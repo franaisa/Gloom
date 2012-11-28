@@ -1,3 +1,4 @@
+===================
 Tree source release
 ===================
 
@@ -6,6 +7,8 @@ This file contains the following sections:
 GENERAL NOTES
 LICENSE
 
+
+=============
 GENERAL NOTES
 =============
 
@@ -28,6 +31,8 @@ GENERAL NOTES
 	University of Madrid. Please note that the development is in a very early stage. 
 	Alpha state gameplay will be available sometime around May 2013.
 
+
+=======	
 LICENSE
 =======
 
