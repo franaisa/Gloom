@@ -1,0 +1,92 @@
+# *****************************************************************************************
+# unnecessary folders 
+# *****************************************************************************************
+
+# Ignore dependencies
+/dependencies/
+
+# Ignore documentation
+/Doc/
+
+# Ignore folder ipch
+/ipch/
+
+# Ignore folder Exes; there is no space for the assets and no need to commit the binaries
+/Exes/
+
+# *****************************************************************************************
+# Patterns
+# *****************************************************************************************
+
+# Ignore any database created by Visual Studio
+*.sdf
+
+#__________________________________________________________________________________________
+
+# Ignore anything inside the project folder that is not a project file
+# To prevent git from ignoring certain files inside certain folders we
+# need to erase each level and then include what we want inside that level
+# which leads us to the following-not-very-elegant solution:
+
+# =====================
+# Clean the first level
+# =====================
+
+/Projects/*
+
+# ==============================
+# Bring back each project folder
+# ==============================
+
+!/Projects/Application/
+!/Projects/BaseSubsystems/
+!/Projects/Configure/
+!/Projects/Graphics/
+!/Projects/GUI/
+!/Projects/Logic/
+!/Projects/Map/
+
+# =================================
+# Clean each project (second level)
+# =================================
+
+/Projects/Application/*
+/Projects/BaseSubsystems/*
+/Projects/Configure/*
+/Projects/Graphics/*
+/Projects/GUI/*
+/Projects/Logic/*
+/Projects/Map/*
+
+# ===============================================
+# Bring back configuration files for each project
+# ===============================================
+
+!/Projects/Application/*.user
+!/Projects/Application/*.filters
+!/Projects/Application/*.vcxproj
+
+!/Projects/BaseSubsystems/*.user
+!/Projects/BaseSubsystems/*.filters
+!/Projects/BaseSubsystems/*.vcxproj
+
+!/Projects/Configure/*.user
+!/Projects/Configure/*.filters
+!/Projects/Configure/*.vcxproj
+
+!/Projects/Graphics/*.user
+!/Projects/Graphics/*.filters
+!/Projects/Graphics/*.vcxproj
+
+!/Projects/GUI/*.user
+!/Projects/GUI/*.filters
+!/Projects/GUI/*.vcxproj
+
+!/Projects/Logic/*.user
+!/Projects/Logic/*.filters
+!/Projects/Logic/*.vcxproj
+
+!/Projects/Map/*.user
+!/Projects/Map/*.filters
+!/Projects/Map/*.vcxproj
+
