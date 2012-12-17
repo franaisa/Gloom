@@ -122,6 +122,8 @@ namespace Logic
 		*/
 		void stopWalk();
 
+		void stopWalkBack();
+
 		/**
 		Provoca que la entidad se desplace lateralmente a la izquierda.
 		*/
@@ -135,8 +137,9 @@ namespace Logic
 		/**
 		Provoca que la entidad cese el desplazamiento lateral.
 		*/
-		void stopStrafe();
+		void stopStrafeRight();
 		
+		void stopStrafeLeft();
 		/**
 		Provoca que la entidad gire. Números Positivos para	giro a 
 		derechas, negativos para giro izquierdas.

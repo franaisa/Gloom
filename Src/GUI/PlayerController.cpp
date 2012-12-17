@@ -97,13 +97,17 @@ namespace GUI {
 			switch(key.keyId)
 			{
 			case GUI::Key::W:
-			case GUI::Key::S:
 				m._string = "stopWalk";
+				break;
+			case GUI::Key::S:
+				m._string = "stopWalkBack";
 				break;
 
 			case GUI::Key::A:
+				m._string = "stopStrafeLeft";
+				break;
 			case GUI::Key::D:
-				m._string = "stopStrafe";
+				m._string = "stopStrafeRight";
 				break;
 
 			default:
