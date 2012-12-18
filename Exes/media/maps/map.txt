@@ -9,7 +9,7 @@ Map = {
 
 	David = {
 		type = "Player",
-		position = {1, 0, 0},
+		position = {0, 0, 0},
 		orientation = 180,
 		life = 100.0,
 		isPlayer = true,
