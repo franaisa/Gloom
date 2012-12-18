@@ -80,17 +80,18 @@ namespace Logic
 				stopStrafeLeft();
 			else if(!message._string.compare("stopStrafeRight"))
 				stopStrafeRight();
-			else if(!message._string.compare("turn"))
-				turn(message._float);
+			else if(!message._string.compare("mouse"))
+				mouse(message._mouse);
 		}
 
 	} // process
 	
 	//---------------------------------------------------------
 
-	void CAvatarController::turn(float amount) 
+	void CAvatarController::mouse(const float* amount) 
 	{
-		_entity->yaw(amount);
+		_entity->yaw(amount[0]);
+		_entity->pitch(amount[1]);
 
 	} // turn
 	
