@@ -14,16 +14,16 @@ Map = {
 		life = 100.0,
 		isPlayer = true,
 		model = "marine.mesh",
-		speed = 0.05,
+		speed = 0.09,
 		defaultAnimation = "Idle",
 	},
 	
 	Camera = {
 		type = "Camera",
 		distance = 1,
-		height = 7,
-		targetDistance = 7,
-		targetHeight = 7,
+		height = 9,
+		targetDistance = 9,
+		targetHeight = 9,
 	},
 	
 	skybox = {
