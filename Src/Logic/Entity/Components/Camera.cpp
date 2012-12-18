@@ -86,7 +86,7 @@ namespace Logic
 
 			// Y la posición hacia donde mira la cámara.
 			direction = _targetDistance * Math::getDirection(_target->getOrientation());
-			direction.y = _targetHeight;
+			//direction.y = _targetHeight;
 			_graphicsCamera->setTargetCameraPosition(position + direction);
 		}
 

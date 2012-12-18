@@ -119,6 +119,19 @@ namespace Math
 		return Vector3(-sin(orientation), 0, -cos(orientation));
 
 	} // getDirection
+
+	/**
+	Crea un vector unitario de dirección vertical a partir de un angulo de
+	orientación en radianes.
+
+	@param orientation Orientación en radianes.
+	@return Vector unitario en el plano XZ.
+	*/
+	static Vector3 getDirectionPitch(float orientation) 
+	{
+		return Vector3(0, sin(orientation), 0);
+
+	} // getDirection
 	
 	/**
 	Aplica un viraje a una matriz de transformación.
@@ -168,6 +181,55 @@ namespace Math
 		Math::yaw(turn,transform);
 
 	} // setYaw
+
+	/**
+	Aplica un subviraje a una matriz de transformación.
+
+	@param turn Giro en radianes que se quiere aplicar.
+	@param transform Matriz de transformación a modificar.
+	*/
+	static void pitch(float turn, Matrix4& transform) 
+	{
+		Matrix3 rotation;
+		transform.extract3x3Matrix(rotation);
+		Ogre::Radian yaw, pitch, roll;
+		rotation.ToEulerAnglesYXZ(yaw, pitch, roll);
+		Ogre::Radian newPitch = pitch + Ogre::Radian(turn);
+		rotation.FromEulerAnglesYXZ(yaw, newPitch, roll);
+		transform = rotation;
+
+	} // pitch
+	
+	/**
+	Extrae el estado del subviraje de una matriz de transformación.
+
+	@param transform Matriz de transformación.
+	@return Viraje de la entidad.
+	*/
+	static float getPitch(const Matrix4& transform) 
+	{
+		Matrix3 rotation;
+		transform.extract3x3Matrix(rotation);
+		Ogre::Radian yaw, pitch, roll;
+		rotation.ToEulerAnglesYXZ(yaw, pitch, roll);
+		return pitch.valueRadians();
+
+	} // getPitch
+	
+	/**
+	Establece un subviraje a una matriz de transformación.
+
+	@param turn Giro en radianes que se quiere etablecer.
+	@param transform Matriz de transformación a modificar.
+	*/
+	static void setPitch(float turn, Matrix4& transform) 
+	{
+		// Reiniciamos la matriz de rotación
+		transform = Matrix3::IDENTITY;
+		// Sobre esta rotamos.
+		Math::pitch(turn,transform);
+
+	} // setPitch
 	
 	/**
 	Crea un vector unitario de dirección en el plano XZ a partir 
@@ -178,7 +240,10 @@ namespace Math
 	*/
 	static Vector3 getDirection(const Matrix4& transform) 
 	{
-		return getDirection(getYaw(transform));
+		Vector3 yaw = getDirection(getYaw(transform));
+		Vector3 pitch = getDirectionPitch(getPitch(transform));
+		
+		return yaw + pitch;
 
 	} // getDirection
 

@@ -308,7 +308,7 @@ namespace Logic
 		//////////////////
 
 		/**
-		Establece el viraje de la entidad. Avisa a los componentes
+		Establece el subviraje de la entidad. Avisa a los componentes
 		del cambio.
 
 		@param yaw Nuevo viraje.
@@ -316,22 +316,22 @@ namespace Logic
 		void setPitch(float pitch);
 
 		/**
-		Vira la entidad. Avisa a los componentes del cambio.
+		Gira verticalmente la entidad. Avisa a los componentes del cambio.
 
-		@param yaw Viraje a aplicar.
+		@param pitch subviraje a aplicar.
 		*/
 		void pitch(float pitch);
 
 		/**
-		Devuelve el viraje de la entidad.
+		Devuelve el subviraje de la entidad.
 		<p>
 		La orientación es inicialmente leída del mapa como un simple 
-		viraje (si no aparece, se colocará a 0), aunque, obviamente, puede
+		subviraje (si no aparece, se colocará a 0), aunque, obviamente, puede
 		cambiar con el tiempo.
 
-		@return Viraje en el entorno.
+		@return Subviraje en el entorno.
 		*/
-		//float getPitch() const { return Math::getPitch(_transform); }
+		float getPitch() const { return Math::getPitch(_transform); }
 
 		/**
 		Indica si la entidad se encuentra activa.

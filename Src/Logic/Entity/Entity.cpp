@@ -317,7 +317,7 @@ namespace Logic
 
 	void CEntity::pitch(float pitch) 
 	{
-		//Math::pitch(pitch,_transform);
+		Math::pitch(pitch,_transform);
 
 		// Avisamos a los componentes del cambio.
 		TMessage message;
