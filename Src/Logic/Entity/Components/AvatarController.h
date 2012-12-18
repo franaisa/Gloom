@@ -122,6 +122,9 @@ namespace Logic
 		*/
 		void stopWalk();
 
+		/**
+		Provoca que la entidad cese el retroceso
+		*/
 		void stopWalkBack();
 
 		/**
@@ -135,14 +138,17 @@ namespace Logic
 		void strafeRight();
 
 		/**
-		Provoca que la entidad cese el desplazamiento lateral.
+		Provoca que la entidad cese el desplazamiento lateral derecho.
 		*/
 		void stopStrafeRight();
 		
+		/**
+		Provoca que la entidad cese el desplazamiento lateral izquierdo.
+		*/
 		void stopStrafeLeft();
 
 		/**
-		Provoca que la entidad salte
+		Provoca que la entidad salte.
 		*/
 		void jump();
 
@@ -187,7 +193,7 @@ namespace Logic
 		/**
 		Atributo para controlar la simulacion del salto
 		*/
-		float timeJump;
+		float _timeJump;
 
 		/**
 		Atributo que indica la magnitud de velocidad de la entidad.

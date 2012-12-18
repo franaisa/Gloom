@@ -40,7 +40,7 @@ namespace Logic
 	bool CAvatarController::activate()
 	{
 		_jumping = false;
-		timeJump = 0.0;
+		_timeJump = 0.0;
 		return true;
 	} // activate
 	
@@ -106,13 +106,6 @@ namespace Logic
 	{
 		_walking = true;
 
-		// Cambiamos la animación
-		TMessage message;
-		message._type = Message::SET_ANIMATION;
-		message._string = "Walk";
-		message._bool = true;
-		_entity->emitMessage(message,this);
-
 	} // walk
 	
 	//---------------------------------------------------------
@@ -120,13 +113,6 @@ namespace Logic
 	void CAvatarController::walkBack() 
 	{
 		_walkingBack = true;
-
-		// Cambiamos la animación
-		TMessage message;
-		message._type = Message::SET_ANIMATION;
-		message._string = "WalkBack";
-		message._bool = true;
-		_entity->emitMessage(message,this);
 
 	} // walkBack
 	
@@ -136,17 +122,6 @@ namespace Logic
 	{
 		_walking = false;
 
-		// Cambiamos la animación si no seguimos desplazándonos
-		// lateralmente
-		if(!(_strafingLeft || _strafingRight))
-		{
-			TMessage message;
-			message._type = Message::SET_ANIMATION;
-			message._string = "Idle";
-			message._bool = true;
-			_entity->emitMessage(message,this);
-		}
-
 	} // stopWalk
 	
 		//---------------------------------------------------------
@@ -154,17 +129,6 @@ namespace Logic
 	void CAvatarController::stopWalkBack() 
 	{
 		 _walkingBack = false;
-
-		// Cambiamos la animación si no seguimos desplazándonos
-		// lateralmente
-		if(!(_strafingLeft || _strafingRight))
-		{
-			TMessage message;
-			message._type = Message::SET_ANIMATION;
-			message._string = "Idle";
-			message._bool = true;
-			_entity->emitMessage(message,this);
-		}
 
 	} // stopWalk
 
@@ -175,13 +139,6 @@ namespace Logic
 	{
 		_strafingLeft = true;
 
-		// Cambiamos la animación
-		TMessage message;
-		message._type = Message::SET_ANIMATION;
-		message._string = "StrafeLeft";
-		message._bool = true;
-		_entity->emitMessage(message,this);
-
 	} // walk
 	
 	//---------------------------------------------------------
@@ -189,13 +146,6 @@ namespace Logic
 	void CAvatarController::strafeRight() 
 	{
 		_strafingRight = true;
-
-		// Cambiamos la animación
-		TMessage message;
-		message._type = Message::SET_ANIMATION;
-		message._string = "StrafeRight";
-		message._bool = true;
-		_entity->emitMessage(message,this);
 
 	} // walkBack
 	
@@ -205,16 +155,6 @@ namespace Logic
 	{
 		_strafingLeft = false;
 
-		// Cambiamos la animación si no seguimos andando
-		if(!(_walking || _walkingBack))
-		{
-			TMessage message;
-			message._type = Message::SET_ANIMATION;
-			message._string = "Idle";
-			message._bool = true;
-			_entity->emitMessage(message,this);
-		}
-
 	} // stopWalk
 
 	//---------------------------------------------------------
@@ -222,15 +162,6 @@ namespace Logic
 		void CAvatarController::stopStrafeRight() 
 	{
 		_strafingRight = false;
-		// Cambiamos la animación si no seguimos andando
-		if(!(_walking || _walkingBack))
-		{
-			TMessage message;
-			message._type = Message::SET_ANIMATION;
-			message._string = "Idle";
-			message._bool = true;
-			_entity->emitMessage(message,this);
-		}
 
 	} // stopWalk
 
@@ -250,20 +181,20 @@ namespace Logic
 	{
 		IComponent::tick(msecs);
 
-		//si estamos saltando, realizamos una simulación de un salto (provisional hasta tener physX
+		//si estamos saltando, realizamos una simulación de un salto (provisional hasta tener physX)
 		if(_jumping){
-			if(timeJump > 800){
-				timeJump = 0.0;
+			if(_timeJump > 800){
+				_timeJump = 0.0;
 				_jumping = false;
-			}else if (timeJump >=400){
+			}else if (_timeJump >=400){
 				Vector3 direction(0,-1,0);
 				direction *= msecs * 0.05;
-				timeJump+=msecs;
+				_timeJump+=msecs;
 				_entity->setPosition(_entity->getPosition()+direction);
 			}else{
 				Vector3 direction(0,1,0);
 				direction *= msecs * 0.05;
-				timeJump+=msecs;
+				_timeJump+=msecs;
 				_entity->setPosition(_entity->getPosition()+direction);
 			}
 		}//if (_jumping)
@@ -282,6 +213,7 @@ namespace Logic
 				direction = Math::getDirection(_entity->getYaw());
 				if(_walkingBack)
 					direction *= -1;
+				//Anulacion forward/back
 				if(_walking && _walkingBack)
 					direction *= 0;
 			}
@@ -292,7 +224,7 @@ namespace Logic
 						Math::getDirection(_entity->getYaw() + Math::PI/2);
 				if(_strafingRight)
 					directionStrafe *= -1;
-				//Para facilitar el strafe
+				//Para facilitar el strafe, anulación de strafes
 				if(_strafingLeft && _strafingRight)
 					directionStrafe *= 0;
 			}

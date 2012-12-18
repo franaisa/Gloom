@@ -13,17 +13,16 @@ Map = {
 		orientation = 180,
 		life = 100.0,
 		isPlayer = true,
-		model = "marine.mesh",
+		model = "AK47.mesh",
 		speed = 0.09,
-		defaultAnimation = "Idle",
 	},
 	
 	Camera = {
 		type = "Camera",
-		distance = 1,
-		height = 5,
-		targetDistance = 10,
-		targetHeight = 7,
+		distance = 20,
+		height = 9,
+		targetDistance = 9,
+		targetHeight = 9,
 	},
 	
 	skybox = {
