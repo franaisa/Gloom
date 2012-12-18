@@ -19,7 +19,8 @@ mover al jugador.
 
 #include <cassert>
 
-#define TURN_FACTOR 0.001f
+#define TURN_FACTOR_X 0.001f
+#define TURN_FACTOR_Y 0.001f
 
 namespace GUI {
 
@@ -131,8 +132,9 @@ namespace GUI {
 		{
 			Logic::TMessage m;
 			m._type = Logic::Message::CONTROL;
-			m._string = "turn";
-			m._float = -(float)mouseState.movX * TURN_FACTOR;
+			m._string = "mouse";
+			m._mouse[0] = -(float)mouseState.movX * TURN_FACTOR_X;
+			m._mouse[1] = -(float)mouseState.movY * TURN_FACTOR_Y;
 			_controlledAvatar->emitMessage(m);
 			return true;
 		}

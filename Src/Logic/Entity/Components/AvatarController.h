@@ -153,7 +153,7 @@ namespace Logic
 		@param amount Cantidad de giro. Positivos giro a derechas,
 		negativos a izquierdas.
 		*/
-		void turn(float amount);
+		void mouse(const float* amount);
 
 	protected:
 

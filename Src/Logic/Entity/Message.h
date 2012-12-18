@@ -83,6 +83,11 @@ namespace Logic
 		*/
 		std::string _string;
 
+		/**
+		Atributo para almacenar las coordeanadas del mouse
+		*/
+		float _mouse[2];
+
 	} TMessage; 
 
 } // namespace Logic

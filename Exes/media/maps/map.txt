@@ -21,9 +21,9 @@ Map = {
 	Camera = {
 		type = "Camera",
 		distance = 1,
-		height = 9,
-		targetDistance = 9,
-		targetHeight = 9,
+		height = 5,
+		targetDistance = 10,
+		targetHeight = 7,
 	},
 	
 	skybox = {

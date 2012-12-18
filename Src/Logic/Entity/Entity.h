@@ -304,6 +304,40 @@ namespace Logic
 
 		@return true si la entidad está activa.
 		*/
+
+		//////////////////
+
+		/**
+		Establece el subviraje de la entidad. Avisa a los componentes
+		del cambio.
+
+		@param yaw Nuevo viraje.
+		*/
+		void setPitch(float pitch);
+
+		/**
+		Gira verticalmente la entidad. Avisa a los componentes del cambio.
+
+		@param pitch subviraje a aplicar.
+		*/
+		void pitch(float pitch);
+
+		/**
+		Devuelve el subviraje de la entidad.
+		<p>
+		La orientación es inicialmente leída del mapa como un simple 
+		subviraje (si no aparece, se colocará a 0), aunque, obviamente, puede
+		cambiar con el tiempo.
+
+		@return Subviraje en el entorno.
+		*/
+		float getPitch() const { return Math::getPitch(_transform); }
+
+		/**
+		Indica si la entidad se encuentra activa.
+
+		@return true si la entidad está activa.
+		*/
 		bool isActivated() {return _activated;}
 
 	protected:

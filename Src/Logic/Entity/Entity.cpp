@@ -299,4 +299,32 @@ namespace Logic
 
 	} // yaw
 
+	//---------------------------------------------------------
+
+	void CEntity::setPitch(float pitch) 
+	{
+		Math::setYaw(pitch,_transform);
+
+		// Avisamos a los componentes del cambio.
+		TMessage message;
+		message._type = Message::SET_TRANSFORM;
+		message._transform = _transform;
+		emitMessage(message);
+
+	} // setYaw
+
+	//---------------------------------------------------------
+
+	void CEntity::pitch(float pitch) 
+	{
+		Math::pitch(pitch,_transform);
+
+		// Avisamos a los componentes del cambio.
+		TMessage message;
+		message._type = Message::SET_TRANSFORM;
+		message._transform = _transform;
+		emitMessage(message);
+
+	} // yaw
+
 } // namespace Logic
