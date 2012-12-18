@@ -140,6 +140,12 @@ namespace Logic
 		void stopStrafeRight();
 		
 		void stopStrafeLeft();
+
+		/**
+		Provoca que la entidad salte
+		*/
+		void jump();
+
 		/**
 		Provoca que la entidad gire. Números Positivos para	giro a 
 		derechas, negativos para giro izquierdas.
@@ -172,6 +178,16 @@ namespace Logic
 		a la derecha.
 		*/
 		bool _strafingRight;
+
+		/**
+		Atributo que indica si la entidad está saltando
+		*/
+		bool _jumping;
+
+		/**
+		Atributo para controlar la simulacion del salto
+		*/
+		float timeJump;
 
 		/**
 		Atributo que indica la magnitud de velocidad de la entidad.

@@ -39,6 +39,8 @@ namespace Logic
 
 	bool CAvatarController::activate()
 	{
+		_jumping = false;
+		timeJump = 0.0;
 		return true;
 	} // activate
 	
@@ -80,6 +82,8 @@ namespace Logic
 				stopStrafeLeft();
 			else if(!message._string.compare("stopStrafeRight"))
 				stopStrafeRight();
+			else if(!message._string.compare("jump"))
+				jump();
 			else if(!message._string.compare("turn"))
 				turn(message._float);
 		}
@@ -216,7 +220,6 @@ namespace Logic
 		void CAvatarController::stopStrafeRight() 
 	{
 		_strafingRight = false;
-
 		// Cambiamos la animación si no seguimos andando
 		if(!(_walking || _walkingBack))
 		{
@@ -228,12 +231,40 @@ namespace Logic
 		}
 
 	} // stopWalk
+
+	//---------------------------------------------------------
+
+	void CAvatarController::jump(){
+		//si ya estaba saltando, pasamos
+		if(_jumping)
+			return;
+
+		_jumping = true;
+	}//jump
 	
 	//---------------------------------------------------------
 
 	void CAvatarController::tick(unsigned int msecs)
 	{
 		IComponent::tick(msecs);
+
+		//si estamos saltando, realizamos una simulación de un salto (provisional hasta tener physX
+		if(_jumping){
+			if(timeJump > 800){
+				timeJump = 0.0;
+				_jumping = false;
+			}else if (timeJump >=400){
+				Vector3 direction(0,-1,0);
+				direction *= msecs * 0.05;
+				timeJump+=msecs;
+				_entity->setPosition(_entity->getPosition()+direction);
+			}else{
+				Vector3 direction(0,1,0);
+				direction *= msecs * 0.05;
+				timeJump+=msecs;
+				_entity->setPosition(_entity->getPosition()+direction);
+			}
+		}//if (_jumping)
 
 		// Si nos estamos desplazando calculamos la próxima posición
 		// Calculamos si hay vectores de dirección de avance y strafe,
