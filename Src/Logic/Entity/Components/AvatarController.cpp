@@ -70,12 +70,16 @@ namespace Logic
 				walkBack();
 			else if(!message._string.compare("stopWalk"))
 				stopWalk();
+			else if(!message._string.compare("stopWalkBack"))
+				stopWalkBack();
 			else if(!message._string.compare("strafeLeft"))
 				strafeLeft();
 			else if(!message._string.compare("strafeRight"))
 				strafeRight();
-			else if(!message._string.compare("stopStrafe"))
-				stopStrafe();
+			else if(!message._string.compare("stopStrafeLeft"))
+				stopStrafeLeft();
+			else if(!message._string.compare("stopStrafeRight"))
+				stopStrafeRight();
 			else if(!message._string.compare("turn"))
 				turn(message._float);
 		}
@@ -124,7 +128,7 @@ namespace Logic
 
 	void CAvatarController::stopWalk() 
 	{
-		_walking = _walkingBack = false;
+		_walking = false;
 
 		// Cambiamos la animación si no seguimos desplazándonos
 		// lateralmente
@@ -139,6 +143,26 @@ namespace Logic
 
 	} // stopWalk
 	
+		//---------------------------------------------------------
+
+	void CAvatarController::stopWalkBack() 
+	{
+		 _walkingBack = false;
+
+		// Cambiamos la animación si no seguimos desplazándonos
+		// lateralmente
+		if(!(_strafingLeft || _strafingRight))
+		{
+			TMessage message;
+			message._type = Message::SET_ANIMATION;
+			message._string = "Idle";
+			message._bool = true;
+			_entity->emitMessage(message,this);
+		}
+
+	} // stopWalk
+
+
 	//---------------------------------------------------------
 
 	void CAvatarController::strafeLeft() 
@@ -171,9 +195,27 @@ namespace Logic
 	
 	//---------------------------------------------------------
 
-	void CAvatarController::stopStrafe() 
+	void CAvatarController::stopStrafeLeft() 
 	{
-		_strafingLeft = _strafingRight = false;
+		_strafingLeft = false;
+
+		// Cambiamos la animación si no seguimos andando
+		if(!(_walking || _walkingBack))
+		{
+			TMessage message;
+			message._type = Message::SET_ANIMATION;
+			message._string = "Idle";
+			message._bool = true;
+			_entity->emitMessage(message,this);
+		}
+
+	} // stopWalk
+
+	//---------------------------------------------------------
+
+		void CAvatarController::stopStrafeRight() 
+	{
+		_strafingRight = false;
 
 		// Cambiamos la animación si no seguimos andando
 		if(!(_walking || _walkingBack))
@@ -207,6 +249,8 @@ namespace Logic
 				direction = Math::getDirection(_entity->getYaw());
 				if(_walkingBack)
 					direction *= -1;
+				if(_walking && _walkingBack)
+					direction *= 0;
 			}
 
 			if(_strafingLeft || _strafingRight)
@@ -215,6 +259,9 @@ namespace Logic
 						Math::getDirection(_entity->getYaw() + Math::PI/2);
 				if(_strafingRight)
 					directionStrafe *= -1;
+				//Para facilitar el strafe
+				if(_strafingLeft && _strafingRight)
+					directionStrafe *= 0;
 			}
 
 			direction += directionStrafe;
