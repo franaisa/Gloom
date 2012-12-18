@@ -18,6 +18,7 @@
 # Ignore any database created by Visual Studio
 *.sdf
 *.suo
+*.opensdf
 
 #__________________________________________________________________________________________
 

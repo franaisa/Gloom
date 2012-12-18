@@ -41,7 +41,7 @@ namespace Logic
 		Constructor por defecto; inicializa los atributos a su valor por 
 		defecto.
 		*/
-		CAvatarController() : IComponent(), _walking(false), _walkingBack(false), 
+		CAvatarController() : IComponent(), _jumping(false), _walking(false), _walkingBack(false), 
 			_strafingLeft(false), _strafingRight(false), _speed(0.05f) {}
 		
 		/**
