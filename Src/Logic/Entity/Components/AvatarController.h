@@ -187,7 +187,7 @@ namespace Logic
 		/**
 		Atributo para controlar la simulacion del salto
 		*/
-		float timeJump;
+		float _timeJump;
 
 		/**
 		Atributo que indica la magnitud de velocidad de la entidad.

@@ -40,7 +40,7 @@ namespace Logic
 	bool CAvatarController::activate()
 	{
 		_jumping = false;
-		timeJump = 0.0;
+		_timeJump = 0.0;
 		return true;
 	} // activate
 	
@@ -252,18 +252,18 @@ namespace Logic
 
 		//si estamos saltando, realizamos una simulación de un salto (provisional hasta tener physX
 		if(_jumping){
-			if(timeJump > 800){
-				timeJump = 0.0;
+			if(_timeJump > 800){
+				_timeJump = 0.0;
 				_jumping = false;
-			}else if (timeJump >=400){
+			}else if (_timeJump >=400){
 				Vector3 direction(0,-1,0);
 				direction *= msecs * 0.05;
-				timeJump+=msecs;
+				_timeJump+=msecs;
 				_entity->setPosition(_entity->getPosition()+direction);
 			}else{
 				Vector3 direction(0,1,0);
 				direction *= msecs * 0.05;
-				timeJump+=msecs;
+				_timeJump+=msecs;
 				_entity->setPosition(_entity->getPosition()+direction);
 			}
 		}//if (_jumping)
