@@ -10,19 +10,17 @@ Map = {
 	David = {
 		type = "Player",
 		position = {0, 0, 0},
-		orientation = 180,
+		orientation = 90,
 		life = 100.0,
 		isPlayer = true,
-		model = "AK47.mesh",
 		speed = 0.09,
 	},
 	
 	Camera = {
 		type = "Camera",
-		distance = 20,
-		height = 9,
-		targetDistance = 9,
-		targetHeight = 9,
+		distance = 1,
+		height = 8,
+		targetDistance = 20,
 	},
 	
 	skybox = {
