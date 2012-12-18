@@ -11,9 +11,6 @@
 # Ignore folder ipch
 /ipch/
 
-# Ignore folder Exes; there is no space for the assets and no need to commit the binaries
-/Exes/
-
 # *****************************************************************************************
 # Patterns
 # *****************************************************************************************
@@ -90,4 +87,17 @@
 !/Projects/Map/*.user
 !/Projects/Map/*.filters
 !/Projects/Map/*.vcxproj
+
+# We are going to go through the same process to include the folder with the map.txt and blueprint.txt
+# Clean first level
+/Exes/*
+
+# Bring back media
+!/Exes/media/
+
+# Delete second level
+/Exes/media/*
+
+# Bring back maps (which contains the two files that we are looking for)
+!/Exes/media/maps/
 
