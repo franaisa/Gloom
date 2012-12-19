@@ -14,6 +14,11 @@ Contiene el tipo de datos de un mensaje.
 
 #include "BaseSubsystems/Math.h"
 
+// Predeclaraciones
+namespace Logic {
+	class CEntity;
+};
+
 namespace Logic
 {
 	/**
@@ -27,7 +32,13 @@ namespace Logic
 			SET_TRANSFORM,
 			SET_ANIMATION,
 			STOP_ANIMATION,
-			CONTROL
+			CONTROL,
+			AVATAR_WALK,
+			KINEMATIC_MOVE,
+			TOUCHED,
+			UNTOUCHED,
+			SWITCH,
+			DAMAGED
 		};
 	}
 
@@ -67,6 +78,11 @@ namespace Logic
 		Atributo para almacenar una matriz de transformación.
 		*/
 		Matrix4 _transform;
+
+		/**
+		Atributo para almacenar un valor int.
+		*/
+		int _int;
 		
 		/**
 		Atributo para almacenar un valor float.
@@ -82,6 +98,16 @@ namespace Logic
 		Atributo para almacenar un string.
 		*/
 		std::string _string;
+
+		/**
+		Atributo para almacenar un vector.
+		*/
+		Vector3 _vector3;
+
+		/**
+		Atributo para almacenar una entidad.
+		*/
+		CEntity *_entity;
 
 		/**
 		Atributo para almacenar las coordeanadas del mouse
