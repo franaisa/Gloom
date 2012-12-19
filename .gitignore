@@ -44,6 +44,7 @@
 !/Projects/GUI/
 !/Projects/Logic/
 !/Projects/Map/
+!/Projects/Physics/
 
 # =================================
 # Clean each project (second level)
@@ -56,6 +57,7 @@
 /Projects/GUI/*
 /Projects/Logic/*
 /Projects/Map/*
+/Projects/Physics/*
 
 # ===============================================
 # Bring back configuration files for each project
@@ -88,6 +90,10 @@
 !/Projects/Map/*.user
 !/Projects/Map/*.filters
 !/Projects/Map/*.vcxproj
+
+!/Projects/Physics/*.user
+!/Projects/Physics/*.filters
+!/Projects/Physics/*.vcxproj
 
 # We are going to go through the same process to include the folder with the map.txt and blueprint.txt
 # Clean first level
