@@ -2,6 +2,9 @@
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Application", "Projects\Application\Application.vcxproj", "{0B9BBA1D-20A3-4737-BD4E-C354FEF50B8A}"
+	ProjectSection(ProjectDependencies) = postProject
+		{848EBA43-0D28-4267-A717-030578DB8EE6} = {848EBA43-0D28-4267-A717-030578DB8EE6}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Graphics", "Projects\Graphics\Graphics.vcxproj", "{34DE02D6-3B05-423D-A1FA-5BF4F6B5FB19}"
 EndProject
