@@ -53,6 +53,7 @@ namespace Application {
 		CEGUI::WindowManager::getSingletonPtr()->loadWindowLayout("Time.layout");
 		_timeWindow = CEGUI::WindowManager::getSingleton().getWindow("Time");
 
+
 		return true;
 
 	} // init
