@@ -239,7 +239,9 @@ void CServer::createScene ()
 
 	// TODO: Crear la escena física
 	// Usando el método adecuado del objeto PxPhysics
-	_scene = NULL;
+	_scene = _physics->createScene(sceneDesc);
+	//if(!_scene)
+	//	fatalError("createScene failed");
 }
 
 //--------------------------------------------------------
@@ -249,6 +251,10 @@ void CServer::destroyScene ()
 	assert(_instance);
 
 	// TODO: Liberar la escena (método release)
+	if(_scene) {
+		_scene->release();
+		_scene = NULL;
+	}
 }
 
 //--------------------------------------------------------
@@ -277,9 +283,12 @@ PxRigidStatic* CServer::createPlane(const Vector3 &point, const Vector3 &normal,
 
 	// TODO: Crear un plano estático
 	// 1. Transformar el punto y la normal a los tipos de PhysX
+	PxVec3 pxPoint = Vector3ToPxVec3(point);
+	PxVec3 pxNormal = Vector3ToPxVec3(normal);
 	// 2. Usar el material por defecto del servidor
 	// 3. Crear el actor usando PxCreatePlane
-	PxRigidStatic *actor = NULL;
+	PxPlane plane(pxPoint, pxNormal);
+	PxRigidStatic *actor = PxCreatePlane(*_physics, plane, *_defaultMaterial);
 	
 	// TODO: enlazar el actor físico al componente lógico
 	// Usamos el atributo userData del actor para guardar la dirección del componente
@@ -287,8 +296,10 @@ PxRigidStatic* CServer::createPlane(const Vector3 &point, const Vector3 &normal,
 
 	// TODO: Establecer el grupo de colisión
 	// Usar la función PxSetGroup
+	PxSetGroup(*actor, group);
 	
 	// TODO: Añadir el actor a la escena
+	_scene->addActor(*actor);
 
 	return actor;
 }
@@ -309,11 +320,14 @@ PxRigidStatic* CServer::createStaticBox(const Vector3 &position, const Vector3 &
 	// TODO: Crear un cubo estático
 	// 0. Recuerda que siempre debes convertir entre los tipos de la lógica y los de PhysX (vectores, etc).
 	// 1. Crear pose (PxTransform) a partir de la posición
+	PxTransform pxPosition( Vector3ToPxVec3(position) );
 	// 2. Crear geometría de la caja (PxBoxGeometry) a partir de las dimensiones
+	PxBoxGeometry pxGeom( Vector3ToPxVec3(dimensions) );
 	// 3. Usar el material por defecto del servidor de física
 	// 4. Aplicar una transformación local (localPose) que desplace dimensions.y hacia arriba (eje Y positivo)
 	// 5. Crear el actor usando la función PxCreateStatic
-	PxRigidStatic *actor = NULL;
+	PxTransform pxLocalPosition ( PxVec3(0, dimensions.y, 0) );
+	PxRigidStatic *actor = PxCreateStatic(*_physics, pxPosition, pxGeom, *_defaultMaterial, pxLocalPosition);
 	
 	// TODO: Transformar el objeto estático en un trigger si es necesario
 	// 1. Obtener la primera shape del actor
@@ -325,8 +339,10 @@ PxRigidStatic* CServer::createStaticBox(const Vector3 &position, const Vector3 &
 
 	// TODO: Establecer el grupo de colisión
 	// Usar la función PxSetGroup
+	PxSetGroup(*actor, group);
 
 	// TODO: Añadir el actor a la escena
+	_scene->addActor(*actor);
 	
 	return actor;
 }
@@ -357,6 +373,10 @@ PxRigidDynamic* CServer::createDynamicBox(const Vector3 &position, const Vector3
 	// - Para cinematico usar PxCreateKinematic
 	// Asignarlo al actor;
 	PxRigidDynamic *actor = NULL;
+	if(kinematic)
+		actor = PxCreateKinematic(*_physics, pose, geom, *material, density, localPose);
+	else
+		actor = PxCreateDynamic(*_physics, pose, geom, *material, density, localPose);
 	
 	// TODO: Transformar el objeto dinámico en un trigger si es necesario
 	// 1. Obtener la primera shape del actor
@@ -369,8 +389,10 @@ PxRigidDynamic* CServer::createDynamicBox(const Vector3 &position, const Vector3
 
 	// TODO: Establecer el grupo de colisión
 	// Usar la función PxSetGroup
+	PxSetGroup(*actor, group);
 
 	// TODO: añadir el actor a la escena
+	_scene->addActor(*actor);
 
 	return actor;
 }
@@ -410,6 +432,7 @@ PxRigidActor* CServer::createFromFile(const std::string &file, int group, const 
 
 	// TODO: Establecer el grupo de colisión 
 	// Usar la función PxSetGroup
+	PxSetGroup(*actor, group);
 
 	// Liberar recursos
 	bufferCollection->release();

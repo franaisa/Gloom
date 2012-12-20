@@ -24,6 +24,7 @@ basadas en Ogre. Esta clase maneja la ejecución de todo el juego.
 #include "GUI/Server.h"
 #include "Logic/Server.h"
 #include "Logic/Maps/ComponentFactory.h"
+#include "Physics/Server.h"
 
 #include <cassert>
 
@@ -72,6 +73,10 @@ namespace Application {
 		if (!GUI::CServer::Init())
 			return false;
 
+		// Inicialización del servidor de física.
+		if (!Physics::CServer::Init())
+			return false;
+
 		// Inicializamos el servidor de la lógica.
 		if (!Logic::CServer::Init())
 			return false;
@@ -99,6 +104,10 @@ namespace Application {
 
 		if(Logic::CServer::getSingletonPtr())
 			Logic::CServer::Release();
+
+		// Liberar los recursos del servidor de física
+		if (Physics::CServer::getSingletonPtr())
+			Physics::CServer::Release();
 		
 		if(GUI::CServer::getSingletonPtr())
 			GUI::CServer::Release();

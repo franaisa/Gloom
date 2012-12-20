@@ -97,6 +97,8 @@ void CPhysicEntity::tick(unsigned int msecs)
 
 	// TODO: actualizar la posición y orientación de la entidad lógica
 	// usando la información proporcionada por el motor de física
+	Matrix4 transform = _server->getActorTransform(_actor);
+	_entity->setTransform(transform);
 
 	// TODO: mover objetos cinemáticos de acuerdo a la lógica
 	// 1. Comprobar si el componente representa a un objeto cinemático usando
@@ -133,14 +135,16 @@ PxRigidStatic* CPhysicEntity::createPlane(const Map::CEntity *entityInfo)
 	const Vector3 point = _entity->getPosition();
 	
 	// TODO: Leer el vector normal al plano del fichero de mapa
-	const Vector3 normal;
+	const Vector3 normal = entityInfo->getVector3Attribute("physic_normal");
 
 	// TODO: leer atributo de grupo de colisión (por defecto 0)
 	int group = 0;
+	if (entityInfo->hasAttribute("physic_group"))
+		group = entityInfo->getIntAttribute("physic_group");
  
 	// TODO: Usar la interfaz del servidor de física para crear un plano estático
 	// Pasar como componente this
-	return NULL;
+	return _server->createPlane(point, normal, group, this);
 }
 
 PxRigidActor* CPhysicEntity::createRigid(const Map::CEntity *entityInfo)
@@ -154,18 +158,20 @@ PxRigidActor* CPhysicEntity::createRigid(const Map::CEntity *entityInfo)
 	assert((physicType == "static") || (physicType == "dynamic") || (physicType == "kinematic"));
 
 	// TODO: Leer la forma (shape) 
-	const std::string physicShape;
+	const std::string physicShape = entityInfo->getStringAttribute("physic_shape");
 
 	// TODO: Leer atributo trigger del mapa (por defecto no es un trigger)
 	bool trigger = false;
 
 	// TODO: leer atributo de grupo de colisión (por defecto 0)
 	int group = 0;
+	if (entityInfo->hasAttribute("physic_group"))
+		group = entityInfo->getIntAttribute("physic_group");
 
 	if (physicType == "static") {
 		if (physicShape == "box") {
 			// TODO: leer las dimensiones de la caja
-			const Vector3 physicDimensions;
+			const Vector3 physicDimensions = entityInfo->getVector3Attribute("physic_dimensions");
 			
 			// Crear una caja estática
 			return _server->createStaticBox(position, physicDimensions, trigger, group, this);
@@ -174,6 +180,8 @@ PxRigidActor* CPhysicEntity::createRigid(const Map::CEntity *entityInfo)
 	} else {
 		// TODO: Leer la masa (por defecto 0)
 		float mass = 0;
+		if (entityInfo->hasAttribute("physic_mass"))
+			mass = entityInfo->getFloatAttribute("physic_mass");
 		
 		// Leer si se trata de un actor cinemático
 		bool kinematic = (physicType == "kinematic");
@@ -185,7 +193,7 @@ PxRigidActor* CPhysicEntity::createRigid(const Map::CEntity *entityInfo)
 			
 			// TODO: Crear y devolver una caja dinámica usando el servidor de física
 			// Pasar como componente this
-			return NULL;
+			return _server->createDynamicBox(position, physicDimensions, mass, kinematic, trigger, group, this);
 		}
 	}
 

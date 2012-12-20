@@ -23,6 +23,8 @@ Contiene la implementación del estado de juego.
 #include "GUI/Server.h"
 #include "GUI/PlayerController.h"
 
+#include "Physics/Server.h"
+
 #include <CEGUISystem.h>
 #include <CEGUIWindowManager.h>
 #include <CEGUIWindow.h>
@@ -32,6 +34,12 @@ namespace Application {
 	bool CGameState::init() 
 	{
 		CApplicationState::init();
+
+		// TODO: desactivar colisiones entre los grupos 0 y 1
+		//Physics::CServer::getSingletonPtr()->setGroupCollisions(0, 1, false);
+
+		// TODO: Crear la escena física usando el servidor de física
+		Physics::CServer::getSingletonPtr()->createScene();
 
 		// Cargamos el archivo con las definiciones de las entidades del nivel.
 		if (!Logic::CEntityFactory::getSingletonPtr()->loadBluePrints("blueprints.txt"))
@@ -56,6 +64,9 @@ namespace Application {
 		Logic::CServer::getSingletonPtr()->unLoadLevel();
 
 		Logic::CEntityFactory::getSingletonPtr()->unloadBluePrints();
+
+		// TODO: Liberar la escena física usando el motor de física
+		Physics::CServer::getSingletonPtr()->destroyScene();
 
 		CApplicationState::release();
 
@@ -104,6 +115,9 @@ namespace Application {
 	void CGameState::tick(unsigned int msecs) 
 	{
 		CApplicationState::tick(msecs);
+
+		// TODO: realizar la simulación física
+		Physics::CServer::getSingletonPtr()->tick(msecs);
 
 		// Actualizamos la lógica de juego.
 		Logic::CServer::getSingletonPtr()->tick(msecs);
