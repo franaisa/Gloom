@@ -203,7 +203,6 @@ namespace Math
 		Ogre::Radian yaw, pitch, roll;
 		
 		rotation.ToEulerAnglesYZX(yaw, pitch, roll);
-		printf("\nyaw: %f pitch: %f roll: %f",yaw, pitch, roll );
 		Ogre::Radian newPitch = pitch + Ogre::Radian(turn);
 		rotation.FromEulerAnglesYZX(yaw, newPitch, roll);
 		transform = rotation;

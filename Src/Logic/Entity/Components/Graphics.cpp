@@ -79,12 +79,7 @@ namespace Logic
 				return 0;
 		}
 
-		_graphicsEntity->setTransform(_entity->getTransform());
-		//Ogre::Matrix3 matrix = Ogre::Matrix3::IDENTITY;
-		//matrix = Ogre::Matrix3(1,0,0, 0,1,1, 0,0,1);
-
-		//_graphicsEntity->setOrientation(matrix);
-		
+		_graphicsEntity->setTransform(_entity->getTransform());		
 		
 		return _graphicsEntity;
 
