@@ -212,7 +212,7 @@ PxRigidActor* CPhysicEntity::createFromFile(const Map::CEntity *entityInfo)
 		group = entityInfo->getIntAttribute("physic_group");
 
 	// TODO: crear el actor a partir del fichero RepX usando el servidor de física
-	return false;
+	return _server->createFromFile(file, group, this);
 }
 
 

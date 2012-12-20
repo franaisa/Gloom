@@ -428,7 +428,8 @@ PxRigidActor* CServer::createFromFile(const std::string &file, int group, const 
 	
 	// TODO: enlazar el actor físico al componente lógico
 	// Usamos el atributo userData del actor para guardar la dirección del componente
-	// lógico encargado de la física. 
+	// lógico encargado de la física.
+	actor->userData = (void*) component;
 
 	// TODO: Establecer el grupo de colisión 
 	// Usar la función PxSetGroup
