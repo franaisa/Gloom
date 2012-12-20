@@ -183,10 +183,10 @@ namespace Logic
 
 		//si estamos saltando, realizamos una simulación de un salto (provisional hasta tener physX)
 		if(_jumping){
-			if(_timeJump > 800){
+			if(_timeJump > 600){
 				_timeJump = 0.0;
 				_jumping = false;
-			}else if (_timeJump >=400){
+			}else if (_timeJump >=300){
 				Vector3 direction(0,-1,0);
 				direction *= msecs * 0.05;
 				_timeJump+=msecs;
