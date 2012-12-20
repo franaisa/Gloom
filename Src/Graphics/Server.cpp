@@ -181,6 +181,60 @@ namespace Graphics
 			assert((*_scenes.find(scene->getName())).second == scene && 
 				"Esta escena no pertenece al servidor");
 
+			Ogre::Light *mLuzDireccional;
+			mLuzDireccional = scene->getSceneMgr()->createLight("LuzDireccional");
+			mLuzDireccional->setType(Ogre::Light::LT_DIRECTIONAL);
+			mLuzDireccional->setDirection(1, 1, 1);
+			mLuzDireccional->setDiffuseColour(1, 0, 0);
+			////////////////////////////////////////////////////
+			Ogre::Light *mLuzDireccional2;
+			mLuzDireccional2 = scene->getSceneMgr()->createLight("LuzDireccional2");
+			mLuzDireccional2->setType(Ogre::Light::LT_DIRECTIONAL);
+			mLuzDireccional2->setDirection(1, 0, 0);
+			mLuzDireccional2->setDiffuseColour(1, 0, 0);
+
+			Ogre::Light *mLuzDireccional3;
+			mLuzDireccional3 = scene->getSceneMgr()->createLight("LuzDireccional3");
+			mLuzDireccional3->setType(Ogre::Light::LT_DIRECTIONAL);
+			mLuzDireccional3->setDirection(0, 1, 0);
+			mLuzDireccional3->setDiffuseColour(1, 0, 0);
+
+			Ogre::Light *mLuzDireccional4;
+			mLuzDireccional4 = scene->getSceneMgr()->createLight("LuzDireccional4");
+			mLuzDireccional4->setType(Ogre::Light::LT_DIRECTIONAL);
+			mLuzDireccional4->setDirection(0, 0, 1);
+			mLuzDireccional4->setDiffuseColour(1, 0, 0);
+			//////////////////////////////////////////////////////////////////////
+			Ogre::Light *mLuzDireccional5;
+			mLuzDireccional5 = scene->getSceneMgr()->createLight("LuzDireccional5");
+			mLuzDireccional5->setType(Ogre::Light::LT_DIRECTIONAL);
+			mLuzDireccional5->setDirection(1, 1, 0);
+			mLuzDireccional5->setDiffuseColour(1, 0, 0);
+
+			Ogre::Light *mLuzDireccional6;
+			mLuzDireccional6 = scene->getSceneMgr()->createLight("LuzDireccional6");
+			mLuzDireccional6->setType(Ogre::Light::LT_DIRECTIONAL);
+			mLuzDireccional6->setDirection(1, 0, 1);
+			mLuzDireccional6->setDiffuseColour(1, 0, 0);
+
+			///////////////////////////////////////////////////////////////////////
+			
+			Ogre::Light *mLuzDireccional8;
+			mLuzDireccional8 = scene->getSceneMgr()->createLight("LuzDireccional8");
+			mLuzDireccional8->setType(Ogre::Light::LT_DIRECTIONAL);
+			mLuzDireccional8->setDirection(0, 1, 1);
+			mLuzDireccional8->setDiffuseColour(1, 1, 0);
+
+		/*	Ogre::Light *mLuzDireccional9;
+			mLuzDireccional9 = scene->getSceneMgr()->createLight("LuzDireccional9");
+			mLuzDireccional9->setType(Ogre::Light::LT_DIRECTIONAL);
+			mLuzDireccional9->setDirection(0, 0, 0);
+			mLuzDireccional9->setDiffuseColour(0, 255, 0);
+			*/
+			//NOTA:mLuzPuntual->setPosition(0, 0, 0); eso para la posición si es que vale de algo
+			//P.D: la luz ambiente ni funciona y hay otras que tampoco, esta es la unica que he conseguido que se note
+			//P.D2: si descomentas la luz direccional 9 el suelo se colorea pero tambien todo con un azul tochisimo que se ve incluso peor aun coloreado
+
 			_activeScene = scene;
 		}
 		// Si se añade NULL ponemos la escena dummy.
