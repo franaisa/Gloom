@@ -107,8 +107,8 @@ namespace Graphics
 		// Además de la luz ambiente creamos una luz direccional que 
 		// hace que se vean mejor los volúmenes de las entidades.
 		_directionalLight = _sceneMgr->createLight("directional light");
-		_directionalLight->setDiffuseColour(.5f,.5f,.5f);
-		_directionalLight->setSpecularColour(.5f,.5f,.5f);
+		_directionalLight->setDiffuseColour(200.5f,.5f,200.5f);
+		_directionalLight->setSpecularColour(200.9f,.5f,200.9f);
 		_directionalLight->setType(Ogre::Light::LT_DIRECTIONAL);
 		_directionalLight->setDirection(0, -150, 0);
 		_directionalLight->setType(Ogre::Light::LT_POINT);
