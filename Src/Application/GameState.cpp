@@ -33,13 +33,21 @@ namespace Application {
 
 	bool CGameState::init() 
 	{
+		// Ejecutamos la inicialización de la clase padre
+		// En este caso no hace nada, solo retorna true
 		CApplicationState::init();
+
+		// INICIALIZACIÓN DE LA FÍSICA
+		// ---------------------------
 
 		// TODO: desactivar colisiones entre los grupos 0 y 1
 		//Physics::CServer::getSingletonPtr()->setGroupCollisions(0, 1, false);
 
 		// TODO: Crear la escena física usando el servidor de física
 		Physics::CServer::getSingletonPtr()->createScene();
+
+		// INICIALIZACIÓN DE LA LÓGICA
+		// ---------------------------
 
 		// Cargamos el archivo con las definiciones de las entidades del nivel.
 		if (!Logic::CEntityFactory::getSingletonPtr()->loadBluePrints("blueprints.txt"))
@@ -49,26 +57,33 @@ namespace Application {
 		if (!Logic::CServer::getSingletonPtr()->loadLevel("map.txt"))
 			return false;
 
+		// INICIALIZACIÓN DEL GUI
+		// ----------------------
+
+		// Ahora mismo la implementación está totalmente acoplada a CEGUI
+		// Hay que desacoplarlo utilizando un nuevo paquete donde se abstraiga
+		// el subsistema utilizado
+
 		// Cargamos la ventana que muestra el tiempo de juego transcurrido.
 		CEGUI::WindowManager::getSingletonPtr()->loadWindowLayout("Time.layout");
 		_timeWindow = CEGUI::WindowManager::getSingleton().getWindow("Time");
 
-
 		return true;
-
 	} // init
 
 	//--------------------------------------------------------
 
 	void CGameState::release() 
 	{
+		// Liberar los recursos reservados para la escena y las
+		// clases construidas a partir de los blueprints
 		Logic::CServer::getSingletonPtr()->unLoadLevel();
-
 		Logic::CEntityFactory::getSingletonPtr()->unloadBluePrints();
 
-		// TODO: Liberar la escena física usando el motor de física
+		// Liberar la escena física usando el motor de física
 		Physics::CServer::getSingletonPtr()->destroyScene();
 
+		// Llamar al método padre por si acaso tiene que hacer algo
 		CApplicationState::release();
 
 	} // release

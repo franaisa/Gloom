@@ -135,6 +135,7 @@ namespace Application {
 
 	void C3DApplication::tick(unsigned int msecs) 
 	{
+		// Ejecutar el tick del estado
 		CBaseApplication::tick(msecs);
 
 		GUI::CInputManager::getSingletonPtr()->tick();

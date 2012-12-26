@@ -102,8 +102,8 @@
     <ClCompile Include="..\..\Src\Application\3DApplication.cpp" />
     <ClCompile Include="..\..\Src\Application\BaseApplication.cpp" />
     <ClCompile Include="..\..\Src\Application\Clock.cpp" />
-    <ClCompile Include="..\..\Src\Application\Galeon.cpp" />
-    <ClCompile Include="..\..\Src\Application\GaleonApplication.cpp" />
+    <ClCompile Include="..\..\Src\Application\Gloom.cpp" />
+    <ClCompile Include="..\..\Src\Application\GloomApplication.cpp" />
     <ClCompile Include="..\..\Src\Application\GameState.cpp" />
     <ClCompile Include="..\..\Src\Application\MenuState.cpp" />
     <ClCompile Include="..\..\Src\Application\OgreClock.cpp" />
@@ -117,7 +117,7 @@
     <ClInclude Include="..\..\Src\Application\Clock.h" />
     <ClInclude Include="..\..\Src\Application\Documentation.h" />
     <ClInclude Include="..\..\Src\Application\ExitState.h" />
-    <ClInclude Include="..\..\Src\Application\GaleonApplication.h" />
+    <ClInclude Include="..\..\Src\Application\GloomApplication.h" />
     <ClInclude Include="..\..\Src\Application\GameState.h" />
     <ClInclude Include="..\..\Src\Application\MenuState.h" />
     <ClInclude Include="..\..\Src\Application\OgreClock.h" />
