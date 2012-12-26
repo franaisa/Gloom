@@ -15,8 +15,8 @@ basadas en Ogre. Esta clase maneja la ejecución de todo el juego.
 @date Septiembre, 2010
  */
 
-#ifndef __Application_GaleonApplication_H
-#define __Application_GaleonApplication_H
+#ifndef __Application_GloomApplication_H
+#define __Application_GloomApplication_H
 
 #include "3DApplication.h"
 #include "GUI/InputManager.h"
@@ -38,7 +38,7 @@ namespace Ogre
 namespace Application 
 {
 	/**
-	Clase CGaleonApplication, que extiende C3DApplication para añadir
+	Clase CGloomApplication, que extiende C3DApplication para añadir
 	los estados concretos que se desean crear en la partida.
 
 	@ingroup applicationGroup
@@ -72,8 +72,8 @@ namespace Application
 		*/
 		virtual void release();
 
-	}; // class GaleonApplication
+	}; // class GloomApplication
 
 } // namespace Application
 
-#endif // __Application_GaleonApplication_H
+#endif // __Application_GloomApplication_H

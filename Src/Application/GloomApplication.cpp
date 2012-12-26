@@ -26,14 +26,14 @@ namespace Application {
 	CGloomApplication::CGloomApplication() : C3DApplication()
 	{
 
-	} // CGaleonApplication
+	} // CGloomApplication
 
 	//--------------------------------------------------------
 
 	CGloomApplication::~CGloomApplication()
 	{
 
-	} // ~CGaleonApplication
+	} // ~CGloomApplication
 
 	//--------------------------------------------------------
 
