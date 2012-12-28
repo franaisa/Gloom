@@ -101,7 +101,7 @@ namespace Graphics
 		_viewport = BaseSubsystems::CServer::getSingletonPtr()->getRenderWindow()
 						->addViewport(_camera->getCamera());
 		_viewport->setBackgroundColour(Ogre::ColourValue::Black);
-
+		
 		_sceneMgr->setAmbientLight(Ogre::ColourValue(.9f,.9f,.9f));
 
 		// Además de la luz ambiente creamos una luz direccional que 

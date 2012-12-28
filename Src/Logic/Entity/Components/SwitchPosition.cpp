@@ -61,7 +61,7 @@ namespace Logic
 	bool CSwitchPosition::accept(const TMessage &message)
 	{
 		// TODO: recibir mensajes de tipo SWITCH
-		return false;
+		return message._type == TMessageType::SWITCH;
 
 	} // accept
 	
@@ -75,6 +75,7 @@ namespace Logic
 			// TODO: procesar mensajes de tipo SWITCH
 			// Almacenar en _targetPosition la posición objetivo 
 			// (_position[0]) ó position[1])
+			//_targetPosition = _position
 
 			break;
 		}

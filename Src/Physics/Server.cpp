@@ -42,7 +42,7 @@ CServer::CServer() : _cudaContextManager(NULL), _scene(NULL)
 	_allocator = new PxDefaultAllocator();
 
 	// TODO: crear gestor de colisiones
-	_collisionManager = NULL;
+	_collisionManager = new CCollisionManager();
 
 	// TODO: Crear PxFoundation
 	// Usar nuestro gestor de memoria y nuestro gestor de errores
@@ -80,7 +80,7 @@ CServer::CServer() : _cudaContextManager(NULL), _scene(NULL)
 #endif
 
 	// TODO: crear controller manager (PxCreateControllerManager)
-	_controllerManager = NULL;
+	_controllerManager = PxCreateControllerManager(*_foundation);
 
 	// TODO: inicializar el módulo PxCooking
 	// Es necesario para cocinar mallas y para deserializar actores a partir de ficheros RepX
@@ -140,7 +140,10 @@ CServer::~CServer()
 	}
 	
 	// TODO: Liberar el controller manager (release)
-
+	if(_controllerManager) {
+		_controllerManager->release();
+		_controllerManager = NULL;
+	}
 
 	if (_cudaContextManager) {
 		_cudaContextManager->release();
@@ -166,6 +169,10 @@ CServer::~CServer()
 	}
 
 	// TODO: destruir gestor de colisiones
+	if(_collisionManager) {
+		delete _collisionManager;
+		_collisionManager = NULL;
+	}
 	
 	if (_allocator) {
 		delete _allocator;
@@ -213,6 +220,7 @@ void CServer::createScene ()
 
 	// TODO: establecer el gestor de colisiones
 	// Asignar el gestor de colisiones al atributo simulationEventCallback
+	sceneDesc.simulationEventCallback = _collisionManager;
 
 	// Establecer un gestor de tareas por CPU
 	if (!sceneDesc.cpuDispatcher) {
@@ -293,6 +301,7 @@ PxRigidStatic* CServer::createPlane(const Vector3 &point, const Vector3 &normal,
 	// TODO: enlazar el actor físico al componente lógico
 	// Usamos el atributo userData del actor para guardar la dirección del componente
 	// lógico encargado de la física. 
+	actor->userData = (void*) component;
 
 	// TODO: Establecer el grupo de colisión
 	// Usar la función PxSetGroup
@@ -332,10 +341,16 @@ PxRigidStatic* CServer::createStaticBox(const Vector3 &position, const Vector3 &
 	// TODO: Transformar el objeto estático en un trigger si es necesario
 	// 1. Obtener la primera shape del actor
 	// 2. Activar el flag PxShapeFlag::eTRIGGER_SHAPE
+	if(trigger) {
+		PxShape *shape;
+		actor->getShapes(&shape, 1, 0);
+		shape->setFlag(PxShapeFlag::eTRIGGER_SHAPE, true);
+	}
 
 	// TODO: enlazar el actor físico al componente lógico
 	// Usamos el atributo userData del actor para guardar la dirección del componente
-	// lógico encargado de la física. 
+	// lógico encargado de la física.
+	actor->userData = (void*) component;
 
 	// TODO: Establecer el grupo de colisión
 	// Usar la función PxSetGroup
@@ -385,7 +400,7 @@ PxRigidDynamic* CServer::createDynamicBox(const Vector3 &position, const Vector3
 	// TODO: enlazar el actor físico al componente lógico
 	// Usamos el atributo userData del actor para guardar la dirección del componente
 	// lógico encargado de la física. 
-
+	actor->userData = (void*) component;
 
 	// TODO: Establecer el grupo de colisión
 	// Usar la función PxSetGroup
@@ -428,7 +443,7 @@ PxRigidActor* CServer::createFromFile(const std::string &file, int group, const 
 	
 	// TODO: enlazar el actor físico al componente lógico
 	// Usamos el atributo userData del actor para guardar la dirección del componente
-	// lógico encargado de la física.
+	// lógico encargado de la física. 
 	actor->userData = (void*) component;
 
 	// TODO: Establecer el grupo de colisión 
@@ -517,24 +532,35 @@ PxCapsuleController* CServer::createCapsuleController(const Vector3 &position, f
 	// TODO: transformar entre distemas de coordenadas lógico y de PhysX
 	// 1. offsetY = altura / 2 + radio
 	// 2. Transformar entre vector lógico y vector de PhysX
+	float offsetY = height / 2.0f + radius;
+	PxExtendedVec3 p = Vector3ToPxExtendedVec3(position) + PxExtendedVec3(0, offsetY, 0);
 
 	// TODO: crear descriptor de controller de tipo cápsula (PxCapsuleControllerDesc)
 	// - usar material por defecto del servidor (_defaultMaterial)
 	// - usar climbingMode PxCapsuleClimbingMode::eEASY
+	PxCapsuleControllerDesc desc;
+	desc.height = height;
+	desc.radius = radius;
+	desc.material = _defaultMaterial;
+	desc.climbingMode = PxCapsuleClimbingMode::eEASY;
+	desc.position = p;
 
 	// TODO: asociar el gestor de colisiones al controller
 	// Asignar el gestor de colisiones al atributo callback del descriptor del controller
+	desc.callback = _collisionManager;
 
 	// TODO: enlazar el controller físico al componente lógico
 	// Usamos el atributo userData del descriptor del controller para guardar la 
-	// dirección del componente lógico encargado de la física. 
+	// dirección del componente lógico encargado de la física.
+	desc.userData = (void*) component;
 
 	// TODO: crear controller a partir del _controllerManager
-	PxCapsuleController *controller = NULL;
+	PxCapsuleController *controller = (PxCapsuleController*) _controllerManager->createController(*_physics, _scene, desc);
 
 	// TODO: enlazar el actor físico del controller al componente lógico
 	// Usamos el atributo userData del actor para guardar la dirección del componente
 	// lógico encargado de la física (no es automático)
+	controller->getActor()->userData = (void*) component;
 
 	return controller;
 }
@@ -551,7 +577,8 @@ unsigned CServer::moveController(PxController *controller, const Vector3 &moveme
 	// 3. PhysX espera el tipo transcurrido en segundos
 	// 4. Colisionar contra cualquier objeto (no usar filtros)
 	// 5. Devolver flags de colisiones
-	return 0;
+	PxControllerFilters filters;
+	return controller->move( Vector3ToPxVec3(movement), 0.01, msecs/1000.0f, filters );
 }
 
 //--------------------------------------------------------
@@ -563,8 +590,11 @@ Vector3 CServer::getControllerPosition(const PxCapsuleController *controller)
 	// TODO: devolver posición del controller
 	// Transformar entre coordenadas de PhysX y coordenadas lógicas
 	//	- offsetY = altura del controller / 2 + radio del controller
-
-	return Vector3(0,0,0);
+	float offsetY = controller->getHeight() / 2 + controller->getRadius();
+	PxExtendedVec3 pos = controller->getPosition();
+	pos -= PxExtendedVec3(0, offsetY, 0);
+	
+	return PxExtendedVec3ToVector3(pos);
 }
 
 //--------------------------------------------------------

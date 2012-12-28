@@ -89,6 +89,14 @@ void CCollisionManager::onTrigger(PxTriggerPair *pairs, PxU32 count)
 		// 1. Obtener el componente lógico (IPhysics) asociado al trigger físico.
 		// 2. Obtener el componente lógico (IPhysics) asociado a la otra entidad física.
 		// 3. Notificar a ambos componentes la colisión
+		IPhysics *triggerComponent = (IPhysics *) pairs[i].triggerShape->getActor().userData;
+		assert(triggerComponent);
+
+		IPhysics *otherComponent = (IPhysics *) pairs[i].otherShape->getActor().userData;
+		assert(otherComponent);
+
+		triggerComponent->onTrigger(otherComponent, enter);
+		otherComponent->onTrigger(triggerComponent, enter);
 	}	
 }
 
@@ -99,6 +107,8 @@ void CCollisionManager::onShapeHit(const PxControllerShapeHit &hit)
 	// TODO: notificar al componente físico la colisión con una entidad
 	// 1. Obtener el puntero al componente físico (CPhysicController)
 	// 2. Notificar la colisión al componente físico
+	CPhysicController * component = (CPhysicController *) hit.controller->getUserData();
+	component->onShapeHit(hit);
 }
 
 //--------------------------------------------------

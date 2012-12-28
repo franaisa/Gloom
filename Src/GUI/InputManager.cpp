@@ -203,7 +203,7 @@ namespace GUI{
 			it = _keyListeners.begin();
 			for (; it != _keyListeners.end(); it++) 
 			{
-				if ((*it)->keyPressed(ois2galeon(e)))
+				if ((*it)->keyPressed(ois2gloom(e)))
 				  return true;
 			}
 		}
@@ -222,7 +222,7 @@ namespace GUI{
 			it = _keyListeners.begin();
 			for (; it != _keyListeners.end(); it++) 
 			{
-				if ((*it)->keyReleased(ois2galeon(e)))
+				if ((*it)->keyReleased(ois2gloom(e)))
 				  return true;
 			}
 		}
@@ -233,7 +233,7 @@ namespace GUI{
 
 	//--------------------------------------------------------
 
-	TKey CInputManager::ois2galeon(const OIS::KeyEvent &e)
+	TKey CInputManager::ois2gloom(const OIS::KeyEvent &e)
 	{
 		unsigned int text = e.text;
 		//Las teclas del numpad no vienen con el texto. Lo metemos a mano.
