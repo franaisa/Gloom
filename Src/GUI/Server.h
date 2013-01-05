@@ -12,6 +12,11 @@ la gestión de la interfaz con el usuario (entrada de periféricos, CEGui...).
 #ifndef __GUI_Server_H
 #define __GUI_Server_H
 
+#include <string>
+#include <map>
+#include <set>
+#include <vector>
+
 #include "InputManager.h"
 
 // Predeclaración de clases para ahorrar tiempo de compilación
@@ -28,7 +33,19 @@ namespace GUI
 namespace CEGUI
 {
 	class System;
+	class Window;
 }
+
+namespace Application {
+	class CApplicationState;
+}
+
+namespace GUI {
+	class GUIDescriptor;
+	class GUIEventArgs;
+}
+
+typedef std::map<Application::CApplicationState*, std::map<std::string, GUI::GUIDescriptor*> > StateLayoutTable;
 
 // Declaración de la clase
 namespace GUI
@@ -134,6 +151,23 @@ namespace GUI
 		*/
 		bool mouseReleased(const CMouseState &mouseState);
 
+		/***************************************************************
+		Métodos para la configuración del GUI
+		***************************************************************/
+
+		void addLayoutToState(Application::CApplicationState* state, const std::string& layoutName);
+
+		void addButtonToLayout( Application::CApplicationState* state, const std::string& layoutName, 
+			const std::string& buttonName, bool (*buttonFunction)(const GUIEventArgs&) );
+
+		bool activateGUI(Application::CApplicationState* state, const std::string& layoutName);
+		void activateMouseCursor();
+
+		void deactivateGUI();
+		void deactivateMouseCursor();
+
+		void setText(const std::string& msg);
+
 	protected:
 
 		/**
@@ -171,6 +205,19 @@ namespace GUI
 		Sistema de la interfaz gráfica de usuario CEGUI.
 		*/
 		CEGUI::System *_GUISystem;
+
+		/**
+		Puntero a la ventana CEGUI que esta actualmente siendo renderizada.
+		Si no se esta renderizando ninguna interfaz de usuario es NULL
+		*/
+		CEGUI::Window* _currentWindow;
+
+		// Table to hold pointers to state and their respective possible layouts
+		// Once a layout is selected, it is loaded using the name of the layout and
+		// the configuration set when the state was fired.
+		// Note that this implies that layout names should match .layout file names.
+		// The same goes for button names.
+		StateLayoutTable _layoutTable;
 
 	private:
 		/**

@@ -25,9 +25,9 @@ Contiene la implementación del estado de juego.
 
 #include "Physics/Server.h"
 
-#include <CEGUISystem.h>
-#include <CEGUIWindowManager.h>
-#include <CEGUIWindow.h>
+//#include <CEGUISystem.h>
+//#include <CEGUIWindowManager.h>
+//#include <CEGUIWindow.h>
 
 namespace Application {
 
@@ -65,8 +65,10 @@ namespace Application {
 		// el subsistema utilizado
 
 		// Cargamos la ventana que muestra el tiempo de juego transcurrido.
-		CEGUI::WindowManager::getSingletonPtr()->loadWindowLayout("Time.layout");
-		_timeWindow = CEGUI::WindowManager::getSingleton().getWindow("Time");
+		//CEGUI::WindowManager::getSingletonPtr()->loadWindowLayout("Time.layout");
+		//_timeWindow = CEGUI::WindowManager::getSingleton().getWindow("Time");
+		
+		GUI::CServer::getSingletonPtr()->addLayoutToState(this, "Time");
 
 		return true;
 	} // init
@@ -101,9 +103,11 @@ namespace Application {
 		GUI::CServer::getSingletonPtr()->getPlayerController()->activate();
 
 		// Activamos la ventana que nos muestra el tiempo transcurrido.
-		CEGUI::System::getSingletonPtr()->setGUISheet(_timeWindow);
-		_timeWindow->setVisible(true);
-		_timeWindow->activate();
+		//CEGUI::System::getSingletonPtr()->setGUISheet(_timeWindow);
+		//_timeWindow->setVisible(true);
+		//_timeWindow->activate();
+
+		GUI::CServer::getSingletonPtr()->activateGUI(this, "Time");
 
 	} // activate
 
@@ -112,8 +116,9 @@ namespace Application {
 	void CGameState::deactivate() 
 	{
 		// Desactivamos la ventana de tiempo.
-		_timeWindow->deactivate();
-		_timeWindow->setVisible(false);
+		//_timeWindow->deactivate();
+		//_timeWindow->setVisible(false);
+		GUI::CServer::getSingletonPtr()->deactivateGUI();
 
 		// Desactivamos la clase que procesa eventos de entrada para 
 		// controlar al jugador.
@@ -142,7 +147,7 @@ namespace Application {
 		
 		std::stringstream text;
 		text << "Time: " << _time/1000;
-		_timeWindow->setText(text.str());
+		GUI::CServer::getSingletonPtr()->setText(text.str());
 
 	} // tick
 

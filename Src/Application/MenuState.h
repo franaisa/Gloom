@@ -23,13 +23,17 @@ Contiene la declaración del estado de menú.
 namespace Application 
 {
 	class CBaseApplication;
-}
+};
 
 namespace CEGUI
 {
 	class EventArgs;
 	class Window;
-}
+};
+
+namespace GUI {
+	class GUIEventArgs;
+};
 
 namespace Application 
 {
@@ -174,6 +178,8 @@ namespace Application
 		*/
 		bool startReleased(const CEGUI::EventArgs& e);
 
+		//bool CMenuState::startReleased(const GUI::GUIEventArgs& e);
+
 		/**
 		Función que se quiere realizar cuando se pulse el botón exit.
 		Simplemente termina la aplicación.
@@ -182,6 +188,6 @@ namespace Application
 
 	}; // CMenuState
 
-} // namespace Application
+}; // namespace Application
 
 #endif //  __Application_MenuState_H
