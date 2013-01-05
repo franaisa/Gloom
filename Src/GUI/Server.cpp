@@ -41,6 +41,16 @@ namespace GUI {
 	CServer::~CServer()
 	{
 		_instance = 0;
+		_currentWindow = NULL;
+
+		// Dealloc the memory reserved for the tables
+		StateLayoutTable::const_iterator it = _layoutTable.begin();
+		std::map<std::string, GUIDescriptor*>::const_iterator it2;
+		for(; it != _layoutTable.end(); ++it) {
+			for(it2 = it->second.begin(); it2 != it->second.end(); ++it2) {
+				delete it2->second;
+			}
+		}
 
 	} // ~CServer
 	
@@ -195,35 +205,40 @@ namespace GUI {
 
 	} // mouseReleased
 
-	//_________________________________________________________________________________________________________________________
+	//________________________________________________________________________
 
-	// If the state doesn't exist or the layout name doesn't exist, it creates a new slot.
-	// CAREFUL! If they do exist, they will be overwrited and their pointers will be lost,
-	// causing to leak memory.
-	void CServer::addLayoutToState(Application::CApplicationState* state, const std::string& layoutName) {
-		// Find the table associated with "state" where all the information about the different layout is stored
-		// Then find the table with that layoutName and create its descriptor (which takes care of window initialization etc)
+	void CServer::addLayoutToState(Application::CApplicationState* state, 
+		const std::string& layoutName) {
+		
+		// Find the table associated with "state" where all the information 
+		// about the different layout is stored. Then find the table with that 
+		// layoutName and create its descriptor (which takes care of window 
+		// initialization etc)
 		(_layoutTable[state])[layoutName] = new GUIDescriptor(layoutName);
 	} // addLayoutToState
 
-	//_________________________________________________________________________________________________________________________
+	//________________________________________________________________________
 
-	void CServer::addButtonToLayout( Application::CApplicationState* state, const std::string& layoutName, 
-									 const std::string& buttonName, bool (*buttonFunction)(const GUIEventArgs&) ) {
+	void CServer::addButtonToLayout( Application::CApplicationState* state, 
+		const std::string& layoutName,  const std::string& buttonName, 
+		bool (*buttonFunction)(const GUIEventArgs&) ) {
 
 		
 	} // addButtonToLayout
 
-	//_________________________________________________________________________________________________________________________
+	//________________________________________________________________________
 
-	bool CServer::activateGUI(Application::CApplicationState* state, const std::string& layoutName) {
+	bool CServer::activateGUI(Application::CApplicationState* state, 
+		const std::string& layoutName) {
+		
 		// Find the layouts table associated to "state"
 		StateLayoutTable::const_iterator it = _layoutTable.find(state);
 
 		// If there is such a state in our table
 		if(it != _layoutTable.end()) {
 			// Find the layout given in "layoutName"
-			std::map<std::string, GUIDescriptor*>::const_iterator it2 = it->second.find(layoutName);
+			std::map<std::string, GUIDescriptor*>::const_iterator it2 = 
+				it->second.find(layoutName);
 
 			// If there is such a layout name
 			if(it2 != it->second.end()) {
@@ -236,13 +251,14 @@ namespace GUI {
 		return false;
 	} // activateGUI
 
-	//_________________________________________________________________________________________________________________________
+	//________________________________________________________________________
 
 	void CServer::activateMouseCursor() {
+		// Show mouse cursor
 		CEGUI::MouseCursor::getSingleton().show();
 	} // activateMouseCursor
 
-	//_________________________________________________________________________________________________________________________
+	//________________________________________________________________________
 
 	void CServer::deactivateGUI() {
 		_currentWindow->deactivate();
@@ -250,14 +266,14 @@ namespace GUI {
 		_currentWindow = NULL;
 	} // deactivateGUI
 
-	//_________________________________________________________________________________________________________________________
+	//________________________________________________________________________
 
 	void CServer::deactivateMouseCursor() {
 		// Desactivamos la ventana GUI con el menú y el ratón.
 		CEGUI::MouseCursor::getSingleton().hide();
 	} // deactivateMouseCursor
 
-	//_________________________________________________________________________________________________________________________
+	//________________________________________________________________________
 
 	void CServer::setText(const std::string& msg) {
 		_currentWindow->setText(msg.c_str());
