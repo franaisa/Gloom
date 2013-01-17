@@ -64,8 +64,7 @@ bool CPhysicController::spawn(CEntity* entity, CMap *map, const Map::CEntity *en
 
 bool CPhysicController::accept(const TMessage &message)
 {
-	// TODO: recibir mensajes de tipo AVATAR_WALK
-	return false;
+	return message._type == Message::AVATAR_WALK;
 } 
 
 //---------------------------------------------------------
@@ -74,9 +73,12 @@ void CPhysicController::process(const TMessage &message)
 {
 	switch(message._type)
 	{
-		// TODO: Procesar mensajes de tipo AVATAR_WALK
-		// Anotamos el vector de desplazamiento recibido en el mensaje en el atributo
-		// privado _movement para aplicar el movimiento en el tick
+	case Message::AVATAR_WALK:
+		// Anotamos el vector de desplazamiento para usarlo posteriormente en 
+		// el método tick. De esa forma, si recibimos varios mensajes AVATAR_WALK
+		// en el mismo ciclo sólo tendremos en cuenta el último.
+		_movement = message._vector3;
+		break;
 	}
 
 } 
@@ -88,20 +90,22 @@ void CPhysicController::tick(unsigned int msecs)
 	// Llamar al método de la clase padre (IMPORTANTE).
 	IComponent::tick(msecs);
 
-	// TODO: actualizar la posición de la entidad lógica
-	// 1. Recuperar la posición del controller físico usando el servidor
-	// 2. Actualizar la posición de la entidad física
+	// Actualizar la posición y orientación de la entidad lógica usando la 
+	// información proporcionada por el motor de física	
+	_entity->setPosition(_server->getControllerPosition(_controller));
 
-	// TODO: simular la gravedad 
-	// Si el controller está cayendo sumar el vector (0, -1, 0) al desplazamiento
+	// Si estamos cayendo modificar el vector de desplazamiento para simular el 
+	// efecto de la gravedad. Lo hacemos de manera sencilla y pero poco realista.
+	if (_falling) {
+		_movement += Vector3(0,-1,0);
+	}
 
-	// TODO: pedir al controller que se mueva
-	// 1. Mover el controller usando el servidor de física
-	
-	// TODO: comprobar si el controller toca el suelo o está cayendo
-	// Comprobar si está activo el flag PxControllerFlag::eCOLLISION_DOWN en la
-	// máscara de bits que devuelve el método que mueve el controller, y actualizar
-	// el valor de _falling
+	// Intentamos mover el controller a la posición recibida en el último mensaje 
+	// de tipo AVATAR_WALK. 
+	unsigned flags = _server->moveController(_controller, _movement, msecs);
+
+	// Actualizamos el flag que indica si estamos cayendo
+	_falling =  !(flags & PxControllerFlag::eCOLLISION_DOWN);
 
 	// Ponemos el movimiento a cero
 	_movement = Vector3::ZERO;
@@ -123,10 +127,16 @@ PxCapsuleController* CPhysicController::createController(const Map::CEntity *ent
 		assert(shape == "capsule");
 	}
 
-	// TODO: Crear el controller
-	// 1. Leer radio y altura de la capsula
-	// 2. Crear el controller usando el servidor de física (pasar como componente this)
-	return NULL;
+	// Leer el radio de la cápsula
+	assert(entityInfo->hasAttribute("physic_radius"));
+	float radius = entityInfo->getFloatAttribute("physic_radius");
+
+	// Leer la altura de la cápsula
+	assert(entityInfo->hasAttribute("physic_height"));
+	float height = entityInfo->getFloatAttribute("physic_height");
+
+	// Crear el controller de tipo cápsula
+	return _server->createCapsuleController(position, radius, height, this);
 } 
 
 //---------------------------------------------------------
@@ -140,11 +150,17 @@ void CPhysicController::onTrigger(IPhysics *otherComponent, bool enter)
 
 void CPhysicController::onShapeHit (const PxControllerShapeHit &hit)
 {
-	// TODO: aplicar una fuerza a la entidad dinámica contra la que chocamos
-	// 1. Obtener el actor del objeto contra el que hemos colisionado
-	// 2. Si es un actor estático no hacemos nada (usar método de PxActor para comprobar)
-	// 3. Si es un actor cinemático no hacemos nada (usar método de CServer para comprobar)
-	// 4. En otro caso aplicamos una fuerza a la entidad en la dirección del golpe
+	// Si chocamos contra una entidad estática no hacemos nada
+	PxRigidDynamic* actor = hit.shape->getActor().isRigidDynamic();
+	if(!actor)
+		return;
+
+	// Si chocamos contra una entidad cinemática no hacemos nada
+	if (_server->isKinematic(actor))
+		return;
+	
+	// Aplicar una fuerza a la entidad en la dirección del movimiento
+	actor->addForce(hit.dir * hit.length * 1000.0f);
 }
 
 //---------------------------------------------------------

@@ -9,6 +9,9 @@ build.xml
 # Unnecessary folders 
 # *****************************************************************************************
 
+/CELayoutEditor 0.7.1/
+
+
 # Ignore dependencies
 /dependencies/
 
@@ -114,4 +117,6 @@ build.xml
 
 # Bring back maps (which contains the two files that we are looking for)
 !/Exes/media/maps/
+
+
 

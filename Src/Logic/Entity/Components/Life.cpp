@@ -28,8 +28,8 @@ namespace Logic
 		if(!IComponent::spawn(entity,map,entityInfo))
 			return false;
 
-		// TODO: 1. Leer atributo "life" del fichero de mapa y almacenar el valor
-		// en el atributo privado _life
+		if(entityInfo->hasAttribute("life"))
+			_life = entityInfo->getFloatAttribute("life");
 
 
 		return true;
@@ -40,9 +40,7 @@ namespace Logic
 
 	bool CLife::accept(const TMessage &message)
 	{
-		
-		// TODO: 2. Aceptar mensajes del tipo DAMAGED
-		return false;
+		return message._type == Message::DAMAGED;
 
 	} // accept
 	
@@ -52,9 +50,24 @@ namespace Logic
 	{
 		switch(message._type)
 		{
-			// TODO: 3. Procesar mensajes de tipo DAMAGED
-			// Disminuir la vida y mostrar un mensaje de herido en la consola.
-			// Si el jugador pierde toda la vida volver al estado de juego "menu".
+		case Message::DAMAGED:
+			{
+				// Disminuir la vida de la entidad
+				
+				_life -= message._float;
+				printf("\nAh!, ya solo me queda %f de vida", _life);
+
+				// Si han matado al jugador salir de la partida
+				/*
+				if ((_life <= 0) && (_entity->isPlayer())) {
+					Application::CBaseApplication::getSingletonPtr()->setState("menu");
+				}
+				*/
+				// @todo Poner la animación de herido.
+				// @todo Si la vida es menor que 0 poner animación de morir.
+
+			}
+			break;
 		}
 
 	} // process

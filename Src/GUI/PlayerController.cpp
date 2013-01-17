@@ -146,6 +146,31 @@ namespace GUI {
 		
 	bool CPlayerController::mousePressed(const CMouseState &mouseState)
 	{
+		if(_controlledAvatar)
+		{
+			Logic::TMessage m;
+			m._type = Logic::Message::CONTROL;
+			switch(mouseState.button)
+			{
+			case GUI::Button::LEFT:
+				m._string = "LeftClick";
+				break;
+			case GUI::Button::RIGHT:
+				m._string = "RightClick";
+				break;
+			case GUI::Button::MIDDLE:
+				m._string = "MiddleClick";
+				break;
+			case GUI::Button::BUTTON_3:
+				m._string = "Button3Click";
+				break;
+			
+			default:
+				return false;
+			}
+			_controlledAvatar->emitMessage(m);
+			return true;
+		}
 		return false;
 
 	} // mousePressed

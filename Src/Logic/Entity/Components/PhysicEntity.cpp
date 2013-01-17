@@ -66,8 +66,7 @@ bool CPhysicEntity::spawn(CEntity *entity, CMap *map, const Map::CEntity *entity
 
 bool CPhysicEntity::accept(const TMessage &message)
 {
-	// TODO: aceptar mensajes de tipo KINEMATIC_MOVE
-	return false;
+	return message._type == Message::KINEMATIC_MOVE;
 }
 
 //---------------------------------------------------------
@@ -75,11 +74,11 @@ bool CPhysicEntity::accept(const TMessage &message)
 void CPhysicEntity::process(const TMessage &message)
 {
 	switch(message._type) {
-	// TODO: procesar mensaje de tipo KINEMATIC_MOVE
-	// Acumular el vector de desplazamiento recibido en el mensaje en el 
-	// atributo privado _movement para posteriormente utilizarlo en el
-	// método tick.
-
+	case Message::KINEMATIC_MOVE:
+		// Acumulamos el vector de desplazamiento para usarlo posteriormente en 
+		// el método tick.
+		_movement += message._vector3;
+		break;
 	}
 }
 
@@ -95,16 +94,16 @@ void CPhysicEntity::tick(unsigned int msecs)
 	if (!dinActor) 
 		return;
 
-	// TODO: actualizar la posición y orientación de la entidad lógica
-	// usando la información proporcionada por el motor de física
-	Matrix4 transform = _server->getActorTransform(_actor);
-	_entity->setTransform(transform);
+	// Actualizar la posición y la orientación de la entidad lógica usando la 
+	// información proporcionada por el motor de física	
+	_entity->setTransform(_server->getActorTransform(dinActor));
 
-	// TODO: mover objetos cinemáticos de acuerdo a la lógica
-	// 1. Comprobar si el componente representa a un objeto cinemático usando
-	//    la interfaz del servidor de física
-	// 2. Mover el objeto usando la interfaz del servidor de física
-	// 3. Poner el atributo _movement a cero para el siguiente tick
+	// Si el objeto físico es cinemático intentamos moverlo de acuerdo 
+	// a los mensajes KINEMATIC_MOVE recibidos 
+	if (_server->isKinematic(dinActor)) {
+		_server->moveKinematicActor(dinActor, _movement);
+		_movement = Vector3::ZERO;
+	} 
 }
 
 //---------------------------------------------------------
@@ -134,16 +133,16 @@ PxRigidStatic* CPhysicEntity::createPlane(const Map::CEntity *entityInfo)
 	// La posición de la entidad es un punto del plano
 	const Vector3 point = _entity->getPosition();
 	
-	// TODO: Leer el vector normal al plano del fichero de mapa
+	// Leer el vector normal al plano
+	assert(entityInfo->hasAttribute("physic_normal"));
 	const Vector3 normal = entityInfo->getVector3Attribute("physic_normal");
 
-	// TODO: leer atributo de grupo de colisión (por defecto 0)
+	// Leer el grupo de colisión (por defecto grupo 0)
 	int group = 0;
 	if (entityInfo->hasAttribute("physic_group"))
 		group = entityInfo->getIntAttribute("physic_group");
  
-	// TODO: Usar la interfaz del servidor de física para crear un plano estático
-	// Pasar como componente this
+	// Crear el plano
 	return _server->createPlane(point, normal, group, this);
 }
 
@@ -157,20 +156,26 @@ PxRigidActor* CPhysicEntity::createRigid(const Map::CEntity *entityInfo)
 	const std::string physicType = entityInfo->getStringAttribute("physic_type");
 	assert((physicType == "static") || (physicType == "dynamic") || (physicType == "kinematic"));
 
-	// TODO: Leer la forma (shape) 
+	// Leer la forma (shape)
+	assert(entityInfo->hasAttribute("physic_shape"));
 	const std::string physicShape = entityInfo->getStringAttribute("physic_shape");
+	assert(physicShape == "box");
 
-	// TODO: Leer atributo trigger del mapa (por defecto no es un trigger)
+	// Leer si es un trigger (por defecto no)
 	bool trigger = false;
+	if (entityInfo->hasAttribute("physic_trigger"))
+		trigger = entityInfo->getBoolAttribute("physic_trigger");
 
-	// TODO: leer atributo de grupo de colisión (por defecto 0)
+	// Leer el grupo de colisión (por defecto 0)
 	int group = 0;
 	if (entityInfo->hasAttribute("physic_group"))
 		group = entityInfo->getIntAttribute("physic_group");
 
+
 	if (physicType == "static") {
 		if (physicShape == "box") {
-			// TODO: leer las dimensiones de la caja
+			// Leer las dimensiones de la caja
+			assert(entityInfo->hasAttribute("physic_dimensions"));
 			const Vector3 physicDimensions = entityInfo->getVector3Attribute("physic_dimensions");
 			
 			// Crear una caja estática
@@ -178,7 +183,7 @@ PxRigidActor* CPhysicEntity::createRigid(const Map::CEntity *entityInfo)
 		}
 
 	} else {
-		// TODO: Leer la masa (por defecto 0)
+		// Leer la masa (por defecto 0)
 		float mass = 0;
 		if (entityInfo->hasAttribute("physic_mass"))
 			mass = entityInfo->getFloatAttribute("physic_mass");
@@ -191,8 +196,7 @@ PxRigidActor* CPhysicEntity::createRigid(const Map::CEntity *entityInfo)
 			assert(entityInfo->hasAttribute("physic_dimensions"));
 			const Vector3 physicDimensions = entityInfo->getVector3Attribute("physic_dimensions");
 			
-			// TODO: Crear y devolver una caja dinámica usando el servidor de física
-			// Pasar como componente this
+			// Crear una caja dinámica
 			return _server->createDynamicBox(position, physicDimensions, mass, kinematic, trigger, group, this);
 		}
 	}
@@ -211,18 +215,13 @@ PxRigidActor* CPhysicEntity::createFromFile(const Map::CEntity *entityInfo)
 	if (entityInfo->hasAttribute("physic_group"))
 		group = entityInfo->getIntAttribute("physic_group");
 
-	// TODO: crear el actor a partir del fichero RepX usando el servidor de física
+	// Crear el actor a partir del fichero RepX
 	return _server->createFromFile(file, group, this);
 }
 
 
 void CPhysicEntity::onTrigger(IPhysics *otherComponent, bool enter)
 {
-	// TODO: notificar que entramos o salimos de un trigger
-	// Construir un mensaje de tipo TOUCHED si entramos en el trigger 
-	// o UNTOUCHED si salimos del trigger y enviarlo al resto de 
-	// componentes de la entidad.
-
 	// Construimos un mensaje de tipo TOUCHED o UNTOUCHED y lo enviamos a 
 	// todos los componentes de la entidad. 
 	TMessage msg;

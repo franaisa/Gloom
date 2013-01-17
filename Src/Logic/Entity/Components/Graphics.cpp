@@ -21,6 +21,8 @@ gráfica de la entidad.
 #include "Graphics/Entity.h"
 #include "Graphics/StaticEntity.h"
 
+#include "OgreEntity.h"
+
 namespace Logic 
 {
 	IMP_FACTORY(CGraphics);

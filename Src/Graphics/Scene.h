@@ -135,6 +135,7 @@ namespace Graphics
 		*/
 		void removeStaticEntity(CStaticEntity* entity);
 
+		Ogre::SceneManager *getSceneMgr() {return _sceneMgr;}
 	protected:
 
 		/**
@@ -196,7 +197,9 @@ namespace Graphics
 
 		@return Puntero al gestor de la escena de Ogre.
 		*/
-		Ogre::SceneManager *getSceneMgr() {return _sceneMgr;}
+
+		//esto ha de ir descomentado
+		//Ogre::SceneManager *getSceneMgr() {return _sceneMgr;}
 
 
 		/**

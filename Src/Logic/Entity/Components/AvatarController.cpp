@@ -168,11 +168,13 @@ namespace Logic
 	//---------------------------------------------------------
 
 	void CAvatarController::jump(){
+		/*
 		//si ya estaba saltando, pasamos
 		if(_jumping)
 			return;
 
 		_jumping = true;
+		*/
 	}//jump
 	
 	//---------------------------------------------------------
@@ -234,6 +236,11 @@ namespace Logic
 			direction *= msecs * _speed;
 			Vector3 newPosition = _entity->getPosition() + direction;
 			_entity->setPosition(newPosition);
+
+			TMessage message;
+			message._type = Message::AVATAR_WALK;
+			message._vector3 = direction;
+			_entity->emitMessage(message);
 		}
 
 	} // tick

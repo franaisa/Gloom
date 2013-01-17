@@ -311,7 +311,7 @@ namespace Logic
 		message._transform = _transform;
 		emitMessage(message);
 
-	} // setYaw
+	} // setPitch
 
 	//---------------------------------------------------------
 
@@ -325,6 +325,6 @@ namespace Logic
 		message._transform = _transform;
 		emitMessage(message);
 
-	} // yaw
+	} // pitch
 
 } // namespace Logic

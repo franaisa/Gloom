@@ -1,5 +1,6 @@
-World CGraphics
-Player CAvatarController 
+World CGraphics CPhysicEntity
+Player CAvatarController CShoot CPhysicController CLife CGraphics
+Enemy CGraphics CPhysicEntity CLife
 Entity CGraphics
 AnimatedEntity CAnimatedGraphics
 Camera CCamera
