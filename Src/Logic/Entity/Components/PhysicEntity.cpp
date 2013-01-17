@@ -64,20 +64,21 @@ bool CPhysicEntity::spawn(CEntity *entity, CMap *map, const Map::CEntity *entity
 
 //---------------------------------------------------------
 
-bool CPhysicEntity::accept(const TMessage &message)
+bool CPhysicEntity::accept(CMessage *message)
 {
-	return message._type == Message::KINEMATIC_MOVE;
+	return message->getMessageType() == Message::KINEMATIC_MOVE;
 }
 
 //---------------------------------------------------------
 
-void CPhysicEntity::process(const TMessage &message)
+void CPhysicEntity::process(CMessage *message)
 {
-	switch(message._type) {
+
+	switch(message->getMessageType()) {
 	case Message::KINEMATIC_MOVE:
 		// Acumulamos el vector de desplazamiento para usarlo posteriormente en 
 		// el método tick.
-		_movement += message._vector3;
+		_movement += ((CMessageKinematicMove*)message)->getMovement();
 		break;
 	}
 }
@@ -224,14 +225,16 @@ void CPhysicEntity::onTrigger(IPhysics *otherComponent, bool enter)
 {
 	// Construimos un mensaje de tipo TOUCHED o UNTOUCHED y lo enviamos a 
 	// todos los componentes de la entidad. 
-	TMessage msg;
-	if (enter) {
-		msg._type = Message::TOUCHED;
-	} else {
-		msg._type = Message::UNTOUCHED;
-	}
-	msg._entity = otherComponent->getEntity();
 
-	_entity->emitMessage(msg);
+	if (enter) {
+		Logic::CMessageTouched *m= new Logic::CMessageTouched(Message::TOUCHED);
+		m->setEntity(otherComponent->getEntity());
+		_entity->emitMessage(m);
+	} else {
+		Logic::CMessageUntouched *m= new Logic::CMessageUntouched(Message::UNTOUCHED);
+		m->setEntity(otherComponent->getEntity());
+		_entity->emitMessage(m);
+	}
+
 }
 

@@ -38,23 +38,23 @@ namespace Logic
 	
 	//---------------------------------------------------------
 
-	bool CLife::accept(const TMessage &message)
+	bool CLife::accept(CMessage *message)
 	{
-		return message._type == Message::DAMAGED;
+		return message->getMessageType() == Message::DAMAGED;
 
 	} // accept
 	
 	//---------------------------------------------------------
 
-	void CLife::process(const TMessage &message)
+	void CLife::process(CMessage *message)
 	{
-		switch(message._type)
+		switch(message->getMessageType())
 		{
 		case Message::DAMAGED:
 			{
 				// Disminuir la vida de la entidad
 				
-				_life -= message._float;
+				_life -= ((CMessageDamaged*)message)->getDamage();
 				printf("\nAh!, ya solo me queda %f de vida", _life);
 
 				// Si han matado al jugador salir de la partida

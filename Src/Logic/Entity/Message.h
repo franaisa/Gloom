@@ -3,7 +3,7 @@
 
 Contiene el tipo de datos de un mensaje.
 
-@see Logic::TMessage
+@see Logic::CMessage
 
 @author David Llansó García
 */
@@ -67,54 +67,135 @@ namespace Logic
 	@date Julio, 2010
     @ingroup grupoEntidad
 	*/
-	typedef struct
-	{
-		/**
-		Tipo del mensaje.
-		*/
+	class CMessage{
+	public:
+		 TMessageType getMessageType();
+		 virtual ~CMessage(){};
+	protected:
 		TMessageType _type;
+	};
 
-		/**
-		Atributo para almacenar una matriz de transformación.
-		*/
-		Matrix4 _transform;
+	class CMessageControl : public CMessage{
+	public:
+		CMessageControl(TMessageType t);
+		std::string getString();
+		void setString(std::string);
+		void setMouse(float mouse[]);
+		float* getMouse();
+		~CMessageControl(){};
 
-		/**
-		Atributo para almacenar un valor int.
-		*/
-		int _int;
-		
-		/**
-		Atributo para almacenar un valor float.
-		*/
-		float _float;
-		
-		/**
-		Atributo para almacenar un valor booleano.
-		*/
-		bool _bool;
-		
-		/**
-		Atributo para almacenar un string.
-		*/
+	private:
 		std::string _string;
-
-		/**
-		Atributo para almacenar un vector.
-		*/
-		Vector3 _vector3;
-
-		/**
-		Atributo para almacenar una entidad.
-		*/
-		CEntity *_entity;
-
-		/**
-		Atributo para almacenar las coordeanadas del mouse
-		*/
 		float _mouse[2];
+	};
 
-	} TMessage; 
+
+	class CMessageTransform : public CMessage{
+	public:
+		CMessageTransform(TMessageType t);
+		Matrix4 getTransform();
+		void setTransform(Matrix4 transform);
+		~CMessageTransform(){};
+		
+	private:
+		Matrix4 _transform;
+	};
+
+
+	class CMessageTouched : public CMessage{
+	public:
+		CMessageTouched(TMessageType t);
+		CEntity* getEntity();
+		void setEntity(CEntity *c);
+		~CMessageTouched(){};
+		
+	private:
+		CEntity *_entity;
+	};
+
+	class CMessageUntouched : public CMessage{
+	public:
+		CMessageUntouched(TMessageType t);
+		CEntity* getEntity();
+		void setEntity(CEntity *c);
+		~CMessageUntouched(){};
+		
+	private:
+		CEntity *_entity;
+	};
+
+	class CMessageSetAnimation : public CMessage{
+	public:
+		CMessageSetAnimation(TMessageType t);
+		std::string getString();
+		void setString(std::string);
+		bool getBool();
+		void setBool(bool boolean);
+		~CMessageSetAnimation(){};
+
+	private:
+		std::string _string;
+		bool _bool;
+	};
+
+	class CMessageStopAnimation : public CMessage{
+	public:
+		CMessageStopAnimation(TMessageType t);
+		std::string getString();
+		void setString(std::string);
+		bool getBool();
+		void setBool(bool boolean);
+		~CMessageStopAnimation(){};
+		
+	private:
+		std::string _string;
+		bool _bool;
+	};
+
+	class CMessageSwitch: public CMessage{
+	public:
+		CMessageSwitch(TMessageType t);
+		int getChange();
+		void setChange(int change);
+		~CMessageSwitch(){};
+		
+	private:
+		int _change;
+	};
+
+
+	class CMessageDamaged: public CMessage{
+	public:
+		CMessageDamaged(TMessageType t);
+		float getDamage();
+		void setDamage(float damage);
+		~CMessageDamaged(){};
+		
+	private:
+		float _damage;
+	};
+
+	class CMessageAvatarWalk: public CMessage{
+	public:
+		CMessageAvatarWalk(TMessageType t);
+		Vector3 getDirection();
+		void setDirection(Vector3 direction);
+		~CMessageAvatarWalk(){};
+		
+	private:
+		Vector3 _direction;
+	};
+
+	class CMessageKinematicMove: public CMessage{
+	public:
+		CMessageKinematicMove(TMessageType t);
+		Vector3 getMovement();
+		void setMovement(Vector3 movement);
+		~CMessageKinematicMove(){};
+		
+	private:
+		Vector3 _movement;
+	};
 
 } // namespace Logic
 

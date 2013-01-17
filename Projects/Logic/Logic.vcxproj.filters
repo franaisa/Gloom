@@ -85,8 +85,13 @@
     <ClCompile Include="..\..\Src\Logic\Entity\Components\PhysicController.cpp">
       <Filter>Entity\Components\Source Files</Filter>
     </ClCompile>
+<<<<<<< HEAD
     <ClCompile Include="..\..\Src\Logic\Entity\Components\Shoot.cpp">
       <Filter>Entity\Components\Source Files</Filter>
+=======
+    <ClCompile Include="..\..\Src\Logic\Entity\Message.cpp">
+      <Filter>Entity\Source Files</Filter>
+>>>>>>> ff48970020ef4ff576a4d3f43eefb41c0a4fb97c
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

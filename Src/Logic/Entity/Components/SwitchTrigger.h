@@ -60,13 +60,13 @@ namespace Logic
 		/**
 		Este componente sólo acepta mensaje de tipos TOUCHED y UNTOUCHED.
 		*/
-		virtual bool accept(const TMessage &message);
+		virtual bool accept(CMessage *message);
 
 		/**
 		Al recibir mensaje TOUCHED y UNTOUCHED emite mensajes SWITCH
 		a la entidad objetivo para que cambie de posición.
 		*/
-		virtual void process(const TMessage &message);
+		virtual void process(CMessage *message);
 
 	protected:
 

@@ -63,19 +63,19 @@ namespace Logic
 	
 	//---------------------------------------------------------
 
-	bool CShoot::accept(const TMessage &message)
+	bool CShoot::accept(CMessage *message)
 	{
-		return message._type == Message::CONTROL;
+		return message->getMessageType() == Message::CONTROL;
 	} // accept
 	
 	//---------------------------------------------------------
 
-	void CShoot::process(const TMessage &message)
+	void CShoot::process(CMessage *message)
 	{
-		switch(message._type)
+		switch(message->getMessageType())
 		{
 			case Message::CONTROL:
-				if(!message._string.compare("LeftClick")){
+				if(!((CMessageControl*)message)->getString().compare("LeftClick")){
 					shoot();
 				}
 				break;
@@ -139,10 +139,9 @@ namespace Logic
 		if(entity)
 		{
 			printf("\nimpacto con %s", entity->getName().c_str());
-			TMessage message;
-			message._type = Message::DAMAGED;
-			message._float = _weapons[_actualWeapon].damage;
-			entity->emitMessage(message);
+			Logic::CMessageDamaged *m=new Logic::CMessageDamaged(Logic::Message::DAMAGED);
+			m->setDamage(_weapons[_actualWeapon].damage);
+			entity->emitMessage(m);
 		}
 	} // shoot
 

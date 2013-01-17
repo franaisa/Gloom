@@ -62,22 +62,22 @@ bool CPhysicController::spawn(CEntity* entity, CMap *map, const Map::CEntity *en
 
 //---------------------------------------------------------
 
-bool CPhysicController::accept(const TMessage &message)
+bool CPhysicController::accept(CMessage *message)
 {
-	return message._type == Message::AVATAR_WALK;
+	return message->getMessageType() == Message::AVATAR_WALK;
 } 
 
 //---------------------------------------------------------
 
-void CPhysicController::process(const TMessage &message)
+void CPhysicController::process(CMessage *message)
 {
-	switch(message._type)
+	switch(message->getMessageType())
 	{
 	case Message::AVATAR_WALK:
 		// Anotamos el vector de desplazamiento para usarlo posteriormente en 
 		// el método tick. De esa forma, si recibimos varios mensajes AVATAR_WALK
 		// en el mismo ciclo sólo tendremos en cuenta el último.
-		_movement = message._vector3;
+		_movement = ((CMessageKinematicMove*)message)->getMovement();
 		break;
 	}
 

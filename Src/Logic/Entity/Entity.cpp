@@ -196,14 +196,15 @@ namespace Logic
 
 	//---------------------------------------------------------
 
-	bool CEntity::emitMessage(const TMessage &message, IComponent* emitter)
+	bool CEntity::emitMessage(CMessage *message, IComponent* emitter)
 	{
+		
 		// Interceptamos los mensajes que además de al resto de los
 		// componentes, interesan a la propia entidad.
-		switch(message._type)
+		switch(message->getMessageType())
 		{
 		case Message::SET_TRANSFORM:
-			_transform = message._transform;
+			_transform = ((CMessageTransform*)message)->getTransform();
 		}
 
 		TComponentList::const_iterator it;
@@ -226,10 +227,9 @@ namespace Logic
 		_transform = transform;
 
 		// Avisamos a los componentes del cambio.
-		TMessage message;
-		message._type = Message::SET_TRANSFORM;
-		message._transform = _transform;
-		emitMessage(message);
+		Logic::CMessageTransform m(Message::SET_TRANSFORM);
+		m.setTransform(_transform);
+		emitMessage(&m);
 
 	} // setTransform
 
@@ -240,10 +240,9 @@ namespace Logic
 		_transform.setTrans(position);
 
 		// Avisamos a los componentes del cambio.
-		TMessage message;
-		message._type = Message::SET_TRANSFORM;
-		message._transform = _transform;
-		emitMessage(message);
+		Logic::CMessageTransform m(Message::SET_TRANSFORM);
+		m.setTransform(_transform);
+		emitMessage(&m);
 
 	} // setPosition
 
@@ -254,10 +253,9 @@ namespace Logic
 		_transform = orientation;
 
 		// Avisamos a los componentes del cambio.
-		TMessage message;
-		message._type = Message::SET_TRANSFORM;
-		message._transform = _transform;
-		emitMessage(message);
+		Logic::CMessageTransform m(Message::SET_TRANSFORM);
+		m.setTransform(_transform);
+		emitMessage(&m);
 
 	} // setOrientation
 
@@ -278,10 +276,9 @@ namespace Logic
 		Math::setYaw(yaw,_transform);
 
 		// Avisamos a los componentes del cambio.
-		TMessage message;
-		message._type = Message::SET_TRANSFORM;
-		message._transform = _transform;
-		emitMessage(message);
+		Logic::CMessageTransform m(Message::SET_TRANSFORM);
+		m.setTransform(_transform);
+		emitMessage(&m);
 
 	} // setYaw
 
@@ -292,10 +289,9 @@ namespace Logic
 		Math::yaw(yaw,_transform);
 
 		// Avisamos a los componentes del cambio.
-		TMessage message;
-		message._type = Message::SET_TRANSFORM;
-		message._transform = _transform;
-		emitMessage(message);
+		Logic::CMessageTransform m(Message::SET_TRANSFORM);
+		m.setTransform(_transform);
+		emitMessage(&m);
 
 	} // yaw
 
@@ -306,10 +302,9 @@ namespace Logic
 		Math::setYaw(pitch,_transform);
 
 		// Avisamos a los componentes del cambio.
-		TMessage message;
-		message._type = Message::SET_TRANSFORM;
-		message._transform = _transform;
-		emitMessage(message);
+		Logic::CMessageTransform m(Message::SET_TRANSFORM);
+		m.setTransform(_transform);
+		emitMessage(&m);
 
 	} // setPitch
 
@@ -320,10 +315,9 @@ namespace Logic
 		Math::pitch(pitch,_transform);
 
 		// Avisamos a los componentes del cambio.
-		TMessage message;
-		message._type = Message::SET_TRANSFORM;
-		message._transform = _transform;
-		emitMessage(message);
+		Logic::CMessageTransform m(Message::SET_TRANSFORM);
+		m.setTransform(_transform);
+		emitMessage(&m);
 
 	} // pitch
 

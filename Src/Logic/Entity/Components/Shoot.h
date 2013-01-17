@@ -39,12 +39,12 @@ namespace Logic
 		/**
 		Este componente sólo acepta mensajes de tipo SHOOT (por ahora).
 		*/
-		virtual bool accept(const TMessage &message);
+		virtual bool accept(CMessage *message);
 
 		/**
 		Al recibir un mensaje de tipo SHOOT la vida de la entidad disminuye.
 		*/
-		virtual void process(const TMessage &message);
+		virtual void process(CMessage *message);
 
 		void shoot();
 

@@ -73,7 +73,7 @@ Map = {
 		type = "Camera",
 		distance = 10,
 		height = 8,
-		targetDistance = 60,
+		targetDistance = 20,
 	},
 	
 	skybox = {

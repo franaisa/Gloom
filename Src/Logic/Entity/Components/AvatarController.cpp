@@ -53,40 +53,39 @@ namespace Logic
 	
 	//---------------------------------------------------------
 
-	bool CAvatarController::accept(const TMessage &message)
+	bool CAvatarController::accept(CMessage *message)
 	{
-		return message._type == Message::CONTROL;
-
+		return message->getMessageType() == Message::CONTROL;
 	} // accept
 	
 	//---------------------------------------------------------
 
-	void CAvatarController::process(const TMessage &message)
+	void CAvatarController::process(CMessage *message)
 	{
-		switch(message._type)
+		switch(message->getMessageType())
 		{
 		case Message::CONTROL:
-			if(!message._string.compare("walk"))
+			if(!((CMessageControl*)message)->getString().compare("walk"))
 				walk();
-			else if(!message._string.compare("walkBack"))
+			else if(!((CMessageControl*)message)->getString().compare("walkBack"))
 				walkBack();
-			else if(!message._string.compare("stopWalk"))
+			else if(!((CMessageControl*)message)->getString().compare("stopWalk"))
 				stopWalk();
-			else if(!message._string.compare("stopWalkBack"))
+			else if(!((CMessageControl*)message)->getString().compare("stopWalkBack"))
 				stopWalkBack();
-			else if(!message._string.compare("strafeLeft"))
+			else if(!((CMessageControl*)message)->getString().compare("strafeLeft"))
 				strafeLeft();
-			else if(!message._string.compare("strafeRight"))
+			else if(!((CMessageControl*)message)->getString().compare("strafeRight"))
 				strafeRight();
-			else if(!message._string.compare("stopStrafeLeft"))
+			else if(!((CMessageControl*)message)->getString().compare("stopStrafeLeft"))
 				stopStrafeLeft();
-			else if(!message._string.compare("stopStrafeRight"))
+			else if(!((CMessageControl*)message)->getString().compare("stopStrafeRight"))
 				stopStrafeRight();
-			else if(!message._string.compare("mouse"))
-				mouse(message._mouse);
-			else if(!message._string.compare("jump"))
+			else if(!((CMessageControl*)message)->getString().compare("mouse"))
+				mouse(((CMessageControl*)message)->getMouse());
+			else if(!((CMessageControl*)message)->getString().compare("jump"))
 				jump();
-
+		
 		}
 
 	} // process
@@ -102,7 +101,7 @@ namespace Logic
 	
 	//---------------------------------------------------------
 
-	void CAvatarController::walk() 
+	void CAvatarController::walk()
 	{
 		_walking = true;
 
@@ -237,10 +236,10 @@ namespace Logic
 			Vector3 newPosition = _entity->getPosition() + direction;
 			_entity->setPosition(newPosition);
 
-			TMessage message;
-			message._type = Message::AVATAR_WALK;
-			message._vector3 = direction;
-			_entity->emitMessage(message);
+			Logic::CMessageAvatarWalk *m=new Logic::CMessageAvatarWalk(Logic::Message::AVATAR_WALK);
+			
+			m->setDirection(direction);
+			_entity->emitMessage(m);
 		}
 
 	} // tick
