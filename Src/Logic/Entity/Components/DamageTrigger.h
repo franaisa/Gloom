@@ -48,13 +48,13 @@ namespace Logic
 		/**
 		Este componente sólo acepta mensajes de tipo TOUCHED.
 		*/
-		virtual bool accept(const TMessage &message);
+		virtual bool accept(CMessage *message);
 
 		/**
 		Al recibir un mensaje TOUCHED se envía otro mensaje de tipo DAMAGED a la
 		entidad tocada.
 		*/
-		virtual void process(const TMessage &message);
+		virtual void process(CMessage *message);
 
 	protected:
 

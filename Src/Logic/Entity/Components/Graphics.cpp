@@ -87,20 +87,19 @@ namespace Logic
 	
 	//---------------------------------------------------------
 
-	bool CGraphics::accept(const TMessage &message)
+	bool CGraphics::accept(CMessage *message)
 	{
-		return message._type == Message::SET_TRANSFORM;
-
+		return (message->getMessageType() == Message::SET_TRANSFORM);
 	} // accept
 	
 	//---------------------------------------------------------
 
-	void CGraphics::process(const TMessage &message)
+	void CGraphics::process(CMessage *message)
 	{
-		switch(message._type)
+		switch(message->getMessageType())
 		{
 		case Message::SET_TRANSFORM:
-			_graphicsEntity->setTransform(message._transform);
+			_graphicsEntity->setTransform(((CMessageTransform*)message)->getTransform());
 		}
 
 	} // process

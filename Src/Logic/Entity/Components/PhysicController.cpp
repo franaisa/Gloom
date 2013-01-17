@@ -62,7 +62,7 @@ bool CPhysicController::spawn(CEntity* entity, CMap *map, const Map::CEntity *en
 
 //---------------------------------------------------------
 
-bool CPhysicController::accept(const TMessage &message)
+bool CPhysicController::accept(CMessage *message)
 {
 	// TODO: recibir mensajes de tipo AVATAR_WALK
 	return false;
@@ -70,9 +70,9 @@ bool CPhysicController::accept(const TMessage &message)
 
 //---------------------------------------------------------
 
-void CPhysicController::process(const TMessage &message)
+void CPhysicController::process(CMessage *message)
 {
-	switch(message._type)
+	switch(message->getMessageType())
 	{
 		// TODO: Procesar mensajes de tipo AVATAR_WALK
 		// Anotamos el vector de desplazamiento recibido en el mensaje en el atributo

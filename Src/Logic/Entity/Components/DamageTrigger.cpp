@@ -37,7 +37,7 @@ namespace Logic
 
 	//---------------------------------------------------------
 
-	bool CDamageTrigger::accept(const TMessage &message)
+	bool CDamageTrigger::accept(CMessage *message)
 	{
 		// TODO: 2. Aceptar mensajes de tipo TOUCHED
 		return false;
@@ -46,9 +46,9 @@ namespace Logic
 	
 	//---------------------------------------------------------
 
-	void CDamageTrigger::process(const TMessage &message)
+	void CDamageTrigger::process(CMessage *message)
 	{
-		switch(message._type)
+		switch(message->getMessageType())
 		{
 			// TODO: 3. Procesar mensajes de tipo TOUCHED
 			// Enviar un mensaje de tipo DAMAGED a la entidad tocada

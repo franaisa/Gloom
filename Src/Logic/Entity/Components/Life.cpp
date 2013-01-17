@@ -38,7 +38,7 @@ namespace Logic
 	
 	//---------------------------------------------------------
 
-	bool CLife::accept(const TMessage &message)
+	bool CLife::accept(CMessage *message)
 	{
 		
 		// TODO: 2. Aceptar mensajes del tipo DAMAGED
@@ -48,9 +48,9 @@ namespace Logic
 	
 	//---------------------------------------------------------
 
-	void CLife::process(const TMessage &message)
+	void CLife::process(CMessage *message)
 	{
-		switch(message._type)
+		switch(message->getMessageType())
 		{
 			// TODO: 3. Procesar mensajes de tipo DAMAGED
 			// Disminuir la vida y mostrar un mensaje de herido en la consola.

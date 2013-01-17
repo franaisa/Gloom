@@ -61,24 +61,23 @@ namespace GUI {
 	{
 		if(_controlledAvatar)
 		{
-			Logic::TMessage m;
-			m._type = Logic::Message::CONTROL;
+			Logic::CMessageControl *m=new Logic::CMessageControl(Logic::Message::CONTROL);
 			switch(key.keyId)
 			{
 			case GUI::Key::W:
-				m._string = "walk";
+				m->setString("walk");
 				break;
 			case GUI::Key::S:
-				m._string = "walkBack";
+				m->setString("walkBack");
 				break;
 			case GUI::Key::A:
-				m._string = "strafeLeft";
+				m->setString("strafeLeft");
 				break;
 			case GUI::Key::D:
-				m._string = "strafeRight";
+				m->setString("strafeRight");
 				break;
 			case GUI::Key::SPACE:
-				m._string = "jump";
+				m->setString("jump");
 				break;
 			default:
 				return false;
@@ -96,24 +95,21 @@ namespace GUI {
 	{
 		if(_controlledAvatar)
 		{
-			Logic::TMessage m;
-			m._type = Logic::Message::CONTROL;
+			Logic::CMessageControl *m=new Logic::CMessageControl(Logic::Message::CONTROL);
 			switch(key.keyId)
 			{
 			case GUI::Key::W:
-				m._string = "stopWalk";
+				m->setString("stopWalk");
 				break;
 			case GUI::Key::S:
-				m._string = "stopWalkBack";
+				m->setString("stopWalkBack");
 				break;
-
 			case GUI::Key::A:
-				m._string = "stopStrafeLeft";
+				m->setString("stopStrafeLeft");
 				break;
 			case GUI::Key::D:
-				m._string = "stopStrafeRight";
+				m->setString("stopStrafeRight");
 				break;
-
 			default:
 				return false;
 			}
@@ -130,11 +126,10 @@ namespace GUI {
 	{
 		if(_controlledAvatar)
 		{
-			Logic::TMessage m;
-			m._type = Logic::Message::CONTROL;
-			m._string = "mouse";
-			m._mouse[0] = -(float)mouseState.movX * TURN_FACTOR_X;
-			m._mouse[1] = -(float)mouseState.movY * TURN_FACTOR_Y;
+			Logic::CMessageControl *m=new Logic::CMessageControl(Logic::Message::CONTROL);
+			m->setString("mouse");
+			float mouse[]={-(float)mouseState.movX * TURN_FACTOR_X,-(float)mouseState.movY * TURN_FACTOR_Y};
+			m->setMouse(mouse);
 			_controlledAvatar->emitMessage(m);
 			return true;
 		}
@@ -151,7 +146,7 @@ namespace GUI {
 	} // mousePressed
 
 	//--------------------------------------------------------
-
+	
 	bool CPlayerController::mouseReleased(const CMouseState &mouseState)
 	{
 		return false;

@@ -85,6 +85,9 @@
     <ClCompile Include="..\..\Src\Logic\Entity\Components\PhysicController.cpp">
       <Filter>Entity\Components\Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Message.cpp">
+      <Filter>Entity\Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Src\Logic\Maps\ComponentFactory.h">
