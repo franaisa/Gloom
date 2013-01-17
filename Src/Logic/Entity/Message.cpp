@@ -190,6 +190,8 @@ namespace Logic
 	//----------------------------------------------------------
 		
 
+
+
 	CMessageAvatarWalk::CMessageAvatarWalk(TMessageType type){
 		_type=type;
 	}//
@@ -204,6 +206,7 @@ namespace Logic
 		return _direction;
 	}//
 	//----------------------------------------------------------
+
 
 
 
