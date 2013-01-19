@@ -18,10 +18,24 @@ namespace Logic
 	}//
 	//----------------------------------------------------------
 
+	void CMessage::addSmartP(){
+		_smartP+=1;
+	}//
+	//----------------------------------------------------------
+
+	void CMessage::subSmartP(){
+		_smartP-=1;
+		if(_smartP==0){
+			delete this;
+		}
+	}//
+	//----------------------------------------------------------
+
 
 
 	CMessageTransform::CMessageTransform(TMessageType type){
 		_type=type;
+		_smartP=0;
 	} //
 	//----------------------------------------------------------
 
@@ -39,33 +53,42 @@ namespace Logic
 
 	CMessageControl::CMessageControl(TMessageType type){
 		_type=type;
+		_smartP=0;
 	} //
 	//----------------------------------------------------------
 
-	void CMessageControl::setString(std::string string){
-		_string=string;
+	void CMessageControl::setType(ControlType controlType){
+		_controlType=controlType;
 	}//
 	//----------------------------------------------------------
 
-	std::string CMessageControl::getString(){
-		return _string;
+	ControlType CMessageControl::getType(){
+		return _controlType;
 	}//
 	//----------------------------------------------------------
 
-	void CMessageControl::setMouse(float mouse[]){
+	CMessageMouse::CMessageMouse(TMessageType t):CMessageControl(t){
+
+	} //
+	//----------------------------------------------------------
+
+	void CMessageMouse::setMouse(float mouse[]){
 		_mouse[0]=mouse[0];
 		_mouse[1]=mouse[1];
 	}//
 	//----------------------------------------------------------
 
-	float* CMessageControl::getMouse(){
+	float* CMessageMouse::getMouse(){
 		return _mouse;
 	}//
 	//----------------------------------------------------------
 
 
+
+
 	CMessageTouched::CMessageTouched(TMessageType type){
 		_type=type;
+		_smartP=0;
 	} //
 	//----------------------------------------------------------
 
@@ -84,6 +107,7 @@ namespace Logic
 
 	CMessageUntouched::CMessageUntouched(TMessageType type){
 		_type=type;
+		_smartP=0;
 	} //
 	//----------------------------------------------------------
 
@@ -102,6 +126,7 @@ namespace Logic
 
 	CMessageSetAnimation::CMessageSetAnimation(TMessageType type){
 		_type=type;
+		_smartP=0;
 	}//
 	//----------------------------------------------------------
 
@@ -130,6 +155,7 @@ namespace Logic
 
 	CMessageStopAnimation::CMessageStopAnimation(TMessageType type){
 		_type=type;
+		_smartP=0;
 	}//
 	//----------------------------------------------------------
 
@@ -158,15 +184,16 @@ namespace Logic
 
 	CMessageSwitch::CMessageSwitch(TMessageType type){
 		_type=type;
+		_smartP=0;
 	}//
 	//----------------------------------------------------------
 
-	void CMessageSwitch::setChange(int change){
+	void CMessageSwitch::setChange(unsigned char change){
 		_change=change;
 	}//
 	//----------------------------------------------------------
 
-	int CMessageSwitch::getChange(){
+	unsigned char CMessageSwitch::getChange(){
 		return _change;
 	}//
 	//----------------------------------------------------------
@@ -176,15 +203,16 @@ namespace Logic
 
 	CMessageDamaged::CMessageDamaged(TMessageType type){
 		_type=type;
+		_smartP=0;
 	}//
 	//----------------------------------------------------------
 
-	void CMessageDamaged::setDamage(float damage){
+	void CMessageDamaged::setDamage(unsigned char damage){
 		_damage = damage;
 	}//
 	//----------------------------------------------------------
 
-	float CMessageDamaged::getDamage(){
+	unsigned char CMessageDamaged::getDamage(){
 		return _damage;
 	}//
 	//----------------------------------------------------------
@@ -194,6 +222,7 @@ namespace Logic
 
 	CMessageAvatarWalk::CMessageAvatarWalk(TMessageType type){
 		_type=type;
+		_smartP=0;
 	}//
 	//----------------------------------------------------------
 
@@ -212,6 +241,7 @@ namespace Logic
 
 	CMessageKinematicMove::CMessageKinematicMove(TMessageType type){
 		_type=type;
+		_smartP=0;
 	}//
 	//----------------------------------------------------------
 

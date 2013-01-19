@@ -65,19 +65,19 @@ namespace GUI {
 			switch(key.keyId)
 			{
 			case GUI::Key::W:
-				m->setString("walk");
+				m->setType(Logic::Control::WALK);
 				break;
 			case GUI::Key::S:
-				m->setString("walkBack");
+				m->setType(Logic::Control::WALKBACK);
 				break;
 			case GUI::Key::A:
-				m->setString("strafeLeft");
+				m->setType(Logic::Control::STRAFE_LEFT);
 				break;
 			case GUI::Key::D:
-				m->setString("strafeRight");
+				m->setType(Logic::Control::STRAFE_RIGHT);
 				break;
 			case GUI::Key::SPACE:
-				m->setString("jump");
+				m->setType(Logic::Control::JUMP);
 				break;
 			default:
 				return false;
@@ -99,16 +99,16 @@ namespace GUI {
 			switch(key.keyId)
 			{
 			case GUI::Key::W:
-				m->setString("stopWalk");
+				m->setType(Logic::Control::STOP_WALK);
 				break;
 			case GUI::Key::S:
-				m->setString("stopWalkBack");
+				m->setType(Logic::Control::STOP_WALKBACK);
 				break;
 			case GUI::Key::A:
-				m->setString("stopStrafeLeft");
+				m->setType(Logic::Control::STOP_STRAFE_LEFT);
 				break;
 			case GUI::Key::D:
-				m->setString("stopStrafeRight");
+				m->setType(Logic::Control::STOP_STRAFE_RIGHT);
 				break;
 			default:
 				return false;
@@ -126,8 +126,8 @@ namespace GUI {
 	{
 		if(_controlledAvatar)
 		{
-			Logic::CMessageControl *m=new Logic::CMessageControl(Logic::Message::CONTROL);
-			m->setString("mouse");
+			Logic::CMessageMouse *m=new Logic::CMessageMouse(Logic::Message::CONTROL);
+			m->setType(Logic::Control::MOUSE);
 			float mouse[]={-(float)mouseState.movX * TURN_FACTOR_X,-(float)mouseState.movY * TURN_FACTOR_Y};
 			m->setMouse(mouse);
 			_controlledAvatar->emitMessage(m);
@@ -147,16 +147,16 @@ namespace GUI {
 			switch(mouseState.button)
 			{
 			case GUI::Button::LEFT:
-				m->setString("LeftClick");
+				m->setType(Logic::Control::LEFT_CLICK);
 				break;
 			case GUI::Button::RIGHT:
-				m->setString("RightClick");
+				m->setType(Logic::Control::RIGHT_CLICK);
 				break;
 			case GUI::Button::MIDDLE:
-				m->setString("MiddleClick");
+				m->setType(Logic::Control::MIDDLE_CLICK);
 				break;
 			case GUI::Button::BUTTON_3:
-				m->setString("Button3Click");
+				m->setType(Logic::Control::BUTTON3_CLICK);
 				break;
 			
 			default:

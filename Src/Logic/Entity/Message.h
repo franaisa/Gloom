@@ -41,51 +41,86 @@ namespace Logic
 			DAMAGED
 		};
 	}
+	/**
+	Namespace para los tipos de mensajes de control posibles.
+	*/
+	namespace Control
+	{
+			enum ControlType
+		{
+			UNASSIGNED = 0xFFFFFFFF,
+			WALK,
+			WALKBACK,
+			STOP_WALK,
+			STOP_WALKBACK,
+			STRAFE_LEFT,
+			STRAFE_RIGHT,
+			STOP_STRAFE_LEFT,
+			STOP_STRAFE_RIGHT,
+			MOUSE,
+			LEFT_CLICK,
+			RIGHT_CLICK,
+			MIDDLE_CLICK,
+			BUTTON3_CLICK,
+			JUMP
+		};
 
+	}
 	/**
 	Tipo copia para los mensajes. Por simplicidad.
 	*/
 	typedef Message::TMessageType TMessageType;
 
 	/**
-	Contiene el tipo de datos de un mensaje. Tiene una serie de
-	atributos genéricos que se interpretarán en función del tipo 
-	de mensaje.
-	<p>
-	@remarks <b>¡¡ESTO NO ES ESCALABLE!!</b> En tu proyecto esto 
-	debería ser cambiado.
-	Lo suyo sería tener una clase CMesage base y luego clases que
-	especializasen a ésta con los atributos necesarios para el 
-	mensaje concreto en vez de tener una serie de atributos
-	genéricos como es esta estructura que deben de ser interpretados
-	externamente en función del tipo de mensaje.
+	Tipo copia para los mensajes de control. Por simplicidad.
+	*/
+	typedef Control::ControlType ControlType;
+
+
+	/**
+		Contiene la jerarquia de mensajes que implementaremos.
 	
     @ingroup logicGroup
     @ingroup entityGroup
 
-	@author David Llansó García
-	@date Julio, 2010
+	@author Jose Antonio García Yáñez
+	@date Enero, 2013
     @ingroup grupoEntidad
 	*/
 	class CMessage{
 	public:
 		 TMessageType getMessageType();
+		 void addSmartP();
+		 void subSmartP();
 		 virtual ~CMessage(){};
-	protected:
+
+	public:
 		TMessageType _type;
+		unsigned char _smartP;
 	};
+
+
 
 	class CMessageControl : public CMessage{
 	public:
 		CMessageControl(TMessageType t);
-		std::string getString();
-		void setString(std::string);
-		void setMouse(float mouse[]);
-		float* getMouse();
+		ControlType getType();
+		void setType(ControlType controltype);
 		~CMessageControl(){};
 
+	protected:
+		ControlType _controlType;
+	};
+
+
+	class CMessageMouse : public CMessageControl{
+	public:
+		CMessageMouse(TMessageType t);
+		void setMouse(float mouse[]);
+		float* getMouse();
+		~CMessageMouse(){};
+
 	private:
-		std::string _string;
 		float _mouse[2];
 	};
 
@@ -155,24 +190,24 @@ namespace Logic
 	class CMessageSwitch: public CMessage{
 	public:
 		CMessageSwitch(TMessageType t);
-		int getChange();
-		void setChange(int change);
+		unsigned char getChange();
+		void setChange(unsigned char change);
 		~CMessageSwitch(){};
 		
 	private:
-		int _change;
+		unsigned char _change;
 	};
 
 
 	class CMessageDamaged: public CMessage{
 	public:
 		CMessageDamaged(TMessageType t);
-		float getDamage();
-		void setDamage(float damage);
+		unsigned char getDamage();
+		void setDamage(unsigned char damage);
 		~CMessageDamaged(){};
 		
 	private:
-		float _damage;
+		unsigned char _damage;
 	};
 
 	class CMessageAvatarWalk: public CMessage{

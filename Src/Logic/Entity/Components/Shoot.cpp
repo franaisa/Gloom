@@ -75,7 +75,7 @@ namespace Logic
 		switch(message->getMessageType())
 		{
 			case Message::CONTROL:
-				if(!((CMessageControl*)message)->getString().compare("LeftClick")){
+				if(!((CMessageControl*)message)->getType()==Control::LEFT_CLICK){
 					shoot();
 				}
 				break;
