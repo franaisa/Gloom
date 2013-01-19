@@ -37,7 +37,7 @@ namespace Logic
 		/**
 		Constructor por defecto.
 		*/
-		CDamageTrigger() : IComponent(), _damage(20.f) {}
+		CDamageTrigger() : IComponent(), _damage(20) {}
 		
 		/**
 		Inicialización del componente usando la descripción de la entidad que hay en 
@@ -61,7 +61,7 @@ namespace Logic
 		/**
 		Daño que se produce cada vez que se toca.
 		*/
-		float _damage;
+		unsigned char _damage;
 
 	}; // class CDamageTrigger
 

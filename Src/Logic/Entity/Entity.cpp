@@ -206,8 +206,11 @@ namespace Logic
 		case Message::SET_TRANSFORM:
 			_transform = ((CMessageTransform*)message)->getTransform();
 		}
+		
 
 		TComponentList::const_iterator it;
+		//Por si nadie quiso el mensaje
+		message->addSmartP();
 		// Para saber si alguien quiso el mensaje.
 		bool anyReceiver = false;
 		for( it = _components.begin(); it != _components.end(); ++it )
@@ -216,6 +219,9 @@ namespace Logic
 			if( emitter != (*it) )
 				anyReceiver = (*it)->set(message) || anyReceiver;
 		}
+		//Por si nadie quiso el mensaje
+		message->subSmartP();
+
 		return anyReceiver;
 
 	} // emitMessage

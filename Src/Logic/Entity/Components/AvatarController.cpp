@@ -65,27 +65,26 @@ namespace Logic
 		switch(message->getMessageType())
 		{
 		case Message::CONTROL:
-			if(!((CMessageControl*)message)->getString().compare("walk"))
+			if(((CMessageControl*)message)->getType()==Control::WALK)
 				walk();
-			else if(!((CMessageControl*)message)->getString().compare("walkBack"))
+			else if(((CMessageControl*)message)->getType()==Control::WALKBACK)
 				walkBack();
-			else if(!((CMessageControl*)message)->getString().compare("stopWalk"))
+			else if(((CMessageControl*)message)->getType()==Control::STOP_WALK)
 				stopWalk();
-			else if(!((CMessageControl*)message)->getString().compare("stopWalkBack"))
+			else if(((CMessageControl*)message)->getType()==Control::STOP_WALKBACK)
 				stopWalkBack();
-			else if(!((CMessageControl*)message)->getString().compare("strafeLeft"))
+			else if(((CMessageControl*)message)->getType()==Control::STRAFE_LEFT)
 				strafeLeft();
-			else if(!((CMessageControl*)message)->getString().compare("strafeRight"))
+			else if(((CMessageControl*)message)->getType()==Control::STRAFE_RIGHT)
 				strafeRight();
-			else if(!((CMessageControl*)message)->getString().compare("stopStrafeLeft"))
+			else if(((CMessageControl*)message)->getType()==Control::STOP_STRAFE_LEFT)
 				stopStrafeLeft();
-			else if(!((CMessageControl*)message)->getString().compare("stopStrafeRight"))
+			else if(((CMessageControl*)message)->getType()==Control::STOP_STRAFE_RIGHT)
 				stopStrafeRight();
-			else if(!((CMessageControl*)message)->getString().compare("mouse"))
-				mouse(((CMessageControl*)message)->getMouse());
-			else if(!((CMessageControl*)message)->getString().compare("jump"))
+			else if(((CMessageControl*)message)->getType()==Control::MOUSE)
+				mouse(((CMessageMouse*)message)->getMouse());
+			else if(((CMessageControl*)message)->getType()==Control::JUMP)
 				jump();
-		
 		}
 
 	} // process
