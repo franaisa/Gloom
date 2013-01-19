@@ -51,56 +51,53 @@ namespace Logic
 				std::string weapon = aux.str();
 												
 				_weapons[i].name = entityInfo->getStringAttribute(weapon+"Name");
-				_weapons[i].damage= entityInfo->getFloatAttribute(weapon+"Damage");
-				_weapons[i].dispersion = entityInfo->getFloatAttribute(weapon+"Dispersion");
+				_weapons[i].damage= entityInfo->getIntAttribute(weapon+"Damage");
+				_weapons[i].dispersion = entityInfo->getIntAttribute(weapon+"Dispersion");
 				_weapons[i].distance = entityInfo->getFloatAttribute(weapon+"Distance");
-				_weapons[i].coolDown = entityInfo->getFloatAttribute(weapon+"CoolDown");
+				_weapons[i].coolDown = entityInfo->getIntAttribute(weapon+"CoolDown");
 			}
 		}
 		return true;
 
 	} // spawn
-	
 	//---------------------------------------------------------
+
 
 	bool CShoot::accept(CMessage *message)
 	{
 		return message->getMessageType() == Message::CONTROL;
 	} // accept
-	
 	//---------------------------------------------------------
+
 
 	void CShoot::process(CMessage *message)
 	{
 		switch(message->getMessageType())
 		{
 			case Message::CONTROL:
-				if(!((CMessageControl*)message)->getType()==Control::LEFT_CLICK){
+				if(((CMessageControl*)message)->getType()==Control::LEFT_CLICK){
 					shoot();
 				}
 				break;
 		}
 
 	} // process
+	//---------------------------------------------------------
+
 
 	void CShoot::shoot(){
 		
-
-
-		
-		Vector3 direction = Math::getDirection(_entity->getTransform());
-		
-
+		//Generación del rayo habiendo obtenido antes el origen y la dirección
+		Graphics::CCamera* camera = Graphics::CServer::getSingletonPtr()->getActiveScene()->getCamera();
+		Vector3 direction = camera->getTargetCameraPosition() - camera->getCameraPosition();
 		direction.normalise();
 
-		//Vector3 origin = _entity->getPosition() + ((_capsuleRadius + 0.1f) * direction);
 		Vector3 origin = Graphics::CServer::getSingletonPtr()->getActiveScene()->getCamera()->getCameraPosition() 
 			 + ((_capsuleRadius + 0.1f) * direction);
 
 		Ray ray(origin, direction);
 
-
-		////////////////////////////////////////////////////////////////////////////////////
+		//Dibujo del rayo
 			Graphics::CScene *scene = Graphics::CServer::getSingletonPtr()->getActiveScene();
 			Ogre::SceneManager *mSceneMgr = scene->getSceneMgr();
 
@@ -121,26 +118,24 @@ namespace Logic
 
 
 		for(int i=0; (i) < _weapons[_actualWeapon].distance;++i){
-			printf("\n%d",i);
-			
 			Vector3 v = ray.getPoint(i);
 			myManualObject->position(v.x,v.y,v.z);
 			// etc 
 		}
 
 			myManualObject->end(); 
- 
 			myManualObjectNode->attachObject(myManualObject);
 
-			//////////////////////////////////////////////////////////////////////////////////
-		
+
+		//Rayo lanzado por el servidor de físicas de acuerdo a la distancia de potencia del arma
 		CEntity *entity = Physics::CServer::getSingletonPtr()->raycastClosest(ray, _weapons[_actualWeapon].distance);
 		
+		//Si hay colisión envíamos a dicha entidad un mensaje de daño
 		if(entity)
 		{
 			printf("\nimpacto con %s", entity->getName().c_str());
 			Logic::CMessageDamaged *m=new Logic::CMessageDamaged(Logic::Message::DAMAGED);
-			m->setDamage(_weapons[_actualWeapon].damage);
+			m->setDamage((unsigned char)_weapons[_actualWeapon].damage);
 			entity->emitMessage(m);
 		}
 	} // shoot

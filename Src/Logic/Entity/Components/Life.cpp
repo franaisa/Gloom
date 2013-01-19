@@ -22,7 +22,7 @@ namespace Logic
 	IMP_FACTORY(CLife);
 	
 	//---------------------------------------------------------
-
+	
 	bool CLife::spawn(CEntity *entity, CMap *map, const Map::CEntity *entityInfo) 
 	{
 		if(!IComponent::spawn(entity,map,entityInfo))

@@ -53,10 +53,10 @@ namespace Logic
 		
 		struct TWeapon{
 			std::string name;
-			float damage;
-			float dispersion;
+			int damage;
+			int dispersion;
 			float distance;
-			float coolDown;
+			int coolDown;
 		};
 
 		
