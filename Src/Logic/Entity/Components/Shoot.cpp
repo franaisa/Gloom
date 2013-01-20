@@ -91,9 +91,9 @@ namespace Logic
 		Graphics::CCamera* camera = Graphics::CServer::getSingletonPtr()->getActiveScene()->getCamera();
 		Vector3 direction = camera->getTargetCameraPosition() - camera->getCameraPosition();
 		direction.normalise();
-
+		//El origen debe ser mínimo la capsula y por si miramos al suelo la separación mínima debe ser 1.5f ( en un futuro es probable que sea recomendable cambiar por no chocar con el grupo de uno mismo )
 		Vector3 origin = Graphics::CServer::getSingletonPtr()->getActiveScene()->getCamera()->getCameraPosition() 
-			 + ((_capsuleRadius + 0.1f) * direction);
+			 + ((_capsuleRadius + 1.5f) * direction);
 
 		Ray ray(origin, direction);
 
