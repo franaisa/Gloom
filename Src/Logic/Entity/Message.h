@@ -19,6 +19,10 @@ namespace Logic {
 	class CEntity;
 };
 
+namespace Net {
+	typedef unsigned char byte;
+};
+
 namespace Logic
 {
 	/**
@@ -98,12 +102,26 @@ namespace Logic
 		 void subSmartP();
 		 virtual ~CMessage(){};
 
-	public:
+	protected:
 		TMessageType _type;
 		unsigned char _smartP;
 	};
 
 
+	// _________________________________________________
+
+	class CMessageNet : public CMessage {
+	public:
+		CMessageNet(TMessageType t) { _type = t; _smartP = 0; };
+		// Nada que hacer, no hay memoria dinámica que liberar
+		virtual ~CMessageNet();
+
+		// Redefinir clases derivadas.
+		virtual Net::byte* serialize();
+		virtual CMessageNet* deserialize();
+	};
+
+	// _________________________________________________
 
 	class CMessageControl : public CMessage{
 	public:
@@ -116,6 +134,7 @@ namespace Logic
 		ControlType _controlType;
 	};
 
+	// _________________________________________________
 
 	class CMessageMouse : public CMessageControl{
 	public:
@@ -128,6 +147,7 @@ namespace Logic
 		float _mouse[2];
 	};
 
+	// _________________________________________________
 
 	class CMessageTransform : public CMessage{
 	public:
@@ -140,6 +160,7 @@ namespace Logic
 		Matrix4 _transform;
 	};
 
+	// _________________________________________________
 
 	class CMessageTouched : public CMessage{
 	public:
@@ -152,6 +173,8 @@ namespace Logic
 		CEntity *_entity;
 	};
 
+	// _________________________________________________
+
 	class CMessageUntouched : public CMessage{
 	public:
 		CMessageUntouched(TMessageType t);
@@ -162,6 +185,8 @@ namespace Logic
 	private:
 		CEntity *_entity;
 	};
+
+	// _________________________________________________
 
 	class CMessageSetAnimation : public CMessage{
 	public:
@@ -177,6 +202,8 @@ namespace Logic
 		bool _bool;
 	};
 
+	// _________________________________________________
+
 	class CMessageStopAnimation : public CMessage{
 	public:
 		CMessageStopAnimation(TMessageType t);
@@ -191,6 +218,8 @@ namespace Logic
 		bool _bool;
 	};
 
+	// _________________________________________________
+
 	class CMessageSwitch: public CMessage{
 	public:
 		CMessageSwitch(TMessageType t);
@@ -202,6 +231,7 @@ namespace Logic
 		unsigned char _change;
 	};
 
+	// _________________________________________________
 
 	class CMessageDamaged: public CMessage{
 	public:
@@ -214,6 +244,8 @@ namespace Logic
 		unsigned char _damage;
 	};
 
+	// _________________________________________________
+
 	class CMessageAvatarWalk: public CMessage{
 	public:
 		CMessageAvatarWalk(TMessageType t);
@@ -224,6 +256,8 @@ namespace Logic
 	private:
 		Vector3 _direction;
 	};
+
+	// _________________________________________________
 
 	class CMessageKinematicMove: public CMessage{
 	public:
