@@ -108,7 +108,7 @@ namespace Logic {
 		// Lo serializamos y enviamos por la red...
 		std::cout << "Enviado mensaje tipo " << txMsg->getMessageType() << " a " << destID << std::endl;
 		Net::NetMessageType msgType = Net::NetMessageType::ENTITY_MSG;// Escribimos el tipo de mensaje de red a enviar
-		Net::CBuffer serialMsg;		
+		Net::CBuffer serialMsg;
 			serialMsg.write(&msgType, sizeof(msgType));
 			serialMsg.write(&destID, sizeof(destID)); // Escribimos el id de la entidad destino
 			Message::Serialize(txMsg, serialMsg);   // Serializamos el mensaje a continuación en el buffer
