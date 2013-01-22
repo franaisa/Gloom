@@ -19,7 +19,7 @@ Contiene la implementación del componente que controla la vida de una entidad.
 
 // Para informar por red que se ha acabado el juego
 #include "Net/Manager.h"
-
+#include "Net/buffer.h"
 
 namespace Logic 
 {
@@ -41,22 +41,22 @@ namespace Logic
 	
 	//---------------------------------------------------------
 
-	bool CLife::accept(const TMessage &message)
+	bool CLife::accept(CMessage *message)
 	{
-		return message._type == Message::DAMAGED;
+		return message->getMessageType() == Message::DAMAGED;
 
 	} // accept
 	
 	//---------------------------------------------------------
 
-	void CLife::process(const TMessage &message)
+	void CLife::process(CMessage *message)
 	{
-		switch(message._type)
+		switch(message->getMessageType())
 		{
 		case Message::DAMAGED:
 			{
 				// Disminuir la vida de la entidad
-				_life -= message._float;
+				_life -= ((CMessageDamaged*)message)->getDamage();
 
 				// Si han matado al jugador sacarlo de la partida
 				if (_life <= 0 && _entity->getType() == "Player") 
@@ -82,12 +82,12 @@ namespace Logic
 						_entity->deactivate();
 				}
 				
-				TMessage msg;
-					msg._type = TMessageType::SET_ANIMATION;						
+				CMessageSetAnimation * msg = new CMessageSetAnimation(TMessageType::SET_ANIMATION);
+											
 				if(_life > 0)  // TODO Poner la animación de herido.
-					msg._string = "Damage";
+					msg->setString("Damage");
 				else  // TODO Si la vida es menor que 0 poner animación de morir.
-					msg._string = "Death";
+					msg->setString("Death");
 				_entity->emitMessage(msg, this);
 			}
 			break;
