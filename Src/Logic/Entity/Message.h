@@ -28,17 +28,20 @@ namespace Logic
 	{
 		enum TMessageType
 		{
-			UNASSIGNED = 0xFFFFFFFF,
-			SET_TRANSFORM,
-			SET_ANIMATION,
-			STOP_ANIMATION,
-			CONTROL,
-			AVATAR_WALK,
-			KINEMATIC_MOVE,
-			TOUCHED,
-			UNTOUCHED,
-			SWITCH,
-			DAMAGED
+			UNASSIGNED          = 0xFFFFFFFF,
+			SET_TRANSFORM       = 0x00000000,
+			SET_ANIMATION       = 0x00000001,
+			STOP_ANIMATION      = 0x00000002,
+			CONTROL	            = 0x00000003,
+			AVATAR_WALK         = 0x00000004,
+			TOUCHED             = 0x00000005,
+			UNTOUCHED           = 0x00000006,
+			SWITCH              = 0x00000007,
+			DAMAGED             = 0x00000008,
+			MOVE_TO             = 0x00000009,
+			ROUTE_TO            = 0x0000000A,
+			FINISHED_ROUTE      = 0x0000000B,
+			FAILED_ROUTE        = 0x0000000C
 		};
 	}
 	/**

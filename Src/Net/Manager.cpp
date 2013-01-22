@@ -104,17 +104,28 @@ namespace Net {
 	{
 		if(!_connections.empty())
 		{
-			// @todo Ahora hay más de una conexión, debemos mandar el mensaje por
+			// TODO Ahora hay más de una conexión, debemos mandar el mensaje por
 			// todas si somos servidor.
-			if(_servidorRed) {
-				TConnectionTable::const_iterator it;
-
-				for(it = _connections.begin(); it != _connections.end(); ++it) {
-					_servidorRed->sendData(it->second, data,longdata,0,1);
-				}
-			}
+			if(_servidorRed)
+				_servidorRed->sendAll(data,longdata,0,1);
 			if(_clienteRed)
-				_clienteRed->sendData(getConnection(Net::ID::SERVER),data,longdata,0,1);
+				_clienteRed->sendData(getConnection(Net::ID::SERVER),data,longdata,0,1); // TODO Se guardan en cliente conexiones con el resto de clientes?
+		}
+
+	} // send
+
+	//---------------------------------------------------------
+
+	void CManager::send(void* data, size_t longdata, Net::NetID id) 
+	{
+		if(!_connections.empty())
+		{
+			// TODO Ahora hay más de una conexión, debemos mandar el mensaje por
+			// todas si somos servidor.
+			if(_servidorRed)
+				_servidorRed->sendData((*_connections.find(id)).second,data,longdata,0,1);
+			if(_clienteRed)
+				_clienteRed->sendData(getConnection(Net::ID::SERVER),data,longdata,0,1); // TODO Se guardan en cliente conexiones con el resto de clientes?
 		}
 
 	} // send
@@ -138,7 +149,7 @@ namespace Net {
 						(*iter)->connexionPacketReceived(paquete);
 					break;
 				case Net::DATOS:
-					if(!internalData(paquete))
+					if(!internalData(paquete)) // Analiza si trae contenido -> TODO: ver funcion
 						for(std::vector<IObserver*>::iterator iter = _observers.begin();iter != _observers.end();++iter)
 							(*iter)->dataPacketReceived(paquete);
 					break;
@@ -182,13 +193,14 @@ namespace Net {
 
 	void CManager::connectTo(char* address, int port, int channels, unsigned int timeout)
 	{
-		assert(_clienteRed && "Cliente Red es null");
-		assert(_connections.empty() && "Ya hay una conexion");
-		CConexion* connection = _clienteRed->connect(address, port, channels,timeout);
-		// Almacenamos esa conexión y le otorgamos un ID de red
-		connection->setId(Net::ID::SERVER);
-		addConnection(Net::ID::SERVER,connection);
+		assert(_clienteRed && "Cliente Red es null"); // Solo se puede ejecutar el connectTo si somos cliente
+		assert(_connections.empty() && "Ya hay una conexion"); // Capamos al cliente a 1 conexión max: la de con el server
 
+		CConexion* connection = _clienteRed->connect(address, port, channels,timeout); // CONNECT
+		
+		// Almacenamos esa conexión y le otorgamos un ID de red
+		connection->setId(Net::ID::SERVER); // Un cliente sólo se conecta al SERVER
+		addConnection(Net::ID::SERVER, connection); // Guardamos en la tabla
 	} // connectTo
 
 	//---------------------------------------------------------
@@ -198,7 +210,7 @@ namespace Net {
 		Net::CBuffer data;
 		data.write(packet->getData(),packet->getDataLength());
 		data.reset();
-		// Ignoramos el tipo de mensaje de red. Ya lo hemos procesado
+		
 		Net::NetMessageType msg;
 		data.read(&msg,sizeof(msg));
 		switch (msg)
@@ -215,21 +227,16 @@ namespace Net {
 
 	//---------------------------------------------------------
 
-	void CManager::connect(CConexion* connection)
+	void CManager::connect(CConexion* connection)// Una nueva conexión de un cliente al sevidor
 	{
-		// Una nueva conexión de un cliente al sevidor
-
 		// Almacenamos esa conexión y le otorgamos un ID de red
 		connection->setId(_nextId);
 		addConnection(_nextId,connection);
 
-		// Avisamos al cliente de cual es su nuevo ID
-		CBuffer buf;
-		// Escribimos el tipo de mensaje de red a enviar
-		NetMessageType type = Net::ASSIGNED_ID;
-		buf.write(&type,sizeof(type));
-		// Escribimos el id del cliente
-		buf.write(&_nextId,sizeof(_nextId));
+		NetMessageType type = Net::ASSIGNED_ID;// Escribimos el tipo de mensaje de red a enviar
+		CBuffer buf;// Avisamos al cliente de cual es su nuevo ID	
+			buf.write(&type,sizeof(type));		
+			buf.write(&_nextId,sizeof(_nextId));// Escribimos el id del cliente
 		_servidorRed->sendData(connection, buf.getbuffer(),buf.getSize(),0,1);
 
 		// Preparamos para la siguiente conexión
@@ -261,7 +268,7 @@ namespace Net {
 		if(_connections.count(id))
 			return false;
 		TConnectionPair elem(id,connection);
-		_connections.insert(elem);
+		_connections.insert(elem); // Insertamos par id - conexion
 		return true;
 
 	} // addConection
@@ -287,7 +294,7 @@ namespace Net {
 	{
 		if(_servidorRed)
 		{
-			_servidorRed->deInit();
+			_servidorRed->deInit(); // TODO analizar que haga disconnect de todo; antes if(_conexion) disconnect (OJO estaba comentado)
 			delete _servidorRed;
 			_servidorRed = 0;
 		}
@@ -301,7 +308,7 @@ namespace Net {
 		{
 			for(TConnectionTable::const_iterator it = _connections.begin(); it != _connections.end(); it++)
 				delete (*it).second;
-			_connections.clear();
+			_connections.clear(); // Quien hace el disconnect
 		}
 	} // deactivateNetwork
 
