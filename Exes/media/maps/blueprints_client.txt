@@ -1,0 +1,11 @@
+World CGraphics
+Player CNetConnector CAnimatedGraphics
+NPC CAnimatedGraphics
+Entity CGraphics
+AnimatedEntity CAnimatedGraphics
+Camera CCamera
+Barril CGraphics
+DoorTrigger
+Door CGraphics
+Blade CAnimatedGraphics
+Waypoint
