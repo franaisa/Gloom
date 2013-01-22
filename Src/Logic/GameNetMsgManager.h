@@ -89,7 +89,7 @@ namespace Logic
 		@param message Mensaje que debe ser serializado y enviado.
 		@param destination ID de la entidad a la que va dirigido el mensaje.
 		*/
-		void sendEntityMessage(const TMessage &message, TEntityID destination);
+		void sendEntityMessage(CMessage* message, TEntityID destination);
 
 		/// IOBSERVER
 		virtual void dataPacketReceived(Net::CPaquete* packet);

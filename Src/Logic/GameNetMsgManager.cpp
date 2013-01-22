@@ -96,7 +96,7 @@ namespace Logic {
 
 	//---------------------------------------------------------
 		
-	void CGameNetMsgManager::sendEntityMessage(const TMessage &txMsg, TEntityID destID)
+	void CGameNetMsgManager::sendEntityMessage(CMessage* txMsg, TEntityID destID)
 	{
 		// TODO serializar el mensaje lógico. Para la serialización
 		// apoyarse en Net::CBuffer. Se debe guardar primero el tipo
@@ -106,7 +106,7 @@ namespace Logic {
 		// el envío usando el gestor de red.
 		// Es un mensaje para enviar por el tubo.
 		// Lo serializamos y enviamos por la red...
-		std::cout << "Enviado mensaje tipo " << txMsg._type << " a " << destID << std::endl;
+		std::cout << "Enviado mensaje tipo " << txMsg->getMessageType() << " a " << destID << std::endl;
 		Net::NetMessageType msgType = Net::NetMessageType::ENTITY_MSG;// Escribimos el tipo de mensaje de red a enviar
 		Net::CBuffer serialMsg;		
 			serialMsg.write(&msgType, sizeof(msgType));
