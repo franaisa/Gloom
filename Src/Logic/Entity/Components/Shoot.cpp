@@ -51,10 +51,10 @@ namespace Logic
 				std::string weapon = aux.str();
 												
 				_weapons[i].name = entityInfo->getStringAttribute(weapon+"Name");
-				_weapons[i].damage= entityInfo->getIntAttribute(weapon+"Damage");
-				_weapons[i].dispersion = entityInfo->getIntAttribute(weapon+"Dispersion");
+				_weapons[i].damage= (unsigned char) entityInfo->getIntAttribute(weapon+"Damage");
+				_weapons[i].dispersion = (unsigned char) entityInfo->getIntAttribute(weapon+"Dispersion");
 				_weapons[i].distance = entityInfo->getFloatAttribute(weapon+"Distance");
-				_weapons[i].coolDown = entityInfo->getIntAttribute(weapon+"CoolDown");
+				_weapons[i].coolDown = (unsigned char) entityInfo->getIntAttribute(weapon+"CoolDown");
 			}
 		}
 		return true;
@@ -135,7 +135,7 @@ namespace Logic
 		{
 			printf("\nimpacto con %s", entity->getName().c_str());
 			Logic::CMessageDamaged *m=new Logic::CMessageDamaged(Logic::Message::DAMAGED);
-			m->setDamage((unsigned char)_weapons[_actualWeapon].damage);
+			m->setDamage(_weapons[_actualWeapon].damage);
 			entity->emitMessage(m);
 		}
 	} // shoot

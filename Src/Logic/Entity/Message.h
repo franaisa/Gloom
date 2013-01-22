@@ -94,7 +94,7 @@ namespace Logic
 		 void subSmartP();
 		 virtual ~CMessage(){};
 
-	public:
+	protected:
 		TMessageType _type;
 		unsigned char _smartP;
 	};

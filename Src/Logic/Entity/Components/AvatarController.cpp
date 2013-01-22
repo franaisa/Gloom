@@ -232,13 +232,13 @@ namespace Logic
 			direction += directionStrafe;
 			direction.normalise();
 			direction *= msecs * _speed;
-			Vector3 newPosition = _entity->getPosition() + direction;
-			_entity->setPosition(newPosition);
 
 			Logic::CMessageAvatarWalk *m=new Logic::CMessageAvatarWalk(Logic::Message::AVATAR_WALK);
-			
 			m->setDirection(direction);
 			_entity->emitMessage(m);
+
+			//Vector3 newPosition = _entity->getPosition() + direction;
+			//_entity->setPosition(newPosition);
 		}
 
 	} // tick

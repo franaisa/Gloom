@@ -55,7 +55,7 @@ namespace Logic
 				// Disminuir la vida de la entidad
 				
 				_life -= ((CMessageDamaged*)message)->getDamage();
-				printf("\nAh!, ya solo me queda %f de vida", _life);
+				printf("\nAh!, ya solo me queda %i de vida", _life);
 
 				// Si han matado al jugador salir de la partida
 				/*

@@ -64,7 +64,7 @@ namespace Logic
 		/**
 		Vida de la entidad
 		*/
-		float _life;
+		int _life;
 
 	}; // class CLife
 
