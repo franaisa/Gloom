@@ -107,20 +107,6 @@ namespace Logic
 		unsigned char _smartP;
 	};
 
-
-	// _________________________________________________
-
-	class CMessageNet : public CMessage {
-	public:
-		CMessageNet(TMessageType t) { _type = t; _smartP = 0; };
-		// Nada que hacer, no hay memoria dinámica que liberar
-		virtual ~CMessageNet();
-
-		// Redefinir clases derivadas.
-		virtual Net::byte* serialize();
-		virtual CMessageNet* deserialize();
-	};
-
 	// _________________________________________________
 
 	class CMessageControl : public CMessage{
@@ -269,6 +255,7 @@ namespace Logic
 	private:
 		Vector3 _movement;
 	};
+
 
 } // namespace Logic
 
