@@ -107,11 +107,14 @@ namespace Logic {
 		// Es un mensaje para enviar por el tubo.
 		// Lo serializamos y enviamos por la red...
 		std::cout << "Enviado mensaje tipo " << txMsg->getMessageType() << " a " << destID << std::endl;
+
+
 		Net::NetMessageType msgType = Net::NetMessageType::ENTITY_MSG;// Escribimos el tipo de mensaje de red a enviar
 		Net::CBuffer serialMsg;
 			serialMsg.write(&msgType, sizeof(msgType));
 			serialMsg.write(&destID, sizeof(destID)); // Escribimos el id de la entidad destino
-			Message::Serialize(txMsg, serialMsg);   // Serializamos el mensaje a continuación en el buffer
+			serialMsg.write(&txMsg,sizeof(txMsg)); //Guardamos el mensaje en el buffer
+			
 		Net::CManager::getSingletonPtr()->send(serialMsg.getbuffer(), serialMsg.getSize());
 
 		LOG("TX ENTITY_MSG " << txMsg._type << " to EntityID " << destID);
@@ -136,13 +139,14 @@ namespace Logic {
 			serialMsg.read(&msgType,sizeof(msgType));
 		TEntityID destID; // Escribimos el id de la entidad
 			serialMsg.read(&destID, sizeof(destID));
-		TMessage rxMsg;
-			Message::Deserialize(serialMsg, rxMsg);
+			Net::byte * msg = serialMsg.getbuffer();
+			CMessage * txMsg = (CMessage*)msg+sizeof(msgType)+sizeof(destID);
+			//Message::Deserialize(serialMsg, rxMsg);
 
 		// Reenvío del mensaje deserializado
 		CEntity* destEntity = Logic::CServer::getSingletonPtr()->getMap()->getEntityByID(destID);
 		if(destEntity != 0)
-			destEntity->emitMessage(rxMsg);
+			destEntity->emitMessage(txMsg);
 		
 		LOG("RX ENTITY_MSG " << rxMsg._type << " from EntityID " << destID);
 	} // processEntityMessage
