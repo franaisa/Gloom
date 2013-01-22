@@ -666,7 +666,7 @@ namespace GUI
 		@param e Evento de teclado de OIS.
 		@return Evento de teclado propio.
 		*/
-		TKey ois2galeon(const OIS::KeyEvent &e);
+		TKey ois2gloom(const OIS::KeyEvent &e);
 
 		/** 
 		Método invocado por OIS cuando se mueve el ratón. 

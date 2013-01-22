@@ -22,12 +22,13 @@ namespace Logic {
 	
 	//---------------------------------------------------------
 
-	bool CCommunicationPort::set(const TMessage &message)
+	bool CCommunicationPort::set(CMessage *message)
 	{
 		bool accepted = accept(message);
-		if(accepted)
+		if(accepted){
+			message->addSmartP();
 			_messages.push_back(message);
-
+		}
 		return accepted;
 
 	} // set
@@ -36,12 +37,12 @@ namespace Logic {
 
 	void CCommunicationPort::processMessages()
 	{
-		TMessageList::const_iterator it = _messages.begin();
-		for(; it != _messages.end(); it++)
+		CMessageList::const_iterator it = _messages.begin();
+		for(; it != _messages.end(); it++){
 			process(*it);
-
+			(*it)->subSmartP();
+		}
 		_messages.clear();
-
 	} // processMessages
 
 } // namespace Logic

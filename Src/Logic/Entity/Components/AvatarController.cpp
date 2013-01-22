@@ -53,40 +53,38 @@ namespace Logic
 	
 	//---------------------------------------------------------
 
-	bool CAvatarController::accept(const TMessage &message)
+	bool CAvatarController::accept(CMessage *message)
 	{
-		return message._type == Message::CONTROL;
-
+		return message->getMessageType() == Message::CONTROL;
 	} // accept
 	
 	//---------------------------------------------------------
 
-	void CAvatarController::process(const TMessage &message)
+	void CAvatarController::process(CMessage *message)
 	{
-		switch(message._type)
+		switch(message->getMessageType())
 		{
 		case Message::CONTROL:
-			if(!message._string.compare("walk"))
+			if(((CMessageControl*)message)->getType()==Control::WALK)
 				walk();
-			else if(!message._string.compare("walkBack"))
+			else if(((CMessageControl*)message)->getType()==Control::WALKBACK)
 				walkBack();
-			else if(!message._string.compare("stopWalk"))
+			else if(((CMessageControl*)message)->getType()==Control::STOP_WALK)
 				stopWalk();
-			else if(!message._string.compare("stopWalkBack"))
+			else if(((CMessageControl*)message)->getType()==Control::STOP_WALKBACK)
 				stopWalkBack();
-			else if(!message._string.compare("strafeLeft"))
+			else if(((CMessageControl*)message)->getType()==Control::STRAFE_LEFT)
 				strafeLeft();
-			else if(!message._string.compare("strafeRight"))
+			else if(((CMessageControl*)message)->getType()==Control::STRAFE_RIGHT)
 				strafeRight();
-			else if(!message._string.compare("stopStrafeLeft"))
+			else if(((CMessageControl*)message)->getType()==Control::STOP_STRAFE_LEFT)
 				stopStrafeLeft();
-			else if(!message._string.compare("stopStrafeRight"))
+			else if(((CMessageControl*)message)->getType()==Control::STOP_STRAFE_RIGHT)
 				stopStrafeRight();
-			else if(!message._string.compare("mouse"))
-				mouse(message._mouse);
-			else if(!message._string.compare("jump"))
+			else if(((CMessageControl*)message)->getType()==Control::MOUSE)
+				mouse(((CMessageMouse*)message)->getMouse());
+			else if(((CMessageControl*)message)->getType()==Control::JUMP)
 				jump();
-
 		}
 
 	} // process
@@ -102,7 +100,7 @@ namespace Logic
 	
 	//---------------------------------------------------------
 
-	void CAvatarController::walk() 
+	void CAvatarController::walk()
 	{
 		_walking = true;
 
@@ -168,11 +166,13 @@ namespace Logic
 	//---------------------------------------------------------
 
 	void CAvatarController::jump(){
+		/*
 		//si ya estaba saltando, pasamos
 		if(_jumping)
 			return;
 
 		_jumping = true;
+		*/
 	}//jump
 	
 	//---------------------------------------------------------
@@ -183,10 +183,10 @@ namespace Logic
 
 		//si estamos saltando, realizamos una simulación de un salto (provisional hasta tener physX)
 		if(_jumping){
-			if(_timeJump > 800){
+			if(_timeJump > 600){
 				_timeJump = 0.0;
 				_jumping = false;
-			}else if (_timeJump >=400){
+			}else if (_timeJump >=300){
 				Vector3 direction(0,-1,0);
 				direction *= msecs * 0.05;
 				_timeJump+=msecs;
@@ -232,8 +232,13 @@ namespace Logic
 			direction += directionStrafe;
 			direction.normalise();
 			direction *= msecs * _speed;
-			Vector3 newPosition = _entity->getPosition() + direction;
-			_entity->setPosition(newPosition);
+
+			Logic::CMessageAvatarWalk *m=new Logic::CMessageAvatarWalk(Logic::Message::AVATAR_WALK);
+			m->setDirection(direction);
+			_entity->emitMessage(m);
+
+			//Vector3 newPosition = _entity->getPosition() + direction;
+			//_entity->setPosition(newPosition);
 		}
 
 	} // tick

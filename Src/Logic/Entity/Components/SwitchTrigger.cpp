@@ -30,6 +30,7 @@ namespace Logic
 
 		// TODO: leer atributo del mapa "target"
 		// Leer atributo del mapa "target" y almacenarlo en el atributo privado _targetName
+		_targetName = entityInfo->getStringAttribute("target");
 
 		return true;
 
@@ -59,7 +60,7 @@ namespace Logic
 	
 	//---------------------------------------------------------
 
-	bool CSwitchTrigger::accept(const TMessage &message)
+	bool CSwitchTrigger::accept(CMessage *message)
 	{
 		// TODO: recibir mensajes de tipo TOUCHED y UNTOUCHED
 		return false;
@@ -68,9 +69,9 @@ namespace Logic
 	
 	//---------------------------------------------------------
 
-	void CSwitchTrigger::process(const TMessage &message)
+	void CSwitchTrigger::process(CMessage *message)
 	{
-		switch(message._type)
+		switch(message->getMessageType())
 		{
 		case Message::TOUCHED:
 		case Message::UNTOUCHED:
@@ -78,6 +79,8 @@ namespace Logic
 			{
 				// TODO: mandar un mensaje de tipo SWITCH a la entidad target
 				// Mandamos un 1 si TOUCHED y un 0 si UNTOUCHED 
+				CMessageSwitch *m=new CMessageSwitch(Message::SWITCH);
+				
 			}
 			break;
 		}

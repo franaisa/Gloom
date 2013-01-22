@@ -136,7 +136,8 @@ namespace Math
 	*/
 	static Vector3 getDirectionPitch(float orientation) 
 	{
-		return Vector3(0, sin(orientation), 0);
+		
+		return Vector3(0, orientation, 0);
 
 	} // getDirection
 	
@@ -200,9 +201,10 @@ namespace Math
 		Matrix3 rotation;
 		transform.extract3x3Matrix(rotation);
 		Ogre::Radian yaw, pitch, roll;
-		rotation.ToEulerAnglesYXZ(yaw, pitch, roll);
+		
+		rotation.ToEulerAnglesYZX(yaw, pitch, roll);
 		Ogre::Radian newPitch = pitch + Ogre::Radian(turn);
-		rotation.FromEulerAnglesYXZ(yaw, newPitch, roll);
+		rotation.FromEulerAnglesYZX(yaw, newPitch, roll);
 		transform = rotation;
 
 	} // pitch
@@ -218,7 +220,7 @@ namespace Math
 		Matrix3 rotation;
 		transform.extract3x3Matrix(rotation);
 		Ogre::Radian yaw, pitch, roll;
-		rotation.ToEulerAnglesYXZ(yaw, pitch, roll);
+		rotation.ToEulerAnglesYZX(yaw, pitch, roll);
 		return pitch.valueRadians();
 
 	} // getPitch

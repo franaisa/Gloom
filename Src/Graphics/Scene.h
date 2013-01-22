@@ -117,7 +117,7 @@ namespace Graphics
 		/**
 		Elimina una entidad gráfica de la escena. 
 		<p>
-		@remarks Este método NO destrulle la entidad, ésta solo deja de
+		@remarks Este método NO destruye la entidad, ésta solo deja de
 		ser parte de la escena.
 
 		@param entity Entidad gráfica que se quiere eliminar de la escena.
@@ -127,7 +127,7 @@ namespace Graphics
 		/**
 		Elimina una entidad gráfica estática de la escena. 
 		<p>
-		@remarks Este método NO destrulle la entidad, ésta solo deja de
+		@remarks Este método NO destruye la entidad, ésta solo deja de
 		ser parte de la escena.
 
 		@param entity Entidad gráfica estática que se quiere eliminar de 
@@ -135,6 +135,7 @@ namespace Graphics
 		*/
 		void removeStaticEntity(CStaticEntity* entity);
 
+		Ogre::SceneManager *getSceneMgr() {return _sceneMgr;}
 	protected:
 
 		/**
@@ -176,7 +177,7 @@ namespace Graphics
 
 		/**
 		Añade las entidades estáticas a la geometría estática del nivel
-		y la construlle. Si la geometría estática ya ha sido construida
+		y la construye. Si la geometría estática ya ha sido construida
 		no se vuelve a construir.
 		<p>
 		@remarks Una vez construida la geometría estática no se pueden 
@@ -196,7 +197,9 @@ namespace Graphics
 
 		@return Puntero al gestor de la escena de Ogre.
 		*/
-		Ogre::SceneManager *getSceneMgr() {return _sceneMgr;}
+
+		//esto ha de ir descomentado
+		//Ogre::SceneManager *getSceneMgr() {return _sceneMgr;}
 
 
 		/**

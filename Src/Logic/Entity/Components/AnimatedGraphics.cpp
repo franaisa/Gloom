@@ -46,31 +46,32 @@ namespace Logic
 	
 	//---------------------------------------------------------
 
-	bool CAnimatedGraphics::accept(const TMessage &message)
+	bool CAnimatedGraphics::accept(CMessage *message)
 	{
 		return CGraphics::accept(message) ||
-			   message._type == Message::SET_ANIMATION ||
-			   message._type == Message::STOP_ANIMATION;
+			message->getMessageType() == Message::SET_ANIMATION ||
+			message->getMessageType() == Message::STOP_ANIMATION;
 
 	} // accept
 	
 	//---------------------------------------------------------
 
-	void CAnimatedGraphics::process(const TMessage &message)
+	void CAnimatedGraphics::process(CMessage *message)
 	{
+		
 		CGraphics::process(message);
 
-		switch(message._type)
+		switch(message->getMessageType())
 		{
 		case Message::SET_ANIMATION:
 			// Paramos todas las animaciones antes de poner una nueva.
 			// Un control más sofisticado debería permitir interpolación
 			// de animaciones. Galeon no lo plantea.
 			_animatedGraphicsEntity->stopAllAnimations();
-			_animatedGraphicsEntity->setAnimation(message._string,message._bool);
+			_animatedGraphicsEntity->setAnimation(((CMessageSetAnimation*)message)->getString(),((CMessageSetAnimation*)message)->getBool());
 			break;
 		case Message::STOP_ANIMATION:
-			_animatedGraphicsEntity->stopAnimation(message._string);
+			_animatedGraphicsEntity->stopAnimation(((CMessageStopAnimation*)message)->getString());
 			break;
 		}
 

@@ -52,19 +52,19 @@ namespace Logic
 		/**
 		Este componente sólo acepta mensajes de tipo DAMAGED.
 		*/
-		virtual bool accept(const TMessage &message);
+		virtual bool accept(CMessage *message);
 
 		/**
 		Al recibir un mensaje de tipo DAMAGED la vida de la entidad disminuye.
 		*/
-		virtual void process(const TMessage &message);
+		virtual void process(CMessage *message);
 
 	protected:
 
 		/**
 		Vida de la entidad
 		*/
-		float _life;
+		int _life;
 
 	}; // class CLife
 

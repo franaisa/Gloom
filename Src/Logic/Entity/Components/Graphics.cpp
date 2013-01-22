@@ -21,6 +21,8 @@ gráfica de la entidad.
 #include "Graphics/Entity.h"
 #include "Graphics/StaticEntity.h"
 
+#include "OgreEntity.h"
+
 namespace Logic 
 {
 	IMP_FACTORY(CGraphics);
@@ -79,12 +81,7 @@ namespace Logic
 				return 0;
 		}
 
-		_graphicsEntity->setTransform(_entity->getTransform());
-		//Ogre::Matrix3 matrix = Ogre::Matrix3::IDENTITY;
-		//matrix = Ogre::Matrix3(1,0,0, 0,1,1, 0,0,1);
-
-		//_graphicsEntity->setOrientation(matrix);
-		
+		_graphicsEntity->setTransform(_entity->getTransform());		
 		
 		return _graphicsEntity;
 
@@ -92,20 +89,19 @@ namespace Logic
 	
 	//---------------------------------------------------------
 
-	bool CGraphics::accept(const TMessage &message)
+	bool CGraphics::accept(CMessage *message)
 	{
-		return message._type == Message::SET_TRANSFORM;
-
+		return (message->getMessageType() == Message::SET_TRANSFORM);
 	} // accept
 	
 	//---------------------------------------------------------
 
-	void CGraphics::process(const TMessage &message)
+	void CGraphics::process(CMessage *message)
 	{
-		switch(message._type)
+		switch(message->getMessageType())
 		{
 		case Message::SET_TRANSFORM:
-			_graphicsEntity->setTransform(message._transform);
+			_graphicsEntity->setTransform(((CMessageTransform*)message)->getTransform());
 		}
 
 	} // process

@@ -1,10 +1,10 @@
 //---------------------------------------------------------------------------
-// Galeon.cpp
+// Configure.cpp
 //---------------------------------------------------------------------------
 
 /**
 @file Configure.cpp
-Configura las opciones gráficas del programa Galeon. Según la configuración
+Configura las opciones gráficas del programa Gloom. Según la configuración
 de las opciones del precompilador (_VISUALLEAKDETECTOR) se comprueba existencia de 
 leaks. En función de la configuración y plataforma se usa un main o un WinMain.
 

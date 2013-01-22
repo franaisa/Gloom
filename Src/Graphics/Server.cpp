@@ -25,6 +25,7 @@ la ventana, etc.
 #include <OgreRoot.h>
 #include <OgreRenderWindow.h>
 #include <OgreWindowEventUtilities.h>
+#include <OgreRay.h>
 
 namespace Graphics 
 {
@@ -116,7 +117,7 @@ namespace Graphics
 	} // close
 
 	//--------------------------------------------------------
-		
+
 	typedef std::pair<std::string,CScene*> TStringScenePar;
 
 	CScene* CServer::createScene(const std::string& name)
@@ -222,5 +223,7 @@ namespace Graphics
 			_root->renderOneFrame(secs);
 		}
 	} // tick
+
+	//--------------------------------------------------------
 
 } // namespace Graphics

@@ -61,24 +61,23 @@ namespace GUI {
 	{
 		if(_controlledAvatar)
 		{
-			Logic::TMessage m;
-			m._type = Logic::Message::CONTROL;
+			Logic::CMessageControl *m=new Logic::CMessageControl(Logic::Message::CONTROL);
 			switch(key.keyId)
 			{
 			case GUI::Key::W:
-				m._string = "walk";
+				m->setType(Logic::Control::WALK);
 				break;
 			case GUI::Key::S:
-				m._string = "walkBack";
+				m->setType(Logic::Control::WALKBACK);
 				break;
 			case GUI::Key::A:
-				m._string = "strafeLeft";
+				m->setType(Logic::Control::STRAFE_LEFT);
 				break;
 			case GUI::Key::D:
-				m._string = "strafeRight";
+				m->setType(Logic::Control::STRAFE_RIGHT);
 				break;
 			case GUI::Key::SPACE:
-				m._string = "jump";
+				m->setType(Logic::Control::JUMP);
 				break;
 			default:
 				return false;
@@ -96,24 +95,21 @@ namespace GUI {
 	{
 		if(_controlledAvatar)
 		{
-			Logic::TMessage m;
-			m._type = Logic::Message::CONTROL;
+			Logic::CMessageControl *m=new Logic::CMessageControl(Logic::Message::CONTROL);
 			switch(key.keyId)
 			{
 			case GUI::Key::W:
-				m._string = "stopWalk";
+				m->setType(Logic::Control::STOP_WALK);
 				break;
 			case GUI::Key::S:
-				m._string = "stopWalkBack";
+				m->setType(Logic::Control::STOP_WALKBACK);
 				break;
-
 			case GUI::Key::A:
-				m._string = "stopStrafeLeft";
+				m->setType(Logic::Control::STOP_STRAFE_LEFT);
 				break;
 			case GUI::Key::D:
-				m._string = "stopStrafeRight";
+				m->setType(Logic::Control::STOP_STRAFE_RIGHT);
 				break;
-
 			default:
 				return false;
 			}
@@ -130,11 +126,10 @@ namespace GUI {
 	{
 		if(_controlledAvatar)
 		{
-			Logic::TMessage m;
-			m._type = Logic::Message::CONTROL;
-			m._string = "mouse";
-			m._mouse[0] = -(float)mouseState.movX * TURN_FACTOR_X;
-			m._mouse[1] = -(float)mouseState.movY * TURN_FACTOR_Y;
+			Logic::CMessageMouse *m=new Logic::CMessageMouse(Logic::Message::CONTROL);
+			m->setType(Logic::Control::MOUSE);
+			float mouse[]={-(float)mouseState.movX * TURN_FACTOR_X,-(float)mouseState.movY * TURN_FACTOR_Y};
+			m->setMouse(mouse);
 			_controlledAvatar->emitMessage(m);
 			return true;
 		}
@@ -146,12 +141,36 @@ namespace GUI {
 		
 	bool CPlayerController::mousePressed(const CMouseState &mouseState)
 	{
+		if(_controlledAvatar)
+		{
+			Logic::CMessageControl *m=new Logic::CMessageControl(Logic::Message::CONTROL);
+			switch(mouseState.button)
+			{
+			case GUI::Button::LEFT:
+				m->setType(Logic::Control::LEFT_CLICK);
+				break;
+			case GUI::Button::RIGHT:
+				m->setType(Logic::Control::RIGHT_CLICK);
+				break;
+			case GUI::Button::MIDDLE:
+				m->setType(Logic::Control::MIDDLE_CLICK);
+				break;
+			case GUI::Button::BUTTON_3:
+				m->setType(Logic::Control::BUTTON3_CLICK);
+				break;
+			
+			default:
+				return false;
+			}
+			_controlledAvatar->emitMessage(m);
+			return true;
+		}
 		return false;
 
 	} // mousePressed
 
 	//--------------------------------------------------------
-
+	
 	bool CPlayerController::mouseReleased(const CMouseState &mouseState)
 	{
 		return false;

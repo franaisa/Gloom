@@ -21,13 +21,18 @@ GENERAL NOTES
 		- Beñat Berasategi Olaizola
 		- Ángel Arenas Civantos
 	
-	** Programmers:
+	** Core Engineers:
 		- Ruben Mulero Guerrero
-		- Antonio Jesus Narvaez Corrales
+		- Antonio Jesus Narváez Corrales
 		- Jose Antonio García Yáñez
 		- Javier Fernández Villanueva
 		- Francisco Aisa García
 
+	** Collaborators:
+		- David Llansó García
+		- Marco Antonio Gómez Martín
+		- Antonio Sánchez Ruiz-Granados
+		
 * About the project: Gloom is being developed as a masters thesis for the Complutense
 University of Madrid. Please note that the development is in a very early stage. 
 Alpha state gameplay will be available sometime around May 2013.

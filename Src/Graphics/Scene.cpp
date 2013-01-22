@@ -101,18 +101,8 @@ namespace Graphics
 		_viewport = BaseSubsystems::CServer::getSingletonPtr()->getRenderWindow()
 						->addViewport(_camera->getCamera());
 		_viewport->setBackgroundColour(Ogre::ColourValue::Black);
-
+		
 		_sceneMgr->setAmbientLight(Ogre::ColourValue(.9f,.9f,.9f));
-
-		// Además de la luz ambiente creamos una luz direccional que 
-		// hace que se vean mejor los volúmenes de las entidades.
-		_directionalLight = _sceneMgr->createLight("directional light");
-		_directionalLight->setDiffuseColour(.5f,.5f,.5f);
-		_directionalLight->setSpecularColour(.5f,.5f,.5f);
-		_directionalLight->setType(Ogre::Light::LT_DIRECTIONAL);
-		_directionalLight->setDirection(0, -150, 0);
-		_directionalLight->setType(Ogre::Light::LT_POINT);
-		_directionalLight->setPosition(0, 500, 0);
 
 	} // activate
 

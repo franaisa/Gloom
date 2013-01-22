@@ -25,6 +25,7 @@ namespace Ogre
 	class Root;
 	class RenderWindow;
 	class Timer;
+	class Ray;
 }
 namespace Graphics 
 {

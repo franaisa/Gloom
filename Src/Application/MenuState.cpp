@@ -17,6 +17,7 @@ Contiene la implementación del estado de menú.
 #include "MenuState.h"
 
 #include "GUI/Server.h"
+#include "GUI/GUIEventArgs.h"
 
 #include <CEGUISystem.h>
 #include <CEGUIWindowManager.h>
@@ -35,18 +36,26 @@ namespace Application {
 	{
 		CApplicationState::init();
 
-		// Cargamos la ventana que muestra el menú
-		CEGUI::WindowManager::getSingletonPtr()->loadWindowLayout("Menu.layout");
-		_menuWindow = CEGUI::WindowManager::getSingleton().getWindow("Menu");
-		
+		// En el propio estado para cambiar a otra configuracion
+		//GUI::getSingletonPtr()->changeStateLayout(this, "layout que nos interese");
+
+		//CEGUI::WindowManager::getSingletonPtr()->loadWindowLayout("Menu.layout");
+		//_menuWindow = CEGUI::WindowManager::getSingleton().getWindow("Menu");
+
+		GUI::CServer::getSingletonPtr()->addLayoutToState(this, "Menu");
+
 		// Asociamos los botones del menú con las funciones que se deben ejecutar.
 		CEGUI::WindowManager::getSingleton().getWindow("Menu/Start")->
 			subscribeEvent(CEGUI::PushButton::EventClicked, 
 				CEGUI::SubscriberSlot(&CMenuState::startReleased, this));
+
+		//GUI::CServer::getSingletonPtr()->addButtonToLayout(this, "Menu", "Start", &CMenuState::startReleased);
 		
 		CEGUI::WindowManager::getSingleton().getWindow("Menu/Exit")->
 			subscribeEvent(CEGUI::PushButton::EventClicked, 
 				CEGUI::SubscriberSlot(&CMenuState::exitReleased, this));
+
+		//GUI::CServer::getSingletonPtr()->addButtonToLayout(this, "Menu", "Exit", &CMenuState::exitReleased);
 	
 		return true;
 
@@ -66,23 +75,29 @@ namespace Application {
 	{
 		CApplicationState::activate();
 
+		GUI::CServer::getSingletonPtr()->activateGUI(this, "Menu");
+		GUI::CServer::getSingletonPtr()->activateMouseCursor();
+
 		// Activamos la ventana que nos muestra el menú y activamos el ratón.
-		CEGUI::System::getSingletonPtr()->setGUISheet(_menuWindow);
+		/*CEGUI::System::getSingletonPtr()->setGUISheet(_menuWindow);
 		_menuWindow->setVisible(true);
 		_menuWindow->activate();
-		CEGUI::MouseCursor::getSingleton().show();
+		CEGUI::MouseCursor::getSingleton().show();*/
 
 	} // activate
 
 	//--------------------------------------------------------
 
 	void CMenuState::deactivate() 
-	{		
+	{	
+		GUI::CServer::getSingletonPtr()->deactivateGUI();
+		GUI::CServer::getSingletonPtr()->deactivateMouseCursor();
+
 		// Desactivamos la ventana GUI con el menú y el ratón.
-		CEGUI::MouseCursor::getSingleton().hide();
+		/*CEGUI::MouseCursor::getSingleton().hide();
 		_menuWindow->deactivate();
 		_menuWindow->setVisible(false);
-		
+		*/
 		CApplicationState::deactivate();
 
 	} // deactivate
@@ -156,6 +171,13 @@ namespace Application {
 
 	} // startReleased
 			
+	/*bool CMenuState::startReleased(const GUI::GUIEventArgs& e)
+	{
+		_app->setState("game");
+		return true;
+
+	} // startReleased*/
+
 	//--------------------------------------------------------
 
 	bool CMenuState::exitReleased(const CEGUI::EventArgs& e)
