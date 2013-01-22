@@ -102,10 +102,14 @@
     <ClCompile Include="..\..\Src\Application\3DApplication.cpp" />
     <ClCompile Include="..\..\Src\Application\BaseApplication.cpp" />
     <ClCompile Include="..\..\Src\Application\Clock.cpp" />
+    <ClCompile Include="..\..\Src\Application\GameOverState.cpp" />
     <ClCompile Include="..\..\Src\Application\Gloom.cpp" />
     <ClCompile Include="..\..\Src\Application\GloomApplication.cpp" />
     <ClCompile Include="..\..\Src\Application\GameState.cpp" />
+    <ClCompile Include="..\..\Src\Application\LobbyClientState.cpp" />
+    <ClCompile Include="..\..\Src\Application\LobbyServerState.cpp" />
     <ClCompile Include="..\..\Src\Application\MenuState.cpp" />
+    <ClCompile Include="..\..\Src\Application\NetMenuState.cpp" />
     <ClCompile Include="..\..\Src\Application\OgreClock.cpp" />
     <ClCompile Include="..\..\Src\Docs\docCompilando.cpp" />
     <ClCompile Include="..\..\Src\Docs\docDirectorios.cpp" />
@@ -117,9 +121,13 @@
     <ClInclude Include="..\..\Src\Application\Clock.h" />
     <ClInclude Include="..\..\Src\Application\Documentation.h" />
     <ClInclude Include="..\..\Src\Application\ExitState.h" />
+    <ClInclude Include="..\..\Src\Application\GameOverState.h" />
     <ClInclude Include="..\..\Src\Application\GloomApplication.h" />
     <ClInclude Include="..\..\Src\Application\GameState.h" />
+    <ClInclude Include="..\..\Src\Application\LobbyClientState.h" />
+    <ClInclude Include="..\..\Src\Application\LobbyServerState.h" />
     <ClInclude Include="..\..\Src\Application\MenuState.h" />
+    <ClInclude Include="..\..\Src\Application\NetMenuState.h" />
     <ClInclude Include="..\..\Src\Application\OgreClock.h" />
   </ItemGroup>
   <ItemGroup>

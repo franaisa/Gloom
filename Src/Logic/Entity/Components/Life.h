@@ -24,7 +24,7 @@ namespace Logic
 	<p>
 	La vida de la entidad se especifica en el mapa con el atributo "life".
 
-	@todo  Si la vida pasa a ser 0 que la entidad muera (poner animación de muerte?)
+	TODO  Si la vida pasa a ser 0 que la entidad muera (poner animación de muerte?)
 	y si es el jugador habrá que terminar el juego. Si la vida sigue siendo mayor 
 	que 0 trás un golpe ¿poner la animación de herido?.
 	
@@ -52,12 +52,12 @@ namespace Logic
 		/**
 		Este componente sólo acepta mensajes de tipo DAMAGED.
 		*/
-		virtual bool accept(CMessage *message);
+		virtual bool accept(const TMessage &message);
 
 		/**
 		Al recibir un mensaje de tipo DAMAGED la vida de la entidad disminuye.
 		*/
-		virtual void process(CMessage *message);
+		virtual void process(const TMessage &message);
 
 	protected:
 
