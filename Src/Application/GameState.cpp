@@ -25,67 +25,38 @@ Contiene la implementación del estado de juego.
 
 #include "Physics/Server.h"
 
-//#include <CEGUISystem.h>
-//#include <CEGUIWindowManager.h>
-//#include <CEGUIWindow.h>
+#include <CEGUISystem.h>
+#include <CEGUIWindowManager.h>
+#include <CEGUIWindow.h>
 
 namespace Application {
 
 	bool CGameState::init() 
 	{
-		// Ejecutamos la inicialización de la clase padre
-		// En este caso no hace nada, solo retorna true
 		CApplicationState::init();
 
-		// INICIALIZACIÓN DE LA FÍSICA
-		// ---------------------------
-
-		// TODO: desactivar colisiones entre los grupos 0 y 1
-		//Physics::CServer::getSingletonPtr()->setGroupCollisions(0, 1, false);
-
-		// TODO: Crear la escena física usando el servidor de física
+		// Crear la escena física.
 		Physics::CServer::getSingletonPtr()->createScene();
 
-		// INICIALIZACIÓN DE LA LÓGICA
-		// ---------------------------
-
-		// Cargamos el archivo con las definiciones de las entidades del nivel.
-		if (!Logic::CEntityFactory::getSingletonPtr()->loadBluePrints("blueprints.txt"))
-			return false;
-
-		// Cargamos el nivel a partir del nombre del mapa. 
-		if (!Logic::CServer::getSingletonPtr()->loadLevel("map.txt"))
-			return false;
-
-		// INICIALIZACIÓN DEL GUI
-		// ----------------------
-
-		// Ahora mismo la implementación está totalmente acoplada a CEGUI
-		// Hay que desacoplarlo utilizando un nuevo paquete donde se abstraiga
-		// el subsistema utilizado
-
 		// Cargamos la ventana que muestra el tiempo de juego transcurrido.
-		//CEGUI::WindowManager::getSingletonPtr()->loadWindowLayout("Time.layout");
-		//_timeWindow = CEGUI::WindowManager::getSingleton().getWindow("Time");
-		
-		GUI::CServer::getSingletonPtr()->addLayoutToState(this, "Time");
+		CEGUI::WindowManager::getSingletonPtr()->loadWindowLayout("Time.layout");
+		_timeWindow = CEGUI::WindowManager::getSingleton().getWindow("Time");
 
 		return true;
+
 	} // init
 
 	//--------------------------------------------------------
 
 	void CGameState::release() 
 	{
-		// Liberar los recursos reservados para la escena y las
-		// clases construidas a partir de los blueprints
 		Logic::CServer::getSingletonPtr()->unLoadLevel();
+
 		Logic::CEntityFactory::getSingletonPtr()->unloadBluePrints();
 
-		// Liberar la escena física usando el motor de física
+		// Liberamos la escena física.
 		Physics::CServer::getSingletonPtr()->destroyScene();
 
-		// Llamar al método padre por si acaso tiene que hacer algo
 		CApplicationState::release();
 
 	} // release
@@ -103,11 +74,9 @@ namespace Application {
 		GUI::CServer::getSingletonPtr()->getPlayerController()->activate();
 
 		// Activamos la ventana que nos muestra el tiempo transcurrido.
-		//CEGUI::System::getSingletonPtr()->setGUISheet(_timeWindow);
-		//_timeWindow->setVisible(true);
-		//_timeWindow->activate();
-
-		GUI::CServer::getSingletonPtr()->activateGUI(this, "Time");
+		CEGUI::System::getSingletonPtr()->setGUISheet(_timeWindow);
+		_timeWindow->setVisible(true);
+		_timeWindow->activate();
 
 	} // activate
 
@@ -116,9 +85,8 @@ namespace Application {
 	void CGameState::deactivate() 
 	{
 		// Desactivamos la ventana de tiempo.
-		//_timeWindow->deactivate();
-		//_timeWindow->setVisible(false);
-		GUI::CServer::getSingletonPtr()->deactivateGUI();
+		_timeWindow->deactivate();
+		_timeWindow->setVisible(false);
 
 		// Desactivamos la clase que procesa eventos de entrada para 
 		// controlar al jugador.
@@ -137,8 +105,8 @@ namespace Application {
 	{
 		CApplicationState::tick(msecs);
 
-		// TODO: realizar la simulación física
-		Physics::CServer::getSingletonPtr()->tick(msecs);
+		// Simulación física
+		Physics::CServer::getSingletonPtr()->tick(msecs / 1000.0f);
 
 		// Actualizamos la lógica de juego.
 		Logic::CServer::getSingletonPtr()->tick(msecs);
@@ -147,7 +115,7 @@ namespace Application {
 		
 		std::stringstream text;
 		text << "Time: " << _time/1000;
-		GUI::CServer::getSingletonPtr()->setText(text.str());
+		_timeWindow->setText(text.str());
 
 	} // tick
 

@@ -183,7 +183,7 @@ namespace Application
 		/**
 		Ventana que muestra el tiempo de juego transcurrido.
 		*/
-		//CEGUI::Window* _timeWindow;
+		CEGUI::Window* _timeWindow;
 
 		/**
 		Tiempo de juego en milisegundos.
