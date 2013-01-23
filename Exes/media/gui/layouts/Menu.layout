@@ -27,5 +27,11 @@
             <Property Name="AlwaysOnTop" Value="True" />
             <Property Name="UnifiedAreaRect" Value="{{0.1,0},{0.6,0},{0.4,0},{0.7,0}}" />
         </Window>
+		<Window Type="OgreTray/Button" Name="Menu/Multiplayer" >	  	
+            <Property Name="Font" Value="DejaVuSans-10" />	  	
+            <Property Name="Text" Value="Multiplayer" />	  	
+            <Property Name="AlwaysOnTop" Value="True" />	  	
+            <Property Name="UnifiedAreaRect" Value="{{0.4,0},{0.6,0},{0.6,0},{0.7,0}}" />  	
+        </Window>
     </Window>
 </GUILayout>
