@@ -57,6 +57,11 @@ bool CPhysicController::spawn(CEntity* entity, CMap *map, const Map::CEntity *en
 	// Crear el character controller asociado al componente
 	_controller = createController(entityInfo);
 
+
+	//Inicialización tiempo de salto
+	_timeJump=0;
+	_jumping=false;
+
 	return true;
 }
 
@@ -77,7 +82,10 @@ void CPhysicController::process(CMessage *message)
 		// Anotamos el vector de desplazamiento para usarlo posteriormente en 
 		// el método tick. De esa forma, si recibimos varios mensajes AVATAR_WALK
 		// en el mismo ciclo sólo tendremos en cuenta el último.
-		_movement = ((CMessageKinematicMove*)message)->getMovement();
+		_movement = ((CMessageAvatarWalk*)message)->getDirection();
+		//Si en algun momento se saltó y toco suelo, activo el salto
+		if(_movement.y!=0 && !_falling)
+			_jumping=true;
 		break;
 	}
 
@@ -96,7 +104,20 @@ void CPhysicController::tick(unsigned int msecs)
 
 	// Si estamos cayendo modificar el vector de desplazamiento para simular el 
 	// efecto de la gravedad. Lo hacemos de manera sencilla y pero poco realista.
-	if (_falling) {
+	// Además es necesario que no estemos saltando
+
+	//Si se paso el tiempo y tengo que cortar el salto
+	if(_timeJump>300){
+		_jumping=false;
+		_timeJump=0;
+	}
+	//Si tengo que continuar con el salto en la física
+	if(_jumping){
+		_timeJump+=msecs;
+		_movement.y=1*msecs*0.09; //0.09 es la speed del player, se podria configurar una speed diferente al salto
+	}
+	//Si estoy en el aire y no está activado el salto tengo que caer
+	if (_falling && !_jumping ) {
 		_movement += Vector3(0,-1,0);
 	}
 
