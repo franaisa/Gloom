@@ -88,6 +88,16 @@ namespace Logic
 			direction = _targetDistance * Math::getDirection(_target->getOrientation());
 			direction.y += _targetHeight;
 			_graphicsCamera->setTargetCameraPosition(position + direction);
+
+			//Implementacion del grupo de Calm night of nose que :P
+			/*
+			Vector3 position = _target->getPosition();
+			position.y += _height;
+			_graphicsCamera->setCameraPosition(position);
+
+			Vector3 direction = Math::getDirection(_target->getOrientation());
+			_graphicsCamera->setTargetCameraPosition(position + direction);
+			*/
 		}
 
 	} // tick
