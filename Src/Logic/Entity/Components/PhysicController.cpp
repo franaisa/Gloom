@@ -106,7 +106,7 @@ void CPhysicController::tick(unsigned int msecs)
 	// efecto de la gravedad. Lo hacemos de manera sencilla y pero poco realista.
 	// Además es necesario que no estemos saltando
 
-	//Si se paso el tiempo y tengo que cortar el salto
+	//Si se paso el tiempo y tengo que cortar el salto //pruebaaa
 	if(_timeJump>300){
 		_jumping=false;
 		_timeJump=0;
