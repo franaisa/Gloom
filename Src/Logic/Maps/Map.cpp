@@ -294,7 +294,7 @@ namespace Logic {
 		playerCreated->setPosition( playerCreated->getPosition() + (rand()%50-25) * Vector3(1, 0, 1) );
 		// Configuramos el jugador como local si lo es
 		playerCreated->setIsPlayer(isLocalPlayer);
-
+		//playerCreated->getEntityID();
 		// Le asignamos una posicion aleatoria para que no salgan todos apelotonados
 	}
 

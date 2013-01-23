@@ -22,11 +22,11 @@ Contiene la implementación del estado de lobby del cliente.
 
 #include "GUI/Server.h"
 
-#include "net/Manager.h"
-#include "net/Cliente.h"
-#include "net/factoriared.h"
-#include "net/paquete.h"
-#include "net/conexion.h"
+#include "Net/Manager.h"
+#include "Net/Cliente.h"
+#include "Net/factoriared.h"
+#include "Net/paquete.h"
+#include "Net/conexion.h"
 #include "Net/buffer.h"
 
 

@@ -18,7 +18,7 @@ Contiene la declaración del estado de lobby del servidor.
 #define __Application_LobbyServerState_H
 
 #include "ApplicationState.h"
-#include "net/Manager.h"
+#include "Net/Manager.h"
 #include <list>
 #include <map>
 

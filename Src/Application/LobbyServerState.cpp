@@ -21,11 +21,11 @@ Contiene la implementación del estado de lobby del servidor.
 #include "Logic/Maps/Map.h"
 
 #include "GUI/Server.h"
-#include "net/Manager.h"
-#include "net/Servidor.h"
-#include "net/factoriared.h"
-#include "net/paquete.h"
-#include "net/buffer.h"
+#include "Net/Manager.h"
+#include "Net/Servidor.h"
+#include "Net/factoriared.h"
+#include "Net/paquete.h"
+#include "Net/buffer.h"
 
 
 #include <CEGUISystem.h>

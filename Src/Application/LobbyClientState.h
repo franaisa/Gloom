@@ -18,7 +18,7 @@ Contiene la declaración del estado de lobby del cliente.
 #define __Application_LobbyClientState_H
 
 #include "ApplicationState.h"
-#include "net/Manager.h"
+#include "Net/Manager.h"
 
 // Predeclaración de clases para ahorrar tiempo de compilación
 namespace Application 
