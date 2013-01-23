@@ -1,0 +1,7 @@
+<?xml version="1.0" ?>
+<GUIScheme Name="CrossHair">
+<Imageset Name="CrossHair" Filename="CrossHair.imageset"/>
+<LookNFeel Filename="OgreTray.looknfeel"/>
+<WindowRendererSet Filename="CEGUIFalagardWRBase" />
+ <FalagardMapping WindowType="OgreTray/StaticImage"          TargetType="DefaultWindow"          Renderer="Falagard/StaticImage"         LookNFeel="OgreTray/StaticImage" />
+</GUIScheme>

@@ -99,7 +99,7 @@ namespace GUI {
 		// (automáticamente cargan los archivos looknfeel e imageset)
 		CEGUI::SchemeManager::getSingleton().create("TaharezLook.scheme");
 		CEGUI::SchemeManager::getSingleton().create("OgreTray.scheme");
-
+		CEGUI::SchemeManager::getSingleton().create("CrossHair.scheme");
 		// Cargamos los archivos con las fuentes que usaremos.
 		CEGUI::FontManager::getSingleton().create("DejaVuSans-10.font");
 		CEGUI::FontManager::getSingleton().create("FairChar-30.font");
@@ -107,7 +107,7 @@ namespace GUI {
 
 #ifndef NON_EXCLUSIVE_MODE_IN_WINDOW_MODE 
 		// Establecemos cual será el puntero del ratón.
-		_GUISystem->setDefaultMouseCursor("OgreTrayImages","MouseArrow");
+		_GUISystem->setDefaultMouseCursor("CrossHair","mira");
 #endif	
 
 		CInputManager::getSingletonPtr()->addMouseListener(this);

@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Imageset Name="CrossHair" Imagefile="CrossHair.png" NativeHorzRes="250" NativeVertRes="250" AutoScaled="true" >
+<Image Name="mira" XPos="0" YPos="0" Width="10" Height="10" />
+</Imageset>
