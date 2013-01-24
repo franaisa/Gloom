@@ -26,7 +26,6 @@ basadas en Ogre. Esta clase maneja la ejecución de todo el juego.
 #include "Logic/Maps/ComponentFactory.h"
 #include "Physics/Server.h"
 #include "net/manager.h"
-
 #include <cassert>
 
 #include <iostream>
@@ -65,7 +64,6 @@ namespace Application {
 		// Inicializamos el gestor de entrada de periféricos.
 		if (!GUI::CInputManager::Init())
 			return false;
-
 		// Nos registramos como oyentes de los eventos del teclado.
 		GUI::CInputManager::getSingletonPtr()->addKeyListener(this);
 		// Y como oyentes de los eventos del ratón.
@@ -86,7 +84,6 @@ namespace Application {
 		// Inicializamos la red
 		if (!Net::CManager::Init())
 			return false;
-
 		// Creamos el reloj basado en Ogre.
 		_clock = new COgreClock();
 
@@ -105,11 +102,6 @@ namespace Application {
 		// de componentes no es de construcción y destrucción explícita
 		// debido a como se registran los componentes. Por ello Init y
 		// Release no son simétricos.
-
-		// Inicializamos la red
-		if (Net::CManager::getSingletonPtr())
-			Net::CManager::Release();
-
 		if(Logic::CComponentFactory::getSingletonPtr())
 			delete Logic::CComponentFactory::getSingletonPtr();
 
@@ -119,7 +111,7 @@ namespace Application {
 		// Liberar los recursos del servidor de física
 		if (Physics::CServer::getSingletonPtr())
 			Physics::CServer::Release();
-
+		
 		if(GUI::CServer::getSingletonPtr())
 			GUI::CServer::Release();
 
@@ -146,13 +138,14 @@ namespace Application {
 
 	void C3DApplication::tick(unsigned int msecs) 
 	{
+		// Ejecutar el tick del estado
 		CBaseApplication::tick(msecs);
+
+		Net::CManager::getSingletonPtr()->tick(msecs);
 
 		GUI::CInputManager::getSingletonPtr()->tick();
 
 		Graphics::CServer::getSingletonPtr()->tick(msecs/1000.0f);
-
-		Net::CManager::getSingletonPtr()->tick(msecs);
 
 	} // tick
 

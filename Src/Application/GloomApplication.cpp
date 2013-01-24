@@ -25,6 +25,7 @@ basadas en Ogre. Esta clase maneja la ejecución de todo el juego.
 #include "LobbyClientState.h"
 #include "LobbyServerState.h"
 
+
 namespace Application {
 
 	CGloomApplication::CGloomApplication() : C3DApplication()

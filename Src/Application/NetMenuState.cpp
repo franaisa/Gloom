@@ -157,6 +157,7 @@ namespace Application {
 	bool CNetMenuState::serverReleased(const CEGUI::EventArgs& e)
 	{
 		_app->setState("lobbyserver");
+		
 		return true;
 
 	} // serverReleased

@@ -19,6 +19,7 @@ de todo el juego.
 #include "ApplicationState.h"
 #include "Clock.h"
 
+
 #include <assert.h>
 
 namespace Application {
@@ -124,7 +125,6 @@ namespace Application {
 	{
 		// Buscamos el estado.
 		TStateTable::const_iterator it;
-
 		it = _states.find(name);
 
 		// Si no hay ningún estado con ese nombre, no hacemos nada

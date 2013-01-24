@@ -284,7 +284,7 @@ namespace Logic {
 
 
 		// Asignar el modelo al player
-		_playerInfo->setAttribute("model", "marine.mesh");
+		//_playerInfo->setAttribute("model", "marine.mesh");
 
 		// Asignar nombre
 		_playerInfo->setName(name);

@@ -39,14 +39,20 @@ namespace Application {
 	{
 		CApplicationState::init();
 
-		// Cargamos la ventana que muestra el menú
-		CEGUI::WindowManager::getSingletonPtr()->loadWindowLayout("Menu.layout");
-		_menuWindow = CEGUI::WindowManager::getSingleton().getWindow("Menu");
-		
+		// En el propio estado para cambiar a otra configuracion
+		//GUI::getSingletonPtr()->changeStateLayout(this, "layout que nos interese");
+
+		//CEGUI::WindowManager::getSingletonPtr()->loadWindowLayout("Menu.layout");
+		//_menuWindow = CEGUI::WindowManager::getSingleton().getWindow("Menu");
+
+		GUI::CServer::getSingletonPtr()->addLayoutToState(this, "Menu");
+
 		// Asociamos los botones del menú con las funciones que se deben ejecutar.
 		CEGUI::WindowManager::getSingleton().getWindow("Menu/Start")->
 			subscribeEvent(CEGUI::PushButton::EventClicked, 
 				CEGUI::SubscriberSlot(&CMenuState::startReleased, this));
+
+		//GUI::CServer::getSingletonPtr()->addButtonToLayout(this, "Menu", "Start", &CMenuState::startReleased);
 		
 		CEGUI::WindowManager::getSingleton().getWindow("Menu/Exit")->
 			subscribeEvent(CEGUI::PushButton::EventClicked, 
@@ -55,6 +61,8 @@ namespace Application {
 		CEGUI::WindowManager::getSingleton().getWindow("Menu/Multiplayer")->
 			subscribeEvent(CEGUI::PushButton::EventClicked, 
 				CEGUI::SubscriberSlot(&CMenuState::multiplayerReleased, this));
+
+		//GUI::CServer::getSingletonPtr()->addButtonToLayout(this, "Menu", "Exit", &CMenuState::exitReleased);
 	
 		return true;
 
@@ -74,23 +82,29 @@ namespace Application {
 	{
 		CApplicationState::activate();
 
+		GUI::CServer::getSingletonPtr()->activateGUI(this, "Menu");
+		GUI::CServer::getSingletonPtr()->activateMouseCursor();
+
 		// Activamos la ventana que nos muestra el menú y activamos el ratón.
-		CEGUI::System::getSingletonPtr()->setGUISheet(_menuWindow);
+		/*CEGUI::System::getSingletonPtr()->setGUISheet(_menuWindow);
 		_menuWindow->setVisible(true);
 		_menuWindow->activate();
-		CEGUI::MouseCursor::getSingleton().show();
+		CEGUI::MouseCursor::getSingleton().show();*/
 
 	} // activate
 
 	//--------------------------------------------------------
 
 	void CMenuState::deactivate() 
-	{		
+	{	
+		GUI::CServer::getSingletonPtr()->deactivateGUI();
+		GUI::CServer::getSingletonPtr()->deactivateMouseCursor();
+
 		// Desactivamos la ventana GUI con el menú y el ratón.
-		CEGUI::MouseCursor::getSingleton().hide();
+		/*CEGUI::MouseCursor::getSingleton().hide();
 		_menuWindow->deactivate();
 		_menuWindow->setVisible(false);
-		
+		*/
 		CApplicationState::deactivate();
 
 	} // deactivate
@@ -117,32 +131,11 @@ namespace Application {
 	{
 		switch(key.keyId)
 		{
-
 		case GUI::Key::ESCAPE:
 			_app->exitRequest();
 			break;
-
 		case GUI::Key::RETURN:
 			_app->setState("game");
-			// Cargamos el archivo con las definiciones de las entidades del nivel.
-			if (!Logic::CEntityFactory::getSingletonPtr()->loadBluePrints("blueprints.txt"))
-				return false;
-			// Cargamos el nivel a partir del nombre del mapa. 
-			if (!Logic::CServer::getSingletonPtr()->loadLevel("map.txt"))
-				return false;
-			
-			// TODO Llamar al método de creación del jugador. Deberemos decidir
-			// si el jugador es el jugador local. Al ser el monojugador lo es.
-			Logic::CServer::getSingletonPtr()->getMap()->createPlayer("Mono", true);
-
-			// HACK Deberíamos poder propocionar caracteríasticas
-			// diferentes según el cliente (nombre, modelo, etc.). Esto es una
-			// aproximación, solo cambiamos el nombre y decimos si es el jugador
-			// local
-			break;
-
-		case GUI::Key::M:
-			_app->setState("netmenu");
 			break;
 		default:
 			return false;
@@ -177,32 +170,30 @@ namespace Application {
 	} // mouseReleased
 			
 	//--------------------------------------------------------
-// TODO Por qué se devuelve  true o false?
+		
 	bool CMenuState::startReleased(const CEGUI::EventArgs& e)
 	{
-		_app->setState("game");
-
-		// Cargamos el archivo con las definiciones de las entidades del nivel.
+		
+		
 		if (!Logic::CEntityFactory::getSingletonPtr()->loadBluePrints("blueprints.txt"))
 			return false;
 
 		// Cargamos el nivel a partir del nombre del mapa. 
 		if (!Logic::CServer::getSingletonPtr()->loadLevel("map.txt"))
 			return false;
-
-		// TODO Llamar al método de creación del jugador. Deberemos decidir
-		// si el jugador es el jugador local. Al ser el monojugador lo es.
-		Logic::CServer::getSingletonPtr()->getMap()->createPlayer("Mono", true);
-
-		// HACK Deberíamos poder propocionar caracteríasticas
-		// diferentes según el cliente (nombre, modelo, etc.). Esto es una
-		// aproximación, solo cambiamos el nombre y decimos si es el jugador
-		// local
-
+		
+		_app->setState("game");
 		return true;
 
 	} // startReleased
 			
+	/*bool CMenuState::startReleased(const GUI::GUIEventArgs& e)
+	{
+		_app->setState("game");
+		return true;
+
+	} // startReleased*/
+
 	//--------------------------------------------------------
 
 	bool CMenuState::exitReleased(const CEGUI::EventArgs& e)
@@ -211,8 +202,6 @@ namespace Application {
 		return true;
 
 	} // exitReleased
-
-	//--------------------------------------------------------
 
 	bool CMenuState::multiplayerReleased(const CEGUI::EventArgs& e)
 	{

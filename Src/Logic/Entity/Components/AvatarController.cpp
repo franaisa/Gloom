@@ -180,7 +180,6 @@ namespace Logic
 	void CAvatarController::tick(unsigned int msecs)
 	{
 		IComponent::tick(msecs);
-
 		//si estamos saltando, realizamos una simulación de un salto (provisional hasta tener physX)
 		if(_jumping){
 			if(_timeJump > 600){
