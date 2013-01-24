@@ -34,6 +34,16 @@ public:
 	CBuffer(size_t initsize=500, size_t delta=100);
 
 	/**
+	 * Constructor de copias. Realiza una copia dura (deep copy).
+	 */
+	CBuffer(const CBuffer& buffer);
+
+	/*
+	 * Operador de igualdad. Realiza una copia dura (deep copy).
+	 */
+	CBuffer& operator=(const CBuffer& source);
+
+	/**
 	 * Destructora
 	 */
 	~CBuffer();
@@ -79,6 +89,14 @@ protected:
 	size_t _maxsize;
 	size_t _size;
 	size_t _delta;
+
+private:
+	/**
+	 * Realiza una "deep copy" de un buffer dado por parametro. Si el buffer tiene suficiente
+	 * capacidad como para solo copiar datos, entonces se realiza una copia directa. En caso
+	 * contrario se libera memoria y se reserva un tamaño suficiente para realizar la copia.
+	 */
+	void clone(const CBuffer& source);
 
 };
 

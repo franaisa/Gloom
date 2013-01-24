@@ -21,6 +21,7 @@ namespace Logic {
 
 namespace Net {
 	typedef unsigned char byte;
+	class CBuffer;
 };
 
 namespace Logic
@@ -102,9 +103,17 @@ namespace Logic
 		 void subSmartP();
 		 virtual ~CMessage(){};
 
+		 // Serializa los datos internos de cada mensaje concreto
+		 // debido a que el tipo se incluye en la cabecera de 
+		 // nuestro protocolo de red, no es necesaria serializarla
+		 // y por lo tanto, aquellos mensajes que no tengan campos
+		 // adicionales solo tienen que devolver null.
+		 virtual Net::CBuffer* serialize() { return NULL; }
+
 	protected:
 		TMessageType _type;
 		unsigned char _smartP;
+		Net::CBuffer* _serializedData;
 	};
 
 	// _________________________________________________
