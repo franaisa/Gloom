@@ -118,11 +118,5 @@ build.xml
 # Bring back media
 !/Exes/media/
 
-# Delete second level
-/Exes/media/*
-
-# Bring back maps (which contains the two files that we are looking for)
-!/Exes/media/maps/
-
 
 
