@@ -13,6 +13,7 @@ Contiene el tipo de datos de un mensaje.
 #include <string>
 
 #include "BaseSubsystems/Math.h"
+#include "Net/Buffer.h"
 
 // Predeclaraciones
 namespace Logic {
@@ -95,16 +96,33 @@ namespace Logic
 	@date Enero, 2013
     @ingroup grupoEntidad
 	*/
-	class CMessage{
+	class CMessage { // Abstracta
 	public:
 		 TMessageType getMessageType();
+		 // Inicializa los mensajes a los valores por defecto
+		 CMessage(TMessageType t);
+		 // Inicializa los valores de sus campos a partir de una ristra de bytes
+		 // con datos serializados
+		 CMessage(Net::byte* serializedData, size_t dataSize = 500);
+		 virtual ~CMessage(){ /* Nada que hacer, no hay memoria dinámica */ };
+
+		 // Control de referencias
 		 void addSmartP();
 		 void subSmartP();
-		 virtual ~CMessage(){};
+		 
+		 // Serializa los datos internos de cada mensaje concreto
+		 // Por defecto, devuelve un buffer con tan solo el tipo del mensaje
+		 // (que es la implementación mínima).
+		 // Aquellos mensajes que tengan más parámetros deberán sobreescribir
+		 // este método.
+		 // Igualmente deberían apoyarse en la implementación del padre
+		 virtual Net::CBuffer serialize();
 
 	protected:
 		TMessageType _type;
 		unsigned char _smartP;
+		/* Se usa en la construccion del objeto y en el método serialize */
+		Net::CBuffer _tempBuffer;
 	};
 
 	// _________________________________________________

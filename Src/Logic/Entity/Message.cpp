@@ -18,6 +18,46 @@ namespace Logic
 	}//
 	//----------------------------------------------------------
 
+	CMessage::CMessage(TMessageType t) : _type(t), _smartP(0) {
+		// Nada que hacer
+	}//
+	//----------------------------------------------------------
+	
+	// Inicializa los valores de sus campos a partir de una ristra de bytes
+	// con datos serializados
+	// dataSize TIENE QUE INDICAR EL TAMAÑO VERDADERO DEL BUFFER QUE SE PASA
+	// por parametro:
+	//     por ejemplo: si el buffer son 2 enteros, datasize debe ser sizeof(int) + sizeof(int)
+	//                  o en su defecto buffer.getSize();
+	// La idea es que en el constructor, los hijos inicializen solo la parte que les
+	// corresponde haciendo uso del read.
+	CMessage::CMessage(Net::byte* serializedData, size_t dataSize) : _tempBuffer(dataSize), _smartP(0) {
+		// Volcamos la ristra de bytes al buffer para posteriormente deserializar
+		_tempBuffer.write(serializedData, dataSize);
+		// Reseteamos el puntero de lectura (ya que el mismo puntero sirve para lectura y escritura)
+		_tempBuffer.reset();
+
+		// Leemos el primer dato del buffer, que para todos los mensajes
+		// siempre indicará su tipo
+		_tempBuffer.read(&_type, sizeof(TMessageType));
+	}//
+	//----------------------------------------------------------
+
+	Net::CBuffer CMessage::serialize() {
+		// Si hemos utilizado el buffer en otra ocasion, recolocamos
+		// el puntero de escritura al principio
+		if(_tempBuffer.getSize() > 0)
+			_tempBuffer.reset();
+		
+		// Escribimos el tipo del mensaje
+		_tempBuffer.write(&_type, sizeof(_type));
+		// Reseteamos el puntero de lectura
+		_tempBuffer.reset();
+
+		return _tempBuffer;
+	}//
+	//----------------------------------------------------------
+
 	void CMessage::addSmartP(){
 		_smartP+=1;
 	}//
@@ -33,9 +73,8 @@ namespace Logic
 
 
 
-	CMessageTransform::CMessageTransform(TMessageType type){
-		_type=type;
-		_smartP=0;
+	CMessageTransform::CMessageTransform(TMessageType type) : CMessage(type) {
+		// Nada que hacer
 	} //
 	//----------------------------------------------------------
 
@@ -51,9 +90,8 @@ namespace Logic
 
 
 
-	CMessageControl::CMessageControl(TMessageType type){
-		_type=type;
-		_smartP=0;
+	CMessageControl::CMessageControl(TMessageType type) : CMessage(type) {
+		// Nada que hacer
 	} //
 	//----------------------------------------------------------
 
@@ -86,9 +124,8 @@ namespace Logic
 
 
 
-	CMessageTouched::CMessageTouched(TMessageType type){
-		_type=type;
-		_smartP=0;
+	CMessageTouched::CMessageTouched(TMessageType type) : CMessage(type) {
+		// Nada que hacer
 	} //
 	//----------------------------------------------------------
 
@@ -105,9 +142,8 @@ namespace Logic
 
 
 
-	CMessageUntouched::CMessageUntouched(TMessageType type){
-		_type=type;
-		_smartP=0;
+	CMessageUntouched::CMessageUntouched(TMessageType type) : CMessage(type) {
+		// Nada que hacer
 	} //
 	//----------------------------------------------------------
 
@@ -124,9 +160,8 @@ namespace Logic
 
 
 
-	CMessageSetAnimation::CMessageSetAnimation(TMessageType type){
-		_type=type;
-		_smartP=0;
+	CMessageSetAnimation::CMessageSetAnimation(TMessageType type) : CMessage(type) {
+		// Nada que hacer
 	}//
 	//----------------------------------------------------------
 
@@ -153,9 +188,8 @@ namespace Logic
 
 
 
-	CMessageStopAnimation::CMessageStopAnimation(TMessageType type){
-		_type=type;
-		_smartP=0;
+	CMessageStopAnimation::CMessageStopAnimation(TMessageType type) : CMessage(type) {
+		// Nada que hacer
 	}//
 	//----------------------------------------------------------
 
@@ -182,9 +216,8 @@ namespace Logic
 
 
 
-	CMessageSwitch::CMessageSwitch(TMessageType type){
-		_type=type;
-		_smartP=0;
+	CMessageSwitch::CMessageSwitch(TMessageType type) : CMessage(type) {
+		// Nada que hacer
 	}//
 	//----------------------------------------------------------
 
@@ -201,9 +234,8 @@ namespace Logic
 
 
 
-	CMessageDamaged::CMessageDamaged(TMessageType type){
-		_type=type;
-		_smartP=0;
+	CMessageDamaged::CMessageDamaged(TMessageType type) : CMessage(type) {
+		// Nada que hacer
 	}//
 	//----------------------------------------------------------
 
@@ -220,9 +252,8 @@ namespace Logic
 
 
 
-	CMessageAvatarWalk::CMessageAvatarWalk(TMessageType type){
-		_type=type;
-		_smartP=0;
+	CMessageAvatarWalk::CMessageAvatarWalk(TMessageType type) : CMessage(type) {
+		// Nada que hacer
 	}//
 	//----------------------------------------------------------
 
@@ -239,9 +270,8 @@ namespace Logic
 
 
 
-	CMessageKinematicMove::CMessageKinematicMove(TMessageType type){
-		_type=type;
-		_smartP=0;
+	CMessageKinematicMove::CMessageKinematicMove(TMessageType type) : CMessage(type) {
+		// Nada que hacer
 	}//
 	//----------------------------------------------------------
 
