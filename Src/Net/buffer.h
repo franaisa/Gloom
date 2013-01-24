@@ -9,7 +9,8 @@
  *
  *
  * @author Juan A. Recio-García
- * @date Octubre, 2006
+ * @author Francisco Aisa García
+ * @date Enero, 2013
  */
 
 #ifndef __BUFFER_H
