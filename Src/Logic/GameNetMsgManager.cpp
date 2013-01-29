@@ -82,6 +82,7 @@ namespace Logic {
 	void CGameNetMsgManager::activate() 
 	{
 		// TODO Escuchamos los mensajes de red. Engancharnos a Net::CManager
+		std::cout << "me estoy añadiendo como observer para escuchar mensajes del otro lado del tubo" << std::endl;
 		Net::CManager::getSingletonPtr()->addObserver(this);
 	} // activate
 
@@ -106,7 +107,7 @@ namespace Logic {
 		// el envío usando el gestor de red.
 		// Es un mensaje para enviar por el tubo.
 		// Lo serializamos y enviamos por la red...
-		std::cout << "Enviado mensaje tipo " << txMsg->getMessageType() << " a " << destID << std::endl;
+		
 
 
 		Net::NetMessageType msgType = Net::NetMessageType::ENTITY_MSG;// Escribimos el tipo de mensaje de red a enviar
@@ -116,7 +117,7 @@ namespace Logic {
 			serialMsg.write(&txMsg,sizeof(txMsg)); //Guardamos el mensaje en el buffer
 			
 		Net::CManager::getSingletonPtr()->send(serialMsg.getbuffer(), serialMsg.getSize());
-
+		std::cout << "Enviado mensaje tipo " << txMsg->getMessageType() << " a " << destID << std::endl;
 		LOG("TX ENTITY_MSG " << txMsg._type << " to EntityID " << destID);
 	} // sendEntityMessage
 
@@ -130,6 +131,10 @@ namespace Logic {
 		// recuperarla, deserializar el mensaje y enviárselo
 		
 		// Creamos un buffer con los datos para leer de manera más cómoda
+
+		
+
+
 		Net::CBuffer serialMsg;
 			serialMsg.write(packet->getData(),packet->getDataLength());
 			serialMsg.reset(); // Reiniciamos el puntero de lectura a la posición 0
@@ -147,7 +152,7 @@ namespace Logic {
 		CEntity* destEntity = Logic::CServer::getSingletonPtr()->getMap()->getEntityByID(destID);
 		if(destEntity != 0)
 			destEntity->emitMessage(txMsg);
-		
+		std::cout << "He conseguido sobrevivir al mensaje, soy el puto amo " <<  std::endl;
 		LOG("RX ENTITY_MSG " << rxMsg._type << " from EntityID " << destID);
 	} // processEntityMessage
 
@@ -158,6 +163,7 @@ namespace Logic {
 	// Aquí es donde debemos recibir los mensajes de red
 	void CGameNetMsgManager::dataPacketReceived(Net::CPaquete* packet)
 	{
+		std::cout << "Mensaje recibido, preparandose para morir " <<  std::endl;
 		Net::CBuffer rxSerialMsg; // Packet: "NetMessageType | extraData"
 			rxSerialMsg.write(packet->getData(),packet->getDataLength());
 			rxSerialMsg.reset();

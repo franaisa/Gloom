@@ -136,11 +136,12 @@ namespace Net {
 	{
 		_paquetes.clear();
 		Net::CManager::getSingletonPtr()->getPackets(_paquetes);
-
+		
 		for(std::vector<Net::CPaquete*>::iterator iterp = _paquetes.begin();iterp != _paquetes.end();++iterp)
 		{
 			Net::CPaquete* paquete = *iterp;
 			// El mensaje debe ser de tipo CONEXION
+			
 			switch (paquete->getTipo())
 			{
 				case Net::CONEXION:
@@ -149,9 +150,12 @@ namespace Net {
 						(*iter)->connexionPacketReceived(paquete);
 					break;
 				case Net::DATOS:
-					if(!internalData(paquete)) // Analiza si trae contenido -> TODO: ver funcion
+					
+					if(!internalData(paquete)){ // Analiza si trae contenido -> TODO: ver funcion
+						//std::cout << "mensaje recibido:  " <<  _observers.size() << std::endl;
 						for(std::vector<IObserver*>::iterator iter = _observers.begin();iter != _observers.end();++iter)
 							(*iter)->dataPacketReceived(paquete);
+					}
 					break;
 				case Net::DESCONEXION:
 					for(std::vector<IObserver*>::iterator iter = _observers.begin();iter != _observers.end();++iter)
@@ -328,13 +332,14 @@ namespace Net {
 	void CManager::addObserver(IObserver* listener)
 	{
 		_observers.push_back(listener);
-
+		std::cout << "añadido observer" << std::endl;
 	} // addObserver
 
 	//---------------------------------------------------------
 
 	void CManager::removeObserver(IObserver* listener)
 	{
+		std::cout << "observer deleted" << std::endl;
 		for(std::vector<IObserver*>::iterator iter = _observers.begin();iter != _observers.end();++iter)
 			if((*iter)==listener)
 			{

@@ -161,7 +161,7 @@ namespace Logic
 	Logic::CEntity *CEntityFactory::assembleEntity(const std::string &type) 
 	{
 		TBluePrintMap::const_iterator it;
-
+		
 		it = _bluePrints.find(type);
 		// si el tipo se encuentra registrado.
 		if (it != _bluePrints.end()) 
