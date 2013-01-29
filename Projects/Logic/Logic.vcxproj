@@ -87,8 +87,10 @@
     <ClCompile Include="..\..\Src\Logic\Entity\Components\SwitchTrigger.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Message.cpp" />
     <ClCompile Include="..\..\Src\Logic\Maps\ComponentFactory.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Maps\ComponentID.cpp" />
     <ClCompile Include="..\..\Src\Logic\Maps\EntityFactory.cpp" />
     <ClCompile Include="..\..\Src\Logic\Maps\EntityID.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Maps\IIdentifier.cpp" />
     <ClCompile Include="..\..\Src\Logic\Maps\Map.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\CommunicationPort.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Component.cpp" />
@@ -110,9 +112,11 @@
     <ClInclude Include="..\..\Src\Logic\Entity\Components\SwitchPosition.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\SwitchTrigger.h" />
     <ClInclude Include="..\..\Src\Logic\Maps\ComponentFactory.h" />
+    <ClInclude Include="..\..\Src\Logic\Maps\ComponentID.h" />
     <ClInclude Include="..\..\Src\Logic\Maps\Documentation.h" />
     <ClInclude Include="..\..\Src\Logic\Maps\EntityFactory.h" />
     <ClInclude Include="..\..\Src\Logic\Maps\EntityID.h" />
+    <ClInclude Include="..\..\Src\Logic\Maps\IIdentifier.h" />
     <ClInclude Include="..\..\Src\Logic\Maps\Map.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\CommunicationPort.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Component.h" />

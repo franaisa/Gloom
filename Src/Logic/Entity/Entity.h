@@ -20,9 +20,11 @@ de juego. Es una colección de componentes.
 
 // Mensaje
 #include "Message.h"
+#include "Logic/Maps/ComponentID.h"
 
 #include <list>
 #include <string>
+#include <map>
 
 // Predeclaración de clases para ahorrar tiempo de compilación
 namespace Map
@@ -340,6 +342,9 @@ namespace Logic
 		*/
 		bool isActivated() {return _activated;}
 
+		template<typename T>
+		T* getComponent(const std::string id);
+
 	protected:
 
 		/**
@@ -362,6 +367,11 @@ namespace Logic
 		Lista de los componentes de la entidad.
 		*/
 		TComponentList _components;
+
+		//typedef std::map<CComponentID, IComponent*> IComponentMap;
+		typedef std::map<std::string, IComponent*> IComponentMap;
+
+		IComponentMap _componentsMap;
 
 		/**
 		Indica si la entidad está activa.
