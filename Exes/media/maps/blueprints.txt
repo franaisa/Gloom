@@ -2,5 +2,4 @@ World CGraphics CPhysicEntity
 Player CAvatarController CShoot CPhysicController CLife CArrayGraphics
 Enemy CGraphics CPhysicEntity CLife
 Entity CGraphics
-AnimatedEntity CAnimatedGraphics
 Camera CCamera

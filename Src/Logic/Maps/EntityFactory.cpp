@@ -184,7 +184,7 @@ namespace Logic
 					return 0;
 				}
 				if(comp)
-					ent->addComponent(comp);
+					ent->addComponent(comp, *itc);
 			}
 
 			return ent;

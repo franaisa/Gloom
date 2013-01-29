@@ -100,6 +100,10 @@ namespace Logic
 
 	} // createGraphicsEntity
 	
+	void CGraphics::setTransform(const Matrix4& transform) {
+		_graphicsEntity->setTransform(transform);
+	}
+
 	//---------------------------------------------------------
 
 	bool CGraphics::accept(CMessage *message)

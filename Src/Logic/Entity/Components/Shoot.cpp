@@ -162,9 +162,12 @@ namespace Logic
 		if(entity)
 		{
 			printf("\nimpacto con %s", entity->getName().c_str());
-			Logic::CMessageDamaged *m=new Logic::CMessageDamaged(Logic::Message::DAMAGED);
-			m->setDamage(_weapons[_actualWeapon].damage);
-			entity->emitMessage(m);
+			// LLamar al componente que corresponda con el daño hecho
+			//entity->
+
+			//Logic::CMessageDamaged *m=new Logic::CMessageDamaged(Logic::Message::DAMAGED);
+			//m->setDamage(_weapons[_actualWeapon].damage);
+			//entity->emitMessage(m);
 		}
 	} // shoot
 

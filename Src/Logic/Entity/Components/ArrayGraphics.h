@@ -85,6 +85,12 @@ namespace Logic
 		*/
 		virtual void process(CMessage *message);
 
+
+		/**
+		Metodo para cambiar el grafico en funcion del arma actual
+		*/
+		void changeWeapon(unsigned char newWeapon);
+
 	protected:
 
 		/**
@@ -101,7 +107,7 @@ namespace Logic
 		/**
 		metodo donde se hara el cambio de arma.
 		*/
-		void changeWeapon(CMessageChangeWeapon *msg);
+		
 
 
 		/**

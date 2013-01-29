@@ -46,13 +46,14 @@ namespace Logic
 		*/
 		virtual void process(CMessage *message);
 
-		
-
-	protected:
 
 		void shoot();
 
 		void changeWeapon(unsigned char newWeapon);
+
+	protected:
+
+		
 		
 		struct TWeapon{
 			std::string name;

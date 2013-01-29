@@ -123,9 +123,9 @@ namespace Logic
 
 	} // process
 
-	void CArrayGraphics::changeWeapon(CMessageChangeWeapon *msg){
+	void CArrayGraphics::changeWeapon(unsigned char newWeapon){
 
-		_graphicsEntities[msg->getWeapon()]._graphicsEntity->setVisible(true);
+		_graphicsEntities[newWeapon]._graphicsEntity->setVisible(true);
 		_graphicsEntities[_actualWeapon]._graphicsEntity->setVisible(false);
 		
 		

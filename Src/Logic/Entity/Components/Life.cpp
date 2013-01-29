@@ -38,15 +38,15 @@ namespace Logic
 	
 	//---------------------------------------------------------
 
-	bool CLife::accept(CMessage *message)
+	/*bool CLife::accept(CMessage *message)
 	{
 		return message->getMessageType() == Message::DAMAGED;
 
-	} // accept
+	}*/ // accept
 	
 	//---------------------------------------------------------
 
-	void CLife::process(CMessage *message)
+	/*void CLife::process(CMessage *message)
 	{
 		switch(message->getMessageType())
 		{
@@ -58,11 +58,11 @@ namespace Logic
 				printf("\nAh!, ya solo me queda %i de vida", _life);
 
 				// Si han matado al jugador salir de la partida
-				/*
-				if ((_life <= 0) && (_entity->isPlayer())) {
-					Application::CBaseApplication::getSingletonPtr()->setState("menu");
-				}
-				*/
+				
+				//if ((_life <= 0) && (_entity->isPlayer())) {
+				//	Application::CBaseApplication::getSingletonPtr()->setState("menu");
+				//}
+				
 				// @todo Poner la animación de herido.
 				// @todo Si la vida es menor que 0 poner animación de morir.
 
@@ -70,7 +70,7 @@ namespace Logic
 			break;
 		}
 
-	} // process
+	}*/ // process
 
 
 } // namespace Logic
