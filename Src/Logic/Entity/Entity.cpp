@@ -327,4 +327,20 @@ namespace Logic
 
 	} // pitch
 
+	//---------------------------------------------------------
+
+	template<typename T>
+	T* CEntity::getComponent(const std::string id) {
+		std::map<std::string, IComponent*>::iterator it;
+		it = _componentsMap.find(id);
+
+		if(it == _componentsMap.end()) {
+			std::cerr << "Error: No se ha encontrado el id de componente que se busca" << std::endl;
+			exit(-1);
+		}
+
+		return static_cast<T*>(it->second);
+	}
+
+
 } // namespace Logic
