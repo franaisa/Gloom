@@ -140,7 +140,7 @@ namespace Logic
 
 		@param component Componente a añadir.
 		*/
-		void addComponent(IComponent* component);
+		void addComponent(IComponent* component, const std::string& id);
 
 		/**
 		Método que quita un componente de la lista.
@@ -153,7 +153,7 @@ namespace Logic
 		@return true si se borró el componente (false si el componente
 		no estaba en el objeto).
 		*/
-		bool removeComponent(IComponent* component);
+		bool removeComponent(const std::string& id);
 		
 		/**
 		Método que destruye todos los componentes de una entidad.
@@ -358,20 +358,10 @@ namespace Logic
 		*/
 		Logic::TEntityID _entityID;
 
-		/**
-		Tipo para la lista de componetes.
-		*/
-		typedef std::list<IComponent*> TComponentList;
-
-		/**
-		Lista de los componentes de la entidad.
-		*/
-		TComponentList _components;
-
 		//typedef std::map<CComponentID, IComponent*> IComponentMap;
-		typedef std::map<std::string, IComponent*> IComponentMap;
+		typedef std::map<std::string, IComponent*> TComponentMap;
 
-		IComponentMap _componentsMap;
+		TComponentMap _components;
 
 		/**
 		Indica si la entidad está activa.
