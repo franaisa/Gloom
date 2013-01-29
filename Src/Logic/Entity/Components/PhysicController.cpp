@@ -89,7 +89,17 @@ void CPhysicController::process(CMessage *message)
 		break;
 	}
 
-} 
+}
+
+void CPhysicController::avatarWalk(const Vector3& direction) {
+	// Anotamos el vector de desplazamiento para usarlo posteriormente en 
+	// el método tick. De esa forma, si recibimos varios mensajes AVATAR_WALK
+	// en el mismo ciclo sólo tendremos en cuenta el último.
+	_movement = direction;
+	//Si en algun momento se saltó y toco suelo, activo el salto
+	if(_movement.y!=0 && !_falling)
+		_jumping=true;
+}
 
 //---------------------------------------------------------
 

@@ -15,6 +15,7 @@ para representar character controllers.
 
 #include "PhysicEntity.h"
 #include "Logic/Entity/Entity.h"
+#include "Logic/Entity/Components/SwitchTrigger.h"
 #include "Map/MapEntity.h"
 #include "Physics/Server.h"
 
@@ -227,13 +228,14 @@ void CPhysicEntity::onTrigger(IPhysics *otherComponent, bool enter)
 	// todos los componentes de la entidad. 
 
 	if (enter) {
-		Logic::CMessageTouched *m= new Logic::CMessageTouched(Message::TOUCHED);
-		m->setEntity(otherComponent->getEntity());
-		_entity->emitMessage(m);
+		//Logic::CMessageTouched *m= new Logic::CMessageTouched(Message::TOUCHED);
+		//m->setEntity(otherComponent->getEntity());
+		//_entity->emitMessage(m);
+		//_entity->getComponent<Logic::CSwitchTrigger>("CSwitchTrigger")->
 	} else {
-		Logic::CMessageUntouched *m= new Logic::CMessageUntouched(Message::UNTOUCHED);
-		m->setEntity(otherComponent->getEntity());
-		_entity->emitMessage(m);
+		//Logic::CMessageUntouched *m= new Logic::CMessageUntouched(Message::UNTOUCHED);
+		//m->setEntity(otherComponent->getEntity());
+		//_entity->emitMessage(m);
 	}
 
 }

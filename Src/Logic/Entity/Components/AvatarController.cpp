@@ -14,6 +14,7 @@ de la entidad.
 #include "AvatarController.h"
 
 #include "Logic/Entity/Entity.h"
+#include "Logic/Entity/Components/PhysicController.h"
 #include "Map/MapEntity.h"
 
 
@@ -219,9 +220,11 @@ namespace Logic
 			direction *= msecs * _speed;
 
 			//Pasamos a la Física la dirección del movimiento para que se encargue ella de movernos
-			Logic::CMessageAvatarWalk *m=new Logic::CMessageAvatarWalk(Logic::Message::AVATAR_WALK);
+			_entity->getComponent<Logic::CPhysicController>("CPhysicController")->avatarWalk(direction);
+
+			/*Logic::CMessageAvatarWalk *m=new Logic::CMessageAvatarWalk(Logic::Message::AVATAR_WALK);
 			m->setDirection(direction);
-			_entity->emitMessage(m);
+			_entity->emitMessage(m);*/
 		}
 
 	} // tick

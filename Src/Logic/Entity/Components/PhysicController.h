@@ -107,6 +107,8 @@ namespace Logic
 		*/
 		void onControllerHit (const physx::PxControllersHit &hit);
 
+		void CPhysicController::avatarWalk(const Vector3& direction);
+
 	private:
 
 		/**

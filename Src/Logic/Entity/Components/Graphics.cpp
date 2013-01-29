@@ -87,16 +87,20 @@ namespace Logic
 
 	} // createGraphicsEntity
 	
+	void CGraphics::setTransform(const Matrix4& transform) {
+		_graphicsEntity->setTransform(transform);
+	}
+
 	//---------------------------------------------------------
 
-	bool CGraphics::accept(CMessage *message)
+	/*bool CGraphics::accept(CMessage *message)
 	{
 		return (message->getMessageType() == Message::SET_TRANSFORM);
-	} // accept
+	}*/ // accept
 	
 	//---------------------------------------------------------
 
-	void CGraphics::process(CMessage *message)
+	/*void CGraphics::process(CMessage *message)
 	{
 		switch(message->getMessageType())
 		{
@@ -104,7 +108,7 @@ namespace Logic
 			_graphicsEntity->setTransform(((CMessageTransform*)message)->getTransform());
 		}
 
-	} // process
+	}*/ // process
 
 } // namespace Logic
 

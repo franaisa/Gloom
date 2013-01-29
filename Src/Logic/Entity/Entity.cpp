@@ -18,6 +18,7 @@ de juego. Es una colección de componentes.
 
 #include "Logic/Server.h"
 #include "Logic/Maps/Map.h"
+#include "Logic/Entity/Components/Graphics.h"
 #include "Map/MapEntity.h"
 
 #include "GUI/Server.h"
@@ -172,7 +173,7 @@ namespace Logic
 
 	//---------------------------------------------------------
 
-	bool CEntity::emitMessage(CMessage *message, IComponent* emitter)
+	/*bool CEntity::emitMessage(CMessage *message, IComponent* emitter)
 	{
 		
 		// Interceptamos los mensajes que además de al resto de los
@@ -200,7 +201,7 @@ namespace Logic
 
 		return anyReceiver;
 
-	} // emitMessage
+	}*/ // emitMessage
 
 	//---------------------------------------------------------
 
@@ -209,9 +210,11 @@ namespace Logic
 		_transform = transform;
 
 		// Avisamos a los componentes del cambio.
-		Logic::CMessageTransform *m=new Logic::CMessageTransform(Message::SET_TRANSFORM);
+		/*Logic::CMessageTransform *m=new Logic::CMessageTransform(Message::SET_TRANSFORM);
 		m->setTransform(_transform);
-		emitMessage(m);
+		emitMessage(m);*/
+
+		getComponent<CGraphics>("CGraphics")->setTransform(_transform);
 
 	} // setTransform
 
@@ -222,10 +225,11 @@ namespace Logic
 		_transform.setTrans(position);
 
 		// Avisamos a los componentes del cambio.
-		Logic::CMessageTransform *m=new Logic::CMessageTransform(Message::SET_TRANSFORM);
+		/*Logic::CMessageTransform *m=new Logic::CMessageTransform(Message::SET_TRANSFORM);
 		m->setTransform(_transform);
-		emitMessage(m);
+		emitMessage(m);*/
 
+		getComponent<CGraphics>("CGraphics")->setTransform(_transform);
 	} // setPosition
 
 	//---------------------------------------------------------
@@ -235,10 +239,11 @@ namespace Logic
 		_transform = orientation;
 
 		// Avisamos a los componentes del cambio.
-		Logic::CMessageTransform *m=new Logic::CMessageTransform(Message::SET_TRANSFORM);
+		/*Logic::CMessageTransform *m=new Logic::CMessageTransform(Message::SET_TRANSFORM);
 		m->setTransform(_transform);
-		emitMessage(m);
+		emitMessage(m);*/
 
+		getComponent<CGraphics>("CGraphics")->setTransform(_transform);
 	} // setOrientation
 
 	//---------------------------------------------------------
@@ -258,10 +263,11 @@ namespace Logic
 		Math::setYaw(yaw,_transform);
 
 		// Avisamos a los componentes del cambio.
-		Logic::CMessageTransform *m=new Logic::CMessageTransform(Message::SET_TRANSFORM);
+		/*Logic::CMessageTransform *m=new Logic::CMessageTransform(Message::SET_TRANSFORM);
 		m->setTransform(_transform);
-		emitMessage(m);
+		emitMessage(m);*/
 
+		getComponent<CGraphics>("CGraphics")->setTransform(_transform);
 	} // setYaw
 
 	//---------------------------------------------------------
@@ -271,10 +277,11 @@ namespace Logic
 		Math::yaw(yaw,_transform);
 
 		// Avisamos a los componentes del cambio.
-		Logic::CMessageTransform *m=new Logic::CMessageTransform(Message::SET_TRANSFORM);
+		/*Logic::CMessageTransform *m=new Logic::CMessageTransform(Message::SET_TRANSFORM);
 		m->setTransform(_transform);
-		emitMessage(m);
+		emitMessage(m);*/
 
+		getComponent<CGraphics>("CGraphics")->setTransform(_transform);
 	} // yaw
 
 	//---------------------------------------------------------
@@ -284,10 +291,11 @@ namespace Logic
 		Math::setYaw(pitch,_transform);
 
 		// Avisamos a los componentes del cambio.
-		Logic::CMessageTransform *m=new Logic::CMessageTransform(Message::SET_TRANSFORM);
+		/*Logic::CMessageTransform *m=new Logic::CMessageTransform(Message::SET_TRANSFORM);
 		m->setTransform(_transform);
-		emitMessage(m);
+		emitMessage(m);*/
 
+		getComponent<CGraphics>("CGraphics")->setTransform(_transform);
 	} // setPitch
 
 	//---------------------------------------------------------
@@ -297,27 +305,16 @@ namespace Logic
 		Math::pitch(pitch,_transform);
 
 		// Avisamos a los componentes del cambio.
-		Logic::CMessageTransform *m=new Logic::CMessageTransform(Message::SET_TRANSFORM);
+		/*Logic::CMessageTransform *m=new Logic::CMessageTransform(Message::SET_TRANSFORM);
 		m->setTransform(_transform);
-		emitMessage(m);
+		emitMessage(m);*/
 
+		getComponent<CGraphics>("CGraphics")->setTransform(_transform);
 	} // pitch
 
 	//---------------------------------------------------------
 
-	template<typename T>
-	T* CEntity::getComponent(const std::string id) {
-		std::map<std::string, IComponent*>::iterator it;
-		it = _componentsMap.find(id);
-
-		if(it == _componentsMap.end()) {
-			std::cerr << "Error: No se ha encontrado el id de componente que se busca" << std::endl;
-			//exit(-1);
-			return NULL;
-		}
-
-		return static_cast<T*>(it->second);
-	}
+	
 
 
 } // namespace Logic

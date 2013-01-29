@@ -168,7 +168,7 @@ namespace Logic
 		@param emitter Componente emisor, si lo hay. No se le enviará el mensaje.
 		@return true si al menos un componente aceptó el mensaje
 		*/
-		bool emitMessage(CMessage *message, IComponent* emitter = 0);
+		//bool emitMessage(CMessage *message, IComponent* emitter = 0);
 
 		/**
 		Devuelve el identificador único de la entidad.
@@ -342,8 +342,30 @@ namespace Logic
 		*/
 		bool isActivated() {return _activated;}
 
+		//__________________________________________________________________________
+
+		/**
+		 * Obtiene un puntero al componente que buscamos por id.
+		 * 
+		 * @param id String que identifica al componente. Es el mismo nombre
+		 * que el asignado en el blueprints.
+		 * @return Puntero al componente que buscamos.
+		 */
 		template<typename T>
-		T* getComponent(const std::string id);
+		T* getComponent(const std::string id) {
+			std::map<std::string, IComponent*>::iterator it;
+			it = _components.find(id);
+
+			if(it == _components.end()) {
+				std::cerr << "Error: No se ha encontrado el id de componente que se busca" << std::endl;
+				//exit(-1);
+				return NULL;
+			}
+
+			return static_cast<T*>(it->second);
+		}
+
+		//__________________________________________________________________________
 
 	protected:
 
