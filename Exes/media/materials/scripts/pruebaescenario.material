@@ -1,0 +1,14 @@
+material "_01_-_Default"
+{
+	technique _01_-_Default_technique
+	{
+		pass _01_-_Default_standard
+		{
+			shading phong
+			ambient 0.588235 0.588235 0.588235 1
+			diffuse 0.588235 0.588235 0.588235 1
+			specular 0 0 0 0 25.5
+			emissive 0 0 0 1
+		}
+	}
+}

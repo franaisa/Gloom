@@ -255,4 +255,18 @@ namespace Logic
 	}//
 	//----------------------------------------------------------
 
+
+	CMessageChangeWeapon::CMessageChangeWeapon(TMessageType type){
+		_type=type;
+		_smartP=0;
+	}//
+	//----------------------------------------------------------
+	void CMessageChangeWeapon::setWeapon(unsigned char weapon){
+		_weapon = weapon;
+	}//
+	//----------------------------------------------------------
+	unsigned char CMessageChangeWeapon::getWeapon(){
+		return _weapon;
+	}//
+	//----------------------------------------------------------
 }

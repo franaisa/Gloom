@@ -55,6 +55,11 @@ namespace Logic
 				_weapons[i].dispersion = (unsigned char) entityInfo->getIntAttribute(weapon+"Dispersion");
 				_weapons[i].distance = entityInfo->getFloatAttribute(weapon+"Distance");
 				_weapons[i].coolDown = (unsigned char) entityInfo->getIntAttribute(weapon+"CoolDown");
+				if(entityInfo->hasAttribute(weapon+"ammo")){
+					_weapons[i].ammo = entityInfo->getIntAttribute(weapon+"ammo");
+				}else{
+					_weapons[i].ammo = -1;
+				}
 			}
 		}
 		return true;
@@ -65,7 +70,8 @@ namespace Logic
 
 	bool CShoot::accept(CMessage *message)
 	{
-		return message->getMessageType() == Message::CONTROL;
+		return message->getMessageType() == Message::CONTROL
+			|| message->getMessageType() == Message::CHANGE_WEAPON;
 	} // accept
 	//---------------------------------------------------------
 
@@ -78,12 +84,28 @@ namespace Logic
 				if(((CMessageControl*)message)->getType()==Control::LEFT_CLICK){
 					shoot();
 				}
-				break;
+			case Message::CHANGE_WEAPON:
+					changeWeapon( ((CMessageChangeWeapon*)message)->getWeapon() );
+			break;
 		}
 
 	} // process
 	//---------------------------------------------------------
 
+	void CShoot::changeWeapon(unsigned char newWeapon){
+		printf("\n\t%d",_actualWeapon);
+		printf("\n\t\t%d",newWeapon);
+		if(newWeapon != _actualWeapon && _weapons[newWeapon].ammo != -1)
+		{
+			_actualWeapon = newWeapon;
+			/*
+			Logic::CMessageChangeWeapon *m=new Logic::CMessageChangeWeapon(Logic::Message::CONTROL);
+			m->setType(Logic::Control::CHANGE_WEAPON);
+			m->setWeapon(_actualWeapon);
+			_entity->emitMessage(m);
+			*/
+		}
+	}
 
 	void CShoot::shoot(){
 		
@@ -97,7 +119,11 @@ namespace Logic
 
 		Ray ray(origin, direction);
 
-		//Dibujo del rayo
+
+
+		////////////////////////////////////////////////Dibujo del rayo
+
+
 			Graphics::CScene *scene = Graphics::CServer::getSingletonPtr()->getActiveScene();
 			Ogre::SceneManager *mSceneMgr = scene->getSceneMgr();
 
@@ -117,7 +143,7 @@ namespace Logic
 			myManualObject->position(v.x,v.y,v.z);
 
 
-		for(int i=0; (i) < _weapons[_actualWeapon].distance;++i){
+		for(int i=0; i < _weapons[_actualWeapon].distance;++i){
 			Vector3 v = ray.getPoint(i);
 			myManualObject->position(v.x,v.y,v.z);
 			// etc 
@@ -126,6 +152,8 @@ namespace Logic
 			myManualObject->end(); 
 			myManualObjectNode->attachObject(myManualObject);
 
+
+		//////////////////////////////////fin del dibujado del rayo
 
 		//Rayo lanzado por el servidor de físicas de acuerdo a la distancia de potencia del arma
 		CEntity *entity = Physics::CServer::getSingletonPtr()->raycastClosest(ray, _weapons[_actualWeapon].distance);

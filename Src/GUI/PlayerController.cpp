@@ -61,28 +61,47 @@ namespace GUI {
 	{
 		if(_controlledAvatar)
 		{
-			Logic::CMessageControl *m=new Logic::CMessageControl(Logic::Message::CONTROL);
-			switch(key.keyId)
-			{
-			case GUI::Key::W:
-				m->setType(Logic::Control::WALK);
-				break;
-			case GUI::Key::S:
-				m->setType(Logic::Control::WALKBACK);
-				break;
-			case GUI::Key::A:
-				m->setType(Logic::Control::STRAFE_LEFT);
-				break;
-			case GUI::Key::D:
-				m->setType(Logic::Control::STRAFE_RIGHT);
-				break;
-			case GUI::Key::SPACE:
-				m->setType(Logic::Control::JUMP);
-				break;
-			default:
-				return false;
+			//esto no me gusta pero por ahora estara asi U.U
+			if(key.keyId == GUI::Key::NUMBER1 || key.keyId == GUI::Key::NUMBER2){
+				Logic::CMessageChangeWeapon *m = new Logic::CMessageChangeWeapon(Logic::Message::CHANGE_WEAPON);
+				
+				switch(key.keyId)
+				{
+					case GUI::Key::NUMBER1:
+						m->setWeapon(0);
+					break;
+					case GUI::Key::NUMBER2:
+						m->setWeapon(1);
+					break;
+				}
+				_controlledAvatar->emitMessage(m);
+				return true;
+			}else{
+
+				Logic::CMessageControl *m=new Logic::CMessageControl(Logic::Message::CONTROL);
+				switch(key.keyId)
+				{
+				case GUI::Key::W:
+					m->setType(Logic::Control::WALK);
+					break;
+				case GUI::Key::S:
+					m->setType(Logic::Control::WALKBACK);
+					break;
+				case GUI::Key::A:
+					m->setType(Logic::Control::STRAFE_LEFT);
+					break;
+				case GUI::Key::D:
+					m->setType(Logic::Control::STRAFE_RIGHT);
+					break;
+				case GUI::Key::SPACE:
+					m->setType(Logic::Control::JUMP);
+					break;
+				
+				default:
+					return false;
+				}
+				_controlledAvatar->emitMessage(m);
 			}
-			_controlledAvatar->emitMessage(m);
 			return true;
 		}
 		return false;

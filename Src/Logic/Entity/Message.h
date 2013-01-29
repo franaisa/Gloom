@@ -38,7 +38,8 @@ namespace Logic
 			TOUCHED,
 			UNTOUCHED,
 			SWITCH,
-			DAMAGED
+			DAMAGED,
+			CHANGE_WEAPON,
 		};
 	}
 	/**
@@ -62,7 +63,7 @@ namespace Logic
 			RIGHT_CLICK,
 			MIDDLE_CLICK,
 			BUTTON3_CLICK,
-			JUMP
+			JUMP,
 		};
 
 	}
@@ -230,6 +231,16 @@ namespace Logic
 		
 	private:
 		Vector3 _movement;
+	};
+
+	class CMessageChangeWeapon: public CMessage{
+	public:
+		CMessageChangeWeapon(TMessageType t);
+		unsigned char getWeapon();
+		void setWeapon(unsigned char weapon);
+		~CMessageChangeWeapon(){};
+	private:
+		unsigned char _weapon;
 	};
 
 } // namespace Logic

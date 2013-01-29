@@ -46,10 +46,13 @@ namespace Logic
 		*/
 		virtual void process(CMessage *message);
 
-		void shoot();
+		
 
 	protected:
 
+		void shoot();
+
+		void changeWeapon(unsigned char newWeapon);
 		
 		struct TWeapon{
 			std::string name;
@@ -57,6 +60,7 @@ namespace Logic
 			unsigned char dispersion;
 			float distance;
 			unsigned char coolDown;
+			int ammo; //esta como int, por que si es -1 esq no tienes esta arma.
 		};
 
 		
@@ -92,6 +96,7 @@ namespace Logic
 		esto se eliminara
 		*/
 		int _temporal;
+
 	}; // class CShoot
 
 	REG_FACTORY(CShoot);
