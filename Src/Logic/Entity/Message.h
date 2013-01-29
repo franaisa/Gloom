@@ -116,7 +116,12 @@ namespace Logic
 		 // Aquellos mensajes que tengan más parámetros deberán sobreescribir
 		 // este método.
 		 // Igualmente deberían apoyarse en la implementación del padre
-		 virtual Net::CBuffer serialize();
+		 // OJO!! NO RESETEA EL PUNTERO DE ESCRITURA/LECTURA POR DEFECTO
+		 // el motivo principial es para que las clases derivadas solo tengan
+		 // que llamar a write para escribir sus datos reutilizando la implentacion
+		 // del padre.
+		 // Estamos presuponiendo que nadie va a instanciar a CMessage.
+		 virtual Net::CBuffer serialize() = 0;
 
 	protected:
 		TMessageType _type;
@@ -134,6 +139,8 @@ namespace Logic
 		void setType(ControlType controltype);
 		~CMessageControl(){};
 
+		virtual Net::CBuffer serialize();
+
 	protected:
 		ControlType _controlType;
 	};
@@ -146,6 +153,8 @@ namespace Logic
 		void setMouse(float mouse[]);
 		float* getMouse();
 		~CMessageMouse(){};
+
+		virtual Net::CBuffer serialize();
 
 	private:
 		float _mouse[2];
@@ -160,6 +169,8 @@ namespace Logic
 		void setTransform(Matrix4 transform);
 		~CMessageTransform(){};
 		
+		virtual Net::CBuffer serialize();
+
 	private:
 		Matrix4 _transform;
 	};
@@ -173,6 +184,8 @@ namespace Logic
 		void setEntity(CEntity *c);
 		~CMessageTouched(){};
 		
+		virtual Net::CBuffer serialize();
+
 	private:
 		CEntity *_entity;
 	};
@@ -186,6 +199,8 @@ namespace Logic
 		void setEntity(CEntity *c);
 		~CMessageUntouched(){};
 		
+		virtual Net::CBuffer serialize();
+
 	private:
 		CEntity *_entity;
 	};
@@ -200,6 +215,8 @@ namespace Logic
 		bool getBool();
 		void setBool(bool boolean);
 		~CMessageSetAnimation(){};
+
+		virtual Net::CBuffer serialize();
 
 	private:
 		std::string _string;
@@ -216,6 +233,8 @@ namespace Logic
 		bool getBool();
 		void setBool(bool boolean);
 		~CMessageStopAnimation(){};
+
+		virtual Net::CBuffer serialize();
 		
 	private:
 		std::string _string;
@@ -231,6 +250,8 @@ namespace Logic
 		void setChange(unsigned char change);
 		~CMessageSwitch(){};
 		
+		virtual Net::CBuffer serialize();
+
 	private:
 		unsigned char _change;
 	};
@@ -244,6 +265,8 @@ namespace Logic
 		void setDamage(unsigned char damage);
 		~CMessageDamaged(){};
 		
+		virtual Net::CBuffer serialize();
+
 	private:
 		unsigned char _damage;
 	};
@@ -256,6 +279,8 @@ namespace Logic
 		Vector3 getDirection();
 		void setDirection(Vector3 direction);
 		~CMessageAvatarWalk(){};
+
+		virtual Net::CBuffer serialize();
 		
 	private:
 		Vector3 _direction;
@@ -269,6 +294,8 @@ namespace Logic
 		Vector3 getMovement();
 		void setMovement(Vector3 movement);
 		~CMessageKinematicMove(){};
+
+		virtual Net::CBuffer serialize();
 		
 	private:
 		Vector3 _movement;

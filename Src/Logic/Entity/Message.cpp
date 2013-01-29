@@ -43,6 +43,7 @@ namespace Logic
 	}//
 	//----------------------------------------------------------
 
+
 	Net::CBuffer CMessage::serialize() {
 		// Si hemos utilizado el buffer en otra ocasion, recolocamos
 		// el puntero de escritura al principio
@@ -51,8 +52,6 @@ namespace Logic
 		
 		// Escribimos el tipo del mensaje
 		_tempBuffer.write(&_type, sizeof(_type));
-		// Reseteamos el puntero de lectura
-		_tempBuffer.reset();
 
 		return _tempBuffer;
 	}//
@@ -87,8 +86,16 @@ namespace Logic
 		_transform=transform;
 	}//
 	//----------------------------------------------------------
+	
+	Net::CBuffer CMessageTransform::serialize() {
+		CMessage::serialize();
+		_tempBuffer.write(&_transform, sizeof(_transform));
+		_tempBuffer.reset();
 
-
+		return _tempBuffer;
+	}//
+	//----------------------------------------------------------
+	
 
 	CMessageControl::CMessageControl(TMessageType type) : CMessage(type) {
 		// Nada que hacer
@@ -105,11 +112,19 @@ namespace Logic
 	}//
 	//----------------------------------------------------------
 
+	Net::CBuffer CMessageControl::serialize() {
+		CMessage::serialize();
+		_tempBuffer.write(&_controlType, sizeof(_controlType));
+		_tempBuffer.reset();
+
+		return _tempBuffer;
+	}//
+	//----------------------------------------------------------
+
 	CMessageMouse::CMessageMouse(TMessageType t):CMessageControl(t){
 
 	} //
 	//----------------------------------------------------------
-
 	void CMessageMouse::setMouse(float mouse[]){
 		_mouse[0]=mouse[0];
 		_mouse[1]=mouse[1];
@@ -121,7 +136,14 @@ namespace Logic
 	}//
 	//----------------------------------------------------------
 
+	Net::CBuffer CMessageMouse::serialize() {
+		CMessageControl::serialize();
+		_tempBuffer.write(&_mouse, 2 * sizeof(float));
+		_tempBuffer.reset();
 
+		return _tempBuffer;
+	}//
+	//----------------------------------------------------------
 
 
 	CMessageTouched::CMessageTouched(TMessageType type) : CMessage(type) {
@@ -139,6 +161,14 @@ namespace Logic
 	}//
 	//----------------------------------------------------------
 
+	Net::CBuffer CMessageTouched::serialize() {
+		CMessage::serialize();
+		_tempBuffer.write(_entity, sizeof(_entity));
+		_tempBuffer.reset();
+
+		return _tempBuffer;
+	}//
+	//----------------------------------------------------------
 
 
 
@@ -157,7 +187,14 @@ namespace Logic
 	}//
 	//----------------------------------------------------------
 
+	Net::CBuffer CMessageUntouched::serialize() {
+		CMessage::serialize();
+		_tempBuffer.write(_entity, sizeof(_entity));
+		_tempBuffer.reset();
 
+		return _tempBuffer;
+	}//
+	//----------------------------------------------------------
 
 
 	CMessageSetAnimation::CMessageSetAnimation(TMessageType type) : CMessage(type) {
@@ -185,6 +222,15 @@ namespace Logic
 	}//
 	//----------------------------------------------------------
 
+	Net::CBuffer CMessageSetAnimation::serialize() {
+		CMessage::serialize();
+		_tempBuffer.write(&_string, sizeof(_string));
+		_tempBuffer.write(&_bool, sizeof(_bool));
+		_tempBuffer.reset();
+
+		return _tempBuffer;
+	}//
+	//----------------------------------------------------------
 
 
 
@@ -213,6 +259,15 @@ namespace Logic
 	}//
 	//----------------------------------------------------------
 
+	Net::CBuffer CMessageStopAnimation::serialize() {
+		CMessage::serialize();
+		_tempBuffer.write(&_string, sizeof(_string));
+		_tempBuffer.write(&_bool, sizeof(_bool));
+		_tempBuffer.reset();
+
+		return _tempBuffer;
+	}//
+	//----------------------------------------------------------
 
 
 
@@ -230,7 +285,15 @@ namespace Logic
 		return _change;
 	}//
 	//----------------------------------------------------------
-		
+	
+	Net::CBuffer CMessageSwitch::serialize() {
+		CMessage::serialize();
+		_tempBuffer.write(&_change, sizeof(_change));
+		_tempBuffer.reset();
+
+		return _tempBuffer;
+	}//
+	//----------------------------------------------------------
 
 
 
@@ -249,7 +312,14 @@ namespace Logic
 	}//
 	//----------------------------------------------------------
 		
+	Net::CBuffer CMessageDamaged::serialize() {
+		CMessage::serialize();
+		_tempBuffer.write(&_damage, sizeof(_damage));
+		_tempBuffer.reset();
 
+		return _tempBuffer;
+	}//
+	//----------------------------------------------------------
 
 
 	CMessageAvatarWalk::CMessageAvatarWalk(TMessageType type) : CMessage(type) {
@@ -267,7 +337,14 @@ namespace Logic
 	}//
 	//----------------------------------------------------------
 
+	Net::CBuffer CMessageAvatarWalk::serialize() {
+		CMessage::serialize();
+		_tempBuffer.write(&_direction, sizeof(_direction));
+		_tempBuffer.reset();
 
+		return _tempBuffer;
+	}//
+	//----------------------------------------------------------
 
 
 	CMessageKinematicMove::CMessageKinematicMove(TMessageType type) : CMessage(type) {
@@ -285,4 +362,12 @@ namespace Logic
 	}//
 	//----------------------------------------------------------
 
+	Net::CBuffer CMessageKinematicMove::serialize() {
+		CMessage::serialize();
+		_tempBuffer.write(&_movement, sizeof(_movement));
+		_tempBuffer.reset();
+
+		return _tempBuffer;
+	}//
+	//----------------------------------------------------------
 }
