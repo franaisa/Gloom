@@ -56,6 +56,19 @@ namespace Logic
 		if(!_graphicsEntity)
 			return false;
 
+		if(entityInfo->hasAttribute("scale")){
+
+			//con el escale puedo escalar lo que quiera cuanto quiera. El mapa ya sale al tamaño que queramos ^^
+			_graphicsEntity->setScale(entityInfo->getVector3Attribute("scale"));
+			/* con esto puedo girar lo que quiera cuanto quiera. Lo he probado con el mapa.
+			Matrix4 transform = entity->getTransform();
+			Math::pitch(30,transform);
+			_graphicsEntity->setTransform(transform);
+			*/
+		}
+
+		
+
 		return true;
 
 	} // spawn
@@ -81,7 +94,7 @@ namespace Logic
 				return 0;
 		}
 
-		_graphicsEntity->setTransform(_entity->getTransform());		
+		//_graphicsEntity->setTransform(_entity->getTransform());		
 		
 		return _graphicsEntity;
 
@@ -93,14 +106,14 @@ namespace Logic
 
 	//---------------------------------------------------------
 
-	/*bool CGraphics::accept(CMessage *message)
+	bool CGraphics::accept(CMessage *message)
 	{
 		return (message->getMessageType() == Message::SET_TRANSFORM);
-	}*/ // accept
+	} // accept
 	
 	//---------------------------------------------------------
 
-	/*void CGraphics::process(CMessage *message)
+	void CGraphics::process(CMessage *message)
 	{
 		switch(message->getMessageType())
 		{
@@ -108,7 +121,7 @@ namespace Logic
 			_graphicsEntity->setTransform(((CMessageTransform*)message)->getTransform());
 		}
 
-	}*/ // process
+	} // process
 
 } // namespace Logic
 

@@ -2,16 +2,16 @@
 @file Graphics.h
 
 Contiene la declaración del componente que controla la representación
-gráfica de la entidad.
+gráfica del jugador, es decir, todas las armas que este portara.
 
 @see Logic::CGraphics
 @see Logic::IComponent
 
-@author David Llansó
-@date Agosto, 2010
+@author Antonio Narváez
+@date Enero, 2013
 */
-#ifndef __Logic_Graphics_H
-#define __Logic_Graphics_H
+#ifndef __Logic_ArrayGraphics_H
+#define __Logic_ArrayGraphics_H
 
 #include "Logic/Entity/Component.h"
 
@@ -39,21 +39,21 @@ namespace Logic
 	@author David Llansó García
 	@date Agosto, 2010
 */
-	class CGraphics : public IComponent
+	class CArrayGraphics : public IComponent
 	{
-		DEC_FACTORY(CGraphics);
+		DEC_FACTORY(CArrayGraphics);
 	public:
 
 		/**
 		Constructor por defecto; inicializa los atributos a su valor por 
 		defecto.
 		*/
-		CGraphics() : IComponent(), _graphicsEntity(0) {}
+		CArrayGraphics() : IComponent(), _actualWeapon(0), _graphicsEntities(), _numWeapons(0) {}
 
 		/**
 		Destructor (virtual); Quita de la escena y destruye la entidad gráfica.
 		*/
-		virtual ~CGraphics();
+		virtual ~CArrayGraphics();
 		
 		/**
 		Inicialización del componente, utilizando la información extraída de
@@ -85,7 +85,17 @@ namespace Logic
 		*/
 		virtual void process(CMessage *message);
 
-		void CGraphics::setTransform(const Matrix4& transform);
+
+		/**
+		Metodo para cambiar el grafico en funcion del arma actual
+		*/
+		void changeWeapon(unsigned char newWeapon);
+
+
+		/**
+		Aqui se actualizara la funcion, la saco fuera para hacer uso de ella
+		*/
+		void setTransform(const Matrix4 &transform);
 
 	protected:
 
@@ -98,17 +108,41 @@ namespace Logic
 			fichero de disco.
 		@return Entidad gráfica creada, NULL si hubo algún problema.
 		*/
-		virtual Graphics::CEntity* createGraphicsEntity(const Map::CEntity *entityInfo);
+		virtual Graphics::CEntity* createGraphicsEntity(std::string nombreEntidad, std::string modelo);
 
 		/**
-		Atributo con el nombre del modelo gráfico de la entidad.
+		metodo donde se hara el cambio de arma.
 		*/
-		std::string _model;
+		
+
+
+		
+
+
+		/**
+		arma actual equipada
+		*/
+		int _actualWeapon;
 		
 		/**
-		Entidad gráfica.
+		Estructura donde se guardara el offset y las modificaciones en el arma
 		*/
-		Graphics::CEntity *_graphicsEntity;
+		struct TGraphicsWeapon{
+			Graphics::CEntity *_graphicsEntity;
+			Vector3 *offset;
+			float yaw;
+			float pitch;
+		};
+
+		/**
+		Entidades gráfica.
+		*/
+		TGraphicsWeapon *_graphicsEntities;
+
+		/**
+		Aqui almaceno el numero de aramas (lo mas seguro que esto deba de ser borrado) !!!! cuidado que en el destructor se usa
+		*/
+		int _numWeapons;
 
 		/**
 		Escena gráfica donde se encontrarán las representaciones gráficas de
@@ -116,9 +150,14 @@ namespace Logic
 		*/
 		Graphics::CScene* _scene;
 
+
+
+		
+
+
 	}; // class CGraphics
 
-	REG_FACTORY(CGraphics);
+	REG_FACTORY(CArrayGraphics);
 
 } // namespace Logic
 

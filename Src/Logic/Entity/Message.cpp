@@ -361,13 +361,24 @@ namespace Logic
 		return _movement;
 	}//
 	//----------------------------------------------------------
-
 	Net::CBuffer CMessageKinematicMove::serialize() {
 		CMessage::serialize();
 		_tempBuffer.write(&_movement, sizeof(_movement));
 		_tempBuffer.reset();
 
 		return _tempBuffer;
+
+	CMessageChangeWeapon::CMessageChangeWeapon(TMessageType type){
+		_type=type;
+		_smartP=0;
+	}//
+	//----------------------------------------------------------
+	void CMessageChangeWeapon::setWeapon(unsigned char weapon){
+		_weapon = weapon;
+	}//
+	//----------------------------------------------------------
+	unsigned char CMessageChangeWeapon::getWeapon(){
+		return _weapon;
 	}//
 	//----------------------------------------------------------
 }

@@ -33,21 +33,18 @@ namespace Logic
 	{
 		enum TMessageType
 		{
-			UNASSIGNED          = 0xFFFFFFFF,
-			SET_TRANSFORM       = 0x00000000,
-			SET_ANIMATION       = 0x00000001,
-			STOP_ANIMATION      = 0x00000002,
-			CONTROL	            = 0x00000003,
-			AVATAR_WALK         = 0x00000004,
-			TOUCHED             = 0x00000005,
-			UNTOUCHED           = 0x00000006,
-			SWITCH              = 0x00000007,
-			DAMAGED             = 0x00000008,
-			MOVE_TO             = 0x00000009,
-			ROUTE_TO            = 0x0000000A,
-			FINISHED_ROUTE      = 0x0000000B,
-			FAILED_ROUTE        = 0x0000000C,
-			KINEMATIC_MOVE		= 0x0000000D
+			UNASSIGNED = 0xFFFFFFFF,
+			SET_TRANSFORM,
+			SET_ANIMATION,
+			STOP_ANIMATION,
+			CONTROL,
+			AVATAR_WALK,
+			KINEMATIC_MOVE,
+			TOUCHED,
+			UNTOUCHED,
+			SWITCH,
+			DAMAGED,
+			CHANGE_WEAPON,
 		};
 	}
 	/**
@@ -57,21 +54,21 @@ namespace Logic
 	{
 			enum ControlType
 		{
-			UNASSIGNED			= 0xFFFFFFFF,
-			WALK				= 0x00000000,
-			WALKBACK			= 0x00000001,
-			STOP_WALK			= 0x00000002,
-			STOP_WALKBACK		= 0x00000003,
-			STRAFE_LEFT			= 0x00000004,
-			STRAFE_RIGHT		= 0x00000005,
-			STOP_STRAFE_LEFT	= 0x00000006,
-			STOP_STRAFE_RIGHT	= 0x00000007,
-			MOUSE				= 0x00000008,
-			LEFT_CLICK			= 0x00000009,
-			RIGHT_CLICK			= 0x0000000A,
-			MIDDLE_CLICK		= 0x0000000B,
-			BUTTON3_CLICK		= 0x0000000C,
-			JUMP				= 0x0000000D
+			UNASSIGNED = 0xFFFFFFFF,
+			WALK,
+			WALKBACK,
+			STOP_WALK,
+			STOP_WALKBACK,
+			STRAFE_LEFT,
+			STRAFE_RIGHT,
+			STOP_STRAFE_LEFT,
+			STOP_STRAFE_RIGHT,
+			MOUSE,
+			LEFT_CLICK,
+			RIGHT_CLICK,
+			MIDDLE_CLICK,
+			BUTTON3_CLICK,
+			JUMP,
 		};
 
 	}
@@ -299,6 +296,18 @@ namespace Logic
 		
 	private:
 		Vector3 _movement;
+	};
+
+	// _________________________________________________
+
+	class CMessageChangeWeapon: public CMessage{
+	public:
+		CMessageChangeWeapon(TMessageType t);
+		unsigned char getWeapon();
+		void setWeapon(unsigned char weapon);
+		~CMessageChangeWeapon(){};
+	private:
+		unsigned char _weapon;
 	};
 
 

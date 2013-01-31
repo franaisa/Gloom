@@ -18,6 +18,7 @@ mover al jugador.
 #include "Logic/Entity/Message.h"
 #include "Logic/Entity/Components/AvatarController.h"
 #include "Logic/Entity/Components/Shoot.h"
+#include "Logic/Entity/Components/ArrayGraphics.h"
 
 #include <cassert>
 
@@ -63,35 +64,70 @@ namespace GUI {
 	{
 		if(_controlledAvatar)
 		{
-			Logic::CAvatarController* controller = _controlledAvatar->getComponent<Logic::CAvatarController>("CAvatarController");
-
-			switch(key.keyId)
-			{
-			case GUI::Key::W:
-				controller->walk();
+			if(key.keyId == GUI::Key::NUMBER1 || key.keyId == GUI::Key::NUMBER2 || key.keyId == GUI::Key::NUMBER3 || key.keyId == GUI::Key::NUMBER4 || 
+				key.keyId == GUI::Key::NUMBER5 || key.keyId == GUI::Key::NUMBER6 ){
 				
-				break;
-			case GUI::Key::S:
-				controller->walkBack();
+					Logic::CArrayGraphics* graphicsComponents= _controlledAvatar->getComponent<Logic::CArrayGraphics>("CArrayGraphics");
+					Logic::CShoot* shootComponent = _controlledAvatar->getComponent<Logic::CShoot>("CShoot");
 
-				break;
-			case GUI::Key::A:
-				controller->strafeLeft();
+					switch(key.keyId)
+					{
+					case GUI::Key::NUMBER1:
+						//graphicsComponents->changeWeapon(0);
+						shootComponent->changeWeapon(0);
+						break;
+					case GUI::Key::NUMBER2:
+						//graphicsComponents->changeWeapon(1);
+						shootComponent->changeWeapon(1);
+						break;
+					case GUI::Key::NUMBER3:
+						//graphicsComponents->changeWeapon(2);
+						shootComponent->changeWeapon(2);
+						break;
+					case GUI::Key::NUMBER4:
+						//graphicsComponents->changeWeapon(3);
+						shootComponent->changeWeapon(3);
+						break;
+					case GUI::Key::NUMBER5:
+						//graphicsComponents->changeWeapon(4);
+						shootComponent->changeWeapon(4);
+						break;
+					case GUI::Key::NUMBER6:
+						//graphicsComponents->changeWeapon(5);
+						shootComponent->changeWeapon(5);
+						break;
+					}
+			}else{
+				Logic::CAvatarController* controller = _controlledAvatar->getComponent<Logic::CAvatarController>("CAvatarController");
 
-				break;
-			case GUI::Key::D:
-				controller->strafeRight();
+				switch(key.keyId)
+				{
+				case GUI::Key::W:
+					controller->walk();
 				
-				break;
-			case GUI::Key::SPACE:
-				controller->jump();
+					break;
+				case GUI::Key::S:
+					controller->walkBack();
+
+					break;
+				case GUI::Key::A:
+					controller->strafeLeft();
+
+					break;
+				case GUI::Key::D:
+					controller->strafeRight();
 				
-				break;
-			default:
-				return false;
+					break;
+				case GUI::Key::SPACE:
+					controller->jump();
+				
+					break;
+			
+				default:
+					return false;
+				}
+				return true;
 			}
-
-			return true;
 		}
 		return false;
 
