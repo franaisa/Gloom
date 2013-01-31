@@ -178,7 +178,7 @@ namespace Logic
 
 	//---------------------------------------------------------
 
-	/*bool CEntity::emitMessage(CMessage *message, IComponent* emitter)
+	bool CEntity::emitMessage(CMessage *message, IComponent* emitter)
 	{
 		
 		// Interceptamos los mensajes que además de al resto de los
@@ -206,7 +206,7 @@ namespace Logic
 
 		return anyReceiver;
 
-	}*/ // emitMessage
+	} // emitMessage
 
 	//---------------------------------------------------------
 

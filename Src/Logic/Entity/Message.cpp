@@ -367,10 +367,10 @@ namespace Logic
 		_tempBuffer.reset();
 
 		return _tempBuffer;
+	}
 
-	CMessageChangeWeapon::CMessageChangeWeapon(TMessageType type){
-		_type=type;
-		_smartP=0;
+	CMessageChangeWeapon::CMessageChangeWeapon(TMessageType type) : CMessage(type) {
+		// Nada que hacer
 	}//
 	//----------------------------------------------------------
 	void CMessageChangeWeapon::setWeapon(unsigned char weapon){
@@ -381,4 +381,11 @@ namespace Logic
 		return _weapon;
 	}//
 	//----------------------------------------------------------
+	Net::CBuffer CMessageChangeWeapon::serialize() {
+		CMessage::serialize();
+		_tempBuffer.write(&_weapon, sizeof(_weapon));
+		_tempBuffer.reset();
+
+		return _tempBuffer;
+	}
 }

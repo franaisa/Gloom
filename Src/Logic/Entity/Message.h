@@ -305,7 +305,9 @@ namespace Logic
 		CMessageChangeWeapon(TMessageType t);
 		unsigned char getWeapon();
 		void setWeapon(unsigned char weapon);
-		~CMessageChangeWeapon(){};
+		~CMessageChangeWeapon() { };
+
+		virtual Net::CBuffer serialize();
 	private:
 		unsigned char _weapon;
 	};
