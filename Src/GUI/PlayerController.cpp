@@ -98,34 +98,28 @@ namespace GUI {
 						break;
 					}
 			}else{
-				Logic::CAvatarController* controller = _controlledAvatar->getComponent<Logic::CAvatarController>("CAvatarController");
-
+				Logic::CMessageControl *m=new Logic::CMessageControl(Logic::Message::CONTROL);
 				switch(key.keyId)
 				{
 				case GUI::Key::W:
-					controller->walk();
-				
+					m->setType(Logic::Control::WALK);
 					break;
 				case GUI::Key::S:
-					controller->walkBack();
-
+					m->setType(Logic::Control::WALKBACK);
 					break;
 				case GUI::Key::A:
-					controller->strafeLeft();
-
+					m->setType(Logic::Control::STRAFE_LEFT);
 					break;
 				case GUI::Key::D:
-					controller->strafeRight();
-				
+					m->setType(Logic::Control::STRAFE_RIGHT);
 					break;
 				case GUI::Key::SPACE:
-					controller->jump();
-				
+					m->setType(Logic::Control::JUMP);
 					break;
-			
 				default:
 					return false;
 				}
+				_controlledAvatar->emitMessage(m);
 				return true;
 			}
 		}
@@ -139,30 +133,25 @@ namespace GUI {
 	{
 		if(_controlledAvatar)
 		{
-			Logic::CAvatarController* controller = _controlledAvatar->getComponent<Logic::CAvatarController>("CAvatarController");
-			
+			Logic::CMessageControl *m=new Logic::CMessageControl(Logic::Message::CONTROL);
 			switch(key.keyId)
 			{
 			case GUI::Key::W:
-				controller->stopWalk();
-
+				m->setType(Logic::Control::STOP_WALK);
 				break;
 			case GUI::Key::S:
-				controller->stopWalkBack();
-
+				m->setType(Logic::Control::STOP_WALKBACK);
 				break;
 			case GUI::Key::A:
-				controller->stopStrafeLeft();
-
+				m->setType(Logic::Control::STOP_STRAFE_LEFT);
 				break;
 			case GUI::Key::D:
-				controller->stopStrafeRight();
-
+				m->setType(Logic::Control::STOP_STRAFE_RIGHT);
 				break;
 			default:
 				return false;
 			}
-
+			_controlledAvatar->emitMessage(m);
 			return true;
 		}
 		return false;
@@ -175,9 +164,11 @@ namespace GUI {
 	{
 		if(_controlledAvatar)
 		{
+			Logic::CMessageMouse *m=new Logic::CMessageMouse(Logic::Message::CONTROL);
+			m->setType(Logic::Control::MOUSE);
 			float mouse[]={-(float)mouseState.movX * TURN_FACTOR_X,-(float)mouseState.movY * TURN_FACTOR_Y};
-			_controlledAvatar->getComponent<Logic::CAvatarController>("CAvatarController")->mouse(mouse);
-			
+			m->setMouse(mouse);
+			_controlledAvatar->emitMessage(m);
 			return true;
 		}
 		return false;
@@ -190,32 +181,26 @@ namespace GUI {
 	{
 		if(_controlledAvatar)
 		{
-			Logic::CShoot* shootComponent = _controlledAvatar->getComponent<Logic::CShoot>("CShoot");
-			
+			Logic::CMessageControl *m=new Logic::CMessageControl(Logic::Message::CONTROL);
 			switch(mouseState.button)
 			{
 			case GUI::Button::LEFT:
-				shootComponent->shoot();
-
+				m->setType(Logic::Control::LEFT_CLICK);
 				break;
 			case GUI::Button::RIGHT:
-				//m->setType(Logic::Control::RIGHT_CLICK);
-				
+				m->setType(Logic::Control::RIGHT_CLICK);
 				break;
 			case GUI::Button::MIDDLE:
-				//m->setType(Logic::Control::MIDDLE_CLICK);
-				
+				m->setType(Logic::Control::MIDDLE_CLICK);
 				break;
 			case GUI::Button::BUTTON_3:
-				//m->setType(Logic::Control::BUTTON3_CLICK);
-				
+				m->setType(Logic::Control::BUTTON3_CLICK);
 				break;
 			
 			default:
 				return false;
 			}
-
-			//_controlledAvatar->emitMessage(m);
+			_controlledAvatar->emitMessage(m);
 			return true;
 		}
 		return false;

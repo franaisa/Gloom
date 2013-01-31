@@ -215,14 +215,16 @@ namespace Logic
 		_transform = transform;
 
 		// Avisamos a los componentes del cambio.
-		/*Logic::CMessageTransform *m=new Logic::CMessageTransform(Message::SET_TRANSFORM);
+		Logic::CMessageTransform *m=new Logic::CMessageTransform(Message::SET_TRANSFORM);
 		m->setTransform(_transform);
-		emitMessage(m);*/
+		emitMessage(m);
 
-		if(!_isPlayer)
-			getComponent<CGraphics>("CGraphics")->setTransform(_transform);
-		else
+		if(!_isPlayer) {
+			//getComponent<CGraphics>("CGraphics")->setTransform(_transform);
+		}
+		else {
 			getComponent<CArrayGraphics>("CArrayGraphics")->setTransform(_transform);
+		}
 
 	} // setTransform
 
@@ -233,14 +235,16 @@ namespace Logic
 		_transform.setTrans(position);
 
 		// Avisamos a los componentes del cambio.
-		/*Logic::CMessageTransform *m=new Logic::CMessageTransform(Message::SET_TRANSFORM);
+		Logic::CMessageTransform *m=new Logic::CMessageTransform(Message::SET_TRANSFORM);
 		m->setTransform(_transform);
-		emitMessage(m);*/
+		emitMessage(m);
 		
-		if(!_isPlayer)
-			getComponent<CGraphics>("CGraphics")->setTransform(_transform);
-		else
+		if(!_isPlayer) {
+			//getComponent<CGraphics>("CGraphics")->setTransform(_transform);
+		}
+		else {
 			getComponent<CArrayGraphics>("CArrayGraphics")->setTransform(_transform);
+		}
 	} // setPosition
 
 	//---------------------------------------------------------
@@ -250,13 +254,15 @@ namespace Logic
 		_transform = orientation;
 
 		// Avisamos a los componentes del cambio.
-		/*Logic::CMessageTransform *m=new Logic::CMessageTransform(Message::SET_TRANSFORM);
+		Logic::CMessageTransform *m=new Logic::CMessageTransform(Message::SET_TRANSFORM);
 		m->setTransform(_transform);
-		emitMessage(m);*/
-		if(!_isPlayer)
-			getComponent<CGraphics>("CGraphics")->setTransform(_transform);
-		else
+		emitMessage(m);
+		if(!_isPlayer) {
+			//getComponent<CGraphics>("CGraphics")->setTransform(_transform);
+		}
+		else {
 			getComponent<CArrayGraphics>("CArrayGraphics")->setTransform(_transform);
+		}
 
 	} // setOrientation
 
@@ -277,14 +283,16 @@ namespace Logic
 		Math::setYaw(yaw,_transform);
 
 		// Avisamos a los componentes del cambio.
-		/*Logic::CMessageTransform *m=new Logic::CMessageTransform(Message::SET_TRANSFORM);
+		Logic::CMessageTransform *m=new Logic::CMessageTransform(Message::SET_TRANSFORM);
 		m->setTransform(_transform);
-		emitMessage(m);*/
+		emitMessage(m);
 
-		if(!_isPlayer)
-			getComponent<CGraphics>("CGraphics")->setTransform(_transform);
-		else
+		if(!_isPlayer) {
+			//getComponent<CGraphics>("CGraphics")->setTransform(_transform);
+		}
+		else {
 			getComponent<CArrayGraphics>("CArrayGraphics")->setTransform(_transform);
+		}
 	} // setYaw
 
 	//---------------------------------------------------------
@@ -294,13 +302,15 @@ namespace Logic
 		Math::yaw(yaw,_transform);
 
 		// Avisamos a los componentes del cambio.
-		/*Logic::CMessageTransform *m=new Logic::CMessageTransform(Message::SET_TRANSFORM);
+		Logic::CMessageTransform *m=new Logic::CMessageTransform(Message::SET_TRANSFORM);
 		m->setTransform(_transform);
-		emitMessage(m);*/
-		if(!_isPlayer)
-			getComponent<CGraphics>("CGraphics")->setTransform(_transform);
-		else
+		emitMessage(m);
+		if(!_isPlayer) {
+			//getComponent<CGraphics>("CGraphics")->setTransform(_transform);
+		}
+		else {
 			getComponent<CArrayGraphics>("CArrayGraphics")->setTransform(_transform);
+		}
 	} // yaw
 
 	//---------------------------------------------------------
@@ -310,13 +320,15 @@ namespace Logic
 		Math::setYaw(pitch,_transform);
 
 		// Avisamos a los componentes del cambio.
-		/*Logic::CMessageTransform *m=new Logic::CMessageTransform(Message::SET_TRANSFORM);
+		Logic::CMessageTransform *m=new Logic::CMessageTransform(Message::SET_TRANSFORM);
 		m->setTransform(_transform);
-		emitMessage(m);*/
-		if(!_isPlayer)
-			getComponent<CGraphics>("CGraphics")->setTransform(_transform);
-		else
+		emitMessage(m);
+		if(!_isPlayer) {
+			//getComponent<CGraphics>("CGraphics")->setTransform(_transform);
+		}
+		else {
 			getComponent<CArrayGraphics>("CArrayGraphics")->setTransform(_transform);
+		}
 	} // setPitch
 
 	//---------------------------------------------------------
@@ -326,13 +338,15 @@ namespace Logic
 		Math::pitch(pitch,_transform);
 
 		// Avisamos a los componentes del cambio.
-		/*Logic::CMessageTransform *m=new Logic::CMessageTransform(Message::SET_TRANSFORM);
+		Logic::CMessageTransform *m=new Logic::CMessageTransform(Message::SET_TRANSFORM);
 		m->setTransform(_transform);
-		emitMessage(m);*/
-		if(!_isPlayer)
-			getComponent<CGraphics>("CGraphics")->setTransform(_transform);
-		else
+		emitMessage(m);
+		if(!_isPlayer) {
+			//getComponent<CGraphics>("CGraphics")->setTransform(_transform);
+		}
+		else {
 			getComponent<CArrayGraphics>("CArrayGraphics")->setTransform(_transform);
+		}
 	} // pitch
 
 	//---------------------------------------------------------

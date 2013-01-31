@@ -356,9 +356,12 @@ namespace Logic
 		direction.y *= msecs * _speedJump;
 
 		//Pasamos a la Física la dirección del movimiento para que se encargue ella de movernos
-		_entity->getComponent<Logic::CPhysicController>("CPhysicController")->avatarWalk(direction);
+		//_entity->getComponent<Logic::CPhysicController>("CPhysicController")->avatarWalk(direction);
 		
-
+		Logic::CMessageAvatarWalk *m=new Logic::CMessageAvatarWalk(Logic::Message::AVATAR_WALK);
+			
+		m->setDirection(direction);
+		_entity->emitMessage(m);
 	} // tick
 
 

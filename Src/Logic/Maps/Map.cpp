@@ -68,6 +68,9 @@ namespace Logic {
 				(*it)->setType("Player");
 				map->setPlayerInfo(*it);
 			}
+			else if((*it)->getType() == "ItemSpawn") {
+
+			}
 			else 
 			{
 				//out << (*it)->getType() << endl;
