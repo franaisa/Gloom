@@ -41,7 +41,7 @@ namespace Logic
 */
 	class CArrayGraphics : public IComponent
 	{
-		DEC_FACTORY(CGraphics);
+		DEC_FACTORY(CArrayGraphics);
 	public:
 
 		/**
@@ -91,6 +91,12 @@ namespace Logic
 		*/
 		void changeWeapon(unsigned char newWeapon);
 
+
+		/**
+		Aqui se actualizara la funcion, la saco fuera para hacer uso de ella
+		*/
+		void setTransform(const Matrix4 &transform);
+
 	protected:
 
 		/**
@@ -110,10 +116,7 @@ namespace Logic
 		
 
 
-		/**
-		Aqui se actualizara la funcion, la saco fuera para hacer uso de ella
-		*/
-		void setTransform(const Matrix4 *transform);
+		
 
 
 		/**
@@ -127,8 +130,8 @@ namespace Logic
 		struct TGraphicsWeapon{
 			Graphics::CEntity *_graphicsEntity;
 			Vector3 *offset;
-			unsigned char yaw;
-			unsigned char pitch;
+			float yaw;
+			float pitch;
 		};
 
 		/**

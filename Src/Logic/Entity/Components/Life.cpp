@@ -72,6 +72,15 @@ namespace Logic
 
 	}*/ // process
 
+	void CLife::damaged(float damage){
+		_life -= damage;
+
+		printf("\nAh!, ya solo me queda %i de vida", _life);
+
+		//if ((_life <= 0) && (_entity->isPlayer())) {
+		//	Application::CBaseApplication::getSingletonPtr()->setState("menu");
+	}
+
 
 } // namespace Logic
 

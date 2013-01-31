@@ -59,6 +59,11 @@ namespace Logic
 		*/
 		//virtual void process(CMessage *message);
 
+		/**
+		Al recibir daño quitamos vida
+		*/
+		void damaged(float damage);
+
 	protected:
 
 		/**

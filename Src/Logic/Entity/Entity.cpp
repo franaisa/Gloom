@@ -19,6 +19,7 @@ de juego. Es una colección de componentes.
 #include "Logic/Server.h"
 #include "Logic/Maps/Map.h"
 #include "Logic/Entity/Components/Graphics.h"
+#include "Logic/Entity/Components/ArrayGraphics.h"
 #include "Map/MapEntity.h"
 
 #include "GUI/Server.h"
@@ -214,7 +215,10 @@ namespace Logic
 		m->setTransform(_transform);
 		emitMessage(m);*/
 
-		getComponent<CGraphics>("CGraphics")->setTransform(_transform);
+		if(!_isPlayer)
+			getComponent<CGraphics>("CGraphics")->setTransform(_transform);
+		else
+			getComponent<CArrayGraphics>("CArrayGraphics")->setTransform(_transform);
 
 	} // setTransform
 
@@ -228,8 +232,11 @@ namespace Logic
 		/*Logic::CMessageTransform *m=new Logic::CMessageTransform(Message::SET_TRANSFORM);
 		m->setTransform(_transform);
 		emitMessage(m);*/
-
-		getComponent<CGraphics>("CGraphics")->setTransform(_transform);
+		
+		if(!_isPlayer)
+			getComponent<CGraphics>("CGraphics")->setTransform(_transform);
+		else
+			getComponent<CArrayGraphics>("CArrayGraphics")->setTransform(_transform);
 	} // setPosition
 
 	//---------------------------------------------------------
@@ -242,8 +249,11 @@ namespace Logic
 		/*Logic::CMessageTransform *m=new Logic::CMessageTransform(Message::SET_TRANSFORM);
 		m->setTransform(_transform);
 		emitMessage(m);*/
+		if(!_isPlayer)
+			getComponent<CGraphics>("CGraphics")->setTransform(_transform);
+		else
+			getComponent<CArrayGraphics>("CArrayGraphics")->setTransform(_transform);
 
-		getComponent<CGraphics>("CGraphics")->setTransform(_transform);
 	} // setOrientation
 
 	//---------------------------------------------------------
@@ -267,7 +277,10 @@ namespace Logic
 		m->setTransform(_transform);
 		emitMessage(m);*/
 
-		getComponent<CGraphics>("CGraphics")->setTransform(_transform);
+		if(!_isPlayer)
+			getComponent<CGraphics>("CGraphics")->setTransform(_transform);
+		else
+			getComponent<CArrayGraphics>("CArrayGraphics")->setTransform(_transform);
 	} // setYaw
 
 	//---------------------------------------------------------
@@ -280,8 +293,10 @@ namespace Logic
 		/*Logic::CMessageTransform *m=new Logic::CMessageTransform(Message::SET_TRANSFORM);
 		m->setTransform(_transform);
 		emitMessage(m);*/
-
-		getComponent<CGraphics>("CGraphics")->setTransform(_transform);
+		if(!_isPlayer)
+			getComponent<CGraphics>("CGraphics")->setTransform(_transform);
+		else
+			getComponent<CArrayGraphics>("CArrayGraphics")->setTransform(_transform);
 	} // yaw
 
 	//---------------------------------------------------------
@@ -294,8 +309,10 @@ namespace Logic
 		/*Logic::CMessageTransform *m=new Logic::CMessageTransform(Message::SET_TRANSFORM);
 		m->setTransform(_transform);
 		emitMessage(m);*/
-
-		getComponent<CGraphics>("CGraphics")->setTransform(_transform);
+		if(!_isPlayer)
+			getComponent<CGraphics>("CGraphics")->setTransform(_transform);
+		else
+			getComponent<CArrayGraphics>("CArrayGraphics")->setTransform(_transform);
 	} // setPitch
 
 	//---------------------------------------------------------
@@ -308,8 +325,10 @@ namespace Logic
 		/*Logic::CMessageTransform *m=new Logic::CMessageTransform(Message::SET_TRANSFORM);
 		m->setTransform(_transform);
 		emitMessage(m);*/
-
-		getComponent<CGraphics>("CGraphics")->setTransform(_transform);
+		if(!_isPlayer)
+			getComponent<CGraphics>("CGraphics")->setTransform(_transform);
+		else
+			getComponent<CArrayGraphics>("CArrayGraphics")->setTransform(_transform);
 	} // pitch
 
 	//---------------------------------------------------------

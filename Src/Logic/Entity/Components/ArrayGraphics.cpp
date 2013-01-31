@@ -17,6 +17,10 @@ gráfica de la entidad.
 #include "Logic/Maps/Map.h"
 #include "Map/MapEntity.h"
 
+
+#include "Graphics/Camera.h"
+
+#include "Graphics/Server.h"
 #include "Graphics/Scene.h"
 #include "Graphics/Entity.h"
 #include "Graphics/StaticEntity.h"
@@ -66,11 +70,11 @@ namespace Logic
 				
 				_graphicsEntities[i]._graphicsEntity = createGraphicsEntity(weapon, entityInfo->getStringAttribute(weapon+"Model"));
 				
-				_graphicsEntities[i].yaw = entityInfo->getIntAttribute(weapon+"ModelYaw");
-				_graphicsEntities[i].pitch = entityInfo->getIntAttribute(weapon+"ModelPitch");
+				_graphicsEntities[i].yaw = entityInfo->getFloatAttribute(weapon+"ModelYaw");
+				_graphicsEntities[i].pitch = entityInfo->getFloatAttribute(weapon+"ModelPitch");
 				
 				//Esto perta y creo q es necesario.
-				//_graphicsEntities[i].offset = new Vector3(entityInfo->getVector3Attribute(weapon+"ModelOffset"));
+				_graphicsEntities[i].offset = new Vector3(entityInfo->getVector3Attribute(weapon+"Offset"));
 				
 				if(i!=0) _graphicsEntities[i]._graphicsEntity->setVisible(false);
 			}
@@ -78,7 +82,7 @@ namespace Logic
 		if(!_graphicsEntities)
 			return false;
 
-		setTransform(&_entity->getTransform());
+		setTransform(_entity->getTransform());
 
 		return true;
 
@@ -113,7 +117,7 @@ namespace Logic
 	{
 		switch(message->getMessageType())
 		{
-		case Message::SET_TRANSFORM: setTransform( &((CMessageTransform*)message)->getTransform() );
+		case Message::SET_TRANSFORM: setTransform( ((CMessageTransform*)message)->getTransform() );
 			break;
 		case Message::CONTROL: 
 			//if(message->getMessageType() == Control::CHANGE_WEAPON)
@@ -124,24 +128,34 @@ namespace Logic
 	} // process
 
 	void CArrayGraphics::changeWeapon(unsigned char newWeapon){
-
+		
 		_graphicsEntities[newWeapon]._graphicsEntity->setVisible(true);
 		_graphicsEntities[_actualWeapon]._graphicsEntity->setVisible(false);
+		_actualWeapon = newWeapon;
 		
 		
-		setTransform(&_entity->getTransform());
+		setTransform(_entity->getTransform());
+		
 	}
 
-	void CArrayGraphics::setTransform(const Matrix4 *transform){
+	void CArrayGraphics::setTransform(const Matrix4 &transform){
 		
-		Matrix4 transformModificado = *transform;
+		//en un futuro simplemente se orientara la entidad en el 3ds o similar. 
+
+		// Obtengo la camara para posicionarla en esta posicion pero algo modificada
+		Graphics::CCamera* camera = Graphics::CServer::getSingletonPtr()->getActiveScene()->getCamera();
+		Vector3 direction = camera->getTargetCameraPosition() - camera->getCameraPosition();
+		direction.normalise();
+		Vector3 posicionModificada = camera->getCameraPosition()- Vector3(0,2.5,0) + ((8.0f) * direction);
 		
+		//Aqui establezco la rotacion (En un futuro se rotara el modelo)
+		Matrix4 transformModificado = transform;
 		Math::yaw(_graphicsEntities[_actualWeapon].yaw, transformModificado);
-		Vector3 vector;
-		transformModificado.getTrans().swap(vector);
-		transformModificado.setTrans (vector + (Vector3(0.0,2.0,0.0)));
-		
+		Math::pitch(_graphicsEntities[_actualWeapon].pitch, transformModificado);
 		_graphicsEntities[_actualWeapon]._graphicsEntity->setTransform(transformModificado);
+		_graphicsEntities[_actualWeapon]._graphicsEntity->setPosition(posicionModificada);
+
+
 	}
 
 } // namespace Logic

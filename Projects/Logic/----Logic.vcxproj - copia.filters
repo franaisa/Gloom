@@ -91,14 +91,13 @@
     <ClCompile Include="..\..\Src\Logic\Entity\Components\Shoot.cpp">
       <Filter>Entity\Components\Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\ArrayGraphics.cpp">
+      <Filter>Entity\Components\Source Files</Filter>
     <ClCompile Include="..\..\Src\Logic\Maps\IIdentifier.cpp">
       <Filter>Entity\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Src\Logic\Maps\ComponentID.cpp">
       <Filter>Entity\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Logic\Entity\Components\ArrayGraphics.cpp">
-      <Filter>Entity\Components\Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -174,14 +173,13 @@
     <ClInclude Include="..\..\Src\Logic\Entity\Components\Physics.h">
       <Filter>Entity\Components\Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\ArrayGraphics.h">
+      <Filter>Entity\Components\Header Files</Filter>
     <ClInclude Include="..\..\Src\Logic\Maps\ComponentID.h">
       <Filter>Entity\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Maps\IIdentifier.h">
       <Filter>Entity\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Logic\Entity\Components\ArrayGraphics.h">
-      <Filter>Entity\Components\Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

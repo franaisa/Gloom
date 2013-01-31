@@ -58,8 +58,9 @@ namespace Logic
 		struct TWeapon{
 			std::string name;
 			unsigned char damage;
-			unsigned char dispersion;
+			float dispersion;
 			float distance;
+			unsigned char numberShoots;
 			unsigned char coolDown;
 			int ammo; //esta como int, por que si es -1 esq no tienes esta arma.
 		};
@@ -87,6 +88,13 @@ namespace Logic
 		arma actual equipada
 		*/
 		int _actualWeapon;
+
+
+		/**
+		arma actual equipada
+		*/
+		int _numWeapons;
+
 
 		/**
 		mide el tiempo de cooldown
