@@ -56,6 +56,9 @@ namespace Logic
 
 	bool CCamera::activate()
 	{
+		
+		std::cout << CServer::getSingletonPtr()->getPlayer() << std::endl;
+		
 		_target = CServer::getSingletonPtr()->getPlayer();
 
 		return true;
@@ -75,9 +78,10 @@ namespace Logic
 	void CCamera::tick(unsigned int msecs)
 	{
 		IComponent::tick(msecs);
-
+		
 		if(_target)
 		{
+			std::cout << "posicion = (" << _target->getPosition().x << ", " << _target->getPosition().y << ", " << _target->getPosition().z << ")" << std::endl;
 			// Actualizamos la posición de la cámara.
 			Vector3 position = _target->getPosition();
 			Vector3 direction = -_distance * Math::getDirection(_target->getOrientation());

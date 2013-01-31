@@ -19,7 +19,6 @@ Map = {
 		orientation = 180,
 		life = 100.0,
 		model = "AK47.mesh",
-		isPlayer = true,
 		speed = 0.09,
 		physic_shape = "capsule",
 		physic_radius = 3,

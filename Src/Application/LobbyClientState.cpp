@@ -35,6 +35,7 @@ Contiene la implementación del estado de lobby del cliente.
 #include <CEGUIWindow.h>
 #include <elements/CEGUIPushButton.h>
 
+#include <iostream>
 #include <fstream>
 using namespace std;
 
@@ -184,11 +185,13 @@ namespace Application {
 			// @todo Llamar al método de creación del jugador. Deberemos decidir
 			// si el jugador es el jugador local (si el ID del paquete coincide 
 			// con nuestro ID de red).
+
+			
+
 			bool localPlayer = false;
 			if(id == Net::CManager::getSingletonPtr()->getID()) {
 				localPlayer = true;
 			}
-			
 			Logic::CServer::getSingletonPtr()->getMap()->createPlayer(name, localPlayer);
 			
 			//Enviamos el mensaje de que se ha creado el jugador

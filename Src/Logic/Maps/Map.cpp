@@ -12,6 +12,7 @@ Contiene la implementación de la clase CMap, Un mapa lógico.
 #include "Map.h"
 
 #include "Logic/Entity/Entity.h"
+#include "Logic/Server.h"
 #include "EntityFactory.h"
 
 #include "Map/MapParser.h"
@@ -282,7 +283,6 @@ namespace Logic {
 		// Para que no salgan todos los jugadores unos encima de otros podemos
 		// cambiar la posición de éstos.
 
-
 		// Asignar el modelo al player
 		//_playerInfo->setAttribute("model", "marine.mesh");
 
@@ -294,6 +294,10 @@ namespace Logic {
 		playerCreated->setPosition( playerCreated->getPosition() + (rand()%50-25) * Vector3(1, 0, 1) );
 		// Configuramos el jugador como local si lo es
 		playerCreated->setIsPlayer(isLocalPlayer);
+		getEntityByID(playerCreated->getEntityID())->setIsPlayer(isLocalPlayer);
+		if(isLocalPlayer){
+			CServer::getSingletonPtr()->setPlayer(playerCreated);
+		}
 		//playerCreated->getEntityID();
 		// Le asignamos una posicion aleatoria para que no salgan todos apelotonados
 	}
