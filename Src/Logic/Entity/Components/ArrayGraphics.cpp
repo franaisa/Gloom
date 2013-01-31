@@ -107,8 +107,8 @@ namespace Logic
 
 	bool CArrayGraphics::accept(CMessage *message)
 	{
-		return (message->getMessageType() == Message::SET_TRANSFORM) || 
-			(message->getMessageType() == Logic::Message::CONTROL);
+		return (message->getMessageType() == Message::SET_TRANSFORM)
+			|| (message->getMessageType() == Message::CHANGE_WEAPON_GRAPHICS);
 	} // accept
 	
 	//---------------------------------------------------------
@@ -117,17 +117,17 @@ namespace Logic
 	{
 		switch(message->getMessageType())
 		{
-		case Message::SET_TRANSFORM: setTransform( ((CMessageTransform*)message)->getTransform() );
+		case Message::SET_TRANSFORM:
+			setTransform(((CMessageTransform*)message)->getTransform());
 			break;
-		case Message::CONTROL: 
-			//if(message->getMessageType() == Control::CHANGE_WEAPON)
-				//changeWeapon((CMessageChangeWeapon*)message);
+		case Message::CHANGE_WEAPON_GRAPHICS:
+			changeWeapon( ((CMessageChangeWeaponGraphics*)message)->getWeapon() );
 			break;
 		}
 
 	} // process
 
-	void CArrayGraphics::changeWeapon(unsigned char newWeapon){
+	void CArrayGraphics::changeWeapon(int newWeapon){
 		
 		_graphicsEntities[newWeapon]._graphicsEntity->setVisible(true);
 		_graphicsEntities[_actualWeapon]._graphicsEntity->setVisible(false);

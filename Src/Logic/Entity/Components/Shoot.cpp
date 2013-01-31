@@ -87,6 +87,7 @@ namespace Logic
 				if(((CMessageControl*)message)->getType()==Control::LEFT_CLICK){
 					shoot();
 				}
+				break;
 			case Message::CHANGE_WEAPON:
 					changeWeapon( ((CMessageChangeWeapon*)message)->getWeapon() );
 			break;
@@ -96,15 +97,19 @@ namespace Logic
 	//---------------------------------------------------------
 
 	void CShoot::changeWeapon(unsigned char newWeapon){
-		printf("\n%d\t%d",_actualWeapon,newWeapon);
 		
-		if(newWeapon >= _numWeapons)
+		
+		if(newWeapon >= _numWeapons){
 			return;
+		}
 
 		if(newWeapon != _actualWeapon && _weapons[newWeapon].ammo != -1)
 		{
 			_actualWeapon = newWeapon;
-			_entity->getComponent<Logic::CArrayGraphics>("CArrayGraphics")->changeWeapon(_actualWeapon);
+			Logic::CMessageChangeWeaponGraphics *m=new Logic::CMessageChangeWeaponGraphics(Logic::Message::CHANGE_WEAPON_GRAPHICS);
+			m->setWeapon(_actualWeapon);
+			_entity->emitMessage(m);
+			
 		}
 		
 	}
@@ -180,19 +185,12 @@ namespace Logic
 			{
 				printf("\nimpacto con %s", entity->getName().c_str());
 
-				Logic::CLife *lifeComponent = entity->getComponent<Logic::CLife>("CLife");
-				if(!lifeComponent)
-					return;
-
-				lifeComponent->damaged(_weapons[_actualWeapon].damage);
-				
-				
 				// LLamar al componente que corresponda con el daño hecho
 				//entity->
 
-				//Logic::CMessageDamaged *m=new Logic::CMessageDamaged(Logic::Message::DAMAGED);
-				//m->setDamage(_weapons[_actualWeapon].damage);
-				//entity->emitMessage(m);
+				Logic::CMessageDamaged *m=new Logic::CMessageDamaged(Logic::Message::DAMAGED);
+				m->setDamage(_weapons[_actualWeapon].damage);
+				entity->emitMessage(m);
 			}
 		
 		

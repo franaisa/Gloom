@@ -55,13 +55,15 @@ namespace Logic
 		{
 		case Message::DAMAGED:
 			{
+				damaged( ((CMessageDamaged*)message)->getDamage());
+				/*
 				// PARTE ANTONIO - HAY QUE CAMBIARLO, YA QUE NO SE ENVIAN MENSAJES
 				// ADEMÁS HAY QUE ADAPTARLO A LA RED.
 
 				// Disminuir la vida de la entidad
 				/*_life -= ((CMessageDamaged*)message)->getDamage();
 				printf("\nAh!, ya solo me queda %i de vida", _life);
-				*/
+				
 				// Si han matado al jugador salir de la partida
 				
 				//if ((_life <= 0) && (_entity->isPlayer())) {
@@ -102,6 +104,7 @@ namespace Logic
 				else  // TODO Si la vida es menor que 0 poner animación de morir.
 					msg->setString("Death");
 				_entity->emitMessage(msg, this);
+				*/
 			}
 			break;
 		}

@@ -363,6 +363,7 @@ namespace Logic
 		 * que el asignado en el blueprints.
 		 * @return Puntero al componente que buscamos.
 		 */
+
 		template<typename T>
 		T* getComponent(const std::string id) {
 			std::map<std::string, IComponent*>::iterator it;

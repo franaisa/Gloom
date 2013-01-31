@@ -45,6 +45,7 @@ namespace Logic
 			SWITCH,
 			DAMAGED,
 			CHANGE_WEAPON,
+			CHANGE_WEAPON_GRAPHICS,
 		};
 	}
 	/**
@@ -303,13 +304,25 @@ namespace Logic
 	class CMessageChangeWeapon: public CMessage{
 	public:
 		CMessageChangeWeapon(TMessageType t);
-		unsigned char getWeapon();
-		void setWeapon(unsigned char weapon);
+		int getWeapon();
+		void setWeapon(int weapon);
 		~CMessageChangeWeapon() { };
 
 		virtual Net::CBuffer serialize();
 	private:
-		unsigned char _weapon;
+		int _weapon;
+	};
+
+	class CMessageChangeWeaponGraphics: public CMessage{
+	public:
+		CMessageChangeWeaponGraphics(TMessageType t);
+		int getWeapon();
+		void setWeapon(int weapon);
+		~CMessageChangeWeaponGraphics() { };
+
+		virtual Net::CBuffer serialize();
+	private:
+		int _weapon;
 	};
 
 

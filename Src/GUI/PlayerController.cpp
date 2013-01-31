@@ -67,36 +67,30 @@ namespace GUI {
 			if(key.keyId == GUI::Key::NUMBER1 || key.keyId == GUI::Key::NUMBER2 || key.keyId == GUI::Key::NUMBER3 || key.keyId == GUI::Key::NUMBER4 || 
 				key.keyId == GUI::Key::NUMBER5 || key.keyId == GUI::Key::NUMBER6 ){
 				
-					Logic::CArrayGraphics* graphicsComponents= _controlledAvatar->getComponent<Logic::CArrayGraphics>("CArrayGraphics");
-					Logic::CShoot* shootComponent = _controlledAvatar->getComponent<Logic::CShoot>("CShoot");
+					Logic::CMessageChangeWeapon *message=new Logic::CMessageChangeWeapon(Logic::Message::CHANGE_WEAPON);
 
 					switch(key.keyId)
 					{
 					case GUI::Key::NUMBER1:
-						//graphicsComponents->changeWeapon(0);
-						shootComponent->changeWeapon(0);
+						message->setWeapon(0);
 						break;
 					case GUI::Key::NUMBER2:
-						//graphicsComponents->changeWeapon(1);
-						shootComponent->changeWeapon(1);
+						message->setWeapon(1);
 						break;
 					case GUI::Key::NUMBER3:
-						//graphicsComponents->changeWeapon(2);
-						shootComponent->changeWeapon(2);
+						message->setWeapon(2);
 						break;
 					case GUI::Key::NUMBER4:
-						//graphicsComponents->changeWeapon(3);
-						shootComponent->changeWeapon(3);
+						message->setWeapon(3);
 						break;
 					case GUI::Key::NUMBER5:
-						//graphicsComponents->changeWeapon(4);
-						shootComponent->changeWeapon(4);
+						message->setWeapon(4);
 						break;
 					case GUI::Key::NUMBER6:
-						//graphicsComponents->changeWeapon(5);
-						shootComponent->changeWeapon(5);
+						message->setWeapon(5);
 						break;
 					}
+					_controlledAvatar->emitMessage(message);
 			}else{
 				Logic::CMessageControl *m=new Logic::CMessageControl(Logic::Message::CONTROL);
 				switch(key.keyId)

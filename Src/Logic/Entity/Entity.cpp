@@ -219,13 +219,6 @@ namespace Logic
 		m->setTransform(_transform);
 		emitMessage(m);
 
-		if(!_isPlayer) {
-			//getComponent<CGraphics>("CGraphics")->setTransform(_transform);
-		}
-		else {
-			getComponent<CArrayGraphics>("CArrayGraphics")->setTransform(_transform);
-		}
-
 	} // setTransform
 
 	//---------------------------------------------------------
@@ -239,12 +232,6 @@ namespace Logic
 		m->setTransform(_transform);
 		emitMessage(m);
 		
-		if(!_isPlayer) {
-			//getComponent<CGraphics>("CGraphics")->setTransform(_transform);
-		}
-		else {
-			getComponent<CArrayGraphics>("CArrayGraphics")->setTransform(_transform);
-		}
 	} // setPosition
 
 	//---------------------------------------------------------
@@ -257,12 +244,6 @@ namespace Logic
 		Logic::CMessageTransform *m=new Logic::CMessageTransform(Message::SET_TRANSFORM);
 		m->setTransform(_transform);
 		emitMessage(m);
-		if(!_isPlayer) {
-			//getComponent<CGraphics>("CGraphics")->setTransform(_transform);
-		}
-		else {
-			getComponent<CArrayGraphics>("CArrayGraphics")->setTransform(_transform);
-		}
 
 	} // setOrientation
 
@@ -287,12 +268,6 @@ namespace Logic
 		m->setTransform(_transform);
 		emitMessage(m);
 
-		if(!_isPlayer) {
-			//getComponent<CGraphics>("CGraphics")->setTransform(_transform);
-		}
-		else {
-			getComponent<CArrayGraphics>("CArrayGraphics")->setTransform(_transform);
-		}
 	} // setYaw
 
 	//---------------------------------------------------------
@@ -305,12 +280,6 @@ namespace Logic
 		Logic::CMessageTransform *m=new Logic::CMessageTransform(Message::SET_TRANSFORM);
 		m->setTransform(_transform);
 		emitMessage(m);
-		if(!_isPlayer) {
-			//getComponent<CGraphics>("CGraphics")->setTransform(_transform);
-		}
-		else {
-			getComponent<CArrayGraphics>("CArrayGraphics")->setTransform(_transform);
-		}
 	} // yaw
 
 	//---------------------------------------------------------
@@ -323,12 +292,6 @@ namespace Logic
 		Logic::CMessageTransform *m=new Logic::CMessageTransform(Message::SET_TRANSFORM);
 		m->setTransform(_transform);
 		emitMessage(m);
-		if(!_isPlayer) {
-			//getComponent<CGraphics>("CGraphics")->setTransform(_transform);
-		}
-		else {
-			getComponent<CArrayGraphics>("CArrayGraphics")->setTransform(_transform);
-		}
 	} // setPitch
 
 	//---------------------------------------------------------
@@ -341,12 +304,6 @@ namespace Logic
 		Logic::CMessageTransform *m=new Logic::CMessageTransform(Message::SET_TRANSFORM);
 		m->setTransform(_transform);
 		emitMessage(m);
-		if(!_isPlayer) {
-			//getComponent<CGraphics>("CGraphics")->setTransform(_transform);
-		}
-		else {
-			getComponent<CArrayGraphics>("CArrayGraphics")->setTransform(_transform);
-		}
 	} // pitch
 
 	//---------------------------------------------------------

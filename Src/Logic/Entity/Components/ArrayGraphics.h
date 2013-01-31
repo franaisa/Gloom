@@ -89,7 +89,7 @@ namespace Logic
 		/**
 		Metodo para cambiar el grafico en funcion del arma actual
 		*/
-		void changeWeapon(unsigned char newWeapon);
+		void changeWeapon(int newWeapon);
 
 
 		/**
