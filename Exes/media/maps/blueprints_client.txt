@@ -1,0 +1,10 @@
+World CGraphics
+Player CGraphics
+Entity CGraphics
+AnimatedEntity CAnimatedGraphics
+Camera CCamera
+Barril CGraphics
+DoorTrigger
+Door CGraphics
+Blade CAnimatedGraphics
+Waypoint

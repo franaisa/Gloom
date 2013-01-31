@@ -16,8 +16,11 @@ Contiene la implementación del estado de menú.
 
 #include "MenuState.h"
 
+#include "Logic/Server.h"
+#include "Logic/Maps/EntityFactory.h"
+#include "Logic/Maps/Map.h"
+
 #include "GUI/Server.h"
-#include "GUI/GUIEventArgs.h"
 
 #include <CEGUISystem.h>
 #include <CEGUIWindowManager.h>
@@ -54,6 +57,10 @@ namespace Application {
 		CEGUI::WindowManager::getSingleton().getWindow("Menu/Exit")->
 			subscribeEvent(CEGUI::PushButton::EventClicked, 
 				CEGUI::SubscriberSlot(&CMenuState::exitReleased, this));
+
+		CEGUI::WindowManager::getSingleton().getWindow("Menu/Multiplayer")->
+			subscribeEvent(CEGUI::PushButton::EventClicked, 
+				CEGUI::SubscriberSlot(&CMenuState::multiplayerReleased, this));
 
 		//GUI::CServer::getSingletonPtr()->addButtonToLayout(this, "Menu", "Exit", &CMenuState::exitReleased);
 	
@@ -166,6 +173,15 @@ namespace Application {
 		
 	bool CMenuState::startReleased(const CEGUI::EventArgs& e)
 	{
+		
+		
+		if (!Logic::CEntityFactory::getSingletonPtr()->loadBluePrints("blueprints.txt"))
+			return false;
+
+		// Cargamos el nivel a partir del nombre del mapa. 
+		if (!Logic::CServer::getSingletonPtr()->loadLevel("map.txt"))
+			return false;
+		
 		_app->setState("game");
 		return true;
 
@@ -186,5 +202,12 @@ namespace Application {
 		return true;
 
 	} // exitReleased
+
+	bool CMenuState::multiplayerReleased(const CEGUI::EventArgs& e)
+	{
+		_app->setState("netmenu");
+		return true;
+
+	} // multiplayerReleased
 
 } // namespace Application

@@ -63,7 +63,7 @@
       <UseLibraryDependencyInputs>true</UseLibraryDependencyInputs>
     </ProjectReference>
     <Link>
-      <AdditionalDependencies>OgreMain_d.lib;OIS_d.lib;CEGUIBase_d.lib;CEGUIOgreRenderer_d.lib;PhysX3CharacterKinematicCHECKED_x86.lib;PhysX3CHECKED_x86.lib;PhysX3CommonCHECKED_x86.lib;PhysX3CookingCHECKED_x86.lib;PhysX3ExtensionsCHECKED.lib;PhysX3VehicleCHECKED.lib;PhysXProfileSDKCHECKED.lib;PhysXVisualDebuggerSDKCHECKED.lib;PxTaskCHECKED.lib;RepX3CHECKED.lib;RepXUpgrader3CHECKED.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>enet.lib;ws2_32.lib;Winmm.lib;OgreMain_d.lib;OIS_d.lib;CEGUIBase_d.lib;CEGUIOgreRenderer_d.lib;PhysX3CharacterKinematicCHECKED_x86.lib;PhysX3CHECKED_x86.lib;PhysX3CommonCHECKED_x86.lib;PhysX3CookingCHECKED_x86.lib;PhysX3ExtensionsCHECKED.lib;PhysX3VehicleCHECKED.lib;PhysXProfileSDKCHECKED.lib;PhysXVisualDebuggerSDKCHECKED.lib;PxTaskCHECKED.lib;RepX3CHECKED.lib;RepXUpgrader3CHECKED.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
       <AdditionalLibraryDirectories>..\..\dependencies\lib\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -102,10 +102,14 @@
     <ClCompile Include="..\..\Src\Application\3DApplication.cpp" />
     <ClCompile Include="..\..\Src\Application\BaseApplication.cpp" />
     <ClCompile Include="..\..\Src\Application\Clock.cpp" />
+    <ClCompile Include="..\..\Src\Application\GameOverState.cpp" />
     <ClCompile Include="..\..\Src\Application\Gloom.cpp" />
     <ClCompile Include="..\..\Src\Application\GloomApplication.cpp" />
     <ClCompile Include="..\..\Src\Application\GameState.cpp" />
+    <ClCompile Include="..\..\Src\Application\LobbyClientState.cpp" />
+    <ClCompile Include="..\..\Src\Application\LobbyServerState.cpp" />
     <ClCompile Include="..\..\Src\Application\MenuState.cpp" />
+    <ClCompile Include="..\..\Src\Application\NetMenuState.cpp" />
     <ClCompile Include="..\..\Src\Application\OgreClock.cpp" />
     <ClCompile Include="..\..\Src\Docs\docCompilando.cpp" />
     <ClCompile Include="..\..\Src\Docs\docDirectorios.cpp" />
@@ -117,9 +121,13 @@
     <ClInclude Include="..\..\Src\Application\Clock.h" />
     <ClInclude Include="..\..\Src\Application\Documentation.h" />
     <ClInclude Include="..\..\Src\Application\ExitState.h" />
+    <ClInclude Include="..\..\Src\Application\GameOverState.h" />
     <ClInclude Include="..\..\Src\Application\GloomApplication.h" />
     <ClInclude Include="..\..\Src\Application\GameState.h" />
+    <ClInclude Include="..\..\Src\Application\LobbyClientState.h" />
+    <ClInclude Include="..\..\Src\Application\LobbyServerState.h" />
     <ClInclude Include="..\..\Src\Application\MenuState.h" />
+    <ClInclude Include="..\..\Src\Application\NetMenuState.h" />
     <ClInclude Include="..\..\Src\Application\OgreClock.h" />
   </ItemGroup>
   <ItemGroup>
@@ -142,6 +150,9 @@
     <ProjectReference Include="..\Logic\Logic.vcxproj">
       <Project>{288b50d7-60bc-4542-a263-74de0acfe822}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+    <ProjectReference Include="..\Net\Net.vcxproj">
+      <Project>{6517a543-d72a-4ed1-83be-104fe82dc59a}</Project>
     </ProjectReference>
     <ProjectReference Include="..\Physics\Physics.vcxproj">
       <Project>{848eba43-0d28-4267-a717-030578db8ee6}</Project>

@@ -13,12 +13,17 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GUI", "Projects\GUI\GUI.vcxproj", "{215AA6AD-AAE6-4E45-9ADC-F075F9EE9966}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Logic", "Projects\Logic\Logic.vcxproj", "{288B50D7-60BC-4542-A263-74DE0ACFE822}"
+	ProjectSection(ProjectDependencies) = postProject
+		{848EBA43-0D28-4267-A717-030578DB8EE6} = {848EBA43-0D28-4267-A717-030578DB8EE6}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Map", "Projects\Map\Map.vcxproj", "{599F27DC-A593-4E7C-A461-D7B3198118B0}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Configure", "Projects\Configure\Configure.vcxproj", "{C1B74FA8-146A-4CC7-9797-55A2F1126AF4}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Physics", "Projects\Physics\Physics.vcxproj", "{848EBA43-0D28-4267-A717-030578DB8EE6}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Net", "Projects\Net\Net.vcxproj", "{6517A543-D72A-4ED1-83BE-104FE82DC59A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -58,6 +63,10 @@ Global
 		{848EBA43-0D28-4267-A717-030578DB8EE6}.Debug|Win32.Build.0 = Debug|Win32
 		{848EBA43-0D28-4267-A717-030578DB8EE6}.Release|Win32.ActiveCfg = Release|Win32
 		{848EBA43-0D28-4267-A717-030578DB8EE6}.Release|Win32.Build.0 = Release|Win32
+		{6517A543-D72A-4ED1-83BE-104FE82DC59A}.Debug|Win32.ActiveCfg = Debug|Win32
+		{6517A543-D72A-4ED1-83BE-104FE82DC59A}.Debug|Win32.Build.0 = Debug|Win32
+		{6517A543-D72A-4ED1-83BE-104FE82DC59A}.Release|Win32.ActiveCfg = Release|Win32
+		{6517A543-D72A-4ED1-83BE-104FE82DC59A}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
