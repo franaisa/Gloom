@@ -502,9 +502,8 @@ PxCapsuleController* CServer::createCapsuleController(const Vector3 &position, f
 	desc.height = height;
 	desc.radius = radius;
 	desc.material = _defaultMaterial;
-	desc.climbingMode = PxCapsuleClimbingMode::eEASY; 
-	//desc.climbingMode = PxCapsuleClimbingMode::eCONSTRAINED;
-	//desc.slopeLimit = 0.707f;
+	desc.climbingMode = PxCapsuleClimbingMode::eCONSTRAINED;
+	desc.slopeLimit = 0.707f;
 	desc.callback = _collisionManager;   // Establecer gestor de colisiones
 	desc.userData = (void *) component;  // Anotar el componente lógico asociado al controller
 	
