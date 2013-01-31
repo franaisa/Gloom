@@ -81,7 +81,6 @@ namespace Logic
 		
 		if(_target)
 		{
-			std::cout << "posicion = (" << _target->getPosition().x << ", " << _target->getPosition().y << ", " << _target->getPosition().z << ")" << std::endl;
 			// Actualizamos la posición de la cámara.
 			Vector3 position = _target->getPosition();
 			Vector3 direction = -_distance * Math::getDirection(_target->getOrientation());
