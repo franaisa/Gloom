@@ -56,6 +56,9 @@ namespace Logic
 
 	bool CCamera::activate()
 	{
+		
+		std::cout << CServer::getSingletonPtr()->getPlayer() << std::endl;
+		
 		_target = CServer::getSingletonPtr()->getPlayer();
 
 		return true;
@@ -75,7 +78,7 @@ namespace Logic
 	void CCamera::tick(unsigned int msecs)
 	{
 		IComponent::tick(msecs);
-
+		
 		if(_target)
 		{
 			// Actualizamos la posición de la cámara.

@@ -107,7 +107,15 @@ namespace Logic
 		*/
 		void onControllerHit (const physx::PxControllersHit &hit);
 
+		/**
+		Se invoca desde la lógica para decir que hay un nuevo movimiento(desplazamiento).
+		*/
 		void CPhysicController::avatarWalk(const Vector3& direction);
+
+		/**
+		Se invoca desde la lógica para saber si la entidad esta cayendo o no.
+		*/
+		bool CPhysicController::getFalling();
 
 	private:
 
@@ -128,9 +136,6 @@ namespace Logic
 
 		// Indica si el character controller esta apoyado sobre una superficie o cayendo.
 		bool _falling;
-
-		bool _jumping;
-		unsigned int _timeJump;
 
 	}; // class CPhysicController
 

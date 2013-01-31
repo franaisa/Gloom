@@ -186,15 +186,55 @@ namespace Logic
 		bool _strafingRight;
 
 		/**
-		Atributo que indica si la entidad está saltando
+		Atributos para el control del salto de la entidad
 		*/
 		bool _jumping;
-
+		bool _jumpingControl;
+		bool _canJump;
 
 		/**
 		Atributo que indica la magnitud de velocidad de la entidad.
 		*/
 		float _speed;
+
+		/**
+		Atributo que indica la magnitud de velocidad del salto de la entidad.
+		*/
+		double _speedJump;
+
+		/**
+		Atributo que indica la magnitud de la gravedad para el MRUA
+		*/
+		double _gravity;
+
+		/**
+		Atributo que indica si estamos cayendo (se actualizará mediante un mensaje que nos envia el PhysicController)
+		*/
+		bool _falling;
+
+		/**
+		Atributo que indica la dirección en el momento de saltar o de empezar a caer
+		*/
+		Vector3 _direccionSaltoCaida;
+
+		/**
+		Atributo que indica si la entidad empezó a caer
+		*/
+		bool _caida;
+
+		/**
+		Atributos que se encargan de contar/llevar el tiempo para ver si se hizo un salto lateral
+		*/
+		int _jumpLeft;
+		int _jumpRight;
+		int _timeSideJump;
+		bool _sideJump;
+		bool _velocitySideJump;
+
+		bool _unpressRight;
+		bool _unpressLeft;
+		bool _readySideJumpLeft;
+		bool _readySideJumpRight;
 
 	}; // class CAvatarController
 

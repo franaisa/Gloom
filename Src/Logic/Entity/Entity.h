@@ -168,7 +168,7 @@ namespace Logic
 		@param emitter Componente emisor, si lo hay. No se le enviará el mensaje.
 		@return true si al menos un componente aceptó el mensaje
 		*/
-		//bool emitMessage(CMessage *message, IComponent* emitter = 0);
+		bool emitMessage(CMessage *message, IComponent* emitter = 0);
 
 		/**
 		Devuelve el identificador único de la entidad.
@@ -187,6 +187,18 @@ namespace Logic
 		@return true si la entidad es el jugador.
 		*/
 		bool isPlayer() { return _isPlayer; }
+
+
+		/**
+		Método que indica si la entidad es o no el jugador.
+		Seguro que hay formas mejores desde el punto de vista de
+		diseño de hacerlo, pero esta es la más rápida: la entidad 
+		con la descripción de la entidad tiene esta descripción que
+		establece en el spawn().
+		
+		@return true si la entidad es el jugador.
+		*/
+		void setIsPlayer(bool isPlayer){ _isPlayer = isPlayer;}
 
 		/**
 		Devuelve el mapa donde está la entidad.

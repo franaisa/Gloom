@@ -18,6 +18,8 @@ namespace Map {
 	void CEntity::setAttribute(const std::string &attr, const std::string &value)
 	{
 		TSSPar elem(attr,value);
+		//assert(!&_attributes && "attributes no esta definido");
+
 		if(_attributes.count(attr))
 			_attributes.erase(attr);
 		_attributes.insert(elem);

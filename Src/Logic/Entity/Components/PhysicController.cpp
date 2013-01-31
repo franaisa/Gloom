@@ -57,10 +57,8 @@ bool CPhysicController::spawn(CEntity* entity, CMap *map, const Map::CEntity *en
 	// Crear el character controller asociado al componente
 	_controller = createController(entityInfo);
 
-
-	//Inicialización tiempo de salto
-	_timeJump=0;
-	_jumping=false;
+	//Inicialmente la entidad esta cayendo
+	_falling=true;
 
 	return true;
 }
@@ -83,10 +81,6 @@ void CPhysicController::process(CMessage *message)
 		// el método tick. De esa forma, si recibimos varios mensajes AVATAR_WALK
 		// en el mismo ciclo sólo tendremos en cuenta el último.
 		_movement = ((CMessageAvatarWalk*)message)->getDirection();
-		//Si en algun momento se saltó y toco suelo, activo el salto
-		if(_movement.y!=0 && !_falling)
-			_jumping=true;
-		break;
 	}
 
 }
@@ -96,9 +90,10 @@ void CPhysicController::avatarWalk(const Vector3& direction) {
 	// el método tick. De esa forma, si recibimos varios mensajes AVATAR_WALK
 	// en el mismo ciclo sólo tendremos en cuenta el último.
 	_movement = direction;
-	//Si en algun momento se saltó y toco suelo, activo el salto
-	if(_movement.y!=0 && !_falling)
-		_jumping=true;
+}
+
+bool CPhysicController::getFalling() {
+	return _falling;
 }
 
 //---------------------------------------------------------
@@ -112,25 +107,6 @@ void CPhysicController::tick(unsigned int msecs)
 	// información proporcionada por el motor de física	
 	_entity->setPosition(_server->getControllerPosition(_controller));
 
-	// Si estamos cayendo modificar el vector de desplazamiento para simular el 
-	// efecto de la gravedad. Lo hacemos de manera sencilla y pero poco realista.
-	// Además es necesario que no estemos saltando
-
-	//Si se paso el tiempo y tengo que cortar el salto //pruebaaa
-	if(_timeJump>300){
-		_jumping=false;
-		_timeJump=0;
-	}
-	//Si tengo que continuar con el salto en la física
-	if(_jumping){
-		_timeJump+=msecs;
-		_movement.y=1*msecs*0.09; //0.09 es la speed del player, se podria configurar una speed diferente al salto
-	}
-	//Si estoy en el aire y no está activado el salto tengo que caer
-	if (_falling && !_jumping ) {
-		_movement += Vector3(0,-1,0);
-	}
-
 	// Intentamos mover el controller a la posición recibida en el último mensaje 
 	// de tipo AVATAR_WALK. 
 	unsigned flags = _server->moveController(_controller, _movement, msecs);
@@ -138,8 +114,8 @@ void CPhysicController::tick(unsigned int msecs)
 	// Actualizamos el flag que indica si estamos cayendo
 	_falling =  !(flags & PxControllerFlag::eCOLLISION_DOWN);
 
-	// Ponemos el movimiento a cero
 	_movement = Vector3::ZERO;
+
 }
 
 //---------------------------------------------------------

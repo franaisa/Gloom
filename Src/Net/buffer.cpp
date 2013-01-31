@@ -27,6 +27,46 @@ namespace Net {
 		_delta = delta;
 	}
 
+	void CBuffer::clone(const CBuffer& source) {
+		// Si ya habia datos reservados, comprobamos
+		// si pueden alojar la memoria que se pide
+		if(_begin != 0 || _maxsize < source._maxsize) {
+			// Eliminamos la memoria reservada
+			delete _begin;
+				
+			// Reservamos memoria para alojar los datos a copiar
+			_begin = new byte[source._maxsize];
+			_maxsize = source._maxsize;
+		}
+		else if(_begin == 0) {
+			// Reservamos memoria para alojar los datos a copiar
+			_begin = new byte[source._maxsize];
+			_maxsize = source._maxsize;
+		}
+
+		// Copiamos los datos
+		for(int i = 0; i < source._size; ++i) {
+			_begin[i] = source._begin[i];
+		}
+
+		_current = source._current;
+		_size = source._size;
+		_delta = source._delta;
+		
+	}
+
+	CBuffer::CBuffer(const CBuffer& source) : _begin(0) {
+		clone(source);
+	}
+
+	CBuffer& CBuffer::operator=(const CBuffer& source) {
+		if(this != &source) {
+			clone(source);
+		}
+		
+		return *this;
+	}
+
 	CBuffer::~CBuffer()
 	{
 		delete[] _begin;

@@ -148,7 +148,10 @@ namespace Net
 
 		@param data Datos a enviar.
 		*/
+		//Metodo que envia un mensaje a todos los clientes
 		void send(void* data, size_t longdata);
+		//Metodo que envia un mensaje a un cliente NetID concreto
+		void send(void* data, size_t longdata, Net::NetID id);
 
 		void activateAsServer(int port, int clients = 16, unsigned int maxinbw = 0, unsigned int maxoutbw = 0);
 
@@ -248,7 +251,7 @@ namespace Net
 		/**
 		ID de red una vez conectado.
 		*/
-		NetID _id;
+		NetID _id;// id para esta entidad de red
 
 		/**
 		Siguiente ID de red que se asignará al próximo cliente. Solo se usa en modo 

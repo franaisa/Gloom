@@ -96,6 +96,12 @@
     </ClCompile>
     <ClCompile Include="..\..\Src\Logic\Maps\ComponentID.cpp">
       <Filter>Entity\Source Files</Filter>
+	  </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\NetConnector.cpp">
+      <Filter>Entity\Components\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\GameNetMsgManager.cpp">
+      <Filter>Maps\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Src\Logic\Entity\Components\ArrayGraphics.cpp">
       <Filter>Entity\Components\Source Files</Filter>
@@ -179,6 +185,12 @@
     </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Maps\IIdentifier.h">
       <Filter>Entity\Header Files</Filter>
+	  </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\NetConnector.h">
+      <Filter>Entity\Components\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\GameNetMsgManager.h">
+      <Filter>Maps\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Entity\Components\ArrayGraphics.h">
       <Filter>Entity\Components\Header Files</Filter>
