@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Imageset Name="raton" Imagefile="raton.png" AutoScaled="true" >
+    <Image Name="miraRaton" XPos="0" YPos="0" Width="25" Height="25" />
+</Imageset>

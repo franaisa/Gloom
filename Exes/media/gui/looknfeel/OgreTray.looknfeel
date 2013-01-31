@@ -487,41 +487,41 @@
                     <Dim type="RightEdge"><UnifiedDim scale="1" type="RightEdge" /></Dim>
                     <Dim type="BottomEdge"><UnifiedDim scale="1" type="BottomEdge" /></Dim>
                 </Area>
-                <Image type="TopLeftCorner" imageset="OgreTrayImages" image="TextBoxTL" />
-                <Image type="TopRightCorner" imageset="OgreTrayImages" image="TextBoxTR" />
-                <Image type="BottomLeftCorner" imageset="OgreTrayImages" image="TextBoxBL" />
-                <Image type="BottomRightCorner" imageset="OgreTrayImages" image="TextBoxBR" />
-                <Image type="LeftEdge" imageset="OgreTrayImages" image="TextBoxL" />
-                <Image type="TopEdge" imageset="OgreTrayImages" image="TextBoxT" />
-                <Image type="RightEdge" imageset="OgreTrayImages" image="TextBoxR" />
-                <Image type="BottomEdge" imageset="OgreTrayImages" image="TextBoxB" />
+                <Image type="TopLeftCorner" imageset="OgreTrayImages" image="CaptionM" />
+                <Image type="TopRightCorner" imageset="OgreTrayImages" image="CaptionM" />
+                <Image type="BottomLeftCorner" imageset="OgreTrayImages" image="CaptionM" />
+                <Image type="BottomRightCorner" imageset="OgreTrayImages" image="CaptionM" />
+                <Image type="LeftEdge" imageset="OgreTrayImages" image="CaptionM" />
+                <Image type="TopEdge" imageset="OgreTrayImages" image="CaptionM" />
+                <Image type="RightEdge" imageset="OgreTrayImages" image="CaptionM" />
+                <Image type="BottomEdge" imageset="OgreTrayImages" image="CaptionM" />
             </FrameComponent>
         </ImagerySection>
         <ImagerySection name="with_frame_background">
             <ImageryComponent>
                 <Area>
                     <Dim type="LeftEdge" >
-                        <ImageDim imageset="OgreTrayImages" image="TextBoxL" dimension="Width" />
+                        <ImageDim imageset="OgreTrayImages" image="CaptionM" dimension="Width" />
                     </Dim>
                     <Dim type="TopEdge" >
-                        <ImageDim imageset="OgreTrayImages" image="TextBoxT" dimension="Height" />
+                        <ImageDim imageset="OgreTrayImages" image="CaptionM" dimension="Height" />
                     </Dim>
                     <Dim type="RightEdge" >
                         <UnifiedDim scale="1.0" type="RightEdge">
                             <DimOperator op="Subtract">
-                                <ImageDim imageset="OgreTrayImages" image="TextBoxR" dimension="Width" />
+                                <ImageDim imageset="OgreTrayImages" image="CaptionM" dimension="Width" />
                             </DimOperator>
                         </UnifiedDim>
                     </Dim>
                     <Dim type="BottomEdge" >
                         <UnifiedDim scale="1.0" type="BottomEdge">
                             <DimOperator op="Subtract">
-                                <ImageDim imageset="OgreTrayImages" image="TextBoxB" dimension="Height" />
+                                <ImageDim imageset="OgreTrayImages" image="CaptionM" dimension="Height" />
                             </DimOperator>
                         </UnifiedDim>
                     </Dim>
                 </Area>
-                <Image imageset="OgreTrayImages" image="TextBoxM" />
+                <Image imageset="OgreTrayImages" image="CaptionM" />
                 <VertFormat type="Stretched" />
                 <HorzFormat type="Stretched" />
             </ImageryComponent>
@@ -534,7 +534,7 @@
                     <Dim type="RightEdge"><UnifiedDim scale="1" type="RightEdge" /></Dim>
                     <Dim type="BottomEdge"><UnifiedDim scale="1" type="BottomEdge" /></Dim>
                 </Area>
-                <Image imageset="OgreTrayImages" image="TextBoxM" />
+                <Image imageset="OgreTrayImages" image="CaptionM" />
                 <VertFormat type="Stretched" />
                 <HorzFormat type="Stretched" />
             </ImageryComponent>
@@ -2449,22 +2449,22 @@
             <ImageryComponent>
                 <Area>
                     <Dim type="LeftEdge" >
-                        <ImageDim imageset="OgreTrayImages" image="TextBoxL" dimension="Width" />
+                        <ImageDim imageset="OgreTrayImages" image="CaptionM" dimension="Width" />
                     </Dim>
                     <Dim type="TopEdge" >
-                        <ImageDim imageset="OgreTrayImages" image="TextBoxT" dimension="Height" />
+                        <ImageDim imageset="OgreTrayImages" image="CaptionM" dimension="Height" />
                     </Dim>
                     <Dim type="RightEdge" >
                         <UnifiedDim scale="1.0" type="RightEdge">
                             <DimOperator op="Subtract">
-                                <ImageDim imageset="OgreTrayImages" image="TextBoxR" dimension="Width" />
+                                <ImageDim imageset="OgreTrayImages" image="CaptionM" dimension="Width" />
                             </DimOperator>
                         </UnifiedDim>
                     </Dim>
                     <Dim type="BottomEdge" >
                         <UnifiedDim scale="1.0" type="BottomEdge">
                             <DimOperator op="Subtract">
-                                <ImageDim imageset="OgreTrayImages" image="TextBoxB" dimension="Height" />
+                                <ImageDim imageset="OgreTrayImages" image="CaptionM" dimension="Height" />
                             </DimOperator>
                         </UnifiedDim>
                     </Dim>

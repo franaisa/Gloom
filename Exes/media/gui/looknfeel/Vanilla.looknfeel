@@ -17,7 +17,7 @@
                 <Image type="TopEdge" imageset="Vanilla-Images" image="FrameTop" />
                 <Image type="RightEdge" imageset="Vanilla-Images" image="FrameRight" />
                 <Image type="BottomEdge" imageset="Vanilla-Images" image="FrameBottom" />
-                <Image type="Background" imageset="Vanilla-Images" image="GenericBrush" />
+                <Image type="Background" imageset="Vanilla-Images" image="ShadowBrush" />
             </FrameComponent>
         </ImagerySection>
 
@@ -60,7 +60,7 @@
                         </UnifiedDim>
                     </Dim>
                 </Area>
-                <Image type="Background" imageset="Vanilla-Images" image="GenericBrush" />
+                <Image type="Background" imageset="Vanilla-Images" image="ShadowBrush" />
             </FrameComponent>
         </ImagerySection>
 
@@ -72,7 +72,7 @@
                     <Dim type="RightEdge"><UnifiedDim scale="1" type="RightEdge" /></Dim>
                     <Dim type="BottomEdge"><UnifiedDim scale="1" type="BottomEdge" /></Dim>
                 </Area>
-                <Image type="Background" imageset="Vanilla-Images" image="GenericBrush" />
+                <Image type="Background" imageset="Vanilla-Images" image="ShadowBrush" />
             </FrameComponent>
         </ImagerySection>
 

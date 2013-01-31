@@ -39,9 +39,7 @@ namespace GUI {
 		this->_layoutName = layoutName;
 
 		// Create the window on CEGUI
-		CEGUI::WindowManager::getSingletonPtr()->loadWindowLayout(_layoutName 
-			+ ".layout");
-		
+		CEGUI::WindowManager::getSingletonPtr()->loadWindowLayout(_layoutName+ ".layout" );
 		_window = CEGUI::WindowManager::getSingleton().getWindow(_layoutName);
 	} // custom constructor
 

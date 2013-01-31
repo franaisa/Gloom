@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<GUILayout >
+    <Window Type="CrossHair/StaticImage" Name="Mira" >
+        <Property Name="AlwaysOnTop" Value="True" />
+        <Property Name="UnifiedAreaRect" Value="{{0.459091,0},{0.39375,0},{0.59329,0},{0.530654,0}}" />
+    </Window>
+</GUILayout>

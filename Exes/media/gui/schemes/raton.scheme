@@ -1,0 +1,5 @@
+<?xml version="1.0" ?>
+<GUIScheme Name="raton">
+	<Imageset Name="raton" Filename="raton.imageset"/>
+	<WindowRendererSet Filename="CEGUIFalagardWRBase" />
+</GUIScheme>

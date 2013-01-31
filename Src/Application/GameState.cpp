@@ -67,8 +67,11 @@ namespace Application {
 		// Cargamos la ventana que muestra el tiempo de juego transcurrido.
 		//CEGUI::WindowManager::getSingletonPtr()->loadWindowLayout("Time.layout");
 		//_timeWindow = CEGUI::WindowManager::getSingleton().getWindow("Time");
-		
+		//LAYOUT TIME
 		GUI::CServer::getSingletonPtr()->addLayoutToState(this, "Time");
+		
+		//LAYOUT MIRA
+		//GUI::CServer::getSingletonPtr()->addLayoutToState(this, "Mira");
 
 		return true;
 	} // init
@@ -107,8 +110,11 @@ namespace Application {
 		//_timeWindow->setVisible(true);
 		//_timeWindow->activate();
 
+		//LAYOUT TIME
 		GUI::CServer::getSingletonPtr()->activateGUI(this, "Time");
-
+	
+		//LAYOUT MIRA
+		//GUI::CServer::getSingletonPtr()->activateGUI(this, "Mira");
 	} // activate
 
 	//--------------------------------------------------------
@@ -118,6 +124,8 @@ namespace Application {
 		// Desactivamos la ventana de tiempo.
 		//_timeWindow->deactivate();
 		//_timeWindow->setVisible(false);
+
+		//LAYOUT TIME
 		GUI::CServer::getSingletonPtr()->deactivateGUI();
 
 		// Desactivamos la clase que procesa eventos de entrada para 
@@ -147,7 +155,9 @@ namespace Application {
 		
 		std::stringstream text;
 		text << "Time: " << _time/1000;
-		GUI::CServer::getSingletonPtr()->setText(text.str());
+
+		//TEXTO DEL LAYOUT TIME
+		//GUI::CServer::getSingletonPtr()->setText(text.str());
 
 	} // tick
 

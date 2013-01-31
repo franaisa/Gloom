@@ -94,7 +94,7 @@ namespace GUI
 
 		@return Instancia de la clase GUI que controla al jugador.
 		*/
-		CPlayerController *getPlayerController() {return _playerController;}
+		CPlayerController *getPlayerController() {return _playerController;}	
 
 		/***************************************************************
 		Métodos de CKeyboardListener
