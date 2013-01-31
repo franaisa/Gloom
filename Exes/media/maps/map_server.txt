@@ -1,0 +1,54 @@
+Map = {
+
+	World = {
+		type = "World",
+		msgList= "0",
+		position = {0, 0, 0},
+		orientation = 0,
+		static = true,
+		model = "laberinto.mesh",
+		physic_entity = "fromFile",
+		physic_normal = { 0, 1, 0 },
+		physic_file = "media/models/laberinto-fisico.RepX",
+		physic_group = 0,
+	},
+
+	David = {
+		type = "PlayerSpawn",
+		msgList= "0,1,2",
+		position = {0, 8, 0},
+		orientation = 180,
+		life = 100.0,
+		model = "AK47.mesh",
+		speed = 0.09,
+		physic_shape = "capsule",
+		physic_radius = 3,
+		physic_height = 6,
+		angularSpeed = 0.003,
+		accel = 0.001,
+		angularAccel = 0.00001,
+		movementTolerance = 7.0,
+		numWeapons = 1,
+		weapon1Name = "primerArma",
+		weapon1Damage = 20.0,
+		weapon1Dispersion = 0,
+		weapon1Distance = 100.0,
+		weapon1CoolDown = 2.0,
+	},
+
+	Camera = {
+		type = "Camera",
+		distance = 0,
+		height = 8,
+		targetHeight = 8,
+		targetDistance = 20,
+	},
+
+	skybox = {
+		type = "Entity",
+		static = true,
+		position = {0, 0, 0},
+		orientation = 0,
+		model = "skybox.mesh",
+	},
+}

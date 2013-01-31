@@ -12,7 +12,7 @@ la gestión de la lógica del juego.
 
 #include "Server.h"
 #include "Logic/Maps/Map.h"
-
+#include "Logic/GameNetMsgManager.h"
 #include "Logic/Maps/EntityFactory.h"
 
 #include "Map/MapParser.h"
@@ -82,7 +82,11 @@ namespace Logic {
 		// Inicializamos la factoría de entidades.
 		if (!Logic::CEntityFactory::Init())
 			return false;
-
+		// Inicializamos el gestor de los mensajes de red durante
+		// el estado de juego
+		if (!Logic::CGameNetMsgManager::Init())
+			return false;
+		_gameNetMsgManager = Logic::CGameNetMsgManager::getSingletonPtr();
 		return true;
 
 	} // open
@@ -134,6 +138,7 @@ namespace Logic {
 
 	bool CServer::activateMap() 
 	{
+		_gameNetMsgManager->activate();
 		return _map->activate();
 
 	} // activateMap
@@ -142,6 +147,7 @@ namespace Logic {
 
 	void CServer::deactivateMap() 
 	{
+		_gameNetMsgManager->deactivate();
 		_map->deactivate();
 
 	} // deactivateMap

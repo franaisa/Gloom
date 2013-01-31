@@ -1,23 +1,26 @@
 //---------------------------------------------------------------------------
-// MenuState.h
+// LobbyServerState.h
 //---------------------------------------------------------------------------
 
 /**
-@file MenuState.h
+@file LobbyServerState.h
 
-Contiene la declaración del estado de menú.
+Contiene la declaración del estado de lobby del servidor.
 
 @see Application::CApplicationState
-@see Application::CMenuState
+@see Application::CLobbyServerState
 
 @author David Llansó
 @date Agosto, 2010
 */
 
-#ifndef __Application_MenuState_H
-#define __Application_MenuState_H
+#ifndef __Application_LobbyServerState_H
+#define __Application_LobbyServerState_H
 
 #include "ApplicationState.h"
+#include "Net/Manager.h"
+#include <list>
+#include <map>
 
 // Predeclaración de clases para ahorrar tiempo de compilación
 namespace Application 
@@ -50,19 +53,19 @@ namespace Application
 	@author David Llansó
 	@date Agosto, 2010
 	*/
-	class CMenuState : public CApplicationState 
+	class CLobbyServerState : public CApplicationState , public Net::CManager::IObserver
 	{
 	public:
 		/** 
 		Constructor de la clase 
 		*/
-		CMenuState(CBaseApplication *app) : CApplicationState(app)
+		CLobbyServerState(CBaseApplication *app) : CApplicationState(app),_waiting(true)
 				{}
 
 		/** 
 		Destructor 
 		*/
-		virtual ~CMenuState();
+		virtual ~CLobbyServerState();
 
 		/**
 		Función llamada cuando se crea el estado (se "engancha" en la
@@ -161,13 +164,47 @@ namespace Application
 		*/
 		virtual bool mouseReleased(const GUI::CMouseState &mouseState);
 
+
+		/******************
+			IOBSERVER
+		******************/
+		virtual void dataPacketReceived(Net::CPaquete* packet);
+		virtual void connexionPacketReceived(Net::CPaquete* packet);
+		virtual void disconnexionPacketReceived(Net::CPaquete* packet);
+
+
 	private:
 
 		/**
 		Ventana CEGUI que muestra el menú.
 		*/
 		CEGUI::Window* _menuWindow;
+
+		typedef std::list<Net::NetID> TNetIDList;
+
+		/**
+		lista donde almacenamos los clientes conectados
+		*/
+		TNetIDList _clients;
+
+		/**
+		lista donde almacenamos los clientes que han cargado el mapa
+		*/
+		TNetIDList _mapLoadedByClients;
+
+		typedef std::map<Net::NetID,unsigned int> TNetIDCounterMap;
+		typedef std::pair<Net::NetID,unsigned int> TNetIDCounterPair;
+
+		/**
+		Tabla donde almacenamos por cada cliente cuantos jugadores han creado
+		*/
+		TNetIDCounterMap _playersLoadedByClients;
 		
+		/**
+		Indica si estamos en fase de espera de jugadores
+		*/
+		bool _waiting;
+
 		/**
 		Función que se quiere realizar cuando se pulse el botón start.
 		Simplemente cambia al estado de juego.
@@ -175,12 +212,17 @@ namespace Application
 		bool startReleased(const CEGUI::EventArgs& e);
 
 		/**
-		Función que se quiere realizar cuando se pulse el botón exit.
-		Simplemente termina la aplicación.
+		Función que se quiere realizar cuando se pulse el botón back.
+		Simplemente cambia al estado de menu.
 		*/
-		bool exitReleased(const CEGUI::EventArgs& e);
+		bool backReleased(const CEGUI::EventArgs& e);
 
-		bool multiplayerReleased(const CEGUI::EventArgs& e);
+		/**
+		* Función que ejecuta la acción start. 
+		Centraliza el código y será invocada cuando se pulse la tecla correspondiente o se
+		genere el evento de ratón
+		*/
+		void doStart();
 
 	}; // CMenuState
 

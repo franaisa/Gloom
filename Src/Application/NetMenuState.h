@@ -14,8 +14,8 @@ Contiene la declaración del estado de menú.
 @date Agosto, 2010
 */
 
-#ifndef __Application_MenuState_H
-#define __Application_MenuState_H
+#ifndef __Application_NetMenuState_H
+#define __Application_NetMenuState_H
 
 #include "ApplicationState.h"
 
@@ -42,6 +42,7 @@ namespace Application
 	del menú a las funciones C++ que se deben invocar cuando los botones
 	son pulsados.
 	<p>
+	// HACK Arreglar
 	Este estado es CEGUI dependiente, lo cual no es deseable, la aplicación
 	debería ser independiente de las tecnologías usadas.
 
@@ -50,19 +51,19 @@ namespace Application
 	@author David Llansó
 	@date Agosto, 2010
 	*/
-	class CMenuState : public CApplicationState 
+	class CNetMenuState : public CApplicationState 
 	{
 	public:
 		/** 
 		Constructor de la clase 
 		*/
-		CMenuState(CBaseApplication *app) : CApplicationState(app)
+		CNetMenuState(CBaseApplication *app) : CApplicationState(app)
 				{}
 
 		/** 
 		Destructor 
 		*/
-		virtual ~CMenuState();
+		virtual ~CNetMenuState();
 
 		/**
 		Función llamada cuando se crea el estado (se "engancha" en la
@@ -169,18 +170,22 @@ namespace Application
 		CEGUI::Window* _menuWindow;
 		
 		/**
-		Función que se quiere realizar cuando se pulse el botón start.
-		Simplemente cambia al estado de juego.
+		Función que se quiere realizar cuando se pulse el botón server.
+		Simplemente cambia al estado de lobby server.
 		*/
-		bool startReleased(const CEGUI::EventArgs& e);
+		bool serverReleased(const CEGUI::EventArgs& e);
 
 		/**
-		Función que se quiere realizar cuando se pulse el botón exit.
-		Simplemente termina la aplicación.
+		Función que se quiere realizar cuando se pulse el botón client.
+		Simplemente cambia al estado de lobby client.
 		*/
-		bool exitReleased(const CEGUI::EventArgs& e);
+		bool clientReleased(const CEGUI::EventArgs& e);
 
-		bool multiplayerReleased(const CEGUI::EventArgs& e);
+		/**
+		Función que se quiere realizar cuando se pulse el botón back.
+		Simplemente cambia al estado de menu.
+		*/
+		bool backReleased(const CEGUI::EventArgs& e);
 
 	}; // CMenuState
 

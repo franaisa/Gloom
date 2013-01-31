@@ -50,12 +50,12 @@ namespace Application {
 		// ---------------------------
 
 		// Cargamos el archivo con las definiciones de las entidades del nivel.
-		if (!Logic::CEntityFactory::getSingletonPtr()->loadBluePrints("blueprints.txt"))
+		/*if (!Logic::CEntityFactory::getSingletonPtr()->loadBluePrints("blueprints.txt"))
 			return false;
 
 		// Cargamos el nivel a partir del nombre del mapa. 
 		if (!Logic::CServer::getSingletonPtr()->loadLevel("map.txt"))
-			return false;
+			return false;*/
 
 		// INICIALIZACIÓN DEL GUI
 		// ----------------------

@@ -12,14 +12,18 @@ Contiene la implementación de la clase CMap, Un mapa lógico.
 #include "Map.h"
 
 #include "Logic/Entity/Entity.h"
+#include "Logic/Server.h"
 #include "EntityFactory.h"
 
 #include "Map/MapParser.h"
+#include "Map/MapEntity.h"
 
 #include "Graphics/Server.h"
 #include "Graphics/Scene.h"
 
 #include <cassert>
+
+#include <fstream>
 
 // HACK. Debería leerse de algún fichero de configuración
 #define MAP_FILE_PATH "./media/maps/"
@@ -50,13 +54,28 @@ namespace Logic {
 		Map::CMapParser::TEntityList::const_iterator it, end;
 		it = entityList.begin();
 		end = entityList.end();
-
+		
 		// Creamos todas las entidades lógicas.
 		for(; it != end; it++)
 		{
-			// La propia factoría se encarga de añadir la entidad al mapa.
-			CEntity *entity = entityFactory->createEntity((*it),map);
-			assert(entity && "No se pudo crear una entidad del mapa");
+			if((*it)->getType() == "PlayerSpawn")
+			{
+
+				// @todo Guardamos los valores de la entidad especial en el mapa (_playerInfo). 
+				// Cambiamos el type de los Map::CEntity de PlayerSpawn a Player
+				// Para cuando creemos jugadores. No es la forma más elegante de hacerlo,
+				// pero si la más rápida.
+				(*it)->setType("Player");
+				map->setPlayerInfo(*it);
+			}
+			else 
+			{
+				//out << (*it)->getType() << endl;
+
+				// La propia factoría se encarga de añadir la entidad al mapa.
+				CEntity *entity = entityFactory->createEntity((*it),map);
+				assert(entity && "No se pudo crear una entidad del mapa");
+			}
 		}
 
 		return map;
@@ -65,7 +84,7 @@ namespace Logic {
 
 	//--------------------------------------------------------
 
-	CMap::CMap(const std::string &name)
+	CMap::CMap(const std::string &name) : _playerInfo(0), _numOfPlayers(0)
 	{
 		_name = name;
 		_scene = Graphics::CServer::getSingletonPtr()->createScene(name);
@@ -252,5 +271,35 @@ namespace Logic {
 		return 0;
 
 	} // getEntityByType
+
+	//--------------------------------------------------------
+
+	void CMap::createPlayer(std::string name, bool isLocalPlayer)
+	{
+		// @todo Creamos un nuevo jugador. Deberíamos tener la info del player
+		// almacenada en _playerInfo así que solo habría que modificarle el
+		// "name". Luego se crea la entidad del jugador con la factoría de 
+		// entidades y se le dice si es o no el jugador local (con setIsPlayer())
+		// Para que no salgan todos los jugadores unos encima de otros podemos
+		// cambiar la posición de éstos.
+
+		// Asignar el modelo al player
+		//_playerInfo->setAttribute("model", "marine.mesh");
+
+		// Asignar nombre
+		_playerInfo->setName(name);
+
+		// Creamos la entidad y modificamos el resto de parametros que necesitamos
+		CEntity* playerCreated = CEntityFactory::getSingletonPtr()->createEntity(_playerInfo, this);
+		playerCreated->setPosition( playerCreated->getPosition() + (rand()%50-25) * Vector3(1, 0, 1) );
+		// Configuramos el jugador como local si lo es
+		playerCreated->setIsPlayer(isLocalPlayer);
+		getEntityByID(playerCreated->getEntityID())->setIsPlayer(isLocalPlayer);
+		if(isLocalPlayer){
+			CServer::getSingletonPtr()->setPlayer(playerCreated);
+		}
+		//playerCreated->getEntityID();
+		// Le asignamos una posicion aleatoria para que no salgan todos apelotonados
+	}
 
 } // namespace Logic

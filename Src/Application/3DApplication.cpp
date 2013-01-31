@@ -25,7 +25,7 @@ basadas en Ogre. Esta clase maneja la ejecución de todo el juego.
 #include "Logic/Server.h"
 #include "Logic/Maps/ComponentFactory.h"
 #include "Physics/Server.h"
-
+#include "net/manager.h"
 #include <cassert>
 
 #include <iostream>
@@ -81,6 +81,9 @@ namespace Application {
 		if (!Logic::CServer::Init())
 			return false;
 
+		// Inicializamos la red
+		if (!Net::CManager::Init())
+			return false;
 		// Creamos el reloj basado en Ogre.
 		_clock = new COgreClock();
 
@@ -137,6 +140,8 @@ namespace Application {
 	{
 		// Ejecutar el tick del estado
 		CBaseApplication::tick(msecs);
+
+		Net::CManager::getSingletonPtr()->tick(msecs);
 
 		GUI::CInputManager::getSingletonPtr()->tick();
 

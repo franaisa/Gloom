@@ -90,8 +90,12 @@ namespace Logic
 		// Si somos jugador, se lo decimos al servidor
 		// y nos registramos para que nos informen
 		// de los movimientos que debemos realizar
+
+		std::cout << "activando ... " << getName() << " que es ... " << isPlayer() << std::endl;
+
 		if (isPlayer())
 		{
+			std::cout << "seteando como player ... " << std::endl;
 			CServer::getSingletonPtr()->setPlayer(this);
 			GUI::CServer::getSingletonPtr()->getPlayerController()->setControlledAvatar(this);
 		}

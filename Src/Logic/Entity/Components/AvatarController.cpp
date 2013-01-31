@@ -180,6 +180,8 @@ namespace Logic
 		//Vector dirección que mandaremos a la física
 		Vector3 direction(Vector3::ZERO);
 		//Si se presionó el salto lo mandaremos a la física para que se encargue de la simulación completa
+		//si estamos saltando, realizamos una simulación de un salto (provisional hasta tener physX)
+
 		if(_jumping){
 			direction+=Vector3(0,1,0);
 			_jumping=false;

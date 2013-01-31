@@ -24,7 +24,7 @@ namespace Logic
 	<p>
 	La vida de la entidad se especifica en el mapa con el atributo "life".
 
-	@todo  Si la vida pasa a ser 0 que la entidad muera (poner animación de muerte?)
+	TODO  Si la vida pasa a ser 0 que la entidad muera (poner animación de muerte?)
 	y si es el jugador habrá que terminar el juego. Si la vida sigue siendo mayor 
 	que 0 trás un golpe ¿poner la animación de herido?.
 	
