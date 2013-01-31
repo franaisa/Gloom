@@ -1,7 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <GUILayout >
+    <Window Type="DefaultWindow" Name="Root" >
+        <Property Name="UnifiedAreaRect" Value="{{0,0},{0,0},{1,0},{1,0}}" />
         <Window Type="OgreTray/StaticImage" Name="Time" >
-            <Property Name="UnifiedAreaRect" Value="{{0.474243,0},{0.413095,0},{0.535932,0},{0.496429,0}}" />
+            <Property Name="AlwaysOnTop" Value="True" />
+            <Property Name="HorzFormatting" Value="CentreAligned" />
+            <Property Name="VertFormatting" Value="BottomAligned" />
+            <Property Name="UnifiedAreaRect" Value="{{-0.00627682,0},{-0.0110123,0},{0.0932905,0},{0.0663693,0}}" />
+            <Property Name="VerticalAlignment" Value="Centre" />
+            <Property Name="HorizontalAlignment" Value="Centre" />
         </Window>
+    </Window>
 </GUILayout>
