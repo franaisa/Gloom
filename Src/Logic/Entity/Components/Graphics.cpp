@@ -21,6 +21,8 @@ gráfica de la entidad.
 #include "Graphics/Entity.h"
 #include "Graphics/StaticEntity.h"
 
+
+#include <OgreSceneManager.h>
 #include "OgreEntity.h"
 
 namespace Logic 
@@ -65,6 +67,16 @@ namespace Logic
 			Math::pitch(30,transform);
 			_graphicsEntity->setTransform(transform);
 			*/
+		}
+
+
+
+		if(_entity->getName() == "World")
+		{
+			Ogre::Light *luz = _scene->getSceneMgr()->createLight("Luz Puntual");
+			luz->setPosition(entity->getPosition() + Vector3(0,10,0));
+			luz->setType(Ogre::Light::LT_POINT);
+			luz->setDiffuseColour(1.0f,1.0f,0.0f);
 		}
 
 		

@@ -102,7 +102,8 @@ namespace Graphics
 						->addViewport(_camera->getCamera());
 		_viewport->setBackgroundColour(Ogre::ColourValue::Black);
 		
-		_sceneMgr->setAmbientLight(Ogre::ColourValue(.9f,.9f,.9f));
+		//_sceneMgr->setAmbientLight(Ogre::ColourValue(.9f,.9f,.9f));
+		
 
 	} // activate
 
