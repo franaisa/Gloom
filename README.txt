@@ -9,7 +9,7 @@ LICENSE
 
 
 =============
-GENERAL NOTES PRUEBA
+GENERAL NOTES
 =============
 
 * Description: Gloom is a pure multiplayer Fast-Paced FPS.
