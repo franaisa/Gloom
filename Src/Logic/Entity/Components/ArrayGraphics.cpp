@@ -145,6 +145,7 @@ namespace Logic
 		// Obtengo la camara para posicionarla en esta posicion pero algo modificada
 		Graphics::CCamera* camera = Graphics::CServer::getSingletonPtr()->getActiveScene()->getCamera();
 		Vector3 direction = camera->getTargetCameraPosition() - camera->getCameraPosition();
+		
 		direction.normalise();
 		Vector3 posicionModificada = camera->getCameraPosition()- Vector3(0,2.5,0) + ((8.0f) * direction);
 		

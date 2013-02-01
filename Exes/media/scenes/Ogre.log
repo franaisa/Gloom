@@ -1,0 +1,24 @@
+02:33:25: Creating resource group General
+02:33:25: Creating resource group Internal
+02:33:25: Creating resource group Autodetect
+02:33:25: Registering ResourceManager for type Mesh
+02:33:25: Registering ResourceManager for type Skeleton
+02:33:25: Registering ResourceManager for type Material
+02:33:25: MeshSerializer writing mesh data to stream ...
+02:33:25: File header written.
+02:33:25: Writing mesh data...
+02:33:25: Writing submesh...
+02:33:25: Exporting submesh texture aliases...
+02:33:25: Submesh texture aliases exported.
+02:33:25: Submesh exported.
+02:33:25: Exporting bounds information....
+02:33:25: Bounds information exported.
+02:33:25: Exporting submesh name table...
+02:33:25: Submesh name table exported.
+02:33:25: Exporting edge lists...
+02:33:25: Edge lists exported
+02:33:25: Mesh data exported.
+02:33:25: MeshSerializer export successful.
+02:33:27: Unregistering ResourceManager for type Material
+02:33:27: Unregistering ResourceManager for type Skeleton
+02:33:27: Unregistering ResourceManager for type Mesh
