@@ -322,6 +322,7 @@ namespace Logic
 	//----------------------------------------------------------
 
 
+
 	CMessageAvatarWalk::CMessageAvatarWalk(TMessageType type) : CMessage(type) {
 		// Nada que hacer
 	}//
@@ -347,6 +348,7 @@ namespace Logic
 	//----------------------------------------------------------
 
 
+
 	CMessageKinematicMove::CMessageKinematicMove(TMessageType type) : CMessage(type) {
 		// Nada que hacer
 	}//
@@ -368,6 +370,8 @@ namespace Logic
 
 		return _tempBuffer;
 	}
+
+
 
 	CMessageChangeWeapon::CMessageChangeWeapon(TMessageType type) : CMessage(type) {
 		// Nada que hacer
@@ -408,4 +412,27 @@ namespace Logic
 
 		return _tempBuffer;
 	}
+
+	CMessageCollisionDown::CMessageCollisionDown(TMessageType type): CMessage(type){
+		
+	}//
+	//----------------------------------------------------------
+
+	void CMessageCollisionDown::setCollisionDown(bool collision){
+		_collision = collision;
+	}//
+	//----------------------------------------------------------
+
+	bool CMessageCollisionDown::getCollisionDown(){
+		return _collision;
+	}//
+	Net::CBuffer CMessageCollisionDown::serialize() {
+		CMessage::serialize();
+
+
+		return _tempBuffer;
+	}//
+	//----------------------------------------------------------
 }
+
+	
