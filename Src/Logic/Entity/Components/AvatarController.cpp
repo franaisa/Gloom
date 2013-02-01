@@ -14,9 +14,7 @@ de la entidad.
 #include "AvatarController.h"
 
 #include "Logic/Entity/Entity.h"
-#include "Logic/Entity/Components/PhysicController.h"
 #include "Map/MapEntity.h"
-
 
 namespace Logic 
 {
@@ -71,7 +69,8 @@ namespace Logic
 
 	bool CAvatarController::accept(CMessage *message)
 	{
-		return message->getMessageType() == Message::CONTROL;
+		return message->getMessageType() == Message::CONTROL || 
+			message->getMessageType() == Message::COLLISION_DOWN;
 	} // accept
 	
 	//---------------------------------------------------------
@@ -101,6 +100,10 @@ namespace Logic
 				mouse(((CMessageMouse*)message)->getMouse());
 			else if(((CMessageControl*)message)->getType()==Control::JUMP)
 				jump();
+			break;
+		case Message::COLLISION_DOWN:
+			_falling=((CMessageCollisionDown*)message)->getCollisionDown();
+			break;
 		}
 
 	} // process
@@ -111,7 +114,6 @@ namespace Logic
 	{
 		_entity->yaw(amount[0]);
 		_entity->pitch(amount[1]);
-
 	} // turn
 	
 	//---------------------------------------------------------
@@ -119,7 +121,6 @@ namespace Logic
 	void CAvatarController::walk()
 	{
 		_walking = true;
-
 	} // walk
 	
 	//---------------------------------------------------------
@@ -127,7 +128,6 @@ namespace Logic
 	void CAvatarController::walkBack() 
 	{
 		_walkingBack = true;
-
 	} // walkBack
 	
 	//---------------------------------------------------------
@@ -135,7 +135,6 @@ namespace Logic
 	void CAvatarController::stopWalk() 
 	{
 		_walking = false;
-
 	} // stopWalk
 	
 		//---------------------------------------------------------
@@ -143,7 +142,6 @@ namespace Logic
 	void CAvatarController::stopWalkBack() 
 	{
 		 _walkingBack = false;
-
 	} // stopWalk
 
 
@@ -152,7 +150,6 @@ namespace Logic
 	void CAvatarController::strafeLeft() 
 	{
 		_strafingLeft = true;
-
 	} // walk
 	
 	//---------------------------------------------------------
@@ -160,7 +157,6 @@ namespace Logic
 	void CAvatarController::strafeRight() 
 	{
 		_strafingRight = true;
-
 	} // walkBack
 	
 	//---------------------------------------------------------
@@ -181,8 +177,8 @@ namespace Logic
 
 	//---------------------------------------------------------
 
-	void CAvatarController::jump(){
-		
+	void CAvatarController::jump()
+	{
 		_jumping = true;
 	}//jump
 	
@@ -285,7 +281,6 @@ namespace Logic
 
 		//Control del salto (normal y lateral)
 		//Pidiendo al PhysicController el atributo _falling (devuelve el del frame anterior) y asi sabemos si esta tocando el suelo y puedo saltar
-		_falling=_entity->getComponent<Logic::CPhysicController>("CPhysicController")->getFalling();
 		if(!_falling){
 			_canJump=true;
 			_speedJump=-0.02;
@@ -340,30 +335,29 @@ namespace Logic
 			direction.z=_direccionSaltoCaida.z+direction.z*0.8;
 		}
 
-		//Normalizamos y luego calculamos la magnitud correcta para la dirección
-		direction.normalise();
+		//Normalizamos y luego calculamos la magnitud correcta para la dirección (sin contar el salto)
+		Vector3 directXZY=direction.normalisedCopy();
 
 		//Aplicaremos más velocidad lateral si se trata de un desplazamiento lateral (para desplazarnos más rápido, recorriendo más terreno)
 		if(!_velocitySideJump){
-			direction.x *= msecs * _speed;
-			direction.z *= msecs * _speed;
+			directXZY.x *= msecs * _speed;
+			directXZY.z *= msecs * _speed;
 		}
 		else{
-			direction.x *= msecs * _speed * 1.5;//Factor que podemos parametrizar
-			direction.z *= msecs * _speed * 1.5;
+			directXZY.x *= msecs * _speed * 1.5;//Factor que podemos parametrizar
+			directXZY.z *= msecs * _speed * 1.5;
 		}
 
+		//Calculamos el desplazamiento del salto y lo añadimos al vector que se mandará por mensaje
 		direction.y *= msecs * _speedJump;
+		directXZY.y=direction.y;
 
 		//Pasamos a la Física la dirección del movimiento para que se encargue ella de movernos
-		//_entity->getComponent<Logic::CPhysicController>("CPhysicController")->avatarWalk(direction);
-		
 		Logic::CMessageAvatarWalk *m=new Logic::CMessageAvatarWalk(Logic::Message::AVATAR_WALK);
-			
-		m->setDirection(direction);
+		m->setDirection(directXZY);
 		_entity->emitMessage(m);
-	} // tick
 
+	} // tick
 
 } // namespace Logic
 

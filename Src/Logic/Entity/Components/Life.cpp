@@ -33,7 +33,7 @@ namespace Logic
 			return false;
 
 		if(entityInfo->hasAttribute("life"))
-			_life = entityInfo->getFloatAttribute("life");
+			_life = entityInfo->getIntAttribute("life");
 
 		return true;
 
@@ -111,7 +111,7 @@ namespace Logic
 
 	} // process
 
-	void CLife::damaged(float damage){
+	void CLife::damaged(int damage){
 		_life -= damage;
 
 		printf("\nAh!, ya solo me queda %i de vida", _life);
