@@ -57,9 +57,6 @@ bool CPhysicController::spawn(CEntity* entity, CMap *map, const Map::CEntity *en
 	// Crear el character controller asociado al componente
 	_controller = createController(entityInfo);
 
-	//Inicialmente la entidad esta cayendo
-	_falling=true;
-
 	return true;
 }
 
@@ -85,16 +82,6 @@ void CPhysicController::process(CMessage *message)
 
 }
 
-void CPhysicController::avatarWalk(const Vector3& direction) {
-	// Anotamos el vector de desplazamiento para usarlo posteriormente en 
-	// el método tick. De esa forma, si recibimos varios mensajes AVATAR_WALK
-	// en el mismo ciclo sólo tendremos en cuenta el último.
-	_movement = direction;
-}
-
-bool CPhysicController::getFalling() {
-	return _falling;
-}
 
 //---------------------------------------------------------
 
@@ -113,6 +100,11 @@ void CPhysicController::tick(unsigned int msecs)
 
 	// Actualizamos el flag que indica si estamos cayendo
 	_falling =  !(flags & PxControllerFlag::eCOLLISION_DOWN);
+
+	//Mandamos un mensaje que dirá si hay collision con el suelo para la lógica
+	Logic::CMessageCollisionDown *m=new Logic::CMessageCollisionDown(Logic::Message::COLLISION_DOWN);
+	m->setCollisionDown(_falling);
+	_entity->emitMessage(m);
 
 	_movement = Vector3::ZERO;
 

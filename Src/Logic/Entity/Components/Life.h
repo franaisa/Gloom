@@ -41,7 +41,7 @@ namespace Logic
 		/**
 		Constructor por defecto; en la clase base no hace nada.
 		*/
-		CLife() : IComponent(), _life(100.f) {}
+		CLife() : IComponent(), _life(100) {}
 		
 		/**
 		Inicialización del componente usando la descripción de la entidad que hay en 
@@ -62,7 +62,7 @@ namespace Logic
 		/**
 		Al recibir daño quitamos vida
 		*/
-		void damaged(float damage);
+		void damaged(int damage);
 
 	protected:
 

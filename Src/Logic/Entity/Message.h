@@ -46,6 +46,7 @@ namespace Logic
 			DAMAGED,
 			CHANGE_WEAPON,
 			CHANGE_WEAPON_GRAPHICS,
+			COLLISION_DOWN
 		};
 	}
 	/**
@@ -126,6 +127,20 @@ namespace Logic
 		unsigned char _smartP;
 		/* Se usa en la construccion del objeto y en el método serialize */
 		Net::CBuffer _tempBuffer;
+	};
+
+	// _________________________________________________
+
+	class CMessageCollisionDown : public CMessage{
+	public:
+		CMessageCollisionDown(TMessageType t);
+		bool getCollisionDown();
+		void setCollisionDown(bool collision);
+		~CMessageCollisionDown(){};
+		
+		virtual Net::CBuffer serialize();
+	private:
+		bool _collision;
 	};
 
 	// _________________________________________________
