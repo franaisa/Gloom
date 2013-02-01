@@ -231,7 +231,6 @@ void CPhysicEntity::onTrigger(IPhysics *otherComponent, bool enter)
 		//Logic::CMessageTouched *m= new Logic::CMessageTouched(Message::TOUCHED);
 		//m->setEntity(otherComponent->getEntity());
 		//_entity->emitMessage(m);
-		//_entity->getComponent<Logic::CSwitchTrigger>("CSwitchTrigger")->
 	} else {
 		//Logic::CMessageUntouched *m= new Logic::CMessageUntouched(Message::UNTOUCHED);
 		//m->setEntity(otherComponent->getEntity());
