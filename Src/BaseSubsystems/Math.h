@@ -281,7 +281,7 @@ namespace Math
 		}
 		return (crc);
 
-	} // getDirection
+	} // CRC
 
 
 
