@@ -14,6 +14,7 @@ Contiene el tipo de datos de un mensaje.
 
 #include "BaseSubsystems/Math.h"
 #include "Net/Buffer.h"
+#include "Logic/Entity/MessageFactory.h"
 
 // Predeclaraciones
 namespace Logic {
@@ -101,33 +102,30 @@ namespace Logic
 		 TMessageType getMessageType();
 		 // Inicializa los mensajes a los valores por defecto
 		 CMessage(TMessageType t);
-		 // Inicializa los valores de sus campos a partir de una ristra de bytes
-		 // con datos serializados
-		 CMessage(Net::byte* serializedData, size_t dataSize = 500);
-		 virtual ~CMessage(){ /* Nada que hacer, no hay memoria dinámica */ };
+		 virtual ~CMessage();
 
 		 // Control de referencias
 		 void addSmartP();
 		 void subSmartP();
-		 
-		 // Serializa los datos internos de cada mensaje concreto
-		 // Por defecto, devuelve un buffer con tan solo el tipo del mensaje
-		 // (que es la implementación mínima).
-		 // Aquellos mensajes que tengan más parámetros deberán sobreescribir
-		 // este método.
-		 // Igualmente deberían apoyarse en la implementación del padre
-		 // OJO!! NO RESETEA EL PUNTERO DE ESCRITURA/LECTURA POR DEFECTO
-		 // el motivo principial es para que las clases derivadas solo tengan
-		 // que llamar a write para escribir sus datos reutilizando la implentacion
-		 // del padre.
-		 // Estamos presuponiendo que nadie va a instanciar a CMessage.
-		 virtual Net::CBuffer serialize() = 0;
+
+		 /**
+		  * Método virtual puro que serializa los datos internos de cada mensaje.
+		  * El puntero de escritura/lectura NO SE RESETEA en ningún caso. Si el 
+		  * cliente quiere realizar lecturas debe realizar un reset sobre el buffer
+		  * devuelto.
+		  * OJO!!! La memoria reservada para el buffer devuelto se libera en el propio
+		  * mensaje. El cliente NUNCA debe intentar efectuar un delete sobre el buffer
+		  * devuelto (de lo contrario se lia muy parda).
+		  */
+		 virtual Net::CBuffer* serialize() = 0;
+
+		 virtual void deserialize(Net::CBuffer& buffer) = 0;
 
 	protected:
 		TMessageType _type;
 		unsigned char _smartP;
-		/* Se usa en la construccion del objeto y en el método serialize */
-		Net::CBuffer _tempBuffer;
+		/* Se utiliza para serializar mensajes */
+		Net::CBuffer* _tempBuffer;
 	};
 
 /////////////////////////////////////////////////////////////
@@ -164,9 +162,9 @@ para que el componente se registre en la factoría.
 	} \
 	bool Class::regist() \
 	{ \
-		if (!CMessageFACTORYMESSAGE::getSingletonPtr()->has(#Class)) \
+		if (!CMessageFactory::getSingletonPtr()->has(#Class)) \
 		{ \
-			CMessageFACTORYMESSAGE::getSingletonPtr()->add(Class::create, #Class); \
+			CMessageFactory::getSingletonPtr()->add(Class::create, #Class); \
 		} \
 		return true; \
 	}

@@ -1,8 +1,12 @@
 #include "MessageChangeWeaponGraphics.h"
 
+#include "Logic/Entity/MessageFactory.h"
+
 namespace Logic {
 
-	CMessageChangeWeaponGraphics::CMessageChangeWeaponGraphics(TMessageType type = TMessageType::CHANGE_WEAPON_GRAPHICS) : CMessage(type) {
+	IMP_FACTORYMESSAGE(CMessageChangeWeaponGraphics);
+
+	CMessageChangeWeaponGraphics::CMessageChangeWeaponGraphics() : CMessage(TMessageType::CHANGE_WEAPON_GRAPHICS) {
 		// Nada que hacer
 	}//
 	//----------------------------------------------------------
@@ -13,12 +17,19 @@ namespace Logic {
 	int CMessageChangeWeaponGraphics::getWeapon(){
 		return _weapon;
 	}//
-	Net::CBuffer CMessageChangeWeaponGraphics::serialize() {
-		CMessage::serialize();
-		_tempBuffer.write(&_weapon, sizeof(_weapon));
-		_tempBuffer.reset();
+	//----------------------------------------------------------
+	Net::CBuffer* CMessageChangeWeaponGraphics::serialize() {
+		assert(_tempBuffer == NULL);
 
+		_tempBuffer = new Net::CBuffer(sizeof(_weapon));
+		_tempBuffer->serialize(_weapon);
+		
 		return _tempBuffer;
+	}//
+	//----------------------------------------------------------
+
+	void CMessageChangeWeaponGraphics::deserialize(Net::CBuffer& buffer) {
+		buffer.deserialize(_weapon);
 	}
 
 };

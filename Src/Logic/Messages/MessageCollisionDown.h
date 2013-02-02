@@ -6,17 +6,19 @@
 namespace Logic {
 
 	class CMessageCollisionDown : public CMessage{
+	DEC_FACTORYMESSAGE(CMessageCollisionDown);
 	public:
-		CMessageCollisionDown(TMessageType t);
+		CMessageCollisionDown();
 		bool getCollisionDown();
 		void setCollisionDown(bool collision);
 		~CMessageCollisionDown(){};
 		
-		virtual Net::CBuffer serialize();
+		virtual Net::CBuffer* serialize();
+		virtual void deserialize(Net::CBuffer& buffer);
 	private:
 		bool _collision;
 	};
-
+	REG_FACTORYMESSAGE(CMessageCollisionDown);
 };
 
 #endif

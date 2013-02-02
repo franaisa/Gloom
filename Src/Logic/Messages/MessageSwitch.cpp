@@ -1,8 +1,12 @@
 #include "MessageSwitch.h"
 
+#include "Logic/Entity/MessageFactory.h"
+
 namespace Logic {
 
-	CMessageSwitch::CMessageSwitch(TMessageType type = TMessageType::SWITCH) : CMessage(type) {
+	IMP_FACTORYMESSAGE(CMessageSwitch);
+
+	CMessageSwitch::CMessageSwitch() : CMessage(TMessageType::SWITCH) {
 		// Nada que hacer
 	}//
 	//----------------------------------------------------------
@@ -17,13 +21,17 @@ namespace Logic {
 	}//
 	//----------------------------------------------------------
 	
-	Net::CBuffer CMessageSwitch::serialize() {
-		CMessage::serialize();
-		_tempBuffer.write(&_change, sizeof(_change));
-		_tempBuffer.reset();
+	Net::CBuffer* CMessageSwitch::serialize() {
+		assert(_tempBuffer == NULL);
 
+		_tempBuffer = new Net::CBuffer(sizeof(unsigned char));
+		_tempBuffer->serialize(_change);
+		
 		return _tempBuffer;
 	}//
 	//----------------------------------------------------------
 
+	void CMessageSwitch::deserialize(Net::CBuffer& buffer) {
+		buffer.deserialize(_change);
+	}
 };

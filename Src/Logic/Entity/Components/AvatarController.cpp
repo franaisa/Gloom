@@ -42,8 +42,10 @@ namespace Logic
 	
 	//---------------------------------------------------------
 
-	bool CAvatarController::activate()
+	void CAvatarController::activate()
 	{
+		IComponent::activate();
+
 		_jumping = false;
 		_jumpingControl = false;
 		_gravity=-0.0008; 
@@ -70,14 +72,14 @@ namespace Logic
 
 		_rebound=false;
 
-		return true;
+		//return true;
 	} // activate
 	
 	//---------------------------------------------------------
 
 	void CAvatarController::deactivate()
 	{
-
+		IComponent::deactivate();
 	} // deactivate
 	
 	//---------------------------------------------------------
@@ -206,6 +208,7 @@ namespace Logic
 
 	void CAvatarController::rebound()
 	{
+		std::cout << "REBOUND() DE AVATARCONTROLLER" << std::endl;
 		_rebound = true;
 	}//rebound
 	
@@ -430,7 +433,7 @@ namespace Logic
 		directXZY.y=direction.y;
 
 		//Pasamos a la Física la dirección del movimiento para que se encargue ella de movernos
-		Logic::CMessageAvatarWalk *m=new Logic::CMessageAvatarWalk(Logic::Message::AVATAR_WALK);
+		Logic::CMessageAvatarWalk *m=new Logic::CMessageAvatarWalk();
 		m->setDirection(directXZY);
 		_entity->emitMessage(m);
 

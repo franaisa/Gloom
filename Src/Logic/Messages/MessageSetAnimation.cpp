@@ -1,8 +1,12 @@
 #include "MessageSetAnimation.h"
 
+#include "Logic/Entity/MessageFactory.h"
+
 namespace Logic {
 
-	CMessageSetAnimation::CMessageSetAnimation(TMessageType type = TMessageType::SET_ANIMATION) : CMessage(type) {
+	IMP_FACTORYMESSAGE(CMessageSetAnimation);
+
+	CMessageSetAnimation::CMessageSetAnimation() : CMessage(TMessageType::SET_ANIMATION) {
 		// Nada que hacer
 	}//
 	//----------------------------------------------------------
@@ -27,14 +31,20 @@ namespace Logic {
 	}//
 	//----------------------------------------------------------
 
-	Net::CBuffer CMessageSetAnimation::serialize() {
-		CMessage::serialize();
-		_tempBuffer.write(&_string, sizeof(_string));
-		_tempBuffer.write(&_bool, sizeof(_bool));
-		_tempBuffer.reset();
+	Net::CBuffer* CMessageSetAnimation::serialize() {
+		assert(_tempBuffer == NULL);
 
+		_tempBuffer = new Net::CBuffer(sizeof(int) + sizeof(bool));
+		_tempBuffer->serialize(_string);
+		_tempBuffer->serialize(_bool);
+		
 		return _tempBuffer;
 	}//
 	//----------------------------------------------------------
+
+	void CMessageSetAnimation::deserialize(Net::CBuffer& buffer) {
+		buffer.deserialize(_string);
+		buffer.deserialize(_bool);
+	}
 
 };

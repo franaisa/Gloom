@@ -6,18 +6,19 @@
 namespace Logic {
 
 	class CMessageControl : public CMessage{
+	DEC_FACTORYMESSAGE(CMessageControl);
 	public:
-		CMessageControl(TMessageType t);
+		CMessageControl();
 		ControlType getType();
 		void setType(ControlType controltype);
 		~CMessageControl(){};
 
-		virtual Net::CBuffer serialize();
-
+		virtual Net::CBuffer* serialize();
+		virtual void deserialize(Net::CBuffer& buffer);
 	protected:
 		ControlType _controlType;
 	};
-
+	REG_FACTORYMESSAGE(CMessageControl);
 };
 
 #endif

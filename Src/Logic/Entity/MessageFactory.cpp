@@ -12,8 +12,8 @@ los punteros a función de funciones de creación componentes (IComponent).
 @date Julio, 2010
 */
 #include "MessageFactory.h"
-#include "Logic/Entity/Component.h"
 #include "BaseSubsystems\Math.h"
+#include "Logic/Messages/Message.h"
 
 #include <cassert>
 
@@ -34,8 +34,8 @@ namespace Logic {
 	CMessageFactory::~CMessageFactory()
 	{
 		_instance = 0;
-		TFunctionPointerMap::const_iterator it = _table.begin();
-		TFunctionPointerMap::const_iterator it2;
+		std::map<int, FunctionPointer>::const_iterator it = _table.begin();
+		std::map<int, FunctionPointer>::const_iterator it2;
 		
 		while( it != _table.end() )
 		{

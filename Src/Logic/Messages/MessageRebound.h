@@ -7,12 +7,13 @@ namespace Logic {
 
 	class CMessageRebound : public CMessage{
 	public:
-		CMessageRebound(TMessageType t);
+		CMessageRebound();
 		Vector3 getDir();
 		void setDir(Vector3 dir);
 		~CMessageRebound(){};
 		
-		virtual Net::CBuffer serialize();
+		virtual Net::CBuffer* serialize();
+		virtual void deserialize(Net::CBuffer& buffer);
 
 	private:
 		Vector3 _dir;

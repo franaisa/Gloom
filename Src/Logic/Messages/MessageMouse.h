@@ -7,13 +7,13 @@ namespace Logic {
 
 	class CMessageMouse : public CMessageControl{
 	public:
-		CMessageMouse(TMessageType t);
+		CMessageMouse();
 		void setMouse(float mouse[]);
 		float* getMouse();
 		~CMessageMouse(){};
 
-		virtual Net::CBuffer serialize();
-
+		virtual Net::CBuffer* serialize();
+		virtual void deserialize(Net::CBuffer& buffer);
 	private:
 		float _mouse[2];
 	};

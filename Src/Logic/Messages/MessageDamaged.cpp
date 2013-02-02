@@ -1,8 +1,12 @@
 #include "MessageDamaged.h"
 
+#include "Logic/Entity/MessageFactory.h"
+
 namespace Logic {
 
-	CMessageDamaged::CMessageDamaged(TMessageType type = TMessageType::DAMAGED) : CMessage(type) {
+	IMP_FACTORYMESSAGE(CMessageDamaged);
+
+	CMessageDamaged::CMessageDamaged() : CMessage(TMessageType::DAMAGED) {
 		// Nada que hacer
 	}//
 	//----------------------------------------------------------
@@ -17,13 +21,18 @@ namespace Logic {
 	}//
 	//----------------------------------------------------------
 		
-	Net::CBuffer CMessageDamaged::serialize() {
-		CMessage::serialize();
-		_tempBuffer.write(&_damage, sizeof(_damage));
-		_tempBuffer.reset();
+	Net::CBuffer* CMessageDamaged::serialize() {
+		assert(_tempBuffer == NULL);
 
+		_tempBuffer = new Net::CBuffer(sizeof(_damage));
+		_tempBuffer->serialize(_damage);
+		
 		return _tempBuffer;
 	}//
 	//----------------------------------------------------------
+
+	void CMessageDamaged::deserialize(Net::CBuffer& buffer) {
+		buffer.deserialize(_damage);
+	}
 
 };

@@ -84,6 +84,10 @@
     <ClCompile Include="..\..\Src\Logic\Entity\Components\PhysicController.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\PhysicEntity.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\Shoot.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\ShootHammer.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\ShootMiniGun.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\ShootShotGun.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\WeaponsManager.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\SwitchPosition.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\SwitchTrigger.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\MessageFactory.cpp" />
@@ -128,6 +132,10 @@
     <ClInclude Include="..\..\Src\Logic\Entity\Components\PhysicController.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\PhysicEntity.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\Shoot.h" />
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\ShootHammer.h" />
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\ShootMiniGun.h" />
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\ShootShotGun.h" />
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\WeaponsManager.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\SwitchPosition.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\SwitchTrigger.h" />
     <ClInclude Include="..\..\Src\Logic\GameNetMsgManager.h" />

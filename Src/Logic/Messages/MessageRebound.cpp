@@ -2,7 +2,7 @@
 
 namespace Logic {
 
-	CMessageRebound::CMessageRebound(TMessageType type = TMessageType::REBOUND) : CMessage(type) {
+	CMessageRebound::CMessageRebound() : CMessage(TMessageType::REBOUND) {
 		// Nada que hacer
 	} //
 	//----------------------------------------------------------
@@ -17,11 +17,19 @@ namespace Logic {
 	}//
 	//----------------------------------------------------------
 
-	Net::CBuffer CMessageRebound::serialize() {
-		CMessage::serialize();
+	Net::CBuffer* CMessageRebound::serialize() {
+		assert(_tempBuffer == NULL);
 
+		_tempBuffer = new Net::CBuffer(sizeof(float) * 3);
+		_tempBuffer->serialize(_dir);
+		
 		return _tempBuffer;
 	}//
 	//----------------------------------------------------------
+
+	void CMessageRebound::deserialize(Net::CBuffer& buffer) {
+		buffer.deserialize(_dir);
+
+	}
 
 };

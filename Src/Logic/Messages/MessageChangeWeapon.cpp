@@ -1,8 +1,12 @@
 #include "MessageChangeWeapon.h"
 
+#include "Logic/Entity/MessageFactory.h"
+
 namespace Logic {
 
-	CMessageChangeWeapon::CMessageChangeWeapon(TMessageType type = TMessageType::CHANGE_WEAPON) : CMessage(type) {
+	IMP_FACTORYMESSAGE(CMessageChangeWeapon);
+
+	CMessageChangeWeapon::CMessageChangeWeapon() : CMessage(TMessageType::CHANGE_WEAPON) {
 		// Nada que hacer
 	}//
 	//----------------------------------------------------------
@@ -14,12 +18,18 @@ namespace Logic {
 		return _weapon;
 	}//
 	//----------------------------------------------------------
-	Net::CBuffer CMessageChangeWeapon::serialize() {
-		CMessage::serialize();
-		_tempBuffer.write(&_weapon, sizeof(_weapon));
-		_tempBuffer.reset();
+	Net::CBuffer* CMessageChangeWeapon::serialize() {
+		assert(_tempBuffer == NULL);
 
+		_tempBuffer = new Net::CBuffer(sizeof(_weapon));
+		_tempBuffer->serialize(_weapon);
+		
 		return _tempBuffer;
+	}//
+	//----------------------------------------------------------
+
+	void CMessageChangeWeapon::deserialize(Net::CBuffer& buffer) {
+		buffer.deserialize(_weapon);
 	}
 
 };

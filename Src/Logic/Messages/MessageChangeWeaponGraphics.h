@@ -6,17 +6,19 @@
 namespace Logic {
 
 	class CMessageChangeWeaponGraphics: public CMessage{
+	DEC_FACTORYMESSAGE(CMessageChangeWeaponGraphics);
 	public:
-		CMessageChangeWeaponGraphics(TMessageType t);
+		CMessageChangeWeaponGraphics();
 		int getWeapon();
 		void setWeapon(int weapon);
 		~CMessageChangeWeaponGraphics() { };
 
-		virtual Net::CBuffer serialize();
+		virtual Net::CBuffer* serialize();
+		virtual void deserialize(Net::CBuffer& buffer);
 	private:
 		int _weapon;
 	};
-
+	REG_FACTORYMESSAGE(CMessageChangeWeaponGraphics);
 };
 
 #endif

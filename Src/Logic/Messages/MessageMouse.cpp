@@ -2,7 +2,7 @@
 
 namespace Logic {
 
-	CMessageMouse::CMessageMouse(TMessageType t = TMessageType::CONTROL):CMessageControl(t){
+	CMessageMouse::CMessageMouse(): CMessageControl(){
 
 	} //
 	//----------------------------------------------------------
@@ -17,13 +17,20 @@ namespace Logic {
 	}//
 	//----------------------------------------------------------
 
-	Net::CBuffer CMessageMouse::serialize() {
-		CMessageControl::serialize();
-		_tempBuffer.write(&_mouse, 2 * sizeof(float));
-		_tempBuffer.reset();
+	Net::CBuffer* CMessageMouse::serialize() {
+		assert(_tempBuffer == NULL);
 
+		_tempBuffer = new Net::CBuffer(sizeof(float) * 2);
+		_tempBuffer->serialize(_mouse[0]);
+		_tempBuffer->serialize(_mouse[1]);
+		
 		return _tempBuffer;
 	}//
 	//----------------------------------------------------------
+
+	void CMessageMouse::deserialize(Net::CBuffer& buffer) {
+		buffer.deserialize(_mouse[0]);
+		buffer.deserialize(_mouse[1]);
+	}
 
 };

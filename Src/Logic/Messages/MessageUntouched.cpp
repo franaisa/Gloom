@@ -1,8 +1,13 @@
 #include "MessageUntouched.h"
+#include "../Entity/Entity.h"
+
+#include "Logic/Entity/MessageFactory.h"
 
 namespace Logic {
 
-	CMessageUntouched::CMessageUntouched(TMessageType type = TMessageType::UNTOUCHED) : CMessage(type) {
+	IMP_FACTORYMESSAGE(CMessageUntouched);
+
+	CMessageUntouched::CMessageUntouched() : CMessage(TMessageType::UNTOUCHED) {
 		// Nada que hacer
 	} //
 	//----------------------------------------------------------
@@ -17,13 +22,21 @@ namespace Logic {
 	}//
 	//----------------------------------------------------------
 
-	Net::CBuffer CMessageUntouched::serialize() {
-		CMessage::serialize();
-		_tempBuffer.write(_entity, sizeof(_entity));
-		_tempBuffer.reset();
+	Net::CBuffer* CMessageUntouched::serialize() {
+		assert(_tempBuffer == NULL);
 
+		_tempBuffer = new Net::CBuffer(sizeof(_entity->getEntityID()));
+		_tempBuffer->serialize(_entity->getEntityID());
+		
 		return _tempBuffer;
 	}//
 	//----------------------------------------------------------
 
+	void CMessageUntouched::deserialize(Net::CBuffer& buffer) {
+		int temp;
+
+		buffer.deserialize(temp);
+		// HAY QUE CONSTRUIR UNA ENTIDAD ENTITY - NO EXISTE METODO
+		// setEntityID
+	}
 };

@@ -6,18 +6,19 @@
 namespace Logic {
 
 	class CMessageTouched : public CMessage{
+	DEC_FACTORYMESSAGE(CMessageTouched);
 	public:
-		CMessageTouched(TMessageType t);
+		CMessageTouched();
 		CEntity* getEntity();
 		void setEntity(CEntity *c);
 		~CMessageTouched(){};
 		
-		virtual Net::CBuffer serialize();
-
+		virtual Net::CBuffer* serialize();
+		virtual void deserialize(Net::CBuffer& buffer);
 	private:
 		CEntity *_entity;
 	};
-
+	REG_FACTORYMESSAGE(CMessageTouched);
 };
 
 #endif

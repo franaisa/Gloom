@@ -1,8 +1,12 @@
 #include "MessageTransform.h"
 
+#include "Logic/Entity/MessageFactory.h"
+
 namespace Logic {
 
-	CMessageTransform::CMessageTransform(TMessageType type = TMessageType::SET_TRANSFORM) : CMessage(type) {
+	IMP_FACTORYMESSAGE(CMessageTransform);
+
+	CMessageTransform::CMessageTransform() : CMessage(TMessageType::SET_TRANSFORM) {
 		// Nada que hacer
 	} //
 	//----------------------------------------------------------
@@ -17,13 +21,19 @@ namespace Logic {
 	}//
 	//----------------------------------------------------------
 	
-	Net::CBuffer CMessageTransform::serialize() {
-		CMessage::serialize();
-		_tempBuffer.write(&_transform, sizeof(_transform));
-		_tempBuffer.reset();
+	Net::CBuffer* CMessageTransform::serialize() {
+		assert(_tempBuffer == NULL);
 
+		// IMPLEMENTAR EL ENVIO DEL MATRIX4
+		_tempBuffer = new Net::CBuffer( sizeof(float) * 5);
+		_tempBuffer->serialize(_transform);
+		
 		return _tempBuffer;
 	}//
 	//----------------------------------------------------------
+
+	void CMessageTransform::deserialize(Net::CBuffer& buffer) {
+		buffer.deserialize(_transform);
+	}
 
 };

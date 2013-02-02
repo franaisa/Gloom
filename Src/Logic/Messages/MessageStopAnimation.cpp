@@ -1,8 +1,13 @@
 #include "MessageStopAnimation.h"
 
+
+#include "Logic/Entity/MessageFactory.h"
+
 namespace Logic {
 
-	CMessageStopAnimation::CMessageStopAnimation(TMessageType type = TMessageType::STOP_ANIMATION) : CMessage(type) {
+	IMP_FACTORYMESSAGE(CMessageStopAnimation);
+
+	CMessageStopAnimation::CMessageStopAnimation() : CMessage(TMessageType::STOP_ANIMATION) {
 		// Nada que hacer
 	}//
 	//----------------------------------------------------------
@@ -27,14 +32,20 @@ namespace Logic {
 	}//
 	//----------------------------------------------------------
 
-	Net::CBuffer CMessageStopAnimation::serialize() {
-		CMessage::serialize();
-		_tempBuffer.write(&_string, sizeof(_string));
-		_tempBuffer.write(&_bool, sizeof(_bool));
-		_tempBuffer.reset();
+	Net::CBuffer* CMessageStopAnimation::serialize() {
+		assert(_tempBuffer == NULL);
 
+		_tempBuffer = new Net::CBuffer(sizeof(int) + sizeof(bool));
+		_tempBuffer->serialize(_string);
+		_tempBuffer->serialize(_bool);
+		
 		return _tempBuffer;
 	}//
 	//----------------------------------------------------------
+
+	void CMessageStopAnimation::deserialize(Net::CBuffer& buffer) {
+		buffer.deserialize(_string);
+		buffer.deserialize(_bool);
+	}
 
 };

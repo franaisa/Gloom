@@ -14,7 +14,8 @@ los punteros a función de funciones de creación componentes (CMessage).
 #ifndef __Logic_MessageFactory_H
 #define __Logic_MessageFactory_H
 
-#include "BaseSubsystems/Factory.h"
+#include <string>
+#include <map>
 
 // Predeclaración de clases para ahorrar tiempo de compilación
 namespace Logic 

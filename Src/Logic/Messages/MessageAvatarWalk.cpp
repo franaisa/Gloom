@@ -1,8 +1,12 @@
 #include "MessageAvatarWalk.h"
+#include "Logic/Entity/MessageFactory.h"
 
 namespace Logic {
 
-	CMessageAvatarWalk::CMessageAvatarWalk(TMessageType type = TMessageType::AVATAR_WALK) : CMessage(type) {
+	IMP_FACTORYMESSAGE(CMessageAvatarWalk);
+	
+	
+	CMessageAvatarWalk::CMessageAvatarWalk() : CMessage(TMessageType::AVATAR_WALK) {
 		// Nada que hacer
 	}//
 	//----------------------------------------------------------
@@ -17,13 +21,17 @@ namespace Logic {
 	}//
 	//----------------------------------------------------------
 
-	Net::CBuffer CMessageAvatarWalk::serialize() {
-		CMessage::serialize();
-		_tempBuffer.write(&_direction, sizeof(_direction));
-		_tempBuffer.reset();
+	Net::CBuffer* CMessageAvatarWalk::serialize() {
+		assert(_tempBuffer == NULL);
 
+		_tempBuffer = new Net::CBuffer(sizeof(_direction.x) * 3);
+		_tempBuffer->serialize(_direction);
+		
 		return _tempBuffer;
 	}//
 	//----------------------------------------------------------
 
+	void CMessageAvatarWalk::deserialize(Net::CBuffer& buffer) {
+		buffer.deserialize(_direction);
+	}
 };

@@ -1,8 +1,12 @@
 #include "MessageCollisionDown.h"
 
+#include "Logic/Entity/MessageFactory.h"
+
 namespace Logic {
 
-	CMessageCollisionDown::CMessageCollisionDown(TMessageType type = TMessageType::COLLISION_DOWN): CMessage(type){
+	IMP_FACTORYMESSAGE(CMessageCollisionDown);
+
+	CMessageCollisionDown::CMessageCollisionDown(): CMessage(TMessageType::COLLISION_DOWN){
 		
 	}//
 	//----------------------------------------------------------
@@ -15,12 +19,19 @@ namespace Logic {
 	bool CMessageCollisionDown::getCollisionDown(){
 		return _collision;
 	}//
-	Net::CBuffer CMessageCollisionDown::serialize() {
-		CMessage::serialize();
+	//----------------------------------------------------------
 
+	Net::CBuffer* CMessageCollisionDown::serialize() {
+		assert(_tempBuffer == NULL);
 
+		_tempBuffer = new Net::CBuffer(sizeof(_collision));
+		_tempBuffer->serialize(_collision);
+		
 		return _tempBuffer;
 	}//
 	//----------------------------------------------------------
 
+	void CMessageCollisionDown::deserialize(Net::CBuffer& buffer) {
+		buffer.deserialize(_collision);
+	}
 };
