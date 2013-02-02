@@ -20,7 +20,10 @@ Contiene la implementación del componente que gestiona las armas y que administr
 
 #include "Graphics/Camera.h"
 
-
+#include "Logic/Messages/MessageChangeWeaponGraphics.h"
+#include "Logic/Messages/MessageChangeWeapon.h"
+#include "Logic/Messages/MessageDamaged.h"
+#include "Logic/Messages/MessageControl.h"
 
 #include <OgreSceneManager.h>
 #include <OgreMaterialManager.h>

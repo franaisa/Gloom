@@ -15,7 +15,7 @@ de los mensajes.
 
 #include <list>
 
-#include "Message.h"
+#include "Logic/Messages/Message.h"
 
 // Declaración de la clase
 namespace Logic 

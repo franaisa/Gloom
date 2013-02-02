@@ -19,6 +19,8 @@ para representar character controllers.
 #include "Map/MapEntity.h"
 #include "Physics/Server.h"
 
+#include "Logic/Messages/MessageKinematicMove.h"
+
 #define _USE_MATH_DEFINES
 #include <math.h>
 

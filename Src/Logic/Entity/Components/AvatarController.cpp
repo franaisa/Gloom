@@ -16,6 +16,11 @@ de la entidad.
 #include "Logic/Entity/Entity.h"
 #include "Map/MapEntity.h"
 
+#include "Logic/Messages/MessageControl.h"
+#include "Logic/Messages/MessageCollisionDown.h"
+#include "Logic/Messages/MessageAvatarWalk.h"
+#include "Logic/Messages/MessageMouse.h"
+
 namespace Logic 
 {
 	IMP_FACTORY(CAvatarController);

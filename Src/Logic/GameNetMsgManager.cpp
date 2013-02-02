@@ -17,7 +17,7 @@ Contiene la implementación del gestor de los mensajes de red durante la partida.
 #include "GameNetMsgManager.h"
 
 #include "Logic/Entity/Entity.h"
-#include "Logic/Entity/Message.h"
+#include "Logic/Messages/Message.h"
 #include "Logic/Maps/Map.h"
 #include "Logic/Maps/EntityFactory.h"
 #include "Logic/Server.h"

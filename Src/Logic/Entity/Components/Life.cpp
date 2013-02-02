@@ -21,6 +21,8 @@ Contiene la implementación del componente que controla la vida de una entidad.
 #include "Net/Manager.h"
 #include "Net/buffer.h"
 
+#include "Logic/Messages/MessageDamaged.h"
+
 namespace Logic 
 {
 	IMP_FACTORY(CLife);
