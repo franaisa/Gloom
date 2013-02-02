@@ -136,4 +136,27 @@ namespace Net {
 		write(&data, sizeof(data));
 	}
 
+	void CBuffer::serialize(unsigned char data)
+	{
+		write(&data, sizeof(data));
+	}
+
+	void CBuffer::serialize(char data)
+	{
+		write(&data, sizeof(data));
+	}
+
+	void CBuffer::serialize(bool data)
+	{
+		write(&data, sizeof(data));
+	}
+
+	void CBuffer::serialize(const Matrix4& data)
+	{
+		Vector3 position = data.getTrans();
+		serialize(position);
+		serialize(Math::getYaw(data));
+		serialize(Math::getPitch(data));
+	}
+
 } // namespace Net

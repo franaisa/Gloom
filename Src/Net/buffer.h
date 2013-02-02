@@ -99,7 +99,33 @@ public:
 	 */
 	void serialize(const std::string& data);
 
+	/**
+	 * Escribe un unsigned char en el buffer
+	 * @param data son los datos a escribir
+	 * @param datalenght es el tamaño de los datos a escribir (número de bytes)
+	 */
+	void serialize(unsigned char data);
 
+	/**
+	 * Escribe un boleano en el buffer
+	 * @param data son los datos a escribir
+	 * @param datalenght es el tamaño de los datos a escribir (número de bytes)
+	 */
+	void serialize(bool data);
+
+	/**
+	 * Escribe un caracter en el buffer
+	 * @param data son los datos a escribir
+	 * @param datalenght es el tamaño de los datos a escribir (número de bytes)
+	 */
+	void serialize(char data);
+
+	/**
+	 * Escribe un caracter en el buffer
+	 * @param data son los datos a escribir
+	 * @param datalenght es el tamaño de los datos a escribir (número de bytes)
+	 */
+	void serialize(const Matrix4& data);
 
 	/**
 	 * Lee datos del buffer.
