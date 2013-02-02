@@ -93,6 +93,13 @@ public:
 	void serialize(int data);
 
 	/**
+	 * Escribe un entero sin signo en el buffer
+	 * @param data son los datos a escribir
+	 * @param datalenght es el tamaño de los datos a escribir (número de bytes)
+	 */
+	void serialize(unsigned int data);
+
+	/**
 	 * Escribe un string en el buffer, comprimiendolo a CRC32
 	 * @param data son los datos a escribir
 	 * @param datalenght es el tamaño de los datos a escribir (número de bytes)

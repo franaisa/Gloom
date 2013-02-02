@@ -131,6 +131,11 @@ namespace Net {
 		write(&data, sizeof(data));
 	}
 
+	void CBuffer::serialize(unsigned int data)
+	{
+		write(&data, sizeof(data));
+	}
+
 	void CBuffer::serialize(float data)
 	{
 		write(&data, sizeof(data));
