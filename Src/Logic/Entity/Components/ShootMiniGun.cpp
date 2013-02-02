@@ -34,6 +34,7 @@ namespace Logic
 {
 	IMP_FACTORY(CShootMiniGun);
 	
+	
 	//---------------------------------------------------------
 
 } // namespace Logic
