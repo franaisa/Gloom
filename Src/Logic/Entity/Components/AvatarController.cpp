@@ -36,8 +36,10 @@ namespace Logic
 	
 	//---------------------------------------------------------
 
-	bool CAvatarController::activate()
+	void CAvatarController::activate()
 	{
+		IComponent::activate();
+
 		_jumping = false;
 		_jumpingControl = false;
 		_gravity=-0.0008; 
@@ -55,14 +57,14 @@ namespace Logic
 		_readySideJumpLeft=false;
 		_readySideJumpRight=false;
 
-		return true;
+		//return true;
 	} // activate
 	
 	//---------------------------------------------------------
 
 	void CAvatarController::deactivate()
 	{
-
+		IComponent::deactivate();
 	} // deactivate
 	
 	//---------------------------------------------------------

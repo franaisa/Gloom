@@ -108,8 +108,10 @@ namespace Logic
 		// consideraremos activados.
 		_activated = true;
 
-		for( it = _components.begin(); it != _components.end(); ++it )
-			_activated = it->second->activate() && _activated;
+		for( it = _components.begin(); it != _components.end(); ++it ){
+			it->second->activate();
+			_activated = it->second->isActivate() && _activated;
+		}
 
 
 		return _activated;
@@ -147,7 +149,8 @@ namespace Logic
 		TComponentMap::const_iterator it;
 
 		for( it = _components.begin(); it != _components.end(); ++it )
-			it->second->tick(msecs);
+			if(it->second->isActivate())
+				it->second->tick(msecs);
 
 	} // tick
 

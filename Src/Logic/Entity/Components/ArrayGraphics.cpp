@@ -62,11 +62,20 @@ namespace Logic
 			
 			_graphicsEntities = new TGraphicsWeapon[numWeapons];
 
+
+
+			// Por ahora leo a mano cada una de las armas que tiene el usuario
+
+			std::string armas[] = {"MiniGun","ShotGun"};
+
+			
 			for(int i = 0; i < numWeapons; ++i){
 				
 				std::stringstream aux;
-				aux << "weapon" << i+1;
+				aux << "weapon" << armas[i];
 				std::string weapon = aux.str();
+				
+				printf("%s", weapon.c_str());
 				
 				_graphicsEntities[i]._graphicsEntity = createGraphicsEntity(weapon, entityInfo->getStringAttribute(weapon+"Model"));
 				
@@ -77,6 +86,7 @@ namespace Logic
 				_graphicsEntities[i].offset = new Vector3(entityInfo->getVector3Attribute(weapon+"Offset"));
 				
 				if(i!=0) _graphicsEntities[i]._graphicsEntity->setVisible(false);
+				
 			}
 		}
 		if(!_graphicsEntities)
@@ -92,14 +102,11 @@ namespace Logic
 
 	Graphics::CEntity* CArrayGraphics::createGraphicsEntity(std::string nombreEntidad, std::string modelo)
 	{
-		Graphics::CEntity *_ge = new Graphics::CEntity(nombreEntidad,modelo);
-		if(!_scene->addEntity(_ge))
+		Graphics::CEntity *graphicsEntity = new Graphics::CEntity(nombreEntidad,modelo);
+		if(!_scene->addEntity(graphicsEntity))
 			return 0;
-		
 
-				
-		
-		return _ge;
+		return graphicsEntity;
 
 	} // createGraphicsEntity
 	

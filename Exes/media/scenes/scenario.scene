@@ -4,11 +4,11 @@
         <colourBackground r="0" g="0" b="0" />
     </environment>
     <nodes>
-        <node name="scenario" id="0" isTarget="false">
-            <position x="-0.00846032" y="0" z="0.00675125" />
-            <rotation qx="-0" qy="-0" qz="-0" qw="-1" />
-            <scale x="120" y="120" z="120" />
-            <entity name="scenario" id="1" meshFile="scenario.mesh" castShadows="true">
+        <node name="scenario2" id="0" isTarget="false">
+            <position x="-0.000214892" y="0" z="0.000171482" />
+            <rotation qx="-0.219335" qy="0.628062" qz="-0.732145" qw="-0.146263" />
+            <scale x="0.00418433" y="0.00608683" z="0.00418433" />
+            <entity name="scenario2" id="1" meshFile="scenario2.mesh" castShadows="true">
                 <subentities>
                     <subentity index="0" materialName="_01_-_Default" />
                 </subentities>

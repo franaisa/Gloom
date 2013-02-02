@@ -38,15 +38,16 @@ namespace Logic
 	
 	//---------------------------------------------------------
 
-	bool CSwitchTrigger::activate()
+	void CSwitchTrigger::activate()
 	{
+		IComponent::activate();
 		// TODO: obtener un puntero a la entidad target
 		// Ojo: necesitamos hacerlo en el activate, porque en el spawn de este componente
 		// puede que aún no exista la entidad target
 		// Pedir al mapa un puntero a la entidad
 
 
-		return true;
+		//return true;
 
 	} // activate
 	
