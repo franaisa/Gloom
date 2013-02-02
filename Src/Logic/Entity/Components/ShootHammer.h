@@ -25,9 +25,10 @@ namespace Logic
 		*/
 
 		CShootHammer() : CShoot("Hammer") {}
-		
+		virtual bool spawn(CEntity* entity, CMap *map, const Map::CEntity *entityInfo);
 
 	protected:
+		
 
 		virtual void shoot();
 		

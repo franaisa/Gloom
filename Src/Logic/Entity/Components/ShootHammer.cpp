@@ -35,6 +35,16 @@ namespace Logic
 {
 	IMP_FACTORY(CShootHammer);
 	
+	bool CShootHammer::spawn(CEntity* entity, CMap *map, const Map::CEntity *entityInfo){
+
+		if(!CShoot::spawn(entity,map,entityInfo))
+			return false;
+		
+		_damageReflect = entityInfo->getIntAttribute("weaponHammerDamageReflect");
+		
+		return true;
+	}
+
 
 	void CShootHammer::shoot(){
 		
@@ -44,7 +54,7 @@ namespace Logic
 		
 		
 		// Para generalizar las armas, todas tendras tantas balas como la variable numberShoots
-		for(int i = 0; i < _weapon.numberShoots; ++i)
+		for(int i = 0; i < _numberShoots; ++i)
 		{
 
 			// Se corrige la posicion de la camara
@@ -55,7 +65,7 @@ namespace Logic
 
 
 			//Me dispongo a calcular la desviacion del arma, en el map.txt se pondra en grados de dispersion (0 => sin dispersion)
-			Ogre::Radian angle = Ogre::Radian( (  (((float)(rand() % 100))/100.0f) * (_weapon.dispersion)) /100);
+			Ogre::Radian angle = Ogre::Radian( (  (((float)(rand() % 100))/100.0f) * (_dispersion)) /100);
 
 			
 
@@ -90,7 +100,7 @@ namespace Logic
 				myManualObject->position(v.x,v.y,v.z);
 
 
-			for(int i=0; i < _weapon.distance;++i){
+			for(int i=0; i < _distance;++i){
 				Vector3 v = ray.getPoint(i);
 				myManualObject->position(v.x,v.y,v.z);
 				// etc 
@@ -103,7 +113,7 @@ namespace Logic
 			//////////////////////////////////fin del dibujado del rayo
 
 			//Rayo lanzado por el servidor de físicas de acuerdo a la distancia de potencia del arma
-			CEntity *entityCollision = Physics::CServer::getSingletonPtr()->raycastClosest(ray, _weapon.distance);
+			CEntity *entityCollision = Physics::CServer::getSingletonPtr()->raycastClosest(ray, _distance);
 		
 			//Si hay colisión envíamos a dicha entidad un mensaje de daño
 			if(entityCollision)
@@ -114,12 +124,17 @@ namespace Logic
 					Logic::CMessageRebound *m=new Logic::CMessageRebound();
 					m->setDir(direccionOpuestaRay);
 					_entity->emitMessage(m);
+
+					Logic::CMessageDamaged *damage=new Logic::CMessageDamaged();
+					damage->setDamage(_damageReflect);
+					_entity->emitMessage(damage);
+
 				}
 				// LLamar al componente que corresponda con el daño hecho (solamente si no fuera el mundo el del choque)
 				//entity->
 				else{
 					Logic::CMessageDamaged *m=new Logic::CMessageDamaged();
-					m->setDamage(_weapon.damage);
+					m->setDamage(_damage);
 					entityCollision->emitMessage(m);
 				}
 			}
