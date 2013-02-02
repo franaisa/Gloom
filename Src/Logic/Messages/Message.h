@@ -49,7 +49,8 @@ namespace Logic
 			CHANGE_WEAPON_GRAPHICS,
 			COLLISION_DOWN,
 			REBOUND,
-
+			HUD_LIFE,
+			HUD_SHIELD
 		};
 	}
 	/**
