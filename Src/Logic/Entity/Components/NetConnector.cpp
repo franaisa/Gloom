@@ -18,7 +18,7 @@ Contiene la implementación del componente que reenvia mensajes por la red.
 #include "Logic/Maps/Map.h"
 #include "Map/MapEntity.h"
 
-#include "Logic/Entity/Message.h"
+#include "Logic/Messages/Message.h"
 
 #include "Net/Manager.h"
 #include "Logic/GameNetMsgManager.h"

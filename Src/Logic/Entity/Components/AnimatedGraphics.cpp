@@ -17,6 +17,9 @@ gráfica de una entidad estática.
 #include "Logic/Maps/Map.h"
 #include "Map/MapEntity.h"
 
+#include "Logic/Messages/MessageSetAnimation.h"
+#include "Logic/Messages/MessageStopAnimation.h"
+
 #include "Graphics/Scene.h"
 
 namespace Logic 

@@ -21,6 +21,7 @@ gráfica de la entidad.
 #include "Graphics/Entity.h"
 #include "Graphics/StaticEntity.h"
 
+#include "Logic/Messages/MessageTransform.h"
 
 #include <OgreSceneManager.h>
 #include "OgreEntity.h"

@@ -25,6 +25,9 @@ gráfica de la entidad.
 #include "Graphics/Entity.h"
 #include "Graphics/StaticEntity.h"
 
+#include "Logic/Messages/MessageTransform.h"
+#include "Logic/Messages/MessageChangeWeaponGraphics.h"
+
 #include "OgreEntity.h"
 
 namespace Logic 
