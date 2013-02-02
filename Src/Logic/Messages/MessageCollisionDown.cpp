@@ -2,6 +2,8 @@
 
 #include "Logic/Entity/MessageFactory.h"
 
+#include <string>
+
 namespace Logic {
 
 	IMP_FACTORYMESSAGE(CMessageCollisionDown);
@@ -25,7 +27,7 @@ namespace Logic {
 		assert(_tempBuffer == NULL);
 
 		_tempBuffer = new Net::CBuffer(sizeof(int) + sizeof(_collision));
-		_tempBuffer->serialize("CMessageCollisionDown");
+		_tempBuffer->serialize(std::string("CMessageCollisionDown"));
 		_tempBuffer->serialize(_collision);
 		
 		return _tempBuffer;

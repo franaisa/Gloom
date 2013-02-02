@@ -2,6 +2,8 @@
 
 #include "Logic/Entity/MessageFactory.h"
 
+#include <string>
+
 namespace Logic {
 
 	IMP_FACTORYMESSAGE(CMessageControl);
@@ -25,7 +27,7 @@ namespace Logic {
 		assert(_tempBuffer == NULL);
 
 		_tempBuffer = new Net::CBuffer(sizeof(int) + sizeof(_controlType));
-		_tempBuffer->serialize("CMessageControl");
+		_tempBuffer->serialize(std::string("CMessageControl"));
 		_tempBuffer->serialize(_controlType);
 		
 		return _tempBuffer;
