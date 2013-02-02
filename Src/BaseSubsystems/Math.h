@@ -28,6 +28,7 @@ Se ofrecen también una serie de funciones auxiliares.
 #include <OgreMatrix3.h>
 #include <OgreMatrix4.h>
 #include <OgreRay.h>
+#include <string>
 
 /**
 Definicion de matriz de 4x4. La definición del tipo de datos
@@ -255,6 +256,34 @@ namespace Math
 		return yaw + pitch;
 
 	} // getDirection
+
+
+	static int CRC(const std::string nombre) 
+	{
+		
+		int count = nombre.size();
+		unsigned int  crc;
+		unsigned int i;
+		const char* ptr = nombre.c_str();
+		crc = 0;
+
+		while (--count >= 0)
+		{
+			crc = crc ^ (unsigned short)*ptr++ << 8;
+			i = 8;
+			do
+			{
+				if (crc & 0x8000)
+					crc = crc << 1 ^ 0x1021;
+				else
+					crc = crc << 1;
+			} while(--i);
+		}
+		return (crc);
+
+	} // getDirection
+
+
 
 } // namespace Math
 

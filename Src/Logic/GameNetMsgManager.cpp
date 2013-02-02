@@ -107,14 +107,13 @@ namespace Logic {
 		// el envío usando el gestor de red.
 		// Es un mensaje para enviar por el tubo.
 		// Lo serializamos y enviamos por la red...
-		
-
+		Net::CBuffer bufferAux = txMsg->serialize();
 
 		Net::NetMessageType msgType = Net::NetMessageType::ENTITY_MSG;// Escribimos el tipo de mensaje de red a enviar
 		Net::CBuffer serialMsg;
 			serialMsg.write(&msgType, sizeof(msgType));
 			serialMsg.write(&destID, sizeof(destID)); // Escribimos el id de la entidad destino
-			serialMsg.write(&txMsg,sizeof(txMsg)); //Guardamos el mensaje en el buffer
+			serialMsg.write(bufferAux.getbuffer(),bufferAux.getSize()); //Guardamos el mensaje en el buffer
 			
 		Net::CManager::getSingletonPtr()->send(serialMsg.getbuffer(), serialMsg.getSize());
 		std::cout << "Enviado mensaje tipo " << txMsg->getMessageType() << " a " << destID << std::endl;
