@@ -289,7 +289,7 @@
       <Filter>Messages\Header</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Messages\MessageDamaged.h">
-      <Filter>Messages\Source</Filter>
+      <Filter>Messages\Header</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

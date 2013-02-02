@@ -105,18 +105,16 @@ namespace Logic
 		 // Control de referencias
 		 void addSmartP();
 		 void subSmartP();
-		 
-		 // Serializa los datos internos de cada mensaje concreto
-		 // Por defecto, devuelve un buffer con tan solo el tipo del mensaje
-		 // (que es la implementación mínima).
-		 // Aquellos mensajes que tengan más parámetros deberán sobreescribir
-		 // este método.
-		 // Igualmente deberían apoyarse en la implementación del padre
-		 // OJO!! NO RESETEA EL PUNTERO DE ESCRITURA/LECTURA POR DEFECTO
-		 // el motivo principial es para que las clases derivadas solo tengan
-		 // que llamar a write para escribir sus datos reutilizando la implentacion
-		 // del padre.
-		 // Estamos presuponiendo que nadie va a instanciar a CMessage.
+
+		 /**
+		  * Método virtual puro que serializa los datos internos de cada mensaje.
+		  * El puntero de escritura/lectura NO SE RESETEA en ningún caso. Si el 
+		  * cliente quiere realizar lecturas debe realizar un reset sobre el buffer
+		  * devuelto.
+		  * OJO!!! La memoria reservada para el buffer devuelto se libera en el propio
+		  * mensaje. El cliente NUNCA debe intentar efectuar un delete sobre el buffer
+		  * devuelto (de lo contrario se lia muy parda).
+		  */
 		 virtual Net::CBuffer* serialize() = 0;
 
 	protected:
