@@ -264,9 +264,6 @@
     <ClInclude Include="..\..\Src\Logic\Messages\MessageControl.h">
       <Filter>Messages\Header</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Src\Logic\Messages\MessageDamaged.h">
-      <Filter>Messages\Header</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Messages\MessageKinematicMove.h">
       <Filter>Messages\Header</Filter>
     </ClInclude>
@@ -290,6 +287,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Messages\MessageUntouched.h">
       <Filter>Messages\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Messages\MessageDamaged.h">
+      <Filter>Messages\Source</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
