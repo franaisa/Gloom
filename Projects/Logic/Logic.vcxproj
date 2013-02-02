@@ -84,9 +84,13 @@
     <ClCompile Include="..\..\Src\Logic\Entity\Components\PhysicController.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\PhysicEntity.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\Shoot.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\ShootHammer.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\ShootMiniGun.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\ShootShotGun.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\WeaponsManager.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\SwitchPosition.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\SwitchTrigger.cpp" />
-    <ClCompile Include="..\..\Src\Logic\Entity\Message.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Entity\MessageFactory.cpp" />
     <ClCompile Include="..\..\Src\Logic\GameNetMsgManager.cpp" />
     <ClCompile Include="..\..\Src\Logic\Maps\ComponentFactory.cpp" />
     <ClCompile Include="..\..\Src\Logic\Maps\ComponentID.cpp" />
@@ -101,6 +105,22 @@
     <ClCompile Include="..\..\Src\Logic\Entity\Components\AvatarController.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\Camera.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\Graphics.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Messages\Message.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Messages\MessageAvatarWalk.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Messages\MessageChangeWeapon.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Messages\MessageChangeWeaponGraphics.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Messages\MessageCollisionDown.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Messages\MessageControl.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Messages\MessageDamaged.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Messages\MessageKinematicMove.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Messages\MessageMouse.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Messages\MessageRebound.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Messages\MessageSetAnimation.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Messages\MessageStopAnimation.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Messages\MessageSwitch.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Messages\MessageTouched.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Messages\MessageTransform.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Messages\MessageUntouched.cpp" />
     <ClCompile Include="..\..\Src\Logic\Server.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -112,8 +132,13 @@
     <ClInclude Include="..\..\Src\Logic\Entity\Components\PhysicController.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\PhysicEntity.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\Shoot.h" />
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\ShootHammer.h" />
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\ShootMiniGun.h" />
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\ShootShotGun.h" />
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\WeaponsManager.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\SwitchPosition.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\SwitchTrigger.h" />
+    <ClInclude Include="..\..\Src\Logic\Entity\MessageFactory.h" />
     <ClInclude Include="..\..\Src\Logic\GameNetMsgManager.h" />
     <ClInclude Include="..\..\Src\Logic\Maps\ComponentFactory.h" />
     <ClInclude Include="..\..\Src\Logic\Maps\ComponentID.h" />
@@ -126,12 +151,27 @@
     <ClInclude Include="..\..\Src\Logic\Entity\Component.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Documentation.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Entity.h" />
-    <ClInclude Include="..\..\Src\Logic\Entity\Message.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\AnimatedGraphics.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\AvatarController.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\Camera.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\Graphics.h" />
     <ClInclude Include="..\..\Src\Logic\Documentation.h" />
+    <ClInclude Include="..\..\Src\Logic\Messages\Message.h" />
+    <ClInclude Include="..\..\Src\Logic\Messages\MessageAvatarWalk.h" />
+    <ClInclude Include="..\..\Src\Logic\Messages\MessageChangeWeapon.h" />
+    <ClInclude Include="..\..\Src\Logic\Messages\MessageChangeWeaponGraphics.h" />
+    <ClInclude Include="..\..\Src\Logic\Messages\MessageCollisionDown.h" />
+    <ClInclude Include="..\..\Src\Logic\Messages\MessageControl.h" />
+    <ClInclude Include="..\..\Src\Logic\Messages\MessageDamaged.h" />
+    <ClInclude Include="..\..\Src\Logic\Messages\MessageKinematicMove.h" />
+    <ClInclude Include="..\..\Src\Logic\Messages\MessageMouse.h" />
+    <ClInclude Include="..\..\Src\Logic\Messages\MessageRebound.h" />
+    <ClInclude Include="..\..\Src\Logic\Messages\MessageSetAnimation.h" />
+    <ClInclude Include="..\..\Src\Logic\Messages\MessageStopAnimation.h" />
+    <ClInclude Include="..\..\Src\Logic\Messages\MessageSwitch.h" />
+    <ClInclude Include="..\..\Src\Logic\Messages\MessageTouched.h" />
+    <ClInclude Include="..\..\Src\Logic\Messages\MessageTransform.h" />
+    <ClInclude Include="..\..\Src\Logic\Messages\MessageUntouched.h" />
     <ClInclude Include="..\..\Src\Logic\Server.h" />
   </ItemGroup>
   <ItemGroup>

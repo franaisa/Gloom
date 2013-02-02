@@ -19,7 +19,7 @@ de juego. Es una colección de componentes.
 #include "Logic/Maps/EntityID.h"
 
 // Mensaje
-#include "Message.h"
+#include "Logic/Messages/Message.h"
 #include "Logic/Maps/ComponentID.h"
 
 #include <list>
@@ -153,7 +153,7 @@ namespace Logic
 		@return true si se borró el componente (false si el componente
 		no estaba en el objeto).
 		*/
-		bool removeComponent(const std::string& id);
+		bool removeComponent(IComponent* component);
 		
 		/**
 		Método que destruye todos los componentes de una entidad.
@@ -396,7 +396,26 @@ namespace Logic
 		//typedef std::map<CComponentID, IComponent*> IComponentMap;
 		typedef std::map<std::string, IComponent*> TComponentMap;
 
+		/**
+		 * Hash para indexar a los componentes que nos interesen.
+		 * OJO! Nunca usar esta estructura para recorrer secuencialmente
+		 * los componentes, para eso tenemos la lista de componentes (que
+		 * es mucho más eficiente en el recorrido secuencial).
+		 */
 		TComponentMap _components;
+
+		typedef std::list<IComponent*> TComponentList;
+
+		/** 
+		 * @Deprecated
+		 *
+		 * Lista de componentes usada para ejecutar los ticks. Lo ideal sería
+		 * utilizar una lista de prioridades (como por ejemplo un Fibonacci Heap)
+		 * para que se llame por orden a los ticks de los componentes.
+		 * De momento usaremos una lista teniendo cuidado de que los componentes
+		 * estén en el orden adecuado.
+		 */
+		TComponentList _componentList;
 
 		/**
 		Indica si la entidad está activa.

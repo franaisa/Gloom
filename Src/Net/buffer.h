@@ -16,6 +16,7 @@
 #ifndef __BUFFER_H
 #define __BUFFER_H
 
+#include "BaseSubsystems\Math.h"
 
 namespace Net {
 
@@ -35,12 +36,22 @@ public:
 	CBuffer(size_t initsize=500, size_t delta=100);
 
 	/**
-	 * Constructor de copias. Realiza una copia dura (deep copy).
+	 * Constructor de copias. Usa Copy-on-write.
 	 */
-	CBuffer(const CBuffer& buffer);
+	CBuffer(const CBuffer& source);
+
+	/**
+	 * Constructor por parámetros. Construye un mensaje a partir de una ristra de bytes.
+	 * Tras la construccion NO SE RECOLOCA EL PUNTERO DE LECTURA/ESCRITURA, hay que hacerlo
+	 * manualmente.
+	 * El propio buffer se encargará de elminar los datos reservados en la cadena de bytes pasada.
+	 * OJO!! se asume que el tamaño pasado es el tamaño lógico y físico! por lo que la ristra de bytes
+	 * que se pasa se espera que sea del tamaño exacto de los datos que contiene.
+	 */
+	CBuffer::CBuffer(byte* adoptBuffer, size_t bufferSize);
 
 	/*
-	 * Operador de igualdad. Realiza una copia dura (deep copy).
+	 * Copy-on-write
 	 */
 	CBuffer& operator=(const CBuffer& source);
 
@@ -81,23 +92,101 @@ public:
 	 */
 	void read (void* data, size_t datalength);
 
+	/**
+	 * Escribe un vector3 en el buffer
+	 * @param data son los datos a escribir
+	 * @param datalenght es el tamaño de los datos a escribir (número de bytes)
+	 */
+	void serialize(const Vector3& data);
+
+	void deserialize(Vector3& data);
+
+	/**
+	 * Escribe un float en el buffer
+	 * @param data son los datos a escribir
+	 * @param datalenght es el tamaño de los datos a escribir (número de bytes)
+	 */
+	void serialize(float data);
+
+	void deserialize(float& data);
+
+	/**
+	 * Escribe un entero en el buffer
+	 * @param data son los datos a escribir
+	 * @param datalenght es el tamaño de los datos a escribir (número de bytes)
+	 */
+	void serialize(int data);
+
+	void deserialize(int& data);
+	/**
+	 * Escribe un entero sin signo en el buffer
+	 * @param data son los datos a escribir
+	 * @param datalenght es el tamaño de los datos a escribir (número de bytes)
+	 */
+	void serialize(unsigned int data);
+
+	void deserialize(unsigned int& data);
+	/**
+	 * Escribe un string en el buffer, comprimiendolo a CRC32
+	 * @param data son los datos a escribir
+	 * @param datalenght es el tamaño de los datos a escribir (número de bytes)
+	 */
+	void serialize(const std::string& data);
+
+	void deserialize(std::string& data);
+	/**
+	 * Escribe un unsigned char en el buffer
+	 * @param data son los datos a escribir
+	 * @param datalenght es el tamaño de los datos a escribir (número de bytes)
+	 */
+	void serialize(unsigned char data);
+
+	void deserialize(unsigned char& data);
+	/**
+	 * Escribe un boleano en el buffer
+	 * @param data son los datos a escribir
+	 * @param datalenght es el tamaño de los datos a escribir (número de bytes)
+	 */
+	void serialize(bool data);
+
+	void deserialize(bool& data);
+	/**
+	 * Escribe un caracter en el buffer
+	 * @param data son los datos a escribir
+	 * @param datalenght es el tamaño de los datos a escribir (número de bytes)
+	 */
+	void serialize(char data);
+
+	void deserialize(char& data);
+	/**
+	 * Escribe un caracter en el buffer
+	 * @param data son los datos a escribir
+	 * @param datalenght es el tamaño de los datos a escribir (número de bytes)
+	 */
+	void serialize(const Matrix4& data);
+
+	void deserialize(Matrix4& data);
 
 protected:
 	void realloc();
 
-	byte* _begin;
-	byte* _current;
-	size_t _maxsize;
-	size_t _size;
-	size_t _delta;
+	// Wrapper para facilitar el uso de copy-on-write
+	struct BufferWrapper {
+		// Informacion del buffer
+		byte* _begin;
+		byte* _current;
+		size_t _maxsize;
+		size_t _size;
+		size_t _delta;
+		
+		// Informacion del copy-on-write
+		unsigned int _refCount;
+	};
+
+	BufferWrapper* _wrapperPtr;
 
 private:
-	/**
-	 * Realiza una "deep copy" de un buffer dado por parametro. Si el buffer tiene suficiente
-	 * capacidad como para solo copiar datos, entonces se realiza una copia directa. En caso
-	 * contrario se libera memoria y se reserva un tamaño suficiente para realizar la copia.
-	 */
-	void clone(const CBuffer& source);
+	void createOwnInstance();
 
 };
 

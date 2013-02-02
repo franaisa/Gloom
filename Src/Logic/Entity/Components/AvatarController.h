@@ -67,7 +67,7 @@ namespace Logic
 
 		@return true si todo ha ido correctamente.
 		*/
-		virtual bool activate();
+		virtual void activate();
 		
 		/**
 		Método que desactiva el componente; invocado cuando se
@@ -153,6 +153,11 @@ namespace Logic
 		void jump();
 
 		/**
+		Provoca que la entidad rebote
+		*/
+		void rebound();
+
+		/**
 		Provoca que la entidad gire. Números Positivos para	giro a 
 		derechas, negativos para giro izquierdas.
 
@@ -235,6 +240,26 @@ namespace Logic
 		bool _unpressLeft;
 		bool _readySideJumpLeft;
 		bool _readySideJumpRight;
+		bool _dontCountUntilUnpress;
+
+		/**
+		Atributo que lleva el conteo de saltos concatenados para el aumento de velocidad
+		*/
+		int _nConcatSideJump;
+		int _timeConcatSideJump;
+		bool _activeConcat;
+		bool _sideFly;
+		bool _sideContact;
+
+		/**
+		Atributo que lleva la dirección en la que tiene que ir el rebote del jugador
+		*/
+		Vector3 _dirRebound;
+
+		/**
+		Atributo que dice si el rebote está activo
+		*/
+		bool _rebound;
 
 	}; // class CAvatarController
 

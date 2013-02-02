@@ -18,6 +18,9 @@ el mundo físico usando character controllers.
 #include "Map/MapEntity.h"
 #include "Physics/Server.h"
 
+#include "Logic/Messages/MessageAvatarWalk.h"
+#include "Logic/Messages/MessageCollisionDown.h"
+
 #include <PxPhysicsAPI.h>
 
 using namespace Logic;
@@ -102,7 +105,7 @@ void CPhysicController::tick(unsigned int msecs)
 	_falling =  !(flags & PxControllerFlag::eCOLLISION_DOWN);
 
 	//Mandamos un mensaje que dirá si hay collision con el suelo para la lógica
-	Logic::CMessageCollisionDown *m=new Logic::CMessageCollisionDown(Logic::Message::COLLISION_DOWN);
+	Logic::CMessageCollisionDown *m=new Logic::CMessageCollisionDown();
 	m->setCollisionDown(_falling);
 	_entity->emitMessage(m);
 

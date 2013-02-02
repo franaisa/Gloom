@@ -22,6 +22,8 @@ de juego. Es una colección de componentes.
 #include "Logic/Entity/Components/ArrayGraphics.h"
 #include "Map/MapEntity.h"
 
+#include "Logic/Messages/MessageTransform.h"
+
 #include "GUI/Server.h"
 #include "GUI/PlayerController.h"
 
@@ -73,12 +75,12 @@ namespace Logic
 		
 
 		// Inicializamos los componentes
-		TComponentMap::const_iterator it;
+		TComponentList::const_iterator it = _componentList.begin();
 
 		bool correct = true;
 
-		for( it = _components.begin(); it != _components.end() && correct; ++it )
-			correct = it->second->spawn(this,map,entityInfo) && correct;
+		for(; it != _componentList.end() && correct; ++it )
+			correct = (*it)->spawn(this,map,entityInfo) && correct;
 
 		return correct;
 
@@ -102,15 +104,16 @@ namespace Logic
 		}
 
 		// Activamos los componentes
-		TComponentMap::const_iterator it;
+		TComponentList::const_iterator it = _componentList.begin();
 
 		// Solo si se activan todos los componentes correctamente nos
 		// consideraremos activados.
 		_activated = true;
 
-		for( it = _components.begin(); it != _components.end(); ++it )
-			_activated = it->second->activate() && _activated;
-
+		for(; it != _componentList.end(); ++it){
+			(*it)->activate();
+			_activated = (*it)->isActivate() && _activated;
+		}
 
 		return _activated;
 
@@ -130,11 +133,11 @@ namespace Logic
 		}
 
 
-		TComponentMap::const_iterator it;
+		TComponentList::const_iterator it = _componentList.begin();
 
 		// Desactivamos los componentes
-		for( it = _components.begin(); it != _components.end(); ++it )
-			it->second->deactivate();
+		for(; it != _componentList.end(); ++it)
+			(*it)->deactivate();
 
 		_activated = false;
 
@@ -144,10 +147,13 @@ namespace Logic
 
 	void CEntity::tick(unsigned int msecs) 
 	{
-		TComponentMap::const_iterator it;
+		TComponentList::const_iterator it = _componentList.begin();
 
-		for( it = _components.begin(); it != _components.end(); ++it )
-			it->second->tick(msecs);
+		for(; it != _componentList.end(); ++it) {
+			if((*it)->isActivate()) {
+				(*it)->tick(msecs);
+			}
+		}
 
 	} // tick
 
@@ -156,16 +162,35 @@ namespace Logic
 	void CEntity::addComponent(IComponent* component, const std::string& id)
 	{
 		_components[id] = component;
-		component->setEntity(this);
+		_componentList.push_back(component);
 
+		component->setEntity(this);
 	} // addComponent
 
 	//---------------------------------------------------------
 
-	bool CEntity::removeComponent(const std::string& id)
+	bool CEntity::removeComponent(IComponent* component)
 	{
-		return _components.erase(id) == 1? true : false;
+		TComponentMap::const_iterator itMap = _components.begin();
+		TComponentList::const_iterator itList = _componentList.begin();
 
+		bool mapErase = false;
+		for(; itMap != _components.end() && !mapErase; ++itMap) {
+			if(itMap->second == component) {
+				_components.erase(itMap);
+				mapErase = true;
+			}
+		}
+
+		bool listErase = false;
+		for(; itList != _componentList.end() && !listErase; ++itList) {
+			if(*itList == component) {
+				_componentList.erase(itList);
+				listErase = true;
+			}
+		}
+
+		return mapErase && listErase;
 	} // removeComponent
 
 	//---------------------------------------------------------
@@ -173,6 +198,11 @@ namespace Logic
 	void CEntity::destroyAllComponents()
 	{
 		_components.clear();
+
+		TComponentList::const_iterator it = _componentList.begin();
+		for(; it != _componentList.end(); ++it) {
+			delete *it;
+		}
 
 	} // destroyAllComponents
 
@@ -190,16 +220,16 @@ namespace Logic
 		}
 		
 
-		TComponentMap::const_iterator it;
+		TComponentList::const_iterator it = _componentList.begin();
 		//Por si nadie quiso el mensaje
 		message->addSmartP();
 		// Para saber si alguien quiso el mensaje.
 		bool anyReceiver = false;
-		for( it = _components.begin(); it != _components.end(); ++it )
+		for(; it != _componentList.end(); ++it)
 		{
 			// Al emisor no se le envia el mensaje.
-			if( emitter != it->second )
-				anyReceiver = it->second->set(message) || anyReceiver;
+			if( emitter != *it )
+				anyReceiver = (*it)->set(message) || anyReceiver;
 		}
 		//Por si nadie quiso el mensaje
 		message->subSmartP();
@@ -215,7 +245,7 @@ namespace Logic
 		_transform = transform;
 
 		// Avisamos a los componentes del cambio.
-		Logic::CMessageTransform *m=new Logic::CMessageTransform(Message::SET_TRANSFORM);
+		Logic::CMessageTransform *m=new Logic::CMessageTransform();
 		m->setTransform(_transform);
 		emitMessage(m);
 
@@ -228,7 +258,7 @@ namespace Logic
 		_transform.setTrans(position);
 
 		// Avisamos a los componentes del cambio.
-		Logic::CMessageTransform *m=new Logic::CMessageTransform(Message::SET_TRANSFORM);
+		Logic::CMessageTransform *m=new Logic::CMessageTransform();
 		m->setTransform(_transform);
 		emitMessage(m);
 		
@@ -241,7 +271,7 @@ namespace Logic
 		_transform = orientation;
 
 		// Avisamos a los componentes del cambio.
-		Logic::CMessageTransform *m=new Logic::CMessageTransform(Message::SET_TRANSFORM);
+		Logic::CMessageTransform *m=new Logic::CMessageTransform();
 		m->setTransform(_transform);
 		emitMessage(m);
 
@@ -264,7 +294,7 @@ namespace Logic
 		Math::setYaw(yaw,_transform);
 
 		// Avisamos a los componentes del cambio.
-		Logic::CMessageTransform *m=new Logic::CMessageTransform(Message::SET_TRANSFORM);
+		Logic::CMessageTransform *m=new Logic::CMessageTransform();
 		m->setTransform(_transform);
 		emitMessage(m);
 
@@ -277,7 +307,7 @@ namespace Logic
 		Math::yaw(yaw,_transform);
 
 		// Avisamos a los componentes del cambio.
-		Logic::CMessageTransform *m=new Logic::CMessageTransform(Message::SET_TRANSFORM);
+		Logic::CMessageTransform *m=new Logic::CMessageTransform();
 		m->setTransform(_transform);
 		emitMessage(m);
 	} // yaw
@@ -289,7 +319,7 @@ namespace Logic
 		Math::setYaw(pitch,_transform);
 
 		// Avisamos a los componentes del cambio.
-		Logic::CMessageTransform *m=new Logic::CMessageTransform(Message::SET_TRANSFORM);
+		Logic::CMessageTransform *m=new Logic::CMessageTransform();
 		m->setTransform(_transform);
 		emitMessage(m);
 	} // setPitch
@@ -301,7 +331,7 @@ namespace Logic
 		Math::pitch(pitch,_transform);
 
 		// Avisamos a los componentes del cambio.
-		Logic::CMessageTransform *m=new Logic::CMessageTransform(Message::SET_TRANSFORM);
+		Logic::CMessageTransform *m=new Logic::CMessageTransform();
 		m->setTransform(_transform);
 		emitMessage(m);
 	} // pitch

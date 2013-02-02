@@ -15,7 +15,7 @@ de los mensajes.
 
 #include <list>
 
-#include "Message.h"
+#include "Logic/Messages/Message.h"
 
 // Declaración de la clase
 namespace Logic 
@@ -92,6 +92,9 @@ namespace Logic
 		Simplemente invoca a process() con cada uno de los mensajes.
 		*/
 		void processMessages();
+
+
+		void clearMessages(){ _messages.clear(); }
 
 	protected:
 		/**

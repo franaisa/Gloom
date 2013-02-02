@@ -1,0 +1,68 @@
+material Pared
+{
+	technique
+	{
+		pass
+		{
+			ambient 0.768628 0.701961 0.992157 1
+			diffuse 0.768628 0.701961 0.992157 1
+			specular 0 0 0 1 10
+			
+			texture_unit Map#9
+			{
+				texture pared2.jpg
+				scale 0.2 1
+			}
+		}
+
+	}
+
+}
+
+
+
+material scenario_OgreMax
+{
+	technique Map#1
+	{
+		pass Suelo
+		{
+			ambient 0.0470588 0.0431373 0 1
+			diffuse 0.0705882 0.0705882 0 1
+			specular 0.0705882 0.0784314 0 1 20
+			
+			texture_unit Map#9
+			{
+				texture sueloMetalico2.jpg
+				filtering linear linear linear
+				scale 0.2 0.2
+			}
+		}
+
+	}
+
+}
+
+
+
+material Suelo_OgreMax
+{
+	technique Map#5
+	{
+		pass Map#6
+		{
+			ambient 0.02 0.02 0.1 1
+			diffuse 0.02 0.02 0.1 1
+			specular 0.02 0.02 0.1 1 10
+			
+			texture_unit Map#9
+			{
+				texture techo1.jpg
+				filtering linear linear linear
+				scale 0.2 0.2
+			}
+		}
+
+	}
+
+}
