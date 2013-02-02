@@ -12,11 +12,9 @@
  * @author Francisco Aisa García
  * @date Enero, 2013
  */
-
+#include "BaseSubsystems\Math.h"
 #ifndef __BUFFER_H
 #define __BUFFER_H
-
-
 namespace Net {
 
 typedef unsigned char byte;
@@ -72,6 +70,36 @@ public:
 	 * @param datalenght es el tamaño de los datos a escribir (número de bytes)
 	 */
 	void write(void* data, size_t datalength);
+
+	/**
+	 * Escribe un vector3 en el buffer
+	 * @param data son los datos a escribir
+	 * @param datalenght es el tamaño de los datos a escribir (número de bytes)
+	 */
+	void serialize(const Vector3& data);
+
+	/**
+	 * Escribe un float en el buffer
+	 * @param data son los datos a escribir
+	 * @param datalenght es el tamaño de los datos a escribir (número de bytes)
+	 */
+	void serialize(float data);
+
+	/**
+	 * Escribe un entero en el buffer
+	 * @param data son los datos a escribir
+	 * @param datalenght es el tamaño de los datos a escribir (número de bytes)
+	 */
+	void serialize(int data);
+
+	/**
+	 * Escribe un string en el buffer, comprimiendolo a CRC32
+	 * @param data son los datos a escribir
+	 * @param datalenght es el tamaño de los datos a escribir (número de bytes)
+	 */
+	void serialize(const std::string& data);
+
+
 
 	/**
 	 * Lee datos del buffer.
