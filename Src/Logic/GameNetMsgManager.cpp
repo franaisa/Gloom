@@ -144,11 +144,14 @@ namespace Logic {
 			serialMsg.read(&destID, sizeof(destID));
 
 		
-		std::cout << "Mensaje recibido de tipo " << msgType << " para la entidad " << destID << " de tamaño " << serialMsg.getSize() << std::endl;
+		
 			
 		//leemos el mensaje que se ha enviado por la red
 		int typeMessage;
 		serialMsg.read(&typeMessage, sizeof(int));
+
+		std::cout << "Mensaje recibido de tipo " << typeMessage << " para la entidad " << destID << " de tamaño " << serialMsg.getSize() << std::endl;
+
 		CMessage * messageReceived = Logic::CMessageFactory::getSingletonPtr()->create(typeMessage);
 			messageReceived->deserialize(serialMsg);
 
