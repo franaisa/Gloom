@@ -1,6 +1,7 @@
 #include "MessageTransform.h"
 
 #include "Logic/Entity/MessageFactory.h"
+#include <string>
 
 namespace Logic {
 
@@ -26,8 +27,10 @@ namespace Logic {
 
 		// IMPLEMENTAR EL ENVIO DEL MATRIX4
 
+		std::string tempString = "CMessageTransform";
+
 		_tempBuffer = new Net::CBuffer(sizeof(int)+( sizeof(float) * 5));
-		_tempBuffer->serialize("CMessageTransform");
+		_tempBuffer->serialize(std::string("CMessageTransform"));
 		_tempBuffer->serialize(_transform);
 		
 		return _tempBuffer;

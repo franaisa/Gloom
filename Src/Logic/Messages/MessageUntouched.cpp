@@ -2,6 +2,7 @@
 #include "../Entity/Entity.h"
 
 #include "Logic/Entity/MessageFactory.h"
+#include <string>
 
 namespace Logic {
 
@@ -26,7 +27,7 @@ namespace Logic {
 		assert(_tempBuffer == NULL);
 
 		_tempBuffer = new Net::CBuffer(sizeof(int) + sizeof(_entity->getEntityID()));
-		_tempBuffer->serialize("CMessageUntouched");
+		_tempBuffer->serialize(std::string("CMessageUntouched"));
 		_tempBuffer->serialize(_entity->getEntityID());
 		
 		return _tempBuffer;

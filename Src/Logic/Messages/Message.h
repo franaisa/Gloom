@@ -10,8 +10,6 @@ Contiene el tipo de datos de un mensaje.
 #ifndef __Logic_Message_H
 #define __Logic_Message_H
 
-#include <string>
-
 #include "BaseSubsystems/Math.h"
 #include "Net/Buffer.h"
 #include "Logic/Entity/MessageFactory.h"
