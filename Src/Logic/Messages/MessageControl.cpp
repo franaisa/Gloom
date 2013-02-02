@@ -31,4 +31,10 @@ namespace Logic {
 	}//
 	//----------------------------------------------------------
 
+	void CMessageControl::deserialize(Net::CBuffer& buffer) {
+		// NO EXISTE FUNCION QUE HAGA MATCH CON UN TIPO ENUM
+		// HAY QUE IMPLEMENTARSE UN DESERIALIZE DE UNSIGNED INT??
+		//buffer.deserialize(_controlType);
+	}
+
 };

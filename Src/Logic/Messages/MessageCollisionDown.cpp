@@ -31,4 +31,7 @@ namespace Logic {
 	}//
 	//----------------------------------------------------------
 
+	void CMessageCollisionDown::deserialize(Net::CBuffer& buffer) {
+		buffer.deserialize(_collision);
+	}
 };

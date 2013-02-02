@@ -31,4 +31,7 @@ namespace Logic {
 	}//
 	//----------------------------------------------------------
 
+	void CMessageAvatarWalk::deserialize(Net::CBuffer& buffer) {
+		buffer.deserialize(_direction);
+	}
 };

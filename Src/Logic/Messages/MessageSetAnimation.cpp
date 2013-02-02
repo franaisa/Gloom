@@ -42,4 +42,9 @@ namespace Logic {
 	}//
 	//----------------------------------------------------------
 
+	void CMessageSetAnimation::deserialize(Net::CBuffer& buffer) {
+		buffer.deserialize(_string);
+		buffer.deserialize(_bool);
+	}
+
 };

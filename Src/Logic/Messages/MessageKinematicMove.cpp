@@ -27,6 +27,11 @@ namespace Logic {
 		_tempBuffer->serialize(_movement);
 		
 		return _tempBuffer;
+	}//
+	//----------------------------------------------------------
+
+	void CMessageKinematicMove::deserialize(Net::CBuffer& buffer) {
+		buffer.deserialize(_movement);
 	}
 
 };

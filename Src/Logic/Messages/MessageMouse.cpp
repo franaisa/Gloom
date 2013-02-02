@@ -28,4 +28,9 @@ namespace Logic {
 	}//
 	//----------------------------------------------------------
 
+	void CMessageMouse::deserialize(Net::CBuffer& buffer) {
+		buffer.deserialize(_mouse[0]);
+		buffer.deserialize(_mouse[1]);
+	}
+
 };

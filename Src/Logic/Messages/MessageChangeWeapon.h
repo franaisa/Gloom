@@ -14,6 +14,7 @@ namespace Logic {
 		~CMessageChangeWeapon() { };
 
 		virtual Net::CBuffer* serialize();
+		virtual void deserialize(Net::CBuffer& buffer);
 	private:
 		int _weapon;
 	};

@@ -14,7 +14,7 @@ namespace Logic {
 		~CMessageDamaged(){};
 		
 		virtual Net::CBuffer* serialize();
-
+		virtual void deserialize(Net::CBuffer& buffer);
 	private:
 		unsigned char _damage;
 	};

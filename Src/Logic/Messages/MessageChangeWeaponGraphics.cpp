@@ -25,6 +25,11 @@ namespace Logic {
 		_tempBuffer->serialize(_weapon);
 		
 		return _tempBuffer;
+	}//
+	//----------------------------------------------------------
+
+	void CMessageChangeWeaponGraphics::deserialize(Net::CBuffer& buffer) {
+		buffer.deserialize(_weapon);
 	}
 
 };

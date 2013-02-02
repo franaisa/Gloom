@@ -32,4 +32,8 @@ namespace Logic {
 	}//
 	//----------------------------------------------------------
 
+	void CMessageTransform::deserialize(Net::CBuffer& buffer) {
+		buffer.deserialize(_transform);
+	}
+
 };

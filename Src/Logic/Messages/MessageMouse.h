@@ -13,7 +13,7 @@ namespace Logic {
 		~CMessageMouse(){};
 
 		virtual Net::CBuffer* serialize();
-
+		virtual void deserialize(Net::CBuffer& buffer);
 	private:
 		float _mouse[2];
 	};
