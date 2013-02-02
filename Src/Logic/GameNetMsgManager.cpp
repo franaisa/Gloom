@@ -22,6 +22,7 @@ Contiene la implementación del gestor de los mensajes de red durante la partida.
 #include "Logic/Server.h"
 #include "Net/paquete.h"
 #include "Net/buffer.h"
+#include "Entity\MessageFactory.h"
 #include "Logic/Messages/Message.h"
 	#include "Messages\MessageControl.h"
 	#include "Messages\MessageTransform.h"
@@ -134,30 +135,28 @@ namespace Logic {
 		// recuperarla, deserializar el mensaje y enviárselo
 		
 		// Creamos un buffer con los datos para leer de manera más cómoda
-
-		
-
-
 		Net::CBuffer serialMsg;
 			serialMsg.write(packet->getData(),packet->getDataLength());
 			serialMsg.reset(); // Reiniciamos el puntero de lectura a la posición 0
 
-
-
-
 		// Extraemos, pero ignoramos el tipo de mensaje de red. Ya lo hemos procesado		
 		Net::NetMessageType msgType;
 			serialMsg.read(&msgType,sizeof(msgType));
-		TEntityID destID; // Escribimos el id de la entidad
+		
+		// Escribimos el id de la entidad
+		TEntityID destID; 
 			serialMsg.read(&destID, sizeof(destID));
-			Net::byte * msg = serialMsg.getbuffer();
-			CMessage * txMsg = (CMessage*)msg+sizeof(msgType)+sizeof(destID);
-			//Message::Deserialize(serialMsg, rxMsg);
 
-		// Reenvío del mensaje deserializado
+		//leemos el mensaje que se ha enviado por la red
+		int typeMessage;
+		serialMsg.read(&typeMessage, sizeof(int));
+		CMessage * messageReceived = Logic::CMessageFactory::getSingletonPtr()->create(typeMessage);
+			messageReceived->deserialize(serialMsg);
+
+		// Me saco la entidad a la que va destinado el mensaje y se lo envío
 		CEntity* destEntity = Logic::CServer::getSingletonPtr()->getMap()->getEntityByID(destID);
 		if(destEntity != 0)
-			destEntity->emitMessage(txMsg);
+			destEntity->emitMessage(messageReceived);
 		std::cout << "He conseguido sobrevivir al mensaje, soy el puto amo " <<  std::endl;
 		LOG("RX ENTITY_MSG " << rxMsg._type << " from EntityID " << destID);
 	} // processEntityMessage
