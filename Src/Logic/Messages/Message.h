@@ -48,7 +48,8 @@ namespace Logic
 			CHANGE_WEAPON,
 			CHANGE_WEAPON_GRAPHICS,
 			COLLISION_DOWN,
-			REBOUND
+			REBOUND,
+
 		};
 	}
 	/**
