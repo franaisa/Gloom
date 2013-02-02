@@ -106,7 +106,7 @@
     <ClCompile Include="..\..\Src\Logic\Entity\Components\ArrayGraphics.cpp">
       <Filter>Entity\Components\Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="MessageFactory.cpp">
+    <ClCompile Include="..\..\Src\Logic\Entity\MessageFactory.cpp">
       <Filter>Entity\Source Files</Filter>
     </ClCompile>
   </ItemGroup>
