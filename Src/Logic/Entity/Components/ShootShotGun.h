@@ -1,7 +1,7 @@
 #ifndef __Logic_ShootShotGun_H
 #define __Logic_ShootShotGun_H
 
-#include "Logic/Entity/Component.h"
+#include "Logic/Entity/Components/Shoot.h"
 
 //declaración de la clase
 namespace Logic 
@@ -16,7 +16,7 @@ namespace Logic
 */
 
 
-	class CShootShotGun : public IComponent
+	class CShootShotGun : public CShoot
 	{
 		DEC_FACTORY(CShootShotGun);
 
@@ -26,71 +26,8 @@ namespace Logic
 		Constructor por defecto; en la clase base no hace nada.
 		*/
 
-		CShootShotGun() : IComponent(),  _timeSinceLastShoot(0),_weapon(),_capsuleRadius(3.0f), _shooting(false), _temporal(0)  {}
-		
-
-	
-		/**
-		Inicialización del componente usando la descripción de la entidad que hay en 
-		el fichero de mapa.
-		*/
-		virtual bool spawn(CEntity* entity, CMap *map, const Map::CEntity *entityInfo);
-
-		/**
-		Este componente sólo acepta mensajes de tipo SHOOT (por ahora).
-		*/
-		virtual bool accept(CMessage *message);
-
-		/**
-		Al recibir un mensaje de tipo SHOOT la vida de la entidad disminuye.
-		*/
-		virtual void process(CMessage *message);
-
-
-		void shoot();
-
-	protected:
-
-		
-		
-		struct TWeapon{
-			std::string name;
-			unsigned char damage;
-			float dispersion;
-			float distance;
-			unsigned char numberShoots;
-			unsigned char coolDown;
-			int ammo; //esta como int, por que si es -1 esq no tienes esta arma.
-		};
-
-
-		/**
-		Contendra el radio de la capsula leido del mapa
-		*/
-		float _capsuleRadius;
-
-		/**
-		vector con caracteristicas de armas
-		*/
-		TWeapon _weapon;
-
-		/**
-		Para comprobar que un arma esta disparando y no poder disparar 
-		"tan rapido como puedas arreglar el gatillo" (Marcus, Borderlands 2)
-		*/
-		bool _shooting;
-
-		/**
-		mide el tiempo de cooldown
-		*/
-		float *_timeSinceLastShoot;
-
-
-		/**
-			Variable de debug.
-		*/
-		int _temporal;
-	}; // class CShoot
+		CShootShotGun() : CShoot("ShotGun") {}
+	};
 
 	REG_FACTORY(CShootShotGun);
 

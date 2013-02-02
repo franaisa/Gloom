@@ -72,7 +72,7 @@ Map = {
 			weaponMiniGunNumberShoots = 1,
 			weaponMiniGunDistance = 100.0,
 			weaponMiniGunCoolDown = 2.0,
-			weaponMiniGunammo = 0,
+			weaponMiniGunAmmo = 0,
 			
 			weaponShotGunName = "Shotgun",
 			weaponShotGunModel = "UziLeft.mesh",
@@ -84,7 +84,7 @@ Map = {
 			weaponShotGunNumberShoots = 8,
 			weaponShotGunDistance = 10.0,
 			weaponShotGunCoolDown = 2.0,
-			weaponShotGunammo = 0,
+			weaponShotGunAmmo = 0,
 	},
 	
 	Camera = {

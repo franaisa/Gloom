@@ -21,6 +21,10 @@ Contiene la implementación del componente que gestiona las armas y que administr
 #include "Logic/Entity/Components/ShootMiniGun.h"
 
 
+#include "Logic/Messages/MessageChangeWeapon.h"
+#include "Logic/Messages/MessageChangeWeaponGraphics.h"
+
+
 
 
 namespace Logic 
