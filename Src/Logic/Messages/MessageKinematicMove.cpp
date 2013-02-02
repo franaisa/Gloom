@@ -1,8 +1,12 @@
 #include "MessageKinematicMove.h"
 
+#include "Logic/Entity/MessageFactory.h"
+
 namespace Logic {
 
-	CMessageKinematicMove::CMessageKinematicMove(TMessageType type = TMessageType::KINEMATIC_MOVE) : CMessage(type) {
+	IMP_FACTORYMESSAGE(CMessageKinematicMove);
+
+	CMessageKinematicMove::CMessageKinematicMove() : CMessage(TMessageType::KINEMATIC_MOVE) {
 		// Nada que hacer
 	}//
 	//----------------------------------------------------------

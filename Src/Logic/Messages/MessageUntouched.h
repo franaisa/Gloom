@@ -6,8 +6,9 @@
 namespace Logic {
 
 	class CMessageUntouched : public CMessage{
+	DEC_FACTORYMESSAGE(CMessageUntouched);
 	public:
-		CMessageUntouched(TMessageType t);
+		CMessageUntouched();
 		CEntity* getEntity();
 		void setEntity(CEntity *c);
 		~CMessageUntouched(){};
@@ -17,7 +18,7 @@ namespace Logic {
 	private:
 		CEntity *_entity;
 	};
-
+	REG_FACTORYMESSAGE(CMessageUntouched);
 };
 
 #endif

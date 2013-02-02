@@ -6,8 +6,9 @@
 namespace Logic {
 
 	class CMessageKinematicMove: public CMessage{
+	DEC_FACTORYMESSAGE(CMessageKinematicMove);
 	public:
-		CMessageKinematicMove(TMessageType t);
+		CMessageKinematicMove();
 		Vector3 getMovement();
 		void setMovement(Vector3 movement);
 		~CMessageKinematicMove(){};
@@ -17,7 +18,7 @@ namespace Logic {
 	private:
 		Vector3 _movement;
 	};
-
+	REG_FACTORYMESSAGE(CMessageKinematicMove);
 };
 
 #endif

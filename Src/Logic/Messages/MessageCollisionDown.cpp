@@ -1,8 +1,12 @@
 #include "MessageCollisionDown.h"
 
+#include "Logic/Entity/MessageFactory.h"
+
 namespace Logic {
 
-	CMessageCollisionDown::CMessageCollisionDown(TMessageType type = TMessageType::COLLISION_DOWN): CMessage(type){
+	IMP_FACTORYMESSAGE(CMessageCollisionDown);
+
+	CMessageCollisionDown::CMessageCollisionDown(): CMessage(TMessageType::COLLISION_DOWN){
 		
 	}//
 	//----------------------------------------------------------

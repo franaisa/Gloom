@@ -1,8 +1,12 @@
 #include "MessageTransform.h"
 
+#include "Logic/Entity/MessageFactory.h"
+
 namespace Logic {
 
-	CMessageTransform::CMessageTransform(TMessageType type = TMessageType::SET_TRANSFORM) : CMessage(type) {
+	IMP_FACTORYMESSAGE(CMessageTransform);
+
+	CMessageTransform::CMessageTransform() : CMessage(TMessageType::SET_TRANSFORM) {
 		// Nada que hacer
 	} //
 	//----------------------------------------------------------

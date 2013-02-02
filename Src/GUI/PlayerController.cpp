@@ -71,7 +71,7 @@ namespace GUI {
 			if(key.keyId == GUI::Key::NUMBER1 || key.keyId == GUI::Key::NUMBER2 || key.keyId == GUI::Key::NUMBER3 || key.keyId == GUI::Key::NUMBER4 || 
 				key.keyId == GUI::Key::NUMBER5 || key.keyId == GUI::Key::NUMBER6 ){
 				
-					Logic::CMessageChangeWeapon *message=new Logic::CMessageChangeWeapon(Logic::Message::CHANGE_WEAPON);
+					Logic::CMessageChangeWeapon *message=new Logic::CMessageChangeWeapon();
 
 					switch(key.keyId)
 					{
@@ -96,7 +96,7 @@ namespace GUI {
 					}
 					_controlledAvatar->emitMessage(message);
 			}else{
-				Logic::CMessageControl *m=new Logic::CMessageControl(Logic::Message::CONTROL);
+				Logic::CMessageControl *m=new Logic::CMessageControl();
 				switch(key.keyId)
 				{
 				case GUI::Key::W:
@@ -131,7 +131,7 @@ namespace GUI {
 	{
 		if(_controlledAvatar)
 		{
-			Logic::CMessageControl *m=new Logic::CMessageControl(Logic::Message::CONTROL);
+			Logic::CMessageControl *m=new Logic::CMessageControl();
 			switch(key.keyId)
 			{
 			case GUI::Key::W:
@@ -162,7 +162,7 @@ namespace GUI {
 	{
 		if(_controlledAvatar)
 		{
-			Logic::CMessageMouse *m=new Logic::CMessageMouse(Logic::Message::CONTROL);
+			Logic::CMessageMouse *m=new Logic::CMessageMouse();
 			m->setType(Logic::Control::MOUSE);
 			float mouse[]={-(float)mouseState.movX * TURN_FACTOR_X,-(float)mouseState.movY * TURN_FACTOR_Y};
 			m->setMouse(mouse);
@@ -179,7 +179,7 @@ namespace GUI {
 	{
 		if(_controlledAvatar)
 		{
-			Logic::CMessageControl *m=new Logic::CMessageControl(Logic::Message::CONTROL);
+			Logic::CMessageControl *m=new Logic::CMessageControl();
 			switch(mouseState.button)
 			{
 			case GUI::Button::LEFT:

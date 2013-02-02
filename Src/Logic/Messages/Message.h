@@ -14,6 +14,7 @@ Contiene el tipo de datos de un mensaje.
 
 #include "BaseSubsystems/Math.h"
 #include "Net/Buffer.h"
+#include "Logic/Entity/MessageFactory.h"
 
 // Predeclaraciones
 namespace Logic {
@@ -160,9 +161,9 @@ para que el componente se registre en la factoría.
 	} \
 	bool Class::regist() \
 	{ \
-		if (!CMessageFACTORYMESSAGE::getSingletonPtr()->has(#Class)) \
+		if (!CMessageFactory::getSingletonPtr()->has(#Class)) \
 		{ \
-			CMessageFACTORYMESSAGE::getSingletonPtr()->add(Class::create, #Class); \
+			CMessageFactory::getSingletonPtr()->add(Class::create, #Class); \
 		} \
 		return true; \
 	}

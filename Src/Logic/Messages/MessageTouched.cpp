@@ -1,9 +1,13 @@
 #include "MessageTouched.h"
 #include "../Entity/Entity.h"
 
+#include "Logic/Entity/MessageFactory.h"
+
 namespace Logic {
 
-	CMessageTouched::CMessageTouched(TMessageType type = TMessageType::TOUCHED) : CMessage(type) {
+	IMP_FACTORYMESSAGE(CMessageTouched);
+
+	CMessageTouched::CMessageTouched() : CMessage(TMessageType::TOUCHED) {
 		// Nada que hacer
 	} //
 	//----------------------------------------------------------

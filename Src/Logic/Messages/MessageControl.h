@@ -6,8 +6,9 @@
 namespace Logic {
 
 	class CMessageControl : public CMessage{
+	DEC_FACTORYMESSAGE(CMessageControl);
 	public:
-		CMessageControl(TMessageType t);
+		CMessageControl();
 		ControlType getType();
 		void setType(ControlType controltype);
 		~CMessageControl(){};
@@ -17,7 +18,7 @@ namespace Logic {
 	protected:
 		ControlType _controlType;
 	};
-
+	REG_FACTORYMESSAGE(CMessageControl);
 };
 
 #endif

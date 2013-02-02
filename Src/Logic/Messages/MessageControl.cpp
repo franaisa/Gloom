@@ -1,8 +1,12 @@
 #include "MessageControl.h"
 
+#include "Logic/Entity/MessageFactory.h"
+
 namespace Logic {
 
-	CMessageControl::CMessageControl(TMessageType type = TMessageType::CONTROL) : CMessage(type) {
+	IMP_FACTORYMESSAGE(CMessageControl);
+
+	CMessageControl::CMessageControl( ) : CMessage(TMessageType::CONTROL) {
 		// Nada que hacer
 	} //
 	//----------------------------------------------------------

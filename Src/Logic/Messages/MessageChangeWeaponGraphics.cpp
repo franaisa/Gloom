@@ -1,8 +1,12 @@
 #include "MessageChangeWeaponGraphics.h"
 
+#include "Logic/Entity/MessageFactory.h"
+
 namespace Logic {
 
-	CMessageChangeWeaponGraphics::CMessageChangeWeaponGraphics(TMessageType type = TMessageType::CHANGE_WEAPON_GRAPHICS) : CMessage(type) {
+	IMP_FACTORYMESSAGE(CMessageChangeWeaponGraphics);
+
+	CMessageChangeWeaponGraphics::CMessageChangeWeaponGraphics() : CMessage(TMessageType::CHANGE_WEAPON_GRAPHICS) {
 		// Nada que hacer
 	}//
 	//----------------------------------------------------------

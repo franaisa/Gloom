@@ -6,8 +6,9 @@
 namespace Logic {
 
 	class CMessageSetAnimation : public CMessage{
+	DEC_FACTORYMESSAGE(CMessageSetAnimation);
 	public:
-		CMessageSetAnimation(TMessageType t);
+		CMessageSetAnimation();
 		std::string getString();
 		void setString(std::string);
 		bool getBool();
@@ -20,7 +21,7 @@ namespace Logic {
 		std::string _string;
 		bool _bool;
 	};
-
+	REG_FACTORYMESSAGE(CMessageSetAnimation);
 };
 
 #endif

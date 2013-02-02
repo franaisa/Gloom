@@ -109,7 +109,7 @@ namespace Logic
 		if(newWeapon != _actualWeapon && _weapons[newWeapon].ammo != -1)
 		{
 			_actualWeapon = newWeapon;
-			Logic::CMessageChangeWeaponGraphics *m=new Logic::CMessageChangeWeaponGraphics(Logic::Message::CHANGE_WEAPON_GRAPHICS);
+			Logic::CMessageChangeWeaponGraphics *m=new Logic::CMessageChangeWeaponGraphics();
 			m->setWeapon(_actualWeapon);
 			_entity->emitMessage(m);
 			
@@ -191,7 +191,7 @@ namespace Logic
 				// LLamar al componente que corresponda con el daño hecho
 				//entity->
 
-				Logic::CMessageDamaged *m=new Logic::CMessageDamaged(Logic::Message::DAMAGED);
+				Logic::CMessageDamaged *m=new Logic::CMessageDamaged();
 				m->setDamage(_weapons[_actualWeapon].damage);
 				entity->emitMessage(m);
 			}
