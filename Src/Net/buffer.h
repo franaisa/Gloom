@@ -12,9 +12,12 @@
  * @author Francisco Aisa García
  * @date Enero, 2013
  */
-#include "BaseSubsystems\Math.h"
+
 #ifndef __BUFFER_H
 #define __BUFFER_H
+
+#include "BaseSubsystems\Math.h"
+
 namespace Net {
 
 typedef unsigned char byte;
@@ -70,6 +73,14 @@ public:
 	 * @param datalenght es el tamaño de los datos a escribir (número de bytes)
 	 */
 	void write(void* data, size_t datalength);
+
+	/**
+	 * Lee datos del buffer.
+	 * Al hacer esto el buffer se "vacia"
+	 * \param data es un puntero indicando a donde se deben copiar los datos desde el buffer
+	 * \param datalength es el número de datos (bytes) a leer
+	 */
+	void read (void* data, size_t datalength);
 
 	/**
 	 * Escribe un vector3 en el buffer
@@ -134,31 +145,26 @@ public:
 	 */
 	void serialize(const Matrix4& data);
 
-	/**
-	 * Lee datos del buffer.
-	 * Al hacer esto el buffer se "vacia"
-	 * \param data es un puntero indicando a donde se deben copiar los datos desde el buffer
-	 * \param datalength es el número de datos (bytes) a leer
-	 */
-	void read (void* data, size_t datalength);
-
-
 protected:
 	void realloc();
 
-	byte* _begin;
-	byte* _current;
-	size_t _maxsize;
-	size_t _size;
-	size_t _delta;
+	// Wrapper para facilitar el uso de copy-on-write
+	struct BufferWrapper {
+		// Informacion del buffer
+		byte* _begin;
+		byte* _current;
+		size_t _maxsize;
+		size_t _size;
+		size_t _delta;
+		
+		// Informacion del copy-on-write
+		unsigned int _refCount;
+	};
+
+	BufferWrapper* _wrapperPtr;
 
 private:
-	/**
-	 * Realiza una "deep copy" de un buffer dado por parametro. Si el buffer tiene suficiente
-	 * capacidad como para solo copiar datos, entonces se realiza una copia directa. En caso
-	 * contrario se libera memoria y se reserva un tamaño suficiente para realizar la copia.
-	 */
-	void clone(const CBuffer& source);
+	void createOwnInstance();
 
 };
 

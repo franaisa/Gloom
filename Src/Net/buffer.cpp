@@ -9,6 +9,8 @@
  *
  *
  * @author Juan A. Recio-García
+ * @author Francisco Aisa García
+ * @author Rubén Mulero Guerrero
  * @date Octubre, 2006
  */
 
@@ -19,145 +21,210 @@
 
 namespace Net {
 
-	CBuffer::CBuffer(size_t initsize, size_t delta)
-	{
-		_current = _begin = new byte[initsize];
-		_maxsize = initsize;
-		_size = 0;
-		_delta = delta;
+	CBuffer::CBuffer(size_t initsize, size_t delta) {
+		// Creamos un nuevo wrapper para alojar los datos del buffer
+		_wrapperPtr = new BufferWrapper;
+
+		// Inicializamos los datos propios del buffer
+		_wrapperPtr->_current = _wrapperPtr->_begin = new byte[initsize];
+		_wrapperPtr->_maxsize = initsize;
+		_wrapperPtr->_size = 0;
+		_wrapperPtr->_delta = delta;
+
+		// Tenemos una referencia de este buffer
+		_wrapperPtr->_refCount = 1;
 	}
 
-	void CBuffer::clone(const CBuffer& source) {
-		// Si ya habia datos reservados, comprobamos
-		// si pueden alojar la memoria que se pide
-		if(_begin != 0 || _maxsize < source._maxsize) {
-			// Eliminamos la memoria reservada
-			delete _begin;
-				
-			// Reservamos memoria para alojar los datos a copiar
-			_begin = new byte[source._maxsize];
-			_maxsize = source._maxsize;
-		}
-		else if(_begin == 0) {
-			// Reservamos memoria para alojar los datos a copiar
-			_begin = new byte[source._maxsize];
-			_maxsize = source._maxsize;
-		}
+	//__________________________________________________________________
 
-		// Copiamos los datos
-		for(int i = 0; i < source._size; ++i) {
-			_begin[i] = source._begin[i];
-		}
-
-		_current = source._current;
-		_size = source._size;
-		_delta = source._delta;
-		
+	CBuffer::CBuffer(const CBuffer& source) {
+		// Para evitar la copia incrementamos el contador de referencias
+		++(source._wrapperPtr->_refCount);
+		// Apuntamos al recurso compartido
+		_wrapperPtr = source._wrapperPtr;
 	}
 
-	CBuffer::CBuffer(const CBuffer& source) : _begin(0) {
-		clone(source);
-	}
+	//__________________________________________________________________
 
 	CBuffer& CBuffer::operator=(const CBuffer& source) {
-		if(this != &source) {
-			clone(source);
+		if(this == &source) {
+			return *this;
+		}
+
+		// Incrementamos el número de referencias de source
+		++(source._wrapperPtr->_refCount);
+		// Eliminamos una referencia de nuestro buffer, ya que
+		// nosotros dejamos de apuntar a él.
+		// Comprobar si se trata de la última referencia para
+		// destruir el objeto
+		if(--(_wrapperPtr->_refCount) == 0) {
+			delete [] _wrapperPtr->_begin;
+			delete _wrapperPtr;
 		}
 		
+		// Apuntamos al objeto que nos pasan
+		_wrapperPtr = source._wrapperPtr;
+
 		return *this;
 	}
 
-	CBuffer::~CBuffer()
-	{
-		delete[] _begin;
+	//__________________________________________________________________
+
+	CBuffer::~CBuffer() {
+		if(--(_wrapperPtr->_refCount) == 0) {
+			delete [] _wrapperPtr->_begin;
+			delete _wrapperPtr;
+		}
 	}
 
-	byte* CBuffer::getbuffer()
-	{
-		return _begin;
+	//__________________________________________________________________
+
+	byte* CBuffer::getbuffer() {
+		return _wrapperPtr->_begin;
 	}
 
-	size_t CBuffer::getSize()
-	{
-		return _size;
+	//__________________________________________________________________
+
+	size_t CBuffer::getSize() {
+		return _wrapperPtr->_size;
 	}
 
-	void CBuffer::reset()
-	{
-		_current = _begin;
+	//__________________________________________________________________
+
+	void CBuffer::createOwnInstance() {
+		// Decrementamos el contador de referencias
+		// ya que vamos a crear nuestra propia copia
+		// para ser modificada al gusto
+		--(_wrapperPtr->_refCount);
+
+		// Creamos un wrapper temporal para ir volcando los datos
+		// a nuestro nuevo buffer
+		BufferWrapper* tempBufferData = _wrapperPtr;
+		
+		// Creamos un nuevo wrapper y copiamos los datos del buffer
+		_wrapperPtr = new BufferWrapper;
+		_wrapperPtr->_begin = new byte [tempBufferData->_maxsize];
+		for(int i = 0; i < tempBufferData->_size; ++i) {
+			_wrapperPtr->_begin[i] = tempBufferData->_begin[i];
+		}
+
+		// Seteamos el offset de nuestro puntero current
+		_wrapperPtr->_current = _wrapperPtr->_begin + (tempBufferData->_current - tempBufferData->_begin);
+		
+		// Copiamos el resto de datos
+		_wrapperPtr->_maxsize = tempBufferData->_maxsize;
+		_wrapperPtr->_size = tempBufferData->_size;
+		_wrapperPtr->_delta = tempBufferData->_delta;
+
+		// Seteamos el contador de referencias a uno
+		_wrapperPtr->_refCount = 1;
 	}
 
-	void CBuffer::write(void* data, size_t datalength)
-	{
-		while(_size + datalength >= _maxsize)
+	//__________________________________________________________________
+
+	void CBuffer::reset() {
+		if(_wrapperPtr->_refCount > 1) {
+			createOwnInstance();
+		}
+
+		_wrapperPtr->_current = _wrapperPtr->_begin;
+	}
+
+	//__________________________________________________________________
+
+	void CBuffer::write(void* data, size_t datalength) {
+		if(_wrapperPtr->_refCount > 1) {
+			createOwnInstance();
+		}
+
+		while(_wrapperPtr->_size + datalength >= _wrapperPtr->_maxsize)
 			realloc();
-		memcpy(_current,data,datalength);
-		_current+=datalength;
-		_size+=datalength;
+		memcpy(_wrapperPtr->_current,data,datalength);
+		_wrapperPtr->_current+=datalength;
+		_wrapperPtr->_size+=datalength;
 	}
 
-	void CBuffer::read(void* data,size_t datalength)
-	{
-		memcpy(data,_current,datalength);
-		_current+=datalength;
+	//__________________________________________________________________
+
+	void CBuffer::read(void* data,size_t datalength) {
+		if(_wrapperPtr->_refCount > 1) {
+			createOwnInstance();
+		}
+
+		memcpy(data, _wrapperPtr->_current, datalength);
+		_wrapperPtr->_current += datalength;
 	}
 
-	void CBuffer::realloc()
-	{
-		byte* newbuffer = new byte[_maxsize+_delta];
-		memcpy(newbuffer,_begin, _size);
-		delete[] _begin;
-		_begin = newbuffer;
-		_current = _begin + _size;
-		_maxsize+=_delta;	
+	//__________________________________________________________________
+
+	void CBuffer::realloc() {
+		if(_wrapperPtr->_refCount > 1) {
+			createOwnInstance();
+		}
+
+		byte* newbuffer = new byte[_wrapperPtr->_maxsize + _wrapperPtr->_delta];
+		memcpy(newbuffer, _wrapperPtr->_begin, _wrapperPtr->_size);
+		delete[] _wrapperPtr->_begin;
+		_wrapperPtr->_begin = newbuffer;
+		_wrapperPtr->_current = _wrapperPtr->_begin + _wrapperPtr->_size;
+		_wrapperPtr->_maxsize += _wrapperPtr->_delta;	
 	}
 
-	void CBuffer::serialize(const Vector3& data)
-	{
+	//__________________________________________________________________
+
+	void CBuffer::serialize(const Vector3& data) {
 		Vector3 temp = data;
 		write(&(temp.x), sizeof(temp.x));
 		write(&(temp.y), sizeof(temp.y));
 		write(&(temp.z), sizeof(temp.z));
 	}
 
-	void CBuffer::serialize(const std::string& data)
-	{
+	//__________________________________________________________________
+
+	void CBuffer::serialize(const std::string& data) {
 		int crc = Math::CRC(data);
 		write(&crc, sizeof(crc));
 	}
 
-	void CBuffer::serialize(int data)
-	{
+	//__________________________________________________________________
+
+	void CBuffer::serialize(int data) {
 		write(&data, sizeof(data));
 	}
 
-	void CBuffer::serialize(unsigned int data)
-	{
+	//__________________________________________________________________
+
+	void CBuffer::serialize(unsigned int data) {
 		write(&data, sizeof(data));
 	}
 
-	void CBuffer::serialize(float data)
-	{
+	//__________________________________________________________________
+
+	void CBuffer::serialize(float data) {
 		write(&data, sizeof(data));
 	}
 
-	void CBuffer::serialize(unsigned char data)
-	{
+	//__________________________________________________________________
+
+	void CBuffer::serialize(unsigned char data) {
 		write(&data, sizeof(data));
 	}
 
-	void CBuffer::serialize(char data)
-	{
+	//__________________________________________________________________
+
+	void CBuffer::serialize(char data) {
 		write(&data, sizeof(data));
 	}
 
-	void CBuffer::serialize(bool data)
-	{
+	//__________________________________________________________________
+
+	void CBuffer::serialize(bool data) {
 		write(&data, sizeof(data));
 	}
 
-	void CBuffer::serialize(const Matrix4& data)
-	{
+	//__________________________________________________________________
+
+	void CBuffer::serialize(const Matrix4& data) {
 		Vector3 position = data.getTrans();
 		serialize(position);
 		serialize(Math::getYaw(data));
