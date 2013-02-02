@@ -14,6 +14,7 @@ namespace Logic {
 		~CMessageAvatarWalk(){};
 
 		virtual Net::CBuffer* serialize();
+		virtual void deserialize(Net::CBuffer& buffer);
 		
 	private:
 		Vector3 _direction;

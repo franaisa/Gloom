@@ -14,7 +14,7 @@ namespace Logic {
 		~CMessageTransform(){};
 		
 		virtual Net::CBuffer* serialize();
-		// En el deserialize llamar primero posicion y luego pitch y roll
+		virtual void deserialize(Net::CBuffer& buffer);
 
 	private:
 		Matrix4 _transform;

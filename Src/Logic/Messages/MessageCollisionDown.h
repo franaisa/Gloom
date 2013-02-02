@@ -14,6 +14,7 @@ namespace Logic {
 		~CMessageCollisionDown(){};
 		
 		virtual Net::CBuffer* serialize();
+		virtual void deserialize(Net::CBuffer& buffer);
 	private:
 		bool _collision;
 	};

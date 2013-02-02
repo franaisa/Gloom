@@ -31,4 +31,7 @@ namespace Logic {
 	}//
 	//----------------------------------------------------------
 
+	void CMessageSwitch::deserialize(Net::CBuffer& buffer) {
+		buffer.deserialize(_change);
+	}
 };

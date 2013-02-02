@@ -16,7 +16,7 @@ namespace Logic {
 		~CMessageSetAnimation(){};
 
 		virtual Net::CBuffer* serialize();
-
+		virtual void deserialize(Net::CBuffer& buffer);
 	private:
 		std::string _string;
 		bool _bool;

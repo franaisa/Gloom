@@ -14,7 +14,7 @@ namespace Logic {
 		~CMessageControl(){};
 
 		virtual Net::CBuffer* serialize();
-
+		virtual void deserialize(Net::CBuffer& buffer);
 	protected:
 		ControlType _controlType;
 	};

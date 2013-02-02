@@ -118,6 +118,8 @@ namespace Logic
 		  */
 		 virtual Net::CBuffer* serialize() = 0;
 
+		 virtual void deserialize(Net::CBuffer& buffer) = 0;
+
 	protected:
 		TMessageType _type;
 		unsigned char _smartP;

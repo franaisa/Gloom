@@ -46,6 +46,22 @@ namespace Net {
 
 	//__________________________________________________________________
 
+	CBuffer::CBuffer(byte* adoptBuffer, size_t bufferSize) {
+		// Creamos un nuevo wrapper para alojar los datos del buffer
+		_wrapperPtr = new BufferWrapper;
+
+		// Inicializamos los datos propios del buffer
+		_wrapperPtr->_current = _wrapperPtr->_begin = adoptBuffer;
+		_wrapperPtr->_maxsize = bufferSize;
+		_wrapperPtr->_size = bufferSize;
+		_wrapperPtr->_delta = 100;
+
+		// Tenemos una referencia de este buffer
+		_wrapperPtr->_refCount = 1;
+	}
+
+	//__________________________________________________________________
+
 	CBuffer& CBuffer::operator=(const CBuffer& source) {
 		if(this == &source) {
 			return *this;
@@ -181,9 +197,22 @@ namespace Net {
 
 	//__________________________________________________________________
 
+	void CBuffer::deserialize(Vector3& data) {
+		read(&data.x, sizeof(data.x));
+		read(&data.y, sizeof(data.y));
+		read(&data.z, sizeof(data.z));
+	}
+
+	//__________________________________________________________________
+
 	void CBuffer::serialize(const std::string& data) {
 		int crc = Math::CRC(data);
 		write(&crc, sizeof(crc));
+	}
+
+	void CBuffer::deserialize(std::string& data) {
+		// COMO DESERIALIZO ESTO? WTF? NECESITO A LA FACTORIA!! XD
+		// Te lo comes tu Ruben, que tiene pinta de estar mu rico
 	}
 
 	//__________________________________________________________________
@@ -192,10 +221,18 @@ namespace Net {
 		write(&data, sizeof(data));
 	}
 
+	void CBuffer::deserialize(int& data) {
+		read(&data, sizeof(data));
+	}
+
 	//__________________________________________________________________
 
 	void CBuffer::serialize(unsigned int data) {
 		write(&data, sizeof(data));
+	}
+
+	void CBuffer::deserialize(unsigned int& data) {
+		read(&data, sizeof(data));
 	}
 
 	//__________________________________________________________________
@@ -204,10 +241,18 @@ namespace Net {
 		write(&data, sizeof(data));
 	}
 
+	void CBuffer::deserialize(float& data) {
+		read(&data, sizeof(data));
+	}
+
 	//__________________________________________________________________
 
 	void CBuffer::serialize(unsigned char data) {
 		write(&data, sizeof(data));
+	}
+
+	void CBuffer::deserialize(unsigned char& data) {
+		read(&data, sizeof(data));
 	}
 
 	//__________________________________________________________________
@@ -216,10 +261,18 @@ namespace Net {
 		write(&data, sizeof(data));
 	}
 
+	void CBuffer::deserialize(char& data) {
+		read(&data, sizeof(data));
+	}
+
 	//__________________________________________________________________
 
 	void CBuffer::serialize(bool data) {
 		write(&data, sizeof(data));
+	}
+
+	void CBuffer::deserialize(bool& data) {
+		read(&data, sizeof(data));
 	}
 
 	//__________________________________________________________________
@@ -229,6 +282,24 @@ namespace Net {
 		serialize(position);
 		serialize(Math::getYaw(data));
 		serialize(Math::getPitch(data));
+	}
+
+	void CBuffer::deserialize(Matrix4& data) {
+		Vector3 transform;
+		float yaw, pitch;
+
+		// Obtenemos los datos del vector
+		read(&transform.x, sizeof(transform.x));
+		read(&transform.y, sizeof(transform.y));
+		read(&transform.z, sizeof(transform.z));
+
+		// Obtenemos el Yaw y el Pitch
+		read(&yaw, sizeof(yaw));
+		read(&pitch, sizeof(pitch));
+		
+		Math::setPitch(pitch, data);
+		Math::setYaw(yaw, data);
+		data.setTrans(transform);
 	}
 
 } // namespace Net
