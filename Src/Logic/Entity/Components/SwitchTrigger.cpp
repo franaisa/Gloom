@@ -17,6 +17,8 @@ entidad cuando recibe un mensaje TOUCHED / UNTOUCHED.
 #include "Logic/Maps/Map.h"
 #include "Map/MapEntity.h"
 
+#include "Logic/Messages/MessageSwitch.h"
+
 namespace Logic 
 {
 	IMP_FACTORY(CSwitchTrigger);

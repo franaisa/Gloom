@@ -235,6 +235,15 @@ namespace Logic
 		bool _unpressLeft;
 		bool _readySideJumpLeft;
 		bool _readySideJumpRight;
+		bool _dontCountUntilUnpress;
+		/**
+		Atributo que lleva el conteo de saltos concatenados para el aumento de velocidad
+		*/
+		int _nConcatSideJump;
+		int _timeConcatSideJump;
+		bool _activeConcat;
+		bool _sideFly;
+		bool _sideContact;
 
 	}; // class CAvatarController
 

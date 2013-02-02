@@ -22,6 +22,8 @@ de juego. Es una colección de componentes.
 #include "Logic/Entity/Components/ArrayGraphics.h"
 #include "Map/MapEntity.h"
 
+#include "Logic/Messages/MessageTransform.h"
+
 #include "GUI/Server.h"
 #include "GUI/PlayerController.h"
 

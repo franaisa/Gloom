@@ -16,6 +16,11 @@ de la entidad.
 #include "Logic/Entity/Entity.h"
 #include "Map/MapEntity.h"
 
+#include "Logic/Messages/MessageControl.h"
+#include "Logic/Messages/MessageCollisionDown.h"
+#include "Logic/Messages/MessageAvatarWalk.h"
+#include "Logic/Messages/MessageMouse.h"
+
 namespace Logic 
 {
 	IMP_FACTORY(CAvatarController);
@@ -56,6 +61,14 @@ namespace Logic
 		_unpressLeft=false;
 		_readySideJumpLeft=false;
 		_readySideJumpRight=false;
+		_dontCountUntilUnpress=false;
+
+		_nConcatSideJump=0;
+		_timeConcatSideJump=0;
+		_activeConcat=false;
+		_sideFly=false;
+		_sideContact=false;
+
 
 		//return true;
 	} // activate
@@ -222,32 +235,42 @@ namespace Logic
 		}
 
 		//Controlamos cuando soltamos la tecla para hacer que la siguiente vez se active el salto
-		if(_unpressLeft){
+		if(_unpressLeft && _jumpLeft==1 && !_dontCountUntilUnpress){
 			_readySideJumpLeft=true;
 			_unpressLeft=false;
 		}
-		else if(_unpressRight){
+		else if(_unpressRight && _jumpRight==1 && !_dontCountUntilUnpress){
 			_readySideJumpRight=true;
 			_unpressRight=false;
+		}
+		//Cuando soltemos la segunda presión entonces empezamos el conteo de presiones otra vez
+		else if((_unpressRight || _unpressLeft) && _dontCountUntilUnpress){
+			_dontCountUntilUnpress=false;
+			_unpressRight=false;
+			_unpressLeft=false;
 		}
 
 		//Izquierda/Derecha
 		if(_strafingLeft || _strafingRight)
 		{
-
+			//Si se presionaron ambas teclas
 			if(_strafingRight && _strafingLeft){
 				_timeSideJump=0;
 				_jumpRight=0;
 				_jumpLeft=0;
+				_readySideJumpLeft=false;
+				_readySideJumpRight=false;
 			}
-			else if((_strafingLeft && _jumpLeft==0) || (_readySideJumpLeft && _strafingLeft)){
+			//Si se presionó la izq , el contador esta a 0 y puedo contar || o el salto izq esta listo y le di a la izq
+			else if((_strafingLeft && _jumpLeft==0 && !_dontCountUntilUnpress) || (_readySideJumpLeft && _strafingLeft)){
 				if(_jumpRight!=0)
 					_timeSideJump=0;
 				_jumpLeft++;
 				_jumpRight=0;
 				_readySideJumpLeft=false;
 			}
-			else if((_strafingRight  && _jumpRight==0) || (_readySideJumpRight && _strafingRight)){
+			//contrario al de arriba
+			else if((_strafingRight  && _jumpRight==0 && !_dontCountUntilUnpress) || (_readySideJumpRight && _strafingRight)){
 				if(_jumpLeft!=0)
 					_timeSideJump=0;
 				_jumpRight++;
@@ -257,18 +280,37 @@ namespace Logic
 
 			//Si se activo el salto lateral hacia algun lado y está dentro del tiempo
 			if((_jumpRight==2 || _jumpLeft==2) && _timeSideJump<300){ // a 500 puedo encadenar saltos laterales
-				std::cout << "SALTO LATERAL" << std::endl;
 				_jumping=true; //Activo el salto
 				_sideJump=true;
+				_dontCountUntilUnpress=true;
+				_nConcatSideJump++;
 				_timeSideJump=0;
 				_jumpRight=0;
 				_jumpLeft=0;
+				_readySideJumpRight=false;
+				_readySideJumpLeft=false;
+				//Control del salto lateral concatenado
+				//Si llevamos mas de uno hecho,no estoy cayendo y el tiempo es inferior a 500msecs activamos la concatenacion (dará velocidad)
+				if(_nConcatSideJump>1 && _timeConcatSideJump<500 && !_falling){
+					_activeConcat=true;
+					_timeConcatSideJump=0;
+					_sideContact=false;
+				}
+				//Si llevo al menos 1 salto, no estoy cayendo, pero el tiempo es mayor a 500msecs reseteo las variables de concatenacion de salto
+				else if(_nConcatSideJump>1 && !_falling){
+					_nConcatSideJump=1; // A uno por que seria un nuevo conteo de saltos laterales
+					_timeConcatSideJump=0;
+					_sideContact=false;
+					_activeConcat=false;
+				}
 			}
 			//Si se pasó el tiempo reseteo
 			else if(_timeSideJump>300){
 				_timeSideJump=0;
 				_jumpLeft=0;
 				_jumpRight=0;
+				_readySideJumpRight=false;
+				_readySideJumpLeft=false;
 			}
 		
 			directionStrafe = 
@@ -282,18 +324,32 @@ namespace Logic
 		direction += directionStrafe;
 
 		//Control del salto (normal y lateral)
-		//Pidiendo al PhysicController el atributo _falling (devuelve el del frame anterior) y asi sabemos si esta tocando el suelo y puedo saltar
+		//El PhysicController nos envía por mensaje el atributo _falling (devuelve el del frame anterior) y asi sabemos si esta tocando el suelo y puedo saltar
 		if(!_falling){
 			_canJump=true;
 			_speedJump=-0.02;
 			_jumpingControl=false;
 			_caida=false;
 			_velocitySideJump=false;
+			//Caí luego activo el booleano para que empiece la cuenta de concatenacion
+			if(_sideFly){
+				_sideContact=true;
+				_sideFly=false;
+			}
+			//Hubo salto lateral, cuando caiga diré que he caido y empezaré la cuenta de concatenacion
+			if(_sideJump){
+				_sideFly=true;
+			}
 		}
 		else{
 			_canJump=false;
 			_sideJump=false;
 			_jumping=false;
+		}
+
+		//Aumento el tiempo de conteo para la concatenacion de saltos
+		if(_sideContact){
+			_timeConcatSideJump+=msecs;
 		}
 
 		//Gravedad
@@ -341,13 +397,20 @@ namespace Logic
 		Vector3 directXZY=direction.normalisedCopy();
 
 		//Aplicaremos más velocidad lateral si se trata de un desplazamiento lateral (para desplazarnos más rápido, recorriendo más terreno)
+		//Si ademas esta activa la concatenacion de saltos pues llegaremos mas lejos
 		if(!_velocitySideJump){
 			directXZY.x *= msecs * _speed;
 			directXZY.z *= msecs * _speed;
 		}
 		else{
-			directXZY.x *= msecs * _speed * 1.5;//Factor que podemos parametrizar
-			directXZY.z *= msecs * _speed * 1.5;
+			if(_activeConcat){
+				directXZY.x *= msecs * _speed * 2;//Factor que podemos parametrizar
+				directXZY.z *= msecs * _speed * 2;
+			}
+			else{
+				directXZY.x *= msecs * _speed * 1.5;//Factor que podemos parametrizar
+				directXZY.z *= msecs * _speed * 1.5;
+			}
 		}
 
 		//Calculamos el desplazamiento del salto y lo añadimos al vector que se mandará por mensaje

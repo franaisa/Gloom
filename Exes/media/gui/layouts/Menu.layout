@@ -33,11 +33,5 @@
             <Property Name="AlwaysOnTop" Value="True" />
             <Property Name="UnifiedAreaRect" Value="{{0.0833984,0},{0.449702,0},{0.254492,0},{0.549703,0}}" />
         </Window>
-        <Window Type="CrossHair/StaticImage" Name="Menu/" >
-            <Property Name="Font" Value="DejaVuSans-10" />
-            <Property Name="AlwaysOnTop" Value="True" />
-            <Property Name="UnifiedAreaRect" Value="{{0.431602,0},{0.499107,0},{1.30606,0},{0.740176,0}}" />
-            <Property Name="BackgroundEnabled" Value="False" />
-        </Window>
     </Window>
 </GUILayout>
