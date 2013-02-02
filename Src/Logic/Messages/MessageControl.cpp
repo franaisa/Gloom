@@ -24,7 +24,8 @@ namespace Logic {
 	Net::CBuffer* CMessageControl::serialize() {
 		assert(_tempBuffer == NULL);
 
-		_tempBuffer = new Net::CBuffer(sizeof(_controlType));
+		_tempBuffer = new Net::CBuffer(sizeof(int) + sizeof(_controlType));
+		_tempBuffer->serialize("CMessageControl");
 		_tempBuffer->serialize(_controlType);
 		
 		return _tempBuffer;

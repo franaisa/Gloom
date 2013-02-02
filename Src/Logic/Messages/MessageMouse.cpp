@@ -20,7 +20,8 @@ namespace Logic {
 	Net::CBuffer* CMessageMouse::serialize() {
 		assert(_tempBuffer == NULL);
 
-		_tempBuffer = new Net::CBuffer(sizeof(float) * 2);
+		_tempBuffer = new Net::CBuffer(sizeof(int) + sizeof(float) * 2);
+		_tempBuffer->serialize("CMessageMouse");
 		_tempBuffer->serialize(_mouse[0]);
 		_tempBuffer->serialize(_mouse[1]);
 		
