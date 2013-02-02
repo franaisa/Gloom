@@ -51,7 +51,7 @@ Map = {
 		type = "Player",
 		position = {0, 8, 0},
 		orientation = 180,
-		life = 100.0,
+		life = 100,
 		isPlayer = true,
 		speed = 0.12,
 		physic_shape = "capsule",
@@ -61,7 +61,20 @@ Map = {
 		accel = 0.001,
 		angularAccel = 0.00001,
 		movementTolerance = 7.0,
-		numWeapons = 2,
+		numWeapons = 3,
+
+			weaponHammerName = "Hammer",
+			weaponHammerModel = "Katana.mesh",
+			weaponHammerModelYaw = 1.55,
+			weaponHammerModelPitch = -0.80,
+			weaponHammerOffset = {5.0, 4.0, 5.0},
+			weaponHammerDamage = 20.0,
+			weaponHammerDispersion = 0,
+			weaponHammerNumberShoots = 1,
+			weaponHammerDistance = 4.0,
+			weaponHammerCoolDown = 2.0,
+			weaponHammerAmmo = 0,
+		
 			weaponMiniGunName = "MiniGun",
 			weaponMiniGunModel = "AK47.mesh",
 			weaponMiniGunModelYaw = 1.55,
@@ -73,6 +86,7 @@ Map = {
 			weaponMiniGunDistance = 100.0,
 			weaponMiniGunCoolDown = 2.0,
 			weaponMiniGunAmmo = 0,
+
 			
 			weaponShotGunName = "Shotgun",
 			weaponShotGunModel = "UziLeft.mesh",

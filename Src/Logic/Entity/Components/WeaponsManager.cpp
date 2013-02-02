@@ -19,6 +19,7 @@ Contiene la implementación del componente que gestiona las armas y que administr
 
 #include "Logic/Entity/Components/ShootShotGun.h"
 #include "Logic/Entity/Components/ShootMiniGun.h"
+#include "Logic/Entity/Components/ShootHammer.h"
 
 
 #include "Logic/Messages/MessageChangeWeapon.h"
@@ -52,7 +53,7 @@ namespace Logic
 			//activateComponent(_actualWeapon);
 
 			_weapons[1] = true;
-
+			_weapons[2] = true;
 			printf("\n\n mi actual weapon es.....%d", _actualWeapon);
 		}
 		return true;
@@ -116,9 +117,12 @@ namespace Logic
 	void CWeaponsManager::desactivateComponent(unsigned char weapon){
 		switch(weapon){
 		case 0:
-			_entity->getComponent<CShootMiniGun>("CShootMiniGun")->deactivate();
+			_entity->getComponent<CShootHammer>("CShootHammer")->deactivate();
 			break;
 		case 1:
+			_entity->getComponent<CShootMiniGun>("CShootMiniGun")->deactivate();
+			break;
+		case 2:
 			_entity->getComponent<CShootShotGun>("CShootShotGun")->deactivate();
 			break;
 
@@ -133,9 +137,12 @@ namespace Logic
 	void CWeaponsManager::activateComponent(unsigned char weapon){
 		switch(weapon){
 		case 0:
-			_entity->getComponent<CShootMiniGun>("CShootMiniGun")->activate();
+			_entity->getComponent<CShootHammer>("CShootHammer")->activate();
 			break;
 		case 1:
+			_entity->getComponent<CShootMiniGun>("CShootMiniGun")->activate();
+			break;
+		case 2:
 			_entity->getComponent<CShootShotGun>("CShootShotGun")->activate();
 			break;
 

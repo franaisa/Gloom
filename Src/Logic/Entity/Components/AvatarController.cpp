@@ -20,6 +20,7 @@ de la entidad.
 #include "Logic/Messages/MessageCollisionDown.h"
 #include "Logic/Messages/MessageAvatarWalk.h"
 #include "Logic/Messages/MessageMouse.h"
+#include "Logic/Messages/MessageRebound.h"
 
 namespace Logic 
 {
@@ -69,6 +70,7 @@ namespace Logic
 		_sideFly=false;
 		_sideContact=false;
 
+		_rebound=false;
 
 		//return true;
 	} // activate
@@ -85,7 +87,8 @@ namespace Logic
 	bool CAvatarController::accept(CMessage *message)
 	{
 		return message->getMessageType() == Message::CONTROL || 
-			message->getMessageType() == Message::COLLISION_DOWN;
+			message->getMessageType() == Message::COLLISION_DOWN ||
+			message->getMessageType() == Message::REBOUND;
 	} // accept
 	
 	//---------------------------------------------------------
@@ -118,6 +121,10 @@ namespace Logic
 			break;
 		case Message::COLLISION_DOWN:
 			_falling=((CMessageCollisionDown*)message)->getCollisionDown();
+			break;
+		case Message::REBOUND:
+			_dirRebound=((CMessageRebound*)message)->getDir();
+			rebound();
 			break;
 		}
 
@@ -196,6 +203,14 @@ namespace Logic
 	{
 		_jumping = true;
 	}//jump
+	
+	//---------------------------------------------------------
+
+	void CAvatarController::rebound()
+	{
+		std::cout << "REBOUND() DE AVATARCONTROLLER" << std::endl;
+		_rebound = true;
+	}//rebound
 	
 	//---------------------------------------------------------
 

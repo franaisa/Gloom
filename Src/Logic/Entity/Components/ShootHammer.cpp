@@ -8,7 +8,7 @@ Contiene la implementación del componente que gestiona las armas y que administr
 
 */
 
-#include "Shoot.h"
+#include "ShootHammer.h"
 
 #include "Logic/Entity/Entity.h"
 #include "Map/MapEntity.h"
@@ -17,11 +17,15 @@ Contiene la implementación del componente que gestiona las armas y que administr
 #include "Graphics/Scene.h"
 #include "Logic/Entity/Components/ArrayGraphics.h"
 #include "Logic/Entity/Components/Life.h"
-
-#include "Graphics/Camera.h"
+#include "Logic/Entity/Components/Shoot.h"
 
 #include "Logic/Messages/MessageControl.h"
 #include "Logic/Messages/MessageDamaged.h"
+#include "Logic/Messages/MessageRebound.h"
+
+#include "Graphics/Camera.h"
+
+
 
 #include <OgreSceneManager.h>
 #include <OgreMaterialManager.h>
@@ -29,60 +33,12 @@ Contiene la implementación del componente que gestiona las armas y que administr
 
 namespace Logic 
 {
-	//IMP_FACTORY(CShoot);
+	IMP_FACTORY(CShootHammer);
 	
-	//---------------------------------------------------------
 
-	bool CShoot::spawn(CEntity *entity, CMap *map, const Map::CEntity *entityInfo) 
-	{
-		if(!IComponent::spawn(entity,map,entityInfo))
-			return false;
-
-		if(entityInfo->hasAttribute("physic_radius")){
-			_capsuleRadius = entityInfo->getFloatAttribute("physic_radius");
-		}
-						
-		std::stringstream aux;
-		aux << "weapon" << _nameWeapon;		////!!!! Aqui debes de poner el nombre del arma que leera en el map.txt
-		std::string weapon = aux.str();
-												
-		_weapon.name = entityInfo->getStringAttribute(weapon+"Name");
-		_weapon.damage= (unsigned char) entityInfo->getIntAttribute(weapon+"Damage");
-		_weapon.dispersion = entityInfo->getFloatAttribute(weapon+"Dispersion");
-		_weapon.distance = entityInfo->getFloatAttribute(weapon+"Distance");
-		_weapon.numberShoots = (unsigned char) entityInfo->getIntAttribute(weapon+"NumberShoots");
-		_weapon.coolDown = (unsigned char) entityInfo->getIntAttribute(weapon+"CoolDown");
-		_weapon.ammo = entityInfo->getIntAttribute(weapon+"Ammo");
+	void CShootHammer::shoot(){
 		
-		return true;
-
-	} // spawn
-	//---------------------------------------------------------
-	bool CShoot::accept(CMessage *message)
-	{
-		return message->getMessageType() == Message::CONTROL;
-	} // accept
-	//---------------------------------------------------------
-
-
-	void CShoot::process(CMessage *message)
-	{
-		
-		switch(message->getMessageType())
-		{
-			case Message::CONTROL:
-				if(((CMessageControl*)message)->getType()==Control::LEFT_CLICK){
-					shoot();
-				}
-				break;
-			break;
-		}
-		
-	} // process
-	//---------------------------------------------------------
-
-	void CShoot::shoot(){
-		
+		std::cout << "DISPARO HAMMER" << std::endl;
 		//Generación del rayo habiendo obtenido antes el origen y la dirección
 		Graphics::CCamera* camera = Graphics::CServer::getSingletonPtr()->getActiveScene()->getCamera();
 		
@@ -147,21 +103,25 @@ namespace Logic
 			//////////////////////////////////fin del dibujado del rayo
 
 			//Rayo lanzado por el servidor de físicas de acuerdo a la distancia de potencia del arma
-			CEntity *entity = Physics::CServer::getSingletonPtr()->raycastClosest(ray, _weapon.distance);
+			CEntity *entityCollision = Physics::CServer::getSingletonPtr()->raycastClosest(ray, _weapon.distance);
 		
 			//Si hay colisión envíamos a dicha entidad un mensaje de daño
-			if(entity)
+			if(entityCollision)
 			{
+				if(entityCollision->getName().compare("World")==0){
 
-				printf("impacto con %s\n", entity->getName().c_str());
-
-				// LLamar al componente que corresponda con el daño hecho
+					Vector3 direccionOpuestaRay= ray.getDirection()*-1;
+					Logic::CMessageRebound *m=new Logic::CMessageRebound();
+					m->setDir(direccionOpuestaRay);
+					_entity->emitMessage(m);
+				}
+				// LLamar al componente que corresponda con el daño hecho (solamente si no fuera el mundo el del choque)
 				//entity->
-
-
-				Logic::CMessageDamaged *m=new Logic::CMessageDamaged();
-				m->setDamage(_weapon.damage);
-				entity->emitMessage(m);
+				else{
+					Logic::CMessageDamaged *m=new Logic::CMessageDamaged();
+					m->setDamage(_weapon.damage);
+					entityCollision->emitMessage(m);
+				}
 			}
 			
 			//Para el rebote, si hay colision con la entidad mundo pues reboto en la dirección opuesta a la que miro
@@ -170,6 +130,9 @@ namespace Logic
 		
 		}// fin del bucle para multiples disparos
 	} // shoot
+
+	
+	//---------------------------------------------------------
 
 } // namespace Logic
 
