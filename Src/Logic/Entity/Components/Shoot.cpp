@@ -24,6 +24,7 @@ Contiene la implementación del componente que gestiona las armas y que administr
 #include "Logic/Messages/MessageChangeWeapon.h"
 #include "Logic/Messages/MessageDamaged.h"
 #include "Logic/Messages/MessageControl.h"
+#include "Logic/Messages/MessageRebound.h"
 
 #include <OgreSceneManager.h>
 #include <OgreMaterialManager.h>
@@ -186,7 +187,9 @@ namespace Logic
 			//Si hay colisión envíamos a dicha entidad un mensaje de daño
 			if(entity)
 			{
-				printf("\nimpacto con %s", entity->getName().c_str());
+			
+
+
 
 				// LLamar al componente que corresponda con el daño hecho
 				//entity->
@@ -195,7 +198,10 @@ namespace Logic
 				m->setDamage(_weapons[_actualWeapon].damage);
 				entity->emitMessage(m);
 			}
-		
+			
+			//Para el rebote, si hay colision con la entidad mundo pues reboto en la dirección opuesta a la que miro
+			
+				
 		
 		}// fin del bucle para multiples disparos
 	} // shoot

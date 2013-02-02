@@ -46,7 +46,8 @@ namespace Logic
 			DAMAGED,
 			CHANGE_WEAPON,
 			CHANGE_WEAPON_GRAPHICS,
-			COLLISION_DOWN
+			COLLISION_DOWN,
+			REBOUND
 		};
 	}
 	/**

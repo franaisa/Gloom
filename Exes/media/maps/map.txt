@@ -70,7 +70,7 @@ Map = {
 			weapon1Damage = 20.0,
 			weapon1Dispersion = 0,
 			weapon1NumberShoots = 1,
-			weapon1Distance = 100.0,
+			weapon1Distance = 3.0,
 			weapon1CoolDown = 2.0,
 			weapon1ammo = 0,
 			
