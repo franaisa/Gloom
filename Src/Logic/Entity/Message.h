@@ -129,6 +129,59 @@ namespace Logic
 		Net::CBuffer _tempBuffer;
 	};
 
+
+
+/////////////////////////////////////////////////////////////
+// Macros para la adición de los componentes a la factoría // 
+// de componentes.                                         //
+/////////////////////////////////////////////////////////////
+	
+/** 
+Macro para la declaración de los métodos necesarios para que 
+la factoria cree nuevas instancias del tipo de componentes y 
+para que el componente se registre en la factoría.
+*/
+#define DEC_FACTORYMESSAGE(Class) \
+public: \
+	/** \
+	Crea un componente de la clase en la que se declara. \
+	*/ \
+    static CMessage* create(); \
+	/** \
+	Registra el componente de la clase en la factoría. \
+	*/ \
+	static bool regist(); \
+
+/** 
+Macro para la implementación de los métodos necesarios para que
+la factoria cree nuevas instancias del tipo de componentes y 
+para que el componente se registre en la factoría.
+*/
+#define IMP_FACTORYMESSAGE(Class) \
+	CMessage* Class::create() \
+	{ \
+		CMessage* res = new Class(); \
+		return res; \
+	} \
+	bool Class::regist() \
+	{ \
+		if (!CMessageFACTORYMESSAGE::getSingletonPtr()->has(#Class)) \
+		{ \
+			CMessageFACTORYMESSAGE::getSingletonPtr()->add(Class::create, #Class); \
+		} \
+		return true; \
+	}
+
+/** 
+Macro que invoca al método que registra la clase en la factoría.
+*/
+#define REG_FACTORYMESSAGE(Class) \
+	static bool RegisteredFACTORYMESSAGE_##Class = Class::regist();
+
+/////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////
 	// _________________________________________________
 
 	class CMessageCollisionDown : public CMessage{
