@@ -25,7 +25,7 @@ namespace Logic {
 	Net::CBuffer* CMessageUntouched::serialize() {
 		assert(_tempBuffer == NULL);
 
-		_tempBuffer = new Net::CBuffer(sizeof(_entity->getEntityID())+sizeof(int));
+		_tempBuffer = new Net::CBuffer(sizeof(int) + sizeof(_entity->getEntityID()));
 		_tempBuffer->serialize("CMessageUntouched");
 		_tempBuffer->serialize(_entity->getEntityID());
 		

@@ -24,7 +24,8 @@ namespace Logic {
 	Net::CBuffer* CMessageDamaged::serialize() {
 		assert(_tempBuffer == NULL);
 
-		_tempBuffer = new Net::CBuffer(sizeof(_damage));
+		_tempBuffer = new Net::CBuffer(sizeof(int) + sizeof(_damage));
+		_tempBuffer->serialize("CMessageDamaged");
 		_tempBuffer->serialize(_damage);
 		
 		return _tempBuffer;

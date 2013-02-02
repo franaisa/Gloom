@@ -21,7 +21,8 @@ namespace Logic {
 	Net::CBuffer* CMessageChangeWeapon::serialize() {
 		assert(_tempBuffer == NULL);
 
-		_tempBuffer = new Net::CBuffer(sizeof(_weapon));
+		_tempBuffer = new Net::CBuffer(sizeof(int) + sizeof(_weapon));
+		_tempBuffer->serialize("CMessageChangeWeapon");
 		_tempBuffer->serialize(_weapon);
 		
 		return _tempBuffer;

@@ -1,5 +1,5 @@
-World CPhysicEntity CGraphics
-Player CAvatarController CPhysicController CLife CGraphics
+World CPhysicEntity CNetConnector CGraphics
+Player CAvatarController CPhysicController CLife CNetConnector CGraphics
 Entity CGraphics
 AnimatedEntity CAnimatedGraphics
 Camera CCamera

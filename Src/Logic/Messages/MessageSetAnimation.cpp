@@ -34,7 +34,8 @@ namespace Logic {
 	Net::CBuffer* CMessageSetAnimation::serialize() {
 		assert(_tempBuffer == NULL);
 
-		_tempBuffer = new Net::CBuffer(sizeof(int) + sizeof(bool));
+		_tempBuffer = new Net::CBuffer((sizeof(int) * 2) + sizeof(bool));
+		_tempBuffer->serialize("CMessageSetAnimation");
 		_tempBuffer->serialize(_string);
 		_tempBuffer->serialize(_bool);
 		

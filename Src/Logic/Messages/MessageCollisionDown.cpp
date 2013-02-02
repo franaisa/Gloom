@@ -24,7 +24,8 @@ namespace Logic {
 	Net::CBuffer* CMessageCollisionDown::serialize() {
 		assert(_tempBuffer == NULL);
 
-		_tempBuffer = new Net::CBuffer(sizeof(_collision));
+		_tempBuffer = new Net::CBuffer(sizeof(int) + sizeof(_collision));
+		_tempBuffer->serialize("CMessageCollisionDown");
 		_tempBuffer->serialize(_collision);
 		
 		return _tempBuffer;

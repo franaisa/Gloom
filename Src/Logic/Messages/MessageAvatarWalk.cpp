@@ -24,7 +24,8 @@ namespace Logic {
 	Net::CBuffer* CMessageAvatarWalk::serialize() {
 		assert(_tempBuffer == NULL);
 
-		_tempBuffer = new Net::CBuffer(sizeof(_direction.x) * 3);
+		_tempBuffer = new Net::CBuffer(sizeof(int) + sizeof(_direction.x) * 3);
+		_tempBuffer->serialize("CMessageAvatarWalk");
 		_tempBuffer->serialize(_direction);
 		
 		return _tempBuffer;
