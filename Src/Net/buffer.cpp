@@ -112,4 +112,51 @@ namespace Net {
 		_maxsize+=_delta;	
 	}
 
+	void CBuffer::serialize(const Vector3& data)
+	{
+		Vector3 temp = data;
+		write(&(temp.x), sizeof(temp.x));
+		write(&(temp.y), sizeof(temp.y));
+		write(&(temp.z), sizeof(temp.z));
+	}
+
+	void CBuffer::serialize(const std::string& data)
+	{
+		int crc = Math::CRC(data);
+		write(&crc, sizeof(crc));
+	}
+
+	void CBuffer::serialize(int data)
+	{
+		write(&data, sizeof(data));
+	}
+
+	void CBuffer::serialize(float data)
+	{
+		write(&data, sizeof(data));
+	}
+
+	void CBuffer::serialize(unsigned char data)
+	{
+		write(&data, sizeof(data));
+	}
+
+	void CBuffer::serialize(char data)
+	{
+		write(&data, sizeof(data));
+	}
+
+	void CBuffer::serialize(bool data)
+	{
+		write(&data, sizeof(data));
+	}
+
+	void CBuffer::serialize(const Matrix4& data)
+	{
+		Vector3 position = data.getTrans();
+		serialize(position);
+		serialize(Math::getYaw(data));
+		serialize(Math::getPitch(data));
+	}
+
 } // namespace Net

@@ -2,7 +2,7 @@
 
 namespace Logic {
 
-	CMessageKinematicMove::CMessageKinematicMove(TMessageType type) : CMessage(type) {
+	CMessageKinematicMove::CMessageKinematicMove(TMessageType type = TMessageType::KINEMATIC_MOVE) : CMessage(type) {
 		// Nada que hacer
 	}//
 	//----------------------------------------------------------

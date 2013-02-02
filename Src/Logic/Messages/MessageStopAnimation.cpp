@@ -2,7 +2,7 @@
 
 namespace Logic {
 
-	CMessageStopAnimation::CMessageStopAnimation(TMessageType type) : CMessage(type) {
+	CMessageStopAnimation::CMessageStopAnimation(TMessageType type = TMessageType::STOP_ANIMATION) : CMessage(type) {
 		// Nada que hacer
 	}//
 	//----------------------------------------------------------

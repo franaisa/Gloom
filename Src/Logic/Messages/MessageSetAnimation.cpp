@@ -2,7 +2,7 @@
 
 namespace Logic {
 
-	CMessageSetAnimation::CMessageSetAnimation(TMessageType type) : CMessage(type) {
+	CMessageSetAnimation::CMessageSetAnimation(TMessageType type = TMessageType::SET_ANIMATION) : CMessage(type) {
 		// Nada que hacer
 	}//
 	//----------------------------------------------------------

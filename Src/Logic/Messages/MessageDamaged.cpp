@@ -2,7 +2,7 @@
 
 namespace Logic {
 
-	CMessageDamaged::CMessageDamaged(TMessageType type) : CMessage(type) {
+	CMessageDamaged::CMessageDamaged(TMessageType type = TMessageType::DAMAGED) : CMessage(type) {
 		// Nada que hacer
 	}//
 	//----------------------------------------------------------

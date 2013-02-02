@@ -2,7 +2,7 @@
 
 namespace Logic {
 
-	CMessageSwitch::CMessageSwitch(TMessageType type) : CMessage(type) {
+	CMessageSwitch::CMessageSwitch(TMessageType type = TMessageType::SWITCH) : CMessage(type) {
 		// Nada que hacer
 	}//
 	//----------------------------------------------------------

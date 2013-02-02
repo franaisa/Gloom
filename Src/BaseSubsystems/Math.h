@@ -257,7 +257,12 @@ namespace Math
 
 	} // getDirection
 
+	/**
+	Calcula el valor CRC de un string pasado como parametro.
 
+	@param nombre string del que se desea calcular el CRC.
+	@return el número entero resultado de calcular el CRC.
+	*/
 	static int CRC(const std::string nombre) 
 	{
 		

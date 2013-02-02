@@ -2,7 +2,7 @@
 
 namespace Logic {
 
-	CMessageAvatarWalk::CMessageAvatarWalk(TMessageType type) : CMessage(type) {
+	CMessageAvatarWalk::CMessageAvatarWalk(TMessageType type = TMessageType::AVATAR_WALK) : CMessage(type) {
 		// Nada que hacer
 	}//
 	//----------------------------------------------------------

@@ -2,7 +2,7 @@
 
 namespace Logic {
 
-	CMessageChangeWeapon::CMessageChangeWeapon(TMessageType type) : CMessage(type) {
+	CMessageChangeWeapon::CMessageChangeWeapon(TMessageType type = TMessageType::CHANGE_WEAPON) : CMessage(type) {
 		// Nada que hacer
 	}//
 	//----------------------------------------------------------

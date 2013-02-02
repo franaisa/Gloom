@@ -2,7 +2,7 @@
 
 namespace Logic {
 
-	CMessageCollisionDown::CMessageCollisionDown(TMessageType type): CMessage(type){
+	CMessageCollisionDown::CMessageCollisionDown(TMessageType type = TMessageType::COLLISION_DOWN): CMessage(type){
 		
 	}//
 	//----------------------------------------------------------
