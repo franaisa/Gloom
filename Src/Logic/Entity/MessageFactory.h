@@ -89,9 +89,18 @@ namespace Logic
 		@param name Nombre de la clase del objeto que se quiere crear.
 		@return Nueva instancia de la clase. 0 si no está en la tabla.
 		*/
-		template<typename T>
-		T create(const std::string& name) const;
+		
+		CMessage * create(const std::string& name) const;
 
+
+		/**
+		Crea una nueva instancia de la clase requerida.
+
+		@param name Nombre de la clase del objeto que se quiere crear.
+		@return Nueva instancia de la clase. 0 si no está en la tabla.
+		*/
+		
+		CMessage * create(int name) const;
 
 	protected:
 		/**

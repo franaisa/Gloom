@@ -321,5 +321,8 @@
     <ClInclude Include="..\..\Src\Logic\Entity\Components\ShootHammer.h">
       <Filter>Entity\Components\Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\MessageFactory.h">
+      <Filter>Entity\Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
