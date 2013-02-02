@@ -16,11 +16,12 @@ namespace Logic {
 		return _movement;
 	}//
 	//----------------------------------------------------------
-	Net::CBuffer CMessageKinematicMove::serialize() {
-		CMessage::serialize();
-		_tempBuffer.write(&_movement, sizeof(_movement));
-		_tempBuffer.reset();
+	Net::CBuffer* CMessageKinematicMove::serialize() {
+		assert(_tempBuffer == NULL);
 
+		_tempBuffer = new Net::CBuffer(sizeof(_movement.x) * 3);
+		_tempBuffer->serialize(_movement);
+		
 		return _tempBuffer;
 	}
 

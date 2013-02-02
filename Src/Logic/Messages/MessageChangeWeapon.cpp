@@ -14,11 +14,12 @@ namespace Logic {
 		return _weapon;
 	}//
 	//----------------------------------------------------------
-	Net::CBuffer CMessageChangeWeapon::serialize() {
-		CMessage::serialize();
-		_tempBuffer.write(&_weapon, sizeof(_weapon));
-		_tempBuffer.reset();
+	Net::CBuffer* CMessageChangeWeapon::serialize() {
+		assert(_tempBuffer == NULL);
 
+		_tempBuffer = new Net::CBuffer(sizeof(_weapon));
+		_tempBuffer->serialize(_weapon);
+		
 		return _tempBuffer;
 	}
 

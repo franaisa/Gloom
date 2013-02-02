@@ -12,7 +12,7 @@ namespace Logic {
 		void setType(ControlType controltype);
 		~CMessageControl(){};
 
-		virtual Net::CBuffer serialize();
+		virtual Net::CBuffer* serialize();
 
 	protected:
 		ControlType _controlType;

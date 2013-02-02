@@ -17,11 +17,12 @@ namespace Logic {
 	}//
 	//----------------------------------------------------------
 
-	Net::CBuffer CMessageUntouched::serialize() {
-		CMessage::serialize();
-		_tempBuffer.write(_entity, sizeof(_entity));
-		_tempBuffer.reset();
+	Net::CBuffer* CMessageUntouched::serialize() {
+		assert(_tempBuffer == NULL);
 
+		_tempBuffer = new Net::CBuffer(sizeof(_entity->getEntityID()));
+		_tempBuffer->serialize(_entity->getEntityID());
+		
 		return _tempBuffer;
 	}//
 	//----------------------------------------------------------

@@ -12,7 +12,7 @@ namespace Logic {
 		void setCollisionDown(bool collision);
 		~CMessageCollisionDown(){};
 		
-		virtual Net::CBuffer serialize();
+		virtual Net::CBuffer* serialize();
 	private:
 		bool _collision;
 	};

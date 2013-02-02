@@ -27,12 +27,13 @@ namespace Logic {
 	}//
 	//----------------------------------------------------------
 
-	Net::CBuffer CMessageStopAnimation::serialize() {
-		CMessage::serialize();
-		_tempBuffer.write(&_string, sizeof(_string));
-		_tempBuffer.write(&_bool, sizeof(_bool));
-		_tempBuffer.reset();
+	Net::CBuffer* CMessageStopAnimation::serialize() {
+		assert(_tempBuffer == NULL);
 
+		_tempBuffer = new Net::CBuffer(sizeof(int) + sizeof(bool));
+		_tempBuffer->serialize(_string);
+		_tempBuffer->serialize(_bool);
+		
 		return _tempBuffer;
 	}//
 	//----------------------------------------------------------

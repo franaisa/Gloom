@@ -14,7 +14,7 @@ namespace Logic {
 		void setBool(bool boolean);
 		~CMessageStopAnimation(){};
 
-		virtual Net::CBuffer serialize();
+		virtual Net::CBuffer* serialize();
 		
 	private:
 		std::string _string;

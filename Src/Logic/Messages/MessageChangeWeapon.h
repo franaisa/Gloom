@@ -12,7 +12,7 @@ namespace Logic {
 		void setWeapon(int weapon);
 		~CMessageChangeWeapon() { };
 
-		virtual Net::CBuffer serialize();
+		virtual Net::CBuffer* serialize();
 	private:
 		int _weapon;
 	};

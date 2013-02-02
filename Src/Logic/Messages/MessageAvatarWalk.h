@@ -12,7 +12,7 @@ namespace Logic {
 		void setDirection(Vector3 direction);
 		~CMessageAvatarWalk(){};
 
-		virtual Net::CBuffer serialize();
+		virtual Net::CBuffer* serialize();
 		
 	private:
 		Vector3 _direction;

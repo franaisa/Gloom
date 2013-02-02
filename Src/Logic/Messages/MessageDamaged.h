@@ -12,7 +12,7 @@ namespace Logic {
 		void setDamage(unsigned char damage);
 		~CMessageDamaged(){};
 		
-		virtual Net::CBuffer serialize();
+		virtual Net::CBuffer* serialize();
 
 	private:
 		unsigned char _damage;

@@ -12,7 +12,7 @@ namespace Logic {
 		void setMovement(Vector3 movement);
 		~CMessageKinematicMove(){};
 
-		virtual Net::CBuffer serialize();
+		virtual Net::CBuffer* serialize();
 		
 	private:
 		Vector3 _movement;

@@ -12,7 +12,7 @@ namespace Logic {
 		void setEntity(CEntity *c);
 		~CMessageUntouched(){};
 		
-		virtual Net::CBuffer serialize();
+		virtual Net::CBuffer* serialize();
 
 	private:
 		CEntity *_entity;

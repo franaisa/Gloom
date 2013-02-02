@@ -17,11 +17,12 @@ namespace Logic {
 	}//
 	//----------------------------------------------------------
 
-	Net::CBuffer CMessageControl::serialize() {
-		CMessage::serialize();
-		_tempBuffer.write(&_controlType, sizeof(_controlType));
-		_tempBuffer.reset();
+	Net::CBuffer* CMessageControl::serialize() {
+		assert(_tempBuffer == NULL);
 
+		_tempBuffer = new Net::CBuffer(sizeof(_controlType));
+		_tempBuffer->serialize(_controlType);
+		
 		return _tempBuffer;
 	}//
 	//----------------------------------------------------------

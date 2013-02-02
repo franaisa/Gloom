@@ -17,11 +17,12 @@ namespace Logic {
 	}//
 	//----------------------------------------------------------
 
-	Net::CBuffer CMessageAvatarWalk::serialize() {
-		CMessage::serialize();
-		_tempBuffer.write(&_direction, sizeof(_direction));
-		_tempBuffer.reset();
+	Net::CBuffer* CMessageAvatarWalk::serialize() {
+		assert(_tempBuffer == NULL);
 
+		_tempBuffer = new Net::CBuffer(sizeof(_direction.x) * 3);
+		_tempBuffer->serialize(_direction);
+		
 		return _tempBuffer;
 	}//
 	//----------------------------------------------------------

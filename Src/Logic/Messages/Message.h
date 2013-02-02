@@ -100,10 +100,7 @@ namespace Logic
 		 TMessageType getMessageType();
 		 // Inicializa los mensajes a los valores por defecto
 		 CMessage(TMessageType t);
-		 // Inicializa los valores de sus campos a partir de una ristra de bytes
-		 // con datos serializados
-		 CMessage(Net::byte* serializedData, size_t dataSize = 500);
-		 virtual ~CMessage(){ /* Nada que hacer, no hay memoria dinámica */ };
+		 virtual ~CMessage();
 
 		 // Control de referencias
 		 void addSmartP();
@@ -120,13 +117,13 @@ namespace Logic
 		 // que llamar a write para escribir sus datos reutilizando la implentacion
 		 // del padre.
 		 // Estamos presuponiendo que nadie va a instanciar a CMessage.
-		 virtual Net::CBuffer serialize() = 0;
+		 virtual Net::CBuffer* serialize() = 0;
 
 	protected:
 		TMessageType _type;
 		unsigned char _smartP;
-		/* Se usa en la construccion del objeto y en el método serialize */
-		Net::CBuffer _tempBuffer;
+		/* Se utiliza para serializar mensajes */
+		Net::CBuffer* _tempBuffer;
 	};
 
 /////////////////////////////////////////////////////////////

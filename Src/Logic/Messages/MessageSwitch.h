@@ -12,7 +12,7 @@ namespace Logic {
 		void setChange(unsigned char change);
 		~CMessageSwitch(){};
 		
-		virtual Net::CBuffer serialize();
+		virtual Net::CBuffer* serialize();
 
 	private:
 		unsigned char _change;
