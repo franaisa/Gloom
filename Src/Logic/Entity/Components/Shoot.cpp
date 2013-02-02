@@ -46,13 +46,13 @@ namespace Logic
 		aux << "weapon" << _nameWeapon;		////!!!! Aqui debes de poner el nombre del arma que leera en el map.txt
 		std::string weapon = aux.str();
 												
-		_weapon.name = entityInfo->getStringAttribute(weapon+"Name");
-		_weapon.damage= (unsigned char) entityInfo->getIntAttribute(weapon+"Damage");
-		_weapon.dispersion = entityInfo->getFloatAttribute(weapon+"Dispersion");
-		_weapon.distance = entityInfo->getFloatAttribute(weapon+"Distance");
-		_weapon.numberShoots = (unsigned char) entityInfo->getIntAttribute(weapon+"NumberShoots");
-		_weapon.coolDown = (unsigned char) entityInfo->getIntAttribute(weapon+"CoolDown");
-		_weapon.ammo = entityInfo->getIntAttribute(weapon+"Ammo");
+		_name = entityInfo->getStringAttribute(weapon+"Name");
+		_damage= (unsigned char) entityInfo->getIntAttribute(weapon+"Damage");
+		_dispersion = entityInfo->getFloatAttribute(weapon+"Dispersion");
+		_distance = entityInfo->getFloatAttribute(weapon+"Distance");
+		_numberShoots = (unsigned char) entityInfo->getIntAttribute(weapon+"NumberShoots");
+		_coolDown = (unsigned char) entityInfo->getIntAttribute(weapon+"CoolDown");
+		_ammo = entityInfo->getIntAttribute(weapon+"Ammo");
 		
 		return true;
 
@@ -88,7 +88,7 @@ namespace Logic
 		
 		
 		// Para generalizar las armas, todas tendras tantas balas como la variable numberShoots
-		for(int i = 0; i < _weapon.numberShoots; ++i)
+		for(int i = 0; i < _numberShoots; ++i)
 		{
 
 			// Se corrige la posicion de la camara
@@ -99,7 +99,7 @@ namespace Logic
 
 
 			//Me dispongo a calcular la desviacion del arma, en el map.txt se pondra en grados de dispersion (0 => sin dispersion)
-			Ogre::Radian angle = Ogre::Radian( (  (((float)(rand() % 100))/100.0f) * (_weapon.dispersion)) /100);
+			Ogre::Radian angle = Ogre::Radian( (  (((float)(rand() % 100))/100.0f) * (_dispersion)) /100);
 
 			
 
@@ -134,7 +134,7 @@ namespace Logic
 				myManualObject->position(v.x,v.y,v.z);
 
 
-			for(int i=0; i < _weapon.distance;++i){
+			for(int i=0; i < _distance;++i){
 				Vector3 v = ray.getPoint(i);
 				myManualObject->position(v.x,v.y,v.z);
 				// etc 
@@ -147,7 +147,7 @@ namespace Logic
 			//////////////////////////////////fin del dibujado del rayo
 
 			//Rayo lanzado por el servidor de físicas de acuerdo a la distancia de potencia del arma
-			CEntity *entity = Physics::CServer::getSingletonPtr()->raycastClosest(ray, _weapon.distance);
+			CEntity *entity = Physics::CServer::getSingletonPtr()->raycastClosest(ray, _distance);
 		
 			//Si hay colisión envíamos a dicha entidad un mensaje de daño
 			if(entity)
@@ -160,7 +160,7 @@ namespace Logic
 
 
 				Logic::CMessageDamaged *m=new Logic::CMessageDamaged();
-				m->setDamage(_weapon.damage);
+				m->setDamage(_damage);
 				entity->emitMessage(m);
 			}
 			

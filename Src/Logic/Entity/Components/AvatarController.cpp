@@ -338,6 +338,7 @@ namespace Logic
 		}
 		direction += directionStrafe;
 
+
 		//Control del salto (normal y lateral)
 		//El PhysicController nos envía por mensaje el atributo _falling (devuelve el del frame anterior) y asi sabemos si esta tocando el suelo y puedo saltar
 		if(!_falling){
@@ -360,6 +361,15 @@ namespace Logic
 			_canJump=false;
 			_sideJump=false;
 			_jumping=false;
+		}
+
+
+		//Si active el rebote, activo un salto con una dirección en concreto (la que me pasaron en el mensaje rebote) y desactivo el rebote
+		if(_rebound){
+			_jumping=true;
+			_canJump=true;
+			direction=_dirRebound;
+			_rebound=false;
 		}
 
 		//Aumento el tiempo de conteo para la concatenacion de saltos
