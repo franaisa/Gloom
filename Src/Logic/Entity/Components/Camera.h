@@ -75,7 +75,7 @@ namespace Logic
 
 		@return true si todo ha ido correctamente.
 		*/
-		virtual bool activate();
+		virtual void activate();
 		
 		/**
 		Método que desactiva el componente; invocado cuando se

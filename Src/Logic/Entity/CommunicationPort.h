@@ -93,6 +93,9 @@ namespace Logic
 		*/
 		void processMessages();
 
+
+		void clearMessages(){ _messages.clear(); }
+
 	protected:
 		/**
 		Tipo lista de CEntity donde guardaremos los pendientes de borrar.
