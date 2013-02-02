@@ -34,7 +34,6 @@ namespace Logic
 	{
 		enum TMessageType
 		{
-<<<<<<< HEAD
 			UNASSIGNED				= 0xFFFFFFFF,
 			SET_TRANSFORM			= 0x00000000,
 			SET_ANIMATION			= 0x00000001,
