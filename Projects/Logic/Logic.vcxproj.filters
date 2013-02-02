@@ -156,7 +156,7 @@
     </ClCompile>
     <ClCompile Include="..\..\Src\Logic\Messages\MessageUntouched.cpp">
       <Filter>Messages\Source</Filter>
-	</ClCompile>
+    </ClCompile>
     <ClCompile Include="..\..\Src\Logic\Entity\MessageFactory.cpp">
       <Filter>Entity\Source Files</Filter>
     </ClCompile>

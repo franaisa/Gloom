@@ -2,7 +2,7 @@
 
 namespace Logic {
 
-	CMessageTransform::CMessageTransform(TMessageType type) : CMessage(type) {
+	CMessageTransform::CMessageTransform(TMessageType type = TMessageType::SET_TRANSFORM) : CMessage(type) {
 		// Nada que hacer
 	} //
 	//----------------------------------------------------------

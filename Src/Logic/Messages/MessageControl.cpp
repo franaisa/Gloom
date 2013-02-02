@@ -2,7 +2,7 @@
 
 namespace Logic {
 
-	CMessageControl::CMessageControl(TMessageType type) : CMessage(type) {
+	CMessageControl::CMessageControl(TMessageType type = TMessageType::CONTROL) : CMessage(type) {
 		// Nada que hacer
 	} //
 	//----------------------------------------------------------

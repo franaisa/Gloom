@@ -7,7 +7,7 @@ Contiene la implementación de la clase Message y sus clases hijas, que serán los
 @date Enero, 2013
 */
 
-#include "Message.h"
+#include "Logic/Messages/Message.h"
 
 
 namespace Logic 

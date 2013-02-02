@@ -2,7 +2,7 @@
 
 namespace Logic {
 
-	CMessageUntouched::CMessageUntouched(TMessageType type) : CMessage(type) {
+	CMessageUntouched::CMessageUntouched(TMessageType type = TMessageType::UNTOUCHED) : CMessage(type) {
 		// Nada que hacer
 	} //
 	//----------------------------------------------------------

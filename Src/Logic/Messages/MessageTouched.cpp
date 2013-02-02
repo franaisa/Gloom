@@ -2,7 +2,7 @@
 
 namespace Logic {
 
-	CMessageTouched::CMessageTouched(TMessageType type) : CMessage(type) {
+	CMessageTouched::CMessageTouched(TMessageType type = TMessageType::TOUCHED) : CMessage(type) {
 		// Nada que hacer
 	} //
 	//----------------------------------------------------------
