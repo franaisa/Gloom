@@ -91,9 +91,6 @@ namespace Logic {
 
 	CMessage * CMessageFactory::create(int name) const
 	{
-		TFunctionPointerMap::const_iterator it = _table.begin();
-		for(;it!=_table.end();++it)
-			std::cout << it->first << std::endl;
 
 		
 		if(_table.count(name) > 0)
