@@ -2,7 +2,7 @@
 
 namespace Logic {
 
-	CMessageMouse::CMessageMouse(TMessageType t = TMessageType::CONTROL):CMessageControl(t){
+	CMessageMouse::CMessageMouse(): CMessageControl(){
 
 	} //
 	//----------------------------------------------------------

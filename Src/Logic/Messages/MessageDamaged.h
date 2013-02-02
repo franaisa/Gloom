@@ -6,8 +6,9 @@
 namespace Logic {
 
 	class CMessageDamaged: public CMessage{
+	DEC_FACTORYMESSAGE(CMessageDamaged);
 	public:
-		CMessageDamaged(TMessageType t);
+		CMessageDamaged();
 		unsigned char getDamage();
 		void setDamage(unsigned char damage);
 		~CMessageDamaged(){};
@@ -17,7 +18,7 @@ namespace Logic {
 	private:
 		unsigned char _damage;
 	};
-
+	REG_FACTORYMESSAGE(CMessageDamaged);
 };
 
 #endif

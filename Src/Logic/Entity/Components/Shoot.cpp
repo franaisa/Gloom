@@ -99,7 +99,9 @@ namespace Logic
 
 
 			//Me dispongo a calcular la desviacion del arma, en el map.txt se pondra en grados de dispersion (0 => sin dispersion)
-			Ogre::Radian angle = Ogre::Radian(_weapon.dispersion/100);
+			Ogre::Radian angle = Ogre::Radian( (  (((float)(rand() % 100))/100.0f) * (_weapon.dispersion)) /100);
+
+			
 
 			//Esto hace un random total, lo que significa, por ejemplo, que puede que todas las balas vayan hacia la derecha 
 			Vector3 dispersionDirection = direction.randomDeviant(angle);
@@ -156,7 +158,8 @@ namespace Logic
 				// LLamar al componente que corresponda con el daño hecho
 				//entity->
 
-				Logic::CMessageDamaged *m=new Logic::CMessageDamaged(Logic::Message::DAMAGED);
+
+				Logic::CMessageDamaged *m=new Logic::CMessageDamaged();
 				m->setDamage(_weapon.damage);
 				entity->emitMessage(m);
 			}

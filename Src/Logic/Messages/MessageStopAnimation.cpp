@@ -1,8 +1,13 @@
 #include "MessageStopAnimation.h"
 
+
+#include "Logic/Entity/MessageFactory.h"
+
 namespace Logic {
 
-	CMessageStopAnimation::CMessageStopAnimation(TMessageType type = TMessageType::STOP_ANIMATION) : CMessage(type) {
+	IMP_FACTORYMESSAGE(CMessageStopAnimation);
+
+	CMessageStopAnimation::CMessageStopAnimation() : CMessage(TMessageType::STOP_ANIMATION) {
 		// Nada que hacer
 	}//
 	//----------------------------------------------------------

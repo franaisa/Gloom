@@ -1,8 +1,12 @@
 #include "MessageSwitch.h"
 
+#include "Logic/Entity/MessageFactory.h"
+
 namespace Logic {
 
-	CMessageSwitch::CMessageSwitch(TMessageType type = TMessageType::SWITCH) : CMessage(type) {
+	IMP_FACTORYMESSAGE(CMessageSwitch);
+
+	CMessageSwitch::CMessageSwitch() : CMessage(TMessageType::SWITCH) {
 		// Nada que hacer
 	}//
 	//----------------------------------------------------------

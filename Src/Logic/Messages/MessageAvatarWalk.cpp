@@ -1,8 +1,12 @@
 #include "MessageAvatarWalk.h"
+#include "Logic/Entity/MessageFactory.h"
 
 namespace Logic {
 
-	CMessageAvatarWalk::CMessageAvatarWalk(TMessageType type = TMessageType::AVATAR_WALK) : CMessage(type) {
+	IMP_FACTORYMESSAGE(CMessageAvatarWalk);
+	
+	
+	CMessageAvatarWalk::CMessageAvatarWalk() : CMessage(TMessageType::AVATAR_WALK) {
 		// Nada que hacer
 	}//
 	//----------------------------------------------------------

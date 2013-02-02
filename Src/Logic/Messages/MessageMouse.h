@@ -7,7 +7,7 @@ namespace Logic {
 
 	class CMessageMouse : public CMessageControl{
 	public:
-		CMessageMouse(TMessageType t);
+		CMessageMouse();
 		void setMouse(float mouse[]);
 		float* getMouse();
 		~CMessageMouse(){};

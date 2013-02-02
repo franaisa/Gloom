@@ -6,8 +6,9 @@
 namespace Logic {
 
 	class CMessageChangeWeapon: public CMessage{
+	DEC_FACTORYMESSAGE(CMessageChangeWeapon);
 	public:
-		CMessageChangeWeapon(TMessageType t);
+		CMessageChangeWeapon();
 		int getWeapon();
 		void setWeapon(int weapon);
 		~CMessageChangeWeapon() { };
@@ -16,7 +17,7 @@ namespace Logic {
 	private:
 		int _weapon;
 	};
-
+	REG_FACTORYMESSAGE(CMessageChangeWeapon);
 };
 
 #endif

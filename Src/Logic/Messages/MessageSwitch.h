@@ -6,8 +6,9 @@
 namespace Logic {
 
 	class CMessageSwitch: public CMessage{
+	DEC_FACTORYMESSAGE(CMessageSwitch);
 	public:
-		CMessageSwitch(TMessageType t);
+		CMessageSwitch();
 		unsigned char getChange();
 		void setChange(unsigned char change);
 		~CMessageSwitch(){};
@@ -17,7 +18,7 @@ namespace Logic {
 	private:
 		unsigned char _change;
 	};
-
+	REG_FACTORYMESSAGE(CMessageSwitch);
 };
 
 #endif

@@ -1,8 +1,12 @@
 #include "MessageChangeWeapon.h"
 
+#include "Logic/Entity/MessageFactory.h"
+
 namespace Logic {
 
-	CMessageChangeWeapon::CMessageChangeWeapon(TMessageType type = TMessageType::CHANGE_WEAPON) : CMessage(type) {
+	IMP_FACTORYMESSAGE(CMessageChangeWeapon);
+
+	CMessageChangeWeapon::CMessageChangeWeapon() : CMessage(TMessageType::CHANGE_WEAPON) {
 		// Nada que hacer
 	}//
 	//----------------------------------------------------------

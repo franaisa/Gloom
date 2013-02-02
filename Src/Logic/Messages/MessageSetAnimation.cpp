@@ -1,8 +1,12 @@
 #include "MessageSetAnimation.h"
 
+#include "Logic/Entity/MessageFactory.h"
+
 namespace Logic {
 
-	CMessageSetAnimation::CMessageSetAnimation(TMessageType type = TMessageType::SET_ANIMATION) : CMessage(type) {
+	IMP_FACTORYMESSAGE(CMessageSetAnimation);
+
+	CMessageSetAnimation::CMessageSetAnimation() : CMessage(TMessageType::SET_ANIMATION) {
 		// Nada que hacer
 	}//
 	//----------------------------------------------------------

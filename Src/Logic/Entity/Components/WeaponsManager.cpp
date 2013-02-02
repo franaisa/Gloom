@@ -106,7 +106,7 @@ namespace Logic
 			desactivateComponent(_actualWeapon);
 			_actualWeapon = newWeapon;
 			activateComponent(newWeapon);
-			Logic::CMessageChangeWeaponGraphics *m=new Logic::CMessageChangeWeaponGraphics(Logic::Message::CHANGE_WEAPON_GRAPHICS);
+			Logic::CMessageChangeWeaponGraphics *m=new Logic::CMessageChangeWeaponGraphics();
 			m->setWeapon(_actualWeapon);
 			_entity->emitMessage(m);
 		}

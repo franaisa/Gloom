@@ -82,7 +82,7 @@ namespace Logic
 			{
 				// TODO: mandar un mensaje de tipo SWITCH a la entidad target
 				// Mandamos un 1 si TOUCHED y un 0 si UNTOUCHED 
-				CMessageSwitch *m=new CMessageSwitch(Message::SWITCH);
+				CMessageSwitch *m=new CMessageSwitch();
 				
 			}
 			break;

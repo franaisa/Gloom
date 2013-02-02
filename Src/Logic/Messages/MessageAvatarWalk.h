@@ -6,8 +6,9 @@
 namespace Logic {
 
 	class CMessageAvatarWalk: public CMessage{
+	DEC_FACTORYMESSAGE(CMessageAvatarWalk);
 	public:
-		CMessageAvatarWalk(TMessageType t);
+		CMessageAvatarWalk();
 		Vector3 getDirection();
 		void setDirection(Vector3 direction);
 		~CMessageAvatarWalk(){};
@@ -17,7 +18,7 @@ namespace Logic {
 	private:
 		Vector3 _direction;
 	};
-
+	REG_FACTORYMESSAGE(CMessageAvatarWalk);
 };
 
 #endif

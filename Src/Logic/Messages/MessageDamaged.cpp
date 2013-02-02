@@ -1,8 +1,12 @@
 #include "MessageDamaged.h"
 
+#include "Logic/Entity/MessageFactory.h"
+
 namespace Logic {
 
-	CMessageDamaged::CMessageDamaged(TMessageType type = TMessageType::DAMAGED) : CMessage(type) {
+	IMP_FACTORYMESSAGE(CMessageDamaged);
+
+	CMessageDamaged::CMessageDamaged() : CMessage(TMessageType::DAMAGED) {
 		// Nada que hacer
 	}//
 	//----------------------------------------------------------

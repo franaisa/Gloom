@@ -1,9 +1,13 @@
 #include "MessageUntouched.h"
 #include "../Entity/Entity.h"
 
+#include "Logic/Entity/MessageFactory.h"
+
 namespace Logic {
 
-	CMessageUntouched::CMessageUntouched(TMessageType type = TMessageType::UNTOUCHED) : CMessage(type) {
+	IMP_FACTORYMESSAGE(CMessageUntouched);
+
+	CMessageUntouched::CMessageUntouched() : CMessage(TMessageType::UNTOUCHED) {
 		// Nada que hacer
 	} //
 	//----------------------------------------------------------

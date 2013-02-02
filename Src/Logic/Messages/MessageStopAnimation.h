@@ -6,8 +6,9 @@
 namespace Logic {
 
 	class CMessageStopAnimation : public CMessage{
+	DEC_FACTORYMESSAGE(CMessageStopAnimation);
 	public:
-		CMessageStopAnimation(TMessageType t);
+		CMessageStopAnimation();
 		std::string getString();
 		void setString(std::string);
 		bool getBool();
@@ -20,7 +21,7 @@ namespace Logic {
 		std::string _string;
 		bool _bool;
 	};
-
+	REG_FACTORYMESSAGE(CMessageStopAnimation);
 };
 
 #endif

@@ -6,8 +6,9 @@
 namespace Logic {
 
 	class CMessageTransform : public CMessage{
+	DEC_FACTORYMESSAGE(CMessageTransform);
 	public:
-		CMessageTransform(TMessageType t);
+		CMessageTransform();
 		Matrix4 getTransform();
 		void setTransform(Matrix4 transform);
 		~CMessageTransform(){};
@@ -18,7 +19,7 @@ namespace Logic {
 	private:
 		Matrix4 _transform;
 	};
-
+	REG_FACTORYMESSAGE(CMessageTransform);
 };
 
 #endif
