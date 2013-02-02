@@ -24,10 +24,6 @@ Contiene la implementación del gestor de los mensajes de red durante la partida.
 #include "Net/buffer.h"
 #include "Entity\MessageFactory.h"
 #include "Logic/Messages/Message.h"
-	#include "Messages\MessageControl.h"
-	#include "Messages\MessageTransform.h"
-	#include "Messages\MessageAvatarWalk.h"
-	#include "Messages\MessageDamaged.h"
 
 #include "Application/BaseApplication.h"
 
@@ -121,7 +117,7 @@ namespace Logic {
 			serialMsg.write(bufferAux->getbuffer(),bufferAux->getSize()); //Guardamos el mensaje en el buffer
 			
 		Net::CManager::getSingletonPtr()->send(serialMsg.getbuffer(), serialMsg.getSize());
-		std::cout << "Enviado mensaje tipo " << txMsg->getMessageType() << " a " << destID << std::endl;
+		std::cout << "Enviado mensaje tipo " << txMsg->getMessageType() << " para la entidad " << destID << " de tamaño " << serialMsg.getSize() << std::endl;
 		LOG("TX ENTITY_MSG " << txMsg._type << " to EntityID " << destID);
 	} // sendEntityMessage
 
@@ -147,6 +143,9 @@ namespace Logic {
 		TEntityID destID; 
 			serialMsg.read(&destID, sizeof(destID));
 
+		
+		std::cout << "Mensaje recibido de tipo " << msgType << " para la entidad " << destID << " de tamaño " << serialMsg.getSize() << std::endl;
+			
 		//leemos el mensaje que se ha enviado por la red
 		int typeMessage;
 		serialMsg.read(&typeMessage, sizeof(int));
@@ -157,7 +156,7 @@ namespace Logic {
 		CEntity* destEntity = Logic::CServer::getSingletonPtr()->getMap()->getEntityByID(destID);
 		if(destEntity != 0)
 			destEntity->emitMessage(messageReceived);
-		std::cout << "He conseguido sobrevivir al mensaje, soy el puto amo " <<  std::endl;
+		std::cout << "Me ha creado el mensaje " << messageReceived << " de tipo " << messageReceived->getMessageType() << std::endl;
 		LOG("RX ENTITY_MSG " << rxMsg._type << " from EntityID " << destID);
 	} // processEntityMessage
 
