@@ -5,9 +5,9 @@
     </environment>
     <nodes>
         <node name="scenario" id="0" isTarget="false">
-            <position x="-0.109784" y="0" z="-0.0247892" />
+            <position x="-0.00846032" y="0" z="0.00675125" />
             <rotation qx="-0" qy="-0" qz="-0" qw="-1" />
-            <scale x="1200" y="1200" z="1200" />
+            <scale x="5000" y="5000" z="5000" />
             <entity name="scenario" id="1" meshFile="scenario.mesh" castShadows="true">
                 <subentities>
                     <subentity index="0" materialName="_01_-_Default" />

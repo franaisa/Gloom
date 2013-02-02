@@ -50,7 +50,7 @@ namespace Logic
 		/**
 		Método que se invoca para activar el componente.
 		*/
-		virtual bool activate();
+		virtual void activate();
 		
 		/**
 		Método que se invoca al desactivar el componente.

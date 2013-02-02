@@ -110,8 +110,10 @@ namespace Logic
 		// consideraremos activados.
 		_activated = true;
 
-		for(; it != _componentList.end(); ++it)
-			_activated = (*it)->activate() && _activated;
+		for(; it != _componentList.end(); ++it){
+			(*it)->activate();
+			_activated = (*it)->isActivate() && _activated;
+		}
 
 		return _activated;
 
@@ -147,8 +149,11 @@ namespace Logic
 	{
 		TComponentList::const_iterator it = _componentList.begin();
 
-		for(; it != _componentList.end(); ++it)
-			(*it)->tick(msecs);
+		for(; it != _componentList.end(); ++it) {
+			if((*it)->isActivate()) {
+				(*it)->tick(msecs);
+			}
+		}
 
 	} // tick
 

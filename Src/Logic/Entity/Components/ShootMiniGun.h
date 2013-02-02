@@ -1,5 +1,5 @@
-#ifndef __Logic_Shoot_H
-#define __Logic_Shoot_H
+#ifndef __Logic_ShootMiniGun_H
+#define __Logic_ShootMiniGun_H
 
 #include "Logic/Entity/Component.h"
 
@@ -16,9 +16,9 @@ namespace Logic
 */
 
 
-	class CShoot : public IComponent
+	class CShootMiniGun : public IComponent
 	{
-		DEC_FACTORY(CShoot);
+		DEC_FACTORY(CShootMiniGun);
 
 	public:
 
@@ -26,7 +26,7 @@ namespace Logic
 		Constructor por defecto; en la clase base no hace nada.
 		*/
 
-		CShoot() : IComponent(), _temporal(0), _timeSinceLastShoot(NULL),_weapons(NULL),_capsuleRadius(3.0f), _shooting(false), _actualWeapon(0) {}
+		CShootMiniGun() : IComponent(),  _timeSinceLastShoot(0),_weapon(),_capsuleRadius(3.0f), _shooting(false), _temporal(0)  {}
 		
 
 	
@@ -46,14 +46,12 @@ namespace Logic
 		*/
 		virtual void process(CMessage *message);
 
+		virtual void desactivate();
 
 		void shoot();
 
-		void changeWeapon(unsigned char newWeapon);
-
 	protected:
 
-		
 		
 		struct TWeapon{
 			std::string name;
@@ -65,8 +63,6 @@ namespace Logic
 			int ammo; //esta como int, por que si es -1 esq no tienes esta arma.
 		};
 
-		
-
 
 		/**
 		Contendra el radio de la capsula leido del mapa
@@ -76,39 +72,27 @@ namespace Logic
 		/**
 		vector con caracteristicas de armas
 		*/
-		TWeapon *_weapons;
+		TWeapon _weapon;
 
 		/**
-		Para comprobar que un arma esta disparando y no poder disparar 
+		Para comprobar que un arma esta disparando y no puede disparar 
 		"tan rapido como puedas arreglar el gatillo" (Marcus, Borderlands 2)
 		*/
 		bool _shooting;
-
-		/**
-		arma actual equipada
-		*/
-		int _actualWeapon;
-
-
-		/**
-		arma actual equipada
-		*/
-		int _numWeapons;
-
 
 		/**
 		mide el tiempo de cooldown
 		*/
 		float *_timeSinceLastShoot;
 
+
 		/**
-		esto se eliminara
+			Variable de debug.
 		*/
 		int _temporal;
-
 	}; // class CShoot
 
-	REG_FACTORY(CShoot);
+	REG_FACTORY(CShootMiniGun);
 
 } // namespace Logic
 
