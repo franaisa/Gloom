@@ -17,12 +17,16 @@ Contiene la implementación del gestor de los mensajes de red durante la partida.
 #include "GameNetMsgManager.h"
 
 #include "Logic/Entity/Entity.h"
-#include "Logic/Messages/Message.h"
 #include "Logic/Maps/Map.h"
 #include "Logic/Maps/EntityFactory.h"
 #include "Logic/Server.h"
 #include "Net/paquete.h"
 #include "Net/buffer.h"
+#include "Logic/Messages/Message.h"
+	#include "Messages\MessageControl.h"
+	#include "Messages\MessageTransform.h"
+	#include "Messages\MessageAvatarWalk.h"
+	#include "Messages\MessageDamaged.h"
 
 #include "Application/BaseApplication.h"
 
@@ -137,6 +141,9 @@ namespace Logic {
 		Net::CBuffer serialMsg;
 			serialMsg.write(packet->getData(),packet->getDataLength());
 			serialMsg.reset(); // Reiniciamos el puntero de lectura a la posición 0
+
+
+
 
 		// Extraemos, pero ignoramos el tipo de mensaje de red. Ya lo hemos procesado		
 		Net::NetMessageType msgType;
