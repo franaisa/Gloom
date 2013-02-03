@@ -15,7 +15,7 @@ Map = {
 
 	David = {
 		type = "PlayerSpawn",
-		msgList= "0,1,2",
+		msgList= "0",
 		position = {0, 8, 0},
 		orientation = 180,
 		life = 100.0,

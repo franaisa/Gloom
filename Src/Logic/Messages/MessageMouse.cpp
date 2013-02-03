@@ -5,7 +5,6 @@
 namespace Logic {
 
 	CMessageMouse::CMessageMouse(): CMessageControl(){
-
 	} //
 	//----------------------------------------------------------
 	void CMessageMouse::setMouse(float mouse[]){
@@ -35,5 +34,6 @@ namespace Logic {
 		buffer.deserialize(_mouse[0]);
 		buffer.deserialize(_mouse[1]);
 	}
+
 
 };
