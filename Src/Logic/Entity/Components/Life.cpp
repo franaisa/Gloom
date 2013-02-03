@@ -24,25 +24,25 @@ Contiene la implementación del componente que controla la vida de una entidad.
 #include "Logic/Messages/MessageDamaged.h"
 #include "Logic/Messages/MessageAddLife.h"
 #include "Logic/Messages/MessageAddShield.h"
+<<<<<<< HEAD
+#include "Logic/Messages/MessageHudLife.h"
+#include "Logic/Messages/MessageHudShield.h"
+
+
+=======
+#include "Logic/Messages/MessagePlayerDead.h"
+>>>>>>> 3415c92d70ded5222de87580c290460b9eefbb41
 namespace Logic 
 {
 	IMP_FACTORY(CLife);
 	
 	//---------------------------------------------------------
-	void CLife::tick(unsigned int msecs)
-	{
-		IComponent::tick(msecs);
-		_varLifeCumulative+=msecs;
-		//Multiplicamos por mil ya que _varLifeCumulative es en milisegundos
-		/*if(_varLifeCumulative >=_lifeTimeDamage*1000){
-			if(_life>_lifeDamage)
-				_life-=_lifeDamage;		
-			else
-				_life=1;		
-			_varLifeCumulative=0;
-		}*/
+	
+<<<<<<< HEAD
 
-	} // tick
+	
+=======
+>>>>>>> 3415c92d70ded5222de87580c290460b9eefbb41
 	bool CLife::spawn(CEntity *entity, CMap *map, const Map::CEntity *entityInfo) 
 	{
 		if(!IComponent::spawn(entity,map,entityInfo))
@@ -57,12 +57,17 @@ namespace Logic
 		if(entityInfo->hasAttribute("lifeTimeDamage"))
 			_lifeTimeDamage = entityInfo->getIntAttribute("lifeTimeDamage");
 		if(entityInfo->hasAttribute("PorcentShield"))
-			_PorcentShield = entityInfo->getIntAttribute("PorcentShield");
+			_porcentShield = entityInfo->getIntAttribute("PorcentShield");
 		if(entityInfo->hasAttribute("maxLife"))
 			_maxLife = entityInfo->getIntAttribute("maxLife");
 		if(entityInfo->hasAttribute("maxShield"))
 			_maxShield = entityInfo->getIntAttribute("maxShield");
+		if(entityInfo->hasAttribute("playerDead"))
+			_playerDead =  entityInfo->getBoolAttribute("playerDead");
 		_varLifeCumulative=0;
+
+		
+
 		return true;
 
 	} // spawn
@@ -104,11 +109,44 @@ namespace Logic
 
 	} // process
 
+<<<<<<< HEAD
+=======
 	//---------------------------------------------------------
+>>>>>>> 3415c92d70ded5222de87580c290460b9eefbb41
+	void CLife::tick(unsigned int msecs)
+	{
+		IComponent::tick(msecs);
+		_varLifeCumulative+=msecs;
+		//Multiplicamos por mil ya que _varLifeCumulative es en milisegundos
+		if(_varLifeCumulative >=_lifeTimeDamage*1000){
+<<<<<<< HEAD
+			if(_life > _lifeDamage){
+				_life-=_lifeDamage;	
+				
+				
+			}else{
+				_life=1;		
+			}
+			_varLifeCumulative=0;
+			Logic::CMessageHudLife *message1 = new Logic::CMessageHudLife();
+			message1->setHudLife(_life);
+			_entity->emitMessage(message1);
+		}
+=======
+			if(_life>_lifeDamage)
+				_life-=_lifeDamage;		
+			else
+				_life=1;		
+			_varLifeCumulative=0;
+		}
+
+>>>>>>> 3415c92d70ded5222de87580c290460b9eefbb41
+	} // tick
+
 
 	void CLife::damaged(int damage){
 		if(_shield>0){
-			int porcentajeEscudo = _PorcentShield * damage * 0.01;
+			int porcentajeEscudo = _porcentShield * damage * 0.01;
 			int porcentajeVida = damage - porcentajeEscudo;
 			if((_shield>=porcentajeEscudo)){
 				_shield-=porcentajeEscudo;
@@ -120,14 +158,36 @@ namespace Logic
 					_shield=0;
 					porcentajeVida= porcentajeVida + porcentajeEscudo;
 					_life=_life-porcentajeVida;
-			}
+				}
+<<<<<<< HEAD
+
+					Logic::CMessageHudShield *message2 = new Logic::CMessageHudShield();
+					message2->setHudShield(_shield);
+					_entity->emitMessage(message2);
+
+		}
+		else
+			_life -= damage;
+=======
 
 		}
 		else
 		_life -= damage;
+
+		if(_life<=0){
+			printf("el jugador está muerto?? con %i  \n",_playerDead);
+			_playerDead=true;
+
+			CLife::sendMessagePlayerDead();
+		}
+>>>>>>> 3415c92d70ded5222de87580c290460b9eefbb41
+
 		printf("\nAh!, ya solo me queda %i de escudo", _shield);
 		printf("\nAh!, ya solo me queda %i de vida", _life);
 
+		Logic::CMessageHudLife *message1 = new Logic::CMessageHudLife();
+		message1->setHudLife(_life);
+		_entity->emitMessage(message1);
 		//if ((_life <= 0) && (_entity->isPlayer())) {
 		//	Application::CBaseApplication::getSingletonPtr()->setState("menu");
 	}
@@ -139,9 +199,19 @@ namespace Logic
 			else
 			_life=_maxLife;
 		}
+
+		Logic::CMessageHudLife *message1 = new Logic::CMessageHudLife();
+		message1->setHudLife(_life);
+		_entity->emitMessage(message1);
 		
-		printf("\nAh!, ya solo me queda %i de escudo", _shield);
-		printf("\nAh!, ya solo me queda %i de VIDA", _life);
+<<<<<<< HEAD
+		printf("\nYuju!, mi vida a aumentado en %d, por lo que ahora tengo %d de VIDA",life, _life);
+
+
+=======
+		printf("\nAh!, ya solo me queda %i de escudo\n", _shield);
+		printf("\nAh!, ya solo me queda %i de VIDA\n", _life);
+>>>>>>> 3415c92d70ded5222de87580c290460b9eefbb41
 	}
 	void CLife::addShield(int shield){
 		if(_shield<_maxShield){
@@ -150,10 +220,22 @@ namespace Logic
 			else
 			_shield=_maxShield;
 		}
-		
-		printf("\nAh!, ya solo me queda %i de ESCUDO", _shield);
-		printf("\nAh!, ya solo me queda %i de vida", _life);
-	}
 
+		Logic::CMessageHudShield *message2 = new Logic::CMessageHudShield();
+					message2->setHudShield(_shield);
+					_entity->emitMessage(message2);
+		
+		printf("\nViva!, mi shield a aumentado en %d, por lo que ahora tengo %d de VIDA",shield, _shield);
+	}
+	void CLife::sendMessagePlayerDead(){
+
+				printf("el jugador está muerto?? con %i  \n",_playerDead);
+
+				Logic::CMessagePlayerDead *m=new Logic::CMessagePlayerDead();
+				m->getPlayerDead();
+				_entity->emitMessage(m);
+
+	}
 } // namespace Logic
+
 
