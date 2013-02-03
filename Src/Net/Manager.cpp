@@ -332,14 +332,12 @@ namespace Net {
 	void CManager::addObserver(IObserver* listener)
 	{
 		_observers.push_back(listener);
-		std::cout << "añadido observer" << std::endl;
 	} // addObserver
 
 	//---------------------------------------------------------
 
 	void CManager::removeObserver(IObserver* listener)
 	{
-		std::cout << "observer deleted" << std::endl;
 		for(std::vector<IObserver*>::iterator iter = _observers.begin();iter != _observers.end();++iter)
 			if((*iter)==listener)
 			{

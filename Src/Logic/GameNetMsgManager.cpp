@@ -83,7 +83,6 @@ namespace Logic {
 	void CGameNetMsgManager::activate() 
 	{
 		// TODO Escuchamos los mensajes de red. Engancharnos a Net::CManager
-		std::cout << "me estoy añadiendo como observer para escuchar mensajes del otro lado del tubo" << std::endl;
 		Net::CManager::getSingletonPtr()->addObserver(this);
 	} // activate
 
@@ -159,7 +158,6 @@ namespace Logic {
 		CEntity* destEntity = Logic::CServer::getSingletonPtr()->getMap()->getEntityByID(destID);
 		if(destEntity != 0)
 			destEntity->emitMessage(messageReceived);
-		std::cout << "Me ha creado el mensaje " << messageReceived << " de tipo " << messageReceived->getMessageType() << std::endl;
 		LOG("RX ENTITY_MSG " << rxMsg._type << " from EntityID " << destID);
 	} // processEntityMessage
 
@@ -170,7 +168,6 @@ namespace Logic {
 	// Aquí es donde debemos recibir los mensajes de red
 	void CGameNetMsgManager::dataPacketReceived(Net::CPaquete* packet)
 	{
-		std::cout << "Mensaje recibido, preparandose para morir " <<  std::endl;
 		Net::CBuffer rxSerialMsg; // Packet: "NetMessageType | extraData"
 			rxSerialMsg.write(packet->getData(),packet->getDataLength());
 			rxSerialMsg.reset();
