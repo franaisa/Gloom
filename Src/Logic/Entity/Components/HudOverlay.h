@@ -79,7 +79,7 @@ namespace Logic
 
 		int _actualWeapon;
 
-		Ogre::OverlayContainer* _weaponsBox[NUM_WEAPONS][3];
+		Ogre::OverlayContainer* _weaponsBox[4][3];
 
 	}; // class CHudOverlay
 

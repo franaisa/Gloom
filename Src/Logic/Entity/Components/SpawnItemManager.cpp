@@ -32,18 +32,18 @@ namespace Logic
 		if(_isRespawning) {
 			_timer += msecs;
 
-			std::cout << "El tiempo transcurrido desde que se capturo es " << _timer << std::endl;
+			//std::cout << "El tiempo transcurrido desde que se capturo es " << _timer << std::endl;
 
 			if(_timer >= _respawnTime) {
 				_isRespawning = false;
 
-				
-
 				// Activar entidad grafica
-				_entity->getComponent<CGraphics>("CGraphics")->activate();
+				//_entity->getComponent<CGraphics>("CGraphics")->activate();
 
 				// Activar entidad fisica
-				_entity->getComponent<CPhysicEntity>("CPhysicEntity")->activate();
+				//_entity->getComponent<CPhysicEntity>("CPhysicEntity")->activate();
+
+				std::cout << "Me vuelvo a activar" << std::endl;
 			}
 		}
 	} // tick
@@ -96,11 +96,13 @@ namespace Logic
 	} // process
 
 	void CSpawnItemManager::itemGrabbed(CEntity* actor) {
+
+		std::cout << "Me desactivo" << std::endl;
 		// Desactivar entidad grafica
-		_entity->getComponent<CGraphics>("CGraphics")->deactivate();
+		//_entity->getComponent<CGraphics>("CGraphics")->deactivate();
 
 		// Desactivar entidad fisica
-		_entity->getComponent<CPhysicEntity>("CPhysicEntity")->deactivate();
+		//_entity->getComponent<CPhysicEntity>("CPhysicEntity")->deactivate();
 		
 		// Mandar el mensaje que corresponda a la entidad actuadora
 		// en funcion del item que se haya cogido (comprobando el id)
