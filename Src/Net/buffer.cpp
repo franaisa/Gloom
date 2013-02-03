@@ -120,7 +120,8 @@ namespace Net {
 		// Creamos un nuevo wrapper y copiamos los datos del buffer
 		_wrapperPtr = new BufferWrapper;
 		_wrapperPtr->_begin = new byte [tempBufferData->_maxsize];
-		for(int i = 0; i < tempBufferData->_size; ++i) {
+		//cambiado el int i a unsigned porque es sin signo (ERA WARNING)
+		for(unsigned int i = 0; i < tempBufferData->_size; ++i) {
 			_wrapperPtr->_begin[i] = tempBufferData->_begin[i];
 		}
 
@@ -206,7 +207,9 @@ namespace Net {
 	//__________________________________________________________________
 
 	void CBuffer::serialize(const std::string& data) {
+
 		int crc = Math::CRC(data);
+
 		write(&crc, sizeof(crc));
 	}
 
@@ -297,8 +300,7 @@ namespace Net {
 		read(&yaw, sizeof(yaw));
 		read(&pitch, sizeof(pitch));
 		
-		Math::setPitch(pitch, data);
-		Math::setYaw(yaw, data);
+		Math::setPitchYaw(pitch,yaw, data);
 		data.setTrans(transform);
 	}
 

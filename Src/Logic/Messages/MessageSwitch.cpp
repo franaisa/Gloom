@@ -2,6 +2,8 @@
 
 #include "Logic/Entity/MessageFactory.h"
 
+#include <string>
+
 namespace Logic {
 
 	IMP_FACTORYMESSAGE(CMessageSwitch);
@@ -24,7 +26,8 @@ namespace Logic {
 	Net::CBuffer* CMessageSwitch::serialize() {
 		assert(_tempBuffer == NULL);
 
-		_tempBuffer = new Net::CBuffer(sizeof(unsigned char));
+		_tempBuffer = new Net::CBuffer(sizeof(int) + sizeof(unsigned char));
+		_tempBuffer->serialize(std::string("CMessageSwitch"));
 		_tempBuffer->serialize(_change);
 		
 		return _tempBuffer;

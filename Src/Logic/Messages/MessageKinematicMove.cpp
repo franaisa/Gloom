@@ -2,6 +2,8 @@
 
 #include "Logic/Entity/MessageFactory.h"
 
+#include <string>
+
 namespace Logic {
 
 	IMP_FACTORYMESSAGE(CMessageKinematicMove);
@@ -23,7 +25,8 @@ namespace Logic {
 	Net::CBuffer* CMessageKinematicMove::serialize() {
 		assert(_tempBuffer == NULL);
 
-		_tempBuffer = new Net::CBuffer(sizeof(_movement.x) * 3);
+		_tempBuffer = new Net::CBuffer(sizeof(int) + sizeof(_movement.x) * 3);
+		_tempBuffer->serialize(std::string("CMessageKinematicMove"));
 		_tempBuffer->serialize(_movement);
 		
 		return _tempBuffer;

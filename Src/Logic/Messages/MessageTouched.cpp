@@ -3,6 +3,8 @@
 
 #include "Logic/Entity/MessageFactory.h"
 
+#include <string>
+
 namespace Logic {
 
 	IMP_FACTORYMESSAGE(CMessageTouched);
@@ -25,7 +27,8 @@ namespace Logic {
 	Net::CBuffer* CMessageTouched::serialize() {
 		assert(_tempBuffer == NULL);
 
-		_tempBuffer = new Net::CBuffer(sizeof(_entity->getEntityID()));
+		_tempBuffer = new Net::CBuffer(sizeof(int) + sizeof(_entity->getEntityID()));
+		_tempBuffer->serialize(std::string("CMessageTouched"));
 		_tempBuffer->serialize(_entity->getEntityID());
 		
 		return _tempBuffer;

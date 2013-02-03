@@ -1,5 +1,7 @@
 #include "MessageRebound.h"
 
+#include <string>
+
 namespace Logic {
 
 	CMessageRebound::CMessageRebound() : CMessage(TMessageType::REBOUND) {
@@ -20,7 +22,8 @@ namespace Logic {
 	Net::CBuffer* CMessageRebound::serialize() {
 		assert(_tempBuffer == NULL);
 
-		_tempBuffer = new Net::CBuffer(sizeof(float) * 3);
+		_tempBuffer = new Net::CBuffer(sizeof(int) + sizeof(float) * 3);
+		_tempBuffer->serialize(std::string("CMessageRebound"));
 		_tempBuffer->serialize(_dir);
 		
 		return _tempBuffer;
@@ -29,7 +32,6 @@ namespace Logic {
 
 	void CMessageRebound::deserialize(Net::CBuffer& buffer) {
 		buffer.deserialize(_dir);
-
 	}
 
 };

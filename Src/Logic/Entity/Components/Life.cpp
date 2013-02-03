@@ -22,13 +22,20 @@ Contiene la implementación del componente que controla la vida de una entidad.
 #include "Net/buffer.h"
 
 #include "Logic/Messages/MessageDamaged.h"
+#include "Logic/Messages/MessageAddLife.h"
+#include "Logic/Messages/MessageAddShield.h"
+#include "Logic/Messages/MessageHudLife.h"
+#include "Logic/Messages/MessageHudShield.h"
+
+
+#include "Logic/Messages/MessagePlayerDead.h"
 
 namespace Logic 
 {
 	IMP_FACTORY(CLife);
 	
 	//---------------------------------------------------------
-
+	
 	bool CLife::spawn(CEntity *entity, CMap *map, const Map::CEntity *entityInfo) 
 	{
 		if(!IComponent::spawn(entity,map,entityInfo))
@@ -36,6 +43,23 @@ namespace Logic
 
 		if(entityInfo->hasAttribute("life"))
 			_life = entityInfo->getIntAttribute("life");
+		if(entityInfo->hasAttribute("shield"))
+			_shield = entityInfo->getIntAttribute("shield");
+		if(entityInfo->hasAttribute("lifeDamage"))
+			_lifeDamage = entityInfo->getIntAttribute("lifeDamage");
+		if(entityInfo->hasAttribute("lifeTimeDamage"))
+			_lifeTimeDamage = entityInfo->getIntAttribute("lifeTimeDamage");
+		if(entityInfo->hasAttribute("PorcentShield"))
+			_porcentShield = entityInfo->getIntAttribute("PorcentShield");
+		if(entityInfo->hasAttribute("maxLife"))
+			_maxLife = entityInfo->getIntAttribute("maxLife");
+		if(entityInfo->hasAttribute("maxShield"))
+			_maxShield = entityInfo->getIntAttribute("maxShield");
+		if(entityInfo->hasAttribute("playerDead"))
+			_playerDead =  entityInfo->getBoolAttribute("playerDead");
+		_varLifeCumulative=0;
+
+		
 
 		return true;
 
@@ -45,8 +69,9 @@ namespace Logic
 
 	bool CLife::accept(CMessage *message)
 	{
-		return message->getMessageType() == Message::DAMAGED;
-
+		return message->getMessageType() == Message::DAMAGED || 
+		message->getMessageType() == Message::ADD_LIFE ||
+		message->getMessageType() == Message::ADD_SHIELD ;
 	} // accept
 	
 	//---------------------------------------------------------
@@ -57,71 +82,106 @@ namespace Logic
 		{
 		case Message::DAMAGED:
 			{
-				damaged( ((CMessageDamaged*)message)->getDamage());
-				/*
-				// PARTE ANTONIO - HAY QUE CAMBIARLO, YA QUE NO SE ENVIAN MENSAJES
-				// ADEMÁS HAY QUE ADAPTARLO A LA RED.
-
-				// Disminuir la vida de la entidad
-				/*_life -= ((CMessageDamaged*)message)->getDamage();
-				printf("\nAh!, ya solo me queda %i de vida", _life);
-				
-				// Si han matado al jugador salir de la partida
-				
-				//if ((_life <= 0) && (_entity->isPlayer())) {
-				//	Application::CBaseApplication::getSingletonPtr()->setState("menu");
-				//}
-				
-				// @todo Poner la animación de herido.
-				// @todo Si la vida es menor que 0 poner animación de morir.
-
-				// Si han matado al jugador sacarlo de la partida
-				if (_life <= 0 && _entity->getType() == "Player") 
-				{
-					// TODO Si matan a un jugador habrá que avisarle que, para él, el 
-					// juego ha terminado. Si hubiese más jugadores también deberían
-					// enterarse de que ese jugador ha muerto para que eliminen su entidad...
-					// TODO Pero queremos eliminar la entidad o dejarla deactive?
-					// TODO Quizá aquí merezca la pena tener un CDeath que se encargue de estas cosas con un Msg DIE entidad tal
-					
-					// MENSAJE "END_GAME | TEntityID"
-					Net::NetMessageType txMsg = Net::NetMessageType::END_GAME;
-					TEntityID entityID = _entity->getEntityID();
-					Net::CBuffer serialMsg;						
-						serialMsg.write( &txMsg, sizeof(txMsg));
-						serialMsg.write( &entityID, sizeof(entityID) );	
-					Net::CManager::getSingletonPtr()->send( serialMsg.getbuffer(),  serialMsg.getSize() );
-
-					// TRATAMIENTO DEL PLAYER
-					if(_entity->isPlayer() ) // MONOJUGADOR -> GameOver
-						Application::CBaseApplication::getSingletonPtr()->setState("gameOver");
-					else					// MULTIJUGADOR
-						_entity->deactivate();
-				}
-				
-				CMessageSetAnimation * msg = new CMessageSetAnimation(TMessageType::SET_ANIMATION);
-											
-				if(_life > 0)  // TODO Poner la animación de herido.
-					msg->setString("Damage");
-				else  // TODO Si la vida es menor que 0 poner animación de morir.
-					msg->setString("Death");
-				_entity->emitMessage(msg, this);
-				*/
+				damaged( ((CMessageDamaged*)message)->getDamage());	
+			}
+			break;
+			case Message::ADD_LIFE:
+			{
+				addLife( ((CMessageAddLife*)message)->getAddLife());
+			}
+			break;
+			case Message::ADD_SHIELD:
+			{
+				addShield( ((CMessageAddShield*)message)->getAddShield());
 			}
 			break;
 		}
 
 	} // process
+	//----------------------------------------------------------
+
+	void CLife::tick(unsigned int msecs)
+	{
+		IComponent::tick(msecs);
+		_varLifeCumulative+=msecs;
+		//Multiplicamos por mil ya que _varLifeCumulative es en milisegundos
+		if(_varLifeCumulative >=_lifeTimeDamage*1000){
+			if(_life > _lifeDamage){
+				_life-=_lifeDamage;	
+				//Actualización vida
+				Logic::CMessageHudLife *message1 = new Logic::CMessageHudLife();
+				message1->setHudLife(_life);
+				_entity->emitMessage(message1);	
+			}
+			_varLifeCumulative=0;
+		}
+	} // tick
+	//----------------------------------------------------------
 
 	void CLife::damaged(int damage){
-		_life -= damage;
+		if(_shield>0){
+			int porcentajeEscudo = _porcentShield * damage * 0.01f;
+			int porcentajeVida = damage - porcentajeEscudo;
+			if((_shield>=porcentajeEscudo)){
+				_shield-=porcentajeEscudo;
+				_life-=porcentajeVida;
+				}
+				else{
+					porcentajeEscudo-=_shield;
+					_shield=0;
+					porcentajeVida= porcentajeVida + porcentajeEscudo;
+					_life=_life-porcentajeVida;
+				}
+					Logic::CMessageHudShield *message2 = new Logic::CMessageHudShield();
+					message2->setHudShield(_shield);
+					_entity->emitMessage(message2);
+		}
+		else
+			_life -= damage;
 
-		printf("\nAh!, ya solo me queda %i de vida", _life);
+		//Si muero por el daño, envio un mensaje de playerDead
+		if(_life<=0){
+			_life=0;
+			std::cout << "MUEROOOWNZ" << std::endl;
+			Logic::CMessagePlayerDead *m=new Logic::CMessagePlayerDead();
+			_entity->emitMessage(m);
+		}
+		//Actualizo la vida
+		Logic::CMessageHudLife *message1 = new Logic::CMessageHudLife();
+		message1->setHudLife(_life);
+		_entity->emitMessage(message1);
+	}// damaged
+	//----------------------------------------------------------
+	
+	void CLife::addLife(int life){
+		if(_life<_maxLife){
+			if(_life+life<=_maxLife)
+				_life+=life;
+			else
+				_life=_maxLife;
 
-		//if ((_life <= 0) && (_entity->isPlayer())) {
-		//	Application::CBaseApplication::getSingletonPtr()->setState("menu");
-	}
+			Logic::CMessageHudLife *message1 = new Logic::CMessageHudLife();
+			message1->setHudLife(_life);
+			_entity->emitMessage(message1);
+		}
+	}// addLife
+	//----------------------------------------------------------
 
+
+	void CLife::addShield(int shield){
+		if(_shield<_maxShield){
+			if(_shield+shield<=_maxShield)
+				_shield+=shield;
+			else
+				_shield=_maxShield;
+
+			Logic::CMessageHudShield *message2 = new Logic::CMessageHudShield();
+			message2->setHudShield(_shield);
+			_entity->emitMessage(message2);
+		}
+	}// addShield
+	//----------------------------------------------------------
 
 } // namespace Logic
+
 

@@ -21,10 +21,16 @@ mover al jugador.
 #include "Logic/Entity/Components/ArrayGraphics.h"
 
 #include "Logic/Messages/MessageChangeWeapon.h"
+
 #include "Logic/Messages/MessageControl.h"
 #include "Logic/Messages/MessageMouse.h"
 
 #include <cassert>
+
+//PRUEBAS,QUITAR LUEGO LOS DOS INCLUDE SIGUIENTES
+#include "Logic/Messages/MessageAddLife.h"
+#include "Logic/Messages/MessageAddShield.h"
+
 
 #define TURN_FACTOR_X 0.001f
 #define TURN_FACTOR_Y 0.001f
@@ -69,10 +75,14 @@ namespace GUI {
 		if(_controlledAvatar)
 		{
 			if(key.keyId == GUI::Key::NUMBER1 || key.keyId == GUI::Key::NUMBER2 || key.keyId == GUI::Key::NUMBER3 || key.keyId == GUI::Key::NUMBER4 || 
-				key.keyId == GUI::Key::NUMBER5 || key.keyId == GUI::Key::NUMBER6 ){
+				key.keyId == GUI::Key::NUMBER5 || key.keyId == GUI::Key::NUMBER6
+				|| key.keyId == GUI::Key::NUMBER7 || key.keyId == GUI::Key::NUMBER8){
 				
 					Logic::CMessageChangeWeapon *message=new Logic::CMessageChangeWeapon();
 
+					//A quitar en un futuro, usado ahora para debuguear
+					Logic::CMessageAddLife *message2=new Logic::CMessageAddLife();
+					Logic::CMessageAddShield *message3=new Logic::CMessageAddShield();
 					switch(key.keyId)
 					{
 					case GUI::Key::NUMBER1:
@@ -93,8 +103,19 @@ namespace GUI {
 					case GUI::Key::NUMBER6:
 						message->setWeapon(5);
 						break;
+					case GUI::Key::NUMBER7:
+						message2->setAddLife(20);
+						_controlledAvatar->emitMessage(message2);
+						break;
+					case GUI::Key::NUMBER8:
+						message3->setAddShield(20);
+						_controlledAvatar->emitMessage(message3);
+						break;
 					}
+
 					_controlledAvatar->emitMessage(message);
+					
+					
 			}else{
 				Logic::CMessageControl *m=new Logic::CMessageControl();
 				switch(key.keyId)

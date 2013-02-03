@@ -91,6 +91,7 @@ namespace Logic {
 
 	CMessage * CMessageFactory::create(int name) const
 	{
+
 		
 		if(_table.count(name) > 0)
 		{
@@ -100,7 +101,6 @@ namespace Logic {
 				return _table.find(name)->second();
 		}
 		throw new std::exception("No existe la función de creación que se solicitó.");
-
 	}//create (int)
 
 

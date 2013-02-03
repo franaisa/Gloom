@@ -36,6 +36,30 @@ namespace Logic
 		if(entityInfo->hasAttribute("speed"))
 			_speed = entityInfo->getFloatAttribute("speed");
 
+		if(entityInfo->hasAttribute("powerSideJump"))
+			_powerSideJump = entityInfo->getFloatAttribute("powerSideJump");
+
+		if(entityInfo->hasAttribute("sumSpeedSideJump"))
+			_sumSpeedSideJump = entityInfo->getFloatAttribute("sumSpeedSideJump");
+
+		if(entityInfo->hasAttribute("sumSpeedSideJumpConcat"))
+			_sumSpeedSideJumpConcat = entityInfo->getFloatAttribute("sumSpeedSideJumpConcat");
+
+		if(entityInfo->hasAttribute("maxTimeSideJump"))
+			_maxTimeSideJump = entityInfo->getIntAttribute("maxTimeSideJump");
+
+		if(entityInfo->hasAttribute("maxTimeConcatSideJump"))
+			_maxTimeConcatSideJump = entityInfo->getIntAttribute("maxTimeConcatSideJump");
+
+		if(entityInfo->hasAttribute("powerJump"))
+			_powerJump = entityInfo->getFloatAttribute("powerJump");
+
+		if(entityInfo->hasAttribute("restitutionMoveAir"))
+			_restitutionMoveAir= entityInfo->getFloatAttribute("restitutionMoveAir");
+
+		if(entityInfo->hasAttribute("gravity"))
+			_gravity= entityInfo->getDoubleAttribute("gravity");
+
 		return true;
 
 	} // spawn
@@ -46,10 +70,10 @@ namespace Logic
 	{
 		IComponent::activate();
 
+		//Inicializacion variables de control ( salto, salto lateral, concatenacion salto lateral y rebote )
 		_jumping = false;
 		_jumpingControl = false;
-		_gravity=-0.0008; 
-		_speedJump=-0.02;
+		_speedJump=-0.02f;
 		_falling=true;
 		_caida=false;
 
@@ -208,7 +232,6 @@ namespace Logic
 
 	void CAvatarController::rebound()
 	{
-		std::cout << "REBOUND() DE AVATARCONTROLLER" << std::endl;
 		_rebound = true;
 	}//rebound
 	
@@ -216,6 +239,7 @@ namespace Logic
 
 	void CAvatarController::tick(unsigned int msecs)
 	{
+
 		IComponent::tick(msecs);
 
 		//Vector dirección que mandaremos a la física
@@ -241,6 +265,7 @@ namespace Logic
 		}
 		direction+= directionWalk;
 
+
 		//Control del tiempo para el salto lateral(al contar aqui cuando se activa no se cuenta el primer tick)
 		if(_jumpLeft!=0 || _jumpRight!=0){
 			_timeSideJump+=msecs;
@@ -252,15 +277,28 @@ namespace Logic
 		//Controlamos cuando soltamos la tecla para hacer que la siguiente vez se active el salto
 		if(_unpressLeft && _jumpLeft==1 && !_dontCountUntilUnpress){
 			_readySideJumpLeft=true;
+			_readySideJumpRight=false;
+			_jumpRight=0;
 			_unpressLeft=false;
 		}
 		else if(_unpressRight && _jumpRight==1 && !_dontCountUntilUnpress){
 			_readySideJumpRight=true;
+			_readySideJumpLeft=false;
+			_jumpLeft=0;
 			_unpressRight=false;
 		}
 		//Cuando soltemos la segunda presión entonces empezamos el conteo de presiones otra vez
 		else if((_unpressRight || _unpressLeft) && _dontCountUntilUnpress){
 			_dontCountUntilUnpress=false;
+			_unpressRight=false;
+			_unpressLeft=false;
+			_jumpRight=0;
+			_jumpLeft=0;
+			_readySideJumpLeft=false;
+			_readySideJumpRight=false;
+			_timeSideJump=0;
+		}
+		else if(_unpressRight || _unpressLeft){
 			_unpressRight=false;
 			_unpressLeft=false;
 		}
@@ -283,6 +321,7 @@ namespace Logic
 				_jumpLeft++;
 				_jumpRight=0;
 				_readySideJumpLeft=false;
+				_readySideJumpRight=false;
 			}
 			//contrario al de arriba
 			else if((_strafingRight  && _jumpRight==0 && !_dontCountUntilUnpress) || (_readySideJumpRight && _strafingRight)){
@@ -290,11 +329,12 @@ namespace Logic
 					_timeSideJump=0;
 				_jumpRight++;
 				_jumpLeft=0;
+				_readySideJumpLeft=false;
 				_readySideJumpRight=false;
 			}
 
 			//Si se activo el salto lateral hacia algun lado y está dentro del tiempo
-			if((_jumpRight==2 || _jumpLeft==2) && _timeSideJump<300){ // a 500 puedo encadenar saltos laterales
+			if((_jumpRight==2 || _jumpLeft==2) && _timeSideJump<_maxTimeSideJump){ 
 				_jumping=true; //Activo el salto
 				_sideJump=true;
 				_dontCountUntilUnpress=true;
@@ -305,8 +345,8 @@ namespace Logic
 				_readySideJumpRight=false;
 				_readySideJumpLeft=false;
 				//Control del salto lateral concatenado
-				//Si llevamos mas de uno hecho,no estoy cayendo y el tiempo es inferior a 500msecs activamos la concatenacion (dará velocidad)
-				if(_nConcatSideJump>1 && _timeConcatSideJump<500 && !_falling){
+				//Si llevamos mas de uno hecho,no estoy cayendo y el tiempo es inferior a _maxTimeConcatSideJump activamos la concatenacion (dará velocidad)
+				if(_nConcatSideJump>1 && _timeConcatSideJump<_maxTimeConcatSideJump && !_falling){
 					_activeConcat=true;
 					_timeConcatSideJump=0;
 					_sideContact=false;
@@ -320,7 +360,7 @@ namespace Logic
 				}
 			}
 			//Si se pasó el tiempo reseteo
-			else if(_timeSideJump>300){
+			else if(_timeSideJump>_maxTimeSideJump){
 				_timeSideJump=0;
 				_jumpLeft=0;
 				_jumpRight=0;
@@ -343,7 +383,7 @@ namespace Logic
 		//El PhysicController nos envía por mensaje el atributo _falling (devuelve el del frame anterior) y asi sabemos si esta tocando el suelo y puedo saltar
 		if(!_falling){
 			_canJump=true;
-			_speedJump=-0.02;
+			_speedJump=-0.02f;
 			_jumpingControl=false;
 			_caida=false;
 			_velocitySideJump=false;
@@ -399,11 +439,11 @@ namespace Logic
 		if(_jumping && _canJump){
 			//Si es un salto normal
 			if(!_sideJump){
-				_speedJump=0.2; // Velocidad explosiva inicial para el salto normal
+				_speedJump=_powerJump; // Velocidad explosiva inicial para el salto normal
 			}
 			//Sino es un salto lateral
 			else{
-				_speedJump=0.1; // Velocidad explosiva inicial para el salto lateral
+				_speedJump=_powerSideJump; // Velocidad explosiva inicial para el salto lateral
 				_velocitySideJump=true;
 			}
 			_jumpingControl=true;
@@ -414,8 +454,9 @@ namespace Logic
 		//Si estamos en un salto o cayendo hay que aplicar la dirección con la que se inició,
 		//además hay que penalizar cualquier intento de movimiento en el aire, aplicaremos un factor de X(el factor por el que multiplicas el movimiento actual) sobre la dirección actual
 		if(_jumpingControl || _caida){
-			direction.x=_direccionSaltoCaida.x+direction.x*0.8;
-			direction.z=_direccionSaltoCaida.z+direction.z*0.8;
+
+			direction.x=_direccionSaltoCaida.x+direction.x*_restitutionMoveAir;
+			direction.z=_direccionSaltoCaida.z+direction.z*_restitutionMoveAir;
 		}
 
 		//Normalizamos y luego calculamos la magnitud correcta para la dirección (sin contar el salto)
@@ -429,12 +470,13 @@ namespace Logic
 		}
 		else{
 			if(_activeConcat){
-				directXZY.x *= msecs * _speed * 2;//Factor que podemos parametrizar
-				directXZY.z *= msecs * _speed * 2;
+				directXZY.x *= msecs * _speed * _sumSpeedSideJumpConcat;
+				directXZY.z *= msecs * _speed * _sumSpeedSideJumpConcat;
 			}
 			else{
-				directXZY.x *= msecs * _speed * 1.5;//Factor que podemos parametrizar
-				directXZY.z *= msecs * _speed * 1.5;
+
+				directXZY.x *= msecs * _speed * _sumSpeedSideJump;
+				directXZY.z *= msecs * _speed * _sumSpeedSideJump;
 			}
 		}
 

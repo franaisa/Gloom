@@ -2,6 +2,8 @@
 
 #include "Logic/Entity/MessageFactory.h"
 
+#include <string>
+
 namespace Logic {
 
 	IMP_FACTORYMESSAGE(CMessageControl);
@@ -24,7 +26,8 @@ namespace Logic {
 	Net::CBuffer* CMessageControl::serialize() {
 		assert(_tempBuffer == NULL);
 
-		_tempBuffer = new Net::CBuffer(sizeof(_controlType));
+		_tempBuffer = new Net::CBuffer(sizeof(int) + sizeof(_controlType));
+		_tempBuffer->serialize(std::string("CMessageControl"));
 		_tempBuffer->serialize(_controlType);
 		
 		return _tempBuffer;
@@ -32,9 +35,7 @@ namespace Logic {
 	//----------------------------------------------------------
 
 	void CMessageControl::deserialize(Net::CBuffer& buffer) {
-		// NO EXISTE FUNCION QUE HAGA MATCH CON UN TIPO ENUM
-		// HAY QUE IMPLEMENTARSE UN DESERIALIZE DE UNSIGNED INT??
-		//buffer.deserialize(_controlType);
+		buffer.read(&_controlType, sizeof(_controlType));
 	}
 
 };

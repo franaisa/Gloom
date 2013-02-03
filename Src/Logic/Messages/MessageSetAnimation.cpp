@@ -2,6 +2,8 @@
 
 #include "Logic/Entity/MessageFactory.h"
 
+#include <string>
+
 namespace Logic {
 
 	IMP_FACTORYMESSAGE(CMessageSetAnimation);
@@ -34,7 +36,8 @@ namespace Logic {
 	Net::CBuffer* CMessageSetAnimation::serialize() {
 		assert(_tempBuffer == NULL);
 
-		_tempBuffer = new Net::CBuffer(sizeof(int) + sizeof(bool));
+		_tempBuffer = new Net::CBuffer((sizeof(int) * 2) + sizeof(bool));
+		_tempBuffer->serialize(std::string("CMessageSetAnimation"));
 		_tempBuffer->serialize(_string);
 		_tempBuffer->serialize(_bool);
 		

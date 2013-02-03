@@ -57,8 +57,6 @@ namespace Logic
 	void CCamera::activate()
 	{
 		IComponent::activate();
-
-		std::cout << CServer::getSingletonPtr()->getPlayer() << std::endl;
 		
 		_target = CServer::getSingletonPtr()->getPlayer();
 

@@ -172,8 +172,32 @@
     <ClCompile Include="..\..\Src\Logic\Entity\Components\Shoot.cpp">
       <Filter>Entity\Components\Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\HudOverlay.cpp">
+      <Filter>Entity\Components\Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Src\Logic\Entity\Components\ShootHammer.cpp">
       <Filter>Entity\Components\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Messages\MessageHudLife.cpp">
+      <Filter>Messages\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Messages\MessageHudShield.cpp">
+      <Filter>Messages\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Messages\MessageAddLife.cpp">
+      <Filter>Messages\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Messages\MessageAddShield.cpp">
+      <Filter>Messages\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\FloatingMovement.cpp">
+      <Filter>Entity\Components\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\SpawnItemManager.cpp">
+      <Filter>Entity\Components\Source Files</Filter>
+	  </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Messages\MessagePlayerDead.cpp">
+      <Filter>Messages\Source</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -318,11 +342,38 @@
     <ClInclude Include="..\..\Src\Logic\Messages\MessageDamaged.h">
       <Filter>Messages\Header</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\HudOverlay.h">
+      <Filter>Entity\Components\Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Entity\Components\ShootHammer.h">
       <Filter>Entity\Components\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Entity\MessageFactory.h">
       <Filter>Entity\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Messages\MessageHudLife.h">
+      <Filter>Messages\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Messages\MessageHudShield.h">
+      <Filter>Messages\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Messages\MessageAddShield.h">
+      <Filter>Messages\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Messages\MessageAddLife.h">
+      <Filter>Messages\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="FloatingMovement.h">
+      <Filter>Entity\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\FloatingMovement.h">
+      <Filter>Entity\Components\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\SpawnItemManager.h">
+      <Filter>Entity\Components\Header Files</Filter>
+	</ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Messages\MessagePlayerDead.h">
+      <Filter>Messages\Header</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

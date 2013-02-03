@@ -68,10 +68,10 @@ namespace Application {
 		//CEGUI::WindowManager::getSingletonPtr()->loadWindowLayout("Time.layout");
 		//_timeWindow = CEGUI::WindowManager::getSingleton().getWindow("Time");
 		//LAYOUT TIME
-		GUI::CServer::getSingletonPtr()->addLayoutToState(this, "Time");
+		//GUI::CServer::getSingletonPtr()->addLayoutToState(this, "Time");
 		
 		//LAYOUT MIRA
-		//GUI::CServer::getSingletonPtr()->addLayoutToState(this, "Mira");
+		GUI::CServer::getSingletonPtr()->addLayoutToState(this, "Mira");
 
 		return true;
 	} // init
@@ -111,7 +111,7 @@ namespace Application {
 		//_timeWindow->activate();
 
 		//LAYOUT TIME
-		GUI::CServer::getSingletonPtr()->activateGUI(this, "Time");
+		//GUI::CServer::getSingletonPtr()->activateGUI(this, "Time");
 	
 		//LAYOUT MIRA
 		//GUI::CServer::getSingletonPtr()->activateGUI(this, "Mira");
@@ -126,7 +126,7 @@ namespace Application {
 		//_timeWindow->setVisible(false);
 
 		//LAYOUT TIME
-		GUI::CServer::getSingletonPtr()->deactivateGUI();
+		//GUI::CServer::getSingletonPtr()->deactivateGUI();
 
 		// Desactivamos la clase que procesa eventos de entrada para 
 		// controlar al jugador.

@@ -24,10 +24,6 @@ Contiene la implementación del gestor de los mensajes de red durante la partida.
 #include "Net/buffer.h"
 #include "Entity\MessageFactory.h"
 #include "Logic/Messages/Message.h"
-	#include "Messages\MessageControl.h"
-	#include "Messages\MessageTransform.h"
-	#include "Messages\MessageAvatarWalk.h"
-	#include "Messages\MessageDamaged.h"
 
 #include "Application/BaseApplication.h"
 
@@ -87,7 +83,6 @@ namespace Logic {
 	void CGameNetMsgManager::activate() 
 	{
 		// TODO Escuchamos los mensajes de red. Engancharnos a Net::CManager
-		std::cout << "me estoy añadiendo como observer para escuchar mensajes del otro lado del tubo" << std::endl;
 		Net::CManager::getSingletonPtr()->addObserver(this);
 	} // activate
 
@@ -121,7 +116,7 @@ namespace Logic {
 			serialMsg.write(bufferAux->getbuffer(),bufferAux->getSize()); //Guardamos el mensaje en el buffer
 			
 		Net::CManager::getSingletonPtr()->send(serialMsg.getbuffer(), serialMsg.getSize());
-		std::cout << "Enviado mensaje tipo " << txMsg->getMessageType() << " a " << destID << std::endl;
+		//std::cout << "Enviado mensaje tipo " << txMsg->getMessageType() << " para la entidad " << destID << " de tamaño " << serialMsg.getSize() << std::endl;
 		LOG("TX ENTITY_MSG " << txMsg._type << " to EntityID " << destID);
 	} // sendEntityMessage
 
@@ -147,9 +142,15 @@ namespace Logic {
 		TEntityID destID; 
 			serialMsg.read(&destID, sizeof(destID));
 
+		
+		
+			
 		//leemos el mensaje que se ha enviado por la red
 		int typeMessage;
 		serialMsg.read(&typeMessage, sizeof(int));
+
+		std::cout << "Mensaje recibido de tipo " << typeMessage << " para la entidad " << destID << " de tamaño " << serialMsg.getSize() << std::endl;
+
 		CMessage * messageReceived = Logic::CMessageFactory::getSingletonPtr()->create(typeMessage);
 			messageReceived->deserialize(serialMsg);
 
@@ -157,7 +158,6 @@ namespace Logic {
 		CEntity* destEntity = Logic::CServer::getSingletonPtr()->getMap()->getEntityByID(destID);
 		if(destEntity != 0)
 			destEntity->emitMessage(messageReceived);
-		std::cout << "He conseguido sobrevivir al mensaje, soy el puto amo " <<  std::endl;
 		LOG("RX ENTITY_MSG " << rxMsg._type << " from EntityID " << destID);
 	} // processEntityMessage
 
@@ -168,7 +168,6 @@ namespace Logic {
 	// Aquí es donde debemos recibir los mensajes de red
 	void CGameNetMsgManager::dataPacketReceived(Net::CPaquete* packet)
 	{
-		std::cout << "Mensaje recibido, preparandose para morir " <<  std::endl;
 		Net::CBuffer rxSerialMsg; // Packet: "NetMessageType | extraData"
 			rxSerialMsg.write(packet->getData(),packet->getDataLength());
 			rxSerialMsg.reset();
