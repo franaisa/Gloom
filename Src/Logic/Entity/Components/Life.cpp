@@ -104,6 +104,8 @@ namespace Logic
 
 	} // process
 
+	//---------------------------------------------------------
+
 	void CLife::damaged(int damage){
 		if(_shield>0){
 			int porcentajeEscudo = _PorcentShield * damage * 0.01;

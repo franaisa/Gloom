@@ -215,6 +215,7 @@ namespace Logic
 
 	void CAvatarController::tick(unsigned int msecs)
 	{
+
 		IComponent::tick(msecs);
 
 		//Vector dirección que mandaremos a la física
@@ -240,6 +241,8 @@ namespace Logic
 		}
 		direction+= directionWalk;
 
+		
+
 		//Control del tiempo para el salto lateral(al contar aqui cuando se activa no se cuenta el primer tick)
 		if(_jumpLeft!=0 || _jumpRight!=0){
 			_timeSideJump+=msecs;
@@ -251,10 +254,14 @@ namespace Logic
 		//Controlamos cuando soltamos la tecla para hacer que la siguiente vez se active el salto
 		if(_unpressLeft && _jumpLeft==1 && !_dontCountUntilUnpress){
 			_readySideJumpLeft=true;
+			_readySideJumpRight=false;
+			_jumpRight=0;
 			_unpressLeft=false;
 		}
 		else if(_unpressRight && _jumpRight==1 && !_dontCountUntilUnpress){
 			_readySideJumpRight=true;
+			_readySideJumpLeft=false;
+			_jumpLeft=0;
 			_unpressRight=false;
 		}
 		//Cuando soltemos la segunda presión entonces empezamos el conteo de presiones otra vez
@@ -262,11 +269,21 @@ namespace Logic
 			_dontCountUntilUnpress=false;
 			_unpressRight=false;
 			_unpressLeft=false;
+			_jumpRight=0;
+			_jumpLeft=0;
+			_readySideJumpLeft=false;
+			_readySideJumpRight=false;
+			_timeSideJump=0;
+		}
+		else if(_unpressRight || _unpressLeft){
+			_unpressRight=false;
+			_unpressLeft=false;
 		}
 
 		//Izquierda/Derecha
 		if(_strafingLeft || _strafingRight)
 		{
+			//std::cout << "TICK" <<  std::endl;
 			//Si se presionaron ambas teclas
 			if(_strafingRight && _strafingLeft){
 				_timeSideJump=0;
@@ -282,6 +299,7 @@ namespace Logic
 				_jumpLeft++;
 				_jumpRight=0;
 				_readySideJumpLeft=false;
+				_readySideJumpRight=false;
 			}
 			//contrario al de arriba
 			else if((_strafingRight  && _jumpRight==0 && !_dontCountUntilUnpress) || (_readySideJumpRight && _strafingRight)){
@@ -289,6 +307,7 @@ namespace Logic
 					_timeSideJump=0;
 				_jumpRight++;
 				_jumpLeft=0;
+				_readySideJumpLeft=false;
 				_readySideJumpRight=false;
 			}
 
