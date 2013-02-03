@@ -299,8 +299,7 @@ namespace Net {
 		read(&yaw, sizeof(yaw));
 		read(&pitch, sizeof(pitch));
 		
-		Math::setPitch(pitch, data);
-		Math::setYaw(yaw, data);
+		Math::setPitchYaw(pitch,yaw, data);
 		data.setTrans(transform);
 	}
 

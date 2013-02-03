@@ -240,6 +240,22 @@ namespace Math
 		Math::pitch(turn,transform);
 
 	} // setPitch
+
+	/**
+	Establece un subviraje a una matriz de transformación.
+
+	@param turn Giro en radianes que se quiere etablecer.
+	@param transform Matriz de transformación a modificar.
+	*/
+	static void setPitchYaw(float turnP, float turnY, Matrix4& transform) 
+	{
+		// Reiniciamos la matriz de rotación
+		transform = Matrix3::IDENTITY;
+		// Sobre esta rotamos.
+		Math::pitch(turnP,transform);
+		Math::yaw(turnY,transform);
+
+	} // setPitch
 	
 	/**
 	Crea un vector unitario de dirección en el plano XZ a partir 
