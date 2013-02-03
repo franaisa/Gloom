@@ -48,7 +48,6 @@ namespace Logic
 
 	void CShootHammer::shoot(){
 		
-		std::cout << "DISPARO HAMMER" << std::endl;
 		//Generación del rayo habiendo obtenido antes el origen y la dirección
 		Graphics::CCamera* camera = Graphics::CServer::getSingletonPtr()->getActiveScene()->getCamera();
 		
@@ -61,7 +60,7 @@ namespace Logic
 			Vector3 direction = camera->getTargetCameraPosition() - camera->getCameraPosition();
 			direction.normalise();
 			//El origen debe ser mínimo la capsula y por si miramos al suelo la separación mínima debe ser 1.5f ( en un futuro es probable que sea recomendable cambiar por no chocar con el grupo de uno mismo )
-			Vector3 origin = camera->getCameraPosition() + ((_capsuleRadius + 1.5f) * direction);
+			Vector3 origin = camera->getCameraPosition() + (_capsuleRadius * direction);
 
 
 			//Me dispongo a calcular la desviacion del arma, en el map.txt se pondra en grados de dispersion (0 => sin dispersion)
@@ -113,7 +112,7 @@ namespace Logic
 			//////////////////////////////////fin del dibujado del rayo
 
 			//Rayo lanzado por el servidor de físicas de acuerdo a la distancia de potencia del arma
-			CEntity *entityCollision = Physics::CServer::getSingletonPtr()->raycastClosest(ray, _distance);
+			CEntity *entityCollision = Physics::CServer::getSingletonPtr()->raycastClosestInverse(ray, _distance,3);
 		
 			//Si hay colisión envíamos a dicha entidad un mensaje de daño
 			if(entityCollision)
