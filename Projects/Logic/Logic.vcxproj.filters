@@ -337,7 +337,4 @@
       <Filter>Messages\Header</Filter>
     </ClInclude>
   </ItemGroup>
-  <ItemGroup>
-    <None Include="LogicDiagramInc-0202.cd" />
-  </ItemGroup>
 </Project>

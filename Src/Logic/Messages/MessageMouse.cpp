@@ -4,12 +4,14 @@
 
 namespace Logic {
 
+	IMP_FACTORYMESSAGE(CMessageMouse);
+
 	CMessageMouse::CMessageMouse(): CMessageControl(){
 	} //
 	//----------------------------------------------------------
 	void CMessageMouse::setMouse(float mouse[]){
-		_mouse[0]=mouse[0];
-		_mouse[1]=mouse[1];
+		_mouse[0] = mouse[0];
+		_mouse[1] = mouse[1];
 	}//
 	//----------------------------------------------------------
 

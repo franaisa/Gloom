@@ -27,8 +27,6 @@ namespace Logic {
 
 		// IMPLEMENTAR EL ENVIO DEL MATRIX4
 
-		std::string tempString = "CMessageTransform";
-
 		_tempBuffer = new Net::CBuffer(sizeof(int)+( sizeof(float) * 5));
 		_tempBuffer->serialize(std::string("CMessageTransform"));
 		_tempBuffer->serialize(_transform);
