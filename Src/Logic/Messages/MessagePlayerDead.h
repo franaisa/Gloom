@@ -15,7 +15,7 @@ namespace Logic {
 		virtual Net::CBuffer* serialize();
 		virtual void deserialize(Net::CBuffer& buffer);
 	private:
-		 int _playerDead;
+		 bool _playerDead;
 	};
 	REG_FACTORYMESSAGE(CMessagePlayerDead);
 };

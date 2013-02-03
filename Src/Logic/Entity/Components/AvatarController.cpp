@@ -48,8 +48,8 @@ namespace Logic
 
 		_jumping = false;
 		_jumpingControl = false;
-		_gravity=-0.0008; 
-		_speedJump=-0.02;
+		_gravity=-0.0008f; 
+		_speedJump=-0.02f;
 		_falling=true;
 		_caida=false;
 
@@ -361,7 +361,7 @@ namespace Logic
 		//El PhysicController nos envía por mensaje el atributo _falling (devuelve el del frame anterior) y asi sabemos si esta tocando el suelo y puedo saltar
 		if(!_falling){
 			_canJump=true;
-			_speedJump=-0.02;
+			_speedJump=-0.02f;
 			_jumpingControl=false;
 			_caida=false;
 			_velocitySideJump=false;
@@ -432,8 +432,8 @@ namespace Logic
 		//Si estamos en un salto o cayendo hay que aplicar la dirección con la que se inició,
 		//además hay que penalizar cualquier intento de movimiento en el aire, aplicaremos un factor de X(el factor por el que multiplicas el movimiento actual) sobre la dirección actual
 		if(_jumpingControl || _caida){
-			direction.x=_direccionSaltoCaida.x+direction.x*0.8;
-			direction.z=_direccionSaltoCaida.z+direction.z*0.8;
+			direction.x=_direccionSaltoCaida.x+direction.x*0.8f;
+			direction.z=_direccionSaltoCaida.z+direction.z*0.8f;
 		}
 
 		//Normalizamos y luego calculamos la magnitud correcta para la dirección (sin contar el salto)
@@ -451,8 +451,8 @@ namespace Logic
 				directXZY.z *= msecs * _speed * 2;
 			}
 			else{
-				directXZY.x *= msecs * _speed * 1.5;//Factor que podemos parametrizar
-				directXZY.z *= msecs * _speed * 1.5;
+				directXZY.x *= msecs * _speed * 1.5f;//Factor que podemos parametrizar
+				directXZY.z *= msecs * _speed * 1.5f;
 			}
 		}
 
