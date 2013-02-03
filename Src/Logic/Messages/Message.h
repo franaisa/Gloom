@@ -52,7 +52,8 @@ namespace Logic
 			HUD_LIFE				= 0x0000000E,
 			HUD_SHIELD				= 0x0000000F,
 			ADD_LIFE				= 0x00000010,
-			ADD_SHIELD				= 0x00000011
+			ADD_SHIELD				= 0x00000011,
+			PLAYER_DEAD				= 0x00000012
 		};
 	}
 

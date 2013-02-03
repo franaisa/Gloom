@@ -11,6 +11,27 @@ Map = {
 		physic_normal = { 0, 1, 0 },
 		physic_file = "media/models/scenario.RepX",
 		physic_group = 0,
+		
+		
+	},
+	
+	Orb = {
+		type = "ItemSpawn",
+		position = {10.0, 10.0, 10.0},
+		model = "marine.mesh",
+		id = "orb",
+		reward = 15,
+		respawnTime = 5,
+		orbitalOffset = 10,
+		orbitalSpeed = 5,
+		physic_entity = "rigid",
+		physic_trigger = true,
+		physic_type = "static",
+		physic_shape = "box",
+		physic_dimensions = { 3, 3, 3 },
+		physic_height = 6,
+		physic_radius = 0.5,
+		physic_mass = 10,
 	},
 	
 	Enemigo1 = {
@@ -60,14 +81,23 @@ Map = {
 		position = {0, 8, 0},
 		orientation = 180,
 		life = 12,
-		shield =12,
-		maxShield=100,
-		maxLife=120,
-		PorcentShield=20,
-		lifeTimeDamage=1,
-		lifeDamage=6,
+		shield = 0,
+		maxShield = 100,
+		maxLife = 120,
+		PorcentShield = 20,
+		lifeTimeDamage = 1,
+		lifeDamage = 1,
+		playerDead = false,
 		isPlayer = true,
 		speed = 0.12,
+		powerSideJump = 0.1,
+		sumSpeedSideJump = 1.5,
+		sumSpeedSideJumpConcat = 2.0,
+		maxTimeSideJump = 300,
+		maxTimeConcatSideJump = 500,
+		powerJump = 0.2,
+		restitutionMoveAir = 0.8,
+		gravity = -0.0008,
 		physic_shape = "capsule",
 		physic_radius = 6,
 		physic_height = 6,
@@ -114,6 +144,22 @@ Map = {
 			weaponShotGunDistance = 100.0,
 			weaponShotGunCoolDown = 2.0,
 			weaponShotGunAmmo = 0,
+			
+			hubTamCuadro = 10,
+		
+		
+		hudMira = 3;
+		hudHealthX = 0.2;
+		hudHealthY = 0.8;
+		hudHealthSize = 0.075;
+		
+		hudShieldX = 0.2;
+		hudShieldY = 0.9;
+		hudShieldSize = 0.075;
+		
+		hudShield2X = 0.4;
+		hudShield2Y = 0.9;
+		hudShield2Size = 0.075;
 	},
 	
 	Camera = {

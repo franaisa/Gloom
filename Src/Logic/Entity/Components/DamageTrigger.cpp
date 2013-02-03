@@ -48,11 +48,11 @@ namespace Logic
 
 	void CDamageTrigger::process(CMessage *message)
 	{
-		switch(message->getMessageType())
-		{
-			// TODO: 3. Procesar mensajes de tipo TOUCHED
-			// Enviar un mensaje de tipo DAMAGED a la entidad tocada
-		}
+		//switch(message->getMessageType())
+		//{
+		//	// TODO: 3. Procesar mensajes de tipo TOUCHED
+		//	// Enviar un mensaje de tipo DAMAGED a la entidad tocada
+		//}
 
 	} // process
 

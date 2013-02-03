@@ -81,6 +81,11 @@ namespace Logic
 		Sumar escudo
 		*/
 		void addShield(int shield);
+
+		/**
+		Manda un mensaje cuando el jugador muere
+		*/
+		void sendMessagePlayerDead();
 	protected:
 
 		/**
@@ -115,7 +120,13 @@ namespace Logic
 			/**
 		Porcentaje de daño que absorve el escudo a la entidad
 		*/
-		int _PorcentShield;
+		int _porcentShield;
+
+			/**
+		Indica si el jugador está muerto.
+		*/
+		bool _playerDead;
+
 	}; // class CLife
 
 	REG_FACTORY(CLife);

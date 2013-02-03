@@ -79,6 +79,8 @@ namespace GUI {
 				|| key.keyId == GUI::Key::NUMBER7 || key.keyId == GUI::Key::NUMBER8){
 				
 					Logic::CMessageChangeWeapon *message=new Logic::CMessageChangeWeapon();
+
+					//A quitar en un futuro, usado ahora para debuguear
 					Logic::CMessageAddLife *message2=new Logic::CMessageAddLife();
 					Logic::CMessageAddShield *message3=new Logic::CMessageAddShield();
 					switch(key.keyId)
