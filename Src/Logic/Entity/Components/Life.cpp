@@ -120,7 +120,7 @@ namespace Logic
 
 	void CLife::damaged(int damage){
 		if(_shield>0){
-			int porcentajeEscudo = _porcentShield * damage * 0.01;
+			int porcentajeEscudo = _porcentShield * damage * 0.01f;
 			int porcentajeVida = damage - porcentajeEscudo;
 			if((_shield>=porcentajeEscudo)){
 				_shield-=porcentajeEscudo;

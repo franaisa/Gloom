@@ -196,7 +196,7 @@ namespace Logic
 		Ogre::OverlayContainer* panelHealth = static_cast<Ogre::OverlayContainer*>( overlayManager.createOverlayElement( "Panel", "panelHealth" ) );
 		panelHealth->setMetricsMode(Ogre::GMM_PIXELS);
 		panelHealth->setPosition( 3*relativeWidth, 29*relativeHeight);
-		panelHealth->setDimensions( relativeWidth*1.5, relativeHeight*1.5 );
+		panelHealth->setDimensions( relativeWidth*1.5f, relativeHeight*1.5f );
         panelHealth->setMaterialName("hudHealth");
 
 				_healthTextArea = static_cast<Ogre::TextAreaOverlayElement*>(
@@ -205,7 +205,7 @@ namespace Logic
 				
 				
 				_healthTextArea->setMetricsMode(Ogre::GMM_PIXELS);
-				_healthTextArea->setPosition(-relativeWidth*1.5, 0);
+				_healthTextArea->setPosition(-relativeWidth*1.5f, 0);
 				_healthTextArea->setDimensions(relativeWidth*2, relativeHeight*2);
 					std::stringstream sHealth;//create a stringstream
 					sHealth << _health;//add number to the stream
@@ -226,7 +226,7 @@ namespace Logic
 		Ogre::OverlayContainer* panelShield = static_cast<Ogre::OverlayContainer*>( overlayManager.createOverlayElement( "Panel", "panelShield" ) );
 		panelShield->setMetricsMode(Ogre::GMM_PIXELS);
 		panelShield->setPosition( 7*relativeWidth, 29*relativeHeight);
-		panelShield->setDimensions( relativeWidth*1.5, relativeHeight*1.5 );
+		panelShield->setDimensions( relativeWidth*1.5f, relativeHeight*1.5f );
         panelShield->setMaterialName("hudShield");
 
 
@@ -234,7 +234,7 @@ namespace Logic
 				overlayManager.createOverlayElement("TextArea", "textAreaPanelShield"));
 				
 				_shieldTextArea->setMetricsMode(Ogre::GMM_PIXELS);
-				_shieldTextArea->setPosition(-relativeWidth*1.5, 0);
+				_shieldTextArea->setPosition(-relativeWidth*1.5f, 0);
 				_shieldTextArea->setDimensions(relativeWidth*2, relativeHeight*2);
 					std::stringstream sShield;//create a stringstream
 					sShield << _shield;//add number to the stream

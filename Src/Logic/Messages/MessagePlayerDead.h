@@ -13,6 +13,7 @@ namespace Logic {
 		
 		virtual Net::CBuffer* serialize();
 		virtual void deserialize(Net::CBuffer& buffer);
+
 	};
 	REG_FACTORYMESSAGE(CMessagePlayerDead);
 };
