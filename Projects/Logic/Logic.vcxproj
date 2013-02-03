@@ -119,6 +119,7 @@
     <ClCompile Include="..\..\Src\Logic\Messages\MessageHudShield.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageKinematicMove.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageMouse.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Messages\MessagePlayerDead.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageRebound.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageSetAnimation.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageStopAnimation.cpp" />
@@ -175,6 +176,7 @@
     <ClInclude Include="..\..\Src\Logic\Messages\MessageHudShield.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageKinematicMove.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageMouse.h" />
+    <ClInclude Include="..\..\Src\Logic\Messages\MessagePlayerDead.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageRebound.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageSetAnimation.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageStopAnimation.h" />
