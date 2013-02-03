@@ -6,6 +6,7 @@ namespace Logic {
 
 	IMP_FACTORYMESSAGE(CMessagePlayerDead);
 
+	
 	CMessagePlayerDead::CMessagePlayerDead() : CMessage(TMessageType::PLAYER_DEAD) {
 		// Nada que hacer
 	}//
