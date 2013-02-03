@@ -42,7 +42,15 @@ namespace Logic
 		Constructor por defecto; en la clase base no hace nada.
 		*/
 		CLife() : IComponent(), _life(100) {}
-		
+
+		/**
+		Método llamado en cada frame que actualiza el estado del componente de la vida,
+		<p>
+		la cual bajará cada n milisegundos.
+
+		@param msecs Milisegundos transcurridos desde el último tick.
+		*/
+		virtual void tick(unsigned int msecs);
 		/**
 		Inicialización del componente usando la descripción de la entidad que hay en 
 		el fichero de mapa.
@@ -63,14 +71,51 @@ namespace Logic
 		Al recibir daño quitamos vida
 		*/
 		void damaged(int damage);
-
+		
+		/**
+		Sumar vida 
+		*/
+		void addLife(int life);
+		
+		/**
+		Sumar escudo
+		*/
+		void addShield(int shield);
 	protected:
 
 		/**
 		Vida de la entidad
 		*/
 		int _life;
+		/**
+		Máxima vida de la entidad
+		*/
+		int _maxLife;
+		/**
+		MáximO escudo de la entidad
+		*/
+		int _maxShield;
+		/**
+		Cantidad de vida restada automáticamente a la entidad al pasar el tiempo en la entidad
+		*/
+		int _lifeDamage;
+		/**
+		Cada cuanto tiempo baja la vida en la entidad, usado en el tick
+		*/
+		unsigned int _lifeTimeDamage;
+		/**
+		Variable acumulativa usada en el tick en milisegundos.
+		*/
+		unsigned int _varLifeCumulative;
 
+		/**
+		Escudo de la entidad
+		*/
+		int _shield;
+			/**
+		Porcentaje de daño que absorve el escudo a la entidad
+		*/
+		int _PorcentShield;
 	}; // class CLife
 
 	REG_FACTORY(CLife);

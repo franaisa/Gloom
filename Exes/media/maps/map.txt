@@ -12,21 +12,7 @@ Map = {
 		physic_file = "media/models/scenario.RepX",
 		physic_group = 0,
 		
-		hubTamCuadro = 10,
 		
-		
-		hudMira = 3;
-		hudHealthX = 0.2;
-		hudHealthY = 0.8;
-		hudHealthSize = 0.075;
-		
-		hudShieldX = 0.2;
-		hudShieldY = 0.9;
-		hudShieldSize = 0.075;
-		
-		hudShield2X = 0.4;
-		hudShield2Y = 0.9;
-		hudShield2Size = 0.075;
 	},
 	
 	Enemigo1 = {
@@ -34,6 +20,10 @@ Map = {
 		position = {0, 5, -10},
 		orientation = 90,
 		life = 100.0,
+		maxShield=100,
+		maxLife=120,
+		shield=10.0,
+		PorcentShield=23,
 		isPlayer = false,
 		model = "marine.mesh",
 		physic_entity = "rigid",
@@ -51,6 +41,10 @@ Map = {
 		position = {0, 5, 10},
 		orientation = 90,
 		life = 100.0,
+		shield=100.0,
+		maxShield=100,
+		maxLife=120,
+		PorcentShield=23,
 		isPlayer = false,
 		model = "marine.mesh",
 		physic_entity = "rigid",
@@ -60,14 +54,20 @@ Map = {
 		physic_height = 6,
 		physic_radius = 0.5,
 		physic_mass = 10,
-		physic_group = 1,
+		physic_group = 2,
 	},
 	
 	David = {
 		type = "Player",
 		position = {0, 8, 0},
 		orientation = 180,
-		life = 100.0,
+		life = 12,
+		shield = 0,
+		maxShield = 100,
+		maxLife = 120,
+		PorcentShield = 20,
+		lifeTimeDamage = 1,
+		lifeDamage = 1,
 		isPlayer = true,
 		speed = 0.12,
 		physic_shape = "capsule",
@@ -77,7 +77,21 @@ Map = {
 		accel = 0.001,
 		angularAccel = 0.00001,
 		movementTolerance = 7.0,
-		numWeapons = 2,
+		numWeapons = 3,
+
+			weaponHammerName = "Hammer",
+			weaponHammerModel = "Katana.mesh",
+			weaponHammerModelYaw = 1.55,
+			weaponHammerModelPitch = -0.80,
+			weaponHammerOffset = {5.0, 4.0, 5.0},
+			weaponHammerDamage = 20.0,
+			weaponHammerDamageReflect = 2,
+			weaponHammerDispersion = 0,
+			weaponHammerNumberShoots = 1,
+			weaponHammerDistance = 7.0,
+			weaponHammerCoolDown = 2.0,
+			weaponHammerAmmo = 0,
+		
 			weaponMiniGunName = "MiniGun",
 			weaponMiniGunModel = "AK47.mesh",
 			weaponMiniGunModelYaw = 1.55,
@@ -89,6 +103,7 @@ Map = {
 			weaponMiniGunDistance = 100.0,
 			weaponMiniGunCoolDown = 2.0,
 			weaponMiniGunAmmo = 0,
+
 			
 			weaponShotGunName = "Shotgun",
 			weaponShotGunModel = "UziLeft.mesh",
@@ -101,6 +116,22 @@ Map = {
 			weaponShotGunDistance = 100.0,
 			weaponShotGunCoolDown = 2.0,
 			weaponShotGunAmmo = 0,
+			
+			hubTamCuadro = 10,
+		
+		
+		hudMira = 3;
+		hudHealthX = 0.2;
+		hudHealthY = 0.8;
+		hudHealthSize = 0.075;
+		
+		hudShieldX = 0.2;
+		hudShieldY = 0.9;
+		hudShieldSize = 0.075;
+		
+		hudShield2X = 0.4;
+		hudShield2Y = 0.9;
+		hudShield2Size = 0.075;
 	},
 	
 	Camera = {

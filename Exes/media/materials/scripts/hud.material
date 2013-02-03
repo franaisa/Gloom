@@ -79,3 +79,145 @@ material cuadroArmas
 		}
 	}
 }
+
+material katana
+{
+	technique
+	{
+		pass
+		{
+			depth_check off
+			depth_write off
+			scene_blend alpha_blend
+			lighting off
+			cull_hardware none
+			cull_software none
+			
+			texture_unit katana
+			{
+				texture katana.png 2d
+			}
+		}
+	}
+}
+material francotirador
+{
+	technique
+	{
+		pass
+		{
+			depth_check off
+			depth_write off
+			scene_blend alpha_blend
+			lighting off
+			cull_hardware none
+			cull_software none
+			
+			texture_unit katana
+			{
+				texture francotirador.png 2d
+			}
+		}
+	}
+}
+material francotiradorBN
+{
+	technique
+	{
+		pass
+		{
+			depth_check off
+			depth_write off
+			scene_blend alpha_blend
+			lighting off
+			cull_hardware none
+			cull_software none
+			
+			texture_unit katana
+			{
+				texture francotiradorBN.png 2d
+			}
+		}
+	}
+}
+material francotiradorSinBalas
+{
+	technique
+	{
+		pass
+		{
+			depth_check off
+			depth_write off
+			scene_blend alpha_blend
+			lighting off
+			cull_hardware none
+			cull_software none
+			
+			texture_unit katana
+			{
+				texture francotiradorSinBalas.png 2d
+			}
+		}
+	}
+}
+
+material escopeta
+{
+	technique
+	{
+		pass
+		{
+			depth_check off
+			depth_write off
+			scene_blend alpha_blend
+			lighting off
+			cull_hardware none
+			cull_software none
+			
+			texture_unit escopeta
+			{
+				texture escopetas.png 2d
+			}
+		}
+	}
+}
+material escopetaBN
+{
+	technique
+	{
+		pass
+		{
+			depth_check off
+			depth_write off
+			scene_blend alpha_blend
+			lighting off
+			cull_hardware none
+			cull_software none
+			
+			texture_unit escopeta
+			{
+				texture escopetasBN.png 2d
+			}
+		}
+	}
+}
+material escopetaSinBalas
+{
+	technique
+	{
+		pass
+		{
+			depth_check off
+			depth_write off
+			scene_blend alpha_blend
+			lighting off
+			cull_hardware none
+			cull_software none
+			
+			texture_unit escopeta
+			{
+				texture escopetasSinBalas.png 2d
+			}
+		}
+	}
+}

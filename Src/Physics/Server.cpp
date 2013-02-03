@@ -237,6 +237,7 @@ void CServer::createScene ()
 
 	// Crear la escena física
 	_scene = _physics->createScene(sceneDesc);
+
 	assert(_scene && "Error en PxPhysics::createScene");
 }
 
@@ -503,15 +504,18 @@ PxCapsuleController* CServer::createCapsuleController(const Vector3 &position, f
 	desc.radius = radius;
 	desc.material = _defaultMaterial;
 	desc.climbingMode = PxCapsuleClimbingMode::eEASY;
-	desc.slopeLimit = 0.707f;
+	//desc.slopeLimit = 0.707f;
 	desc.callback = _collisionManager;   // Establecer gestor de colisiones
 	desc.userData = (void *) component;  // Anotar el componente lógico asociado al controller
-	
 	PxCapsuleController *controller = (PxCapsuleController *)
 		 _controllerManager->createController(*_physics, _scene, desc);
 	
+
 	// Anotar el componente lógico asociado al actor dentro del controller (No es automático)
 	controller->getActor()->userData = (void *) component;
+
+	//Establecemos el grupo del jugador al 3
+	PxSetGroup(*controller->getActor(), 3);
 
 	return controller;
 }
@@ -608,6 +612,41 @@ Logic::CEntity* CServer::raycastClosest(const Ray& ray, float maxDist, int group
 	for (int i=0; i<nHits; i++) {
 		PxRigidActor *actor = &hits[i].shape->getActor();
 		if (PxGetGroup(*actor) == group) {
+			IPhysics *component = (IPhysics *) actor->userData;
+			if (component) {
+				return component->getEntity();
+			}
+		}
+	}
+
+	return NULL;
+
+	// Nota: seguro que se puede hacer de manera mucho más eficiente usando los filtros
+	// de PhysX.
+}
+
+//--------------------------------------------------------
+
+Logic::CEntity* CServer::raycastClosestInverse(const Ray& ray, float maxDist, int group) const 
+{
+	assert(_scene);
+
+	// Establecer parámettros del rayo
+	PxVec3 origin = Vector3ToPxVec3(ray.getOrigin());      // origen     
+	PxVec3 unitDir = Vector3ToPxVec3(ray.getDirection());  // dirección normalizada   
+	PxReal maxDistance = maxDist;                          // distancia máxima
+	PxRaycastHit hit;                 
+	const PxSceneQueryFlags outputFlags;				   // Info que queremos recuperar	
+
+	// Lanzar el rayo
+	PxRaycastHit hits[2];
+	bool blockingHit;
+	PxI32 nHits = _scene->raycastMultiple(origin, unitDir, maxDistance, outputFlags, hits, 2, blockingHit); 
+	
+	// Buscar un actot que pertenezca al grupo de colisión indicado
+	for (int i=0; i<nHits; i++) {
+		PxRigidActor *actor = &hits[i].shape->getActor();
+		if (PxGetGroup(*actor) != group) {
 			IPhysics *component = (IPhysics *) actor->userData;
 			if (component) {
 				return component->getEntity();

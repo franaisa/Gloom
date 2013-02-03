@@ -80,7 +80,6 @@ namespace Application {
 	void CLobbyServerState::activate() 
 	{
 		CApplicationState::activate();
-		std::cout << "ha ido bien el poner el lobbyserver" << std::endl;
 		// Activamos la ventana que nos muestra el menú y activamos el ratón.
 		CEGUI::System::getSingletonPtr()->setGUISheet(_menuWindow);
 		_menuWindow->setVisible(true);
@@ -92,7 +91,6 @@ namespace Application {
 
 		CEGUI::WindowManager::getSingleton().getWindow("NetLobbyServer/Status")
 			->setText("Status: Server up. Waiting for clients ...");
-		std::cout << "ha ido bien el poner el terminado de activar lobbyserver" << std::endl;
 	} // activate
 
 	//--------------------------------------------------------
@@ -348,7 +346,6 @@ namespace Application {
 		if(_waiting)
 		{
 			
-			std::cout << "Server: paquete de conexion recibido" << std::endl;
 			
 			//Mostramos un poco de información en el status
 			char id[100];

@@ -20,6 +20,7 @@ de la entidad.
 #include "Logic/Messages/MessageCollisionDown.h"
 #include "Logic/Messages/MessageAvatarWalk.h"
 #include "Logic/Messages/MessageMouse.h"
+#include "Logic/Messages/MessageRebound.h"
 
 namespace Logic 
 {
@@ -69,6 +70,7 @@ namespace Logic
 		_sideFly=false;
 		_sideContact=false;
 
+		_rebound=false;
 
 		//return true;
 	} // activate
@@ -85,7 +87,8 @@ namespace Logic
 	bool CAvatarController::accept(CMessage *message)
 	{
 		return message->getMessageType() == Message::CONTROL || 
-			message->getMessageType() == Message::COLLISION_DOWN;
+			message->getMessageType() == Message::COLLISION_DOWN ||
+			message->getMessageType() == Message::REBOUND;
 	} // accept
 	
 	//---------------------------------------------------------
@@ -118,6 +121,10 @@ namespace Logic
 			break;
 		case Message::COLLISION_DOWN:
 			_falling=((CMessageCollisionDown*)message)->getCollisionDown();
+			break;
+		case Message::REBOUND:
+			_dirRebound=((CMessageRebound*)message)->getDir();
+			rebound();
 			break;
 		}
 
@@ -196,6 +203,13 @@ namespace Logic
 	{
 		_jumping = true;
 	}//jump
+	
+	//---------------------------------------------------------
+
+	void CAvatarController::rebound()
+	{
+		_rebound = true;
+	}//rebound
 	
 	//---------------------------------------------------------
 
@@ -323,6 +337,7 @@ namespace Logic
 		}
 		direction += directionStrafe;
 
+
 		//Control del salto (normal y lateral)
 		//El PhysicController nos envía por mensaje el atributo _falling (devuelve el del frame anterior) y asi sabemos si esta tocando el suelo y puedo saltar
 		if(!_falling){
@@ -345,6 +360,15 @@ namespace Logic
 			_canJump=false;
 			_sideJump=false;
 			_jumping=false;
+		}
+
+
+		//Si active el rebote, activo un salto con una dirección en concreto (la que me pasaron en el mensaje rebote) y desactivo el rebote
+		if(_rebound){
+			_jumping=true;
+			_canJump=true;
+			direction=_dirRebound;
+			_rebound=false;
 		}
 
 		//Aumento el tiempo de conteo para la concatenacion de saltos

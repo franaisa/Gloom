@@ -1,7 +1,8 @@
 #include "MessageStopAnimation.h"
 
-
 #include "Logic/Entity/MessageFactory.h"
+
+#include <string>
 
 namespace Logic {
 
@@ -35,7 +36,8 @@ namespace Logic {
 	Net::CBuffer* CMessageStopAnimation::serialize() {
 		assert(_tempBuffer == NULL);
 
-		_tempBuffer = new Net::CBuffer(sizeof(int) + sizeof(bool));
+		_tempBuffer = new Net::CBuffer((sizeof(int) * 2) + sizeof(bool));
+		_tempBuffer->serialize(std::string("CMessageStopAnimation"));
 		_tempBuffer->serialize(_string);
 		_tempBuffer->serialize(_bool);
 		

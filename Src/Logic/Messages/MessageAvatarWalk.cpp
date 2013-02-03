@@ -1,6 +1,8 @@
 #include "MessageAvatarWalk.h"
 #include "Logic/Entity/MessageFactory.h"
 
+#include <string>
+
 namespace Logic {
 
 	IMP_FACTORYMESSAGE(CMessageAvatarWalk);
@@ -24,7 +26,8 @@ namespace Logic {
 	Net::CBuffer* CMessageAvatarWalk::serialize() {
 		assert(_tempBuffer == NULL);
 
-		_tempBuffer = new Net::CBuffer(sizeof(_direction.x) * 3);
+		_tempBuffer = new Net::CBuffer(sizeof(int) + sizeof(_direction.x) * 3);
+		_tempBuffer->serialize(std::string("CMessageAvatarWalk"));
 		_tempBuffer->serialize(_direction);
 		
 		return _tempBuffer;

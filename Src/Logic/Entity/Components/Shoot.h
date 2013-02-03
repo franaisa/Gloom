@@ -51,27 +51,23 @@ namespace Logic
 
 	protected:
 
-		
-		struct TWeapon{
-			std::string name;
-			unsigned char damage;
-			float dispersion;
-			float distance;
-			unsigned char numberShoots;
-			unsigned char coolDown;
-			int ammo; //esta como int, por que si es -1 esq no tienes esta arma.
-		};
+		/**
+		caracteristicas de armas
+		*/
+		std::string _name;
+		unsigned char _damage;
+		unsigned char _damageReflect;
+		float _dispersion;
+		float _distance;
+		unsigned char _numberShoots;
+		unsigned char _coolDown;
+		int _ammo; //esta como int, por que si es -1 esq no tienes esta arma.
 
 		std::string _nameWeapon;
 		/**
 		Contendra el radio de la capsula leido del mapa
 		*/
 		float _capsuleRadius;
-
-		/**
-		vector con caracteristicas de armas
-		*/
-		TWeapon _weapon;
 
 		/**
 		Para comprobar que un arma esta disparando y no puede disparar 

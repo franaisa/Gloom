@@ -27,6 +27,10 @@ Contiene la implementación del componente que controla la vida de una entidad.
 #include <OgreOverlay.h>
 #include <OgreTextAreaOverlayElement.h>
 
+
+#include "Logic/Messages/MessageHudLife.h"
+#include "Logic/Messages/MessageHudShield.h"
+
 namespace Logic 
 {
 	IMP_FACTORY(CHudOverlay);
@@ -42,25 +46,29 @@ namespace Logic
 		Ogre::OverlayManager& overlayManager = Ogre::OverlayManager::getSingleton();
 		Ogre::Overlay* overlay = overlayManager.create( "HudOverlay" );
 
-		int height = overlayManager.getViewportHeight();
-		int width = overlayManager.getViewportWidth();
+		float height = overlayManager.getViewportHeight();
+		float width = overlayManager.getViewportWidth();
 
-		int relativeWidth = width/26;
-		int relativeHeight = height/31;
+		float relativeWidth = width/26;
+		float relativeHeight = height/31;
 
 		////////////////Todo esto para la mira
          // Create an overlay
 
-         // Create a panel
+         // Create a panel de Mira
          Ogre::OverlayContainer* panelMira = static_cast<Ogre::OverlayContainer*>( overlayManager.createOverlayElement( "Panel", "Mira" ) );
 		 float sizeCrossFire = entityInfo->getFloatAttribute("hudMira");
 		 float positionCrossFire = 0.5f-((sizeCrossFire/2)/100) ;
          panelMira->setPosition( positionCrossFire,positionCrossFire);
 		 panelMira->setDimensions( sizeCrossFire/100, sizeCrossFire/100 );
          panelMira->setMaterialName("hudMira");
+
+		 overlay->add2D( panelMira );
          // Add the panel to the overlay
 
-		////// panel PanelWeapon1
+		
+		 
+		 ////// panel PanelWeapon cuadro principal
 		Ogre::OverlayContainer* panelWeapon1 = static_cast<Ogre::OverlayContainer*>( overlayManager.createOverlayElement( "Panel", "PanelWeapon1" ) );
 		panelWeapon1->setMetricsMode(Ogre::GMM_PIXELS);
 		panelWeapon1->setPosition( 9*relativeWidth, 29*relativeHeight);
@@ -69,8 +77,18 @@ namespace Logic
 
 		overlay->add2D( panelWeapon1 );
 
-		////// panel PanelWeapon1
-		Ogre::OverlayContainer* panelWeapon2 = static_cast<Ogre::OverlayContainer*>( overlayManager.createOverlayElement( "Panel", "PanelWeapon2" ) );
+				 ////// panel PanelWeapon1 con arma activa
+			_weaponsBox[HAMMER][ACTIVE] = static_cast<Ogre::OverlayContainer*>( overlayManager.createOverlayElement( "Panel", "_weaponsBox[HAMMER][ACTIVE]" ) );
+			_weaponsBox[HAMMER][ACTIVE]->setMetricsMode(Ogre::GMM_PIXELS);
+			_weaponsBox[HAMMER][ACTIVE]->setPosition( 9*relativeWidth, 29*relativeHeight);
+			_weaponsBox[HAMMER][ACTIVE]->setDimensions( relativeWidth*2, relativeHeight*2 );
+			_weaponsBox[HAMMER][ACTIVE]->setMaterialName("katana");
+
+			overlay->add2D( _weaponsBox[0][0] );
+
+
+		////// panel PanelWeapon2 cuadro principal
+		Ogre::OverlayContainer* panelWeapon2 = static_cast<Ogre::OverlayContainer*>( overlayManager.createOverlayElement( "Panel", "panelWeapon2" ) );
 		panelWeapon2->setMetricsMode(Ogre::GMM_PIXELS);
 		panelWeapon2->setPosition( 11*relativeWidth, 29*relativeHeight);
 		panelWeapon2->setDimensions( relativeWidth*2, relativeHeight*2 );
@@ -78,13 +96,72 @@ namespace Logic
 
 		overlay->add2D( panelWeapon2 );
 
-		///// panel PanelWeapon1
+			 ////// panel PanelWeapon2 activa
+			_weaponsBox[SNIPER][ACTIVE] = static_cast<Ogre::OverlayContainer*>( overlayManager.createOverlayElement( "Panel", "_weaponsBox[SNIPER][ACTIVE]" ) );
+			_weaponsBox[SNIPER][ACTIVE]->setMetricsMode(Ogre::GMM_PIXELS);
+			_weaponsBox[SNIPER][ACTIVE]->setPosition( 11*relativeWidth, 29*relativeHeight);
+			_weaponsBox[SNIPER][ACTIVE]->setDimensions( relativeWidth*2, relativeHeight*2 );
+			_weaponsBox[SNIPER][ACTIVE]->setMaterialName("francotirador");
+
+			overlay->add2D( _weaponsBox[SNIPER][ACTIVE] );
+
+			 ////// panel PanelWeapon2 BN
+			_weaponsBox[SNIPER][NO_AMMO] = static_cast<Ogre::OverlayContainer*>( overlayManager.createOverlayElement( "Panel", "_weaponsBox[SNIPER][NO_AMMO]" ) );
+			_weaponsBox[SNIPER][NO_AMMO]->setMetricsMode(Ogre::GMM_PIXELS);
+			_weaponsBox[SNIPER][NO_AMMO]->setPosition( 11*relativeWidth, 29*relativeHeight);
+			_weaponsBox[SNIPER][NO_AMMO]->setDimensions( relativeWidth*2, relativeHeight*2 );
+			_weaponsBox[SNIPER][NO_AMMO]->setMaterialName("francotiradorBN");
+
+			overlay->add2D( _weaponsBox[SNIPER][NO_AMMO] );
+
+
+			 ////// panel PanelWeapon2 SinBalas
+			_weaponsBox[SNIPER][NO_WEAPON] = static_cast<Ogre::OverlayContainer*>( overlayManager.createOverlayElement( "Panel", "_weaponsBox[SNIPER][NO_WEAPON]" ) );
+			_weaponsBox[SNIPER][NO_WEAPON]->setMetricsMode(Ogre::GMM_PIXELS);
+			_weaponsBox[SNIPER][NO_WEAPON]->setPosition( 11*relativeWidth, 29*relativeHeight);
+			_weaponsBox[SNIPER][NO_WEAPON]->setDimensions( relativeWidth*2, relativeHeight*2 );
+			_weaponsBox[SNIPER][NO_WEAPON]->setMaterialName("francotiradorSinBalas");
+
+			overlay->add2D( _weaponsBox[SNIPER][NO_WEAPON] );
+
+
+
+		///// panel PanelWeapon3
 		Ogre::OverlayContainer* panelWeapon3 = static_cast<Ogre::OverlayContainer*>( overlayManager.createOverlayElement( "Panel", "panelWeapon3" ) );
 		panelWeapon3->setMetricsMode(Ogre::GMM_PIXELS);
 		panelWeapon3->setPosition( 13*relativeWidth, 29*relativeHeight);
 		panelWeapon3->setDimensions( relativeWidth*2, relativeHeight*2 );
         panelWeapon3->setMaterialName("cuadroArmas");
 		overlay->add2D( panelWeapon3 );
+
+				///// panel PanelWeapon3 Active
+			_weaponsBox[SHOTGUN][ACTIVE] = static_cast<Ogre::OverlayContainer*>( overlayManager.createOverlayElement( "Panel", "_weaponsBox[SHOTGUN][ACTIVE]" ) );
+			_weaponsBox[SHOTGUN][ACTIVE]->setMetricsMode(Ogre::GMM_PIXELS);
+			_weaponsBox[SHOTGUN][ACTIVE]->setPosition( 13*relativeWidth, 29*relativeHeight);
+			_weaponsBox[SHOTGUN][ACTIVE]->setDimensions( relativeWidth*2, relativeHeight*2 );
+			_weaponsBox[SHOTGUN][ACTIVE]->setMaterialName("escopeta");
+			overlay->add2D( _weaponsBox[SHOTGUN][ACTIVE] );
+
+			
+				///// panel PanelWeapon3 no ammo
+			_weaponsBox[SHOTGUN][NO_AMMO] = static_cast<Ogre::OverlayContainer*>( overlayManager.createOverlayElement( "Panel", "_weaponsBox[SHOTGUN][NO_AMMO]" ) );
+			_weaponsBox[SHOTGUN][NO_AMMO]->setMetricsMode(Ogre::GMM_PIXELS);
+			_weaponsBox[SHOTGUN][NO_AMMO]->setPosition( 13*relativeWidth, 29*relativeHeight);
+			_weaponsBox[SHOTGUN][NO_AMMO]->setDimensions( relativeWidth*2, relativeHeight*2 );
+			_weaponsBox[SHOTGUN][NO_AMMO]->setMaterialName("escopetaBN");
+			overlay->add2D( _weaponsBox[SHOTGUN][NO_AMMO] );
+			
+				///// panel PanelWeapon3 no weapon
+			_weaponsBox[SHOTGUN][NO_WEAPON] = static_cast<Ogre::OverlayContainer*>( overlayManager.createOverlayElement( "Panel", "_weaponsBox[SHOTGUN][NO_WEAPON]" ) );
+			_weaponsBox[SHOTGUN][NO_WEAPON]->setMetricsMode(Ogre::GMM_PIXELS);
+			_weaponsBox[SHOTGUN][NO_WEAPON]->setPosition( 13*relativeWidth, 29*relativeHeight);
+			_weaponsBox[SHOTGUN][NO_WEAPON]->setDimensions( relativeWidth*2, relativeHeight*2 );
+			_weaponsBox[SHOTGUN][NO_WEAPON]->setMaterialName("escopetaSinBalas");
+			overlay->add2D( _weaponsBox[SHOTGUN][NO_WEAPON] );
+
+			
+
+			
 
 		///// panel PanelWeapon1
 		Ogre::OverlayContainer* panelWeapon4 = static_cast<Ogre::OverlayContainer*>( overlayManager.createOverlayElement( "Panel", "panelWeapon4" ) );
@@ -122,24 +199,24 @@ namespace Logic
 		panelHealth->setDimensions( relativeWidth*1.5, relativeHeight*1.5 );
         panelHealth->setMaterialName("hudHealth");
 
-				Ogre::TextAreaOverlayElement* textAreaPanelHealth = static_cast<Ogre::TextAreaOverlayElement*>(
+				_healthTextArea = static_cast<Ogre::TextAreaOverlayElement*>(
 				overlayManager.createOverlayElement("TextArea", "textAreaPanelHealth"));
 				
 				
 				
-				textAreaPanelHealth->setMetricsMode(Ogre::GMM_PIXELS);
-				textAreaPanelHealth->setPosition(-relativeWidth*1.5, 0);
-				textAreaPanelHealth->setDimensions(relativeWidth*2, relativeHeight*2);
-					std::stringstream ss;//create a stringstream
-					ss << _health;//add number to the stream
-				textAreaPanelHealth->setCaption(ss.str());
-				textAreaPanelHealth->setCharHeight(46);
-				textAreaPanelHealth->setFontName("fuenteSimple");
-				textAreaPanelHealth->setColour(Ogre::ColourValue::White);
+				_healthTextArea->setMetricsMode(Ogre::GMM_PIXELS);
+				_healthTextArea->setPosition(-relativeWidth*1.5, 0);
+				_healthTextArea->setDimensions(relativeWidth*2, relativeHeight*2);
+					std::stringstream sHealth;//create a stringstream
+					sHealth << _health;//add number to the stream
+				_healthTextArea->setCaption(sHealth.str());
+				_healthTextArea->setCharHeight(46);
+				_healthTextArea->setFontName("fuenteSimple");
+				_healthTextArea->setColour(Ogre::ColourValue::White);
 
 				//panelShield->addChild(textAreaHealth);
 				
-				panelHealth->addChild(textAreaPanelHealth);
+				panelHealth->addChild(_healthTextArea);
 
 		overlay->add2D( panelHealth );
          // Add the panel to the overlay
@@ -153,128 +230,21 @@ namespace Logic
         panelShield->setMaterialName("hudShield");
 
 
-				Ogre::TextAreaOverlayElement* textAreaPanelShield = static_cast<Ogre::TextAreaOverlayElement*>(
+				_shieldTextArea = static_cast<Ogre::TextAreaOverlayElement*>(
 				overlayManager.createOverlayElement("TextArea", "textAreaPanelShield"));
 				
-				textAreaPanelShield->setMetricsMode(Ogre::GMM_PIXELS);
-				textAreaPanelShield->setPosition(-relativeWidth*1.5, 0);
-				textAreaPanelShield->setDimensions(relativeWidth*2, relativeHeight*2);
-					std::stringstream ss;//create a stringstream
-					ss << _shield;//add number to the stream
-				textAreaPanelShield->setCaption(ss.str());
-				textAreaPanelShield->setCharHeight(46);
-				textAreaPanelShield->setFontName("fuenteSimple");
-				textAreaPanelShield->setColour(Ogre::ColourValue::White);
+				_shieldTextArea->setMetricsMode(Ogre::GMM_PIXELS);
+				_shieldTextArea->setPosition(-relativeWidth*1.5, 0);
+				_shieldTextArea->setDimensions(relativeWidth*2, relativeHeight*2);
+					std::stringstream sShield;//create a stringstream
+					sShield << _shield;//add number to the stream
+				_shieldTextArea->setCaption(sShield.str());
+				_shieldTextArea->setCharHeight(46);
+				_shieldTextArea->setFontName("fuenteSimple");
+				_shieldTextArea->setColour(Ogre::ColourValue::White);
 
-				panelShield->addChild(textAreaPanelShield);
+				panelShield->addChild(_shieldTextArea);
 		overlay->add2D( panelShield );
-         // Add the panel to the overlay
-
-		/*
-			/////////// Texto de salud
-		
-				Ogre::TextAreaOverlayElement* textAreaShield = static_cast<Ogre::TextAreaOverlayElement*>(
-				overlayManager.createOverlayElement("TextArea", "TextAreaShield"));
-				
-				
-				
-				textAreaShield->setMetricsMode(Ogre::GMM_PIXELS);
-				textAreaShield->setPosition(0.5, 0.5);
-				textAreaShield->setDimensions(10, 10);
-				textAreaShield->setCaption("pepe");
-				textAreaShield->setCharHeight(16);
-				textAreaShield->setFontName("fuenteSimple");
-
-				//panelShield->addChild(textAreaHealth);
-				
-				panelShield->addChild(textAreaShield);
-
-				Ogre::TextAreaOverlayElement* textAreaShield3 = static_cast<Ogre::TextAreaOverlayElement*>(
-				overlayManager.createOverlayElement("TextArea", "TextAreaShield3"));
-				
-				
-				
-				textAreaShield3->setMetricsMode(Ogre::GMM_PIXELS);
-				textAreaShield3->setPosition(0.5, 0.5);
-				textAreaShield3->setDimensions(10, 10);
-				textAreaShield3->setCaption("pepeppepepe 3");
-				textAreaShield3->setCharHeight(16);
-				textAreaShield3->setFontName("fuenteSimple");
-
-				//panelShield->addChild(textAreaHealth);
-				
-				panelShield->addChild(textAreaShield3);
-				
-				
-
-						////// panel Shield2
-		Ogre::OverlayContainer* panelShield2 = static_cast<Ogre::OverlayContainer*>( overlayManager.createOverlayElement( "Panel", "Shield2" ) );
-		 
-		 float hudShield2X = entityInfo->getFloatAttribute("hudShield2X");
-		 float hudShield2Y = entityInfo->getFloatAttribute("hudShield2Y");
-		 float hudShield2Size = entityInfo->getFloatAttribute("hudShield2Size");
-		 
-         panelShield2->setPosition( hudShield2X,hudShield2Y);
-		 panelShield2->setDimensions( hudShield2Size, hudShield2Size );
-         panelShield2->setMaterialName("hudHealth");
-         // Add the panel to the overlay
-        
-		 
-			/////////// Texto de salud
-		
-				Ogre::TextAreaOverlayElement* textAreaShield2 = static_cast<Ogre::TextAreaOverlayElement*>(
-				overlayManager.createOverlayElement("TextArea", "TextAreaShield2"));
-				textAreaShield2->setMetricsMode(Ogre::GMM_PIXELS);
-				textAreaShield2->setPosition(0.5, 0.5);
-				textAreaShield2->setDimensions(10, 10);
-				textAreaShield2->setCaption("venga......");
-				textAreaShield2->setCharHeight(16);
-				textAreaShield2->setFontName("fuenteSimple");
-
-				//panelShield2->addChild(textAreaHealth);
-				panelShield2->addChild(textAreaShield2);
-
-
-
-		
-
-				
-		 
-Ogre::OverlayContainer* panelHealth = static_cast<Ogre::OverlayContainer*>( overlayManager.createOverlayElement( "Panel", "Health" ) );
-		 
-		 float hudHealthX = entityInfo->getFloatAttribute("hudHealthX");
-		 float hudHealthY = entityInfo->getFloatAttribute("hudHealthY");
-		 float hudHealthSize = entityInfo->getFloatAttribute("hudHealthSize");
-		 
-         panelHealth->setPosition( hudHealthX,hudHealthY);
-		 panelHealth->setDimensions( hudHealthSize, hudHealthSize );
-         panelHealth->setMaterialName("hudHealth");
-         // Add the panel to the overlay
-        
-		 
-			/////////// Texto de salud
-		
-				Ogre::TextAreaOverlayElement* textAreaHealth = static_cast<Ogre::TextAreaOverlayElement*>(
-				overlayManager.createOverlayElement("TextArea", "TextAreaHealth"));
-				textAreaHealth->setMetricsMode(Ogre::GMM_PIXELS);
-				textAreaHealth->setPosition(0.5, 0.5);
-				textAreaHealth->setDimensions(10, 10);
-				textAreaHealth->setCaption("juanito");
-				textAreaHealth->setCharHeight(16);
-				textAreaHealth->setFontName("fuenteSimple");
-
-				//panelHealth->addChild(textAreaHealth);
-				panelHealth->addChild(textAreaHealth);
-			
-			
-         // Show the overlay
-          
-		  overlay->add2D( panelMira );
-		
-		  overlay->add2D( panelShield );
-		   overlay->add2D( panelShield2 );
-		    overlay->add2D( panelHealth );
-			*/
 
 		 overlay->show();
 
@@ -288,8 +258,8 @@ Ogre::OverlayContainer* panelHealth = static_cast<Ogre::OverlayContainer*>( over
 
 	bool CHudOverlay::accept(CMessage *message)
 	{
-		//return message->getMessageType() == Message::DAMAGED;
-		return false;
+		return message->getMessageType() == Message::HUD_LIFE
+			|| message->getMessageType() == Message::HUD_SHIELD;
 
 	} // accept
 	
@@ -299,10 +269,28 @@ Ogre::OverlayContainer* panelHealth = static_cast<Ogre::OverlayContainer*>( over
 	{
 		switch(message->getMessageType())
 		{
-
+		case Message::HUD_LIFE: addLife(((CMessageHudLife*)message)->getHudLife());
+			break;
+		case Message::HUD_SHIELD: addShield(((CMessageHudShield*)message)->getHudShield());
+			break;
 		}
 
 	} // process
+
+	void CHudOverlay::addLife( int health){
+		_health = health;
+		std::stringstream sHealth;
+		sHealth << _health;
+		_healthTextArea->setCaption(sHealth.str());
+	}
+
+	void CHudOverlay::addShield( int shield){
+		_shield = shield;
+
+		std::stringstream sShield;
+		sShield << _shield;
+		_shieldTextArea->setCaption(sShield.str());
+	}
 
 
 } // namespace Logic

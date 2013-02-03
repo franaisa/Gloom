@@ -75,20 +75,33 @@ namespace Logic {
 
 	//--------------------------------------------------------
 
-	template <class T> 
-	inline T CMessageFactory::create(const std::string& name) const
+	CMessage * CMessageFactory::create(const std::string& name) const
 	{
 		int n = Math::CRC(name);
-		if(has(n))
+		if(has(name))
 		{
 			TFunctionPointerMap::const_iterator it;
 			it = _table.find(n);
 			if( it != _table.end() )
-				return (T)_table.find(n)->second();
+				return _table.find(n)->second();
 		}
 		throw new std::exception("No existe la función de creación que se solicitó.");
 
-	} // create
+	} // create (string)
+
+	CMessage * CMessageFactory::create(int name) const
+	{
+
+		
+		if(_table.count(name) > 0)
+		{
+			TFunctionPointerMap::const_iterator it;
+			it = _table.find(name);
+			if( it != _table.end() )
+				return _table.find(name)->second();
+		}
+		throw new std::exception("No existe la función de creación que se solicitó.");
+	}//create (int)
 
 
 } // namespace Logic

@@ -11,6 +11,9 @@
 
 #include "Logic/Entity/Component.h"
 
+#include <OgreOverlayContainer.h>
+#include <OgreTextAreaOverlayElement.h>
+
 //declaración de la clase
 namespace Logic 
 {
@@ -24,12 +27,13 @@ namespace Logic
 	class CHudOverlay : public IComponent
 	{
 		DEC_FACTORY(CHudOverlay);
+
 	public:
 
 		/**
 		Constructor por defecto; en la clase base no hace nada.
 		*/
-		CHudOverlay() : IComponent(), _health(0), _shield(0) {}
+		CHudOverlay() : IComponent(), _health(0), _shield(0), NUM_WEAPONS(3) {}
 		
 		/**
 		Inicialización del componente usando la descripción de la entidad que hay en 
@@ -51,14 +55,31 @@ namespace Logic
 		Al recibir daño quitamos vida
 		*/
 
-
+		
 
 	protected:
 
-		int _health;
-		int _shield;
+		const int NUM_WEAPONS;
 
-		bool _weapons[];
+		enum eWeaponIndex { HAMMER, SNIPER, SHOTGUN, NONE };
+		enum eOverlayState { ACTIVE, NO_AMMO, NO_WEAPON };
+		
+
+		
+
+		void addLife(int health);
+
+		void addShield(int shield);
+
+
+		int _health;
+		Ogre::TextAreaOverlayElement* _healthTextArea;
+		int _shield;
+		Ogre::TextAreaOverlayElement* _shieldTextArea;
+
+		int _actualWeapon;
+
+		Ogre::OverlayContainer* _weaponsBox[NUM_WEAPONS][3];
 
 	}; // class CHudOverlay
 

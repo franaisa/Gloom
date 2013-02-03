@@ -2,6 +2,8 @@
 
 #include "Logic/Entity/MessageFactory.h"
 
+#include <string>
+
 namespace Logic {
 
 	IMP_FACTORYMESSAGE(CMessageChangeWeapon);
@@ -21,7 +23,8 @@ namespace Logic {
 	Net::CBuffer* CMessageChangeWeapon::serialize() {
 		assert(_tempBuffer == NULL);
 
-		_tempBuffer = new Net::CBuffer(sizeof(_weapon));
+		_tempBuffer = new Net::CBuffer(sizeof(int) + sizeof(_weapon));
+		_tempBuffer->serialize(std::string("CMessageChangeWeapon"));
 		_tempBuffer->serialize(_weapon);
 		
 		return _tempBuffer;

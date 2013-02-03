@@ -60,6 +60,8 @@ namespace Logic
 
 	protected:
 
+
+
 		/**
 		dado un weapon desactivo su componente
 		*/
