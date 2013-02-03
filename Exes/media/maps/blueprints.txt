@@ -2,3 +2,4 @@ World CGraphics CPhysicEntity
 Player CAvatarController CArrayGraphics CPhysicController CLife CShootShotGun CShootMiniGun CShootHammer CWeaponsManager
 Enemy CGraphics CPhysicEntity CLife
 Camera CCamera
+ItemSpawn CGraphics CPhysicEntity CFloatingMovement CSpawnItemManager

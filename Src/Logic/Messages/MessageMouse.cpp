@@ -38,6 +38,4 @@ namespace Logic {
 		buffer.deserialize(_mouse[0]);
 		buffer.deserialize(_mouse[1]);
 	}
-
-
 };

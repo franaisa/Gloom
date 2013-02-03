@@ -13,6 +13,26 @@ Map = {
 		physic_group = 0,
 	},
 	
+	Orb = {
+		type = "ItemSpawn",
+		position = {0, 3, 60},
+		model = "esfera.mesh",
+		scale = {5, 5, 5},
+		id = "orb",
+		reward = 15,
+		respawnTime = 5,
+		orbitalOffset = 10,
+		orbitalSpeed = 5,
+		physic_entity = "rigid",
+		physic_trigger = true,
+		physic_type = "dynamic",
+		physic_shape = "box",
+		physic_dimensions = { 3, 3, 3 },
+		physic_height = 6,
+		physic_radius = 0.5,
+		physic_mass = 10,
+	},
+	
 	Enemigo1 = {
 		type = "Enemy",
 		position = {0, 5, -10},

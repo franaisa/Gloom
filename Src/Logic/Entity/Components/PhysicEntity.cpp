@@ -20,6 +20,8 @@ para representar character controllers.
 #include "Physics/Server.h"
 
 #include "Logic/Messages/MessageKinematicMove.h"
+#include "Logic/Messages/MessageTouched.h"
+#include "Logic/Messages/MessageUntouched.h"
 
 #define _USE_MATH_DEFINES
 #include <math.h>
@@ -230,9 +232,10 @@ void CPhysicEntity::onTrigger(IPhysics *otherComponent, bool enter)
 	// todos los componentes de la entidad. 
 
 	if (enter) {
-		//Logic::CMessageTouched *m= new Logic::CMessageTouched(Message::TOUCHED);
-		//m->setEntity(otherComponent->getEntity());
-		//_entity->emitMessage(m);
+		
+		Logic::CMessageTouched *m = new Logic::CMessageTouched();
+		m->setEntity(otherComponent->getEntity());
+		_entity->emitMessage(m);
 		//_entity->getComponent<Logic::CSwitchTrigger>("CSwitchTrigger")->
 	} else {
 		//Logic::CMessageUntouched *m= new Logic::CMessageUntouched(Message::UNTOUCHED);
