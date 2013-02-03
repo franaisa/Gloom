@@ -6,6 +6,7 @@
 namespace Logic {
 
 	class CMessageMouse : public CMessageControl{
+	DEC_FACTORYMESSAGE(CMessageMouse);
 	public:
 		CMessageMouse();
 		void setMouse(float mouse[]);
@@ -17,7 +18,7 @@ namespace Logic {
 	private:
 		float _mouse[2];
 	};
-
+	REG_FACTORYMESSAGE(CMessageMouse);
 };
 
 #endif
