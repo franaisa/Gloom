@@ -33,6 +33,8 @@ namespace Logic {
 	//----------------------------------------------------------
 
 	void CMessageMouse::deserialize(Net::CBuffer& buffer) {
+		CMessageControl::deserialize(buffer);
+
 		buffer.deserialize(_mouse[0]);
 		buffer.deserialize(_mouse[1]);
 	}

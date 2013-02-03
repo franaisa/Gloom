@@ -50,7 +50,9 @@ namespace Logic
 			COLLISION_DOWN			= 0x0000000C,
 			REBOUND					= 0x0000000D,
 			HUD_LIFE				= 0x0000000E,
-			HUD_SHIELD				= 0x0000000F
+			HUD_SHIELD				= 0x0000000F,
+			ADD_LIFE				= 0x00000010,
+			ADD_SHIELD				= 0x00000011
 		};
 	}
 

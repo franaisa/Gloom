@@ -106,6 +106,8 @@
     <ClCompile Include="..\..\Src\Logic\Entity\Components\Camera.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\Graphics.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\Message.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Messages\MessageAddLife.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Messages\MessageAddShield.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageAvatarWalk.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageChangeWeapon.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageChangeWeaponGraphics.cpp" />
@@ -159,6 +161,8 @@
     <ClInclude Include="..\..\Src\Logic\Entity\Components\Graphics.h" />
     <ClInclude Include="..\..\Src\Logic\Documentation.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\Message.h" />
+    <ClInclude Include="..\..\Src\Logic\Messages\MessageAddLife.h" />
+    <ClInclude Include="..\..\Src\Logic\Messages\MessageAddShield.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageAvatarWalk.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageChangeWeapon.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageChangeWeaponGraphics.h" />
