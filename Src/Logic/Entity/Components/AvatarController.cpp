@@ -208,7 +208,6 @@ namespace Logic
 
 	void CAvatarController::rebound()
 	{
-		std::cout << "REBOUND() DE AVATARCONTROLLER" << std::endl;
 		_rebound = true;
 	}//rebound
 	

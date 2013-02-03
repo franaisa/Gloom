@@ -1,83 +1,87 @@
-	/**
-	@file Message.h
+/**
+@file Message.h
 
-	Contiene el tipo de datos de un mensaje.
+Contiene el tipo de datos de un mensaje.
 
-	@see Logic::CMessage
+@see Logic::CMessage
 
-	@author David Llansó García
-	*/
-	#ifndef __Logic_Message_H
-	#define __Logic_Message_H
+@author José Antonio García Yáñez
+@author Francisco Aisa García
+@author Rubén Mulero Guerrero
+*/
+#ifndef __Logic_Message_H
+#define __Logic_Message_H
 
-	#include "BaseSubsystems/Math.h"
-	#include "Net/Buffer.h"
-	#include "Logic/Entity/MessageFactory.h"
+#include "BaseSubsystems/Math.h"
+#include "Net/Buffer.h"
+#include "Logic/Entity/MessageFactory.h"
 
-	// Predeclaraciones
-	namespace Logic {
+// Predeclaraciones
+namespace Logic {
 	class CEntity;
-	};
+};
 
-	namespace Net {
+namespace Net {
 	typedef unsigned char byte;
-	};
+};
 
-	namespace Logic
-	{
+namespace Logic
+{
 	/**
 	Namespace para los tipos de mensajes posibles.
 	*/
 	namespace Message
 	{
-	enum TMessageType
-	{
-	UNASSIGNED	= 0xFFFFFFFF,
-	SET_TRANSFORM	= 0x00000000,
-	SET_ANIMATION	= 0x00000001,
-	STOP_ANIMATION	= 0x00000002,
-	CONTROL	= 0x00000003,
-	AVATAR_WALK	= 0x00000004,
-	KINEMATIC_MOVE	= 0x00000005,
-	TOUCHED	= 0x00000006,
-	UNTOUCHED	= 0x00000007,
-	SWITCH	= 0x00000008,
-	DAMAGED	= 0x00000009,
-	CHANGE_WEAPON	= 0x0000000A,
-	CHANGE_WEAPON_GRAPHICS	= 0x0000000B,
-	COLLISION_DOWN	= 0x0000000C,
-	REBOUND	= 0x0000000D,
-	HUD_LIFE = 0x0000000E,
-	HUD_SHIELD = 0x0000000F,
-	ADD_LIFE = 0x00000010,
-	ADD_SHIELD = 0x00000011
-	};
+		enum TMessageType
+		{
+			UNASSIGNED				= 0xFFFFFFFF,
+			SET_TRANSFORM			= 0x00000000,
+			SET_ANIMATION			= 0x00000001,
+			STOP_ANIMATION			= 0x00000002,
+			CONTROL					= 0x00000003,
+			AVATAR_WALK				= 0x00000004,
+			KINEMATIC_MOVE			= 0x00000005,
+			TOUCHED					= 0x00000006,
+			UNTOUCHED				= 0x00000007,
+			SWITCH					= 0x00000008,
+			DAMAGED					= 0x00000009,
+			CHANGE_WEAPON			= 0x0000000A,
+			CHANGE_WEAPON_GRAPHICS	= 0x0000000B,
+			COLLISION_DOWN			= 0x0000000C,
+			REBOUND					= 0x0000000D,
+			HUD_LIFE				= 0x0000000E,
+			HUD_SHIELD				= 0x0000000F,
+			ADD_LIFE				= 0x00000010,
+			ADD_SHIELD				= 0x00000011
+		};
 	}
+
 	/**
 	Namespace para los tipos de mensajes de control posibles.
 	*/
 	namespace Control
 	{
-	enum ControlType
-	{
-	UNASSIGNED = 0xFFFFFFFF,
-	WALK,
-	WALKBACK,
-	STOP_WALK,
-	STOP_WALKBACK,
-	STRAFE_LEFT,
-	STRAFE_RIGHT,
-	STOP_STRAFE_LEFT,
-	STOP_STRAFE_RIGHT,
-	MOUSE,
-	LEFT_CLICK,
-	RIGHT_CLICK,
-	MIDDLE_CLICK,
-	BUTTON3_CLICK,
-	JUMP,
-	};
+		enum ControlType
+		{
+			UNASSIGNED = 0xFFFFFFFF,
+			WALK,
+			WALKBACK,
+			STOP_WALK,
+			STOP_WALKBACK,
+			STRAFE_LEFT,
+			STRAFE_RIGHT,
+			STOP_STRAFE_LEFT,
+			STOP_STRAFE_RIGHT,
+			MOUSE,
+			LEFT_CLICK,
+			RIGHT_CLICK,
+			MIDDLE_CLICK,
+			BUTTON3_CLICK,
+			JUMP,
+		};
 
 	}
+
 	/**
 	Tipo copia para los mensajes. Por simplicidad.
 	*/
@@ -100,33 +104,33 @@
 	*/
 	class CMessage { // Abstracta
 	public:
-	TMessageType getMessageType();
-	// Inicializa los mensajes a los valores por defecto
-	CMessage(TMessageType t);
-	virtual ~CMessage();
+		TMessageType getMessageType();
+		// Inicializa los mensajes a los valores por defecto
+		CMessage(TMessageType t);
+		virtual ~CMessage();
 
-	// Control de referencias
-	void addSmartP();
-	void subSmartP();
+		// Control de referencias
+		void addSmartP();
+		void subSmartP();
 
-	/**
-	* Método virtual puro que serializa los datos internos de cada mensaje.
-	* El puntero de escritura/lectura NO SE RESETEA en ningún caso. Si el
-	* cliente quiere realizar lecturas debe realizar un reset sobre el buffer
-	* devuelto.
-	* OJO!!! La memoria reservada para el buffer devuelto se libera en el propio
-	* mensaje. El cliente NUNCA debe intentar efectuar un delete sobre el buffer
-	* devuelto (de lo contrario se lia muy parda).
-	*/
-	virtual Net::CBuffer* serialize() = 0;
+		/**
+		* Método virtual puro que serializa los datos internos de cada mensaje.
+		* El puntero de escritura/lectura NO SE RESETEA en ningún caso. Si el
+		* cliente quiere realizar lecturas debe realizar un reset sobre el buffer
+		* devuelto.
+		* OJO!!! La memoria reservada para el buffer devuelto se libera en el propio
+		* mensaje. El cliente NUNCA debe intentar efectuar un delete sobre el buffer
+		* devuelto (de lo contrario se lia muy parda).
+		*/
+		virtual Net::CBuffer* serialize() = 0;
 
-	virtual void deserialize(Net::CBuffer& buffer) = 0;
+		virtual void deserialize(Net::CBuffer& buffer) = 0;
 
 	protected:
-	TMessageType _type;
-	unsigned char _smartP;
-	/* Se utiliza para serializar mensajes */
-	Net::CBuffer* _tempBuffer;
+		TMessageType _type;
+		unsigned char _smartP;
+		/* Se utiliza para serializar mensajes */
+		Net::CBuffer* _tempBuffer;
 	};
 
 	/////////////////////////////////////////////////////////////
@@ -141,14 +145,14 @@
 	*/
 	#define DEC_FACTORYMESSAGE(Class) \
 	public: \
-	/** \
-	Crea un componente de la clase en la que se declara. \
-	*/ \
-	static CMessage* create(); \
-	/** \
-	Registra el componente de la clase en la factoría. \
-	*/ \
-	static bool regist(); \
+		/** \
+		Crea un componente de la clase en la que se declara. \
+		*/ \
+		static CMessage* create(); \
+		/** \
+		Registra el componente de la clase en la factoría. \
+		*/ \
+		static bool regist(); \
 
 	/**
 	Macro para la implementación de los métodos necesarios para que
@@ -158,16 +162,16 @@
 	#define IMP_FACTORYMESSAGE(Class) \
 	CMessage* Class::create() \
 	{ \
-	CMessage* res = new Class(); \
-	return res; \
+		CMessage* res = new Class(); \
+		return res; \
 	} \
 	bool Class::regist() \
 	{ \
-	if (!CMessageFactory::getSingletonPtr()->has(#Class)) \
-	{ \
-	CMessageFactory::getSingletonPtr()->add(Class::create, #Class); \
-	} \
-	return true; \
+		if (!CMessageFactory::getSingletonPtr()->has(#Class)) \
+		{ \
+			CMessageFactory::getSingletonPtr()->add(Class::create, #Class); \
+		} \
+		return true; \
 	}
 
 	/**
@@ -176,6 +180,6 @@
 	#define REG_FACTORYMESSAGE(Class) \
 	static bool RegisteredFACTORYMESSAGE_##Class = Class::regist();
 
-	} // namespace Logic
+} // namespace Logic
 
-	#endif // __Logic_Message_H
+#endif // __Logic_Message_H

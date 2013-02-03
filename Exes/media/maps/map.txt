@@ -52,7 +52,7 @@ Map = {
 		physic_height = 6,
 		physic_radius = 0.5,
 		physic_mass = 10,
-		physic_group = 1,
+		physic_group = 2,
 	},
 	
 	David = {
@@ -86,7 +86,7 @@ Map = {
 			weaponHammerDamageReflect = 2,
 			weaponHammerDispersion = 0,
 			weaponHammerNumberShoots = 1,
-			weaponHammerDistance = 4.0,
+			weaponHammerDistance = 7.0,
 			weaponHammerCoolDown = 2.0,
 			weaponHammerAmmo = 0,
 		

@@ -101,7 +101,6 @@ namespace Logic {
 				return _table.find(name)->second();
 		}
 		throw new std::exception("No existe la función de creación que se solicitó.");
-		return NULL;
 	}//create (int)
 
 
