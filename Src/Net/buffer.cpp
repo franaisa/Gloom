@@ -206,11 +206,8 @@ namespace Net {
 	//__________________________________________________________________
 
 	void CBuffer::serialize(const std::string& data) {
-		std::cout << "Serializando el string: " << data;
 
 		int crc = Math::CRC(data);
-
-		std::cout << " cuyo CRC es: " << crc << std::endl;
 
 		write(&crc, sizeof(crc));
 	}
