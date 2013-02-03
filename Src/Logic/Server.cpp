@@ -87,6 +87,9 @@ namespace Logic {
 		if (!Logic::CGameNetMsgManager::Init())
 			return false;
 		_gameNetMsgManager = Logic::CGameNetMsgManager::getSingletonPtr();
+
+		//Inicializamos el gestor de spawn/respawn
+
 		return true;
 
 	} // open

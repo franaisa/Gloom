@@ -82,10 +82,6 @@ namespace Logic
 		*/
 		void addShield(int shield);
 
-		/**
-		Manda un mensaje cuando el jugador muere
-		*/
-		void sendMessagePlayerDead();
 	protected:
 
 		/**
