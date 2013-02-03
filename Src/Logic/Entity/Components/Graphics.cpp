@@ -70,8 +70,6 @@ namespace Logic
 			*/
 		}
 
-
-
 		if(_entity->getName() == "World")
 		{
 			Ogre::Light *luz = _scene->getSceneMgr()->createLight("Luz Puntual");

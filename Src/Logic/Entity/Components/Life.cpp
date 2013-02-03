@@ -29,6 +29,7 @@ Contiene la implementación del componente que controla la vida de una entidad.
 
 
 #include "Logic/Messages/MessagePlayerDead.h"
+
 namespace Logic 
 {
 	IMP_FACTORY(CLife);
@@ -102,7 +103,6 @@ namespace Logic
 	} // process
 
 
-	//---------------------------------------------------------
 	void CLife::tick(unsigned int msecs)
 	{
 		IComponent::tick(msecs);
@@ -128,6 +128,7 @@ namespace Logic
 			_varLifeCumulative=0;
 		
 		}
+
 	} // tick
 
 
@@ -147,6 +148,7 @@ namespace Logic
 					_life=_life-porcentajeVida;
 				}
 
+
 					Logic::CMessageHudShield *message2 = new Logic::CMessageHudShield();
 					message2->setHudShield(_shield);
 					_entity->emitMessage(message2);
@@ -162,8 +164,6 @@ namespace Logic
 			CLife::sendMessagePlayerDead();
 		}
 
-		printf("\nAh!, ya solo me queda %i de escudo", _shield);
-		printf("\nAh!, ya solo me queda %i de vida", _life);
 
 		Logic::CMessageHudLife *message1 = new Logic::CMessageHudLife();
 		message1->setHudLife(_life);
@@ -183,7 +183,7 @@ namespace Logic
 		Logic::CMessageHudLife *message1 = new Logic::CMessageHudLife();
 		message1->setHudLife(_life);
 		_entity->emitMessage(message1);
-		
+
 	}
 	void CLife::addShield(int shield){
 		if(_shield<_maxShield){
@@ -206,7 +206,7 @@ namespace Logic
 				Logic::CMessagePlayerDead *m=new Logic::CMessagePlayerDead();
 				m->getPlayerDead();
 				_entity->emitMessage(m);
-
+				
 	}
 } // namespace Logic
 

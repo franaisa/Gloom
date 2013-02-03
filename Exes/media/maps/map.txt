@@ -15,6 +15,25 @@ Map = {
 		
 	},
 	
+	Orb = {
+		type = "ItemSpawn",
+		position = {10.0, 10.0, 10.0},
+		model = "marine.mesh",
+		id = "orb",
+		reward = 15,
+		respawnTime = 5,
+		orbitalOffset = 10,
+		orbitalSpeed = 5,
+		physic_entity = "rigid",
+		physic_trigger = true,
+		physic_type = "static",
+		physic_shape = "box",
+		physic_dimensions = { 3, 3, 3 },
+		physic_height = 6,
+		physic_radius = 0.5,
+		physic_mass = 10,
+	},
+	
 	Enemigo1 = {
 		type = "Enemy",
 		position = {0, 5, -10},
