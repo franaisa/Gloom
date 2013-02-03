@@ -11,6 +11,22 @@ Map = {
 		physic_normal = { 0, 1, 0 },
 		physic_file = "media/models/scenario.RepX",
 		physic_group = 0,
+		
+		hubTamCuadro = 10,
+		
+		
+		hudMira = 3;
+		hudHealthX = 0.2;
+		hudHealthY = 0.8;
+		hudHealthSize = 0.075;
+		
+		hudShieldX = 0.2;
+		hudShieldY = 0.9;
+		hudShieldSize = 0.075;
+		
+		hudShield2X = 0.4;
+		hudShield2Y = 0.9;
+		hudShield2Size = 0.075;
 	},
 	
 	Enemigo1 = {
