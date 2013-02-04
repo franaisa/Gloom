@@ -87,6 +87,9 @@ namespace Logic
 
 		void CGraphics::setTransform(const Matrix4& transform);
 
+		virtual void deactivate();
+		virtual void activate();
+	
 	protected:
 
 		/**

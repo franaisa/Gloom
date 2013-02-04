@@ -195,9 +195,12 @@
     </ClCompile>
     <ClCompile Include="..\..\Src\Logic\Entity\Components\SpawnItemManager.cpp">
       <Filter>Entity\Components\Source Files</Filter>
-	  </ClCompile>
+    </ClCompile>
     <ClCompile Include="..\..\Src\Logic\Messages\MessagePlayerDead.cpp">
       <Filter>Messages\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\SpawnPlayer.cpp">
+      <Filter>Entity\Components\Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -371,9 +374,12 @@
     </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Entity\Components\SpawnItemManager.h">
       <Filter>Entity\Components\Header Files</Filter>
-	</ClInclude>
+    </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Messages\MessagePlayerDead.h">
       <Filter>Messages\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\SpawnPlayer.h">
+      <Filter>Entity\Components\Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
