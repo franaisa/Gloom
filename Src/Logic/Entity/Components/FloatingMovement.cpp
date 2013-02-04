@@ -34,7 +34,7 @@ namespace Logic
 
 	//---------------------------------------------------------
 	void CFloatingMovement::estimateItemRotation(Vector3& position, unsigned int msecs) {
-		_orientation +=  0.001;
+		_orientation +=  0.001f;
 		if(_orientation > Math::PI * 2)
 			_orientation = 0;
 	}
