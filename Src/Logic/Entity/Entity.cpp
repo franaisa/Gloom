@@ -15,9 +15,9 @@ de juego. Es una colección de componentes.
 
 // Componentes
 #include "Component.h"
-
 #include "Logic/Server.h"
 #include "Logic/Maps/Map.h"
+
 #include "Logic/Entity/Components/Graphics.h"
 #include "Logic/Entity/Components/ArrayGraphics.h"
 #include "Map/MapEntity.h"
@@ -26,6 +26,8 @@ de juego. Es una colección de componentes.
 
 #include "GUI/Server.h"
 #include "GUI/PlayerController.h"
+
+
 
 namespace Logic 
 {
@@ -140,7 +142,23 @@ namespace Logic
 		_activated = false;
 
 	} // deactivate
+	//---------------------------------------------------------
 
+
+	void CEntity::deactivateAllComponentsExcept(const std::string id) {
+		//Buscamos el componente que no desactivaremos mediante la hash
+		std::map<std::string, IComponent*>::iterator except;
+		except = _components.find(id);
+		// Desactivamos los componentes
+		TComponentList::const_iterator it = _componentList.begin();
+		for(; it != _componentList.end(); ++it)
+			(*it)->deactivate();
+
+		//Activamos el correspondiente
+		((except)->second)->activate();
+
+		return;
+	}// deactivateAllComponentsExcept
 	//---------------------------------------------------------
 
 	void CEntity::tick(unsigned int msecs) 

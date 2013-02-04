@@ -80,6 +80,7 @@ Map = {
 		type = "Player",
 		position = {0, 8, 0},
 		orientation = 180,
+		timeSpawn = 4,
 		life = 12,
 		shield = 0,
 		maxShield = 100,

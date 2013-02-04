@@ -50,11 +50,6 @@ namespace Logic
 		Al recibir un mensaje de tipo DAMAGED la vida de la entidad disminuye.
 		*/
 		virtual void process(CMessage *message);
-
-		/**
-		Al recibir daño quitamos vida
-		*/
-
 		
 
 	protected:
