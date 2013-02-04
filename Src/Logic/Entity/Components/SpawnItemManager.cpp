@@ -32,18 +32,15 @@ namespace Logic
 		if(_isRespawning) {
 			_timer += msecs;
 
-			
-
 			if(_timer >= _respawnTime) {
 				_isRespawning = false;
+				_timer = 0;
 
 				// Activar entidad grafica
 				_entity->getComponent<CGraphics>("CGraphics")->activate();
 
 				// Activar entidad fisica
 				_entity->getComponent<CPhysicEntity>("CPhysicEntity")->activate();
-
-				std::cout << "Me vuelvo a activar" << std::endl;
 			}
 		}
 	} // tick
@@ -123,7 +120,6 @@ namespace Logic
 		}
 
 		// Arrancar el timer
-		_timer = 0;
 		_isRespawning = true;
 	}
 
