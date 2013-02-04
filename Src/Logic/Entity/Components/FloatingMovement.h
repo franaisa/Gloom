@@ -32,7 +32,7 @@ namespace Logic
 		/**
 		Constructor por defecto; en la clase base no hace nada.
 		*/
-		CFloatingMovement() : IComponent() {}
+		CFloatingMovement() : IComponent(), _goingUp(true), _orientation(0) {}
 
 		/**
 		Método llamado en cada frame que actualiza el estado del componente de la vida,
@@ -48,21 +48,21 @@ namespace Logic
 		*/
 		virtual bool spawn(CEntity* entity, CMap *map, const Map::CEntity *entityInfo);
 
-		/**
-		Este componente sólo acepta mensajes de tipo DAMAGED.
-		*/
-		virtual bool accept(CMessage *message);
+		void estimateItemFloatingPos(Vector3& position, unsigned int msecs);
 
-		/**
-		Al recibir un mensaje de tipo DAMAGED la vida de la entidad disminuye.
-		*/
-		virtual void process(CMessage *message);
+		void estimateItemRotation(Vector3& position, unsigned int msecs);
 
 	protected:
 
-		float _orbitalOffset;
+		float _orbitalTopY;
+
+		float _orbitalBottomY;
 
 		float _orbitalSpeed;
+
+		bool _goingUp;
+
+		float _orientation;
 
 	}; // class CFloatingMovement
 
