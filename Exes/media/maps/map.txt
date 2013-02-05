@@ -37,8 +37,8 @@ Map = {
 	
 	Shotgun = {
 		type = "ItemSpawn",
-		position = {-67.0, 2.0, 42.0},
-		model = "AK47.mesh",
+		position = {-67.0, 5.0, 42.0},
+		model = "hammer.mesh",
 		id = "weapon",
 		weaponType = 2,
 		reward = 30,
@@ -58,8 +58,8 @@ Map = {
 	
 	ShotgunAmmo1 = {
 		type = "ItemSpawn",
-		position = {-67.0, 2.0, -42.0},
-		model = "UziLeft.mesh",
+		position = {-67.0, 4.0, -42.0},
+		model = "rocketLauncher.mesh",
 		id = "ammo",
 		weaponType = 2,
 		reward = 15,
