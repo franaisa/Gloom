@@ -15,6 +15,7 @@ Contiene la implementación del componente que gestiona el spawn del jugador.
 #include "PhysicController.h"
 
 #include "Logic/Messages/MessagePlayerDead.h"
+#include "Logic/Messages/MessageSetPhysicPosition.h"
 
 
 
@@ -48,6 +49,8 @@ namespace Logic
 		_actualTimeSpawn=0;
 
 	} // activate
+	//--------------------------------------------------------
+
 
 	bool CSpawnPlayer::accept(CMessage *message)
 	{
@@ -76,16 +79,20 @@ namespace Logic
 			_actualTimeSpawn+=msecs;
 			//Si superamos el tiempo de spawn tenemos que revivir
 			if(_actualTimeSpawn>_timeSpawn){
-				std::cout << "REVIVOOOOO" << std::endl;
 				//LLamamos al manager de spawn que nos devolverá una posición ( ahora hecho a lo cutre)
 				Vector3 spawn(3,4,3);
+
+				//Volvemos a activar todos los componentes para que la fisica pueda recibir el mensaje de spawn
 				_entity->activate();
-
-				_entity->getComponent<CPhysicController>("CPhysicController")->setPosition(spawn);
+				//Mensaje para el componente de físicas
+				Logic::CMessageSetPhysicPosition *m=new Logic::CMessageSetPhysicPosition();
+				m->setPosition(spawn);
+				_entity->emitMessage(m);
+				//_entity->getComponent<CPhysicController>("CPhysicController")->setPosition(spawn);
+				//Establecemos la orientación adecuada segun la devolución del manager de spawn
 				_entity->setYaw(180);
+				
 
-				_isDead=false;
-				_actualTimeSpawn=0;
 			}
 		}
 

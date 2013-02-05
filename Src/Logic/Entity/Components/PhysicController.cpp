@@ -20,6 +20,7 @@ el mundo físico usando character controllers.
 
 #include "Logic/Messages/MessageAvatarWalk.h"
 #include "Logic/Messages/MessageCollisionDown.h"
+#include "Logic/Messages/MessageSetPhysicPosition.h"
 
 #include <PxPhysicsAPI.h>
 
@@ -67,7 +68,8 @@ bool CPhysicController::spawn(CEntity* entity, CMap *map, const Map::CEntity *en
 
 bool CPhysicController::accept(CMessage *message)
 {
-	return message->getMessageType() == Message::AVATAR_WALK;
+	return message->getMessageType() == Message::AVATAR_WALK ||
+		message->getMessageType() == Message::SET_PHYSIC_POSITION;
 } 
 
 //---------------------------------------------------------
@@ -81,6 +83,10 @@ void CPhysicController::process(CMessage *message)
 		// el método tick. De esa forma, si recibimos varios mensajes AVATAR_WALK
 		// en el mismo ciclo sólo tendremos en cuenta el último.
 		_movement = ((CMessageAvatarWalk*)message)->getDirection();
+		break;
+	case Message::SET_PHYSIC_POSITION:
+		setPosition(((CMessageSetPhysicPosition*)message)->getPosition());
+		break;
 	}
 
 }

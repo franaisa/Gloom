@@ -42,7 +42,7 @@ namespace Logic
 			return false;
 
 		if(entityInfo->hasAttribute("life"))
-			_life = entityInfo->getIntAttribute("life");
+			_classLife = entityInfo->getIntAttribute("life");
 		if(entityInfo->hasAttribute("shield"))
 			_shield = entityInfo->getIntAttribute("shield");
 		if(entityInfo->hasAttribute("lifeDamage"))
@@ -66,6 +66,20 @@ namespace Logic
 	} // spawn
 	
 	//---------------------------------------------------------
+
+
+	
+	void CLife::activate()
+	{
+		IComponent::activate();
+		
+		_life=_classLife;
+		
+
+	} // activate
+	//---------------------------------------------------------
+
+
 
 	bool CLife::accept(CMessage *message)
 	{
@@ -142,7 +156,6 @@ namespace Logic
 		//Si muero por el daño, envio un mensaje de playerDead
 		if(_life<=0){
 			_life=0;
-			std::cout << "MUEROOOWNZ" << std::endl;
 			Logic::CMessagePlayerDead *m=new Logic::CMessagePlayerDead();
 			_entity->emitMessage(m);
 		}
