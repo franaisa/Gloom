@@ -97,7 +97,9 @@ namespace Logic
 	{
 		//Si no esto muerto ya hago las acciones
 		if(!_isDead){
-			_entity->deactivateAllComponentsExcept("CSpawnPlayer");
+			//Desactivamos todos menos el cspawnplayerv
+			std::string except[1]={"CSpawnPlayer"};
+			_entity->deactivateAllComponentsExcept(except);
 			_isDead=true;
 		}
 
