@@ -55,7 +55,7 @@ namespace Logic
 
 			if(_id == "weapon" || _id == "ammo") {
 				if(entityInfo->hasAttribute("weaponType")) {
-					_weaponType = entityInfo->getStringAttribute("weaponType");
+					_weaponType = entityInfo->getIntAttribute("weaponType");
 				}
 			}
 		}
@@ -109,9 +109,17 @@ namespace Logic
 		}
 		else if(_id == "ammo") {
 			// Mandar un mensaje con el _weaponType
+			//CMessageAddAmmo* m = new CMessageAddAmmo();
+			//m->setQuantity(_reward);
+			//m->setWeaponType(_weaponType);
+			//actor->emitMessage(m);
 		}
 		else if(_id == "weapon") {
 			// Mandar un mensaje con el _weaponType
+			//CMessageAddWeapon* m = new CMessageAddWeapon();
+			//m->setQuantity(_reward);
+			//m->setWeaponType(_weaponType);
+			//actor->emitMessage(m);
 		}
 
 		// Arrancar el timer
