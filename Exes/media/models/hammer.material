@@ -1,0 +1,19 @@
+material rocketLauncherSheet
+{
+	technique
+	{
+		pass
+		{
+			ambient 0 0 0 1
+			diffuse 0.8 0.8 0.8 1
+			specular 0 0 0 1 1
+
+			texture_unit
+			{
+				texture rocketLauncher.tif
+			}
+		}
+
+	}
+
+}
