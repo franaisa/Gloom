@@ -76,6 +76,10 @@ namespace Logic {
 	} // deactivate
 
 	//---------------------------------------------------------
-		
+	
+	Vector3 CGameSpawnManager::getSpawnPosition(){
+	
+		return Vector3(3,4,3);
+	}
 
 } // namespace Logic

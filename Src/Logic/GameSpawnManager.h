@@ -16,6 +16,7 @@ Contiene la declaración del gestor de los mensajes de red durante la partida.
 #ifndef __GameSpawnManager_H
 #define __GameSpawnManager_H
 
+#include "BaseSubsystems\Math.h"
 
 namespace Logic 
 {
@@ -60,6 +61,11 @@ namespace Logic
 		*/
 		void deactivate();
 
+
+		/**
+		Función llamada desactivar la escucha.
+		*/
+		Vector3 getSpawnPosition();
 
 	protected:
 		
