@@ -149,6 +149,7 @@ namespace Logic {
 
 	bool CServer::activateMap() 
 	{
+		_gameSpawnManager->activate();
 		_gameNetMsgManager->activate();
 		return _map->activate();
 
@@ -158,6 +159,7 @@ namespace Logic {
 
 	void CServer::deactivateMap() 
 	{
+		_gameSpawnManager->deactivate();
 		_gameNetMsgManager->deactivate();
 		_map->deactivate();
 
