@@ -96,6 +96,7 @@
     <ClCompile Include="..\..\Src\Logic\Entity\Components\SwitchTrigger.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\MessageFactory.cpp" />
     <ClCompile Include="..\..\Src\Logic\GameNetMsgManager.cpp" />
+    <ClCompile Include="..\..\Src\Logic\GameSpawnManager.cpp" />
     <ClCompile Include="..\..\Src\Logic\Maps\ComponentFactory.cpp" />
     <ClCompile Include="..\..\Src\Logic\Maps\ComponentID.cpp" />
     <ClCompile Include="..\..\Src\Logic\Maps\EntityFactory.cpp" />
@@ -154,6 +155,7 @@
     <ClInclude Include="..\..\Src\Logic\Entity\Components\SwitchTrigger.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\MessageFactory.h" />
     <ClInclude Include="..\..\Src\Logic\GameNetMsgManager.h" />
+    <ClInclude Include="..\..\Src\Logic\GameSpawnManager.h" />
     <ClInclude Include="..\..\Src\Logic\Maps\ComponentFactory.h" />
     <ClInclude Include="..\..\Src\Logic\Maps\ComponentID.h" />
     <ClInclude Include="..\..\Src\Logic\Maps\Documentation.h" />

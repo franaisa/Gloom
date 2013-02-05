@@ -13,6 +13,7 @@ la gestión de la lógica del juego.
 #include "Server.h"
 #include "Logic/Maps/Map.h"
 #include "Logic/GameNetMsgManager.h"
+#include "Logic/GameSpawnManager.h"
 #include "Logic/Maps/EntityFactory.h"
 
 #include "Map/MapParser.h"
@@ -89,6 +90,9 @@ namespace Logic {
 		_gameNetMsgManager = Logic::CGameNetMsgManager::getSingletonPtr();
 
 		//Inicializamos el gestor de spawn/respawn
+		if (!Logic::CGameSpawnManager::Init())
+			return false;
+		_gameSpawnManager = Logic::CGameSpawnManager::getSingletonPtr();
 
 		return true;
 
@@ -103,6 +107,10 @@ namespace Logic {
 		Logic::CEntityFactory::Release();
 		
 		Map::CMapParser::Release();
+
+		Logic::CGameNetMsgManager::Release();
+
+		Logic::CGameSpawnManager::Release();
 
 	} // close
 

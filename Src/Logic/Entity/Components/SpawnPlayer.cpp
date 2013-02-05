@@ -81,14 +81,13 @@ namespace Logic
 			if(_actualTimeSpawn>_timeSpawn){
 				//LLamamos al manager de spawn que nos devolverá una posición ( ahora hecho a lo cutre)
 				Vector3 spawn(3,4,3);
-
+				
 				//Volvemos a activar todos los componentes para que la fisica pueda recibir el mensaje de spawn
 				_entity->activate();
 				//Mensaje para el componente de físicas
 				Logic::CMessageSetPhysicPosition *m=new Logic::CMessageSetPhysicPosition();
 				m->setPosition(spawn);
 				_entity->emitMessage(m);
-				//_entity->getComponent<CPhysicController>("CPhysicController")->setPosition(spawn);
 				//Establecemos la orientación adecuada segun la devolución del manager de spawn
 				_entity->setYaw(180);
 				

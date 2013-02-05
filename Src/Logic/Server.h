@@ -20,6 +20,7 @@ namespace Logic
 	class CMap;
 	class CEntity;
 	class CGameNetMsgManager;
+	class CGameSpawnManager;
 }
 
 /**
@@ -167,6 +168,11 @@ namespace Logic
 		Gestor de los mensajes que llegan por la red
 		*/
 		Logic::CGameNetMsgManager* _gameNetMsgManager;
+
+		/**
+		Gestor de los puntos de respawn
+		*/
+		Logic::CGameSpawnManager* _gameSpawnManager;
 
 	private:
 		/**
