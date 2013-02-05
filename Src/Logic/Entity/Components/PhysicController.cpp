@@ -115,6 +115,13 @@ void CPhysicController::tick(unsigned int msecs)
 
 //---------------------------------------------------------
 
+void  CPhysicController::setPosition (const Vector3 &position){
+	_server->setControllerPosition(_controller,position);
+}
+
+
+//---------------------------------------------------------
+
 PxCapsuleController* CPhysicController::createController(const Map::CEntity *entityInfo)
 {
 	// Obtenemos la posición de la entidad. Inicialmente colocaremos el controller

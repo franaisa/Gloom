@@ -93,6 +93,11 @@ namespace Logic
 		virtual void tick(unsigned int msecs);
 
 		/**
+		Setea la posición del controlador
+		*/
+		void  setPosition (const Vector3 &position);
+
+		/**
 		Se invoca cuando se produce una colisión entre una entidad física y un trigger.
 		*/
 		void  onTrigger (IPhysics *otherComponent, bool enter);

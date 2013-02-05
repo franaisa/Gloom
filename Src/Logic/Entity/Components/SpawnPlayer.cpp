@@ -12,6 +12,7 @@ Contiene la implementación del componente que gestiona el spawn del jugador.
 
 #include "Logic/Entity/Entity.h"
 #include "Map/MapEntity.h"
+#include "PhysicController.h"
 
 #include "Logic/Messages/MessagePlayerDead.h"
 
@@ -79,6 +80,10 @@ namespace Logic
 				//LLamamos al manager de spawn que nos devolverá una posición ( ahora hecho a lo cutre)
 				Vector3 spawn(3,4,3);
 				_entity->activate();
+
+				_entity->getComponent<CPhysicController>("CPhysicController")->setPosition(spawn);
+				_entity->setYaw(180);
+
 				_isDead=false;
 				_actualTimeSpawn=0;
 			}
@@ -92,8 +97,7 @@ namespace Logic
 	{
 		//Si no esto muerto ya hago las acciones
 		if(!_isDead){
-			
-			//_entity->deactivateAllComponentsExcept("CSpawnPlayer");
+			_entity->deactivateAllComponentsExcept("CSpawnPlayer");
 			_isDead=true;
 		}
 
