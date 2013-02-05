@@ -46,7 +46,6 @@ namespace Logic
 		*/
 		virtual void process(CMessage *message);
 
-
 		virtual void shoot();
 
 	protected:

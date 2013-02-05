@@ -85,8 +85,10 @@ namespace Logic
 		*/
 		virtual void process(CMessage *message);
 
-		void CGraphics::setTransform(const Matrix4& transform);
+		void setTransform(const Matrix4& transform);
 
+		void setVisible(bool renderGraphicEntity);
+	
 	protected:
 
 		/**

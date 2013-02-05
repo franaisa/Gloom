@@ -10,14 +10,15 @@ de juego. Es una colección de componentes.
 @author David Llansó
 @date Julio, 2010
 */
+#include "Components\SpawnPlayer.h"
 
 #include "Entity.h"
 
 // Componentes
 #include "Component.h"
-
 #include "Logic/Server.h"
 #include "Logic/Maps/Map.h"
+
 #include "Logic/Entity/Components/Graphics.h"
 #include "Logic/Entity/Components/ArrayGraphics.h"
 #include "Map/MapEntity.h"
@@ -26,6 +27,8 @@ de juego. Es una colección de componentes.
 
 #include "GUI/Server.h"
 #include "GUI/PlayerController.h"
+
+
 
 namespace Logic 
 {
@@ -140,6 +143,18 @@ namespace Logic
 		_activated = false;
 
 	} // deactivate
+	//---------------------------------------------------------
+
+	
+	void CEntity::deactivateAllComponentsExcept (const std::string id) {
+		std::map<std::string, IComponent*>::iterator except = _components.begin();
+
+		for(; except!=_components.end(); ++except){
+			if(except->first.compare(id)!=0)
+				(except->second)->deactivate();
+		}
+
+	}// deactivateAllComponentsExcept
 
 	//---------------------------------------------------------
 

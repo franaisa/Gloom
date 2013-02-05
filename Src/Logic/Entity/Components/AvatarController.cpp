@@ -95,8 +95,6 @@ namespace Logic
 		_sideContact=false;
 
 		_rebound=false;
-
-		//return true;
 	} // activate
 	
 	//---------------------------------------------------------

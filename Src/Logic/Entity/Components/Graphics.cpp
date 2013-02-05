@@ -135,5 +135,11 @@ namespace Logic
 
 	} // process
 
+	//---------------------------------------------------------
+
+	void CGraphics::setVisible(bool renderGraphicEntity) {
+		_graphicsEntity->setVisible(renderGraphicEntity);
+	}
+
 } // namespace Logic
 

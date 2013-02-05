@@ -90,6 +90,7 @@
     <ClCompile Include="..\..\Src\Logic\Entity\Components\ShootMiniGun.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\ShootShotGun.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\SpawnItemManager.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\SpawnPlayer.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\WeaponsManager.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\SwitchPosition.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\SwitchTrigger.cpp" />
@@ -146,6 +147,7 @@
     <ClInclude Include="..\..\Src\Logic\Entity\Components\ShootMiniGun.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\ShootShotGun.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\SpawnItemManager.h" />
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\SpawnPlayer.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\WeaponsManager.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\SwitchPosition.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\SwitchTrigger.h" />

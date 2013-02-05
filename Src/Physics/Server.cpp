@@ -550,6 +550,19 @@ Vector3 CServer::getControllerPosition(const PxCapsuleController *controller)
 
 //--------------------------------------------------------
 
+void CServer::setControllerPosition(PxCapsuleController *controller, const Vector3 &position)
+{
+	assert(_scene);
+	// Transformación entre el sistema de coordenadas lógico y el de PhysX
+	float offsetY = controller->getHeight() / 2.0f + controller->getRadius();
+	PxVec3 pos = Vector3ToPxVec3(position + Vector3(0, offsetY, 0));
+	PxExtendedVec3 posicionPhysics(pos.x,pos.y,pos.z);
+	controller->setPosition(posicionPhysics);
+
+}
+
+//--------------------------------------------------------
+
 void CServer::setGroupCollisions(int group1, int group2, bool enable)
 {
 	// Activar / desactivar colisiones entre grupos
