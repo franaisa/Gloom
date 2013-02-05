@@ -155,6 +155,7 @@ namespace Logic
 		}
 
 	}// deactivateAllComponentsExcept
+
 	//---------------------------------------------------------
 
 	void CEntity::tick(unsigned int msecs) 
