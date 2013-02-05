@@ -116,7 +116,7 @@ namespace Logic {
 			serialMsg.write(bufferAux->getbuffer(),bufferAux->getSize()); //Guardamos el mensaje en el buffer
 			
 		Net::CManager::getSingletonPtr()->send(serialMsg.getbuffer(), serialMsg.getSize());
-		//std::cout << "Enviado mensaje tipo " << txMsg->getMessageType() << " para la entidad " << destID << " de tamaño " << serialMsg.getSize() << std::endl;
+		std::cout << "Enviado mensaje tipo " << txMsg->getMessageType() << " para la entidad " << destID << " de tamaño " << serialMsg.getSize() << std::endl;
 		LOG("TX ENTITY_MSG " << txMsg._type << " to EntityID " << destID);
 	} // sendEntityMessage
 
