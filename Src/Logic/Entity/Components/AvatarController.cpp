@@ -70,6 +70,15 @@ namespace Logic
 	{
 		IComponent::activate();
 
+		//Desactivo movimientos para respawn
+		_walking=false;
+		_walkingBack=false;
+		_strafingRight=false;
+		_strafingLeft=false;
+		_unpressLeft=false;
+		_unpressRight=false;
+		_jumping=false;
+
 		//Inicializacion variables de control ( salto, salto lateral, concatenacion salto lateral y rebote )
 		_jumping = false;
 		_jumpingControl = false;
