@@ -20,6 +20,7 @@ namespace Logic
 	class CMap;
 	class CEntity;
 	class CGameNetMsgManager;
+	class CGameSpawnManager;
 }
 
 /**
@@ -98,6 +99,13 @@ namespace Logic
 		CMap *getMap() {return _map;}
 
 		/**
+		Devuelve el manager de puntos de spawn
+
+		@return Manager de puntos de spawn
+		*/
+		CGameSpawnManager *getSpawnManager() {return _gameSpawnManager;}
+
+		/**
 		Devuelve la entidad del jugador.
 
 		@return Entidad del jugador.
@@ -167,6 +175,11 @@ namespace Logic
 		Gestor de los mensajes que llegan por la red
 		*/
 		Logic::CGameNetMsgManager* _gameNetMsgManager;
+
+		/**
+		Gestor de los puntos de respawn
+		*/
+		Logic::CGameSpawnManager* _gameSpawnManager;
 
 	private:
 		/**
