@@ -9,8 +9,8 @@ namespace Logic {
 	DEC_FACTORYMESSAGE(CMessageHudLife);
 	public:
 		CMessageHudLife();
-		int getHudLife();
-		void setHudLife( int life);
+		int getLife();
+		void setLife( int life);
 		~CMessageHudLife(){};
 		
 		virtual Net::CBuffer* serialize();

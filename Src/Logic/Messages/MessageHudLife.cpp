@@ -11,12 +11,12 @@ namespace Logic {
 	}//
 	//----------------------------------------------------------
 
-	void CMessageHudLife::setHudLife( int life){
+	void CMessageHudLife::setLife( int life){
 		_life = life;
 	}//
 	//----------------------------------------------------------
 
-	int CMessageHudLife::getHudLife(){
+	int CMessageHudLife::getLife(){
 		return _life;
 	}//
 	//----------------------------------------------------------

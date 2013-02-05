@@ -195,8 +195,20 @@
     </ClCompile>
     <ClCompile Include="..\..\Src\Logic\Entity\Components\SpawnItemManager.cpp">
       <Filter>Entity\Components\Source Files</Filter>
-	  </ClCompile>
+    </ClCompile>
     <ClCompile Include="..\..\Src\Logic\Messages\MessagePlayerDead.cpp">
+      <Filter>Messages\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Messages\MessageHudAmmo.cpp">
+      <Filter>Messages\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Messages\MessageHudWeapon.cpp">
+      <Filter>Messages\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Messages\MessageAddAmmo.cpp">
+      <Filter>Messages\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Messages\MessageAddWeapon.cpp">
       <Filter>Messages\Source</Filter>
     </ClCompile>
   </ItemGroup>
@@ -363,16 +375,28 @@
     <ClInclude Include="..\..\Src\Logic\Messages\MessageAddLife.h">
       <Filter>Messages\Header</Filter>
     </ClInclude>
-    <ClInclude Include="FloatingMovement.h">
-      <Filter>Entity\Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Entity\Components\FloatingMovement.h">
       <Filter>Entity\Components\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Entity\Components\SpawnItemManager.h">
       <Filter>Entity\Components\Header Files</Filter>
-	</ClInclude>
+    </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Messages\MessagePlayerDead.h">
+      <Filter>Messages\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Messages\MessageHudAmmo.h">
+      <Filter>Messages\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Messages\MessageHudWeapon.h">
+      <Filter>Messages\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="FloatingMovement.h">
+      <Filter>Entity\Components\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Messages\MessageAddAmmo.h">
+      <Filter>Messages\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Messages\MessageAddWeapon.h">
       <Filter>Messages\Header</Filter>
     </ClInclude>
   </ItemGroup>

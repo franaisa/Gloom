@@ -122,7 +122,7 @@ Map = {
 			weaponMiniGunNumberShoots = 1,
 			weaponMiniGunDistance = 100.0,
 			weaponMiniGunCoolDown = 2.0,
-			weaponMiniGunAmmo = 0,
+			weaponMiniGunAmmo = 10,
 
 			
 			weaponShotGunName = "Shotgun",
@@ -135,7 +135,7 @@ Map = {
 			weaponShotGunNumberShoots = 8,
 			weaponShotGunDistance = 100.0,
 			weaponShotGunCoolDown = 2.0,
-			weaponShotGunAmmo = 0,
+			weaponShotGunAmmo = 200,
 			
 			hubTamCuadro = 10,
 		

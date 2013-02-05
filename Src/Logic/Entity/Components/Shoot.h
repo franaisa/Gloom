@@ -49,6 +49,8 @@ namespace Logic
 
 		virtual void shoot();
 
+		virtual void activate();
+
 	protected:
 
 		/**

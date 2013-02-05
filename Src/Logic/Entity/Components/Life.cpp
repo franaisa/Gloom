@@ -118,7 +118,7 @@ namespace Logic
 			}
 			_varLifeCumulative=0;
 			Logic::CMessageHudLife *message1 = new Logic::CMessageHudLife();
-			message1->setHudLife(_life);
+			message1->setLife(_life);
 			_entity->emitMessage(message1);
 		
 			if(_life>_lifeDamage)
@@ -150,7 +150,7 @@ namespace Logic
 
 
 					Logic::CMessageHudShield *message2 = new Logic::CMessageHudShield();
-					message2->setHudShield(_shield);
+					message2->setShield(_shield);
 					_entity->emitMessage(message2);
 
 		}
@@ -166,7 +166,7 @@ namespace Logic
 
 
 		Logic::CMessageHudLife *message1 = new Logic::CMessageHudLife();
-		message1->setHudLife(_life);
+		message1->setLife(_life);
 		_entity->emitMessage(message1);
 		//if ((_life <= 0) && (_entity->isPlayer())) {
 		//	Application::CBaseApplication::getSingletonPtr()->setState("menu");
@@ -181,7 +181,7 @@ namespace Logic
 		}
 
 		Logic::CMessageHudLife *message1 = new Logic::CMessageHudLife();
-		message1->setHudLife(_life);
+		message1->setLife(_life);
 		_entity->emitMessage(message1);
 
 	}
@@ -194,7 +194,7 @@ namespace Logic
 		}
 
 		Logic::CMessageHudShield *message2 = new Logic::CMessageHudShield();
-					message2->setHudShield(_shield);
+					message2->setShield(_shield);
 					_entity->emitMessage(message2);
 		
 		printf("\nViva!, mi shield a aumentado en %d, por lo que ahora tengo %d de VIDA",shield, _shield);

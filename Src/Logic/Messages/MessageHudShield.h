@@ -9,8 +9,8 @@ namespace Logic {
 	DEC_FACTORYMESSAGE(CMessageHudShield);
 	public:
 		CMessageHudShield();
-		int getHudShield();
-		void setHudShield( int shield);
+		int getShield();
+		void setShield( int shield);
 		~CMessageHudShield(){};
 		
 		virtual Net::CBuffer* serialize();

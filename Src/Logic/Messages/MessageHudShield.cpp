@@ -11,12 +11,12 @@ namespace Logic {
 	}//
 	//----------------------------------------------------------
 
-	void CMessageHudShield::setHudShield( int shield){
+	void CMessageHudShield::setShield( int shield){
 		_shield = shield;
 	}//
 	//----------------------------------------------------------
 
-	int CMessageHudShield::getHudShield(){
+	int CMessageHudShield::getShield(){
 		return _shield;
 	}//
 	//----------------------------------------------------------
