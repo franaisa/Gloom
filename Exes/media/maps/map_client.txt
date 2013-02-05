@@ -2,14 +2,18 @@ Map = {
 
 	World = {
 		type = "World",
-		position = {0, 0, 0},
+		position = {0, -500, 0},
+		msgList= "0",
+		scale = {1, 1, 1},
 		orientation = 0,
 		static = true,
-		model = "laberinto.mesh",
+		model = "scenario.mesh",
 		physic_entity = "fromFile",
 		physic_normal = { 0, 1, 0 },
-		physic_file = "media/models/laberinto-fisico.RepX",
+		physic_file = "media/models/scenario.RepX",
 		physic_group = 0,
+		
+		
 	},
 
 	David = {
@@ -41,13 +45,5 @@ Map = {
 		height = 8,
 		targetHeight = 8,
 		targetDistance = 20,
-	},
-
-	skybox = {
-		type = "Entity",
-		static = true,
-		position = {0, 0, 0},
-		orientation = 0,
-		model = "skybox.mesh",
 	},
 }
