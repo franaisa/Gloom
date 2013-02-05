@@ -99,6 +99,13 @@ namespace Logic
 		CMap *getMap() {return _map;}
 
 		/**
+		Devuelve el manager de puntos de spawn
+
+		@return Manager de puntos de spawn
+		*/
+		CGameSpawnManager *getSpawnManager() {return _gameSpawnManager;}
+
+		/**
 		Devuelve la entidad del jugador.
 
 		@return Entidad del jugador.

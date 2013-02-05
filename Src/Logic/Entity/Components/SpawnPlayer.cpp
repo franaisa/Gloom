@@ -13,6 +13,9 @@ Contiene la implementación del componente que gestiona el spawn del jugador.
 #include "Logic/Entity/Entity.h"
 #include "Map/MapEntity.h"
 #include "PhysicController.h"
+#include "Logic/Maps/Map.h"
+#include "Logic/Server.h"
+
 
 #include "Logic/Messages/MessagePlayerDead.h"
 #include "Logic/Messages/MessageSetPhysicPosition.h"
@@ -81,7 +84,8 @@ namespace Logic
 			if(_actualTimeSpawn>_timeSpawn){
 				//LLamamos al manager de spawn que nos devolverá una posición ( ahora hecho a lo cutre)
 				Vector3 spawn(3,4,3);
-				
+				CServer::getSingletonPtr()->getSpawnManager();
+
 				//Volvemos a activar todos los componentes para que la fisica pueda recibir el mensaje de spawn
 				_entity->activate();
 				//Mensaje para el componente de físicas
