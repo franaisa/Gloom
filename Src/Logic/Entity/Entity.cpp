@@ -269,7 +269,6 @@ namespace Logic
 		Logic::CMessageTransform *m=new Logic::CMessageTransform();
 		m->setTransform(_transform);
 		emitMessage(m);
-		std::cout << "enviando mensaje SET_TRANSFORM" << std::endl;
 	} // setTransform
 
 	//---------------------------------------------------------
