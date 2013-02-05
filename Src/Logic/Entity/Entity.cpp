@@ -162,7 +162,7 @@ namespace Logic
 		}
 
 
-	}// deactivateAllComponentsExceptv
+	}// deactivateAllComponentsExcept
 
 	//---------------------------------------------------------
 
