@@ -145,20 +145,15 @@ namespace Logic
 	//---------------------------------------------------------
 
 
-	void CEntity::deactivateAllComponentsExcept(const std::string id) {
-		//Buscamos el componente que no desactivaremos mediante la hash
-		std::map<std::string, IComponent*>::iterator except;
-		except = _components.find(id);
-		// Desactivamos los componentes
-		TComponentList::const_iterator it = _componentList.begin();
-		for(; it != _componentList.end(); ++it)
-			(*it)->deactivate();
+	 void CEntity::deactivateAllComponentsExcept (const std::string id) {
+        std::map<std::string, IComponent*>::iterator except = _components.begin();
 
-		//Activamos el correspondiente
-		((except)->second)->activate();
+        for(; except!=_components.end(); ++except){
+            if(except->first.compare(id)!=0)
+                (except->second)->deactivate();
+        }
 
-		return;
-	}// deactivateAllComponentsExcept
+    }// deactivateAllComponentsExcept
 	//---------------------------------------------------------
 
 	void CEntity::tick(unsigned int msecs) 

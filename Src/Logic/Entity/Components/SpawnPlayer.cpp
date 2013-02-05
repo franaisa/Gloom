@@ -92,8 +92,7 @@ namespace Logic
 	{
 		//Si no esto muerto ya hago las acciones
 		if(!_isDead){
-			
-			//_entity->deactivateAllComponentsExcept("CSpawnPlayer");
+			_entity->deactivateAllComponentsExcept("CSpawnPlayer");
 			_isDead=true;
 		}
 

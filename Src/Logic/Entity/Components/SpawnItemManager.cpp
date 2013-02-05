@@ -25,8 +25,7 @@ namespace Logic
 	IMP_FACTORY(CSpawnItemManager);
 	
 	//---------------------------------------------------------
-	void CSpawnItemManager::tick(unsigned int msecs)
-	{
+	void CSpawnItemManager::tick(unsigned int msecs) {
 		IComponent::tick(msecs);
 
 		if(_isRespawning) {
@@ -38,6 +37,7 @@ namespace Logic
 
 				// Activar entidad grafica
 				_entity->getComponent<CGraphics>("CGraphics")->activate();
+				_entity->getComponent<CGraphics>("CGraphics")->setVisible(true);
 
 				// Activar entidad fisica
 				_entity->getComponent<CPhysicEntity>("CPhysicEntity")->activate();
@@ -45,8 +45,8 @@ namespace Logic
 		}
 	} // tick
 
-	bool CSpawnItemManager::spawn(CEntity *entity, CMap *map, const Map::CEntity *entityInfo) 
-	{
+	//---------------------------------------------------------
+	bool CSpawnItemManager::spawn(CEntity *entity, CMap *map, const Map::CEntity *entityInfo) {
 		if(!IComponent::spawn(entity,map,entityInfo))
 			return false;
 
@@ -72,30 +72,25 @@ namespace Logic
 	} // spawn
 	
 	//---------------------------------------------------------
-
-	bool CSpawnItemManager::accept(CMessage *message)
-	{
+	bool CSpawnItemManager::accept(CMessage *message) {
 		return (message->getMessageType() == Message::TOUCHED);
 	} // accept
 	
 	//---------------------------------------------------------
-
-	void CSpawnItemManager::process(CMessage *message)
-	{
-		switch(message->getMessageType())
-		{
+	void CSpawnItemManager::process(CMessage *message) {
+		switch(message->getMessageType()) {
 		case Message::TOUCHED:
-			{
-				itemGrabbed( ((CMessageTouched*)message)->getEntity() );
-			}
+			itemGrabbed( ((CMessageTouched*)message)->getEntity() );
+			break;
 		}
-
 	} // process
 
+	//---------------------------------------------------------
 	void CSpawnItemManager::itemGrabbed(CEntity* actor) {
 
 		// Desactivar entidad grafica
 		_entity->getComponent<CGraphics>("CGraphics")->deactivate();
+		_entity->getComponent<CGraphics>("CGraphics")->setVisible(false);
 
 		// Desactivar entidad fisica
 		_entity->getComponent<CPhysicEntity>("CPhysicEntity")->deactivate();

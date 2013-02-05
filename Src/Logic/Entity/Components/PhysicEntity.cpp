@@ -244,4 +244,3 @@ void CPhysicEntity::onTrigger(IPhysics *otherComponent, bool enter)
 		_entity->emitMessage(m);
 	}
 }
-
