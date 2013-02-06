@@ -124,6 +124,7 @@
     <ClCompile Include="..\..\Src\Logic\Messages\MessageHudAmmo.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageHudLife.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageHudShield.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Messages\MessageHudSpawn.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageHudWeapon.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageKinematicMove.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageMouse.cpp" />
@@ -190,6 +191,7 @@
     <ClInclude Include="..\..\Src\Logic\Messages\MessageHudAmmo.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageHudLife.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageHudShield.h" />
+    <ClInclude Include="..\..\Src\Logic\Messages\MessageHudSpawn.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageHudWeapon.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageKinematicMove.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageMouse.h" />
