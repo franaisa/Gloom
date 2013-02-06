@@ -168,6 +168,8 @@ namespace Net
 
 		bool imServer(){return _servidorRed!=NULL;}
 
+
+		bool imClient(){return _clienteRed!=NULL;}
 		/**
 		Devuelve el ID de red.
 		

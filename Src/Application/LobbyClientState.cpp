@@ -21,7 +21,7 @@ Contiene la implementación del estado de lobby del cliente.
 #include "Logic/Maps/Map.h"
 
 #include "GUI/Server.h"
-
+#include "Logic/Entity/Entity.h"
 #include "Net/Manager.h"
 #include "Net/Cliente.h"
 #include "Net/factoriared.h"
@@ -174,9 +174,10 @@ namespace Application {
 			// aproximación, solo cambiamos el nombre y decimos si es el jugador
 			// local. Los datos deberían llegar en el paquete de red.
 			Net::NetID id;
+			Logic::TEntityID entityID;
 			//memcpy(&id, packet->getData() + sizeof(msg), sizeof(id));
 			buffer.read(&id, sizeof(id));
-			
+			buffer.read(&entityID, sizeof(entityID));
 			std::string name("Player");
 			std::stringstream number;
 			number << id;
@@ -186,18 +187,17 @@ namespace Application {
 			// si el jugador es el jugador local (si el ID del paquete coincide 
 			// con nuestro ID de red).
 
-			
-
 			bool localPlayer = false;
 			if(id == Net::CManager::getSingletonPtr()->getID()) {
 				localPlayer = true;
 			}
-			Logic::CServer::getSingletonPtr()->getMap()->createPlayer(name, localPlayer);
-			
+			Logic::CEntity * player = Logic::CServer::getSingletonPtr()->getMap()->createPlayer(name, localPlayer);
+			player->setEntityID(entityID);
+			outstream << "CLIENT: me han asignado esta id: " << entityID << endl;
+			cout << "CLIENTE " << id << "con id de entidad "  << entityID << std::endl;
 			//Enviamos el mensaje de que se ha creado el jugador
 			Net::NetMessageType ackMsg = Net::PLAYER_LOADED;
 			Net::CBuffer ackBuffer(sizeof(ackMsg));
-
 			ackBuffer.write(&ackMsg, sizeof(ackMsg));
 			Net::CManager::getSingletonPtr()->send(ackBuffer.getbuffer(), ackBuffer.getSize());
 
