@@ -346,7 +346,7 @@ PxRigidDynamic* CServer::createDynamicBox(const Vector3 &position, const Vector3
 	// cara inferior. Para unificar necesitamos realizar una traslación en el eje Y.
 	// Afortunadamente, el descriptor que se usa para crear el actor permite definir esta 
 	// transformación local, por lo que la conversión entre sistemas de coordenadas es transparente. 
-
+	std::cout << "FISICA DINAMICA,CREACION POSICION: " << position << std::endl;
 	// Crear un cubo dinámico
 	PxTransform pose(Vector3ToPxVec3(position));
 	PxBoxGeometry geom(Vector3ToPxVec3(dimensions));

@@ -386,7 +386,7 @@ namespace Logic
 		 * @param id String que identifica al componente. Es el mismo nombre
 		 * que el asignado en el blueprints.
 		 */
-		void deactivateAllComponentsExcept(const std::string id[]);
+		void deactivateAllComponentsExcept(std::list<std::string>* id);
 
 	protected:
 

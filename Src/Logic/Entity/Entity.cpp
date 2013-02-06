@@ -146,15 +146,16 @@ namespace Logic
 	//---------------------------------------------------------
 
 	
-	void CEntity::deactivateAllComponentsExcept (const std::string id[]) {
+	void CEntity::deactivateAllComponentsExcept (std::list<std::string>* id) {
 		std::map<std::string, IComponent*>::iterator except = _components.begin();
 
 		bool desactivar=true;
 		for(; except!=_components.end(); ++except){
-			for(int i=0;i<sizeof(id) && desactivar;i++){
-				if(except->first.compare(id[i])==0){
+			std::list<std::string>::iterator iteIds= id->begin();
+
+			for(; iteIds!=id->end(); ++iteIds){
+				if(iteIds->compare(except->first)==0)
 					desactivar=false;
-				}
 			}
 			if(desactivar)
 				(except->second)->deactivate();

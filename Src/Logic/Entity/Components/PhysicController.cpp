@@ -85,7 +85,7 @@ void CPhysicController::process(CMessage *message)
 		_movement = ((CMessageAvatarWalk*)message)->getDirection();
 		break;
 	case Message::SET_PHYSIC_POSITION:
-		setPosition(((CMessageSetPhysicPosition*)message)->getPosition());
+		setPhysicPosition(((CMessageSetPhysicPosition*)message)->getPosition());
 		break;
 	}
 
@@ -121,7 +121,7 @@ void CPhysicController::tick(unsigned int msecs)
 
 //---------------------------------------------------------
 
-void  CPhysicController::setPosition (const Vector3 &position){
+void  CPhysicController::setPhysicPosition (const Vector3 &position){
 	_server->setControllerPosition(_controller,position);
 }
 

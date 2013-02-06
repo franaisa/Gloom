@@ -95,7 +95,7 @@ namespace Logic
 		/**
 		Setea la posición del controlador
 		*/
-		void  setPosition (const Vector3 &position);
+		void  setPhysicPosition (const Vector3 &position);
 
 		/**
 		Se invoca cuando se produce una colisión entre una entidad física y un trigger.
