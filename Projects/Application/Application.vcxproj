@@ -131,7 +131,6 @@
     <ClInclude Include="..\..\Src\Application\OgreClock.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="ClassDiagram1.cd" />
     <None Include="Galeon.ico" />
     <None Include="small.ico" />
   </ItemGroup>

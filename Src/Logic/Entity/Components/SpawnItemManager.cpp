@@ -114,15 +114,15 @@ namespace Logic
 			else if(_id == "ammo") {
 				// Mandar un mensaje con el _weaponType
 				//CMessageAddAmmo* m = new CMessageAddAmmo();
-				//m->setQuantity(_reward);
-				//m->setWeaponType(_weaponType);
+				//m->setAmmo(_reward);
+				//m->setWeapon(_weaponType);
 				//actor->emitMessage(m);
 			}
 			else if(_id == "weapon") {
 				// Mandar un mensaje con el _weaponType
 				//CMessageAddWeapon* m = new CMessageAddWeapon();
-				//m->setQuantity(_reward);
-				//m->setWeaponType(_weaponType);
+				//m->AddAmmo(_reward);
+				//m->addWeapon(_weaponType);
 				//actor->emitMessage(m);
 			}
 		}
