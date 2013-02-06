@@ -154,8 +154,12 @@ namespace Application {
 		while (!exitRequested()) 
 		{
 			if (!_currentState ||
-					(_nextState && (_currentState != _nextState)))
+					(_nextState && (_currentState != _nextState))){
 				changeState();
+				_clock->updateTime();
+				tick(1);
+				continue;
+			}
 
 			_clock->updateTime();
 

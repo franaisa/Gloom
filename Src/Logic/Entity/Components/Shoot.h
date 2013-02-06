@@ -50,6 +50,7 @@ namespace Logic
 
 		virtual void activate();
 
+		virtual void addAmmo(int weapon, int ammo);
 	protected:
 
 		/**

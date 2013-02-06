@@ -74,6 +74,10 @@ namespace Logic
 		IComponent::activate();
 		
 		_life=_classLife;
+		//Actualización vida
+		Logic::CMessageHudLife *message1 = new Logic::CMessageHudLife();
+		message1->setLife(_life);
+		_entity->emitMessage(message1);	
 		
 
 	} // activate

@@ -124,6 +124,24 @@ namespace Logic
 	}
 	void CWeaponsManager::addAmmo(int ammo, int weapon){
 		// Preguntar mñn a esta gente, yo tengo las armas cableadas para desactivarlas o no, aprovecho esto y ya le paso la municion o que todos acepten ese mensaje?
+		// Si al final se hace que acepeten los
+		switch(weapon){
+		case 0:
+			_entity->getComponent<CShootHammer>("CShootHammer")->addAmmo(0,ammo);
+			break;
+		case 1:
+			_entity->getComponent<CShootMiniGun>("CShootMiniGun")->addAmmo(1,ammo);
+			break;
+		case 2:
+			_entity->getComponent<CShootShotGun>("CShootShotGun")->addAmmo(2,ammo);
+			break;
+
+		/*
+		case 2:
+			_entity->getComponent<CShootShotGun>("CShootShotGun")->deactivate();
+			break;
+		*/
+		}
 	}
 
 	void CWeaponsManager::addWeapon(int ammo, int weapon){

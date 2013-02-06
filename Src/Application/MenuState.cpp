@@ -190,7 +190,7 @@ namespace Application {
 	/*bool CMenuState::startReleased(const GUI::GUIEventArgs& e)
 	{
 		_app->setState("game");
-		return true;
+		return true;6
 
 	} // startReleased*/
 

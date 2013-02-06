@@ -207,5 +207,11 @@ namespace Logic
 
 	}
 
+	void CShoot::addAmmo(int weapon, int ammo)
+	{
+		//si yo soy el weapon
+		_ammo += ammo;
+	}
+
 } // namespace Logic
 
