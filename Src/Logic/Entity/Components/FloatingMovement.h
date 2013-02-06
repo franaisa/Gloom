@@ -32,7 +32,7 @@ namespace Logic
 		/**
 		Constructor por defecto; en la clase base no hace nada.
 		*/
-		CFloatingMovement() : IComponent(), _goingUp(true), _orientation(0), _degrees(0), _radians(0) {}
+		CFloatingMovement() : IComponent(), _orientation(0) {}
 
 		/**
 		Método llamado en cada frame que actualiza el estado del componente de la vida,
