@@ -82,7 +82,7 @@ namespace Logic
 		//Inicializacion variables de control ( salto, salto lateral, concatenacion salto lateral y rebote )
 		_jumping = false;
 		_jumpingControl = false;
-		_speedJump=-0.02f;
+		_speedJump=-0.5f;
 		_falling=true;
 		_caida=false;
 
@@ -390,7 +390,7 @@ namespace Logic
 		//El PhysicController nos envía por mensaje el atributo _falling (devuelve el del frame anterior) y asi sabemos si esta tocando el suelo y puedo saltar
 		if(!_falling){
 			_canJump=true;
-			_speedJump=-0.02f;
+			_speedJump=-0.5f;
 			_jumpingControl=false;
 			_caida=false;
 			_velocitySideJump=false;

@@ -163,7 +163,13 @@ namespace Application {
 
 			_clock->updateTime();
 
-			tick(_clock->getLastFrameDuration());
+			//Como mínimo 3 milisegundos para ejecutar un tick desde la ultima vez
+			_clock->setAcumTime(_clock->getAcumTime()+_clock->getLastFrameDuration());
+			if(_clock->getAcumTime()>2){
+				tick(_clock->getAcumTime());
+				_clock->setAcumTime(0);
+			}
+		
 		}
 
 	} // run

@@ -61,6 +61,9 @@ bool CPhysicController::spawn(CEntity* entity, CMap *map, const Map::CEntity *en
 	// Crear el character controller asociado al componente
 	_controller = createController(entityInfo);
 
+	// Seteo de _falling a false para que se envie el primer mensaje de actualizacion
+	_falling=false;
+
 	return true;
 }
 
@@ -107,14 +110,14 @@ void CPhysicController::tick(unsigned int msecs)
 	// de tipo AVATAR_WALK. 
 	unsigned flags = _server->moveController(_controller, _movement, msecs);
 
-	// Actualizamos el flag que indica si estamos cayendo
-	_falling =  !(flags & PxControllerFlag::eCOLLISION_DOWN);
-
-	//Mandamos un mensaje que dirá si hay collision con el suelo para la lógica
-	Logic::CMessageCollisionDown *m=new Logic::CMessageCollisionDown();
-	m->setCollisionDown(_falling);
-	_entity->emitMessage(m);
-
+	if(_falling != !(flags & PxControllerFlag::eCOLLISION_DOWN)){
+		// Actualizamos el flag que indica si estamos cayendo
+		_falling =  !(flags & PxControllerFlag::eCOLLISION_DOWN);
+		//Mandamos un mensaje que dirá si hay collision con el suelo para la lógica
+		Logic::CMessageCollisionDown *m=new Logic::CMessageCollisionDown();
+		m->setCollisionDown(_falling);
+		_entity->emitMessage(m);
+	}
 	_movement = Vector3::ZERO;
 
 }

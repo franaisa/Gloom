@@ -61,7 +61,7 @@ namespace Application
 		/** 
 		Constructor de la clase 
 		*/
-		IClock() : _lastTime(0), _lastFrameDuration(0) {}
+		IClock() : _lastTime(0), _lastFrameDuration(0), _acumTime(0) {}
 
 		/** 
 		Destructor 
@@ -97,6 +97,22 @@ namespace Application
 		*/
 		unsigned int getLastFrameDuration() const { return _lastFrameDuration; }
 
+
+		/**
+		Devuelve el tiempo acumulado si no se cumplio la condición de X milisegundos
+		para procesar ticks.
+
+		@return Devuelve el tiempo acumulado
+		*/
+		unsigned int getAcumTime() { return _acumTime; }
+
+
+		/**
+		Devuelve el tiempo acumulado si no se cumplio la condición de X milisegundos
+		para procesar ticks.
+		*/
+		void setAcumTime(unsigned int acum) { _acumTime=acum; }
+
 	protected:
 
 		/**
@@ -124,6 +140,11 @@ namespace Application
 		Duración del último frame
 		*/
 		unsigned int _lastFrameDuration;
+
+		/**
+		Tiempo acumulado si no se cumplió la condicion
+		*/
+		unsigned int _acumTime;
 
 	}; // IClock
 
