@@ -9,13 +9,11 @@ namespace Logic {
 	DEC_FACTORYMESSAGE(CMessagePlayerDead);
 	public:
 		CMessagePlayerDead();
-		bool getPlayerDead();	
 		~CMessagePlayerDead(){};
 		
 		virtual Net::CBuffer* serialize();
 		virtual void deserialize(Net::CBuffer& buffer);
-	private:
-		 int _playerDead;
+
 	};
 	REG_FACTORYMESSAGE(CMessagePlayerDead);
 };

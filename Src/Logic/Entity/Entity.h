@@ -368,7 +368,6 @@ namespace Logic
 		T* getComponent(const std::string id) {
 			std::map<std::string, IComponent*>::iterator it;
 			it = _components.find(id);
-
 			if(it == _components.end()) {
 				std::cerr << "Error: No se ha encontrado el id de componente que se busca" << std::endl;
 				//exit(-1);
@@ -379,6 +378,15 @@ namespace Logic
 		}
 
 		//__________________________________________________________________________
+
+		
+		/**
+		 * Desactiva todos los componentes excepto el paso por parámetro como id.
+		 * 
+		 * @param id String que identifica al componente. Es el mismo nombre
+		 * que el asignado en el blueprints.
+		 */
+		void deactivateAllComponentsExcept(const std::string id);
 
 	protected:
 

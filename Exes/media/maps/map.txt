@@ -15,25 +15,84 @@ Map = {
 		
 	},
 	
-	Orb = {
+	Orb1 = {
 		type = "ItemSpawn",
-		position = {10.0, 10.0, 10.0},
-		model = "marine.mesh",
+		position = {67.0, 2.0, 42.0},
+		model = "bioshock.mesh",
 		id = "orb",
-		reward = 15,
+		reward = 17,
 		respawnTime = 5,
-		orbitalOffset = 10,
-		orbitalSpeed = 5,
+		orbitalOffset = 4,
+		orbitalSpeed = 0.005,
 		physic_entity = "rigid",
 		physic_trigger = true,
 		physic_type = "static",
 		physic_shape = "box",
 		physic_dimensions = { 3, 3, 3 },
-		physic_height = 6,
+		physic_height = 0,
 		physic_radius = 0.5,
 		physic_mass = 10,
 	},
 	
+	Shotgun = {
+		type = "ItemSpawn",
+		position = {-67.0, 2.0, 42.0},
+		model = "AK47.mesh",
+		id = "weapon",
+		weaponType = "shotgun",
+		reward = 30,
+		respawnTime = 5,
+		orbitalOffset = 4,
+		orbitalSpeed = 0.005,
+		physic_entity = "rigid",
+		physic_trigger = true,
+		physic_type = "static",
+		physic_shape = "box",
+		physic_dimensions = { 3, 3, 3 },
+		physic_height = 0,
+		physic_radius = 0.5,
+		physic_mass = 10,
+	},
+	
+	ShotgunAmmo1 = {
+		type = "ItemSpawn",
+		position = {-67.0, 2.0, -42.0},
+		model = "UziLeft.mesh",
+		id = "ammo",
+		weaponType = "shotgun",
+		reward = 15,
+		respawnTime = 5,
+		orbitalOffset = 4,
+		orbitalSpeed = 0.005,
+		physic_entity = "rigid",
+		physic_trigger = true,
+		physic_type = "static",
+		physic_shape = "box",
+		physic_dimensions = { 3, 3, 3 },
+		physic_height = 0,
+		physic_radius = 0.5,
+		physic_mass = 10,
+	},
+	
+	SuperShield = {
+		type = "ItemSpawn",
+		position = {67.0, 2.0, -42.0},
+		model = "torreta.mesh",
+		id = "armor",
+		reward = 100,
+		respawnTime = 5,
+		orbitalOffset = 4,
+		orbitalSpeed = 0.005,
+		physic_entity = "rigid",
+		physic_trigger = true,
+		physic_type = "static",
+		physic_shape = "box",
+		physic_dimensions = { 3, 3, 3 },
+		physic_height = 0,
+		physic_radius = 0.5,
+		physic_mass = 10,
+	},
+		
 	Enemigo1 = {
 		type = "Enemy",
 		position = {0, 5, -10},
@@ -80,6 +139,7 @@ Map = {
 		type = "Player",
 		position = {0, 8, 0},
 		orientation = 180,
+		timeSpawn = 4,
 		life = 12,
 		shield = 0,
 		maxShield = 100,
@@ -90,6 +150,14 @@ Map = {
 		playerDead = false,
 		isPlayer = true,
 		speed = 0.12,
+		powerSideJump = 0.1,
+		sumSpeedSideJump = 1.5,
+		sumSpeedSideJumpConcat = 2.0,
+		maxTimeSideJump = 300,
+		maxTimeConcatSideJump = 500,
+		powerJump = 0.2,
+		restitutionMoveAir = 0.8,
+		gravity = -0.0008,
 		physic_shape = "capsule",
 		physic_radius = 6,
 		physic_height = 6,
@@ -137,21 +205,7 @@ Map = {
 			weaponShotGunCoolDown = 2.0,
 			weaponShotGunAmmo = 200,
 			
-			hubTamCuadro = 10,
-		
-		
-		hudMira = 3;
-		hudHealthX = 0.2;
-		hudHealthY = 0.8;
-		hudHealthSize = 0.075;
-		
-		hudShieldX = 0.2;
-		hudShieldY = 0.9;
-		hudShieldSize = 0.075;
-		
-		hudShield2X = 0.4;
-		hudShield2Y = 0.9;
-		hudShield2Size = 0.075;
+		hudMira = 3,
 	},
 	
 	Camera = {

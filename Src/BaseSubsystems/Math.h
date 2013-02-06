@@ -244,7 +244,8 @@ namespace Math
 	/**
 	Establece un subviraje a una matriz de transformación.
 
-	@param turn Giro en radianes que se quiere etablecer.
+	@param turnP Giro en radianes que se quiere etablecer en el eje Y.
+	@param turnY Giro en radianes que se quiere etablecer en el eje X.
 	@param transform Matriz de transformación a modificar.
 	*/
 	static void setPitchYaw(float turnP, float turnY, Matrix4& transform) 

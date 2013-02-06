@@ -207,8 +207,10 @@ namespace Map {
     YYUSE (yyvaluep);
     switch (yytype)
       {
-         default:
-	  break;
+		  //añadido case 1 por warning
+			
+			default:
+			break;
       }
   }
 

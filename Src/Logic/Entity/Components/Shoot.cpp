@@ -162,14 +162,10 @@ namespace Logic
 				CEntity *entity = Physics::CServer::getSingletonPtr()->raycastClosestInverse(ray, _distance,3);
 			
 
-				//Para no restar balas al martillo
+				//resto las balas que tiene, luego enviare las que le quedan actualizadas, asi no envio un mensaje por balas (en la escopeta envairia 8 mensajes, asi solo uno)
 				if(_name != "Hammer"){
 					--_ammo;
-					Logic::CMessageHudAmmo *message = new Logic::CMessageHudAmmo();
-					message->setAmmo(_ammo);
-					_entity->emitMessage(message);
 				}
-		
 				//Si hay colisión envíamos a dicha entidad un mensaje de daño
 				if(entity)
 				{
@@ -186,8 +182,17 @@ namespace Logic
 				}
 			
 				//Para el rebote, si hay colision con la entidad mundo pues reboto en la dirección opuesta a la que miro
-		
+				
 			}// fin del bucle para multiples disparos
+			if(_name != "Hammer"){				
+				Logic::CMessageHudAmmo *message = new Logic::CMessageHudAmmo();
+				message->setAmmo(_ammo);
+
+				//Cambio sobre uno, hay q cambiarlo ;-)
+				message->setWeapon(1);
+				_entity->emitMessage(message);
+			}
+			
 		}
 	} // shoot
 
@@ -200,7 +205,7 @@ namespace Logic
 		message->setAmmo(_ammo);
 		_entity->emitMessage(message);
 
-	};
+	}
 
 } // namespace Logic
 

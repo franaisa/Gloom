@@ -1,7 +1,0 @@
-HubOverlay
-{
-	container BorderPanel(Core/ShadowsPanel)
-	{
-		
-	}
-}

@@ -204,17 +204,17 @@ namespace Logic
 		Ogre::OverlayContainer* panelHealth = static_cast<Ogre::OverlayContainer*>( overlayManager.createOverlayElement( "Panel", "panelHealth" ) );
 		panelHealth->setMetricsMode(Ogre::GMM_PIXELS);
 		panelHealth->setPosition( 3*relativeWidth, 29*relativeHeight);
-		panelHealth->setDimensions( relativeWidth*1.5, relativeHeight*1.5 );
+		panelHealth->setDimensions( relativeWidth*1.5f, relativeHeight*1.5f );
         panelHealth->setMaterialName("hudHealth");
 
 		_textBoxArea[HEALTH] = static_cast<Ogre::TextAreaOverlayElement*>(
 				overlayManager.createOverlayElement("TextArea", "textAreaPanelHealth"));
 				
-				
-				
+		
 				_textBoxArea[HEALTH]->setMetricsMode(Ogre::GMM_PIXELS);
 				_textBoxArea[HEALTH]->setPosition(-relativeWidth*1.5, 0);
 				_textBoxArea[HEALTH]->setDimensions(relativeWidth*2, relativeHeight*2);
+
 					std::stringstream sHealth;//create a stringstream
 					sHealth << _health;//add number to the stream
 				_textBoxArea[HEALTH]->setCaption(sHealth.str());
@@ -234,7 +234,7 @@ namespace Logic
 		Ogre::OverlayContainer* panelShield = static_cast<Ogre::OverlayContainer*>( overlayManager.createOverlayElement( "Panel", "panelShield" ) );
 		panelShield->setMetricsMode(Ogre::GMM_PIXELS);
 		panelShield->setPosition( 7*relativeWidth, 29*relativeHeight);
-		panelShield->setDimensions( relativeWidth*1.5, relativeHeight*1.5 );
+		panelShield->setDimensions( relativeWidth*1.5f, relativeHeight*1.5f );
         panelShield->setMaterialName("hudShield");
 
 
@@ -244,6 +244,7 @@ namespace Logic
 				_textBoxArea[SHIELD]->setMetricsMode(Ogre::GMM_PIXELS);
 				_textBoxArea[SHIELD]->setPosition(-relativeWidth*1.5, 0);
 				_textBoxArea[SHIELD]->setDimensions(relativeWidth*2, relativeHeight*2);
+
 					std::stringstream sShield;//create a stringstream
 					sShield << _shield;//add number to the stream
 				_textBoxArea[SHIELD]->setCaption(sShield.str());
@@ -316,7 +317,7 @@ namespace Logic
 			break;
 		case Message::HUD_SHIELD: hudShield(((CMessageHudShield*)message)->getShield());
 			break;
-		case Message::HUD_AMMO: hudAmmo(((CMessageHudAmmo*)message)->getAmmo());
+		case Message::HUD_AMMO: hudAmmo( ((CMessageHudAmmo*)message)->getAmmo(), ((CMessageHudAmmo*)message)->getWeapon());
 			break;
 		//case Message::HUD_WEAPON: hudWeapon(((CMessageHudWeapon*)message)->getWeapon());
 			//break;
@@ -339,24 +340,28 @@ namespace Logic
 		_textBoxArea[SHIELD]->setCaption(sShield.str());
 	}
 
-	void CHudOverlay::hudAmmo(int ammo){
-		printf("\n\nllega %d",ammo);
-		_ammo = ammo;
+	void CHudOverlay::hudAmmo(int ammo, int weapon){
 
-		std::stringstream sAmmo;
-		sAmmo << _ammo;
-		_textBoxArea[AMMO]->setCaption(sAmmo.str());
-
-		if(ammo == 0)
+		if(weapon == _actualWeapon)
 		{
-			_weaponsBox[_actualWeapon][ACTIVE]->hide();
-			_weaponsBox[_actualWeapon][NO_AMMO]->show();
-		}
+			_ammo = ammo;
+			if(_ammo != 0){
+				if(!_weaponsBox[_actualWeapon][ACTIVE]->isVisible())
+				{
+					_weaponsBox[_actualWeapon][NO_AMMO]->hide();
+					_weaponsBox[_actualWeapon][ACTIVE]->show();
+				}
+				std::stringstream sAmmo;
+				sAmmo << _ammo;
+				_textBoxArea[AMMO]->setCaption(sAmmo.str());
+			}else{
+				_weaponsBox[_actualWeapon][ACTIVE]->hide();
+				_weaponsBox[_actualWeapon][NO_AMMO]->show();
+			}			
+		}		
 	}
 
-	void CHudOverlay::hudWeapon(int weapon){
-
-		_actualWeapon = weapon;
+	void CHudOverlay::hudWeapon(int ammo, int weapon){
 
 		_weaponsBox[_actualWeapon][ACTIVE]->show();
 		_weaponsBox[_actualWeapon][NO_AMMO]->hide();

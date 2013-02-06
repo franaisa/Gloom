@@ -11,12 +11,15 @@ namespace Logic {
 		CMessageHudAmmo();
 		int getAmmo();
 		void setAmmo( int ammo);
+		int getWeapon();
+		void setWeapon( int weapon);
 		~CMessageHudAmmo(){};
 		
 		virtual Net::CBuffer* serialize();
 		virtual void deserialize(Net::CBuffer& buffer);
 	private:
 		 int _ammo;
+		 int _weapon;
 	};
 	REG_FACTORYMESSAGE(CMessageHudAmmo);
 };

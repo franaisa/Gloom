@@ -58,6 +58,11 @@ namespace Logic
 
 		void changeWeapon(unsigned char newWeapon);
 
+		void CWeaponsManager::addAmmo(int ammo, int weapon);
+
+		void CWeaponsManager::addWeapon(int ammo, int weapon);
+	
+
 	protected:
 
 

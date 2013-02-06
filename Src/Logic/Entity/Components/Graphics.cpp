@@ -135,5 +135,19 @@ namespace Logic
 
 	} // process
 
+	void CGraphics::deactivate() {
+		IComponent::deactivate();
+
+		// Desactivar la entidad graficamente
+		_graphicsEntity->setVisible(false);
+	}
+
+	void CGraphics::activate() {
+		IComponent::activate();
+
+		// Activar la entidad graficamente
+		_graphicsEntity->setVisible(true);
+	}
+
 } // namespace Logic
 

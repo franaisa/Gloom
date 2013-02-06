@@ -6,13 +6,22 @@ namespace Logic {
 
 	IMP_FACTORYMESSAGE(CMessageAddAmmo);
 
-	CMessageAddAmmo::CMessageAddAmmo() : CMessage(TMessageType::ADD_LIFE) {
+	CMessageAddAmmo::CMessageAddAmmo() : CMessage(TMessageType::ADD_AMMO) {
 		// Nada que hacer
 	}//
 	//----------------------------------------------------------
 
+	void CMessageAddAmmo::setAddWeapon( int weapon){
+		_weapon = weapon;
+	}//
+	//----------------------------------------------------------
+	
 	void CMessageAddAmmo::setAddAmmo( int ammo){
 		_ammo = ammo;
+	}//
+
+	int CMessageAddAmmo::getAddWeapon(){
+		return _weapon;
 	}//
 	//----------------------------------------------------------
 
@@ -24,8 +33,9 @@ namespace Logic {
 	Net::CBuffer* CMessageAddAmmo::serialize() {
 		assert(_tempBuffer == NULL);
 
-		_tempBuffer = new Net::CBuffer(sizeof(int) + sizeof(_ammo));
+		_tempBuffer = new Net::CBuffer(sizeof(int) + sizeof(_weapon) + sizeof(_ammo));
 		_tempBuffer->serialize("CMessageAddAmmo");
+		_tempBuffer->serialize(_weapon);
 		_tempBuffer->serialize(_ammo);
 		
 		return _tempBuffer;
@@ -33,6 +43,7 @@ namespace Logic {
 	//----------------------------------------------------------
 
 	void CMessageAddAmmo::deserialize(Net::CBuffer& buffer) {
+		buffer.deserialize(_weapon);
 		buffer.deserialize(_ammo);
 	}
 

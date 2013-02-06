@@ -50,11 +50,6 @@ namespace Logic
 		Al recibir un mensaje de tipo DAMAGED la vida de la entidad disminuye.
 		*/
 		virtual void process(CMessage *message);
-
-		/**
-		Al recibir daño quitamos vida
-		*/
-
 		
 
 	protected:
@@ -70,8 +65,8 @@ namespace Logic
 
 		void hudLife(int health);
 		void hudShield(int shield);
-		void hudWeapon(int weapon);
-		void hudAmmo(int ammo);
+		void hudWeapon(int ammo, int weapon);
+		void hudAmmo(int ammo, int weapon);
 
 
 		int _health;

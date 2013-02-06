@@ -46,7 +46,6 @@ namespace Logic
 		*/
 		virtual void process(CMessage *message);
 
-
 		virtual void shoot();
 
 		virtual void activate();
@@ -66,6 +65,7 @@ namespace Logic
 		int _ammo; //esta como int, por que si es -1 esq no tienes esta arma.
 
 		std::string _nameWeapon;
+		
 		/**
 		Contendra el radio de la capsula leido del mapa
 		*/

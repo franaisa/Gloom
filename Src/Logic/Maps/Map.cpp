@@ -291,7 +291,7 @@ namespace Logic {
 
 		// Creamos la entidad y modificamos el resto de parametros que necesitamos
 		CEntity* playerCreated = CEntityFactory::getSingletonPtr()->createEntity(_playerInfo, this);
-		playerCreated->setPosition( playerCreated->getPosition() + (rand()%50-25) * Vector3(1, 0, 1) );
+		playerCreated->setPosition( playerCreated->getPosition() + (rand()%15+5) * Vector3(1, 0, 1) );
 		// Configuramos el jugador como local si lo es
 		playerCreated->setIsPlayer(isLocalPlayer);
 		getEntityByID(playerCreated->getEntityID())->setIsPlayer(isLocalPlayer);

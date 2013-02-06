@@ -41,7 +41,7 @@ namespace Logic
 		/**
 		Constructor por defecto; en la clase base no hace nada.
 		*/
-		CLife() : IComponent(), _life(100) {}
+		CLife() : IComponent(), _life(100), _playerDead(false) {}
 
 		/**
 		Método llamado en cada frame que actualiza el estado del componente de la vida,
@@ -82,10 +82,8 @@ namespace Logic
 		*/
 		void addShield(int shield);
 
-		/**
-		Manda un mensaje cuando el jugador muere
-		*/
 		void sendMessagePlayerDead();
+
 	protected:
 
 		/**

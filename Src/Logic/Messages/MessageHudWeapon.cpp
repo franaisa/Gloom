@@ -20,12 +20,23 @@ namespace Logic {
 		return _weapon;
 	}//
 	//----------------------------------------------------------
+
+	void CMessageHudWeapon::setAmmo( int ammo){
+		_ammo = ammo;
+	}//
+	//----------------------------------------------------------
+
+	int CMessageHudWeapon::getAmmo(){
+		return _ammo;
+	}//
+	//----------------------------------------------------------
 		
 	Net::CBuffer* CMessageHudWeapon::serialize() {
 		assert(_tempBuffer == NULL);
 
-		_tempBuffer = new Net::CBuffer(sizeof(int) + sizeof(_weapon));
+		_tempBuffer = new Net::CBuffer(sizeof(int) + sizeof(_ammo) + sizeof(_weapon));
 		_tempBuffer->serialize("CMessageHudWeapon");
+		_tempBuffer->serialize(_ammo);
 		_tempBuffer->serialize(_weapon);
 		
 		return _tempBuffer;
@@ -33,6 +44,7 @@ namespace Logic {
 	//----------------------------------------------------------
 
 	void CMessageHudWeapon::deserialize(Net::CBuffer& buffer) {
+		buffer.deserialize(_ammo);
 		buffer.deserialize(_weapon);
 	}
 

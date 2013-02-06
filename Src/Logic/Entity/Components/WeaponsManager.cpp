@@ -24,6 +24,11 @@ Contiene la implementación del componente que gestiona las armas y que administr
 
 #include "Logic/Messages/MessageChangeWeapon.h"
 #include "Logic/Messages/MessageChangeWeaponGraphics.h"
+#include "Logic/Messages/MessageAddAmmo.h"
+#include "Logic/Messages/MessageAddWeapon.h"
+
+#include "Logic/Messages/MessageHudWeapon.h"
+#include "Logic/Messages/MessageHudAmmo.h"
 
 
 
@@ -78,7 +83,8 @@ namespace Logic
 
 	bool CWeaponsManager::accept(CMessage *message)
 	{
-		return message->getMessageType() == Message::CHANGE_WEAPON;
+		return message->getMessageType() == Message::CHANGE_WEAPON 
+			|| message->getMessageType() == Message::ADD_AMMO;
 	} // accept
 	//---------------------------------------------------------
 
@@ -89,6 +95,9 @@ namespace Logic
 		{
 			case Message::CHANGE_WEAPON:
 					changeWeapon( ((CMessageChangeWeapon*)message)->getWeapon() );
+			break;
+			case Message::ADD_AMMO:
+				addAmmo( ((CMessageAddAmmo*)message)->getAddAmmo(),((CMessageAddAmmo*)message)->getAddWeapon()  );
 			break;
 		}
 
@@ -112,6 +121,23 @@ namespace Logic
 			_entity->emitMessage(m);
 		}
 		
+	}
+	void CWeaponsManager::addAmmo(int ammo, int weapon){
+		// Preguntar mñn a esta gente, yo tengo las armas cableadas para desactivarlas o no, aprovecho esto y ya le paso la municion o que todos acepten ese mensaje?
+	}
+
+	void CWeaponsManager::addWeapon(int ammo, int weapon){
+		if(weapon < _numWeapons)
+			_weapons[weapon] = true;
+		
+		Logic::CMessageHudWeapon *m=new Logic::CMessageHudWeapon();
+		m->setWeapon(weapon);
+		m->setAmmo(ammo);
+		_entity->emitMessage(m);
+
+
+		addAmmo(ammo, weapon);
+		// Preguntar mñn a esta gente, yo tengo las armas cableadas para desactivarlas o no, aprovecho esto y ya le paso la municion o que todos acepten ese mensaje?
 	}
 
 	void CWeaponsManager::desactivateComponent(unsigned char weapon){

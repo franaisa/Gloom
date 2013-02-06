@@ -19,6 +19,8 @@
 #include "Logic/Messages/MessageTouched.h"
 #include "Logic/Messages/MessageAddLife.h"
 #include "Logic/Messages/MessageAddShield.h"
+#include "Logic/Messages/MessageAddAmmo.h"
+#include "Logic/Messages/MessageAddWeapon.h"
 
 namespace Logic 
 {
@@ -32,18 +34,15 @@ namespace Logic
 		if(_isRespawning) {
 			_timer += msecs;
 
-			
-
 			if(_timer >= _respawnTime) {
 				_isRespawning = false;
+				_timer = 0;
 
 				// Activar entidad grafica
 				_entity->getComponent<CGraphics>("CGraphics")->activate();
 
 				// Activar entidad fisica
 				_entity->getComponent<CPhysicEntity>("CPhysicEntity")->activate();
-
-				std::cout << "Me vuelvo a activar" << std::endl;
 			}
 		}
 	} // tick
@@ -116,14 +115,19 @@ namespace Logic
 			actor->emitMessage(m);
 		}
 		else if(_id == "ammo") {
-			// Mandar un mensaje con el _weaponType
+			CMessageAddAmmo* m = new CMessageAddAmmo();
+			m->setAddAmmo(_reward);
+
+			/////////!!!!!!! pongo el numero a hierro, hay q cambiarlo por lo del enum q hablamos fran ;-)
+			m->setAddWeapon(1);
+
+			actor->emitMessage(m);
 		}
 		else if(_id == "weapon") {
 			// Mandar un mensaje con el _weaponType
 		}
 
 		// Arrancar el timer
-		_timer = 0;
 		_isRespawning = true;
 	}
 
