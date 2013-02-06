@@ -97,7 +97,6 @@ namespace Logic
 		// Desactivar entidad grafica
 		_entity->getComponent<CGraphics>("CGraphics")->deactivate();
 		_entity->getComponent<CGraphics>("CGraphics")->setVisible(false);
-		std::cout << "me llega mensaje de itemgrabbed" << std::endl;
 		
 		if(Net::CManager::getSingletonPtr()->imServer() || (!Net::CManager::getSingletonPtr()->imServer() && !Net::CManager::getSingletonPtr()->imClient())){
 			// Activar entidad fisica
@@ -117,17 +116,17 @@ namespace Logic
 			}
 			else if(_id == "ammo") {
 				// Mandar un mensaje con el _weaponType
-				//CMessageAddAmmo* m = new CMessageAddAmmo();
-				//m->setAmmo(_reward);
-				//m->setWeapon(_weaponType);
-				//actor->emitMessage(m);
+				CMessageAddAmmo* m = new CMessageAddAmmo();
+				m->setAddAmmo(_reward);
+				m->setAddWeapon(_weaponType);
+				actor->emitMessage(m);
 			}
 			else if(_id == "weapon") {
 				// Mandar un mensaje con el _weaponType
-				//CMessageAddWeapon* m = new CMessageAddWeapon();
-				//m->AddAmmo(_reward);
-				//m->addWeapon(_weaponType);
-				//actor->emitMessage(m);
+				CMessageAddWeapon* m = new CMessageAddWeapon();
+				m->setAddAmmo(_reward);
+				m->setAddWeapon(_weaponType);
+				actor->emitMessage(m);
 			}
 		}
 		// Arrancar el timer
