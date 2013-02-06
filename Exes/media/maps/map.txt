@@ -14,6 +14,28 @@ Map = {
 	
 	},
 	
+	Enemigo1 = {
+		type = "Enemy",
+		position = {0, 8, -10},
+		orientation = 90,
+		life = 100.0,
+		maxShield=100,
+		maxLife=120,
+		shield=10.0,
+		PorcentShield=23,
+		isPlayer = false,
+		model = "marine.mesh",
+		physic_entity = "rigid",
+		physic_type = "dynamic",
+		physic_shape = "box",
+		physic_dimensions = { 3, 6, 3 },
+		physic_height = 6,
+		physic_radius = 0.5,
+		physic_mass = 10,
+		physic_group = 1,
+	},
+	
+	
 	Orb1 = {
 		type = "ItemSpawn",
 		position = {67.0, 2.0, 42.0},
@@ -96,26 +118,7 @@ Map = {
 		physic_mass = 10,
 	},
 	
-	Enemigo1 = {
-		type = "Enemy",
-		position = {0, 8, -10},
-		orientation = 90,
-		life = 100.0,
-		maxShield=100,
-		maxLife=120,
-		shield=10.0,
-		PorcentShield=23,
-		isPlayer = false,
-		model = "marine.mesh",
-		physic_entity = "rigid",
-		physic_type = "dynamic",
-		physic_shape = "box",
-		physic_dimensions = { 3, 6, 3 },
-		physic_height = 6,
-		physic_radius = 0.5,
-		physic_mass = 10,
-		physic_group = 1,
-	},
+
 	
 	
 	
