@@ -175,7 +175,7 @@ namespace Logic
 
 		@param name Nombre del jugador.
 		*/
-		void createPlayer(std::string name, bool isLocalPlayer);
+		CEntity* createPlayer(std::string name, bool isLocalPlayer);
 
 	private:
 

@@ -177,6 +177,8 @@ namespace Logic
 		*/
 		Logic::TEntityID getEntityID() const { return _entityID; }
 
+
+		void setEntityID(TEntityID id) {_entityID = id; }
 		/**
 		Método que indica si la entidad es o no el jugador.
 		Seguro que hay formas mejores desde el punto de vista de
