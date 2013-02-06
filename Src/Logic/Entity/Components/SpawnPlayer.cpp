@@ -81,6 +81,9 @@ namespace Logic
 		//Solamente si estamos muertos (se recibió el mensaje)
 		if(_isDead){
 			_actualTimeSpawn+=msecs;
+			//Actualizamos el HUD para el respawn
+			//if(_actualTimeSpawn/1000
+
 			//Si superamos el tiempo de spawn tenemos que revivir
 			if(_actualTimeSpawn>_timeSpawn){
 				//LLamamos al manager de spawn que nos devolverá una posición ( ahora hecho a lo cutre)
@@ -115,6 +118,7 @@ namespace Logic
 			for(std::list<std::string*>::iterator it = except->begin(); it != except->end(); ++it)
 				delete *it;
 			delete except;
+
 		}
 
 	} // process

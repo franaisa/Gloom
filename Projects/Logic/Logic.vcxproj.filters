@@ -220,6 +220,9 @@
     <ClCompile Include="..\..\Src\Logic\GameSpawnManager.cpp">
       <Filter>Maps\Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Messages\MessageHudSpawn.cpp">
+      <Filter>Messages\Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Src\Logic\Maps\ComponentFactory.h">
@@ -413,6 +416,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Src\Logic\GameSpawnManager.h">
       <Filter>Maps\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Messages\MessageHudSpawn.h">
+      <Filter>Messages\Header</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
