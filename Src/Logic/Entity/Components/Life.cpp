@@ -76,7 +76,7 @@ namespace Logic
 		_life=_classLife;
 		//Actualización vida
 		Logic::CMessageHudLife *message1 = new Logic::CMessageHudLife();
-		message1->setHudLife(_life);
+		message1->setLife(_life);
 		_entity->emitMessage(message1);	
 		
 
@@ -128,7 +128,7 @@ namespace Logic
 				_life-=_lifeDamage;	
 				//Actualización vida
 				Logic::CMessageHudLife *message1 = new Logic::CMessageHudLife();
-				message1->setHudLife(_life);
+				message1->setLife(_life);
 				_entity->emitMessage(message1);	
 			}
 			_varLifeCumulative=0;
@@ -151,7 +151,7 @@ namespace Logic
 					_life=_life-porcentajeVida;
 				}
 					Logic::CMessageHudShield *message2 = new Logic::CMessageHudShield();
-					message2->setHudShield(_shield);
+					message2->setShield(_shield);
 					_entity->emitMessage(message2);
 		}
 		else
@@ -165,7 +165,7 @@ namespace Logic
 		}
 		//Actualizo la vida
 		Logic::CMessageHudLife *message1 = new Logic::CMessageHudLife();
-		message1->setHudLife(_life);
+		message1->setLife(_life);
 		_entity->emitMessage(message1);
 	}// damaged
 	//----------------------------------------------------------
@@ -178,7 +178,7 @@ namespace Logic
 				_life=_maxLife;
 
 			Logic::CMessageHudLife *message1 = new Logic::CMessageHudLife();
-			message1->setHudLife(_life);
+			message1->setLife(_life);
 			_entity->emitMessage(message1);
 		}
 	}// addLife
@@ -192,10 +192,21 @@ namespace Logic
 			else
 				_shield=_maxShield;
 
-			Logic::CMessageHudShield *message2 = new Logic::CMessageHudShield();
-			message2->setHudShield(_shield);
-			_entity->emitMessage(message2);
-		}
+
+		Logic::CMessageHudShield *message2 = new Logic::CMessageHudShield();
+					message2->setShield(_shield);
+					_entity->emitMessage(message2);
+		
+		printf("\nViva!, mi shield a aumentado en %d, por lo que ahora tengo %d de VIDA",shield, _shield);
+		}// addShield
+	}
+	//----------------------------------------------------------
+
+	void CLife::sendMessagePlayerDead(){
+
+				printf("el jugador está muerto?? con %i  \n",_playerDead);
+
+		
 	}// addShield
 	//----------------------------------------------------------
 

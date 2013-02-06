@@ -33,7 +33,7 @@ namespace Logic
 		/**
 		Constructor por defecto; en la clase base no hace nada.
 		*/
-		CHudOverlay() : IComponent(), _health(0), _shield(0), NUM_WEAPONS(3) {}
+		CHudOverlay() : IComponent(), _health(0), _shield(0), _ammo(0), _actualWeapon(0), _numWeapons(0) {}
 		
 		/**
 		Inicialización del componente usando la descripción de la entidad que hay en 
@@ -54,27 +54,31 @@ namespace Logic
 
 	protected:
 
-		const int NUM_WEAPONS;
+		int _numWeapons;
 
 		enum eWeaponIndex { HAMMER, SNIPER, SHOTGUN, NONE };
 		enum eOverlayState { ACTIVE, NO_AMMO, NO_WEAPON };
+		enum eOverlayTextArea {HEALTH, SHIELD, AMMO };
 		
 
 		
 
-		void addLife(int health);
-
-		void addShield(int shield);
+		void hudLife(int health);
+		void hudShield(int shield);
+		void hudWeapon(int ammo, int weapon);
+		void hudAmmo(int ammo, int weapon);
 
 
 		int _health;
-		Ogre::TextAreaOverlayElement* _healthTextArea;
 		int _shield;
-		Ogre::TextAreaOverlayElement* _shieldTextArea;
+		int _ammo;
+
+		Ogre::TextAreaOverlayElement *_textBoxArea[3];
 
 		int _actualWeapon;
 
-		Ogre::OverlayContainer* _weaponsBox[4][3];
+		// En vez de 4 deberia de ir el numero de armas pero no tengo cojones U.U
+		Ogre::OverlayContainer *_weaponsBox[4][3];
 
 	}; // class CHudOverlay
 

@@ -23,6 +23,11 @@ Contiene la implementación del componente que gestiona las armas y que administr
 #include "Logic/Messages/MessageControl.h"
 #include "Logic/Messages/MessageDamaged.h"
 
+#include "Logic/Messages/MessageAddAmmo.h"
+#include "Logic/Messages/MessageAddWeapon.h"
+#include "Logic/Messages/MessageHudAmmo.h"
+#include "Logic/Messages/MessageHudWeapon.h"
+
 #include <OgreSceneManager.h>
 #include <OgreMaterialManager.h>
 #include <OgreManualObject.h>
@@ -83,93 +88,130 @@ namespace Logic
 
 	void CShoot::shoot(){
 		
-		//Generación del rayo habiendo obtenido antes el origen y la dirección
-		Graphics::CCamera* camera = Graphics::CServer::getSingletonPtr()->getActiveScene()->getCamera();
+		if(_ammo > 0){
+
+			//Generación del rayo habiendo obtenido antes el origen y la dirección
+			Graphics::CCamera* camera = Graphics::CServer::getSingletonPtr()->getActiveScene()->getCamera();
 		
 		
-		// Para generalizar las armas, todas tendras tantas balas como la variable numberShoots
-		for(int i = 0; i < _numberShoots; ++i)
-		{
 
-			// Se corrige la posicion de la camara
-			Vector3 direction = camera->getTargetCameraPosition() - camera->getCameraPosition();
-			direction.normalise();
-			//El origen debe ser mínimo la capsula y por si miramos al suelo la separación mínima debe ser 1.5f ( en un futuro es probable que sea recomendable cambiar por no chocar con el grupo de uno mismo )
-			Vector3 origin = camera->getCameraPosition() + (_capsuleRadius * direction);
-
-
-			//Me dispongo a calcular la desviacion del arma, en el map.txt se pondra en grados de dispersion (0 => sin dispersion)
-			Ogre::Radian angle = Ogre::Radian( (  (((float)(rand() % 100))/100.0f) * (_dispersion)) /100);
-
+			int currentNumberShoots = _numberShoots;
+			// Para generalizar las armas, todas tendras tantas balas como la variable numberShoots
+			if(_numberShoots > _ammo)
+				currentNumberShoots = _ammo;
 			
-
-			//Esto hace un random total, lo que significa, por ejemplo, que puede que todas las balas vayan hacia la derecha 
-			Vector3 dispersionDirection = direction.randomDeviant(angle);
-			dispersionDirection.normalise();
-
-			// Creamos el ray desde el origen en la direccion del raton (desvido ya aplicado)
-			Ray ray(origin, dispersionDirection);
-			
-
-
-			////////////////////////////////////////////////Dibujo del rayo
-
-
-				Graphics::CScene *scene = Graphics::CServer::getSingletonPtr()->getActiveScene();
-				Ogre::SceneManager *mSceneMgr = scene->getSceneMgr();
-
-				
-				std::stringstream aux;
-				aux << "laser" << _nameWeapon << _temporal;
-				++_temporal;
-				std::string laser = aux.str();
-
-
-				Ogre::ManualObject* myManualObject =  mSceneMgr->createManualObject(laser); 
-				Ogre::SceneNode* myManualObjectNode = mSceneMgr->getRootSceneNode()->createChildSceneNode(laser+"_node"); 
- 
-
-				myManualObject->begin("laser", Ogre::RenderOperation::OT_LINE_STRIP);
-				Vector3 v = ray.getOrigin();
-				myManualObject->position(v.x,v.y,v.z);
-
-
-			for(int i=0; i < _distance;++i){
-				Vector3 v = ray.getPoint(i);
-				myManualObject->position(v.x,v.y,v.z);
-				// etc 
-			}
-
-				myManualObject->end(); 
-				myManualObjectNode->attachObject(myManualObject);
-
-
-			//////////////////////////////////fin del dibujado del rayo
-
-			//Rayo lanzado por el servidor de físicas de acuerdo a la distancia de potencia del arma
-			CEntity *entity = Physics::CServer::getSingletonPtr()->raycastClosestInverse(ray, _distance,3);
-		
-			//Si hay colisión envíamos a dicha entidad un mensaje de daño
-			if(entity)
+			for(int i = 0; i < currentNumberShoots; ++i)
 			{
 
-				printf("impacto con %s\n", entity->getName().c_str());
+				// Se corrige la posicion de la camara
+				Vector3 direction = camera->getTargetCameraPosition() - camera->getCameraPosition();
+				direction.normalise();
+				//El origen debe ser mínimo la capsula y por si miramos al suelo la separación mínima debe ser 1.5f ( en un futuro es probable que sea recomendable cambiar por no chocar con el grupo de uno mismo )
+				Vector3 origin = camera->getCameraPosition() + (_capsuleRadius * direction);
 
-				// LLamar al componente que corresponda con el daño hecho
-				//entity->
+
+				//Me dispongo a calcular la desviacion del arma, en el map.txt se pondra en grados de dispersion (0 => sin dispersion)
+				Ogre::Radian angle = Ogre::Radian( (  (((float)(rand() % 100))/100.0f) * (_dispersion)) /100);
+
+			
+
+				//Esto hace un random total, lo que significa, por ejemplo, que puede que todas las balas vayan hacia la derecha 
+				Vector3 dispersionDirection = direction.randomDeviant(angle);
+				dispersionDirection.normalise();
+
+				// Creamos el ray desde el origen en la direccion del raton (desvido ya aplicado)
+				Ray ray(origin, dispersionDirection);
+			
 
 
-				Logic::CMessageDamaged *m=new Logic::CMessageDamaged();
-				m->setDamage(_damage);
-				entity->emitMessage(m);
+				////////////////////////////////////////////////Dibujo del rayo
+
+
+					Graphics::CScene *scene = Graphics::CServer::getSingletonPtr()->getActiveScene();
+					Ogre::SceneManager *mSceneMgr = scene->getSceneMgr();
+
+				
+					std::stringstream aux;
+					aux << "laser" << _nameWeapon << _temporal;
+					++_temporal;
+					std::string laser = aux.str();
+
+
+					Ogre::ManualObject* myManualObject =  mSceneMgr->createManualObject(laser); 
+					Ogre::SceneNode* myManualObjectNode = mSceneMgr->getRootSceneNode()->createChildSceneNode(laser+"_node"); 
+ 
+
+					myManualObject->begin("laser", Ogre::RenderOperation::OT_LINE_STRIP);
+					Vector3 v = ray.getOrigin();
+					myManualObject->position(v.x,v.y,v.z);
+
+
+				for(int i=0; i < _distance;++i){
+					Vector3 v = ray.getPoint(i);
+					myManualObject->position(v.x,v.y,v.z);
+					// etc 
+				}
+
+					myManualObject->end(); 
+					myManualObjectNode->attachObject(myManualObject);
+
+
+				//////////////////////////////////fin del dibujado del rayo
+
+				//Rayo lanzado por el servidor de físicas de acuerdo a la distancia de potencia del arma
+				CEntity *entity = Physics::CServer::getSingletonPtr()->raycastClosestInverse(ray, _distance,3);
+			
+
+				//resto las balas que tiene, luego enviare las que le quedan actualizadas, asi no envio un mensaje por balas (en la escopeta envairia 8 mensajes, asi solo uno)
+				if(_name != "Hammer"){
+					--_ammo;
+				}
+				//Si hay colisión envíamos a dicha entidad un mensaje de daño
+				if(entity)
+				{
+
+					printf("impacto con %s\n", entity->getName().c_str());
+
+					// LLamar al componente que corresponda con el daño hecho
+					//entity->
+
+
+					Logic::CMessageDamaged *m=new Logic::CMessageDamaged();
+					m->setDamage(_damage);
+					entity->emitMessage(m);
+				}
+			
+				//Para el rebote, si hay colision con la entidad mundo pues reboto en la dirección opuesta a la que miro
+				
+			}// fin del bucle para multiples disparos
+			if(_name != "Hammer"){				
+				Logic::CMessageHudAmmo *message = new Logic::CMessageHudAmmo();
+				message->setAmmo(_ammo);
+
+				//Cambio sobre uno, hay q cambiarlo ;-)
+				message->setWeapon(1);
+				_entity->emitMessage(message);
 			}
 			
-			//Para el rebote, si hay colision con la entidad mundo pues reboto en la dirección opuesta a la que miro
-			
-				
-		
-		}// fin del bucle para multiples disparos
+		}
 	} // shoot
+
+	// Cuando activo una entidad de disparo, actulio la hub indicandole cuanta municion tengo
+	
+	void CShoot::activate() {
+		IComponent::activate();
+
+		Logic::CMessageHudAmmo *message = new Logic::CMessageHudAmmo();
+		message->setAmmo(_ammo);
+		_entity->emitMessage(message);
+
+	}
+
+	void CShoot::addAmmo(int weapon, int ammo)
+	{
+		//si yo soy el weapon
+		_ammo += ammo;
+	}
 
 } // namespace Logic
 

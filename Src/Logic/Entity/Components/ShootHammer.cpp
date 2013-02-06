@@ -40,6 +40,8 @@ namespace Logic
 		if(!CShoot::spawn(entity,map,entityInfo))
 			return false;
 		
+		_ammo = 1;
+
 		_damageReflect = entityInfo->getIntAttribute("weaponHammerDamageReflect");
 		
 		return true;

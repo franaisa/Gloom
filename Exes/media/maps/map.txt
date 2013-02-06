@@ -14,27 +14,6 @@ Map = {
 	
 	},
 	
-	Enemigo1 = {
-		type = "Enemy",
-		position = {0, 8, -10},
-		orientation = 90,
-		life = 100.0,
-		maxShield=100,
-		maxLife=120,
-		shield=10.0,
-		PorcentShield=23,
-		isPlayer = false,
-		model = "marine.mesh",
-		physic_entity = "rigid",
-		physic_type = "dynamic",
-		physic_shape = "box",
-		physic_dimensions = { 3, 6, 3 },
-		physic_height = 6,
-		physic_radius = 0.5,
-		physic_mass = 10,
-		physic_group = 1,
-	},
-	
 	
 	Orb1 = {
 		type = "ItemSpawn",
@@ -117,10 +96,27 @@ Map = {
 		physic_radius = 0.5,
 		physic_mass = 10,
 	},
-	
 
-	
-	
+	Enemigo1 = {
+		type = "Enemy",
+		position = {0, 8, -10},
+		orientation = 90,
+		life = 100.0,
+		maxShield=100,
+		maxLife=120,
+		shield=10.0,
+		PorcentShield=23,
+		isPlayer = false,
+		model = "marine.mesh",
+		physic_entity = "rigid",
+		physic_type = "dynamic",
+		physic_shape = "box",
+		physic_dimensions = { 3, 6, 3 },
+		physic_height = 6,
+		physic_radius = 0.5,
+		physic_mass = 10,
+		physic_group = 1,
+	},
 	
 	David = {
 		type = "Player",
@@ -177,7 +173,7 @@ Map = {
 			weaponMiniGunNumberShoots = 1,
 			weaponMiniGunDistance = 100.0,
 			weaponMiniGunCoolDown = 2.0,
-			weaponMiniGunAmmo = 0,
+			weaponMiniGunAmmo = 10,
 
 			
 			weaponShotGunName = "Shotgun",
@@ -190,23 +186,9 @@ Map = {
 			weaponShotGunNumberShoots = 8,
 			weaponShotGunDistance = 100.0,
 			weaponShotGunCoolDown = 2.0,
-			weaponShotGunAmmo = 0,
+			weaponShotGunAmmo = 200,
 			
-			hubTamCuadro = 10,
-		
-		
-		hudMira = 3;
-		hudHealthX = 0.2;
-		hudHealthY = 0.8;
-		hudHealthSize = 0.075;
-		
-		hudShieldX = 0.2;
-		hudShieldY = 0.9;
-		hudShieldSize = 0.075;
-		
-		hudShield2X = 0.4;
-		hudShield2Y = 0.9;
-		hudShield2Size = 0.075;
+		hudMira = 3,
 	},
 	
 	Camera = {

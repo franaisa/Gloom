@@ -19,7 +19,11 @@
 #include "Logic/Messages/MessageTouched.h"
 #include "Logic/Messages/MessageAddLife.h"
 #include "Logic/Messages/MessageAddShield.h"
+#include "Logic/Messages/MessageAddAmmo.h"
+#include "Logic/Messages/MessageAddWeapon.h"
+
 #include "Net/Manager.h"
+
 
 namespace Logic 
 {

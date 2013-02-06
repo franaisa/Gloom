@@ -129,6 +129,7 @@ namespace Logic
 		@return true si todo ha ido correctamente.
 		*/
 		virtual void activate() {_activate = true;
+			// Guarrada enorme, arregladlo por favor
 				clearMessages();
 		}
 		
