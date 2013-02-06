@@ -40,8 +40,8 @@ namespace Logic
 				_entity->getComponent<CGraphics>("CGraphics")->activate();
 				_entity->getComponent<CGraphics>("CGraphics")->setVisible(true);
 
-				// Activar entidad fisica (solo si soy el servidor
-				if(Net::CManager::getSingletonPtr()->imServer())
+				// Activar entidad fisica (solo si soy el servidor o single player)
+				if(Net::CManager::getSingletonPtr()->imServer() || (!Net::CManager::getSingletonPtr()->imServer() && Net::CManager::getSingletonPtr()->imClient()))
 					_entity->getComponent<CPhysicEntity>("CPhysicEntity")->activate();
 			}
 		}
@@ -95,7 +95,7 @@ namespace Logic
 		_entity->getComponent<CGraphics>("CGraphics")->setVisible(false);
 		std::cout << "me llega mensaje de itemgrabbed" << std::endl;
 		
-		if(Net::CManager::getSingletonPtr()->imServer()){
+		if(Net::CManager::getSingletonPtr()->imServer() || (!Net::CManager::getSingletonPtr()->imServer() && !Net::CManager::getSingletonPtr()->imClient())){
 			// Activar entidad fisica
 			_entity->getComponent<CPhysicEntity>("CPhysicEntity")->deactivate();
 		

@@ -19,7 +19,9 @@ Contiene la implementación del estado de lobby del servidor.
 #include "Logic/Server.h"
 #include "Logic/Maps/EntityFactory.h"
 #include "Logic/Maps/Map.h"
+#include "Logic/Maps/EntityID.h"
 
+#include "Logic/Entity/Entity.h"
 #include "GUI/Server.h"
 #include "Net/Manager.h"
 #include "Net/Servidor.h"
@@ -249,7 +251,7 @@ namespace Application {
 		{
 		case Net::MAP_LOADED:
 		{
-			outstream << "SERVER: Mensaje MAP_LOADED recibido" << endl;
+			outstream << "SERVER: Mensaje MAP_LOADED recibido de " << packet->getConexion()->getId() << endl;
 
 			// @todo Borrar las siguientes 3 líneas. Están de momento para que
 			// se lance el estado de juego al cargar el mapa
@@ -273,13 +275,13 @@ namespace Application {
 					Net::NetMessageType msg = Net::LOAD_PLAYER;
 					Net::NetID netId = *it;
 
-					Net::CBuffer buffer(sizeof(msg) + sizeof(netId));
+					Net::CBuffer buffer(sizeof(msg) + sizeof(netId) + sizeof(Logic::EntityID));
 					buffer.write(&msg, sizeof(msg));
 					buffer.write(&netId, sizeof(netId));
 
 					// Mandar el ID del cliente actual a todos los clientes para que
 					// lo carguen
-					Net::CManager::getSingletonPtr()->send(buffer.getbuffer(), buffer.getSize());
+					
 					
 
 					// Creamos el player. Deberíamos poder propocionar caracteríasticas
@@ -290,10 +292,17 @@ namespace Application {
 					std::stringstream number;
 					number << (*it);
 					name.append(number.str());
-
+					outstream << "SERVER: Voy a crear el player del cliente" << (*it) << "con nombre " << name << endl;
 					// @todo Llamar al método de creación del jugador. Deberemos decidir
 					// si el jugador es el jugador local. Al ser el servidor ninguno lo es
-					Logic::CServer::getSingletonPtr()->getMap()->createPlayer(name, false);
+					Logic::CEntity * player = Logic::CServer::getSingletonPtr()->getMap()->createPlayer(name, false);
+					outstream << "SERVER: player creado, voy a enviar su id, que es ... "<< player->getEntityID() << endl;
+
+					Logic::TEntityID id = player->getEntityID();
+					buffer.write(&id, sizeof(id));
+
+
+					Net::CManager::getSingletonPtr()->send(buffer.getbuffer(), buffer.getSize());
 				}
 			}
 			break;

@@ -50,9 +50,6 @@ Map = {
 		numWeapons = 3,
 
 			weaponHammerName = "Hammer",
-			weaponHammerModel = "Katana.mesh",
-			weaponHammerModelYaw = 1.55,
-			weaponHammerModelPitch = -0.80,
 			weaponHammerOffset = {5.0, 4.0, 5.0},
 			weaponHammerDamage = 20.0,
 			weaponHammerDamageReflect = 2,
@@ -63,9 +60,6 @@ Map = {
 			weaponHammerAmmo = 0,
 		
 			weaponMiniGunName = "MiniGun",
-			weaponMiniGunModel = "AK47.mesh",
-			weaponMiniGunModelYaw = 1.55,
-			weaponMiniGunModelPitch = -0.80,
 			weaponMiniGunOffset = {5.0, 4.0, 5.0},
 			weaponMiniGunDamage = 20.0,
 			weaponMiniGunDispersion = 0,
@@ -76,9 +70,6 @@ Map = {
 
 			
 			weaponShotGunName = "Shotgun",
-			weaponShotGunModel = "UziLeft.mesh",
-			weaponShotGunModelYaw = 1.55,
-			weaponShotGunModelPitch = 3.14,
 			weaponShotGunOffset = {5.0, 7.0, 5.0},
 			weaponShotGunDamage = 1.0,
 			weaponShotGunDispersion = 20,

@@ -17,7 +17,7 @@ Contiene la implementación de la clase CMap, Un mapa lógico.
 
 #include "Map/MapParser.h"
 #include "Map/MapEntity.h"
-
+#include "Net/Manager.h"
 #include "Graphics/Server.h"
 #include "Graphics/Scene.h"
 
@@ -274,7 +274,7 @@ namespace Logic {
 
 	//--------------------------------------------------------
 
-	void CMap::createPlayer(std::string name, bool isLocalPlayer)
+	CEntity* CMap::createPlayer(std::string name, bool isLocalPlayer)
 	{
 		// @todo Creamos un nuevo jugador. Deberíamos tener la info del player
 		// almacenada en _playerInfo así que solo habría que modificarle el
@@ -286,20 +286,27 @@ namespace Logic {
 		// Asignar el modelo al player
 		//_playerInfo->setAttribute("model", "marine.mesh");
 
+		
+		if(Net::CManager::getSingletonPtr()->imServer())
+			std::cout << "Servidor: paso 1" << std::endl;
 		// Asignar nombre
 		_playerInfo->setName(name);
-
+		if(Net::CManager::getSingletonPtr()->imServer())
+			std::cout << "Servidor: paso 2" << std::endl;
 		// Creamos la entidad y modificamos el resto de parametros que necesitamos
 		CEntity* playerCreated = CEntityFactory::getSingletonPtr()->createEntity(_playerInfo, this);
 		playerCreated->setPosition( playerCreated->getPosition() + (rand()%15+5) * Vector3(1, 0, 1) );
+		if(Net::CManager::getSingletonPtr()->imServer())
+			std::cout << "Servidor: paso 4" << std::endl;
 		// Configuramos el jugador como local si lo es
 		playerCreated->setIsPlayer(isLocalPlayer);
 		getEntityByID(playerCreated->getEntityID())->setIsPlayer(isLocalPlayer);
+		if(Net::CManager::getSingletonPtr()->imServer())
+			std::cout << "Servidor: paso 5" << std::endl;
 		if(isLocalPlayer){
 			CServer::getSingletonPtr()->setPlayer(playerCreated);
 		}
-		//playerCreated->getEntityID();
-		// Le asignamos una posicion aleatoria para que no salgan todos apelotonados
+		return playerCreated;
 	}
 
 } // namespace Logic
