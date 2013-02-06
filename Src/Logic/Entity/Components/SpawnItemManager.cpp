@@ -41,7 +41,7 @@ namespace Logic
 				_entity->getComponent<CGraphics>("CGraphics")->setVisible(true);
 
 				// Activar entidad fisica (solo si soy el servidor o single player)
-				if(Net::CManager::getSingletonPtr()->imServer() || (!Net::CManager::getSingletonPtr()->imServer() && Net::CManager::getSingletonPtr()->imClient()))
+				if(Net::CManager::getSingletonPtr()->imServer() || (!Net::CManager::getSingletonPtr()->imServer() && !Net::CManager::getSingletonPtr()->imClient()))
 					_entity->getComponent<CPhysicEntity>("CPhysicEntity")->activate();
 			}
 		}
