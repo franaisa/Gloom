@@ -58,6 +58,11 @@ namespace Logic
 		virtual bool spawn(CEntity* entity, CMap *map, const Map::CEntity *entityInfo);
 
 		/**
+		Metodo que se llama al activar el componente.
+		*/
+		virtual void activate();
+
+		/**
 		Este componente sólo acepta mensajes de tipo DAMAGED.
 		*/
 		virtual bool accept(CMessage *message);
@@ -87,7 +92,12 @@ namespace Logic
 	protected:
 
 		/**
-		Vida de la entidad
+		Vida de la entidad(clase).
+		*/
+		int _classLife;
+
+		/**
+		Vida actual de la entidad
 		*/
 		int _life;
 		/**

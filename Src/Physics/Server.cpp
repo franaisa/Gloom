@@ -346,7 +346,7 @@ PxRigidDynamic* CServer::createDynamicBox(const Vector3 &position, const Vector3
 	// cara inferior. Para unificar necesitamos realizar una traslación en el eje Y.
 	// Afortunadamente, el descriptor que se usa para crear el actor permite definir esta 
 	// transformación local, por lo que la conversión entre sistemas de coordenadas es transparente. 
-
+	std::cout << "FISICA DINAMICA,CREACION POSICION: " << position << std::endl;
 	// Crear un cubo dinámico
 	PxTransform pose(Vector3ToPxVec3(position));
 	PxBoxGeometry geom(Vector3ToPxVec3(dimensions));
@@ -546,6 +546,19 @@ Vector3 CServer::getControllerPosition(const PxCapsuleController *controller)
 	float offsetY = controller->getHeight() / 2.0f + controller->getRadius();
 	Vector3 pos = PxExtendedVec3ToVector3(controller->getPosition());
 	return pos - Vector3(0, offsetY, 0);
+}
+
+//--------------------------------------------------------
+
+void CServer::setControllerPosition(PxCapsuleController *controller, const Vector3 &position)
+{
+	assert(_scene);
+	// Transformación entre el sistema de coordenadas lógico y el de PhysX
+	float offsetY = controller->getHeight() / 2.0f + controller->getRadius();
+	PxVec3 pos = Vector3ToPxVec3(position + Vector3(0, offsetY, 0));
+	PxExtendedVec3 posicionPhysics(pos.x,pos.y,pos.z);
+	controller->setPosition(posicionPhysics);
+
 }
 
 //--------------------------------------------------------

@@ -33,28 +33,26 @@ namespace Logic
 	}
 
 	//---------------------------------------------------------
-	void CFloatingMovement::estimateItemRotation(Vector3& position, unsigned int msecs) {
-		_orientation +=  0.001;
-		if(_orientation > Math::PI * 2)
-			_orientation = 0;
+	void CFloatingMovement::estimateItemRotation(unsigned int msecs) {
+		_orientation = _entity->getYaw();
+		_orientation += _orbitalRotationSpeed * msecs;
 	}
 
 	//---------------------------------------------------------
-	void CFloatingMovement::tick(unsigned int msecs)
-	{
+	void CFloatingMovement::tick(unsigned int msecs) {
 		IComponent::tick(msecs);
 
 		Vector3 newItemPos = _entity->getPosition();
 		estimateItemFloatingPos(newItemPos, msecs);
-		estimateItemRotation(newItemPos, msecs);
+		estimateItemRotation(msecs);
 
 		_entity->setPosition(newItemPos);
 		_entity->setYaw(_orientation);
 		
 	} // tick
 
-	bool CFloatingMovement::spawn(CEntity *entity, CMap *map, const Map::CEntity *entityInfo) 
-	{
+	//---------------------------------------------------------
+	bool CFloatingMovement::spawn(CEntity *entity, CMap *map, const Map::CEntity *entityInfo) {
 		if(!IComponent::spawn(entity,map,entityInfo))
 			return false;
 
@@ -73,8 +71,11 @@ namespace Logic
 			_orbitalBottomY = itemPosition.y - (orbitalOffset / 2);
 		}
 
-		return true;
+		if(entityInfo->hasAttribute("orbitalRotationSpeed")) {
+			_orbitalRotationSpeed = entityInfo->getFloatAttribute("orbitalRotationSpeed");
+		}
 
+		return true;
 	} // spawn
 
 

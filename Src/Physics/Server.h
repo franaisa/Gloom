@@ -296,6 +296,14 @@ namespace Physics {
 		Vector3 CServer::getControllerPosition(const physx::PxCapsuleController *controller);
 
 		
+		/**
+		Establece una nueva posición al controlador.
+
+		@param controller Controlador en el que setearemos la posicion.
+		@param position Posicion donde queremos poner al controller físico.
+		*/
+		void CServer::setControllerPosition(physx::PxCapsuleController *controller, const Vector3 &position);
+		
 		//----------------------------------
 		// Consultas 
 		//----------------------------------

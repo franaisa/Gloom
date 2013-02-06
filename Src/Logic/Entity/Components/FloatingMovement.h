@@ -50,7 +50,7 @@ namespace Logic
 
 		void estimateItemFloatingPos(Vector3& position, unsigned int msecs);
 
-		void estimateItemRotation(Vector3& position, unsigned int msecs);
+		void estimateItemRotation(unsigned int msecs);
 
 	protected:
 
@@ -59,6 +59,8 @@ namespace Logic
 		float _orbitalBottomY;
 
 		float _orbitalSpeed;
+
+		float _orbitalRotationSpeed;
 
 		bool _goingUp;
 

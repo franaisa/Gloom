@@ -1,10 +1,5 @@
 World CGraphics
-Player CNetConnector CGraphics
-Entity CGraphics
-AnimatedEntity CAnimatedGraphics
+Player CHudOverlay CArrayGraphics CLife CNetConnector
+Enemy CGraphics CLife
 Camera CCamera
-Barril CGraphics
-DoorTrigger
-Door CGraphics
-Blade CAnimatedGraphics
-Waypoint
+ItemSpawn CGraphics CFloatingMovement CSpawnItemManager CNetConnector

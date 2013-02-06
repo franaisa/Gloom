@@ -64,7 +64,7 @@ namespace Logic
 
 		std::string _id;
 
-		std::string _weaponType;
+		int _weaponType;
 
 		int _reward;
 

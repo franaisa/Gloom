@@ -175,10 +175,6 @@ namespace Net {
 	//__________________________________________________________________
 
 	void CBuffer::realloc() {
-		if(_wrapperPtr->_refCount > 1) {
-			createOwnInstance();
-		}
-
 		byte* newbuffer = new byte[_wrapperPtr->_maxsize + _wrapperPtr->_delta];
 		memcpy(newbuffer, _wrapperPtr->_begin, _wrapperPtr->_size);
 		delete[] _wrapperPtr->_begin;

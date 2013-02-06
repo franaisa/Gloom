@@ -10,6 +10,7 @@ de juego. Es una colección de componentes.
 @author David Llansó
 @date Julio, 2010
 */
+#include "Components\SpawnPlayer.h"
 
 #include "Entity.h"
 
@@ -144,21 +145,26 @@ namespace Logic
 	} // deactivate
 	//---------------------------------------------------------
 
+	
+	void CEntity::deactivateAllComponentsExcept (std::list<std::string*>* id) {
+		std::map<std::string, IComponent*>::iterator except = _components.begin();
 
-	void CEntity::deactivateAllComponentsExcept(const std::string id) {
-		//Buscamos el componente que no desactivaremos mediante la hash
-		std::map<std::string, IComponent*>::iterator except;
-		except = _components.find(id);
-		// Desactivamos los componentes
-		TComponentList::const_iterator it = _componentList.begin();
-		for(; it != _componentList.end(); ++it)
-			(*it)->deactivate();
+		bool desactivar=true;
+		for(; except!=_components.end(); ++except){
+			std::list<std::string*>::iterator iteIds= id->begin();
 
-		//Activamos el correspondiente
-		((except)->second)->activate();
+			for(; iteIds!=id->end(); ++iteIds){
+				if((*iteIds)->compare(except->first)==0)
+					desactivar=false;
+			}
+			if(desactivar)
+				(except->second)->deactivate();
+			desactivar=true;
+		}
 
-		return;
+
 	}// deactivateAllComponentsExcept
+
 	//---------------------------------------------------------
 
 	void CEntity::tick(unsigned int msecs) 
@@ -264,7 +270,6 @@ namespace Logic
 		Logic::CMessageTransform *m=new Logic::CMessageTransform();
 		m->setTransform(_transform);
 		emitMessage(m);
-
 	} // setTransform
 
 	//---------------------------------------------------------

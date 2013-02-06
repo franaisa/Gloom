@@ -22,13 +22,15 @@
 #include "Logic/Messages/MessageAddAmmo.h"
 #include "Logic/Messages/MessageAddWeapon.h"
 
+#include "Net/Manager.h"
+
+
 namespace Logic 
 {
 	IMP_FACTORY(CSpawnItemManager);
 	
 	//---------------------------------------------------------
-	void CSpawnItemManager::tick(unsigned int msecs)
-	{
+	void CSpawnItemManager::tick(unsigned int msecs) {
 		IComponent::tick(msecs);
 
 		if(_isRespawning) {
@@ -40,15 +42,17 @@ namespace Logic
 
 				// Activar entidad grafica
 				_entity->getComponent<CGraphics>("CGraphics")->activate();
+				_entity->getComponent<CGraphics>("CGraphics")->setVisible(true);
 
-				// Activar entidad fisica
-				_entity->getComponent<CPhysicEntity>("CPhysicEntity")->activate();
+				// Activar entidad fisica (solo si soy el servidor
+				if(Net::CManager::getSingletonPtr()->imServer())
+					_entity->getComponent<CPhysicEntity>("CPhysicEntity")->activate();
 			}
 		}
 	} // tick
 
-	bool CSpawnItemManager::spawn(CEntity *entity, CMap *map, const Map::CEntity *entityInfo) 
-	{
+	//---------------------------------------------------------
+	bool CSpawnItemManager::spawn(CEntity *entity, CMap *map, const Map::CEntity *entityInfo) {
 		if(!IComponent::spawn(entity,map,entityInfo))
 			return false;
 
@@ -57,7 +61,7 @@ namespace Logic
 
 			if(_id == "weapon" || _id == "ammo") {
 				if(entityInfo->hasAttribute("weaponType")) {
-					_weaponType = entityInfo->getStringAttribute("weaponType");
+					_weaponType = entityInfo->getIntAttribute("weaponType");
 				}
 			}
 		}
@@ -74,59 +78,58 @@ namespace Logic
 	} // spawn
 	
 	//---------------------------------------------------------
-
-	bool CSpawnItemManager::accept(CMessage *message)
-	{
+	bool CSpawnItemManager::accept(CMessage *message) {
 		return (message->getMessageType() == Message::TOUCHED);
 	} // accept
 	
 	//---------------------------------------------------------
-
-	void CSpawnItemManager::process(CMessage *message)
-	{
-		switch(message->getMessageType())
-		{
+	void CSpawnItemManager::process(CMessage *message) {
+		switch(message->getMessageType()) {
 		case Message::TOUCHED:
-			{
-				itemGrabbed( ((CMessageTouched*)message)->getEntity() );
-			}
+			itemGrabbed( ((CMessageTouched*)message)->getEntity() );
+			break;
 		}
-
 	} // process
 
+	//---------------------------------------------------------
 	void CSpawnItemManager::itemGrabbed(CEntity* actor) {
 
 		// Desactivar entidad grafica
 		_entity->getComponent<CGraphics>("CGraphics")->deactivate();
-
-		// Desactivar entidad fisica
-		_entity->getComponent<CPhysicEntity>("CPhysicEntity")->deactivate();
+		_entity->getComponent<CGraphics>("CGraphics")->setVisible(false);
+		std::cout << "me llega mensaje de itemgrabbed" << std::endl;
 		
-		// Mandar el mensaje que corresponda a la entidad actuadora
-		// en funcion del item que se haya cogido (comprobando el id)
-		if(_id == "orb") {
-			CMessageAddLife* m = new CMessageAddLife();
-			m->setAddLife(_reward);
-			actor->emitMessage(m);
-		}
-		else if(_id == "armor") {
-			CMessageAddShield* m = new CMessageAddShield();
-			m->setAddShield(_reward);
-			actor->emitMessage(m);
-		}
-		else if(_id == "ammo") {
-			CMessageAddAmmo* m = new CMessageAddAmmo();
-			m->setAddAmmo(_reward);
-
-			/////////!!!!!!! pongo el numero a hierro, hay q cambiarlo por lo del enum q hablamos fran ;-)
-			m->setAddWeapon(1);
-
-			actor->emitMessage(m);
-		}
-		else if(_id == "weapon") {
-			// Mandar un mensaje con el _weaponType
-		}
-
+		//if(Net::CManager::getSingletonPtr()->imServer()){
+			// Activar entidad fisica
+			//_entity->getComponent<CPhysicEntity>("CPhysicEntity")->deactivate();
+		
+			// Mandar el mensaje que corresponda a la entidad actuadora
+			// en funcion del item que se haya cogido (comprobando el id)
+			if(_id == "orb") {
+				CMessageAddLife* m = new CMessageAddLife();
+				m->setAddLife(_reward);
+				actor->emitMessage(m);
+			}
+			else if(_id == "armor") {
+				CMessageAddShield* m = new CMessageAddShield();
+				m->setAddShield(_reward);
+				actor->emitMessage(m);
+			}
+			else if(_id == "ammo") {
+				// Mandar un mensaje con el _weaponType
+				//CMessageAddAmmo* m = new CMessageAddAmmo();
+				//m->setQuantity(_reward);
+				//m->setWeaponType(_weaponType);
+				//actor->emitMessage(m);
+			}
+			else if(_id == "weapon") {
+				// Mandar un mensaje con el _weaponType
+				//CMessageAddWeapon* m = new CMessageAddWeapon();
+				//m->setQuantity(_reward);
+				//m->setWeaponType(_weaponType);
+				//actor->emitMessage(m);
+			}
+//		}
 		// Arrancar el timer
 		_isRespawning = true;
 	}

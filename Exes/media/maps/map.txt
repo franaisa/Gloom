@@ -11,8 +11,7 @@ Map = {
 		physic_normal = { 0, 1, 0 },
 		physic_file = "media/models/scenario.RepX",
 		physic_group = 0,
-		
-		
+	
 	},
 	
 	Orb1 = {
@@ -24,6 +23,7 @@ Map = {
 		respawnTime = 5,
 		orbitalOffset = 4,
 		orbitalSpeed = 0.005,
+		orbitalRotationSpeed = 0.001,
 		physic_entity = "rigid",
 		physic_trigger = true,
 		physic_type = "static",
@@ -36,14 +36,15 @@ Map = {
 	
 	Shotgun = {
 		type = "ItemSpawn",
-		position = {-67.0, 2.0, 42.0},
-		model = "AK47.mesh",
+		position = {-67.0, 5.0, 42.0},
+		model = "hammer.mesh",
 		id = "weapon",
-		weaponType = "shotgun",
+		weaponType = 2,
 		reward = 30,
 		respawnTime = 5,
 		orbitalOffset = 4,
 		orbitalSpeed = 0.005,
+		orbitalRotationSpeed = 0.001,
 		physic_entity = "rigid",
 		physic_trigger = true,
 		physic_type = "static",
@@ -56,14 +57,15 @@ Map = {
 	
 	ShotgunAmmo1 = {
 		type = "ItemSpawn",
-		position = {-67.0, 2.0, -42.0},
-		model = "UziLeft.mesh",
+		position = {-67.0, 4.0, -42.0},
+		model = "rocketLauncher.mesh",
 		id = "ammo",
-		weaponType = "shotgun",
+		weaponType = 2,
 		reward = 15,
 		respawnTime = 5,
 		orbitalOffset = 4,
 		orbitalSpeed = 0.005,
+		orbitalRotationSpeed = 0.001,
 		physic_entity = "rigid",
 		physic_trigger = true,
 		physic_type = "static",
@@ -83,6 +85,7 @@ Map = {
 		respawnTime = 5,
 		orbitalOffset = 4,
 		orbitalSpeed = 0.005,
+		orbitalRotationSpeed = 0.001,
 		physic_entity = "rigid",
 		physic_trigger = true,
 		physic_type = "static",
@@ -95,7 +98,7 @@ Map = {
 		
 	Enemigo1 = {
 		type = "Enemy",
-		position = {0, 5, -10},
+		position = {0, 8, -10},
 		orientation = 90,
 		life = 100.0,
 		maxShield=100,
@@ -114,26 +117,7 @@ Map = {
 		physic_group = 1,
 	},
 	
-	Enemigo2 = {
-		type = "Enemy",
-		position = {0, 5, 10},
-		orientation = 90,
-		life = 100.0,
-		shield=100.0,
-		maxShield=100,
-		maxLife=120,
-		PorcentShield=23,
-		isPlayer = false,
-		model = "marine.mesh",
-		physic_entity = "rigid",
-		physic_type = "dynamic",
-		physic_shape = "box",
-		physic_dimensions = { 3, 6, 3 },
-		physic_height = 6,
-		physic_radius = 0.5,
-		physic_mass = 10,
-		physic_group = 2,
-	},
+	
 	
 	David = {
 		type = "Player",
