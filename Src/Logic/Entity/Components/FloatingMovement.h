@@ -32,7 +32,7 @@ namespace Logic
 		/**
 		Constructor por defecto; en la clase base no hace nada.
 		*/
-		CFloatingMovement() : IComponent(), _orientation(0) {}
+		CFloatingMovement() : IComponent(), _orientation(0), _currentOrbitalPos(0) {}
 
 		/**
 		Método llamado en cada frame que actualiza el estado del componente de la vida,
@@ -53,7 +53,7 @@ namespace Logic
 		void estimateItemRotation(unsigned int msecs);
 
 	protected:
-
+		// En radianes
 		float _currentOrbitalPos;
 
 		float _orbitalOffset;

@@ -23,7 +23,6 @@ namespace Logic
 	//---------------------------------------------------------
 	void CFloatingMovement::estimateItemFloatingPos(Vector3& position, unsigned int msecs) {
 		_currentOrbitalPos += _orbitalSpeed * msecs;
-		// Si la graduacion obtenida es mayor que 2Pi, resteamos el valor
 		if(_currentOrbitalPos > 6.283) _currentOrbitalPos = 0;
 		position.y += sin(_currentOrbitalPos) * _orbitalOffset; 
 	}
@@ -52,8 +51,13 @@ namespace Logic
 		if(!IComponent::spawn(entity,map,entityInfo))
 			return false;
 
+		Vector3 itemPosition;
+
 		if(entityInfo->hasAttribute("orbitalSpeed")) {
 			_orbitalSpeed = entityInfo->getFloatAttribute("orbitalSpeed");
+		}
+		if(entityInfo->hasAttribute("position")) {
+			itemPosition = entityInfo->getVector3Attribute("position");
 		}
 
 		if(entityInfo->hasAttribute("orbitalOffset")) {
