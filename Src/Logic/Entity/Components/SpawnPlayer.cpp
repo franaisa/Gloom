@@ -107,10 +107,14 @@ namespace Logic
 		//Si no esto muerto ya hago las acciones
 		if(!_isDead){
 			//Desactivamos todos menos el cspawnplayerv
-			std::list<std::string> *except=new std::list<std::string>();
-			except->push_back("CSpawnPlayer");
+			std::list<std::string*> *except=new std::list<std::string*>();
+			except->push_back(new std::string("CSpawnPlayer"));
 			_entity->deactivateAllComponentsExcept(except);
 			_isDead=true;
+			//Liberando memoria
+			for(std::list<std::string*>::iterator it = except->begin(); it != except->end(); ++it)
+				delete *it;
+			delete except;
 		}
 
 	} // process
