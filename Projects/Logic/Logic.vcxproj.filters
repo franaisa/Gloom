@@ -402,9 +402,6 @@
     <ClInclude Include="..\..\Src\Logic\Messages\MessageHudWeapon.h">
       <Filter>Messages\Header</Filter>
     </ClInclude>
-    <ClInclude Include="FloatingMovement.h">
-      <Filter>Entity\Components\Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Messages\MessageAddAmmo.h">
       <Filter>Messages\Header</Filter>
     </ClInclude>

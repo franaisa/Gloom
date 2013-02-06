@@ -205,7 +205,6 @@
     <ClInclude Include="..\..\Src\Logic\Messages\MessageTransform.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageUntouched.h" />
     <ClInclude Include="..\..\Src\Logic\Server.h" />
-    <ClInclude Include="FloatingMovement.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BaseSubsystems\BaseSubsystems.vcxproj">
