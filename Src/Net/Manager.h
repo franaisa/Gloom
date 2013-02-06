@@ -166,6 +166,8 @@ namespace Net
 
 		void removeObserver(IObserver*);
 
+		bool imServer(){return _servidorRed!=NULL;}
+
 		/**
 		Devuelve el ID de red.
 		

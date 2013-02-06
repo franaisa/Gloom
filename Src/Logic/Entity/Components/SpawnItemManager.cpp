@@ -19,6 +19,7 @@
 #include "Logic/Messages/MessageTouched.h"
 #include "Logic/Messages/MessageAddLife.h"
 #include "Logic/Messages/MessageAddShield.h"
+#include "Net/Manager.h"
 
 namespace Logic 
 {
@@ -39,8 +40,9 @@ namespace Logic
 				_entity->getComponent<CGraphics>("CGraphics")->activate();
 				_entity->getComponent<CGraphics>("CGraphics")->setVisible(true);
 
-				// Activar entidad fisica
-				_entity->getComponent<CPhysicEntity>("CPhysicEntity")->activate();
+				// Activar entidad fisica (solo si soy el servidor
+				if(Net::CManager::getSingletonPtr()->imServer())
+					_entity->getComponent<CPhysicEntity>("CPhysicEntity")->activate();
 			}
 		}
 	} // tick
@@ -91,37 +93,39 @@ namespace Logic
 		// Desactivar entidad grafica
 		_entity->getComponent<CGraphics>("CGraphics")->deactivate();
 		_entity->getComponent<CGraphics>("CGraphics")->setVisible(false);
-
-		// Desactivar entidad fisica
-		_entity->getComponent<CPhysicEntity>("CPhysicEntity")->deactivate();
+		std::cout << "me llega mensaje de itemgrabbed" << std::endl;
 		
-		// Mandar el mensaje que corresponda a la entidad actuadora
-		// en funcion del item que se haya cogido (comprobando el id)
-		if(_id == "orb") {
-			CMessageAddLife* m = new CMessageAddLife();
-			m->setAddLife(_reward);
-			actor->emitMessage(m);
+		if(Net::CManager::getSingletonPtr()->imServer()){
+			// Activar entidad fisica
+			_entity->getComponent<CPhysicEntity>("CPhysicEntity")->deactivate();
+		
+			// Mandar el mensaje que corresponda a la entidad actuadora
+			// en funcion del item que se haya cogido (comprobando el id)
+			if(_id == "orb") {
+				CMessageAddLife* m = new CMessageAddLife();
+				m->setAddLife(_reward);
+				actor->emitMessage(m);
+			}
+			else if(_id == "armor") {
+				CMessageAddShield* m = new CMessageAddShield();
+				m->setAddShield(_reward);
+				actor->emitMessage(m);
+			}
+			else if(_id == "ammo") {
+				// Mandar un mensaje con el _weaponType
+				//CMessageAddAmmo* m = new CMessageAddAmmo();
+				//m->setQuantity(_reward);
+				//m->setWeaponType(_weaponType);
+				//actor->emitMessage(m);
+			}
+			else if(_id == "weapon") {
+				// Mandar un mensaje con el _weaponType
+				//CMessageAddWeapon* m = new CMessageAddWeapon();
+				//m->setQuantity(_reward);
+				//m->setWeaponType(_weaponType);
+				//actor->emitMessage(m);
+			}
 		}
-		else if(_id == "armor") {
-			CMessageAddShield* m = new CMessageAddShield();
-			m->setAddShield(_reward);
-			actor->emitMessage(m);
-		}
-		else if(_id == "ammo") {
-			// Mandar un mensaje con el _weaponType
-			//CMessageAddAmmo* m = new CMessageAddAmmo();
-			//m->setQuantity(_reward);
-			//m->setWeaponType(_weaponType);
-			//actor->emitMessage(m);
-		}
-		else if(_id == "weapon") {
-			// Mandar un mensaje con el _weaponType
-			//CMessageAddWeapon* m = new CMessageAddWeapon();
-			//m->setQuantity(_reward);
-			//m->setWeaponType(_weaponType);
-			//actor->emitMessage(m);
-		}
-
 		// Arrancar el timer
 		_isRespawning = true;
 	}
