@@ -85,6 +85,25 @@ namespace Logic
 		*/
 		virtual void process(CMessage *message);
 
+		/**
+		Método que activa el componente; invocado cuando se activa
+		el mapa donde está la entidad a la que pertenece el componente.
+		<p>
+		Se coge el jugador del mapa, la entidad que se quiere "seguir".
+
+		@return true si todo ha ido correctamente.
+		*/
+		virtual void activate();
+
+		/**
+		Método que desactiva el componente; invocado cuando se
+		desactiva el mapa donde está la entidad a la que pertenece el
+		componente. Se invocará siempre, independientemente de si estamos
+		activados o no.
+		<p>
+		Se pone el objetivo a seguir a NULL.
+		*/
+		virtual void deactivate();
 
 		/**
 		Metodo para cambiar el grafico en funcion del arma actual

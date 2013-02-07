@@ -50,7 +50,24 @@ namespace Logic
 		}
 
 	} // ~CGraphics
+	//---------------------------------------------------------
 	
+	void CArrayGraphics::activate()
+	{
+		IComponent::activate();
+
+		_graphicsEntities[_actualWeapon]._graphicsEntity->setVisible(true);
+
+	} // activate
+	//---------------------------------------------------------
+
+	void CArrayGraphics::deactivate()
+	{
+		IComponent::deactivate();
+
+		_graphicsEntities[_actualWeapon]._graphicsEntity->setVisible(false);
+
+	} // deactivate
 	//---------------------------------------------------------
 
 	bool CArrayGraphics::spawn(CEntity *entity, CMap *map, const Map::CEntity *entityInfo) 

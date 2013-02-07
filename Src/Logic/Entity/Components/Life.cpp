@@ -31,6 +31,8 @@ Contiene la implementación del componente que controla la vida de una entidad.
 #include "Logic/Messages/MessagePlayerDead.h"
 #include "Logic/Messages/MessageCameraToEnemy.h"
 
+#include "Logic/Server.h"
+
 namespace Logic 
 {
 	IMP_FACTORY(CLife);
@@ -168,7 +170,7 @@ namespace Logic
 			//Mensaje para que la camara ahora enfoque al jugador que nos mató
 			Logic::CMessageCameraToEnemy *cte=new Logic::CMessageCameraToEnemy();
 			cte->setEnemy(enemy);
-			_entity->emitMessage(cte);
+			CServer::getSingletonPtr()->getMap()->getEntityByName("Camera")->emitMessage(cte);
 
 		}
 		//Actualizo la vida
