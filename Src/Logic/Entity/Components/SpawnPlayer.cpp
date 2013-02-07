@@ -117,6 +117,7 @@ namespace Logic
 			//Desactivamos todos menos el cspawnplayerv
 			std::list<std::string*> *except=new std::list<std::string*>();
 			except->push_back(new std::string("CSpawnPlayer"));
+			except->push_back(new std::string("CHudOverlay"));
 			_entity->deactivateAllComponentsExcept(except);
 			_isDead=true;
 			//Liberando memoria
