@@ -51,6 +51,7 @@ namespace Logic
 		virtual void activate();
 
 		virtual void addAmmo(int weapon, int ammo);
+
 	protected:
 
 		/**
@@ -64,6 +65,7 @@ namespace Logic
 		unsigned char _numberShoots;
 		unsigned char _coolDown;
 		int _ammo; //esta como int, por que si es -1 esq no tienes esta arma.
+		int _id;
 
 		std::string _nameWeapon;
 		

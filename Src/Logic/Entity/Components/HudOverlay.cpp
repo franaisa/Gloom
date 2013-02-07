@@ -319,8 +319,8 @@ namespace Logic
 			break;
 		case Message::HUD_AMMO: hudAmmo( ((CMessageHudAmmo*)message)->getAmmo(), ((CMessageHudAmmo*)message)->getWeapon());
 			break;
-		//case Message::HUD_WEAPON: hudWeapon(((CMessageHudWeapon*)message)->getWeapon());
-			//break;
+		case Message::HUD_WEAPON: hudWeapon(((CMessageHudWeapon*)message)->getAmmo(), ((CMessageHudWeapon*)message)->getWeapon());
+			break;
 		}
 
 	} // process
@@ -355,17 +355,30 @@ namespace Logic
 				sAmmo << _ammo;
 				_textBoxArea[AMMO]->setCaption(sAmmo.str());
 			}else{
-				_weaponsBox[_actualWeapon][ACTIVE]->hide();
-				_weaponsBox[_actualWeapon][NO_AMMO]->show();
-			}			
-		}		
+				if(_weaponsBox[_actualWeapon][ACTIVE]->isVisible())
+				{
+					_weaponsBox[_actualWeapon][ACTIVE]->hide();
+					_weaponsBox[_actualWeapon][NO_AMMO]->show();
+				}
+			}//fin else	ammo!=0
+		}//fin weapon == _actualweapon
+		else{
+			_weaponsBox[weapon][ACTIVE]->show();
+			_weaponsBox[weapon][NO_WEAPON]->hide();
+			_weaponsBox[weapon][NO_AMMO]->hide();
+		}
 	}
 
 	void CHudOverlay::hudWeapon(int ammo, int weapon){
 
-		_weaponsBox[_actualWeapon][ACTIVE]->show();
-		_weaponsBox[_actualWeapon][NO_AMMO]->hide();
-		_weaponsBox[_actualWeapon][NO_WEAPON]->hide();
+		if(weapon != _actualWeapon && _actualWeapon != 0)
+		{
+			_actualWeapon = weapon;
+			_weaponsBox[_actualWeapon][ACTIVE]->show();
+			_weaponsBox[_actualWeapon][NO_AMMO]->hide();
+			_weaponsBox[_actualWeapon][NO_WEAPON]->hide();
+		}
+		hudAmmo(ammo, weapon);
 	}
 
 

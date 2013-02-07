@@ -58,6 +58,7 @@ namespace Logic
 		_numberShoots = (unsigned char) entityInfo->getIntAttribute(weapon+"NumberShoots");
 		_coolDown = (unsigned char) entityInfo->getIntAttribute(weapon+"CoolDown");
 		_ammo = entityInfo->getIntAttribute(weapon+"Ammo");
+		_id = entityInfo->getIntAttribute(weapon+"Id");
 		
 		return true;
 
@@ -189,10 +190,9 @@ namespace Logic
 				message->setAmmo(_ammo);
 
 				//Cambio sobre uno, hay q cambiarlo ;-)
-				message->setWeapon(1);
+				message->setWeapon(_id);
 				_entity->emitMessage(message);
 			}
-			
 		}
 	} // shoot
 
@@ -202,9 +202,17 @@ namespace Logic
 		IComponent::activate();
 
 		Logic::CMessageHudAmmo *message = new Logic::CMessageHudAmmo();
+		message->setWeapon(_id);
 		message->setAmmo(_ammo);
 		_entity->emitMessage(message);
 
+		
+		/*
+		Logic::CMessageHudAmmo *message = new Logic::CMessageHudAmmo();
+		message->setAmmo(_ammo);
+		message->setWeapon(_id);
+		_entity->emitMessage(message);
+		*/
 	}
 
 	void CShoot::addAmmo(int weapon, int ammo)

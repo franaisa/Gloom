@@ -162,6 +162,7 @@ Map = {
 			weaponHammerDistance = 7.0,
 			weaponHammerCoolDown = 2.0,
 			weaponHammerAmmo = 0,
+			weaponHammerId = 0,
 		
 			weaponMiniGunName = "MiniGun",
 			weaponMiniGunModel = "AK47.mesh",
@@ -174,7 +175,7 @@ Map = {
 			weaponMiniGunDistance = 100.0,
 			weaponMiniGunCoolDown = 2.0,
 			weaponMiniGunAmmo = 10,
-
+			weaponMiniGunId = 1,
 			
 			weaponShotGunName = "Shotgun",
 			weaponShotGunModel = "UziLeft.mesh",
@@ -187,6 +188,7 @@ Map = {
 			weaponShotGunDistance = 100.0,
 			weaponShotGunCoolDown = 2.0,
 			weaponShotGunAmmo = 200,
+			weaponShotGunId = 2,
 			
 		hudMira = 3,
 	},
