@@ -160,8 +160,8 @@ Map = {
 			weaponHammerDispersion = 0,
 			weaponHammerNumberShoots = 1,
 			weaponHammerDistance = 7.0,
-			weaponHammerCoolDown = 2.0,
-			weaponHammerAmmo = 0,
+			weaponHammerColdDown = 2.0,
+			weaponHammerAmmo = 1,
 			weaponHammerId = 0,
 		
 			weaponMiniGunName = "MiniGun",
@@ -173,7 +173,7 @@ Map = {
 			weaponMiniGunDispersion = 0,
 			weaponMiniGunNumberShoots = 1,
 			weaponMiniGunDistance = 100.0,
-			weaponMiniGunCoolDown = 2.0,
+			weaponMiniGunColdDown = 5.0,
 			weaponMiniGunAmmo = 10,
 			weaponMiniGunId = 1,
 			
@@ -186,7 +186,7 @@ Map = {
 			weaponShotGunDispersion = 20,
 			weaponShotGunNumberShoots = 8,
 			weaponShotGunDistance = 100.0,
-			weaponShotGunCoolDown = 2.0,
+			weaponShotGunColdDown = 3.0,
 			weaponShotGunAmmo = 200,
 			weaponShotGunId = 2,
 			

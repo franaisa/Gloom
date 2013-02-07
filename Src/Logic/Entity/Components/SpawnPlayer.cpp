@@ -93,6 +93,8 @@ namespace Logic
 		
 			//Si superamos el tiempo de spawn tenemos que revivir
 			if(_actualTimeSpawn>_timeSpawn){
+				
+				
 				//LLamamos al manager de spawn que nos devolverá una posición ( ahora hecho a lo cutre)
 				Vector3 spawn = CServer::getSingletonPtr()->getSpawnManager()->getSpawnPosition();
 				//Volvemos a activar todos los componentes para que la fisica pueda recibir el mensaje de spawn
@@ -103,6 +105,10 @@ namespace Logic
 				_entity->emitMessage(m);
 				//Establecemos la orientación adecuada segun la devolución del manager de spawn
 				_entity->setYaw(180);
+
+				Logic::CMessageHudSpawn *mS=new Logic::CMessageHudSpawn();
+				mS->setTime(0);
+				_entity->emitMessage(mS);
 			}
 		}
 

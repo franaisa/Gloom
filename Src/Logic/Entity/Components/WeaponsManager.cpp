@@ -55,7 +55,7 @@ namespace Logic
 
 			/*la 1º arama siempre estara a true*/
 			_weapons[0] = true;
-			//activateComponent(_actualWeapon);
+			activateComponent(_actualWeapon);
 			/*
 			_weapons[1] = true;
 			_weapons[2] = true;
@@ -97,7 +97,7 @@ namespace Logic
 		switch(message->getMessageType())
 		{
 			case Message::CHANGE_WEAPON:
-					changeWeapon( ((CMessageChangeWeapon*)message)->getWeapon() );
+				changeWeapon( ((CMessageChangeWeapon*)message)->getWeapon() );
 			break;
 			case Message::ADD_AMMO:
 				addAmmo( ((CMessageAddAmmo*)message)->getAddAmmo(),((CMessageAddAmmo*)message)->getAddWeapon()  );
@@ -134,13 +134,13 @@ namespace Logic
 		// Si al final se hace que acepeten los
 		switch(weapon){
 		case 0:
-			_entity->getComponent<CShootHammer>("CShootHammer")->addAmmo(0,ammo);
+			_entity->getComponent<CShootHammer>("CShootHammer")->addAmmo(0,ammo, _actualWeapon);
 			break;
 		case 1:
-			_entity->getComponent<CShootMiniGun>("CShootMiniGun")->addAmmo(1,ammo);
+			_entity->getComponent<CShootMiniGun>("CShootMiniGun")->addAmmo(1,ammo, _actualWeapon);
 			break;
 		case 2:
-			_entity->getComponent<CShootShotGun>("CShootShotGun")->addAmmo(2,ammo);
+			_entity->getComponent<CShootShotGun>("CShootShotGun")->addAmmo(2,ammo, _actualWeapon);
 			break;
 
 		/*
@@ -155,9 +155,9 @@ namespace Logic
 		if(weapon < _numWeapons && !_weapons[weapon])
 			_weapons[weapon] = true;
 
-		Logic::CMessageHudWeapon *m=new Logic::CMessageHudWeapon();
+		Logic::CMessageHudAmmo *m=new Logic::CMessageHudAmmo();
 		m->setWeapon(weapon);
-		m->setAmmo(weapon);//No es necesario esto, ya que solo actualizare el hub como que puedo coger el arma pero no mostrara sus balas
+		m->setAmmo(ammo);//No es necesario esto, ya que solo actualizare el hub como que puedo coger el arma pero no mostrara sus balas
 		_entity->emitMessage(m);
 
 		addAmmo(ammo, weapon);

@@ -50,103 +50,109 @@ namespace Logic
 
 	void CShootHammer::shoot(){
 		
-		//Generación del rayo habiendo obtenido antes el origen y la dirección
-		Graphics::CCamera* camera = Graphics::CServer::getSingletonPtr()->getActiveScene()->getCamera();
+		if(_canShoot){
+
+			_canShoot = false;
+			_coldDownTime = 0;
+			//Generación del rayo habiendo obtenido antes el origen y la dirección
+			Graphics::CCamera* camera = Graphics::CServer::getSingletonPtr()->getActiveScene()->getCamera();
 		
 		
-		// Para generalizar las armas, todas tendras tantas balas como la variable numberShoots
-		for(int i = 0; i < _numberShoots; ++i)
-		{
+			// Para generalizar las armas, todas tendras tantas balas como la variable numberShoots
+			for(int i = 0; i < _numberShoots; ++i)
+			{
 
-			// Se corrige la posicion de la camara
-			Vector3 direction = camera->getTargetCameraPosition() - camera->getCameraPosition();
-			direction.normalise();
-			//El origen debe ser mínimo la capsula y por si miramos al suelo la separación mínima debe ser 1.5f ( en un futuro es probable que sea recomendable cambiar por no chocar con el grupo de uno mismo )
-			Vector3 origin = camera->getCameraPosition() + (_capsuleRadius * direction);
+				// Se corrige la posicion de la camara
+				Vector3 direction = camera->getTargetCameraPosition() - camera->getCameraPosition();
+				direction.normalise();
+				//El origen debe ser mínimo la capsula y por si miramos al suelo la separación mínima debe ser 1.5f ( en un futuro es probable que sea recomendable cambiar por no chocar con el grupo de uno mismo )
+				Vector3 origin = camera->getCameraPosition() + (_capsuleRadius * direction);
 
 
-			//Me dispongo a calcular la desviacion del arma, en el map.txt se pondra en grados de dispersion (0 => sin dispersion)
-			Ogre::Radian angle = Ogre::Radian( (  (((float)(rand() % 100))/100.0f) * (_dispersion)) /100);
+				//Me dispongo a calcular la desviacion del arma, en el map.txt se pondra en grados de dispersion (0 => sin dispersion)
+				Ogre::Radian angle = Ogre::Radian( (  (((float)(rand() % 100))/100.0f) * (_dispersion)) /100);
 
 			
 
-			//Esto hace un random total, lo que significa, por ejemplo, que puede que todas las balas vayan hacia la derecha 
-			Vector3 dispersionDirection = direction.randomDeviant(angle);
-			dispersionDirection.normalise();
+				//Esto hace un random total, lo que significa, por ejemplo, que puede que todas las balas vayan hacia la derecha 
+				Vector3 dispersionDirection = direction.randomDeviant(angle);
+				dispersionDirection.normalise();
 
-			// Creamos el ray desde el origen en la direccion del raton (desvido ya aplicado)
-			Ray ray(origin, dispersionDirection);
+				// Creamos el ray desde el origen en la direccion del raton (desvido ya aplicado)
+				Ray ray(origin, dispersionDirection);
 			
 
 
-			////////////////////////////////////////////////Dibujo del rayo
+				////////////////////////////////////////////////Dibujo del rayo
 
 
-				Graphics::CScene *scene = Graphics::CServer::getSingletonPtr()->getActiveScene();
-				Ogre::SceneManager *mSceneMgr = scene->getSceneMgr();
+					Graphics::CScene *scene = Graphics::CServer::getSingletonPtr()->getActiveScene();
+					Ogre::SceneManager *mSceneMgr = scene->getSceneMgr();
 
 				
-				std::stringstream aux;
-				aux << "laser" << _nameWeapon << _temporal;
-				++_temporal;
-				std::string laser = aux.str();
+					std::stringstream aux;
+					aux << "laser" << _nameWeapon << _temporal;
+					++_temporal;
+					std::string laser = aux.str();
 
 
-				Ogre::ManualObject* myManualObject =  mSceneMgr->createManualObject(laser); 
-				Ogre::SceneNode* myManualObjectNode = mSceneMgr->getRootSceneNode()->createChildSceneNode(laser+"_node"); 
+					Ogre::ManualObject* myManualObject =  mSceneMgr->createManualObject(laser); 
+					Ogre::SceneNode* myManualObjectNode = mSceneMgr->getRootSceneNode()->createChildSceneNode(laser+"_node"); 
  
 
-				myManualObject->begin("laser", Ogre::RenderOperation::OT_LINE_STRIP);
-				Vector3 v = ray.getOrigin();
-				myManualObject->position(v.x,v.y,v.z);
+					myManualObject->begin("laser", Ogre::RenderOperation::OT_LINE_STRIP);
+					Vector3 v = ray.getOrigin();
+					myManualObject->position(v.x,v.y,v.z);
 
 
-			for(int i=0; i < _distance;++i){
-				Vector3 v = ray.getPoint(i);
-				myManualObject->position(v.x,v.y,v.z);
-				// etc 
-			}
+				for(int i=0; i < _distance;++i){
+					Vector3 v = ray.getPoint(i);
+					myManualObject->position(v.x,v.y,v.z);
+					// etc 
+				}
 
-				myManualObject->end(); 
-				myManualObjectNode->attachObject(myManualObject);
+					myManualObject->end(); 
+					myManualObjectNode->attachObject(myManualObject);
 
 
-			//////////////////////////////////fin del dibujado del rayo
+				//////////////////////////////////fin del dibujado del rayo
 
-			//Rayo lanzado por el servidor de físicas de acuerdo a la distancia de potencia del arma
-			CEntity *entityCollision = Physics::CServer::getSingletonPtr()->raycastClosestInverse(ray, _distance,3);
+				//Rayo lanzado por el servidor de físicas de acuerdo a la distancia de potencia del arma
+				CEntity *entityCollision = Physics::CServer::getSingletonPtr()->raycastClosestInverse(ray, _distance,3);
 		
-			//Si hay colisión envíamos a dicha entidad un mensaje de daño
-			if(entityCollision)
-			{
-				if(entityCollision->getName().compare("World")==0){
+				//Si hay colisión envíamos a dicha entidad un mensaje de daño
+				if(entityCollision)
+				{
+					if(entityCollision->getName().compare("World")==0){
 
-					Vector3 direccionOpuestaRay= ray.getDirection()*-1;
-					Logic::CMessageRebound *m=new Logic::CMessageRebound();
-					m->setDir(direccionOpuestaRay);
-					_entity->emitMessage(m);
+						Vector3 direccionOpuestaRay= ray.getDirection()*-1;
+						Logic::CMessageRebound *m=new Logic::CMessageRebound();
+						m->setDir(direccionOpuestaRay);
+						_entity->emitMessage(m);
 
-					Logic::CMessageDamaged *damage=new Logic::CMessageDamaged();
-					damage->setDamage(_damageReflect);
-					damage->setEnemy(_entity);
-					_entity->emitMessage(damage);
+						Logic::CMessageDamaged *damage=new Logic::CMessageDamaged();
+						damage->setDamage(_damageReflect);
+						damage->setEnemy(_entity);
+						_entity->emitMessage(damage);
 
+					}
+					// LLamar al componente que corresponda con el daño hecho (solamente si no fuera el mundo el del choque)
+					//entity->
+					else{
+						Logic::CMessageDamaged *m=new Logic::CMessageDamaged();
+						m->setDamage(_damage);
+						m->setEnemy(entityCollision);
+						entityCollision->emitMessage(m);
+					}
 				}
-				// LLamar al componente que corresponda con el daño hecho (solamente si no fuera el mundo el del choque)
-				//entity->
-				else{
-					Logic::CMessageDamaged *m=new Logic::CMessageDamaged();
-					m->setDamage(_damage);
-					m->setEnemy(entityCollision);
-					entityCollision->emitMessage(m);
-				}
-			}
 			
-			//Para el rebote, si hay colision con la entidad mundo pues reboto en la dirección opuesta a la que miro
+				//Para el rebote, si hay colision con la entidad mundo pues reboto en la dirección opuesta a la que miro
 			
 				
 		
-		}// fin del bucle para multiples disparos
+			}// fin del bucle para multiples disparos
+
+		}// fin if _canShoot
 	} // shoot
 
 	
