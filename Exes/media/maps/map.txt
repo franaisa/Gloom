@@ -6,12 +6,11 @@ Map = {
 		scale = {1, 1, 1},
 		orientation = 0,
 		static = true,
-		model = "Laberinto.mesh",
+		model = "scenario.mesh",
 		physic_entity = "fromFile",
 		physic_normal = { 0, 1, 0 },
-		physic_file = "media/models/laberinto-fisico.RepX",
+		physic_file = "media/models/scenario.RepX",
 		physic_group = 0,
-	
 	},
 	
 	
@@ -144,10 +143,6 @@ Map = {
 		physic_shape = "capsule",
 		physic_radius = 6,
 		physic_height = 6,
-		angularSpeed = 0.003,
-		accel = 0.001,
-		angularAccel = 0.00001,
-		movementTolerance = 7.0,
 		numWeapons = 3,
 
 			weaponHammerName = "Hammer",
@@ -160,7 +155,7 @@ Map = {
 			weaponHammerDispersion = 0,
 			weaponHammerNumberShoots = 1,
 			weaponHammerDistance = 7.0,
-			weaponHammerColdDown = 2.0,
+			weaponHammerColdDown = 0.0,
 			weaponHammerAmmo = 1,
 			weaponHammerId = 0,
 		
@@ -173,7 +168,7 @@ Map = {
 			weaponMiniGunDispersion = 0,
 			weaponMiniGunNumberShoots = 1,
 			weaponMiniGunDistance = 100.0,
-			weaponMiniGunColdDown = 5.0,
+			weaponMiniGunColdDown = 0.0,
 			weaponMiniGunAmmo = 10,
 			weaponMiniGunId = 1,
 			
@@ -186,7 +181,7 @@ Map = {
 			weaponShotGunDispersion = 20,
 			weaponShotGunNumberShoots = 8,
 			weaponShotGunDistance = 100.0,
-			weaponShotGunColdDown = 3.0,
+			weaponShotGunColdDown = 1.0,
 			weaponShotGunAmmo = 200,
 			weaponShotGunId = 2,
 			
