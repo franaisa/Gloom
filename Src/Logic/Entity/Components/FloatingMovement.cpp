@@ -14,22 +14,17 @@
 #include "Map/MapEntity.h"
 #include "Basesubsystems/Math.h"
 
+#include <math.h>
+
 namespace Logic 
 {
 	IMP_FACTORY(CFloatingMovement);
 	
 	//---------------------------------------------------------
 	void CFloatingMovement::estimateItemFloatingPos(Vector3& position, unsigned int msecs) {
-		if(_goingUp) {
-			position.y += _orbitalSpeed * msecs;
-			if(position.y > _orbitalTopY)
-				_goingUp = false;
-		}
-		else {
-			position.y -= _orbitalSpeed * msecs;
-			if(position.y < _orbitalBottomY)
-				_goingUp = true;
-		}
+		_currentOrbitalPos += _orbitalSpeed * msecs;
+		if(_currentOrbitalPos > 6.283) _currentOrbitalPos = 0;
+		position.y += sin(_currentOrbitalPos) * _orbitalOffset; 
 	}
 
 	//---------------------------------------------------------
@@ -66,9 +61,7 @@ namespace Logic
 		}
 
 		if(entityInfo->hasAttribute("orbitalOffset")) {
-			float orbitalOffset = entityInfo->getFloatAttribute("orbitalOffset");
-			_orbitalTopY = itemPosition.y + (orbitalOffset / 2);
-			_orbitalBottomY = itemPosition.y - (orbitalOffset / 2);
+			_orbitalOffset = entityInfo->getFloatAttribute("orbitalOffset");
 		}
 
 		if(entityInfo->hasAttribute("orbitalRotationSpeed")) {

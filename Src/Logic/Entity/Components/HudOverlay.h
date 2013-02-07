@@ -11,6 +11,7 @@
 
 #include "Logic/Entity/Component.h"
 
+#include <OgreOverlay.h>
 #include <OgreOverlayContainer.h>
 #include <OgreTextAreaOverlayElement.h>
 
@@ -33,7 +34,7 @@ namespace Logic
 		/**
 		Constructor por defecto; en la clase base no hace nada.
 		*/
-		CHudOverlay() : IComponent(), _health(0), _shield(0), _ammo(0), _actualWeapon(0), _numWeapons(0) {}
+		CHudOverlay() : IComponent(), _health(0), _shield(0), _ammo(1), _actualWeapon(0), _numWeapons(0) {}
 		
 		/**
 		Inicialización del componente usando la descripción de la entidad que hay en 
@@ -68,10 +69,17 @@ namespace Logic
 		void hudWeapon(int ammo, int weapon);
 		void hudAmmo(int ammo, int weapon);
 
+		void hudSpawn(int spawn);
+
 
 		int _health;
 		int _shield;
 		int _ammo;
+
+		Ogre::Overlay *_overlayPlay;
+		Ogre::Overlay *_overlayDie;
+
+		Ogre::TextAreaOverlayElement *_textAreaDie;
 
 		Ogre::TextAreaOverlayElement *_textBoxArea[3];
 

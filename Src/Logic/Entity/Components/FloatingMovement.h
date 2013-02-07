@@ -6,7 +6,7 @@ Contiene la declaración del componente que controla la vida de una entidad.
 @see Logic::CLife
 @see Logic::IComponent
 
-@author David Llansó
+@author Francisco Aisa García
 @date Octubre, 2010
 */
 #ifndef __Logic_FloatingMovement_H
@@ -32,7 +32,7 @@ namespace Logic
 		/**
 		Constructor por defecto; en la clase base no hace nada.
 		*/
-		CFloatingMovement() : IComponent(), _goingUp(true), _orientation(0) {}
+		CFloatingMovement() : IComponent(), _orientation(0), _currentOrbitalPos(0) {}
 
 		/**
 		Método llamado en cada frame que actualiza el estado del componente de la vida,
@@ -53,16 +53,14 @@ namespace Logic
 		void estimateItemRotation(unsigned int msecs);
 
 	protected:
+		// En radianes
+		float _currentOrbitalPos;
 
-		float _orbitalTopY;
-
-		float _orbitalBottomY;
+		float _orbitalOffset;
 
 		float _orbitalSpeed;
 
 		float _orbitalRotationSpeed;
-
-		bool _goingUp;
 
 		float _orientation;
 

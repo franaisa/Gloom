@@ -26,7 +26,7 @@ namespace Logic
 		Constructor por defecto; en la clase base no hace nada.
 		*/
 
-		CShoot(const std::string &shoot) : IComponent(),  _timeSinceLastShoot(0),_capsuleRadius(3.0f), _shooting(false), _temporal(0), _nameWeapon(shoot)  {}
+		CShoot(const std::string &shoot) : IComponent(),  _timeSinceLastShoot(0),_capsuleRadius(3.0f),_canShoot(true), _coldDownTime(0), _temporal(0), _nameWeapon(shoot)  {}
 		
 
 	
@@ -50,7 +50,10 @@ namespace Logic
 
 		virtual void activate();
 
-		virtual void addAmmo(int weapon, int ammo);
+		virtual void addAmmo(int weapon, int ammo, int actualWeapon);
+
+		virtual void tick(unsigned int msecs);
+
 	protected:
 
 		/**
@@ -62,8 +65,9 @@ namespace Logic
 		float _dispersion;
 		float _distance;
 		unsigned char _numberShoots;
-		unsigned char _coolDown;
+		unsigned char _coldDown;
 		int _ammo; //esta como int, por que si es -1 esq no tienes esta arma.
+		int _id;
 
 		std::string _nameWeapon;
 		
@@ -76,7 +80,8 @@ namespace Logic
 		Para comprobar que un arma esta disparando y no puede disparar 
 		"tan rapido como puedas arreglar el gatillo" (Marcus, Borderlands 2)
 		*/
-		bool _shooting;
+		bool _canShoot;
+		int _coldDownTime;
 
 		/**
 		mide el tiempo de cooldown

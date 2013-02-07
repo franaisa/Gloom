@@ -21,6 +21,10 @@ de una escena.
 #include "Graphics/Scene.h"
 #include "Graphics/Camera.h"
 
+#include "AvatarController.h"
+
+#include "Logic/Messages/MessageCameraToEnemy.h"
+
 namespace Logic 
 {
 	IMP_FACTORY(CCamera);
@@ -79,6 +83,31 @@ namespace Logic
 	
 	//---------------------------------------------------------
 
+		bool CCamera::accept(CMessage *message)
+	{
+		return message->getMessageType() == Message::PLAYER_DEAD;
+	} // accept
+	//---------------------------------------------------------
+
+
+	void CCamera::process(CMessage *message)
+	{
+		switch(message->getMessageType())
+		{
+		case Message::CAMERA_TO_ENEMY:
+					setTargetEnemy(((CMessageCameraToEnemy*)message)->getEnemy());
+			break;
+		}
+
+	} // process
+	//---------------------------------------------------------
+
+	void CCamera::setTargetEnemy(CEntity *enemy){
+	
+	}
+
+
+
 	void CCamera::tick(unsigned int msecs)
 	{
 		IComponent::tick(msecs);
@@ -91,11 +120,17 @@ namespace Logic
 			direction.y = _height;
 			_graphicsCamera->setCameraPosition(position + direction);
 
-			// Y la posición hacia donde mira la cámara.
-			direction = _targetDistance * Math::getDirection(_target->getOrientation());
-			direction.y += _targetHeight;
-			_graphicsCamera->setTargetCameraPosition(position + direction);
-
+			if(_target->getComponent<CAvatarController>("CAvatarController")->isActivate()){
+				// Y la posición hacia donde mira la cámara.
+				direction = _targetDistance * Math::getDirection(_target->getOrientation());
+				direction.y += _targetHeight;
+				_graphicsCamera->setTargetCameraPosition(position + direction);
+			}
+			else{
+				direction = _targetDistance * Math::getDirection(_target->getOrientation());
+				direction.y += _targetHeight;
+				_graphicsCamera->setTargetCameraPosition(position + direction);
+			}
 			//Implementacion del grupo de Calm night of nose que :P
 			/*
 			Vector3 position = _target->getPosition();

@@ -75,7 +75,7 @@ namespace Logic
 		/**
 		Al recibir daño quitamos vida
 		*/
-		void damaged(int damage);
+		void damaged(int damage, CEntity* enemy);
 		
 		/**
 		Sumar vida 
@@ -86,8 +86,6 @@ namespace Logic
 		Sumar escudo
 		*/
 		void addShield(int shield);
-
-		void sendMessagePlayerDead();
 
 	protected:
 

@@ -116,6 +116,7 @@
     <ClCompile Include="..\..\Src\Logic\Messages\MessageAddShield.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageAddWeapon.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageAvatarWalk.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Messages\MessageCameraToEnemy.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageChangeWeapon.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageChangeWeaponGraphics.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageCollisionDown.cpp" />
@@ -124,6 +125,7 @@
     <ClCompile Include="..\..\Src\Logic\Messages\MessageHudAmmo.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageHudLife.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageHudShield.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Messages\MessageHudSpawn.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageHudWeapon.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageKinematicMove.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageMouse.cpp" />
@@ -182,6 +184,7 @@
     <ClInclude Include="..\..\Src\Logic\Messages\MessageAddShield.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageAddWeapon.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageAvatarWalk.h" />
+    <ClInclude Include="..\..\Src\Logic\Messages\MessageCameraToEnemy.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageChangeWeapon.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageChangeWeaponGraphics.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageCollisionDown.h" />
@@ -190,6 +193,7 @@
     <ClInclude Include="..\..\Src\Logic\Messages\MessageHudAmmo.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageHudLife.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageHudShield.h" />
+    <ClInclude Include="..\..\Src\Logic\Messages\MessageHudSpawn.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageHudWeapon.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageKinematicMove.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageMouse.h" />
@@ -203,7 +207,6 @@
     <ClInclude Include="..\..\Src\Logic\Messages\MessageTransform.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageUntouched.h" />
     <ClInclude Include="..\..\Src\Logic\Server.h" />
-    <ClInclude Include="FloatingMovement.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BaseSubsystems\BaseSubsystems.vcxproj">

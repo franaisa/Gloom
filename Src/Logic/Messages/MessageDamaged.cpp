@@ -22,13 +22,24 @@ namespace Logic {
 		return _damage;
 	}//
 	//----------------------------------------------------------
-		
+
+	CEntity* CMessageDamaged::getEnemy(){
+		return _entity;
+	}//
+	//----------------------------------------------------------
+
+	void CMessageDamaged::setEnemy(CEntity* entity){
+		_entity=entity;
+	}//
+	//----------------------------------------------------------
+	
 	Net::CBuffer* CMessageDamaged::serialize() {
 		assert(_tempBuffer == NULL);
 
-		_tempBuffer = new Net::CBuffer(sizeof(int) + sizeof(_damage));
+		_tempBuffer = new Net::CBuffer(sizeof(int) + sizeof(_damage) + sizeof(_entity));
 		_tempBuffer->serialize(std::string("CMessageDamaged"));
 		_tempBuffer->serialize(_damage);
+		_tempBuffer->serialize(_entity);
 		
 		return _tempBuffer;
 	}//
@@ -36,6 +47,9 @@ namespace Logic {
 
 	void CMessageDamaged::deserialize(Net::CBuffer& buffer) {
 		buffer.deserialize(_damage);
+
+		// HAY QUE CONSTRUIR UNA ENTIDAD ENTITY - NO EXISTE METODO
+		// setEntityID
 	}
 
 };

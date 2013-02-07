@@ -88,6 +88,17 @@ namespace Logic
 		virtual void deactivate();
 
 		/**
+		Este componente sólo acepta mensajes de situar la camara al morir.
+		*/
+		virtual bool accept(CMessage *message);
+
+		/**
+		Al tratar el mensaje de situar la camara al morir, nos quedaremos mirando al jugador que nos ha matado.
+		*/
+		virtual void process(CMessage *message);
+
+
+		/**
 		Método llamado en cada frame que actualiza el estado del componente.
 		<p>
 		Se encarga de mover la cámara siguiendo al jugador.
@@ -95,6 +106,16 @@ namespace Logic
 		@param msecs Milisegundos transcurridos desde el último tick.
 		*/
 		virtual void tick(unsigned int msecs);
+
+		/**
+		Método llamado cuando nos llega un mensaje de mirar al enemigo que nos ha matado.
+		<p>
+		Se encarga de mover la cámara para seguir al enemigo que nos mató.
+
+		@param enemy Entidad enemiga.
+		*/
+		void setTargetEnemy(CEntity* enemy);
+
 
 	protected:
 		
