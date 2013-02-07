@@ -202,6 +202,13 @@ namespace Logic
 	void CShoot::activate() {
 		IComponent::activate();
 
+		/*
+		Logic::CMessageHudAmmo *message = new Logic::CMessageHudAmmo();
+		message->setAmmo(_ammo);
+		message->setWeapon(_id);
+		_entity->emitMessage(message);
+		*/
+
 		Logic::CMessageHudAmmo *message = new Logic::CMessageHudAmmo();
 		message->setWeapon(_id);
 		message->setAmmo(_ammo);
