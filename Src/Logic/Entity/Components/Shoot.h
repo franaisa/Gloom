@@ -50,7 +50,7 @@ namespace Logic
 
 		virtual void activate();
 
-		virtual void addAmmo(int weapon, int ammo, int actualWeapon);
+		virtual void addAmmo(int weapon, int ammo);
 
 		virtual void resetAmmo();
 
