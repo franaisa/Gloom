@@ -106,6 +106,7 @@ namespace Logic
 
 	void CCamera::setTargetEnemy(CEntity *enemy){
 		_enemy=enemy;
+		//_enemy=CServer::getSingletonPtr()->getMap()->getEntityByName("Shotgun");//Para comprobar que apuntamos bien a un enemigo que no sea yo mismo como ahora
 	}
 
 
@@ -123,16 +124,24 @@ namespace Logic
 			_graphicsCamera->setCameraPosition(position + direction);
 
 			if(_target->getComponent<CAvatarController>("CAvatarController")->isActivate()){
+
 				// Y la posición hacia donde mira la cámara.
 				direction = _targetDistance * Math::getDirection(_target->getOrientation());
 				direction.y += _targetHeight;
 				_graphicsCamera->setTargetCameraPosition(position + direction);
 			}
+
 			else if(_enemy){
+
 				std::cout << "CAMARA APUNTANDO AL ENEMIGO: " << _enemy->getName() << std::endl;
-				direction = _targetDistance * Math::getDirection(_enemy->getTransform());
-				direction.y += _targetHeight;
-				_graphicsCamera->setTargetCameraPosition(position + direction);
+				if(_enemy->getName().compare("David")!=0)
+					_graphicsCamera->setTargetCameraPosition(_enemy->getPosition() );
+				else{
+					std::cout << "hola david estas en la posicion: " << _enemy->getPosition() << std::endl;
+
+					_graphicsCamera->setCameraPosition(_enemy->getPosition()+Vector3(0,50,0));
+					_graphicsCamera->setTargetCameraPosition(_enemy->getPosition());
+				}
 			}
 		}
 

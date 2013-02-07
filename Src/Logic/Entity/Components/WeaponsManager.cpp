@@ -76,12 +76,29 @@ namespace Logic
 				desactivateComponent(i);
 			}
 
-			/*la 1º arama siempre estara a true*/
+			/*la 1º arma siempre estara a true*/
 			activateComponent(_actualWeapon);
 
 		//return true;
 
 	} // activate
+	//---------------------------------------------------------
+
+
+	void CWeaponsManager::deactivate(){
+		//reset de armas
+		for(int i = 1; i<_numWeapons;++i){
+			_weapons[i] = false;
+		}
+		_actualWeapon=0;
+		//reset de balas
+		for(int i = 1; i<_numWeapons;++i){
+			resetAmmo(i);
+		}
+	
+	}// deactivate
+	//---------------------------------------------------------
+
 
 	bool CWeaponsManager::accept(CMessage *message)
 	{
@@ -130,8 +147,6 @@ namespace Logic
 		
 	}
 	void CWeaponsManager::addAmmo(int ammo, int weapon){
-		// Preguntar mñn a esta gente, yo tengo las armas cableadas para desactivarlas o no, aprovecho esto y ya le paso la municion o que todos acepten ese mensaje?
-		// Si al final se hace que acepeten los
 		switch(weapon){
 		case 0:
 			_entity->getComponent<CShootHammer>("CShootHammer")->addAmmo(0,ammo);
@@ -142,14 +157,23 @@ namespace Logic
 		case 2:
 			_entity->getComponent<CShootShotGun>("CShootShotGun")->addAmmo(2,ammo);
 			break;
-
-		/*
-		case 2:
-			_entity->getComponent<CShootShotGun>("CShootShotGun")->deactivate();
-			break;
-		*/
 		}
 	}
+
+	void CWeaponsManager::resetAmmo(int weapon){
+		switch(weapon){
+		case 0:
+			_entity->getComponent<CShootHammer>("CShootHammer")->resetAmmo();
+			break;
+		case 1:
+			_entity->getComponent<CShootMiniGun>("CShootMiniGun")->resetAmmo();
+			break;
+		case 2:
+			_entity->getComponent<CShootShotGun>("CShootShotGun")->resetAmmo();
+			break;
+		}
+	}
+
 
 	void CWeaponsManager::addWeapon(int ammo, int weapon){
 		if(weapon < _numWeapons && !_weapons[weapon])
@@ -157,11 +181,11 @@ namespace Logic
 
 		Logic::CMessageHudAmmo *m=new Logic::CMessageHudAmmo();
 		m->setWeapon(weapon);
-		m->setAmmo(ammo);//No es necesario esto, ya que solo actualizare el hub como que puedo coger el arma pero no mostrara sus balas
+		m->setAmmo(ammo);//No es necesario esto, ya que solo actualizare el hud como que puedo coger el arma pero no mostrara sus balas(en este caso concreto)
 		_entity->emitMessage(m);
 
 		addAmmo(ammo, weapon);
-		// Preguntar mñn a esta gente, yo tengo las armas cableadas para desactivarlas o no, aprovecho esto y ya le paso la municion o que todos acepten ese mensaje?
+		
 	}
 
 	void CWeaponsManager::desactivateComponent(unsigned char weapon){
