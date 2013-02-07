@@ -134,13 +134,13 @@ namespace Logic
 		// Si al final se hace que acepeten los
 		switch(weapon){
 		case 0:
-			_entity->getComponent<CShootHammer>("CShootHammer")->addAmmo(0,ammo, _actualWeapon);
+			_entity->getComponent<CShootHammer>("CShootHammer")->addAmmo(0,ammo);
 			break;
 		case 1:
-			_entity->getComponent<CShootMiniGun>("CShootMiniGun")->addAmmo(1,ammo, _actualWeapon);
+			_entity->getComponent<CShootMiniGun>("CShootMiniGun")->addAmmo(1,ammo);
 			break;
 		case 2:
-			_entity->getComponent<CShootShotGun>("CShootShotGun")->addAmmo(2,ammo, _actualWeapon);
+			_entity->getComponent<CShootShotGun>("CShootShotGun")->addAmmo(2,ammo);
 			break;
 
 		/*

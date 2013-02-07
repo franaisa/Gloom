@@ -223,17 +223,18 @@ namespace Logic
 		_entity->emitMessage(message);
 	}
 
-	void CShoot::addAmmo(int weapon, int ammo, int actualWeapon)
+	void CShoot::addAmmo(int weapon, int ammo)
 	{
 		//si yo soy el weapon
 		_ammo += ammo;
-
-		if(_id == actualWeapon){
+		
+		//if(_id == actualWeapon){
 			Logic::CMessageHudAmmo *message = new Logic::CMessageHudAmmo();
 			message->setWeapon(_id);
 			message->setAmmo(_ammo);
 			_entity->emitMessage(message);
-		}
+		//}
+		
 	}
 
 } // namespace Logic
