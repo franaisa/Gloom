@@ -92,8 +92,6 @@ namespace Logic
 	{
 		IComponent::tick(msecs);
 		
-		printf("\n _coldDownTime %d", _coldDownTime);
-
 		if((_coldDownTime/1000) < _coldDown)
 			_coldDownTime += msecs;
 		else
