@@ -449,7 +449,7 @@ namespace Logic
 		}
 
 		std::stringstream sSpawn;
-		sSpawn << "HAS MUERTO, LOOSER \n Tiempo de respawn: " << spawmTime;
+		sSpawn << "HAS MUERTO, LOSER \n Tiempo de respawn: " << spawmTime;
 		_textAreaDie->setCaption(sSpawn.str());
 		
 		if(!_overlayDie->isVisible())
