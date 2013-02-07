@@ -431,6 +431,7 @@ namespace Logic
 		if(!_canJump && !_jumpingControl && !_caida){
 			_direccionSaltoCaida=direction;
 			_caida=true;
+			_speedJump=-0.02;
 		}//if (!_canJump && !_jumpingControl)
 		if(_caida){
 			_speedJump=_speedJump + _gravity*msecs; //MRUA
