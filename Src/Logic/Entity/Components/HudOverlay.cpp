@@ -457,6 +457,10 @@ namespace Logic
 		if(spawmTime <= 0.1){
 
 			_overlayDie->hide();
+			//reset para volver a mostrar solo el arma inicial al hacer show
+			for(int i=1; i<_numWeapons;++i){
+				_weaponsBox[i][NO_WEAPON]->show();
+			}
 			_overlayPlay->show();
 		}
 
