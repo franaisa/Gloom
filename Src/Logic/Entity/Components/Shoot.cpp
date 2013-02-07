@@ -179,6 +179,7 @@ namespace Logic
 
 					Logic::CMessageDamaged *m=new Logic::CMessageDamaged();
 					m->setDamage(_damage);
+					m->setEnemy(_entity);
 					entity->emitMessage(m);
 				}
 			

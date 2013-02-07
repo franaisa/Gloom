@@ -128,6 +128,7 @@ namespace Logic
 
 					Logic::CMessageDamaged *damage=new Logic::CMessageDamaged();
 					damage->setDamage(_damageReflect);
+					damage->setEnemy(_entity);
 					_entity->emitMessage(damage);
 
 				}
@@ -136,6 +137,7 @@ namespace Logic
 				else{
 					Logic::CMessageDamaged *m=new Logic::CMessageDamaged();
 					m->setDamage(_damage);
+					m->setEnemy(entityCollision);
 					entityCollision->emitMessage(m);
 				}
 			}

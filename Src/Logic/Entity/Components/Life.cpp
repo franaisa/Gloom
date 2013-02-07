@@ -29,6 +29,7 @@ Contiene la implementación del componente que controla la vida de una entidad.
 
 
 #include "Logic/Messages/MessagePlayerDead.h"
+#include "Logic/Messages/MessageCameraToEnemy.h"
 
 namespace Logic 
 {
@@ -100,7 +101,7 @@ namespace Logic
 		{
 		case Message::DAMAGED:
 			{
-				damaged( ((CMessageDamaged*)message)->getDamage());	
+				damaged( ((CMessageDamaged*)message)->getDamage(), ((CMessageDamaged*)message)->getEnemy());	
 			}
 			break;
 			case Message::ADD_LIFE:
@@ -136,7 +137,7 @@ namespace Logic
 	} // tick
 	//----------------------------------------------------------
 
-	void CLife::damaged(int damage){
+	void CLife::damaged(int damage, CEntity* enemy){
 		if(_shield>0){
 			int porcentajeEscudo = _porcentShield * damage * 0.01f;
 			int porcentajeVida = damage - porcentajeEscudo;
@@ -159,9 +160,16 @@ namespace Logic
 
 		//Si muero por el daño, envio un mensaje de playerDead
 		if(_life<=0){
+			std::cout << "TE HA MATADO EL ENEMIGO CON NOMBRE: " << enemy->getName() << std::endl;
 			_life=0;
+			//Mensaje de muerte para tratar respawn/desactivar componentes
 			Logic::CMessagePlayerDead *m=new Logic::CMessagePlayerDead();
 			_entity->emitMessage(m);
+			//Mensaje para que la camara ahora enfoque al jugador que nos mató
+			Logic::CMessageCameraToEnemy *cte=new Logic::CMessageCameraToEnemy();
+			cte->setEnemy(enemy);
+			_entity->emitMessage(cte);
+
 		}
 		//Actualizo la vida
 		Logic::CMessageHudLife *message1 = new Logic::CMessageHudLife();
@@ -202,13 +210,6 @@ namespace Logic
 	}
 	//----------------------------------------------------------
 
-	void CLife::sendMessagePlayerDead(){
-
-				printf("el jugador está muerto?? con %i  \n",_playerDead);
-
-		
-	}// addShield
-	//----------------------------------------------------------
 
 } // namespace Logic
 
