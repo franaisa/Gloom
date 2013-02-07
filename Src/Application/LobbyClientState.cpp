@@ -29,15 +29,10 @@ Contiene la implementación del estado de lobby del cliente.
 #include "Net/conexion.h"
 #include "Net/buffer.h"
 
-
 #include <CEGUISystem.h>
 #include <CEGUIWindowManager.h>
 #include <CEGUIWindow.h>
 #include <elements/CEGUIPushButton.h>
-
-#include <iostream>
-#include <fstream>
-using namespace std;
 
 namespace Application {
 
@@ -122,8 +117,6 @@ namespace Application {
 
 	void CLobbyClientState::dataPacketReceived(Net::CPaquete* packet)
 	{
-		ofstream outstream;
-		outstream.open("logClient.txt", ios::app);
 
 		Net::CBuffer buffer(packet->getDataLength());
 		buffer.write(packet->getData(), packet->getDataLength());
@@ -133,12 +126,9 @@ namespace Application {
 		//memcpy(&msg, packet->getData(), sizeof(msg));
 		buffer.read(&msg, sizeof(msg));
 
-		outstream << "CLIENT: Mensaje no." << msg << " recibido" << endl;
-
 		switch (msg)
 		{
 		case Net::LOAD_MAP:
-			outstream << "CLIENT: Mensaje LOAD_MAP recibido" << endl;
 
 			// Cargamos el archivo con las definiciones de las entidades del nivel.
 			if (!Logic::CEntityFactory::getSingletonPtr()->loadBluePrints("blueprints_client.txt"))
@@ -162,12 +152,10 @@ namespace Application {
 				ackBuffer.write(&ackMsg, sizeof(ackMsg));
 				Net::CManager::getSingletonPtr()->send(ackBuffer.getbuffer(), ackBuffer.getSize());
 
-				outstream << "CLIENT: Carga de mapa ok, enviando MAP_LOADED" << endl;
 			}
 			break;
 		case Net::LOAD_PLAYER:
 			{
-			outstream << "CLIENT: Mensaje LOAD_PLAYER recibido" << endl;
 
 			// Creamos el player. Deberíamos poder propocionar caracteríasticas
 			// diferentes según el cliente (nombre, modelo, etc.). Esto es una
@@ -193,8 +181,7 @@ namespace Application {
 			}
 			Logic::CEntity * player = Logic::CServer::getSingletonPtr()->getMap()->createPlayer(name, localPlayer);
 			player->setEntityID(entityID);
-			outstream << "CLIENT: me han asignado esta id: " << entityID << endl;
-			cout << "CLIENTE " << id << "con id de entidad "  << entityID << std::endl;
+
 			//Enviamos el mensaje de que se ha creado el jugador
 			Net::NetMessageType ackMsg = Net::PLAYER_LOADED;
 			Net::CBuffer ackBuffer(sizeof(ackMsg));
@@ -206,13 +193,11 @@ namespace Application {
 			}
 			break;
 		case Net::START_GAME:
-			outstream << "CLIENT: Mensaje START_GAME recibido" << endl;
 
 			_app->setState("game");
 			break;
 		}
 		
-		outstream.close();
 	} // dataPacketReceived
 
 	//--------------------------------------------------------
