@@ -183,26 +183,21 @@ namespace Application {
 			number << id;
 			name.append(number.str());
 
-			// @todo Llamar al método de creación del jugador. Deberemos decidir
-			// si el jugador es el jugador local (si el ID del paquete coincide 
-			// con nuestro ID de red).
-
-			bool localPlayer = false;
-			if(id == Net::CManager::getSingletonPtr()->getID()) {
-				localPlayer = true;
+			//llamo al metodo de creacion del jugador
+			cout << "CLIENTE " << id << "con id de entidad "  << Net::CManager::getSingletonPtr()->getID() << std::endl;
+			if(id == Net::CManager::getSingletonPtr()->getID()) {//si soy yo, me creo como jugador local
+				Logic::CEntity * player = Logic::CServer::getSingletonPtr()->getMap()->createLocalPlayer(name, entityID);
+			}else{//si no soy yo, me creo como jugador remoto
+				Logic::CEntity * player = Logic::CServer::getSingletonPtr()->getMap()->createPlayer(name, entityID);
+				player->setEntityID(entityID);
 			}
-			Logic::CEntity * player = Logic::CServer::getSingletonPtr()->getMap()->createPlayer(name, localPlayer);
-			player->setEntityID(entityID);
 			outstream << "CLIENT: me han asignado esta id: " << entityID << endl;
-			cout << "CLIENTE " << id << "con id de entidad "  << entityID << std::endl;
+			
 			//Enviamos el mensaje de que se ha creado el jugador
 			Net::NetMessageType ackMsg = Net::PLAYER_LOADED;
 			Net::CBuffer ackBuffer(sizeof(ackMsg));
 			ackBuffer.write(&ackMsg, sizeof(ackMsg));
 			Net::CManager::getSingletonPtr()->send(ackBuffer.getbuffer(), ackBuffer.getSize());
-
-			//Net::NetMessageType msg = Net::PLAYER_LOADED;
-			//Net::CManager::getSingletonPtr()->send(&msg, sizeof(msg));
 			}
 			break;
 		case Net::START_GAME:

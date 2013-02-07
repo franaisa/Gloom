@@ -47,6 +47,11 @@ namespace Map
 		*/
 		CEntity(const std::string &name) : _type(""), _name(name) {}
 
+		/** 
+		Constructor de copia de la clase.
+		*/
+		CEntity(const CEntity &other) : _type(other._type), _name(other._name), _attributes(other._attributes) {}
+
 		/**
 		Destructor.
 		*/

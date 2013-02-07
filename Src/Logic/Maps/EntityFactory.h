@@ -115,6 +115,28 @@ namespace Logic
 		CEntity *createEntity(const Map::CEntity *entityInfo,
 							  CMap *map);
 
+
+		/**
+		Crea una nueva entidad de juego en un mapa determinado a partir de
+		su descripción en base a los componentes que necesita debido
+		a su naturaleza según lo leído en el/los archivo/s blueprint y a
+		una id que le ha sido asignada a la fuerza.
+
+		El método se encarga de asignar un nuevo identificador único a la
+		entidad y añadirlo en el mapa del parámetro.
+
+		@param entityInfo Descripción de la entidad; puede ser leída
+		de un fichero de mapa o montada "al vuelo".
+		@param map Mapa donde se crea la entidad.
+		@param id id que tiene que tener la entidad creada.
+		@return Entidad creada o NULL si no se pudo crear.
+
+		@note Las entidades aquí creadas pueden eliminarse al final del 
+		juego o bien utilizando deferredDeleteEntity.
+		*/
+		CEntity *createEntity(const Map::CEntity *entityInfo,
+							  CMap *map, TEntityID id);
+
 		/**
 		Destruye el CEntity pasado como parámetro. La destrucción
 		es inmediata, por lo que el <em>invocante debe garantizar</em>
@@ -222,13 +244,17 @@ namespace Logic
 		En base al tipo de entidad se crearán y añadirán a la entidad las 
 		instancias de los componentes que necesita según lo leído en el/los 
 		archivo/s blueprint.
+		La id de la entidad puede que sea proporcionada por el motor o por
+		otro que le fuerce a tener una id concreta.
 		Es un procedimiento auxiliar utilizado por createEntity.
 
 		@param type Tipo de la entidad que se quiere crear.
+		@param id id de la entidad que se desea crear.
 		@return La entidad creada o NULL si no se pudo crear.
 		*/
-		CEntity *assembleEntity(const std::string &type);
+		CEntity *assembleEntity(const std::string &type, TEntityID id);
 
+		CEntity *assembleEntity(const std::string &type);
 		/**
 		Tipo lista de CEntity donde guardaremos los pendientes de borrar.
 		*/

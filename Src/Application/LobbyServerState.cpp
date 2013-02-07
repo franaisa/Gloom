@@ -295,7 +295,7 @@ namespace Application {
 					outstream << "SERVER: Voy a crear el player del cliente" << (*it) << "con nombre " << name << endl;
 					// @todo Llamar al método de creación del jugador. Deberemos decidir
 					// si el jugador es el jugador local. Al ser el servidor ninguno lo es
-					Logic::CEntity * player = Logic::CServer::getSingletonPtr()->getMap()->createPlayer(name, false);
+					Logic::CEntity * player = Logic::CServer::getSingletonPtr()->getMap()->createPlayer(name);
 					outstream << "SERVER: player creado, voy a enviar su id, que es ... "<< player->getEntityID() << endl;
 
 					Logic::TEntityID id = player->getEntityID();
