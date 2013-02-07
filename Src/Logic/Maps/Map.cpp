@@ -68,6 +68,13 @@ namespace Logic {
 				(*it)->setType("Player");
 				map->setPlayerInfo(*it);
 			}
+			else if((*it)->getType() == "RemotePlayer")
+			{
+
+				// guardamos la información de lo que serán los demas jugadores que juegen en nuestra partida
+				(*it)->setType("EnemySpawn");
+				map->setRemotePlayerInfo(*it);
+			}
 			else 
 			{
 				//out << (*it)->getType() << endl;
@@ -273,40 +280,91 @@ namespace Logic {
 	} // getEntityByType
 
 	//--------------------------------------------------------
+	//--------------------------------------------------------
 
-	CEntity* CMap::createPlayer(std::string name, bool isLocalPlayer)
+	CEntity* CMap::createLocalPlayer(std::string name)
 	{
-		// @todo Creamos un nuevo jugador. Deberíamos tener la info del player
-		// almacenada en _playerInfo así que solo habría que modificarle el
-		// "name". Luego se crea la entidad del jugador con la factoría de 
-		// entidades y se le dice si es o no el jugador local (con setIsPlayer())
-		// Para que no salgan todos los jugadores unos encima de otros podemos
-		// cambiar la posición de éstos.
-
-		// Asignar el modelo al player
-		//_playerInfo->setAttribute("model", "marine.mesh");
-
 		
-		if(Net::CManager::getSingletonPtr()->imServer())
-			std::cout << "Servidor: paso 1" << std::endl;
 		// Asignar nombre
 		_playerInfo->setName(name);
-		if(Net::CManager::getSingletonPtr()->imServer())
-			std::cout << "Servidor: paso 2" << std::endl;
+		
 		// Creamos la entidad y modificamos el resto de parametros que necesitamos
 		CEntity* playerCreated = CEntityFactory::getSingletonPtr()->createEntity(_playerInfo, this);
 		playerCreated->setPosition( playerCreated->getPosition() + (rand()%15+5) * Vector3(1, 0, 1) );
-		if(Net::CManager::getSingletonPtr()->imServer())
-			std::cout << "Servidor: paso 4" << std::endl;
+		
 		// Configuramos el jugador como local si lo es
-		playerCreated->setIsPlayer(isLocalPlayer);
-		getEntityByID(playerCreated->getEntityID())->setIsPlayer(isLocalPlayer);
-		if(Net::CManager::getSingletonPtr()->imServer())
-			std::cout << "Servidor: paso 5" << std::endl;
-		if(isLocalPlayer){
-			CServer::getSingletonPtr()->setPlayer(playerCreated);
-		}
+		playerCreated->setIsPlayer(true);
+		getEntityByID(playerCreated->getEntityID())->setIsPlayer(true);
+
+		//como es el local, le decimos al juego que esta entidad es el player principal para
+		//que le pueda atachar la camara
+		CServer::getSingletonPtr()->setPlayer(playerCreated);
+
+
 		return playerCreated;
 	}
 
+	//--------------------------------------------------------
+	//--------------------------------------------------------
+	
+	CEntity* CMap::createPlayer(std::string name)
+	{
+		std::cout << "createPlayer -> "<< _remotePlayerInfo << std::endl;
+		// Asignar nombre
+		_remotePlayerInfo->setName(name);
+		std::cout << "createPlayer -> añadido el nombre" << std::endl;
+		// Creamos la entidad y modificamos el resto de parametros que necesitamos
+		CEntity* playerCreated = CEntityFactory::getSingletonPtr()->createEntity(_remotePlayerInfo, this);
+		std::cout << "createPlayer -> entidad creada"<< playerCreated << std::endl;
+		playerCreated->setPosition( playerCreated->getPosition() + (rand()%15+5) * Vector3(1, 0, 1) );
+		std::cout << "createPlayer -> entidad seteada" << std::endl;
+		/*//finalmente, borramos el playerinfo y creamos otro
+		Map::CEntity * aux = new Map::CEntity((*_remotePlayerInfo));
+		delete _remotePlayerInfo;*/
+		return playerCreated;
+	}
+
+	//--------------------------------------------------------
+	//--------------------------------------------------------
+
+		CEntity* CMap::createLocalPlayer(std::string name, TEntityID id)
+	{
+		std::cout << "createLocalPlayer "<< name << "con id-> "<< id << std::endl;
+		// Asignar nombre
+		_playerInfo->setName(name);
+
+		// Creamos la entidad y modificamos el resto de parametros que necesitamos
+		CEntity* playerCreated = CEntityFactory::getSingletonPtr()->createEntity(_playerInfo, this, id);
+		playerCreated->setPosition( playerCreated->getPosition() + (rand()%15+5) * Vector3(1, 0, 1) );
+
+		// Configuramos el jugador como local si lo es
+		playerCreated->setIsPlayer(true);
+		getEntityByID(playerCreated->getEntityID())->setIsPlayer(true);
+
+		//como es el local, le decimos al juego que esta entidad es el player principal para
+		//que le pueda atachar la camara
+		CServer::getSingletonPtr()->setPlayer(playerCreated);
+
+
+		return playerCreated;
+	}
+	
+	//--------------------------------------------------------
+	//--------------------------------------------------------
+
+	CEntity* CMap::createPlayer(std::string name, TEntityID id)
+	{
+		std::cout << "createPlayer "<< name << "con id-> "<< id << std::endl;
+		// Asignar nombre
+		_remotePlayerInfo->setName(name);
+
+		// Creamos la entidad y modificamos el resto de parametros que necesitamos
+		CEntity* playerCreated = CEntityFactory::getSingletonPtr()->createEntity(_remotePlayerInfo, this, id);
+		playerCreated->setPosition( playerCreated->getPosition() + (rand()%15+5) * Vector3(1, 0, 1) );
+
+		/*//finalmente, borramos el playerinfo y creamos otro
+		Map::CEntity * aux = new Map::CEntity((*_remotePlayerInfo));
+		delete _remotePlayerInfo;*/
+		return playerCreated;
+	}
 } // namespace Logic

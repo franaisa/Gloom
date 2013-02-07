@@ -123,8 +123,7 @@ namespace Logic
 			direction.y = _height;
 			_graphicsCamera->setCameraPosition(position + direction);
 
-			if(_target->getComponent<CAvatarController>("CAvatarController")->isActivate()){
-
+			if(_target->getComponent<CAvatarController>("CLife")->isActivate()){
 				// Y la posición hacia donde mira la cámara.
 				direction = _targetDistance * Math::getDirection(_target->getOrientation());
 				direction.y += _targetHeight;

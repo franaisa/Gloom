@@ -156,16 +156,16 @@ namespace Logic
 
 	} // unloadBluePrints
 	
-	//---------------------------------------------------------
+		//---------------------------------------------------------
 
 	Logic::CEntity *CEntityFactory::assembleEntity(const std::string &type) 
 	{
 		TBluePrintMap::const_iterator it;
-		
 		it = _bluePrints.find(type);
 		// si el tipo se encuentra registrado.
 		if (it != _bluePrints.end()) 
 		{
+			std::cout << "\tassembleEntity -> componente " << (*it).second.type << std::endl;
 			CEntity* ent = new CEntity(EntityID::NextID());
 			std::list<std::string>::const_iterator itc;
 			// Añadimos todos sus componentes.
@@ -186,7 +186,44 @@ namespace Logic
 				if(comp)
 					ent->addComponent(comp, *itc);
 			}
+			return ent;
+		}
+		return 0;
 
+	} // assembleEntity
+
+
+	//---------------------------------------------------------
+
+	Logic::CEntity *CEntityFactory::assembleEntity(const std::string &type, const TEntityID id) 
+	{
+		TBluePrintMap::const_iterator it;
+		it = _bluePrints.find(type);
+		// si el tipo se encuentra registrado.
+		if (it != _bluePrints.end()) 
+		{
+			
+			CEntity* ent = new CEntity(id);
+			std::list<std::string>::const_iterator itc;
+			// Añadimos todos sus componentes.
+			IComponent* comp;
+			for(itc = (*it).second.components.begin(); 
+				itc !=(*it).second.components.end(); itc++)
+			{
+				std::cout << "\tassembleEntity -> componente " << (*itc) << std::endl;
+				if(CComponentFactory::getSingletonPtr()->has((*itc)))
+				{
+					comp = CComponentFactory::getSingletonPtr()->create((*itc));
+				}
+				else
+				{
+					assert(!"Nombre erroneo de un componente, Mira a ver si están todos bien escritos en el fichero de blueprints");
+					delete ent;
+					return 0;
+				}
+				if(comp)
+					ent->addComponent(comp, *itc);
+			}
 			return ent;
 		}
 		return 0;
@@ -200,14 +237,38 @@ namespace Logic
 								const Map::CEntity *entityInfo,
 								Logic::CMap *map)
 	{
+		std::cout << "createEntity -> " << std::endl;
 		CEntity *ret = assembleEntity(entityInfo->getType());
-
+		std::cout << "createEntity -> entidad ensamblada" << std::endl;
 		if (!ret)
 			return 0;
 
 		// Añadimos la nueva entidad en el mapa antes de inicializarla.
 		map->addEntity(ret);
+		// Y lo inicializamos
+		if (ret->spawn(map, entityInfo))
+			return ret;
+		else {
+			map->removeEntity(ret);
+			delete ret;
+			return 0;
+		}
 
+	} // createEntity
+
+	//---------------------------------------------------------
+
+
+	Logic::CEntity *CEntityFactory::createEntity(const Map::CEntity *entityInfo, Logic::CMap *map, TEntityID id)
+	{
+		std::cout << "createEntity -> " << std::endl;
+		CEntity *ret = assembleEntity(entityInfo->getType(), id);
+		std::cout << "createEntity -> entidad ensamblada" << std::endl;
+		if (!ret)
+			return 0;
+
+		// Añadimos la nueva entidad en el mapa antes de inicializarla.
+		map->addEntity(ret);
 		// Y lo inicializamos
 		if (ret->spawn(map, entityInfo))
 			return ret;
