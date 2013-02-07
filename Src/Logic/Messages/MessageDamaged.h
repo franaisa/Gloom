@@ -11,12 +11,15 @@ namespace Logic {
 		CMessageDamaged();
 		unsigned char getDamage();
 		void setDamage(unsigned char damage);
+		CEntity* getEnemy();
+		void setEnemy(CEntity* entity);
 		~CMessageDamaged(){};
 		
 		virtual Net::CBuffer* serialize();
 		virtual void deserialize(Net::CBuffer& buffer);
 	private:
 		unsigned char _damage;
+		CEntity* _entity;
 	};
 	REG_FACTORYMESSAGE(CMessageDamaged);
 };
