@@ -67,6 +67,8 @@ namespace Logic
 		if(!_target)
 			deactivate();
 
+		_enemy=NULL;
+
 		//return true;
 
 	} // activate
@@ -85,7 +87,7 @@ namespace Logic
 
 		bool CCamera::accept(CMessage *message)
 	{
-		return message->getMessageType() == Message::PLAYER_DEAD;
+		return message->getMessageType() == Message::CAMERA_TO_ENEMY;
 	} // accept
 	//---------------------------------------------------------
 
@@ -103,7 +105,7 @@ namespace Logic
 	//---------------------------------------------------------
 
 	void CCamera::setTargetEnemy(CEntity *enemy){
-	
+		_enemy=enemy;
 	}
 
 
@@ -126,20 +128,12 @@ namespace Logic
 				direction.y += _targetHeight;
 				_graphicsCamera->setTargetCameraPosition(position + direction);
 			}
-			else{
-				direction = _targetDistance * Math::getDirection(_target->getOrientation());
+			else if(_enemy){
+				std::cout << "CAMARA APUNTANDO AL ENEMIGO: " << _enemy->getName() << std::endl;
+				direction = _targetDistance * Math::getDirection(_enemy->getTransform());
 				direction.y += _targetHeight;
 				_graphicsCamera->setTargetCameraPosition(position + direction);
 			}
-			//Implementacion del grupo de Calm night of nose que :P
-			/*
-			Vector3 position = _target->getPosition();
-			position.y += _height;
-			_graphicsCamera->setCameraPosition(position);
-
-			Vector3 direction = Math::getDirection(_target->getOrientation());
-			_graphicsCamera->setTargetCameraPosition(position + direction);
-			*/
 		}
 
 	} // tick

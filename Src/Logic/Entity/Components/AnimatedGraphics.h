@@ -65,6 +65,8 @@ namespace Logic
 		@param message Mensaje a procesar.
 		*/
 		virtual void process(CMessage *message);
+
+
 		
 		////////////////////////////////////////
 		// Métodos de CAnimatedEntityListener //
