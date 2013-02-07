@@ -249,8 +249,8 @@ namespace Logic
 		bool anyReceiver = false;
 		for(; it != _componentList.end(); ++it)
 		{
-			// Al emisor no se le envia el mensaje.
-			if( emitter != *it )
+			// Al emisor no se le envia el mensaje y si esta desactivado el componente tampoco se le envia
+			if( emitter != *it && (*it)->isActivate())
 				anyReceiver = (*it)->set(message) || anyReceiver;
 		}
 		//Por si nadie quiso el mensaje

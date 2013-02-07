@@ -35,10 +35,7 @@ namespace Logic {
 	//----------------------------------------------------------
 
 	void CMessageUntouched::deserialize(Net::CBuffer& buffer) {
-		int temp;
-
-		buffer.deserialize(temp);
-		// HAY QUE CONSTRUIR UNA ENTIDAD ENTITY - NO EXISTE METODO
-		// setEntityID
+		TEntityID id;
+        buffer.deserialize(id);
 	}
 };

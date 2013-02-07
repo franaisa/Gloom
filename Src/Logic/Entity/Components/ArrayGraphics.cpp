@@ -50,7 +50,24 @@ namespace Logic
 		}
 
 	} // ~CGraphics
+	//---------------------------------------------------------
 	
+	void CArrayGraphics::activate()
+	{
+		IComponent::activate();
+		//Cuando activamos el componente solo tendremos visible el arma 0( arma melee)
+		_graphicsEntities[0]._graphicsEntity->setVisible(true);
+
+	} // activate
+	//---------------------------------------------------------
+
+	void CArrayGraphics::deactivate()
+	{
+		IComponent::deactivate();
+		//Cuando desactivamos el componente, desactivaremos el arma actual
+		_graphicsEntities[_actualWeapon]._graphicsEntity->setVisible(false);
+
+	} // deactivate
 	//---------------------------------------------------------
 
 	bool CArrayGraphics::spawn(CEntity *entity, CMap *map, const Map::CEntity *entityInfo) 

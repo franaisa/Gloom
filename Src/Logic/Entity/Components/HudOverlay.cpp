@@ -449,7 +449,7 @@ namespace Logic
 		}
 
 		std::stringstream sSpawn;
-		sSpawn << "HAS MUERTO, LOOSER \n Tiempo de respawn: " << spawmTime;
+		sSpawn << "HAS MUERTO, LOSER \n Tiempo de respawn: " << spawmTime;
 		_textAreaDie->setCaption(sSpawn.str());
 		
 		if(!_overlayDie->isVisible())
@@ -457,6 +457,10 @@ namespace Logic
 		if(spawmTime <= 0.1){
 
 			_overlayDie->hide();
+			//reset para volver a mostrar solo el arma inicial al hacer show
+			for(int i=1; i<_numWeapons;++i){
+				_weaponsBox[i][NO_WEAPON]->show();
+			}
 			_overlayPlay->show();
 		}
 

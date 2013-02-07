@@ -57,7 +57,7 @@ namespace Logic
 		_distance = entityInfo->getFloatAttribute(weapon+"Distance");
 		_numberShoots = (unsigned char) entityInfo->getIntAttribute(weapon+"NumberShoots");
 		_coldDown = (unsigned char) entityInfo->getIntAttribute(weapon+"ColdDown");
-		_ammo = entityInfo->getIntAttribute(weapon+"Ammo");
+		_maxAmmo = entityInfo->getIntAttribute(weapon+"MaxAmmo");
 		_id = entityInfo->getIntAttribute(weapon+"Id");
 		
 		return true;
@@ -102,7 +102,7 @@ namespace Logic
 
 	void CShoot::shoot(){
 
-		if(_canShoot && _ammo > 0){
+		if(_canShoot && _currentAmmo > 0){
 
 				_canShoot = false;
 				_coldDownTime = 0;
@@ -113,8 +113,8 @@ namespace Logic
 
 				int currentNumberShoots = _numberShoots;
 				// Para generalizar las armas, todas tendras tantas balas como la variable numberShoots
-				if(_numberShoots > _ammo)
-					currentNumberShoots = _ammo;
+				if(_numberShoots > _currentAmmo)
+					currentNumberShoots = _currentAmmo;
 			
 				for(int i = 0; i < currentNumberShoots; ++i)
 				{
@@ -180,7 +180,7 @@ namespace Logic
 
 					//resto las balas que tiene, luego enviare las que le quedan actualizadas, asi no envio un mensaje por balas (en la escopeta envairia 8 mensajes, asi solo uno)
 					if(_name != "Hammer"){
-						--_ammo;
+						--_currentAmmo;
 					}
 					//Si hay colisión envíamos a dicha entidad un mensaje de daño
 					if(entity)
@@ -203,7 +203,7 @@ namespace Logic
 				}// fin del bucle para multiples disparos
 				if(_name != "Hammer"){				
 					Logic::CMessageHudAmmo *message = new Logic::CMessageHudAmmo();
-					message->setAmmo(_ammo);
+					message->setAmmo(_currentAmmo);
 
 					//Cambio sobre uno, hay q cambiarlo ;-)
 					message->setWeapon(_id);
@@ -219,21 +219,29 @@ namespace Logic
 
 		Logic::CMessageHudWeapon *message = new Logic::CMessageHudWeapon();
 		message->setWeapon(_id);
-		message->setAmmo(_ammo);
+		message->setAmmo(_currentAmmo);
 		_entity->emitMessage(message);
 	}
 
-	void CShoot::addAmmo(int weapon, int ammo, int actualWeapon)
+	void CShoot::addAmmo(int weapon, int ammo)
 	{
-		//si yo soy el weapon
-		_ammo += ammo;
+		if(_currentAmmo + ammo>_maxAmmo)
+			_currentAmmo = _maxAmmo;
+		else
+			_currentAmmo += ammo;
 
-		if(_id == actualWeapon){
 			Logic::CMessageHudAmmo *message = new Logic::CMessageHudAmmo();
 			message->setWeapon(_id);
-			message->setAmmo(_ammo);
+			message->setAmmo(_currentAmmo);
 			_entity->emitMessage(message);
-		}
+		
+	}
+
+	void CShoot::resetAmmo()
+	{
+		//si yo soy el weapon
+		_currentAmmo = 0;
+
 	}
 
 } // namespace Logic

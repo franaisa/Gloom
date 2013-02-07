@@ -1,0 +1,299 @@
+
+material mesh005_tex1_png
+{
+	technique
+	{
+		pass
+		{
+			ambient 0.64 0.64 0.64 1
+			diffuse 0.64 0.64 0.64 1
+			specular 0.5 0.5 0.5 1 96.0784
+			scene_blend one one_minus_src_alpha
+
+			texture_unit
+			{
+				texture tex1.png
+			}
+		}
+
+	}
+
+}
+
+
+
+material mesh006_tex1_png
+{
+	technique
+	{
+		pass
+		{
+			ambient 0.64 0.64 0.64 1
+			diffuse 0.64 0.64 0.64 1
+			specular 0.5 0.5 0.5 1 96.0784
+			scene_blend one one_minus_src_alpha
+
+			texture_unit
+			{
+				texture tex1.png
+			}
+		}
+
+	}
+
+}
+
+
+
+material mesh007_tex1_png
+{
+	technique
+	{
+		pass
+		{
+			ambient 0.64 0.64 0.64 1
+			diffuse 0.64 0.64 0.64 1
+			specular 0.5 0.5 0.5 1 96.0784
+			scene_blend one one_minus_src_alpha
+
+			texture_unit
+			{
+				texture tex1.png
+			}
+		}
+
+	}
+
+}
+
+
+
+material mesh008_tex1_png
+{
+	technique
+	{
+		pass
+		{
+			ambient 0.64 0.64 0.64 1
+			diffuse 0.64 0.64 0.64 1
+			specular 0.5 0.5 0.5 1 96.0784
+			scene_blend one one_minus_src_alpha
+
+			texture_unit
+			{
+				texture tex1.png
+			}
+		}
+
+	}
+
+}
+
+
+
+material mesh009_tex1_png
+{
+	technique
+	{
+		pass
+		{
+			ambient 0.64 0.64 0.64 1
+			diffuse 0.64 0.64 0.64 1
+			specular 0.5 0.5 0.5 1 96.0784
+			scene_blend one one_minus_src_alpha
+
+			texture_unit
+			{
+				texture tex1.png
+			}
+		}
+
+	}
+
+}
+
+
+
+material mesh010_tex1_png
+{
+	technique
+	{
+		pass
+		{
+			ambient 0.64 0.64 0.64 1
+			diffuse 0.64 0.64 0.64 1
+			specular 0.5 0.5 0.5 1 96.0784
+			scene_blend one one_minus_src_alpha
+
+			texture_unit
+			{
+				texture tex1.png
+			}
+		}
+
+	}
+
+}
+
+
+
+material mesh000_tex1_png
+{
+	technique
+	{
+		pass
+		{
+			ambient 0.64 0.64 0.64 1
+			diffuse 0.64 0.64 0.64 1
+			specular 0.5 0.5 0.5 1 96.0784
+			scene_blend one one_minus_src_alpha
+
+			texture_unit
+			{
+				texture tex1.png
+			}
+		}
+
+	}
+
+}
+
+
+
+material mesh001_tex1_png
+{
+	technique
+	{
+		pass
+		{
+			ambient 0.64 0.64 0.64 1
+			diffuse 0.64 0.64 0.64 1
+			specular 0.5 0.5 0.5 1 96.0784
+			scene_blend one one_minus_src_alpha
+
+			texture_unit
+			{
+				texture tex1.png
+			}
+		}
+
+	}
+
+}
+
+
+
+material mesh002_tex1_png
+{
+	technique
+	{
+		pass
+		{
+			ambient 0.64 0.64 0.64 1
+			diffuse 0.64 0.64 0.64 1
+			specular 0.5 0.5 0.5 1 96.0784
+			scene_blend one one_minus_src_alpha
+
+			texture_unit
+			{
+				texture tex1.png
+			}
+		}
+
+	}
+
+}
+
+
+
+material mesh003_tex1_png
+{
+	technique
+	{
+		pass
+		{
+			ambient 0.64 0.64 0.64 1
+			diffuse 0.64 0.64 0.64 1
+			specular 0.5 0.5 0.5 1 96.0784
+			scene_blend one one_minus_src_alpha
+
+			texture_unit
+			{
+				texture tex1.png
+			}
+		}
+
+	}
+
+}
+
+
+
+material mesh004_tex1_png
+{
+	technique
+	{
+		pass
+		{
+			ambient 0.64 0.64 0.64 1
+			diffuse 0.64 0.64 0.64 1
+			specular 0.5 0.5 0.5 1 96.0784
+			scene_blend one one_minus_src_alpha
+
+			texture_unit
+			{
+				texture tex1.png
+			}
+		}
+
+	}
+
+}
+
+
+
+material mesh011_tex1_png
+{
+	technique
+	{
+		pass
+		{
+			ambient 0.64 0.64 0.64 1
+			diffuse 0.64 0.64 0.64 1
+			specular 0.5 0.5 0.5 1 96.0784
+			scene_blend one one_minus_src_alpha
+
+			texture_unit
+			{
+				texture tex1.png
+			}
+		}
+
+	}
+
+}
+
+
+
+material mesh012_tex1_png
+{
+	technique
+	{
+		pass
+		{
+			ambient 0.64 0.64 0.64 1
+			diffuse 0.64 0.64 0.64 1
+			specular 0.5 0.5 0.5 1 96.0784
+			scene_blend one one_minus_src_alpha
+
+			texture_unit
+			{
+				texture tex1.png
+			}
+		}
+
+	}
+
+}
+
+

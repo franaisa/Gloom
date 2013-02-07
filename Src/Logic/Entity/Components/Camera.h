@@ -130,6 +130,12 @@ namespace Logic
 		CEntity *_target;
 
 		/**
+		Entidad enemiga que se usa como objetivo
+		*/
+		CEntity *_enemy;
+
+
+		/**
 		Distancia de la cámara respecto a la entidad objetivo. Es distancia
 		sobre el plano XZ, la altura tiene su propio atributo.
 		*/

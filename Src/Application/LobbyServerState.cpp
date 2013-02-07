@@ -29,14 +29,10 @@ Contiene la implementación del estado de lobby del servidor.
 #include "Net/paquete.h"
 #include "Net/buffer.h"
 
-
 #include <CEGUISystem.h>
 #include <CEGUIWindowManager.h>
 #include <CEGUIWindow.h>
 #include <elements/CEGUIPushButton.h>
-
-#include <iostream>
-using namespace std;
 
 namespace Application {
 
@@ -197,9 +193,6 @@ namespace Application {
 	{
 		_waiting = false;
 
-		ofstream outstream;
-		outstream.open("log.txt");
-
 		// Construimos un buffer para alojar el mensaje de carga de mapa que
 		// enviaremos a todos los clientes mediante send
 		Net::NetMessageType msg = Net::LOAD_MAP;
@@ -207,8 +200,6 @@ namespace Application {
 		buffer.write(&msg, sizeof(msg));
 
 		Net::CManager::getSingletonPtr()->send(buffer.getbuffer(), buffer.getSize());
-
-		outstream << "SERVER: Enviado mensaje LOAD_MAP" << endl;
 
 		// Cargamos el archivo con las definiciones de las entidades del nivel.
 		if (!Logic::CEntityFactory::getSingletonPtr()->loadBluePrints("blueprints_server.txt"))
@@ -223,21 +214,12 @@ namespace Application {
 			Net::CManager::getSingletonPtr()->deactivateNetwork();
 			_app->exitRequest();
 		}
-
-		outstream << "SERVER: Mapa Cargado" << endl;
-
-		outstream << "SERVER: doStart() OK -----" << endl;
-
-		outstream.close();
 	} // doStart
 
 	//--------------------------------------------------------
 
 	void CLobbyServerState::dataPacketReceived(Net::CPaquete* packet)
 	{
-		ofstream outstream;
-		outstream.open("log.txt", ios::app);
-
 		Net::CBuffer buffer(packet->getDataLength());
 		buffer.write(packet->getData(), packet->getDataLength());
 		// Desplazamos el puntero al principio para realizar la lectura
@@ -251,7 +233,6 @@ namespace Application {
 		{
 		case Net::MAP_LOADED:
 		{
-			outstream << "SERVER: Mensaje MAP_LOADED recibido de " << packet->getConexion()->getId() << endl;
 
 			// @todo Borrar las siguientes 3 líneas. Están de momento para que
 			// se lance el estado de juego al cargar el mapa
@@ -282,8 +263,6 @@ namespace Application {
 					// Mandar el ID del cliente actual a todos los clientes para que
 					// lo carguen
 					
-					
-
 					// Creamos el player. Deberíamos poder propocionar caracteríasticas
 					// diferentes según el cliente (nombre, modelo, etc.). Esto es una
 					// aproximación, solo cambiamos el nombre y decimos si es el jugador
@@ -292,11 +271,11 @@ namespace Application {
 					std::stringstream number;
 					number << (*it);
 					name.append(number.str());
-					outstream << "SERVER: Voy a crear el player del cliente" << (*it) << "con nombre " << name << endl;
+
 					// @todo Llamar al método de creación del jugador. Deberemos decidir
 					// si el jugador es el jugador local. Al ser el servidor ninguno lo es
-					Logic::CEntity * player = Logic::CServer::getSingletonPtr()->getMap()->createPlayer(name);
-					outstream << "SERVER: player creado, voy a enviar su id, que es ... "<< player->getEntityID() << endl;
+
+					Logic::CEntity * player = Logic::CServer::getSingletonPtr()->getMap()->createPlayer(name, false);
 
 					Logic::TEntityID id = player->getEntityID();
 					buffer.write(&id, sizeof(id));
@@ -309,8 +288,6 @@ namespace Application {
 		}
 		case Net::PLAYER_LOADED:
 		{
-			//outstream << "SERVER: Mensaje PLAYER_LOADED recibido" << endl;
-
 			//Aumentamos el número de jugadores cargados por el cliente
 			(*_playersLoadedByClients.find(packet->getConexion()->getId())).second++;
 
@@ -331,12 +308,10 @@ namespace Application {
 					}
 				}
 			}
-			outstream << "SERVER: terminado de contar jugadores, el resultado es " << loadFinished << endl;
 			//Si todos los clientes han cargado todos los players
 			if(loadFinished)
 			{
 				//Enviamos el mensaje de que empieza el juego a todos los clientes
-				outstream << "SERVER: Mensaje START_GAME enviado" << endl;
 				Net::NetMessageType msg = Net::START_GAME;
 				Net::CManager::getSingletonPtr()->send(&msg, sizeof(msg));
 				_app->setState("game");
@@ -345,7 +320,6 @@ namespace Application {
 		}
 		}
 
-		outstream.close();
 	} // dataPacketReceived
 
 	//--------------------------------------------------------
@@ -354,8 +328,6 @@ namespace Application {
 	{
 		if(_waiting)
 		{
-			
-			
 			//Mostramos un poco de información en el status
 			char id[100];
 			unsigned int ip = packet->getConexion()->getAddress();

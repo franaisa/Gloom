@@ -11,14 +11,13 @@ Map = {
 		physic_normal = { 0, 1, 0 },
 		physic_file = "media/models/scenario.RepX",
 		physic_group = 0,
-	
 	},
 	
 	
 	Orb1 = {
 		type = "ItemSpawn",
 		position = {67.0, 2.0, 42.0},
-		model = "bioshock.mesh",
+		model = "health1.mesh",
 		id = "orb",
 		reward = 17,
 		respawnTime = 5,
@@ -38,7 +37,7 @@ Map = {
 	Shotgun = {
 		type = "ItemSpawn",
 		position = {-67.0, 5.0, 42.0},
-		model = "hammer.mesh",
+		model = "shotGun01.mesh",
 		id = "weapon",
 		weaponType = 2,
 		reward = 30,
@@ -59,7 +58,7 @@ Map = {
 	ShotgunAmmo1 = {
 		type = "ItemSpawn",
 		position = {-67.0, 4.0, -42.0},
-		model = "rocketLauncher.mesh",
+		model = "ammo01.mesh",
 		id = "ammo",
 		weaponType = 2,
 		reward = 15,
@@ -80,7 +79,7 @@ Map = {
 	SuperShield = {
 		type = "ItemSpawn",
 		position = {67.0, 2.0, -42.0},
-		model = "torreta.mesh",
+		model = "shield1.mesh",
 		id = "armor",
 		reward = 100,
 		respawnTime = 5,
@@ -144,10 +143,6 @@ Map = {
 		physic_shape = "capsule",
 		physic_radius = 6,
 		physic_height = 6,
-		angularSpeed = 0.003,
-		accel = 0.001,
-		angularAccel = 0.00001,
-		movementTolerance = 7.0,
 		numWeapons = 3,
 
 			weaponHammerName = "Hammer",
@@ -160,8 +155,8 @@ Map = {
 			weaponHammerDispersion = 0,
 			weaponHammerNumberShoots = 1,
 			weaponHammerDistance = 7.0,
-			weaponHammerColdDown = 2.0,
-			weaponHammerAmmo = 1,
+			weaponHammerColdDown = 0.0,
+			weaponHammerMaxAmmo = 1,
 			weaponHammerId = 0,
 		
 			weaponMiniGunName = "MiniGun",
@@ -173,8 +168,8 @@ Map = {
 			weaponMiniGunDispersion = 0,
 			weaponMiniGunNumberShoots = 1,
 			weaponMiniGunDistance = 100.0,
-			weaponMiniGunColdDown = 5.0,
-			weaponMiniGunAmmo = 10,
+			weaponMiniGunColdDown = 0.0,
+			weaponMiniGunMaxAmmo = 10,
 			weaponMiniGunId = 1,
 			
 			weaponShotGunName = "Shotgun",
@@ -186,8 +181,8 @@ Map = {
 			weaponShotGunDispersion = 20,
 			weaponShotGunNumberShoots = 8,
 			weaponShotGunDistance = 100.0,
-			weaponShotGunColdDown = 3.0,
-			weaponShotGunAmmo = 200,
+			weaponShotGunColdDown = 1.0,
+			weaponShotGunMaxAmmo = 50,
 			weaponShotGunId = 2,
 			
 		hudMira = 3,

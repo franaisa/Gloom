@@ -56,11 +56,24 @@ namespace Logic
 		*/
 		virtual void activate();
 
+		/**
+		Método que desactiva el componente; invocado cuando se
+		desactiva el mapa donde está la entidad a la que pertenece el
+		componente. Se invocará siempre, independientemente de si estamos
+		activados o no.
+		<p>
+		Se pone el objetivo a seguir a NULL.
+		*/
+		virtual void deactivate();
+
+
 		void changeWeapon(unsigned char newWeapon);
 
-		void CWeaponsManager::addAmmo(int ammo, int weapon);
+		void addAmmo(int ammo, int weapon);
 
-		void CWeaponsManager::addWeapon(int ammo, int weapon);
+		void addWeapon(int ammo, int weapon);
+
+		void resetAmmo(int weapon);
 	
 
 	protected:
