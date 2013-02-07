@@ -1,6 +1,7 @@
 #include "MessageDamaged.h"
 
 #include "Logic/Entity/MessageFactory.h"
+#include "Logic/Entity/Entity.h"
 
 #include <string>
 
@@ -39,7 +40,7 @@ namespace Logic {
 		_tempBuffer = new Net::CBuffer(sizeof(int) + sizeof(_damage) + sizeof(_entity));
 		_tempBuffer->serialize(std::string("CMessageDamaged"));
 		_tempBuffer->serialize(_damage);
-		_tempBuffer->serialize(_entity);
+		_tempBuffer->serialize(_entity->getEntityID());
 		
 		return _tempBuffer;
 	}//
@@ -47,9 +48,8 @@ namespace Logic {
 
 	void CMessageDamaged::deserialize(Net::CBuffer& buffer) {
 		buffer.deserialize(_damage);
-
-		// HAY QUE CONSTRUIR UNA ENTIDAD ENTITY - NO EXISTE METODO
-		// setEntityID
+		TEntityID id;
+        buffer.deserialize(id);
 	}
 
 };

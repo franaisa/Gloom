@@ -1,6 +1,7 @@
 #include "MessageCameraToEnemy.h"
 
 #include "Logic/Entity/MessageFactory.h"
+#include "Logic/Entity/Entity.h"
 
 #include <string>
 
@@ -29,18 +30,15 @@ namespace Logic {
 
 		_tempBuffer = new Net::CBuffer(sizeof(int) + sizeof(_entity));
 		_tempBuffer->serialize(std::string("CMessageDamaged"));
-		_tempBuffer->serialize(_entity);
+		_tempBuffer->serialize(_entity->getEntityID());
 		
 		return _tempBuffer;
 	}//
 	//----------------------------------------------------------
 
 	void CMessageCameraToEnemy::deserialize(Net::CBuffer& buffer) {
-		int temp;
-		buffer.deserialize(temp);
-
-		// HAY QUE CONSTRUIR UNA ENTIDAD ENTITY - NO EXISTE METODO
-		// setEntityID
+		TEntityID id;
+        buffer.deserialize(id);
 	}
 
 };
