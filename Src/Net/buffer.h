@@ -18,6 +18,7 @@
 
 #include "BaseSubsystems\Math.h"
 
+
 namespace Net {
 
 typedef unsigned char byte;
