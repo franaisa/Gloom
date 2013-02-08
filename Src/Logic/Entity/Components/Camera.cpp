@@ -21,7 +21,7 @@ de una escena.
 #include "Graphics/Scene.h"
 #include "Graphics/Camera.h"
 
-#include "AvatarController.h"
+#include "Life.h"
 
 #include "Logic/Messages/MessageCameraToEnemy.h"
 
@@ -67,8 +67,6 @@ namespace Logic
 		if(!_target)
 			deactivate();
 
-		_enemy=NULL;
-
 		//return true;
 
 	} // activate
@@ -87,7 +85,7 @@ namespace Logic
 
 		bool CCamera::accept(CMessage *message)
 	{
-		return message->getMessageType() == Message::CAMERA_TO_ENEMY;
+		return message->getMessageType() == Message::PLAYER_DEAD;
 	} // accept
 	//---------------------------------------------------------
 
@@ -105,8 +103,7 @@ namespace Logic
 	//---------------------------------------------------------
 
 	void CCamera::setTargetEnemy(CEntity *enemy){
-		_enemy=enemy;
-		//_enemy=CServer::getSingletonPtr()->getMap()->getEntityByName("Shotgun");//Para comprobar que apuntamos bien a un enemigo que no sea yo mismo como ahora
+	
 	}
 
 
@@ -123,25 +120,26 @@ namespace Logic
 			direction.y = _height;
 			_graphicsCamera->setCameraPosition(position + direction);
 
-			if(_target->getComponent<CAvatarController>("CLife")->isActivate()){
+			if(_target->getComponent<CLife>("CLife")->isActivate()){
 				// Y la posición hacia donde mira la cámara.
 				direction = _targetDistance * Math::getDirection(_target->getOrientation());
 				direction.y += _targetHeight;
 				_graphicsCamera->setTargetCameraPosition(position + direction);
 			}
-
-			else if(_enemy){
-
-				std::cout << "CAMARA APUNTANDO AL ENEMIGO: " << _enemy->getName() << std::endl;
-				if(_enemy->getName().compare("David")!=0)
-					_graphicsCamera->setTargetCameraPosition(_enemy->getPosition() );
-				else{
-					std::cout << "hola david estas en la posicion: " << _enemy->getPosition() << std::endl;
-
-					_graphicsCamera->setCameraPosition(_enemy->getPosition()+Vector3(0,50,0));
-					_graphicsCamera->setTargetCameraPosition(_enemy->getPosition());
-				}
+			else{
+				direction = _targetDistance * Math::getDirection(_target->getOrientation());
+				direction.y += _targetHeight;
+				_graphicsCamera->setTargetCameraPosition(position + direction);
 			}
+			//Implementacion del grupo de Calm night of nose que :P
+			/*
+			Vector3 position = _target->getPosition();
+			position.y += _height;
+			_graphicsCamera->setCameraPosition(position);
+
+			Vector3 direction = Math::getDirection(_target->getOrientation());
+			_graphicsCamera->setTargetCameraPosition(position + direction);
+			*/
 		}
 
 	} // tick

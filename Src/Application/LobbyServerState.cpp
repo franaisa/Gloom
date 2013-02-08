@@ -256,6 +256,7 @@ namespace Application {
 					Net::NetMessageType msg = Net::LOAD_PLAYER;
 					Net::NetID netId = *it;
 
+					
 					Net::CBuffer buffer(sizeof(msg) + sizeof(netId) + sizeof(Logic::EntityID));
 					buffer.write(&msg, sizeof(msg));
 					buffer.write(&netId, sizeof(netId));
@@ -275,7 +276,7 @@ namespace Application {
 					// @todo Llamar al método de creación del jugador. Deberemos decidir
 					// si el jugador es el jugador local. Al ser el servidor ninguno lo es
 
-					Logic::CEntity * player = Logic::CServer::getSingletonPtr()->getMap()->createPlayer(name, false);
+					Logic::CEntity * player = Logic::CServer::getSingletonPtr()->getMap()->createPlayer(name);
 
 					Logic::TEntityID id = player->getEntityID();
 					buffer.write(&id, sizeof(id));

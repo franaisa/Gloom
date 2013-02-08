@@ -189,7 +189,6 @@ namespace Application {
 				Logic::CEntity * player = Logic::CServer::getSingletonPtr()->getMap()->createLocalPlayer(name, entityID);
 			}else{//si no soy yo, me creo como jugador remoto
 				Logic::CEntity * player = Logic::CServer::getSingletonPtr()->getMap()->createPlayer(name, entityID);
-				player->setEntityID(entityID);
 			}
 			outstream << "CLIENT: me han asignado esta id: " << entityID << endl;
 			

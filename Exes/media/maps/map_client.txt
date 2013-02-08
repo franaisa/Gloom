@@ -11,8 +11,8 @@ Map = {
 		physic_normal = { 0, 1, 0 },
 		physic_file = "media/models/scenario.RepX",
 		physic_group = 0,
-		
-		
+
+
 	},
 
 	David = {
@@ -20,7 +20,7 @@ Map = {
 		position = {0, 8, 0},
 		position = {0, 8, 0},
 		orientation = 180,
-		msgList= "3",
+		msgList= "3,10",
 		timeSpawn = 4,
 		life = 12,
 		shield = 0,
@@ -58,8 +58,8 @@ Map = {
 			weaponHammerDispersion = 0,
 			weaponHammerNumberShoots = 1,
 			weaponHammerDistance = 7.0,
-			weaponHammerColdDown = 2.0,
-			weaponHammerAmmo = 1,
+			weaponHammerColdDown = 0.0,
+			weaponHammerMaxAmmo = 1,
 			weaponHammerId = 0,
 		
 			weaponMiniGunName = "MiniGun",
@@ -71,8 +71,8 @@ Map = {
 			weaponMiniGunDispersion = 0,
 			weaponMiniGunNumberShoots = 1,
 			weaponMiniGunDistance = 100.0,
-			weaponMiniGunColdDown = 5.0,
-			weaponMiniGunAmmo = 10,
+			weaponMiniGunColdDown = 0.0,
+			weaponMiniGunMaxAmmo = 10,
 			weaponMiniGunId = 1,
 			
 			weaponShotGunName = "Shotgun",
@@ -84,13 +84,13 @@ Map = {
 			weaponShotGunDispersion = 20,
 			weaponShotGunNumberShoots = 8,
 			weaponShotGunDistance = 100.0,
-			weaponShotGunColdDown = 3.0,
-			weaponShotGunAmmo = 200,
+			weaponShotGunColdDown = 1.0,
+			weaponShotGunMaxAmmo = 50,
 			weaponShotGunId = 2,
-			
+
 		hudMira = 3,
 	},
-	
+
 
 		Orb1 = {
 		type = "ItemSpawn",
@@ -99,8 +99,8 @@ Map = {
 		id = "orb",
 		reward = 17,
 		respawnTime = 5,
-		orbitalOffset = 4,
-		orbitalSpeed = 0.005,
+		orbitalOffset = 0.013,
+		orbitalSpeed = 0.004,
 		orbitalRotationSpeed = 0.001,
 		physic_entity = "rigid",
 		physic_trigger = true,
@@ -111,7 +111,7 @@ Map = {
 		physic_radius = 0.5,
 		physic_mass = 10,
 	},
-	
+
 	Shotgun = {
 		type = "ItemSpawn",
 		position = {-67.0, 5.0, 42.0},
@@ -120,8 +120,8 @@ Map = {
 		weaponType = 2,
 		reward = 30,
 		respawnTime = 5,
-		orbitalOffset = 4,
-		orbitalSpeed = 0.005,
+		orbitalOffset = 0.013,
+		orbitalSpeed = 0.004,
 		orbitalRotationSpeed = 0.001,
 		physic_entity = "rigid",
 		physic_trigger = true,
@@ -132,7 +132,7 @@ Map = {
 		physic_radius = 0.5,
 		physic_mass = 10,
 	},
-	
+
 	ShotgunAmmo1 = {
 		type = "ItemSpawn",
 		position = {-67.0, 4.0, -42.0},
@@ -141,8 +141,8 @@ Map = {
 		weaponType = 2,
 		reward = 15,
 		respawnTime = 5,
-		orbitalOffset = 4,
-		orbitalSpeed = 0.005,
+		orbitalOffset = 0.013,
+		orbitalSpeed = 0.004,
 		orbitalRotationSpeed = 0.001,
 		physic_entity = "rigid",
 		physic_trigger = true,
@@ -153,7 +153,7 @@ Map = {
 		physic_radius = 0.5,
 		physic_mass = 10,
 	},
-	
+
 	SuperShield = {
 		type = "ItemSpawn",
 		position = {67.0, 2.0, -42.0},
@@ -161,8 +161,8 @@ Map = {
 		id = "armor",
 		reward = 100,
 		respawnTime = 5,
-		orbitalOffset = 4,
-		orbitalSpeed = 0.005,
+		orbitalOffset = 0.013,
+		orbitalSpeed = 0.004,
 		orbitalRotationSpeed = 0.001,
 		physic_entity = "rigid",
 		physic_trigger = true,
@@ -173,7 +173,7 @@ Map = {
 		physic_radius = 0.5,
 		physic_mass = 10,
 	},
-	
+
 	enemigoreal = {
 		type = "RemotePlayer",
 		position = {20.0, 5.0, 20.0},
@@ -181,9 +181,6 @@ Map = {
 		id = "armor",
 		reward = 100,
 		respawnTime = 5,
-		orbitalOffset = 4,
-		orbitalSpeed = 0.005,
-		orbitalRotationSpeed = 0.001,
 		physic_entity = "rigid",
 		physic_trigger = true,
 		physic_type = "static",
@@ -193,7 +190,7 @@ Map = {
 		physic_radius = 0.5,
 		physic_mass = 10,
 	},
-	
+
 
 	Camera = {
 		type = "Camera",

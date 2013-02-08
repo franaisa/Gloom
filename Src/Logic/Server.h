@@ -13,7 +13,7 @@ la gestión de la lógica del juego.
 #define __Logic_Server_H
 
 #include <string>
-
+#include <iostream>
 // Predeclaración de clases para ahorrar tiempo de compilación
 namespace Logic 
 {
@@ -110,7 +110,9 @@ namespace Logic
 
 		@return Entidad del jugador.
 		*/
-		CEntity *getPlayer() {return _player;}
+		CEntity *getPlayer() {
+			std::cout << "hola" << std::endl;
+			return _player;}
 
 		/**
 		Establece la entidad del jugador.
