@@ -382,6 +382,80 @@ PxRigidDynamic* CServer::createDynamicBox(const Vector3 &position, const Vector3
 
 //--------------------------------------------------------
 
+physx::PxRigidStatic* CServer::createStaticSphere(const Vector3 &position, float radius, 
+			                                      bool trigger, int group, const Logic::IPhysics *component) {
+
+	assert(_scene);
+
+	// Creamos una esfera estática
+	PxTransform pose(Vector3ToPxVec3(position));
+	PxSphereGeometry geom(radius);
+	PxMaterial *material = _defaultMaterial;
+	PxTransform localPose(PxVec3(0, radius, 0)); // Transformación de coordenadas lógicas a coodenadas de PhysX
+	PxRigidStatic *actor = PxCreateStatic(*_physics, pose, geom, *material, localPose);
+
+	// Transformarlo en trigger si es necesario
+	if (trigger) {
+		PxShape *shape;
+		actor->getShapes(&shape, 1, 0);
+		shape->setFlag(PxShapeFlag::eTRIGGER_SHAPE, true);
+	}
+
+	// Anotar el componente lógico asociado a la entidad física
+	actor->userData = (void *) component;
+
+	// Establecer el grupo de colisión
+	PxSetGroup(*actor, group);
+
+	// Añadir el actor a la escena
+	_scene->addActor(*actor);
+	
+	return actor;
+}
+
+//--------------------------------------------------------
+
+PxRigidDynamic* CServer::createDynamicSphere(const Vector3 &position, float radius, 
+	                                         float mass, bool kinematic, bool trigger, int group, 
+										     const IPhysics *component) {
+
+	assert(_scene);
+
+	// Creamos una esfera dinámica
+	PxTransform pose(Vector3ToPxVec3(position));
+	PxSphereGeometry geom(radius);
+	PxMaterial *material = _defaultMaterial;
+	float density = mass / (4.0/3.0 * 3.141592653589793 * radius * radius * radius);
+	PxTransform localPose(PxVec3(0, radius, 0)); // Transformación de coordenadas lógicas a coodenadas de PhysX
+
+	// Crear esfera dinámico o cinemático
+	PxRigidDynamic *actor;
+	if (kinematic)
+		actor = PxCreateKinematic(*_physics, pose, geom, *material, density, localPose);
+	else
+		actor = PxCreateDynamic(*_physics, pose, geom, *material, density, localPose);
+	
+	// Transformarlo en trigger si es necesario
+	if (trigger) {
+		PxShape *shape;
+		actor->getShapes(&shape, 1, 0);
+		shape->setFlag(PxShapeFlag::eTRIGGER_SHAPE, true);
+	}
+
+	// Anotar el componente lógico asociado a la entidad física
+	actor->userData = (void *) component;
+
+	// Establecer el grupo de colisión
+	PxSetGroup(*actor, group);
+
+	// Añadir el actor a la escena
+	_scene->addActor(*actor);
+
+	return actor;
+}
+
+//--------------------------------------------------------
+
 PxRigidActor* CServer::createFromFile(const std::string &file, int group, const IPhysics *component)
 {
 	assert(_scene);
