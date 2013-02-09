@@ -244,9 +244,6 @@ void CPhysicEntity::onTrigger(IPhysics *otherComponent, bool enter)
 {
 	// Construimos un mensaje de tipo TOUCHED o UNTOUCHED y lo enviamos a 
 	// todos los componentes de la entidad. 
-	if(!_activate)
-		return;
-
 	if (enter) {
 		Logic::CMessageTouched *m = new Logic::CMessageTouched();
 		m->setEntity(otherComponent->getEntity());

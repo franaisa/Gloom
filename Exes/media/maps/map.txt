@@ -28,7 +28,7 @@ Map = {
 		physic_trigger = true,
 		physic_type = "static",
 		physic_shape = "sphere",
-		physic_radius = 0.5,
+		physic_radius = 3,
 		physic_mass = 10,
 	},
 	
@@ -47,7 +47,7 @@ Map = {
 		physic_trigger = true,
 		physic_type = "static",
 		physic_shape = "sphere",
-		physic_radius = 0.5,
+		physic_radius = 3,
 	},
 	
 	Sniper = {
@@ -65,7 +65,7 @@ Map = {
 		physic_trigger = true,
 		physic_type = "static",
 		physic_shape = "sphere",
-		physic_radius = 0.5,
+		physic_radius = 3,
 	},
 	
 	ShotgunAmmo1 = {
@@ -83,7 +83,7 @@ Map = {
 		physic_trigger = true,
 		physic_type = "static",
 		physic_shape = "sphere",
-		physic_radius = 0.5,
+		physic_radius = 3,
 		physic_mass = 10,
 	},
 	

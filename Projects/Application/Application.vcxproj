@@ -103,6 +103,8 @@
     <ClCompile Include="..\..\Src\Application\BaseApplication.cpp" />
     <ClCompile Include="..\..\Src\Application\Clock.cpp" />
     <ClCompile Include="..\..\Src\Application\GameOverState.cpp" />
+    <ClCompile Include="..\..\Src\Application\GameStateClient.cpp" />
+    <ClCompile Include="..\..\Src\Application\GameStateServer.cpp" />
     <ClCompile Include="..\..\Src\Application\Gloom.cpp" />
     <ClCompile Include="..\..\Src\Application\GloomApplication.cpp" />
     <ClCompile Include="..\..\Src\Application\GameState.cpp" />
@@ -122,6 +124,8 @@
     <ClInclude Include="..\..\Src\Application\Documentation.h" />
     <ClInclude Include="..\..\Src\Application\ExitState.h" />
     <ClInclude Include="..\..\Src\Application\GameOverState.h" />
+    <ClInclude Include="..\..\Src\Application\GameStateClient.h" />
+    <ClInclude Include="..\..\Src\Application\GameStateServer.h" />
     <ClInclude Include="..\..\Src\Application\GloomApplication.h" />
     <ClInclude Include="..\..\Src\Application\GameState.h" />
     <ClInclude Include="..\..\Src\Application\LobbyClientState.h" />
