@@ -51,7 +51,7 @@ namespace Application {
 		//Physics::CServer::getSingletonPtr()->setGroupCollisions(0, 1, false);
 
 		// TODO: Crear la escena física usando el servidor de física
-		Physics::CServer::getSingletonPtr()->createScene();
+		//Physics::CServer::getSingletonPtr()->createScene();
 
 		// INICIALIZACIÓN DE LA LÓGICA
 		// ---------------------------
@@ -78,7 +78,7 @@ namespace Application {
 		//GUI::CServer::getSingletonPtr()->addLayoutToState(this, "Time");
 		
 		//LAYOUT MIRA
-		GUI::CServer::getSingletonPtr()->addLayoutToState(this, "Mira");
+		//GUI::CServer::getSingletonPtr()->addLayoutToState(this, "Mira");
 
 		return true;
 	} // init
@@ -112,6 +112,8 @@ namespace Application {
 		// Queremos que el GUI maneje al jugador.
 		GUI::CServer::getSingletonPtr()->getPlayerController()->activate();
 
+		Net::CManager::getSingletonPtr()->addObserver(this);
+
 		// Activamos la ventana que nos muestra el tiempo transcurrido.
 		//CEGUI::System::getSingletonPtr()->setGUISheet(_timeWindow);
 		//_timeWindow->setVisible(true);
@@ -128,6 +130,9 @@ namespace Application {
 
 	void CGameStateServer::deactivate() 
 	{
+		Net::CManager::getSingletonPtr()->removeObserver(this);
+		Net::CManager::getSingletonPtr()->deactivateNetwork();
+
 		// Desactivamos la ventana de tiempo.
 		//_timeWindow->deactivate();
 		//_timeWindow->setVisible(false);

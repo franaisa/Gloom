@@ -17,8 +17,11 @@ Contiene la implementación del componente que controla la vida de una entidad.
 #include "Map/MapEntity.h"
 #include "Application/BaseApplication.h"
 
+#include "Graphics/Server.h"
+#include "Graphics/Camera.h"
 #include "Graphics/Scene.h"
 #include "Graphics/Entity.h"
+#include "Graphics/StaticEntity.h"
 
 #include <OgreSceneManager.h>
 #include <OgreOverlayManager.h>
@@ -26,6 +29,7 @@ Contiene la implementación del componente que controla la vida de una entidad.
 #include <OgreColourValue.h>
 #include <OgreOverlay.h>
 #include <OgreTextAreaOverlayElement.h>
+
 
 
 #include "Logic/Messages/Message.h"
@@ -93,6 +97,7 @@ namespace Logic
 			_weaponsBox[HAMMER][ACTIVE]->setPosition( 9*relativeWidth, 29*relativeHeight);
 			_weaponsBox[HAMMER][ACTIVE]->setDimensions( relativeWidth*2, relativeHeight*2 );
 			_weaponsBox[HAMMER][ACTIVE]->setMaterialName("katana");
+			_weaponsBox[HAMMER][ACTIVE]->show();
 
 			_overlayPlay->add2D( _weaponsBox[HAMMER][ACTIVE] );
 
@@ -102,6 +107,7 @@ namespace Logic
 			_weaponsBox[HAMMER][NO_AMMO]->setPosition( 9*relativeWidth, 29*relativeHeight);
 			_weaponsBox[HAMMER][NO_AMMO]->setDimensions( relativeWidth*2, relativeHeight*2 );
 			_weaponsBox[HAMMER][NO_AMMO]->setMaterialName("katana");
+			_weaponsBox[HAMMER][NO_AMMO]->hide();
 
 			_overlayPlay->add2D( _weaponsBox[HAMMER][NO_AMMO] );
 
@@ -111,6 +117,7 @@ namespace Logic
 			_weaponsBox[HAMMER][NO_WEAPON]->setPosition( 9*relativeWidth, 29*relativeHeight);
 			_weaponsBox[HAMMER][NO_WEAPON]->setDimensions( relativeWidth*2, relativeHeight*2 );
 			_weaponsBox[HAMMER][NO_WEAPON]->setMaterialName("katana");
+			_weaponsBox[HAMMER][NO_WEAPON]->hide();
 
 			_overlayPlay->add2D( _weaponsBox[HAMMER][NO_WEAPON] );
 
@@ -130,6 +137,7 @@ namespace Logic
 			_weaponsBox[SNIPER][ACTIVE]->setPosition( 11*relativeWidth, 29*relativeHeight);
 			_weaponsBox[SNIPER][ACTIVE]->setDimensions( relativeWidth*2, relativeHeight*2 );
 			_weaponsBox[SNIPER][ACTIVE]->setMaterialName("francotirador");
+			_weaponsBox[SNIPER][ACTIVE]->hide();
 
 			_overlayPlay->add2D( _weaponsBox[SNIPER][ACTIVE] );
 
@@ -139,6 +147,7 @@ namespace Logic
 			_weaponsBox[SNIPER][NO_AMMO]->setPosition( 11*relativeWidth, 29*relativeHeight);
 			_weaponsBox[SNIPER][NO_AMMO]->setDimensions( relativeWidth*2, relativeHeight*2 );
 			_weaponsBox[SNIPER][NO_AMMO]->setMaterialName("francotiradorBN");
+			_weaponsBox[SNIPER][NO_AMMO]->hide();
 
 			_overlayPlay->add2D( _weaponsBox[SNIPER][NO_AMMO] );
 
@@ -149,6 +158,7 @@ namespace Logic
 			_weaponsBox[SNIPER][NO_WEAPON]->setPosition( 11*relativeWidth, 29*relativeHeight);
 			_weaponsBox[SNIPER][NO_WEAPON]->setDimensions( relativeWidth*2, relativeHeight*2 );
 			_weaponsBox[SNIPER][NO_WEAPON]->setMaterialName("francotiradorSinBalas");
+			_weaponsBox[SNIPER][NO_WEAPON]->show();
 
 			_overlayPlay->add2D( _weaponsBox[SNIPER][NO_WEAPON] );
 
@@ -168,6 +178,8 @@ namespace Logic
 			_weaponsBox[SHOTGUN][ACTIVE]->setPosition( 13*relativeWidth, 29*relativeHeight);
 			_weaponsBox[SHOTGUN][ACTIVE]->setDimensions( relativeWidth*2, relativeHeight*2 );
 			_weaponsBox[SHOTGUN][ACTIVE]->setMaterialName("escopeta");
+			_weaponsBox[SHOTGUN][ACTIVE]->hide();
+			
 			_overlayPlay->add2D( _weaponsBox[SHOTGUN][ACTIVE] );
 
 			
@@ -177,6 +189,8 @@ namespace Logic
 			_weaponsBox[SHOTGUN][NO_AMMO]->setPosition( 13*relativeWidth, 29*relativeHeight);
 			_weaponsBox[SHOTGUN][NO_AMMO]->setDimensions( relativeWidth*2, relativeHeight*2 );
 			_weaponsBox[SHOTGUN][NO_AMMO]->setMaterialName("escopetaBN");
+			_weaponsBox[SHOTGUN][NO_AMMO]->hide();
+
 			_overlayPlay->add2D( _weaponsBox[SHOTGUN][NO_AMMO] );
 			
 				///// panel PanelWeapon3 no weapon
@@ -185,6 +199,8 @@ namespace Logic
 			_weaponsBox[SHOTGUN][NO_WEAPON]->setPosition( 13*relativeWidth, 29*relativeHeight);
 			_weaponsBox[SHOTGUN][NO_WEAPON]->setDimensions( relativeWidth*2, relativeHeight*2 );
 			_weaponsBox[SHOTGUN][NO_WEAPON]->setMaterialName("escopetaSinBalas");
+			_weaponsBox[SHOTGUN][NO_WEAPON]->show();
+			
 			_overlayPlay->add2D( _weaponsBox[SHOTGUN][NO_WEAPON] );
 
 			
@@ -306,21 +322,42 @@ namespace Logic
 			_weaponsBox[i][ACTIVE]->hide();
 		}
 		
+		 //_overlayPlay->show();
+
+		// me creo la escena
+		/*
+		Graphics::CScene *hud = new Graphics::CScene::getSceneMgr()->;
+		// me creo la entidad que pondre en la escena
+		Graphics::CEntity *weaponEntity = new Graphics::CEntity("Arma1","Katana.mesh");
 
 
-		 _overlayPlay->show();
+		Graphics::CCamera* camera = Graphics::CServer::getSingletonPtr()->getActiveScene()->getCamera();
+		Vector3 direction = camera->getTargetCameraPosition() - camera->getCameraPosition();
+		
+		direction.normalise();
+		Vector3 posicionModificada = camera->getCameraPosition()- Vector3(0,2.5,0) + ((8.0f) * direction);
+		
+		//Aqui establezco la rotacion (En un futuro se rotara el modelo)
+		Matrix4 transformModificado = _entity->getTransform();
+		Math::yaw(1.55, transformModificado);
+		Math::pitch(-0.8, transformModificado);
+		weaponEntity->setTransform(transformModificado);
+		weaponEntity->setPosition(posicionModificada);
 
+
+
+		hud3D->addEntity(weaponEntity);
+		*/
+
+
+		
+		_overlayPlay->show();
 
 
 
 		 //////////////////////////////////////AQUI ME CREO EL OVERLAY PARA CUANDO SE MUERA
 
-
-
-
 		 _overlayDie = overlayManager.create( "_overlayDie" );
-
-
 
 		Ogre::OverlayContainer* panelDie = static_cast<Ogre::OverlayContainer*>( overlayManager.createOverlayElement( "Panel", "panelDie" ) );
 		panelDie->setMetricsMode(Ogre::GMM_PIXELS);
@@ -346,9 +383,6 @@ namespace Logic
 		_overlayDie->add2D( panelDie );
 
 		//_overlayDie->show();
-
-		 
-
 		return true;
 
 	} // spawn
@@ -423,14 +457,17 @@ namespace Logic
 			_textBoxArea[AMMO]->setCaption(sAmmo.str());
 		}//fin weapon == _actualweapon
 		else{
-			_weaponsBox[weapon][ACTIVE]->show();
-			_weaponsBox[weapon][NO_WEAPON]->hide();
-			_weaponsBox[weapon][NO_AMMO]->hide();
+			if(!_weaponsBox[weapon][ACTIVE]->isVisible()){
+				_weaponsBox[weapon][ACTIVE]->show();
+				_weaponsBox[weapon][NO_WEAPON]->hide();
+				_weaponsBox[weapon][NO_AMMO]->hide();
+			}
 		}
 	}
 
 	void CHudOverlay::hudWeapon(int ammo, int weapon){
 
+		
 		//if(weapon != _actualWeapon && _actualWeapon != 0)
 		if(weapon != _actualWeapon)
 		{
@@ -460,6 +497,8 @@ namespace Logic
 			//reset para volver a mostrar solo el arma inicial al hacer show
 			for(int i=1; i<_numWeapons;++i){
 				_weaponsBox[i][NO_WEAPON]->show();
+				_weaponsBox[i][ACTIVE]->hide();
+				_weaponsBox[i][NO_AMMO]->hide();
 			}
 			_overlayPlay->show();
 		}

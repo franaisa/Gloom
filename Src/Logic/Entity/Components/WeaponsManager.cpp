@@ -149,13 +149,13 @@ namespace Logic
 	void CWeaponsManager::addAmmo(int ammo, int weapon){
 		switch(weapon){
 		case 0:
-			_entity->getComponent<CShootHammer>("CShootHammer")->addAmmo(0,ammo);
+			_entity->getComponent<CShootHammer>("CShootHammer")->addAmmo(0,ammo, (weapon == _weapons[weapon]) );
 			break;
 		case 1:
-			_entity->getComponent<CShootMiniGun>("CShootMiniGun")->addAmmo(1,ammo);
+			_entity->getComponent<CShootMiniGun>("CShootMiniGun")->addAmmo(1,ammo, (weapon == _weapons[weapon]) );
 			break;
 		case 2:
-			_entity->getComponent<CShootShotGun>("CShootShotGun")->addAmmo(2,ammo);
+			_entity->getComponent<CShootShotGun>("CShootShotGun")->addAmmo(2,ammo, (weapon == _weapons[weapon]) );
 			break;
 		}
 	}
