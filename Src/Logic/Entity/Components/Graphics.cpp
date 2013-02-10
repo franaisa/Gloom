@@ -63,13 +63,10 @@ namespace Logic
 
 			//con el escale puedo escalar lo que quiera cuanto quiera. El mapa ya sale al tamaño que queramos ^^
 			_graphicsEntity->setScale(entityInfo->getVector3Attribute("scale"));
-			/* con esto puedo girar lo que quiera cuanto quiera. Lo he probado con el mapa.
-			Matrix4 transform = entity->getTransform();
-			Math::pitch(30,transform);
-			_graphicsEntity->setTransform(transform);
-			*/
+			// con esto puedo girar lo que quiera cuanto quiera. Lo he probado con el mapa
 		}
 
+		//// Esto tb es una guarrada, habra q hacer un componente de luces para controlarlas todas y cargarlas.
 		if(_entity->getName() == "World")
 		{
 			Ogre::Light *luz = _scene->getSceneMgr()->createLight("Luz Puntual");

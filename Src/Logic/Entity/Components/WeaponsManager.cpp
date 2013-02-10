@@ -179,7 +179,7 @@ namespace Logic
 		if(weapon < _numWeapons && !_weapons[weapon])
 			_weapons[weapon] = true;
 
-		Logic::CMessageHudAmmo *m=new Logic::CMessageHudAmmo();
+		Logic::CMessageHudWeapon*m=new Logic::CMessageHudWeapon();
 		m->setWeapon(weapon);
 		m->setAmmo(ammo);//No es necesario esto, ya que solo actualizare el hud como que puedo coger el arma pero no mostrara sus balas(en este caso concreto)
 		_entity->emitMessage(m);
