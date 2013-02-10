@@ -131,7 +131,6 @@ Map = {
 		orientation = 180,
 		timeSpawn = 4,
 		life = 12,
-		shield = 0,
 		maxShield = 100,
 		maxLife = 120,
 		PorcentShield = 20,
