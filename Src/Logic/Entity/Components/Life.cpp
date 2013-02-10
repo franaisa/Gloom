@@ -46,8 +46,6 @@ namespace Logic
 
 		if(entityInfo->hasAttribute("life"))
 			_classLife = entityInfo->getIntAttribute("life");
-		if(entityInfo->hasAttribute("shield"))
-			_shield = entityInfo->getIntAttribute("shield");
 		if(entityInfo->hasAttribute("lifeDamage"))
 			_lifeDamage = entityInfo->getIntAttribute("lifeDamage");
 		if(entityInfo->hasAttribute("lifeTimeDamage"))
@@ -77,11 +75,15 @@ namespace Logic
 		IComponent::activate();
 		
 		_life=_classLife;
-		//Actualización vida
+		_shield=0;
+		//Actualización vida y escudo
 		Logic::CMessageHudLife *message1 = new Logic::CMessageHudLife();
 		message1->setLife(_life);
 		_entity->emitMessage(message1);	
 		
+		Logic::CMessageHudShield *message2 = new Logic::CMessageHudShield();
+		message2->setShield(_shield);
+		_entity->emitMessage(message2);	
 
 	} // activate
 	//---------------------------------------------------------
@@ -204,8 +206,8 @@ namespace Logic
 
 
 		Logic::CMessageHudShield *message2 = new Logic::CMessageHudShield();
-					message2->setShield(_shield);
-					_entity->emitMessage(message2);
+		message2->setShield(_shield);
+		_entity->emitMessage(message2);
 		
 		printf("\nViva!, mi shield a aumentado en %d, por lo que ahora tengo %d de VIDA",shield, _shield);
 		}// addShield
