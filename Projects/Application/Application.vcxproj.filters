@@ -109,5 +109,6 @@
     <None Include="small.ico">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="AppDiagram7FEB.cd" />
   </ItemGroup>
 </Project>
