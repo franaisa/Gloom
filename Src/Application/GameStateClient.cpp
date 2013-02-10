@@ -32,6 +32,8 @@ Contiene la implementación del estado de juego.
 #include "Net/conexion.h"
 #include "Net/buffer.h"
 
+#include <iostream>
+
 //#include <CEGUISystem.h>
 //#include <CEGUIWindowManager.h>
 //#include <CEGUIWindow.h>
@@ -41,7 +43,7 @@ namespace Application {
 	bool CGameStateClient::init() {
 		// Ejecutamos la inicialización de la clase padre
 		// En este caso no hace nada, solo retorna true
-		CGameStateClient::init();
+		CApplicationState::init();
 
 		// INICIALIZACIÓN DE LA FÍSICA
 		// ---------------------------
@@ -50,7 +52,7 @@ namespace Application {
 		//Physics::CServer::getSingletonPtr()->setGroupCollisions(0, 1, false);
 
 		// TODO: Crear la escena física usando el servidor de física
-		Physics::CServer::getSingletonPtr()->createScene();
+		//Physics::CServer::getSingletonPtr()->createScene();
 
 		// INICIALIZACIÓN DE LA LÓGICA
 		// ---------------------------
@@ -77,7 +79,7 @@ namespace Application {
 		//GUI::CServer::getSingletonPtr()->addLayoutToState(this, "Time");
 		
 		//LAYOUT MIRA
-		GUI::CServer::getSingletonPtr()->addLayoutToState(this, "Mira");
+		//GUI::CServer::getSingletonPtr()->addLayoutToState(this, "Mira");
 
 		return true;
 	} // init
@@ -147,6 +149,8 @@ namespace Application {
 	void CGameStateClient::tick(unsigned int msecs) {
 		CApplicationState::tick(msecs);
 
+		std::cout << "Ejecutando cliente" << std::endl;
+
 		// TODO: realizar la simulación física
 		Physics::CServer::getSingletonPtr()->tick(msecs);
 
@@ -176,6 +180,8 @@ namespace Application {
 		switch(key.keyId) {
 		case GUI::Key::ESCAPE:
 			_app->setState("menu");
+			//@todo Mandar paquete de desconexion
+			//@todo Sacar menu de juego
 			break;
 		default:
 			return false;

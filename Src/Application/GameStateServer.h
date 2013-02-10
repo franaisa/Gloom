@@ -10,15 +10,17 @@ Contiene la declaración del estado de juego.
 @see Application::CApplicationState
 @see Application::CGameState
 
-@author David Llansó
-@date Agosto, 2010
+@author Francisco Aisa García
+@date Febrero, 2013
 */
 
-#ifndef __Application_GameState_H
-#define __Application_GameState_H
+#ifndef __Application_GameStateServer_H
+#define __Application_GameStateServer_H
 
 #include "ApplicationState.h"
 #include "Net/Manager.h"
+
+#include <iostream>
 
 // Predeclaración de clases para ahorrar tiempo de compilación
 namespace Application 
@@ -177,9 +179,9 @@ namespace Application
 		/******************
 			IOBSERVER
 		******************/
-		/*virtual void dataPacketReceived(Net::CPaquete* packet);
-		virtual void connexionPacketReceived(Net::CPaquete* packet);
-		virtual void disconnexionPacketReceived(Net::CPaquete* packet);*/
+		virtual void dataPacketReceived(Net::CPaquete* packet) {}
+		virtual void connexionPacketReceived(Net::CPaquete* packet) { std::cout << "Alguien se quiere conectar" << std::endl; }
+		virtual void disconnexionPacketReceived(Net::CPaquete* packet) {}
 
 	protected:
 

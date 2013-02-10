@@ -10,12 +10,12 @@ Contiene la declaración del estado de juego.
 @see Application::CApplicationState
 @see Application::CGameState
 
-@author David Llansó
-@date Agosto, 2010
+@author Francisco Aisa García
+@date Febrero, 2013
 */
 
-#ifndef __Application_GameState_H
-#define __Application_GameState_H
+#ifndef __Application_GameStateClient_H
+#define __Application_GameStateClient_H
 
 #include "ApplicationState.h"
 #include "Net/Manager.h"

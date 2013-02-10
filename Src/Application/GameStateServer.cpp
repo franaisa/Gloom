@@ -51,7 +51,7 @@ namespace Application {
 		//Physics::CServer::getSingletonPtr()->setGroupCollisions(0, 1, false);
 
 		// TODO: Crear la escena física usando el servidor de física
-		Physics::CServer::getSingletonPtr()->createScene();
+		//Physics::CServer::getSingletonPtr()->createScene();
 
 		// INICIALIZACIÓN DE LA LÓGICA
 		// ---------------------------
@@ -78,7 +78,7 @@ namespace Application {
 		//GUI::CServer::getSingletonPtr()->addLayoutToState(this, "Time");
 		
 		//LAYOUT MIRA
-		GUI::CServer::getSingletonPtr()->addLayoutToState(this, "Mira");
+		//GUI::CServer::getSingletonPtr()->addLayoutToState(this, "Mira");
 
 		return true;
 	} // init
@@ -151,6 +151,8 @@ namespace Application {
 	void CGameStateServer::tick(unsigned int msecs) 
 	{
 		CApplicationState::tick(msecs);
+
+		std::cout << "Ejecutando el servidor" << std::endl;
 
 		// TODO: realizar la simulación física
 		Physics::CServer::getSingletonPtr()->tick(msecs);
