@@ -149,7 +149,7 @@ namespace Application {
 	void CGameStateClient::tick(unsigned int msecs) {
 		CApplicationState::tick(msecs);
 
-		std::cout << "Ejecutando cliente" << std::endl;
+		//std::cout << "Ejecutando cliente" << std::endl;
 
 		// TODO: realizar la simulación física
 		Physics::CServer::getSingletonPtr()->tick(msecs);

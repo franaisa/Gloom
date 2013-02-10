@@ -112,6 +112,8 @@ namespace Application {
 		// Queremos que el GUI maneje al jugador.
 		GUI::CServer::getSingletonPtr()->getPlayerController()->activate();
 
+		Net::CManager::getSingletonPtr()->addObserver(this);
+
 		// Activamos la ventana que nos muestra el tiempo transcurrido.
 		//CEGUI::System::getSingletonPtr()->setGUISheet(_timeWindow);
 		//_timeWindow->setVisible(true);
@@ -128,6 +130,9 @@ namespace Application {
 
 	void CGameStateServer::deactivate() 
 	{
+		Net::CManager::getSingletonPtr()->removeObserver(this);
+		Net::CManager::getSingletonPtr()->deactivateNetwork();
+
 		// Desactivamos la ventana de tiempo.
 		//_timeWindow->deactivate();
 		//_timeWindow->setVisible(false);
@@ -151,8 +156,6 @@ namespace Application {
 	void CGameStateServer::tick(unsigned int msecs) 
 	{
 		CApplicationState::tick(msecs);
-
-		std::cout << "Ejecutando el servidor" << std::endl;
 
 		// TODO: realizar la simulación física
 		Physics::CServer::getSingletonPtr()->tick(msecs);

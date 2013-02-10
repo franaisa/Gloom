@@ -63,6 +63,8 @@ namespace Application
 	@author David Llansó
 	@date Agosto, 2010
 	*/
+	// Necesita heredar de Net::IObserver para poder desconectarse de la red
+	// de forma explicita, de lo contrario el propio timeout dispara el paquete de desconexion
 	class CGameStateClient : public CApplicationState
 	{
 	public:
