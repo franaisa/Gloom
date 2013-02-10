@@ -315,7 +315,7 @@ namespace Application {
 				//Enviamos el mensaje de que empieza el juego a todos los clientes
 				Net::NetMessageType msg = Net::START_GAME;
 				Net::CManager::getSingletonPtr()->send(&msg, sizeof(msg));
-				_app->setState("game");
+				_app->setState("gameServer");
 			}
 			break;
 		}

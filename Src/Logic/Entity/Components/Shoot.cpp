@@ -223,18 +223,19 @@ namespace Logic
 		_entity->emitMessage(message);
 	}
 
-	void CShoot::addAmmo(int weapon, int ammo)
+	void CShoot::addAmmo(int weapon, int ammo, bool iAmCatch)
 	{
 		if(_currentAmmo + ammo>_maxAmmo)
 			_currentAmmo = _maxAmmo;
 		else
 			_currentAmmo += ammo;
 
+		if(iAmCatch){
 			Logic::CMessageHudAmmo *message = new Logic::CMessageHudAmmo();
 			message->setWeapon(_id);
 			message->setAmmo(_currentAmmo);
 			_entity->emitMessage(message);
-		
+		}
 	}
 
 	void CShoot::resetAmmo()

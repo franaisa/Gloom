@@ -18,7 +18,7 @@ de todo el juego.
 #include "BaseApplication.h"
 #include "ApplicationState.h"
 #include "Clock.h"
-
+#include <iostream>
 
 #include <assert.h>
 
@@ -142,12 +142,12 @@ namespace Application {
 	void CBaseApplication::run() 
 	{
 		assert(_clock && "Asegurate de haber creado un reloj en el init de la clase de tu aplicacion!");
+		unsigned int resto;
 
 		// Actualizamos una primera vez el tiempo, antes de
 		// empezar, para que el primer frame tenga un tiempo
 		// de frame razonable.
 		_clock->updateTime();
-
 		// Ejecución del bucle principal. Simplemente miramos si
 		// tenemos que hacer una transición de estado, y si no hay que
 		// hacerla, ejecutamos la vuelta
@@ -157,17 +157,17 @@ namespace Application {
 					(_nextState && (_currentState != _nextState))){
 				changeState();
 				_clock->updateTime();
-				tick(1);
 				continue;
 			}
 
 			_clock->updateTime();
 
-			//Como mínimo 3 milisegundos para ejecutar un tick desde la ultima vez
+			//Como mínimo 3 milisegundos para ejecutar un tick desde la ultima vez, el resto me lo guardo
 			_clock->setAcumTime(_clock->getAcumTime()+_clock->getLastFrameDuration());
-			if(_clock->getAcumTime()>2){
-				tick(_clock->getAcumTime());
-				_clock->setAcumTime(0);
+			if(_clock->getAcumTime()>3000){
+				tick(_clock->getAcumTime()/1000);
+				resto=_clock->getAcumTime()%1000;
+				_clock->setAcumTime(resto);
 			}
 		
 		}

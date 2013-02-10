@@ -13,6 +13,35 @@ Map = {
 		physic_group = 0,
 	},
 	
+	Point1 = {
+		type = "SpawnPoint",
+		position = {67.0, 2.0, 42.0},
+		physic_entity = "rigid",
+		physic_trigger = true,
+		physic_type = "static",
+		physic_shape = "box",
+		physic_dimensions = { 4, 7, 4 },
+	},
+	
+	Point2 = {
+		type = "SpawnPoint",
+		position = {-67.0, 5.0, 42.0},
+		physic_entity = "rigid",
+		physic_trigger = true,
+		physic_type = "static",
+		physic_shape = "box",
+		physic_dimensions = { 4, 7, 4 },
+	},
+	
+	Point3 = {
+		type = "SpawnPoint",
+		position = {-47.0, 5.0, 42.0},
+		physic_entity = "rigid",
+		physic_trigger = true,
+		physic_type = "static",
+		physic_shape = "box",
+		physic_dimensions = { 4, 7, 4 },
+	},
 	
 	Orb1 = {
 		type = "ItemSpawn",
@@ -29,7 +58,6 @@ Map = {
 		physic_type = "static",
 		physic_shape = "sphere",
 		physic_radius = 3,
-		physic_mass = 10,
 	},
 	
 	Shotgun = {
@@ -84,7 +112,6 @@ Map = {
 		physic_type = "static",
 		physic_shape = "sphere",
 		physic_radius = 3,
-		physic_mass = 10,
 	},
 	
 	SuperShield = {
@@ -100,11 +127,8 @@ Map = {
 		physic_entity = "rigid",
 		physic_trigger = true,
 		physic_type = "static",
-		physic_shape = "box",
-		physic_dimensions = { 3, 3, 3 },
-		physic_height = 0,
-		physic_radius = 0.5,
-		physic_mass = 10,
+		physic_shape = "sphere",
+		physic_radius = 3,
 	},
 
 	Enemigo1 = {

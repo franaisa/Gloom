@@ -184,6 +184,7 @@ bool CServer::Init()
 		_instance = new CServer();
 	}
 
+
 	return true;
 } 
 
@@ -237,7 +238,8 @@ void CServer::createScene ()
 
 	// Crear la escena física
 	_scene = _physics->createScene(sceneDesc);
-
+	_acumTime=0;
+	_fixedTime=5;
 	assert(_scene && "Error en PxPhysics::createScene");
 }
 
@@ -258,12 +260,17 @@ void CServer::destroyScene ()
 bool CServer::tick(unsigned int msecs) 
 {
 	assert(_scene);
-
+	_acumTime+=msecs;
 	// Empezar la simulación física. Actualmente usamos intervalos de tiempo variables,
 	// debemos tener cuidado porque PhysX puede no comportarse bien si el tiempo 
 	// transcurrido es demasiado grande.
-	_scene->simulate(msecs / 1000.0f);
-
+	// Se ha cambiado a intervalos fijos y si nos pasamos hacemos repeticiones del intervalo fijo para la CCD
+	while(_acumTime>=_fixedTime){
+		_scene->simulate(_fixedTime / 1000.0f);
+		_acumTime-=5;
+		if(_acumTime>=_fixedTime)
+			_scene->fetchResults(true);
+	}
 	// Esperamos a que la simulación física termine. En principio podríamos utilizar
 	// este intervalo de tiempo para hacer algo más útil. Existe una versión de este
 	// método no bloqueante.
