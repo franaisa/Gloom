@@ -149,13 +149,13 @@ namespace Logic
 	void CWeaponsManager::addAmmo(int ammo, int weapon){
 		switch(weapon){
 		case 0:
-			_entity->getComponent<CShootHammer>("CShootHammer")->addAmmo(0,ammo);
+			_entity->getComponent<CShootHammer>("CShootHammer")->addAmmo(0,ammo, (weapon == _weapons[weapon]) );
 			break;
 		case 1:
-			_entity->getComponent<CShootMiniGun>("CShootMiniGun")->addAmmo(1,ammo);
+			_entity->getComponent<CShootMiniGun>("CShootMiniGun")->addAmmo(1,ammo, (weapon == _weapons[weapon]) );
 			break;
 		case 2:
-			_entity->getComponent<CShootShotGun>("CShootShotGun")->addAmmo(2,ammo);
+			_entity->getComponent<CShootShotGun>("CShootShotGun")->addAmmo(2,ammo, (weapon == _weapons[weapon]) );
 			break;
 		}
 	}
@@ -179,7 +179,7 @@ namespace Logic
 		if(weapon < _numWeapons && !_weapons[weapon])
 			_weapons[weapon] = true;
 
-		Logic::CMessageHudWeapon*m=new Logic::CMessageHudWeapon();
+		Logic::CMessageHudAmmo *m=new Logic::CMessageHudAmmo();
 		m->setWeapon(weapon);
 		m->setAmmo(ammo);//No es necesario esto, ya que solo actualizare el hud como que puedo coger el arma pero no mostrara sus balas(en este caso concreto)
 		_entity->emitMessage(m);

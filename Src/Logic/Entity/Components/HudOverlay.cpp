@@ -457,7 +457,7 @@ namespace Logic
 			_textBoxArea[AMMO]->setCaption(sAmmo.str());
 		}//fin weapon == _actualweapon
 		else{
-			if(_weaponsBox[weapon][NO_AMMO]->isVisible()){
+			if(!_weaponsBox[weapon][ACTIVE]->isVisible()){
 				_weaponsBox[weapon][ACTIVE]->show();
 				_weaponsBox[weapon][NO_WEAPON]->hide();
 				_weaponsBox[weapon][NO_AMMO]->hide();
@@ -467,7 +467,7 @@ namespace Logic
 
 	void CHudOverlay::hudWeapon(int ammo, int weapon){
 
-		printf("");
+		
 		//if(weapon != _actualWeapon && _actualWeapon != 0)
 		if(weapon != _actualWeapon)
 		{
@@ -497,6 +497,8 @@ namespace Logic
 			//reset para volver a mostrar solo el arma inicial al hacer show
 			for(int i=1; i<_numWeapons;++i){
 				_weaponsBox[i][NO_WEAPON]->show();
+				_weaponsBox[i][ACTIVE]->hide();
+				_weaponsBox[i][NO_AMMO]->hide();
 			}
 			_overlayPlay->show();
 		}
