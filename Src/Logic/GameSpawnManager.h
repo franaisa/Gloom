@@ -17,6 +17,7 @@ Contiene la declaración del gestor de los mensajes de red durante la partida.
 #define __GameSpawnManager_H
 
 #include "BaseSubsystems\Math.h"
+#include "Entity\Entity.h"
 
 namespace Logic 
 {
@@ -79,6 +80,10 @@ namespace Logic
 		*/
 		~CGameSpawnManager();
 
+		/**
+		Lista de puntos
+		*/
+		std::vector<CEntity*> _listSpawnPoints;
 
 	private:
 		/**

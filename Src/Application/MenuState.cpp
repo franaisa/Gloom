@@ -135,6 +135,11 @@ namespace Application {
 			_app->exitRequest();
 			break;
 		case GUI::Key::RETURN:
+			if (!Logic::CEntityFactory::getSingletonPtr()->loadBluePrints("blueprints.txt"))
+			return false;
+			// Cargamos el nivel a partir del nombre del mapa. 
+			if (!Logic::CServer::getSingletonPtr()->loadLevel("map.txt"))
+			return false;
 			_app->setState("game");
 			break;
 		default:

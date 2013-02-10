@@ -99,7 +99,6 @@ namespace Physics {
 	class CServer 
 	{
 	public:
-
 		/**
 		Devuelve la única instancia de la clase.
 
@@ -393,6 +392,11 @@ namespace Physics {
 
 		// Gestion de colisiones
 		CCollisionManager *_collisionManager;
+
+		// Tiempo mínimo de ejecución de física
+		unsigned int _acumTime;
+
+		unsigned int _fixedTime;
 
 	}; // class CServer
 
