@@ -206,6 +206,14 @@ namespace Physics {
 			                                    float mass, bool kinematic, bool trigger, int group, 
 												const Logic::IPhysics *component); 
 
+
+		physx::PxRigidStatic* createStaticSphere(const Vector3 &position, float radius, 
+			                                     bool trigger, int group, const Logic::IPhysics *component); 
+
+		physx::PxRigidDynamic* createDynamicSphere(const Vector3 &positon, float radius,
+												   float mass, bool kinematic, bool trigger, int group,
+												   const Logic::IPhysics* component);
+
 		/**
 		Crea una entidad física en la escena a partir de un fichero RepX exportado con el 
 		plug-in de PhysX para 3ds Max. Asume que el fichero contiene únicamente la 
