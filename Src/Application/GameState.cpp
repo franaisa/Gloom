@@ -71,7 +71,7 @@ namespace Application {
 		//GUI::CServer::getSingletonPtr()->addLayoutToState(this, "Time");
 		
 		//LAYOUT MIRA
-		GUI::CServer::getSingletonPtr()->addLayoutToState(this, "Mira");
+		//GUI::CServer::getSingletonPtr()->addLayoutToState(this, "Mira");
 
 		return true;
 	} // init

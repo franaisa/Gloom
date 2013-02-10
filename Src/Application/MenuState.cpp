@@ -146,7 +146,7 @@ namespace Application {
 			_app->exitRequest();
 			break;
 		case GUI::Key::RETURN:
-			_app->setState("game");
+			_app->setState("singlePlayer");
 			break;
 		default:
 			return false;
@@ -182,10 +182,7 @@ namespace Application {
 			
 	//--------------------------------------------------------
 		
-	bool CMenuState::startReleased(const CEGUI::EventArgs& e)
-	{
-		
-		
+	bool CMenuState::startReleased(const CEGUI::EventArgs& e) {
 		if (!Logic::CEntityFactory::getSingletonPtr()->loadBluePrints("blueprints.txt"))
 			return false;
 
@@ -193,14 +190,14 @@ namespace Application {
 		if (!Logic::CServer::getSingletonPtr()->loadLevel("map.txt"))
 			return false;
 		
-		_app->setState("game");
+		_app->setState("singlePlayer");
 		return true;
 
 	} // startReleased
 			
 	/*bool CMenuState::startReleased(const GUI::GUIEventArgs& e)
 	{
-		_app->setState("game");
+		_app->setState("singlePlayer");
 		return true;6
 
 	} // startReleased*/
