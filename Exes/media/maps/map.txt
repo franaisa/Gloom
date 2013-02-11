@@ -220,6 +220,7 @@ Map = {
 			weaponShotGunId = 2,
 			
 		hudMira = 3,
+		heightShoot = 8,
 	},
 	
 	Camera = {
