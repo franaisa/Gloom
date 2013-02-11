@@ -105,11 +105,8 @@ Map = {
 		physic_entity = "rigid",
 		physic_trigger = true,
 		physic_type = "static",
-		physic_shape = "box",
-		physic_dimensions = { 3, 3, 3 },
-		physic_height = 0,
-		physic_radius = 0.5,
-		physic_mass = 10,
+		physic_shape = "sphere",
+		physic_radius = 3,
 	},
 	
 	Sniper = {
@@ -144,11 +141,8 @@ Map = {
 		physic_entity = "rigid",
 		physic_trigger = true,
 		physic_type = "static",
-		physic_shape = "box",
-		physic_dimensions = { 3, 3, 3 },
-		physic_height = 0,
-		physic_radius = 0.5,
-		physic_mass = 10,
+		physic_shape = "sphere",
+		physic_radius = 3,
 	},
 
 	ShotgunAmmo1 = {
@@ -165,11 +159,8 @@ Map = {
 		physic_entity = "rigid",
 		physic_trigger = true,
 		physic_type = "static",
-		physic_shape = "box",
-		physic_dimensions = { 3, 3, 3 },
-		physic_height = 0,
-		physic_radius = 0.5,
-		physic_mass = 10,
+		physic_shape = "sphere",
+		physic_radius = 3,
 	},
 
 	SuperShield = {
@@ -185,11 +176,8 @@ Map = {
 		physic_entity = "rigid",
 		physic_trigger = true,
 		physic_type = "static",
-		physic_shape = "box",
-		physic_dimensions = { 3, 3, 3 },
-		physic_height = 0,
-		physic_radius = 0.5,
-		physic_mass = 10,
+		physic_shape = "sphere",
+		physic_radius = 3,
 	},
 
 	enemigoreal = {
