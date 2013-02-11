@@ -67,7 +67,7 @@ namespace Logic
 				direction.normalise();
 				//El origen debe ser mínimo la capsula y por si miramos al suelo la separación mínima debe ser 1.5f ( en un futuro es probable que sea recomendable cambiar por no chocar con el grupo de uno mismo )
 				Vector3 origin = (_entity->getPosition() - Math::getDirection(_entity->getOrientation())) + (_capsuleRadius * direction);
-
+				origin.y = _entity->getPosition().y+8;
 
 				//Me dispongo a calcular la desviacion del arma, en el map.txt se pondra en grados de dispersion (0 => sin dispersion)
 				Ogre::Radian angle = Ogre::Radian( (  (((float)(rand() % 100))/100.0f) * (_dispersion)) /100);
