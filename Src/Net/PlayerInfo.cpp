@@ -14,16 +14,30 @@ Contiene la implementación de la clase PlayerInfo para el proyecto de red.
 */
 
 #include "PlayerInfo.h"
+#include "conexion.h"
 
 namespace Net {
 
-	CPlayerInfo::CPlayerInfo(std::string name, std::string mesh) : _name(name), _mesh(mesh) {
+	CPlayerInfo::CPlayerInfo(std::string name, std::string mesh, CConexion* connection) : 
+																   _name(name), 
+																   _mesh(mesh),
+																   _connection(connection) {
 		// No hay memoria dinamica que inicializar
 	}
 
 	//______________________________________________________________________________
 
-	CPlayerInfo::CPlayerInfo(const CPlayerInfo& rhs) : _name(rhs._name), _mesh(rhs._mesh), _clan(rhs._clan), _rank(rhs._rank) {
+	CPlayerInfo::CPlayerInfo(CConexion* connection) : _connection(connection) {
+		// No hay memoria dinamica que inicializar
+	}
+
+	//______________________________________________________________________________
+
+	CPlayerInfo::CPlayerInfo(const CPlayerInfo& rhs) : _name(rhs._name), 
+													   _mesh(rhs._mesh), 
+													   _clan(rhs._clan), 
+													   _rank(rhs._rank),
+													   _connection(rhs._connection) {
 		// No hay memoria dinamica que inicializar
 	}
 
@@ -41,6 +55,7 @@ namespace Net {
 			_mesh = rhs._mesh;
 			_clan = rhs._clan;
 			_rank = rhs._rank;
+			_connection = rhs._connection;
 		}
 
 		return *this;
@@ -67,6 +82,12 @@ namespace Net {
 
 	std::string CPlayerInfo::getMesh() {
 		return _mesh;
+	}
+
+	//______________________________________________________________________________
+
+	CConexion* CPlayerInfo::getConnection() {
+		return _connection;
 	}
 
 };
