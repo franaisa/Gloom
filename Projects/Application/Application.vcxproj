@@ -103,16 +103,17 @@
     <ClCompile Include="..\..\Src\Application\BaseApplication.cpp" />
     <ClCompile Include="..\..\Src\Application\Clock.cpp" />
     <ClCompile Include="..\..\Src\Application\GameOverState.cpp" />
-    <ClCompile Include="..\..\Src\Application\GameStateClient.cpp" />
-    <ClCompile Include="..\..\Src\Application\GameStateServer.cpp" />
     <ClCompile Include="..\..\Src\Application\Gloom.cpp" />
     <ClCompile Include="..\..\Src\Application\GloomApplication.cpp" />
     <ClCompile Include="..\..\Src\Application\GameState.cpp" />
     <ClCompile Include="..\..\Src\Application\LobbyClientState.cpp" />
     <ClCompile Include="..\..\Src\Application\LobbyServerState.cpp" />
     <ClCompile Include="..\..\Src\Application\MenuState.cpp" />
+    <ClCompile Include="..\..\Src\Application\MultiplayerTeamDeathmatchClientState.cpp" />
+    <ClCompile Include="..\..\Src\Application\MultiplayerTeamDeathmatchServerState.cpp" />
     <ClCompile Include="..\..\Src\Application\NetMenuState.cpp" />
     <ClCompile Include="..\..\Src\Application\OgreClock.cpp" />
+    <ClCompile Include="..\..\Src\Application\SinglePlayerState.cpp" />
     <ClCompile Include="..\..\Src\Docs\docCompilando.cpp" />
     <ClCompile Include="..\..\Src\Docs\docDirectorios.cpp" />
   </ItemGroup>
@@ -124,15 +125,16 @@
     <ClInclude Include="..\..\Src\Application\Documentation.h" />
     <ClInclude Include="..\..\Src\Application\ExitState.h" />
     <ClInclude Include="..\..\Src\Application\GameOverState.h" />
-    <ClInclude Include="..\..\Src\Application\GameStateClient.h" />
-    <ClInclude Include="..\..\Src\Application\GameStateServer.h" />
     <ClInclude Include="..\..\Src\Application\GloomApplication.h" />
     <ClInclude Include="..\..\Src\Application\GameState.h" />
     <ClInclude Include="..\..\Src\Application\LobbyClientState.h" />
     <ClInclude Include="..\..\Src\Application\LobbyServerState.h" />
     <ClInclude Include="..\..\Src\Application\MenuState.h" />
+    <ClInclude Include="..\..\Src\Application\MultiplayerTeamDeathmatchClientState.h" />
+    <ClInclude Include="..\..\Src\Application\MultiplayerTeamDeathmatchServerState.h" />
     <ClInclude Include="..\..\Src\Application\NetMenuState.h" />
     <ClInclude Include="..\..\Src\Application\OgreClock.h" />
+    <ClInclude Include="..\..\Src\Application\SinglePlayerState.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="AppDiagram7FEB.cd" />

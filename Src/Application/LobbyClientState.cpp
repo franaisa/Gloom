@@ -202,7 +202,7 @@ namespace Application {
 		case Net::START_GAME:
 			outstream << "CLIENT: Mensaje START_GAME recibido" << endl;
 
-			_app->setState("gameClient");
+			_app->setState("multiplayerTeamDeathmatchClient");
 			break;
 		}
 		

@@ -38,6 +38,9 @@
     <ClCompile Include="..\..\Src\Net\servidorENet.cpp">
       <Filter>Source Files\Enet</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Src\Net\PlayerInfo.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Src\Net\buffer.h">
@@ -75,6 +78,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Src\Net\servidorENet.h">
       <Filter>Header Files\Enet</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Net\PlayerInfo.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

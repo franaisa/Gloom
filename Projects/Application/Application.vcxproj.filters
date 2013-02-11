@@ -57,10 +57,13 @@
     <ClCompile Include="..\..\Src\Application\GameOverState.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Src\Application\GameStateClient.cpp">
+    <ClCompile Include="..\..\Src\Application\SinglePlayerState.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Src\Application\GameStateServer.cpp">
+    <ClCompile Include="..\..\Src\Application\MultiplayerTeamDeathmatchClientState.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Application\MultiplayerTeamDeathmatchServerState.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -107,10 +110,13 @@
     <ClInclude Include="..\..\Src\Application\GameOverState.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Src\Application\GameStateClient.h">
+    <ClInclude Include="..\..\Src\Application\SinglePlayerState.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Src\Application\GameStateServer.h">
+    <ClInclude Include="..\..\Src\Application\MultiplayerTeamDeathmatchClientState.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Application\MultiplayerTeamDeathmatchServerState.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
