@@ -18,6 +18,11 @@ Contiene la declaracion de la clase PlayerInfo para el proyecto de red.
 
 #include <string>
 
+// Predeclaracion de clases
+namespace Net {
+	class CConexion;
+};
+
 namespace Net {
 
 	/**
@@ -33,7 +38,8 @@ namespace Net {
 	*/
 	class CPlayerInfo {
 	public:
-		CPlayerInfo(std::string name, std::string mesh);
+		CPlayerInfo(std::string name, std::string mesh, CConexion* connection);
+		CPlayerInfo(CConexion* connection);
 		CPlayerInfo(const CPlayerInfo& rhs);
 		~CPlayerInfo();
 
@@ -43,12 +49,17 @@ namespace Net {
 
 		std::string getName();
 		std::string getMesh();
+		CConexion* getConnection();
 
 	private:
 		std::string _name;
 		std::string _mesh;
 		std::string _clan;
 		unsigned short int _rank;
+
+		// Esta clase no es responsable de liberar los recursos alocatados por _connection
+		// tan solo se encarga de almacenar el puntero dado
+		CConexion* _connection;
 		//CPlayerStats _stats;
 	};
 
