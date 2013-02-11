@@ -55,7 +55,7 @@ namespace Logic
 			_canShoot = false;
 			_coldDownTime = 0;
 			//Generación del rayo habiendo obtenido antes el origen y la dirección
-			Graphics::CCamera* camera = Graphics::CServer::getSingletonPtr()->getActiveScene()->getCamera();
+			//Graphics::CCamera* camera = Graphics::CServer::getSingletonPtr()->getActiveScene()->getCamera();
 		
 		
 			// Para generalizar las armas, todas tendras tantas balas como la variable numberShoots
@@ -63,10 +63,10 @@ namespace Logic
 			{
 
 				// Se corrige la posicion de la camara
-				Vector3 direction = camera->getTargetCameraPosition() - camera->getCameraPosition();
+				Vector3 direction = Math::getDirection(_entity->getOrientation());
 				direction.normalise();
 				//El origen debe ser mínimo la capsula y por si miramos al suelo la separación mínima debe ser 1.5f ( en un futuro es probable que sea recomendable cambiar por no chocar con el grupo de uno mismo )
-				Vector3 origin = camera->getCameraPosition() + (_capsuleRadius * direction);
+				Vector3 origin = (_entity->getPosition() - Math::getDirection(_entity->getOrientation())) + (_capsuleRadius * direction);
 
 
 				//Me dispongo a calcular la desviacion del arma, en el map.txt se pondra en grados de dispersion (0 => sin dispersion)
@@ -86,7 +86,7 @@ namespace Logic
 				////////////////////////////////////////////////Dibujo del rayo
 
 
-					Graphics::CScene *scene = Graphics::CServer::getSingletonPtr()->getActiveScene();
+			/*		Graphics::CScene *scene = Graphics::CServer::getSingletonPtr()->getActiveScene();
 					Ogre::SceneManager *mSceneMgr = scene->getSceneMgr();
 
 				
@@ -112,7 +112,7 @@ namespace Logic
 				}
 
 					myManualObject->end(); 
-					myManualObjectNode->attachObject(myManualObject);
+					myManualObjectNode->attachObject(myManualObject);*/
 
 
 				//////////////////////////////////fin del dibujado del rayo
