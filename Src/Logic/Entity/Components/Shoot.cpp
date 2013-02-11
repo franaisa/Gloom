@@ -120,10 +120,10 @@ namespace Logic
 				{
 
 					// Se corrige la posicion de la camara
-					Vector3 direction = camera->getTargetCameraPosition() - camera->getCameraPosition();
+					Vector3 direction = -_entity->getPosition()+ Math::getDirection(_entity->getOrientation()); //camera->getTargetCameraPosition() - camera->getCameraPosition();
 					direction.normalise();
 					//El origen debe ser mínimo la capsula y por si miramos al suelo la separación mínima debe ser 1.5f ( en un futuro es probable que sea recomendable cambiar por no chocar con el grupo de uno mismo )
-					Vector3 origin = camera->getCameraPosition() + (_capsuleRadius * direction);
+					Vector3 origin = _entity->getPosition()+Vector3(0,8,0)+ (_capsuleRadius * direction);//camera->getCameraPosition() + (_capsuleRadius * direction);
 
 
 					//Me dispongo a calcular la desviacion del arma, en el map.txt se pondra en grados de dispersion (0 => sin dispersion)

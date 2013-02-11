@@ -224,9 +224,6 @@ Map = {
 	
 	Camera = {
 		type = "Camera",
-		distance = 0,
 		height = 8,
-		targetHeight = 8,
-		targetDistance = 20,
 	},
 }
