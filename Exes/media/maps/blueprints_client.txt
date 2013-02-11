@@ -3,4 +3,4 @@ Player CHudOverlay CArrayGraphics CLife CNetConnector
 Enemy CGraphics CLife
 Camera CCamera
 ItemSpawn CGraphics CFloatingMovement CSpawnItemManager CNetConnector
-EnemySpawn CGraphics CNetConnector
+EnemySpawn CNetConnector CAnimatedGraphics

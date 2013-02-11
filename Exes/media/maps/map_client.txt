@@ -92,10 +92,10 @@ Map = {
 	},
 
 
-		Orb1 = {
+	Orb1 = {
 		type = "ItemSpawn",
 		position = {67.0, 2.0, 42.0},
-		model = "bioshock.mesh",
+		model = "health1.mesh",
 		id = "orb",
 		reward = 17,
 		respawnTime = 5,
@@ -110,6 +110,24 @@ Map = {
 		physic_height = 0,
 		physic_radius = 0.5,
 		physic_mass = 10,
+	},
+	
+	Sniper = {
+		type = "ItemSpawn",
+		position = {-47.0, 5.0, 42.0},
+		model = "rocketLauncher.mesh",
+		id = "weapon",
+		weaponType = 1,
+		reward = 10,
+		respawnTime = 5,
+		orbitalOffset = 0.013,
+		orbitalSpeed = 0.004,
+		orbitalRotationSpeed = 0.001,
+		physic_entity = "rigid",
+		physic_trigger = true,
+		physic_type = "static",
+		physic_shape = "sphere",
+		physic_radius = 3,
 	},
 
 	Shotgun = {
@@ -136,7 +154,7 @@ Map = {
 	ShotgunAmmo1 = {
 		type = "ItemSpawn",
 		position = {-67.0, 4.0, -42.0},
-		model = "rocketLauncher.mesh",
+		model = "ammo01.mesh",
 		id = "ammo",
 		weaponType = 2,
 		reward = 15,
@@ -157,7 +175,7 @@ Map = {
 	SuperShield = {
 		type = "ItemSpawn",
 		position = {67.0, 2.0, -42.0},
-		model = "torreta.mesh",
+		model = "shield1.mesh",
 		id = "armor",
 		reward = 100,
 		respawnTime = 5,
@@ -181,6 +199,7 @@ Map = {
 		id = "armor",
 		reward = 100,
 		respawnTime = 5,
+		defaultAnimation = "Idle",
 		physic_entity = "rigid",
 		physic_trigger = true,
 		physic_type = "static",
