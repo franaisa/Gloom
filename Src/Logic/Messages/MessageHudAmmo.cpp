@@ -35,7 +35,7 @@ namespace Logic {
 		assert(_tempBuffer == NULL);
 
 		_tempBuffer = new Net::CBuffer(sizeof(int) + sizeof(_ammo) + sizeof(_weapon));
-		_tempBuffer->serialize(std::string("CMessageHudAmmo"));
+		_tempBuffer->serialize(std::string("CMessageHudAmmo"),true);
 		_tempBuffer->serialize(_ammo);
 		_tempBuffer->serialize(_weapon);
 		

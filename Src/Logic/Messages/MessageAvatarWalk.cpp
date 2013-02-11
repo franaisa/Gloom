@@ -27,7 +27,7 @@ namespace Logic {
 		assert(_tempBuffer == NULL);
 
 		_tempBuffer = new Net::CBuffer(sizeof(int) + sizeof(_direction.x) * 3);
-		_tempBuffer->serialize(std::string("CMessageAvatarWalk"));
+		_tempBuffer->serialize(std::string("CMessageAvatarWalk"),true);
 		_tempBuffer->serialize(_direction);
 		
 		return _tempBuffer;

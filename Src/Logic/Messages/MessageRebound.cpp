@@ -23,7 +23,7 @@ namespace Logic {
 		assert(_tempBuffer == NULL);
 
 		_tempBuffer = new Net::CBuffer(sizeof(int) + sizeof(float) * 3);
-		_tempBuffer->serialize(std::string("CMessageRebound"));
+		_tempBuffer->serialize(std::string("CMessageRebound"),true);
 		_tempBuffer->serialize(_dir);
 		
 		return _tempBuffer;

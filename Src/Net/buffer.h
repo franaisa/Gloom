@@ -132,9 +132,9 @@ public:
 	 * @param data son los datos a escribir
 	 * @param datalenght es el tamaño de los datos a escribir (número de bytes)
 	 */
-	void serialize(const std::string& data);
+	void serialize(const std::string& data, bool crc);
 
-	void deserialize(std::string& data);
+	void deserialize(std::string& data, int size);
 	/**
 	 * Escribe un unsigned char en el buffer
 	 * @param data son los datos a escribir

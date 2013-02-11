@@ -21,7 +21,7 @@ de la entidad.
 #include "Logic/Messages/MessageAvatarWalk.h"
 #include "Logic/Messages/MessageMouse.h"
 #include "Logic/Messages/MessageRebound.h"
-
+#include "Logic/Messages/MessageSetAnimation.h"
 namespace Logic 
 {
 	IMP_FACTORY(CAvatarController);
@@ -173,6 +173,11 @@ namespace Logic
 
 	void CAvatarController::walk()
 	{
+		
+		CMessageSetAnimation * anim = new CMessageSetAnimation();
+		anim->setString("Walk");
+		anim->setBool(true);
+		_entity->emitMessage(anim);
 		_walking = true;
 	} // walk
 	
@@ -180,6 +185,10 @@ namespace Logic
 
 	void CAvatarController::walkBack() 
 	{
+		CMessageSetAnimation * anim = new CMessageSetAnimation();
+		anim->setString("WalkBack");
+		anim->setBool(true);
+		_entity->emitMessage(anim, this);
 		_walkingBack = true;
 	} // walkBack
 	
@@ -187,6 +196,10 @@ namespace Logic
 
 	void CAvatarController::stopWalk() 
 	{
+		CMessageSetAnimation * anim = new CMessageSetAnimation();
+		anim->setString("Idle");
+		anim->setBool(true);
+		_entity->emitMessage(anim, this);
 		_walking = false;
 	} // stopWalk
 	
@@ -194,7 +207,11 @@ namespace Logic
 
 	void CAvatarController::stopWalkBack() 
 	{
-		 _walkingBack = false;
+		CMessageSetAnimation * anim = new CMessageSetAnimation();
+		anim->setString("Idle");
+		anim->setBool(true);
+		_entity->emitMessage(anim, this); 
+		_walkingBack = false;
 	} // stopWalk
 
 
@@ -202,6 +219,10 @@ namespace Logic
 
 	void CAvatarController::strafeLeft() 
 	{
+		CMessageSetAnimation * anim = new CMessageSetAnimation();
+		anim->setString("StrafeLeft");
+		anim->setBool(true);
+		_entity->emitMessage(anim);
 		_strafingLeft = true;
 	} // walk
 	
@@ -209,6 +230,10 @@ namespace Logic
 
 	void CAvatarController::strafeRight() 
 	{
+		CMessageSetAnimation * anim = new CMessageSetAnimation();
+		anim->setString("StrafeRight");
+		anim->setBool(true);
+		_entity->emitMessage(anim);
 		_strafingRight = true;
 	} // walkBack
 	
@@ -216,6 +241,10 @@ namespace Logic
 
 	void CAvatarController::stopStrafeLeft() 
 	{
+		CMessageSetAnimation * anim = new CMessageSetAnimation();
+		anim->setString("Idle");
+		anim->setBool(true);
+		_entity->emitMessage(anim, this);
 		_strafingLeft = false;
 		_unpressLeft = true;
 	} // stopWalk
@@ -224,6 +253,11 @@ namespace Logic
 
 		void CAvatarController::stopStrafeRight() 
 	{
+		
+		CMessageSetAnimation * anim = new CMessageSetAnimation();
+		anim->setString("Idle");
+		anim->setBool(true);
+		_entity->emitMessage(anim, this);
 		_strafingRight = false;
 		_unpressRight = true;
 	} // stopWalk
