@@ -113,8 +113,6 @@ namespace Application {
 
 	} // tick
 
-
-
 	//--------------------------------------------------------
 
 	bool CLobbyServerState::keyPressed(GUI::TKey key)
@@ -202,15 +200,13 @@ namespace Application {
 		Net::CManager::getSingletonPtr()->send(buffer.getbuffer(), buffer.getSize());
 
 		// Cargamos el archivo con las definiciones de las entidades del nivel.
-		if (!Logic::CEntityFactory::getSingletonPtr()->loadBluePrints("blueprints_server.txt"))
-		{
+		if (!Logic::CEntityFactory::getSingletonPtr()->loadBluePrints("blueprints_server.txt")) {
 			Net::CManager::getSingletonPtr()->deactivateNetwork();
 			_app->exitRequest();
 		}
 
 		// Cargamos el nivel a partir del nombre del mapa. 
-		if (!Logic::CServer::getSingletonPtr()->loadLevel("map_server.txt"))
-		{
+		if (!Logic::CServer::getSingletonPtr()->loadLevel("map_server.txt")) {
 			Net::CManager::getSingletonPtr()->deactivateNetwork();
 			_app->exitRequest();
 		}
@@ -241,11 +237,9 @@ namespace Application {
 			_mapLoadedByClients.push_back(packet->getConexion()->getId());
 
 			//Si todos los clientes han cargado los mapas pasamos a crear jugadores.
-			if(_clients.size() == _mapLoadedByClients.size())
-			{
+			if(_clients.size() == _mapLoadedByClients.size()) {
 				// Se debe crear un jugador por cada cliente registrado.
-				for(TNetIDList::const_iterator it = _clients.begin(); it != _clients.end(); it++)
-				{
+				for(TNetIDList::const_iterator it = _clients.begin(); it != _clients.end(); it++) {
 					//Preparamos la lista de control de carga de jugadores.
 					//Esto quiere decir que el cliente (*it) ha cargado 0 jugadores
 					TNetIDCounterPair elem(*it,0);
@@ -255,7 +249,6 @@ namespace Application {
 					// el NetID del cliente del que estamos creando el jugador (*it)
 					Net::NetMessageType msg = Net::LOAD_PLAYER;
 					Net::NetID netId = *it;
-
 					
 					Net::CBuffer buffer(sizeof(msg) + sizeof(netId) + sizeof(Logic::EntityID));
 					buffer.write(&msg, sizeof(msg));
@@ -280,7 +273,6 @@ namespace Application {
 
 					Logic::TEntityID id = player->getEntityID();
 					buffer.write(&id, sizeof(id));
-
 
 					Net::CManager::getSingletonPtr()->send(buffer.getbuffer(), buffer.getSize());
 				}

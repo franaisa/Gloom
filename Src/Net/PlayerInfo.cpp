@@ -90,4 +90,16 @@ namespace Net {
 		return _connection;
 	}
 
+	//______________________________________________________________________________
+
+	void CPlayerInfo::setName(const std::string& name) {
+		this->_name = name;
+	}
+
+	//______________________________________________________________________________
+		
+	void CPlayerInfo::setMesh(const std::string& mesh) {
+		this->_mesh = mesh;
+	}
+
 };

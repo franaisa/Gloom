@@ -51,6 +51,9 @@ namespace Net {
 		std::string getMesh();
 		CConexion* getConnection();
 
+		void setName(const std::string& name);
+		void setMesh(const std::string& mesh);
+
 	private:
 		std::string _name;
 		std::string _mesh;
