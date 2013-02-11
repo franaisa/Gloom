@@ -64,6 +64,7 @@ bool CPhysicEntity::spawn(CEntity *entity, CMap *map, const Map::CEntity *entity
 	// Crear el objeto físico asociado al componente
 	_actor = createActor(entityInfo);
 
+	_inTrigger=false;
 	return true;
 } 
 
@@ -246,10 +247,12 @@ void CPhysicEntity::onTrigger(IPhysics *otherComponent, bool enter)
 	// todos los componentes de la entidad. 
 
 	if (enter) {
+		_inTrigger=true;
 		Logic::CMessageTouched *m = new Logic::CMessageTouched();
 		m->setEntity(otherComponent->getEntity());
 		_entity->emitMessage(m);
 	} else {
+		_inTrigger=false;
 		Logic::CMessageUntouched *m = new Logic::CMessageUntouched();
 		m->setEntity(otherComponent->getEntity());
 		_entity->emitMessage(m);
