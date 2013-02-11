@@ -1,195 +1,44 @@
 //---------------------------------------------------------------------------
-// LobbyServerState.cpp
+// MultiplayerTeamDeathmatchServerState.cpp
 //---------------------------------------------------------------------------
 
 /**
-@file LobbyServerState.cpp
+@file MultiplayerTeamDeathmatchServerState.cpp
 
-Contiene la implementación del estado de lobby del servidor.
+Contiene la implementación del estado de juego.
 
-@see Application::CApplicationState
-@see Application::CLobbyServerState
+@see Application::MultiplayerTeamDeathmatchServerState
+@see Application::CGameState
 
-@author David Llansó
-@date Agosto, 2010
+@author Francisco Aisa García
+@date Febrero, 2013
 */
 
-#include "LobbyServerState.h"
-
-#include "Logic/Server.h"
-#include "Logic/Maps/EntityFactory.h"
-#include "Logic/Maps/Map.h"
-#include "Logic/Maps/EntityID.h"
-
-#include "Logic/Entity/Entity.h"
-#include "GUI/Server.h"
-#include "Net/Manager.h"
-#include "Net/Servidor.h"
-#include "Net/factoriared.h"
-#include "Net/paquete.h"
-#include "Net/buffer.h"
-
-#include <CEGUISystem.h>
-#include <CEGUIWindowManager.h>
-#include <CEGUIWindow.h>
-#include <elements/CEGUIPushButton.h>
+#include "MultiplayerTeamDeathmatchServerState.h"
 
 namespace Application {
 
-	CLobbyServerState::~CLobbyServerState() 
+
+	void CMultiplayerTeamDeathmatchServerState::activate() 
 	{
-	} // ~CLobbyServerState
-
-	//--------------------------------------------------------
-
-	bool CLobbyServerState::init() 
-	{
-		CApplicationState::init();
-
-		// Cargamos la ventana que muestra el menú
-		CEGUI::WindowManager::getSingletonPtr()->loadWindowLayout("NetLobbyServer.layout");
-		_menuWindow = CEGUI::WindowManager::getSingleton().getWindow("NetLobbyServer");
-		
-		// Asociamos los botones del menú con las funciones que se deben ejecutar.
-		CEGUI::WindowManager::getSingleton().getWindow("NetLobbyServer/Start")->
-			subscribeEvent(CEGUI::PushButton::EventClicked, 
-				CEGUI::SubscriberSlot(&CLobbyServerState::startReleased, this));
-
-		CEGUI::WindowManager::getSingleton().getWindow("NetLobbyServer/Start")->setEnabled(false);
-		
-		CEGUI::WindowManager::getSingleton().getWindow("NetLobbyServer/Back")->
-			subscribeEvent(CEGUI::PushButton::EventClicked, 
-				CEGUI::SubscriberSlot(&CLobbyServerState::backReleased, this));
-	
-		return true;
-
-	} // init
-
-	//--------------------------------------------------------
-
-	void CLobbyServerState::release() 
-	{
-		CApplicationState::release();
-
-	} // release
-
-	//--------------------------------------------------------
-
-	void CLobbyServerState::activate() 
-	{
-		CApplicationState::activate();
-		// Activamos la ventana que nos muestra el menú y activamos el ratón.
-		CEGUI::System::getSingletonPtr()->setGUISheet(_menuWindow);
-		_menuWindow->setVisible(true);
-		_menuWindow->activate();
-		CEGUI::MouseCursor::getSingleton().show();
+		CGameState::activate();
 
 		Net::CManager::getSingletonPtr()->addObserver(this);
-		Net::CManager::getSingletonPtr()->activateAsServer(1234,16);
-
-		CEGUI::WindowManager::getSingleton().getWindow("NetLobbyServer/Status")
-			->setText("Status: Server up. Waiting for clients ...");
 	} // activate
 
 	//--------------------------------------------------------
 
-	void CLobbyServerState::deactivate() 
-	{		
+	void CMultiplayerTeamDeathmatchServerState::deactivate() 
+	{
 		Net::CManager::getSingletonPtr()->removeObserver(this);
-		// Desactivamos la ventana GUI con el menú y el ratón.
-		CEGUI::MouseCursor::getSingleton().hide();
-		_menuWindow->deactivate();
-		_menuWindow->setVisible(false);
-		
-		CApplicationState::deactivate();
+		Net::CManager::getSingletonPtr()->deactivateNetwork();
 
+		CGameState::deactivate();
 	} // deactivate
 
 	//--------------------------------------------------------
 
-	void CLobbyServerState::tick(unsigned int msecs) 
-	{
-		CApplicationState::tick(msecs);
-
-	} // tick
-
-
-
-	//--------------------------------------------------------
-
-	bool CLobbyServerState::keyPressed(GUI::TKey key)
-	{
-	   return false;
-
-	} // keyPressed
-
-	//--------------------------------------------------------
-
-	bool CLobbyServerState::keyReleased(GUI::TKey key)
-	{
-		switch(key.keyId)
-		{
-		case GUI::Key::ESCAPE:
-			Net::CManager::getSingletonPtr()->deactivateNetwork();
-			_app->setState("netmenu");
-			break;
-		case GUI::Key::RETURN:
-			doStart();
-			break;
-		default:
-			return false;
-		}
-		return true;
-
-	} // keyReleased
-
-	//--------------------------------------------------------
-	
-	bool CLobbyServerState::mouseMoved(const GUI::CMouseState &mouseState)
-	{
-		return false;
-
-	} // mouseMoved
-
-	//--------------------------------------------------------
-		
-	bool CLobbyServerState::mousePressed(const GUI::CMouseState &mouseState)
-	{
-		return false;
-
-	} // mousePressed
-
-	//--------------------------------------------------------
-
-
-	bool CLobbyServerState::mouseReleased(const GUI::CMouseState &mouseState)
-	{
-		return false;
-
-	} // mouseReleased
-			
-	//--------------------------------------------------------
-		
-	bool CLobbyServerState::startReleased(const CEGUI::EventArgs& e)
-	{
-		doStart();
-		return true;
-
-	} // startReleased
-			
-	//--------------------------------------------------------
-
-	bool CLobbyServerState::backReleased(const CEGUI::EventArgs& e)
-	{
-		Net::CManager::getSingletonPtr()->deactivateNetwork();
-		_app->setState("netmenu");
-		return true;
-
-	} // backReleased
-
-	//--------------------------------------------------------
-
-	void CLobbyServerState::doStart()
+	/*void CGameStateServer::doStart()
 	{
 		_waiting = false;
 
@@ -218,7 +67,7 @@ namespace Application {
 
 	//--------------------------------------------------------
 
-	void CLobbyServerState::dataPacketReceived(Net::CPaquete* packet)
+	void CGameStateServer::dataPacketReceived(Net::CPaquete* packet)
 	{
 		Net::CBuffer buffer(packet->getDataLength());
 		buffer.write(packet->getData(), packet->getDataLength());
@@ -315,7 +164,7 @@ namespace Application {
 				//Enviamos el mensaje de que empieza el juego a todos los clientes
 				Net::NetMessageType msg = Net::START_GAME;
 				Net::CManager::getSingletonPtr()->send(&msg, sizeof(msg));
-				_app->setState("multiplayerTeamDeathmatchServer");
+				_app->setState("game");
 			}
 			break;
 		}
@@ -325,7 +174,7 @@ namespace Application {
 
 	//--------------------------------------------------------
 
-	void CLobbyServerState::connexionPacketReceived(Net::CPaquete* packet)
+	void CGameStateServer::connexionPacketReceived(Net::CPaquete* packet)
 	{
 		if(_waiting)
 		{
@@ -347,7 +196,7 @@ namespace Application {
 
 	//--------------------------------------------------------
 
-	void CLobbyServerState::disconnexionPacketReceived(Net::CPaquete* packet)
+	void CGameStateServer::disconnexionPacketReceived(Net::CPaquete* packet)
 	{
 		// @todo gestionar desconexiones.
 		// TODO gestionar desconexiones.
@@ -369,5 +218,5 @@ namespace Application {
 		}
 
 	} // disconnexionPacketReceived
-
+	*/
 } // namespace Application

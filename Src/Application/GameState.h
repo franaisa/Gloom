@@ -62,8 +62,7 @@ namespace Application
 	@author David Llansó
 	@date Agosto, 2010
 	*/
-	class CGameState : public CApplicationState 
-	{
+	class CGameState : public CApplicationState {
 	public:
 		/** 
 		Constructor de la clase 
