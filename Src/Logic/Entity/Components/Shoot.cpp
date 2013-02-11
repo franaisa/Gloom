@@ -124,7 +124,7 @@ namespace Logic
 				for(int i = 0; i < currentNumberShoots; ++i)
 				{
 
-					// Se corrige la posicion de la camara
+					//Direccion
 					Vector3 direction = Math::getDirection(_entity->getOrientation()); 
 					//El origen debe ser mínimo la capsula (si chocamos el disparo en la capsula al mirar en diferentes direcciones ya esta tratado en la funcion de colision)
 					//Posicion de la entidad + altura de disparo(coincidente con la altura de la camara) + desplazamiento de la direccion
