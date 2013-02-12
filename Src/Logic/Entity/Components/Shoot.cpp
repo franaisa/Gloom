@@ -112,7 +112,7 @@ namespace Logic
 				_canShoot = false;
 				_coldDownTime = 0;
 				//Generación del rayo habiendo obtenido antes el origen y la dirección
-				Graphics::CCamera* camera = Graphics::CServer::getSingletonPtr()->getActiveScene()->getCamera();
+				//Graphics::CCamera* camera = Graphics::CServer::getSingletonPtr()->getActiveScene()->getCamera();
 		
 		
 
@@ -123,13 +123,11 @@ namespace Logic
 			
 				for(int i = 0; i < currentNumberShoots; ++i)
 				{
-
 					//Direccion
 					Vector3 direction = Math::getDirection(_entity->getOrientation()); 
 					//El origen debe ser mínimo la capsula (si chocamos el disparo en la capsula al mirar en diferentes direcciones ya esta tratado en la funcion de colision)
 					//Posicion de la entidad + altura de disparo(coincidente con la altura de la camara) + desplazamiento de la direccion
 					Vector3 origin = _entity->getPosition()+Vector3(0,_heightShoot,0)+ (_capsuleRadius * direction);
-
 
 					//Me dispongo a calcular la desviacion del arma, en el map.txt se pondra en grados de dispersion (0 => sin dispersion)
 					Ogre::Radian angle = Ogre::Radian( (  (((float)(rand() % 100))/100.0f) * (_dispersion)) /100);

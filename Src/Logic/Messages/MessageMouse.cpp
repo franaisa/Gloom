@@ -24,7 +24,7 @@ namespace Logic {
 		assert(_tempBuffer == NULL);
 
 		_tempBuffer = new Net::CBuffer(sizeof(int) + sizeof(float) * 2);
-		_tempBuffer->serialize(std::string("CMessageMouse"));
+		_tempBuffer->serialize(std::string("CMessageMouse"),true);
 		_tempBuffer->serialize(_mouse[0]);
 		_tempBuffer->serialize(_mouse[1]);
 		

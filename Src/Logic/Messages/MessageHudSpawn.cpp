@@ -25,7 +25,7 @@ namespace Logic {
 		assert(_tempBuffer == NULL);
 
 		_tempBuffer = new Net::CBuffer(sizeof(int) + sizeof(_time));
-		_tempBuffer->serialize(std::string("CMessageHudSpawn"));
+		_tempBuffer->serialize(std::string("CMessageHudSpawn"),true);
 		_tempBuffer->serialize(_time);
 		
 		return _tempBuffer;

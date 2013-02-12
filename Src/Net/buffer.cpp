@@ -202,16 +202,21 @@ namespace Net {
 
 	//__________________________________________________________________
 
-	void CBuffer::serialize(const std::string& data) {
+	void CBuffer::serialize(const std::string& data, bool crc) {
 
-		int crc = Math::CRC(data);
+		if(crc){
+			int crc = Math::CRC(data);
 
-		write(&crc, sizeof(crc));
+			write(&crc, sizeof(crc));
+		}else{
+			write(const_cast <char*>(data.c_str()), data.size());
+		}
 	}
 
-	void CBuffer::deserialize(std::string& data) {
-		// COMO DESERIALIZO ESTO? WTF? NECESITO A LA FACTORIA!! XD
-		// Te lo comes tu Ruben, que tiene pinta de estar mu rico
+	void CBuffer::deserialize(std::string& data, int size) {
+		char * aux = (char*)malloc(size);
+		read(aux, size);
+		data.assign(aux,size);
 	}
 
 	//__________________________________________________________________

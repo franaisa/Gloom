@@ -124,6 +124,7 @@ namespace Logic
 			std::list<std::string*> *except=new std::list<std::string*>();
 			except->push_back(new std::string("CSpawnPlayer"));
 			except->push_back(new std::string("CHudOverlay"));
+			except->push_back(new std::string("CNetConnector"));
 			_entity->deactivateAllComponentsExcept(except);
 			_isDead=true;
 			//Liberando memoria
