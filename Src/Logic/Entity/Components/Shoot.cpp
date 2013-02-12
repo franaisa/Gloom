@@ -126,9 +126,10 @@ namespace Logic
 
 					//Direccion
 					Vector3 direction = Math::getDirection(_entity->getOrientation()); 
+					direction.normalise();
 					//El origen debe ser mínimo la capsula (si chocamos el disparo en la capsula al mirar en diferentes direcciones ya esta tratado en la funcion de colision)
 					//Posicion de la entidad + altura de disparo(coincidente con la altura de la camara) + desplazamiento de la direccion
-					Vector3 origin = _entity->getPosition()+Vector3(0,_heightShoot,0)+ (_capsuleRadius * direction);
+					Vector3 origin = _entity->getPosition()+Vector3(0,_heightShoot,0);//+ (_capsuleRadius * direction);
 
 
 					//Me dispongo a calcular la desviacion del arma, en el map.txt se pondra en grados de dispersion (0 => sin dispersion)
@@ -137,11 +138,11 @@ namespace Logic
 			
 
 					//Esto hace un random total, lo que significa, por ejemplo, que puede que todas las balas vayan hacia la derecha 
-					Vector3 dispersionDirection = direction.randomDeviant(angle);
-					dispersionDirection.normalise();
+					//Vector3 dispersionDirection = direction.randomDeviant(angle);
+					//dispersionDirection.normalise();
 
-					// Creamos el ray desde el origen en la direccion del raton (desvido ya aplicado)
-					Ray ray(origin, dispersionDirection);
+					// Creamos el ray desde el origen en la direccion del raton (desvio ya aplicado)
+					Ray ray(origin, direction);
 			
 
 
