@@ -13,6 +13,17 @@ Map = {
 		physic_group = 0,
 	},
 	
+	Jumper1 = {
+		type = "Jumper",
+		position = {0, 0, 0},
+		model = "health1.mesh",
+		physic_entity = "rigid",
+		physic_trigger = true,
+		physic_type = "static",
+		physic_shape = "box",
+		physic_dimensions = { 2, 2, 2 },
+	},
+	
 	Point1 = {
 		type = "SpawnPoint",
 		position = {67.0, 2.0, 42.0},

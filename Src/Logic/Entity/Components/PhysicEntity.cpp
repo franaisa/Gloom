@@ -111,6 +111,8 @@ void CPhysicEntity::tick(unsigned int msecs)
 	if (_server->isKinematic(dinActor)) {
 		_server->moveKinematicActor(dinActor, _movement);
 		_movement = Vector3::ZERO;
+
+	
 	} 
 }
 
