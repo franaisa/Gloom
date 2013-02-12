@@ -2,7 +2,7 @@ Map = {
 	
 	World = {
 		type = "World",
-		position = {0, -500, 0},
+		position = {0, 0, 0},
 		scale = {1, 1, 1},
 		orientation = 0,
 		static = true,
@@ -11,6 +11,17 @@ Map = {
 		physic_normal = { 0, 1, 0 },
 		physic_file = "media/models/scenario.RepX",
 		physic_group = 0,
+	},
+	
+	Jumper1 = {
+		type = "Jumper",
+		position = {51.0, 0.0, 1.0},
+		model = "health1.mesh",
+		physic_entity = "rigid",
+		physic_trigger = true,
+		physic_type = "static",
+		physic_shape = "box",
+		physic_dimensions = { 2, 2, 2 },
 	},
 	
 	Point1 = {
@@ -172,6 +183,7 @@ Map = {
 		maxTimeSideJump = 300,
 		maxTimeConcatSideJump = 500,
 		powerJump = 0.2,
+		powerJumpInJumper = 0.35,
 		restitutionMoveAir = 0.8,
 		gravity = -0.0008,
 		physic_shape = "capsule",

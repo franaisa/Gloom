@@ -733,14 +733,11 @@ Logic::CEntity* CServer::raycastClosestInverse(const Ray& ray, float maxDist, in
 	const PxSceneQueryFlags outputFlags;				   // Info que queremos recuperar	
 
 	// Lanzar el rayo
-	PxRaycastHit hits[2];
+	PxRaycastHit hits[60];
 	bool blockingHit;
-	PxI32 nHits = _scene->raycastMultiple(origin, unitDir, maxDistance, outputFlags, hits, 2, blockingHit); 
-	for (int i=0; i<nHits; i++) {
-		PxRigidActor *actor = &hits[i].shape->getActor();
-		IPhysics *component = (IPhysics *) actor->userData;
-		std::cout << component->getEntity()->getName() << std::endl;
-	}
+
+	PxI32 nHits = _scene->raycastMultiple(origin, unitDir, maxDistance, outputFlags, hits, 60, blockingHit); 
+	
 	// Buscar un actot que pertenezca al grupo de colisión indicado
 	for (int i=nHits-1; i>=0; i--) {
 		PxRigidActor *actor = &hits[i].shape->getActor();

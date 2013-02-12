@@ -103,7 +103,8 @@ namespace Logic
 				return 0;
 		}
 
-		//_graphicsEntity->setTransform(_entity->getTransform());		
+		
+		_graphicsEntity->setTransform(_entity->getTransform());		
 		
 		return _graphicsEntity;
 
