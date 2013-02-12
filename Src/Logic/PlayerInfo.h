@@ -5,25 +5,20 @@
 /**
 @file PlayerInfo.h
 
-Contiene la declaracion de la clase PlayerInfo para el proyecto de red.
+Contiene la declaracion de la clase PlayerInfo para el proyecto de logica.
 
-@see Net::CPlayerInfo
+@see Logic::CPlayerInfo
 
 @author Francisco Aisa García
 @date Febrero, 2013
 */
 
-#ifndef __Net_PlayerInfo_H
-#define __Net_PlayerInfo_H
+#ifndef __Logic_PlayerInfo_H
+#define __Logic_PlayerInfo_H
 
 #include <string>
 
-// Predeclaracion de clases
-namespace Net {
-	class CConexion;
-};
-
-namespace Net {
+namespace Logic {
 
 	/**
 	Información sobre los clientes. El manager de red debe mantener una
@@ -31,15 +26,14 @@ namespace Net {
 	clase sirve de abstracción para introducir todos aquellos detalles
 	de los clientes que consideremos relevantes.
 
-	@ingroup NetGroup
+	@ingroup LogicGroup
 
 	@author Francisco Aisa García
 	@date Febrero, 2013
 	*/
 	class CPlayerInfo {
 	public:
-		CPlayerInfo(std::string name, std::string mesh, CConexion* connection);
-		CPlayerInfo(CConexion* connection);
+		CPlayerInfo(std::string name, std::string mesh);
 		CPlayerInfo(const CPlayerInfo& rhs);
 		~CPlayerInfo();
 
@@ -49,7 +43,6 @@ namespace Net {
 
 		std::string getName();
 		std::string getMesh();
-		CConexion* getConnection();
 
 		void setName(const std::string& name);
 		void setMesh(const std::string& mesh);
@@ -59,11 +52,7 @@ namespace Net {
 		std::string _mesh;
 		std::string _clan;
 		unsigned short int _rank;
-
-		// Esta clase no es responsable de liberar los recursos alocatados por _connection
-		// tan solo se encarga de almacenar el puntero dado
-		CConexion* _connection;
-		//CPlayerStats _stats;
+		//CPlayerStats _stats; -- en un futuro la clase que contendra las estadisticas del player
 	};
 
 };

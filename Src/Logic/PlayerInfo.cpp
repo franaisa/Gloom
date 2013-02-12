@@ -5,29 +5,20 @@
 /**
 @file PlayerInfo.cpp
 
-Contiene la implementación de la clase PlayerInfo para el proyecto de red.
+Contiene la implementación de la clase PlayerInfo para el proyecto de logica.
 
-@see Net::CPlayerInfo
+@see Logic::CPlayerInfo
 
 @author Francisco Aisa García
 @date Febrero, 2013
 */
 
 #include "PlayerInfo.h"
-#include "conexion.h"
 
-namespace Net {
+namespace Logic {
 
-	CPlayerInfo::CPlayerInfo(std::string name, std::string mesh, CConexion* connection) : 
-																   _name(name), 
-																   _mesh(mesh),
-																   _connection(connection) {
-		// No hay memoria dinamica que inicializar
-	}
-
-	//______________________________________________________________________________
-
-	CPlayerInfo::CPlayerInfo(CConexion* connection) : _connection(connection) {
+	CPlayerInfo::CPlayerInfo(std::string name, std::string mesh) : _name(name), 
+																   _mesh(mesh) {
 		// No hay memoria dinamica que inicializar
 	}
 
@@ -36,8 +27,7 @@ namespace Net {
 	CPlayerInfo::CPlayerInfo(const CPlayerInfo& rhs) : _name(rhs._name), 
 													   _mesh(rhs._mesh), 
 													   _clan(rhs._clan), 
-													   _rank(rhs._rank),
-													   _connection(rhs._connection) {
+													   _rank(rhs._rank) {
 		// No hay memoria dinamica que inicializar
 	}
 
@@ -55,7 +45,6 @@ namespace Net {
 			_mesh = rhs._mesh;
 			_clan = rhs._clan;
 			_rank = rhs._rank;
-			_connection = rhs._connection;
 		}
 
 		return *this;
@@ -82,12 +71,6 @@ namespace Net {
 
 	std::string CPlayerInfo::getMesh() {
 		return _mesh;
-	}
-
-	//______________________________________________________________________________
-
-	CConexion* CPlayerInfo::getConnection() {
-		return _connection;
 	}
 
 	//______________________________________________________________________________
