@@ -70,11 +70,16 @@ namespace Logic
 
 	void CJumper::applyJump(CEntity *entity)
 	{
-		std::cout << "PROBANDO JUUUUUUUUMPEEEEEEER" << std::endl;
 		CMessageJumper *m=new Logic::CMessageJumper();
 		entity->emitMessage(m);
 	} // applyJump
 	//---------------------------------------------------------
+
+		//---------------------------------------------------------
+	void CJumper::tick(unsigned int msecs) {
+		IComponent::tick(msecs);
+
+	} // tick
 
 } // namespace Logic
 

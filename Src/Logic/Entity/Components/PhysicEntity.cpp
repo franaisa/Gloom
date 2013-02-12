@@ -88,8 +88,8 @@ void CPhysicEntity::process(CMessage *message)
 		break;
 	}
 }
-
 //---------------------------------------------------------
+
 
 void CPhysicEntity::tick(unsigned int msecs) 
 {
@@ -101,7 +101,7 @@ void CPhysicEntity::tick(unsigned int msecs)
 	PxRigidDynamic *dinActor = _actor->isRigidDynamic();
 	if (!dinActor) 
 		return;
-	//std::cout << "FISICA DINAMICA,POSICION: " << _entity->getPosition() << std::endl;
+
 	// Actualizar la posición y la orientación de la entidad lógica usando la 
 	// información proporcionada por el motor de física	
 	_entity->setTransform(_server->getActorTransform(dinActor));

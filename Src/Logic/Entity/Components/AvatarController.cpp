@@ -39,6 +39,9 @@ namespace Logic
 		if(entityInfo->hasAttribute("powerSideJump"))
 			_powerSideJump = entityInfo->getFloatAttribute("powerSideJump");
 
+		if(entityInfo->hasAttribute("powerJumpInJumper"))
+			_powerJumpInJumper = entityInfo->getFloatAttribute("powerJumpInJumper");
+
 		if(entityInfo->hasAttribute("sumSpeedSideJump"))
 			_sumSpeedSideJump = entityInfo->getFloatAttribute("sumSpeedSideJump");
 
@@ -104,6 +107,7 @@ namespace Logic
 		_sideContact=false;
 
 		_rebound=false;
+		_jumper=false;
 	} // activate
 	
 	//---------------------------------------------------------
@@ -119,7 +123,8 @@ namespace Logic
 	{
 		return message->getMessageType() == Message::CONTROL || 
 			message->getMessageType() == Message::COLLISION_DOWN ||
-			message->getMessageType() == Message::REBOUND;
+			message->getMessageType() == Message::REBOUND ||
+			message->getMessageType() == Message::JUMPER;
 	} // accept
 	
 	//---------------------------------------------------------
@@ -156,6 +161,9 @@ namespace Logic
 		case Message::REBOUND:
 			_dirRebound=((CMessageRebound*)message)->getDir();
 			rebound();
+			break;
+		case Message::JUMPER:
+			jumper();
 			break;
 		}
 
@@ -244,6 +252,12 @@ namespace Logic
 	
 	//---------------------------------------------------------
 
+	void CAvatarController::jumper()
+	{
+		_jumper = true;
+	}//rebound
+	
+	//---------------------------------------------------------
 	void CAvatarController::tick(unsigned int msecs)
 	{
 
@@ -419,6 +433,7 @@ namespace Logic
 			_rebound=false;
 		}
 
+
 		//Aumento el tiempo de conteo para la concatenacion de saltos
 		if(_sideContact){
 			_timeConcatSideJump+=msecs;
@@ -443,10 +458,15 @@ namespace Logic
 			_speedJump=_speedJump + _gravity*msecs; //MRUA
 		}//if (_jumpingControl)
 
-		//Si se presionó el salto y podemos saltar aplicamos una velocidad que posteriormente decrementaremos
-		if(_jumping && _canJump){
+		//Si hay que aplicar el salto debido a saltos, saltos laterales, rebotes o jumpers
+		if(_jumping && _canJump || _jumper ){
+			//Si es de jumper 
+			if(_jumper){
+				_jumper=false;
+				_speedJump=_powerJumpInJumper;
+			}
 			//Si es un salto normal
-			if(!_sideJump){
+			else if(!_sideJump){
 				_speedJump=_powerJump; // Velocidad explosiva inicial para el salto normal
 			}
 			//Sino es un salto lateral

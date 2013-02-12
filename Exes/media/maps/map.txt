@@ -15,7 +15,7 @@ Map = {
 	
 	Jumper1 = {
 		type = "Jumper",
-		position = {0, 0, 0},
+		position = {51.0, 0.0, 1.0},
 		model = "health1.mesh",
 		physic_entity = "rigid",
 		physic_trigger = true,
@@ -183,6 +183,7 @@ Map = {
 		maxTimeSideJump = 300,
 		maxTimeConcatSideJump = 500,
 		powerJump = 0.2,
+		powerJumpInJumper = 0.35,
 		restitutionMoveAir = 0.8,
 		gravity = -0.0008,
 		physic_shape = "capsule",

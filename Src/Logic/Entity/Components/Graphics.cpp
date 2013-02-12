@@ -103,7 +103,8 @@ namespace Logic
 				return 0;
 		}
 
-		//_graphicsEntity->setTransform(_entity->getTransform());		
+		if(_entity->getType().compare("World")!=0)
+			_graphicsEntity->setTransform(_entity->getTransform());		
 		
 		return _graphicsEntity;
 
