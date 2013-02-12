@@ -106,6 +106,9 @@ namespace Logic
 		*/
 		virtual void onTrigger (IPhysics *otherComponent, bool enter);
 
+		//Metodo que devuelve el booleano _inTrigger que nos indica si hay alguien dentro del trigger
+		bool getInTrigger(){return _inTrigger;};
+
 	private:
 
 		/**
@@ -139,6 +142,9 @@ namespace Logic
 		// Vector de deplazamiento recibido en el último mensaje de tipo KINEMATIC_MOVE. Sirve
 		// para mover entidades físicas cinemáticas.
 		Vector3 _movement;
+
+		//Booleano que controla si hay alguien dentro del posible trigger que puede tener la entidad, por defecto desactivado
+		bool _inTrigger;
 
 	}; // class CPhysicEntity
 

@@ -40,17 +40,8 @@ namespace Logic
 		if(!_graphicsCamera)
 			return false;
 
-		if(entityInfo->hasAttribute("distance"))
-			_distance = entityInfo->getFloatAttribute("distance");
-
 		if(entityInfo->hasAttribute("height"))
 			_height = entityInfo->getFloatAttribute("height");
-
-		if(entityInfo->hasAttribute("targetDistance"))
-			_targetDistance = entityInfo->getFloatAttribute("targetDistance");
-
-		if(entityInfo->hasAttribute("targetHeight"))
-			_targetHeight = entityInfo->getFloatAttribute("targetHeight");
 
 		return true;
 
@@ -116,33 +107,24 @@ namespace Logic
 		{
 			// Actualizamos la posición de la cámara.
 			Vector3 position = _target->getPosition();
-			Vector3 direction = -_distance * Math::getDirection(_target->getOrientation());
-			direction.y = _height;
-			_graphicsCamera->setCameraPosition(position + direction);
+			position.y+=_height;
+			_graphicsCamera->setCameraPosition(position);
 
 			if(_target->getComponent<CLife>("CLife")->isActivate()){
 				// Y la posición hacia donde mira la cámara.
-				direction = _targetDistance * Math::getDirection(_target->getOrientation());
-				direction.y += _targetHeight;
+				Vector3 direction = Math::getDirection(_target->getOrientation());
 				_graphicsCamera->setTargetCameraPosition(position + direction);
 			}
+			//Si estamos muertos miramos al enemigo, diferenciamos entre nosotros mismos o el rival (ojo con que el rival sea de tipo player)
 			else if(_enemy){
-				 if(_enemy->getName().compare("David")!=0)
+				 if(_enemy->getType().compare("Player")!=0)
 				    _graphicsCamera->setTargetCameraPosition(_enemy->getPosition() );
 				 else{	
 					  _graphicsCamera->setCameraPosition(_enemy->getPosition()+Vector3(0,50,0));
 					 _graphicsCamera->setTargetCameraPosition(_enemy->getPosition());
 				 }
 			}
-			//Implementacion del grupo de Calm night of nose que :P
-			/*
-			Vector3 position = _target->getPosition();
-			position.y += _height;
-			_graphicsCamera->setCameraPosition(position);
 
-			Vector3 direction = Math::getDirection(_target->getOrientation());
-			_graphicsCamera->setTargetCameraPosition(position + direction);
-			*/
 		}
 
 	} // tick

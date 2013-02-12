@@ -14,6 +14,7 @@ Contiene la implementación del servidor de física.
 #include "ErrorManager.h"
 #include "CollisionManager.h"
 #include "Logic/Entity/Components/Physics.h"
+#include "Logic/Entity/Entity.h"
 
 #include <assert.h>
 #include <algorithm>
@@ -353,7 +354,6 @@ PxRigidDynamic* CServer::createDynamicBox(const Vector3 &position, const Vector3
 	// cara inferior. Para unificar necesitamos realizar una traslación en el eje Y.
 	// Afortunadamente, el descriptor que se usa para crear el actor permite definir esta 
 	// transformación local, por lo que la conversión entre sistemas de coordenadas es transparente. 
-	std::cout << "FISICA DINAMICA,CREACION POSICION: " << position << std::endl;
 	// Crear un cubo dinámico
 	PxTransform pose(Vector3ToPxVec3(position));
 	PxBoxGeometry geom(Vector3ToPxVec3(dimensions));
@@ -733,12 +733,17 @@ Logic::CEntity* CServer::raycastClosestInverse(const Ray& ray, float maxDist, in
 	const PxSceneQueryFlags outputFlags;				   // Info que queremos recuperar	
 
 	// Lanzar el rayo
-	PxRaycastHit hits[2];
+	PxRaycastHit hits[60];
 	bool blockingHit;
-	PxI32 nHits = _scene->raycastMultiple(origin, unitDir, maxDistance, outputFlags, hits, 2, blockingHit); 
+	PxI32 nHits = _scene->raycastMultiple(origin, unitDir, maxDistance, outputFlags, hits, 60, blockingHit); 
 	
+	for (int i=nHits-1; i>=0; i--) {
+		PxRigidActor *actor = &hits[i].shape->getActor();
+		IPhysics *component = (IPhysics *) actor->userData;
+		std::cout <<  component->getEntity()->getName() << std::endl;
+	}
 	// Buscar un actot que pertenezca al grupo de colisión indicado
-	for (int i=0; i<nHits; i++) {
+	for (int i=nHits-1; i>=0; i--) {
 		PxRigidActor *actor = &hits[i].shape->getActor();
 		if (PxGetGroup(*actor) != group) {
 			IPhysics *component = (IPhysics *) actor->userData;
