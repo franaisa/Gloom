@@ -33,6 +33,9 @@ namespace Logic
 		if(!IComponent::spawn(entity,map,entityInfo))
 			return false;
 
+		if(entityInfo->hasAttribute("power"))
+			_power = entityInfo->getFloatAttribute("power");
+
 		return true;
 
 	} // spawn
@@ -71,6 +74,7 @@ namespace Logic
 	void CJumper::applyJump(CEntity *entity)
 	{
 		CMessageJumper *m=new Logic::CMessageJumper();
+		m->setPower(_power);
 		entity->emitMessage(m);
 	} // applyJump
 	//---------------------------------------------------------

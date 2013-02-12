@@ -8,6 +8,15 @@ namespace Logic {
 		// Nada que hacer
 	} //
 	//----------------------------------------------------------
+	float CMessageJumper::getPower(){
+		return _power;
+	}//
+	//----------------------------------------------------------
+
+	void CMessageJumper::setPower(float power){
+		_power=power;
+	}//
+	//----------------------------------------------------------
 
 	Net::CBuffer* CMessageJumper::serialize() {
 		assert(_tempBuffer == NULL);

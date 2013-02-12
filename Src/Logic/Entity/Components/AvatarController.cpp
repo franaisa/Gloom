@@ -21,6 +21,7 @@ de la entidad.
 #include "Logic/Messages/MessageAvatarWalk.h"
 #include "Logic/Messages/MessageMouse.h"
 #include "Logic/Messages/MessageRebound.h"
+#include "Logic/Messages/MessageJumper.h"
 
 namespace Logic 
 {
@@ -38,9 +39,6 @@ namespace Logic
 
 		if(entityInfo->hasAttribute("powerSideJump"))
 			_powerSideJump = entityInfo->getFloatAttribute("powerSideJump");
-
-		if(entityInfo->hasAttribute("powerJumpInJumper"))
-			_powerJumpInJumper = entityInfo->getFloatAttribute("powerJumpInJumper");
 
 		if(entityInfo->hasAttribute("sumSpeedSideJump"))
 			_sumSpeedSideJump = entityInfo->getFloatAttribute("sumSpeedSideJump");
@@ -163,6 +161,7 @@ namespace Logic
 			rebound();
 			break;
 		case Message::JUMPER:
+			_powerJumpInJumper=((CMessageJumper*)message)->getPower();
 			jumper();
 			break;
 		}

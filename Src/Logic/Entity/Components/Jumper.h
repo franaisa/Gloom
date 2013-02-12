@@ -60,6 +60,13 @@ namespace Logic
 		*/
 		void applyJump(CEntity *entity);
 
+	protected:
+
+		/**
+		Atributo que lleva la potencia del jumper
+		*/
+		float _power;
+
 	}; // class CJumper
 
 	REG_FACTORY(CJumper);
