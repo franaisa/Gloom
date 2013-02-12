@@ -111,7 +111,6 @@ namespace Logic
 		@return Entidad del jugador.
 		*/
 		CEntity *getPlayer() {
-			std::cout << "hola" << std::endl;
 			return _player;}
 
 		/**

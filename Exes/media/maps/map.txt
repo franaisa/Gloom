@@ -2,7 +2,7 @@ Map = {
 	
 	World = {
 		type = "World",
-		position = {0, -500, 0},
+		position = {0, 0, 0},
 		scale = {1, 1, 1},
 		orientation = 0,
 		static = true,
@@ -13,6 +13,47 @@ Map = {
 		physic_group = 0,
 	},
 	
+	Jumper1 = {
+		type = "Jumper",
+		position = {51.0, 0.0, 1.0},
+		model = "health1.mesh",
+		power = 0.35,
+		physic_entity = "rigid",
+		physic_trigger = true,
+		physic_type = "static",
+		physic_shape = "box",
+		physic_dimensions = { 2, 2, 2 },
+	},
+	
+	Point1 = {
+		type = "SpawnPoint",
+		position = {67.0, 2.0, 42.0},
+		physic_entity = "rigid",
+		physic_trigger = true,
+		physic_type = "static",
+		physic_shape = "box",
+		physic_dimensions = { 4, 7, 4 },
+	},
+	
+	Point2 = {
+		type = "SpawnPoint",
+		position = {-67.0, 5.0, 42.0},
+		physic_entity = "rigid",
+		physic_trigger = true,
+		physic_type = "static",
+		physic_shape = "box",
+		physic_dimensions = { 4, 7, 4 },
+	},
+	
+	Point3 = {
+		type = "SpawnPoint",
+		position = {-47.0, 5.0, 42.0},
+		physic_entity = "rigid",
+		physic_trigger = true,
+		physic_type = "static",
+		physic_shape = "box",
+		physic_dimensions = { 4, 7, 4 },
+	},
 	
 	Orb1 = {
 		type = "ItemSpawn",
@@ -29,7 +70,6 @@ Map = {
 		physic_type = "static",
 		physic_shape = "sphere",
 		physic_radius = 3,
-		physic_mass = 10,
 	},
 	
 	Shotgun = {
@@ -84,7 +124,6 @@ Map = {
 		physic_type = "static",
 		physic_shape = "sphere",
 		physic_radius = 3,
-		physic_mass = 10,
 	},
 	
 	SuperShield = {
@@ -100,18 +139,15 @@ Map = {
 		physic_entity = "rigid",
 		physic_trigger = true,
 		physic_type = "static",
-		physic_shape = "box",
-		physic_dimensions = { 3, 3, 3 },
-		physic_height = 0,
-		physic_radius = 0.5,
-		physic_mass = 10,
+		physic_shape = "sphere",
+		physic_radius = 3,
 	},
 
 	Enemigo1 = {
 		type = "Enemy",
 		position = {0, 8, -10},
 		orientation = 90,
-		life = 100.0,
+		life = 100000.0,
 		maxShield=100,
 		maxLife=120,
 		shield=10.0,
@@ -196,13 +232,11 @@ Map = {
 			weaponShotGunId = 2,
 			
 		hudMira = 3,
+		heightShoot = 8,
 	},
 	
 	Camera = {
 		type = "Camera",
-		distance = 0,
 		height = 8,
-		targetHeight = 8,
-		targetDistance = 20,
 	},
 }

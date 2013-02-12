@@ -46,6 +46,11 @@ namespace Logic
 		if(entityInfo->hasAttribute("physic_radius")){
 			_capsuleRadius = entityInfo->getFloatAttribute("physic_radius");
 		}
+
+		if(entityInfo->hasAttribute("heightShoot")){
+			_heightShoot = entityInfo->getIntAttribute("heightShoot");
+		}
+		
 						
 		std::stringstream aux;
 		aux << "weapon" << _nameWeapon;		////!!!! Aqui debes de poner el nombre del arma que leera en el map.txt
@@ -119,26 +124,25 @@ namespace Logic
 				for(int i = 0; i < currentNumberShoots; ++i)
 				{
 
-					// Se corrige la posicion de la camara
-					Vector3 direction = camera->getTargetCameraPosition() - camera->getCameraPosition();
-					direction.normalise();
-					//El origen debe ser mínimo la capsula y por si miramos al suelo la separación mínima debe ser 1.5f ( en un futuro es probable que sea recomendable cambiar por no chocar con el grupo de uno mismo )
-					Vector3 origin = camera->getCameraPosition() + (_capsuleRadius * direction);
+					//Direccion
+					Vector3 direction = Math::getDirection(_entity->getOrientation()); 
+					//El origen debe ser mínimo la capsula (si chocamos el disparo en la capsula al mirar en diferentes direcciones ya esta tratado en la funcion de colision)
+					//Posicion de la entidad + altura de disparo(coincidente con la altura de la camara)
+					Vector3 origin = _entity->getPosition()+Vector3(0,_heightShoot,0); 
 
 
 					//Me dispongo a calcular la desviacion del arma, en el map.txt se pondra en grados de dispersion (0 => sin dispersion)
 					Ogre::Radian angle = Ogre::Radian( (  (((float)(rand() % 100))/100.0f) * (_dispersion)) /100);
 
-			
+		
 
 					//Esto hace un random total, lo que significa, por ejemplo, que puede que todas las balas vayan hacia la derecha 
 					Vector3 dispersionDirection = direction.randomDeviant(angle);
 					dispersionDirection.normalise();
 
-					// Creamos el ray desde el origen en la direccion del raton (desvido ya aplicado)
+					// Creamos el ray desde el origen en la direccion del raton (desvio ya aplicado)
 					Ray ray(origin, dispersionDirection);
 			
-
 
 					////////////////////////////////////////////////Dibujo del rayo
 

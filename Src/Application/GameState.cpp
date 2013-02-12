@@ -44,7 +44,7 @@ namespace Application {
 		//Physics::CServer::getSingletonPtr()->setGroupCollisions(0, 1, false);
 
 		// TODO: Crear la escena física usando el servidor de física
-		Physics::CServer::getSingletonPtr()->createScene();
+		//Physics::CServer::getSingletonPtr()->createScene();
 
 		// INICIALIZACIÓN DE LA LÓGICA
 		// ---------------------------
@@ -71,7 +71,7 @@ namespace Application {
 		//GUI::CServer::getSingletonPtr()->addLayoutToState(this, "Time");
 		
 		//LAYOUT MIRA
-		GUI::CServer::getSingletonPtr()->addLayoutToState(this, "Mira");
+		//GUI::CServer::getSingletonPtr()->addLayoutToState(this, "Mira");
 
 		return true;
 	} // init

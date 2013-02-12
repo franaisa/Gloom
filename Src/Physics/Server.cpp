@@ -14,6 +14,7 @@ Contiene la implementación del servidor de física.
 #include "ErrorManager.h"
 #include "CollisionManager.h"
 #include "Logic/Entity/Components/Physics.h"
+#include "Logic/Entity/Entity.h"
 
 #include <assert.h>
 #include <algorithm>
@@ -184,6 +185,7 @@ bool CServer::Init()
 		_instance = new CServer();
 	}
 
+
 	return true;
 } 
 
@@ -237,7 +239,8 @@ void CServer::createScene ()
 
 	// Crear la escena física
 	_scene = _physics->createScene(sceneDesc);
-
+	_acumTime=0;
+	_fixedTime=5;
 	assert(_scene && "Error en PxPhysics::createScene");
 }
 
@@ -258,12 +261,17 @@ void CServer::destroyScene ()
 bool CServer::tick(unsigned int msecs) 
 {
 	assert(_scene);
-
+	_acumTime+=msecs;
 	// Empezar la simulación física. Actualmente usamos intervalos de tiempo variables,
 	// debemos tener cuidado porque PhysX puede no comportarse bien si el tiempo 
 	// transcurrido es demasiado grande.
-	_scene->simulate(msecs / 1000.0f);
-
+	// Se ha cambiado a intervalos fijos y si nos pasamos hacemos repeticiones del intervalo fijo para la CCD
+	while(_acumTime>=_fixedTime){
+		_scene->simulate(_fixedTime / 1000.0f);
+		_acumTime-=5;
+		if(_acumTime>=_fixedTime)
+			_scene->fetchResults(true);
+	}
 	// Esperamos a que la simulación física termine. En principio podríamos utilizar
 	// este intervalo de tiempo para hacer algo más útil. Existe una versión de este
 	// método no bloqueante.
@@ -346,7 +354,6 @@ PxRigidDynamic* CServer::createDynamicBox(const Vector3 &position, const Vector3
 	// cara inferior. Para unificar necesitamos realizar una traslación en el eje Y.
 	// Afortunadamente, el descriptor que se usa para crear el actor permite definir esta 
 	// transformación local, por lo que la conversión entre sistemas de coordenadas es transparente. 
-	std::cout << "FISICA DINAMICA,CREACION POSICION: " << position << std::endl;
 	// Crear un cubo dinámico
 	PxTransform pose(Vector3ToPxVec3(position));
 	PxBoxGeometry geom(Vector3ToPxVec3(dimensions));
@@ -694,7 +701,7 @@ Logic::CEntity* CServer::raycastClosest(const Ray& ray, float maxDist, int group
 	PxRaycastHit hits[64];
 	bool blockingHit;
 	PxI32 nHits = _scene->raycastMultiple(origin, unitDir, maxDistance, outputFlags, hits, 64, blockingHit); 
-	
+
 	// Buscar un actot que pertenezca al grupo de colisión indicado
 	for (int i=0; i<nHits; i++) {
 		PxRigidActor *actor = &hits[i].shape->getActor();
@@ -726,12 +733,13 @@ Logic::CEntity* CServer::raycastClosestInverse(const Ray& ray, float maxDist, in
 	const PxSceneQueryFlags outputFlags;				   // Info que queremos recuperar	
 
 	// Lanzar el rayo
-	PxRaycastHit hits[2];
+	PxRaycastHit hits[60];
 	bool blockingHit;
-	PxI32 nHits = _scene->raycastMultiple(origin, unitDir, maxDistance, outputFlags, hits, 2, blockingHit); 
+
+	PxI32 nHits = _scene->raycastMultiple(origin, unitDir, maxDistance, outputFlags, hits, 60, blockingHit); 
 	
 	// Buscar un actot que pertenezca al grupo de colisión indicado
-	for (int i=0; i<nHits; i++) {
+	for (int i=nHits-1; i>=0; i--) {
 		PxRigidActor *actor = &hits[i].shape->getActor();
 		if (PxGetGroup(*actor) != group) {
 			IPhysics *component = (IPhysics *) actor->userData;

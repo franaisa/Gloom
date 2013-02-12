@@ -62,6 +62,7 @@ namespace Logic
 		caracteristicas de armas
 		*/
 		std::string _name;
+		int _heightShoot;
 		unsigned char _damage;
 		unsigned char _damageReflect;
 		float _dispersion;

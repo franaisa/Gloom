@@ -27,6 +27,8 @@ Contiene la implementación del estado de menú.
 #include <CEGUIWindow.h>
 #include <elements/CEGUIPushButton.h>
 
+#include "Physics/Server.h"
+
 namespace Application {
 
 	CMenuState::~CMenuState() 
@@ -38,6 +40,15 @@ namespace Application {
 	bool CMenuState::init() 
 	{
 		CApplicationState::init();
+
+		// INICIALIZACIÓN DE LA FÍSICA
+		// ---------------------------
+
+		// TODO: desactivar colisiones entre los grupos 0 y 1
+		//Physics::CServer::getSingletonPtr()->setGroupCollisions(0, 1, false);
+
+		// TODO: Crear la escena física usando el servidor de física
+		Physics::CServer::getSingletonPtr()->createScene();
 
 		// En el propio estado para cambiar a otra configuracion
 		//GUI::getSingletonPtr()->changeStateLayout(this, "layout que nos interese");
@@ -135,7 +146,12 @@ namespace Application {
 			_app->exitRequest();
 			break;
 		case GUI::Key::RETURN:
-			_app->setState("game");
+			if (!Logic::CEntityFactory::getSingletonPtr()->loadBluePrints("blueprints.txt"))
+				return false;
+			if (!Logic::CServer::getSingletonPtr()->loadLevel("map.txt"))
+				return false;
+
+			_app->setState("singlePlayer");
 			break;
 		default:
 			return false;
@@ -171,10 +187,7 @@ namespace Application {
 			
 	//--------------------------------------------------------
 		
-	bool CMenuState::startReleased(const CEGUI::EventArgs& e)
-	{
-		
-		
+	bool CMenuState::startReleased(const CEGUI::EventArgs& e) {
 		if (!Logic::CEntityFactory::getSingletonPtr()->loadBluePrints("blueprints.txt"))
 			return false;
 
@@ -182,14 +195,14 @@ namespace Application {
 		if (!Logic::CServer::getSingletonPtr()->loadLevel("map.txt"))
 			return false;
 		
-		_app->setState("game");
+		_app->setState("singlePlayer");
 		return true;
 
 	} // startReleased
 			
 	/*bool CMenuState::startReleased(const GUI::GUIEventArgs& e)
 	{
-		_app->setState("game");
+		_app->setState("singlePlayer");
 		return true;6
 
 	} // startReleased*/

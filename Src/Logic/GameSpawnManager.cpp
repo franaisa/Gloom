@@ -14,6 +14,10 @@ Contiene la implementación del gestor del spawn/respawn de jugadores.
 */
 
 #include "GameSpawnManager.h"
+#include "Logic\Entity\Components\PhysicEntity.h"
+
+#include "Server.h"
+#include "Logic/Maps/Map.h"
 
 #include <cassert>
 
@@ -65,21 +69,34 @@ namespace Logic {
 
 	void CGameSpawnManager::activate() 
 	{
-		
+		//Cargamos los las entidades de tipo SpawnPoint para tenerlas
+		CEntity *entidad;
+		entidad=CServer::getSingletonPtr()->getMap()->getEntityByType("SpawnPoint");
+		if(entidad!=NULL)
+			_listSpawnPoints.push_back(entidad);
+		while(entidad!=NULL){
+			entidad=CServer::getSingletonPtr()->getMap()->getEntityByType("SpawnPoint",entidad);
+			if(entidad!=NULL)
+				_listSpawnPoints.push_back(entidad);
+		}
 	} // activate
 
 	//--------------------------------------------------------
 
 	void CGameSpawnManager::deactivate() 
 	{	
-		
+		_listSpawnPoints.clear();
 	} // deactivate
 
 	//---------------------------------------------------------
 	
 	Vector3 CGameSpawnManager::getSpawnPosition(){
-	
-		return Vector3(3,4,3);
+		//std::cout << "EL NUMERO DE PUNTOS SON: " << _listSpawnPoints.size() << std::endl;
+		int random=rand()%_listSpawnPoints.size();
+		//Mientras que nos devuelva que el trigger esta activado buscamos otro punto
+		while(_listSpawnPoints[random]->getComponent<CPhysicEntity>("CPhysicEntity")->getInTrigger())
+			random=rand()%_listSpawnPoints.size();;
+		return _listSpawnPoints[random]->getPosition();
 	}
 
 } // namespace Logic

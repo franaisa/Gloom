@@ -64,6 +64,7 @@ bool CPhysicEntity::spawn(CEntity *entity, CMap *map, const Map::CEntity *entity
 	// Crear el objeto físico asociado al componente
 	_actor = createActor(entityInfo);
 
+	_inTrigger=false;
 	return true;
 } 
 
@@ -87,8 +88,8 @@ void CPhysicEntity::process(CMessage *message)
 		break;
 	}
 }
-
 //---------------------------------------------------------
+
 
 void CPhysicEntity::tick(unsigned int msecs) 
 {
@@ -100,7 +101,7 @@ void CPhysicEntity::tick(unsigned int msecs)
 	PxRigidDynamic *dinActor = _actor->isRigidDynamic();
 	if (!dinActor) 
 		return;
-	//std::cout << "FISICA DINAMICA,POSICION: " << _entity->getPosition() << std::endl;
+
 	// Actualizar la posición y la orientación de la entidad lógica usando la 
 	// información proporcionada por el motor de física	
 	_entity->setTransform(_server->getActorTransform(dinActor));
@@ -110,6 +111,8 @@ void CPhysicEntity::tick(unsigned int msecs)
 	if (_server->isKinematic(dinActor)) {
 		_server->moveKinematicActor(dinActor, _movement);
 		_movement = Vector3::ZERO;
+
+	
 	} 
 }
 
@@ -244,11 +247,14 @@ void CPhysicEntity::onTrigger(IPhysics *otherComponent, bool enter)
 {
 	// Construimos un mensaje de tipo TOUCHED o UNTOUCHED y lo enviamos a 
 	// todos los componentes de la entidad. 
+
 	if (enter) {
+		_inTrigger=true;
 		Logic::CMessageTouched *m = new Logic::CMessageTouched();
 		m->setEntity(otherComponent->getEntity());
 		_entity->emitMessage(m);
 	} else {
+		_inTrigger=false;
 		Logic::CMessageUntouched *m = new Logic::CMessageUntouched();
 		m->setEntity(otherComponent->getEntity());
 		_entity->emitMessage(m);

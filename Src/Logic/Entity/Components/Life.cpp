@@ -164,7 +164,6 @@ namespace Logic
 
 		//Si muero por el daño, envio un mensaje de playerDead
 		if(_life<=0){
-			std::cout << "TE HA MATADO EL ENEMIGO CON NOMBRE: " << enemy->getName() << std::endl;
 			_life=0;
 			//Mensaje de muerte para tratar respawn/desactivar componentes
 			Logic::CMessagePlayerDead *m=new Logic::CMessagePlayerDead();
@@ -208,8 +207,7 @@ namespace Logic
 		Logic::CMessageHudShield *message2 = new Logic::CMessageHudShield();
 		message2->setShield(_shield);
 		_entity->emitMessage(message2);
-		
-		printf("\nViva!, mi shield a aumentado en %d, por lo que ahora tengo %d de VIDA",shield, _shield);
+
 		}// addShield
 	}
 	//----------------------------------------------------------

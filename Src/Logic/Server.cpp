@@ -153,6 +153,7 @@ namespace Logic {
 		_gameNetMsgManager->activate();
 		return _map->activate();
 
+
 	} // activateMap
 
 	//---------------------------------------------------------

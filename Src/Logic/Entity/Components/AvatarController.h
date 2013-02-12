@@ -158,6 +158,11 @@ namespace Logic
 		void rebound();
 
 		/**
+		Provoca que la entidad salte con la fuerza de un jumper
+		*/
+		void jumper();
+
+		/**
 		Provoca que la entidad gire. Números Positivos para	giro a 
 		derechas, negativos para giro izquierdas.
 
@@ -262,6 +267,11 @@ namespace Logic
 		bool _rebound;
 
 		/**
+		Atributo que dice si hay salto con jumper
+		*/
+		bool _jumper;
+
+		/**
 		Atributo que indica la potencia explosiva que se el aplicará al salto lateral al iniciarse
 		*/
 		float _powerSideJump;
@@ -270,6 +280,11 @@ namespace Logic
 		Atributo que indica la potencia explosiva que se el aplicará al salto al iniciarse
 		*/
 		float _powerJump;
+
+		/**
+		Atributo que indica la potencia explosiva que se el aplicará al salto en jumper al iniciarse
+		*/
+		float _powerJumpInJumper;
 
 		/**
 		Atributos que indican que velocidad extra tendrá el salto lateral, segun si no es concatenado o sí respectivamente
