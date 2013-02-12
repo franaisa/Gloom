@@ -29,6 +29,9 @@ gráfica de la entidad.
 #include "Logic/Messages/MessageChangeWeaponGraphics.h"
 
 #include "OgreEntity.h"
+#include "OgreSceneNode.h"
+#include <OgreOverlayManager.h>
+#include <OgreSceneManager.h>
 
 namespace Logic 
 {
@@ -42,7 +45,7 @@ namespace Logic
 		{
 			for(int i = 0; i < _numWeapons; ++i)
 			{
-				_scene->removeEntity(_graphicsEntities[i]._graphicsEntity);
+				//_scene->removeChild(_graphicsEntities[i]._graphicsEntity);
 				delete _graphicsEntities[i]._graphicsEntity;
 				_graphicsEntities[i]._graphicsEntity = NULL;
 			}
@@ -75,7 +78,16 @@ namespace Logic
 		if(!IComponent::spawn(entity,map,entityInfo))
 			return false;
 		
-		_scene = _entity->getMap()->getScene();
+		//Lo recomendable serie hacer un metorod en Graphics server que sea create scene overlay o algo asi y llamarla.
+		Ogre::SceneNode* _scene = new Ogre::SceneNode(Graphics::CServer::getSingletonPtr()->getActiveScene()->getSceneMgr(), "SceneOverlayHud3D");
+		//_scene = _entity->getMap()->getScene();
+
+		Ogre::OverlayManager& overlayManager = Ogre::OverlayManager::getSingleton();
+		Ogre::Overlay *_overlayWeapon = overlayManager.create( "overlayHud3D" );
+
+		Ogre::SceneManager *miSceneManager = Graphics::CServer::getSingletonPtr()->getActiveScene()->getSceneMgr();
+
+		
 
 		if(entityInfo->hasAttribute("numWeapons")){
 			int numWeapons = entityInfo->getIntAttribute("numWeapons");
@@ -112,6 +124,11 @@ namespace Logic
 		if(!_graphicsEntities)
 			return false;
 
+		_scene->setPosition(0,-1.5,-8.9);
+		
+		_overlayWeapon->add3D(_scene);
+		_overlayWeapon->show();
+		
 		setTransform(_entity->getTransform());
 
 		return true;
@@ -123,8 +140,9 @@ namespace Logic
 	Graphics::CEntity* CArrayGraphics::createGraphicsEntity(std::string nombreEntidad, std::string modelo)
 	{
 		Graphics::CEntity *graphicsEntity = new Graphics::CEntity(nombreEntidad,modelo);
-		if(!_scene->addEntity(graphicsEntity))
-			return 0;
+		
+		Graphics::CServer::getSingletonPtr()->getActiveScene()->getSceneMgr()->createEntity(nombreEntidad,modelo);
+		_scene->attachObject((Ogre::MovableObject *)graphicsEntity->getEntity());
 
 		return graphicsEntity;
 
@@ -167,6 +185,7 @@ namespace Logic
 
 	void CArrayGraphics::setTransform(const Matrix4 &transform){
 		
+		
 		//en un futuro simplemente se orientara la entidad en el 3ds o similar. 
 
 		// Obtengo la camara para posicionarla en esta posicion pero algo modificada
@@ -182,7 +201,7 @@ namespace Logic
 		Math::pitch(_graphicsEntities[_actualWeapon].pitch, transformModificado);
 		_graphicsEntities[_actualWeapon]._graphicsEntity->setTransform(transformModificado);
 		_graphicsEntities[_actualWeapon]._graphicsEntity->setPosition(posicionModificada);
-
+		
 
 	}
 

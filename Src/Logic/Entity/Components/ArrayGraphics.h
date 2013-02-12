@@ -167,7 +167,8 @@ namespace Logic
 		Escena gráfica donde se encontrarán las representaciones gráficas de
 		las entidades. La guardamos para la destrucción de la entidad gráfica.
 		*/
-		Graphics::CScene* _scene;
+		Ogre::SceneNode* _scene;
+		//Graphics::CScene* _scene;
 
 
 

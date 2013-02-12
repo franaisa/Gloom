@@ -9,6 +9,7 @@ material armas
     {
         pass
         {
+			depth_check off
             illumination_stage ambient
 
             ambient 1 1 1 1

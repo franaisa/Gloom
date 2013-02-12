@@ -29,6 +29,9 @@ Contiene la implementación del componente que controla la vida de una entidad.
 #include <OgreColourValue.h>
 #include <OgreOverlay.h>
 #include <OgreTextAreaOverlayElement.h>
+#include <OgreEntity.h>
+
+
 
 
 
@@ -291,7 +294,7 @@ namespace Logic
 				panelShield->addChild(_textBoxArea[SHIELD]);
 		_overlayPlay->add2D( panelShield );
 
-
+		
 
 		///// panel AMMO
 		Ogre::OverlayContainer* panelAmmo = static_cast<Ogre::OverlayContainer*>( overlayManager.createOverlayElement( "Panel", "panelAmmo" ) );
@@ -300,7 +303,7 @@ namespace Logic
 		panelAmmo->setDimensions( relativeWidth*0.5, relativeHeight*1.5 );
         panelAmmo->setMaterialName("hudAmmo");
 
-
+		
 				_textBoxArea[AMMO] = static_cast<Ogre::TextAreaOverlayElement*>(
 				overlayManager.createOverlayElement("TextArea", "textAreaPanelAmmo"));
 				
@@ -322,33 +325,31 @@ namespace Logic
 			_weaponsBox[i][ACTIVE]->hide();
 		}
 		
-		 //_overlayPlay->show();
-
-		// me creo la escena
 		/*
-		Graphics::CScene *hud = new Graphics::CScene::getSceneMgr()->;
-		// me creo la entidad que pondre en la escena
-		Graphics::CEntity *weaponEntity = new Graphics::CEntity("Arma1","Katana.mesh");
+		Ogre::Overlay *_overlayWeapon = overlayManager.create( "_overlayHud3D" );
 
-
-		Graphics::CCamera* camera = Graphics::CServer::getSingletonPtr()->getActiveScene()->getCamera();
-		Vector3 direction = camera->getTargetCameraPosition() - camera->getCameraPosition();
+		Ogre::SceneManager *miSceneManager = Graphics::CServer::getSingletonPtr()->getActiveScene()->getSceneMgr();
+		Ogre::SceneNode* miSceneNode = new Ogre::SceneNode(miSceneManager, "hola");
+		//Ogre::SceneNode* miSceneNode = new Ogre::SceneNode(NULL);
 		
-		direction.normalise();
-		Vector3 posicionModificada = camera->getCameraPosition()- Vector3(0,2.5,0) + ((8.0f) * direction);
+
+		//Ogre::SceneNode *miSceneNode = miSceneManager->createSceneNode("sceneNodeHud3D");
+
+		Ogre::Entity *ent = miSceneManager->createEntity("overlay3D", "AK47.mesh");
+		ent->setRenderQueueGroup(Ogre::RENDER_QUEUE_OVERLAY - 1);
+		//Ogre::MaterialPtr mat = Ogre::MaterialManager::getSingleton().getByName("pruebaHud3D");
+		//mat->setDepthCheckEnabled(false);
+		//ent->setMaterial(mat);
+		ent->setMaterialName("pruebaHud3D");
+
+		miSceneNode->attachObject((Ogre::MovableObject *)ent);
+		miSceneNode->setPosition(0,-1.5,-8.9);
 		
-		//Aqui establezco la rotacion (En un futuro se rotara el modelo)
-		Matrix4 transformModificado = _entity->getTransform();
-		Math::yaw(1.55, transformModificado);
-		Math::pitch(-0.8, transformModificado);
-		weaponEntity->setTransform(transformModificado);
-		weaponEntity->setPosition(posicionModificada);
 
-
-
-		hud3D->addEntity(weaponEntity);
+		
+		_overlayWeapon->add3D(miSceneNode);
+		_overlayWeapon->show();
 		*/
-
 
 		
 		_overlayPlay->show();
