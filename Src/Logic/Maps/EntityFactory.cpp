@@ -13,7 +13,7 @@ del juego.
 #include "ComponentFactory.h"
 #include "Logic/Entity/Entity.h"
 #include "Map.h"
-
+#include "Map/MapParser.h"
 #include "Map/MapEntity.h"
 
 #include <iostream>
@@ -147,6 +147,36 @@ namespace Logic
 		return true;
 
 	} // loadBluePrints
+	typedef std::pair<std::string,Map::CEntity*> archetype;
+	bool CEntityFactory::loadArchetypes(const std::string &filename){
+		std::string completePath(BLUEPRINTS_FILE_PATH);
+		completePath = completePath + filename;
+		// Parseamos el fichero
+		if(!Map::CMapParser::getSingletonPtr()->parseFile(completePath))
+		{
+			assert(!"No se ha podido parsear el mapa.");
+			return false;
+		}
+
+		Map::CMapParser::TEntityList entityList = 
+			Map::CMapParser::getSingletonPtr()->getEntityList();
+
+		Map::CMapParser::TEntityList::const_iterator it, end;
+		it = entityList.begin();
+		end = entityList.end();
+		
+		// Creamos los arquetipos de todo lo que ha leido el parser
+		for(; it != end; it++)
+		{
+			
+				archetype elem((*it)->getType(), (*it));
+				_archetypes.insert(elem);
+		}
+
+		Map::CMapParser::getSingletonPtr()->releaseEntityList();
+		return true;
+
+	} // loadArchetypes
 	
 	//---------------------------------------------------------
 
@@ -165,7 +195,6 @@ namespace Logic
 		// si el tipo se encuentra registrado.
 		if (it != _bluePrints.end()) 
 		{
-			std::cout << "\tassembleEntity -> componente " << (*it).second.type << std::endl;
 			CEntity* ent = new CEntity(EntityID::NextID());
 			std::list<std::string>::const_iterator itc;
 			// Añadimos todos sus componentes.
