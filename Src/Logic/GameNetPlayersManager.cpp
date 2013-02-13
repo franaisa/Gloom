@@ -90,11 +90,37 @@ namespace Logic {
 
 	//______________________________________________________________________________
 
+	void CGameNetPlayersManager::setPlayerNickname(Net::NetID idPlayer, const std::string& nickname) {
+		TConnectedPlayersTable::const_iterator it = _connectedPlayers.find(idPlayer);
+		assert(it == _connectedPlayers.end() && "No se puede poner nombre al player porque no existe en el Manager");
+
+		CPlayerInfo player = it->second;
+		player.setName(nickname);
+	}
+
+	//______________________________________________________________________________
+
+	void CGameNetPlayersManager::setPlayerMesh(Net::NetID idPlayer, const std::string& mesh) {
+		TConnectedPlayersTable::const_iterator it = _connectedPlayers.find(idPlayer);
+		assert(it == _connectedPlayers.end() && "No se puede poner el nombre de la maya al player porque no existe en el Manager");
+
+		CPlayerInfo player = it->second;
+		player.setName(mesh);
+	}
+
+	//______________________________________________________________________________
+
 	CPlayerInfo CGameNetPlayersManager::getPlayer(Net::NetID idPlayer) {
 		TConnectedPlayersTable::const_iterator it = _connectedPlayers.find(idPlayer);
 		assert(it == _connectedPlayers.end() && "No se ha encontrado el id de player buscado");
 
 		return it->second;
 	} // getPlayer
+
+	//______________________________________________________________________________
+
+	unsigned int CGameNetPlayersManager::getNumberOfPlayersConnected() {
+		return _connectedPlayers.size();
+	}
 
 };

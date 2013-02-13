@@ -195,7 +195,7 @@ namespace Application {
 
 		// Construimos un buffer para alojar el mensaje de carga de mapa que
 		// enviaremos a todos los clientes mediante send
-		Net::NetMessageType msg = Net::LOAD_MAP;
+		Net::NetMessageType msg = Net::LOAD_PLAYER_INFO;
 		Net::CBuffer buffer(sizeof(msg));
 		buffer.write(&msg, sizeof(msg));
 
@@ -207,10 +207,10 @@ namespace Application {
 			_app->exitRequest();
 		}
 
-		if (!Logic::CEntityFactory::getSingletonPtr()->loadArchetypes("archetypes.txt")) {
+		/*if (!Logic::CEntityFactory::getSingletonPtr()->loadArchetypes("archetypes.txt")) {
 			Net::CManager::getSingletonPtr()->deactivateNetwork();
 			_app->exitRequest();
-		}
+		}*/
 
 		// Cargamos el nivel a partir del nombre del mapa. 
 		if (!Logic::CServer::getSingletonPtr()->loadLevel("map_server.txt")) {
@@ -223,6 +223,8 @@ namespace Application {
 
 	void CLobbyServerState::dataPacketReceived(Net::CPaquete* packet)
 	{
+		Net::NetID playerId = packet->getConexion()->getId();
+
 		Net::CBuffer buffer(packet->getDataLength());
 		buffer.write(packet->getData(), packet->getDataLength());
 		// Desplazamos el puntero al principio para realizar la lectura
@@ -234,6 +236,31 @@ namespace Application {
 		
 		switch (msg)
 		{
+		case Net::PLAYER_INFO:
+		{
+			std::string playerNick, playerMesh;
+			buffer.deserialize(playerNick);
+			buffer.deserialize(playerMesh);
+
+			std::cout << "Se quiere conectar " << playerNick << std::endl;
+			std::cout << "Con la maya " << playerMesh << std::endl;
+
+			Logic::CGameNetPlayersManager::getSingletonPtr()->setPlayerNickname(playerId, playerNick);
+			Logic::CGameNetPlayersManager::getSingletonPtr()->setPlayerMesh(playerId, playerMesh);
+
+			// Si se ha cargado la información de todos los clientes, entonces
+			// comenzamos la fase de carga del mapa
+
+			if( ++_playersFetched == Logic::CGameNetPlayersManager::getSingletonPtr()->getNumberOfPlayersConnected() ) {
+				Net::NetMessageType msg = Net::LOAD_MAP;
+				Net::CBuffer buffer(sizeof(msg));
+				buffer.write(&msg, sizeof(msg));
+
+				Net::CManager::getSingletonPtr()->send(buffer.getbuffer(), buffer.getSize());
+			}
+
+			break;
+		}
 		case Net::MAP_LOADED:
 		{
 			//Almacenamos el ID del usuario que se ha cargado el mapa.
@@ -339,9 +366,7 @@ namespace Application {
 
 			// Añadimos un nuevo jugador para esta nueva conexion
 			// En la fase de carga de datos incluiremos su nombre y modelo
-			if( !Logic::CGameNetPlayersManager::getSingletonPtr()->addPlayer( packet->getConexion()->getId() ) ) {
-
-			}
+			Logic::CGameNetPlayersManager::getSingletonPtr()->addPlayer( packet->getConexion()->getId() );
 		}
 
 	} // connexionPacketReceived

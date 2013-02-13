@@ -59,8 +59,12 @@ namespace Application
 		/** 
 		Constructor de la clase 
 		*/
-		CLobbyServerState(CBaseApplication *app) : CApplicationState(app),_waiting(true)
-				{}
+		CLobbyServerState(CBaseApplication *app) : CApplicationState(app), 
+											       _waiting(true), 
+												   _playersFetched(0) 
+		{
+			// Nada que hacer
+		}
 
 		/** 
 		Destructor 
@@ -200,6 +204,9 @@ namespace Application
 		*/
 		TNetIDCounterMap _playersLoadedByClients;
 		
+		/** Contador para la informacion obtenida de los players */
+		unsigned int _playersFetched;
+
 		/**
 		Indica si estamos en fase de espera de jugadores
 		*/

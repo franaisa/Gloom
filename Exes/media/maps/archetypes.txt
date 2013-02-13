@@ -17,7 +17,7 @@ Map = {
 	},
 	
 	Jugador = {
-		type = "Player",
+		type = "PlayerSpawn",
 		msgList= "0,1,2,6,11,14,15,16,17,23,24",
 		timeSpawn = 4,
 		life = 12,

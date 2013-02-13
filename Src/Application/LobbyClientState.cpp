@@ -131,6 +131,24 @@ namespace Application {
 
 		switch (msg)
 		{
+		case Net::LOAD_PLAYER_INFO:
+		{
+			// Obtenemos el nombre del mesh que va a usar el player
+			std::string playerModel = std::string( CEGUI::WindowManager::getSingleton().getWindow("NetLobbyClient/ModelBox")->getText().c_str() );
+
+			// Obtenemos el nombre del player
+			std::string playerNick = std::string( CEGUI::WindowManager::getSingleton().getWindow("NetLobbyClient/NickBox")->getText().c_str() );
+
+			// Enviamos los datos del player al servidor
+			Net::NetMessageType msg = Net::PLAYER_INFO;
+
+			Net::CBuffer playerData(sizeof(msg) + playerNick.size() + playerModel.size());
+			playerData.write(&msg, sizeof(msg)); // Por problemas con enumerados serializamos manualmente
+			playerData.serialize(playerNick, false);
+			playerData.serialize(playerModel, false);
+		
+			Net::CManager::getSingletonPtr()->send(playerData.getbuffer(), playerData.getSize());
+		}
 		case Net::LOAD_MAP:
 			// Cargamos el archivo con las definiciones de las entidades del nivel.
 			if (!Logic::CEntityFactory::getSingletonPtr()->loadBluePrints("blueprints_client.txt"))
@@ -279,15 +297,6 @@ namespace Application {
 
 		// Conectamos
 		Net::CManager::getSingletonPtr()->connectTo((char*)ip.c_str(),1234,1);
-
-		// Obtenemos el nombre del mesh que va a usar el player
-		std::string playerModel = std::string( CEGUI::WindowManager::getSingleton().getWindow("NetLobbyClient/ModelBox")->getText().c_str() );
-
-		// Obtenemos el nombre del player
-		std::string playerNick = std::string( CEGUI::WindowManager::getSingleton().getWindow("NetLobbyClient/NickBox")->getText().c_str() );
-
-		//std::cout << "PlayerModel = " << playerModel << std::endl;
-		//std::cout << "PlayerNick = " << playerNick << std::endl;
 
 		// Actualizamos el status
 		status->setText("Status: Connected to server. Waiting to start game...");
