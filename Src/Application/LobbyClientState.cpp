@@ -56,7 +56,7 @@ namespace Application {
 		_menuWindow = CEGUI::WindowManager::getSingleton().getWindow("NetLobbyClient");
 		
 		// Asociamos los botones del menú con las funciones que se deben ejecutar.
-		CEGUI::WindowManager::getSingleton().getWindow("NetLobbyClient/Start")->
+		CEGUI::WindowManager::getSingleton().getWindow("NetLobbyClient/Connect")->
 			subscribeEvent(CEGUI::PushButton::EventClicked, 
 				CEGUI::SubscriberSlot(&CLobbyClientState::startReleased, this));
 		
@@ -268,17 +268,24 @@ namespace Application {
 	void CLobbyClientState::doStart()
 	{
 		// Deshabilitamos el botón de Start
-		CEGUI::WindowManager::getSingleton().getWindow("NetLobbyClient/Start")->setEnabled(false);
+		CEGUI::WindowManager::getSingleton().getWindow("NetLobbyClient/Connect")->setEnabled(false);
 		
 		// Actualizamos el status
 		CEGUI::Window * status = CEGUI::WindowManager::getSingleton().getWindow("NetLobbyClient/Status");
 		status->setText("Status: Connecting...");
 
 		// Obtenemos la ip desde el Editbox
-		CEGUI::String ip = CEGUI::WindowManager::getSingleton().getWindow("NetLobbyClient/Editbox")->getText();
+		CEGUI::String ip = CEGUI::WindowManager::getSingleton().getWindow("NetLobbyClient/IPBox")->getText();
 
 		// Conectamos
 		Net::CManager::getSingletonPtr()->connectTo((char*)ip.c_str(),1234,1);
+
+		// ENVIAMOS LOS DATOS DEL PLAYER AL SERVIDOR ANTES DE COMENZAR LA PARTIDA
+		std::string playerModel = std::string( CEGUI::WindowManager::getSingleton().getWindow("NetLobbyClient/ModelBox")->getText().c_str() );
+		std::string playerNick = std::string( CEGUI::WindowManager::getSingleton().getWindow("NetLobbyClient/NickBox")->getText().c_str() );
+
+		std::cout << "PlayerModel = " << playerModel << std::endl;
+		std::cout << "PlayerNick = " << playerNick << std::endl;
 
 		// Actualizamos el status
 		status->setText("Status: Connected to server. Waiting to start game...");
