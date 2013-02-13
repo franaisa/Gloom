@@ -178,7 +178,7 @@ void CPhysicController::onShapeHit (const PxControllerShapeHit &hit)
 		return;
 	
 	// Aplicar una fuerza a la entidad en la dirección del movimiento
-	actor->addForce(hit.dir * hit.length * 1000.0f);
+	//actor->addForce(hit.dir * hit.length * 1000.0f);
 }
 
 //---------------------------------------------------------

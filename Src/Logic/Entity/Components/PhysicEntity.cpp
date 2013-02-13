@@ -22,6 +22,9 @@ para representar character controllers.
 #include "Logic/Messages/MessageKinematicMove.h"
 #include "Logic/Messages/MessageTouched.h"
 #include "Logic/Messages/MessageUntouched.h"
+#include "Logic/Messages/MessageWakeUp.h"
+#include "Logic/Messages/MessageSleep.h"
+
 
 #define _USE_MATH_DEFINES
 #include <math.h>
@@ -65,6 +68,7 @@ bool CPhysicEntity::spawn(CEntity *entity, CMap *map, const Map::CEntity *entity
 	_actor = createActor(entityInfo);
 
 	_inTrigger=false;
+	_sleepUntil=false;
 	return true;
 } 
 
@@ -72,24 +76,36 @@ bool CPhysicEntity::spawn(CEntity *entity, CMap *map, const Map::CEntity *entity
 
 bool CPhysicEntity::accept(CMessage *message)
 {
-	return message->getMessageType() == Message::KINEMATIC_MOVE;
+	return message->getMessageType() == Message::KINEMATIC_MOVE ||
+		message->getMessageType() == Message::SLEEP ||
+		message->getMessageType() == Message::WAKEUP ;
 }
 
 //---------------------------------------------------------
 
 void CPhysicEntity::process(CMessage *message)
 {
-
+	PxRigidDynamic *dinActor;
 	switch(message->getMessageType()) {
 	case Message::KINEMATIC_MOVE:
 		// Acumulamos el vector de desplazamiento para usarlo posteriormente en 
 		// el método tick.
 		_movement += ((CMessageKinematicMove*)message)->getMovement();
 		break;
+	case Message::SLEEP:
+		dinActor = _actor->isRigidDynamic();
+		//dinActor->putToSleep();
+		_sleepUntil=true;
+		break;
+	case Message::WAKEUP:
+		dinActor = _actor->isRigidDynamic();
+		dinActor->wakeUp();
+		_sleepUntil=false;
+		break;
 	}
 }
-
 //---------------------------------------------------------
+
 
 void CPhysicEntity::tick(unsigned int msecs) 
 {
@@ -101,10 +117,15 @@ void CPhysicEntity::tick(unsigned int msecs)
 	PxRigidDynamic *dinActor = _actor->isRigidDynamic();
 	if (!dinActor) 
 		return;
-	//std::cout << "FISICA DINAMICA,POSICION: " << _entity->getPosition() << std::endl;
+
+	if(_sleepUntil)
+		dinActor->putToSleep();
+	
 	// Actualizar la posición y la orientación de la entidad lógica usando la 
 	// información proporcionada por el motor de física	
-	_entity->setTransform(_server->getActorTransform(dinActor));
+	// Ñapa legendaria, solo para los items por cuestiones de eficiencia
+	if(_entity->getType().compare("ItemSpawn")!=0)
+		_entity->setTransform(_server->getActorTransform(dinActor));
 
 	// Si el objeto físico es cinemático intentamos moverlo de acuerdo 
 	// a los mensajes KINEMATIC_MOVE recibidos 

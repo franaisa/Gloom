@@ -4,3 +4,4 @@ Enemy CGraphics CPhysicEntity CLife
 Camera CCamera
 ItemSpawn CGraphics CPhysicEntity CFloatingMovement CSpawnItemManager 
 SpawnPoint CPhysicEntity
+Jumper CGraphics CPhysicEntity CJumper

@@ -22,6 +22,8 @@ gráfica de la entidad.
 #include "Graphics/StaticEntity.h"
 
 #include "Logic/Messages/MessageTransform.h"
+#include "Logic/Messages/MessageSleep.h"
+#include "Logic/Messages/MessageWakeUp.h"
 
 #include <OgreSceneManager.h>
 #include "OgreEntity.h"
@@ -103,7 +105,8 @@ namespace Logic
 				return 0;
 		}
 
-		//_graphicsEntity->setTransform(_entity->getTransform());		
+		
+		_graphicsEntity->setTransform(_entity->getTransform());		
 		
 		return _graphicsEntity;
 
@@ -117,7 +120,9 @@ namespace Logic
 
 	bool CGraphics::accept(CMessage *message)
 	{
-		return (message->getMessageType() == Message::SET_TRANSFORM);
+		return (message->getMessageType() == Message::SET_TRANSFORM || 
+			message->getMessageType() == Message::WAKEUP || 
+			message->getMessageType() == Message::SLEEP );
 	} // accept
 	
 	//---------------------------------------------------------
@@ -128,6 +133,13 @@ namespace Logic
 		{
 		case Message::SET_TRANSFORM:
 			_graphicsEntity->setTransform(((CMessageTransform*)message)->getTransform());
+			break;
+		case Message::SLEEP:
+			sleep();
+			break;
+		case Message::WAKEUP:
+			wakeup();
+			break;
 		}
 
 	} // process
@@ -136,6 +148,14 @@ namespace Logic
 
 	void CGraphics::setVisible(bool renderGraphicEntity) {
 		_graphicsEntity->setVisible(renderGraphicEntity);
+	}
+
+	void CGraphics::sleep() {
+		setVisible(false);
+	}
+
+	void CGraphics::wakeup() {
+		setVisible(true);
 	}
 
 } // namespace Logic

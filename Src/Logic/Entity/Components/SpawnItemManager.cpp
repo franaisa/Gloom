@@ -21,6 +21,8 @@
 #include "Logic/Messages/MessageAddShield.h"
 #include "Logic/Messages/MessageAddAmmo.h"
 #include "Logic/Messages/MessageAddWeapon.h"
+#include "Logic/Messages/MessageSleep.h"
+#include "Logic/Messages/MessageWakeUp.h"
 
 #include "Net/Manager.h"
 
@@ -40,13 +42,15 @@ namespace Logic
 				_isRespawning = false;
 				_timer = 0;
 
-				// Activar entidad grafica
-				_entity->getComponent<CGraphics>("CGraphics")->activate();
-				_entity->getComponent<CGraphics>("CGraphics")->setVisible(true);
+				// Activar entidad grafica y despertar la fisica
+				CMessageWakeUp* m = new CMessageWakeUp();
+				_entity->emitMessage(m);
+				//_entity->getComponent<CGraphics>("CGraphics")->activate();
+				//_entity->getComponent<CGraphics>("CGraphics")->setVisible(true);
 
 				// Activar entidad fisica (solo si soy el servidor o single player)
 				if(Net::CManager::getSingletonPtr()->imServer() || (!Net::CManager::getSingletonPtr()->imServer() && !Net::CManager::getSingletonPtr()->imClient()))
-					_entity->getComponent<CPhysicEntity>("CPhysicEntity")->activate();
+					;//_entity->getComponent<CPhysicEntity>("CPhysicEntity")->activate();
 			}
 		}
 	} // tick
@@ -94,13 +98,15 @@ namespace Logic
 	//---------------------------------------------------------
 	void CSpawnItemManager::itemGrabbed(CEntity* actor) {
 
-		// Desactivar entidad grafica
-		_entity->getComponent<CGraphics>("CGraphics")->deactivate();
-		_entity->getComponent<CGraphics>("CGraphics")->setVisible(false);
+		// Poner a dormir la entidad física y dormir la física
+		CMessageSleep* m = new CMessageSleep();
+		_entity->emitMessage(m);
+		//_entity->getComponent<CGraphics>("CGraphics")->deactivate();
+		//_entity->getComponent<CGraphics>("CGraphics")->setVisible(false);
 		
 		if(Net::CManager::getSingletonPtr()->imServer() || (!Net::CManager::getSingletonPtr()->imServer() && !Net::CManager::getSingletonPtr()->imClient())){
-			// Activar entidad fisica
-			_entity->getComponent<CPhysicEntity>("CPhysicEntity")->deactivate();
+			// Desactivar entidad fisica
+			//_entity->getComponent<CPhysicEntity>("CPhysicEntity")->deactivate();
 		
 			// Mandar el mensaje que corresponda a la entidad actuadora
 			// en funcion del item que se haya cogido (comprobando el id)

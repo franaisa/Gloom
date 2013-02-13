@@ -146,6 +146,8 @@ namespace Logic
 		//Booleano que controla si hay alguien dentro del posible trigger que puede tener la entidad, por defecto desactivado
 		bool _inTrigger;
 
+		bool _sleepUntil;
+
 	}; // class CPhysicEntity
 
 	REG_FACTORY(CPhysicEntity);

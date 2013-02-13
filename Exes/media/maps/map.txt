@@ -2,7 +2,7 @@ Map = {
 	
 	World = {
 		type = "World",
-		position = {0, -500, 0},
+		position = {0, 0, 0},
 		scale = {1, 1, 1},
 		orientation = 0,
 		static = true,
@@ -13,9 +13,21 @@ Map = {
 		physic_group = 0,
 	},
 	
+	Jumper1 = {
+		type = "Jumper",
+		position = {51.0, 0.0, 1.0},
+		model = "health1.mesh",
+		power = 0.35,
+		physic_entity = "rigid",
+		physic_trigger = true,
+		physic_type = "static",
+		physic_shape = "box",
+		physic_dimensions = { 2, 2, 2 },
+	},
+	
 	Point1 = {
 		type = "SpawnPoint",
-		position = {67.0, 2.0, 42.0},
+		position = {-75.0, 0.0, 0.0},
 		physic_entity = "rigid",
 		physic_trigger = true,
 		physic_type = "static",
@@ -25,7 +37,7 @@ Map = {
 	
 	Point2 = {
 		type = "SpawnPoint",
-		position = {-67.0, 5.0, 42.0},
+		position = {-150.0, 0.0, 0.0},
 		physic_entity = "rigid",
 		physic_trigger = true,
 		physic_type = "static",
@@ -35,7 +47,7 @@ Map = {
 	
 	Point3 = {
 		type = "SpawnPoint",
-		position = {-47.0, 5.0, 42.0},
+		position = {130.0, 0.0, 0.0},
 		physic_entity = "rigid",
 		physic_trigger = true,
 		physic_type = "static",
@@ -73,9 +85,10 @@ Map = {
 		orbitalRotationSpeed = 0.001,
 		physic_entity = "rigid",
 		physic_trigger = true,
-		physic_type = "static",
+		physic_type = "kinematic",
 		physic_shape = "sphere",
 		physic_radius = 3,
+		physic_mass = 10,
 	},
 	
 	Sniper = {

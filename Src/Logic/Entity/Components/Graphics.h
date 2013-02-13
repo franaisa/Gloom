@@ -88,6 +88,10 @@ namespace Logic
 		void setTransform(const Matrix4& transform);
 
 		void setVisible(bool renderGraphicEntity);
+
+		void sleep();
+
+		void wakeup();
 	
 	protected:
 
