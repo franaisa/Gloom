@@ -21,6 +21,7 @@ el mundo físico usando character controllers.
 #include "Logic/Messages/MessageAvatarWalk.h"
 #include "Logic/Messages/MessageCollisionDown.h"
 #include "Logic/Messages/MessageSetPhysicPosition.h"
+#include "Logic/Messages/MessageCealing.h"
 
 #include <PxPhysicsAPI.h>
 
@@ -110,6 +111,13 @@ void CPhysicController::tick(unsigned int msecs)
 	// de tipo AVATAR_WALK. 
 	unsigned flags = _server->moveController(_controller, _movement, msecs);
 
+	//Si tocamos con el techo lo notificamos
+	if((flags & PxControllerFlag::eCOLLISION_UP)){
+		Logic::CMessageCealing *em=new Logic::CMessageCealing();
+		_entity->emitMessage(em);
+	}
+	
+	//Si hay cambio de estado en el flag de tocar suelo
 	if(_falling != !(flags & PxControllerFlag::eCOLLISION_DOWN)){
 		// Actualizamos el flag que indica si estamos cayendo
 		_falling =  !(flags & PxControllerFlag::eCOLLISION_DOWN);

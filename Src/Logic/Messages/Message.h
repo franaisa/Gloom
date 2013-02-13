@@ -65,7 +65,8 @@ namespace Logic
 			WAKEUP					= 0x0000001B,
 			SLEEP					= 0x0000001C,
 			ACTIVATE				= 0x0000001D,
-			DEACTIVATE				= 0x0000001E
+			DEACTIVATE				= 0x0000001E,
+			CEALING					= 0x0000001F
 		};
 	}
 
