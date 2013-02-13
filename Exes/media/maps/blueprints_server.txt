@@ -3,3 +3,4 @@ EnemySpawn CAvatarController CPhysicController CShootShotGun CShootMiniGun CShoo
 Enemy CGraphics CPhysicEntity CLife
 Camera CCamera
 ItemSpawn CGraphics CPhysicEntity CFloatingMovement CSpawnItemManager CNetConnector
+SpawnPoint CPhysicEntity
