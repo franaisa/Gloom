@@ -95,10 +95,10 @@ void CCollisionManager::onTrigger(PxTriggerPair *pairs, PxU32 count)
 		IPhysics *otherComponent = (IPhysics *) pairs[i].otherShape->getActor().userData;
 		assert(otherComponent);
 
-		//if(triggerComponent->isActivate() && otherComponent->isActivate()) {
-			triggerComponent->onTrigger(otherComponent, enter);
-			otherComponent->onTrigger(triggerComponent, enter);
-		//}
+		
+		triggerComponent->onTrigger(otherComponent, enter);
+		otherComponent->onTrigger(triggerComponent, enter);
+		
 	}	
 }
 

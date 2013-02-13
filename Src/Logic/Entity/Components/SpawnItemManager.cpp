@@ -23,6 +23,9 @@
 #include "Logic/Messages/MessageAddWeapon.h"
 #include "Logic/Messages/MessageSleep.h"
 #include "Logic/Messages/MessageWakeUp.h"
+#include "Logic/Messages/MessageActivate.h"
+#include "Logic/Messages/MessageDeactivate.h"
+
 
 #include "Net/Manager.h"
 
@@ -43,10 +46,9 @@ namespace Logic
 				_timer = 0;
 
 				// Activar entidad grafica y despertar la fisica
-				CMessageWakeUp* m = new CMessageWakeUp();
+				CMessageActivate* m = new CMessageActivate();
 				_entity->emitMessage(m);
-				//_entity->getComponent<CGraphics>("CGraphics")->activate();
-				//_entity->getComponent<CGraphics>("CGraphics")->setVisible(true);
+
 
 				// Activar entidad fisica (solo si soy el servidor o single player)
 				if(Net::CManager::getSingletonPtr()->imServer() || (!Net::CManager::getSingletonPtr()->imServer() && !Net::CManager::getSingletonPtr()->imClient()))
@@ -99,10 +101,8 @@ namespace Logic
 	void CSpawnItemManager::itemGrabbed(CEntity* actor) {
 
 		// Poner a dormir la entidad física y dormir la física
-		CMessageSleep* m = new CMessageSleep();
+		CMessageDeactivate* m = new CMessageDeactivate();
 		_entity->emitMessage(m);
-		//_entity->getComponent<CGraphics>("CGraphics")->deactivate();
-		//_entity->getComponent<CGraphics>("CGraphics")->setVisible(false);
 		
 		if(Net::CManager::getSingletonPtr()->imServer() || (!Net::CManager::getSingletonPtr()->imServer() && !Net::CManager::getSingletonPtr()->imClient())){
 			// Desactivar entidad fisica
