@@ -89,10 +89,6 @@ namespace Logic
 
 		void setVisible(bool renderGraphicEntity);
 
-		void sleep();
-
-		void wakeup();
-	
 	protected:
 
 		/**

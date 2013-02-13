@@ -63,7 +63,9 @@ namespace Logic
 			CAMERA_TO_ENEMY			= 0x00000019,
 			JUMPER					= 0X0000001A,
 			WAKEUP					= 0x0000001B,
-			SLEEP					= 0x0000001C
+			SLEEP					= 0x0000001C,
+			ACTIVATE				= 0x0000001D,
+			DEACTIVATE				= 0x0000001E
 		};
 	}
 

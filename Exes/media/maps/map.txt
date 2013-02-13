@@ -85,10 +85,9 @@ Map = {
 		orbitalRotationSpeed = 0.001,
 		physic_entity = "rigid",
 		physic_trigger = true,
-		physic_type = "kinematic",
+		physic_type = "static",
 		physic_shape = "sphere",
 		physic_radius = 3,
-		physic_mass = 10,
 	},
 	
 	Sniper = {

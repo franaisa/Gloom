@@ -77,30 +77,39 @@ bool CPhysicEntity::spawn(CEntity *entity, CMap *map, const Map::CEntity *entity
 bool CPhysicEntity::accept(CMessage *message)
 {
 	return message->getMessageType() == Message::KINEMATIC_MOVE ||
-		message->getMessageType() == Message::SLEEP ||
-		message->getMessageType() == Message::WAKEUP ;
+		message->getMessageType() == Message::ACTIVATE ||
+		message->getMessageType() == Message::DEACTIVATE;
 }
 
 //---------------------------------------------------------
 
 void CPhysicEntity::process(CMessage *message)
 {
-	PxRigidDynamic *dinActor;
+	unsigned int nbShapes;
+	PxShape** actorShapes;
 	switch(message->getMessageType()) {
 	case Message::KINEMATIC_MOVE:
 		// Acumulamos el vector de desplazamiento para usarlo posteriormente en 
 		// el método tick.
 		_movement += ((CMessageKinematicMove*)message)->getMovement();
 		break;
-	case Message::SLEEP:
-		dinActor = _actor->isRigidDynamic();
-		//dinActor->putToSleep();
-		_sleepUntil=true;
+	case Message::ACTIVATE:
+		nbShapes = _actor->getNbShapes();
+		actorShapes = new PxShape* [nbShapes];
+		_actor->getShapes(actorShapes, nbShapes);
+		for(int i=0;i<nbShapes;i++){
+			actorShapes[i]->setFlag(PxShapeFlag::eTRIGGER_SHAPE,true);
+			actorShapes[i]->setFlag(PxShapeFlag::eSCENE_QUERY_SHAPE,true);
+		}
 		break;
-	case Message::WAKEUP:
-		dinActor = _actor->isRigidDynamic();
-		dinActor->wakeUp();
-		_sleepUntil=false;
+	case Message::DEACTIVATE:
+		nbShapes = _actor->getNbShapes();
+		actorShapes = new PxShape* [nbShapes];
+		_actor->getShapes(actorShapes, nbShapes);
+		for(int i=0;i<nbShapes;i++){
+			actorShapes[i]->setFlag(PxShapeFlag::eTRIGGER_SHAPE,false);
+			actorShapes[i]->setFlag(PxShapeFlag::eSCENE_QUERY_SHAPE,false);
+		}
 		break;
 	}
 }
@@ -118,14 +127,9 @@ void CPhysicEntity::tick(unsigned int msecs)
 	if (!dinActor) 
 		return;
 
-	if(_sleepUntil)
-		dinActor->putToSleep();
-	
 	// Actualizar la posición y la orientación de la entidad lógica usando la 
 	// información proporcionada por el motor de física	
-	// Ñapa legendaria, solo para los items por cuestiones de eficiencia
-	if(_entity->getType().compare("ItemSpawn")!=0)
-		_entity->setTransform(_server->getActorTransform(dinActor));
+	_entity->setTransform(_server->getActorTransform(dinActor));
 
 	// Si el objeto físico es cinemático intentamos moverlo de acuerdo 
 	// a los mensajes KINEMATIC_MOVE recibidos 
