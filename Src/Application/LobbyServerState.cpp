@@ -339,7 +339,9 @@ namespace Application {
 
 			// Añadimos un nuevo jugador para esta nueva conexion
 			// En la fase de carga de datos incluiremos su nombre y modelo
-			//Logic::CGameNetPlayersManager::getSingletonPtr()->addPlayer( packet->getConexion()->getId() );
+			if( !Logic::CGameNetPlayersManager::getSingletonPtr()->addPlayer( packet->getConexion()->getId() ) ) {
+
+			}
 		}
 
 	} // connexionPacketReceived

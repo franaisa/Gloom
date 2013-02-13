@@ -134,7 +134,7 @@ public:
 	 */
 	void serialize(const std::string& data, bool crc);
 
-	void deserialize(std::string& data, int size);
+	void deserialize(std::string& data);
 	/**
 	 * Escribe un unsigned char en el buffer
 	 * @param data son los datos a escribir

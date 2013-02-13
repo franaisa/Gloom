@@ -209,14 +209,19 @@ namespace Net {
 
 			write(&crc, sizeof(crc));
 		}else{
+			unsigned int stringSize = data.size();
+			write(&stringSize, sizeof(unsigned int));
 			write(const_cast <char*>(data.c_str()), data.size());
 		}
 	}
 
-	void CBuffer::deserialize(std::string& data, int size) {
+	void CBuffer::deserialize(std::string& data) {
+		int size;
+		read(&size, sizeof(unsigned int));
+
 		char * aux = (char*)malloc(size);
 		read(aux, size);
-		data.assign(aux,size);
+		data.assign(aux, size);
 	}
 
 	//__________________________________________________________________

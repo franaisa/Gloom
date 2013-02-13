@@ -73,7 +73,7 @@ namespace Logic {
 		/** Inserta un nuevo jugador */
 		bool addPlayer(Net::NetID idPlayer, const std::string& name, const std::string& mesh);
 
-		/** Inserta un nuevo jugador con la info asociada a null */
+		/** Inserta un nuevo jugador con la info asociada sin rellenar */
 		bool addPlayer(Net::NetID idPlayer);
 
 		/** Devuelve un jugador si es que ha sido registrado */

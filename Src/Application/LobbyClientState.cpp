@@ -280,12 +280,14 @@ namespace Application {
 		// Conectamos
 		Net::CManager::getSingletonPtr()->connectTo((char*)ip.c_str(),1234,1);
 
-		// ENVIAMOS LOS DATOS DEL PLAYER AL SERVIDOR ANTES DE COMENZAR LA PARTIDA
+		// Obtenemos el nombre del mesh que va a usar el player
 		std::string playerModel = std::string( CEGUI::WindowManager::getSingleton().getWindow("NetLobbyClient/ModelBox")->getText().c_str() );
+
+		// Obtenemos el nombre del player
 		std::string playerNick = std::string( CEGUI::WindowManager::getSingleton().getWindow("NetLobbyClient/NickBox")->getText().c_str() );
 
-		std::cout << "PlayerModel = " << playerModel << std::endl;
-		std::cout << "PlayerNick = " << playerNick << std::endl;
+		//std::cout << "PlayerModel = " << playerModel << std::endl;
+		//std::cout << "PlayerNick = " << playerNick << std::endl;
 
 		// Actualizamos el status
 		status->setText("Status: Connected to server. Waiting to start game...");

@@ -39,8 +39,7 @@ namespace Logic {
 		_tempBuffer = new Net::CBuffer((sizeof(int) * 2) + sizeof(bool) + sizeof(unsigned int));
 		_tempBuffer->serialize(std::string("CMessageSetAnimation"),true);
 		_tempBuffer->serialize(_bool);
-		_tempBuffer->serialize(_string.size());
-		_tempBuffer->serialize(_string,false);
+		_tempBuffer->serialize(_string, false);
 		return _tempBuffer;
 	}//
 	//----------------------------------------------------------
@@ -48,8 +47,7 @@ namespace Logic {
 	void CMessageSetAnimation::deserialize(Net::CBuffer& buffer) {
 		unsigned int size;
 		buffer.deserialize(_bool);
-		buffer.deserialize(size);
-		buffer.deserialize(_string,size);
+		buffer.deserialize(_string);
 	}
 
 };
