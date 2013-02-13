@@ -60,27 +60,29 @@ namespace Logic {
 		{
 			if((*it)->getType() == "PlayerSpawn")
 			{
-
-				// @todo Guardamos los valores de la entidad especial en el mapa (_playerInfo). 
-				// Cambiamos el type de los Map::CEntity de PlayerSpawn a Player
-				// Para cuando creemos jugadores. No es la forma más elegante de hacerlo,
-				// pero si la más rápida.
-				(*it)->setType("Player");
-				map->setPlayerInfo(*it);
+				Map::CEntity * info = entityFactory->getInfo((*it)->getType());
+				info->setAttribute((*it));
+				info->setType("Player");
+				map->setPlayerInfo(info);
 			}
 			else if((*it)->getType() == "RemotePlayer")
 			{
-
-				// guardamos la información de lo que serán los demas jugadores que juegen en nuestra partida
-				(*it)->setType("EnemySpawn");
-				map->setRemotePlayerInfo(*it);
+				Map::CEntity * info = entityFactory->getInfo((*it)->getType());
+				info->setAttribute((*it));
+				info->setType("EnemySpawn");
+				map->setRemotePlayerInfo(info);
 			}
 			else 
 			{
-				//out << (*it)->getType() << endl;
-
-				// La propia factoría se encarga de añadir la entidad al mapa.
-				CEntity *entity = entityFactory->createEntity((*it),map);
+				CEntity *entity;
+				Map::CEntity * info = entityFactory->getInfo((*it)->getType());
+				if(!info){
+					entity = entityFactory->createEntity((*it),map);
+				}else{
+					info->setAttribute((*it));
+					info->setName((*it)->getName());
+					entity = entityFactory->createEntity(info,map);
+				}
 				assert(entity && "No se pudo crear una entidad del mapa");
 			}
 		}

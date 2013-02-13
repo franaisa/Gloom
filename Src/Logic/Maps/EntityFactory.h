@@ -201,6 +201,15 @@ namespace Logic
 		void deleteDefferedEntities();
 
 		/**
+		Método que dado un tipo de entidad, devuelve su informacion.
+
+		@param type el tipo de entidad que se está buscando
+		@return Información de la entidad, o NULL en caso de no
+		encontrarla
+		*/
+		Map::CEntity * getInfo(std::string type);
+
+		/**
 		Estructura que define una entidad blueprint.
 		*/
 		typedef struct
