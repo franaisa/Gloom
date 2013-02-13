@@ -27,6 +27,29 @@ namespace Map {
 	} // setAttribute
 
 	//--------------------------------------------------------
+	//--------------------------------------------------------
+
+	void CEntity::setAttribute(CEntity *info)
+	{
+		TAttrList::const_iterator it = info->_attributes.begin();
+		for(;it!=info->_attributes.end();++it){
+			//buscamos por si ya existia el atributo y hay que modificarlo
+			TAttrList::const_iterator it2 = _attributes.find((*it).first);
+			if(it2!=_attributes.end()){//si lo ha encontrado ...
+				//lo eliminamos de la tabla (para no dejar rastro)
+				_attributes.erase(it2);
+				//metemos los valores nuevos en la tabla
+				TSSPar elem((*it).first, (*it).second);
+				_attributes.insert(elem);
+			}else{// si no lo ha encotnrado
+				TSSPar elem((*it).first, (*it).second);
+				_attributes.insert(elem);
+			}
+		}
+
+	} // setAttribute
+
+	//--------------------------------------------------------
 
 	bool CEntity::hasAttribute(const std::string &attr) const
 	{
@@ -105,5 +128,8 @@ namespace Map {
 		return Vector3(x,y,z);
 
 	} // getVector3Attribute
+
+
+
 
 } // namespace Map

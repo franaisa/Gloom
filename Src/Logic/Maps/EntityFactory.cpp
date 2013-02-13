@@ -161,7 +161,7 @@ namespace Logic
 		Map::CMapParser::TEntityList entityList = 
 			Map::CMapParser::getSingletonPtr()->getEntityList();
 
-		Map::CMapParser::TEntityList::const_iterator it, end;
+		Map::CMapParser::TEntityList::iterator it, end;
 		it = entityList.begin();
 		end = entityList.end();
 		
@@ -169,10 +169,10 @@ namespace Logic
 		for(; it != end; it++)
 		{
 			
-				archetype elem((*it)->getType(), (*it));
+			Map::CEntity  *clone = (*it)->clone();
+			archetype elem((*it)->getType(), clone);
 				_archetypes.insert(elem);
 		}
-
 		Map::CMapParser::getSingletonPtr()->releaseEntityList();
 		return true;
 
@@ -348,5 +348,14 @@ namespace Logic
 			_pendingEntities.clear();
 
 	} // deleteDefferedObjects
+
+
+	Map::CEntity * CEntityFactory::getInfo(std::string type){
+		std::map<std::string,Map::CEntity *>::const_iterator it = _archetypes.find(type);
+		if(it!=_archetypes.end()){
+			return (*it).second;
+		}
+		return NULL;
+	}
 
 } // namespace Logic
