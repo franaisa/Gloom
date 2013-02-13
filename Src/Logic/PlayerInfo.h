@@ -33,6 +33,7 @@ namespace Logic {
 	*/
 	class CPlayerInfo {
 	public:
+		CPlayerInfo() : _rank(0) {}
 		CPlayerInfo(std::string name, std::string mesh);
 		CPlayerInfo(const CPlayerInfo& rhs);
 		~CPlayerInfo();

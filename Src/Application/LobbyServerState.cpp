@@ -34,6 +34,8 @@ Contiene la implementación del estado de lobby del servidor.
 #include <CEGUIWindow.h>
 #include <elements/CEGUIPushButton.h>
 
+#include "Logic/GameNetPlayersManager.h"
+
 namespace Application {
 
 	CLobbyServerState::~CLobbyServerState() 
@@ -227,17 +229,13 @@ namespace Application {
 		buffer.reset();
 
 		Net::NetMessageType msg;
-		//memcpy(&msg, packet->getData(),sizeof(msg));
+		//memcpy(&msg, packet->getData(), sizeof(msg));
 		buffer.read(&msg, sizeof(msg));
 		
 		switch (msg)
 		{
 		case Net::MAP_LOADED:
 		{
-
-			// @todo Borrar las siguientes 3 líneas. Están de momento para que
-			// se lance el estado de juego al cargar el mapa
-
 			//Almacenamos el ID del usuario que se ha cargado el mapa.
 			_mapLoadedByClients.push_back(packet->getConexion()->getId());
 
@@ -338,6 +336,10 @@ namespace Application {
 
 			//Almacenamos el ID del usuario que se ha conectado.
 			_clients.push_back(packet->getConexion()->getId());
+
+			// Añadimos un nuevo jugador para esta nueva conexion
+			// En la fase de carga de datos incluiremos su nombre y modelo
+			//Logic::CGameNetPlayersManager::getSingletonPtr()->addPlayer( packet->getConexion()->getId() );
 		}
 
 	} // connexionPacketReceived
