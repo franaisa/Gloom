@@ -135,11 +135,13 @@
     <ClCompile Include="..\..\Src\Logic\Messages\MessageRebound.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageSetAnimation.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageSetPhysicPosition.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Messages\MessageSleep.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageStopAnimation.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageSwitch.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageTouched.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageTransform.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageUntouched.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Messages\MessageWakeUp.cpp" />
     <ClCompile Include="..\..\Src\Logic\Server.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -205,11 +207,13 @@
     <ClInclude Include="..\..\Src\Logic\Messages\MessageRebound.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageSetAnimation.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageSetPhysicPosition.h" />
+    <ClInclude Include="..\..\Src\Logic\Messages\MessageSleep.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageStopAnimation.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageSwitch.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageTouched.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageTransform.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageUntouched.h" />
+    <ClInclude Include="..\..\Src\Logic\Messages\MessageWakeUp.h" />
     <ClInclude Include="..\..\Src\Logic\Server.h" />
   </ItemGroup>
   <ItemGroup>

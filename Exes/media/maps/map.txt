@@ -27,7 +27,7 @@ Map = {
 	
 	Point1 = {
 		type = "SpawnPoint",
-		position = {67.0, 2.0, 42.0},
+		position = {-75.0, 0.0, 0.0},
 		physic_entity = "rigid",
 		physic_trigger = true,
 		physic_type = "static",
@@ -37,7 +37,7 @@ Map = {
 	
 	Point2 = {
 		type = "SpawnPoint",
-		position = {-67.0, 5.0, 42.0},
+		position = {-150.0, 0.0, 0.0},
 		physic_entity = "rigid",
 		physic_trigger = true,
 		physic_type = "static",
@@ -47,7 +47,7 @@ Map = {
 	
 	Point3 = {
 		type = "SpawnPoint",
-		position = {-47.0, 5.0, 42.0},
+		position = {130.0, 0.0, 0.0},
 		physic_entity = "rigid",
 		physic_trigger = true,
 		physic_type = "static",
@@ -85,9 +85,10 @@ Map = {
 		orbitalRotationSpeed = 0.001,
 		physic_entity = "rigid",
 		physic_trigger = true,
-		physic_type = "static",
+		physic_type = "kinematic",
 		physic_shape = "sphere",
 		physic_radius = 3,
+		physic_mass = 10,
 	},
 	
 	Sniper = {

@@ -259,7 +259,7 @@ namespace Logic
 	//---------------------------------------------------------
 	void CAvatarController::tick(unsigned int msecs)
 	{
-
+		//std::cout << _entity->getPosition() << std::endl;
 		IComponent::tick(msecs);
 
 		//Vector dirección que mandaremos a la física
