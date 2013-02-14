@@ -164,20 +164,6 @@ namespace Logic
 		Graphics::CScene *getScene() {return _scene;}
 		
 		/**
-		Establece la información para la creación del jugador local.
-
-		@param playerInfo Propiedades de la inicialización.
-		*/
-		void setPlayerInfo(Map::CEntity* playerInfo) {_playerInfo = playerInfo;}
-
-		/**
-		Establece la información para la creación de los jugadores.
-
-		@param playerInfo Propiedades de la inicialización.
-		*/
-		void setRemotePlayerInfo(Map::CEntity* playerInfo) {_remotePlayerInfo = playerInfo;}
-		
-		/**
 		Crea un nuevo jugador y le porporciona un nombre determinado.
 
 		@param name Nombre del jugador.
@@ -218,16 +204,6 @@ namespace Logic
 		las entidades.
 		*/
 		Graphics::CScene* _scene;
-
-		/**
-		Propiedades de la inicialización del player local.
-		*/
-		Map::CEntity* _playerInfo;
-
-		/**
-		Propiedades de la inicialización de los players remotos.
-		*/
-		Map::CEntity* _remotePlayerInfo;
 
 		/**
 		Número de jugadores creados hasta el momento.

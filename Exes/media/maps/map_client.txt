@@ -51,18 +51,6 @@ Map = {
 		respawnTime = 5,
 	},
 	
-	David = {
-		type = "PlayerSpawn",
-		position = {0, 8, 0},
-		isPlayer = true,
-	},
-	
-	David = {
-		type = "Player",
-		position = {0, 8, 0},
-		isPlayer = true,
-	},
-	
 	Camera = {
 		type = "Camera",
 		height = 8,
