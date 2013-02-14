@@ -50,9 +50,9 @@ namespace Application
 		/******************
 			IOBSERVER
 		******************/
-		virtual void dataPacketReceived(Net::CPaquete* packet) {}
-		virtual void connexionPacketReceived(Net::CPaquete* packet) { std::cout << "Alguien se quiere conectar" << std::endl; }
-		virtual void disconnexionPacketReceived(Net::CPaquete* packet) { std::cout << "Un maricon se quiere ir" << std::endl; }
+		virtual void dataPacketReceived(Net::CPaquete* packet);
+		virtual void connexionPacketReceived(Net::CPaquete* packet);
+		virtual void disconnexionPacketReceived(Net::CPaquete* packet);
 
 	}; // CGameState
 

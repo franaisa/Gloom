@@ -189,10 +189,8 @@ namespace Application {
 			//memcpy(&id, packet->getData() + sizeof(msg), sizeof(id));
 			buffer.read(&id, sizeof(id));
 			buffer.read(&entityID, sizeof(entityID));
-			std::string name("Player");
-			std::stringstream number;
-			number << id;
-			name.append(number.str());
+			std::string name;
+			buffer.deserialize(name);
 
 			//llamo al metodo de creacion del jugador
 			if(id == Net::CManager::getSingletonPtr()->getID()) {//si soy yo, me creo como jugador local

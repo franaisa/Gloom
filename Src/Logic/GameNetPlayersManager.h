@@ -76,12 +76,16 @@ namespace Logic {
 		/** Inserta un nuevo jugador con la info asociada sin rellenar */
 		bool addPlayer(Net::NetID idPlayer);
 
+		bool removePlayer(Net::NetID idPlayer);
+
 		void setPlayerNickname(Net::NetID idPlayer, const std::string& nickname);
 
 		void setPlayerMesh(Net::NetID idPlayer, const std::string& mesh);
 
 		/** Devuelve un jugador si es que ha sido registrado */
 		CPlayerInfo getPlayer(Net::NetID idPlayer);
+
+		std::string getPlayerNickname(Net::NetID idPlayer);
 
 		unsigned int getNumberOfPlayersConnected();
 

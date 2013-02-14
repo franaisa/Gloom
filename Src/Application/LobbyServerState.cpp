@@ -242,11 +242,8 @@ namespace Application {
 			buffer.deserialize(playerNick);
 			buffer.deserialize(playerMesh);
 
-			std::cout << "Se quiere conectar " << playerNick << std::endl;
-			std::cout << "Con la maya " << playerMesh << std::endl;
-
-			/*Logic::CGameNetPlayersManager::getSingletonPtr()->setPlayerNickname(playerId, playerNick);
-			Logic::CGameNetPlayersManager::getSingletonPtr()->setPlayerMesh(playerId, playerMesh);*/
+			Logic::CGameNetPlayersManager::getSingletonPtr()->setPlayerNickname(playerId, playerNick);
+			Logic::CGameNetPlayersManager::getSingletonPtr()->setPlayerMesh(playerId, playerMesh);
 
 			// Si se ha cargado la información de todos los clientes, entonces
 			// comenzamos la fase de carga del mapa
@@ -279,8 +276,9 @@ namespace Application {
 					// el NetID del cliente del que estamos creando el jugador (*it)
 					Net::NetMessageType msg = Net::LOAD_PLAYER;
 					Net::NetID netId = *it;
+					std::string name( Logic::CGameNetPlayersManager::getSingletonPtr()->getPlayerNickname(netId) );
 					
-					Net::CBuffer buffer(sizeof(msg) + sizeof(netId) + sizeof(Logic::EntityID));
+					Net::CBuffer buffer(sizeof(msg) + sizeof(netId) + sizeof(Logic::EntityID) + (sizeof(char) * name.size()));
 					buffer.write(&msg, sizeof(msg));
 					buffer.write(&netId, sizeof(netId));
 
@@ -291,18 +289,16 @@ namespace Application {
 					// diferentes según el cliente (nombre, modelo, etc.). Esto es una
 					// aproximación, solo cambiamos el nombre y decimos si es el jugador
 					// local
-					std::string name("Player");
-					std::stringstream number;
-					number << (*it);
-					name.append(number.str());
-
+					
 					// @todo Llamar al método de creación del jugador. Deberemos decidir
 					// si el jugador es el jugador local. Al ser el servidor ninguno lo es
-
 					Logic::CEntity * player = Logic::CServer::getSingletonPtr()->getMap()->createPlayer(name);
 
 					Logic::TEntityID id = player->getEntityID();
 					buffer.write(&id, sizeof(id));
+
+					// Metemos el nombre del jugador en el buffer
+					buffer.serialize(name, false);
 
 					Net::CManager::getSingletonPtr()->send(buffer.getbuffer(), buffer.getSize());
 				}
@@ -380,6 +376,11 @@ namespace Application {
 		//Eliminamos el ID del usuario que se ha desconectado.
 		_clients.remove( packet->getConexion()->getId() );
 		_mapLoadedByClients.remove( packet->getConexion()->getId() );
+		Logic::CGameNetPlayersManager::getSingletonPtr()->removePlayer( packet->getConexion()->getId() );
+		--_playersFetched;
+
+		// @todo
+		// NOTIFICAR A LOS CLIENTES PARA QUE ELIMINEN ESE JUGADOR DE LA PARTIDA
 
 		TNetIDCounterMap::const_iterator pairIt = _playersLoadedByClients.find(packet->getConexion()->getId());
 		if(pairIt != _playersLoadedByClients.end())
