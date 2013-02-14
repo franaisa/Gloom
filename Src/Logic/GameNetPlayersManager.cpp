@@ -90,9 +90,15 @@ namespace Logic {
 
 	//______________________________________________________________________________
 
+	bool CGameNetPlayersManager::removePlayer(Net::NetID idPlayer) {
+		return _connectedPlayers.erase(idPlayer) > 0;
+	}
+
+	//______________________________________________________________________________
+
 	void CGameNetPlayersManager::setPlayerNickname(Net::NetID idPlayer, const std::string& nickname) {
 		TConnectedPlayersTable::const_iterator it = _connectedPlayers.find(idPlayer);
-		assert(it == _connectedPlayers.end() && "No se puede poner nombre al player porque no existe en el Manager");
+		assert(it != _connectedPlayers.end() && "No se puede poner nombre al player porque no existe en el Manager");
 
 		CPlayerInfo player = it->second;
 		player.setName(nickname);
@@ -102,7 +108,7 @@ namespace Logic {
 
 	void CGameNetPlayersManager::setPlayerMesh(Net::NetID idPlayer, const std::string& mesh) {
 		TConnectedPlayersTable::const_iterator it = _connectedPlayers.find(idPlayer);
-		assert(it == _connectedPlayers.end() && "No se puede poner el nombre de la maya al player porque no existe en el Manager");
+		assert(it != _connectedPlayers.end() && "No se puede poner el nombre de la maya al player porque no existe en el Manager");
 
 		CPlayerInfo player = it->second;
 		player.setName(mesh);
@@ -121,6 +127,15 @@ namespace Logic {
 
 	unsigned int CGameNetPlayersManager::getNumberOfPlayersConnected() {
 		return _connectedPlayers.size();
+	}
+
+	//______________________________________________________________________________
+
+	string CGameNetPlayersManager::getPlayerNickname(Net::NetID idPlayer) {
+		TConnectedPlayersTable::iterator it = _connectedPlayers.find(idPlayer);
+		assert(it != _connectedPlayers.end() && "No se puede poner obtener el nombre del player porque no existe en el Manager");
+
+		return it->second.getName();
 	}
 
 };
