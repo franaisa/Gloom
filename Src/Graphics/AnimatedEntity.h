@@ -85,7 +85,7 @@ namespace Graphics
 		@param mesh Nombre del modelo que debe cargarse.
 		*/
 		CAnimatedEntity(const std::string &name, const std::string &mesh):
-					CEntity(name,mesh), _currentAnimation(0) {}
+					CEntity(name,mesh), _currentAnimation(0), _weapon(0) {}
 
 		/**
 		Destructor de la aplicación.
@@ -100,6 +100,13 @@ namespace Graphics
 		@return true si la animación solicitada fue correctamente activada.
 		*/
 		bool setAnimation(const std::string &anim, bool loop);
+
+		/**
+		Le pone un arma en la mano al monigote
+
+		
+		*/
+		void attachWeapon(CEntity &arma);
 		
 		/**
 		Desactiva una animación a partir de su nombre.
@@ -153,6 +160,8 @@ namespace Graphics
 		Animación que tiene la entidad activada.
 		*/
 		Ogre::AnimationState *_currentAnimation;
+
+		Ogre::Entity *_weapon;
 
 	}; // class CAnimatedEntity
 

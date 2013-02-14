@@ -138,5 +138,11 @@ namespace Logic
 		_graphicsEntity->setVisible(renderGraphicEntity);
 	}
 
+
+	void CGraphics::activate()
+	{
+		IComponent::activate();
+	}
+
 } // namespace Logic
 

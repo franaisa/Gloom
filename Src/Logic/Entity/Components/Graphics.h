@@ -79,6 +79,19 @@ namespace Logic
 		virtual bool accept(CMessage *message);
 
 		/**
+		Método que activa el componente; invocado cuando se activa
+		el mapa donde está la entidad a la que pertenece el componente.
+		<p>
+		Si el componente pertenece a la entidad del jugador, el componente
+		se registra así mismo en el controlador del GUI para que las ordenes 
+		se reciban a partir de los eventos de teclado y ratón.
+
+		@return true si todo ha ido correctamente.
+		*/
+		virtual void activate();
+
+
+		/**
 		Método virtual que procesa un mensaje.
 
 		@param message Mensaje a procesar.

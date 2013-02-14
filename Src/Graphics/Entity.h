@@ -158,6 +158,10 @@ namespace Graphics
 		*/
 		Ogre::Entity* getEntity() {return _entity;}
 
+		std::string getName(){return _name;}
+
+		std::string getMesh(){return _mesh;}
+
 	protected:
 
 		// CScene es la única que puede añadir o eliminar entidades de una 

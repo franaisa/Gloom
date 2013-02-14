@@ -21,6 +21,7 @@ gráfica de una entidad estática.
 #include "Logic/Messages/MessageStopAnimation.h"
 
 #include "Graphics/Scene.h"
+#include "Graphics/Entity.h"
 
 namespace Logic 
 {
@@ -43,11 +44,44 @@ namespace Logic
 			_animatedGraphicsEntity->setObserver(this);
 		}
 
+		//cargamos los modelos de las armas para poder ponerselas en la mano conforme los jugadores cambien de arma
+
+		if(entityInfo->hasAttribute("numWeapons")){
+			int numWeapons = entityInfo->getIntAttribute("numWeapons");
+			
+			//_weapons[numWeapons];
+
+			// Por ahora leo a mano cada una de las armas que tiene el usuario
+
+			std::string armas[] = {"Hammer","MiniGun","ShotGun"};
+
+			
+			for(int i = 0; i < numWeapons; ++i){
+				
+				std::stringstream aux;
+				aux << "weapon" << armas[i];
+				std::string weapon = aux.str();
+				
+				//creamos la entidad gráfica del arma para poder atacharla al monigote
+				_weapons = new Graphics::CEntity(weapon,entityInfo->getStringAttribute(weapon+"Model")); 
+				
+			}
+			if(!_weapons)
+				return NULL;
+		}
+		
 		return _animatedGraphicsEntity;
 
 	} // createGraphicsEntity
 	
 	//---------------------------------------------------------
+
+	void CAnimatedGraphics::activate()
+	{
+		CGraphics::activate();
+		_animatedGraphicsEntity->attachWeapon(*_weapons);
+	}
+
 
 	bool CAnimatedGraphics::accept(CMessage *message)
 	{
