@@ -207,10 +207,10 @@ namespace Application {
 			_app->exitRequest();
 		}
 
-		/*if (!Logic::CEntityFactory::getSingletonPtr()->loadArchetypes("archetypes.txt")) {
+		if (!Logic::CEntityFactory::getSingletonPtr()->loadArchetypes("archetypes.txt")) {
 			Net::CManager::getSingletonPtr()->deactivateNetwork();
 			_app->exitRequest();
-		}*/
+		}
 
 		// Cargamos el nivel a partir del nombre del mapa. 
 		if (!Logic::CServer::getSingletonPtr()->loadLevel("map_server.txt")) {
@@ -245,8 +245,8 @@ namespace Application {
 			std::cout << "Se quiere conectar " << playerNick << std::endl;
 			std::cout << "Con la maya " << playerMesh << std::endl;
 
-			Logic::CGameNetPlayersManager::getSingletonPtr()->setPlayerNickname(playerId, playerNick);
-			Logic::CGameNetPlayersManager::getSingletonPtr()->setPlayerMesh(playerId, playerMesh);
+			/*Logic::CGameNetPlayersManager::getSingletonPtr()->setPlayerNickname(playerId, playerNick);
+			Logic::CGameNetPlayersManager::getSingletonPtr()->setPlayerMesh(playerId, playerMesh);*/
 
 			// Si se ha cargado la información de todos los clientes, entonces
 			// comenzamos la fase de carga del mapa

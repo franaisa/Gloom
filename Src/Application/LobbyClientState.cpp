@@ -148,6 +148,8 @@ namespace Application {
 			playerData.serialize(playerModel, false);
 		
 			Net::CManager::getSingletonPtr()->send(playerData.getbuffer(), playerData.getSize());
+			
+			break;
 		}
 		case Net::LOAD_MAP:
 			// Cargamos el archivo con las definiciones de las entidades del nivel.
