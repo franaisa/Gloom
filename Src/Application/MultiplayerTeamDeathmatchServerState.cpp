@@ -85,6 +85,12 @@ namespace Application {
 			// EN ESTA FASE EL CLIENTE PASA PASA A CARGAR LOS CLIENTES DE LA PARTIDA Y VICEVERSA,
 			// LOS CLIENTES DE LA PARTIDA PASAN A CARGAR EL NUEVO CLIENTE
 
+			Logic::CGameNetPlayersManager::iterator it = Logic::CGameNetPlayersManager::getSingletonPtr()->begin();
+			for(; it != Logic::CGameNetPlayersManager::getSingletonPtr()->end(); ++it) {
+
+			}
+
+
 			// Se debe crear un jugador por cada cliente registrado.
 			/*for(TNetIDList::const_iterator it = _clients.begin(); it != _clients.end(); it++) {
 				//Preparamos la lista de control de carga de jugadores.

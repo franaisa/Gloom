@@ -138,4 +138,16 @@ namespace Logic {
 		return it->second.getName();
 	}
 
+	//______________________________________________________________________________
+
+	CGameNetPlayersManager::iterator CGameNetPlayersManager::begin() {
+		return _connectedPlayers.begin();
+	}
+
+	//______________________________________________________________________________
+
+	CGameNetPlayersManager::iterator CGameNetPlayersManager::end() {
+		return _connectedPlayers.end();
+	}
+
 };

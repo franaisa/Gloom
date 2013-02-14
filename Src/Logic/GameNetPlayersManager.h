@@ -40,6 +40,11 @@ namespace Logic {
 	class CGameNetPlayersManager {
 	public:
 		
+		/** Iterador para obtener o recorrer los jugadores de la partida */
+		class iterator;
+		/** Iterador constante para obtener o recorrer los jugadores de la partida */
+		class const_iterator;
+
 		/**
 		Devuelve la única instancia de la clase CServer.
 		
@@ -89,6 +94,12 @@ namespace Logic {
 
 		unsigned int getNumberOfPlayersConnected();
 
+		/** Devuelve el primer player de la tabla */
+		CGameNetPlayersManager::iterator begin();
+		
+		/** Devuelve el último player de la tabla */
+		CGameNetPlayersManager::iterator end();
+
 	protected:
 		/** Constructor de la clase */
 		CGameNetPlayersManager();
@@ -105,6 +116,44 @@ namespace Logic {
 
 		/** Única instancia de la clase. */
 		static CGameNetPlayersManager* _instance;
+	};
+
+	/**
+	Esta clase es un wrapper para los iteradores que internamente manejan a la
+	clase CGameNetPlayersManager, de esta manera podemos recorrer sin ningún 
+	tipo de compromiso a los players (por si en un futuro se cambia el entramado).
+
+	@ingroup LogicGroup
+
+	@author Francisco Aisa García
+	@date Febrero, 2013
+	*/
+	class CGameNetPlayersManager::iterator {
+	public:
+		inline iterator() { }
+		inline iterator(const TConnectedPlayersTable::iterator& src) : _it(src) { }
+		inline iterator(const iterator& src) : _it(src._it) { }
+		inline ~iterator() { }
+
+		inline iterator& operator=(const iterator& rhs) {
+			if(this != &rhs) {
+				_it = rhs._it;
+			}
+
+			return *this;
+		};
+
+		inline iterator& operator++() { ++_it; }
+		inline iterator operator++(int notUsed) { _it++; }
+
+		inline bool operator==(const iterator& rhs) const { return _it == rhs._it; }
+		inline bool operator!=(const iterator& rhs) const { return _it != rhs._it; }
+
+		inline std::pair<const Net::NetID, CPlayerInfo>* operator->() const { return _it.operator->(); }
+		inline std::pair<const Net::NetID, CPlayerInfo>& operator*() const { return _it.operator*(); }
+
+	private:
+		TConnectedPlayersTable::iterator _it;
 	};
 
 };
