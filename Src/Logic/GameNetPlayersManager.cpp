@@ -116,15 +116,19 @@ namespace Logic {
 
 	//______________________________________________________________________________
 
-	void CGameNetPlayersManager::setEntityID(Net::NetID idPlayer, Logic::TEntityID) {
+	void CGameNetPlayersManager::setEntityID(Net::NetID idPlayer, Logic::TEntityID entityId) {
+		TConnectedPlayersTable::const_iterator it = _connectedPlayers.find(idPlayer);
+		assert(it != _connectedPlayers.end() && "No se puede asignar el id de entidad al player porque no existe en el Manager");
 
+		CPlayerInfo player = it->second;
+		player.setEntityId(entityId);
 	}
 
 	//______________________________________________________________________________
 
 	CPlayerInfo CGameNetPlayersManager::getPlayer(Net::NetID idPlayer) {
 		TConnectedPlayersTable::const_iterator it = _connectedPlayers.find(idPlayer);
-		assert(it == _connectedPlayers.end() && "No se ha encontrado el id de player buscado");
+		assert(it != _connectedPlayers.end() && "No se ha encontrado el id de player buscado");
 
 		return it->second;
 	} // getPlayer
