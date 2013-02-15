@@ -293,8 +293,9 @@ namespace Application {
 					// @todo Llamar al método de creación del jugador. Deberemos decidir
 					// si el jugador es el jugador local. Al ser el servidor ninguno lo es
 					Logic::CEntity * player = Logic::CServer::getSingletonPtr()->getMap()->createPlayer(name);
-
 					Logic::TEntityID id = player->getEntityID();
+					Logic::CGameNetPlayersManager::getSingletonPtr()->setEntityID(netId, id);
+					
 					buffer.write(&id, sizeof(id));
 
 					// Metemos el nombre del jugador en el buffer

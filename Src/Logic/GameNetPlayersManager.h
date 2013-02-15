@@ -27,6 +27,8 @@ namespace Net {
 
 namespace Logic {
 
+	typedef unsigned int TEntityID;
+
 	/**
 	Esta clase es la encargada de controlar toda la información lógica 
 	asociada a los jugadores conectados a una partida (nombre, mesh, 
@@ -87,6 +89,8 @@ namespace Logic {
 
 		void setPlayerMesh(Net::NetID idPlayer, const std::string& mesh);
 
+		void setEntityID(Net::NetID idPlayer, TEntityID entityId);
+
 		/** Devuelve un jugador si es que ha sido registrado */
 		CPlayerInfo getPlayer(Net::NetID idPlayer);
 
@@ -143,14 +147,22 @@ namespace Logic {
 			return *this;
 		};
 
-		inline iterator& operator++() { ++_it; }
-		inline iterator operator++(int notUsed) { _it++; }
+		inline iterator& operator++() { 
+			++_it; 
+			return *this;
+		}
+
+		inline iterator operator++(int notUsed) { 
+			iterator tmp(*this);
+			++(*this);
+			return tmp; 
+		}
 
 		inline bool operator==(const iterator& rhs) const { return _it == rhs._it; }
 		inline bool operator!=(const iterator& rhs) const { return _it != rhs._it; }
 
-		inline std::pair<const Net::NetID, CPlayerInfo>* operator->() const { return _it.operator->(); }
-		inline std::pair<const Net::NetID, CPlayerInfo>& operator*() const { return _it.operator*(); }
+		inline CPlayerInfo* operator->() const { return &(_it->second); }
+		inline CPlayerInfo& operator*() const { return *( operator->() ); }
 
 	private:
 		TConnectedPlayersTable::iterator _it;

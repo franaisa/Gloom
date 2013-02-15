@@ -23,6 +23,11 @@ Contiene la implementación del estado de juego.
 #include "Net/buffer.h"
 
 #include "Logic/GameNetPlayersManager.h"
+#include "Logic/Entity/Entity.h"
+#include "Logic/Server.h"
+#include "Logic/Maps/EntityFactory.h"
+#include "Logic/Maps/Map.h"
+#include "Logic/Maps/EntityID.h"
 
 namespace Application {
 
@@ -50,7 +55,7 @@ namespace Application {
 	{
 		// Obtenemos la id de la conexion por la que hemos recibido el paquete (para identificar
 		// al cliente)
-		Net::NetID playerId = packet->getConexion()->getId();
+		Net::NetID playerNetId = packet->getConexion()->getId();
 
 		Net::CBuffer buffer(packet->getDataLength());
 		buffer.write(packet->getData(), packet->getDataLength());
@@ -67,8 +72,8 @@ namespace Application {
 			buffer.deserialize(playerNick);
 			buffer.deserialize(playerMesh);
 
-			Logic::CGameNetPlayersManager::getSingletonPtr()->setPlayerNickname(playerId, playerNick);
-			Logic::CGameNetPlayersManager::getSingletonPtr()->setPlayerMesh(playerId, playerMesh);
+			Logic::CGameNetPlayersManager::getSingletonPtr()->setPlayerNickname(playerNetId, playerNick);
+			Logic::CGameNetPlayersManager::getSingletonPtr()->setPlayerMesh(playerNetId, playerMesh);
 
 			// Una vez recibida la informacion del cliente, le indicamos que cargue el mapa (solo
 			// a ese cliente concreto)
@@ -76,7 +81,7 @@ namespace Application {
 			Net::CBuffer buffer(sizeof(msg));
 			buffer.write(&msg, sizeof(msg));
 
-			Net::CManager::getSingletonPtr()->send(buffer.getbuffer(), buffer.getSize(), playerId);
+			Net::CManager::getSingletonPtr()->send(buffer.getbuffer(), buffer.getSize(), playerNetId);
 
 			break;
 		}
@@ -85,57 +90,66 @@ namespace Application {
 			// EN ESTA FASE EL CLIENTE PASA PASA A CARGAR LOS CLIENTES DE LA PARTIDA Y VICEVERSA,
 			// LOS CLIENTES DE LA PARTIDA PASAN A CARGAR EL NUEVO CLIENTE
 
-			Logic::CGameNetPlayersManager::iterator it = Logic::CGameNetPlayersManager::getSingletonPtr()->begin();
-			for(; it != Logic::CGameNetPlayersManager::getSingletonPtr()->end(); ++it) {
+			// Variables locales
+			Net::CBuffer tempBuffer;
+			std::string name;
+			Logic::TEntityID entityId;
+			Net::NetID netId;
+			Net::NetMessageType msg = Net::LOAD_PLAYER;
 
+			// Mandamos la informacion de los players de la partida al cliente que esta intentando conectarse
+			Logic::CGameNetPlayersManager::iterator playerInfoIt = Logic::CGameNetPlayersManager::getSingletonPtr()->begin();
+			for(; playerInfoIt != Logic::CGameNetPlayersManager::getSingletonPtr()->end(); ++playerInfoIt) {
+				netId = playerInfoIt->getNetId();
+
+				// Debido a que fuera de este bucle enviaremos la informacion de este player mediante broadcast
+				// evitamos enviar la informacion en esta fase (ya que la id de entidad aun no ha sido asignada)
+				if(netId != playerNetId) {
+					entityId = playerInfoIt->getEntityId();
+					name = playerInfoIt->getName();
+
+					// Mensaje LOAD_PLAYER
+					tempBuffer.write(&msg, sizeof(msg));
+					tempBuffer.write(&netId, sizeof(netId));
+					tempBuffer.write(&entityId, sizeof(entityId));
+					tempBuffer.serialize(name, false);
+
+					// Enviamos los datos de los clientes conectados al cliente que se quiere conectar
+					Net::CManager::getSingletonPtr()->send(buffer.getbuffer(), buffer.getSize(), playerNetId);
+
+					// Reseteamos el puntero de escritura del buffer para escribir en la siguiente vuelta del bucle
+					tempBuffer.reset();
+				}
 			}
 
+			Logic::CPlayerInfo playerInfo = Logic::CGameNetPlayersManager::getSingletonPtr()->getPlayer(playerNetId);
+			name = playerInfo.getName();
 
-			// Se debe crear un jugador por cada cliente registrado.
-			/*for(TNetIDList::const_iterator it = _clients.begin(); it != _clients.end(); it++) {
-				//Preparamos la lista de control de carga de jugadores.
-				//Esto quiere decir que el cliente (*it) ha cargado 0 jugadores
-				TNetIDCounterPair elem(*it,0);
-				_playersLoadedByClients.insert(elem);
-
-				// @todo Hay que enviar un paquete tipo LOAD_PLAYER con 
-				// el NetID del cliente del que estamos creando el jugador (*it)
-				Net::NetMessageType msg = Net::LOAD_PLAYER;
-				Net::NetID netId = *it;
-					
-				Net::CBuffer buffer(sizeof(msg) + sizeof(netId) + sizeof(Logic::EntityID));
-				buffer.write(&msg, sizeof(msg));
-				buffer.write(&netId, sizeof(netId));
-
-				// Mandar el ID del cliente actual a todos los clientes para que
-				// lo carguen
-					
-				// Creamos el player. Deberíamos poder propocionar caracteríasticas
-				// diferentes según el cliente (nombre, modelo, etc.). Esto es una
-				// aproximación, solo cambiamos el nombre y decimos si es el jugador
-				// local
-				std::string name("Player");
-				std::stringstream number;
-				number << (*it);
-				name.append(number.str());
-
-				// @todo Llamar al método de creación del jugador. Deberemos decidir
-				// si el jugador es el jugador local. Al ser el servidor ninguno lo es
-
-				Logic::CEntity * player = Logic::CServer::getSingletonPtr()->getMap()->createPlayer(name);
-
-				Logic::TEntityID id = player->getEntityID();
-				buffer.write(&id, sizeof(id));
-
-				Net::CManager::getSingletonPtr()->send(buffer.getbuffer(), buffer.getSize());
-			}
+			// Creamos un player en el mundo con el nombre del jugador que solicita entrar
+			Logic::CEntity* player = Logic::CServer::getSingletonPtr()->getMap()->createPlayer(name);
+			// Extraemos la id asignada a dicha entidad y la asociamos al player del gestor
+			entityId = player->getEntityID();
+			Logic::CGameNetPlayersManager::getSingletonPtr()->setEntityID(playerNetId, entityId);
 			
+			// Ordenamos la carga del player a todos los clientes conectados, evidentemente el propio cliente que se quiere
+			// conectar tendra que obviar ignorar este mensaje (comprobando que el cliente que se carga es él mismo).
+
+			// El contenido de msg es LOAD_PLAYER
+			Net::CBuffer buffer( sizeof(msg) + sizeof(playerNetId) + sizeof(entityId) + (sizeof(char) * name.size()) );
+			buffer.write(&msg, sizeof(msg));
+			buffer.write(&playerNetId, sizeof(playerNetId));
+			buffer.write(&entityId, sizeof(entityId));
+			buffer.serialize(name, false);
+
+			// Broadcast a todos los jugadores del id de este jugador
+			Net::CManager::getSingletonPtr()->send(buffer.getbuffer(), buffer.getSize());
+
 			break;
 		}
 		case Net::PLAYER_LOADED:
 		{
 			//Aumentamos el número de jugadores cargados por el cliente
-			(*_playersLoadedByClients.find(packet->getConexion()->getId())).second++;
+			/*(*_playersLoadedByClients.find(packet->getConexion()->getId())).second++;
 
 			// @todo Comprobar si todos los clientes han terminado de 
 			// cargar todos los jugadores
@@ -161,8 +175,9 @@ namespace Application {
 				Net::NetMessageType msg = Net::START_GAME;
 				Net::CManager::getSingletonPtr()->send(&msg, sizeof(msg));
 				_app->setState("multiplayerTeamDeathmatchServer");
-			}
-			break;*/
+			}*/
+
+			break;
 		}
 		}
 
@@ -193,11 +208,11 @@ namespace Application {
 
 	void CMultiplayerTeamDeathmatchServerState::disconnexionPacketReceived(Net::CPaquete* packet)
 	{
-		// Actualizamos el manager de jugadores
-		Logic::CGameNetPlayersManager::getSingletonPtr()->removePlayer( packet->getConexion()->getId() );
-
 		// @todo
 		// NOTIFICAR A LOS CLIENTES PARA QUE ELIMINEN ESE JUGADOR DE LA PARTIDA
+
+		// Actualizamos el manager de jugadores
+		Logic::CGameNetPlayersManager::getSingletonPtr()->removePlayer( packet->getConexion()->getId() );
 	} // disconnexionPacketReceived
 	
 } // namespace Application

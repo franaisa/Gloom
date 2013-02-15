@@ -18,7 +18,13 @@ Contiene la declaracion de la clase PlayerInfo para el proyecto de logica.
 
 #include <string>
 
+namespace Net {
+	typedef unsigned int NetID;
+};
+
 namespace Logic {
+
+	typedef unsigned int TEntityID;
 
 	/**
 	Información sobre los clientes. El manager de red debe mantener una
@@ -34,9 +40,10 @@ namespace Logic {
 	class CPlayerInfo {
 	public:
 		CPlayerInfo() : _rank(0) {}
+		CPlayerInfo(Net::NetID netId);
 		CPlayerInfo(std::string name, std::string mesh);
 		CPlayerInfo(const CPlayerInfo& rhs);
-		~CPlayerInfo();
+		~CPlayerInfo() {};
 
 		CPlayerInfo& operator=(const CPlayerInfo& rhs);
 
@@ -44,15 +51,21 @@ namespace Logic {
 
 		std::string getName();
 		std::string getMesh();
+		TEntityID getEntityId();
+		Net::NetID getNetId();
 
 		void setName(const std::string& name);
 		void setMesh(const std::string& mesh);
+		void setEntityId(TEntityID entityId);
+		void setNetId(Net::NetID netId);
 
 	private:
 		std::string _name;
 		std::string _mesh;
 		std::string _clan;
 		unsigned short int _rank;
+		TEntityID _entityId;
+		Net::NetID _netId;
 		//CPlayerStats _stats; -- en un futuro la clase que contendra las estadisticas del player
 	};
 

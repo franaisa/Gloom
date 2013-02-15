@@ -85,7 +85,7 @@ namespace Logic {
 	//______________________________________________________________________________
 
 	bool CGameNetPlayersManager::addPlayer(Net::NetID idPlayer) {
-		return (_connectedPlayers.insert( TConnectedPlayersPair(idPlayer, CPlayerInfo()) ) ).second;
+		return (_connectedPlayers.insert( TConnectedPlayersPair(idPlayer, CPlayerInfo(idPlayer)) ) ).second;
 	} // addPlayer
 
 	//______________________________________________________________________________
@@ -112,6 +112,12 @@ namespace Logic {
 
 		CPlayerInfo player = it->second;
 		player.setName(mesh);
+	}
+
+	//______________________________________________________________________________
+
+	void CGameNetPlayersManager::setEntityID(Net::NetID idPlayer, Logic::TEntityID) {
+
 	}
 
 	//______________________________________________________________________________
