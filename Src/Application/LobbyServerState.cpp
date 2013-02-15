@@ -311,6 +311,11 @@ namespace Application {
 			//Aumentamos el número de jugadores cargados por el cliente
 			(*_playersLoadedByClients.find(packet->getConexion()->getId())).second++;
 
+			// Incrementamos el numero de clientes cargados para todos los clientes
+			Net::NetID playerLoadedNetId;
+			buffer.read(&playerLoadedNetId, sizeof(playerLoadedNetId));
+			Logic::CGameNetPlayersManager::getSingletonPtr()->loadPlayer( packet->getConexion()->getId(), playerLoadedNetId );
+
 			// @todo Comprobar si todos los clientes han terminado de 
 			// cargar todos los jugadores
 			bool loadFinished = true;
@@ -377,6 +382,9 @@ namespace Application {
 		//Eliminamos el ID del usuario que se ha desconectado.
 		_clients.remove( packet->getConexion()->getId() );
 		_mapLoadedByClients.remove( packet->getConexion()->getId() );
+		// Eliminamos la informacion del player que se quiere desconectar del gestor de players
+		// y ademas eliminamos este player de la lista de players cargados del resto de clientes
+		// si es que han llegado a cargarlo
 		Logic::CGameNetPlayersManager::getSingletonPtr()->removePlayer( packet->getConexion()->getId() );
 		--_playersFetched;
 

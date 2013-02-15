@@ -21,6 +21,7 @@ Contiene la declaración del estado de juego.
 #include "Net/Manager.h"
 
 #include <iostream>
+#include <queue>
 
 namespace Application 
 {
@@ -53,7 +54,6 @@ namespace Application
 		virtual void dataPacketReceived(Net::CPaquete* packet);
 		virtual void connexionPacketReceived(Net::CPaquete* packet);
 		virtual void disconnexionPacketReceived(Net::CPaquete* packet);
-
 	}; // CGameState
 
 } // namespace Application

@@ -24,7 +24,8 @@ namespace Logic {
 	//______________________________________________________________________________
 
 	CPlayerInfo::CPlayerInfo(std::string name, std::string mesh) : _name(name), 
-																   _mesh(mesh) {
+																   _mesh(mesh),
+																   _rank(0) {
 		// No hay memoria dinamica que inicializar
 	}
 
@@ -35,7 +36,8 @@ namespace Logic {
 													   _clan(rhs._clan), 
 													   _rank(rhs._rank),
 													   _entityId(rhs._entityId),
-													   _netId(rhs._netId) {
+													   _netId(rhs._netId),
+													   _playersLoaded(rhs._playersLoaded) {
 		// No hay memoria dinamica que inicializar
 	}
 
@@ -49,6 +51,7 @@ namespace Logic {
 			_rank = rhs._rank;
 			_entityId = rhs._entityId;
 			_netId = rhs._netId;
+			_playersLoaded = rhs._playersLoaded;
 		}
 
 		return *this;
@@ -62,7 +65,13 @@ namespace Logic {
 	   out << "Clan = " << playerInfo._clan << std::endl;
 	   out << "Rank = " << playerInfo._rank << std::endl;
 	   out << "EntityID = " << playerInfo._entityId << std::endl;
-	   out << "NetID = " << playerInfo._netId;
+	   out << "NetID = " << playerInfo._netId << std::endl;
+	   out << "NetID's de jugadores cargados =";
+
+	   std::set<Net::NetID>::iterator it = playerInfo._playersLoaded.begin();
+	   for(; it != playerInfo._playersLoaded.end(); ++it) {
+		   out << " " << *it;
+	   }
 
 	   return out;
 	}
@@ -92,7 +101,13 @@ namespace Logic {
 	}
 
 	//______________________________________________________________________________
+	
+	unsigned int CPlayerInfo::playersLoaded() {
+		return _playersLoaded.size();
+	}
 
+	//______________________________________________________________________________
+	
 	void CPlayerInfo::setName(const std::string& name) {
 		this->_name = name;
 	}
@@ -113,6 +128,24 @@ namespace Logic {
 
 	void CPlayerInfo::setNetId(Net::NetID netId) {
 		this->_netId = netId;
+	}
+
+	//______________________________________________________________________________
+
+	bool CPlayerInfo::loadPlayer(Net::NetID playerNetId) {
+		return _playersLoaded.insert(playerNetId).second;
+	}
+
+	//______________________________________________________________________________
+
+	bool CPlayerInfo::unloadPlayer(Net::NetID playerNetId) {
+		return _playersLoaded.erase(playerNetId) > 0;
+	}
+
+	//______________________________________________________________________________
+
+	void CPlayerInfo::clearLoadedPlayers() {
+		_playersLoaded.clear();
 	}
 
 };

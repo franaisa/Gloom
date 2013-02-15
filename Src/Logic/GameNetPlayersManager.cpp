@@ -91,6 +91,13 @@ namespace Logic {
 	//______________________________________________________________________________
 
 	bool CGameNetPlayersManager::removePlayer(Net::NetID idPlayer) {
+		// Si el player que desea desconectarse ha sido cargado por algun otro cliente
+		// lo eliminamos de su lista de jugadores cargados
+		TConnectedPlayersTable::iterator it = _connectedPlayers.begin();
+		for(; it != _connectedPlayers.end(); ++it) {
+			it->second.unloadPlayer(idPlayer);
+		}
+
 		return _connectedPlayers.erase(idPlayer) > 0;
 	}
 
@@ -122,6 +129,35 @@ namespace Logic {
 
 		CPlayerInfo player = it->second;
 		player.setEntityId(entityId);
+	}
+
+	//______________________________________________________________________________
+
+	void CGameNetPlayersManager::loadPlayer(Net::NetID idPlayer, Net::NetID idPlayerToLoad) {
+		TConnectedPlayersTable::iterator it = _connectedPlayers.find(idPlayer);
+		assert(it != _connectedPlayers.end() && "No se puede aumentar el contador de players porque no existe el player en el Manager");
+
+		CPlayerInfo player = it->second;
+		player.loadPlayer(idPlayerToLoad);
+	}
+
+	//______________________________________________________________________________
+
+	void CGameNetPlayersManager::unloadPlayer(Net::NetID idPlayer, Net::NetID idPlayerToUnload) {
+		TConnectedPlayersTable::iterator it = _connectedPlayers.find(idPlayer);
+		assert(it != _connectedPlayers.end() && "No se puede decrementar el contador de players porque no existe el player en el Manager");
+
+		CPlayerInfo player = it->second;
+		player.unloadPlayer(idPlayerToUnload);
+	}
+
+	//______________________________________________________________________________
+
+	unsigned int CGameNetPlayersManager::getPlayersLoaded(Net::NetID idPlayer) {
+		TConnectedPlayersTable::iterator it = _connectedPlayers.find(idPlayer);
+		assert(it != _connectedPlayers.end() && "No se puede devolver cuantos players ha cargado el jugador porque no existe en el Manager");
+
+		return it->second.playersLoaded();
 	}
 
 	//______________________________________________________________________________

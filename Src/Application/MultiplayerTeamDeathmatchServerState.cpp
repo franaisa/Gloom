@@ -149,33 +149,26 @@ namespace Application {
 		case Net::PLAYER_LOADED:
 		{
 			//Aumentamos el número de jugadores cargados por el cliente
-			/*(*_playersLoadedByClients.find(packet->getConexion()->getId())).second++;
+			Net::NetID playerLoadedNetId;
+			buffer.read(&playerLoadedNetId, sizeof(playerLoadedNetId));
+			Logic::CGameNetPlayersManager::getSingletonPtr()->loadPlayer( packet->getConexion()->getId(), playerLoadedNetId );
 
-			// @todo Comprobar si todos los clientes han terminado de 
-			// cargar todos los jugadores
-			bool loadFinished = true;
-			TNetIDCounterMap::const_iterator it2;
-			for(TNetIDList::const_iterator it = _clients.begin(); it != _clients.end() && loadFinished; it++) {
-				// Obtener la pareja (NetID, jugadores cargados)
-				it2 = _playersLoadedByClients.find(*it);
-				
-				if(it2 != _playersLoadedByClients.end()) {
-					// Si el numero de jugadores cargados para este cliente es menor
-					// que el numero total de clientes cargar, entonces es que aun
-					// hay clientes que no han cargado a todos los jugadores
-					if(it2->second < _clients.size()) {
-						loadFinished = false;
-					}
-				}
-			}
+			// MANDAR EL MENSAJE DE ARRANQUE A TAN SOLO UNO DE ELLOS (EL QUE SE QUIERE CONECTAR)
+
+			// Problema, si se conecta alguien antes de llegar a este if, el numero de jugadores conectados
+			// incrementa (cosa que se hace cuando se recibe un paquete de conexion) y ya no se cumpliria
+			// el if
+
+			//@deprecated
 			//Si todos los clientes han cargado todos los players
-			if(loadFinished)
-			{
-				//Enviamos el mensaje de que empieza el juego a todos los clientes
+			if( Logic::CGameNetPlayersManager::getSingletonPtr()->getPlayersLoaded(playerNetId) == 
+				Logic::CGameNetPlayersManager::getSingletonPtr()->getNumberOfPlayersConnected() ) {
+				
+				// Si el cliente que queria conectarse a cargado a todos los players mandamos el mensaje
+				// de empezar
 				Net::NetMessageType msg = Net::START_GAME;
-				Net::CManager::getSingletonPtr()->send(&msg, sizeof(msg));
-				_app->setState("multiplayerTeamDeathmatchServer");
-			}*/
+				Net::CManager::getSingletonPtr()->send(&msg, sizeof(msg), playerNetId);
+			}
 
 			break;
 		}

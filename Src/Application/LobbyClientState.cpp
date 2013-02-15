@@ -29,7 +29,6 @@ Contiene la implementación del estado de lobby del cliente.
 #include "Net/conexion.h"
 #include "Net/buffer.h"
 
-
 #include <CEGUISystem.h>
 #include <CEGUIWindowManager.h>
 #include <CEGUIWindow.h>
@@ -201,8 +200,9 @@ namespace Application {
 			
 			//Enviamos el mensaje de que se ha creado el jugador
 			Net::NetMessageType ackMsg = Net::PLAYER_LOADED;
-			Net::CBuffer ackBuffer(sizeof(ackMsg));
+			Net::CBuffer ackBuffer(sizeof(ackMsg) + sizeof(id));
 			ackBuffer.write(&ackMsg, sizeof(ackMsg));
+			ackBuffer.write(&id, sizeof(id));
 			Net::CManager::getSingletonPtr()->send(ackBuffer.getbuffer(), ackBuffer.getSize());
 			}
 			break;

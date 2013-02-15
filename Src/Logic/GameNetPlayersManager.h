@@ -85,11 +85,25 @@ namespace Logic {
 
 		bool removePlayer(Net::NetID idPlayer);
 
+
+
 		void setPlayerNickname(Net::NetID idPlayer, const std::string& nickname);
 
 		void setPlayerMesh(Net::NetID idPlayer, const std::string& mesh);
 
 		void setEntityID(Net::NetID idPlayer, TEntityID entityId);
+
+		//void incrementPlayersLoaded(Net::NetID idPlayer);
+
+		//void decrementPlayersLoaded(Net::NetID idPlayer);
+
+		//void resetPlayersLoaded(Net::NetID idPlayer);
+
+
+		void loadPlayer(Net::NetID idPlayer, Net::NetID idPlayerToLoad);
+		void unloadPlayer(Net::NetID idPlayer, Net::NetID idPlayerToUnload);
+		unsigned int getPlayersLoaded(Net::NetID idPlayer);
+
 
 		/** Devuelve un jugador si es que ha sido registrado */
 		CPlayerInfo getPlayer(Net::NetID idPlayer);
@@ -97,6 +111,8 @@ namespace Logic {
 		std::string getPlayerNickname(Net::NetID idPlayer);
 
 		unsigned int getNumberOfPlayersConnected();
+
+
 
 		/** Devuelve el primer player de la tabla */
 		CGameNetPlayersManager::iterator begin();
