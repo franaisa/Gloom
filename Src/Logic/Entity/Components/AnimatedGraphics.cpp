@@ -19,6 +19,7 @@ gráfica de una entidad estática.
 
 #include "Logic/Messages/MessageSetAnimation.h"
 #include "Logic/Messages/MessageStopAnimation.h"
+#include "Logic/Messages/MessageChangeWeaponGraphics.h"
 
 #include "Graphics/Scene.h"
 #include "Graphics/Entity.h"
@@ -34,7 +35,7 @@ namespace Logic
 		_animatedGraphicsEntity = new Graphics::CAnimatedEntity(_entity->getName(),_model);
 		if(!_scene->addEntity(_animatedGraphicsEntity))
 			return 0;
-
+		
 		_animatedGraphicsEntity->setTransform(_entity->getTransform());
 		
 		if(entityInfo->hasAttribute("defaultAnimation"))
@@ -48,7 +49,7 @@ namespace Logic
 
 		if(entityInfo->hasAttribute("numWeapons")){
 			int numWeapons = entityInfo->getIntAttribute("numWeapons");
-			
+		_weapons = new  Graphics::CEntity*[numWeapons];	
 			//_weapons[numWeapons];
 
 			// Por ahora leo a mano cada una de las armas que tiene el usuario
@@ -63,7 +64,7 @@ namespace Logic
 				std::string weapon = aux.str();
 				
 				//creamos la entidad gráfica del arma para poder atacharla al monigote
-				_weapons = new Graphics::CEntity(weapon,entityInfo->getStringAttribute(weapon+"Model")); 
+				_weapons[i] = new Graphics::CEntity(weapon,entityInfo->getStringAttribute(weapon+"Model")); 
 				
 			}
 			if(!_weapons)
@@ -79,7 +80,7 @@ namespace Logic
 	void CAnimatedGraphics::activate()
 	{
 		CGraphics::activate();
-		_animatedGraphicsEntity->attachWeapon(*_weapons);
+		_animatedGraphicsEntity->attachWeapon(*_weapons[0]);
 	}
 
 
@@ -87,7 +88,8 @@ namespace Logic
 	{
 		return CGraphics::accept(message) ||
 			message->getMessageType() == Message::SET_ANIMATION ||
-			message->getMessageType() == Message::STOP_ANIMATION;
+			message->getMessageType() == Message::STOP_ANIMATION ||
+			message->getMessageType() == Message::CHANGE_WEAPON_GRAPHICS;
 
 	} // accept
 	
@@ -110,6 +112,9 @@ namespace Logic
 		case Message::STOP_ANIMATION:
 			_animatedGraphicsEntity->stopAnimation(((CMessageStopAnimation*)message)->getString());
 			break;
+		case Message::CHANGE_WEAPON_GRAPHICS:
+			changeWeapon( ((CMessageChangeWeaponGraphics*)message)->getWeapon() );
+			break;
 		}
 
 	} // process
@@ -121,6 +126,11 @@ namespace Logic
 		// Si acaba una animación y tenemos una por defecto la ponemos
 		_animatedGraphicsEntity->stopAllAnimations();
 		_animatedGraphicsEntity->setAnimation(_defaultAnimation,true);
+	}
+
+
+	void CAnimatedGraphics::changeWeapon(int newWeapon){
+		_animatedGraphicsEntity->attachWeapon(*_weapons[newWeapon]);
 	}
 
 } // namespace Logic

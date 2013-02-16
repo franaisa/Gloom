@@ -371,7 +371,6 @@ namespace Logic
 			std::map<std::string, IComponent*>::iterator it;
 			it = _components.find(id);
 			if(it == _components.end()) {
-				std::cerr << "Error: No se ha encontrado el id de componente que se busca" << std::endl;
 				//exit(-1);
 				return NULL;
 			}

@@ -208,7 +208,7 @@ Map = {
 		physic_group = 1,
 		
 		
-		numWeapons = 1,
+		numWeapons = 3,
 
 			weaponHammerName = "Hammer",
 			weaponHammerModel = "Katana.mesh",

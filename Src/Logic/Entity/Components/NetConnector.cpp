@@ -108,21 +108,6 @@ namespace Logic {
 	void CNetConnector::tick(unsigned int msecs)
 	{
 		IComponent::tick(msecs);
-		
-		// Grano fino:
-		// Solo permitimos envíos del mismo tipo de mensaje cada x tiempo.
-		// Aquí actualizamos el tiempo que falta para poder enviar un nuevo
-		// mensaje de un tipo espécifico.
-		TTimeToUnblockMsgDelivery::iterator it =
-			_timeToUnblockMsgDelivery.begin();
-		while(it != _timeToUnblockMsgDelivery.end()) // Recorremos pares
-		{
-			(*it).second -= msecs;	//Descontamos tiempo a _timeToUnblock (second)
-			if ((*it).second <= 0)
-				it = _timeToUnblockMsgDelivery.erase(it); // Eliminamos par de bloqueo y saltamos al siguiente
-			else
-				it++;	// Si no se elimina par, incremetnamos para pasar a siguiente
-		}
 	}
 
 } // namespace Logic

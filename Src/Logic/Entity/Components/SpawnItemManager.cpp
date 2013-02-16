@@ -95,9 +95,10 @@ namespace Logic
 	void CSpawnItemManager::itemGrabbed(CEntity* actor) {
 
 		// Desactivar entidad grafica
-		_entity->getComponent<CGraphics>("CGraphics")->deactivate();
-		_entity->getComponent<CGraphics>("CGraphics")->setVisible(false);
-		
+		if(!Net::CManager::getSingletonPtr()->imServer()){
+			_entity->getComponent<CGraphics>("CGraphics")->deactivate();
+			_entity->getComponent<CGraphics>("CGraphics")->setVisible(false);
+		}
 		if(Net::CManager::getSingletonPtr()->imServer() || (!Net::CManager::getSingletonPtr()->imServer() && !Net::CManager::getSingletonPtr()->imClient())){
 			// Activar entidad fisica
 			_entity->getComponent<CPhysicEntity>("CPhysicEntity")->deactivate();
