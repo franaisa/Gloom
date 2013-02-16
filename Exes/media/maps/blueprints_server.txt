@@ -1,6 +1,6 @@
 World CGraphics CPhysicEntity
-ServerPlayer CAvatarController CPhysicController CShootShotGun CShootMiniGun CShootHammer CWeaponsManager CLife CSpawnPlayer CNetConnector
+ServerPlayer CAvatarController CPhysicController CShootShotGun CShootMiniGun CShootHammer CWeaponsManager CLife CSpawnPlayer CNetConnector 
 Enemy CPhysicEntity CLife
 Camera CCamera
-ItemSpawn CPhysicEntity CFloatingMovement CSpawnItemManager CNetConnector
+ItemSpawn CPhysicEntity CFloatingMovement CSpawnItemManager CNetConnector CGraphics
 SpawnPoint CPhysicEntity

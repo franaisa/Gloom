@@ -89,6 +89,8 @@ namespace Logic
 		*/
 		void animationFinished(const std::string &animation);
 
+		void changeWeapon(int newWeapon);
+
 	protected:
 
 		/**
@@ -109,7 +111,7 @@ namespace Logic
 		/**
 		Entidades gráficas de las armas.
 		*/
-		Graphics::CEntity *_weapons;
+		Graphics::CEntity **_weapons;
 
 		/**
 		Animación por defecto de una entidad gráfica animada.
