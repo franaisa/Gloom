@@ -29,8 +29,6 @@ namespace Logic
 			msg->setTransform( _entity->getTransform() );
 			_entity->emitMessage(msg);
 
-			std::cout << "Emito el mensaje SYNC_POSITION en el server_player" << std::endl;
-
 			_timer = 0;
 		}
 

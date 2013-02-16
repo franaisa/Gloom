@@ -43,11 +43,8 @@ namespace Logic
 		{
 		case Message::SYNC_POSITION:
 			// Set transform por cojones
-			Matrix4 newTransform = ((CMessageSyncPosition*)message)->getTransform();
-			_entity->setPosition( newTransform.getTrans() );
-			_entity->setYaw( Math::getYaw(newTransform) );
-			_entity->setPitch( Math::getPitch(newTransform) );
-			
+			_entity->setTransform( ((CMessageSyncPosition*)message)->getTransform() );
+
 			break;
 		}
 	} // process
