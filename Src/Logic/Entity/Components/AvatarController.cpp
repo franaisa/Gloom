@@ -527,7 +527,7 @@ namespace Logic
 		directXZY.y=direction.y;
 
 		//Pasamos a la Física la dirección del movimiento para que se encargue ella de movernos
-		Logic::CMessageAvatarWalk *m=new Logic::CMessageAvatarWalk();
+		Logic::CMessageAvatarWalk* m = new Logic::CMessageAvatarWalk();
 		m->setDirection(directXZY);
 		_entity->emitMessage(m);
 
