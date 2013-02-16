@@ -119,7 +119,7 @@ namespace Logic
 	{
 		return message->getMessageType() == Message::CONTROL || 
 			message->getMessageType() == Message::COLLISION_DOWN ||
-			message->getMessageType() == Message::REBOUND;
+			message->getMessageType() == Message::REBOUND;			
 	} // accept
 	
 	//---------------------------------------------------------
