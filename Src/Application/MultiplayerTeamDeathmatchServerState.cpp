@@ -155,11 +155,11 @@ namespace Application {
 
 			// MANDAR EL MENSAJE DE ARRANQUE A TAN SOLO UNO DE ELLOS (EL QUE SE QUIERE CONECTAR)
 
+			// @deprecated
 			// Problema, si se conecta alguien antes de llegar a este if, el numero de jugadores conectados
 			// incrementa (cosa que se hace cuando se recibe un paquete de conexion) y ya no se cumpliria
 			// el if
 
-			//@deprecated
 			//Si todos los clientes han cargado todos los players
 			if( Logic::CGameNetPlayersManager::getSingletonPtr()->getPlayersLoaded(playerNetId) == 
 				Logic::CGameNetPlayersManager::getSingletonPtr()->getNumberOfPlayersConnected() ) {

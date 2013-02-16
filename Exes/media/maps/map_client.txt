@@ -3,54 +3,6 @@ Map = {
 		type = "World",
 	},
 	
-	Orb1 = {
-		type = "ItemSpawn",
-		position = {67.0, 2.0, 42.0},
-		model = "health1.mesh",
-		id = "orb",
-		reward = 17,
-		respawnTime = 5,
-	},
-	
-	Shotgun = {
-		type = "ItemSpawn",
-		position = {-67.0, 5.0, 42.0},
-		model = "shotGun01.mesh",
-		id = "weapon",
-		weaponType = 2,
-		reward = 30,
-		respawnTime = 5,
-	},
-	
-	Sniper = {
-		type = "ItemSpawn",
-		position = {-47.0, 5.0, 42.0},
-		model = "rocketLauncher.mesh",
-		id = "weapon",
-		weaponType = 1,
-		reward = 10,
-		respawnTime = 5,
-	},
-	
-	ShotgunAmmo1 = {
-		type = "ItemSpawn",
-		position = {-67.0, 4.0, -42.0},
-		model = "ammo01.mesh",
-		id = "ammo",
-		weaponType = 2,
-		reward = 15,
-		respawnTime = 5,
-	},
-	
-	SuperShield = {
-		type = "ItemSpawn",
-		position = {67.0, 2.0, -42.0},
-		model = "shield1.mesh",
-		id = "armor",
-		reward = 100,
-		respawnTime = 5,
-	},
-	
 	Camera = {
 		type = "Camera",
 		height = 8,
