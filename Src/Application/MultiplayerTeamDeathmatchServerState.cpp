@@ -98,15 +98,20 @@ namespace Application {
 			Net::NetMessageType msg = Net::LOAD_PLAYER;
 
 			// Mandamos la informacion de los players de la partida al cliente que esta intentando conectarse
-			Logic::CGameNetPlayersManager::iterator playerInfoIt = Logic::CGameNetPlayersManager::getSingletonPtr()->begin();
-			for(; playerInfoIt != Logic::CGameNetPlayersManager::getSingletonPtr()->end(); ++playerInfoIt) {
-				netId = playerInfoIt->getNetId();
+			//Logic::CGameNetPlayersManager::iterator playerInfoIt = Logic::CGameNetPlayersManager::getSingletonPtr()->begin();
+			std::map<Net::NetID, Logic::CPlayerInfo>::iterator it = Logic::CGameNetPlayersManager::getSingletonPtr()->begin2();
+			std::pair<Net::NetID, Logic::CPlayerInfo> tempPair;
+			
+			Logic::CPlayerInfo playerInfoIt;
+			for(; it != Logic::CGameNetPlayersManager::getSingletonPtr()->end2(); ++it) {
+				playerInfoIt = it->second;
+				netId = playerInfoIt.getNetId();
 
 				// Debido a que fuera de este bucle enviaremos la informacion de este player mediante broadcast
 				// evitamos enviar la informacion en esta fase (ya que la id de entidad aun no ha sido asignada)
 				if(netId != playerNetId) {
-					entityId = playerInfoIt->getEntityId();
-					name = playerInfoIt->getName();
+					entityId = playerInfoIt.getEntityId();
+					name = playerInfoIt.getName();
 
 					// Mensaje LOAD_PLAYER
 					tempBuffer.write(&msg, sizeof(msg));
@@ -151,7 +156,7 @@ namespace Application {
 			//Aumentamos el número de jugadores cargados por el cliente
 			Net::NetID playerLoadedNetId;
 			buffer.read(&playerLoadedNetId, sizeof(playerLoadedNetId));
-			Logic::CGameNetPlayersManager::getSingletonPtr()->loadPlayer( packet->getConexion()->getId(), playerLoadedNetId );
+			Logic::CGameNetPlayersManager::getSingletonPtr()->loadPlayer( playerNetId, playerLoadedNetId );
 
 			// MANDAR EL MENSAJE DE ARRANQUE A TAN SOLO UNO DE ELLOS (EL QUE SE QUIERE CONECTAR)
 
@@ -159,6 +164,9 @@ namespace Application {
 			// Problema, si se conecta alguien antes de llegar a este if, el numero de jugadores conectados
 			// incrementa (cosa que se hace cuando se recibe un paquete de conexion) y ya no se cumpliria
 			// el if
+
+			unsigned int playersLoadedByClient = Logic::CGameNetPlayersManager::getSingletonPtr()->getPlayersLoaded(playerNetId);
+			unsigned int playersConnected = Logic::CGameNetPlayersManager::getSingletonPtr()->getNumberOfPlayersConnected();
 
 			//Si todos los clientes han cargado todos los players
 			if( Logic::CGameNetPlayersManager::getSingletonPtr()->getPlayersLoaded(playerNetId) == 

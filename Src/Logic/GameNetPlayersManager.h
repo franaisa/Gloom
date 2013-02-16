@@ -115,6 +115,13 @@ namespace Logic {
 
 
 		/** Devuelve el primer player de la tabla */
+		std::map<Net::NetID, CPlayerInfo>::iterator begin2() { return _connectedPlayers.begin(); }
+		
+		/** Devuelve el último player de la tabla */
+		std::map<Net::NetID, CPlayerInfo>::iterator end2() { return _connectedPlayers.end(); }
+
+
+		/** Devuelve el primer player de la tabla */
 		CGameNetPlayersManager::iterator begin();
 		
 		/** Devuelve el último player de la tabla */

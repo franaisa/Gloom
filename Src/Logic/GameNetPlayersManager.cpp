@@ -104,31 +104,28 @@ namespace Logic {
 	//______________________________________________________________________________
 
 	void CGameNetPlayersManager::setPlayerNickname(Net::NetID idPlayer, const std::string& nickname) {
-		TConnectedPlayersTable::const_iterator it = _connectedPlayers.find(idPlayer);
+		TConnectedPlayersTable::iterator it = _connectedPlayers.find(idPlayer);
 		assert(it != _connectedPlayers.end() && "No se puede poner nombre al player porque no existe en el Manager");
 
-		CPlayerInfo player = it->second;
-		player.setName(nickname);
+		it->second.setName(nickname);
 	}
 
 	//______________________________________________________________________________
 
 	void CGameNetPlayersManager::setPlayerMesh(Net::NetID idPlayer, const std::string& mesh) {
-		TConnectedPlayersTable::const_iterator it = _connectedPlayers.find(idPlayer);
+		TConnectedPlayersTable::iterator it = _connectedPlayers.find(idPlayer);
 		assert(it != _connectedPlayers.end() && "No se puede poner el nombre de la maya al player porque no existe en el Manager");
 
-		CPlayerInfo player = it->second;
-		player.setName(mesh);
+		it->second.setMesh(mesh);
 	}
 
 	//______________________________________________________________________________
 
 	void CGameNetPlayersManager::setEntityID(Net::NetID idPlayer, Logic::TEntityID entityId) {
-		TConnectedPlayersTable::const_iterator it = _connectedPlayers.find(idPlayer);
+		TConnectedPlayersTable::iterator it = _connectedPlayers.find(idPlayer);
 		assert(it != _connectedPlayers.end() && "No se puede asignar el id de entidad al player porque no existe en el Manager");
 
-		CPlayerInfo player = it->second;
-		player.setEntityId(entityId);
+		it->second.setEntityId(entityId);
 	}
 
 	//______________________________________________________________________________
@@ -137,8 +134,7 @@ namespace Logic {
 		TConnectedPlayersTable::iterator it = _connectedPlayers.find(idPlayer);
 		assert(it != _connectedPlayers.end() && "No se puede aumentar el contador de players porque no existe el player en el Manager");
 
-		CPlayerInfo player = it->second;
-		player.loadPlayer(idPlayerToLoad);
+		it->second.loadPlayer(idPlayerToLoad);
 	}
 
 	//______________________________________________________________________________
@@ -147,8 +143,7 @@ namespace Logic {
 		TConnectedPlayersTable::iterator it = _connectedPlayers.find(idPlayer);
 		assert(it != _connectedPlayers.end() && "No se puede decrementar el contador de players porque no existe el player en el Manager");
 
-		CPlayerInfo player = it->second;
-		player.unloadPlayer(idPlayerToUnload);
+		it->second.unloadPlayer(idPlayerToUnload);
 	}
 
 	//______________________________________________________________________________
@@ -187,13 +182,13 @@ namespace Logic {
 	//______________________________________________________________________________
 
 	CGameNetPlayersManager::iterator CGameNetPlayersManager::begin() {
-		return _connectedPlayers.begin();
+		return CGameNetPlayersManager::iterator( _connectedPlayers.begin() );
 	}
 
 	//______________________________________________________________________________
 
 	CGameNetPlayersManager::iterator CGameNetPlayersManager::end() {
-		return _connectedPlayers.end();
+		return CGameNetPlayersManager::iterator( _connectedPlayers.end() );
 	}
 
 };
