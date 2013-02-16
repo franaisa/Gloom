@@ -102,16 +102,16 @@ namespace Application {
 			std::map<Net::NetID, Logic::CPlayerInfo>::iterator it = Logic::CGameNetPlayersManager::getSingletonPtr()->begin2();
 			std::pair<Net::NetID, Logic::CPlayerInfo> tempPair;
 			
-			Logic::CPlayerInfo playerInfoIt;
+			Logic::CPlayerInfo tempPlayerInfo;
 			for(; it != Logic::CGameNetPlayersManager::getSingletonPtr()->end2(); ++it) {
-				playerInfoIt = it->second;
-				netId = playerInfoIt.getNetId();
+				tempPlayerInfo = it->second;
+				netId = tempPlayerInfo.getNetId();
 
 				// Debido a que fuera de este bucle enviaremos la informacion de este player mediante broadcast
 				// evitamos enviar la informacion en esta fase (ya que la id de entidad aun no ha sido asignada)
 				if(netId != playerNetId) {
-					entityId = playerInfoIt.getEntityId();
-					name = playerInfoIt.getName();
+					entityId = tempPlayerInfo.getEntityId();
+					name = tempPlayerInfo.getName();
 
 					// Mensaje LOAD_PLAYER
 					tempBuffer.write(&msg, sizeof(msg));
