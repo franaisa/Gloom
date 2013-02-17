@@ -24,52 +24,45 @@ using namespace physx;
 
 //--------------------------------------------------
 
-CCollisionManager::CCollisionManager()
-{
+CCollisionManager::CCollisionManager() {
 
 }
 
 //--------------------------------------------------
 
-CCollisionManager::~CCollisionManager()
-{
+CCollisionManager::~CCollisionManager() {
 
 }
 
 //--------------------------------------------------
 
-void CCollisionManager::onConstraintBreak(PxConstraintInfo *constraints, PxU32 count)
-{
+void CCollisionManager::onConstraintBreak(PxConstraintInfo *constraints, PxU32 count) {
 	// Por ahora ignoramos estos mensajes	
 }
 
 //--------------------------------------------------
 
-void CCollisionManager::onWake(PxActor **actors, PxU32 count)
-{
+void CCollisionManager::onWake(PxActor **actors, PxU32 count) {
 	// Por ahora ignoramos estos mensajes	
 }
 
 //--------------------------------------------------
 
-void CCollisionManager::onSleep(PxActor **actors, PxU32 count)
-{
+void CCollisionManager::onSleep(PxActor **actors, PxU32 count) {
 	// Por ahora ignoramos estos mensajes	
 }
 
 //--------------------------------------------------
 
-void CCollisionManager::onContact(const PxContactPairHeader &pairHeader, const PxContactPair *pairs, PxU32 nbPairs) 
-{
-	// Por ahora ignoramos estos mensajes	
+void CCollisionManager::onContact(const PxContactPairHeader &pairHeader, const PxContactPair *pairs, PxU32 nbPairs) {
+	// Por ahora ignoramos estos mensajes
 }
 
 //--------------------------------------------------
 
-void CCollisionManager::onTrigger(PxTriggerPair *pairs, PxU32 count)
-{
+void CCollisionManager::onTrigger(PxTriggerPair *pairs, PxU32 count) {
 	// Recorrer el array de colisiones
-	for (unsigned int i=0; i<count; i++) {
+	for (unsigned int i = 0; i < count; ++i) {
 		
 		// Ignoramos los pares en los que alguna de las shapes (del trigger o de la otra entidad) ha sido borrada
 		if (pairs[i].flags & (PxTriggerPairFlag::eDELETED_SHAPE_TRIGGER | PxTriggerPairFlag::eDELETED_SHAPE_OTHER))
@@ -85,7 +78,7 @@ void CCollisionManager::onTrigger(PxTriggerPair *pairs, PxU32 count)
 		if (!enter && !exit)
 			continue;
 
-		// TODO: notificar a los componentes físicos de la lógica las colisiones
+		// Notificar a los componentes físicos de la lógica las colisiones
 		// 1. Obtener el componente lógico (IPhysics) asociado al trigger físico.
 		// 2. Obtener el componente lógico (IPhysics) asociado a la otra entidad física.
 		// 3. Notificar a ambos componentes la colisión
@@ -95,17 +88,14 @@ void CCollisionManager::onTrigger(PxTriggerPair *pairs, PxU32 count)
 		IPhysics *otherComponent = (IPhysics *) pairs[i].otherShape->getActor().userData;
 		assert(otherComponent);
 
-		//if(triggerComponent->isActivate() && otherComponent->isActivate()) {
-			triggerComponent->onTrigger(otherComponent, enter);
-			otherComponent->onTrigger(triggerComponent, enter);
-		//}
+		triggerComponent->onTrigger(otherComponent, enter);
+		otherComponent->onTrigger(triggerComponent, enter);
 	}	
 }
 
 //--------------------------------------------------
 
-void CCollisionManager::onShapeHit(const PxControllerShapeHit &hit)
-{
+void CCollisionManager::onShapeHit(const PxControllerShapeHit &hit) {
 	// TODO: notificar al componente físico la colisión con una entidad
 	// 1. Obtener el puntero al componente físico (CPhysicController)
 	// 2. Notificar la colisión al componente físico
@@ -115,8 +105,7 @@ void CCollisionManager::onShapeHit(const PxControllerShapeHit &hit)
 
 //--------------------------------------------------
 
-void CCollisionManager::onControllerHit(const PxControllersHit &hit) 
-{
+void CCollisionManager::onControllerHit(const PxControllersHit &hit) {
 	// TODO: notificar al componente físico la colisión con otro controller
 	// 1. Obtener el puntero al componente físico (CPhysicController)
 	// 2. Notificar la colisión al componente físico
@@ -124,8 +113,7 @@ void CCollisionManager::onControllerHit(const PxControllersHit &hit)
 
 //--------------------------------------------------
 
-void CCollisionManager::onObstacleHit(const PxControllerObstacleHit &hit)
-{
+void CCollisionManager::onObstacleHit(const PxControllerObstacleHit &hit) {
 	// Por ahora ignoramos estos mensajes	
 }
 
