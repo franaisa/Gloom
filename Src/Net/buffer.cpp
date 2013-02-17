@@ -11,7 +11,7 @@
  * @author Juan A. Recio-García
  * @author Francisco Aisa García
  * @author Rubén Mulero Guerrero
- * @date Octubre, 2006
+ * @date Enero, 2006
  */
 
 #include "buffer.h"
@@ -156,6 +156,7 @@ namespace Net {
 
 		while(_wrapperPtr->_size + datalength >= _wrapperPtr->_maxsize)
 			realloc();
+		
 		memcpy(_wrapperPtr->_current,data,datalength);
 		_wrapperPtr->_current+=datalength;
 		_wrapperPtr->_size+=datalength;
@@ -178,6 +179,7 @@ namespace Net {
 		byte* newbuffer = new byte[_wrapperPtr->_maxsize + _wrapperPtr->_delta];
 		memcpy(newbuffer, _wrapperPtr->_begin, _wrapperPtr->_size);
 		delete[] _wrapperPtr->_begin;
+		
 		_wrapperPtr->_begin = newbuffer;
 		_wrapperPtr->_current = _wrapperPtr->_begin + _wrapperPtr->_size;
 		_wrapperPtr->_maxsize += _wrapperPtr->_delta;	
@@ -203,7 +205,6 @@ namespace Net {
 	//__________________________________________________________________
 
 	void CBuffer::serialize(const std::string& data, bool crc) {
-
 		if(crc){
 			int crc = Math::CRC(data);
 
@@ -214,6 +215,8 @@ namespace Net {
 			write(const_cast <char*>(data.c_str()), data.size());
 		}
 	}
+
+	//__________________________________________________________________
 
 	void CBuffer::deserialize(std::string& data) {
 		int size;
@@ -230,6 +233,8 @@ namespace Net {
 		write(&data, sizeof(data));
 	}
 
+	//__________________________________________________________________
+
 	void CBuffer::deserialize(int& data) {
 		read(&data, sizeof(data));
 	}
@@ -239,6 +244,8 @@ namespace Net {
 	void CBuffer::serialize(unsigned int data) {
 		write(&data, sizeof(data));
 	}
+
+	//__________________________________________________________________
 
 	void CBuffer::deserialize(unsigned int& data) {
 		read(&data, sizeof(data));
@@ -250,6 +257,8 @@ namespace Net {
 		write(&data, sizeof(data));
 	}
 
+	//__________________________________________________________________
+
 	void CBuffer::deserialize(float& data) {
 		read(&data, sizeof(data));
 	}
@@ -259,6 +268,8 @@ namespace Net {
 	void CBuffer::serialize(unsigned char data) {
 		write(&data, sizeof(data));
 	}
+
+	//__________________________________________________________________
 
 	void CBuffer::deserialize(unsigned char& data) {
 		read(&data, sizeof(data));
@@ -270,6 +281,8 @@ namespace Net {
 		write(&data, sizeof(data));
 	}
 
+	//__________________________________________________________________
+
 	void CBuffer::deserialize(char& data) {
 		read(&data, sizeof(data));
 	}
@@ -279,6 +292,8 @@ namespace Net {
 	void CBuffer::serialize(bool data) {
 		write(&data, sizeof(data));
 	}
+
+	//__________________________________________________________________
 
 	void CBuffer::deserialize(bool& data) {
 		read(&data, sizeof(data));
@@ -292,6 +307,8 @@ namespace Net {
 		serialize(Math::getYaw(data));
 		serialize(Math::getPitch(data));
 	}
+
+	//__________________________________________________________________
 
 	void CBuffer::deserialize(Matrix4& data) {
 		Vector3 transform;
