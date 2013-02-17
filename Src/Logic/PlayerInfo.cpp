@@ -23,14 +23,6 @@ namespace Logic {
 
 	//______________________________________________________________________________
 
-	CPlayerInfo::CPlayerInfo(std::string name, std::string mesh) : _name(name), 
-																   _mesh(mesh),
-																   _rank(0) {
-		// No hay memoria dinamica que inicializar
-	}
-
-	//______________________________________________________________________________
-
 	CPlayerInfo::CPlayerInfo(const CPlayerInfo& rhs) : _name(rhs._name), 
 													   _mesh(rhs._mesh), 
 													   _clan(rhs._clan), 

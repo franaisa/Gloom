@@ -24,18 +24,14 @@ namespace Logic {
 
 	//______________________________________________________________________________
 
-	CGameNetPlayersManager::CGameNetPlayersManager()
-	{
+	CGameNetPlayersManager::CGameNetPlayersManager() {
 		_instance = this;
-
 	} // CServer
 
 	//______________________________________________________________________________
 
-	CGameNetPlayersManager::~CGameNetPlayersManager()
-	{
+	CGameNetPlayersManager::~CGameNetPlayersManager() {
 		_instance = 0;
-
 	} // ~CServer
 	
 	//______________________________________________________________________________
@@ -46,34 +42,28 @@ namespace Logic {
 		new CGameNetPlayersManager();
 
 		return true;
-
 	} // Init
 
 	//______________________________________________________________________________
 
-	void CGameNetPlayersManager::Release()
-	{
+	void CGameNetPlayersManager::Release() {
 		assert(_instance && "Logic::CGameNetPlayersManager no está inicializado!");
 
 		if(_instance)
 			delete _instance;
-
 	} // Release
 
 	//______________________________________________________________________________
 
-	void CGameNetPlayersManager::activate() 
-	{
+	void CGameNetPlayersManager::activate() {
 		// De momento no cargamos nada
-
 	} // activate
 
 	//______________________________________________________________________________
 
-	void CGameNetPlayersManager::deactivate() 
-	{	
+	void CGameNetPlayersManager::deactivate() {	
 		// Vaciamos el map de clientes creados
-
+		_connectedPlayers.clear();
 	} // deactivate
 
 	//______________________________________________________________________________

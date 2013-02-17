@@ -47,7 +47,7 @@ namespace Net {
 		@param initsize Tamaño inicial del buffer.
 		@param delta Indica cuanto crecerá el buffer cada vez que se necesite ampliarlo.
 		*/
-		CBuffer(size_t initsize=500, size_t delta=100);
+		CBuffer(size_t initsize = 500, size_t delta = 100);
 
 		//________________________________________________________________________
 
@@ -339,8 +339,6 @@ namespace Net {
 
 		/** Wrapper para facilitar el uso de copy-on-write. */
 		struct BufferWrapper {
-			// Informacion del buffer
-
 			/** Puntero al comienzo del buffer. */
 			byte* _begin;
 			
