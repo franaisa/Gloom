@@ -122,7 +122,8 @@ namespace Logic
 		return message->getMessageType() == Message::CONTROL || 
 			message->getMessageType() == Message::COLLISION_DOWN ||
 			message->getMessageType() == Message::REBOUND ||
-			message->getMessageType() == Message::JUMPER;
+			message->getMessageType() == Message::JUMPER ||
+			message->getMessageType() == Message::CEALING;
 	} // accept
 	
 	//---------------------------------------------------------
@@ -163,6 +164,9 @@ namespace Logic
 		case Message::JUMPER:
 			_powerJumpInJumper=((CMessageJumper*)message)->getPower();
 			jumper();
+			break;
+		case Message::CEALING:
+			_speedJump=-0.02;
 			break;
 		}
 

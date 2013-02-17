@@ -74,6 +74,5 @@ namespace Logic {
 		return true;
 	} // spawn
 
-
 } // namespace Logic
 

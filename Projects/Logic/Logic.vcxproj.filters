@@ -240,6 +240,15 @@
     </ClCompile>
     <ClCompile Include="..\..\Src\Logic\Entity\Components\ShootGrenadeLauncher.cpp">
       <Filter>Entity\Components\Source Files</Filter>
+	</ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Messages\MessageActivate.cpp">
+      <Filter>Messages\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Messages\MessageDeactivate.cpp">
+      <Filter>Messages\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Messages\MessageCealing.cpp">
+      <Filter>Messages\Source</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -455,6 +464,15 @@
     </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Entity\Components\ShootGrenadeLauncher.h">
       <Filter>Entity\Components\Header Files</Filter>
+	</ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Messages\MessageActivate.h">
+      <Filter>Messages\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Messages\MessageDeactivate.h">
+      <Filter>Messages\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Messages\MessageCealing.h">
+      <Filter>Messages\Header</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

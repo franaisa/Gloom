@@ -121,8 +121,8 @@ namespace Logic
 	bool CGraphics::accept(CMessage *message)
 	{
 		return (message->getMessageType() == Message::SET_TRANSFORM || 
-			message->getMessageType() == Message::WAKEUP || 
-			message->getMessageType() == Message::SLEEP );
+			message->getMessageType() == Message::ACTIVATE || 
+			message->getMessageType() == Message::DEACTIVATE );
 	} // accept
 	
 	//---------------------------------------------------------
@@ -134,11 +134,11 @@ namespace Logic
 		case Message::SET_TRANSFORM:
 			_graphicsEntity->setTransform(((CMessageTransform*)message)->getTransform());
 			break;
-		case Message::SLEEP:
-			sleep();
+		case Message::ACTIVATE:
+			setVisible(true);
 			break;
-		case Message::WAKEUP:
-			wakeup();
+		case Message::DEACTIVATE:
+			setVisible(false);
 			break;
 		}
 
@@ -150,13 +150,6 @@ namespace Logic
 		_graphicsEntity->setVisible(renderGraphicEntity);
 	}
 
-	void CGraphics::sleep() {
-		setVisible(false);
-	}
-
-	void CGraphics::wakeup() {
-		setVisible(true);
-	}
 
 } // namespace Logic
 

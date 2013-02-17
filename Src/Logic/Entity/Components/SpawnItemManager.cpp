@@ -22,6 +22,9 @@
 #include "Logic/Messages/MessageAddWeapon.h"
 #include "Logic/Messages/MessageSleep.h"
 #include "Logic/Messages/MessageWakeUp.h"
+#include "Logic/Messages/MessageActivate.h"
+#include "Logic/Messages/MessageDeactivate.h"
+
 
 #include "Net/Manager.h"
 
@@ -44,11 +47,11 @@ namespace Logic {
 				_isRespawning = false;
 				_timer = 0;
 
-				// Activar entidad grafica y despertar la fisica
-				CMessageWakeUp* m = new CMessageWakeUp();
+				// Activar entidad grafica y fisica
+				CMessageActivate* m = new CMessageActivate();
 				_entity->emitMessage(m);
-				
-				// Activar entidad fisica (solo si soy el servidor o single player)
+
+				// Activar la entidad fisica (solo si soy el servidor o single player)
 				if(Net::CManager::getSingletonPtr()->imServer() || (!Net::CManager::getSingletonPtr()->imServer() && !Net::CManager::getSingletonPtr()->imClient()))
 					;//_entity->getComponent<CPhysicEntity>("CPhysicEntity")->activate();
 			}
@@ -113,7 +116,7 @@ namespace Logic {
 	void CSpawnItemManager::itemGrabbed(CEntity* actor) {
 
 		// Desactivamos la entidad grafica y fisica.
-		CMessageSleep* m = new CMessageSleep();
+		CMessageDeactivate* m = new CMessageDeactivate();
 		_entity->emitMessage(m);
 		
 		// Si se trata del servidor o del single player
