@@ -113,6 +113,8 @@ namespace Logic
 	@ingroup entityGroup
 
 	@author Jose Antonio García Yáñez
+	@author Francisco Aisa García
+	@author Ruben Mulero Guerrero
 	@date Enero, 2013
 	@ingroup grupoEntidad
 	*/
