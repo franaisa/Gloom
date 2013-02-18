@@ -214,7 +214,16 @@ namespace Logic
 
 	void CShoot::decrementAmmo() {
 		--_currentAmmo;
-	}// addAmmo
+
+		// Notificamos al hud para que cambie la cantidad de municion
+		// que tenemos
+		Logic::CMessageHudAmmo *message = new Logic::CMessageHudAmmo();
+		message->setAmmo(_currentAmmo);
+
+		//Cambio sobre uno, hay q cambiarlo ;-)
+		message->setWeapon(_id);
+		_entity->emitMessage(message);
+	}// decrementAmmo
 	//----------------------------------------------------------
 
 	void CShoot::resetAmmo()
@@ -226,7 +235,7 @@ namespace Logic
 
 	// Patron template
 	void CShoot::shoot2() {
-		if(_canShoot && _currentAmmo > 0 && _numberShoots > _currentAmmo){
+		if(_canShoot && _currentAmmo > 0 && _numberShoots >= _currentAmmo){
 			_canShoot = false;
 			_coldDownTime = 0;
 				
@@ -236,9 +245,9 @@ namespace Logic
 					printf("impacto con %s\n", entityHit->getName().c_str());
 					triggerHitMessages(entityHit);
 				}
-			}
 
-			decrementAmmo();
+				decrementAmmo();
+			}
 		}
 		else if(_currentAmmo == 0) {
 			// Ejecutar sonidos y animaciones de falta de balas
@@ -271,33 +280,6 @@ namespace Logic
 		CEntity *entity = Physics::CServer::getSingletonPtr()->raycastClosestInverse(ray, _distance,3);
 
 		return Physics::CServer::getSingletonPtr()->raycastClosestInverse(ray, _distance, 3);
-
-		/*
-		//resto las balas que tiene, luego enviare las que le quedan actualizadas, asi no envio un mensaje por balas (en la escopeta envairia 8 mensajes, asi solo uno)
-		if(_name != "Hammer"){
-			--_currentAmmo;
-		}
-		//Si hay colisión envíamos a dicha entidad un mensaje de daño
-		if(entity) {
-			// LLamar al componente que corresponda con el daño hecho
-			//entity->
-			Logic::CMessageDamaged *m=new Logic::CMessageDamaged();
-			m->setDamage(_damage);
-			m->setEnemy(_entity);
-			entity->emitMessage(m);
-		}
-			
-		//Para el rebote, si hay colision con la entidad mundo pues reboto en la dirección opuesta a la que miro
-				
-		if(_name != "Hammer"){				
-			Logic::CMessageHudAmmo *message = new Logic::CMessageHudAmmo();
-			message->setAmmo(_currentAmmo);
-
-			//Cambio sobre uno, hay q cambiarlo ;-)
-			message->setWeapon(_id);
-			_entity->emitMessage(message);
-		}
-		*/
 	}// fireWeapon
 	//----------------------------------------------------------
 
