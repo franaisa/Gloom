@@ -16,6 +16,7 @@ la ventana, etc.
 
 #include "Server.h"
 #include "Scene.h"
+#include "Overlay.h"
 
 #include "BaseSubsystems/Server.h"
 #include "BaseSubsystems/Math.h"
@@ -25,13 +26,14 @@ la ventana, etc.
 #include <OgreRoot.h>
 #include <OgreRenderWindow.h>
 #include <OgreWindowEventUtilities.h>
+#include <OgreOverlayManager.h>
 #include <OgreRay.h>
 
 namespace Graphics 
 {
 	CServer *CServer::_instance = 0;
 
-	CServer::CServer() : _root(0), _renderWindow(0), _activeScene(0), _dummyScene(0)
+	CServer::CServer() : _root(0), _renderWindow(0), _activeScene(0), _dummyScene(0), _overlayManager(0)
 	{
 		assert(!_instance && "Segunda inicialización de Graphics::CServer no permitida!");
 
@@ -96,6 +98,9 @@ namespace Graphics
 		// Por defecto la escena activa es la dummy
 		setScene(_dummyScene);
 
+		//Carga el manager de overlays
+		_overlayManager = Ogre::OverlayManager::getSingletonPtr();
+		
 		return true;
 
 	} // open
@@ -210,6 +215,43 @@ namespace Graphics
 	} // createScene
 
 	//--------------------------------------------------------
+
+	COverlay* CServer::createOverlay(const std::string& name, const std::string& type){
+	
+		//Nos aseguramos de que no exista ya un overlay con este nombre.
+		assert(_overlayManager->hasOverlayElement(name) && 
+			"Ya se ha creado un overlay con este nombre.");
+
+		COverlay *overlay = new COverlay(name, type);
+		std::pair<std::string,COverlay*> aux(name, overlay);
+		//_overlays.insert(aux);
+
+		return overlay;
+	} // createOverlayelement
+
+		
+	//--------------------------------------------------------
+
+	void CServer::removeOverlay(const std::string& name){
+	
+	} //removeOverlayElement
+	//--------------------------------------------------------
+	/*
+	COverlay* CServer::getOverlay(const std::string& name){
+		return (*_overlays.find(name))->second;
+	} //get Overlay
+	//--------------------------------------------------------
+	*/
+	int CServer::getWidth(){
+		return _overlayManager->getViewportHeight();
+	} //get Width
+	//--------------------------------------------------------
+
+	int CServer::getHeight(){
+		return _overlayManager->getViewportWidth();
+	} //get Height
+	//--------------------------------------------------------
+
 
 	void CServer::tick(float secs) 
 	{
