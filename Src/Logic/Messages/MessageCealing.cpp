@@ -4,6 +4,8 @@
 
 namespace Logic {
 
+	IMP_FACTORYMESSAGE(CMessageCealing);
+
 	CMessageCealing::CMessageCealing() : CMessage(TMessageType::CEALING) {
 		// Nada que hacer
 	} //
@@ -13,7 +15,7 @@ namespace Logic {
 		assert(_tempBuffer == NULL);
 
 		_tempBuffer = new Net::CBuffer(sizeof(int));
-		_tempBuffer->serialize(std::string("CMessageCealing"));
+		_tempBuffer->serialize(std::string("CMessageCealing"), true);
 		
 		return _tempBuffer;
 	}//

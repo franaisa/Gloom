@@ -38,6 +38,15 @@
     <Filter Include="Messages\Source">
       <UniqueIdentifier>{95c95c1a-83ed-47e0-9ce4-173333221a5f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Net">
+      <UniqueIdentifier>{3080b548-ccce-4804-bdf8-f2a688d7bbd0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Net\Header">
+      <UniqueIdentifier>{194807b5-b41a-44a8-8d23-0bff06103adb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Net\Source">
+      <UniqueIdentifier>{772c75e6-854b-4b26-8162-58fc8aa37601}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Src\Logic\Maps\ComponentFactory.cpp">
@@ -249,6 +258,21 @@
     </ClCompile>
     <ClCompile Include="..\..\Src\Logic\Messages\MessageCealing.cpp">
       <Filter>Messages\Source</Filter>
+	</ClCompile>
+    <ClCompile Include="..\..\Src\Logic\PlayerInfo.cpp">
+      <Filter>Net\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\GameNetPlayersManager.cpp">
+      <Filter>Net\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Messages\MessageSyncPosition.cpp">
+      <Filter>Messages\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\Interpolation.cpp">
+      <Filter>Entity\Components\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\UpdateClientPosition.cpp">
+      <Filter>Entity\Components\Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -473,6 +497,21 @@
     </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Messages\MessageCealing.h">
       <Filter>Messages\Header</Filter>
+	</ClInclude>
+    <ClInclude Include="..\..\Src\Logic\PlayerInfo.h">
+      <Filter>Net\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\GameNetPlayersManager.h">
+      <Filter>Net\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Messages\MessageSyncPosition.h">
+      <Filter>Messages\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\Interpolation.h">
+      <Filter>Entity\Components\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\UpdateClientPosition.h">
+      <Filter>Entity\Components\Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

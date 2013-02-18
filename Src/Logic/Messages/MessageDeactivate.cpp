@@ -4,6 +4,8 @@
 
 namespace Logic {
 
+	IMP_FACTORYMESSAGE(CMessageDeactivate);
+
 	CMessageDeactivate::CMessageDeactivate() : CMessage(TMessageType::DEACTIVATE) {
 		// Nada que hacer
 	} //
@@ -13,7 +15,7 @@ namespace Logic {
 		assert(_tempBuffer == NULL);
 
 		_tempBuffer = new Net::CBuffer(sizeof(int));
-		_tempBuffer->serialize(std::string("CMessageDeactivate"));
+		_tempBuffer->serialize(std::string("CMessageDeactivate"), true);
 		
 		return _tempBuffer;
 	}//

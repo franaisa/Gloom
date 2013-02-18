@@ -100,34 +100,32 @@ namespace Net {
 
 	//---------------------------------------------------------
 
-	void CManager::send(void* data, size_t longdata) 
-	{
-		if(!_connections.empty())
-		{
-			// TODO Ahora hay más de una conexión, debemos mandar el mensaje por
-			// todas si somos servidor.
+	void CManager::send(void* data, size_t longdata) {
+		// Si hay jugadores conectados
+		if(!_connections.empty()) {
+			// Si somos el servidor realizar un broadcast a todos los clientes
 			if(_servidorRed)
-				_servidorRed->sendAll(data,longdata,0,1);
-			if(_clienteRed)
-				_clienteRed->sendData(getConnection(Net::ID::SERVER),data,longdata,0,1); // TODO Se guardan en cliente conexiones con el resto de clientes?
-		}
+				_servidorRed->sendAll(data, longdata, 0, 1);
 
+			// Si somos el cliente enviamos la informacion al servidor
+			if(_clienteRed)
+				_clienteRed->sendData(getConnection(Net::ID::SERVER), data, longdata, 0, 1);
+		}
 	} // send
 
 	//---------------------------------------------------------
 
-	void CManager::send(void* data, size_t longdata, Net::NetID id) 
-	{
-		if(!_connections.empty())
-		{
-			// TODO Ahora hay más de una conexión, debemos mandar el mensaje por
-			// todas si somos servidor.
+	void CManager::send(void* data, size_t longdata, Net::NetID id) {
+		if(!_connections.empty()) {
+			// Si somos el servidor mandamos el mensaje al cliente que nos han indicado
+			// por parametro
 			if(_servidorRed)
-				_servidorRed->sendData((*_connections.find(id)).second,data,longdata,0,1);
-			if(_clienteRed)
-				_clienteRed->sendData(getConnection(Net::ID::SERVER),data,longdata,0,1); // TODO Se guardan en cliente conexiones con el resto de clientes?
-		}
+				_servidorRed->sendData(_connections.find(id)->second, data, longdata, 0, 1);
 
+			// Si somos el cliente enviamos la información al servidor
+			if(_clienteRed)
+				_clienteRed->sendData(getConnection(Net::ID::SERVER), data, longdata, 0, 1);
+		}
 	} // send
 
 	//---------------------------------------------------------
@@ -200,7 +198,7 @@ namespace Net {
 		assert(_clienteRed && "Cliente Red es null"); // Solo se puede ejecutar el connectTo si somos cliente
 		assert(_connections.empty() && "Ya hay una conexion"); // Capamos al cliente a 1 conexión max: la de con el server
 
-		CConexion* connection = _clienteRed->connect(address, port, channels,timeout); // CONNECT
+		CConexion* connection = _clienteRed->connect(address, port, channels, timeout); // CONNECT
 		
 		// Almacenamos esa conexión y le otorgamos un ID de red
 		connection->setId(Net::ID::SERVER); // Un cliente sólo se conecta al SERVER
@@ -250,76 +248,70 @@ namespace Net {
 
 	//---------------------------------------------------------
 
-	void CManager::disconnect(CConexion* connection)
-	{
-		if(_servidorRed)
-		{
+	void CManager::disconnect(CConexion* connection) {
+		if(_servidorRed) {
 			_servidorRed->disconnect(connection);
 			removeConnection(connection->getId());
 		}
-		else if(_clienteRed)
-		{
+		else if(_clienteRed) {
 			_clienteRed->disconnect(getConnection(Net::ID::SERVER));
 			removeConnection(Net::ID::SERVER);
 		}
-
 	} // disconnect
 		
 	//---------------------------------------------------------
 
-	bool CManager::addConnection(NetID id, CConexion* connection) 
-	{
+	bool CManager::addConnection(NetID id, CConexion* connection) {
 		if(_connections.count(id))
 			return false;
-		TConnectionPair elem(id,connection);
-		_connections.insert(elem); // Insertamos par id - conexion
-		return true;
 
+		// Insertamos una nueva conexion con tan solo la informacion de conexion
+		TConnectionPair elem(id, connection);
+		// Insertamos par id - playerInfo con la conexion correspondiente
+		_connections.insert(elem);
+		
+		return true;
 	} // addConection
 		
 	//---------------------------------------------------------
 
-	bool CManager::removeConnection(NetID id) 
-	{
-		if(_connections.count(id))
-		{
+	bool CManager::removeConnection(NetID id) {
+		if(_connections.count(id)) {
 			CConexion* connection = getConnection(id);
 			_connections.erase(id);
 			delete connection;
+			
 			return true;
 		}
+		
 		return false;
-
 	} // removeConection
 
 	//---------------------------------------------------------
 
-	void CManager::deactivateNetwork()
-	{
-		if(_servidorRed)
-		{
+	void CManager::deactivateNetwork() {
+		if(_servidorRed) {
 			_servidorRed->deInit(); // TODO analizar que haga disconnect de todo; antes if(_conexion) disconnect (OJO estaba comentado)
 			delete _servidorRed;
 			_servidorRed = 0;
 		}
-		if(_clienteRed)
-		{
+		if(_clienteRed) {
 			_clienteRed->deInit();
 			delete _clienteRed;
 			_clienteRed = 0;
 		}
-		if(!_connections.empty())
-		{
+		if(!_connections.empty()) {
+			CConexion* connection;
 			for(TConnectionTable::const_iterator it = _connections.begin(); it != _connections.end(); it++)
-				delete (*it).second;
+				delete it->second;
+			
 			_connections.clear(); // Quien hace el disconnect
 		}
 	} // deactivateNetwork
 
 	//---------------------------------------------------------
 
-	void CManager::getPackets(std::vector<Net::CPaquete*>& _paquetes)
-	{
+	void CManager::getPackets(std::vector<Net::CPaquete*>& _paquetes) {
 		if(_servidorRed)
 			_servidorRed->service(_paquetes);
 		if(_clienteRed)
@@ -329,8 +321,7 @@ namespace Net {
 
 	//---------------------------------------------------------
 
-	void CManager::addObserver(IObserver* listener)
-	{
+	void CManager::addObserver(IObserver* listener) {
 		_observers.push_back(listener);
 	} // addObserver
 

@@ -6,6 +6,7 @@
 namespace Logic {
 
 	class CMessageJumper : public CMessage{
+	DEC_FACTORYMESSAGE(CMessageJumper);
 	public:
 		CMessageJumper();
 		void setPower(float power);
@@ -18,6 +19,7 @@ namespace Logic {
 	protected:
 		float _power;
 	};
+	REG_FACTORYMESSAGE(CMessageJumper);
 
 };
 

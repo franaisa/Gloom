@@ -4,6 +4,8 @@
 
 namespace Logic {
 
+	IMP_FACTORYMESSAGE(CMessageJumper);
+
 	CMessageJumper::CMessageJumper() : CMessage(TMessageType::JUMPER) {
 		// Nada que hacer
 	} //
@@ -22,7 +24,7 @@ namespace Logic {
 		assert(_tempBuffer == NULL);
 
 		_tempBuffer = new Net::CBuffer(sizeof(int));
-		_tempBuffer->serialize(std::string("CMessageJumper"));
+		_tempBuffer->serialize(std::string("CMessageJumper"), true);
 		
 		return _tempBuffer;
 	}//

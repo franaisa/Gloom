@@ -6,6 +6,7 @@
 namespace Logic {
 
 	class CMessageCealing : public CMessage{
+	DEC_FACTORYMESSAGE(CMessageCealing);
 	public:
 		CMessageCealing();
 		~CMessageCealing(){};
@@ -14,7 +15,7 @@ namespace Logic {
 		virtual void deserialize(Net::CBuffer& buffer);
 
 	};
-
+	REG_FACTORYMESSAGE(CMessageCealing);
 };
 
 #endif

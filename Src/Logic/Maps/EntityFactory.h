@@ -18,6 +18,7 @@ del juego.
 #include <list>
 
 #include "EntityID.h"
+#include "Map/MapEntity.h"
 
 // Predeclaración de clases para ahorrar tiempo de compilación
 namespace Map
@@ -90,6 +91,17 @@ namespace Logic
 		@return true si la carga se hizo correctamente.
 		*/
 		bool loadBluePrints(const std::string &filename);
+
+		/**
+		Carga y crea entidades genéricas que se han especificado en el
+		archivo de arquetipos. Estas entidades se guardan en una lista
+		de la que luego el mapa creará tantas instancias como se hayan
+		especificado.
+
+		@param filename Fichero con la descripción de las entidades.
+		@return true si la carga se hizo correctamente.
+		*/
+		bool loadArchetypes(const std::string &filename);
 
 		/**
 		Descarga el listado de entidades creadas
@@ -189,6 +201,15 @@ namespace Logic
 		void deleteDefferedEntities();
 
 		/**
+		Método que dado un tipo de entidad, devuelve su informacion.
+
+		@param type el tipo de entidad que se está buscando
+		@return Información de la entidad, o NULL en caso de no
+		encontrarla
+		*/
+		Map::CEntity * getInfo(std::string type);
+
+		/**
 		Estructura que define una entidad blueprint.
 		*/
 		typedef struct
@@ -270,6 +291,11 @@ namespace Logic
 		*/
 		typedef std::map<std::string,TBluePrint> TBluePrintMap;
 
+		/**
+		Tabla donde se almacenan los arquetipos de las entidades.
+		*/
+		std::map<std::string,Map::CEntity *> _archetypes;
+		
 		/**
 		Tabla donde se almacenan las entidades blueprint por nombre.
 		*/

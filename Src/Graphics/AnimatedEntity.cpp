@@ -18,9 +18,12 @@ con animaciones.
 #include "AnimatedEntity.h"
 
 #include <assert.h>
-
+#include "Server.h"
+#include "Scene.h"
+#include "Entity.h"
 #include <OgreEntity.h>
 #include <OgreAnimationState.h>
+#include <OgreSceneManager.h>
 
 namespace Graphics 
 {
@@ -88,6 +91,16 @@ namespace Graphics
 		}
 
 	} // tick
+
+
+	void CAnimatedEntity::attachWeapon(CEntity &arma){
+		if(_weapon)
+			_scene->getSceneMgr()->destroyEntity(_weapon);
+		Ogre::String asd = arma.getMesh();
+		_weapon = _scene->getSceneMgr()->createEntity("weapon", arma.getMesh());
+		_entity->attachObjectToBone("Bip01 R Hand",_weapon);
+
+	}
 
 
 } // namespace Graphics

@@ -99,6 +99,8 @@ namespace Graphics
 		_entityNode = _scene->getSceneMgr()->getRootSceneNode()->
 								createChildSceneNode(_name + "_node");
 		_entityNode->attachObject(_entity);
+
+			
 		_loaded = true;
 
 		return true;

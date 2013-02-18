@@ -190,7 +190,9 @@ namespace Application {
 	bool CMenuState::startReleased(const CEGUI::EventArgs& e) {
 		if (!Logic::CEntityFactory::getSingletonPtr()->loadBluePrints("blueprints.txt"))
 			return false;
-
+		if (!Logic::CEntityFactory::getSingletonPtr()->loadArchetypes("archetypes.txt")) {
+			return false;
+		}
 		// Cargamos el nivel a partir del nombre del mapa. 
 		if (!Logic::CServer::getSingletonPtr()->loadLevel("map.txt"))
 			return false;

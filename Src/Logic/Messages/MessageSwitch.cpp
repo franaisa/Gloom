@@ -27,7 +27,7 @@ namespace Logic {
 		assert(_tempBuffer == NULL);
 
 		_tempBuffer = new Net::CBuffer(sizeof(int) + sizeof(unsigned char));
-		_tempBuffer->serialize(std::string("CMessageSwitch"));
+		_tempBuffer->serialize(std::string("CMessageSwitch"),true);
 		_tempBuffer->serialize(_change);
 		
 		return _tempBuffer;

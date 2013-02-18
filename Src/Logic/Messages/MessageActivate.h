@@ -6,6 +6,7 @@
 namespace Logic {
 
 	class CMessageActivate : public CMessage{
+	DEC_FACTORYMESSAGE(CMessageActivate);
 	public:
 		CMessageActivate();
 		~CMessageActivate(){};
@@ -14,7 +15,7 @@ namespace Logic {
 		virtual void deserialize(Net::CBuffer& buffer);
 
 	};
-
+	REG_FACTORYMESSAGE(CMessageActivate);
 };
 
 #endif
