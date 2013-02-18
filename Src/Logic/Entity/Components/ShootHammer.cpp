@@ -182,8 +182,7 @@ namespace Logic
 			entityHit->emitMessage(m);
 		}
 	}// triggerHitMessages
-	//---------------------------------------------------------
-	*/
+	//---------------------------------------------------------*/
 
 } // namespace Logic
 
