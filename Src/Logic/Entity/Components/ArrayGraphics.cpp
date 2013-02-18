@@ -29,6 +29,9 @@ gráfica de la entidad.
 #include "Logic/Messages/MessageChangeWeaponGraphics.h"
 
 #include "OgreEntity.h"
+#include "OgreSceneNode.h"
+#include <OgreOverlayManager.h>
+#include <OgreSceneManager.h>
 
 namespace Logic 
 {
@@ -42,7 +45,7 @@ namespace Logic
 		{
 			for(int i = 0; i < _numWeapons; ++i)
 			{
-				_scene->removeEntity(_graphicsEntities[i]._graphicsEntity);
+				//_scene->removeChild(_graphicsEntities[i]._graphicsEntity);
 				delete _graphicsEntities[i]._graphicsEntity;
 				_graphicsEntities[i]._graphicsEntity = NULL;
 			}
@@ -76,7 +79,7 @@ namespace Logic
 			return false;
 		
 		_scene = _entity->getMap()->getScene();
-
+		
 		if(entityInfo->hasAttribute("numWeapons")){
 			int numWeapons = entityInfo->getIntAttribute("numWeapons");
 			
@@ -111,7 +114,7 @@ namespace Logic
 		}
 		if(!_graphicsEntities)
 			return false;
-
+		
 		setTransform(_entity->getTransform());
 
 		return true;
@@ -167,6 +170,7 @@ namespace Logic
 
 	void CArrayGraphics::setTransform(const Matrix4 &transform){
 		
+		
 		//en un futuro simplemente se orientara la entidad en el 3ds o similar. 
 
 		// Obtengo la camara para posicionarla en esta posicion pero algo modificada
@@ -182,7 +186,7 @@ namespace Logic
 		Math::pitch(_graphicsEntities[_actualWeapon].pitch, transformModificado);
 		_graphicsEntities[_actualWeapon]._graphicsEntity->setTransform(transformModificado);
 		_graphicsEntities[_actualWeapon]._graphicsEntity->setPosition(posicionModificada);
-
+		
 
 	}
 

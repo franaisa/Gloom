@@ -52,11 +52,27 @@ namespace Logic
 
 		virtual void addAmmo(int weapon, int ammo, bool iAmCatch);
 
-		virtual void resetAmmo();
+		// Metodo que decrementa la municion del arma. Es virtual porque existen armas como el
+		// hammer que no tienen municion (y por lo tanto no siguen la pauta habitual).
+		virtual void decrementAmmo();
+
+		// Metodo estatico que resetea la cantidad de municion del arma
+		void resetAmmo();
 
 		virtual void tick(unsigned int msecs);
 
+		// Metodo estatico que implementa el patron template
+		void shoot2();
+
+		// Metodo que realmente realiza el disparo
+		virtual CEntity* fireWeapon();
+
+		// Metodo que se encarga de mandar los mensajes que correspondan cuando se hace hit
+		virtual void triggerHitMessages(CEntity* entityHit);
+
 	protected:
+
+		void drawRaycast(const Ray& raycast);
 
 		/**
 		caracteristicas de armas

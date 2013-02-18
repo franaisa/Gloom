@@ -23,7 +23,7 @@ namespace Graphics
 }
 
 //declaración de la clase
-namespace Logic 
+namespace Logic
 {
 /**
 	Componente que se encarga de la representación gráfica de una entidad.
@@ -167,12 +167,8 @@ namespace Logic
 		Escena gráfica donde se encontrarán las representaciones gráficas de
 		las entidades. La guardamos para la destrucción de la entidad gráfica.
 		*/
+		//Graphics::SceneNode* _scene;
 		Graphics::CScene* _scene;
-
-
-
-		
-
 
 	}; // class CGraphics
 

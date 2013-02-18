@@ -1,0 +1,10 @@
+material pruebaHud3D
+{
+	technique
+	{
+		pass
+		{
+			depth_check off
+		}
+	}
+}
