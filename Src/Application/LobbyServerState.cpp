@@ -238,16 +238,17 @@ namespace Application {
 		{
 		case Net::PLAYER_INFO:
 		{
+			// Deserializamos el nombre del player y el mesh (en un futuro la clase del player)
 			std::string playerNick, playerMesh;
 			buffer.deserialize(playerNick);
 			buffer.deserialize(playerMesh);
 
+			// Registramos estos datos en el gestor de players
 			Logic::CGameNetPlayersManager::getSingletonPtr()->setPlayerNickname(playerId, playerNick);
 			Logic::CGameNetPlayersManager::getSingletonPtr()->setPlayerMesh(playerId, playerMesh);
 
 			// Si se ha cargado la información de todos los clientes, entonces
 			// comenzamos la fase de carga del mapa
-
 			if( ++_playersFetched == Logic::CGameNetPlayersManager::getSingletonPtr()->getNumberOfPlayersConnected() ) {
 				Net::NetMessageType msg = Net::LOAD_MAP;
 				Net::CBuffer buffer(sizeof(msg));
@@ -382,6 +383,7 @@ namespace Application {
 		//Eliminamos el ID del usuario que se ha desconectado.
 		_clients.remove( packet->getConexion()->getId() );
 		_mapLoadedByClients.remove( packet->getConexion()->getId() );
+
 		// Eliminamos la informacion del player que se quiere desconectar del gestor de players
 		// y ademas eliminamos este player de la lista de players cargados del resto de clientes
 		// si es que han llegado a cargarlo

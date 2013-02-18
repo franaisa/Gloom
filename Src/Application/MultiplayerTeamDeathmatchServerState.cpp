@@ -32,46 +32,49 @@ Contiene la implementación del estado de juego.
 namespace Application {
 
 
-	void CMultiplayerTeamDeathmatchServerState::activate() 
-	{
+	void CMultiplayerTeamDeathmatchServerState::activate() {
 		CGameState::activate();
 
+		// Añadir a este estado como observador de la red para ser notificado
 		Net::CManager::getSingletonPtr()->addObserver(this);
 	} // activate
 
-	//--------------------------------------------------------
+	//______________________________________________________________________________
 
-	void CMultiplayerTeamDeathmatchServerState::deactivate() 
-	{
+	void CMultiplayerTeamDeathmatchServerState::deactivate() {
+		// Solicitamos dejar de ser notificados
 		Net::CManager::getSingletonPtr()->removeObserver(this);
+		// Nos desconectamos
 		Net::CManager::getSingletonPtr()->deactivateNetwork();
 
 		CGameState::deactivate();
 	} // deactivate
 
-	//--------------------------------------------------------
+	//______________________________________________________________________________
 	
-	void CMultiplayerTeamDeathmatchServerState::dataPacketReceived(Net::CPaquete* packet)
-	{
+	void CMultiplayerTeamDeathmatchServerState::dataPacketReceived(Net::CPaquete* packet) {
 		// Obtenemos la id de la conexion por la que hemos recibido el paquete (para identificar
 		// al cliente)
 		Net::NetID playerNetId = packet->getConexion()->getId();
 
+		// Construimos un buffer para leer los datos que hemos recibido
 		Net::CBuffer buffer(packet->getDataLength());
 		buffer.write(packet->getData(), packet->getDataLength());
 		buffer.reset(); // Desplazamos el puntero al principio para realizar la lectura
 
+		// En primer lugar extraemos el tipo del mensaje que hemos recibido
 		Net::NetMessageType msg;
 		buffer.read(&msg, sizeof(msg));
 		
-		switch (msg)
-		{
+		switch (msg) {
 		case Net::PLAYER_INFO:
 		{
+			// Deserializamos el nombre del player y el mesh (en un futuro la clase del player)
 			std::string playerNick, playerMesh;
 			buffer.deserialize(playerNick);
 			buffer.deserialize(playerMesh);
 
+			// Registramos estos datos en el gestor de players
 			Logic::CGameNetPlayersManager::getSingletonPtr()->setPlayerNickname(playerNetId, playerNick);
 			Logic::CGameNetPlayersManager::getSingletonPtr()->setPlayerMesh(playerNetId, playerMesh);
 
@@ -98,6 +101,8 @@ namespace Application {
 			Net::NetMessageType msg = Net::LOAD_PLAYER;
 
 			// Mandamos la informacion de los players de la partida al cliente que esta intentando conectarse
+			// De momento utilizo un iterador de la stl porque hay un bug con el iterador propio.
+
 			//Logic::CGameNetPlayersManager::iterator playerInfoIt = Logic::CGameNetPlayersManager::getSingletonPtr()->begin();
 			std::map<Net::NetID, Logic::CPlayerInfo>::iterator it = Logic::CGameNetPlayersManager::getSingletonPtr()->begin2();
 			std::pair<Net::NetID, Logic::CPlayerInfo> tempPair;
@@ -120,6 +125,7 @@ namespace Application {
 					tempBuffer.serialize(name, false);
 
 					// Enviamos los datos de los clientes conectados al cliente que se quiere conectar
+					// ESTA ES LA FUNCION QUE DA PROBLEMAS, A PESAR DE QUE SE EJECUTA EL SEND, EL CLIENTE NO RECIBE NADA
 					Net::CManager::getSingletonPtr()->send(buffer.getbuffer(), buffer.getSize(), playerNetId);
 
 					// Reseteamos el puntero de escritura del buffer para escribir en la siguiente vuelta del bucle
@@ -127,6 +133,7 @@ namespace Application {
 				}
 			}
 
+			// Extraemos la informacion asociada al player que quiere conectarse
 			Logic::CPlayerInfo playerInfo = Logic::CGameNetPlayersManager::getSingletonPtr()->getPlayer(playerNetId);
 			name = playerInfo.getName();
 
@@ -136,17 +143,14 @@ namespace Application {
 			entityId = player->getEntityID();
 			Logic::CGameNetPlayersManager::getSingletonPtr()->setEntityID(playerNetId, entityId);
 			
-			// Ordenamos la carga del player a todos los clientes conectados, evidentemente el propio cliente que se quiere
-			// conectar tendra que obviar ignorar este mensaje (comprobando que el cliente que se carga es él mismo).
-
-			// El contenido de msg es LOAD_PLAYER
+			// Ordenamos la carga del player a todos los clientes conectados
 			Net::CBuffer buffer( sizeof(msg) + sizeof(playerNetId) + sizeof(entityId) + (sizeof(char) * name.size()) );
-			buffer.write(&msg, sizeof(msg));
+			buffer.write(&msg, sizeof(msg)); // El contenido de msg es LOAD_PLAYER
 			buffer.write(&playerNetId, sizeof(playerNetId));
 			buffer.write(&entityId, sizeof(entityId));
 			buffer.serialize(name, false);
 
-			// Broadcast a todos los jugadores del id de este jugador
+			// Broadcast a todos los jugadores con el id del player que se quiere conectar
 			Net::CManager::getSingletonPtr()->send(buffer.getbuffer(), buffer.getSize());
 
 			break;
@@ -184,13 +188,12 @@ namespace Application {
 
 	} // dataPacketReceived
 
-	//--------------------------------------------------------
+	//______________________________________________________________________________
 
-	void CMultiplayerTeamDeathmatchServerState::connexionPacketReceived(Net::CPaquete* packet)
-	{
+	void CMultiplayerTeamDeathmatchServerState::connexionPacketReceived(Net::CPaquete* packet) {
 		Net::NetID playerId = packet->getConexion()->getId();
 
-		// @TODO
+		// @todo
 		// Garantizar que todos los clientes se conectan en la fase adecuada de manera que no se
 		// produzcan condiciones indeseables a causa de la concurrencia
 		
@@ -205,12 +208,12 @@ namespace Application {
 		Net::CManager::getSingletonPtr()->send(buffer.getbuffer(), buffer.getSize(), playerId);
 	} // connexionPacketReceived
 
-	//--------------------------------------------------------
+	//______________________________________________________________________________
 
 	void CMultiplayerTeamDeathmatchServerState::disconnexionPacketReceived(Net::CPaquete* packet)
 	{
 		// @todo
-		// NOTIFICAR A LOS CLIENTES PARA QUE ELIMINEN ESE JUGADOR DE LA PARTIDA
+		// NOTIFICAR A LOS CLIENTES PARA QUE ELIMINEN AL JUGADOR QUE SE QUIERE DESCONECTAR DE LA PARTIDA
 
 		// Actualizamos el manager de jugadores
 		Logic::CGameNetPlayersManager::getSingletonPtr()->removePlayer( packet->getConexion()->getId() );

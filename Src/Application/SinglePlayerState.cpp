@@ -7,7 +7,7 @@
 
 Contiene la implementación del estado de juego.
 
-@see Application::SinglePlayerState
+@see Application::CSinglePlayerState
 @see Application::CGameState
 
 @author Francisco Aisa García

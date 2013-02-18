@@ -99,18 +99,6 @@ namespace Logic {
 		// =======================================================================
 
 
-		/** 
-		Inserta un nuevo jugador con el id de red, el nombre y el mesh dados.
-
-		@param idPlayer Identificador de red del player a insertar.
-		@param name Nickname del player a insertar.
-		@param mesh Nombre del mesh que el player va a utilizar.
-		@return true si no existe otro player con el mismo identificador de red.
-		*/
-		bool addPlayer(Net::NetID idPlayer, const std::string& name, const std::string& mesh);
-
-		//________________________________________________________________________
-
 		/**
 		Inserta un nuevo jugador con la info asociada sin rellenar.
 		

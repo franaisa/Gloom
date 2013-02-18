@@ -31,24 +31,25 @@ Contiene la implementación del estado de juego.
 
 namespace Application {
 
-	void CMultiplayerTeamDeathmatchClientState::activate() 
-	{
+	void CMultiplayerTeamDeathmatchClientState::activate() {
 		CGameState::activate();
 
+		// Registramos a este estado como observador de red para que sea notificado
 		Net::CManager::getSingletonPtr()->addObserver(this);
 	} // activate
 
-	//--------------------------------------------------------
+	//______________________________________________________________________________
 
-	void CMultiplayerTeamDeathmatchClientState::deactivate() 
-	{
+	void CMultiplayerTeamDeathmatchClientState::deactivate() {
+		// Indicamos que ya no queremos ser notificados por la red
 		Net::CManager::getSingletonPtr()->removeObserver(this);
+		// Nos desconectamos
 		Net::CManager::getSingletonPtr()->deactivateNetwork();
 
 		CGameState::deactivate();
 	} // deactivate
 
-	//--------------------------------------------------------
+	//______________________________________________________________________________
 
 	void CMultiplayerTeamDeathmatchClientState::dataPacketReceived(Net::CPaquete* packet) {
 		Net::CBuffer buffer(packet->getDataLength());

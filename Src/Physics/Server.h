@@ -206,9 +206,33 @@ namespace Physics {
 												const Logic::IPhysics *component); 
 
 
+		/**
+		Crea una esfera estática en la escena.
+
+		@param position Posición de la esfera en coordenadas lógicas (el origen de coordenadas 
+		       está en el centro de la cara inferior del cubo).
+		@param radius Radio de la esfera.
+		@param trigger Indica si la entidad física representa un trigger.
+		@param group Grupo de colisión.
+		@param component Componente lógico asociado a la entidad física.
+		@return actor físico creado
+		*/
 		physx::PxRigidStatic* createStaticSphere(const Vector3 &position, float radius, 
 			                                     bool trigger, int group, const Logic::IPhysics *component); 
 
+		/**
+		Crea una esfera dinámica en la escena.
+
+		@param position Posición de la esfera en coordenadas lógicas (el origen de coordenadas 
+		       está en el centro de la cara inferior del cubo).
+		@param radius Radio de la esfera.
+		@param mass Masa distribuida uniformemente en el volumen de la entidad.
+		@param kinematic Indica si la entidad es cinemática.
+		@param trigger Indica si la entidad física representa un trigger.
+		@param group Grupo de colisión.
+		@param component Componente lógico asociado a la entidad física.
+		@return actor físico creado
+		*/
 		physx::PxRigidDynamic* createDynamicSphere(const Vector3 &positon, float radius,
 												   float mass, bool kinematic, bool trigger, int group,
 												   const Logic::IPhysics* component);

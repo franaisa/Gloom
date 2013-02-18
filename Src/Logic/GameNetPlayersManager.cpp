@@ -68,12 +68,6 @@ namespace Logic {
 
 	//______________________________________________________________________________
 
-	bool CGameNetPlayersManager::addPlayer(Net::NetID idPlayer, const std::string& name, const std::string& mesh) {
-		return (_connectedPlayers.insert( TConnectedPlayersPair(idPlayer, CPlayerInfo(name, mesh)) ) ).second;
-	} // addPlayer
-
-	//______________________________________________________________________________
-
 	bool CGameNetPlayersManager::addPlayer(Net::NetID idPlayer) {
 		return (_connectedPlayers.insert( TConnectedPlayersPair(idPlayer, CPlayerInfo(idPlayer)) ) ).second;
 	} // addPlayer
