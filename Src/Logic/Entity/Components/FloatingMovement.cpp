@@ -16,48 +16,51 @@
 
 #include <math.h>
 
-namespace Logic 
-{
+namespace Logic {
+	
 	IMP_FACTORY(CFloatingMovement);
 	
-	//---------------------------------------------------------
-	void CFloatingMovement::estimateItemFloatingPos(Vector3& position, unsigned int msecs) {
+	//________________________________________________________________________
+
+	Vector3 CFloatingMovement::estimateItemFloatingPos(const Vector3& position, unsigned int msecs) {
+		// La velocidad a la que el item recorre la funcion seno depende de _orbitalSpeed
+		// Si llegamos 2Pi, reseteamos el valor a cero.
 		_currentOrbitalPos += _orbitalSpeed * msecs;
 		if(_currentOrbitalPos > 6.283) _currentOrbitalPos = 0;
-		position.y += sin(_currentOrbitalPos) * _orbitalOffset; 
+
+		// Calculamos la posicion de la vertical en funcion del valor obtenido al calcular el seno.
+		// Multiplicamos el resultado por el offset para conseguir que el objeto recorra mas distancia
+		// pero a la misma velocidad.
+		return Vector3(position.x, position.y + (sin(_currentOrbitalPos) * _orbitalOffset), position.z);
 	}
 
-	//---------------------------------------------------------
-	void CFloatingMovement::estimateItemRotation(unsigned int msecs) {
-		_orientation = _entity->getYaw();
-		_orientation += _orbitalRotationSpeed * msecs;
+	//________________________________________________________________________
+
+	float CFloatingMovement::estimateItemRotation(unsigned int msecs) {
+		// Giramos en funcion de la velocidad de giro.
+		return _entity->getYaw() + (_orbitalRotationSpeed * msecs);
 	}
 
-	//---------------------------------------------------------
+	//________________________________________________________________________
+
 	void CFloatingMovement::tick(unsigned int msecs) {
 		IComponent::tick(msecs);
-
-		Vector3 newItemPos = _entity->getPosition();
-		estimateItemFloatingPos(newItemPos, msecs);
-		estimateItemRotation(msecs);
-
-		_entity->setPosition(newItemPos);
-		_entity->setYaw(_orientation);
+		
+		// Calculamos la nueva posicion de la vertical del item
+		_entity->setPosition( estimateItemFloatingPos(_entity->getPosition(), msecs) );
+		// Calculamos la nueva orientacion del item
+		_entity->setYaw( estimateItemRotation(msecs) );
 		
 	} // tick
 
-	//---------------------------------------------------------
+	//________________________________________________________________________
+
 	bool CFloatingMovement::spawn(CEntity *entity, CMap *map, const Map::CEntity *entityInfo) {
 		if(!IComponent::spawn(entity,map,entityInfo))
 			return false;
 
-		Vector3 itemPosition;
-
 		if(entityInfo->hasAttribute("orbitalSpeed")) {
 			_orbitalSpeed = entityInfo->getFloatAttribute("orbitalSpeed");
-		}
-		if(entityInfo->hasAttribute("position")) {
-			itemPosition = entityInfo->getVector3Attribute("position");
 		}
 
 		if(entityInfo->hasAttribute("orbitalOffset")) {
@@ -70,7 +73,6 @@ namespace Logic
 
 		return true;
 	} // spawn
-
 
 } // namespace Logic
 
