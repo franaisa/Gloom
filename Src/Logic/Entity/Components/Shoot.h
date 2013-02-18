@@ -52,11 +52,21 @@ namespace Logic
 
 		virtual void addAmmo(int weapon, int ammo, bool iAmCatch);
 
-		virtual void resetAmmo();
+		virtual void decrementAmmo();
+
+		void resetAmmo();
 
 		virtual void tick(unsigned int msecs);
 
+		void shoot2();
+
+		virtual CEntity* fireWeapon();
+
+		virtual void triggerHitMessages(CEntity* entityHit);
+
 	protected:
+
+		void drawRaycast(const Ray& raycast);
 
 		/**
 		caracteristicas de armas
