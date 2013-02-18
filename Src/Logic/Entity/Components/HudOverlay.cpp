@@ -71,8 +71,9 @@ namespace Logic
 
 		////////////////Todo esto para la mira
          // Create an overlay
-
+		
          // Create a panel de Mira
+
          Ogre::OverlayContainer* panelMira = static_cast<Ogre::OverlayContainer*>( overlayManager.createOverlayElement( "Panel", "Mira" ) );
 		 float sizeCrossFire = entityInfo->getFloatAttribute("hudMira");
 		 float positionCrossFire = 0.5f-((sizeCrossFire/2)/100) ;
@@ -90,6 +91,7 @@ namespace Logic
 		panelWeapon1->setMetricsMode(Ogre::GMM_PIXELS);
 		panelWeapon1->setPosition( 9*relativeWidth, 29*relativeHeight);
 		panelWeapon1->setDimensions( relativeWidth*2, relativeHeight*2 );
+		
         panelWeapon1->setMaterialName("cuadroArmas");
 
 		_overlayPlay->add2D( panelWeapon1 );
@@ -205,7 +207,7 @@ namespace Logic
 			_weaponsBox[SHOTGUN][NO_WEAPON]->show();
 			
 			_overlayPlay->add2D( _weaponsBox[SHOTGUN][NO_WEAPON] );
-
+			
 			
 
 			

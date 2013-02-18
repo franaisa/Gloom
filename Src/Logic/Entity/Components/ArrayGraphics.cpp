@@ -78,17 +78,8 @@ namespace Logic
 		if(!IComponent::spawn(entity,map,entityInfo))
 			return false;
 		
-		//Lo recomendable serie hacer un metorod en Graphics server que sea create scene overlay o algo asi y llamarla.
-		Ogre::SceneNode* _scene = new Ogre::SceneNode(Graphics::CServer::getSingletonPtr()->getActiveScene()->getSceneMgr(), "SceneOverlayHud3D");
-		//_scene = _entity->getMap()->getScene();
-
-		Ogre::OverlayManager& overlayManager = Ogre::OverlayManager::getSingleton();
-		Ogre::Overlay *_overlayWeapon = overlayManager.create( "overlayHud3D" );
-
-		Ogre::SceneManager *miSceneManager = Graphics::CServer::getSingletonPtr()->getActiveScene()->getSceneMgr();
-
+		_scene = _entity->getMap()->getScene();
 		
-
 		if(entityInfo->hasAttribute("numWeapons")){
 			int numWeapons = entityInfo->getIntAttribute("numWeapons");
 			
@@ -123,11 +114,6 @@ namespace Logic
 		}
 		if(!_graphicsEntities)
 			return false;
-
-		_scene->setPosition(0,-1.5,-8.9);
-		
-		_overlayWeapon->add3D(_scene);
-		_overlayWeapon->show();
 		
 		setTransform(_entity->getTransform());
 
@@ -140,9 +126,8 @@ namespace Logic
 	Graphics::CEntity* CArrayGraphics::createGraphicsEntity(std::string nombreEntidad, std::string modelo)
 	{
 		Graphics::CEntity *graphicsEntity = new Graphics::CEntity(nombreEntidad,modelo);
-		
-		Graphics::CServer::getSingletonPtr()->getActiveScene()->getSceneMgr()->createEntity(nombreEntidad,modelo);
-		_scene->attachObject((Ogre::MovableObject *)graphicsEntity->getEntity());
+		if(!_scene->addEntity(graphicsEntity))
+			return 0;
 
 		return graphicsEntity;
 
