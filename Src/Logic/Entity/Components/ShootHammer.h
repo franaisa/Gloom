@@ -31,6 +31,10 @@ namespace Logic
 		
 
 		virtual void shoot();
+
+		virtual void decrementAmmo();
+
+		/*virtual void triggerHitMessages(CEntity* entityHit);*/
 		
 	}; // class CShoot
 

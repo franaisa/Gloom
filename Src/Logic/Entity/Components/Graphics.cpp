@@ -22,6 +22,8 @@ gráfica de la entidad.
 #include "Graphics/StaticEntity.h"
 
 #include "Logic/Messages/MessageTransform.h"
+#include "Logic/Messages/MessageSleep.h"
+#include "Logic/Messages/MessageWakeUp.h"
 
 #include <OgreSceneManager.h>
 #include "OgreEntity.h"
@@ -118,7 +120,9 @@ namespace Logic
 
 	bool CGraphics::accept(CMessage *message)
 	{
-		return (message->getMessageType() == Message::SET_TRANSFORM);
+		return (message->getMessageType() == Message::SET_TRANSFORM || 
+			message->getMessageType() == Message::ACTIVATE || 
+			message->getMessageType() == Message::DEACTIVATE );
 	} // accept
 	
 	//---------------------------------------------------------
@@ -129,6 +133,13 @@ namespace Logic
 		{
 		case Message::SET_TRANSFORM:
 			_graphicsEntity->setTransform(((CMessageTransform*)message)->getTransform());
+			break;
+		case Message::ACTIVATE:
+			setVisible(true);
+			break;
+		case Message::DEACTIVATE:
+			setVisible(false);
+			break;
 		}
 
 	} // process
@@ -138,6 +149,7 @@ namespace Logic
 	void CGraphics::setVisible(bool renderGraphicEntity) {
 		_graphicsEntity->setVisible(renderGraphicEntity);
 	}
+
 
 } // namespace Logic
 

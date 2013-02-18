@@ -61,7 +61,12 @@ namespace Logic
 			SET_PHYSIC_POSITION		= 0x00000017,//23
 			HUD_SPAWN				= 0x00000018,
 			CAMERA_TO_ENEMY			= 0x00000019,
-			JUMPER					= 0X00000020
+			JUMPER					= 0X0000001A,
+			WAKEUP					= 0x0000001B,
+			SLEEP					= 0x0000001C,
+			ACTIVATE				= 0x0000001D,
+			DEACTIVATE				= 0x0000001E,
+			CEALING					= 0x0000001F
 		};
 	}
 
@@ -108,6 +113,8 @@ namespace Logic
 	@ingroup entityGroup
 
 	@author Jose Antonio García Yáñez
+	@author Francisco Aisa García
+	@author Ruben Mulero Guerrero
 	@date Enero, 2013
 	@ingroup grupoEntidad
 	*/

@@ -153,9 +153,37 @@ namespace Logic
 
 		}// fin if _canShoot
 	} // shoot
-
-	
 	//---------------------------------------------------------
+
+	void CShootHammer::decrementAmmo() {
+		// Redefinimos el metodo para que no se haga nada ya que el hammer
+		// realmente no tiene municion
+	}// decrementAmmo
+	//---------------------------------------------------------
+
+	/*void CShootHammer::triggerHitMessages(CEntity* entityHit) {
+		if(entityHit->getName().compare("World")==0){
+			Vector3 direccionOpuestaRay= ray.getDirection()*-1;
+			Logic::CMessageRebound *m=new Logic::CMessageRebound();
+			m->setDir(direccionOpuestaRay);
+			_entity->emitMessage(m);
+
+			Logic::CMessageDamaged *damage=new Logic::CMessageDamaged();
+			damage->setDamage(_damageReflect);
+			damage->setEnemy(_entity);
+			_entity->emitMessage(damage);
+
+		}
+		// LLamar al componente que corresponda con el daño hecho (solamente si no fuera el mundo el del choque)
+		else{
+			Logic::CMessageDamaged *m=new Logic::CMessageDamaged();
+			m->setDamage(_damage);
+			m->setEnemy(entityHit);
+			entityHit->emitMessage(m);
+		}
+	}// triggerHitMessages
+	//---------------------------------------------------------
+	*/
 
 } // namespace Logic
 

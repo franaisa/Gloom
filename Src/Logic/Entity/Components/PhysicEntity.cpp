@@ -22,6 +22,9 @@ para representar character controllers.
 #include "Logic/Messages/MessageKinematicMove.h"
 #include "Logic/Messages/MessageTouched.h"
 #include "Logic/Messages/MessageUntouched.h"
+#include "Logic/Messages/MessageWakeUp.h"
+#include "Logic/Messages/MessageSleep.h"
+
 
 #define _USE_MATH_DEFINES
 #include <math.h>
@@ -65,6 +68,7 @@ bool CPhysicEntity::spawn(CEntity *entity, CMap *map, const Map::CEntity *entity
 	_actor = createActor(entityInfo);
 
 	_inTrigger=false;
+	_sleepUntil=false;
 	return true;
 } 
 
@@ -72,19 +76,40 @@ bool CPhysicEntity::spawn(CEntity *entity, CMap *map, const Map::CEntity *entity
 
 bool CPhysicEntity::accept(CMessage *message)
 {
-	return message->getMessageType() == Message::KINEMATIC_MOVE;
+	return message->getMessageType() == Message::KINEMATIC_MOVE ||
+		message->getMessageType() == Message::ACTIVATE ||
+		message->getMessageType() == Message::DEACTIVATE;
 }
 
 //---------------------------------------------------------
 
 void CPhysicEntity::process(CMessage *message)
 {
-
+	unsigned int nbShapes;
+	PxShape** actorShapes;
 	switch(message->getMessageType()) {
 	case Message::KINEMATIC_MOVE:
 		// Acumulamos el vector de desplazamiento para usarlo posteriormente en 
 		// el método tick.
 		_movement += ((CMessageKinematicMove*)message)->getMovement();
+		break;
+	case Message::ACTIVATE:
+		nbShapes = _actor->getNbShapes();
+		actorShapes = new PxShape* [nbShapes];
+		_actor->getShapes(actorShapes, nbShapes);
+		for(int i=0;i<nbShapes;i++){
+			actorShapes[i]->setFlag(PxShapeFlag::eTRIGGER_SHAPE,true);
+			actorShapes[i]->setFlag(PxShapeFlag::eSCENE_QUERY_SHAPE,true);
+		}
+		break;
+	case Message::DEACTIVATE:
+		nbShapes = _actor->getNbShapes();
+		actorShapes = new PxShape* [nbShapes];
+		_actor->getShapes(actorShapes, nbShapes);
+		for(int i=0;i<nbShapes;i++){
+			actorShapes[i]->setFlag(PxShapeFlag::eTRIGGER_SHAPE,false);
+			actorShapes[i]->setFlag(PxShapeFlag::eSCENE_QUERY_SHAPE,false);
+		}
 		break;
 	}
 }
@@ -93,7 +118,6 @@ void CPhysicEntity::process(CMessage *message)
 
 void CPhysicEntity::tick(unsigned int msecs) 
 {
-
 	// Invocar al método de la clase padre (IMPORTANTE)
 	IComponent::tick(msecs);
 
@@ -111,8 +135,6 @@ void CPhysicEntity::tick(unsigned int msecs)
 	if (_server->isKinematic(dinActor)) {
 		_server->moveKinematicActor(dinActor, _movement);
 		_movement = Vector3::ZERO;
-
-	
 	} 
 }
 
