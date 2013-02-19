@@ -6,6 +6,9 @@ Contiene la implementación del componente que gestiona las armas y que administr
 @see Logic::CShoot
 @see Logic::IComponent
 
+@author Antonio Jesus Narváez Corrales
+@author Francisco Aisa García
+@date Febrero, 2013
 */
 
 #include "Shoot.h"
@@ -22,7 +25,6 @@ Contiene la implementación del componente que gestiona las armas y que administr
 
 #include "Logic/Messages/MessageControl.h"
 #include "Logic/Messages/MessageDamaged.h"
-
 #include "Logic/Messages/MessageAddAmmo.h"
 #include "Logic/Messages/MessageAddWeapon.h"
 #include "Logic/Messages/MessageHudAmmo.h"
@@ -32,28 +34,26 @@ Contiene la implementación del componente que gestiona las armas y que administr
 #include <OgreMaterialManager.h>
 #include <OgreManualObject.h>
 
-namespace Logic 
-{
+namespace Logic {
 	IMP_FACTORY(CShoot);
 	
-	//---------------------------------------------------------
+	//__________________________________________________________________
 
-	bool CShoot::spawn(CEntity *entity, CMap *map, const Map::CEntity *entityInfo) 
-	{
+	bool CShoot::spawn(CEntity *entity, CMap *map, const Map::CEntity *entityInfo) {
 		if(!IComponent::spawn(entity,map,entityInfo))
 			return false;
 
-		if(entityInfo->hasAttribute("physic_radius")){
+		if(entityInfo->hasAttribute("physic_radius")) {
 			_capsuleRadius = entityInfo->getFloatAttribute("physic_radius");
 		}
 
-		if(entityInfo->hasAttribute("heightShoot")){
+		if(entityInfo->hasAttribute("heightShoot")) {
 			_heightShoot = entityInfo->getIntAttribute("heightShoot");
 		}
 		
 						
 		std::stringstream aux;
-		aux << "weapon" << _nameWeapon;		////!!!! Aqui debes de poner el nombre del arma que leera en el map.txt
+		aux << "weapon" << _nameWeapon;	////!!!! Aqui debes de poner el nombre del arma que leera en el map.txt
 		std::string weapon = aux.str();
 												
 		_name = entityInfo->getStringAttribute(weapon+"Name");
@@ -66,23 +66,20 @@ namespace Logic
 		_id = entityInfo->getIntAttribute(weapon+"Id");
 		
 		return true;
-
 	} // spawn
-	//---------------------------------------------------------
-	bool CShoot::accept(CMessage *message)
-	{
+	
+	//__________________________________________________________________
+
+	bool CShoot::accept(CMessage *message) {
 		return message->getMessageType() == Message::CONTROL;
 	} // accept
-	//---------------------------------------------------------
+	
+	//__________________________________________________________________
 
-
-	void CShoot::process(CMessage *message)
-	{
-		
-		switch(message->getMessageType())
-		{
+	void CShoot::process(CMessage *message) {
+		switch(message->getMessageType()) {
 			case Message::CONTROL:
-				if(((CMessageControl*)message)->getType()==Control::LEFT_CLICK){
+				if(((CMessageControl*)message)->getType()==Control::LEFT_CLICK) {
 					shoot();
 				}
 				break;
@@ -90,11 +87,10 @@ namespace Logic
 		}
 		
 	} // process
-	//---------------------------------------------------------
 
+	//__________________________________________________________________
 
-	void CShoot::tick(unsigned int msecs)
-	{
+	void CShoot::tick(unsigned int msecs) {
 		IComponent::tick(msecs);
 		
 		if(_coldDownTime < _coldDown)
@@ -103,12 +99,11 @@ namespace Logic
 			_canShoot = true;
 
 	} // tick
-	//----------------------------------------------------------
 
-	void CShoot::shoot(){
+	//__________________________________________________________________
 
+	void CShoot::shoot() {
 		if(_canShoot && _currentAmmo > 0){
-
 				_canShoot = false;
 				_coldDownTime = 0;
 		
@@ -140,26 +135,19 @@ namespace Logic
 					// Dibujado del rayo en Ogre
 					drawRaycast(ray);
 
-			
-
 					//Rayo lanzado por el servidor de físicas de acuerdo a la distancia de potencia del arma
 					CEntity *entity = Physics::CServer::getSingletonPtr()->raycastClosestInverse(ray, _distance,3);
 			
-
 					//resto las balas que tiene, luego enviare las que le quedan actualizadas, asi no envio un mensaje por balas (en la escopeta envairia 8 mensajes, asi solo uno)
-					if(_name != "Hammer"){
+					if(_name != "Hammer") {
 						--_currentAmmo;
 					}
 					//Si hay colisión envíamos a dicha entidad un mensaje de daño
-					if(entity)
-					{
-
+					if(entity) {
 						printf("impacto con %s\n", entity->getName().c_str());
 
 						// LLamar al componente que corresponda con el daño hecho
 						//entity->
-
-
 						Logic::CMessageDamaged *m=new Logic::CMessageDamaged();
 						m->setDamage(_damage);
 						m->setEnemy(_entity);
@@ -169,7 +157,7 @@ namespace Logic
 					//Para el rebote, si hay colision con la entidad mundo pues reboto en la dirección opuesta a la que miro
 				
 				}// fin del bucle para multiples disparos
-				if(_name != "Hammer"){				
+				if(_name != "Hammer") {				
 					Logic::CMessageHudAmmo *message = new Logic::CMessageHudAmmo();
 					message->setAmmo(_currentAmmo);
 
@@ -179,6 +167,8 @@ namespace Logic
 				}
 			} // fin if de _canShoot && _ammo > 0
 	} // shoot
+
+	//__________________________________________________________________
 
 	// Cuando activo una entidad de disparo, actulio la hub indicandole cuanta municion tengo
 	
@@ -190,23 +180,24 @@ namespace Logic
 		message->setAmmo(_currentAmmo);
 		_entity->emitMessage(message);
 	} // activate
-	//----------------------------------------------------------
 
-	void CShoot::addAmmo(int weapon, int ammo, bool iAmCatch)
-	{
+	//__________________________________________________________________
+
+	void CShoot::addAmmo(int weapon, int ammo, bool iAmCatch) {
 		if(_currentAmmo + ammo>_maxAmmo)
 			_currentAmmo = _maxAmmo;
 		else
 			_currentAmmo += ammo;
 
-		if(iAmCatch){
+		if(iAmCatch) {
 			Logic::CMessageHudAmmo *message = new Logic::CMessageHudAmmo();
 			message->setWeapon(_id);
 			message->setAmmo(_currentAmmo);
 			_entity->emitMessage(message);
 		}
 	} // addAmmo
-	//----------------------------------------------------------
+
+	//__________________________________________________________________
 
 	void CShoot::decrementAmmo() {
 		--_currentAmmo;
@@ -220,14 +211,15 @@ namespace Logic
 		message->setWeapon(_id);
 		_entity->emitMessage(message);
 	}// decrementAmmo
-	//----------------------------------------------------------
 
-	void CShoot::resetAmmo()
-	{
+	//__________________________________________________________________
+
+	void CShoot::resetAmmo() {
 		//si yo soy el weapon
 		_currentAmmo = 0;
 	} // resetAmmo
-	//----------------------------------------------------------
+
+	//__________________________________________________________________
 
 	void CShoot::drawRaycast(const Ray& raycast) {
 		Graphics::CScene *scene = Graphics::CServer::getSingletonPtr()->getActiveScene();
@@ -254,8 +246,6 @@ namespace Logic
 		myManualObject->end(); 
 		myManualObjectNode->attachObject(myManualObject);
 	}// drawRaycast
-	//----------------------------------------------------------
-
 
 } // namespace Logic
 
