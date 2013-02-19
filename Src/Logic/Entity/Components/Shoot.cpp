@@ -229,64 +229,6 @@ namespace Logic
 	} // resetAmmo
 	//----------------------------------------------------------
 
-	// Patron template
-	void CShoot::shoot2() {
-		if(_canShoot && _currentAmmo > 0 && _numberShoots >= _currentAmmo){
-			_canShoot = false;
-			_coldDownTime = 0;
-				
-			for(int i = 0; i < _numberShoots; ++i) {
-				CEntity* entityHit = fireWeapon();
-				if(!entityHit) {
-					printf("impacto con %s\n", entityHit->getName().c_str());
-					triggerHitMessages(entityHit);
-				}
-
-				decrementAmmo();
-			}
-		}
-		else if(_currentAmmo == 0) {
-			// Ejecutar sonidos y animaciones de falta de balas
-			//triggerRunOutOfAmmoMessages();
-		}
-	} // shoot2
-	//----------------------------------------------------------
-
-	// La implementacion por defecto de fireWeapon se basa en el uso del raycasting
-	// Devuelve la entidad con la que ha colisionado el raycasting, si es que hay alguna
-	CEntity* CShoot::fireWeapon() {
-		//Direccion
-		Vector3 direction = Math::getDirection(_entity->getOrientation()); 
-		//Me dispongo a calcular la desviacion del arma, en el map.txt se pondra en grados de dispersion (0 => sin dispersion)
-		Ogre::Radian angle = Ogre::Radian( (  (((float)(rand() % 100))/100.0f) * (_dispersion)) /100);
-		//Esto hace un random total, lo que significa, por ejemplo, que puede que todas las balas vayan hacia la derecha 
-		Vector3 dispersionDirection = direction.randomDeviant(angle);
-		dispersionDirection.normalise();
-
-		//El origen debe ser mínimo la capsula (si chocamos el disparo en la capsula al mirar en diferentes direcciones ya esta tratado en la funcion de colision)
-		//Posicion de la entidad + altura de disparo(coincidente con la altura de la camara)
-		Vector3 origin = _entity->getPosition()+Vector3(0,_heightShoot,0); 
-		// Creamos el ray desde el origen en la direccion del raton (desvio ya aplicado)
-		Ray ray(origin, dispersionDirection);
-			
-		// Dibujamos el rayo en ogre para poder depurar
-		drawRaycast(ray);
-
-		// Rayo lanzado por el servidor de físicas de acuerdo a la distancia de potencia del arma
-		CEntity *entity = Physics::CServer::getSingletonPtr()->raycastClosestInverse(ray, _distance,3);
-
-		return Physics::CServer::getSingletonPtr()->raycastClosestInverse(ray, _distance, 3);
-	}// fireWeapon
-	//----------------------------------------------------------
-
-	void CShoot::triggerHitMessages(CEntity* entityHit) {
-		Logic::CMessageDamaged* m = new Logic::CMessageDamaged();
-		m->setDamage(_damage);
-		m->setEnemy(_entity);
-		entityHit->emitMessage(m);
-	}// triggerHitMessages
-	//----------------------------------------------------------
-
 	void CShoot::drawRaycast(const Ray& raycast) {
 		Graphics::CScene *scene = Graphics::CServer::getSingletonPtr()->getActiveScene();
 		Ogre::SceneManager *mSceneMgr = scene->getSceneMgr();

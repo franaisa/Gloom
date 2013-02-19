@@ -61,15 +61,6 @@ namespace Logic
 
 		virtual void tick(unsigned int msecs);
 
-		// Metodo estatico que implementa el patron template
-		void shoot2();
-
-		// Metodo que realmente realiza el disparo
-		virtual CEntity* fireWeapon();
-
-		// Metodo que se encarga de mandar los mensajes que correspondan cuando se hace hit
-		virtual void triggerHitMessages(CEntity* entityHit);
-
 	protected:
 
 		void drawRaycast(const Ray& raycast);

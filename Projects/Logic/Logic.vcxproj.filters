@@ -249,7 +249,7 @@
     </ClCompile>
     <ClCompile Include="..\..\Src\Logic\Entity\Components\ShootGrenadeLauncher.cpp">
       <Filter>Entity\Components\Source Files</Filter>
-	</ClCompile>
+    </ClCompile>
     <ClCompile Include="..\..\Src\Logic\Messages\MessageActivate.cpp">
       <Filter>Messages\Source</Filter>
     </ClCompile>
@@ -258,7 +258,7 @@
     </ClCompile>
     <ClCompile Include="..\..\Src\Logic\Messages\MessageCealing.cpp">
       <Filter>Messages\Source</Filter>
-	</ClCompile>
+    </ClCompile>
     <ClCompile Include="..\..\Src\Logic\PlayerInfo.cpp">
       <Filter>Net\Source</Filter>
     </ClCompile>
@@ -272,6 +272,12 @@
       <Filter>Entity\Components\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Src\Logic\Entity\Components\UpdateClientPosition.cpp">
+      <Filter>Entity\Components\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\ShootProjectile.cpp">
+      <Filter>Entity\Components\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\ShootRaycast.cpp">
       <Filter>Entity\Components\Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -488,7 +494,7 @@
     </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Entity\Components\ShootGrenadeLauncher.h">
       <Filter>Entity\Components\Header Files</Filter>
-	</ClInclude>
+    </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Messages\MessageActivate.h">
       <Filter>Messages\Header</Filter>
     </ClInclude>
@@ -497,7 +503,7 @@
     </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Messages\MessageCealing.h">
       <Filter>Messages\Header</Filter>
-	</ClInclude>
+    </ClInclude>
     <ClInclude Include="..\..\Src\Logic\PlayerInfo.h">
       <Filter>Net\Header</Filter>
     </ClInclude>
@@ -511,6 +517,12 @@
       <Filter>Entity\Components\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Entity\Components\UpdateClientPosition.h">
+      <Filter>Entity\Components\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\ShootProjectile.h">
+      <Filter>Entity\Components\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\ShootRaycast.h">
       <Filter>Entity\Components\Header Files</Filter>
     </ClInclude>
   </ItemGroup>
