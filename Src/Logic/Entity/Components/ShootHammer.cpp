@@ -54,9 +54,6 @@ namespace Logic
 
 			_canShoot = false;
 			_coldDownTime = 0;
-			//Generación del rayo habiendo obtenido antes el origen y la dirección
-			//Graphics::CCamera* camera = Graphics::CServer::getSingletonPtr()->getActiveScene()->getCamera();
-		
 		
 			// Para generalizar las armas, todas tendras tantas balas como la variable numberShoots
 			for(int i = 0; i < _numberShoots; ++i)
@@ -84,7 +81,7 @@ namespace Logic
 				////////////////////////////////////////////////Dibujo del rayo
 
 
-			/*		Graphics::CScene *scene = Graphics::CServer::getSingletonPtr()->getActiveScene();
+					Graphics::CScene *scene = Graphics::CServer::getSingletonPtr()->getActiveScene();
 					Ogre::SceneManager *mSceneMgr = scene->getSceneMgr();
 
 				
@@ -110,7 +107,7 @@ namespace Logic
 				}
 
 					myManualObject->end(); 
-					myManualObjectNode->attachObject(myManualObject);*/
+					myManualObjectNode->attachObject(myManualObject);
 
 
 				//////////////////////////////////fin del dibujado del rayo
