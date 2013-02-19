@@ -65,7 +65,7 @@ Map = {
 			weaponHammerDamageReflect = 2,
 			weaponHammerDispersion = 0,
 			weaponHammerNumberShoots = 1,
-			weaponHammerDistance = 7.0,
+			weaponHammerDistance = 15.0,
 			weaponHammerColdDown = 0.0,
 			weaponHammerMaxAmmo = 1,
 			weaponHammerId = 0,
@@ -142,7 +142,7 @@ Map = {
 			weaponHammerDamageReflect = 2,
 			weaponHammerDispersion = 0,
 			weaponHammerNumberShoots = 1,
-			weaponHammerDistance = 7.0,
+			weaponHammerDistance = 15.0,
 			weaponHammerColdDown = 0.0,
 			weaponHammerMaxAmmo = 1,
 			weaponHammerId = 0,
@@ -222,7 +222,7 @@ Map = {
 			weaponHammerDamageReflect = 2,
 			weaponHammerDispersion = 0,
 			weaponHammerNumberShoots = 1,
-			weaponHammerDistance = 7.0,
+			weaponHammerDistance = 15.0,
 			weaponHammerColdDown = 0.0,
 			weaponHammerMaxAmmo = 1,
 			weaponHammerId = 0,
@@ -256,9 +256,6 @@ Map = {
 	
 	Camera = {
 		type = "Camera",
-		distance = 0,
 		height = 8,
-		targetHeight = 8,
-		targetDistance = 20,
 	},
 }
