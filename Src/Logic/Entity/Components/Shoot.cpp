@@ -34,7 +34,7 @@ Contiene la implementación del componente que gestiona las armas y que administr
 
 namespace Logic 
 {
-	//IMP_FACTORY(CShoot);
+	IMP_FACTORY(CShoot);
 	
 	//---------------------------------------------------------
 
