@@ -1,7 +1,7 @@
-#ifndef __Logic_ShootHammer_H
-#define __Logic_ShootHammer_H
+#ifndef __Logic_ShootRaycast_H
+#define __Logic_ShootRaycast_H
 
-#include "Logic/Entity/Components/ShootRaycast.h"
+#include "Logic/Entity/Components/Shoot.h"
 
 //declaración de la clase
 namespace Logic 
@@ -14,9 +14,11 @@ namespace Logic
 	Tambien poseera un vector de booleanos que indicara las armas que posee.
 
 */
-	class CShootHammer : public CShootRaycast
+
+
+	class CShootRaycast : public CShoot
 	{
-		DEC_FACTORY(CShootHammer);
+		DEC_FACTORY(CShootRaycast);
 
 	public:
 
@@ -24,23 +26,20 @@ namespace Logic
 		Constructor por defecto; en la clase base no hace nada.
 		*/
 
-		CShootHammer() : CShootRaycast("Hammer") {}
-		virtual bool spawn(CEntity* entity, CMap *map, const Map::CEntity *entityInfo);
+		CShootRaycast() : CShoot() {}
 
-	protected:
-		
+		CShootRaycast(const std::string &shoot) : CShoot(shoot) {}
 
-		//virtual void shoot();
+		virtual void shoot();
 
-		virtual void decrementAmmo();
+		// Metodo que realmente realiza el disparo
+		virtual std::pair<CEntity*, Ray> fireWeapon();
 
-		/*virtual void triggerHitMessages(CEntity* entityHit);*/
-
+		// Metodo que se encarga de mandar los mensajes que correspondan cuando se hace hit
 		virtual void triggerHitMessages(std::pair<CEntity*, Ray> entityHit);
-		
-	}; // class CShootRaycast
+	};
 
-	REG_FACTORY(CShootHammer);
+	REG_FACTORY(CShootRaycast);
 
 } // namespace Logic
 

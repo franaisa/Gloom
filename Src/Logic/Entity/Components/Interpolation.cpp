@@ -19,11 +19,12 @@
 
 #include <iostream>
 
-namespace Logic 
-{
+namespace Logic  {
+	
 	IMP_FACTORY(CInterpolation);
 
-	//---------------------------------------------------------
+	//________________________________________________________________________
+
 	bool CInterpolation::spawn(CEntity *entity, CMap *map, const Map::CEntity *entityInfo) {
 		if(!IComponent::spawn(entity,map,entityInfo))
 			return false;
@@ -33,12 +34,14 @@ namespace Logic
 		return true;
 	} // spawn
 
-	//---------------------------------------------------------
+	//________________________________________________________________________
+
 	bool CInterpolation::accept(CMessage *message) {
 		return message->getMessageType() == Message::SYNC_POSITION;
 	} // accept
 	
-	//---------------------------------------------------------
+	//________________________________________________________________________
+
 	void CInterpolation::process(CMessage *message) {
 		switch(message->getMessageType())
 		{
@@ -58,7 +61,6 @@ namespace Logic
 			break;
 		}
 	} // process
-
 
 } // namespace Logic
 

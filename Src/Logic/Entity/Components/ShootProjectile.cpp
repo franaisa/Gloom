@@ -1,14 +1,14 @@
 /**
-@file Shoot.cpp
+@file ShootProjectile.cpp
 
 Contiene la implementación del componente que gestiona las armas y que administra el disparo.
  
-@see Logic::CShoot
+@see Logic::CShootProjectile
 @see Logic::IComponent
 
 */
 
-#include "ShootShotGun.h"
+#include "ShootProjectile.h"
 
 #include "Logic/Entity/Entity.h"
 #include "Map/MapEntity.h"
@@ -24,14 +24,16 @@ Contiene la implementación del componente que gestiona las armas y que administr
 
 #include "Graphics/Camera.h"
 
-
-
 #include <OgreSceneManager.h>
 #include <OgreMaterialManager.h>
 #include <OgreManualObject.h>
 
 namespace Logic {
-	IMP_FACTORY(CShootShotGun);
+	IMP_FACTORY(CShootProjectile);
 	
+	void CShootProjectile::shoot() {
+
+	}
+
 } // namespace Logic
 
