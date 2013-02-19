@@ -89,7 +89,8 @@ namespace Logic
 		return CGraphics::accept(message) ||
 			message->getMessageType() == Message::SET_ANIMATION ||
 			message->getMessageType() == Message::STOP_ANIMATION ||
-			message->getMessageType() == Message::CHANGE_WEAPON_GRAPHICS;
+			message->getMessageType() == Message::CHANGE_WEAPON_GRAPHICS || 
+			message->getMessageType() == Message::PLAYER_DEAD;
 
 	} // accept
 	
@@ -114,6 +115,13 @@ namespace Logic
 			break;
 		case Message::CHANGE_WEAPON_GRAPHICS:
 			changeWeapon( ((CMessageChangeWeaponGraphics*)message)->getWeapon() );
+			break;
+		case Message::PLAYER_DEAD:
+			_animatedGraphicsEntity->stopAllAnimations();
+			_animatedGraphicsEntity->setAnimation("Death",false);
+			break;
+		case Message::DAMAGED:
+			_animatedGraphicsEntity->setAnimation("Damage",false);
 			break;
 		}
 

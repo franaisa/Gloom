@@ -103,7 +103,7 @@ Map = {
 	},
 
 	Enemigo1 = {
-		type = "Enemy",
+		type = "RemotePlayer",
 		position = {0, 8, -10},
 		orientation = 90,
 		life = 100000.0,
