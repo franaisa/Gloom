@@ -14,7 +14,6 @@ la gestión de la red del juego.
 
 #include <vector>
 #include <map>
-#include "PlayerInfo.h"
 
 // Predeclaracion de clases
 namespace Net {
@@ -73,7 +72,9 @@ namespace Net
 		MAP_LOADED,
 		PLAYER_LOADED,
 		ENTITY_MSG,
-		ASSIGNED_ID
+		ASSIGNED_ID,
+		LOAD_PLAYER_INFO,
+		PLAYER_INFO
 	};
 
 
@@ -243,10 +244,7 @@ namespace Net
 		*/
 		TConnectionTable _connections;
 
-		typedef std::map<NetID, CPlayerInfo> TConnectedPlayersTable;
-		TConnectedPlayersTable _players;
-
-		CConexion* getConnection(NetID id) {return (*_connections.find(id)).second;}
+		CConexion* getConnection(NetID id) {return _connections.find(id)->second; }
 
 		bool addConnection(NetID id, CConexion* connection);
 

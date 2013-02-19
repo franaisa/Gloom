@@ -58,31 +58,16 @@ namespace Logic {
 		// Creamos todas las entidades lógicas.
 		for(; it != end; it++)
 		{
-			if((*it)->getType() == "PlayerSpawn")
-			{
-
-				// @todo Guardamos los valores de la entidad especial en el mapa (_playerInfo). 
-				// Cambiamos el type de los Map::CEntity de PlayerSpawn a Player
-				// Para cuando creemos jugadores. No es la forma más elegante de hacerlo,
-				// pero si la más rápida.
-				(*it)->setType("Player");
-				map->setPlayerInfo(*it);
+			CEntity *entity;
+			Map::CEntity * info = entityFactory->getInfo((*it)->getType());
+			if(!info){
+				entity = entityFactory->createEntity((*it),map);
+			}else{
+				info->setAttribute((*it));
+				info->setName((*it)->getName());
+				entity = entityFactory->createEntity(info,map);
 			}
-			else if((*it)->getType() == "RemotePlayer")
-			{
-
-				// guardamos la información de lo que serán los demas jugadores que juegen en nuestra partida
-				(*it)->setType("EnemySpawn");
-				map->setRemotePlayerInfo(*it);
-			}
-			else 
-			{
-				//out << (*it)->getType() << endl;
-
-				// La propia factoría se encarga de añadir la entidad al mapa.
-				CEntity *entity = entityFactory->createEntity((*it),map);
-				assert(entity && "No se pudo crear una entidad del mapa");
-			}
+			assert(entity && "No se pudo crear una entidad del mapa");
 		}
 
 		return map;
@@ -91,7 +76,7 @@ namespace Logic {
 
 	//--------------------------------------------------------
 
-	CMap::CMap(const std::string &name) : _playerInfo(0), _numOfPlayers(0)
+	CMap::CMap(const std::string &name) : _numOfPlayers(0)
 	{
 		_name = name;
 		_scene = Graphics::CServer::getSingletonPtr()->createScene(name);
@@ -279,63 +264,39 @@ namespace Logic {
 
 	} // getEntityByType
 
-
-	//--------------------------------------------------------
-	//--------------------------------------------------------
-
-	CEntity* CMap::createLocalPlayer(std::string name)
-	{
-		
-		// Asignar nombre
-		_playerInfo->setName(name);
-		
-		// Creamos la entidad y modificamos el resto de parametros que necesitamos
-		CEntity* playerCreated = CEntityFactory::getSingletonPtr()->createEntity(_playerInfo, this);
-		playerCreated->setPosition( playerCreated->getPosition() + (rand()%15+5) * Vector3(1, 0, 1) );
-		
-		// Configuramos el jugador como local si lo es
-		playerCreated->setIsPlayer(true);
-		getEntityByID(playerCreated->getEntityID())->setIsPlayer(true);
-
-		//como es el local, le decimos al juego que esta entidad es el player principal para
-		//que le pueda atachar la camara
-		CServer::getSingletonPtr()->setPlayer(playerCreated);
-
-
-		return playerCreated;
-	}
-
 	//--------------------------------------------------------
 	//--------------------------------------------------------
 	
 	CEntity* CMap::createPlayer(std::string name)
 	{
-		std::cout << "createPlayer -> "<< _remotePlayerInfo << std::endl;
+		std::cout << "createPlayer "<< name << std::endl;
+
+		//cogemos el player necesario
+		Map::CEntity *playerInfo = CEntityFactory::getSingletonPtr()->getInfo("ServerPlayer");
+
 		// Asignar nombre
-		_remotePlayerInfo->setName(name);
-		std::cout << "createPlayer -> añadido el nombre" << std::endl;
+		playerInfo->setName(name);
+
 		// Creamos la entidad y modificamos el resto de parametros que necesitamos
-		CEntity* playerCreated = CEntityFactory::getSingletonPtr()->createEntity(_remotePlayerInfo, this);
-		std::cout << "createPlayer -> entidad creada"<< playerCreated << std::endl;
+		CEntity* playerCreated = CEntityFactory::getSingletonPtr()->createEntity(playerInfo, this);
 		playerCreated->setPosition( playerCreated->getPosition() + (rand()%15+5) * Vector3(1, 0, 1) );
-		std::cout << "createPlayer -> entidad seteada" << std::endl;
-		/*//finalmente, borramos el playerinfo y creamos otro
-		Map::CEntity * aux = new Map::CEntity((*_remotePlayerInfo));
-		delete _remotePlayerInfo;*/
 		return playerCreated;
 	}
 
 	//--------------------------------------------------------
 	//--------------------------------------------------------
 
-		CEntity* CMap::createLocalPlayer(std::string name, TEntityID id)
-	{
+	CEntity* CMap::createLocalPlayer(std::string name, TEntityID id){
 		std::cout << "createLocalPlayer "<< name << "con id-> "<< id << std::endl;
+
+		//cogemos el player necesario
+		Map::CEntity *playerInfo = CEntityFactory::getSingletonPtr()->getInfo("LocalPlayer");
+
 		// Asignar nombre
-		_playerInfo->setName(name);
+		playerInfo->setName(name);
 
 		// Creamos la entidad y modificamos el resto de parametros que necesitamos
-		CEntity* playerCreated = CEntityFactory::getSingletonPtr()->createEntity(_playerInfo, this, id);
+		CEntity* playerCreated = CEntityFactory::getSingletonPtr()->createEntity(playerInfo, this, id);
 		playerCreated->setPosition( playerCreated->getPosition() + (rand()%15+5) * Vector3(1, 0, 1) );
 
 		// Configuramos el jugador como local si lo es
@@ -346,26 +307,25 @@ namespace Logic {
 		//que le pueda atachar la camara
 		CServer::getSingletonPtr()->setPlayer(playerCreated);
 
-
 		return playerCreated;
 	}
 	
 	//--------------------------------------------------------
 	//--------------------------------------------------------
 
-	CEntity* CMap::createPlayer(std::string name, TEntityID id)
-	{
+	CEntity* CMap::createPlayer(std::string name, TEntityID id){
+
 		std::cout << "createPlayer "<< name << "con id-> "<< id << std::endl;
+
+		//cogemos el player necesario
+		Map::CEntity *playerInfo = CEntityFactory::getSingletonPtr()->getInfo("RemotePlayer");
+
 		// Asignar nombre
-		_remotePlayerInfo->setName(name);
+		playerInfo->setName(name);
 
 		// Creamos la entidad y modificamos el resto de parametros que necesitamos
-		CEntity* playerCreated = CEntityFactory::getSingletonPtr()->createEntity(_remotePlayerInfo, this, id);
+		CEntity* playerCreated = CEntityFactory::getSingletonPtr()->createEntity(playerInfo, this, id);
 		playerCreated->setPosition( playerCreated->getPosition() + (rand()%15+5) * Vector3(1, 0, 1) );
-
-		/*//finalmente, borramos el playerinfo y creamos otro
-		Map::CEntity * aux = new Map::CEntity((*_remotePlayerInfo));
-		delete _remotePlayerInfo;*/
 		return playerCreated;
 	}
 } // namespace Logic

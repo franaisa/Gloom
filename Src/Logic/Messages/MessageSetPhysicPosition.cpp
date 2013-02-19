@@ -27,7 +27,7 @@ namespace Logic {
 		assert(_tempBuffer == NULL);
 
 		_tempBuffer = new Net::CBuffer(sizeof(int) + sizeof(_position.x) * 3);
-		_tempBuffer->serialize(std::string("CMessageSetPhysicPosition"));
+		_tempBuffer->serialize(std::string("CMessageSetPhysicPosition"),true);
 		_tempBuffer->serialize(_position);
 		
 		return _tempBuffer;

@@ -4,6 +4,8 @@
 
 namespace Logic {
 
+	IMP_FACTORYMESSAGE(CMessageSleep);
+
 	CMessageSleep::CMessageSleep() : CMessage(TMessageType::SLEEP) {
 		// Nada que hacer
 	} //
@@ -13,7 +15,7 @@ namespace Logic {
 		assert(_tempBuffer == NULL);
 
 		_tempBuffer = new Net::CBuffer(sizeof(int));
-		_tempBuffer->serialize(std::string("CMessageSleep"));
+		_tempBuffer->serialize(std::string("CMessageSleep"), true);
 		
 		return _tempBuffer;
 	}//

@@ -236,8 +236,8 @@ namespace BaseSubsystems
 		if(!_renderWindow->isFullScreen())
 		{
 #if defined OIS_WIN32_PLATFORM 
-			paramList.insert(std::make_pair(std::string("w32_mouse"), std::string("DISCL_FOREGROUND" ))); 
-			paramList.insert(std::make_pair(std::string("w32_mouse"), std::string("DISCL_NONEXCLUSIVE"))); 
+			paramList.insert(std::make_pair(std::string("w64_mouse"), std::string("DISCL_FOREGROUND" ))); 
+			paramList.insert(std::make_pair(std::string("w64_mouse"), std::string("DISCL_NONEXCLUSIVE"))); 
 			paramList.insert(std::make_pair(std::string("w32_keyboard"), std::string("DISCL_FOREGROUND"))); 
 			paramList.insert(std::make_pair(std::string("w32_keyboard"), std::string("DISCL_NONEXCLUSIVE"))); 
 #elif defined OIS_LINUX_PLATFORM 
@@ -455,7 +455,7 @@ namespace BaseSubsystems
 			// Inicializa el sistema de renderizado y crea la ventanapor defecto. 
 			// El true nos evita llamar a Root::createRenderWindow y se invoca 
 			// con los parámetros actuales del sistema de reenderizado.
-			_renderWindow = _root->initialise(true, "Gloom");
+			_renderWindow = _root->initialise(true,"Galeon");
 
 			// Añadimos un listener que gestiona el evento de cierre de la ventana.
 			_windowEventListener = new WindowEventListener();

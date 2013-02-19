@@ -66,6 +66,15 @@ namespace Map
 		void setAttribute(const std::string &attr, const std::string &value);
 
 		/**
+		Añade los atributos de otra entidad en esta.
+		Si los atributos ya existían los sustituye por los nuevos
+		que se le están pasando. Sino los inserta directamente.
+
+		@param info la otra entidad que queremos mezclar con ésta
+		*/
+		void setAttribute(CEntity *info);
+
+		/**
 		Dice si se ha añadido un atributo.
 
 		@param attr Nombre del atributo.
@@ -155,6 +164,12 @@ namespace Map
 		@param name Nombre de la entidad.
 		*/
 		void setName(const std::string &name) {_name = name;}
+
+		/**
+		Clona una entidad.
+
+		*/
+		CEntity *clone(){return new CEntity(*this);}
 
 	protected:
 

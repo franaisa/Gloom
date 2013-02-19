@@ -18,14 +18,14 @@ namespace Logic
 
 	class CShoot : public IComponent
 	{
-		//DEC_FACTORY(CShoot);
+		DEC_FACTORY(CShoot);
 
 	public:
 
 		/**
 		Constructor por defecto; en la clase base no hace nada.
 		*/
-
+		CShoot() : IComponent(),  _timeSinceLastShoot(0),_capsuleRadius(3.0f),_canShoot(true), _coldDownTime(0), _temporal(0), _nameWeapon(0), _currentAmmo(0)  {}
 		CShoot(const std::string &shoot) : IComponent(),  _timeSinceLastShoot(0),_capsuleRadius(3.0f),_canShoot(true), _coldDownTime(0), _temporal(0), _nameWeapon(shoot), _currentAmmo(0)  {}
 		
 
@@ -115,7 +115,7 @@ namespace Logic
 		int _temporal;
 	}; // class CShoot
 
-	//REG_FACTORY(CShoot);
+	REG_FACTORY(CShoot);
 
 } // namespace Logic
 

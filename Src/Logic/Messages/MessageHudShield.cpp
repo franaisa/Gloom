@@ -25,7 +25,7 @@ namespace Logic {
 		assert(_tempBuffer == NULL);
 
 		_tempBuffer = new Net::CBuffer(sizeof(int) + sizeof(_shield));
-		_tempBuffer->serialize(std::string("CMessageHudShield"));
+		_tempBuffer->serialize(std::string("CMessageHudShield"),true);
 		_tempBuffer->serialize(_shield);
 		
 		return _tempBuffer;

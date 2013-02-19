@@ -19,8 +19,10 @@ gráfica de una entidad estática.
 
 #include "Logic/Messages/MessageSetAnimation.h"
 #include "Logic/Messages/MessageStopAnimation.h"
+#include "Logic/Messages/MessageChangeWeaponGraphics.h"
 
 #include "Graphics/Scene.h"
+#include "Graphics/Entity.h"
 
 namespace Logic 
 {
@@ -33,7 +35,7 @@ namespace Logic
 		_animatedGraphicsEntity = new Graphics::CAnimatedEntity(_entity->getName(),_model);
 		if(!_scene->addEntity(_animatedGraphicsEntity))
 			return 0;
-
+		
 		_animatedGraphicsEntity->setTransform(_entity->getTransform());
 		
 		if(entityInfo->hasAttribute("defaultAnimation"))
@@ -43,17 +45,52 @@ namespace Logic
 			_animatedGraphicsEntity->setObserver(this);
 		}
 
+		//cargamos los modelos de las armas para poder ponerselas en la mano conforme los jugadores cambien de arma
+
+		if(entityInfo->hasAttribute("numWeapons")){
+			int numWeapons = entityInfo->getIntAttribute("numWeapons");
+		_weapons = new  Graphics::CEntity*[numWeapons];	
+			//_weapons[numWeapons];
+
+			// Por ahora leo a mano cada una de las armas que tiene el usuario
+
+			std::string armas[] = {"Hammer","MiniGun","ShotGun"};
+
+			
+			for(int i = 0; i < numWeapons; ++i){
+				
+				std::stringstream aux;
+				aux << "weapon" << armas[i];
+				std::string weapon = aux.str();
+				
+				//creamos la entidad gráfica del arma para poder atacharla al monigote
+				_weapons[i] = new Graphics::CEntity(weapon,entityInfo->getStringAttribute(weapon+"Model")); 
+				
+			}
+			if(!_weapons)
+				return NULL;
+		}
+		
 		return _animatedGraphicsEntity;
 
 	} // createGraphicsEntity
 	
 	//---------------------------------------------------------
 
+	void CAnimatedGraphics::activate()
+	{
+		CGraphics::activate();
+		_animatedGraphicsEntity->attachWeapon(*_weapons[0]);
+	}
+
+
 	bool CAnimatedGraphics::accept(CMessage *message)
 	{
 		return CGraphics::accept(message) ||
 			message->getMessageType() == Message::SET_ANIMATION ||
-			message->getMessageType() == Message::STOP_ANIMATION;
+			message->getMessageType() == Message::STOP_ANIMATION ||
+			message->getMessageType() == Message::CHANGE_WEAPON_GRAPHICS || 
+			message->getMessageType() == Message::PLAYER_DEAD;
 
 	} // accept
 	
@@ -76,6 +113,16 @@ namespace Logic
 		case Message::STOP_ANIMATION:
 			_animatedGraphicsEntity->stopAnimation(((CMessageStopAnimation*)message)->getString());
 			break;
+		case Message::CHANGE_WEAPON_GRAPHICS:
+			changeWeapon( ((CMessageChangeWeaponGraphics*)message)->getWeapon() );
+			break;
+		case Message::PLAYER_DEAD:
+			_animatedGraphicsEntity->stopAllAnimations();
+			_animatedGraphicsEntity->setAnimation("Death",false);
+			break;
+		case Message::DAMAGED:
+			_animatedGraphicsEntity->setAnimation("Damage",false);
+			break;
 		}
 
 	} // process
@@ -87,6 +134,11 @@ namespace Logic
 		// Si acaba una animación y tenemos una por defecto la ponemos
 		_animatedGraphicsEntity->stopAllAnimations();
 		_animatedGraphicsEntity->setAnimation(_defaultAnimation,true);
+	}
+
+
+	void CAnimatedGraphics::changeWeapon(int newWeapon){
+		_animatedGraphicsEntity->attachWeapon(*_weapons[newWeapon]);
 	}
 
 } // namespace Logic

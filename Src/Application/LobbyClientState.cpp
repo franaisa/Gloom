@@ -29,7 +29,6 @@ Contiene la implementación del estado de lobby del cliente.
 #include "Net/conexion.h"
 #include "Net/buffer.h"
 
-
 #include <CEGUISystem.h>
 #include <CEGUIWindowManager.h>
 #include <CEGUIWindow.h>
@@ -56,7 +55,7 @@ namespace Application {
 		_menuWindow = CEGUI::WindowManager::getSingleton().getWindow("NetLobbyClient");
 		
 		// Asociamos los botones del menú con las funciones que se deben ejecutar.
-		CEGUI::WindowManager::getSingleton().getWindow("NetLobbyClient/Start")->
+		CEGUI::WindowManager::getSingleton().getWindow("NetLobbyClient/Connect")->
 			subscribeEvent(CEGUI::PushButton::EventClicked, 
 				CEGUI::SubscriberSlot(&CLobbyClientState::startReleased, this));
 		
@@ -120,11 +119,7 @@ namespace Application {
 
 	//--------------------------------------------------------
 
-	void CLobbyClientState::dataPacketReceived(Net::CPaquete* packet)
-	{
-		ofstream outstream;
-		outstream.open("logClient.txt", ios::app);
-
+	void CLobbyClientState::dataPacketReceived(Net::CPaquete* packet) {
 		Net::CBuffer buffer(packet->getDataLength());
 		buffer.write(packet->getData(), packet->getDataLength());
 		buffer.reset();
@@ -133,20 +128,39 @@ namespace Application {
 		//memcpy(&msg, packet->getData(), sizeof(msg));
 		buffer.read(&msg, sizeof(msg));
 
-		outstream << "CLIENT: Mensaje no." << msg << " recibido" << endl;
-
 		switch (msg)
 		{
-		case Net::LOAD_MAP:
-			outstream << "CLIENT: Mensaje LOAD_MAP recibido" << endl;
+		case Net::LOAD_PLAYER_INFO:
+		{
+			// Obtenemos el nombre del mesh que va a usar el player
+			std::string playerModel = std::string( CEGUI::WindowManager::getSingleton().getWindow("NetLobbyClient/ModelBox")->getText().c_str() );
 
+			// Obtenemos el nombre del player
+			std::string playerNick = std::string( CEGUI::WindowManager::getSingleton().getWindow("NetLobbyClient/NickBox")->getText().c_str() );
+
+			// Enviamos los datos del player al servidor
+			Net::NetMessageType msg = Net::PLAYER_INFO;
+
+			Net::CBuffer playerData(sizeof(msg) + playerNick.size() + playerModel.size());
+			playerData.write(&msg, sizeof(msg)); // Por problemas con enumerados serializamos manualmente
+			playerData.serialize(playerNick, false);
+			playerData.serialize(playerModel, false);
+		
+			Net::CManager::getSingletonPtr()->send(playerData.getbuffer(), playerData.getSize());
+			
+			break;
+		}
+		case Net::LOAD_MAP:
 			// Cargamos el archivo con las definiciones de las entidades del nivel.
 			if (!Logic::CEntityFactory::getSingletonPtr()->loadBluePrints("blueprints_client.txt"))
 			{
 				Net::CManager::getSingletonPtr()->deactivateNetwork();
 				_app->exitRequest();
 			}
-
+			if (!Logic::CEntityFactory::getSingletonPtr()->loadArchetypes("archetypes.txt")) {
+				Net::CManager::getSingletonPtr()->deactivateNetwork();
+				_app->exitRequest();
+			}
 			// Cargamos el nivel a partir del nombre del mapa. 
 			if (!Logic::CServer::getSingletonPtr()->loadLevel("map_client.txt"))
 			{
@@ -161,14 +175,10 @@ namespace Application {
 
 				ackBuffer.write(&ackMsg, sizeof(ackMsg));
 				Net::CManager::getSingletonPtr()->send(ackBuffer.getbuffer(), ackBuffer.getSize());
-
-				outstream << "CLIENT: Carga de mapa ok, enviando MAP_LOADED" << endl;
 			}
 			break;
 		case Net::LOAD_PLAYER:
 			{
-			outstream << "CLIENT: Mensaje LOAD_PLAYER recibido" << endl;
-
 			// Creamos el player. Deberíamos poder propocionar caracteríasticas
 			// diferentes según el cliente (nombre, modelo, etc.). Esto es una
 			// aproximación, solo cambiamos el nombre y decimos si es el jugador
@@ -178,35 +188,28 @@ namespace Application {
 			//memcpy(&id, packet->getData() + sizeof(msg), sizeof(id));
 			buffer.read(&id, sizeof(id));
 			buffer.read(&entityID, sizeof(entityID));
-			std::string name("Player");
-			std::stringstream number;
-			number << id;
-			name.append(number.str());
+			std::string name;
+			buffer.deserialize(name);
 
 			//llamo al metodo de creacion del jugador
-			cout << "CLIENTE " << id << "con id de entidad "  << Net::CManager::getSingletonPtr()->getID() << std::endl;
 			if(id == Net::CManager::getSingletonPtr()->getID()) {//si soy yo, me creo como jugador local
 				Logic::CEntity * player = Logic::CServer::getSingletonPtr()->getMap()->createLocalPlayer(name, entityID);
 			}else{//si no soy yo, me creo como jugador remoto
 				Logic::CEntity * player = Logic::CServer::getSingletonPtr()->getMap()->createPlayer(name, entityID);
 			}
-			outstream << "CLIENT: me han asignado esta id: " << entityID << endl;
 			
 			//Enviamos el mensaje de que se ha creado el jugador
 			Net::NetMessageType ackMsg = Net::PLAYER_LOADED;
-			Net::CBuffer ackBuffer(sizeof(ackMsg));
+			Net::CBuffer ackBuffer(sizeof(ackMsg) + sizeof(id));
 			ackBuffer.write(&ackMsg, sizeof(ackMsg));
+			ackBuffer.write(&id, sizeof(id));
 			Net::CManager::getSingletonPtr()->send(ackBuffer.getbuffer(), ackBuffer.getSize());
 			}
 			break;
 		case Net::START_GAME:
-			outstream << "CLIENT: Mensaje START_GAME recibido" << endl;
-
 			_app->setState("multiplayerTeamDeathmatchClient");
 			break;
 		}
-		
-		outstream.close();
 	} // dataPacketReceived
 
 	//--------------------------------------------------------
@@ -286,14 +289,14 @@ namespace Application {
 	void CLobbyClientState::doStart()
 	{
 		// Deshabilitamos el botón de Start
-		CEGUI::WindowManager::getSingleton().getWindow("NetLobbyClient/Start")->setEnabled(false);
+		CEGUI::WindowManager::getSingleton().getWindow("NetLobbyClient/Connect")->setEnabled(false);
 		
 		// Actualizamos el status
 		CEGUI::Window * status = CEGUI::WindowManager::getSingleton().getWindow("NetLobbyClient/Status");
 		status->setText("Status: Connecting...");
 
 		// Obtenemos la ip desde el Editbox
-		CEGUI::String ip = CEGUI::WindowManager::getSingleton().getWindow("NetLobbyClient/Editbox")->getText();
+		CEGUI::String ip = CEGUI::WindowManager::getSingleton().getWindow("NetLobbyClient/IPBox")->getText();
 
 		// Conectamos
 		Net::CManager::getSingletonPtr()->connectTo((char*)ip.c_str(),1234,1);

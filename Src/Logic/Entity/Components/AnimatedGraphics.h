@@ -66,7 +66,17 @@ namespace Logic
 		*/
 		virtual void process(CMessage *message);
 
+		/**
+		Método que activa el componente; invocado cuando se activa
+		el mapa donde está la entidad a la que pertenece el componente.
+		<p>
+		Si el componente pertenece a la entidad del jugador, el componente
+		se registra así mismo en el controlador del GUI para que las ordenes 
+		se reciban a partir de los eventos de teclado y ratón.
 
+		@return true si todo ha ido correctamente.
+		*/
+		virtual void activate();
 		
 		////////////////////////////////////////
 		// Métodos de CAnimatedEntityListener //
@@ -78,6 +88,8 @@ namespace Logic
 		@param animation Nombre de la animación terminada.
 		*/
 		void animationFinished(const std::string &animation);
+
+		void changeWeapon(int newWeapon);
 
 	protected:
 
@@ -95,6 +107,11 @@ namespace Logic
 		Entidad gráfica animada.
 		*/
 		Graphics::CAnimatedEntity *_animatedGraphicsEntity;
+
+		/**
+		Entidades gráficas de las armas.
+		*/
+		Graphics::CEntity **_weapons;
 
 		/**
 		Animación por defecto de una entidad gráfica animada.

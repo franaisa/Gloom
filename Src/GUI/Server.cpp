@@ -106,11 +106,11 @@ namespace GUI {
 		CEGUI::FontManager::getSingleton().create("FairChar-30.font");
 		CEGUI::FontManager::getSingleton().create("Batang-26.font");
 
-//#ifndef NON_EXCLUSIVE_MODE_IN_WINDOW_MODE 
+#ifndef NON_EXCLUSIVE_MODE_IN_WINDOW_MODE 
 		// Establecemos cual será el puntero del ratón.
 		CEGUI::SchemeManager::getSingleton().create("raton.scheme");
 		_GUISystem->setDefaultMouseCursor("raton","miraRaton");
-//#endif	
+#endif	
 
 		CInputManager::getSingletonPtr()->addMouseListener(this);
 		CInputManager::getSingletonPtr()->addKeyListener(this);

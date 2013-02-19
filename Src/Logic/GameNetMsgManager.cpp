@@ -113,11 +113,11 @@ namespace Logic {
 		Net::CBuffer serialMsg;
 			serialMsg.write(&msgType, sizeof(msgType));
 			serialMsg.write(&destID, sizeof(destID)); // Escribimos el id de la entidad destino
-			serialMsg.write(bufferAux->getbuffer(),bufferAux->getSize()); //Guardamos el mensaje en el buffer
+			serialMsg.write(bufferAux->getbuffer(), bufferAux->getSize()); //Guardamos el mensaje en el buffer
 			
 		Net::CManager::getSingletonPtr()->send(serialMsg.getbuffer(), serialMsg.getSize());
 		//std::cout << "Enviado mensaje tipo " << txMsg->getMessageType() << " para la entidad " << destID << " de tamaño " << serialMsg.getSize() << std::endl;
-		LOG("TX ENTITY_MSG " << txMsg._type << " to EntityID " << destID);
+		//LOG("TX ENTITY_MSG " << txMsg._type << " to EntityID " << destID);
 	} // sendEntityMessage
 
 	//---------------------------------------------------------
@@ -148,7 +148,7 @@ namespace Logic {
 		//leemos el mensaje que se ha enviado por la red
 		int typeMessage;
 		serialMsg.read(&typeMessage, sizeof(int));
-
+		//std::cout << "mensaje de tipo " << typeMessage << std::endl;
 		CMessage * messageReceived = Logic::CMessageFactory::getSingletonPtr()->create(typeMessage);
 			messageReceived->deserialize(serialMsg);
 
@@ -156,7 +156,7 @@ namespace Logic {
 		CEntity* destEntity = Logic::CServer::getSingletonPtr()->getMap()->getEntityByID(destID);
 		if(destEntity != 0)
 			destEntity->emitMessage(messageReceived);
-		LOG("RX ENTITY_MSG " << rxMsg._type << " from EntityID " << destID);
+		//LOG("RX ENTITY_MSG " << rxMsg._type << " from EntityID " << destID);
 	} // processEntityMessage
 
 

@@ -29,7 +29,7 @@ namespace Logic {
 		assert(_tempBuffer == NULL);
 
 		_tempBuffer = new Net::CBuffer(sizeof(int) + sizeof(_entity));
-		_tempBuffer->serialize(std::string("CMessageDamaged"));
+		_tempBuffer->serialize(std::string("CMessageDamaged"),true);
 		_tempBuffer->serialize(_entity->getEntityID());
 		
 		return _tempBuffer;

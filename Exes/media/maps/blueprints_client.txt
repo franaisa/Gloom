@@ -1,6 +1,5 @@
-World CGraphics
-Player CHudOverlay CArrayGraphics CLife CNetConnector
-Enemy CGraphics CLife
+World CGraphics CPhysicEntity
+LocalPlayer CAvatarController CPhysicController CInterpolation CHudOverlay CArrayGraphics CLife CNetConnector
 Camera CCamera
 ItemSpawn CGraphics CFloatingMovement CSpawnItemManager CNetConnector
-EnemySpawn CGraphics CNetConnector
+RemotePlayer CNetConnector CAnimatedGraphics CInterpolation
