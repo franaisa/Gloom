@@ -208,7 +208,7 @@ Map = {
 		physic_radius = 0.5,
 		physic_mass = 10,
 		physic_group = 1,
-		
+	
 		
 		numWeapons = 3,
 
