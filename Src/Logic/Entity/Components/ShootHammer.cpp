@@ -1,11 +1,10 @@
 /**
-@file Shoot.cpp
+@file ShootHammer.cpp
 
-Contiene la implementación del componente que gestiona las armas y que administra el disparo.
+Contiene la implementación del componente que representa al hammer.
  
-@see Logic::CShoot
-@see Logic::IComponent
-
+@see Logic::CShootHammer
+@see Logic::CShootRaycast
 */
 
 #include "ShootHammer.h"
@@ -25,20 +24,15 @@ Contiene la implementación del componente que gestiona las armas y que administr
 
 #include "Graphics/Camera.h"
 
-
-
 #include <OgreSceneManager.h>
 #include <OgreMaterialManager.h>
 #include <OgreManualObject.h>
 
-namespace Logic 
-{
+namespace Logic {
 	IMP_FACTORY(CShootHammer);
 	
-	bool CShootHammer::spawn(CEntity* entity, CMap *map, const Map::CEntity *entityInfo){
-
-		if(!CShoot::spawn(entity,map,entityInfo))
-			return false;
+	bool CShootHammer::spawn(CEntity* entity, CMap *map, const Map::CEntity *entityInfo) {
+		if(!CShootRaycast::spawn(entity,map,entityInfo)) return false;
 		
 		_currentAmmo = 1;
 
@@ -47,11 +41,14 @@ namespace Logic
 		return true;
 	}
 
+	//__________________________________________________________________
+
 	void CShootHammer::decrementAmmo() {
 		// Redefinimos el metodo para que no se haga nada ya que el hammer
 		// realmente no tiene municion
 	}// decrementAmmo
-	//---------------------------------------------------------
+	
+	//__________________________________________________________________
 
 	void CShootHammer::triggerHitMessages(std::pair<CEntity*, Ray> entityHit) {
 		if(entityHit.first->getName().compare("World")==0){
@@ -74,7 +71,6 @@ namespace Logic
 			entityHit.first->emitMessage(m);
 		}
 	}// triggerHitMessages
-	//---------------------------------------------------------
 
 } // namespace Logic
 

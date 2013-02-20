@@ -5,7 +5,6 @@ Contiene la implementación del componente que gestiona las armas y que administr
  
 @see Logic::CShootProjectile
 @see Logic::IComponent
-
 */
 
 #include "ShootProjectile.h"

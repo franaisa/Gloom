@@ -29,32 +29,48 @@ Contiene la implementación del componente que gestiona las armas y que administr
 #include <OgreManualObject.h>
 
 namespace Logic {
-	IMP_FACTORY(CShootRaycast);
+	//IMP_FACTORY(CShootRaycast);
 	
+	bool CShootRaycast::spawn(CEntity* entity, CMap *map, const Map::CEntity *entityInfo) {
+		if(!CShoot::spawn(entity,map,entityInfo)) return false;
+
+		std::stringstream aux;
+		aux << "weapon" << _nameWeapon;	////!!!! Aqui debes de poner el nombre del arma que leera en el map.txt
+		std::string weapon = aux.str();
+
+		_dispersion = entityInfo->getFloatAttribute(weapon+"Dispersion");
+		_distance = entityInfo->getFloatAttribute(weapon+"Distance");
+
+		return true;
+	}
+
+	//__________________________________________________________________
+
+	// Disparo, usa el patrón template
 	void CShootRaycast::shoot() {
-		if(_canShoot && _currentAmmo > 0 && _numberShoots <= _currentAmmo){
+		if(_canShoot && _currentAmmo > 0 && _numberShots <= _currentAmmo){
 			_canShoot = false;
-			_coldDownTime = 0;
+			_cooldownTimer = 0;
 				
-			for(int i = 0; i < _numberShoots; ++i) {
+			for(int i = 0; i < _numberShots; ++i) {
 				std::pair<CEntity*, Ray> entityHit = fireWeapon();
 				if(entityHit.first != NULL) {
 					printf("impacto con %s\n", entityHit.first->getName().c_str());
 					triggerHitMessages(entityHit);
 				}
-
-				decrementAmmo();
 			}
+
+			decrementAmmo();
 		}
 		else if(_currentAmmo == 0) {
 			// Ejecutar sonidos y animaciones de falta de balas
 			//triggerRunOutOfAmmoMessages();
 		}
 	}// fireWeapon
-	//----------------------------------------------------------
+	
+	//__________________________________________________________________
 
-	// La implementacion por defecto de fireWeapon se basa en el uso del raycasting
-	// Devuelve la entidad con la que ha colisionado el raycasting, si es que hay alguna
+	// Dispara rayos mediante raycast dependiendo de los parametros del arquetipo del arma
 	std::pair<CEntity*, Ray> CShootRaycast::fireWeapon() {
 		//Direccion
 		Vector3 direction = Math::getDirection(_entity->getOrientation()); 
@@ -78,15 +94,45 @@ namespace Logic {
 
 		return std::pair<CEntity*, Ray>(Physics::CServer::getSingletonPtr()->raycastClosestInverse(ray, _distance, 3), ray);
 	}// fireWeapon
-	//----------------------------------------------------------
+	
+	//__________________________________________________________________
 
+	// Implementación por defecto de triggerHitMessages
 	void CShootRaycast::triggerHitMessages(std::pair<CEntity*, Ray> entityHit) {
 		Logic::CMessageDamaged* m = new Logic::CMessageDamaged();
 		m->setDamage(_damage);
 		m->setEnemy(_entity);
 		entityHit.first->emitMessage(m);
 	}// triggerHitMessages
-	//----------------------------------------------------------
+
+	//__________________________________________________________________
+
+	// Dibujado de raycast para depurar
+	void CShootRaycast::drawRaycast(const Ray& raycast) {
+		Graphics::CScene *scene = Graphics::CServer::getSingletonPtr()->getActiveScene();
+		Ogre::SceneManager *mSceneMgr = scene->getSceneMgr();
+
+		std::stringstream aux;
+		aux << "laser" << _nameWeapon << _temporal;
+		++_temporal;
+		std::string laser = aux.str();
+
+		Ogre::ManualObject* myManualObject =  mSceneMgr->createManualObject(laser); 
+		Ogre::SceneNode* myManualObjectNode = mSceneMgr->getRootSceneNode()->createChildSceneNode(laser+"_node"); 
+ 
+		myManualObject->begin("laser", Ogre::RenderOperation::OT_LINE_STRIP);
+		Vector3 v = raycast.getOrigin();
+		myManualObject->position(v.x,v.y,v.z);
+
+		for(int i=0; i < _distance;++i){
+			Vector3 v = raycast.getPoint(i);
+			myManualObject->position(v.x,v.y,v.z);
+			// etc 
+		}
+
+		myManualObject->end(); 
+		myManualObjectNode->attachObject(myManualObject);
+	}// drawRaycast
 
 } // namespace Logic
 
