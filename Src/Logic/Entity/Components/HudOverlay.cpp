@@ -215,7 +215,7 @@ namespace Logic
 
 			
 
-		///// panel PanelWeapon1
+		///// panel PanelWeapon4
 		Graphics::COverlay* panelWeapon4 = _server->createOverlay( "panelWeapon4","Panel");
 		panelWeapon4->setMetricsMode("pixel");
 		panelWeapon4->setPosition( 15*relativeWidth, 29*relativeHeight);
@@ -233,16 +233,126 @@ namespace Logic
 				textAreaDummy->setTextSize(16);
 				textAreaDummy->setFont("fuenteSimple");
 
-				//panelShield->addChild(textAreaHealth);
 				
 				panelWeapon4->addChild(textAreaDummy);
 
+				///// panel PanelWeapon4 Active
+			_weaponsBox[MINIGUN][ACTIVE] = _server->createOverlay( "_weaponsBox[MINIGUN][ACTIVE]", "Panel"  );
+			_weaponsBox[MINIGUN][ACTIVE]->setMetricsMode("pixel");
+			_weaponsBox[MINIGUN][ACTIVE]->setPosition( 15*relativeWidth, 29*relativeHeight);
+			_weaponsBox[MINIGUN][ACTIVE]->setDimensions( relativeWidth*2, relativeHeight*2 );
+			_weaponsBox[MINIGUN][ACTIVE]->setMaterial("weapon4");
+			_weaponsBox[MINIGUN][ACTIVE]->setVisible(false);
+			
+			_overlayPlay->add2D( _weaponsBox[SHOTGUN][ACTIVE] );
+
+			
+				///// panel PanelWeapon4 no ammo
+			_weaponsBox[MINIGUN][NO_AMMO] = _server->createOverlay( "_weaponsBox[MINIGUN][NO_AMMO]", "Panel" );
+			_weaponsBox[MINIGUN][NO_AMMO]->setMetricsMode("pixel");
+			_weaponsBox[MINIGUN][NO_AMMO]->setPosition( 15*relativeWidth, 29*relativeHeight);
+			_weaponsBox[MINIGUN][NO_AMMO]->setDimensions( relativeWidth*2, relativeHeight*2 );
+			_weaponsBox[MINIGUN][NO_AMMO]->setMaterial("weapon4BN");
+			_weaponsBox[MINIGUN][NO_AMMO]->setVisible(false);
+
+			_overlayPlay->add2D( _weaponsBox[MINIGUN][NO_AMMO] );
+			
+				///// panel PanelWeapon4 no weapon
+			_weaponsBox[MINIGUN][NO_WEAPON] = _server->createOverlay( "_weaponsBox[MINIGUN][NO_WEAPON]", "Panel" );
+			_weaponsBox[MINIGUN][NO_WEAPON]->setMetricsMode("pixel");
+			_weaponsBox[MINIGUN][NO_WEAPON]->setPosition( 15*relativeWidth, 29*relativeHeight);
+			_weaponsBox[MINIGUN][NO_WEAPON]->setDimensions( relativeWidth*2, relativeHeight*2 );
+			_weaponsBox[MINIGUN][NO_WEAPON]->setMaterial("weapon4SinBalas");
+			_weaponsBox[MINIGUN][NO_WEAPON]->setVisible(true);
+			
+			_overlayPlay->add2D( _weaponsBox[MINIGUN][NO_WEAPON] );
+			
 		_overlayPlay->add2D( panelWeapon4 );
 
 
+		///// panel PanelWeapon5
+		Graphics::COverlay* panelWeapon5 = _server->createOverlay( "panelWeapon5","Panel");
+		panelWeapon5->setMetricsMode("pixel");
+		panelWeapon5->setPosition( 17*relativeWidth, 29*relativeHeight);
+		panelWeapon5->setDimensions( relativeWidth*2, relativeHeight*2 );
+        panelWeapon5->setMaterial("cuadroArmas");
 
+				///// panel PanelWeapon3 Active
+			_weaponsBox[ROCKET_LAUNCHER][ACTIVE] = _server->createOverlay( "_weaponsBox[ROCKET_LAUNCHER][ACTIVE]", "Panel"  );
+			_weaponsBox[ROCKET_LAUNCHER][ACTIVE]->setMetricsMode("pixel");
+			_weaponsBox[ROCKET_LAUNCHER][ACTIVE]->setPosition( 17*relativeWidth, 29*relativeHeight);
+			_weaponsBox[ROCKET_LAUNCHER][ACTIVE]->setDimensions( relativeWidth*2, relativeHeight*2 );
+			_weaponsBox[ROCKET_LAUNCHER][ACTIVE]->setMaterial("weapon5");
+			_weaponsBox[ROCKET_LAUNCHER][ACTIVE]->setVisible(false);
+			
+			_overlayPlay->add2D( _weaponsBox[ROCKET_LAUNCHER][ACTIVE] );
+
+			
+				///// panel PanelWeapon3 no ammo
+			_weaponsBox[ROCKET_LAUNCHER][NO_AMMO] = _server->createOverlay( "_weaponsBox[ROCKET_LAUNCHER][NO_AMMO]", "Panel" );
+			_weaponsBox[ROCKET_LAUNCHER][NO_AMMO]->setMetricsMode("pixel");
+			_weaponsBox[ROCKET_LAUNCHER][NO_AMMO]->setPosition( 17*relativeWidth, 29*relativeHeight);
+			_weaponsBox[ROCKET_LAUNCHER][NO_AMMO]->setDimensions( relativeWidth*2, relativeHeight*2 );
+			_weaponsBox[ROCKET_LAUNCHER][NO_AMMO]->setMaterial("weapon5BN");
+			_weaponsBox[ROCKET_LAUNCHER][NO_AMMO]->setVisible(false);
+
+			_overlayPlay->add2D( _weaponsBox[ROCKET_LAUNCHER][NO_AMMO] );
+			
+				///// panel PanelWeapon3 no weapon
+			_weaponsBox[ROCKET_LAUNCHER][NO_WEAPON] = _server->createOverlay( "_weaponsBox[ROCKET_LAUNCHER][NO_WEAPON]", "Panel" );
+			_weaponsBox[ROCKET_LAUNCHER][NO_WEAPON]->setMetricsMode("pixel");
+			_weaponsBox[ROCKET_LAUNCHER][NO_WEAPON]->setPosition( 17*relativeWidth, 29*relativeHeight);
+			_weaponsBox[ROCKET_LAUNCHER][NO_WEAPON]->setDimensions( relativeWidth*2, relativeHeight*2 );
+			_weaponsBox[ROCKET_LAUNCHER][NO_WEAPON]->setMaterial("weapon5SinBalas");
+			_weaponsBox[ROCKET_LAUNCHER][NO_WEAPON]->setVisible(true);
+			
+			_overlayPlay->add2D( _weaponsBox[ROCKET_LAUNCHER][NO_WEAPON] );
+			
+		_overlayPlay->add2D( panelWeapon5 );
+
+
+		///// panel PanelWeapon6
+		Graphics::COverlay* panelWeapon6 = _server->createOverlay( "panelWeapon6","Panel");
+		panelWeapon6->setMetricsMode("pixel");
+		panelWeapon6->setPosition( 19*relativeWidth, 29*relativeHeight);
+		panelWeapon6->setDimensions( relativeWidth*2, relativeHeight*2 );
+        panelWeapon6->setMaterial("cuadroArmas");
+
+				///// panel PanelWeapon3 Active
+			_weaponsBox[GRENADE_LAUNCHER][ACTIVE] = _server->createOverlay( "_weaponsBox[GRENADE_LAUNCHER][ACTIVE]", "Panel"  );
+			_weaponsBox[GRENADE_LAUNCHER][ACTIVE]->setMetricsMode("pixel");
+			_weaponsBox[GRENADE_LAUNCHER][ACTIVE]->setPosition( 19*relativeWidth, 29*relativeHeight);
+			_weaponsBox[GRENADE_LAUNCHER][ACTIVE]->setDimensions( relativeWidth*2, relativeHeight*2 );
+			_weaponsBox[GRENADE_LAUNCHER][ACTIVE]->setMaterial("weapon6");
+			_weaponsBox[GRENADE_LAUNCHER][ACTIVE]->setVisible(false);
+			
+			_overlayPlay->add2D( _weaponsBox[GRENADE_LAUNCHER][ACTIVE] );
+
+			
+				///// panel PanelWeapon3 no ammo
+			_weaponsBox[GRENADE_LAUNCHER][NO_AMMO] = _server->createOverlay( "_weaponsBox[GRENADE_LAUNCHER][NO_AMMO]", "Panel" );
+			_weaponsBox[GRENADE_LAUNCHER][NO_AMMO]->setMetricsMode("pixel");
+			_weaponsBox[GRENADE_LAUNCHER][NO_AMMO]->setPosition( 19*relativeWidth, 29*relativeHeight);
+			_weaponsBox[GRENADE_LAUNCHER][NO_AMMO]->setDimensions( relativeWidth*2, relativeHeight*2 );
+			_weaponsBox[GRENADE_LAUNCHER][NO_AMMO]->setMaterial("weapon6BN");
+			_weaponsBox[GRENADE_LAUNCHER][NO_AMMO]->setVisible(false);
+
+			_overlayPlay->add2D( _weaponsBox[GRENADE_LAUNCHER][NO_AMMO] );
+			
+				///// panel PanelWeapon3 no weapon
+			_weaponsBox[GRENADE_LAUNCHER][NO_WEAPON] = _server->createOverlay( "_weaponsBox[GRENADE_LAUNCHER][NO_WEAPON]", "Panel" );
+			_weaponsBox[GRENADE_LAUNCHER][NO_WEAPON]->setMetricsMode("pixel");
+			_weaponsBox[GRENADE_LAUNCHER][NO_WEAPON]->setPosition( 19*relativeWidth, 29*relativeHeight);
+			_weaponsBox[GRENADE_LAUNCHER][NO_WEAPON]->setDimensions( relativeWidth*2, relativeHeight*2 );
+			_weaponsBox[GRENADE_LAUNCHER][NO_WEAPON]->setMaterial("weapon6SinBalas");
+			_weaponsBox[GRENADE_LAUNCHER][NO_WEAPON]->setVisible(true);
+			
+			_overlayPlay->add2D( _weaponsBox[GRENADE_LAUNCHER][NO_WEAPON] );
+			
+		_overlayPlay->add2D( panelWeapon6 );
 
 		
+
 		///// panel health
 		Graphics::COverlay *panelHealth = _server->createOverlay("panelHealth",  "Panel" );
 		panelHealth->setMetricsMode("pixel");

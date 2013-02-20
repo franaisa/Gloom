@@ -60,7 +60,7 @@ namespace Logic
 
 		int _numWeapons;
 
-		enum eWeaponIndex { HAMMER, SNIPER, SHOTGUN, NONE };
+		enum eWeaponIndex { HAMMER, SNIPER, SHOTGUN, MINIGUN, GRENADE_LAUNCHER, ROCKET_LAUNCHER, NONE };
 		enum eOverlayState { ACTIVE, NO_AMMO, NO_WEAPON };
 		enum eOverlayTextArea {HEALTH, SHIELD, AMMO };
 		
@@ -106,7 +106,7 @@ namespace Logic
 		Graphics::COverlay *_textBoxArea[3];
 
 		// En vez de 4 deberia de ir el numero de armas pero no tengo cojones U.U
-		Graphics::COverlay *_weaponsBox[4][3];
+		Graphics::COverlay *_weaponsBox[6][3];
 
 	}; // class CHudOverlay
 
