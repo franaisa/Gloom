@@ -30,6 +30,8 @@ namespace Logic {
 
 	public:
 		CShootGrenadeLauncher() : CShoot("GrenadeLauncher") { }
+
+		virtual void shoot() { }
 	};
 
 	REG_FACTORY(CShootGrenadeLauncher);

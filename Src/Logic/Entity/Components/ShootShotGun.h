@@ -1,32 +1,55 @@
+//---------------------------------------------------------------------------
+// ShootShotGun.h
+//---------------------------------------------------------------------------
+
+/**
+@file ShootShotGun.h
+
+Contiene la declaración del componente que implementa la escopeta.
+ 
+@author Antonio Jesus Narváez Corrales
+@date Febrero, 2013
+*/
+
 #ifndef __Logic_ShootShotGun_H
 #define __Logic_ShootShotGun_H
 
-#include "Logic/Entity/Components/Shoot.h"
+#include "Logic/Entity/Components/ShootRaycast.h"
 
-//declaración de la clase
-namespace Logic 
-{
-/**
-	Este componente controla la capacidad de disparo de una entidad, asi como las armas que puede tener. Procesa mensajes de tipo 
-	SHOOT (indican que la entidad ha disparado)
-	<p>
-	Poseera una vector, con las armas que tiene, asi como su daño y alcance.
-	Tambien poseera un vector de booleanos que indicara las armas que posee.
+namespace Logic {
 
-*/
+	/**
+	@ingroup logicGroup
 
+	Este componente implementa la funcionalidad de la escopeta. Tan solo necesitamos
+	redefinir los mensajes que se mandan a las entidades en caso de hit (que
+	en este caso nos sirve la implementación por defecto), ya que el resto
+	del comportamiento esta definido en el arquetipo que describe a la escopeta.
 
-	class CShootShotGun : public CShoot
-	{
+	@author Antonio Jesus Narváez Corrales
+	@date Febrero, 2013
+	*/
+
+	class CShootShotGun : public CShootRaycast {
 		DEC_FACTORY(CShootShotGun);
-
 	public:
 
-		/**
-		Constructor por defecto; en la clase base no hace nada.
-		*/
+		/** Constructor por defecto. */
+		CShootShotGun() : CShootRaycast("ShotGun") { }
 
-		CShootShotGun() : CShoot("ShotGun") {}
+		//__________________________________________________________________
+
+		/**
+		Método que se encarga de mandar los mensajes que corresopondan a la entidad
+		que se ha golpeado en caso de hacer hit.
+
+		Sencillamente reutiliza la implementación por defecto de CShootRaycast.
+
+		@param entityHit Pareja que contiene el puntero a la entidad que se ha dado
+		(o NULL si no se ha colisionado con ninguna) y el rayo que se disparo para
+		comprobar si habia colisiones.
+		*/
+		virtual void triggerHitMessages(std::pair<CEntity*, Ray> entityHit) { CShootRaycast::triggerHitMessages(entityHit); }
 	};
 
 	REG_FACTORY(CShootShotGun);

@@ -91,6 +91,8 @@
     <ClCompile Include="..\..\Src\Logic\Entity\Components\ShootGrenadeLauncher.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\ShootHammer.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\ShootMiniGun.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\ShootProjectile.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\ShootRaycast.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\ShootShotGun.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\SpawnItemManager.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\SpawnPlayer.cpp" />
@@ -169,6 +171,8 @@
     <ClInclude Include="..\..\Src\Logic\Entity\Components\ShootGrenadeLauncher.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\ShootHammer.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\ShootMiniGun.h" />
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\ShootProjectile.h" />
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\ShootRaycast.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\ShootShotGun.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\SpawnItemManager.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\SpawnPlayer.h" />
