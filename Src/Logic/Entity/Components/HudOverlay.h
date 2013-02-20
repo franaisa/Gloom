@@ -9,11 +9,14 @@
 #ifndef __Logic_HudOverlay_H
 #define __Logic_HudOverlay_H
 
+#include "Graphics/Server.h"
 #include "Logic/Entity/Component.h"
 
+/*
 #include <OgreOverlay.h>
 #include <OgreOverlayContainer.h>
 #include <OgreTextAreaOverlayElement.h>
+*/
 
 //declaración de la clase
 namespace Logic 
@@ -76,17 +79,34 @@ namespace Logic
 		int _shield;
 		int _ammo;
 
-		Ogre::Overlay *_overlayPlay;
-		Ogre::Overlay *_overlayDie;
-
-		Ogre::TextAreaOverlayElement *_textAreaDie;
-
-		Ogre::TextAreaOverlayElement *_textBoxArea[3];
 
 		int _actualWeapon;
 
+		Graphics::CServer* _server;
+
+		//Ogre::Overlay *_overlayPlay;
+		
+		
+		//Ogre::Overlay *_overlayDie;
+
+		//Ogre::TextAreaOverlayElement *_textAreaDie;
+
+		//Ogre::TextAreaOverlayElement *_textBoxArea[3];
+
+		//Ogre::OverlayContainer *_weaponsBox[4][3];
+
+
+
+
+		Graphics::COverlay *_overlayPlay;
+		Graphics::COverlay *_overlayDie;
+
+		Graphics::COverlay *_textAreaDie;
+
+		Graphics::COverlay *_textBoxArea[3];
+
 		// En vez de 4 deberia de ir el numero de armas pero no tengo cojones U.U
-		Ogre::OverlayContainer *_weaponsBox[4][3];
+		Graphics::COverlay *_weaponsBox[4][3];
 
 	}; // class CHudOverlay
 

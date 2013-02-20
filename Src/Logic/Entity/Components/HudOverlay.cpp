@@ -1,12 +1,12 @@
-/**
+ï»¿/**
 @file Life.cpp
 
-Contiene la implementación del componente que controla la vida de una entidad.
+Contiene la implementaciï¿½n del componente que controla la vida de una entidad.
  
 @see Logic::CLife
 @see Logic::IComponent
 
-@author David Llansó
+@author David Llansï¿½
 @date Octubre, 2010
 */
 
@@ -21,16 +21,18 @@ Contiene la implementación del componente que controla la vida de una entidad.
 #include "Graphics/Camera.h"
 #include "Graphics/Scene.h"
 #include "Graphics/Entity.h"
+#include "Graphics/Overlay.h"
 #include "Graphics/StaticEntity.h"
 
-#include <OgreSceneManager.h>
+/*
 #include <OgreOverlayManager.h>
+#include <OgreSceneManager.h>
 #include <OgreOverlayContainer.h>
 #include <OgreColourValue.h>
 #include <OgreOverlay.h>
 #include <OgreTextAreaOverlayElement.h>
 #include <OgreEntity.h>
-
+*/
 
 
 
@@ -59,12 +61,13 @@ namespace Logic
 		int _actualWeapon;
 
 		
+		_server = Graphics::CServer::getSingletonPtr();
 
-		Ogre::OverlayManager& overlayManager = Ogre::OverlayManager::getSingleton();
-		_overlayPlay = overlayManager.create( "_overlayPlay" );
+		_overlayPlay = _server->createOverlay( "_overlayPlay" );
 
-		float height = overlayManager.getViewportHeight();
-		float width = overlayManager.getViewportWidth();
+
+		float height = _server->getHeight();
+		float width = _server->getWidth();
 
 		float relativeWidth = width/26;
 		float relativeHeight = height/31;
@@ -74,137 +77,137 @@ namespace Logic
 		
          // Create a panel de Mira
 
-         Ogre::OverlayContainer* panelMira = static_cast<Ogre::OverlayContainer*>( overlayManager.createOverlayElement( "Panel", "Mira" ) );
-		 float sizeCrossFire = entityInfo->getFloatAttribute("hudMira");
-		 float positionCrossFire = 0.5f-((sizeCrossFire/2)/100) ;
-         panelMira->setPosition( positionCrossFire,positionCrossFire);
-		 panelMira->setDimensions( sizeCrossFire/100, sizeCrossFire/100 );
-         panelMira->setMaterialName("hudMira");
+		Graphics::COverlay *panelMira = _server->createOverlay("Mira",  "Panel" );
+		float sizeCrossFire = entityInfo->getFloatAttribute("hudMira");
+		float positionCrossFire = 0.5f-((sizeCrossFire/2)/100) ;
+        panelMira->setPosition( positionCrossFire,positionCrossFire);
+		panelMira->setDimensions( sizeCrossFire/100, sizeCrossFire/100 );
+        panelMira->setMaterial("hudMira");
 
-		 _overlayPlay->add2D( panelMira );
+		_overlayPlay->add2D( panelMira );
          // Add the panel to the overlay
 
 		
 		 
 		 ////// panel PanelWeapon cuadro principal
-		Ogre::OverlayContainer* panelWeapon1 = static_cast<Ogre::OverlayContainer*>( overlayManager.createOverlayElement( "Panel", "PanelWeapon1" ) );
-		panelWeapon1->setMetricsMode(Ogre::GMM_PIXELS);
+		Graphics::COverlay *panelWeapon1 = _server->createOverlay( "PanelWeapon1", "Panel");
+		panelWeapon1->setMetricsMode("pixel");
 		panelWeapon1->setPosition( 9*relativeWidth, 29*relativeHeight);
 		panelWeapon1->setDimensions( relativeWidth*2, relativeHeight*2 );
 		
-        panelWeapon1->setMaterialName("cuadroArmas");
+        panelWeapon1->setMaterial("cuadroArmas");
 
-		_overlayPlay->add2D( panelWeapon1 );
+		_overlayPlay->add2D( panelWeapon1);
 
 				 ////// panel PanelWeapon1 con arma activa
-			_weaponsBox[HAMMER][ACTIVE] = static_cast<Ogre::OverlayContainer*>( overlayManager.createOverlayElement( "Panel", "_weaponsBox[HAMMER][ACTIVE]" ) );
-			_weaponsBox[HAMMER][ACTIVE]->setMetricsMode(Ogre::GMM_PIXELS);
+			_weaponsBox[HAMMER][ACTIVE] = _server->createOverlay( "_weaponsBox[HAMMER][ACTIVE]", "Panel");
+			_weaponsBox[HAMMER][ACTIVE]->setMetricsMode("pixel");
 			_weaponsBox[HAMMER][ACTIVE]->setPosition( 9*relativeWidth, 29*relativeHeight);
 			_weaponsBox[HAMMER][ACTIVE]->setDimensions( relativeWidth*2, relativeHeight*2 );
-			_weaponsBox[HAMMER][ACTIVE]->setMaterialName("katana");
-			_weaponsBox[HAMMER][ACTIVE]->show();
+			_weaponsBox[HAMMER][ACTIVE]->setMaterial("katana");
+			_weaponsBox[HAMMER][ACTIVE]->setVisible(true);
 
 			_overlayPlay->add2D( _weaponsBox[HAMMER][ACTIVE] );
 
 				 ////// panel PanelWeapon1 con arma activa
-			_weaponsBox[HAMMER][NO_AMMO] = static_cast<Ogre::OverlayContainer*>( overlayManager.createOverlayElement( "Panel", "_weaponsBox[HAMMER][NO_AMMO]" ) );
-			_weaponsBox[HAMMER][NO_AMMO]->setMetricsMode(Ogre::GMM_PIXELS);
+			_weaponsBox[HAMMER][NO_AMMO] = _server->createOverlay("_weaponsBox[HAMMER][NO_AMMO]", "Panel"  );
+			_weaponsBox[HAMMER][NO_AMMO]->setMetricsMode("pixel");
 			_weaponsBox[HAMMER][NO_AMMO]->setPosition( 9*relativeWidth, 29*relativeHeight);
 			_weaponsBox[HAMMER][NO_AMMO]->setDimensions( relativeWidth*2, relativeHeight*2 );
-			_weaponsBox[HAMMER][NO_AMMO]->setMaterialName("katana");
-			_weaponsBox[HAMMER][NO_AMMO]->hide();
+			_weaponsBox[HAMMER][NO_AMMO]->setMaterial("katana");
+			_weaponsBox[HAMMER][NO_AMMO]->setVisible(true);
 
 			_overlayPlay->add2D( _weaponsBox[HAMMER][NO_AMMO] );
 
 				 ////// panel PanelWeapon1 con arma activa
-			_weaponsBox[HAMMER][NO_WEAPON] = static_cast<Ogre::OverlayContainer*>( overlayManager.createOverlayElement( "Panel", "_weaponsBox[HAMMER][NO_WEAPON]" ) );
-			_weaponsBox[HAMMER][NO_WEAPON]->setMetricsMode(Ogre::GMM_PIXELS);
+			_weaponsBox[HAMMER][NO_WEAPON] = _server->createOverlay( "_weaponsBox[HAMMER][NO_WEAPON]", "Panel" );
+			_weaponsBox[HAMMER][NO_WEAPON]->setMetricsMode("pixel");
 			_weaponsBox[HAMMER][NO_WEAPON]->setPosition( 9*relativeWidth, 29*relativeHeight);
 			_weaponsBox[HAMMER][NO_WEAPON]->setDimensions( relativeWidth*2, relativeHeight*2 );
-			_weaponsBox[HAMMER][NO_WEAPON]->setMaterialName("katana");
-			_weaponsBox[HAMMER][NO_WEAPON]->hide();
+			_weaponsBox[HAMMER][NO_WEAPON]->setMaterial("katana");
+			_weaponsBox[HAMMER][NO_WEAPON]->setVisible(true);
 
 			_overlayPlay->add2D( _weaponsBox[HAMMER][NO_WEAPON] );
 
 
 		////// panel PanelWeapon2 cuadro principal
-		Ogre::OverlayContainer* panelWeapon2 = static_cast<Ogre::OverlayContainer*>( overlayManager.createOverlayElement( "Panel", "panelWeapon2" ) );
-		panelWeapon2->setMetricsMode(Ogre::GMM_PIXELS);
+		Graphics::COverlay* panelWeapon2 = _server->createOverlay( "panelWeapon2", "Panel");
+		panelWeapon2->setMetricsMode("pixel");
 		panelWeapon2->setPosition( 11*relativeWidth, 29*relativeHeight);
 		panelWeapon2->setDimensions( relativeWidth*2, relativeHeight*2 );
-        panelWeapon2->setMaterialName("cuadroArmas");
+        panelWeapon2->setMaterial("cuadroArmas");
 
 		_overlayPlay->add2D( panelWeapon2 );
 
 			 ////// panel PanelWeapon2 activa
-			_weaponsBox[SNIPER][ACTIVE] = static_cast<Ogre::OverlayContainer*>( overlayManager.createOverlayElement( "Panel", "_weaponsBox[SNIPER][ACTIVE]" ) );
-			_weaponsBox[SNIPER][ACTIVE]->setMetricsMode(Ogre::GMM_PIXELS);
+			_weaponsBox[SNIPER][ACTIVE] = _server->createOverlay( "_weaponsBox[SNIPER][ACTIVE]", "Panel"  );
+			_weaponsBox[SNIPER][ACTIVE]->setMetricsMode("pixel");
 			_weaponsBox[SNIPER][ACTIVE]->setPosition( 11*relativeWidth, 29*relativeHeight);
 			_weaponsBox[SNIPER][ACTIVE]->setDimensions( relativeWidth*2, relativeHeight*2 );
-			_weaponsBox[SNIPER][ACTIVE]->setMaterialName("francotirador");
-			_weaponsBox[SNIPER][ACTIVE]->hide();
+			_weaponsBox[SNIPER][ACTIVE]->setMaterial("francotirador");
+			_weaponsBox[SNIPER][ACTIVE]->setVisible(false);
 
 			_overlayPlay->add2D( _weaponsBox[SNIPER][ACTIVE] );
 
 			 ////// panel PanelWeapon2 BN
-			_weaponsBox[SNIPER][NO_AMMO] = static_cast<Ogre::OverlayContainer*>( overlayManager.createOverlayElement( "Panel", "_weaponsBox[SNIPER][NO_AMMO]" ) );
-			_weaponsBox[SNIPER][NO_AMMO]->setMetricsMode(Ogre::GMM_PIXELS);
+			_weaponsBox[SNIPER][NO_AMMO] = _server->createOverlay( "_weaponsBox[SNIPER][NO_AMMO]", "Panel" );
+			_weaponsBox[SNIPER][NO_AMMO]->setMetricsMode("pixel");
 			_weaponsBox[SNIPER][NO_AMMO]->setPosition( 11*relativeWidth, 29*relativeHeight);
 			_weaponsBox[SNIPER][NO_AMMO]->setDimensions( relativeWidth*2, relativeHeight*2 );
-			_weaponsBox[SNIPER][NO_AMMO]->setMaterialName("francotiradorBN");
-			_weaponsBox[SNIPER][NO_AMMO]->hide();
+			_weaponsBox[SNIPER][NO_AMMO]->setMaterial("francotiradorBN");
+			_weaponsBox[SNIPER][NO_AMMO]->setVisible(false);
 
 			_overlayPlay->add2D( _weaponsBox[SNIPER][NO_AMMO] );
 
 
 			 ////// panel PanelWeapon2 SinBalas
-			_weaponsBox[SNIPER][NO_WEAPON] = static_cast<Ogre::OverlayContainer*>( overlayManager.createOverlayElement( "Panel", "_weaponsBox[SNIPER][NO_WEAPON]" ) );
-			_weaponsBox[SNIPER][NO_WEAPON]->setMetricsMode(Ogre::GMM_PIXELS);
+			_weaponsBox[SNIPER][NO_WEAPON] = _server->createOverlay( "_weaponsBox[SNIPER][NO_WEAPON]", "Panel" );
+			_weaponsBox[SNIPER][NO_WEAPON]->setMetricsMode("pixel");
 			_weaponsBox[SNIPER][NO_WEAPON]->setPosition( 11*relativeWidth, 29*relativeHeight);
 			_weaponsBox[SNIPER][NO_WEAPON]->setDimensions( relativeWidth*2, relativeHeight*2 );
-			_weaponsBox[SNIPER][NO_WEAPON]->setMaterialName("francotiradorSinBalas");
-			_weaponsBox[SNIPER][NO_WEAPON]->show();
+			_weaponsBox[SNIPER][NO_WEAPON]->setMaterial("francotiradorSinBalas");
+			_weaponsBox[SNIPER][NO_WEAPON]->setVisible(true);
 
 			_overlayPlay->add2D( _weaponsBox[SNIPER][NO_WEAPON] );
 
 
 
 		///// panel PanelWeapon3
-		Ogre::OverlayContainer* panelWeapon3 = static_cast<Ogre::OverlayContainer*>( overlayManager.createOverlayElement( "Panel", "panelWeapon3" ) );
-		panelWeapon3->setMetricsMode(Ogre::GMM_PIXELS);
+		Graphics::COverlay* panelWeapon3 = _server->createOverlay("panelWeapon3","Panel");
+		panelWeapon3->setMetricsMode("pixel");
 		panelWeapon3->setPosition( 13*relativeWidth, 29*relativeHeight);
 		panelWeapon3->setDimensions( relativeWidth*2, relativeHeight*2 );
-        panelWeapon3->setMaterialName("cuadroArmas");
+        panelWeapon3->setMaterial("cuadroArmas");
 		_overlayPlay->add2D( panelWeapon3 );
 
 				///// panel PanelWeapon3 Active
-			_weaponsBox[SHOTGUN][ACTIVE] = static_cast<Ogre::OverlayContainer*>( overlayManager.createOverlayElement( "Panel", "_weaponsBox[SHOTGUN][ACTIVE]" ) );
-			_weaponsBox[SHOTGUN][ACTIVE]->setMetricsMode(Ogre::GMM_PIXELS);
+			_weaponsBox[SHOTGUN][ACTIVE] = _server->createOverlay( "_weaponsBox[SHOTGUN][ACTIVE]", "Panel"  );
+			_weaponsBox[SHOTGUN][ACTIVE]->setMetricsMode("pixel");
 			_weaponsBox[SHOTGUN][ACTIVE]->setPosition( 13*relativeWidth, 29*relativeHeight);
 			_weaponsBox[SHOTGUN][ACTIVE]->setDimensions( relativeWidth*2, relativeHeight*2 );
-			_weaponsBox[SHOTGUN][ACTIVE]->setMaterialName("escopeta");
-			_weaponsBox[SHOTGUN][ACTIVE]->hide();
+			_weaponsBox[SHOTGUN][ACTIVE]->setMaterial("escopeta");
+			_weaponsBox[SHOTGUN][ACTIVE]->setVisible(false);
 			
 			_overlayPlay->add2D( _weaponsBox[SHOTGUN][ACTIVE] );
 
 			
 				///// panel PanelWeapon3 no ammo
-			_weaponsBox[SHOTGUN][NO_AMMO] = static_cast<Ogre::OverlayContainer*>( overlayManager.createOverlayElement( "Panel", "_weaponsBox[SHOTGUN][NO_AMMO]" ) );
-			_weaponsBox[SHOTGUN][NO_AMMO]->setMetricsMode(Ogre::GMM_PIXELS);
+			_weaponsBox[SHOTGUN][NO_AMMO] = _server->createOverlay( "_weaponsBox[SHOTGUN][NO_AMMO]", "Panel" );
+			_weaponsBox[SHOTGUN][NO_AMMO]->setMetricsMode("pixel");
 			_weaponsBox[SHOTGUN][NO_AMMO]->setPosition( 13*relativeWidth, 29*relativeHeight);
 			_weaponsBox[SHOTGUN][NO_AMMO]->setDimensions( relativeWidth*2, relativeHeight*2 );
-			_weaponsBox[SHOTGUN][NO_AMMO]->setMaterialName("escopetaBN");
-			_weaponsBox[SHOTGUN][NO_AMMO]->hide();
+			_weaponsBox[SHOTGUN][NO_AMMO]->setMaterial("escopetaBN");
+			_weaponsBox[SHOTGUN][NO_AMMO]->setVisible(false);
 
 			_overlayPlay->add2D( _weaponsBox[SHOTGUN][NO_AMMO] );
 			
 				///// panel PanelWeapon3 no weapon
-			_weaponsBox[SHOTGUN][NO_WEAPON] = static_cast<Ogre::OverlayContainer*>( overlayManager.createOverlayElement( "Panel", "_weaponsBox[SHOTGUN][NO_WEAPON]" ) );
-			_weaponsBox[SHOTGUN][NO_WEAPON]->setMetricsMode(Ogre::GMM_PIXELS);
+			_weaponsBox[SHOTGUN][NO_WEAPON] = _server->createOverlay( "_weaponsBox[SHOTGUN][NO_WEAPON]", "Panel" );
+			_weaponsBox[SHOTGUN][NO_WEAPON]->setMetricsMode("pixel");
 			_weaponsBox[SHOTGUN][NO_WEAPON]->setPosition( 13*relativeWidth, 29*relativeHeight);
 			_weaponsBox[SHOTGUN][NO_WEAPON]->setDimensions( relativeWidth*2, relativeHeight*2 );
-			_weaponsBox[SHOTGUN][NO_WEAPON]->setMaterialName("escopetaSinBalas");
-			_weaponsBox[SHOTGUN][NO_WEAPON]->show();
+			_weaponsBox[SHOTGUN][NO_WEAPON]->setMaterial("escopetaSinBalas");
+			_weaponsBox[SHOTGUN][NO_WEAPON]->setVisible(true);
 			
 			_overlayPlay->add2D( _weaponsBox[SHOTGUN][NO_WEAPON] );
 			
@@ -213,23 +216,22 @@ namespace Logic
 			
 
 		///// panel PanelWeapon1
-		Ogre::OverlayContainer* panelWeapon4 = static_cast<Ogre::OverlayContainer*>( overlayManager.createOverlayElement( "Panel", "panelWeapon4" ) );
-		panelWeapon4->setMetricsMode(Ogre::GMM_PIXELS);
+		Graphics::COverlay* panelWeapon4 = _server->createOverlay( "panelWeapon4","Panel");
+		panelWeapon4->setMetricsMode("pixel");
 		panelWeapon4->setPosition( 15*relativeWidth, 29*relativeHeight);
 		panelWeapon4->setDimensions( relativeWidth*2, relativeHeight*2 );
-        panelWeapon4->setMaterialName("cuadroArmas");
+        panelWeapon4->setMaterial("cuadroArmas");
 
-		Ogre::TextAreaOverlayElement* textAreaDummy = static_cast<Ogre::TextAreaOverlayElement*>(
-				overlayManager.createOverlayElement("TextArea", "textAreaDummy"));
+		Graphics::COverlay* textAreaDummy = _server->createOverlay("textAreaDummy", "TextArea");
 				
 				
 				
-				textAreaDummy->setMetricsMode(Ogre::GMM_PIXELS);
+				textAreaDummy->setMetricsMode("pixel");
 				textAreaDummy->setPosition(0.5, 0.5);
 				textAreaDummy->setDimensions(10, 10);
-				textAreaDummy->setCaption("pepe");
-				textAreaDummy->setCharHeight(16);
-				textAreaDummy->setFontName("fuenteSimple");
+				textAreaDummy->setText("pepe");
+				textAreaDummy->setTextSize(16);
+				textAreaDummy->setFont("fuenteSimple");
 
 				//panelShield->addChild(textAreaHealth);
 				
@@ -242,26 +244,26 @@ namespace Logic
 
 		
 		///// panel health
-		Ogre::OverlayContainer* panelHealth = static_cast<Ogre::OverlayContainer*>( overlayManager.createOverlayElement( "Panel", "panelHealth" ) );
-		panelHealth->setMetricsMode(Ogre::GMM_PIXELS);
+		Graphics::COverlay *panelHealth = _server->createOverlay("panelHealth",  "Panel" );
+		panelHealth->setMetricsMode("pixel");
 		panelHealth->setPosition( 3*relativeWidth, 29*relativeHeight);
 		panelHealth->setDimensions( relativeWidth*1.5f, relativeHeight*1.5f );
-        panelHealth->setMaterialName("hudHealth");
+        panelHealth->setMaterial("hudHealth");
 
-		_textBoxArea[HEALTH] = static_cast<Ogre::TextAreaOverlayElement*>(
-				overlayManager.createOverlayElement("TextArea", "textAreaPanelHealth"));
+		_textBoxArea[HEALTH] = _server->createOverlay("textAreaPanelHealth", "TextArea");
 				
 		
-				_textBoxArea[HEALTH]->setMetricsMode(Ogre::GMM_PIXELS);
+				_textBoxArea[HEALTH]->setMetricsMode("pixel");
 				_textBoxArea[HEALTH]->setPosition(-relativeWidth*1.5, 0);
 				_textBoxArea[HEALTH]->setDimensions(relativeWidth*2, relativeHeight*2);
 
 					std::stringstream sHealth;//create a stringstream
 					sHealth << _health;//add number to the stream
-				_textBoxArea[HEALTH]->setCaption(sHealth.str());
-				_textBoxArea[HEALTH]->setCharHeight(46);
-				_textBoxArea[HEALTH]->setFontName("fuenteSimple");
-				_textBoxArea[HEALTH]->setColour(Ogre::ColourValue::White);
+				_textBoxArea[HEALTH]->setText(sHealth.str());
+				_textBoxArea[HEALTH]->setTextSize(46);
+				_textBoxArea[HEALTH]->setFont("fuenteSimple");
+				//el metodo set colour no me lo he definido en COverlay
+				//_textBoxArea[HEALTH]->setColour(Ogre::ColourValue::White);
 
 				//panelShield->addChild(textAreaHealth);
 				
@@ -272,61 +274,77 @@ namespace Logic
         
 		
 		///// panel shield
-		Ogre::OverlayContainer* panelShield = static_cast<Ogre::OverlayContainer*>( overlayManager.createOverlayElement( "Panel", "panelShield" ) );
-		panelShield->setMetricsMode(Ogre::GMM_PIXELS);
+		Graphics::COverlay* panelShield = _server->createOverlay("panelShield", "Panel");
+		panelShield->setMetricsMode("pixel");
 		panelShield->setPosition( 7*relativeWidth, 29*relativeHeight);
 		panelShield->setDimensions( relativeWidth*1.5f, relativeHeight*1.5f );
-        panelShield->setMaterialName("hudShield");
+        panelShield->setMaterial("hudShield");
 
 
-				_textBoxArea[SHIELD] = static_cast<Ogre::TextAreaOverlayElement*>(
-				overlayManager.createOverlayElement("TextArea", "textAreaPanelShield"));
+				_textBoxArea[SHIELD] = _server->createOverlay("textAreaPanelShield", "TextArea");
 				
-				_textBoxArea[SHIELD]->setMetricsMode(Ogre::GMM_PIXELS);
+				_textBoxArea[SHIELD]->setMetricsMode("pixel");
 				_textBoxArea[SHIELD]->setPosition(-relativeWidth*1.5, 0);
 				_textBoxArea[SHIELD]->setDimensions(relativeWidth*2, relativeHeight*2);
 
 					std::stringstream sShield;//create a stringstream
 					sShield << _shield;//add number to the stream
-				_textBoxArea[SHIELD]->setCaption(sShield.str());
-				_textBoxArea[SHIELD]->setCharHeight(46);
-				_textBoxArea[SHIELD]->setFontName("fuenteSimple");
-				_textBoxArea[SHIELD]->setColour(Ogre::ColourValue::White);
+				_textBoxArea[SHIELD]->setText(sShield.str());
+				_textBoxArea[SHIELD]->setTextSize(46);
+				_textBoxArea[SHIELD]->setFont("fuenteSimple");
+				//_textBoxArea[SHIELD]->setColour(Ogre::ColourValue::White);
 
 				panelShield->addChild(_textBoxArea[SHIELD]);
-		_overlayPlay->add2D( panelShield );
+				_overlayPlay->add2D( panelShield );
 
 		
 
 		///// panel AMMO
-		Ogre::OverlayContainer* panelAmmo = static_cast<Ogre::OverlayContainer*>( overlayManager.createOverlayElement( "Panel", "panelAmmo" ) );
-		panelAmmo->setMetricsMode(Ogre::GMM_PIXELS);
+		Graphics::COverlay* panelAmmo = _server->createOverlay("panelAmmo", "Panel");
+		panelAmmo->setMetricsMode("pixel");
 		panelAmmo->setPosition( 24*relativeWidth, 29*relativeHeight);
 		panelAmmo->setDimensions( relativeWidth*0.5, relativeHeight*1.5 );
-        panelAmmo->setMaterialName("hudAmmo");
+        panelAmmo->setMaterial("hudAmmo");
 
 		
-				_textBoxArea[AMMO] = static_cast<Ogre::TextAreaOverlayElement*>(
-				overlayManager.createOverlayElement("TextArea", "textAreaPanelAmmo"));
+				_textBoxArea[AMMO] = _server->createOverlay("textAreaPanelAmmo", "TextArea");
 				
-				_textBoxArea[AMMO]->setMetricsMode(Ogre::GMM_PIXELS);
+				_textBoxArea[AMMO]->setMetricsMode("pixel");
 				_textBoxArea[AMMO]->setPosition(-relativeWidth*2, 0);
 				_textBoxArea[AMMO]->setDimensions(relativeWidth*2, relativeHeight*2);
 					std::stringstream sAmmo;
 					sAmmo << _ammo;
-				_textBoxArea[AMMO]->setCaption(sAmmo.str());
-				_textBoxArea[AMMO]->setCharHeight(46);
-				_textBoxArea[AMMO]->setFontName("fuenteSimple");
-				_textBoxArea[AMMO]->setColour(Ogre::ColourValue::White);
+				_textBoxArea[AMMO]->setText(sAmmo.str());
+				_textBoxArea[AMMO]->setTextSize(46);
+				_textBoxArea[AMMO]->setFont("fuenteSimple");
+				//_textBoxArea[AMMO]->setColour(Ogre::ColourValue::White);
 
 				panelAmmo->addChild(_textBoxArea[AMMO]);
-		_overlayPlay->add2D( panelAmmo );
+				_overlayPlay->add2D( panelAmmo );
 
 		for(int i = 1; i < _numWeapons; ++i){
-			_weaponsBox[i][NO_AMMO]->hide();
-			_weaponsBox[i][ACTIVE]->hide();
+			_weaponsBox[i][NO_AMMO]->setVisible(false);
+			_weaponsBox[i][ACTIVE]->setVisible(false);
 		}
 		
+
+
+		Graphics::CScene *miScene3D = _server->createScene("SceneOverlay3D");
+
+		//Graphics::CScene *miScene3D = _server->getActiveScene();
+		//Graphics::CScene *miScene3D = _entity->getMap()->getScene();
+
+		Graphics::CEntity *ent = new Graphics::CEntity("AK47","AK47.mesh");
+	
+		//miScene3D->createSceneNode("SceneNode3d");
+		
+		ent->attachToScene(miScene3D);
+		
+		//miScene3D->addEntityToSceneNode(ent);
+		ent->setPosition(Vector3(0,0,50));
+
+		_overlayPlay->add3D(miScene3D);
+
 		/*
 		Ogre::Overlay *_overlayWeapon = overlayManager.create( "_overlayHud3D" );
 
@@ -354,30 +372,29 @@ namespace Logic
 		*/
 
 		
-		_overlayPlay->show();
+		_overlayPlay->setVisible(true);
 
 
 
 		 //////////////////////////////////////AQUI ME CREO EL OVERLAY PARA CUANDO SE MUERA
 
-		 _overlayDie = overlayManager.create( "_overlayDie" );
+		_overlayDie = _server->createOverlay( "_overlayDie" );
 
-		Ogre::OverlayContainer* panelDie = static_cast<Ogre::OverlayContainer*>( overlayManager.createOverlayElement( "Panel", "panelDie" ) );
-		panelDie->setMetricsMode(Ogre::GMM_PIXELS);
+		Graphics::COverlay* panelDie = _server->createOverlay("panelDie",  "Panel");
+		panelDie->setMetricsMode("pixel");
 		panelDie->setPosition( 5*relativeWidth, 12*relativeHeight);
 		panelDie->setDimensions( relativeWidth*10, relativeHeight*10 );
         //panelDie->setMaterialName("cuadroArmas");
 
-		_textAreaDie = static_cast<Ogre::TextAreaOverlayElement*>(
-				overlayManager.createOverlayElement("TextArea", "_textAreaDie"));
+		_textAreaDie = _server->createOverlay("_textAreaDie", "TextArea");
 				
-				_textAreaDie->setMetricsMode(Ogre::GMM_PIXELS);
+				_textAreaDie->setMetricsMode("pixel");
 				_textAreaDie->setPosition(0.5, 0.5);
 				_textAreaDie->setDimensions(10, 10);
 
-				_textAreaDie->setCaption("MUERE");
-				_textAreaDie->setCharHeight(46);
-				_textAreaDie->setFontName("fuenteSimple");
+				_textAreaDie->setText("MUERE");
+				_textAreaDie->setTextSize(46);
+				_textAreaDie->setFont("fuenteSimple");
 
 				//panelShield->addChild(textAreaHealth);
 				
@@ -426,7 +443,7 @@ namespace Logic
 		_health = health;
 		std::stringstream sHealth;
 		sHealth << _health;
-		_textBoxArea[HEALTH]->setCaption(sHealth.str());
+		_textBoxArea[HEALTH]->setText(sHealth.str());
 	}
 
 	void CHudOverlay::hudShield(int shield){
@@ -434,7 +451,7 @@ namespace Logic
 
 		std::stringstream sShield;
 		sShield << _shield;
-		_textBoxArea[SHIELD]->setCaption(sShield.str());
+		_textBoxArea[SHIELD]->setText(sShield.str());
 	}
 
 	void CHudOverlay::hudAmmo(int ammo, int weapon){
@@ -445,25 +462,25 @@ namespace Logic
 			if(_ammo != 0){
 				if(!_weaponsBox[_actualWeapon][ACTIVE]->isVisible())
 				{
-					_weaponsBox[_actualWeapon][NO_AMMO]->hide();
-					_weaponsBox[_actualWeapon][ACTIVE]->show();
+					_weaponsBox[_actualWeapon][NO_AMMO]->setVisible(false);
+					_weaponsBox[_actualWeapon][ACTIVE]->setVisible(true);
 				}
 			}else{
 				if(_weaponsBox[_actualWeapon][ACTIVE]->isVisible())
 				{
-					_weaponsBox[_actualWeapon][ACTIVE]->hide();
-					_weaponsBox[_actualWeapon][NO_AMMO]->show();
+					_weaponsBox[_actualWeapon][ACTIVE]->setVisible(false);
+					_weaponsBox[_actualWeapon][NO_AMMO]->setVisible(true);
 				}
 			}//fin else	ammo!=0
 			std::stringstream sAmmo;
 			sAmmo << _ammo;
-			_textBoxArea[AMMO]->setCaption(sAmmo.str());
+			_textBoxArea[AMMO]->setText(sAmmo.str());
 		}//fin weapon == _actualweapon
 		else{
 			if(!_weaponsBox[weapon][ACTIVE]->isVisible()){
-				_weaponsBox[weapon][ACTIVE]->show();
-				_weaponsBox[weapon][NO_WEAPON]->hide();
-				_weaponsBox[weapon][NO_AMMO]->hide();
+				_weaponsBox[weapon][ACTIVE]->setVisible(true);
+				_weaponsBox[weapon][NO_WEAPON]->setVisible(false);
+				_weaponsBox[weapon][NO_AMMO]->setVisible(false);
 			}
 		}
 	}
@@ -475,9 +492,9 @@ namespace Logic
 		if(weapon != _actualWeapon)
 		{
 			_actualWeapon = weapon;
-			_weaponsBox[_actualWeapon][ACTIVE]->show();
-			_weaponsBox[_actualWeapon][NO_AMMO]->hide();
-			_weaponsBox[_actualWeapon][NO_WEAPON]->hide();
+			_weaponsBox[_actualWeapon][ACTIVE]->setVisible(true);
+			_weaponsBox[_actualWeapon][NO_AMMO]->setVisible(false);
+			_weaponsBox[_actualWeapon][NO_WEAPON]->setVisible(false);
 		}
 		hudAmmo(ammo, weapon);
 	}
@@ -485,25 +502,25 @@ namespace Logic
 	void CHudOverlay::hudSpawn(int spawmTime){
 		
 		if(_overlayPlay->isVisible()){
-			_overlayPlay->hide();
+			_overlayPlay->setVisible(false);
 		}
 
 		std::stringstream sSpawn;
 		sSpawn << "HAS MUERTO, LOSER \n Tiempo de respawn: " << spawmTime;
-		_textAreaDie->setCaption(sSpawn.str());
+		_textAreaDie->setText(sSpawn.str());
 		
 		if(!_overlayDie->isVisible())
-			_overlayDie->show();
+			_overlayDie->setVisible(true);
 		if(spawmTime <= 0.1){
 
-			_overlayDie->hide();
+			_overlayDie->setVisible(false);
 			//reset para volver a mostrar solo el arma inicial al hacer show
 			for(int i=1; i<_numWeapons;++i){
-				_weaponsBox[i][NO_WEAPON]->show();
-				_weaponsBox[i][ACTIVE]->hide();
-				_weaponsBox[i][NO_AMMO]->hide();
+				_weaponsBox[i][NO_WEAPON]->setVisible(true);
+				_weaponsBox[i][ACTIVE]->setVisible(false);
+				_weaponsBox[i][NO_AMMO]->setVisible(false);
 			}
-			_overlayPlay->show();
+			_overlayPlay->setVisible(true);
 		}
 
 	}

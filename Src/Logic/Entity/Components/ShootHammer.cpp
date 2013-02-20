@@ -51,7 +51,7 @@ namespace Logic
 	void CShootHammer::shoot(){
 		
 		if(_canShoot){
-
+			
 			_canShoot = false;
 			_coldDownTime = 0;
 			//Generación del rayo habiendo obtenido antes el origen y la dirección
@@ -79,8 +79,6 @@ namespace Logic
 				// Creamos el ray desde el origen en la direccion del raton (desvido ya aplicado)
 				Ray ray(origin, dispersionDirection);
 			
-
-
 				////////////////////////////////////////////////Dibujo del rayo
 
 
@@ -117,7 +115,7 @@ namespace Logic
 
 				//Rayo lanzado por el servidor de físicas de acuerdo a la distancia de potencia del arma
 				CEntity *entityCollision = Physics::CServer::getSingletonPtr()->raycastClosestInverse(ray, _distance,3);
-		
+				
 				//Si hay colisión envíamos a dicha entidad un mensaje de daño
 				if(entityCollision)
 				{

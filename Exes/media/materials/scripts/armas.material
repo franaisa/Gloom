@@ -9,6 +9,10 @@ material armas
     {
         pass
         {
+			depth_check off
+
+			scene_blend alpha_blend
+			lighting off
 			
             illumination_stage ambient
 

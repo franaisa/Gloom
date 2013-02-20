@@ -1,0 +1,187 @@
+
+//Segun el sistema que he establecido, he dividido la pantalla en 
+//width 25 veces, lo que implica que cada unidad es 0.04
+//height 30 veces, lo que implica que cada unidad es 0.033
+
+// Primero pongo los template, que son aquellos que seran general.
+
+	//Primer template es de los paneles sobre los que se pondran las armas
+	
+	template container Panel (MyTemplates/PanelArmas)
+	{
+		left 0.36
+		top 0.933
+		width 0.08
+		height 0.066
+		transparent false
+		
+		material cuadroArmas
+	}
+	
+	
+	// Template para los textos basicos
+	
+	template element TextArea(MyTemplates/BasicText)
+	{
+		font_name fuentesimple
+		char_height 46
+		//colour_top 1 1 0
+		//colour_bottom 1 0.2 0.2
+		left -0.02
+		top 0
+		width 0.02
+		height 0.02
+	}
+
+MyOverlay/OverlayPlay
+{
+	container Panel (MyOverlay/Mira)
+	{
+		left 0.47
+		top 0.47
+		width 0.03
+		height 0.1
+		
+		material hudMira
+	}
+	
+	
+	//Estos son los paneles basico sobre los que se pondran las armas
+	container Panel (MyOverlay/PanelWeapon1) : MyTemplates/PanelArmas
+	{
+			// no pongo nada xq es el template puro
+	}
+	container Panel (MyOverlay/PanelWeapon2) : MyTemplates/PanelArmas
+	{
+		//esto no se si funciona, si no seria 0.36 + 0.8 es decir 0.44
+		left (left+0.08)
+	}
+	container Panel (MyOverlay/PanelWeapon3) : MyTemplates/PanelArmas
+	{
+		left (left+0.16)		
+	}
+	container Panel (MyOverlay/PanelWeapon4) : MyTemplates/PanelArmas
+	{
+		left (left+0.24)
+	}
+	container Panel (MyOverlay/PanelWeapon5) : MyTemplates/PanelArmas
+	{
+		left (left+0.32)
+	}
+	container Panel (MyOverlay/PanelWeapon6) : MyTemplates/PanelArmas
+	{
+		left (left+0.40)
+	}
+	
+	
+	//Aqui pongo los paneles de armas Activas
+	
+	container Panel (MyOverlay/Hammer) : MyTemplates/PanelArmas
+	{
+			// no pongo nada xq es el template puro
+	}
+	container Panel (MyOverlay/Sniper) : MyTemplates/PanelArmas
+	{
+		//esto no se si funciona, si no seria 0.36 + 0.8 es decir 0.44
+		left (left+0.08)
+		material sniperBN // Antonio, acuerdate de cambiar el material
+		transparent true		
+	}
+	container Panel (MyOverlay/ShotGun) : MyTemplates/PanelArmas
+	{
+		left (left+0.16)
+		material shotGunBN
+		transparent true		
+	}
+	container Panel (MyOverlay/MiniGun) : MyTemplates/PanelArmas
+	{
+		left (left+0.24)
+		material miniGunBN
+		transparent true		
+	}
+	
+//	container Panel (MyOverlay/ponerAquiNombreArma5) : MyTemplates/PanelArmas
+//	{
+//		left (left+0.32)
+//		material ponerAquiNombreArma5BN
+//		transparent true
+//	}
+//	container Panel (MyOverlay/ponerAquiNombreArma6) : MyTemplates/PanelArmas
+//	{
+//		left (left+0.40)
+//		material ponerAquiNombreArma6BN
+//		transparent true
+//	}	
+	
+
+
+	//Aqui pongo los paneles de sin balas
+	
+	container Panel (MyOverlay/HammerSinBalas) : MyTemplates/PanelArmas
+	{
+			// no pongo nada xq es el template puro
+	}
+	container Panel (MyOverlay/SniperSinBalas) : MyTemplates/PanelArmas
+	{
+		//esto no se si funciona, si no seria 0.36 + 0.8 es decir 0.44
+		left (left+0.08)
+		material sniperSinBalas // Antonio, acuerdate de cambiar el material
+	}
+	container Panel (MyOverlay/ShotGunSinBalas) : MyTemplates/PanelArmas
+	{
+		left (left+0.16)
+		material shotGunSinBalas
+	}
+	container Panel (MyOverlay/MiniGunSinBalas) : MyTemplates/PanelArmas
+	{
+		left (left+0.24)
+		material miniGunSinBalas
+	}
+	
+//	container Panel (MyOverlay/ponerAquiNombreArma5SinBalas) : MyTemplates/PanelArmas
+//	{
+//		left (left+0.32)
+//		material ponerAquiNombreArma5SinBalas
+//	}
+//	container Panel (MyOverlay/ponerAquiNombreArma6SinBalas) : MyTemplates/PanelArmas
+//	{
+//		left (left+0.40)
+//		material ponerAquiNombreArma6BSinBalas
+//	}	
+
+////////////////////////////////////////////////////////////////
+//Aqui pongo los paneles de sin armas
+	
+	container Panel (MyOverlay/HammerBN) : MyTemplates/PanelArmas
+	{
+			// no pongo nada xq es el template puro
+	}
+	container Panel (MyOverlay/SniperBN) : MyTemplates/PanelArmas
+	{
+		//esto no se si funciona, si no seria 0.36 + 0.8 es decir 0.44
+		left (left+0.08)
+		material sniperBN // Antonio, acuerdate de cambiar el material
+		tra
+	}
+	container Panel (MyOverlay/ShotGunBN) : MyTemplates/PanelArmas
+	{
+		left (left+0.16)
+		material shotGunBN
+	}
+	container Panel (MyOverlay/MiniGunBN) : MyTemplates/PanelArmas
+	{
+		left (left+0.24)
+		material miniGunBN
+	}
+	
+//	container Panel (MyOverlay/ponerAquiNombreArma5BN) : MyTemplates/PanelArmas
+//	{
+//		left (left+0.32)
+//		material ponerAquiNombreArma5BN
+//	}
+//	container Panel (MyOverlay/ponerAquiNombreArma6BN) : MyTemplates/PanelArmas
+//	{
+//		left (left+0.40)
+//		material ponerAquiNombreArma6BN
+//	}	
+}
