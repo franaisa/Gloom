@@ -1,121 +1,233 @@
+//---------------------------------------------------------------------------
+// Shoot.h
+//---------------------------------------------------------------------------
+
+/**
+@file Shoot.h
+
+Contiene la declaración del componente general de disparo.
+
+@author Antonio Jesus Narváez Corrales
+@author Francisco Aisa García
+@date Febrero, 2013
+*/
+
 #ifndef __Logic_Shoot_H
 #define __Logic_Shoot_H
 
 #include "Logic/Entity/Component.h"
 
-//declaración de la clase
-namespace Logic 
-{
-/**
-	Este componente controla la capacidad de disparo de una entidad, asi como las armas que puede tener. Procesa mensajes de tipo 
-	SHOOT (indican que la entidad ha disparado)
-	<p>
-	Poseera una vector, con las armas que tiene, asi como su daño y alcance.
-	Tambien poseera un vector de booleanos que indicara las armas que posee.
+namespace Logic {
 
-*/
+	/**
+	@ingroup logicGroup
 
+	Este componente define la interfaz que van a utilizar todas las armas
+	del player. Cada arma es un nuevo componente que hereda de esta clase
+	y que únicamente debe preocuparse de redefinir el método shoot, que 
+	será el método que se dispare cuando se detecte que el player ha 
+	inicializado la acción de disparo.
 
-	class CShoot : public IComponent
-	{
-		DEC_FACTORY(CShoot);
+	@author Antonio Jesus Narváez Corrales
+	@author Francisco Aisa García
+	@date Febrero, 2013
+	*/
 
+	class CShoot : public IComponent {
+		//DEC_FACTORY(CShoot); -- Esta clase es abstracta y por lo tanto no instanciable
 	public:
 
+
+		// =======================================================================
+		//                      CONSTRUCTORES Y DESTRUCTOR
+		// =======================================================================
+
+
+		/** Constructor por defecto. */
+		CShoot() : IComponent(), 
+				   _capsuleRadius(3.0f),
+				   _cooldownTimer(0),
+				   _canShoot(true),
+				   _nameWeapon(0), 
+				   _currentAmmo(0) {
+		
+			// No hay memoria dinamica que inicializar
+		}
+
+		//__________________________________________________________________
+
 		/**
-		Constructor por defecto; en la clase base no hace nada.
+		Constructor parametrizado
+
+		@param shoot Nombre del arma que vamos a inicializar.
 		*/
-		CShoot() : IComponent(),  _timeSinceLastShoot(0),_capsuleRadius(3.0f),_canShoot(true), _coldDownTime(0), _temporal(0), _nameWeapon(0), _currentAmmo(0)  {}
-		CShoot(const std::string &shoot) : IComponent(),  _timeSinceLastShoot(0),_capsuleRadius(3.0f),_canShoot(true), _coldDownTime(0), _temporal(0), _nameWeapon(shoot), _currentAmmo(0)  {}
+		CShoot(const std::string &shoot) : IComponent(),  
+										   _capsuleRadius(3.0f),
+										   _cooldownTimer(0),
+										   _canShoot(true),
+										   _nameWeapon(shoot), 
+										   _currentAmmo(0) {
+			
+			// No hay memoria dinámica que inicializar
+		}
 		
 
+		// =======================================================================
+		//                    METODOS HEREDADOS DE ICOMPONENT
+		// =======================================================================
 	
+
 		/**
-		Inicialización del componente usando la descripción de la entidad que hay en 
-		el fichero de mapa.
+		Inicialización del componente utilizando la información extraída de
+		la entidad leída del mapa (Maps::CEntity). Toma del mapa el atributo
+		speed que indica a la velocidad a la que se moverá el jugador.
+
+		Inicialización del componente a partir de la información extraida de la entidad
+		leida del mapa:
+		<ul>
+			<li><strong>physic_radius:</strong> Radio de la cápsula fisica del jugador. </li>
+			<li><strong>heightShoot:</strong> Altura de la que sale el disparo. </li>
+			<li><strong>(weaponName)+Name:</strong> Nombre del arma. </li>
+			<li><strong>(weaponName)+Damage:</strong> Daño que hace cada impacto del arma. </li>
+			<li><strong>(weaponName)+NumberShoots:</strong> Número de balas por disparo. </li>
+			<li><strong>(weaponName)+ColdDown:</strong> Cooldown del arma (tiempo entre disparos). </li>
+			<li><strong>(weaponName)+MaxAmmo:</strong> Máxima cantidad de munición equipable. </li>
+			<li><strong>(weaponName)+Id:</strong> Identificador del arma. </li>
+		</ul>
+
+		@param entity Entidad a la que pertenece el componente.
+		@param map Mapa Lógico en el que se registrará el objeto.
+		@param entityInfo Información de construcción del objeto leído del fichero de disco.
+		@return Cierto si la inicialización ha sido satisfactoria.
 		*/
 		virtual bool spawn(CEntity* entity, CMap *map, const Map::CEntity *entityInfo);
 
-		/**
-		Este componente sólo acepta mensajes de tipo SHOOT (por ahora).
+		//__________________________________________________________________
+
+		/** 
+		Este componente acepta los siguientes mensajes:
+
+		<ul>
+			<li>CONTROL</li>
+		</ul>
+		
+		@param message Mensaje a chequear.
+		@return true si el mensaje es aceptado.
 		*/
 		virtual bool accept(CMessage *message);
 
+		//__________________________________________________________________
+
 		/**
-		Al recibir un mensaje de tipo SHOOT la vida de la entidad disminuye.
+		Método virtual que procesa un mensaje.
+
+		@param message Mensaje a procesar.
 		*/
 		virtual void process(CMessage *message);
 
-		virtual void shoot();
+		//__________________________________________________________________
 
-		virtual void activate();
+		/**
+		Método llamado en cada frame que actualiza la posicion flotante del item.
 
-		virtual void addAmmo(int weapon, int ammo, bool iAmCatch);
-
-		// Metodo que decrementa la municion del arma. Es virtual porque existen armas como el
-		// hammer que no tienen municion (y por lo tanto no siguen la pauta habitual).
-		virtual void decrementAmmo();
-
-		// Metodo estatico que resetea la cantidad de municion del arma
-		void resetAmmo();
-
+		@param msecs Milisegundos transcurridos desde el último tick.
+		*/
 		virtual void tick(unsigned int msecs);
 
-		// Metodo estatico que implementa el patron template
-		void shoot2();
+		
+		// =======================================================================
+		//                            METODOS PROPIOS
+		// =======================================================================
 
-		// Metodo que realmente realiza el disparo
-		virtual CEntity* fireWeapon();
+		/**
+		Este es el método que todas las armas deben redefinir. Es el que implementa
+		la acción de disparar.
+		*/
+		virtual void shoot() = 0;
 
-		// Metodo que se encarga de mandar los mensajes que correspondan cuando se hace hit
-		virtual void triggerHitMessages(CEntity* entityHit);
+		//__________________________________________________________________
+
+		/** 
+		Activa el componente. Lo utilizaremos para activar el componente del arma
+		que esté en uso.
+		*/
+		virtual void activate();
+
+		//__________________________________________________________________
+
+		/** 
+		Añade munición a un arma concreta.
+
+		@param weapon Número de arma a la que queremos añadir munición.
+		@param ammo Cantidad de munición que vamos a añadir.
+		@param iAmCatch true si tengo el arma de la munición que he recogido.
+		*/
+		virtual void addAmmo(int weapon, int ammo, bool iAmCatch);
+
+		//__________________________________________________________________
+
+		/**
+		Método que decrementa la cantidad de munición que tenemos. Debido a que
+		no todas las armas decrementan su munición de la misma forma (algunas
+		ni siquiera tienen munición) este método es virtual.
+		*/
+		virtual void decrementAmmo();
+
+		//__________________________________________________________________
+
+		/** Método estático que resetea la cantidad de munición del arma. */
+		void resetAmmo();
 
 	protected:
 
-		void drawRaycast(const Ray& raycast);
 
-		/**
-		caracteristicas de armas
-		*/
+		// =======================================================================
+		//                          MIEMBROS PROTEGIDOS
+		// =======================================================================
+
+
+		/** Nombre del arma. */
 		std::string _name;
-		int _heightShoot;
-		unsigned char _damage;
-		unsigned char _damageReflect;
-		float _dispersion;
-		float _distance;
-		unsigned char _numberShoots;
-		unsigned char _coldDown;
-		int _maxAmmo; //esta como int, por que si es -1 esq no tienes esta arma.
-		int _currentAmmo;
+
+		/** Nombre del arma. */
+		std::string _nameWeapon;
+
+		/** Identificador del arma. */
 		int _id;
 
-		std::string _nameWeapon;
-		
-		/**
-		Contendra el radio de la capsula leido del mapa
-		*/
+		/** Radio de la capsula leido del mapa. */
 		float _capsuleRadius;
+
+		/** Altura de disparo. */
+		int _heightShoot;
+
+		/** Daño del arma. */
+		unsigned char _damage;
+
+		/** Número de balas por disparo. */
+		unsigned char _numberShots;
+
+		/** Munición máxima que puede tener el arma. -1 si no tienes el arma. */
+		int _maxAmmo;
+
+		/** Munición actual. */
+		int _currentAmmo;
+
+		/** Timer para el cooldown. */
+		int _cooldownTimer;
+
+		/** Cooldown del arma (tiempo entre disparo y disparo). */
+		unsigned char _cooldown;
 
 		/**
 		Para comprobar que un arma esta disparando y no puede disparar 
 		"tan rapido como puedas arreglar el gatillo" (Marcus, Borderlands 2)
 		*/
 		bool _canShoot;
-		int _coldDownTime;
 
-		/**
-		mide el tiempo de cooldown
-		*/
-		float *_timeSinceLastShoot;
-
-
-		/**
-			Variable de debug, se usa para darle un nombre unico a cada raycast.
-		*/
-		int _temporal;
 	}; // class CShoot
 
-	REG_FACTORY(CShoot);
+	//REG_FACTORY(CShoot);
 
 } // namespace Logic
 
