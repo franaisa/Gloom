@@ -11,6 +11,10 @@ namespace Logic {
 		CMessageJumper();
 		void setPower(float power);
 		float getPower();
+		void setVelocity(float velocity);
+		float getVelocity();
+		void setDirection(Vector3 direction);
+		Vector3 getDirection();
 		~CMessageJumper(){};
 		
 		virtual Net::CBuffer* serialize();
@@ -18,6 +22,8 @@ namespace Logic {
 
 	protected:
 		float _power;
+		float _velocity;
+		Vector3 _direction;
 	};
 	REG_FACTORYMESSAGE(CMessageJumper);
 

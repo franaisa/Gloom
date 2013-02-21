@@ -67,6 +67,18 @@ namespace Logic
 		*/
 		float _power;
 
+		/**
+		Atributo que lleva la potencia del jumper
+		*/
+		float _velocity;
+
+		/**
+		Atributo que lleva la potencia del jumper
+		*/
+		Vector3 _direction;
+
+
+
 	}; // class CJumper
 
 	REG_FACTORY(CJumper);

@@ -22,6 +22,7 @@ el mundo físico usando character controllers.
 #include "Logic/Messages/MessageCollisionDown.h"
 #include "Logic/Messages/MessageSetPhysicPosition.h"
 #include "Logic/Messages/MessageCealing.h"
+#include "Logic/Messages/MessageSide.h"
 
 #include <PxPhysicsAPI.h>
 
@@ -116,7 +117,11 @@ void CPhysicController::tick(unsigned int msecs)
 		Logic::CMessageCealing *em=new Logic::CMessageCealing();
 		_entity->emitMessage(em);
 	}
-	
+	//Si tocamos el lateral tenemos que parar la inercia de la direccion
+	if((flags & PxControllerFlag::eCOLLISION_SIDES)){
+		Logic::CMessageSide *side=new Logic::CMessageSide();
+		_entity->emitMessage(side);
+	}
 	//Si hay cambio de estado en el flag de tocar suelo
 	if(_falling != !(flags & PxControllerFlag::eCOLLISION_DOWN)){
 		// Actualizamos el flag que indica si estamos cayendo

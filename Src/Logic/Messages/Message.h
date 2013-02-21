@@ -68,7 +68,8 @@ namespace Logic
 			ACTIVATE				= 0x0000001D,//29
 			DEACTIVATE				= 0x0000001E,//30
 			CEALING					= 0x0000001F,//31
-			JUMPER					= 0X00000020//32
+			JUMPER					= 0X00000020,//32
+			SIDE					= 0X00000021,//33
 		};
 	}
 
