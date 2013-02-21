@@ -1,0 +1,13 @@
+vertex_program MiVSShader hlsl
+{
+	source lava.hlsl
+	entry_point vsMain
+	target vs_2_0
+}
+
+fragment_program lavapsshader hlsl
+{
+	source lava.hlsl
+	entry_point mainPS
+	target ps_2_0
+}

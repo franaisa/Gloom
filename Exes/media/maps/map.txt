@@ -114,6 +114,21 @@ Map = {
 		physic_group = 1,
 	},
 	
+	
+	lava = {
+		type = "lava",
+		position = {-10.0, 0.2, -30.0},
+		model = "lava.mesh",
+		scale = 1,
+		damage = 5,
+		timeDamage = 500,
+		physic_entity = "rigid",
+		physic_trigger = true,
+		physic_type = "static",
+		physic_shape = "box",
+		physic_dimensions = { 4, 7, 4 },
+	},
+	
 	David = {
 		type = "LocalPlayer",
 		isPlayer = true,
