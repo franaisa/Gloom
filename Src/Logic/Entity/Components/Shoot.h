@@ -4,8 +4,9 @@
 
 /**
 @file Shoot.h
- 
- 
+
+Contiene la declaración del componente general de disparo.
+
 @author Antonio Jesus Narváez Corrales
 @author Francisco Aisa García
 @date Febrero, 2013
@@ -33,7 +34,7 @@ namespace Logic {
 	*/
 
 	class CShoot : public IComponent {
-		DEC_FACTORY(CShoot);
+		//DEC_FACTORY(CShoot); -- Esta clase es abstracta y por lo tanto no instanciable
 	public:
 
 
@@ -45,11 +46,10 @@ namespace Logic {
 		/** Constructor por defecto. */
 		CShoot() : IComponent(), 
 				   _capsuleRadius(3.0f),
-				   _canShoot(true), 
-				   _coldDownTime(0), 
-				   _temporal(0),
+				   _cooldownTimer(0),
+				   _canShoot(true),
 				   _nameWeapon(0), 
-				   _currentAmmo(0)  {
+				   _currentAmmo(0) {
 		
 			// No hay memoria dinamica que inicializar
 		}
@@ -63,9 +63,8 @@ namespace Logic {
 		*/
 		CShoot(const std::string &shoot) : IComponent(),  
 										   _capsuleRadius(3.0f),
+										   _cooldownTimer(0),
 										   _canShoot(true),
-										   _coldDownTime(0), 
-										   _temporal(0), 
 										   _nameWeapon(shoot), 
 										   _currentAmmo(0) {
 			
@@ -90,8 +89,6 @@ namespace Logic {
 			<li><strong>heightShoot:</strong> Altura de la que sale el disparo. </li>
 			<li><strong>(weaponName)+Name:</strong> Nombre del arma. </li>
 			<li><strong>(weaponName)+Damage:</strong> Daño que hace cada impacto del arma. </li>
-			<li><strong>(weaponName)+Dispersion:</strong> Dispersion del arma. </li>
-			<li><strong>(weaponName)+Distance:</strong> Distancia que alcanza el arma. </li>
 			<li><strong>(weaponName)+NumberShoots:</strong> Número de balas por disparo. </li>
 			<li><strong>(weaponName)+ColdDown:</strong> Cooldown del arma (tiempo entre disparos). </li>
 			<li><strong>(weaponName)+MaxAmmo:</strong> Máxima cantidad de munición equipable. </li>
@@ -146,7 +143,7 @@ namespace Logic {
 		Este es el método que todas las armas deben redefinir. Es el que implementa
 		la acción de disparar.
 		*/
-		virtual void shoot();
+		virtual void shoot() = 0;
 
 		//__________________________________________________________________
 
@@ -185,18 +182,6 @@ namespace Logic {
 
 
 		// =======================================================================
-		//                          METODOS PROTEGIDOS
-		// =======================================================================
-
-
-		/** 
-		Dibuja un rayo en Ogre. Útil para debuggear las armas que disparan mediante
-		raycast.
-		*/
-		void drawRaycast(const Ray& raycast);
-
-
-		// =======================================================================
 		//                          MIEMBROS PROTEGIDOS
 		// =======================================================================
 
@@ -204,23 +189,23 @@ namespace Logic {
 		/** Nombre del arma. */
 		std::string _name;
 
+		/** Nombre del arma. */
+		std::string _nameWeapon;
+
+		/** Identificador del arma. */
+		int _id;
+
+		/** Radio de la capsula leido del mapa. */
+		float _capsuleRadius;
+
 		/** Altura de disparo. */
 		int _heightShoot;
 
 		/** Daño del arma. */
 		unsigned char _damage;
 
-		/** Daño que el arma refleja. */
-		unsigned char _damageReflect;
-
-		/** Dispersión del arma. */
-		float _dispersion;
-
-		/** Distancia de alcance del arma. */
-		float _distance;
-
 		/** Número de balas por disparo. */
-		unsigned char _numberShoots;
+		unsigned char _numberShots;
 
 		/** Munición máxima que puede tener el arma. -1 si no tienes el arma. */
 		int _maxAmmo;
@@ -228,32 +213,21 @@ namespace Logic {
 		/** Munición actual. */
 		int _currentAmmo;
 
-		/** Identificador del arma. */
-		int _id;
+		/** Timer para el cooldown. */
+		int _cooldownTimer;
 
-		/** Nombre del arma. */
-		std::string _nameWeapon;
-		
-		/** Radio de la capsula leido del mapa. */
-		float _capsuleRadius;
+		/** Cooldown del arma (tiempo entre disparo y disparo). */
+		unsigned char _cooldown;
 
 		/**
 		Para comprobar que un arma esta disparando y no puede disparar 
 		"tan rapido como puedas arreglar el gatillo" (Marcus, Borderlands 2)
 		*/
 		bool _canShoot;
-		
-		/** Timer para el cooldown. */
-		int _coldDownTime;
 
-		/** Cooldown del arma (tiempo entre disparo y disparo). */
-		unsigned char _coldDown;
-
-		/** Variable de debug, se usa para darle un nombre unico a cada raycast. */
-		int _temporal;
 	}; // class CShoot
 
-	REG_FACTORY(CShoot);
+	//REG_FACTORY(CShoot);
 
 } // namespace Logic
 

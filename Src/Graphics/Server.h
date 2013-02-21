@@ -190,12 +190,13 @@ namespace Graphics
 		*/
 		Ogre::OverlayManager* getOverlayManager() {return _overlayManager;}
 
+		
 		/**
 		Crea un Overlay.
 
 		@param name Nombre del Overlay.
 		*/
-		COverlay* createOverlay(const std::string& name, const std::string& type = NULL);
+		COverlay* createOverlay(const std::string& name, const std::string& type = "");
 
 		/**
 		Destruye un Overlay.

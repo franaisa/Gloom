@@ -58,7 +58,9 @@ namespace Graphics
 		@param name Nombre del Overlay.
 
 		*/
-		//COverlay();
+		COverlay(Ogre::Overlay* overlay);
+		COverlay(Ogre::OverlayElement* overlay);
+		
 
 		/**
 		Constructor de la clase.
@@ -67,7 +69,8 @@ namespace Graphics
 		@param name Nombre del Overlay.
 		
 		*/
-		COverlay(const std::string &name, const std::string& type = NULL);
+		COverlay(const std::string &name);
+		COverlay(const std::string &name, const std::string& type = "");
 
 		/**
 		Destructor de la aplicación.
@@ -114,7 +117,7 @@ namespace Graphics
 		@param top, establece el y donde comenzara el overlay
 		orientarse la entidad.
 		*/
-		void setPosition(int left, int top);
+		void setPosition(float left, float top);
 
 		/**
 		Establece las dimensiones del overlay.
@@ -126,7 +129,7 @@ namespace Graphics
 		@param height, establece el largo del overlay
 		orientarse la entidad.
 		*/
-		void setDimensions(int width, int height);
+		void setDimensions(float width, float height);
 		
 		/**
 		Establece la unidad de medida que se usara, debe indicarse por cada overlay. Por defecto se usa en pixeles.
