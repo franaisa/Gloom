@@ -45,6 +45,7 @@ namespace Logic {
 
 	//__________________________________________________________________
 
+
 	void CShootHammer::decrementAmmo() {
 		// Redefinimos el metodo para que no se haga nada ya que el hammer
 		// realmente no tiene municion

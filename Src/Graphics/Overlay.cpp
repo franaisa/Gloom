@@ -32,8 +32,25 @@ Contiene la implementación de la clase que representa un Overlay.
 
 namespace Graphics 
 {
+	COverlay::COverlay(Ogre::Overlay* overlay){
+		_overlay = overlay;
+	}
+
+	COverlay::COverlay(Ogre::OverlayElement* overlay){
+		if(std::string::npos != overlay->getName().find("Panel")){
+			_overlayContainer = static_cast<Ogre::OverlayContainer*>(overlay);
+		}else{
+			_overlayText = static_cast<Ogre::TextAreaOverlayElement*>(overlay);
+		}
+	} // COverlay
+
 	COverlay::COverlay(const std::string &name, const std::string &type){
-		if(!type.empty()){
+
+		_overlay = NULL;
+		_overlayContainer = NULL;
+		_overlayText = NULL;
+
+		if(type.empty()){
 			_overlay = Graphics::CServer::getSingletonPtr()->getOverlayManager()->create(name);
 		}else{
 			if(type == "Panel")
@@ -76,20 +93,24 @@ namespace Graphics
 	//------------------------------------------------------------
 
 	void COverlay::add2D(COverlay* overlayContainer){
-		if(getOverlayContainer()){ _overlay->add2D(overlayContainer->getOverlayContainer()); }
+		if(_overlay){ _overlay->add2D(overlayContainer->getOverlayContainer()); 	
+		}
 	} // add2D
 
 	//------------------------------------------------------------
 
 	
 	void COverlay::add3D(CScene* scene){
-	
+		if(_overlay){
+			_overlay->add3D( scene->getSceneMgr()->getRootSceneNode());
+		}
+
 	} // add3D
 
 	//------------------------------------------------------------
 
 
-	void COverlay::setPosition(int left, int top){
+	void COverlay::setPosition(float left, float top){
 		if(_overlayContainer){ _overlayContainer->setPosition(left, top);}
 		if(_overlayText){ _overlayText->setPosition(left, top);}
 	} // setPosition
@@ -97,9 +118,9 @@ namespace Graphics
 	//------------------------------------------------------------
 
 	
-	void COverlay::setDimensions(int width, int height){
-		if(_overlayContainer){ _overlayContainer->setPosition(width, height);}
-		if(_overlayText){ _overlayText->setPosition(width, height);}
+	void COverlay::setDimensions(float width, float height){
+		if(_overlayContainer){ _overlayContainer->setDimensions(width, height);}
+		if(_overlayText){ _overlayText->setDimensions(width, height);}
 	} // setDimensions
 
 	//------------------------------------------------------------

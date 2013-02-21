@@ -21,7 +21,7 @@ namespace Logic {
 	/**
 	@ingroup logicGroup
 
-	Este componente implementa la funcionalidad de la escopeta. Tan solo necesitamos
+	Este componente implementa la funcionalidad de la minigun. Tan solo necesitamos
 	redefinir los mensajes que se mandan a las entidades en caso de hit (que
 	en este caso nos sirve la implementación por defecto), ya que el resto
 	del comportamiento esta definido en el arquetipo que describe a la minigun.

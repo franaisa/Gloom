@@ -216,11 +216,10 @@ namespace Graphics
 
 	//--------------------------------------------------------
 
-	COverlay* CServer::createOverlay(const std::string& name, const std::string& type){
+	COverlay* CServer::createOverlay(const std::string &name, const std::string &type){
 	
 		//Nos aseguramos de que no exista ya un overlay con este nombre.
-		assert(_overlayManager->hasOverlayElement(name) && 
-			"Ya se ha creado un overlay con este nombre.");
+		//assert(_overlayManager->hasOverlayElement(name));
 
 		COverlay *overlay = new COverlay(name, type);
 		std::pair<std::string,COverlay*> aux(name, overlay);
@@ -236,23 +235,31 @@ namespace Graphics
 	
 	} //removeOverlayElement
 	//--------------------------------------------------------
-	/*
+	
 	COverlay* CServer::getOverlay(const std::string& name){
-		return (*_overlays.find(name))->second;
+		if(_overlayManager->hasOverlayElement(name)){
+			return new COverlay(_overlayManager->getOverlayElement(name));
+		}else{
+			if(_overlayManager->getByName(name)){
+				return new COverlay(_overlayManager->getByName(name));
+			}
+			return 0;
+		}
 	} //get Overlay
 	//--------------------------------------------------------
-	*/
+	
 	int CServer::getWidth(){
-		return _overlayManager->getViewportHeight();
+		int aux(_overlayManager->getViewportWidth());
+		return aux;
 	} //get Width
 	//--------------------------------------------------------
 
 	int CServer::getHeight(){
-		return _overlayManager->getViewportWidth();
+		return _overlayManager->getViewportHeight();
 	} //get Height
 	//--------------------------------------------------------
 
-
+	
 	void CServer::tick(float secs) 
 	{
 		if(_activeScene != _dummyScene)

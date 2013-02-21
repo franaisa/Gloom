@@ -28,11 +28,12 @@ de una escena.
 #include <OgreViewport.h>
 #include <OgreStaticGeometry.h>
 #include <OgreColourValue.h>
+#include <OgreSceneNode.h>
 
 namespace Graphics 
 {
 	CScene::CScene(const std::string& name) : _viewport(0), 
-			_staticGeometry(0), _directionalLight(0)
+		_staticGeometry(0), _directionalLight(0), _sceneNode(0)
 	{
 		_root = BaseSubsystems::CServer::getSingletonPtr()->getOgreRoot();
 		_sceneMgr = _root->createSceneManager(Ogre::ST_INTERIOR, name);
@@ -155,5 +156,22 @@ namespace Graphics
 		}
 
 	} // buildStaticGeometry
+
+	void CScene::createSceneNode(const std::string &name){
+		if(_sceneNode)
+			delete _sceneNode;
+		_sceneNode = _sceneMgr->createSceneNode(name);
+	}
+
+	bool CScene::addEntityToSceneNode(CEntity* entity){
+		if(!_sceneNode)
+			return false;
+		_sceneNode->attachObject((Ogre::MovableObject*)entity->getEntity());
+		return true;
+	}
+
+	void CScene::removeEntityToSceneNode(CEntity* entity){
+		_sceneNode->removeChild(entity->getName());
+	}
 
 } // namespace Graphics

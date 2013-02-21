@@ -40,7 +40,22 @@ namespace Logic {
 
 		//__________________________________________________________________
 
-		/** */
+		/**
+		Inicialización del componente utilizando la información extraída de
+		la entidad leída del mapa (Maps::CEntity). Toma del mapa el atributo
+		speed que indica a la velocidad a la que se moverá el jugador.
+
+		Inicialización del componente a partir de la información extraida de la entidad
+		leida del mapa:
+		<ul>
+			<li><strong>weaponHammerDamageReflect:</strong> Daño que hace el hammer al golpear contra el mundo. </li>
+		</ul>
+
+		@param entity Entidad a la que pertenece el componente.
+		@param map Mapa Lógico en el que se registrará el objeto.
+		@param entityInfo Información de construcción del objeto leído del fichero de disco.
+		@return Cierto si la inicialización ha sido satisfactoria.
+		*/
 		virtual bool spawn(CEntity* entity, CMap *map, const Map::CEntity *entityInfo);
 
 	protected:

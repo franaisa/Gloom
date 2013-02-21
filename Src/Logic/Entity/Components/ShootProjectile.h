@@ -1,3 +1,17 @@
+//---------------------------------------------------------------------------
+// ShootProjectile.h
+//---------------------------------------------------------------------------
+
+/**
+@file ShootProjectile.h
+
+Contiene la declaración del componente que abstrae la implementación del 
+disparo de proyectiles.
+
+@author Francisco Aisa García
+@date Febrero, 2013
+*/
+
 #ifndef __Logic_ShootProjectile_H
 #define __Logic_ShootProjectile_H
 
@@ -6,27 +20,77 @@
 namespace Logic {
 
 	/**
-	Este componente controla la capacidad de disparo de una entidad, asi como las armas que puede tener. Procesa mensajes de tipo 
-	SHOOT (indican que la entidad ha disparado)
-	<p>
-	Poseera una vector, con las armas que tiene, asi como su daño y alcance.
-	Tambien poseera un vector de booleanos que indicara las armas que posee.
+	@ingroup logicGroup
+
+	Componente que implementa de forma general el comportamiento de aquellas
+	armas que disparan proyectiles.
+
+	@author Francisco Aisa García
+	@date Febrero, 2013
 	*/
 
 	class CShootProjectile : public CShoot {
-		DEC_FACTORY(CShootProjectile);
-
+		//DEC_FACTORY(CShootProjectile); -- Esta clase es abstracta y por lo tanto no instanciable
 	public:
+
+
+		// =======================================================================
+		//                      CONSTRUCTORES Y DESTRUCTOR
+		// =======================================================================
+
 
 		/** Constructor por defecto. */
 		CShootProjectile() : CShoot() {}
 
-		CShootProjectile(const std::string &shoot) : CShoot(shoot) {}
+		//__________________________________________________________________
 
+		/**
+		Constructor parametrizado
+
+		@param shoot Nombre del arma que vamos a inicializar.
+		*/
+		CShootProjectile(const std::string &shoot) : CShoot(shoot) {}
+		
+
+		// =======================================================================
+		//                    METODOS HEREDADOS DE ICOMPONENT
+		// =======================================================================
+
+
+		virtual bool spawn(CEntity* entity, CMap *map, const Map::CEntity *entityInfo);
+
+
+		// =======================================================================
+		//                    METODOS HEREDADOS DE CSHOOT
+		// =======================================================================
+
+
+		/**
+		Debido a que todos los disparos siguen una pauta similar, este método implementa
+		el patrón template, siendo únicamente necesario redefinir el método
+		"fireWeapon".
+
+		Debido a que los proyectiles disparados por las armas que derivan de este 
+		componente serán entidades físicas, el envío de mensajes ya no es necesario
+		hacerlo desde aquí (las propias entidades físicas se encargarán de mandar
+		los mensajes que correspondan).
+
+		Notar, que la función shoot no se ha hecho estática en CShoot porque los
+		proyectiles y los raycast tienen comportamientos muy distintos.
+		*/
 		virtual void shoot();
+
+
+		// =======================================================================
+		//                          METODOS PROPIOS
+		// =======================================================================
+
+
+		/** Método que se encarga de realizar el disparo del proyectil. */
+		virtual void fireWeapon() = 0;
 	};
 
-	REG_FACTORY(CShootProjectile);
+	//REG_FACTORY(CShootProjectile);
 
 } // namespace Logic
 

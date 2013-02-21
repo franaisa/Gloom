@@ -241,3 +241,187 @@ material escopetaSinBalas
 		}
 	}
 }
+
+material weapon4
+{
+	technique
+	{
+		pass
+		{
+			depth_check off
+			depth_write off
+			scene_blend alpha_blend
+			lighting off
+			cull_hardware none
+			cull_software none
+			
+			texture_unit weapon4
+			{
+				texture escopetas.png 2d
+			}
+		}
+	}
+}
+material weapon4BN
+{
+	technique
+	{
+		pass
+		{
+			depth_check off
+			depth_write off
+			scene_blend alpha_blend
+			lighting off
+			cull_hardware none
+			cull_software none
+			
+			texture_unit weapon4
+			{
+				texture escopetasBN.png 2d
+			}
+		}
+	}
+}
+material weapon4SinBalas
+{
+	technique
+	{
+		pass
+		{
+			depth_check off
+			depth_write off
+			scene_blend alpha_blend
+			lighting off
+			cull_hardware none
+			cull_software none
+			
+			texture_unit weapon4
+			{
+				texture escopetasSinBalas.png 2d
+			}
+		}
+	}
+}
+
+material weapon5
+{
+	technique
+	{
+		pass
+		{
+			depth_check off
+			depth_write off
+			scene_blend alpha_blend
+			lighting off
+			cull_hardware none
+			cull_software none
+			
+			texture_unit weapon4
+			{
+				texture escopetas.png 2d
+			}
+		}
+	}
+}
+material weapon5BN
+{
+	technique
+	{
+		pass
+		{
+			depth_check off
+			depth_write off
+			scene_blend alpha_blend
+			lighting off
+			cull_hardware none
+			cull_software none
+			
+			texture_unit weapon5
+			{
+				texture escopetasBN.png 2d
+			}
+		}
+	}
+}
+material weapon5SinBalas
+{
+	technique
+	{
+		pass
+		{
+			depth_check off
+			depth_write off
+			scene_blend alpha_blend
+			lighting off
+			cull_hardware none
+			cull_software none
+			
+			texture_unit weapon5
+			{
+				texture escopetasSinBalas.png 2d
+			}
+		}
+	}
+}
+
+
+material weapon6
+{
+	technique
+	{
+		pass
+		{
+			depth_check off
+			depth_write off
+			scene_blend alpha_blend
+			lighting off
+			cull_hardware none
+			cull_software none
+			
+			texture_unit escopeta
+			{
+				texture escopetas.png 2d
+			}
+		}
+	}
+}
+material weapon6BN
+{
+	technique
+	{
+		pass
+		{
+			depth_check off
+			depth_write off
+			scene_blend alpha_blend
+			lighting off
+			cull_hardware none
+			cull_software none
+			
+			texture_unit weapon6
+			{
+				texture escopetasBN.png 2d
+			}
+		}
+	}
+}
+material weapon6SinBalas
+{
+	technique
+	{
+		pass
+		{
+			depth_check off
+			depth_write off
+			scene_blend alpha_blend
+			lighting off
+			cull_hardware none
+			cull_software none
+			
+			texture_unit weapon6
+			{
+				texture escopetasSinBalas.png 2d
+			}
+		}
+	}
+}
