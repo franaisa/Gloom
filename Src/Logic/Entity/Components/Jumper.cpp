@@ -36,6 +36,12 @@ namespace Logic
 		if(entityInfo->hasAttribute("power"))
 			_power = entityInfo->getFloatAttribute("power");
 
+		if(entityInfo->hasAttribute("velocity"))
+			_velocity = entityInfo->getFloatAttribute("velocity");
+
+		if(entityInfo->hasAttribute("direction"))
+			_direction = entityInfo->getVector3Attribute("direction");
+
 		return true;
 
 	} // spawn
@@ -75,6 +81,8 @@ namespace Logic
 	{
 		CMessageJumper *m=new Logic::CMessageJumper();
 		m->setPower(_power);
+		m->setVelocity(_velocity);
+		m->setDirection(_direction);
 		entity->emitMessage(m);
 	} // applyJump
 	//---------------------------------------------------------

@@ -23,6 +23,7 @@ de la entidad.
 #include "Logic/Messages/MessageRebound.h"
 #include "Logic/Messages/MessageJumper.h"
 #include "Logic/Messages/MessageSetAnimation.h"
+#include "Logic/Messages/MessageSide.h"
 
 namespace Logic 
 {
@@ -107,6 +108,7 @@ namespace Logic
 
 		_rebound=false;
 		_jumper=false;
+		_velocityJumper=false;
 	} // activate
 	
 	//---------------------------------------------------------
@@ -124,7 +126,8 @@ namespace Logic
 			message->getMessageType() == Message::COLLISION_DOWN ||
 			message->getMessageType() == Message::REBOUND ||
 			message->getMessageType() == Message::JUMPER ||
-			message->getMessageType() == Message::CEALING;
+			message->getMessageType() == Message::CEALING ||
+			message->getMessageType() == Message::SIDE;
 	} // accept
 	
 	//---------------------------------------------------------
@@ -164,10 +167,15 @@ namespace Logic
 			break;
 		case Message::JUMPER:
 			_powerJumpInJumper=((CMessageJumper*)message)->getPower();
+			_velocityInJumper=((CMessageJumper*)message)->getVelocity();
+			_directionInJumper=((CMessageJumper*)message)->getDirection();
 			jumper();
 			break;
 		case Message::CEALING:
 			_speedJump=-0.02;
+			break;
+		case Message::SIDE:
+			_direccionSaltoCaida=Vector3(0,0,0);
 			break;
 		}
 
@@ -446,6 +454,7 @@ namespace Logic
 			_jumpingControl=false;
 			_caida=false;
 			_velocitySideJump=false;
+			_velocityJumper=false;
 			//Caí luego activo el booleano para que empiece la cuenta de concatenacion
 			if(_sideFly){
 				_sideContact=true;
@@ -502,18 +511,21 @@ namespace Logic
 			if(_jumper){
 				_jumper=false;
 				_speedJump=_powerJumpInJumper;
+				_direccionSaltoCaida=_directionInJumper;
+				_velocityJumper=true;
 			}
 			//Si es un salto normal
 			else if(!_sideJump){
 				_speedJump=_powerJump; // Velocidad explosiva inicial para el salto normal
+				_direccionSaltoCaida=direction; //Guardamos la dirección del salto al iniciarse
 			}
 			//Sino es un salto lateral
 			else{
 				_speedJump=_powerSideJump; // Velocidad explosiva inicial para el salto lateral
 				_velocitySideJump=true;
+				_direccionSaltoCaida=direction; //Guardamos la dirección del salto al iniciarse
 			}
 			_jumpingControl=true;
-			_direccionSaltoCaida=direction; //Guardamos la dirección del salto al iniciarse
 		}//if (_jumping && _canJump)
 
 
@@ -525,12 +537,17 @@ namespace Logic
 			direction.z=_direccionSaltoCaida.z+direction.z*_restitutionMoveAir;
 		}
 
-		//Normalizamos y luego calculamos la magnitud correcta para la dirección (sin contar el salto)
+		//Normalizamos y luego calculamos la magnitud correcta para la dirección (sin contar el salto/eje Y)
 		Vector3 directXZY=direction.normalisedCopy();
 
+		//Si saltamos en un jumper nos desplazaremos mucho mas rapido (ignorando si veniamos de un salto lateral/concatenado)
 		//Aplicaremos más velocidad lateral si se trata de un desplazamiento lateral (para desplazarnos más rápido, recorriendo más terreno)
 		//Si ademas esta activa la concatenacion de saltos pues llegaremos mas lejos
-		if(!_velocitySideJump){
+		if(_velocityJumper){
+			directXZY.x *= msecs * _velocityInJumper;
+			directXZY.z *= msecs * _velocityInJumper;
+		}
+		else if(!_velocitySideJump){
 			directXZY.x *= msecs * _speed;
 			directXZY.z *= msecs * _speed;
 		}
@@ -545,6 +562,7 @@ namespace Logic
 				directXZY.z *= msecs * _speed * _sumSpeedSideJump;
 			}
 		}
+
 
 		//Calculamos el desplazamiento del salto y lo añadimos al vector que se mandará por mensaje
 		direction.y *= msecs * _speedJump;
