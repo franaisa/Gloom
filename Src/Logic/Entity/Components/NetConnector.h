@@ -7,13 +7,16 @@ Contiene la declaración del componente que reenvia mensajes por la red.
 @see Logic::IComponent
 
 @author David Llansó
-@date Diciembre, 2010
+@author Francisco Aisa García
+@date Febrero, 2013
 */
 
 #ifndef __Logic_NetConnector_H
 #define __Logic_NetConnector_H
 
 #include "Logic/Entity/Component.h"
+
+#include <set>
 
 // Declaración de la clase
 namespace Logic {
@@ -92,9 +95,11 @@ namespace Logic {
 
 	protected:
 
-		/// Vector que contiene los TMessageType de los mensajes
-		/// que debemos propagar por la red.
-		std::vector<Logic::TMessageType>	_forwardedMsgTypes;
+		/** 
+		Arbol binario de busqueda que contiene los tipos de mensajes
+		que este componente debe enviar por la red.
+		*/
+		std::set<Logic::TMessageType> _forwardedMsgTypes;
 
 		/// Map que contiene los TMessageType de los mensajes
 		/// que están bloqueados (no se envían) debido a que se 
