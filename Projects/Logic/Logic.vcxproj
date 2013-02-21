@@ -83,6 +83,7 @@
     <ClCompile Include="..\..\Src\Logic\Entity\Components\HudOverlay.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\Jumper.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\Interpolation.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\Lava.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\Life.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\NetConnector.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\PhysicController.cpp" />
@@ -160,6 +161,7 @@
     <ClInclude Include="..\..\Src\Logic\Entity\Components\HudOverlay.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\Jumper.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\Interpolation.h" />
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\Lava.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\NetConnector.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\ArrayGraphics.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\Physics.h" />
