@@ -27,6 +27,7 @@ namespace Ogre
 	class SceneManager;
 	class StaticGeometry;
 	class Light;
+	class SceneNode;
 }
 namespace Graphics 
 {
@@ -135,7 +136,35 @@ namespace Graphics
 		*/
 		void removeStaticEntity(CStaticEntity* entity);
 
+		/**
+		Devuelve el objeto de ogre Scene manager, a veces sera necesario tenerlo
+
+		@return devuelve la scene manager
+		*/
 		Ogre::SceneManager *getSceneMgr() {return _sceneMgr;}
+
+		/**
+		Crea un scene node, se usa para los overlays. Tan solo podra haber un scenenode al mismo tiempo.
+		*/
+		void createSceneNode(const std::string &name);
+
+		/**
+		Añade una entidad al scene node. Dicha entidad tendra que tener el material las entradas:
+		<ul>
+		<li></li>
+		</ul>
+		*/
+		bool addEntityToSceneNode(CEntity* entity);
+
+		/**
+		Elimina una entidad de la sceneNode
+		*/
+		void removeEntityToSceneNode(CEntity* entity);
+
+		/**
+		Devuelve el scene node. Este metodo solo deberia de invocarse en Overlay.cpp
+		*/
+		Ogre::SceneNode* getSceneNode() { return _sceneNode; };
 	protected:
 
 		/**
@@ -277,6 +306,11 @@ namespace Graphics
 		Geometría estática de la escena.
 		*/
 		Ogre::StaticGeometry *_staticGeometry;
+
+		/**
+		Escena cuyo padre es la grande. Se usa principalmente para los overlays
+		*/
+		Ogre::SceneNode *_sceneNode;
 
 	}; // class CScene
 

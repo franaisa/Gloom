@@ -162,13 +162,7 @@ namespace Graphics
 
 		std::string getMesh(){return _mesh;}
 
-	protected:
-
-		// CScene es la única que puede añadir o eliminar entidades de una 
-		// escena y por tanto cargar o descargar entidades.
-		// Por otro lado cada entidad debe pertenecer a una escena. Solo 
-		// permitimos a la escena actualizar el estado.
-		friend class CScene;
+		Ogre::SceneNode* getSceneNode() {return _entityNode;}
 
 		/**
 		Añade la entidad al SceneManager pasado por parámetro. Si la entidad
@@ -179,6 +173,16 @@ namespace Graphics
 		@return true si la entidad se pudo cargar y añadir a la escena.
 		*/
 		bool attachToScene(CScene *scene);
+
+	protected:
+
+		// CScene es la única que puede añadir o eliminar entidades de una 
+		// escena y por tanto cargar o descargar entidades.
+		// Por otro lado cada entidad debe pertenecer a una escena. Solo 
+		// permitimos a la escena actualizar el estado.
+		friend class CScene;
+
+		
 
 		/**
 		Descarga una entidad de la escena en la que se encuentra cargada.

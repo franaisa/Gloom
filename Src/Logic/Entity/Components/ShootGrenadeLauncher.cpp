@@ -16,6 +16,5 @@ de disparo del lanzagranadas.
 namespace Logic {
 	IMP_FACTORY(CShootGrenadeLauncher);
 	
-
 } // namespace Logic
 

@@ -1,17 +1,15 @@
 //---------------------------------------------------------------------------
-// buffer.h
+// buffer.cpp
 //---------------------------------------------------------------------------
 
 /**
- * @file buffer.h
+ * @file buffer.cpp
  *
  * Implementa un buffer dinámico que los objetos utilizan para serializarse o deserializarse
  *
- *
- * @author Juan A. Recio-García
  * @author Francisco Aisa García
  * @author Rubén Mulero Guerrero
- * @date Enero, 2006
+ * @date Febrero, 2013
  */
 
 #include "buffer.h"
