@@ -130,7 +130,6 @@ Map = {
 		angularAccel = 0.00001,
 		movementTolerance = 7.0,
 		numWeapons = 3,
-		
 		heightShoot = 8,
 
 			weaponHammerName = "Hammer",
@@ -252,6 +251,8 @@ Map = {
 			weaponShotGunColdDown = 1.0,
 			weaponShotGunMaxAmmo = 50,
 			weaponShotGunId = 2,
+			
+			hudMira = 3,
 	},
 	
 	Camera = {

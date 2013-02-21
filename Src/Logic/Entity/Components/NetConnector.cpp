@@ -7,7 +7,8 @@ Contiene la implementación del componente que reenvia mensajes por la red.
 @see Logic::IComponent
 
 @author David Llansó
-@date Diciembre, 2010
+@author Francisco Aisa García
+@date Febrero, 2013
 */
 
 #include "NetConnector.h"
@@ -32,14 +33,13 @@ namespace Logic {
 		
 	IMP_FACTORY(CNetConnector);
 
-	bool CNetConnector::spawn(CEntity *entity, CMap *map, const Map::CEntity *entityInfo)  {
+	bool CNetConnector::spawn(CEntity *entity, CMap *map, const Map::CEntity *entityInfo) {
 
 		if (!IComponent::spawn(entity, map, entityInfo))
 			return false;
 
 		// NET: Procesamos la lista con los nombres de los mensajes...
-		if (entityInfo->hasAttribute("msgList")) 
-		{
+		if (entityInfo->hasAttribute("msgList")) {
 			std::istringstream mgsTypeList(entityInfo->getStringAttribute("msgList"));
 
 			// Para cada cadena entre comas...
@@ -52,9 +52,8 @@ namespace Logic {
 					std::getline(str, MsgTypeName, ' ');  // linea entre espacios
 				} while (MsgTypeName.size() == 0 && !str.eof());
 
-				// ... y registramos el tipo en la lista
-				_forwardedMsgTypes.push_back((Logic::TMessageType)atoi(MsgTypeName.c_str())); // char[] -> int -> TMessageType
-
+				// ... y registramos el tipo en el set
+				_forwardedMsgTypes.insert((Logic::TMessageType)atoi(MsgTypeName.c_str()));
 			} while (!mgsTypeList.eof());
 		}
 
@@ -66,21 +65,18 @@ namespace Logic {
 		return true;
 	}
 
-	bool CNetConnector::accept(CMessage* message)
-	{
+	bool CNetConnector::accept(CMessage* message) {
 		// TODO Vemos si es uno de los mensajes que debemos trasmitir 
 		// por red. Para eso usamos la lista de mensajes que se ha
 		// leido del mapa.
 		// Vemos si es uno de los mensajes que debemos trasmitir 
 		// por red.
-		if (std::find(_forwardedMsgTypes.begin(),  _forwardedMsgTypes.end(), message->getMessageType()) != _forwardedMsgTypes.end())
-		{
+		if( _forwardedMsgTypes.find(message->getMessageType()) != _forwardedMsgTypes.end() ) {
 			// Grano fino, en vez de aceptar el mensaje directamente
 			// solo se retransmitirá por la red si no se ha transmitido 
 			// hace poco (_timeOfBlocking milisegundos) un mensaje del 
 			// mismo tipo
-			if(_timeToUnblockMsgDelivery.count(message->getMessageType()) == 0) // TODO probar sin ajuste fino qué tal va de fino :P
-			{
+			if(_timeToUnblockMsgDelivery.count(message->getMessageType()) == 0) { // TODO probar sin ajuste fino qué tal va de fino :P
 				if(_timeOfBlocking)
 					_timeToUnblockMsgDelivery.insert(
 						TTimeToUnblockMsgDeliveryPair(message->getMessageType(), _timeOfBlocking));
@@ -94,8 +90,7 @@ namespace Logic {
 		
 	//---------------------------------------------------------------------------------
 
-	void CNetConnector::process(CMessage* message)
-	{
+	void CNetConnector::process(CMessage* message) {
 		// TODO Es un mensaje para enviar por el tubo.
 		// Lo enviamos por la red usando el front-end CGameNetMsgManager
 		CGameNetMsgManager::getSingletonPtr()->
@@ -105,8 +100,7 @@ namespace Logic {
 		
 	//---------------------------------------------------------------------------------
 		
-	void CNetConnector::tick(unsigned int msecs)
-	{
+	void CNetConnector::tick(unsigned int msecs) {
 		IComponent::tick(msecs);
 	}
 
