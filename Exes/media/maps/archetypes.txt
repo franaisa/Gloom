@@ -1,5 +1,5 @@
 Map = {
-	
+
 	World = {
 		type = "World",
 		position = {0, 0, 0},
@@ -326,5 +326,16 @@ Map = {
 	Camera = {
 		type = "Camera",
 		height = 8,
+	},
+	
+	Grenade = {
+		type = "Grenade",
+		model = "ammo01.mesh",
+		physic_entity = "rigid",
+		physic_trigger = false,
+		physic_type = "dynamic",
+		physic_shape = "sphere",
+		physic_radius = 3,
+		physic_mass = 1,
 	},
 }

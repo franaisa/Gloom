@@ -111,6 +111,7 @@ void CPhysicEntity::process(CMessage *message)
 			actorShapes[i]->setFlag(PxShapeFlag::eSCENE_QUERY_SHAPE,false);
 		}
 		break;
+	// caso ADD_FORCE <- darle una ostia en physx y luego actualizamos el transform en el tick
 	}
 }
 //---------------------------------------------------------

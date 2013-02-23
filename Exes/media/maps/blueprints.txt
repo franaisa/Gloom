@@ -6,3 +6,4 @@ ItemSpawn CGraphics CPhysicEntity CFloatingMovement CSpawnItemManager
 SpawnPoint CPhysicEntity
 Jumper CGraphics CPhysicEntity CJumper
 lava CGraphics CPhysicEntity CLava
+Grenade CGraphics CPhysicEntity
