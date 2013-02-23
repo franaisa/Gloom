@@ -12,6 +12,7 @@ Contiene la declaración de la clase CMap, Un mapa lógico.
 #define __Logic_Map_H
 
 #include <map>
+#include <list>
 #include "EntityID.h"
 
 // Predeclaración de clases para ahorrar tiempo de compilación
@@ -182,6 +183,12 @@ namespace Logic
 
 		CEntity* createPlayer(std::string name, TEntityID id);
 
+		/**
+			Método que elimina una entidad en el siguiente tick del mapa
+			@param entity Entidad que será borrada
+		*/
+		void deleteDeferredEntity(CEntity* entity);
+
 	private:
 
 		/**
@@ -193,6 +200,11 @@ namespace Logic
 		tabla con las entidades del mapa localizadas por su ID.
 		*/
 		TEntityMap _entityMap;
+
+		/**
+		Lista de entidades que hay que borrar
+		*/
+		std::list<CEntity*> _deleteEntities;
 
 		/**
 		Nombre del mapa.

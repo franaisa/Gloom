@@ -154,7 +154,7 @@ namespace Application {
 
 			// Broadcast a todos los jugadores con el id del player que se quiere conectar
 			Net::CManager::getSingletonPtr()->send(buffer.getbuffer(), buffer.getSize());
-
+			player->activate();
 			break;
 		}
 		case Net::PLAYER_LOADED:
@@ -184,6 +184,16 @@ namespace Application {
 				Net::CManager::getSingletonPtr()->send(&msg, sizeof(msg), playerNetId);
 			}
 
+			break;
+		}
+		case Net::PING:{
+			Net::NetMessageType ackMsg = Net::PING;
+			clock_t time = clock();
+			Net::NetID id = Net::CManager::getSingletonPtr()->getID();
+			Net::CBuffer ackBuffer(sizeof(ackMsg) + sizeof(time));
+			ackBuffer.write(&ackMsg, sizeof(ackMsg));
+			ackBuffer.write(&time, sizeof(time));
+			Net::CManager::getSingletonPtr()->send(ackBuffer.getbuffer(), ackBuffer.getSize(), id);
 			break;
 		}
 		}

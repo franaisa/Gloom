@@ -15,7 +15,7 @@ Contiene la implementación del estado de juego.
 */
 
 #include "MultiplayerTeamDeathmatchClientState.h"
-
+#include "OgreClock.h"
 #include "Net/Manager.h"
 #include "Net/Servidor.h"
 #include "Net/factoriared.h"
@@ -31,6 +31,21 @@ Contiene la implementación del estado de juego.
 
 namespace Application {
 
+	
+	bool CMultiplayerTeamDeathmatchClientState::init(){
+
+		
+		//comenzamos el proceso de sincronizacion, para ello enviamos un mensaje de ping
+		//y tomamos el tiempo para cronometrar cuanto tarda el servidor en respondernos
+		Net::NetMessageType ackMsg = Net::PING;
+		Net::NetID id = Net::CManager::getSingletonPtr()->getID();
+		Net::CBuffer ackBuffer(sizeof(ackMsg) + sizeof(id));
+		ackBuffer.write(&ackMsg, sizeof(ackMsg));
+		ackBuffer.write(&id, sizeof(id));
+		_reloj = clock();
+		Net::CManager::getSingletonPtr()->send(ackBuffer.getbuffer(), ackBuffer.getSize());
+		return true;
+	}
 	void CMultiplayerTeamDeathmatchClientState::activate() {
 		CGameState::activate();
 
@@ -59,7 +74,9 @@ namespace Application {
 		Net::NetMessageType msg;
 		buffer.read(&msg, sizeof(msg));
 
-		if(msg == Net::LOAD_PLAYER) {
+		switch (msg)
+		{
+		case Net::LOAD_PLAYER: {
 			// Creamos el player. Deberíamos poder propocionar caracteríasticas
 			// diferentes según el cliente (nombre, modelo, etc.). Esto es una
 			// aproximación, solo cambiamos el nombre y decimos si es el jugador
@@ -72,8 +89,8 @@ namespace Application {
 			std::string name;
 			buffer.deserialize(name);
 
-			//Logic::CEntity * player = Logic::CServer::getSingletonPtr()->getMap()->createPlayer(name, entityID);
-			
+			Logic::CEntity * player = Logic::CServer::getSingletonPtr()->getMap()->createPlayer(name, entityID);
+			player->activate();
 			// NO ES NECESARIO ENVIAR LOAD_PLAYER EN EL CASO DE LOS QUE JUEGAN
 
 			//Enviamos el mensaje de que se ha creado el jugador
@@ -82,6 +99,31 @@ namespace Application {
 			ackBuffer.write(&ackMsg, sizeof(ackMsg));
 			ackBuffer.write(&id, sizeof(id));
 			Net::CManager::getSingletonPtr()->send(ackBuffer.getbuffer(), ackBuffer.getSize());*/
+			break;
+		}
+		case Net::PING:
+			//me llega la respuesta de un ping, por lo tanto tomo el tiempo y calculo mi ping
+			
+			int ping = clock()-_reloj;
+			_npings++;
+			_pingActual += ping;
+
+			if(_npings>2){//si ya he tomado suficientes pings, calculo la media y la seteo al server
+				_pingActual = _pingActual/_npings;
+				clock_t serverTime;
+				buffer.read(&serverTime,sizeof(serverTime));
+				serverTime+=_pingActual;
+				Logic::CServer::getSingletonPtr()->setDiffTime(clock()-serverTime);
+			}else{//si no he tomado suficientes pings, me guardo el ping y envío otro
+				Net::NetMessageType msgping = Net::PING;
+				Net::NetID id = Net::CManager::getSingletonPtr()->getID();
+				Net::CBuffer ackBuffer(sizeof(msgping) + sizeof(id));
+				ackBuffer.write(&msgping, sizeof(msgping));
+				ackBuffer.write(&id, sizeof(id));
+				_reloj = clock();
+				Net::CManager::getSingletonPtr()->send(ackBuffer.getbuffer(), ackBuffer.getSize());
+			}
+			break;
 		}
 	}
 

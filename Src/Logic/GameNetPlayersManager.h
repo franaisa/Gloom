@@ -289,6 +289,9 @@ namespace Logic {
 
 		/** Única instancia de la clase. */
 		static CGameNetPlayersManager* _instance;
+
+		
+		
 	};
 
 
@@ -450,6 +453,7 @@ namespace Logic {
 		@return Referencia a la informacion asociada al player.
 		*/
 		inline CPlayerInfo& operator*() const { return *( operator->() ); }
+
 
 	private:
 

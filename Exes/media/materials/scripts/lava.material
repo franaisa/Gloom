@@ -12,9 +12,10 @@ material Material#71_OgreMax
 			
 			vertex_program_ref MiVSShader
 			{
-				param_named_auto ViewProjectionMatrix worldviewproj_matrix
-				param_named_auto worldMatrix world_matrix
-				param_named_auto tiempo time
+				param_named_auto view          view_matrix
+				param_named_auto modelview       worldview_matrix
+				param_named_auto modelviewproj    worldviewproj_matrix
+				param_named_auto lightpos       light_position_object_space    0 
 			}
 			//fragment_program_ref lavapsshader
 			//{
