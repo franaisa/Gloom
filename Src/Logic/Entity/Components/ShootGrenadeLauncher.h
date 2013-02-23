@@ -1,9 +1,9 @@
 //---------------------------------------------------------------------------
-// ShootMiniGun.h
+// ShootGrenadeLauncher.h
 //---------------------------------------------------------------------------
 
 /**
-@file ShootMiniGun.h
+@file ShootGrenadeLauncher.h
 
 Contiene la declaración del componente que implementa la minigun.
 
@@ -44,7 +44,7 @@ namespace Logic {
 		//__________________________________________________________________
 
 		/** Al ejecutarse dispara una granada. */
-		virtual void fireWeapon() { }
+		virtual void fireWeapon();
 	};
 
 	REG_FACTORY(CShootGrenadeLauncher);

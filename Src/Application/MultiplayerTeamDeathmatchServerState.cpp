@@ -94,7 +94,6 @@ namespace Application {
 			// LOS CLIENTES DE LA PARTIDA PASAN A CARGAR EL NUEVO CLIENTE
 
 			// Variables locales
-			Net::CBuffer tempBuffer;
 			std::string name;
 			Logic::TEntityID entityId;
 			Net::NetID netId;
@@ -109,6 +108,8 @@ namespace Application {
 			
 			Logic::CPlayerInfo tempPlayerInfo;
 			for(; it != Logic::CGameNetPlayersManager::getSingletonPtr()->end2(); ++it) {
+				
+				
 				tempPlayerInfo = it->second;
 				netId = tempPlayerInfo.getNetId();
 
@@ -119,6 +120,7 @@ namespace Application {
 					name = tempPlayerInfo.getName();
 
 					// Mensaje LOAD_PLAYER
+					Net::CBuffer tempBuffer(sizeof(msg)+sizeof(netId)+sizeof(entityId)+sizeof(name));
 					tempBuffer.write(&msg, sizeof(msg));
 					tempBuffer.write(&netId, sizeof(netId));
 					tempBuffer.write(&entityId, sizeof(entityId));
@@ -126,10 +128,10 @@ namespace Application {
 
 					// Enviamos los datos de los clientes conectados al cliente que se quiere conectar
 					// ESTA ES LA FUNCION QUE DA PROBLEMAS, A PESAR DE QUE SE EJECUTA EL SEND, EL CLIENTE NO RECIBE NADA
-					Net::CManager::getSingletonPtr()->send(buffer.getbuffer(), buffer.getSize(), playerNetId);
+					Net::CManager::getSingletonPtr()->send(tempBuffer.getbuffer(), tempBuffer.getSize(), playerNetId);
 
 					// Reseteamos el puntero de escritura del buffer para escribir en la siguiente vuelta del bucle
-					tempBuffer.reset();
+					//tempBuffer.reset();
 				}
 			}
 

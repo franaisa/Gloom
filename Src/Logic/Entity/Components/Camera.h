@@ -129,6 +129,7 @@ namespace Logic
 		*/
 		CEntity *_target;
 
+		Vector3 _targetV;
 		/**
 		Entidad enemiga que se usa como objetivo
 		*/

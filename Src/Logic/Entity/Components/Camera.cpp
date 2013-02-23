@@ -35,13 +35,19 @@ namespace Logic
 	{
 		if(!IComponent::spawn(entity,map,entityInfo))
 			return false;
-
+		Vector3 camPos;
 		_graphicsCamera = _entity->getMap()->getScene()->getCamera();
 		if(!_graphicsCamera)
 			return false;
 
 		if(entityInfo->hasAttribute("height"))
 			_height = entityInfo->getFloatAttribute("height");
+		if(entityInfo->hasAttribute("target"))
+			_targetV = entityInfo->getVector3Attribute("target");
+		if(entityInfo->hasAttribute("position")){
+			camPos = entityInfo->getVector3Attribute("position");
+			_graphicsCamera->setCameraPosition(camPos);
+		}
 
 		return true;
 
@@ -125,8 +131,9 @@ namespace Logic
 				 }
 			}
 
+		}else{
+			_graphicsCamera->setTargetCameraPosition(_targetV);
 		}
-
 	} // tick
 
 } // namespace Logic
