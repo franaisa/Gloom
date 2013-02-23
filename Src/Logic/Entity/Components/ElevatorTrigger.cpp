@@ -1,33 +1,35 @@
 /**
-@file Elevator.cpp
+@file ElevatorTrigger.cpp
 
 Contiene la implementación del componente que controla el movimiento de un ascensor.
  
-@see Logic::CElevator
+@see Logic::CElevatorTrigger
 @see Logic::IComponent
 
 @author Jose Antonio García Yáñez
 @date Febrero, 2013
 */
 
-#include "Elevator.h"
+#include "ElevatorTrigger.h"
 
 #include "Logic/Entity/Entity.h"
 #include "Map/MapEntity.h"
 #include "PhysicController.h"
 #include "Logic/Maps/Map.h"
 #include "Logic/Server.h"
+#include "Map/MapEntity.h"
 
 #include "Logic/Messages/MessageKinematicMove.h"
 #include "Logic/Messages/MessageTouched.h"
+#include "Logic/Messages/MessageUntouched.h"
 
 namespace Logic 
 {
-	IMP_FACTORY(CElevator);
+	IMP_FACTORY(CElevatorTrigger);
 	
 	//---------------------------------------------------------
 	
-	bool CElevator::spawn(CEntity *entity, CMap *map, const Map::CEntity *entityInfo) 
+	bool CElevatorTrigger::spawn(CEntity *entity, CMap *map, const Map::CEntity *entityInfo) 
 	{
 		if(!IComponent::spawn(entity,map,entityInfo))
 			return false;
@@ -37,6 +39,9 @@ namespace Logic
 
 		if(entityInfo->hasAttribute("positionFinal"))
 			_positionFinal = entityInfo->getVector3Attribute("positionFinal");
+
+		if(entityInfo->hasAttribute("link"))
+			_entityLink = entityInfo->getStringAttribute("link");
 
 		if(entityInfo->hasAttribute("velocity"))
 			_velocity = entityInfo->getFloatAttribute("velocity");
@@ -49,7 +54,7 @@ namespace Logic
 
 
 	
-	void CElevator::activate()
+	void CElevatorTrigger::activate()
 	{
 		IComponent::activate();
 		
@@ -59,12 +64,13 @@ namespace Logic
 		_directionFinal.normalise();
 		_toFinal=false;
 
+		_elevatorLink=Logic::CServer::getSingletonPtr()->getMap()->getEntityByName(_entityLink);
 	} // activate
 	//---------------------------------------------------------
 
 
 
-	bool CElevator::accept(CMessage *message)
+	bool CElevatorTrigger::accept(CMessage *message)
 	{
 		return message->getMessageType() == Message::TOUCHED|| 
 			message->getMessageType() == Message::UNTOUCHED;
@@ -72,14 +78,24 @@ namespace Logic
 	
 	//---------------------------------------------------------
 
-	void CElevator::process(CMessage *message)
+	void CElevatorTrigger::process(CMessage *message)
 	{
+		Logic::CMessageTouched *t;
+		Logic::CMessageUntouched *u;
 		switch(message->getMessageType())
 		{
 		case Message::TOUCHED:
+			//std::cout << "CHOCO CON ASCENSOR Y PROCESO" << ((CMessageTouched*)message)->getEntity()->getName() << std::endl;
+			t = new Logic::CMessageTouched();
+			t->setEntity(getEntity());
+			_elevatorLink->emitMessage(t);
 			_toFinal=true;
 			break;
 		case Message::UNTOUCHED:
+			//std::cout << "DESCHOCO CON ASCENSOR Y PROCESO" << std::endl;
+			u = new Logic::CMessageUntouched();
+			u->setEntity(getEntity());
+			_elevatorLink->emitMessage(u);
 			_toFinal=false;
 			break;
 		}
@@ -87,7 +103,7 @@ namespace Logic
 	} // process
 	//----------------------------------------------------------
 
-	void CElevator::tick(unsigned int msecs)
+	void CElevatorTrigger::tick(unsigned int msecs)
 	{
 		IComponent::tick(msecs);
 		Vector3 toDirection;
