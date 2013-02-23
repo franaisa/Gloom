@@ -1,18 +1,18 @@
 //---------------------------------------------------------------------------
-// ShootMiniGun.h
+// ShootSniper.h
 //---------------------------------------------------------------------------
 
 /**
-@file ShootMiniGun.h
+@file ShootSniper.h
 
-Contiene la declaración del componente que implementa el arma minigun.
+Contiene la declaración del componente que implementa el arma sniper.
 
-@author Jose Antonio García Yáñez
+@author Antonio Jesus Narváez Corrales
 @date Febrero, 2013
 */
 
-#ifndef __Logic_ShootMiniGun_H
-#define __Logic_ShootMiniGun_H
+#ifndef __Logic_ShootSniper_H
+#define __Logic_ShootSniper_H
 
 #include "Logic/Entity/Components/ShootRaycast.h"
 
@@ -32,13 +32,13 @@ namespace Logic {
 	que la sniper tenga su propio componente y la minigun funcione como tal.
 	*/
 
-	class CShootMiniGun : public CShootRaycast {
-		DEC_FACTORY(CShootMiniGun);
+	class CShootSniper : public CShootRaycast {
+		DEC_FACTORY(CShootSniper);
 
 	public:
 
 		/** Constructor por defecto. */
-		CShootMiniGun() : CShootRaycast("MiniGun") {}
+		CShootSniper() : CShootRaycast("Sniper") {}
 
 		//__________________________________________________________________
 
@@ -54,9 +54,9 @@ namespace Logic {
 		*/
 		virtual void triggerHitMessages(std::pair<CEntity*, Ray> entityHit) { CShootRaycast::triggerHitMessages(entityHit); }
 
-	}; // class CShootMiniGun
+	}; // class CShootSniper
 
-	REG_FACTORY(CShootMiniGun);
+	REG_FACTORY(CShootSniper);
 
 } // namespace Logic
 
