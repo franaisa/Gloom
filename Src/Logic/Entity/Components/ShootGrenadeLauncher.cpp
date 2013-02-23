@@ -14,22 +14,31 @@ de disparo del lanzagranadas.
 #include "ShootGrenadeLauncher.h"
 
 #include "Logic/Maps/EntityFactory.h"
+#include "Logic/Entity/Entity.h"
 #include "Logic/Server.h"
+
+#include "Logic/Messages/MessageSetPhysicPosition.h"
 
 namespace Logic {
 	IMP_FACTORY(CShootGrenadeLauncher);
 
 	void CShootGrenadeLauncher::fireWeapon() {
-		// Crear entidad fisica proyectil
-		std::cout << "DISPARO!!!" << std::endl;
-
+		// Obtenemos la informacion asociada al arquetipo de la granada
 		Map::CEntity *entityInfo = CEntityFactory::getSingletonPtr()->getInfo("Grenade");
+		// Creamos la entidad y la activamos
 		CEntity* grenade = CEntityFactory::getSingletonPtr()->createEntity( entityInfo, Logic::CServer::getSingletonPtr()->getMap() );
+		grenade->activate();
 
-		// addForce sobre la entidad creada, que en este caso
-		// es un rigid dynamic (el lanzacohetes es kinematic)
+		// Spawneamos la granada justo delante del jugador y a la altura de disparo que corresponda
+		Vector3 myPosition = _entity->getPosition() + ( Math::getDirection( _entity->getOrientation() ) * (_capsuleRadius) );
+		myPosition.y = _heightShoot - _projectileRadius;
 
-		// La entidad creada deberia crear otra mas tarde
+		// Mensaje para situar el collider fisico de la granada en la posicion de disparo.
+		Logic::CMessageSetPhysicPosition *msg = new Logic::CMessageSetPhysicPosition();
+		msg->setPosition(myPosition);
+		grenade->emitMessage(msg);
+		
+		// Mandar mensaje add force
 
 	}
 	

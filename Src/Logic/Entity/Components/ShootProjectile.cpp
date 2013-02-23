@@ -10,13 +10,20 @@ del disparo de proyectiles.
 
 #include "ShootProjectile.h"
 
+#include "Map/MapEntity.h"
+
 namespace Logic {
 	//IMP_FACTORY(CShootProjectile);
 	
 	bool CShootProjectile::spawn(CEntity* entity, CMap *map, const Map::CEntity *entityInfo) {
-		if(!CShoot::spawn(entity,map,entityInfo)) return false;
+		if(!CShoot::spawn(entity, map, entityInfo)) return false;
 
 		// Leer los parametros que toquen para los proyectiles
+		std::stringstream aux;
+		aux << "weapon" << _nameWeapon;	////!!!! Aqui debes de poner el nombre del arma que leera en el map.txt
+		std::string weapon = aux.str();
+
+		_projectileRadius = entityInfo->getFloatAttribute(weapon+"ProjectileRadius");
 
 		return true;
 	}
