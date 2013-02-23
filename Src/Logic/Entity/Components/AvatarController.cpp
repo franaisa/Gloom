@@ -63,6 +63,10 @@ namespace Logic
 		if(entityInfo->hasAttribute("gravity"))
 			_gravity= entityInfo->getDoubleAttribute("gravity");
 
+		if(entityInfo->hasAttribute("maxSpeedDown"))
+			_maxSpeedDown= entityInfo->getFloatAttribute("maxSpeedDown");
+		
+
 		return true;
 
 	} // spawn
@@ -497,12 +501,16 @@ namespace Logic
 		}//if (!_canJump && !_jumpingControl)
 		if(_caida){
 			_speedJump=_speedJump + _gravity*msecs; //MRUA
+			if(_speedJump<_maxSpeedDown)
+				_speedJump=_maxSpeedDown;
 		}
 
 
 		//Calculamos la nueva velocidad si hay salto en ejecución
 		if(_jumpingControl){
 			_speedJump=_speedJump + _gravity*msecs; //MRUA
+			if(_speedJump<_maxSpeedDown)
+				_speedJump=_maxSpeedDown;
 		}//if (_jumpingControl)
 
 		//Si hay que aplicar el salto debido a saltos, saltos laterales, rebotes o jumpers

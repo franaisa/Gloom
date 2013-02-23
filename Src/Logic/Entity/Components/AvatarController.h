@@ -319,6 +319,11 @@ namespace Logic
 		int _maxTimeSideJump;
 		int _maxTimeConcatSideJump;
 
+		/**
+		Atributos que indica la velocidad máxima de caida que puedes llegar a alcanzar
+		*/
+		float _maxSpeedDown;
+
 	}; // class CAvatarController
 
 	REG_FACTORY(CAvatarController);
