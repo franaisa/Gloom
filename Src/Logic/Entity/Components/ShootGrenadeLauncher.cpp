@@ -18,6 +18,7 @@ namespace Logic {
 
 	void CShootGrenadeLauncher::fireWeapon() {
 		// Crear entidad fisica proyectil
+		std::cout << "DISPARO!!!" << std::endl;
 		
 		// addForce sobre la entidad creada, que en este caso
 		// es un rigid dynamic (el lanzacohetes es kinematic)

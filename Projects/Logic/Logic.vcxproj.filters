@@ -124,9 +124,6 @@
     <ClCompile Include="..\..\Src\Logic\Entity\Components\ShootShotGun.cpp">
       <Filter>Entity\Components\Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Src\Logic\Entity\Components\ShootMiniGun.cpp">
-      <Filter>Entity\Components\Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Src\Logic\Messages\Message.cpp">
       <Filter>Messages\Source</Filter>
     </ClCompile>
@@ -286,6 +283,12 @@
     <ClCompile Include="..\..\Src\Logic\Messages\MessageSide.cpp">
       <Filter>Messages\Source</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\ShootSniper.cpp">
+      <Filter>Entity\Components\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\ShootMiniGun.cpp">
+      <Filter>Entity\Components\Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Src\Logic\Maps\ComponentFactory.h">
@@ -373,9 +376,6 @@
       <Filter>Entity\Components\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Entity\Components\ShootShotGun.h">
-      <Filter>Entity\Components\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Logic\Entity\Components\ShootMiniGun.h">
       <Filter>Entity\Components\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Messages\Message.h">
@@ -536,6 +536,12 @@
     </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Messages\MessageSide.h">
       <Filter>Messages\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\ShootSniper.h">
+      <Filter>Entity\Components\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\ShootMiniGun.h">
+      <Filter>Entity\Components\Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

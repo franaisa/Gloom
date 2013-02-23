@@ -18,8 +18,10 @@ Contiene la implementación del componente que gestiona las armas y que administr
 #include "Logic/Entity/Components/ArrayGraphics.h"
 
 #include "Logic/Entity/Components/ShootShotGun.h"
+#include "Logic/Entity/Components/ShootSniper.h"
 #include "Logic/Entity/Components/ShootMiniGun.h"
 #include "Logic/Entity/Components/ShootHammer.h"
+#include "Logic/Entity/Components/ShootGrenadeLauncher.h"
 
 
 #include "Logic/Messages/MessageChangeWeapon.h"
@@ -56,9 +58,11 @@ namespace Logic
 			/*la 1º arama siempre estara a true*/
 			_weapons[0] = true;
 			activateComponent(_actualWeapon);
+			_weapons[3] = true;
+			_weapons[4] = true;
 			/*
 			_weapons[1] = true;
-			_weapons[2] = true;
+		
 			printf("\n\n mi actual weapon es.....%d", _actualWeapon);
 
 			*/
@@ -152,10 +156,16 @@ namespace Logic
 			_entity->getComponent<CShootHammer>("CShootHammer")->addAmmo(0,ammo, (weapon == _weapons[weapon]) );
 			break;
 		case 1:
-			_entity->getComponent<CShootMiniGun>("CShootMiniGun")->addAmmo(1,ammo, (weapon == _weapons[weapon]) );
+			_entity->getComponent<CShootSniper>("CShootSniper")->addAmmo(1,ammo, (weapon == _weapons[weapon]) );
 			break;
 		case 2:
 			_entity->getComponent<CShootShotGun>("CShootShotGun")->addAmmo(2,ammo, (weapon == _weapons[weapon]) );
+			break;
+		case 3:
+			_entity->getComponent<CShootMiniGun>("CShootMiniGun")->addAmmo(3,ammo, (weapon == _weapons[weapon]) );
+			break;
+		case 4:
+			_entity->getComponent<CShootGrenadeLauncher>("CShootGrenadeLauncher")->addAmmo(4,ammo, (weapon == _weapons[weapon]) );
 			break;
 		}
 	}
@@ -166,10 +176,16 @@ namespace Logic
 			_entity->getComponent<CShootHammer>("CShootHammer")->resetAmmo();
 			break;
 		case 1:
-			_entity->getComponent<CShootMiniGun>("CShootMiniGun")->resetAmmo();
+			_entity->getComponent<CShootSniper>("CShootSniper")->resetAmmo();
 			break;
 		case 2:
 			_entity->getComponent<CShootShotGun>("CShootShotGun")->resetAmmo();
+			break;
+		case 3:
+			_entity->getComponent<CShootMiniGun>("CShootMiniGun")->resetAmmo();
+			break;
+		case 4:
+			_entity->getComponent<CShootGrenadeLauncher>("CShootGrenadeLauncher")->resetAmmo();
 			break;
 		}
 	}
@@ -194,17 +210,17 @@ namespace Logic
 			_entity->getComponent<CShootHammer>("CShootHammer")->deactivate();
 			break;
 		case 1:
+			_entity->getComponent<CShootSniper>("CShootSniper")->deactivate();
+			break;
+		case 2:
+			_entity->getComponent<CShootShotGun>("CShootShotGun")->deactivate();
+			break;
+		case 3:
 			_entity->getComponent<CShootMiniGun>("CShootMiniGun")->deactivate();
 			break;
-		case 2:
-			_entity->getComponent<CShootShotGun>("CShootShotGun")->deactivate();
+		case 4:
+			_entity->getComponent<CShootGrenadeLauncher>("CShootGrenadeLauncher")->deactivate();
 			break;
-
-		/*
-		case 2:
-			_entity->getComponent<CShootShotGun>("CShootShotGun")->deactivate();
-			break;
-		*/
 		}
 	}
 
@@ -214,17 +230,17 @@ namespace Logic
 			_entity->getComponent<CShootHammer>("CShootHammer")->activate();
 			break;
 		case 1:
-			_entity->getComponent<CShootMiniGun>("CShootMiniGun")->activate();
+			_entity->getComponent<CShootSniper>("CShootSniper")->activate();
 			break;
 		case 2:
 			_entity->getComponent<CShootShotGun>("CShootShotGun")->activate();
 			break;
-
-		/*
-		case 2:
-			_entity->getComponent<CShootShotGun>("CShootShotGun")->deactivate();
+		case 3:
+			_entity->getComponent<CShootMiniGun>("CShootMiniGun")->activate();
 			break;
-		*/
+		case 4:
+			_entity->getComponent<CShootGrenadeLauncher>("CShootGrenadeLauncher")->activate();
+			break;
 		}
 	}
 

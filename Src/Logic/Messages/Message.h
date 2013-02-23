@@ -95,6 +95,10 @@ namespace Logic
 			MIDDLE_CLICK,
 			BUTTON3_CLICK,
 			JUMP,
+			UNLEFT_CLICK,
+			UNRIGHT_CLICK,
+			UNMIDDLE_CLICK,
+			UNBUTTON3_CLICK
 		};
 
 	}

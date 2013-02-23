@@ -1,4 +1,5 @@
 float4x4 ViewProjectionMatrix;
+float4x4 worldMatrix;
 
 float tiempo;
 
@@ -19,7 +20,8 @@ VsOutput vsMain(const VsInput In) {
 
 	VsOutput vsOut;
 
-	float4 pos = float4(In.position.xyz,0);
+	float4 pos = mul(In.position,worldMatrix);
+	//pos = mul(pos, worldMatrix);
 	pos.y += (sin(pos.x+tiempo) + sin(pos.z+tiempo));
     vsOut.position = mul(pos,ViewProjectionMatrix);
 	//vsOut.position = In.position;

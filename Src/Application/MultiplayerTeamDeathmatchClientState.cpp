@@ -72,7 +72,7 @@ namespace Application {
 			std::string name;
 			buffer.deserialize(name);
 
-			Logic::CEntity * player = Logic::CServer::getSingletonPtr()->getMap()->createPlayer(name, entityID);
+			//Logic::CEntity * player = Logic::CServer::getSingletonPtr()->getMap()->createPlayer(name, entityID);
 			
 			// NO ES NECESARIO ENVIAR LOAD_PLAYER EN EL CASO DE LOS QUE JUEGAN
 
