@@ -17,7 +17,7 @@ Contiene la implementación del componente que gestiona la aplicacion de una fuer
 #include "Logic/Server.h"
 
 #include "Logic/Messages/MessageTouched.h"
-#include "Logic/Messages/MessageJumper.h"
+#include "Logic/Messages/MessageAddForcePlayer.h"
 
 
 
@@ -79,7 +79,7 @@ namespace Logic
 
 	void CJumper::applyJump(CEntity *entity)
 	{
-		CMessageJumper *m=new Logic::CMessageJumper();
+		CMessageAddForcePlayer *m=new Logic::CMessageAddForcePlayer();
 		m->setPower(_power);
 		m->setVelocity(_velocity);
 		m->setDirection(_direction);

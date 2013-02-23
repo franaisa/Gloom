@@ -79,6 +79,7 @@
   <ItemGroup>
     <ClCompile Include="..\..\Src\Logic\Entity\Components\ArrayGraphics.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\DamageTrigger.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\Elevator.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\FloatingMovement.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\HudOverlay.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\Jumper.cpp" />
@@ -122,6 +123,8 @@
     <ClCompile Include="..\..\Src\Logic\Messages\Message.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageActivate.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageAddAmmo.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Messages\MessageAddForcePhysics.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Messages\MessageAddForcePlayer.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageAddLife.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageAddShield.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageAddWeapon.cpp" />
@@ -139,7 +142,6 @@
     <ClCompile Include="..\..\Src\Logic\Messages\MessageHudShield.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageHudSpawn.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageHudWeapon.cpp" />
-    <ClCompile Include="..\..\Src\Logic\Messages\MessageJumper.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageKinematicMove.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageMouse.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessagePlayerDead.cpp" />
@@ -159,6 +161,7 @@
     <ClCompile Include="..\..\Src\Logic\Server.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\Elevator.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\FloatingMovement.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\HudOverlay.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\Jumper.h" />
@@ -208,6 +211,8 @@
     <ClInclude Include="..\..\Src\Logic\Messages\Message.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageActivate.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageAddAmmo.h" />
+    <ClInclude Include="..\..\Src\Logic\Messages\MessageAddForcePhysics.h" />
+    <ClInclude Include="..\..\Src\Logic\Messages\MessageAddForcePlayer.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageAddLife.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageAddShield.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageAddWeapon.h" />
@@ -225,7 +230,6 @@
     <ClInclude Include="..\..\Src\Logic\Messages\MessageHudShield.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageHudSpawn.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageHudWeapon.h" />
-    <ClInclude Include="..\..\Src\Logic\Messages\MessageJumper.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageKinematicMove.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageMouse.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessagePlayerDead.h" />

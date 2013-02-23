@@ -1,50 +1,50 @@
-#include "MessageJumper.h"
+#include "MessageAddForcePlayer.h"
 
 #include <string>
 
 namespace Logic {
 
-	IMP_FACTORYMESSAGE(CMessageJumper);
+	IMP_FACTORYMESSAGE(CMessageAddForcePlayer);
 
-	CMessageJumper::CMessageJumper() : CMessage(TMessageType::JUMPER) {
+	CMessageAddForcePlayer::CMessageAddForcePlayer() : CMessage(TMessageType::ADDFORCEPLAYER) {
 		// Nada que hacer
 	} //
 	//----------------------------------------------------------
-	float CMessageJumper::getPower(){
+	float CMessageAddForcePlayer::getPower(){
 		return _power;
 	}//
 	//----------------------------------------------------------
 
-	void CMessageJumper::setPower(float power){
+	void CMessageAddForcePlayer::setPower(float power){
 		_power=power;
 	}//
 	//----------------------------------------------------------
 
-	void CMessageJumper::setVelocity(float velocity){
+	void CMessageAddForcePlayer::setVelocity(float velocity){
 		_velocity=velocity;;
 	}//
 	//----------------------------------------------------------
 
-	float CMessageJumper::getVelocity(){
+	float CMessageAddForcePlayer::getVelocity(){
 		return _velocity;
 	}//
 	//----------------------------------------------------------
 
-	void CMessageJumper::setDirection(Vector3 direction){
+	void CMessageAddForcePlayer::setDirection(Vector3 direction){
 		_direction=direction;
 	}//
 	//----------------------------------------------------------
 
-	Vector3 CMessageJumper::getDirection(){
+	Vector3 CMessageAddForcePlayer::getDirection(){
 		return _direction;
 	}//
 	//----------------------------------------------------------
 
-	Net::CBuffer* CMessageJumper::serialize() {
+	Net::CBuffer* CMessageAddForcePlayer::serialize() {
 		assert(_tempBuffer == NULL);
 		//
 		_tempBuffer = new Net::CBuffer(sizeof(int) + (sizeof(float) * 5));
-		_tempBuffer->serialize(std::string("CMessageJumper"), true);
+		_tempBuffer->serialize(std::string("CMessageAddForcePlayer"), true);
 		_tempBuffer->serialize(_power);
 		_tempBuffer->serialize(_velocity);
 		_tempBuffer->serialize(_direction);
@@ -53,7 +53,7 @@ namespace Logic {
 	}//
 	//----------------------------------------------------------
 
-	void CMessageJumper::deserialize(Net::CBuffer& buffer) {
+	void CMessageAddForcePlayer::deserialize(Net::CBuffer& buffer) {
 		buffer.deserialize(_power);
 		buffer.deserialize(_velocity);
 		buffer.deserialize(_direction);

@@ -24,7 +24,8 @@ para representar character controllers.
 #include "Logic/Messages/MessageUntouched.h"
 #include "Logic/Messages/MessageWakeUp.h"
 #include "Logic/Messages/MessageSleep.h"
-
+#include "Logic/Messages/MessageSetPhysicPosition.h"
+#include "Logic/Messages/MessageAddForcePhysics.h"
 
 #define _USE_MATH_DEFINES
 #include <math.h>
@@ -77,8 +78,10 @@ bool CPhysicEntity::spawn(CEntity *entity, CMap *map, const Map::CEntity *entity
 bool CPhysicEntity::accept(CMessage *message)
 {
 	return message->getMessageType() == Message::KINEMATIC_MOVE ||
-		message->getMessageType() == Message::ACTIVATE ||
-		message->getMessageType() == Message::DEACTIVATE;
+		   message->getMessageType() == Message::ACTIVATE ||
+		   message->getMessageType() == Message::DEACTIVATE ||
+		   message->getMessageType() == Message::SET_PHYSIC_POSITION ||
+		   message->getMessageType() == Message::ADD_FORCE_PHYSICS;
 }
 
 //---------------------------------------------------------
@@ -110,6 +113,14 @@ void CPhysicEntity::process(CMessage *message)
 			actorShapes[i]->setFlag(PxShapeFlag::eTRIGGER_SHAPE,false);
 			actorShapes[i]->setFlag(PxShapeFlag::eSCENE_QUERY_SHAPE,false);
 		}
+		break;
+	case Message::SET_PHYSIC_POSITION:
+		std::cout << "seteo posicion" << std::endl;
+		setPhysicPosition( ((CMessageSetPhysicPosition*)message)->getPosition() );
+		break;
+	case Message::ADD_FORCE_PHYSICS:
+		std::cout << "le pego una ostia" << std::endl;
+		addImpulsiveForce( ((CMessageAddForcePhysics*)message)->getForceVector() );
 		break;
 	}
 }
@@ -160,6 +171,8 @@ PxRigidActor* CPhysicEntity::createActor(const Map::CEntity *entityInfo)
 	return NULL;
 }
 
+//---------------------------------------------------------
+
 PxRigidStatic* CPhysicEntity::createPlane(const Map::CEntity *entityInfo)
 {
 	// La posición de la entidad es un punto del plano
@@ -177,6 +190,8 @@ PxRigidStatic* CPhysicEntity::createPlane(const Map::CEntity *entityInfo)
 	// Crear el plano
 	return _server->createPlane(point, normal, group, this);
 }
+
+//---------------------------------------------------------
 
 PxRigidActor* CPhysicEntity::createRigid(const Map::CEntity *entityInfo)
 {
@@ -249,6 +264,8 @@ PxRigidActor* CPhysicEntity::createRigid(const Map::CEntity *entityInfo)
 	return NULL;
 }
 
+//---------------------------------------------------------
+
 PxRigidActor* CPhysicEntity::createFromFile(const Map::CEntity *entityInfo)
 {
 	// Leer la ruta del fichero RepX
@@ -264,6 +281,7 @@ PxRigidActor* CPhysicEntity::createFromFile(const Map::CEntity *entityInfo)
 	return _server->createFromFile(file, group, this);
 }
 
+//---------------------------------------------------------
 
 void CPhysicEntity::onTrigger(IPhysics *otherComponent, bool enter)
 {
@@ -280,5 +298,20 @@ void CPhysicEntity::onTrigger(IPhysics *otherComponent, bool enter)
 		Logic::CMessageUntouched *m = new Logic::CMessageUntouched();
 		m->setEntity(otherComponent->getEntity());
 		_entity->emitMessage(m);
+	}
+}
+
+//---------------------------------------------------------
+
+void CPhysicEntity::setPhysicPosition(const Vector3 &position) {
+	if( _actor->isRigidDynamic() )
+		_server->setRigidDynamicPosition( static_cast<PxRigidDynamic*>(_actor), position );
+}
+
+//---------------------------------------------------------
+
+void CPhysicEntity::addImpulsiveForce(const Vector3& force) {
+	if(_actor->isRigidBody()) {
+		_server->addImpulsiveForce( static_cast<PxRigidDynamic*>(_actor), force ); 
 	}
 }

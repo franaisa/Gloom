@@ -1,5 +1,5 @@
 Map = {
-	
+
 	World = {
 		type = "World",
 		position = {0, 0, 0},
@@ -47,6 +47,7 @@ Map = {
 		powerJump = 0.2,
 		restitutionMoveAir = 0.8,
 		gravity = -0.0008,
+		maxSpeedDown = -0.2,
 		physic_shape = "capsule",
 		physic_radius = 6,
 		physic_height = 6,
@@ -54,7 +55,7 @@ Map = {
 		accel = 0.001,
 		angularAccel = 0.00001,
 		movementTolerance = 7.0,
-		numWeapons = 4,
+		numWeapons = 5,
 		heightShoot = 8,
 
 			weaponHammerName = "Hammer",
@@ -109,7 +110,19 @@ Map = {
 			weaponMiniGunColdDown = 0.8,
 			weaponMiniGunMaxAmmo = 200,
 			weaponMiniGunId = 3,
-		
+			
+			weaponGrenadeLauncherName = "GrenadeLauncher",
+			weaponGrenadeLauncherModel = "shotGun01.mesh",
+			weaponGrenadeLauncherModelYaw = 3.10,
+			weaponGrenadeLauncherModelPitch = 0,
+			weaponGrenadeLauncherOffset = {5.0, 4.0, 5.0},
+			weaponGrenadeLauncherDamage = 30.0,
+			weaponGrenadeLauncherNumberShoots = 1,
+			weaponGrenadeLauncherColdDown = 2,
+			weaponGrenadeLauncherMaxAmmo = 18,
+			weaponGrenadeLauncherId = 4,
+			weaponGrenadeLauncherShootForce = 2000,
+			weaponGrenadeLauncherProjectileRadius = 3,
 
 		hudMira = 3,
 	},
@@ -138,6 +151,7 @@ Map = {
 		powerJump = 0.2,
 		restitutionMoveAir = 0.8,
 		gravity = -0.0008,
+		maxSpeedDown = -0.2,
 		physic_shape = "capsule",
 		physic_radius = 6,
 		physic_height = 6,
@@ -145,7 +159,7 @@ Map = {
 		accel = 0.001,
 		angularAccel = 0.00001,
 		movementTolerance = 7.0,
-		numWeapons = 4,
+		numWeapons = 5,
 		heightShoot = 8,
 
 			weaponHammerName = "Hammer",
@@ -200,6 +214,19 @@ Map = {
 			weaponMiniGunColdDown = 0.8,
 			weaponMiniGunMaxAmmo = 200,
 			weaponMiniGunId = 3,
+			
+			weaponGrenadeLauncherName = "GrenadeLauncher",
+			weaponGrenadeLauncherModel = "shotGun01.mesh",
+			weaponGrenadeLauncherModelYaw = 3.10,
+			weaponGrenadeLauncherModelPitch = 0,
+			weaponGrenadeLauncherOffset = {5.0, 4.0, 5.0},
+			weaponGrenadeLauncherDamage = 30.0,
+			weaponGrenadeLauncherNumberShoots = 1,
+			weaponGrenadeLauncherColdDown = 2,
+			weaponGrenadeLauncherMaxAmmo = 18,
+			weaponGrenadeLauncherId = 4,
+			weaponGrenadeLauncherShootForce = 2000,
+			weaponGrenadeLauncherProjectileRadius = 3,
 
 		hudMira = 3,
 	},
@@ -232,7 +259,7 @@ Map = {
 		physic_shape = "capsule",
 		physic_radius = 6,
 		physic_height = 6,
-		numWeapons = 4,
+		numWeapons = 5,
 
 			weaponHammerName = "Hammer",
 			weaponHammerModel = "Katana.mesh",
@@ -284,8 +311,21 @@ Map = {
 			weaponMiniGunNumberShoots = 1,
 			weaponMiniGunDistance = 200.0,
 			weaponMiniGunColdDown = 0.8,
-			weaponMiniGunMaxAmmo = 200,
+			weaponMiniGunMaxAmmo = 2000,
 			weaponMiniGunId = 3,
+			
+			weaponGrenadeLauncherName = "GrenadeLauncher",
+			weaponGrenadeLauncherModel = "shotGun01.mesh",
+			weaponGrenadeLauncherModelYaw = 3.10,
+			weaponGrenadeLauncherModelPitch = 0,
+			weaponGrenadeLauncherOffset = {5.0, 4.0, 5.0},
+			weaponGrenadeLauncherDamage = 30.0,
+			weaponGrenadeLauncherNumberShoots = 1,
+			weaponGrenadeLauncherColdDown = 2,
+			weaponGrenadeLauncherMaxAmmo = 18,
+			weaponGrenadeLauncherId = 4,
+			weaponGrenadeLauncherShootForce = 200,
+			weaponGrenadeLauncherProjectileRadius = 3,
 			
 			hudMira = 3,
 	},
@@ -293,5 +333,16 @@ Map = {
 	Camera = {
 		type = "Camera",
 		height = 8,
+	},
+	
+	Grenade = {
+		type = "Grenade",
+		model = "mine.mesh",
+		physic_entity = "rigid",
+		physic_trigger = false,
+		physic_type = "dynamic",
+		physic_shape = "sphere",
+		physic_radius = 0.3,
+		physic_mass = 50,
 	},
 }

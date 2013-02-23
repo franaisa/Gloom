@@ -1,21 +1,21 @@
-#ifndef __Logic_MessageJumper_H
-#define __Logic_MessageJumper_H
+#ifndef __Logic_MessageAddForcePlayer_H
+#define __Logic_MessageAddForcePlayer_H
 
 #include "Message.h"
 
 namespace Logic {
 
-	class CMessageJumper : public CMessage{
-	DEC_FACTORYMESSAGE(CMessageJumper);
+	class CMessageAddForcePlayer : public CMessage{
+	DEC_FACTORYMESSAGE(CMessageAddForcePlayer);
 	public:
-		CMessageJumper();
+		CMessageAddForcePlayer();
 		void setPower(float power);
 		float getPower();
 		void setVelocity(float velocity);
 		float getVelocity();
 		void setDirection(Vector3 direction);
 		Vector3 getDirection();
-		~CMessageJumper(){};
+		~CMessageAddForcePlayer(){};
 		
 		virtual Net::CBuffer* serialize();
 		virtual void deserialize(Net::CBuffer& buffer);
@@ -25,7 +25,7 @@ namespace Logic {
 		float _velocity;
 		Vector3 _direction;
 	};
-	REG_FACTORYMESSAGE(CMessageJumper);
+	REG_FACTORYMESSAGE(CMessageAddForcePlayer);
 
 };
 
