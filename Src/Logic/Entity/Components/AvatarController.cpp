@@ -21,7 +21,7 @@ de la entidad.
 #include "Logic/Messages/MessageAvatarWalk.h"
 #include "Logic/Messages/MessageMouse.h"
 #include "Logic/Messages/MessageRebound.h"
-#include "Logic/Messages/MessageJumper.h"
+#include "Logic/Messages/MessageAddForcePlayer.h"
 #include "Logic/Messages/MessageSetAnimation.h"
 #include "Logic/Messages/MessageSide.h"
 
@@ -107,8 +107,8 @@ namespace Logic
 		_sideContact=false;
 
 		_rebound=false;
-		_jumper=false;
-		_velocityJumper=false;
+		_force=false;
+		_applyForce=false;
 	} // activate
 	
 	//---------------------------------------------------------
@@ -125,7 +125,7 @@ namespace Logic
 		return message->getMessageType() == Message::CONTROL || 
 			message->getMessageType() == Message::COLLISION_DOWN ||
 			message->getMessageType() == Message::REBOUND ||
-			message->getMessageType() == Message::JUMPER ||
+			message->getMessageType() == Message::ADDFORCEPLAYER ||
 			message->getMessageType() == Message::CEALING ||
 			message->getMessageType() == Message::SIDE;
 	} // accept
@@ -165,11 +165,11 @@ namespace Logic
 			_dirRebound=((CMessageRebound*)message)->getDir();
 			rebound();
 			break;
-		case Message::JUMPER:
-			_powerJumpInJumper=((CMessageJumper*)message)->getPower();
-			_velocityInJumper=((CMessageJumper*)message)->getVelocity();
-			_directionInJumper=((CMessageJumper*)message)->getDirection();
-			jumper();
+		case Message::ADDFORCEPLAYER:
+			_powerJumpForce=((CMessageAddForcePlayer*)message)->getPower();
+			_velocityForce=((CMessageAddForcePlayer*)message)->getVelocity();
+			_directionForce=((CMessageAddForcePlayer*)message)->getDirection();
+			force();
 			break;
 		case Message::CEALING:
 			_speedJump=-0.02;
@@ -298,9 +298,9 @@ namespace Logic
 	
 	//---------------------------------------------------------
 
-	void CAvatarController::jumper()
+	void CAvatarController::force()
 	{
-		_jumper = true;
+		_force = true;
 	}//rebound
 	
 	//---------------------------------------------------------
@@ -454,7 +454,7 @@ namespace Logic
 			_jumpingControl=false;
 			_caida=false;
 			_velocitySideJump=false;
-			_velocityJumper=false;
+			_applyForce=false;
 			//Caí luego activo el booleano para que empiece la cuenta de concatenacion
 			if(_sideFly){
 				_sideContact=true;
@@ -506,13 +506,13 @@ namespace Logic
 		}//if (_jumpingControl)
 
 		//Si hay que aplicar el salto debido a saltos, saltos laterales, rebotes o jumpers
-		if(_jumping && _canJump || _jumper ){
-			//Si es de jumper 
-			if(_jumper){
-				_jumper=false;
-				_speedJump=_powerJumpInJumper;
-				_direccionSaltoCaida=_directionInJumper;
-				_velocityJumper=true;
+		if(_jumping && _canJump || _force ){
+			//Si es una fuerza
+			if(_force){
+				_force=false;
+				_speedJump=_powerJumpForce;
+				_direccionSaltoCaida=_directionForce;
+				_applyForce=true;
 			}
 			//Si es un salto normal
 			else if(!_sideJump){
@@ -543,9 +543,9 @@ namespace Logic
 		//Si saltamos en un jumper nos desplazaremos mucho mas rapido (ignorando si veniamos de un salto lateral/concatenado)
 		//Aplicaremos más velocidad lateral si se trata de un desplazamiento lateral (para desplazarnos más rápido, recorriendo más terreno)
 		//Si ademas esta activa la concatenacion de saltos pues llegaremos mas lejos
-		if(_velocityJumper){
-			directXZY.x *= msecs * _velocityInJumper;
-			directXZY.z *= msecs * _velocityInJumper;
+		if(_applyForce){
+			directXZY.x *= msecs * _velocityForce;
+			directXZY.z *= msecs * _velocityForce;
 		}
 		else if(!_velocitySideJump){
 			directXZY.x *= msecs * _speed;
