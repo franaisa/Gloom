@@ -5,4 +5,5 @@ Camera CCamera
 ItemSpawn CGraphics CPhysicEntity CFloatingMovement CSpawnItemManager 
 SpawnPoint CPhysicEntity
 Jumper CGraphics CPhysicEntity CJumper
-lava CGraphics CPhysicEntity CLava
+Lava CGraphics CPhysicEntity CLava
+Elevator CGraphics CPhysicEntity CElevator

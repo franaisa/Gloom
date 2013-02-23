@@ -79,6 +79,7 @@
   <ItemGroup>
     <ClCompile Include="..\..\Src\Logic\Entity\Components\ArrayGraphics.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\DamageTrigger.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\Elevator.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\FloatingMovement.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\HudOverlay.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\Jumper.cpp" />
@@ -135,6 +136,8 @@
     <ClCompile Include="..\..\Src\Logic\Messages\MessageControl.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageDamaged.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageDeactivate.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Messages\MessageElevatorFinal.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Messages\MessageElevatorInitial.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageHudAmmo.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageHudLife.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageHudShield.cpp" />
@@ -159,6 +162,7 @@
     <ClCompile Include="..\..\Src\Logic\Server.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\Elevator.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\FloatingMovement.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\HudOverlay.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\Jumper.h" />
@@ -221,6 +225,8 @@
     <ClInclude Include="..\..\Src\Logic\Messages\MessageControl.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageDamaged.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageDeactivate.h" />
+    <ClInclude Include="..\..\Src\Logic\Messages\MessageElevatorFinal.h" />
+    <ClInclude Include="..\..\Src\Logic\Messages\MessageElevatorInitial.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageHudAmmo.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageHudLife.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageHudShield.h" />

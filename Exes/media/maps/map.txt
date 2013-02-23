@@ -3,6 +3,20 @@ Map = {
 		type = "World",
 	},
 	
+	Ascensor1 = {
+		type = "Elevator",
+		position = {-51.0, 0.0, 1.0},
+		positionInitial = {-51.0, 0.0, 1.0},
+		positionFinal = {-51.0, 63.0, 1.0},
+		model = "health1.mesh",
+		physic_entity = "rigid",
+		physic_trigger = true,
+		physic_type = "kinematic",
+		physic_shape = "box",
+		physic_dimensions = { 2, 2, 2 },
+		physic_mass = 10,
+	},
+	
 	Jumper1 = {
 		type = "Jumper",
 		position = {51.0, 0.0, 1.0},
@@ -138,7 +152,7 @@ Map = {
 	
 	
 	lava = {
-		type = "lava",
+		type = "Lava",
 		position = {-10.0, 0.2, -30.0},
 		model = "lava.mesh",
 		scale = 1,
