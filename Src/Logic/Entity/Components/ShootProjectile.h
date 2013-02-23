@@ -88,6 +88,16 @@ namespace Logic {
 
 		/** Método que se encarga de realizar el disparo del proyectil. */
 		virtual void fireWeapon() = 0;
+
+	protected:
+
+
+		// =======================================================================
+		//                          MIEMBROS PROPIOS
+		// =======================================================================
+
+
+		float _projectileRadius;
 	};
 
 	//REG_FACTORY(CShootProjectile);
