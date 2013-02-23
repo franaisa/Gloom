@@ -15,6 +15,16 @@ de disparo del lanzagranadas.
 
 namespace Logic {
 	IMP_FACTORY(CShootGrenadeLauncher);
+
+	void CShootGrenadeLauncher::fireWeapon() {
+		// Crear entidad fisica proyectil
+		
+		// addForce sobre la entidad creada, que en este caso
+		// es un rigid dynamic (el lanzacohetes es kinematic)
+
+		// La entidad creada deberia crear otra mas tarde
+
+	}
 	
 } // namespace Logic
 

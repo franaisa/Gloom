@@ -66,7 +66,7 @@ namespace Logic {
 			// Ejecutar sonidos y animaciones de falta de balas
 			//triggerRunOutOfAmmoMessages();
 		}
-	}// fireWeapon
+	}// shoot
 	
 	//__________________________________________________________________
 

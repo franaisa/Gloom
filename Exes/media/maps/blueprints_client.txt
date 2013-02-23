@@ -2,4 +2,4 @@ World CGraphics CPhysicEntity
 LocalPlayer CAvatarController CPhysicController CInterpolation CHudOverlay CArrayGraphics CLife CNetConnector
 Camera CCamera
 ItemSpawn CGraphics CFloatingMovement CSpawnItemManager CNetConnector
-RemotePlayer CNetConnector CAnimatedGraphics CInterpolation
+RemotePlayer CNetConnector CAnimatedGraphics CInterpolation CPhysicController
