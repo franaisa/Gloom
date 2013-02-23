@@ -121,6 +121,7 @@ Map = {
 			weaponGrenadeLauncherColdDown = 2,
 			weaponGrenadeLauncherMaxAmmo = 18,
 			weaponGrenadeLauncherId = 4,
+			weaponGrenadeLauncherShootForce = 2000,
 			weaponGrenadeLauncherProjectileRadius = 3,
 
 		hudMira = 3,
@@ -224,6 +225,7 @@ Map = {
 			weaponGrenadeLauncherColdDown = 2,
 			weaponGrenadeLauncherMaxAmmo = 18,
 			weaponGrenadeLauncherId = 4,
+			weaponGrenadeLauncherShootForce = 2000,
 			weaponGrenadeLauncherProjectileRadius = 3,
 
 		hudMira = 3,
@@ -309,7 +311,7 @@ Map = {
 			weaponMiniGunNumberShoots = 1,
 			weaponMiniGunDistance = 200.0,
 			weaponMiniGunColdDown = 0.8,
-			weaponMiniGunMaxAmmo = 200,
+			weaponMiniGunMaxAmmo = 2000,
 			weaponMiniGunId = 3,
 			
 			weaponGrenadeLauncherName = "GrenadeLauncher",
@@ -322,6 +324,7 @@ Map = {
 			weaponGrenadeLauncherColdDown = 2,
 			weaponGrenadeLauncherMaxAmmo = 18,
 			weaponGrenadeLauncherId = 4,
+			weaponGrenadeLauncherShootForce = 200,
 			weaponGrenadeLauncherProjectileRadius = 3,
 			
 			hudMira = 3,
@@ -334,12 +337,12 @@ Map = {
 	
 	Grenade = {
 		type = "Grenade",
-		model = "rocketLauncher.mesh",
+		model = "mine.mesh",
 		physic_entity = "rigid",
 		physic_trigger = false,
 		physic_type = "dynamic",
 		physic_shape = "sphere",
-		physic_radius = 3,
-		physic_mass = 5,
+		physic_radius = 0.3,
+		physic_mass = 50,
 	},
 }

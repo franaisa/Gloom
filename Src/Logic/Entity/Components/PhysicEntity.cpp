@@ -25,7 +25,7 @@ para representar character controllers.
 #include "Logic/Messages/MessageWakeUp.h"
 #include "Logic/Messages/MessageSleep.h"
 #include "Logic/Messages/MessageSetPhysicPosition.h"
-
+#include "Logic/Messages/MessageAddForcePhysics.h"
 
 #define _USE_MATH_DEFINES
 #include <math.h>
@@ -80,7 +80,8 @@ bool CPhysicEntity::accept(CMessage *message)
 	return message->getMessageType() == Message::KINEMATIC_MOVE ||
 		   message->getMessageType() == Message::ACTIVATE ||
 		   message->getMessageType() == Message::DEACTIVATE ||
-		   message->getMessageType() == Message::SET_PHYSIC_POSITION;
+		   message->getMessageType() == Message::SET_PHYSIC_POSITION ||
+		   message->getMessageType() == Message::ADD_FORCE_PHYSICS;
 }
 
 //---------------------------------------------------------
@@ -114,9 +115,13 @@ void CPhysicEntity::process(CMessage *message)
 		}
 		break;
 	case Message::SET_PHYSIC_POSITION:
+		std::cout << "seteo posicion" << std::endl;
 		setPhysicPosition( ((CMessageSetPhysicPosition*)message)->getPosition() );
 		break;
-	// caso ADD_FORCE <- darle una ostia en physx y luego actualizamos el transform en el tick
+	case Message::ADD_FORCE_PHYSICS:
+		std::cout << "le pego una ostia" << std::endl;
+		addImpulsiveForce( ((CMessageAddForcePhysics*)message)->getForceVector() );
+		break;
 	}
 }
 //---------------------------------------------------------
