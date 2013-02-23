@@ -14,6 +14,7 @@ la gestión de la lógica del juego.
 
 #include <string>
 #include <iostream>
+#include <ctime>
 // Predeclaración de clases para ahorrar tiempo de compilación
 namespace Logic 
 {
@@ -135,6 +136,18 @@ namespace Logic
 		*/
 		void unLoadLevel();
 
+		/**
+			Devuelve la hora actual
+			@return el ping actual
+		*/
+		clock_t getDiffTime(){return _diffTime;}
+
+		/**
+			Setea la hora que tengo ahora mismo con respecto al servidor
+			@param ping el ping que estoy asignando
+		*/
+		void setDiffTime(int time){_diffTime = time;}
+
 	protected:
 		/**
 		Constructor.
@@ -182,11 +195,17 @@ namespace Logic
 		*/
 		Logic::CGameSpawnManager* _gameSpawnManager;
 
+		/**
+			mi ping actual
+		*/
+		int _diffTime;
+
 	private:
 		/**
 		Única instancia de la clase.
 		*/
 		static CServer* _instance;
+
 
 	}; // class CServer
 

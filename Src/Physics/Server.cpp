@@ -209,7 +209,7 @@ void CServer::createScene ()
 	PxSceneDesc sceneDesc(_physics->getTolerancesScale());
 
 	// Establecer la gravedad en el eje Y
-	sceneDesc.gravity = PxVec3(0.0f, -9.81f, 0.0f);
+	sceneDesc.gravity = PxVec3(0.0f, -9.81f * 5, 0.0f);
 
 	// Establecer el gestor de colisiones
 	sceneDesc.simulationEventCallback = _collisionManager;
@@ -647,6 +647,52 @@ void CServer::setControllerPosition(PxCapsuleController *controller, const Vecto
 
 //--------------------------------------------------------
 
+void CServer::setRigidDynamicPosition(physx::PxRigidDynamic* dynActor, const Vector3& position) {
+	assert(_scene);
+	
+	// Transformación entre el sistema de coordenadas lógico y el de PhysX
+
+	// En primer lugar obtenemos todas las formas del actor y calculamos el punto medio
+	// de todas ellas.
+	unsigned int nbShapes = dynActor->getNbShapes(); // sacamos el numero de formas del actor
+	PxShape** actorShapes = new PxShape* [nbShapes]; // creamos un array de shapes
+	dynActor->getShapes(actorShapes, nbShapes); // obtenemos todas las formas del actor
+	float averageYPosition = 0; // Contendra la altura media de todos los shapes
+
+	for(int i = 0; i < nbShapes; ++i) {
+		PxGeometryType::Enum geomType = actorShapes[i]->getGeometryType();
+
+		if(geomType == PxGeometryType::eSPHERE) {
+			PxSphereGeometry sphereGeom; 
+			actorShapes[i]->getSphereGeometry(sphereGeom);
+
+			averageYPosition += sphereGeom.radius;
+		}
+		else if(geomType == PxGeometryType::eCAPSULE) {
+			PxCapsuleGeometry capsuleGeom; 
+			actorShapes[i]->getCapsuleGeometry(capsuleGeom);
+
+			averageYPosition += capsuleGeom.halfHeight;
+		}
+		else if(geomType == PxGeometryType::eBOX) {
+			PxBoxGeometry boxGeom; 
+			actorShapes[i]->getBoxGeometry(boxGeom);
+
+			PxVec3 halfPos(boxGeom.halfExtents);
+			averageYPosition += halfPos.y;
+		}
+		/*else if(geomType == PxGeometryType::eTRIANGLEMESH) {
+		}*/
+	}
+
+	// Calculamos la altura media de todas las formas para colocar el vector
+	// posicion de physx
+	averageYPosition = averageYPosition / nbShapes;
+	dynActor->setGlobalPose( PxTransform( PxVec3(position.x, position.y + averageYPosition, position.z) ) );
+}
+
+//--------------------------------------------------------
+
 void CServer::setGroupCollisions(int group1, int group2, bool enable)
 {
 	// Activar / desactivar colisiones entre grupos
@@ -759,3 +805,7 @@ Logic::CEntity* CServer::raycastClosestInverse(const Ray& ray, float maxDist, in
 }
 
 //--------------------------------------------------------
+
+void CServer::addImpulsiveForce( PxRigidDynamic* actor, const Vector3& force ) {
+	actor->addForce( Vector3ToPxVec3(force), PxForceMode::eIMPULSE );
+}

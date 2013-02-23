@@ -134,6 +134,13 @@ namespace Logic {
 
 	void CMap::tick(unsigned int msecs) 
 	{
+		//primero comprobamos si hay entidades que han de ser eliminadas
+		std::list<CEntity*>::const_iterator del;
+		for(del = _deleteEntities.begin();del!=_deleteEntities.end();++del){
+			removeEntity(*del);
+		}
+		_deleteEntities.clear();
+		//ejecutamos el tick de todas nuestras entidades
 		TEntityMap::const_iterator it;
 
 		for( it = _entityMap.begin(); it != _entityMap.end(); ++it )
@@ -319,7 +326,6 @@ namespace Logic {
 
 		//cogemos el player necesario
 		Map::CEntity *playerInfo = CEntityFactory::getSingletonPtr()->getInfo("RemotePlayer");
-
 		// Asignar nombre
 		playerInfo->setName(name);
 
@@ -328,4 +334,13 @@ namespace Logic {
 		playerCreated->setPosition( playerCreated->getPosition() + (rand()%15+5) * Vector3(1, 0, 1) );
 		return playerCreated;
 	}
+
+	//--------------------------------------------------------
+	//--------------------------------------------------------
+
+
+	void CMap::deleteDeferredEntity(CEntity* entity){
+		_deleteEntities.push_back(entity);
+	}
+
 } // namespace Logic

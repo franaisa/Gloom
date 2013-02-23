@@ -74,7 +74,8 @@ namespace Net
 		ENTITY_MSG,
 		ASSIGNED_ID,
 		LOAD_PLAYER_INFO,
-		PLAYER_INFO
+		PLAYER_INFO,
+		PING
 	};
 
 

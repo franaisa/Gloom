@@ -124,6 +124,7 @@
     <ClCompile Include="..\..\Src\Logic\Messages\Message.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageActivate.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageAddAmmo.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Messages\MessageAddForcePhysics.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageAddForcePlayer.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageAddLife.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageAddShield.cpp" />
@@ -212,6 +213,7 @@
     <ClInclude Include="..\..\Src\Logic\Messages\Message.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageActivate.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageAddAmmo.h" />
+    <ClInclude Include="..\..\Src\Logic\Messages\MessageAddForcePhysics.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageAddForcePlayer.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageAddLife.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageAddShield.h" />

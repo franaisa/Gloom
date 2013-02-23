@@ -109,6 +109,10 @@ namespace Logic
 		//Metodo que devuelve el booleano _inTrigger que nos indica si hay alguien dentro del trigger
 		bool getInTrigger(){return _inTrigger;};
 
+		void setPhysicPosition(const Vector3 &position);
+
+		void addImpulsiveForce(const Vector3& force);
+
 	private:
 
 		/**

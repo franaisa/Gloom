@@ -9,7 +9,6 @@ material Material#71_OgreMax
 			specular 2 2 2 100
 			emissive 1 1 1 1 
 			
-			
 			//vertex_program_ref MiVSShader
 			//{
 			//	param_named_auto ViewProjectionMatrix worldviewproj_matrix

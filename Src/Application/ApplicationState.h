@@ -20,6 +20,7 @@ aplicacion.
 
 #include "BaseApplication.h"
 #include "GUI/InputManager.h"
+#include <ctime>
 
 namespace Application 
 {
@@ -161,6 +162,7 @@ namespace Application
 		*/
 		CBaseApplication *_app;
 
+		clock_t _reloj;
 	}; // CApplicationState
 
 } // namespace Application

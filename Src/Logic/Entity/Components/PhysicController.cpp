@@ -139,7 +139,7 @@ void CPhysicController::tick(unsigned int msecs)
 //---------------------------------------------------------
 
 void  CPhysicController::setPhysicPosition (const Vector3 &position){
-	_server->setControllerPosition(_controller,position);
+	_server->setControllerPosition(_controller, position);
 }
 
 

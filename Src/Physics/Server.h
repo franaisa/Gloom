@@ -14,6 +14,8 @@ Contiene la declaración del servidor de física.
 
 #include "BaseSubsystems/Math.h"
 
+//#include <PxForceMode.h>
+
 // Predeclaración de tipos
 namespace Logic {
 	class CEntity;
@@ -334,6 +336,8 @@ namespace Physics {
 		@param position Posicion donde queremos poner al controller físico.
 		*/
 		void CServer::setControllerPosition(physx::PxCapsuleController *controller, const Vector3 &position);
+
+		void setRigidDynamicPosition(physx::PxRigidDynamic *dynActor, const Vector3 &position);
 		
 		//----------------------------------
 		// Consultas 
@@ -372,6 +376,8 @@ namespace Physics {
 		 @return Primera entidad lógica alcanzada de ese grupo o NULL.
 		 */
 		Logic::CEntity* raycastClosestInverse (const Ray& ray, float maxDist, int group) const; 
+
+		void addImpulsiveForce( physx::PxRigidDynamic* actor, const Vector3& force ); 
 
 	private:
 
