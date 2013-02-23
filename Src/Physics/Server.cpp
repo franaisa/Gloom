@@ -209,7 +209,7 @@ void CServer::createScene ()
 	PxSceneDesc sceneDesc(_physics->getTolerancesScale());
 
 	// Establecer la gravedad en el eje Y
-	sceneDesc.gravity = PxVec3(0.0f, -9.81f, 0.0f);
+	sceneDesc.gravity = PxVec3(0.0f, -9.81f * 5, 0.0f);
 
 	// Establecer el gestor de colisiones
 	sceneDesc.simulationEventCallback = _collisionManager;

@@ -18,9 +18,25 @@ de disparo del lanzagranadas.
 #include "Logic/Server.h"
 
 #include "Logic/Messages/MessageSetPhysicPosition.h"
+#include "Logic/Messages/MessageAddForcePhysics.h"
 
 namespace Logic {
 	IMP_FACTORY(CShootGrenadeLauncher);
+
+	bool CShootGrenadeLauncher::spawn(CEntity* entity, CMap *map, const Map::CEntity *entityInfo) {
+		if(!CShootProjectile::spawn(entity, map, entityInfo)) return false;
+
+		// Leer los parametros que toquen para los proyectiles
+		std::stringstream aux;
+		aux << "weapon" << _nameWeapon;	////!!!! Aqui debes de poner el nombre del arma que leera en el map.txt
+		std::string weapon = aux.str();
+
+		_shootForce = entityInfo->getFloatAttribute(weapon+"ShootForce");
+
+		return true;
+	}
+
+	//__________________________________________________________________
 
 	void CShootGrenadeLauncher::fireWeapon() {
 		// Obtenemos la informacion asociada al arquetipo de la granada
@@ -34,12 +50,14 @@ namespace Logic {
 		myPosition.y = _heightShoot - _projectileRadius;
 
 		// Mensaje para situar el collider fisico de la granada en la posicion de disparo.
-		Logic::CMessageSetPhysicPosition *msg = new Logic::CMessageSetPhysicPosition();
+		Logic::CMessageSetPhysicPosition* msg = new Logic::CMessageSetPhysicPosition();
 		msg->setPosition(myPosition);
 		grenade->emitMessage(msg);
 		
 		// Mandar mensaje add force
-
+		Logic::CMessageAddForcePhysics* forceMsg = new Logic::CMessageAddForcePhysics();
+		forceMsg->setForceVector( Math::getDirection( _entity->getOrientation()) * _shootForce );
+		grenade->emitMessage(forceMsg);
 	}
 	
 } // namespace Logic
