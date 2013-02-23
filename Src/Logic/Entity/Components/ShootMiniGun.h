@@ -38,7 +38,7 @@ namespace Logic {
 	public:
 
 		/** Constructor por defecto. */
-		CShootMiniGun() : CShootRaycast("MiniGun") {}
+		CShootMiniGun() : CShootRaycast("MiniGun"), _pressThenShoot(false) {}
 
 		//__________________________________________________________________
 
@@ -53,6 +53,30 @@ namespace Logic {
 		comprobar si habia colisiones.
 		*/
 		virtual void triggerHitMessages(std::pair<CEntity*, Ray> entityHit) { CShootRaycast::triggerHitMessages(entityHit); }
+
+		/**
+		Método virtual que procesa un mensaje.
+
+		@param message Mensaje a procesar.
+		*/
+		virtual void process(CMessage *message);
+
+		//__________________________________________________________________
+
+		/**
+		Método llamado en cada frame que actualiza la posicion flotante del item.
+
+		@param msecs Milisegundos transcurridos desde el último tick.
+		*/
+		virtual void tick(unsigned int msecs);
+
+	private:
+
+		/**
+		Namespace para los tipos de mensajes de control posibles.
+		*/
+		bool _pressThenShoot;
+
 
 	}; // class CShootMiniGun
 

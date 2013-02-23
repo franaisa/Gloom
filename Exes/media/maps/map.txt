@@ -86,6 +86,16 @@ Map = {
 		respawnTime = 5,
 	},
 	
+	MinigunAmmo1 = {
+		type = "ItemSpawn",
+		position = {-150.0, 0.0, 0.0},
+		model = "ammo01.mesh",
+		id = "ammo",
+		weaponType = 3,
+		reward = 200,
+		respawnTime = 5,
+	},
+	
 	SuperShield = {
 		type = "ItemSpawn",
 		position = {67.0, 2.0, -42.0},

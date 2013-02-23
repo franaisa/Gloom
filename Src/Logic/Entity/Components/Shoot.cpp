@@ -84,7 +84,6 @@ namespace Logic {
 		}
 		
 	} // process
-
 	//__________________________________________________________________
 
 	void CShoot::tick(unsigned int msecs) {
