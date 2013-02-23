@@ -292,12 +292,6 @@
     <ClCompile Include="..\..\Src\Logic\Entity\Components\Elevator.cpp">
       <Filter>Entity\Components\Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Src\Logic\Messages\MessageElevatorInitial.cpp">
-      <Filter>Messages\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Logic\Messages\MessageElevatorFinal.cpp">
-      <Filter>Messages\Source</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Src\Logic\Maps\ComponentFactory.h">
@@ -554,12 +548,6 @@
     </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Entity\Components\Elevator.h">
       <Filter>Entity\Components\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Logic\Messages\MessageElevatorInitial.h">
-      <Filter>Messages\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Logic\Messages\MessageElevatorFinal.h">
-      <Filter>Messages\Header</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
