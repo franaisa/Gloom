@@ -130,6 +130,21 @@ namespace Net {
 
 	//---------------------------------------------------------
 
+	void CManager::sendAllExcept(void* data, size_t longdata, Net::NetID id) {
+		// Si hay jugadores conectados
+		if(!_connections.empty()) {
+			// Si somos el servidor realizar un broadcast a todos los clientes
+			if(_servidorRed) {
+				TConnectionTable::iterator it = _connections.find(id);
+				assert(it != _connections.end() && "sendAllExcept no puede ejecutarse porque no existe ninguna conexion con el id dado");
+
+				_servidorRed->sendAllExcept(data, longdata, 0, 1, it->second);
+			}
+		}
+	} // sendAllExcept
+
+	//---------------------------------------------------------
+
 	void CManager::tick(unsigned int msecs) 
 	{
 		_paquetes.clear();

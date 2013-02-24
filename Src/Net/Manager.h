@@ -156,6 +156,8 @@ namespace Net
 		//Metodo que envia un mensaje a un cliente NetID concreto
 		void send(void* data, size_t longdata, Net::NetID id);
 
+		void sendAllExcept(void* data, size_t longdata, Net::NetID id);
+
 		void activateAsServer(int port, int clients = 16, unsigned int maxinbw = 0, unsigned int maxoutbw = 0);
 
 		void activateAsClient(unsigned int maxConnections = 1, unsigned int maxinbw = 0, unsigned int maxoutbw = 0);

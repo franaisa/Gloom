@@ -83,6 +83,16 @@ public:
 	virtual void sendAll(void* data, size_t longData, int channel, bool reliable)=0;
 
 	/**
+	 * Envía el mismo dato a todos los clientes conectados
+	 * @param data son los datos a enviar
+	 * @param longData tamaño de los datos a enviar
+	 * @param channel canal lógico por el que se enviarán los datos
+	 * @param reliable indica si el cliente debe comprobar que los datos han sido recibidos por la máquina remota
+	 * @param
+	 */
+	virtual void sendAllExcept(void* data, size_t longData, int channel, bool reliable, CConexion* conexion)=0;
+
+	/**
 	 * Desconecta la conexión indicada.
 	 */
 	virtual void disconnect(CConexion * conexion)=0;
