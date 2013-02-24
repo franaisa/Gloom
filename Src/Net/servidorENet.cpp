@@ -183,6 +183,25 @@ namespace Net {
 		enet_host_flush (server);
 	}
 
+	void CServidorENet::sendAllExcept(void* data, size_t longData, int channel, bool reliable, CConexion* conexion) {
+		enet_uint32 rel = 0;
+		if(reliable)
+			rel = ENET_PACKET_FLAG_RELIABLE;
+
+		ENetPacket * packet = enet_packet_create (data,longData,rel);
+	    
+		for(std::vector<CConexion*>::iterator iter = listaConexiones.begin(); iter != listaConexiones.end(); ++iter)
+		{
+			if( ((CConexionENet*)*iter) != conexion ) {
+				enet_peer_send (((CConexionENet*)*iter)->getENetPeer(), channel, packet);
+			}
+		}
+
+		if(DEBUG_SERVER)
+			fprintf (stdout, "Packet send ");
+		enet_host_flush (server);
+	}
+
 	void CServidorENet::disconnect(CConexion* conexion)
 	{
 		ENetEvent event;

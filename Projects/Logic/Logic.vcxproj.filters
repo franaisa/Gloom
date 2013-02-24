@@ -294,9 +294,18 @@
     </ClCompile>
     <ClCompile Include="..\..\Src\Logic\Entity\Components\ElevatorTrigger.cpp">
       <Filter>Entity\Components\Source Files</Filter>
-	</ClCompile>
+    </ClCompile>
     <ClCompile Include="..\..\Src\Logic\Messages\MessageAddForcePhysics.cpp">
       <Filter>Messages\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\Spike.cpp">
+	<Filter>Entity\Components\Source Files</Filter>
+	</ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\ExplotionController.cpp">
+      <Filter>Entity\Components\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\ExplotionHitNotifier.cpp">
+      <Filter>Entity\Components\Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -557,9 +566,18 @@
     </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Entity\Components\ElevatorTrigger.h">
       <Filter>Entity\Components\Header Files</Filter>
-	</ClInclude>
+    </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Messages\MessageAddForcePhysics.h">
       <Filter>Messages\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\Spike.h">
+	  <Filter>Entity\Components\Header Files</Filter>
+	</ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\ExplotionController.h">
+      <Filter>Entity\Components\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\ExplotionHitNotifier.h">
+      <Filter>Entity\Components\Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

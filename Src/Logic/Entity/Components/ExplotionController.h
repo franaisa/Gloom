@@ -1,18 +1,18 @@
 /**
-@file SpawnItemManager.h
+@file ExplotionController.h
 
 Contiene la declaración de la cabecera del componente
-que controla el comportamiento de los items.
+que controla el timer de la explosion.
 
-@see Logic::CSpawnItemManager
+@see Logic::CExplotionController
 @see Logic::IComponent
 
 @author Francisco Aisa García
 @date Febrero, 2013
 */
 
-#ifndef __Logic_SpawnItemManager_H
-#define __Logic_SpawnItemManager_H
+#ifndef __Logic_ExplotionController_H
+#define __Logic_ExplotionController_H
 
 #include "Logic/Entity/Component.h"
 
@@ -21,16 +21,12 @@ namespace Logic {
 	/**
     @ingroup logicGroup
 
-	Este componente es el encargado de gestionar el comportamiento
-	de los items; tanto los tiempos de respawn como los efectos
-	que provoca cada uno.
-
 	@author Francisco Aisa García
 	@date Febrero, 2013
 	*/
 	
-	class CSpawnItemManager : public IComponent {
-		DEC_FACTORY(CSpawnItemManager);
+	class CExplotionController : public IComponent {
+		DEC_FACTORY(CExplotionController);
 	public:
 
 
@@ -40,7 +36,7 @@ namespace Logic {
 
 
 		/** Constructor por defecto; en la clase base no hace nada. */
-		CSpawnItemManager() : IComponent(), _isRespawning(false), _timer(0), _weaponType(-1) {}
+		CExplotionController() : IComponent(), _timer(0) { }
 
 
 		// =======================================================================
@@ -65,10 +61,7 @@ namespace Logic {
 		Inicialización del componente a partir de la información extraida de la entidad
 		leida del mapa:
 		<ul>
-			<li><strong>id:</strong> Tipo del item: orbe, arma, armadura... </li>
-			<li><strong>weaponType:</strong> Si el id es weapon o weaponAmmo esta etiqueta identifica de que arma se trata. </li>
-			<li><strong>reward:</strong> Puntos de beneficio que proporciona el objeto. </li>
-			<li><strong>respawnTime:</strong> Tiempo de respawn en segundos. </li>
+			<li><strong>explotionTime: </strong>tiempo en segundos tras el cual la granada explota.</li>
 		</ul>
 
 		@param entity Entidad a la que pertenece el componente.
@@ -80,76 +73,39 @@ namespace Logic {
 
 		//________________________________________________________________________
 
-		/** 
-		Este componente acepta los siguientes mensajes:
-
-		<ul>
-			<li>TOUCHED</li>
-		</ul>
-		
-		@param message Mensaje a chequear.
-		@return true si el mensaje es aceptado.
-		*/
-		virtual bool accept(CMessage *message);
-
-		//________________________________________________________________________
-
 		/**
-		Método virtual que procesa un mensaje.
+		Setea el puntero a la entidad que ha disparado la granada
 
-		@param message Mensaje a procesar.
+		@param CEntity Puntero a la entidad que disparo la granada.
 		*/
-		virtual void process(CMessage *message);
+		void setOwner(CEntity* _owner);
 
 	private:
 
 
 		// =======================================================================
-		//                           METODOS PRIVADOS
+		//                            METODOS PRIVADOS
 		// =======================================================================
 
-
-		/**
-		Cuando se coge un objeto se llama a esta funcion, que es la encargada de 
-		mandar los mensajes que correspondan a la entidad que ha cogido el objeto.
-
-		@param actor Entidad que ha cogido el item.
-		*/
-		void itemGrabbed(CEntity* actor);
-
+		/** Crea una entidad GrenadeExplotion justo en el lugar en el que se encuentre la granada (_entity). */
+		void createExplotion();
 
 		// =======================================================================
 		//                            CAMPOS PRIVADOS
 		// =======================================================================
 
+		/** Transcurrido este tiempo, la se destruye la entidad granada y se ejecuta la explosion. */
+		float _explotionTime;
 
-		/** Id del item que controla este spawn manager */
-		std::string _id;
-
-		/** 
-		Tipo del arma o la municion de este item. Si no se trata de municion o de un arma
-		su valor es -1.
-		*/
-		int _weaponType;
-
-		/** 
-		Cantidad de puntos que ofrece este item al ser cogido (los puntos pueden indicar
-		balas, vida, armadura...
-		*/
-		int _reward;
-
-		/** Tiempo de respawn de este item en segundos. */
-		float _respawnTime;
-
-		/** Reloj que controla el tiempo que le queda a este item para respawnear. */
+		/** Timer que controla cuando explota la granada. */
 		unsigned int _timer;
 
-		/** true si este item esta en fase de respawn. */
-		bool _isRespawning;
+		/** Entidad que ha disparado la granada. */
+		CEntity* _owner;
 
-	}; // class CSpawnItemManager
+	}; // class CExplotionController
 
-	REG_FACTORY(CSpawnItemManager);
+	REG_FACTORY(CExplotionController);
 
 } // namespace Logic
 

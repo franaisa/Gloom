@@ -16,6 +16,7 @@ de disparo del lanzagranadas.
 #include "Logic/Maps/EntityFactory.h"
 #include "Logic/Entity/Entity.h"
 #include "Logic/Server.h"
+#include "Logic/Entity/Components/ExplotionController.h"
 
 #include "Logic/Messages/MessageSetPhysicPosition.h"
 #include "Logic/Messages/MessageAddForcePhysics.h"
@@ -43,11 +44,19 @@ namespace Logic {
 		Map::CEntity *entityInfo = CEntityFactory::getSingletonPtr()->getInfo("Grenade");
 		// Creamos la entidad y la activamos
 		CEntity* grenade = CEntityFactory::getSingletonPtr()->createEntity( entityInfo, Logic::CServer::getSingletonPtr()->getMap() );
+		
+		assert(grenade != NULL);
 		grenade->activate();
+
+		// Seteamos la entidad que dispara la granada
+		CExplotionController* comp = grenade->getComponent<CExplotionController>("CExplotionController");
+		assert(comp != NULL);
+		comp->setOwner(_entity);
 
 		// Spawneamos la granada justo delante del jugador y a la altura de disparo que corresponda
 		Vector3 myPosition = _entity->getPosition() + ( Math::getDirection( _entity->getOrientation() ) * (_capsuleRadius) );
 		myPosition.y = _heightShoot - _projectileRadius;
+		//myPosition.y = _heightShoot;
 
 		// Mensaje para situar el collider fisico de la granada en la posicion de disparo.
 		Logic::CMessageSetPhysicPosition* msg = new Logic::CMessageSetPhysicPosition();
