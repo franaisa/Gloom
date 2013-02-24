@@ -81,6 +81,28 @@ namespace Logic
 		*/
 		bool _active;
 
+			/**
+		Posició inicial y final del ascensor.
+		*/
+		Vector3 _positionInitial;
+		Vector3 _positionFinal;
+
+		/**
+		Controla si vamos hacia la posicion final o no
+		*/
+		bool _toFinal;
+	
+		/**
+		Dirección inicial y final del ascensor.
+		*/
+		Vector3 _directionFinal;
+		Vector3 _directionInitial;
+
+		/**
+		Velocidad del ascensor
+		*/
+		float _velocity;
+
 	}; // class CSpike
 
 	REG_FACTORY(CSpike);

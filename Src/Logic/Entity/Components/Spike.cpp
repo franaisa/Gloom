@@ -22,6 +22,7 @@ Contiene la implementación del componente que controla el movimiento de un ascen
 #include "Logic/Messages/MessageDeactivate.h"
 #include "Logic/Messages/MessageDamaged.h"
 #include "Logic/Messages/MessageTouched.h"
+#include "Logic/Messages/MessageKinematicMove.h"
 
 namespace Logic 
 {
@@ -40,6 +41,16 @@ namespace Logic
 		if(entityInfo->hasAttribute("timeToUnshow"))
 			_timeToUnshow = entityInfo->getIntAttribute("timeToUnshow");
 
+		if(entityInfo->hasAttribute("positionInitial"))
+			_positionInitial = entityInfo->getVector3Attribute("positionInitial");
+
+		if(entityInfo->hasAttribute("positionFinal"))
+			_positionFinal = entityInfo->getVector3Attribute("positionFinal");
+
+		if(entityInfo->hasAttribute("velocity"))
+			_velocity = entityInfo->getFloatAttribute("velocity");
+
+
 		return true;
 
 	} // spawn
@@ -55,6 +66,12 @@ namespace Logic
 		_active=false;
 		_timeToShow*=1000;
 		_timeToUnshow*=1000;
+
+		_directionInitial=(_positionInitial-_positionFinal);
+		_directionFinal=(_positionFinal-_positionInitial);
+		_directionInitial.normalise();
+		_directionFinal.normalise();
+		_toFinal=false;
 
 	} // activate
 	//---------------------------------------------------------
@@ -76,7 +93,6 @@ namespace Logic
 			m = new Logic::CMessageDamaged();
 			m->setDamage(1000);
 			m->setEnemy(_entity);
-			std::cout << ((CMessageTouched*)message)->getEntity()->getName() << std::endl;
 			((CMessageTouched*)message)->getEntity()->emitMessage(m);
 			break;
 		}
@@ -87,21 +103,41 @@ namespace Logic
 	void CSpike::tick(unsigned int msecs)
 	{
 		IComponent::tick(msecs);
+		Vector3 toDirection;
 		_timer+=msecs;
 		//Si ha pasado el tiempo mostramos los pinchos
 		if(_timer>_timeToShow && !_active){
-			Logic::CMessageActivate *m=new Logic::CMessageActivate();
-			_entity->emitMessage(m);
 			_timer=0;
 			_active=true;
+			_toFinal=true;
 		}
 		//Si los pinchos estan fuera solamente duran X segundos
 		if(_active && _timer>_timeToUnshow){
-			Logic::CMessageDeactivate *m=new Logic::CMessageDeactivate();
-			_entity->emitMessage(m);
 			_active=false;
 			_timer=0;
+			_toFinal=false;
 		}
+
+		//Hacia la posicion final
+		if(_toFinal){
+			if(_entity->getPosition().distance(_positionFinal)>0.2){
+				toDirection = _directionFinal * msecs * _velocity;
+				Logic::CMessageKinematicMove* m = new Logic::CMessageKinematicMove();
+				m->setMovement(toDirection);
+				_entity->emitMessage(m);
+			}
+		}
+		//Hacia la posicion inicial
+		else{
+			if(_entity->getPosition().distance(_positionInitial)>0.2){
+				toDirection = _directionInitial * msecs * _velocity;
+				Logic::CMessageKinematicMove* m = new Logic::CMessageKinematicMove();
+				m->setMovement(toDirection);
+				_entity->emitMessage(m);
+			}
+		}
+
+
 	} // tick
 	//----------------------------------------------------------
 
