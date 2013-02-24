@@ -20,11 +20,8 @@
 #include "Logic/Messages/MessageAddShield.h"
 #include "Logic/Messages/MessageAddAmmo.h"
 #include "Logic/Messages/MessageAddWeapon.h"
-#include "Logic/Messages/MessageSleep.h"
-#include "Logic/Messages/MessageWakeUp.h"
 #include "Logic/Messages/MessageActivate.h"
 #include "Logic/Messages/MessageDeactivate.h"
-
 
 #include "Net/Manager.h"
 

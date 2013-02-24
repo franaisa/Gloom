@@ -5,6 +5,7 @@ Camera CCamera
 ItemSpawn CGraphics CPhysicEntity CFloatingMovement CSpawnItemManager 
 SpawnPoint CPhysicEntity
 Jumper CGraphics CPhysicEntity CJumper
-Grenade CGraphics CPhysicEntity
+Grenade CGraphics CPhysicEntity CExplotionController
+Explotion CGraphics CPhysicEntity CExplotionHitNotifier
 Lava CGraphics CPhysicEntity CLava
 Elevator CGraphics CPhysicEntity CElevator

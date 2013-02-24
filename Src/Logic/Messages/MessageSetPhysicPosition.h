@@ -10,7 +10,7 @@ namespace Logic {
 	public:
 		CMessageSetPhysicPosition();
 		Vector3 getPosition();
-		void setPosition(Vector3 direction);
+		void setPosition(const Vector3& direction);
 		~CMessageSetPhysicPosition(){};
 
 		virtual Net::CBuffer* serialize();

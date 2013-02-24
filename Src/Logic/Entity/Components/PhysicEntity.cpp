@@ -115,11 +115,9 @@ void CPhysicEntity::process(CMessage *message)
 		}
 		break;
 	case Message::SET_PHYSIC_POSITION:
-		std::cout << "seteo posicion" << std::endl;
 		setPhysicPosition( ((CMessageSetPhysicPosition*)message)->getPosition() );
 		break;
 	case Message::ADD_FORCE_PHYSICS:
-		std::cout << "le pego una ostia" << std::endl;
 		addImpulsiveForce( ((CMessageAddForcePhysics*)message)->getForceVector() );
 		break;
 	}
@@ -304,14 +302,14 @@ void CPhysicEntity::onTrigger(IPhysics *otherComponent, bool enter)
 //---------------------------------------------------------
 
 void CPhysicEntity::setPhysicPosition(const Vector3 &position) {
-	if( _actor->isRigidDynamic() )
-		_server->setRigidDynamicPosition( static_cast<PxRigidDynamic*>(_actor), position );
+	if( _actor->isRigidBody() )
+		_server->setRigidBodyPosition( static_cast<PxRigidBody*>(_actor), position );
 }
 
 //---------------------------------------------------------
 
 void CPhysicEntity::addImpulsiveForce(const Vector3& force) {
-	if(_actor->isRigidBody()) {
+	if( _actor->isRigidDynamic() ) {
 		_server->addImpulsiveForce( static_cast<PxRigidDynamic*>(_actor), force ); 
 	}
 }

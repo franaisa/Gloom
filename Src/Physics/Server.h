@@ -47,6 +47,7 @@ namespace physx {
 	class PxRigidDynamic;
 	class PxRigidStatic;
 	class PxScene;
+	class PxRigidBody;
 
 	namespace pxtask {
 		class CudaContextManager;
@@ -337,7 +338,7 @@ namespace Physics {
 		*/
 		void CServer::setControllerPosition(physx::PxCapsuleController *controller, const Vector3 &position);
 
-		void setRigidDynamicPosition(physx::PxRigidDynamic *dynActor, const Vector3 &position);
+		void setRigidBodyPosition(physx::PxRigidBody *actor, const Vector3 &position);
 		
 		//----------------------------------
 		// Consultas 

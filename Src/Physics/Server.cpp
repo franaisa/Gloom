@@ -644,16 +644,16 @@ void CServer::setControllerPosition(PxCapsuleController *controller, const Vecto
 
 //--------------------------------------------------------
 
-void CServer::setRigidDynamicPosition(physx::PxRigidDynamic* dynActor, const Vector3& position) {
+void CServer::setRigidBodyPosition(physx::PxRigidBody* actor, const Vector3& position) {
 	assert(_scene);
 	
 	// Transformación entre el sistema de coordenadas lógico y el de PhysX
 
 	// En primer lugar obtenemos todas las formas del actor y calculamos el punto medio
 	// de todas ellas.
-	unsigned int nbShapes = dynActor->getNbShapes(); // sacamos el numero de formas del actor
+	unsigned int nbShapes = actor->getNbShapes(); // sacamos el numero de formas del actor
 	PxShape** actorShapes = new PxShape* [nbShapes]; // creamos un array de shapes
-	dynActor->getShapes(actorShapes, nbShapes); // obtenemos todas las formas del actor
+	actor->getShapes(actorShapes, nbShapes); // obtenemos todas las formas del actor
 	float averageYPosition = 0; // Contendra la altura media de todos los shapes
 
 	for(int i = 0; i < nbShapes; ++i) {
@@ -679,13 +679,15 @@ void CServer::setRigidDynamicPosition(physx::PxRigidDynamic* dynActor, const Vec
 			averageYPosition += halfPos.y;
 		}
 		/*else if(geomType == PxGeometryType::eTRIANGLEMESH) {
+			// Deducir punto medio del mesh
 		}*/
 	}
 
 	// Calculamos la altura media de todas las formas para colocar el vector
 	// posicion de physx
 	averageYPosition = averageYPosition / nbShapes;
-	dynActor->setGlobalPose( PxTransform( PxVec3(position.x, position.y + averageYPosition, position.z) ) );
+	actor->setGlobalPose( PxTransform( PxVec3(position.x, position.y + averageYPosition, position.z) ) );
+	//actor->setGlobalPose( PxTransform( PxVec3(position.x, position.y, position.z) ) );
 }
 
 //--------------------------------------------------------
