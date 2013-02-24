@@ -126,8 +126,6 @@ namespace Application {
 					tempBuffer.write(&entityId, sizeof(entityId));
 					tempBuffer.serialize(name, false);
 
-					// Enviamos los datos de los clientes conectados al cliente que se quiere conectar
-					// ESTA ES LA FUNCION QUE DA PROBLEMAS, A PESAR DE QUE SE EJECUTA EL SEND, EL CLIENTE NO RECIBE NADA
 					Net::CManager::getSingletonPtr()->send(tempBuffer.getbuffer(), tempBuffer.getSize(), playerNetId);
 
 					// Reseteamos el puntero de escritura del buffer para escribir en la siguiente vuelta del bucle
