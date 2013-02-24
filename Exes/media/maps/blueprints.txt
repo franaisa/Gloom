@@ -9,4 +9,4 @@ Grenade CGraphics CPhysicEntity
 Lava CGraphics CPhysicEntity CLava
 Elevator CGraphics CPhysicEntity CElevator
 ElevatorTrigger CGraphics CPhysicEntity CElevatorTrigger
-
+Spike CGraphics CPhysicEntity CSpike

@@ -22,8 +22,6 @@ para representar character controllers.
 #include "Logic/Messages/MessageKinematicMove.h"
 #include "Logic/Messages/MessageTouched.h"
 #include "Logic/Messages/MessageUntouched.h"
-#include "Logic/Messages/MessageWakeUp.h"
-#include "Logic/Messages/MessageSleep.h"
 #include "Logic/Messages/MessageSetPhysicPosition.h"
 #include "Logic/Messages/MessageAddForcePhysics.h"
 
