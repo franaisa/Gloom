@@ -299,6 +299,12 @@
       <Filter>Messages\Source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Src\Logic\Entity\Components\Spike.cpp">
+	<Filter>Entity\Components\Source Files</Filter>
+	</ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\ExplotionController.cpp">
+      <Filter>Entity\Components\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\ExplotionHitNotifier.cpp">
       <Filter>Entity\Components\Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -565,6 +571,12 @@
       <Filter>Messages\Header</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Entity\Components\Spike.h">
+	  <Filter>Entity\Components\Header Files</Filter>
+	</ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\ExplotionController.h">
+      <Filter>Entity\Components\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\ExplotionHitNotifier.h">
       <Filter>Entity\Components\Header Files</Filter>
     </ClInclude>
   </ItemGroup>

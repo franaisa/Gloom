@@ -121,7 +121,7 @@ Map = {
 			weaponGrenadeLauncherColdDown = 2,
 			weaponGrenadeLauncherMaxAmmo = 18,
 			weaponGrenadeLauncherId = 4,
-			weaponGrenadeLauncherShootForce = 2000,
+			weaponGrenadeLauncherShootForce = 5000,
 			weaponGrenadeLauncherProjectileRadius = 3,
 
 		hudMira = 3,
@@ -225,7 +225,7 @@ Map = {
 			weaponGrenadeLauncherColdDown = 2,
 			weaponGrenadeLauncherMaxAmmo = 18,
 			weaponGrenadeLauncherId = 4,
-			weaponGrenadeLauncherShootForce = 2000,
+			weaponGrenadeLauncherShootForce = 5000,
 			weaponGrenadeLauncherProjectileRadius = 3,
 
 		hudMira = 3,
@@ -324,7 +324,7 @@ Map = {
 			weaponGrenadeLauncherColdDown = 2,
 			weaponGrenadeLauncherMaxAmmo = 18,
 			weaponGrenadeLauncherId = 4,
-			weaponGrenadeLauncherShootForce = 200,
+			weaponGrenadeLauncherShootForce = 5000,
 			weaponGrenadeLauncherProjectileRadius = 3,
 			
 			hudMira = 3,
@@ -344,5 +344,18 @@ Map = {
 		physic_shape = "sphere",
 		physic_radius = 0.3,
 		physic_mass = 50,
+		explotionTime = 2,
+	},
+	
+	GrenadeExplotion = {
+		type = "Explotion",
+		model = "rocketLauncher.mesh",
+		physic_entity = "rigid",
+		physic_trigger = true,
+		physic_type = "kinematic",
+		physic_shape = "sphere",
+		physic_radius = 6,
+		physic_mass = 10,
+		explotionDamage = 40,
 	},
 }
