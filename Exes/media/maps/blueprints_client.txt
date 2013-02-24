@@ -3,3 +3,9 @@ LocalPlayer CAvatarController CPhysicController CInterpolation CHudOverlay CArra
 Camera CCamera
 ItemSpawn CGraphics CFloatingMovement CSpawnItemManager CNetConnector
 RemotePlayer CAvatarController CNetConnector CAnimatedGraphics CInterpolation CPhysicController
+SpawnPoint CPhysicEntity
+Jumper CGraphics CPhysicEntity CJumper
+Grenade CGraphics CPhysicEntity
+Lava CGraphics CPhysicEntity CLava
+Elevator CGraphics CPhysicEntity CElevator
+ElevatorTrigger CGraphics CPhysicEntity CElevatorTrigger

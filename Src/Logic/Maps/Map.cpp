@@ -276,7 +276,6 @@ namespace Logic {
 	
 	CEntity* CMap::createPlayer(std::string name)
 	{
-		std::cout << "createPlayer "<< name << std::endl;
 
 		//cogemos el player necesario
 		Map::CEntity *playerInfo = CEntityFactory::getSingletonPtr()->getInfo("ServerPlayer");
@@ -294,7 +293,6 @@ namespace Logic {
 	//--------------------------------------------------------
 
 	CEntity* CMap::createLocalPlayer(std::string name, TEntityID id){
-		std::cout << "createLocalPlayer "<< name << "con id-> "<< id << std::endl;
 
 		//cogemos el player necesario
 		Map::CEntity *playerInfo = CEntityFactory::getSingletonPtr()->getInfo("LocalPlayer");
@@ -322,7 +320,6 @@ namespace Logic {
 
 	CEntity* CMap::createPlayer(std::string name, TEntityID id){
 
-		std::cout << "createPlayer "<< name << "con id-> "<< id << std::endl;
 
 		//cogemos el player necesario
 		Map::CEntity *playerInfo = CEntityFactory::getSingletonPtr()->getInfo("RemotePlayer");

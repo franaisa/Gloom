@@ -141,9 +141,6 @@ namespace Logic {
 		// Escribimos el id de la entidad
 		TEntityID destID; 
 			serialMsg.read(&destID, sizeof(destID));
-
-		
-		
 			
 		//leemos el mensaje que se ha enviado por la red
 		int typeMessage;
@@ -156,6 +153,12 @@ namespace Logic {
 		CEntity* destEntity = Logic::CServer::getSingletonPtr()->getMap()->getEntityByID(destID);
 		if(destEntity != 0)
 			destEntity->emitMessage(messageReceived);
+
+		if(Net::CManager::getSingletonPtr()->imServer() && messageReceived->getMessageType()==Logic::TMessageType::CONTROL){
+			Net::CBuffer *buffer = messageReceived->serialize();
+			Net::CManager::getSingletonPtr()->sendAllExcept(buffer->getbuffer(),buffer->getSize(),packet->getConexion()->getId());
+		}
+
 		//LOG("RX ENTITY_MSG " << rxMsg._type << " from EntityID " << destID);
 	} // processEntityMessage
 

@@ -136,7 +136,9 @@ namespace Application {
 			// Extraemos la informacion asociada al player que quiere conectarse
 			Logic::CPlayerInfo playerInfo = Logic::CGameNetPlayersManager::getSingletonPtr()->getPlayer(playerNetId);
 			name = playerInfo.getName();
-
+			std::stringstream number;
+			number << playerNetId;
+			name.append(number.str());
 			// Creamos un player en el mundo con el nombre del jugador que solicita entrar
 			Logic::CEntity* player = Logic::CServer::getSingletonPtr()->getMap()->createPlayer(name);
 			// Extraemos la id asignada a dicha entidad y la asociamos al player del gestor
