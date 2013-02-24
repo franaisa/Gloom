@@ -156,7 +156,7 @@ namespace Logic {
 
 		if(Net::CManager::getSingletonPtr()->imServer() && messageReceived->getMessageType()==Logic::TMessageType::CONTROL){
 			Net::CBuffer *buffer = messageReceived->serialize();
-			//Net::CManager::getSingletonPtr()->sendAllExcept(buffer->getbuffer(),buffer->getSize(),packet->getConexion()->getId());
+			Net::CManager::getSingletonPtr()->sendAllExcept(buffer->getbuffer(),buffer->getSize(),packet->getConexion()->getId());
 		}
 
 		//LOG("RX ENTITY_MSG " << rxMsg._type << " from EntityID " << destID);
