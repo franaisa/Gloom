@@ -100,17 +100,12 @@ namespace Application {
 			Net::NetMessageType msg = Net::LOAD_PLAYER;
 
 			// Mandamos la informacion de los players de la partida al cliente que esta intentando conectarse
-			// De momento utilizo un iterador de la stl porque hay un bug con el iterador propio.
-
-			//Logic::CGameNetPlayersManager::iterator playerInfoIt = Logic::CGameNetPlayersManager::getSingletonPtr()->begin();
-			std::map<Net::NetID, Logic::CPlayerInfo>::iterator it = Logic::CGameNetPlayersManager::getSingletonPtr()->begin2();
-			std::pair<Net::NetID, Logic::CPlayerInfo> tempPair;
-			
 			Logic::CPlayerInfo tempPlayerInfo;
-			for(; it != Logic::CGameNetPlayersManager::getSingletonPtr()->end2(); ++it) {
-				
-				
-				tempPlayerInfo = it->second;
+			Net::CBuffer tempBuffer(sizeof(msg)+sizeof(netId)+sizeof(entityId)+sizeof(name));
+
+			Logic::CGameNetPlayersManager::iterator it = Logic::CGameNetPlayersManager::getSingletonPtr()->begin();
+			for(; it != Logic::CGameNetPlayersManager::getSingletonPtr()->end(); ++it) {
+				tempPlayerInfo = *it;
 				netId = tempPlayerInfo.getNetId();
 
 				// Debido a que fuera de este bucle enviaremos la informacion de este player mediante broadcast
@@ -120,7 +115,6 @@ namespace Application {
 					name = tempPlayerInfo.getName();
 
 					// Mensaje LOAD_PLAYER
-					Net::CBuffer tempBuffer(sizeof(msg)+sizeof(netId)+sizeof(entityId)+sizeof(name));
 					tempBuffer.write(&msg, sizeof(msg));
 					tempBuffer.write(&netId, sizeof(netId));
 					tempBuffer.write(&entityId, sizeof(entityId));
@@ -129,7 +123,7 @@ namespace Application {
 					Net::CManager::getSingletonPtr()->send(tempBuffer.getbuffer(), tempBuffer.getSize(), playerNetId);
 
 					// Reseteamos el puntero de escritura del buffer para escribir en la siguiente vuelta del bucle
-					//tempBuffer.reset();
+					tempBuffer.reset();
 				}
 			}
 
