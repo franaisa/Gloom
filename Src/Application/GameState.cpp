@@ -15,6 +15,7 @@ Contiene la implementación del estado de juego.
 */
 
 #include "GameState.h"
+#include "OgreClock.h"
 
 #include "Logic/Server.h"
 #include "Logic/Maps/EntityFactory.h"
@@ -84,7 +85,6 @@ namespace Application {
 		// clases construidas a partir de los blueprints
 		Logic::CServer::getSingletonPtr()->unLoadLevel();
 		Logic::CEntityFactory::getSingletonPtr()->unloadBluePrints();
-
 		// Liberar la escena física usando el motor de física
 		Physics::CServer::getSingletonPtr()->destroyScene();
 

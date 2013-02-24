@@ -9,3 +9,5 @@ Grenade CGraphics CPhysicEntity CExplotionController
 Explotion CGraphics CPhysicEntity CExplotionHitNotifier
 Lava CGraphics CPhysicEntity CLava
 Elevator CGraphics CPhysicEntity CElevator
+ElevatorTrigger CGraphics CPhysicEntity CElevatorTrigger
+
