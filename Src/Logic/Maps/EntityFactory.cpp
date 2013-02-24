@@ -239,7 +239,6 @@ namespace Logic
 			for(itc = (*it).second.components.begin(); 
 				itc !=(*it).second.components.end(); itc++)
 			{
-				std::cout << "\tassembleEntity -> componente " << (*itc) << std::endl;
 				if(CComponentFactory::getSingletonPtr()->has((*itc)))
 				{
 					comp = CComponentFactory::getSingletonPtr()->create((*itc));
@@ -266,9 +265,7 @@ namespace Logic
 								const Map::CEntity *entityInfo,
 								Logic::CMap *map)
 	{
-		std::cout << "createEntity -> " << std::endl;
 		CEntity *ret = assembleEntity(entityInfo->getType());
-		std::cout << "createEntity -> entidad ensamblada" << std::endl;
 		if (!ret)
 			return 0;
 
@@ -290,9 +287,7 @@ namespace Logic
 
 	Logic::CEntity *CEntityFactory::createEntity(const Map::CEntity *entityInfo, Logic::CMap *map, TEntityID id)
 	{
-		std::cout << "createEntity -> " << std::endl;
 		CEntity *ret = assembleEntity(entityInfo->getType(), id);
-		std::cout << "createEntity -> entidad ensamblada" << std::endl;
 		if (!ret)
 			return 0;
 

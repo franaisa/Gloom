@@ -138,7 +138,9 @@ namespace Application {
 			// Extraemos la informacion asociada al player que quiere conectarse
 			Logic::CPlayerInfo playerInfo = Logic::CGameNetPlayersManager::getSingletonPtr()->getPlayer(playerNetId);
 			name = playerInfo.getName();
-
+			std::stringstream number;
+			number << playerNetId;
+			name.append(number.str());
 			// Creamos un player en el mundo con el nombre del jugador que solicita entrar
 			Logic::CEntity* player = Logic::CServer::getSingletonPtr()->getMap()->createPlayer(name);
 			// Extraemos la id asignada a dicha entidad y la asociamos al player del gestor
@@ -154,7 +156,7 @@ namespace Application {
 
 			// Broadcast a todos los jugadores con el id del player que se quiere conectar
 			Net::CManager::getSingletonPtr()->send(buffer.getbuffer(), buffer.getSize());
-
+			player->activate();
 			break;
 		}
 		case Net::PLAYER_LOADED:
@@ -184,6 +186,16 @@ namespace Application {
 				Net::CManager::getSingletonPtr()->send(&msg, sizeof(msg), playerNetId);
 			}
 
+			break;
+		}
+		case Net::PING:{
+			Net::NetMessageType ackMsg = Net::PING;
+			clock_t time = clock();
+			Net::NetID id = Net::CManager::getSingletonPtr()->getID();
+			Net::CBuffer ackBuffer(sizeof(ackMsg) + sizeof(time));
+			ackBuffer.write(&ackMsg, sizeof(ackMsg));
+			ackBuffer.write(&time, sizeof(time));
+			Net::CManager::getSingletonPtr()->send(ackBuffer.getbuffer(), ackBuffer.getSize(), id);
 			break;
 		}
 		}

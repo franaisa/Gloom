@@ -1,18 +1,19 @@
 /**
-@file Elevator.h
+@file ElevatorTrigger.h
 
 Contiene la declaración del componente que controla el movimiento de los ascensores
 
-@see Logic::CElevator
+@see Logic::CElevatorTrigger
 @see Logic::IComponent
 
 @author Jose Antonio García Yáñez
 @date Febrero, 2013
 */
-#ifndef __Logic_Elevator_H
-#define __Logic_Elevator_H
+#ifndef __Logic_ElevatorTrigger_H
+#define __Logic_ElevatorTrigger_H
 
 #include "Logic/Entity/Component.h"
+#include <ostream>
 
 //declaración de la clase
 namespace Logic 
@@ -28,15 +29,15 @@ namespace Logic
 	@author Jose Antonio García Yáñez
 	@date Febrero, 2013
 */
-	class CElevator : public IComponent
+	class CElevatorTrigger : public IComponent
 	{
-		DEC_FACTORY(CElevator);
+		DEC_FACTORY(CElevatorTrigger);
 	public:
 
 		/**
 		Constructor por defecto; en la clase base no hace nada.
 		*/
-		CElevator() : IComponent() {}
+		CElevatorTrigger() : IComponent() {}
 
 		/**
 		Método llamado en cada frame que actualiza el estado del componente de la vida,
@@ -87,14 +88,20 @@ namespace Logic
 		Vector3 _directionInitial;
 
 		/**
+		Nombre y puntero para lincar a la entidad dinamica sin trigger
+		*/
+		std::string _entityLink;
+		CEntity* _elevatorLink;
+
+		/**
 		Velocidad del ascensor
 		*/
 		float _velocity;
 
 	}; // class CElevator
 
-	REG_FACTORY(CElevator);
+	REG_FACTORY(CElevatorTrigger);
 
 } // namespace Logic
 
-#endif // __Logic_Elevator_H
+#endif // __Logic_ElevatorTrigger_H

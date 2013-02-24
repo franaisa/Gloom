@@ -3,6 +3,54 @@ Map = {
 		type = "World",
 	},
 	
+	Ascensor1 = {
+		type = "Elevator",
+		position = {-51.0, 0.0, 1.0},
+		positionInitial = {-51.0, 0.0, 1.0},
+		positionFinal = {-51.0, 60.0, 1.0},
+		velocity = 0.035,
+		model = "health1.mesh",
+		physic_entity = "rigid",
+		physic_trigger = false,
+		physic_type = "kinematic",
+		physic_shape = "box",
+		physic_dimensions = { 2, 2, 2 },
+		physic_mass = 1,
+		physic_group = 5,
+	},
+	
+	Ascensor1T = {
+		type = "ElevatorTrigger",
+		position = {-51.0, 5.0, 1.0},
+		positionInitial = {-51.0, 5.0, 1.0},
+		positionFinal = {-51.0, 65.0, 1.0},
+		link = "Ascensor1",
+		velocity = 0.035,
+		model = "health1.mesh",
+		physic_entity = "rigid",
+		physic_trigger = true,
+		physic_type = "kinematic",
+		physic_shape = "box",
+		physic_dimensions = { 1, 1, 1 },
+		physic_mass = 10,
+		physic_group = 6,
+	},
+
+	
+	Jumper1 = {
+		type = "Jumper",
+		position = {51.0, 0.0, 1.0},
+		model = "health1.mesh",
+		power = 0.35,
+		velocity = 0.12,
+		direction = {-1,0,0},
+		physic_entity = "rigid",
+		physic_trigger = true,
+		physic_type = "static",
+		physic_shape = "box",
+		physic_dimensions = { 2, 2, 2 },
+	},
+	
 	Orb1 = {
 		type = "ItemSpawn",
 		position = {67.0, 2.0, 42.0},
@@ -42,6 +90,26 @@ Map = {
 		respawnTime = 5,
 	},
 	
+	MinigunAmmo1 = {
+		type = "ItemSpawn",
+		position = {-150.0, 4.0, 0.0},
+		model = "ammo01.mesh",
+		id = "ammo",
+		weaponType = 3,
+		reward = 200,
+		respawnTime = 5,
+	},
+	
+	GrenadeLauncherAmmo1 = {
+		type = "ItemSpawn",
+		position = {150.0, 4.0, 0.0},
+		model = "ammo01.mesh",
+		id = "ammo",
+		weaponType = 4,
+		reward = 5,
+		respawnTime = 5,
+	},
+	
 	SuperShield = {
 		type = "ItemSpawn",
 		position = {67.0, 2.0, -42.0},
@@ -51,19 +119,51 @@ Map = {
 		respawnTime = 5,
 	},
 	
+	
+	lava = {
+		type = "Lava",
+		position = {-10.0, 2, -50.0},
+		model = "lava.mesh",
+		scale = 1,
+		damage = 5,
+		timeDamage = 500,
+		physic_entity = "rigid",
+		physic_trigger = true,
+		physic_type = "static",
+		physic_shape = "box",
+		physic_dimensions = { 4, 7, 4 },
+	},
+	
+	
+	
 	Point1 = {
 		type = "SpawnPoint",
-		position = {67.0, 2.0, 42.0},
+		position = {-75.0, 0.0, 0.0},
+		physic_entity = "rigid",
+		physic_trigger = true,
+		physic_type = "static",
+		physic_shape = "box",
+		physic_dimensions = { 4, 7, 4 },
 	},
 	
 	Point2 = {
 		type = "SpawnPoint",
-		position = {-67.0, 5.0, 42.0},
+		position = {-150.0, 0.0, 0.0},
+		physic_entity = "rigid",
+		physic_trigger = true,
+		physic_type = "static",
+		physic_shape = "box",
+		physic_dimensions = { 4, 7, 4 },
 	},
 	
 	Point3 = {
 		type = "SpawnPoint",
-		position = {-47.0, 5.0, 42.0},
+		position = {130.0, 0.0, 0.0},
+		physic_entity = "rigid",
+		physic_trigger = true,
+		physic_type = "static",
+		physic_shape = "box",
+		physic_dimensions = { 4, 7, 4 },
 	},
 	
 	Camera = {

@@ -13,7 +13,7 @@ namespace Logic {
 	}//
 	//----------------------------------------------------------
 
-	void CMessageSetPhysicPosition::setPosition(Vector3 direction){
+	void CMessageSetPhysicPosition::setPosition(const Vector3& direction){
 		_position = direction;
 	}//
 	//----------------------------------------------------------

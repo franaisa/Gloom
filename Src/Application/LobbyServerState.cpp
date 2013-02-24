@@ -278,7 +278,8 @@ namespace Application {
 					Net::NetMessageType msg = Net::LOAD_PLAYER;
 					Net::NetID netId = *it;
 					std::string name( Logic::CGameNetPlayersManager::getSingletonPtr()->getPlayerNickname(netId) );
-					
+					std::stringstream number;
+					number << *it;
 					Net::CBuffer buffer(sizeof(msg) + sizeof(netId) + sizeof(Logic::EntityID) + (sizeof(char) * name.size()));
 					buffer.write(&msg, sizeof(msg));
 					buffer.write(&netId, sizeof(netId));

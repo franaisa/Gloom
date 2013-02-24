@@ -1,16 +1,16 @@
 /**
-@file Elevator.h
+@file Spike.h
 
-Contiene la declaración del componente que controla el movimiento de los ascensores
+Contiene la declaración del componente que controla la aparicion de pinchos.
 
-@see Logic::CElevator
+@see Logic::CSpike
 @see Logic::IComponent
 
 @author Jose Antonio García Yáñez
 @date Febrero, 2013
 */
-#ifndef __Logic_Elevator_H
-#define __Logic_Elevator_H
+#ifndef __Logic_Spike_H
+#define __Logic_Spike_H
 
 #include "Logic/Entity/Component.h"
 
@@ -18,25 +18,24 @@ Contiene la declaración del componente que controla el movimiento de los ascenso
 namespace Logic 
 {
 /**
-	Este componente controla el movimiento de los ascensores.
+	Este componente controla la aparicion de los pinchos en el mapa.
 	<p>
-	El ascensor se moverá entre una posicion inicial y otra final segun
-	se dispare el trigger o no.
+	Los pinchos aparecerán cada cierto tiempo.
 	
     @ingroup logicGroup
 
 	@author Jose Antonio García Yáñez
 	@date Febrero, 2013
 */
-	class CElevator : public IComponent
+	class CSpike : public IComponent
 	{
-		DEC_FACTORY(CElevator);
+		DEC_FACTORY(CSpike);
 	public:
 
 		/**
 		Constructor por defecto; en la clase base no hace nada.
 		*/
-		CElevator() : IComponent() {}
+		CSpike() : IComponent() {}
 
 		/**
 		Método llamado en cada frame que actualiza el estado del componente de la vida,
@@ -58,18 +57,31 @@ namespace Logic
 		virtual void activate();
 
 		/**
-		Este componente sólo acepta mensajes de tipo DAMAGED.
+		Este componente sólo acepta mensajes de tipo touched (por ahora).
 		*/
 		virtual bool accept(CMessage *message);
 
 		/**
-		Al recibir un mensaje de tipo DAMAGED la vida de la entidad disminuye.
+		Al recibir un mensaje de tipo TOUCHED aplicamos una fuerza de salto al jugador.
 		*/
 		virtual void process(CMessage *message);
+	
 
 	protected:
 
 		/**
+		Timers que controlan la aparición de los pinchos
+		*/
+		unsigned int _timer;
+		unsigned int _timeToShow;
+		unsigned int _timeToUnshow;
+		
+		/**
+		Booleano que controla si esta activo
+		*/
+		bool _active;
+
+			/**
 		Posició inicial y final del ascensor.
 		*/
 		Vector3 _positionInitial;
@@ -91,10 +103,10 @@ namespace Logic
 		*/
 		float _velocity;
 
-	}; // class CElevator
+	}; // class CSpike
 
-	REG_FACTORY(CElevator);
+	REG_FACTORY(CSpike);
 
 } // namespace Logic
 
-#endif // __Logic_Elevator_H
+#endif // __Logic_Spike_H

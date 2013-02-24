@@ -1,6 +1,7 @@
-material Material#71_OgreMax
+
+material NoMaterial
 {
-	technique 
+	technique
 	{
 		pass 
 		{
@@ -18,18 +19,17 @@ material Material#71_OgreMax
 			//fragment_program_ref lavapsshader
 			//{
 			//}
-			texture lava_COLOR.tga
-            }
-			texture_unit specMap
+			scene_blend alpha_blend
+			depth_write off
+			texture_unit diffuseMap
             {
-                texture lava_SPEC.tga
-            }
-			texture_unit normalMap
-            {
-                texture lava_NRM.tga
+                texture lava_COLOR.tga alpha
+				alpha_op_ex source1 src_manual src_current 0.2
             }
 		}
 
 	}
 
 }
+
+

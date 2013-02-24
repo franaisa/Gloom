@@ -62,6 +62,14 @@ namespace Application {
 		//                           METODOS HEREDADOS
 		// =======================================================================
 
+		/**
+		Función llamada cuando se crea el estado (se "engancha" en la
+		aplicación, para que inicialice sus elementos.
+
+		@return true si todo fue bien.
+		*/
+
+		virtual bool init();
 
 		/**
 		Función llamada por la aplicación cuando se activa
@@ -109,6 +117,11 @@ namespace Application {
 		*/
 		virtual void disconnexionPacketReceived(Net::CPaquete* packet) { /* Los clientes no reciben este tipo de mensajes */ }
 
+	protected:
+
+		unsigned int _npings;
+		unsigned int _time;
+		unsigned int _pingActual;
 	}; // CMultiplayerTeamDeathmatchClientState
 
 } // namespace Application

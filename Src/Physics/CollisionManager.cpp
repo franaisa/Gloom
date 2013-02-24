@@ -12,11 +12,12 @@ Contiene la implementación del gestor de colisiones.
 #include "CollisionManager.h"
 #include "Logic/Entity/Components/PhysicController.h"
 #include "Logic/Entity/Components/PhysicEntity.h"
-#include "Conversions.h"
+#include "Logic/Entity/Entity.h"
 
 #include <PxRigidActor.h>
 #include <PxShape.h> 
 #include <PxSimulationEventCallback.h> 
+#include <PxPhysicsAPI.h>
 
 using namespace Physics;
 using namespace Logic;
@@ -56,6 +57,7 @@ void CCollisionManager::onSleep(PxActor **actors, PxU32 count) {
 
 void CCollisionManager::onContact(const PxContactPairHeader &pairHeader, const PxContactPair *pairs, PxU32 nbPairs) {
 	// Por ahora ignoramos estos mensajes
+
 }
 
 //--------------------------------------------------
@@ -109,6 +111,7 @@ void CCollisionManager::onControllerHit(const PxControllersHit &hit) {
 	// TODO: notificar al componente físico la colisión con otro controller
 	// 1. Obtener el puntero al componente físico (CPhysicController)
 	// 2. Notificar la colisión al componente físico
+	
 }
 
 //--------------------------------------------------
