@@ -59,7 +59,7 @@ Map = {
 		heightShoot = 8,
 
 			weaponHammerName = "Hammer",
-			weaponHammerModel = "Katana.mesh",
+			weaponHammerModel = "hammer.mesh",
 			weaponHammerModelYaw = 1.55,
 			weaponHammerModelPitch = -0.80,
 			weaponHammerOffset = {5.0, 4.0, 5.0},
@@ -99,7 +99,7 @@ Map = {
 			weaponShotGunId = 2,
 			
 			weaponMiniGunName = "MiniGun",
-			weaponMiniGunModel = "rocketLauncher.mesh",
+			weaponMiniGunModel = "plasmagun.mesh",
 			weaponMiniGunModelYaw = 1.55,
 			weaponMiniGunModelPitch = -0.80,
 			weaponMiniGunOffset = {5.0, 4.0, 5.0},
@@ -112,7 +112,7 @@ Map = {
 			weaponMiniGunId = 3,
 			
 			weaponGrenadeLauncherName = "GrenadeLauncher",
-			weaponGrenadeLauncherModel = "shotGun01.mesh",
+			weaponGrenadeLauncherModel = "grenadelauncher.mesh",
 			weaponGrenadeLauncherModelYaw = 3.10,
 			weaponGrenadeLauncherModelPitch = 0,
 			weaponGrenadeLauncherOffset = {5.0, 4.0, 5.0},
@@ -163,7 +163,7 @@ Map = {
 		heightShoot = 8,
 
 			weaponHammerName = "Hammer",
-			weaponHammerModel = "Katana.mesh",
+			weaponHammerModel = "hammer.mesh",
 			weaponHammerModelYaw = 1.55,
 			weaponHammerModelPitch = -0.80,
 			weaponHammerOffset = {5.0, 4.0, 5.0},
@@ -203,7 +203,7 @@ Map = {
 			weaponShotGunId = 2,
 			
 			weaponMiniGunName = "MiniGun",
-			weaponMiniGunModel = "rocketLauncher.mesh",
+			weaponMiniGunModel = "plasmagun.mesh",
 			weaponMiniGunModelYaw = 1.55,
 			weaponMiniGunModelPitch = -0.80,
 			weaponMiniGunOffset = {5.0, 4.0, 5.0},
@@ -216,7 +216,7 @@ Map = {
 			weaponMiniGunId = 3,
 			
 			weaponGrenadeLauncherName = "GrenadeLauncher",
-			weaponGrenadeLauncherModel = "shotGun01.mesh",
+			weaponGrenadeLauncherModel = "grenadelauncher.mesh",
 			weaponGrenadeLauncherModelYaw = 3.10,
 			weaponGrenadeLauncherModelPitch = 0,
 			weaponGrenadeLauncherOffset = {5.0, 4.0, 5.0},
@@ -262,7 +262,7 @@ Map = {
 		numWeapons = 5,
 
 			weaponHammerName = "Hammer",
-			weaponHammerModel = "Katana.mesh",
+			weaponHammerModel = "hammer.mesh",
 			weaponHammerModelYaw = 1.55,
 			weaponHammerModelPitch = -0.80,
 			weaponHammerOffset = {5.0, 4.0, 5.0},
@@ -302,7 +302,7 @@ Map = {
 			weaponShotGunId = 2,
 			
 			weaponMiniGunName = "MiniGun",
-			weaponMiniGunModel = "rocketLauncher.mesh",
+			weaponMiniGunModel = "plasmagun.mesh",
 			weaponMiniGunModelYaw = 1.55,
 			weaponMiniGunModelPitch = -0.80,
 			weaponMiniGunOffset = {5.0, 4.0, 5.0},
@@ -315,7 +315,7 @@ Map = {
 			weaponMiniGunId = 3,
 			
 			weaponGrenadeLauncherName = "GrenadeLauncher",
-			weaponGrenadeLauncherModel = "shotGun01.mesh",
+			weaponGrenadeLauncherModel = "grenadelauncher.mesh",
 			weaponGrenadeLauncherModelYaw = 3.10,
 			weaponGrenadeLauncherModelPitch = 0,
 			weaponGrenadeLauncherOffset = {5.0, 4.0, 5.0},
