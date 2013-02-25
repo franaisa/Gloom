@@ -18,11 +18,9 @@ material Material#71_OgreMax
 			//fragment_program_ref lavapsshader
 			//{
 			//}
-			texture lava_COLOR.tga
-            }
-			texture_unit specMap
+			texture_unit diffuseMap
             {
-                texture lava_SPEC.tga
+				texture lava_COLOR.tga
             }
 			texture_unit normalMap
             {
