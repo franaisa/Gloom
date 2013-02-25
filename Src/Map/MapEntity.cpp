@@ -129,7 +129,4 @@ namespace Map {
 
 	} // getVector3Attribute
 
-
-
-
 } // namespace Map

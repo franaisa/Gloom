@@ -336,9 +336,9 @@ namespace Physics {
 		@param controller Controlador en el que setearemos la posicion.
 		@param position Posicion donde queremos poner al controller físico.
 		*/
-		void CServer::setControllerPosition(physx::PxCapsuleController *controller, const Vector3 &position);
+		void setControllerPosition(physx::PxCapsuleController *controller, const Vector3 &position);
 
-		void setRigidBodyPosition(physx::PxRigidBody *actor, const Vector3 &position);
+		void setRigidBodyPosition(physx::PxRigidBody* actor, const Vector3& position, bool makeConversionToLogicWorld);
 		
 		//----------------------------------
 		// Consultas 

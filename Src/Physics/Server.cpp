@@ -647,50 +647,54 @@ void CServer::setControllerPosition(PxCapsuleController *controller, const Vecto
 
 //--------------------------------------------------------
 
-void CServer::setRigidBodyPosition(physx::PxRigidBody* actor, const Vector3& position) {
+void CServer::setRigidBodyPosition(physx::PxRigidBody* actor, const Vector3& position, bool makeConversionToLogicWorld) {
 	assert(_scene);
 	
-	// Transformación entre el sistema de coordenadas lógico y el de PhysX
+	if(makeConversionToLogicWorld) {
+		// Transformación entre el sistema de coordenadas lógico y el de PhysX
 
-	// En primer lugar obtenemos todas las formas del actor y calculamos el punto medio
-	// de todas ellas.
-	unsigned int nbShapes = actor->getNbShapes(); // sacamos el numero de formas del actor
-	PxShape** actorShapes = new PxShape* [nbShapes]; // creamos un array de shapes
-	actor->getShapes(actorShapes, nbShapes); // obtenemos todas las formas del actor
-	float averageYPosition = 0; // Contendra la altura media de todos los shapes
+		// En primer lugar obtenemos todas las formas del actor y calculamos el punto medio
+		// de todas ellas.
+		unsigned int nbShapes = actor->getNbShapes(); // sacamos el numero de formas del actor
+		PxShape** actorShapes = new PxShape* [nbShapes]; // creamos un array de shapes
+		actor->getShapes(actorShapes, nbShapes); // obtenemos todas las formas del actor
+		float averageYPosition = 0; // Contendra la altura media de todos los shapes
 
-	for(int i = 0; i < nbShapes; ++i) {
-		PxGeometryType::Enum geomType = actorShapes[i]->getGeometryType();
+		for(int i = 0; i < nbShapes; ++i) {
+			PxGeometryType::Enum geomType = actorShapes[i]->getGeometryType();
 
-		if(geomType == PxGeometryType::eSPHERE) {
-			PxSphereGeometry sphereGeom; 
-			actorShapes[i]->getSphereGeometry(sphereGeom);
+			if(geomType == PxGeometryType::eSPHERE) {
+				PxSphereGeometry sphereGeom; 
+				actorShapes[i]->getSphereGeometry(sphereGeom);
 
-			averageYPosition += sphereGeom.radius;
+				averageYPosition += sphereGeom.radius;
+			}
+			else if(geomType == PxGeometryType::eCAPSULE) {
+				PxCapsuleGeometry capsuleGeom; 
+				actorShapes[i]->getCapsuleGeometry(capsuleGeom);
+
+				averageYPosition += capsuleGeom.halfHeight;
+			}
+			else if(geomType == PxGeometryType::eBOX) {
+				PxBoxGeometry boxGeom; 
+				actorShapes[i]->getBoxGeometry(boxGeom);
+
+				PxVec3 halfPos(boxGeom.halfExtents);
+				averageYPosition += halfPos.y;
+			}
+			/*else if(geomType == PxGeometryType::eTRIANGLEMESH) {
+				// Deducir punto medio del mesh
+			}*/
 		}
-		else if(geomType == PxGeometryType::eCAPSULE) {
-			PxCapsuleGeometry capsuleGeom; 
-			actorShapes[i]->getCapsuleGeometry(capsuleGeom);
 
-			averageYPosition += capsuleGeom.halfHeight;
-		}
-		else if(geomType == PxGeometryType::eBOX) {
-			PxBoxGeometry boxGeom; 
-			actorShapes[i]->getBoxGeometry(boxGeom);
-
-			PxVec3 halfPos(boxGeom.halfExtents);
-			averageYPosition += halfPos.y;
-		}
-		/*else if(geomType == PxGeometryType::eTRIANGLEMESH) {
-			// Deducir punto medio del mesh
-		}*/
+		// Calculamos la altura media de todas las formas para colocar el vector
+		// posicion de physx
+		averageYPosition = averageYPosition / nbShapes;
+		actor->setGlobalPose( PxTransform( PxVec3(position.x, position.y + averageYPosition, position.z) ) );
 	}
-
-	// Calculamos la altura media de todas las formas para colocar el vector
-	// posicion de physx
-	averageYPosition = averageYPosition / nbShapes;
-	actor->setGlobalPose( PxTransform( PxVec3(position.x, position.y + averageYPosition, position.z) ) );
-	//actor->setGlobalPose( PxTransform( PxVec3(position.x, position.y, position.z) ) );
+	else {
+		actor->setGlobalPose( PxTransform( PxVec3(position.x, position.y, position.z) ) );
+	}
 }
 
 //--------------------------------------------------------

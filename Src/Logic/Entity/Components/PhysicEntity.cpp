@@ -113,8 +113,11 @@ void CPhysicEntity::process(CMessage *message)
 		}
 		break;
 	case Message::SET_PHYSIC_POSITION:
-		setPhysicPosition( ((CMessageSetPhysicPosition*)message)->getPosition() );
+		{
+		CMessageSetPhysicPosition* setPosMsg = static_cast<CMessageSetPhysicPosition*>(message);
+		setPhysicPosition( setPosMsg->getPosition(), setPosMsg->getMakeConversion() );
 		break;
+		}
 	case Message::ADD_FORCE_PHYSICS:
 		addImpulsiveForce( ((CMessageAddForcePhysics*)message)->getForceVector() );
 		break;
@@ -299,9 +302,9 @@ void CPhysicEntity::onTrigger(IPhysics *otherComponent, bool enter)
 
 //---------------------------------------------------------
 
-void CPhysicEntity::setPhysicPosition(const Vector3 &position) {
+void CPhysicEntity::setPhysicPosition(const Vector3 &position, bool makeConversionToLogicWorld) {
 	if( _actor->isRigidBody() )
-		_server->setRigidBodyPosition( static_cast<PxRigidBody*>(_actor), position );
+		_server->setRigidBodyPosition( static_cast<PxRigidBody*>(_actor), position, makeConversionToLogicWorld );
 }
 
 //---------------------------------------------------------
