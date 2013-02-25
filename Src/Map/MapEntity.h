@@ -167,7 +167,6 @@ namespace Map
 
 		/**
 		Clona una entidad.
-
 		*/
 		CEntity *clone(){return new CEntity(*this);}
 

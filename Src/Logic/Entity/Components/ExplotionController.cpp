@@ -65,6 +65,7 @@ namespace Logic {
 		// Enviamos el mensaje para situar a la explosion en el punto en el que estaba la granada
 		Logic::CMessageSetPhysicPosition* msg = new Logic::CMessageSetPhysicPosition();
 		msg->setPosition( _entity->getPosition() ); // spawneamos la explosion justo en el centro de la granada
+		msg->setMakeConversion(false);
 		grenadeExplotion->emitMessage(msg);
 
 		// Seteamos la entidad que dispara la granada

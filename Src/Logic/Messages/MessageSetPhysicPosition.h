@@ -11,6 +11,10 @@ namespace Logic {
 		CMessageSetPhysicPosition();
 		Vector3 getPosition();
 		void setPosition(const Vector3& direction);
+
+		void setMakeConversion(bool convertCoordsToLogicWorld);
+		bool getMakeConversion();
+
 		~CMessageSetPhysicPosition(){};
 
 		virtual Net::CBuffer* serialize();
@@ -18,6 +22,7 @@ namespace Logic {
 		
 	private:
 		Vector3 _position;
+		bool _convertCoordsToLogicWorld;
 	};
 	REG_FACTORYMESSAGE(CMessageSetPhysicPosition);
 };

@@ -29,7 +29,7 @@ namespace Logic {
 
 		// Leer los parametros que toquen para los proyectiles
 		std::stringstream aux;
-		aux << "weapon" << _nameWeapon;	////!!!! Aqui debes de poner el nombre del arma que leera en el map.txt
+		aux << "weapon" << _nameWeapon;
 		std::string weapon = aux.str();
 
 		_shootForce = entityInfo->getFloatAttribute(weapon+"ShootForce");
@@ -61,6 +61,7 @@ namespace Logic {
 		// Mensaje para situar el collider fisico de la granada en la posicion de disparo.
 		Logic::CMessageSetPhysicPosition* msg = new Logic::CMessageSetPhysicPosition();
 		msg->setPosition(myPosition);
+		msg->setMakeConversion(true);
 		grenade->emitMessage(msg);
 		
 		// Mandar mensaje add force

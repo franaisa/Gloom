@@ -13,7 +13,7 @@ namespace Logic {
 	}//
 	//----------------------------------------------------------
 
-	void CMessageSetPhysicPosition::setPosition(const Vector3& direction){
+	void CMessageSetPhysicPosition::setPosition(const Vector3& direction) {
 		_position = direction;
 	}//
 	//----------------------------------------------------------
@@ -23,12 +23,23 @@ namespace Logic {
 	}//
 	//----------------------------------------------------------
 
+	void CMessageSetPhysicPosition::setMakeConversion(bool convertCoordsToLogicWorld) {
+		this->_convertCoordsToLogicWorld = convertCoordsToLogicWorld;
+	}//
+	//----------------------------------------------------------
+
+	bool CMessageSetPhysicPosition::getMakeConversion() {
+		return _convertCoordsToLogicWorld;
+	}//
+	//----------------------------------------------------------
+
 	Net::CBuffer* CMessageSetPhysicPosition::serialize() {
 		assert(_tempBuffer == NULL);
 
 		_tempBuffer = new Net::CBuffer(sizeof(int) + sizeof(_position.x) * 3);
-		_tempBuffer->serialize(std::string("CMessageSetPhysicPosition"),true);
+		_tempBuffer->serialize(std::string("CMessageSetPhysicPosition"), true);
 		_tempBuffer->serialize(_position);
+		_tempBuffer->serialize(_convertCoordsToLogicWorld);
 		
 		return _tempBuffer;
 	}//
@@ -36,5 +47,6 @@ namespace Logic {
 
 	void CMessageSetPhysicPosition::deserialize(Net::CBuffer& buffer) {
 		buffer.deserialize(_position);
+		buffer.deserialize(_convertCoordsToLogicWorld);
 	}
 };
