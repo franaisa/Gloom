@@ -198,6 +198,7 @@ namespace Logic
 	void CAvatarController::walk()
 	{
 		
+		
 		CMessageSetAnimation * anim = new CMessageSetAnimation();
 		anim->setString("Walk");
 		anim->setBool(true);

@@ -38,7 +38,7 @@ IMP_FACTORY(CPhysicEntity);
 
 //---------------------------------------------------------
 
-CPhysicEntity::CPhysicEntity() : IPhysics(), _actor(NULL), _movement(0,0,0)
+CPhysicEntity::CPhysicEntity() : IPhysics(), _actor(NULL), _movement(0,0,0), _isTrigger(false)
 {
 	_server = CServer::getSingletonPtr();
 }
@@ -62,6 +62,10 @@ bool CPhysicEntity::spawn(CEntity *entity, CMap *map, const Map::CEntity *entity
 	// Invocar al método de la clase padre
 	if(!IComponent::spawn(entity,map,entityInfo))
 		return false;
+
+	if(entityInfo->hasAttribute("physic_trigger")) {
+		_isTrigger = entityInfo->getBoolAttribute("physic_trigger");
+	}
 
 	// Crear el objeto físico asociado al componente
 	_actor = createActor(entityInfo);
@@ -95,22 +99,10 @@ void CPhysicEntity::process(CMessage *message)
 		_movement += ((CMessageKinematicMove*)message)->getMovement();
 		break;
 	case Message::ACTIVATE:
-		nbShapes = _actor->getNbShapes();
-		actorShapes = new PxShape* [nbShapes];
-		_actor->getShapes(actorShapes, nbShapes);
-		for(int i=0;i<nbShapes;i++){
-			actorShapes[i]->setFlag(PxShapeFlag::eTRIGGER_SHAPE,true);
-			actorShapes[i]->setFlag(PxShapeFlag::eSCENE_QUERY_SHAPE,true);
-		}
+		activate();
 		break;
 	case Message::DEACTIVATE:
-		nbShapes = _actor->getNbShapes();
-		actorShapes = new PxShape* [nbShapes];
-		_actor->getShapes(actorShapes, nbShapes);
-		for(int i=0;i<nbShapes;i++){
-			actorShapes[i]->setFlag(PxShapeFlag::eTRIGGER_SHAPE,false);
-			actorShapes[i]->setFlag(PxShapeFlag::eSCENE_QUERY_SHAPE,false);
-		}
+		deactivate();
 		break;
 	case Message::SET_PHYSIC_POSITION:
 		{
@@ -312,5 +304,61 @@ void CPhysicEntity::setPhysicPosition(const Vector3 &position, bool makeConversi
 void CPhysicEntity::addImpulsiveForce(const Vector3& force) {
 	if( _actor->isRigidDynamic() ) {
 		_server->addImpulsiveForce( static_cast<PxRigidDynamic*>(_actor), force ); 
+	}
+}
+
+//---------------------------------------------------------
+
+void CPhysicEntity::deactivate() {
+	// Setea _activate a false
+	// No desactivamos a IPhysics por que necesitamos que se reciban
+	// MENSAJES de activacio y desactivacion, y por lo tanto, necesitamos
+	// que se ejecute el tick de este componente.
+	//IPhysics::deactivate();
+
+	// Desactivamos todos los shapes del componente por completo en PhysX
+	// Para ello, obtenemos todos sus shapes y ponemos los flags a false
+
+	int nbShapes = _actor->getNbShapes();
+	PxShape** actorShapes = new PxShape* [nbShapes];
+	_actor->getShapes(actorShapes, nbShapes);
+	for(int i = 0; i < nbShapes; ++i) {
+		if(_isTrigger) {
+			// Desactivamos la shape como trigger
+			actorShapes[i]->setFlag(PxShapeFlag::eTRIGGER_SHAPE, false);
+		}
+
+		// Esta shape no tomara parte en barridos, raycasts...
+		actorShapes[i]->setFlag(PxShapeFlag::eSCENE_QUERY_SHAPE, false);
+		// Esta shape no entrara dentro de la simulacion de fisicas
+		actorShapes[i]->setFlag(PxShapeFlag::eSIMULATION_SHAPE , false);
+	}
+}
+
+//---------------------------------------------------------
+
+void CPhysicEntity::activate() {
+	// Setea _activate a true
+	// Activamos a IPhysics por que necesitamos que se reciban
+	// MENSAJES de activacio y desactivacion, y por lo tanto, necesitamos
+	// que se ejecute el tick de este componente.
+	//IPhysics::activate();
+
+	// Activamos todos los shapes del componente por completo en PhysX
+	// Para ello, obtenemos todos sus shapes y ponemos los flags a true
+
+	int nbShapes = _actor->getNbShapes();
+	PxShape** actorShapes = new PxShape* [nbShapes];
+	_actor->getShapes(actorShapes, nbShapes);
+	for(int i = 0; i < nbShapes; ++i) {
+		if(_isTrigger) {
+			// Volvemos a activar la shape como trigger
+			actorShapes[i]->setFlag(PxShapeFlag::eTRIGGER_SHAPE, true);
+		}
+
+		// Esta shape tomara parte en barridos, raycasts...
+		actorShapes[i]->setFlag(PxShapeFlag::eSCENE_QUERY_SHAPE, true);
+		// Esta shape entrara dentro de la simulacion de fisicas
+		actorShapes[i]->setFlag(PxShapeFlag::eSIMULATION_SHAPE , true);
 	}
 }
