@@ -159,8 +159,8 @@ namespace Logic
 
 	void CArrayGraphics::changeWeapon(int newWeapon){
 		
-		_graphicsEntities[newWeapon]._graphicsEntity->setVisible(true);
 		_graphicsEntities[_actualWeapon]._graphicsEntity->setVisible(false);
+		_graphicsEntities[newWeapon]._graphicsEntity->setVisible(true);
 		_actualWeapon = newWeapon;
 		
 		

@@ -113,6 +113,10 @@ namespace Logic
 
 		void addImpulsiveForce(const Vector3& force);
 
+		virtual void deactivate();
+
+		virtual void activate();
+
 	private:
 
 		/**
@@ -151,6 +155,8 @@ namespace Logic
 		bool _inTrigger;
 
 		bool _sleepUntil;
+
+		bool _isTrigger;
 
 	}; // class CPhysicEntity
 

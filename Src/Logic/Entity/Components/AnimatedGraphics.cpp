@@ -27,6 +27,10 @@ gráfica de una entidad estática.
 namespace Logic 
 {
 	IMP_FACTORY(CAnimatedGraphics);
+
+	CAnimatedGraphics::~CAnimatedGraphics(){
+		delete _weapons;
+	}
 	
 	//---------------------------------------------------------
 

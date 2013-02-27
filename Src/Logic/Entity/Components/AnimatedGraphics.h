@@ -52,6 +52,11 @@ namespace Logic
 				_defaultAnimation("") {}
 
 		/**
+		Destructor (virtual); Quita de la escena y destruye la entidad gráfica y la animada.
+		*/
+		virtual ~CAnimatedGraphics();
+		
+		/**
 		Método virtual que elige que mensajes son aceptados. Son válidos
 		SET_ANIMATION y STOP_ANIMATION.
 

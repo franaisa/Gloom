@@ -187,7 +187,7 @@ namespace Application {
 			Net::CBuffer ackBuffer(sizeof(ackMsg) + sizeof(time));
 			ackBuffer.write(&ackMsg, sizeof(ackMsg));
 			ackBuffer.write(&time, sizeof(time));
-			Net::CManager::getSingletonPtr()->send(ackBuffer.getbuffer(), ackBuffer.getSize(), id);
+			Net::CManager::getSingletonPtr()->send(ackBuffer.getbuffer(), ackBuffer.getSize(), playerNetId);
 			break;
 		}
 		}

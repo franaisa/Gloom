@@ -62,6 +62,12 @@ namespace Logic  {
 
 		//________________________________________________________________________
 
+		/**
+		Tick de reloj del componente
+		*/
+		virtual void tick();
+
+
 		/** 
 		Este componente acepta los siguientes mensajes:
 
@@ -83,6 +89,29 @@ namespace Logic  {
 		*/
 		virtual void process(CMessage *message);
 
+	private:
+		/**
+		Posición que el servidor me ha dicho que es donde debo estar
+		*/
+		Matrix4 _serverPos;
+		/**
+		distancia maxima a la que interpolo poco a poco
+		*/
+		float _maxDistance;
+		/**
+		distancia minima a la que interpolo poco a poco
+		*/
+		float _minDistance;
+		/**
+		Variable de control de interpolación (para no liarla)
+		*/
+		bool _interpolating;
+		/**
+		variable que indica el ping con el que estamos corrigiendo
+		*/
+		unsigned int _actualPing;
+
+		float _speed;
 	}; // class CInterpolation
 
 	REG_FACTORY(CInterpolation);

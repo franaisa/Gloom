@@ -14,6 +14,7 @@ Contiene la declaración del gestor de colisiones.
 
 #include <PxSimulationEventCallback.h> 
 #include <characterkinematic/PxController.h>
+#include <set>
 
 // Namespace que contiene las clases relacionadas con la parte física. 
 namespace Physics {
@@ -87,6 +88,20 @@ namespace Physics {
 		el usuario (ver documentación PhysX).
 		*/ 
 		void onObstacleHit(const physx::PxControllerObstacleHit &hit);
+
+		/**
+		@deprecated
+		*/
+		bool collisionEnabled(physx::PxU16 group1, physx::PxU16 group2) const;
+
+		/**
+		@deprecated
+		*/
+		void setCollisionGroup(physx::PxU16 group1, physx::PxU16 group2, bool enabled);
+
+	private:
+		// LIBERAR MEMORIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA!
+		std::set<physx::PxU16>* _collisionGroupLookupTable[32];
    
 	}; // CCollisionManager
 
