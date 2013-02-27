@@ -41,6 +41,7 @@ namespace Logic
 		*/
 		CSwitchTrigger() : IComponent(), _targetName(""), _target(0) {}
 		
+		virtual ~CSwitchTrigger();
 		/**
 		Inicialización del componente usando la descripción de la entidad que hay en 
 		el fichero de mapa.

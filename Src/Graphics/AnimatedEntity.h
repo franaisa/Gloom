@@ -163,6 +163,8 @@ namespace Graphics
 
 		Ogre::Entity *_weapon;
 
+		Ogre::SceneNode* _ObjectentityNode;
+
 	}; // class CAnimatedEntity
 
 } // namespace Graphics
