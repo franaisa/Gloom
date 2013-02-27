@@ -48,6 +48,18 @@ namespace Logic
 {
 	IMP_FACTORY(CHudOverlay);
 	
+	CHudOverlay::~CHudOverlay(){
+		delete _overlayPlay;
+		delete _overlayDie;
+
+		delete _textAreaDie;
+
+		delete _textBoxArea[3];
+
+		// En vez de 4 deberia de ir el numero de armas pero no tengo cojones U.U
+		delete _weaponsBox[6][3];
+	}
+
 	//---------------------------------------------------------
 
 	bool CHudOverlay::spawn(CEntity *entity, CMap *map, const Map::CEntity *entityInfo)
