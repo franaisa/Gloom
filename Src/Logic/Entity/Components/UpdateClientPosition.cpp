@@ -28,7 +28,6 @@ namespace Logic
 			CMessageSyncPosition* msg = new CMessageSyncPosition;
 			msg->setTransform( _entity->getTransform() );
 			_entity->emitMessage(msg);
-
 			_timer = 0;
 		}
 

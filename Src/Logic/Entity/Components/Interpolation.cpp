@@ -30,7 +30,7 @@ namespace Logic  {
 			return false;
 
 		// Indicar parametros de interpolacion
-
+		_interpolating = false;
 		return true;
 	} // spawn
 
@@ -42,22 +42,37 @@ namespace Logic  {
 	
 	//________________________________________________________________________
 
+	void CInterpolation::tick(){
+		//si no estamos interpolando, gl
+		if(!_interpolating)
+			return;
+
+		//calculamos la distancia que hay entre donde estoy y donde me dice el servidor que debería estar
+		Vector3 serverPos = _serverPos.getTrans();
+		serverPos = serverPos - _entity->getPosition();
+		float distance = sqrt(serverPos.x*serverPos.x+serverPos.y*serverPos.y+serverPos.z+serverPos.z);
+		
+		//si la distancia es muy grande, entonces seteamos la posi del tirón
+		//Mensaje para el componente de físicas
+		
+
+	}
+
+	//________________________________________________________________________
+
 	void CInterpolation::process(CMessage *message) {
 		switch(message->getMessageType())
 		{
 		case Message::SYNC_POSITION:
-			// Set transform por cojones
-			//_entity->setTransform( ((CMessageSyncPosition*)message)->getTransform() );
-			Matrix4 transform = ((CMessageSyncPosition*)message)->getTransform();
-			//Mensaje para el componente de físicas
+			// nos guardamos la posi que nos han dado por si tenemos que interpolar
+			_serverPos = ((CMessageSyncPosition*)message)->getTransform();
 			Logic::CMessageSetPhysicPosition *m = new Logic::CMessageSetPhysicPosition();
-			m->setPosition(transform.getTrans());
+			m->setPosition(_serverPos.getTrans());
 			_entity->emitMessage(m);
 			//Movemos la orientacion logica/grafica
 			Matrix3 tmpMatrix;
-			transform.extract3x3Matrix(tmpMatrix);
+			_serverPos.extract3x3Matrix(tmpMatrix);
 			_entity->setOrientation(tmpMatrix);
-
 			break;
 		}
 	} // process
