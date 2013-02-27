@@ -106,7 +106,12 @@ namespace Logic  {
 		Variable de control de interpolación (para no liarla)
 		*/
 		bool _interpolating;
+		/**
+		variable que indica el ping con el que estamos corrigiendo
+		*/
+		unsigned int _actualPing;
 
+		float _speed;
 	}; // class CInterpolation
 
 	REG_FACTORY(CInterpolation);

@@ -54,10 +54,10 @@ namespace Logic
 
 		delete _textAreaDie;
 
-		delete _textBoxArea[3];
+		//delete _textBoxArea[3];
 
 		// En vez de 4 deberia de ir el numero de armas pero no tengo cojones U.U
-		delete _weaponsBox[6][3];
+		//delete _weaponsBox[6][3];
 	}
 
 	//---------------------------------------------------------

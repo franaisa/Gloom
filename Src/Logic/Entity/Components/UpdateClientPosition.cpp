@@ -27,6 +27,7 @@ namespace Logic
 		if(_timer > _syncPosTimeStamp) {
 			CMessageSyncPosition* msg = new CMessageSyncPosition;
 			msg->setTransform( _entity->getTransform() );
+			msg->setTime(clock());
 			_entity->emitMessage(msg);
 			_timer = 0;
 		}

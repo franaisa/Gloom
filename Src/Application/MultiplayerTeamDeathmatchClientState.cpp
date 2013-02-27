@@ -37,13 +37,7 @@ namespace Application {
 		
 		//comenzamos el proceso de sincronizacion, para ello enviamos un mensaje de ping
 		//y tomamos el tiempo para cronometrar cuanto tarda el servidor en respondernos
-		Net::NetMessageType ackMsg = Net::PING;
-		Net::NetID id = Net::CManager::getSingletonPtr()->getID();
-		Net::CBuffer ackBuffer(sizeof(ackMsg) + sizeof(id));
-		ackBuffer.write(&ackMsg, sizeof(ackMsg));
-		ackBuffer.write(&id, sizeof(id));
-		_reloj = clock();
-		Net::CManager::getSingletonPtr()->send(ackBuffer.getbuffer(), ackBuffer.getSize());
+		
 		return true;
 	}
 	void CMultiplayerTeamDeathmatchClientState::activate() {
@@ -51,6 +45,15 @@ namespace Application {
 
 		// Registramos a este estado como observador de red para que sea notificado
 		Net::CManager::getSingletonPtr()->addObserver(this);
+		Net::NetMessageType ackMsg = Net::PING;
+		Net::NetID id = Net::CManager::getSingletonPtr()->getID();
+		Net::CBuffer ackBuffer(sizeof(ackMsg) + sizeof(id));
+		ackBuffer.write(&ackMsg, sizeof(ackMsg));
+		ackBuffer.write(&id, sizeof(id));
+		_reloj = clock();
+		_npings = 0;
+		_pingActual = 0;
+		Net::CManager::getSingletonPtr()->send(ackBuffer.getbuffer(), ackBuffer.getSize());
 	} // activate
 
 	//______________________________________________________________________________
@@ -104,16 +107,16 @@ namespace Application {
 		case Net::PING:
 			//me llega la respuesta de un ping, por lo tanto tomo el tiempo y calculo mi ping
 			
-			int ping = clock()-_reloj;
+			unsigned int ping = clock()-_reloj;
 			_npings++;
 			_pingActual += ping;
 
-			if(_npings>2){//si ya he tomado suficientes pings, calculo la media y la seteo al server
+			if(_npings>5){//si ya he tomado suficientes pings, calculo la media y la seteo al server
 				_pingActual = _pingActual/_npings;
 				clock_t serverTime;
 				buffer.read(&serverTime,sizeof(serverTime));
 				serverTime+=_pingActual;
-				Logic::CServer::getSingletonPtr()->setDiffTime(clock()-serverTime);
+				Logic::CServer::getSingletonPtr()->setDiffTime(serverTime-clock());
 			}else{//si no he tomado suficientes pings, me guardo el ping y envío otro
 				Net::NetMessageType msgping = Net::PING;
 				Net::NetID id = Net::CManager::getSingletonPtr()->getID();
