@@ -120,7 +120,7 @@ namespace Logic
 	{
 		//Si no esto muerto ya hago las acciones
 		if(!_isDead){
-			//Desactivamos todos menos el cspawnplayerv
+			//Desactivamos todos menos el cspawnplayer
 			std::list<std::string*> *except=new std::list<std::string*>();
 			except->push_back(new std::string("CSpawnPlayer"));
 			except->push_back(new std::string("CHudOverlay"));
