@@ -242,6 +242,7 @@ Map = {
 		physic_type = "static",
 		physic_shape = "sphere",
 		physic_radius = 3,
+		physic_group = 10,
 	},
 	
 	Enemigo1 = {
@@ -344,6 +345,7 @@ Map = {
 		physic_shape = "sphere",
 		physic_radius = 0.3,
 		physic_mass = 50,
+		physic_group = 11,
 		explotionTime = 2,
 	},
 	
@@ -356,6 +358,7 @@ Map = {
 		physic_shape = "sphere",
 		physic_radius = 6,
 		physic_mass = 10,
+		physic_group = 12,
 		explotionDamage = 40,
 	},
 }
