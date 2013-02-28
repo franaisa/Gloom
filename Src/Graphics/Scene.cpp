@@ -14,13 +14,16 @@ de una escena.
 @date Julio, 2010
 */
 
+#include "Particle.h"
 #include "Scene.h"
 #include "Camera.h"
 #include "Server.h"
 #include "StaticEntity.h"
 #include "BaseSubsystems/Server.h"
+#include "Graphics/Entity.h"
 
 #include <assert.h>
+#include <map>
 
 #include <OgreRoot.h>
 #include <OgreSceneManager.h>
@@ -29,11 +32,12 @@ de una escena.
 #include <OgreStaticGeometry.h>
 #include <OgreColourValue.h>
 #include <OgreSceneNode.h>
+#include <OgreParticleSystem.h>
 
 namespace Graphics 
 {
 	CScene::CScene(const std::string& name) : _viewport(0), 
-		_staticGeometry(0), _directionalLight(0), _sceneNode(0)
+		_staticGeometry(0), _directionalLight(0), _temporal(0)
 	{
 		_root = BaseSubsystems::CServer::getSingletonPtr()->getOgreRoot();
 		_sceneMgr = _root->createSceneManager(Ogre::ST_INTERIOR, name);
@@ -157,21 +161,75 @@ namespace Graphics
 
 	} // buildStaticGeometry
 
-	void CScene::createSceneNode(const std::string &name){
-		if(_sceneNode)
-			delete _sceneNode;
-		_sceneNode = _sceneMgr->createSceneNode(name);
+	void CScene::createSceneNode(const std::string &nameSceneNode){
+
+		Ogre::SceneNode *sceneNode = getSceneNode(nameSceneNode);
+		if(!sceneNode)
+			sceneNode = _sceneMgr->createSceneNode(nameSceneNode);
+		std::pair<std::string,Ogre::SceneNode*> aux(nameSceneNode,sceneNode);
+		_sceneNodes.insert(aux);
+		
 	}
 
-	bool CScene::addEntityToSceneNode(CEntity* entity){
-		if(!_sceneNode)
-			return false;
-		_sceneNode->attachObject((Ogre::MovableObject*)entity->getEntity());
+	Ogre::SceneNode* CScene::getSceneNode(const std::string &nameSceneNode){
+		
+		std::map<std::string, Ogre::SceneNode*>::iterator aux = _sceneNodes.find(nameSceneNode); 
+		//Si cierto, significa que no existe dicha SceneNode
+		if (aux == _sceneNodes.end())
+			return 0;
+		return aux->second;
+
+	}
+/*
+	bool CScene::addEntityToSceneNode(std::string &nameSceneNode, CEntity* entity){
+		Ogre::SceneNode *sceneNode = _sceneNodes.find(nameSceneNode)->second;
+		sceneNode->attachObject((Ogre::MovableObject*)entity->getEntity());
 		return true;
 	}
 
-	void CScene::removeEntityToSceneNode(CEntity* entity){
-		_sceneNode->removeChild(entity->getName());
+	void CScene::removeEntityToSceneNode(std::string &nameSceneNode, CEntity* entity){
+		Ogre::SceneNode *sceneNode = _sceneNodes.find(nameSceneNode)->second;
+		sceneNode->removeChild(entity->getName());
+	}
+*/
+	CParticle * CScene::createParticle(const std::string &unicName, const std::string &particleName){
+
+
+		CParticle *particle = new CParticle(unicName, particleName, ++_temporal);
+		return particle;
+
+		/*
+		char numstr[21]; // enough to hold all numbers up to 64-bits
+			sprintf(numstr, "%d", _temporal);
+
+			// Creamos nuestro sistema de partículas :)
+			Ogre::ParticleSystem *pssmoke;
+			pssmoke = _sceneMgr->createParticleSystem(unicName+numstr, particleName);
+
+			// Creamos un nodo y atachamos la particula pssmoke a ese scenenode
+			Ogre::SceneNode* sceneNode = _sceneMgr->createSceneNode(unicName+"_particleSystemNode_"+numstr);
+			sceneNode->attachObject((Ogre::MovableObject*)pssmoke);
+
+			if(_sceneMgr->hasSceneNode(unicName+"_node"))
+			{
+				_sceneMgr->getSceneNode(unicName+"_node")->addChild(sceneNode);
+			}
+
+			// Desvinculamos el sistema de partículas del nodo
+			/*
+			sceneNode->detachObject(pssmoke);
+ 
+			// Destruimos el nodo
+			_sceneMgr->destroySceneNode(sceneNode);
+ 
+			// Destruimos el sistema de partículas
+			_sceneMgr->destroyParticleSystem(pssmoke);
+			
+		
+			_temporal++;
+
+			return pssmoke;
+			*/
 	}
 
 } // namespace Graphics

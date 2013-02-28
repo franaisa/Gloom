@@ -46,7 +46,7 @@ namespace Logic {
 	//----------------------------------------------------------
 
 	void CMessageStopAnimation::deserialize(Net::CBuffer& buffer) {
-		unsigned int size;
+		//unsigned int size;
 		buffer.deserialize(_bool);
 		buffer.deserialize(_string);
 		buffer.deserialize(_bool);

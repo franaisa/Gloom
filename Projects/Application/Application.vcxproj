@@ -113,6 +113,7 @@
     <ClCompile Include="..\..\Src\Application\MultiplayerTeamDeathmatchServerState.cpp" />
     <ClCompile Include="..\..\Src\Application\NetMenuState.cpp" />
     <ClCompile Include="..\..\Src\Application\OgreClock.cpp" />
+    <ClCompile Include="..\..\Src\Application\SelectScenario.cpp" />
     <ClCompile Include="..\..\Src\Application\SinglePlayerState.cpp" />
     <ClCompile Include="..\..\Src\Docs\docCompilando.cpp" />
     <ClCompile Include="..\..\Src\Docs\docDirectorios.cpp" />
@@ -134,6 +135,7 @@
     <ClInclude Include="..\..\Src\Application\MultiplayerTeamDeathmatchServerState.h" />
     <ClInclude Include="..\..\Src\Application\NetMenuState.h" />
     <ClInclude Include="..\..\Src\Application\OgreClock.h" />
+    <ClInclude Include="..\..\Src\Application\SelectScenario.h" />
     <ClInclude Include="..\..\Src\Application\SinglePlayerState.h" />
   </ItemGroup>
   <ItemGroup>

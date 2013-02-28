@@ -1,0 +1,22 @@
+
+material RefRep_297_Machine_Gun_Ammo_Text
+{
+	technique
+	{
+		pass
+		{
+			ambient 0.558431 0.558431 0.558431 1
+			diffuse 0.558431 0.558431 0.558431 1
+			specular 0.5 0.5 0.5 1 96.0784
+
+			texture_unit
+			{
+				texture Machine_Gun_Ammo_Texture.png
+			}
+		}
+
+	}
+
+}
+
+

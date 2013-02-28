@@ -118,3 +118,5 @@ build.xml
 # Bring back media
 !/Exes/media/
 
+# Bring resources.cfg
+!/Exes/resource.cfg

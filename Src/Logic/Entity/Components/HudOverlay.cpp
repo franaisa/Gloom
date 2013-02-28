@@ -450,7 +450,6 @@ namespace Logic
 		}
 		
 
-
 		Graphics::CScene *miScene3D = _server->createScene("SceneOverlay3D");
 
 		//Graphics::CScene *miScene3D = _server->getActiveScene();

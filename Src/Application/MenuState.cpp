@@ -146,13 +146,18 @@ namespace Application {
 			_app->exitRequest();
 			break;
 		case GUI::Key::RETURN:
+			/*
 			if (!Logic::CEntityFactory::getSingletonPtr()->loadBluePrints("blueprints.txt"))
 				return false;
 			if (!Logic::CServer::getSingletonPtr()->loadLevel("map.txt"))
 				return false;
 
 			_app->setState("singlePlayer");
+			/*/
+			_app->setState("selectScenario");
+			/* */
 			break;
+			
 		default:
 			return false;
 		}
@@ -188,6 +193,9 @@ namespace Application {
 	//--------------------------------------------------------
 		
 	bool CMenuState::startReleased(const CEGUI::EventArgs& e) {
+		
+		/*
+		
 		if (!Logic::CEntityFactory::getSingletonPtr()->loadBluePrints("blueprints.txt"))
 			return false;
 		if (!Logic::CEntityFactory::getSingletonPtr()->loadArchetypes("archetypes.txt")) {
@@ -198,6 +206,12 @@ namespace Application {
 			return false;
 		
 		_app->setState("singlePlayer");
+		
+		/*/
+		
+		_app->setState("selectScenario");
+		
+		/* */
 		return true;
 
 	} // startReleased

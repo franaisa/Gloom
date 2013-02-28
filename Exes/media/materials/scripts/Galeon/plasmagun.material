@@ -1,0 +1,23 @@
+
+material Default_OgreMax
+{
+	technique Map#12
+	{
+		pass Map#13
+		{
+			ambient 0.7 0.7 0.7 1
+			diffuse 0.7 0.7 0.7 1
+			specular 0.707 0.707 0.707 1 50
+
+			texture_unit Map#14
+			{
+				texture plasma.jpg
+				filtering linear linear linear
+			}
+		}
+
+	}
+
+}
+
+

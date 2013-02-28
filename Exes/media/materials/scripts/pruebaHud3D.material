@@ -5,6 +5,11 @@ material pruebaHud3D
 		pass
 		{
 			depth_check off
+
+			scene_blend alpha_blend
+			lighting off
+			
+			
 		}
 	}
 }

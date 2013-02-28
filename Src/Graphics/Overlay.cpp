@@ -64,7 +64,17 @@ namespace Graphics
 	//------------------------------------------------------------
 
 	COverlay::~COverlay(){
-	
+		/*
+		if(_overlay){Graphics::CServer::getSingletonPtr()->getOverlayManager()->destroy(_overlay->getName());}
+		if(_overlayContainer){Graphics::CServer::getSingletonPtr()->getOverlayManager()->destroyOverlayElement(_overlayContainer->getName());}
+		if(_overlayText){Graphics::CServer::getSingletonPtr()->getOverlayManager()->destroyOverlayElement(_overlayContainer->getName());}
+		*/
+		Graphics::CServer::getSingletonPtr()->getOverlayManager()->destroyAllOverlayElements();
+		Graphics::CServer::getSingletonPtr()->getOverlayManager()->destroyAll();
+
+		_overlay = NULL;
+		_overlayContainer = NULL;
+		_overlayText = NULL;
 	} // ~COverlay
 
 	//------------------------------------------------------------
@@ -88,6 +98,7 @@ namespace Graphics
 		if(_overlay){return _overlay->isVisible();}
 		if(_overlayContainer){return _overlayContainer->isVisible();}
 		if(_overlayText){return _overlayText->isVisible();}
+		return false;
 	} // isVisible
 
 	//------------------------------------------------------------

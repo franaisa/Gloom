@@ -26,6 +26,7 @@ basadas en Ogre. Esta clase maneja la ejecución de todo el juego.
 #include "LobbyServerState.h"
 #include "MultiplayerTeamDeathmatchClientState.h"
 #include "MultiplayerTeamDeathmatchServerState.h"
+#include "SelectScenario.h"
 #include "SinglePlayerState.h"
 
 
@@ -60,6 +61,8 @@ namespace Application {
 		if(!addState("singlePlayer", new CSinglePlayerState(this)))
 			return false;
 		if(!addState("exit", new CExitState(this)))
+			return false;
+		if(!addState("selectScenario", new CSelectScenario(this)))
 			return false;
 
 		// ESTADOS DE RED

@@ -65,7 +65,7 @@ bool CPhysicController::spawn(CEntity* entity, CMap *map, const Map::CEntity *en
 	_controller = createController(entityInfo);
 	// Seteo de _falling a false para que se envie el primer mensaje de actualizacion
 	_falling=false;
-
+	std::cout << _entity->getPosition() << std::endl;
 	return true;
 }
 

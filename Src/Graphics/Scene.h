@@ -28,6 +28,7 @@ namespace Ogre
 	class StaticGeometry;
 	class Light;
 	class SceneNode;
+	class ParticleSystem;
 }
 namespace Graphics 
 {
@@ -35,6 +36,7 @@ namespace Graphics
 	class CCamera;
 	class CEntity;
 	class CStaticEntity;
+	class CParticle;
 }
 
 namespace Graphics 
@@ -144,7 +146,7 @@ namespace Graphics
 		Ogre::SceneManager *getSceneMgr() {return _sceneMgr;}
 
 		/**
-		Crea un scene node, se usa para los overlays. Tan solo podra haber un scenenode al mismo tiempo.
+		Crea un scene node, se usa para los overlays.
 		*/
 		void createSceneNode(const std::string &name);
 
@@ -154,17 +156,19 @@ namespace Graphics
 		<li></li>
 		</ul>
 		*/
-		bool addEntityToSceneNode(CEntity* entity);
+		//bool addEntityToSceneNode(std::string &nameSceneNode, CEntity* entity);
 
 		/**
 		Elimina una entidad de la sceneNode
 		*/
-		void removeEntityToSceneNode(CEntity* entity);
+		//void removeEntityToSceneNode(std::string &nameSceneNode, CEntity* entity);
 
 		/**
 		Devuelve el scene node. Este metodo solo deberia de invocarse en Overlay.cpp
 		*/
-		Ogre::SceneNode* getSceneNode() { return _sceneNode; };
+		Ogre::SceneNode* getSceneNode(const std::string &nameSceneNode);
+		
+		CParticle *createParticle(const std::string &unicName, const std::string &particleName);
 	protected:
 
 		/**
@@ -293,6 +297,11 @@ namespace Graphics
 		typedef std::list<CEntity*> TEntityList;
 
 		/**
+		Tipos para la lista de sceneNodes
+		*/
+		typedef std::map<std::string, Ogre::SceneNode *> TSceneNodeList;
+
+		/**
 		Lista de entidades estáticas.
 		*/
 		TStaticEntityList _staticEntities;
@@ -303,6 +312,11 @@ namespace Graphics
 		TEntityList _dynamicEntities;
 		
 		/**
+		Lista de SceneNodes.
+		*/
+		TSceneNodeList _sceneNodes;
+
+		/**
 		Geometría estática de la escena.
 		*/
 		Ogre::StaticGeometry *_staticGeometry;
@@ -310,7 +324,9 @@ namespace Graphics
 		/**
 		Escena cuyo padre es la grande. Se usa principalmente para los overlays
 		*/
-		Ogre::SceneNode *_sceneNode;
+		//Ogre::SceneNode *_sceneNode;
+
+		int _temporal;
 
 	}; // class CScene
 
