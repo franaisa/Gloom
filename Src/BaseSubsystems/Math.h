@@ -82,6 +82,10 @@ typedef Ogre::Ray Ray;
 Namespace en el que ofrecemos alguna definición de constante
 matamática y métodos para convertir grados en radianes, etc.
 */
+
+typedef Ogre::Light::LightTypes LightType;
+
+
 namespace Math
 {
 	/**
