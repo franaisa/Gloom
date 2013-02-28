@@ -39,6 +39,7 @@ namespace Logic  {
 		_minYaw = 1;
 		_maxYaw = 2;
 		_yawDifference = 0;
+		_rotationSpeed = 0.2;
 		return true;
 	} // spawn
 
@@ -160,8 +161,8 @@ namespace Logic  {
 			}
 			//Guardamos el grado de desactualización del ratón
 			_yawDifference = _entity->getYaw() - Math::getYaw(_serverPos);
-			std::cout << "distance -> " << distance << std::endl;
-			std::cout << "yaw distance -> " << _yawDifference << std::endl;
+			//std::cout << "distance -> " << distance << std::endl;
+			//std::cout << "yaw distance -> " << _yawDifference << std::endl;
 			break;
 			}
 		case Message::CONTROL:

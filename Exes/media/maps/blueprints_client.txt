@@ -1,8 +1,8 @@
 World CGraphics CPhysicEntity
-LocalPlayer CAvatarController CPhysicController CInterpolation CHudOverlay CArrayGraphics CLife CNetConnector
+LocalPlayer CAvatarController CPhysicController CInterpolation CHudOverlay CArrayGraphics CNetConnector
 Camera CCamera
 ItemSpawn CGraphics CFloatingMovement CSpawnItemManager CNetConnector
-RemotePlayer CAvatarController CNetConnector CAnimatedGraphics CInterpolation CPhysicController
+RemotePlayer CAvatarController CPhysicController CInterpolation CAnimatedGraphics CNetConnector
 SpawnPoint CPhysicEntity
 Jumper CGraphics CPhysicEntity CJumper
 Grenade CGraphics CPhysicEntity
