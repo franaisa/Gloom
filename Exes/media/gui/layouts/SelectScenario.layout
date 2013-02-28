@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<GUILayout >
+    <Window Type="DefaultWindow" Name="SelectScenario" >
+        <Property Name="UnifiedAreaRect" Value="{{0,0},{0,0},{1,0},{1,0}}" />
+        <Window Type="TaharezLook/StaticImage" Name="SelectScenario/BackGround" >
+            <Property Name="Font" Value="FairChar-30" />
+            <Property Name="Text" Value="Select Scenario" />
+            <Property Name="UnifiedAreaRect" Value="{{-0.00541124,0},{-0.00297616,0},{0.99459,0},{0.997024,0}}" />
+        </Window>
+        <Window Type="TaharezLook/StaticImage" Name="SelectScenario/Titulo" >
+            <Property Name="Font" Value="FairChar-30" />
+            <Property Name="Text" Value="GLOOM" />
+            <Property Name="UnifiedAreaRect" Value="{{-0.00324672,0},{0.00446429,0},{0.99675,0},{1.00447,0}}" />
+            <Window Type="TaharezLook/Titlebar" Name="SelectScenario/Titulo/Texto1/" >
+                <Property Name="Font" Value="FairChar-30" />
+                <Property Name="Text" Value="    SELECT SCENARIO" />
+                <Property Name="AlwaysOnTop" Value="True" />
+                <Property Name="UnifiedAreaRect" Value="{{0.00887858,0},{0.0797622,0},{0.866114,0},{0.344644,0}}" />
+                <Property Name="HorizontalAlignment" Value="Centre" />
+            </Window>
+        </Window>
+        <Window Type="TaharezLook/Button" Name="SelectScenario/Scenario1" >
+            <Property Name="Font" Value="DejaVuSans-10" />
+            <Property Name="Text" Value="Scenario1" />
+            <Property Name="AlwaysOnTop" Value="True" />
+            <Property Name="UnifiedAreaRect" Value="{{0.0804688,0},{0.465725,0},{0.380469,0},{0.565724,0}}" />
+        </Window>
+        <Window Type="TaharezLook/Button" Name="SelectScenario/Scenario2" >
+            <Property Name="Font" Value="DejaVuSans-10" />
+            <Property Name="Text" Value="Scenario2" />
+            <Property Name="AlwaysOnTop" Value="True" />
+            <Property Name="UnifiedAreaRect" Value="{{0.0794922,0},{0.637102,0},{0.379492,0},{0.737102,0}}" />
+        </Window>
+        <Window Type="TaharezLook/Button" Name="SelectScenario/Back" >
+            <Property Name="Font" Value="DejaVuSans-10" />
+            <Property Name="Text" Value="Back" />
+            <Property Name="AlwaysOnTop" Value="True" />
+            <Property Name="UnifiedAreaRect" Value="{{0.0564935,0},{0.898512,0},{0.206494,0},{0.948512,0}}" />
+        </Window>
+    </Window>
+</GUILayout>

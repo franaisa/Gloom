@@ -232,7 +232,7 @@ namespace Graphics
 	//--------------------------------------------------------
 
 	void CServer::removeOverlay(const std::string& name){
-	
+		_overlayManager->destroy(name);
 	} //removeOverlayElement
 	//--------------------------------------------------------
 	

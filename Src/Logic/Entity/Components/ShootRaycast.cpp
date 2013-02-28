@@ -103,6 +103,10 @@ namespace Logic {
 		m->setDamage(_damage);
 		m->setEnemy(_entity);
 		entityHit.first->emitMessage(m);
+
+		Graphics::CScene* _scen = Graphics::CServer::getSingletonPtr()->getActiveScene();
+		_scen->createParticle(_entity->getName(),"SmokeParticles");
+
 	}// triggerHitMessages
 
 	//__________________________________________________________________

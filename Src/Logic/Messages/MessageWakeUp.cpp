@@ -6,7 +6,7 @@ namespace Logic {
 
 	IMP_FACTORYMESSAGE(CMessageWakeUp);
 
-	CMessageWakeUp::CMessageWakeUp() : CMessage(TMessageType::WAKEUP) {
+	CMessageWakeUp::CMessageWakeUp() : CMessage(Message::WAKEUP) {
 		// Nada que hacer
 	} //
 	//----------------------------------------------------------

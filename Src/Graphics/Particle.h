@@ -51,7 +51,7 @@ namespace Graphics
 
 		@param name Nombre del Particle.
 		*/
-		CParticle(const std::string &name, const std::string &templateName);
+		CParticle(const std::string &unicName, const std::string &particleName, int contador);
 
 		/**
 		Destructor de la partícula.
@@ -71,9 +71,13 @@ namespace Graphics
 		/**
 		Nombre del ParticleSystem.
 		*/
-		std::string _nameps;
+		std::string _nameParticle;
 
-		//friend int contador; //lo hago friend para que al crearse una particula, se incremente este contador.
+		/**
+		scene
+		*/
+
+		int _temporal;
 
 	}; // class CParticle
 

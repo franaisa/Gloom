@@ -660,7 +660,7 @@ void CServer::setRigidBodyPosition(physx::PxRigidBody* actor, const Vector3& pos
 		actor->getShapes(actorShapes, nbShapes); // obtenemos todas las formas del actor
 		float averageYPosition = 0; // Contendra la altura media de todos los shapes
 
-		for(int i = 0; i < nbShapes; ++i) {
+		for(unsigned int i = 0; i < nbShapes; ++i) {
 			PxGeometryType::Enum geomType = actorShapes[i]->getGeometryType();
 
 			if(geomType == PxGeometryType::eSPHERE) {

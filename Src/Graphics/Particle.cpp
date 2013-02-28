@@ -46,10 +46,43 @@ Contiene la implementación de la clase que maneja el Particle.
 namespace Graphics 
 {
 	//Constructor de la clase CParticle. Donde se crea un ParticleSet (de momento con 1 sólo Particle)
-	CParticle::CParticle(const std::string &unicName, const std::string &particleName)
+	CParticle::CParticle(const std::string &unicName, const std::string &particleName, int contador)
 	{
-		Graphics::CScene* _scen = Graphics::CServer::getSingletonPtr()->getActiveScene();
-		//_scen->createParticula(name,templateName); 
+		
+		_nameParticle = unicName;
+		
+		
+		CScene *scene = Graphics::CServer::getSingletonPtr()->getActiveScene();
+		//scene->createSceneNode(nameSceneNode);
+
+		contador++;
+		char num[5];
+		sprintf(num, "%d", contador);
+		std::string nameSceneNode = "SceneNode_"+unicName + num;
+
+		_particleSystem = scene->getSceneMgr()->createParticleSystem(_nameParticle+num,"SmokeParticles");
+
+		/*
+		Ogre::SceneNode *sceneNode = scene->getSceneMgr()->getRootSceneNode();
+		
+		scene->createSceneNode(nameSceneNode+num);
+
+		sceneNode->attachObject(_particleSystem);
+
+	
+
+		/*/
+		scene->createSceneNode(nameSceneNode+num);
+		Ogre::SceneNode *sceneNode = scene->getSceneNode(nameSceneNode+num);
+		sceneNode->setPosition(0,5,10);
+		//Ogre::SceneNode *sceneNode = scene->getSceneNode();
+		sceneNode->attachObject(_particleSystem);
+
+		scene->getSceneMgr()->getSceneNode("weaponSniper_node")->addChild(sceneNode);
+
+		//scene->getSceneMgr()->getRootSceneNode()->getChild("David_node")->addChild(sceneNode);
+		/* */
+
 	} // CParticle
 	
 	//--------------------------------------------------------

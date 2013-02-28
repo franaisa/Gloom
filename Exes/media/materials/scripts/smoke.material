@@ -1,0 +1,19 @@
+material SmokeMaterial
+{
+	technique
+	{
+		pass
+		{
+			depth_check off
+
+			scene_blend alpha_blend
+			lighting off
+
+			texture_unit
+			{
+				texture smoke.png
+				tex_address_mode clamp
+			}
+		}
+	}
+}
