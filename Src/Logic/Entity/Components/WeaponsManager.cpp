@@ -84,7 +84,7 @@ namespace Logic
 			activateComponent(_actualWeapon);
 			_weapons[_actualWeapon]=true;
 			//ÑAPAWNZ
-			_entity->getComponent<CArrayGraphics>("CArrayGraphics")->changeWeapon(0);
+			//_entity->getComponent<CArrayGraphics>(std::string("CArrayGraphics"))->changeWeapon(0);
 			
 			//trama para las demas
 			_weapons[3] = true;
