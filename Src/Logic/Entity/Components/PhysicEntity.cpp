@@ -15,7 +15,6 @@ para representar character controllers.
 
 #include "PhysicEntity.h"
 #include "Logic/Entity/Entity.h"
-#include "Logic/Entity/Components/SwitchTrigger.h"
 #include "Map/MapEntity.h"
 #include "Physics/Server.h"
 
