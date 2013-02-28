@@ -30,7 +30,6 @@ namespace Physics {
 	*/
 	class CCollisionManager : public physx::PxSimulationEventCallback,
 							  public physx::PxUserControllerHitReport
-						  
 	{
 	public:
 		/**
