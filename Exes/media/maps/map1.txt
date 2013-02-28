@@ -3,6 +3,21 @@ Map = {
 		type = "World",
 	},
 	
+	Hacksaw = {
+		type = "Hacksaw",
+		position = {86.0,8.0,-16.0},
+		positionInitial = {86.0,8.0,-16.0},
+		positionFinal = {120.0,8.0,-16.0},
+		velocity = 0.04,
+		model = "cone.mesh",
+		physic_entity = "rigid",
+		physic_trigger = true,
+		physic_type = "kinematic",
+		physic_shape = "box",
+		physic_dimensions = { 1, 1, 1 },
+		physic_mass = 1,
+	},
+	
 	Pincho11 = {
 		type = "Spike",
 		position = {100.0,-3.0,-12.0},

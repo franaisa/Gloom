@@ -28,6 +28,7 @@ Se ofrecen también una serie de funciones auxiliares.
 #include <OgreMatrix3.h>
 #include <OgreMatrix4.h>
 #include <OgreRay.h>
+#include <OgreLight.h>
 #include <string>
 
 /**
@@ -82,6 +83,10 @@ typedef Ogre::Ray Ray;
 Namespace en el que ofrecemos alguna definición de constante
 matamática y métodos para convertir grados en radianes, etc.
 */
+
+//typedef Ogre::Light::LightTypes LightType;
+
+
 namespace Math
 {
 	/**

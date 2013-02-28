@@ -64,11 +64,11 @@ namespace Graphics
 	//------------------------------------------------------------
 
 	COverlay::~COverlay(){
-
+		/*
 		if(_overlay){Graphics::CServer::getSingletonPtr()->getOverlayManager()->destroy(_overlay->getName());}
 		if(_overlayContainer){Graphics::CServer::getSingletonPtr()->getOverlayManager()->destroyOverlayElement(_overlayContainer->getName());}
 		if(_overlayText){Graphics::CServer::getSingletonPtr()->getOverlayManager()->destroyOverlayElement(_overlayContainer->getName());}
-
+		*/
 		Graphics::CServer::getSingletonPtr()->getOverlayManager()->destroyAllOverlayElements();
 		Graphics::CServer::getSingletonPtr()->getOverlayManager()->destroyAll();
 

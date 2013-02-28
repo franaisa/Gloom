@@ -22,6 +22,7 @@ de una escena.
 #include "Graphics/Camera.h"
 
 #include "Interpolation.h"
+#include "AvatarController.h"
 
 #include "Logic/Messages/MessageCameraToEnemy.h"
 
@@ -116,7 +117,8 @@ namespace Logic
 			position.y+=_height;
 			_graphicsCamera->setCameraPosition(position);
 
-			if(_target->getComponent<CInterpolation>("CInterpolation")->isActivate()){
+			
+			if(_target->getComponent<CAvatarController>("CAvatarController")->isActivate()){
 				// Y la posición hacia donde mira la cámara.
 				Vector3 direction = Math::getDirection(_target->getOrientation());
 				_graphicsCamera->setTargetCameraPosition(position + direction);
