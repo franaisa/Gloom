@@ -146,7 +146,7 @@ namespace Logic
 			Setea la hora que tengo ahora mismo con respecto al servidor
 			@param ping el ping que estoy asignando
 		*/
-		void setDiffTime(int time){_diffTime = time;}
+		void setDiffTime(unsigned int time){_diffTime = time;}
 
 	protected:
 		/**

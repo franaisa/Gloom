@@ -39,6 +39,8 @@ namespace Logic
 		*/
 		CHudOverlay() : IComponent(), _health(0), _shield(0), _ammo(1), _actualWeapon(0), _numWeapons(0) {}
 		
+
+		virtual ~CHudOverlay();
 		/**
 		Inicialización del componente usando la descripción de la entidad que hay en 
 		el fichero de mapa.

@@ -39,7 +39,6 @@ namespace Logic
 		if(_graphicsEntity)
 		{
 			_scene->removeEntity(_graphicsEntity);
-			delete _graphicsEntity;
 			_graphicsEntity = 0;
 		}
 

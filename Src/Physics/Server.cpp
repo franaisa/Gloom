@@ -245,6 +245,10 @@ void CServer::createScene ()
 
 	//Establecemos los grupos de colision
 	//Nada por el momento
+	// Entre granadas e items y explosiones y granadas
+	setGroupCollisions(10, 11, false);
+	setGroupCollisions(10, 12, false);
+	setGroupCollisions(11, 12, false);
 }
 
 //--------------------------------------------------------
@@ -703,6 +707,8 @@ void CServer::setGroupCollisions(int group1, int group2, bool enable)
 {
 	// Activar / desactivar colisiones entre grupos
 	PxSetGroupCollisionFlag(group1, group2, enable);
+	// Activamos los grupos de colision ñapeados
+	_collisionManager->setCollisionGroup(group1, group2, enable);
 }
 
 //--------------------------------------------------------
