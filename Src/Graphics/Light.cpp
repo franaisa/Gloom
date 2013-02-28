@@ -5,7 +5,7 @@
 #include <OgreSceneNode.h>
 #include <OgreSceneManager.h>
 
-
+/*
 namespace Graphics{
 
 
@@ -32,4 +32,4 @@ namespace Graphics{
 	}
 
 
-}
+}*/

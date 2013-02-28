@@ -80,6 +80,7 @@
     <ClCompile Include="..\..\Src\Graphics\AnimatedEntity.cpp" />
     <ClCompile Include="..\..\Src\Graphics\Camera.cpp" />
     <ClCompile Include="..\..\Src\Graphics\Entity.cpp" />
+    <ClCompile Include="..\..\Src\Graphics\Light.cpp" />
     <ClCompile Include="..\..\Src\Graphics\Overlay.cpp" />
     <ClCompile Include="..\..\Src\Graphics\Scene.cpp" />
     <ClCompile Include="..\..\Src\Graphics\Server.cpp" />
@@ -90,6 +91,7 @@
     <ClInclude Include="..\..\Src\Graphics\Camera.h" />
     <ClInclude Include="..\..\Src\Graphics\Documentation.h" />
     <ClInclude Include="..\..\Src\Graphics\Entity.h" />
+    <ClInclude Include="..\..\Src\Graphics\Light.h" />
     <ClInclude Include="..\..\Src\Graphics\Overlay.h" />
     <ClInclude Include="..\..\Src\Graphics\Scene.h" />
     <ClInclude Include="..\..\Src\Graphics\Server.h" />
