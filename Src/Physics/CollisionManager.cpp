@@ -63,8 +63,29 @@ void CCollisionManager::onSleep(PxActor **actors, PxU32 count) {
 //--------------------------------------------------
 
 void CCollisionManager::onContact(const PxContactPairHeader &pairHeader, const PxContactPair *pairs, PxU32 nbPairs) {
-	// Por ahora ignoramos estos mensajes
+	// Para cada pareja de actores en los cuales se ha detectado contacto
+	// comprobamos el tipo de contacto que se ha detectado y disparamos los
+	// metodos correspondientes de IPhysics
+	for(PxU32 i =0 ; i < nbPairs; ++i) {
+		const PxContactPair& cp = pairs[i];
 
+		// eNOTIFY_TOUCH_FOUND es un flag para indicar que los shapes acaban de empezar a estar en contacto
+		// de momento solo necesitamos saber cuando colisionan dos shapes. En un futuro
+		// puede interesarnos cuando dos shapes y entran en contacto y dejan de estarlo.
+		if(cp.events & PxPairFlag::eNOTIFY_TOUCH_FOUND) {
+			// Obtenemos los datos logicos asociados al primer actor
+			IPhysics* firstActorBeingContacted = (IPhysics *) pairHeader.actors[0]->userData;
+			assert(firstActorBeingContacted);
+
+			// Obtenemos los datos logicos asociados al segundo actor
+			IPhysics* secondActorBeingContacted = (IPhysics *) pairHeader.actors[1]->userData;
+			assert(secondActorBeingContacted);
+
+			// Disparamos los metodos onContact de la interfaz logica
+			firstActorBeingContacted->onContact(secondActorBeingContacted);
+			secondActorBeingContacted->onContact(firstActorBeingContacted);
+		}
+	}
 }
 
 //--------------------------------------------------

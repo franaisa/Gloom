@@ -16,6 +16,7 @@ componentes físicos.
 #define __Logic_Physics_H
 //
 #include "Logic/Entity/Component.h"
+#include <iostream>
 
 // Predeclaración de tipos
 namespace physx {
@@ -48,6 +49,19 @@ namespace Logic
 		@param enter True si la entidad entra en el trigger y false si sale. 
 		*/
 		virtual void onTrigger(IPhysics *otherComponent, bool enter) = 0;
+
+		/**
+		Este método es invocado desde el motor de física cuando una entidad golpea a otra. Para
+		comprobar exclusivamente si un controller a golpeado a otra cosa es mejor usar otros
+		metodos de physX.
+
+		Para mejorar la eficiencia de esta query, physX permite implementar filtros, de manera
+		que cada actor fisico pueda indicar de que cosas quiere ser notificado (pudiendo eliminar
+		onContact por ejemplo, en algunas entidades).
+
+		@param otherComponent Componente asociado a la otra entidad que nos ha golpeado.
+		*/
+		virtual void onContact(IPhysics *otherComponent) { std::cout << "ostion" << std::endl; }
 
 	}; // class IPhysics
 

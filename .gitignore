@@ -56,6 +56,7 @@ build.xml
 !/Projects/Map/
 !/Projects/Physics/
 !/Projects/Net/
+!/Projects/Audio/
 
 # =================================
 # Clean each project (second level)
@@ -70,6 +71,7 @@ build.xml
 /Projects/Map/*
 /Projects/Physics/*
 /Projects/Net/*
+/Projects/Audio/*
 
 # ===============================================
 # Bring back configuration files for each project
@@ -110,6 +112,10 @@ build.xml
 !/Projects/Net/*.user
 !/Projects/Net/*.filters
 !/Projects/Net/*.vcxproj
+
+!/Projects/Audio/*.user
+!/Projects/Audio/*.filters
+!/Projects/Audio/*.vcxproj
 
 # We are going to go through the same process to include the folder with the map.txt and blueprint.txt
 # Clean first level
