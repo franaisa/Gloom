@@ -15,6 +15,7 @@ Contiene la declaración del componente general de disparo.
 #ifndef __Logic_Shoot_H
 #define __Logic_Shoot_H
 
+#include "BaseSubsystems/Math.h"
 #include "Logic/Entity/Component.h"
 
 namespace Logic {
@@ -49,7 +50,8 @@ namespace Logic {
 				   _cooldownTimer(0),
 				   _canShoot(true),
 				   _nameWeapon(0), 
-				   _currentAmmo(0) {
+				   _currentAmmo(0),
+				   _particlePosition(Vector3::ZERO){
 		
 			// No hay memoria dinamica que inicializar
 		}
@@ -66,7 +68,8 @@ namespace Logic {
 										   _cooldownTimer(0),
 										   _canShoot(true),
 										   _nameWeapon(shoot), 
-										   _currentAmmo(0) {
+										   _currentAmmo(0),
+										   _particlePosition(Vector3::ZERO){
 			
 			// No hay memoria dinámica que inicializar
 		}
@@ -178,6 +181,12 @@ namespace Logic {
 		/** Método estático que resetea la cantidad de munición del arma. */
 		void resetAmmo();
 
+		/** Método estático que dibuja la particula. Todas las armas tendran una particula al disparar. 
+		@param nombreParticula, nombre para poder identificar esta particula en concreto
+		@param Particula, nombre del template de particula definido en el archivo .particle
+		*/
+		void drawParticle(const std::string &nombreParticula, const std::string &Particula);
+
 	protected:
 
 
@@ -225,6 +234,10 @@ namespace Logic {
 		*/
 		bool _canShoot;
 
+		/**
+		Vector donde se posionara la particula de emision de disparo
+		*/
+		Vector3 _particlePosition;
 	}; // class CShoot
 
 	//REG_FACTORY(CShoot);

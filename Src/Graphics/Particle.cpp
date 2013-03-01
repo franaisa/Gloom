@@ -45,49 +45,37 @@ Contiene la implementación de la clase que maneja el Particle.
 
 namespace Graphics 
 {
-	//Constructor de la clase CParticle. Donde se crea un ParticleSet (de momento con 1 sólo Particle)
-	CParticle::CParticle(const std::string &unicName, const std::string &particleName, int contador)
+	//Constructor de la clase CParticle
+	CParticle::CParticle(const std::string &unicName, const std::string &particleName)
 	{
-		
-		_nameParticle = unicName;
-		
+		static int counter = 0;
+		_nameParticle = unicName;	
 		
 		CScene *scene = Graphics::CServer::getSingletonPtr()->getActiveScene();
 		//scene->createSceneNode(nameSceneNode);
-
-		contador++;
 		char num[5];
-		sprintf(num, "%d", contador);
-		std::string nameSceneNode = "SceneNode_"+unicName + num;
+		sprintf(num, "%d", counter);
+		std::string nameSceneNode = "SceneNode_"+_nameParticle + num;
 
-		_particleSystem = scene->getSceneMgr()->createParticleSystem(_nameParticle+num,"SmokeParticles");
+		_particleSystem = scene->getSceneMgr()->createParticleSystem(_nameParticle+num, particleName);
+		_sceneNode = scene->getSceneMgr()->getRootSceneNode()->createChildSceneNode(nameSceneNode + "_node");
+		_sceneNode->attachObject(_particleSystem);
 
-		/*
-		Ogre::SceneNode *sceneNode = scene->getSceneMgr()->getRootSceneNode();
-		
-		scene->createSceneNode(nameSceneNode+num);
-
-		sceneNode->attachObject(_particleSystem);
-
-	
-
-		/*/
-		scene->createSceneNode(nameSceneNode+num);
-		Ogre::SceneNode *sceneNode = scene->getSceneNode(nameSceneNode+num);
-		sceneNode->setPosition(0,5,10);
-		//Ogre::SceneNode *sceneNode = scene->getSceneNode();
-		sceneNode->attachObject(_particleSystem);
-
-		scene->getSceneMgr()->getSceneNode("weaponSniper_node")->addChild(sceneNode);
-
-		//scene->getSceneMgr()->getRootSceneNode()->getChild("David_node")->addChild(sceneNode);
-		/* */
-
+		counter++;
 	} // CParticle
+
+	void CParticle::setPosition(const Vector3 *position){
+		_sceneNode->setPosition(*position);
+
+	} // setPosition
+
+	Vector3 CParticle::getPosition(){
+		return _sceneNode->getPosition();
+	}
 	
 	//--------------------------------------------------------
-
-	/*void CParticle::deactivateParticle(const std::string &name) 
+	/*
+	void CParticle::deactivateParticle(const std::string &name) 
 	{
 		Graphics::CScene* _scen = Graphics::CServer::getSingletonPtr()->getActiveScene();
 		//_scen->deleteParticle(name);
@@ -95,8 +83,12 @@ namespace Graphics
 	} // deactivateParticle
 	*/
 
-
 	//--------------------------------------------------------
-
+	
+	CParticle::~CParticle(){
+	
+		delete _particleSystem;
+		delete _sceneNode;
+	}
 
 } // namespace Graphics

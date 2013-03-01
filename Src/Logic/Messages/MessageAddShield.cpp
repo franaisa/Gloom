@@ -6,7 +6,7 @@ namespace Logic {
 
 	IMP_FACTORYMESSAGE(CMessageAddShield);
 
-	CMessageAddShield::CMessageAddShield() : CMessage(TMessageType::ADD_SHIELD) {
+	CMessageAddShield::CMessageAddShield() : CMessage(Message::ADD_SHIELD) {
 		// Nada que hacer
 	}//
 	//----------------------------------------------------------

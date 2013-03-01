@@ -90,6 +90,16 @@ namespace Logic  {
 		*/
 		virtual void process(CMessage *message);
 
+		/**
+		Método que mueve el punto del servidor para que esté actualizado
+		*/
+		void moveServerPos();
+		/**
+		calcula si hay que hacer interpolación, o mueve al player si la distancia es
+		muy grande
+		*/
+		void calculateInterpolation();
+
 	private:
 		/**
 		Posición que el servidor me ha dicho que es donde debo estar
@@ -130,6 +140,10 @@ namespace Logic  {
 		variable que indica el ping con el que estamos corrigiendo
 		*/
 		unsigned int _actualPing;
+		/**
+		dirección en la que se está moviendo el server
+		*/
+		Vector3 _serverDirection;
 
 		float _speed;
 		float _rotationSpeed;

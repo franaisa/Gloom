@@ -7,7 +7,7 @@ namespace Logic {
 
 	IMP_FACTORYMESSAGE(CMessageSyncPosition);
 	
-	CMessageSyncPosition::CMessageSyncPosition() : CMessage(TMessageType::SYNC_POSITION) {
+	CMessageSyncPosition::CMessageSyncPosition() : CMessage(Message::SYNC_POSITION) {
 		// Nada que hacer
 	}//
 	//----------------------------------------------------------

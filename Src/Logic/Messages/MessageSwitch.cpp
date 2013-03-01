@@ -8,7 +8,7 @@ namespace Logic {
 
 	IMP_FACTORYMESSAGE(CMessageSwitch);
 
-	CMessageSwitch::CMessageSwitch() : CMessage(TMessageType::SWITCH) {
+	CMessageSwitch::CMessageSwitch() : CMessage(Message::SWITCH) {
 		// Nada que hacer
 	}//
 	//----------------------------------------------------------

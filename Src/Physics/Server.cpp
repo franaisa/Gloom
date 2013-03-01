@@ -15,6 +15,7 @@ Contiene la implementación del servidor de física.
 #include "CollisionManager.h"
 #include "Logic/Entity/Components/Physics.h"
 #include "Logic/Entity/Entity.h"
+#include "Map/MapEntity.h"
 
 #include <assert.h>
 #include <algorithm>
@@ -598,12 +599,8 @@ PxCapsuleController* CServer::createCapsuleController(const Vector3 &position, f
 	PxCapsuleController *controller = (PxCapsuleController *)
 		 _controllerManager->createController(*_physics, _scene, desc);
 	
-
 	// Anotar el componente lógico asociado al actor dentro del controller (No es automático)
 	controller->getActor()->userData = (void *) component;
-
-	//Establecemos el grupo del jugador al 3
-	PxSetGroup(*controller->getActor(), 3);
 
 	return controller;
 }
@@ -782,7 +779,7 @@ Logic::CEntity* CServer::raycastClosest(const Ray& ray, float maxDist, int group
 
 //--------------------------------------------------------
 
-Logic::CEntity* CServer::raycastClosestInverse(const Ray& ray, float maxDist, int group) const 
+Logic::CEntity* CServer::raycastClosestInverse(const Ray& ray, float maxDist, unsigned int id) const 
 {
 	assert(_scene);
 
@@ -802,7 +799,7 @@ Logic::CEntity* CServer::raycastClosestInverse(const Ray& ray, float maxDist, in
 	// Buscar un actot que pertenezca al grupo de colisión indicado
 	for (int i=nHits-1; i>=0; i--) {
 		PxRigidActor *actor = &hits[i].shape->getActor();
-		if (PxGetGroup(*actor) != group) {
+		if (((IPhysics*)(actor->userData))->getEntity()->getEntityID() != id) {
 			IPhysics *component = (IPhysics *) actor->userData;
 			if (component) {
 				return component->getEntity();

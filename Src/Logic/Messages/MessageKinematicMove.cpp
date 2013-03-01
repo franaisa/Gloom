@@ -8,7 +8,7 @@ namespace Logic {
 
 	IMP_FACTORYMESSAGE(CMessageKinematicMove);
 
-	CMessageKinematicMove::CMessageKinematicMove() : CMessage(TMessageType::KINEMATIC_MOVE) {
+	CMessageKinematicMove::CMessageKinematicMove() : CMessage(Message::KINEMATIC_MOVE) {
 		// Nada que hacer
 	}//
 	//----------------------------------------------------------

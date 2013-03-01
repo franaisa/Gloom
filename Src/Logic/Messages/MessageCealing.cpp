@@ -6,7 +6,7 @@ namespace Logic {
 
 	IMP_FACTORYMESSAGE(CMessageCealing);
 
-	CMessageCealing::CMessageCealing() : CMessage(TMessageType::CEALING) {
+	CMessageCealing::CMessageCealing() : CMessage(Message::CEALING) {
 		// Nada que hacer
 	} //
 	//----------------------------------------------------------

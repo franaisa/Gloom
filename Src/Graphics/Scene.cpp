@@ -20,6 +20,7 @@ de una escena.
 #include "Server.h"
 #include "StaticEntity.h"
 #include "BaseSubsystems/Server.h"
+#include "BaseSubsystems/Math.h"
 #include "Graphics/Entity.h"
 
 #include <assert.h>
@@ -37,7 +38,7 @@ de una escena.
 namespace Graphics 
 {
 	CScene::CScene(const std::string& name) : _viewport(0), 
-		_staticGeometry(0), _directionalLight(0), _temporal(0)
+		_staticGeometry(0), _directionalLight(0)
 	{
 		_root = BaseSubsystems::CServer::getSingletonPtr()->getOgreRoot();
 		_sceneMgr = _root->createSceneManager(Ogre::ST_INTERIOR, name);
@@ -192,44 +193,14 @@ namespace Graphics
 		sceneNode->removeChild(entity->getName());
 	}
 */
-	CParticle * CScene::createParticle(const std::string &unicName, const std::string &particleName){
+	CParticle * CScene::createParticle(const std::string &unicName, const std::string &particleName, const Vector3 *position){
 
+		CParticle *particle = new CParticle(unicName, particleName);
 
-		CParticle *particle = new CParticle(unicName, particleName, ++_temporal);
+		particle->setPosition(position);
+
 		return particle;
 
-		/*
-		char numstr[21]; // enough to hold all numbers up to 64-bits
-			sprintf(numstr, "%d", _temporal);
-
-			// Creamos nuestro sistema de partículas :)
-			Ogre::ParticleSystem *pssmoke;
-			pssmoke = _sceneMgr->createParticleSystem(unicName+numstr, particleName);
-
-			// Creamos un nodo y atachamos la particula pssmoke a ese scenenode
-			Ogre::SceneNode* sceneNode = _sceneMgr->createSceneNode(unicName+"_particleSystemNode_"+numstr);
-			sceneNode->attachObject((Ogre::MovableObject*)pssmoke);
-
-			if(_sceneMgr->hasSceneNode(unicName+"_node"))
-			{
-				_sceneMgr->getSceneNode(unicName+"_node")->addChild(sceneNode);
-			}
-
-			// Desvinculamos el sistema de partículas del nodo
-			/*
-			sceneNode->detachObject(pssmoke);
- 
-			// Destruimos el nodo
-			_sceneMgr->destroySceneNode(sceneNode);
- 
-			// Destruimos el sistema de partículas
-			_sceneMgr->destroyParticleSystem(pssmoke);
-			
-		
-			_temporal++;
-
-			return pssmoke;
-			*/
 	}
 
 } // namespace Graphics

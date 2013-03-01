@@ -51,7 +51,7 @@ namespace Graphics
 
 		@param name Nombre del Particle.
 		*/
-		CParticle(const std::string &unicName, const std::string &particleName, int contador);
+		CParticle(const std::string &unicName, const std::string &particleName);
 
 		/**
 		Destructor de la partícula.
@@ -59,6 +59,23 @@ namespace Graphics
 		~CParticle();
 
 
+		/**
+		posiciona la particula en la pos dada
+		@params position, es un vector3 con la posicion donde se ubicada la particula
+		*/
+		void setPosition(const Vector3 *position);
+
+		/**
+		devuelve  la particula en la pos dada
+		@return Vector3 con la posicion donde se ubicada la particula
+		*/
+		Vector3 getPosition();
+
+		/**
+		Devuelve el objeto ogre de la particula
+
+		@return objeto ogre de la particula.
+		*/
 		Ogre::ParticleSystem* getParticleSystem() {return _particleSystem;}
 
 
@@ -74,10 +91,9 @@ namespace Graphics
 		std::string _nameParticle;
 
 		/**
-		scene
+		scene donde se crea la particula
 		*/
-
-		int _temporal;
+		Ogre::SceneNode *_sceneNode;
 
 	}; // class CParticle
 

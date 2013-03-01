@@ -16,6 +16,7 @@
 #include "Logic/Messages/MessageSyncPosition.h"
 #include "Logic/Messages/MessageSetPhysicPosition.h"
 #include "Logic/Messages/MessageControl.h"
+#include "Logic/Messages/MessageMouse.h"
 
 #include <math.h>
 
@@ -56,13 +57,13 @@ namespace Logic  {
 		//si no estamos interpolando, gl
 		if(!_interpolating)
 			return;
-
+		moveServerPos();
 		if(_canInterpolateMove){
 			//calculamos la direccion en la que debemos interpolar
 			Vector3 direction = _serverPos.getTrans();
 			direction = direction - _entity->getPosition();
 			float distance = direction.length();
-			direction.normalisedCopy();
+			direction = direction.normalisedCopy();
 		
 			//calculamos el movimiento que debe hacer el monigote, mucho mas lento del que debe hacer de normal
 			direction = direction*_speed/3;
@@ -117,7 +118,7 @@ namespace Logic  {
 		}
 	}
 
-	//________________________________________________________________________
+////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	void CInterpolation::process(CMessage *message) {
 		switch(message->getMessageType())
@@ -126,64 +127,111 @@ namespace Logic  {
 			{
 			// nos guardamos la posi que nos han dado por si tenemos que interpolar
 			_serverPos = ((CMessageSyncPosition*)message)->getTransform();
-
-			//calculamos la distancia que hay entre donde estoy y donde me dice el servidor que debería estar
-			Vector3 serverPos = _serverPos.getTrans();
-			serverPos = serverPos - _entity->getPosition();
-			float distance = serverPos.length();
-
 			//calculo el ping que tengo ahora mismo
 			_actualPing = ((CMessageSyncPosition*)message)->getTime();
 			_actualPing = clock()+Logic::CServer::getSingletonPtr()->getDiffTime()-_actualPing;
-
-			//calculo la distancia que habría recorrido trasladándome hacia la posi que me ha dado el servidor
-			Vector3 direction = serverPos.normalisedCopy();
-			float myDistance = direction.length() * _actualPing/CLOCKS_PER_SEC;
-
-			//seteo la distancia real
-			distance = distance-myDistance;
-			
-			//si la distancia es mayor de maxDistance .. set transform por cojones
-			if(distance > _maxDistance){
-				Logic::CMessageSetPhysicPosition *m = new Logic::CMessageSetPhysicPosition();
-				m->setPosition(_serverPos.getTrans());
-				_entity->emitMessage(m);
-				//Movemos la orientacion logica/grafica
-				Matrix3 tmpMatrix;
-				_serverPos.extract3x3Matrix(tmpMatrix);
-				_entity->setOrientation(tmpMatrix);
-				return;
-			}
-			//si la distancia es mayor que min distance y menor que maxDistance interpolamos
-			else if(distance > _minDistance){
-				_interpolating = true;
-				return;
-			}
-			//Guardamos el grado de desactualización del ratón
-			_yawDifference = _entity->getYaw() - Math::getYaw(_serverPos);
-			//std::cout << "distance -> " << distance << std::endl;
-			//std::cout << "yaw distance -> " << _yawDifference << std::endl;
+			//calculamos la interpolacion
+			calculateInterpolation();
 			break;
 			}
 		case Message::CONTROL:
-			if(((CMessageControl*)message)->getType()==Control::WALK ||
-				((CMessageControl*)message)->getType()==Control::WALKBACK ||
-				((CMessageControl*)message)->getType()==Control::STRAFE_LEFT ||
-				((CMessageControl*)message)->getType()==Control::STRAFE_RIGHT)
+			{
+			//calculamos la dirección del movimiento
+			switch(((CMessageControl*)message)->getType()){
+			case Control::WALK:
+				_serverDirection+=Vector3(0,0,1);
 				_canInterpolateMove = true;
+				break;
 
-			if(	((CMessageControl*)message)->getType()==Control::STOP_WALK ||
-				((CMessageControl*)message)->getType()==Control::STOP_WALKBACK ||
-				((CMessageControl*)message)->getType()==Control::STOP_STRAFE_LEFT ||
-				((CMessageControl*)message)->getType()==Control::STOP_STRAFE_RIGHT)
-				_canInterpolateMove = false;
+			case Control::STRAFE_LEFT:
+				_serverDirection+=Vector3(1,0,0);
+				_canInterpolateMove = true;
+				break;
 
-			if(	((CMessageControl*)message)->getType()==Control::MOUSE)
-				_canInterpolateRotation = true;
+			case Control::STRAFE_RIGHT:
+				_serverDirection+=Vector3(-1,0,0);
+				_canInterpolateMove = true;
+				break;
+
+			case Control::WALKBACK:
+				_serverDirection+=Vector3(0,0,-1);
+				_canInterpolateMove = true;
+				break;
+
+			case Control::STOP_WALK:
+				_serverDirection+=Vector3(0,0,-1);
+				break;
+
+			case Control::STOP_WALKBACK:
+				_serverDirection+=Vector3(0,0,1);
+				break;
+
+			case Control::STOP_STRAFE_LEFT:
+				_serverDirection+=Vector3(-1,0,0);
+				break;
+
+			case Control::STOP_STRAFE_RIGHT:
+				_serverDirection+=Vector3(1,0,0);
+				break;
+
+			case Control::MOUSE:
+				Math::yaw(((CMessageMouse*)message)->getMouse()[0], _serverPos);;
+
+				break;
+
+			}//switch
+
 			break;
+			}//case Message::CONTROL:
 
 		}//switch
+
 	} // process
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	void CInterpolation::moveServerPos(){
+		Vector3 newPos = _serverPos.getTrans();
+		//nueva posi = (old posi + direcion*orientacion)*velocidad
+		newPos+=_serverDirection*_speed*Math::getDirection(_serverPos);
+		_serverPos.setTrans(newPos);
+	}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	void CInterpolation::calculateInterpolation(){
+		//calculamos la distancia que hay entre donde estoy y donde me dice el servidor que debería estar
+		Vector3 serverPos = _serverPos.getTrans();
+		serverPos = serverPos - _entity->getPosition();
+		float distance = serverPos.length();
+		
+		//calculo la distancia que habría recorrido trasladándome hacia la posi que me ha dado el servidor
+		Vector3 direction = serverPos.normalisedCopy();
+		float myDistance = direction.length() * _actualPing/CLOCKS_PER_SEC;
+		//seteo la distancia real
+		distance = distance-myDistance;
+		
+		//si la distancia es mayor de maxDistance .. set transform por cojones
+		if(distance > _maxDistance){
+			Logic::CMessageSetPhysicPosition *m = new Logic::CMessageSetPhysicPosition();
+			m->setPosition(_serverPos.getTrans());
+			_entity->emitMessage(m);
+			//Movemos la orientacion logica/grafica
+			Matrix3 tmpMatrix;
+			_serverPos.extract3x3Matrix(tmpMatrix);
+			_entity->setOrientation(tmpMatrix);
+			return;
+		}
+		//si la distancia es mayor que min distance y menor que maxDistance interpolamos
+		else if(distance > _minDistance){
+			_interpolating = true;
+			return;
+		}
+		//Guardamos el grado de desactualización del ratón
+		_yawDifference = _entity->getYaw() - Math::getYaw(_serverPos);
+	}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 } // namespace Logic
 
