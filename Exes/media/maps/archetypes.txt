@@ -68,7 +68,7 @@ Map = {
 			weaponHammerDispersion = 0,
 			weaponHammerNumberShoots = 1,
 			weaponHammerDistance = 15.0,
-			weaponHammerColdDown = 0.0,
+			weaponHammerColdDown = 0.5,
 			weaponHammerMaxAmmo = 1,
 			weaponHammerId = 0,
 			
@@ -81,9 +81,10 @@ Map = {
 			weaponSniperDispersion = 0,
 			weaponSniperNumberShoots = 1,
 			weaponSniperDistance = 100.0,
-			weaponSniperColdDown = 0.0,
+			weaponSniperColdDown = 2.0,
 			weaponSniperMaxAmmo = 10,
 			weaponSniperId = 1,
+			weaponSniperParticlePosition = {50.0, 50.0, 50.0},
 			
 			weaponShotGunName = "Shotgun",
 			weaponShotGunModel = "UziLeft.mesh",
@@ -107,7 +108,7 @@ Map = {
 			weaponMiniGunDispersion = 2,
 			weaponMiniGunNumberShoots = 1,
 			weaponMiniGunDistance = 100.0,
-			weaponMiniGunColdDown = 0.8,
+			weaponMiniGunColdDown = 1.0,
 			weaponMiniGunMaxAmmo = 200,
 			weaponMiniGunId = 3,
 			
@@ -172,7 +173,7 @@ Map = {
 			weaponHammerDispersion = 0,
 			weaponHammerNumberShoots = 1,
 			weaponHammerDistance = 15.0,
-			weaponHammerColdDown = 0.0,
+			weaponHammerColdDown = 0.5,
 			weaponHammerMaxAmmo = 1,
 			weaponHammerId = 0,
 			
@@ -185,9 +186,10 @@ Map = {
 			weaponSniperDispersion = 0,
 			weaponSniperNumberShoots = 1,
 			weaponSniperDistance = 100.0,
-			weaponSniperColdDown = 0.0,
+			weaponSniperColdDown = 2.0,
 			weaponSniperMaxAmmo = 10,
 			weaponSniperId = 1,
+			weaponSniperParticlePosition = {50.0, 50.0, 50.0},
 			
 			weaponShotGunName = "Shotgun",
 			weaponShotGunModel = "UziLeft.mesh",
@@ -211,7 +213,7 @@ Map = {
 			weaponMiniGunDispersion = 3,
 			weaponMiniGunNumberShoots = 1,
 			weaponMiniGunDistance = 200.0,
-			weaponMiniGunColdDown = 0.8,
+			weaponMiniGunColdDown = 1.0,
 			weaponMiniGunMaxAmmo = 200,
 			weaponMiniGunId = 3,
 			
@@ -288,7 +290,7 @@ Map = {
 			weaponHammerDispersion = 0,
 			weaponHammerNumberShoots = 1,
 			weaponHammerDistance = 15.0,
-			weaponHammerColdDown = 0.0,
+			weaponHammerColdDown = 0.5,
 			weaponHammerMaxAmmo = 1,
 			weaponHammerId = 0,
 			
@@ -301,7 +303,7 @@ Map = {
 			weaponSniperDispersion = 0,
 			weaponSniperNumberShoots = 1,
 			weaponSniperDistance = 100.0,
-			weaponSniperColdDown = 0.0,
+			weaponSniperColdDown = 2.0,
 			weaponSniperMaxAmmo = 10,
 			weaponSniperId = 1,
 			
@@ -327,7 +329,7 @@ Map = {
 			weaponMiniGunDispersion = 2,
 			weaponMiniGunNumberShoots = 1,
 			weaponMiniGunDistance = 100.0,
-			weaponMiniGunColdDown = 0.8,
+			weaponMiniGunColdDown = 1.0,
 			weaponMiniGunMaxAmmo = 200,
 			weaponMiniGunId = 3,
 			

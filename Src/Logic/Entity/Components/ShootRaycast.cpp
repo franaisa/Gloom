@@ -105,8 +105,9 @@ namespace Logic {
 		entityHit.first->emitMessage(m);
 
 		Graphics::CScene* _scen = Graphics::CServer::getSingletonPtr()->getActiveScene();
-		_scen->createParticle(_entity->getName(),"SmokeParticles");
-
+		//Vector3 positionParticle = _entity->getPosition() + (Math::getDirection(_entity->getOrientation()) * 50);
+		Vector3 positionParticle = _entity->getPosition() + (Math::getDirection(_entity->getOrientation()) * _particlePosition);
+		_scen->createParticle(_entity->getName(),"SmokeParticles", &positionParticle);
 	}// triggerHitMessages
 
 	//__________________________________________________________________

@@ -49,7 +49,8 @@ namespace Logic {
 				   _cooldownTimer(0),
 				   _canShoot(true),
 				   _nameWeapon(0), 
-				   _currentAmmo(0) {
+				   _currentAmmo(0),
+				   _particlePosition(Vector3::ZERO){
 		
 			// No hay memoria dinamica que inicializar
 		}
@@ -66,7 +67,8 @@ namespace Logic {
 										   _cooldownTimer(0),
 										   _canShoot(true),
 										   _nameWeapon(shoot), 
-										   _currentAmmo(0) {
+										   _currentAmmo(0),
+										   _particlePosition(Vector3::ZERO){
 			
 			// No hay memoria dinámica que inicializar
 		}
@@ -225,6 +227,10 @@ namespace Logic {
 		*/
 		bool _canShoot;
 
+		/**
+		Vector donde se posionara la particula de emision de disparo
+		*/
+		Vector3 _particlePosition;
 	}; // class CShoot
 
 	//REG_FACTORY(CShoot);

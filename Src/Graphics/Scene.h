@@ -168,7 +168,11 @@ namespace Graphics
 		*/
 		Ogre::SceneNode* getSceneNode(const std::string &nameSceneNode);
 		
-		CParticle *createParticle(const std::string &unicName, const std::string &particleName);
+		/**
+		crea una particula
+		*/
+		CParticle *createParticle(const std::string &unicName, const std::string &particleName, const Vector3 *position);
+
 	protected:
 
 		/**
@@ -325,8 +329,6 @@ namespace Graphics
 		Escena cuyo padre es la grande. Se usa principalmente para los overlays
 		*/
 		//Ogre::SceneNode *_sceneNode;
-
-		int _temporal;
 
 	}; // class CScene
 

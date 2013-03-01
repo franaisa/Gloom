@@ -61,7 +61,9 @@ namespace Logic {
 		_cooldown = (unsigned char) entityInfo->getIntAttribute(weapon+"ColdDown") * 1000;
 		_maxAmmo = entityInfo->getIntAttribute(weapon+"MaxAmmo");
 		_id = entityInfo->getIntAttribute(weapon+"Id");
-		
+		if(entityInfo->hasAttribute(weapon+"ParticlePosition")) {
+			_particlePosition = entityInfo->getVector3Attribute(weapon+"ParticlePosition");
+		}
 		return true;
 	} // spawn
 	
