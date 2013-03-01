@@ -227,7 +227,6 @@ Map = {
 		model = "marine.mesh",
 		physic_entity = "rigid",
 		physic_type = "dynamic",
-		physic_shape = "box",
 		physic_dimensions = { 3, 6, 3 },
 		physic_height = 6,
 		physic_radius = 0.5,
