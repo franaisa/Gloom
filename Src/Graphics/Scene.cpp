@@ -20,6 +20,7 @@ de una escena.
 #include "Server.h"
 #include "StaticEntity.h"
 #include "BaseSubsystems/Server.h"
+#include "BaseSubsystems/Math.h"
 #include "Graphics/Entity.h"
 
 #include <assert.h>
@@ -192,8 +193,7 @@ namespace Graphics
 		sceneNode->removeChild(entity->getName());
 	}
 */
-	CParticle * CScene::createParticle(const std::string &unicName, const std::string &particleName,const Vector3 *position){
-
+	CParticle * CScene::createParticle(const std::string &unicName, const std::string &particleName, const Vector3 *position){
 
 		CParticle *particle = new CParticle(unicName, particleName);
 

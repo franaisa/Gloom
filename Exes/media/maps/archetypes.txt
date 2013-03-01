@@ -98,6 +98,7 @@ Map = {
 			weaponShotGunColdDown = 1.0,
 			weaponShotGunMaxAmmo = 50,
 			weaponShotGunId = 2,
+			weaponShotGunParticlePosition = {50.0, 50.0, 50.0},
 			
 			weaponMiniGunName = "MiniGun",
 			weaponMiniGunModel = "plasmagun.mesh",
@@ -111,6 +112,7 @@ Map = {
 			weaponMiniGunColdDown = 1.0,
 			weaponMiniGunMaxAmmo = 200,
 			weaponMiniGunId = 3,
+			weaponMiniGunParticlePosition = {50.0, 50.0, 50.0},
 			
 			weaponGrenadeLauncherName = "GrenadeLauncher",
 			weaponGrenadeLauncherModel = "grenadelauncher.mesh",
@@ -124,6 +126,7 @@ Map = {
 			weaponGrenadeLauncherId = 4,
 			weaponGrenadeLauncherShootForce = 5000,
 			weaponGrenadeLauncherProjectileRadius = 3,
+			weaponGrenadeLauncherParticlePosition = {50.0, 50.0, 50.0},
 
 		hudMira = 3,
 	},
@@ -203,6 +206,7 @@ Map = {
 			weaponShotGunColdDown = 1.0,
 			weaponShotGunMaxAmmo = 50,
 			weaponShotGunId = 2,
+			weaponShotGunParticlePosition = {50.0, 50.0, 50.0},
 			
 			weaponMiniGunName = "MiniGun",
 			weaponMiniGunModel = "plasmagun.mesh",
@@ -216,6 +220,7 @@ Map = {
 			weaponMiniGunColdDown = 1.0,
 			weaponMiniGunMaxAmmo = 200,
 			weaponMiniGunId = 3,
+			weaponMiniGunParticlePosition = {50.0, 50.0, 50.0},
 			
 			weaponGrenadeLauncherName = "GrenadeLauncher",
 			weaponGrenadeLauncherModel = "grenadelauncher.mesh",
@@ -229,6 +234,7 @@ Map = {
 			weaponGrenadeLauncherId = 4,
 			weaponGrenadeLauncherShootForce = 5000,
 			weaponGrenadeLauncherProjectileRadius = 3,
+			weaponGrenadeLauncherParticlePosition = {50.0, 50.0, 50.0},
 
 		hudMira = 3,
 	},

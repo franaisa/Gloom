@@ -18,6 +18,7 @@ de una escena.
 #define __Graphics_Scene_H
 
 #include <list>
+#include "BaseSubsystems/Math.h"
 
 // Predeclaración de clases para ahorrar tiempo de compilación
 namespace Ogre 
@@ -171,7 +172,7 @@ namespace Graphics
 		/**
 		crea una particula
 		*/
-		CParticle *createParticle(const std::string &unicName, const std::string &particleName, const Vector3 *position);
+		CParticle* createParticle(const std::string &unicName, const std::string &particleName, const Vector3 *position);
 
 	protected:
 

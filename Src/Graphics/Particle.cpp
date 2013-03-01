@@ -49,22 +49,16 @@ namespace Graphics
 	CParticle::CParticle(const std::string &unicName, const std::string &particleName)
 	{
 		static int counter = 0;
-		_nameParticle = unicName;
-		
+		_nameParticle = unicName;	
 		
 		CScene *scene = Graphics::CServer::getSingletonPtr()->getActiveScene();
 		//scene->createSceneNode(nameSceneNode);
-
 		char num[5];
 		sprintf(num, "%d", counter);
 		std::string nameSceneNode = "SceneNode_"+_nameParticle + num;
 
 		_particleSystem = scene->getSceneMgr()->createParticleSystem(_nameParticle+num, particleName);
-
-	
-
-		_sceneNode = scene->getSceneMgr()->getRootSceneNode()->
-								createChildSceneNode(nameSceneNode + "_node");
+		_sceneNode = scene->getSceneMgr()->getRootSceneNode()->createChildSceneNode(nameSceneNode + "_node");
 		_sceneNode->attachObject(_particleSystem);
 
 		counter++;

@@ -52,6 +52,8 @@ namespace Logic {
 			_canShoot = false;
 			_cooldownTimer = 0;
 				
+			drawParticle("fire", "SmokeParticles");
+
 			for(int i = 0; i < _numberShots; ++i) {
 				std::pair<CEntity*, Ray> entityHit = fireWeapon();
 				if(entityHit.first != NULL) {
@@ -104,10 +106,6 @@ namespace Logic {
 		m->setEnemy(_entity);
 		entityHit.first->emitMessage(m);
 
-		Graphics::CScene* _scen = Graphics::CServer::getSingletonPtr()->getActiveScene();
-		//Vector3 positionParticle = _entity->getPosition() + (Math::getDirection(_entity->getOrientation()) * 50);
-		Vector3 positionParticle = _entity->getPosition() + (Math::getDirection(_entity->getOrientation()) * _particlePosition);
-		_scen->createParticle(_entity->getName(),"SmokeParticles", &positionParticle);
 	}// triggerHitMessages
 
 	//__________________________________________________________________
