@@ -8,7 +8,7 @@ namespace Logic {
 
 	IMP_FACTORYMESSAGE(CMessageStopAnimation);
 
-	CMessageStopAnimation::CMessageStopAnimation() : CMessage(TMessageType::STOP_ANIMATION) {
+	CMessageStopAnimation::CMessageStopAnimation() : CMessage(Message::STOP_ANIMATION) {
 		// Nada que hacer
 	}//
 	//----------------------------------------------------------

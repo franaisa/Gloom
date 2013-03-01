@@ -6,7 +6,7 @@ namespace Logic {
 
 	IMP_FACTORYMESSAGE(CMessageSide);
 
-	CMessageSide::CMessageSide() : CMessage(TMessageType::SIDE) {
+	CMessageSide::CMessageSide() : CMessage(Message::SIDE) {
 		// Nada que hacer
 	} //
 	//----------------------------------------------------------

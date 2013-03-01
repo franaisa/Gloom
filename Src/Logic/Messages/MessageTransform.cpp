@@ -7,7 +7,7 @@ namespace Logic {
 
 	IMP_FACTORYMESSAGE(CMessageTransform);
 
-	CMessageTransform::CMessageTransform() : CMessage(TMessageType::SET_TRANSFORM) {
+	CMessageTransform::CMessageTransform() : CMessage(Message::SET_TRANSFORM) {
 		// Nada que hacer
 	} //
 	//----------------------------------------------------------

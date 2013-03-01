@@ -6,7 +6,7 @@ namespace Logic {
 
 	IMP_FACTORYMESSAGE(CMessageAddAmmo);
 
-	CMessageAddAmmo::CMessageAddAmmo() : CMessage(TMessageType::ADD_AMMO) {
+	CMessageAddAmmo::CMessageAddAmmo() : CMessage(Message::ADD_AMMO) {
 		// Nada que hacer
 	}//
 	//----------------------------------------------------------

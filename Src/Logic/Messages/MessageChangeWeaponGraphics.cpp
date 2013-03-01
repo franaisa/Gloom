@@ -8,7 +8,7 @@ namespace Logic {
 
 	IMP_FACTORYMESSAGE(CMessageChangeWeaponGraphics);
 
-	CMessageChangeWeaponGraphics::CMessageChangeWeaponGraphics() : CMessage(TMessageType::CHANGE_WEAPON_GRAPHICS) {
+	CMessageChangeWeaponGraphics::CMessageChangeWeaponGraphics() : CMessage(Message::CHANGE_WEAPON_GRAPHICS) {
 		// Nada que hacer
 	}//
 	//----------------------------------------------------------

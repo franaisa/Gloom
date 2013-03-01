@@ -8,7 +8,7 @@ namespace Logic {
 
 	IMP_FACTORYMESSAGE(CMessageChangeWeapon);
 
-	CMessageChangeWeapon::CMessageChangeWeapon() : CMessage(TMessageType::CHANGE_WEAPON) {
+	CMessageChangeWeapon::CMessageChangeWeapon() : CMessage(Message::CHANGE_WEAPON) {
 		// Nada que hacer
 	}//
 	//----------------------------------------------------------

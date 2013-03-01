@@ -6,7 +6,7 @@ namespace Logic {
 
 	IMP_FACTORYMESSAGE(CMessageHudLife);
 
-	CMessageHudLife::CMessageHudLife() : CMessage(TMessageType::HUD_LIFE) {
+	CMessageHudLife::CMessageHudLife() : CMessage(Message::HUD_LIFE) {
 		// Nada que hacer
 	}//
 	//----------------------------------------------------------
