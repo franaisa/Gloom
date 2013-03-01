@@ -367,16 +367,15 @@ namespace Physics {
 		Logic::CEntity* raycastClosest (const Ray& ray, float maxDist, int group) const; 
 
 		/**
-		Lanza un rayo y devuelve la primera entidad lógica contra la que interseca que NO pertenece
-		 al grupo de colisión indicado. Si el rayo no choca contra ninguna entidad de ese grupo
-		 devuelve NULL.
+		Lanza un rayo y devuelve la primera entidad lógica contra la que interseca que NO es la indicada en el ID.
+		Si el rayo no choca contra ninguna entidad devuelve NULL.
 		 
 		 @param ray Rayo lanzado.
 		 @param maxDist distancia máxima de la primera intersección.
-		 @param group Grupo de colisión de la entidad buscada.
-		 @return Primera entidad lógica alcanzada de ese grupo o NULL.
+		 @param id Id con la que no puede chocar.
+		 @return Primera entidad lógica alcanzada o NULL.
 		 */
-		Logic::CEntity* raycastClosestInverse (const Ray& ray, float maxDist, int group) const; 
+		Logic::CEntity* raycastClosestInverse (const Ray& ray, float maxDist, unsigned int id) const; 
 
 		void addImpulsiveForce( physx::PxRigidDynamic* actor, const Vector3& force ); 
 

@@ -12,12 +12,8 @@ material Material#71_OgreMax
 			vertex_program_ref MiVSShader
 			{
 				param_named_auto ViewProjectionMatrix worldviewproj_matrix
-				//param_named_auto worldMatrix world_matrix
 				param_named_auto tiempo time
 			}
-			//fragment_program_ref lavapsshader
-			//{
-			//}
 			texture_unit diffuseMap
             {
 				texture lava_COLOR.tga

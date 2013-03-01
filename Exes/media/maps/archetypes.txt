@@ -51,10 +51,6 @@ Map = {
 		physic_shape = "capsule",
 		physic_radius = 6,
 		physic_height = 6,
-		angularSpeed = 0.003,
-		accel = 0.001,
-		angularAccel = 0.00001,
-		movementTolerance = 7.0,
 		numWeapons = 5,
 		heightShoot = 8,
 
@@ -159,10 +155,6 @@ Map = {
 		physic_shape = "capsule",
 		physic_radius = 6,
 		physic_height = 6,
-		angularSpeed = 0.003,
-		accel = 0.001,
-		angularAccel = 0.00001,
-		movementTolerance = 7.0,
 		numWeapons = 5,
 		heightShoot = 8,
 
@@ -279,10 +271,6 @@ Map = {
 		physic_shape = "capsule",
 		physic_radius = 6,
 		physic_height = 6,
-		angularSpeed = 0.003,
-		accel = 0.001,
-		angularAccel = 0.00001,
-		movementTolerance = 7.0,
 		numWeapons = 5,
 		heightShoot = 8,
 

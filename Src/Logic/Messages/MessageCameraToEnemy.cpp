@@ -9,7 +9,7 @@ namespace Logic {
 
 	IMP_FACTORYMESSAGE(CMessageCameraToEnemy);
 
-	CMessageCameraToEnemy::CMessageCameraToEnemy() : CMessage(TMessageType::CAMERA_TO_ENEMY) {
+	CMessageCameraToEnemy::CMessageCameraToEnemy() : CMessage(Message::CAMERA_TO_ENEMY) {
 		// Nada que hacer
 	}//
 	//----------------------------------------------------------

@@ -9,7 +9,7 @@ namespace Logic {
 
 	IMP_FACTORYMESSAGE(CMessageDamaged);
 
-	CMessageDamaged::CMessageDamaged() : CMessage(TMessageType::DAMAGED) {
+	CMessageDamaged::CMessageDamaged() : CMessage(Message::DAMAGED) {
 		// Nada que hacer
 	}//
 	//----------------------------------------------------------

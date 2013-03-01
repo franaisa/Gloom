@@ -6,7 +6,7 @@ namespace Logic {
 
 	IMP_FACTORYMESSAGE(CMessageHudWeapon);
 
-	CMessageHudWeapon::CMessageHudWeapon() : CMessage(TMessageType::HUD_WEAPON) {
+	CMessageHudWeapon::CMessageHudWeapon() : CMessage(Message::HUD_WEAPON) {
 		// Nada que hacer
 	}//
 	//----------------------------------------------------------

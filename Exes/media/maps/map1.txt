@@ -215,7 +215,7 @@ Map = {
 
 	Enemigo1 = {
 		type = "RemotePlayer",
-		position = {0, 8, -10},
+		position = {0, 0.2, -10},
 		orientation = 90,
 		life = 100000.0,
 		maxShield=100,
@@ -224,14 +224,10 @@ Map = {
 		PorcentShield=23,
 		isPlayer = false,
 		model = "marine.mesh",
-		physic_entity = "rigid",
-		physic_type = "dynamic",
-		physic_shape = "box",
-		physic_dimensions = { 3, 6, 3 },
+		physic_shape = "capsule",
+		physic_radius = 6,
 		physic_height = 6,
-		physic_radius = 0.5,
-		physic_mass = 10,
-		physic_group = 1,
+
 	},
 	
 	

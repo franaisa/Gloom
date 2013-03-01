@@ -6,7 +6,7 @@ namespace Logic {
 
 	IMP_FACTORYMESSAGE(CMessageAddLife);
 
-	CMessageAddLife::CMessageAddLife() : CMessage(TMessageType::ADD_LIFE) {
+	CMessageAddLife::CMessageAddLife() : CMessage(Message::ADD_LIFE) {
 		// Nada que hacer
 	}//
 	//----------------------------------------------------------
