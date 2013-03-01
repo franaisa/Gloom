@@ -73,6 +73,7 @@ namespace Logic  {
 
 		<ul>
 			<li>SYNC_POSITION</li>
+			<li>CONTROL</li>
 		</ul>
 		
 		@param message Mensaje a chequear.
