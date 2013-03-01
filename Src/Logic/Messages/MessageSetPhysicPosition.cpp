@@ -8,7 +8,7 @@ namespace Logic {
 	IMP_FACTORYMESSAGE(CMessageSetPhysicPosition);
 	
 	
-	CMessageSetPhysicPosition::CMessageSetPhysicPosition() : CMessage(TMessageType::SET_PHYSIC_POSITION) {
+	CMessageSetPhysicPosition::CMessageSetPhysicPosition() : CMessage(Message::SET_PHYSIC_POSITION) {
 		// Nada que hacer
 	}//
 	//----------------------------------------------------------

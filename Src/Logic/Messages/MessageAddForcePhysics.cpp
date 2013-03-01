@@ -6,7 +6,7 @@ namespace Logic {
 
 	IMP_FACTORYMESSAGE(CMessageAddForcePhysics);
 
-	CMessageAddForcePhysics::CMessageAddForcePhysics() : CMessage(TMessageType::ADD_FORCE_PHYSICS) {
+	CMessageAddForcePhysics::CMessageAddForcePhysics() : CMessage(Message::ADD_FORCE_PHYSICS) {
 		// Nada que hacer
 	}
 

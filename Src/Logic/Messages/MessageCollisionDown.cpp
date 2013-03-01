@@ -8,7 +8,7 @@ namespace Logic {
 
 	IMP_FACTORYMESSAGE(CMessageCollisionDown);
 
-	CMessageCollisionDown::CMessageCollisionDown(): CMessage(TMessageType::COLLISION_DOWN){
+	CMessageCollisionDown::CMessageCollisionDown(): CMessage(Message::COLLISION_DOWN){
 		
 	}//
 	//----------------------------------------------------------

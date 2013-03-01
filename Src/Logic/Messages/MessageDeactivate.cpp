@@ -6,7 +6,7 @@ namespace Logic {
 
 	IMP_FACTORYMESSAGE(CMessageDeactivate);
 
-	CMessageDeactivate::CMessageDeactivate() : CMessage(TMessageType::DEACTIVATE) {
+	CMessageDeactivate::CMessageDeactivate() : CMessage(Message::DEACTIVATE) {
 		// Nada que hacer
 	} //
 	//----------------------------------------------------------

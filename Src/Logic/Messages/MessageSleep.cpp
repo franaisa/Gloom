@@ -6,7 +6,7 @@ namespace Logic {
 
 	IMP_FACTORYMESSAGE(CMessageSleep);
 
-	CMessageSleep::CMessageSleep() : CMessage(TMessageType::SLEEP) {
+	CMessageSleep::CMessageSleep() : CMessage(Message::SLEEP) {
 		// Nada que hacer
 	} //
 	//----------------------------------------------------------

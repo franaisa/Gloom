@@ -4,7 +4,7 @@
 
 namespace Logic {
 
-	CMessageRebound::CMessageRebound() : CMessage(TMessageType::REBOUND) {
+	CMessageRebound::CMessageRebound() : CMessage(Message::REBOUND) {
 		// Nada que hacer
 	} //
 	//----------------------------------------------------------

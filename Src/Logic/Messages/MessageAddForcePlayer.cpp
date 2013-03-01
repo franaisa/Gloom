@@ -6,7 +6,7 @@ namespace Logic {
 
 	IMP_FACTORYMESSAGE(CMessageAddForcePlayer);
 
-	CMessageAddForcePlayer::CMessageAddForcePlayer() : CMessage(TMessageType::ADDFORCEPLAYER) {
+	CMessageAddForcePlayer::CMessageAddForcePlayer() : CMessage(Message::ADDFORCEPLAYER) {
 		// Nada que hacer
 	} //
 	//----------------------------------------------------------

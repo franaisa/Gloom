@@ -9,7 +9,7 @@ namespace Logic {
 
 	IMP_FACTORYMESSAGE(CMessageTouched);
 
-	CMessageTouched::CMessageTouched() : CMessage(TMessageType::TOUCHED) {
+	CMessageTouched::CMessageTouched() : CMessage(Message::TOUCHED) {
 		// Nada que hacer
 	} //
 	//----------------------------------------------------------
