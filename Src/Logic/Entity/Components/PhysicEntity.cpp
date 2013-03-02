@@ -23,6 +23,7 @@ para representar character controllers.
 #include "Logic/Messages/MessageUntouched.h"
 #include "Logic/Messages/MessageSetPhysicPosition.h"
 #include "Logic/Messages/MessageAddForcePhysics.h"
+#include "Logic/Messages/MessageContactEnter.h"
 
 #define _USE_MATH_DEFINES
 #include <math.h>
@@ -289,6 +290,14 @@ void CPhysicEntity::onTrigger(IPhysics *otherComponent, bool enter)
 		m->setEntity(otherComponent->getEntity());
 		_entity->emitMessage(m);
 	}
+}
+
+//---------------------------------------------------------
+
+void CPhysicEntity::onContact (IPhysics *otherComponent) {
+	Logic::CMessageContactEnter* msg = new Logic::CMessageContactEnter();
+	msg->setEntity( otherComponent->getEntity() );
+	_entity->emitMessage(msg);
 }
 
 //---------------------------------------------------------

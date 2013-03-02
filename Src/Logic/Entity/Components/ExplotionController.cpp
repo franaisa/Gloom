@@ -17,6 +17,7 @@
 #include "Logic/Entity/Components/PhysicEntity.h"
 
 #include "Logic/Messages/MessageSetPhysicPosition.h"
+#include "Logic/Messages/MessageContactEnter.h"
 
 namespace Logic {
 	
@@ -30,7 +31,7 @@ namespace Logic {
 		// Actualizamos el timer. Si se ha cumplido el tiempo limite de explosion
 		// eliminamos la entidad granada y creamos la entidad explosion.
 		_timer += msecs;
-		if(_timer > _explotionTime) {
+		if(_timer > _explotionTime || _enemyHit) {
 			// Eliminamos la entidad en diferido
 			CEntityFactory::getSingletonPtr()->deferredDeleteEntity(_entity);
 			
@@ -58,6 +59,25 @@ namespace Logic {
 
 		return true;
 	} // spawn
+
+	//________________________________________________________________________
+
+	bool CExplotionController::accept(CMessage *message) {
+		return (message->getMessageType() == Message::CONTACT_ENTER);
+	} // accept
+	
+	//________________________________________________________________________
+
+	void CExplotionController::process(CMessage *message) {
+		switch(message->getMessageType()) {
+		case Message::CONTACT_ENTER:
+			// No funciona, hay que averiguar si contra lo que choco es un player
+			if(static_cast<CMessageContactEnter*>(message)->getEntity()->isPlayer()) 
+				_enemyHit = true;
+
+			break;
+		}
+	} // process
 
 	//________________________________________________________________________
 

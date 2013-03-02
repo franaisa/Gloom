@@ -183,7 +183,7 @@ void CCollisionManager::setCollisionGroup(physx::PxU16 group1, physx::PxU16 grou
 		if(_collisionGroupLookupTable[group1] != NULL) {
 			_collisionGroupLookupTable[group1]->erase(group2);
 		}
-		
+
 		if(_collisionGroupLookupTable[group2] != NULL) {
 			_collisionGroupLookupTable[group2]->erase(group1);
 		}

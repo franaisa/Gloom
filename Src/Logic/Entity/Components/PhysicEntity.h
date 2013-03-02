@@ -106,6 +106,8 @@ namespace Logic
 		*/
 		virtual void onTrigger (IPhysics *otherComponent, bool enter);
 
+		virtual void onContact (IPhysics *otherComponent);
+
 		//Metodo que devuelve el booleano _inTrigger que nos indica si hay alguien dentro del trigger
 		bool getInTrigger(){return _inTrigger;};
 

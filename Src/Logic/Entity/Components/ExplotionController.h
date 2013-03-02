@@ -36,7 +36,7 @@ namespace Logic {
 
 
 		/** Constructor por defecto; en la clase base no hace nada. */
-		CExplotionController() : IComponent(), _timer(0) { }
+		CExplotionController() : IComponent(), _timer(0), _enemyHit(false) { }
 
 
 		// =======================================================================
@@ -73,6 +73,33 @@ namespace Logic {
 
 		//________________________________________________________________________
 
+		/** 
+		Este componente acepta los siguientes mensajes:
+
+		<ul>
+			<li>CONTACT_ENTER</li>
+		</ul>
+		
+		@param message Mensaje a chequear.
+		@return true si el mensaje es aceptado.
+		*/
+		virtual bool accept(CMessage *message);
+
+		//________________________________________________________________________
+
+		/**
+		Método virtual que procesa un mensaje.
+
+		@param message Mensaje a procesar.
+		*/
+		virtual void process(CMessage *message);
+
+
+		// =======================================================================
+		//                            METODOS PROPIOS
+		// =======================================================================
+
+
 		/**
 		Setea el puntero a la entidad que ha disparado la granada
 
@@ -102,6 +129,9 @@ namespace Logic {
 
 		/** Entidad que ha disparado la granada. */
 		CEntity* _owner;
+
+		/** true si la granada a golpeado a un enemigo */
+		bool _enemyHit;
 
 	}; // class CExplotionController
 
