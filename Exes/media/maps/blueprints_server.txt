@@ -7,5 +7,5 @@ SpawnPoint CPhysicEntity
 Jumper CGraphics CPhysicEntity CJumper
 Grenade CGraphics CPhysicEntity
 Lava CGraphics CPhysicEntity CLava
-Elevator CGraphics CPhysicEntity CElevator
-ElevatorTrigger CGraphics CPhysicEntity CElevatorTrigger
+Elevator CGraphics CPhysicEntity CElevator CNetConnector
+ElevatorTrigger CGraphics CPhysicEntity CElevatorTrigger 

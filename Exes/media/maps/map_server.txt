@@ -6,6 +6,7 @@ Map = {
 	Ascensor1 = {
 		type = "Elevator",
 		position = {-51.0, 0.0, 1.0},
+		msgList= "6,7",
 		positionInitial = {-51.0, 0.0, 1.0},
 		positionFinal = {-51.0, 60.0, 1.0},
 		velocity = 0.035,
@@ -19,23 +20,6 @@ Map = {
 		physic_group = 5,
 	},
 	
-	Ascensor1T = {
-		type = "ElevatorTrigger",
-		position = {-51.0, 5.0, 1.0},
-		positionInitial = {-51.0, 5.0, 1.0},
-		positionFinal = {-51.0, 65.0, 1.0},
-		link = "Ascensor1",
-		velocity = 0.035,
-		model = "health1.mesh",
-		physic_entity = "rigid",
-		physic_trigger = true,
-		physic_type = "kinematic",
-		physic_shape = "box",
-		physic_dimensions = { 1, 1, 1 },
-		physic_mass = 10,
-		physic_group = 6,
-	},
-
 	
 	Jumper1 = {
 		type = "Jumper",
@@ -169,7 +153,24 @@ Map = {
 	Camera = {
 		type = "Camera",
 		position = {-50.0, 60.0, 48.0},
-		target = {0,0,0},
+		target = {-10.0, 2, -50.0},
 		height = 8,
+	},
+	
+	Ascensor1T = {
+		type = "ElevatorTrigger",
+		position = {-51.0, 5.0, 1.0},
+		positionInitial = {-51.0, 5.0, 1.0},
+		positionFinal = {-51.0, 65.0, 1.0},
+		link = "Ascensor1",
+		velocity = 0.035,
+		model = "health1.mesh",
+		physic_entity = "rigid",
+		physic_trigger = true,
+		physic_type = "kinematic",
+		physic_shape = "box",
+		physic_dimensions = { 1, 1, 1 },
+		physic_mass = 10,
+		physic_group = 6,
 	},
 }

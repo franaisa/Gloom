@@ -35,8 +35,7 @@ namespace Application {
 	bool CMultiplayerTeamDeathmatchClientState::init(){
 
 		
-		//comenzamos el proceso de sincronizacion, para ello enviamos un mensaje de ping
-		//y tomamos el tiempo para cronometrar cuanto tarda el servidor en respondernos
+		
 		
 		return true;
 	}
@@ -45,6 +44,9 @@ namespace Application {
 
 		// Registramos a este estado como observador de red para que sea notificado
 		Net::CManager::getSingletonPtr()->addObserver(this);
+		
+		//comenzamos el proceso de sincronizacion, para ello enviamos un mensaje de ping
+		//y tomamos el tiempo para cronometrar cuanto tarda el servidor en respondernos
 		Net::NetMessageType ackMsg = Net::PING;
 		Net::NetID id = Net::CManager::getSingletonPtr()->getID();
 		Net::CBuffer ackBuffer(sizeof(ackMsg) + sizeof(id));
@@ -94,14 +96,6 @@ namespace Application {
 
 			Logic::CEntity * player = Logic::CServer::getSingletonPtr()->getMap()->createPlayer(name, entityID);
 			player->activate();
-			// NO ES NECESARIO ENVIAR LOAD_PLAYER EN EL CASO DE LOS QUE JUEGAN
-
-			//Enviamos el mensaje de que se ha creado el jugador
-			/*Net::NetMessageType ackMsg = Net::PLAYER_LOADED;
-			Net::CBuffer ackBuffer(sizeof(ackMsg) + sizeof(id));
-			ackBuffer.write(&ackMsg, sizeof(ackMsg));
-			ackBuffer.write(&id, sizeof(id));
-			Net::CManager::getSingletonPtr()->send(ackBuffer.getbuffer(), ackBuffer.getSize());*/
 			break;
 		}
 		case Net::PING:
@@ -109,7 +103,7 @@ namespace Application {
 			
 			unsigned int ping = clock()-_reloj;
 			_npings++;
-			_pingActual += ping;
+			_pingActual += ping/2;
 
 			if(_npings>5){//si ya he tomado suficientes pings, calculo la media y la seteo al server
 				_pingActual = _pingActual/_npings;

@@ -57,11 +57,13 @@ namespace Logic  {
 		//si no estamos interpolando, gl
 		if(!_interpolating)
 			return;
+		//lo primero de todo, movemos la posición del servidor para poder interpolar con más exactitud
 		moveServerPos();
 		if(_canInterpolateMove){
 			//calculamos la direccion en la que debemos interpolar
 			Vector3 direction = _serverPos.getTrans();
 			direction = direction - _entity->getPosition();
+			direction = direction * Vector3(1,0,1);
 			float distance = direction.length();
 			direction = direction.normalisedCopy();
 		
@@ -176,7 +178,7 @@ namespace Logic  {
 
 			case Control::MOUSE:
 				Math::yaw(((CMessageMouse*)message)->getMouse()[0], _serverPos);;
-
+				_canInterpolateRotation = true;
 				break;
 
 			}//switch
@@ -186,6 +188,14 @@ namespace Logic  {
 
 		}//switch
 
+		//comprobamos si nos estamos moviendo, de manera que si no nos estamos moviendo no interpolamos
+		if(_serverDirection == Vector3(0,0,0))
+			_canInterpolateMove = false;
+
+		//comprobamos si es el jugador local, de manera que si no lo es le decimos que puede interpolar 
+		//siempre que deba hacerlo
+		if(!_entity->isPlayer())
+			_canInterpolateMove = true;
 	} // process
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -202,7 +212,7 @@ namespace Logic  {
 	void CInterpolation::calculateInterpolation(){
 		//calculamos la distancia que hay entre donde estoy y donde me dice el servidor que debería estar
 		Vector3 serverPos = _serverPos.getTrans();
-		serverPos = serverPos - _entity->getPosition();
+		serverPos = (serverPos - _entity->getPosition())*Vector3(1,0,1);
 		float distance = serverPos.length();
 		
 		//calculo la distancia que habría recorrido trasladándome hacia la posi que me ha dado el servidor
