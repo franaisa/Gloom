@@ -30,6 +30,7 @@ Contiene la implementación de la clase que representa una entidad gráfica.
 #include <Graphics/Camera.h>
 #include <Graphics/ObjectTextDisplay.h>
 
+
 namespace Graphics 
 {
 	CEntity::CEntity(const std::string &name, const std::string &mesh)
@@ -104,9 +105,9 @@ namespace Graphics
 		_entityNode = _scene->getSceneMgr()->getRootSceneNode()->createChildSceneNode(_name + "_node");
 		_entityNode->attachObject(_entity);
 
-		CObjectTextDisplay* text = new CObjectTextDisplay(_entity, _scene->getCamera()->getOgreCamera());
-		text->enable(true);
-		text->setText("Toma compadre!");
+		_text = new CObjectTextDisplay(_entity, _scene->getCamera()->getOgreCamera());
+		_text->enable(true);
+		_text->setText("Gazpacho");
 			
 		_loaded = true;
 
@@ -136,6 +137,7 @@ namespace Graphics
 	//--------------------------------------------------------
 		
 	void CEntity::tick(float secs) {
+		_text->update();
 	} // tick
 	
 	//--------------------------------------------------------
