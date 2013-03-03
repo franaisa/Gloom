@@ -11,130 +11,120 @@
 
 namespace Graphics {
 
-// From the Ogre forums.  This class displays text above or next to on screen entities.
-class CObjectTextDisplay {
+	// From the Ogre forums.  This class displays text above or next to on screen entities.
+	class CObjectTextDisplay {
+	public:
+		CObjectTextDisplay(const Ogre::MovableObject* p, const Ogre::Camera* c) {
+			m_p = p;
+			m_c = c;
+			m_enabled = false;
+			m_text = "";
  
-public:
-    static Ogre::Overlay* g_pOverlay;
+			// create an overlay that we can use for later
+			m_pOverlay = Ogre::OverlayManager::getSingleton().create("shapeName" + p->getName());
+			m_pContainer = static_cast<Ogre::OverlayContainer*>(Ogre::OverlayManager::getSingleton().createOverlayElement(
+						"Panel", "container1" + p->getName()));
  
-    CObjectTextDisplay(const Ogre::MovableObject* p, const Ogre::Camera* c) {
-        m_p = p;
-        m_c = c;
-        m_enabled = false;
-        m_text = "";
+			m_pOverlay->add2D(m_pContainer);
  
-        // create an overlay that we can use for later
-		if(g_pOverlay == NULL)
-		{
-			g_pOverlay = Ogre::OverlayManager::getSingleton().create("floatingTextOverlay");
-			g_pOverlay->show();
+			m_pText = Ogre::OverlayManager::getSingleton().createOverlayElement("TextArea", "shapeNameText" + p->getName());
+			m_pText->setDimensions(1.0, 1.0);
+			m_pText->setMetricsMode(Ogre::GMM_PIXELS);
+			m_pText->setPosition(0, 0);
+ 
+			m_pText->setParameter("font_name", "fuenteSimple");
+			m_pText->setParameter("char_height", "16");
+			m_pText->setParameter("horz_align", "center");
+			m_pText->setColour(Ogre::ColourValue(1.0, 1.0, 1.0));
+ 
+			m_pContainer->addChild(m_pText);
+			m_pOverlay->show();
 		}
  
-		char buf[50];
-		sprintf(buf, "c_%s", p->getName().c_str());
-		m_elementName = buf;
-        m_pContainer = static_cast<Ogre::OverlayContainer*>(Ogre::OverlayManager::getSingleton().createOverlayElement(
-                  "Panel", "container1" +  p->getName()));
- 
-        g_pOverlay->add2D(m_pContainer);
- 
-		sprintf(buf, "ct_%s", p->getName().c_str());
-		m_elementTextName = buf;
-        m_pText = Ogre::OverlayManager::getSingleton().createOverlayElement("TextArea", buf + p->getName());
-		assert(m_pText != NULL);
-        m_pText->setDimensions(1.0, 1.0);
-        m_pText->setMetricsMode(Ogre::GMM_PIXELS);
-        m_pText->setPosition(0, 0);
- 
-        m_pText->setParameter("font_name", "fuenteSimple");
-        m_pText->setParameter("char_height", "16");
-        m_pText->setParameter("horz_align", "center");
-        m_pText->setColour(Ogre::ColourValue(1.0, 1.0, 1.0));
- 
-        m_pContainer->addChild(m_pText);
-		m_pContainer->setEnabled(false);
-    }
- 
-    virtual ~CObjectTextDisplay() {
- 
-        // overlay cleanup -- Ogre would clean this up at app exit but if your app 
-        // tends to create and delete these objects often it's a good idea to do it here.
- 
-		Ogre::OverlayManager *overlayManager = Ogre::OverlayManager::getSingletonPtr();
-		m_pContainer->removeChild(m_elementTextName);
-		g_pOverlay->remove2D(m_pContainer);
-		overlayManager->destroyOverlayElement(m_pText);
-		overlayManager->destroyOverlayElement(m_pContainer);
-    }
- 
-    void enable(bool enable) {
-        m_enabled = enable;
-        if (enable)
-		{
-            m_pContainer->show();
+		virtual ~CObjectTextDisplay() {
+			// overlay cleanup -- Ogre would clean this up at app exit but if your app 
+			// tends to create and delete these objects often it's a good idea to do it here.
+			m_pOverlay->hide();
+			Ogre::OverlayManager *overlayManager = Ogre::OverlayManager::getSingletonPtr();
+			m_pContainer->removeChild("shapeNameText");
+			m_pOverlay->remove2D(m_pContainer);
+			overlayManager->destroyOverlayElement(m_pText);
+			overlayManager->destroyOverlayElement(m_pContainer);
+			overlayManager->destroy(m_pOverlay);
 		}
-        else
-		{
-            m_pContainer->hide();
+ 
+		void enable(bool enable) {
+			m_enabled = enable;
+			if (enable)
+				m_pOverlay->show();
+			else
+				m_pOverlay->hide();
 		}
-    }
  
-    void setText(const Ogre::String& text) {
-        m_text = text;
-        m_pText->setCaption(m_text);
-    }
+		void setText(const Ogre::String& text) {
+			m_text = text;
+			m_pText->setCaption(m_text);
+		}
  
-    void update();
+		void update();
  
-protected:
-    const Ogre::MovableObject* m_p;
-    const Ogre::Camera* m_c;
-    bool m_enabled;
-    Ogre::OverlayElement* m_pText;
-    Ogre::String m_text;
-	Ogre::String m_elementName;
-	Ogre::String m_elementTextName;
-    Ogre::OverlayContainer* m_pContainer;
-};
+	protected:
+		const Ogre::MovableObject* m_p;
+		const Ogre::Camera* m_c;
+		bool m_enabled;
+		Ogre::Overlay* m_pOverlay;
+		Ogre::OverlayElement* m_pText;
+		Ogre::OverlayContainer* m_pContainer;
+		Ogre::String m_text;
+	};
  
-Ogre::Overlay * CObjectTextDisplay::g_pOverlay = NULL;
+	void CObjectTextDisplay::update()  {
+		if (!m_enabled)
+			return;
  
-void CObjectTextDisplay::update()  {
-    if (!m_enabled)
-        return;
+		// get the projection of the object's AABB into screen space
+		const Ogre::AxisAlignedBox& bbox = m_p->getWorldBoundingBox(true);
+		Ogre::Matrix4 mat = m_c->getViewMatrix();
  
-    const Ogre::AxisAlignedBox& bbox = m_p->getWorldBoundingBox(true);
-	Ogre::Matrix4 mat = m_c->getViewMatrix();
+		const Ogre::Vector3* corners = bbox.getAllCorners();
  
-	bool behind = false;
+		float min_x = 1.0f, max_x = 0.0f, min_y = 1.0f, max_y = 0.0f;
  
-	// We want to put the text point in the center of the top of the AABB Box.
-	Ogre::Vector3 topcenter = bbox.getCenter();
-	// Y is up.
-	topcenter.y += bbox.getHalfSize().y;
-	topcenter = mat * topcenter;
-	// We are now in screen pixel coords and depth is +Z away from the viewer.
-	behind = (topcenter.z > 0.0);
+		// expand the screen-space bounding-box so that it completely encloses 
+		// the object's AABB
+		for (int i=0; i<8; i++) {
+			Ogre::Vector3 corner = corners[i];
  
-	if(behind)
-	{
-		// Don't show text for objects behind the camera.
-		m_pContainer->setPosition(-1000, -1000);
+			// multiply the AABB corner vertex by the view matrix to 
+			// get a camera-space vertex
+			corner = mat * corner;
+ 
+			// make 2D relative/normalized coords from the view-space vertex
+			// by dividing out the Z (depth) factor -- this is an approximation
+			float x = corner.x / corner.z + 0.5;
+			float y = corner.y / corner.z + 0.5;
+ 
+			if (x < min_x) 
+				min_x = x;
+ 
+			if (x > max_x) 
+				max_x = x;
+ 
+			if (y < min_y) 
+				min_y = y;
+ 
+			if (y > max_y) 
+				max_y = y;
+		}
+ 
+		// we now have relative screen-space coords for the object's bounding box; here
+		// we need to center the text above the BB on the top edge. The line that defines
+		// this top edge is (min_x, min_y) to (max_x, min_y)
+ 
+		//m_pContainer->setPosition(min_x, min_y);
+		m_pContainer->setPosition(1-max_x, min_y);  // Edited by alberts: This code works for me
+		m_pContainer->setDimensions(max_x - min_x, 0.1); // 0.1, just "because"
 	}
-	else
-	{
-		// Not in pixel coordinates, in screen coordinates as described above.
-		// We convert to screen relative coord by knowing the window size.
-		// Top left screen corner is 0, 0 and the bottom right is 1,1
-		// The 0.45's here offset alittle up and right for better "text above head" positioning.
-		// The 2.2 and 1.7 compensate for some strangeness in Ogre projection?
-		// Tested in wide screen and normal aspect ratio.
-		m_pContainer->setPosition(0.45f - topcenter.x / (2.2f * topcenter.z), 
-			topcenter.y / (1.7f * topcenter.z) + 0.45f);
-		// Sizse is relative to screen size being 1.0 by 1.0 (not pixels size)
-		m_pContainer->setDimensions(0.1f, 0.1f);
-	}
-}
 
 };
 
