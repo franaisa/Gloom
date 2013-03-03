@@ -231,7 +231,12 @@ void setupFiltering(PxRigidActor* actor, int group, const std::vector<int>& grou
 	// El grupo de colision equivale al numero de desplazamientos que podemos realizar,
 	// que en nuestro caso son 32 debido a que tenemos un entero de 32 bits.
 	PxU32 filterGroup = (1 << group);
-	PxU32 filterMask = groupList.empty() ? 0xFFFF : (1 << groupList[0]);
+	//PxU32 filterMask = 
+	//if( !groupList.empty() ) {
+
+	//}
+
+	PxU32 filterMask = groupList.empty() ? 0 : ( groupList[0] == -1 ? 0xFFFF : (1 << groupList[0]) );
 
 	// Calculamos la mascara de colision, es decir, la mascara que define con que grupos
 	// de colision debemos activarnos.
