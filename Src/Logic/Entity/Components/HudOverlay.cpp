@@ -105,7 +105,7 @@ namespace Logic
 		int x = hudPanelInitialPositionX;
 		int y = hudPanelInitialPositionY;
 
-		/*
+		
 		for(int i=0; i<= NONE; ++i)
 		{
 			eWeaponIndex current = (eWeaponIndex)i;
@@ -113,11 +113,17 @@ namespace Logic
 			_panelWeapon[current] = _server->createOverlay( "PanelWeapon" + current, "Panel");
 			_panelWeapon[current]->setMetricsMode("pixel");
 			_panelWeapon[current]->setPosition( x*relativeWidth, y*relativeHeight);
-			_panelWeapon[current]->setDimensions( relativeWidth*hudPa, relativeHeight*2 );
+			_panelWeapon[current]->setDimensions( relativeWidth*hudPanelSizeX, relativeHeight*hudPanelSizeX );
+			_panelWeapon[current]->setMaterial("cuadroArmas");
 
+			_overlayPlay->add2D( _panelWeapon[current]);
+
+			x += hudPanelSizeX;
+			// La posicion y no debe cambiar, ya que todo ira a la misma altura.
+			//y += hudPanelSizeY;
 		 }
-		 */
-		 ////// panel PanelWeapon cuadro principal
+		
+		////// panel PanelWeapon cuadro principal
 		Graphics::COverlay *panelWeapon1 = _server->createOverlay( "PanelWeapon1", "Panel");
 		panelWeapon1->setMetricsMode("pixel");
 		panelWeapon1->setPosition( 9*relativeWidth, 29*relativeHeight);
@@ -466,50 +472,6 @@ namespace Logic
 		}
 		
 		//_overlayPlay->add3D("AK47", "AK47.mesh", new Vector3(0,0,-5));
-
-		/*
-		Graphics::CScene *miScene3D = _server->createScene("SceneOverlay3D");
-
-		//Graphics::CScene *miScene3D = _server->getActiveScene();
-		//Graphics::CScene *miScene3D = _entity->getMap()->getScene();
-
-		Graphics::CEntity *ent = new Graphics::CEntity("AK47","AK47.mesh");
-	
-		//miScene3D->createSceneNode("SceneNode3d");
-		
-		ent->attachToScene(miScene3D);
-		
-		//miScene3D->addEntityToSceneNode(ent);
-	e	nt->setPosition(Vector3(0,0,50));
-
-		_overlayPlay->add3D(miScene3D);
-		*/
-		/*
-		Ogre::Overlay *_overlayWeapon = overlayManager.create( "_overlayHud3D" );
-
-		Ogre::SceneManager *miSceneManager = Graphics::CServer::getSingletonPtr()->getActiveScene()->getSceneMgr();
-		Ogre::SceneNode* miSceneNode = new Ogre::SceneNode(miSceneManager, "hola");
-		//Ogre::SceneNode* miSceneNode = new Ogre::SceneNode(NULL);
-		
-
-		//Ogre::SceneNode *miSceneNode = miSceneManager->createSceneNode("sceneNodeHud3D");
-
-		Ogre::Entity *ent = miSceneManager->createEntity("overlay3D", "AK47.mesh");
-		ent->setRenderQueueGroup(Ogre::RENDER_QUEUE_OVERLAY - 1);
-		//Ogre::MaterialPtr mat = Ogre::MaterialManager::getSingleton().getByName("pruebaHud3D");
-		//mat->setDepthCheckEnabled(false);
-		//ent->setMaterial(mat);
-		ent->setMaterialName("pruebaHud3D");
-
-		miSceneNode->attachObject((Ogre::MovableObject *)ent);
-		miSceneNode->setPosition(0,-1.5,-8.9);
-		
-
-		
-		_overlayWeapon->add3D(miSceneNode);
-		_overlayWeapon->show();
-		*/
-
 		
 		_overlayPlay->setVisible(true);
 
