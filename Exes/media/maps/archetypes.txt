@@ -126,7 +126,7 @@ Map = {
 			weaponGrenadeLauncherProjectileRadius = 3,
 			weaponGrenadeLauncherParticlePosition = {50.0, 50.0, 50.0},
 			
-			weaponRocketLauncherName = "GrenadeLauncher",
+			weaponRocketLauncherName = "RocketLauncher",
 			weaponRocketLauncherModel = "grenadelauncher.mesh",
 			weaponRocketLauncherModelYaw = 3.10,
 			weaponRocketLauncherModelPitch = 0,
@@ -141,6 +141,14 @@ Map = {
 			weaponRocketLauncherParticlePosition = {50.0, 50.0, 50.0},
 			
 		hudMira = 3,
+		hudCross = 3,
+		hudScreenWidth = 26,
+		hudScreenHeight = 31,
+		hudPanelInitialPositionX = 9,
+		hudPanelInitialPositionY = 29,
+		hudPanelSizeX = 2,
+		hudPanelSizeY = 2,
+
 	},
 	
 	
@@ -246,7 +254,7 @@ Map = {
 			weaponGrenadeLauncherProjectileRadius = 3,
 			weaponGrenadeLauncherParticlePosition = {50.0, 50.0, 50.0},
 
-			weaponRocketLauncherName = "GrenadeLauncher",
+			weaponRocketLauncherName = "RocketLauncher",
 			weaponRocketLauncherModel = "grenadelauncher.mesh",
 			weaponRocketLauncherModelYaw = 3.10,
 			weaponRocketLauncherModelPitch = 0,
@@ -261,6 +269,13 @@ Map = {
 			weaponRocketLauncherParticlePosition = {50.0, 50.0, 50.0},
 			
 		hudMira = 3,
+		hudCross = 3,
+		hudScreenWidth = 26,
+		hudScreenHeight = 31,
+		hudPanelInitialPositionX = 9,
+		hudPanelInitialPositionY = 29,
+		hudPanelSizeX = 2,
+		hudPanelSizeY = 2,
 	},
 	
 	item = {
@@ -375,7 +390,7 @@ Map = {
 			weaponGrenadeLauncherShootForce = 5000,
 			weaponGrenadeLauncherProjectileRadius = 3,
 
-			weaponRocketLauncherName = "GrenadeLauncher",
+			weaponRocketLauncherName = "RocketLauncher",
 			weaponRocketLauncherModel = "grenadelauncher.mesh",
 			weaponRocketLauncherModelYaw = 3.10,
 			weaponRocketLauncherModelPitch = 0,
@@ -390,6 +405,13 @@ Map = {
 			weaponRocketLauncherParticlePosition = {50.0, 50.0, 50.0},
 			
 		hudMira = 3,
+		hudCross = 3,
+		hudScreenWidth = 26,
+		hudScreenHeight = 31,
+		hudPanelInitialPositionX = 9,
+		hudPanelInitialPositionY = 29,
+		hudPanelSizeX = 2,
+		hudPanelSizeY = 2,
 	},
 	
 	Camera = {

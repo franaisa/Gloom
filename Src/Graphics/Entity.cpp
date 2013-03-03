@@ -104,9 +104,9 @@ namespace Graphics
 		_entityNode = _scene->getSceneMgr()->getRootSceneNode()->createChildSceneNode(_name + "_node");
 		_entityNode->attachObject(_entity);
 
-		//CObjectTextDisplay* text = new CObjectTextDisplay(_entity, _scene->getCamera()->getOgreCamera());
-		//text->enable(true);
-		//text->setText("Toma compadre!");
+		CObjectTextDisplay* text = new CObjectTextDisplay(_entity, _scene->getCamera()->getOgreCamera());
+		text->enable(true);
+		text->setText("Toma compadre!");
 			
 		_loaded = true;
 

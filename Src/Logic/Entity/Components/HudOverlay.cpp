@@ -69,38 +69,54 @@ namespace Logic
 
 		
 		_numWeapons = entityInfo->getIntAttribute("numWeapons");
-
-		int _actualWeapon;
-
-		
+	
 		_server = Graphics::CServer::getSingletonPtr();
 
-		_overlayPlay = _server->createOverlay( "_overlayPlay" );
 
+		int hudScreenWidth = entityInfo->getIntAttribute("hudScreenWidth");
+		int hudScreenHeight = entityInfo->getIntAttribute("hudScreenHeight");
+
+		int hudPanelInitialPositionX = entityInfo->getIntAttribute("hudPanelInitialPositionX");
+		int hudPanelInitialPositionY = entityInfo->getIntAttribute("hudPanelInitialPositionY");
+		int hudPanelSizeX = entityInfo->getIntAttribute("hudPanelSizeX");
+		int hudPanelSizeY = entityInfo->getIntAttribute("hudPanelSizeY");
 
 		float height = _server->getHeight();
 		float width = _server->getWidth();
 
-		float relativeWidth = width/26;
-		float relativeHeight = height/31;
+		float relativeWidth = width/hudScreenWidth;
+		float relativeHeight = height/hudScreenHeight;
 
 		////////////////Todo esto para la mira
          // Create an overlay
-		
-         // Create a panel de Mira
-
-		Graphics::COverlay *panelMira = _server->createOverlay("Mira",  "Panel" );
-		float sizeCrossFire = entityInfo->getFloatAttribute("hudMira");
+		_overlayPlay = _server->createOverlay( "_overlayPlay" );		
+         
+		// Create a panel de Mira
+		_panelMira = _server->createOverlay("Mira",  "Panel" );
+		float sizeCrossFire = entityInfo->getFloatAttribute("hudCross");
 		float positionCrossFire = 0.5f-((sizeCrossFire/2)/100) ;
-        panelMira->setPosition( positionCrossFire,positionCrossFire);
-		panelMira->setDimensions( sizeCrossFire/100, sizeCrossFire/100 );
-        panelMira->setMaterial("hudMira");
+        _panelMira->setPosition( positionCrossFire,positionCrossFire);
+		_panelMira->setDimensions( sizeCrossFire/100, sizeCrossFire/100 );
+        _panelMira->setMaterial("hudMira");
 
-		_overlayPlay->add2D( panelMira );
+		_overlayPlay->add2D( _panelMira );
          // Add the panel to the overlay
 
+		int x = hudPanelInitialPositionX;
+		int y = hudPanelInitialPositionY;
+
+		/*
+		for(int i=0; i<= NONE; ++i)
+		{
+			eWeaponIndex current = (eWeaponIndex)i;
 		
-		 
+			_panelWeapon[current] = _server->createOverlay( "PanelWeapon" + current, "Panel");
+			_panelWeapon[current]->setMetricsMode("pixel");
+			_panelWeapon[current]->setPosition( x*relativeWidth, y*relativeHeight);
+			_panelWeapon[current]->setDimensions( relativeWidth*hudPa, relativeHeight*2 );
+
+		 }
+		 */
 		 ////// panel PanelWeapon cuadro principal
 		Graphics::COverlay *panelWeapon1 = _server->createOverlay( "PanelWeapon1", "Panel");
 		panelWeapon1->setMetricsMode("pixel");
@@ -449,7 +465,9 @@ namespace Logic
 			_weaponsBox[i][ACTIVE]->setVisible(false);
 		}
 		
+		//_overlayPlay->add3D("AK47", "AK47.mesh", new Vector3(0,0,-5));
 
+		/*
 		Graphics::CScene *miScene3D = _server->createScene("SceneOverlay3D");
 
 		//Graphics::CScene *miScene3D = _server->getActiveScene();
@@ -462,10 +480,10 @@ namespace Logic
 		ent->attachToScene(miScene3D);
 		
 		//miScene3D->addEntityToSceneNode(ent);
-		ent->setPosition(Vector3(0,0,50));
+	e	nt->setPosition(Vector3(0,0,50));
 
 		_overlayPlay->add3D(miScene3D);
-
+		*/
 		/*
 		Ogre::Overlay *_overlayWeapon = overlayManager.create( "_overlayHud3D" );
 

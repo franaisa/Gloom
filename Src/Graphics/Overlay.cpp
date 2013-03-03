@@ -15,6 +15,7 @@ Contiene la implementación de la clase que representa un Overlay.
 
 #include "Overlay.h"
 #include "Scene.h"
+#include "Entity.h"
 
 #include "Graphics/Server.h"
 #include "BaseSubsystems/Math.h"
@@ -111,9 +112,37 @@ namespace Graphics
 	//------------------------------------------------------------
 
 	
-	void COverlay::add3D(CScene* scene){
+	void COverlay::add3D(const std::string &name, const std::string &mesh, const Vector3 *position){
+
 		if(_overlay){
-			_overlay->add3D( scene->getSceneMgr()->getRootSceneNode());
+
+			CScene *scene = Graphics::CServer::getSingletonPtr()->getActiveScene();
+			
+			int counter=0;
+			char num[5];
+			sprintf(num, "%d", counter);
+			
+			std::string nameSceneNode = "SceneNode_"+name + num;
+			
+
+			Ogre::Entity *entity = scene->getSceneMgr()->createEntity(name, mesh);
+
+
+			//Ogre::SceneNode *sceneNode = scene->getSceneMgr()->getRootSceneNode()->createChildSceneNode(nameSceneNode + "_node");
+			//sceneNode->attachObject((Ogre::MovableObject *)entity);
+
+			//_overlay->add3D(sceneNode);
+
+
+			Ogre::SceneNode* sceneNode = new Ogre::SceneNode(scene->getSceneMgr(), nameSceneNode);
+			//scene->getSceneMgr()->getRootSceneNode()->addChild(sceneNode);
+
+			sceneNode->attachObject((Ogre::MovableObject *)entity);
+
+
+			_overlay->add3D(sceneNode);
+
+			sceneNode->setPosition(*position);
 		}
 
 	} // add3D
