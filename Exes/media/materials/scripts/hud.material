@@ -100,7 +100,7 @@ material cuadroArmas
 	}
 }
 
-material katana
+material KATANA_ACTIVE
 {
 	technique
 	{
@@ -120,7 +120,7 @@ material katana
 		}
 	}
 }
-material francotirador
+material KATANA_ACTIVE
 {
 	technique
 	{
@@ -134,33 +134,53 @@ material francotirador
 			cull_software none
 			
 			texture_unit katana
+			{
+				texture katana.png 2d
+			}
+		}
+	}
+}
+material KATANA_ACTIVE
+{
+	technique
+	{
+		pass
+		{
+			depth_check off
+			depth_write off
+			scene_blend alpha_blend
+			lighting off
+			cull_hardware none
+			cull_software none
+			
+			texture_unit katana
+			{
+				texture katana.png 2d
+			}
+		}
+	}
+}
+material SNIPER_ACTIVE
+{
+	technique
+	{
+		pass
+		{
+			depth_check off
+			depth_write off
+			scene_blend alpha_blend
+			lighting off
+			cull_hardware none
+			cull_software none
+			
+			texture_unit SNIPER
 			{
 				texture francotirador.png 2d
 			}
 		}
 	}
 }
-material francotiradorBN
-{
-	technique
-	{
-		pass
-		{
-			depth_check off
-			depth_write off
-			scene_blend alpha_blend
-			lighting off
-			cull_hardware none
-			cull_software none
-			
-			texture_unit katana
-			{
-				texture francotiradorBN.png 2d
-			}
-		}
-	}
-}
-material francotiradorSinBalas
+material SNIPER_NO_AMMO
 {
 	technique
 	{
@@ -180,8 +200,28 @@ material francotiradorSinBalas
 		}
 	}
 }
+material SNIPER_NO_WEAPON
+{
+	technique
+	{
+		pass
+		{
+			depth_check off
+			depth_write off
+			scene_blend alpha_blend
+			lighting off
+			cull_hardware none
+			cull_software none
+			
+			texture_unit katana
+			{
+				texture francotiradorBN.png 2d
+			}
+		}
+	}
+}
 
-material escopeta
+material SHOTGUN_ACTIVE
 {
 	technique
 	{
@@ -201,7 +241,7 @@ material escopeta
 		}
 	}
 }
-material escopetaBN
+material SHOTGUN_NO_WEAPON
 {
 	technique
 	{
@@ -221,7 +261,7 @@ material escopetaBN
 		}
 	}
 }
-material escopetaSinBalas
+material SHOTGUN_NO_AMMO
 {
 	technique
 	{
@@ -242,7 +282,7 @@ material escopetaSinBalas
 	}
 }
 
-material weapon4
+material MINIGUN_ACTIVE
 {
 	technique
 	{
@@ -255,14 +295,14 @@ material weapon4
 			cull_hardware none
 			cull_software none
 			
-			texture_unit weapon4
+			texture_unit MINIGUN
 			{
 				texture escopetas.png 2d
 			}
 		}
 	}
 }
-material weapon4BN
+material MINIGUN_NO_WEAPON
 {
 	technique
 	{
@@ -282,7 +322,7 @@ material weapon4BN
 		}
 	}
 }
-material weapon4SinBalas
+material MINIGUN_NO_AMMO
 {
 	technique
 	{
