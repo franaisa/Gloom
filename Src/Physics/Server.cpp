@@ -202,31 +202,66 @@ void CServer::Release()
 
 //--------------------------------------------------------
 
-PxFilterFlags sampleFilterShader(
-        PxFilterObjectAttributes attributes0, PxFilterData filterData0,
-        PxFilterObjectAttributes attributes1, PxFilterData filterData1,
-        PxPairFlags& pairFlags, const void* constantBlock, PxU32 constantBlockSize)
-{
-        // let triggers through
-        if(PxFilterObjectIsTrigger(attributes0) || PxFilterObjectIsTrigger(attributes1))
-        {
-                pairFlags = PxPairFlag::eTRIGGER_DEFAULT;
-                return PxFilterFlag::eDEFAULT;
-        }
-        // generate contacts for all that were not filtered above
-        pairFlags = PxPairFlag::eCONTACT_DEFAULT;
+PxFilterFlags customFilterShader(PxFilterObjectAttributes attributes0, PxFilterData filterData0,
+								 PxFilterObjectAttributes attributes1, PxFilterData filterData1,
+								 PxPairFlags& pairFlags, const void* constantBlock, PxU32 constantBlockSize) {
+        
+	// Si alguno de los dos actores es un trigger...
+	if( PxFilterObjectIsTrigger(attributes0) || PxFilterObjectIsTrigger(attributes1) ) {
+		if( (filterData0.word0 & filterData1.word1) && (filterData1.word0 & filterData0.word1) )
+			pairFlags = PxPairFlag::eTRIGGER_DEFAULT;
+		
+		return PxFilterFlag::eDEFAULT;
+	}
 
-        // trigger the contact callback for pairs (A,B) where
-        // the filtermask of A contains the ID of B and vice versa.
-        //if((filterData0.word0 & filterData1.word1) && (filterData1.word0 & filterData0.word1))
-                //pairFlags |= PxPairFlag::eNOTIFY_TOUCH_FOUND;
+	// Generamos el comportamiento por defecto de contacto entre shapes
+	pairFlags = PxPairFlag::eCONTACT_DEFAULT;
 
+	// Disparar la llamada a onContact de collisonManager siempre que los grupos de colision
+	// sean los adecuados
+	if((filterData0.word0 & filterData1.word1) && (filterData1.word0 & filterData0.word1))
 		pairFlags |= PxPairFlag::eNOTIFY_TOUCH_FOUND;
-        return PxFilterFlag::eDEFAULT;
+
+	return PxFilterFlag::eDEFAULT;
 }
 
-void CServer::createScene ()
-{
+//--------------------------------------------------------
+
+void setupFiltering(PxRigidActor* actor, int group, const std::vector<int>& groupList) {
+	// El grupo de colision equivale al numero de desplazamientos que podemos realizar,
+	// que en nuestro caso son 32 debido a que tenemos un entero de 32 bits.
+	PxU32 filterGroup = (1 << group);
+	PxU32 filterMask = groupList.empty() ? 0xFFFF : (1 << groupList[0]);
+
+	// Calculamos la mascara de colision, es decir, la mascara que define con que grupos
+	// de colision debemos activarnos.
+	// Para conseguir esto realizamos un OR logico de todos los grupos de colision con los
+	// que debemos ser activados.
+	// Sabremos si debemos comprobar colisiones con un objeto si al chocar contra nosotros
+	// devuelve true al realizar un AND logico con nuestra mascara y su grupo (lo cual
+	// querria decir que su grupo esta incluido en la lista de actores a tener en cuenta).
+	for(int i = 1; i < groupList.size(); ++i) {
+		filterMask |= (1 << groupList[i]);
+	}
+
+    PxFilterData filterData;
+    filterData.word0 = filterGroup; // grupo de colision
+    filterData.word1 = filterMask;  // mascara de colision - de ella depende que se ejecute onTrigger y onContact
+    const PxU32 numShapes = actor->getNbShapes();
+    PxShape** shapes = new PxShape* [numShapes];
+    actor->getShapes(shapes, numShapes);
+
+	// Asignamos el filtro a todos los shapes de nuestro actor
+    for(PxU32 i = 0; i < numShapes; i++) {
+        shapes[i]->setSimulationFilterData(filterData);
+    }
+
+	delete [] shapes;
+}
+
+//--------------------------------------------------------
+
+void CServer::createScene () {
 	assert(_instance);
 	
 	// Crear el descriptor de la escena
@@ -246,13 +281,9 @@ void CServer::createScene ()
 
 		sceneDesc.cpuDispatcher = _cpuDispatcher;
 	}
-
-	// Establecer el shader que controla las colisiones entre entidades.
-	// Usamos un shader que emula la gestión de grupos de PhysX 2.8
-	//if (!sceneDesc.filterShader)
 		
 	// Establecemos el shader que controla las colisiones entre entidades.
-	sceneDesc.filterShader = sampleFilterShader;
+	sceneDesc.filterShader = customFilterShader;
 
 	// Intentar establecer un gestor de tareas por GPU 
 	// Sólo Windows
@@ -268,13 +299,6 @@ void CServer::createScene ()
 	_acumTime=0;
 	_fixedTime=5;
 	assert(_scene && "Error en PxPhysics::createScene");
-
-	//Establecemos los grupos de colision
-	//Nada por el momento
-	// Entre granadas e items y explosiones y granadas
-	setGroupCollisions(10, 11, false);
-	setGroupCollisions(10, 12, false);
-	setGroupCollisions(11, 12, false);
 }
 
 //--------------------------------------------------------
@@ -314,8 +338,7 @@ bool CServer::tick(unsigned int msecs)
 //--------------------------------------------------------
 
 PxRigidStatic* CServer::createPlane(const Vector3 &point, const Vector3 &normal, int group, 
-	                                const IPhysics *component)
-{
+									const std::vector<int>& groupList, const IPhysics *component) {
 	assert(_scene);
 
 	// Crear un plano estático
@@ -328,6 +351,8 @@ PxRigidStatic* CServer::createPlane(const Vector3 &point, const Vector3 &normal,
 
 	// Establecer el grupo de colisión
 	PxSetGroup(*actor, group);
+
+	setupFiltering(actor, group, groupList);
 	
 	// Añadir el actor a la escena
 	_scene->addActor(*actor);
@@ -338,7 +363,7 @@ PxRigidStatic* CServer::createPlane(const Vector3 &point, const Vector3 &normal,
 //--------------------------------------------------------
 
 PxRigidStatic* CServer::createStaticBox(const Vector3 &position, const Vector3 &dimensions, bool trigger, 
-	                                    int group, const IPhysics *component)
+	                                    int group, const std::vector<int>& groupList, const IPhysics *component)
 {
 	assert(_scene);
 
@@ -368,6 +393,8 @@ PxRigidStatic* CServer::createStaticBox(const Vector3 &position, const Vector3 &
 	// Establecer el grupo de colisión
 	PxSetGroup(*actor, group);
 
+	setupFiltering(actor, group, groupList);
+
 	// Añadir el actor a la escena
 	_scene->addActor(*actor);
 	
@@ -377,7 +404,7 @@ PxRigidStatic* CServer::createStaticBox(const Vector3 &position, const Vector3 &
 //--------------------------------------------------------
 
 PxRigidDynamic* CServer::createDynamicBox(const Vector3 &position, const Vector3 &dimensions, 
-	                                      float mass, bool kinematic, bool trigger, int group, 
+	                                      float mass, bool kinematic, bool trigger, int group, const std::vector<int>& groupList,  
 										  const IPhysics *component)
 {
 	assert(_scene);
@@ -414,6 +441,8 @@ PxRigidDynamic* CServer::createDynamicBox(const Vector3 &position, const Vector3
 	// Establecer el grupo de colisión
 	PxSetGroup(*actor, group);
 
+	setupFiltering(actor, group, groupList);
+
 	// Añadir el actor a la escena
 	_scene->addActor(*actor);
 
@@ -423,7 +452,7 @@ PxRigidDynamic* CServer::createDynamicBox(const Vector3 &position, const Vector3
 //--------------------------------------------------------
 
 physx::PxRigidStatic* CServer::createStaticSphere(const Vector3 &position, float radius, 
-			                                      bool trigger, int group, const Logic::IPhysics *component) {
+			                                      bool trigger, int group, const std::vector<int>& groupList, const Logic::IPhysics *component) {
 
 	assert(_scene);
 
@@ -447,6 +476,8 @@ physx::PxRigidStatic* CServer::createStaticSphere(const Vector3 &position, float
 	// Establecer el grupo de colisión
 	PxSetGroup(*actor, group);
 
+	setupFiltering(actor, group, groupList);
+
 	// Añadir el actor a la escena
 	_scene->addActor(*actor);
 	
@@ -456,7 +487,7 @@ physx::PxRigidStatic* CServer::createStaticSphere(const Vector3 &position, float
 //--------------------------------------------------------
 
 PxRigidDynamic* CServer::createDynamicSphere(const Vector3 &position, float radius, 
-	                                         float mass, bool kinematic, bool trigger, int group, 
+	                                         float mass, bool kinematic, bool trigger, int group, const std::vector<int>& groupList,  
 										     const IPhysics *component) {
 
 	assert(_scene);
@@ -488,6 +519,8 @@ PxRigidDynamic* CServer::createDynamicSphere(const Vector3 &position, float radi
 	// Establecer el grupo de colisión
 	PxSetGroup(*actor, group);
 
+	setupFiltering(actor, group, groupList);
+
 	// Añadir el actor a la escena
 	_scene->addActor(*actor);
 
@@ -496,8 +529,7 @@ PxRigidDynamic* CServer::createDynamicSphere(const Vector3 &position, float radi
 
 //--------------------------------------------------------
 
-PxRigidActor* CServer::createFromFile(const std::string &file, int group, const IPhysics *component)
-{
+PxRigidActor* CServer::createFromFile(const std::string &file, int group, const std::vector<int>& groupList, const IPhysics *component) {
 	assert(_scene);
 
 	// Preparar parámetros para deserializar
@@ -530,6 +562,8 @@ PxRigidActor* CServer::createFromFile(const std::string &file, int group, const 
 	// Establecer el grupo de colisión
 	PxSetGroup(*actor, group);
 
+	setupFiltering(actor, group, groupList);
+
 	// Liberar recursos
 	bufferCollection->release();
 	sceneCollection->release();
@@ -539,8 +573,7 @@ PxRigidActor* CServer::createFromFile(const std::string &file, int group, const 
 
 //--------------------------------------------------------
 
-void CServer::destroyActor(physx::PxActor *actor)
-{
+void CServer::destroyActor(physx::PxActor *actor) {
 	assert(_scene);
 
 	// Eliminar el actor de la escena
@@ -552,8 +585,7 @@ void CServer::destroyActor(physx::PxActor *actor)
 
 //--------------------------------------------------------
 
-Matrix4 CServer::getActorTransform(const PxRigidActor *actor)
-{
+Matrix4 CServer::getActorTransform(const PxRigidActor *actor) {
 	assert(actor);
 
 	// Devolver la posición y orientación en coordenadas lógicas
@@ -562,8 +594,7 @@ Matrix4 CServer::getActorTransform(const PxRigidActor *actor)
 
 //--------------------------------------------------------
 
-void CServer::moveKinematicActor(physx::PxRigidDynamic *actor, const Matrix4 &transform)
-{
+void CServer::moveKinematicActor(physx::PxRigidDynamic *actor, const Matrix4 &transform) {
 	assert(actor);
 	assert(isKinematic(actor));
 
@@ -573,8 +604,7 @@ void CServer::moveKinematicActor(physx::PxRigidDynamic *actor, const Matrix4 &tr
 
 //--------------------------------------------------------
 
-void CServer::moveKinematicActor(physx::PxRigidDynamic *actor, const Vector3 &displ)
-{
+void CServer::moveKinematicActor(physx::PxRigidDynamic *actor, const Vector3 &displ) {
 	assert(actor);
 	assert(isKinematic(actor));
 
@@ -586,8 +616,7 @@ void CServer::moveKinematicActor(physx::PxRigidDynamic *actor, const Vector3 &di
 
 //--------------------------------------------------------
 
-bool CServer::isKinematic(const PxRigidDynamic *actor)
-{
+bool CServer::isKinematic(const PxRigidDynamic *actor) {
 	assert(actor);
 
 	return actor->getRigidDynamicFlags() & PxRigidDynamicFlag::eKINEMATIC;
@@ -595,9 +624,8 @@ bool CServer::isKinematic(const PxRigidDynamic *actor)
 
 //--------------------------------------------------------
 
-PxCapsuleController* CServer::createCapsuleController(const Vector3 &position, float radius, 
-	                                                  float height, const CPhysicController *component)
-{
+PxCapsuleController* CServer::createCapsuleController(const Vector3 &position, int group, const std::vector<int>& groupList, float radius, 
+	                                                  float height, const CPhysicController *component) {
 	assert(_scene);
 
 	// Nota: PhysX coloca el sistema de coordenadas local en el centro de la cápsula, mientras
@@ -627,13 +655,17 @@ PxCapsuleController* CServer::createCapsuleController(const Vector3 &position, f
 	// Anotar el componente lógico asociado al actor dentro del controller (No es automático)
 	controller->getActor()->userData = (void *) component;
 
+	// Establecer el grupo de colisión
+	//PxSetGroup(*actor, group);
+
+	setupFiltering(controller->getActor(), group, groupList);
+
 	return controller;
 }
 
 //--------------------------------------------------------
 
-unsigned CServer::moveController(PxController *controller, const Vector3 &movement, unsigned int msecs)
-{
+unsigned CServer::moveController(PxController *controller, const Vector3 &movement, unsigned int msecs) {
 	assert(_scene);
 
 	// Mover el character controller y devolver los flags de colisión
@@ -647,8 +679,7 @@ unsigned CServer::moveController(PxController *controller, const Vector3 &moveme
 
 //--------------------------------------------------------
 
-Vector3 CServer::getControllerPosition(const PxCapsuleController *controller)
-{
+Vector3 CServer::getControllerPosition(const PxCapsuleController *controller) {
 	assert(_scene);
 
 	// Antes de devolver la posición del controller debemos transformar entre el 
@@ -660,8 +691,7 @@ Vector3 CServer::getControllerPosition(const PxCapsuleController *controller)
 
 //--------------------------------------------------------
 
-void CServer::setControllerPosition(PxCapsuleController *controller, const Vector3 &position)
-{
+void CServer::setControllerPosition(PxCapsuleController *controller, const Vector3 &position) {
 	assert(_scene);
 	// Transformación entre el sistema de coordenadas lógico y el de PhysX
 	float offsetY = controller->getHeight() / 2.0f + controller->getRadius();
@@ -713,6 +743,8 @@ void CServer::setRigidBodyPosition(physx::PxRigidBody* actor, const Vector3& pos
 			}*/
 		}
 
+		delete [] actorShapes;
+
 		// Calculamos la altura media de todas las formas para colocar el vector
 		// posicion de physx
 		averageYPosition = averageYPosition / nbShapes;
@@ -725,18 +757,14 @@ void CServer::setRigidBodyPosition(physx::PxRigidBody* actor, const Vector3& pos
 
 //--------------------------------------------------------
 
-void CServer::setGroupCollisions(int group1, int group2, bool enable)
-{
+void CServer::setGroupCollisions(int group1, int group2, bool enable) {
 	// Activar / desactivar colisiones entre grupos
 	PxSetGroupCollisionFlag(group1, group2, enable);
-	// Activamos los grupos de colision ñapeados
-	_collisionManager->setCollisionGroup(group1, group2, enable);
 }
 
 //--------------------------------------------------------
 
-Logic::CEntity* CServer::raycastClosest (const Ray& ray, float maxDist) const
-{
+Logic::CEntity* CServer::raycastClosest (const Ray& ray, float maxDist) const {
 	assert(_scene);
 
 	// Establecer parámettros del rayo
@@ -752,8 +780,6 @@ Logic::CEntity* CServer::raycastClosest (const Ray& ray, float maxDist) const
 	// Lanzar el rayo
 	bool intersection = _scene->raycastSingle(origin, unitDir, maxDistance, outputFlags, hit);
 	
-	
-
 	// IMPORTANTE: aunque se haya llamado al método move de los controllers y al consultar su posición
 	// esta aparezca actualizada, sus actores asociados no se habrán desplazado aún. La consecuencia
 	// es que se pueden recuperar colisiones inesperadas.
@@ -769,8 +795,7 @@ Logic::CEntity* CServer::raycastClosest (const Ray& ray, float maxDist) const
 
 //--------------------------------------------------------
 
-Logic::CEntity* CServer::raycastClosest(const Ray& ray, float maxDist, int group) const 
-{
+Logic::CEntity* CServer::raycastClosest(const Ray& ray, float maxDist, int group) const {
 	assert(_scene);
 
 	// Establecer parámettros del rayo
@@ -804,8 +829,7 @@ Logic::CEntity* CServer::raycastClosest(const Ray& ray, float maxDist, int group
 
 //--------------------------------------------------------
 
-Logic::CEntity* CServer::raycastClosestInverse(const Ray& ray, float maxDist, unsigned int id) const 
-{
+Logic::CEntity* CServer::raycastClosestInverse(const Ray& ray, float maxDist, unsigned int id) const {
 	assert(_scene);
 
 	// Establecer parámettros del rayo

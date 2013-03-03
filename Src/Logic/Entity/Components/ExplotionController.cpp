@@ -72,7 +72,7 @@ namespace Logic {
 		switch(message->getMessageType()) {
 		case Message::CONTACT_ENTER:
 			// No funciona, hay que averiguar si contra lo que choco es un player
-			if(static_cast<CMessageContactEnter*>(message)->getEntity()->isPlayer()) 
+			if( static_cast<CMessageContactEnter*>(message)->getEntity()->isPlayer() ) 
 				_enemyHit = true;
 
 			break;

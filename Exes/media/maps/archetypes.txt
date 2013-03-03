@@ -51,6 +51,7 @@ Map = {
 		physic_shape = "capsule",
 		physic_radius = 6,
 		physic_height = 6,
+		physic_group = 1,
 		numWeapons = 5,
 		heightShoot = 8,
 
@@ -155,6 +156,7 @@ Map = {
 		physic_shape = "capsule",
 		physic_radius = 6,
 		physic_height = 6,
+		physic_group = 1,
 		numWeapons = 5,
 		heightShoot = 8,
 
@@ -242,7 +244,8 @@ Map = {
 		physic_type = "static",
 		physic_shape = "sphere",
 		physic_radius = 3,
-		physic_group = 10,
+		physic_group = 2,
+		physic_groupList = "1",
 	},
 	
 	Enemigo1 = {
@@ -271,6 +274,7 @@ Map = {
 		physic_shape = "capsule",
 		physic_radius = 6,
 		physic_height = 6,
+		physic_group = 1,
 		numWeapons = 5,
 		heightShoot = 8,
 
@@ -357,7 +361,8 @@ Map = {
 		physic_shape = "sphere",
 		physic_radius = 0.3,
 		physic_mass = 50,
-		physic_group = 11,
+		physic_group = 3,
+		physic_groupList = "1",
 		explotionTime = 2,
 	},
 	
@@ -370,7 +375,8 @@ Map = {
 		physic_shape = "sphere",
 		physic_radius = 6,
 		physic_mass = 10,
-		physic_group = 12,
+		physic_group = 4,
+		physic_groupList = "1",
 		explotionDamage = 40,
 	},
 }

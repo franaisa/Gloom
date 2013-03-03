@@ -114,6 +114,8 @@ namespace Logic
 		*/
 		void onControllerHit (const physx::PxControllersHit &hit);
 
+		void readCollisionGroupInfo(const Map::CEntity *entityInfo, int& group, std::vector<int>& groupList);
+
 	private:
 
 		/**

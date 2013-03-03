@@ -26,20 +26,11 @@ using namespace physx;
 //--------------------------------------------------
 
 CCollisionManager::CCollisionManager() {
-	for(int i = 0; i < 32; ++i) {
-		_collisionGroupLookupTable[i] = NULL;
-	}
 }
 
 //--------------------------------------------------
 
 CCollisionManager::~CCollisionManager() {
-	for(int i = 0; i < 32; ++i) {
-		if(_collisionGroupLookupTable[i] != NULL) {
-			// Borramos aquellos sets que hayan sido inicializados
-			delete _collisionGroupLookupTable[i];
-		}
-	}
 }
 
 //--------------------------------------------------
@@ -98,14 +89,6 @@ void CCollisionManager::onTrigger(PxTriggerPair *pairs, PxU32 count) {
 		if (pairs[i].flags & (PxTriggerPairFlag::eDELETED_SHAPE_TRIGGER | PxTriggerPairFlag::eDELETED_SHAPE_OTHER))
 			continue;
 
-		PxU16 group1 = PxGetGroup(pairs[i].triggerShape->getActor());
-		PxU16 group2 = PxGetGroup(pairs[i].otherShape->getActor());
-
-		// Si no se han activado las colisiones entre estos dos grupos para estos triggers
-		// no hacer nada
-		if ( !collisionEnabled(group1, group2) )
-			continue;
-
 		// Comprobamos si estamos saliendo o entrando en el trigger
 		bool enter = pairs[i].status & PxPairFlag::eNOTIFY_TOUCH_FOUND;
 		bool exit = pairs[i].status & PxPairFlag::eNOTIFY_TOUCH_LOST;
@@ -154,48 +137,4 @@ void CCollisionManager::onControllerHit(const PxControllersHit &hit) {
 
 void CCollisionManager::onObstacleHit(const PxControllerObstacleHit &hit) {
 	// Por ahora ignoramos estos mensajes	
-}
-
-//--------------------------------------------------
-
-void CCollisionManager::setCollisionGroup(physx::PxU16 group1, physx::PxU16 group2, bool enabled) {
-	// Para insertar un nuevo grupo de colision comprobamos si el set habia sido inicializado. Si no
-	// habia sido inicializado, reservamos memoria e insertamos el grupo de colision.
-	if(enabled) {
-		if(_collisionGroupLookupTable[group1] != NULL) {
-			_collisionGroupLookupTable[group1]->insert(group2);
-		}
-		else {
-			_collisionGroupLookupTable[group1] = new(std::nothrow) std::set<physx::PxU16>;
-			assert(_collisionGroupLookupTable[group1] != NULL && "Error: No se puede reservar memoria para el grupo de colision");
-		}
-
-		if(_collisionGroupLookupTable[group2] != NULL) {
-			_collisionGroupLookupTable[group2]->insert(group1);
-		}
-		else {
-			_collisionGroupLookupTable[group2] = new(std::nothrow) std::set<physx::PxU16>;
-			assert(_collisionGroupLookupTable[group2] != NULL && "Error: No se puede reservar memoria para el grupo de colision");
-		}
-	}
-	// Eliminamos el grupo de colision del set solo si el set ha sido inicializado.
-	else {
-		if(_collisionGroupLookupTable[group1] != NULL) {
-			_collisionGroupLookupTable[group1]->erase(group2);
-		}
-
-		if(_collisionGroupLookupTable[group2] != NULL) {
-			_collisionGroupLookupTable[group2]->erase(group1);
-		}
-	}
-}
-
-//--------------------------------------------------
-
-bool CCollisionManager::collisionEnabled(PxU16 group1, PxU16 group2) const {
-	// true si existe un elemento group2 en el set de group1
-	if(_collisionGroupLookupTable[group1] != NULL)
-		return _collisionGroupLookupTable[group1]->count(group2) != 0;
-	else
-		return true;
 }
