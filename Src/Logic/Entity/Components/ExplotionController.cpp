@@ -35,10 +35,10 @@ namespace Logic {
 			// Eliminamos la entidad en diferido
 			CEntityFactory::getSingletonPtr()->deferredDeleteEntity(_entity);
 			
-			CPhysicEntity* physicEntity = _entity->getComponent<CPhysicEntity>("CPhysicEntity");
-			if(physicEntity != NULL) {
-				physicEntity->deactivate();
-			}
+			//CPhysicEntity* physicEntity = _entity->getComponent<CPhysicEntity>("CPhysicEntity");
+			//if(physicEntity != NULL) {
+			//	physicEntity->deactivate();
+			//}
 
 			// Creamos la explosion
 			createExplotion();
@@ -71,9 +71,10 @@ namespace Logic {
 	void CExplotionController::process(CMessage *message) {
 		switch(message->getMessageType()) {
 		case Message::CONTACT_ENTER:
-			// No funciona, hay que averiguar si contra lo que choco es un player
-			if( static_cast<CMessageContactEnter*>(message)->getEntity()->isPlayer() ) 
-				_enemyHit = true;
+			// Las granadas solo notifican de contacto contra players y por lo
+			// tanto al recibir este mensaje signfica que ha impactado contra
+			// otro player
+			_enemyHit = true;
 
 			break;
 		}
