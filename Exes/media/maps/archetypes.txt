@@ -53,7 +53,7 @@ Map = {
 		physic_height = 6,
 		physic_group = 1,
 		physic_groupList = "-1",
-		numWeapons = 5,
+		numWeapons = 6,
 		heightShoot = 8,
 
 			weaponHammerName = "Hammer",
@@ -125,7 +125,21 @@ Map = {
 			weaponGrenadeLauncherShootForce = 5000,
 			weaponGrenadeLauncherProjectileRadius = 3,
 			weaponGrenadeLauncherParticlePosition = {50.0, 50.0, 50.0},
-
+			
+			weaponRocketLauncherName = "GrenadeLauncher",
+			weaponRocketLauncherModel = "grenadelauncher.mesh",
+			weaponRocketLauncherModelYaw = 3.10,
+			weaponRocketLauncherModelPitch = 0,
+			weaponRocketLauncherOffset = {5.0, 4.0, 5.0},
+			weaponRocketLauncherDamage = 30.0,
+			weaponRocketLauncherNumberShoots = 1,
+			weaponRocketLauncherColdDown = 2,
+			weaponRocketLauncherMaxAmmo = 18,
+			weaponRocketLauncherId = 4,
+			weaponRocketLauncherShootForce = 5000,
+			weaponRocketLauncherProjectileRadius = 3,
+			weaponRocketLauncherParticlePosition = {50.0, 50.0, 50.0},
+			
 		hudMira = 3,
 	},
 	
@@ -159,7 +173,7 @@ Map = {
 		physic_height = 6,
 		physic_group = 1,
 		physic_groupList = "-1",
-		numWeapons = 5,
+		numWeapons = 6,
 		heightShoot = 8,
 
 			weaponHammerName = "Hammer",
@@ -232,6 +246,20 @@ Map = {
 			weaponGrenadeLauncherProjectileRadius = 3,
 			weaponGrenadeLauncherParticlePosition = {50.0, 50.0, 50.0},
 
+			weaponRocketLauncherName = "GrenadeLauncher",
+			weaponRocketLauncherModel = "grenadelauncher.mesh",
+			weaponRocketLauncherModelYaw = 3.10,
+			weaponRocketLauncherModelPitch = 0,
+			weaponRocketLauncherOffset = {5.0, 4.0, 5.0},
+			weaponRocketLauncherDamage = 30.0,
+			weaponRocketLauncherNumberShoots = 1,
+			weaponRocketLauncherColdDown = 2,
+			weaponRocketLauncherMaxAmmo = 18,
+			weaponRocketLauncherId = 4,
+			weaponRocketLauncherShootForce = 5000,
+			weaponRocketLauncherProjectileRadius = 3,
+			weaponRocketLauncherParticlePosition = {50.0, 50.0, 50.0},
+			
 		hudMira = 3,
 	},
 	
@@ -278,7 +306,7 @@ Map = {
 		physic_height = 6,
 		physic_group = 1,
 		physic_groupList = "-1",
-		numWeapons = 5,
+		numWeapons = 6,
 		heightShoot = 8,
 
 			weaponHammerName = "Hammer",
@@ -347,6 +375,20 @@ Map = {
 			weaponGrenadeLauncherShootForce = 5000,
 			weaponGrenadeLauncherProjectileRadius = 3,
 
+			weaponRocketLauncherName = "GrenadeLauncher",
+			weaponRocketLauncherModel = "grenadelauncher.mesh",
+			weaponRocketLauncherModelYaw = 3.10,
+			weaponRocketLauncherModelPitch = 0,
+			weaponRocketLauncherOffset = {5.0, 4.0, 5.0},
+			weaponRocketLauncherDamage = 30.0,
+			weaponRocketLauncherNumberShoots = 1,
+			weaponRocketLauncherColdDown = 2,
+			weaponRocketLauncherMaxAmmo = 18,
+			weaponRocketLauncherId = 4,
+			weaponRocketLauncherShootForce = 5000,
+			weaponRocketLauncherProjectileRadius = 3,
+			weaponRocketLauncherParticlePosition = {50.0, 50.0, 50.0},
+			
 		hudMira = 3,
 	},
 	
@@ -370,6 +412,34 @@ Map = {
 	},
 	
 	GrenadeExplotion = {
+		type = "Explotion",
+		model = "rocketLauncher.mesh",
+		physic_entity = "rigid",
+		physic_trigger = true,
+		physic_type = "kinematic",
+		physic_shape = "sphere",
+		physic_radius = 6,
+		physic_mass = 10,
+		physic_group = 4,
+		physic_groupList = "1",
+		explotionDamage = 40,
+	},
+	
+	Rocket = {
+		type = "Rocket",
+		model = "mine.mesh",
+		physic_entity = "rigid",
+		physic_trigger = false,
+		physic_type = "kinematic",
+		physic_shape = "sphere",
+		physic_radius = 0.3,
+		physic_mass = 50,
+		physic_group = 3,
+		physic_groupList = "-1",
+		explotionTime = 2,
+	},
+	
+	RocketExplotion = {
 		type = "Explotion",
 		model = "rocketLauncher.mesh",
 		physic_entity = "rigid",
