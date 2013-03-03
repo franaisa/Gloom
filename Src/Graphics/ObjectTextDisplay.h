@@ -26,18 +26,19 @@ public:
         m_text = "";
  
         // create an overlay that we can use for later
-        m_pOverlay = Ogre::OverlayManager::getSingleton().create("shapeName");
+		m_pOverlay = Ogre::OverlayManager::getSingleton().create("shapeName" + p->getName() );
         m_pContainer = static_cast<Ogre::OverlayContainer*>(Ogre::OverlayManager::getSingleton().createOverlayElement(
-                  "Panel", "container1"));
+                  "Panel", "container1" +  p->getName()));
  
         m_pOverlay->add2D(m_pContainer);
  
-        m_pText = Ogre::OverlayManager::getSingleton().createOverlayElement("TextArea", "shapeNameText");
+        m_pText = Ogre::OverlayManager::getSingleton().createOverlayElement("TextArea", "shapeNameText" + p->getName() );
         m_pText->setDimensions(1.0, 1.0);
         m_pText->setMetricsMode(Ogre::GMM_PIXELS);
         m_pText->setPosition(0, 0);
  
-        m_pText->setParameter("font_name", "bluehighway-8");
+		
+        m_pText->setParameter("font_name", "fuenteSimple");
         m_pText->setParameter("char_height", "26");
         m_pText->setParameter("horz_align", "center");
         m_pText->setColour(Ogre::ColourValue(1.0, 1.0, 1.0));

@@ -126,7 +126,13 @@ Map = {
 			weaponGrenadeLauncherProjectileRadius = 3,
 			weaponGrenadeLauncherParticlePosition = {50.0, 50.0, 50.0},
 
-		hudMira = 3,
+		hudCross = 3,
+		hudScreenWidth = 26,
+		hudScreenHeight = 31,
+		hudPanelInitialPositionX = 9,
+		hudPanelInitialPositionY = 29,
+		hudPanelSizeX = 2,
+		hudPanelSizeY = 2,
 	},
 	
 	
@@ -233,6 +239,13 @@ Map = {
 			weaponGrenadeLauncherParticlePosition = {50.0, 50.0, 50.0},
 
 		hudMira = 3,
+		hudCross = 3,
+		hudScreenWidth = 26,
+		hudScreenHeight = 31,
+		hudPanelInitialPositionX = 9,
+		hudPanelInitialPositionY = 29,
+		hudPanelSizeX = 2,
+		hudPanelSizeY = 2,
 	},
 	
 	item = {
@@ -348,6 +361,13 @@ Map = {
 			weaponGrenadeLauncherProjectileRadius = 3,
 
 		hudMira = 3,
+		hudCross = 3,
+		hudScreenWidth = 26,
+		hudScreenHeight = 31,
+		hudPanelInitialPositionX = 9,
+		hudPanelInitialPositionY = 29,
+		hudPanelSizeX = 2,
+		hudPanelSizeY = 2,
 	},
 	
 	Camera = {
