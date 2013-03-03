@@ -153,6 +153,7 @@
     <ClCompile Include="..\..\Src\Logic\Messages\MessagePlayerDead.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageRebound.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageSetAnimation.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Messages\MessageSetPhysicPosition.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageSide.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageSleep.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageStopAnimation.cpp" />
@@ -246,6 +247,7 @@
     <ClInclude Include="..\..\Src\Logic\Messages\MessagePlayerDead.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageRebound.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageSetAnimation.h" />
+    <ClInclude Include="..\..\Src\Logic\Messages\MessageSetPhysicPosition.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageSide.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageSleep.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageStopAnimation.h" />

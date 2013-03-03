@@ -30,7 +30,7 @@ public:
 			g_pOverlay->show();
 		}
  
-		char buf[15];
+		char buf[50];
 		sprintf(buf, "c_%s", p->getName().c_str());
 		m_elementName = buf;
         m_pContainer = static_cast<Ogre::OverlayContainer*>(Ogre::OverlayManager::getSingleton().createOverlayElement(
@@ -40,7 +40,7 @@ public:
  
 		sprintf(buf, "ct_%s", p->getName().c_str());
 		m_elementTextName = buf;
-        m_pText = Ogre::OverlayManager::getSingleton().createOverlayElement("TextArea", buf);
+        m_pText = Ogre::OverlayManager::getSingleton().createOverlayElement("TextArea", buf + p->getName());
 		assert(m_pText != NULL);
         m_pText->setDimensions(1.0, 1.0);
         m_pText->setMetricsMode(Ogre::GMM_PIXELS);
