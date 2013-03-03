@@ -30,7 +30,7 @@ public:
 			g_pOverlay->show();
 		}
  
-		char buf[15];
+		char buf[50];
 		sprintf(buf, "c_%s", p->getName().c_str());
 		m_elementName = buf;
         m_pContainer = static_cast<Ogre::OverlayContainer*>(Ogre::OverlayManager::getSingleton().createOverlayElement(
@@ -55,17 +55,17 @@ public:
 		m_pContainer->setEnabled(false);
     }
  
-        virtual ~CObjectTextDisplay() {
+    virtual ~CObjectTextDisplay() {
  
-            // overlay cleanup -- Ogre would clean this up at app exit but if your app 
-            // tends to create and delete these objects often it's a good idea to do it here.
+        // overlay cleanup -- Ogre would clean this up at app exit but if your app 
+        // tends to create and delete these objects often it's a good idea to do it here.
  
-			Ogre::OverlayManager *overlayManager = Ogre::OverlayManager::getSingletonPtr();
-			m_pContainer->removeChild(m_elementTextName);
-			g_pOverlay->remove2D(m_pContainer);
-			overlayManager->destroyOverlayElement(m_pText);
-			overlayManager->destroyOverlayElement(m_pContainer);
-        }
+		Ogre::OverlayManager *overlayManager = Ogre::OverlayManager::getSingletonPtr();
+		m_pContainer->removeChild(m_elementTextName);
+		g_pOverlay->remove2D(m_pContainer);
+		overlayManager->destroyOverlayElement(m_pText);
+		overlayManager->destroyOverlayElement(m_pContainer);
+    }
  
     void enable(bool enable) {
         m_enabled = enable;
