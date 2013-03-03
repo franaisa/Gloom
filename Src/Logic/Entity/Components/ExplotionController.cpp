@@ -34,11 +34,6 @@ namespace Logic {
 		if(_timer > _explotionTime || _enemyHit) {
 			// Eliminamos la entidad en diferido
 			CEntityFactory::getSingletonPtr()->deferredDeleteEntity(_entity);
-			
-			//CPhysicEntity* physicEntity = _entity->getComponent<CPhysicEntity>("CPhysicEntity");
-			//if(physicEntity != NULL) {
-			//	physicEntity->deactivate();
-			//}
 
 			// Creamos la explosion
 			createExplotion();
