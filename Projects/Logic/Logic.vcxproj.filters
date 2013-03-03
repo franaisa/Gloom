@@ -217,9 +217,6 @@
     <ClCompile Include="..\..\Src\Logic\Entity\Components\SpawnPlayer.cpp">
       <Filter>Entity\Components\Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Src\Logic\Messages\MessageSetPhysicPosition.cpp">
-      <Filter>Messages\Source</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Src\Logic\GameSpawnManager.cpp">
       <Filter>Maps\Source Files</Filter>
     </ClCompile>
@@ -494,9 +491,6 @@
     </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Entity\Components\SpawnPlayer.h">
       <Filter>Entity\Components\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Logic\Messages\MessageSetPhysicPosition.h">
-      <Filter>Messages\Header</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Src\Logic\GameSpawnManager.h">
       <Filter>Maps\Header Files</Filter>

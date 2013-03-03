@@ -16,6 +16,8 @@ Map = {
 		physic_shape = "box",
 		physic_dimensions = { 1, 1, 1 },
 		physic_mass = 1,
+		physic_group = 8,
+		physic_groupList = "1",
 	},
 	
 	Pincho11 = {
@@ -33,6 +35,8 @@ Map = {
 		physic_shape = "box",
 		physic_dimensions = { 1, 1, 1 },
 		physic_mass = 1,
+		physic_group = 9,
+		physic_groupList = "1",
 	},
 	Pincho12 = {
 		type = "Spike",
@@ -49,6 +53,8 @@ Map = {
 		physic_shape = "box",
 		physic_dimensions = { 1, 1, 1 },
 		physic_mass = 1,
+		physic_group = 9,
+		physic_groupList = "1",
 	},
 	Pincho13 = {
 		type = "Spike",
@@ -65,6 +71,8 @@ Map = {
 		physic_shape = "box",
 		physic_dimensions = { 1, 1, 1 },
 		physic_mass = 1,
+		physic_group = 9,
+		physic_groupList = "1",
 	},
 	
 	Ascensor1 = {
@@ -98,6 +106,7 @@ Map = {
 		physic_dimensions = { 1, 1, 1 },
 		physic_mass = 10,
 		physic_group = 6,
+		physic_groupList = "1",
 	},
 
 	
@@ -113,6 +122,8 @@ Map = {
 		physic_type = "static",
 		physic_shape = "box",
 		physic_dimensions = { 2, 2, 2 },
+		physic_group = 7,
+		physic_groupList = "1",
 	},
 	
 	Point1 = {

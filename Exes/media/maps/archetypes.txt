@@ -21,6 +21,8 @@ Map = {
 		physic_type = "static",
 		physic_shape = "box",
 		physic_dimensions = { 4, 7, 4 },
+		physic_group = 2,
+		physic_groupList = "1",
 	},
 	
 	JugadorServer = {
