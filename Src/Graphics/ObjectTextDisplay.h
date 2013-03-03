@@ -9,6 +9,8 @@
 #include <OgreOverlayElement.h>
 #include <OgreCamera.h>
 
+namespace Graphics {
+
 class CObjectTextDisplay {
  
 public:
@@ -132,5 +134,7 @@ void CObjectTextDisplay::update()  {
     m_pContainer->setPosition(1-max_x, min_y);  // Edited by alberts: This code works for me
     m_pContainer->setDimensions(max_x - min_x, 0.1); // 0.1, just "because"
 }
+
+};
 
 #endif

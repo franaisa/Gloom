@@ -28,6 +28,7 @@ namespace Ogre
 namespace Graphics 
 {
 	class CScene;
+	class CObjectTextDisplay;
 }
 
 namespace Graphics 
@@ -251,6 +252,7 @@ namespace Graphics
 		*/
 		bool _loaded;
 
+		CObjectTextDisplay* _text;
 	}; // class CEntity
 
 } // namespace Graphics
