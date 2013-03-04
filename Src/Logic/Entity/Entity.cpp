@@ -51,6 +51,23 @@ namespace Logic
 	
 	//---------------------------------------------------------
 
+	bool CEntity::dynamicSpawn(CMap* map, Map::CEntity* entityInfo) {
+		if(entityInfo->hasAttribute("name")) {
+			int entityId = getEntityID();
+			std::ostringstream convert;
+			convert << entityId;
+			std::string nameId = convert.str();
+
+			entityInfo->setAttribute("name", entityInfo->getStringAttribute("name") + nameId);
+
+			return spawn(map, entityInfo);
+		}
+
+		return false;
+	}
+
+	//---------------------------------------------------------
+
 	bool CEntity::spawn(CMap *map, const Map::CEntity *entityInfo) 
 	{
 		// Leemos las propiedades comunes
@@ -58,15 +75,6 @@ namespace Logic
 		_type = entityInfo->getType();
 
 		if(entityInfo->hasAttribute("name")) {
-			int entityId = getEntityID();
-			std::ostringstream convert;
-			convert << entityId;
-			std::string nameId = convert.str(); 
-
-			// Asignamos como el nombre de entidad el nombre dado y su id
-			// para evitar conflictos con Ogre al crear entidades duplicadas
-			// on the fly.
-			//_name = entityInfo->getStringAttribute("name") + nameId;
 			_name = entityInfo->getStringAttribute("name");
 		}
 
@@ -106,7 +114,6 @@ namespace Logic
 		// Si somos jugador, se lo decimos al servidor
 		// y nos registramos para que nos informen
 		// de los movimientos que debemos realizar
-
 
 		if (isPlayer())
 		{

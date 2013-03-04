@@ -388,6 +388,8 @@ namespace Logic
 		 */
 		void deactivateAllComponentsExcept(std::list<std::string*>* id);
 
+		bool dynamicSpawn(CMap* map, Map::CEntity* entityInfo);
+
 	protected:
 
 		/**

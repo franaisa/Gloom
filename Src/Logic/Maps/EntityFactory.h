@@ -124,7 +124,7 @@ namespace Logic
 		@note Las entidades aquí creadas pueden eliminarse al final del 
 		juego o bien utilizando deferredDeleteEntity.
 		*/
-		CEntity *createEntity(const Map::CEntity *entityInfo,
+		CEntity *createEntity(Map::CEntity *entityInfo,
 							  CMap *map);
 
 
@@ -208,6 +208,8 @@ namespace Logic
 		encontrarla
 		*/
 		Map::CEntity * getInfo(std::string type);
+
+		void dynamicCreation(bool enable) { _dynamicCreation = enable; }
 
 		/**
 		Estructura que define una entidad blueprint.
@@ -300,6 +302,8 @@ namespace Logic
 		Tabla donde se almacenan las entidades blueprint por nombre.
 		*/
 		TBluePrintMap _bluePrints;
+
+		bool _dynamicCreation;
 
 	}; // CEntityFactory
 

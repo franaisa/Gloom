@@ -51,7 +51,7 @@ namespace Logic
 	
 	//---------------------------------------------------------
 
-	CEntityFactory::CEntityFactory()
+	CEntityFactory::CEntityFactory() : _dynamicCreation(false)
 	{
 		_instance = this;
 
@@ -262,7 +262,7 @@ namespace Logic
 
 
 	Logic::CEntity *CEntityFactory::createEntity(
-								const Map::CEntity *entityInfo,
+								Map::CEntity *entityInfo,
 								Logic::CMap *map)
 	{
 		CEntity *ret = assembleEntity(entityInfo->getType());
@@ -272,7 +272,7 @@ namespace Logic
 		// Añadimos la nueva entidad en el mapa antes de inicializarla.
 		map->addEntity(ret);
 		// Y lo inicializamos
-		if (ret->spawn(map, entityInfo))
+		if (_dynamicCreation ? ret->dynamicSpawn(map, entityInfo) : ret->spawn(map, entityInfo))
 			return ret;
 		else {
 			map->removeEntity(ret);

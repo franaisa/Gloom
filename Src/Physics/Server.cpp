@@ -306,6 +306,8 @@ void CServer::createScene () {
 	_fixedTime=5;
 	assert(_scene && "Error en PxPhysics::createScene");
 
+	_scene->setFlag(PxSceneFlag::eENABLE_KINEMATIC_PAIRS, true);
+	_scene->setFlag(PxSceneFlag::eENABLE_KINEMATIC_STATIC_PAIRS, true);
 }
 
 //--------------------------------------------------------
