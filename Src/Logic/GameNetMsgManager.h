@@ -91,6 +91,30 @@ namespace Logic
 		*/
 		void sendEntityMessage(CMessage* message, TEntityID destination);
 
+		/**
+		Método que envía por la red un mensaje de destruccion de entidad
+		
+		@param dest ID de la entidad que se va a destruir
+		*/
+		void sendDestroyEntity(TEntityID dest);
+
+		/**
+		Método que procesa un paquete de creación de entidad
+		*/
+		void processCreateEntity(Net::CPaquete* packet);
+
+		/**
+		Método que procesa un paquete de destruccion de entidad
+		*/
+		void processDestroyEntity(Net::CPaquete* packet);
+
+		/**
+		Método que envía por la red un mensaje de creación de entidad
+		
+		@param dest ID de la entidad que se va a crear
+		*/
+		void sendCreateEntity(TEntityID dest);
+
 		/// IOBSERVER
 		virtual void dataPacketReceived(Net::CPaquete* packet);
 		virtual void connexionPacketReceived(Net::CPaquete* packet){}

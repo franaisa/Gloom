@@ -425,6 +425,7 @@ Map = {
 	Grenade = {
 		type = "Grenade",
 		model = "mine.mesh",
+		msgList = "36",
 		physic_entity = "rigid",
 		physic_trigger = false,
 		physic_type = "dynamic",
