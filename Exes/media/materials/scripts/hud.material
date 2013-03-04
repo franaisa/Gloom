@@ -19,7 +19,7 @@ material hudMira
 	}
 }
 
-material hudHealth
+material hud_HEALTH
 {
 	technique
 	{
@@ -39,7 +39,7 @@ material hudHealth
 		}
 	}
 }
-material hudShield
+material hud_SHIELD
 {
 	technique
 	{
@@ -59,7 +59,7 @@ material hudShield
 		}
 	}
 }
-material hudAmmo
+material hud_AMMO
 {
 	technique
 	{
@@ -100,7 +100,7 @@ material cuadroArmas
 	}
 }
 
-material KATANA_ACTIVE
+material Hammer_ACTIVE
 {
 	technique
 	{
@@ -120,7 +120,7 @@ material KATANA_ACTIVE
 		}
 	}
 }
-material KATANA_ACTIVE
+material Hammer_NO_AMMO
 {
 	technique
 	{
@@ -140,7 +140,7 @@ material KATANA_ACTIVE
 		}
 	}
 }
-material KATANA_ACTIVE
+material Hammer_NO_WEAPON
 {
 	technique
 	{
@@ -160,7 +160,7 @@ material KATANA_ACTIVE
 		}
 	}
 }
-material SNIPER_ACTIVE
+material Sniper_ACTIVE
 {
 	technique
 	{
@@ -173,14 +173,14 @@ material SNIPER_ACTIVE
 			cull_hardware none
 			cull_software none
 			
-			texture_unit SNIPER
+			texture_unit Sniper
 			{
 				texture francotirador.png 2d
 			}
 		}
 	}
 }
-material SNIPER_NO_AMMO
+material Sniper_NO_WEAPON
 {
 	technique
 	{
@@ -200,7 +200,7 @@ material SNIPER_NO_AMMO
 		}
 	}
 }
-material SNIPER_NO_WEAPON
+material Sniper_NO_AMMO
 {
 	technique
 	{
@@ -221,7 +221,7 @@ material SNIPER_NO_WEAPON
 	}
 }
 
-material SHOTGUN_ACTIVE
+material ShotGun_ACTIVE
 {
 	technique
 	{
@@ -241,7 +241,7 @@ material SHOTGUN_ACTIVE
 		}
 	}
 }
-material SHOTGUN_NO_WEAPON
+material ShotGun_NO_AMMO
 {
 	technique
 	{
@@ -261,7 +261,7 @@ material SHOTGUN_NO_WEAPON
 		}
 	}
 }
-material SHOTGUN_NO_AMMO
+material ShotGun_NO_WEAPON
 {
 	technique
 	{
@@ -282,7 +282,7 @@ material SHOTGUN_NO_AMMO
 	}
 }
 
-material MINIGUN_ACTIVE
+material MiniGun_ACTIVE
 {
 	technique
 	{
@@ -295,34 +295,15 @@ material MINIGUN_ACTIVE
 			cull_hardware none
 			cull_software none
 			
-			texture_unit MINIGUN
+			texture_unit MiniGun
 			{
 				texture escopetas.png 2d
 			}
 		}
 	}
 }
-material MINIGUN_NO_WEAPON
-{
-	technique
-	{
-		pass
-		{
-			depth_check off
-			depth_write off
-			scene_blend alpha_blend
-			lighting off
-			cull_hardware none
-			cull_software none
-			
-			texture_unit weapon4
-			{
-				texture escopetasBN.png 2d
-			}
-		}
-	}
-}
-material MINIGUN_NO_AMMO
+
+material MiniGun_NO_WEAPON
 {
 	technique
 	{
@@ -343,7 +324,28 @@ material MINIGUN_NO_AMMO
 	}
 }
 
-material weapon5
+material MiniGun_NO_AMMO
+{
+	technique
+	{
+		pass
+		{
+			depth_check off
+			depth_write off
+			scene_blend alpha_blend
+			lighting off
+			cull_hardware none
+			cull_software none
+			
+			texture_unit weapon4
+			{
+				texture escopetasBN.png 2d
+			}
+		}
+	}
+}
+
+material GrenadeLauncher_ACTIVE
 {
 	technique
 	{
@@ -363,7 +365,7 @@ material weapon5
 		}
 	}
 }
-material weapon5BN
+material GrenadeLauncher_NO_AMMO
 {
 	technique
 	{
@@ -383,7 +385,7 @@ material weapon5BN
 		}
 	}
 }
-material weapon5SinBalas
+material GrenadeLauncher_NO_WEAPON
 {
 	technique
 	{
@@ -405,7 +407,7 @@ material weapon5SinBalas
 }
 
 
-material weapon6
+material RocketLauncher_ACTIVE
 {
 	technique
 	{
@@ -425,7 +427,7 @@ material weapon6
 		}
 	}
 }
-material weapon6BN
+material RocketLauncher_NO_AMMO
 {
 	technique
 	{
@@ -445,7 +447,7 @@ material weapon6BN
 		}
 	}
 }
-material weapon6SinBalas
+material RocketLauncher_NO_WEAPON
 {
 	technique
 	{

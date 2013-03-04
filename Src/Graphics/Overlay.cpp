@@ -112,21 +112,20 @@ namespace Graphics
 	//------------------------------------------------------------
 
 	
-	void COverlay::add3D(const std::string &name, const std::string &mesh, const Vector3 *position){
-
+	CEntity* COverlay::add3D(const std::string &name, const std::string &mesh, const Vector3 *position){
+		
 		if(_overlay){
 
 			CScene *scene = Graphics::CServer::getSingletonPtr()->getActiveScene();
 			
 			int counter=0;
 			char num[5];
-			sprintf(num, "%d", counter);
+			sprintf(num, "%d", counter++);
 			
-			std::string nameSceneNode = "SceneNode_"+name + num;
+			std::string nameSceneNode = "SceneNode_"+name;// + num;
 			
 
-			Ogre::Entity *entity = scene->getSceneMgr()->createEntity(name, mesh);
-
+			Ogre::Entity *entity = scene->getSceneMgr()->createEntity("hud3D_"+name, mesh);
 
 			//Ogre::SceneNode *sceneNode = scene->getSceneMgr()->getRootSceneNode()->createChildSceneNode(nameSceneNode + "_node");
 			//sceneNode->attachObject((Ogre::MovableObject *)entity);
@@ -143,7 +142,14 @@ namespace Graphics
 			_overlay->add3D(sceneNode);
 
 			sceneNode->setPosition(*position);
+
+			// Esto es una pequeña ñapa, me creo un entidad grafica pero sin inicializar, y le añado una escena ahierro
+			// Hago esto para que se pueda desplazar desde la logica sin ningun problema.
+			Graphics::CEntity *aux = new CEntity("hud3D_"+name, mesh);
+			aux->setSceneNode(sceneNode);
+			return aux;
 		}
+		return 0;
 
 	} // add3D
 
@@ -195,7 +201,7 @@ namespace Graphics
 
 
 	void COverlay::setTextSize(const int textSize){
-		if(_overlayText){ _overlayText->setCharHeight(textSize);}
+		if(_overlayText){ _overlayText->setCharHeight((Ogre::Real)textSize);}
 	} // setTextSize
 
 	//------------------------------------------------------------

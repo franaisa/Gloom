@@ -31,6 +31,7 @@ namespace Ogre
 namespace Graphics 
 {
 	class CScene;
+	class CEntity;
 }
 
 namespace Graphics 
@@ -105,7 +106,7 @@ namespace Graphics
 
 		@param scene, escena que se añadira al overlay.
 		*/
-		void add3D(const std::string &name, const std::string &mesh, const Vector3 *position);
+		CEntity* add3D(const std::string &name, const std::string &mesh, const Vector3 *position);
 
 		/**
 		Establece donde se posicionara el Overlay.

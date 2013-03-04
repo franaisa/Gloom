@@ -162,22 +162,22 @@ namespace Logic
 	void CWeaponsManager::addAmmo(int ammo, int weapon){
 		switch(weapon){
 		case 0:
-			_entity->getComponent<CShootHammer>("CShootHammer")->addAmmo(0,ammo, (weapon == _weapons[weapon]) );
+			_entity->getComponent<CShootHammer>("CShootHammer")->addAmmo(0,ammo, (_weapons[weapon]) );
 			break;
 		case 1:
-			_entity->getComponent<CShootSniper>("CShootSniper")->addAmmo(1,ammo, (weapon == _weapons[weapon]) );
+			_entity->getComponent<CShootSniper>("CShootSniper")->addAmmo(1,ammo, (_weapons[weapon]) );
 			break;
 		case 2:
-			_entity->getComponent<CShootShotGun>("CShootShotGun")->addAmmo(2,ammo, (weapon == _weapons[weapon]) );
+			_entity->getComponent<CShootShotGun>("CShootShotGun")->addAmmo(2,ammo, (_weapons[weapon]) );
 			break;
 		case 3:
-			_entity->getComponent<CShootMiniGun>("CShootMiniGun")->addAmmo(3,ammo, (weapon == _weapons[weapon]) );
+			_entity->getComponent<CShootMiniGun>("CShootMiniGun")->addAmmo(3,ammo, (_weapons[weapon]) );
 			break;
 		case 4:
-			_entity->getComponent<CShootGrenadeLauncher>("CShootGrenadeLauncher")->addAmmo(4,ammo, (weapon == _weapons[weapon]) );
+			_entity->getComponent<CShootGrenadeLauncher>("CShootGrenadeLauncher")->addAmmo(4,ammo, (_weapons[weapon]) );
 			break;
 		case 5:
-			_entity->getComponent<CShootRocketLauncher>("CShootRocketLauncher")->addAmmo(5,ammo, (weapon == _weapons[weapon]) );
+			_entity->getComponent<CShootRocketLauncher>("CShootRocketLauncher")->addAmmo(5,ammo, (_weapons[weapon]) );
 			break;
 		}
 	}

@@ -155,6 +155,14 @@ namespace Graphics
 	
 	//--------------------------------------------------------
 		
+	Matrix4 CEntity::getTransform() {
+			Matrix4 result;
+			result.makeTransform(_entityNode->getPosition(),_entityNode->getScale(),_entityNode->getOrientation());
+			return result;
+	}// getTransform
+
+	//--------------------------------------------------------
+
 	void CEntity::setOrientation(const Matrix3 &orientation)
 	{
 		assert(_entityNode && "La entidad no ha sido cargada");

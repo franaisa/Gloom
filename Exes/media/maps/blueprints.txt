@@ -1,5 +1,5 @@
 World CGraphics CPhysicEntity
-LocalPlayer CAvatarController CArrayGraphics CPhysicController CShootRocketLauncher CShootGrenadeLauncher CShootMiniGun CShootShotGun CShootSniper CShootHammer CWeaponsManager CHudOverlay CLife CSpawnPlayer
+LocalPlayer CAvatarController CPhysicController CShootRocketLauncher CShootGrenadeLauncher CShootMiniGun CShootShotGun CShootSniper CShootHammer CWeaponsManager CHudOverlay CLife CSpawnPlayer
 RemotePlayer CAnimatedGraphics CPhysicController CLife
 Camera CCamera
 ItemSpawn CGraphics CPhysicEntity CFloatingMovement CSpawnItemManager 

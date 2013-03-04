@@ -36,7 +36,7 @@ namespace Logic {
 		
 		_currentAmmo = 1;
 
-		_damageReflect = entityInfo->getIntAttribute("weaponHammerDamageReflect");
+		_damageReflect = entityInfo->getIntAttribute("weapon"+_nameWeapon+"DamageReflect");
 				
 
 

@@ -249,8 +249,8 @@ namespace Graphics
 	//--------------------------------------------------------
 	
 	int CServer::getWidth(){
-		int aux(_overlayManager->getViewportWidth());
-		return aux;
+		return _overlayManager->getViewportWidth();
+		
 	} //get Width
 	//--------------------------------------------------------
 
