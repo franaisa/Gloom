@@ -105,6 +105,7 @@ namespace Logic
 		{
 		case Message::DAMAGED:
 			{
+				std::cout << "AU! ME QUITAN VIDA Y SOY "<< _entity->getName() << std::endl; 
 				damaged( ((CMessageDamaged*)message)->getDamage(), ((CMessageDamaged*)message)->getEnemy());	
 			}
 			break;
