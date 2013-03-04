@@ -10,6 +10,7 @@
 #define __Logic_HudOverlay_H
 
 #include "Graphics/Server.h"
+#include "Graphics/Entity.h"
 #include "Logic/Entity/Component.h"
 
 /*
@@ -37,7 +38,11 @@ namespace Logic
 		/**
 		Constructor por defecto; en la clase base no hace nada.
 		*/
-		CHudOverlay() : IComponent(), _health(0), _shield(0), _ammo(1), _actualWeapon(0), _numWeapons(0), _panelMira(0){}
+		CHudOverlay() : IComponent(), _health(0), _shield(0), _ammo(1), _actualWeapon(0), _numWeapons(0), _panelMira(0){
+			for(int i=0;i<3;++i){
+				_panelElementsText[i]=1;
+			}
+		}
 		
 
 		virtual ~CHudOverlay();
@@ -62,9 +67,9 @@ namespace Logic
 
 		int _numWeapons;
 
-		enum eWeaponIndex { HAMMER, SNIPER, SHOTGUN, MINIGUN, GRENADE_LAUNCHER, ROCKET_LAUNCHER, NONE };
-		enum eOverlayState { ACTIVE, NO_AMMO, NO_WEAPON };
-		enum eOverlayTextArea {HEALTH, SHIELD, AMMO };
+		enum eWeaponIndex { HAMMER, SNIPER, SHOTGUN, MINIGUN, GRENADELAUNCHER, ROCKETLAUNCHER, NONE };
+		enum eOverlayWeaponState { ACTIVE, NO_AMMO, NO_WEAPON };
+		enum eOverlayElements {HEALTH, SHIELD, AMMO };
 
 		void hudLife(int health);
 		void hudShield(int shield);
@@ -72,7 +77,9 @@ namespace Logic
 		void hudAmmo(int ammo, int weapon);
 		void hudSpawn(int spawn);
 		std::string toText(eWeaponIndex weapon);
-		std::string toText(eOverlayState state);
+		std::string toText(eOverlayWeaponState state);
+		std::string toText(eOverlayElements element);
+
 
 		int _health;
 		int _shield;
@@ -81,14 +88,56 @@ namespace Logic
 
 		Graphics::CServer* _server;
 		
+		/** 
+		overlay principal, albergará los paneles de armas, y el inidicador de vida, municion y armadura
+		*/
 		Graphics::COverlay *_overlayPlay;
+
+		/** 
+		Overlay que se mostrara cuando se muere el usuario
+		*/
 		Graphics::COverlay *_overlayDie;
+		
+		/**
+		Texto que se muestra cuando el jugador se muere
+		*/
 		Graphics::COverlay *_textAreaDie;
-		Graphics::COverlay *_textBoxArea[3];
+
+		/**
+		Overlays de los siguiente elementos, HEALTH, SHIELD, AMMO
+		*/
+		Graphics::COverlay *_panelElements[3];
+		/** 
+		OverlaysText  de los siguiente elementos, HEALTH, SHIELD, AMMO
+		*/
+		Graphics::COverlay *_panelElementsTextArea[3];
+		/**
+		Textos que se muestran por pantalla en los overlaysElements
+		*/
+		int _panelElementsText[3];
+
+		/**
+		Maneja el overlay de la mira.
+		*/
 		Graphics::COverlay *_panelMira;
+
+		/** 
+		Gestiona los paneles de armas basicas (el 6 esta a hierro, deberia se ser el num de armas, pero bueno)
+		*/
 		Graphics::COverlay *_panelWeapon[6];
-		// En vez de 6 deberia de ir el numero de armas pero no tengo cojones U.U
+		/**
+		Gestion los paneles de las armas (6) en este caso, en cada uno de sus estados: ACTIVE, NO_AMMO, NO_WEAPON
+		*/
 		Graphics::COverlay *_weaponsBox[6][3];
+
+
+		//////////////////////Gestion de armas
+		Graphics::COverlay *_overlayWeapon3D[6];
+
+		/**
+		Aqui guardare un puntero a cada entidad, para poder moverla y rotarla
+		*/
+		Graphics::CEntity *_weaponsEntities[6];
 
 	}; // class CHudOverlay
 

@@ -8,7 +8,7 @@ namespace Logic {
 	IMP_FACTORYMESSAGE(CMessageAvatarWalk);
 	
 	
-	CMessageAvatarWalk::CMessageAvatarWalk() : CMessage(TMessageType::AVATAR_WALK) {
+	CMessageAvatarWalk::CMessageAvatarWalk() : CMessage(Message::AVATAR_WALK) {
 		// Nada que hacer
 	}//
 	//----------------------------------------------------------
