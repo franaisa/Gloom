@@ -305,6 +305,7 @@ void CServer::createScene () {
 	_acumTime=0;
 	_fixedTime=5;
 	assert(_scene && "Error en PxPhysics::createScene");
+
 }
 
 //--------------------------------------------------------
@@ -854,8 +855,8 @@ Logic::CEntity* CServer::raycastClosestInverse(const Ray& ray, float maxDist, un
 	// Buscar un actot que pertenezca al grupo de colisión indicado
 	for (int i=nHits-1; i>=0; i--) {
 		PxRigidActor *actor = &hits[i].shape->getActor();
-		//PxShapeFlags* flags = &hits[i].shape->getFlags();
-		if (((IPhysics*)(actor->userData))->getEntity()->getEntityID() != id){ //&& !(*flags & PxShapeFlag::eTRIGGER_SHAPE)) {
+		PxShapeFlags* flags = &hits[i].shape->getFlags();
+		if (((IPhysics*)(actor->userData))->getEntity()->getEntityID() != id && !(*flags & PxShapeFlag::eTRIGGER_SHAPE)) {
 			IPhysics *component = (IPhysics *) actor->userData;
 			if (component) {
 				return component->getEntity();
