@@ -57,8 +57,17 @@ namespace Logic
 		_map = map;
 		_type = entityInfo->getType();
 
-		if(entityInfo->hasAttribute("name"))
-			_name = entityInfo->getStringAttribute("name");
+		if(entityInfo->hasAttribute("name")) {
+			int entityId = getEntityID();
+			std::ostringstream convert;
+			convert << entityId;
+			std::string nameId = convert.str(); 
+
+			// Asignamos como el nombre de entidad el nombre dado y su id
+			// para evitar conflictos con Ogre al crear entidades duplicadas
+			// on the fly.
+			_name = entityInfo->getStringAttribute("name") + nameId;
+		}
 
 		if(entityInfo->hasAttribute("position"))
 		{
