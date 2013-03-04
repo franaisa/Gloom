@@ -93,6 +93,7 @@
     <ClCompile Include="..\..\Src\Logic\Entity\Components\NetConnector.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\PhysicController.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\PhysicEntity.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\RocketController.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\Shoot.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\ShootGrenadeLauncher.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\ShootHammer.cpp" />
@@ -184,6 +185,7 @@
     <ClInclude Include="..\..\Src\Logic\Entity\Components\Life.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\PhysicController.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\PhysicEntity.h" />
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\RocketController.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\Shoot.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\ShootGrenadeLauncher.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\ShootHammer.h" />

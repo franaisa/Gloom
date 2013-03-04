@@ -7,7 +7,7 @@ SpawnPoint CPhysicEntity
 Jumper CGraphics CPhysicEntity CJumper
 Grenade CGraphics CPhysicEntity CExplotionController
 Explotion CGraphics CPhysicEntity CExplotionHitNotifier
-Rocket CGraphics CPhysicEntity CExplotionController
+Rocket CGraphics CPhysicEntity CRocketController
 Lava CGraphics CPhysicEntity CLava
 Elevator CGraphics CPhysicEntity CElevator
 ElevatorTrigger CGraphics CPhysicEntity CElevatorTrigger
