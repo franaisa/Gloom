@@ -105,6 +105,7 @@ namespace Logic
 		{
 		case Message::DAMAGED:
 			{
+				std::cout << "AU! ME QUITAN VIDA Y SOY "<< _entity->getName() << std::endl; 
 				damaged( ((CMessageDamaged*)message)->getDamage(), ((CMessageDamaged*)message)->getEnemy());	
 			}
 			break;
@@ -168,10 +169,10 @@ namespace Logic
 			//Mensaje de muerte para tratar respawn/desactivar componentes
 			Logic::CMessagePlayerDead *m=new Logic::CMessagePlayerDead();
 			_entity->emitMessage(m);
-			//Mensaje para que la camara ahora enfoque al jugador que nos mató
+			//Mensaje para que la camara ahora enfoque al jugador que nos mató (hay que enviar un mensaje de red especial para el cliente)
 			Logic::CMessageCameraToEnemy *cte=new Logic::CMessageCameraToEnemy();
 			cte->setEnemy(enemy);
-			CServer::getSingletonPtr()->getMap()->getEntityByName("Camera")->emitMessage(cte);
+			CServer::getSingletonPtr()->getMap()->getEntityByType("Camera")->emitMessage(cte);
 
 		}
 		//Actualizo la vida

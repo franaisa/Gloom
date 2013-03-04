@@ -69,7 +69,7 @@ namespace Logic {
 
 		float res = _explotionDamage * (1 - (entityDistanceFromZero / _explotionRadius));
 
-		std::cout << "Te quito " << res << " puntos de salud" << std::endl;
+		std::cout << "Soy "<< _owner->getName() << " y te quito " << res << " puntos de salud" << std::endl;
 	}
 
 	//________________________________________________________________________

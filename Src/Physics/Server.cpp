@@ -305,6 +305,7 @@ void CServer::createScene () {
 	_acumTime=0;
 	_fixedTime=5;
 	assert(_scene && "Error en PxPhysics::createScene");
+
 }
 
 //--------------------------------------------------------

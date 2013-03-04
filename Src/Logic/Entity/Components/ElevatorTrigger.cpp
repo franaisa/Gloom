@@ -64,7 +64,7 @@ namespace Logic
 		_directionFinal.normalise();
 		_toFinal=false;
 
-		_elevatorLink=Logic::CServer::getSingletonPtr()->getMap()->getEntityByName(_entityLink);
+		_elevatorLink=Logic::CServer::getSingletonPtr()->getMap()->getEntityByType(_entityLink);
 	} // activate
 	//---------------------------------------------------------
 

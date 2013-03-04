@@ -82,6 +82,7 @@ namespace Logic {
 	//________________________________________________________________________
 
 	void CRocketController::createExplotion() {
+		std::cout << "CREO EXPLOSION COHETE" << std::endl;
 		// Obtenemos la informacion asociada al arquetipo de la explosion del cohete
 		Map::CEntity *entityInfo = CEntityFactory::getSingletonPtr()->getInfo("Explotion");
 		// Creamos la entidad y la activamos
