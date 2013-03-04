@@ -66,7 +66,8 @@ namespace Logic
 			// Asignamos como el nombre de entidad el nombre dado y su id
 			// para evitar conflictos con Ogre al crear entidades duplicadas
 			// on the fly.
-			_name = entityInfo->getStringAttribute("name") + nameId;
+			//_name = entityInfo->getStringAttribute("name") + nameId;
+			_name = entityInfo->getStringAttribute("name");
 		}
 
 		if(entityInfo->hasAttribute("position"))
