@@ -12,6 +12,7 @@ Map = {
 		physic_normal = { 0, 1, 0 },
 		physic_file = "media/models/scenario.RepX",
 		physic_group = 0,
+		physic_groupList = "10",
 	},
 	
 	Spawn = {
@@ -458,9 +459,8 @@ Map = {
 		physic_shape = "sphere",
 		physic_radius = 0.3,
 		physic_mass = 50,
-		physic_group = 3,
+		physic_group = 10,
 		physic_groupList = "-1",
-		explotionTime = 2,
 	},
 	
 	RocketExplotion = {
@@ -472,7 +472,7 @@ Map = {
 		physic_shape = "sphere",
 		physic_radius = 6,
 		physic_mass = 10,
-		physic_group = 4,
+		physic_group = 11,
 		physic_groupList = "1",
 		explotionDamage = 40,
 	},
