@@ -30,6 +30,8 @@ Contiene la implementación de la clase que representa un Overlay.
 #include <OgreSceneNode.h>
 #include <OgreSceneManager.h>
 #include <OgreOverlayManager.h>
+#include <OgreMaterialManager.h>
+#include <OgreEntity.h>
 
 namespace Graphics 
 {
@@ -127,11 +129,17 @@ namespace Graphics
 
 			Ogre::Entity *entity = scene->getSceneMgr()->createEntity("hud3D_"+name, mesh);
 
-			//Ogre::SceneNode *sceneNode = scene->getSceneMgr()->getRootSceneNode()->createChildSceneNode(nameSceneNode + "_node");
-			//sceneNode->attachObject((Ogre::MovableObject *)entity);
-
-			//_overlay->add3D(sceneNode);
-
+			
+			Ogre::MaterialPtr material = Ogre::MaterialManager::getSingleton().getByName(name);
+			
+			if(!material.isNull()){
+						
+				material->getTechnique(0)->getPass(0)->setDepthCheckEnabled(false);
+				material->getTechnique(0)->getPass(0)->setDepthWriteEnabled(false);
+				material->getTechnique(0)->setSceneBlending(Ogre::SBT_TRANSPARENT_ALPHA);
+				
+			}
+			
 
 			Ogre::SceneNode* sceneNode = new Ogre::SceneNode(scene->getSceneMgr(), nameSceneNode);
 			//scene->getSceneMgr()->getRootSceneNode()->addChild(sceneNode);
