@@ -73,6 +73,7 @@ namespace Logic  {
 
 		<ul>
 			<li>SYNC_POSITION</li>
+			<li>CONTROL</li>
 		</ul>
 		
 		@param message Mensaje a chequear.
@@ -88,6 +89,16 @@ namespace Logic  {
 		@param message Mensaje a procesar.
 		*/
 		virtual void process(CMessage *message);
+
+		/**
+		Método que mueve el punto del servidor para que esté actualizado
+		*/
+		void moveServerPos();
+		/**
+		calcula si hay que hacer interpolación, o mueve al player si la distancia es
+		muy grande
+		*/
+		void calculateInterpolation();
 
 	private:
 		/**
@@ -129,6 +140,10 @@ namespace Logic  {
 		variable que indica el ping con el que estamos corrigiendo
 		*/
 		unsigned int _actualPing;
+		/**
+		dirección en la que se está moviendo el server
+		*/
+		Vector3 _serverDirection;
 
 		float _speed;
 		float _rotationSpeed;

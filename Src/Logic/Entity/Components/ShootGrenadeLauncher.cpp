@@ -56,7 +56,6 @@ namespace Logic {
 		Vector3 myPosition = _entity->getPosition() + ( Math::getDirection( _entity->getOrientation() )* (_capsuleRadius) );
 		myPosition.y = _heightShoot;
 		grenade->setPosition(myPosition);
-		//myPosition.y = _heightShoot;
 
 		// Mensaje para situar el collider fisico de la granada en la posicion de disparo.
 		Logic::CMessageSetPhysicPosition* msg = new Logic::CMessageSetPhysicPosition();

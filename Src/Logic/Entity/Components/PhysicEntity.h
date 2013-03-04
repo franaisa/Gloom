@@ -18,6 +18,8 @@ para representar character controllers.
 
 #include "Physics.h"
 
+#include <vector>
+
 // Predeclaración de tipos
 namespace physx {
 	class PxRigidActor;
@@ -106,6 +108,8 @@ namespace Logic
 		*/
 		virtual void onTrigger (IPhysics *otherComponent, bool enter);
 
+		virtual void onContact (IPhysics *otherComponent);
+
 		//Metodo que devuelve el booleano _inTrigger que nos indica si hay alguien dentro del trigger
 		bool getInTrigger(){return _inTrigger;};
 
@@ -128,18 +132,18 @@ namespace Logic
 		/**
 		Crea un plano estático a partir de la información de mapa. 
 		*/
-		physx::PxRigidStatic* createPlane(const Map::CEntity *entityInfo);
+		physx::PxRigidStatic* createPlane(const Map::CEntity *entityInfo, int group, const std::vector<int>& groupList);
 				
 		/**
 		Crea una entidad rígida (estática, dinámica o cinemática) a partir de la información de mapa. 
 		*/
-		physx::PxRigidActor* createRigid(const Map::CEntity *entityInfo);
+		physx::PxRigidActor* createRigid(const Map::CEntity *entityInfo, int group, const std::vector<int>& groupList);
 		
 		/**
 		Crea una entidad rígida (estática, dinámica o cinemática) a partir de un fichero RepX
 		exportando previamente con el plug-in the PhysX para 3ds Max.
 		*/
-		physx::PxRigidActor* createFromFile(const Map::CEntity *entityInfo);
+		physx::PxRigidActor* createFromFile(const Map::CEntity *entityInfo, int group, const std::vector<int>& groupList);
 
 		// Servidor de física
 		Physics::CServer *_server;

@@ -58,7 +58,7 @@ namespace Logic
 
 			// Por ahora leo a mano cada una de las armas que tiene el usuario
 
-			std::string armas[] = {"Hammer","Sniper","ShotGun","MiniGun", "GrenadeLauncher"};
+			std::string armas[] = {"Hammer","Sniper","ShotGun","MiniGun", "GrenadeLauncher", "RocketLauncher"};
 
 			
 			for(int i = 0; i < numWeapons; ++i){
@@ -91,10 +91,11 @@ namespace Logic
 	bool CAnimatedGraphics::accept(CMessage *message)
 	{
 		return CGraphics::accept(message) ||
-			message->getMessageType() == Message::SET_ANIMATION ||
-			message->getMessageType() == Message::STOP_ANIMATION ||
-			message->getMessageType() == Message::CHANGE_WEAPON_GRAPHICS || 
-			message->getMessageType() == Message::PLAYER_DEAD;
+			message->getMessageType() == Message::SET_ANIMATION				||
+			message->getMessageType() == Message::STOP_ANIMATION			||
+			message->getMessageType() == Message::CHANGE_WEAPON_GRAPHICS	|| 
+			message->getMessageType() == Message::PLAYER_DEAD				||
+			message->getMessageType() == Message::HUD_SPAWN;
 
 	} // accept
 	
@@ -126,6 +127,9 @@ namespace Logic
 			break;
 		case Message::DAMAGED:
 			_animatedGraphicsEntity->setAnimation("Damage",false);
+			break;
+		case Message::HUD_SPAWN:
+			_animatedGraphicsEntity->setAnimation("Idle",true);
 			break;
 		}
 

@@ -37,7 +37,7 @@ namespace Logic
 		/**
 		Constructor por defecto; en la clase base no hace nada.
 		*/
-		CHudOverlay() : IComponent(), _health(0), _shield(0), _ammo(1), _actualWeapon(0), _numWeapons(0) {}
+		CHudOverlay() : IComponent(), _health(0), _shield(0), _ammo(1), _actualWeapon(0), _numWeapons(0), _panelMira(0){}
 		
 
 		virtual ~CHudOverlay();
@@ -65,49 +65,29 @@ namespace Logic
 		enum eWeaponIndex { HAMMER, SNIPER, SHOTGUN, MINIGUN, GRENADE_LAUNCHER, ROCKET_LAUNCHER, NONE };
 		enum eOverlayState { ACTIVE, NO_AMMO, NO_WEAPON };
 		enum eOverlayTextArea {HEALTH, SHIELD, AMMO };
-		
-
-		
 
 		void hudLife(int health);
 		void hudShield(int shield);
 		void hudWeapon(int ammo, int weapon);
 		void hudAmmo(int ammo, int weapon);
-
 		void hudSpawn(int spawn);
-
+		std::string toText(eWeaponIndex weapon);
+		std::string toText(eOverlayState state);
 
 		int _health;
 		int _shield;
 		int _ammo;
-
-
 		int _actualWeapon;
 
 		Graphics::CServer* _server;
-
-		//Ogre::Overlay *_overlayPlay;
 		
-		
-		//Ogre::Overlay *_overlayDie;
-
-		//Ogre::TextAreaOverlayElement *_textAreaDie;
-
-		//Ogre::TextAreaOverlayElement *_textBoxArea[3];
-
-		//Ogre::OverlayContainer *_weaponsBox[4][3];
-
-
-
-
 		Graphics::COverlay *_overlayPlay;
 		Graphics::COverlay *_overlayDie;
-
 		Graphics::COverlay *_textAreaDie;
-
 		Graphics::COverlay *_textBoxArea[3];
-
-		// En vez de 4 deberia de ir el numero de armas pero no tengo cojones U.U
+		Graphics::COverlay *_panelMira;
+		Graphics::COverlay *_panelWeapon[6];
+		// En vez de 6 deberia de ir el numero de armas pero no tengo cojones U.U
 		Graphics::COverlay *_weaponsBox[6][3];
 
 	}; // class CHudOverlay

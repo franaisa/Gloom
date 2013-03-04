@@ -8,7 +8,7 @@ namespace Logic {
 
 	IMP_FACTORYMESSAGE(CMessageSetAnimation);
 
-	CMessageSetAnimation::CMessageSetAnimation() : CMessage(TMessageType::SET_ANIMATION) {
+	CMessageSetAnimation::CMessageSetAnimation() : CMessage(Message::SET_ANIMATION) {
 		// Nada que hacer
 	}//
 	//----------------------------------------------------------
@@ -45,7 +45,6 @@ namespace Logic {
 	//----------------------------------------------------------
 
 	void CMessageSetAnimation::deserialize(Net::CBuffer& buffer) {
-		unsigned int size;
 		buffer.deserialize(_bool);
 		buffer.deserialize(_string);
 	}

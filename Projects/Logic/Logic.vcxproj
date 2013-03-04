@@ -93,12 +93,14 @@
     <ClCompile Include="..\..\Src\Logic\Entity\Components\NetConnector.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\PhysicController.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\PhysicEntity.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\RocketController.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\Shoot.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\ShootGrenadeLauncher.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\ShootHammer.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\ShootMiniGun.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\ShootProjectile.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\ShootRaycast.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\ShootRocketLauncher.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\ShootShotGun.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\ShootSniper.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\SpawnItemManager.cpp" />
@@ -138,6 +140,7 @@
     <ClCompile Include="..\..\Src\Logic\Messages\MessageChangeWeapon.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageChangeWeaponGraphics.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageCollisionDown.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Messages\MessageContactEnter.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageControl.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageDamaged.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageDeactivate.cpp" />
@@ -182,12 +185,14 @@
     <ClInclude Include="..\..\Src\Logic\Entity\Components\Life.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\PhysicController.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\PhysicEntity.h" />
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\RocketController.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\Shoot.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\ShootGrenadeLauncher.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\ShootHammer.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\ShootMiniGun.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\ShootProjectile.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\ShootRaycast.h" />
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\ShootRocketLauncher.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\ShootShotGun.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\ShootSniper.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\SpawnItemManager.h" />
@@ -230,6 +235,7 @@
     <ClInclude Include="..\..\Src\Logic\Messages\MessageChangeWeapon.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageChangeWeaponGraphics.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageCollisionDown.h" />
+    <ClInclude Include="..\..\Src\Logic\Messages\MessageContactEnter.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageControl.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageDamaged.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageDeactivate.h" />

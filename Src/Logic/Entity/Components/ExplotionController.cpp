@@ -17,6 +17,7 @@
 #include "Logic/Entity/Components/PhysicEntity.h"
 
 #include "Logic/Messages/MessageSetPhysicPosition.h"
+#include "Logic/Messages/MessageContactEnter.h"
 
 namespace Logic {
 	
@@ -30,14 +31,9 @@ namespace Logic {
 		// Actualizamos el timer. Si se ha cumplido el tiempo limite de explosion
 		// eliminamos la entidad granada y creamos la entidad explosion.
 		_timer += msecs;
-		if(_timer > _explotionTime) {
+		if(_timer > _explotionTime || _enemyHit) {
 			// Eliminamos la entidad en diferido
 			CEntityFactory::getSingletonPtr()->deferredDeleteEntity(_entity);
-			
-			CPhysicEntity* physicEntity = _entity->getComponent<CPhysicEntity>("CPhysicEntity");
-			if(physicEntity != NULL) {
-				physicEntity->deactivate();
-			}
 
 			// Creamos la explosion
 			createExplotion();
@@ -58,6 +54,26 @@ namespace Logic {
 
 		return true;
 	} // spawn
+
+	//________________________________________________________________________
+
+	bool CExplotionController::accept(CMessage *message) {
+		return (message->getMessageType() == Message::CONTACT_ENTER);
+	} // accept
+	
+	//________________________________________________________________________
+
+	void CExplotionController::process(CMessage *message) {
+		switch(message->getMessageType()) {
+		case Message::CONTACT_ENTER:
+			// Las granadas solo notifican de contacto contra players y por lo
+			// tanto al recibir este mensaje signfica que ha impactado contra
+			// otro player
+			_enemyHit = true;
+
+			break;
+		}
+	} // process
 
 	//________________________________________________________________________
 

@@ -16,6 +16,8 @@ Map = {
 		physic_shape = "box",
 		physic_dimensions = { 1, 1, 1 },
 		physic_mass = 1,
+		physic_group = 8,
+		physic_groupList = "1",
 	},
 	
 	Pincho11 = {
@@ -33,6 +35,8 @@ Map = {
 		physic_shape = "box",
 		physic_dimensions = { 1, 1, 1 },
 		physic_mass = 1,
+		physic_group = 9,
+		physic_groupList = "1",
 	},
 	Pincho12 = {
 		type = "Spike",
@@ -49,6 +53,8 @@ Map = {
 		physic_shape = "box",
 		physic_dimensions = { 1, 1, 1 },
 		physic_mass = 1,
+		physic_group = 9,
+		physic_groupList = "1",
 	},
 	Pincho13 = {
 		type = "Spike",
@@ -65,6 +71,8 @@ Map = {
 		physic_shape = "box",
 		physic_dimensions = { 1, 1, 1 },
 		physic_mass = 1,
+		physic_group = 9,
+		physic_groupList = "1",
 	},
 	
 	Ascensor1 = {
@@ -98,6 +106,7 @@ Map = {
 		physic_dimensions = { 1, 1, 1 },
 		physic_mass = 10,
 		physic_group = 6,
+		physic_groupList = "1",
 	},
 
 	
@@ -113,6 +122,8 @@ Map = {
 		physic_type = "static",
 		physic_shape = "box",
 		physic_dimensions = { 2, 2, 2 },
+		physic_group = 7,
+		physic_groupList = "1",
 	},
 	
 	Point1 = {
@@ -204,6 +215,16 @@ Map = {
 		respawnTime = 5,
 	},
 	
+	RocketLauncherAmmo1 = {
+		type = "ItemSpawn",
+		position = {140,4.0,-16.0},
+		model = "grenadelauncher.mesh",
+		id = "ammo",
+		weaponType = 5,
+		reward = 5,
+		respawnTime = 5,
+	},
+	
 	SuperShield = {
 		type = "ItemSpawn",
 		position = {67.0, 2.0, -42.0},
@@ -215,7 +236,7 @@ Map = {
 
 	Enemigo1 = {
 		type = "RemotePlayer",
-		position = {0, 8, -10},
+		position = {0, 0.2, -10},
 		orientation = 90,
 		life = 100000.0,
 		maxShield=100,
@@ -224,14 +245,10 @@ Map = {
 		PorcentShield=23,
 		isPlayer = false,
 		model = "marine.mesh",
-		physic_entity = "rigid",
-		physic_type = "dynamic",
-		physic_shape = "box",
-		physic_dimensions = { 3, 6, 3 },
+		physic_shape = "capsule",
+		physic_radius = 6,
 		physic_height = 6,
-		physic_radius = 0.5,
-		physic_mass = 10,
-		physic_group = 1,
+
 	},
 	
 	

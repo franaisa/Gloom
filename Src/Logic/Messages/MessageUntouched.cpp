@@ -8,7 +8,7 @@ namespace Logic {
 
 	IMP_FACTORYMESSAGE(CMessageUntouched);
 
-	CMessageUntouched::CMessageUntouched() : CMessage(TMessageType::UNTOUCHED) {
+	CMessageUntouched::CMessageUntouched() : CMessage(Message::UNTOUCHED) {
 		// Nada que hacer
 	} //
 	//----------------------------------------------------------

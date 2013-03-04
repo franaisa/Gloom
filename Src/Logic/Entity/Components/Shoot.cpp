@@ -20,6 +20,7 @@ Contiene la implementación del componente que gestiona las armas y que administr
 #include "Graphics/Scene.h"
 #include "Logic/Entity/Components/ArrayGraphics.h"
 #include "Logic/Entity/Components/Life.h"
+#include "BaseSubsystems/Math.h"
 
 #include "Graphics/Camera.h"
 
@@ -61,7 +62,9 @@ namespace Logic {
 		_cooldown = (unsigned char) entityInfo->getIntAttribute(weapon+"ColdDown") * 1000;
 		_maxAmmo = entityInfo->getIntAttribute(weapon+"MaxAmmo");
 		_id = entityInfo->getIntAttribute(weapon+"Id");
-		
+		if(entityInfo->hasAttribute(weapon+"ParticlePosition")) {
+			_particlePosition = entityInfo->getVector3Attribute(weapon+"ParticlePosition");
+		}
 		return true;
 	} // spawn
 	
@@ -147,5 +150,11 @@ namespace Logic {
 		_currentAmmo = 0;
 	} // resetAmmo
 
+	void CShoot::drawParticle(const std::string &nombreParticula, const std::string &particula){
+
+		Vector3 positionParticle = _entity->getPosition() + (Math::getDirection(_entity->getOrientation()) * _particlePosition);
+		Graphics::CScene* _scen = Graphics::CServer::getSingletonPtr()->getActiveScene();
+		_scen->createParticle(_entity->getName(),particula, &positionParticle);
+	}
 } // namespace Logic
 

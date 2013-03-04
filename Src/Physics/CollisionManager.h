@@ -87,20 +87,6 @@ namespace Physics {
 		el usuario (ver documentación PhysX).
 		*/ 
 		void onObstacleHit(const physx::PxControllerObstacleHit &hit);
-
-		/**
-		@deprecated
-		*/
-		bool collisionEnabled(physx::PxU16 group1, physx::PxU16 group2) const;
-
-		/**
-		@deprecated
-		*/
-		void setCollisionGroup(physx::PxU16 group1, physx::PxU16 group2, bool enabled);
-
-	private:
-		// LIBERAR MEMORIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA!
-		std::set<physx::PxU16>* _collisionGroupLookupTable[32];
    
 	}; // CCollisionManager
 

@@ -95,7 +95,7 @@ namespace Logic {
 		int random=rand()%_listSpawnPoints.size();
 		//Mientras que nos devuelva que el trigger esta activado buscamos otro punto
 		while(_listSpawnPoints[random]->getComponent<CPhysicEntity>("CPhysicEntity")->getInTrigger())
-			random=rand()%_listSpawnPoints.size();;
+			random=rand()%_listSpawnPoints.size();
 		return _listSpawnPoints[random]->getPosition();
 	}
 

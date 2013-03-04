@@ -125,4 +125,4 @@ build.xml
 !/Exes/media/
 
 # Bring resources.cfg
-!/Exes/resource.cfg
+!/Exes/resources.cfg

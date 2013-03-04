@@ -20,7 +20,6 @@ el mundo físico usando character controllers.
 
 #include "Logic/Messages/MessageAvatarWalk.h"
 #include "Logic/Messages/MessageCollisionDown.h"
-#include "Logic/Messages/MessageSetPhysicPosition.h"
 #include "Logic/Messages/MessageCealing.h"
 #include "Logic/Messages/MessageSide.h"
 
@@ -73,8 +72,7 @@ bool CPhysicController::spawn(CEntity* entity, CMap *map, const Map::CEntity *en
 
 bool CPhysicController::accept(CMessage *message)
 {
-	return message->getMessageType() == Message::AVATAR_WALK ||
-		message->getMessageType() == Message::SET_PHYSIC_POSITION;
+	return message->getMessageType() == Message::AVATAR_WALK;
 } 
 
 //---------------------------------------------------------
@@ -88,9 +86,6 @@ void CPhysicController::process(CMessage *message)
 		// el método tick. De esa forma, si recibimos varios mensajes AVATAR_WALK
 		// en el mismo ciclo sólo tendremos en cuenta el último.
 		_movement = ((CMessageAvatarWalk*)message)->getDirection();
-		break;
-	case Message::SET_PHYSIC_POSITION:
-		setPhysicPosition(((CMessageSetPhysicPosition*)message)->getPosition());
 		break;
 	}
 
@@ -144,6 +139,32 @@ void  CPhysicController::setPhysicPosition (const Vector3 &position){
 
 //---------------------------------------------------------
 
+void CPhysicController::readCollisionGroupInfo(const Map::CEntity *entityInfo, int& group, std::vector<int>& groupList) {
+	// Leer el grupo de colisión (por defecto grupo 0)
+	if (entityInfo->hasAttribute("physic_group"))
+		group = entityInfo->getIntAttribute("physic_group");
+
+	// Comprobamos los grupos con los que esta entidad deberia colisionar
+	if (entityInfo->hasAttribute("physic_groupList")) {
+		std::istringstream groupListString(entityInfo->getStringAttribute("physic_groupList"));
+
+		// Para cada cadena entre comas...
+		do {
+			std::string groupNumber;
+			std::getline(groupListString, groupNumber, ','); // linea entre delimitadores
+				
+			std::istringstream str(groupNumber);     // wrappeamos cadena como Input Stream
+			do {									// Le quitamos los espacios...
+				std::getline(str, groupNumber, ' ');  // linea entre espacios
+			} while (groupNumber.size() == 0 && !str.eof());
+
+			groupList.push_back( atoi(groupNumber.c_str()) );
+		} while (!groupListString.eof());
+	}
+}
+
+//---------------------------------------------------------
+
 PxCapsuleController* CPhysicController::createController(const Map::CEntity *entityInfo)
 {
 	// Obtenemos la posición de la entidad. Inicialmente colocaremos el controller
@@ -166,8 +187,12 @@ PxCapsuleController* CPhysicController::createController(const Map::CEntity *ent
 	assert(entityInfo->hasAttribute("physic_height"));
 	float height = entityInfo->getFloatAttribute("physic_height");
 
+	int group = 0;
+	std::vector<int> groupList;
+	readCollisionGroupInfo(entityInfo, group, groupList);
+
 	// Crear el controller de tipo cápsula
-	return _server->createCapsuleController(position, radius, height, this);
+	return _server->createCapsuleController(position, group, groupList, radius, height, this);
 } 
 
 //---------------------------------------------------------

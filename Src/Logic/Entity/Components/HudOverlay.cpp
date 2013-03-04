@@ -69,39 +69,82 @@ namespace Logic
 
 		
 		_numWeapons = entityInfo->getIntAttribute("numWeapons");
-
-		int _actualWeapon;
-
-		
+	
 		_server = Graphics::CServer::getSingletonPtr();
 
-		_overlayPlay = _server->createOverlay( "_overlayPlay" );
 
+		int hudScreenWidth = entityInfo->getIntAttribute("hudScreenWidth");
+		int hudScreenHeight = entityInfo->getIntAttribute("hudScreenHeight");
+
+		int hudPanelInitialPositionX = entityInfo->getIntAttribute("hudPanelInitialPositionX");
+		int hudPanelInitialPositionY = entityInfo->getIntAttribute("hudPanelInitialPositionY");
+		int hudPanelSizeX = entityInfo->getIntAttribute("hudPanelSizeX");
+		int hudPanelSizeY = entityInfo->getIntAttribute("hudPanelSizeY");
 
 		float height = _server->getHeight();
 		float width = _server->getWidth();
 
-		float relativeWidth = width/26;
-		float relativeHeight = height/31;
+		float relativeWidth = width/hudScreenWidth;
+		float relativeHeight = height/hudScreenHeight;
 
 		////////////////Todo esto para la mira
          // Create an overlay
-		
-         // Create a panel de Mira
-
-		Graphics::COverlay *panelMira = _server->createOverlay("Mira",  "Panel" );
-		float sizeCrossFire = entityInfo->getFloatAttribute("hudMira");
+		_overlayPlay = _server->createOverlay( "_overlayPlay" );		
+         
+		// Create a panel de Mira
+		_panelMira = _server->createOverlay("Mira",  "Panel" );
+		float sizeCrossFire = entityInfo->getFloatAttribute("hudCross");
 		float positionCrossFire = 0.5f-((sizeCrossFire/2)/100) ;
-        panelMira->setPosition( positionCrossFire,positionCrossFire);
-		panelMira->setDimensions( sizeCrossFire/100, sizeCrossFire/100 );
-        panelMira->setMaterial("hudMira");
+        _panelMira->setPosition( positionCrossFire,positionCrossFire);
+		_panelMira->setDimensions( sizeCrossFire/100, sizeCrossFire/100 );
+        _panelMira->setMaterial("hudMira");
 
-		_overlayPlay->add2D( panelMira );
+		_overlayPlay->add2D( _panelMira );
          // Add the panel to the overlay
 
+		int x = hudPanelInitialPositionX;
+		int y = hudPanelInitialPositionY;
+
+/*		
+		for(int i=0; i< NONE; ++i)
+		{
+			eWeaponIndex current = (eWeaponIndex)i;
+			std::string currentOnText = toText(current);
 		
-		 
-		 ////// panel PanelWeapon cuadro principal
+			_panelWeapon[current] = _server->createOverlay( "PanelWeapon" + currentOnText, "Panel");
+			_panelWeapon[current]->setMetricsMode("pixel");
+			_panelWeapon[current]->setPosition( x*relativeWidth, y*relativeHeight);
+			_panelWeapon[current]->setDimensions( relativeWidth*hudPanelSizeX, relativeHeight*hudPanelSizeX );
+			_panelWeapon[current]->setMaterial("cuadroArmas");
+
+			_overlayPlay->add2D( _panelWeapon[current]);
+
+			for(int j=0; j<=NO_WEAPON; ++j){
+				eOverlayState currentState = (eOverlayState)j;
+
+				std::string currentStateOnText = toText(currentState);
+
+					//Aqui inicio el cuadro de ACTIVE, NO_AMMO, NO_WEAPON
+				_weaponsBox[current][currentState] = _server->createOverlay( "_weaponsBox["+currentOnText+"]["+currentStateOnText+"]", "Panel");
+				_weaponsBox[current][currentState]->setMetricsMode("pixel");
+				_weaponsBox[current][currentState]->setPosition( x*relativeWidth, y*relativeHeight);
+				_weaponsBox[current][currentState]->setDimensions( relativeWidth*hudPanelSizeX, relativeHeight*hudPanelSizeY );
+				_weaponsBox[current][currentState]->setMaterial(currentOnText +"_"+ currentOnText);
+				_weaponsBox[current][currentState]->setVisible(false);
+
+				_overlayPlay->add2D( _weaponsBox[current][ACTIVE] );
+			}
+				_weaponsBox[current][NO_WEAPON]->setVisible(true);
+
+			// Actualizo la posicion de los paneles
+			x += hudPanelSizeX;
+			// La posicion y no debe cambiar, ya que todo ira a la misma altura.
+			//y += hudPanelSizeY;
+
+		 }
+		
+	*/	
+		////// panel PanelWeapon cuadro principal
 		Graphics::COverlay *panelWeapon1 = _server->createOverlay( "PanelWeapon1", "Panel");
 		panelWeapon1->setMetricsMode("pixel");
 		panelWeapon1->setPosition( 9*relativeWidth, 29*relativeHeight);
@@ -110,13 +153,13 @@ namespace Logic
         panelWeapon1->setMaterial("cuadroArmas");
 
 		_overlayPlay->add2D( panelWeapon1);
-
+		
 				 ////// panel PanelWeapon1 con arma activa
 			_weaponsBox[HAMMER][ACTIVE] = _server->createOverlay( "_weaponsBox[HAMMER][ACTIVE]", "Panel");
 			_weaponsBox[HAMMER][ACTIVE]->setMetricsMode("pixel");
 			_weaponsBox[HAMMER][ACTIVE]->setPosition( 9*relativeWidth, 29*relativeHeight);
 			_weaponsBox[HAMMER][ACTIVE]->setDimensions( relativeWidth*2, relativeHeight*2 );
-			_weaponsBox[HAMMER][ACTIVE]->setMaterial("katana");
+			_weaponsBox[HAMMER][ACTIVE]->setMaterial("KATANA_ACTIVE");
 			_weaponsBox[HAMMER][ACTIVE]->setVisible(true);
 
 			_overlayPlay->add2D( _weaponsBox[HAMMER][ACTIVE] );
@@ -126,7 +169,7 @@ namespace Logic
 			_weaponsBox[HAMMER][NO_AMMO]->setMetricsMode("pixel");
 			_weaponsBox[HAMMER][NO_AMMO]->setPosition( 9*relativeWidth, 29*relativeHeight);
 			_weaponsBox[HAMMER][NO_AMMO]->setDimensions( relativeWidth*2, relativeHeight*2 );
-			_weaponsBox[HAMMER][NO_AMMO]->setMaterial("katana");
+			_weaponsBox[HAMMER][NO_AMMO]->setMaterial("KATANA_ACTIVE");
 			_weaponsBox[HAMMER][NO_AMMO]->setVisible(true);
 
 			_overlayPlay->add2D( _weaponsBox[HAMMER][NO_AMMO] );
@@ -136,7 +179,7 @@ namespace Logic
 			_weaponsBox[HAMMER][NO_WEAPON]->setMetricsMode("pixel");
 			_weaponsBox[HAMMER][NO_WEAPON]->setPosition( 9*relativeWidth, 29*relativeHeight);
 			_weaponsBox[HAMMER][NO_WEAPON]->setDimensions( relativeWidth*2, relativeHeight*2 );
-			_weaponsBox[HAMMER][NO_WEAPON]->setMaterial("katana");
+			_weaponsBox[HAMMER][NO_WEAPON]->setMaterial("KATANA_ACTIVE");
 			_weaponsBox[HAMMER][NO_WEAPON]->setVisible(true);
 
 			_overlayPlay->add2D( _weaponsBox[HAMMER][NO_WEAPON] );
@@ -156,7 +199,7 @@ namespace Logic
 			_weaponsBox[SNIPER][ACTIVE]->setMetricsMode("pixel");
 			_weaponsBox[SNIPER][ACTIVE]->setPosition( 11*relativeWidth, 29*relativeHeight);
 			_weaponsBox[SNIPER][ACTIVE]->setDimensions( relativeWidth*2, relativeHeight*2 );
-			_weaponsBox[SNIPER][ACTIVE]->setMaterial("francotirador");
+			_weaponsBox[SNIPER][ACTIVE]->setMaterial("SNIPER_ACTIVE");
 			_weaponsBox[SNIPER][ACTIVE]->setVisible(false);
 
 			_overlayPlay->add2D( _weaponsBox[SNIPER][ACTIVE] );
@@ -166,7 +209,7 @@ namespace Logic
 			_weaponsBox[SNIPER][NO_AMMO]->setMetricsMode("pixel");
 			_weaponsBox[SNIPER][NO_AMMO]->setPosition( 11*relativeWidth, 29*relativeHeight);
 			_weaponsBox[SNIPER][NO_AMMO]->setDimensions( relativeWidth*2, relativeHeight*2 );
-			_weaponsBox[SNIPER][NO_AMMO]->setMaterial("francotiradorBN");
+			_weaponsBox[SNIPER][NO_AMMO]->setMaterial("SNIPER_NO_AMMO");
 			_weaponsBox[SNIPER][NO_AMMO]->setVisible(false);
 
 			_overlayPlay->add2D( _weaponsBox[SNIPER][NO_AMMO] );
@@ -177,7 +220,7 @@ namespace Logic
 			_weaponsBox[SNIPER][NO_WEAPON]->setMetricsMode("pixel");
 			_weaponsBox[SNIPER][NO_WEAPON]->setPosition( 11*relativeWidth, 29*relativeHeight);
 			_weaponsBox[SNIPER][NO_WEAPON]->setDimensions( relativeWidth*2, relativeHeight*2 );
-			_weaponsBox[SNIPER][NO_WEAPON]->setMaterial("francotiradorSinBalas");
+			_weaponsBox[SNIPER][NO_WEAPON]->setMaterial("SNIPER_NO_WEAPON");
 			_weaponsBox[SNIPER][NO_WEAPON]->setVisible(true);
 
 			_overlayPlay->add2D( _weaponsBox[SNIPER][NO_WEAPON] );
@@ -197,7 +240,7 @@ namespace Logic
 			_weaponsBox[SHOTGUN][ACTIVE]->setMetricsMode("pixel");
 			_weaponsBox[SHOTGUN][ACTIVE]->setPosition( 13*relativeWidth, 29*relativeHeight);
 			_weaponsBox[SHOTGUN][ACTIVE]->setDimensions( relativeWidth*2, relativeHeight*2 );
-			_weaponsBox[SHOTGUN][ACTIVE]->setMaterial("escopeta");
+			_weaponsBox[SHOTGUN][ACTIVE]->setMaterial("SHOTGUN_ACTIVE");
 			_weaponsBox[SHOTGUN][ACTIVE]->setVisible(false);
 			
 			_overlayPlay->add2D( _weaponsBox[SHOTGUN][ACTIVE] );
@@ -208,7 +251,7 @@ namespace Logic
 			_weaponsBox[SHOTGUN][NO_AMMO]->setMetricsMode("pixel");
 			_weaponsBox[SHOTGUN][NO_AMMO]->setPosition( 13*relativeWidth, 29*relativeHeight);
 			_weaponsBox[SHOTGUN][NO_AMMO]->setDimensions( relativeWidth*2, relativeHeight*2 );
-			_weaponsBox[SHOTGUN][NO_AMMO]->setMaterial("escopetaBN");
+			_weaponsBox[SHOTGUN][NO_AMMO]->setMaterial("SHOTGUN_NO_AMMO");
 			_weaponsBox[SHOTGUN][NO_AMMO]->setVisible(false);
 
 			_overlayPlay->add2D( _weaponsBox[SHOTGUN][NO_AMMO] );
@@ -218,7 +261,7 @@ namespace Logic
 			_weaponsBox[SHOTGUN][NO_WEAPON]->setMetricsMode("pixel");
 			_weaponsBox[SHOTGUN][NO_WEAPON]->setPosition( 13*relativeWidth, 29*relativeHeight);
 			_weaponsBox[SHOTGUN][NO_WEAPON]->setDimensions( relativeWidth*2, relativeHeight*2 );
-			_weaponsBox[SHOTGUN][NO_WEAPON]->setMaterial("escopetaSinBalas");
+			_weaponsBox[SHOTGUN][NO_WEAPON]->setMaterial("SHOTGUN_NO_WEAPON");
 			_weaponsBox[SHOTGUN][NO_WEAPON]->setVisible(true);
 			
 			_overlayPlay->add2D( _weaponsBox[SHOTGUN][NO_WEAPON] );
@@ -253,7 +296,7 @@ namespace Logic
 			_weaponsBox[MINIGUN][ACTIVE]->setMetricsMode("pixel");
 			_weaponsBox[MINIGUN][ACTIVE]->setPosition( 15*relativeWidth, 29*relativeHeight);
 			_weaponsBox[MINIGUN][ACTIVE]->setDimensions( relativeWidth*2, relativeHeight*2 );
-			_weaponsBox[MINIGUN][ACTIVE]->setMaterial("weapon4");
+			_weaponsBox[MINIGUN][ACTIVE]->setMaterial("MINIGUN_ACTIVE");
 			_weaponsBox[MINIGUN][ACTIVE]->setVisible(false);
 			
 			_overlayPlay->add2D( _weaponsBox[SHOTGUN][ACTIVE] );
@@ -264,7 +307,7 @@ namespace Logic
 			_weaponsBox[MINIGUN][NO_AMMO]->setMetricsMode("pixel");
 			_weaponsBox[MINIGUN][NO_AMMO]->setPosition( 15*relativeWidth, 29*relativeHeight);
 			_weaponsBox[MINIGUN][NO_AMMO]->setDimensions( relativeWidth*2, relativeHeight*2 );
-			_weaponsBox[MINIGUN][NO_AMMO]->setMaterial("weapon4BN");
+			_weaponsBox[MINIGUN][NO_AMMO]->setMaterial("MINIGUN_NO_AMMO");
 			_weaponsBox[MINIGUN][NO_AMMO]->setVisible(false);
 
 			_overlayPlay->add2D( _weaponsBox[MINIGUN][NO_AMMO] );
@@ -274,7 +317,7 @@ namespace Logic
 			_weaponsBox[MINIGUN][NO_WEAPON]->setMetricsMode("pixel");
 			_weaponsBox[MINIGUN][NO_WEAPON]->setPosition( 15*relativeWidth, 29*relativeHeight);
 			_weaponsBox[MINIGUN][NO_WEAPON]->setDimensions( relativeWidth*2, relativeHeight*2 );
-			_weaponsBox[MINIGUN][NO_WEAPON]->setMaterial("weapon4SinBalas");
+			_weaponsBox[MINIGUN][NO_WEAPON]->setMaterial("MINIGUN_NO_WEAPON");
 			_weaponsBox[MINIGUN][NO_WEAPON]->setVisible(true);
 			
 			_overlayPlay->add2D( _weaponsBox[MINIGUN][NO_WEAPON] );
@@ -449,49 +492,7 @@ namespace Logic
 			_weaponsBox[i][ACTIVE]->setVisible(false);
 		}
 		
-
-		Graphics::CScene *miScene3D = _server->createScene("SceneOverlay3D");
-
-		//Graphics::CScene *miScene3D = _server->getActiveScene();
-		//Graphics::CScene *miScene3D = _entity->getMap()->getScene();
-
-		Graphics::CEntity *ent = new Graphics::CEntity("AK47","AK47.mesh");
-	
-		//miScene3D->createSceneNode("SceneNode3d");
-		
-		ent->attachToScene(miScene3D);
-		
-		//miScene3D->addEntityToSceneNode(ent);
-		ent->setPosition(Vector3(0,0,50));
-
-		_overlayPlay->add3D(miScene3D);
-
-		/*
-		Ogre::Overlay *_overlayWeapon = overlayManager.create( "_overlayHud3D" );
-
-		Ogre::SceneManager *miSceneManager = Graphics::CServer::getSingletonPtr()->getActiveScene()->getSceneMgr();
-		Ogre::SceneNode* miSceneNode = new Ogre::SceneNode(miSceneManager, "hola");
-		//Ogre::SceneNode* miSceneNode = new Ogre::SceneNode(NULL);
-		
-
-		//Ogre::SceneNode *miSceneNode = miSceneManager->createSceneNode("sceneNodeHud3D");
-
-		Ogre::Entity *ent = miSceneManager->createEntity("overlay3D", "AK47.mesh");
-		ent->setRenderQueueGroup(Ogre::RENDER_QUEUE_OVERLAY - 1);
-		//Ogre::MaterialPtr mat = Ogre::MaterialManager::getSingleton().getByName("pruebaHud3D");
-		//mat->setDepthCheckEnabled(false);
-		//ent->setMaterial(mat);
-		ent->setMaterialName("pruebaHud3D");
-
-		miSceneNode->attachObject((Ogre::MovableObject *)ent);
-		miSceneNode->setPosition(0,-1.5,-8.9);
-		
-
-		
-		_overlayWeapon->add3D(miSceneNode);
-		_overlayWeapon->show();
-		*/
-
+		//_overlayPlay->add3D("AK47", "AK47.mesh", new Vector3(0,0,-5));
 		
 		_overlayPlay->setVisible(true);
 
@@ -644,6 +645,34 @@ namespace Logic
 			_overlayPlay->setVisible(true);
 		}
 
+	}
+	
+	std::string CHudOverlay::toText(eWeaponIndex weapon){
+		switch(weapon){
+			case HAMMER: return "HAMMER";
+				break;
+			case SNIPER: return "SNIPER";
+				break;
+			case SHOTGUN: return "SHOTGUN";
+				break;
+			case MINIGUN: return "MINIGUN";
+				break;
+			case GRENADE_LAUNCHER: return "GRENADE_LAUNCHER";
+				break;
+			case ROCKET_LAUNCHER: return "ROCKET_LAUNCHER";
+				break;
+			}
+	}
+
+	std::string CHudOverlay::toText(eOverlayState state){
+		switch(state){
+			case ACTIVE: return "ACTIVE";
+				break;
+			case NO_AMMO: return "NO_AMMO";
+				break;
+			case NO_WEAPON: return "NO_WEAPON";
+				break;
+			}
 	}
 
 } // namespace Logic

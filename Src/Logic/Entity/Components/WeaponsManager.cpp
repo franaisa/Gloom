@@ -22,7 +22,7 @@ Contiene la implementación del componente que gestiona las armas y que administr
 #include "Logic/Entity/Components/ShootMiniGun.h"
 #include "Logic/Entity/Components/ShootHammer.h"
 #include "Logic/Entity/Components/ShootGrenadeLauncher.h"
-
+#include "Logic/Entity/Components/ShootRocketLauncher.h"
 
 #include "Logic/Messages/MessageChangeWeapon.h"
 #include "Logic/Messages/MessageChangeWeaponGraphics.h"
@@ -60,6 +60,7 @@ namespace Logic
 			activateComponent(_actualWeapon);
 			_weapons[3] = true;
 			_weapons[4] = true;
+			_weapons[5] = true;
 			/*
 			_weapons[1] = true;
 		
@@ -89,6 +90,7 @@ namespace Logic
 			//trama para las demas
 			_weapons[3] = true;
 			_weapons[4] = true;
+			_weapons[5] = true;
 
 		//return true;
 
@@ -174,6 +176,9 @@ namespace Logic
 		case 4:
 			_entity->getComponent<CShootGrenadeLauncher>("CShootGrenadeLauncher")->addAmmo(4,ammo, (weapon == _weapons[weapon]) );
 			break;
+		case 5:
+			_entity->getComponent<CShootRocketLauncher>("CShootRocketLauncher")->addAmmo(5,ammo, (weapon == _weapons[weapon]) );
+			break;
 		}
 	}
 
@@ -193,6 +198,9 @@ namespace Logic
 			break;
 		case 4:
 			_entity->getComponent<CShootGrenadeLauncher>("CShootGrenadeLauncher")->resetAmmo();
+			break;
+		case 5:
+			_entity->getComponent<CShootRocketLauncher>("CShootRocketLauncher")->resetAmmo();
 			break;
 		}
 	}
@@ -228,6 +236,9 @@ namespace Logic
 		case 4:
 			_entity->getComponent<CShootGrenadeLauncher>("CShootGrenadeLauncher")->deactivate();
 			break;
+		case 5:
+			_entity->getComponent<CShootRocketLauncher>("CShootRocketLauncher")->deactivate();
+			break;
 		}
 	}
 
@@ -247,6 +258,9 @@ namespace Logic
 			break;
 		case 4:
 			_entity->getComponent<CShootGrenadeLauncher>("CShootGrenadeLauncher")->activate();
+			break;
+		case 5:
+			_entity->getComponent<CShootRocketLauncher>("CShootRocketLauncher")->activate();
 			break;
 		}
 	}

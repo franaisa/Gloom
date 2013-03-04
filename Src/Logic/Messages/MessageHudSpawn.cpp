@@ -6,7 +6,7 @@ namespace Logic {
 
 	IMP_FACTORYMESSAGE(CMessageHudSpawn);
 
-	CMessageHudSpawn::CMessageHudSpawn() : CMessage(TMessageType::HUD_SPAWN) {
+	CMessageHudSpawn::CMessageHudSpawn() : CMessage(Message::HUD_SPAWN) {
 		// Nada que hacer
 	}//
 	//----------------------------------------------------------

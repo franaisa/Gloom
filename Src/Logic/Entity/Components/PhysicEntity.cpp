@@ -23,6 +23,7 @@ para representar character controllers.
 #include "Logic/Messages/MessageUntouched.h"
 #include "Logic/Messages/MessageSetPhysicPosition.h"
 #include "Logic/Messages/MessageAddForcePhysics.h"
+#include "Logic/Messages/MessageContactEnter.h"
 
 #define _USE_MATH_DEFINES
 #include <math.h>
@@ -141,6 +142,32 @@ void CPhysicEntity::tick(unsigned int msecs)
 
 //---------------------------------------------------------
 
+void readCollisionGroupInfo(const Map::CEntity *entityInfo, int& group, std::vector<int>& groupList) {
+	// Leer el grupo de colisión (por defecto grupo 0)
+	if (entityInfo->hasAttribute("physic_group"))
+		group = entityInfo->getIntAttribute("physic_group");
+
+	// Comprobamos los grupos con los que esta entidad deberia colisionar
+	if (entityInfo->hasAttribute("physic_groupList")) {
+		std::istringstream groupListString(entityInfo->getStringAttribute("physic_groupList"));
+
+		// Para cada cadena entre comas...
+		do {
+			std::string groupNumber;
+			std::getline(groupListString, groupNumber, ','); // linea entre delimitadores
+				
+			std::istringstream str(groupNumber);     // wrappeamos cadena como Input Stream
+			do {									// Le quitamos los espacios...
+				std::getline(str, groupNumber, ' ');  // linea entre espacios
+			} while (groupNumber.size() == 0 && !str.eof());
+
+			groupList.push_back( atoi(groupNumber.c_str()) );
+		} while (!groupListString.eof());
+	}
+}
+
+//---------------------------------------------------------
+
 PxRigidActor* CPhysicEntity::createActor(const Map::CEntity *entityInfo)
 {
 	// Leer el tipo de entidad
@@ -148,22 +175,26 @@ PxRigidActor* CPhysicEntity::createActor(const Map::CEntity *entityInfo)
 	const std::string physicEntity = entityInfo->getStringAttribute("physic_entity");
 	assert((physicEntity == "rigid") || (physicEntity == "plane") || (physicEntity == "fromFile"));
 
+	int group = 0;
+	std::vector<int> groupList;
+	readCollisionGroupInfo(entityInfo, group, groupList);
+
 	// Crear el tipo de entidad adecuada
 	if (physicEntity == "plane") 
-		return createPlane(entityInfo);
+		return createPlane(entityInfo, group, groupList);
 	
 	if (physicEntity == "rigid") 
-		return createRigid(entityInfo);
+		return createRigid(entityInfo, group, groupList);
 	
 	if (physicEntity == "fromFile")
-		return createFromFile(entityInfo);
+		return createFromFile(entityInfo, group, groupList);
 
 	return NULL;
 }
 
 //---------------------------------------------------------
 
-PxRigidStatic* CPhysicEntity::createPlane(const Map::CEntity *entityInfo)
+PxRigidStatic* CPhysicEntity::createPlane(const Map::CEntity *entityInfo, int group, const std::vector<int>& groupList)
 {
 	// La posición de la entidad es un punto del plano
 	const Vector3 point = _entity->getPosition();
@@ -171,19 +202,15 @@ PxRigidStatic* CPhysicEntity::createPlane(const Map::CEntity *entityInfo)
 	// Leer el vector normal al plano
 	assert(entityInfo->hasAttribute("physic_normal"));
 	const Vector3 normal = entityInfo->getVector3Attribute("physic_normal");
-
-	// Leer el grupo de colisión (por defecto grupo 0)
-	int group = 0;
-	if (entityInfo->hasAttribute("physic_group"))
-		group = entityInfo->getIntAttribute("physic_group");
  
 	// Crear el plano
-	return _server->createPlane(point, normal, group, this);
+	//return _server->createPlane(point, normal, group, this);
+	return _server->createPlane(point, normal, group, groupList, this);
 }
 
 //---------------------------------------------------------
 
-PxRigidActor* CPhysicEntity::createRigid(const Map::CEntity *entityInfo)
+PxRigidActor* CPhysicEntity::createRigid(const Map::CEntity *entityInfo, int group, const std::vector<int>& groupList)
 {
 	// Leer la posición de la entidad
 	const Vector3 position = _entity->getPosition();
@@ -203,12 +230,6 @@ PxRigidActor* CPhysicEntity::createRigid(const Map::CEntity *entityInfo)
 	if (entityInfo->hasAttribute("physic_trigger"))
 		trigger = entityInfo->getBoolAttribute("physic_trigger");
 
-	// Leer el grupo de colisión (por defecto 0)
-	int group = 0;
-	if (entityInfo->hasAttribute("physic_group"))
-		group = entityInfo->getIntAttribute("physic_group");
-
-
 	if (physicType == "static") {
 		if (physicShape == "box") {
 			// Leer las dimensiones de la caja
@@ -216,14 +237,14 @@ PxRigidActor* CPhysicEntity::createRigid(const Map::CEntity *entityInfo)
 			const Vector3 physicDimensions = entityInfo->getVector3Attribute("physic_dimensions");
 			
 			// Crear una caja estática
-			return _server->createStaticBox(position, physicDimensions, trigger, group, this);
+			return _server->createStaticBox(position, physicDimensions, trigger, group, groupList, this);
 		}
 		else if (physicShape == "sphere") {
 			assert(entityInfo->hasAttribute("physic_radius"));
 			const float physicRadius = entityInfo->getFloatAttribute("physic_radius");
 			
 			// Crear una esfera dinámica
-			return _server->createStaticSphere(position, physicRadius, trigger, group, this);
+			return _server->createStaticSphere(position, physicRadius, trigger, group, groupList, this);
 		}
 	} else {
 		// Leer la masa (por defecto 0)
@@ -240,14 +261,14 @@ PxRigidActor* CPhysicEntity::createRigid(const Map::CEntity *entityInfo)
 			const Vector3 physicDimensions = entityInfo->getVector3Attribute("physic_dimensions");
 			
 			// Crear una caja dinámica
-			return _server->createDynamicBox(position, physicDimensions, mass, kinematic, trigger, group, this);
+			return _server->createDynamicBox(position, physicDimensions, mass, kinematic, trigger, group, groupList, this);
 		}
 		else if (physicShape == "sphere") {
 			assert(entityInfo->hasAttribute("physic_radius"));
 			const float physicRadius = entityInfo->getFloatAttribute("physic_radius");
 			
 			// Crear una esfera dinámica
-			return _server->createDynamicSphere(position, physicRadius, mass, kinematic, trigger, group, this);
+			return _server->createDynamicSphere(position, physicRadius, mass, kinematic, trigger, group, groupList, this);
 		}
 	}
 
@@ -256,19 +277,14 @@ PxRigidActor* CPhysicEntity::createRigid(const Map::CEntity *entityInfo)
 
 //---------------------------------------------------------
 
-PxRigidActor* CPhysicEntity::createFromFile(const Map::CEntity *entityInfo)
+PxRigidActor* CPhysicEntity::createFromFile(const Map::CEntity *entityInfo, int group, const std::vector<int>& groupList)
 {
 	// Leer la ruta del fichero RepX
 	assert(entityInfo->hasAttribute("physic_file"));
 	const std::string file = entityInfo->getStringAttribute("physic_file");
-	
-	// Leer el grupo de colisión (por defecto 0)
-	int group = 0;
-	if (entityInfo->hasAttribute("physic_group"))
-		group = entityInfo->getIntAttribute("physic_group");
 
 	// Crear el actor a partir del fichero RepX
-	return _server->createFromFile(file, group, this);
+	return _server->createFromFile(file, group, groupList, this);
 }
 
 //---------------------------------------------------------
@@ -289,6 +305,14 @@ void CPhysicEntity::onTrigger(IPhysics *otherComponent, bool enter)
 		m->setEntity(otherComponent->getEntity());
 		_entity->emitMessage(m);
 	}
+}
+
+//---------------------------------------------------------
+
+void CPhysicEntity::onContact (IPhysics *otherComponent) {
+	Logic::CMessageContactEnter* msg = new Logic::CMessageContactEnter();
+	msg->setEntity( otherComponent->getEntity() );
+	_entity->emitMessage(msg);
 }
 
 //---------------------------------------------------------
@@ -332,6 +356,8 @@ void CPhysicEntity::deactivate() {
 		// Esta shape no entrara dentro de la simulacion de fisicas
 		actorShapes[i]->setFlag(PxShapeFlag::eSIMULATION_SHAPE , false);
 	}
+
+	delete [] actorShapes;
 }
 
 //---------------------------------------------------------

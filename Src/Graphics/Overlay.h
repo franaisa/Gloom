@@ -105,7 +105,7 @@ namespace Graphics
 
 		@param scene, escena que se añadira al overlay.
 		*/
-		void add3D(CScene* scene);
+		void add3D(const std::string &name, const std::string &mesh, const Vector3 *position);
 
 		/**
 		Establece donde se posicionara el Overlay.

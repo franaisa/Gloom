@@ -173,7 +173,7 @@ namespace Physics {
 		@return actor físico creado
 		*/
 		physx::PxRigidStatic* createPlane(const Vector3 &point, const Vector3 &normal, 
-			                              int group, const Logic::IPhysics *component);
+			                              int group, const std::vector<int>& groupList, const Logic::IPhysics *component);
 
 		/**
 		Crea una caja estática en la escena.
@@ -188,7 +188,7 @@ namespace Physics {
 		@return actor físico creado
 		*/
 		physx::PxRigidStatic* createStaticBox(const Vector3 &position, const Vector3 &dimensions, 
-			                                  bool trigger, int group, const Logic::IPhysics *component); 
+			                                  bool trigger, int group, const std::vector<int>& groupList, const Logic::IPhysics *component); 
 
 		/**
 		Crea una caja dinámica en la escena.
@@ -205,7 +205,7 @@ namespace Physics {
 		@return actor físico creado
 		*/
 		physx::PxRigidDynamic* createDynamicBox(const Vector3 &position, const Vector3 &dimensions, 
-			                                    float mass, bool kinematic, bool trigger, int group, 
+			                                    float mass, bool kinematic, bool trigger, int group, const std::vector<int>& groupList, 
 												const Logic::IPhysics *component); 
 
 
@@ -221,7 +221,7 @@ namespace Physics {
 		@return actor físico creado
 		*/
 		physx::PxRigidStatic* createStaticSphere(const Vector3 &position, float radius, 
-			                                     bool trigger, int group, const Logic::IPhysics *component); 
+			                                     bool trigger, int group, const std::vector<int>& groupList, const Logic::IPhysics *component); 
 
 		/**
 		Crea una esfera dinámica en la escena.
@@ -237,7 +237,7 @@ namespace Physics {
 		@return actor físico creado
 		*/
 		physx::PxRigidDynamic* createDynamicSphere(const Vector3 &positon, float radius,
-												   float mass, bool kinematic, bool trigger, int group,
+												   float mass, bool kinematic, bool trigger, int group, const std::vector<int>& groupList, 
 												   const Logic::IPhysics* component);
 
 		/**
@@ -250,7 +250,7 @@ namespace Physics {
 		@param component Componente lógico asociado a la entidad física.
 		@return actor físico creado
 		*/
-		physx::PxRigidActor* createFromFile(const std::string &file, int group, 
+		physx::PxRigidActor* createFromFile(const std::string &file, int group, const std::vector<int>& groupList, 
 			                                const Logic::IPhysics *component);
 
 		/**
@@ -305,7 +305,7 @@ namespace Physics {
 		@param component Componente lógico asociado a la entidad física.
 		@return character controller creado
 		*/
-		physx::PxCapsuleController* createCapsuleController(const Vector3 &position, float radius, 
+		physx::PxCapsuleController* createCapsuleController(const Vector3 &position, int group, const std::vector<int>& groupList, float radius, 
 															float height, 
 															const Logic::CPhysicController *component);
 
@@ -367,16 +367,15 @@ namespace Physics {
 		Logic::CEntity* raycastClosest (const Ray& ray, float maxDist, int group) const; 
 
 		/**
-		Lanza un rayo y devuelve la primera entidad lógica contra la que interseca que NO pertenece
-		 al grupo de colisión indicado. Si el rayo no choca contra ninguna entidad de ese grupo
-		 devuelve NULL.
+		Lanza un rayo y devuelve la primera entidad lógica contra la que interseca que NO es la indicada en el ID.
+		Si el rayo no choca contra ninguna entidad devuelve NULL.
 		 
 		 @param ray Rayo lanzado.
 		 @param maxDist distancia máxima de la primera intersección.
-		 @param group Grupo de colisión de la entidad buscada.
-		 @return Primera entidad lógica alcanzada de ese grupo o NULL.
+		 @param id Id con la que no puede chocar.
+		 @return Primera entidad lógica alcanzada o NULL.
 		 */
-		Logic::CEntity* raycastClosestInverse (const Ray& ray, float maxDist, int group) const; 
+		Logic::CEntity* raycastClosestInverse (const Ray& ray, float maxDist, unsigned int id) const; 
 
 		void addImpulsiveForce( physx::PxRigidDynamic* actor, const Vector3& force ); 
 

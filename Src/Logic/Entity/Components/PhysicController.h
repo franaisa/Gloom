@@ -100,7 +100,9 @@ namespace Logic
 		/**
 		Se invoca cuando se produce una colisión entre una entidad física y un trigger.
 		*/
-		void  onTrigger (IPhysics *otherComponent, bool enter);
+		virtual void  onTrigger (IPhysics *otherComponent, bool enter);
+
+		virtual void onContact (IPhysics *otherComponent) {}
 
 		/**
 		Se invoca cuando se produce una colisión entre un character controller y una entidad física.
@@ -111,6 +113,8 @@ namespace Logic
 		Se invoca cuando se produce una colisión entre dos character controllers.
 		*/
 		void onControllerHit (const physx::PxControllersHit &hit);
+
+		void readCollisionGroupInfo(const Map::CEntity *entityInfo, int& group, std::vector<int>& groupList);
 
 	private:
 

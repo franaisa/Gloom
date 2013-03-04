@@ -31,7 +31,6 @@ namespace Logic {
 		case Message::TOUCHED:
 			// Si se ha disparado el trigger de la explosion, calculamos
 			// cuanto daño se ha hecho el actor que lo ha disparado
-			//itemGrabbed( ((CMessageTouched*)message)->getEntity() );
 			explotionHit( ((CMessageTouched*)message)->getEntity() );
 			break;
 		}

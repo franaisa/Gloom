@@ -24,6 +24,12 @@ Contiene la implementación de la clase que representa una entidad gráfica.
 #include <OgreEntity.h>
 #include <OgreSceneNode.h>
 #include <OgreSceneManager.h>
+#include <OgreCamera.h>
+
+#include <Graphics/Server.h>
+#include <Graphics/Camera.h>
+#include <Graphics/ObjectTextDisplay.h>
+
 
 namespace Graphics 
 {
@@ -96,10 +102,12 @@ namespace Graphics
 		{
 			return false;
 		}
-		_entityNode = _scene->getSceneMgr()->getRootSceneNode()->
-								createChildSceneNode(_name + "_node");
+		_entityNode = _scene->getSceneMgr()->getRootSceneNode()->createChildSceneNode(_name + "_node");
 		_entityNode->attachObject(_entity);
 
+		_text = new CObjectTextDisplay(_entity, _scene->getCamera()->getOgreCamera());
+		_text->enable(false);
+		_text->setText("Gazpacho");
 			
 		_loaded = true;
 
@@ -128,8 +136,8 @@ namespace Graphics
 
 	//--------------------------------------------------------
 		
-	void CEntity::tick(float secs)
-	{
+	void CEntity::tick(float secs) {
+		_text->update();
 	} // tick
 	
 	//--------------------------------------------------------

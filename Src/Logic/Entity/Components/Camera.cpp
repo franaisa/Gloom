@@ -62,8 +62,10 @@ namespace Logic
 		
 		_target = CServer::getSingletonPtr()->getPlayer();
 
-		if(!_target)
+		if(!_target){
+			_graphicsCamera->setTargetCameraPosition(_targetV);
 			deactivate();
+		}
 
 		//return true;
 
