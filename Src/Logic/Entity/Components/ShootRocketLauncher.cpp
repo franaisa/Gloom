@@ -18,6 +18,8 @@ de disparo del lanzacohetes.
 #include "Logic/Server.h"
 #include "Logic/Entity/Components/ExplotionController.h"
 #include "RocketController.h"
+#include "Logic/GameNetMsgManager.h"
+#include "../../../Net/Manager.h"
 
 #include "Logic/Messages/MessageSetPhysicPosition.h"
 #include "Logic/Messages/MessageAddForcePhysics.h"
@@ -51,6 +53,9 @@ namespace Logic {
 		assert(comp != NULL);
 		comp->setOwner(_entity);
 		comp->setDirection(Math::getDirection( _entity->getOrientation()));
+
+		if(Net::CManager::getSingletonPtr()->imServer())
+			Logic::CGameNetMsgManager::getSingletonPtr()->sendCreateEntity(rocket->getEntityID());
 
 		// Spawneamos el cohete justo delante del jugador y a la altura de disparo que corresponda
 		Vector3 myPosition = _entity->getPosition() + ( Math::getDirection( _entity->getOrientation() )* (_capsuleRadius) );

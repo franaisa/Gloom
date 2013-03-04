@@ -12,6 +12,7 @@
 #include "Logic/Maps/EntityFactory.h"
 #include "Logic/Entity/Entity.h"
 #include "Logic/Server.h"
+#include "Logic/GameNetMsgManager.h"
 
 #include "Logic/Entity/Components/ExplotionHitNotifier.h"
 #include "Logic/Entity/Components/PhysicEntity.h"
@@ -34,7 +35,7 @@ namespace Logic {
 		if(_timer > _explotionTime || _enemyHit) {
 			// Eliminamos la entidad en diferido
 			CEntityFactory::getSingletonPtr()->deferredDeleteEntity(_entity);
-
+			Logic::CGameNetMsgManager::getSingletonPtr()->sendDestroyEntity(_entity->getEntityID());
 			// Creamos la explosion
 			createExplotion();
 		}

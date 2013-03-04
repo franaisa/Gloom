@@ -17,6 +17,8 @@ de disparo del lanzagranadas.
 #include "Logic/Entity/Entity.h"
 #include "Logic/Server.h"
 #include "Logic/Entity/Components/ExplotionController.h"
+#include "Logic/GameNetMsgManager.h"
+#include "../../../Net/Manager.h"
 
 #include "Logic/Messages/MessageSetPhysicPosition.h"
 #include "Logic/Messages/MessageAddForcePhysics.h"
@@ -63,10 +65,17 @@ namespace Logic {
 		msg->setMakeConversion(true);
 		grenade->emitMessage(msg);
 		
+		if(Net::CManager::getSingletonPtr()->imServer())
+			Logic::CGameNetMsgManager::getSingletonPtr()->sendCreateEntity(grenade->getEntityID());
+
 		// Mandar mensaje add force
 		Logic::CMessageAddForcePhysics* forceMsg = new Logic::CMessageAddForcePhysics();
 		forceMsg->setForceVector( Math::getDirection( _entity->getOrientation()) * _shootForce );
 		grenade->emitMessage(forceMsg);
+
+		//enviamos mensaje por red para que se cree la entidad
+		//NOTA: pregunto por si es el servidor, no vaya a ser que el single player se suicide
+		
 	}
 	
 } // namespace Logic
