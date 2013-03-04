@@ -52,7 +52,7 @@ namespace Logic {
 			_canShoot = false;
 			_cooldownTimer = 0;
 				
-			drawParticle("fire", "SmokeParticles");
+			//drawParticle("fire", "SmokeParticles");
 
 			for(int i = 0; i < _numberShots; ++i) {
 				std::pair<CEntity*, Ray> entityHit = fireWeapon();
@@ -94,7 +94,7 @@ namespace Logic {
 		// Rayo lanzado por el servidor de físicas de acuerdo a la distancia de potencia del arma
 		CEntity *entity = Physics::CServer::getSingletonPtr()->raycastClosestInverse(ray, _distance,_entity->getEntityID());
 
-		return std::pair<CEntity*, Ray>(Physics::CServer::getSingletonPtr()->raycastClosestInverse(ray, _distance, 3), ray);
+		return std::pair<CEntity*, Ray>(entity, ray);
 	}// fireWeapon
 	
 	//__________________________________________________________________

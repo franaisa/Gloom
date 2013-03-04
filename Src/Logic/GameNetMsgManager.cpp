@@ -17,6 +17,7 @@ Contiene la implementación del gestor de los mensajes de red durante la partida.
 #include "GameNetMsgManager.h"
 
 #include "Logic/Entity/Entity.h"
+#include "Logic/Entity/Components/PhysicEntity.h"
 #include "Logic/Maps/Map.h"
 #include "Logic/Maps/EntityFactory.h"
 #include "Logic/Server.h"
@@ -94,6 +95,107 @@ namespace Logic {
 		// Desengancharnos de Net::CManager
 		Net::CManager::getSingletonPtr()->removeObserver(this);
 	} // deactivate
+
+	//---------------------------------------------------------
+		
+	void CGameNetMsgManager::sendDestroyEntity(TEntityID destID){
+		Net::NetMessageType msgType = Net::NetMessageType::DESTROY_ENTITY;// Escribimos el tipo de mensaje de red a enviar
+		Net::CBuffer serialMsg;
+		//serializamos toda la información que se necesita para la creación de la entidad
+		serialMsg.write(&msgType, sizeof(msgType));
+		serialMsg.serialize(destID);
+
+		std::cout << "Enviando destruccion de entidad con id " << destID << std::endl;
+
+		//enviamos el mensaje
+		Net::CManager::getSingletonPtr()->send(serialMsg.getbuffer(), serialMsg.getSize());
+	}
+
+	//---------------------------------------------------------
+
+	void CGameNetMsgManager::processDestroyEntity(Net::CPaquete* packet){
+		Net::CBuffer serialMsg;
+			serialMsg.write(packet->getData(),packet->getDataLength());
+			serialMsg.reset(); // Reiniciamos el puntero de lectura a la posición 0
+
+		//deserializamos toda la información que se necesita para la creación de la entidad
+		Net::NetMessageType msgType;
+			serialMsg.read(&msgType,sizeof(msgType));
+		
+		//cargamos todos los datos que se nos envían por mensaje
+		TEntityID destID; 
+			serialMsg.read(&destID, sizeof(destID));
+
+		//le decimos al mapa que elimine la entidad
+		CEntity * entity = CServer::getSingletonPtr()->getMap()->getEntityByID(destID);
+		CServer::getSingletonPtr()->getMap()->deleteDeferredEntity(entity);
+	}
+
+	//---------------------------------------------------------
+		
+	void CGameNetMsgManager::sendCreateEntity(TEntityID destID){
+		//cogemos la entidad que hemos creado para enviar la información por la red
+		CEntity * destEntity = CServer::getSingletonPtr()->getMap()->getEntityByID(destID);
+
+		Net::NetMessageType msgType = Net::NetMessageType::CREATE_ENTITY;// Escribimos el tipo de mensaje de red a enviar
+		Net::CBuffer serialMsg;
+		//serializamos toda la información que se necesita para la creación de la entidad
+		serialMsg.write(&msgType, sizeof(msgType));
+		serialMsg.serialize(destID);
+		serialMsg.serialize(destEntity->getType(), false);
+		serialMsg.serialize(destEntity->getName(), false);
+		serialMsg.serialize(destEntity->getTransform());
+
+		std::cout << "Enviando creacion de entidad con id " << destID << std::endl;
+
+		//enviamos el mensaje
+		Net::CManager::getSingletonPtr()->send(serialMsg.getbuffer(), serialMsg.getSize());
+	}
+
+	//---------------------------------------------------------
+		
+	void CGameNetMsgManager::processCreateEntity(Net::CPaquete* packet){
+
+		
+
+		Net::CBuffer serialMsg;
+			serialMsg.write(packet->getData(),packet->getDataLength());
+			serialMsg.reset(); // Reiniciamos el puntero de lectura a la posición 0
+
+		//deserializamos toda la información que se necesita para la creación de la entidad
+		Net::NetMessageType msgType;
+			serialMsg.read(&msgType,sizeof(msgType));
+		
+		//cargamos todos los datos que se nos envían por mensaje
+		TEntityID destID; 
+			serialMsg.read(&destID, sizeof(destID));
+
+		std::cout << "recibida creacion de entidad con id " << destID << std::endl;
+
+		std::string type;
+		serialMsg.deserialize(type);
+
+		std::string name;
+		serialMsg.deserialize(name);
+
+		Matrix4 transform;
+		serialMsg.deserialize(transform);
+
+		//creamos la entidad
+		Map::CEntity * info = Logic::CEntityFactory::getSingletonPtr()->getInfo(type);
+		info->setName(name);
+		CEntity * newEntity = Logic::CEntityFactory::getSingletonPtr()->createEntity(info, CServer::getSingletonPtr()->getMap(), destID);
+		newEntity->activate();
+
+		//ahora le seteamos la posición
+		newEntity->getComponent<CPhysicEntity>("CPhysicEntity")->setPhysicPosition(transform.getTrans(), false);
+
+		//seteamos la orientación
+		Matrix3 orientation;
+		transform.extract3x3Matrix(orientation);
+		newEntity->setOrientation(orientation);
+	}
+
 
 	//---------------------------------------------------------
 		
@@ -185,6 +287,14 @@ namespace Logic {
 
 		case Net::NetMessageType::ENTITY_MSG:	
 			processEntityMessage(packet);
+			break;	
+
+		case Net::NetMessageType::CREATE_ENTITY:	
+			processCreateEntity(packet);
+			break;	
+
+		case Net::NetMessageType::DESTROY_ENTITY:	
+			processDestroyEntity(packet);
 			break;	
 
 		case Net::NetMessageType::END_GAME:	

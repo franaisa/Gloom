@@ -99,7 +99,7 @@ namespace Logic
 				//Volvemos a activar todos los componentes para que la fisica pueda recibir el mensaje de spawn
 				_entity->activate();
 				//Ponemos la entidad física en la posición instantaneamente ( no se puede permitir el envio de mensajes )
-				_entity->getComponent<CPhysicController>("CPhysicEntityController")->setPhysicPosition(spawn);
+				_entity->getComponent<CPhysicController>("CPhysicController")->setPhysicPosition(spawn);
 				//Establecemos la orientación adecuada segun la devolución del manager de spawn
 				_entity->setYaw(180);
 

@@ -106,7 +106,7 @@ namespace Graphics
 		_entityNode->attachObject(_entity);
 
 		_text = new CObjectTextDisplay(_entity, _scene->getCamera()->getOgreCamera());
-		_text->enable(true);
+		_text->enable(false);
 		_text->setText("Gazpacho");
 			
 		_loaded = true;
