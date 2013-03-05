@@ -107,11 +107,6 @@ namespace Logic {
 		//serializamos toda la información que se necesita para la creación de la entidad
 		serialMsg.write(&msgType, sizeof(msgType));
 		serialMsg.serialize(destID);
-		serialMsg.serialize(destEntity->getType(), false);
-		serialMsg.serialize(destEntity->getName(), false);
-		serialMsg.serialize(destEntity->getTransform());
-
-		std::cout << "Enviando creacion de entidad con id " << destID << std::endl;
 
 		//enviamos el mensaje
 		Net::CManager::getSingletonPtr()->send(serialMsg.getbuffer(), serialMsg.getSize());
@@ -131,10 +126,9 @@ namespace Logic {
 		//cargamos todos los datos que se nos envían por mensaje
 		TEntityID destID; 
 			serialMsg.read(&destID, sizeof(destID));
-
 		//le decimos al mapa que elimine la entidad
 		CEntity * entity = CServer::getSingletonPtr()->getMap()->getEntityByID(destID);
-		CServer::getSingletonPtr()->getMap()->deleteDeferredEntity(entity);
+		CEntityFactory::getSingletonPtr()->deferredDeleteEntity(entity);
 	}
 
 	//---------------------------------------------------------
