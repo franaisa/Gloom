@@ -8,6 +8,7 @@
 #include "Interpolation.h"
 
 #include "Logic/Entity/Entity.h"
+#include "PhysicController.h"
 #include "Logic/Server.h"
 #include "Logic/Maps/Map.h"
 #include "Map/MapEntity.h"
@@ -72,15 +73,9 @@ namespace Logic  {
 			Vector3 newPos = _entity->getPosition()+direction;
 			//vemos a ver si hemos recorrido más de lo que deberíamos, y actuamos en consecuencia
 			if(direction.length() > distance){
-				Logic::CMessageSetPhysicPosition *m = new Logic::CMessageSetPhysicPosition();
-				m->setPosition(_serverPos.getTrans());
-				_entity->emitMessage(m);
+				_entity->getComponent<CPhysicController>("CPhysicController")->setPhysicPosition(_serverPos.getTrans());
 			}else{
-
-				Logic::CMessageSetPhysicPosition *m = new Logic::CMessageSetPhysicPosition();
-				m->setPosition(newPos);
-				_entity->emitMessage(m);
-
+				_entity->getComponent<CPhysicController>("CPhysicController")->setPhysicPosition(newPos);
 			}
 			//si nos hemos quedado suficientemente cerquita, dejaremos de interpolar
 			newPos = newPos - _serverPos.getTrans();
@@ -223,9 +218,7 @@ namespace Logic  {
 		
 		//si la distancia es mayor de maxDistance .. set transform por cojones
 		if(distance > _maxDistance){
-			Logic::CMessageSetPhysicPosition *m = new Logic::CMessageSetPhysicPosition();
-			m->setPosition(_serverPos.getTrans());
-			_entity->emitMessage(m);
+			_entity->getComponent<CPhysicController>("CPhysicController")->setPhysicPosition(_serverPos.getTrans());
 			//Movemos la orientacion logica/grafica
 			Matrix3 tmpMatrix;
 			_serverPos.extract3x3Matrix(tmpMatrix);
