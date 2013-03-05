@@ -189,7 +189,11 @@ namespace Logic
 		*/
 		void deleteDeferredEntity(CEntity* entity);
 
+		void entityTimeToLive(CEntity* entity, unsigned int msecs);
+
 	private:
+
+		std::list< std::pair<CEntity*, unsigned int> > _entitiesToBeDeleted;
 
 		/**
 		Tipo tabla de entidades de mapa.

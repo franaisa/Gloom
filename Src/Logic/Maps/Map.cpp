@@ -134,6 +134,27 @@ namespace Logic {
 
 	void CMap::tick(unsigned int msecs) 
 	{
+		// Si hay entidades con cronometros de autodestruccion
+		// comprobamos el cronometro y si hay que destruirlas avisamos
+		// a la factoria para que se encargue de ello en diferido.
+		if( !_entitiesToBeDeleted.empty() ) {
+			std::list< std::pair<CEntity*, unsigned int> >::iterator it = _entitiesToBeDeleted.begin();
+			while(it != _entitiesToBeDeleted.end()) {
+				// Dado que estamos tratando con un unsigned int, comprobamos si la resta saldria menor
+				// que 0, ya que si hacemos directamente la resta el numero pasa a ser el unsigned int 
+				//mas alto y por lo tanto seria un fail.
+				it->second = msecs >= it->second ? 0 : (it->second - msecs);
+
+				if(it->second <= 0) {
+					CEntityFactory::getSingletonPtr()->deferredDeleteEntity(it->first);
+					it = _entitiesToBeDeleted.erase(it);
+				}
+				else {
+					++it;
+				}
+			}
+		}
+
 		//primero comprobamos si hay entidades que han de ser eliminadas
 		std::list<CEntity*>::const_iterator del;
 		for(del = _deleteEntities.begin();del!=_deleteEntities.end();++del){
@@ -338,6 +359,10 @@ namespace Logic {
 
 	void CMap::deleteDeferredEntity(CEntity* entity){
 		_deleteEntities.push_back(entity);
+	}
+
+	void CMap::entityTimeToLive(CEntity* entity, unsigned int msecs) {
+		_entitiesToBeDeleted.push_back( std::pair<CEntity*, unsigned int>(entity, msecs) );
 	}
 
 } // namespace Logic

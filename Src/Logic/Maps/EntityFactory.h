@@ -194,6 +194,8 @@ namespace Logic
 		*/
 		void deferredDeleteEntity(CEntity *entity);
 
+		void deferredDeleteEntity(CEntity *entity, unsigned int msecs);
+
 		/**
 		Método invocado por el bucle del juego para que la factoría
 		elimine todos los objetos pendientes de ser borrados.

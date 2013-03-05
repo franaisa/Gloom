@@ -68,7 +68,6 @@ namespace Logic {
 		msg->setPosition(myPosition);
 		msg->setMakeConversion(true);
 		rocket->emitMessage(msg);
-		
 	}
 	
 } // namespace Logic

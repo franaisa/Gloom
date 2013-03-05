@@ -12,6 +12,8 @@ del juego.
 #include "EntityFactory.h"
 #include "ComponentFactory.h"
 #include "Logic/Entity/Entity.h"
+#include "Logic/Maps/Map.h"
+#include "Logic/Server.h"
 #include "Map.h"
 #include "Map/MapParser.h"
 #include "Map/MapEntity.h"
@@ -324,6 +326,13 @@ namespace Logic
 		_pendingEntities.push_back(entity);
 
 	} // deferredDeleteEntity
+
+	//---------------------------------------------------------
+
+	void CEntityFactory::deferredDeleteEntity(CEntity *entity, unsigned int msecs) {
+		assert(entity);
+		Logic::CServer::getSingletonPtr()->getMap()->entityTimeToLive(entity, msecs);
+	}
 	
 	//---------------------------------------------------------
 
