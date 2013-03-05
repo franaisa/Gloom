@@ -107,7 +107,13 @@ namespace Logic {
 		*/
 		void setOwner(CEntity* _owner);
 
+		//________________________________________________________________________
 
+		/**
+		Setea la direccion del misil.
+
+		@param direction Dirección que queremos que tome el misil.
+		*/
 		void setDirection(Vector3 direction);
 
 	private:
@@ -130,6 +136,7 @@ namespace Logic {
 		/** true si la granada a golpeado a un enemigo */
 		bool _enemyHit;
 
+		/** Direccion del misil en todo momento */
 		Vector3 _direction;
 	}; // class CRocketController
 

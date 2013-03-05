@@ -57,8 +57,9 @@ namespace Logic {
 		
 
 		// Spawneamos el cohete justo delante del jugador y a la altura de disparo que corresponda
-		Vector3 myPosition = _entity->getPosition() + ( Math::getDirection( _entity->getOrientation() )* (_capsuleRadius) );
-		myPosition.y = _heightShoot;
+		Vector3 entityPosition = _entity->getPosition();
+		Vector3 myPosition = entityPosition + ( Math::getDirection( _entity->getOrientation() )* (_capsuleRadius) );
+		myPosition.y = entityPosition.y + _heightShoot;
 		rocket->setPosition(myPosition);
 
 		//enviamos por red la creación de la entidad
