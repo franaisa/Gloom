@@ -128,6 +128,12 @@ namespace Logic
 							  CMap *map);
 
 
+
+		CEntity* createEntity(Map::CEntity *entityInfo,
+							  CMap *map, unsigned int msecs);
+
+
+
 		/**
 		Crea una nueva entidad de juego en un mapa determinado a partir de
 		su descripción en base a los componentes que necesita debido

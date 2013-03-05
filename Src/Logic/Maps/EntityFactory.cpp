@@ -262,7 +262,6 @@ namespace Logic
 	
 	//---------------------------------------------------------
 
-
 	Logic::CEntity *CEntityFactory::createEntity(
 								Map::CEntity *entityInfo,
 								Logic::CMap *map)
@@ -283,6 +282,14 @@ namespace Logic
 		}
 
 	} // createEntity
+
+	//---------------------------------------------------------
+
+	Logic::CEntity* CEntityFactory::createEntity(Map::CEntity *entityInfo, CMap *map, unsigned int msecs) {
+		CEntity* createdEntity = createEntity(entityInfo, map);
+		deferredDeleteEntity(createdEntity , msecs);
+		return createdEntity;
+	}
 
 	//---------------------------------------------------------
 
