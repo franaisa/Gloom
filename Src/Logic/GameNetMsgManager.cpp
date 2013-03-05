@@ -99,13 +99,19 @@ namespace Logic {
 	//---------------------------------------------------------
 		
 	void CGameNetMsgManager::sendDestroyEntity(TEntityID destID){
+		//cogemos la entidad que hemos creado para enviar la información por la red
+		CEntity * destEntity = CServer::getSingletonPtr()->getMap()->getEntityByID(destID);
+
 		Net::NetMessageType msgType = Net::NetMessageType::DESTROY_ENTITY;// Escribimos el tipo de mensaje de red a enviar
 		Net::CBuffer serialMsg;
 		//serializamos toda la información que se necesita para la creación de la entidad
 		serialMsg.write(&msgType, sizeof(msgType));
 		serialMsg.serialize(destID);
+		serialMsg.serialize(destEntity->getType(), false);
+		serialMsg.serialize(destEntity->getName(), false);
+		serialMsg.serialize(destEntity->getTransform());
 
-		std::cout << "Enviando destruccion de entidad con id " << destID << std::endl;
+		std::cout << "Enviando creacion de entidad con id " << destID << std::endl;
 
 		//enviamos el mensaje
 		Net::CManager::getSingletonPtr()->send(serialMsg.getbuffer(), serialMsg.getSize());
@@ -285,16 +291,15 @@ namespace Logic {
 		switch (rxMsgType)
 		{
 
+		case Net::NetMessageType::DESTROY_ENTITY:	
+			processDestroyEntity(packet);
+			break;	
 		case Net::NetMessageType::ENTITY_MSG:	
 			processEntityMessage(packet);
 			break;	
 
 		case Net::NetMessageType::CREATE_ENTITY:	
 			processCreateEntity(packet);
-			break;	
-
-		case Net::NetMessageType::DESTROY_ENTITY:	
-			processDestroyEntity(packet);
 			break;	
 
 		case Net::NetMessageType::END_GAME:	

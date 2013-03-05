@@ -54,13 +54,17 @@ namespace Logic {
 		comp->setOwner(_entity);
 		comp->setDirection(Math::getDirection( _entity->getOrientation()));
 
-		if(Net::CManager::getSingletonPtr()->imServer())
-			Logic::CGameNetMsgManager::getSingletonPtr()->sendCreateEntity(rocket->getEntityID());
+		
 
 		// Spawneamos el cohete justo delante del jugador y a la altura de disparo que corresponda
 		Vector3 myPosition = _entity->getPosition() + ( Math::getDirection( _entity->getOrientation() )* (_capsuleRadius) );
 		myPosition.y = _heightShoot;
 		rocket->setPosition(myPosition);
+
+		//enviamos por red la creación de la entidad
+		if(Net::CManager::getSingletonPtr()->imServer())
+			Logic::CGameNetMsgManager::getSingletonPtr()->sendCreateEntity(rocket->getEntityID());
+
 
 		// Mensaje para situar el collider fisico del cohete en la posicion de disparo.
 		Logic::CMessageSetPhysicPosition* msg = new Logic::CMessageSetPhysicPosition();

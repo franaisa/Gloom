@@ -94,6 +94,16 @@ Map = {
 		respawnTime = 5,
 	},
 	
+	RocketLauncherAmmo1 = {
+		type = "ItemSpawn",
+		position = {140,4.0,-16.0},
+		model = "grenadelauncher.mesh",
+		id = "ammo",
+		weaponType = 5,
+		reward = 5,
+		respawnTime = 5,
+	},
+	
 	SuperShield = {
 		type = "ItemSpawn",
 		position = {67.0, 2.0, -42.0},
