@@ -52,18 +52,14 @@ namespace Logic
 	//---------------------------------------------------------
 
 	bool CEntity::dynamicSpawn(CMap* map, Map::CEntity* entityInfo) {
-		if(entityInfo->hasAttribute("name")) {
-			int entityId = getEntityID();
-			std::ostringstream convert;
-			convert << entityId;
-			std::string nameId = convert.str();
+		int entityId = getEntityID();
+		std::ostringstream convert;
+		convert << entityId;
+		std::string nameId = convert.str();
 
-			entityInfo->setAttribute("name", entityInfo->getStringAttribute("name") + nameId);
+		entityInfo->setName(entityInfo->getStringAttribute("name") + nameId);
 
-			return spawn(map, entityInfo);
-		}
-
-		return false;
+		return spawn(map, entityInfo);
 	}
 
 	//---------------------------------------------------------
