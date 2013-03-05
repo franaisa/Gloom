@@ -30,23 +30,12 @@ namespace Logic {
 	void CRocketController::tick(unsigned int msecs) {
 		IComponent::tick(msecs);
 
-		//Si hay colision con el enemigo o el mundo, eliminamos la entidad y creamos la explosión
-		if( _enemyHit) {
-			std::cout << "COHETE HIT" << std::endl;
-			// Eliminamos la entidad en diferido
-			CEntityFactory::getSingletonPtr()->deferredDeleteEntity(_entity);
-			Logic::CGameNetMsgManager::getSingletonPtr()->sendDestroyEntity(_entity->getEntityID());
-			// Creamos la explosion
-			createExplotion();
-		}
-		//Sino movemos el cohete
-		else{	
-			// Mensaje para situar el collider fisico de la granada en la posicion de disparo.
-			Logic::CMessageKinematicMove* msg = new Logic::CMessageKinematicMove();
-			Vector3 direction= _direction*msecs*0.10;//velocidad a poner parametrizable
-			msg->setMovement(direction);
-			_entity->emitMessage(msg);
-		}
+		// Movemos el cohete
+		// Mensaje para situar el collider fisico de la granada en la posicion de disparo.
+		Logic::CMessageKinematicMove* msg = new Logic::CMessageKinematicMove();
+		Vector3 direction= _direction*msecs*0.10;//velocidad a poner parametrizable
+		msg->setMovement(direction);
+		_entity->emitMessage(msg);
 
 	} // tick
 
@@ -70,10 +59,15 @@ namespace Logic {
 	void CRocketController::process(CMessage *message) {
 		switch(message->getMessageType()) {
 		case Message::CONTACT_ENTER:
-			//Los cohetes solo notifican de contacto contra players y el mundo,
-			//y por lo tanto al recibir este mensaje signfica que ha impactado contra
-			// otro player
-			_enemyHit = true;
+			// Los cohetes solos se destruyen al colisionar
+			// Este mensaje deberia recibirse al tocar cualquier otro
+			// rigidbody del mundo
+
+			// Eliminamos la entidad en diferido
+			CEntityFactory::getSingletonPtr()->deferredDeleteEntity(_entity);
+			Logic::CGameNetMsgManager::getSingletonPtr()->sendDestroyEntity(_entity->getEntityID());
+			// Creamos la explosion
+			createExplotion();
 
 			break;
 		}
@@ -82,7 +76,6 @@ namespace Logic {
 	//________________________________________________________________________
 
 	void CRocketController::createExplotion() {
-		std::cout << "CREO EXPLOSION COHETE" << std::endl;
 		// Obtenemos la informacion asociada al arquetipo de la explosion del cohete
 		Map::CEntity *entityInfo = CEntityFactory::getSingletonPtr()->getInfo("Explotion");
 		// Creamos la entidad y la activamos
@@ -106,6 +99,8 @@ namespace Logic {
 	void CRocketController::setOwner(CEntity* owner) {
 		this->_owner = owner;
 	}
+
+	//________________________________________________________________________
 
 	void CRocketController::setDirection(Vector3 direction) {
 		_direction = direction;
