@@ -16,7 +16,6 @@ de disparo del lanzacohetes.
 #include "Logic/Maps/EntityFactory.h"
 #include "Logic/Entity/Entity.h"
 #include "Logic/Server.h"
-#include "Logic/Entity/Components/ExplotionController.h"
 #include "RocketController.h"
 #include "Logic/GameNetMsgManager.h"
 #include "../../../Net/Manager.h"

@@ -16,7 +16,7 @@ de disparo del lanzagranadas.
 #include "Logic/Maps/EntityFactory.h"
 #include "Logic/Entity/Entity.h"
 #include "Logic/Server.h"
-#include "Logic/Entity/Components/ExplotionController.h"
+#include "Logic/Entity/Components/GrenadeController.h"
 #include "Logic/GameNetMsgManager.h"
 #include "../../../Net/Manager.h"
 
@@ -50,7 +50,7 @@ namespace Logic {
 		grenade->activate();
 
 		// Seteamos la entidad que dispara la granada
-		CExplotionController* comp = grenade->getComponent<CExplotionController>("CExplotionController");
+		CGrenadeController* comp = grenade->getComponent<CGrenadeController>("CGrenadeController");
 		assert(comp != NULL);
 		comp->setOwner(_entity);
 
