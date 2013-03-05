@@ -11,6 +11,7 @@
 
 #include "Logic/Maps/EntityFactory.h"
 #include "Logic/Entity/Entity.h"
+#include "Logic/Entity/Components/PhysicEntity.h"
 #include "Logic/Server.h"
 
 #include "Logic/Messages/MessageTouched.h"
@@ -19,6 +20,29 @@
 namespace Logic {
 	
 	IMP_FACTORY(CExplotionHitNotifier);
+
+	//________________________________________________________________________
+
+	void CExplotionHitNotifier::tick(unsigned int msecs) {
+		IComponent::tick(msecs);
+
+		// Actualizamos el timer. Si se ha cumplido el tiempo limite de explosion
+		// eliminamos la entidad granada y creamos la entidad explosion.
+		_timer += msecs;
+		if(_timer > _explotionTimeOut) {
+			// Desactivamos la entidad fisica (para que no se dispare el trigger
+			// al eliminar la explosion, ya que se detecta que el shape ya no esta)
+			// Seteamos la entidad que dispara la granada
+			CPhysicEntity* physicEntityComponent = _entity->getComponent<CPhysicEntity>("CPhysicEntity");
+			assert(physicEntityComponent != NULL);
+			physicEntityComponent->deactivate();
+
+			// Eliminamos la entidad en diferido
+			CEntityFactory::getSingletonPtr()->deferredDeleteEntity(_entity);
+		}
+	} // tick
+
+	//________________________________________________________________________
 	
 	bool CExplotionHitNotifier::accept(CMessage *message) {
 		return (message->getMessageType() == Message::TOUCHED);
@@ -42,6 +66,11 @@ namespace Logic {
 		if(!IComponent::spawn(entity,map,entityInfo))
 			return false;
 
+		// Leer el timer que controla la explosion
+		if( entityInfo->hasAttribute("explotionTime") ) {
+			// Pasamos a msecs
+			_explotionTimeOut = entityInfo->getFloatAttribute("explotionTime") * 1000;
+		}
 		if( entityInfo->hasAttribute("explotionDamage") ) {
 			// Daño máximo de la explosion
 			_explotionDamage = entityInfo->getFloatAttribute("explotionDamage");

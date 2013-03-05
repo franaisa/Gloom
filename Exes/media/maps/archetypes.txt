@@ -282,7 +282,7 @@ Map = {
 			weaponGrenadeLauncherId = 4,
 			weaponGrenadeLauncherShootForce = 5000,
 			weaponGrenadeLauncherProjectileRadius = 3,
-			weaponGrenadeLauncherParticlePosition = {50.0, 50.0, 50.0},
+			weaponGrenadeLauncherParticlePosition = {0.0, 0.0, 0.0},
 
 			weaponRocketLauncherName = "RocketLauncher",
 			weaponRocketLauncherModel = "grenadelauncher.mesh",
@@ -296,7 +296,7 @@ Map = {
 			weaponRocketLauncherId = 4,
 			weaponRocketLauncherShootForce = 5000,
 			weaponRocketLauncherProjectileRadius = 3,
-			weaponRocketLauncherParticlePosition = {50.0, 50.0, 50.0},
+			weaponRocketLauncherParticlePosition = {0.0, 0.0, 0.0},
 			
 		hudMira = 3,
 		hudCross = 3,
@@ -459,7 +459,7 @@ Map = {
 			weaponRocketLauncherId = 4,
 			weaponRocketLauncherShootForce = 5000,
 			weaponRocketLauncherProjectileRadius = 3,
-			weaponRocketLauncherParticlePosition = {50.0, 50.0, 50.0},
+			weaponRocketLauncherParticlePosition = {00.0, 0.0, 0.0},
 			
 		hudMira = 3,
 		hudCross = 3,
@@ -515,7 +515,7 @@ Map = {
 		physic_mass = 50,
 		physic_group = 3,
 		physic_groupList = "1",
-		explotionTime = 2,
+		explotionTime = 5,
 	},
 	
 	GrenadeExplotion = {
@@ -530,6 +530,7 @@ Map = {
 		physic_group = 4,
 		physic_groupList = "1",
 		explotionDamage = 40,
+		explotionTime = 1,
 	},
 	
 	Rocket = {
@@ -557,5 +558,6 @@ Map = {
 		physic_group = 11,
 		physic_groupList = "1",
 		explotionDamage = 40,
+		explotionTime = 1,
 	},
 }

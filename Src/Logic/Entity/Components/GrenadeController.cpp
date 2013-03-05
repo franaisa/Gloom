@@ -82,7 +82,7 @@ namespace Logic {
 		// Obtenemos la informacion asociada al arquetipo de la explosion de la granada
 		Map::CEntity *entityInfo = CEntityFactory::getSingletonPtr()->getInfo("Explotion");
 		// Creamos la entidad y la activamos
-		CEntity* grenadeExplotion = CEntityFactory::getSingletonPtr()->createEntityTimeOut( entityInfo, Logic::CServer::getSingletonPtr()->getMap(), 200 );
+		CEntity* grenadeExplotion = CEntityFactory::getSingletonPtr()->createEntity( entityInfo, Logic::CServer::getSingletonPtr()->getMap() );
 		grenadeExplotion->activate();
 
 		// Enviamos el mensaje para situar a la explosion en el punto en el que estaba la granada

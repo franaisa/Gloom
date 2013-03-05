@@ -50,7 +50,8 @@ namespace Logic {
 
 
 		/**
-		Método llamado en cada frame que actualiza la posicion flotante del item.
+		Método llamado en cada frame que controla el timer para la creacion de la
+		explosion.
 
 		@param msecs Milisegundos transcurridos desde el último tick.
 		*/
