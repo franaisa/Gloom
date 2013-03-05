@@ -129,7 +129,7 @@ namespace Logic
 
 
 
-		CEntity* createEntity(Map::CEntity *entityInfo,
+		CEntity* createEntityTimeOut(Map::CEntity *entityInfo,
 							  CMap *map, unsigned int msecs);
 
 
