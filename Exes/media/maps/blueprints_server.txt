@@ -1,5 +1,5 @@
 World CGraphics CPhysicEntity
-ServerPlayer CAvatarController CPhysicController CUpdateClientPosition CShootRocketLauncher CShootGrenadeLauncher CShootMiniGun CShootShotGun CShootSniper CShootHammer CWeaponsManager CLife CSpawnPlayer CNetConnector CGraphics
+ServerPlayer CAvatarController CPhysicController CShootRocketLauncher CShootGrenadeLauncher CShootMiniGun CShootShotGun CShootSniper CShootHammer CWeaponsManager CHudOverlay CLife CSpawnPlayer CNetConnector CGraphics
 Enemy CPhysicEntity CLife
 Camera CCamera
 ItemSpawn CGraphics CPhysicEntity CFloatingMovement CSpawnItemManager 
@@ -7,7 +7,7 @@ SpawnPoint CPhysicEntity
 Jumper CGraphics CPhysicEntity CJumper
 Grenade CGraphics CPhysicEntity CExplotionController CNetConnector
 Explotion CGraphics CPhysicEntity CExplotionHitNotifier
-Rocket CGraphics CPhysicEntity CRocketController
+Rocket CGraphics CPhysicEntity CRocketController CNetConnector
 Lava CGraphics CPhysicEntity CLava
 Elevator CGraphics CPhysicEntity CElevator
 ElevatorTrigger CGraphics CPhysicEntity CElevatorTrigger
