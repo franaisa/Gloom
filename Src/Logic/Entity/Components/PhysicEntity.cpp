@@ -99,10 +99,10 @@ void CPhysicEntity::process(CMessage *message)
 		_movement += ((CMessageKinematicMove*)message)->getMovement();
 		break;
 	case Message::ACTIVATE:
-		activate();
+		activateSimulation();
 		break;
 	case Message::DEACTIVATE:
-		deactivate();
+		deactivateSimulation();
 		break;
 	case Message::SET_PHYSIC_POSITION:
 		{
@@ -332,7 +332,7 @@ void CPhysicEntity::addImpulsiveForce(const Vector3& force) {
 
 //---------------------------------------------------------
 
-void CPhysicEntity::deactivate() {
+void CPhysicEntity::deactivateSimulation() {
 	// Setea _activate a false
 	// No desactivamos a IPhysics por que necesitamos que se reciban
 	// MENSAJES de activacio y desactivacion, y por lo tanto, necesitamos
@@ -362,7 +362,7 @@ void CPhysicEntity::deactivate() {
 
 //---------------------------------------------------------
 
-void CPhysicEntity::activate() {
+void CPhysicEntity::activateSimulation() {
 	// Setea _activate a true
 	// Activamos a IPhysics por que necesitamos que se reciban
 	// MENSAJES de activacio y desactivacion, y por lo tanto, necesitamos
