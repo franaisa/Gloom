@@ -45,7 +45,7 @@ namespace Graphics{
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	bool CLight::destroyLight(){
+	bool CLight::destroyLight(){		
 		_node->detachObject(_light);
 		CServer::getSingletonPtr()->getActiveScene()->getSceneMgr()->destroySceneNode(_node);
 		_node = 0;
@@ -58,6 +58,7 @@ namespace Graphics{
 
 	void CLight::attachToScene(){
 		_node = static_cast<Ogre::SceneNode*>(CServer::getSingletonPtr()->getActiveScene()->getSceneMgr()->getRootSceneNode()->createChild());
+		//_node = CServer::getSingletonPtr()->getActiveScene()->getSceneMgr()->createSceneNode(_light->getName());
 		_node->attachObject(_light);
 	}
 
@@ -81,4 +82,11 @@ namespace Graphics{
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 
+	CLight::~CLight(){
+		_node->detachObject(_light);
+		CServer::getSingletonPtr()->getActiveScene()->getSceneMgr()->destroySceneNode(_node);
+		_node = 0;
+		CServer::getSingletonPtr()->getActiveScene()->getSceneMgr()->destroyLight(_light);
+		_light = 0;
+	}
 }

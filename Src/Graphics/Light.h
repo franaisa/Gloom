@@ -44,8 +44,8 @@ namespace Graphics
 	*/
 	class CLight{
 	public:
-		CLight(): _node(0), _light(0){}
-		virtual ~CLight();
+		CLight(): _node(NULL), _light(NULL) {}
+		~CLight();
 		/**
 		Método que crea una luz direccional en la posición dada, que mira en la
 		dirección que se le indica como parámetro
@@ -115,7 +115,13 @@ namespace Graphics
 		Método que setea la posición de la luz
 		@param position la posición en la que queremos la luz
 		*/
-		Vector3 setposition(Vector3 position){_light->setPosition(position);}
+		void setposition(Vector3 position){_light->setPosition(position);}
+
+		/**
+		Método que setea la fuerza de la luz
+		@param intensiy la fuerza emisora de la luz.
+		*/
+		void setIntensity(float intensiy){_light->setPowerScale(intensiy);}
 
 		/**
 		Método que mete la luz en la escena de ogre para que se pueda visualizar en el mapa
@@ -128,7 +134,6 @@ namespace Graphics
 		Ogre::Light* _light;
 
 		Ogre::SceneNode * _node;
-
 	};
 
 }
