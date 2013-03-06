@@ -457,7 +457,6 @@ Map = {
 			weaponRocketLauncherColdDown = 2,
 			weaponRocketLauncherMaxAmmo = 18,
 			weaponRocketLauncherId = 4,
-			weaponRocketLauncherShootForce = 5000,
 			weaponRocketLauncherProjectileRadius = 3,
 			weaponRocketLauncherParticlePosition = {00.0, 0.0, 0.0},
 			
@@ -529,7 +528,7 @@ Map = {
 		physic_mass = 10,
 		physic_group = 4,
 		physic_groupList = "1",
-		explotionDamage = 40,
+		explotionDamage = 10,
 		explotionTime = 1,
 	},
 	
@@ -557,7 +556,7 @@ Map = {
 		physic_mass = 10,
 		physic_group = 11,
 		physic_groupList = "1",
-		explotionDamage = 40,
+		explotionDamage = 15,
 		explotionTime = 1,
 	},
 	

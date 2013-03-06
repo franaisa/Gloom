@@ -87,18 +87,12 @@ namespace Logic {
 
 	void CExplotionHitNotifier::explotionHit(CEntity* entity) {
 		if(entity == NULL) return;
-		float entityDistanceFromZero = this->_entity->getPosition().distance( entity->getPosition() );
 
-		// Quitamos vida al jugador en proporcion a la distancia que se encuentra
-		// de la zona cero
+		// Quitamos vida al enemigo
 		CMessageDamaged* msg = new CMessageDamaged();
-		msg->setDamage( _explotionDamage * (1 - (entityDistanceFromZero / _explotionRadius)) );
+		msg->setDamage( _explotionDamage );
 		msg->setEnemy(_owner);
 		entity->emitMessage(msg);
-
-		float res = _explotionDamage * (1 - (entityDistanceFromZero / _explotionRadius));
-
-		std::cout << "Soy "<< _owner->getName() << " y te quito " << res << " puntos de salud" << std::endl;
 	}
 
 	//________________________________________________________________________
