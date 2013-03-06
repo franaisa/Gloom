@@ -444,7 +444,7 @@ Map = {
 			weaponGrenadeLauncherColdDown = 2,
 			weaponGrenadeLauncherMaxAmmo = 18,
 			weaponGrenadeLauncherId = 4,
-			weaponGrenadeLauncherShootForce = 5000,
+			weaponGrenadeLauncherShootForce = 400000,
 			weaponGrenadeLauncherProjectileRadius = 3,
 
 			weaponRocketLauncherName = "RocketLauncher",
@@ -512,7 +512,7 @@ Map = {
 		physic_type = "dynamic",
 		physic_shape = "sphere",
 		physic_radius = 0.3,
-		physic_mass = 50,
+		physic_mass = 55,
 		physic_group = 3,
 		physic_groupList = "1",
 		explotionTime = 5,
