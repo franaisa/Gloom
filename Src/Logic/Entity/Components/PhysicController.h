@@ -116,6 +116,10 @@ namespace Logic
 
 		void readCollisionGroupInfo(const Map::CEntity *entityInfo, int& group, std::vector<int>& groupList);
 
+		void activateSimulation();
+
+		void deactivateSimulation();
+
 	private:
 
 		/**

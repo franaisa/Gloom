@@ -248,7 +248,7 @@ Map = {
 
 	Enemigo1 = {
 		type = "RemotePlayer",
-		position = {0, 0.2, -10},
+		position = {0, 0.2, -20},
 		orientation = 90,
 		life = 100000.0,
 		maxShield=100,
@@ -276,6 +276,8 @@ Map = {
 		physic_type = "static",
 		physic_shape = "box",
 		physic_dimensions = { 4, 7, 4 },
+		physic_group = 2,
+		physic_groupList = "1",
 	},
 	
 	David = {

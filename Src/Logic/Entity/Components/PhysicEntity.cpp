@@ -333,12 +333,6 @@ void CPhysicEntity::addImpulsiveForce(const Vector3& force) {
 //---------------------------------------------------------
 
 void CPhysicEntity::deactivateSimulation() {
-	// Setea _activate a false
-	// No desactivamos a IPhysics por que necesitamos que se reciban
-	// MENSAJES de activacio y desactivacion, y por lo tanto, necesitamos
-	// que se ejecute el tick de este componente.
-	//IPhysics::deactivate();
-
 	// Desactivamos todos los shapes del componente por completo en PhysX
 	// Para ello, obtenemos todos sus shapes y ponemos los flags a false
 
@@ -363,12 +357,6 @@ void CPhysicEntity::deactivateSimulation() {
 //---------------------------------------------------------
 
 void CPhysicEntity::activateSimulation() {
-	// Setea _activate a true
-	// Activamos a IPhysics por que necesitamos que se reciban
-	// MENSAJES de activacio y desactivacion, y por lo tanto, necesitamos
-	// que se ejecute el tick de este componente.
-	//IPhysics::activate();
-
 	// Activamos todos los shapes del componente por completo en PhysX
 	// Para ello, obtenemos todos sus shapes y ponemos los flags a true
 
@@ -386,4 +374,6 @@ void CPhysicEntity::activateSimulation() {
 		// Esta shape entrara dentro de la simulacion de fisicas
 		actorShapes[i]->setFlag(PxShapeFlag::eSIMULATION_SHAPE , true);
 	}
+
+	delete [] actorShapes;
 }
