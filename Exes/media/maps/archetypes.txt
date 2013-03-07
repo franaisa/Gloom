@@ -1,5 +1,33 @@
 Map = {
 
+		
+	SpotLight = {
+		type = "SpotLight",
+		position = {10.0,10.0,10.0},
+		direction = {0.0,-1.0,0.0},
+		castShadows = true,
+		colour = {1.0,1.0,1.0},
+		specularColour = {0.0,0.0,0.0},
+		intensity = 1500 ;
+	},
+	DirectionalLight = {
+		type = "DirectionalLight",
+		position = {0.0,10.0,0.0},
+		direction = {0.0,-1.0,0.0},
+		castShadows = true,
+		colour = {1.0,1.0,1.0},
+		specularColour = {0.0,0.0,0.0},
+		intensity = 1500 ;
+	},
+	PointLight = {
+		type = "PointLight",
+		position = {0.0,10.0,0.0},
+		castShadows = true,
+		colour = {1.0,1.0,1.0},
+		specularColour = {0.0,0.0,0.0},
+		intensity = 1500 ;
+	},	
+	
 	World = {
 		type = "World",
 		position = {0, 0, 0},
@@ -559,32 +587,6 @@ Map = {
 		explotionDamage = 15,
 		explotionTime = 1,
 	},
-	
-	SpotLight = {
-		type = "SpotLight",
-		position = {0.0,0.0,0.0},
-		direction = {0.0,-1.0,0.0},
-		castShadows = true,
-		colour = {1.0,1.0,1.0},
-		specularColour = {0.0,0.0,0.0},
-		intensity = 50;
-	},
-	DirectionalLight = {
-		type = "DirectionalLight",
-		position = {0.0,0.0,0.0},
-		direction = {0.0,-1.0,0.0},
-		castShadows = true,
-		colour = {1.0,1.0,1.0},
-		specularColour = {0.0,0.0,0.0},
-		intensity = 50;
-	},
-	PointLight = {
-		type = "PointLight",
-		position = {0.0,0.0,0.0},
-		castShadows = true,
-		colour = {1.0,1.0,1.0},
-		specularColour = {0.0,0.0,0.0},
-		intensity = 50;
-	},	
+
 	
 }

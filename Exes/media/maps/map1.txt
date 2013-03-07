@@ -1,4 +1,16 @@
 Map = {
+	SpotLight1 = {
+		type = "SpotLight",
+
+	},
+	DirectionalLight1 = {
+		type = "DirectionalLight",
+	},
+	PointLight1 = {
+		type = "PointLight",
+		position = {67.0, 10.0, -42.0},
+		intensity = 500,
+	},
 	World = {
 		type = "World",
 	},
@@ -274,17 +286,5 @@ Map = {
 	Camera = {
 		type = "Camera",
 		height = 8,
-	},
-	SpotLight1 = {
-		type = "SpotLight",
-
-	},
-	DirectionalLight1 = {
-		type = "DirectionalLight",
-	},
-	PointLight1 = {
-		type = "PointLight",
-		position = {67.0, 10.0, -42.0},
-		intensity = 500,
 	},
 }

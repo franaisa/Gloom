@@ -44,7 +44,7 @@ namespace Graphics
 	*/
 	class CLight{
 	public:
-		CLight(): _node(NULL), _light(NULL) {}
+		CLight():_light(NULL) {}
 		~CLight();
 		/**
 		Método que crea una luz direccional en la posición dada, que mira en la
@@ -72,10 +72,6 @@ namespace Graphics
 		*/
 		bool createSpotlLight(std::string name, Vector3 position, Vector3 direction);
 
-		/**
-		Método que destruye la luz y la elimina de la escena
-		*/
-		bool destroyLight();
 		/**
 		Método controla las sombras que castea la luz.
 		@param enabled indica si las sombras se activan o se desactivan
@@ -121,19 +117,11 @@ namespace Graphics
 		Método que setea la fuerza de la luz
 		@param intensiy la fuerza emisora de la luz.
 		*/
-		void setIntensity(float intensiy){_light->setPowerScale(intensiy);}
-
-		/**
-		Método que mete la luz en la escena de ogre para que se pueda visualizar en el mapa
-		*/
-		void attachToScene();
-
+		void setIntensity(float intensity){_light->setPowerScale(intensity);}
 	
 
 	protected:
 		Ogre::Light* _light;
-
-		Ogre::SceneNode * _node;
 	};
 
 }
