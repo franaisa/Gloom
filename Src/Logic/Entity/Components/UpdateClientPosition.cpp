@@ -20,7 +20,8 @@ namespace Logic
 {
 	IMP_FACTORY(CUpdateClientPosition);
 
-	//---------------------------------------------------------
+	//________________________________________________________________________
+
 	void CUpdateClientPosition::tick(unsigned int msecs) {
 		IComponent::tick(msecs);
 		
@@ -36,7 +37,8 @@ namespace Logic
 		_timer += msecs;
 	} // tick
 
-	//---------------------------------------------------------
+	//________________________________________________________________________
+
 	bool CUpdateClientPosition::spawn(CEntity *entity, CMap *map, const Map::CEntity *entityInfo) {
 		if(!IComponent::spawn(entity,map,entityInfo))
 			return false;

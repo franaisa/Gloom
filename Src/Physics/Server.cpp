@@ -308,6 +308,7 @@ void CServer::createScene () {
 
 	_scene->setFlag(PxSceneFlag::eENABLE_KINEMATIC_PAIRS, true);
 	_scene->setFlag(PxSceneFlag::eENABLE_KINEMATIC_STATIC_PAIRS, true);
+	setGroupCollisions(1, 4, false);
 }
 
 //--------------------------------------------------------
