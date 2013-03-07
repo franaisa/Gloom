@@ -2,6 +2,7 @@
 @file Interpolation.cpp
 
 @author Francisco Aisa García
+@author Ruben Mulero Guerrero
 @date Febrero, 2013
 */
 
@@ -122,10 +123,12 @@ namespace Logic  {
 		{
 		case Message::SYNC_POSITION:
 			{
+			CMessageSyncPosition* syncMsg = static_cast<CMessageSyncPosition*>(message);
+
 			// nos guardamos la posi que nos han dado por si tenemos que interpolar
-			_serverPos = ((CMessageSyncPosition*)message)->getTransform();
+			_serverPos = syncMsg->getTransform();
 			//calculo el ping que tengo ahora mismo
-			_actualPing = ((CMessageSyncPosition*)message)->getTime();
+			_actualPing = syncMsg->getTime();
 			_actualPing = clock()+Logic::CServer::getSingletonPtr()->getDiffTime()-_actualPing;
 			//calculamos la interpolacion
 			calculateInterpolation();
