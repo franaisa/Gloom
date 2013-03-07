@@ -70,7 +70,7 @@ namespace Logic  {
 			direction = direction.normalisedCopy();
 		
 			//calculamos el movimiento que debe hacer el monigote, mucho mas lento del que debe hacer de normal
-			direction = direction*_speed/2;
+			direction = direction*_speed;
 			Vector3 newPos = _entity->getPosition()+direction;
 			//vemos a ver si hemos recorrido más de lo que deberíamos, y actuamos en consecuencia
 			if(direction.length() > distance){
