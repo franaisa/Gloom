@@ -17,7 +17,9 @@ Contiene la implementación del componente que controla la vida de una entidad.
 #include "Map/MapEntity.h"
 #include "Application/BaseApplication.h"
 #include "Graphics/Light.h"
-
+#include "Graphics/Scene.h"
+#include "Graphics/Server.h"
+#include <OgreSceneManager.h>
 #include "Logic/Server.h"
 
 namespace Logic 
@@ -48,22 +50,11 @@ namespace Logic
 
 		if(entityInfo->hasAttribute("castShadows"))
 			_light->setCastShadows(entityInfo->getBoolAttribute("castShadows"));
-		
+
 		if(entityInfo->hasAttribute("colour")){
 			Vector3 colour = entityInfo->getVector3Attribute("colour");
 			_light->setColour(colour.x, colour.y, colour.z);
 		}
-		
-		if(entityInfo->hasAttribute("specularColour")){
-			Vector3 specularColour = entityInfo->getVector3Attribute("specularColour");
-			_light->setColour(specularColour.x, specularColour.y, specularColour.z);
-		}
-
-		if(entityInfo->hasAttribute("intensity"))
-			_light->setIntensity(entityInfo->getFloatAttribute("intensity"));
-
-		_light->attachToScene();
-
 		return true;
 
 	} // spawn

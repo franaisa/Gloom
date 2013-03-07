@@ -95,6 +95,7 @@ namespace Logic
 			message->getMessageType() == Message::STOP_ANIMATION			||
 			message->getMessageType() == Message::CHANGE_WEAPON_GRAPHICS	|| 
 			message->getMessageType() == Message::PLAYER_DEAD				||
+			message->getMessageType() == Message::DAMAGED					||
 			message->getMessageType() == Message::HUD_SPAWN;
 
 	} // accept
