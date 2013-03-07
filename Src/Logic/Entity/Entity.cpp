@@ -52,14 +52,16 @@ namespace Logic
 	//---------------------------------------------------------
 
 	bool CEntity::dynamicSpawn(CMap* map, Map::CEntity* entityInfo) {
+		Map::CEntity* newEntityInfo = entityInfo->clone(); 
+		
 		int entityId = getEntityID();
 		std::ostringstream convert;
 		convert << entityId;
 		std::string nameId = convert.str();
 
-		entityInfo->setName(entityInfo->getStringAttribute("name") + nameId);
+		newEntityInfo->setName(entityInfo->getStringAttribute("name") + nameId);
 
-		return spawn(map, entityInfo);
+		return spawn(map, newEntityInfo);
 	}
 
 	//---------------------------------------------------------
