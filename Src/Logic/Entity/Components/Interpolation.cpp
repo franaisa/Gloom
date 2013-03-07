@@ -36,10 +36,10 @@ namespace Logic  {
 			_speed = entityInfo->getFloatAttribute("speed");
 		// Indicar parametros de interpolacion (ñapeado de momento)
 		_interpolating = false;
-		_maxDistance = 5;
-		_minDistance = 1;
+		_maxDistance = 15;
+		_minDistance = 1.5f;
 		_minYaw = 1;
-		_maxYaw = 2;
+		_maxYaw = 2.5f;
 		_yawDifference = 0;
 		_rotationSpeed = 0.2;
 		return true;
@@ -69,7 +69,7 @@ namespace Logic  {
 			direction = direction.normalisedCopy();
 		
 			//calculamos el movimiento que debe hacer el monigote, mucho mas lento del que debe hacer de normal
-			direction = direction*_speed/3;
+			direction = direction*_speed/2;
 			Vector3 newPos = _entity->getPosition()+direction;
 			//vemos a ver si hemos recorrido más de lo que deberíamos, y actuamos en consecuencia
 			if(direction.length() > distance){
