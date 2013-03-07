@@ -285,7 +285,7 @@ namespace Logic
 
 	//---------------------------------------------------------
 
-	Logic::CEntity* CEntityFactory::createEntityWithTimeOut(Map::CEntity *entityInfo, CMap *map, unsigned int msecs) {
+	Logic::CEntity* CEntityFactory::createEntityTimeOut(Map::CEntity *entityInfo, CMap *map, unsigned int msecs) {
 		CEntity* createdEntity = createEntity(entityInfo, map);
 		deferredDeleteEntity(createdEntity , msecs);
 		return createdEntity;
@@ -360,7 +360,6 @@ namespace Logic
 
 	} // deleteDefferedObjects
 
-	//---------------------------------------------------------
 
 	Map::CEntity * CEntityFactory::getInfo(std::string type){
 		std::map<std::string,Map::CEntity *>::const_iterator it = _archetypes.find(type);
