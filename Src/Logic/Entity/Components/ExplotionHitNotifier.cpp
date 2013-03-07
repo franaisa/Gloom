@@ -66,7 +66,7 @@ namespace Logic {
 		CMessageDamaged* msg = new CMessageDamaged();
 		msg->setDamage( _explotionDamage );
 		msg->setEnemy(_owner);
-		//entity->emitMessage(msg);
+		entity->emitMessage(msg);
 	}
 
 	//________________________________________________________________________
