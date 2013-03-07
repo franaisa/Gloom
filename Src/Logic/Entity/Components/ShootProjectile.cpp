@@ -23,7 +23,7 @@ namespace Logic {
 		aux << "weapon" << _nameWeapon;	////!!!! Aqui debes de poner el nombre del arma que leera en el map.txt
 		std::string weapon = aux.str();
 
-		_projectileRadius = entityInfo->getFloatAttribute(weapon+"ProjectileRadius");
+		_projectileRadius = entityInfo->getFloatAttribute(weapon + "ProjectileRadius");
 
 		return true;
 	}

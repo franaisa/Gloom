@@ -138,6 +138,9 @@ namespace Logic {
 
 		/** Direccion del misil en todo momento */
 		Vector3 _direction;
+
+		float _rocketSpeed;
+
 	}; // class CRocketController
 
 	REG_FACTORY(CRocketController);

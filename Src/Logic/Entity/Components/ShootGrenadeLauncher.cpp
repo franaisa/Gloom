@@ -34,7 +34,7 @@ namespace Logic {
 		aux << "weapon" << _nameWeapon;
 		std::string weapon = aux.str();
 
-		_shootForce = entityInfo->getFloatAttribute(weapon+"ShootForce");
+		_shootForce = entityInfo->getFloatAttribute(weapon + "ShootForce");
 
 		return true;
 	}
