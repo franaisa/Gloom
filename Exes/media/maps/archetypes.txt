@@ -564,6 +564,7 @@ Map = {
 	Rocket = {
 		type = "Rocket",
 		model = "mine.mesh",
+		rocketSpeed = 0.30,
 		physic_entity = "rigid",
 		physic_trigger = false,
 		physic_type = "kinematic",

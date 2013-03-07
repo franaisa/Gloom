@@ -33,7 +33,7 @@ namespace Logic {
 		// Movemos el cohete
 		// Mensaje para situar el collider fisico de la granada en la posicion de disparo.
 		Logic::CMessageKinematicMove* msg = new Logic::CMessageKinematicMove();
-		Vector3 direction= _direction*msecs*0.10;//velocidad a poner parametrizable
+		Vector3 direction= _direction*msecs*_rocketSpeed;//velocidad a poner parametrizable
 		msg->setMovement(direction);
 		_entity->emitMessage(msg);
 
@@ -42,8 +42,9 @@ namespace Logic {
 	//________________________________________________________________________
 
 	bool CRocketController::spawn(CEntity *entity, CMap *map, const Map::CEntity *entityInfo) {
-		if(!IComponent::spawn(entity,map,entityInfo))
-			return false;
+		if(!IComponent::spawn(entity,map,entityInfo)) return false;
+			
+		_rocketSpeed = entityInfo->getFloatAttribute("rocketSpeed");
 
 		return true;
 	} // spawn
