@@ -285,7 +285,7 @@ namespace Logic
 
 	//---------------------------------------------------------
 
-	Logic::CEntity* CEntityFactory::createEntityTimeOut(Map::CEntity *entityInfo, CMap *map, unsigned int msecs) {
+	Logic::CEntity* CEntityFactory::createEntityWithTimeOut(Map::CEntity *entityInfo, CMap *map, unsigned int msecs) {
 		CEntity* createdEntity = createEntity(entityInfo, map);
 		deferredDeleteEntity(createdEntity , msecs);
 		return createdEntity;
