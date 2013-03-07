@@ -67,6 +67,10 @@ namespace Logic  {
 			direction = direction - _entity->getPosition();
 			direction = direction * Vector3(1,0,1);
 			float distance = direction.length();
+			float myDistance = distance * _actualPing/CLOCKS_PER_SEC;
+			//seteo la distancia real
+			distance = distance-myDistance;
+
 			direction = direction.normalisedCopy();
 		
 			//calculamos el movimiento que debe hacer el monigote, mucho mas lento del que debe hacer de normal
@@ -132,6 +136,7 @@ namespace Logic  {
 			_actualPing = clock()+Logic::CServer::getSingletonPtr()->getDiffTime()-_actualPing;
 			//calculamos la interpolacion
 			calculateInterpolation();
+
 			break;
 			}
 		case Message::CONTROL:
@@ -202,6 +207,7 @@ namespace Logic  {
 		Vector3 newPos = _serverPos.getTrans();
 		//nueva posi = (old posi + direcion*orientacion)*velocidad
 		newPos+=_serverDirection*_speed*Math::getDirection(_serverPos);
+		std::cout << Math::getDirection(_serverPos) << std::endl;
 		_serverPos.setTrans(newPos);
 	}
 
@@ -218,7 +224,7 @@ namespace Logic  {
 		float myDistance = direction.length() * _actualPing/CLOCKS_PER_SEC;
 		//seteo la distancia real
 		distance = distance-myDistance;
-		std::cout << "distancia a la que esta" << _entity->getName() << " " << distance << std::endl;
+		std::cout << "distancia a la que esta" << _entity->getName() << " " << distance << "con ping " << _actualPing << "ms" << std::endl;
 		//si la distancia es mayor de maxDistance .. set transform por cojones
 		if(distance > _maxDistance){
 			_entity->getComponent<CPhysicController>("CPhysicController")->setPhysicPosition(_serverPos.getTrans());
