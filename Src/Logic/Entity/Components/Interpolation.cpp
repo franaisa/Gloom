@@ -37,7 +37,7 @@ namespace Logic  {
 		// Indicar parametros de interpolacion (ñapeado de momento)
 		_interpolating = false;
 		_maxDistance = 15;
-		_minDistance = 1.5f;
+		_minDistance = 0.5f;
 		_minYaw = 1;
 		_maxYaw = 2.5f;
 		_yawDifference = 0;
