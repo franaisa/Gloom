@@ -14,6 +14,7 @@ Contiene la implementación del componente que gestiona el spawn del jugador.
 #include "Map/MapEntity.h"
 #include "PhysicController.h"
 #include "Logic/Maps/Map.h"
+#include "Logic/Entity/Components/PhysicEntity.h"
 #include "Logic/Server.h"
 #include "Logic/GameSpawnManager.h"
 #include "PhysicController.h"
@@ -98,6 +99,11 @@ namespace Logic
 				Vector3 spawn = CServer::getSingletonPtr()->getSpawnManager()->getSpawnPosition();
 				//Volvemos a activar todos los componentes para que la fisica pueda recibir el mensaje de spawn
 				_entity->activate();
+
+				//CPhysicEntity* physicEntityComponent = _entity->getComponent<CPhysicEntity>("CPhysicEntity");
+				//assert(physicEntityComponent != NULL);
+				//physicEntityComponent->activateSimulation();
+
 				//Ponemos la entidad física en la posición instantaneamente ( no se puede permitir el envio de mensajes )
 				_entity->getComponent<CPhysicController>("CPhysicController")->setPhysicPosition(spawn);
 				//Establecemos la orientación adecuada segun la devolución del manager de spawn
@@ -122,6 +128,11 @@ namespace Logic
 			except->push_back(new std::string("CSpawnPlayer"));
 			except->push_back(new std::string("CHudOverlay"));
 			except->push_back(new std::string("CNetConnector"));
+
+			//CPhysicEntity* physicEntityComponent = _entity->getComponent<CPhysicEntity>("CPhysicEntity");
+			//assert(physicEntityComponent != NULL);
+			//physicEntityComponent->deactivateSimulation();
+
 			_entity->deactivateAllComponentsExcept(except);
 			_isDead=true;
 			//Liberando memoria

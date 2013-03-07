@@ -180,7 +180,6 @@ namespace Logic {
 		Logic::CEntityFactory::getSingletonPtr()->deleteDefferedEntities();
 
 		_map->tick(msecs);
-
 	} // tick
 
 } // namespace Logic

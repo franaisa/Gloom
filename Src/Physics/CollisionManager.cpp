@@ -35,6 +35,7 @@ CCollisionManager::~CCollisionManager() {
 
 //--------------------------------------------------
 
+// Para que se dispare tiene que estar contemplado en el filtro
 void CCollisionManager::onConstraintBreak(PxConstraintInfo *constraints, PxU32 count) {
 	// Por ahora ignoramos estos mensajes	
 }
@@ -59,6 +60,9 @@ void CCollisionManager::onContact(const PxContactPairHeader &pairHeader, const P
 	// metodos correspondientes de IPhysics
 	for(PxU32 i =0 ; i < nbPairs; ++i) {
 		const PxContactPair& cp = pairs[i];
+
+		if( cp.flags & (PxContactPairFlag::eDELETED_SHAPE_0 | PxContactPairFlag::eDELETED_SHAPE_0) )
+			continue;
 
 		// eNOTIFY_TOUCH_FOUND es un flag para indicar que los shapes acaban de empezar a estar en contacto
 		// de momento solo necesitamos saber cuando colisionan dos shapes. En un futuro
@@ -86,7 +90,7 @@ void CCollisionManager::onTrigger(PxTriggerPair *pairs, PxU32 count) {
 	for (unsigned int i = 0; i < count; ++i) {
 		
 		// Ignoramos los pares en los que alguna de las shapes (del trigger o de la otra entidad) ha sido borrada
-		if (pairs[i].flags & (PxTriggerPairFlag::eDELETED_SHAPE_TRIGGER | PxTriggerPairFlag::eDELETED_SHAPE_OTHER))
+		if( pairs[i].flags & (PxTriggerPairFlag::eDELETED_SHAPE_TRIGGER | PxTriggerPairFlag::eDELETED_SHAPE_OTHER) )
 			continue;
 
 		// Comprobamos si estamos saliendo o entrando en el trigger

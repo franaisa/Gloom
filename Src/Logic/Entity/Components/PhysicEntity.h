@@ -111,15 +111,15 @@ namespace Logic
 		virtual void onContact (IPhysics *otherComponent);
 
 		//Metodo que devuelve el booleano _inTrigger que nos indica si hay alguien dentro del trigger
-		bool getInTrigger(){return _inTrigger;};
+		bool getInTrigger(){ return _inTrigger; };
 
 		void setPhysicPosition(const Vector3 &position, bool makeConversionToLogicWorld);
 
 		void addImpulsiveForce(const Vector3& force);
 
-		virtual void deactivate();
+		void deactivateSimulation();
 
-		virtual void activate();
+		void activateSimulation();
 
 	private:
 

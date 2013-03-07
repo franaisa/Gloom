@@ -79,7 +79,7 @@ namespace Logic {
 		// Obtenemos la informacion asociada al arquetipo de la explosion del cohete
 		Map::CEntity *entityInfo = CEntityFactory::getSingletonPtr()->getInfo("Explotion");
 		// Creamos la entidad y la activamos
-		CEntity* rocketExplotion = CEntityFactory::getSingletonPtr()->createEntity( entityInfo, Logic::CServer::getSingletonPtr()->getMap() );
+		CEntity* rocketExplotion = CEntityFactory::getSingletonPtr()->createEntityWithTimeOut(entityInfo, Logic::CServer::getSingletonPtr()->getMap(), 200);
 		rocketExplotion->activate();
 
 		// Enviamos el mensaje para situar a la explosion en el punto en el que estaba el cohete

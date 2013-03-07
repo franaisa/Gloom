@@ -111,7 +111,6 @@ namespace Graphics
 	_sceneMgr->setAmbientLight(Ogre::ColourValue(1,1,1));
     _sceneMgr->setShadowTechnique(Ogre::SHADOWTYPE_STENCIL_ADDITIVE);
 
-
 	} // activate
 
 	//--------------------------------------------------------

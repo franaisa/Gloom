@@ -37,23 +37,13 @@ namespace Logic {
 
 
 		/** Constructor por defecto; en la clase base no hace nada. */
-		CExplotionHitNotifier() : IComponent(), _timer(0) { }
+		CExplotionHitNotifier() : IComponent() { }
 
 
 		// =======================================================================
 		//                    METODOS HEREDADOS DE ICOMPONENT
 		// =======================================================================
 
-
-		/**
-		Método llamado en cada frame que controla el timer para la creacion de la
-		explosion.
-
-		@param msecs Milisegundos transcurridos desde el último tick.
-		*/
-		virtual void tick(unsigned int msecs);
-
-		//________________________________________________________________________
 
 		/**
 		Inicialización del componente utilizando la información extraída de
@@ -128,10 +118,6 @@ namespace Logic {
 
 		/** Entidad que ha disparado la granada. */
 		CEntity* _owner;
-
-		unsigned int _explotionTimeOut;
-
-		unsigned int _timer;
 
 	}; // class CExplotionHitNotifier
 
