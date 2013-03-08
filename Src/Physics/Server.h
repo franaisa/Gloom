@@ -48,6 +48,7 @@ namespace physx {
 	class PxRigidStatic;
 	class PxScene;
 	class PxRigidBody;
+	class PxControllerBehaviorCallback;
 
 	namespace pxtask {
 		class CudaContextManager;
@@ -306,8 +307,7 @@ namespace Physics {
 		@return character controller creado
 		*/
 		physx::PxCapsuleController* createCapsuleController(const Vector3 &position, int group, const std::vector<int>& groupList, float radius, 
-															float height, 
-															const Logic::CPhysicController *component);
+															float height, const Logic::CPhysicController *component);
 
 
 		/**

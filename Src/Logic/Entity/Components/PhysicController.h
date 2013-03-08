@@ -114,13 +114,13 @@ namespace Logic
 		*/
 		void onControllerHit (const physx::PxControllersHit &hit);
 
-		void readCollisionGroupInfo(const Map::CEntity *entityInfo, int& group, std::vector<int>& groupList);
-
 		void activateSimulation();
 
 		void deactivateSimulation();
 
 	private:
+
+		void readCollisionGroupInfo(const Map::CEntity *entityInfo, int& group, std::vector<int>& groupList);
 
 		/**
 		Crea el character controller de PhysX que representa la entidad física a partir de la
