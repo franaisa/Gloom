@@ -285,6 +285,6 @@ Map = {
 	PointLight1 = {
 		type = "PointLight",
 		position = {67.0, 10.0, -42.0},
-		intensity = 500,
+		intensity = 5,
 	},
 }

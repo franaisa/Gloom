@@ -34,10 +34,10 @@ namespace Graphics{
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 
-		bool CLight::createPointLight(std::string name, Vector3 position){
+		bool CLight::createPointLight(CScene* scene, std::string name, Vector3 position){
 		if(_node)
 			return false;
-		_light = CServer::getSingletonPtr()->getActiveScene()->getSceneMgr()->createLight(name);
+		_light = scene->getSceneMgr()->createLight(name);
 		_light->setPosition(position);
 		_light->setType(Ogre::Light::LT_POINT);
 		return true;

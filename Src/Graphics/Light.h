@@ -63,7 +63,7 @@ namespace Graphics
 		@param direction Dirección en la que mira la luz que se crea
 		@return true si todo fue bien, false en caso contrario
 		*/
-		bool createPointLight(std::string name, Vector3 position);
+		bool createPointLight(CScene* scene, std::string name, Vector3 position);
 		/**
 		Método que crea una luz local en la posición dada.
 		@param name El nombre de la luz que se va a crear

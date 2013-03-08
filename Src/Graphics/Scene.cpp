@@ -17,6 +17,7 @@ de una escena.
 #include "Particle.h"
 #include "Scene.h"
 #include "Camera.h"
+#include "Light.h"
 #include "Server.h"
 #include "StaticEntity.h"
 #include "BaseSubsystems/Server.h"
@@ -113,7 +114,16 @@ namespace Graphics
 		/*
 		_sceneMgr->setAmbientLight(Ogre::ColourValue(.9f,.9f,.9f));
 		/*/
-		_sceneMgr->setAmbientLight(Ogre::ColourValue(1,1,1));
+		_sceneMgr->setAmbientLight(Ogre::ColourValue(0,0,0));
+	/*	CLight* _light = new CLight();
+		_light->createPointLight(this,"l",Vector3(67.0, 10.0, -42.0));
+		_light->setCastShadows(true);
+		
+			_light->setColour(1,1,1);
+		
+			_light->setColour(0,0,0);
+
+			_light->setIntensity(500);
 		/* */
 
 	} // activate
