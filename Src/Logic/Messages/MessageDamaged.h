@@ -9,8 +9,8 @@ namespace Logic {
 	DEC_FACTORYMESSAGE(CMessageDamaged);
 	public:
 		CMessageDamaged();
-		unsigned char getDamage();
-		void setDamage(unsigned char damage);
+		float getDamage();
+		void setDamage(float damage);
 		CEntity* getEnemy();
 		void setEnemy(CEntity* entity);
 		~CMessageDamaged(){};
@@ -18,7 +18,7 @@ namespace Logic {
 		virtual Net::CBuffer* serialize();
 		virtual void deserialize(Net::CBuffer& buffer);
 	private:
-		unsigned char _damage;
+		float _damage;
 		CEntity* _entity;
 	};
 	REG_FACTORYMESSAGE(CMessageDamaged);

@@ -377,6 +377,8 @@ namespace Physics {
 		 */
 		Logic::CEntity* raycastClosestInverse (const Ray& ray, float maxDist, unsigned int id) const; 
 
+		void overlapExplotion(const Vector3& position, float explotionRadius, Logic::CEntity** & entitiesHit, int& nbHits);
+
 		void addImpulsiveForce( physx::PxRigidDynamic* actor, const Vector3& force ); 
 
 	private:

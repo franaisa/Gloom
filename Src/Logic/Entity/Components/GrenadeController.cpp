@@ -9,16 +9,18 @@
 
 #include "GrenadeController.h"
 
+#include "Physics/Server.h"
+
 #include "Logic/Maps/EntityFactory.h"
 #include "Logic/Entity/Entity.h"
 #include "Logic/Server.h"
 #include "Logic/GameNetMsgManager.h"
 
-#include "Logic/Entity/Components/ExplotionHitNotifier.h"
-#include "Logic/Entity/Components/PhysicEntity.h"
+#include "Logic/Entity/Components/Graphics.h"
 
 #include "Logic/Messages/MessageSetPhysicPosition.h"
 #include "Logic/Messages/MessageContactEnter.h"
+#include "Logic/Messages/MessageDamaged.h"
 
 namespace Logic {
 	
@@ -53,6 +55,9 @@ namespace Logic {
 			_explotionTime = entityInfo->getFloatAttribute("explotionTime") * 1000;
 		}
 
+		_explotionDamage = entityInfo->getFloatAttribute("explotionDamage");
+		_explotionRadius = entityInfo->getFloatAttribute("explotionRadius");
+
 		return true;
 	} // spawn
 
@@ -79,22 +84,38 @@ namespace Logic {
 	//________________________________________________________________________
 
 	void CGrenadeController::createExplotion() {
+		// Hacemos una consulta de overlap para ver si tenemos que mandar
+		// un mensaje de daño
+		CEntity** entitiesHit = NULL;
+		int nbHits = 0;
+		// Hacemos una query de overlap en la posicion en la que se encuentra la granada con el radio
+		// que se indique de explosion
+		Physics::CServer::getSingletonPtr()->overlapExplotion(_entity->getPosition(), _explotionRadius, entitiesHit, nbHits);
+
+		// Mandamos el mensaje de daño a cada una de las entidades que hayamos golpeado
+		for(int i = 0; i < nbHits; ++i) {
+			if(entitiesHit[i] != NULL) {
+				CMessageDamaged* msg = new CMessageDamaged();
+				msg->setDamage( _explotionDamage );
+				msg->setEnemy(_owner);
+				entitiesHit[i]->emitMessage(msg);
+			}
+		}
+
+		if(nbHits > 0) delete [] entitiesHit;
+
 		// Obtenemos la informacion asociada al arquetipo de la explosion de la granada
 		Map::CEntity *entityInfo = CEntityFactory::getSingletonPtr()->getInfo("Explotion");
 		// Creamos la entidad y la activamos
 		CEntity* grenadeExplotion = CEntityFactory::getSingletonPtr()->createEntityWithTimeOut(entityInfo, Logic::CServer::getSingletonPtr()->getMap(), 200);
 		grenadeExplotion->activate();
 
-		// Enviamos el mensaje para situar a la explosion en el punto en el que estaba la granada
-		Logic::CMessageSetPhysicPosition* msg = new Logic::CMessageSetPhysicPosition();
-		msg->setPosition( _entity->getPosition() ); // spawneamos la explosion justo en el centro de la granada
-		msg->setMakeConversion(false);
-		grenadeExplotion->emitMessage(msg);
-
-		// Seteamos la entidad que dispara la granada
-		CExplotionHitNotifier* comp = grenadeExplotion->getComponent<CExplotionHitNotifier>("CExplotionHitNotifier");
-		assert(comp != NULL);
-		comp->setOwner(_owner);
+		// Debido a que la explosion es un mero grafico, situamos la entidad grafica
+		// en el centro de la posicion en la que esta la granada (restando el radio ya
+		// que los graficos tienen el pivote en el pie).
+		CGraphics* graphicComponent = grenadeExplotion->getComponent<CGraphics>("CGraphics");
+		assert(graphicComponent != NULL && "No se puede colocar la explosion porque no tiene componente grafico");
+		graphicComponent->setTransform( _entity->getTransform() );
 	} // createExplotion
 
 	//________________________________________________________________________
