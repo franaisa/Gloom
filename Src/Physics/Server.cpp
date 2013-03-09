@@ -25,6 +25,8 @@ Contiene la implementación del servidor de física.
 #include <extensions\PxVisualDebuggerExt.h> 
 #include <RepX\RepX.h>
 
+#include "Physics/CustomControllerBehavior.h"
+
 using namespace Physics;
 using namespace Logic;
 using namespace physx;
@@ -308,6 +310,7 @@ void CServer::createScene () {
 
 	_scene->setFlag(PxSceneFlag::eENABLE_KINEMATIC_PAIRS, true);
 	_scene->setFlag(PxSceneFlag::eENABLE_KINEMATIC_STATIC_PAIRS, true);
+	setGroupCollisions(1, 4, false);
 }
 
 //--------------------------------------------------------
@@ -658,6 +661,7 @@ PxCapsuleController* CServer::createCapsuleController(const Vector3 &position, i
 	//desc.slopeLimit = 0.707f;
 	desc.callback = _collisionManager;   // Establecer gestor de colisiones
 	desc.userData = (void *) component;  // Anotar el componente lógico asociado al controller
+
 	PxCapsuleController *controller = (PxCapsuleController *)
 		 _controllerManager->createController(*_physics, _scene, desc);
 	

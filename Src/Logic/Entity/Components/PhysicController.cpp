@@ -229,4 +229,38 @@ void CPhysicController::onControllerHit (const PxControllersHit &hit)
 //---------------------------------------------------------
 
 
+void CPhysicController::deactivateSimulation() {
+	// Desactivamos todos los shapes del componente por completo en PhysX
+	// Para ello, obtenemos todos sus shapes y ponemos los flags a false
 
+	int nbShapes = _controller->getActor()->getNbShapes();
+	PxShape** actorShapes = new PxShape* [nbShapes];
+	_controller->getActor()->getShapes(actorShapes, nbShapes);
+	for(int i = 0; i < nbShapes; ++i) {
+		// Esta shape no tomara parte en barridos, raycasts...
+		actorShapes[i]->setFlag(PxShapeFlag::eSCENE_QUERY_SHAPE, false);
+		// Esta shape no entrara dentro de la simulacion de fisicas
+		actorShapes[i]->setFlag(PxShapeFlag::eSIMULATION_SHAPE , false);
+	}
+
+	delete [] actorShapes;
+}
+
+//---------------------------------------------------------
+
+void CPhysicController::activateSimulation() {
+	// Activamos todos los shapes del componente por completo en PhysX
+	// Para ello, obtenemos todos sus shapes y ponemos los flags a true
+
+	int nbShapes = _controller->getActor()->getNbShapes();
+	PxShape** actorShapes = new PxShape* [nbShapes];
+	_controller->getActor()->getShapes(actorShapes, nbShapes);
+	for(int i = 0; i < nbShapes; ++i) {
+		// Esta shape tomara parte en barridos, raycasts...
+		actorShapes[i]->setFlag(PxShapeFlag::eSCENE_QUERY_SHAPE, true);
+		// Esta shape entrara dentro de la simulacion de fisicas
+		actorShapes[i]->setFlag(PxShapeFlag::eSIMULATION_SHAPE , true);
+	}
+
+	delete [] actorShapes;
+}

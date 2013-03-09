@@ -26,17 +26,6 @@ de disparo del lanzacohetes.
 namespace Logic {
 	IMP_FACTORY(CShootRocketLauncher);
 
-	bool CShootRocketLauncher::spawn(CEntity* entity, CMap *map, const Map::CEntity *entityInfo) {
-		if(!CShootProjectile::spawn(entity, map, entityInfo)) return false;
-
-		// Leer los parametros que toquen para los proyectiles
-		std::stringstream aux;
-		aux << "weapon" << _nameWeapon;
-		std::string weapon = aux.str();
-
-		return true;
-	}
-
 	//__________________________________________________________________
 
 	void CShootRocketLauncher::fireWeapon() {

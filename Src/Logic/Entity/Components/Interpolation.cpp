@@ -2,6 +2,7 @@
 @file Interpolation.cpp
 
 @author Francisco Aisa García
+@author Ruben Mulero Guerrero
 @date Febrero, 2013
 */
 
@@ -36,10 +37,10 @@ namespace Logic  {
 			_speed = entityInfo->getFloatAttribute("speed");
 		// Indicar parametros de interpolacion (ñapeado de momento)
 		_interpolating = false;
-		_maxDistance = 5;
-		_minDistance = 1;
+		_maxDistance = 15;
+		_minDistance = 0.5f;
 		_minYaw = 1;
-		_maxYaw = 2;
+		_maxYaw = 2.5f;
 		_yawDifference = 0;
 		_rotationSpeed = 0.2;
 		return true;
@@ -66,10 +67,14 @@ namespace Logic  {
 			direction = direction - _entity->getPosition();
 			direction = direction * Vector3(1,0,1);
 			float distance = direction.length();
+			float myDistance = distance * _actualPing/CLOCKS_PER_SEC;
+			//seteo la distancia real
+			distance = distance-myDistance;
+
 			direction = direction.normalisedCopy();
 		
 			//calculamos el movimiento que debe hacer el monigote, mucho mas lento del que debe hacer de normal
-			direction = direction*_speed/3;
+			direction = direction*_speed;
 			Vector3 newPos = _entity->getPosition()+direction;
 			//vemos a ver si hemos recorrido más de lo que deberíamos, y actuamos en consecuencia
 			if(direction.length() > distance){
@@ -122,13 +127,16 @@ namespace Logic  {
 		{
 		case Message::SYNC_POSITION:
 			{
+			CMessageSyncPosition* syncMsg = static_cast<CMessageSyncPosition*>(message);
+
 			// nos guardamos la posi que nos han dado por si tenemos que interpolar
-			_serverPos = ((CMessageSyncPosition*)message)->getTransform();
+			_serverPos = syncMsg->getTransform();
 			//calculo el ping que tengo ahora mismo
-			_actualPing = ((CMessageSyncPosition*)message)->getTime();
+			_actualPing = syncMsg->getTime();
 			_actualPing = clock()+Logic::CServer::getSingletonPtr()->getDiffTime()-_actualPing;
 			//calculamos la interpolacion
 			calculateInterpolation();
+
 			break;
 			}
 		case Message::CONTROL:
@@ -199,6 +207,7 @@ namespace Logic  {
 		Vector3 newPos = _serverPos.getTrans();
 		//nueva posi = (old posi + direcion*orientacion)*velocidad
 		newPos+=_serverDirection*_speed*Math::getDirection(_serverPos);
+		std::cout << Math::getDirection(_serverPos) << std::endl;
 		_serverPos.setTrans(newPos);
 	}
 
@@ -215,7 +224,7 @@ namespace Logic  {
 		float myDistance = direction.length() * _actualPing/CLOCKS_PER_SEC;
 		//seteo la distancia real
 		distance = distance-myDistance;
-		
+		std::cout << "distancia a la que esta" << _entity->getName() << " " << distance << "con ping " << _actualPing << "ms" << std::endl;
 		//si la distancia es mayor de maxDistance .. set transform por cojones
 		if(distance > _maxDistance){
 			_entity->getComponent<CPhysicController>("CPhysicController")->setPhysicPosition(_serverPos.getTrans());

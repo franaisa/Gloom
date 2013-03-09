@@ -44,7 +44,7 @@ namespace Graphics
 	*/
 	class CLight{
 	public:
-		CLight(): _node(NULL), _light(NULL) {}
+		CLight():_light(NULL) {}
 		~CLight();
 		/**
 		Método que crea una luz direccional en la posición dada, que mira en la
@@ -54,7 +54,7 @@ namespace Graphics
 		@param direction Dirección en la que mira la luz que se crea
 		@return true si todo fue bien, false en caso contrario
 		*/
-		bool createDirectionalLight(std::string name, Vector3 position, Vector3 direction);
+		bool createDirectionalLight(CScene* scene, std::string name, Vector3 position, Vector3 direction);
 		/**
 		Método que crea una luz puntual en la posición dada, que mira en la
 		dirección que se le indica como parámetro
@@ -70,12 +70,8 @@ namespace Graphics
 		@param position la posición de la escena donde se va a crear la luz
 		@return true si todo fue bien, false en caso contrario
 		*/
-		bool createSpotlLight(std::string name, Vector3 position, Vector3 direction);
+		bool createSpotlLight(CScene* scene, std::string name, Vector3 position, Vector3 direction);
 
-		/**
-		Método que destruye la luz y la elimina de la escena
-		*/
-		bool destroyLight();
 		/**
 		Método controla las sombras que castea la luz.
 		@param enabled indica si las sombras se activan o se desactivan
@@ -121,19 +117,17 @@ namespace Graphics
 		Método que setea la fuerza de la luz
 		@param intensiy la fuerza emisora de la luz.
 		*/
-		void setIntensity(float intensiy){_light->setPowerScale(intensiy);}
+		void setIntensity(float intensity){_light->setPowerScale(intensity);}
 
 		/**
-		Método que mete la luz en la escena de ogre para que se pueda visualizar en el mapa
+		Método que setea el angulo de salida de un Sporlight y en angulo Maximo.
+		@pamam innerAngle angulo de salida del SpotLight
+		@pamam outerAngle angulo de salida del SpotLight
 		*/
-		void attachToScene();
-
-	
+		void setRange(float innerAngle, float outerAngle){_light->setSpotlightRange(Ogre::Radian(innerAngle), Ogre::Radian(outerAngle));}	
 
 	protected:
 		Ogre::Light* _light;
-
-		Ogre::SceneNode * _node;
 	};
 
 }

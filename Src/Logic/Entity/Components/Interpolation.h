@@ -6,6 +6,7 @@ del movimiento cuando el servidor nos informa de la posicion que deberiamos
 tener.
 
 @author Francisco Aisa García
+@author Ruben Mulero Guerrero
 @date Febrero, 2013
 */
 
@@ -62,11 +63,10 @@ namespace Logic  {
 
 		//________________________________________________________________________
 
-		/**
-		Tick de reloj del componente
-		*/
+		/** Tick de reloj del componente. */
 		virtual void tick();
 
+		//________________________________________________________________________
 
 		/** 
 		Este componente acepta los siguientes mensajes:
@@ -90,62 +90,93 @@ namespace Logic  {
 		*/
 		virtual void process(CMessage *message);
 
+
+		// =======================================================================
+		//                            METODOS PROPIOS
+		// =======================================================================
+
+
 		/**
-		Método que mueve el punto del servidor para que esté actualizado
+		Método que mueve el punto del servidor para que esté actualizado.
 		*/
 		void moveServerPos();
+
+		//________________________________________________________________________
+
 		/**
-		calcula si hay que hacer interpolación, o mueve al player si la distancia es
-		muy grande
+		Calcula si hay que hacer interpolación, o mueve al player si la distancia es
+		muy grande.
 		*/
 		void calculateInterpolation();
 
 	private:
+
+
+		// =======================================================================
+		//                            MIEMBROS PRIVADOS
+		// =======================================================================
+
+
 		/**
 		Posición que el servidor me ha dicho que es donde debo estar
 		*/
 		Matrix4 _serverPos;
+
+
 		float _yawDifference;
+
 		/**
 		distancia maxima a la que interpolo poco a poco
 		*/
+
 		float _maxDistance;
+
 		/**
 		distancia minima a la que interpolo poco a poco
 		*/
 		float _minDistance;
+
 		/**
 		minima diferencia de yaw que puede haber entre servidor y cliente
 		*/
 		float _minYaw;
+
 		/**
 		maxima diferencia de yaw que puede haber entre servidor y cliente
 		*/
 		float _maxYaw;
+
 		/**
 		minima diferencia de pitch que puede haber entre servidor y cliente
 		*/
 		float _minPitch;
+
 		/**
 		maxima diferencia de pitch que puede haber entre servidor y cliente
 		*/
 		float _maxPitch;
+
 		/**
 		Variables de control de interpolación (para no liarla)
 		*/
 		bool _interpolating;
+
 		bool _canInterpolateMove;
+
 		bool _canInterpolateRotation;
+
 		/**
 		variable que indica el ping con el que estamos corrigiendo
 		*/
-		unsigned int _actualPing;
+		float _actualPing;
+
 		/**
 		dirección en la que se está moviendo el server
 		*/
 		Vector3 _serverDirection;
 
 		float _speed;
+
 		float _rotationSpeed;
 	}; // class CInterpolation
 

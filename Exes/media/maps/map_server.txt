@@ -128,7 +128,12 @@ Map = {
 		physic_dimensions = { 4, 7, 4 },
 	},
 	
-	
+	Camera = {
+		type = "Camera",
+		position = {-50.0, 60.0, 48.0},
+		target = {-10.0, 2, -50.0},
+		height = 8,
+	},
 	
 	Point1 = {
 		type = "SpawnPoint",
@@ -160,12 +165,7 @@ Map = {
 		physic_dimensions = { 4, 7, 4 },
 	},
 	
-	Camera = {
-		type = "Camera",
-		position = {-50.0, 60.0, 48.0},
-		target = {-10.0, 2, -50.0},
-		height = 8,
-	},
+
 	
 	Ascensor1T = {
 		type = "ElevatorTrigger",

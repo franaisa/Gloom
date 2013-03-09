@@ -360,7 +360,6 @@ namespace Logic
 
 	} // deleteDefferedObjects
 
-	//---------------------------------------------------------
 
 	Map::CEntity * CEntityFactory::getInfo(std::string type){
 		std::map<std::string,Map::CEntity *>::const_iterator it = _archetypes.find(type);

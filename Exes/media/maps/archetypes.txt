@@ -1,5 +1,7 @@
 Map = {
 
+	
+	
 	World = {
 		type = "World",
 		position = {0, 0, 0},
@@ -31,7 +33,7 @@ Map = {
 		position = {0, 8, 0},
 		msgList= "1,2,6,9,11,14,15,16,17,22,23,24,26",
 		model = "marine.mesh",
-		syncPosTimeStamp = 1,
+		syncPosTimeStamp = 0.03,
 		timeSpawn = 4,
 		life = 12,
 		shield = 0,
@@ -380,6 +382,7 @@ Map = {
 		physic_groupList = "-1",
 		numWeapons = 6,
 		heightShoot = 8,
+		defaultAnimation = "Idle",
 
 			weaponHammerName = "Hammer",
 			weaponHammerModel = "hammer.mesh",
@@ -535,6 +538,7 @@ Map = {
 	Rocket = {
 		type = "Rocket",
 		model = "mine.mesh",
+		rocketSpeed = 0.30,
 		physic_entity = "rigid",
 		physic_trigger = false,
 		physic_type = "kinematic",
@@ -554,37 +558,46 @@ Map = {
 		physic_shape = "sphere",
 		physic_radius = 6,
 		physic_mass = 10,
-		physic_group = 11,
+		physic_group = 4,
 		physic_groupList = "1",
 		explotionDamage = 15,
 		explotionTime = 1,
 	},
-	
+
 	SpotLight = {
 		type = "SpotLight",
-		position = {0.0,0.0,0.0},
+		position = {10.0,10.0,10.0},
 		direction = {0.0,-1.0,0.0},
 		castShadows = true,
 		colour = {1.0,1.0,1.0},
 		specularColour = {0.0,0.0,0.0},
-		intensity = 50;
+		intensity = 1500,
+		innerAngle = 0.8,
+		outerAngle = 1.6,
+		static = true,
+		model = "esfera.mesh",
+		scale = {25,25,25},
 	},
 	DirectionalLight = {
 		type = "DirectionalLight",
-		position = {0.0,0.0,0.0},
+		position = {0.0,10.0,0.0},
 		direction = {0.0,-1.0,0.0},
 		castShadows = true,
 		colour = {1.0,1.0,1.0},
 		specularColour = {0.0,0.0,0.0},
-		intensity = 50;
+		intensity = 1500,
+		static = true,
+		model = "esfera.mesh",
 	},
 	PointLight = {
 		type = "PointLight",
-		position = {0.0,0.0,0.0},
+		position = {0.0,10.0,0.0},
 		castShadows = true,
 		colour = {1.0,1.0,1.0},
 		specularColour = {0.0,0.0,0.0},
-		intensity = 50;
+		intensity = 1500,
+		static = true,
+		model = "esfera.mesh",
 	},	
 	
 }

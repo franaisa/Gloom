@@ -82,6 +82,9 @@ namespace Logic {
 				if(((CMessageControl*)message)->getType()==Control::LEFT_CLICK) {
 					shoot();
 				}
+				if(((CMessageControl*)message)->getType()==Control::RIGHT_CLICK) {
+					printf("\nx: %f, y: %f, z: %f",_entity->getPosition().x, _entity->getPosition().y, _entity->getPosition().z);
+				}
 				break;
 			break;
 		}

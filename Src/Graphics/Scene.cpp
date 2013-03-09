@@ -108,24 +108,15 @@ namespace Graphics
 		_viewport = BaseSubsystems::CServer::getSingletonPtr()->getRenderWindow()
 						->addViewport(_camera->getCamera());
 		_viewport->setBackgroundColour(Ogre::ColourValue::Black);
+
 		
 		_sceneMgr->setShadowTechnique(Ogre::SHADOWTYPE_STENCIL_ADDITIVE);
 		
-		/*
-		_sceneMgr->setAmbientLight(Ogre::ColourValue(.9f,.9f,.9f));
+		//*
+		_sceneMgr->setAmbientLight(Ogre::ColourValue(.2f,.2f,.2f));
 		/*/
 		_sceneMgr->setAmbientLight(Ogre::ColourValue(0,0,0));
-	/*	CLight* _light = new CLight();
-		_light->createPointLight(this,"l",Vector3(67.0, 10.0, -42.0));
-		_light->setCastShadows(true);
-		
-			_light->setColour(1,1,1);
-		
-			_light->setColour(0,0,0);
-
-			_light->setIntensity(500);
 		/* */
-
 	} // activate
 
 	//--------------------------------------------------------
@@ -155,10 +146,13 @@ namespace Graphics
 		TEntityList::const_iterator end = _dynamicEntities.end();
 		for(; it != end; it++)
 			(*it)->tick(secs);
-
+		
 	} // tick
 
 	//--------------------------------------------------------
+
+	void CScene::changeAmbientLight(Vector3 Light){_sceneMgr->setAmbientLight(Ogre::ColourValue(Light.x,Light.y,Light.z));};
+
 
 	void CScene::buildStaticGeometry()
 	{

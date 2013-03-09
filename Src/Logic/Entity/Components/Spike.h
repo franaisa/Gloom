@@ -70,38 +70,43 @@ namespace Logic
 	protected:
 
 		/**
-		Timers que controlan la aparición de los pinchos
+		Timers que controlan la aparición de los pinchos.
 		*/
 		unsigned int _timer;
 		unsigned int _timeToShow;
 		unsigned int _timeToUnshow;
 		
 		/**
-		Booleano que controla si esta activo
+		Booleano que controla si esta activo.
 		*/
 		bool _active;
 
 			/**
-		Posició inicial y final del ascensor.
+		Posició inicial y final del pincho.
 		*/
 		Vector3 _positionInitial;
 		Vector3 _positionFinal;
 
 		/**
-		Controla si vamos hacia la posicion final o no
+		Controla si vamos hacia la posicion final o no.
 		*/
 		bool _toFinal;
 	
 		/**
-		Dirección inicial y final del ascensor.
+		Dirección inicial y final del pincho.
 		*/
 		Vector3 _directionFinal;
 		Vector3 _directionInitial;
 
 		/**
-		Velocidad del ascensor
+		Velocidad del pincho
 		*/
 		float _velocity;
+
+		/**
+		Booleano que controla la espera para no ejecutar instrucciones inutiles.
+		*/
+		bool _wait;
 
 	}; // class CSpike
 
