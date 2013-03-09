@@ -149,6 +149,7 @@ namespace Logic {
 		/** Daño de la explosion. */
 		float _explotionDamage;
 
+
 	}; // class CRocketController
 
 	REG_FACTORY(CRocketController);

@@ -35,10 +35,10 @@ namespace Logic {
 		// Movemos el cohete
 		// Mensaje para situar el collider fisico de la granada en la posicion de disparo.
 		Logic::CMessageKinematicMove* msg = new Logic::CMessageKinematicMove();
-		Vector3 direction= _direction*msecs*_rocketSpeed;//velocidad a poner parametrizable
+		Vector3 direction= _direction*msecs*_rocketSpeed;
 		msg->setMovement(direction);
 		_entity->emitMessage(msg);
-
+	
 	} // tick
 
 	//________________________________________________________________________
