@@ -111,6 +111,8 @@ namespace Logic
 		return _graphicsEntity;
 
 	} // createGraphicsEntity
+
+	//---------------------------------------------------------
 	
 	void CGraphics::setTransform(const Matrix4& transform) {
 		_graphicsEntity->setTransform(transform);

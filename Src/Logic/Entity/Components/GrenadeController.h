@@ -139,6 +139,12 @@ namespace Logic {
 		/** true si la granada a golpeado a un enemigo */
 		bool _enemyHit;
 
+		/** Radio de explosion de la granada. */
+		float _explotionRadius;
+
+		/** Daño de la explosion. */
+		float _explotionDamage;
+
 	}; // class CGrenadeController
 
 	REG_FACTORY(CGrenadeController);

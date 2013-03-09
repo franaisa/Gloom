@@ -23,6 +23,8 @@ el mundo físico usando character controllers.
 #include "Logic/Messages/MessageCealing.h"
 #include "Logic/Messages/MessageSide.h"
 
+#include "AvatarController.h"
+
 #include <PxPhysicsAPI.h>
 
 
@@ -64,7 +66,7 @@ bool CPhysicController::spawn(CEntity* entity, CMap *map, const Map::CEntity *en
 	_controller = createController(entityInfo);
 	// Seteo de _falling a false para que se envie el primer mensaje de actualizacion
 	_falling=false;
-	std::cout << _entity->getPosition() << std::endl;
+	_stop=false;
 	return true;
 }
 
@@ -99,9 +101,21 @@ void CPhysicController::tick(unsigned int msecs)
 	// Llamar al método de la clase padre (IMPORTANTE).
 	IComponent::tick(msecs);
 
+	if(!_stop && _entity->getName().compare("Enemigo1")==0 && _entity->getPosition()==_server->getControllerPosition(_controller)){
+		CAvatarController* avatar = _entity->getComponent<CAvatarController>("CAvatarController");
+		//avatar->deactivate();
+		std::cout << "desactivo el avatar" << std::endl;
+		_stop=true;
+	}
+	if(_entity->getName().compare("Enemigo1")==0 && _server->getControllerPosition(_controller).y>1.7){
+		std::cout << "el enemigo sobrepasa los 1.7" << std::endl;
+	}
+
 	// Actualizar la posición y orientación de la entidad lógica usando la 
 	// información proporcionada por el motor de física	
 	_entity->setPosition(_server->getControllerPosition(_controller));
+
+
 
 	// Intentamos mover el controller a la posición recibida en el último mensaje 
 	// de tipo AVATAR_WALK. 

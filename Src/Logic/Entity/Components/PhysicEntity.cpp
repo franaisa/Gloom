@@ -313,6 +313,7 @@ void CPhysicEntity::onContact (IPhysics *otherComponent) {
 	Logic::CMessageContactEnter* msg = new Logic::CMessageContactEnter();
 	msg->setEntity( otherComponent->getEntity() );
 	_entity->emitMessage(msg);
+
 }
 
 //---------------------------------------------------------
