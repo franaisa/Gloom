@@ -76,6 +76,9 @@ namespace Logic
 		void hudWeapon(int ammo, int weapon);
 		void hudAmmo(int ammo, int weapon);
 		void hudSpawn(int spawn);
+
+		void hudParticle(const std::string &nameParticle);
+
 		std::string toText(eWeaponIndex weapon);
 		std::string toText(eOverlayWeaponState state);
 		std::string toText(eOverlayElements element);

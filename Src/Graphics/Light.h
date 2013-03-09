@@ -54,7 +54,7 @@ namespace Graphics
 		@param direction Dirección en la que mira la luz que se crea
 		@return true si todo fue bien, false en caso contrario
 		*/
-		bool createDirectionalLight(std::string name, Vector3 position, Vector3 direction);
+		bool createDirectionalLight(CScene* scene, std::string name, Vector3 position, Vector3 direction);
 		/**
 		Método que crea una luz puntual en la posición dada, que mira en la
 		dirección que se le indica como parámetro
@@ -63,14 +63,14 @@ namespace Graphics
 		@param direction Dirección en la que mira la luz que se crea
 		@return true si todo fue bien, false en caso contrario
 		*/
-		bool createPointLight(std::string name, Vector3 position);
+		bool createPointLight(CScene* scene, std::string name, Vector3 position);
 		/**
 		Método que crea una luz local en la posición dada.
 		@param name El nombre de la luz que se va a crear
 		@param position la posición de la escena donde se va a crear la luz
 		@return true si todo fue bien, false en caso contrario
 		*/
-		bool createSpotlLight(std::string name, Vector3 position, Vector3 direction);
+		bool createSpotlLight(CScene* scene, std::string name, Vector3 position, Vector3 direction);
 
 		/**
 		Método controla las sombras que castea la luz.
@@ -118,7 +118,13 @@ namespace Graphics
 		@param intensiy la fuerza emisora de la luz.
 		*/
 		void setIntensity(float intensity){_light->setPowerScale(intensity);}
-	
+
+		/**
+		Método que setea el angulo de salida de un Sporlight y en angulo Maximo.
+		@pamam innerAngle angulo de salida del SpotLight
+		@pamam outerAngle angulo de salida del SpotLight
+		*/
+		void setRange(float innerAngle, float outerAngle){_light->setSpotlightRange(Ogre::Radian(innerAngle), Ogre::Radian(outerAngle));}	
 
 	protected:
 		Ogre::Light* _light;

@@ -10,19 +10,18 @@ namespace Graphics{
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	bool CLight::createSpotlLight(std::string name, Vector3 position, Vector3 direction){
-		_light = CServer::getSingletonPtr()->getActiveScene()->getSceneMgr()->createLight(name);
+	bool CLight::createSpotlLight(CScene* scene, std::string name, Vector3 position, Vector3 direction){
+		_light = scene->getSceneMgr()->createLight(name);
 		_light->setPosition(position);
 		_light->setType(Ogre::Light::LT_SPOTLIGHT);
 		_light->setDirection(direction);
-
 		return true;
 	}
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	bool CLight::createDirectionalLight(std::string name, Vector3 position, Vector3 direction){
-		_light = CServer::getSingletonPtr()->getActiveScene()->getSceneMgr()->createLight(name);
+	bool CLight::createDirectionalLight(CScene* scene, std::string name, Vector3 position, Vector3 direction){
+		_light = scene->getSceneMgr()->createLight(name);
 		_light->setPosition(position);
 		_light->setType(Ogre::Light::LT_DIRECTIONAL);
 		_light->setDirection(direction);
@@ -31,8 +30,9 @@ namespace Graphics{
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 
-		bool CLight::createPointLight(std::string name, Vector3 position){
-		_light = CServer::getSingletonPtr()->getActiveScene()->getSceneMgr()->createLight(name);
+
+		bool CLight::createPointLight(CScene* scene, std::string name, Vector3 position){
+		_light = scene->getSceneMgr()->createLight(name);
 		_light->setPosition(position);
 		_light->setType(Ogre::Light::LT_POINT);
 		return true;

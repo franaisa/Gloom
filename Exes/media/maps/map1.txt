@@ -1,16 +1,5 @@
 Map = {
-	SpotLight1 = {
-		type = "SpotLight",
 
-	},
-	DirectionalLight1 = {
-		type = "DirectionalLight",
-	},
-	PointLight1 = {
-		type = "PointLight",
-		position = {67.0, 10.0, -42.0},
-		intensity = 500,
-	},
 	World = {
 		type = "World",
 	},
@@ -289,4 +278,82 @@ Map = {
 		type = "Camera",
 		height = 8,
 	},
+	SpotLight0 = {
+		type = "SpotLight",
+		position = {0.0,75.0,00.0},
+		direction = {0.0,-1.0,0.0},
+		intensity = 5,
+	},
+	SpotLight1 = {
+		type = "SpotLight",
+		position = {0.0,65.0,00.0},
+		direction = {0.0,-1.0,0.0},
+		intensity = 5,
+	},
+	SpotLight2 = {
+		type = "SpotLight",
+		position = {-79.0,50.0,-52.0},
+		direction = {0.0,-1.0,0.0},
+		intensity = 5,
+	},
+	SpotLight3 = {
+		type = "SpotLight",
+		position = {-76.0,50.0,55.0},
+		direction = {0.0,-1.0,0.0},
+		intensity = 5,
+	},
+	SpotLight4 = {
+		type = "SpotLight",
+		position = {75.0,50.0,55.0},
+		direction = {0.0,-1.0,0.0},
+		intensity = 5,
+	},
+	SpotLight5 = {
+		type = "SpotLight",
+		position = {76.0,50.0,-55.0},
+		direction = {0.0,-1.0,0.0},
+		intensity = 5,
+	},
+	SpotLight6 = {
+		type = "SpotLight",
+		position = {-153.0,20.0,171},
+		direction = {0.0,-1.0,0.0},
+		intensity = 5,
+	},
+	SpotLight7 = {
+		type = "SpotLight",
+		position = {-153.0,20.0,-171},
+		direction = {0.0,-1.0,0.0},
+		intensity = 5,
+	},
+	SpotLight8 = {
+		type = "SpotLight",
+		position = {153.0,20.0,171},
+		direction = {0.0,-1.0,0.0},
+		intensity = 5,
+	},
+	SpotLight9 = {
+		type = "SpotLight",
+		position = {153.0,20.0,-171},
+		direction = {0.0,-1.0,0.0},
+		intensity = 5,
+	},
+	SpotLight10 = {
+		type = "SpotLight",
+		position = {-4.0,60.0,172},
+		direction = {0.0,-1.0,0.0},
+		intensity = 5,
+	},
+	SpotLight11 = {
+		type = "SpotLight",
+		position = {-4.0,60.0,-172},
+		direction = {0.0,-1.0,0.0},
+		intensity = 5,
+	},
+	SpotLight12 = {
+		type = "SpotLight",
+		position = {0.0,10.0,0},
+		direction = {0.0,-1.0,0.0},
+		intensity = 5,
+	},	
 }

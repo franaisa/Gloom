@@ -41,12 +41,15 @@ namespace Logic
 			direction = entityInfo->getVector3Attribute("direction");
 
 		std::string type = entityInfo->getStringAttribute("type");
-		if(type == "SpotLight")
-			_light->createSpotlLight(_entity->getName(), position, direction);
+		if(type == "SpotLight"){
+			_light->createSpotlLight(_entity->getMap()->getScene(), _entity->getName(), position, direction);
+			if(entityInfo->hasAttribute("innerAngle") && entityInfo->hasAttribute("outerAngle"))
+				_light->setRange(entityInfo->getFloatAttribute("innerAngle"), entityInfo->getFloatAttribute("outerAngle") );
+		}
 		if(type == "DirectionalLight")
-			_light->createDirectionalLight(_entity->getName(), position, direction);
+			_light->createDirectionalLight(_entity->getMap()->getScene(), _entity->getName(), position, direction);
 		if(type == "PointLight")
-			_light->createPointLight(_entity->getName(), position);
+			_light->createPointLight(_entity->getMap()->getScene(),_entity->getName(), position);
 
 		if(entityInfo->hasAttribute("castShadows"))
 			_light->setCastShadows(entityInfo->getBoolAttribute("castShadows"));
@@ -55,6 +58,17 @@ namespace Logic
 			Vector3 colour = entityInfo->getVector3Attribute("colour");
 			_light->setColour(colour.x, colour.y, colour.z);
 		}
+		
+		if(entityInfo->hasAttribute("specularColour")){
+			Vector3 specularColour = entityInfo->getVector3Attribute("specularColour");
+			_light->setSpecularColour(specularColour.x, specularColour.y, specularColour.z);
+		}
+
+		if(entityInfo->hasAttribute("intensity"))
+			_light->setIntensity(entityInfo->getFloatAttribute("intensity"));
+
+		//_light->attachToScene();
+
 		return true;
 
 	} // spawn

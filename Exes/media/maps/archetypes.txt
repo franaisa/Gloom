@@ -1,32 +1,6 @@
 Map = {
 
-		
-	SpotLight = {
-		type = "SpotLight",
-		position = {10.0,10.0,10.0},
-		direction = {0.0,-1.0,0.0},
-		castShadows = true,
-		colour = {1.0,1.0,1.0},
-		specularColour = {0.0,0.0,0.0},
-		intensity = 1500 ;
-	},
-	DirectionalLight = {
-		type = "DirectionalLight",
-		position = {0.0,10.0,0.0},
-		direction = {0.0,-1.0,0.0},
-		castShadows = true,
-		colour = {1.0,1.0,1.0},
-		specularColour = {0.0,0.0,0.0},
-		intensity = 1500 ;
-	},
-	PointLight = {
-		type = "PointLight",
-		position = {0.0,10.0,0.0},
-		castShadows = true,
-		colour = {1.0,1.0,1.0},
-		specularColour = {0.0,0.0,0.0},
-		intensity = 1500 ;
-	},	
+	
 	
 	World = {
 		type = "World",
@@ -576,5 +550,40 @@ Map = {
 		explotionTime = 1,
 	},
 
+	SpotLight = {
+		type = "SpotLight",
+		position = {10.0,10.0,10.0},
+		direction = {0.0,-1.0,0.0},
+		castShadows = true,
+		colour = {1.0,1.0,1.0},
+		specularColour = {0.0,0.0,0.0},
+		intensity = 1500,
+		innerAngle = 0.8,
+		outerAngle = 1.6,
+		static = true,
+		model = "esfera.mesh",
+		scale = {25,25,25},
+	},
+	DirectionalLight = {
+		type = "DirectionalLight",
+		position = {0.0,10.0,0.0},
+		direction = {0.0,-1.0,0.0},
+		castShadows = true,
+		colour = {1.0,1.0,1.0},
+		specularColour = {0.0,0.0,0.0},
+		intensity = 1500,
+		static = true,
+		model = "esfera.mesh",
+	},
+	PointLight = {
+		type = "PointLight",
+		position = {0.0,10.0,0.0},
+		castShadows = true,
+		colour = {1.0,1.0,1.0},
+		specularColour = {0.0,0.0,0.0},
+		intensity = 1500,
+		static = true,
+		model = "esfera.mesh",
+	},	
 	
 }

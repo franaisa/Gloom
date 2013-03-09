@@ -13,6 +13,6 @@ Elevator CGraphics CPhysicEntity CElevator
 ElevatorTrigger CGraphics CPhysicEntity CElevatorTrigger
 Spike CGraphics CPhysicEntity CSpike
 Hacksaw CGraphics CPhysicEntity CHacksaw
-SpotLight CLight
-DirectionalLight CLight
-PointLight CLight
+SpotLight CLight CGraphics
+DirectionalLight CLight CGraphics
+PointLight CLight CGraphics

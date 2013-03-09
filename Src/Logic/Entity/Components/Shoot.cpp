@@ -82,6 +82,9 @@ namespace Logic {
 				if(((CMessageControl*)message)->getType()==Control::LEFT_CLICK) {
 					shoot();
 				}
+				if(((CMessageControl*)message)->getType()==Control::RIGHT_CLICK) {
+					printf("\nx: %f, y: %f, z: %f",_entity->getPosition().x, _entity->getPosition().y, _entity->getPosition().z);
+				}
 				break;
 			break;
 		}
@@ -152,9 +155,13 @@ namespace Logic {
 
 	void CShoot::drawParticle(const std::string &nombreParticula, const std::string &particula){
 
+
+		
 		Vector3 positionParticle = _entity->getPosition() + (Math::getDirection(_entity->getOrientation()) * _particlePosition);
 		Graphics::CScene* _scen = Graphics::CServer::getSingletonPtr()->getActiveScene();
+		
 		_scen->createParticle(_entity->getName(),particula, &positionParticle);
+		
 	}
 } // namespace Logic
 

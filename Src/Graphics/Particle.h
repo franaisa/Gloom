@@ -51,7 +51,7 @@ namespace Graphics
 
 		@param name Nombre del Particle.
 		*/
-		CParticle(const std::string &unicName, const std::string &particleName);
+		CParticle(const std::string &unicName, const std::string &particleName, bool isOverlay = false);
 
 		/**
 		Destructor de la partícula.
@@ -77,6 +77,8 @@ namespace Graphics
 		@return objeto ogre de la particula.
 		*/
 		Ogre::ParticleSystem* getParticleSystem() {return _particleSystem;}
+
+		Ogre::SceneNode * getSceneNode(){ return _sceneNode;}
 
 
 	protected:

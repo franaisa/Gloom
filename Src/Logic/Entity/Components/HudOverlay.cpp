@@ -17,6 +17,9 @@ Contiene la implementaci�n del componente que controla la vida de una entidad.
 #include "Map/MapEntity.h"
 #include "Application/BaseApplication.h"
 
+
+#include "Graphics/Particle.h"
+
 #include "Graphics/Server.h"
 #include "Graphics/Camera.h"
 #include "Graphics/Scene.h"
@@ -315,7 +318,7 @@ namespace Logic
 		if(weapon == _actualWeapon)
 		{
 			_panelElementsText[AMMO] = ammo;
-			if(_ammo != 0){
+			if(ammo != 0){
 				if(!_weaponsBox[_actualWeapon][ACTIVE]->isVisible())
 				{
 					_weaponsBox[_actualWeapon][NO_AMMO]->setVisible(false);
@@ -343,7 +346,7 @@ namespace Logic
 
 	void CHudOverlay::hudWeapon(int ammo, int weapon){
 
-		
+		hudParticle("partilcle");
 		//if(weapon != _actualWeapon && _actualWeapon != 0)
 		if(weapon != _actualWeapon)
 		{
@@ -386,6 +389,16 @@ namespace Logic
 			_overlayWeapon3D[HAMMER]->setVisible(true);
 		}
 
+	}
+
+	void CHudOverlay::hudParticle(const std::string &nameParticle){
+		
+		/*
+		Graphics::CParticle *particle = new Graphics::CParticle("particle", "SmokeParticles", true);
+		
+		Graphics::COverlay *overlayParticle = _server->createOverlay( "_overlay3DParticle");
+		overlayParticle->add3D(particle, new Vector3(0,0,-20));
+		*/
 	}
 	
 	std::string CHudOverlay::toText(eWeaponIndex weapon){

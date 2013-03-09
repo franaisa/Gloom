@@ -17,6 +17,7 @@ de una escena.
 #include "Particle.h"
 #include "Scene.h"
 #include "Camera.h"
+#include "Light.h"
 #include "Server.h"
 #include "StaticEntity.h"
 #include "BaseSubsystems/Server.h"
@@ -108,9 +109,14 @@ namespace Graphics
 						->addViewport(_camera->getCamera());
 		_viewport->setBackgroundColour(Ogre::ColourValue::Black);
 
-	_sceneMgr->setAmbientLight(Ogre::ColourValue(1,1,1));
-    _sceneMgr->setShadowTechnique(Ogre::SHADOWTYPE_STENCIL_ADDITIVE);
-
+		
+		_sceneMgr->setShadowTechnique(Ogre::SHADOWTYPE_STENCIL_ADDITIVE);
+		
+		//*
+		_sceneMgr->setAmbientLight(Ogre::ColourValue(.2f,.2f,.2f));
+		/*/
+		_sceneMgr->setAmbientLight(Ogre::ColourValue(0,0,0));
+		/* */
 	} // activate
 
 	//--------------------------------------------------------

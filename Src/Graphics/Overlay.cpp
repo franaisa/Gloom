@@ -17,6 +17,8 @@ Contiene la implementación de la clase que representa un Overlay.
 #include "Scene.h"
 #include "Entity.h"
 
+#include "Particle.h"
+
 #include "Graphics/Server.h"
 #include "BaseSubsystems/Math.h"
 
@@ -163,6 +165,19 @@ namespace Graphics
 
 	//------------------------------------------------------------
 
+	void COverlay::add3D(Graphics::CParticle *particle, const Vector3 *position){
+			
+		
+		if(_overlay){
+			_overlay->add3D(particle->getSceneNode());
+
+			// Esto es una pequeña ñapa, me creo un entidad grafica pero sin inicializar, y le añado una escena ahierro
+			// Hago esto para que se pueda desplazar desde la logica sin ningun problema.
+		}
+
+	} // add3D
+
+	//------------------------------------------------------------
 
 	void COverlay::setPosition(float left, float top){
 		if(_overlayContainer){ _overlayContainer->setPosition(left, top);}

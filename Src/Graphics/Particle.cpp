@@ -46,7 +46,7 @@ Contiene la implementación de la clase que maneja el Particle.
 namespace Graphics 
 {
 	//Constructor de la clase CParticle
-	CParticle::CParticle(const std::string &unicName, const std::string &particleName)
+	CParticle::CParticle(const std::string &unicName, const std::string &particleName, bool isOverlay)
 	{
 		static int counter = 0;
 		_nameParticle = unicName;	
@@ -58,7 +58,12 @@ namespace Graphics
 		std::string nameSceneNode = "SceneNode_"+_nameParticle + num;
 
 		_particleSystem = scene->getSceneMgr()->createParticleSystem(_nameParticle+num, particleName);
-		_sceneNode = scene->getSceneMgr()->getRootSceneNode()->createChildSceneNode(nameSceneNode + "_node");
+		if(isOverlay){
+			_sceneNode = new Ogre::SceneNode(scene->getSceneMgr(), nameSceneNode);
+		}else{
+			_sceneNode = scene->getSceneMgr()->getRootSceneNode()->createChildSceneNode(nameSceneNode + "_node");
+		}
+		
 		_sceneNode->attachObject(_particleSystem);
 
 		counter++;
