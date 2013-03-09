@@ -111,6 +111,8 @@ void CPhysicEntity::process(CMessage *message)
 		break;
 		}
 	case Message::ADD_FORCE_PHYSICS:
+		if(!((CMessageAddForcePhysics*)message)->getGravity())
+			_actor->setActorFlag(PxActorFlag::eDISABLE_GRAVITY, true);
 		addImpulsiveForce( ((CMessageAddForcePhysics*)message)->getForceVector() );
 		break;
 	}
