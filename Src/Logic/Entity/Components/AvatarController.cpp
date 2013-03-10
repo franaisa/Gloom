@@ -335,7 +335,7 @@ namespace Logic
 				directionWalk *= 0;
 		}
 		direction+= directionWalk;
-
+		//std::cout << "direccion en avatarcontroller " << direction << std::endl;
 
 		//Control del tiempo para el salto lateral(al contar aqui cuando se activa no se cuenta el primer tick)
 		if(_jumpLeft!=0 || _jumpRight!=0){
@@ -448,7 +448,7 @@ namespace Logic
 				directionStrafe *= 0;	
 		}
 		direction += directionStrafe;
-
+		//std::cout << "direccion en avatarcontroller 2" << direction << std::endl;
 
 		//Control del salto (normal y lateral)
 		//El PhysicController nos envía por mensaje el atributo _falling (devuelve el del frame anterior) y asi sabemos si esta tocando el suelo y puedo saltar
@@ -483,7 +483,7 @@ namespace Logic
 			direction=_dirRebound;
 			_rebound=false;
 		}
-
+		//std::cout << "direccion en avatarcontroller 3" << direction << std::endl;
 
 		//Aumento el tiempo de conteo para la concatenacion de saltos
 		if(_sideContact){
@@ -544,41 +544,45 @@ namespace Logic
 			direction.x=_direccionSaltoCaida.x+direction.x*_restitutionMoveAir;
 			direction.z=_direccionSaltoCaida.z+direction.z*_restitutionMoveAir;
 		}
-
+		std::cout << "direccion en avatarcontroller" << direction << std::endl;
 		//Normalizamos y luego calculamos la magnitud correcta para la dirección (sin contar el salto/eje Y)
-		Vector3 directXZY=direction.normalisedCopy();
-
+		//Vector3 directXZY=direction.normalisedCopy();
+		//std::cout << "direccion en avatarcontroller 5" << directXZY << std::endl;
 		//Si saltamos en un jumper nos desplazaremos mucho mas rapido (ignorando si veniamos de un salto lateral/concatenado)
 		//Aplicaremos más velocidad lateral si se trata de un desplazamiento lateral (para desplazarnos más rápido, recorriendo más terreno)
 		//Si ademas esta activa la concatenacion de saltos pues llegaremos mas lejos
 		if(_applyForce){
-			directXZY.x *= msecs * _velocityForce;
-			directXZY.z *= msecs * _velocityForce;
+			direction.x *= msecs * _velocityForce;
+			direction.z *= msecs * _velocityForce;
 		}
 		else if(!_velocitySideJump){
-			directXZY.x *= msecs * _speed;
-			directXZY.z *= msecs * _speed;
+			
+			direction.x *= msecs * _speed;
+			direction.z *= msecs * _speed;
+			
 		}
 		else{
 			if(_activeConcat){
-				directXZY.x *= msecs * _speed * _sumSpeedSideJumpConcat;
-				directXZY.z *= msecs * _speed * _sumSpeedSideJumpConcat;
+				direction.x *= msecs * _speed * _sumSpeedSideJumpConcat;
+				direction.z *= msecs * _speed * _sumSpeedSideJumpConcat;
 			}
 			else{
 
-				directXZY.x *= msecs * _speed * _sumSpeedSideJump;
-				directXZY.z *= msecs * _speed * _sumSpeedSideJump;
+				direction.x *= msecs * _speed * _sumSpeedSideJump;
+				direction.z *= msecs * _speed * _sumSpeedSideJump;
 			}
 		}
 
 
 		//Calculamos el desplazamiento del salto y lo añadimos al vector que se mandará por mensaje
 		direction.y *= msecs * _speedJump;
-		directXZY.y=direction.y;
+		//direction.y=direction.y;
+
+		//std::cout << "direccion en avatarcontroller " << directXZY << std::endl;
 
 		//Pasamos a la Física la dirección del movimiento para que se encargue ella de movernos
 		Logic::CMessageAvatarWalk* m = new Logic::CMessageAvatarWalk();
-		m->setDirection(directXZY);
+		m->setDirection(direction);
 		_entity->emitMessage(m);
 
 	} // tick

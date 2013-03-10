@@ -100,13 +100,13 @@ void CPhysicController::tick(unsigned int msecs)
 	// Llamar al método de la clase padre (IMPORTANTE).
 	IComponent::tick(msecs);
 
-	// Actualizar la posición y orientación de la entidad lógica usando la 
-	// información proporcionada por el motor de física	
-	_entity->setPosition(_server->getControllerPosition(_controller));
-
 	// Intentamos mover el controller a la posición recibida en el último mensaje 
 	// de tipo AVATAR_WALK. 
 	unsigned flags = _server->moveController(_controller, _movement, msecs);
+
+	// Actualizar la posición y orientación de la entidad lógica usando la 
+	// información proporcionada por el motor de física	
+	_entity->setPosition(_server->getControllerPosition(_controller));
 
 	//Si tocamos con el techo lo notificamos
 	if((flags & PxControllerFlag::eCOLLISION_UP)){

@@ -64,7 +64,7 @@ namespace Logic  {
 		//________________________________________________________________________
 
 		/** Tick de reloj del componente. */
-		virtual void tick();
+		virtual void tick(unsigned int msecs);
 
 		//________________________________________________________________________
 
@@ -99,7 +99,7 @@ namespace Logic  {
 		/**
 		Método que mueve el punto del servidor para que esté actualizado.
 		*/
-		void moveServerPos();
+		void moveServerPos(unsigned int msecs);
 
 		//________________________________________________________________________
 

@@ -33,7 +33,7 @@ Map = {
 		position = {0, 8, 0},
 		msgList= "1,2,6,9,11,14,15,16,17,22,23,24,26",
 		model = "marine.mesh",
-		syncPosTimeStamp = 0.03,
+		syncPosTimeStamp = 0.5,
 		timeSpawn = 4,
 		life = 12,
 		shield = 0,
@@ -585,5 +585,21 @@ Map = {
 		static = true,
 		model = "esfera.mesh",
 	},	
+	
+		lava = {
+		type = "Lava",
+		position = {-10.0,0.2, -50.0},
+		model = "lava.mesh",
+		scale = 1,
+		damage = 5,
+		timeDamage = 500,
+		physic_entity = "rigid",
+		physic_trigger = true,
+		physic_type = "static",
+		physic_shape = "box",
+		physic_dimensions = { 4, 7, 4 },
+		physic_group = 2,
+		physic_groupList = "1",
+	},
 	
 }
