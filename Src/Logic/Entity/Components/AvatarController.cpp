@@ -445,7 +445,7 @@ namespace Logic
 				directionStrafe *= -1;
 			//Para facilitar el strafe, anulación de strafes
 			if(_strafingLeft && _strafingRight)
-				directionStrafe *= 0;	
+				directionStrafe *= 0;
 		}
 		direction += directionStrafe;
 		//std::cout << "direccion en avatarcontroller 2" << direction << std::endl;

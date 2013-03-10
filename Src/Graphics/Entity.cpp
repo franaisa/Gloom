@@ -110,9 +110,7 @@ namespace Graphics
 		//_text->enable(false);
 		//_text->setText("Gazpacho");
 			
-		_loaded = true;
-
-		return true;
+		return _loaded = true;
 
 	} // load
 	
