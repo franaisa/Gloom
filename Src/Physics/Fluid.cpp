@@ -35,6 +35,20 @@ namespace Physics {
 		
 		// Creamos el fluido con los parametros pasados
 		createFluid(maxParticles, restitution, viscosity, stiffness, dynamicFriction, particleDistance);
+
+		// declare particle descriptor for creating new particles
+		// based on numNewAppParticles count and newAppParticleIndices, newAppParticlePositions arrays.
+		PxParticleCreationData particleCreationData;
+		
+		// Numero de particulas
+		particleCreationData.numParticles = maxParticles;
+		//
+		//particleCreationData.indexBuffer = PxStrideIterator<const PxU32>(newAppParticleIndices);
+		//
+		//particleCreationData.positionBuffer = PxStrideIterator<const PxVec3>(newAppParticlePositions);
+
+		// create particles in *PxParticleSystem* ps
+		bool success = _fluid->createParticles(particleCreationData);
 	} // CEntity
 
 	//________________________________________________________________________
