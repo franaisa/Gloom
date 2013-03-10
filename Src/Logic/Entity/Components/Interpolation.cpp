@@ -94,7 +94,7 @@ namespace Logic  {
 			if (newPos.length() < _minDistance)
 				_canInterpolateMove = false;
 			//std::cout << "nueva pos " << newPos << std::endl ;
-			std::cout << "nueva pos lenght " << newPos.length() << std::endl << std::endl;
+			//std::cout << "nueva pos lenght " << newPos.length() << std::endl << std::endl;
 		}//if
 		if(_canInterpolateRotation){
 
@@ -158,12 +158,14 @@ namespace Logic  {
 				break;
 
 			case Control::STRAFE_LEFT:
-				_serverDirection+=Vector3(-1,0,1);
+				_serverDirection+=Vector3(1,0,1);
+				std::cout << Math::getDirection(_serverPos) << std::endl;
+				Math::yaw(Math::PI*0.5, _serverPos);
+				std::cout <<  Math::getDirection(_serverPos) << std::endl << std::endl;
 				_canInterpolateMove = true;
 				break;
 
 			case Control::STRAFE_RIGHT:
-				_serverDirection+=Vector3(-1,0,1);
 				_canInterpolateMove = true;
 				break;
 
@@ -181,11 +183,9 @@ namespace Logic  {
 				break;
 
 			case Control::STOP_STRAFE_LEFT:
-				_serverDirection+=Vector3(-1,0,1);
 				break;
 
 			case Control::STOP_STRAFE_RIGHT:
-				_serverDirection+=Vector3(1,0,-1);
 				break;
 
 			case Control::MOUSE:
@@ -220,12 +220,12 @@ namespace Logic  {
 		Vector3 newPos = _serverPos.getTrans();
 		//nueva posi = (old posi + direcion*orientacion)*velocidad
 		//std::cout << "server pos antes " << _serverPos.getTrans() << std::endl;
-		newPos+=_serverDirection*_speed*Math::getDirection(_entity->getOrientation())*msecs;
+		newPos+=_serverDirection.normalisedCopy()*_speed*Math::getDirection(_serverPos)*msecs;
 		//std::cout << "server pos mientras " << newPos << std::endl;
 		_serverPos.setTrans(newPos);
-		std::cout << "server pos despues " << _serverDirection*Math::getDirection(_entity->getOrientation()) << std::endl << std::endl;
+		//std::cout << "server pos despues " << Math::getDirection(_entity->getYaw()) << std::endl << std::endl;
 		
-		//std::cout << "direccion en INTERPOLATION " << Math::getDirection(_entity->getYaw()) <<  std::endl << std::endl;
+		std::cout << "direccion en INTERPOLATION " << Math::getDirection(_serverPos) <<  std::endl << std::endl;
 
 	}
 
