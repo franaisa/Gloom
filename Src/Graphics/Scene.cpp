@@ -17,6 +17,7 @@ de una escena.
 #include "Particle.h"
 #include "Scene.h"
 #include "Camera.h"
+#include "Light.h"
 #include "Server.h"
 #include "StaticEntity.h"
 #include "BaseSubsystems/Server.h"
@@ -34,6 +35,10 @@ de una escena.
 #include <OgreColourValue.h>
 #include <OgreSceneNode.h>
 #include <OgreParticleSystem.h>
+
+#include <OgreCompositorManager.h>
+#include <OgreMaterialManager.h>
+
 
 namespace Graphics 
 {
@@ -107,9 +112,23 @@ namespace Graphics
 		_viewport = BaseSubsystems::CServer::getSingletonPtr()->getRenderWindow()
 						->addViewport(_camera->getCamera());
 		_viewport->setBackgroundColour(Ogre::ColourValue::Black);
+
 		
-		_sceneMgr->setAmbientLight(Ogre::ColourValue(.9f,.9f,.9f));
+		_sceneMgr->setShadowTechnique(Ogre::SHADOWTYPE_STENCIL_ADDITIVE);
 		
+		//*
+		_sceneMgr->setAmbientLight(Ogre::ColourValue(.2f,.2f,.2f));
+		/*/
+		_sceneMgr->setAmbientLight(Ogre::ColourValue(0,0,0));
+		/* */
+		
+		
+		Ogre::CompositorManager::getSingletonPtr()->addCompositor(_camera->getOgreCamera()->getViewport(), "Glow");
+
+		Ogre::CompositorManager::getSingletonPtr()->setCompositorEnabled(_camera->getOgreCamera()->getViewport(), "Glow", true);
+		
+		GlowMaterialListener *gml = new GlowMaterialListener();
+		Ogre::MaterialManager::getSingletonPtr()->addListener(gml);
 
 	} // activate
 
@@ -140,10 +159,13 @@ namespace Graphics
 		TEntityList::const_iterator end = _dynamicEntities.end();
 		for(; it != end; it++)
 			(*it)->tick(secs);
-
+		
 	} // tick
 
 	//--------------------------------------------------------
+
+	void CScene::changeAmbientLight(Vector3 Light){_sceneMgr->setAmbientLight(Ogre::ColourValue(Light.x,Light.y,Light.z));};
+
 
 	void CScene::buildStaticGeometry()
 	{

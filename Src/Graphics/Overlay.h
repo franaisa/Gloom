@@ -31,6 +31,9 @@ namespace Ogre
 namespace Graphics 
 {
 	class CScene;
+	class CEntity;
+
+	class CParticle;
 }
 
 namespace Graphics 
@@ -100,12 +103,16 @@ namespace Graphics
 		void add2D(COverlay* overlayContainer);
 
 		/**
-		Añade una escena al overlay, para que esta se pinte superpuesta en la pantalla.
-		IMPORTANTE: en el material del arma debe de tener indicado el la entrada "depth_check off"
+		Añade una entidad al overlay, para que esta se pinte superpuesta en la pantalla.
+		
 
-		@param scene, escena que se añadira al overlay.
+		@param name, nombre de la entidad.
+		@param mesh, mesh de la entidad a añadir en el overlay.
+		@param position, posicion donde se pondra dicha entidad. Para que aparezca en pantalla se recomienda que la Z sea -5 como minimo y que el resto no se exceda ya que podria no verse en la pantalla.
 		*/
-		void add3D(const std::string &name, const std::string &mesh, const Vector3 *position);
+		CEntity* add3D(const std::string &name, const std::string &mesh, const Vector3 *position);
+
+		void add3D(Graphics::CParticle *particle, const Vector3 *position);
 
 		/**
 		Establece donde se posicionara el Overlay.

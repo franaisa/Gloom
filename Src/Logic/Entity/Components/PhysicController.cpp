@@ -23,6 +23,8 @@ el mundo físico usando character controllers.
 #include "Logic/Messages/MessageCealing.h"
 #include "Logic/Messages/MessageSide.h"
 
+#include "AvatarController.h"
+
 #include <PxPhysicsAPI.h>
 
 
@@ -64,7 +66,6 @@ bool CPhysicController::spawn(CEntity* entity, CMap *map, const Map::CEntity *en
 	_controller = createController(entityInfo);
 	// Seteo de _falling a false para que se envie el primer mensaje de actualizacion
 	_falling=false;
-	std::cout << _entity->getPosition() << std::endl;
 	return true;
 }
 
@@ -99,13 +100,13 @@ void CPhysicController::tick(unsigned int msecs)
 	// Llamar al método de la clase padre (IMPORTANTE).
 	IComponent::tick(msecs);
 
-	// Actualizar la posición y orientación de la entidad lógica usando la 
-	// información proporcionada por el motor de física	
-	_entity->setPosition(_server->getControllerPosition(_controller));
-
 	// Intentamos mover el controller a la posición recibida en el último mensaje 
 	// de tipo AVATAR_WALK. 
 	unsigned flags = _server->moveController(_controller, _movement, msecs);
+
+	// Actualizar la posición y orientación de la entidad lógica usando la 
+	// información proporcionada por el motor de física	
+	_entity->setPosition(_server->getControllerPosition(_controller));
 
 	//Si tocamos con el techo lo notificamos
 	if((flags & PxControllerFlag::eCOLLISION_UP)){
@@ -133,7 +134,9 @@ void CPhysicController::tick(unsigned int msecs)
 //---------------------------------------------------------
 
 void  CPhysicController::setPhysicPosition (const Vector3 &position){
+	//Teletransportamos al player y ponemos la logica en el mismo momento(sino ocurrirían teletransportaciones gráficas)
 	_server->setControllerPosition(_controller, position);
+	_entity->setPosition(_server->getControllerPosition(_controller));
 }
 
 
@@ -229,4 +232,38 @@ void CPhysicController::onControllerHit (const PxControllersHit &hit)
 //---------------------------------------------------------
 
 
+void CPhysicController::deactivateSimulation() {
+	// Desactivamos todos los shapes del componente por completo en PhysX
+	// Para ello, obtenemos todos sus shapes y ponemos los flags a false
 
+	int nbShapes = _controller->getActor()->getNbShapes();
+	PxShape** actorShapes = new PxShape* [nbShapes];
+	_controller->getActor()->getShapes(actorShapes, nbShapes);
+	for(int i = 0; i < nbShapes; ++i) {
+		// Esta shape no tomara parte en barridos, raycasts...
+		actorShapes[i]->setFlag(PxShapeFlag::eSCENE_QUERY_SHAPE, false);
+		// Esta shape no entrara dentro de la simulacion de fisicas
+		actorShapes[i]->setFlag(PxShapeFlag::eSIMULATION_SHAPE , false);
+	}
+
+	delete [] actorShapes;
+}
+
+//---------------------------------------------------------
+
+void CPhysicController::activateSimulation() {
+	// Activamos todos los shapes del componente por completo en PhysX
+	// Para ello, obtenemos todos sus shapes y ponemos los flags a true
+
+	int nbShapes = _controller->getActor()->getNbShapes();
+	PxShape** actorShapes = new PxShape* [nbShapes];
+	_controller->getActor()->getShapes(actorShapes, nbShapes);
+	for(int i = 0; i < nbShapes; ++i) {
+		// Esta shape tomara parte en barridos, raycasts...
+		actorShapes[i]->setFlag(PxShapeFlag::eSCENE_QUERY_SHAPE, true);
+		// Esta shape entrara dentro de la simulacion de fisicas
+		actorShapes[i]->setFlag(PxShapeFlag::eSIMULATION_SHAPE , true);
+	}
+
+	delete [] actorShapes;
+}

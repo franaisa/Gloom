@@ -51,14 +51,30 @@ namespace Logic
 	
 	//---------------------------------------------------------
 
+	bool CEntity::dynamicSpawn(CMap* map, Map::CEntity* entityInfo) {
+		Map::CEntity* newEntityInfo = entityInfo->clone(); 
+		
+		int entityId = getEntityID();
+		std::ostringstream convert;
+		convert << entityId;
+		std::string nameId = convert.str();
+
+		newEntityInfo->setName(entityInfo->getStringAttribute("name") + nameId);
+
+		return spawn(map, newEntityInfo);
+	}
+
+	//---------------------------------------------------------
+
 	bool CEntity::spawn(CMap *map, const Map::CEntity *entityInfo) 
 	{
 		// Leemos las propiedades comunes
 		_map = map;
 		_type = entityInfo->getType();
 
-		if(entityInfo->hasAttribute("name"))
+		if(entityInfo->hasAttribute("name")) {
 			_name = entityInfo->getStringAttribute("name");
+		}
 
 		if(entityInfo->hasAttribute("position"))
 		{
@@ -96,7 +112,6 @@ namespace Logic
 		// Si somos jugador, se lo decimos al servidor
 		// y nos registramos para que nos informen
 		// de los movimientos que debemos realizar
-
 
 		if (isPlayer())
 		{

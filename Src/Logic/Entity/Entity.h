@@ -223,6 +223,8 @@ namespace Logic
 		*/
 		const std::string &getName() const { return _name; }
 
+		void setName(const std::string& name) { this->_name = name; }
+
 		/**
 		Devuelve el tipo de la entidad. Este atributo es leido de
 		la entidad del mapa en spawn().
@@ -387,6 +389,8 @@ namespace Logic
 		 * que el asignado en el blueprints.
 		 */
 		void deactivateAllComponentsExcept(std::list<std::string*>* id);
+
+		bool dynamicSpawn(CMap* map, Map::CEntity* entityInfo);
 
 	protected:
 

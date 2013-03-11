@@ -1,15 +1,16 @@
 Map = {
+
 	World = {
 		type = "World",
 	},
 	
 	Hacksaw = {
 		type = "Hacksaw",
-		position = {86.0,8.0,-16.0},
-		positionInitial = {86.0,8.0,-16.0},
-		positionFinal = {120.0,8.0,-16.0},
+		position = {120.0,8.0,-16.0},
+		positionInitial = {120.0,8.0,-16.0},
+		positionFinal = {86.0,8.0,-16.0},
 		velocity = 0.04,
-		model = "cone.mesh",
+		model = "sierra.mesh",
 		physic_entity = "rigid",
 		physic_trigger = true,
 		physic_type = "kinematic",
@@ -96,7 +97,7 @@ Map = {
 		position = {-51.0, 5.0, 1.0},
 		positionInitial = {-51.0, 5.0, 1.0},
 		positionFinal = {-51.0, 65.0, 1.0},
-		link = "Ascensor1",
+		link = "Elevator",
 		velocity = 0.035,
 		model = "health1.mesh",
 		physic_entity = "rigid",
@@ -198,7 +199,7 @@ Map = {
 	MinigunAmmo1 = {
 		type = "ItemSpawn",
 		position = {-150.0, 4.0, 0.0},
-		model = "ammo01.mesh",
+		model = "plasmagun.mesh",
 		id = "ammo",
 		weaponType = 3,
 		reward = 200,
@@ -218,7 +219,7 @@ Map = {
 	RocketLauncherAmmo1 = {
 		type = "ItemSpawn",
 		position = {140,4.0,-16.0},
-		model = "grenadelauncher.mesh",
+		model = "rocketq3.mesh",
 		id = "ammo",
 		weaponType = 5,
 		reward = 5,
@@ -236,9 +237,9 @@ Map = {
 
 	Enemigo1 = {
 		type = "RemotePlayer",
-		position = {0, 0.2, -10},
+		position = {0, 0.2, -20},
 		orientation = 90,
-		life = 100000.0,
+		life = 20.0,
 		maxShield=100,
 		maxLife=120,
 		shield=10.0,
@@ -264,6 +265,8 @@ Map = {
 		physic_type = "static",
 		physic_shape = "box",
 		physic_dimensions = { 4, 7, 4 },
+		physic_group = 2,
+		physic_groupList = "1",
 	},
 	
 	David = {
@@ -275,4 +278,82 @@ Map = {
 		type = "Camera",
 		height = 8,
 	},
+	SpotLight0 = {
+		type = "SpotLight",
+		position = {0.0,75.0,00.0},
+		direction = {0.0,-1.0,0.0},
+		intensity = 5,
+	},
+	SpotLight1 = {
+		type = "SpotLight",
+		position = {0.0,65.0,00.0},
+		direction = {0.0,-1.0,0.0},
+		intensity = 5,
+	},
+	SpotLight2 = {
+		type = "SpotLight",
+		position = {-79.0,50.0,-52.0},
+		direction = {0.0,-1.0,0.0},
+		intensity = 5,
+	},
+	SpotLight3 = {
+		type = "SpotLight",
+		position = {-76.0,50.0,55.0},
+		direction = {0.0,-1.0,0.0},
+		intensity = 5,
+	},
+	SpotLight4 = {
+		type = "SpotLight",
+		position = {75.0,50.0,55.0},
+		direction = {0.0,-1.0,0.0},
+		intensity = 5,
+	},
+	SpotLight5 = {
+		type = "SpotLight",
+		position = {76.0,50.0,-55.0},
+		direction = {0.0,-1.0,0.0},
+		intensity = 5,
+	},
+	SpotLight6 = {
+		type = "SpotLight",
+		position = {-153.0,20.0,171},
+		direction = {0.0,-1.0,0.0},
+		intensity = 5,
+	},
+	SpotLight7 = {
+		type = "SpotLight",
+		position = {-153.0,20.0,-171},
+		direction = {0.0,-1.0,0.0},
+		intensity = 5,
+	},
+	SpotLight8 = {
+		type = "SpotLight",
+		position = {153.0,20.0,171},
+		direction = {0.0,-1.0,0.0},
+		intensity = 5,
+	},
+	SpotLight9 = {
+		type = "SpotLight",
+		position = {153.0,20.0,-171},
+		direction = {0.0,-1.0,0.0},
+		intensity = 5,
+	},
+	SpotLight10 = {
+		type = "SpotLight",
+		position = {-4.0,60.0,172},
+		direction = {0.0,-1.0,0.0},
+		intensity = 5,
+	},
+	SpotLight11 = {
+		type = "SpotLight",
+		position = {-4.0,60.0,-172},
+		direction = {0.0,-1.0,0.0},
+		intensity = 5,
+	},
+	SpotLight12 = {
+		type = "SpotLight",
+		position = {0.0,10.0,0},
+		direction = {0.0,-1.0,0.0},
+		intensity = 5,
+	},	
 }

@@ -25,6 +25,8 @@ Contiene la implementación del servidor de física.
 #include <extensions\PxVisualDebuggerExt.h> 
 #include <RepX\RepX.h>
 
+#include "Physics/CustomControllerBehavior.h"
+
 using namespace Physics;
 using namespace Logic;
 using namespace physx;
@@ -274,7 +276,7 @@ void CServer::createScene () {
 	PxSceneDesc sceneDesc(_physics->getTolerancesScale());
 
 	// Establecer la gravedad en el eje Y
-	sceneDesc.gravity = PxVec3(0.0f, -9.81f * 5, 0.0f);
+	sceneDesc.gravity = PxVec3(0.0f, -9.81f * 7, 0.0f);
 
 	// Establecer el gestor de colisiones
 	sceneDesc.simulationEventCallback = _collisionManager;
@@ -305,6 +307,10 @@ void CServer::createScene () {
 	_acumTime=0;
 	_fixedTime=5;
 	assert(_scene && "Error en PxPhysics::createScene");
+
+	_scene->setFlag(PxSceneFlag::eENABLE_KINEMATIC_PAIRS, true);
+	_scene->setFlag(PxSceneFlag::eENABLE_KINEMATIC_STATIC_PAIRS, true);
+	setGroupCollisions(1, 4, false);
 }
 
 //--------------------------------------------------------
@@ -655,6 +661,7 @@ PxCapsuleController* CServer::createCapsuleController(const Vector3 &position, i
 	//desc.slopeLimit = 0.707f;
 	desc.callback = _collisionManager;   // Establecer gestor de colisiones
 	desc.userData = (void *) component;  // Anotar el componente lógico asociado al controller
+
 	PxCapsuleController *controller = (PxCapsuleController *)
 		 _controllerManager->createController(*_physics, _scene, desc);
 	
@@ -867,6 +874,54 @@ Logic::CEntity* CServer::raycastClosestInverse(const Ray& ray, float maxDist, un
 
 	// Nota: seguro que se puede hacer de manera mucho más eficiente usando los filtros
 	// de PhysX.
+}
+
+//--------------------------------------------------------
+
+void CServer::overlapExplotion(const Vector3& position, float explotionRadius, Logic::CEntity** & entitiesHit, int& nbHits) {
+	// Construimos una esfera con el radio de la explosion
+	PxSphereGeometry explotionVolume(explotionRadius);
+	// La situamos en la posicion dada
+	PxTransform pose( Vector3ToPxVec3(position) );
+	// Seteamos el tamaño del buffer de colisiones a 5
+	PxU32 bufferSize = 5;
+	// Reservamos memoria para el buffer
+	PxShape** hitBuffer = new(std::nothrow) PxShape* [bufferSize];
+	assert(hitBuffer != NULL && "Error en la reserva de memoria");
+
+	// Calculamos el overlap contra objetos dinamicos (ya que los estaticos no nos interesan).
+	// El valor de retorno es el numero de hits del buffer o -1 si el buffer no es lo suficientemente
+	// grande.
+	PxSceneQueryFilterData filterData(PxSceneQueryFilterFlag::eDYNAMIC);
+
+	nbHits = _scene->overlapMultiple(explotionVolume, pose, hitBuffer, bufferSize, filterData);
+	while(nbHits == -1) {
+		// Si el buffer se ha desbordado aumentamos su tamaño al doble
+		// y volvemos ha realizar la query
+		delete [] hitBuffer;
+		
+		bufferSize *= 2;
+		hitBuffer = new(std::nothrow) PxShape* [bufferSize];
+		assert(hitBuffer != NULL && "Error en la reserva de memoria");
+
+		// Realizamos de nuevo la query
+		nbHits = _scene->overlapMultiple(explotionVolume, pose, hitBuffer, bufferSize, filterData);
+	}
+
+	if(nbHits > 0) {
+		// Si hemos golpeado a otras entidades creamos un buffer
+		entitiesHit = new(std::nothrow) Logic::CEntity* [nbHits];
+		assert(entitiesHit != NULL && "Error en la reserva de memoria");
+
+		// Rellenamos el buffer con un puntero a cada una de las entidades golpeadas
+		for(int i = 0; i < nbHits; ++i) {
+			IPhysics *component = static_cast<IPhysics*>( hitBuffer[i]->getActor().userData );
+			
+			entitiesHit[i] = component != NULL ? component->getEntity() : NULL;
+		}
+	}
+
+	delete [] hitBuffer;
 }
 
 //--------------------------------------------------------

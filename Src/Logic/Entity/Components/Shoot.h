@@ -142,6 +142,7 @@ namespace Logic {
 		//                            METODOS PROPIOS
 		// =======================================================================
 
+
 		/**
 		Este es el método que todas las armas deben redefinir. Es el que implementa
 		la acción de disparar.

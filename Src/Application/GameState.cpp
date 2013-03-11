@@ -105,6 +105,8 @@ namespace Application {
 		// Queremos que el GUI maneje al jugador.
 		GUI::CServer::getSingletonPtr()->getPlayerController()->activate();
 
+		Logic::CEntityFactory::getSingletonPtr()->dynamicCreation(true);
+
 		// Activamos la ventana que nos muestra el tiempo transcurrido.
 		//CEGUI::System::getSingletonPtr()->setGUISheet(_timeWindow);
 		//_timeWindow->setVisible(true);
@@ -137,6 +139,7 @@ namespace Application {
 		
 		CApplicationState::deactivate();
 
+		Logic::CEntityFactory::getSingletonPtr()->dynamicCreation(false);
 	} // deactivate
 
 	//--------------------------------------------------------

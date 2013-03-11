@@ -1,23 +1,11 @@
-
-material Material#10
+material NoMaterial
 {
 	technique
 	{
 		pass
 		{
-			ambient 0.588 0.588 0.588 1
-			diffuse 0.588 0.588 0.588 1
-			specular 0 0 0 1 10
-			scene_blend one one_minus_src_alpha
-
-			texture_unit
-			{
-				texture rollermine_sheet.tga
-			}
 		}
 
 	}
 
 }
-
-

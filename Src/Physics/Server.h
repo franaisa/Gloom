@@ -48,6 +48,7 @@ namespace physx {
 	class PxRigidStatic;
 	class PxScene;
 	class PxRigidBody;
+	class PxControllerBehaviorCallback;
 
 	namespace pxtask {
 		class CudaContextManager;
@@ -306,8 +307,7 @@ namespace Physics {
 		@return character controller creado
 		*/
 		physx::PxCapsuleController* createCapsuleController(const Vector3 &position, int group, const std::vector<int>& groupList, float radius, 
-															float height, 
-															const Logic::CPhysicController *component);
+															float height, const Logic::CPhysicController *component);
 
 
 		/**
@@ -377,9 +377,17 @@ namespace Physics {
 		 */
 		Logic::CEntity* raycastClosestInverse (const Ray& ray, float maxDist, unsigned int id) const; 
 
+		void overlapExplotion(const Vector3& position, float explotionRadius, Logic::CEntity** & entitiesHit, int& nbHits);
+
 		void addImpulsiveForce( physx::PxRigidDynamic* actor, const Vector3& force ); 
 
 	private:
+
+		friend class CFluid;
+
+		physx::PxScene* getActiveScene() { return _scene; }
+
+		physx::PxPhysics* getPhysxSDK() { return _physics; }
 
 		/**
 		Constructor de la clase.

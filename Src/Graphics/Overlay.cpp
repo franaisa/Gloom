@@ -17,6 +17,8 @@ Contiene la implementación de la clase que representa un Overlay.
 #include "Scene.h"
 #include "Entity.h"
 
+#include "Particle.h"
+
 #include "Graphics/Server.h"
 #include "BaseSubsystems/Math.h"
 
@@ -30,6 +32,8 @@ Contiene la implementación de la clase que representa un Overlay.
 #include <OgreSceneNode.h>
 #include <OgreSceneManager.h>
 #include <OgreOverlayManager.h>
+#include <OgreMaterialManager.h>
+#include <OgreEntity.h>
 
 namespace Graphics 
 {
@@ -76,6 +80,7 @@ namespace Graphics
 		_overlay = NULL;
 		_overlayContainer = NULL;
 		_overlayText = NULL;
+
 	} // ~COverlay
 
 	//------------------------------------------------------------
@@ -112,27 +117,32 @@ namespace Graphics
 	//------------------------------------------------------------
 
 	
-	void COverlay::add3D(const std::string &name, const std::string &mesh, const Vector3 *position){
-
+	CEntity* COverlay::add3D(const std::string &name, const std::string &mesh, const Vector3 *position){
+		
 		if(_overlay){
 
 			CScene *scene = Graphics::CServer::getSingletonPtr()->getActiveScene();
 			
 			int counter=0;
 			char num[5];
-			sprintf(num, "%d", counter);
+			sprintf(num, "%d", counter++);
 			
-			std::string nameSceneNode = "SceneNode_"+name + num;
+			std::string nameSceneNode = "SceneNode_"+name;// + num;
 			
 
-			Ogre::Entity *entity = scene->getSceneMgr()->createEntity(name, mesh);
+			Ogre::Entity *entity = scene->getSceneMgr()->createEntity("hud3D_"+name, mesh);
 
-
-			//Ogre::SceneNode *sceneNode = scene->getSceneMgr()->getRootSceneNode()->createChildSceneNode(nameSceneNode + "_node");
-			//sceneNode->attachObject((Ogre::MovableObject *)entity);
-
-			//_overlay->add3D(sceneNode);
-
+			
+			Ogre::MaterialPtr material = Ogre::MaterialManager::getSingleton().getByName(name);
+			
+			if(!material.isNull()){
+						
+				material->getTechnique(0)->getPass(0)->setDepthCheckEnabled(false);
+				material->getTechnique(0)->getPass(0)->setDepthWriteEnabled(false);
+				material->getTechnique(0)->setSceneBlending(Ogre::SBT_TRANSPARENT_ALPHA);
+				
+			}
+			
 
 			Ogre::SceneNode* sceneNode = new Ogre::SceneNode(scene->getSceneMgr(), nameSceneNode);
 			//scene->getSceneMgr()->getRootSceneNode()->addChild(sceneNode);
@@ -143,12 +153,32 @@ namespace Graphics
 			_overlay->add3D(sceneNode);
 
 			sceneNode->setPosition(*position);
+
+			// Esto es una pequeña ñapa, me creo un entidad grafica pero sin inicializar, y le añado una escena ahierro
+			// Hago esto para que se pueda desplazar desde la logica sin ningun problema.
+			Graphics::CEntity *aux = new CEntity("hud3D_"+name, mesh);
+			aux->setSceneNode(sceneNode);
+			return aux;
 		}
+		return 0;
 
 	} // add3D
 
 	//------------------------------------------------------------
 
+	void COverlay::add3D(Graphics::CParticle *particle, const Vector3 *position){
+			
+		
+		if(_overlay){
+			_overlay->add3D(particle->getSceneNode());
+
+			// Esto es una pequeña ñapa, me creo un entidad grafica pero sin inicializar, y le añado una escena ahierro
+			// Hago esto para que se pueda desplazar desde la logica sin ningun problema.
+		}
+
+	} // add3D
+
+	//------------------------------------------------------------
 
 	void COverlay::setPosition(float left, float top){
 		if(_overlayContainer){ _overlayContainer->setPosition(left, top);}
@@ -195,7 +225,7 @@ namespace Graphics
 
 
 	void COverlay::setTextSize(const int textSize){
-		if(_overlayText){ _overlayText->setCharHeight(textSize);}
+		if(_overlayText){ _overlayText->setCharHeight((Ogre::Real)textSize);}
 	} // setTextSize
 
 	//------------------------------------------------------------

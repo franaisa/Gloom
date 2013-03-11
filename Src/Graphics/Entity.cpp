@@ -97,6 +97,7 @@ namespace Graphics
 		try
 		{
 			_entity = _scene->getSceneMgr()->createEntity(_name, _mesh);
+			_entity->setCastShadows(true);
 		}
 		catch(std::exception e)
 		{
@@ -105,13 +106,11 @@ namespace Graphics
 		_entityNode = _scene->getSceneMgr()->getRootSceneNode()->createChildSceneNode(_name + "_node");
 		_entityNode->attachObject(_entity);
 
-		_text = new CObjectTextDisplay(_entity, _scene->getCamera()->getOgreCamera());
-		_text->enable(false);
-		_text->setText("Gazpacho");
+		//_text = new CObjectTextDisplay(_entity, _scene->getCamera()->getOgreCamera());
+		//_text->enable(false);
+		//_text->setText("Gazpacho");
 			
-		_loaded = true;
-
-		return true;
+		return _loaded = true;
 
 	} // load
 	
@@ -137,7 +136,7 @@ namespace Graphics
 	//--------------------------------------------------------
 		
 	void CEntity::tick(float secs) {
-		_text->update();
+		//_text->update();
 	} // tick
 	
 	//--------------------------------------------------------
@@ -155,6 +154,14 @@ namespace Graphics
 	
 	//--------------------------------------------------------
 		
+	Matrix4 CEntity::getTransform() {
+			Matrix4 result;
+			result.makeTransform(_entityNode->getPosition(),_entityNode->getScale(),_entityNode->getOrientation());
+			return result;
+	}// getTransform
+
+	//--------------------------------------------------------
+
 	void CEntity::setOrientation(const Matrix3 &orientation)
 	{
 		assert(_entityNode && "La entidad no ha sido cargada");

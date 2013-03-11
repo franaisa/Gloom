@@ -64,6 +64,7 @@ namespace Logic
 		IComponent::activate();
 		_timer=0;
 		_active=false;
+		_wait=true;
 		_timeToShow*=1000;
 		_timeToUnshow*=1000;
 
@@ -110,27 +111,42 @@ namespace Logic
 			_timer=0;
 			_active=true;
 			_toFinal=true;
+			_wait=false;
 		}
 		//Si los pinchos estan fuera solamente duran X segundos
 		if(_active && _timer>_timeToUnshow){
 			_active=false;
 			_timer=0;
 			_toFinal=false;
+			_wait=false;
 		}
 
 		//Hacia la posicion final
-		if(_toFinal){
-			if(_entity->getPosition().distance(_positionFinal)>0.2){
+		if(_toFinal && !_wait){
+			float distanciaToFinal=(_positionFinal-_entity->getPosition()).absDotProduct(Vector3(1,1,1));
+			if(distanciaToFinal>=0){
 				toDirection = _directionFinal * msecs * _velocity;
+				//Por si nos pasasemos de la posición final
+				if(toDirection.absDotProduct(Vector3(1,1,1))>distanciaToFinal){
+					toDirection=(_positionFinal-_entity->getPosition());
+					_wait=true;
+				}
 				Logic::CMessageKinematicMove* m = new Logic::CMessageKinematicMove();
 				m->setMovement(toDirection);
 				_entity->emitMessage(m);
 			}
 		}
 		//Hacia la posicion inicial
-		else{
-			if(_entity->getPosition().distance(_positionInitial)>0.2){
-				toDirection = _directionInitial * msecs * _velocity;
+		else if(!_wait){
+			float distanciaToInitial=(_positionInitial-_entity->getPosition()).absDotProduct(Vector3(1,1,1));
+			if(distanciaToInitial>=0){
+				toDirection = _directionInitial* msecs * _velocity;
+				//Por si nos pasasemos de la posición inicial
+				if(toDirection.absDotProduct(Vector3(1,1,1))>distanciaToInitial){
+					toDirection=(_positionInitial-_entity->getPosition());
+					_wait=true;
+				}
+
 				Logic::CMessageKinematicMove* m = new Logic::CMessageKinematicMove();
 				m->setMovement(toDirection);
 				_entity->emitMessage(m);

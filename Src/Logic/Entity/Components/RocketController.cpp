@@ -9,16 +9,20 @@
 
 #include "RocketController.h"
 
+#include "Physics/Server.h"
+
 #include "Logic/Maps/EntityFactory.h"
 #include "Logic/Entity/Entity.h"
 #include "Logic/Server.h"
+#include "Logic/GameNetMsgManager.h"
 
-#include "Logic/Entity/Components/ExplotionHitNotifier.h"
-#include "Logic/Entity/Components/PhysicEntity.h"
+#include "Logic/Entity/Components/Graphics.h"
 
 #include "Logic/Messages/MessageSetPhysicPosition.h"
 #include "Logic/Messages/MessageContactEnter.h"
 #include "Logic/Messages/MessageKinematicMove.h"
+#include "Logic/Messages/MessageDamaged.h"
+#include "Logic/Messages/MessageAddForcePlayer.h"
 
 namespace Logic {
 	
@@ -29,31 +33,15 @@ namespace Logic {
 	void CRocketController::tick(unsigned int msecs) {
 		IComponent::tick(msecs);
 
-		//Si hay colision con el enemigo o el mundo, eliminamos la entidad y creamos la explosión
-		if( _enemyHit) {
-			std::cout << "COHETE HIT" << std::endl;
-			// Eliminamos la entidad en diferido
-			CEntityFactory::getSingletonPtr()->deferredDeleteEntity(_entity);
-
-			// Creamos la explosion
-			createExplotion();
-		}
-		//Sino movemos el cohete
-		else{	
-			// Mensaje para situar el collider fisico de la granada en la posicion de disparo.
-			Logic::CMessageKinematicMove* msg = new Logic::CMessageKinematicMove();
-			Vector3 direction= _direction*msecs*0.10;//velocidad a poner parametrizable
-			msg->setMovement(direction);
-			_entity->emitMessage(msg);
-		}
-
 	} // tick
 
 	//________________________________________________________________________
 
 	bool CRocketController::spawn(CEntity *entity, CMap *map, const Map::CEntity *entityInfo) {
-		if(!IComponent::spawn(entity,map,entityInfo))
-			return false;
+		if(!IComponent::spawn(entity,map,entityInfo)) return false;
+			
+		_explotionDamage = entityInfo->getFloatAttribute("explotionDamage");
+		_explotionRadius = entityInfo->getFloatAttribute("explotionRadius");
 
 		return true;
 	} // spawn
@@ -69,10 +57,15 @@ namespace Logic {
 	void CRocketController::process(CMessage *message) {
 		switch(message->getMessageType()) {
 		case Message::CONTACT_ENTER:
-			//Los cohetes solo notifican de contacto contra players y el mundo,
-			//y por lo tanto al recibir este mensaje signfica que ha impactado contra
-			// otro player
-			_enemyHit = true;
+			// Los cohetes solos se destruyen al colisionar
+			// Este mensaje deberia recibirse al tocar cualquier otro
+			// rigidbody del mundo
+
+			// Eliminamos la entidad en diferido
+			CEntityFactory::getSingletonPtr()->deferredDeleteEntity(_entity);
+			Logic::CGameNetMsgManager::getSingletonPtr()->sendDestroyEntity(_entity->getEntityID());
+			// Creamos la explosion
+			createExplotion();
 
 			break;
 		}
@@ -81,22 +74,47 @@ namespace Logic {
 	//________________________________________________________________________
 
 	void CRocketController::createExplotion() {
+		// Hacemos una consulta de overlap para ver si tenemos que mandar
+		// un mensaje de daño
+		CEntity** entitiesHit = NULL;
+		int nbHits = 0;
+		// Hacemos una query de overlap en la posicion en la que se encuentra la granada con el radio
+		// que se indique de explosion
+		Physics::CServer::getSingletonPtr()->overlapExplotion(_entity->getPosition(), _explotionRadius, entitiesHit, nbHits);
+
+		// Mandamos el mensaje de daño a cada una de las entidades que hayamos golpeado
+		// Además aplicamos un desplazamiento al jugador 
+		for(int i = 0; i < nbHits; ++i) {
+			if(entitiesHit[i] != NULL) {
+				//Mensaje Daño
+				CMessageDamaged* msg = new CMessageDamaged();
+				msg->setDamage( _explotionDamage );
+				msg->setEnemy(_owner);
+				entitiesHit[i]->emitMessage(msg);
+				//Mensaje desplazamiento
+				CMessageAddForcePlayer* msg2 = new CMessageAddForcePlayer();
+				msg2->setPower(0.1f);
+				msg2->setVelocity(0.12f);
+				
+				msg2->setDirection(Math::getDirection(_entity->getOrientation()));//Vector3(-1,0,0));
+				entitiesHit[i]->emitMessage(msg2);
+			}
+		}
+
+		if(nbHits > 0) delete [] entitiesHit;
+
 		// Obtenemos la informacion asociada al arquetipo de la explosion del cohete
 		Map::CEntity *entityInfo = CEntityFactory::getSingletonPtr()->getInfo("Explotion");
 		// Creamos la entidad y la activamos
-		CEntity* rocketExplotion = CEntityFactory::getSingletonPtr()->createEntity( entityInfo, Logic::CServer::getSingletonPtr()->getMap() );
+		CEntity* rocketExplotion = CEntityFactory::getSingletonPtr()->createEntityWithTimeOut(entityInfo, Logic::CServer::getSingletonPtr()->getMap(), 200);
 		rocketExplotion->activate();
 
-		// Enviamos el mensaje para situar a la explosion en el punto en el que estaba el cohete
-		Logic::CMessageSetPhysicPosition* msg = new Logic::CMessageSetPhysicPosition();
-		msg->setPosition( _entity->getPosition() ); // spawneamos la explosion justo en el centro del cohete
-		msg->setMakeConversion(false);
-		rocketExplotion->emitMessage(msg);
-
-		// Seteamos la entidad que dispara el cohete
-		CExplotionHitNotifier* comp = rocketExplotion->getComponent<CExplotionHitNotifier>("CExplotionHitNotifier");
-		assert(comp != NULL);
-		comp->setOwner(_owner);
+		// Debido a que la explosion es un mero grafico, situamos la entidad grafica
+		// en el centro de la posicion en la que esta el misil (restando el radio ya
+		// que los graficos tienen el pivote en el pie).
+		CGraphics* graphicComponent = rocketExplotion->getComponent<CGraphics>("CGraphics");
+		assert(graphicComponent != NULL && "No se puede colocar la explosion porque no tiene componente grafico");
+		graphicComponent->setTransform( _entity->getTransform() );
 	} // createExplotion
 
 	//________________________________________________________________________
@@ -105,9 +123,8 @@ namespace Logic {
 		this->_owner = owner;
 	}
 
-	void CRocketController::setDirection(Vector3 direction) {
-		_direction = direction;
-	}
+	//________________________________________________________________________
+
 
 } // namespace Logic
 

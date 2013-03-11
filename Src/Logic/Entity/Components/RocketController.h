@@ -107,8 +107,8 @@ namespace Logic {
 		*/
 		void setOwner(CEntity* _owner);
 
+		//________________________________________________________________________
 
-		void setDirection(Vector3 direction);
 
 	private:
 
@@ -120,6 +120,7 @@ namespace Logic {
 		/** Crea una entidad GrenadeExplotion justo en el lugar en el que se encuentre la granada (_entity). */
 		void createExplotion();
 
+
 		// =======================================================================
 		//                            CAMPOS PRIVADOS
 		// =======================================================================
@@ -127,10 +128,19 @@ namespace Logic {
 		/** Entidad que ha disparado la granada. */
 		CEntity* _owner;
 
-		/** true si la granada a golpeado a un enemigo */
+		/** true si la granada a golpeado a un enemigo. */
 		bool _enemyHit;
 
-		Vector3 _direction;
+		/** Velocidad a la que viaja el misil. */
+		float _rocketSpeed;
+
+		/** Radio de explosion del misil. */
+		float _explotionRadius;
+
+		/** Daño de la explosion. */
+		float _explotionDamage;
+
+
 	}; // class CRocketController
 
 	REG_FACTORY(CRocketController);

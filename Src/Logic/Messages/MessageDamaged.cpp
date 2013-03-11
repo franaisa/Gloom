@@ -14,12 +14,12 @@ namespace Logic {
 	}//
 	//----------------------------------------------------------
 
-	void CMessageDamaged::setDamage(unsigned char damage){
+	void CMessageDamaged::setDamage(float damage){
 		_damage = damage;
 	}//
 	//----------------------------------------------------------
 
-	unsigned char CMessageDamaged::getDamage(){
+	float CMessageDamaged::getDamage(){
 		return _damage;
 	}//
 	//----------------------------------------------------------

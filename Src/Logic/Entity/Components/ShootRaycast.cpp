@@ -52,12 +52,11 @@ namespace Logic {
 			_canShoot = false;
 			_cooldownTimer = 0;
 				
-			drawParticle("fire", "SmokeParticles");
+			drawParticle("fire", "ShootParticle");
 
 			for(int i = 0; i < _numberShots; ++i) {
 				std::pair<CEntity*, Ray> entityHit = fireWeapon();
 				if(entityHit.first != NULL) {
-					printf("impacto con %s\n", entityHit.first->getName().c_str());
 					triggerHitMessages(entityHit);
 				}
 			}

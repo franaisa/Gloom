@@ -16,7 +16,9 @@ de disparo del lanzagranadas.
 #include "Logic/Maps/EntityFactory.h"
 #include "Logic/Entity/Entity.h"
 #include "Logic/Server.h"
-#include "Logic/Entity/Components/ExplotionController.h"
+#include "Logic/Entity/Components/GrenadeController.h"
+#include "Logic/GameNetMsgManager.h"
+#include "../../../Net/Manager.h"
 
 #include "Logic/Messages/MessageSetPhysicPosition.h"
 #include "Logic/Messages/MessageAddForcePhysics.h"
@@ -32,7 +34,7 @@ namespace Logic {
 		aux << "weapon" << _nameWeapon;
 		std::string weapon = aux.str();
 
-		_shootForce = entityInfo->getFloatAttribute(weapon+"ShootForce");
+		_shootForce = entityInfo->getFloatAttribute(weapon + "ShootForce");
 
 		return true;
 	}
@@ -43,18 +45,19 @@ namespace Logic {
 		// Obtenemos la informacion asociada al arquetipo de la granada
 		Map::CEntity *entityInfo = CEntityFactory::getSingletonPtr()->getInfo("Grenade");
 		// Creamos la entidad y la activamos
-		CEntity* grenade = CEntityFactory::getSingletonPtr()->createEntity( entityInfo, Logic::CServer::getSingletonPtr()->getMap() );
+		CEntity* grenade = CEntityFactory::getSingletonPtr()->createEntity(entityInfo, Logic::CServer::getSingletonPtr()->getMap());
 		assert(grenade != NULL);
 		grenade->activate();
 
 		// Seteamos la entidad que dispara la granada
-		CExplotionController* comp = grenade->getComponent<CExplotionController>("CExplotionController");
+		CGrenadeController* comp = grenade->getComponent<CGrenadeController>("CGrenadeController");
 		assert(comp != NULL);
 		comp->setOwner(_entity);
 
 		// Spawneamos la granada justo delante del jugador y a la altura de disparo que corresponda
-		Vector3 myPosition = _entity->getPosition() + ( Math::getDirection( _entity->getOrientation() )* (_capsuleRadius) );
-		myPosition.y = _heightShoot;
+		Vector3 entityPosition = _entity->getPosition();
+		Vector3 myPosition = entityPosition + ( Math::getDirection( _entity->getOrientation() )* (_capsuleRadius) );
+		myPosition.y = entityPosition.y + _heightShoot;
 		grenade->setPosition(myPosition);
 
 		// Mensaje para situar el collider fisico de la granada en la posicion de disparo.
@@ -63,10 +66,18 @@ namespace Logic {
 		msg->setMakeConversion(true);
 		grenade->emitMessage(msg);
 		
+		if(Net::CManager::getSingletonPtr()->imServer())
+			Logic::CGameNetMsgManager::getSingletonPtr()->sendCreateEntity(grenade->getEntityID());
+
 		// Mandar mensaje add force
 		Logic::CMessageAddForcePhysics* forceMsg = new Logic::CMessageAddForcePhysics();
 		forceMsg->setForceVector( Math::getDirection( _entity->getOrientation()) * _shootForce );
+		forceMsg->setGravity(true);
 		grenade->emitMessage(forceMsg);
+
+		//enviamos mensaje por red para que se cree la entidad
+		//NOTA: pregunto por si es el servidor, no vaya a ser que el single player se suicide
+		
 	}
 	
 } // namespace Logic

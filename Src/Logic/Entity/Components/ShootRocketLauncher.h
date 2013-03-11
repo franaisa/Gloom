@@ -41,7 +41,6 @@ namespace Logic {
 		/** Constructor por defecto. */
 		CShootRocketLauncher() : CShootProjectile("RocketLauncher") { }
 
-		//__________________________________________________________________
 
 		virtual bool spawn(CEntity* entity, CMap *map, const Map::CEntity *entityInfo);
 
@@ -53,6 +52,7 @@ namespace Logic {
 	private:
 
 		float _shootForce;
+
 	};
 
 	REG_FACTORY(CShootRocketLauncher);

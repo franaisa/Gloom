@@ -99,10 +99,10 @@ void CPhysicEntity::process(CMessage *message)
 		_movement += ((CMessageKinematicMove*)message)->getMovement();
 		break;
 	case Message::ACTIVATE:
-		activate();
+		activateSimulation();
 		break;
 	case Message::DEACTIVATE:
-		deactivate();
+		deactivateSimulation();
 		break;
 	case Message::SET_PHYSIC_POSITION:
 		{
@@ -111,6 +111,8 @@ void CPhysicEntity::process(CMessage *message)
 		break;
 		}
 	case Message::ADD_FORCE_PHYSICS:
+		if(!((CMessageAddForcePhysics*)message)->getGravity())
+			_actor->setActorFlag(PxActorFlag::eDISABLE_GRAVITY, true);
 		addImpulsiveForce( ((CMessageAddForcePhysics*)message)->getForceVector() );
 		break;
 	}
@@ -313,6 +315,7 @@ void CPhysicEntity::onContact (IPhysics *otherComponent) {
 	Logic::CMessageContactEnter* msg = new Logic::CMessageContactEnter();
 	msg->setEntity( otherComponent->getEntity() );
 	_entity->emitMessage(msg);
+
 }
 
 //---------------------------------------------------------
@@ -332,13 +335,7 @@ void CPhysicEntity::addImpulsiveForce(const Vector3& force) {
 
 //---------------------------------------------------------
 
-void CPhysicEntity::deactivate() {
-	// Setea _activate a false
-	// No desactivamos a IPhysics por que necesitamos que se reciban
-	// MENSAJES de activacio y desactivacion, y por lo tanto, necesitamos
-	// que se ejecute el tick de este componente.
-	//IPhysics::deactivate();
-
+void CPhysicEntity::deactivateSimulation() {
 	// Desactivamos todos los shapes del componente por completo en PhysX
 	// Para ello, obtenemos todos sus shapes y ponemos los flags a false
 
@@ -362,13 +359,7 @@ void CPhysicEntity::deactivate() {
 
 //---------------------------------------------------------
 
-void CPhysicEntity::activate() {
-	// Setea _activate a true
-	// Activamos a IPhysics por que necesitamos que se reciban
-	// MENSAJES de activacio y desactivacion, y por lo tanto, necesitamos
-	// que se ejecute el tick de este componente.
-	//IPhysics::activate();
-
+void CPhysicEntity::activateSimulation() {
 	// Activamos todos los shapes del componente por completo en PhysX
 	// Para ello, obtenemos todos sus shapes y ponemos los flags a true
 
@@ -386,4 +377,6 @@ void CPhysicEntity::activate() {
 		// Esta shape entrara dentro de la simulacion de fisicas
 		actorShapes[i]->setFlag(PxShapeFlag::eSIMULATION_SHAPE , true);
 	}
+
+	delete [] actorShapes;
 }

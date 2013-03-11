@@ -97,25 +97,35 @@ namespace Logic
 
 		//Hacia la posicion final
 		if(_toFinal){
-			if(_entity->getPosition().distance(_positionFinal)>0.2){
+			float distanciaToFinal=(_positionFinal-_entity->getPosition()).absDotProduct(Vector3(1,1,1));
+			if(distanciaToFinal>=0){
 				toDirection = _directionFinal * msecs * _velocity;
+				//Por si nos pasasemos de la posición final
+				if(toDirection.absDotProduct(Vector3(1,1,1))>distanciaToFinal){
+					toDirection=(_positionFinal-_entity->getPosition());
+					_toFinal=false;
+				}
+				
 				Logic::CMessageKinematicMove* m = new Logic::CMessageKinematicMove();
 				m->setMovement(toDirection);
 				_entity->emitMessage(m);
 			}
-			else
-				_toFinal=false;
 		}
 		//Hacia la posicion inicial
 		else{
-			if(_entity->getPosition().distance(_positionInitial)>0.2){
-				toDirection = _directionInitial * msecs * _velocity;
+			float distanciaToInitial=(_positionInitial-_entity->getPosition()).absDotProduct(Vector3(1,1,1));
+			if(distanciaToInitial>=0){
+				toDirection = _directionInitial* msecs * _velocity;
+				//Por si nos pasasemos de la posición inicial
+				if(toDirection.absDotProduct(Vector3(1,1,1))>distanciaToInitial){
+					toDirection=(_positionInitial-_entity->getPosition());
+					_toFinal=true;
+				}
+
 				Logic::CMessageKinematicMove* m = new Logic::CMessageKinematicMove();
 				m->setMovement(toDirection);
 				_entity->emitMessage(m);
 			}
-			else
-				_toFinal=true;
 		}
 
 

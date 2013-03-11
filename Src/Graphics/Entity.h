@@ -153,6 +153,13 @@ namespace Graphics
 		const Vector3 &getScale();
 
 		/**
+		Devuelve el transform de la entidad
+
+		@return Matrix4 del la entidad
+		*/
+		Matrix4 getTransform();
+
+		/**
 		Devuelve la entidad de Ogre.
 
 		@return puntero a la entidad de Ogre.
@@ -164,6 +171,8 @@ namespace Graphics
 		std::string getMesh(){return _mesh;}
 
 		Ogre::SceneNode* getSceneNode() {return _entityNode;}
+
+		void setSceneNode(Ogre::SceneNode *sceneNode) {_entityNode = sceneNode;}
 
 		/**
 		Añade la entidad al SceneManager pasado por parámetro. Si la entidad

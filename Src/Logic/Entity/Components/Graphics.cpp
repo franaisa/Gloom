@@ -67,6 +67,7 @@ namespace Logic
 			// con esto puedo girar lo que quiera cuanto quiera. Lo he probado con el mapa
 		}
 
+		/*
 		//// Esto tb es una guarrada, habra q hacer un componente de luces para controlarlas todas y cargarlas.
 		if(_entity->getName() == "World")
 		{
@@ -76,7 +77,7 @@ namespace Logic
 			luz->setDiffuseColour(1.0f,1.0f,0.0f);
 			luz->setPowerScale(Ogre::Real(550));
 		}
-
+		*/
 		
 
 		return true;
@@ -110,6 +111,8 @@ namespace Logic
 		return _graphicsEntity;
 
 	} // createGraphicsEntity
+
+	//---------------------------------------------------------
 	
 	void CGraphics::setTransform(const Matrix4& transform) {
 		_graphicsEntity->setTransform(transform);
@@ -154,7 +157,16 @@ namespace Logic
 	void CGraphics::activate()
 	{
 		IComponent::activate();
+		_graphicsEntity->setTransform(_entity->getTransform());
 	}
+	//---------------------------------------------------------
+
+	void CGraphics::deactivate()
+	{
+		IComponent::deactivate();
+		
+	}
+
 
 } // namespace Logic
 

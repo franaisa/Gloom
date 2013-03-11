@@ -12,6 +12,8 @@ del juego.
 #include "EntityFactory.h"
 #include "ComponentFactory.h"
 #include "Logic/Entity/Entity.h"
+#include "Logic/Maps/Map.h"
+#include "Logic/Server.h"
 #include "Map.h"
 #include "Map/MapParser.h"
 #include "Map/MapEntity.h"
@@ -51,7 +53,7 @@ namespace Logic
 	
 	//---------------------------------------------------------
 
-	CEntityFactory::CEntityFactory()
+	CEntityFactory::CEntityFactory() : _dynamicCreation(false)
 	{
 		_instance = this;
 
@@ -260,9 +262,8 @@ namespace Logic
 	
 	//---------------------------------------------------------
 
-
 	Logic::CEntity *CEntityFactory::createEntity(
-								const Map::CEntity *entityInfo,
+								Map::CEntity *entityInfo,
 								Logic::CMap *map)
 	{
 		CEntity *ret = assembleEntity(entityInfo->getType());
@@ -272,7 +273,7 @@ namespace Logic
 		// Añadimos la nueva entidad en el mapa antes de inicializarla.
 		map->addEntity(ret);
 		// Y lo inicializamos
-		if (ret->spawn(map, entityInfo))
+		if (_dynamicCreation ? ret->dynamicSpawn(map, entityInfo) : ret->spawn(map, entityInfo))
 			return ret;
 		else {
 			map->removeEntity(ret);
@@ -281,6 +282,14 @@ namespace Logic
 		}
 
 	} // createEntity
+
+	//---------------------------------------------------------
+
+	Logic::CEntity* CEntityFactory::createEntityWithTimeOut(Map::CEntity *entityInfo, CMap *map, unsigned int msecs) {
+		CEntity* createdEntity = createEntity(entityInfo, map);
+		deferredDeleteEntity(createdEntity , msecs);
+		return createdEntity;
+	}
 
 	//---------------------------------------------------------
 
@@ -324,6 +333,13 @@ namespace Logic
 		_pendingEntities.push_back(entity);
 
 	} // deferredDeleteEntity
+
+	//---------------------------------------------------------
+
+	void CEntityFactory::deferredDeleteEntity(CEntity *entity, unsigned int msecs) {
+		assert(entity);
+		Logic::CServer::getSingletonPtr()->getMap()->entityTimeToLive(entity, msecs);
+	}
 	
 	//---------------------------------------------------------
 

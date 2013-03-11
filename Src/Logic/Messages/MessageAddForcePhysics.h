@@ -12,6 +12,8 @@ namespace Logic {
 
 		void setForceVector(const Vector3& force);
 		Vector3 getForceVector();
+		void setGravity(bool gravity);
+		bool getGravity();
 		
 		~CMessageAddForcePhysics(){};
 		
@@ -20,6 +22,7 @@ namespace Logic {
 
 	protected:
 		Vector3 _force;
+		bool _gravity;
 	};
 	REG_FACTORYMESSAGE(CMessageAddForcePhysics);
 

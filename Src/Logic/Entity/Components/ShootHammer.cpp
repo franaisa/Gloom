@@ -36,7 +36,7 @@ namespace Logic {
 		
 		_currentAmmo = 1;
 
-		_damageReflect = entityInfo->getIntAttribute("weaponHammerDamageReflect");
+		_damageReflect = entityInfo->getIntAttribute("weapon"+_nameWeapon+"DamageReflect");
 				
 
 
@@ -54,7 +54,7 @@ namespace Logic {
 	//__________________________________________________________________
 
 	void CShootHammer::triggerHitMessages(std::pair<CEntity*, Ray> entityHit) {
-		if(entityHit.first->getName().compare("World")==0){
+		if(entityHit.first->getType().compare("World")==0){
 			Vector3 direccionOpuestaRay= entityHit.second.getDirection()*-1;
 			Logic::CMessageRebound *m=new Logic::CMessageRebound();
 			m->setDir(direccionOpuestaRay);

@@ -1,0 +1,23 @@
+
+material Material#1_OgreMax
+{
+	technique Map#8
+	{
+		pass Map#9
+		{
+			ambient 0.537255 0.196078 0.196078 1
+			diffuse 0.537255 0.196078 0.196078 1
+			specular 0 0 0 1 10
+
+			texture_unit Map#10
+			{
+				texture rocketl.jpg
+				filtering linear linear linear
+			}
+		}
+
+	}
+
+}
+
+

@@ -24,12 +24,27 @@ namespace Logic {
 
 	//__________________________________________________________________
 
+
+	void CMessageAddForcePhysics::setGravity(bool gravity){
+		_gravity=gravity;
+	}
+
+	//__________________________________________________________________
+
+	bool CMessageAddForcePhysics::getGravity() {
+		return _gravity;
+	}
+
+	//__________________________________________________________________
+
+
 	Net::CBuffer* CMessageAddForcePhysics::serialize() {
 		assert(_tempBuffer == NULL);
 
 		_tempBuffer = new Net::CBuffer(sizeof(int) + (sizeof(float) * 3));
 		_tempBuffer->serialize(std::string("CMessageAddForcePhysics"), true);
 		_tempBuffer->serialize(_force);
+		_tempBuffer->serialize(_gravity);
 
 		return _tempBuffer;
 	}
@@ -38,6 +53,7 @@ namespace Logic {
 
 	void CMessageAddForcePhysics::deserialize(Net::CBuffer& buffer) {
 		buffer.deserialize(_force);
+		buffer.deserialize(_gravity);
 	}
 
 };
