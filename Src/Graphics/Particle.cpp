@@ -42,6 +42,7 @@ Contiene la implementación de la clase que maneja el Particle.
 #include <OgreSceneManager.h>
 #include <OgreParticleSystem.h>
 #include <OgreParticle.h>
+#include <OgreParticleEmitter.h>
 
 namespace Graphics 
 {
@@ -70,8 +71,8 @@ namespace Graphics
 		counter++;
 	} // CParticle
 
-	void CParticle::setPosition(const Vector3 *position){
-		_sceneNode->setPosition(*position);
+	void CParticle::setPosition(const Vector3 &position){
+		_sceneNode->setPosition(position);
 
 	} // setPosition
 
@@ -79,6 +80,13 @@ namespace Graphics
 		return _sceneNode->getPosition();
 	}
 	
+	void CParticle::setDirection(const Vector3 &direction, int emitter){
+		if(_particleSystem->getEmitting() && _particleSystem->getNumEmitters() < emitter)
+		{
+			_particleSystem->getEmitter(emitter)->setDirection(direction);
+		}
+	
+	}
 	//--------------------------------------------------------
 	/*
 	void CParticle::deactivateParticle(const std::string &name) 

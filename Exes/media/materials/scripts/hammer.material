@@ -1,6 +1,7 @@
 
 material Hammer
 {
+	set $glot_tex "Joker_Lieutenant_SledgeHammer_D.tga"
 	technique
 	{
 		pass
@@ -16,7 +17,21 @@ material Hammer
 		}
 
 	}
-
+technique
+	{
+		scheme glow
+		pass
+		{
+			texture_unit
+			{
+				texture $glow_tex
+			}
+			ambient 1 1 1
+			diffuse 1 1 1
+			specular 0 0 0 1
+			emissive 0 0 0
+		}
+	}
 }
 
 
