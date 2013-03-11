@@ -63,13 +63,23 @@ namespace Graphics
 		posiciona la particula en la pos dada
 		@params position, es un vector3 con la posicion donde se ubicada la particula
 		*/
-		void setPosition(const Vector3 *position);
+		void setPosition(const Vector3 &position);
 
 		/**
 		devuelve  la particula en la pos dada
 		@return Vector3 con la posicion donde se ubicada la particula
 		*/
 		Vector3 getPosition();
+
+
+
+		/**
+		Setea la direccion del emisor que se le introduce a la particula, el 0 por defecto
+
+		@param direccion de la particula
+		@param emitter, campo opcional.
+		*/
+		void setDirection(const Vector3 &direction, int emitter = 0);
 
 		/**
 		Devuelve el objeto ogre de la particula
