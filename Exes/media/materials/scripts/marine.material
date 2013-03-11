@@ -1,4 +1,4 @@
-material marine : BaseGlow
+material marine
 {
 	set $diffuse_tex "marine.tga"
 	
