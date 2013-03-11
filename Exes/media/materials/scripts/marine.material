@@ -1,10 +1,13 @@
-
-material marine
+material marine : BaseGlow
 {
-    set $ambientCol "0 0 0 1"
-    set $diffuseCol "1 1 1 1"
-    set $specularCol "2 2 2 100"
+	set $diffuse_tex "marine.tga"
+	
+    set $ambient "0 0 0 1"
+    set $diffuse "1 1 1 1"
+    set $specular "2 2 2 100"
     set $shininess "60"
+	
+	set $glow_tex "marineGlow.tga"
 
     technique
     {
@@ -12,9 +15,9 @@ material marine
         {
             illumination_stage ambient
 
-            ambient $ambientCol
-            diffuse $diffuseCol
-            specular $specularCol $shininess
+            ambient $ambient
+            diffuse $diffuse
+            specular $specular $shininess
             emissive 0 0 0 0
 
             vertex_program_ref ambient_vs
@@ -27,12 +30,12 @@ material marine
 
             texture_unit diffuseMap
             {
-                texture marine.tga
+                texture $diffuse_tex
             }
 
             texture_unit aoMap
             {
-                texture marine.tga
+                texture $diffuse_tex
             }
         }
 
@@ -51,13 +54,13 @@ material marine
             {
             }
 
-            diffuse $diffuseCol
-            specular $specularCol $shininess
-            ambient $ambientCol
+            diffuse $diffuse
+            specular $specular $shininess
+            ambient $ambient
 
             texture_unit diffuseMap
             {
-                texture marine.tga
+                texture $diffuse_tex
             }
 
             texture_unit specMap
@@ -71,4 +74,20 @@ material marine
             }
         }
     }
+	
+	technique
+	{
+		scheme glow
+		pass
+		{
+			texture_unit
+			{
+				texture $glow_tex
+			}
+			ambient 1 1 1
+			diffuse 1 1 1
+			specular 0 0 0 1
+			emissive 0 0 0
+		}
+	}
 }

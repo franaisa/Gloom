@@ -36,6 +36,10 @@ de una escena.
 #include <OgreSceneNode.h>
 #include <OgreParticleSystem.h>
 
+#include <OgreCompositorManager.h>
+#include <OgreMaterialManager.h>
+
+
 namespace Graphics 
 {
 	CScene::CScene(const std::string& name) : _viewport(0), 
@@ -117,6 +121,15 @@ namespace Graphics
 		/*/
 		_sceneMgr->setAmbientLight(Ogre::ColourValue(0,0,0));
 		/* */
+		
+		
+		Ogre::CompositorManager::getSingletonPtr()->addCompositor(_camera->getOgreCamera()->getViewport(), "Glow");
+
+		Ogre::CompositorManager::getSingletonPtr()->setCompositorEnabled(_camera->getOgreCamera()->getViewport(), "Glow", true);
+		
+		GlowMaterialListener *gml = new GlowMaterialListener();
+		Ogre::MaterialManager::getSingletonPtr()->addListener(gml);
+
 	} // activate
 
 	//--------------------------------------------------------

@@ -175,6 +175,11 @@ namespace Logic  {
 		*/
 		Vector3 _serverDirection;
 
+		/**
+		dirección en la que el server se movería en strafe
+		*/
+		Vector3 _serverStrafeDirection;
+
 		float _speed;
 
 		float _rotationSpeed;

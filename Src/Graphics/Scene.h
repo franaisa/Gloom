@@ -19,6 +19,8 @@ de una escena.
 
 #include <list>
 #include "BaseSubsystems/Math.h"
+#include "OgreMaterialManager.h"
+#include "OgreTechnique.h"
 
 // Predeclaración de clases para ahorrar tiempo de compilación
 namespace Ogre 
@@ -176,6 +178,38 @@ namespace Graphics
 
 		void changeAmbientLight(Vector3 Light);
 
+
+		/////////////////////////////////////////////////////////////////////////////////////////
+		/////////////////////////////////////////////////////////////////////////////////////////
+		// SubClase que hago para hacer ciertas pruebas con el Glow guay.
+
+			class GlowMaterialListener : public Ogre::MaterialManager::Listener
+			{
+			protected:
+				Ogre::MaterialPtr mBlackMat;
+			public:
+				GlowMaterialListener()
+				{
+					mBlackMat = Ogre::MaterialManager::getSingleton().create("mGlowBlack", "Internal");
+					mBlackMat->getTechnique(0)->getPass(0)->setDiffuse(0,0,0,0);
+					mBlackMat->getTechnique(0)->getPass(0)->setSpecular(0,0,0,0);
+					mBlackMat->getTechnique(0)->getPass(0)->setAmbient(0,0,0);
+					mBlackMat->getTechnique(0)->getPass(0)->setSelfIllumination(0,0,0);
+				}
+ 
+				Ogre::Technique *handleSchemeNotFound(unsigned short, const Ogre::String& schemeName, Ogre::Material*mat, unsigned short, const Ogre::Renderable*)
+				{
+					if (schemeName == "glow")
+					{
+						//LogManager::getSingleton().logMessage(">> adding glow to material: "+mat->getName());
+						return mBlackMat->getTechnique(0);
+					}
+					return NULL;
+				}
+			};
+
+		/////////////////////////////////////////////////////////////////////////////////////////
+		/////////////////////////////////////////////////////////////////////////////////////////
 	protected:
 
 		/**
