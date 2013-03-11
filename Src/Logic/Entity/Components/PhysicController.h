@@ -140,8 +140,6 @@ namespace Logic
 		// Indica si el character controller esta apoyado sobre una superficie o cayendo.
 		bool _falling;
 
-		bool _stop;
-
 	}; // class CPhysicController
 
 	REG_FACTORY(CPhysicController);

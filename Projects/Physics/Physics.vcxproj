@@ -72,6 +72,7 @@
     <ClCompile Include="..\..\Src\Physics\CollisionManager.cpp" />
     <ClCompile Include="..\..\Src\Physics\CustomControllerBehavior.cpp" />
     <ClCompile Include="..\..\Src\Physics\ErrorManager.cpp" />
+    <ClCompile Include="..\..\Src\Physics\Fluid.cpp" />
     <ClCompile Include="..\..\Src\Physics\Server.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -79,6 +80,7 @@
     <ClInclude Include="..\..\Src\Physics\Conversions.h" />
     <ClInclude Include="..\..\Src\Physics\CustomControllerBehavior.h" />
     <ClInclude Include="..\..\Src\Physics\ErrorManager.h" />
+    <ClInclude Include="..\..\Src\Physics\Fluid.h" />
     <ClInclude Include="..\..\Src\Physics\Server.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -383,6 +383,12 @@ namespace Physics {
 
 	private:
 
+		friend class CFluid;
+
+		physx::PxScene* getActiveScene() { return _scene; }
+
+		physx::PxPhysics* getPhysxSDK() { return _physics; }
+
 		/**
 		Constructor de la clase.
 		*/

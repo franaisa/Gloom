@@ -26,6 +26,19 @@ de disparo del lanzacohetes.
 namespace Logic {
 	IMP_FACTORY(CShootRocketLauncher);
 
+	bool CShootRocketLauncher::spawn(CEntity* entity, CMap *map, const Map::CEntity *entityInfo) {
+		if(!CShootProjectile::spawn(entity, map, entityInfo)) return false;
+
+		// Leer los parametros que toquen para los proyectiles
+		std::stringstream aux;
+		aux << "weapon" << _nameWeapon;
+		std::string weapon = aux.str();
+
+		_shootForce = entityInfo->getFloatAttribute(weapon + "ShootForce");
+
+		return true;
+	}
+
 	//__________________________________________________________________
 
 	void CShootRocketLauncher::fireWeapon() {
@@ -40,7 +53,6 @@ namespace Logic {
 		CRocketController* comp = rocket->getComponent<CRocketController>("CRocketController");
 		assert(comp != NULL);
 		comp->setOwner(_entity);
-		comp->setDirection(Math::getDirection( _entity->getOrientation()));
 
 		// Spawneamos el cohete justo delante del jugador y a la altura de disparo que corresponda
 		Vector3 entityPosition = _entity->getPosition();
@@ -57,6 +69,12 @@ namespace Logic {
 		msg->setPosition(myPosition);
 		msg->setMakeConversion(true);
 		rocket->emitMessage(msg);
+
+		// Mandar mensaje add force
+		Logic::CMessageAddForcePhysics* forceMsg = new Logic::CMessageAddForcePhysics();
+		forceMsg->setForceVector( Math::getDirection( _entity->getOrientation()) * _shootForce );
+		forceMsg->setGravity(false);
+		rocket->emitMessage(forceMsg);
 	}
 	
 } // namespace Logic

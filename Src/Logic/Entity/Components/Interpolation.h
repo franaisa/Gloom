@@ -64,7 +64,7 @@ namespace Logic  {
 		//________________________________________________________________________
 
 		/** Tick de reloj del componente. */
-		virtual void tick();
+		virtual void tick(unsigned int msecs);
 
 		//________________________________________________________________________
 
@@ -99,7 +99,7 @@ namespace Logic  {
 		/**
 		Método que mueve el punto del servidor para que esté actualizado.
 		*/
-		void moveServerPos();
+		void moveServerPos(unsigned int msecs);
 
 		//________________________________________________________________________
 
@@ -174,6 +174,11 @@ namespace Logic  {
 		dirección en la que se está moviendo el server
 		*/
 		Vector3 _serverDirection;
+
+		/**
+		dirección en la que el server se movería en strafe
+		*/
+		Vector3 _serverStrafeDirection;
 
 		float _speed;
 

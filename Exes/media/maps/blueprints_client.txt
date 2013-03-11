@@ -10,3 +10,6 @@ Rocket CGraphics CPhysicEntity CRocketController
 Lava CGraphics CPhysicEntity CLava
 Elevator CGraphics CPhysicEntity CElevator
 ElevatorTrigger CGraphics CPhysicEntity CElevatorTrigger
+SpotLight CLight CGraphics
+DirectionalLight CLight CGraphics
+PointLight CLight CGraphics

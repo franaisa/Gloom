@@ -72,6 +72,7 @@ namespace Logic {
 		// Mandar mensaje add force
 		Logic::CMessageAddForcePhysics* forceMsg = new Logic::CMessageAddForcePhysics();
 		forceMsg->setForceVector( Math::getDirection( _entity->getOrientation()) * _shootForce );
+		forceMsg->setGravity(true);
 		grenade->emitMessage(forceMsg);
 
 		//enviamos mensaje por red para que se cree la entidad
