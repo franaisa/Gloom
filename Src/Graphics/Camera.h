@@ -99,6 +99,8 @@ namespace Graphics
 
 		Ogre::Camera* getOgreCamera() { return _camera; }
 
+
+
 	protected:
 		
 		/**
