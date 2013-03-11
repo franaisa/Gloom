@@ -90,14 +90,14 @@ namespace Graphics
 		if(_currentAnimation)
 		{
 			_currentAnimation->addTime(secs);
-			// Comprobamos si la animación ha terminado para avisar
-			if(_observer && _currentAnimation->hasEnded()){
+			// Comprobamos si la animación ha terminado para avisar, salvo que se trate de una animación final ( en este caso muerte)
+			if(_observer && _currentAnimation->hasEnded() && _currentAnimation->getAnimationName().compare("Death")!=0){
 				_observer->animationFinished(_currentAnimation->getAnimationName());
 			}
 		}
 
 	} // tick
-
+	//--------------------------------------------------------
 
 	void CAnimatedEntity::attachWeapon(CEntity &arma){
 		if(_weapon)

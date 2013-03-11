@@ -45,7 +45,6 @@ namespace Logic
 		if(entityInfo->hasAttribute("defaultAnimation"))
 		{
 			_defaultAnimation = entityInfo->getStringAttribute("defaultAnimation");
-			_animatedGraphicsEntity->setAnimation(_defaultAnimation,true);
 			_animatedGraphicsEntity->setObserver(this);
 		}
 
@@ -84,9 +83,22 @@ namespace Logic
 	void CAnimatedGraphics::activate()
 	{
 		CGraphics::activate();
+
+		//Habria que quitare el string que se pasa por parametro porque no tiene sentido
+		animationFinished("random");
 		_animatedGraphicsEntity->attachWeapon(*_weapons[0]);
 	}
+	//---------------------------------------------------------
 
+	void CAnimatedGraphics::deactivate()
+	{
+		CGraphics::deactivate();
+
+		//En verdad hay que dejar la animación de morir porque desactivaremos al morir
+		//_animatedGraphicsEntity->stopAllAnimations();
+		
+	}
+	//---------------------------------------------------------
 
 	bool CAnimatedGraphics::accept(CMessage *message)
 	{
@@ -130,7 +142,7 @@ namespace Logic
 			_animatedGraphicsEntity->stopAllAnimations();
 			_animatedGraphicsEntity->setAnimation("Damage",false);
 			break;
-		//Creo que no es necesario ya que se hace en el spawn por defecto
+		//Por si en redes se utilizara para algo hay que cambiarlo porque es un nonsense
 		/*case Message::HUD_SPAWN:
 			_animatedGraphicsEntity->stopAllAnimations();
 			_animatedGraphicsEntity->setAnimation("Idle",true);
