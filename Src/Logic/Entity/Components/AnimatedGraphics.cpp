@@ -127,11 +127,14 @@ namespace Logic
 			_animatedGraphicsEntity->setAnimation("Death",false);
 			break;
 		case Message::DAMAGED:
+			_animatedGraphicsEntity->stopAllAnimations();
 			_animatedGraphicsEntity->setAnimation("Damage",false);
 			break;
-		case Message::HUD_SPAWN:
+		//Creo que no es necesario ya que se hace en el spawn por defecto
+		/*case Message::HUD_SPAWN:
+			_animatedGraphicsEntity->stopAllAnimations();
 			_animatedGraphicsEntity->setAnimation("Idle",true);
-			break;
+			break;*/
 		}
 
 	} // process
@@ -140,7 +143,7 @@ namespace Logic
 	
 	void CAnimatedGraphics::animationFinished(const std::string &animation)
 	{
-		// Si acaba una animación y tenemos una por defecto la ponemos
+		// Al acabar una animación ponemos la de por defecto en loop
 		_animatedGraphicsEntity->stopAllAnimations();
 		_animatedGraphicsEntity->setAnimation(_defaultAnimation,true);
 	}
