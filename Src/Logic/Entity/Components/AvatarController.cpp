@@ -547,7 +547,6 @@ namespace Logic
 
 		//Normalizamos y luego calculamos la magnitud correcta para la dirección (sin contar el salto/eje Y)
 		Vector3 directXZY=direction.normalisedCopy();
-
 		//Si saltamos en un jumper nos desplazaremos mucho mas rapido (ignorando si veniamos de un salto lateral/concatenado)
 		//Aplicaremos más velocidad lateral si se trata de un desplazamiento lateral (para desplazarnos más rápido, recorriendo más terreno)
 		//Si ademas esta activa la concatenacion de saltos pues llegaremos mas lejos
@@ -571,7 +570,7 @@ namespace Logic
 			}
 		}
 
-
+		
 		//Calculamos el desplazamiento del salto y lo añadimos al vector que se mandará por mensaje
 		direction.y *= msecs * _speedJump;
 		directXZY.y=direction.y;
