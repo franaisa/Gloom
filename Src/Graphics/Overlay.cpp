@@ -80,6 +80,7 @@ namespace Graphics
 		_overlay = NULL;
 		_overlayContainer = NULL;
 		_overlayText = NULL;
+
 	} // ~COverlay
 
 	//------------------------------------------------------------

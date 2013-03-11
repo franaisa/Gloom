@@ -1,0 +1,46 @@
+particle_system ShootParticle
+{
+	material Particles/Sun.000
+	particle_width 0.1
+	particle_height 0.1
+	quota 10
+	cull_each false
+	sorted false
+	local_space false
+	iteration_interval 0.0
+	nonvisible_update_timeout 0.0
+	billboard_type point
+	billboard_origin center
+	billboard_rotation_type texcoord
+	point_rendering false
+	accurate_facing false
+
+	emitter Point
+	{
+		position 0.0 0.0 0.0
+		direction 1.0 0.0 0.0
+		angle 30
+		emission_rate 200
+		velocity_min 1
+		velocity_max 70.17
+		time_to_live_min 1
+		time_to_live_max 1
+		duration_min 1
+		duration_max 1
+		repeat_delay_min 0
+		repeat_delay_max 0
+		colour_range_start 1 1 1 1
+		colour_range_end 1 1 1 1
+	}
+
+	affector ColourImage
+	{
+		image Blind.png
+	}
+
+	affector Scaler
+	{
+		rate 5
+	}
+
+}

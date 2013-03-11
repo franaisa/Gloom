@@ -64,6 +64,7 @@ namespace Graphics
 			_sceneNode = scene->getSceneMgr()->getRootSceneNode()->createChildSceneNode(nameSceneNode + "_node");
 		}
 		
+		
 		_sceneNode->attachObject(_particleSystem);
 
 		counter++;
