@@ -507,12 +507,13 @@ Map = {
 	
 	Grenade = {
 		type = "Grenade",
-		physic_entity = "fromFile",
-		physic_file = "media/models/mine.RepX",
 		model = "mine.mesh",
 		msgList = "36",
+		physic_entity = "rigid",
 		physic_trigger = false,
 		physic_type = "dynamic",
+		physic_shape = "sphere",
+		physic_radius = 1,
 		physic_mass = 55,
 		physic_group = 3,
 		physic_groupList = "1",
