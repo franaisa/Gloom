@@ -561,7 +561,7 @@ Map = {
 		position = {10.0,10.0,10.0},
 		direction = {0.0,-1.0,0.0},
 		castShadows = true,
-		colour = {0.0,0.0,0.0},
+		colour = {1.0,1.0,1.0},
 		specularColour = {0.0,0.0,0.0},
 		intensity = 1500,
 		innerAngle = 0.8,
@@ -585,11 +585,12 @@ Map = {
 		type = "PointLight",
 		position = {0.0,10.0,0.0},
 		castShadows = true,
-		colour = {0.0,0.0,0.0},
+		colour = {1.0,1.0,1.0},
 		specularColour = {0.0,0.0,0.0},
 		intensity = 1500,
 		static = true,
 		model = "esfera.mesh",
+		intensity = 5,
 	},	
 	
 		lava = {
