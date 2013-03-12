@@ -118,6 +118,8 @@ namespace Logic
 
 		void deactivateSimulation();
 
+		void moveController(Vector3& movement, unsigned int msecs);
+
 	private:
 
 		void readCollisionGroupInfo(const Map::CEntity *entityInfo, int& group, std::vector<int>& groupList);

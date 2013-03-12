@@ -117,7 +117,7 @@ namespace Graphics
 		_sceneMgr->setShadowTechnique(Ogre::SHADOWTYPE_NONE);
 
 		//*
-		_sceneMgr->setAmbientLight(Ogre::ColourValue(.2f,.2f,.2f));
+		_sceneMgr->setAmbientLight(Ogre::ColourValue(.6f,.6f,.6f));
 		/*/
 		_sceneMgr->setAmbientLight(Ogre::ColourValue(0,0,0));
 		/* */

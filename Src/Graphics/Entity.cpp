@@ -97,7 +97,7 @@ namespace Graphics
 		try
 		{
 			_entity = _scene->getSceneMgr()->createEntity(_name, _mesh);
-			_entity->setCastShadows(true);
+			//_entity->setCastShadows(true);
 		}
 		catch(std::exception e)
 		{
