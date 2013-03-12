@@ -513,7 +513,7 @@ namespace Logic
 				_speedJump=_maxSpeedDown;
 		}//if (_jumpingControl)
 
-		//Si hay que aplicar el salto debido a saltos, saltos laterales, rebotes o jumpers
+		//Si hay que aplicar el salto debido a saltos, saltos laterales, rebotes o jumpers/misiles/fuerzas
 		if(_jumping && _canJump || _force ){
 			//Si es una fuerza
 			if(_force){

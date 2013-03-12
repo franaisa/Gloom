@@ -917,7 +917,6 @@ void CServer::overlapExplotion(const Vector3& position, float explotionRadius, L
 		// Rellenamos el buffer con un puntero a cada una de las entidades golpeadas
 		for(int i = 0; i < nbHits; ++i) {
 			IPhysics *component = static_cast<IPhysics*>( hitBuffer[i]->getActor().userData );
-			
 			entitiesHit[i] = component != NULL ? component->getEntity() : NULL;
 		}
 	}
