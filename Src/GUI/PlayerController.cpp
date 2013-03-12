@@ -31,6 +31,8 @@ mover al jugador.
 #include "Logic/Messages/MessageAddLife.h"
 #include "Logic/Messages/MessageAddShield.h"
 
+//MENSAJE PARA DEBBUG
+#include "Logic/Messages/MessageHudDebbug.h"
 
 #define TURN_FACTOR_X 0.001f
 #define TURN_FACTOR_Y 0.001f
@@ -75,8 +77,7 @@ namespace GUI {
 		if(_controlledAvatar)
 		{
 			if(key.keyId == GUI::Key::NUMBER1 || key.keyId == GUI::Key::NUMBER2 || key.keyId == GUI::Key::NUMBER3 || key.keyId == GUI::Key::NUMBER4 || 
-				key.keyId == GUI::Key::NUMBER5 || key.keyId == GUI::Key::NUMBER6
-				|| key.keyId == GUI::Key::NUMBER7 || key.keyId == GUI::Key::NUMBER8){
+				key.keyId == GUI::Key::NUMBER5 || key.keyId == GUI::Key::NUMBER6 || key.keyId == GUI::Key::NUMBER7 || key.keyId == GUI::Key::NUMBER8){
 				
 					Logic::CMessageChangeWeapon *message=new Logic::CMessageChangeWeapon();
 
@@ -118,6 +119,7 @@ namespace GUI {
 					
 			}else{
 				Logic::CMessageControl *m=new Logic::CMessageControl();
+				Logic::CMessageHudDebbug *m2=new Logic::CMessageHudDebbug();
 				switch(key.keyId)
 				{
 				case GUI::Key::W:
@@ -135,10 +137,15 @@ namespace GUI {
 				case GUI::Key::SPACE:
 					m->setType(Logic::Control::JUMP);
 					break;
+				case GUI::Key::O:
+					_controlledAvatar->emitMessage(m2);
+					break;
 				default:
 					return false;
 				}
-				_controlledAvatar->emitMessage(m);
+				if (key.keyId != GUI::Key::O)
+					_controlledAvatar->emitMessage(m);
+
 				return true;
 			}
 		}

@@ -80,18 +80,18 @@ namespace Logic  {
 			direction = direction.normalisedCopy();
 		
 			//calculamos el movimiento que debe hacer el monigote, mucho mas lento del que debe hacer de normal
-			direction *=_speed/5;
-			Vector3 newPos = _entity->getPosition()+direction;
+			direction *=_speed/5*msecs;
+			//Vector3 newPos = _entity->getPosition()+direction;
 			//vemos a ver si hemos recorrido más de lo que deberíamos, y actuamos en consecuencia
-			std::cout << "server pos " << _serverPos.getTrans() << std::endl;
-			std::cout << "mi pos " << _entity->getPosition() << std::endl ;
+			//std::cout << "server pos " << _serverPos.getTrans() << std::endl;
+			//std::cout << "mi pos " << _entity->getPosition() << std::endl ;
 			if(direction.length() > distance){
-				_entity->getComponent<CPhysicController>("CPhysicController")->setPhysicPosition(_serverPos.getTrans());
+				_entity->getComponent<CPhysicController>("CPhysicController")->moveController(direction, msecs);
 			}else{
-				_entity->getComponent<CPhysicController>("CPhysicController")->setPhysicPosition(newPos);
+				_entity->getComponent<CPhysicController>("CPhysicController")->moveController(direction, msecs);
 			}
 			//si nos hemos quedado suficientemente cerquita, dejaremos de interpolar
-			newPos = (newPos - _serverPos.getTrans())*Vector3(1,0,1);
+			Vector3 newPos = (_entity->getPosition() - _serverPos.getTrans())*Vector3(1,0,1);
 			if (newPos.length() < _minDistance)
 				_canInterpolateMove = false;
 			//std::cout << "nueva pos " << newPos << std::endl ;
@@ -224,7 +224,6 @@ namespace Logic  {
 			//std::cout << "server pos mientras " << newPos << std::endl;
 			_serverPos.setTrans(newPos);
 		}
-		//std::cout << "server pos despues " << Math::getDirection(_entity->getYaw()) << std::endl << std::endl;
 		
 		//ahora nos movemos en la dirección del strafe
 		if(_serverStrafeDirection != Vector3(0,0,0)){
@@ -239,9 +238,6 @@ namespace Logic  {
 			_serverPos.setTrans(newPos);
 			//std::cout << "direccion en INTERPOLATION 2 " << _serverStrafeDirection.normalisedCopy()*Math::getDirection(strafe) <<  std::endl << std::endl;
 		}
-
-		
-
 	}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
