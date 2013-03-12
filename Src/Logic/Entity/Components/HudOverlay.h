@@ -38,7 +38,7 @@ namespace Logic
 		/**
 		Constructor por defecto; en la clase base no hace nada.
 		*/
-		CHudOverlay() : IComponent(), _health(0), _shield(0), _ammo(1), _actualWeapon(0), _numWeapons(0), _panelMira(0){
+		CHudOverlay() : IComponent(), _health(0), _shield(0), _ammo(1), _actualWeapon(0), _numWeapons(0), _panelMira(0), _temporal(0){
 			for(int i=0;i<3;++i){
 				_panelElementsText[i]=1;
 			}
@@ -62,6 +62,14 @@ namespace Logic
 		*/
 		virtual void process(CMessage *message);
 		
+		/**
+		Método llamado en cada frame que actualiza el estado del componente.
+		<p>
+		Lo uso para cambiar los valores del debbug
+
+		@param msecs Milisegundos transcurridos desde el último tick.
+		*/
+		virtual void tick(unsigned int msecs);
 
 	protected:
 
@@ -78,6 +86,8 @@ namespace Logic
 		void hudSpawn(int spawn);
 
 		void hudParticle(const std::string &nameParticle);
+
+		void hudDebbug();
 
 		std::string toText(eWeaponIndex weapon);
 		std::string toText(eOverlayWeaponState state);
@@ -142,6 +152,16 @@ namespace Logic
 		*/
 		Graphics::CEntity *_weaponsEntities[6];
 
+
+		/**
+		
+		*/
+		Graphics::COverlay *_overlayDebbug;
+		Graphics::COverlay *_panelDebbug;
+		Graphics::COverlay *_textAreaDebbug;
+
+
+		int _temporal;
 	}; // class CHudOverlay
 
 	REG_FACTORY(CHudOverlay);
