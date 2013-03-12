@@ -297,7 +297,7 @@ material MiniGun_ACTIVE
 			
 			texture_unit MiniGun
 			{
-				texture escopetas.png 2d
+				texture ak47.png 2d
 			}
 		}
 	}
@@ -318,7 +318,7 @@ material MiniGun_NO_WEAPON
 			
 			texture_unit weapon4
 			{
-				texture escopetasSinBalas.png 2d
+				texture ak47SinBalas.png 2d
 			}
 		}
 	}
@@ -339,7 +339,7 @@ material MiniGun_NO_AMMO
 			
 			texture_unit weapon4
 			{
-				texture escopetasBN.png 2d
+				texture ak47BN.png 2d
 			}
 		}
 	}
@@ -360,7 +360,7 @@ material GrenadeLauncher_ACTIVE
 			
 			texture_unit weapon4
 			{
-				texture escopetas.png 2d
+				texture lanzaGranadas.png 2d
 			}
 		}
 	}
@@ -380,7 +380,7 @@ material GrenadeLauncher_NO_AMMO
 			
 			texture_unit weapon5
 			{
-				texture escopetasBN.png 2d
+				texture lanzaGranadasBN.png 2d
 			}
 		}
 	}
@@ -400,7 +400,7 @@ material GrenadeLauncher_NO_WEAPON
 			
 			texture_unit weapon5
 			{
-				texture escopetasSinBalas.png 2d
+				texture lanzaGranadasSinBalas.png 2d
 			}
 		}
 	}
@@ -422,7 +422,7 @@ material RocketLauncher_ACTIVE
 			
 			texture_unit escopeta
 			{
-				texture escopetas.png 2d
+				texture rocket.png 2d
 			}
 		}
 	}
@@ -442,7 +442,7 @@ material RocketLauncher_NO_AMMO
 			
 			texture_unit weapon6
 			{
-				texture escopetasBN.png 2d
+				texture rocketBN.png 2d
 			}
 		}
 	}
@@ -462,7 +462,7 @@ material RocketLauncher_NO_WEAPON
 			
 			texture_unit weapon6
 			{
-				texture escopetasSinBalas.png 2d
+				texture rocketSinBalas.png 2d
 			}
 		}
 	}
