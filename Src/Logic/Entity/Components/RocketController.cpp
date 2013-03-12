@@ -95,8 +95,9 @@ namespace Logic {
 				CMessageAddForcePlayer* msg2 = new CMessageAddForcePlayer();
 				msg2->setPower(0.1f);
 				msg2->setVelocity(0.12f);
-				
-				msg2->setDirection(Math::getDirection(_entity->getOrientation()));//Vector3(-1,0,0));
+				Vector3 direccionImpacto=entitiesHit[i]->getPosition()-_entity->getPosition();
+				direccionImpacto.normalise();
+				msg2->setDirection(direccionImpacto);
 				entitiesHit[i]->emitMessage(msg2);
 			}
 		}

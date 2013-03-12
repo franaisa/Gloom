@@ -310,7 +310,7 @@ void CServer::createScene () {
 
 	_scene->setFlag(PxSceneFlag::eENABLE_KINEMATIC_PAIRS, true);
 	_scene->setFlag(PxSceneFlag::eENABLE_KINEMATIC_STATIC_PAIRS, true);
-	setGroupCollisions(1, 4, false);
+	//setGroupCollisions(1, 1, false);
 }
 
 //--------------------------------------------------------
@@ -669,7 +669,8 @@ PxCapsuleController* CServer::createCapsuleController(const Vector3 &position, i
 	controller->getActor()->userData = (void *) component;
 
 	// Establecer el grupo de colisión
-	//PxSetGroup(*actor, group);
+
+	PxSetGroup(*controller->getActor(), group);
 
 	setupFiltering(controller->getActor(), group, groupList);
 
@@ -916,7 +917,6 @@ void CServer::overlapExplotion(const Vector3& position, float explotionRadius, L
 		// Rellenamos el buffer con un puntero a cada una de las entidades golpeadas
 		for(int i = 0; i < nbHits; ++i) {
 			IPhysics *component = static_cast<IPhysics*>( hitBuffer[i]->getActor().userData );
-			
 			entitiesHit[i] = component != NULL ? component->getEntity() : NULL;
 		}
 	}

@@ -245,7 +245,7 @@ void CPhysicController::deactivateSimulation() {
 		// Esta shape no entrara dentro de la simulacion de fisicas
 		actorShapes[i]->setFlag(PxShapeFlag::eSIMULATION_SHAPE , false);
 	}
-
+	_controller->setInteraction(PxCCTInteractionMode::eEXCLUDE);
 	delete [] actorShapes;
 }
 
@@ -264,6 +264,6 @@ void CPhysicController::activateSimulation() {
 		// Esta shape entrara dentro de la simulacion de fisicas
 		actorShapes[i]->setFlag(PxShapeFlag::eSIMULATION_SHAPE , true);
 	}
-
+	_controller->setInteraction(PxCCTInteractionMode::eINCLUDE);
 	delete [] actorShapes;
 }
