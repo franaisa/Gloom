@@ -45,7 +45,6 @@ namespace Logic
 		if(entityInfo->hasAttribute("defaultAnimation"))
 		{
 			_defaultAnimation = entityInfo->getStringAttribute("defaultAnimation");
-			_animatedGraphicsEntity->setAnimation(_defaultAnimation,true);
 			_animatedGraphicsEntity->setObserver(this);
 		}
 
@@ -84,9 +83,22 @@ namespace Logic
 	void CAnimatedGraphics::activate()
 	{
 		CGraphics::activate();
+
+		//Habria que quitare el string que se pasa por parametro porque no tiene sentido
+		animationFinished("random");
 		_animatedGraphicsEntity->attachWeapon(*_weapons[0]);
 	}
+	//---------------------------------------------------------
 
+	void CAnimatedGraphics::deactivate()
+	{
+		CGraphics::deactivate();
+
+		//En verdad hay que dejar la animación de morir porque desactivaremos al morir
+		//_animatedGraphicsEntity->stopAllAnimations();
+		
+	}
+	//---------------------------------------------------------
 
 	bool CAnimatedGraphics::accept(CMessage *message)
 	{
@@ -127,11 +139,14 @@ namespace Logic
 			_animatedGraphicsEntity->setAnimation("Death",false);
 			break;
 		case Message::DAMAGED:
+			_animatedGraphicsEntity->stopAllAnimations();
 			_animatedGraphicsEntity->setAnimation("Damage",false);
 			break;
-		case Message::HUD_SPAWN:
+		//Por si en redes se utilizara para algo hay que cambiarlo porque es un nonsense
+		/*case Message::HUD_SPAWN:
+			_animatedGraphicsEntity->stopAllAnimations();
 			_animatedGraphicsEntity->setAnimation("Idle",true);
-			break;
+			break;*/
 		}
 
 	} // process
@@ -140,7 +155,7 @@ namespace Logic
 	
 	void CAnimatedGraphics::animationFinished(const std::string &animation)
 	{
-		// Si acaba una animación y tenemos una por defecto la ponemos
+		// Al acabar una animación ponemos la de por defecto en loop
 		_animatedGraphicsEntity->stopAllAnimations();
 		_animatedGraphicsEntity->setAnimation(_defaultAnimation,true);
 	}

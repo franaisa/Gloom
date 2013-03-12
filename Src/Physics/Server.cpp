@@ -311,7 +311,7 @@ void CServer::createScene () {
 
 	_scene->setFlag(PxSceneFlag::eENABLE_KINEMATIC_PAIRS, true);
 	_scene->setFlag(PxSceneFlag::eENABLE_KINEMATIC_STATIC_PAIRS, true);
-	setGroupCollisions(1, 4, false);
+	//setGroupCollisions(1, 1, false);
 }
 
 //--------------------------------------------------------
@@ -670,7 +670,8 @@ PxCapsuleController* CServer::createCapsuleController(const Vector3 &position, i
 	controller->getActor()->userData = (void *) component;
 
 	// Establecer el grupo de colisión
-	//PxSetGroup(*actor, group);
+
+	PxSetGroup(*controller->getActor(), group);
 
 	setupFiltering(controller->getActor(), group, groupList);
 

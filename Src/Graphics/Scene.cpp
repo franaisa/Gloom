@@ -36,6 +36,10 @@ de una escena.
 #include <OgreSceneNode.h>
 #include <OgreParticleSystem.h>
 
+#include <OgreCompositorManager.h>
+#include <OgreMaterialManager.h>
+
+
 namespace Graphics 
 {
 	CScene::CScene(const std::string& name) : _viewport(0), 
@@ -109,14 +113,23 @@ namespace Graphics
 						->addViewport(_camera->getCamera());
 		_viewport->setBackgroundColour(Ogre::ColourValue::Black);
 
-		
-		_sceneMgr->setShadowTechnique(Ogre::SHADOWTYPE_TEXTURE_MODULATIVE);
-		
+		//_sceneMgr->setShadowTechnique(Ogre::SHADOWTYPE_STENCIL_ADDITIVE);
+		_sceneMgr->setShadowTechnique(Ogre::SHADOWTYPE_NONE);
+
 		//*
 		_sceneMgr->setAmbientLight(Ogre::ColourValue(.2f,.2f,.2f));
 		/*/
 		_sceneMgr->setAmbientLight(Ogre::ColourValue(0,0,0));
 		/* */
+		
+		
+		Ogre::CompositorManager::getSingletonPtr()->addCompositor(_camera->getOgreCamera()->getViewport(), "Glow");
+
+		Ogre::CompositorManager::getSingletonPtr()->setCompositorEnabled(_camera->getOgreCamera()->getViewport(), "Glow", true);
+		
+		GlowMaterialListener *gml = new GlowMaterialListener();
+		Ogre::MaterialManager::getSingletonPtr()->addListener(gml);
+
 	} // activate
 
 	//--------------------------------------------------------
@@ -202,11 +215,14 @@ namespace Graphics
 		sceneNode->removeChild(entity->getName());
 	}
 */
-	CParticle * CScene::createParticle(const std::string &unicName, const std::string &particleName, const Vector3 *position){
+	CParticle * CScene::createParticle(const std::string &unicName, const std::string &particleName, const Vector3 &position, Vector3 *direction){
 
 		CParticle *particle = new CParticle(unicName, particleName);
 
 		particle->setPosition(position);
+
+		if(direction)
+			particle->setDirection(*direction);
 
 		return particle;
 

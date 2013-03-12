@@ -1,4 +1,3 @@
-
 material Material01
 {
 	technique
@@ -17,6 +16,8 @@ material Material01
 		}
 
 	}
+	
+	
 
 }
 

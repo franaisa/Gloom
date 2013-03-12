@@ -1,0 +1,16 @@
+<PhysicsPlugin>
+    <ExporterSettings ExportPhysXScene="true" PhysXSceneFileFormat=".RepX" ExportAPEXClothing="false" APEXClothingFileFormat="apx" APEXClothingExportCtp="true" APEXClothingExportCtw="true" APEXReverseWinding="false" APEXClothingAddHulls="true" APEXClothingOmitMeshSubpartName="false" />
+    <GraphicsExport File="mine.fbx" />
+    <PhysicsExport SDK="3.2.0" PhysXScene="mine.RepX" />
+    <ClothingTool SDK="unknown" CTP="" />
+    <SceneParameters>
+        <AnimationRange Start="0" End="100" FrameRate="30" FrameSubStepCount="3" />
+        <LengthUnit Type="centimeters" />
+        <GroundPlane Enabled="false" />
+        <Gravity Enabled="true" Value="0 0 0" />
+        <Simulation SolverIteration="30" SimulationLoop="Continue Simulation" LastFrameMode="Continue Simulation" />
+    </SceneParameters>
+    <SceneObjects>
+        <RigidBody Attach="subdivisio" Type="Dynamic" Position="-18.087 2.3909 -7.14305" SwitchEnabled="false" SwitchAtFrame="0" Velocity="0 0 0" Spin="0 0 0" />
+    </SceneObjects>
+</PhysicsPlugin>

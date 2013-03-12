@@ -21,6 +21,7 @@
 #include "Logic/Messages/MessageSetPhysicPosition.h"
 #include "Logic/Messages/MessageContactEnter.h"
 #include "Logic/Messages/MessageDamaged.h"
+#include "Logic/Messages/MessageAddForcePlayer.h"
 
 namespace Logic {
 	
@@ -93,12 +94,21 @@ namespace Logic {
 		Physics::CServer::getSingletonPtr()->overlapExplotion(_entity->getPosition(), _explotionRadius, entitiesHit, nbHits);
 
 		// Mandamos el mensaje de daño a cada una de las entidades que hayamos golpeado
+		// Además aplicamos un desplazamiento al jugador 
 		for(int i = 0; i < nbHits; ++i) {
 			if(entitiesHit[i] != NULL) {
 				CMessageDamaged* msg = new CMessageDamaged();
 				msg->setDamage( _explotionDamage );
 				msg->setEnemy(_owner);
 				entitiesHit[i]->emitMessage(msg);
+				//Mensaje desplazamiento
+				CMessageAddForcePlayer* msg2 = new CMessageAddForcePlayer();
+				msg2->setPower(0.1f);
+				msg2->setVelocity(0.12f);
+				Vector3 direccionImpacto=(entitiesHit[i]->getPosition()-_entity->getPosition());
+				direccionImpacto.normalise();
+				msg2->setDirection(direccionImpacto);
+				entitiesHit[i]->emitMessage(msg2);
 			}
 		}
 

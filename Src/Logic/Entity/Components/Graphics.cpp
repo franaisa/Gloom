@@ -157,7 +157,16 @@ namespace Logic
 	void CGraphics::activate()
 	{
 		IComponent::activate();
+		_graphicsEntity->setTransform(_entity->getTransform());
 	}
+	//---------------------------------------------------------
+
+	void CGraphics::deactivate()
+	{
+		IComponent::deactivate();
+		
+	}
+
 
 } // namespace Logic
 

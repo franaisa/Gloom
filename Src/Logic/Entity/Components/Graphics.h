@@ -90,6 +90,8 @@ namespace Logic
 		*/
 		virtual void activate();
 
+		virtual void deactivate();
+
 
 		/**
 		Método virtual que procesa un mensaje.

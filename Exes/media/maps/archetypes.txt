@@ -1,7 +1,5 @@
 Map = {
 
-	
-	
 	World = {
 		type = "World",
 		position = {0, 0, 0},
@@ -60,6 +58,7 @@ Map = {
 		physic_groupList = "-1",
 		numWeapons = 6,
 		heightShoot = 8,
+		defaultAnimation ="Idle",
 
 			weaponHammerName = "Hammer",
 			weaponHammerModel = "hammer.mesh",
@@ -189,7 +188,6 @@ Map = {
 		position = {0, 8, 0},
 		msgList= "3, 10",
 		timeSpawn = 4,
-		
 		life = 12,
 		shield = 0,
 		maxShield = 100,
@@ -215,6 +213,7 @@ Map = {
 		physic_groupList = "-1",
 		numWeapons = 6,
 		heightShoot = 8,
+		defaultAnimation ="Idle",
 
 			weaponHammerName = "Hammer",
 			weaponHammerModel = "hammer.mesh",
@@ -242,7 +241,7 @@ Map = {
 			weaponSniperColdDown = 2.0,
 			weaponSniperMaxAmmo = 10,
 			weaponSniperId = 1,
-			weaponSniperParticlePosition = {50.0, 50.0, 50.0},
+			weaponSniperParticlePosition = {30.0,50.0, 30.0},
 			
 			weaponShotGunName = "Shotgun",
 			weaponShotGunModel = "UziLeft.mesh",
@@ -357,7 +356,7 @@ Map = {
 		model = "marine.mesh",
 		syncPosTimeStamp = 0.1,
 		timeSpawn = 4,
-		life = 12,
+		life = 50,
 		shield = 0,
 		maxShield = 100,
 		maxLife = 120,
@@ -508,13 +507,12 @@ Map = {
 	
 	Grenade = {
 		type = "Grenade",
+		physic_entity = "fromFile",
+		physic_file = "media/models/mine.RepX",
 		model = "mine.mesh",
 		msgList = "36",
-		physic_entity = "rigid",
 		physic_trigger = false,
 		physic_type = "dynamic",
-		physic_shape = "sphere",
-		physic_radius = 1,
 		physic_mass = 55,
 		physic_group = 3,
 		physic_groupList = "1",

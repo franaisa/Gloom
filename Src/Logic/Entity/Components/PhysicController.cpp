@@ -134,7 +134,9 @@ void CPhysicController::tick(unsigned int msecs)
 //---------------------------------------------------------
 
 void  CPhysicController::setPhysicPosition (const Vector3 &position){
+	//Teletransportamos al player y ponemos la logica en el mismo momento(sino ocurrirían teletransportaciones gráficas)
 	_server->setControllerPosition(_controller, position);
+	_entity->setPosition(_server->getControllerPosition(_controller));
 }
 
 
@@ -243,7 +245,7 @@ void CPhysicController::deactivateSimulation() {
 		// Esta shape no entrara dentro de la simulacion de fisicas
 		actorShapes[i]->setFlag(PxShapeFlag::eSIMULATION_SHAPE , false);
 	}
-
+	_controller->setInteraction(PxCCTInteractionMode::eEXCLUDE);
 	delete [] actorShapes;
 }
 
@@ -262,6 +264,6 @@ void CPhysicController::activateSimulation() {
 		// Esta shape entrara dentro de la simulacion de fisicas
 		actorShapes[i]->setFlag(PxShapeFlag::eSIMULATION_SHAPE , true);
 	}
-
+	_controller->setInteraction(PxCCTInteractionMode::eINCLUDE);
 	delete [] actorShapes;
 }
