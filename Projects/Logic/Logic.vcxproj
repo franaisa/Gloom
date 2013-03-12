@@ -141,6 +141,7 @@
     <ClCompile Include="..\..\Src\Logic\Messages\MessageChangeWeaponGraphics.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageCollisionDown.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageContactEnter.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Messages\MessageContactExit.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageControl.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageDamaged.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageDeactivate.cpp" />
@@ -236,6 +237,7 @@
     <ClInclude Include="..\..\Src\Logic\Messages\MessageChangeWeaponGraphics.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageCollisionDown.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageContactEnter.h" />
+    <ClInclude Include="..\..\Src\Logic\Messages\MessageContactExit.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageControl.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageDamaged.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageDeactivate.h" />

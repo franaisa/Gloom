@@ -66,8 +66,8 @@ namespace Logic
 
 	bool CElevator::accept(CMessage *message)
 	{
-		return message->getMessageType() == Message::TOUCHED|| 
-			message->getMessageType() == Message::UNTOUCHED;
+		return message->getMessageType() == Message::CONTACT_ENTER ||
+			message->getMessageType() == Message::CONTACT_EXIT;
 	} // accept
 	
 	//---------------------------------------------------------
@@ -76,10 +76,10 @@ namespace Logic
 	{
 		switch(message->getMessageType())
 		{
-		case Message::TOUCHED:
+		case Message::CONTACT_ENTER:
 			_toFinal=true;
 			break;
-		case Message::UNTOUCHED:
+		case Message::CONTACT_EXIT:
 			_toFinal=false;
 			break;
 		}
@@ -109,6 +109,11 @@ namespace Logic
 				_entity->emitMessage(m);
 			}
 		}
+
+
+
+
+
 	} // tick
 	//----------------------------------------------------------
 

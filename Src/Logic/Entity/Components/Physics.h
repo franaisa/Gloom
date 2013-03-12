@@ -61,7 +61,7 @@ namespace Logic
 
 		@param otherComponent Componente asociado a la otra entidad que nos ha golpeado.
 		*/
-		virtual void onContact(IPhysics *otherComponent) = 0;
+		virtual void onContact(IPhysics *otherComponent, bool enter) = 0;
 
 	}; // class IPhysics
 

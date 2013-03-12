@@ -215,9 +215,10 @@ void CPhysicController::onShapeHit (const PxControllerShapeHit &hit)
 		return;
 
 	// Si chocamos contra una entidad cinemática no hacemos nada
-	if (_server->isKinematic(actor))
+	if (_server->isKinematic(actor)){
+		//std::cout << _entity->getName() << " es un actor que chocó con " << ((IPhysics*)((PxRigidActor&)hit.shape->getActor()).userData)->getEntity()->getName() << std::endl;
 		return;
-
+	}
 	// Aplicar una fuerza a la entidad en la dirección del movimiento
 	//actor->addForce(hit.dir * hit.length * 1000.0f);
 }
@@ -231,6 +232,13 @@ void CPhysicController::onControllerHit (const PxControllersHit &hit)
 
 //---------------------------------------------------------
 
+void CPhysicController::onContact (IPhysics *otherComponent,bool enter)
+{
+	//std::cout<< "contacto entre kinematics en oncontact" << std::endl;
+	std::cout << "ONCONTACT. Estoy en "<<_entity->getName() <<" contacto con algo que es " << otherComponent->getEntity()->getName() << std::endl;
+}
+
+//---------------------------------------------------------
 
 void CPhysicController::deactivateSimulation() {
 	// Desactivamos todos los shapes del componente por completo en PhysX

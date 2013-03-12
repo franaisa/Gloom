@@ -90,6 +90,7 @@ Map = {
 		physic_dimensions = { 2, 2, 2 },
 		physic_mass = 1,
 		physic_group = 5,
+		physic_groupList = "1",
 	},
 	
 	Ascensor1T = {
