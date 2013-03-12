@@ -1,0 +1,81 @@
+<PhysX30Collection version="3.2.0" >
+	<UpVector >0 0 0</UpVector>
+	<Scale >
+		<Length >1</Length>
+		<Mass >1000</Mass>
+		<Speed >10</Speed>
+	</Scale>
+	<PxMaterial >
+		<Id >1361079712</Id>
+		<DynamicFriction >0.3</DynamicFriction>
+		<StaticFriction >0.3</StaticFriction>
+		<Restitution >0.5</Restitution>
+		<FrictionCombineMode >eAVERAGE</FrictionCombineMode>
+		<RestitutionCombineMode >eAVERAGE</RestitutionCombineMode>
+	</PxMaterial>
+	<PxConvexMesh >
+		<Id >1361078752</Id>
+		<points > -20.5079 4.7733 6.12559 -20.9583 -2.85866 3.64151
+			-18.2268 2.65042 6.99825 -15.6654 0.00794053 -6.12535
+			-16.2915 -4.34623 -0.673009 -22.0204 -1.90928 -3.88541
+			-22.73 7.59135 0.673251 -19.8818 9.12747 0.673251
+			-22.6121 5.72268 -4.18059 -13.4434 -2.8101 -0.673009
+			-13.5612 -0.941437 4.18084 -12.3327 3.31572 -3.88541
+			-15.215 7.6399 -3.64126 -11.1966 3.31572 -0.855441
+			-17.9465 2.13082 -6.99801 -24.0505 2.87454 -3.64126
+			-24.9767 1.46552 0.855684 -12.1228 1.9067 3.64151
+			-14.1529 6.69052 3.88565 -18.4959 -1.90928 5.51413
+			-20.9963 -3.80803 -1.47346 -17.6774 6.69052 -5.51389
+			-15.177 8.58928 1.4737 -24.1625 3.36428 3.34633
+			-22.6445 -2.85866 -0.855441 -13.5288 7.6399 0.855684
+			-18.8355 0.370574 -6.66468 -18.7476 5.72268 6.12559
+			-11.3086 1.41696 -1.47346 -24.3438 0.292024 2.34635
+			-22.7934 2.65042 -5.18056 -20.2675 8.54073 2.54588</points>
+	</PxConvexMesh>
+	<PxRigidDynamic >
+		<Id >1361078416</Id>
+		<Name >subdivisio</Name>
+		<ActorFlags >eVISUALIZATION</ActorFlags>
+		<DominanceGroup >0</DominanceGroup>
+		<OwnerClient >0</OwnerClient>
+		<ClientBehaviorBits >0</ClientBehaviorBits>
+		<GlobalPose >0 7.45058e-009 0 1 -18.087 2.3909 -7.14305</GlobalPose>
+		<Shapes >
+			<PxShape >
+				<Geometry >
+					<PxConvexMeshGeometry >
+						<Scale >
+							<Scale >1 1 1</Scale>
+							<Rotation >0 0 0 1</Rotation>
+						</Scale>
+						<ConvexMesh >1361078752</ConvexMesh>
+					</PxConvexMeshGeometry>
+				</Geometry>
+				<LocalPose >0 0 0 1 18.087 -2.3909 7.14305</LocalPose>
+				<SimulationFilterData >1 0 1 0</SimulationFilterData>
+				<QueryFilterData >0 0 0 0</QueryFilterData>
+				<Materials >
+					<PxMaterialRef >1361079712</PxMaterialRef>
+				</Materials>
+				<ContactOffset >0.0787402</ContactOffset>
+				<RestOffset >0.0393701</RestOffset>
+				<Flags >eSIMULATION_SHAPE|eSCENE_QUERY_SHAPE|eVISUALIZATION</Flags>
+				<Name >subdivisio</Name>
+			</PxShape>
+		</Shapes>
+		<CMassLocalPose >0.347463 -0.0501739 0.229497 0.90779 -0.0189667 0.0545716 7.11908</CMassLocalPose>
+		<Mass >498969</Mass>
+		<MassSpaceInertiaTensor >8.13312e+006 8.34626e+006 8.39093e+006</MassSpaceInertiaTensor>
+		<LinearVelocity >0 0 0</LinearVelocity>
+		<AngularVelocity >0 0 0</AngularVelocity>
+		<LinearDamping >0</LinearDamping>
+		<AngularDamping >0.05</AngularDamping>
+		<MaxAngularVelocity >7</MaxAngularVelocity>
+		<SleepThreshold >0.005</SleepThreshold>
+		<SolverIterationCounts >
+			<minPositionIters >30</minPositionIters>
+			<minVelocityIters >1</minVelocityIters>
+		</SolverIterationCounts>
+		<ContactReportThreshold >3.40282e+038</ContactReportThreshold>
+	</PxRigidDynamic>
+</PhysX30Collection>
