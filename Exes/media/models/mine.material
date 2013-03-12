@@ -1,34 +1,11 @@
-
-material grey2
+material NoMaterial
 {
 	technique
 	{
 		pass
 		{
-			ambient 0.231373 0.282353 0.247059 1
-			diffuse 0.231373 0.282353 0.247059 1
-			specular 0.3 0.3 0.3 1 75
 		}
 
 	}
 
 }
-
-
-
-material grey1
-{
-	technique
-	{
-		pass
-		{
-			ambient 0.34902 0.364706 0.352941 1
-			diffuse 0.34902 0.364706 0.352941 1
-			specular 0.3 0.3 0.3 1 75
-		}
-
-	}
-
-}
-
-
