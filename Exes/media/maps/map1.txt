@@ -295,30 +295,26 @@ Map = {
 		type = "SpotLight",
 		position = {0.0,75.0,00.0},
 		direction = {0.0,-1.0,0.0},
-		intensity = 5,
+		intensity = 20,
 	},
 	SpotLight6 = {
 		type = "SpotLight",
 		position = {-153.0,40.0,171},
 		direction = {0.0,-1.0,0.0},
-		intensity = 5,
 	},
 	SpotLight7 = {
 		type = "SpotLight",
 		position = {-153.0,40.0,-171},
 		direction = {0.0,-1.0,0.0},
-		intensity = 5,
 	},
 	SpotLight8 = {
 		type = "SpotLight",
 		position = {153.0,40.0,171},
 		direction = {0.0,-1.0,0.0},
-		intensity = 5,
 	},
 	SpotLight9 = {
 		type = "SpotLight",
 		position = {153.0,40.0,-171},
 		direction = {0.0,-1.0,0.0},
-		intensity = 5,
 	},
 }
