@@ -195,6 +195,9 @@ namespace Logic  {
 
 			}//switch
 
+			std::cout << "serverDirection = " << _serverDirection << std::endl;
+			std::cout << "serverStrafeDirection = " << _serverStrafeDirection << std::endl << std::endl;
+
 			break;
 			}//case Message::CONTROL:
 
