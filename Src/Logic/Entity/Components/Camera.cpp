@@ -93,6 +93,7 @@ namespace Logic
 
 	void CCamera::process(CMessage *message)
 	{
+		std::cout << "camera to enemy" << std::endl;
 		switch(message->getMessageType())
 		{
 		case Message::CAMERA_TO_ENEMY:

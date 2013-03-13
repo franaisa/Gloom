@@ -79,7 +79,7 @@ namespace Logic  {
 			}
 
 			// Volvemos a activar todos los componentes
-			_entity->activate();
+			//_entity->activate();
 			
 			break;
 			}
