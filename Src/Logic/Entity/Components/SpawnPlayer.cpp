@@ -20,6 +20,7 @@ Contiene la implementación del componente que gestiona el spawn del jugador.
 
 
 #include "Logic/Messages/MessagePlayerDead.h"
+#include "Logic/Messages/MessagePlayerSpawn.h"
 #include "Logic/Messages/MessageSetPhysicPosition.h"
 #include "Logic/Messages/MessageHudSpawn.h"
 
@@ -109,6 +110,11 @@ namespace Logic
 				//Establecemos la orientación adecuada segun la devolución del manager de spawn
 				_entity->setYaw(180);
 
+				// Si eres el server mandar un mensaje de spawn
+				Logic::CMessagePlayerSpawn* spawnMsg = new Logic::CMessagePlayerSpawn();
+				spawnMsg->setSpawnPosition(spawn);
+				_entity->emitMessage(spawnMsg);
+
 				Logic::CMessageHudSpawn *mS=new Logic::CMessageHudSpawn();
 				mS->setTime(0);
 				_entity->emitMessage(mS);
@@ -128,7 +134,7 @@ namespace Logic
 			except.push_back( std::string("CAnimatedGraphics") );
 			except.push_back( std::string("CSpawnPlayer") );
 			except.push_back( std::string("CHudOverlay") );
-			except.push_back( std::string("CNetConnector"));
+			except.push_back( std::string("CNetConnector") );
 
 			//Desactivamos la simulación física (no puede estar activo en la escena física al morir)
 			_entity->getComponent<CPhysicController>("CPhysicController")->deactivateSimulation();

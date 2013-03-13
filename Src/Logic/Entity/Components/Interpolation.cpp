@@ -95,7 +95,7 @@ namespace Logic  {
 			if (newPos.length() < _minDistance)
 				_canInterpolateMove = false;
 			//std::cout << "nueva pos " << newPos << std::endl ;
-			std::cout << "nueva pos lenght " << newPos.length() << std::endl << std::endl;
+			//std::cout << "nueva pos lenght " << newPos.length() << std::endl << std::endl;
 		}//if
 		if(_canInterpolateRotation){
 
@@ -142,8 +142,7 @@ namespace Logic  {
 			// nos guardamos la posi que nos han dado por si tenemos que interpolar
 			_serverPos = syncMsg->getTransform();
 			//calculo el ping que tengo ahora mismo
-			_actualPing = syncMsg->getTime();
-			_actualPing = clock()+Logic::CServer::getSingletonPtr()->getDiffTime()-_actualPing;
+			_actualPing = clock()+Logic::CServer::getSingletonPtr()->getDiffTime()-syncMsg->getTime();
 			//calculamos la interpolacion
 			calculateInterpolation();
 
@@ -195,6 +194,9 @@ namespace Logic  {
 				break;
 
 			}//switch
+
+			//std::cout << "serverDirection = " << _serverDirection << std::endl;
+			//std::cout << "serverStrafeDirection = " << _serverStrafeDirection << std::endl << std::endl;
 
 			break;
 			}//case Message::CONTROL:

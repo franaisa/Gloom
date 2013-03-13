@@ -16,3 +16,4 @@ Hacksaw CGraphics CPhysicEntity CHacksaw
 SpotLight CLight CGraphics
 DirectionalLight CLight CGraphics
 PointLight CLight CGraphics
+ContenedorLava CGraphics CPhysicEntity

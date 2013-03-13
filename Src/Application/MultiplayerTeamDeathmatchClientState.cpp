@@ -100,8 +100,8 @@ namespace Application {
 		}
 		case Net::PING:
 			//me llega la respuesta de un ping, por lo tanto tomo el tiempo y calculo mi ping
-			
-			unsigned int ping = clock()-_reloj;
+			unsigned int time = clock();
+			unsigned int ping = time - _reloj;
 			_npings++;
 			_pingActual += ping/2;
 
@@ -110,7 +110,7 @@ namespace Application {
 				clock_t serverTime;
 				buffer.read(&serverTime,sizeof(serverTime));
 				serverTime+=_pingActual;
-				Logic::CServer::getSingletonPtr()->setDiffTime(serverTime-clock());
+				Logic::CServer::getSingletonPtr()->setDiffTime(serverTime-time);
 			}else{//si no he tomado suficientes pings, me guardo el ping y envío otro
 				Net::NetMessageType msgping = Net::PING;
 				Net::NetID id = Net::CManager::getSingletonPtr()->getID();

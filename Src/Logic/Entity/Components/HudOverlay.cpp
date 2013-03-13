@@ -431,6 +431,7 @@ namespace Logic
 			}
 			_overlayPlay->setVisible(true);
 			_overlayWeapon3D[HAMMER]->setVisible(true);
+			_actualWeapon = HAMMER;
 		}
 
 	}
