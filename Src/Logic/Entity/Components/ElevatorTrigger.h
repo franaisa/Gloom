@@ -71,6 +71,19 @@ namespace Logic
 	protected:
 
 		/**
+		Timers que controlan la elevación del ascensor.
+		*/
+		unsigned int _timer;
+		unsigned int _launchTime;
+		unsigned int _waitTime;
+		unsigned int _waitTimeInFinal;
+
+		/**
+		Booleano que controla si esta activo.
+		*/
+		bool _active;
+
+		/**
 		Posició inicial y final del ascensor.
 		*/
 		Vector3 _positionInitial;
@@ -97,6 +110,17 @@ namespace Logic
 		Velocidad del ascensor
 		*/
 		float _velocity;
+		
+		/**
+		Booleano que controla la espera para no ejecutar instrucciones inutiles.
+		*/
+		bool _wait;
+		bool _waitInFinal;
+
+		/**
+		Booleano que controla la espera para no ejecutar instrucciones inutiles.
+		*/
+		bool _touching;
 
 	}; // class CElevator
 

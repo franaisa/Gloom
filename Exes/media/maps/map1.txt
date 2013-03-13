@@ -82,6 +82,7 @@ Map = {
 		positionInitial = {-51.0, 0.0, 1.0},
 		positionFinal = {-51.0, 60.0, 1.0},
 		velocity = 0.035,
+		waitTime = 2.0,
 		model = "health1.mesh",
 		physic_entity = "rigid",
 		physic_trigger = false,
@@ -90,7 +91,6 @@ Map = {
 		physic_dimensions = { 2, 2, 2 },
 		physic_mass = 1,
 		physic_group = 5,
-		physic_groupList = "1",
 	},
 	
 	Ascensor1T = {
@@ -98,8 +98,10 @@ Map = {
 		position = {-51.0, 5.0, 1.0},
 		positionInitial = {-51.0, 5.0, 1.0},
 		positionFinal = {-51.0, 65.0, 1.0},
-		link = "Elevator",
+		link = "Ascensor1",
 		velocity = 0.035,
+		launchTime = 2.0,
+		waitTime = 2.0,
 		model = "health1.mesh",
 		physic_entity = "rigid",
 		physic_trigger = true,
