@@ -48,8 +48,8 @@ namespace Logic  {
 			exceptionList.push_back( std::string("CClientRespawn") );
 			exceptionList.push_back( std::string("CHudOverlay") );
 			exceptionList.push_back( std::string("CNetConnector") );
-			exceptionList.push_back( std::string("CAvatarController") );
-			exceptionList.push_back( std::string("CPhysicController") );
+			//exceptionList.push_back( std::string("CAvatarController") );
+			//exceptionList.push_back( std::string("CPhysicController") );
 
 			// En caso de estar simulando fisica en el cliente, desactivamos
 			// la cápsula.
