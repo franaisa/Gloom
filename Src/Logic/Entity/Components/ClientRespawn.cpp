@@ -44,9 +44,12 @@ namespace Logic  {
 			// podamos colisionar con la cápsula del jugador.
 
 			// Desactivamos todos los componentes menos estos
-			std::vector<std::string> exceptionList(2);
+			std::vector<std::string> exceptionList(5);
 			exceptionList.push_back( std::string("CClientRespawn") );
+			exceptionList.push_back( std::string("CHudOverlay") );
 			exceptionList.push_back( std::string("CNetConnector") );
+			exceptionList.push_back( std::string("CAvatarController") );
+			exceptionList.push_back( std::string("CPhysicController") );
 
 			// En caso de estar simulando fisica en el cliente, desactivamos
 			// la cápsula.
@@ -56,7 +59,7 @@ namespace Logic  {
 			}
 
 			_entity->deactivateAllComponentsExcept(exceptionList);
-
+			
 			break;
 			}
 		case Message::PLAYER_SPAWN:
@@ -77,7 +80,7 @@ namespace Logic  {
 
 			// Volvemos a activar todos los componentes
 			_entity->activate();
-
+			
 			break;
 			}
 		}

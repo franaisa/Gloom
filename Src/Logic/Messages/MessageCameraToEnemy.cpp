@@ -2,6 +2,8 @@
 
 #include "Logic/Entity/MessageFactory.h"
 #include "Logic/Entity/Entity.h"
+#include "Logic/Server.h"
+#include "Logic/Maps/Map.h"
 
 #include <string>
 
@@ -39,6 +41,8 @@ namespace Logic {
 	void CMessageCameraToEnemy::deserialize(Net::CBuffer& buffer) {
 		TEntityID id;
         buffer.deserialize(id);
+
+		_entity = Logic::CServer::getSingletonPtr()->getMap()->getEntityByID(id);
 	}
 
 };

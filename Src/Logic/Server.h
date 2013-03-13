@@ -140,13 +140,15 @@ namespace Logic
 			Devuelve la hora actual
 			@return el ping actual
 		*/
-		clock_t getDiffTime(){return _diffTime;}
+		int getDiffTime(){return _diffTime;}
 
 		/**
 			Setea la hora que tengo ahora mismo con respecto al servidor
 			@param ping el ping que estoy asignando
 		*/
-		void setDiffTime(unsigned int time){_diffTime = time;}
+		void setDiffTime(int time){
+			_diffTime = time;
+		}
 
 	protected:
 		/**
