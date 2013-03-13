@@ -24,6 +24,7 @@ para representar character controllers.
 namespace physx {
 	class PxRigidActor;
 	class PxRigidStatic;
+	struct PxControllerShapeHit;
 };
 
 namespace Physics {
@@ -108,10 +109,17 @@ namespace Logic
 		*/
 		virtual void onTrigger (IPhysics *otherComponent, bool enter);
 
-		virtual void onContact (IPhysics *otherComponent);
+		virtual void onContact (IPhysics *otherComponent, bool enter);
+
+	    void onShapeHit(const physx::PxControllerShapeHit &hit);
 
 		//Metodo que devuelve el booleano _inTrigger que nos indica si hay alguien dentro del trigger
 		bool getInTrigger(){ return _inTrigger; };
+
+		//Metodo que devuelve el booleano _inContact que nos indica si hay alguien tocando la entidad
+		bool getInContact(){ return _inContact; };
+
+		bool getInControllerContact(){ return _inControllerContact; };
 
 		void setPhysicPosition(const Vector3 &position, bool makeConversionToLogicWorld);
 
@@ -157,6 +165,11 @@ namespace Logic
 
 		//Booleano que controla si hay alguien dentro del posible trigger que puede tener la entidad, por defecto desactivado
 		bool _inTrigger;
+
+		//Booleano que controla si hay alguien en contacto con la entidad, por defecto desactivado
+		bool _inContact;
+
+		bool _inControllerContact;
 
 		bool _sleepUntil;
 

@@ -4,10 +4,6 @@ material Pared
 	{
 		pass
 		{
-			illumination_stage per_light
-
-            scene_blend add
-            iteration once_per_light
 			ambient 0.768628 0.701961 0.992157 1
 			diffuse 0.768628 0.701961 0.992157 1
 			specular 0 0 0 1 10
@@ -31,10 +27,6 @@ material scenario_OgreMax
 	{
 		pass Suelo
 		{
-			illumination_stage per_light
-
-            scene_blend add
-            iteration once_per_light
 			ambient 0.0470588 0.0431373 0 1
 			diffuse 0.0705882 0.0705882 0 1
 			specular 0.0705882 0.0784314 0 1 20
@@ -59,10 +51,6 @@ material Suelo_OgreMax
 	{
 		pass Map#6
 		{
-			illumination_stage per_light
-
-            scene_blend add
-            iteration once_per_light
 			ambient 0.02 0.02 0.1 1
 			diffuse 0.02 0.02 0.1 1
 			specular 0.02 0.02 0.1 1 10

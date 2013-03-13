@@ -1,9 +1,24 @@
 Map = {
+
 	World = {
 		type = "World",
-		position = {0, -10, 0},
-		model = "Gloom.mesh",
-		physic_file = "media/models/Gloom.RepX",
+	},
+	
+	Hacksaw = {
+		type = "Hacksaw",
+		position = {120.0,8.0,-16.0},
+		positionInitial = {120.0,8.0,-16.0},
+		positionFinal = {86.0,8.0,-16.0},
+		velocity = 0.04,
+		model = "sierra.mesh",
+		physic_entity = "rigid",
+		physic_trigger = true,
+		physic_type = "kinematic",
+		physic_shape = "box",
+		physic_dimensions = { 1, 1, 1 },
+		physic_mass = 1,
+		physic_group = 8,
+		physic_groupList = "1",
 	},
 	
 	Pincho11 = {
@@ -21,6 +36,8 @@ Map = {
 		physic_shape = "box",
 		physic_dimensions = { 1, 1, 1 },
 		physic_mass = 1,
+		physic_group = 9,
+		physic_groupList = "1",
 	},
 	Pincho12 = {
 		type = "Spike",
@@ -37,6 +54,8 @@ Map = {
 		physic_shape = "box",
 		physic_dimensions = { 1, 1, 1 },
 		physic_mass = 1,
+		physic_group = 9,
+		physic_groupList = "1",
 	},
 	Pincho13 = {
 		type = "Spike",
@@ -53,6 +72,8 @@ Map = {
 		physic_shape = "box",
 		physic_dimensions = { 1, 1, 1 },
 		physic_mass = 1,
+		physic_group = 9,
+		physic_groupList = "1",
 	},
 	
 	Ascensor1 = {
@@ -69,6 +90,7 @@ Map = {
 		physic_dimensions = { 2, 2, 2 },
 		physic_mass = 1,
 		physic_group = 5,
+		physic_groupList = "1",
 	},
 	
 	Ascensor1T = {
@@ -76,7 +98,7 @@ Map = {
 		position = {-51.0, 5.0, 1.0},
 		positionInitial = {-51.0, 5.0, 1.0},
 		positionFinal = {-51.0, 65.0, 1.0},
-		link = "Ascensor1",
+		link = "Elevator",
 		velocity = 0.035,
 		model = "health1.mesh",
 		physic_entity = "rigid",
@@ -86,6 +108,7 @@ Map = {
 		physic_dimensions = { 1, 1, 1 },
 		physic_mass = 10,
 		physic_group = 6,
+		physic_groupList = "1",
 	},
 
 	
@@ -101,6 +124,8 @@ Map = {
 		physic_type = "static",
 		physic_shape = "box",
 		physic_dimensions = { 2, 2, 2 },
+		physic_group = 7,
+		physic_groupList = "1",
 	},
 	
 	Point1 = {
@@ -175,7 +200,7 @@ Map = {
 	MinigunAmmo1 = {
 		type = "ItemSpawn",
 		position = {-150.0, 4.0, 0.0},
-		model = "ammo01.mesh",
+		model = "plasmagun.mesh",
 		id = "ammo",
 		weaponType = 3,
 		reward = 200,
@@ -192,6 +217,16 @@ Map = {
 		respawnTime = 5,
 	},
 	
+	RocketLauncherAmmo1 = {
+		type = "ItemSpawn",
+		position = {140,4.0,-16.0},
+		model = "rocketq3.mesh",
+		id = "ammo",
+		weaponType = 5,
+		reward = 5,
+		respawnTime = 5,
+	},
+	
 	SuperShield = {
 		type = "ItemSpawn",
 		position = {67.0, 2.0, -42.0},
@@ -203,29 +238,25 @@ Map = {
 
 	Enemigo1 = {
 		type = "RemotePlayer",
-		position = {0, 8, -10},
+		position = {0, 0.2, -20},
 		orientation = 90,
-		life = 100000.0,
+		life = 300.0,
 		maxShield=100,
 		maxLife=120,
 		shield=10.0,
 		PorcentShield=23,
 		isPlayer = false,
 		model = "marine.mesh",
-		physic_entity = "rigid",
-		physic_type = "dynamic",
-		physic_shape = "box",
-		physic_dimensions = { 3, 6, 3 },
+		physic_shape = "capsule",
+		physic_radius = 6,
 		physic_height = 6,
-		physic_radius = 0.5,
-		physic_mass = 10,
-		physic_group = 1,
+
 	},
 	
 	
 	lava = {
 		type = "Lava",
-		position = {-10.0,0.2, -50.0},
+		position = {-64.0,3.0, -37.0},
 		model = "lava.mesh",
 		scale = 1,
 		damage = 5,
@@ -234,7 +265,22 @@ Map = {
 		physic_trigger = true,
 		physic_type = "static",
 		physic_shape = "box",
-		physic_dimensions = { 4, 7, 4 },
+		physic_dimensions = { 13, 5, 13 },
+		physic_group = 2,
+		physic_groupList = "1",
+	},
+	
+	contenedorLava = {
+		type = "ContenedorLava",
+		position = {-64.0,0.2, -37.0},
+		model = "contenedorLava.mesh",
+		physic_entity = "rigid",
+		physic_trigger = false,
+		physic_type = "static",
+		physic_shape = "box",
+		physic_dimensions = { 22, 4, 22 },
+		physic_group = 1,
+		physic_groupList = "-1",
 	},
 	
 	David = {
@@ -245,5 +291,27 @@ Map = {
 	Camera = {
 		type = "Camera",
 		height = 8,
+	},
+	SpotLight0 = {
+		type = "SpotLight",
+		position = {0.0,75.0,00.0},
+		outerAngle = 3.14,
+		intensity = 20,
+	},
+	SpotLight6 = {
+		type = "SpotLight",
+		position = {-153.0,40.0,171},
+	},
+	SpotLight7 = {
+		type = "SpotLight",
+		position = {-153.0,40.0,-171},
+	},
+	SpotLight8 = {
+		type = "SpotLight",
+		position = {153.0,40.0,171},
+	},
+	SpotLight9 = {
+		type = "SpotLight",
+		position = {153.0,40.0,-171},
 	},
 }
