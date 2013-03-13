@@ -142,8 +142,7 @@ namespace Logic  {
 			// nos guardamos la posi que nos han dado por si tenemos que interpolar
 			_serverPos = syncMsg->getTransform();
 			//calculo el ping que tengo ahora mismo
-			_actualPing = syncMsg->getTime();
-			_actualPing = clock()+Logic::CServer::getSingletonPtr()->getDiffTime()-_actualPing;
+			_actualPing = clock()+Logic::CServer::getSingletonPtr()->getDiffTime()-syncMsg->getTime();
 			//calculamos la interpolacion
 			calculateInterpolation();
 

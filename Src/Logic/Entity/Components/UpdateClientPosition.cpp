@@ -31,7 +31,6 @@ namespace Logic
 			msg->setTime(clock());
 			_entity->emitMessage(msg);
 			_timer = 0;
-			//std::cout << "enviando update " << clock() << std::endl;
 		}
 
 		_timer += msecs;
