@@ -64,7 +64,8 @@ namespace Logic
 
 		if(!_target){
 			_graphicsCamera->setTargetCameraPosition(_targetV);
-			deactivate();
+			_target = NULL;
+			//deactivate();
 		}
 
 		//return true;
@@ -92,6 +93,7 @@ namespace Logic
 
 	void CCamera::process(CMessage *message)
 	{
+		std::cout << "camera to enemy" << std::endl;
 		switch(message->getMessageType())
 		{
 		case Message::CAMERA_TO_ENEMY:
