@@ -95,7 +95,7 @@ namespace Logic  {
 			if (newPos.length() < _minDistance)
 				_canInterpolateMove = false;
 			//std::cout << "nueva pos " << newPos << std::endl ;
-			std::cout << "nueva pos lenght " << newPos.length() << std::endl << std::endl;
+			//std::cout << "nueva pos lenght " << newPos.length() << std::endl << std::endl;
 		}//if
 		if(_canInterpolateRotation){
 
@@ -194,6 +194,9 @@ namespace Logic  {
 				break;
 
 			}//switch
+
+			//std::cout << "serverDirection = " << _serverDirection << std::endl;
+			//std::cout << "serverStrafeDirection = " << _serverStrafeDirection << std::endl << std::endl;
 
 			break;
 			}//case Message::CONTROL:
