@@ -106,7 +106,7 @@ namespace Logic
 		_enemy=enemy;
 	}
 
-
+	//---------------------------------------------------------
 
 	void CCamera::tick(unsigned int msecs)
 	{

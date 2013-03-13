@@ -78,6 +78,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Src\Logic\Entity\Components\ArrayGraphics.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\ClientRespawn.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\DamageTrigger.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\Elevator.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\ElevatorTrigger.cpp" />
@@ -157,6 +158,7 @@
     <ClCompile Include="..\..\Src\Logic\Messages\MessageSetPhysicPosition.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageSide.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageSleep.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Messages\MessagePlayerSpawn.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageStopAnimation.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageSwitch.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageSyncPosition.cpp" />
@@ -168,6 +170,7 @@
     <ClCompile Include="..\..\Src\Logic\Server.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\ClientRespawn.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\Elevator.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\ElevatorTrigger.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\FloatingMovement.h" />
@@ -252,6 +255,7 @@
     <ClInclude Include="..\..\Src\Logic\Messages\MessageSetPhysicPosition.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageSide.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageSleep.h" />
+    <ClInclude Include="..\..\Src\Logic\Messages\MessagePlayerSpawn.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageStopAnimation.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageSwitch.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageSyncPosition.h" />
