@@ -64,7 +64,8 @@ namespace Logic
 
 		if(!_target){
 			_graphicsCamera->setTargetCameraPosition(_targetV);
-			deactivate();
+			_target = NULL;
+			//deactivate();
 		}
 
 		//return true;

@@ -71,6 +71,14 @@ namespace Logic {
 		// leido del mapa.
 		// Vemos si es uno de los mensajes que debemos trasmitir 
 		// por red.
+		if(message->getMessageType() == Logic::TMessageType::CAMERA_TO_ENEMY) {
+			std::cout << "Recibido un mensaje de tipo camera to enemy" << std::endl;
+
+			if( _forwardedMsgTypes.find(message->getMessageType()) != _forwardedMsgTypes.end() ) {
+				std::cout << "El mensaje se encuentra en nuestra lista de mensajes, por lo tanto lo enviamos" << std::endl;
+			}
+		}
+
 		if( _forwardedMsgTypes.find(message->getMessageType()) != _forwardedMsgTypes.end() ) {
 			// Grano fino, en vez de aceptar el mensaje directamente
 			// solo se retransmitirá por la red si no se ha transmitido 
