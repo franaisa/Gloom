@@ -113,7 +113,7 @@ namespace Logic
 				Logic::CMessagePlayerSpawn* spawnMsg = new Logic::CMessagePlayerSpawn();
 				spawnMsg->setSpawnTransform( _entity->getTransform() );
 				_entity->emitMessage(spawnMsg);
-
+				CServer::getSingletonPtr()->getMap()->getEntityByType("Camera")->emitMessage(new CMessagePlayerSpawn());
 				Logic::CMessageHudSpawn *mS=new Logic::CMessageHudSpawn();
 				mS->setTime(0);
 				_entity->emitMessage(mS);
