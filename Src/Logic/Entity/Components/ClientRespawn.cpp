@@ -13,6 +13,7 @@
 #include "Logic/Maps/Map.h"
 #include "Map/MapEntity.h"
 #include "Basesubsystems/Math.h"
+#include "Interpolation.h"
 
 #include "Logic/Messages/MessagePlayerDead.h"
 #include "Logic/Messages/MessagePlayerSpawn.h"
@@ -46,6 +47,7 @@ namespace Logic  {
 			// Desactivamos todos los componentes menos estos
 			std::vector<std::string> exceptionList;
 			exceptionList.push_back( std::string("CClientRespawn") );
+			exceptionList.push_back( std::string("CAnimatedGraphics") );
 			exceptionList.push_back( std::string("CHudOverlay") );
 			exceptionList.push_back( std::string("CNetConnector") );
 			//exceptionList.push_back( std::string("CAvatarController") );
@@ -77,10 +79,11 @@ namespace Logic  {
 				controllerComponent->activateSimulation();
 				controllerComponent->setPhysicPosition( playerSpawnMsg->getSpawnPosition() );
 			}
-
+			//_entity->setYaw(180);
 			// Volvemos a activar todos los componentes
-			//_entity->activate();
-			
+			_entity->activate();
+			CServer::getSingletonPtr()->getMap()->getEntityByType("Camera")->emitMessage(new CMessagePlayerSpawn());
+
 			break;
 			}
 		}

@@ -141,7 +141,6 @@ namespace Logic
 
 			_entity->deactivateAllComponentsExcept(except);
 			_isDead=true;
-
 			//Mensaje para el Hud (tiempo de spawn)
 			Logic::CMessageHudSpawn *m=new Logic::CMessageHudSpawn();
 			m->setTime(_timeSpawn/1000);

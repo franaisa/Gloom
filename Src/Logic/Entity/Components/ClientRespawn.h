@@ -65,6 +65,9 @@ namespace Logic  {
 		*/
 		virtual void process(CMessage *message);
 
+
+		virtual void activate() {_activate = true;}
+
 	}; // class CClientRespawn
 
 	REG_FACTORY(CClientRespawn);

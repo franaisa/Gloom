@@ -109,6 +109,8 @@ namespace Logic  {
 		*/
 		void calculateInterpolation();
 
+		//void stopInterpolation(){_interpolating = false;}
+
 	private:
 
 

@@ -22,6 +22,10 @@ namespace Graphics
 	class CScene;
 }
 
+namespace Logic{
+	class CMessageCameraToEnemy;
+}
+
 //declaración de la clase
 namespace Logic 
 {
@@ -114,7 +118,7 @@ namespace Logic
 
 		@param enemy Entidad enemiga.
 		*/
-		void setTargetEnemy(CEntity* enemy);
+		void setTargetEnemy(CMessageCameraToEnemy* message);
 
 
 	protected:
@@ -135,6 +139,10 @@ namespace Logic
 		*/
 		CEntity *_enemy;
 
+		/**
+		Variable que indica si estamos muertos o no (para apuntar al tipo adecuado)
+		*/
+		bool _dead;
 
 		/**
 		Distancia de la cámara respecto a la entidad objetivo. Es distancia

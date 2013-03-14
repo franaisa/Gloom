@@ -106,7 +106,6 @@ namespace Logic
 		case Message::DAMAGED:
 			{
 				CMessageDamaged* dmgMsg = static_cast<CMessageDamaged*>(message);
-				std::cout << "AU! ME QUITAN " << dmgMsg->getDamage()  << " Y SOY "<< _entity->getName() << std::endl; 
 				damaged( dmgMsg->getDamage(), dmgMsg->getEnemy());	
 			}
 			break;
@@ -175,6 +174,8 @@ namespace Logic
 			cte->setEnemy(enemy);
 			CServer::getSingletonPtr()->getMap()->getEntityByType("Camera")->emitMessage(cte);
 
+			//el mensaje de camera to enemy debe ir solamente al jugador que ha muerto, no  a ningún otro
+			//Logic:CServer::getSingletonPtr()->getpla
 		}
 		//Actualizo la vida
 		Logic::CMessageHudLife *message1 = new Logic::CMessageHudLife();
