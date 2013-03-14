@@ -98,7 +98,7 @@ Map = {
 			weaponShotGunNumberShoots = 8,
 			weaponShotGunDistance = 100.0,
 			weaponShotGunColdDown = 1.0,
-			weaponShotGunMaxAmmo = 50,
+			weaponShotGunMaxAmmo = 48,
 			weaponShotGunId = 2,
 			weaponShotGunParticlePosition = {50.0, 50.0, 50.0},
 			
@@ -253,7 +253,7 @@ Map = {
 			weaponShotGunNumberShoots = 8,
 			weaponShotGunDistance = 100.0,
 			weaponShotGunColdDown = 1.0,
-			weaponShotGunMaxAmmo = 50,
+			weaponShotGunMaxAmmo = 48,
 			weaponShotGunId = 2,
 			weaponShotGunParticlePosition = {50.0, 50.0, 50.0},
 			
@@ -427,7 +427,7 @@ Map = {
 			weaponShotGunNumberShoots = 8,
 			weaponShotGunDistance = 100.0,
 			weaponShotGunColdDown = 1.0,
-			weaponShotGunMaxAmmo = 50,
+			weaponShotGunMaxAmmo = 48,
 			weaponShotGunId = 2,
 			
 			weaponMiniGunName = "MiniGun",
