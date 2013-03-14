@@ -88,7 +88,7 @@ Map = {
 		physic_trigger = false,
 		physic_type = "kinematic",
 		physic_shape = "box",
-		physic_dimensions = { 2, 2, 2 },
+		physic_dimensions = { 3, 2, 3 },
 		physic_mass = 1,
 		physic_group = 5,
 	},
