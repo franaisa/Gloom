@@ -131,7 +131,7 @@ Map = {
 			weaponGrenadeLauncherParticlePosition = {50.0, 50.0, 50.0},
 			
 			weaponRocketLauncherName = "RocketLauncher",
-			weaponRocketLauncherModel = "grenadelauncher.mesh",
+			weaponRocketLauncherModel = "rocketq3.mesh",
 			weaponRocketLauncherModelYaw = 3.10,
 			weaponRocketLauncherModelPitch = 0,
 			weaponRocketLauncherOffset = {0.0,-3.0,-10.0},
@@ -286,7 +286,7 @@ Map = {
 			weaponGrenadeLauncherParticlePosition = {0.0, 0.0, 0.0},
 
 			weaponRocketLauncherName = "RocketLauncher",
-			weaponRocketLauncherModel = "grenadelauncher.mesh",
+			weaponRocketLauncherModel = "rocketq3.mesh",
 			weaponRocketLauncherModelYaw = 3.10,
 			weaponRocketLauncherModelPitch = 0,
 			weaponRocketLauncherOffset = {0.0,-3.0,-10.0},
@@ -457,7 +457,7 @@ Map = {
 			weaponGrenadeLauncherProjectileRadius = 3,
 
 			weaponRocketLauncherName = "RocketLauncher",
-			weaponRocketLauncherModel = "grenadelauncher.mesh",
+			weaponRocketLauncherModel = "rocketq3.mesh",
 			weaponRocketLauncherModelYaw = 3.10,
 			weaponRocketLauncherModelPitch = 0,
 			weaponRocketLauncherOffset = {0.0,-3.0,-10.0},

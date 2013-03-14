@@ -102,6 +102,7 @@ namespace Logic
 
 		case Message::PLAYER_SPAWN:
 				_dead=false;
+				std::cout << "mensaje respawn recibido" << std::endl;
 			break;
 		}
 

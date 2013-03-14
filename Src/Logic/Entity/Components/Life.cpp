@@ -180,7 +180,8 @@ namespace Logic
 			camera->emitMessage(cte);
 			
 			//enviamos el mensaje por la red
-			Logic::CGameNetMsgManager::getSingletonPtr()->sendMessageToOne(cte, camera->getEntityID(), _entity->getEntityID());
+			if(Net::CManager::getSingletonPtr()->imServer())
+				Logic::CGameNetMsgManager::getSingletonPtr()->sendMessageToOne(cte, camera->getEntityID(), _entity->getEntityID());
 			//el mensaje de camera to enemy debe ir solamente al jugador que ha muerto, no  a ningún otro
 			//Logic:CServer::getSingletonPtr()->getpla
 		}
