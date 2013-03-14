@@ -111,6 +111,11 @@ namespace Logic  {
 
 		//void stopInterpolation(){_interpolating = false;}
 
+		/**
+		Activa el componente
+		*/
+		virtual void activate();
+
 	private:
 
 

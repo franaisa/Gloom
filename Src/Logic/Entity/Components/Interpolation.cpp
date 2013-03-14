@@ -40,7 +40,7 @@ namespace Logic  {
 		_maxDistance = 15;
 		_minDistance = 0.5f;
 		_minYaw = 1;
-		_maxYaw = 2.5f;
+		_maxYaw = 4;
 		_yawDifference = 0;
 		_rotationSpeed = 0.2;
 		_serverDirection = Vector3(0,0,0);
@@ -83,8 +83,8 @@ namespace Logic  {
 			direction *=_speed/5*msecs;
 			//Vector3 newPos = _entity->getPosition()+direction;
 			//vemos a ver si hemos recorrido más de lo que deberíamos, y actuamos en consecuencia
-			//std::cout << "server pos " << _serverPos.getTrans() << std::endl;
-			//std::cout << "mi pos " << _entity->getPosition() << std::endl ;
+			std::cout << "server pos " << _serverPos.getTrans() << std::endl;
+			std::cout << "mi pos " << _entity->getPosition() << std::endl << std::endl ;
 			if(direction.length() > distance){
 				_entity->getComponent<CPhysicController>("CPhysicController")->moveController(direction, msecs);
 			}else{
@@ -101,7 +101,9 @@ namespace Logic  {
 
 			//si la diferencia es demasiado grande, lo movemos a pelo
 			if(_yawDifference > _maxYaw || _yawDifference < _maxYaw*(-1)){
-				_entity->yaw(_yawDifference);
+				Matrix3 a;
+				_serverPos.extract3x3Matrix(a);
+				_entity->setOrientation(a);
 				_yawDifference = 0;
 			}
 
@@ -255,7 +257,8 @@ namespace Logic  {
 		float myDistance = direction.length() * _actualPing/CLOCKS_PER_SEC;
 		//seteo la distancia real
 		distance = distance-myDistance;
-		//std::cout << "distancia a la que esta" << _entity->getName() << " " << distance << "con ping " << _actualPing << "ms" << std::endl;
+		std::cout << ">>>>>>>>>>>> mi dirección" << Math::getDirection(_entity->getTransform()) << std::endl;
+		std::cout << ">>>>>>>>>>>>>>> direccion del servah" << Math::getDirection(_serverPos) << std::endl  << std::endl;
 		//si la distancia es mayor de maxDistance .. set transform por cojones
 		if(distance > _maxDistance){
 			_entity->getComponent<CPhysicController>("CPhysicController")->setPhysicPosition(_serverPos.getTrans());
@@ -275,6 +278,13 @@ namespace Logic  {
 	}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	void CInterpolation::activate(){
+		IComponent::activate();
+		_serverDirection = Vector3(0,0,0);
+		_serverStrafeDirection = Vector3(0,0,0);
+		_interpolating = false;
+	}
 
 } // namespace Logic
 
