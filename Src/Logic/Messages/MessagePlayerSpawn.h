@@ -10,8 +10,8 @@ namespace Logic {
 	public:
 		CMessagePlayerSpawn();
 
-		Vector3 getSpawnPosition();
-		void setSpawnPosition(const Vector3& position);
+		Matrix4 getSpawnTransform();
+		void setSpawnTransform(const Matrix4& transform);
 
 		~CMessagePlayerSpawn(){};
 
@@ -19,7 +19,7 @@ namespace Logic {
 		virtual void deserialize(Net::CBuffer& buffer);
 		
 	private:
-		Vector3 _spawnPosition;
+		Matrix4 _spawnTransform;
 	};
 	REG_FACTORYMESSAGE(CMessagePlayerSpawn);
 };
