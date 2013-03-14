@@ -9,9 +9,11 @@ namespace Logic {
 	DEC_FACTORYMESSAGE(CMessageCameraToEnemy);
 	public:
 		CMessageCameraToEnemy();
+		~CMessageCameraToEnemy(){};
+
+
 		CEntity* getEnemy();
 		void setEnemy(CEntity* entity);
-		~CMessageCameraToEnemy(){};
 		
 		virtual Net::CBuffer* serialize();
 		virtual void deserialize(Net::CBuffer& buffer);

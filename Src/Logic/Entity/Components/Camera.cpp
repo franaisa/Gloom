@@ -49,7 +49,7 @@ namespace Logic
 			camPos = entityInfo->getVector3Attribute("position");
 			_graphicsCamera->setCameraPosition(camPos);
 		}
-
+		_dead=false;
 		return true;
 
 	} // spawn
@@ -64,7 +64,8 @@ namespace Logic
 
 		if(!_target){
 			_graphicsCamera->setTargetCameraPosition(_targetV);
-			deactivate();
+			_target = NULL;
+			//deactivate();
 		}
 
 		//return true;
@@ -85,7 +86,8 @@ namespace Logic
 
 		bool CCamera::accept(CMessage *message)
 	{
-		return message->getMessageType() == Message::CAMERA_TO_ENEMY;
+		return message->getMessageType() == Message::CAMERA_TO_ENEMY ||
+				 message->getMessageType() == Message::PLAYER_SPAWN;
 	} // accept
 	//---------------------------------------------------------
 
@@ -95,15 +97,21 @@ namespace Logic
 		switch(message->getMessageType())
 		{
 		case Message::CAMERA_TO_ENEMY:
-					setTargetEnemy(((CMessageCameraToEnemy*)message)->getEnemy());
+				setTargetEnemy((CMessageCameraToEnemy*)message);
+			break;
+
+		case Message::PLAYER_SPAWN:
+				_dead=false;
 			break;
 		}
 
 	} // process
 	//---------------------------------------------------------
 
-	void CCamera::setTargetEnemy(CEntity *enemy){
-		_enemy=enemy;
+	void CCamera::setTargetEnemy(CMessageCameraToEnemy* message){
+		
+		_enemy=message->getEnemy();
+		_dead=true;
 	}
 
 	//---------------------------------------------------------
@@ -120,7 +128,7 @@ namespace Logic
 			_graphicsCamera->setCameraPosition(position);
 
 			
-			if(_target->getComponent<CAvatarController>("CAvatarController")->isActivate()){
+			if(!_dead){
 				// Y la posición hacia donde mira la cámara.
 				Vector3 direction = Math::getDirection(_target->getOrientation());
 				_graphicsCamera->setTargetCameraPosition(position + direction);

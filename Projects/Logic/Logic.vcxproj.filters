@@ -320,11 +320,11 @@
       <Filter>Entity\Components\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Src\Logic\Messages\MessagePlayerSpawn.cpp">
-		<Filter>Messages\Source</Filter>
-	</ClCompile>
+      <Filter>Messages\Source</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Src\Logic\Messages\MessageContactExit.cpp">
-	  <Filter>Messages\Source</Filter>
-	</ClCompile>
+      <Filter>Messages\Source</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Src\Logic\Messages\MessageHudDebbug.cpp">
       <Filter>Messages\Source</Filter>
     </ClCompile>
@@ -612,13 +612,13 @@
     <ClInclude Include="..\..\Src\Logic\Entity\Components\ClientRespawn.h">
       <Filter>Entity\Components\Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Src\Logic\Messages\MessagePlayerSpawn.h">
-		<Filter>Entity\Components\Header Files</Filter>
+    <ClInclude Include="..\..\Src\Logic\Messages\MessageHudDebbug.h">
+      <Filter>Messages\Header</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Messages\MessageContactExit.h">
-	 <Filter>Entity\Components\Header Files</Filter>
-	 </ClInclude>
-    <ClInclude Include="..\..\Src\Logic\Messages\MessageHudDebbug.h">
+      <Filter>Messages\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Messages\MessagePlayerSpawn.h">
       <Filter>Messages\Header</Filter>
     </ClInclude>
   </ItemGroup>

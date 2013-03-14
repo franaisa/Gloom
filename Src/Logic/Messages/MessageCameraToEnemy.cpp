@@ -30,8 +30,8 @@ namespace Logic {
 	Net::CBuffer* CMessageCameraToEnemy::serialize() {
 		assert(_tempBuffer == NULL);
 
-		_tempBuffer = new Net::CBuffer(sizeof(int) + sizeof(_entity));
-		_tempBuffer->serialize(std::string("CMessageDamaged"),true);
+		_tempBuffer = new Net::CBuffer(sizeof(int) + sizeof(Logic::TEntityID));
+		_tempBuffer->serialize(std::string("CMessageCameraToEnemy"),true);
 		_tempBuffer->serialize(_entity->getEntityID());
 		
 		return _tempBuffer;
@@ -41,7 +41,6 @@ namespace Logic {
 	void CMessageCameraToEnemy::deserialize(Net::CBuffer& buffer) {
 		TEntityID id;
         buffer.deserialize(id);
-
 		_entity = Logic::CServer::getSingletonPtr()->getMap()->getEntityByID(id);
 	}
 

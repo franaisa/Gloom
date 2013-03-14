@@ -78,8 +78,7 @@ namespace Logic
 	} // process
 	//---------------------------------------------------------
 
-	void CSpawnPlayer::tick(unsigned int msecs)
-	{
+	void CSpawnPlayer::tick(unsigned int msecs) {
 		IComponent::tick(msecs);
 		//Solamente si estamos muertos (se recibió el mensaje)
 		if(_isDead){
@@ -112,7 +111,7 @@ namespace Logic
 
 				// Si eres el server mandar un mensaje de spawn
 				Logic::CMessagePlayerSpawn* spawnMsg = new Logic::CMessagePlayerSpawn();
-				spawnMsg->setSpawnPosition(spawn);
+				spawnMsg->setSpawnTransform( _entity->getTransform() );
 				_entity->emitMessage(spawnMsg);
 
 				Logic::CMessageHudSpawn *mS=new Logic::CMessageHudSpawn();
@@ -141,7 +140,6 @@ namespace Logic
 
 			_entity->deactivateAllComponentsExcept(except);
 			_isDead=true;
-
 			//Mensaje para el Hud (tiempo de spawn)
 			Logic::CMessageHudSpawn *m=new Logic::CMessageHudSpawn();
 			m->setTime(_timeSpawn/1000);

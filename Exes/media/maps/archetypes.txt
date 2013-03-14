@@ -510,6 +510,7 @@ Map = {
 	Camera = {
 		type = "Camera",
 		height = 8,
+		msgList = "25",
 	},
 	
 	Grenade = {

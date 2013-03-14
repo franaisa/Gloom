@@ -13,6 +13,7 @@
 #include "Logic/Maps/Map.h"
 #include "Map/MapEntity.h"
 #include "Basesubsystems/Math.h"
+#include "Interpolation.h"
 
 #include "Logic/Messages/MessagePlayerDead.h"
 #include "Logic/Messages/MessagePlayerSpawn.h"
@@ -44,12 +45,11 @@ namespace Logic  {
 			// podamos colisionar con la cápsula del jugador.
 
 			// Desactivamos todos los componentes menos estos
-			std::vector<std::string> exceptionList(5);
+			std::vector<std::string> exceptionList;
 			exceptionList.push_back( std::string("CClientRespawn") );
+			exceptionList.push_back( std::string("CAnimatedGraphics") );
 			exceptionList.push_back( std::string("CHudOverlay") );
 			exceptionList.push_back( std::string("CNetConnector") );
-			exceptionList.push_back( std::string("CAvatarController") );
-			exceptionList.push_back( std::string("CPhysicController") );
 
 			// En caso de estar simulando fisica en el cliente, desactivamos
 			// la cápsula.
@@ -69,18 +69,27 @@ namespace Logic  {
 			// en el lugar indicado por el mensaje recibido del servidor.
 
 			CMessagePlayerSpawn* playerSpawnMsg = static_cast<CMessagePlayerSpawn*>(message);
+			Matrix4 spawnTransform = playerSpawnMsg->getSpawnTransform();
 
 			// En caso de estar simulando fisica en el cliente, reactivamos las colisiones
 			// y reposicionamos la capsula donde nos diga el servidor.
 			CPhysicController* controllerComponent = _entity->getComponent<CPhysicController>("CPhysicController");
 			if(controllerComponent != NULL) {
+				// Reactivamos la simulacion
 				controllerComponent->activateSimulation();
-				controllerComponent->setPhysicPosition( playerSpawnMsg->getSpawnPosition() );
-			}
+				// Colocamos al player en la posicion dada por el manager de spawn del server
+				controllerComponent->setPhysicPosition( spawnTransform.getTrans() );
 
+				// Seteamos la orientacion a la dada por el server
+				Matrix3 spawnOrientation;
+				spawnTransform.extract3x3Matrix( spawnOrientation );
+				_entity->setOrientation(spawnOrientation);
+			}
+			
 			// Volvemos a activar todos los componentes
 			_entity->activate();
-			
+			CServer::getSingletonPtr()->getMap()->getEntityByType("Camera")->emitMessage(new CMessagePlayerSpawn());
+
 			break;
 			}
 		}
