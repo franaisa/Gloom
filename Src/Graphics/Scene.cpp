@@ -113,13 +113,13 @@ namespace Graphics
 						->addViewport(_camera->getCamera());
 		_viewport->setBackgroundColour(Ogre::ColourValue::Black);
 
-		
+		//_sceneMgr->setShadowTechnique(Ogre::SHADOWTYPE_STENCIL_ADDITIVE);
 		_sceneMgr->setShadowTechnique(Ogre::SHADOWTYPE_STENCIL_ADDITIVE);
-		
-		//*
-		_sceneMgr->setAmbientLight(Ogre::ColourValue(.2f,.2f,.2f));
+
+		/*
+		_sceneMgr->setAmbientLight(Ogre::ColourValue(1,1,1));
 		/*/
-		_sceneMgr->setAmbientLight(Ogre::ColourValue(0,0,0));
+		_sceneMgr->setAmbientLight(Ogre::ColourValue(0.4,0.4,0.4));
 		/* */
 		
 		
@@ -215,11 +215,14 @@ namespace Graphics
 		sceneNode->removeChild(entity->getName());
 	}
 */
-	CParticle * CScene::createParticle(const std::string &unicName, const std::string &particleName, const Vector3 *position){
+	CParticle * CScene::createParticle(const std::string &unicName, const std::string &particleName, const Vector3 &position, Vector3 *direction){
 
 		CParticle *particle = new CParticle(unicName, particleName);
 
 		particle->setPosition(position);
+
+		if(direction)
+			particle->setDirection(*direction);
 
 		return particle;
 

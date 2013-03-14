@@ -100,34 +100,10 @@ void CPhysicController::tick(unsigned int msecs)
 	// Llamar al método de la clase padre (IMPORTANTE).
 	IComponent::tick(msecs);
 
-	// Intentamos mover el controller a la posición recibida en el último mensaje 
-	// de tipo AVATAR_WALK. 
-	unsigned flags = _server->moveController(_controller, _movement, msecs);
+	if(_movement == Vector3(0,0,0))
+		return;
 
-	// Actualizar la posición y orientación de la entidad lógica usando la 
-	// información proporcionada por el motor de física	
-	_entity->setPosition(_server->getControllerPosition(_controller));
-
-	//Si tocamos con el techo lo notificamos
-	if((flags & PxControllerFlag::eCOLLISION_UP)){
-		Logic::CMessageCealing *em=new Logic::CMessageCealing();
-		_entity->emitMessage(em);
-	}
-	//Si tocamos el lateral tenemos que parar la inercia de la direccion
-	if((flags & PxControllerFlag::eCOLLISION_SIDES)){
-		Logic::CMessageSide *side=new Logic::CMessageSide();
-		_entity->emitMessage(side);
-	}
-	//Si hay cambio de estado en el flag de tocar suelo
-	if(_falling != !(flags & PxControllerFlag::eCOLLISION_DOWN)){
-		// Actualizamos el flag que indica si estamos cayendo
-		_falling =  !(flags & PxControllerFlag::eCOLLISION_DOWN);
-		//Mandamos un mensaje que dirá si hay collision con el suelo para la lógica
-		Logic::CMessageCollisionDown *m=new Logic::CMessageCollisionDown();
-		m->setCollisionDown(_falling);
-		_entity->emitMessage(m);
-	}
-	_movement = Vector3::ZERO;
+	moveController(_movement, msecs);
 
 }
 
@@ -215,9 +191,10 @@ void CPhysicController::onShapeHit (const PxControllerShapeHit &hit)
 		return;
 
 	// Si chocamos contra una entidad cinemática no hacemos nada
-	if (_server->isKinematic(actor))
+	if (_server->isKinematic(actor)){
+		//std::cout << _entity->getName() << " es un actor que chocó con " << ((IPhysics*)((PxRigidActor&)hit.shape->getActor()).userData)->getEntity()->getName() << std::endl;
 		return;
-
+	}
 	// Aplicar una fuerza a la entidad en la dirección del movimiento
 	//actor->addForce(hit.dir * hit.length * 1000.0f);
 }
@@ -231,6 +208,13 @@ void CPhysicController::onControllerHit (const PxControllersHit &hit)
 
 //---------------------------------------------------------
 
+void CPhysicController::onContact (IPhysics *otherComponent,bool enter)
+{
+	//std::cout<< "contacto entre kinematics en oncontact" << std::endl;
+	std::cout << "ONCONTACT. Estoy en "<<_entity->getName() <<" contacto con algo que es " << otherComponent->getEntity()->getName() << std::endl;
+}
+
+//---------------------------------------------------------
 
 void CPhysicController::deactivateSimulation() {
 	// Desactivamos todos los shapes del componente por completo en PhysX
@@ -245,7 +229,7 @@ void CPhysicController::deactivateSimulation() {
 		// Esta shape no entrara dentro de la simulacion de fisicas
 		actorShapes[i]->setFlag(PxShapeFlag::eSIMULATION_SHAPE , false);
 	}
-
+	_controller->setInteraction(PxCCTInteractionMode::eEXCLUDE);
 	delete [] actorShapes;
 }
 
@@ -264,6 +248,39 @@ void CPhysicController::activateSimulation() {
 		// Esta shape entrara dentro de la simulacion de fisicas
 		actorShapes[i]->setFlag(PxShapeFlag::eSIMULATION_SHAPE , true);
 	}
-
+	_controller->setInteraction(PxCCTInteractionMode::eINCLUDE);
 	delete [] actorShapes;
+}
+
+void CPhysicController::moveController(Vector3& movement, unsigned int msecs){
+
+	// Intentamos mover el controller a la posición recibida en el último mensaje 
+	// de tipo AVATAR_WALK. 
+	unsigned flags = _server->moveController(_controller, movement, msecs);
+
+	// Actualizar la posición y orientación de la entidad lógica usando la 
+	// información proporcionada por el motor de física	
+	_entity->setPosition(_server->getControllerPosition(_controller));
+
+	//Si tocamos con el techo lo notificamos
+	if((flags & PxControllerFlag::eCOLLISION_UP)){
+		Logic::CMessageCealing *em=new Logic::CMessageCealing();
+		_entity->emitMessage(em);
+	}
+	//Si tocamos el lateral tenemos que parar la inercia de la direccion
+	if((flags & PxControllerFlag::eCOLLISION_SIDES)){
+		Logic::CMessageSide *side=new Logic::CMessageSide();
+		_entity->emitMessage(side);
+	}
+	//Si hay cambio de estado en el flag de tocar suelo
+	if(_falling != !(flags & PxControllerFlag::eCOLLISION_DOWN)){
+		// Actualizamos el flag que indica si estamos cayendo
+		_falling =  !(flags & PxControllerFlag::eCOLLISION_DOWN);
+		//Mandamos un mensaje que dirá si hay collision con el suelo para la lógica
+		Logic::CMessageCollisionDown *m=new Logic::CMessageCollisionDown();
+		m->setCollisionDown(_falling);
+		_entity->emitMessage(m);
+	}
+	movement = Vector3::ZERO;
+
 }

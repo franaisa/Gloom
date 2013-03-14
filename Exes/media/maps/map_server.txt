@@ -116,10 +116,34 @@ Map = {
 	
 	lava = {
 		type = "Lava",
-		position = {-10.0, 2, -50.0},
+		position = {-64.0,3.0, -37.0},
+		model = "lava.mesh",
+		scale = 1,
+		damage = 5,
+		timeDamage = 500,
+		physic_entity = "rigid",
+		physic_trigger = true,
+		physic_type = "static",
+		physic_shape = "box",
+		physic_dimensions = { 13, 5, 13 },
+		physic_group = 2,
+		physic_groupList = "1",
 	},
 	
-		SpotLight0 = {
+	contenedorLava = {
+		type = "ContenedorLava",
+		position = {-64.0,0.2, -37.0},
+		model = "contenedorLava.mesh",
+		physic_entity = "rigid",
+		physic_trigger = false,
+		physic_type = "static",
+		physic_shape = "box",
+		physic_dimensions = { 22, 4, 22 },
+		physic_group = 1,
+		physic_groupList = "-1",
+	},
+	
+	SpotLight0 = {
 		type = "SpotLight",
 		position = {0.0,75.0,00.0},
 		direction = {0.0,-1.0,0.0},

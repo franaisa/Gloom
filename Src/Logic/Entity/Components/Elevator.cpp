@@ -32,6 +32,9 @@ namespace Logic
 		if(!IComponent::spawn(entity,map,entityInfo))
 			return false;
 
+		if(entityInfo->hasAttribute("waitTime"))
+			_waitTime= entityInfo->getIntAttribute("waitTime");
+
 		if(entityInfo->hasAttribute("positionInitial"))
 			_positionInitial = entityInfo->getVector3Attribute("positionInitial");
 
@@ -52,7 +55,13 @@ namespace Logic
 	void CElevator::activate()
 	{
 		IComponent::activate();
-		
+		_wait=true;
+		_waitTimeInFinal=0;
+		_active=false;
+		_waitInFinal=false;
+		_waitTime*=1000;
+		_go=false;
+
 		_directionInitial=(_positionInitial-_positionFinal);
 		_directionFinal=(_positionFinal-_positionInitial);
 		_directionInitial.normalise();
@@ -66,8 +75,7 @@ namespace Logic
 
 	bool CElevator::accept(CMessage *message)
 	{
-		return message->getMessageType() == Message::TOUCHED|| 
-			message->getMessageType() == Message::UNTOUCHED;
+		return message->getMessageType() == Message::TOUCHED;
 	} // accept
 	
 	//---------------------------------------------------------
@@ -77,10 +85,7 @@ namespace Logic
 		switch(message->getMessageType())
 		{
 		case Message::TOUCHED:
-			_toFinal=true;
-			break;
-		case Message::UNTOUCHED:
-			_toFinal=false;
+			_go=true;
 			break;
 		}
 
@@ -91,24 +96,68 @@ namespace Logic
 	{
 		IComponent::tick(msecs);
 		Vector3 toDirection;
+	
+		//Timer para cuando llegamos arriba
+		if(_waitInFinal)
+			_waitTimeInFinal+=msecs;
+
+		//Si estuvimos _launchTime
+		if(_go && !_active){
+			std::cout << "DESPEGAMOS autentico" << std::endl;
+			_active=true;
+			_toFinal=true;
+			_wait=false;
+			_go=false;
+		}
+		//Si hemos pasado 2 segundos arriba, volvemos a bajar
+		if(_active && _waitTimeInFinal>_waitTime){
+			std::cout << "BAJAMOS autentico" << std::endl;
+			_toFinal=false;
+			_wait=false;
+			_waitInFinal=false;
+			_waitTimeInFinal=0;
+		}
+
 		//Hacia la posicion final
-		if(_toFinal){
-			if(_entity->getPosition().distance(_positionFinal)>0.5){
+		if(_toFinal && !_wait){
+			float distanciaToFinal=(_positionFinal-_entity->getPosition()).absDotProduct(Vector3(1,1,1));
+			if(distanciaToFinal>=0){
 				toDirection = _directionFinal * msecs * _velocity;
+				//Por si nos pasasemos de la posición final
+				if(toDirection.absDotProduct(Vector3(1,1,1))>distanciaToFinal){
+					toDirection=(_positionFinal-_entity->getPosition());
+					_wait=true;
+					_waitInFinal=true;
+					_waitTimeInFinal=0;
+				}
 				Logic::CMessageKinematicMove* m = new Logic::CMessageKinematicMove();
 				m->setMovement(toDirection);
 				_entity->emitMessage(m);
 			}
 		}
 		//Hacia la posicion inicial
-		else{
-			if(_entity->getPosition().distance(_positionInitial)>0.5){
-				toDirection = _directionInitial * msecs * _velocity;
+		else if(!_wait){
+			float distanciaToInitial=(_positionInitial-_entity->getPosition()).absDotProduct(Vector3(1,1,1));
+			if(distanciaToInitial>=0){
+				toDirection = _directionInitial* msecs * _velocity;
+				//Por si nos pasasemos de la posición inicial
+				if(toDirection.absDotProduct(Vector3(1,1,1))>distanciaToInitial){
+					toDirection=(_positionInitial-_entity->getPosition());
+					_wait=true;
+					_active=false;
+				}
+
 				Logic::CMessageKinematicMove* m = new Logic::CMessageKinematicMove();
 				m->setMovement(toDirection);
 				_entity->emitMessage(m);
 			}
 		}
+
+
+
+
+
+
 	} // tick
 	//----------------------------------------------------------
 

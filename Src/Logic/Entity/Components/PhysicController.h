@@ -102,7 +102,7 @@ namespace Logic
 		*/
 		virtual void  onTrigger (IPhysics *otherComponent, bool enter);
 
-		virtual void onContact (IPhysics *otherComponent) {}
+		virtual void onContact (IPhysics *otherComponent,bool enter);
 
 		/**
 		Se invoca cuando se produce una colisión entre un character controller y una entidad física.
@@ -117,6 +117,8 @@ namespace Logic
 		void activateSimulation();
 
 		void deactivateSimulation();
+
+		void moveController(Vector3& movement, unsigned int msecs);
 
 	private:
 

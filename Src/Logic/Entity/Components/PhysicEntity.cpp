@@ -24,6 +24,7 @@ para representar character controllers.
 #include "Logic/Messages/MessageSetPhysicPosition.h"
 #include "Logic/Messages/MessageAddForcePhysics.h"
 #include "Logic/Messages/MessageContactEnter.h"
+#include "Logic/Messages/MessageContactExit.h"
 
 #define _USE_MATH_DEFINES
 #include <math.h>
@@ -71,6 +72,7 @@ bool CPhysicEntity::spawn(CEntity *entity, CMap *map, const Map::CEntity *entity
 	_actor = createActor(entityInfo);
 
 	_inTrigger=false;
+	_inContact=false;
 	_sleepUntil=false;
 	return true;
 } 
@@ -311,10 +313,28 @@ void CPhysicEntity::onTrigger(IPhysics *otherComponent, bool enter)
 
 //---------------------------------------------------------
 
-void CPhysicEntity::onContact (IPhysics *otherComponent) {
-	Logic::CMessageContactEnter* msg = new Logic::CMessageContactEnter();
-	msg->setEntity( otherComponent->getEntity() );
-	_entity->emitMessage(msg);
+void CPhysicEntity::onContact (IPhysics *otherComponent,bool enter) {
+	std::cout << "contactan con la entidad " << _entity->getName() << std::endl;
+	if (enter) {
+		_inContact=true;
+		std::cout << "TOCO LA ENTIDAD" << std::endl;
+			Logic::CMessageContactEnter* msg = new Logic::CMessageContactEnter();
+			msg->setEntity( otherComponent->getEntity() );
+			_entity->emitMessage(msg);
+	} else {
+		_inContact=false;
+		std::cout << "DEJO DE TOCAR LA ENTIDAD" << std::endl;
+		Logic::CMessageContactExit *m = new Logic::CMessageContactExit();
+		m->setEntity(otherComponent->getEntity());
+		_entity->emitMessage(m);
+	}
+}
+//---------------------------------------------------------
+
+
+void CPhysicEntity::onShapeHit (const PxControllerShapeHit &hit)
+{
+	//std::cout << _entity->getName() << " le llega el contacto con " << ((IPhysics*)(hit.controller->getUserData()))->getEntity()->getName() << std::endl;
 
 }
 

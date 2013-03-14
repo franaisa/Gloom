@@ -47,6 +47,8 @@ Contiene la implementaci�n del componente que controla la vida de una entidad.
 #include "Logic/Messages/MessageHudWeapon.h"
 #include "Logic/Messages/MessageHudSpawn.h"
 
+#include "Logic/Messages/MessageHudDebbug.h"
+
 namespace Logic 
 {
 	IMP_FACTORY(CHudOverlay);
@@ -244,10 +246,10 @@ namespace Logic
 		panelDie->setMetricsMode("pixel");
 		panelDie->setPosition( 5*relativeWidth, 12*relativeHeight);
 		panelDie->setDimensions( relativeWidth*10, relativeHeight*10 );
-        //panelDie->setMaterialName("cuadroArmas");
+        //panelDie->setMaterial("cuadroArmas");
 
 		_textAreaDie = _server->createOverlay("_textAreaDie", "TextArea");
-				
+
 				_textAreaDie->setMetricsMode("pixel");
 				_textAreaDie->setPosition(0.5, 0.5);
 				_textAreaDie->setDimensions(10, 10);
@@ -255,14 +257,52 @@ namespace Logic
 				_textAreaDie->setText("MUERE");
 				_textAreaDie->setTextSize(46);
 				_textAreaDie->setFont("fuenteSimple");
-
-				//panelShield->addChild(textAreaHealth);
 				
 				panelDie->addChild(_textAreaDie);
 
 		_overlayDie->add2D( panelDie );
 
 		//_overlayDie->show();
+
+
+		//////////////////////////////////////AQUI ME CREO EL OVERLAY PARA EL DEBBUG
+
+		_overlayDebbug = _server->createOverlay( "_overlayDebbug" );
+
+		_panelDebbug = _server->createOverlay("panelDebbug",  "Panel");
+		panelDie->setMetricsMode("pixel");
+
+		//_panelDebbug->setPosition(0,0);
+
+		_panelDebbug->setPosition( entityInfo->getFloatAttribute("hudPanelDebbugPositionX")*relativeWidth, 
+			entityInfo->getFloatAttribute("hudPanelDebbugPositionY")*relativeHeight);
+		
+		_panelDebbug->setDimensions( entityInfo->getFloatAttribute("hudPanelDebbugWidth")*relativeWidth,
+			entityInfo->getFloatAttribute("hudPanelDebbugHeight")*relativeHeight );
+        //_panelDebbug->setMaterial("cuadroArmas");
+		
+		_panelDebbug->setVisible(true);
+
+		_textAreaDebbug = _server->createOverlay("_textAreaDebbug", "TextArea");
+				
+				_textAreaDebbug->setMetricsMode("pixel");
+				_textAreaDebbug->setPosition(0, 0);
+				_textAreaDebbug->setDimensions( entityInfo->getFloatAttribute("hudPanelDebbugWidth")*relativeWidth,
+			entityInfo->getFloatAttribute("hudPanelDebbugHeight")*relativeHeight );
+
+				_textAreaDebbug->setText("Debbug");
+				_textAreaDebbug->setTextSize(entityInfo->getIntAttribute("hudPanelDebbugFontSize"));
+				_textAreaDebbug->setFont("fuenteSimple");
+
+				//panelShield->addChild(textAreaHealth);
+				
+				_panelDebbug->addChild(_textAreaDebbug);
+
+		_overlayDebbug->add2D( _panelDebbug );
+
+		_overlayDebbug->setVisible(false);
+
+
 		return true;
 
 	} // spawn
@@ -275,7 +315,8 @@ namespace Logic
 			|| message->getMessageType() == Message::HUD_SHIELD
 			|| message->getMessageType() == Message::HUD_AMMO
 			|| message->getMessageType() == Message::HUD_WEAPON
-			|| message->getMessageType() == Message::HUD_SPAWN;
+			|| message->getMessageType() == Message::HUD_SPAWN
+			|| message->getMessageType() == Message::HUD_DEBBUG;
 
 	} // accept
 	
@@ -294,6 +335,8 @@ namespace Logic
 		case Message::HUD_WEAPON: hudWeapon(((CMessageHudWeapon*)message)->getAmmo(), ((CMessageHudWeapon*)message)->getWeapon());
 			break;
 		case Message::HUD_SPAWN: hudSpawn(((CMessageHudSpawn*)message)->getTime());
+			break;
+		case Message::HUD_DEBBUG: hudDebbug();
 			break;
 		}
 
@@ -388,6 +431,7 @@ namespace Logic
 			}
 			_overlayPlay->setVisible(true);
 			_overlayWeapon3D[HAMMER]->setVisible(true);
+			_actualWeapon = HAMMER;
 		}
 
 	}
@@ -442,6 +486,34 @@ namespace Logic
 				break;
 			default: return "";
 			}
+	}
+
+	void CHudOverlay::hudDebbug(){
+		if(_overlayDebbug->isVisible()){
+			printf("\nBorrate! ");	
+		}else{
+			printf("\npintate! ");
+		}
+
+		_overlayDebbug->setVisible(!_overlayDebbug->isVisible());
+	}
+
+	void CHudOverlay::tick(unsigned int msecs)
+	{
+		IComponent::tick(msecs);
+		
+
+		if(_overlayDebbug->isVisible())
+		{
+			_temporal+=msecs;
+			if(_temporal>200)
+			{
+				std::stringstream sDebug;
+				sDebug << "FPS: " << 1000/msecs;
+				_textAreaDebbug->setText(sDebug.str());
+				_temporal=0;
+			}
+		}
 	}
 
 } // namespace Logic

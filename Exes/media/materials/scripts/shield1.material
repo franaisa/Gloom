@@ -1,4 +1,6 @@
 
+
+
 material Material01
 {
 	technique
@@ -14,10 +16,9 @@ material Material01
 			{
 				texture newred.png
 			}
-		}
-
+		}	
 	}
-
 }
+
 
 

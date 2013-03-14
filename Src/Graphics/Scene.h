@@ -174,7 +174,7 @@ namespace Graphics
 		/**
 		crea una particula
 		*/
-		CParticle* createParticle(const std::string &unicName, const std::string &particleName, const Vector3 *position);
+		CParticle* createParticle(const std::string &unicName, const std::string &particleName, const Vector3 &position, Vector3 *direction = NULL);
 
 		void changeAmbientLight(Vector3 Light);
 

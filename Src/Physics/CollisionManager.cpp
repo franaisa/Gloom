@@ -64,22 +64,28 @@ void CCollisionManager::onContact(const PxContactPairHeader &pairHeader, const P
 		if( cp.flags & (PxContactPairFlag::eDELETED_SHAPE_0 | PxContactPairFlag::eDELETED_SHAPE_0) )
 			continue;
 
-		// eNOTIFY_TOUCH_FOUND es un flag para indicar que los shapes acaban de empezar a estar en contacto
-		// de momento solo necesitamos saber cuando colisionan dos shapes. En un futuro
-		// puede interesarnos cuando dos shapes y entran en contacto y dejan de estarlo.
-		if(cp.events & PxPairFlag::eNOTIFY_TOUCH_FOUND) {
-			// Obtenemos los datos logicos asociados al primer actor
-			IPhysics* firstActorBeingContacted = (IPhysics *) pairHeader.actors[0]->userData;
-			assert(firstActorBeingContacted);
+		// Comprobamos si estamos tocando o no el objeto
+		bool enter = cp.events & PxPairFlag::eNOTIFY_TOUCH_FOUND;
+		bool exit = cp.events & PxPairFlag::eNOTIFY_TOUCH_LOST;
 
-			// Obtenemos los datos logicos asociados al segundo actor
-			IPhysics* secondActorBeingContacted = (IPhysics *) pairHeader.actors[1]->userData;
-			assert(secondActorBeingContacted);
+		// Sólo tenemos en cuenta los eventos de entrada y salida del contact. En PhysX 2.8 y anteriores
+		// también se notificada si el objeto permanecía en contacto. La documentación no deja muy
+		// claro si este comportamiento se ha eliminado de manera definitiva.
+		if (!enter && !exit)
+			continue;
 
-			// Disparamos los metodos onContact de la interfaz logica
-			firstActorBeingContacted->onContact(secondActorBeingContacted);
-			secondActorBeingContacted->onContact(firstActorBeingContacted);
-		}
+		// Obtenemos los datos logicos asociados al primer actor
+		IPhysics* firstActorBeingContacted = (IPhysics *) pairHeader.actors[0]->userData;
+		assert(firstActorBeingContacted);
+
+		// Obtenemos los datos logicos asociados al segundo actor
+		IPhysics* secondActorBeingContacted = (IPhysics *) pairHeader.actors[1]->userData;
+		assert(secondActorBeingContacted);
+
+		// Disparamos los metodos onContact de la interfaz logica
+		firstActorBeingContacted->onContact(secondActorBeingContacted,enter);
+		secondActorBeingContacted->onContact(firstActorBeingContacted,enter);
+		
 	}
 }
 
@@ -126,6 +132,10 @@ void CCollisionManager::onShapeHit(const PxControllerShapeHit &hit) {
 	// 2. Notificar la colisión al componente físico
 	CPhysicController * component = (CPhysicController *) hit.controller->getUserData();
 	component->onShapeHit(hit);
+	
+	
+	CPhysicEntity* otherComponent = (CPhysicEntity *)hit.shape->getActor().userData;
+	otherComponent->onShapeHit(hit); 
 }
 
 //--------------------------------------------------
@@ -142,3 +152,4 @@ void CCollisionManager::onControllerHit(const PxControllersHit &hit) {
 void CCollisionManager::onObstacleHit(const PxControllerObstacleHit &hit) {
 	// Por ahora ignoramos estos mensajes	
 }
+

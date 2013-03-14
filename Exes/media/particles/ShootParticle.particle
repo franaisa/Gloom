@@ -38,9 +38,4 @@ particle_system ShootParticle
 		image Blind.png
 	}
 
-	affector Scaler
-	{
-		rate 5
-	}
-
 }

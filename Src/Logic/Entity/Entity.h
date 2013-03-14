@@ -388,7 +388,7 @@ namespace Logic
 		 * @param id String que identifica al componente. Es el mismo nombre
 		 * que el asignado en el blueprints.
 		 */
-		void deactivateAllComponentsExcept(std::list<std::string*>* id);
+		void deactivateAllComponentsExcept(std::vector<std::string> exceptionList);
 
 		bool dynamicSpawn(CMap* map, Map::CEntity* entityInfo);
 
