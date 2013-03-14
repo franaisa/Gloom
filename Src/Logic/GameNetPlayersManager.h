@@ -102,40 +102,40 @@ namespace Logic {
 		/**
 		Inserta un nuevo jugador con la info asociada sin rellenar.
 		
-		@param idPlayer Identificador de red del player a insertar.
+		@param playerNetId Identificador de red del player a insertar.
 		@return true si no existe otro player con el mismo identificador de red.
 		*/
-		bool addPlayer(Net::NetID idPlayer);
+		bool addPlayer(Net::NetID playerNetId);
 
 		//________________________________________________________________________
 
 		/**
 		Elimina a un jugador del gestor dado su identificador de red.
 
-		@param idPlayer Identificador de red del player que se desea eliminar.
+		@param playerNetId Identificador de red del player que se desea eliminar.
 		@return true si el player estaba registrado.
 		*/
-		bool removePlayer(Net::NetID idPlayer);
+		bool removePlayer(Net::NetID playerNetId);
 
 		//________________________________________________________________________
 
 		/**
 		Añade un jugador a la lista de jugadores cargados de otro jugador.
 
-		@param idPlayer Identificador de red del player que ha cargado un nuevo jugador.
+		@param playerNetId Identificador de red del player que ha cargado un nuevo jugador.
 		@param idPlayerToLoad Identificador de red del jugador que ha cargado el player.
 		*/
-		void loadPlayer(Net::NetID idPlayer, Net::NetID idPlayerToLoad);
+		void loadPlayer(Net::NetID playerNetId, Net::NetID idPlayerToLoad);
 
 		//________________________________________________________________________
 
 		/**
 		Elimina un jugador de la lista de jugadores cargados de un player concreto.
 
-		@param idPlayer Identificador de red del player que debe eliminar a un jugador de su lista.
+		@param playerNetId Identificador de red del player que debe eliminar a un jugador de su lista.
 		@param idPlayerToUnload Identificador de red del player que debe eliminarse de la lista.
 		*/
-		void unloadPlayer(Net::NetID idPlayer, Net::NetID idPlayerToUnload);
+		void unloadPlayer(Net::NetID playerNetId, Net::NetID idPlayerToUnload);
 
 
 		// =======================================================================
@@ -146,30 +146,30 @@ namespace Logic {
 		/**
 		Asigna un nickname a un player dado un identificador de red.
 
-		@param idPlayer Identificador de red del player al que queremos cambiarle el nombre.
+		@param playerNetId Identificador de red del player al que queremos cambiarle el nombre.
 		@param nickname Nickname que vamos a asignar al player.
 		*/
-		void setPlayerNickname(Net::NetID idPlayer, const std::string& nickname);
+		void setPlayerNickname(Net::NetID playerNetId, const std::string& nickname);
 
 		//________________________________________________________________________
 
 		/**
 		Asigna un mesh a un player dado un identificador de red.
 
-		@param idPlayer Identificador de red del player al que queremos cambiarle el mesh.
+		@param playerNetId Identificador de red del player al que queremos cambiarle el mesh.
 		@param mesh Mesh que queremos asignar al player.
 		*/
-		void setPlayerMesh(Net::NetID idPlayer, const std::string& mesh);
+		void setPlayerMesh(Net::NetID playerNetId, const std::string& mesh);
 
 		//________________________________________________________________________
 
 		/**
 		Asigna un identificador de entidad a un player dado un identificador de red.
 
-		@param idPlayer Identificador de red del player al que queremos asignar un identificador de entidad.
+		@param playerNetId Identificador de red del player al que queremos asignar un identificador de entidad.
 		@param entityId Identificador de entidad que queremos asignar al player.
 		*/
-		void setEntityID(Net::NetID idPlayer, TEntityID entityId);
+		void setEntityID(Net::NetID playerNetId, TEntityID entityId);
 
 
 		// =======================================================================
@@ -181,30 +181,40 @@ namespace Logic {
 		Devuelve el numero de jugadores que ha cargado un player dado su identificador
 		de red.
 
-		@param idPlayer Identificador de red del player.
+		@param playerNetId Identificador de red del player.
 		@return Numero de jugadores que el player ha cargado.
 		*/
-		unsigned int getPlayersLoaded(Net::NetID idPlayer);
+		unsigned int getPlayersLoaded(Net::NetID playerNetId);
 
 		//________________________________________________________________________
 
 		/**
 		Devuelve toda la informacion asociada a un jugador dado su identificador de red.
 
-		@param idPlayer Identificador de red del player.
+		@param playerNetId Identificador de red del player.
 		@return Informacion asociada al player buscado.
 		*/
-		CPlayerInfo getPlayer(Net::NetID idPlayer);
+		CPlayerInfo getPlayer(Net::NetID playerNetId);
+
+		//________________________________________________________________________
+
+		/**
+		Devuelve toda la informacion asociada a un jugador dado su identificador de red.
+
+		@param entityId Identificador logico del player.
+		@return Información asociada al player buscado.
+		*/
+		CPlayerInfo getPlayerByEntityId(Logic::TEntityID entityId);
 
 		//________________________________________________________________________
 
 		/**
 		Devuelve el nickname de un player dado su identificador de red.
 
-		@param idPlayer Identificador de red del player.
+		@param playerNetId Identificador de red del player.
 		@return Nickname del player buscado.
 		*/
-		std::string getPlayerNickname(Net::NetID idPlayer);
+		std::string getPlayerNickname(Net::NetID playerNetId);
 
 		//________________________________________________________________________
 
@@ -220,30 +230,6 @@ namespace Logic {
 		//                                ITERADORES
 		// =======================================================================
 
-
-		/** 
-		Devuelve un iterador al primer player de la tabla.
-		
-		@return Un iterador al primer player de la tabla.
-		@deprecated Esta funcion existe por un bug con el iterador que funciona como
-		wrapper. Lo ideal es que el cliente no necesite conocer los detalles de 
-		implementacion internos.
-		*/
-		std::map<Net::NetID, CPlayerInfo>::iterator begin2() { return _connectedPlayers.begin(); }
-
-		//________________________________________________________________________
-		
-		/**
-		Devuelve un iterador al final de la tabla.
-		
-		@return Un iterador al final de la tabla.
-		@deprecated Esta funcion existe por un bug con el iterador que funciona como
-		wrapper. Lo ideal es que el cliente no necesite conocer los detalles de 
-		implementacion internos.
-		*/
-		std::map<Net::NetID, CPlayerInfo>::iterator end2() { return _connectedPlayers.end(); }
-
-		//________________________________________________________________________
 
 		/**
 		Devuelve un iterador al primer player de la tabla. 
@@ -281,16 +267,19 @@ namespace Logic {
 		// =======================================================================
 
 
-		typedef std::pair<Net::NetID, CPlayerInfo> TConnectedPlayersPair;
-		typedef std::map<Net::NetID, CPlayerInfo> TConnectedPlayersTable;
+		typedef std::pair<Net::NetID, CPlayerInfo*> TNetConnectedPlayersPair;
+		typedef std::pair<Logic::TEntityID, CPlayerInfo*> TLogicConnectedPlayersPair;
+		typedef std::map<Net::NetID, CPlayerInfo*> TNetConnectedPlayersTable;
+		typedef std::map<Logic::TEntityID, CPlayerInfo*> TLogicConnectedPlayersTable;
 
-		/** Map que contiene pares (Net::ID, CPlayerInfo). */
-		TConnectedPlayersTable _connectedPlayers;
+		/** Map que contiene pares (Net::ID, CPlayerInfo*). */
+		TNetConnectedPlayersTable _netConnectedPlayers;
+
+		/** Map que contiene pares (Logic::TEntityID, CPlayerInfo*) */
+		TLogicConnectedPlayersTable _logicConnectedPlayers;
 
 		/** Única instancia de la clase. */
 		static CGameNetPlayersManager* _instance;
-
-		
 		
 	};
 
@@ -355,7 +344,7 @@ namespace Logic {
 
 		@param src Iterador del que se quiere hacer un copia.
 		*/
-		inline iterator(const TConnectedPlayersTable::iterator& src) : _it(src) { }
+		inline iterator(const TNetConnectedPlayersTable::iterator& src) : _it(src) { }
 		
 		//________________________________________________________________________
 
@@ -443,7 +432,7 @@ namespace Logic {
 
 		@return Puntero a la informacion asociada al player.
 		*/
-		inline CPlayerInfo* operator->() const { return &(_it->second); }
+		inline CPlayerInfo* operator->() const { return _it->second; }
 		
 		//________________________________________________________________________
 
@@ -464,7 +453,7 @@ namespace Logic {
 
 
 		/** Iterador de tipo std::map<Net::NetID, CPlayerInfo>. */
-		TConnectedPlayersTable::iterator _it;
+		TNetConnectedPlayersTable::iterator _it;
 	};
 
 };

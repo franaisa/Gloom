@@ -10,18 +10,21 @@ namespace Logic {
 	
 	CMessagePlayerSpawn::CMessagePlayerSpawn() : CMessage(Message::PLAYER_SPAWN) {
 		// Nada que hacer
-	}//
-	//----------------------------------------------------------
+	}
+	
+	//________________________________________________________________________
 
 	void CMessagePlayerSpawn::setSpawnTransform(const Matrix4& transform) {
 		_spawnTransform = transform;
-	}//
-	//----------------------------------------------------------
+	}
+	
+	//________________________________________________________________________
 
 	Matrix4 CMessagePlayerSpawn::getSpawnTransform(){
 		return _spawnTransform;
-	}//
-	//----------------------------------------------------------
+	}
+	
+	//________________________________________________________________________
 
 	Net::CBuffer* CMessagePlayerSpawn::serialize() {
 		assert(_tempBuffer == NULL);
@@ -31,8 +34,9 @@ namespace Logic {
 		_tempBuffer->serialize(_spawnTransform);
 		
 		return _tempBuffer;
-	}//
-	//----------------------------------------------------------
+	}
+	
+	//________________________________________________________________________
 
 	void CMessagePlayerSpawn::deserialize(Net::CBuffer& buffer) {
 		buffer.deserialize(_spawnTransform);

@@ -20,7 +20,7 @@ using namespace std;
 
 namespace Logic {
 	
-	CGameNetPlayersManager* CGameNetPlayersManager::_instance = 0;
+	CGameNetPlayersManager* CGameNetPlayersManager::_instance = NULL;
 
 	//______________________________________________________________________________
 
@@ -31,7 +31,17 @@ namespace Logic {
 	//______________________________________________________________________________
 
 	CGameNetPlayersManager::~CGameNetPlayersManager() {
-		_instance = 0;
+		// Eliminamos la informacion asociada a los clientes
+		TNetConnectedPlayersTable::iterator it = _netConnectedPlayers.begin();
+		for(; it != _netConnectedPlayers.end(); ++it) {
+			delete it->second;
+		}
+
+		// Vaciamos la tabla de referencias
+		_netConnectedPlayers.clear();
+		_logicConnectedPlayers.clear();
+
+		_instance = NULL;
 	} // ~CServer
 	
 	//______________________________________________________________________________
@@ -61,118 +71,159 @@ namespace Logic {
 
 	//______________________________________________________________________________
 
-	void CGameNetPlayersManager::deactivate() {	
-		// Vaciamos el map de clientes creados
-		_connectedPlayers.clear();
+	void CGameNetPlayersManager::deactivate() {
+		// Eliminamos la informacion asociada a los clientes
+		TNetConnectedPlayersTable::iterator it = _netConnectedPlayers.begin();
+		for(; it != _netConnectedPlayers.end(); ++it) {
+			delete it->second;
+		}
+
+		// Vaciamos la tabla de referencias
+		_netConnectedPlayers.clear();
+		_logicConnectedPlayers.clear();
 	} // deactivate
 
 	//______________________________________________________________________________
 
-	bool CGameNetPlayersManager::addPlayer(Net::NetID idPlayer) {
-		return (_connectedPlayers.insert( TConnectedPlayersPair(idPlayer, CPlayerInfo(idPlayer)) ) ).second;
+	bool CGameNetPlayersManager::addPlayer(Net::NetID playerNetId) {
+		return (_netConnectedPlayers.insert( TLogicConnectedPlayersPair(playerNetId, new CPlayerInfo(playerNetId)) ) ).second;
 	} // addPlayer
 
 	//______________________________________________________________________________
 
-	bool CGameNetPlayersManager::removePlayer(Net::NetID idPlayer) {
-		// Si el player que desea desconectarse ha sido cargado por algun otro cliente
-		// lo eliminamos de su lista de jugadores cargados
-		TConnectedPlayersTable::iterator it = _connectedPlayers.begin();
-		for(; it != _connectedPlayers.end(); ++it) {
-			it->second.unloadPlayer(idPlayer);
+	bool CGameNetPlayersManager::removePlayer(Net::NetID playerNetId) {
+		// Buscamos el player que queremos borrar. 
+		TNetConnectedPlayersTable::iterator itWantedPlayer = _netConnectedPlayers.find(playerNetId);
+		if( itWantedPlayer != _netConnectedPlayers.end() ) {
+			// Si el player que desea desconectarse ha sido cargado por algun otro cliente
+			// lo eliminamos de su lista de jugadores cargados
+			TNetConnectedPlayersTable::iterator it = _netConnectedPlayers.begin();
+			for(; it != _netConnectedPlayers.end(); ++it) {
+				it->second->unloadPlayer(playerNetId);
+			}
+
+			// Comprobamos si existia una referencia en la tabla de identificadores logicos
+			std::pair<Logic::TEntityID, bool> ret = itWantedPlayer->second->getEntityId();
+			if(ret.second) {
+				// Si existia, borramos su entrada
+				_logicConnectedPlayers.erase(ret.first);
+			}
+
+			// Borramos el puntero a la informacion asociada al player
+			delete itWantedPlayer->second;
+
+			// Borramos la entrada en la tabla de informaciones asociadas a identificadores
+			// de red
+			_netConnectedPlayers.erase(itWantedPlayer);
+
+			// Exito en el borrado
+			return true;
 		}
 
-		return _connectedPlayers.erase(idPlayer) > 0;
+		// El id de red no existia en la tabla, fallo en el borrado
+		return false;
 	}
 
 	//______________________________________________________________________________
 
-	void CGameNetPlayersManager::setPlayerNickname(Net::NetID idPlayer, const std::string& nickname) {
-		TConnectedPlayersTable::iterator it = _connectedPlayers.find(idPlayer);
-		assert(it != _connectedPlayers.end() && "No se puede poner nombre al player porque no existe en el Manager");
+	void CGameNetPlayersManager::setPlayerNickname(Net::NetID playerNetId, const std::string& nickname) {
+		TNetConnectedPlayersTable::iterator it = _netConnectedPlayers.find(playerNetId);
+		assert(it != _netConnectedPlayers.end() && "No se puede poner nombre al player porque no existe en el Manager");
 
-		it->second.setName(nickname);
+		it->second->setName(nickname);
 	}
 
 	//______________________________________________________________________________
 
-	void CGameNetPlayersManager::setPlayerMesh(Net::NetID idPlayer, const std::string& mesh) {
-		TConnectedPlayersTable::iterator it = _connectedPlayers.find(idPlayer);
-		assert(it != _connectedPlayers.end() && "No se puede poner el nombre de la maya al player porque no existe en el Manager");
+	void CGameNetPlayersManager::setPlayerMesh(Net::NetID playerNetId, const std::string& mesh) {
+		TNetConnectedPlayersTable::iterator it = _netConnectedPlayers.find(playerNetId);
+		assert(it != _netConnectedPlayers.end() && "No se puede poner el nombre de la maya al player porque no existe en el Manager");
 
-		it->second.setMesh(mesh);
+		it->second->setMesh(mesh);
 	}
 
 	//______________________________________________________________________________
 
-	void CGameNetPlayersManager::setEntityID(Net::NetID idPlayer, Logic::TEntityID entityId) {
-		TConnectedPlayersTable::iterator it = _connectedPlayers.find(idPlayer);
-		assert(it != _connectedPlayers.end() && "No se puede asignar el id de entidad al player porque no existe en el Manager");
+	void CGameNetPlayersManager::setEntityID(Net::NetID playerNetId, Logic::TEntityID entityId) {
+		TNetConnectedPlayersTable::iterator it = _netConnectedPlayers.find(playerNetId);
+		assert(it != _netConnectedPlayers.end() && "No se puede asignar el id de entidad al player porque no existe en el Manager");
 
-		it->second.setEntityId(entityId);
+		// Seteamos el id de entidad dado al cliente con el netid dado
+		it->second->setEntityId(entityId);
+		// Añadimos una entrada en la tabla de ids logicos a informacion de cliente
+		_logicConnectedPlayers.insert( std::pair<Logic::TEntityID, CPlayerInfo*>(entityId, it->second) );
 	}
 
 	//______________________________________________________________________________
 
-	void CGameNetPlayersManager::loadPlayer(Net::NetID idPlayer, Net::NetID idPlayerToLoad) {
-		TConnectedPlayersTable::iterator it = _connectedPlayers.find(idPlayer);
-		assert(it != _connectedPlayers.end() && "No se puede aumentar el contador de players porque no existe el player en el Manager");
+	void CGameNetPlayersManager::loadPlayer(Net::NetID playerNetId, Net::NetID idPlayerToLoad) {
+		TNetConnectedPlayersTable::iterator it = _netConnectedPlayers.find(playerNetId);
+		assert(it != _netConnectedPlayers.end() && "No se puede aumentar el contador de players porque no existe el player en el Manager");
 
-		it->second.loadPlayer(idPlayerToLoad);
+		it->second->loadPlayer(idPlayerToLoad);
 	}
 
 	//______________________________________________________________________________
 
-	void CGameNetPlayersManager::unloadPlayer(Net::NetID idPlayer, Net::NetID idPlayerToUnload) {
-		TConnectedPlayersTable::iterator it = _connectedPlayers.find(idPlayer);
-		assert(it != _connectedPlayers.end() && "No se puede decrementar el contador de players porque no existe el player en el Manager");
+	void CGameNetPlayersManager::unloadPlayer(Net::NetID playerNetId, Net::NetID idPlayerToUnload) {
+		TNetConnectedPlayersTable::iterator it = _netConnectedPlayers.find(playerNetId);
+		assert(it != _netConnectedPlayers.end() && "No se puede decrementar el contador de players porque no existe el player en el Manager");
 
-		it->second.unloadPlayer(idPlayerToUnload);
+		it->second->unloadPlayer(idPlayerToUnload);
 	}
 
 	//______________________________________________________________________________
 
-	unsigned int CGameNetPlayersManager::getPlayersLoaded(Net::NetID idPlayer) {
-		TConnectedPlayersTable::iterator it = _connectedPlayers.find(idPlayer);
-		assert(it != _connectedPlayers.end() && "No se puede devolver cuantos players ha cargado el jugador porque no existe en el Manager");
+	unsigned int CGameNetPlayersManager::getPlayersLoaded(Net::NetID playerNetId) {
+		TNetConnectedPlayersTable::iterator it = _netConnectedPlayers.find(playerNetId);
+		assert(it != _netConnectedPlayers.end() && "No se puede devolver cuantos players ha cargado el jugador porque no existe en el Manager");
 
-		return it->second.playersLoaded();
+		return it->second->playersLoaded();
 	}
 
 	//______________________________________________________________________________
 
-	CPlayerInfo CGameNetPlayersManager::getPlayer(Net::NetID idPlayer) {
-		TConnectedPlayersTable::const_iterator it = _connectedPlayers.find(idPlayer);
-		assert(it != _connectedPlayers.end() && "No se ha encontrado el id de player buscado");
+	CPlayerInfo CGameNetPlayersManager::getPlayer(Net::NetID playerNetId) {
+		TNetConnectedPlayersTable::const_iterator it = _netConnectedPlayers.find(playerNetId);
+		assert(it != _netConnectedPlayers.end() && "No se ha encontrado el id de player buscado");
 
-		return it->second;
-	} // getPlayer
+		return *it->second;
+	}
+
+	//______________________________________________________________________________
+
+	CPlayerInfo CGameNetPlayersManager::getPlayerByEntityId(Logic::TEntityID entityId) {
+		TLogicConnectedPlayersTable::const_iterator it = _logicConnectedPlayers.find(entityId);
+		assert(it != _logicConnectedPlayers.end() && "No se ha encontrado el id logico buscado");
+
+		return *it->second;
+	}
 
 	//______________________________________________________________________________
 
 	unsigned int CGameNetPlayersManager::getNumberOfPlayersConnected() {
-		return _connectedPlayers.size();
+		return _netConnectedPlayers.size();
 	}
 
 	//______________________________________________________________________________
 
-	string CGameNetPlayersManager::getPlayerNickname(Net::NetID idPlayer) {
-		TConnectedPlayersTable::iterator it = _connectedPlayers.find(idPlayer);
-		assert(it != _connectedPlayers.end() && "No se puede poner obtener el nombre del player porque no existe en el Manager");
+	string CGameNetPlayersManager::getPlayerNickname(Net::NetID playerNetId) {
+		TNetConnectedPlayersTable::iterator it = _netConnectedPlayers.find(playerNetId);
+		assert(it != _netConnectedPlayers.end() && "No se puede poner obtener el nombre del player porque no existe en el Manager");
 
-		return it->second.getName();
+		return it->second->getName();
 	}
 
 	//______________________________________________________________________________
 
 	CGameNetPlayersManager::iterator CGameNetPlayersManager::begin() {
-		return CGameNetPlayersManager::iterator( _connectedPlayers.begin() );
+		return CGameNetPlayersManager::iterator( _netConnectedPlayers.begin() );
 	}
 
 	//______________________________________________________________________________
 
 	CGameNetPlayersManager::iterator CGameNetPlayersManager::end() {
-		return CGameNetPlayersManager::iterator( _connectedPlayers.end() );
+		return CGameNetPlayersManager::iterator( _netConnectedPlayers.end() );
 	}
 
 };
