@@ -17,7 +17,7 @@ Contiene la implementación del componente que gestiona el spawn del jugador.
 #include "Logic/Server.h"
 #include "Logic/GameSpawnManager.h"
 #include "PhysicController.h"
-
+#include "Logic/GameNetMsgManager.h"
 
 #include "Logic/Messages/MessagePlayerDead.h"
 #include "Logic/Messages/MessagePlayerSpawn.h"
@@ -113,7 +113,11 @@ namespace Logic
 				Logic::CMessagePlayerSpawn* spawnMsg = new Logic::CMessagePlayerSpawn();
 				spawnMsg->setSpawnTransform( _entity->getTransform() );
 				_entity->emitMessage(spawnMsg);
-				CServer::getSingletonPtr()->getMap()->getEntityByType("Camera")->emitMessage(new CMessagePlayerSpawn());
+				CEntity * camera = CServer::getSingletonPtr()->getMap()->getEntityByType("Camera");
+					
+				camera->emitMessage(spawnMsg);
+				Logic::CGameNetMsgManager::getSingletonPtr()->sendMessageToOne(new CMessagePlayerSpawn(), camera->getEntityID(), _entity->getEntityID());
+
 				Logic::CMessageHudSpawn *mS=new Logic::CMessageHudSpawn();
 				mS->setTime(0);
 				_entity->emitMessage(mS);

@@ -115,6 +115,15 @@ namespace Logic
 		*/
 		void sendCreateEntity(TEntityID dest);
 
+		/**
+		Método que serializa un mensaje lógico y lo envía por el tubo al otro
+		extremo de la red. Pero sólo lo envía al player local de esta id
+		
+		@param message Mensaje que debe ser serializado y enviado.
+		@param destination ID de la entidad a la que va dirigido el mensaje.
+		*/
+		void sendMessageToOne(CMessage * message, TEntityID destination, TEntityID player);
+
 		/// IOBSERVER
 		virtual void dataPacketReceived(Net::CPaquete* packet);
 		virtual void connexionPacketReceived(Net::CPaquete* packet){}

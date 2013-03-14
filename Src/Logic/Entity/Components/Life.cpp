@@ -20,6 +20,9 @@ Contiene la implementación del componente que controla la vida de una entidad.
 // Para informar por red que se ha acabado el juego
 #include "Net/Manager.h"
 #include "Net/buffer.h"
+#include "Logic/GameNetPlayersManager.h"
+#include "Logic/PlayerInfo.h"
+#include "Logic/GameNetMsgManager.h"
 
 #include "Logic/Messages/MessageDamaged.h"
 #include "Logic/Messages/MessageAddLife.h"
@@ -172,8 +175,12 @@ namespace Logic
 			//Mensaje para que la camara ahora enfoque al jugador que nos mató (hay que enviar un mensaje de red especial para el cliente)
 			Logic::CMessageCameraToEnemy *cte=new Logic::CMessageCameraToEnemy();
 			cte->setEnemy(enemy);
-			CServer::getSingletonPtr()->getMap()->getEntityByType("Camera")->emitMessage(cte);
 
+			CEntity * camera = CServer::getSingletonPtr()->getMap()->getEntityByType("Camera");
+			camera->emitMessage(cte);
+			
+			//enviamos el mensaje por la red
+			Logic::CGameNetMsgManager::getSingletonPtr()->sendMessageToOne(cte, camera->getEntityID(), _entity->getEntityID());
 			//el mensaje de camera to enemy debe ir solamente al jugador que ha muerto, no  a ningún otro
 			//Logic:CServer::getSingletonPtr()->getpla
 		}
