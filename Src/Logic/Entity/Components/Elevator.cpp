@@ -20,6 +20,9 @@ Contiene la implementación del componente que controla el movimiento de un ascen
 
 #include "Logic/Messages/MessageKinematicMove.h"
 #include "Logic/Messages/MessageTouched.h"
+#include "Logic/Messages/MessageAddForcePhysics.h"
+#include "Logic/Messages/MessageSetPhysicPosition.h"
+#include "PhysicEntity.h"
 
 namespace Logic 
 {
@@ -103,7 +106,6 @@ namespace Logic
 
 		//Si estuvimos _launchTime
 		if(_go && !_active){
-			std::cout << "DESPEGAMOS autentico" << std::endl;
 			_active=true;
 			_toFinal=true;
 			_wait=false;
@@ -111,7 +113,6 @@ namespace Logic
 		}
 		//Si hemos pasado 2 segundos arriba, volvemos a bajar
 		if(_active && _waitTimeInFinal>_waitTime){
-			std::cout << "BAJAMOS autentico" << std::endl;
 			_toFinal=false;
 			_wait=false;
 			_waitInFinal=false;

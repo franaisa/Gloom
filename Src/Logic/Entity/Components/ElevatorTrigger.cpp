@@ -129,7 +129,6 @@ namespace Logic
 
 		//Si estuvimos _launchTime
 		if(_timer>_launchTime && !_active){
-			std::cout << "DESPEGAMOS trigger" << std::endl;
 			_active=true;
 			_toFinal=true;
 			_wait=false;
@@ -141,7 +140,6 @@ namespace Logic
 		}
 		//Si hemos pasado 2 segundos arriba, volvemos a bajar
 		if(_active && _waitTimeInFinal>_waitTime){
-			std::cout << "BAJAMOS trigger" << std::endl;
 			_timer=0;
 			_toFinal=false;
 			_wait=false;
