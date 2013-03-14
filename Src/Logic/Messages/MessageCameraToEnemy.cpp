@@ -41,7 +41,6 @@ namespace Logic {
 	void CMessageCameraToEnemy::deserialize(Net::CBuffer& buffer) {
 		TEntityID id;
         buffer.deserialize(id);
-
 		_entity = Logic::CServer::getSingletonPtr()->getMap()->getEntityByID(id);
 	}
 
