@@ -241,7 +241,7 @@ Map = {
 			weaponSniperColdDown = 2.0,
 			weaponSniperMaxAmmo = 10,
 			weaponSniperId = 1,
-			weaponSniperParticlePosition = {30.0,50.0, 30.0},
+			weaponSniperParticlePosition = {30.0,30.0, 30.0},
 			
 			weaponShotGunName = "Shotgun",
 			weaponShotGunModel = "UziLeft.mesh",
