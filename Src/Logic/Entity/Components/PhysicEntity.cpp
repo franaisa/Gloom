@@ -353,6 +353,7 @@ void CPhysicEntity::addImpulsiveForce(const Vector3& force) {
 	}
 }
 
+
 //---------------------------------------------------------
 
 void CPhysicEntity::deactivateSimulation() {

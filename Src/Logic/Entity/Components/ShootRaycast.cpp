@@ -56,12 +56,13 @@ namespace Logic {
 
 			for(int i = 0; i < _numberShots; ++i) {
 				std::pair<CEntity*, Ray> entityHit = fireWeapon();
+				decrementAmmo();
 				if(entityHit.first != NULL) {
 					triggerHitMessages(entityHit);
 				}
 			}
 
-			decrementAmmo();
+			
 		}
 		else if(_currentAmmo == 0) {
 			// Ejecutar sonidos y animaciones de falta de balas

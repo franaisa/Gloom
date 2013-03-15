@@ -17,7 +17,10 @@ Contiene la implementación de la clase PlayerInfo para el proyecto de logica.
 
 namespace Logic {
 
-	CPlayerInfo::CPlayerInfo(Net::NetID netId) : _netId(netId), _rank(0) {
+	CPlayerInfo::CPlayerInfo(Net::NetID netId) : _netId(netId), 
+											     _rank(0), 
+												 _entityIdInitialized(false) {
+		
 		// No hay memoria dinamica que inicializar
 	}
 
@@ -28,6 +31,7 @@ namespace Logic {
 													   _clan(rhs._clan), 
 													   _rank(rhs._rank),
 													   _entityId(rhs._entityId),
+													   _entityIdInitialized(rhs._entityIdInitialized),
 													   _netId(rhs._netId),
 													   _playersLoaded(rhs._playersLoaded) {
 		// No hay memoria dinamica que inicializar
@@ -42,6 +46,7 @@ namespace Logic {
 			_clan = rhs._clan;
 			_rank = rhs._rank;
 			_entityId = rhs._entityId;
+			_entityIdInitialized = rhs._entityIdInitialized;
 			_netId = rhs._netId;
 			_playersLoaded = rhs._playersLoaded;
 		}
@@ -57,6 +62,7 @@ namespace Logic {
 	   out << "Clan = " << playerInfo._clan << std::endl;
 	   out << "Rank = " << playerInfo._rank << std::endl;
 	   out << "EntityID = " << playerInfo._entityId << std::endl;
+	   out << "EntityIDInitialized = " << (playerInfo._entityIdInitialized ? "true" : "false") << std::endl;
 	   out << "NetID = " << playerInfo._netId << std::endl;
 	   out << "NetID's de jugadores cargados =";
 
@@ -82,8 +88,8 @@ namespace Logic {
 
 	//______________________________________________________________________________
 
-	TEntityID CPlayerInfo::getEntityId() {
-		return _entityId;
+	std::pair<TEntityID, bool> CPlayerInfo::getEntityId() {
+		return std::pair<TEntityID, bool>(_entityId, _entityIdInitialized);
 	}
 
 	//______________________________________________________________________________
@@ -114,6 +120,7 @@ namespace Logic {
 
 	void CPlayerInfo::setEntityId(TEntityID entityId) {
 		this->_entityId = entityId;
+		_entityIdInitialized = true;
 	}
 
 	//______________________________________________________________________________

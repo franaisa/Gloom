@@ -58,15 +58,7 @@ namespace Logic
 			/*la 1º arama siempre estara a true*/
 			_weapons[0] = true;
 			activateComponent(_actualWeapon);
-			_weapons[3] = true;
-			_weapons[4] = true;
-			_weapons[5] = true;
-			/*
-			_weapons[1] = true;
-		
-			printf("\n\n mi actual weapon es.....%d", _actualWeapon);
 
-			*/
 		}
 		return true;
 
@@ -84,13 +76,7 @@ namespace Logic
 			/*la 1º arma siempre estara a true*/
 			activateComponent(_actualWeapon);
 			_weapons[_actualWeapon]=true;
-			//ÑAPAWNZ
-			//_entity->getComponent<CArrayGraphics>(std::string("CArrayGraphics"))->changeWeapon(0);
-			
-			//trama para las demas
-			_weapons[3] = true;
-			_weapons[4] = true;
-			_weapons[5] = true;
+
 
 		//return true;
 

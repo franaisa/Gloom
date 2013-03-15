@@ -183,7 +183,6 @@ namespace Net {
 
 	//---------------------------------------------------------
 
-
 	void CManager::activateAsServer(int port, int clients, unsigned int maxinbw, unsigned int maxoutbw)
 	{
 		//Creamos el servidor de red

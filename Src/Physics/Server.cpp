@@ -930,3 +930,6 @@ void CServer::overlapExplotion(const Vector3& position, float explotionRadius, L
 void CServer::addImpulsiveForce( PxRigidDynamic* actor, const Vector3& force ) {
 	actor->addForce( Vector3ToPxVec3(force), PxForceMode::eIMPULSE );
 }
+
+//--------------------------------------------------------
+
