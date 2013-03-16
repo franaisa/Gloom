@@ -23,6 +23,9 @@
 #include "Logic/Messages/MessageDamaged.h"
 #include "Logic/Messages/MessageAddForcePlayer.h"
 
+#include "Graphics/Server.h"
+#include "Graphics/Scene.h"
+
 namespace Logic {
 	
 	IMP_FACTORY(CGrenadeController);
@@ -113,7 +116,7 @@ namespace Logic {
 		}
 
 		if(nbHits > 0) delete [] entitiesHit;
-
+		/*
 		// Obtenemos la informacion asociada al arquetipo de la explosion de la granada
 		Map::CEntity *entityInfo = CEntityFactory::getSingletonPtr()->getInfo("Explotion");
 		// Creamos la entidad y la activamos
@@ -126,6 +129,9 @@ namespace Logic {
 		CGraphics* graphicComponent = grenadeExplotion->getComponent<CGraphics>("CGraphics");
 		assert(graphicComponent != NULL && "No se puede colocar la explosion porque no tiene componente grafico");
 		graphicComponent->setTransform( _entity->getTransform() );
+		*/
+
+		Graphics::CParticle *particle = Graphics::CServer::getSingletonPtr()->getActiveScene()->createParticle(_entity->getName(),"ExplosionParticle", _entity->getPosition());
 	} // createExplotion
 
 	//________________________________________________________________________
