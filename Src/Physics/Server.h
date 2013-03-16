@@ -292,52 +292,6 @@ namespace Physics {
 		bool isKinematic(const physx::PxRigidDynamic *actor);
 		
 
-		//----------------------------------
-		// Gestión de character controllers
-		//----------------------------------
-
-		/**
-		Crea un controller de tipo capsula en la escena.
-
-		@param position Posición del controller en coordenadas lógicas (el origen de coordenadas 
-		       está en los pies del controller).
-		@param radius Radio de la cápsula.
-		@param height Altura de la cápsula.
-		@param component Componente lógico asociado a la entidad física.
-		@return character controller creado
-		*/
-		physx::PxCapsuleController* createCapsuleController(const Vector3 &position, int group, const std::vector<int>& groupList, float radius, 
-															float height, const Logic::CPhysicController *component);
-
-
-		/**
-		Mueve el controller por la escena.
-
-		@param controller Controller que se desea mover.
-		@param movement Movimiento que se quiere realizar.
-		@param msecs Millisegundos transcurridos desde la última actualización.
-		@return Flags de colisión, un conjunto de physx::PxControllerFlag.
-		*/
-		unsigned CServer::moveController(physx::PxController *controller, const Vector3 &movement, 
-			                             unsigned int msecs);
-
-		/**
-		Devuelve la posición del controller.
-
-		@param controller Controller del que se desea conocer su posición.
-		@return posición del controller en coordenadas lógicas.
-		*/
-		Vector3 CServer::getControllerPosition(const physx::PxCapsuleController *controller);
-
-		
-		/**
-		Establece una nueva posición al controlador.
-
-		@param controller Controlador en el que setearemos la posicion.
-		@param position Posicion donde queremos poner al controller físico.
-		*/
-		void setControllerPosition(physx::PxCapsuleController *controller, const Vector3 &position);
-
 		void setRigidBodyPosition(physx::PxRigidBody* actor, const Vector3& position, bool makeConversionToLogicWorld);
 		
 		//----------------------------------

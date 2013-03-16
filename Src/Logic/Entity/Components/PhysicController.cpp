@@ -25,7 +25,7 @@ el mundo físico usando character controllers.
 
 #include "AvatarController.h"
 
-#include <PxPhysicsAPI.h>
+#include <PxPhysicsAPI.h> // !!!! Cambiar!!!!!!!!
 
 
 using namespace Logic;
@@ -34,89 +34,76 @@ using namespace physx;
 
 IMP_FACTORY(CPhysicController);
 
-//---------------------------------------------------------
+//________________________________________________________________________
 
-CPhysicController::CPhysicController() : IPhysics(), _controller(NULL), 
-								       _movement(0,0,0), _falling(false)
-{
+CPhysicController::CPhysicController() : IPhysics(), _movement(0,0,0), _falling(false) {
+	// _controller <- Su valor se auto inicializa
 	_server = CServer::getSingletonPtr();
 }
 
-//---------------------------------------------------------
+//________________________________________________________________________
 
-CPhysicController::~CPhysicController() 
-{
-	if (_controller) {
-		_controller->release();
-		_controller = NULL;
-	}
-
+CPhysicController::~CPhysicController() {
+	// El destructor de _controller se auto ejecuta
 	_server = NULL;
 } 
 
-//---------------------------------------------------------
+//________________________________________________________________________
 
-bool CPhysicController::spawn(CEntity* entity, CMap *map, const Map::CEntity *entityInfo)
-{
+bool CPhysicController::spawn(CEntity* entity, CMap *map, const Map::CEntity *entityInfo) {
 	// Invocar al método de la clase padre
-	if(!IComponent::spawn(entity,map,entityInfo))
-		return false;
+	if( !IComponent::spawn(entity,map,entityInfo) ) return false;
 
 	// Crear el character controller asociado al componente
-	_controller = createController(entityInfo);
+	createController(entityInfo);
 	// Seteo de _falling a false para que se envie el primer mensaje de actualizacion
-	_falling=false;
+	_falling = false;
+
+
 	return true;
 }
 
-//---------------------------------------------------------
+//________________________________________________________________________
 
-bool CPhysicController::accept(CMessage *message)
-{
+bool CPhysicController::accept(CMessage *message) {
 	return message->getMessageType() == Message::AVATAR_WALK;
-} 
+}
 
-//---------------------------------------------------------
+//________________________________________________________________________
 
-void CPhysicController::process(CMessage *message)
-{
-	switch(message->getMessageType())
-	{
+void CPhysicController::process(CMessage *message) {
+	switch(message->getMessageType()) {
 	case Message::AVATAR_WALK:
 		// Anotamos el vector de desplazamiento para usarlo posteriormente en 
 		// el método tick. De esa forma, si recibimos varios mensajes AVATAR_WALK
 		// en el mismo ciclo sólo tendremos en cuenta el último.
-		_movement = ((CMessageAvatarWalk*)message)->getDirection();
+		_movement = static_cast<CMessageAvatarWalk*>(message)->getDirection();
+		
 		break;
 	}
-
 }
 
+//________________________________________________________________________
 
-//---------------------------------------------------------
-
-void CPhysicController::tick(unsigned int msecs) 
-{
-	// Llamar al método de la clase padre (IMPORTANTE).
+void CPhysicController::tick(unsigned int msecs) {
 	IComponent::tick(msecs);
 
-	if(_movement == Vector3(0,0,0))
-		return;
+	// Sino hay movimiento no hacemos nada
+	if(_movement == Vector3(0,0,0)) return;
 
+	// Movemos el character controller
 	moveController(_movement, msecs);
-
 }
 
-//---------------------------------------------------------
+//________________________________________________________________________
 
 void  CPhysicController::setPhysicPosition (const Vector3 &position){
 	//Teletransportamos al player y ponemos la logica en el mismo momento(sino ocurrirían teletransportaciones gráficas)
-	_server->setControllerPosition(_controller, position);
-	_entity->setPosition(_server->getControllerPosition(_controller));
+	_controller.setPosition(position);
+	_entity->setPosition( _controller.getPosition() );
 }
 
-
-//---------------------------------------------------------
+//________________________________________________________________________
 
 void CPhysicController::readCollisionGroupInfo(const Map::CEntity *entityInfo, int& group, std::vector<int>& groupList) {
 	// Leer el grupo de colisión (por defecto grupo 0)
@@ -142,10 +129,9 @@ void CPhysicController::readCollisionGroupInfo(const Map::CEntity *entityInfo, i
 	}
 }
 
-//---------------------------------------------------------
+//________________________________________________________________________
 
-PxCapsuleController* CPhysicController::createController(const Map::CEntity *entityInfo)
-{
+void CPhysicController::createController(const Map::CEntity *entityInfo) {
 	// Obtenemos la posición de la entidad. Inicialmente colocaremos el controller
 	// un poco por encima del suelo, porque si lo ponemos justo en el suelo a veces
 	// lo atraviesa en el primer ciclo de simulación.
@@ -166,29 +152,27 @@ PxCapsuleController* CPhysicController::createController(const Map::CEntity *ent
 	assert(entityInfo->hasAttribute("physic_height"));
 	float height = entityInfo->getFloatAttribute("physic_height");
 
+	// Leer la informacion sobre el grupo de colision de la capsula
 	int group = 0;
 	std::vector<int> groupList;
 	readCollisionGroupInfo(entityInfo, group, groupList);
 
-	// Crear el controller de tipo cápsula
-	return _server->createCapsuleController(position, group, groupList, radius, height, this);
+	// Inicializar el controller de tipo capsula
+	_controller.load(position, radius, height, group, groupList, this);
 } 
 
-//---------------------------------------------------------
+//________________________________________________________________________
 
-void CPhysicController::onTrigger(IPhysics *otherComponent, bool enter)
-{
+void CPhysicController::onTrigger(IPhysics *otherComponent, bool enter) {
 
 }
 
-//---------------------------------------------------------
+//________________________________________________________________________
 
-void CPhysicController::onShapeHit (const PxControllerShapeHit &hit)
-{
+void CPhysicController::onShapeHit (const PxControllerShapeHit &hit) {
 	// Si chocamos contra una entidad estática no hacemos nada
 	PxRigidDynamic* actor = hit.shape->getActor().isRigidDynamic();
-	if(!actor)
-		return;
+	if(!actor) return;
 
 	// Si chocamos contra una entidad cinemática no hacemos nada
 	if (_server->isKinematic(actor)){
@@ -199,88 +183,61 @@ void CPhysicController::onShapeHit (const PxControllerShapeHit &hit)
 	//actor->addForce(hit.dir * hit.length * 1000.0f);
 }
 
-//---------------------------------------------------------
+//________________________________________________________________________
 
-void CPhysicController::onControllerHit (const PxControllersHit &hit)
-{
+void CPhysicController::onControllerHit (const PxControllersHit &hit) {
 
 }
 
-//---------------------------------------------------------
+//________________________________________________________________________
 
-void CPhysicController::onContact (IPhysics *otherComponent,bool enter)
-{
+void CPhysicController::onContact (IPhysics *otherComponent,bool enter) {
 	//std::cout<< "contacto entre kinematics en oncontact" << std::endl;
 	std::cout << "ONCONTACT. Estoy en "<<_entity->getName() <<" contacto con algo que es " << otherComponent->getEntity()->getName() << std::endl;
 }
 
-//---------------------------------------------------------
+//________________________________________________________________________
 
 void CPhysicController::deactivateSimulation() {
-	// Desactivamos todos los shapes del componente por completo en PhysX
-	// Para ello, obtenemos todos sus shapes y ponemos los flags a false
-
-	int nbShapes = _controller->getActor()->getNbShapes();
-	PxShape** actorShapes = new PxShape* [nbShapes];
-	_controller->getActor()->getShapes(actorShapes, nbShapes);
-	for(int i = 0; i < nbShapes; ++i) {
-		// Esta shape no tomara parte en barridos, raycasts...
-		actorShapes[i]->setFlag(PxShapeFlag::eSCENE_QUERY_SHAPE, false);
-		// Esta shape no entrara dentro de la simulacion de fisicas
-		actorShapes[i]->setFlag(PxShapeFlag::eSIMULATION_SHAPE , false);
-	}
-	_controller->setInteraction(PxCCTInteractionMode::eEXCLUDE);
-	delete [] actorShapes;
+	_controller.deactivateSimulation();
 }
 
-//---------------------------------------------------------
+//________________________________________________________________________
 
 void CPhysicController::activateSimulation() {
-	// Activamos todos los shapes del componente por completo en PhysX
-	// Para ello, obtenemos todos sus shapes y ponemos los flags a true
-
-	int nbShapes = _controller->getActor()->getNbShapes();
-	PxShape** actorShapes = new PxShape* [nbShapes];
-	_controller->getActor()->getShapes(actorShapes, nbShapes);
-	for(int i = 0; i < nbShapes; ++i) {
-		// Esta shape tomara parte en barridos, raycasts...
-		actorShapes[i]->setFlag(PxShapeFlag::eSCENE_QUERY_SHAPE, true);
-		// Esta shape entrara dentro de la simulacion de fisicas
-		actorShapes[i]->setFlag(PxShapeFlag::eSIMULATION_SHAPE , true);
-	}
-	_controller->setInteraction(PxCCTInteractionMode::eINCLUDE);
-	delete [] actorShapes;
+	_controller.activateSimulation();
 }
 
-void CPhysicController::moveController(Vector3& movement, unsigned int msecs){
+//________________________________________________________________________
 
+void CPhysicController::moveController(Vector3& movement, unsigned int msecs) {
 	// Intentamos mover el controller a la posición recibida en el último mensaje 
 	// de tipo AVATAR_WALK. 
-	unsigned flags = _server->moveController(_controller, movement, msecs);
+	unsigned flags = _controller.move(movement, msecs);
 
 	// Actualizar la posición y orientación de la entidad lógica usando la 
 	// información proporcionada por el motor de física	
-	_entity->setPosition(_server->getControllerPosition(_controller));
+	_entity->setPosition( _controller.getPosition() );
 
-	//Si tocamos con el techo lo notificamos
-	if((flags & PxControllerFlag::eCOLLISION_UP)){
-		Logic::CMessageCealing *em=new Logic::CMessageCealing();
+	// Si tocamos con el techo lo notificamos
+	if((flags & PxControllerFlag::eCOLLISION_UP)) {
+		Logic::CMessageCealing* em = new Logic::CMessageCealing();
 		_entity->emitMessage(em);
 	}
-	//Si tocamos el lateral tenemos que parar la inercia de la direccion
-	if((flags & PxControllerFlag::eCOLLISION_SIDES)){
-		Logic::CMessageSide *side=new Logic::CMessageSide();
+	// Si tocamos el lateral tenemos que parar la inercia de la direccion
+	if((flags & PxControllerFlag::eCOLLISION_SIDES)) {
+		Logic::CMessageSide* side = new Logic::CMessageSide();
 		_entity->emitMessage(side);
 	}
-	//Si hay cambio de estado en el flag de tocar suelo
-	if(_falling != !(flags & PxControllerFlag::eCOLLISION_DOWN)){
+	// Si hay cambio de estado en el flag de tocar suelo
+	if(_falling != !(flags & PxControllerFlag::eCOLLISION_DOWN)) {
 		// Actualizamos el flag que indica si estamos cayendo
 		_falling =  !(flags & PxControllerFlag::eCOLLISION_DOWN);
-		//Mandamos un mensaje que dirá si hay collision con el suelo para la lógica
-		Logic::CMessageCollisionDown *m=new Logic::CMessageCollisionDown();
+		// Mandamos un mensaje que dirá si hay collision con el suelo para la lógica
+		Logic::CMessageCollisionDown *m = new Logic::CMessageCollisionDown();
 		m->setCollisionDown(_falling);
 		_entity->emitMessage(m);
 	}
-	movement = Vector3::ZERO;
 
+	movement = Vector3::ZERO;
 }

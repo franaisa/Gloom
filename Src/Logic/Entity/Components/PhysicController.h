@@ -16,6 +16,7 @@ el mundo físico usando character controllers.
 #define __Logic_PhysicController_H
 
 #include "Physics.h"
+#include "Physics/CharacterController.h"
 
 // Predeclaración de tipos
 namespace physx {
@@ -49,8 +50,7 @@ namespace Logic
 	@author Antonio Sánchez Ruiz-Granados
 	@date Noviembre, 2012
 	*/
-	class CPhysicController : public IPhysics
-	{
+	class CPhysicController : public IPhysics {
 		DEC_FACTORY(CPhysicController);
 	public:
 
@@ -128,13 +128,14 @@ namespace Logic
 		Crea el character controller de PhysX que representa la entidad física a partir de la
 		información del mapa.
 		*/
-		physx::PxCapsuleController* createController(const Map::CEntity *entityInfo);
+		void createController(const Map::CEntity *entityInfo);
 
 		// Servidor de física
 		Physics::CServer *_server;
 
 		// Character controller que representa la entidad física en PhysX
-		physx::PxCapsuleController *_controller;
+		//physx::PxCapsuleController *_controller;
+		Physics::CCharacterController _controller;
 
 		// Vector de desplazamiento recibido en el último mensaje de tipo AVATAR_WALK. 
 		Vector3 _movement;
