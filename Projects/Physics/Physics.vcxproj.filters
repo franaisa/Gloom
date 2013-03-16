@@ -26,6 +26,9 @@
     <ClCompile Include="..\..\Src\Physics\Fluid.cpp">
       <Filter>Source</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Src\Physics\CharacterController.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Src\Physics\Conversions.h">
@@ -44,6 +47,9 @@
       <Filter>Header</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Src\Physics\Fluid.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Physics\CharacterController.h">
       <Filter>Header</Filter>
     </ClInclude>
   </ItemGroup>

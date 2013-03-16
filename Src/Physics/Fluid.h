@@ -63,7 +63,7 @@ namespace Physics {
 		/** True si estamos usando CUDA para simular fluidos. */
 		bool _runOnGPU;
 
-	}; // class CEntity
+	}; // class CFluid
 
 } // namespace Graphics
 

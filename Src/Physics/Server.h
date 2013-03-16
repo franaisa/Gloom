@@ -383,11 +383,19 @@ namespace Physics {
 
 	private:
 
+		friend class CCharacterController;
+
 		friend class CFluid;
+
+		void setupFiltering(physx::PxRigidActor* actor, int group, const std::vector<int>& groupList);
 
 		physx::PxScene* getActiveScene() { return _scene; }
 
 		physx::PxPhysics* getPhysxSDK() { return _physics; }
+
+		physx::PxControllerManager* getControllerManager() { return _controllerManager; }
+
+		CCollisionManager* getCollisionManager() { return _collisionManager; }
 
 		/**
 		Constructor de la clase.

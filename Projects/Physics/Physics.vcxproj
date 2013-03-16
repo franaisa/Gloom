@@ -69,6 +69,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Src\Physics\CharacterController.cpp" />
     <ClCompile Include="..\..\Src\Physics\CollisionManager.cpp" />
     <ClCompile Include="..\..\Src\Physics\CustomControllerBehavior.cpp" />
     <ClCompile Include="..\..\Src\Physics\ErrorManager.cpp" />
@@ -76,6 +77,7 @@
     <ClCompile Include="..\..\Src\Physics\Server.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Src\Physics\CharacterController.h" />
     <ClInclude Include="..\..\Src\Physics\CollisionManager.h" />
     <ClInclude Include="..\..\Src\Physics\Conversions.h" />
     <ClInclude Include="..\..\Src\Physics\CustomControllerBehavior.h" />
