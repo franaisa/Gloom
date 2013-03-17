@@ -26,6 +26,9 @@ Contiene la implementación del gestor de los mensajes de red durante la partida.
 #include "Entity\MessageFactory.h"
 #include "Logic/Messages/Message.h"
 
+#include "Logic/GameNetPlayersManager.h"
+#include "Logic/PlayerInfo.h"
+
 #include "Application/BaseApplication.h"
 
 #define DEBUG 0
@@ -201,14 +204,7 @@ namespace Logic {
 		
 	void CGameNetMsgManager::sendEntityMessage(CMessage* txMsg, TEntityID destID)
 	{
-		// TODO serializar el mensaje lógico. Para la serialización
-		// apoyarse en Net::CBuffer. Se debe guardar primero el tipo
-		// de mensaje de red (Net::ENTITY_MSG) y luego el id de la
-		// entidad y el mensaje serializado. La función de serialización
-		// de un mensaje lógico está en Message. Al final se debe hacer
-		// el envío usando el gestor de red.
-		// Es un mensaje para enviar por el tubo.
-		// Lo serializamos y enviamos por la red...
+
 		Net::CBuffer* bufferAux = txMsg->serialize();
 
 		Net::NetMessageType msgType = Net::NetMessageType::ENTITY_MSG;// Escribimos el tipo de mensaje de red a enviar
@@ -221,6 +217,24 @@ namespace Logic {
 		//std::cout << "Enviado mensaje tipo " << txMsg->getMessageType() << " para la entidad " << destID << " de tamaño " << serialMsg.getSize() << std::endl;
 		//LOG("TX ENTITY_MSG " << txMsg._type << " to EntityID " << destID);
 	} // sendEntityMessage
+
+	//---------------------------------------------------------
+		
+	void CGameNetMsgManager::sendMessageToOne(CMessage* txMsg, TEntityID destID, TEntityID player)
+	{
+
+		Net::CBuffer* bufferAux = txMsg->serialize();
+
+		Net::NetMessageType msgType = Net::NetMessageType::ENTITY_MSG;// Escribimos el tipo de mensaje de red a enviar
+		Net::CBuffer serialMsg;
+			serialMsg.write(&msgType, sizeof(msgType));
+			serialMsg.write(&destID, sizeof(destID)); // Escribimos el id de la entidad destino
+			serialMsg.write(bufferAux->getbuffer(), bufferAux->getSize()); //Guardamos el mensaje en el buffer
+			
+		Net::NetID idMsg = Logic::CGameNetPlayersManager::getSingletonPtr()->getPlayerByEntityId(player).getNetId();
+
+		Net::CManager::getSingletonPtr()->send(serialMsg.getbuffer(), serialMsg.getSize(), idMsg);
+	} // sendMessageToOne
 
 	//---------------------------------------------------------
 		

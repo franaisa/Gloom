@@ -221,8 +221,8 @@ namespace Graphics
 
 		particle->setPosition(position);
 
-		if(direction)
-			particle->setDirection(*direction);
+		//if(direction)
+			//particle->setDirection(*direction);
 
 		return particle;
 

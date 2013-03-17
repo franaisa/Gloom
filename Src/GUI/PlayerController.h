@@ -139,6 +139,34 @@ namespace GUI
 		*/
 		Logic::CEntity *_controlledAvatar;
 
+
+		/*Atributos que se encargan de contar/llevar el tiempo para ver si se hizo un salto lateral
+		*/
+		int _jumpLeft;
+		int _jumpRight;
+		int _timeSideJump;
+		bool _sideJump;
+		bool _velocitySideJump;
+
+		bool _unpressRight;
+		bool _unpressLeft;
+		bool _readySideJumpLeft;
+		bool _readySideJumpRight;
+		bool _dontCountUntilUnpress;
+
+		/**
+		Atributo que lleva el conteo de saltos concatenados para el aumento de velocidad
+		*/
+		int _nConcatSideJump;
+		int _timeConcatSideJump;
+		bool _activeConcat;
+		bool _sideFly;
+		bool _sideContact;
+
+
+
+
+
 	}; // class CPlayerController
 
 } // namespace GUI

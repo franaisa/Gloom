@@ -111,7 +111,7 @@ namespace Application {
 				// Debido a que fuera de este bucle enviaremos la informacion de este player mediante broadcast
 				// evitamos enviar la informacion en esta fase (ya que la id de entidad aun no ha sido asignada)
 				if(netId != playerNetId) {
-					entityId = tempPlayerInfo.getEntityId();
+					entityId = tempPlayerInfo.getEntityId().first;
 					name = tempPlayerInfo.getName();
 
 					// Mensaje LOAD_PLAYER

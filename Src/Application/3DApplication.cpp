@@ -26,6 +26,7 @@ basadas en Ogre. Esta clase maneja la ejecución de todo el juego.
 #include "Logic/Maps/ComponentFactory.h"
 #include "Physics/Server.h"
 #include "net/manager.h"
+#include "Audio/Server.h"
 #include <cassert>
 
 #include <iostream>
@@ -81,11 +82,17 @@ namespace Application {
 		if (!Logic::CServer::Init())
 			return false;
 
+		//Iniciamos el audio
+		if(!Audio::CServer::Init())
+			return false;
+
 		// Inicializamos la red
 		if (!Net::CManager::Init())
 			return false;
 		// Creamos el reloj basado en Ogre.
 		_clock = new COgreClock();
+
+
 
 		return true;
 
@@ -111,6 +118,10 @@ namespace Application {
 		// Liberar los recursos del servidor de física
 		if (Physics::CServer::getSingletonPtr())
 			Physics::CServer::Release();
+
+		//Liberar los recursos del servidor de audio
+		if(Audio::CServer::getSingletonPtr())
+			Audio::CServer::Release();
 		
 		if(GUI::CServer::getSingletonPtr())
 			GUI::CServer::Release();
@@ -146,6 +157,8 @@ namespace Application {
 		GUI::CInputManager::getSingletonPtr()->tick();
 
 		Graphics::CServer::getSingletonPtr()->tick(msecs/1000.0f);
+
+		Audio::CServer::getSingletonPtr()->tick(msecs);
 
 	} // tick
 

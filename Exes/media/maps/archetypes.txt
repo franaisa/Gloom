@@ -98,7 +98,7 @@ Map = {
 			weaponShotGunNumberShoots = 8,
 			weaponShotGunDistance = 100.0,
 			weaponShotGunColdDown = 1.0,
-			weaponShotGunMaxAmmo = 50,
+			weaponShotGunMaxAmmo = 48,
 			weaponShotGunId = 2,
 			weaponShotGunParticlePosition = {50.0, 50.0, 50.0},
 			
@@ -131,7 +131,7 @@ Map = {
 			weaponGrenadeLauncherParticlePosition = {50.0, 50.0, 50.0},
 			
 			weaponRocketLauncherName = "RocketLauncher",
-			weaponRocketLauncherModel = "grenadelauncher.mesh",
+			weaponRocketLauncherModel = "rocketq3.mesh",
 			weaponRocketLauncherModelYaw = 3.10,
 			weaponRocketLauncherModelPitch = 0,
 			weaponRocketLauncherOffset = {0.0,-3.0,-10.0},
@@ -241,7 +241,7 @@ Map = {
 			weaponSniperColdDown = 2.0,
 			weaponSniperMaxAmmo = 10,
 			weaponSniperId = 1,
-			weaponSniperParticlePosition = {30.0,50.0, 30.0},
+			weaponSniperParticlePosition = {30.0,30.0, 30.0},
 			
 			weaponShotGunName = "Shotgun",
 			weaponShotGunModel = "UziLeft.mesh",
@@ -253,7 +253,7 @@ Map = {
 			weaponShotGunNumberShoots = 8,
 			weaponShotGunDistance = 100.0,
 			weaponShotGunColdDown = 1.0,
-			weaponShotGunMaxAmmo = 50,
+			weaponShotGunMaxAmmo = 48,
 			weaponShotGunId = 2,
 			weaponShotGunParticlePosition = {50.0, 50.0, 50.0},
 			
@@ -286,7 +286,7 @@ Map = {
 			weaponGrenadeLauncherParticlePosition = {0.0, 0.0, 0.0},
 
 			weaponRocketLauncherName = "RocketLauncher",
-			weaponRocketLauncherModel = "grenadelauncher.mesh",
+			weaponRocketLauncherModel = "rocketq3.mesh",
 			weaponRocketLauncherModelYaw = 3.10,
 			weaponRocketLauncherModelPitch = 0,
 			weaponRocketLauncherOffset = {0.0,-3.0,-10.0},
@@ -427,7 +427,7 @@ Map = {
 			weaponShotGunNumberShoots = 8,
 			weaponShotGunDistance = 100.0,
 			weaponShotGunColdDown = 1.0,
-			weaponShotGunMaxAmmo = 50,
+			weaponShotGunMaxAmmo = 48,
 			weaponShotGunId = 2,
 			
 			weaponMiniGunName = "MiniGun",
@@ -457,7 +457,7 @@ Map = {
 			weaponGrenadeLauncherProjectileRadius = 3,
 
 			weaponRocketLauncherName = "RocketLauncher",
-			weaponRocketLauncherModel = "grenadelauncher.mesh",
+			weaponRocketLauncherModel = "rocketq3.mesh",
 			weaponRocketLauncherModelYaw = 3.10,
 			weaponRocketLauncherModelPitch = 0,
 			weaponRocketLauncherOffset = {0.0,-3.0,-10.0},
@@ -594,7 +594,7 @@ Map = {
 		intensity = 5,
 	},	
 	
-		lava = {
+	lava = {
 		type = "Lava",
 		position = {-10.0,0.2, -50.0},
 		model = "lava.mesh",

@@ -39,8 +39,8 @@ namespace Logic  {
 		_interpolating = false;
 		_maxDistance = 15;
 		_minDistance = 0.5f;
-		_minYaw = 1;
-		_maxYaw = 2.5f;
+		_minYaw = 1.5;
+		_maxYaw = 15;
 		_yawDifference = 0;
 		_rotationSpeed = 0.2;
 		_serverDirection = Vector3(0,0,0);
@@ -64,8 +64,10 @@ namespace Logic  {
 		moveServerPos(msecs);
 		if(!_interpolating)
 			return;
+		std::cout << ">>>>>>>>>>\t MS" << msecs << std::endl  << std::endl;
+		//std::cout << "interpolandooooo "<< std::endl;
 		//lo primero de todo, movemos la posición del servidor para poder interpolar con más exactitud
-		
+		Vector3 newPos;
 		//std::cout << "puedo interpolar? " << _canInterpolateMove << std::endl;
 		if(_canInterpolateMove){
 			//calculamos la direccion en la que debemos interpolar
@@ -84,24 +86,31 @@ namespace Logic  {
 			//Vector3 newPos = _entity->getPosition()+direction;
 			//vemos a ver si hemos recorrido más de lo que deberíamos, y actuamos en consecuencia
 			//std::cout << "server pos " << _serverPos.getTrans() << std::endl;
-			//std::cout << "mi pos " << _entity->getPosition() << std::endl ;
+			//std::cout << "mi pos " << _entity->getPosition() << std::endl << std::endl ;
+
+			//std::cout << "mi dirección" << Math::getDirection(_entity->getTransform()) << std::endl;
+			//std::cout << "direccion del servah" << Math::getDirection(_serverPos) << std::endl  << std::endl;
+
 			if(direction.length() > distance){
 				_entity->getComponent<CPhysicController>("CPhysicController")->moveController(direction, msecs);
+				
 			}else{
 				_entity->getComponent<CPhysicController>("CPhysicController")->moveController(direction, msecs);
 			}
 			//si nos hemos quedado suficientemente cerquita, dejaremos de interpolar
-			Vector3 newPos = (_entity->getPosition() - _serverPos.getTrans())*Vector3(1,0,1);
+			newPos = (_entity->getPosition() - _serverPos.getTrans())*Vector3(1,0,1);
 			if (newPos.length() < _minDistance)
 				_canInterpolateMove = false;
 			//std::cout << "nueva pos " << newPos << std::endl ;
-			//std::cout << "nueva pos lenght " << newPos.length() << std::endl << std::endl;
+			std::cout << "nueva pos lenght " << newPos.length() << std::endl << std::endl;
 		}//if
 		if(_canInterpolateRotation){
 
 			//si la diferencia es demasiado grande, lo movemos a pelo
 			if(_yawDifference > _maxYaw || _yawDifference < _maxYaw*(-1)){
-				_entity->yaw(_yawDifference);
+				Matrix3 a;
+				_serverPos.extract3x3Matrix(a);
+				_entity->setOrientation(a);
 				_yawDifference = 0;
 			}
 
@@ -125,7 +134,7 @@ namespace Logic  {
 		}//if(_canInterpolateRotation)
 
 		//si hemos terminado de interpolar, lo dejamos
-		if(!_canInterpolateRotation && !_canInterpolateMove){
+		if((newPos.length() < _minDistance) && ( _yawDifference < _minYaw || _yawDifference > _minYaw*(-1) )){
 			_interpolating = false;
 		}
 	}
@@ -255,11 +264,14 @@ namespace Logic  {
 		float myDistance = direction.length() * _actualPing/CLOCKS_PER_SEC;
 		//seteo la distancia real
 		distance = distance-myDistance;
-		//std::cout << "distancia a la que esta" << _entity->getName() << " " << distance << "con ping " << _actualPing << "ms" << std::endl;
+		//std::cout << ">>>>>>>>>>>> \tmi posi" << _entity->getPosition() << std::endl;
+		//std::cout << ">>>>>>>>>>>>>>>\t server posi" << _serverPos.getTrans() << std::endl;
 		//si la distancia es mayor de maxDistance .. set transform por cojones
 		if(distance > _maxDistance){
 			_entity->getComponent<CPhysicController>("CPhysicController")->setPhysicPosition(_serverPos.getTrans());
 			//Movemos la orientacion logica/grafica
+			std::cout << "<<<<<<< SETEO A LO ANIMAL >>>>>>>" << std::endl;
+			std::cout << "distancia ->" << distance << std::endl;
 			Matrix3 tmpMatrix;
 			_serverPos.extract3x3Matrix(tmpMatrix);
 			_entity->setOrientation(tmpMatrix);
@@ -268,13 +280,26 @@ namespace Logic  {
 		//si la distancia es mayor que min distance y menor que maxDistance interpolamos
 		else if(distance > _minDistance){
 			_interpolating = true;
+			
 		}
+			
 		
 		//Guardamos el grado de desactualización del ratón
 		_yawDifference = _entity->getYaw() - Math::getYaw(_serverPos);
+		//std::cout << ">>>>>>>>>>>> \tmi dirección" << Math::getDirection(_entity->getTransform()) << std::endl;
+		//std::cout << ">>>>>>>>>>>>>>>\t direccion del servah" << Math::getDirection(_serverPos) << std::endl;
+		//std::cout << ">>>>>>>>>>\t _yawDifference" << _yawDifference << std::endl  << std::endl;
 	}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	void CInterpolation::activate(){
+		IComponent::activate();
+		_serverDirection = Vector3(0,0,0);
+		_serverStrafeDirection = Vector3(0,0,0);
+		_interpolating = false;
+
+	}
 
 } // namespace Logic
 

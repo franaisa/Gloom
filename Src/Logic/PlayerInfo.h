@@ -51,7 +51,7 @@ namespace Logic {
 
 
 		/** Constructor por defecto. */
-		CPlayerInfo() : _rank(0) {}
+		CPlayerInfo() : _rank(0), _entityIdInitialized(false) {}
 		
 		//________________________________________________________________________
 
@@ -129,9 +129,10 @@ namespace Logic {
 		Devuelve el identificador de la entidad logica que corresponde al player que
 		describe este CPlayerInfo.
 
-		@return El identificador de la entidad.
+		@return El identificador de la entidad y un booleano que indica si el id de
+		entidad ha sido inicializado.
 		*/
-		TEntityID getEntityId();
+		std::pair<TEntityID, bool> getEntityId();
 
 		//________________________________________________________________________
 
@@ -246,6 +247,9 @@ namespace Logic {
 
 		/** Identificador de la entidad logica */
 		TEntityID _entityId;
+
+		/** True si el identificador de entidad ha sido inicializado */
+		bool _entityIdInitialized;
 
 		/** Identificador de la entidad de red */
 		Net::NetID _netId;

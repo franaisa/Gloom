@@ -2,23 +2,6 @@ Map = {
 	World = {
 		type = "World",
 	},
-
-	Ascensor1 = {
-		type = "Elevator",
-		position = {-51.0, 0.0, 1.0},
-		positionInitial = {-51.0, 0.0, 1.0},
-		positionFinal = {-51.0, 60.0, 1.0},
-		velocity = 0.035,
-		model = "health1.mesh",
-		physic_entity = "rigid",
-		physic_trigger = false,
-		physic_type = "kinematic",
-		physic_shape = "box",
-		physic_dimensions = { 2, 2, 2 },
-		physic_mass = 1,
-		physic_group = 5,
-	},
-
 	
 	Jumper1 = {
 		type = "Jumper",
@@ -225,10 +208,6 @@ Map = {
 		type = "Camera",
 		height = 8,
 	},
-	
-	
-	
-	
 	
 	
 }

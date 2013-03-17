@@ -85,14 +85,12 @@ namespace Logic
 		_unpressLeft=false;
 		_unpressRight=false;
 		_jumping=false;
-
 		//Inicializacion variables de control ( salto, salto lateral, concatenacion salto lateral y rebote )
 		_jumping = false;
 		_jumpingControl = false;
 		_speedJump=-0.5f;
-		_falling=true;
+		_falling=false;
 		_caida=false;
-
 		_jumpLeft=0;
 		_jumpRight=0;
 		_timeSideJump=0;
@@ -103,13 +101,11 @@ namespace Logic
 		_readySideJumpLeft=false;
 		_readySideJumpRight=false;
 		_dontCountUntilUnpress=false;
-
 		_nConcatSideJump=0;
 		_timeConcatSideJump=0;
 		_activeConcat=false;
 		_sideFly=false;
 		_sideContact=false;
-
 		_rebound=false;
 		_force=false;
 		_applyForce=false;
@@ -312,7 +308,8 @@ namespace Logic
 	void CAvatarController::tick(unsigned int msecs)
 	{
 		IComponent::tick(msecs);
-
+		//if(_entity->getName().compare("David")==0)
+			//std::cout << _entity->getPosition().y << std::endl;
 		//Vector dirección que mandaremos a la física
 		Vector3 direction(Vector3::ZERO);
 
