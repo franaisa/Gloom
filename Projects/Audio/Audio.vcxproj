@@ -13,6 +13,14 @@
   <ItemGroup>
     <ClCompile Include="..\..\Src\Audio\testAudio.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\Src\Audio\fmod.h" />
+    <ClInclude Include="..\..\Src\Audio\fmod_codec.h" />
+    <ClInclude Include="..\..\Src\Audio\fmod_dsp.h" />
+    <ClInclude Include="..\..\Src\Audio\fmod_errors.h" />
+    <ClInclude Include="..\..\Src\Audio\fmod_memoryinfo.h" />
+    <ClInclude Include="..\..\Src\Audio\fmod_output.h" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{2A27AFA1-174A-4AC6-A8EA-1AEB3CC0FEAB}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
