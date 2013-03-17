@@ -99,7 +99,7 @@ namespace Logic  {
 		/**
 		Método que mueve el punto del servidor para que esté actualizado.
 		*/
-		void moveServerPos(unsigned int msecs);
+		//void moveServerPos(unsigned int msecs);
 
 		//________________________________________________________________________
 
@@ -183,9 +183,21 @@ namespace Logic  {
 		Vector3 _serverDirection;
 
 		/**
-		dirección en la que el server se movería en strafe
+		posicion de la entidad el tick anterior, para calcular la velocidad
 		*/
-		Vector3 _serverStrafeDirection;
+		Vector3 _oldPos;
+		int _msecs;
+
+		/**
+		distancia que hay que interpolar
+		*/
+		float _distance;
+
+		/**
+		Teclas pulsadas
+		*/
+		int _keyAD;
+		int _keyWS;
 
 		float _speed;
 

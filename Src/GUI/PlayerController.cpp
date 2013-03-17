@@ -140,8 +140,12 @@ namespace GUI {
 				case GUI::Key::O:
 					_controlledAvatar->emitMessage(m2);
 					break;
-				default:
+				case GUI::Key::ESCAPE:// esto debe desaparecer en el futuro
+					std::cout << "escape pulsado" << std::endl;
 					return false;
+					break;
+				default:
+					return true;
 				}
 				if (key.keyId != GUI::Key::O)
 					_controlledAvatar->emitMessage(m);
@@ -174,8 +178,11 @@ namespace GUI {
 			case GUI::Key::D:
 				m->setType(Logic::Control::STOP_STRAFE_RIGHT);
 				break;
+			case GUI::Key::ESCAPE:// esto debe desaparecer en el futuro
+					std::cout << "escape pulsado" << std::endl;
+					return false;
 			default:
-				return false;
+				return true;
 			}
 			_controlledAvatar->emitMessage(m);
 			return true;
