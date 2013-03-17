@@ -1,56 +1,95 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Source">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    <Filter Include="Actors">
+      <UniqueIdentifier>{57b18d1b-a100-453d-bdf1-ccdbdd691b2e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    <Filter Include="Filters">
+      <UniqueIdentifier>{4bc4c3de-623e-4508-a1c2-1936c1f7d5a1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Factories">
+      <UniqueIdentifier>{ce3f3be8-054d-484d-92ec-8e7d60b115b3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Actors\Header">
+      <UniqueIdentifier>{18cef4e1-0d01-4563-ae6d-9cac1cbc0388}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Actors\Source">
+      <UniqueIdentifier>{66f81168-2ef1-4181-ab5d-eb50b9312548}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Filters\Header">
+      <UniqueIdentifier>{f3dd1488-f1d3-4ea2-b00f-8f8a2607de44}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Filters\Source">
+      <UniqueIdentifier>{796c6869-35ba-49a9-8b77-c0390c5238f4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utils">
+      <UniqueIdentifier>{18c0cd9b-e950-4e18-9447-ed6857453f8b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Factories\Header">
+      <UniqueIdentifier>{f93fa31e-2c45-4b7b-9c38-4e3d13cc100a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Factories\Source">
+      <UniqueIdentifier>{81f10043-60f9-420a-8df8-9c66dd3d9f13}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Managers">
+      <UniqueIdentifier>{c2d93a6f-af4e-4f51-8e4d-d9186a104713}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Managers\Header">
+      <UniqueIdentifier>{f329b31c-fccf-49b3-9e38-90375f90316c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Managers\Source">
+      <UniqueIdentifier>{daf1ee2d-488f-40b6-9aab-411d88ba0ff9}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\Src\Physics\Server.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Physics\ErrorManager.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Physics\CollisionManager.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Physics\CustomControllerBehavior.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Src\Physics\Fluid.cpp">
-      <Filter>Source</Filter>
+      <Filter>Actors\Source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Src\Physics\CharacterController.cpp">
-      <Filter>Source</Filter>
+      <Filter>Actors\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Physics\CollisionManager.cpp">
+      <Filter>Managers\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Physics\ErrorManager.cpp">
+      <Filter>Managers\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Physics\Server.cpp" />
+    <ClCompile Include="..\..\Src\Physics\CustomControllerBehavior.cpp">
+      <Filter>Filters\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Physics\GeometryFactory.cpp">
+      <Filter>Factories\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Physics\Entity.cpp">
+      <Filter>Actors\Source</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\Src\Physics\Conversions.h">
-      <Filter>Header</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Physics\Server.h">
-      <Filter>Header</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Physics\ErrorManager.h">
-      <Filter>Header</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Physics\CollisionManager.h">
-      <Filter>Header</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Physics\CustomControllerBehavior.h">
-      <Filter>Header</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Src\Physics\Fluid.h">
-      <Filter>Header</Filter>
+      <Filter>Actors\Header</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Src\Physics\CharacterController.h">
-      <Filter>Header</Filter>
+      <Filter>Actors\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Physics\CollisionManager.h">
+      <Filter>Managers\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Physics\ErrorManager.h">
+      <Filter>Managers\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Physics\Server.h" />
+    <ClInclude Include="..\..\Src\Physics\CustomControllerBehavior.h">
+      <Filter>Filters\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Physics\Conversions.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Physics\GeometryFactory.h">
+      <Filter>Factories\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Physics\Entity.h">
+      <Filter>Actors\Header</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

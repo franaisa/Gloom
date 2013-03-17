@@ -19,24 +19,36 @@
 
 #include <characterkinematic/PxController.h>
 
+// REMEMBER! CONFIGURAR LOS FILTROS DEL CONTROLLER
+
 // Predeclaración de clases para ahorrar tiempo de compilación
 namespace physx {
 	class PxCapsuleController;
 	class PxControllerManager;
 	class PxScene;
 	class PxPhysics;
-};
+}
 
 namespace Physics {
 	class CCollisionManager;
-	class CErrorManager;
-};
+}
 
 namespace Logic {
 	class CPhysicController;
-};
+}
 
 namespace Physics {
+
+	// Flags que controlan con que colisiona el controller
+	enum CharacterControllerFlag {
+		// El controller esta colisionando por los lados
+		eCOLLISION_SIDES	= physx::PxControllerFlag::eCOLLISION_SIDES,
+		// El controller colisiona por la parte superior
+		eCOLLISION_UP		= physx::PxControllerFlag::eCOLLISION_UP,
+		// El controller colisiona por la parte inferior
+		eCOLLISION_DOWN		= physx::PxControllerFlag::eCOLLISION_DOWN,
+	};
+
 	/**
 	
 	@ingroup physicsGroup

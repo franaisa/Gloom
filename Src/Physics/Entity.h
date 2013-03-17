@@ -1,125 +1,113 @@
 //---------------------------------------------------------------------------
-// Fluid.h
+// Entity.h
 //---------------------------------------------------------------------------
 
 /**
-@file Fluid.h
+@file Entity.h
 
-@see Graphics::CFluid
+@see Physics::CEntity
 
 @author Francisco Aisa García
 @date Marzo, 2013
 */
 
-#ifndef __Physics_Fluid_H
-#define __Physics_Fluid_H
+#ifndef __Physics_Entity_H
+#define __Physics_Entity_H
+
+#include "BaseSubsystems/Math.h"
+
+#include <geometry/PxGeometry.h>
+#include <PxMaterial.h>
+
+#include <vector>
+
+// REMEMBER! CONFIGURAR LOS FILTROS DEL CONTROLLER
 
 // Predeclaración de clases para ahorrar tiempo de compilación
 namespace physx {
-	class PxParticleFluid;
 	class PxScene;
 	class PxPhysics;
-};
+	class PxRigidActor;
+}
 
 namespace Physics {
+	class CCollisionManager;
+	class CErrorManager;
+}
+
+namespace Logic {
+	class CPhysicEntity;
+	class IPhysics;
+}
+
+namespace Physics {
+
 	/**
 	
+	LAS ENTIDADES FISICAS TIENEN ORIENTACION, NO SON COMO LOS CONTROLLERS!
+	PERMITIR FIJAR ESTOS PARAMETROS
+
+	De momento solo un shape por entidad, pero en el futuro un vector de shapes
+	cada una con sus propiedades
+
 	@ingroup physicsGroup
+
+	Para los character controllers, las capsulas no giran, tan solo podemos obtener
+	la posicion.
 
 	@author Francisco Aisa García
 	@date Marzo, 2013
 	*/
-	class CFluid {
+	class CEntity {
 	public:
 
-		/** Constructor por defecto. */
-		CFluid();
+		CEntity::CEntity();
 
-		/** Destructor de la aplicación. */
-		virtual ~CFluid();
+		virtual ~CEntity();
 
-		/**
-		Añade la entidad al SceneManager pasado por parámetro. Si la entidad
-		no está cargada se fuerza su carga.
+		void loadDynamic(const Vector3 &position, const const physx::PxGeometry& geometry, physx::PxMaterial& material, 
+						 float density, bool kinematic, bool trigger, int group, 
+						 const std::vector<int>& groupList, const Logic::IPhysics *component);
 
-		@param sceneMgr Gestor de la escena de Ogre a la que se quiere añadir
-		la entidad.
-		@return true si la entidad se pudo cargar y añadir a la escena.
-		*/
-		//bool attachToScene(CScene *scene);
-
-	protected:
-
-		// CScene es la única que puede añadir o eliminar entidades de una 
-		// escena y por tanto cargar o descargar entidades.
-		// Por otro lado cada entidad debe pertenecer a una escena. Solo 
-		// permitimos a la escena actualizar el estado.
-		friend class CScene;
-
-		/**
-		Descarga una entidad de la escena en la que se encuentra cargada.
-
-		@return true si la entidad se descargo y eliminó de la escena
-		correctamente. Si la entidad no estaba cargada se devuelve false.
-		*/
-		bool deattachFromScene();
+		void loadStatic(const Vector3 &position, const const physx::PxGeometry& geometry, physx::PxMaterial& material, 
+						bool trigger, int group, const std::vector<int>& groupList, const Logic::IPhysics *component);
+						 
 		
 		/**
-		Carga la entidad gráfica correspondiente al nombre _mesh. No hace 
-		comprobaciónes de si la entidad está ya cargada o de si pertenece a
-		otra escena. Esto se debe hacer de manera externa.
+		Devuelve la posición y rotación de una entidad física.
 
-		@return true si la entidad pudo crear los objetos necesarios en Ogre
-		o si la entidad ya estaba cargada.
-		*/
-		bool load();
+		@param actor Actor físico del que se desea conocer la posición y orientación.
+		@return Matriz 4x4 con la posición y orientación de la entidad.
+		 */
+		Matrix4 getTransform();
 
-		/**
-		Elimina las estructuras creadas en Ogre mediante load(). No hace 
-		comprobaciónes de si la entidad está o no cargada o de si pertenece
-		a una escena. Esto se debe hacer de manera externa.
-		*/
-		void unload();
-		
-		physx::PxParticleFluid* createFluid(unsigned int maxParticles, float restitution, float viscosity,
-								            float stiffness, float dynamicFriction, float particleDistance);
+		// Deberiamos tener un SET TRANSFORM Y UN GET POSITION!!!!!!!!!!!!!!!!
 
-		/**
-		Actualiza el estado de la entidad cada ciclo. En esta clase no se
-		necesita actualizar el estado cada ciclo, pero en las hijas puede que
-		si.
-		
-		@param secs Número de segundos transcurridos desde la última llamada.
-		*/
-		virtual void tick(float secs);
-		
-		/**
-		Nodo que contiene la entidad de Ogre.
-		*/
-		//Ogre::SceneNode *_entityNode;
+		// set position
+		void setPosition(const Vector3 &position);
 
-		/** Sistema de fluidos de PhysX. */
-		physx::PxParticleFluid* _fluid;
+		void activateSimulation();
 
-		/** @deprecated De momento tenemos la escena de physx, en un futuro sera CScene. */
+		void deactivateSimulation();
+
+	private:
+
+		bool _isTrigger;
+
+		/** Controlador de la cápsula del controller. */
+		physx::PxRigidActor* _actor;
+
+		// Puntero a la escena
 		physx::PxScene* _scene;
 
 		// SDK de Physx
-		/** 
-		@deprecated De momento mantenemos el puntero a la SDK, pero en el futuro se deberia
-		llamar al server para que haga lo que tenga que hacer.
-		*/
-		physx::PxPhysics* _physics;
+		physx::PxPhysics* _physxSDK;
 
-		/**
-		Indica si la entidad ha sido cargada en el motor gráfico.
-		*/
-		bool _loaded;
-
-		bool _runOnGPU;
+		/** Puntero al gestor de colisiones */
+		CCollisionManager* _collisionManager;
 
 	}; // class CEntity
 
-} // namespace Graphics
+} // namespace Physics
 
-#endif // __Graphics_Entity_H
+#endif // __Physics_Entity_H

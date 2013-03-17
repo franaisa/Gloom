@@ -19,7 +19,14 @@
 #include "Physics/CollisionManager.h"
 #include "Conversions.h"
 
-#include <PxPhysicsAPI.h> // Cambiarlo!! Solo incluir lo necesario
+#include <PxPhysics.h>
+#include <PxScene.h>
+#include <PxShape.h>
+#include <PxRigidDynamic.h>
+#include <extensions/PxDefaultSimulationFilterShader.h>
+#include <characterkinematic/PxCapsuleController.h>
+#include <characterkinematic/PxController.h>
+#include <characterkinematic/PxControllerManager.h>
 
 using namespace physx;
 

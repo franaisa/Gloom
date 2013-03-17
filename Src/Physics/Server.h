@@ -335,12 +335,6 @@ namespace Physics {
 
 		void addImpulsiveForce( physx::PxRigidDynamic* actor, const Vector3& force ); 
 
-	private:
-
-		friend class CCharacterController;
-
-		friend class CFluid;
-
 		void setupFiltering(physx::PxRigidActor* actor, int group, const std::vector<int>& groupList);
 
 		physx::PxScene* getActiveScene() { return _scene; }
@@ -350,6 +344,8 @@ namespace Physics {
 		physx::PxControllerManager* getControllerManager() { return _controllerManager; }
 
 		CCollisionManager* getCollisionManager() { return _collisionManager; }
+
+	private:	
 
 		/**
 		Constructor de la clase.
