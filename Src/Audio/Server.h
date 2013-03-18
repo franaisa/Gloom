@@ -1,0 +1,110 @@
+/**
+@file Server.h
+
+Contiene la declaración de la clase CServer, Singleton que se encarga de
+la gestión del audio en el juego.
+
+@see Audio::CServer
+
+@author Jose Antonio García Yáñez
+@date Marzo, 2013
+*/
+#ifndef __Audio_Server_H
+#define __Audio_Server_H
+
+#include "fmod.hpp"
+#include "fmod_errors.h"
+
+using namespace FMOD;
+
+// Declaración de la clase
+namespace Audio
+{
+	/**
+	Servidor del módulo Audio que se encarga de la gestión del audio del juego. Está 
+	implementado como un singlenton de inicialización explícita. Sirve 
+	para comunicar a FMOD los eventos de sonido que tenga que reproducir.
+
+	@author Jose Antonio García Yáñez
+	@date Marzo, 2013
+	*/
+	class CServer
+	{
+	public:
+
+		/**
+		Devuelve la única instancia de la clase CServer.
+		
+		@return Única instancia de la clase CServer.
+		*/
+		static CServer* getSingletonPtr() {return _instance;}
+
+		/**
+		Inicializa la instancia
+
+		@return Devuelve false si no se ha podido inicializar.
+		*/
+		static bool Init();
+
+		/**
+		Libera la instancia de CServer. Debe llamarse al finalizar la 
+		aplicación.
+		*/
+		static void Release();
+
+		/**
+		Función llamada en cada frame para que se realicen las funciones
+		de actualización adecuadas.
+		<p>
+		Llamará al método tick() del mapa.
+
+		@param msecs Milisegundos transcurridos desde el último tick.
+		*/
+		void tick(unsigned int msecs);
+
+
+	protected:
+
+		/**
+		Constructor.
+		*/
+		CServer ();
+
+		/**
+		Destructor.
+		*/
+		~CServer();
+
+		/**
+		Segunda fase de la construcción del objeto. Sirve para hacer
+		inicializaciones de la propia instancia en vez de inicializaciones 
+		estáticas.
+
+		@return true si todo fue correctamente.
+		*/
+		bool open();
+
+		/**
+		Segunda fase de la destrucción del objeto. Sirve para hacer liberar 
+		los recursos de la propia instancia, la liberación de los recursos 
+		estáticos se hace en Release().
+		*/
+		void close();
+
+	private:
+		/**
+		Única instancia de la clase.
+		*/
+		static CServer* _instance;
+
+
+		/**
+		Variable sistema de fmod.
+		*/
+		System* _system; // reminiscencias de C
+
+	}; // class CServer
+
+} // namespace Audio
+
+#endif // __Audio_Server_H
