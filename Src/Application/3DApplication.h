@@ -33,6 +33,10 @@ namespace Ogre
 {
   class Timer;
 }
+namespace Audio
+{
+  class CServer;
+}
 
 namespace Application 
 {

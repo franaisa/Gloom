@@ -77,12 +77,13 @@ namespace Audio
 		FMOD_RESULT result;
 		//Creamos
 		result = System_Create(&_system);
-		if(result!= FMOD_OK) return false;
+		ERRCHECK(result);
 			
 		//Iniciamos
 		result = _system->init(100, FMOD_INIT_NORMAL, 0);
-		if(result!= FMOD_OK) return false;
+		ERRCHECK(result);
 
+		playLoopSound("media/audio/themeGloom.wav");
 
 		return true;
 
@@ -100,21 +101,71 @@ namespace Audio
 
 	void CServer::tick(unsigned int secs) 
 	{
-		/*if(_activeScene != _dummyScene)
-			_activeScene->tick(secs);
-		if(_root)
-		{
-			// Actualizamos todas las ventanas de reenderizado.
-			Ogre::WindowEventUtilities::messagePump();
-			// Reenderizamos un frame
-			_root->renderOneFrame(secs);
-		}*/
-
-
-
+	// Sin uso, si no se hace nada quitarlo y quitar su llamada para que no se haga en 3daplication.
 
 	} // tick
-
 	//--------------------------------------------------------
+
+	// función para dar salida de error y terminar aplicación
+	void CServer::ERRCHECK(FMOD_RESULT result){
+		if (result != FMOD_OK){
+		std::cout << "FMOD error! " << result << std::endl <<FMOD_ErrorString(result);
+		exit(-1);
+		}
+	}//ERRCHECK
+	//--------------------------------------------------------
+
+	void CServer::playSound(char* rutaSonido){
+			//Carga del sonido
+			Sound *sound;
+			FMOD_RESULT result = _system->createSound(
+			rutaSonido, // path del archivo de sonido
+			FMOD_DEFAULT, // flags
+			0, // información adicional (nada en este caso)
+			& sound); // devolución del handle al buffer
+			ERRCHECK(result);
+
+			//Reproducción en canal
+			Channel *canal;
+			result = _system->playSound(
+			FMOD_CHANNEL_FREE , // dejamos que FMOD seleccione cualquiera
+			sound, // sonido que se “engancha” a ese canal
+			false, // arranca sin “pause” (se reproduce directamente)
+			& canal); // devuelve el canal que asigna
+			ERRCHECK(result);
+			// el sonido ya está reproduciendo!!
+			float volume=0.7; // valor entre 0 y 1
+			result = canal->setVolume(volume);
+			ERRCHECK(result);
+	}//playSound
+	//--------------------------------------------------------
+
+		void CServer::playLoopSound(char* rutaSonido){
+			//Carga del sonido
+			Sound *sound;
+			FMOD_RESULT result = _system->createSound(
+			rutaSonido, // path del archivo de sonido
+			FMOD_DEFAULT | FMOD_LOOP_NORMAL, // flags
+			0, // información adicional (nada en este caso)
+			& sound); // devolución del handle al buffer
+			ERRCHECK(result);
+			//sound->setLoopCount(-1); // sonido a loop asi le iba a david
+			
+			//Reproducción en canal
+			Channel *canal;
+			result = _system->playSound(
+			FMOD_CHANNEL_FREE , // dejamos que FMOD seleccione cualquiera
+			sound, // sonido que se “engancha” a ese canal
+			false, // arranca sin “pause” (se reproduce directamente)
+			& canal); // devuelve el canal que asigna
+			ERRCHECK(result);
+			// el sonido ya está reproduciendo!!
+			float volume=0.7; // valor entre 0 y 1
+			result = canal->setVolume(volume);
+			ERRCHECK(result);
+	}//playLoopSound
+	//--------------------------------------------------------
+
+
 
 } // namespace Audio

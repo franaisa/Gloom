@@ -15,6 +15,8 @@ la gestión del audio en el juego.
 #include "fmod.hpp"
 #include "fmod_errors.h"
 
+#include <iostream>
+
 using namespace FMOD;
 
 // Declaración de la clase
@@ -62,6 +64,17 @@ namespace Audio
 		*/
 		void tick(unsigned int msecs);
 
+		/**
+		Se encarga de cargar un sonido y reproducirlo en modo normal.
+		*/
+		void playSound(char* rutaSonido);
+
+		/**
+		Se encarga de cargar un sonido y reproducirlo en modo loop.
+		*/
+		void playLoopSound(char* rutaSonido);
+
+
 
 	protected:
 
@@ -91,12 +104,17 @@ namespace Audio
 		*/
 		void close();
 
+		/**
+		Gestiona los errores de inicialización del sistema o carga/reproduccion de sonidos.
+		*/
+		void ERRCHECK(FMOD_RESULT result);
+
+
 	private:
 		/**
 		Única instancia de la clase.
 		*/
 		static CServer* _instance;
-
 
 		/**
 		Variable sistema de fmod.

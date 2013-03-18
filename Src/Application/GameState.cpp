@@ -25,6 +25,7 @@ Contiene la implementación del estado de juego.
 #include "GUI/PlayerController.h"
 
 #include "Physics/Server.h"
+#include "Audio\Server.h"
 
 //#include <CEGUISystem.h>
 //#include <CEGUIWindowManager.h>
@@ -106,6 +107,9 @@ namespace Application {
 		GUI::CServer::getSingletonPtr()->getPlayerController()->activate();
 
 		Logic::CEntityFactory::getSingletonPtr()->dynamicCreation(true);
+
+		//La picadura no te escapas
+		//Audio::CServer::getSingletonPtr()->playLoopSound("themeGloom.wav");
 
 		// Activamos la ventana que nos muestra el tiempo transcurrido.
 		//CEGUI::System::getSingletonPtr()->setGUISheet(_timeWindow);

@@ -89,6 +89,7 @@ namespace Application {
 		// Inicializamos la red
 		if (!Net::CManager::Init())
 			return false;
+
 		// Creamos el reloj basado en Ogre.
 		_clock = new COgreClock();
 
