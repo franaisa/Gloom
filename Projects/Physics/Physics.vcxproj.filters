@@ -70,6 +70,9 @@
     <ClCompile Include="..\..\Src\Physics\StaticEntity.cpp">
       <Filter>Actors\Source</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Src\Physics\MaterialManager.cpp">
+      <Filter>Managers\Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Src\Physics\Fluid.h">
@@ -102,6 +105,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Src\Physics\StaticEntity.h">
       <Filter>Actors\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Physics\MaterialManager.h">
+      <Filter>Managers\Header</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

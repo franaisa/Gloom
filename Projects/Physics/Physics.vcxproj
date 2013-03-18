@@ -77,6 +77,7 @@
     <ClCompile Include="..\..\Src\Physics\ErrorManager.cpp" />
     <ClCompile Include="..\..\Src\Physics\Fluid.cpp" />
     <ClCompile Include="..\..\Src\Physics\GeometryFactory.cpp" />
+    <ClCompile Include="..\..\Src\Physics\MaterialManager.cpp" />
     <ClCompile Include="..\..\Src\Physics\Server.cpp" />
     <ClCompile Include="..\..\Src\Physics\StaticEntity.cpp" />
   </ItemGroup>
@@ -90,6 +91,7 @@
     <ClInclude Include="..\..\Src\Physics\ErrorManager.h" />
     <ClInclude Include="..\..\Src\Physics\Fluid.h" />
     <ClInclude Include="..\..\Src\Physics\GeometryFactory.h" />
+    <ClInclude Include="..\..\Src\Physics\MaterialManager.h" />
     <ClInclude Include="..\..\Src\Physics\Server.h" />
     <ClInclude Include="..\..\Src\Physics\StaticEntity.h" />
   </ItemGroup>

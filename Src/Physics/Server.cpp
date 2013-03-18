@@ -17,6 +17,8 @@ Contiene la implementación del servidor de física.
 #include "Logic/Entity/Entity.h"
 #include "Map/MapEntity.h"
 #include "Fluid.h"
+#include "MaterialManager.h"
+#include "GeometryFactory.h"
 
 #include <assert.h>
 #include <algorithm>
@@ -179,6 +181,9 @@ CServer::~CServer()
 		delete _errorManager;
 		_errorManager = NULL;
 	}
+
+	Physics::CGeometryFactory::Release();
+	Physics::CMaterialManager::Release();
 } 
 
 //--------------------------------------------------------
@@ -189,14 +194,18 @@ bool CServer::Init()
 		_instance = new CServer();
 	}
 
+	if (!Physics::CGeometryFactory::Init())
+		return false;
+
+	if (!Physics::CMaterialManager::Init())
+		return false;
 
 	return true;
 } 
 
 //--------------------------------------------------------
 
-void CServer::Release()
-{
+void CServer::Release() {
 	if(_instance) {
 		delete _instance;
 		_instance = NULL;
