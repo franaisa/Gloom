@@ -119,7 +119,7 @@ namespace Graphics
 		/*
 		_sceneMgr->setAmbientLight(Ogre::ColourValue(1,1,1));
 		/*/
-		_sceneMgr->setAmbientLight(Ogre::ColourValue(0.4,0.4,0.4));
+		_sceneMgr->setAmbientLight(Ogre::ColourValue(0.4f,0.4f,0.4f));
 		/* */
 		
 		

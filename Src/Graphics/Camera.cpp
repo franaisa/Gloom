@@ -52,6 +52,8 @@ namespace Graphics
 		// Deberían poder configurarse.
 		_camera->setNearClipDistance(5);
 		_camera->setFarClipDistance(500);
+
+		_camera->setFOVy(Ogre::Radian(70));
 		// Finalmente adjuntamos la cámara a su nodo.
 		_cameraNode->attachObject (_camera);
 
