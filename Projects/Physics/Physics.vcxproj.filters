@@ -64,6 +64,12 @@
     <ClCompile Include="..\..\Src\Physics\Entity.cpp">
       <Filter>Actors\Source</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Src\Physics\DynamicEntity.cpp">
+      <Filter>Actors\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Physics\StaticEntity.cpp">
+      <Filter>Actors\Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Src\Physics\Fluid.h">
@@ -89,6 +95,12 @@
       <Filter>Factories\Header</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Src\Physics\Entity.h">
+      <Filter>Actors\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Physics\DynamicEntity.h">
+      <Filter>Actors\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Physics\StaticEntity.h">
       <Filter>Actors\Header</Filter>
     </ClInclude>
   </ItemGroup>

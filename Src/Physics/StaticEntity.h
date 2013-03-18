@@ -1,20 +1,21 @@
 //---------------------------------------------------------------------------
-// Entity.h
+// StaticEntity.h
 //---------------------------------------------------------------------------
 
 /**
-@file Entity.h
+@file StaticEntity.h
 
-@see Physics::CEntity
+@see Physics::CStaticEntity
 
 @author Francisco Aisa García
 @date Marzo, 2013
 */
 
-#ifndef __Physics_Entity_H
-#define __Physics_Entity_H
+#ifndef __Physics_StaticEntity_H
+#define __Physics_StaticEntity_H
 
 #include "BaseSubsystems/Math.h"
+#include "Physics/Entity.h"
 
 #include <geometry/PxGeometry.h>
 #include <PxMaterial.h>
@@ -22,8 +23,6 @@
 
 #include <vector>
 #include <string>
-
-// REMEMBER! CONFIGURAR LOS FILTROS DEL CONTROLLER
 
 // Predeclaración de clases para ahorrar tiempo de compilación
 namespace physx {
@@ -60,44 +59,11 @@ namespace Physics {
 	@author Francisco Aisa García
 	@date Marzo, 2013
 	*/
-	class CEntity {
+	class CStaticEntity : public CEntity {
 	public:
 
-		CEntity::CEntity();
-
-		virtual ~CEntity();
-
-		void loadFromFile(const std::string &file, int group, const std::vector<int>& groupList, const Logic::IPhysics *component);
-
-		/**
-		Devuelve la posición y rotación de una entidad física.
-
-		@param actor Actor físico del que se desea conocer la posición y orientación.
-		@return Matriz 4x4 con la posición y orientación de la entidad.
-		 */
-		Matrix4 getTransform() const;
-
-		// Deberiamos tener un SET TRANSFORM Y UN GET POSITION!!!!!!!!!!!!!!!!
-
-		void activateSimulation();
-
-		void deactivateSimulation();
-
-	protected:
-
-		float getLogicPivotOffset(const physx::PxGeometry& geometry);
-
-		/** Rigidbody. IMPORTANTE: TIENE QUE SER INICIALIZADO POR LA CLASE HIJA. */
-		physx::PxRigidActor* _actor;
-
-		// Puntero a la escena
-		physx::PxScene* _scene;
-
-		// SDK de Physx
-		physx::PxPhysics* _physxSDK;
-
-		/** Puntero al gestor de colisiones */
-		CCollisionManager* _collisionManager;
+		void load(const Vector3 &position, const const physx::PxGeometry& geometry, physx::PxMaterial& material, 
+				  bool trigger, int group, const std::vector<int>& groupList, const Logic::IPhysics *component);
 
 	}; // class CEntity
 

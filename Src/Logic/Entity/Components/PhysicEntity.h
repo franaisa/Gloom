@@ -17,6 +17,7 @@ para representar character controllers.
 #define __Logic_PhysicEntity_H
 
 #include "Physics.h"
+#include "Physics/Entity.h"
 
 #include <vector>
 
@@ -154,10 +155,12 @@ namespace Logic
 		physx::PxRigidActor* createFromFile(const Map::CEntity *entityInfo, int group, const std::vector<int>& groupList);
 
 		// Servidor de física
-		Physics::CServer *_server;
+		Physics::CServer* _server;
 
 		// Actor que representa la entidad física en PhysX
 		physx::PxRigidActor *_actor;
+
+		//Physics::CEntity _physicEntity;
 
 		// Vector de deplazamiento recibido en el último mensaje de tipo KINEMATIC_MOVE. Sirve
 		// para mover entidades físicas cinemáticas.

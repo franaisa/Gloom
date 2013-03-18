@@ -1,9 +1,9 @@
 //---------------------------------------------------------------------------
-// CEntity.cpp
+// Entity.cpp
 //---------------------------------------------------------------------------
 
 /**
-@file CEntity.cpp
+@file Entity.cpp
 
 @see Physics::CEntity
 
@@ -26,8 +26,10 @@
 #include <PxShape.h>
 #include <PxRigidActor.h>
 #include <PxRigidDynamic.h>
+#include <PxRigidStatic.h>
 #include <extensions/PxDefaultSimulationFilterShader.h>
 #include <extensions/PxSimpleFactory.h>
+#include <geometry/PxGeometryHelpers.h>
 
 using namespace physx;
 
@@ -63,114 +65,40 @@ namespace Physics {
 
 	//________________________________________________________________________
 
-	void CEntity::loadDynamic(const Vector3 &position, const PxGeometry& geometry, PxMaterial& material,
-							  float density, bool kinematic, bool trigger, int group, 
-							  const std::vector<int>& groupList, const Logic::IPhysics *component) {
+	float CEntity::getLogicPivotOffset(const PxGeometry& geometry) {
+		switch( geometry.getType() ) {
+			case PxGeometryType::eBOX:
+				// Devolver la altura media de la caja
+				return static_cast<const PxBoxGeometry*>(&geometry)->halfExtents.y;
 
-		assert(_scene);
+				break;
 
-		_isTrigger = trigger;
+			case PxGeometryType::eSPHERE:
+				// Devolver el radio de la esfera
+				return static_cast<const PxSphereGeometry*>(&geometry)->radius;
 
-		// Creamos una esfera dinámica
-		PxTransform pose(Vector3ToPxVec3(position));
-		
-		
+				break;
 
+			case PxGeometryType::eCAPSULE:
+				// Devolver el radio de la cupula mas la mitad de la altura
+				return static_cast<const PxCapsuleGeometry*>(&geometry)->halfHeight;
 
-
-
-		//PxTransform localPose(PxVec3(0, radius, 0)); // Transformación de coordenadas lógicas a coodenadas de PhysX
-		PxTransform localPose( PxVec3(0, 0, 0) ); // CAMBIAR!!!!!!!!!!!!!!!!!!!!!!!!!
-
-
-
-
-
-
-
-		// Crear esfera dinámico o cinemático
-		if (kinematic)
-			_actor = PxCreateKinematic(*_physxSDK, pose, geometry, material, density, localPose);
-		else
-			_actor = PxCreateDynamic(*_physxSDK, pose, geometry, material, density, localPose);
-	
-		// Transformarlo en trigger si es necesario
-		if (trigger) {
-			PxShape* shape;
-			_actor->getShapes(&shape, 1, 0);
-			shape->setFlag(PxShapeFlag::eTRIGGER_SHAPE, true);
+				break;
 		}
 
-		// Anotar el componente lógico asociado a la entidad física
-		_actor->userData = (void*) component;
-
-		// Establecer el grupo de colisión
-		PxSetGroup(*_actor, group);
-		// Establecer los filtros en base al grupo de colision
-		Physics::CServer::getSingletonPtr()->setupFiltering(_actor, group, groupList);
-
-		// Añadir el actor a la escena
-		_scene->addActor(*_actor);
+		return 0;
 	}
 
 	//________________________________________________________________________
 
-	void loadStatic(const Vector3 &position, const const physx::PxGeometry& geometry, physx::PxMaterial& material, 
-					bool trigger, int group, const std::vector<int>& groupList, const Logic::IPhysics *component) {
-
+	void CEntity::loadFromFile(const std::string &file, int group, const std::vector<int>& groupList, const Logic::IPhysics* component) {
+		_actor = Physics::CServer::getSingletonPtr()->createFromFile(file, group, groupList, component);
 	}
 
 	//________________________________________________________________________
 
-	Matrix4 CEntity::getTransform() {
+	Matrix4 CEntity::getTransform() const {
 		return PxTransformToMatrix4( _actor->getGlobalPose() );
-	}
-
-	//________________________________________________________________________
-
-	void CEntity::setPosition(const Vector3& position) {
-		// Transformación entre el sistema de coordenadas lógico y el de PhysX
-
-		// En primer lugar obtenemos todas las formas del actor y calculamos el punto medio
-		// de todas ellas.
-		unsigned int nbShapes = _actor->getNbShapes(); // sacamos el numero de formas del actor
-		PxShape** actorShapes = new PxShape* [nbShapes]; // creamos un array de shapes
-		_actor->getShapes(actorShapes, nbShapes); // obtenemos todas las formas del actor
-		float averageYPosition = 0; // Contendra la altura media de todos los shapes
-
-		for(unsigned int i = 0; i < nbShapes; ++i) {
-			PxGeometryType::Enum geomType = actorShapes[i]->getGeometryType();
-
-			if(geomType == PxGeometryType::eSPHERE) {
-				PxSphereGeometry sphereGeom; 
-				actorShapes[i]->getSphereGeometry(sphereGeom);
-
-				averageYPosition += sphereGeom.radius;
-			}
-			else if(geomType == PxGeometryType::eCAPSULE) {
-				PxCapsuleGeometry capsuleGeom; 
-				actorShapes[i]->getCapsuleGeometry(capsuleGeom);
-
-				averageYPosition += capsuleGeom.halfHeight;
-			}
-			else if(geomType == PxGeometryType::eBOX) {
-				PxBoxGeometry boxGeom; 
-				actorShapes[i]->getBoxGeometry(boxGeom);
-
-				PxVec3 halfPos(boxGeom.halfExtents);
-				averageYPosition += halfPos.y;
-			}
-			/*else if(geomType == PxGeometryType::eTRIANGLEMESH) {
-				// Deducir punto medio del mesh
-			}*/
-		}
-
-		delete [] actorShapes;
-
-		// Calculamos la altura media de todas las formas para colocar el vector
-		// posicion de physx
-		averageYPosition = averageYPosition / nbShapes;
-		_actor->setGlobalPose( PxTransform( PxVec3(position.x, position.y + averageYPosition, position.z) ) );
 	}
 
 	//________________________________________________________________________
@@ -183,7 +111,7 @@ namespace Physics {
 		PxShape** actorShapes = new PxShape* [nbShapes];
 		_actor->getShapes(actorShapes, nbShapes);
 		for(int i = 0; i < nbShapes; ++i) {
-			if(_isTrigger) {
+			if(actorShapes[i]->getFlags() & PxShapeFlag::eTRIGGER_SHAPE) {
 				// Volvemos a activar la shape como trigger
 				actorShapes[i]->setFlag(PxShapeFlag::eTRIGGER_SHAPE, true);
 			}
@@ -207,7 +135,7 @@ namespace Physics {
 		PxShape** actorShapes = new PxShape* [nbShapes];
 		_actor->getShapes(actorShapes, nbShapes);
 		for(int i = 0; i < nbShapes; ++i) {
-			if(_isTrigger) {
+			if(actorShapes[i]->getFlags() & PxShapeFlag::eTRIGGER_SHAPE) {
 				// Desactivamos la shape como trigger
 				actorShapes[i]->setFlag(PxShapeFlag::eTRIGGER_SHAPE, false);
 			}

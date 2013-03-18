@@ -1,20 +1,21 @@
 //---------------------------------------------------------------------------
-// Entity.h
+// DynamicEntity.h
 //---------------------------------------------------------------------------
 
 /**
-@file Entity.h
+@file DynamicEntity.h
 
-@see Physics::CEntity
+@see Physics::CDynamicEntity
 
 @author Francisco Aisa García
 @date Marzo, 2013
 */
 
-#ifndef __Physics_Entity_H
-#define __Physics_Entity_H
+#ifndef __Physics_DynamicEntity_H
+#define __Physics_DynamicEntity_H
 
 #include "BaseSubsystems/Math.h"
+#include "Physics/Entity.h"
 
 #include <geometry/PxGeometry.h>
 #include <PxMaterial.h>
@@ -23,13 +24,11 @@
 #include <vector>
 #include <string>
 
-// REMEMBER! CONFIGURAR LOS FILTROS DEL CONTROLLER
-
 // Predeclaración de clases para ahorrar tiempo de compilación
 namespace physx {
 	class PxScene;
 	class PxPhysics;
-	class PxRigidActor;
+	class PxRigidDynamic;
 }
 
 namespace Physics {
@@ -43,6 +42,13 @@ namespace Logic {
 }
 
 namespace Physics {
+
+	enum ForceMode {
+		eFORCE				= physx::PxForceMode::eFORCE,
+		eIMPULSE			= physx::PxForceMode::eIMPULSE,
+		eVELOCITY_CHANGE	= physx::PxForceMode::eVELOCITY_CHANGE,
+		eACCELERATION		= physx::PxForceMode::eACCELERATION
+	};
 
 	/**
 	
@@ -60,44 +66,32 @@ namespace Physics {
 	@author Francisco Aisa García
 	@date Marzo, 2013
 	*/
-	class CEntity {
+	class CDynamicEntity : public CEntity {
 	public:
 
-		CEntity::CEntity();
+		CDynamicEntity::CDynamicEntity();
 
-		virtual ~CEntity();
+		virtual ~CDynamicEntity();
 
-		void loadFromFile(const std::string &file, int group, const std::vector<int>& groupList, const Logic::IPhysics *component);
+		void load(const Vector3 &position, const const physx::PxGeometry& geometry, physx::PxMaterial& material, 
+				  float density, bool kinematic, bool trigger, int group, 
+				  const std::vector<int>& groupList, const Logic::IPhysics *component);
+						 
+		void addForce(const Vector3& forceVector, ForceMode forceMode, bool autowake);
 
-		/**
-		Devuelve la posición y rotación de una entidad física.
+		void addTorque(const Vector3& forceVector, ForceMode forceMode, bool autowake);
 
-		@param actor Actor físico del que se desea conocer la posición y orientación.
-		@return Matriz 4x4 con la posición y orientación de la entidad.
-		 */
-		Matrix4 getTransform() const;
+		//activate/deactivate gravity
 
 		// Deberiamos tener un SET TRANSFORM Y UN GET POSITION!!!!!!!!!!!!!!!!
 
-		void activateSimulation();
+		// set position
+		void setPosition(const Vector3 &position, bool makeConversionToLogicWorld);
 
-		void deactivateSimulation();
+	private:
 
-	protected:
-
-		float getLogicPivotOffset(const physx::PxGeometry& geometry);
-
-		/** Rigidbody. IMPORTANTE: TIENE QUE SER INICIALIZADO POR LA CLASE HIJA. */
-		physx::PxRigidActor* _actor;
-
-		// Puntero a la escena
-		physx::PxScene* _scene;
-
-		// SDK de Physx
-		physx::PxPhysics* _physxSDK;
-
-		/** Puntero al gestor de colisiones */
-		CCollisionManager* _collisionManager;
+		/** Controlador de la cápsula del controller. */
+		physx::PxRigidDynamic* _dynamicActor;
 
 	}; // class CEntity
 
