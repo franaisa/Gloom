@@ -89,6 +89,10 @@ namespace Application
 		*/
 		virtual void tick(unsigned int msecs);
 
+	private:
+
+		unsigned int _acumAudio;
+		unsigned int _timerAudio;
 	}; // class 3DApplication
 
 } // namespace Application

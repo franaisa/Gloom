@@ -35,7 +35,8 @@ namespace Application {
 
 	C3DApplication::C3DApplication() : CBaseApplication()
 	{
-
+		_timerAudio=500;
+		_acumAudio=0;
 	} // C3DApplication
 
 	//--------------------------------------------------------
@@ -151,6 +152,9 @@ namespace Application {
 	void C3DApplication::tick(unsigned int msecs) 
 	{
 		// Ejecutar el tick del estado
+		_acumAudio+=msecs;
+
+
 		CBaseApplication::tick(msecs);
 
 		Net::CManager::getSingletonPtr()->tick(msecs);
@@ -159,7 +163,11 @@ namespace Application {
 
 		Graphics::CServer::getSingletonPtr()->tick(msecs/1000.0f);
 
-		Audio::CServer::getSingletonPtr()->tick(msecs);
+		//El tick del server de audio solo se ejecuta cada X tiempo por cuestiones de eficiencia ( solo hace un update para los sonidos sin loop liberen canales al acabar )
+		if(_acumAudio>=_timerAudio){
+			Audio::CServer::getSingletonPtr()->tick(msecs);
+			_acumAudio=0;
+		}
 
 	} // tick
 

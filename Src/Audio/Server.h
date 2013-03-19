@@ -16,6 +16,8 @@ la gestión del audio en el juego.
 #include "fmod_errors.h"
 
 #include <iostream>
+#include <string>
+#include <map>
 
 using namespace FMOD;
 
@@ -67,13 +69,26 @@ namespace Audio
 		/**
 		Se encarga de cargar un sonido y reproducirlo en modo normal.
 		*/
-		void playSound(char* rutaSonido);
+		void playSound(char* rutaSonido, std::string id);
 
 		/**
 		Se encarga de cargar un sonido y reproducirlo en modo loop.
 		*/
-		void playLoopSound(char* rutaSonido);
+		void playLoopSound(char* rutaSonido, std::string id);
 
+		/**
+		Se encarga de parar un sonido introduciendo su nombre como parámetro.
+
+		@param id El identificador del sonido
+		*/
+		void stopSound(std::string id);
+
+		/**
+		Se encarga de parar un sonido
+
+		@param id El identificador del sonido
+		*/
+		void stopAllSounds();
 
 
 	protected:
@@ -109,6 +124,11 @@ namespace Audio
 		*/
 		void ERRCHECK(FMOD_RESULT result);
 
+		/**
+		Guarda las asociaciones de nombreSonido/Canal
+		*/
+		typedef std::map<std::string, Channel *> SoundChannelMap;
+		SoundChannelMap _soundChannel;
 
 	private:
 		/**

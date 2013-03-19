@@ -109,7 +109,8 @@ namespace Application {
 		Logic::CEntityFactory::getSingletonPtr()->dynamicCreation(true);
 
 		//La picadura no te escapas
-		//Audio::CServer::getSingletonPtr()->playLoopSound("themeGloom.wav");
+		Audio::CServer::getSingletonPtr()->stopSound("theme");
+		Audio::CServer::getSingletonPtr()->playLoopSound("media/audio/picadura.mp3","picadura");
 
 		// Activamos la ventana que nos muestra el tiempo transcurrido.
 		//CEGUI::System::getSingletonPtr()->setGUISheet(_timeWindow);

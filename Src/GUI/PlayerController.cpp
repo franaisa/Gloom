@@ -27,9 +27,8 @@ mover al jugador.
 
 #include <cassert>
 
-//PRUEBAS,QUITAR LUEGO LOS DOS INCLUDE SIGUIENTES
-#include "Logic/Messages/MessageAddLife.h"
-#include "Logic/Messages/MessageAddShield.h"
+//PRUEBAS,QUITAR LUEGO el INCLUDE SIGUIENTE
+#include "Audio\Server.h"
 
 //MENSAJE PARA DEBBUG
 #include "Logic/Messages/MessageHudDebbug.h"
@@ -110,10 +109,7 @@ namespace GUI {
 				key.keyId == GUI::Key::NUMBER5 || key.keyId == GUI::Key::NUMBER6 || key.keyId == GUI::Key::NUMBER7 || key.keyId == GUI::Key::NUMBER8){
 				
 					Logic::CMessageChangeWeapon *message=new Logic::CMessageChangeWeapon();
-
-					//A quitar en un futuro, usado ahora para debuguear
-					Logic::CMessageAddLife *message2=new Logic::CMessageAddLife();
-					Logic::CMessageAddShield *message3=new Logic::CMessageAddShield();
+	
 					switch(key.keyId)
 					{
 					case GUI::Key::NUMBER1:
@@ -135,12 +131,8 @@ namespace GUI {
 						message->setWeapon(5);
 						break;
 					case GUI::Key::NUMBER7:
-						message2->setAddLife(20);
-						_controlledAvatar->emitMessage(message2);
 						break;
 					case GUI::Key::NUMBER8:
-						message3->setAddShield(20);
-						_controlledAvatar->emitMessage(message3);
 						break;
 					}
 
