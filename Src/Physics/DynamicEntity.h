@@ -73,13 +73,16 @@ namespace Physics {
 
 		virtual ~CDynamicEntity();
 
-		void load(const Vector3 &position, const const physx::PxGeometry& geometry, physx::PxMaterial& material, 
+		void load(const Vector3 &position, const physx::PxGeometry& geometry, physx::PxMaterial& material, 
 				  float density, bool kinematic, bool trigger, int group, 
 				  const std::vector<int>& groupList, const Logic::IPhysics *component);
-						 
-		void addForce(const Vector3& forceVector, ForceMode forceMode, bool autowake);
 
-		void addTorque(const Vector3& forceVector, ForceMode forceMode, bool autowake);
+		// Cargar desde fichero
+		virtual void load(const std::string &file, int group, const std::vector<int>& groupList, const Logic::IPhysics *component);
+						 
+		void addForce(const Vector3& forceVector, ForceMode forceMode = ForceMode::eFORCE, bool autowake = true);
+
+		void addTorque(const Vector3& forceVector, ForceMode forceMode = ForceMode::eFORCE, bool autowake = true);
 
 		//activate/deactivate gravity
 

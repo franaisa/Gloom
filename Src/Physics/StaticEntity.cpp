@@ -32,11 +32,12 @@
 #include <geometry/PxGeometryHelpers.h>
 
 using namespace physx;
+using namespace std;
 
 namespace Physics {
 
-	void CStaticEntity::load(const Vector3 &position, const const physx::PxGeometry& geometry, physx::PxMaterial& material, 
-					         bool trigger, int group, const std::vector<int>& groupList, const Logic::IPhysics *component) {
+	void CStaticEntity::load(const Vector3 &position, const PxGeometry& geometry, PxMaterial& material, 
+					         bool trigger, int group, const vector<int>& groupList, const Logic::IPhysics *component) {
 
 		assert(_scene);
 						
@@ -65,6 +66,37 @@ namespace Physics {
 
 		// Añadir el actor a la escena
 		_scene->addActor(*_actor);
+	}
+
+	//________________________________________________________________________
+
+	void CStaticEntity::load(const PxPlane& plane, PxMaterial& material, int group, 
+							 const vector<int>& groupList, const Logic::IPhysics *component) {
+
+		assert(_scene);
+
+		// Crear un plano estático
+		_actor = PxCreatePlane(*_physxSDK, plane, material);
+	
+		// Anotar el componente lógico asociado a la entidad física
+		_actor->userData = (void*) component;
+
+		// Establecer el grupo de colisión
+		PxSetGroup(*_actor, group);
+
+		Physics::CServer::getSingletonPtr()->setupFiltering(_actor, group, groupList);
+	
+		// Añadir el actor a la escena
+		_scene->addActor(*_actor);
+	}
+
+	//________________________________________________________________________
+
+	void CStaticEntity::load(const string &file, int group, const vector<int>& groupList, const Logic::IPhysics *component) {
+		// Deserializamos el fichero RepX
+		_actor = deserializeRepXFile(file, group, groupList, component);
+
+		// Asignamos al actor los flags que corresponden a los rigid estaticos
 	}
 
 } // namespace Physics

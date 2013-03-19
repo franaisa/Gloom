@@ -67,8 +67,6 @@ namespace Physics {
 
 		virtual ~CEntity();
 
-		void loadFromFile(const std::string &file, int group, const std::vector<int>& groupList, const Logic::IPhysics *component);
-
 		/**
 		Devuelve la posición y rotación de una entidad física.
 
@@ -83,7 +81,11 @@ namespace Physics {
 
 		void deactivateSimulation();
 
+		virtual void load(const std::string &file, int group, const std::vector<int>& groupList, const Logic::IPhysics *component) = 0;
+
 	protected:
+
+		physx::PxRigidActor* deserializeRepXFile(const std::string &file, int group, const std::vector<int>& groupList, const Logic::IPhysics *component);
 
 		float getLogicPivotOffset(const physx::PxGeometry& geometry);
 

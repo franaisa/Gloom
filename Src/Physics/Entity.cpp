@@ -91,8 +91,8 @@ namespace Physics {
 
 	//________________________________________________________________________
 
-	void CEntity::loadFromFile(const std::string &file, int group, const std::vector<int>& groupList, const Logic::IPhysics* component) {
-		_actor = Physics::CServer::getSingletonPtr()->createFromFile(file, group, groupList, component);
+	PxRigidActor* CEntity::deserializeRepXFile(const std::string &file, int group, const std::vector<int>& groupList, const Logic::IPhysics* component) {
+		return Physics::CServer::getSingletonPtr()->createFromFile(file, group, groupList, component);
 	}
 
 	//________________________________________________________________________

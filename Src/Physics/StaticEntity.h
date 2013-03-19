@@ -18,6 +18,7 @@
 #include "Physics/Entity.h"
 
 #include <geometry/PxGeometry.h>
+#include <geometry/PxPlaneGeometry.h>
 #include <PxMaterial.h>
 #include <PxForceMode.h>
 
@@ -62,8 +63,15 @@ namespace Physics {
 	class CStaticEntity : public CEntity {
 	public:
 
-		void load(const Vector3 &position, const const physx::PxGeometry& geometry, physx::PxMaterial& material, 
+		void load(const Vector3 &position, const physx::PxGeometry& geometry, physx::PxMaterial& material, 
 				  bool trigger, int group, const std::vector<int>& groupList, const Logic::IPhysics *component);
+
+		// Crear un plano estatico
+		void load(const physx::PxPlane& plane, physx::PxMaterial& material, int group,
+				  const std::vector<int>& groupList, const Logic::IPhysics *component);
+
+		// Cargar desde fichero
+		virtual void load(const std::string &file, int group, const std::vector<int>& groupList, const Logic::IPhysics *component);
 
 	}; // class CEntity
 

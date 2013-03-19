@@ -32,6 +32,7 @@
 #include <geometry/PxGeometryHelpers.h>
 
 using namespace physx;
+using namespace std;
 
 namespace Physics {
 
@@ -51,7 +52,7 @@ namespace Physics {
 
 	void CDynamicEntity::load(const Vector3 &position, const PxGeometry& geometry, PxMaterial& material,
 							  float density, bool kinematic, bool trigger, int group, 
-							  const std::vector<int>& groupList, const Logic::IPhysics *component) {
+							  const vector<int>& groupList, const Logic::IPhysics *component) {
 
 		assert(_scene);
 
@@ -84,6 +85,15 @@ namespace Physics {
 
 		// Añadir el actor a la escena
 		_scene->addActor(*_dynamicActor);
+	}
+
+	//________________________________________________________________________
+
+	void CDynamicEntity::load(const std::string &file, int group, const vector<int>& groupList, const Logic::IPhysics *component) {
+		// Deserializamos el fichero RepX
+		_actor = deserializeRepXFile(file, group, groupList, component);
+
+		// Asignamos al actor los flags que corresponden a los rigid dinamicos
 	}
 
 	//________________________________________________________________________
