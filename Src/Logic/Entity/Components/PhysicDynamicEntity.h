@@ -110,6 +110,8 @@ namespace Logic {
 
 	private:
 
+		void readCollisionGroupInfo(const Map::CEntity *entityInfo, int& group, std::vector<int>& groupList);
+
 		/**
 		Crea el actor de PhysX que representa la entidad física a partir de la
 		información del mapa.

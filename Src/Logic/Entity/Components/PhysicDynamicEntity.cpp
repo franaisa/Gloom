@@ -49,7 +49,7 @@ CPhysicDynamicEntity::CPhysicDynamicEntity() : _movement(0,0,0),
 //---------------------------------------------------------
 
 CPhysicDynamicEntity::~CPhysicDynamicEntity() {
-	// El destructor de dynamicEntity ya sabe que hacer
+	// El destructor de _physicEntity ya sabe que hacer
 
 	_server = NULL;
 } 
@@ -80,10 +80,7 @@ bool CPhysicDynamicEntity::accept(CMessage *message) {
 
 //---------------------------------------------------------
 
-void CPhysicDynamicEntity::process(CMessage *message)
-{
-	unsigned int nbShapes;
-	PxShape** actorShapes;
+void CPhysicDynamicEntity::process(CMessage *message) {
 	switch(message->getMessageType()) {
 	case Message::KINEMATIC_MOVE:
 		// Acumulamos el vector de desplazamiento para usarlo posteriormente en 
@@ -134,7 +131,7 @@ void CPhysicDynamicEntity::tick(unsigned int msecs) {
 
 //---------------------------------------------------------
 
-void readCollisionGroupInfo(const Map::CEntity *entityInfo, int& group, std::vector<int>& groupList) {
+void CPhysicDynamicEntity::readCollisionGroupInfo(const Map::CEntity *entityInfo, int& group, std::vector<int>& groupList) {
 	// Leer el grupo de colisión (por defecto grupo 0)
 	if (entityInfo->hasAttribute("physic_group"))
 		group = entityInfo->getIntAttribute("physic_group");

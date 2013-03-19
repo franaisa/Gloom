@@ -146,7 +146,7 @@ void CPhysicEntity::tick(unsigned int msecs)
 
 //---------------------------------------------------------
 
-void readCollisionGroupInfo(const Map::CEntity *entityInfo, int& group, std::vector<int>& groupList) {
+void CPhysicEntity::readCollisionGroupInfo(const Map::CEntity *entityInfo, int& group, std::vector<int>& groupList) {
 	// Leer el grupo de colisión (por defecto grupo 0)
 	if (entityInfo->hasAttribute("physic_group"))
 		group = entityInfo->getIntAttribute("physic_group");

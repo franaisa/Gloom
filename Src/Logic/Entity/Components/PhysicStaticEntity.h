@@ -1,23 +1,19 @@
 /**
-@file PhysicEntity.h
+@file PhysicStaticEntity.h
 
-Contiene la declaración del componente encargado de representar entidades físicas simples,
-que son aquellas representadas mediante un único actor de PhysX. Este componente no sirve
-para representar character controllers.
-
-@see Logic::CPhysicEntity
+@see Logic::CPhysicStaticEntity
 @see Logic::IComponent
 @see Logic::CPhysicController
 
-@author Antonio Sánchez Ruiz-Granados
-@date Noviembre, 2012
+@author Francisco Aisa García
+@date Marzo, 2013
 */
 
-#ifndef __Logic_PhysicEntity_H
-#define __Logic_PhysicEntity_H
+#ifndef __Logic_PhysicStaticEntity_H
+#define __Logic_PhysicStaticEntity_H
 
 #include "Physics.h"
-#include "Physics/Entity.h"
+#include "Physics/StaticEntity.h"
 
 #include <vector>
 
@@ -25,55 +21,38 @@ para representar character controllers.
 namespace physx {
 	class PxRigidActor;
 	class PxRigidStatic;
-	struct PxControllerShapeHit;
+	class PxControllerShapeHit;
 };
 
 namespace Physics {
 	class CServer;
+	class CGeometryFactory;
+	class CMaterialManager;
 };
 
 // Los componentes pertenecen al namespace Logic
-namespace Logic 
-{	
-	/**
-	Componente encargardo de la representación física de una entidad simple. Entendemos por 
-	entidades simples aquellas que pueden ser representadas mediante un único actor de PhysX.
-	Esta clase no sirve para representar character controllers ni entidades compuestas como
-	ragdolls.
-	<p>
-	En PhysX existen dos tipos de entidades físicas: estáticas y dinámicas. Las entidades 
-	estáticas no se pueden mover una vez creadas y sólo sirven como volúmenes de colisión.
-	Las entidades dinámicas tienen masa y se mueven aplicándoles fuerzas (por ejemplo la gravedad). 
-	También existe un tipo especial de entidades dinámicas llamadas cinemáticas, que están pensadas 
-	para representar objetos cuyo movimiento viene dictado desde la lógica del juego. Las entidades 
-	cinemáticas se pueden mover mediante desplazamientos en lugar de fuerzas.
-	<p>
-	En cada tick, este componente actualiza la posición y rotación de las entidades lógicas usando
-	la información que proporciona el motor de física (sólo entidades dinámicas). 
-	<p>
-	Cuando este componente se utiliza para representar una entidad cinemática, acepta mensajes de 
-	tipo KINEMATIC_MOVE indicando el movimiento que se quiere realizar. Y en cada tick el componente
-	intenta mover la entidad física de acuerdo a los mensajes recibidos. 
+namespace Logic {	
 	
+	/**
+
     @ingroup logicGroup
 
-	@author Antonio Sánchez Ruiz-Granados
-	@date Noviembre, 2012
+	@author Francisco Aisa García
+	@date Marzo, 2013
 	*/
-	class CPhysicEntity : public IPhysics
-	{
-		DEC_FACTORY(CPhysicEntity);
+	class CPhysicStaticEntity : public IPhysics {
+		DEC_FACTORY(CPhysicStaticEntity);
 	public:
 	
 		/**
 		Constructor por defecto.
 		*/
-		CPhysicEntity();
+		CPhysicStaticEntity();
 
 		/**
 		Destructor. Elimina el objeto físico de la escena y lo destruye. 
 		*/
-		virtual ~CPhysicEntity();
+		virtual ~CPhysicStaticEntity();
 		
 		/**
 		Inicializa el componente usando los atributos definidos en el fichero de mapa.
@@ -122,43 +101,47 @@ namespace Logic
 
 		bool getInControllerContact(){ return _inControllerContact; };
 
-		void setPhysicPosition(const Vector3 &position, bool makeConversionToLogicWorld);
-
-		void addImpulsiveForce(const Vector3& force);
-
 		void deactivateSimulation();
 
 		void activateSimulation();
 
 	private:
 
+		void readCollisionGroupInfo(const Map::CEntity *entityInfo, int& group, std::vector<int>& groupList);
+
 		/**
 		Crea el actor de PhysX que representa la entidad física a partir de la
 		información del mapa.
 		*/
-		physx::PxRigidActor* createActor(const Map::CEntity *entityInfo);
+		void createPhysicEntity(const Map::CEntity *entityInfo);
 
 		/**
 		Crea un plano estático a partir de la información de mapa. 
 		*/
-		physx::PxRigidStatic* createPlane(const Map::CEntity *entityInfo, int group, const std::vector<int>& groupList);
+		void createPlane(const Map::CEntity *entityInfo, int group, const std::vector<int>& groupList);
 				
 		/**
 		Crea una entidad rígida (estática, dinámica o cinemática) a partir de la información de mapa. 
 		*/
-		physx::PxRigidActor* createRigid(const Map::CEntity *entityInfo, int group, const std::vector<int>& groupList);
+		void createRigid(const Map::CEntity *entityInfo, int group, const std::vector<int>& groupList);
 		
 		/**
 		Crea una entidad rígida (estática, dinámica o cinemática) a partir de un fichero RepX
 		exportando previamente con el plug-in the PhysX para 3ds Max.
 		*/
-		physx::PxRigidActor* createFromFile(const Map::CEntity *entityInfo, int group, const std::vector<int>& groupList);
+		void createFromFile(const Map::CEntity *entityInfo, int group, const std::vector<int>& groupList);
 
 		// Servidor de física
 		Physics::CServer* _server;
 
+		Physics::CGeometryFactory* _geometryFactory;
+
+		Physics::CMaterialManager* _materialManager;
+
 		// Actor que representa la entidad física en PhysX
-		physx::PxRigidActor *_actor;
+		//physx::PxRigidActor *_actor;
+
+		Physics::CStaticEntity _physicEntity;
 
 		//Physics::CEntity _physicEntity;
 
@@ -176,11 +159,9 @@ namespace Logic
 
 		bool _sleepUntil;
 
-		bool _isTrigger;
+	}; // class CPhysicStaticEntity
 
-	}; // class CPhysicEntity
-
-	REG_FACTORY(CPhysicEntity);
+	REG_FACTORY(CPhysicStaticEntity);
 
 } // namespace Logic
 
