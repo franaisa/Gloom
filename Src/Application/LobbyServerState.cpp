@@ -117,7 +117,7 @@ namespace Application {
 
 	//--------------------------------------------------------
 
-	bool CLobbyServerState::keyPressed(GUI::TKey key)
+	bool CLobbyServerState::keyPressed(Input::TKey key)
 	{
 	   return false;
 
@@ -125,15 +125,15 @@ namespace Application {
 
 	//--------------------------------------------------------
 
-	bool CLobbyServerState::keyReleased(GUI::TKey key)
+	bool CLobbyServerState::keyReleased(Input::TKey key)
 	{
 		switch(key.keyId)
 		{
-		case GUI::Key::ESCAPE:
+		case Input::Key::ESCAPE:
 			Net::CManager::getSingletonPtr()->deactivateNetwork();
 			_app->setState("netmenu");
 			break;
-		case GUI::Key::RETURN:
+		case Input::Key::RETURN:
 			doStart();
 			break;
 		default:
@@ -145,7 +145,7 @@ namespace Application {
 
 	//--------------------------------------------------------
 	
-	bool CLobbyServerState::mouseMoved(const GUI::CMouseState &mouseState)
+	bool CLobbyServerState::mouseMoved(const Input::CMouseState &mouseState)
 	{
 		return false;
 
@@ -153,7 +153,7 @@ namespace Application {
 
 	//--------------------------------------------------------
 		
-	bool CLobbyServerState::mousePressed(const GUI::CMouseState &mouseState)
+	bool CLobbyServerState::mousePressed(const Input::CMouseState &mouseState)
 	{
 		return false;
 
@@ -162,7 +162,7 @@ namespace Application {
 	//--------------------------------------------------------
 
 
-	bool CLobbyServerState::mouseReleased(const GUI::CMouseState &mouseState)
+	bool CLobbyServerState::mouseReleased(const Input::CMouseState &mouseState)
 	{
 		return false;
 

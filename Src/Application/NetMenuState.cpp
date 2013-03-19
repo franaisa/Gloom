@@ -102,7 +102,7 @@ namespace Application {
 
 	//--------------------------------------------------------
 
-	bool CNetMenuState::keyPressed(GUI::TKey key)
+	bool CNetMenuState::keyPressed(Input::TKey key)
 	{
 		return false;
 
@@ -110,14 +110,14 @@ namespace Application {
 
 	//--------------------------------------------------------
 
-	bool CNetMenuState::keyReleased(GUI::TKey key)
+	bool CNetMenuState::keyReleased(Input::TKey key)
 	{
 		switch(key.keyId)
 		{
-		case GUI::Key::S:
+		case Input::Key::S:
 			_app->setState("lobbyserver");
 			break;
-		case GUI::Key::C:
+		case Input::Key::C:
 			_app->setState("lobbyclient");
 			break;
 		default:
@@ -129,7 +129,7 @@ namespace Application {
 
 	//--------------------------------------------------------
 	
-	bool CNetMenuState::mouseMoved(const GUI::CMouseState &mouseState)
+	bool CNetMenuState::mouseMoved(const Input::CMouseState &mouseState)
 	{
 		return false;
 
@@ -137,7 +137,7 @@ namespace Application {
 
 	//--------------------------------------------------------
 		
-	bool CNetMenuState::mousePressed(const GUI::CMouseState &mouseState)
+	bool CNetMenuState::mousePressed(const Input::CMouseState &mouseState)
 	{
 		return false;
 
@@ -146,7 +146,7 @@ namespace Application {
 	//--------------------------------------------------------
 
 
-	bool CNetMenuState::mouseReleased(const GUI::CMouseState &mouseState)
+	bool CNetMenuState::mouseReleased(const Input::CMouseState &mouseState)
 	{
 		return false;
 

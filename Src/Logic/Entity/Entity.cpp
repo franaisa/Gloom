@@ -25,8 +25,8 @@ de juego. Es una colección de componentes.
 
 #include "Logic/Messages/MessageTransform.h"
 
-#include "GUI/Server.h"
-#include "GUI/PlayerController.h"
+#include "Input/Server.h"
+#include "Input/PlayerController.h"
 
 
 
@@ -116,7 +116,7 @@ namespace Logic
 		if (isPlayer())
 		{
 			CServer::getSingletonPtr()->setPlayer(this);
-			GUI::CServer::getSingletonPtr()->getPlayerController()->setControlledAvatar(this);
+			Input::CServer::getSingletonPtr()->getPlayerController()->setControlledAvatar(this);
 		}
 
 		// Activamos los componentes
@@ -144,7 +144,7 @@ namespace Logic
 		// debemos realizar
 		if (isPlayer())
 		{
-			GUI::CServer::getSingletonPtr()->getPlayerController()->setControlledAvatar(0);
+			Input::CServer::getSingletonPtr()->getPlayerController()->setControlledAvatar(0);
 			CServer::getSingletonPtr()->setPlayer(0);
 		}
 

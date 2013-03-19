@@ -21,6 +21,7 @@ Contiene la implementación del estado de lobby del cliente.
 #include "Logic/Maps/Map.h"
 
 #include "GUI/Server.h"
+#include "Input\Server.h"
 #include "Logic/Entity/Entity.h"
 #include "Net/Manager.h"
 #include "Net/Cliente.h"
@@ -214,7 +215,7 @@ namespace Application {
 
 	//--------------------------------------------------------
 	
-	bool CLobbyClientState::keyPressed(GUI::TKey key)
+	bool CLobbyClientState::keyPressed(Input::TKey key)
 	{
 	   return false;
 
@@ -222,15 +223,15 @@ namespace Application {
 
 	//--------------------------------------------------------
 
-	bool CLobbyClientState::keyReleased(GUI::TKey key)
+	bool CLobbyClientState::keyReleased(Input::TKey key)
 	{
 		switch(key.keyId)
 		{
-		case GUI::Key::ESCAPE:
+		case Input::Key::ESCAPE:
 			Net::CManager::getSingletonPtr()->deactivateNetwork();
 			_app->setState("netmenu");
 			break;
-		case GUI::Key::RETURN:
+		case Input::Key::RETURN:
 			doStart();
 			break;
 		default:
@@ -242,7 +243,7 @@ namespace Application {
 
 	//--------------------------------------------------------
 	
-	bool CLobbyClientState::mouseMoved(const GUI::CMouseState &mouseState)
+	bool CLobbyClientState::mouseMoved(const Input::CMouseState &mouseState)
 	{
 		return false;
 
@@ -250,7 +251,7 @@ namespace Application {
 
 	//--------------------------------------------------------
 		
-	bool CLobbyClientState::mousePressed(const GUI::CMouseState &mouseState)
+	bool CLobbyClientState::mousePressed(const Input::CMouseState &mouseState)
 	{
 		//CEGUI::System::getSingleton().injectMouseButtonDown(mouseState.);
 		return false;
@@ -260,7 +261,7 @@ namespace Application {
 	//--------------------------------------------------------
 
 
-	bool CLobbyClientState::mouseReleased(const GUI::CMouseState &mouseState)
+	bool CLobbyClientState::mouseReleased(const Input::CMouseState &mouseState)
 	{
 		return false;
 

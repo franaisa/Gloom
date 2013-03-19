@@ -104,7 +104,7 @@ namespace Application {
 
 	//--------------------------------------------------------
 
-	bool CSelectScenario::keyPressed(GUI::TKey key)
+	bool CSelectScenario::keyPressed(Input::TKey key)
 	{
 		return false;
 
@@ -112,15 +112,15 @@ namespace Application {
 
 	//--------------------------------------------------------
 
-	bool CSelectScenario::keyReleased(GUI::TKey key)
+	bool CSelectScenario::keyReleased(Input::TKey key)
 	{
 		switch(key.keyId)
 		{
-		case GUI::Key::NUMBER1:
+		case Input::Key::NUMBER1:
 			return loadScenario("1");
 			//_app->setState("lobbyserver");
 			break;
-		case GUI::Key::NUMBER2:
+		case Input::Key::NUMBER2:
 			return loadScenario("2");
 			//_app->setState("lobbyclient");
 			break;
@@ -133,7 +133,7 @@ namespace Application {
 
 	//--------------------------------------------------------
 	
-	bool CSelectScenario::mouseMoved(const GUI::CMouseState &mouseState)
+	bool CSelectScenario::mouseMoved(const Input::CMouseState &mouseState)
 	{
 		return false;
 
@@ -141,7 +141,7 @@ namespace Application {
 
 	//--------------------------------------------------------
 		
-	bool CSelectScenario::mousePressed(const GUI::CMouseState &mouseState)
+	bool CSelectScenario::mousePressed(const Input::CMouseState &mouseState)
 	{
 		return false;
 
@@ -150,7 +150,7 @@ namespace Application {
 	//--------------------------------------------------------
 
 
-	bool CSelectScenario::mouseReleased(const GUI::CMouseState &mouseState)
+	bool CSelectScenario::mouseReleased(const Input::CMouseState &mouseState)
 	{
 		return false;
 

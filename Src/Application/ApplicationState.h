@@ -19,7 +19,7 @@ aplicacion.
 #define __Application_ApplicationState_H
 
 #include "BaseApplication.h"
-#include "GUI/InputManager.h"
+#include "Input/InputManager.h"
 #include <ctime>
 
 namespace Application 
@@ -36,8 +36,8 @@ namespace Application
 	@author Marco Antonio Gómez Martín & David Llansó
 	@date Julio, 2010
 	*/
-	class CApplicationState : public GUI::CKeyboardListener, 
-							  public GUI::CMouseListener
+	class CApplicationState : public Input::CKeyboardListener, 
+							  public Input::CMouseListener
 	{
 	public:
 		/** 
@@ -102,7 +102,7 @@ namespace Application
 		@return true si el evento ha sido procesado. En este caso 
 		el gestor no llamará a otros listeners.
 		*/
-		virtual bool keyPressed(GUI::TKey key) {return false;}
+		virtual bool keyPressed(Input::TKey key) {return false;}
 		
 		/**
 		Método que será invocado siempre que se termine la pulsación
@@ -116,7 +116,7 @@ namespace Application
 		@return true si el evento ha sido procesado. En este caso 
 		el gestor no llamará a otros listeners.
 		*/
-		virtual bool keyReleased(GUI::TKey key) {return false;}
+		virtual bool keyReleased(Input::TKey key) {return false;}
 
 		// Métodos de CMouseListener
 		
@@ -129,7 +129,7 @@ namespace Application
 		@return true si el evento ha sido procesado. En este caso 
 		el gestor no llamará a otros listeners.
 		*/
-		virtual bool mouseMoved(const GUI::CMouseState &mouseState)
+		virtual bool mouseMoved(const Input::CMouseState &mouseState)
 														{return false;}
 		
 		/**
@@ -141,7 +141,7 @@ namespace Application
 		@return true si el evento ha sido procesado. En este caso 
 		el gestor no llamará a otros listeners.
 		*/
-		virtual bool mousePressed(const GUI::CMouseState &mouseState)
+		virtual bool mousePressed(const Input::CMouseState &mouseState)
 														{return false;}
 
 		/**
@@ -153,7 +153,7 @@ namespace Application
 		@return true si el evento ha sido procesado. En este caso 
 		el gestor no llamará a otros listeners. 
 		*/
-		virtual bool mouseReleased(const GUI::CMouseState &mouseState)
+		virtual bool mouseReleased(const Input::CMouseState &mouseState)
 														{return false;}
 
 	protected:

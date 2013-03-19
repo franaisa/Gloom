@@ -130,7 +130,7 @@ namespace Application {
 
 	//--------------------------------------------------------
 
-	bool CMenuState::keyPressed(GUI::TKey key)
+	bool CMenuState::keyPressed(Input::TKey key)
 	{
 		return false;
 
@@ -138,14 +138,14 @@ namespace Application {
 
 	//--------------------------------------------------------
 
-	bool CMenuState::keyReleased(GUI::TKey key)
+	bool CMenuState::keyReleased(Input::TKey key)
 	{
 		switch(key.keyId)
 		{
-		case GUI::Key::ESCAPE:
+		case Input::Key::ESCAPE:
 			_app->exitRequest();
 			break;
-		case GUI::Key::RETURN:
+		case Input::Key::RETURN:
 			/*
 			if (!Logic::CEntityFactory::getSingletonPtr()->loadBluePrints("blueprints.txt"))
 				return false;
@@ -167,7 +167,7 @@ namespace Application {
 
 	//--------------------------------------------------------
 	
-	bool CMenuState::mouseMoved(const GUI::CMouseState &mouseState)
+	bool CMenuState::mouseMoved(const Input::CMouseState &mouseState)
 	{
 		return false;
 
@@ -175,7 +175,7 @@ namespace Application {
 
 	//--------------------------------------------------------
 		
-	bool CMenuState::mousePressed(const GUI::CMouseState &mouseState)
+	bool CMenuState::mousePressed(const Input::CMouseState &mouseState)
 	{
 		return false;
 
@@ -184,7 +184,7 @@ namespace Application {
 	//--------------------------------------------------------
 
 
-	bool CMenuState::mouseReleased(const GUI::CMouseState &mouseState)
+	bool CMenuState::mouseReleased(const Input::CMouseState &mouseState)
 	{
 		return false;
 
