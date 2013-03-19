@@ -1,22 +1,19 @@
 /**
-@file PhysicEntity.h
+@file PhysicDynamicEntity.h
 
-Contiene la implementación del componente encargado de representar entidades físicas simples,
-que son aquellas representadas mediante un único actor de PhysX. Este componente no sirve
-para representar character controllers.
-
-@see Logic::CPhysicEntity
+@see Logic::CPhysicDynamicEntity
 @see Logic::IComponent
-@see Logic::CPhysicController
 
-@author Antonio Sánchez Ruiz-Granados
-@date Noviembre, 2012
+@author Francisco Aisa García
+@date Marzo, 2013
 */
 
-#include "PhysicEntity.h"
+#include "PhysicDynamicEntity.h"
 #include "Logic/Entity/Entity.h"
 #include "Map/MapEntity.h"
 #include "Physics/Server.h"
+#include "Physics/GeometryFactory.h"
+#include "Physics/MaterialManager.h"
 
 #include "Logic/Messages/MessageKinematicMove.h"
 #include "Logic/Messages/MessageTouched.h"
@@ -35,65 +32,55 @@ using namespace Logic;
 using namespace Physics;
 using namespace physx; 
 
-IMP_FACTORY(CPhysicEntity);
+IMP_FACTORY(CPhysicDynamicEntity);
 
 //---------------------------------------------------------
 
-CPhysicEntity::CPhysicEntity() : IPhysics(), _actor(NULL), _movement(0,0,0), _isTrigger(false)
-{
+CPhysicDynamicEntity::CPhysicDynamicEntity() : _movement(0,0,0),
+											   _inTrigger(false),
+											   _inContact(false),
+											   _sleepUntil(false) {
+
 	_server = CServer::getSingletonPtr();
+	_geometryFactory = Physics::CGeometryFactory::getSingletonPtr();
+	_materialManager = Physics::CMaterialManager::getSingletonPtr();
 }
 
 //---------------------------------------------------------
 
-CPhysicEntity::~CPhysicEntity() 
-{
-	if (_actor) {
-		_server->destroyActor(_actor);
-		_actor = NULL;
-	}
+CPhysicDynamicEntity::~CPhysicDynamicEntity() {
+	// El destructor de _physicEntity ya sabe que hacer
 
 	_server = NULL;
 } 
 
 ////---------------------------------------------------------
 
-bool CPhysicEntity::spawn(Logic::CEntity *entity, CMap *map, const Map::CEntity *entityInfo) 
-{
+bool CPhysicDynamicEntity::spawn(Logic::CEntity *entity, CMap *map, const Map::CEntity *entityInfo) {
 	// Invocar al método de la clase padre
-	if(!IComponent::spawn(entity,map,entityInfo))
-		return false;
-
-	if(entityInfo->hasAttribute("physic_trigger")) {
-		_isTrigger = entityInfo->getBoolAttribute("physic_trigger");
-	}
+	if( !IComponent::spawn(entity,map,entityInfo) ) return false;
 
 	// Crear el objeto físico asociado al componente
-	_actor = createActor(entityInfo);
+	createPhysicEntity(entityInfo);
 
-	_inTrigger=false;
-	_inContact=false;
-	_sleepUntil=false;
 	return true;
 } 
 
 //---------------------------------------------------------
 
-bool CPhysicEntity::accept(CMessage *message)
-{
-	return message->getMessageType() == Message::KINEMATIC_MOVE ||
-		   message->getMessageType() == Message::ACTIVATE ||
-		   message->getMessageType() == Message::DEACTIVATE ||
-		   message->getMessageType() == Message::SET_PHYSIC_POSITION ||
-		   message->getMessageType() == Message::ADD_FORCE_PHYSICS;
+bool CPhysicDynamicEntity::accept(CMessage *message) {
+	Logic::TMessageType msgType = message->getMessageType();
+
+	return msgType == Message::KINEMATIC_MOVE ||
+		   msgType == Message::ACTIVATE ||
+		   msgType == Message::DEACTIVATE ||
+		   msgType == Message::SET_PHYSIC_POSITION ||
+		   msgType == Message::ADD_FORCE_PHYSICS;
 }
 
 //---------------------------------------------------------
 
-void CPhysicEntity::process(CMessage *message)
-{
-	unsigned int nbShapes;
-	PxShape** actorShapes;
+void CPhysicDynamicEntity::process(CMessage *message) {
 	switch(message->getMessageType()) {
 	case Message::KINEMATIC_MOVE:
 		// Acumulamos el vector de desplazamiento para usarlo posteriormente en 
@@ -114,7 +101,8 @@ void CPhysicEntity::process(CMessage *message)
 		}
 	case Message::ADD_FORCE_PHYSICS:
 		if(!((CMessageAddForcePhysics*)message)->getGravity())
-			_actor->setActorFlag(PxActorFlag::eDISABLE_GRAVITY, true);
+			//deprecated
+			//_actor->setActorFlag(PxActorFlag::eDISABLE_GRAVITY, true);
 		addImpulsiveForce( ((CMessageAddForcePhysics*)message)->getForceVector() );
 		break;
 	}
@@ -122,31 +110,28 @@ void CPhysicEntity::process(CMessage *message)
 //---------------------------------------------------------
 
 
-void CPhysicEntity::tick(unsigned int msecs) 
-{
+void CPhysicDynamicEntity::tick(unsigned int msecs) {
 	// Invocar al método de la clase padre (IMPORTANTE)
 	IComponent::tick(msecs);
 
-	// Si es una entidad estática no hacemos nada
-	PxRigidDynamic *dinActor = _actor->isRigidDynamic();
-	if (!dinActor) 
-		return;
-
 	// Actualizar la posición y la orientación de la entidad lógica usando la 
 	// información proporcionada por el motor de física	
-	_entity->setTransform(_server->getActorTransform(dinActor));
+	_entity->setTransform( _physicEntity.getTransform() );
 
 	// Si el objeto físico es cinemático intentamos moverlo de acuerdo 
 	// a los mensajes KINEMATIC_MOVE recibidos 
-	if (_server->isKinematic(dinActor)) {
+	
+	// deprecated
+	// implementar los de movimiento kinematico en el physic entity
+	/*if (_server->isKinematic(dinActor)) {
 		_server->moveKinematicActor(dinActor, _movement);
 		_movement = Vector3::ZERO;
-	} 
+	} */
 }
 
 //---------------------------------------------------------
 
-void CPhysicEntity::readCollisionGroupInfo(const Map::CEntity *entityInfo, int& group, std::vector<int>& groupList) {
+void CPhysicDynamicEntity::readCollisionGroupInfo(const Map::CEntity *entityInfo, int& group, std::vector<int>& groupList) {
 	// Leer el grupo de colisión (por defecto grupo 0)
 	if (entityInfo->hasAttribute("physic_group"))
 		group = entityInfo->getIntAttribute("physic_group");
@@ -172,34 +157,31 @@ void CPhysicEntity::readCollisionGroupInfo(const Map::CEntity *entityInfo, int& 
 
 //---------------------------------------------------------
 
-PxRigidActor* CPhysicEntity::createActor(const Map::CEntity *entityInfo)
-{
-	// Leer el tipo de entidad
+void CPhysicDynamicEntity::createPhysicEntity(const Map::CEntity *entityInfo) {
+	// Leemos el tipo de entidad
 	assert(entityInfo->hasAttribute("physic_entity"));
 	const std::string physicEntity = entityInfo->getStringAttribute("physic_entity");
 	assert((physicEntity == "rigid") || (physicEntity == "plane") || (physicEntity == "fromFile"));
 
+	// Leemos la informacion de grupos de colision
 	int group = 0;
 	std::vector<int> groupList;
 	readCollisionGroupInfo(entityInfo, group, groupList);
 
 	// Crear el tipo de entidad adecuada
-	if (physicEntity == "plane") 
-		return createPlane(entityInfo, group, groupList);
+	//if (physicEntity == "plane") 
+	//	createPlane(entityInfo, group, groupList);
 	
 	if (physicEntity == "rigid") 
-		return createRigid(entityInfo, group, groupList);
+		createRigid(entityInfo, group, groupList);
 	
 	if (physicEntity == "fromFile")
-		return createFromFile(entityInfo, group, groupList);
-
-	return NULL;
+		createFromFile(entityInfo, group, groupList);
 }
 
 //---------------------------------------------------------
 
-PxRigidStatic* CPhysicEntity::createPlane(const Map::CEntity *entityInfo, int group, const std::vector<int>& groupList)
-{
+void CPhysicDynamicEntity::createPlane(const Map::CEntity *entityInfo, int group, const std::vector<int>& groupList) {
 	// La posición de la entidad es un punto del plano
 	const Vector3 point = _entity->getPosition();
 	
@@ -208,14 +190,15 @@ PxRigidStatic* CPhysicEntity::createPlane(const Map::CEntity *entityInfo, int gr
 	const Vector3 normal = entityInfo->getVector3Attribute("physic_normal");
  
 	// Crear el plano
-	//return _server->createPlane(point, normal, group, this);
-	return _server->createPlane(point, normal, group, groupList, this);
+	//_physicEntity.load( point, _geometryFactory->createPlane(point, normal), _materialManager->getMaterial(MaterialType::eDEFAULT),
+						
+
+	//return _server->createPlane(point, normal, group, groupList, this);
 }
 
 //---------------------------------------------------------
 
-PxRigidActor* CPhysicEntity::createRigid(const Map::CEntity *entityInfo, int group, const std::vector<int>& groupList)
-{
+void CPhysicDynamicEntity::createRigid(const Map::CEntity *entityInfo, int group, const std::vector<int>& groupList) {
 	// Leer la posición de la entidad
 	const Vector3 position = _entity->getPosition();
 	
@@ -230,71 +213,58 @@ PxRigidActor* CPhysicEntity::createRigid(const Map::CEntity *entityInfo, int gro
 	assert(physicShape == "box" || physicShape == "sphere");
 
 	// Leer si es un trigger (por defecto no)
-	bool trigger = false;
+	bool isTrigger = false;
 	if (entityInfo->hasAttribute("physic_trigger"))
-		trigger = entityInfo->getBoolAttribute("physic_trigger");
+		isTrigger = entityInfo->getBoolAttribute("physic_trigger");
 
-	if (physicType == "static") {
-		if (physicShape == "box") {
-			// Leer las dimensiones de la caja
-			assert(entityInfo->hasAttribute("physic_dimensions"));
-			const Vector3 physicDimensions = entityInfo->getVector3Attribute("physic_dimensions");
-			
-			// Crear una caja estática
-			return _server->createStaticBox(position, physicDimensions, trigger, group, groupList, this);
-		}
-		else if (physicShape == "sphere") {
-			assert(entityInfo->hasAttribute("physic_radius"));
-			const float physicRadius = entityInfo->getFloatAttribute("physic_radius");
-			
-			// Crear una esfera dinámica
-			return _server->createStaticSphere(position, physicRadius, trigger, group, groupList, this);
-		}
-	} else {
-		// Leer la masa (por defecto 0)
-		float mass = 0;
-		if (entityInfo->hasAttribute("physic_mass"))
-			mass = entityInfo->getFloatAttribute("physic_mass");
+
+	// Leer la masa (por defecto 0)
+	float mass = 0;
+	if (entityInfo->hasAttribute("physic_mass"))
+		mass = entityInfo->getFloatAttribute("physic_mass");
 		
-		// Leer si se trata de un actor cinemático
-		bool kinematic = (physicType == "kinematic");
+	// Leer si se trata de un actor cinemático
+	bool isKinematic = (physicType == "kinematic");
 
-		if (physicShape == "box") {
-			// Leer las dimensiones de la caja
-			assert(entityInfo->hasAttribute("physic_dimensions"));
-			const Vector3 physicDimensions = entityInfo->getVector3Attribute("physic_dimensions");
-			
-			// Crear una caja dinámica
-			return _server->createDynamicBox(position, physicDimensions, mass, kinematic, trigger, group, groupList, this);
-		}
-		else if (physicShape == "sphere") {
-			assert(entityInfo->hasAttribute("physic_radius"));
-			const float physicRadius = entityInfo->getFloatAttribute("physic_radius");
-			
-			// Crear una esfera dinámica
-			return _server->createDynamicSphere(position, physicRadius, mass, kinematic, trigger, group, groupList, this);
-		}
+	if (physicShape == "box") {
+		// Leer las dimensiones de la caja
+		assert(entityInfo->hasAttribute("physic_dimensions"));
+		const Vector3 physicDimensions = entityInfo->getVector3Attribute("physic_dimensions");
+
+		// HAY QUE DESACOPLAR!!! deprecated
+		PxBoxGeometry box = _geometryFactory->createBox(physicDimensions);
+		PxMaterial* defaultMaterial = _materialManager->getMaterial(MaterialType::eDEFAULT);
+		float density = mass / (physicDimensions.x * physicDimensions.y * physicDimensions.z);
+		
+		_physicEntity.load(position, box, *defaultMaterial, density, isKinematic, isTrigger, group, groupList, this);
 	}
+	else if (physicShape == "sphere") {
+		assert(entityInfo->hasAttribute("physic_radius"));
+		const float physicRadius = entityInfo->getFloatAttribute("physic_radius");
+			
+		// HAY QUE DESACOPLAR!! deprecated
+		PxSphereGeometry sphere = _geometryFactory->createSphere(physicRadius);
+		PxMaterial* defaultMaterial = _materialManager->getMaterial(MaterialType::eDEFAULT);
+		float density = mass / mass / (4.0/3.0 * 3.141592653589793 * physicRadius * physicRadius * physicRadius);
 
-	return NULL;
+		_physicEntity.load(position, sphere, *defaultMaterial, density, isKinematic, isTrigger, group, groupList, this);
+	}
 }
 
 //---------------------------------------------------------
 
-PxRigidActor* CPhysicEntity::createFromFile(const Map::CEntity *entityInfo, int group, const std::vector<int>& groupList)
-{
+void CPhysicDynamicEntity::createFromFile(const Map::CEntity *entityInfo, int group, const std::vector<int>& groupList) {
 	// Leer la ruta del fichero RepX
 	assert(entityInfo->hasAttribute("physic_file"));
 	const std::string file = entityInfo->getStringAttribute("physic_file");
 
 	// Crear el actor a partir del fichero RepX
-	return _server->createFromFile(file, group, groupList, this);
+	_physicEntity.load(file, group, groupList, this);
 }
 
 //---------------------------------------------------------
 
-void CPhysicEntity::onTrigger(IPhysics *otherComponent, bool enter)
-{
+void CPhysicDynamicEntity::onTrigger(IPhysics *otherComponent, bool enter) {
 	// Construimos un mensaje de tipo TOUCHED o UNTOUCHED y lo enviamos a 
 	// todos los componentes de la entidad. 
 
@@ -313,7 +283,7 @@ void CPhysicEntity::onTrigger(IPhysics *otherComponent, bool enter)
 
 //---------------------------------------------------------
 
-void CPhysicEntity::onContact (IPhysics *otherComponent,bool enter) {
+void CPhysicDynamicEntity::onContact (IPhysics *otherComponent,bool enter) {
 	std::cout << "contactan con la entidad " << _entity->getName() << std::endl;
 	if (enter) {
 		_inContact=true;
@@ -332,72 +302,31 @@ void CPhysicEntity::onContact (IPhysics *otherComponent,bool enter) {
 //---------------------------------------------------------
 
 
-void CPhysicEntity::onShapeHit (const PxControllerShapeHit &hit)
-{
+void CPhysicDynamicEntity::onShapeHit (const PxControllerShapeHit &hit) {
 	//std::cout << _entity->getName() << " le llega el contacto con " << ((IPhysics*)(hit.controller->getUserData()))->getEntity()->getName() << std::endl;
 
 }
 
 //---------------------------------------------------------
 
-void CPhysicEntity::setPhysicPosition(const Vector3 &position, bool makeConversionToLogicWorld) {
-	if( _actor->isRigidBody() )
-		_server->setRigidBodyPosition( static_cast<PxRigidBody*>(_actor), position, makeConversionToLogicWorld );
+void CPhysicDynamicEntity::setPhysicPosition(const Vector3 &position, bool makeConversionToLogicWorld) {
+	_physicEntity.setPosition(position, makeConversionToLogicWorld);
 }
 
 //---------------------------------------------------------
 
-void CPhysicEntity::addImpulsiveForce(const Vector3& force) {
-	if( _actor->isRigidDynamic() ) {
-		_server->addImpulsiveForce( static_cast<PxRigidDynamic*>(_actor), force ); 
-	}
-}
-
-
-//---------------------------------------------------------
-
-void CPhysicEntity::deactivateSimulation() {
-	// Desactivamos todos los shapes del componente por completo en PhysX
-	// Para ello, obtenemos todos sus shapes y ponemos los flags a false
-
-	int nbShapes = _actor->getNbShapes();
-	PxShape** actorShapes = new PxShape* [nbShapes];
-	_actor->getShapes(actorShapes, nbShapes);
-	for(int i = 0; i < nbShapes; ++i) {
-		if(_isTrigger) {
-			// Desactivamos la shape como trigger
-			actorShapes[i]->setFlag(PxShapeFlag::eTRIGGER_SHAPE, false);
-		}
-
-		// Esta shape no tomara parte en barridos, raycasts...
-		actorShapes[i]->setFlag(PxShapeFlag::eSCENE_QUERY_SHAPE, false);
-		// Esta shape no entrara dentro de la simulacion de fisicas
-		actorShapes[i]->setFlag(PxShapeFlag::eSIMULATION_SHAPE , false);
-	}
-
-	delete [] actorShapes;
+void CPhysicDynamicEntity::addImpulsiveForce(const Vector3& force) {
+	_physicEntity.addForce(force, ForceMode::eIMPULSE);
 }
 
 //---------------------------------------------------------
 
-void CPhysicEntity::activateSimulation() {
-	// Activamos todos los shapes del componente por completo en PhysX
-	// Para ello, obtenemos todos sus shapes y ponemos los flags a true
+void CPhysicDynamicEntity::deactivateSimulation() {
+	_physicEntity.deactivateSimulation();
+}
 
-	int nbShapes = _actor->getNbShapes();
-	PxShape** actorShapes = new PxShape* [nbShapes];
-	_actor->getShapes(actorShapes, nbShapes);
-	for(int i = 0; i < nbShapes; ++i) {
-		if(_isTrigger) {
-			// Volvemos a activar la shape como trigger
-			actorShapes[i]->setFlag(PxShapeFlag::eTRIGGER_SHAPE, true);
-		}
+//---------------------------------------------------------
 
-		// Esta shape tomara parte en barridos, raycasts...
-		actorShapes[i]->setFlag(PxShapeFlag::eSCENE_QUERY_SHAPE, true);
-		// Esta shape entrara dentro de la simulacion de fisicas
-		actorShapes[i]->setFlag(PxShapeFlag::eSIMULATION_SHAPE , true);
-	}
-
-	delete [] actorShapes;
+void CPhysicDynamicEntity::activateSimulation() {
+	_physicEntity.activateSimulation();
 }

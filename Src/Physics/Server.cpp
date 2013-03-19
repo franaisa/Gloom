@@ -17,6 +17,8 @@ Contiene la implementación del servidor de física.
 #include "Logic/Entity/Entity.h"
 #include "Map/MapEntity.h"
 #include "Fluid.h"
+#include "MaterialManager.h"
+#include "GeometryFactory.h"
 
 #include <assert.h>
 #include <algorithm>
@@ -179,6 +181,9 @@ CServer::~CServer()
 		delete _errorManager;
 		_errorManager = NULL;
 	}
+
+	Physics::CGeometryFactory::Release();
+	Physics::CMaterialManager::Release();
 } 
 
 //--------------------------------------------------------
@@ -189,14 +194,18 @@ bool CServer::Init()
 		_instance = new CServer();
 	}
 
+	if (!Physics::CGeometryFactory::Init())
+		return false;
+
+	if (!Physics::CMaterialManager::Init())
+		return false;
 
 	return true;
 } 
 
 //--------------------------------------------------------
 
-void CServer::Release()
-{
+void CServer::Release() {
 	if(_instance) {
 		delete _instance;
 		_instance = NULL;
@@ -230,7 +239,7 @@ PxFilterFlags customFilterShader(PxFilterObjectAttributes attributes0, PxFilterD
 
 //--------------------------------------------------------
 
-void setupFiltering(PxRigidActor* actor, int group, const std::vector<int>& groupList) {
+void CServer::setupFiltering(PxRigidActor* actor, int group, const std::vector<int>& groupList) {
 	// El grupo de colision equivale al numero de desplazamientos que podemos realizar,
 	// que en nuestro caso son 32 debido a que tenemos un entero de 32 bits.
 	PxU32 filterGroup = (1 << group);
@@ -633,87 +642,6 @@ bool CServer::isKinematic(const PxRigidDynamic *actor) {
 	assert(actor);
 
 	return actor->getRigidDynamicFlags() & PxRigidDynamicFlag::eKINEMATIC;
-}
-
-//--------------------------------------------------------
-
-PxCapsuleController* CServer::createCapsuleController(const Vector3 &position, int group, const std::vector<int>& groupList, float radius, 
-	                                                  float height, const CPhysicController *component) {
-	assert(_scene);
-
-	// Nota: PhysX coloca el sistema de coordenadas local en el centro de la cápsula, mientras
-	// que la lógica asume que el origen del sistema de coordenadas está en los piés del 
-	// jugador. Para unificar necesitamos realizar una traslación en el eje Y.
-	// Desafortunadamente, el descriptor que se usa para crear los controllers no permite
-	// definir esta transformación local (que sí permite al crear un actor), por lo que
-	// tendremos que realizar la traslación nosotros cada vez. 
-
-	// Transformación entre el sistema de coordenadas lógico y el de PhysX
-	float offsetY = height / 2.0f + radius;
-	PxVec3 pos = Vector3ToPxVec3(position + Vector3(0, offsetY, 0));
-	
-	// Crear descriptor del controller
-	PxCapsuleControllerDesc desc;
-	desc.position = PxExtendedVec3(pos.x, pos.y, pos.z);
-	desc.height = height;
-	desc.radius = radius;
-	desc.material = _defaultMaterial;
-	desc.climbingMode = PxCapsuleClimbingMode::eEASY;
-	//desc.slopeLimit = 0.707f;
-	desc.callback = _collisionManager;   // Establecer gestor de colisiones
-	desc.userData = (void *) component;  // Anotar el componente lógico asociado al controller
-
-	PxCapsuleController *controller = (PxCapsuleController *)
-		 _controllerManager->createController(*_physics, _scene, desc);
-	
-	// Anotar el componente lógico asociado al actor dentro del controller (No es automático)
-	controller->getActor()->userData = (void *) component;
-
-	// Establecer el grupo de colisión
-
-	PxSetGroup(*controller->getActor(), group);
-
-	setupFiltering(controller->getActor(), group, groupList);
-
-	return controller;
-}
-
-//--------------------------------------------------------
-
-unsigned CServer::moveController(PxController *controller, const Vector3 &movement, unsigned int msecs) {
-	assert(_scene);
-
-	// Mover el character controller y devolver los flags de colisión
-	PxVec3 disp = Vector3ToPxVec3(movement);
-	float minDist = 0.01f;
-	float elapsedTime = msecs / 1000.0f;
-	PxControllerFilters filters;
-	PxObstacleContext *obstacles = NULL;
-	return controller->move(disp, minDist, elapsedTime, filters, obstacles);
-}
-
-//--------------------------------------------------------
-
-Vector3 CServer::getControllerPosition(const PxCapsuleController *controller) {
-	assert(_scene);
-
-	// Antes de devolver la posición del controller debemos transformar entre el 
-	// sistema de coordenadas de PhysX y el de la lógica
-	float offsetY = controller->getHeight() / 2.0f + controller->getRadius();
-	Vector3 pos = PxExtendedVec3ToVector3(controller->getPosition());
-	return pos - Vector3(0, offsetY, 0);
-}
-
-//--------------------------------------------------------
-
-void CServer::setControllerPosition(PxCapsuleController *controller, const Vector3 &position) {
-	assert(_scene);
-	// Transformación entre el sistema de coordenadas lógico y el de PhysX
-	float offsetY = controller->getHeight() / 2.0f + controller->getRadius();
-	PxVec3 pos = Vector3ToPxVec3(position + Vector3(0, offsetY, 0));
-	PxExtendedVec3 posicionPhysics(pos.x,pos.y,pos.z);
-	controller->setPosition(posicionPhysics);
-
 }
 
 //--------------------------------------------------------
