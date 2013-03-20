@@ -15,6 +15,8 @@ Contiene la implementación de la clase principal de audio, llevará el control de
 
 #include "Server.h"
 
+#include "Logic\Entity\Entity.h"
+
 #include <cassert>
 #include <iostream>
 
@@ -25,7 +27,9 @@ namespace Audio
 	CServer::CServer()
 	{
 		assert(!_instance && "Segunda inicialización de Graphics::CServer no permitida!");
-
+		_doppler=0.00000001f;
+		_rolloff=0.00000001f;
+		_soundAvatar=NULL;
 		_instance = this;
 
 	} // CServer
@@ -82,7 +86,11 @@ namespace Audio
 		//Iniciamos
 		result = _system->init(100, FMOD_INIT_NORMAL, 0);
 		ERRCHECK(result);
+		
+		//Configuración 3D, el parámetro central es el factor de distancia (FMOD trabaja en metros/segundos)
+		_system->set3DSettings(_doppler,1.0,_rolloff);
 
+		//Cargamos la banda sonora del juego
 		playLoopSound("media/audio/themeGloom.wav", "theme");
 
 		return true;
@@ -101,6 +109,24 @@ namespace Audio
 
 	void CServer::tick(unsigned int secs) 
 	{
+		//Si hay un player con el que actualizarnos, seteamos la nueva posición
+		if(_soundAvatar){
+			std::cout << "LE DIGO AL SERVER LA POSICION DEL PLAYER EN CADA TICK" << std::endl;
+			Vector3 positionAvatar=_soundAvatar->getPosition();
+
+			FMOD_VECTOR
+				listenerPos = {positionAvatar.x,positionAvatar.y,positionAvatar.z}, // posición del listener
+				listenerVel = {0,0,0}, // velocidad
+				up = {0,1,0},          // vector up: hacia la “coronilla”
+				at = {0,0,1};          // vector at: hacia donde se mira
+
+			// se coloca el listener
+			_system->set3DListenerAttributes(0,&listenerPos, &listenerVel,
+                                     &up, &at);
+		}
+
+
+		//Actualizamos el sistema
 		_system->update();
 	} // tick
 	//--------------------------------------------------------
@@ -114,7 +140,7 @@ namespace Audio
 	}//ERRCHECK
 	//--------------------------------------------------------
 
-	void CServer::playSound(char* rutaSonido, std::string id){
+	void CServer::playSound(char* rutaSonido, const std::string& id){
 		//Carga del sonido
 		Sound *sound;
 		FMOD_RESULT result = _system->createSound(
@@ -150,7 +176,7 @@ namespace Audio
 	}//playSound
 	//--------------------------------------------------------
 
-	void CServer::playLoopSound(char* rutaSonido, std::string id){
+	void CServer::playLoopSound(char* rutaSonido, const std::string& id){
 		//Carga del sonido
 		Sound *sound;
 		FMOD_RESULT result = _system->createSound(
@@ -188,7 +214,7 @@ namespace Audio
 	}//playLoopSound
 	//--------------------------------------------------------
 
-	void CServer::stopSound(std::string id){
+	void CServer::stopSound(const std::string& id){
 		SoundChannelMap::const_iterator itMap = _soundChannel.begin();
 		SoundChannelMap::const_iterator itErase;
 		bool mapErase = false;
@@ -212,7 +238,8 @@ namespace Audio
 				itMap->second->stop();
 		}
 		_soundChannel.clear();
-	}//stopSound
+	}//stopAllSounds
 	//--------------------------------------------------------
+
 
 } // namespace Audio

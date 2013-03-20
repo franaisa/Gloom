@@ -35,7 +35,7 @@ namespace Application {
 
 	C3DApplication::C3DApplication() : CBaseApplication()
 	{
-		_timerAudio=500;
+		_timerAudio=100;
 		_acumAudio=0;
 	} // C3DApplication
 

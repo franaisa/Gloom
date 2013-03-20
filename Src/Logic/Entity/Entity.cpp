@@ -28,7 +28,7 @@ de juego. Es una colección de componentes.
 #include "GUI/Server.h"
 #include "GUI/PlayerController.h"
 
-
+#include "../../Audio/Server.h"
 
 namespace Logic 
 {
@@ -113,10 +113,13 @@ namespace Logic
 		// y nos registramos para que nos informen
 		// de los movimientos que debemos realizar
 
+		//Ademas como el sonido necesita saber la posición para actualizarse lo seteamos tambien
+
 		if (isPlayer())
 		{
 			CServer::getSingletonPtr()->setPlayer(this);
 			GUI::CServer::getSingletonPtr()->getPlayerController()->setControlledAvatar(this);
+			Audio::CServer::getSingletonPtr()->setSoundAvatar(this);
 		}
 
 		// Activamos los componentes
