@@ -10,10 +10,10 @@ Explotion CGraphics
 Rocket CGraphics CPhysicDynamicEntity CRocketController
 Lava CGraphics CPhysicStaticEntity CLava
 ContenedorLava CGraphics CPhysicStaticEntity
-Elevator CGraphics CPhysicEntity CElevator
-ElevatorTrigger CPhysicEntity CElevatorTrigger
-Spike CGraphics CPhysicEntity CSpike
-Hacksaw CGraphics CPhysicEntity CHacksaw
+Elevator CGraphics CPhysicDynamicEntity CElevator
+ElevatorTrigger CPhysicDynamicEntity CElevatorTrigger
+Spike CGraphics CPhysicDynamicEntity CSpike
+Hacksaw CGraphics CPhysicDynamicEntity CHacksaw
 SpotLight CLight CGraphics
 DirectionalLight CLight CGraphics
 PointLight CLight CGraphics
