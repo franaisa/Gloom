@@ -148,6 +148,32 @@ namespace Physics {
 
 	//________________________________________________________________________
 
+	bool CDynamicEntity::isKinematic() {
+		return _dynamicActor->getRigidDynamicFlags() & PxRigidDynamicFlag::eKINEMATIC;
+	}
+
+	//________________________________________________________________________
+
+	void CDynamicEntity::move(const Matrix4& transform) {
+		assert( isKinematic() );
+
+		// Mover el actor tras transformar el destino a coordenadas lógicas
+		_dynamicActor->setKinematicTarget( Matrix4ToPxTransform(transform) );
+	}
+
+	//________________________________________________________________________
+
+	void CDynamicEntity::move(const Vector3& displ) {
+		assert( isKinematic() );
+
+		// Desplazar el actor
+		PxTransform transform = _dynamicActor->getGlobalPose();
+		transform.p += Vector3ToPxVec3(displ);
+		_dynamicActor->setKinematicTarget(transform);
+	}
+
+	//________________________________________________________________________
+
 	void CDynamicEntity::setPosition(const Vector3& position, bool makeConversionToLogicWorld) {
 		if(makeConversionToLogicWorld) {
 			std::cout << "Colocando entidad fisica con reposicionamiento" << std::endl;

@@ -86,6 +86,13 @@ namespace Physics {
 
 		void disableGravity(bool state);
 
+		bool isKinematic();
+
+		// Movimiento kinematico. El actor debe ser dinamico y kinematico (en caso contrario peta).
+		void move(const Matrix4 &transform);
+
+		void move(const Vector3& displ);
+
 		//activate/deactivate gravity
 
 		// Deberiamos tener un SET TRANSFORM Y UN GET POSITION!!!!!!!!!!!!!!!!

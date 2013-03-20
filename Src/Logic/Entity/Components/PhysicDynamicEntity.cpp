@@ -128,15 +128,12 @@ void CPhysicDynamicEntity::tick(unsigned int msecs) {
 	// información proporcionada por el motor de física	
 	_entity->setTransform( _physicEntity.getTransform() );
 
-	// Si el objeto físico es cinemático intentamos moverlo de acuerdo 
+	// Si el objeto físico es kinematico intentamos moverlo de acuerdo 
 	// a los mensajes KINEMATIC_MOVE recibidos 
-	
-	// deprecated
-	// implementar los de movimiento kinematico en el physic entity
-	/*if (_server->isKinematic(dinActor)) {
-		_server->moveKinematicActor(dinActor, _movement);
+	if ( _physicEntity.isKinematic() ) {
+		_physicEntity.move(_movement);
 		_movement = Vector3::ZERO;
-	} */
+	}
 }
 
 //---------------------------------------------------------
