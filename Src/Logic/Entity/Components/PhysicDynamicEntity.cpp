@@ -231,7 +231,7 @@ void CPhysicDynamicEntity::createRigid(const Map::CEntity *entityInfo, int group
 		// HAY QUE DESACOPLAR!! deprecated
 		Physics::SphereGeometry sphere = _geometryFactory->createSphere(physicRadius);
 		Physics::Material* defaultMaterial = _materialManager->getMaterial(MaterialType::eDEFAULT);
-		float density = mass / (4.0/3.0 * 3.141592653589793 * physicRadius * physicRadius * physicRadius);
+		float density = mass / (4.0/3.0 * Math::PI * physicRadius * physicRadius * physicRadius);
 
 		_physicEntity.load(position, sphere, *defaultMaterial, density, isKinematic, isTrigger, group, groupList, this);
 	}
