@@ -35,7 +35,7 @@ using namespace physx;
 
 namespace Physics {
 
-	CEntity::CEntity() {
+	CEntity::CEntity() : _isTrigger(false) {
 		// Obtenemos la sdk de physics y comprobamos que ha sido inicializada
 		_physxSDK = Physics::CServer::getSingletonPtr()->getPhysxSDK();
 		assert(_physxSDK && "No se ha inicializado physX");
@@ -111,7 +111,7 @@ namespace Physics {
 		PxShape** actorShapes = new PxShape* [nbShapes];
 		_actor->getShapes(actorShapes, nbShapes);
 		for(int i = 0; i < nbShapes; ++i) {
-			if(actorShapes[i]->getFlags() & PxShapeFlag::eTRIGGER_SHAPE) {
+			if(_isTrigger) {
 				// Volvemos a activar la shape como trigger
 				actorShapes[i]->setFlag(PxShapeFlag::eTRIGGER_SHAPE, true);
 			}
@@ -135,7 +135,7 @@ namespace Physics {
 		PxShape** actorShapes = new PxShape* [nbShapes];
 		_actor->getShapes(actorShapes, nbShapes);
 		for(int i = 0; i < nbShapes; ++i) {
-			if(actorShapes[i]->getFlags() & PxShapeFlag::eTRIGGER_SHAPE) {
+			if(_isTrigger) {
 				// Desactivamos la shape como trigger
 				actorShapes[i]->setFlag(PxShapeFlag::eTRIGGER_SHAPE, false);
 			}

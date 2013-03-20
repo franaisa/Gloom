@@ -58,7 +58,6 @@ namespace Logic {
 		Vector3 entityPosition = _entity->getPosition();
 		Vector3 myPosition = entityPosition + ( Math::getDirection( _entity->getOrientation() )* (_capsuleRadius) );
 		myPosition.y = entityPosition.y + _heightShoot;
-		rocket->setPosition(myPosition);
 
 		//enviamos por red la creación de la entidad
 		if(Net::CManager::getSingletonPtr()->imServer())
@@ -67,7 +66,7 @@ namespace Logic {
 		// Mensaje para situar el collider fisico del cohete en la posicion de disparo.
 		Logic::CMessageSetPhysicPosition* msg = new Logic::CMessageSetPhysicPosition();
 		msg->setPosition(myPosition);
-		msg->setMakeConversion(true);
+		msg->setMakeConversion(false);
 		rocket->emitMessage(msg);
 
 		// Mandar mensaje add force

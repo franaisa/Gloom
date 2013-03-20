@@ -160,9 +160,8 @@ void CPhysicStaticEntity::createPlane(const Map::CEntity *entityInfo, int group,
 	assert(entityInfo->hasAttribute("physic_normal"));
 	const Vector3 normal = entityInfo->getVector3Attribute("physic_normal");
  
-	// DESACOPLAR!!! deprecated
-	PxPlane plane = _geometryFactory->createPlane(point, normal);
-	PxMaterial* defaultMaterial = _materialManager->getMaterial(MaterialType::eDEFAULT);
+	Physics::PlaneGeometry plane = _geometryFactory->createPlane(point, normal);
+	Physics::Material* defaultMaterial = _materialManager->getMaterial(MaterialType::eDEFAULT);
 
 	_physicEntity.load(plane, *defaultMaterial, group, groupList, this);
 }
@@ -193,19 +192,17 @@ void CPhysicStaticEntity::createRigid(const Map::CEntity *entityInfo, int group,
 		assert(entityInfo->hasAttribute("physic_dimensions"));
 		const Vector3 physicDimensions = entityInfo->getVector3Attribute("physic_dimensions");
 
-		// HAY QUE DESACOPLAR!!! deprecated
-		PxBoxGeometry box = _geometryFactory->createBox(physicDimensions);
-		PxMaterial* defaultMaterial = _materialManager->getMaterial(MaterialType::eDEFAULT);
+		Physics::BoxGeometry box = _geometryFactory->createBox(physicDimensions);
+		Physics::Material* defaultMaterial = _materialManager->getMaterial(MaterialType::eDEFAULT);
 		
 		_physicEntity.load(position, box, *defaultMaterial, isTrigger, group, groupList, this);
 	}
 	else if (physicShape == "sphere") {
 		assert(entityInfo->hasAttribute("physic_radius"));
 		const float physicRadius = entityInfo->getFloatAttribute("physic_radius");
-			
-		// HAY QUE DESACOPLAR!! deprecated
-		PxSphereGeometry sphere = _geometryFactory->createSphere(physicRadius);
-		PxMaterial* defaultMaterial = _materialManager->getMaterial(MaterialType::eDEFAULT);
+		
+		Physics::SphereGeometry sphere = _geometryFactory->createSphere(physicRadius);
+		Physics::Material* defaultMaterial = _materialManager->getMaterial(MaterialType::eDEFAULT);
 
 		_physicEntity.load(position, sphere, *defaultMaterial, isTrigger, group, groupList, this);
 	}

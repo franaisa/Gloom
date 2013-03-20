@@ -20,6 +20,8 @@ namespace physx {
 // Namespace que contiene las clases relacionadas con la parte física. 
 namespace Physics {
 
+	typedef physx::PxMaterial Material;
+
 	enum MaterialType {
 		eDEFAULT
 	};

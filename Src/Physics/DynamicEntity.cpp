@@ -56,6 +56,8 @@ namespace Physics {
 
 		assert(_scene);
 
+		_isTrigger = trigger;
+
 		// Creamos una esfera dinámica
 		PxTransform globalPose( Vector3ToPxVec3(position) );
 		
@@ -142,8 +144,42 @@ namespace Physics {
 
 	//________________________________________________________________________
 
+	void CDynamicEntity::disableGravity(bool state) {
+		_dynamicActor->setActorFlag(PxActorFlag::eDISABLE_GRAVITY, state);
+	}
+
+	//________________________________________________________________________
+
+	bool CDynamicEntity::isKinematic() {
+		return _dynamicActor->getRigidDynamicFlags() & PxRigidDynamicFlag::eKINEMATIC;
+	}
+
+	//________________________________________________________________________
+
+	void CDynamicEntity::move(const Matrix4& transform) {
+		assert( isKinematic() );
+
+		// Mover el actor tras transformar el destino a coordenadas lógicas
+		_dynamicActor->setKinematicTarget( Matrix4ToPxTransform(transform) );
+	}
+
+	//________________________________________________________________________
+
+	void CDynamicEntity::move(const Vector3& displ) {
+		assert( isKinematic() );
+
+		// Desplazar el actor
+		PxTransform transform = _dynamicActor->getGlobalPose();
+		transform.p += Vector3ToPxVec3(displ);
+		_dynamicActor->setKinematicTarget(transform);
+	}
+
+	//________________________________________________________________________
+
 	void CDynamicEntity::setPosition(const Vector3& position, bool makeConversionToLogicWorld) {
 		if(makeConversionToLogicWorld) {
+			std::cout << "Colocando entidad fisica con reposicionamiento" << std::endl;
+
 			// Transformación entre el sistema de coordenadas lógico y el de PhysX
 
 			// En primer lugar obtenemos todas las formas del actor y calculamos el punto medio
@@ -188,6 +224,8 @@ namespace Physics {
 			_actor->setGlobalPose( PxTransform( PxVec3(position.x, position.y + averageYPosition, position.z) ) );
 		}
 		else {
+			std::cout << "Colocando entidad fisica sin reposicionamiento" << std::endl;
+
 			_actor->setGlobalPose( PxTransform( PxVec3(position.x, position.y, position.z) ) );
 		}
 	}
