@@ -84,6 +84,8 @@ namespace Physics {
 
 		void addTorque(const Vector3& forceVector, ForceMode forceMode = ForceMode::eFORCE, bool autowake = true);
 
+		void disableGravity(bool state);
+
 		//activate/deactivate gravity
 
 		// Deberiamos tener un SET TRANSFORM Y UN GET POSITION!!!!!!!!!!!!!!!!

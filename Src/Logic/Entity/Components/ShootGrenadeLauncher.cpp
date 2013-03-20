@@ -56,14 +56,13 @@ namespace Logic {
 
 		// Spawneamos la granada justo delante del jugador y a la altura de disparo que corresponda
 		Vector3 entityPosition = _entity->getPosition();
-		Vector3 myPosition = entityPosition + ( Math::getDirection( _entity->getOrientation() )* (_capsuleRadius) );
+		Vector3 myPosition = entityPosition + ( Math::getDirection( _entity->getOrientation() ) * _capsuleRadius );
 		myPosition.y = entityPosition.y + _heightShoot;
-		grenade->setPosition(myPosition);
 
 		// Mensaje para situar el collider fisico de la granada en la posicion de disparo.
 		Logic::CMessageSetPhysicPosition* msg = new Logic::CMessageSetPhysicPosition();
 		msg->setPosition(myPosition);
-		msg->setMakeConversion(true);
+		msg->setMakeConversion(false);
 		grenade->emitMessage(msg);
 		
 		if(Net::CManager::getSingletonPtr()->imServer())
@@ -71,7 +70,7 @@ namespace Logic {
 
 		// Mandar mensaje add force
 		Logic::CMessageAddForcePhysics* forceMsg = new Logic::CMessageAddForcePhysics();
-		forceMsg->setForceVector( Math::getDirection( _entity->getOrientation()) * _shootForce );
+		forceMsg->setForceVector( Math::getDirection( _entity->getOrientation() ) * _shootForce );
 		forceMsg->setGravity(true);
 		grenade->emitMessage(forceMsg);
 

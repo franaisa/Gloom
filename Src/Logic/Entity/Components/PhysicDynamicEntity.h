@@ -117,11 +117,6 @@ namespace Logic {
 		información del mapa.
 		*/
 		void createPhysicEntity(const Map::CEntity *entityInfo);
-
-		/**
-		Crea un plano estático a partir de la información de mapa. 
-		*/
-		void createPlane(const Map::CEntity *entityInfo, int group, const std::vector<int>& groupList);
 				
 		/**
 		Crea una entidad rígida (estática, dinámica o cinemática) a partir de la información de mapa. 

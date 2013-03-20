@@ -142,8 +142,16 @@ namespace Physics {
 
 	//________________________________________________________________________
 
+	void CDynamicEntity::disableGravity(bool state) {
+		_dynamicActor->setActorFlag(PxActorFlag::eDISABLE_GRAVITY, state);
+	}
+
+	//________________________________________________________________________
+
 	void CDynamicEntity::setPosition(const Vector3& position, bool makeConversionToLogicWorld) {
 		if(makeConversionToLogicWorld) {
+			std::cout << "Colocando entidad fisica con reposicionamiento" << std::endl;
+
 			// Transformación entre el sistema de coordenadas lógico y el de PhysX
 
 			// En primer lugar obtenemos todas las formas del actor y calculamos el punto medio
@@ -188,6 +196,8 @@ namespace Physics {
 			_actor->setGlobalPose( PxTransform( PxVec3(position.x, position.y + averageYPosition, position.z) ) );
 		}
 		else {
+			std::cout << "Colocando entidad fisica sin reposicionamiento" << std::endl;
+
 			_actor->setGlobalPose( PxTransform( PxVec3(position.x, position.y, position.z) ) );
 		}
 	}

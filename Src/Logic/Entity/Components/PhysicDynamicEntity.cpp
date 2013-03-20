@@ -82,29 +82,39 @@ bool CPhysicDynamicEntity::accept(CMessage *message) {
 
 void CPhysicDynamicEntity::process(CMessage *message) {
 	switch(message->getMessageType()) {
-	case Message::KINEMATIC_MOVE:
-		// Acumulamos el vector de desplazamiento para usarlo posteriormente en 
-		// el método tick.
-		_movement += ((CMessageKinematicMove*)message)->getMovement();
-		break;
-	case Message::ACTIVATE:
-		activateSimulation();
-		break;
-	case Message::DEACTIVATE:
-		deactivateSimulation();
-		break;
-	case Message::SET_PHYSIC_POSITION:
+		case Message::KINEMATIC_MOVE:
+			// Acumulamos el vector de desplazamiento para usarlo posteriormente en 
+			// el método tick.
+			_movement += static_cast<CMessageKinematicMove*>(message)->getMovement();
+			break;
+		case Message::ACTIVATE:
+			activateSimulation();
+		
+			break;
+		case Message::DEACTIVATE:
 		{
-		CMessageSetPhysicPosition* setPosMsg = static_cast<CMessageSetPhysicPosition*>(message);
-		setPhysicPosition( setPosMsg->getPosition(), setPosMsg->getMakeConversion() );
-		break;
+			deactivateSimulation();
+		
+			break;
 		}
-	case Message::ADD_FORCE_PHYSICS:
-		if(!((CMessageAddForcePhysics*)message)->getGravity())
-			//deprecated
-			//_actor->setActorFlag(PxActorFlag::eDISABLE_GRAVITY, true);
-		addImpulsiveForce( ((CMessageAddForcePhysics*)message)->getForceVector() );
-		break;
+		case Message::SET_PHYSIC_POSITION:
+		{
+			CMessageSetPhysicPosition* setPosMsg = static_cast<CMessageSetPhysicPosition*>(message);
+			setPhysicPosition( setPosMsg->getPosition(), setPosMsg->getMakeConversion() );
+		
+			break;
+		}
+		case Message::ADD_FORCE_PHYSICS:
+		{
+			CMessageAddForcePhysics* forceMsg = static_cast<CMessageAddForcePhysics*>(message);
+
+			if( !forceMsg->getGravity() )
+				_physicEntity.disableGravity(true);
+		
+			addImpulsiveForce( forceMsg->getForceVector() );
+		
+			break;
+		}
 	}
 }
 //---------------------------------------------------------
@@ -161,39 +171,18 @@ void CPhysicDynamicEntity::createPhysicEntity(const Map::CEntity *entityInfo) {
 	// Leemos el tipo de entidad
 	assert(entityInfo->hasAttribute("physic_entity"));
 	const std::string physicEntity = entityInfo->getStringAttribute("physic_entity");
-	assert((physicEntity == "rigid") || (physicEntity == "plane") || (physicEntity == "fromFile"));
+	assert((physicEntity == "rigid") || (physicEntity == "fromFile"));
 
 	// Leemos la informacion de grupos de colision
 	int group = 0;
 	std::vector<int> groupList;
 	readCollisionGroupInfo(entityInfo, group, groupList);
-
-	// Crear el tipo de entidad adecuada
-	//if (physicEntity == "plane") 
-	//	createPlane(entityInfo, group, groupList);
 	
 	if (physicEntity == "rigid") 
 		createRigid(entityInfo, group, groupList);
 	
 	if (physicEntity == "fromFile")
 		createFromFile(entityInfo, group, groupList);
-}
-
-//---------------------------------------------------------
-
-void CPhysicDynamicEntity::createPlane(const Map::CEntity *entityInfo, int group, const std::vector<int>& groupList) {
-	// La posición de la entidad es un punto del plano
-	const Vector3 point = _entity->getPosition();
-	
-	// Leer el vector normal al plano
-	assert(entityInfo->hasAttribute("physic_normal"));
-	const Vector3 normal = entityInfo->getVector3Attribute("physic_normal");
- 
-	// Crear el plano
-	//_physicEntity.load( point, _geometryFactory->createPlane(point, normal), _materialManager->getMaterial(MaterialType::eDEFAULT),
-						
-
-	//return _server->createPlane(point, normal, group, groupList, this);
 }
 
 //---------------------------------------------------------
@@ -232,8 +221,8 @@ void CPhysicDynamicEntity::createRigid(const Map::CEntity *entityInfo, int group
 		const Vector3 physicDimensions = entityInfo->getVector3Attribute("physic_dimensions");
 
 		// HAY QUE DESACOPLAR!!! deprecated
-		PxBoxGeometry box = _geometryFactory->createBox(physicDimensions);
-		PxMaterial* defaultMaterial = _materialManager->getMaterial(MaterialType::eDEFAULT);
+		Physics::BoxGeometry box = _geometryFactory->createBox(physicDimensions);
+		Physics::Material* defaultMaterial = _materialManager->getMaterial(MaterialType::eDEFAULT);
 		float density = mass / (physicDimensions.x * physicDimensions.y * physicDimensions.z);
 		
 		_physicEntity.load(position, box, *defaultMaterial, density, isKinematic, isTrigger, group, groupList, this);
@@ -243,9 +232,9 @@ void CPhysicDynamicEntity::createRigid(const Map::CEntity *entityInfo, int group
 		const float physicRadius = entityInfo->getFloatAttribute("physic_radius");
 			
 		// HAY QUE DESACOPLAR!! deprecated
-		PxSphereGeometry sphere = _geometryFactory->createSphere(physicRadius);
-		PxMaterial* defaultMaterial = _materialManager->getMaterial(MaterialType::eDEFAULT);
-		float density = mass / mass / (4.0/3.0 * 3.141592653589793 * physicRadius * physicRadius * physicRadius);
+		Physics::SphereGeometry sphere = _geometryFactory->createSphere(physicRadius);
+		Physics::Material* defaultMaterial = _materialManager->getMaterial(MaterialType::eDEFAULT);
+		float density = mass / (4.0/3.0 * 3.141592653589793 * physicRadius * physicRadius * physicRadius);
 
 		_physicEntity.load(position, sphere, *defaultMaterial, density, isKinematic, isTrigger, group, groupList, this);
 	}

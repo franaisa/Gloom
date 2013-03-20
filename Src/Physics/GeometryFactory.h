@@ -18,11 +18,18 @@ del juego.
 #include "geometry/PxSphereGeometry.h"
 #include "geometry/PxBoxGeometry.h"
 #include "geometry/PxPlaneGeometry.h"
+#include "geometry/PxCapsuleGeometry.h"
 
 // Predeclaración de clases para ahorrar tiempo de compilación
 
 // Definición de la clase
 namespace Physics {
+
+	typedef physx::PxGeometry Geometry;
+	typedef physx::PxBoxGeometry BoxGeometry;
+	typedef physx::PxSphereGeometry SphereGeometry;
+	typedef physx::PxCapsuleGeometry CapsuleGeometry;
+	typedef physx::PxPlane PlaneGeometry;
 
 	// Enumerado para indicar el tipo de geometria que queremos crear
 	enum GeometryType { 
