@@ -53,7 +53,10 @@ namespace Physics {
 		// Destruimos el actor de physx asociado al controller y desligamos el 
 		// actor de la escena
 		if(_actor != NULL) {
-			_actor->release();
+			// El server se encarga de desatachar la entidad fisica de la
+			// escena a la que pertenezca y liberar los recursos reservados
+			// por ella
+			Physics::CServer::getSingletonPtr()->destroyActor(_actor);
 			_actor = NULL;
 		}
 
