@@ -56,6 +56,8 @@ namespace Physics {
 
 		assert(_scene);
 
+		_isTrigger = trigger;
+
 		// Creamos una esfera dinámica
 		PxTransform globalPose( Vector3ToPxVec3(position) );
 		

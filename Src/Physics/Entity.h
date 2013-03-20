@@ -101,6 +101,8 @@ namespace Physics {
 		/** Puntero al gestor de colisiones */
 		CCollisionManager* _collisionManager;
 
+		bool _isTrigger;
+
 	}; // class CEntity
 
 } // namespace Physics

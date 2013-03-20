@@ -40,6 +40,8 @@ namespace Physics {
 					         bool trigger, int group, const vector<int>& groupList, const Logic::IPhysics *component) {
 
 		assert(_scene);
+
+		_isTrigger = trigger;
 						
 		// Creamos una esfera estática
 		PxTransform globalPose(Vector3ToPxVec3(position));
