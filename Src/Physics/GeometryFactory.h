@@ -67,7 +67,7 @@ namespace Physics {
 
 		@return Factoría de entidades.
 		*/
-		static CGeometryFactory *getSingletonPtr() { return _instance; }
+		static CGeometryFactory* getSingletonPtr() { return _instance; }
 
 		// Crear una esfera
 		physx::PxSphereGeometry createSphere(float radius);

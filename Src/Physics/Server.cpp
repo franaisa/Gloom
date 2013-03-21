@@ -481,7 +481,7 @@ Logic::CEntity* CServer::raycastClosestInverse(const Ray& ray, float maxDist, un
 
 //--------------------------------------------------------
 
-/*void CServer::overlapMultiple(const PxGeometry& geometry, const Vector3& position, Logic::CEntity** & entitiesHit, int& nbHits) {
+void CServer::overlapMultiple(const PxGeometry& geometry, const Vector3& position, Logic::CEntity** & entitiesHit, int& nbHits) {
 	// Comprobar que es una de las geometrias soportadas por la query de overlap
 
 	// La situamos en la posicion dada
@@ -531,52 +531,4 @@ Logic::CEntity* CServer::raycastClosestInverse(const Ray& ray, float maxDist, un
 void CServer::overlapAny(const PxGeometry& geometry, const Vector3& position) {
 	PxShape* hit;
 	_scene->overlapAny(geometry, PxTransform ( Vector3ToPxVec3(position) ), hit);
-}*/
-
-//--------------------------------------------------------
-
-void CServer::overlapExplotion(const Vector3& position, float explotionRadius, Logic::CEntity** & entitiesHit, int& nbHits) {
-	// Construimos una esfera con el radio de la explosion
-	PxSphereGeometry explotionVolume(explotionRadius);
-	// La situamos en la posicion dada
-	PxTransform pose( Vector3ToPxVec3(position) );
-	// Seteamos el tamaño del buffer de colisiones a 5
-	PxU32 bufferSize = 5;
-	// Reservamos memoria para el buffer
-	PxShape** hitBuffer = new(std::nothrow) PxShape* [bufferSize];
-	assert(hitBuffer != NULL && "Error en la reserva de memoria");
-
-	// Calculamos el overlap contra objetos dinamicos (ya que los estaticos no nos interesan).
-	// El valor de retorno es el numero de hits del buffer o -1 si el buffer no es lo suficientemente
-	// grande.
-	PxSceneQueryFilterData filterData(PxSceneQueryFilterFlag::eDYNAMIC);
-
-	nbHits = _scene->overlapMultiple(explotionVolume, pose, hitBuffer, bufferSize, filterData);
-	while(nbHits == -1) {
-		// Si el buffer se ha desbordado aumentamos su tamaño al doble
-		// y volvemos ha realizar la query
-		delete [] hitBuffer;
-		
-		bufferSize *= 2;
-		hitBuffer = new(std::nothrow) PxShape* [bufferSize];
-		assert(hitBuffer != NULL && "Error en la reserva de memoria");
-
-		// Realizamos de nuevo la query
-		nbHits = _scene->overlapMultiple(explotionVolume, pose, hitBuffer, bufferSize, filterData);
-	}
-
-	if(nbHits > 0) {
-		// Si hemos golpeado a otras entidades creamos un buffer
-		entitiesHit = new(std::nothrow) Logic::CEntity* [nbHits];
-		assert(entitiesHit != NULL && "Error en la reserva de memoria");
-
-		// Rellenamos el buffer con un puntero a cada una de las entidades golpeadas
-		for(int i = 0; i < nbHits; ++i) {
-			IPhysics *component = static_cast<IPhysics*>( hitBuffer[i]->getActor().userData );
-			entitiesHit[i] = component != NULL ? component->getEntity() : NULL;
-		}
-	}
-
-	delete [] hitBuffer;
 }
-
