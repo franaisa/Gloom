@@ -15,9 +15,10 @@
 
 #include <assert.h>
 
+#include "Conversions.h"
+
 #include "Physics/Server.h"
 #include "Physics/CollisionManager.h"
-#include "Conversions.h"
 
 #include "Logic/Entity/Components/Physics.h"
 
@@ -27,24 +28,40 @@
 #include <PxRigidActor.h>
 #include <PxRigidDynamic.h>
 #include <PxRigidStatic.h>
+#include <PxStringTable.h>
+
+#include <cooking/PxCooking.h>
+
 #include <extensions/PxDefaultSimulationFilterShader.h>
 #include <extensions/PxSimpleFactory.h>
+#include <extensions/PxDefaultStreams.h>
+
 #include <geometry/PxGeometryHelpers.h>
+
+#include <RepX/RepXUtility.h>
 
 using namespace physx;
 
 namespace Physics {
 
 	CEntity::CEntity() : _isTrigger(false) {
+		Physics::CServer* physicsServer = Physics::CServer::getSingletonPtr();
+
 		// Obtenemos la sdk de physics y comprobamos que ha sido inicializada
-		_physxSDK = Physics::CServer::getSingletonPtr()->getPhysxSDK();
+		_physxSDK = physicsServer->getPhysxSDK();
 		assert(_physxSDK && "No se ha inicializado physX");
 		
+		_cooking = physicsServer->getCooking();
+		assert(_cooking && "El cocinado de physx no ha sido activado");
+
 		// Obtenemos la escena de physx y comprobamos que ha sido inicializada
-		_scene = Physics::CServer::getSingletonPtr()->getActiveScene();
+		_scene = physicsServer->getActiveScene();
 		assert(_scene && "No existe una escena fisica");
 
-		_collisionManager = Physics::CServer::getSingletonPtr()->getCollisionManager();
+		_collisionManager = physicsServer->getCollisionManager();
+		assert(_collisionManager && "No existe ningun gestor de colisiones");
+
+		
 	} // CEntity
 
 	//________________________________________________________________________
@@ -94,8 +111,46 @@ namespace Physics {
 
 	//________________________________________________________________________
 
-	PxRigidActor* CEntity::deserializeRepXFile(const std::string &file, int group, const std::vector<int>& groupList, const Logic::IPhysics* component) {
-		return Physics::CServer::getSingletonPtr()->createFromFile(file, group, groupList, component);
+	PxRigidActor* CEntity::deserializeFromRepXFile(const std::string &file, int group, const std::vector<int>& groupList, const Logic::IPhysics* component) {
+		assert(_scene);
+
+		// Preparar parámetros para deserializar
+		PxDefaultFileInputData data(file.c_str());
+		PxCollection* bufferCollection = _physxSDK->createCollection();
+		PxCollection* sceneCollection = _physxSDK->createCollection();
+		PxStringTable* stringTable = NULL; 
+		PxUserReferences* externalRefs = NULL; 
+		PxUserReferences* userRefs = NULL; 
+
+		// Deserializar a partir del fichero RepX
+		repx::deserializeFromRepX(data, *_physxSDK, *_cooking, stringTable, externalRefs, 
+								  *bufferCollection, *sceneCollection, userRefs);
+
+		// Añadir entidades físicas a la escena
+		_physxSDK->addCollection(*sceneCollection, *_scene); 
+
+		// Buscar una entidad de tipo PxRigidActor. Asumimos que hay exactamente 1 en el fichero.
+		PxRigidActor *actor = NULL;
+		for (unsigned int i=0; (i<sceneCollection->getNbObjects()) && !actor; i++) {
+			PxSerializable *p = sceneCollection->getObject(i);
+			actor = p->is<PxRigidActor>();
+
+		}
+		assert(actor);
+
+		// Anotar el componente lógico asociado a la entidad física
+		actor->userData = (void *) component;
+
+		// Establecer el grupo de colisión
+		PxSetGroup(*actor, group);
+
+		Physics::CServer::getSingletonPtr()->setupFiltering(actor, group, groupList);
+
+		// Liberar recursos
+		bufferCollection->release();
+		sceneCollection->release();
+
+		return actor;
 	}
 
 	//________________________________________________________________________

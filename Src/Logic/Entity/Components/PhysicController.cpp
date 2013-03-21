@@ -169,7 +169,7 @@ void CPhysicController::onTrigger(IPhysics *otherComponent, bool enter) {
 
 //________________________________________________________________________
 
-void CPhysicController::onShapeHit (const PxControllerShapeHit &hit) {
+/*void CPhysicController::onShapeHit (const PxControllerShapeHit &hit) {
 	// Si chocamos contra una entidad estática no hacemos nada
 	PxRigidDynamic* actor = hit.shape->getActor().isRigidDynamic();
 	if(!actor) return;
@@ -181,6 +181,14 @@ void CPhysicController::onShapeHit (const PxControllerShapeHit &hit) {
 	}
 	// Aplicar una fuerza a la entidad en la dirección del movimiento
 	//actor->addForce(hit.dir * hit.length * 1000.0f);
+}*/
+
+//________________________________________________________________________
+
+void CPhysicController::onShapeHit(IPhysics *otherComponent) {
+	// Implementar la funcionalidad que corresponda en IPhysics, aunque
+	// si nos vemos forzados a hacer este tipo de ñapas es que algo estamos
+	// haciendo mal. Hay que ser mas elegantes for the win.
 }
 
 //________________________________________________________________________
@@ -191,7 +199,7 @@ void CPhysicController::onControllerHit (const PxControllersHit &hit) {
 
 //________________________________________________________________________
 
-void CPhysicController::onContact (IPhysics *otherComponent,bool enter) {
+void CPhysicController::onContact (IPhysics *otherComponent, bool enter) {
 	//std::cout<< "contacto entre kinematics en oncontact" << std::endl;
 	std::cout << "ONCONTACT. Estoy en "<<_entity->getName() <<" contacto con algo que es " << otherComponent->getEntity()->getName() << std::endl;
 }

@@ -30,6 +30,7 @@ namespace physx {
 	class PxScene;
 	class PxPhysics;
 	class PxRigidActor;
+	class PxCooking;
 }
 
 namespace Physics {
@@ -85,7 +86,7 @@ namespace Physics {
 
 	protected:
 
-		physx::PxRigidActor* deserializeRepXFile(const std::string &file, int group, const std::vector<int>& groupList, const Logic::IPhysics *component);
+		physx::PxRigidActor* deserializeFromRepXFile(const std::string &file, int group, const std::vector<int>& groupList, const Logic::IPhysics *component);
 
 		float getLogicPivotOffset(const physx::PxGeometry& geometry);
 
@@ -97,6 +98,8 @@ namespace Physics {
 
 		// SDK de Physx
 		physx::PxPhysics* _physxSDK;
+
+		physx::PxCooking* _cooking;
 
 		/** Puntero al gestor de colisiones */
 		CCollisionManager* _collisionManager;

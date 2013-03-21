@@ -107,7 +107,9 @@ namespace Logic
 		/**
 		Se invoca cuando se produce una colisión entre un character controller y una entidad física.
 		*/
-		void onShapeHit (const physx::PxControllerShapeHit &hit);
+		//void onShapeHit (const physx::PxControllerShapeHit &hit);
+
+		virtual void onShapeHit(IPhysics *otherComponent);
 
 		/**
 		Se invoca cuando se produce una colisión entre dos character controllers.

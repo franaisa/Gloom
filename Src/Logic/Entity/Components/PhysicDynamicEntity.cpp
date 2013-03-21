@@ -117,8 +117,8 @@ void CPhysicDynamicEntity::process(CMessage *message) {
 		}
 	}
 }
-//---------------------------------------------------------
 
+//---------------------------------------------------------
 
 void CPhysicDynamicEntity::tick(unsigned int msecs) {
 	// Invocar al método de la clase padre (IMPORTANTE)
@@ -287,11 +287,10 @@ void CPhysicDynamicEntity::onContact (IPhysics *otherComponent,bool enter) {
 }
 //---------------------------------------------------------
 
-
-void CPhysicDynamicEntity::onShapeHit (const PxControllerShapeHit &hit) {
+/*void CPhysicDynamicEntity::onShapeHit (const PxControllerShapeHit &hit) {
 	//std::cout << _entity->getName() << " le llega el contacto con " << ((IPhysics*)(hit.controller->getUserData()))->getEntity()->getName() << std::endl;
 
-}
+}*/
 
 //---------------------------------------------------------
 

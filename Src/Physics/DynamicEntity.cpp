@@ -93,7 +93,7 @@ namespace Physics {
 
 	void CDynamicEntity::load(const std::string &file, int group, const vector<int>& groupList, const Logic::IPhysics *component) {
 		// Deserializamos el fichero RepX
-		_actor = deserializeRepXFile(file, group, groupList, component);
+		_actor = deserializeFromRepXFile(file, group, groupList, component);
 
 		// Asignamos al actor los flags que corresponden a los rigid dinamicos
 	}

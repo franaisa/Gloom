@@ -259,10 +259,10 @@ void CPhysicStaticEntity::onContact (IPhysics *otherComponent,bool enter) {
 //---------------------------------------------------------
 
 
-void CPhysicStaticEntity::onShapeHit (const PxControllerShapeHit &hit) {
+/*void CPhysicStaticEntity::onShapeHit (const PxControllerShapeHit &hit) {
 	//std::cout << _entity->getName() << " le llega el contacto con " << ((IPhysics*)(hit.controller->getUserData()))->getEntity()->getName() << std::endl;
 
-}
+}*/
 
 
 //---------------------------------------------------------

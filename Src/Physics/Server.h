@@ -168,96 +168,6 @@ namespace Physics {
 		//------------------------------
 
 		/**
-		Crea un plano estático en la escena.
-
-		@param point Punto del plano.
-		@param normal Vector normal al plano.
-		@param group Grupo de colisión.
-		@param component Componente lógico asociado a la entidad física.
-		@return actor físico creado
-		*/
-		physx::PxRigidStatic* createPlane(const Vector3 &point, const Vector3 &normal, 
-			                              int group, const std::vector<int>& groupList, const Logic::IPhysics *component);
-
-		/**
-		Crea una caja estática en la escena.
-
-		@param position Posición de la caja en coordenadas lógicas (el origen de coordenadas 
-		       está en el centro de la cara inferior del cubo).
-		@param dimensions Dimensiones de la caja divididas entre 2. Es decir, los lados de 
-		       la caja medirán dimensions*2.
-		@param trigger Indica si la entidad física representa un trigger.
-		@param group Grupo de colisión.
-		@param component Componente lógico asociado a la entidad física.
-		@return actor físico creado
-		*/
-		physx::PxRigidStatic* createStaticBox(const Vector3 &position, const Vector3 &dimensions, 
-			                                  bool trigger, int group, const std::vector<int>& groupList, const Logic::IPhysics *component); 
-
-		/**
-		Crea una caja dinámica en la escena.
-
-		@param position Posición de la caja en coordenadas lógicas (el origen de coordenadas 
-		       está en el centro de la cara inferior del cubo).
-		@param dimensions Dimensiones de la caja divididas entre 2. Es decir, los lados de 
-		       la caja medirán dimensions*2.
-		@param mass Masa distribuida uniformemente en el volumen de la entidad.
-		@param kinematic Indica si la entidad es cinemática.
-		@param trigger Indica si la entidad física representa un trigger.
-		@param group Grupo de colisión.
-		@param component Componente lógico asociado a la entidad física.
-		@return actor físico creado
-		*/
-		physx::PxRigidDynamic* createDynamicBox(const Vector3 &position, const Vector3 &dimensions, 
-			                                    float mass, bool kinematic, bool trigger, int group, const std::vector<int>& groupList, 
-												const Logic::IPhysics *component); 
-
-
-		/**
-		Crea una esfera estática en la escena.
-
-		@param position Posición de la esfera en coordenadas lógicas (el origen de coordenadas 
-		       está en el centro de la cara inferior del cubo).
-		@param radius Radio de la esfera.
-		@param trigger Indica si la entidad física representa un trigger.
-		@param group Grupo de colisión.
-		@param component Componente lógico asociado a la entidad física.
-		@return actor físico creado
-		*/
-		physx::PxRigidStatic* createStaticSphere(const Vector3 &position, float radius, 
-			                                     bool trigger, int group, const std::vector<int>& groupList, const Logic::IPhysics *component); 
-
-		/**
-		Crea una esfera dinámica en la escena.
-
-		@param position Posición de la esfera en coordenadas lógicas (el origen de coordenadas 
-		       está en el centro de la cara inferior del cubo).
-		@param radius Radio de la esfera.
-		@param mass Masa distribuida uniformemente en el volumen de la entidad.
-		@param kinematic Indica si la entidad es cinemática.
-		@param trigger Indica si la entidad física representa un trigger.
-		@param group Grupo de colisión.
-		@param component Componente lógico asociado a la entidad física.
-		@return actor físico creado
-		*/
-		physx::PxRigidDynamic* createDynamicSphere(const Vector3 &positon, float radius,
-												   float mass, bool kinematic, bool trigger, int group, const std::vector<int>& groupList, 
-												   const Logic::IPhysics* component);
-
-		/**
-		Crea una entidad física en la escena a partir de un fichero RepX exportado con el 
-		plug-in de PhysX para 3ds Max. Asume que el fichero contiene únicamente la 
-		descripción de un actor.
-
-		@param file Fichero generado con el plug-in de PhysX.
-		@param group Grupo de colisión en el que debe ser incluida la entidad.
-		@param component Componente lógico asociado a la entidad física.
-		@return actor físico creado
-		*/
-		physx::PxRigidActor* createFromFile(const std::string &file, int group, const std::vector<int>& groupList, 
-			                                const Logic::IPhysics *component);
-
-		/**
 		Elimina una entidad física de la escena y libera los recursos que tenga asociados.
 		NO DEBE USARSE CON CHARACTER CONTROLLERS.
 
@@ -265,37 +175,6 @@ namespace Physics {
 		 */
 		void destroyActor(physx::PxActor *actor);
 
-		/**
-		Devuelve la posición y rotación de una entidad física.
-
-		@param actor Actor físico del que se desea conocer la posición y orientación.
-		@return Matriz 4x4 con la posición y orientación de la entidad.
-		 */
-		Matrix4 getActorTransform(const physx::PxRigidActor *actor);
-
-		/**
-		Mueve un actor cinemático.
-
-		@param actor Actor cinemático que se desea mover.
-		@param transform Nueva posición y orientación. 
-		 */
-		void moveKinematicActor(physx::PxRigidDynamic *actor, const Matrix4 &transform);
-
-		/**
-		Aplica una traslación a un actor cinemático.
-
-		@param actor Actor cinemático que se desea mover.
-		@param displ Desplazamiento a realizar
-		 */
-		void moveKinematicActor(physx::PxRigidDynamic *actor, const Vector3 &displ);
-
-		/**
-		Indica si un actor dinámico es cinemático.
-		 */
-		bool isKinematic(const physx::PxRigidDynamic *actor);
-		
-
-		void setRigidBodyPosition(physx::PxRigidBody* actor, const Vector3& position, bool makeConversionToLogicWorld);
 		
 		//----------------------------------
 		// Consultas 
@@ -340,8 +219,6 @@ namespace Physics {
 
 		//void overlapAny(const physx::PxGeometry& geometry, const Vector3& position);
 
-		void addImpulsiveForce( physx::PxRigidDynamic* actor, const Vector3& force ); 
-
 		void setupFiltering(physx::PxRigidActor* actor, int group, const std::vector<int>& groupList);
 
 		physx::PxScene* getActiveScene() { return _scene; }
@@ -349,6 +226,8 @@ namespace Physics {
 		physx::PxPhysics* getPhysxSDK() { return _physics; }
 
 		physx::PxControllerManager* getControllerManager() { return _controllerManager; }
+
+		physx::PxCooking* getCooking() { return _cooking; }
 
 		CCollisionManager* getCollisionManager() { return _collisionManager; }
 

@@ -11,7 +11,6 @@ Contiene la implementación del gestor de colisiones.
 
 #include "CollisionManager.h"
 #include "Logic/Entity/Components/PhysicController.h"
-#include "Logic/Entity/Components/PhysicEntity.h"
 #include "Logic/Entity/Entity.h"
 
 #include <PxRigidActor.h>
@@ -83,8 +82,8 @@ void CCollisionManager::onContact(const PxContactPairHeader &pairHeader, const P
 		assert(secondActorBeingContacted);
 
 		// Disparamos los metodos onContact de la interfaz logica
-		firstActorBeingContacted->onContact(secondActorBeingContacted,enter);
-		secondActorBeingContacted->onContact(firstActorBeingContacted,enter);
+		firstActorBeingContacted->onContact(secondActorBeingContacted, enter);
+		secondActorBeingContacted->onContact(firstActorBeingContacted, enter);
 		
 	}
 }
@@ -130,12 +129,11 @@ void CCollisionManager::onShapeHit(const PxControllerShapeHit &hit) {
 	// TODO: notificar al componente físico la colisión con una entidad
 	// 1. Obtener el puntero al componente físico (CPhysicController)
 	// 2. Notificar la colisión al componente físico
-	CPhysicController * component = (CPhysicController *) hit.controller->getUserData();
-	component->onShapeHit(hit);
-	
-	
-	CPhysicEntity* otherComponent = (CPhysicEntity *)hit.shape->getActor().userData;
-	otherComponent->onShapeHit(hit); 
+	IPhysics* component = (IPhysics*) hit.controller->getUserData();
+	IPhysics* otherComponent = (IPhysics*)hit.shape->getActor().userData;
+
+	component->onShapeHit(otherComponent);
+	otherComponent->onShapeHit(component); 
 }
 
 //--------------------------------------------------

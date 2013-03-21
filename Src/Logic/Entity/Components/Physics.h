@@ -63,6 +63,8 @@ namespace Logic
 		*/
 		virtual void onContact(IPhysics *otherComponent, bool enter) = 0;
 
+		virtual void onShapeHit(IPhysics *otherComponent) = 0;
+
 	}; // class IPhysics
 
 } // namespace Logic

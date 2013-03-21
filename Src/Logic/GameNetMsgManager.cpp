@@ -17,7 +17,7 @@ Contiene la implementación del gestor de los mensajes de red durante la partida.
 #include "GameNetMsgManager.h"
 
 #include "Logic/Entity/Entity.h"
-#include "Logic/Entity/Components/PhysicEntity.h"
+#include "Logic/Entity/Components/PhysicDynamicEntity.h"
 #include "Logic/Maps/Map.h"
 #include "Logic/Maps/EntityFactory.h"
 #include "Logic/Server.h"
@@ -191,7 +191,9 @@ namespace Logic {
 		newEntity->activate();
 
 		//ahora le seteamos la posición
-		newEntity->getComponent<CPhysicEntity>("CPhysicEntity")->setPhysicPosition(transform.getTrans(), false);
+		// TIENE QUE TRATARSE DE UN COMPONENTE FISICO DINAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMICO SI NO EXPLOTA
+		// (tenemos entidades fisicas dinamicas y estaticas y controllers).
+		newEntity->getComponent<CPhysicDynamicEntity>("CPhysicDynamicEntity")->setPhysicPosition(transform.getTrans(), false);
 
 		//seteamos la orientación
 		Matrix3 orientation;
