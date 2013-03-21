@@ -111,7 +111,7 @@ void CPhysicDynamicEntity::process(CMessage *message) {
 			if( !forceMsg->getGravity() )
 				_physicEntity.disableGravity(true);
 		
-			addImpulsiveForce( forceMsg->getForceVector() );
+			addForce( forceMsg->getForceVector(), forceMsg->getForceMode() );
 		
 			break;
 		}
@@ -301,8 +301,14 @@ void CPhysicDynamicEntity::setPhysicPosition(const Vector3 &position, bool makeC
 
 //---------------------------------------------------------
 
-void CPhysicDynamicEntity::addImpulsiveForce(const Vector3& force) {
-	_physicEntity.addForce(force, ForceMode::eIMPULSE);
+void CPhysicDynamicEntity::addForce(const Vector3& force, Physics::ForceMode mode, bool autowake) {
+	_physicEntity.addForce(force, mode, autowake);
+}
+
+//---------------------------------------------------------
+
+void CPhysicDynamicEntity::addTorque(const Vector3& force, Physics::ForceMode mode, bool autowake) {
+	_physicEntity.addTorque(force, mode, autowake);
 }
 
 //---------------------------------------------------------

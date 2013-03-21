@@ -71,7 +71,7 @@ namespace Logic {
 
 		// Mandar mensaje add force
 		Logic::CMessageAddForcePhysics* forceMsg = new Logic::CMessageAddForcePhysics();
-		forceMsg->setForceVector( Math::getDirection( _entity->getOrientation()) * _shootForce );
+		forceMsg->setForce( (Math::getDirection( _entity->getOrientation()) * _shootForce), Physics::ForceMode::eIMPULSE );
 		forceMsg->setGravity(false);
 		rocket->emitMessage(forceMsg);
 	}
