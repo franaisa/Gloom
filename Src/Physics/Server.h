@@ -13,6 +13,9 @@ Contiene la declaración del servidor de física.
 #define __Physics_Server_H
 
 #include "BaseSubsystems/Math.h"
+//#include <geometry/PxGeometry.h>
+//#include "Physics/GeometryFactory.h"
+//#include "Physics/MaterialManager.h"
 
 //#include <PxForceMode.h>
 
@@ -332,6 +335,10 @@ namespace Physics {
 		Logic::CEntity* raycastClosestInverse (const Ray& ray, float maxDist, unsigned int id) const; 
 
 		void overlapExplotion(const Vector3& position, float explotionRadius, Logic::CEntity** & entitiesHit, int& nbHits);
+
+		//void overlapMultiple(const physx::PxGeometry& geometry, const Vector3& position, Logic::CEntity** & entitiesHit, int& nbHits);
+
+		//void overlapAny(const physx::PxGeometry& geometry, const Vector3& position);
 
 		void addImpulsiveForce( physx::PxRigidDynamic* actor, const Vector3& force ); 
 
