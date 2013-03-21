@@ -256,14 +256,13 @@ void CPhysicStaticEntity::onContact (IPhysics *otherComponent,bool enter) {
 		_entity->emitMessage(m);
 	}
 }
-//---------------------------------------------------------
 
+//---------------------------------------------------------
 
 /*void CPhysicStaticEntity::onShapeHit (const PxControllerShapeHit &hit) {
 	//std::cout << _entity->getName() << " le llega el contacto con " << ((IPhysics*)(hit.controller->getUserData()))->getEntity()->getName() << std::endl;
 
 }*/
-
 
 //---------------------------------------------------------
 

@@ -63,6 +63,9 @@ namespace Logic
 		*/
 		virtual void onContact(IPhysics *otherComponent, bool enter) = 0;
 
+		// Me he sacado el on shape hit aqui para evitar la ñapa de jose, pero aun asi, no deberia
+		// estar aqui (o al menos eso me dice la intuicion). Quizas la interfaz Iphysics es demasiado
+		// generalista.
 		virtual void onShapeHit(IPhysics *otherComponent) = 0;
 
 	}; // class IPhysics

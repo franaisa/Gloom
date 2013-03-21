@@ -191,7 +191,7 @@ void CPhysicDynamicEntity::createRigid(const Map::CEntity *entityInfo, int group
 	// Leer el tipo de entidad: estáticos, dinámico o cinemático
 	assert(entityInfo->hasAttribute("physic_type"));
 	const std::string physicType = entityInfo->getStringAttribute("physic_type");
-	assert((physicType == "static") || (physicType == "dynamic") || (physicType == "kinematic"));
+	assert((physicType == "dynamic") || (physicType == "kinematic"));
 
 	// Leer la forma (shape)
 	assert(entityInfo->hasAttribute("physic_shape"));
@@ -217,7 +217,6 @@ void CPhysicDynamicEntity::createRigid(const Map::CEntity *entityInfo, int group
 		assert(entityInfo->hasAttribute("physic_dimensions"));
 		const Vector3 physicDimensions = entityInfo->getVector3Attribute("physic_dimensions");
 
-		// HAY QUE DESACOPLAR!!! deprecated
 		Physics::BoxGeometry box = _geometryFactory->createBox(physicDimensions);
 		Physics::Material* defaultMaterial = _materialManager->getMaterial(MaterialType::eDEFAULT);
 		float density = mass / (physicDimensions.x * physicDimensions.y * physicDimensions.z);
@@ -227,8 +226,7 @@ void CPhysicDynamicEntity::createRigid(const Map::CEntity *entityInfo, int group
 	else if (physicShape == "sphere") {
 		assert(entityInfo->hasAttribute("physic_radius"));
 		const float physicRadius = entityInfo->getFloatAttribute("physic_radius");
-			
-		// HAY QUE DESACOPLAR!! deprecated
+		
 		Physics::SphereGeometry sphere = _geometryFactory->createSphere(physicRadius);
 		Physics::Material* defaultMaterial = _materialManager->getMaterial(MaterialType::eDEFAULT);
 		float density = mass / (4.0/3.0 * Math::PI * physicRadius * physicRadius * physicRadius);
