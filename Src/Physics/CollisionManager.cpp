@@ -5,8 +5,8 @@ Contiene la implementación del gestor de colisiones.
 
 @see Physics::CCollisionManager
 
-@author Antonio Sánchez Ruiz-Granados
-@date Noviembre, 2012
+@author Francisco Aisa García
+@date Marzo, 2013
 */
 
 #include "CollisionManager.h"

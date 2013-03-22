@@ -1,6 +1,8 @@
 /**
 @file MaterialManager.h
 
+Contiene la declaración del manager de materiales físicos.
+
 @see Physics::CMaterialManager
 
 @author Francisco Aisa García
@@ -12,75 +14,107 @@
 
 #include <vector>
 
+// Predeclaración de clases
 namespace physx {
 	class PxMaterial;
 	class PxPhysics;
 }
 
-// Namespace que contiene las clases relacionadas con la parte física. 
 namespace Physics {
 
+	// Alias para evitar acoplamiento en el proyecto de lógica
 	typedef physx::PxMaterial Material;
 
+	// Enumerado que contiene la lista de materiales que podemos usar
 	enum MaterialType {
 		eDEFAULT
 	};
 
+
 	/**
-	Gestor sencillisimo de materiales, para tenerlos organizados en algun
-	sitio. Como en principio vamos a tener pocos materiales, el enumerado
-	nos sirve (nada de tablas con strings).
+	Gestor que mantiene una tabla de materiales físicos que iremos asignando
+	a los actores físicos que creemos. La implementación es prácticamente
+	dummy, ya que probablemente no necesitaremos muchos materiales (por
+	lo que un vector indexado mediante enumerados es más que suficiente).
 
 	@ingroup physicGroup
 
 	@author Francisco Aisa García
 	@date Marzo, 2013
 	*/
+
 	class CMaterialManager {
 	public:
 
+
+		// =======================================================================
+		//                 METODOS DE INICIALIZACION Y LIBERACION
+		// =======================================================================
+
+
 		/**
-		Inicializa la base de datos de la factoría.
+		Inicializa el manager.
 
 		@return false si no se ha podido inicializar.
 		*/
 		static bool Init();
 
-		/**
-		Libera la base de datos. Debe llamarse al finalizar la aplicación.
-		*/
+		//________________________________________________________________________
+
+		/** Libera los recursos reservados por el manager. */
 		static void Release();
+
+
+		// =======================================================================
+		//                            METODOS PROPIOS
+		// =======================================================================
+
 
 		/**
 		Devuelve un puntero al único objeto de la clase.
 
-		@return Factoría de entidades.
+		@return Manager de materiales.
 		*/
 		static CMaterialManager* getSingletonPtr() { return _instance; }
 
-		physx::PxMaterial* getMaterial(MaterialType material);
+		//________________________________________________________________________
+
+		/**
+		Devuelve un puntero al material físico que buscamos.
+
+		@param material Tipo de material que queremos.
+		*/
+		Material* getMaterial(MaterialType material);
 
 	private:
 
-		/**
-		Única instancia de la clase.
-		*/
-		static CMaterialManager *_instance;
+		
+		// =======================================================================
+		//                      CONSTRUCTORES Y DESTRUCTOR
+		// =======================================================================
 
-		/** 
-		Constructor de la clase, protegido, pues es un singleton.
-		Registra al objeto como observer del cargador de mapas.
-		*/
+
+		/** Constructor de la clase, privado, pues es un singleton. */
 		CMaterialManager();
 
-		/**
-		Destructor protegido, por ser singleton.
-		*/
+		//________________________________________________________________________
+
+		/** Destructor privado, por ser singleton. */
 		~CMaterialManager();
 
-		// SDK de Physx
+
+		// =======================================================================
+		//                          MIEMBROS PRIVADOS
+		// =======================================================================
+
+
+		/** Única instancia de la clase. */
+		static CMaterialManager *_instance;
+
+		/** Puntero a la SDK de PhysX, necesario para registrar materiales. */
 		physx::PxPhysics* _physxSDK;
 
+		/** Vector que contendrá los materiales registrados. */
 		std::vector<physx::PxMaterial*> _materialTable;
 
 	}; // CMaterialManager

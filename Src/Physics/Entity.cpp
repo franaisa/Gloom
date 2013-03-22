@@ -5,6 +5,9 @@
 /**
 @file Entity.cpp
 
+Contiene la implementación de la clase que encapsula las operaciones 
+básicas de los rigid bodies.
+
 @see Physics::CEntity
 
 @author Francisco Aisa García
@@ -12,15 +15,12 @@
 */
 
 #include "Entity.h"
-
-#include <assert.h>
-
 #include "Conversions.h"
-
 #include "Physics/Server.h"
 #include "Physics/CollisionManager.h"
-
 #include "Logic/Entity/Components/Physics.h"
+
+#include <assert.h>
 
 #include <PxPhysics.h>
 #include <PxScene.h>
@@ -29,15 +29,11 @@
 #include <PxRigidDynamic.h>
 #include <PxRigidStatic.h>
 #include <PxStringTable.h>
-
 #include <cooking/PxCooking.h>
-
 #include <extensions/PxDefaultSimulationFilterShader.h>
 #include <extensions/PxSimpleFactory.h>
 #include <extensions/PxDefaultStreams.h>
-
 #include <geometry/PxGeometryHelpers.h>
-
 #include <RepX/RepXUtility.h>
 
 using namespace physx;
@@ -51,6 +47,7 @@ namespace Physics {
 		_physxSDK = physicsServer->getPhysxSDK();
 		assert(_physxSDK && "No se ha inicializado physX");
 		
+		// Obtenemos la clase de cocinado de physX y comprobamos que ha sido inicializada
 		_cooking = physicsServer->getCooking();
 		assert(_cooking && "El cocinado de physx no ha sido activado");
 
@@ -58,17 +55,14 @@ namespace Physics {
 		_scene = physicsServer->getActiveScene();
 		assert(_scene && "No existe una escena fisica");
 
+		// Obtenemos el gestor de colisiones
 		_collisionManager = physicsServer->getCollisionManager();
 		assert(_collisionManager && "No existe ningun gestor de colisiones");
-
-		
 	} // CEntity
 
 	//________________________________________________________________________
 
 	CEntity::~CEntity() {
-		// Destruimos el actor de physx asociado al controller y desligamos el 
-		// actor de la escena
 		if(_actor != NULL) {
 			// El server se encarga de desatachar la entidad fisica de la
 			// escena a la que pertenezca y liberar los recursos reservados
@@ -90,19 +84,16 @@ namespace Physics {
 			case PxGeometryType::eBOX:
 				// Devolver la altura media de la caja
 				return static_cast<const PxBoxGeometry*>(&geometry)->halfExtents.y;
-
 				break;
 
 			case PxGeometryType::eSPHERE:
 				// Devolver el radio de la esfera
 				return static_cast<const PxSphereGeometry*>(&geometry)->radius;
-
 				break;
 
 			case PxGeometryType::eCAPSULE:
 				// Devolver el radio de la cupula mas la mitad de la altura
 				return static_cast<const PxCapsuleGeometry*>(&geometry)->halfHeight;
-
 				break;
 		}
 
@@ -130,20 +121,20 @@ namespace Physics {
 		_physxSDK->addCollection(*sceneCollection, *_scene); 
 
 		// Buscar una entidad de tipo PxRigidActor. Asumimos que hay exactamente 1 en el fichero.
-		PxRigidActor *actor = NULL;
+		PxRigidActor* actor = NULL;
 		for (unsigned int i=0; (i<sceneCollection->getNbObjects()) && !actor; i++) {
-			PxSerializable *p = sceneCollection->getObject(i);
+			PxSerializable* p = sceneCollection->getObject(i);
 			actor = p->is<PxRigidActor>();
 
 		}
 		assert(actor);
 
 		// Anotar el componente lógico asociado a la entidad física
-		actor->userData = (void *) component;
+		actor->userData = (void*) component;
 
 		// Establecer el grupo de colisión
 		PxSetGroup(*actor, group);
-
+		// Establecer los filtros de colisión
 		Physics::CServer::getSingletonPtr()->setupFiltering(actor, group, groupList);
 
 		// Liberar recursos

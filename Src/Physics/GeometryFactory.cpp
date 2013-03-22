@@ -1,6 +1,8 @@
 /**
 @file GeometryFactory.cpp
 
+Contiene la implementación de la factoría de geometrías.
+
 @see Logic::CGeometryFactory
 
 @author Francisco Aisa García
@@ -8,7 +10,6 @@
 */
 
 #include "GeometryFactory.h"
-
 #include "Conversions.h"
 
 #include <cassert>
@@ -51,19 +52,19 @@ namespace Physics {
 
 	//________________________________________________________________________
 
-	PxSphereGeometry CGeometryFactory::createSphere(float radius) {
+	SphereGeometry CGeometryFactory::createSphere(float radius) {
 		return PxSphereGeometry(radius);
 	}
 
 	//________________________________________________________________________
 
-	PxBoxGeometry CGeometryFactory::createBox(const Vector3& dimensions) {
+	BoxGeometry CGeometryFactory::createBox(const Vector3& dimensions) {
 		return PxBoxGeometry( Vector3ToPxVec3(dimensions) );
 	}
 
 	//________________________________________________________________________
 
-	PxPlane CGeometryFactory::createPlane(const Vector3 &point, const Vector3 &normal) {
+	PlaneGeometry CGeometryFactory::createPlane(const Vector3 &point, const Vector3 &normal) {
 		return PxPlane( Vector3ToPxVec3(point), Vector3ToPxVec3(normal) );
 	}
 

@@ -5,7 +5,8 @@
 /**
 @file CharacterController.cpp
 
-@see Graphics::CCharacterController
+@see Physics::CCharacterController
+@see physx::PxController
 
 @author Francisco Aisa García
 @date Marzo, 2013
@@ -41,17 +42,19 @@ namespace Physics {
 		_scene = Physics::CServer::getSingletonPtr()->getActiveScene();
 		assert(_scene && "No existe una escena fisica");
 
+		// Obtenemos el manager de controladores y comprobamos que ha sido inicializado
 		_controllerManager = Physics::CServer::getSingletonPtr()->getControllerManager();
 		assert(_controllerManager && "No existe controller manager");
 
+		// Obtenemos el gestor de colisiones
 		_collisionManager = Physics::CServer::getSingletonPtr()->getCollisionManager();
 	} // CCharacterController
 
 	//________________________________________________________________________
 
 	CCharacterController::~CCharacterController() {
-		// Destruimos el actor de physx asociado al controller y desligamos el 
-		// actor de la escena
+		// Destruimos el actor de physx asociado al controller. El gestor de controladores
+		// en su release ya se encarga de desligar el controlador de la escena.
 		if(_controller != NULL) {
 			_controller->release();
 			_controller = NULL;
@@ -91,9 +94,8 @@ namespace Physics {
 		desc.material = _physxSDK->createMaterial(0.5f, 0.5f, 0.1f); // En realidad sera getDefaultMaterial en el futuro
 		desc.climbingMode = PxCapsuleClimbingMode::eEASY;
 
-		//desc.contactOffset <-- Tamaño que recubre el volumen de la capsula, physx lo usa para no permitir que la capsula
+		//desc.contactOffset <-- Tamaño que recubre el volumen de la capsula, physx lo usa para no permitir que la capsula se introduzca en otros shapes
 		//desc.stepOffset <-- Tamaño de los escalones que el player puede subir
-		// se introduzca en otros shapes
 		//desc.slopeLimit = 0.707f;
 
 		desc.callback = _collisionManager;   // Establecer gestor de colisiones

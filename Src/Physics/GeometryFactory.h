@@ -1,13 +1,13 @@
 /**
-@file EntityFactory.h
+@file GeometryFactory.h
 
-Contiene la declaración de la clase factoría de entidades
-del juego.
+Contiene la declaración de la factoría de geometrías
+físicas.
 
-@see Logic::CEntityFactory
+@see Logic::CGeometryFactory
 
-@author David Llansó García, Marco Antonio Gómez Martín
-@date Agosto, 2010
+@author Francisco Aisa García.
+@date Marzo, 2013.
 */
 
 #ifndef __Physics_GeometryFactory_H
@@ -22,45 +22,52 @@ del juego.
 #include "geometry/PxPlaneGeometry.h"
 #include "geometry/PxCapsuleGeometry.h"
 
-// Definición de la clase
 namespace Physics {
 
+	// Alias para evitar acoplamiento en el proyecto de lógica
 	typedef physx::PxGeometry Geometry;
 	typedef physx::PxBoxGeometry BoxGeometry;
 	typedef physx::PxSphereGeometry SphereGeometry;
 	typedef physx::PxCapsuleGeometry CapsuleGeometry;
 	typedef physx::PxPlane PlaneGeometry;
 
-	// Enumerado para indicar el tipo de geometria que queremos crear
-	enum GeometryType { 
-		eBOX,			// Caja
-		eCAPSULE,		// Capsula
-		eSPHERE,		// Esfera
-		eCONVEX_MESH,	// Maya convexa
-		eHEIGHT_FIELD,	// Terreno
-		ePLANE,			// Plano
-		eTRIANGLE_MESH	// Maya de triangulos
-	};
-
 	/**
-	
+	Factoría de geometrías físicas. Los actores están formados de shapes, que
+	a su vez están formados por geometrías. La factoría nos da la posibilidad
+	de crear actores y hacer queries especificando la geometría que queremos.
+
 	@author Francisco Aisa García
 	@date Marzo, 2013
 	*/
+
 	class CGeometryFactory {
 	public:
 
+
+		// =======================================================================
+		//                 METODOS DE INICIALIZACION Y LIBERACION
+		// =======================================================================
+
+
 		/**
-		Inicializa la base de datos de la factoría.
+		Inicializa la factoría de geometrías.
 
 		@return false si no se ha podido inicializar.
 		*/
 		static bool Init();
 
+		//________________________________________________________________________
+
 		/**
-		Libera la base de datos. Debe llamarse al finalizar la aplicación.
+		Libera los recursos reservados por la factoría.
 		*/
 		static void Release();
+
+
+		// =======================================================================
+		//                            METODOS PROPIOS
+		// =======================================================================
+
 
 		/**
 		Devuelve un puntero al único objeto de la clase.
@@ -69,32 +76,57 @@ namespace Physics {
 		*/
 		static CGeometryFactory* getSingletonPtr() { return _instance; }
 
-		// Crear una esfera
-		physx::PxSphereGeometry createSphere(float radius);
-
-		// Crear una caja
-		physx::PxBoxGeometry createBox(const Vector3& dimensions);
-
-		// Crear un plano
-		physx::PxPlane createPlane(const Vector3 &point, const Vector3 &normal);
-
-	protected:
+		//________________________________________________________________________
 
 		/**
-		Única instancia de la clase.
-		*/
-		static CGeometryFactory *_instance;
+		Crea una esfera dado un radio.
 
-		/** 
-		Constructor de la clase, protegido, pues es un singleton.
-		Registra al objeto como observer del cargador de mapas.
+		@param radius Radio de la esfera que queremos crear
+		@return La geometría de una esfera.
 		*/
+		SphereGeometry createSphere(float radius);
+
+		//________________________________________________________________________
+
+		/**
+		Crea una caja dadas unas dimensiones.
+
+		@param dimensions Anchura, altura y profundidad de la caja.
+		@return La geometría de una caja.
+		*/
+		BoxGeometry createBox(const Vector3& dimensions);
+
+		//________________________________________________________________________
+
+		/**
+		Crea la geometría de un plano.
+
+		@param point Punto por el que pasa el plano.
+		@param normal Normal del plano.
+		@return La geometría de un plano.
+		*/
+		PlaneGeometry createPlane(const Vector3 &point, const Vector3 &normal);
+
+	private:
+
+
+		// =======================================================================
+		//                      CONSTRUCTORES Y DESTRUCTOR
+		// =======================================================================
+
+
+		/** Constructor de la clase, privado, pues es un singleton. */
 		CGeometryFactory();
 
-		/**
-		Destructor protegido, por ser singleton.
-		*/
+		//________________________________________________________________________
+
+		/** Destructor privado, por ser singleton. */
 		~CGeometryFactory();
+
+		//________________________________________________________________________
+
+		/** Única instancia de la clase. */
+		static CGeometryFactory *_instance;
 
 	}; // CGeometryFactory
 

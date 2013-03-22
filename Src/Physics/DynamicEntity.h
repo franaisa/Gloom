@@ -51,6 +51,10 @@ namespace Physics {
 	};
 
 	/**
+
+	IMPORTANTE: Las entidades físicas tienen orientación (a diferencia de
+	los controllers). Actualmente solo soportamos métodos de seteo de posición.
+	Deberiamos permitir setear la orientación también.
 	
 	LAS ENTIDADES FISICAS TIENEN ORIENTACION, NO SON COMO LOS CONTROLLERS!
 	PERMITIR FIJAR ESTOS PARAMETROS

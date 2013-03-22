@@ -5,6 +5,9 @@
 /**
 @file Entity.h
 
+Contiene la declaración de la clase que encapsula las operaciones 
+básicas de los rigid bodies.
+
 @see Physics::CEntity
 
 @author Francisco Aisa García
@@ -22,8 +25,6 @@
 
 #include <vector>
 #include <string>
-
-// REMEMBER! CONFIGURAR LOS FILTROS DEL CONTROLLER
 
 // Predeclaración de clases para ahorrar tiempo de compilación
 namespace physx {
@@ -46,64 +47,114 @@ namespace Logic {
 namespace Physics {
 
 	/**
-	
-	LAS ENTIDADES FISICAS TIENEN ORIENTACION, NO SON COMO LOS CONTROLLERS!
-	PERMITIR FIJAR ESTOS PARAMETROS
-
-	De momento solo un shape por entidad, pero en el futuro un vector de shapes
-	cada una con sus propiedades
+	Esta clase implementa la funcionalidad básica de los rigid bodies.
+	Las entidades dinámicas y estáticas tendrán que derivar de ésta.
 
 	@ingroup physicsGroup
-
-	Para los character controllers, las capsulas no giran, tan solo podemos obtener
-	la posicion.
 
 	@author Francisco Aisa García
 	@date Marzo, 2013
 	*/
+
 	class CEntity {
 	public:
 
+
+		// =======================================================================
+		//                      CONSTRUCTORES Y DESTRUCTOR
+		// =======================================================================
+
+
+		/** Constructor por defecto. */
 		CEntity::CEntity();
 
+		//________________________________________________________________________
+
+		/** Destructor. */
 		virtual ~CEntity();
 
-		/**
-		Devuelve la posición y rotación de una entidad física.
+		//________________________________________________________________________
 
-		@param actor Actor físico del que se desea conocer la posición y orientación.
-		@return Matriz 4x4 con la posición y orientación de la entidad.
-		 */
+		/**
+		Método virtual puro que debe ser implementado por las clases hijas para 
+		deserializar los datos físicos desde un fichero.
+
+		@param file Fichero desde el que se van a leer los datos.
+		@param group Grupo de colisión que queremos asignar al actor.
+		@param groupList Grupos de colisión con los que el actor quiere interactuar.
+		@param component Componente lógico asociado.
+		*/
+		virtual void load(const std::string &file, int group, const std::vector<int>& groupList, const Logic::IPhysics *component) = 0;
+
+		//________________________________________________________________________
+
+		/** Devuelve la posición y rotación de la entidad física. */
 		Matrix4 getTransform() const;
 
-		// Deberiamos tener un SET TRANSFORM Y UN GET POSITION!!!!!!!!!!!!!!!!
+		//________________________________________________________________________
 
+		/** Activa la simulación física. */
 		void activateSimulation();
 
+		//________________________________________________________________________
+
+		/** Desactiva la simulación física. */
 		void deactivateSimulation();
 
-		virtual void load(const std::string &file, int group, const std::vector<int>& groupList, const Logic::IPhysics *component) = 0;
 
 	protected:
 
+
+		// =======================================================================
+		//                          METODOS PRIVADOS
+		// =======================================================================
+
+
+		/** 
+		Método para construir un actor de PhysX a partir de un fichero RepX.
+
+		@param file Fichero desde el que se van a leer los datos.
+		@param group Grupo de colisión que queremos asignar al actor.
+		@param groupList Grupos de colisión con los que el actor quiere interactuar.
+		@param component Componente lógico asociado.
+		*/
 		physx::PxRigidActor* deserializeFromRepXFile(const std::string &file, int group, const std::vector<int>& groupList, const Logic::IPhysics *component);
 
+		//________________________________________________________________________
+
+		/**
+		Dada una geometría devuelve el desfase que existe entre el pivote lógico y
+		el físico, ya que en la física el pivote se encuentra en el centro del objeto
+		y en la lógica en el pie.
+
+		@param geometry Geometria a la cual queremos calcularle el desfase del pivote.
+		@return Defase entre el pivote lógico y el físico (solo afecta a la coordenada
+		y).
+		*/
 		float getLogicPivotOffset(const physx::PxGeometry& geometry);
 
-		/** Rigidbody. IMPORTANTE: TIENE QUE SER INICIALIZADO POR LA CLASE HIJA. */
+
+		// =======================================================================
+		//                          MIEMBROS PRIVADOS
+		// =======================================================================
+
+
+		/** Puntero al actor de PhysX. Importante: Tiene que ser inicializado por la clase hija. */
 		physx::PxRigidActor* _actor;
 
-		// Puntero a la escena
+		/** Puntero a la escena de PhysX. */
 		physx::PxScene* _scene;
 
-		// SDK de Physx
+		/** Puntero al core de PhysX. */
 		physx::PxPhysics* _physxSDK;
 
+		/** Puntero al cocinado de PhysX. */
 		physx::PxCooking* _cooking;
 
 		/** Puntero al gestor de colisiones */
 		CCollisionManager* _collisionManager;
 
+		/** True si el actor representa a un trigger. */
 		bool _isTrigger;
 
 	}; // class CEntity

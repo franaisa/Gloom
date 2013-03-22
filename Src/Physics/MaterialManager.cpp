@@ -1,6 +1,8 @@
 /**
 @file MaterialManager.cpp
 
+Contiene la implementación del gestor de materiales.
+
 @see Physics::CMaterialManager
 
 @author Francisco Aisa García
@@ -70,7 +72,7 @@ namespace Physics {
 
 	//________________________________________________________________________
 
-	PxMaterial* CMaterialManager::getMaterial(MaterialType material) {
+	Material* CMaterialManager::getMaterial(MaterialType material) {
 		return _materialTable[material];
 	}
 
