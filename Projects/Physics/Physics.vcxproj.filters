@@ -4,9 +4,6 @@
     <Filter Include="Actors">
       <UniqueIdentifier>{57b18d1b-a100-453d-bdf1-ccdbdd691b2e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Filters">
-      <UniqueIdentifier>{4bc4c3de-623e-4508-a1c2-1936c1f7d5a1}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Factories">
       <UniqueIdentifier>{ce3f3be8-054d-484d-92ec-8e7d60b115b3}</UniqueIdentifier>
     </Filter>
@@ -15,12 +12,6 @@
     </Filter>
     <Filter Include="Actors\Source">
       <UniqueIdentifier>{66f81168-2ef1-4181-ab5d-eb50b9312548}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Filters\Header">
-      <UniqueIdentifier>{f3dd1488-f1d3-4ea2-b00f-8f8a2607de44}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Filters\Source">
-      <UniqueIdentifier>{796c6869-35ba-49a9-8b77-c0390c5238f4}</UniqueIdentifier>
     </Filter>
     <Filter Include="Utils">
       <UniqueIdentifier>{18c0cd9b-e950-4e18-9447-ed6857453f8b}</UniqueIdentifier>
@@ -55,9 +46,6 @@
       <Filter>Managers\Source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Src\Physics\Server.cpp" />
-    <ClCompile Include="..\..\Src\Physics\CustomControllerBehavior.cpp">
-      <Filter>Filters\Source</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Src\Physics\GeometryFactory.cpp">
       <Filter>Factories\Source</Filter>
     </ClCompile>
@@ -88,9 +76,6 @@
       <Filter>Managers\Header</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Src\Physics\Server.h" />
-    <ClInclude Include="..\..\Src\Physics\CustomControllerBehavior.h">
-      <Filter>Filters\Header</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Src\Physics\Conversions.h">
       <Filter>Utils</Filter>
     </ClInclude>

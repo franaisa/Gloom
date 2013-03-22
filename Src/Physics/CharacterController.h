@@ -43,11 +43,11 @@ namespace Physics {
 	// Flags que controlan con que colisiona el controller
 	enum CharacterControllerFlag {
 		// El controller esta colisionando por los lados
-		eCOLLISION_SIDES = physx::PxControllerFlag::eCOLLISION_SIDES,
+		eCOLLISION_SIDES	= physx::PxControllerFlag::eCOLLISION_SIDES,
 		// El controller colisiona por la parte superior
-		eCOLLISION_UP = physx::PxControllerFlag::eCOLLISION_UP,
+		eCOLLISION_UP		= physx::PxControllerFlag::eCOLLISION_UP,
 		// El controller colisiona por la parte inferior
-		eCOLLISION_DOWN	= physx::PxControllerFlag::eCOLLISION_DOWN,
+		eCOLLISION_DOWN		= physx::PxControllerFlag::eCOLLISION_DOWN,
 	};
 
 	/**

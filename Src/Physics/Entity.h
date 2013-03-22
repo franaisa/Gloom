@@ -36,11 +36,9 @@ namespace physx {
 
 namespace Physics {
 	class CCollisionManager;
-	class CErrorManager;
 }
 
 namespace Logic {
-	class CPhysicEntity;
 	class IPhysics;
 }
 
@@ -73,18 +71,25 @@ namespace Physics {
 		/** Destructor. */
 		virtual ~CEntity();
 
-		//________________________________________________________________________
+
+		// =======================================================================
+		//                            METODOS PROPIOS
+		// =======================================================================
+
 
 		/**
 		Método virtual puro que debe ser implementado por las clases hijas para 
 		deserializar los datos físicos desde un fichero.
+
+		Contiene una implementación por defecto que las clases hijas pueden 
+		reutilizar.
 
 		@param file Fichero desde el que se van a leer los datos.
 		@param group Grupo de colisión que queremos asignar al actor.
 		@param groupList Grupos de colisión con los que el actor quiere interactuar.
 		@param component Componente lógico asociado.
 		*/
-		virtual void load(const std::string &file, int group, const std::vector<int>& groupList, const Logic::IPhysics *component) = 0;
+		virtual void load(const std::string &file, int group, const std::vector<int>& groupList, const Logic::IPhysics* component) = 0;
 
 		//________________________________________________________________________
 
@@ -118,7 +123,7 @@ namespace Physics {
 		@param groupList Grupos de colisión con los que el actor quiere interactuar.
 		@param component Componente lógico asociado.
 		*/
-		physx::PxRigidActor* deserializeFromRepXFile(const std::string &file, int group, const std::vector<int>& groupList, const Logic::IPhysics *component);
+		physx::PxRigidActor* deserializeFromRepXFile(const std::string &file, int group, const std::vector<int>& groupList, const Logic::IPhysics* component);
 
 		//________________________________________________________________________
 

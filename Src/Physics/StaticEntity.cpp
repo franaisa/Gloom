@@ -5,6 +5,9 @@
 /**
 @file StaticEntity.cpp
 
+Contiene la implementación de la clase que representa a las entidades físicas
+estáticas.
+
 @see Physics::CStaticEntity
 
 @author Francisco Aisa García
@@ -29,15 +32,23 @@
 #include <PxRigidStatic.h>
 #include <extensions/PxDefaultSimulationFilterShader.h>
 #include <extensions/PxSimpleFactory.h>
-#include <geometry/PxGeometryHelpers.h>
 
 using namespace physx;
 using namespace std;
 
 namespace Physics {
 
-	void CStaticEntity::load(const Vector3 &position, const PxGeometry& geometry, PxMaterial& material, 
-					         bool trigger, int group, const vector<int>& groupList, const Logic::IPhysics *component) {
+	void CStaticEntity::load(const string &file, int group, const vector<int>& groupList, const Logic::IPhysics* component) {
+		// Cargamos desde fichero los datos del actor
+		CEntity::load(file, group, groupList, component);
+
+		// Asignamos al actor los flags que corresponden a los rigid estaticos
+	}
+
+	//________________________________________________________________________
+
+	void CStaticEntity::load(const Vector3 &position, const Geometry& geometry, Material& material, 
+					         bool trigger, int group, const vector<int>& groupList, const Logic::IPhysics* component) {
 
 		assert(_scene);
 
@@ -72,8 +83,8 @@ namespace Physics {
 
 	//________________________________________________________________________
 
-	void CStaticEntity::load(const PxPlane& plane, PxMaterial& material, int group, 
-							 const vector<int>& groupList, const Logic::IPhysics *component) {
+	void CStaticEntity::load(const PlaneGeometry& plane, Material& material, int group, 
+							 const vector<int>& groupList, const Logic::IPhysics* component) {
 
 		assert(_scene);
 
@@ -90,15 +101,6 @@ namespace Physics {
 	
 		// Añadir el actor a la escena
 		_scene->addActor(*_actor);
-	}
-
-	//________________________________________________________________________
-
-	void CStaticEntity::load(const string &file, int group, const vector<int>& groupList, const Logic::IPhysics *component) {
-		// Deserializamos el fichero RepX
-		_actor = deserializeFromRepXFile(file, group, groupList, component);
-
-		// Asignamos al actor los flags que corresponden a los rigid estaticos
 	}
 
 } // namespace Physics

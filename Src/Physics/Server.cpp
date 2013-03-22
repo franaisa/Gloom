@@ -28,8 +28,6 @@ Contiene la implementación del servidor de física.
 #include <extensions\PxVisualDebuggerExt.h> 
 #include <RepX\RepX.h>
 
-#include "Physics/CustomControllerBehavior.h"
-
 using namespace Physics;
 using namespace Logic;
 using namespace physx;

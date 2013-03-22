@@ -79,6 +79,12 @@ namespace Physics {
 
 	//________________________________________________________________________
 
+	void CEntity::load(const std::string &file, int group, const std::vector<int>& groupList, const Logic::IPhysics* component) {
+		_actor = deserializeFromRepXFile(file, group, groupList, component);
+	}
+
+	//________________________________________________________________________
+
 	float CEntity::getLogicPivotOffset(const PxGeometry& geometry) {
 		switch( geometry.getType() ) {
 			case PxGeometryType::eBOX:

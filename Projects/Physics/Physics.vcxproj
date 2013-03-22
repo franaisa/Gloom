@@ -71,7 +71,6 @@
   <ItemGroup>
     <ClCompile Include="..\..\Src\Physics\CharacterController.cpp" />
     <ClCompile Include="..\..\Src\Physics\CollisionManager.cpp" />
-    <ClCompile Include="..\..\Src\Physics\CustomControllerBehavior.cpp" />
     <ClCompile Include="..\..\Src\Physics\DynamicEntity.cpp" />
     <ClCompile Include="..\..\Src\Physics\Entity.cpp" />
     <ClCompile Include="..\..\Src\Physics\ErrorManager.cpp" />
@@ -85,7 +84,6 @@
     <ClInclude Include="..\..\Src\Physics\CharacterController.h" />
     <ClInclude Include="..\..\Src\Physics\CollisionManager.h" />
     <ClInclude Include="..\..\Src\Physics\Conversions.h" />
-    <ClInclude Include="..\..\Src\Physics\CustomControllerBehavior.h" />
     <ClInclude Include="..\..\Src\Physics\DynamicEntity.h" />
     <ClInclude Include="..\..\Src\Physics\Entity.h" />
     <ClInclude Include="..\..\Src\Physics\ErrorManager.h" />
