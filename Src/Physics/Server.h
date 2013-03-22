@@ -242,36 +242,36 @@ namespace Physics {
 		virtual ~CServer();
 
 		// Instancia única de la clase.
-		static CServer *_instance;
+		static CServer* _instance;
 
 		// Gestor de errores
-		physx::PxErrorCallback *_errorManager;
+		physx::PxErrorCallback* _errorManager;
 
 		// Gestor de memoria
-		physx::PxAllocatorCallback *_allocator;
+		physx::PxAllocatorCallback* _allocator;
 
 		// Distintos atributos relacionados con PhysX
-		physx::PxFoundation *_foundation;
-		physx::PxProfileZoneManager *_profileZoneManager;
-		physx::PxDefaultCpuDispatcher *_cpuDispatcher;
-		physx::pxtask::CudaContextManager *_cudaContextManager;
-		physx::debugger::comm::PvdConnection *_pvdConnection;
-		physx::PxCooking *_cooking;
+		physx::PxFoundation* _foundation;
+		physx::PxProfileZoneManager* _profileZoneManager;
+		physx::PxDefaultCpuDispatcher* _cpuDispatcher;
+		physx::pxtask::CudaContextManager* _cudaContextManager;
+		physx::debugger::comm::PvdConnection* _pvdConnection;
+		physx::PxCooking* _cooking;
 
 		// SDK de PhysX
-		physx::PxPhysics *_physics;
+		physx::PxPhysics* _physics;
 
 		// Escena física
-		physx::PxScene *_scene;
+		physx::PxScene* _scene;
 
 		// Gestor de controller managers
 		physx::PxControllerManager* _controllerManager;
 
 		// Material que se aplica por defecto a las nuevas entidades físicas
-		physx::PxMaterial *_defaultMaterial;
+		physx::PxMaterial* _defaultMaterial;
 
 		// Gestion de colisiones
-		CCollisionManager *_collisionManager;
+		CCollisionManager* _collisionManager;
 
 		// Tiempo mínimo de ejecución de física
 		unsigned int _acumTime;

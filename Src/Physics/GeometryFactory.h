@@ -15,12 +15,12 @@ del juego.
 
 #include "BaseSubsystems/Math.h"
 
+// La factoria devuelve tipos estaticos (nada de punteros)
+// por ello incluimos las cabeceras y no hacemos predeclaraciones
 #include "geometry/PxSphereGeometry.h"
 #include "geometry/PxBoxGeometry.h"
 #include "geometry/PxPlaneGeometry.h"
 #include "geometry/PxCapsuleGeometry.h"
-
-// Predeclaración de clases para ahorrar tiempo de compilación
 
 // Definición de la clase
 namespace Physics {

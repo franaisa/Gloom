@@ -26,7 +26,7 @@ namespace Physics {
 	//________________________________________________________________________
 
 	// Hacer que el tamaño del vector sea el del numero de materiales
-	CMaterialManager::CMaterialManager() : _materialTable(1) {
+	CMaterialManager::CMaterialManager() {
 		_instance = this;
 
 		// Obtenemos la sdk de physics y comprobamos que ha sido inicializada
@@ -34,14 +34,17 @@ namespace Physics {
 		assert(_physxSDK && "No se ha inicializado physX");
 
 		// Creamos los materiales
+		_materialTable.resize(1); // Cuanta memoria vamos a necesitar?
 		_materialTable[MaterialType::eDEFAULT] = _physxSDK->createMaterial(0.5f, 0.5f, 0.1f);
 	} // CMaterialManager
 	
 	//________________________________________________________________________
 
 	CMaterialManager::~CMaterialManager() {
-		// Nada que liberar, no hemos reservado memoria dinamica.
-		// La propia physx se encarga de liberar a los materiales creados
+		// Liberamos los materiales que han sido creados
+		for(int i = 0; i < _materialTable.size(); ++i) {
+			_materialTable[i]->release();
+		}
 
 		_instance = NULL;
 		_physxSDK = NULL;

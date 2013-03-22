@@ -132,7 +132,8 @@ namespace Logic
 		//Si no esto muerto ya hago las acciones
 		if(!_isDead){
 			//Desactivamos todos menos el cspawnplayer
-			std::vector<std::string> except(4);
+			std::vector<std::string> except;
+			except.resize(4); // Solo necesitamos 4 slots
 			except.push_back( std::string("CAnimatedGraphics") );
 			except.push_back( std::string("CSpawnPlayer") );
 			except.push_back( std::string("CHudOverlay") );

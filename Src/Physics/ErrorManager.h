@@ -28,8 +28,7 @@ namespace Physics {
 	 @author Antonio Sánchez Ruiz-Granados
 	 @date Noviembre, 2012
 	 */
-	class CErrorManager : public physx::PxErrorCallback
-	{
+	class CErrorManager : public physx::PxErrorCallback {
 	public:
 		/**
 		 * Constructor por defecto.

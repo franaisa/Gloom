@@ -94,12 +94,6 @@ CServer::CServer() : _cudaContextManager(NULL), _scene(NULL)
 	PxCookingParams params;
 	_cooking = PxCreateCooking(PX_PHYSICS_VERSION, *_foundation, params);
 
-	// Crear el material que se usará por defecto
-	float staticFriction = 0.5f;
-	float dynamicFriction = 0.5f;
-	float restitution = 0.1f;
-	_defaultMaterial = _physics->createMaterial(staticFriction, dynamicFriction, restitution);
-
 	// Intentar conectar con PhysX Visual Debugger (PVD)
 	_pvdConnection = NULL;
 
@@ -132,10 +126,11 @@ CServer::~CServer()
 		_pvdConnection = NULL;
 	}
 
-	if (_defaultMaterial) {
-		_defaultMaterial->release();
-		_defaultMaterial = NULL;
-	}
+	// Antes de liberar los punteros de PhysX, liberamos
+	// los material reservados (las geometrias en principio
+	// no manejan punteros).
+	Physics::CGeometryFactory::Release();
+	Physics::CMaterialManager::Release();
 
 	if (_cooking) {
 		_cooking->release();
@@ -181,9 +176,6 @@ CServer::~CServer()
 		delete _errorManager;
 		_errorManager = NULL;
 	}
-
-	Physics::CGeometryFactory::Release();
-	Physics::CMaterialManager::Release();
 } 
 
 //--------------------------------------------------------
@@ -368,8 +360,6 @@ void CServer::destroyActor(physx::PxActor *actor) {
 	// Liberar recursos
 	actor->release();
 }
-
-
 
 //--------------------------------------------------------
 
