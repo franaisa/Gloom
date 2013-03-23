@@ -2,12 +2,12 @@
 @file Server.cpp
 
 Contiene la implementación de la clase CServer, Singleton que se encarga de
-la gestión de la interfaz con el usuario (entrada de periféricos, CEGui...).
+la gestión de la entrada de periféricos.
 
-@see GUI::CServer
+@see Input::CServer
 
-@author David Llansó
-@date Agosto, 2010
+@author Rubén Mulero
+@date March, 2013
 */
 
 #include "Server.h"
@@ -79,18 +79,6 @@ namespace Input {
 		_playerController = new CPlayerController();
 
 		_GUISystem = BaseSubsystems::CServer::getSingletonPtr()->getGUISystem();
-
-		// Cargamos las distintas plantillas o esquemas de fichero
-		// que usaremos en nuestro GUI.
-		// (automáticamente cargan los archivos looknfeel e imageset)
-		/*CEGUI::SchemeManager::getSingleton().create("TaharezLook.scheme");
-		CEGUI::SchemeManager::getSingleton().create("OgreTray.scheme");
-		CEGUI::SchemeManager::getSingleton().create("SleekSpace.scheme");
-		CEGUI::SchemeManager::getSingleton().create("CrossHair.scheme");
-		// Cargamos los archivos con las fuentes que usaremos.
-		CEGUI::FontManager::getSingleton().create("DejaVuSans-10.font");
-		CEGUI::FontManager::getSingleton().create("FairChar-30.font");
-		CEGUI::FontManager::getSingleton().create("Batang-26.font");*/
 
 		CInputManager::getSingletonPtr()->addMouseListener(this);
 		CInputManager::getSingletonPtr()->addKeyListener(this);
