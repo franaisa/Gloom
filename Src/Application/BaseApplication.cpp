@@ -143,6 +143,8 @@ namespace Application {
 	{
 		assert(_clock && "Asegurate de haber creado un reloj en el init de la clase de tu aplicacion!");
 		unsigned int resto;
+		unsigned int multiplo;
+		unsigned int fixedTick;
 
 		// Actualizamos una primera vez el tiempo, antes de
 		// empezar, para que el primer frame tenga un tiempo
@@ -162,11 +164,14 @@ namespace Application {
 
 			_clock->updateTime();
 
-			//Como mínimo 3 milisegundos para ejecutar un tick desde la ultima vez, el resto me lo guardo
-			_clock->setAcumTime(_clock->getAcumTime()+_clock->getLastFrameDuration());
-			if(_clock->getAcumTime()>3000){
-				tick(_clock->getAcumTime()/1000);
-				resto=_clock->getAcumTime()%1000;
+			//Como mínimo 16 milisegundos para ejecutar un tick desde la ultima vez, el resto me lo guardo
+			//Salvo que sea multiplo en cuyo caso ejecuto el tick entero (Ej; 32 del tiron y no guardo nada)
+			_clock->setAcumTime(_clock->getAcumTime()+_clock->getLastFrameDuration());		
+			if(_clock->getAcumTime()>=16000){
+				multiplo=_clock->getAcumTime()/16000;
+				fixedTick=16*multiplo;
+				tick(fixedTick);
+				resto=_clock->getAcumTime()-fixedTick*1000;
 				_clock->setAcumTime(resto);
 			}
 		

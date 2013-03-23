@@ -30,6 +30,7 @@ namespace Audio
 		_doppler=0.00000001f;
 		_rolloff=0.00000001f;
 		_soundAvatar=NULL;
+		_playerHeight=8;
 		_instance = this;
 
 	} // CServer
@@ -109,16 +110,17 @@ namespace Audio
 
 	void CServer::tick(unsigned int secs) 
 	{
+		//El tick se ejecuta ahora mismo cada 0.001secs (controlado en el nivel superior)
 		//Si hay un player con el que actualizarnos, seteamos la nueva posición
 		if(_soundAvatar){
-			std::cout << "LE DIGO AL SERVER LA POSICION DEL PLAYER EN CADA TICK" << std::endl;
 			Vector3 positionAvatar=_soundAvatar->getPosition();
+			Vector3 directionAvatar=Math::getDirection(_soundAvatar->getOrientation());
 
 			FMOD_VECTOR
-				listenerPos = {positionAvatar.x,positionAvatar.y,positionAvatar.z}, // posición del listener
+				listenerPos = {positionAvatar.x,positionAvatar.y+_playerHeight,positionAvatar.z}, // posición del listener
 				listenerVel = {0,0,0}, // velocidad
 				up = {0,1,0},          // vector up: hacia la “coronilla”
-				at = {0,0,1};          // vector at: hacia donde se mira
+				at = {directionAvatar.x,directionAvatar.y,directionAvatar.z};          // vector at: hacia donde se mira
 
 			// se coloca el listener
 			_system->set3DListenerAttributes(0,&listenerPos, &listenerVel,
@@ -214,6 +216,90 @@ namespace Audio
 	}//playLoopSound
 	//--------------------------------------------------------
 
+	void CServer::playSound3D(char* rutaSonido, const std::string& id,Vector3 position){
+		//Carga del sonido
+		Sound *sound;
+		FMOD_RESULT result = _system->createSound(
+		rutaSonido, // path del archivo de sonido
+		FMOD_3D, // flags
+		0, // información adicional (nada en este caso)
+		& sound); // devolución del handle al buffer
+		ERRCHECK(result);
+
+		//Reproducción en canal
+		Channel *canal;
+		result = _system->playSound(
+		FMOD_CHANNEL_FREE , // dejamos que FMOD seleccione cualquiera
+		sound, // sonido que se “engancha” a ese canal
+		false, // arranca sin “pause” (se reproduce directamente)
+		& canal); // devuelve el canal que asigna
+		ERRCHECK(result);
+		// el sonido ya está reproduciendo!!
+		float volume=0.7; // valor entre 0 y 1
+		result = canal->setVolume(volume);
+		ERRCHECK(result);
+
+		FMOD_VECTOR
+			pos={position.x,position.y,position.z}, // posición
+			vel={0,0,0};  // velocidad (para el doppler)
+			canal->set3DAttributes(& pos, & vel);
+			ERRCHECK(result);
+
+		int can;
+		canal->getIndex(&can);
+		std::cout << "el numero de canal ocupado es " << can << std::endl;
+		int numcanales;
+		_system->getChannelsPlaying(&numcanales);
+		std::cout << "El numero de canales usados al cargar el sonido es " << numcanales << std::endl;
+
+		//Guardamos la asociacion nombreSonido/Canal
+		_soundChannel[id]=canal;
+	}//playSound3D
+	//--------------------------------------------------------
+
+	void CServer::playLoopSound3D(char* rutaSonido, const std::string& id, Vector3 position){
+		//Carga del sonido
+		Sound *sound;
+		FMOD_RESULT result = _system->createSound(
+		rutaSonido, // path del archivo de sonido
+		FMOD_3D | FMOD_LOOP_NORMAL, // flags
+		0, // información adicional (nada en este caso)
+		& sound); // devolución del handle al buffer
+		ERRCHECK(result);
+		//sound->setLoopCount(-1); // sonido a loop asi le iba a david
+			
+		//Reproducción en canal
+		Channel *canal;
+		result = _system->playSound(
+		FMOD_CHANNEL_FREE , // dejamos que FMOD seleccione cualquiera
+		sound, // sonido que se “engancha” a ese canal
+		false, // arranca sin “pause” (se reproduce directamente)
+		& canal); // devuelve el canal que asigna
+		ERRCHECK(result);
+		// el sonido ya está reproduciendo!!
+		float volume=0.7; // valor entre 0 y 1
+		result = canal->setVolume(volume);
+		ERRCHECK(result);
+
+		FMOD_VECTOR
+			pos={position.x,position.y,position.z}, // posición
+			vel={0,0,0};  // velocidad (para el doppler)
+			canal->set3DAttributes(& pos, & vel);
+			ERRCHECK(result);
+
+		int can;
+		canal->getIndex(&can);
+		std::cout << "el numero de canal ocupado es " << can << std::endl;
+		int numcanales;
+		_system->getChannelsPlaying(&numcanales);
+		std::cout << "El numero de canales usados al cargar el sonido es " << numcanales << std::endl;
+
+
+		//Guardamos la asociacion nombreSonido/Canal
+		_soundChannel[id]=canal;
+	}//playLoopSound3D
+	//--------------------------------------------------------
+
 	void CServer::stopSound(const std::string& id){
 		SoundChannelMap::const_iterator itMap = _soundChannel.begin();
 		SoundChannelMap::const_iterator itErase;
@@ -239,6 +325,80 @@ namespace Audio
 		}
 		_soundChannel.clear();
 	}//stopAllSounds
+	//--------------------------------------------------------
+
+	void CServer::playStreamingSound(char* rutaSonido, const std::string& id){
+		//Carga del sonido
+		Sound *sound;
+		FMOD_RESULT result = _system->createStream(
+		rutaSonido, // path del archivo de sonido
+		FMOD_DEFAULT, // flags
+		0, // información adicional (nada en este caso)
+		& sound); // devolución del handle al buffer
+		ERRCHECK(result);
+
+		//Reproducción en canal
+		Channel *canal;
+		result = _system->playSound(
+		FMOD_CHANNEL_FREE , // dejamos que FMOD seleccione cualquiera
+		sound, // sonido que se “engancha” a ese canal
+		false, // arranca sin “pause” (se reproduce directamente)
+		& canal); // devuelve el canal que asigna
+		ERRCHECK(result);
+		// el sonido ya está reproduciendo!!
+		float volume=0.7; // valor entre 0 y 1
+		result = canal->setVolume(volume);
+		ERRCHECK(result);
+
+		int can;
+		canal->getIndex(&can);
+		std::cout << "el numero de canal ocupado es " << can << std::endl;
+		int numcanales;
+		_system->getChannelsPlaying(&numcanales);
+		std::cout << "El numero de canales usados al cargar el sonido es " << numcanales << std::endl;
+
+		//Guardamos la asociacion nombreSonido/Canal
+		_soundChannel[id]=canal;
+
+	}//playSound
+	//--------------------------------------------------------
+
+	void CServer::playStreamingLoopSound(char* rutaSonido, const std::string& id){
+		//Carga del sonido
+		Sound *sound;
+		FMOD_RESULT result = _system->createStream(
+		rutaSonido, // path del archivo de sonido
+		FMOD_DEFAULT | FMOD_LOOP_NORMAL, // flags
+		0, // información adicional (nada en este caso)
+		& sound); // devolución del handle al buffer
+		ERRCHECK(result);
+		//sound->setLoopCount(-1); // sonido a loop asi le iba a david
+			
+		//Reproducción en canal
+		Channel *canal;
+		result = _system->playSound(
+		FMOD_CHANNEL_FREE , // dejamos que FMOD seleccione cualquiera
+		sound, // sonido que se “engancha” a ese canal
+		false, // arranca sin “pause” (se reproduce directamente)
+		& canal); // devuelve el canal que asigna
+		ERRCHECK(result);
+		// el sonido ya está reproduciendo!!
+		float volume=0.7; // valor entre 0 y 1
+		result = canal->setVolume(volume);
+		ERRCHECK(result);
+
+		int can;
+		canal->getIndex(&can);
+		std::cout << "el numero de canal ocupado es " << can << std::endl;
+		int numcanales;
+		_system->getChannelsPlaying(&numcanales);
+		std::cout << "El numero de canales usados al cargar el sonido es " << numcanales << std::endl;
+
+
+		//Guardamos la asociacion nombreSonido/Canal
+		_soundChannel[id]=canal;
+
+	}//playLoopSound
 	//--------------------------------------------------------
 
 

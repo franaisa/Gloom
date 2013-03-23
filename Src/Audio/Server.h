@@ -74,14 +74,24 @@ namespace Audio
 		void tick(unsigned int msecs);
 
 		/**
-		Se encarga de cargar un sonido y reproducirlo en modo normal.
+		Se encarga de cargar un sonido (no 3D) y reproducirlo en modo normal.
 		*/
 		void playSound(char* rutaSonido, const std::string& id);
 
 		/**
-		Se encarga de cargar un sonido y reproducirlo en modo loop.
+		Se encarga de cargar un sonido (no 3D) y reproducirlo en modo loop.
 		*/
 		void playLoopSound(char* rutaSonido, const std::string& id);
+
+		/**
+		Se encarga de cargar un sonido 3D y reproducirlo en modo normal.
+		*/
+		void playSound3D(char* rutaSonido, const std::string& id, Vector3 position);
+
+		/**
+		Se encarga de cargar un sonido 3D y reproducirlo en modo loop.
+		*/
+		void playLoopSound3D(char* rutaSonido, const std::string& id, Vector3 position);
 
 		/**
 		Se encarga de parar un sonido introduciendo su nombre como parámetro.
@@ -96,12 +106,22 @@ namespace Audio
 		void stopAllSounds();
 
 		/**
+		Se encarga de cargar un sonido (no 3D) y reproducirlo en modo normal.
+		*/
+		void playStreamingSound(char* rutaSonido, const std::string& id);
+
+		/**
+		Se encarga de cargar un sonido (no 3D) y reproducirlo en modo loop.
+		*/
+		void playStreamingLoopSound(char* rutaSonido, const std::string& id);
+
+		/**
 		Establece el componente del jugador con el que preguntaremos la posición para actualizar la posición de escucha.
 
 		@param controlledAvatar Componente al que le preguntaremos la posición de la entidad.
 		*/
 		void setSoundAvatar(Logic::CEntity *controlledAvatar) 
-										{_soundAvatar = controlledAvatar;} 
+										{_soundAvatar = controlledAvatar;};
 
 	protected:
 
@@ -163,6 +183,7 @@ namespace Audio
 		Player(Protagonista) del audio.
 		*/
 		Logic::CEntity* _soundAvatar;
+		short _playerHeight;
 
 	}; // class CServer
 

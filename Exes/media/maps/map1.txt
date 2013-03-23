@@ -121,6 +121,7 @@ Map = {
 		power = 0.35,
 		velocity = 0.12,
 		direction = {-1,0,0},
+		audio = "media/audio/plasma.wav",
 		physic_entity = "rigid",
 		physic_trigger = true,
 		physic_type = "static",

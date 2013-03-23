@@ -28,7 +28,9 @@ mover al jugador.
 #include <cassert>
 
 //PRUEBAS,QUITAR LUEGO el INCLUDE SIGUIENTE
-#include "Audio\Server.h"
+#include "Audio/Server.h"
+#include "Logic/Server.h"
+#include "Logic/Maps/Map.h"
 
 //MENSAJE PARA DEBBUG
 #include "Logic/Messages/MessageHudDebbug.h"
@@ -109,7 +111,8 @@ namespace GUI {
 				key.keyId == GUI::Key::NUMBER5 || key.keyId == GUI::Key::NUMBER6 || key.keyId == GUI::Key::NUMBER7 || key.keyId == GUI::Key::NUMBER8){
 				
 					Logic::CMessageChangeWeapon *message=new Logic::CMessageChangeWeapon();
-	
+					Vector3 position;										
+					
 					switch(key.keyId)
 					{
 					case GUI::Key::NUMBER1:
@@ -128,9 +131,11 @@ namespace GUI {
 						message->setWeapon(4);
 						break;
 					case GUI::Key::NUMBER6:
-						message->setWeapon(5);
+					message->setWeapon(5);
 						break;
 					case GUI::Key::NUMBER7:
+						position=Logic::CServer::getSingletonPtr()->getMap()->getEntityByName("Jumper1")->getPosition();
+						Audio::CServer::getSingletonPtr()->playSound3D("media/audio/plasma.wav", "cosa", position);
 						break;
 					case GUI::Key::NUMBER8:
 						break;
