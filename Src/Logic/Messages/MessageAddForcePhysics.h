@@ -2,6 +2,7 @@
 #define __Logic_MessageAddForcePhysics_H
 
 #include "Message.h"
+#include "Physics/DynamicEntity.h"
 
 namespace Logic {
 
@@ -10,8 +11,12 @@ namespace Logic {
 	public:
 		CMessageAddForcePhysics();
 
-		void setForceVector(const Vector3& force);
+		void setForce(const Vector3& force, Physics::ForceMode mode);
+
+
+		Physics::ForceMode getForceMode();
 		Vector3 getForceVector();
+
 		void setGravity(bool gravity);
 		bool getGravity();
 		
@@ -22,6 +27,7 @@ namespace Logic {
 
 	protected:
 		Vector3 _force;
+		Physics::ForceMode _forceMode;
 		bool _gravity;
 	};
 	REG_FACTORYMESSAGE(CMessageAddForcePhysics);

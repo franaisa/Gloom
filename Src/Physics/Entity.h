@@ -1,125 +1,169 @@
 //---------------------------------------------------------------------------
-// Fluid.h
+// Entity.h
 //---------------------------------------------------------------------------
 
 /**
-@file Fluid.h
+@file Entity.h
 
-@see Graphics::CFluid
+Contiene la declaración de la clase que encapsula las operaciones 
+básicas de los rigid bodies.
+
+@see Physics::CEntity
 
 @author Francisco Aisa García
 @date Marzo, 2013
 */
 
-#ifndef __Physics_Fluid_H
-#define __Physics_Fluid_H
+#ifndef __Physics_Entity_H
+#define __Physics_Entity_H
+
+#include "BaseSubsystems/Math.h"
+
+#include <geometry/PxGeometry.h>
+#include <PxMaterial.h>
+#include <PxForceMode.h>
+
+#include <vector>
+#include <string>
 
 // Predeclaración de clases para ahorrar tiempo de compilación
 namespace physx {
-	class PxParticleFluid;
 	class PxScene;
 	class PxPhysics;
-};
+	class PxRigidActor;
+	class PxCooking;
+}
 
 namespace Physics {
+	class CCollisionManager;
+}
+
+namespace Logic {
+	class IPhysics;
+}
+
+namespace Physics {
+
 	/**
-	
+	Esta clase implementa la funcionalidad básica de los rigid bodies.
+	Las entidades dinámicas y estáticas tendrán que derivar de ésta.
+
 	@ingroup physicsGroup
 
 	@author Francisco Aisa García
 	@date Marzo, 2013
 	*/
-	class CFluid {
+
+	class CEntity {
 	public:
 
-		/** Constructor por defecto. */
-		CFluid();
 
-		/** Destructor de la aplicación. */
-		virtual ~CFluid();
+		// =======================================================================
+		//                      CONSTRUCTORES Y DESTRUCTOR
+		// =======================================================================
+
+
+		/** Constructor por defecto. */
+		CEntity::CEntity();
+
+		//________________________________________________________________________
+
+		/** Destructor. */
+		virtual ~CEntity();
+
+
+		// =======================================================================
+		//                            METODOS PROPIOS
+		// =======================================================================
+
 
 		/**
-		Añade la entidad al SceneManager pasado por parámetro. Si la entidad
-		no está cargada se fuerza su carga.
+		Método virtual puro que debe ser implementado por las clases hijas para 
+		deserializar los datos físicos desde un fichero.
 
-		@param sceneMgr Gestor de la escena de Ogre a la que se quiere añadir
-		la entidad.
-		@return true si la entidad se pudo cargar y añadir a la escena.
+		Contiene una implementación por defecto que las clases hijas pueden 
+		reutilizar.
+
+		@param file Fichero desde el que se van a leer los datos.
+		@param group Grupo de colisión que queremos asignar al actor.
+		@param groupList Grupos de colisión con los que el actor quiere interactuar.
+		@param component Componente lógico asociado.
 		*/
-		//bool attachToScene(CScene *scene);
+		virtual void load(const std::string &file, int group, const std::vector<int>& groupList, const Logic::IPhysics* component) = 0;
+
+		//________________________________________________________________________
+
+		/** Devuelve la posición y rotación de la entidad física. */
+		Matrix4 getTransform() const;
+
+		//________________________________________________________________________
+
+		/** Activa la simulación física. */
+		void activateSimulation();
+
+		//________________________________________________________________________
+
+		/** Desactiva la simulación física. */
+		void deactivateSimulation();
+
 
 	protected:
 
-		// CScene es la única que puede añadir o eliminar entidades de una 
-		// escena y por tanto cargar o descargar entidades.
-		// Por otro lado cada entidad debe pertenecer a una escena. Solo 
-		// permitimos a la escena actualizar el estado.
-		friend class CScene;
+
+		// =======================================================================
+		//                          METODOS PRIVADOS
+		// =======================================================================
+
+
+		/** 
+		Método para construir un actor de PhysX a partir de un fichero RepX.
+
+		@param file Fichero desde el que se van a leer los datos.
+		@param group Grupo de colisión que queremos asignar al actor.
+		@param groupList Grupos de colisión con los que el actor quiere interactuar.
+		@param component Componente lógico asociado.
+		*/
+		physx::PxRigidActor* deserializeFromRepXFile(const std::string &file, int group, const std::vector<int>& groupList, const Logic::IPhysics* component);
+
+		//________________________________________________________________________
 
 		/**
-		Descarga una entidad de la escena en la que se encuentra cargada.
+		Dada una geometría devuelve el desfase que existe entre el pivote lógico y
+		el físico, ya que en la física el pivote se encuentra en el centro del objeto
+		y en la lógica en el pie.
 
-		@return true si la entidad se descargo y eliminó de la escena
-		correctamente. Si la entidad no estaba cargada se devuelve false.
+		@param geometry Geometria a la cual queremos calcularle el desfase del pivote.
+		@return Defase entre el pivote lógico y el físico (solo afecta a la coordenada
+		y).
 		*/
-		bool deattachFromScene();
-		
-		/**
-		Carga la entidad gráfica correspondiente al nombre _mesh. No hace 
-		comprobaciónes de si la entidad está ya cargada o de si pertenece a
-		otra escena. Esto se debe hacer de manera externa.
+		float getLogicPivotOffset(const physx::PxGeometry& geometry);
 
-		@return true si la entidad pudo crear los objetos necesarios en Ogre
-		o si la entidad ya estaba cargada.
-		*/
-		bool load();
 
-		/**
-		Elimina las estructuras creadas en Ogre mediante load(). No hace 
-		comprobaciónes de si la entidad está o no cargada o de si pertenece
-		a una escena. Esto se debe hacer de manera externa.
-		*/
-		void unload();
-		
-		physx::PxParticleFluid* createFluid(unsigned int maxParticles, float restitution, float viscosity,
-								            float stiffness, float dynamicFriction, float particleDistance);
+		// =======================================================================
+		//                          MIEMBROS PRIVADOS
+		// =======================================================================
 
-		/**
-		Actualiza el estado de la entidad cada ciclo. En esta clase no se
-		necesita actualizar el estado cada ciclo, pero en las hijas puede que
-		si.
-		
-		@param secs Número de segundos transcurridos desde la última llamada.
-		*/
-		virtual void tick(float secs);
-		
-		/**
-		Nodo que contiene la entidad de Ogre.
-		*/
-		//Ogre::SceneNode *_entityNode;
 
-		/** Sistema de fluidos de PhysX. */
-		physx::PxParticleFluid* _fluid;
+		/** Puntero al actor de PhysX. Importante: Tiene que ser inicializado por la clase hija. */
+		physx::PxRigidActor* _actor;
 
-		/** @deprecated De momento tenemos la escena de physx, en un futuro sera CScene. */
+		/** Puntero a la escena de PhysX. */
 		physx::PxScene* _scene;
 
-		// SDK de Physx
-		/** 
-		@deprecated De momento mantenemos el puntero a la SDK, pero en el futuro se deberia
-		llamar al server para que haga lo que tenga que hacer.
-		*/
-		physx::PxPhysics* _physics;
+		/** Puntero al core de PhysX. */
+		physx::PxPhysics* _physxSDK;
 
-		/**
-		Indica si la entidad ha sido cargada en el motor gráfico.
-		*/
-		bool _loaded;
+		/** Puntero al cocinado de PhysX. */
+		physx::PxCooking* _cooking;
 
-		bool _runOnGPU;
+		/** Puntero al gestor de colisiones */
+		CCollisionManager* _collisionManager;
+
+		/** True si el actor representa a un trigger. */
+		bool _isTrigger;
 
 	}; // class CEntity
 
-} // namespace Graphics
+} // namespace Physics
 
-#endif // __Graphics_Entity_H
+#endif // __Physics_Entity_H

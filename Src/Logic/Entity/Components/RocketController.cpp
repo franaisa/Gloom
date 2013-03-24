@@ -77,28 +77,34 @@ namespace Logic {
 	//________________________________________________________________________
 
 	void CRocketController::createExplotion() {
-		// Hacemos una consulta de overlap para ver si tenemos que mandar
-		// un mensaje de daño
+		// EntitiesHit sera el buffer que contendra la lista de entidades que ha colisionado
+		// con el overlap
 		CEntity** entitiesHit = NULL;
 		int nbHits = 0;
-		// Hacemos una query de overlap en la posicion en la que se encuentra la granada con el radio
-		// que se indique de explosion
-		Physics::CServer::getSingletonPtr()->overlapExplotion(_entity->getPosition(), _explotionRadius, entitiesHit, nbHits);
+
+		// Hacemos una query de overlap con la geometria de una esfera en la posicion 
+		// en la que se encuentra la granada con el radio que se indique de explosion
+		Physics::SphereGeometry explotionGeom = Physics::CGeometryFactory::getSingletonPtr()->createSphere(_explotionRadius);
+		Physics::CServer::getSingletonPtr()->overlapMultiple(explotionGeom, _entity->getPosition(), entitiesHit, nbHits);
 
 		// Mandamos el mensaje de daño a cada una de las entidades que hayamos golpeado
 		// Además aplicamos un desplazamiento al jugador 
 		for(int i = 0; i < nbHits; ++i) {
+			// Si la entidad golpeada es valida
 			if(entitiesHit[i] != NULL) {
-				//Mensaje Daño
+				// Emitimos el mensaje de daño
 				CMessageDamaged* msg = new CMessageDamaged();
-				msg->setDamage( _explotionDamage );
+				msg->setDamage(_explotionDamage);
 				msg->setEnemy(_owner);
 				entitiesHit[i]->emitMessage(msg);
-				//Mensaje desplazamiento
+
+				// Emitimos el mensaje de desplazamiento por daños
 				CMessageAddForcePlayer* msg2 = new CMessageAddForcePlayer();
+				// Seteamos la fuerza y la velocidad
 				msg2->setPower(0.1f);
 				msg2->setVelocity(0.12f);
-				Vector3 direccionImpacto=entitiesHit[i]->getPosition()-_entity->getPosition();
+				// Seteamos el vector director del desplazamiento
+				Vector3 direccionImpacto = entitiesHit[i]->getPosition() - _entity->getPosition();
 				direccionImpacto.normalise();
 				msg2->setDirection(direccionImpacto);
 				entitiesHit[i]->emitMessage(msg2);
@@ -121,6 +127,7 @@ namespace Logic {
 		assert(graphicComponent != NULL && "No se puede colocar la explosion porque no tiene componente grafico");
 		graphicComponent->setTransform( _entity->getTransform() );
 		*/
+
 		Graphics::CParticle *particle = Graphics::CServer::getSingletonPtr()->getActiveScene()->createParticle(_entity->getName(),"ExplosionParticle", _entity->getPosition());
 
 	} // createExplotion

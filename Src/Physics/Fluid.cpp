@@ -49,7 +49,7 @@ namespace Physics {
 
 		// create particles in *PxParticleSystem* ps
 		bool success = _fluid->createParticles(particleCreationData);
-	} // CEntity
+	} // CFluid
 
 	//________________________________________________________________________
 
@@ -60,7 +60,7 @@ namespace Physics {
 		// Fijamos los punteros a physx como nulos
 		_physxSDK = NULL;
 		_scene = NULL;
-	} // ~CEntity
+	} // ~CFluid
 
 	//________________________________________________________________________
 		

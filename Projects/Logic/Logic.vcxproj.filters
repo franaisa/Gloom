@@ -91,9 +91,6 @@
     <ClCompile Include="..\..\Src\Logic\Entity\Components\Life.cpp">
       <Filter>Entity\Components\Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Src\Logic\Entity\Components\PhysicEntity.cpp">
-      <Filter>Entity\Components\Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Src\Logic\Entity\Components\SwitchPosition.cpp">
       <Filter>Entity\Components\Source Files</Filter>
     </ClCompile>
@@ -333,6 +330,12 @@
     </ClCompile>
     <ClCompile Include="..\..\Src\Logic\Messages\MessageAudio.cpp">
       <Filter>Messages\Source</Filter>
+	</ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\PhysicStaticEntity.cpp">
+      <Filter>Entity\Components\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\PhysicDynamicEntity.cpp">
+      <Filter>Entity\Components\Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -385,9 +388,6 @@
       <Filter>Entity\Components\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Entity\Components\Life.h">
-      <Filter>Entity\Components\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Logic\Entity\Components\PhysicEntity.h">
       <Filter>Entity\Components\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Entity\Components\SwitchPosition.h">
@@ -632,6 +632,12 @@
     </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Messages\MessageAudio.h">
       <Filter>Messages\Header</Filter>
+	</ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\PhysicStaticEntity.h">
+      <Filter>Entity\Components\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\PhysicDynamicEntity.h">
+      <Filter>Entity\Components\Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
