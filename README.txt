@@ -23,6 +23,7 @@ GENERAL NOTES
 	
 	** Core Engineers:
 		- Ruben Mulero Guerrero
+		- Jaime Chapinal Cervantes
 		- Antonio Jesus Narváez Corrales
 		- Jose Antonio García Yáñez
 		- Javier Fernández Villanueva
@@ -31,7 +32,6 @@ GENERAL NOTES
 	** Collaborators:
 		- David Llansó García
 		- Marco Antonio Gómez Martín
-		- Antonio Sánchez Ruiz-Granados
 		
 * About the project: Gloom is being developed as a masters thesis for the Complutense
 University of Madrid. Please note that the development is in a very early stage. 
