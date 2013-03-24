@@ -26,11 +26,8 @@
 #define _USE_MATH_DEFINES
 #include <math.h>
 
-#include <PxPhysicsAPI.h>
-
 using namespace Logic;
 using namespace Physics;
-using namespace physx; 
 
 IMP_FACTORY(CPhysicStaticEntity);
 

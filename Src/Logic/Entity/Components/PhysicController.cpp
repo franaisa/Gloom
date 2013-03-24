@@ -8,8 +8,8 @@ el mundo físico usando character controllers.
 @see Logic::CPhysicEntity
 @see Logic::IPhysics
 
-@author Antonio Sánchez Ruiz-Granados
-@date Noviembre, 2012
+@author Francisco Aisa García
+@date Marzo, 2013.
 */
 
 #include "PhysicController.h"
@@ -25,12 +25,8 @@ el mundo físico usando character controllers.
 
 #include "AvatarController.h"
 
-#include <PxPhysicsAPI.h> // !!!! Cambiar!!!!!!!!
-
-
 using namespace Logic;
 using namespace Physics;
-using namespace physx; 
 
 IMP_FACTORY(CPhysicController);
 
@@ -193,9 +189,9 @@ void CPhysicController::onShapeHit(IPhysics *otherComponent) {
 
 //________________________________________________________________________
 
-void CPhysicController::onControllerHit (const PxControllersHit &hit) {
+/*void CPhysicController::onControllerHit (const PxControllersHit &hit) {
 
-}
+}*/
 
 //________________________________________________________________________
 

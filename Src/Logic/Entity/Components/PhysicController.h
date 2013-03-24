@@ -114,7 +114,7 @@ namespace Logic
 		/**
 		Se invoca cuando se produce una colisión entre dos character controllers.
 		*/
-		void onControllerHit (const physx::PxControllersHit &hit);
+		//void onControllerHit (const physx::PxControllersHit &hit);
 
 		void activateSimulation();
 
