@@ -1,16 +1,16 @@
-World CGraphics CPhysicEntity
+World CGraphics CPhysicStaticEntity
 LocalPlayer CAvatarController CInterpolation CPhysicController CHudOverlay CNetConnector CClientRespawn
 Camera CCamera
 RemotePlayer CAvatarController CInterpolation CPhysicController CAnimatedGraphics CNetConnector CClientRespawn
 ItemSpawn CFloatingMovement CSpawnItemManager CGraphics
-SpawnPoint CPhysicEntity
-Jumper CGraphics CPhysicEntity CJumper
-Grenade CPhysicEntity CGraphics
-Rocket CPhysicEntity CRocketController CGraphics
-Lava CPhysicEntity CLava CGraphics
-Elevator CPhysicEntity CElevator CGraphics
-ElevatorTrigger CPhysicEntity CElevatorTrigger
+SpawnPoint CPhysicStaticEntity
+Jumper CGraphics CPhysicStaticEntity CJumper
+Grenade CPhysicDynamicEntity CGraphics
+Rocket CPhysicDynamicEntity CRocketController CGraphics
+Lava CPhysicStaticEntity CLava CGraphics
+Elevator CPhysicDynamicEntity CElevator CGraphics
+ElevatorTrigger CPhysicDynamicEntity CElevatorTrigger
 SpotLight CLight CGraphics
 DirectionalLight CLight CGraphics
 PointLight CLight CGraphics
-ContenedorLava CGraphics CPhysicEntity
+ContenedorLava CGraphics CPhysicStaticEntity
