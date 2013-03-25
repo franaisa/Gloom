@@ -19,12 +19,12 @@ mover al jugador.
 #include "Logic/Entity/Components/AvatarController.h"
 #include "Logic/Entity/Components/WeaponsManager.h"
 #include "Logic/Entity/Components/ArrayGraphics.h"
+#include "Logic/Entity/Components/AvatarController.h"
 
 #include "Logic/Messages/MessageChangeWeapon.h"
 
 #include "Logic/Messages/MessageControl.h"
 #include "Logic/Messages/MessageMouse.h"
-
 #include <cassert>
 
 //PRUEBAS,QUITAR LUEGO el INCLUDE SIGUIENTE
@@ -59,24 +59,19 @@ namespace GUI {
 	{		
 		CInputManager::getSingletonPtr()->addKeyListener(this);
 		CInputManager::getSingletonPtr()->addMouseListener(this);
+		_time=clock();
 
-
-		/*_strafingRight=false;
+		_strafingRight=false;
 		_strafingLeft=false;
 		_unpressLeft=false;
 		_unpressRight=false;
 		_jumping=false;
 		//Inicializacion variables de control ( salto, salto lateral, concatenacion salto lateral y rebote )
 		_jumping = false;
-		_jumpingControl = false;
-		_speedJump=-0.5f;
-		_falling=false;
-		_caida=false;
 		_jumpLeft=0;
 		_jumpRight=0;
 		_timeSideJump=0;
 		_sideJump=false;
-		_velocitySideJump=false;
 		_unpressRight=false;
 		_unpressLeft=false;
 		_readySideJumpLeft=false;
@@ -86,9 +81,11 @@ namespace GUI {
 		_timeConcatSideJump=0;
 		_activeConcat=false;
 		_sideFly=false;
-		_sideContact=false;*/
+		_sideContact=false;
 
-
+		_maxTimeSideJump = 300;
+		_maxTimeConcatSideJump = 500;
+		_falling=false;
 
 	} // activate
 
@@ -157,9 +154,11 @@ namespace GUI {
 					break;
 				case GUI::Key::A:
 					m->setType(Logic::Control::STRAFE_LEFT);
+					_strafingLeft=true;
 					break;
 				case GUI::Key::D:
 					m->setType(Logic::Control::STRAFE_RIGHT);
+					_strafingRight=true;
 					break;
 				case GUI::Key::SPACE:
 					m->setType(Logic::Control::JUMP);
@@ -171,13 +170,20 @@ namespace GUI {
 					return false;
 				}
 				if (key.keyId != GUI::Key::O){
-					//Tomamos el tiempo
-					unsigned int time = clock();
+					//Tomamos el tiempo actual, calculamos la diferencia y actualizamos para la siguiente comprobacion
+					unsigned int actualTime = clock();
+					unsigned int diffTime= (_time-actualTime)%1000; //Diferencia de tiempo en msecs
+					_time=actualTime;
+
+					//Cogemos el _falling del proyecto de lógica para saber cuando volvemos a tocar el suelo y empezamos a contar el tiempo
+					Logic::CAvatarController *avat=_controlledAvatar->getComponent<Logic::CAvatarController>("CAvatarController");
+					_falling=avat->getFalling();
+
 					//Antes de emitir el tipico mensaje comprobaremos si en verdad es un salto lateral ( y después si es concatenado )
-					/*
+					
 					//Control del tiempo para el salto lateral(al contar aqui cuando se activa no se cuenta el primer tick)
 					if(_jumpLeft!=0 || _jumpRight!=0){
-						_timeSideJump+=msecs;
+						_timeSideJump+=diffTime;
 					}
 					else{
 						_timeSideJump=0;
@@ -242,15 +248,21 @@ namespace GUI {
 							_readySideJumpRight=false;
 						}
 
-						//Si se activo el salto lateral hacia algun lado y está dentro del tiempo
-						if((_jumpRight==2 || _jumpLeft==2) && _timeSideJump<_maxTimeSideJump){ 
+						//Si se activo el salto lateral hacia algun lado, está dentro del tiempo y no estamos cayendo
+						if((_jumpRight==2 || _jumpLeft==2) && _timeSideJump<_maxTimeSideJump && !_falling){ 
 							_jumping=true; //Activo el salto
 							_sideJump=true;
+							if(_jumpRight==2){
+								m->setType(Logic::Control::SIDEJUMP_RIGHT);
+								//std::cout << "SIDE RIGHT" << std::endl;
+							}
+							else{
+								m->setType(Logic::Control::SIDEJUMP_LEFT);
+								//std::cout << "SIDE LEFT" << std::endl;
+							}
 							_dontCountUntilUnpress=true;
 							_nConcatSideJump++;
 							_timeSideJump=0;
-							_jumpRight=0;
-							_jumpLeft=0;
 							_readySideJumpRight=false;
 							_readySideJumpLeft=false;
 							//Control del salto lateral concatenado
@@ -259,7 +271,15 @@ namespace GUI {
 								_activeConcat=true;
 								_timeConcatSideJump=0;
 								_sideContact=false;
-							}
+								if(_jumpRight==2){
+									m->setType(Logic::Control::CONCATSIDEJUMP_RIGHT);
+									//std::cout << "CONCAT RIGHT" << std::endl;
+								}
+								else{
+									m->setType(Logic::Control::CONCATSIDEJUMP_LEFT);
+									//std::cout << "CONCAT LEFT" << std::endl;
+								}
+							}	
 							//Si llevo al menos 1 salto, no estoy cayendo, pero el tiempo es mayor a 500msecs reseteo las variables de concatenacion de salto
 							else if(_nConcatSideJump>1 && !_falling){
 								_nConcatSideJump=1; // A uno por que seria un nuevo conteo de saltos laterales
@@ -267,6 +287,8 @@ namespace GUI {
 								_sideContact=false;
 								_activeConcat=false;
 							}
+							_jumpRight=0;
+							_jumpLeft=0;
 						}
 						//Si se pasó el tiempo reseteo
 						else if(_timeSideJump>_maxTimeSideJump){
@@ -275,12 +297,33 @@ namespace GUI {
 							_jumpRight=0;
 							_readySideJumpRight=false;
 							_readySideJumpLeft=false;
-						}*/
+						}
+					}
+
+					if(!_falling){
+						//Caí luego activo el booleano para que empiece la cuenta de concatenacion
+						if(_sideFly){
+							_sideContact=true;
+							_sideFly=false;
+						}
+						//Hubo salto lateral, cuando caiga diré que he caido y empezaré la cuenta de concatenacion
+						if(_sideJump){
+							_sideFly=true;
+						}
+					}
+					else{
+						_sideJump=false;
+						_jumping=false;
+					}
 
 
+					//Aumento el tiempo de conteo para la concatenacion de saltos
+					if(_sideContact){
+						_timeConcatSideJump+=diffTime;
+					}
 
 
-
+					
 
 					_controlledAvatar->emitMessage(m);
 				}
@@ -309,9 +352,13 @@ namespace GUI {
 				break;
 			case GUI::Key::A:
 				m->setType(Logic::Control::STOP_STRAFE_LEFT);
+				_strafingLeft = false;
+				_unpressLeft = true;
 				break;
 			case GUI::Key::D:
 				m->setType(Logic::Control::STOP_STRAFE_RIGHT);
+				_strafingRight = false;
+				_unpressRight = true;
 				break;
 			default:
 				return false;

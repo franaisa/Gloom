@@ -82,8 +82,6 @@ namespace Logic
 		_walkingBack=false;
 		_strafingRight=false;
 		_strafingLeft=false;
-		_unpressLeft=false;
-		_unpressRight=false;
 		_jumping=false;
 		//Inicializacion variables de control ( salto, salto lateral, concatenacion salto lateral y rebote )
 		_jumping = false;
@@ -91,21 +89,9 @@ namespace Logic
 		_speedJump=-0.5f;
 		_falling=false;
 		_caida=false;
-		_jumpLeft=0;
-		_jumpRight=0;
-		_timeSideJump=0;
 		_sideJump=false;
 		_velocitySideJump=false;
-		_unpressRight=false;
-		_unpressLeft=false;
-		_readySideJumpLeft=false;
-		_readySideJumpRight=false;
-		_dontCountUntilUnpress=false;
-		_nConcatSideJump=0;
-		_timeConcatSideJump=0;
 		_activeConcat=false;
-		_sideFly=false;
-		_sideContact=false;
 		_rebound=false;
 		_force=false;
 		_applyForce=false;
@@ -157,6 +143,30 @@ namespace Logic
 				mouse(((CMessageMouse*)message)->getMouse());
 			else if(((CMessageControl*)message)->getType()==Control::JUMP)
 				jump();
+			else if(((CMessageControl*)message)->getType()==Control::SIDEJUMP_LEFT){
+				strafeLeft();
+				_sideJump=true;
+				_jumping=true;
+				_activeConcat=false;
+			}
+			else if(((CMessageControl*)message)->getType()==Control::SIDEJUMP_RIGHT){
+				strafeRight();
+				_sideJump=true;
+				_jumping=true;
+				_activeConcat=false;
+			}
+			else if(((CMessageControl*)message)->getType()==Control::CONCATSIDEJUMP_LEFT){
+				strafeLeft();
+				_sideJump=true;
+				_jumping=true;
+				_activeConcat=true;
+			}
+			else if(((CMessageControl*)message)->getType()==Control::CONCATSIDEJUMP_RIGHT){
+				strafeRight();
+				_sideJump=true;
+				_jumping=true;
+				_activeConcat=true;
+			}
 			break;
 		case Message::COLLISION_DOWN:
 			_falling=((CMessageCollisionDown*)message)->getCollisionDown();
@@ -267,7 +277,7 @@ namespace Logic
 		anim->setBool(true);
 		_entity->emitMessage(anim, this);
 		_strafingLeft = false;
-		_unpressLeft = true;
+
 	} // stopWalk
 
 	//---------------------------------------------------------
@@ -280,7 +290,7 @@ namespace Logic
 		anim->setBool(true);
 		_entity->emitMessage(anim, this);
 		_strafingRight = false;
-		_unpressRight = true;
+
 	} // stopWalk
 
 	//---------------------------------------------------------
@@ -333,109 +343,9 @@ namespace Logic
 		}
 		direction+= directionWalk;
 
-
-		//Control del tiempo para el salto lateral(al contar aqui cuando se activa no se cuenta el primer tick)
-		if(_jumpLeft!=0 || _jumpRight!=0){
-			_timeSideJump+=msecs;
-		}
-		else{
-			_timeSideJump=0;
-		}
-
-		//Controlamos cuando soltamos la tecla para hacer que la siguiente vez se active el salto
-		if(_unpressLeft && _jumpLeft==1 && !_dontCountUntilUnpress){
-			_readySideJumpLeft=true;
-			_readySideJumpRight=false;
-			_jumpRight=0;
-			_unpressLeft=false;
-		}
-		else if(_unpressRight && _jumpRight==1 && !_dontCountUntilUnpress){
-			_readySideJumpRight=true;
-			_readySideJumpLeft=false;
-			_jumpLeft=0;
-			_unpressRight=false;
-		}
-		//Cuando soltemos la segunda presión entonces empezamos el conteo de presiones otra vez
-		else if((_unpressRight || _unpressLeft) && _dontCountUntilUnpress){
-			_dontCountUntilUnpress=false;
-			_unpressRight=false;
-			_unpressLeft=false;
-			_jumpRight=0;
-			_jumpLeft=0;
-			_readySideJumpLeft=false;
-			_readySideJumpRight=false;
-			_timeSideJump=0;
-		}
-		else if(_unpressRight || _unpressLeft){
-			_unpressRight=false;
-			_unpressLeft=false;
-		}
-
 		//Izquierda/Derecha
 		if(_strafingLeft || _strafingRight)
 		{
-			//Si se presionaron ambas teclas
-			if(_strafingRight && _strafingLeft){
-				_timeSideJump=0;
-				_jumpRight=0;
-				_jumpLeft=0;
-				_readySideJumpLeft=false;
-				_readySideJumpRight=false;
-			}
-			//Si se presionó la izq , el contador esta a 0 y puedo contar || o el salto izq esta listo y le di a la izq
-			else if((_strafingLeft && _jumpLeft==0 && !_dontCountUntilUnpress) || (_readySideJumpLeft && _strafingLeft)){
-				if(_jumpRight!=0)
-					_timeSideJump=0;
-				_jumpLeft++;
-				_jumpRight=0;
-				_readySideJumpLeft=false;
-				_readySideJumpRight=false;
-			}
-			//contrario al de arriba
-			else if((_strafingRight  && _jumpRight==0 && !_dontCountUntilUnpress) || (_readySideJumpRight && _strafingRight)){
-				if(_jumpLeft!=0)
-					_timeSideJump=0;
-				_jumpRight++;
-				_jumpLeft=0;
-				_readySideJumpLeft=false;
-				_readySideJumpRight=false;
-			}
-
-			//Si se activo el salto lateral hacia algun lado y está dentro del tiempo
-			if((_jumpRight==2 || _jumpLeft==2) && _timeSideJump<_maxTimeSideJump){ 
-				_jumping=true; //Activo el salto
-				_sideJump=true;
-				_dontCountUntilUnpress=true;
-				_nConcatSideJump++;
-				_timeSideJump=0;
-				_jumpRight=0;
-				_jumpLeft=0;
-				_readySideJumpRight=false;
-				_readySideJumpLeft=false;
-				//Control del salto lateral concatenado
-				//Si llevamos mas de uno hecho,no estoy cayendo y el tiempo es inferior a _maxTimeConcatSideJump activamos la concatenacion (dará velocidad)
-				if(_nConcatSideJump>1 && _timeConcatSideJump<_maxTimeConcatSideJump && !_falling){
-					_activeConcat=true;
-					_timeConcatSideJump=0;
-					_sideContact=false;
-				}
-				//Si llevo al menos 1 salto, no estoy cayendo, pero el tiempo es mayor a 500msecs reseteo las variables de concatenacion de salto
-				else if(_nConcatSideJump>1 && !_falling){
-					_nConcatSideJump=1; // A uno por que seria un nuevo conteo de saltos laterales
-					_timeConcatSideJump=0;
-					_sideContact=false;
-					_activeConcat=false;
-				}
-			}
-			//Si se pasó el tiempo reseteo
-			else if(_timeSideJump>_maxTimeSideJump){
-				_timeSideJump=0;
-				_jumpLeft=0;
-				_jumpRight=0;
-				_readySideJumpRight=false;
-				_readySideJumpLeft=false;
-			}
-		
 			directionStrafe = 
 					Math::getDirection(_entity->getYaw() + Math::PI/2);
 			if(_strafingRight)
@@ -456,15 +366,6 @@ namespace Logic
 			_caida=false;
 			_velocitySideJump=false;
 			_applyForce=false;
-			//Caí luego activo el booleano para que empiece la cuenta de concatenacion
-			if(_sideFly){
-				_sideContact=true;
-				_sideFly=false;
-			}
-			//Hubo salto lateral, cuando caiga diré que he caido y empezaré la cuenta de concatenacion
-			if(_sideJump){
-				_sideFly=true;
-			}
 		}
 		else{
 			_canJump=false;
@@ -479,12 +380,6 @@ namespace Logic
 			_canJump=true;
 			direction=_dirRebound;
 			_rebound=false;
-		}
-
-
-		//Aumento el tiempo de conteo para la concatenacion de saltos
-		if(_sideContact){
-			_timeConcatSideJump+=msecs;
 		}
 
 		//Gravedad
@@ -578,6 +473,7 @@ namespace Logic
 		_entity->emitMessage(m);
 
 	} // tick
+
 
 } // namespace Logic
 
