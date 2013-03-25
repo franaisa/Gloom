@@ -5,6 +5,10 @@
 /**
 @file Shadow.h
 
+Contiene la declaración de la clase que
+implementa las habilidades del personaje
+"Shadow".
+
 @author Francisco Aisa García
 @date Marzo, 2013
 */
@@ -18,7 +22,8 @@
 namespace Logic {
 
 	/**
-
+	Clase que implementa las habilidades propias
+	del personaje "Shadow".
 
 	@ingroup logicGroup
 
@@ -37,14 +42,12 @@ namespace Logic {
 
 
 		/** Constructor por defecto. */
-		CShadow() {
-			// No hay memoria dinamica que inicializar
-		}
+		CShadow();
 
 		//__________________________________________________________________
 
 		/** Destructor virtual. */
-		virtual ~CShadow() { }
+		virtual ~CShadow();
 		
 
 		// =======================================================================
@@ -53,6 +56,7 @@ namespace Logic {
 	
 
 		/**
+		De momento no lee nada nuevo, tan solo llama a la clase padre.
 
 		@param entity Entidad a la que pertenece el componente.
 		@param map Mapa Lógico en el que se registrará el objeto.
@@ -63,28 +67,17 @@ namespace Logic {
 
 		
 		// =======================================================================
-		//                     METODOS HEREDADOS DE CSkills
+		//                  METODOS HEREDADOS DE CPlayerClass
 		// =======================================================================
 
 
-		/**
-		*/
-		virtual void primarySkill() { /* Implementar */ };
+		/** El personaje se vuelve invisible al invocar este método. */
+		virtual void primarySkill();
 
 		//__________________________________________________________________
 
-		/**
-		*/
-		virtual void secondarySkill() { /* Implementar */ };
-
-
-	protected:
-
-
-		// =======================================================================
-		//                          MIEMBROS PROTEGIDOS
-		// =======================================================================
-
+		/** Habilidad por definir. */
+		virtual void secondarySkill();
 
 	}; // class CShadow
 

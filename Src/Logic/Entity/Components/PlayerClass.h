@@ -19,6 +19,8 @@ clase.
 #include "BaseSubsystems/Math.h"
 #include "Logic/Entity/Component.h"
 
+#include <string>
+
 namespace Logic {
 
 	/**
@@ -67,8 +69,17 @@ namespace Logic {
 		// =======================================================================
 
 
-		/** Constructor por defecto. */
-		CPlayerClass();
+		/** 
+		Constructor parametrizado. Todos los componentes necesitan un constructor
+		por defecto para poder ser llamados desde la factoría, pero dado que este
+		componente es abstracto, no tenemos ese problema.
+
+		Pasamos el nombre de la clase hija como truco para leer los datos de cooldown.
+		
+		@param playerClassName Nombre de la clase de personaje. Las clases que hereden
+		de ésta, deben rellenar este campo (Hound, Screamer, Shadow, Archangel).
+		*/
+		CPlayerClass(const std::string& playerClassName);
 
 		//__________________________________________________________________
 
@@ -188,6 +199,9 @@ namespace Logic {
 		//                          MIEMBROS PROTEGIDOS
 		// =======================================================================
 
+
+		/** Nombre de la clase del personaje. */
+		std::string _playerClassName;
 
 		/** Tiempo de recarga de la habilidad primaria del personaje. */
 		float _primarySkillCooldown;

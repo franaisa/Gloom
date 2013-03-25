@@ -5,7 +5,11 @@
 /**
 @file Archangel.h
 
-@author 
+Contiene la declaración de la clase que
+implementa las habilidades del personaje
+"Archangel".
+
+@author Francisco Aisa García
 @date Marzo, 2013
 */
 
@@ -18,11 +22,12 @@
 namespace Logic {
 
 	/**
-
+	Clase que implementa las habilidades propias
+	del personaje "Shadow".
 
 	@ingroup logicGroup
 
-	@author 
+	@author Francisco Aisa García
 	@date Febrero, 2013
 	*/
 
@@ -37,14 +42,12 @@ namespace Logic {
 
 
 		/** Constructor por defecto. */
-		CArchangel() {
-			// No hay memoria dinamica que inicializar
-		}
+		CArchangel();
 
 		//__________________________________________________________________
 
 		/** Destructor virtual. */
-		virtual ~CArchangel() { }
+		virtual ~CArchangel();
 		
 
 		// =======================================================================
@@ -53,6 +56,7 @@ namespace Logic {
 	
 
 		/**
+		De momento no lee nada nuevo, tan solo llama a la clase padre.
 
 		@param entity Entidad a la que pertenece el componente.
 		@param map Mapa Lógico en el que se registrará el objeto.
@@ -63,28 +67,17 @@ namespace Logic {
 
 		
 		// =======================================================================
-		//                     METODOS HEREDADOS DE CSkills
+		//                  METODOS HEREDADOS DE CPlayerClass
 		// =======================================================================
 
 
-		/**
-		*/
-		virtual void primarySkill() { /* Implementar */ };
+		/** Su piel se transforma en piedra. */
+		virtual void primarySkill();
 
 		//__________________________________________________________________
 
-		/**
-		*/
-		virtual void secondarySkill() { /* Implementar */ };
-
-
-	protected:
-
-
-		// =======================================================================
-		//                          MIEMBROS PROTEGIDOS
-		// =======================================================================
-
+		/** El personaje cura a los aliados que tiene en un radio. */
+		virtual void secondarySkill();
 
 	}; // class CArchangel
 
@@ -92,4 +85,4 @@ namespace Logic {
 
 } // namespace Logic
 
-#endif // __Logic_SkillsArchangel_H
+#endif // __Logic_Archangel_H

@@ -5,7 +5,11 @@
 /**
 @file Screamer.h
 
-@author 
+Contiene la declaración de la clase que
+implementa las habilidades del personaje
+"Screamer".
+
+@author Francisco Aisa García
 @date Marzo, 2013
 */
 
@@ -18,11 +22,12 @@
 namespace Logic {
 
 	/**
-
+	Clase que implementa las habilidades propias
+	del personaje "Screamer".
 
 	@ingroup logicGroup
 
-	@author 
+	@author Francisco Aisa García
 	@date Febrero, 2013
 	*/
 
@@ -37,14 +42,12 @@ namespace Logic {
 
 
 		/** Constructor por defecto. */
-		CScreamer() {
-			// No hay memoria dinamica que inicializar
-		}
+		CScreamer();
 
 		//__________________________________________________________________
 
 		/** Destructor virtual. */
-		virtual ~CScreamer() { }
+		virtual ~CScreamer();
 		
 
 		// =======================================================================
@@ -53,6 +56,7 @@ namespace Logic {
 	
 
 		/**
+		De momento no lee nada nuevo, tan solo llama a la clase padre.
 
 		@param entity Entidad a la que pertenece el componente.
 		@param map Mapa Lógico en el que se registrará el objeto.
@@ -63,28 +67,20 @@ namespace Logic {
 
 		
 		// =======================================================================
-		//                     METODOS HEREDADOS DE CSkills
+		//                  METODOS HEREDADOS DE CPlayerClass
 		// =======================================================================
 
 
-		/**
+		/** 
+		Absorbe todos los proyectiles que le llegan de frente. Esta habilidad tiene
+		un límite, si se sobrepasa explotas.
 		*/
-		virtual void primarySkill() { /* Implementar */ };
+		virtual void primarySkill();
 
 		//__________________________________________________________________
 
-		/**
-		*/
-		virtual void secondarySkill() { /* Implementar */ };
-
-
-	protected:
-
-
-		// =======================================================================
-		//                          MIEMBROS PROTEGIDOS
-		// =======================================================================
-
+		/** Habilidad por definir. */
+		virtual void secondarySkill();
 
 	}; // class CScreamer
 

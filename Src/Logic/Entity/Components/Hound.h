@@ -5,7 +5,11 @@
 /**
 @file Hound.h
 
-@author 
+Contiene la declaración de la clase que
+implementa las habilidades del personaje
+"Hound".
+
+@author Francisco Aisa García
 @date Marzo, 2013
 */
 
@@ -18,11 +22,12 @@
 namespace Logic {
 
 	/**
-
+	Clase que implementa las habilidades propias
+	del personaje "Hound".
 
 	@ingroup logicGroup
 
-	@author 
+	@author Francisco Aisa García
 	@date Febrero, 2013
 	*/
 
@@ -37,14 +42,12 @@ namespace Logic {
 
 
 		/** Constructor por defecto. */
-		CHound() {
-			// No hay memoria dinamica que inicializar
-		}
+		CHound();
 
 		//__________________________________________________________________
 
 		/** Destructor virtual. */
-		virtual ~CHound() { }
+		virtual ~CHound();
 		
 
 		// =======================================================================
@@ -53,6 +56,7 @@ namespace Logic {
 	
 
 		/**
+		De momento no lee nada nuevo, tan solo llama a la clase padre.
 
 		@param entity Entidad a la que pertenece el componente.
 		@param map Mapa Lógico en el que se registrará el objeto.
@@ -63,28 +67,17 @@ namespace Logic {
 
 		
 		// =======================================================================
-		//                     METODOS HEREDADOS DE CSkills
+		//                  METODOS HEREDADOS DE CPlayerClass
 		// =======================================================================
 
 
-		/**
-		*/
-		virtual void primarySkill() { /* Implementar */ };
+		/** Beserker, el personaje dispara más rápido y hace más daño. */
+		virtual void primarySkill();
 
 		//__________________________________________________________________
 
-		/**
-		*/
-		virtual void secondarySkill() { /* Implementar */ };
-
-
-	protected:
-
-
-		// =======================================================================
-		//                          MIEMBROS PROTEGIDOS
-		// =======================================================================
-
+		/** Habilidad por definir. */
+		virtual void secondarySkill();
 
 	}; // class CHound
 

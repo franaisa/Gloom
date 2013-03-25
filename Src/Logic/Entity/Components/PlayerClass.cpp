@@ -27,8 +27,9 @@ clase.
 namespace Logic {
 	//IMP_FACTORY(CPlayerClass);
 	
-	CPlayerClass::CPlayerClass() : _primarySkillTimer(0),
-								   _secondarySkillTimer(0) {
+	CPlayerClass::CPlayerClass(const std::string& playerClassName) : _primarySkillTimer(0),
+																	 _secondarySkillTimer(0),
+																	 _playerClassName(playerClassName) {
 		
 		// No hay memoria dinamica que reservar
 	}
@@ -44,17 +45,19 @@ namespace Logic {
 	bool CPlayerClass::spawn(CEntity* entity, CMap* map, const Map::CEntity* entityInfo) {
 		if( !IComponent::spawn(entity,map,entityInfo) ) return false;
 
+		std::string primarySkillCooldownName = _playerClassName + "PrimarySkillCooldown";
+		std::string secondarySkillCooldownName = _playerClassName + "SecondarySkillCooldown";
+
 		// Leer el tiempo de cooldown de las habilidades primarias y secundarias
-		if(entityInfo->hasAttribute("primarySkillCooldown")) {
-			// Pasamos el tiempo a msecs
-			_primarySkillCooldown = entityInfo->getFloatAttribute("primarySkillCooldown") * 1000;
-		}
+		assert( entityInfo->hasAttribute(primarySkillCooldownName) );
+		// Pasamos el tiempo a msecs
+		_primarySkillCooldown = entityInfo->getFloatAttribute(primarySkillCooldownName) * 1000;
 
-		if(entityInfo->hasAttribute("secondarySkillCooldown")) {
-			// Pasamos el tiempo a msecs
-			_secondarySkillCooldown = entityInfo->getFloatAttribute("secondarySkillCooldown") * 1000;
-		}
+		assert( entityInfo->hasAttribute(secondarySkillCooldownName) );
+		// Pasamos el tiempo a msecs
+		_secondarySkillCooldown = entityInfo->getFloatAttribute(secondarySkillCooldownName) * 1000;
 
+		return true;
 	} // spawn
 	
 	//__________________________________________________________________
@@ -73,19 +76,15 @@ namespace Logic {
 		Logic::TMessageType msgType = message->getMessageType();
 
 		switch(msgType) {
-			case Message::CHANGE_PLAYER_CLASS:
-			{
+			case Message::CHANGE_PLAYER_CLASS: {
 				CMessageChangePlayerClass* changeClassMsg = static_cast<CMessageChangePlayerClass*>(message);
 
 				// Cambiar a la clase que toque en funcion del enumerado recibido
-				// Desactivar el componente actual y activar el componente
-				// correspondiente
 				changePlayerClass( changeClassMsg->getPlayerClass() );
 
 				break;
 			}
-			case Message::USE_PRIMARY_SKILL:
-			{
+			case Message::USE_PRIMARY_SKILL: {
 				if( canUsePrimarySkill() ) {
 					primarySkill();
 					_primarySkillTimer = _primarySkillCooldown;
@@ -93,8 +92,7 @@ namespace Logic {
 
 				break;
 			}
-			case Message::USE_SECONDARY_SKILL:
-			{
+			case Message::USE_SECONDARY_SKILL: {
 				if( canUseSecondarySkill() ) {
 					secondarySkill();
 					_secondarySkillTimer = _secondarySkillCooldown;
