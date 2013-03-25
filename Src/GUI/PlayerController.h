@@ -142,11 +142,12 @@ namespace GUI
 
 		/*Atributos que se encargan de contar/llevar el tiempo para ver si se hizo un salto lateral
 		*/
+		unsigned int _time;
+
 		int _jumpLeft;
 		int _jumpRight;
 		int _timeSideJump;
 		bool _sideJump;
-		bool _velocitySideJump;
 
 		bool _unpressRight;
 		bool _unpressLeft;
@@ -154,6 +155,10 @@ namespace GUI
 		bool _readySideJumpRight;
 		bool _dontCountUntilUnpress;
 
+		bool _jumping;
+		bool _strafingRight;
+		bool _strafingLeft;
+		bool _falling;
 		/**
 		Atributo que lleva el conteo de saltos concatenados para el aumento de velocidad
 		*/
@@ -162,7 +167,8 @@ namespace GUI
 		bool _activeConcat;
 		bool _sideFly;
 		bool _sideContact;
-
+		int _maxTimeSideJump;
+		int _maxTimeConcatSideJump;
 
 
 

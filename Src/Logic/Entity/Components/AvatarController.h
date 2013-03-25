@@ -171,6 +171,13 @@ namespace Logic
 		*/
 		void mouse(const float* amount);
 
+		/**
+		Devuelve el estado del booleano falling
+		*/
+		bool getFalling(){
+			return _falling;
+		};
+
 	protected:
 
 		/**
@@ -233,28 +240,15 @@ namespace Logic
 		bool _caida;
 
 		/**
-		Atributos que se encargan de contar/llevar el tiempo para ver si se hizo un salto lateral
+		Atributos que se encargan de los saltos laterales (activacion y velocidad)
 		*/
-		int _jumpLeft;
-		int _jumpRight;
-		int _timeSideJump;
 		bool _sideJump;
 		bool _velocitySideJump;
 
-		bool _unpressRight;
-		bool _unpressLeft;
-		bool _readySideJumpLeft;
-		bool _readySideJumpRight;
-		bool _dontCountUntilUnpress;
-
 		/**
-		Atributo que lleva el conteo de saltos concatenados para el aumento de velocidad
+		Atributo que lleva la activacion de la concatenacion de saltos laterales
 		*/
-		int _nConcatSideJump;
-		int _timeConcatSideJump;
 		bool _activeConcat;
-		bool _sideFly;
-		bool _sideContact;
 
 		/**
 		Atributo que lleva la dirección en la que tiene que ir el rebote del jugador
