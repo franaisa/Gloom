@@ -106,6 +106,11 @@
     <ClCompile Include="..\..\Src\Logic\Entity\Components\ShootRocketLauncher.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\ShootShotGun.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\ShootSniper.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\PlayerClass.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\Archangel.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\Hound.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\Screamer.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\Shadow.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\SpawnItemManager.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\SpawnPlayer.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\Spike.cpp" />
@@ -141,6 +146,7 @@
     <ClCompile Include="..\..\Src\Logic\Messages\MessageAvatarWalk.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageCameraToEnemy.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageCealing.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Messages\MessageChangePlayerClass.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageChangeWeapon.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageChangeWeaponGraphics.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageCollisionDown.cpp" />
@@ -170,6 +176,8 @@
     <ClCompile Include="..\..\Src\Logic\Messages\MessageTouched.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageTransform.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageUntouched.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Messages\MessageUsePrimarySkill.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Messages\MessageUseSecondarySkill.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageWakeUp.cpp" />
     <ClCompile Include="..\..\Src\Logic\PlayerInfo.cpp" />
     <ClCompile Include="..\..\Src\Logic\Server.cpp" />
@@ -205,6 +213,11 @@
     <ClInclude Include="..\..\Src\Logic\Entity\Components\ShootRocketLauncher.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\ShootShotGun.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\ShootSniper.h" />
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\PlayerClass.h" />
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\Archangel.h" />
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\Hound.h" />
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\Screamer.h" />
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\Shadow.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\SpawnItemManager.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\SpawnPlayer.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\Spike.h" />
@@ -243,6 +256,7 @@
     <ClInclude Include="..\..\Src\Logic\Messages\MessageAvatarWalk.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageCameraToEnemy.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageCealing.h" />
+    <ClInclude Include="..\..\Src\Logic\Messages\MessageChangePlayerClass.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageChangeWeapon.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageChangeWeaponGraphics.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageCollisionDown.h" />
@@ -272,6 +286,8 @@
     <ClInclude Include="..\..\Src\Logic\Messages\MessageTouched.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageTransform.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageUntouched.h" />
+    <ClInclude Include="..\..\Src\Logic\Messages\MessageUsePrimarySkill.h" />
+    <ClInclude Include="..\..\Src\Logic\Messages\MessageUseSecondarySkill.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageWakeUp.h" />
     <ClInclude Include="..\..\Src\Logic\PlayerInfo.h" />
     <ClInclude Include="..\..\Src\Logic\Server.h" />

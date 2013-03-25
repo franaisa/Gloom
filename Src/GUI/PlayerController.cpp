@@ -131,7 +131,7 @@ namespace GUI {
 						message->setWeapon(4);
 						break;
 					case GUI::Key::NUMBER6:
-					message->setWeapon(5);
+						message->setWeapon(5);
 						break;
 					case GUI::Key::NUMBER7:
 						position=Logic::CServer::getSingletonPtr()->getMap()->getEntityByName("Jumper1")->getPosition();

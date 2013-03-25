@@ -81,10 +81,6 @@ namespace Logic {
 	
 
 		/**
-		Inicialización del componente utilizando la información extraída de
-		la entidad leída del mapa (Maps::CEntity). Toma del mapa el atributo
-		speed que indica a la velocidad a la que se moverá el jugador.
-
 		Inicialización del componente a partir de la información extraida de la entidad
 		leida del mapa:
 		<ul>
