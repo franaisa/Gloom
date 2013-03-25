@@ -1,6 +1,6 @@
-===================
+=================
 Gloom Source Release
-===================
+=================
 
 This file contains the following sections:
 
@@ -8,9 +8,9 @@ GENERAL NOTES
 LICENSE
 
 
-=============
+==============
 GENERAL NOTES
-=============
+==============
 
 * Description: Gloom is a pure multiplayer Fast-Paced FPS.
 * Technology: C++/Ogre3d/PhysX/Enet - Windows.
