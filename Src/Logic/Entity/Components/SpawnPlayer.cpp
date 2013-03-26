@@ -23,6 +23,7 @@ Contiene la implementación del componente que gestiona el spawn del jugador.
 #include "Logic/Messages/MessagePlayerSpawn.h"
 #include "Logic/Messages/MessageSetPhysicPosition.h"
 #include "Logic/Messages/MessageHudSpawn.h"
+#include "Logic/Messages/MessageAudio.h"
 
 
 
@@ -42,6 +43,9 @@ namespace Logic
 			_timeSpawn= entityInfo->getIntAttribute("timeSpawn");
 			_timeSpawn*=1000;
 		}
+
+		if(entityInfo->hasAttribute("audioSpawn"))
+			_audioSpawn =  entityInfo->getStringAttribute("audioSpawn");
 
 		return true;
 
@@ -122,6 +126,14 @@ namespace Logic
 				Logic::CMessageHudSpawn *mS=new Logic::CMessageHudSpawn();
 				mS->setTime(0);
 				_entity->emitMessage(mS);
+
+				//Sonido Spawn
+				Logic::CMessageAudio *maudio=new Logic::CMessageAudio();
+				maudio->setRuta(_audioSpawn);
+				maudio->setId("spawn");
+				maudio->setPosition(_entity->getPosition());
+				maudio->setNotIfPlay(false);
+				_entity->emitMessage(maudio);
 			}
 		}
 	} // tick
@@ -133,11 +145,12 @@ namespace Logic
 		if(!_isDead){
 			//Desactivamos todos menos el cspawnplayer
 			std::vector<std::string> except;
-			except.resize(4); // Solo necesitamos 4 slots
+			except.resize(5); // Solo necesitamos 5 slots
 			except.push_back( std::string("CAnimatedGraphics") );
 			except.push_back( std::string("CSpawnPlayer") );
 			except.push_back( std::string("CHudOverlay") );
 			except.push_back( std::string("CNetConnector") );
+			except.push_back( std::string("CAudio") );
 
 			//Desactivamos la simulación física (no puede estar activo en la escena física al morir)
 			_entity->getComponent<CPhysicController>("CPhysicController")->deactivateSimulation();

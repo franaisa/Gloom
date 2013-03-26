@@ -29,7 +29,7 @@ Contiene la implementación del componente que controla la vida de una entidad.
 #include "Logic/Messages/MessageAddShield.h"
 #include "Logic/Messages/MessageHudLife.h"
 #include "Logic/Messages/MessageHudShield.h"
-
+#include "Logic/Messages/MessageAudio.h"
 
 #include "Logic/Messages/MessagePlayerDead.h"
 #include "Logic/Messages/MessageCameraToEnemy.h"
@@ -61,6 +61,10 @@ namespace Logic
 			_maxShield = entityInfo->getIntAttribute("maxShield");
 		if(entityInfo->hasAttribute("playerDead"))
 			_playerDead =  entityInfo->getBoolAttribute("playerDead");
+		if(entityInfo->hasAttribute("audioPain"))
+			_audioPain =  entityInfo->getStringAttribute("audioPain");
+		if(entityInfo->hasAttribute("audioDeath"))
+			_audioDeath =  entityInfo->getStringAttribute("audioDeath");
 		_varLifeCumulative=0;
 
 		
@@ -166,8 +170,15 @@ namespace Logic
 		else
 			_life -= damage;
 
-		//Si muero por el daño, envio un mensaje de playerDead
+		//Si muero por el daño, envio un mensaje de playerDead y sonido de muerte
 		if(_life<=0){
+			Logic::CMessageAudio *maudio=new Logic::CMessageAudio();
+			maudio->setRuta(_audioDeath);
+			maudio->setId("death");
+			maudio->setPosition(_entity->getPosition());
+			maudio->setNotIfPlay(false);
+			_entity->emitMessage(maudio);
+
 			_life=0;
 			//Mensaje de muerte para tratar respawn/desactivar componentes
 			Logic::CMessagePlayerDead *m=new Logic::CMessagePlayerDead();
@@ -184,6 +195,16 @@ namespace Logic
 				Logic::CGameNetMsgManager::getSingletonPtr()->sendMessageToOne(cte, camera->getEntityID(), _entity->getEntityID());
 			//el mensaje de camera to enemy debe ir solamente al jugador que ha muerto, no  a ningún otro
 			//Logic:CServer::getSingletonPtr()->getpla
+		}
+		//sino sonido de daño
+		else{
+			Logic::CMessageAudio *maudio=new Logic::CMessageAudio();
+			maudio->setRuta(_audioPain);
+			maudio->setId("pain");
+			maudio->setPosition(_entity->getPosition());
+			maudio->setNotIfPlay(false);
+			_entity->emitMessage(maudio);
+		
 		}
 		//Actualizo la vida
 		Logic::CMessageHudLife *message1 = new Logic::CMessageHudLife();

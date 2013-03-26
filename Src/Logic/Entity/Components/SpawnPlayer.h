@@ -87,6 +87,11 @@ namespace Logic
 		*/
 		int _timeToSendHud;
 
+		/**
+		Ruta del sonido de spawn.
+		*/
+		std::string _audioSpawn;
+
 	}; // class CShoot
 
 	REG_FACTORY(CSpawnPlayer);
