@@ -24,6 +24,7 @@ gráfica de la entidad.
 #include "Logic/Messages/MessageTransform.h"
 #include "Logic/Messages/MessageSleep.h"
 #include "Logic/Messages/MessageWakeUp.h"
+#include "Logic/Messages/MessageChangeMaterial.h"
 
 #include <OgreSceneManager.h>
 #include "OgreEntity.h"
@@ -86,20 +87,17 @@ namespace Logic
 	
 	//---------------------------------------------------------
 
-	Graphics::CEntity* CGraphics::createGraphicsEntity(const Map::CEntity *entityInfo)
-	{
+	Graphics::CEntity* CGraphics::createGraphicsEntity(const Map::CEntity *entityInfo) {
 		bool isStatic = false;
 		if(entityInfo->hasAttribute("static"))
 			isStatic = entityInfo->getBoolAttribute("static");
 
-		if(isStatic)
-		{
+		if(isStatic) {
 			_graphicsEntity = new Graphics::CStaticEntity(_entity->getName(),_model);
 			if(!_scene->addStaticEntity((Graphics::CStaticEntity*)_graphicsEntity))
 				return 0;
 		}
-		else
-		{
+		else {
 			_graphicsEntity = new Graphics::CEntity(_entity->getName(),_model);
 			if(!_scene->addEntity(_graphicsEntity))
 				return 0;
@@ -120,28 +118,36 @@ namespace Logic
 
 	//---------------------------------------------------------
 
-	bool CGraphics::accept(CMessage *message)
-	{
-		return (message->getMessageType() == Message::SET_TRANSFORM || 
-			message->getMessageType() == Message::ACTIVATE || 
-			message->getMessageType() == Message::DEACTIVATE );
+	bool CGraphics::accept(CMessage *message) {
+		Logic::TMessageType msgType = message->getMessageType();
+
+		return msgType == Message::SET_TRANSFORM    ||
+			   msgType == Message::ACTIVATE			|| 
+			   msgType == Message::DEACTIVATE		||
+			   msgType == Message::CHANGE_MATERIAL;
 	} // accept
 	
 	//---------------------------------------------------------
 
-	void CGraphics::process(CMessage *message)
-	{
-		switch(message->getMessageType())
-		{
-		case Message::SET_TRANSFORM:
-			_graphicsEntity->setTransform(((CMessageTransform*)message)->getTransform());
-			break;
-		case Message::ACTIVATE:
-			setVisible(true);
-			break;
-		case Message::DEACTIVATE:
-			setVisible(false);
-			break;
+	void CGraphics::process(CMessage *message) {
+		switch( message->getMessageType() ) {
+			case Message::SET_TRANSFORM: {
+				_graphicsEntity->setTransform( static_cast<CMessageTransform*>(message)->getTransform() );
+				break;
+			}
+			case Message::ACTIVATE: {
+				setVisible(true);
+				break;
+			}
+			case Message::DEACTIVATE: {
+				setVisible(false);
+				break;
+			}
+			case Message::CHANGE_MATERIAL: {
+				CMessageChangeMaterial* materialMsg = static_cast<CMessageChangeMaterial*>(message);
+				_graphicsEntity->changeMaterial( materialMsg->getMaterialName() );
+				break;
+			}
 		}
 
 	} // process
@@ -154,17 +160,14 @@ namespace Logic
 
 	//---------------------------------------------------------
 
-	void CGraphics::activate()
-	{
+	void CGraphics::activate() {
 		IComponent::activate();
 		_graphicsEntity->setTransform(_entity->getTransform());
 	}
 	//---------------------------------------------------------
 
-	void CGraphics::deactivate()
-	{
+	void CGraphics::deactivate() {
 		IComponent::deactivate();
-		
 	}
 
 

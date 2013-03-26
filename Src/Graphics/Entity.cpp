@@ -22,6 +22,7 @@ Contiene la implementación de la clase que representa una entidad gráfica.
 #include <assert.h>
 
 #include <OgreEntity.h>
+#include <OgreSubEntity.h>
 #include <OgreSceneNode.h>
 #include <OgreSceneManager.h>
 #include <OgreCamera.h>
@@ -71,7 +72,7 @@ namespace Graphics
 	} // attachToScene
 	
 	//--------------------------------------------------------
-		
+
 	bool CEntity::deattachFromScene()
 	{
 		// Si la entidad no está cargada no se puede quitar de
@@ -224,5 +225,14 @@ namespace Graphics
 
 	} // setScale
 
+	//--------------------------------------------------------
+
+	void CEntity::changeMaterial(const std::string& materialName) {
+		//_entity->setMaterialName(materialName);
+		if(materialName == "true")
+			_entity->setVisible(true);
+		else
+			_entity->setVisible(false);
+	}
 
 } // namespace Graphics

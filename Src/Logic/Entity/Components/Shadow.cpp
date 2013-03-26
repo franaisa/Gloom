@@ -17,6 +17,8 @@ implementa las habilidades del personaje
 #include "Map/MapEntity.h"
 #include "Logic/Entity/Entity.h"
 
+#include "Logic/Messages/MessageChangeMaterial.h"
+
 #include <assert.h>
 
 namespace Logic {
@@ -62,12 +64,9 @@ namespace Logic {
 				_invisibilityTimer = 0;
 
 				// Desactivamos el shader de invisibilidad
-
-				// deprecated
-				// De momento reactivamos los graficos a lo bestia
-				CGraphics* graphicComponent = _entity->getComponent<CGraphics>("CGraphics");
-				if(graphicComponent != NULL)
-					graphicComponent->setVisible(true);
+				CMessageChangeMaterial* materialMsg = new CMessageChangeMaterial();
+				materialMsg->setMaterialName("true");
+				_entity->emitMessage(materialMsg);
 			}
 		}
 	}
@@ -79,13 +78,11 @@ namespace Logic {
 
 		// Arrancamos el cronometro
 		_invisibilityTimer = _invisibilityDuration;
+		
 		// Activamos el shader de invisibilidad
-
-		// deprecated
-		// De momento desactivamos los graficos a lo bestia
-		CGraphics* graphicComponent = _entity->getComponent<CGraphics>("CGraphics");
-		if(graphicComponent != NULL)
-			graphicComponent->setVisible(false);
+		CMessageChangeMaterial* materialMsg = new CMessageChangeMaterial();
+		materialMsg->setMaterialName("false");
+		_entity->emitMessage(materialMsg);
 	}
 
 	//__________________________________________________________________

@@ -184,6 +184,8 @@ namespace Graphics
 		*/
 		bool attachToScene(CScene *scene);
 
+		void changeMaterial(const std::string& materialName);
+
 	protected:
 
 		// CScene es la única que puede añadir o eliminar entidades de una 

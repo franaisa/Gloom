@@ -355,6 +355,9 @@
     <ClCompile Include="..\..\Src\Logic\Messages\MessageChangePlayerClass.cpp">
       <Filter>Messages\Source</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Messages\MessageChangeMaterial.cpp">
+      <Filter>Messages\Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Src\Logic\Maps\ComponentFactory.h">
@@ -673,6 +676,9 @@
       <Filter>Entity\Components\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Messages\MessageChangePlayerClass.h">
+      <Filter>Messages\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Messages\MessageChangeMaterial.h">
       <Filter>Messages\Header</Filter>
     </ClInclude>
   </ItemGroup>

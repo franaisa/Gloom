@@ -146,6 +146,7 @@
     <ClCompile Include="..\..\Src\Logic\Messages\MessageAvatarWalk.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageCameraToEnemy.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageCealing.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Messages\MessageChangeMaterial.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageChangePlayerClass.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageChangeWeapon.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageChangeWeaponGraphics.cpp" />
@@ -254,6 +255,7 @@
     <ClInclude Include="..\..\Src\Logic\Messages\MessageAvatarWalk.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageCameraToEnemy.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageCealing.h" />
+    <ClInclude Include="..\..\Src\Logic\Messages\MessageChangeMaterial.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageChangePlayerClass.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageChangeWeapon.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageChangeWeaponGraphics.h" />
