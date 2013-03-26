@@ -62,6 +62,19 @@ Map = {
 		audioStep = "media/audio/step1.wav",
 		audioNoAmmo = "media/audio/noammo.wav",
 		
+		shadowPrimarySkillCooldown = 15,
+		shadowSecondarySkillCooldown = 3,
+		shadowInvisibilityDuration = 5,
+		
+		screamerPrimarySkillCooldown = 2,
+		screamerSecondarySkillCooldown = 2,
+		
+		houndPrimarySkillCooldown = 1,
+		houndSecondarySkillCooldown = 1,
+		
+		archangelPrimarySkillCooldown = 0.5,
+		archangelSecondarySkillCooldown = 0.5,
+		
 			weaponHammerName = "Hammer",
 			weaponHammerModel = "hammer.mesh",
 			weaponHammerModelYaw = 1.55,
