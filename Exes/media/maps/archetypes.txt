@@ -565,6 +565,7 @@ Map = {
 		explotionTime = 5,
 		explotionDamage = 10,
 		explotionRadius = 6,
+		explotionAudio = "media/audio/explotion.wav",
 	},
 	
 	GrenadeExplotion = {
@@ -586,6 +587,7 @@ Map = {
 		physic_groupList = "-1",
 		explotionDamage = 15,
 		explotionRadius = 6,
+		explotionAudio = "media/audio/explotion.wav",
 	},
 	
 	RocketExplotion = {

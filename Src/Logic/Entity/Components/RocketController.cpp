@@ -15,9 +15,9 @@
 #include "Logic/Entity/Entity.h"
 #include "Logic/Server.h"
 #include "Logic/GameNetMsgManager.h"
-
 #include "Logic/Entity/Components/Graphics.h"
 
+#include "Logic/Messages/MessageAudio.h"
 #include "Logic/Messages/MessageSetPhysicPosition.h"
 #include "Logic/Messages/MessageContactEnter.h"
 #include "Logic/Messages/MessageKinematicMove.h"
@@ -45,6 +45,7 @@ namespace Logic {
 			
 		_explotionDamage = entityInfo->getFloatAttribute("explotionDamage");
 		_explotionRadius = entityInfo->getFloatAttribute("explotionRadius");
+		_audioExplotion = entityInfo->getStringAttribute("explotionAudio");
 
 		return true;
 	} // spawn
@@ -69,6 +70,14 @@ namespace Logic {
 			Logic::CGameNetMsgManager::getSingletonPtr()->sendDestroyEntity(_entity->getEntityID());
 			// Creamos la explosion
 			createExplotion();
+
+			//Sonido de explosion
+			Logic::CMessageAudio *maudio=new Logic::CMessageAudio();
+			maudio->setRuta(_audioExplotion);
+			maudio->setId("audioExplotion");
+			maudio->setPosition(_entity->getPosition());
+			maudio->setNotIfPlay(false);
+			_entity->emitMessage(maudio);
 
 			break;
 		}
