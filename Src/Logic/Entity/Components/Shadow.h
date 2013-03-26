@@ -63,9 +63,18 @@ namespace Logic {
 		@param entityInfo Información de construcción del objeto leído del fichero de disco.
 		@return Cierto si la inicialización ha sido satisfactoria.
 		*/
-		virtual bool spawn(CEntity* entity, CMap *map, const Map::CEntity *entityInfo);
+		virtual bool spawn(CEntity* entity, CMap* map, const Map::CEntity *entityInfo);
 
-		
+		//__________________________________________________________________
+
+		/**
+		Método llamado en cada frame.
+
+		@param msecs Milisegundos transcurridos desde el último tick.
+		*/
+		virtual void tick(unsigned int msecs);
+
+
 		// =======================================================================
 		//                  METODOS HEREDADOS DE CPlayerClass
 		// =======================================================================
@@ -78,6 +87,21 @@ namespace Logic {
 
 		/** Habilidad por definir. */
 		virtual void secondarySkill();
+
+
+	private:
+
+
+		// =======================================================================
+		//                          MIEMBROS PRIVADOS
+		// =======================================================================
+
+
+		/** Tiempo que dura la invisibilidad. */
+		float _invisibilityDuration;
+
+		/** Timer que controla la duración de la invisibilidad. */
+		float _invisibilityTimer;
 
 	}; // class CShadow
 
