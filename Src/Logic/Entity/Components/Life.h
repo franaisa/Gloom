@@ -128,10 +128,20 @@ namespace Logic
 		*/
 		int _porcentShield;
 
-			/**
+		/**
 		Indica si el jugador está muerto.
 		*/
 		bool _playerDead;
+
+		/**
+		Ruta del sonido de daño
+		*/
+		std::string _audioPain;
+
+		/**
+		Ruta del sonido de muerte
+		*/
+		std::string _audioDeath;
 
 	}; // class CLife
 

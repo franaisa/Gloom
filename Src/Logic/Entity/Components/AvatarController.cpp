@@ -70,6 +70,12 @@ namespace Logic
 		if(entityInfo->hasAttribute("audioStep"))
 			_audioStep= entityInfo->getStringAttribute("audioStep");
 
+		if(entityInfo->hasAttribute("audioJump"))
+			_audioJump= entityInfo->getStringAttribute("audioJump");
+
+		if(entityInfo->hasAttribute("audioSideJump"))
+			_audioSideJump= entityInfo->getStringAttribute("audioSideJump");
+
 		return true;
 
 	} // spawn
@@ -421,12 +427,26 @@ namespace Logic
 			else if(!_sideJump){
 				_speedJump=_powerJump; // Velocidad explosiva inicial para el salto normal
 				_direccionSaltoCaida=direction; //Guardamos la dirección del salto al iniciarse
+				//Sonido salto normal
+				Logic::CMessageAudio *maudio=new Logic::CMessageAudio();
+				maudio->setRuta(_audioJump);
+				maudio->setId("Jump");
+				maudio->setPosition(_entity->getPosition());
+				maudio->setNotIfPlay(false);
+				_entity->emitMessage(maudio);
 			}
 			//Sino es un salto lateral
 			else{
 				_speedJump=_powerSideJump; // Velocidad explosiva inicial para el salto lateral
 				_velocitySideJump=true;
 				_direccionSaltoCaida=direction; //Guardamos la dirección del salto al iniciarse
+				//Sonido salto lateral
+				Logic::CMessageAudio *maudio=new Logic::CMessageAudio();
+				maudio->setRuta(_audioSideJump);
+				maudio->setId("sideJump");
+				maudio->setPosition(_entity->getPosition());
+				maudio->setNotIfPlay(false);
+				_entity->emitMessage(maudio);
 			}
 			_jumpingControl=true;
 		}//if (_jumping && _canJump)

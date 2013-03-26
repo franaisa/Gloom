@@ -318,7 +318,20 @@ namespace Logic
 		*/
 		float _maxSpeedDown;
 
+		/**
+		Atributo que indica la ruta del sonido de pasos
+		*/
 		std::string _audioStep;
+
+		/**
+		Atributo que indica la ruta del sonido de salto
+		*/
+		std::string _audioJump;
+
+		/**
+		Atributo que indica la ruta del sonido de salto lateral
+		*/
+		std::string _audioSideJump;
 
 	}; // class CAvatarController
 
