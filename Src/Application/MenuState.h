@@ -32,10 +32,6 @@ namespace CEGUI
 	class Window;
 }
 
-namespace Hikari{
-	class FlashControl;
-}
-
 namespace Application 
 {
 	/**

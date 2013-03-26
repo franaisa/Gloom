@@ -35,24 +35,12 @@ namespace Application {
 	{
 		CApplicationState::init();
 
-		// Cargamos la ventana que muestra el menú
-		CEGUI::WindowManager::getSingletonPtr()->loadWindowLayout("NetMenu.layout");
-		_menuWindow = CEGUI::WindowManager::getSingleton().getWindow("NetMenu");
-		
-		// Asociamos los botones del menú con las funciones que se deben ejecutar.
-		
-		CEGUI::WindowManager::getSingleton().getWindow("NetMenu/Server")->
-			subscribeEvent(CEGUI::PushButton::EventClicked, 
-				CEGUI::SubscriberSlot(&CNetMenuState::serverReleased, this));
-		
-		CEGUI::WindowManager::getSingleton().getWindow("NetMenu/Client")->
-			subscribeEvent(CEGUI::PushButton::EventClicked, 
-				CEGUI::SubscriberSlot(&CNetMenuState::clientReleased, this));
-
-		CEGUI::WindowManager::getSingleton().getWindow("NetMenu/Back")->
-			subscribeEvent(CEGUI::PushButton::EventClicked, 
-				CEGUI::SubscriberSlot(&CNetMenuState::backReleased, this));
-
+		_menu = GUI::CServer::getSingletonPtr()->addLayoutToState(this,"network", Hikari::Position(Hikari::Center));
+		_menu->load("NetworkGame.swf");
+		_menu->bind("multiplayer",Hikari::FlashDelegate(this, &CNetMenuState::serverReleased));
+		_menu->bind("newgame",Hikari::FlashDelegate(this, &CNetMenuState::clientReleased));
+		_menu->bind("back",Hikari::FlashDelegate(this, &CNetMenuState::backReleased));
+		_menu->hide();
 		return true;
 
 	} // init
@@ -71,11 +59,7 @@ namespace Application {
 	{
 		CApplicationState::activate();
 
-		// Activamos la ventana que nos muestra el menú y activamos el ratón.
-		CEGUI::System::getSingletonPtr()->setGUISheet(_menuWindow);
-		_menuWindow->setVisible(true);
-		_menuWindow->activate();
-		CEGUI::MouseCursor::getSingleton().show();
+		_menu->show();
 
 	} // activate
 
@@ -83,12 +67,7 @@ namespace Application {
 
 	void CNetMenuState::deactivate() 
 	{		
-		// Desactivamos la ventana GUI con el menú y el ratón.
-		CEGUI::MouseCursor::getSingleton().hide();
-		_menuWindow->deactivate();
-		_menuWindow->setVisible(false);
-		
-		CApplicationState::deactivate();
+		_menu->hide();
 
 	} // deactivate
 
@@ -154,7 +133,7 @@ namespace Application {
 			
 	//--------------------------------------------------------
 		
-	bool CNetMenuState::serverReleased(const CEGUI::EventArgs& e)
+	Hikari::FlashValue CNetMenuState::serverReleased(Hikari::FlashControl* caller, const Hikari::Arguments& args)
 	{
 		_app->setState("lobbyserver");
 		
@@ -164,7 +143,7 @@ namespace Application {
 			
 	//--------------------------------------------------------
 
-	bool CNetMenuState::clientReleased(const CEGUI::EventArgs& e)
+	Hikari::FlashValue CNetMenuState::clientReleased(Hikari::FlashControl* caller, const Hikari::Arguments& args)
 	{
 		_app->setState("lobbyclient");
 		return true;
@@ -173,7 +152,7 @@ namespace Application {
 
 		//--------------------------------------------------------
 
-	bool CNetMenuState::backReleased(const CEGUI::EventArgs& e)
+	Hikari::FlashValue CNetMenuState::backReleased(Hikari::FlashControl* caller, const Hikari::Arguments& args)
 	{
 		_app->setState("menu");
 		return true;

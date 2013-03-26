@@ -19,6 +19,8 @@ Contiene la declaración del estado de menú.
 
 #include "ApplicationState.h"
 
+#include "Hikari.h"
+
 // Predeclaración de clases para ahorrar tiempo de compilación
 namespace Application 
 {
@@ -165,27 +167,29 @@ namespace Application
 	private:
 
 		/**
-		Ventana CEGUI que muestra el menú.
+		Ventana GUI que muestra el menú.
 		*/
 		CEGUI::Window* _menuWindow;
+
+		Hikari::FlashControl* _menu;
 		
 		/**
 		Función que se quiere realizar cuando se pulse el botón server.
 		Simplemente cambia al estado de lobby server.
 		*/
-		bool serverReleased(const CEGUI::EventArgs& e);
+		Hikari::FlashValue serverReleased(Hikari::FlashControl* caller, const Hikari::Arguments& args);
 
 		/**
 		Función que se quiere realizar cuando se pulse el botón client.
 		Simplemente cambia al estado de lobby client.
 		*/
-		bool clientReleased(const CEGUI::EventArgs& e);
+		Hikari::FlashValue clientReleased(Hikari::FlashControl* caller, const Hikari::Arguments& args);
 
 		/**
 		Función que se quiere realizar cuando se pulse el botón back.
 		Simplemente cambia al estado de menu.
 		*/
-		bool backReleased(const CEGUI::EventArgs& e);
+		Hikari::FlashValue backReleased(Hikari::FlashControl* caller, const Hikari::Arguments& args);
 
 	}; // CMenuState
 
