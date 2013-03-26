@@ -59,7 +59,6 @@ namespace Logic {
 			maudio->setPosition(_entity->getPosition());
 			maudio->setNotIfPlay(false);
 			_entity->emitMessage(maudio);
-
 		}
 		else if(_currentAmmo == 0) {
 			// Ejecutar sonidos y animaciones de falta de balas

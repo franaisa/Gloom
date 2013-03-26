@@ -145,6 +145,9 @@ namespace Logic {
 		/** Daño de la explosion. */
 		float _explotionDamage;
 
+		/** Ruta del sonido de la explosion. */
+		std::string _audioExplotion;
+
 	}; // class CGrenadeController
 
 	REG_FACTORY(CGrenadeController);
