@@ -60,7 +60,7 @@ Map = {
 		heightShoot = 8,
 		defaultAnimation ="Idle",
 		audioStep = "media/audio/step1.wav",
-		
+		audioNoAmmo = "media/audio/noammo.wav",
 		
 			weaponHammerName = "Hammer",
 			weaponHammerModel = "hammer.mesh",
@@ -75,6 +75,7 @@ Map = {
 			weaponHammerColdDown = 0.5,
 			weaponHammerMaxAmmo = 1,
 			weaponHammerId = 0,
+			weaponHammerAudio = "media/audio/hammer.wav",
 			
 			weaponSniperName = "Sniper",
 			weaponSniperModel = "AK47.mesh",
@@ -89,6 +90,7 @@ Map = {
 			weaponSniperMaxAmmo = 10,
 			weaponSniperId = 1,
 			weaponSniperParticlePosition = {50.0, 50.0, 50.0},
+			weaponSniperAudio = "media/audio/sniper.wav",
 			
 			weaponShotGunName = "Shotgun",
 			weaponShotGunModel = "UziLeft.mesh",
@@ -103,6 +105,7 @@ Map = {
 			weaponShotGunMaxAmmo = 48,
 			weaponShotGunId = 2,
 			weaponShotGunParticlePosition = {50.0, 50.0, 50.0},
+			weaponShotGunAudio = "media/audio/shotgun.wav",
 			
 			weaponMiniGunName = "MiniGun",
 			weaponMiniGunModel = "plasmagun.mesh",
@@ -117,6 +120,7 @@ Map = {
 			weaponMiniGunMaxAmmo = 200,
 			weaponMiniGunId = 3,
 			weaponMiniGunParticlePosition = {50.0, 50.0, 50.0},
+			weaponMiniGunAudio = "media/audio/minigun.wav",
 			
 			weaponGrenadeLauncherName = "GrenadeLauncher",
 			weaponGrenadeLauncherModel = "grenadelauncher.mesh",
@@ -131,6 +135,7 @@ Map = {
 			weaponGrenadeLauncherShootForce = 5000,
 			weaponGrenadeLauncherProjectileRadius = 3,
 			weaponGrenadeLauncherParticlePosition = {50.0, 50.0, 50.0},
+			weaponGrenadeLauncherAudio = "media/audio/grenadeLauncher.wav",
 			
 			weaponRocketLauncherName = "RocketLauncher",
 			weaponRocketLauncherModel = "rocketq3.mesh",
@@ -145,6 +150,7 @@ Map = {
 			weaponRocketLauncherShootForce = 10000,
 			weaponRocketLauncherProjectileRadius = 3,
 			weaponRocketLauncherParticlePosition = {50.0, 50.0, 50.0},
+			weaponRocketLauncherAudio = "media/audio/rocketLauncher.wav",
 			
 		hudMira = 3,
 		hudCross = 3,
@@ -217,6 +223,7 @@ Map = {
 		heightShoot = 8,
 		defaultAnimation ="Idle",
 		audioStep = "media/audio/step1.wav",
+		audioNoAmmo = "media/audio/noammo.wav",
 		
 		shadowPrimarySkillCooldown = 15,
 		shadowSecondarySkillCooldown = 3,
@@ -244,6 +251,7 @@ Map = {
 			weaponHammerColdDown = 0.5,
 			weaponHammerMaxAmmo = 1,
 			weaponHammerId = 0,
+			weaponHammerAudio = "media/audio/hammer.wav",
 			
 			weaponSniperName = "Sniper",
 			weaponSniperModel = "AK47.mesh",
@@ -258,6 +266,7 @@ Map = {
 			weaponSniperMaxAmmo = 10,
 			weaponSniperId = 1,
 			weaponSniperParticlePosition = {30.0,30.0, 30.0},
+			weaponSniperAudio = "media/audio/sniper.wav",
 			
 			weaponShotGunName = "Shotgun",
 			weaponShotGunModel = "UziLeft.mesh",
@@ -272,6 +281,7 @@ Map = {
 			weaponShotGunMaxAmmo = 48,
 			weaponShotGunId = 2,
 			weaponShotGunParticlePosition = {50.0, 50.0, 50.0},
+			weaponShotGunAudio = "media/audio/shotgun.wav",
 			
 			weaponMiniGunName = "MiniGun",
 			weaponMiniGunModel = "plasmagun.mesh",
@@ -286,6 +296,7 @@ Map = {
 			weaponMiniGunMaxAmmo = 200,
 			weaponMiniGunId = 3,
 			weaponMiniGunParticlePosition = {50.0, 50.0, 50.0},
+			weaponMiniGunAudio = "media/audio/minigun.wav",
 			
 			weaponGrenadeLauncherName = "GrenadeLauncher",
 			weaponGrenadeLauncherModel = "grenadelauncher.mesh",
@@ -300,6 +311,7 @@ Map = {
 			weaponGrenadeLauncherShootForce = 5000,
 			weaponGrenadeLauncherProjectileRadius = 3,
 			weaponGrenadeLauncherParticlePosition = {0.0, 0.0, 0.0},
+			weaponGrenadeLauncherAudio = "media/audio/grenadeLauncher.wav",
 
 			weaponRocketLauncherName = "RocketLauncher",
 			weaponRocketLauncherModel = "rocketq3.mesh",
@@ -314,6 +326,7 @@ Map = {
 			weaponRocketLauncherShootForce = 10000,
 			weaponRocketLauncherProjectileRadius = 3,
 			weaponRocketLauncherParticlePosition = {0.0, 0.0, 0.0},
+			weaponRocketLauncherAudio = "media/audio/rocketLauncher.wav",
 			
 		hudMira = 3,
 		hudCross = 3,
@@ -406,6 +419,7 @@ Map = {
 		heightShoot = 8,
 		defaultAnimation = "Idle",
 		audioStep = "media/audio/step1.wav",
+		audioNoAmmo = "media/audio/noammo.wav",
 		
 			weaponHammerName = "Hammer",
 			weaponHammerModel = "hammer.mesh",
@@ -420,6 +434,7 @@ Map = {
 			weaponHammerColdDown = 0.5,
 			weaponHammerMaxAmmo = 1,
 			weaponHammerId = 0,
+			weaponHammerAudio = "media/audio/hammer.wav",
 			
 			weaponSniperName = "Sniper",
 			weaponSniperModel = "AK47.mesh",
@@ -433,6 +448,7 @@ Map = {
 			weaponSniperColdDown = 2.0,
 			weaponSniperMaxAmmo = 10,
 			weaponSniperId = 1,
+			weaponSniperAudio = "media/audio/sniper.wav",
 			
 			weaponShotGunName = "Shotgun",
 			weaponShotGunModel = "UziLeft.mesh",
@@ -446,6 +462,7 @@ Map = {
 			weaponShotGunColdDown = 1.0,
 			weaponShotGunMaxAmmo = 48,
 			weaponShotGunId = 2,
+			weaponShotGunAudio = "media/audio/shotgun.wav",
 			
 			weaponMiniGunName = "MiniGun",
 			weaponMiniGunModel = "plasmagun.mesh",
@@ -459,6 +476,7 @@ Map = {
 			weaponMiniGunColdDown = 1.0,
 			weaponMiniGunMaxAmmo = 200,
 			weaponMiniGunId = 3,
+			weaponMiniGunAudio = "media/audio/minigun.wav",
 			
 			weaponGrenadeLauncherName = "GrenadeLauncher",
 			weaponGrenadeLauncherModel = "grenadelauncher.mesh",
@@ -472,6 +490,7 @@ Map = {
 			weaponGrenadeLauncherId = 4,
 			weaponGrenadeLauncherShootForce = 5000,
 			weaponGrenadeLauncherProjectileRadius = 3,
+			weaponGrenadeLauncherAudio = "media/audio/grenadeLauncher.wav",
 
 			weaponRocketLauncherName = "RocketLauncher",
 			weaponRocketLauncherModel = "rocketq3.mesh",
@@ -486,6 +505,7 @@ Map = {
 			weaponRocketLauncherProjectileRadius = 3,
 			weaponRocketLauncherParticlePosition = {00.0, 0.0, 0.0},
 			weaponRocketLauncherShootForce = 10000,
+			weaponRocketLauncherAudio = "media/audio/rocketLauncher.wav",
 			
 		hudMira = 3,
 		hudCross = 3,

@@ -98,6 +98,12 @@ namespace Logic {
 
 
 		float _projectileRadius;
+
+		/** Ruta del sonido de no munición */
+		std::string _noAmmo;
+
+		/** Ruta del sonido de disparo */
+		std::string _audioShoot;
 	};
 
 	//REG_FACTORY(CShootProjectile);
