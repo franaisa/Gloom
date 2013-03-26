@@ -218,12 +218,16 @@ Map = {
 		defaultAnimation ="Idle",
 		audioStep = "media/audio/step1.wav",
 		
-		shadowPrimarySkillCooldown = 3,
+		shadowPrimarySkillCooldown = 15,
 		shadowSecondarySkillCooldown = 3,
+		shadowInvisibilityDuration = 5,
+		
 		screamerPrimarySkillCooldown = 2,
 		screamerSecondarySkillCooldown = 2,
+		
 		houndPrimarySkillCooldown = 1,
 		houndSecondarySkillCooldown = 1,
+		
 		archangelPrimarySkillCooldown = 0.5,
 		archangelSecondarySkillCooldown = 0.5,
 
