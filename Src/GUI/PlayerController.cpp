@@ -21,6 +21,7 @@ mover al jugador.
 #include "Logic/Entity/Components/ArrayGraphics.h"
 #include "Logic/Entity/Components/AvatarController.h"
 
+#include "Logic/Messages/MessageChangePlayerClass.h"
 #include "Logic/Messages/MessageChangeWeapon.h"
 #include "Logic/Messages/MessageControl.h"
 #include "Logic/Messages/MessageMouse.h"
@@ -138,9 +139,7 @@ namespace GUI {
 						break;
 					}
 
-					_controlledAvatar->emitMessage(message);
-					
-					
+					_controlledAvatar->emitMessage(message);	
 			}
 			else{
 				Logic::CMessageControl *m=new Logic::CMessageControl();

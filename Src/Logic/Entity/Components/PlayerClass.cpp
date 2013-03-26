@@ -126,6 +126,15 @@ namespace Logic {
 
 	//__________________________________________________________________
 
+	void CPlayerClass::deactivate() {
+		IComponent::deactivate();
+
+		// Restea el valor de los timers
+		_primarySkillTimer = _secondarySkillTimer = 0;
+	}
+
+	//__________________________________________________________________
+
 	void CPlayerClass::changePlayerClass(unsigned int classType) {
 		deactivate();
 
@@ -147,6 +156,8 @@ namespace Logic {
 
 		if(selectedClassComponent != NULL)
 			selectedClassComponent->activate();
+		else
+			std::cerr << "Warning: No se ha podido cambiar de clase por no existir el componente" << std::endl;
 	}
 
 	//__________________________________________________________________

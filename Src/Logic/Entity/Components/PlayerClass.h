@@ -141,6 +141,15 @@ namespace Logic {
 		*/
 		virtual void tick(unsigned int msecs);
 
+		//__________________________________________________________________
+
+		/**
+		Extiende el comportamiento de la clase padre ya que cuando se desactiva
+		este componente puede ser porque el jugador haya cambiado de clase
+		por lo que los timers de los cooldowns tienen que volver a 0.
+		*/
+		virtual void deactivate();
+
 		
 		// =======================================================================
 		//                            METODOS PROPIOS
