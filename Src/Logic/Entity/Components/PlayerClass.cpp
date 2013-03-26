@@ -21,8 +21,7 @@ clase.
 #include "Map/MapEntity.h"
 
 #include "Logic/Messages/MessageChangePlayerClass.h"
-#include "Logic/Messages/MessageUsePrimarySkill.h"
-#include "Logic/Messages/MessageUseSecondarySkill.h"
+#include "Logic/Messages/MessageControl.h"
 
 namespace Logic {
 	//IMP_FACTORY(CPlayerClass);
@@ -65,9 +64,7 @@ namespace Logic {
 	bool CPlayerClass::accept(CMessage* message) {
 		Logic::TMessageType msgType = message->getMessageType();
 
-		return msgType == Message::USE_PRIMARY_SKILL   ||
-			   msgType == Message::USE_SECONDARY_SKILL ||
-			   msgType == Message::CHANGE_PLAYER_CLASS;
+		return msgType == Message::CONTROL || msgType == Message::CHANGE_PLAYER_CLASS;
 	} // accept
 	
 	//__________________________________________________________________
@@ -84,18 +81,20 @@ namespace Logic {
 
 				break;
 			}
-			case Message::USE_PRIMARY_SKILL: {
-				if( canUsePrimarySkill() ) {
-					primarySkill();
-					_primarySkillTimer = _primarySkillCooldown;
-				}
+			case Message::CONTROL: {
+				ControlType type = static_cast<CMessageControl*>(message)->getType();
 
-				break;
-			}
-			case Message::USE_SECONDARY_SKILL: {
-				if( canUseSecondarySkill() ) {
-					secondarySkill();
-					_secondarySkillTimer = _secondarySkillCooldown;
+				if(type == ControlType::USE_PRIMARY_SKILL) {
+					if( canUsePrimarySkill() ) {
+						primarySkill();
+						_primarySkillTimer = _primarySkillCooldown;
+					}
+				}
+				else if(type == ControlType::USE_SECONDARY_SKILL) {
+					if( canUseSecondarySkill() ) {
+						secondarySkill();
+						_secondarySkillTimer = _secondarySkillCooldown;
+					}
 				}
 
 				break;
