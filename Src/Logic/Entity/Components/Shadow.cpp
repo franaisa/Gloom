@@ -65,7 +65,7 @@ namespace Logic {
 
 				// Desactivamos el shader de invisibilidad
 				CMessageChangeMaterial* materialMsg = new CMessageChangeMaterial();
-				materialMsg->setMaterialName("true");
+				materialMsg->setMaterialName("marine");
 				_entity->emitMessage(materialMsg);
 			}
 		}
@@ -81,7 +81,7 @@ namespace Logic {
 		
 		// Activamos el shader de invisibilidad
 		CMessageChangeMaterial* materialMsg = new CMessageChangeMaterial();
-		materialMsg->setMaterialName("false");
+		materialMsg->setMaterialName("shadowInvisibility");
 		_entity->emitMessage(materialMsg);
 	}
 

@@ -228,11 +228,7 @@ namespace Graphics
 	//--------------------------------------------------------
 
 	void CEntity::changeMaterial(const std::string& materialName) {
-		//_entity->setMaterialName(materialName);
-		if(materialName == "true")
-			_entity->setVisible(true);
-		else
-			_entity->setVisible(false);
+		_entity->setMaterialName(materialName);
 	}
 
 } // namespace Graphics
