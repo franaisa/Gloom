@@ -176,8 +176,6 @@
     <ClCompile Include="..\..\Src\Logic\Messages\MessageTouched.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageTransform.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageUntouched.cpp" />
-    <ClCompile Include="..\..\Src\Logic\Messages\MessageUsePrimarySkill.cpp" />
-    <ClCompile Include="..\..\Src\Logic\Messages\MessageUseSecondarySkill.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageWakeUp.cpp" />
     <ClCompile Include="..\..\Src\Logic\PlayerInfo.cpp" />
     <ClCompile Include="..\..\Src\Logic\Server.cpp" />
@@ -286,8 +284,6 @@
     <ClInclude Include="..\..\Src\Logic\Messages\MessageTouched.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageTransform.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageUntouched.h" />
-    <ClInclude Include="..\..\Src\Logic\Messages\MessageUsePrimarySkill.h" />
-    <ClInclude Include="..\..\Src\Logic\Messages\MessageUseSecondarySkill.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageWakeUp.h" />
     <ClInclude Include="..\..\Src\Logic\PlayerInfo.h" />
     <ClInclude Include="..\..\Src\Logic\Server.h" />

@@ -22,8 +22,6 @@ mover al jugador.
 #include "Logic/Entity/Components/AvatarController.h"
 
 #include "Logic/Messages/MessageChangeWeapon.h"
-#include "Logic/Messages/MessageUsePrimarySkill.h"
-#include "Logic/Messages/MessageUseSecondarySkill.h"
 #include "Logic/Messages/MessageControl.h"
 #include "Logic/Messages/MessageMouse.h"
 
@@ -144,21 +142,17 @@ namespace GUI {
 					
 					
 			}
-			else if(key.keyId == GUI::Key::Q || key.keyId == GUI::Key::E) {
-				switch(key.keyId) {
-					case GUI::Key::Q:
-						_controlledAvatar->emitMessage( new Logic::CMessageUsePrimarySkill() );
-						break;
-					case GUI::Key::E:
-						_controlledAvatar->emitMessage( new Logic::CMessageUseSecondarySkill() );
-						break;
-				}
-			}
 			else{
 				Logic::CMessageControl *m=new Logic::CMessageControl();
 				Logic::CMessageHudDebbug *m2=new Logic::CMessageHudDebbug();
 				switch(key.keyId)
 				{
+				case GUI::Key::Q:
+					m->setType(Logic::Control::USE_PRIMARY_SKILL);
+					break;
+				case GUI::Key::E:
+					m->setType(Logic::Control::USE_SECONDARY_SKILL);
+					break;
 				case GUI::Key::W:
 					m->setType(Logic::Control::WALK);
 					break;
