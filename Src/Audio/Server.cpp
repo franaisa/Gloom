@@ -255,6 +255,9 @@ namespace Audio
 			canal->set3DAttributes(& pos, & vel);
 			ERRCHECK(result);
 
+		//Distancia a la que empieza a atenuarse y a la cual ya no se atunua mas respectivamente
+		canal->set3DMinMaxDistance(4,40);
+
 		int can;
 		canal->getIndex(&can);
 		std::cout << "el numero de canal ocupado es " << can << std::endl;
