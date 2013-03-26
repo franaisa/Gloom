@@ -59,7 +59,9 @@ Map = {
 		numWeapons = 6,
 		heightShoot = 8,
 		defaultAnimation ="Idle",
-
+		audioStep = "media/audio/step1.wav",
+		
+		
 			weaponHammerName = "Hammer",
 			weaponHammerModel = "hammer.mesh",
 			weaponHammerModelYaw = 1.55,
@@ -214,6 +216,7 @@ Map = {
 		numWeapons = 6,
 		heightShoot = 8,
 		defaultAnimation ="Idle",
+		audioStep = "media/audio/step1.wav",
 		
 		shadowPrimarySkillCooldown = 3,
 		shadowSecondarySkillCooldown = 3,
@@ -398,7 +401,8 @@ Map = {
 		numWeapons = 6,
 		heightShoot = 8,
 		defaultAnimation = "Idle",
-
+		audioStep = "media/audio/step1.wav",
+		
 			weaponHammerName = "Hammer",
 			weaponHammerModel = "hammer.mesh",
 			weaponHammerModelYaw = 1.55,

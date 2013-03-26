@@ -318,6 +318,8 @@ namespace Logic
 		*/
 		float _maxSpeedDown;
 
+		std::string _audioStep;
+
 	}; // class CAvatarController
 
 	REG_FACTORY(CAvatarController);

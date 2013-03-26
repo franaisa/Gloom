@@ -24,6 +24,7 @@ de la entidad.
 #include "Logic/Messages/MessageAddForcePlayer.h"
 #include "Logic/Messages/MessageSetAnimation.h"
 #include "Logic/Messages/MessageSide.h"
+#include "Logic/Messages/MessageAudio.h"
 
 namespace Logic 
 {
@@ -66,6 +67,8 @@ namespace Logic
 		if(entityInfo->hasAttribute("maxSpeedDown"))
 			_maxSpeedDown= entityInfo->getFloatAttribute("maxSpeedDown");
 		
+		if(entityInfo->hasAttribute("audioStep"))
+			_audioStep= entityInfo->getStringAttribute("audioStep");
 
 		return true;
 
@@ -471,6 +474,17 @@ namespace Logic
 		Logic::CMessageAvatarWalk* m = new Logic::CMessageAvatarWalk();
 		m->setDirection(directXZY);
 		_entity->emitMessage(m);
+
+		//Audio
+		//Si nos estamos moviendo pero no saltando/ni cayendo mandamos un mensaje de audio (pasos)
+		if(directXZY.x!=0 && directXZY.z!=0 && !_jumpingControl && !_caida){
+			Logic::CMessageAudio *maudio=new Logic::CMessageAudio();
+			maudio->setRuta(_audioStep);
+			maudio->setId("steps");
+			maudio->setPosition(_entity->getPosition());
+			maudio->setNotIfPlay(true);
+			_entity->emitMessage(maudio);
+		}
 
 	} // tick
 

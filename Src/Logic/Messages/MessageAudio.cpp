@@ -40,14 +40,25 @@ namespace Logic {
 	}//
 	//----------------------------------------------------------
 
+	void CMessageAudio::setNotIfPlay(bool notIfPlay){
+		_notIfPlay=notIfPlay;
+	}//
+	//----------------------------------------------------------
+
+	bool CMessageAudio::getNotIfPlay(){
+		return _notIfPlay;
+	}//
+	//----------------------------------------------------------
+
 	Net::CBuffer* CMessageAudio::serialize() {
 		assert(_tempBuffer == NULL);
 		//
-		_tempBuffer = new Net::CBuffer((sizeof(int)*3) + (sizeof(float) * 3));
+		_tempBuffer = new Net::CBuffer((sizeof(int)*3) + (sizeof(float) * 3) + sizeof(bool));
 		_tempBuffer->serialize(std::string("CMessageAudio"), true);
 		_tempBuffer->serialize(_ruta, false);
 		_tempBuffer->serialize(_id, false);
 		_tempBuffer->serialize(_position);
+		_tempBuffer->serialize(_notIfPlay);
 
 		return _tempBuffer;
 	}//
@@ -57,6 +68,7 @@ namespace Logic {
 		buffer.deserialize(_ruta);
 		buffer.deserialize(_id);
 		buffer.deserialize(_position);
+		buffer.deserialize(_notIfPlay);
 	}
 
 };

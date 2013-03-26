@@ -216,7 +216,17 @@ namespace Audio
 	}//playLoopSound
 	//--------------------------------------------------------
 
-	void CServer::playSound3D(char* rutaSonido, const std::string& id,Vector3 position){
+	void CServer::playSound3D(char* rutaSonido, const std::string& id,Vector3 position, bool notIfPlay){
+
+		//Si queremos que suena solamente si no esta sonando ya
+		if(notIfPlay){
+			bool isPlaying;
+			_soundChannel[id]->isPlaying(&isPlaying);
+			if(isPlaying){
+				return;
+			}
+		}
+
 		//Carga del sonido
 		Sound *sound;
 		FMOD_RESULT result = _system->createSound(
@@ -235,7 +245,7 @@ namespace Audio
 		& canal); // devuelve el canal que asigna
 		ERRCHECK(result);
 		// el sonido ya está reproduciendo!!
-		float volume=0.7; // valor entre 0 y 1
+		float volume=0.5; // valor entre 0 y 1
 		result = canal->setVolume(volume);
 		ERRCHECK(result);
 
@@ -277,7 +287,7 @@ namespace Audio
 		& canal); // devuelve el canal que asigna
 		ERRCHECK(result);
 		// el sonido ya está reproduciendo!!
-		float volume=0.7; // valor entre 0 y 1
+		float volume=0.5; // valor entre 0 y 1
 		result = canal->setVolume(volume);
 		ERRCHECK(result);
 
@@ -346,7 +356,7 @@ namespace Audio
 		& canal); // devuelve el canal que asigna
 		ERRCHECK(result);
 		// el sonido ya está reproduciendo!!
-		float volume=0.7; // valor entre 0 y 1
+		float volume=0.5; // valor entre 0 y 1
 		result = canal->setVolume(volume);
 		ERRCHECK(result);
 
@@ -383,7 +393,7 @@ namespace Audio
 		& canal); // devuelve el canal que asigna
 		ERRCHECK(result);
 		// el sonido ya está reproduciendo!!
-		float volume=0.7; // valor entre 0 y 1
+		float volume=0.5; // valor entre 0 y 1
 		result = canal->setVolume(volume);
 		ERRCHECK(result);
 

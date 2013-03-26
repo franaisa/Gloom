@@ -134,7 +134,7 @@ namespace GUI {
 						break;
 					case GUI::Key::NUMBER7:
 						position=Logic::CServer::getSingletonPtr()->getMap()->getEntityByName("Jumper1")->getPosition();
-						Audio::CServer::getSingletonPtr()->playSound3D("media/audio/plasma.wav", "cosa", position);
+						Audio::CServer::getSingletonPtr()->playSound3D("media/audio/plasma.wav", "cosa", position, false);
 						break;
 					case GUI::Key::NUMBER8:
 						break;

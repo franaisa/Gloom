@@ -77,6 +77,7 @@ namespace Logic
 			maudio->setRuta(_audio);
 			maudio->setId("jumper");
 			maudio->setPosition(_entity->getPosition());
+			maudio->setNotIfPlay(false);
 			_entity->emitMessage(maudio);
 			break;
 		}
