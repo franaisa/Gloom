@@ -149,6 +149,15 @@ namespace Graphics
 		Ogre::SceneManager *getSceneMgr() {return _sceneMgr;}
 
 		/**
+		Devuelve el objeto que representa la pantalla
+
+		@return el viewport que se muestra con la escena
+		*/
+		Ogre::Viewport *getViewport() {
+			return _viewport;
+		}
+
+		/**
 		Crea un scene node, se usa para los overlays.
 		*/
 		void createSceneNode(const std::string &name);

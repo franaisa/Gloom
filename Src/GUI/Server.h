@@ -29,6 +29,12 @@ namespace CEGUI
 	class Window;
 }
 
+namespace Hikari {
+	class HikariManager;
+	class FlashControl;
+	struct Position;
+}
+
 namespace Application {
 	class CApplicationState;
 }
@@ -104,6 +110,8 @@ namespace GUI
 		 */
 		void addLayoutToState(Application::CApplicationState* state, const std::string& layoutName);
 
+		Hikari::FlashControl* addLayoutToState(Application::CApplicationState* state, const std::string& layoutName, Hikari::Position pos);
+
 		//________________________________________________________________________
 
 		/**
@@ -155,6 +163,8 @@ namespace GUI
 		 */
 		void setText(const std::string& msg);
 
+		void tick();
+
 	protected:
 
 		/**
@@ -203,6 +213,8 @@ namespace GUI
 		Única instancia de la clase.
 		*/
 		static CServer* _instance;
+
+		Hikari::HikariManager* _manager;
 
 	}; // class CServer
 

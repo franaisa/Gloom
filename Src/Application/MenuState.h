@@ -18,6 +18,7 @@ Contiene la declaración del estado de menú.
 #define __Application_MenuState_H
 
 #include "ApplicationState.h"
+#include "Hikari.h"
 
 // Predeclaración de clases para ahorrar tiempo de compilación
 namespace Application 
@@ -29,6 +30,10 @@ namespace CEGUI
 {
 	class EventArgs;
 	class Window;
+}
+
+namespace Hikari{
+	class FlashControl;
 }
 
 namespace Application 
@@ -167,20 +172,22 @@ namespace Application
 		Ventana CEGUI que muestra el menú.
 		*/
 		CEGUI::Window* _menuWindow;
+
+		Hikari::FlashControl* _menu;
 		
 		/**
 		Función que se quiere realizar cuando se pulse el botón start.
 		Simplemente cambia al estado de juego.
 		*/
-		bool startReleased(const CEGUI::EventArgs& e);
+		Hikari::FlashValue startReleased(Hikari::FlashControl* caller, const Hikari::Arguments& args);
 
 		/**
 		Función que se quiere realizar cuando se pulse el botón exit.
 		Simplemente termina la aplicación.
 		*/
-		bool exitReleased(const CEGUI::EventArgs& e);
+		Hikari::FlashValue onExitClick(Hikari::FlashControl* caller, const Hikari::Arguments& args);
 
-		bool multiplayerReleased(const CEGUI::EventArgs& e);
+		Hikari::FlashValue multiplayerReleased(Hikari::FlashControl* caller, const Hikari::Arguments& args);
 
 	}; // CMenuState
 

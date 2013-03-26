@@ -40,6 +40,10 @@ namespace Application {
 	class CApplicationState;
 }
 
+namespace Hikari{
+	class HikariManager;
+}
+
 // Declaración de la clase
 namespace Input
 {
@@ -180,7 +184,7 @@ namespace Input
 		/**
 		Sistema de la interfaz gráfica de usuario CEGUI.
 		*/
-		CEGUI::System *_GUISystem;
+		Hikari::HikariManager *_GUISystem;
 
 	private:
 		/**

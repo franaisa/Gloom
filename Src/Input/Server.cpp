@@ -20,6 +20,8 @@ la gestión de la entrada de periféricos.
 #include <CEGUISchemeManager.h>
 #include <CEGUIFontManager.h>
 
+#include "Hikari.h"
+
 #include <cassert>
 namespace Input {
 
@@ -78,7 +80,7 @@ namespace Input {
 	{
 		_playerController = new CPlayerController();
 
-		_GUISystem = BaseSubsystems::CServer::getSingletonPtr()->getGUISystem();
+		_GUISystem = BaseSubsystems::CServer::getSingletonPtr()->getHikari();
 
 		CInputManager::getSingletonPtr()->addMouseListener(this);
 		CInputManager::getSingletonPtr()->addKeyListener(this);
@@ -102,8 +104,8 @@ namespace Input {
 
 	bool CServer::keyPressed(TKey key)
 	{
-		_GUISystem->injectKeyDown(key.keyId);    
-		_GUISystem->injectChar(key.text);    
+		//_GUISystem->injectKeyDown(key.keyId);    
+		//_GUISystem->injectChar(key.text);    
 
 		
 		// Queremos que si hay más oyentes también reciban el evento
@@ -115,7 +117,7 @@ namespace Input {
 
 	bool CServer::keyReleased(TKey key)
 	{
-		_GUISystem->injectKeyUp(key.keyId);
+		//_GUISystem->injectKeyUp(key.keyId);
 
 		
 		// Queremos que si hay más oyentes también reciban el evento
@@ -130,7 +132,8 @@ namespace Input {
 #if defined NON_EXCLUSIVE_MODE_IN_WINDOW_MODE
 		_GUISystem->injectMousePosition((float)mouseState.posAbsX,(float)mouseState.posAbsY);
 #else 
-		_GUISystem->injectMouseMove((float)mouseState.movX,(float)mouseState.movY);
+		//_GUISystem->injectMouseMove((float)mouseState.movX,(float)mouseState.movY);
+		_GUISystem->injectMouseMove(mouseState.posAbsX, mouseState.posAbsY);
 #endif	
 		// Queremos que si hay más oyentes también reciban el evento
 		return false;
@@ -141,7 +144,7 @@ namespace Input {
 		
 	bool CServer::mousePressed(const CMouseState &mouseState)
 	{
-		switch (mouseState.button)
+		/*switch (mouseState.button)
 		{
 		case Button::LEFT:
 			_GUISystem->injectMouseButtonDown(CEGUI::LeftButton);
@@ -149,7 +152,9 @@ namespace Input {
 			_GUISystem->injectMouseButtonDown(CEGUI::RightButton);
 		case Button::MIDDLE:
 			_GUISystem->injectMouseButtonDown(CEGUI::MiddleButton);
-		}
+		}*/
+
+		_GUISystem->injectMouseDown(mouseState.button);
 
 		// Queremos que si hay más oyentes también reciban el evento
 		return false;
@@ -160,7 +165,7 @@ namespace Input {
 
 	bool CServer::mouseReleased(const CMouseState &mouseState)
 	{
-		switch (mouseState.button)
+		/*switch (mouseState.button)
 		{
 		case Button::LEFT:
 			_GUISystem->injectMouseButtonUp(CEGUI::LeftButton);
@@ -168,7 +173,9 @@ namespace Input {
 			_GUISystem->injectMouseButtonUp(CEGUI::RightButton);
 		case Button::MIDDLE:
 			_GUISystem->injectMouseButtonUp(CEGUI::MiddleButton);
-		}
+		}*/
+
+		_GUISystem->injectMouseUp(mouseState.button);
 
 		// Queremos que si hay más oyentes también reciban el evento
 		return false;

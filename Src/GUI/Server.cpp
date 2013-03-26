@@ -22,6 +22,13 @@ la gestión de la interfaz con el usuario (entrada de periféricos, CEGui...).
 #include <CEGUIWindow.h>
 #include <CEGUISchemeManager.h>
 #include <CEGUIFontManager.h>
+#include "Hikari.h"
+#include "FlashControl.h"
+#include "FlashValue.h"
+#include "HikariPlatform.h"
+
+#include "Graphics/Server.h"
+#include "Graphics/Scene.h"
 
 namespace GUI {
 
@@ -109,6 +116,8 @@ namespace GUI {
 		BaseSubsystems::CServer::getSingletonPtr()->getGUISystem()->setDefaultMouseCursor("raton","miraRaton");
 		#endif	
 
+		_manager = BaseSubsystems::CServer::getSingletonPtr()->getHikari();
+
 		return true;
 
 	} // open
@@ -131,6 +140,19 @@ namespace GUI {
 		// initialization etc)
 		(_layoutTable[state])[layoutName] = new GUIDescriptor(layoutName);
 	} // addLayoutToState
+
+	//________________________________________________________________________
+
+	Hikari::FlashControl* CServer::addLayoutToState(Application::CApplicationState* state, 
+		const std::string& layoutName, Hikari::Position pos) {
+
+		std::cout << layoutName << std::endl;
+
+			return BaseSubsystems::CServer::getSingletonPtr()->getHikari()->
+							createFlashOverlay(layoutName,Graphics::CServer::getSingletonPtr()->getActiveScene()->getViewport(),
+							BaseSubsystems::CServer::getSingletonPtr()->getRenderWindow()->getWidth(), 
+							BaseSubsystems::CServer::getSingletonPtr()->getRenderWindow()->getHeight(), Hikari::Position(Hikari::Center),1);
+	}
 
 	//________________________________________________________________________
 
@@ -158,7 +180,8 @@ namespace GUI {
 			// If there is such a layout name
 			if(it2 != it->second.end()) {
 				// Activate the window and update "_currentWindow" pointer
-				_currentWindow = it2->second->activate();
+				
+				//_currentWindow = it2->second->activate();
 				return true;
 			}
 
@@ -166,6 +189,12 @@ namespace GUI {
 
 		return false;
 	} // activateGUI
+
+
+
+	void CServer::tick(){
+		_manager->update();
+	}
 
 	//________________________________________________________________________
 

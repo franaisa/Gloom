@@ -142,12 +142,15 @@ namespace Application {
 
 	void C3DApplication::tick(unsigned int msecs) 
 	{
-		// Ejecutar el tick del estado
-		CBaseApplication::tick(msecs);
-
+		//primero queremos actualizar los paquetes de red recibidos
 		Net::CManager::getSingletonPtr()->tick(msecs);
 
 		Input::CInputManager::getSingletonPtr()->tick();
+		
+		// Ejecutar el tick del estado
+		CBaseApplication::tick(msecs);
+
+		GUI::CServer::getSingletonPtr()->tick();
 
 		Graphics::CServer::getSingletonPtr()->tick(msecs/1000.0f);
 
