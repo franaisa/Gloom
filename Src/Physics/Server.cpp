@@ -222,7 +222,7 @@ namespace Physics {
 			// La llamada a simulate provoca que PhysX mueva a los actores físicos durante
 			// el tiempo especificado.
 			_scene->simulate(_fixedTime / 1000.0f);
-			_acumTime -= 5;
+			_acumTime -= 16;
 
 			// Si aún tenemos que hacer más simulaciones, le pedimos a PhysX que nos devuelva
 			// los resultados.
@@ -274,7 +274,7 @@ namespace Physics {
 		// Crear la escena física
 		_scene = _physics->createScene(sceneDesc);
 		_acumTime = 0;
-		_fixedTime = 5;
+		_fixedTime = 16;
 		assert(_scene && "Error en PxPhysics::createScene");
 
 		// Activamos la notificación de eventos entre entidades kinemáticas.
