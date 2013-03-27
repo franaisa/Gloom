@@ -74,7 +74,7 @@ namespace Logic {
 		
 		// Traducimos el daño al rango 0-1 suponiendo que el daño esté dado entre 0-100
 		assert(entityInfo->hasAttribute("shieldDamageAbsorption"));
-		_shieldDamageAbsorption = entityInfo->getIntAttribute("shieldDamageAbsorption") * 0.01f;
+		_shieldDamageAbsorption = entityInfo->getFloatAttribute("shieldDamageAbsorption") * 0.01f;
 		
 		assert(entityInfo->hasAttribute("maxLife"));
 		_maxLife = entityInfo->getIntAttribute("maxLife");

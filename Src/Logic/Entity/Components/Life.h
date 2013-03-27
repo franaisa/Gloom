@@ -20,15 +20,8 @@ controla la vida de un personaje.
 namespace Logic {
 	
 	/**
-	Este componente controla la vida de una entidad. Procesa mensajes de tipo 
-	DAMAGED (indican que la entidad ha sido herida) y resta el daño a la vida de la
-	entidad.
-	<p>
-	La vida de la entidad se especifica en el mapa con el atributo "life".
-
-	TODO  Si la vida pasa a ser 0 que la entidad muera (poner animación de muerte?)
-	y si es el jugador habrá que terminar el juego. Si la vida sigue siendo mayor 
-	que 0 trás un golpe ¿poner la animación de herido?.
+	Componente que controla la vida y la armadura de una entidad.
+	Procesa mensajes de daño y de "tweaking".
 	
     @ingroup logicGroup
 
@@ -41,107 +34,216 @@ namespace Logic {
 		DEC_FACTORY(CLife);
 	public:
 
-		/** Constructor por defecto; en la clase base no hace nada. */
+
+		// =======================================================================
+		//                      CONSTRUCTORES Y DESTRUCTOR
+		// =======================================================================
+
+
+		/** Constructor por defecto. */
 		CLife();
+
+		//__________________________________________________________________
 
 		/** Destructor. */
 		virtual ~CLife();
 
+
+		// =======================================================================
+		//                    METODOS HEREDADOS DE ICOMPONENT
+		// =======================================================================
+
+
 		/**
-		Método llamado en cada frame que actualiza el estado del componente de la vida,
-		<p>
-		la cual bajará cada n milisegundos.
+		Método llamado en cada frame. En este componente se encarga
+		de reducir la vida del individuo paulatinamente en base a los
+		parámetros fijados desde fichero.
 
 		@param msecs Milisegundos transcurridos desde el último tick.
 		*/
 		virtual void tick(unsigned int msecs);
 
+		//__________________________________________________________________
+
 		/**
-		Inicialización del componente usando la descripción de la entidad que hay en 
-		el fichero de mapa.
+		Inicialización del componente a partir de la información extraida de la entidad
+		leida del mapa:
+		<ul>
+			<li><strong>defaultLife:</strong> Vida por defecto del personaje (depende de la clase de éste). </li>
+			<li><strong>damageOverTime:</strong> Cantidad de vida que se pierde con el tiempo. </li>
+			<li><strong>damageTimeStep:</strong> Cada cuanto se resta vida de forma automática. </li>
+			<li><strong>shieldDamageAbsorption:</strong> Cantidad de daño que absorbe el escudo (de 0 a 100). </li>
+			<li><strong>maxLife:</strong> Máximo de vida que puede tener el personaje. </li>
+			<li><strong>maxShield:</strong> Máximo de armadura que puede tener el personaje. </li>
+			<li><strong>audioPain:</strong> Nombre del fichero de audio que se dispara al herir al personaje. </li>
+			<li><strong>audioDeath:</strong> Nombre del fichero de audio que se dispara al morir el personaje. </li>
+		</ul>
+
+		@param entity Entidad a la que pertenece el componente.
+		@param map Mapa Lógico en el que se registrará el objeto.
+		@param entityInfo Información de construcción del objeto leído del fichero de disco.
+		@return Cierto si la inicialización ha sido satisfactoria.
 		*/
 		virtual bool spawn(CEntity* entity, CMap *map, const Map::CEntity *entityInfo);
 
+		//__________________________________________________________________
+
 		/**
 		Metodo que se llama al activar el componente.
+		Resetea los valores de vida y escudo a los fijados por defecto.
 		*/
 		virtual void activate();
 
-		/**
-		Este componente sólo acepta mensajes de tipo DAMAGED.
+		//__________________________________________________________________
+
+		/** 
+		Este componente acepta los siguientes mensajes:
+
+		<ul>
+			<li>DAMAGED</li>
+			<li>ADD_LIFE</li>
+			<li>ADD_SHIELD</li>
+			<li>SET_IMMUNITY</li>
+			<li>SET_REDUCED_DAMAGE</li>
+		</ul>
+		
+		@param message Mensaje a chequear.
+		@return true si el mensaje es aceptado.
 		*/
 		virtual bool accept(CMessage *message);
 
+		//__________________________________________________________________
+
 		/**
-		Al recibir un mensaje de tipo DAMAGED la vida de la entidad disminuye.
+		Método virtual que procesa un mensaje.
+
+		@param message Mensaje a procesar.
 		*/
 		virtual void process(CMessage *message);
 
+		
+		// =======================================================================
+		//                            METODOS PROPIOS
+		// =======================================================================
+
+
 		/**
-		Al recibir daño quitamos vida
+		Resta los daños indicados a la entidad (tanto de escudo
+		como de vida), dispara los sonidos de daño correspondientes
+		y envia el mensaje de muerte si es necesario.
+
+		@param damage Daño que queremos restar al personaje.
+		@param enemy Entidad que nos está haciendo daño.
 		*/
 		void damaged(int damage, CEntity* enemy);
+
+		//__________________________________________________________________
 		
 		/**
-		Sumar vida 
+		Suma la vida pasada por parámetro.
+
+		@param life Cantidad de vida que queremos sumar.
 		*/
 		void addLife(int life);
+
+		//__________________________________________________________________
 		
 		/**
-		Sumar escudo
+		Suma los puntos de armadura pasados por parámetro.
+
+		@param shield Puntos de armadura que queremos sumar.
 		*/
 		void addShield(int shield);
 
-		// Activa la inmunidad
+		//__________________________________________________________________
+
+		/**
+		Activa o desactiva la inmunidad del personaje.
+
+		@param isImmune True si queremos que el personaje
+		sea inmune.
+		*/
 		void setImmunity(bool isImmune);
 
-		// Numero entre 0 y 1
+		//__________________________________________________________________
+
+		/**
+		Dado un porcentaje de reducción de daños (comprendido entre
+		0 y 1) reduce todo el daño recibido en base a ese porcentaje.
+
+		Por ejemplo, un porcentaje de 1 haría que el personaje siempre
+		recibiera un daño de 0 puntos.
+
+		@param percentage Porcentaje de reducción de daños. Tiene que 
+		estar comprendido entre 0 y 1.
+		*/
 		void reducedDamageAbsorption(float percentage);
+
 
 	private:
 
+
+		// =======================================================================
+		//                          MÉTODOS PRIVADOS
+		// =======================================================================
+		
+		
+		/**
+		Resta los puntos de daño indicados.
+
+		@param damage Daño que queremos restar a la entidad.
+		@return true si el personaje ha muerto.
+		*/
 		bool updateLife(int damage);
 
+		//__________________________________________________________________
+
+		/**
+		Setea la posición de la cámara y envía el mensaje de muerte.
+
+		@param enemy Enemigo al que queremos que mire la cámara.
+		*/
 		void triggerDeathState(CEntity* enemy);
 
+		//__________________________________________________________________
+
+		/**	Dispara el sonido de muerte. */
 		void triggerDeathSound();
 
+		//__________________________________________________________________
+
+		/** Dispara el sonido de herido. */
 		void triggerHurtSound();
 
+
+		// =======================================================================
+		//                          MIEMBROS PRIVADOS
+		// =======================================================================
+
+
+		/** Indica si el personaje es inmune (si recibe daños). */
 		bool _isImmune;
 
+		/** Porcentaje de daños recibidos. Su valor por defecto es 0 (desactivado). */
 		float _reducedDamageAbsorption;
 
-		/**
-		Vida por defecto del personaje, depende de la clase.
-		*/
+		/** Vida por defecto del personaje, depende de la clase. */
 		int _defaultLife;
 
-		/**
-		Vida actual de la entidad
-		*/
+		/** Vida actual del personaje. */
 		int _currentLife;
 		
-		/**
-		Máxima vida de la entidad
-		*/
+		/** Vida máxima del personaje. */
 		int _maxLife;
 
-		/**
-		Escudo de la entidad
-		*/
+		/** Puntos de armadura que el personaje tiene. */
 		int _currentShield;
 		
-		/**
-		Máximo escudo de la entidad
-		*/
+		/**	Puntos máximos de armadura que el personaje puede tener. */
 		int _maxShield;
 		
-		/**
-		Porcentaje de daño que absorve el escudo a la entidad
-		*/
-		int _shieldDamageAbsorption;
-
+		/** Porcentaje de daño que absorbe la armadura. De 0 a 1. */
+		float _shieldDamageAbsorption;
 
 		/** Cantidad de vida que se le resta al personaje con el paso del tiempo. */
 		int _damageOverTime;
@@ -152,20 +254,10 @@ namespace Logic {
 		/** Timer que controla el tiempo que ha pasado desde el anterior step de daño. */
 		unsigned int _damageTimer;
 
-
-		/**
-		Indica si el jugador está muerto.
-		*/
-		bool _playerIsDead;
-
-		/**
-		Ruta del sonido de daño
-		*/
+		/** Ruta del sonido de daño. */
 		std::string _audioPain;
 
-		/**
-		Ruta del sonido de muerte
-		*/
+		/** Ruta del sonido de muerte. */
 		std::string _audioDeath;
 
 	}; // class CLife
