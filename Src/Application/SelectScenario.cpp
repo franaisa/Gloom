@@ -26,7 +26,6 @@ Contiene la implementación del estado de menú.
 #include <direct.h>
 
 #include "GUI\Server.h"
-#include <elements/CEGUIPushButton.h>
 
 namespace Application {
 
@@ -44,7 +43,7 @@ namespace Application {
 		_menu = GUI::CServer::getSingletonPtr()->addLayoutToState(this,"singleplayer", Hikari::Position(Hikari::Center));
 		_menu->load("SinglePlayer.swf");
 		_menu->bind("back",Hikari::FlashDelegate(this, &CSelectScenario::backReleased));
-		_menu->bind("newgame",Hikari::FlashDelegate(this, &CSelectScenario::loadScenario));
+		_menu->bind("createGame",Hikari::FlashDelegate(this, &CSelectScenario::loadScenario));
 		_menu->hide();
 		listFiles();
 		return true;

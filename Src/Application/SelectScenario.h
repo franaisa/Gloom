@@ -183,6 +183,9 @@ namespace Application
 		*/
 		Hikari::FlashValue loadScenario(Hikari::FlashControl* caller, const Hikari::Arguments& args);
 
+		/**
+		Método que lista los ficheros que hay en el directorio /media/maps y los muestra en el gui sin la extension
+		*/
 		void listFiles();
 
 	}; // CMenuState

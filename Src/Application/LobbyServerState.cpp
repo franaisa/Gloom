@@ -28,11 +28,12 @@ Contiene la implementación del estado de lobby del servidor.
 #include "Net/factoriared.h"
 #include "Net/paquete.h"
 #include "Net/buffer.h"
+#include "Hikari.h"
 
-#include <CEGUISystem.h>
-#include <CEGUIWindowManager.h>
-#include <CEGUIWindow.h>
-#include <elements/CEGUIPushButton.h>
+#include <iostream>
+#include <fstream>
+#include <cstdlib>
+#include <direct.h>
 
 #include "Logic/GameNetPlayersManager.h"
 
@@ -49,19 +50,13 @@ namespace Application {
 		CApplicationState::init();
 
 		// Cargamos la ventana que muestra el menú
-		CEGUI::WindowManager::getSingletonPtr()->loadWindowLayout("NetLobbyServer.layout");
-		_menuWindow = CEGUI::WindowManager::getSingleton().getWindow("NetLobbyServer");
-		
-		// Asociamos los botones del menú con las funciones que se deben ejecutar.
-		CEGUI::WindowManager::getSingleton().getWindow("NetLobbyServer/Start")->
-			subscribeEvent(CEGUI::PushButton::EventClicked, 
-				CEGUI::SubscriberSlot(&CLobbyServerState::startReleased, this));
-
-		CEGUI::WindowManager::getSingleton().getWindow("NetLobbyServer/Start")->setEnabled(false);
-		
-		CEGUI::WindowManager::getSingleton().getWindow("NetLobbyServer/Back")->
-			subscribeEvent(CEGUI::PushButton::EventClicked, 
-				CEGUI::SubscriberSlot(&CLobbyServerState::backReleased, this));
+		_menu = GUI::CServer::getSingletonPtr()->addLayoutToState(this,"server", Hikari::Position(Hikari::Center));
+		_menu->load("MultiplayerServer.swf");
+		_menu->bind("back",Hikari::FlashDelegate(this, &CLobbyServerState::backReleased));
+		_menu->bind("newgame",Hikari::FlashDelegate(this, &CLobbyServerState::startReleased));
+		_menu->bind("createGame",Hikari::FlashDelegate(this, &CLobbyServerState::createReleased));
+		_menu->hide();
+		listFiles();
 	
 		return true;
 
@@ -81,29 +76,19 @@ namespace Application {
 	{
 		CApplicationState::activate();
 		// Activamos la ventana que nos muestra el menú y activamos el ratón.
-		CEGUI::System::getSingletonPtr()->setGUISheet(_menuWindow);
-		_menuWindow->setVisible(true);
-		_menuWindow->activate();
-		CEGUI::MouseCursor::getSingleton().show();
+		_menu->show();
 
-		Net::CManager::getSingletonPtr()->addObserver(this);
-		Net::CManager::getSingletonPtr()->activateAsServer(1234,16);
-
-		CEGUI::WindowManager::getSingleton().getWindow("NetLobbyServer/Status")
-			->setText("Status: Server up. Waiting for clients ...");
+		
 	} // activate
 
 	//--------------------------------------------------------
 
 	void CLobbyServerState::deactivate() 
-	{		
-		Net::CManager::getSingletonPtr()->removeObserver(this);
-		// Desactivamos la ventana GUI con el menú y el ratón.
-		CEGUI::MouseCursor::getSingleton().hide();
-		_menuWindow->deactivate();
-		_menuWindow->setVisible(false);
-		
+	{	
 		CApplicationState::deactivate();
+
+		Net::CManager::getSingletonPtr()->removeObserver(this);
+		_menu->hide();
 
 	} // deactivate
 
@@ -170,20 +155,40 @@ namespace Application {
 			
 	//--------------------------------------------------------
 		
-	bool CLobbyServerState::startReleased(const CEGUI::EventArgs& e)
+	Hikari::FlashValue CLobbyServerState::startReleased(Hikari::FlashControl* caller, const Hikari::Arguments& args)
 	{
 		doStart();
-		return true;
+		return FLASH_VOID;
 
 	} // startReleased
 			
 	//--------------------------------------------------------
 
-	bool CLobbyServerState::backReleased(const CEGUI::EventArgs& e)
+	Hikari::FlashValue CLobbyServerState::backReleased(Hikari::FlashControl* caller, const Hikari::Arguments& args)
 	{
 		Net::CManager::getSingletonPtr()->deactivateNetwork();
 		_app->setState("netmenu");
-		return true;
+		return FLASH_VOID;
+
+	} // backReleased
+
+	Hikari::FlashValue CLobbyServerState::createReleased(Hikari::FlashControl* caller, const Hikari::Arguments& args)
+	{
+		
+		//ponemos al server a escuchar
+		Net::CManager::getSingletonPtr()->addObserver(this);
+		Net::CManager::getSingletonPtr()->activateAsServer(1234,16);
+
+		//deshabilitamos el boton crear partida
+		_menu->callFunction("disableCreate",Hikari::Args());
+		
+
+		//cogemos el mapa en el que crear la partida
+		_map=args.at(0).getString()+".txt";
+
+		//mostramos en el gui lo que esta pasando
+		_menu->callFunction("pushCommand",Hikari::Args("Status: Server up. Waiting for clients ..."));
+		return FLASH_VOID;
 
 	} // backReleased
 
@@ -359,13 +364,13 @@ namespace Application {
 			//Mostramos un poco de información en el status
 			char id[100];
 			unsigned int ip = packet->getConexion()->getAddress();
-			byte* p = (byte*)&ip;
+			
+			BYTE* p = (BYTE*)&ip;
 			sprintf_s(id,"\nClient conected: %d.%d.%d.%d:%d\nGame can start...\n",p[0],p[1],p[2],p[3], packet->getConexion()->getPort()); 				
-			CEGUI::WindowManager::getSingleton().getWindow("NetLobbyServer/Status")->appendText(id);
+			_menu->callFunction("pushCommand",Hikari::Args(id));
 			
 			//Habilitamos el botón de start.
-			CEGUI::WindowManager::getSingleton().getWindow("NetLobbyServer/Start")->setEnabled(true);
-
+			_menu->callFunction("enableBegin",Hikari::Args());
 			//Almacenamos el ID del usuario que se ha conectado.
 			_clients.push_back(packet->getConexion()->getId());
 
@@ -400,14 +405,30 @@ namespace Application {
 			_playersLoadedByClients.erase(pairIt);
 
 		if(!_clients.empty()) {
-			CEGUI::WindowManager::getSingleton().getWindow("NetLobbyServer/Status")
-				->setText("Client disconnected. Waiting for new clients...");					
+			_menu->callFunction("pushCommand",Hikari::Args("Client disconnected. Waiting for new clients..."));
 		} else{
-			CEGUI::WindowManager::getSingleton().getWindow("NetLobbyServer/Status")
-				->setText("All clients disconnected. Waiting for some client...");
-			CEGUI::WindowManager::getSingleton().getWindow("NetLobbyServer/Start")->setEnabled(false); //Dehabilitamos el botón de start.
+			_menu->callFunction("pushCommand",Hikari::Args("All clients disconnected. Waiting for some client..."));
+
+			//Dehabilitamos el botón de start.
+			_menu->callFunction("disableBegin",Hikari::Args()); 
 		}
 
 	} // disconnexionPacketReceived
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	void CLobbyServerState::listFiles(){
+		WIN32_FIND_DATA FindData;
+		HANDLE hFind;
+		hFind = FindFirstFile("media\\maps\\*.txt", &FindData);
+
+		std::string filename;
+		while (FindNextFile(hFind, &FindData))
+		{     
+			filename = FindData.cFileName;
+			_menu->callFunction("pushFile",Hikari::Args(filename.substr(0,filename.find(".txt"))));
+
+		}
+	}
 
 } // namespace Application
