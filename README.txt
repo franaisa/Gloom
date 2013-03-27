@@ -13,13 +13,18 @@ GENERAL NOTES
 ==============
 
 * Description: Gloom is a pure multiplayer Fast-Paced FPS.
-* Technology: C++/Ogre3d/PhysX/Enet - Windows.
+* Technology: C++/Ogre3d/PhysX/Flash/Enet - Windows.
 * Authors:
+
+	** Artists:
+		- Ángel Arenas Civantos
+		- Alberto Moro
 
 	** Designers:
 		- Manuel López Ibáñez
 		- Beñat Berasategi Olaizola
 		- Ángel Arenas Civantos
+		- Francisco Aisa García
 	
 	** Core Engineers:
 		- Ruben Mulero Guerrero

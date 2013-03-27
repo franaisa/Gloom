@@ -1,23 +1,25 @@
 /**
 @file Life.h
 
-Contiene la declaración del componente que controla la vida de una entidad.
+Contiene la declaración del componente que 
+controla la vida de un personaje.
 
 @see Logic::CLife
 @see Logic::IComponent
 
-@author David Llansó
-@date Octubre, 2010
+@author Francisco Aisa García
+@author Jose Antonio García Yáñez
+@date Marzo, 2013
 */
+
 #ifndef __Logic_Life_H
 #define __Logic_Life_H
 
 #include "Logic/Entity/Component.h"
 
-//declaración de la clase
-namespace Logic 
-{
-/**
+namespace Logic {
+	
+	/**
 	Este componente controla la vida de una entidad. Procesa mensajes de tipo 
 	DAMAGED (indican que la entidad ha sido herida) y resta el daño a la vida de la
 	entidad.
@@ -30,18 +32,20 @@ namespace Logic
 	
     @ingroup logicGroup
 
-	@author David Llansó García
-	@date Octubre, 2010
-*/
-	class CLife : public IComponent
-	{
+	@author Francisco Aisa García
+	@author Jose Antonio García Yáñez
+	@date Marzo, 2013
+	*/
+	
+	class CLife : public IComponent {
 		DEC_FACTORY(CLife);
 	public:
 
-		/**
-		Constructor por defecto; en la clase base no hace nada.
-		*/
-		CLife() : IComponent(), _life(100), _playerDead(false) {}
+		/** Constructor por defecto; en la clase base no hace nada. */
+		CLife();
+
+		/** Destructor. */
+		virtual ~CLife();
 
 		/**
 		Método llamado en cada frame que actualiza el estado del componente de la vida,
@@ -51,6 +55,7 @@ namespace Logic
 		@param msecs Milisegundos transcurridos desde el último tick.
 		*/
 		virtual void tick(unsigned int msecs);
+
 		/**
 		Inicialización del componente usando la descripción de la entidad que hay en 
 		el fichero de mapa.
@@ -87,51 +92,71 @@ namespace Logic
 		*/
 		void addShield(int shield);
 
-	protected:
+		// Activa la inmunidad
+		void setImmunity(bool isImmune);
+
+		// Numero entre 0 y 1
+		void reducedDamageAbsorption(float percentage);
+
+	private:
+
+		bool updateLife(int damage);
+
+		void triggerDeathState(CEntity* enemy);
+
+		void triggerDeathSound();
+
+		void triggerHurtSound();
+
+		bool _isImmune;
+
+		float _reducedDamageAbsorption;
 
 		/**
-		Vida de la entidad(clase).
+		Vida por defecto del personaje, depende de la clase.
 		*/
-		int _classLife;
+		int _defaultLife;
 
 		/**
 		Vida actual de la entidad
 		*/
-		int _life;
+		int _currentLife;
+		
 		/**
 		Máxima vida de la entidad
 		*/
 		int _maxLife;
-		/**
-		MáximO escudo de la entidad
-		*/
-		int _maxShield;
-		/**
-		Cantidad de vida restada automáticamente a la entidad al pasar el tiempo en la entidad
-		*/
-		int _lifeDamage;
-		/**
-		Cada cuanto tiempo baja la vida en la entidad, usado en el tick
-		*/
-		unsigned int _lifeTimeDamage;
-		/**
-		Variable acumulativa usada en el tick en milisegundos.
-		*/
-		unsigned int _varLifeCumulative;
 
 		/**
 		Escudo de la entidad
 		*/
-		int _shield;
-			/**
+		int _currentShield;
+		
+		/**
+		Máximo escudo de la entidad
+		*/
+		int _maxShield;
+		
+		/**
 		Porcentaje de daño que absorve el escudo a la entidad
 		*/
-		int _porcentShield;
+		int _shieldDamageAbsorption;
+
+
+		/** Cantidad de vida que se le resta al personaje con el paso del tiempo. */
+		int _damageOverTime;
+		
+		/** Cada cuanto tiempo baja la vida del personaje. */
+		unsigned int _damageTimeStep;
+		
+		/** Timer que controla el tiempo que ha pasado desde el anterior step de daño. */
+		unsigned int _damageTimer;
+
 
 		/**
 		Indica si el jugador está muerto.
 		*/
-		bool _playerDead;
+		bool _playerIsDead;
 
 		/**
 		Ruta del sonido de daño
