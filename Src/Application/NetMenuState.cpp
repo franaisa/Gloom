@@ -35,7 +35,7 @@ namespace Application {
 	{
 		CApplicationState::init();
 
-		_menu = GUI::CServer::getSingletonPtr()->addLayoutToState(this,"network", Hikari::Position(Hikari::Center));
+		_menu = GUI::CServer::getSingletonPtr()->addLayoutToState(this,"netmenu", Hikari::Position(Hikari::Center));
 		_menu->load("NetworkGame.swf");
 		_menu->bind("multiplayer",Hikari::FlashDelegate(this, &CNetMenuState::serverReleased));
 		_menu->bind("newgame",Hikari::FlashDelegate(this, &CNetMenuState::clientReleased));

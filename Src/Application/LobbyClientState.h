@@ -16,9 +16,9 @@ Contiene la declaración del estado de lobby del cliente.
 
 #ifndef __Application_LobbyClientState_H
 #define __Application_LobbyClientState_H
-
 #include "ApplicationState.h"
 #include "Net/Manager.h"
+#include "FlashValue.h"
 
 // Predeclaración de clases para ahorrar tiempo de compilación
 namespace Application 
@@ -30,6 +30,10 @@ namespace CEGUI
 {
 	class EventArgs;
 	class Window;
+}
+
+namespace Hikari{
+	class FlashControl;
 }
 
 namespace Application 
@@ -102,7 +106,7 @@ namespace Application
 		virtual void tick(unsigned int msecs);
 
 		// Métodos de CKeyboardListener
-		
+
 		/**
 		Método que será invocado siempre que se pulse una tecla. 
 		Será la aplicación quién llame a este método cuando el 
@@ -115,7 +119,7 @@ namespace Application
 		el gestor no llamará a otros listeners.
 		*/
 		virtual bool keyPressed(Input::TKey key);
-		
+
 		/**
 		Método que será invocado siempre que se termine la pulsación
 		de una tecla. Será la aplicación quién llame a este método 
@@ -130,7 +134,7 @@ namespace Application
 		virtual bool keyReleased(Input::TKey key);
 
 		// Métodos de CMouseListener
-		
+
 		/**
 		Método que será invocado siempre que se mueva el ratón. La
 		aplicación avisa de este evento al estado actual.
@@ -140,7 +144,7 @@ namespace Application
 		el gestor no llamará a otros listeners.
 		*/
 		virtual bool mouseMoved(const Input::CMouseState &mouseState);
-		
+
 		/**
 		Método que será invocado siempre que se pulse un botón. La
 		aplicación avisa de este evento al estado actual.
@@ -175,18 +179,19 @@ namespace Application
 		Ventana CEGUI que muestra el menú.
 		*/
 		CEGUI::Window* _menuWindow;
-		
+		Hikari::FlashControl* _menu;
+
 		/**
 		Función que se quiere realizar cuando se pulse el botón start.
 		Simplemente cambia al estado de juego.
 		*/
-		bool startReleased(const CEGUI::EventArgs& e);
+		Hikari::FlashValue startReleased(Hikari::FlashControl* caller, const Hikari::Arguments& args);
 
 		/**
 		Función que se quiere realizar cuando se pulse el botón back.
 		Simplemente cambia al estado de menu.
 		*/
-		bool backReleased(const CEGUI::EventArgs& e);
+		Hikari::FlashValue backReleased(Hikari::FlashControl* caller, const Hikari::Arguments& args);
 
 
 		/**
@@ -194,7 +199,7 @@ namespace Application
 		Centraliza el código y será invocada cuando se pulse la tecla correspondiente o se
 		genere el evento de ratón
 		*/
-		void doStart();
+		void doStart(std::string ip);
 
 	}; // CMenuState
 
