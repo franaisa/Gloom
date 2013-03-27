@@ -44,6 +44,7 @@ namespace Application {
 		_menu = GUI::CServer::getSingletonPtr()->addLayoutToState(this,"singleplayer", Hikari::Position(Hikari::Center));
 		_menu->load("SinglePlayer.swf");
 		_menu->bind("back",Hikari::FlashDelegate(this, &CSelectScenario::backReleased));
+		_menu->bind("newgame",Hikari::FlashDelegate(this, &CSelectScenario::loadScenario));
 		_menu->hide();
 		listFiles();
 		return true;
@@ -100,16 +101,16 @@ namespace Application {
 	{
 		switch(key.keyId)
 		{
-		case Input::Key::NUMBER1:
-			return loadScenario("1");
+		//case Input::Key::NUMBER1:
+			//return loadScenario("1");
 			//_app->setState("lobbyserver");
-			break;
-		case Input::Key::NUMBER2:
-			return loadScenario("2");
+			//break;
+		//case Input::Key::NUMBER2:
+			//return loadScenario("2");
 			//_app->setState("lobbyclient");
-			break;
+			//break;
 		default:
-			return false;
+			return true;
 		}
 		return true;
 
@@ -143,7 +144,7 @@ namespace Application {
 
 	//--------------------------------------------------------
 
-	bool CSelectScenario::loadScenario(const std::string &name){
+	Hikari::FlashValue CSelectScenario::loadScenario(Hikari::FlashControl* caller, const Hikari::Arguments& args){
 	
 		if (!Logic::CEntityFactory::getSingletonPtr()->loadBluePrints("blueprints.txt"))
 			return false;
@@ -151,7 +152,7 @@ namespace Application {
 			return false;
 		}
 		// Cargamos el nivel a partir del nombre del mapa. 
-		if (!Logic::CServer::getSingletonPtr()->loadLevel("map"+name+".txt"))
+		if (!Logic::CServer::getSingletonPtr()->loadLevel(args.at(0).getString()+".txt"))
 			return false;
 		
 		_app->setState("singlePlayer");

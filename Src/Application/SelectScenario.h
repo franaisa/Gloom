@@ -181,7 +181,7 @@ namespace Application
 		Funcion que se encarga de cargar en escenario.
 		@param name, indica el nombre del mapa. Su nombre sera "mapname.txt"
 		*/
-		bool loadScenario(const std::string &name);
+		Hikari::FlashValue loadScenario(Hikari::FlashControl* caller, const Hikari::Arguments& args);
 
 		void listFiles();
 
