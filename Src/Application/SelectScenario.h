@@ -18,6 +18,7 @@ Contiene la declaración del estado de menú.
 #define __Application_SelectScenario_H
 
 #include "ApplicationState.h"
+#include "Hikari.h"
 
 // Predeclaración de clases para ahorrar tiempo de compilación
 namespace Application 
@@ -168,30 +169,21 @@ namespace Application
 		Ventana CEGUI que muestra el menú.
 		*/
 		CEGUI::Window* _menuWindow;
-		
-		/**
-		Función que se quiere realizar de un scenario.
-		Simplemente cambia al estado para el juego.
-		*/
-		bool scenario1Released(const CEGUI::EventArgs& e);
-
-		/**
-		Función que se quiere realizar de un scenario.
-		Simplemente cambia al estado para el juego.
-		*/
-		bool scenario2Released(const CEGUI::EventArgs& e);
+		Hikari::FlashControl* _menu;
 
 		/**
 		Función que se quiere realizar cuando se pulse el botón back.
 		Simplemente cambia al estado de menu.
 		*/
-		bool backReleased(const CEGUI::EventArgs& e);
+		Hikari::FlashValue backReleased(Hikari::FlashControl* caller, const Hikari::Arguments& args);
 
 		/**
 		Funcion que se encarga de cargar en escenario.
 		@param name, indica el nombre del mapa. Su nombre sera "mapname.txt"
 		*/
 		bool loadScenario(const std::string &name);
+
+		void listFiles();
 
 	}; // CMenuState
 

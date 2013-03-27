@@ -20,9 +20,12 @@ Contiene la implementación del estado de menú.
 #include "Logic/Maps/EntityFactory.h"
 #include "Logic/Maps/Map.h"
 
-#include <CEGUISystem.h>
-#include <CEGUIWindowManager.h>
-#include <CEGUIWindow.h>
+#include <iostream>
+#include <fstream>
+#include <cstdlib>
+#include <direct.h>
+
+#include "GUI\Server.h"
 #include <elements/CEGUIPushButton.h>
 
 namespace Application {
@@ -38,23 +41,11 @@ namespace Application {
 		CApplicationState::init();
 
 		// Cargamos la ventana que muestra el menú
-		CEGUI::WindowManager::getSingletonPtr()->loadWindowLayout("SelectScenario.layout");
-		_menuWindow = CEGUI::WindowManager::getSingleton().getWindow("SelectScenario");
-		
-		// Asociamos los botones del menú con las funciones que se deben ejecutar.
-		
-		CEGUI::WindowManager::getSingleton().getWindow("SelectScenario/Scenario1")->
-			subscribeEvent(CEGUI::PushButton::EventClicked, 
-				CEGUI::SubscriberSlot(&CSelectScenario::scenario1Released, this));
-		
-		CEGUI::WindowManager::getSingleton().getWindow("SelectScenario/Scenario2")->
-			subscribeEvent(CEGUI::PushButton::EventClicked, 
-				CEGUI::SubscriberSlot(&CSelectScenario::scenario2Released, this));
-
-		CEGUI::WindowManager::getSingleton().getWindow("SelectScenario/Back")->
-			subscribeEvent(CEGUI::PushButton::EventClicked, 
-				CEGUI::SubscriberSlot(&CSelectScenario::backReleased, this));
-
+		_menu = GUI::CServer::getSingletonPtr()->addLayoutToState(this,"singleplayer", Hikari::Position(Hikari::Center));
+		_menu->load("SinglePlayer.swf");
+		_menu->bind("back",Hikari::FlashDelegate(this, &CSelectScenario::backReleased));
+		_menu->hide();
+		listFiles();
 		return true;
 
 	} // init
@@ -74,23 +65,16 @@ namespace Application {
 		CApplicationState::activate();
 
 		// Activamos la ventana que nos muestra el menú y activamos el ratón.
-		CEGUI::System::getSingletonPtr()->setGUISheet(_menuWindow);
-		_menuWindow->setVisible(true);
-		_menuWindow->activate();
-		CEGUI::MouseCursor::getSingleton().show();
-
+		_menu->show();
 	} // activate
 
 	//--------------------------------------------------------
 
 	void CSelectScenario::deactivate() 
 	{		
-		// Desactivamos la ventana GUI con el menú y el ratón.
-		CEGUI::MouseCursor::getSingleton().hide();
-		_menuWindow->deactivate();
-		_menuWindow->setVisible(false);
-		
 		CApplicationState::deactivate();
+		// Desactivamos la ventana GUI con el menú y el ratón.
+		_menu->hide();
 
 	} // deactivate
 
@@ -156,23 +140,8 @@ namespace Application {
 
 	} // mouseReleased
 			
+
 	//--------------------------------------------------------
-		
-	bool CSelectScenario::scenario1Released(const CEGUI::EventArgs& e)
-	{
-		return loadScenario("1");
-
-	} // serverReleased
-			
-	//--------------------------------------------------------
-
-	bool CSelectScenario::scenario2Released(const CEGUI::EventArgs& e)
-	{
-		return loadScenario("2");
-
-	} // clientReleased
-
-		//--------------------------------------------------------
 
 	bool CSelectScenario::loadScenario(const std::string &name){
 	
@@ -190,11 +159,26 @@ namespace Application {
 	}
 
 
-	bool CSelectScenario::backReleased(const CEGUI::EventArgs& e)
+	Hikari::FlashValue CSelectScenario::backReleased(Hikari::FlashControl* caller, const Hikari::Arguments& args)
 	{
 		_app->setState("menu");
 		return true;
 
 	} // backReleased
+
+
+	void CSelectScenario::listFiles(){
+		WIN32_FIND_DATA FindData;
+		HANDLE hFind;
+		hFind = FindFirstFile("media\\maps\\*.txt", &FindData);
+
+		std::string filename;
+		while (FindNextFile(hFind, &FindData))
+		{     
+			filename = FindData.cFileName;
+			_menu->callFunction("pushFile",Hikari::Args(filename.substr(0,filename.find(".txt"))));
+
+		}
+	}
 
 } // namespace Application
