@@ -8,7 +8,7 @@ implementa las habilidades del personaje
 @see Logic::CHound
 @see Logic::IComponent
 
-@author Francisco Aisa García.
+@author Jose Antonio García Yáñez.
 @date Marzo, 2013
 */
 
@@ -54,8 +54,8 @@ namespace Logic {
 		CPlayerClass::tick(msecs);
 
 		// Si la habilidad primaria esta en uso, controlar el tiempo
-		// efectivo de la invisibilidad. Cuando se cumpla el tiempo,
-		// deshabilitamos el shader de transparencia.
+		// de duración de la habilidad. Cuando se cumpla el tiempo,
+		// deshabilitamos el shader y el efecto beserker.
 		if(_berserkerTimer > 0) {
 			_berserkerTimer -= msecs;
 

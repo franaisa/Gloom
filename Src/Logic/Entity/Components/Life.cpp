@@ -227,6 +227,8 @@ namespace Logic {
 		// Si hay una reduccion de daño activa, reducimos el daño aplicado
 		damage -= damage * _reducedDamageAbsorption;
 
+		std::cout << "Me quitan " << damage << std::endl;
+
 		if(_currentShield > 0) {
 			int damageAbsorbedByShield = _shieldDamageAbsorption * damage;
 			int damageAbsorbedByLife = damage - damageAbsorbedByShield;

@@ -74,8 +74,7 @@ namespace Logic {
 	//__________________________________________________________________
 
 	bool CShoot::accept(CMessage *message) {
-		return message->getMessageType() == Message::CONTROL || 
-			message->getMessageType() == Message::BERSERKER;
+		return _isInUse && message->getMessageType() == Message::CONTROL;
 	} // accept
 	
 	//__________________________________________________________________
@@ -90,11 +89,6 @@ namespace Logic {
 				else if(type == Control::RIGHT_CLICK) {
 					printf("\nx: %f, y: %f, z: %f",_entity->getPosition().x, _entity->getPosition().y, _entity->getPosition().z);
 				}
-				break;
-			}
-			case Message::BERSERKER:{
-				reduceCooldown(static_cast<CMessageBerserker*>(message)->getPercentCooldown());
-				incrementDamage(static_cast<CMessageBerserker*>(message)->getPercentDamage());
 				break;
 			}
 		}
@@ -162,6 +156,7 @@ namespace Logic {
 		//si yo soy el weapon
 		_currentAmmo = 0;
 	} // resetAmmo
+	
 	//__________________________________________________________________
 
 
@@ -172,6 +167,7 @@ namespace Logic {
 		
 		_scen->createParticle(_entity->getName(),particula, positionParticle, &Math::getDirection(_entity->getOrientation()));
 	}
+	
 	//__________________________________________________________________
 
 	void CShoot::incrementDamage(int percent) {
@@ -182,10 +178,12 @@ namespace Logic {
 		}
 		//Sino aplicamos el porcentaje pasado por parámetro
 		else{
-			std::cout << "incrementamos daño en " << _nameWeapon << std::endl;
+			
 			_damage=_damage+(percent*_damage)%100;
+			std::cout << "incrementamos daño en " << _nameWeapon << " a " << _damage << std::endl;
 		}
 	} // incrementDamage
+	
 	//__________________________________________________________________
 
 	void CShoot::reduceCooldown(int percent) {
@@ -201,8 +199,12 @@ namespace Logic {
 			_cooldown=_cooldown-(percent*_cooldown)%100;
 		}
 	} // reduceCooldown
+
 	//__________________________________________________________________
 
+	void CShoot::inUse(bool state) {
+		_isInUse = state;
+	}
 
 } // namespace Logic
 

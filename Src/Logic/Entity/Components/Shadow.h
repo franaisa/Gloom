@@ -56,7 +56,11 @@ namespace Logic {
 	
 
 		/**
-		De momento no lee nada nuevo, tan solo llama a la clase padre.
+		Inicialización del componente a partir de la información extraida de la entidad
+		leida del mapa:
+		<ul>
+			<li><strong>shadowInvisibilityDuration:</strong> Tiempo que dura la invsibilidad desde que se activa. </li>
+		</ul>
 
 		@param entity Entidad a la que pertenece el componente.
 		@param map Mapa Lógico en el que se registrará el objeto.

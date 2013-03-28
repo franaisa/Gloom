@@ -75,15 +75,20 @@ namespace Logic
 
 		void resetAmmo(int weapon);
 	
+		void amplifyDamage(int percentage);
+
+		void reduceCooldowns(int percentage);
+
 
 	protected:
 
 
+		void equippedWeapon(unsigned char weapon, bool isEquipped);
 
 		/**
 		dado un weapon desactivo su componente
 		*/
-		void desactivateComponent(unsigned char weapon);
+		void deactivateComponent(unsigned char weapon);
 		
 
 		/**

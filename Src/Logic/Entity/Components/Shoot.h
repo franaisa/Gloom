@@ -51,7 +51,8 @@ namespace Logic {
 				   _canShoot(true),
 				   _nameWeapon(0), 
 				   _currentAmmo(0),
-				   _particlePosition(Vector3::ZERO){
+				   _particlePosition(Vector3::ZERO),
+				   _isInUse(false) {
 		
 			// No hay memoria dinamica que inicializar
 		}
@@ -69,7 +70,8 @@ namespace Logic {
 										   _canShoot(true),
 										   _nameWeapon(shoot), 
 										   _currentAmmo(0),
-										   _particlePosition(Vector3::ZERO){
+										   _particlePosition(Vector3::ZERO),
+										   _isInUse(false) {
 			
 			// No hay memoria dinámica que inicializar
 		}
@@ -186,15 +188,37 @@ namespace Logic {
 		*/
 		void drawParticle(const std::string &nombreParticula, const std::string &Particula);
 
-		/** Método que se encarga de incrementar el daño del arma */
+		//__________________________________________________________________
+
+		/** 
+		Método que se encarga de incrementar el daño del arma 
+		
+		@param percent Porcentaje de incremento de daño.
+		*/
 		void incrementDamage(int percent);
 
 		//__________________________________________________________________
 
-		/** Método que se encarga de reducir el cooldown del arma. */
+		/** 
+		Método que se encarga de reducir el cooldown del arma. 
+
+		@param percent Porcentaje de reducción de cooldown.
+		*/
 		void reduceCooldown(int percent);
 
 		//__________________________________________________________________
+
+		/**
+		Sirve para indicar si este arma es el arma actualmente equipada.
+
+		Este método es necesario para evitar que se acepten mensajes en 
+		armas que no están siendo equipadas, ya que las armas no pueden desactivarse
+		(de lo contrario seria imposible actualizar los timers de los cooldowns).
+
+		@param state true si el arma está equipada, false si no esta en uso.
+		*/
+		void inUse(bool state);
+
 
 	protected:
 
@@ -219,8 +243,10 @@ namespace Logic {
 		/** Altura de disparo. */
 		int _heightShoot;
 
-		/** Daño del arma. */
+		/** Daño actual del arma (modificable por powerups). */
 		unsigned char _damage;
+
+		/** Daño por defecto del arma. */
 		unsigned char _defaultDamage;
 
 		/** Número de balas por disparo. */
@@ -235,8 +261,10 @@ namespace Logic {
 		/** Timer para el cooldown. */
 		int _cooldownTimer;
 
-		/** Cooldown del arma (tiempo entre disparo y disparo). */
+		/** Cooldown actual (modificable por powerups). */
 		unsigned char _cooldown;
+
+		/** Cooldown por defecto del arma (tiempo entre disparo y disparo). */
 		unsigned char _defaultCooldown;
 
 		/**
@@ -249,6 +277,9 @@ namespace Logic {
 		Vector donde se posionara la particula de emision de disparo
 		*/
 		Vector3 _particlePosition;
+
+		/** true si el arma está actualmente equipada por el jugador */
+		bool _isInUse;
 	}; // class CShoot
 
 	//REG_FACTORY(CShoot);

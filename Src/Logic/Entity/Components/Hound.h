@@ -9,7 +9,7 @@ Contiene la declaración de la clase que
 implementa las habilidades del personaje
 "Hound".
 
-@author Francisco Aisa García
+@author Jose Antonio García Yáñez.
 @date Marzo, 2013
 */
 
@@ -27,8 +27,8 @@ namespace Logic {
 
 	@ingroup logicGroup
 
-	@author Francisco Aisa García
-	@date Febrero, 2013
+	@author Jose Antonio García Yáñez.
+	@date Marzo, 2013
 	*/
 
 	class CHound : public CPlayerClass {
@@ -56,7 +56,12 @@ namespace Logic {
 	
 
 		/**
-		De momento no lee nada nuevo, tan solo llama a la clase padre.
+		Inicialización del componente a partir de la información extraida de la entidad
+		leida del mapa:
+		<ul>
+			<li><strong>houndBerserkerDuration:</strong> Tiempo que dura el efecto 
+			beserker desde que se activa. </li>
+		</ul>
 
 		@param entity Entidad a la que pertenece el componente.
 		@param map Mapa Lógico en el que se registrará el objeto.
