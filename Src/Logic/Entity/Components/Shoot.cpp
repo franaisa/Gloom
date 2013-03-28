@@ -30,6 +30,7 @@ Contiene la implementación del componente que gestiona las armas y que administr
 #include "Logic/Messages/MessageAddWeapon.h"
 #include "Logic/Messages/MessageHudAmmo.h"
 #include "Logic/Messages/MessageHudWeapon.h"
+#include "Logic/Messages/MessageBerserker.h"
 
 #include <OgreSceneManager.h>
 #include <OgreMaterialManager.h>
@@ -58,8 +59,10 @@ namespace Logic {
 												
 		_name = entityInfo->getStringAttribute(weapon+"Name");
 		_damage= (unsigned char) entityInfo->getIntAttribute(weapon+"Damage");
+		_defaultDamage=_damage;
 		_numberShots = (unsigned char) entityInfo->getIntAttribute(weapon+"NumberShoots");
 		_cooldown = (unsigned char) entityInfo->getIntAttribute(weapon+"ColdDown") * 1000;
+		_defaultCooldown=_cooldown;
 		_maxAmmo = entityInfo->getIntAttribute(weapon+"MaxAmmo");
 		_id = entityInfo->getIntAttribute(weapon+"Id");
 		if(entityInfo->hasAttribute(weapon+"ParticlePosition")) {
@@ -71,14 +74,15 @@ namespace Logic {
 	//__________________________________________________________________
 
 	bool CShoot::accept(CMessage *message) {
-		return message->getMessageType() == Message::CONTROL;
+		return message->getMessageType() == Message::CONTROL || 
+			message->getMessageType() == Message::BERSERKER;
 	} // accept
 	
 	//__________________________________________________________________
 
 	void CShoot::process(CMessage *message) {
 		switch(message->getMessageType()) {
-			case Message::CONTROL: {
+			case Message::CONTROL:{
 				ControlType type = static_cast<CMessageControl*>(message)->getType();
 				if(type == Control::LEFT_CLICK) {
 					shoot();
@@ -86,6 +90,11 @@ namespace Logic {
 				else if(type == Control::RIGHT_CLICK) {
 					printf("\nx: %f, y: %f, z: %f",_entity->getPosition().x, _entity->getPosition().y, _entity->getPosition().z);
 				}
+				break;
+			}
+			case Message::BERSERKER:{
+				reduceCooldown(static_cast<CMessageBerserker*>(message)->getPercentCooldown());
+				incrementDamage(static_cast<CMessageBerserker*>(message)->getPercentDamage());
 				break;
 			}
 		}
@@ -153,16 +162,47 @@ namespace Logic {
 		//si yo soy el weapon
 		_currentAmmo = 0;
 	} // resetAmmo
+	//__________________________________________________________________
+
 
 	void CShoot::drawParticle(const std::string &nombreParticula, const std::string &particula){
-
-
-		
+	
 		Vector3 positionParticle = _entity->getPosition() + (Math::getDirection(_entity->getOrientation()) * _particlePosition);
 		Graphics::CScene* _scen = Graphics::CServer::getSingletonPtr()->getActiveScene();
 		
 		_scen->createParticle(_entity->getName(),particula, positionParticle, &Math::getDirection(_entity->getOrientation()));
-		
 	}
+	//__________________________________________________________________
+
+	void CShoot::incrementDamage(int percent) {
+		//Si es 0 significa que hay que restaurar al que habia por defecto
+		if(percent==0){
+			std::cout << "daño por defecto  " << _nameWeapon << std::endl;
+			_damage=_defaultDamage;
+		}
+		//Sino aplicamos el porcentaje pasado por parámetro
+		else{
+			std::cout << "incrementamos daño en " << _nameWeapon << std::endl;
+			_damage=_damage+(percent*_damage)%100;
+		}
+	} // incrementDamage
+	//__________________________________________________________________
+
+	void CShoot::reduceCooldown(int percent) {
+		
+		//Si es 0 significa que hay que restaurar al que habia por defecto
+		if(percent==0){
+			std::cout << "cd por defecto " << _nameWeapon << std::endl;
+			_cooldown=_defaultCooldown;
+		}
+		//Sino aplicamos el porcentaje pasado por parámetro
+		else{
+			std::cout << "decrementamos cd en " << _nameWeapon << std::endl;
+			_cooldown=_cooldown-(percent*_cooldown)%100;
+		}
+	} // reduceCooldown
+	//__________________________________________________________________
+
+
 } // namespace Logic
 

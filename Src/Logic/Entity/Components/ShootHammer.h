@@ -78,6 +78,7 @@ namespace Logic {
 		*/
 		virtual void triggerHitMessages(std::pair<CEntity*, Ray> entityHit);
 
+
 	}; // class CShootRaycast
 
 	REG_FACTORY(CShootHammer);

@@ -50,6 +50,7 @@ namespace Logic {
 		comprobar si habia colisiones.
 		*/
 		virtual void triggerHitMessages(std::pair<CEntity*, Ray> entityHit) { CShootRaycast::triggerHitMessages(entityHit); }
+
 	};
 
 	REG_FACTORY(CShootShotGun);

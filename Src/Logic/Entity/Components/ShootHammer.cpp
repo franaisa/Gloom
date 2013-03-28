@@ -35,7 +35,6 @@ namespace Logic {
 		if(!CShootRaycast::spawn(entity,map,entityInfo)) return false;
 		
 		_currentAmmo = 1;
-
 		_damageReflect = entityInfo->getIntAttribute("weapon"+_nameWeapon+"DamageReflect");
 
 		return true;
@@ -72,6 +71,7 @@ namespace Logic {
 			entityHit.first->emitMessage(m);
 		}
 	}// triggerHitMessages
+	//__________________________________________________________________
 
 } // namespace Logic
 

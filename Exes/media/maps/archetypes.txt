@@ -255,6 +255,7 @@ Map = {
 		
 		houndPrimarySkillCooldown = 1,
 		houndSecondarySkillCooldown = 1,
+		houndBerserkerDuration=5,
 		
 		archangelPrimarySkillCooldown = 0.5,
 		archangelSecondarySkillCooldown = 0.5,

@@ -257,12 +257,12 @@ namespace Audio
 		//Distancia a la que empieza a atenuarse y a la cual ya no se atunua mas respectivamente
 		canal->set3DMinMaxDistance(4,40);
 
-		int can;
+	/*	int can;
 		canal->getIndex(&can);
 		std::cout << "el numero de canal ocupado es " << can << std::endl;
 		int numcanales;
 		_system->getChannelsPlaying(&numcanales);
-		std::cout << "El numero de canales usados al cargar el sonido es " << numcanales << std::endl;
+		std::cout << "El numero de canales usados al cargar el sonido es " << numcanales << std::endl;*/
 
 		//Guardamos la asociacion nombreSonido/Canal
 		_soundChannel[id]=canal;

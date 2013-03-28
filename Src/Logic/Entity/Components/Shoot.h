@@ -186,6 +186,16 @@ namespace Logic {
 		*/
 		void drawParticle(const std::string &nombreParticula, const std::string &Particula);
 
+		/** Método que se encarga de incrementar el daño del arma */
+		void incrementDamage(int percent);
+
+		//__________________________________________________________________
+
+		/** Método que se encarga de reducir el cooldown del arma. */
+		void reduceCooldown(int percent);
+
+		//__________________________________________________________________
+
 	protected:
 
 
@@ -211,6 +221,7 @@ namespace Logic {
 
 		/** Daño del arma. */
 		unsigned char _damage;
+		unsigned char _defaultDamage;
 
 		/** Número de balas por disparo. */
 		unsigned char _numberShots;
@@ -226,6 +237,7 @@ namespace Logic {
 
 		/** Cooldown del arma (tiempo entre disparo y disparo). */
 		unsigned char _cooldown;
+		unsigned char _defaultCooldown;
 
 		/**
 		Para comprobar que un arma esta disparando y no puede disparar 

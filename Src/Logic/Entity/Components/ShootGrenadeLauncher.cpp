@@ -78,6 +78,6 @@ namespace Logic {
 		//NOTA: pregunto por si es el servidor, no vaya a ser que el single player se suicide
 		
 	}
-	
+
 } // namespace Logic
 

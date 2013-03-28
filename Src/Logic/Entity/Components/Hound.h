@@ -65,6 +65,13 @@ namespace Logic {
 		*/
 		virtual bool spawn(CEntity* entity, CMap *map, const Map::CEntity *entityInfo);
 
+
+		/**
+		Método llamado en cada frame.
+
+		@param msecs Milisegundos transcurridos desde el último tick.
+		*/
+		virtual void tick(unsigned int msecs);
 		
 		// =======================================================================
 		//                  METODOS HEREDADOS DE CPlayerClass
@@ -78,6 +85,21 @@ namespace Logic {
 
 		/** Habilidad por definir. */
 		virtual void secondarySkill();
+
+
+		private:
+
+
+		// =======================================================================
+		//                          MIEMBROS PRIVADOS
+		// =======================================================================
+
+
+		/** Tiempo que dura el berserker */
+		float _berserkerDuration;
+
+		/** Timer que controla la duración del berserker. */
+		float _berserkerTimer;
 
 	}; // class CHound
 

@@ -75,6 +75,7 @@ namespace Logic {
 		forceMsg->setGravity(false);
 		rocket->emitMessage(forceMsg);
 	}
-	
+
+
 } // namespace Logic
 

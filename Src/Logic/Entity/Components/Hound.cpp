@@ -13,6 +13,10 @@ implementa las habilidades del personaje
 */
 
 #include "Hound.h"
+#include "Map/MapEntity.h"
+#include "Logic/Entity/Entity.h"
+
+#include "Logic/Messages/MessageBerserker.h"
 
 namespace Logic {
 
@@ -35,13 +39,53 @@ namespace Logic {
 	bool CHound::spawn(CEntity* entity, CMap* map, const Map::CEntity* entityInfo) {
 		if( !CPlayerClass::spawn(entity,map,entityInfo) ) return false;
 
-		// Leer atributos propios
+		_berserkerTimer=0;
+
+		// Leer el tiempo que dura el Berserker
+		assert( entityInfo->hasAttribute("houndBerserkerDuration") );
+		// Pasamos el tiempo a msecs
+		_berserkerDuration = entityInfo->getFloatAttribute("houndBerserkerDuration") * 1000;
 	} // spawn
 
 	//__________________________________________________________________
 
+
+	void CHound::tick(unsigned int msecs) {
+		CPlayerClass::tick(msecs);
+
+		// Si la habilidad primaria esta en uso, controlar el tiempo
+		// efectivo de la invisibilidad. Cuando se cumpla el tiempo,
+		// deshabilitamos el shader de transparencia.
+		if(_berserkerTimer > 0) {
+			_berserkerTimer -= msecs;
+
+			if(_berserkerTimer < 0) {
+				_berserkerTimer = 0;
+
+				// Volvemos a los valores de daño y cd's originales
+				//Ponemos los valores de daño y cd's del berserker (mensaje con porcentajes de incremento y reduccion respecto al original)
+				CMessageBerserker* berserkerMsg = new CMessageBerserker();
+				berserkerMsg->setPercentCooldown(0);
+				berserkerMsg->setPercentDamage(0);
+				_entity->emitMessage(berserkerMsg);
+			}
+		}
+	}
+
+	//__________________________________________________________________
+
+
 	void CHound::primarySkill() {
 		std::cout << "Primary Skill - Hound" << std::endl;
+
+		//Arrancamos el cronometro
+		_berserkerTimer= _berserkerDuration;
+
+		//Ponemos los valores de daño y cd's del berserker (mensaje con porcentajes de incremento y reduccion respecto al original)
+		CMessageBerserker* berserkerMsg = new CMessageBerserker();
+		berserkerMsg->setPercentCooldown(50);
+		berserkerMsg->setPercentDamage(50);
+		_entity->emitMessage(berserkerMsg);
 	}
 
 	//__________________________________________________________________
