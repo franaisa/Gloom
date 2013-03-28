@@ -15,6 +15,7 @@ de la entidad.
 
 #include "Logic/Entity/Entity.h"
 #include "Map/MapEntity.h"
+#include "Logic/GameNetMsgManager.h"
 
 #include "Logic/Messages/MessageControl.h"
 #include "Logic/Messages/MessageCollisionDown.h"
@@ -428,12 +429,14 @@ namespace Logic
 				_speedJump=_powerJump; // Velocidad explosiva inicial para el salto normal
 				_direccionSaltoCaida=direction; //Guardamos la dirección del salto al iniciarse
 				//Sonido salto normal
-				Logic::CMessageAudio *maudio=new Logic::CMessageAudio();
-				maudio->setRuta(_audioJump);
-				maudio->setId("Jump");
-				maudio->setPosition(_entity->getPosition());
-				maudio->setNotIfPlay(false);
-				_entity->emitMessage(maudio);
+				if(!Net::CManager::getSingletonPtr()->imServer()){
+					Logic::CMessageAudio *maudio=new Logic::CMessageAudio();
+					maudio->setRuta(_audioJump);
+					maudio->setId("Jump");
+					maudio->setPosition(_entity->getPosition());
+					maudio->setNotIfPlay(false);
+					_entity->emitMessage(maudio);
+				}
 			}
 			//Sino es un salto lateral
 			else{
@@ -441,12 +444,14 @@ namespace Logic
 				_velocitySideJump=true;
 				_direccionSaltoCaida=direction; //Guardamos la dirección del salto al iniciarse
 				//Sonido salto lateral
+				if(!Net::CManager::getSingletonPtr()->imServer()){
 				Logic::CMessageAudio *maudio=new Logic::CMessageAudio();
-				maudio->setRuta(_audioSideJump);
-				maudio->setId("sideJump");
-				maudio->setPosition(_entity->getPosition());
-				maudio->setNotIfPlay(false);
-				_entity->emitMessage(maudio);
+					maudio->setRuta(_audioSideJump);
+					maudio->setId("sideJump");
+					maudio->setPosition(_entity->getPosition());
+					maudio->setNotIfPlay(false);
+					_entity->emitMessage(maudio);
+				}
 			}
 			_jumpingControl=true;
 		}//if (_jumping && _canJump)
@@ -497,13 +502,15 @@ namespace Logic
 
 		//Audio
 		//Si nos estamos moviendo pero no saltando/ni cayendo mandamos un mensaje de audio (pasos)
-		if(directXZY.x!=0 && directXZY.z!=0 && !_jumpingControl && !_caida){
-			Logic::CMessageAudio *maudio=new Logic::CMessageAudio();
-			maudio->setRuta(_audioStep);
-			maudio->setId("steps");
-			maudio->setPosition(_entity->getPosition());
-			maudio->setNotIfPlay(true);
-			_entity->emitMessage(maudio);
+		if(!Net::CManager::getSingletonPtr()->imServer()){
+			if(directXZY.x!=0 && directXZY.z!=0 && !_jumpingControl && !_caida){
+				Logic::CMessageAudio *maudio=new Logic::CMessageAudio();
+				maudio->setRuta(_audioStep);
+				maudio->setId("steps");
+				maudio->setPosition(_entity->getPosition());
+				maudio->setNotIfPlay(true);
+				_entity->emitMessage(maudio);
+			}
 		}
 
 	} // tick
