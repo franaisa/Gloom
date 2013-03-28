@@ -45,6 +45,9 @@ namespace Logic {
 		assert( entityInfo->hasAttribute("houndBerserkerDuration") );
 		// Pasamos el tiempo a msecs
 		_berserkerDuration = entityInfo->getFloatAttribute("houndBerserkerDuration") * 1000;
+		_berserkerDamagePercent = entityInfo->getFloatAttribute("houndBerserkerDamagePercent");
+		_berserkerCooldownPercent = entityInfo->getFloatAttribute("houndBerserkerCooldownPercent");
+
 	} // spawn
 
 	//__________________________________________________________________
@@ -83,8 +86,8 @@ namespace Logic {
 
 		//Ponemos los valores de daño y cd's del berserker (mensaje con porcentajes de incremento y reduccion respecto al original)
 		CMessageBerserker* berserkerMsg = new CMessageBerserker();
-		berserkerMsg->setPercentCooldown(50);
-		berserkerMsg->setPercentDamage(50);
+		berserkerMsg->setPercentCooldown(_berserkerCooldownPercent);
+		berserkerMsg->setPercentDamage(_berserkerDamagePercent);
 		_entity->emitMessage(berserkerMsg);
 	}
 

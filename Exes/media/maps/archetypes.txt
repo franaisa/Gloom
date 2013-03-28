@@ -253,9 +253,12 @@ Map = {
 		screamerPrimarySkillCooldown = 2,
 		screamerSecondarySkillCooldown = 2,
 		
-		houndPrimarySkillCooldown = 1,
+		houndPrimarySkillCooldown = 10,
 		houndSecondarySkillCooldown = 1,
+
 		houndBerserkerDuration=15,
+		houndBerserkerDamagePercent=50,
+		houndBerserkerCooldownPercent=50,
 		
 		archangelPrimarySkillCooldown = 0.5,
 		archangelSecondarySkillCooldown = 0.5,

@@ -250,7 +250,7 @@ namespace Logic {
 		unsigned char _defaultDamage;
 
 		/** Número de balas por disparo. */
-		unsigned char _numberShots;
+		int _numberShots;
 
 		/** Munición máxima que puede tener el arma. -1 si no tienes el arma. */
 		int _maxAmmo;
