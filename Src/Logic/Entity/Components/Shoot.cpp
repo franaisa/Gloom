@@ -58,10 +58,10 @@ namespace Logic {
 		std::string weapon = aux.str();
 												
 		_name = entityInfo->getStringAttribute(weapon+"Name");
-		_damage= (unsigned char) entityInfo->getIntAttribute(weapon+"Damage");
+		_damage= entityInfo->getIntAttribute(weapon+"Damage");
 		_defaultDamage=_damage;
-		_numberShots = (unsigned char) entityInfo->getIntAttribute(weapon+"NumberShoots");
-		_cooldown = (unsigned char) entityInfo->getIntAttribute(weapon+"ColdDown") * 1000;
+		_numberShots = entityInfo->getIntAttribute(weapon+"NumberShoots");
+		_cooldown = entityInfo->getIntAttribute(weapon+"ColdDown") * 1000;
 		_defaultCooldown=_cooldown;
 		_maxAmmo = entityInfo->getIntAttribute(weapon+"MaxAmmo");
 		_id = entityInfo->getIntAttribute(weapon+"Id");
@@ -182,8 +182,9 @@ namespace Logic {
 		}
 		//Sino aplicamos el porcentaje pasado por parámetro
 		else{
-			std::cout << "incrementamos daño en " << _nameWeapon << std::endl;
-			_damage=_damage+(percent*_damage)%100;
+			std::cout << "daño por defecto" << _damage << std::endl;
+			_damage+=(percent*_damage)/100;
+			std::cout << "daño incrementado en " << _damage << std::endl;
 		}
 	} // incrementDamage
 	//__________________________________________________________________
@@ -198,7 +199,7 @@ namespace Logic {
 		//Sino aplicamos el porcentaje pasado por parámetro
 		else{
 			std::cout << "decrementamos cd en " << _nameWeapon << std::endl;
-			_cooldown=_cooldown-(percent*_cooldown)%100;
+			_cooldown=_cooldown-(percent*_cooldown)/100;
 		}
 	} // reduceCooldown
 	//__________________________________________________________________

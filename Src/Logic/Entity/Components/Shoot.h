@@ -220,11 +220,11 @@ namespace Logic {
 		int _heightShoot;
 
 		/** Daño del arma. */
-		unsigned char _damage;
-		unsigned char _defaultDamage;
+		int _damage;
+		int _defaultDamage;
 
 		/** Número de balas por disparo. */
-		unsigned char _numberShots;
+		int _numberShots;
 
 		/** Munición máxima que puede tener el arma. -1 si no tienes el arma. */
 		int _maxAmmo;
@@ -236,8 +236,8 @@ namespace Logic {
 		int _cooldownTimer;
 
 		/** Cooldown del arma (tiempo entre disparo y disparo). */
-		unsigned char _cooldown;
-		unsigned char _defaultCooldown;
+		int _cooldown;
+		int _defaultCooldown;
 
 		/**
 		Para comprobar que un arma esta disparando y no puede disparar 

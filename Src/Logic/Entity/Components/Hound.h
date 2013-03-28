@@ -101,6 +101,12 @@ namespace Logic {
 		/** Timer que controla la duración del berserker. */
 		float _berserkerTimer;
 
+		/** Porcentaje de incremento de daño del berserker. */
+		float _berserkerDamagePercent;
+
+		/** Porcentaje de reduccion de cooldown del berserker. */
+		float _berserkerCooldownPercent;
+
 	}; // class CHound
 
 	REG_FACTORY(CHound);
