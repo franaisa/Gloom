@@ -167,7 +167,9 @@
     <ClCompile Include="..\..\Src\Logic\Messages\MessagePlayerDead.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageRebound.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageSetAnimation.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Messages\MessageSetImmunity.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageSetPhysicPosition.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Messages\MessageSetReducedDamage.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageSide.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageSleep.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessagePlayerSpawn.cpp" />
@@ -276,7 +278,9 @@
     <ClInclude Include="..\..\Src\Logic\Messages\MessagePlayerDead.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageRebound.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageSetAnimation.h" />
+    <ClInclude Include="..\..\Src\Logic\Messages\MessageSetImmunity.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageSetPhysicPosition.h" />
+    <ClInclude Include="..\..\Src\Logic\Messages\MessageSetReducedDamage.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageSide.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageSleep.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessagePlayerSpawn.h" />
