@@ -78,18 +78,19 @@ namespace Logic {
 
 	void CShoot::process(CMessage *message) {
 		switch(message->getMessageType()) {
-			case Message::CONTROL:
-				if(((CMessageControl*)message)->getType()==Control::LEFT_CLICK) {
+			case Message::CONTROL: {
+				ControlType type = static_cast<CMessageControl*>(message)->getType();
+				if(type == Control::LEFT_CLICK) {
 					shoot();
 				}
-				if(((CMessageControl*)message)->getType()==Control::RIGHT_CLICK) {
+				else if(type == Control::RIGHT_CLICK) {
 					printf("\nx: %f, y: %f, z: %f",_entity->getPosition().x, _entity->getPosition().y, _entity->getPosition().z);
 				}
 				break;
-			break;
+			}
 		}
-		
 	} // process
+
 	//__________________________________________________________________
 
 	void CShoot::tick(unsigned int msecs) {

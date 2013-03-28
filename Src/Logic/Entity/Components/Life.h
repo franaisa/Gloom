@@ -103,7 +103,6 @@ namespace Logic {
 			<li>DAMAGED</li>
 			<li>ADD_LIFE</li>
 			<li>ADD_SHIELD</li>
-			<li>SET_IMMUNITY</li>
 			<li>SET_REDUCED_DAMAGE</li>
 		</ul>
 		
@@ -158,21 +157,12 @@ namespace Logic {
 		//__________________________________________________________________
 
 		/**
-		Activa o desactiva la inmunidad del personaje.
-
-		@param isImmune True si queremos que el personaje
-		sea inmune.
-		*/
-		inline void setImmunity(bool isImmune);
-
-		//__________________________________________________________________
-
-		/**
 		Dado un porcentaje de reducción de daños (comprendido entre
 		0 y 1) reduce todo el daño recibido en base a ese porcentaje.
 
 		Por ejemplo, un porcentaje de 1 haría que el personaje siempre
-		recibiera un daño de 0 puntos.
+		recibiera un daño de 0 puntos (o en otras palabras, que
+		fuera inmune).
 
 		@param percentage Porcentaje de reducción de daños. Tiene que 
 		estar comprendido entre 0 y 1.
@@ -221,10 +211,10 @@ namespace Logic {
 		// =======================================================================
 
 
-		/** Indica si el personaje es inmune (si recibe daños). */
-		bool _isImmune;
-
-		/** Porcentaje de daños recibidos. Su valor por defecto es 0 (desactivado). */
+		/** 
+		Porcentaje de daños recibidos. Su valor por defecto es 0 (desactivado), para hacer
+		que el personaje sea inmune hay que fijarlo a 1. 
+		*/
 		float _reducedDamageAbsorption;
 
 		/** Vida por defecto del personaje, depende de la clase. */

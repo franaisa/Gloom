@@ -36,7 +36,6 @@ que controla la vida de un personaje.
 #include "Logic/Messages/MessageAudio.h"
 #include "Logic/Messages/MessagePlayerDead.h"
 #include "Logic/Messages/MessageCameraToEnemy.h"
-#include "Logic/Messages/MessageSetImmunity.h"
 #include "Logic/Messages/MessageSetReducedDamage.h"
 
 namespace Logic {
@@ -46,8 +45,7 @@ namespace Logic {
 	//________________________________________________________________________
 
 	CLife::CLife() : _damageTimer(0), 
-					_isImmune(false), 
-					_reducedDamageAbsorption(0) {
+					 _reducedDamageAbsorption(0) {
 
 		// Nada que hacer
 	}
@@ -123,7 +121,6 @@ namespace Logic {
 		return msgType == Message::DAMAGED				|| 
 			   msgType == Message::ADD_LIFE				||
 			   msgType == Message::ADD_SHIELD			||
-			   msgType == Message::SET_IMMUNITY			||
 			   msgType == Message::SET_REDUCED_DAMAGE;
 	} // accept
 	
@@ -142,10 +139,6 @@ namespace Logic {
 			}	
 			case Message::ADD_SHIELD: {
 				addShield( static_cast<CMessageAddShield*>(message)->getAddShield() );
-				break;
-			}
-			case Message::SET_IMMUNITY: {
-				setImmunity( static_cast<CMessageSetImmunity*>(message)->isImmune() );
 				break;
 			}
 			case Message::SET_REDUCED_DAMAGE: {
@@ -224,12 +217,6 @@ namespace Logic {
 
 	//________________________________________________________________________
 
-	void CLife::setImmunity(bool isImmune) {
-		this->_isImmune = isImmune;
-	}
-
-	//________________________________________________________________________
-
 	void CLife::reducedDamageAbsorption(float percentage) {
 		_reducedDamageAbsorption = percentage;
 	}
@@ -237,9 +224,6 @@ namespace Logic {
 	//________________________________________________________________________
 
 	bool CLife::updateLife(int damage) {
-		// Si somos immunes no hacemos nada
-		if(_isImmune) return false;
-
 		// Si hay una reduccion de daño activa, reducimos el daño aplicado
 		damage -= damage * _reducedDamageAbsorption;
 

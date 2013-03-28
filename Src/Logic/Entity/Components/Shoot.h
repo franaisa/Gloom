@@ -178,6 +178,8 @@ namespace Logic {
 		/** Método estático que resetea la cantidad de munición del arma. */
 		void resetAmmo();
 
+		//__________________________________________________________________
+
 		/** Método estático que dibuja la particula. Todas las armas tendran una particula al disparar. 
 		@param nombreParticula, nombre para poder identificar esta particula en concreto
 		@param Particula, nombre del template de particula definido en el archivo .particle
