@@ -163,7 +163,7 @@ namespace Logic {
 		@param isImmune True si queremos que el personaje
 		sea inmune.
 		*/
-		void setImmunity(bool isImmune);
+		inline void setImmunity(bool isImmune);
 
 		//__________________________________________________________________
 
@@ -177,7 +177,7 @@ namespace Logic {
 		@param percentage Porcentaje de reducción de daños. Tiene que 
 		estar comprendido entre 0 y 1.
 		*/
-		void reducedDamageAbsorption(float percentage);
+		inline void reducedDamageAbsorption(float percentage);
 
 
 	private:
