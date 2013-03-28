@@ -136,6 +136,7 @@ namespace GUI {
 						Audio::CServer::getSingletonPtr()->playSound3D("media/audio/plasma.wav", "cosa", position, false);
 						break;
 					case GUI::Key::NUMBER8:
+						Audio::CServer::getSingletonPtr()->mute();
 						break;
 					}
 

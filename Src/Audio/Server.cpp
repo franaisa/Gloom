@@ -26,11 +26,13 @@ namespace Audio
 
 	CServer::CServer()
 	{
-		assert(!_instance && "Segunda inicialización de Graphics::CServer no permitida!");
+		assert(!_instance && "Segunda inicialización de Audio::CServer no permitida!");
+		_volume=0.5;
 		_doppler=0.00000001f;
 		_rolloff=0.00000001f;
 		_soundAvatar=NULL;
 		_playerHeight=8;
+		_isMute=false;
 		_instance = this;
 
 	} // CServer
@@ -49,7 +51,7 @@ namespace Audio
 
 	bool CServer::Init() 
 	{
-		assert(!_instance && "Segunda inicialización de Graphics::CServer no permitida!");
+		assert(!_instance && "Segunda inicialización de Audio::CServer no permitida!");
 
 		new CServer();
 
@@ -161,8 +163,7 @@ namespace Audio
 		& canal); // devuelve el canal que asigna
 		ERRCHECK(result);
 		// el sonido ya está reproduciendo!!
-		float volume=0.7; // valor entre 0 y 1
-		result = canal->setVolume(volume);
+		result = canal->setVolume(_volume);
 		ERRCHECK(result);
 
 		int can;
@@ -198,8 +199,7 @@ namespace Audio
 		& canal); // devuelve el canal que asigna
 		ERRCHECK(result);
 		// el sonido ya está reproduciendo!!
-		float volume=0.7; // valor entre 0 y 1
-		result = canal->setVolume(volume);
+		result = canal->setVolume(_volume);
 		ERRCHECK(result);
 
 		int can;
@@ -245,8 +245,7 @@ namespace Audio
 		& canal); // devuelve el canal que asigna
 		ERRCHECK(result);
 		// el sonido ya está reproduciendo!!
-		float volume=0.5; // valor entre 0 y 1
-		result = canal->setVolume(volume);
+		result = canal->setVolume(_volume);
 		ERRCHECK(result);
 
 		FMOD_VECTOR
@@ -290,8 +289,7 @@ namespace Audio
 		& canal); // devuelve el canal que asigna
 		ERRCHECK(result);
 		// el sonido ya está reproduciendo!!
-		float volume=0.5; // valor entre 0 y 1
-		result = canal->setVolume(volume);
+		result = canal->setVolume(_volume);
 		ERRCHECK(result);
 
 		FMOD_VECTOR
@@ -359,8 +357,7 @@ namespace Audio
 		& canal); // devuelve el canal que asigna
 		ERRCHECK(result);
 		// el sonido ya está reproduciendo!!
-		float volume=0.5; // valor entre 0 y 1
-		result = canal->setVolume(volume);
+		result = canal->setVolume(_volume);
 		ERRCHECK(result);
 
 		int can;
@@ -396,8 +393,7 @@ namespace Audio
 		& canal); // devuelve el canal que asigna
 		ERRCHECK(result);
 		// el sonido ya está reproduciendo!!
-		float volume=0.5; // valor entre 0 y 1
-		result = canal->setVolume(volume);
+		result = canal->setVolume(_volume);
 		ERRCHECK(result);
 
 		int can;
@@ -406,13 +402,38 @@ namespace Audio
 		int numcanales;
 		_system->getChannelsPlaying(&numcanales);
 		std::cout << "El numero de canales usados al cargar el sonido es " << numcanales << std::endl;
-
-
+		
 		//Guardamos la asociacion nombreSonido/Canal
 		_soundChannel[id]=canal;
-
 	}//playLoopSound
 	//--------------------------------------------------------
+
+	
+	void CServer::mute(){
+		std::cout << "llamada al mute" << std::endl;
+		//Si el server estaba muteado lo desmuteamos y viceversa
+		if(_isMute){
+			_isMute=false;
+			_volume=0.5;
+			//Recorremos aquellos canales donde podría haber un sonido sonando y cambiamos su volumen
+			SoundChannelMap::const_iterator canales = _soundChannel.begin();
+			for(; canales!= _soundChannel.end(); ++canales) {
+				canales->second->setVolume(0.5);
+			}
+		}
+		else{
+			_isMute=true;
+			_volume=0;
+			//Recorremos aquellos canales donde podría haber un sonido sonando y cambiamos su volumen
+			SoundChannelMap::const_iterator canales = _soundChannel.begin();
+			for(; canales!= _soundChannel.end(); ++canales) {
+				canales->second->setVolume(0);
+			}
+		}
+
+	}//mute
+	//--------------------------------------------------------
+
 
 
 } // namespace Audio

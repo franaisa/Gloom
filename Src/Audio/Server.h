@@ -116,6 +116,11 @@ namespace Audio
 		void playStreamingLoopSound(char* rutaSonido, const std::string& id);
 
 		/**
+		Se encarga de mutear el sonido que se reproduce por los canales.
+		*/
+		void mute();
+
+		/**
 		Establece el componente del jugador con el que preguntaremos la posición para actualizar la posición de escucha.
 
 		@param controlledAvatar Componente al que le preguntaremos la posición de la entidad.
@@ -174,6 +179,11 @@ namespace Audio
 		System* _system; // reminiscencias de C
 
 		/**
+		Variable que controla el volumen de los sonidos por defecto.
+		*/
+		float _volume;
+
+		/**
 		Factores doppler y rolloff del sistema
 		*/
 		float _doppler; 
@@ -184,6 +194,11 @@ namespace Audio
 		*/
 		Logic::CEntity* _soundAvatar;
 		short _playerHeight;
+
+		/**
+		Booleano que controla si el server esta muteado.
+		*/
+		bool _isMute;
 
 	}; // class CServer
 
