@@ -17,6 +17,7 @@ Contiene la implementación del componente que gestiona las armas y que administr
 #include "Graphics/Scene.h"
 #include "Logic/Entity/Components/ArrayGraphics.h"
 
+#include "Logic/Entity/Components/Shoot.h"
 #include "Logic/Entity/Components/ShootShotGun.h"
 #include "Logic/Entity/Components/ShootSniper.h"
 #include "Logic/Entity/Components/ShootMiniGun.h"
@@ -38,70 +39,80 @@ Contiene la implementación del componente que gestiona las armas y que administr
 namespace Logic 
 {
 	IMP_FACTORY(CWeaponsManager);
+
+	//---------------------------------------------------------
 	
+	CWeaponsManager::CWeaponsManager() : _currentWeapon(0), 
+										 _numWeapons(6) {
+		
+	}
+
 	//---------------------------------------------------------
 
-	bool CWeaponsManager::spawn(CEntity *entity, CMap *map, const Map::CEntity *entityInfo) 
-	{
-		if(!IComponent::spawn(entity,map,entityInfo))
-			return false;
+	bool CWeaponsManager::spawn(CEntity *entity, CMap *map, const Map::CEntity *entityInfo) {
+		if(!IComponent::spawn(entity,map,entityInfo)) return false;
 
-		if(entityInfo->hasAttribute("numWeapons")){
-			_numWeapons = entityInfo->getIntAttribute("numWeapons");
+		// Inicializamos el vector de armas.
+		// De momento no tiene mucho sentido que comprobemos el número de armas que hay
+		// por que luego usamos el getComponent a piñon.
+		_weaponry.resize(_numWeapons);
 
-			_weapons = new bool[_numWeapons];
-			for(int i = 1; i<_numWeapons;++i){
-				_weapons[i] = false;
-				deactivateComponent(i);
-			}
+		// Rellenamos el vector con los punteros a los componentes correspondientes
+		_weaponry[WeaponType::eHAMMER].second = _entity->getComponent<CShootHammer>("CShootHammer");
+		_weaponry[WeaponType::eSNIPER].second = _entity->getComponent<CShootSniper>("CShootSniper");
+		_weaponry[WeaponType::eSHOTGUN].second = _entity->getComponent<CShootShotGun>("CShootShotGun");
+		_weaponry[WeaponType::eMINIGUN].second = _entity->getComponent<CShootMiniGun>("CShootMiniGun");
+		_weaponry[WeaponType::eGRENADE_LAUNCHER].second = _entity->getComponent<CShootGrenadeLauncher>("CShootGrenadeLauncher");
+		_weaponry[WeaponType::eROCKET_LAUNCHER].second = _entity->getComponent<CShootRocketLauncher>("CShootRocketLauncher");
 
-			/*la 1º arama siempre estara a true*/
-			_weapons[0] = true;
-			activateComponent(_actualWeapon);
+		// Por defecto la primera arma está activada y equipada (es el arma 0).
+		_weaponry[WeaponType::eHAMMER].first = true;
+		_weaponry[WeaponType::eHAMMER].second->activate();
+		_weaponry[WeaponType::eHAMMER].second->inUse(true);
 
+		// El resto de las armas están desactivadas, ya que no las tenemos
+		for(int i = 1; i < _weaponry.size(); ++i) {
+			_weaponry[i].first = false;
+			_weaponry[i].second->deactivate();
 		}
+
 		return true;
 
 	} // spawn
+	
 	//---------------------------------------------------------
 
-	void CWeaponsManager::activate()
-	{
+	void CWeaponsManager::activate() {
 		IComponent::activate();
 
-		for(int i = 0; i<_numWeapons;++i){
-			deactivateComponent(i);
+		// Por defecto la primera arma está activada y equipadda
+		_weaponry[WeaponType::eHAMMER].first = true;
+		_weaponry[WeaponType::eHAMMER].second->activate();
+		_weaponry[WeaponType::eHAMMER].second->inUse(true);
+
+		// El resto de las armas están desactivadas, ya que no las tenemos
+		for(int i = 1; i < _weaponry.size(); ++i) {
+			_weaponry[i].first = false; // Por si acaso habian sido activadas anteriormente
+			_weaponry[i].second->deactivate();
 		}
-
-		/*la 1º arma siempre estara a true*/
-		activateComponent(_actualWeapon);
-		equippedWeapon(_actualWeapon, true);
-		_weapons[_actualWeapon]=true;
-
-
-		//return true;
-
 	} // activate
+	
 	//---------------------------------------------------------
-
 
 	void CWeaponsManager::deactivate(){
-		//reset de armas
-		for(int i = 1; i<_numWeapons;++i){
-			_weapons[i] = false;
-		}
-		_actualWeapon=0;
-		//reset de balas
-		for(int i = 1; i<_numWeapons;++i){
-			resetAmmo(i);
+		//reset de armas y balas
+		for(int i = 0; i<_weaponry.size();++i){
+			_weaponry[i].first = false;
+			_weaponry[i].second->resetAmmo();
+			_weaponry[i].second->inUse(false);
 		}
 
-		// desactivamos todas las armas excepto el hammer
-		// y seteamos inUse a false en todas menos en el hammer
-	
+		// El arma actual tiene que ser el hammer, que
+		// es la única que tenemos de primeras
+		_currentWeapon=0;
 	}// deactivate
+	
 	//---------------------------------------------------------
-
 
 	bool CWeaponsManager::accept(CMessage *message)
 	{
@@ -112,8 +123,8 @@ namespace Logic
 			|| msgType == Message::ADD_WEAPON
 			|| msgType == Message::BERSERKER;
 	} // accept
+	
 	//---------------------------------------------------------
-
 
 	void CWeaponsManager::process(CMessage* message) {
 		switch( message->getMessageType() ) {
@@ -123,7 +134,8 @@ namespace Logic
 			}
 			case Message::ADD_AMMO: {
 				CMessageAddAmmo* addAmmoMsg = static_cast<CMessageAddAmmo*>(message);
-				addAmmo( addAmmoMsg->getAddAmmo(), addAmmoMsg->getAddWeapon() );
+				unsigned int weaponIndex = addAmmoMsg->getAddWeapon();
+				_weaponry[weaponIndex].second->addAmmo(weaponIndex, addAmmoMsg->getAddAmmo(), _weaponry[weaponIndex].first);
 				break;
 			}
 			case Message::ADD_WEAPON: {
@@ -140,200 +152,75 @@ namespace Logic
 		}
 
 	} // process
+	
 	//---------------------------------------------------------
 
 	void CWeaponsManager::changeWeapon(unsigned char newWeapon){
 		
-		//printf("\n%d\t%d",_actualWeapon, newWeapon);
+		//printf("\n%d\t%d",_currentWeapon, newWeapon);
 		if(newWeapon >= _numWeapons){
 			return;
 		}
-		if(_weapons[newWeapon] && (newWeapon != _actualWeapon))
+		if(_weaponry[newWeapon].first && (newWeapon != _currentWeapon))
 		{
 			// Indicamos que el arma actual ya no está equipada
-			deactivateComponent(_actualWeapon);
-			equippedWeapon(_actualWeapon, false);
+			// Desactivamos el componente Shoot del arma actual
+			// e indicamos que ya no está equipada
+			_weaponry[_currentWeapon].second->inUse(false);
+			_weaponry[_currentWeapon].second->deactivate();
 
-			activateComponent(newWeapon);
-			equippedWeapon(newWeapon, true);
+			// Activamos el componente del nuevo arma que vamos
+			// a equipar e indicamos que el arma está equipada
+			_weaponry[newWeapon].second->activate();
+			_weaponry[newWeapon].second->inUse(true);
+			
+			// Actualizamo el indice de arma
+			_currentWeapon = newWeapon;
 
-			_actualWeapon = newWeapon;
-
+			// Mandamos un mensaje para actualizar el HUD
 			Logic::CMessageChangeWeaponGraphics *m=new Logic::CMessageChangeWeaponGraphics();
-			m->setWeapon(_actualWeapon);
+			m->setWeapon(_currentWeapon);
 			_entity->emitMessage(m);
 		}
 		
 	}
-	void CWeaponsManager::addAmmo(int ammo, int weapon){
-		switch(weapon){
-		case 0:
-			_entity->getComponent<CShootHammer>("CShootHammer")->addAmmo(0,ammo, (_weapons[weapon]) );
-			break;
-		case 1:
-			_entity->getComponent<CShootSniper>("CShootSniper")->addAmmo(1,ammo, (_weapons[weapon]) );
-			break;
-		case 2:
-			_entity->getComponent<CShootShotGun>("CShootShotGun")->addAmmo(2,ammo, (_weapons[weapon]) );
-			break;
-		case 3:
-			_entity->getComponent<CShootMiniGun>("CShootMiniGun")->addAmmo(3,ammo, (_weapons[weapon]) );
-			break;
-		case 4:
-			_entity->getComponent<CShootGrenadeLauncher>("CShootGrenadeLauncher")->addAmmo(4,ammo, (_weapons[weapon]) );
-			break;
-		case 5:
-			_entity->getComponent<CShootRocketLauncher>("CShootRocketLauncher")->addAmmo(5,ammo, (_weapons[weapon]) );
-			break;
-		}
-	}
 
-	void CWeaponsManager::resetAmmo(int weapon){
-		switch(weapon){
-		case 0:
-			_entity->getComponent<CShootHammer>("CShootHammer")->resetAmmo();
-			break;
-		case 1:
-			_entity->getComponent<CShootSniper>("CShootSniper")->resetAmmo();
-			break;
-		case 2:
-			_entity->getComponent<CShootShotGun>("CShootShotGun")->resetAmmo();
-			break;
-		case 3:
-			_entity->getComponent<CShootMiniGun>("CShootMiniGun")->resetAmmo();
-			break;
-		case 4:
-			_entity->getComponent<CShootGrenadeLauncher>("CShootGrenadeLauncher")->resetAmmo();
-			break;
-		case 5:
-			_entity->getComponent<CShootRocketLauncher>("CShootRocketLauncher")->resetAmmo();
-			break;
-		}
-	}
+	//---------------------------------------------------------
 
 	void CWeaponsManager::amplifyDamage(int percentage) {
 		// Amplificamos el daño de todas las armas en base al porcentaje dado
-		// Como no tenemos ninguna estructura que almacene las armas, tenemos
-		// que listarlas todas a lo bestia.
-
-		_entity->getComponent<CShootHammer>("CShootHammer")->incrementDamage(percentage);
-		_entity->getComponent<CShootSniper>("CShootSniper")->incrementDamage(percentage);
-		_entity->getComponent<CShootShotGun>("CShootShotGun")->incrementDamage(percentage);
-		_entity->getComponent<CShootMiniGun>("CShootMiniGun")->incrementDamage(percentage);
-		_entity->getComponent<CShootGrenadeLauncher>("CShootGrenadeLauncher")->incrementDamage(percentage);
-		_entity->getComponent<CShootRocketLauncher>("CShootRocketLauncher")->incrementDamage(percentage);
+		for(int i = 0; i < _weaponry.size(); ++i) {
+			_weaponry[i].second->incrementDamage(percentage);
+		}
 	}
+
+	//---------------------------------------------------------
 
 	void CWeaponsManager::reduceCooldowns(int percentage) {
 		// Reducimos el cooldown de todas las armas en base al porcentaje dado
-		// Como no tenemos ninguna estructura que almacene las armas, tenemos
-		// que listarlas todas a lo bestia.
-
-		_entity->getComponent<CShootHammer>("CShootHammer")->reduceCooldown(percentage);
-		_entity->getComponent<CShootSniper>("CShootSniper")->reduceCooldown(percentage);
-		_entity->getComponent<CShootShotGun>("CShootShotGun")->reduceCooldown(percentage);
-		_entity->getComponent<CShootMiniGun>("CShootMiniGun")->reduceCooldown(percentage);
-		_entity->getComponent<CShootGrenadeLauncher>("CShootGrenadeLauncher")->reduceCooldown(percentage);
-		_entity->getComponent<CShootRocketLauncher>("CShootRocketLauncher")->reduceCooldown(percentage);
+		for(int i = 0; i < _weaponry.size(); ++i) {
+			_weaponry[i].second->reduceCooldown(percentage);
+		}
 	}
 
-	void CWeaponsManager::addWeapon(int ammo, int weapon){
-		if(weapon < _numWeapons && !_weapons[weapon])
-			_weapons[weapon] = true;
+	//---------------------------------------------------------
+
+	void CWeaponsManager::addWeapon(int ammo, int weaponIndex){
+		// Si el arma dada no la teniamos, indicamos que ahora la tenemos
+		if(weaponIndex < _numWeapons && !_weaponry[weaponIndex].first)
+			_weaponry[weaponIndex].first = true;
 
 		// Activamos el componente pero indicamos que
 		// no es el arma equipada.
-		activateComponent(weapon);
-		equippedWeapon(weapon, false);
+		_weaponry[weaponIndex].second->activate();
+		_weaponry[weaponIndex].second->inUse(false);
+		_weaponry[weaponIndex].second->addAmmo(weaponIndex, ammo, _weaponry[weaponIndex].first);
 
+		// Enviamos un mensaje de actualizacion del hud
 		Logic::CMessageHudAmmo *m=new Logic::CMessageHudAmmo();
-		m->setWeapon(weapon);
+		m->setWeapon(weaponIndex);
 		m->setAmmo(ammo);//No es necesario esto, ya que solo actualizare el hud como que puedo coger el arma pero no mostrara sus balas(en este caso concreto)
 		_entity->emitMessage(m);
-
-		addAmmo(ammo, weapon);
-		
-	}
-
-	void CWeaponsManager::deactivateComponent(unsigned char weapon){
-		CShoot* component;
-
-		switch(weapon){
-			case 0:
-				component = _entity->getComponent<CShootHammer>("CShootHammer");
-				break;
-			case 1:
-				component = _entity->getComponent<CShootSniper>("CShootSniper");
-				break;
-			case 2:
-				component = _entity->getComponent<CShootShotGun>("CShootShotGun");
-				break;
-			case 3:
-				component = _entity->getComponent<CShootMiniGun>("CShootMiniGun");
-				break;
-			case 4:
-				component = _entity->getComponent<CShootGrenadeLauncher>("CShootGrenadeLauncher");
-				break;
-			case 5:
-				component = _entity->getComponent<CShootRocketLauncher>("CShootRocketLauncher");
-				break;
-		}
-
-		component->deactivate();
-	}
-
-	void CWeaponsManager::activateComponent(unsigned char weapon){
-		CShoot* component;
-
-		switch(weapon){
-			case 0:
-				component = _entity->getComponent<CShootHammer>("CShootHammer");
-				break;
-			case 1:
-				component = _entity->getComponent<CShootSniper>("CShootSniper");
-				break;
-			case 2:
-				component = _entity->getComponent<CShootShotGun>("CShootShotGun");
-				break;
-			case 3:
-				component = _entity->getComponent<CShootMiniGun>("CShootMiniGun");
-				break;
-			case 4:
-				component = _entity->getComponent<CShootGrenadeLauncher>("CShootGrenadeLauncher");
-				break;
-			case 5:
-				component = _entity->getComponent<CShootRocketLauncher>("CShootRocketLauncher");
-				break;
-		}
-
-		component->activate();	
-	}
-
-	void CWeaponsManager::equippedWeapon(unsigned char weapon, bool isEquipped) {
-		CShoot* component;
-
-		switch(weapon){
-			case 0:
-				component = _entity->getComponent<CShootHammer>("CShootHammer");
-				break;
-			case 1:
-				component = _entity->getComponent<CShootSniper>("CShootSniper");
-				break;
-			case 2:
-				component = _entity->getComponent<CShootShotGun>("CShootShotGun");
-				break;
-			case 3:
-				component = _entity->getComponent<CShootMiniGun>("CShootMiniGun");
-				break;
-			case 4:
-				component = _entity->getComponent<CShootGrenadeLauncher>("CShootGrenadeLauncher");
-				break;
-			case 5:
-				component = _entity->getComponent<CShootRocketLauncher>("CShootRocketLauncher");
-				break;
-		}
-
-		component->inUse(isEquipped);
 	}
 
 } // namespace Logic

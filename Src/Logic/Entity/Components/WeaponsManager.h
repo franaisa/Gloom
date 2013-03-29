@@ -3,6 +3,13 @@
 
 #include "Logic/Entity/Component.h"
 
+#include <vector>
+
+// Predeclaración de clases para ahorrar tiempo de compilación
+namespace Logic {
+	class CShoot;
+}
+
 //declaración de la clase
 namespace Logic 
 {
@@ -22,11 +29,20 @@ namespace Logic
 
 	public:
 
+		enum WeaponType {
+			eHAMMER,
+			eSNIPER,
+			eSHOTGUN,
+			eMINIGUN,
+			eGRENADE_LAUNCHER,
+			eROCKET_LAUNCHER
+		};
+
 		/**
 		Constructor por defecto; en la clase base no hace nada.
 		*/
 
-		CWeaponsManager() : IComponent(), _actualWeapon(0), _numWeapons(0) {}
+		CWeaponsManager();
 		
 
 	
@@ -66,49 +82,29 @@ namespace Logic
 		*/
 		virtual void deactivate();
 
-
 		void changeWeapon(unsigned char newWeapon);
-
-		void addAmmo(int ammo, int weapon);
-
-		void addWeapon(int ammo, int weapon);
-
-		void resetAmmo(int weapon);
 	
 		void amplifyDamage(int percentage);
 
 		void reduceCooldowns(int percentage);
 
+		void addWeapon(int ammo, int weaponIndex);
 
 	protected:
-
-
-		void equippedWeapon(unsigned char weapon, bool isEquipped);
-
-		/**
-		dado un weapon desactivo su componente
-		*/
-		void deactivateComponent(unsigned char weapon);
-		
-
-		/**
-		dado un weapon activo su componente
-		*/
-		void activateComponent(unsigned char weapon);
 
 
 		/**
 		arma actual equipada
 		*/
-		int _actualWeapon;
+		int _currentWeapon;
 
 
 		/**
 		numero de armas que tengo
 		*/
-		int _numWeapons;
+		const unsigned int _numWeapons;
 
-		bool *_weapons;
+		std::vector< std::pair<bool, CShoot*> > _weaponry;
 
 	}; // class CShoot
 
