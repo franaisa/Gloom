@@ -17,6 +17,7 @@ Contiene la implementación del servidor de física.
 #include "Logic/Entity/Entity.h"
 #include "Map/MapEntity.h"
 #include "Fluid.h"
+#include "Cloth.h"
 #include "MaterialManager.h"
 #include "GeometryFactory.h"
 

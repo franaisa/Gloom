@@ -70,6 +70,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Src\Physics\CharacterController.cpp" />
+    <ClCompile Include="..\..\Src\Physics\Cloth.cpp" />
     <ClCompile Include="..\..\Src\Physics\CollisionManager.cpp" />
     <ClCompile Include="..\..\Src\Physics\DynamicEntity.cpp" />
     <ClCompile Include="..\..\Src\Physics\Entity.cpp" />
@@ -82,6 +83,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Src\Physics\CharacterController.h" />
+    <ClInclude Include="..\..\Src\Physics\Cloth.h" />
     <ClInclude Include="..\..\Src\Physics\CollisionManager.h" />
     <ClInclude Include="..\..\Src\Physics\Conversions.h" />
     <ClInclude Include="..\..\Src\Physics\DynamicEntity.h" />
