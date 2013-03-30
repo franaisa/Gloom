@@ -74,6 +74,7 @@ namespace Logic {
 			maudio->setId("audioShoot");
 			maudio->setPosition(_entity->getPosition());
 			maudio->setNotIfPlay(false);
+			maudio->setIsPlayer(_entity->isPlayer());
 			_entity->emitMessage(maudio);
 		}
 		else if(_currentAmmo == 0) {
@@ -83,6 +84,7 @@ namespace Logic {
 			maudio->setId("noAmmo");
 			maudio->setPosition(_entity->getPosition());
 			maudio->setNotIfPlay(false);
+			maudio->setIsPlayer(_entity->isPlayer());
 			_entity->emitMessage(maudio);
 		}
 	}// shoot

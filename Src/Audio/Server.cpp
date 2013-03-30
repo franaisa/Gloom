@@ -94,7 +94,7 @@ namespace Audio
 		_system->set3DSettings(_doppler,1.0,_rolloff);
 
 		//Cargamos la banda sonora del juego
-		playLoopSound("media/audio/themeGloom.wav", "theme");
+		playStreamingLoopSound("media/audio/themeGloom.wav", "theme");
 
 		return true;
 
@@ -144,7 +144,17 @@ namespace Audio
 	}//ERRCHECK
 	//--------------------------------------------------------
 
-	void CServer::playSound(char* rutaSonido, const std::string& id){
+	void CServer::playSound(char* rutaSonido, const std::string& id, bool notIfPlay){
+
+		//Si queremos que suena solamente si no esta sonando ya
+		if(notIfPlay){
+			bool isPlaying;
+			_soundChannel[id]->isPlaying(&isPlaying);
+			if(isPlaying){
+				return;
+			}
+		}
+		
 		//Carga del sonido
 		Sound *sound;
 		FMOD_RESULT result = _system->createSound(
@@ -188,7 +198,6 @@ namespace Audio
 		0, // información adicional (nada en este caso)
 		& sound); // devolución del handle al buffer
 		ERRCHECK(result);
-		//sound->setLoopCount(-1); // sonido a loop asi le iba a david
 			
 		//Reproducción en canal
 		Channel *canal;
@@ -278,7 +287,6 @@ namespace Audio
 		0, // información adicional (nada en este caso)
 		& sound); // devolución del handle al buffer
 		ERRCHECK(result);
-		//sound->setLoopCount(-1); // sonido a loop asi le iba a david
 			
 		//Reproducción en canal
 		Channel *canal;
@@ -382,7 +390,7 @@ namespace Audio
 		0, // información adicional (nada en este caso)
 		& sound); // devolución del handle al buffer
 		ERRCHECK(result);
-		//sound->setLoopCount(-1); // sonido a loop asi le iba a david
+		
 			
 		//Reproducción en canal
 		Channel *canal;

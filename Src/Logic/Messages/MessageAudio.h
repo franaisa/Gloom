@@ -17,6 +17,8 @@ namespace Logic {
 		Vector3 getPosition();
 		bool getNotIfPlay();
 		void setNotIfPlay(bool notIfPlay);
+		bool getIsPlayer();
+		void setIsPlayer(bool isPlayer);
 		~CMessageAudio(){};
 		
 		virtual Net::CBuffer* serialize();
@@ -27,6 +29,7 @@ namespace Logic {
 		std::string _id;
 		Vector3 _position;
 		bool _notIfPlay;
+		bool _isPlayer;
 	};
 	REG_FACTORYMESSAGE(CMessageAudio);
 
