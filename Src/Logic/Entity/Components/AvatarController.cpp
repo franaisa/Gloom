@@ -27,6 +27,8 @@ de la entidad.
 #include "Logic/Messages/MessageSide.h"
 #include "Logic/Messages/MessageAudio.h"
 
+#include "Audio.h"
+
 namespace Logic 
 {
 	IMP_FACTORY(CAvatarController);

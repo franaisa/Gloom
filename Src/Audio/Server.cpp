@@ -87,7 +87,7 @@ namespace Audio
 		ERRCHECK(result);
 			
 		//Iniciamos
-		result = _system->init(100, FMOD_INIT_NORMAL, 0);
+		result = _system->init(32, FMOD_INIT_NORMAL, 0);
 		ERRCHECK(result);
 		
 		//Configuración 3D, el parámetro central es el factor de distancia (FMOD trabaja en metros/segundos)
@@ -335,13 +335,14 @@ namespace Audio
 	}//stopSound
 	//--------------------------------------------------------
 
-
 	void CServer::stopAllSounds(){
-		SoundChannelMap::const_iterator itMap = _soundChannel.begin();
-		bool mapErase = false;
-		for(; itMap != _soundChannel.end(); ++itMap) {
-				itMap->second->stop();
-		}
+		Channel *canal;
+		//Recorremos los 32 canales y paramos su reproduccion
+		for(int i=0;i<32;i++){
+				_system->getChannel(i,&canal);
+				canal->stop();
+			}
+		//Limpiamos el mapa idSonido-canal
 		_soundChannel.clear();
 	}//stopAllSounds
 	//--------------------------------------------------------
@@ -418,25 +419,26 @@ namespace Audio
 
 	
 	void CServer::mute(){
-		std::cout << "llamada al mute" << std::endl;
+		Channel* canal;
 		//Si el server estaba muteado lo desmuteamos y viceversa
 		if(_isMute){
 			_isMute=false;
 			_volume=0.5;
-			//Recorremos aquellos canales donde podría haber un sonido sonando y cambiamos su volumen
-			SoundChannelMap::const_iterator canales = _soundChannel.begin();
-			for(; canales!= _soundChannel.end(); ++canales) {
-				canales->second->setVolume(0.5);
+			//Recorremos los 32 canales y cambiamos su volumen
+			for(int i=0;i<32;i++){
+				_system->getChannel(i,&canal);
+				canal->setVolume(0);
 			}
 		}
 		else{
 			_isMute=true;
 			_volume=0;
-			//Recorremos aquellos canales donde podría haber un sonido sonando y cambiamos su volumen
-			SoundChannelMap::const_iterator canales = _soundChannel.begin();
-			for(; canales!= _soundChannel.end(); ++canales) {
-				canales->second->setVolume(0);
+			//Recorremos los 32 canales y cambiamos su volumen
+			for(int i=0;i<32;i++){
+				_system->getChannel(i,&canal);
+				canal->setVolume(0);
 			}
+
 		}
 
 	}//mute
