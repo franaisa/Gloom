@@ -292,6 +292,7 @@ namespace Logic {
 		audioMsg->setId("death");
 		audioMsg->setPosition( _entity->getPosition() );
 		audioMsg->setNotIfPlay(false);
+		audioMsg->setIsPlayer(_entity->isPlayer());
 		_entity->emitMessage(audioMsg);
 	}
 
@@ -303,6 +304,7 @@ namespace Logic {
 		audioMsg->setId("pain");
 		audioMsg->setPosition( _entity->getPosition() );
 		audioMsg->setNotIfPlay(false);
+		audioMsg->setIsPlayer(_entity->isPlayer());
 		_entity->emitMessage(audioMsg);
 	}
 
