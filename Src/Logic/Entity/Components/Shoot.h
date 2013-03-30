@@ -244,10 +244,10 @@ namespace Logic {
 		int _heightShoot;
 
 		/** Daño actual del arma (modificable por powerups). */
-		unsigned char _damage;
+		int _damage;
 
 		/** Daño por defecto del arma. */
-		unsigned char _defaultDamage;
+		int _defaultDamage;
 
 		/** Número de balas por disparo. */
 		int _numberShots;
@@ -262,10 +262,10 @@ namespace Logic {
 		int _cooldownTimer;
 
 		/** Cooldown actual (modificable por powerups). */
-		unsigned char _cooldown;
+		int _cooldown;
 
 		/** Cooldown por defecto del arma (tiempo entre disparo y disparo). */
-		unsigned char _defaultCooldown;
+		int _defaultCooldown;
 
 		/**
 		Para comprobar que un arma esta disparando y no puede disparar 
