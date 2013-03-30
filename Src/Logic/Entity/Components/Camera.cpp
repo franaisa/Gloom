@@ -139,7 +139,7 @@ namespace Logic
 				 if(_enemy->getType().compare("LocalPlayer")!=0)
 				    _graphicsCamera->setTargetCameraPosition(_enemy->getPosition() );
 				 else{	
-					  _graphicsCamera->setCameraPosition(_enemy->getPosition()+Vector3(0,50,0));
+					 _graphicsCamera->setCameraPosition(_enemy->getPosition()+Vector3(0,50,0));
 					 _graphicsCamera->setTargetCameraPosition(_enemy->getPosition());
 				 }
 			}

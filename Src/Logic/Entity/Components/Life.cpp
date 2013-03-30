@@ -275,8 +275,9 @@ namespace Logic {
 		// En el caso de la red, hay que enviar un mensaje especial para el cliente
 		// Siempre y cuando no haya muerto un remotePlayer/enemigo (debug singlePlayer)
 		Logic::CMessageCameraToEnemy* cteMsg=cteMsg = new Logic::CMessageCameraToEnemy();
-		CEntity* camera=camera = CServer::getSingletonPtr()->getMap()->getEntityByType("Camera");;
+		CEntity* camera=camera = CServer::getSingletonPtr()->getMap()->getEntityByType("Camera");
 		cteMsg->setEnemy(enemy);
+		//Solo si soy el jugador local envio mensaje de recolocación de camara (no quiero que enemigos muertos me seteen mi camara)
 		if(_entity->getType().compare("LocalPlayer")==0){
 			camera->emitMessage(cteMsg);
 		}
