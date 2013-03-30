@@ -10,6 +10,7 @@ implementa las habilidades del personaje
 "Archangel".
 
 @author Francisco Aisa García
+@author Jaime Chapinal Cervantes
 @date Marzo, 2013
 */
 
@@ -65,6 +66,13 @@ namespace Logic {
 		*/
 		virtual bool spawn(CEntity* entity, CMap *map, const Map::CEntity *entityInfo);
 
+		/**
+		Método llamado en cada frame.
+
+		@param msecs Milisegundos transcurridos desde el último tick.
+		*/
+		virtual void tick(unsigned int msecs);
+
 		
 		// =======================================================================
 		//                  METODOS HEREDADOS DE CPlayerClass
@@ -78,6 +86,21 @@ namespace Logic {
 
 		/** El personaje cura a los aliados que tiene en un radio. */
 		virtual void secondarySkill();
+
+
+	private:
+
+
+		// =======================================================================
+		//                          MIEMBROS PRIVADOS
+		// =======================================================================
+
+
+		/** Tiempo que dura siendo inmune (piel de diamante) */
+		float _inmuneDuration;
+
+		/** Timer que controla la duración que lleva siendo inmune. */
+		float _inmuneTimer;
 
 	}; // class CArchangel
 

@@ -260,7 +260,7 @@ Map = {
 		houndBerserkerDamagePercent=50,
 		houndBerserkerCooldownPercent=50,
 		
-		archangelPrimarySkillCooldown = 0.5,
+		archangelPrimarySkillCooldown = 4.0,
 		archangelSecondarySkillCooldown = 0.5,
 
 			weaponHammerName = "Hammer",
