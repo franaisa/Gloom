@@ -47,6 +47,13 @@ namespace Physics {
 		
 		void createCloth();
 
+		physx::PxClothFabric* createFabric(const physx::PxClothMeshDesc& clothDesc, const physx::PxVec3& gravityDir);
+
+		physx::PxClothMeshDesc createCustomClothDescriptor(int width, int height, float d);
+
+		void createCustomClothCollisionData(physx::PxClothFabric* fabric, const physx::PxClothMeshDesc& clothDesc, 
+									        int width, int height, float d);
+
 		// Puntero a la escena
 		physx::PxScene* _scene;
 
