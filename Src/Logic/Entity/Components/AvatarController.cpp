@@ -27,6 +27,8 @@ de la entidad.
 #include "Logic/Messages/MessageSide.h"
 #include "Logic/Messages/MessageAudio.h"
 
+#include "Audio.h"
+
 namespace Logic 
 {
 	IMP_FACTORY(CAvatarController);
@@ -432,9 +434,10 @@ namespace Logic
 				if(!Net::CManager::getSingletonPtr()->imServer()){
 					Logic::CMessageAudio *maudio=new Logic::CMessageAudio();
 					maudio->setRuta(_audioJump);
-					maudio->setId("Jump");
+					maudio->setId(_entity->getName()+"Jump");
 					maudio->setPosition(_entity->getPosition());
 					maudio->setNotIfPlay(false);
+					maudio->setIsPlayer(_entity->isPlayer());
 					_entity->emitMessage(maudio);
 				}
 			}
@@ -447,9 +450,10 @@ namespace Logic
 				if(!Net::CManager::getSingletonPtr()->imServer()){
 				Logic::CMessageAudio *maudio=new Logic::CMessageAudio();
 					maudio->setRuta(_audioSideJump);
-					maudio->setId("sideJump");
+					maudio->setId(_entity->getName()+"sideJump");
 					maudio->setPosition(_entity->getPosition());
 					maudio->setNotIfPlay(false);
+					maudio->setIsPlayer(_entity->isPlayer());
 					_entity->emitMessage(maudio);
 				}
 			}
@@ -503,12 +507,13 @@ namespace Logic
 		//Audio
 		//Si nos estamos moviendo pero no saltando/ni cayendo mandamos un mensaje de audio (pasos)
 		if(!Net::CManager::getSingletonPtr()->imServer()){
-			if(directXZY.x!=0 && directXZY.z!=0 && !_jumpingControl && !_caida){
+			if((directXZY.x!=0 || directXZY.z!=0) && !_jumpingControl && !_caida){
 				Logic::CMessageAudio *maudio=new Logic::CMessageAudio();
 				maudio->setRuta(_audioStep);
-				maudio->setId("steps");
+				maudio->setId(_entity->getName()+"steps");
 				maudio->setPosition(_entity->getPosition());
 				maudio->setNotIfPlay(true);
+				maudio->setIsPlayer(_entity->isPlayer());
 				_entity->emitMessage(maudio);
 			}
 		}

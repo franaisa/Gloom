@@ -133,6 +133,7 @@ namespace Logic
 				maudio->setId("spawn");
 				maudio->setPosition(_entity->getPosition());
 				maudio->setNotIfPlay(false);
+				maudio->setIsPlayer(_entity->isPlayer());
 				_entity->emitMessage(maudio);
 			}
 		}

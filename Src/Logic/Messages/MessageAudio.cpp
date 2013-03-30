@@ -50,6 +50,17 @@ namespace Logic {
 	}//
 	//----------------------------------------------------------
 
+	void CMessageAudio::setIsPlayer(bool isPlayer){
+		_isPlayer=isPlayer;
+	}//
+	//----------------------------------------------------------
+
+	bool CMessageAudio::getIsPlayer(){
+		return _isPlayer;
+	}//
+	//----------------------------------------------------------
+
+
 	Net::CBuffer* CMessageAudio::serialize() {
 		assert(_tempBuffer == NULL);
 		//

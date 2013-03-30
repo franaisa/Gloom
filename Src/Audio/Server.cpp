@@ -87,14 +87,14 @@ namespace Audio
 		ERRCHECK(result);
 			
 		//Iniciamos
-		result = _system->init(100, FMOD_INIT_NORMAL, 0);
+		result = _system->init(32, FMOD_INIT_NORMAL, 0);
 		ERRCHECK(result);
 		
 		//Configuración 3D, el parámetro central es el factor de distancia (FMOD trabaja en metros/segundos)
 		_system->set3DSettings(_doppler,1.0,_rolloff);
 
 		//Cargamos la banda sonora del juego
-		playLoopSound("media/audio/themeGloom.wav", "theme");
+		playStreamingLoopSound("media/audio/themeGloom.wav", "theme");
 
 		return true;
 
@@ -144,7 +144,17 @@ namespace Audio
 	}//ERRCHECK
 	//--------------------------------------------------------
 
-	void CServer::playSound(char* rutaSonido, const std::string& id){
+	void CServer::playSound(char* rutaSonido, const std::string& id, bool notIfPlay){
+
+		//Si queremos que suena solamente si no esta sonando ya
+		if(notIfPlay){
+			bool isPlaying;
+			_soundChannel[id]->isPlaying(&isPlaying);
+			if(isPlaying){
+				return;
+			}
+		}
+		
 		//Carga del sonido
 		Sound *sound;
 		FMOD_RESULT result = _system->createSound(
@@ -188,7 +198,6 @@ namespace Audio
 		0, // información adicional (nada en este caso)
 		& sound); // devolución del handle al buffer
 		ERRCHECK(result);
-		//sound->setLoopCount(-1); // sonido a loop asi le iba a david
 			
 		//Reproducción en canal
 		Channel *canal;
@@ -278,7 +287,6 @@ namespace Audio
 		0, // información adicional (nada en este caso)
 		& sound); // devolución del handle al buffer
 		ERRCHECK(result);
-		//sound->setLoopCount(-1); // sonido a loop asi le iba a david
 			
 		//Reproducción en canal
 		Channel *canal;
@@ -327,13 +335,14 @@ namespace Audio
 	}//stopSound
 	//--------------------------------------------------------
 
-
 	void CServer::stopAllSounds(){
-		SoundChannelMap::const_iterator itMap = _soundChannel.begin();
-		bool mapErase = false;
-		for(; itMap != _soundChannel.end(); ++itMap) {
-				itMap->second->stop();
-		}
+		Channel *canal;
+		//Recorremos los 32 canales y paramos su reproduccion
+		for(int i=0;i<32;i++){
+				_system->getChannel(i,&canal);
+				canal->stop();
+			}
+		//Limpiamos el mapa idSonido-canal
 		_soundChannel.clear();
 	}//stopAllSounds
 	//--------------------------------------------------------
@@ -382,7 +391,7 @@ namespace Audio
 		0, // información adicional (nada en este caso)
 		& sound); // devolución del handle al buffer
 		ERRCHECK(result);
-		//sound->setLoopCount(-1); // sonido a loop asi le iba a david
+		
 			
 		//Reproducción en canal
 		Channel *canal;
@@ -410,25 +419,26 @@ namespace Audio
 
 	
 	void CServer::mute(){
-		std::cout << "llamada al mute" << std::endl;
+		Channel* canal;
 		//Si el server estaba muteado lo desmuteamos y viceversa
 		if(_isMute){
 			_isMute=false;
 			_volume=0.5;
-			//Recorremos aquellos canales donde podría haber un sonido sonando y cambiamos su volumen
-			SoundChannelMap::const_iterator canales = _soundChannel.begin();
-			for(; canales!= _soundChannel.end(); ++canales) {
-				canales->second->setVolume(0.5);
+			//Recorremos los 32 canales y cambiamos su volumen
+			for(int i=0;i<32;i++){
+				_system->getChannel(i,&canal);
+				canal->setVolume(0);
 			}
 		}
 		else{
 			_isMute=true;
 			_volume=0;
-			//Recorremos aquellos canales donde podría haber un sonido sonando y cambiamos su volumen
-			SoundChannelMap::const_iterator canales = _soundChannel.begin();
-			for(; canales!= _soundChannel.end(); ++canales) {
-				canales->second->setVolume(0);
+			//Recorremos los 32 canales y cambiamos su volumen
+			for(int i=0;i<32;i++){
+				_system->getChannel(i,&canal);
+				canal->setVolume(0);
 			}
+
 		}
 
 	}//mute

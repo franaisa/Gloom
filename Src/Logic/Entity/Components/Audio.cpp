@@ -50,6 +50,7 @@ namespace Logic
 		std::string ruta,id;
 		Vector3 position;
 		bool notIfPlay;
+		bool localPlayer;
 
 		switch(message->getMessageType())
 		{
@@ -60,11 +61,17 @@ namespace Logic
 				id=((CMessageAudio*)message)->getId();
 				position=((CMessageAudio*)message)->getPosition();
 				notIfPlay=((CMessageAudio*)message)->getNotIfPlay();
+				localPlayer=((CMessageAudio*)message)->getIsPlayer();
 				//Le decimos al server de audio lo que queremos reproducir
 				char *aux=new char[ruta.size()+1];
 				aux[ruta.size()]=0;
 				memcpy(aux,ruta.c_str(),ruta.size());
-				Audio::CServer::getSingletonPtr()->playSound3D(aux,id,position,notIfPlay);	
+				//Si es local el sonido será stereo
+				if(localPlayer)
+					Audio::CServer::getSingletonPtr()->playSound(aux,id,notIfPlay);
+				//En otro caso se trata de un sonido con posición 3D
+				else
+					Audio::CServer::getSingletonPtr()->playSound3D(aux,id,position,notIfPlay);	
 			}
 			break;
 

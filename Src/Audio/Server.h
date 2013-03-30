@@ -76,7 +76,7 @@ namespace Audio
 		/**
 		Se encarga de cargar un sonido (no 3D) y reproducirlo en modo normal.
 		*/
-		void playSound(char* rutaSonido, const std::string& id);
+		void playSound(char* rutaSonido, const std::string& id, bool notIfPlay);
 
 		/**
 		Se encarga de cargar un sonido (no 3D) y reproducirlo en modo loop.

@@ -52,6 +52,7 @@ namespace Logic {
 			maudio->setId("audioExplotion");
 			maudio->setPosition(_entity->getPosition());
 			maudio->setNotIfPlay(false);
+			maudio->setIsPlayer(false);
 			_entity->emitMessage(maudio);
 		}
 	} // tick

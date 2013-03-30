@@ -273,12 +273,14 @@ namespace Logic {
 
 		// Mensaje para que la camara enfoque al jugador que nos ha matado
 		// En el caso de la red, hay que enviar un mensaje especial para el cliente
-		Logic::CMessageCameraToEnemy* cteMsg = new Logic::CMessageCameraToEnemy();
+		// Siempre y cuando no haya muerto un remotePlayer/enemigo (debug singlePlayer)
+		Logic::CMessageCameraToEnemy* cteMsg=cteMsg = new Logic::CMessageCameraToEnemy();
+		CEntity* camera=camera = CServer::getSingletonPtr()->getMap()->getEntityByType("Camera");
 		cteMsg->setEnemy(enemy);
-
-		CEntity* camera = CServer::getSingletonPtr()->getMap()->getEntityByType("Camera");
-		camera->emitMessage(cteMsg);
-			
+		//Solo si soy el jugador local envio mensaje de recolocación de camara (no quiero que enemigos muertos me seteen mi camara)
+		if(_entity->getType().compare("LocalPlayer")==0){
+			camera->emitMessage(cteMsg);
+		}
 		// Enviamos el mensaje por la red
 		if( Net::CManager::getSingletonPtr()->imServer() )
 			Logic::CGameNetMsgManager::getSingletonPtr()->sendMessageToOne(cteMsg, camera->getEntityID(), _entity->getEntityID());
@@ -292,6 +294,7 @@ namespace Logic {
 		audioMsg->setId("death");
 		audioMsg->setPosition( _entity->getPosition() );
 		audioMsg->setNotIfPlay(false);
+		audioMsg->setIsPlayer(_entity->isPlayer());
 		_entity->emitMessage(audioMsg);
 	}
 
@@ -303,6 +306,7 @@ namespace Logic {
 		audioMsg->setId("pain");
 		audioMsg->setPosition( _entity->getPosition() );
 		audioMsg->setNotIfPlay(false);
+		audioMsg->setIsPlayer(_entity->isPlayer());
 		_entity->emitMessage(audioMsg);
 	}
 
