@@ -32,6 +32,7 @@ mover al jugador.
 #include "Audio/Server.h"
 #include "Logic/Server.h"
 #include "Logic/Maps/Map.h"
+#include "Logic/Messages/MessageDamaged.h"
 
 //MENSAJE PARA DEBBUG
 #include "Logic/Messages/MessageHudDebbug.h"
@@ -109,6 +110,7 @@ namespace GUI {
 				key.keyId == GUI::Key::NUMBER5 || key.keyId == GUI::Key::NUMBER6 || key.keyId == GUI::Key::NUMBER7 || key.keyId == GUI::Key::NUMBER8){
 				
 					Logic::CMessageChangeWeapon *message=new Logic::CMessageChangeWeapon();
+					Logic::CMessageDamaged *damage;
 					Vector3 position;										
 					
 					switch(key.keyId)
@@ -134,6 +136,10 @@ namespace GUI {
 					case GUI::Key::NUMBER7:
 						position=Logic::CServer::getSingletonPtr()->getMap()->getEntityByName("Jumper1")->getPosition();
 						Audio::CServer::getSingletonPtr()->playSound3D("media/audio/plasma.wav", "cosa", position, false);
+						damage=new Logic::CMessageDamaged();
+						damage->setDamage(100);
+						damage->setEnemy(Logic::CServer::getSingletonPtr()->getMap()->getEntityByName("Jumper1"));
+						_controlledAvatar->emitMessage(damage);
 						break;
 					case GUI::Key::NUMBER8:
 						Audio::CServer::getSingletonPtr()->mute();

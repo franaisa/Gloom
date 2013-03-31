@@ -67,7 +67,7 @@ namespace Logic {
 		else{
 			Logic::CMessageDamaged *m=new Logic::CMessageDamaged();
 			m->setDamage(_damage);
-			m->setEnemy(entityHit.first);
+			m->setEnemy(_entity);
 			entityHit.first->emitMessage(m);
 		}
 	}// triggerHitMessages
