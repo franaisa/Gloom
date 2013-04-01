@@ -250,7 +250,7 @@ Map = {
 		shadowSecondarySkillCooldown = 3,
 		shadowInvisibilityDuration = 5,
 		
-		screamerPrimarySkillCooldown = 2,
+		screamerPrimarySkillCooldown = 0,
 		screamerSecondarySkillCooldown = 2,
 		
 		houndPrimarySkillCooldown = 10,
@@ -589,7 +589,7 @@ Map = {
 		physic_radius = 1,
 		physic_mass = 55,
 		physic_group = 3,
-		physic_groupList = "1",
+		physic_groupList = "1, 5",
 		explotionTime = 5,
 		explotionDamage = 10,
 		explotionRadius = 6,
@@ -673,8 +673,21 @@ Map = {
 		physic_type = "static",
 		physic_shape = "box",
 		physic_dimensions = { 4, 7, 4 },
-		physic_group = 2,
+		physic_group = 4,
 		physic_groupList = "1",
+	},
+	
+	ScreamerShield = {
+		type = "ScreamerShield",
+		model = "mine.mesh",
+		physic_entity = "rigid",
+		physic_trigger = true,
+		physic_type = "kinematic",
+		physic_shape = "sphere",
+		physic_radius = 3,
+		physic_mass = 10,
+		physic_group = 5,
+		physic_groupList = "3, 10", 
 	},
 	
 }

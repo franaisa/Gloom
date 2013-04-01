@@ -116,6 +116,8 @@ namespace Logic {
 			<li>USE_PRIMARY_SKILL</li>
 			<li>USE_SECONDARY_SKILL</li>
 			<li>CHANGE_PLAYER_CLASS</li>
+			<li>STOP_PRIMARY_SKILL</li>
+			<li>STOP_SECONDARY_SKILL</li>
 		</ul>
 		
 		@param message Mensaje a chequear.
@@ -170,6 +172,34 @@ namespace Logic {
 		*/
 		virtual void secondarySkill() = 0;
 
+		//__________________________________________________________________
+
+		/**
+		Se dispara cuando se deja de pulsar la tecla que dispara la habilidad primaria.
+		Notar que este método no se ha hecho virtual puro (abstracto) porque muchas
+		de las habilidades no necesitarán tenerlo en cuenta. No obstante, dado que
+		el mensaje que se recibe para informarnos de esta acción es un mensaje de
+		control, he decidido tenerlo en cuenta en la clase padre.
+
+		Para que el uso de este método tenga sentido lo normal es que el cooldown
+		de la habilidad sea 0.
+		*/
+		virtual void stopPrimarySkill();
+
+		//__________________________________________________________________
+
+		/**
+		Se dispara cuando se deja de pulsar la tecla que dispara la habilidad primaria.
+		Notar que este método no se ha hecho virtual puro (abstracto) porque muchas
+		de las habilidades no necesitarán tenerlo en cuenta. No obstante, dado que
+		el mensaje que se recibe para informarnos de esta acción es un mensaje de
+		control, he decidido tenerlo en cuenta en la clase padre.
+
+		Para que el uso de este método tenga sentido lo normal es que el cooldown
+		de la habilidad sea 0.
+		*/
+		virtual void stopSecondarySkill();
+
 
 	protected:
 
@@ -223,6 +253,13 @@ namespace Logic {
 
 		/** Cronometro para el cooldown de la segunda skill. */
 		float _secondarySkillTimer;
+
+		/** Altura a la que se encuentra el punto de disparo. */
+		// static??
+		float _heightShoot;
+
+		/** Radio de la cápsula del jugador. */
+		float _capsuleRadius;
 
 	}; // class CPlayerClass
 

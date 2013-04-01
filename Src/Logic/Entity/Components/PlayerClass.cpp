@@ -47,14 +47,23 @@ namespace Logic {
 		std::string primarySkillCooldownName = _playerClassName + "PrimarySkillCooldown";
 		std::string secondarySkillCooldownName = _playerClassName + "SecondarySkillCooldown";
 
-		// Leer el tiempo de cooldown de las habilidades primarias y secundarias
+		// Leemos el tiempo de cooldown de la habilidad primaria
 		assert( entityInfo->hasAttribute(primarySkillCooldownName) );
 		// Pasamos el tiempo a msecs
 		_primarySkillCooldown = entityInfo->getFloatAttribute(primarySkillCooldownName) * 1000;
 
+		// Leemos el tiempo de cooldown de la habilidad secundaria
 		assert( entityInfo->hasAttribute(secondarySkillCooldownName) );
 		// Pasamos el tiempo a msecs
 		_secondarySkillCooldown = entityInfo->getFloatAttribute(secondarySkillCooldownName) * 1000;
+
+		// Leemos la altura de disparo
+		assert( entityInfo->hasAttribute("heightShoot") );
+		_heightShoot = entityInfo->getFloatAttribute("heightShoot");
+
+		// Leemos el radio de la cápsula del player
+		assert( entityInfo->hasAttribute("physic_radius") );
+		_capsuleRadius = entityInfo->getFloatAttribute("physic_radius");
 
 		return true;
 	} // spawn
@@ -96,6 +105,12 @@ namespace Logic {
 						_secondarySkillTimer = _secondarySkillCooldown;
 					}
 				}
+				else if(type == ControlType::STOP_PRIMARY_SKILL) {
+					stopPrimarySkill();
+				}
+				else if(type == ControlType::STOP_SECONDARY_SKILL) {
+					stopSecondarySkill();
+				}
 
 				break;
 			}
@@ -131,6 +146,20 @@ namespace Logic {
 
 		// Restea el valor de los timers
 		_primarySkillTimer = _secondarySkillTimer = 0;
+	}
+
+	//__________________________________________________________________
+
+	void CPlayerClass::stopPrimarySkill() {
+		// Si las clases hijas no sobreescriben este método su invoación
+		// es ignorada
+	}
+
+	//__________________________________________________________________
+
+	void CPlayerClass::stopSecondarySkill() {
+		// Si las clases hijas no sobreescriben este método su invoación
+		// es ignorada
 	}
 
 	//__________________________________________________________________

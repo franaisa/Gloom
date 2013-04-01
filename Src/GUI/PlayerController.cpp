@@ -357,6 +357,12 @@ namespace GUI {
 			Logic::CMessageControl *m=new Logic::CMessageControl();
 			switch(key.keyId)
 			{
+			case GUI::Key::Q:
+				m->setType(Logic::Control::STOP_PRIMARY_SKILL);
+				break;
+			case GUI::Key::E:
+				m->setType(Logic::Control::STOP_SECONDARY_SKILL);
+				break;
 			case GUI::Key::W:
 				m->setType(Logic::Control::STOP_WALK);
 				break;
