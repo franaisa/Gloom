@@ -119,6 +119,10 @@ build.xml
 !/Projects/Audio/*.filters
 !/Projects/Audio/*.vcxproj
 
+!/Projects/Input/*.user
+!/Projects/Input/*.filters
+!/Projects/Input/*.vcxproj
+
 !/Projects/Hikari/*.user
 !/Projects/Hikari/*.filters
 !/Projects/Hikari/*.vcxproj
