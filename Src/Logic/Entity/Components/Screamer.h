@@ -105,9 +105,20 @@ namespace Logic {
 		*/
 		virtual void stopPrimarySkill();
 
+		//__________________________________________________________________
+
+		/**
+		Resta al escudo del screamer la cantidad de puntos dados. Si absorbe demasiados
+		puntos de daño, el personaje explotará.
+
+		@param damage Daño que absorbe el escudo del Screamer.
+		*/
+		void absorbDamage(float damage);
+
 
 	private:
 
+		/** Recoloca el escudo del screamer en la posición del punto de mira. */
 		void refreshShieldPosition();
 
 		/** true si la habilidad primaria está siendo usada. */
