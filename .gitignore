@@ -58,6 +58,7 @@ build.xml
 !/Projects/Net/
 !/Projects/Audio/
 !/Projects/Hikari/
+!/Projects/Input/
 
 # =================================
 # Clean each project (second level)
@@ -74,6 +75,7 @@ build.xml
 /Projects/Net/*
 /Projects/Audio/*
 /Projects/Hikari/*
+/Projects/Input/*
 
 # ===============================================
 # Bring back configuration files for each project
