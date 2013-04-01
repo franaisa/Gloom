@@ -70,8 +70,13 @@ Map = {
 		shadowSecondarySkillCooldown = 3,
 		shadowInvisibilityDuration = 5,
 		
-		screamerPrimarySkillCooldown = 2,
+		screamerPrimarySkillCooldown = 0,
 		screamerSecondarySkillCooldown = 2,
+		screamerShieldThreshold = 100,
+		screamerShieldDamageTimeStep = 0.5,
+		screamerShieldDamageOverTime = 5,
+		screamerShieldRecoveryTimeStep = 0.5,
+		screamerShieldRecoveryOverTime = 2,
 		
 		houndPrimarySkillCooldown = 1,
 		houndSecondarySkillCooldown = 1,
@@ -252,6 +257,11 @@ Map = {
 		
 		screamerPrimarySkillCooldown = 0,
 		screamerSecondarySkillCooldown = 2,
+		screamerShieldThreshold = 100,
+		screamerShieldDamageTimeStep = 0.5,
+		screamerShieldDamageOverTime = 5,
+		screamerShieldRecoveryTimeStep = 0.5,
+		screamerShieldRecoveryOverTime = 2,
 		
 		houndPrimarySkillCooldown = 10,
 		houndSecondarySkillCooldown = 1,

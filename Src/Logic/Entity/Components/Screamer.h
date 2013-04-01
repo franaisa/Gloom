@@ -113,6 +113,31 @@ namespace Logic {
 		/** true si la habilidad primaria está siendo usada. */
 		bool _primarySkillIsActive;
 
+		/** Puntos de escudo actuales de la habilidad primaria. */
+		float _currentScreamerShield;
+
+		/** Limite de aguante del escudo generado por la habilidad primaria. */
+		float _screamerShieldThreshold;
+
+		/** Cada cuanto baja la resistencia del escudo de la habilidad primaria cuando está activa. */
+		float _screamerShieldDamageTimeStep;
+
+		/** Cantidad de daño que se va restando al escudo de la habilidad primaria con el tiempo. */
+		float _screamerShieldDamageOverTime;
+
+		/** Timer para controlar cuando hay que restar energia al escudo del screamer. */
+		float _screamerShieldDamageTimer;
+
+		/** Cada cuanto se recupera el escudo del screamer si no esta usando la habilidad primaria. */
+		float _screamerShieldRecoveryTimeStep;
+
+		/** Cuantos puntos de escudo recupera el screamer con el tiempo. */
+		float _screamerShieldRecoveryOverTime;
+
+		/** Cronometro para calcular cada cuanto hay que subirle los puntos de escudo al Screamer. */
+		float _screamerShieldRecoveryTimer;
+
+		/** Puntero a la entidad que representa al escudo generado por la habilidad primaria. */
 		Logic::CEntity* _screamerShield;
 
 	}; // class CScreamer

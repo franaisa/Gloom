@@ -28,6 +28,8 @@ namespace Logic {
 
 	CScreamer::CScreamer() : CPlayerClass("screamer"),
 							 _primarySkillIsActive(false),
+							 _screamerShieldDamageTimer(0),
+							 _screamerShieldRecoveryTimer(0),
 							 _screamerShield(NULL) {
 		
 		// Nada que hacer
@@ -43,6 +45,19 @@ namespace Logic {
 
 	bool CScreamer::spawn(CEntity* entity, CMap* map, const Map::CEntity* entityInfo) {
 		if( !CPlayerClass::spawn(entity,map,entityInfo) ) return false;
+
+		assert( entityInfo->hasAttribute("screamerShieldThreshold") );
+		assert( entityInfo->hasAttribute("screamerShieldDamageTimeStep") );
+		assert( entityInfo->hasAttribute("screamerShieldDamageOverTime") );
+		assert( entityInfo->hasAttribute("screamerShieldRecoveryTimeStep") );
+		assert( entityInfo->hasAttribute("screamerShieldRecoveryOverTime") );
+
+		_screamerShieldThreshold = entityInfo->getFloatAttribute("screamerShieldThreshold");
+		_currentScreamerShield = _screamerShieldThreshold;
+		_screamerShieldDamageTimeStep = entityInfo->getFloatAttribute("screamerShieldDamageTimeStep");
+		_screamerShieldDamageOverTime = entityInfo->getFloatAttribute("screamerShieldDamageOverTime");
+		_screamerShieldRecoveryTimeStep = entityInfo->getFloatAttribute("screamerShieldRecoveryTimeStep");
+		_screamerShieldRecoveryOverTime = entityInfo->getFloatAttribute("screamerShieldRecoveryOverTime");
 	} // spawn
 
 	//__________________________________________________________________
@@ -52,7 +67,37 @@ namespace Logic {
 
 		// Si la habilidad primaria está siendo usada
 		if(_primarySkillIsActive) {
-			refreshShieldPosition();
+			// Deberia funcionar este bucle como el de la fisica? restando
+			// daños hasta cumplir los ciclos acumulados?
+			if(_screamerShieldDamageTimer < _screamerShieldDamageTimeStep) {
+				_screamerShieldDamageTimer += msecs;
+			}
+			else {
+				_currentScreamerShield -= _screamerShieldDamageOverTime;
+				_screamerShieldDamageTimer = 0;
+
+				if(_currentScreamerShield > 0) {
+					// Colocamos el escudo delante nuestra
+					refreshShieldPosition();
+				}
+				else {
+					// El screamer explota
+					std::cout << "Exploto" << std::endl;
+				}
+			}
+		}
+		else if(_currentScreamerShield != _screamerShieldThreshold) {
+			if(_screamerShieldRecoveryTimer < _screamerShieldRecoveryTimeStep) {
+				_screamerShieldRecoveryTimer += msecs;
+			}
+			else {
+				_currentScreamerShield += _screamerShieldRecoveryOverTime;
+				_screamerShieldRecoveryTimer = 0;
+
+				if(_currentScreamerShield > _screamerShieldThreshold) {
+					_currentScreamerShield = _screamerShieldThreshold;
+				}
+			}
 		}
 	}
 
@@ -75,7 +120,6 @@ namespace Logic {
 
 		// Activamos el escudo
 		_screamerShield->activate();
-		refreshShieldPosition();
 	}
 
 	//__________________________________________________________________
