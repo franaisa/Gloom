@@ -44,8 +44,13 @@ namespace Logic {
 	void CShootRocketLauncher::fireWeapon() {
 		// Obtenemos la informacion asociada al arquetipo del cohete
 		Map::CEntity *entityInfo = CEntityFactory::getSingletonPtr()->getInfo("Rocket");
-		// Creamos la entidad y la activamos
-		CEntity* rocket = CEntityFactory::getSingletonPtr()->createEntity(entityInfo, Logic::CServer::getSingletonPtr()->getMap());
+		
+		// Creamos la entidad y la activamos// Spawneamos el cohete justo delante del jugador y a la altura de disparo que corresponda
+		Vector3 entityPosition = _entity->getPosition();
+		Vector3 myPosition = entityPosition + ( Math::getDirection( _entity->getOrientation() )* (_capsuleRadius) );
+		myPosition.y = entityPosition.y + _heightShoot;
+
+		CEntity* rocket = CEntityFactory::getSingletonPtr()->createEntity(entityInfo, Logic::CServer::getSingletonPtr()->getMap(), myPosition);
 		assert(rocket != NULL);
 		rocket->activate();
 
@@ -53,16 +58,6 @@ namespace Logic {
 		CRocketController* comp = rocket->getComponent<CRocketController>("CRocketController");
 		assert(comp != NULL);
 		comp->setOwner(_entity);
-
-		// Spawneamos el cohete justo delante del jugador y a la altura de disparo que corresponda
-		Vector3 entityPosition = _entity->getPosition();
-		Vector3 myPosition = entityPosition + ( Math::getDirection( _entity->getOrientation() )* (_capsuleRadius) );
-		myPosition.y = entityPosition.y + _heightShoot;
-		rocket->setPosition(myPosition);
-
-		//enviamos por red la creación de la entidad
-		if(Net::CManager::getSingletonPtr()->imServer())
-			Logic::CGameNetMsgManager::getSingletonPtr()->sendCreateEntity(rocket->getEntityID());
 
 		// Mensaje para situar el collider fisico del cohete en la posicion de disparo.
 		Logic::CMessageSetPhysicPosition* msg = new Logic::CMessageSetPhysicPosition();

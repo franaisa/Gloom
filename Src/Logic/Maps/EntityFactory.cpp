@@ -14,9 +14,13 @@ del juego.
 #include "Logic/Entity/Entity.h"
 #include "Logic/Maps/Map.h"
 #include "Logic/Server.h"
+#include "Logic/GameNetMsgManager.h"
+#include "Net/Manager.h"
 #include "Map.h"
 #include "Map/MapParser.h"
 #include "Map/MapEntity.h"
+#include "../../Application/BaseApplication.h"
+#include "../../Application/ApplicationState.h"
 
 #include <iostream>
 #include <fstream>
@@ -273,15 +277,49 @@ namespace Logic
 		// Añadimos la nueva entidad en el mapa antes de inicializarla.
 		map->addEntity(ret);
 		// Y lo inicializamos
-		if (_dynamicCreation ? ret->dynamicSpawn(map, entityInfo) : ret->spawn(map, entityInfo))
+		if (_dynamicCreation ? ret->dynamicSpawn(map, entityInfo) : ret->spawn(map, entityInfo)){
+			if(Net::CManager::getSingletonPtr()->imServer() && _dynamicCreation)
+				Logic::CGameNetMsgManager::getSingletonPtr()->sendCreateEntity(ret->getEntityID());
+			
 			return ret;
-		else {
+		} else {
 			map->removeEntity(ret);
 			delete ret;
 			return 0;
 		}
 
 	} // createEntity
+
+	//---------------------------------------------------------
+
+	Logic::CEntity *CEntityFactory::createEntity(Map::CEntity *entityInfo,
+							  CMap *map, Vector3 position)
+	{
+		CEntity *ret = assembleEntity(entityInfo->getType());
+		if (!ret)
+			return 0;
+
+		
+		// Añadimos la nueva entidad en el mapa antes de inicializarla.
+		map->addEntity(ret);
+		// Y lo inicializamos
+		if (_dynamicCreation ? ret->dynamicSpawn(map, entityInfo) : ret->spawn(map, entityInfo)){
+			ret->setPosition(position);
+
+			//enviamos por red la creación de la entidad
+			if(Net::CManager::getSingletonPtr()->imServer() && _dynamicCreation)
+				Logic::CGameNetMsgManager::getSingletonPtr()->sendCreateEntity(ret->getEntityID());
+
+			return ret;
+		} else {
+			map->removeEntity(ret);
+			delete ret;
+			return 0;
+		}
+
+	} // createEntity
+
+
 
 	//---------------------------------------------------------
 
@@ -294,7 +332,7 @@ namespace Logic
 	//---------------------------------------------------------
 
 
-	Logic::CEntity *CEntityFactory::createEntity(const Map::CEntity *entityInfo, Logic::CMap *map, TEntityID id)
+	Logic::CEntity *CEntityFactory::createEntity(Map::CEntity *entityInfo, Logic::CMap *map, TEntityID id)
 	{
 		CEntity *ret = assembleEntity(entityInfo->getType(), id);
 		if (!ret)
@@ -303,9 +341,13 @@ namespace Logic
 		// Añadimos la nueva entidad en el mapa antes de inicializarla.
 		map->addEntity(ret);
 		// Y lo inicializamos
-		if (ret->spawn(map, entityInfo))
+		if (ret->spawn(map, entityInfo)){
+
+			if(Net::CManager::getSingletonPtr()->imServer() && _dynamicCreation)
+				Logic::CGameNetMsgManager::getSingletonPtr()->sendCreateEntity(ret->getEntityID());
+
 			return ret;
-		else {
+		} else {
 			map->removeEntity(ret);
 			delete ret;
 			return 0;
@@ -321,6 +363,10 @@ namespace Logic
 		// Si la entidad estaba activada se desactiva al sacarla
 		// del mapa.
 		entity->getMap()->removeEntity(entity);
+
+		if(Net::CManager::getSingletonPtr()->imServer())
+			Logic::CGameNetMsgManager::getSingletonPtr()->sendDestroyEntity(entity->getEntityID());
+
 		delete entity;
 
 	} // deleteEntity
