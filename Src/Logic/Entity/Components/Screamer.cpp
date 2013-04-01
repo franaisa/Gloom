@@ -13,6 +13,7 @@ implementa las habilidades del personaje
 */
 
 #include "Screamer.h"
+#include "ScreamerShieldDamageNotifier.h"
 #include "PhysicDynamicEntity.h"
 #include "Graphics.h"
 #include "Logic/Maps/EntityFactory.h"
@@ -52,8 +53,7 @@ namespace Logic {
 		assert( entityInfo->hasAttribute("screamerShieldRecoveryTimeStep") );
 		assert( entityInfo->hasAttribute("screamerShieldRecoveryOverTime") );
 
-		_screamerShieldThreshold = entityInfo->getFloatAttribute("screamerShieldThreshold");
-		_currentScreamerShield = _screamerShieldThreshold;
+		_currentScreamerShield = _screamerShieldThreshold = entityInfo->getFloatAttribute("screamerShieldThreshold");
 		_screamerShieldDamageTimeStep = entityInfo->getFloatAttribute("screamerShieldDamageTimeStep");
 		_screamerShieldDamageOverTime = entityInfo->getFloatAttribute("screamerShieldDamageOverTime");
 		_screamerShieldRecoveryTimeStep = entityInfo->getFloatAttribute("screamerShieldRecoveryTimeStep");
@@ -78,11 +78,13 @@ namespace Logic {
 
 				if(_currentScreamerShield > 0) {
 					// Colocamos el escudo delante nuestra
-					refreshShieldPosition();
+					//refreshShieldPosition();
 				}
 				else {
 					// El screamer explota
 					std::cout << "Exploto" << std::endl;
+
+					// Destruir o desactivar el escudo
 				}
 			}
 		}
@@ -116,10 +118,19 @@ namespace Logic {
 			// Creamos la entidad y la activamos
 			_screamerShield = CEntityFactory::getSingletonPtr()->createEntity( screamerShieldInfo, Logic::CServer::getSingletonPtr()->getMap() );
 			assert(_screamerShield != NULL);
+
+			// Fijamos a nuestra entidad como dueña de la entidad creada en el componente
+			// que recibe las notificaciones de daño.
+			CScreamerShieldDamageNotifier* shieldDmgNotifier = _screamerShield->getComponent<CScreamerShieldDamageNotifier>("CScreamerShieldDamageNotifier");
+			assert(shieldDmgNotifier && "Error: La entidad ScreamerShield no tiene ningun componente llamado CScreamerShieldDamageNotifier");
+			shieldDmgNotifier->setOwner(_entity);
 		}
 
 		// Activamos el escudo
 		_screamerShield->activate();
+
+		// deprecated
+		refreshShieldPosition();
 	}
 
 	//__________________________________________________________________
@@ -135,10 +146,20 @@ namespace Logic {
 		_primarySkillIsActive = false;
 		
 		// Desactivamos los gráficos y la entidad
-		CGraphics* shieldGraphics = _screamerShield->getComponent<CGraphics>("CGraphics");
+		/*CGraphics* shieldGraphics = _screamerShield->getComponent<CGraphics>("CGraphics");
 		assert(shieldGraphics && "Error: La entidad ScreamerShield no tiene un componente CGraphics");
 		shieldGraphics->setVisible(false);
-		_screamerShield->deactivate();
+		_screamerShield->deactivate();*/
+	}
+
+	//__________________________________________________________________
+
+	void CScreamer::absorbDamage(float damage) {
+		_currentScreamerShield -= damage;
+
+		if(_currentScreamerShield <= 0) {
+			std::cout << "Exploto" << std::endl;
+		}
 	}
 
 	//__________________________________________________________________
