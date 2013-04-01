@@ -13,6 +13,8 @@ implementa las habilidades del personaje
 */
 
 #include "Screamer.h"
+#include "PhysicDynamicEntity.h"
+#include "Graphics.h"
 #include "Logic/Maps/EntityFactory.h"
 #include "Logic/Entity/Entity.h"
 #include "Logic/Server.h"
@@ -25,7 +27,8 @@ namespace Logic {
 	//__________________________________________________________________
 
 	CScreamer::CScreamer() : CPlayerClass("screamer"),
-							 _primarySkillIsActive(false) {
+							 _primarySkillIsActive(false),
+							 _screamerShield(NULL) {
 		
 		// Nada que hacer
 	}
@@ -40,8 +43,6 @@ namespace Logic {
 
 	bool CScreamer::spawn(CEntity* entity, CMap* map, const Map::CEntity* entityInfo) {
 		if( !CPlayerClass::spawn(entity,map,entityInfo) ) return false;
-
-		// Leer atributos propios
 	} // spawn
 
 	//__________________________________________________________________
@@ -51,7 +52,7 @@ namespace Logic {
 
 		// Si la habilidad primaria está siendo usada
 		if(_primarySkillIsActive) {
-			
+			refreshShieldPosition();
 		}
 	}
 
@@ -62,23 +63,19 @@ namespace Logic {
 
 		_primarySkillIsActive = true;
 
-		// Obtenemos la informacion asociada al arquetipo de la granada
-		Map::CEntity *entityInfo = CEntityFactory::getSingletonPtr()->getInfo("ScreamerShield");
-		// Creamos la entidad y la activamos
-		CEntity* screamerShield = CEntityFactory::getSingletonPtr()->createEntity( entityInfo, Logic::CServer::getSingletonPtr()->getMap() );
-		assert(screamerShield != NULL);
-		screamerShield->activate();
+		// Me he visto obligado a realizar esta comprobacion aqui porque de momento no podemos crear entidades dinamicas
+		// en el spawn (por la forma de asignar nombres).
+		if(_screamerShield == NULL) {
+			// Obtenemos la informacion asociada al arquetipo de la granada
+			Map::CEntity* screamerShieldInfo = CEntityFactory::getSingletonPtr()->getInfo("ScreamerShield");
+			// Creamos la entidad y la activamos
+			_screamerShield = CEntityFactory::getSingletonPtr()->createEntity( screamerShieldInfo, Logic::CServer::getSingletonPtr()->getMap() );
+			assert(_screamerShield != NULL);
+		}
 
-		// Spawneamos la granada justo delante del jugador y a la altura de disparo que corresponda
-		Vector3 entityPosition = _entity->getPosition();
-		Vector3 myPosition = entityPosition + ( Math::getDirection( _entity->getOrientation() ) * _capsuleRadius );
-		myPosition.y = entityPosition.y + _heightShoot;
-
-		// Mensaje para situar el collider fisico del escudo centrado en la posicion de disparo.
-		Logic::CMessageSetPhysicPosition* msg = new Logic::CMessageSetPhysicPosition();
-		msg->setPosition(myPosition);
-		msg->setMakeConversion(false);
-		screamerShield->emitMessage(msg);
+		// Activamos el escudo
+		_screamerShield->activate();
+		refreshShieldPosition();
 	}
 
 	//__________________________________________________________________
@@ -92,6 +89,31 @@ namespace Logic {
 
 	void CScreamer::stopPrimarySkill() {
 		_primarySkillIsActive = false;
+		
+		// Desactivamos los gráficos y la entidad
+		CGraphics* shieldGraphics = _screamerShield->getComponent<CGraphics>("CGraphics");
+		assert(shieldGraphics && "Error: La entidad ScreamerShield no tiene un componente CGraphics");
+		shieldGraphics->setVisible(false);
+		_screamerShield->deactivate();
+	}
+
+	//__________________________________________________________________
+
+	void CScreamer::refreshShieldPosition() {
+		// Spawneamos la granada justo delante del jugador y a la altura de disparo que corresponda
+		Vector3 entityPosition = _entity->getPosition();
+		Vector3 myPosition = entityPosition + ( Math::getDirection( _entity->getOrientation() ) * _capsuleRadius );
+		myPosition.y = entityPosition.y + _heightShoot;
+
+		// Posicionamos el centro del escudo justo en el punto de mira
+		CPhysicDynamicEntity* physicDynamic = _screamerShield->getComponent<CPhysicDynamicEntity>("CPhysicDynamicEntity");
+		assert(physicDynamic && "Error la entidad ScreamerShield no tiene un componente fisico");
+		physicDynamic->setPhysicPosition(myPosition, false);
+
+		// Activamos los gráficos del escudo
+		CGraphics* shieldGraphics = _screamerShield->getComponent<CGraphics>("CGraphics");
+		assert(shieldGraphics && "Error: La entidad ScreamerShield no tiene un componente CGraphics");
+		shieldGraphics->setVisible(true);
 	}
 
 } // namespace Logic

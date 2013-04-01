@@ -108,6 +108,7 @@ namespace Logic {
 
 	private:
 
+		void refreshShieldPosition();
 
 		/** true si la habilidad primaria está siendo usada. */
 		bool _primarySkillIsActive;
