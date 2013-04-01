@@ -21,8 +21,8 @@ Contiene la implementación del estado de juego.
 #include "Logic/Maps/EntityFactory.h"
 #include "Logic/Maps/Map.h"
 
-#include "GUI/Server.h"
-#include "GUI/PlayerController.h"
+#include "Input/Server.h"
+#include "Input\PlayerController.h"
 
 #include "Physics/Server.h"
 #include "Audio\Server.h"
@@ -104,8 +104,7 @@ namespace Application {
 		Logic::CServer::getSingletonPtr()->activateMap();
 
 		// Queremos que el GUI maneje al jugador.
-		GUI::CServer::getSingletonPtr()->getPlayerController()->activate();
-
+		Input::CServer::getSingletonPtr()->getPlayerController()->activate();
 		Logic::CEntityFactory::getSingletonPtr()->dynamicCreation(true);
 
 		//La picadura no te escapas
@@ -137,8 +136,7 @@ namespace Application {
 
 		// Desactivamos la clase que procesa eventos de entrada para 
 		// controlar al jugador.
-		GUI::CServer::getSingletonPtr()->getPlayerController()->deactivate();
-		
+		Input::CServer::getSingletonPtr()->getPlayerController()->deactivate();
 		// Desactivamos el mapa de la partida.
 		Logic::CServer::getSingletonPtr()->deactivateMap();
 		
@@ -171,7 +169,7 @@ namespace Application {
 
 	//--------------------------------------------------------
 
-	bool CGameState::keyPressed(GUI::TKey key)
+	bool CGameState::keyPressed(Input::TKey key)
 	{
 		return false;
 
@@ -179,11 +177,11 @@ namespace Application {
 
 	//--------------------------------------------------------
 
-	bool CGameState::keyReleased(GUI::TKey key)
+	bool CGameState::keyReleased(Input::TKey key)
 	{
 		switch(key.keyId)
 		{
-		case GUI::Key::ESCAPE:
+		case Input::Key::ESCAPE:
 			_app->setState("menu");
 			break;
 		default:
@@ -195,7 +193,7 @@ namespace Application {
 
 	//--------------------------------------------------------
 	
-	bool CGameState::mouseMoved(const GUI::CMouseState &mouseState)
+	bool CGameState::mouseMoved(const Input::CMouseState &mouseState)
 	{
 		return false;
 
@@ -203,7 +201,7 @@ namespace Application {
 
 	//--------------------------------------------------------
 		
-	bool CGameState::mousePressed(const GUI::CMouseState &mouseState)
+	bool CGameState::mousePressed(const Input::CMouseState &mouseState)
 	{
 		return false;
 
@@ -212,7 +210,7 @@ namespace Application {
 	//--------------------------------------------------------
 
 
-	bool CGameState::mouseReleased(const GUI::CMouseState &mouseState)
+	bool CGameState::mouseReleased(const Input::CMouseState &mouseState)
 	{
 		return false;
 

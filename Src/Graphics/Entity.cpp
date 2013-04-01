@@ -86,7 +86,6 @@ namespace Graphics
 			unload();
 			_scene = 0;
 		}
-
 		return true;
 
 	} // deattachFromScene

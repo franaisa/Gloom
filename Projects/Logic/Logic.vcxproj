@@ -307,6 +307,9 @@
       <Project>{215aa6ad-aae6-4e45-9adc-f075f9ee9966}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
+    <ProjectReference Include="..\Input\Input.vcxproj">
+      <Project>{6a071cda-f5f7-4155-9072-6fdabbb3029c}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\Map\Map.vcxproj">
       <Project>{599f27dc-a593-4e7c-a461-d7b3198118b0}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
