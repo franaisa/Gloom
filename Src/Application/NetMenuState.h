@@ -19,6 +19,8 @@ Contiene la declaración del estado de menú.
 
 #include "ApplicationState.h"
 
+#include "Hikari.h"
+
 // Predeclaración de clases para ahorrar tiempo de compilación
 namespace Application 
 {
@@ -114,7 +116,7 @@ namespace Application
 		@return true si el evento ha sido procesado. En este caso 
 		el gestor no llamará a otros listeners.
 		*/
-		virtual bool keyPressed(GUI::TKey key);
+		virtual bool keyPressed(Input::TKey key);
 		
 		/**
 		Método que será invocado siempre que se termine la pulsación
@@ -127,7 +129,7 @@ namespace Application
 		@return true si el evento ha sido procesado. En este caso 
 		el gestor no llamará a otros listeners.
 		*/
-		virtual bool keyReleased(GUI::TKey key);
+		virtual bool keyReleased(Input::TKey key);
 
 		// Métodos de CMouseListener
 		
@@ -139,7 +141,7 @@ namespace Application
 		@return true si el evento ha sido procesado. En este caso 
 		el gestor no llamará a otros listeners.
 		*/
-		virtual bool mouseMoved(const GUI::CMouseState &mouseState);
+		virtual bool mouseMoved(const Input::CMouseState &mouseState);
 		
 		/**
 		Método que será invocado siempre que se pulse un botón. La
@@ -149,7 +151,7 @@ namespace Application
 		@return true si el evento ha sido procesado. En este caso 
 		el gestor no llamará a otros listeners.
 		*/
-		virtual bool mousePressed(const GUI::CMouseState &mouseState);
+		virtual bool mousePressed(const Input::CMouseState &mouseState);
 
 		/**
 		Método que será invocado siempre que se termine la pulsación
@@ -160,32 +162,34 @@ namespace Application
 		@return true si el evento ha sido procesado. En este caso 
 		el gestor no llamará a otros listeners. 
 		*/
-		virtual bool mouseReleased(const GUI::CMouseState &mouseState);
+		virtual bool mouseReleased(const Input::CMouseState &mouseState);
 
 	private:
 
 		/**
-		Ventana CEGUI que muestra el menú.
+		Ventana GUI que muestra el menú.
 		*/
 		CEGUI::Window* _menuWindow;
+
+		Hikari::FlashControl* _menu;
 		
 		/**
 		Función que se quiere realizar cuando se pulse el botón server.
 		Simplemente cambia al estado de lobby server.
 		*/
-		bool serverReleased(const CEGUI::EventArgs& e);
+		Hikari::FlashValue serverReleased(Hikari::FlashControl* caller, const Hikari::Arguments& args);
 
 		/**
 		Función que se quiere realizar cuando se pulse el botón client.
 		Simplemente cambia al estado de lobby client.
 		*/
-		bool clientReleased(const CEGUI::EventArgs& e);
+		Hikari::FlashValue clientReleased(Hikari::FlashControl* caller, const Hikari::Arguments& args);
 
 		/**
 		Función que se quiere realizar cuando se pulse el botón back.
 		Simplemente cambia al estado de menu.
 		*/
-		bool backReleased(const CEGUI::EventArgs& e);
+		Hikari::FlashValue backReleased(Hikari::FlashControl* caller, const Hikari::Arguments& args);
 
 	}; // CMenuState
 

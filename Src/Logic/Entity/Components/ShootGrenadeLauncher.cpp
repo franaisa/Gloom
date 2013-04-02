@@ -44,8 +44,14 @@ namespace Logic {
 	void CShootGrenadeLauncher::fireWeapon() {
 		// Obtenemos la informacion asociada al arquetipo de la granada
 		Map::CEntity *entityInfo = CEntityFactory::getSingletonPtr()->getInfo("Grenade");
+
+		// Spawneamos la granada justo delante del jugador y a la altura de disparo que corresponda
+		Vector3 entityPosition = _entity->getPosition();
+		Vector3 myPosition = entityPosition + ( Math::getDirection( _entity->getOrientation() )* (_capsuleRadius) );
+		myPosition.y = entityPosition.y + _heightShoot;
+		
 		// Creamos la entidad y la activamos
-		CEntity* grenade = CEntityFactory::getSingletonPtr()->createEntity(entityInfo, Logic::CServer::getSingletonPtr()->getMap());
+		CEntity* grenade = CEntityFactory::getSingletonPtr()->createEntity(entityInfo, Logic::CServer::getSingletonPtr()->getMap(), myPosition);
 		assert(grenade != NULL);
 		grenade->activate();
 
@@ -54,29 +60,18 @@ namespace Logic {
 		assert(comp != NULL);
 		comp->setOwner(_entity);
 
-		// Spawneamos la granada justo delante del jugador y a la altura de disparo que corresponda
-		Vector3 entityPosition = _entity->getPosition();
-		Vector3 myPosition = entityPosition + ( Math::getDirection( _entity->getOrientation() ) * _capsuleRadius );
-		myPosition.y = entityPosition.y + _heightShoot;
-
 		// Mensaje para situar el collider fisico de la granada en la posicion de disparo.
 		Logic::CMessageSetPhysicPosition* msg = new Logic::CMessageSetPhysicPosition();
 		msg->setPosition(myPosition);
 		msg->setMakeConversion(false);
 		grenade->emitMessage(msg);
 		
-		if(Net::CManager::getSingletonPtr()->imServer())
-			Logic::CGameNetMsgManager::getSingletonPtr()->sendCreateEntity(grenade->getEntityID());
-
 		// Mandar mensaje add force
 		Logic::CMessageAddForcePhysics* forceMsg = new Logic::CMessageAddForcePhysics();
 		forceMsg->setForce( (Math::getDirection( _entity->getOrientation() ) * _shootForce), Physics::ForceMode::eIMPULSE );
 		forceMsg->setGravity(true);
 		grenade->emitMessage(forceMsg);
 
-		//enviamos mensaje por red para que se cree la entidad
-		//NOTA: pregunto por si es el servidor, no vaya a ser que el single player se suicide
-		
 	}
 
 } // namespace Logic

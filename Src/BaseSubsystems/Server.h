@@ -44,6 +44,10 @@ namespace CEGUI
 	class System;
 }
 
+namespace Hikari{
+	class HikariManager;
+}
+
 namespace BaseSubsystems
 {
 	class WindowEventListener;
@@ -183,6 +187,8 @@ namespace BaseSubsystems
 		CEGUI.
 		*/
 		CEGUI::System *getGUISystem() {return _GUISystem;}
+
+		Hikari::HikariManager *getHikari() {return _hikariMgr;}
 
 	protected:
 
@@ -327,6 +333,11 @@ namespace BaseSubsystems
 		Sistema de la interfaz gráfica de usuario CEGUI.
 		*/
 		CEGUI::System *_GUISystem;
+
+		/**
+		Sistema de la interfaz gráfica de usuario de Hikari
+		*/
+		Hikari::HikariManager* _hikariMgr;
 
 	}; // class CServer
 

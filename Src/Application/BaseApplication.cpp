@@ -219,7 +219,7 @@ namespace Application {
 
 	//--------------------------------------------------------
 
-	bool CBaseApplication::keyPressed(GUI::TKey key)
+	bool CBaseApplication::keyPressed(Input::TKey key)
 	{
 		// Avisamos al estado actual de la pulsación.
 		if (_currentState)
@@ -231,7 +231,7 @@ namespace Application {
 
 	//--------------------------------------------------------
 
-	bool CBaseApplication::keyReleased(GUI::TKey key)
+	bool CBaseApplication::keyReleased(Input::TKey key)
 	{
 		// Avisamos al estado actual del fin de la pulsación.
 		if (_currentState)
@@ -243,7 +243,7 @@ namespace Application {
 
 	//--------------------------------------------------------
 	
-	bool CBaseApplication::mouseMoved(const GUI::CMouseState &mouseState)
+	bool CBaseApplication::mouseMoved(const Input::CMouseState &mouseState)
 	{
 		// Avisamos al estado actual del movimiento.
 		if (_currentState)
@@ -255,7 +255,7 @@ namespace Application {
 
 	//--------------------------------------------------------
 		
-	bool CBaseApplication::mousePressed(const GUI::CMouseState &mouseState)
+	bool CBaseApplication::mousePressed(const Input::CMouseState &mouseState)
 	{
 		// Avisamos al estado actual de la pulsación.
 		if (_currentState)
@@ -268,7 +268,7 @@ namespace Application {
 	//--------------------------------------------------------
 
 
-	bool CBaseApplication::mouseReleased(const GUI::CMouseState &mouseState)
+	bool CBaseApplication::mouseReleased(const Input::CMouseState &mouseState)
 	{
 		// Avisamos al estado actual del fin de la pulsación.
 		if (_currentState)
