@@ -101,7 +101,8 @@ namespace Logic {
 				}
 				else {
 					// El screamer explota
-					std::cout << "Exploto2" << std::endl;
+
+					_primarySkillIsActive = false;
 
 					// Destruir o desactivar el escudo
 					deactivateScreamerShield();
@@ -188,10 +189,6 @@ namespace Logic {
 
 	void CScreamer::absorbDamage(float damage) {
 		_currentScreamerShield -= damage;
-
-		if(_currentScreamerShield <= 0) {
-			std::cout << "Exploto" << std::endl;
-		}
 	}
 
 	//__________________________________________________________________

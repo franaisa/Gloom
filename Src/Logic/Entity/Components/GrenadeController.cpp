@@ -30,6 +30,12 @@
 namespace Logic {
 	
 	IMP_FACTORY(CGrenadeController);
+
+	//________________________________________________________________________
+
+	CGrenadeController::CGrenadeController() : _timer(0) { 
+		// Nada que hacer
+	}
 	
 	//________________________________________________________________________
 
@@ -39,21 +45,12 @@ namespace Logic {
 		// Actualizamos el timer. Si se ha cumplido el tiempo limite de explosion
 		// eliminamos la entidad granada y creamos la entidad explosion.
 		_timer += msecs;
-		if(_timer > _explotionTime || _enemyHit) {
+		if(_timer > _explotionTime) {
 			// Eliminamos la entidad en diferido
 			CEntityFactory::getSingletonPtr()->deferredDeleteEntity(_entity);
 			Logic::CGameNetMsgManager::getSingletonPtr()->sendDestroyEntity(_entity->getEntityID());
 			// Creamos la explosion
 			createExplotion();
-
-			//Sonido de explosion
-			Logic::CMessageAudio *maudio=new Logic::CMessageAudio();
-			maudio->setRuta(_audioExplotion);
-			maudio->setId("audioExplotion");
-			maudio->setPosition(_entity->getPosition());
-			maudio->setNotIfPlay(false);
-			maudio->setIsPlayer(false);
-			_entity->emitMessage(maudio);
 		}
 	} // tick
 
@@ -79,20 +76,43 @@ namespace Logic {
 	//________________________________________________________________________
 
 	bool CGrenadeController::accept(CMessage *message) {
-		return (message->getMessageType() == Message::CONTACT_ENTER);
+		return message->getMessageType() == Message::CONTACT_ENTER;
 	} // accept
 	
 	//________________________________________________________________________
 
 	void CGrenadeController::process(CMessage *message) {
-		switch(message->getMessageType()) {
-		case Message::CONTACT_ENTER:
-			// Las granadas solo notifican de contacto contra players y por lo
-			// tanto al recibir este mensaje signfica que ha impactado contra
-			// otro player
-			_enemyHit = true;
+		switch( message->getMessageType() ) {
+			case Message::CONTACT_ENTER: {
+				CMessageContactEnter* contactMsg = static_cast<CMessageContactEnter*>(message);
+				Logic::CEntity* playerHit = contactMsg->getEntity();
+			
+				// Si es el escudo del screamer mandar directamente esos daños a la
+				// entidad contra la que hemos golpeado (el escudo), sino, crear explosion
+				if(playerHit->getType() == "ScreamerShield") {
+					// Mandar mensaje de daño
+					// Emitimos el mensaje de daño
+					CMessageDamaged* dmgMsg = new CMessageDamaged();
+					dmgMsg->setDamage(_explotionDamage);
+					dmgMsg->setEnemy(_owner); // No tiene importancia en este caso
+					playerHit->emitMessage(dmgMsg);
 
-			break;
+					// Crear efecto y sonido de absorcion
+
+					// Eliminamos la entidad en diferido
+					CEntityFactory::getSingletonPtr()->deferredDeleteEntity(_entity);
+					Logic::CGameNetMsgManager::getSingletonPtr()->sendDestroyEntity( _entity->getEntityID() );
+				}
+				else {
+					// Eliminamos la entidad en diferido
+					CEntityFactory::getSingletonPtr()->deferredDeleteEntity(_entity);
+					Logic::CGameNetMsgManager::getSingletonPtr()->sendDestroyEntity( _entity->getEntityID() );
+					// Creamos la explosion
+					createExplotion();
+				}
+
+				break;
+			}
 		}
 	} // process
 
@@ -113,7 +133,8 @@ namespace Logic {
 		// Además aplicamos un desplazamiento al jugador 
 		for(int i = 0; i < nbHits; ++i) {
 			// Si la entidad golpeada es valida
-			if(entitiesHit[i] != NULL) {
+			// y no se trata del escudo
+			if(entitiesHit[i] != NULL && entitiesHit[i]->getType() != "ScreamerShield") {
 				// Emitimos el mensaje de daño
 				CMessageDamaged* msg = new CMessageDamaged();
 				msg->setDamage(_explotionDamage);
@@ -150,6 +171,15 @@ namespace Logic {
 		assert(graphicComponent != NULL && "No se puede colocar la explosion porque no tiene componente grafico");
 		graphicComponent->setTransform( _entity->getTransform() );
 		*/
+
+		//Sonido de explosion
+		Logic::CMessageAudio *maudio=new Logic::CMessageAudio();
+		maudio->setRuta(_audioExplotion);
+		maudio->setId("audioExplotion");
+		maudio->setPosition(_entity->getPosition());
+		maudio->setNotIfPlay(false);
+		maudio->setIsPlayer(false);
+		_entity->emitMessage(maudio);
 
 		Graphics::CParticle *particle = Graphics::CServer::getSingletonPtr()->getActiveScene()->createParticle(_entity->getName(),"ExplosionParticle", _entity->getPosition());
 	} // createExplotion

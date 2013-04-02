@@ -73,7 +73,6 @@ namespace Logic {
 		IComponent::activate();
 
 		_reducedDamageAbsorption = 0;
-		_owner = NULL;
 	}
 
 	//________________________________________________________________________

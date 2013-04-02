@@ -267,6 +267,8 @@ namespace Logic {
 		hudLifeMsg->setLife(_currentLife);
 		_entity->emitMessage(hudLifeMsg);
 
+		std::cout << "Me quedan " << _currentLife << " puntos de salud" << std::endl;
+
 		return _currentLife == 0;
 	}
 
