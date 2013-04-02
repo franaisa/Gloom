@@ -30,13 +30,10 @@
 namespace Logic {
 	
 	IMP_FACTORY(CRocketController);
-	
-	//________________________________________________________________________
 
-	void CRocketController::tick(unsigned int msecs) {
-		IComponent::tick(msecs);
-
-	} // tick
+	CRocketController::CRocketController() : _enemyHit(false) { 
+		// Nada que hacer
+	}
 
 	//________________________________________________________________________
 
@@ -53,34 +50,56 @@ namespace Logic {
 	//________________________________________________________________________
 
 	bool CRocketController::accept(CMessage *message) {
-		return (message->getMessageType() == Message::CONTACT_ENTER);
+		return message->getMessageType() == Message::CONTACT_ENTER;
 	} // accept
 	
 	//________________________________________________________________________
 
 	void CRocketController::process(CMessage *message) {
 		switch(message->getMessageType()) {
-		case Message::CONTACT_ENTER:
-			// Los cohetes solos se destruyen al colisionar
-			// Este mensaje deberia recibirse al tocar cualquier otro
-			// rigidbody del mundo
+			case Message::CONTACT_ENTER: {
+				CMessageContactEnter* contactMsg = static_cast<CMessageContactEnter*>(message);
+				Logic::CEntity* playerHit = contactMsg->getEntity();
 
-			// Eliminamos la entidad en diferido
-			CEntityFactory::getSingletonPtr()->deferredDeleteEntity(_entity);
-			Logic::CGameNetMsgManager::getSingletonPtr()->sendDestroyEntity(_entity->getEntityID());
-			// Creamos la explosion
-			createExplotion();
+				// Los cohetes solos se destruyen al colisionar
+				// Este mensaje deberia recibirse al tocar cualquier otro
+				// rigidbody del mundo
 
-			//Sonido de explosion
-			Logic::CMessageAudio *maudio=new Logic::CMessageAudio();
-			maudio->setRuta(_audioExplotion);
-			maudio->setId("audioExplotion");
-			maudio->setPosition(_entity->getPosition());
-			maudio->setNotIfPlay(false);
-			maudio->setIsPlayer(false);
-			_entity->emitMessage(maudio);
+				// Si es el escudo del screamer mandar directamente esos daños a la
+				// entidad contra la que hemos golpeado (el escudo), sino, crear explosion
+				if(playerHit->getType() == "ScreamerShield") {
+					// Mandar mensaje de daño
+					// Emitimos el mensaje de daño
+					CMessageDamaged* dmgMsg = new CMessageDamaged();
+					dmgMsg->setDamage(_explotionDamage);
+					dmgMsg->setEnemy(_owner); // No tiene importancia en este caso
+					playerHit->emitMessage(dmgMsg);
 
-			break;
+					// Crear efecto y sonido de absorcion
+
+					// Eliminamos la entidad en diferido
+					CEntityFactory::getSingletonPtr()->deferredDeleteEntity(_entity);
+					Logic::CGameNetMsgManager::getSingletonPtr()->sendDestroyEntity( _entity->getEntityID() );
+				}
+				else {
+					// Eliminamos la entidad en diferido
+					CEntityFactory::getSingletonPtr()->deferredDeleteEntity(_entity);
+					Logic::CGameNetMsgManager::getSingletonPtr()->sendDestroyEntity(_entity->getEntityID());
+					// Creamos la explosion
+					createExplotion();
+
+					//Sonido de explosion
+					Logic::CMessageAudio *maudio=new Logic::CMessageAudio();
+					maudio->setRuta(_audioExplotion);
+					maudio->setId("audioExplotion");
+					maudio->setPosition(_entity->getPosition());
+					maudio->setNotIfPlay(false);
+					maudio->setIsPlayer(false);
+					_entity->emitMessage(maudio);
+				}
+
+				break;
+			}
 		}
 	} // process
 

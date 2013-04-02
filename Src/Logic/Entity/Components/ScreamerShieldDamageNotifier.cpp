@@ -69,6 +69,14 @@ namespace Logic {
 
 	//________________________________________________________________________
 
+	void CScreamerShieldDamageNotifier::activate() {
+		IComponent::activate();
+
+		_reducedDamageAbsorption = 0;
+	}
+
+	//________________________________________________________________________
+
 	void CScreamerShieldDamageNotifier::damaged(int damage, CEntity* enemy) {
 		// Si hay una reduccion de daño activa, reducimos el daño aplicado
 		damage -= damage * _reducedDamageAbsorption;

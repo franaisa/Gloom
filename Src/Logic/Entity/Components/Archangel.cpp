@@ -76,6 +76,14 @@ namespace Logic {
 		}
 	}
 
+	//________________________________________________________________________
+
+	void CArchangel::activate() {
+		CPlayerClass::activate();
+
+		_inmuneTimer = 0;
+	}
+
 	//__________________________________________________________________
 
 	void CArchangel::primarySkill() {

@@ -74,6 +74,16 @@ namespace Logic {
 		*/
 		virtual void process(CMessage* message);
 
+		//__________________________________________________________________
+
+		/**
+		Metodo que se llama al activar el componente.
+		Resetea el valor del porcentaje de daños absorbido. Se entiende que
+		se llama a este metodo cuando la entidad muere y vuelve a ser
+		despertada.
+		*/
+		virtual void activate();
+
 		
 		// =======================================================================
 		//                            METODOS PROPIOS

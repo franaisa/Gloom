@@ -73,6 +73,14 @@ namespace Logic {
 		}
 	}
 
+	//________________________________________________________________________
+
+	void CShadow::activate() {
+		CPlayerClass::activate();
+
+		_invisibilityTimer = 0;
+	}
+
 	//__________________________________________________________________
 
 	void CShadow::primarySkill() {

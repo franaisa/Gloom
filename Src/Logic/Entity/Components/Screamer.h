@@ -59,7 +59,17 @@ namespace Logic {
 	
 
 		/**
-		De momento no lee nada nuevo, tan solo llama a la clase padre.
+		Inicialización del componente a partir de la información extraida de la entidad
+		leida del mapa:
+		<ul>
+			<li><strong>screamerShieldThreshold:</strong> Daño máximo que aguanta el escudo del Screamer. </li>
+			<li><strong>screamerShieldDamageTimeStep:</strong> Cada cuanto se baja el escudo cuando está activado. </li>
+			<li><strong>screamerShieldDamageOverTime:</strong> Cuánto daño se le quita al escudo en cada iteración. </li>
+			<li><strong>screamerShieldRecoveryTimeStep:</strong> Cada cuanto se recupera el escudo cuando está en recarga. </li>
+			<li><strong>screamerShieldRecoveryOverTime:</strong> Cuánto se recupera el escudo en cada iteración. </li>
+			<li><strong>screamerExplotionDamage:</strong> Daño de la explosión al explotar el Screamer. </li>
+			<li><strong>screamerExplotionRadius:</strong> Radio de la explosión al explotar el Screamer. </li>
+		</ul>
 
 		@param entity Entidad a la que pertenece el componente.
 		@param map Mapa Lógico en el que se registrará el objeto.
@@ -76,6 +86,14 @@ namespace Logic {
 		@param msecs Milisegundos transcurridos desde el último tick.
 		*/
 		virtual void tick(unsigned int msecs);
+
+		//__________________________________________________________________
+
+		/**
+		Metodo que se llama al activar el componente.
+		Restea los campos de la clase a los valores por defecto.
+		*/
+		virtual void activate();
 
 		
 		// =======================================================================
@@ -118,8 +136,34 @@ namespace Logic {
 
 	private:
 
+
+		// =======================================================================
+		//                          MÉTODOS PRIVADOS
+		// =======================================================================
+
+
+		/**
+		Desactiva el shader del escudo y a la entidad.
+		*/
+		void deactivateScreamerShield();
+
+		//__________________________________________________________________
+
+		/**
+		Crea una explosion mediante overlap.
+		*/
+		void createExplotion();
+
+		//__________________________________________________________________
+
 		/** Recoloca el escudo del screamer en la posición del punto de mira. */
 		void refreshShieldPosition();
+
+
+		// =======================================================================
+		//                          MIEMBROS PRIVADOS
+		// =======================================================================
+
 
 		/** true si la habilidad primaria está siendo usada. */
 		bool _primarySkillIsActive;
@@ -147,6 +191,12 @@ namespace Logic {
 
 		/** Cronometro para calcular cada cuanto hay que subirle los puntos de escudo al Screamer. */
 		float _screamerShieldRecoveryTimer;
+
+		/** Daño de la explosión que provoca el screamer al soportar más daños de la cuenta con el escudo. */
+		float _screamerExplotionDamage;
+
+		/** Radio de la explosión si el Screamer explota. */
+		float _screamerExplotionRadius;
 
 		/** Puntero a la entidad que representa al escudo generado por la habilidad primaria. */
 		Logic::CEntity* _screamerShield;

@@ -77,6 +77,8 @@ Map = {
 		screamerShieldDamageOverTime = 5,
 		screamerShieldRecoveryTimeStep = 0.5,
 		screamerShieldRecoveryOverTime = 2,
+		screamerExplotionDamage = 300,
+		screamerExplotionRadius = 6,
 		
 		houndPrimarySkillCooldown = 1,
 		houndSecondarySkillCooldown = 1,
@@ -262,6 +264,8 @@ Map = {
 		screamerShieldDamageOverTime = 5,
 		screamerShieldRecoveryTimeStep = 0.5,
 		screamerShieldRecoveryOverTime = 2,
+		screamerExplotionDamage = 300,
+		screamerExplotionRadius = 6,
 		
 		houndPrimarySkillCooldown = 10,
 		houndSecondarySkillCooldown = 1,

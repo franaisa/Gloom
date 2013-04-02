@@ -146,11 +146,15 @@ namespace Logic {
 		//__________________________________________________________________
 
 		/**
-		Extiende el comportamiento de la clase padre ya que cuando se desactiva
+		Extiende el comportamiento de la clase padre ya que cuando se activa
 		este componente puede ser porque el jugador haya cambiado de clase
 		por lo que los timers de los cooldowns tienen que volver a 0.
+
+		Además, cuando el personaje muere tambien se reactiva este componente
+		por lo que las clases hijas deberán sobreescribir este método para
+		resetear todos sus campos.
 		*/
-		virtual void deactivate();
+		virtual void activate();
 
 		
 		// =======================================================================

@@ -141,8 +141,8 @@ namespace Logic {
 
 	//__________________________________________________________________
 
-	void CPlayerClass::deactivate() {
-		IComponent::deactivate();
+	void CPlayerClass::activate() {
+		IComponent::activate();
 
 		// Restea el valor de los timers
 		_primarySkillTimer = _secondarySkillTimer = 0;

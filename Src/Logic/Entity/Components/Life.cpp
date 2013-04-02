@@ -223,6 +223,13 @@ namespace Logic {
 
 	//________________________________________________________________________
 
+	void CLife::suicide() {
+		triggerDeathState(_entity);
+		triggerDeathSound();
+	}
+
+	//________________________________________________________________________
+
 	bool CLife::updateLife(int damage) {
 		// Si hay una reduccion de daño activa, reducimos el daño aplicado
 		damage -= damage * _reducedDamageAbsorption;
@@ -259,6 +266,8 @@ namespace Logic {
 		Logic::CMessageHudLife* hudLifeMsg = new Logic::CMessageHudLife();
 		hudLifeMsg->setLife(_currentLife);
 		_entity->emitMessage(hudLifeMsg);
+
+		std::cout << "Me quedan " << _currentLife << " puntos de salud" << std::endl;
 
 		return _currentLife == 0;
 	}
