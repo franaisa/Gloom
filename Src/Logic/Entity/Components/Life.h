@@ -169,6 +169,13 @@ namespace Logic {
 		*/
 		inline void reducedDamageAbsorption(float percentage);
 
+		//__________________________________________________________________
+
+		/**
+		El personaje muere al ejecutarse este método independientemente de
+		la situación o los powerups que tenga.
+		*/
+		void suicide();
 
 	private:
 

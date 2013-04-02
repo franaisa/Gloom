@@ -16,10 +16,21 @@ implementa las habilidades del personaje
 #include "ScreamerShieldDamageNotifier.h"
 #include "PhysicDynamicEntity.h"
 #include "Graphics.h"
+#include "Life.h"
+
 #include "Logic/Maps/EntityFactory.h"
 #include "Logic/Entity/Entity.h"
 #include "Logic/Server.h"
 #include "Logic/Messages/MessageSetPhysicPosition.h"
+#include "Logic/Messages/MessageAddForcePlayer.h"
+#include "Logic/Messages/MessageDamaged.h"
+
+#include "Physics/Server.h"
+#include "Physics/GeometryFactory.h"
+
+#include "Graphics/Server.h"
+#include "Graphics/Particle.h"
+#include "Graphics/Scene.h"
 
 namespace Logic {
 
@@ -52,12 +63,16 @@ namespace Logic {
 		assert( entityInfo->hasAttribute("screamerShieldDamageOverTime") );
 		assert( entityInfo->hasAttribute("screamerShieldRecoveryTimeStep") );
 		assert( entityInfo->hasAttribute("screamerShieldRecoveryOverTime") );
+		assert( entityInfo->hasAttribute("screamerExplotionDamage") );
+		assert( entityInfo->hasAttribute("screamerExplotionRadius") );
 
 		_currentScreamerShield = _screamerShieldThreshold = entityInfo->getFloatAttribute("screamerShieldThreshold");
 		_screamerShieldDamageTimeStep = entityInfo->getFloatAttribute("screamerShieldDamageTimeStep");
 		_screamerShieldDamageOverTime = entityInfo->getFloatAttribute("screamerShieldDamageOverTime");
 		_screamerShieldRecoveryTimeStep = entityInfo->getFloatAttribute("screamerShieldRecoveryTimeStep");
 		_screamerShieldRecoveryOverTime = entityInfo->getFloatAttribute("screamerShieldRecoveryOverTime");
+		_screamerExplotionDamage = entityInfo->getFloatAttribute("screamerExplotionDamage");
+		_screamerExplotionRadius = entityInfo->getFloatAttribute("screamerExplotionRadius");
 	} // spawn
 
 	//__________________________________________________________________
@@ -82,9 +97,18 @@ namespace Logic {
 				}
 				else {
 					// El screamer explota
-					std::cout << "Exploto" << std::endl;
+					std::cout << "Exploto2" << std::endl;
 
 					// Destruir o desactivar el escudo
+					deactivateScreamerShield();
+
+					// Crear explosión
+					createExplotion();
+
+					// Matar a mi propia entidad
+					/*CLife* lifeComponent = _entity->getComponent<CLife>("CLife");
+					assert(lifeComponent && "Error: El jugador no tiene un componente CLife");
+					lifeComponent->suicide();*/
 				}
 			}
 		}
@@ -146,10 +170,7 @@ namespace Logic {
 		_primarySkillIsActive = false;
 		
 		// Desactivamos los gráficos y la entidad
-		/*CGraphics* shieldGraphics = _screamerShield->getComponent<CGraphics>("CGraphics");
-		assert(shieldGraphics && "Error: La entidad ScreamerShield no tiene un componente CGraphics");
-		shieldGraphics->setVisible(false);
-		_screamerShield->deactivate();*/
+		deactivateScreamerShield();
 	}
 
 	//__________________________________________________________________
@@ -179,6 +200,59 @@ namespace Logic {
 		CGraphics* shieldGraphics = _screamerShield->getComponent<CGraphics>("CGraphics");
 		assert(shieldGraphics && "Error: La entidad ScreamerShield no tiene un componente CGraphics");
 		shieldGraphics->setVisible(true);
+	}
+
+	//__________________________________________________________________
+
+	void CScreamer::deactivateScreamerShield() {
+		CGraphics* shieldGraphics = _screamerShield->getComponent<CGraphics>("CGraphics");
+		assert(shieldGraphics && "Error: La entidad ScreamerShield no tiene un componente CGraphics");
+		shieldGraphics->setVisible(false);
+		_screamerShield->deactivate();
+	}
+
+	//__________________________________________________________________
+
+	void CScreamer::createExplotion() {
+		// EntitiesHit sera el buffer que contendra la lista de entidades que ha colisionado
+		// con el overlap
+		CEntity** entitiesHit = NULL;
+		int nbHits = 0;
+
+		// Hacemos una query de overlap con la geometria de una esfera en la posicion 
+		// en la que se encuentra la granada con el radio que se indique de explosion
+		Physics::SphereGeometry explotionGeom = Physics::CGeometryFactory::getSingletonPtr()->createSphere(_screamerExplotionRadius);
+		Physics::CServer::getSingletonPtr()->overlapMultiple(explotionGeom, _entity->getPosition(), entitiesHit, nbHits);
+
+		// Mandamos el mensaje de daño a cada una de las entidades que hayamos golpeado
+		// Además aplicamos un desplazamiento al jugador 
+		for(int i = 0; i < nbHits; ++i) {
+			// Si la entidad golpeada es valida
+			if(entitiesHit[i] != NULL) {
+				// Emitimos el mensaje de daño
+				CMessageDamaged* dmgMsg = new CMessageDamaged;
+				dmgMsg->setDamage(_screamerExplotionDamage);
+				dmgMsg->setEnemy(_entity);
+				entitiesHit[i]->emitMessage(dmgMsg);
+				
+				// Emitimos el mensaje de desplazamiento por daños
+				CMessageAddForcePlayer* forceMsg = new CMessageAddForcePlayer;
+				// Seteamos la fuerza y la velocidad
+				forceMsg->setPower(0.1f);
+				forceMsg->setVelocity(0.12f);
+				// Seteamos el vector director del desplazamiento
+				Vector3 impulseDirection = entitiesHit[i]->getPosition() - _entity->getPosition();
+				impulseDirection.normalise();
+				forceMsg->setDirection(impulseDirection);
+				entitiesHit[i]->emitMessage(forceMsg);
+			}
+		}
+
+		// Limpiamos el buffer si es necesario
+		if(nbHits > 0) delete [] entitiesHit;
+
+		Graphics::CParticle *particle = Graphics::CServer::getSingletonPtr()->
+			getActiveScene()->createParticle(_entity->getName(),"ExplosionParticle", _entity->getPosition());
 	}
 
 } // namespace Logic

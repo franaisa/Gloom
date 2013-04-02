@@ -118,6 +118,12 @@ namespace Logic {
 
 	private:
 
+
+		void deactivateScreamerShield();
+
+		void createExplotion();
+
+
 		/** Recoloca el escudo del screamer en la posición del punto de mira. */
 		void refreshShieldPosition();
 
@@ -147,6 +153,12 @@ namespace Logic {
 
 		/** Cronometro para calcular cada cuanto hay que subirle los puntos de escudo al Screamer. */
 		float _screamerShieldRecoveryTimer;
+
+		/** Daño de la explosión que provoca el screamer al soportar más daños de la cuenta con el escudo. */
+		float _screamerExplotionDamage;
+
+		/** Radio de la explosión si el Screamer explota. */
+		float _screamerExplotionRadius;
 
 		/** Puntero a la entidad que representa al escudo generado por la habilidad primaria. */
 		Logic::CEntity* _screamerShield;

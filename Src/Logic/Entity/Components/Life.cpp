@@ -223,6 +223,13 @@ namespace Logic {
 
 	//________________________________________________________________________
 
+	void CLife::suicide() {
+		triggerDeathState(_entity);
+		triggerDeathSound();
+	}
+
+	//________________________________________________________________________
+
 	bool CLife::updateLife(int damage) {
 		// Si hay una reduccion de daño activa, reducimos el daño aplicado
 		damage -= damage * _reducedDamageAbsorption;
