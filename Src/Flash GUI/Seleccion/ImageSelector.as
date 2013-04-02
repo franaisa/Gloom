@@ -1,6 +1,8 @@
 package 
 {
 	import flash.display.MovieClip;
+	import flash.events.MouseEvent;
+	import flash.external.ExternalInterface;
 	
 	/**
 	 * ...
@@ -11,7 +13,11 @@ package
 		
 		public function ImageSelector() 
 		{
-			
+			gotoAndPlay("none");
+		}
+		
+		public function putImage(image:String):void {
+			gotoAndPlay(image);
 		}
 		
 	}
