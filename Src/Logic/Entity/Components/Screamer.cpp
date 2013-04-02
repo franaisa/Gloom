@@ -12,12 +12,14 @@ implementa las habilidades del personaje
 @date Marzo, 2013
 */
 
+// Componentes
 #include "Screamer.h"
 #include "ScreamerShieldDamageNotifier.h"
 #include "PhysicDynamicEntity.h"
 #include "Graphics.h"
 #include "Life.h"
 
+// Logica
 #include "Logic/Maps/EntityFactory.h"
 #include "Logic/Entity/Entity.h"
 #include "Logic/Server.h"
@@ -25,9 +27,11 @@ implementa las habilidades del personaje
 #include "Logic/Messages/MessageAddForcePlayer.h"
 #include "Logic/Messages/MessageDamaged.h"
 
+// Física
 #include "Physics/Server.h"
 #include "Physics/GeometryFactory.h"
 
+// Gráficos
 #include "Graphics/Server.h"
 #include "Graphics/Particle.h"
 #include "Graphics/Scene.h"
@@ -93,7 +97,7 @@ namespace Logic {
 
 				if(_currentScreamerShield > 0) {
 					// Colocamos el escudo delante nuestra
-					//refreshShieldPosition();
+					refreshShieldPosition();
 				}
 				else {
 					// El screamer explota
@@ -106,9 +110,9 @@ namespace Logic {
 					createExplotion();
 
 					// Matar a mi propia entidad
-					/*CLife* lifeComponent = _entity->getComponent<CLife>("CLife");
+					CLife* lifeComponent = _entity->getComponent<CLife>("CLife");
 					assert(lifeComponent && "Error: El jugador no tiene un componente CLife");
-					lifeComponent->suicide();*/
+					lifeComponent->suicide();
 				}
 			}
 		}
@@ -125,6 +129,16 @@ namespace Logic {
 				}
 			}
 		}
+	}
+
+	//________________________________________________________________________
+
+	void CScreamer::activate() {
+		CPlayerClass::activate();
+
+		_primarySkillIsActive = false;
+		_currentScreamerShield = _screamerShieldThreshold;
+		_screamerShieldDamageTimer = _screamerShieldRecoveryTimer = 0;
 	}
 
 	//__________________________________________________________________
@@ -152,9 +166,6 @@ namespace Logic {
 
 		// Activamos el escudo
 		_screamerShield->activate();
-
-		// deprecated
-		refreshShieldPosition();
 	}
 
 	//__________________________________________________________________

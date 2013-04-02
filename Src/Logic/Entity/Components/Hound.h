@@ -61,6 +61,10 @@ namespace Logic {
 		<ul>
 			<li><strong>houndBerserkerDuration:</strong> Tiempo que dura el efecto 
 			beserker desde que se activa. </li>
+			<li><strong>houndBerserkerDamagePercent:</strong> Porcentaje de aumento del
+			daño. </li>
+			<li><strong>houndBerserkerCooldownPercent:</strong> Porcentaje de reducción
+			de cooldowns. </li>
 		</ul>
 
 		@param entity Entidad a la que pertenece el componente.
@@ -77,6 +81,15 @@ namespace Logic {
 		@param msecs Milisegundos transcurridos desde el último tick.
 		*/
 		virtual void tick(unsigned int msecs);
+
+		//__________________________________________________________________
+
+		/**
+		Metodo que se llama al activar el componente.
+		Restea los campos de la clase a los valores por defecto.
+		*/
+		virtual void activate();
+
 		
 		// =======================================================================
 		//                  METODOS HEREDADOS DE CPlayerClass

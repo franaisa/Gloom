@@ -78,6 +78,14 @@ namespace Logic {
 		*/
 		virtual void tick(unsigned int msecs);
 
+		//__________________________________________________________________
+
+		/**
+		Metodo que se llama al activar el componente.
+		Restea los campos de la clase a los valores por defecto.
+		*/
+		virtual void activate();
+
 
 		// =======================================================================
 		//                  METODOS HEREDADOS DE CPlayerClass
