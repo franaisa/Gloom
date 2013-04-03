@@ -213,14 +213,18 @@ namespace Logic
 		// Activamos el componente pero indicamos que
 		// no es el arma equipada.
 		_weaponry[weaponIndex].second->activate();
-		_weaponry[weaponIndex].second->inUse(false);
+		
+		// El arma estara en uso si es la actual, si no estara sin uso
+		_weaponry[weaponIndex].second->inUse( _currentWeapon == weaponIndex );
 		_weaponry[weaponIndex].second->addAmmo(weaponIndex, ammo, _weaponry[weaponIndex].first);
 
+		/*
 		// Enviamos un mensaje de actualizacion del hud
 		Logic::CMessageHudAmmo *m=new Logic::CMessageHudAmmo();
 		m->setWeapon(weaponIndex);
 		m->setAmmo(ammo);//No es necesario esto, ya que solo actualizare el hud como que puedo coger el arma pero no mostrara sus balas(en este caso concreto)
 		_entity->emitMessage(m);
+		*/
 	}
 
 } // namespace Logic
