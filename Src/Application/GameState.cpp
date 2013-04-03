@@ -182,6 +182,7 @@ namespace Application {
 		switch(key.keyId)
 		{
 		case Input::Key::ESCAPE:
+			Logic::CServer::getSingletonPtr()->unLoadLevel();
 			_app->setState("menu");
 			break;
 		default:

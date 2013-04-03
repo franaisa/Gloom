@@ -179,7 +179,6 @@ namespace Input {
 					_controlledAvatar->emitMessage(m2);
 					break;
 				case Input::Key::ESCAPE:// esto debe desaparecer en el futuro
-					std::cout << "escape pulsado" << std::endl;
 					return false;
 					break;
 				default:
@@ -343,7 +342,7 @@ namespace Input {
 				return true;
 			}
 		}
-		return false;
+		return true;
 
 	} // keyPressed
 
@@ -387,7 +386,7 @@ namespace Input {
 			_controlledAvatar->emitMessage(m);
 			return true;
 		}
-		return false;
+		return true;
 
 	} // keyReleased
 
@@ -404,7 +403,7 @@ namespace Input {
 			_controlledAvatar->emitMessage(m);
 			return true;
 		}
-		return false;
+		return true;
 
 	} // mouseMoved
 
@@ -431,12 +430,12 @@ namespace Input {
 				break;
 			
 			default:
-				return false;
+				return true;
 			}
 			_controlledAvatar->emitMessage(m);
 			return true;
 		}
-		return false;
+		return true;
 
 	} // mousePressed
 
@@ -464,7 +463,7 @@ namespace Input {
 				break;
 			
 			default:
-				return false;
+				return true;
 			}
 			_controlledAvatar->emitMessage(m);
 			return true;
