@@ -146,8 +146,6 @@ namespace GUI {
 	Hikari::FlashControl* CServer::addLayoutToState(Application::CApplicationState* state, 
 		const std::string& layoutName, Hikari::Position pos) {
 
-		std::cout << layoutName << std::endl;
-
 			return BaseSubsystems::CServer::getSingletonPtr()->getHikari()->
 							createFlashOverlay(layoutName,Graphics::CServer::getSingletonPtr()->getActiveScene()->getViewport(),
 							BaseSubsystems::CServer::getSingletonPtr()->getRenderWindow()->getWidth(), 
