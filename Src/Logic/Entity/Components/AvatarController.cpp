@@ -7,8 +7,8 @@ de la entidad.
 @see Logic::CAvatarController
 @see Logic::IComponent
 
-@author David Llansó
-@date Agosto, 2010
+@author Jose Antonio García Yáñez
+@date Enero, 2013
 */
 
 #include "AvatarController.h"
