@@ -132,15 +132,27 @@ namespace Graphics
 
 			Ogre::Entity *entity = scene->getSceneMgr()->createEntity("hud3D_"+name, mesh);
 
+
+
+			Ogre::MaterialPtr aux= Ogre::MaterialManager::getSingleton().getByName(name);
+
+
+
 			
-			Ogre::MaterialPtr material = Ogre::MaterialManager::getSingleton().getByName(name);
 			
-			if(!material.isNull()){
+			
+			//Ogre::MaterialPtr material = static_cast<Ogre::Material *>(Ogre::MaterialManager::getSingleton().getByName(name).get())->clone(name+"_3D");
+			
+			
+			if(!aux.isNull()){
+
+				Ogre::MaterialPtr material = aux.get()->clone(name+"_3D");
 						
 				material->getTechnique(0)->getPass(0)->setDepthCheckEnabled(false);
 				material->getTechnique(0)->getPass(0)->setDepthWriteEnabled(false);
 				material->getTechnique(0)->setSceneBlending(Ogre::SBT_TRANSPARENT_ALPHA);
-				
+			
+				entity->setMaterial(material);
 			}
 			
 
@@ -156,9 +168,9 @@ namespace Graphics
 
 			// Esto es una pequeña ñapa, me creo un entidad grafica pero sin inicializar, y le añado una escena ahierro
 			// Hago esto para que se pueda desplazar desde la logica sin ningun problema.
-			Graphics::CEntity *aux = new CEntity("hud3D_"+name, mesh);
-			aux->setSceneNode(sceneNode);
-			return aux;
+			Graphics::CEntity *entityTemp = new CEntity("hud3D_"+name, mesh);
+			entityTemp->setSceneNode(sceneNode);
+			return entityTemp;
 		}
 		return 0;
 
