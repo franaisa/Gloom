@@ -61,9 +61,11 @@ namespace Logic {
 				
 			//drawParticle("fire", "ShootParticle");
 
+			decrementAmmo();
+
 			for(int i = 0; i < _numberShots; ++i) {
 				std::pair<CEntity*, Ray> entityHit = fireWeapon();
-				decrementAmmo();
+				
 				if(entityHit.first != NULL) {
 					triggerHitMessages(entityHit);
 				}

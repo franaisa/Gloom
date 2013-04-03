@@ -138,7 +138,7 @@ namespace Audio
 	// función para dar salida de error y terminar aplicación
 	void CServer::ERRCHECK(FMOD_RESULT result){
 		if (result != FMOD_OK){
-		std::cout << "FMOD error! " << result << std::endl <<FMOD_ErrorString(result);
+		//std::cout << "FMOD error! " << result << std::endl <<FMOD_ErrorString(result);
 		exit(-1);
 		}
 	}//ERRCHECK
@@ -178,10 +178,10 @@ namespace Audio
 
 		int can;
 		canal->getIndex(&can);
-		std::cout << "el numero de canal ocupado es " << can << std::endl;
+		//std::cout << "el numero de canal ocupado es " << can << std::endl;
 		int numcanales;
 		_system->getChannelsPlaying(&numcanales);
-		std::cout << "El numero de canales usados al cargar el sonido es " << numcanales << std::endl;
+		//std::cout << "El numero de canales usados al cargar el sonido es " << numcanales << std::endl;
 
 		//Guardamos la asociacion nombreSonido/Canal
 		_soundChannel[id]=canal;
@@ -213,10 +213,10 @@ namespace Audio
 
 		int can;
 		canal->getIndex(&can);
-		std::cout << "el numero de canal ocupado es " << can << std::endl;
+		//std::cout << "el numero de canal ocupado es " << can << std::endl;
 		int numcanales;
 		_system->getChannelsPlaying(&numcanales);
-		std::cout << "El numero de canales usados al cargar el sonido es " << numcanales << std::endl;
+		//std::cout << "El numero de canales usados al cargar el sonido es " << numcanales << std::endl;
 
 
 		//Guardamos la asociacion nombreSonido/Canal

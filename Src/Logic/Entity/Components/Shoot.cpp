@@ -113,10 +113,8 @@ namespace Logic {
 	void CShoot::activate() {
 		IComponent::activate();
 
-		Logic::CMessageHudWeapon *message = new Logic::CMessageHudWeapon();
-		message->setWeapon(_id);
-		message->setAmmo(_currentAmmo);
-		_entity->emitMessage(message);
+		
+
 	} // activate
 
 	//__________________________________________________________________
@@ -204,6 +202,14 @@ namespace Logic {
 
 	void CShoot::inUse(bool state) {
 		_isInUse = state;
+
+		if(_isInUse)
+		{
+			Logic::CMessageHudWeapon *message = new Logic::CMessageHudWeapon();
+			message->setWeapon(_id);
+			message->setAmmo(_currentAmmo);
+			_entity->emitMessage(message);
+		}
 	}
 
 } // namespace Logic

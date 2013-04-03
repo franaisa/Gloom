@@ -88,7 +88,7 @@ namespace Logic  {
 			}
 			
 			_entity->getComponent<CPhysicController>("CPhysicController")->moveController(Vector3(direction), msecs);
-			std::cout << "nueva pos lenght " << _distance << std::endl << std::endl;
+			//std::cout << "nueva pos lenght " << _distance << std::endl << std::endl;
 			_distance -= direction.length();
 			
 		}//if
@@ -161,7 +161,18 @@ namespace Logic  {
 				_canInterpolateMove = true;
 				break;
 
+			case Control::SIDEJUMP_LEFT:
+				_keyAD+=1;
+				_canInterpolateMove = true;
+				break;
+
 			case Control::STRAFE_RIGHT:
+				std::cout << "strafe -> "<< _keyAD << std::endl;
+				_keyAD-=1;
+				break;
+
+			case Control::SIDEJUMP_RIGHT:
+				std::cout << "sidejump -> "<< _keyAD << std::endl;
 				_keyAD-=1;
 				break;
 
@@ -182,6 +193,7 @@ namespace Logic  {
 				break;
 
 			case Control::STOP_STRAFE_RIGHT:
+				std::cout << "stop -> "<< _keyAD << std::endl;
 				_keyAD+=1;
 				
 				break;
@@ -197,8 +209,10 @@ namespace Logic  {
 			}//case Message::CONTROL:
 
 		}//switch
-		//comprobamos si nos estamos moviendo, de manera que si no nos estamos moviendo no interpolamos
 
+		//std::cout << "movimiento AD -> "<< _keyAD << std::endl;
+		//std::cout << "movimiento WS -> "<< _keyWS << std::endl;
+		//comprobamos si nos estamos moviendo, de manera que si no nos estamos moviendo no interpolamos
 		if(_keyWS == 0 && _keyAD == 0){
 			_canInterpolateMove = false;
 		}
@@ -262,12 +276,12 @@ namespace Logic  {
 		//std::cout << ">>>>>>>>>>>> \tmi posi" << _entity->getPosition() << std::endl;
 		//std::cout << ">>>>>>>>>>>>>>>\t server posi" << _serverPos.getTrans() << std::endl;
 		//si la distancia es mayor de maxDistance .. set transform por cojones
-		std::cout << "distancia ->" << distance << std::endl;
-		std::cout << "speed ->" << speed << std::endl;
+		//std::cout << "distancia ->" << distance << std::endl;
+		//std::cout << "speed ->" << speed << std::endl;
 		if(distance > _maxDistance){
 			_entity->getComponent<CPhysicController>("CPhysicController")->setPhysicPosition(_serverPos.getTrans());
 			//Movemos la orientacion logica/grafica
-			std::cout << "<<<<<<< SETEO A LO ANIMAL >>>>>>>" << std::endl;
+			//std::cout << "<<<<<<< SETEO A LO ANIMAL >>>>>>>" << std::endl;
 			Matrix3 tmpMatrix;
 			_serverPos.extract3x3Matrix(tmpMatrix);
 			_entity->setOrientation(tmpMatrix);
