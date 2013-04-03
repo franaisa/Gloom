@@ -41,30 +41,19 @@ HikariManager* HikariManager::instance = 0;
 HikariManager::HikariManager(const std::string& assetsDirectory) : flashLib(0), focusedControl(0), mouseXPos(0), mouseYPos(0), 
 	mouseButtonRDown(false), zOrderCounter(1), keyboardHook(0)
 {
-	//std::cout << "0-> " << getCurrentWorkingDirectory() << std::endl;
 	if(instance)
 		throw std::exception("In HikariManager constructor, HikariManager is already instantiated!");
 	instance = this;
-	//std::cout << "2" << std::endl;
 	std::string workingDirectory = getCurrentWorkingDirectory();
-	std::cout << "3-> " << assetsDirectory << std::endl;
 	this->basePath = workingDirectory + assetsDirectory;
-	//std::cout << "4" << std::endl;
-	
 
 	if(this->basePath.at(this->basePath.length()-1) != '\\')
 		this->basePath.push_back('\\');
 
-	
-
 	CoInitialize(0);
-
-	
 
 	// Attempt to load 'Flash.ocx', it's alrite if this fails, we have a fallback strategy
 	flashLib = LoadLibrary((workingDirectory + "Flash.ocx").c_str());
-
-	
 
 	keyboardHook = new Impl::KeyboardHook();
 }
