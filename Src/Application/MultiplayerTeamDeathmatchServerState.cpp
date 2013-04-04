@@ -137,6 +137,7 @@ namespace Application {
 			Logic::CEntity* player = Logic::CServer::getSingletonPtr()->getMap()->createPlayer(name);
 			// Extraemos la id asignada a dicha entidad y la asociamos al player del gestor
 			entityId = player->getEntityID();
+			std::cout << "creando player con id" << entityId << std::endl << std::endl << std::endl << std::endl << std::endl << std::endl << std::endl << std::endl;
 			Logic::CGameNetPlayersManager::getSingletonPtr()->setEntityID(playerNetId, entityId);
 			
 			// Ordenamos la carga del player a todos los clientes conectados

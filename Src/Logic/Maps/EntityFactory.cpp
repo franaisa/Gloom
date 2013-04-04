@@ -324,7 +324,7 @@ namespace Logic
 	Logic::CEntity *CEntityFactory::createEntity(Map::CEntity *entityInfo, Logic::CMap *map, TEntityID id)
 	{
 		std::string entityType = entityInfo->getType();
-		CEntity *ret = assembleEntity(entityType);
+		CEntity *ret = assembleEntity(entityType, id);
 		if (!ret)
 			return 0;
 

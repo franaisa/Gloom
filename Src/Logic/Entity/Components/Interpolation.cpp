@@ -80,7 +80,7 @@ namespace Logic  {
 			Vector3 direction = _serverDirection*Vector3(1,0,1);
 		
 			//calculamos el movimiento que debe hacer el monigote, mucho mas lento del que debe hacer de normal
-			direction *=(_speed/5)*msecs;
+			direction *=(_speed/10)*msecs;
 			
 			//si nos hemos pasado, debemos moverlo al sitio
 			if(direction.length() > _distance){
