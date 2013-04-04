@@ -110,6 +110,58 @@ namespace GUI
 		 */
 		void addLayoutToState(Application::CApplicationState* state, const std::string& layoutName);
 
+		/**
+		Método de creacion de un layout con un nombre, posicion y medidas del layout. Devuelve
+		un controlador de flash con la informacion necesaria para utilizar la GUI
+
+		@param layoutName Nombre del layout
+		@param pos posición del layout
+		@param width ancho del layout (en pixels)
+		@param height alto del layout (en pixels)
+
+		@return un FlashControl con el controlador del layout, listo para cargar el swf y bindear y
+		ejecutar todas las llamadas que quieras la interfaz de flash
+		*/
+
+		Hikari::FlashControl* addLayout(const std::string& layoutName, Hikari::Position pos, unsigned int width, unsigned int height);
+
+		/**
+		Método de creacion de un layout con un nombre, posicion y medidas del layout. Devuelve
+		un controlador de flash con la informacion necesaria para utilizar la GUI
+
+		@param layoutName Nombre del layout
+		@param pos posición del layout
+		@param relativePos posición relativa con respecto al tamaño total de la pantalla
+
+		@return un FlashControl con el controlador del layout, listo para cargar el swf y bindear y
+		ejecutar todas las llamadas que quieras la interfaz de flash
+		*/
+		Hikari::FlashControl* addLayout(const std::string& layoutName, Hikari::Position pos, float relativePos);
+
+		/**
+		Método de creacion de un layout con un nombre, posicion y con el tamaño total de la pantalla. Devuelve
+		un controlador de flash con la informacion necesaria para utilizar la GUI
+
+		@param layoutName Nombre del layout
+		@param pos posición del layout
+
+		@return un FlashControl con el controlador del layout, listo para cargar el swf y bindear y
+		ejecutar todas las llamadas que quieras la interfaz de flash
+		*/
+		Hikari::FlashControl* addLayout(const std::string& layoutName, Hikari::Position pos);
+
+		/**
+		Método de creacion de un layout con un nombre, posicion y con el tamaño total de la
+		pantalla. Devuelve un controlador de flash con la informacion necesaria para utilizar 
+		la GUI.
+
+		@param state estado en el que se está creando el layout
+		@param layoutName Nombre del layout
+		@param pos posición del layout
+
+		@return un FlashControl con el controlador del layout, listo para cargar el swf y bindear y
+		ejecutar todas las llamadas que quieras la interfaz de flash
+		*/
 		Hikari::FlashControl* addLayoutToState(Application::CApplicationState* state, const std::string& layoutName, Hikari::Position pos);
 
 		//________________________________________________________________________

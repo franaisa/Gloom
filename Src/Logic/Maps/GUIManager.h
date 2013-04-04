@@ -1,8 +1,16 @@
-
+#include <string>
+#include <map>
 
 
 #ifndef __Logic_GUIManager_H
 #define __Logic_GUIManager_H
+
+
+//predeclaracion de clases
+
+namespace Hikari{
+	class FlashControl;
+}
 
 
 namespace Logic
@@ -34,7 +42,22 @@ namespace Logic
 		/**
 
 		**/
-		bool addGUI();
+		bool addGUI(Hikari::FlashControl* overlay, std::string name);
+
+		/**
+		Inicializa la instancia
+
+		@return Devuelve false si no se ha podido inicializar.
+		*/
+		static bool Init();
+
+		/**
+		Libera la instancia de CServer. Debe llamarse al finalizar la 
+		aplicación.
+		*/
+		static void Release();
+
+		void activate();
 
 	protected:
 
@@ -65,7 +88,13 @@ namespace Logic
 		void close();
 
 	private:
+		//unica instancia de singleton
 		static CGUIManager* _instance;
+
+		//tabla hash con todos los guis cargados para ser utilizados en la logica
+		typedef std::pair<std::string ,Hikari::FlashControl*> GUIPair;
+		typedef std::map<std::string ,Hikari::FlashControl*> TGUI;
+		TGUI _loadedGUIs;
 
 	};//class CGUIManager
 }//nampespace Logic
