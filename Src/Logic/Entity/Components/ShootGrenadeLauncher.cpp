@@ -59,12 +59,6 @@ namespace Logic {
 		CGrenadeController* comp = grenade->getComponent<CGrenadeController>("CGrenadeController");
 		assert(comp != NULL);
 		comp->setOwner(_entity);
-
-		// Mensaje para situar el collider fisico de la granada en la posicion de disparo.
-		Logic::CMessageSetPhysicPosition* msg = new Logic::CMessageSetPhysicPosition();
-		msg->setPosition(myPosition);
-		msg->setMakeConversion(false);
-		grenade->emitMessage(msg);
 		
 		// Mandar mensaje add force
 		Logic::CMessageAddForcePhysics* forceMsg = new Logic::CMessageAddForcePhysics();

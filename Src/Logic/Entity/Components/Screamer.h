@@ -142,9 +142,12 @@ namespace Logic {
 		// =======================================================================
 
 
-		/**
-		Desactiva el shader del escudo y a la entidad.
-		*/
+		/** Activa el shader del escudo y a la entidad */
+		void activateScreamerShield();
+
+		//__________________________________________________________________
+
+		/** Desactiva el shader del escudo y a la entidad. */
 		void deactivateScreamerShield();
 
 		//__________________________________________________________________

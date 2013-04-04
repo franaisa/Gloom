@@ -297,33 +297,18 @@ namespace Logic
 	Logic::CEntity *CEntityFactory::createEntity(Map::CEntity *entityInfo,
 							  CMap *map, Vector3 position)
 	{
-		std::string entityType = entityInfo->getType();
-		CEntity *ret = assembleEntity(entityType);
-		if (!ret)
-			return 0;
+		std::stringstream ss (std::stringstream::in | std::stringstream::out);
 
-		
-		// Añadimos la nueva entidad en el mapa antes de inicializarla.
-		map->addEntity(ret);
-		// Y lo inicializamos
-		if (_dynamicCreation ? ret->dynamicSpawn(map, entityInfo) : ret->spawn(map, entityInfo)){
-			ret->setPosition(position);
+		ss << position.x;
+		ss << " ";
+		ss << position.y;
+		ss << " ";
+		ss << position.z;
 
-			//enviamos por red la creación de la entidad
-			if(Net::CManager::getSingletonPtr()->imServer() && _dynamicCreation && entityType != "ServerPlayer"){
-				Logic::CGameNetMsgManager::getSingletonPtr()->sendCreateEntity(ret->getEntityID());
-			}
+		entityInfo->setAttribute( "position", ss.str() );
 
-			return ret;
-		} else {
-			map->removeEntity(ret);
-			delete ret;
-			return 0;
-		}
-
+		return createEntity(entityInfo, map);
 	} // createEntity
-
-
 
 	//---------------------------------------------------------
 
