@@ -403,11 +403,11 @@ Map = {
 		hudPanelAMMOTextPositionXRelative = -1.5,
 		hudPanelAMMOTextPositionYRelative = 0,
 		
-		hudPanelDebbugPositionX = 0,
-		hudPanelDebbugPositionY = 0,
-		hudPanelDebbugWidth = 2,
-		hudPanelDebbugHeight = 5,
-		hudPanelDebbugFontSize = 22,
+		hudPanelDebugPositionX = 0,
+		hudPanelDebugPositionY = 0,
+		hudPanelDebugWidth = 2,
+		hudPanelDebugHeight = 5,
+		hudPanelDebugFontSize = 22,
 		
 	},
 	

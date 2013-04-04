@@ -322,9 +322,6 @@
     <ClCompile Include="..\..\Src\Logic\Messages\MessageContactExit.cpp">
       <Filter>Messages\Source</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Src\Logic\Messages\MessageHudDebbug.cpp">
-      <Filter>Messages\Source</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Src\Logic\Entity\Components\Audio.cpp">
       <Filter>Entity\Components\Source Files</Filter>
     </ClCompile>
@@ -366,6 +363,9 @@
     </ClCompile>
     <ClCompile Include="..\..\Src\Logic\Entity\Components\ScreamerShieldDamageNotifier.cpp">
       <Filter>Entity\Components\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Messages\MessageHudDebug.cpp">
+      <Filter>Messages\Source</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -648,9 +648,6 @@
     <ClInclude Include="..\..\Src\Logic\Entity\Components\ClientRespawn.h">
       <Filter>Entity\Components\Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Src\Logic\Messages\MessageHudDebbug.h">
-      <Filter>Messages\Header</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Messages\MessageContactExit.h">
       <Filter>Messages\Header</Filter>
     </ClInclude>
@@ -698,6 +695,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Entity\Components\ScreamerShieldDamageNotifier.h">
       <Filter>Entity\Components\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Messages\MessageHudDebug.h">
+      <Filter>Messages\Header</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

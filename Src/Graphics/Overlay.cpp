@@ -75,8 +75,21 @@ namespace Graphics
 		if(_overlayText){Graphics::CServer::getSingletonPtr()->getOverlayManager()->destroyOverlayElement(_overlayContainer->getName());}
 		*/
 		std::cout << "destruyendo overlay" << std::endl;
+		
+		/*
 		Graphics::CServer::getSingletonPtr()->getOverlayManager()->destroyAllOverlayElements();
 		Graphics::CServer::getSingletonPtr()->getOverlayManager()->destroyAll();
+		*/
+		if(_overlay){ 
+			Graphics::CServer::getSingletonPtr()->getOverlayManager()->destroy(_overlay);
+		}
+		
+		if(_overlayContainer){ 
+			Graphics::CServer::getSingletonPtr()->getOverlayManager()->destroyOverlayElement(_overlayContainer);
+		}
+		if(_overlayText){
+			Graphics::CServer::getSingletonPtr()->getOverlayManager()->destroyOverlayElement(_overlayText);
+		}
 
 		_overlay = NULL;
 		_overlayContainer = NULL;

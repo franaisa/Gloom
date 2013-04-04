@@ -35,7 +35,7 @@ mover al jugador.
 #include "Logic/Messages/MessageDamaged.h"
 
 //MENSAJE PARA DEBBUG
-#include "Logic/Messages/MessageHudDebbug.h"
+#include "Logic/Messages/MessageHudDebug.h"
 
 #define TURN_FACTOR_X 0.001f
 #define TURN_FACTOR_Y 0.001f
@@ -149,7 +149,7 @@ namespace Input {
 			}
 			else{
 				Logic::CMessageControl *m=new Logic::CMessageControl();
-				Logic::CMessageHudDebbug *m2=new Logic::CMessageHudDebbug();
+				Logic::CMessageHudDebug *m2=new Logic::CMessageHudDebug();
 				switch(key.keyId)
 				{
 				case Input::Key::Q:
