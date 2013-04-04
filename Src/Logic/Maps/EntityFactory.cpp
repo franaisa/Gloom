@@ -270,7 +270,8 @@ namespace Logic
 								Map::CEntity *entityInfo,
 								Logic::CMap *map)
 	{
-		CEntity *ret = assembleEntity(entityInfo->getType());
+		std::string entityType = entityInfo->getType();
+		CEntity *ret = assembleEntity(entityType);
 		if (!ret)
 			return 0;
 
@@ -278,8 +279,11 @@ namespace Logic
 		map->addEntity(ret);
 		// Y lo inicializamos
 		if (_dynamicCreation ? ret->dynamicSpawn(map, entityInfo) : ret->spawn(map, entityInfo)){
-			if(Net::CManager::getSingletonPtr()->imServer() && _dynamicCreation)
-				Logic::CGameNetMsgManager::getSingletonPtr()->sendCreateEntity(ret->getEntityID());
+			if(Net::CManager::getSingletonPtr()->imServer() && _dynamicCreation && 
+			   entityType != "LocalPlayer" && entityType != "RemotePlayer") {
+				
+			   Logic::CGameNetMsgManager::getSingletonPtr()->sendCreateEntity(ret->getEntityID());
+			}
 			
 			return ret;
 		} else {
