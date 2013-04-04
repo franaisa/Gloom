@@ -47,22 +47,40 @@ Contiene la implementaci�n del componente que controla la vida de una entidad.
 #include "Logic/Messages/MessageHudWeapon.h"
 #include "Logic/Messages/MessageHudSpawn.h"
 
-#include "Logic/Messages/MessageHudDebbug.h"
+#include "Logic/Messages/MessageHudDebug.h"
 
 namespace Logic 
 {
 	IMP_FACTORY(CHudOverlay);
 	
 	CHudOverlay::~CHudOverlay(){
+		
 		delete _overlayPlay;
 		delete _overlayDie;
-
 		delete _textAreaDie;
+		
+		for(int i=0;i<3;++i){
+		
+			delete _panelElements[i];
+			delete _panelElementsTextArea[i];
 
-		//delete _textBoxArea[3];
+		}
+		delete _panelMira;
 
-		// En vez de 4 deberia de ir el numero de armas pero no tengo cojones U.U
-		//delete _weaponsBox[6][3];
+		for(int i=0;i<6;++i){
+			delete _panelWeapon[i];
+			
+			delete _overlayWeapon3D[i];
+			delete _weaponsEntities[i];
+			for(int j=0;j<3;++j){
+				delete _weaponsBox[i][j];
+			}
+		}
+
+		delete _overlayDebug;
+		delete _panelDebug;
+		delete _textAreaDebug;
+
 	}
 
 	//---------------------------------------------------------
@@ -267,40 +285,40 @@ namespace Logic
 
 		//////////////////////////////////////AQUI ME CREO EL OVERLAY PARA EL DEBBUG
 
-		_overlayDebbug = _server->createOverlay( "_overlayDebbug" );
+		_overlayDebug = _server->createOverlay( "_overlayDebug" );
 
-		_panelDebbug = _server->createOverlay("panelDebbug",  "Panel");
+		_panelDebug = _server->createOverlay("panelDebug",  "Panel");
 		panelDie->setMetricsMode("pixel");
 
-		//_panelDebbug->setPosition(0,0);
+		//_panelDebug->setPosition(0,0);
 
-		_panelDebbug->setPosition( entityInfo->getFloatAttribute("hudPanelDebbugPositionX")*relativeWidth, 
-			entityInfo->getFloatAttribute("hudPanelDebbugPositionY")*relativeHeight);
+		_panelDebug->setPosition( entityInfo->getFloatAttribute("hudPanelDebugPositionX")*relativeWidth, 
+			entityInfo->getFloatAttribute("hudPanelDebugPositionY")*relativeHeight);
 		
-		_panelDebbug->setDimensions( entityInfo->getFloatAttribute("hudPanelDebbugWidth")*relativeWidth,
-			entityInfo->getFloatAttribute("hudPanelDebbugHeight")*relativeHeight );
-        //_panelDebbug->setMaterial("cuadroArmas");
+		_panelDebug->setDimensions( entityInfo->getFloatAttribute("hudPanelDebugWidth")*relativeWidth,
+			entityInfo->getFloatAttribute("hudPanelDebugHeight")*relativeHeight );
+        //_panelDebug->setMaterial("cuadroArmas");
 		
-		_panelDebbug->setVisible(true);
+		_panelDebug->setVisible(true);
 
-		_textAreaDebbug = _server->createOverlay("_textAreaDebbug", "TextArea");
+		_textAreaDebug = _server->createOverlay("_textAreaDebug", "TextArea");
 				
-				_textAreaDebbug->setMetricsMode("pixel");
-				_textAreaDebbug->setPosition(0, 0);
-				_textAreaDebbug->setDimensions( entityInfo->getFloatAttribute("hudPanelDebbugWidth")*relativeWidth,
-			entityInfo->getFloatAttribute("hudPanelDebbugHeight")*relativeHeight );
+				_textAreaDebug->setMetricsMode("pixel");
+				_textAreaDebug->setPosition(0, 0);
+				_textAreaDebug->setDimensions( entityInfo->getFloatAttribute("hudPanelDebugWidth")*relativeWidth,
+			entityInfo->getFloatAttribute("hudPanelDebugHeight")*relativeHeight );
 
-				_textAreaDebbug->setText("Debbug");
-				_textAreaDebbug->setTextSize(entityInfo->getIntAttribute("hudPanelDebbugFontSize"));
-				_textAreaDebbug->setFont("fuenteSimple");
+				_textAreaDebug->setText("Debug");
+				_textAreaDebug->setTextSize(entityInfo->getIntAttribute("hudPanelDebugFontSize"));
+				_textAreaDebug->setFont("fuenteSimple");
 
 				//panelShield->addChild(textAreaHealth);
 				
-				_panelDebbug->addChild(_textAreaDebbug);
+				_panelDebug->addChild(_textAreaDebug);
 
-		_overlayDebbug->add2D( _panelDebbug );
+		_overlayDebug->add2D( _panelDebug );
 
-		_overlayDebbug->setVisible(false);
+		_overlayDebug->setVisible(false);
 
 
 		return true;
@@ -316,7 +334,7 @@ namespace Logic
 			|| message->getMessageType() == Message::HUD_AMMO
 			|| message->getMessageType() == Message::HUD_WEAPON
 			|| message->getMessageType() == Message::HUD_SPAWN
-			|| message->getMessageType() == Message::HUD_DEBBUG;
+			|| message->getMessageType() == Message::HUD_DEBUG;
 
 	} // accept
 	
@@ -336,7 +354,7 @@ namespace Logic
 			break;
 		case Message::HUD_SPAWN: hudSpawn(((CMessageHudSpawn*)message)->getTime());
 			break;
-		case Message::HUD_DEBBUG: hudDebbug();
+		case Message::HUD_DEBUG: hudDebug();
 			break;
 		}
 
@@ -488,14 +506,14 @@ namespace Logic
 			}
 	}
 
-	void CHudOverlay::hudDebbug(){
-		if(_overlayDebbug->isVisible()){
+	void CHudOverlay::hudDebug(){
+		if(_overlayDebug->isVisible()){
 			printf("\nBorrate! ");	
 		}else{
 			printf("\npintate! ");
 		}
 
-		_overlayDebbug->setVisible(!_overlayDebbug->isVisible());
+		_overlayDebug->setVisible(!_overlayDebug->isVisible());
 	}
 
 	void CHudOverlay::tick(unsigned int msecs)
@@ -503,14 +521,14 @@ namespace Logic
 		IComponent::tick(msecs);
 		
 
-		if(_overlayDebbug->isVisible())
+		if(_overlayDebug->isVisible())
 		{
 			_temporal+=msecs;
 			if(_temporal>200)
 			{
 				std::stringstream sDebug;
 				sDebug << "FPS: " << 1000/msecs;
-				_textAreaDebbug->setText(sDebug.str());
+				_textAreaDebug->setText(sDebug.str());
 				_temporal=0;
 			}
 		}

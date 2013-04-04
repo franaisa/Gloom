@@ -20,10 +20,12 @@ Contiene la implementación del estado de menú.
 #include "Logic/Maps/EntityFactory.h"
 #include "Logic/Maps/Map.h"
 
-#include <CEGUISystem.h>
-#include <CEGUIWindowManager.h>
-#include <CEGUIWindow.h>
-#include <elements/CEGUIPushButton.h>
+#include <iostream>
+#include <fstream>
+#include <cstdlib>
+#include <direct.h>
+
+#include "GUI\Server.h"
 
 namespace Application {
 
@@ -38,23 +40,12 @@ namespace Application {
 		CApplicationState::init();
 
 		// Cargamos la ventana que muestra el menú
-		CEGUI::WindowManager::getSingletonPtr()->loadWindowLayout("SelectScenario.layout");
-		_menuWindow = CEGUI::WindowManager::getSingleton().getWindow("SelectScenario");
-		
-		// Asociamos los botones del menú con las funciones que se deben ejecutar.
-		
-		CEGUI::WindowManager::getSingleton().getWindow("SelectScenario/Scenario1")->
-			subscribeEvent(CEGUI::PushButton::EventClicked, 
-				CEGUI::SubscriberSlot(&CSelectScenario::scenario1Released, this));
-		
-		CEGUI::WindowManager::getSingleton().getWindow("SelectScenario/Scenario2")->
-			subscribeEvent(CEGUI::PushButton::EventClicked, 
-				CEGUI::SubscriberSlot(&CSelectScenario::scenario2Released, this));
-
-		CEGUI::WindowManager::getSingleton().getWindow("SelectScenario/Back")->
-			subscribeEvent(CEGUI::PushButton::EventClicked, 
-				CEGUI::SubscriberSlot(&CSelectScenario::backReleased, this));
-
+		_menu = GUI::CServer::getSingletonPtr()->addLayoutToState(this,"singleplayer", Hikari::Position(Hikari::Center));
+		_menu->load("SinglePlayer.swf");
+		_menu->bind("back",Hikari::FlashDelegate(this, &CSelectScenario::backReleased));
+		_menu->bind("createGame",Hikari::FlashDelegate(this, &CSelectScenario::loadScenario));
+		_menu->hide();
+		listFiles();
 		return true;
 
 	} // init
@@ -74,23 +65,16 @@ namespace Application {
 		CApplicationState::activate();
 
 		// Activamos la ventana que nos muestra el menú y activamos el ratón.
-		CEGUI::System::getSingletonPtr()->setGUISheet(_menuWindow);
-		_menuWindow->setVisible(true);
-		_menuWindow->activate();
-		CEGUI::MouseCursor::getSingleton().show();
-
+		_menu->show();
 	} // activate
 
 	//--------------------------------------------------------
 
 	void CSelectScenario::deactivate() 
 	{		
-		// Desactivamos la ventana GUI con el menú y el ratón.
-		CEGUI::MouseCursor::getSingleton().hide();
-		_menuWindow->deactivate();
-		_menuWindow->setVisible(false);
-		
 		CApplicationState::deactivate();
+		// Desactivamos la ventana GUI con el menú y el ratón.
+		_menu->hide();
 
 	} // deactivate
 
@@ -104,7 +88,7 @@ namespace Application {
 
 	//--------------------------------------------------------
 
-	bool CSelectScenario::keyPressed(GUI::TKey key)
+	bool CSelectScenario::keyPressed(Input::TKey key)
 	{
 		return false;
 
@@ -112,20 +96,20 @@ namespace Application {
 
 	//--------------------------------------------------------
 
-	bool CSelectScenario::keyReleased(GUI::TKey key)
+	bool CSelectScenario::keyReleased(Input::TKey key)
 	{
 		switch(key.keyId)
 		{
-		case GUI::Key::NUMBER1:
-			return loadScenario("1");
+		//case Input::Key::NUMBER1:
+			//return loadScenario("1");
 			//_app->setState("lobbyserver");
-			break;
-		case GUI::Key::NUMBER2:
-			return loadScenario("2");
+			//break;
+		//case Input::Key::NUMBER2:
+			//return loadScenario("2");
 			//_app->setState("lobbyclient");
-			break;
+			//break;
 		default:
-			return false;
+			return true;
 		}
 		return true;
 
@@ -133,7 +117,7 @@ namespace Application {
 
 	//--------------------------------------------------------
 	
-	bool CSelectScenario::mouseMoved(const GUI::CMouseState &mouseState)
+	bool CSelectScenario::mouseMoved(const Input::CMouseState &mouseState)
 	{
 		return false;
 
@@ -141,7 +125,7 @@ namespace Application {
 
 	//--------------------------------------------------------
 		
-	bool CSelectScenario::mousePressed(const GUI::CMouseState &mouseState)
+	bool CSelectScenario::mousePressed(const Input::CMouseState &mouseState)
 	{
 		return false;
 
@@ -150,31 +134,16 @@ namespace Application {
 	//--------------------------------------------------------
 
 
-	bool CSelectScenario::mouseReleased(const GUI::CMouseState &mouseState)
+	bool CSelectScenario::mouseReleased(const Input::CMouseState &mouseState)
 	{
 		return false;
 
 	} // mouseReleased
 			
-	//--------------------------------------------------------
-		
-	bool CSelectScenario::scenario1Released(const CEGUI::EventArgs& e)
-	{
-		return loadScenario("1");
 
-	} // serverReleased
-			
 	//--------------------------------------------------------
 
-	bool CSelectScenario::scenario2Released(const CEGUI::EventArgs& e)
-	{
-		return loadScenario("2");
-
-	} // clientReleased
-
-		//--------------------------------------------------------
-
-	bool CSelectScenario::loadScenario(const std::string &name){
+	Hikari::FlashValue CSelectScenario::loadScenario(Hikari::FlashControl* caller, const Hikari::Arguments& args){
 	
 		if (!Logic::CEntityFactory::getSingletonPtr()->loadBluePrints("blueprints.txt"))
 			return false;
@@ -182,7 +151,7 @@ namespace Application {
 			return false;
 		}
 		// Cargamos el nivel a partir del nombre del mapa. 
-		if (!Logic::CServer::getSingletonPtr()->loadLevel("map"+name+".txt"))
+		if (!Logic::CServer::getSingletonPtr()->loadLevel(args.at(0).getString()+".txt"))
 			return false;
 		
 		_app->setState("singlePlayer");
@@ -190,11 +159,26 @@ namespace Application {
 	}
 
 
-	bool CSelectScenario::backReleased(const CEGUI::EventArgs& e)
+	Hikari::FlashValue CSelectScenario::backReleased(Hikari::FlashControl* caller, const Hikari::Arguments& args)
 	{
 		_app->setState("menu");
 		return true;
 
 	} // backReleased
+
+
+	void CSelectScenario::listFiles(){
+		WIN32_FIND_DATA FindData;
+		HANDLE hFind;
+		hFind = FindFirstFile("media\\maps\\*.txt", &FindData);
+
+		std::string filename;
+		while (FindNextFile(hFind, &FindData))
+		{     
+			filename = FindData.cFileName;
+			_menu->callFunction("pushFile",Hikari::Args(filename.substr(0,filename.find(".txt"))));
+
+		}
+	}
 
 } // namespace Application

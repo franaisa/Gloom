@@ -162,6 +162,15 @@ namespace Logic {
 		
 		/** Variable de debug, se usa para darle un nombre unico a cada raycast. */
 		int _temporal;
+
+		/** Ruta del sonido de no munición */
+		std::string _noAmmo;
+		
+		/** Ruta del sonido de disparo */
+		std::string _audioShoot;
+
+
+
 	};
 
 	//REG_FACTORY(CShootRaycast);

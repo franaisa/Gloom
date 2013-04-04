@@ -13,7 +13,6 @@
 #include "Logic/Maps/Map.h"
 #include "Map/MapEntity.h"
 #include "Logic/Entity/Components/Graphics.h"
-#include "Logic/Entity/Components/PhysicEntity.h"
 
 #include "Logic/Messages/MessageTouched.h"
 #include "Logic/Messages/MessageAddLife.h"

@@ -12,8 +12,15 @@ namespace Logic {
 
 	//__________________________________________________________________
 
-	void CMessageAddForcePhysics::setForceVector(const Vector3& force){
+	void CMessageAddForcePhysics::setForce(const Vector3& force, Physics::ForceMode mode) {
 		this->_force = force;
+		_forceMode = mode;
+	}
+
+	//__________________________________________________________________
+
+	Physics::ForceMode CMessageAddForcePhysics::getForceMode() {
+		return _forceMode;
 	}
 
 	//__________________________________________________________________
@@ -26,7 +33,7 @@ namespace Logic {
 
 
 	void CMessageAddForcePhysics::setGravity(bool gravity){
-		_gravity=gravity;
+		_gravity = gravity;
 	}
 
 	//__________________________________________________________________
@@ -41,9 +48,13 @@ namespace Logic {
 	Net::CBuffer* CMessageAddForcePhysics::serialize() {
 		assert(_tempBuffer == NULL);
 
-		_tempBuffer = new Net::CBuffer(sizeof(int) + (sizeof(float) * 3));
+		// Tamaño de la cabecera (int) + tipo de fuerza (int) + Vector3 (float * 3)
+		// + booleano de gravedad (bool).
+		_tempBuffer = new Net::CBuffer( (sizeof(int) * 2) + (sizeof(float) * 3) + sizeof(bool) );
 		_tempBuffer->serialize(std::string("CMessageAddForcePhysics"), true);
 		_tempBuffer->serialize(_force);
+		// No uso la funcion de serializar por ser un enumerado (que dan problemillas).
+		_tempBuffer->write(&_forceMode, sizeof(_forceMode));
 		_tempBuffer->serialize(_gravity);
 
 		return _tempBuffer;
@@ -53,6 +64,8 @@ namespace Logic {
 
 	void CMessageAddForcePhysics::deserialize(Net::CBuffer& buffer) {
 		buffer.deserialize(_force);
+		// Leo directamente por ser un enumerado para evitar problemas
+		buffer.read(&_forceMode, sizeof(_forceMode));
 		buffer.deserialize(_gravity);
 	}
 

@@ -1,19 +1,20 @@
-World CGraphics CPhysicEntity
-LocalPlayer CAvatarController CPhysicController CShootRocketLauncher CShootGrenadeLauncher CShootMiniGun CShootShotGun CShootSniper CShootHammer CWeaponsManager CHudOverlay CLife CSpawnPlayer
-RemotePlayer CAvatarController CAnimatedGraphics CPhysicController CLife CSpawnPlayer
+World CGraphics CPhysicStaticEntity
+LocalPlayer CAvatarController CPhysicController CScreamer CShootRocketLauncher CShootGrenadeLauncher CShootMiniGun CShootShotGun CShootSniper CShootHammer CWeaponsManager CHudOverlay CLife CSpawnPlayer CAudio
+RemotePlayer CAvatarController CAnimatedGraphics CPhysicController CLife CSpawnPlayer CAudio
 Camera CCamera 
-ItemSpawn CGraphics CPhysicEntity CFloatingMovement CSpawnItemManager 
-SpawnPoint CPhysicEntity
-Jumper CGraphics CPhysicEntity CJumper
-Grenade CGraphics CPhysicEntity CGrenadeController
+ItemSpawn CGraphics CPhysicStaticEntity CFloatingMovement CSpawnItemManager 
+SpawnPoint CPhysicStaticEntity
+Jumper CGraphics CPhysicStaticEntity CJumper CAudio
+Grenade CGraphics CPhysicDynamicEntity CGrenadeController CAudio
 Explotion CGraphics
-Rocket CGraphics CPhysicEntity CRocketController
-Lava CGraphics CPhysicEntity CLava
-ContenedorLava CGraphics CPhysicEntity
-Elevator CGraphics CPhysicEntity CElevator
-ElevatorTrigger CPhysicEntity CElevatorTrigger
-Spike CGraphics CPhysicEntity CSpike
-Hacksaw CGraphics CPhysicEntity CHacksaw
+Rocket CGraphics CPhysicDynamicEntity CRocketController CAudio
+Lava CGraphics CPhysicStaticEntity CLava
+ContenedorLava CGraphics CPhysicStaticEntity
+Elevator CGraphics CPhysicDynamicEntity CElevator
+ElevatorTrigger CPhysicDynamicEntity CElevatorTrigger
+Spike CGraphics CPhysicDynamicEntity CSpike
+Hacksaw CGraphics CPhysicDynamicEntity CHacksaw
 SpotLight CLight CGraphics
 DirectionalLight CLight CGraphics
 PointLight CLight CGraphics
+ScreamerShield CGraphics CPhysicDynamicEntity CScreamerShieldDamageNotifier

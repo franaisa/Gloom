@@ -1,17 +1,20 @@
 /**
 @file Life.cpp
 
-Contiene la implementación del componente que controla la vida de una entidad.
+Contiene la implementación del componente 
+que controla la vida de un personaje.
  
 @see Logic::CLife
 @see Logic::IComponent
 
-@author David Llansó
-@date Octubre, 2010
+@author Francisco Aisa García
+@author Jose Antonio García Yáñez
+@date Marzo, 2013
 */
 
 #include "Life.h"
 
+#include "Logic/Server.h"
 #include "Logic/Entity/Entity.h"
 #include "Logic/Maps/Map.h"
 #include "Map/MapEntity.h"
@@ -20,209 +23,301 @@ Contiene la implementación del componente que controla la vida de una entidad.
 // Para informar por red que se ha acabado el juego
 #include "Net/Manager.h"
 #include "Net/buffer.h"
-#include "Logic/GameNetPlayersManager.h"
 #include "Logic/PlayerInfo.h"
+#include "Logic/GameNetPlayersManager.h"
 #include "Logic/GameNetMsgManager.h"
 
+// Mensajes
 #include "Logic/Messages/MessageDamaged.h"
 #include "Logic/Messages/MessageAddLife.h"
 #include "Logic/Messages/MessageAddShield.h"
 #include "Logic/Messages/MessageHudLife.h"
 #include "Logic/Messages/MessageHudShield.h"
-
-
+#include "Logic/Messages/MessageAudio.h"
 #include "Logic/Messages/MessagePlayerDead.h"
 #include "Logic/Messages/MessageCameraToEnemy.h"
+#include "Logic/Messages/MessageSetReducedDamage.h"
 
-#include "Logic/Server.h"
-
-namespace Logic 
-{
+namespace Logic {
+	
 	IMP_FACTORY(CLife);
-	
-	//---------------------------------------------------------
-	
-	bool CLife::spawn(CEntity *entity, CMap *map, const Map::CEntity *entityInfo) 
-	{
-		if(!IComponent::spawn(entity,map,entityInfo))
-			return false;
 
-		if(entityInfo->hasAttribute("life"))
-			_classLife = entityInfo->getIntAttribute("life");
-		if(entityInfo->hasAttribute("lifeDamage"))
-			_lifeDamage = entityInfo->getIntAttribute("lifeDamage");
-		if(entityInfo->hasAttribute("lifeTimeDamage"))
-			_lifeTimeDamage = entityInfo->getIntAttribute("lifeTimeDamage");
-		if(entityInfo->hasAttribute("PorcentShield"))
-			_porcentShield = entityInfo->getIntAttribute("PorcentShield");
-		if(entityInfo->hasAttribute("maxLife"))
-			_maxLife = entityInfo->getIntAttribute("maxLife");
-		if(entityInfo->hasAttribute("maxShield"))
-			_maxShield = entityInfo->getIntAttribute("maxShield");
-		if(entityInfo->hasAttribute("playerDead"))
-			_playerDead =  entityInfo->getBoolAttribute("playerDead");
-		_varLifeCumulative=0;
+	//________________________________________________________________________
 
+	CLife::CLife() : _damageTimer(0), 
+					 _reducedDamageAbsorption(0) {
+
+		// Nada que hacer
+	}
+
+	//________________________________________________________________________
+
+	CLife::~CLife() {
+		// Nada que borrar
+	}
+	
+	//________________________________________________________________________
+	
+	bool CLife::spawn(CEntity *entity, CMap *map, const Map::CEntity *entityInfo) {
+		if( !IComponent::spawn(entity, map, entityInfo) ) return false;
+
+		// ATRIBUTOS DE VIDA Y ARMADURA
+
+		assert( entityInfo->hasAttribute("defaultLife") );
+		_defaultLife = entityInfo->getIntAttribute("defaultLife");
 		
+		assert(entityInfo->hasAttribute("damageOverTime"));
+		_damageOverTime = entityInfo->getIntAttribute("damageOverTime");
+		
+		assert(entityInfo->hasAttribute("damageTimeStep"));
+		_damageTimeStep = entityInfo->getIntAttribute("damageTimeStep") * 1000; // Traducimos a milisegundos
+		
+		// Traducimos el daño al rango 0-1 suponiendo que el daño esté dado entre 0-100
+		assert(entityInfo->hasAttribute("shieldDamageAbsorption"));
+		_shieldDamageAbsorption = entityInfo->getFloatAttribute("shieldDamageAbsorption") * 0.01f;
+		
+		assert(entityInfo->hasAttribute("maxLife"));
+		_maxLife = entityInfo->getIntAttribute("maxLife");
+		
+		assert(entityInfo->hasAttribute("maxShield"));
+		_maxShield = entityInfo->getIntAttribute("maxShield");
+		
+
+		// ATRIBUTOS DE SONIDO
+
+		assert(entityInfo->hasAttribute("audioPain"));
+		_audioPain =  entityInfo->getStringAttribute("audioPain");
+		
+		assert(entityInfo->hasAttribute("audioDeath"));
+		_audioDeath =  entityInfo->getStringAttribute("audioDeath");
 
 		return true;
-
 	} // spawn
 	
-	//---------------------------------------------------------
-
-
+	//________________________________________________________________________
 	
-	void CLife::activate()
-	{
+	void CLife::activate() {
 		IComponent::activate();
 		
-		_life=_classLife;
-		_shield=0;
-		//Actualización vida y escudo
-		Logic::CMessageHudLife *message1 = new Logic::CMessageHudLife();
-		message1->setLife(_life);
-		_entity->emitMessage(message1);	
+		// Resteamos los valores de salud y escudo a los valores por defecto
+		_currentLife = _defaultLife;
+		_currentShield = 0;
+
+		// Actualizamos la info del HUD
+		Logic::CMessageHudLife* hudLifeMsg = new Logic::CMessageHudLife();
+		hudLifeMsg->setLife(_currentLife);
+		_entity->emitMessage(hudLifeMsg);	
 		
-		Logic::CMessageHudShield *message2 = new Logic::CMessageHudShield();
-		message2->setShield(_shield);
-		_entity->emitMessage(message2);	
-
+		Logic::CMessageHudShield* hudShieldMsg = new Logic::CMessageHudShield();
+		hudShieldMsg->setShield(_currentShield);
+		_entity->emitMessage(hudShieldMsg);	
 	} // activate
-	//---------------------------------------------------------
+	
+	//________________________________________________________________________
 
+	bool CLife::accept(CMessage* message) {
+		Logic::TMessageType msgType = message->getMessageType();
 
-
-	bool CLife::accept(CMessage *message)
-	{
-		return message->getMessageType() == Message::DAMAGED || 
-		message->getMessageType() == Message::ADD_LIFE ||
-		message->getMessageType() == Message::ADD_SHIELD ;
+		return msgType == Message::DAMAGED				|| 
+			   msgType == Message::ADD_LIFE				||
+			   msgType == Message::ADD_SHIELD			||
+			   msgType == Message::SET_REDUCED_DAMAGE;
 	} // accept
 	
-	//---------------------------------------------------------
+	//________________________________________________________________________
 
-	void CLife::process(CMessage *message)
-	{
-		switch(message->getMessageType())
-		{
-		case Message::DAMAGED:
-			{
+	void CLife::process(CMessage* message) {
+		switch( message->getMessageType() ) {
+			case Message::DAMAGED: {
 				CMessageDamaged* dmgMsg = static_cast<CMessageDamaged*>(message);
-				damaged( dmgMsg->getDamage(), dmgMsg->getEnemy());	
+				damaged( dmgMsg->getDamage(), dmgMsg->getEnemy() );
+				break;
 			}
-			break;
-			case Message::ADD_LIFE:
-			{
-				addLife( ((CMessageAddLife*)message)->getAddLife());
+			case Message::ADD_LIFE: {
+				addLife( static_cast<CMessageAddLife*>(message)->getAddLife() );
+				break;
+			}	
+			case Message::ADD_SHIELD: {
+				addShield( static_cast<CMessageAddShield*>(message)->getAddShield() );
+				break;
 			}
-			break;
-			case Message::ADD_SHIELD:
-			{
-				addShield( ((CMessageAddShield*)message)->getAddShield());
+			case Message::SET_REDUCED_DAMAGE: {
+				reducedDamageAbsorption( static_cast<CMessageSetReducedDamage*>(message)->getReducedDamage() );
+				break;
 			}
-			break;
 		}
-
 	} // process
-	//----------------------------------------------------------
+	
+	//________________________________________________________________________
 
-	void CLife::tick(unsigned int msecs)
-	{
+	void CLife::tick(unsigned int msecs) {
+		// Necesario para que se procesen todos los mensajes aceptados
 		IComponent::tick(msecs);
-		_varLifeCumulative+=msecs;
-		//Multiplicamos por mil ya que _varLifeCumulative es en milisegundos
-		if(_varLifeCumulative >=_lifeTimeDamage*1000){
-			if(_life > _lifeDamage){
-				_life-=_lifeDamage;	
-				//Actualización vida
-				Logic::CMessageHudLife *message1 = new Logic::CMessageHudLife();
-				message1->setLife(_life);
-				_entity->emitMessage(message1);	
-			}
-			_varLifeCumulative=0;
+
+		_damageTimer += msecs;
+		if(_damageTimer >= _damageTimeStep && _currentLife != 1) {
+			// Reducimos la vida hasta un minimo de un punto de salud
+			_currentLife =  _damageOverTime < _currentLife ? (_currentLife - _damageOverTime) : 1;
+
+			// Actualización la información de vida del HUD
+			Logic::CMessageHudLife* hudLifeMsg = new Logic::CMessageHudLife();
+			hudLifeMsg->setLife(_currentLife);
+			_entity->emitMessage(hudLifeMsg);	
+
+			// Resteamos el timer
+			_damageTimer = 0;
 		}
 	} // tick
-	//----------------------------------------------------------
 
-	void CLife::damaged(int damage, CEntity* enemy){
-		if(_shield>0){
-			int porcentajeEscudo = _porcentShield * damage * 0.01f;
-			int porcentajeVida = damage - porcentajeEscudo;
-			if((_shield>=porcentajeEscudo)){
-				_shield-=porcentajeEscudo;
-				_life-=porcentajeVida;
-				}
-				else{
-					porcentajeEscudo-=_shield;
-					_shield=0;
-					porcentajeVida= porcentajeVida + porcentajeEscudo;
-					_life=_life-porcentajeVida;
-				}
-					Logic::CMessageHudShield *message2 = new Logic::CMessageHudShield();
-					message2->setShield(_shield);
-					_entity->emitMessage(message2);
+	//________________________________________________________________________
+
+	void CLife::damaged(int damage, CEntity* enemy) {
+		// Actualizamos los puntos de salud y armadura del personaje.
+		// En caso de muerte activamos la escena de muerte y disparamos los sonidos
+		// correspondientes.
+		if( updateLife(damage) ) {
+			triggerDeathState(enemy);
+			triggerDeathSound();
 		}
-		else
-			_life -= damage;
-
-		//Si muero por el daño, envio un mensaje de playerDead
-		if(_life<=0){
-			_life=0;
-			//Mensaje de muerte para tratar respawn/desactivar componentes
-			Logic::CMessagePlayerDead *m=new Logic::CMessagePlayerDead();
-			_entity->emitMessage(m);
-			//Mensaje para que la camara ahora enfoque al jugador que nos mató (hay que enviar un mensaje de red especial para el cliente)
-			Logic::CMessageCameraToEnemy *cte=new Logic::CMessageCameraToEnemy();
-			cte->setEnemy(enemy);
-
-			CEntity * camera = CServer::getSingletonPtr()->getMap()->getEntityByType("Camera");
-			camera->emitMessage(cte);
-			
-			//enviamos el mensaje por la red
-			if(Net::CManager::getSingletonPtr()->imServer())
-				Logic::CGameNetMsgManager::getSingletonPtr()->sendMessageToOne(cte, camera->getEntityID(), _entity->getEntityID());
-			//el mensaje de camera to enemy debe ir solamente al jugador que ha muerto, no  a ningún otro
-			//Logic:CServer::getSingletonPtr()->getpla
+		// Si el personaje no ha muerto lanzamos los sonidos de daño.
+		else {
+			triggerHurtSound();
 		}
-		//Actualizo la vida
-		Logic::CMessageHudLife *message1 = new Logic::CMessageHudLife();
-		message1->setLife(_life);
-		_entity->emitMessage(message1);
 	}// damaged
-	//----------------------------------------------------------
 	
-	void CLife::addLife(int life){
-		if(_life<_maxLife){
-			if(_life+life<=_maxLife)
-				_life+=life;
+	//________________________________________________________________________
+	
+	void CLife::addLife(int life) {
+		if(_currentLife < _maxLife) {
+			if(_currentLife + life <= _maxLife)
+				_currentLife += life;
 			else
-				_life=_maxLife;
+				_currentLife = _maxLife;
 
-			Logic::CMessageHudLife *message1 = new Logic::CMessageHudLife();
-			message1->setLife(_life);
-			_entity->emitMessage(message1);
+			Logic::CMessageHudLife* hudLifeMsg = new Logic::CMessageHudLife();
+			hudLifeMsg->setLife(_currentLife);
+			_entity->emitMessage(hudLifeMsg);
 		}
 	}// addLife
-	//----------------------------------------------------------
+	
+	//________________________________________________________________________
 
-
-	void CLife::addShield(int shield){
-		if(_shield<_maxShield){
-			if(_shield+shield<=_maxShield)
-				_shield+=shield;
+	void CLife::addShield(int shield) {
+		if(_currentShield < _maxShield) {
+			if(_currentShield + shield <= _maxShield)
+				_currentShield += shield;
 			else
-				_shield=_maxShield;
+				_currentShield = _maxShield;
 
-
-		Logic::CMessageHudShield *message2 = new Logic::CMessageHudShield();
-		message2->setShield(_shield);
-		_entity->emitMessage(message2);
-
+			Logic::CMessageHudShield* hudShieldMsg = new Logic::CMessageHudShield();
+			hudShieldMsg->setShield(_currentShield);
+			_entity->emitMessage(hudShieldMsg);
 		}// addShield
 	}
-	//----------------------------------------------------------
 
+	//________________________________________________________________________
+
+	void CLife::reducedDamageAbsorption(float percentage) {
+		_reducedDamageAbsorption = percentage;
+	}
+
+	//________________________________________________________________________
+
+	void CLife::suicide() {
+		triggerDeathState(_entity);
+		triggerDeathSound();
+	}
+
+	//________________________________________________________________________
+
+	bool CLife::updateLife(int damage) {
+		// Si hay una reduccion de daño activa, reducimos el daño aplicado
+		damage -= damage * _reducedDamageAbsorption;
+
+		std::cout << "Me quitan " << damage << std::endl;
+
+		if(_currentShield > 0) {
+			int damageAbsorbedByShield = _shieldDamageAbsorption * damage;
+			int damageAbsorbedByLife = damage - damageAbsorbedByShield;
+			
+			if(_currentShield >= damageAbsorbedByShield) {
+				_currentShield -= damageAbsorbedByShield;
+				_currentLife -= damageAbsorbedByLife;
+			}
+			else {
+				damageAbsorbedByShield -= _currentShield;
+				_currentShield = 0;
+				_currentLife -= damageAbsorbedByLife + damageAbsorbedByShield;
+			}
+
+			// Actualizamos los puntos de armadura mostrados en el HUD
+			Logic::CMessageHudShield* hudShieldMsg = new Logic::CMessageHudShield();
+			hudShieldMsg->setShield(_currentShield);
+			_entity->emitMessage(hudShieldMsg);
+		}
+		else {
+			_currentLife -= damage;
+		}
+
+		if(_currentLife < 0)
+			_currentLife = 0;
+
+		// Actualizamos los puntos de salud mostrados en el HUD
+		Logic::CMessageHudLife* hudLifeMsg = new Logic::CMessageHudLife();
+		hudLifeMsg->setLife(_currentLife);
+		_entity->emitMessage(hudLifeMsg);
+
+		std::cout << "Me quedan " << _currentLife << " puntos de salud" << std::endl;
+
+		return _currentLife == 0;
+	}
+
+	//________________________________________________________________________
+
+	void CLife::triggerDeathState(CEntity* enemy) {
+		// Mensaje de playerDead para tratar el respawn y desactivar los componentes
+		// del personaje.
+		Logic::CMessagePlayerDead* playerDeadMsg = new Logic::CMessagePlayerDead();
+		_entity->emitMessage(playerDeadMsg);
+
+		// Mensaje para que la camara enfoque al jugador que nos ha matado
+		// En el caso de la red, hay que enviar un mensaje especial para el cliente
+		// Siempre y cuando no haya muerto un remotePlayer/enemigo (debug singlePlayer)
+		Logic::CMessageCameraToEnemy* cteMsg=cteMsg = new Logic::CMessageCameraToEnemy();
+		CEntity* camera=camera = CServer::getSingletonPtr()->getMap()->getEntityByType("Camera");
+		cteMsg->setEnemy(enemy);
+		//Solo si soy el jugador local envio mensaje de recolocación de camara (no quiero que enemigos muertos me seteen mi camara)
+		if(_entity->getType().compare("LocalPlayer")==0){
+			camera->emitMessage(cteMsg);
+		}
+		// Enviamos el mensaje por la red
+		if( Net::CManager::getSingletonPtr()->imServer() )
+			Logic::CGameNetMsgManager::getSingletonPtr()->sendMessageToOne(cteMsg, camera->getEntityID(), _entity->getEntityID());
+	}
+
+	//________________________________________________________________________
+
+	void CLife::triggerDeathSound() {
+		Logic::CMessageAudio* audioMsg = new Logic::CMessageAudio();
+		audioMsg->setRuta(_audioDeath);
+		audioMsg->setId("death");
+		audioMsg->setPosition( _entity->getPosition() );
+		audioMsg->setNotIfPlay(false);
+		audioMsg->setIsPlayer(_entity->isPlayer());
+		_entity->emitMessage(audioMsg);
+	}
+
+	//________________________________________________________________________
+
+	void CLife::triggerHurtSound() {
+		Logic::CMessageAudio* audioMsg = new Logic::CMessageAudio();
+		audioMsg->setRuta(_audioPain);
+		audioMsg->setId("pain");
+		audioMsg->setPosition( _entity->getPosition() );
+		audioMsg->setNotIfPlay(false);
+		audioMsg->setIsPlayer(_entity->isPlayer());
+		_entity->emitMessage(audioMsg);
+	}
 
 } // namespace Logic
 

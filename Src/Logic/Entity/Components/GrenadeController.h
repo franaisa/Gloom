@@ -41,7 +41,7 @@ namespace Logic {
 
 
 		/** Constructor por defecto; en la clase base no hace nada. */
-		CGrenadeController() : IComponent(), _timer(0), _enemyHit(false) { }
+		CGrenadeController();
 
 
 		// =======================================================================
@@ -136,14 +136,14 @@ namespace Logic {
 		/** Entidad que ha disparado la granada. */
 		CEntity* _owner;
 
-		/** true si la granada a golpeado a un enemigo */
-		bool _enemyHit;
-
 		/** Radio de explosion de la granada. */
 		float _explotionRadius;
 
 		/** Daño de la explosion. */
 		float _explotionDamage;
+
+		/** Ruta del sonido de la explosion. */
+		std::string _audioExplotion;
 
 	}; // class CGrenadeController
 

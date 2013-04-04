@@ -16,7 +16,7 @@ Contiene la implementación del estado de game over.
 
 #include "GameOverState.h"
 
-#include "GUI/Server.h"
+#include "Input/Server.h"
 
 #include <CEGUISystem.h>
 #include <CEGUIWindowManager.h>
@@ -92,7 +92,7 @@ namespace Application {
 
 	//--------------------------------------------------------
 
-	bool CGameOverState::keyPressed(GUI::TKey key)
+	bool CGameOverState::keyPressed(Input::TKey key)
 	{
 		return false;
 
@@ -100,11 +100,11 @@ namespace Application {
 
 	//--------------------------------------------------------
 
-	bool CGameOverState::keyReleased(GUI::TKey key)
+	bool CGameOverState::keyReleased(Input::TKey key)
 	{
 		switch(key.keyId)
 		{
-		case GUI::Key::ESCAPE:
+		case Input::Key::ESCAPE:
 			_app->exitRequest();
 			break;
 		default:
@@ -116,7 +116,7 @@ namespace Application {
 
 	//--------------------------------------------------------
 	
-	bool CGameOverState::mouseMoved(const GUI::CMouseState &mouseState)
+	bool CGameOverState::mouseMoved(const Input::CMouseState &mouseState)
 	{
 		return false;
 
@@ -124,7 +124,7 @@ namespace Application {
 
 	//--------------------------------------------------------
 		
-	bool CGameOverState::mousePressed(const GUI::CMouseState &mouseState)
+	bool CGameOverState::mousePressed(const Input::CMouseState &mouseState)
 	{
 		return false;
 
@@ -133,7 +133,7 @@ namespace Application {
 	//--------------------------------------------------------
 
 
-	bool CGameOverState::mouseReleased(const GUI::CMouseState &mouseState)
+	bool CGameOverState::mouseReleased(const Input::CMouseState &mouseState)
 	{
 		return false;
 

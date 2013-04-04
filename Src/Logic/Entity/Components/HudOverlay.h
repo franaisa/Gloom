@@ -65,7 +65,7 @@ namespace Logic
 		/**
 		Método llamado en cada frame que actualiza el estado del componente.
 		<p>
-		Lo uso para cambiar los valores del debbug
+		Lo uso para cambiar los valores del debug
 
 		@param msecs Milisegundos transcurridos desde el último tick.
 		*/
@@ -87,7 +87,7 @@ namespace Logic
 
 		void hudParticle(const std::string &nameParticle);
 
-		void hudDebbug();
+		void hudDebug();
 
 		std::string toText(eWeaponIndex weapon);
 		std::string toText(eOverlayWeaponState state);
@@ -156,9 +156,9 @@ namespace Logic
 		/**
 		
 		*/
-		Graphics::COverlay *_overlayDebbug;
-		Graphics::COverlay *_panelDebbug;
-		Graphics::COverlay *_textAreaDebbug;
+		Graphics::COverlay *_overlayDebug;
+		Graphics::COverlay *_panelDebug;
+		Graphics::COverlay *_textAreaDebug;
 
 
 		int _temporal;

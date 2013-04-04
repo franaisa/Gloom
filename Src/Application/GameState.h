@@ -123,7 +123,7 @@ namespace Application
 		@return true si el evento ha sido procesado. En este caso 
 		el gestor no llamará a otros listeners.
 		*/
-		virtual bool keyPressed(GUI::TKey key);
+		virtual bool keyPressed(Input::TKey key);
 		
 		/**
 		Método que será invocado siempre que se termine la pulsación
@@ -136,7 +136,7 @@ namespace Application
 		@return true si el evento ha sido procesado. En este caso 
 		el gestor no llamará a otros listeners.
 		*/
-		virtual bool keyReleased(GUI::TKey key);
+		virtual bool keyReleased(Input::TKey key);
 
 		// Métodos de CMouseListener
 		
@@ -148,7 +148,7 @@ namespace Application
 		@return true si el evento ha sido procesado. En este caso 
 		el gestor no llamará a otros listeners.
 		*/
-		virtual bool mouseMoved(const GUI::CMouseState &mouseState);
+		virtual bool mouseMoved(const Input::CMouseState &mouseState);
 		
 		/**
 		Método que será invocado siempre que se pulse un botón. La
@@ -158,7 +158,7 @@ namespace Application
 		@return true si el evento ha sido procesado. En este caso 
 		el gestor no llamará a otros listeners.
 		*/
-		virtual bool mousePressed(const GUI::CMouseState &mouseState);
+		virtual bool mousePressed(const Input::CMouseState &mouseState);
 
 		/**
 		Método que será invocado siempre que se termine la pulsación
@@ -169,7 +169,7 @@ namespace Application
 		@return true si el evento ha sido procesado. En este caso 
 		el gestor no llamará a otros listeners. 
 		*/
-		virtual bool mouseReleased(const GUI::CMouseState &mouseState);
+		virtual bool mouseReleased(const Input::CMouseState &mouseState);
 
 	protected:
 

@@ -18,6 +18,7 @@ Contiene la implementación del componente que gestiona las armas y que administr
 #include "Logic/Entity/Components/ArrayGraphics.h"
 #include "Logic/Entity/Components/Life.h"
 #include "Logic/Entity/Components/Shoot.h"
+#include "Logic/Messages/MessageAudio.h"
 
 #include "Logic/Messages/MessageControl.h"
 #include "Logic/Messages/MessageDamaged.h"
@@ -41,6 +42,12 @@ namespace Logic {
 		_dispersion = entityInfo->getFloatAttribute(weapon+"Dispersion");
 		_distance = entityInfo->getFloatAttribute(weapon+"Distance");
 
+		if(entityInfo->hasAttribute("audioNoAmmo"))
+			_noAmmo = entityInfo->getStringAttribute("audioNoAmmo");
+
+		if(entityInfo->hasAttribute(weapon+"Audio"))
+			_audioShoot = entityInfo->getStringAttribute(weapon+"Audio");
+
 		return true;
 	}
 
@@ -52,21 +59,35 @@ namespace Logic {
 			_canShoot = false;
 			_cooldownTimer = 0;
 				
-			drawParticle("fire", "ShootParticle");
+			//drawParticle("fire", "ShootParticle");
+
+			decrementAmmo();
 
 			for(int i = 0; i < _numberShots; ++i) {
 				std::pair<CEntity*, Ray> entityHit = fireWeapon();
-				decrementAmmo();
+				
 				if(entityHit.first != NULL) {
 					triggerHitMessages(entityHit);
 				}
 			}
-
-			
+			//Sonido de disparo
+			Logic::CMessageAudio *maudio=new Logic::CMessageAudio();
+			maudio->setRuta(_audioShoot);
+			maudio->setId("audioShoot");
+			maudio->setPosition(_entity->getPosition());
+			maudio->setNotIfPlay(false);
+			maudio->setIsPlayer(_entity->isPlayer());
+			_entity->emitMessage(maudio);
 		}
 		else if(_currentAmmo == 0) {
 			// Ejecutar sonidos y animaciones de falta de balas
-			//triggerRunOutOfAmmoMessages();
+			Logic::CMessageAudio *maudio=new Logic::CMessageAudio();
+			maudio->setRuta(_noAmmo);
+			maudio->setId("noAmmo");
+			maudio->setPosition(_entity->getPosition());
+			maudio->setNotIfPlay(false);
+			maudio->setIsPlayer(_entity->isPlayer());
+			_entity->emitMessage(maudio);
 		}
 	}// shoot
 	

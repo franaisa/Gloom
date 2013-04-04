@@ -20,12 +20,15 @@ Contiene la implementación del estado de menú.
 #include "Logic/Maps/EntityFactory.h"
 #include "Logic/Maps/Map.h"
 
+#include "BaseSubsystems\Server.h"
+
 #include "GUI/Server.h"
 
 #include <CEGUISystem.h>
 #include <CEGUIWindowManager.h>
 #include <CEGUIWindow.h>
 #include <elements/CEGUIPushButton.h>
+
 
 #include "Physics/Server.h"
 
@@ -50,31 +53,12 @@ namespace Application {
 		// TODO: Crear la escena física usando el servidor de física
 		Physics::CServer::getSingletonPtr()->createScene();
 
-		// En el propio estado para cambiar a otra configuracion
-		//GUI::getSingletonPtr()->changeStateLayout(this, "layout que nos interese");
-
-		//CEGUI::WindowManager::getSingletonPtr()->loadWindowLayout("Menu.layout");
-		//_menuWindow = CEGUI::WindowManager::getSingleton().getWindow("Menu");
-
-		GUI::CServer::getSingletonPtr()->addLayoutToState(this, "Menu");
-
-		// Asociamos los botones del menú con las funciones que se deben ejecutar.
-		CEGUI::WindowManager::getSingleton().getWindow("Menu/Start")->
-			subscribeEvent(CEGUI::PushButton::EventClicked, 
-				CEGUI::SubscriberSlot(&CMenuState::startReleased, this));
-
-		//GUI::CServer::getSingletonPtr()->addButtonToLayout(this, "Menu", "Start", &CMenuState::startReleased);
-		
-		CEGUI::WindowManager::getSingleton().getWindow("Menu/Exit")->
-			subscribeEvent(CEGUI::PushButton::EventClicked, 
-				CEGUI::SubscriberSlot(&CMenuState::exitReleased, this));
-
-		CEGUI::WindowManager::getSingleton().getWindow("Menu/Multiplayer")->
-			subscribeEvent(CEGUI::PushButton::EventClicked, 
-				CEGUI::SubscriberSlot(&CMenuState::multiplayerReleased, this));
-
-		//GUI::CServer::getSingletonPtr()->addButtonToLayout(this, "Menu", "Exit", &CMenuState::exitReleased);
-	
+		_menu = GUI::CServer::getSingletonPtr()->addLayoutToState(this,"menu", Hikari::Position(Hikari::Center));
+		_menu->load("MenuPrincipal.swf");
+		_menu->bind("exitClick",Hikari::FlashDelegate(this, &CMenuState::onExitClick));
+		_menu->bind("multiplayer",Hikari::FlashDelegate(this, &CMenuState::multiplayerReleased));
+		_menu->bind("newgame",Hikari::FlashDelegate(this, &CMenuState::startReleased));
+		_menu->hide();
 		return true;
 
 	} // init
@@ -92,15 +76,14 @@ namespace Application {
 	void CMenuState::activate() 
 	{
 		CApplicationState::activate();
-
-		GUI::CServer::getSingletonPtr()->activateGUI(this, "Menu");
-		GUI::CServer::getSingletonPtr()->activateMouseCursor();
-
+		_menu->show();
+		//GUI::CServer::getSingletonPtr()->activateMouseCursor();
+		//_menuWindow->setVisible(false);
 		// Activamos la ventana que nos muestra el menú y activamos el ratón.
-		/*CEGUI::System::getSingletonPtr()->setGUISheet(_menuWindow);
-		_menuWindow->setVisible(true);
-		_menuWindow->activate();
-		CEGUI::MouseCursor::getSingleton().show();*/
+		//CEGUI::System::getSingletonPtr()->setGUISheet(_menuWindow);
+		//_menuWindow->setVisible(true);
+		//_menuWindow->activate();
+		//CEGUI::MouseCursor::getSingleton().show();
 
 	} // activate
 
@@ -108,15 +91,8 @@ namespace Application {
 
 	void CMenuState::deactivate() 
 	{	
-		GUI::CServer::getSingletonPtr()->deactivateGUI();
-		GUI::CServer::getSingletonPtr()->deactivateMouseCursor();
-
-		// Desactivamos la ventana GUI con el menú y el ratón.
-		/*CEGUI::MouseCursor::getSingleton().hide();
-		_menuWindow->deactivate();
-		_menuWindow->setVisible(false);
-		*/
 		CApplicationState::deactivate();
+		_menu->hide();
 
 	} // deactivate
 
@@ -125,12 +101,11 @@ namespace Application {
 	void CMenuState::tick(unsigned int msecs) 
 	{
 		CApplicationState::tick(msecs);
-
 	} // tick
 
 	//--------------------------------------------------------
 
-	bool CMenuState::keyPressed(GUI::TKey key)
+	bool CMenuState::keyPressed(Input::TKey key)
 	{
 		return false;
 
@@ -138,14 +113,14 @@ namespace Application {
 
 	//--------------------------------------------------------
 
-	bool CMenuState::keyReleased(GUI::TKey key)
+	bool CMenuState::keyReleased(Input::TKey key)
 	{
 		switch(key.keyId)
 		{
-		case GUI::Key::ESCAPE:
+		case Input::Key::ESCAPE:
 			_app->exitRequest();
 			break;
-		case GUI::Key::RETURN:
+		case Input::Key::RETURN:
 			/*
 			if (!Logic::CEntityFactory::getSingletonPtr()->loadBluePrints("blueprints.txt"))
 				return false;
@@ -167,7 +142,7 @@ namespace Application {
 
 	//--------------------------------------------------------
 	
-	bool CMenuState::mouseMoved(const GUI::CMouseState &mouseState)
+	bool CMenuState::mouseMoved(const Input::CMouseState &mouseState)
 	{
 		return false;
 
@@ -175,7 +150,7 @@ namespace Application {
 
 	//--------------------------------------------------------
 		
-	bool CMenuState::mousePressed(const GUI::CMouseState &mouseState)
+	bool CMenuState::mousePressed(const Input::CMouseState &mouseState)
 	{
 		return false;
 
@@ -184,7 +159,7 @@ namespace Application {
 	//--------------------------------------------------------
 
 
-	bool CMenuState::mouseReleased(const GUI::CMouseState &mouseState)
+	bool CMenuState::mouseReleased(const Input::CMouseState &mouseState)
 	{
 		return false;
 
@@ -192,27 +167,12 @@ namespace Application {
 			
 	//--------------------------------------------------------
 		
-	bool CMenuState::startReleased(const CEGUI::EventArgs& e) {
-		
-		/*
-		
-		if (!Logic::CEntityFactory::getSingletonPtr()->loadBluePrints("blueprints.txt"))
-			return false;
-		if (!Logic::CEntityFactory::getSingletonPtr()->loadArchetypes("archetypes.txt")) {
-			return false;
-		}
-		// Cargamos el nivel a partir del nombre del mapa. 
-		if (!Logic::CServer::getSingletonPtr()->loadLevel("map.txt"))
-			return false;
-		
-		_app->setState("singlePlayer");
-		
-		/*/
+	Hikari::FlashValue CMenuState::startReleased(Hikari::FlashControl* caller, const Hikari::Arguments& args){
 		
 		_app->setState("selectScenario");
 		
 		/* */
-		return true;
+		return FLASH_VOID;
 
 	} // startReleased
 			
@@ -225,17 +185,16 @@ namespace Application {
 
 	//--------------------------------------------------------
 
-	bool CMenuState::exitReleased(const CEGUI::EventArgs& e)
+	Hikari::FlashValue CMenuState::onExitClick(Hikari::FlashControl* caller, const Hikari::Arguments& args)
 	{
 		_app->exitRequest();
-		return true;
-
+		return FLASH_VOID;
 	} // exitReleased
 
-	bool CMenuState::multiplayerReleased(const CEGUI::EventArgs& e)
+	Hikari::FlashValue CMenuState::multiplayerReleased(Hikari::FlashControl* caller, const Hikari::Arguments& args)
 	{
 		_app->setState("netmenu");
-		return true;
+		return FLASH_VOID;
 
 	} // multiplayerReleased
 

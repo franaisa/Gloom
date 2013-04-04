@@ -93,7 +93,7 @@ namespace Application {
 			buffer.read(&entityID, sizeof(entityID));
 			std::string name;
 			buffer.deserialize(name);
-
+			std::cout << "RECEIVED creando player con id" << entityID << std::endl << std::endl << std::endl << std::endl << std::endl << std::endl << std::endl << std::endl;
 			Logic::CEntity * player = Logic::CServer::getSingletonPtr()->getMap()->createPlayer(name, entityID);
 			player->activate();
 			break;

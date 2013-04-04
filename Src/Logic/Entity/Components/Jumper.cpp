@@ -18,6 +18,7 @@ Contiene la implementación del componente que gestiona la aplicacion de una fuer
 
 #include "Logic/Messages/MessageTouched.h"
 #include "Logic/Messages/MessageAddForcePlayer.h"
+#include "Logic/Messages/MessageAudio.h"
 
 
 
@@ -42,6 +43,9 @@ namespace Logic
 		if(entityInfo->hasAttribute("direction"))
 			_direction = entityInfo->getVector3Attribute("direction");
 
+		if(entityInfo->hasAttribute("audio"))
+			_audio = entityInfo->getStringAttribute("audio");
+
 		return true;
 
 	} // spawn
@@ -64,10 +68,18 @@ namespace Logic
 
 	void CJumper::process(CMessage *message)
 	{
+		Logic::CMessageAudio *maudio=new Logic::CMessageAudio();
+
 		switch(message->getMessageType())
 		{
 		case Message::TOUCHED:
 			applyJump(((CMessageTouched*)message)->getEntity());
+			maudio->setRuta(_audio);
+			maudio->setId("jumper");
+			maudio->setPosition(_entity->getPosition());
+			maudio->setNotIfPlay(false);
+			maudio->setIsPlayer(false);
+			_entity->emitMessage(maudio);
 			break;
 		}
 

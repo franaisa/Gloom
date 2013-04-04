@@ -19,7 +19,7 @@ basadas en Ogre. Esta clase maneja la ejecución de todo el juego.
 #define __Application_GloomApplication_H
 
 #include "3DApplication.h"
-#include "GUI/InputManager.h"
+#include "Input/InputManager.h"
 
 // Predeclaración de clases para ahorrar tiempo de compilación
 namespace Application 
