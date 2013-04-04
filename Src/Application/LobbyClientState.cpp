@@ -175,10 +175,10 @@ namespace Application {
 			//llamo al metodo de creacion del jugador
 			if(id == Net::CManager::getSingletonPtr()->getID()) {//si soy yo, me creo como jugador local
 				Logic::CEntity * player = Logic::CServer::getSingletonPtr()->getMap()->createLocalPlayer(name, entityID);
+				player->getEntityID();
 			}else{//si no soy yo, me creo como jugador remoto
 				Logic::CEntity * player = Logic::CServer::getSingletonPtr()->getMap()->createPlayer(name, entityID);
 			}
-
 			//Enviamos el mensaje de que se ha creado el jugador
 			Net::NetMessageType ackMsg = Net::PLAYER_LOADED;
 			Net::CBuffer ackBuffer(sizeof(ackMsg) + sizeof(id));

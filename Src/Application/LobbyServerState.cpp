@@ -303,7 +303,7 @@ namespace Application {
 					Logic::TEntityID id = player->getEntityID();
 					Logic::CGameNetPlayersManager::getSingletonPtr()->setEntityID(netId, id);
 					
-					
+					std::cout << "creando player con id " << id << std::endl;
 					buffer.write(&id, sizeof(id));
 
 					// Metemos el nombre del jugador en el buffer
