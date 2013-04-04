@@ -279,12 +279,10 @@ namespace Logic
 		map->addEntity(ret);
 		// Y lo inicializamos
 		if (_dynamicCreation ? ret->dynamicSpawn(map, entityInfo) : ret->spawn(map, entityInfo)){
-			if(Net::CManager::getSingletonPtr()->imServer() && _dynamicCreation && 
-			   entityType != "LocalPlayer" && entityType != "RemotePlayer") {
-				
-			   Logic::CGameNetMsgManager::getSingletonPtr()->sendCreateEntity(ret->getEntityID());
+			if(Net::CManager::getSingletonPtr()->imServer() && _dynamicCreation && entityType != "ServerPlayer"){
+				Logic::CGameNetMsgManager::getSingletonPtr()->sendCreateEntity(ret->getEntityID());
 			}
-			
+
 			return ret;
 		} else {
 			map->removeEntity(ret);
@@ -299,7 +297,8 @@ namespace Logic
 	Logic::CEntity *CEntityFactory::createEntity(Map::CEntity *entityInfo,
 							  CMap *map, Vector3 position)
 	{
-		CEntity *ret = assembleEntity(entityInfo->getType());
+		std::string entityType = entityInfo->getType();
+		CEntity *ret = assembleEntity(entityType);
 		if (!ret)
 			return 0;
 
@@ -311,8 +310,9 @@ namespace Logic
 			ret->setPosition(position);
 
 			//enviamos por red la creación de la entidad
-			if(Net::CManager::getSingletonPtr()->imServer() && _dynamicCreation)
+			if(Net::CManager::getSingletonPtr()->imServer() && _dynamicCreation && entityType != "ServerPlayer"){
 				Logic::CGameNetMsgManager::getSingletonPtr()->sendCreateEntity(ret->getEntityID());
+			}
 
 			return ret;
 		} else {
@@ -338,7 +338,8 @@ namespace Logic
 
 	Logic::CEntity *CEntityFactory::createEntity(Map::CEntity *entityInfo, Logic::CMap *map, TEntityID id)
 	{
-		CEntity *ret = assembleEntity(entityInfo->getType(), id);
+		std::string entityType = entityInfo->getType();
+		CEntity *ret = assembleEntity(entityType);
 		if (!ret)
 			return 0;
 
@@ -347,8 +348,9 @@ namespace Logic
 		// Y lo inicializamos
 		if (ret->spawn(map, entityInfo)){
 
-			if(Net::CManager::getSingletonPtr()->imServer() && _dynamicCreation)
+			if(Net::CManager::getSingletonPtr()->imServer() && _dynamicCreation && entityType != "ServerPlayer"){
 				Logic::CGameNetMsgManager::getSingletonPtr()->sendCreateEntity(ret->getEntityID());
+			}
 
 			return ret;
 		} else {
