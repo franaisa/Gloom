@@ -186,6 +186,12 @@ namespace Graphics
 
 		void changeMaterial(const std::string& materialName);
 
+		void getMeshInformation(const Ogre::MeshPtr& mesh,size_t &vertex_count, Ogre::Vector3* &vertices,
+								size_t &index_count, unsigned* &indices,
+								const Ogre::Vector3 &position = Ogre::Vector3::ZERO,
+								const Ogre::Quaternion &orient = Ogre::Quaternion::IDENTITY,
+								const Ogre::Vector3 &scale = Ogre::Vector3::UNIT_SCALE);
+
 	protected:
 
 		// CScene es la única que puede añadir o eliminar entidades de una 
