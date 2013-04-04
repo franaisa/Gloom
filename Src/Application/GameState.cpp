@@ -110,7 +110,7 @@ namespace Application {
 
 		//La picadura no te escapas
 		Audio::CServer::getSingletonPtr()->stopSound("theme");
-		Audio::CServer::getSingletonPtr()->playLoopSound("media/audio/picadura.mp3","picadura");
+		//Audio::CServer::getSingletonPtr()->playLoopSound("media/audio/picadura.mp3","picadura");
 
 		// Activamos la ventana que nos muestra el tiempo transcurrido.
 		//CEGUI::System::getSingletonPtr()->setGUISheet(_timeWindow);
