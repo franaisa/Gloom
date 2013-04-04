@@ -19,6 +19,7 @@ de disparo del lanzacohetes.
 #include "RocketController.h"
 #include "Logic/GameNetMsgManager.h"
 #include "../../../Net/Manager.h"
+#include "Logic/Entity/Components/AvatarController.h"
 
 #include "Logic/Messages/MessageSetPhysicPosition.h"
 #include "Logic/Messages/MessageAddForcePhysics.h"
@@ -46,9 +47,13 @@ namespace Logic {
 		Map::CEntity *entityInfo = CEntityFactory::getSingletonPtr()->getInfo("Rocket");
 		
 		// Creamos la entidad y la activamos// Spawneamos el cohete justo delante del jugador y a la altura de disparo que corresponda
+		// Ojo si vamos hacia atras necesitamos mas separacion o la liamos ( no se si la jode la orientacion o la posicion o estoy del reves )
+		int inverse = 1;
+		if(_entity->getComponent<CAvatarController>("CAvatarController")->getWalkingBack())
+			inverse = 2;
 		Vector3 entityPosition = _entity->getPosition();
-		Vector3 myPosition = entityPosition + ( Math::getDirection( _entity->getOrientation() )* (_capsuleRadius) );
-		myPosition.y = entityPosition.y + _heightShoot;
+		Vector3 myPosition = entityPosition + (Math::getDirection( _entity->getOrientation() )* (_capsuleRadius) * inverse );
+		myPosition.y += _heightShoot;
 
 		CEntity* rocket = CEntityFactory::getSingletonPtr()->createEntity(entityInfo, Logic::CServer::getSingletonPtr()->getMap(), myPosition);
 		assert(rocket != NULL);
@@ -66,7 +71,7 @@ namespace Logic {
 
 		// Mandar mensaje add force
 		Logic::CMessageAddForcePhysics* forceMsg = new Logic::CMessageAddForcePhysics();
-		forceMsg->setForce( (Math::getDirection( _entity->getOrientation()) * _shootForce), Physics::ForceMode::eIMPULSE );
+		forceMsg->setForce( (Math::getDirection( _entity->getOrientation()) * _shootForce), Physics::ForceMode::eFORCE );
 		forceMsg->setGravity(false);
 		rocket->emitMessage(forceMsg);
 	}

@@ -178,6 +178,13 @@ namespace Logic
 			return _falling;
 		};
 
+		/**
+		Devuelve el estado del booleano WalkingBack
+		*/
+		bool getWalkingBack(){
+			return _walkingBack;
+		};
+
 	protected:
 
 		/**
