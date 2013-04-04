@@ -52,10 +52,10 @@ namespace Logic {
 		if(_entity->getComponent<CAvatarController>("CAvatarController")->getWalkingBack())
 			inverse = 2;
 		Vector3 entityPosition = _entity->getPosition();
-		Vector3 myPosition = entityPosition + (Math::getDirection( _entity->getOrientation() )* (_capsuleRadius) * inverse );
-		myPosition.y += _heightShoot;
+		Vector3 shootPosition = entityPosition + (Math::getDirection( _entity->getOrientation() )* (_capsuleRadius) * inverse );
+		shootPosition.y += _heightShoot;
 
-		CEntity* rocket = CEntityFactory::getSingletonPtr()->createEntity(entityInfo, Logic::CServer::getSingletonPtr()->getMap(), myPosition);
+		CEntity* rocket = CEntityFactory::getSingletonPtr()->createEntity(entityInfo, Logic::CServer::getSingletonPtr()->getMap(), shootPosition);
 		assert(rocket != NULL);
 		rocket->activate();
 
@@ -63,11 +63,6 @@ namespace Logic {
 		CRocketController* comp = rocket->getComponent<CRocketController>("CRocketController");
 		assert(comp != NULL);
 		comp->setOwner(_entity);
-		// Mensaje para situar el collider fisico del cohete en la posicion de disparo.
-		Logic::CMessageSetPhysicPosition* msg = new Logic::CMessageSetPhysicPosition();
-		msg->setPosition(myPosition);
-		msg->setMakeConversion(false);
-		rocket->emitMessage(msg);
 
 		// Mandar mensaje add force
 		Logic::CMessageAddForcePhysics* forceMsg = new Logic::CMessageAddForcePhysics();

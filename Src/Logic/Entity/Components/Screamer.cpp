@@ -100,8 +100,6 @@ namespace Logic {
 					refreshShieldPosition();
 				}
 				else {
-					// El screamer explota
-
 					_primarySkillIsActive = false;
 
 					// Destruir o desactivar el escudo
@@ -152,10 +150,14 @@ namespace Logic {
 		// Me he visto obligado a realizar esta comprobacion aqui porque de momento no podemos crear entidades dinamicas
 		// en el spawn (por la forma de asignar nombres).
 		if(_screamerShield == NULL) {
+			Vector3 entityPosition = _entity->getPosition();
+			Vector3 shootPosition = entityPosition + ( Math::getDirection( _entity->getOrientation() ) * _capsuleRadius );
+			shootPosition.y = entityPosition.y + _heightShoot;
+
 			// Obtenemos la informacion asociada al arquetipo de la granada
 			Map::CEntity* screamerShieldInfo = CEntityFactory::getSingletonPtr()->getInfo("ScreamerShield");
 			// Creamos la entidad y la activamos
-			_screamerShield = CEntityFactory::getSingletonPtr()->createEntity( screamerShieldInfo, Logic::CServer::getSingletonPtr()->getMap() );
+			_screamerShield = CEntityFactory::getSingletonPtr()->createEntity( screamerShieldInfo, Logic::CServer::getSingletonPtr()->getMap(), shootPosition );
 			assert(_screamerShield != NULL);
 
 			// Fijamos a nuestra entidad como dueña de la entidad creada en el componente
@@ -165,8 +167,8 @@ namespace Logic {
 			shieldDmgNotifier->setOwner(_entity);
 		}
 
-		// Activamos el escudo
-		_screamerShield->activate();
+		// Activamos los gráficos y la entidad
+		activateScreamerShield();
 	}
 
 	//__________________________________________________________________
@@ -196,13 +198,20 @@ namespace Logic {
 	void CScreamer::refreshShieldPosition() {
 		// Spawneamos la granada justo delante del jugador y a la altura de disparo que corresponda
 		Vector3 entityPosition = _entity->getPosition();
-		Vector3 myPosition = entityPosition + ( Math::getDirection( _entity->getOrientation() ) * _capsuleRadius );
-		myPosition.y = entityPosition.y + _heightShoot;
+		Vector3 shootPosition = entityPosition + ( Math::getDirection( _entity->getOrientation() ) * _capsuleRadius );
+		shootPosition.y = entityPosition.y + _heightShoot;
 
 		// Posicionamos el centro del escudo justo en el punto de mira
 		CPhysicDynamicEntity* physicDynamic = _screamerShield->getComponent<CPhysicDynamicEntity>("CPhysicDynamicEntity");
 		assert(physicDynamic && "Error la entidad ScreamerShield no tiene un componente fisico");
-		physicDynamic->setPhysicPosition(myPosition, false);
+		physicDynamic->setPhysicPosition(shootPosition, false);
+	}
+
+	//__________________________________________________________________
+
+	void CScreamer::activateScreamerShield() {
+		// Activamos el escudo
+		_screamerShield->activate();
 
 		// Activamos los gráficos del escudo
 		CGraphics* shieldGraphics = _screamerShield->getComponent<CGraphics>("CGraphics");
