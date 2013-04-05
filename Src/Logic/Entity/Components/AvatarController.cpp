@@ -132,6 +132,7 @@ namespace Logic
 
 	void CAvatarController::process(CMessage *message)
 	{
+		//std::cout << "menssaje de avatar controller recibido" << std::endl;
 		switch(message->getMessageType())
 		{
 		case Message::CONTROL:

@@ -282,7 +282,7 @@ namespace Physics {
 		_scene->setFlag(PxSceneFlag::eENABLE_KINEMATIC_PAIRS, true);
 		_scene->setFlag(PxSceneFlag::eENABLE_KINEMATIC_STATIC_PAIRS, true);
 
-		//CCloth* test = new CCloth();
+		CCloth* test = new CCloth();
 	}
 
 	//________________________________________________________________________

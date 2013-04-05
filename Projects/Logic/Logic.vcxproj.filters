@@ -369,6 +369,9 @@
     </ClCompile>
     <ClCompile Include="..\..\Src\Logic\Entity\Components\Particle.cpp">
       <Filter>Entity\Components\Source Files</Filter>
+	</ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Maps\GUIManager.cpp">
+      <Filter>Maps\Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -704,6 +707,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Entity\Components\Particle.h">
       <Filter>Entity\Components\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Maps\GUIManager.h">
+      <Filter>Maps\Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

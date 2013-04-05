@@ -22,6 +22,7 @@ namespace Logic
 	class CEntity;
 	class CGameNetMsgManager;
 	class CGameSpawnManager;
+	class CGUIManager;
 }
 
 /**
@@ -196,6 +197,8 @@ namespace Logic
 		Gestor de los puntos de respawn
 		*/
 		Logic::CGameSpawnManager* _gameSpawnManager;
+
+		Logic::CGUIManager* _guiManager;
 
 		/**
 			mi ping actual
