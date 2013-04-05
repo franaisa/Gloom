@@ -71,6 +71,8 @@ namespace Logic
 		*/
 		virtual void tick(unsigned int msecs);
 
+
+		virtual void deactivate();
 	protected:
 
 		int _numWeapons;

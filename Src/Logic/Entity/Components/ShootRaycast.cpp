@@ -59,7 +59,7 @@ namespace Logic {
 			_canShoot = false;
 			_cooldownTimer = 0;
 				
-			//drawParticle("fire", "ShootParticle");
+			drawParticle("fire", "ShootParticle");
 
 			decrementAmmo();
 
@@ -126,6 +126,8 @@ namespace Logic {
 		m->setDamage(_damage);
 		m->setEnemy(_entity);
 		entityHit.first->emitMessage(m);
+
+
 
 	}// triggerHitMessages
 

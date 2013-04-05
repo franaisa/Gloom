@@ -534,5 +534,9 @@ namespace Logic
 		}
 	}
 
+	void CHudOverlay::deactivate(){
+		_overlayPlay->setVisible(false);
+	}
+
 } // namespace Logic
 

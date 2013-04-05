@@ -93,6 +93,7 @@
     <ClCompile Include="..\..\Src\Logic\Entity\Components\Life.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\Light.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\NetConnector.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\Particle.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\PhysicController.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\PhysicDynamicEntity.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\PhysicStaticEntity.cpp" />
@@ -199,6 +200,7 @@
     <ClInclude Include="..\..\Src\Logic\Entity\Components\Light.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\NetConnector.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\ArrayGraphics.h" />
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\Particle.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\PhysicDynamicEntity.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\Physics.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\DamageTrigger.h" />
