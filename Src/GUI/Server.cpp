@@ -186,6 +186,13 @@ namespace GUI {
 
 	//________________________________________________________________________
 
+	void CServer::destroyLayout(Hikari::FlashControl* overlay){
+		_manager->destroyFlashControl(overlay);
+
+	}
+
+	//________________________________________________________________________
+
 	void CServer::addButtonToLayout( Application::CApplicationState* state, 
 		const std::string& layoutName,  const std::string& buttonName, 
 		bool (*buttonFunction)(const GUIEventArgs&) ) {

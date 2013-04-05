@@ -123,6 +123,8 @@ namespace Logic {
 
 		Logic::CGameSpawnManager::Release();
 
+		Logic::CGUIManager::Release();
+
 	} // close
 
 	//--------------------------------------------------------

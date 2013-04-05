@@ -1,5 +1,6 @@
 #include <string>
 #include <map>
+#include <vector>
 
 
 #ifndef __Logic_GUIManager_H
@@ -40,9 +41,39 @@ namespace Logic
 		static CGUIManager* getSingletonPtr() {return _instance;}
 
 		/**
+		Método que añade un GUI control al manager de GUIs, para que podamos invocar 
+		sus métodos
 
+		@param overlay El overlay en flash que estamos añadiendo al manager
+		@param name el nombre que le hemos asignado al overlay (debe ser único)
+
+		@return true si todo fue bien, false en caso contrario
 		**/
-		bool addGUI(Hikari::FlashControl* overlay, std::string name);
+		bool addGUI(Hikari::FlashControl* overlay,const std::string &name);
+
+		/**
+		Método que devuelve el control que maneja la GUI
+
+		@param name el nombre de la GUI que estamos pidiendo
+
+		@return Un puntero al control de la GUI
+		*/
+		Hikari::FlashControl* getGUIControl(const std::string &name);
+
+		void deleteGUI(const std::string &gui);
+
+		void showGUI(const std::string &name);
+
+		void hideGUI(const std::string &name);
+
+		template<class T, typename ReturnType>
+		void addCallback(const std::string &gui, const std::string &funcName, T instance, ReturnType (T::*function)());
+
+		void callFunction(const std::string &gui, const std::string &function);
+
+		void callFunction(const std::string &gui, const std::string &function, const std::vector<std::string> &stringPars, 
+						const std::vector<float> &floatPars, 
+						const std::vector<int> &intPars);
 
 		/**
 		Inicializa la instancia
