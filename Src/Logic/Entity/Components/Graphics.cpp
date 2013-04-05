@@ -104,7 +104,7 @@ namespace Logic
 		}
 
 		
-		_graphicsEntity->setTransform(_entity->getTransform());		
+		_graphicsEntity->setTransform(_entity->getTransform());
 		
 		return _graphicsEntity;
 

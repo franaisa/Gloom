@@ -162,7 +162,7 @@ Map = {
 			weaponGrenadeLauncherAudio = "media/audio/grenadeLauncher.wav",
 			
 			weaponRocketLauncherName = "RocketLauncher",
-			weaponRocketLauncherModel = "rocketq3.mesh",
+			weaponRocketLauncherModel = "FreezeGun.mesh",
 			weaponRocketLauncherModelYaw = 3.10,
 			weaponRocketLauncherModelPitch = 0,
 			weaponRocketLauncherOffset = {0.0,-3.0,-10.0},
@@ -350,11 +350,11 @@ Map = {
 			weaponGrenadeLauncherId = 4,
 			weaponGrenadeLauncherShootForce = 5000,
 			weaponGrenadeLauncherProjectileRadius = 3,
-			weaponGrenadeLauncherParticlePosition = {0.0, 0.0, 0.0},
+			weaponGrenadeLauncherParticlePosition = {50.0, 50.0, 50.0},
 			weaponGrenadeLauncherAudio = "media/audio/grenadeLauncher.wav",
 
 			weaponRocketLauncherName = "RocketLauncher",
-			weaponRocketLauncherModel = "rocketq3.mesh",
+			weaponRocketLauncherModel = "FreezeGun.mesh",
 			weaponRocketLauncherModelYaw = 3.10,
 			weaponRocketLauncherModelPitch = 0,
 			weaponRocketLauncherOffset = {0.0,-3.0,-10.0},
@@ -365,7 +365,7 @@ Map = {
 			weaponRocketLauncherId = 5,
 			weaponRocketLauncherShootForce = 10000,
 			weaponRocketLauncherProjectileRadius = 3,
-			weaponRocketLauncherParticlePosition = {0.0, 0.0, 0.0},
+			weaponRocketLauncherParticlePosition = {50.0, 50.0, 50.0},
 			weaponRocketLauncherAudio = "media/audio/rocketLauncher.wav",
 			
 		hudMira = 3,
@@ -492,6 +492,7 @@ Map = {
 			weaponSniperMaxAmmo = 10,
 			weaponSniperId = 1,
 			weaponSniperAudio = "media/audio/sniper.wav",
+			weaponSniperParticlePosition = {50.0, 50.0, 50.0},	
 			
 			weaponShotGunName = "Shotgun",
 			weaponShotGunModel = "UziLeft.mesh",
@@ -506,6 +507,7 @@ Map = {
 			weaponShotGunMaxAmmo = 48,
 			weaponShotGunId = 2,
 			weaponShotGunAudio = "media/audio/shotgun.wav",
+			weaponShotGunParticlePosition = {50.0, 50.0, 50.0},	
 			
 			weaponMiniGunName = "MiniGun",
 			weaponMiniGunModel = "plasmagun.mesh",
@@ -520,6 +522,7 @@ Map = {
 			weaponMiniGunMaxAmmo = 200,
 			weaponMiniGunId = 3,
 			weaponMiniGunAudio = "media/audio/minigun.wav",
+			weaponMiniGunParticlePosition = {50.0, 50.0, 50.0},	
 			
 			weaponGrenadeLauncherName = "GrenadeLauncher",
 			weaponGrenadeLauncherModel = "grenadelauncher.mesh",
@@ -534,9 +537,10 @@ Map = {
 			weaponGrenadeLauncherShootForce = 5000,
 			weaponGrenadeLauncherProjectileRadius = 3,
 			weaponGrenadeLauncherAudio = "media/audio/grenadeLauncher.wav",
+			weaponGrenadeLauncherParticlePosition = {50.0, 50.0, 50.0},			
 
 			weaponRocketLauncherName = "RocketLauncher",
-			weaponRocketLauncherModel = "rocketq3.mesh",
+			weaponRocketLauncherModel = "FreezeGun.mesh",
 			weaponRocketLauncherModelYaw = 3.10,
 			weaponRocketLauncherModelPitch = 0,
 			weaponRocketLauncherOffset = {0.0,-3.0,-10.0},
@@ -546,9 +550,9 @@ Map = {
 			weaponRocketLauncherMaxAmmo = 18,
 			weaponRocketLauncherId = 5,
 			weaponRocketLauncherProjectileRadius = 3,
-			weaponRocketLauncherParticlePosition = {00.0, 0.0, 0.0},
 			weaponRocketLauncherShootForce = 20000,
 			weaponRocketLauncherAudio = "media/audio/rocketLauncher.wav",
+			weaponRocketLauncherParticlePosition = {50.0, 50.0, 50.0},
 			
 		hudMira = 3,
 		hudCross = 3,

@@ -182,7 +182,19 @@ namespace Application {
 		switch(key.keyId)
 		{
 		case Input::Key::ESCAPE:
+			
+			//Logic::CServer::getSingletonPtr()->unLoadLevel();
+/*
 			Logic::CServer::getSingletonPtr()->unLoadLevel();
+		Logic::CEntityFactory::getSingletonPtr()->unloadBluePrints();
+		// Liberar la escena física usando el motor de física
+		Physics::CServer::getSingletonPtr()->destroyScene();
+
+		// Llamar al método padre por si acaso tiene que hacer algo
+		CApplicationState::release();
+
+		CApplicationState::init();
+		*/
 			_app->setState("menu");
 			break;
 		default:

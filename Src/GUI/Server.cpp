@@ -143,6 +143,38 @@ namespace GUI {
 
 	//________________________________________________________________________
 
+	Hikari::FlashControl* CServer::addLayout(const std::string& layoutName, Hikari::Position pos, unsigned int width, unsigned int height) {
+
+			return BaseSubsystems::CServer::getSingletonPtr()->getHikari()->
+							createFlashOverlay(layoutName,Graphics::CServer::getSingletonPtr()->getActiveScene()->getViewport(),
+							width, height, Hikari::Position(Hikari::Center),1);
+	}
+
+	//________________________________________________________________________
+
+	Hikari::FlashControl* CServer::addLayout(const std::string& layoutName, Hikari::Position pos, float relativePos) {
+
+			return BaseSubsystems::CServer::getSingletonPtr()->getHikari()->
+							createFlashOverlay(layoutName,Graphics::CServer::getSingletonPtr()->getActiveScene()->getViewport(),
+							BaseSubsystems::CServer::getSingletonPtr()->getRenderWindow()->getWidth()*relativePos, 
+							BaseSubsystems::CServer::getSingletonPtr()->getRenderWindow()->getHeight()*relativePos, 
+							Hikari::Position(Hikari::Center),1);
+	}
+
+	//________________________________________________________________________
+
+	Hikari::FlashControl* CServer::addLayout(const std::string& layoutName, Hikari::Position pos) {
+
+			return BaseSubsystems::CServer::getSingletonPtr()->getHikari()->
+							createFlashOverlay(layoutName,Graphics::CServer::getSingletonPtr()->getActiveScene()->getViewport(),
+							BaseSubsystems::CServer::getSingletonPtr()->getRenderWindow()->getWidth(), 
+							BaseSubsystems::CServer::getSingletonPtr()->getRenderWindow()->getHeight(), 
+							Hikari::Position(Hikari::Center),1);
+	}
+
+	//________________________________________________________________________
+
+
 	Hikari::FlashControl* CServer::addLayoutToState(Application::CApplicationState* state, 
 		const std::string& layoutName, Hikari::Position pos) {
 
