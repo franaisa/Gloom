@@ -127,6 +127,9 @@ namespace Logic {
 		//                            CAMPOS PRIVADOS
 		// =======================================================================
 
+		/** Booleano que controla que solo se trate el primer contacto ( debe explotar ). */
+		bool _explotionActive;
+
 		/** Transcurrido este tiempo, la se destruye la entidad granada y se ejecuta la explosion. */
 		float _explotionTime;
 

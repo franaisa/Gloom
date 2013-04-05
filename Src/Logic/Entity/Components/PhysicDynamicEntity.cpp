@@ -265,13 +265,13 @@ void CPhysicDynamicEntity::onTrigger(IPhysics *otherComponent, bool enter) {
 //---------------------------------------------------------
 
 void CPhysicDynamicEntity::onContact (IPhysics *otherComponent,bool enter) {
-	std::cout << "contactan con la entidad " << _entity->getName() << std::endl;
+	//std::cout << "contactan con la entidad " << _entity->getName() << std::endl;
 	if (enter) {
 		_inContact=true;
 		std::cout << "TOCO LA ENTIDAD" << std::endl;
-			Logic::CMessageContactEnter* msg = new Logic::CMessageContactEnter();
-			msg->setEntity( otherComponent->getEntity() );
-			_entity->emitMessage(msg);
+		Logic::CMessageContactEnter* msg = new Logic::CMessageContactEnter();
+		msg->setEntity( otherComponent->getEntity() );
+		_entity->emitMessage(msg);
 	} else {
 		_inContact=false;
 		std::cout << "DEJO DE TOCAR LA ENTIDAD" << std::endl;

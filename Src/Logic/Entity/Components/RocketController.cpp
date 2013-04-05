@@ -43,14 +43,20 @@ namespace Logic {
 		_explotionDamage = entityInfo->getFloatAttribute("explotionDamage");
 		_explotionRadius = entityInfo->getFloatAttribute("explotionRadius");
 		_audioExplotion = entityInfo->getStringAttribute("explotionAudio");
-
+		_explotionActive = false;
 		return true;
 	} // spawn
 
 	//________________________________________________________________________
 
 	bool CRocketController::accept(CMessage *message) {
-		return message->getMessageType() == Message::CONTACT_ENTER;
+		//Solamente podemos aceptar un contacto porque luego explotamos
+		if(message->getMessageType() == Message::CONTACT_ENTER && !_explotionActive){
+			_explotionActive=true;
+			return true;
+		}
+		else
+			return false;
 	} // accept
 	
 	//________________________________________________________________________
@@ -97,7 +103,6 @@ namespace Logic {
 					maudio->setIsPlayer(false);
 					_entity->emitMessage(maudio);
 				}
-
 				break;
 			}
 		}
