@@ -20,7 +20,9 @@ namespace Logic
 	Clase que representa la GUI en la lógica.
 	<p>
 	Esta clase se encarga de manejar todos los eventos de GUI que tienen que ver con la lógica 
-	del juego (menus, minimap, etc).
+	del juego (menus, minimap, etc). Esta clase permite que todas las GUIs estén centralizadas
+	y que cualquier evento o llamada a función de las GUIs tenga que pasar por aquí, de manera
+	que queda el manejo de GUIs abstraído del resto de la lógica
 	</p>
 
 	@ingroup logicGroup
@@ -60,17 +62,62 @@ namespace Logic
 		*/
 		Hikari::FlashControl* getGUIControl(const std::string &name);
 
+		/**
+		Método que borra una gui del manager y libera la memoria asociada a ella
+		@param gui el nombre de la gui que se quiere borrar
+		*/
 		void deleteGUI(const std::string &gui);
 
+		/**
+		Método que le dice a una gui concreta que se muestre en la pantalla
+
+		@param name el nombre de la gui que se desea mostrar
+		*/
 		void showGUI(const std::string &name);
 
-		void hideGUI(const std::string &name);
+		/**
+		Método que le dice a una gui concreta que se borre de la pantalla y
+		deje de ser visible
 
+		@param name El nombre de la gui que se desea ocultar
+		*/
+		void hideGUI(const std::string &name);
+		
+		/**
+		Método genérico para añadir a la gui que se desea un callback asociado a una función
+		de la clase llamante. Asocia la función que se le pasa como parámetro al flash control
+		correspondiente para que cuando éste llame a la función desde flash, le llegue al 
+		método de la clase correspondiente
+
+		@param gui el nombre de la gui a la que quiero poner el callback
+		@param funcName el nombre de la función que debe llamar flash para que se ejecute el
+		callback
+		@param instance la instancia de la clase a la que llama el callback
+		@param function la función que actúa como callback
+		*/
 		template<class T, typename ReturnType>
 		void addCallback(const std::string &gui, const std::string &funcName, T instance, ReturnType (T::*function)());
 
+		/**
+		Método que llama a una función de flash de una gui concreta sin parámetros.
+
+		@param gui nombre de la gui a la que estoy llamando
+		@param function nombre de la función en flash a la que estoy llamando
+		*/
 		void callFunction(const std::string &gui, const std::string &function);
 
+		/**
+		Método que llama a una función de flash de una gui concreta. Se le pueden pasar
+		un número variable de parámetros, pero tienen que estar metidos en listas
+		concretas para poder llamar a flash. una lista para strings, una para float y una
+		para integers.
+
+		@param gui nombre de la gui a la que estoy llamando
+		@param function nombre de la función en flash a la que estoy llamando
+		@param stringPars lista de parámetros de tipo string que se le pasan a la funcion
+		@param floatPars lista de parametros de tipo float que se le pasan a la funcion
+		@param intPars lista de parametros de tipo integer que se le pasan a la funcion
+		*/
 		void callFunction(const std::string &gui, const std::string &function, const std::vector<std::string> &stringPars, 
 						const std::vector<float> &floatPars, 
 						const std::vector<int> &intPars);
