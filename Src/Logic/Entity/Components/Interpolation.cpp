@@ -44,7 +44,10 @@ namespace Logic  {
 		_yawDifference = 0;
 		_rotationSpeed = 0.2;
 		_serverDirection = Vector3(0,0,0);
-		_serverStrafeDirection = Vector3(0,0,0);
+		_distance = 0;
+		_keyWS = 0;
+		_keyAD = 0;
+		_oldPos = _entity->getPosition();
 		return true;
 	} // spawn
 
@@ -59,50 +62,35 @@ namespace Logic  {
 
 	void CInterpolation::tick(unsigned int msecs){
 		IComponent::tick(msecs);
+
+		_oldPos = _entity->getPosition();
+		_msecs = msecs;
+
 		//si no estamos interpolando, gl
 		//std::cout << "interpolamos? -> " << _interpolating << std::endl;
-		moveServerPos(msecs);
+		//moveServerPos(msecs);
 		if(!_interpolating)
 			return;
-		std::cout << ">>>>>>>>>>\t MS" << msecs << std::endl  << std::endl;
 		//std::cout << "interpolandooooo "<< std::endl;
 		//lo primero de todo, movemos la posición del servidor para poder interpolar con más exactitud
 		Vector3 newPos;
 		//std::cout << "puedo interpolar? " << _canInterpolateMove << std::endl;
 		if(_canInterpolateMove){
 			//calculamos la direccion en la que debemos interpolar
-			Vector3 direction = _serverPos.getTrans();
-			direction = direction - _entity->getPosition();
-			direction = direction * Vector3(1,0,1);
-			float distance = direction.length();
-			float myDistance = distance * _actualPing/CLOCKS_PER_SEC;
-			//seteo la distancia real
-			distance = distance-myDistance;
-
-			direction = direction.normalisedCopy();
+			Vector3 direction = _serverDirection*Vector3(1,0,1);
 		
 			//calculamos el movimiento que debe hacer el monigote, mucho mas lento del que debe hacer de normal
-			direction *=_speed/5*msecs;
-			//Vector3 newPos = _entity->getPosition()+direction;
-			//vemos a ver si hemos recorrido más de lo que deberíamos, y actuamos en consecuencia
-			//std::cout << "server pos " << _serverPos.getTrans() << std::endl;
-			//std::cout << "mi pos " << _entity->getPosition() << std::endl << std::endl ;
-
-			//std::cout << "mi dirección" << Math::getDirection(_entity->getTransform()) << std::endl;
-			//std::cout << "direccion del servah" << Math::getDirection(_serverPos) << std::endl  << std::endl;
-
-			if(direction.length() > distance){
-				_entity->getComponent<CPhysicController>("CPhysicController")->moveController(direction, msecs);
-				
-			}else{
-				_entity->getComponent<CPhysicController>("CPhysicController")->moveController(direction, msecs);
+			direction *=(_speed/10)*msecs;
+			
+			//si nos hemos pasado, debemos moverlo al sitio
+			if(direction.length() > _distance){
+				direction*=(_distance/direction.length());
 			}
-			//si nos hemos quedado suficientemente cerquita, dejaremos de interpolar
-			newPos = (_entity->getPosition() - _serverPos.getTrans())*Vector3(1,0,1);
-			if (newPos.length() < _minDistance)
-				_canInterpolateMove = false;
-			//std::cout << "nueva pos " << newPos << std::endl ;
-			std::cout << "nueva pos lenght " << newPos.length() << std::endl << std::endl;
+			
+			_entity->getComponent<CPhysicController>("CPhysicController")->moveController(Vector3(direction), msecs);
+			//std::cout << "nueva pos lenght " << _distance << std::endl << std::endl;
+			_distance -= direction.length();
+			
 		}//if
 		if(_canInterpolateRotation){
 
@@ -134,9 +122,10 @@ namespace Logic  {
 		}//if(_canInterpolateRotation)
 
 		//si hemos terminado de interpolar, lo dejamos
-		if((newPos.length() < _minDistance) && ( _yawDifference < _minYaw || _yawDifference > _minYaw*(-1) )){
+		if((_distance < _minDistance) && ( _yawDifference < _minYaw || _yawDifference > _minYaw*(-1) )){
 			_interpolating = false;
 		}
+		
 	}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -159,42 +148,54 @@ namespace Logic  {
 			}
 		case Message::CONTROL:
 			{
+				_canInterpolateMove = true;
+
 			//calculamos la dirección del movimiento
 			switch(((CMessageControl*)message)->getType()){
 			case Control::WALK:
-				_serverDirection+=Vector3(1,0,1);
-				_canInterpolateMove = true;
+				_keyWS+=1;
 				break;
 
 			case Control::STRAFE_LEFT:
-				_serverStrafeDirection+=Vector3(1,0,1);
+				_keyAD+=1;
+				_canInterpolateMove = true;
+				break;
+
+			case Control::SIDEJUMP_LEFT:
+				_keyAD+=1;
 				_canInterpolateMove = true;
 				break;
 
 			case Control::STRAFE_RIGHT:
-				_serverStrafeDirection+=Vector3(-1,0,-1);
-				_canInterpolateMove = true;
+				std::cout << "strafe -> "<< _keyAD << std::endl;
+				_keyAD-=1;
+				break;
+
+			case Control::SIDEJUMP_RIGHT:
+				std::cout << "sidejump -> "<< _keyAD << std::endl;
+				_keyAD-=1;
 				break;
 
 			case Control::WALKBACK:
-				_serverDirection+=Vector3(-1,0,-1);
-				_canInterpolateMove = true;
+				_keyWS-=1;
 				break;
 
 			case Control::STOP_WALK:
-				_serverDirection+=Vector3(-1,0,-1);
+				_keyWS-=1;
 				break;
 
 			case Control::STOP_WALKBACK:
-				_serverDirection+=Vector3(1,0,1);
+				_keyWS+=1;
 				break;
 
 			case Control::STOP_STRAFE_LEFT:
-				_serverStrafeDirection+=Vector3(-1,0,-1);
+				_keyAD-=1;
 				break;
 
 			case Control::STOP_STRAFE_RIGHT:
-				_serverStrafeDirection+=Vector3(1,0,1);
+				std::cout << "stop -> "<< _keyAD << std::endl;
+				_keyAD+=1;
+				
 				break;
 
 			case Control::MOUSE:
@@ -204,15 +205,15 @@ namespace Logic  {
 
 			}//switch
 
-			//std::cout << "serverDirection = " << _serverDirection << std::endl;
-			//std::cout << "serverStrafeDirection = " << _serverStrafeDirection << std::endl << std::endl;
-
 			break;
 			}//case Message::CONTROL:
 
 		}//switch
+
+		//std::cout << "movimiento AD -> "<< _keyAD << std::endl;
+		//std::cout << "movimiento WS -> "<< _keyWS << std::endl;
 		//comprobamos si nos estamos moviendo, de manera que si no nos estamos moviendo no interpolamos
-		if((_serverDirection == Vector3(0,0,0)) && (_serverStrafeDirection == Vector3(0,0,0)) ){
+		if(_keyWS == 0 && _keyAD == 0){
 			_canInterpolateMove = false;
 		}
 
@@ -224,7 +225,7 @@ namespace Logic  {
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	void CInterpolation::moveServerPos(unsigned int msecs){
+/*	void CInterpolation::moveServerPos(unsigned int msecs){
 
 		//primero movemos hacia adelante o hacia atrás
 		if(_serverDirection != Vector3(0,0,0)){
@@ -249,29 +250,38 @@ namespace Logic  {
 			_serverPos.setTrans(newPos);
 			//std::cout << "direccion en INTERPOLATION 2 " << _serverStrafeDirection.normalisedCopy()*Math::getDirection(strafe) <<  std::endl << std::endl;
 		}
-	}
+	}*/
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	void CInterpolation::calculateInterpolation(){
+		
 		//calculamos la distancia que hay entre donde estoy y donde me dice el servidor que debería estar
 		Vector3 serverPos = _serverPos.getTrans();
-		serverPos = (serverPos - _entity->getPosition())*Vector3(1,0,1);
+		serverPos = (_entity->getPosition() - serverPos)*Vector3(1,0,1);
 		float distance = serverPos.length();
-		
+
 		//calculo la distancia que habría recorrido trasladándome hacia la posi que me ha dado el servidor
 		Vector3 direction = serverPos.normalisedCopy();
-		float myDistance = direction.length() * _actualPing/CLOCKS_PER_SEC;
+		float speed = (_oldPos-_entity->getPosition()).length()/_msecs;
+		float myDistance = direction.length() * _actualPing * speed;
+
+		//re seteamos la posi del servidor en donde nos debe tener ahora mas o menos
+		direction *= _actualPing * speed;
+
+		_serverPos.setTrans(_serverPos.getTrans()+direction);
+
 		//seteo la distancia real
 		distance = distance-myDistance;
 		//std::cout << ">>>>>>>>>>>> \tmi posi" << _entity->getPosition() << std::endl;
 		//std::cout << ">>>>>>>>>>>>>>>\t server posi" << _serverPos.getTrans() << std::endl;
 		//si la distancia es mayor de maxDistance .. set transform por cojones
+		//std::cout << "distancia ->" << distance << std::endl;
+		//std::cout << "speed ->" << speed << std::endl;
 		if(distance > _maxDistance){
 			_entity->getComponent<CPhysicController>("CPhysicController")->setPhysicPosition(_serverPos.getTrans());
 			//Movemos la orientacion logica/grafica
-			std::cout << "<<<<<<< SETEO A LO ANIMAL >>>>>>>" << std::endl;
-			std::cout << "distancia ->" << distance << std::endl;
+			//std::cout << "<<<<<<< SETEO A LO ANIMAL >>>>>>>" << std::endl;
 			Matrix3 tmpMatrix;
 			_serverPos.extract3x3Matrix(tmpMatrix);
 			_entity->setOrientation(tmpMatrix);
@@ -279,16 +289,15 @@ namespace Logic  {
 		}
 		//si la distancia es mayor que min distance y menor que maxDistance interpolamos
 		else if(distance > _minDistance){
+			//calculamos donde nos debería tener el server mas o menos
+			direction = (_serverPos.getTrans() - _entity->getPosition())*Vector3(1,0,1);
+
+			_serverDirection = direction.normalisedCopy();
+			_distance = distance;
+
 			_interpolating = true;
-			
+
 		}
-			
-		
-		//Guardamos el grado de desactualización del ratón
-		_yawDifference = _entity->getYaw() - Math::getYaw(_serverPos);
-		//std::cout << ">>>>>>>>>>>> \tmi dirección" << Math::getDirection(_entity->getTransform()) << std::endl;
-		//std::cout << ">>>>>>>>>>>>>>>\t direccion del servah" << Math::getDirection(_serverPos) << std::endl;
-		//std::cout << ">>>>>>>>>>\t _yawDifference" << _yawDifference << std::endl  << std::endl;
 	}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -296,9 +305,8 @@ namespace Logic  {
 	void CInterpolation::activate(){
 		IComponent::activate();
 		_serverDirection = Vector3(0,0,0);
-		_serverStrafeDirection = Vector3(0,0,0);
 		_interpolating = false;
-
+		_distance = 0;
 	}
 
 } // namespace Logic

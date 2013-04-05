@@ -5,7 +5,7 @@
 /**
 @file Fluid.h
 
-@see Graphics::CFluid
+@see Physics::CFluid
 
 @author Francisco Aisa García
 @date Marzo, 2013
@@ -14,21 +14,27 @@
 #ifndef __Physics_Fluid_H
 #define __Physics_Fluid_H
 
+#include <PxPhysicsAPI.h> // Cambiarlo!! Solo incluir lo necesario
+
 // Predeclaración de clases para ahorrar tiempo de compilación
-namespace physx {
+/*namespace physx {
 	class PxParticleFluid;
 	class PxScene;
 	class PxPhysics;
-};
+};*/
 
 namespace Physics {
+	
 	/**
 	
+	CLASE GUARRA PARA HACER PRUEBAS DE FLUIDOS
+
 	@ingroup physicsGroup
 
 	@author Francisco Aisa García
 	@date Marzo, 2013
 	*/
+	
 	class CFluid {
 	public:
 
@@ -41,6 +47,8 @@ namespace Physics {
 		
 		void createFluid(unsigned int maxParticles, float restitution, float viscosity,
 					     float stiffness, float dynamicFriction, float particleDistance);
+
+		void createParticleBufferInfo(unsigned int maxParticles);
 
 		/**
 		Actualiza el estado de la entidad cada ciclo. En esta clase no se
@@ -63,8 +71,14 @@ namespace Physics {
 		/** True si estamos usando CUDA para simular fluidos. */
 		bool _runOnGPU;
 
-	}; // class CEntity
+		physx::PxU32* _indexBuffer;
+		physx::PxVec3* _positionBuffer;
+		physx::PxVec3* _velocityBuffer;
+		physx::PxF32* _restOffsetBuffer;
+		physx::PxU32* _flagBuffer;
 
-} // namespace Graphics
+	}; // class CFluid
 
-#endif // __Graphics_Entity_H
+} // namespace Physics
+
+#endif // __Physics_Fluid_H

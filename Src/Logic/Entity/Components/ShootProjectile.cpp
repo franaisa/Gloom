@@ -11,6 +11,8 @@ del disparo de proyectiles.
 #include "ShootProjectile.h"
 
 #include "Map/MapEntity.h"
+#include "Logic/Entity/Entity.h"
+#include "Logic/Messages/MessageAudio.h"
 
 namespace Logic {
 	//IMP_FACTORY(CShootProjectile);
@@ -25,6 +27,12 @@ namespace Logic {
 
 		_projectileRadius = entityInfo->getFloatAttribute(weapon + "ProjectileRadius");
 
+		if(entityInfo->hasAttribute("audioNoAmmo"))
+			_noAmmo = entityInfo->getStringAttribute("audioNoAmmo");
+
+		if(entityInfo->hasAttribute(weapon+"Audio"))
+			_audioShoot = entityInfo->getStringAttribute(weapon+"Audio");
+
 		return true;
 	}
 
@@ -37,16 +45,31 @@ namespace Logic {
 			_canShoot = false;
 			_cooldownTimer = 0;
 				
-			drawParticle("fire", "SmokeParticles");
+			drawParticle("fire", "ShootParticle");
 
 			for(int i = 0; i < _numberShots; ++i)
 				fireWeapon();
 
 			decrementAmmo();
+
+			//Sonido de disparo
+			Logic::CMessageAudio *maudio=new Logic::CMessageAudio();
+			maudio->setRuta(_audioShoot);
+			maudio->setId("audioShoot");
+			maudio->setPosition(_entity->getPosition());
+			maudio->setNotIfPlay(false);
+			maudio->setIsPlayer(_entity->isPlayer());
+			_entity->emitMessage(maudio);
 		}
 		else if(_currentAmmo == 0) {
 			// Ejecutar sonidos y animaciones de falta de balas
-			//triggerRunOutOfAmmoMessages();
+			Logic::CMessageAudio *maudio=new Logic::CMessageAudio();
+			maudio->setRuta(_noAmmo);
+			maudio->setId("noAmmo");
+			maudio->setPosition(_entity->getPosition());
+			maudio->setNotIfPlay(false);
+			maudio->setIsPlayer(_entity->isPlayer());
+			_entity->emitMessage(maudio);
 		}
 	}
 

@@ -77,7 +77,7 @@ namespace Logic
 		*/
 		Vector3 _direction;
 
-
+		std::string _audio;
 
 	}; // class CJumper
 

@@ -56,12 +56,23 @@ namespace Graphics
 		_overlayText = NULL;
 
 		if(type.empty()){
-			_overlay = Graphics::CServer::getSingletonPtr()->getOverlayManager()->create(name);
+			if(0 == (_overlay = Graphics::CServer::getSingletonPtr()->getOverlayManager()->getByName(name)))
+				_overlay = Graphics::CServer::getSingletonPtr()->getOverlayManager()->create(name);
 		}else{
-			if(type == "Panel")
-				_overlayContainer = static_cast<Ogre::OverlayContainer*> (Graphics::CServer::getSingletonPtr()->getOverlayManager()->createOverlayElement(type, name));
-			if(type == "TextArea")
-				_overlayText = static_cast<Ogre::TextAreaOverlayElement*>(Graphics::CServer::getSingletonPtr()->getOverlayManager()->createOverlayElement(type, name)) ;
+			if(type == "Panel"){
+				if(!Graphics::CServer::getSingletonPtr()->getOverlayManager()->hasOverlayElement(name)){
+					_overlayContainer = static_cast<Ogre::OverlayContainer*> (Graphics::CServer::getSingletonPtr()->getOverlayManager()->createOverlayElement(type, name));
+				}else{
+					_overlayContainer = static_cast<Ogre::OverlayContainer*> (Graphics::CServer::getSingletonPtr()->getOverlayManager()->getOverlayElement(name));
+				}
+			}
+			if(type == "TextArea"){
+				if(!Graphics::CServer::getSingletonPtr()->getOverlayManager()->hasOverlayElement(name)){
+					_overlayText = static_cast<Ogre::TextAreaOverlayElement*> (Graphics::CServer::getSingletonPtr()->getOverlayManager()->createOverlayElement(type, name));
+				}else{
+					_overlayText = static_cast<Ogre::TextAreaOverlayElement*> (Graphics::CServer::getSingletonPtr()->getOverlayManager()->getOverlayElement(name));
+				}
+			}
 		}
 		_type = type;
 	} // COverlay
@@ -74,8 +85,22 @@ namespace Graphics
 		if(_overlayContainer){Graphics::CServer::getSingletonPtr()->getOverlayManager()->destroyOverlayElement(_overlayContainer->getName());}
 		if(_overlayText){Graphics::CServer::getSingletonPtr()->getOverlayManager()->destroyOverlayElement(_overlayContainer->getName());}
 		*/
+		//std::cout << "destruyendo overlay" << std::endl;
+		
+		/*
 		Graphics::CServer::getSingletonPtr()->getOverlayManager()->destroyAllOverlayElements();
 		Graphics::CServer::getSingletonPtr()->getOverlayManager()->destroyAll();
+		*/
+		if(_overlay){ 
+			Graphics::CServer::getSingletonPtr()->getOverlayManager()->destroy(_overlay);
+		}
+		
+		if(_overlayContainer){ 
+			Graphics::CServer::getSingletonPtr()->getOverlayManager()->destroyOverlayElement(_overlayContainer);
+		}
+		if(_overlayText){
+			Graphics::CServer::getSingletonPtr()->getOverlayManager()->destroyOverlayElement(_overlayText);
+		}
 
 		_overlay = NULL;
 		_overlayContainer = NULL;
@@ -129,36 +154,37 @@ namespace Graphics
 			
 			std::string nameSceneNode = "SceneNode_"+name;// + num;
 			
+			Ogre::Entity *entity;
+			if (!scene->getSceneMgr()->hasEntity("hud3D_"+name))
+				entity = scene->getSceneMgr()->createEntity("hud3D_"+name, mesh);
+			else
+				entity = scene->getSceneMgr()->getEntity("hud3D_"+name);
 
-			Ogre::Entity *entity = scene->getSceneMgr()->createEntity("hud3D_"+name, mesh);
+			Ogre::MaterialPtr aux= Ogre::MaterialManager::getSingleton().getByName(name);
+			//Ogre::MaterialPtr material = static_cast<Ogre::Material *>(Ogre::MaterialManager::getSingleton().getByName(name).get())->clone(name+"_3D");
+			
+			if(!aux.isNull()){
+				Ogre::MaterialPtr material = aux.get()->clone(name+"_3D");
 
-			
-			Ogre::MaterialPtr material = Ogre::MaterialManager::getSingleton().getByName(name);
-			
-			if(!material.isNull()){
-						
 				material->getTechnique(0)->getPass(0)->setDepthCheckEnabled(false);
 				material->getTechnique(0)->getPass(0)->setDepthWriteEnabled(false);
 				material->getTechnique(0)->setSceneBlending(Ogre::SBT_TRANSPARENT_ALPHA);
-				
-			}
 			
-
+				entity->setMaterial(material);
+			}
 			Ogre::SceneNode* sceneNode = new Ogre::SceneNode(scene->getSceneMgr(), nameSceneNode);
 			//scene->getSceneMgr()->getRootSceneNode()->addChild(sceneNode);
 
 			sceneNode->attachObject((Ogre::MovableObject *)entity);
-
-
 			_overlay->add3D(sceneNode);
 
 			sceneNode->setPosition(*position);
 
 			// Esto es una pequeña ñapa, me creo un entidad grafica pero sin inicializar, y le añado una escena ahierro
 			// Hago esto para que se pueda desplazar desde la logica sin ningun problema.
-			Graphics::CEntity *aux = new CEntity("hud3D_"+name, mesh);
-			aux->setSceneNode(sceneNode);
-			return aux;
+			Graphics::CEntity *entityTemp = new CEntity("hud3D_"+name, mesh);
+			entityTemp->setSceneNode(sceneNode);
+			return entityTemp;
 		}
 		return 0;
 

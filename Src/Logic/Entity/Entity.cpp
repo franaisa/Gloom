@@ -25,10 +25,10 @@ de juego. Es una colección de componentes.
 
 #include "Logic/Messages/MessageTransform.h"
 
-#include "GUI/Server.h"
-#include "GUI/PlayerController.h"
+#include "Input/Server.h"
+#include "Input/PlayerController.h"
 
-
+#include "../../Audio/Server.h"
 
 namespace Logic 
 {
@@ -113,10 +113,13 @@ namespace Logic
 		// y nos registramos para que nos informen
 		// de los movimientos que debemos realizar
 
+		//Ademas como el sonido necesita saber la posición para actualizarse lo seteamos tambien
+
 		if (isPlayer())
 		{
 			CServer::getSingletonPtr()->setPlayer(this);
-			GUI::CServer::getSingletonPtr()->getPlayerController()->setControlledAvatar(this);
+			Audio::CServer::getSingletonPtr()->setSoundAvatar(this);
+			Input::CServer::getSingletonPtr()->getPlayerController()->setControlledAvatar(this);
 		}
 
 		// Activamos los componentes
@@ -144,7 +147,7 @@ namespace Logic
 		// debemos realizar
 		if (isPlayer())
 		{
-			GUI::CServer::getSingletonPtr()->getPlayerController()->setControlledAvatar(0);
+			Input::CServer::getSingletonPtr()->getPlayerController()->setControlledAvatar(0);
 			CServer::getSingletonPtr()->setPlayer(0);
 		}
 

@@ -45,6 +45,12 @@ usados. La mayoría de ellos son parte de Ogre.
 // Para cerrar la aplicación si se cierra la ventana
 #include "Application/BaseApplication.h"
 
+//incluimos hikari
+#include <Hikari.h>
+
+#include "Graphics\Server.h"
+#include "Graphics\Scene.h"
+
 /**
 Si se define la siguiente directiva, en modo ventana se reenderiza aunque
 la ventana esté en background (siempre que esté visible)
@@ -288,8 +294,11 @@ namespace BaseSubsystems
 				 CEGUI::OgreRenderer::create(*_renderWindow);
 
 		CEGUI::System::create(CEGUIRenderer);
-
 		_GUISystem = CEGUI::System::getSingletonPtr();
+
+
+		_hikariMgr = new Hikari::HikariManager("media/gui");
+
 
 		// Inicializamos los directorios necesarios para el Resource Provider,
 		// así cuando creemos un recurso no tenemos que dar una ruta completa.
@@ -455,8 +464,7 @@ namespace BaseSubsystems
 			// Inicializa el sistema de renderizado y crea la ventanapor defecto. 
 			// El true nos evita llamar a Root::createRenderWindow y se invoca 
 			// con los parámetros actuales del sistema de reenderizado.
-			_renderWindow = _root->initialise(true,"Galeon");
-
+			_renderWindow = _root->initialise(true,"Gloom");
 			// Añadimos un listener que gestiona el evento de cierre de la ventana.
 			_windowEventListener = new WindowEventListener();
 			Ogre::WindowEventUtilities::addWindowEventListener(_renderWindow,_windowEventListener);

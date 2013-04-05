@@ -14,8 +14,19 @@ la gestión del audio en el juego.
 
 #include "fmod.hpp"
 #include "fmod_errors.h"
+#include "BaseSubsystems/Math.h"
+
+#include <iostream>
+#include <string>
+#include <map>
 
 using namespace FMOD;
+
+// Predeclaración de clases para ahorrar tiempo de compilación
+namespace Logic 
+{
+	class CEntity;
+}
 
 // Declaración de la clase
 namespace Audio
@@ -62,13 +73,67 @@ namespace Audio
 		*/
 		void tick(unsigned int msecs);
 
+		/**
+		Se encarga de cargar un sonido (no 3D) y reproducirlo en modo normal.
+		*/
+		void playSound(char* rutaSonido, const std::string& id, bool notIfPlay);
+
+		/**
+		Se encarga de cargar un sonido (no 3D) y reproducirlo en modo loop.
+		*/
+		void playLoopSound(char* rutaSonido, const std::string& id);
+
+		/**
+		Se encarga de cargar un sonido 3D y reproducirlo en modo normal.
+		*/
+		void playSound3D(char* rutaSonido, const std::string& id, Vector3 position, bool notIfPlay);
+
+		/**
+		Se encarga de cargar un sonido 3D y reproducirlo en modo loop.
+		*/
+		void playLoopSound3D(char* rutaSonido, const std::string& id, Vector3 position);
+
+		/**
+		Se encarga de parar un sonido introduciendo su nombre como parámetro.
+
+		@param id El identificador del sonido
+		*/
+		void stopSound(const std::string& id);
+
+		/**
+		Se encarga de parar todos los sonidos
+		*/
+		void stopAllSounds();
+
+		/**
+		Se encarga de cargar un sonido (no 3D) y reproducirlo en modo normal.
+		*/
+		void playStreamingSound(char* rutaSonido, const std::string& id);
+
+		/**
+		Se encarga de cargar un sonido (no 3D) y reproducirlo en modo loop.
+		*/
+		void playStreamingLoopSound(char* rutaSonido, const std::string& id);
+
+		/**
+		Se encarga de mutear el sonido que se reproduce por los canales.
+		*/
+		void mute();
+
+		/**
+		Establece el componente del jugador con el que preguntaremos la posición para actualizar la posición de escucha.
+
+		@param controlledAvatar Componente al que le preguntaremos la posición de la entidad.
+		*/
+		void setSoundAvatar(Logic::CEntity *controlledAvatar) 
+										{_soundAvatar = controlledAvatar;};
 
 	protected:
 
 		/**
 		Constructor.
 		*/
-		CServer ();
+		CServer();
 
 		/**
 		Destructor.
@@ -91,17 +156,49 @@ namespace Audio
 		*/
 		void close();
 
+		/**
+		Gestiona los errores de inicialización del sistema o carga/reproduccion de sonidos.
+		*/
+		void ERRCHECK(FMOD_RESULT result);
+
+		/**
+		Guarda las asociaciones de nombreSonido/Canal
+		*/
+		typedef std::map<std::string, Channel *> SoundChannelMap;
+		SoundChannelMap _soundChannel;
+
 	private:
 		/**
 		Única instancia de la clase.
 		*/
 		static CServer* _instance;
 
-
 		/**
 		Variable sistema de fmod.
 		*/
 		System* _system; // reminiscencias de C
+
+		/**
+		Variable que controla el volumen de los sonidos por defecto.
+		*/
+		float _volume;
+
+		/**
+		Factores doppler y rolloff del sistema
+		*/
+		float _doppler; 
+		float _rolloff;
+
+		/**
+		Player(Protagonista) del audio.
+		*/
+		Logic::CEntity* _soundAvatar;
+		short _playerHeight;
+
+		/**
+		Booleano que controla si el server esta muteado.
+		*/
+		bool _isMute;
 
 	}; // class CServer
 

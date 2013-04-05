@@ -16,6 +16,7 @@ la gestión de la lógica del juego.
 #include "Logic/GameSpawnManager.h"
 #include "Logic/GameNetPlayersManager.h"
 #include "Logic/Maps/EntityFactory.h"
+#include "Logic/Maps/GUIManager.h"
 
 #include "Map/MapParser.h"
 
@@ -98,7 +99,11 @@ namespace Logic {
 		// Inicializamos el gestor de jugadores en red
 		if(!Logic::CGameNetPlayersManager::Init())
 			return false;
-		
+
+		// Inicializamos el manager de eventos de GUI
+		if(!Logic::CGUIManager::Init())
+			return false;
+		_guiManager = Logic::CGUIManager::getSingletonPtr(); 
 
 		return true;
 
@@ -117,6 +122,8 @@ namespace Logic {
 		Logic::CGameNetMsgManager::Release();
 
 		Logic::CGameSpawnManager::Release();
+
+		Logic::CGUIManager::Release();
 
 	} // close
 
@@ -157,6 +164,7 @@ namespace Logic {
 	{
 		_gameSpawnManager->activate();
 		_gameNetMsgManager->activate();
+		_guiManager->activate();
 		return _map->activate();
 
 

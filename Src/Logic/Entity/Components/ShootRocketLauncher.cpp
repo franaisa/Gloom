@@ -19,6 +19,7 @@ de disparo del lanzacohetes.
 #include "RocketController.h"
 #include "Logic/GameNetMsgManager.h"
 #include "../../../Net/Manager.h"
+#include "Logic/Entity/Components/AvatarController.h"
 
 #include "Logic/Messages/MessageSetPhysicPosition.h"
 #include "Logic/Messages/MessageAddForcePhysics.h"
@@ -44,8 +45,17 @@ namespace Logic {
 	void CShootRocketLauncher::fireWeapon() {
 		// Obtenemos la informacion asociada al arquetipo del cohete
 		Map::CEntity *entityInfo = CEntityFactory::getSingletonPtr()->getInfo("Rocket");
-		// Creamos la entidad y la activamos
-		CEntity* rocket = CEntityFactory::getSingletonPtr()->createEntity(entityInfo, Logic::CServer::getSingletonPtr()->getMap());
+		
+		// Creamos la entidad y la activamos// Spawneamos el cohete justo delante del jugador y a la altura de disparo que corresponda
+		// Ojo si vamos hacia atras necesitamos mas separacion o la liamos ( no se si la jode la orientacion o la posicion o estoy del reves )
+		int inverse = 1;
+		if(_entity->getComponent<CAvatarController>("CAvatarController")->getWalkingBack())
+			inverse = 2;
+		Vector3 entityPosition = _entity->getPosition();
+		Vector3 shootPosition = entityPosition + (Math::getDirection( _entity->getOrientation() )* (_capsuleRadius) * inverse );
+		shootPosition.y += _heightShoot;
+
+		CEntity* rocket = CEntityFactory::getSingletonPtr()->createEntity(entityInfo, Logic::CServer::getSingletonPtr()->getMap(), shootPosition);
 		assert(rocket != NULL);
 		rocket->activate();
 
@@ -54,28 +64,13 @@ namespace Logic {
 		assert(comp != NULL);
 		comp->setOwner(_entity);
 
-		// Spawneamos el cohete justo delante del jugador y a la altura de disparo que corresponda
-		Vector3 entityPosition = _entity->getPosition();
-		Vector3 myPosition = entityPosition + ( Math::getDirection( _entity->getOrientation() )* (_capsuleRadius) );
-		myPosition.y = entityPosition.y + _heightShoot;
-		rocket->setPosition(myPosition);
-
-		//enviamos por red la creación de la entidad
-		if(Net::CManager::getSingletonPtr()->imServer())
-			Logic::CGameNetMsgManager::getSingletonPtr()->sendCreateEntity(rocket->getEntityID());
-
-		// Mensaje para situar el collider fisico del cohete en la posicion de disparo.
-		Logic::CMessageSetPhysicPosition* msg = new Logic::CMessageSetPhysicPosition();
-		msg->setPosition(myPosition);
-		msg->setMakeConversion(true);
-		rocket->emitMessage(msg);
-
 		// Mandar mensaje add force
 		Logic::CMessageAddForcePhysics* forceMsg = new Logic::CMessageAddForcePhysics();
-		forceMsg->setForceVector( Math::getDirection( _entity->getOrientation()) * _shootForce );
+		forceMsg->setForce( (Math::getDirection( _entity->getOrientation()) * _shootForce), Physics::ForceMode::eFORCE );
 		forceMsg->setGravity(false);
 		rocket->emitMessage(forceMsg);
 	}
-	
+
+
 } // namespace Logic
 

@@ -48,7 +48,7 @@ namespace Logic
 		Constructor por defecto; inicializa los atributos a su valor por 
 		defecto.
 		*/
-		CGraphics() : IComponent(), _graphicsEntity(0) {}
+		CGraphics() : _graphicsEntity(NULL) {}
 
 		/**
 		Destructor (virtual); Quita de la escena y destruye la entidad gráfica.

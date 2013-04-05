@@ -121,6 +121,7 @@ Map = {
 		power = 0.35,
 		velocity = 0.12,
 		direction = {-1,0,0},
+		audio = "media/audio/plasma.wav",
 		physic_entity = "rigid",
 		physic_trigger = true,
 		physic_type = "static",
@@ -274,10 +275,9 @@ Map = {
 		type = "RemotePlayer",
 		position = {0, 0.2, -20},
 		orientation = 90,
-		life = 300.0,
+		defaultLife = 120,
 		maxShield=100,
-		maxLife=120,
-		shield=10.0,
+		maxLife=250,
 		PorcentShield=23,
 		isPlayer = false,
 		model = "marine.mesh",
@@ -286,7 +286,6 @@ Map = {
 		physic_height = 6,
 
 	},
-	
 	
 	lava = {
 		type = "Lava",

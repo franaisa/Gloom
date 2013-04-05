@@ -17,23 +17,22 @@ la gestión de la interfaz con el usuario (entrada de periféricos, CEGui...).
 #include <set>
 #include <vector>
 
-#include "InputManager.h"
-
 // Predeclaración de clases para ahorrar tiempo de compilación
 namespace Logic 
 {
 	class CAvatarController;
 }
 
-namespace GUI 
-{
-	class CPlayerController;
-}
-
 namespace CEGUI
 {
 	class System;
 	class Window;
+}
+
+namespace Hikari {
+	class HikariManager;
+	class FlashControl;
+	struct Position;
 }
 
 namespace Application {
@@ -63,7 +62,7 @@ namespace GUI
 	@author David Llansó
 	@date Agosto, 2010
 	*/
-	class CServer : public CKeyboardListener, public CMouseListener
+	class CServer
 	{
 	public:
 
@@ -86,70 +85,6 @@ namespace GUI
 		aplicación.
 		*/
 		static void Release();
-
-		/**
-		Devuelve la instancia de la clase GUI que se encarga de procesar los
-		eventos de entrada para controlar al jugador por si se desea configurar
-		externemante.
-
-		@return Instancia de la clase GUI que controla al jugador.
-		*/
-		CPlayerController *getPlayerController() {return _playerController;}	
-
-		/***************************************************************
-		Métodos de CKeyboardListener
-		***************************************************************/
-		
-		/**
-		Método que será invocado siempre que se pulse una tecla.
-
-		@param key Código de la tecla pulsada.
-		@return true si el evento ha sido procesado. En este caso 
-		el gestor no llamará a otros listeners.
-		*/
-		bool keyPressed(TKey key);
-		
-		/**
-		Método que será invocado siempre que se termine la pulsación
-		de una tecla.
-
-		@param key Código de la tecla pulsada.
-		@return true si el evento ha sido procesado. En este caso 
-		el gestor no llamará a otros listeners.
-		*/
-		bool keyReleased(TKey key);
-		
-		/***************************************************************
-		Métodos de CKeyboardListener
-		***************************************************************/
-		
-		/**
-		Método que será invocado siempre que se mueva el ratón.
-
-		@param mouseState Estado del ratón cuando se lanza el evento.
-		@return true si el evento ha sido procesado. En este caso 
-		el gestor no llamará a otros listeners.
-		*/
-		bool mouseMoved(const CMouseState &mouseState);
-		
-		/**
-		Método que será invocado siempre que se pulse un botón.
-
-		@param mouseState Estado del ratón cuando se lanza el evento.
-		@return true si el evento ha sido procesado. En este caso 
-		el gestor no llamará a otros listeners.
-		*/
-		bool mousePressed(const CMouseState &mouseState);
-
-		/**
-		Método que será invocado siempre que se termine la pulsación
-		de un botón.
-
-		@param mouseState Estado del ratón cuando se lanza el evento.
-		@return true si el evento ha sido procesado. En este caso 
-		el gestor no llamará a otros listeners.
-		*/
-		bool mouseReleased(const CMouseState &mouseState);
 
 		/***************************************************************
 		Métodos para la configuración del GUI
@@ -174,6 +109,63 @@ namespace GUI
 		 * @param layoutName Name of the new layout.
 		 */
 		void addLayoutToState(Application::CApplicationState* state, const std::string& layoutName);
+
+		/**
+		Método de creacion de un layout con un nombre, posicion y medidas del layout. Devuelve
+		un controlador de flash con la informacion necesaria para utilizar la GUI
+
+		@param layoutName Nombre del layout
+		@param pos posición del layout
+		@param width ancho del layout (en pixels)
+		@param height alto del layout (en pixels)
+
+		@return un FlashControl con el controlador del layout, listo para cargar el swf y bindear y
+		ejecutar todas las llamadas que quieras la interfaz de flash
+		*/
+
+		Hikari::FlashControl* addLayout(const std::string& layoutName, Hikari::Position pos, unsigned int width, unsigned int height);
+
+		/**
+		Método de creacion de un layout con un nombre, posicion y medidas del layout. Devuelve
+		un controlador de flash con la informacion necesaria para utilizar la GUI
+
+		@param layoutName Nombre del layout
+		@param pos posición del layout
+		@param relativePos posición relativa con respecto al tamaño total de la pantalla
+
+		@return un FlashControl con el controlador del layout, listo para cargar el swf y bindear y
+		ejecutar todas las llamadas que quieras la interfaz de flash
+		*/
+		Hikari::FlashControl* addLayout(const std::string& layoutName, Hikari::Position pos, float relativePos);
+
+		/**
+		Método de creacion de un layout con un nombre, posicion y con el tamaño total de la pantalla. Devuelve
+		un controlador de flash con la informacion necesaria para utilizar la GUI
+
+		@param layoutName Nombre del layout
+		@param pos posición del layout
+
+		@return un FlashControl con el controlador del layout, listo para cargar el swf y bindear y
+		ejecutar todas las llamadas que quieras la interfaz de flash
+		*/
+		Hikari::FlashControl* addLayout(const std::string& layoutName, Hikari::Position pos);
+
+		/**
+		Método de creacion de un layout con un nombre, posicion y con el tamaño total de la
+		pantalla. Devuelve un controlador de flash con la informacion necesaria para utilizar 
+		la GUI.
+
+		@param state estado en el que se está creando el layout
+		@param layoutName Nombre del layout
+		@param pos posición del layout
+
+		@return un FlashControl con el controlador del layout, listo para cargar el swf y bindear y
+		ejecutar todas las llamadas que quieras la interfaz de flash
+		*/
+		Hikari::FlashControl* addLayoutToState(Application::CApplicationState* state, const std::string& layoutName, Hikari::Position pos);
+
+
+		void destroyLayout(Hikari::FlashControl* overlay);
 
 		//________________________________________________________________________
 
@@ -226,6 +218,8 @@ namespace GUI
 		 */
 		void setText(const std::string& msg);
 
+		void tick();
+
 	protected:
 
 		/**
@@ -255,16 +249,6 @@ namespace GUI
 		void close();
 
 		/**
-		Clase GUI que se encarga de controlar al jugador.
-		*/
-		CPlayerController *_playerController;
-
-		/**
-		Sistema de la interfaz gráfica de usuario CEGUI.
-		*/
-		CEGUI::System *_GUISystem;
-
-		/**
 		 * Puntero a la ventana CEGUI que esta actualmente siendo renderizada.
 		 * Si no se esta renderizando ninguna interfaz de usuario es NULL
 		 */
@@ -284,6 +268,8 @@ namespace GUI
 		Única instancia de la clase.
 		*/
 		static CServer* _instance;
+
+		Hikari::HikariManager* _manager;
 
 	}; // class CServer
 

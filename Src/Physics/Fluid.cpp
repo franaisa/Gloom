@@ -5,7 +5,7 @@
 /**
 @file Fluid.cpp
 
-@see Graphics::CFluid
+@see Physics::CFluid
 
 @author Francisco Aisa García
 @date Marzo, 2013
@@ -17,7 +17,7 @@
 #include <assert.h>
 
 #include <Physics/Server.h>
-#include <PxPhysicsAPI.h> // Cambiarlo!! Solo incluir lo necesario
+
 
 using namespace physx;
 
@@ -35,32 +35,43 @@ namespace Physics {
 		
 		// Creamos el fluido con los parametros pasados
 		createFluid(maxParticles, restitution, viscosity, stiffness, dynamicFriction, particleDistance);
+		createParticleBufferInfo(maxParticles);
 
 		// declare particle descriptor for creating new particles
-		// based on numNewAppParticles count and newAppParticleIndices, newAppParticlePositions arrays.
 		PxParticleCreationData particleCreationData;
 		
 		// Numero de particulas
 		particleCreationData.numParticles = maxParticles;
-		//
-		//particleCreationData.indexBuffer = PxStrideIterator<const PxU32>(newAppParticleIndices);
-		//
-		//particleCreationData.positionBuffer = PxStrideIterator<const PxVec3>(newAppParticlePositions);
+
+		// La informacion sobre el array de particulas de momento lo hacemos temporal, ya que no lo vamos
+		// a necesitar en nigun otro sitio
+		particleCreationData.indexBuffer = PxStrideIterator<const PxU32>(_indexBuffer);
+		particleCreationData.positionBuffer = PxStrideIterator<const PxVec3>(_positionBuffer);
+		particleCreationData.velocityBuffer = PxStrideIterator<const PxVec3>(_velocityBuffer);
+		particleCreationData.restOffsetBuffer = PxStrideIterator<const PxF32>(_restOffsetBuffer);
+		particleCreationData.flagBuffer = PxStrideIterator<const PxU32>(_flagBuffer);
 
 		// create particles in *PxParticleSystem* ps
 		bool success = _fluid->createParticles(particleCreationData);
-	} // CEntity
+		_fluid->releaseParticles();
+	} // CFluid
 
 	//________________________________________________________________________
 
 	CFluid::~CFluid() {
+		delete [] _indexBuffer;
+		delete [] _positionBuffer;
+		delete [] _velocityBuffer;
+		delete [] _restOffsetBuffer;
+		delete [] _flagBuffer;
+
 		// Destruimos el actor de physx asociado al fluido y desligamos el 
 		// actor de la escena
 
 		// Fijamos los punteros a physx como nulos
 		_physxSDK = NULL;
 		_scene = NULL;
-	} // ~CEntity
+	} // ~CFluid
 
 	//________________________________________________________________________
 		
@@ -72,7 +83,7 @@ namespace Physics {
 	void CFluid::createFluid(unsigned int maxParticles, float restitution, float viscosity,
 								         float stiffness, float dynamicFriction, float particleDistance) {	
 
-		_fluid = _physxSDK->createParticleFluid(maxParticles, true);
+		_fluid = _physxSDK->createParticleFluid(maxParticles);
 		assert(_fluid && "PxPhysics::createParticleFluid returned NULL\n");
 		_fluid->setGridSize(5.0f);
 		_fluid->setMaxMotionDistance(0.3f);
@@ -96,6 +107,21 @@ namespace Physics {
 		//check gpu flags after adding to scene, cpu fallback might have been used.
 		_runOnGPU = _runOnGPU && (_fluid->getParticleBaseFlags() & PxParticleBaseFlag::eGPU);
 	#endif
+	}
+
+	//________________________________________________________________________
+
+	void CFluid::createParticleBufferInfo(unsigned int maxParticles) {
+		_indexBuffer = new PxU32 [maxParticles];
+		_positionBuffer = new PxVec3 [maxParticles];
+		_velocityBuffer = new PxVec3 [maxParticles];
+		_restOffsetBuffer = new PxF32 [maxParticles];
+		_flagBuffer = new PxU32 [maxParticles];
+
+		for(int i = 0; i < maxParticles; ++i) {
+			_indexBuffer[i] = i;
+			_positionBuffer[i] = PxVec3(0, 20, 0);
+		}
 	}
 
 } // namespace Physics

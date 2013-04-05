@@ -21,6 +21,7 @@ Contiene la implementación del estado de lobby del cliente.
 #include "Logic/Maps/Map.h"
 
 #include "GUI/Server.h"
+#include "Input\Server.h"
 #include "Logic/Entity/Entity.h"
 #include "Net/Manager.h"
 #include "Net/Cliente.h"
@@ -28,11 +29,7 @@ Contiene la implementación del estado de lobby del cliente.
 #include "Net/paquete.h"
 #include "Net/conexion.h"
 #include "Net/buffer.h"
-
-#include <CEGUISystem.h>
-#include <CEGUIWindowManager.h>
-#include <CEGUIWindow.h>
-#include <elements/CEGUIPushButton.h>
+#include "Hikari.h"
 
 #include <iostream>
 #include <fstream>
@@ -51,18 +48,13 @@ namespace Application {
 		CApplicationState::init();
 
 		// Cargamos la ventana que muestra el menú
-		CEGUI::WindowManager::getSingletonPtr()->loadWindowLayout("NetLobbyClient.layout");
-		_menuWindow = CEGUI::WindowManager::getSingleton().getWindow("NetLobbyClient");
 		
-		// Asociamos los botones del menú con las funciones que se deben ejecutar.
-		CEGUI::WindowManager::getSingleton().getWindow("NetLobbyClient/Connect")->
-			subscribeEvent(CEGUI::PushButton::EventClicked, 
-				CEGUI::SubscriberSlot(&CLobbyClientState::startReleased, this));
+		_menu = GUI::CServer::getSingletonPtr()->addLayoutToState(this,"joinGame", Hikari::Position(Hikari::Center));
+		_menu->load("MultiplayerClient.swf");
+		_menu->bind("connect",Hikari::FlashDelegate(this, &CLobbyClientState::startReleased));
+		_menu->bind("back",Hikari::FlashDelegate(this, &CLobbyClientState::backReleased));
+		_menu->hide();
 		
-		CEGUI::WindowManager::getSingleton().getWindow("NetLobbyClient/Back")->
-			subscribeEvent(CEGUI::PushButton::EventClicked, 
-				CEGUI::SubscriberSlot(&CLobbyClientState::backReleased, this));
-	
 		return true;
 
 	} // init
@@ -80,13 +72,7 @@ namespace Application {
 	void CLobbyClientState::activate() 
 	{
 		CApplicationState::activate();
-
-		// Activamos la ventana que nos muestra el menú y activamos el ratón.
-		CEGUI::System::getSingletonPtr()->setGUISheet(_menuWindow);
-		_menuWindow->setVisible(true);
-		_menuWindow->activate();
-		CEGUI::MouseCursor::getSingleton().show();
-
+		_menu->show();
 		Net::CManager::getSingletonPtr()->addObserver(this);
 		// Activar la red
 		Net::CManager::getSingletonPtr()->activateAsClient();
@@ -98,12 +84,7 @@ namespace Application {
 	void CLobbyClientState::deactivate() 
 	{	
 		Net::CManager::getSingletonPtr()->removeObserver(this);
-
-		// Desactivamos la ventana GUI con el menú y el ratón.
-		CEGUI::MouseCursor::getSingleton().hide();
-		_menuWindow->deactivate();
-		_menuWindow->setVisible(false);
-
+		_menu->hide();
 		CApplicationState::deactivate();
 
 
@@ -133,10 +114,10 @@ namespace Application {
 		case Net::LOAD_PLAYER_INFO:
 		{
 			// Obtenemos el nombre del mesh que va a usar el player
-			std::string playerModel = std::string( CEGUI::WindowManager::getSingleton().getWindow("NetLobbyClient/ModelBox")->getText().c_str() );
+			std::string playerModel = "marine.mesh";
 
 			// Obtenemos el nombre del player
-			std::string playerNick = std::string( CEGUI::WindowManager::getSingleton().getWindow("NetLobbyClient/NickBox")->getText().c_str() );
+			std::string playerNick = _menu->callFunction("getNick",Hikari::Args()).getString();
 
 			// Enviamos los datos del player al servidor
 			Net::NetMessageType msg = Net::PLAYER_INFO;
@@ -145,9 +126,9 @@ namespace Application {
 			playerData.write(&msg, sizeof(msg)); // Por problemas con enumerados serializamos manualmente
 			playerData.serialize(playerNick, false);
 			playerData.serialize(playerModel, false);
-		
+
 			Net::CManager::getSingletonPtr()->send(playerData.getbuffer(), playerData.getSize());
-			
+
 			break;
 		}
 		case Net::LOAD_MAP:
@@ -194,10 +175,10 @@ namespace Application {
 			//llamo al metodo de creacion del jugador
 			if(id == Net::CManager::getSingletonPtr()->getID()) {//si soy yo, me creo como jugador local
 				Logic::CEntity * player = Logic::CServer::getSingletonPtr()->getMap()->createLocalPlayer(name, entityID);
+				player->getEntityID();
 			}else{//si no soy yo, me creo como jugador remoto
 				Logic::CEntity * player = Logic::CServer::getSingletonPtr()->getMap()->createPlayer(name, entityID);
 			}
-			
 			//Enviamos el mensaje de que se ha creado el jugador
 			Net::NetMessageType ackMsg = Net::PLAYER_LOADED;
 			Net::CBuffer ackBuffer(sizeof(ackMsg) + sizeof(id));
@@ -213,8 +194,8 @@ namespace Application {
 	} // dataPacketReceived
 
 	//--------------------------------------------------------
-	
-	bool CLobbyClientState::keyPressed(GUI::TKey key)
+
+	bool CLobbyClientState::keyPressed(Input::TKey key)
 	{
 	   return false;
 
@@ -222,16 +203,16 @@ namespace Application {
 
 	//--------------------------------------------------------
 
-	bool CLobbyClientState::keyReleased(GUI::TKey key)
+	bool CLobbyClientState::keyReleased(Input::TKey key)
 	{
 		switch(key.keyId)
 		{
-		case GUI::Key::ESCAPE:
+		case Input::Key::ESCAPE:
 			Net::CManager::getSingletonPtr()->deactivateNetwork();
 			_app->setState("netmenu");
 			break;
-		case GUI::Key::RETURN:
-			doStart();
+		case Input::Key::RETURN:
+			doStart(_menu->callFunction("getIp",Hikari::Args()).getString());
 			break;
 		default:
 			return false;
@@ -241,71 +222,55 @@ namespace Application {
 	} // keyReleased
 
 	//--------------------------------------------------------
-	
-	bool CLobbyClientState::mouseMoved(const GUI::CMouseState &mouseState)
+
+	bool CLobbyClientState::mouseMoved(const Input::CMouseState &mouseState)
 	{
-		return false;
+		return true;
 
 	} // mouseMoved
 
 	//--------------------------------------------------------
-		
-	bool CLobbyClientState::mousePressed(const GUI::CMouseState &mouseState)
+
+	bool CLobbyClientState::mousePressed(const Input::CMouseState &mouseState)
 	{
-		//CEGUI::System::getSingleton().injectMouseButtonDown(mouseState.);
-		return false;
+		return true;
 
 	} // mousePressed
 
 	//--------------------------------------------------------
 
 
-	bool CLobbyClientState::mouseReleased(const GUI::CMouseState &mouseState)
+	bool CLobbyClientState::mouseReleased(const Input::CMouseState &mouseState)
 	{
-		return false;
+		return true;
 
 	} // mouseReleased
-			
-	//--------------------------------------------------------
-		
-	bool CLobbyClientState::startReleased(const CEGUI::EventArgs& e)
-	{
-		doStart();
-		return true;
-	} // startReleased
-			
+
 	//--------------------------------------------------------
 
-	bool CLobbyClientState::backReleased(const CEGUI::EventArgs& e)
+	Hikari::FlashValue CLobbyClientState::startReleased(Hikari::FlashControl* caller, const Hikari::Arguments& args)
+	{
+		doStart(args.at(0).getString());
+
+		return true;
+	} // startReleased
+
+	//--------------------------------------------------------
+
+	Hikari::FlashValue CLobbyClientState::backReleased(Hikari::FlashControl* caller, const Hikari::Arguments& args)
 	{
 		Net::CManager::getSingletonPtr()->deactivateNetwork();
 		_app->setState("netmenu");
 		return true;
 
 	} // backReleased
-			
+
 	//--------------------------------------------------------
 
-	void CLobbyClientState::doStart()
+	void CLobbyClientState::doStart(string ip)
 	{
-		// Deshabilitamos el botón de Start
-		CEGUI::WindowManager::getSingleton().getWindow("NetLobbyClient/Connect")->setEnabled(false);
-		
-		// Actualizamos el status
-		CEGUI::Window * status = CEGUI::WindowManager::getSingleton().getWindow("NetLobbyClient/Status");
-		status->setText("Status: Connecting...");
-
-		// Obtenemos la ip desde el Editbox
-		CEGUI::String ip = CEGUI::WindowManager::getSingleton().getWindow("NetLobbyClient/IPBox")->getText();
-
 		// Conectamos
 		Net::CManager::getSingletonPtr()->connectTo((char*)ip.c_str(),1234,1);
-
-		// Actualizamos el status
-		status->setText("Status: Connected to server. Waiting to start game...");
-
-		//tickNet is in charge of receiving the message and change the state
-
 	} // doStart
 
 } // namespace Application

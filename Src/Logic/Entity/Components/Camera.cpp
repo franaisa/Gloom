@@ -134,12 +134,12 @@ namespace Logic
 				Vector3 direction = Math::getDirection(_target->getOrientation());
 				_graphicsCamera->setTargetCameraPosition(position + direction);
 			}
-			//Si estamos muertos miramos al enemigo, diferenciamos entre nosotros mismos o el rival (ojo con que el rival sea de tipo player)
+			//Si estamos muertos miramos al enemigo, diferenciamos entre nosotros mismos o el rival
 			else if(_enemy){
-				 if(_enemy->getType().compare("Player")!=0)
+				 if(_enemy->getType().compare("LocalPlayer")!=0)
 				    _graphicsCamera->setTargetCameraPosition(_enemy->getPosition() );
 				 else{	
-					  _graphicsCamera->setCameraPosition(_enemy->getPosition()+Vector3(0,50,0));
+					 _graphicsCamera->setCameraPosition(_enemy->getPosition()+Vector3(0,50,0));
 					 _graphicsCamera->setTargetCameraPosition(_enemy->getPosition());
 				 }
 			}

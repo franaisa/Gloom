@@ -36,22 +36,13 @@ namespace Logic {
 
 
 		/** Constructor por defecto; en la clase base no hace nada. */
-		CRocketController() : IComponent(), _enemyHit(false) { }
+		CRocketController();
 
 
 		// =======================================================================
 		//                    METODOS HEREDADOS DE ICOMPONENT
 		// =======================================================================
 
-
-		/**
-		Método llamado en cada frame que actualiza la posicion flotante del item.
-
-		@param msecs Milisegundos transcurridos desde el último tick.
-		*/
-		virtual void tick(unsigned int msecs);
-
-		//________________________________________________________________________
 
 		/**
 		Inicialización del componente utilizando la información extraída de
@@ -125,6 +116,9 @@ namespace Logic {
 		//                            CAMPOS PRIVADOS
 		// =======================================================================
 
+		/** Booleano que controla que solo se trate el primer contacto ( debe explotar ). */
+		bool _explotionActive;
+
 		/** Entidad que ha disparado la granada. */
 		CEntity* _owner;
 
@@ -140,6 +134,8 @@ namespace Logic {
 		/** Daño de la explosion. */
 		float _explotionDamage;
 
+		/** Ruta del sonido de la explosion. */
+		std::string _audioExplotion;
 
 	}; // class CRocketController
 

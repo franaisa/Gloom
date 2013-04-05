@@ -14,7 +14,7 @@ Contiene la implementación del gestor del spawn/respawn de jugadores.
 */
 
 #include "GameSpawnManager.h"
-#include "Logic\Entity\Components\PhysicEntity.h"
+#include "Logic\Entity\Components\PhysicStaticEntity.h"
 
 #include "Server.h"
 #include "Logic/Maps/Map.h"
@@ -94,7 +94,7 @@ namespace Logic {
 		//std::cout << "EL NUMERO DE PUNTOS SON: " << _listSpawnPoints.size() << std::endl;
 		int random=rand()%_listSpawnPoints.size();
 		//Mientras que nos devuelva que el trigger esta activado buscamos otro punto
-		while(_listSpawnPoints[random]->getComponent<CPhysicEntity>("CPhysicEntity")->getInTrigger())
+		while(_listSpawnPoints[random]->getComponent<CPhysicStaticEntity>("CPhysicStaticEntity")->getInTrigger())
 			random=rand()%_listSpawnPoints.size();
 		return _listSpawnPoints[random]->getPosition();
 	}

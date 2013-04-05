@@ -100,7 +100,7 @@ namespace Graphics
 
 		//Carga el manager de overlays
 		_overlayManager = Ogre::OverlayManager::getSingletonPtr();
-		
+
 		return true;
 
 	} // open

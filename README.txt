@@ -1,6 +1,6 @@
-===================
+=================
 Gloom Source Release
-===================
+=================
 
 This file contains the following sections:
 
@@ -8,21 +8,27 @@ GENERAL NOTES
 LICENSE
 
 
-=============
+==============
 GENERAL NOTES
-=============
+==============
 
 * Description: Gloom is a pure multiplayer Fast-Paced FPS.
-* Technology: C++/Ogre3d/PhysX/Enet - Windows.
+* Technology: C++/Ogre3d/PhysX/Flash/Enet - Windows.
 * Authors:
+
+	** Artists:
+		- Ángel Arenas Civantos
+		- Alberto Moro
 
 	** Designers:
 		- Manuel López Ibáñez
 		- Beñat Berasategi Olaizola
 		- Ángel Arenas Civantos
+		- Francisco Aisa García
 	
 	** Core Engineers:
 		- Ruben Mulero Guerrero
+		- Jaime Chapinal Cervantes
 		- Antonio Jesus Narváez Corrales
 		- Jose Antonio García Yáñez
 		- Javier Fernández Villanueva
@@ -31,7 +37,6 @@ GENERAL NOTES
 	** Collaborators:
 		- David Llansó García
 		- Marco Antonio Gómez Martín
-		- Antonio Sánchez Ruiz-Granados
 		
 * About the project: Gloom is being developed as a masters thesis for the Complutense
 University of Madrid. Please note that the development is in a very early stage. 

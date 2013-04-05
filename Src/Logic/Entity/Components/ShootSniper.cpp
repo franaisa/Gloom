@@ -12,7 +12,6 @@ Contiene la implementación del componente que gestiona las armas y que administr
 namespace Logic {
 	IMP_FACTORY(CShootSniper);
 	
-	// Nada que implementar (:
 
 } // namespace Logic
 

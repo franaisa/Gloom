@@ -22,7 +22,6 @@ Contiene la implementación del componente que controla el movimiento de un ascen
 #include "Logic/Messages/MessageTouched.h"
 #include "Logic/Messages/MessageAddForcePhysics.h"
 #include "Logic/Messages/MessageSetPhysicPosition.h"
-#include "PhysicEntity.h"
 
 namespace Logic 
 {
