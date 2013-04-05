@@ -116,6 +116,9 @@ namespace Logic {
 		//                            CAMPOS PRIVADOS
 		// =======================================================================
 
+		/** Booleano que controla que solo se trate el primer contacto ( debe explotar ). */
+		bool _explotionActive;
+
 		/** Entidad que ha disparado la granada. */
 		CEntity* _owner;
 

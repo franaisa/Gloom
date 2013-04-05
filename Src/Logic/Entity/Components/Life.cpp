@@ -131,6 +131,7 @@ namespace Logic {
 			case Message::DAMAGED: {
 				CMessageDamaged* dmgMsg = static_cast<CMessageDamaged*>(message);
 				damaged( dmgMsg->getDamage(), dmgMsg->getEnemy() );
+				std::cout << "soy " << _entity->getName() << " y me hace " << dmgMsg->getDamage() << " el enemigo " << dmgMsg->getEnemy()->getName() << std::endl;
 				break;
 			}
 			case Message::ADD_LIFE: {
