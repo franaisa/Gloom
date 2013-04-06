@@ -228,6 +228,10 @@ namespace Graphics
 
 	} // setScale
 
+	void CEntity::setOgreEntity(Ogre::Entity* entity){
+		_entity=entity;
+	}
+
 	//--------------------------------------------------------
 
 	void CEntity::changeMaterial(const std::string& materialName) {
