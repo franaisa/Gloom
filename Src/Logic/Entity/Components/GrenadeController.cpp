@@ -23,6 +23,7 @@
 #include "Logic/Messages/MessageDamaged.h"
 #include "Logic/Messages/MessageAddForcePlayer.h"
 #include "Logic/Messages/MessageAudio.h"
+#include "Logic/Messages/MessageCreateParticle.h"
 
 #include "Graphics/Server.h"
 #include "Graphics/Scene.h"
@@ -185,7 +186,11 @@ namespace Logic {
 		maudio->setIsPlayer(false);
 		_entity->emitMessage(maudio);
 
-		Graphics::CParticle *particle = Graphics::CServer::getSingletonPtr()->getActiveScene()->createParticle(_entity->getName(),"ExplosionParticle", _entity->getPosition());
+		CMessageCreateParticle *particle = new CMessageCreateParticle();
+		particle->setParticle("ExplosionParticle");
+		particle->setPosition(_entity->getPosition());
+
+		_entity->emitMessage(particle);
 	} // createExplotion
 
 	//________________________________________________________________________
