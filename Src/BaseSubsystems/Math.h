@@ -90,6 +90,8 @@ namespace Math
 	*/
 	static const float PI = float( 4.0 * atan( 1.0 ) );
 
+	static const float HALF_PI = PI * 0.5;
+
 	/**
 	Constante para pasar de grados a radianes.
 	*/
