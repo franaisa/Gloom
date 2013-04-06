@@ -104,6 +104,8 @@ namespace Logic {
 
 		void setPhysicPosition(const Vector3 &position, bool makeConversionToLogicWorld);
 
+		void setTransformPosition(const Matrix4 &transform, bool makeConversionToLogicWorld);
+
 		void addForce(const Vector3& force, Physics::ForceMode mode = Physics::ForceMode::eFORCE, bool autowake = true);
 
 		void addTorque(const Vector3& force, Physics::ForceMode mode = Physics::ForceMode::eFORCE, bool autowake = true);

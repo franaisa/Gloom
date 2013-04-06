@@ -205,6 +205,26 @@ namespace Physics {
 		*/
 		void setPosition(const Vector3 &position, bool makeConversionToLogicWorld);
 
+		/** 
+		Setea el transform de la entidad física. Mucho cuidado porque este método
+		lo que hace es transportar a la entidad (no moverla).
+
+		@param transform Transform al que queramos convertir la entidad la entidad.
+		@param makeConversionToLogicWorld True si queremos que la entidad física
+		se coloque en la posición dada + el desfase entre pivote lógico y físico.
+		*/
+		void setTransform(const Matrix4 &transform, bool makeConversionToLogicWorld);
+
+
+		/** 
+		Setea el transform de la entidad física. Mucho cuidado porque este método
+		lo que hace es transportar a la entidad (no moverla).
+
+		@param position Position del que queremos recalcular el pivote
+		@return Posición nueva ponderada en la Y para el pivote
+		*/
+		Vector3 CDynamicEntity::TransformPositionLogicPhysX(Vector3 position);
+
 	private:
 
 

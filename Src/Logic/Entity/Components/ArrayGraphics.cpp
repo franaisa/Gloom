@@ -186,7 +186,7 @@ namespace Logic
 		Math::pitch(_graphicsEntities[_actualWeapon].pitch, transformModificado);
 		_graphicsEntities[_actualWeapon]._graphicsEntity->setTransform(transformModificado);
 		_graphicsEntities[_actualWeapon]._graphicsEntity->setPosition(posicionModificada);
-		
+
 
 	}
 

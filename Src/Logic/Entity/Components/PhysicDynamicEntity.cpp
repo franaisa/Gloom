@@ -292,7 +292,12 @@ void CPhysicDynamicEntity::onContact (IPhysics *otherComponent,bool enter) {
 void CPhysicDynamicEntity::setPhysicPosition(const Vector3 &position, bool makeConversionToLogicWorld) {
 	_physicEntity.setPosition(position, makeConversionToLogicWorld);
 }
+//---------------------------------------------------------
 
+void CPhysicDynamicEntity::setTransformPosition(const Matrix4 &transform, bool makeConversionToLogicWorld)
+{
+	_physicEntity.setTransform(transform, makeConversionToLogicWorld);
+}
 //---------------------------------------------------------
 
 void CPhysicDynamicEntity::addForce(const Vector3& force, Physics::ForceMode mode, bool autowake) {
