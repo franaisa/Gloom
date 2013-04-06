@@ -55,11 +55,11 @@ namespace Logic {
 
 	// Disparo, usa el patrón template
 	void CShootRaycast::shoot() {
-		if(_canShoot && _currentAmmo > 0 && _numberShots <= _currentAmmo){
+		if(_canShoot && _currentAmmo > 0){
 			_canShoot = false;
 			_cooldownTimer = 0;
 				
-			drawParticle("fire", "ShootParticle");
+			drawParticle("fire", "shootParticle");
 
 			decrementAmmo();
 
@@ -105,7 +105,7 @@ namespace Logic {
 
 		//El origen debe ser mínimo la capsula (si chocamos el disparo en la capsula al mirar en diferentes direcciones ya esta tratado en la funcion de colision)
 		//Posicion de la entidad + altura de disparo(coincidente con la altura de la camara)
-		Vector3 origin = _entity->getPosition()+Vector3(0,_heightShoot,0); 
+		Vector3 origin = _entity->getPosition()+Vector3(0,_heightShoot,0);
 		// Creamos el ray desde el origen en la direccion del raton (desvio ya aplicado)
 		Ray ray(origin, dispersionDirection);
 			
