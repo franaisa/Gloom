@@ -18,6 +18,7 @@ implementa las habilidades del personaje
 #include "Logic/Entity/Entity.h"
 
 #include "Logic/Messages/MessageSetReducedDamage.h"
+#include "Logic/Messages/MessageChangeMaterial.h"
 
 #include <assert.h>
 
@@ -68,10 +69,15 @@ namespace Logic {
 			if(_inmuneTimer < 0) {
 				_inmuneTimer = 0;
 
-				// Desactivamos el shader de invisibilidad
+				// Seteamos la reducción de daño a 0 de manera que recibimos los daños normales
 				CMessageSetReducedDamage* pReducedDmgMsg = new CMessageSetReducedDamage();
 				pReducedDmgMsg->setReducedDamage(0);
 				_entity->emitMessage(pReducedDmgMsg);
+
+				// Desacctivamos el shader de inmunidad
+				CMessageChangeMaterial* materialMsg = new CMessageChangeMaterial();
+				materialMsg->setMaterialName("marine");
+				_entity->emitMessage(materialMsg);
 			}
 		}
 	}
@@ -92,10 +98,15 @@ namespace Logic {
 		// Arrancamos el cronometro
 		_inmuneTimer = _inmuneDuration;
 
-		// Activamos la piel de diamante (inmune)
+		// Seteamos la reducción de daño al máximo de manera que no se reciban daños
 		CMessageSetReducedDamage* pReducedDmgMsg = new CMessageSetReducedDamage();
 		pReducedDmgMsg->setReducedDamage(1);
 		_entity->emitMessage(pReducedDmgMsg);
+
+		// Activamos el shader de inmunidad
+		CMessageChangeMaterial* materialMsg = new CMessageChangeMaterial();
+		materialMsg->setMaterialName("shadowInvisibility"); // En el futuro debe ser el material del archangel
+		_entity->emitMessage(materialMsg);
 	}
 
 	//__________________________________________________________________

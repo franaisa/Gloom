@@ -1,8 +1,10 @@
 
 material shieldCone
 {
+
 	receive_shadows on
    //transparency_casts_shadows on
+
 	technique
 	{
 		pass

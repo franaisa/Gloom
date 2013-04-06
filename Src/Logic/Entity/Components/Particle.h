@@ -34,7 +34,9 @@ namespace Logic
 		/**
 		Constructor por defecto; en la clase base no hace nada.
 		*/
-		CParticle() : IComponent() {}
+		CParticle();
+
+		virtual ~CParticle();
 
 		/**
 		Método llamado en cada frame que actualiza el estado del componente de la particula.
@@ -42,7 +44,8 @@ namespace Logic
 
 		@param msecs Milisegundos transcurridos desde el último tick.
 		*/
-		//virtual void tick(unsigned int msecs);
+		virtual void tick(unsigned int msecs);
+
 		/**
 		Inicialización del componente usando la descripción de la entidad que hay en 
 		el fichero de mapa.
@@ -72,6 +75,9 @@ namespace Logic
 		Puntero al objeto particula
 		*/
 		Graphics::CParticle *_particle;
+
+		Vector3 _particleOffset;
+		Vector3 _particleEmitterDirection;
 
 	}; // class CParticle
 

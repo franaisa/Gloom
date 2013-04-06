@@ -273,19 +273,21 @@ Map = {
 
 	Enemigo1 = {
 		type = "RemotePlayer",
-		position = {0, 0.2, -20},
+		position = {5, 0.2, -20},
 		orientation = 90,
 		defaultLife = 120,
 		maxShield=100,
 		maxLife=250,
 		PorcentShield=23,
 		isPlayer = false,
-		model = "marine.mesh",
+		model = "loco.mesh",
 		physic_shape = "capsule",
 		physic_radius = 6,
 		physic_height = 6,
 
 	},
+	
+	
 	
 	lava = {
 		type = "Lava",

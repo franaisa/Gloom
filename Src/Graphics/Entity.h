@@ -120,6 +120,8 @@ namespace Graphics
 		 */
 		void setVisible(bool visible);
 
+		void setOgreEntity(Ogre::Entity* entity);
+
 		/**
 		 Devuelve el valor de la propiedad visible.
 		 La propiedad indica si la entidad debe dibujarse o no,
@@ -172,7 +174,7 @@ namespace Graphics
 
 		Ogre::SceneNode* getSceneNode() {return _entityNode;}
 
-		void setSceneNode(Ogre::SceneNode *sceneNode) {_entityNode = sceneNode;}
+		void setSceneNode(Ogre::SceneNode *sceneNode) {_entityNode = sceneNode;_loaded = true;}
 
 		/**
 		Añade la entidad al SceneManager pasado por parámetro. Si la entidad
@@ -183,6 +185,8 @@ namespace Graphics
 		@return true si la entidad se pudo cargar y añadir a la escena.
 		*/
 		bool attachToScene(CScene *scene);
+
+		void setScene(CScene *scene){_scene=scene;}
 
 		void changeMaterial(const std::string& materialName);
 

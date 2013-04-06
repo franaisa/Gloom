@@ -25,7 +25,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Configure", "Projects\Confi
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Net", "Projects\Net\Net.vcxproj", "{6517A543-D72A-4ED1-83BE-104FE82DC59A}"
 EndProject
-
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Audio", "Projects\Audio\Audio.vcxproj", "{2A27AFA1-174A-4AC6-A8EA-1AEB3CC0FEAB}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Input", "Projects\Input\Input.vcxproj", "{6A071CDA-F5F7-4155-9072-6FDABBB3029C}"
@@ -82,7 +81,6 @@ Global
 		{6517A543-D72A-4ED1-83BE-104FE82DC59A}.Debug|Win32.Build.0 = Debug|Win32
 		{6517A543-D72A-4ED1-83BE-104FE82DC59A}.Release|Win32.ActiveCfg = Release|Win32
 		{6517A543-D72A-4ED1-83BE-104FE82DC59A}.Release|Win32.Build.0 = Release|Win32
-
 		{2A27AFA1-174A-4AC6-A8EA-1AEB3CC0FEAB}.Debug|Win32.ActiveCfg = Debug|Win32
 		{2A27AFA1-174A-4AC6-A8EA-1AEB3CC0FEAB}.Debug|Win32.Build.0 = Debug|Win32
 		{2A27AFA1-174A-4AC6-A8EA-1AEB3CC0FEAB}.Release|Win32.ActiveCfg = Release|Win32
