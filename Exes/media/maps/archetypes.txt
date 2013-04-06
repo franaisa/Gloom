@@ -302,10 +302,10 @@ Map = {
 			weaponSniperDispersion = 0,
 			weaponSniperNumberShoots = 1,
 			weaponSniperDistance = 100.0,
-			weaponSniperColdDown = 2.0,
+			weaponSniperColdDown = 1.5,
 			weaponSniperMaxAmmo = 10,
 			weaponSniperId = 1,
-			weaponSniperParticlePosition = {30.0,30.0, 30.0},
+			weaponSniperParticlePosition = {20.0, 50.0, 20.0},
 			weaponSniperAudio = "media/audio/sniper.wav",
 			
 			weaponShotGunName = "Shotgun",
@@ -429,7 +429,7 @@ Map = {
 	
 	Enemigo1 = {
 		type = "RemotePlayer",
-		model = "marine.mesh",
+		model = "loco.mesh",
 		syncPosTimeStamp = 0.1,
 		timeSpawn = 4,
 		defaultLife = 120,
@@ -635,9 +635,9 @@ Map = {
 		explotionDamage = 15,
 		explotionRadius = 6,
 		explotionAudio = "media/audio/explotion.wav",
-		particleOffset = {0.0, 0.0, -2.0},
-		particleEmitterDirection = {0.0, 0.0, -10.0},
-		particleName = "SmokeParticles",
+		particleOffset = {0.0, 0.0, 0.0},
+		particleEmitterDirection = {0.0, 0.0, -1.0},
+		particleName = "rocketParticles",
 	},
 	
 	RocketExplotion = {

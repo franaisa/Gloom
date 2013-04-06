@@ -78,6 +78,11 @@ namespace Logic {
 		*/
 		virtual void triggerHitMessages(std::pair<CEntity*, Ray> entityHit);
 
+		/** Método estático que resetea la cantidad de munición del arma.
+		En el hammer, se establecera a una bala, para que pueda disparar y debido a que cuando dispara no baja tendra balas infinitas
+		*/
+		virtual void resetAmmo();
+
 
 	}; // class CShootRaycast
 
