@@ -94,10 +94,12 @@ namespace Graphics
 		
 		direction.normalise();
 		direction *=-1;
-		std::string aux= Ogre::StringConverter::toString(direction*100);
+		std::string aux= Ogre::StringConverter::toString(direction);
 		
+		/*
 		aff->setParameter("PT_VECTOR3",aux );
 		aff->setParameter("PT_STRING","FA_ADD");
+		*/
 		Ogre::ParamDictionary *aux2 = aff->getParamDictionary();
 		
 	}
