@@ -189,9 +189,9 @@ namespace Physics {
 	//________________________________________________________________________
 
 	void CDynamicEntity::setTransform(const Matrix4 &transform, bool makeConversionToLogicWorld) {
-		/*Matrix4 transf (transform);
-
-		if(makeConversionToLogicWorld) {		
+		/*
+		if(makeConversionToLogicWorld) {
+			Matrix4 transf (transform);
 			Vector3 position = transform.getTrans();
 			transf.setTrans(convertPhysxCoordsToLogicCoords(position));	
 		}*/
