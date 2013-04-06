@@ -90,6 +90,8 @@ namespace Math
 	*/
 	static const float PI = float( 4.0 * atan( 1.0 ) );
 
+	static const float HALF_PI = PI * 0.5;
+
 	/**
 	Constante para pasar de grados a radianes.
 	*/
@@ -204,9 +206,9 @@ namespace Math
 		transform.extract3x3Matrix(rotation);
 		Ogre::Radian yaw, pitch, roll;
 		
-		rotation.ToEulerAnglesYZX(yaw, pitch, roll);
+		rotation.ToEulerAnglesYXZ(yaw, pitch, roll);
 		Ogre::Radian newPitch = pitch + Ogre::Radian(turn);
-		rotation.FromEulerAnglesYZX(yaw, newPitch, roll);
+		rotation.FromEulerAnglesYXZ(yaw, newPitch, roll);
 		transform = rotation;
 
 	} // pitch
@@ -222,7 +224,7 @@ namespace Math
 		Matrix3 rotation;
 		transform.extract3x3Matrix(rotation);
 		Ogre::Radian yaw, pitch, roll;
-		rotation.ToEulerAnglesYZX(yaw, pitch, roll);
+		rotation.ToEulerAnglesYXZ(yaw, pitch, roll);
 		return pitch.valueRadians();
 
 	} // getPitch

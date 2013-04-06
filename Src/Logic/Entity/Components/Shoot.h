@@ -178,7 +178,7 @@ namespace Logic {
 		//__________________________________________________________________
 
 		/** Método estático que resetea la cantidad de munición del arma. */
-		void resetAmmo();
+		virtual void resetAmmo();
 
 		//__________________________________________________________________
 

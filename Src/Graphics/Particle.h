@@ -79,7 +79,7 @@ namespace Graphics
 		@param direccion de la particula
 		@param emitter, campo opcional.
 		*/
-		void setDirection(const Vector3 &direction, int emitter = 0);
+		void setDirection(const Vector3 &direction);
 
 		/**
 		Devuelve el objeto ogre de la particula

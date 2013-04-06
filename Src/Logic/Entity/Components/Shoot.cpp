@@ -163,8 +163,8 @@ namespace Logic {
 		Vector3 positionParticle = _entity->getPosition() + (Math::getDirection(_entity->getOrientation()) * _particlePosition);
 		Graphics::CScene* _scen = Graphics::CServer::getSingletonPtr()->getActiveScene();
 		
-		//_scen->createParticle(_entity->getName(),particula, positionParticle, &Math::getDirection(_entity->getOrientation()));
-		_scen->createParticle(_entity->getName(),particula, positionParticle);
+		_scen->createParticle(_entity->getName(),particula, positionParticle, &Math::getDirection(_entity->getOrientation()));
+		//_scen->createParticle(_entity->getName(),particula, positionParticle);
 	}
 	
 	//__________________________________________________________________
