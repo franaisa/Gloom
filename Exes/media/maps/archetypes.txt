@@ -701,7 +701,7 @@ Map = {
 	
 	ScreamerShield = {
 		type = "ScreamerShield",
-		model = "mine.mesh",
+		model = "shieldCone.mesh",
 		physic_entity = "rigid",
 		physic_trigger = false,
 		physic_type = "kinematic",

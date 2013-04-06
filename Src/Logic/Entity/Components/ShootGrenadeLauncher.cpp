@@ -47,11 +47,11 @@ namespace Logic {
 
 		// Spawneamos la granada justo delante del jugador y a la altura de disparo que corresponda
 		Vector3 entityPosition = _entity->getPosition();
-		Vector3 myPosition = entityPosition + ( Math::getDirection( _entity->getOrientation() )* (_capsuleRadius) );
-		myPosition.y = entityPosition.y + _heightShoot;
+		Vector3 shootPosition = entityPosition + ( Math::getDirection( _entity->getOrientation() )* (_capsuleRadius) );
+		shootPosition.y += _heightShoot;
 		
 		// Creamos la entidad y la activamos
-		CEntity* grenade = CEntityFactory::getSingletonPtr()->createEntity(entityInfo, Logic::CServer::getSingletonPtr()->getMap(), myPosition);
+		CEntity* grenade = CEntityFactory::getSingletonPtr()->createEntity(entityInfo, Logic::CServer::getSingletonPtr()->getMap(), shootPosition);
 		assert(grenade != NULL);
 		grenade->activate();
 

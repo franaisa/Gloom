@@ -52,9 +52,6 @@ namespace Logic
 		if(entityInfo->hasAttribute("sumSpeedSideJumpConcat"))
 			_sumSpeedSideJumpConcat = entityInfo->getFloatAttribute("sumSpeedSideJumpConcat");
 
-		if(entityInfo->hasAttribute("maxTimeSideJump"))
-			_maxTimeSideJump = entityInfo->getIntAttribute("maxTimeSideJump");
-
 		if(entityInfo->hasAttribute("maxTimeConcatSideJump"))
 			_maxTimeConcatSideJump = entityInfo->getIntAttribute("maxTimeConcatSideJump");
 
@@ -107,6 +104,12 @@ namespace Logic
 		_rebound=false;
 		_force=false;
 		_applyForce=false;
+
+		_nConcatSideJump=0;
+		_timeConcatSideJump=0;
+		_sideFly=false;
+		_sideContact=false;
+
 	} // activate
 	
 	//---------------------------------------------------------
@@ -158,27 +161,15 @@ namespace Logic
 				jump();
 			else if(((CMessageControl*)message)->getType()==Control::SIDEJUMP_LEFT){
 				strafeLeft();
+				_nConcatSideJump++;
 				_sideJump=true;
 				_jumping=true;
-				_activeConcat=false;
 			}
 			else if(((CMessageControl*)message)->getType()==Control::SIDEJUMP_RIGHT){
 				strafeRight();
+				_nConcatSideJump++;
 				_sideJump=true;
 				_jumping=true;
-				_activeConcat=false;
-			}
-			else if(((CMessageControl*)message)->getType()==Control::CONCATSIDEJUMP_LEFT){
-				strafeLeft();
-				_sideJump=true;
-				_jumping=true;
-				_activeConcat=true;
-			}
-			else if(((CMessageControl*)message)->getType()==Control::CONCATSIDEJUMP_RIGHT){
-				strafeRight();
-				_sideJump=true;
-				_jumping=true;
-				_activeConcat=true;
 			}
 			break;
 		case Message::COLLISION_DOWN:
@@ -215,9 +206,7 @@ namespace Logic
 	//---------------------------------------------------------
 
 	void CAvatarController::walk()
-	{
-		
-		
+	{	
 		CMessageSetAnimation * anim = new CMessageSetAnimation();
 		anim->setString("Walk");
 		anim->setBool(true);
@@ -297,7 +286,6 @@ namespace Logic
 
 		void CAvatarController::stopStrafeRight() 
 	{
-		
 		CMessageSetAnimation * anim = new CMessageSetAnimation();
 		anim->setString("Idle");
 		anim->setBool(true);
@@ -369,6 +357,27 @@ namespace Logic
 		}
 		direction += directionStrafe;
 
+		//Control de concatenacion de saltos (siempre y cuando hubo salto lateral)
+		//Si hubo salto lateral, si llevamos mas de uno hecho,no estoy cayendo y el tiempo es inferior a _maxTimeConcatSideJump activamos la concatenacion (dará velocidad)
+		if(_sideJump && _nConcatSideJump>1 && _timeConcatSideJump<_maxTimeConcatSideJump && !_falling){
+			std::cout << "activo concatenacion" << std::endl;
+			_activeConcat=true;
+			_timeConcatSideJump=0;
+			_sideContact=false;
+		}	
+		//Si llevo al menos 1 salto, no estoy cayendo, pero el tiempo es mayor a 500msecs reseteo las variables de concatenacion de salto
+		else if(_sideJump && _nConcatSideJump>1 && !_falling){
+			_nConcatSideJump=1; // A uno por que seria un nuevo conteo de saltos laterales
+			_timeConcatSideJump=0;
+			_sideContact=false;
+			_activeConcat=false;
+		}
+
+		//Aumento el tiempo de conteo para la concatenacion de saltos
+		if(_sideContact){
+			_timeConcatSideJump+=msecs;
+		}
+
 
 		//Control del salto (normal y lateral)
 		//El PhysicController nos envía por mensaje el atributo _falling (devuelve el del frame anterior) y asi sabemos si esta tocando el suelo y puedo saltar
@@ -379,6 +388,15 @@ namespace Logic
 			_caida=false;
 			_velocitySideJump=false;
 			_applyForce=false;
+			//Caí luego activo el booleano para que empiece la cuenta de concatenacion
+			if(_sideFly){
+				_sideContact=true;
+				_sideFly=false;
+			}
+			//Hubo salto lateral, cuando caiga diré que he caido y empezaré la cuenta de concatenacion
+			if(_sideJump){
+				_sideFly=true;
+			}
 		}
 		else{
 			_canJump=false;
@@ -465,7 +483,6 @@ namespace Logic
 		//Si estamos en un salto o cayendo hay que aplicar la dirección con la que se inició,
 		//además hay que penalizar cualquier intento de movimiento en el aire, aplicaremos un factor de X(el factor por el que multiplicas el movimiento actual) sobre la dirección actual
 		if(_jumpingControl || _caida){
-
 			direction.x=_direccionSaltoCaida.x+direction.x*_restitutionMoveAir;
 			direction.z=_direccionSaltoCaida.z+direction.z*_restitutionMoveAir;
 		}
@@ -485,6 +502,7 @@ namespace Logic
 		}
 		else{
 			if(_activeConcat){
+				std::cout << "HACIENDO CONCATENACION" << std::endl;
 				directXZY.x *= msecs * _speed * _sumSpeedSideJumpConcat;
 				directXZY.z *= msecs * _speed * _sumSpeedSideJumpConcat;
 			}

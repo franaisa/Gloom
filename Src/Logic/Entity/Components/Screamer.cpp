@@ -36,6 +36,8 @@ implementa las habilidades del personaje
 #include "Graphics/Particle.h"
 #include "Graphics/Scene.h"
 
+#include "Graphics/Camera.h"
+
 namespace Logic {
 
 	IMP_FACTORY(CScreamer);
@@ -196,14 +198,21 @@ namespace Logic {
 	//__________________________________________________________________
 
 	void CScreamer::refreshShieldPosition() {
+		// Sacamos la posicion del escudo (que debe estar situada a la altura de disparo)
 		Vector3 entityPosition = _entity->getPosition();
 		Vector3 shootPosition = entityPosition + ( Math::getDirection( _entity->getOrientation() ) * _capsuleRadius );
-		shootPosition.y = entityPosition.y + _heightShoot;
+		shootPosition.y += _heightShoot;
 
-		// Posicionamos el centro del escudo justo en el punto de mira
+		// Sacamos la orientacion de la entidad para setearsela al escudo
+		Matrix4 shootTransform;
+		shootTransform.setTrans(shootPosition);
+		Math::setPitchYaw( _entity->getPitch(), _entity->getYaw(), shootTransform);
+
+		// Posicionamos el centro del escudo justo en el punto de mira		
 		CPhysicDynamicEntity* physicDynamic = _screamerShield->getComponent<CPhysicDynamicEntity>("CPhysicDynamicEntity");
 		assert(physicDynamic && "Error la entidad ScreamerShield no tiene un componente fisico");
-		physicDynamic->setPhysicPosition(shootPosition, false);
+		physicDynamic->setTransform(shootTransform, false);
+		//physicDynamic->setPosition(shootPosition, false);
 	}
 
 	//__________________________________________________________________
@@ -269,6 +278,7 @@ namespace Logic {
 
 		Graphics::CParticle *particle = Graphics::CServer::getSingletonPtr()->
 			getActiveScene()->createParticle(_entity->getName(),"ExplosionParticle", _entity->getPosition());
+
 	}
 
 } // namespace Logic
