@@ -48,7 +48,7 @@ namespace Logic {
 		assert( entityInfo->hasAttribute("shadowInvisibilityDuration") );
 		// Pasamos el tiempo a msecs
 		_invisibilityDuration = entityInfo->getFloatAttribute("shadowInvisibilityDuration") * 1000;
-
+		
 	} // spawn
 
 	//__________________________________________________________________
@@ -77,6 +77,12 @@ namespace Logic {
 
 	void CShadow::activate() {
 		CPlayerClass::activate();
+
+		// Ñapa temporal para el ideame
+		// Cambiamos el color del marine en funcion de la clase con un changeMaterial
+		CMessageChangeMaterial* materialMsg = new CMessageChangeMaterial();
+		materialMsg->setMaterialName("marine_azul");
+		_entity->emitMessage(materialMsg);
 
 		_invisibilityTimer = 0;
 	}
