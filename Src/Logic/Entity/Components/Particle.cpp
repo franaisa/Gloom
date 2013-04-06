@@ -21,6 +21,7 @@ Contiene la implementación del componente que controla la vida de una entidad.
 #include "Graphics/Server.h"
 #include <OgreSceneManager.h>
 #include "Logic/Server.h"
+#include "Logic/Messages/MessageCreateParticle.h"
 
 namespace Logic 
 {
@@ -29,14 +30,16 @@ namespace Logic
 	//---------------------------------------------------------
 
 	CParticle::CParticle() : _particleOffset(Vector3::ZERO),
-							 _particleEmitterDirection(Vector3::ZERO) {
+							 _particleEmitterDirection(Vector3::ZERO),
+							 _particle(0){
 		// Nada que hacer
 	}
 
 	//---------------------------------------------------------
 	
 	CParticle::~CParticle() {
-		delete _particle;
+		if(_particle)
+			delete _particle;
 	}
 
 	//---------------------------------------------------------
@@ -51,13 +54,15 @@ namespace Logic
 		if( entityInfo->hasAttribute("particleEmitterDirection") )
 			_particleEmitterDirection = entityInfo->getVector3Attribute("particleEmitterDirection");
 
-		assert( entityInfo->hasAttribute("particleName") && "Error: No se ha establecido un nombre de particula" );
-		std::string particleName = entityInfo->getStringAttribute("particleName");
+		if ( entityInfo->hasAttribute("particleName")){
+			std::string particleName = entityInfo->getStringAttribute("particleName");
 
-		_particle = new Graphics::CParticle( _entity->getName(), particleName );
-		_particle->setPosition( _entity->getPosition() + ( _particleOffset * _entity->getOrientation() ) );
-		_particle->setDirection( _particleEmitterDirection * _entity->getOrientation() );
+			_particle = new Graphics::CParticle( _entity->getName(), particleName );
+			_particle->setPosition( _entity->getPosition() + ( _particleOffset * _entity->getOrientation() ) );
 
+			if( entityInfo->hasAttribute("particleEmitterDirection") )
+				_particle->setDirection( _particleEmitterDirection * _entity->getOrientation() );
+		}
 		return true;
 
 	} // spawn
@@ -75,28 +80,34 @@ namespace Logic
 
 
 	bool CParticle::accept(CMessage *message) {
-		return false;
-		//return message->getMessageType() == Message::DAMAGED;
+		
+		return message->getMessageType() == Message::CREATE_PARTICLE;
 		
 	} // accept
 	
 	//---------------------------------------------------------
 
 	void CParticle::process(CMessage *message) {
-		/*
+		
 		switch(message->getMessageType())
 		{
 
+		case Message::CREATE_PARTICLE:
+			CMessageCreateParticle *msg = static_cast<CMessageCreateParticle*>(message);
+			Graphics::CParticle *particle = Graphics::CServer::getSingletonPtr()->getActiveScene()->createParticle(
+						_entity->getName(),msg->getParticle(), msg->getPosition());
+			break;
+
 		}
-		*/
+		
 
 	} // process
 	//----------------------------------------------------------
 
 	void CParticle::tick(unsigned int msecs) {
 		IComponent::tick(msecs);
-
-		_particle->setPosition(_entity->getPosition() + _particleOffset);
+		if(_particle)
+			_particle->setPosition(_entity->getPosition() + _particleOffset);
 	} // tick
 	//----------------------------------------------------------
 

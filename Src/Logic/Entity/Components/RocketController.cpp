@@ -23,6 +23,7 @@
 #include "Logic/Messages/MessageKinematicMove.h"
 #include "Logic/Messages/MessageDamaged.h"
 #include "Logic/Messages/MessageAddForcePlayer.h"
+#include "Logic/Messages/MessageCreateParticle.h"
 
 #include "Graphics/Server.h"
 #include "Graphics/Scene.h"
@@ -85,12 +86,10 @@ namespace Logic {
 
 					// Eliminamos la entidad en diferido
 					CEntityFactory::getSingletonPtr()->deferredDeleteEntity(_entity);
-					Logic::CGameNetMsgManager::getSingletonPtr()->sendDestroyEntity( _entity->getEntityID() );
 				}
 				else {
 					// Eliminamos la entidad en diferido
 					CEntityFactory::getSingletonPtr()->deferredDeleteEntity(_entity);
-					Logic::CGameNetMsgManager::getSingletonPtr()->sendDestroyEntity(_entity->getEntityID());
 					// Creamos la explosion
 					createExplotion();
 
@@ -162,7 +161,13 @@ namespace Logic {
 		graphicComponent->setTransform( _entity->getTransform() );
 		*/
 
-		Graphics::CParticle *particle = Graphics::CServer::getSingletonPtr()->getActiveScene()->createParticle(_entity->getName(),"ExplosionParticle", _entity->getPosition());
+		//Graphics::CParticle *particle = Graphics::CServer::getSingletonPtr()->getActiveScene()->createParticle(_entity->getName(),"ExplosionParticle", _entity->getPosition());
+
+		CMessageCreateParticle *particle = new CMessageCreateParticle();
+		particle->setParticle("ExplosionParticle");
+		particle->setPosition(_entity->getPosition());
+
+		_entity->emitMessage(particle);
 
 	} // createExplotion
 

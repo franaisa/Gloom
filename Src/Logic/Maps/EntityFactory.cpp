@@ -355,8 +355,7 @@ namespace Logic
 		// del mapa.
 		entity->getMap()->removeEntity(entity);
 
-		if(Net::CManager::getSingletonPtr()->imServer())
-			Logic::CGameNetMsgManager::getSingletonPtr()->sendDestroyEntity(entity->getEntityID());
+		
 
 		delete entity;
 
@@ -368,6 +367,9 @@ namespace Logic
 	{
 		assert(entity);
 		_pendingEntities.push_back(entity);
+
+		if(Net::CManager::getSingletonPtr()->imServer())
+			Logic::CGameNetMsgManager::getSingletonPtr()->sendDestroyEntity(entity->getEntityID());
 
 	} // deferredDeleteEntity
 

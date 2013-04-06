@@ -158,6 +158,7 @@
     <ClCompile Include="..\..\Src\Logic\Messages\MessageContactEnter.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageContactExit.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageControl.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Messages\MessageCreateParticle.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageDamaged.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageDeactivate.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageHudAmmo.cpp" />
@@ -251,6 +252,7 @@
     <ClInclude Include="..\..\Src\Logic\Entity\Components\Camera.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\Graphics.h" />
     <ClInclude Include="..\..\Src\Logic\Documentation.h" />
+    <ClInclude Include="..\..\Src\Logic\Messages\MessageCreateParticle.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\Message.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageActivate.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageAddAmmo.h" />

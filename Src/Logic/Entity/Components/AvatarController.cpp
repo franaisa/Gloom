@@ -109,7 +109,7 @@ namespace Logic
 		_timeConcatSideJump=0;
 		_sideFly=false;
 		_sideContact=false;
-		//_timeMrua=0;
+		_timeMrua=0;
 
 	} // activate
 	

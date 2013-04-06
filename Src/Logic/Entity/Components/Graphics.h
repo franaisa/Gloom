@@ -104,6 +104,8 @@ namespace Logic
 
 		void setVisible(bool renderGraphicEntity);
 
+		void changeMaterial(const std::string& materialName);
+
 	protected:
 
 		/**
