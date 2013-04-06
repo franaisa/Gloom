@@ -36,6 +36,8 @@ implementa las habilidades del personaje
 #include "Graphics/Particle.h"
 #include "Graphics/Scene.h"
 
+#include "Graphics/Camera.h"
+
 namespace Logic {
 
 	IMP_FACTORY(CScreamer);
@@ -199,12 +201,38 @@ namespace Logic {
 		// Spawneamos la granada justo delante del jugador y a la altura de disparo que corresponda
 		Vector3 entityPosition = _entity->getPosition();
 		Vector3 shootPosition = entityPosition + ( Math::getDirection( _entity->getOrientation() ) * _capsuleRadius );
-		shootPosition.y = entityPosition.y + _heightShoot;
 
-		// Posicionamos el centro del escudo justo en el punto de mira
+		//shootPosition.y = entityPosition.y + _heightShoot;
+		shootPosition.y += _heightShoot;
+
+		// Posicionamos el centro del escudo justo en el punto de mira		
 		CPhysicDynamicEntity* physicDynamic = _screamerShield->getComponent<CPhysicDynamicEntity>("CPhysicDynamicEntity");
 		assert(physicDynamic && "Error la entidad ScreamerShield no tiene un componente fisico");
 		physicDynamic->setPhysicPosition(shootPosition, false);
+
+		//ROTACION--------
+		/*Matrix4 transformModificado = _entity->getTransform();
+		std::cout << "EntityYaw: " << _entity->getYaw() << std::endl;
+		std::cout << "EntityPitch: " << _entity->getPitch() << std::endl;
+		Math::yaw(_entity->getYaw(), transformModificado);
+		Math::pitch(_entity->getPitch(), transformModificado);
+		physicDynamic->setTransformPosition(transformModificado,false);
+
+
+		CGraphics* shieldGraphics = _screamerShield->getComponent<CGraphics>("CGraphics");
+		Graphics::CCamera* camera = Graphics::CServer::getSingletonPtr()->getActiveScene()->getCamera();
+
+		Vector3 direction = camera->getTargetCameraPosition() - camera->getCameraPosition();		
+		direction.normalise();
+		Vector3 posicionModificada = camera->getCameraPosition()- Vector3(0,2.5,0) + ((8.0f) * direction);
+		posicionModificada += _heightShoot;
+
+		Matrix4 transformModificado = _entity->getTransform();
+		Math::yaw(_entity->getYaw(), transformModificado);
+		Math::pitch(_entity->getPitch(), transformModificado);
+
+		shieldGraphics->getEntity()->setTransform(transformModificado);
+		shieldGraphics->getEntity()->setPosition(posicionModificada);*/
 	}
 
 	//__________________________________________________________________
@@ -270,6 +298,7 @@ namespace Logic {
 
 		Graphics::CParticle *particle = Graphics::CServer::getSingletonPtr()->
 			getActiveScene()->createParticle(_entity->getName(),"ExplosionParticle", _entity->getPosition());
+
 	}
 
 } // namespace Logic
