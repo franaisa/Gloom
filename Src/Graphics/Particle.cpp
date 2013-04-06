@@ -34,7 +34,7 @@ Contiene la implementación de la clase que maneja el Particle.
 #include "Server.h"
 
 //#include "BaseSubsystems/Server.h"
-#include "BaseSubsystems/Math.h"
+
 
 #include <assert.h>
 
@@ -43,6 +43,7 @@ Contiene la implementación de la clase que maneja el Particle.
 #include <OgreParticleSystem.h>
 #include <OgreParticle.h>
 #include <OgreParticleEmitter.h>
+
 #include <OgreParticleAffector.h>
 
 namespace Graphics 
@@ -87,13 +88,20 @@ namespace Graphics
 
 	//--------------------------------------------------------
 	
-	void CParticle::setDirection(const Vector3 &direction){
+	void CParticle::setDirection(Vector3 &direction){
 		
 		Ogre::ParticleAffector *aff = _particleSystem->addAffector("LinearForce");
+		
+		direction.normalise();
+		direction *=-1;
 		std::string aux= Ogre::StringConverter::toString(direction);
-		//aff->
-		aff->setParameter("force_vector",aux );
-		aff->setParameter("force_application","add");
+		
+		/*
+		aff->setParameter("PT_VECTOR3",aux );
+		aff->setParameter("PT_STRING","FA_ADD");
+		*/
+		Ogre::ParamDictionary *aux2 = aff->getParamDictionary();
+		
 	}
 	//--------------------------------------------------------
 	/*
