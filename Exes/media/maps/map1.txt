@@ -118,7 +118,7 @@ Map = {
 		type = "Jumper",
 		position = {51.0, 0.0, 1.0},
 		model = "health1.mesh",
-		power = 0.75,
+		power = 0.35,
 		velocity = 0.12,
 		direction = {-1,0,0},
 		audio = "media/audio/plasma.wav",
@@ -286,9 +286,7 @@ Map = {
 		physic_height = 6,
 
 	},
-	
-	
-	
+
 	lava = {
 		type = "Lava",
 		position = {-64.0,3.0, -37.0},
