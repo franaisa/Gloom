@@ -55,7 +55,7 @@ namespace Logic {
 
 	// Disparo, usa el patrón template
 	void CShootRaycast::shoot() {
-		if(_canShoot && _currentAmmo > 0 && _numberShots <= _currentAmmo){
+		if(_canShoot && _currentAmmo > 0){
 			_canShoot = false;
 			_cooldownTimer = 0;
 				
