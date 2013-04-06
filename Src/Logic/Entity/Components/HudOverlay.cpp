@@ -57,32 +57,51 @@ namespace Logic
 	
 	CHudOverlay::~CHudOverlay(){
 		
-		delete _overlayPlay;
-		delete _overlayDie;
-		delete _textAreaDie;
+		if(_overlayPlay)
+			delete _overlayPlay;
+		if(_overlayDie)
+			delete _overlayDie;
+		if(_textAreaDie)
+			delete _textAreaDie;
 		
 		for(int i=0;i<3;++i){
 		
-			delete _panelElements[i];
-			delete _panelElementsTextArea[i];
+			if(_panelElements[i])
+				delete _panelElements[i];
+
+			if(_panelElementsTextArea)
+				delete _panelElementsTextArea[i];
 
 		}
-		delete _panelMira;
+
+		if(_panelMira)
+			delete _panelMira;
 
 		for(int i=0;i<6;++i){
-			delete _panelWeapon[i];
+			if(_panelWeapon[i])
+				delete _panelWeapon[i];
 			
-			delete _overlayWeapon3D[i];
+			if(_overlayWeapon3D[i])
+				delete _overlayWeapon3D[i];
 			//Graphics::CServer::getSingletonPtr()->getActiveScene()->removeEntity( _weaponsEntities[i]);
-			_weaponsEntities[i] = 0;
+
+			if(_weaponsEntities[i])
+				_weaponsEntities[i] = 0;
+			
 			for(int j=0;j<3;++j){
-				delete _weaponsBox[i][j];
+				if(_weaponsBox[i][j])
+					delete _weaponsBox[i][j];
 			}
 		}
 
-		delete _overlayDebug;
-		delete _panelDebug;
-		delete _textAreaDebug;
+		if(_overlayDebug)
+			delete _overlayDebug;
+
+		if(_panelDebug)
+			delete _panelDebug;
+
+		if(_textAreaDebug)
+			delete _textAreaDebug;
 
 	}
 

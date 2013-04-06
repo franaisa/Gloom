@@ -429,7 +429,7 @@ Map = {
 	
 	Enemigo1 = {
 		type = "RemotePlayer",
-		model = "loco.mesh",
+		model = "marine.mesh",
 		syncPosTimeStamp = 0.1,
 		timeSpawn = 4,
 		defaultLife = 120,
