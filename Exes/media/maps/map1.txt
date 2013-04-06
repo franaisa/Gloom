@@ -32,8 +32,7 @@ Map = {
 		physic_type = "static",
 		physic_shape = "box",
 		physic_dimensions = { 4, 7, 4 },
-  },
-	
+	},
 	
 	Hacksaw = {
 		type = "Hacksaw",
