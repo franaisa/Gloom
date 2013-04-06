@@ -189,13 +189,19 @@ namespace Physics {
 	//________________________________________________________________________
 
 	void CDynamicEntity::setTransform(const Matrix4 &transform, bool makeConversionToLogicWorld) {
-		/*
 		if(makeConversionToLogicWorld) {
 			Matrix4 transf (transform);
 			Vector3 position = transform.getTrans();
-			transf.setTrans(convertPhysxCoordsToLogicCoords(position));	
-		}*/
-		_actor->setGlobalPose( PxTransform( Matrix4ToPxTransform(transform) ) );
+			transf.setTrans(convertPhysxCoordsToLogicCoords(position));
+
+			Matrix4 convertedTransform = transform;
+			convertedTransform.setTrans( convertPhysxCoordsToLogicCoords( transform.getTrans() ) );
+
+			_actor->setGlobalPose( PxTransform( Matrix4ToPxTransform(convertedTransform) ) );
+		}
+		else {
+			_actor->setGlobalPose( PxTransform( Matrix4ToPxTransform(transform) ) );
+		}
 	}
 
 	//________________________________________________________________________
