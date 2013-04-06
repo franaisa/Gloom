@@ -68,17 +68,23 @@ namespace Graphics
 		
 		_sceneNode->attachObject(_particleSystem);
 
-		counter++;
+		++counter;
 	} // CParticle
+
+	//--------------------------------------------------------
 
 	void CParticle::setPosition(const Vector3 &position){
 		_sceneNode->setPosition(position);
 
 	} // setPosition
 
+	//--------------------------------------------------------
+
 	Vector3 CParticle::getPosition(){
 		return _sceneNode->getPosition();
 	}
+
+	//--------------------------------------------------------
 	
 	void CParticle::setDirection(const Vector3 &direction, int emitter){
 		if(_particleSystem->getEmitting() && _particleSystem->getNumEmitters() < emitter)
@@ -100,9 +106,10 @@ namespace Graphics
 	//--------------------------------------------------------
 	
 	CParticle::~CParticle(){
-	
-		delete _particleSystem;
-		delete _sceneNode;
+		// Mirar documentación de Ogre
+
+		//delete _particleSystem;
+		//delete _sceneNode;
 	}
 
 } // namespace Graphics
