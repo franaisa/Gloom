@@ -102,9 +102,9 @@ namespace Logic {
 
 		bool getInControllerContact(){ return _inControllerContact; };
 
-		void setPhysicPosition(const Vector3 &position, bool makeConversionToLogicWorld);
+		void setPosition(const Vector3 &position, bool makeConversionToLogicWorld);
 
-		void setTransformPosition(const Matrix4 &transform, bool makeConversionToLogicWorld);
+		void setTransform(const Matrix4 &transform, bool makeConversionToLogicWorld);
 
 		void addForce(const Vector3& force, Physics::ForceMode mode = Physics::ForceMode::eFORCE, bool autowake = true);
 

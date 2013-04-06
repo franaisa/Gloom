@@ -97,7 +97,7 @@ void CPhysicDynamicEntity::process(CMessage *message) {
 		case Message::SET_PHYSIC_POSITION:
 		{
 			CMessageSetPhysicPosition* setPosMsg = static_cast<CMessageSetPhysicPosition*>(message);
-			setPhysicPosition( setPosMsg->getPosition(), setPosMsg->getMakeConversion() );
+			setPosition( setPosMsg->getPosition(), setPosMsg->getMakeConversion() );
 		
 			break;
 		}
@@ -289,13 +289,12 @@ void CPhysicDynamicEntity::onContact (IPhysics *otherComponent,bool enter) {
 
 //---------------------------------------------------------
 
-void CPhysicDynamicEntity::setPhysicPosition(const Vector3 &position, bool makeConversionToLogicWorld) {
+void CPhysicDynamicEntity::setPosition(const Vector3 &position, bool makeConversionToLogicWorld) {
 	_physicEntity.setPosition(position, makeConversionToLogicWorld);
 }
 //---------------------------------------------------------
 
-void CPhysicDynamicEntity::setTransformPosition(const Matrix4 &transform, bool makeConversionToLogicWorld)
-{
+void CPhysicDynamicEntity::setTransform(const Matrix4 &transform, bool makeConversionToLogicWorld) {
 	_physicEntity.setTransform(transform, makeConversionToLogicWorld);
 }
 //---------------------------------------------------------
