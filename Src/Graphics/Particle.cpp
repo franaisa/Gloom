@@ -101,8 +101,12 @@ namespace Graphics
 	
 	CParticle::~CParticle(){
 	
+		Graphics::CServer::getSingletonPtr()->getActiveScene()->getSceneMgr()->destroyParticleSystem(_particleSystem);
+		Graphics::CServer::getSingletonPtr()->getActiveScene()->getSceneMgr()->destroySceneNode(_sceneNode);
+		/*
 		delete _particleSystem;
 		delete _sceneNode;
+		*/
 	}
 
 } // namespace Graphics
