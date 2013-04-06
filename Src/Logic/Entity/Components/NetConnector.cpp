@@ -103,7 +103,6 @@ namespace Logic {
 			Logic::TEntityID id = _entity->getEntityID();
 			
 		}
-		std::cout << "Mandamos el mensaje a la entidad " << _entity->getEntityID() << std::endl;
 		CGameNetMsgManager::getSingletonPtr()->
 			sendEntityMessage(message, _entity->getEntityID());
 

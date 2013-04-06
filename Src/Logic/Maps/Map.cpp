@@ -360,6 +360,7 @@ namespace Logic {
 
 	void CMap::deleteDeferredEntity(CEntity* entity){
 		_deleteEntities.push_back(entity);
+		
 	}
 
 	void CMap::entityTimeToLive(CEntity* entity, unsigned int msecs) {

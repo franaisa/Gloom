@@ -4,6 +4,36 @@ Map = {
 		type = "World",
 	},
 	
+	Point1 = {
+		type = "SpawnPoint",
+		position = {-75.0, 0.0, 0.0},
+		physic_entity = "rigid",
+		physic_trigger = true,
+		physic_type = "static",
+		physic_shape = "box",
+		physic_dimensions = { 4, 7, 4 },
+	},
+  
+	Point2 = {
+		type = "SpawnPoint",
+		position = {-150.0, 0.0, 0.0},
+		physic_entity = "rigid",
+		physic_trigger = true,
+		physic_type = "static",
+		physic_shape = "box",
+		physic_dimensions = { 4, 7, 4 },
+	},
+  
+	Point3 = {
+		type = "SpawnPoint",
+		position = {130.0, 0.0, 0.0},
+		physic_entity = "rigid",
+		physic_trigger = true,
+		physic_type = "static",
+		physic_shape = "box",
+		physic_dimensions = { 4, 7, 4 },
+	},
+	
 	Hacksaw = {
 		type = "Hacksaw",
 		position = {120.0,8.0,-16.0},
@@ -28,7 +58,7 @@ Map = {
 		positionFinal = {100.0,2.0,-12.0},
 		velocity = 0.02,
 		model = "cone.mesh",
-		timeToShow = 8.0,
+		timeToShow = 6.0,
 		timeToUnshow = 4.0,
 		physic_entity = "rigid",
 		physic_trigger = true,
@@ -46,7 +76,7 @@ Map = {
 		positionFinal = {100.0,2.0,-1.0},
 		velocity = 0.02,
 		model = "cone.mesh",
-		timeToShow = 8.0,
+		timeToShow = 6.0,
 		timeToUnshow = 4.0,
 		physic_entity = "rigid",
 		physic_trigger = true,
@@ -64,7 +94,7 @@ Map = {
 		positionFinal = {100.0,2.0,10.0},
 		velocity = 0.02,
 		model = "cone.mesh",
-		timeToShow = 8.0,
+		timeToShow = 6.0,
 		timeToUnshow = 4.0,
 		physic_entity = "rigid",
 		physic_trigger = true,
@@ -118,7 +148,7 @@ Map = {
 		type = "Jumper",
 		position = {51.0, 0.0, 1.0},
 		model = "health1.mesh",
-		power = 0.75,
+		power = 0.25,
 		velocity = 0.12,
 		direction = {-1,0,0},
 		audio = "media/audio/plasma.wav",
@@ -129,36 +159,6 @@ Map = {
 		physic_dimensions = { 2, 2, 2 },
 		physic_group = 7,
 		physic_groupList = "1",
-	},
-	
-	Point1 = {
-		type = "SpawnPoint",
-		position = {-75.0, 0.0, 0.0},
-		physic_entity = "rigid",
-		physic_trigger = true,
-		physic_type = "static",
-		physic_shape = "box",
-		physic_dimensions = { 4, 7, 4 },
-	},
-	
-	Point2 = {
-		type = "SpawnPoint",
-		position = {-150.0, 0.0, 0.0},
-		physic_entity = "rigid",
-		physic_trigger = true,
-		physic_type = "static",
-		physic_shape = "box",
-		physic_dimensions = { 4, 7, 4 },
-	},
-	
-	Point3 = {
-		type = "SpawnPoint",
-		position = {130.0, 0.0, 0.0},
-		physic_entity = "rigid",
-		physic_trigger = true,
-		physic_type = "static",
-		physic_shape = "box",
-		physic_dimensions = { 4, 7, 4 },
 	},
 	
 	Orb1 = {
@@ -286,9 +286,7 @@ Map = {
 		physic_height = 6,
 
 	},
-	
-	
-	
+
 	lava = {
 		type = "Lava",
 		position = {-64.0,3.0, -37.0},

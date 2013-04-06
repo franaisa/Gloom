@@ -167,12 +167,10 @@ namespace Logic  {
 				break;
 
 			case Control::STRAFE_RIGHT:
-				std::cout << "strafe -> "<< _keyAD << std::endl;
 				_keyAD-=1;
 				break;
 
 			case Control::SIDEJUMP_RIGHT:
-				std::cout << "sidejump -> "<< _keyAD << std::endl;
 				_keyAD-=1;
 				break;
 

@@ -15,7 +15,7 @@ Contiene la implementación de la clase principal de audio, llevará el control de
 
 #include "Server.h"
 
-#include "Logic\Entity\Entity.h"
+#include "Logic/Entity/Entity.h"
 
 #include <cassert>
 #include <iostream>
@@ -28,8 +28,8 @@ namespace Audio
 	{
 		assert(!_instance && "Segunda inicialización de Audio::CServer no permitida!");
 		_volume=0.5;
-		_doppler=0.00000001f;
-		_rolloff=0.00000001f;
+		_doppler=0.005f;
+		_rolloff=0.005f;
 		_soundAvatar=NULL;
 		_playerHeight=8;
 		_isMute=false;
@@ -89,7 +89,7 @@ namespace Audio
 		//Iniciamos
 		result = _system->init(32, FMOD_INIT_NORMAL, 0);
 		ERRCHECK(result);
-		
+
 		//Configuración 3D, el parámetro central es el factor de distancia (FMOD trabaja en metros/segundos)
 		_system->set3DSettings(_doppler,1.0,_rolloff);
 
@@ -263,9 +263,9 @@ namespace Audio
 			canal->set3DAttributes(& pos, & vel);
 			ERRCHECK(result);
 
-		//Distancia a la que empieza a atenuarse y a la cual ya no se atunua mas respectivamente
-		canal->set3DMinMaxDistance(4,40);
-
+		//Distancia a la que empieza a atenuarse y a la cual ya no se atenua mas respectivamente
+		result = canal->set3DMinMaxDistance(1,800);
+		ERRCHECK(result);
 	/*	int can;
 		canal->getIndex(&can);
 		std::cout << "el numero de canal ocupado es " << can << std::endl;
@@ -305,6 +305,10 @@ namespace Audio
 			vel={0,0,0};  // velocidad (para el doppler)
 			canal->set3DAttributes(& pos, & vel);
 			ERRCHECK(result);
+
+		//Distancia a la que empieza a atenuarse y a la cual ya no se atenua mas respectivamente
+			result = canal->set3DMinMaxDistance(1,800);
+		ERRCHECK(result);
 
 		int can;
 		canal->getIndex(&can);

@@ -17,6 +17,7 @@ implementa las habilidades del personaje
 #include "Logic/Entity/Entity.h"
 
 #include "Logic/Messages/MessageBerserker.h"
+#include "Logic/Messages/MessageChangeMaterial.h"
 
 namespace Logic {
 
@@ -47,7 +48,7 @@ namespace Logic {
 		_berserkerDuration = entityInfo->getFloatAttribute("houndBerserkerDuration") * 1000;
 		_berserkerDamagePercent = entityInfo->getFloatAttribute("houndBerserkerDamagePercent");
 		_berserkerCooldownPercent = entityInfo->getFloatAttribute("houndBerserkerCooldownPercent");
-
+		
 	} // spawn
 
 	//__________________________________________________________________
@@ -79,6 +80,12 @@ namespace Logic {
 
 	void CHound::activate() {
 		CPlayerClass::activate();
+
+		// Ñapa temporal para el ideame
+		// Cambiamos el color del marine en funcion de la clase con un changeMaterial
+		CMessageChangeMaterial* materialMsg = new CMessageChangeMaterial();
+		materialMsg->setMaterialName("marine_rojo");
+		_entity->emitMessage(materialMsg);
 
 		_berserkerTimer = 0;
 	}

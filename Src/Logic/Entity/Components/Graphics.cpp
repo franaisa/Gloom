@@ -144,8 +144,7 @@ namespace Logic
 				break;
 			}
 			case Message::CHANGE_MATERIAL: {
-				CMessageChangeMaterial* materialMsg = static_cast<CMessageChangeMaterial*>(message);
-				_graphicsEntity->changeMaterial( materialMsg->getMaterialName() );
+				changeMaterial( static_cast<CMessageChangeMaterial*>(message)->getMaterialName() );
 				break;
 			}
 		}
@@ -156,6 +155,12 @@ namespace Logic
 
 	void CGraphics::setVisible(bool renderGraphicEntity) {
 		_graphicsEntity->setVisible(renderGraphicEntity);
+	}
+
+	//---------------------------------------------------------
+
+	void CGraphics::changeMaterial(const std::string& materialName) {
+		_graphicsEntity->changeMaterial(materialName);
 	}
 
 	//---------------------------------------------------------
