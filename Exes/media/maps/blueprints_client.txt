@@ -6,7 +6,7 @@ ItemSpawn CFloatingMovement CSpawnItemManager CGraphics
 SpawnPoint CPhysicStaticEntity
 Jumper CGraphics CPhysicStaticEntity CJumper CAudio
 Grenade CPhysicDynamicEntity CGraphics CAudio
-Rocket CPhysicDynamicEntity CRocketController CGraphics CAudio
+Rocket CPhysicDynamicEntity CParticle CGraphics CAudio
 Lava CPhysicStaticEntity CLava CGraphics
 Elevator CPhysicDynamicEntity CElevator CGraphics
 ElevatorTrigger CPhysicDynamicEntity CElevatorTrigger
@@ -14,3 +14,5 @@ SpotLight CLight CGraphics
 DirectionalLight CLight CGraphics
 PointLight CLight CGraphics
 ContenedorLava CGraphics CPhysicStaticEntity
+Spike CGraphics CSpike
+Hacksaw CGraphics CHacksaw

@@ -129,6 +129,7 @@ namespace Logic {
 		//cargamos todos los datos que se nos envían por mensaje
 		TEntityID destID; 
 			serialMsg.read(&destID, sizeof(destID));
+
 		//le decimos al mapa que elimine la entidad
 		CEntity * entity = CServer::getSingletonPtr()->getMap()->getEntityByID(destID);
 		CEntityFactory::getSingletonPtr()->deferredDeleteEntity(entity);
@@ -148,8 +149,6 @@ namespace Logic {
 		serialMsg.serialize(destEntity->getType(), false);
 		serialMsg.serialize(destEntity->getName(), false);
 		serialMsg.serialize(destEntity->getTransform());
-
-		std::cout << "Enviando creacion de entidad con id " << destID << std::endl;
 
 		//enviamos el mensaje
 		Net::CManager::getSingletonPtr()->send(serialMsg.getbuffer(), serialMsg.getSize());
@@ -173,7 +172,6 @@ namespace Logic {
 		TEntityID destID; 
 			serialMsg.read(&destID, sizeof(destID));
 
-		std::cout << "recibida creacion de entidad con id " << destID << std::endl;
 
 		std::string type;
 		serialMsg.deserialize(type);
@@ -189,7 +187,6 @@ namespace Logic {
 		info->setName(name);
 		CEntity * newEntity = Logic::CEntityFactory::getSingletonPtr()->createEntity(info, CServer::getSingletonPtr()->getMap(), destID);
 		newEntity->activate();
-
 		//ahora le seteamos la posición
 		// TIENE QUE TRATARSE DE UN COMPONENTE FISICO DINAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMICO SI NO EXPLOTA
 		// (tenemos entidades fisicas dinamicas y estaticas y controllers).

@@ -48,7 +48,6 @@ namespace Logic {
 		if(_timer > _explotionTime) {
 			// Eliminamos la entidad en diferido
 			CEntityFactory::getSingletonPtr()->deferredDeleteEntity(_entity);
-			Logic::CGameNetMsgManager::getSingletonPtr()->sendDestroyEntity(_entity->getEntityID());
 			// Creamos la explosion
 			createExplotion();
 		}
@@ -108,12 +107,10 @@ namespace Logic {
 
 					// Eliminamos la entidad en diferido
 					CEntityFactory::getSingletonPtr()->deferredDeleteEntity(_entity);
-					Logic::CGameNetMsgManager::getSingletonPtr()->sendDestroyEntity( _entity->getEntityID() );
 				}
 				else {
 					// Eliminamos la entidad en diferido
 					CEntityFactory::getSingletonPtr()->deferredDeleteEntity(_entity);
-					Logic::CGameNetMsgManager::getSingletonPtr()->sendDestroyEntity( _entity->getEntityID() );
 					// Creamos la explosion
 					createExplotion();
 				}
