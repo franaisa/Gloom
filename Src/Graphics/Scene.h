@@ -215,6 +215,7 @@ namespace Graphics
 						//LogManager::getSingleton().logMessage(">> adding glow to material: "+mat->getName());
 						return mBlackMat->getTechnique(0);
 					}
+
 					return NULL;
 				}
 			};

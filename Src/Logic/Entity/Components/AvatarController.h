@@ -252,6 +252,12 @@ namespace Logic
 		bool _sideJump;
 		bool _velocitySideJump;
 
+		int _nConcatSideJump;
+		bool _sideContact;
+		bool _sideFly;
+		int _timeConcatSideJump;
+		bool _activeContact;
+
 		/**
 		Atributo que lleva la activacion de la concatenacion de saltos laterales
 		*/
@@ -315,9 +321,8 @@ namespace Logic
 		float _restitutionMoveAir;
 
 		/**
-		Atributos que indican el maximo tiempo para contabilizar un salto lateral y la concatenacion de un salto lateral respectivamente
+		Atributo que indica el maximo tiempo para contabilizar la concatenacion de un salto lateral
 		*/
-		int _maxTimeSideJump;
 		int _maxTimeConcatSideJump;
 
 		/**

@@ -49,11 +49,12 @@ namespace Graphics
 		}
 	} // COverlay
 
-	COverlay::COverlay(const std::string &name, const std::string &type){
+	COverlay::COverlay(const std::string &name, CScene* scene, const std::string &type){
 
 		_overlay = NULL;
 		_overlayContainer = NULL;
 		_overlayText = NULL;
+		_scene = scene;
 
 		if(type.empty()){
 			if(0 == (_overlay = Graphics::CServer::getSingletonPtr()->getOverlayManager()->getByName(name)))
@@ -146,7 +147,7 @@ namespace Graphics
 		
 		if(_overlay){
 
-			CScene *scene = Graphics::CServer::getSingletonPtr()->getActiveScene();
+			//CScene *scene = Graphics::CServer::getSingletonPtr()->getActiveScene();
 			
 			int counter=0;
 			char num[5];
@@ -155,10 +156,10 @@ namespace Graphics
 			std::string nameSceneNode = "SceneNode_"+name;// + num;
 			
 			Ogre::Entity *entity;
-			if (!scene->getSceneMgr()->hasEntity("hud3D_"+name))
-				entity = scene->getSceneMgr()->createEntity("hud3D_"+name, mesh);
+			if (!_scene->getSceneMgr()->hasEntity("hud3D_"+name))
+				entity = _scene->getSceneMgr()->createEntity("hud3D_"+name, mesh);
 			else
-				entity = scene->getSceneMgr()->getEntity("hud3D_"+name);
+				entity = _scene->getSceneMgr()->getEntity("hud3D_"+name);
 
 			Ogre::MaterialPtr aux= Ogre::MaterialManager::getSingleton().getByName(name);
 			//Ogre::MaterialPtr material = static_cast<Ogre::Material *>(Ogre::MaterialManager::getSingleton().getByName(name).get())->clone(name+"_3D");
@@ -172,7 +173,7 @@ namespace Graphics
 			
 				entity->setMaterial(material);
 			}
-			Ogre::SceneNode* sceneNode = new Ogre::SceneNode(scene->getSceneMgr(), nameSceneNode);
+			Ogre::SceneNode* sceneNode = new Ogre::SceneNode(_scene->getSceneMgr(), nameSceneNode);
 			//scene->getSceneMgr()->getRootSceneNode()->addChild(sceneNode);
 
 			sceneNode->attachObject((Ogre::MovableObject *)entity);
@@ -183,7 +184,9 @@ namespace Graphics
 			// Esto es una pequeña ñapa, me creo un entidad grafica pero sin inicializar, y le añado una escena ahierro
 			// Hago esto para que se pueda desplazar desde la logica sin ningun problema.
 			Graphics::CEntity *entityTemp = new CEntity("hud3D_"+name, mesh);
+			entityTemp->setOgreEntity(entity);
 			entityTemp->setSceneNode(sceneNode);
+			entityTemp->setScene(_scene);
 			return entityTemp;
 		}
 		return 0;

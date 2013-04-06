@@ -320,17 +320,13 @@ namespace Audio
 	//--------------------------------------------------------
 
 	void CServer::stopSound(const std::string& id){
-		SoundChannelMap::const_iterator itMap = _soundChannel.begin();
-		SoundChannelMap::const_iterator itErase;
-		bool mapErase = false;
-		for(; itMap != _soundChannel.end() && !mapErase; ++itMap) {
-			if(itMap->first.compare(id)==0) {
-				itMap->second->stop();
-				itErase=itMap;
-				mapErase=true;
-			}
+		
+		SoundChannelMap::const_iterator itMap = _soundChannel.find(id);
+
+		if (itMap != _soundChannel.end()){
+			itMap->second->stop();
+			_soundChannel.erase(id);
 		}
-		_soundChannel.erase(itErase);
 			
 	}//stopSound
 	//--------------------------------------------------------

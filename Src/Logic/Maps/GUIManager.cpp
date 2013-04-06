@@ -138,21 +138,18 @@ namespace Logic {
 		if(!stringPars.empty()){
 			for(int i=0;i<stringPars.size();++i){
 				args(stringPars[i]);
-
 			}
 		}
 		//despues metemos los parametros de tipo float
 		if(!intPars.empty()){
 			for(int i=0;i<floatPars.size();++i){
 				args(floatPars[i]);
-
 			}
 		}
 		//por ultimo metemos los parametros de tipo int
 		if(!intPars.empty()){
 			for(int i=0;i<intPars.size();++i){
 				args(intPars[i]);
-
 			}
 		}
 

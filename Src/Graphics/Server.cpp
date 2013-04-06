@@ -216,12 +216,12 @@ namespace Graphics
 
 	//--------------------------------------------------------
 
-	COverlay* CServer::createOverlay(const std::string &name, const std::string &type){
+	COverlay* CServer::createOverlay(const std::string &name, CScene* scene, const std::string &type){
 	
 		//Nos aseguramos de que no exista ya un overlay con este nombre.
 		//assert(_overlayManager->hasOverlayElement(name));
 
-		COverlay *overlay = new COverlay(name, type);
+		COverlay *overlay = new COverlay(name, scene, type);
 		std::pair<std::string,COverlay*> aux(name, overlay);
 		//_overlays.insert(aux);
 
