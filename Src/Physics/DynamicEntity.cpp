@@ -178,48 +178,8 @@ namespace Physics {
 
 	void CDynamicEntity::setPosition(const Vector3& position, bool makeConversionToLogicWorld) {
 		if(makeConversionToLogicWorld) {
-			// Transformación entre el sistema de coordenadas lógico y el de PhysX
-
-			// En primer lugar obtenemos todas las formas del actor y calculamos el punto medio
-			// de todas ellas.
-			unsigned int nbShapes = _actor->getNbShapes(); // sacamos el numero de formas del actor
-			PxShape** actorShapes = new PxShape* [nbShapes]; // creamos un array de shapes
-			_actor->getShapes(actorShapes, nbShapes); // obtenemos todas las formas del actor
-			float averageYPosition = 0; // Contendra la altura media de todos los shapes
-
-			for(unsigned int i = 0; i < nbShapes; ++i) {
-				PxGeometryType::Enum geomType = actorShapes[i]->getGeometryType();
-
-				if(geomType == PxGeometryType::eSPHERE) {
-					PxSphereGeometry sphereGeom; 
-					actorShapes[i]->getSphereGeometry(sphereGeom);
-
-					averageYPosition += sphereGeom.radius;
-				}
-				else if(geomType == PxGeometryType::eCAPSULE) {
-					PxCapsuleGeometry capsuleGeom; 
-					actorShapes[i]->getCapsuleGeometry(capsuleGeom);
-
-					averageYPosition += capsuleGeom.halfHeight;
-				}
-				else if(geomType == PxGeometryType::eBOX) {
-					PxBoxGeometry boxGeom; 
-					actorShapes[i]->getBoxGeometry(boxGeom);
-
-					PxVec3 halfPos(boxGeom.halfExtents);
-					averageYPosition += halfPos.y;
-				}
-				/*else if(geomType == PxGeometryType::eTRIANGLEMESH) {
-					// Deducir punto medio del mesh
-				}*/
-			}
-
-			delete [] actorShapes;
-
-			// Calculamos la altura media de todas las formas para colocar el vector
-			// posicion de physx
-			averageYPosition = averageYPosition / nbShapes;
-			_actor->setGlobalPose( PxTransform( PxVec3(position.x, position.y + averageYPosition, position.z) ) );
+			Vector3 logicPosition = convertPhysxCoordsToLogicCoords(position);
+			_actor->setGlobalPose( PxTransform( PxVec3(logicPosition.x, logicPosition.y, logicPosition.z) ) );
 		}
 		else {
 			_actor->setGlobalPose( PxTransform( PxVec3(position.x, position.y, position.z) ) );
@@ -228,19 +188,19 @@ namespace Physics {
 	
 	//________________________________________________________________________
 
-	void CDynamicEntity::setTransform(const Matrix4 &transform, bool makeConversionToLogicWorld)
-	{
+	void CDynamicEntity::setTransform(const Matrix4 &transform, bool makeConversionToLogicWorld) {
 		/*Matrix4 transf (transform);
 
 		if(makeConversionToLogicWorld) {		
 			Vector3 position = transform.getTrans();
-			transf.setTrans(TransformPositionLogicPhysX(position));	
+			transf.setTrans(convertPhysxCoordsToLogicCoords(position));	
 		}*/
 		_actor->setGlobalPose( PxTransform( Matrix4ToPxTransform(transform) ) );
 	}
 
-	Vector3 CDynamicEntity::TransformPositionLogicPhysX(Vector3 position)
-	{
+	//________________________________________________________________________
+
+	Vector3 CDynamicEntity::convertPhysxCoordsToLogicCoords(const Vector3& position) {
 		// Transformación entre el sistema de coordenadas lógico y el de PhysX
 
 		// En primer lugar obtenemos todas las formas del actor y calculamos el punto medio
