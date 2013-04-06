@@ -133,7 +133,6 @@ namespace Logic {
 	{
 		// solo admitimos un mapa cargado, si iniciamos un nuevo nivel 
 		// se borra el mapa anterior.
-		unLoadLevel();
 
 		if(_map = CMap::createMapFromFile(filename))
 		{
@@ -151,6 +150,8 @@ namespace Logic {
 		if(_map)
 		{
 			_map->deactivate();
+			_gameSpawnManager->deactivate();
+			_gameNetMsgManager->deactivate();
 			delete _map;
 			_map = 0;
 		}

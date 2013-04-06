@@ -138,7 +138,9 @@ namespace Application {
 		// controlar al jugador.
 		Input::CServer::getSingletonPtr()->getPlayerController()->deactivate();
 		// Desactivamos el mapa de la partida.
-		Logic::CServer::getSingletonPtr()->deactivateMap();
+		//Logic::CServer::getSingletonPtr()->deactivateMap();
+
+		Logic::CServer::getSingletonPtr()->unLoadLevel();
 		
 		CApplicationState::deactivate();
 

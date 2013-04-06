@@ -43,6 +43,7 @@ Contiene la implementación de la clase que maneja el Particle.
 #include <OgreParticleSystem.h>
 #include <OgreParticle.h>
 #include <OgreParticleEmitter.h>
+#include <OgreParticleAffector.h>
 
 namespace Graphics 
 {
@@ -68,24 +69,30 @@ namespace Graphics
 		
 		_sceneNode->attachObject(_particleSystem);
 
-		counter++;
+		++counter;
 	} // CParticle
+
+	//--------------------------------------------------------
 
 	void CParticle::setPosition(const Vector3 &position){
 		_sceneNode->setPosition(position);
 
 	} // setPosition
 
+	//--------------------------------------------------------
+
 	Vector3 CParticle::getPosition(){
 		return _sceneNode->getPosition();
 	}
+
+	//--------------------------------------------------------
 	
-	void CParticle::setDirection(const Vector3 &direction, int emitter){
-		if(_particleSystem->getEmitting() && _particleSystem->getNumEmitters() < emitter)
-		{
-			_particleSystem->getEmitter(emitter)->setDirection(direction);
-		}
-	
+	void CParticle::setDirection(const Vector3 &direction){
+		
+		Ogre::ParticleAffector *aff = _particleSystem->addAffector("LinearForce");
+		std::string aux= Ogre::StringConverter::toString(direction);
+		aff->setParameter("force_vector",aux );
+		aff->setParameter("force_application","add");
 	}
 	//--------------------------------------------------------
 	/*
@@ -102,11 +109,11 @@ namespace Graphics
 	CParticle::~CParticle(){
 	
 		Graphics::CServer::getSingletonPtr()->getActiveScene()->getSceneMgr()->destroyParticleSystem(_particleSystem);
-		Graphics::CServer::getSingletonPtr()->getActiveScene()->getSceneMgr()->destroySceneNode(_sceneNode);
-		/*
-		delete _particleSystem;
-		delete _sceneNode;
-		*/
+		//Graphics::CServer::getSingletonPtr()->getActiveScene()->getSceneMgr()->destroySceneNode(_sceneNode);
+	
+		_particleSystem = NULL;
+		//_sceneNode = NULL;
+		
 	}
 
 } // namespace Graphics

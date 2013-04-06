@@ -162,7 +162,8 @@ namespace Logic
 
 		@return Escena con las entidades gráficas.
 		*/
-		Graphics::CScene *getScene() {return _scene;}
+		Graphics::CScene *getScene() {
+			return _scene;}
 		
 		/**
 		Crea un nuevo jugador y le porporciona un nombre determinado.
