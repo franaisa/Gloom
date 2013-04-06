@@ -109,6 +109,7 @@ namespace Logic
 		_timeConcatSideJump=0;
 		_sideFly=false;
 		_sideContact=false;
+		//_timeMrua=0;
 
 	} // activate
 	
@@ -422,7 +423,8 @@ namespace Logic
 			_speedJump=-0.02;
 		}//if (!_canJump && !_jumpingControl)
 		if(_caida){
-			_speedJump=_speedJump + _gravity*msecs; //MRUA
+			_timeMrua+=msecs;
+			_speedJump=_vo + _gravity*_timeMrua; //MRUA
 			if(_speedJump<_maxSpeedDown)
 				_speedJump=_maxSpeedDown;
 		}
@@ -430,22 +432,26 @@ namespace Logic
 
 		//Calculamos la nueva velocidad si hay salto en ejecución
 		if(_jumpingControl){
-			_speedJump=_speedJump + _gravity*msecs; //MRUA
+			_timeMrua+=msecs;
+			_speedJump=_vo + _gravity*_timeMrua; //MRUA
 			if(_speedJump<_maxSpeedDown)
 				_speedJump=_maxSpeedDown;
 		}//if (_jumpingControl)
 
 		//Si hay que aplicar el salto debido a saltos, saltos laterales, rebotes o jumpers/misiles/fuerzas
 		if(_jumping && _canJump || _force ){
+			_timeMrua=0;
 			//Si es una fuerza
 			if(_force){
 				_force=false;
+				_vo=_powerJumpForce;
 				_speedJump=_powerJumpForce;
 				_direccionSaltoCaida=_directionForce;
 				_applyForce=true;
 			}
 			//Si es un salto normal
 			else if(!_sideJump){
+				_vo=_powerJump;
 				_speedJump=_powerJump; // Velocidad explosiva inicial para el salto normal
 				_direccionSaltoCaida=direction; //Guardamos la dirección del salto al iniciarse
 				//Sonido salto normal
@@ -461,6 +467,7 @@ namespace Logic
 			}
 			//Sino es un salto lateral
 			else{
+				_vo=_powerJump;
 				_speedJump=_powerSideJump; // Velocidad explosiva inicial para el salto lateral
 				_velocitySideJump=true;
 				_direccionSaltoCaida=direction; //Guardamos la dirección del salto al iniciarse
