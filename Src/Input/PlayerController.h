@@ -147,7 +147,6 @@ namespace Input
 		int _jumpLeft;
 		int _jumpRight;
 		int _timeSideJump;
-		bool _sideJump;
 
 		bool _unpressRight;
 		bool _unpressLeft;
@@ -155,10 +154,9 @@ namespace Input
 		bool _readySideJumpRight;
 		bool _dontCountUntilUnpress;
 
-		bool _jumping;
 		bool _strafingRight;
 		bool _strafingLeft;
-		bool _falling;
+
 		/**
 		Atributo que lleva el conteo de saltos concatenados para el aumento de velocidad
 		*/
@@ -168,7 +166,6 @@ namespace Input
 		bool _sideFly;
 		bool _sideContact;
 		int _maxTimeSideJump;
-		int _maxTimeConcatSideJump;
 
 
 
