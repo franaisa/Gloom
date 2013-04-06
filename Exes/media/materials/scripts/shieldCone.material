@@ -1,0 +1,36 @@
+
+material shieldCone
+{
+	receive_shadows on
+   //transparency_casts_shadows on
+	technique
+	{
+		pass
+		{
+			//TRANSPARENCIAS SHADER 
+			ambient 0.1 0.1 0.1
+			scene_blend add
+			depth_write off
+			cull_software none
+			cull_hardware none
+			
+			
+			vertex_program_ref SHIELDCONESH
+			{
+				param_named_auto ViewProjectionMatrix worldviewproj_matrix
+				param_named_auto tiempo time
+			}
+			
+
+			
+		
+			texture_unit
+			{
+				texture WaterNormal1.tga
+				scroll_anim 0.125 0
+				wave_xform scroll_y sine 0 0.1 0 0.25
+
+			}
+		}	
+	}
+}
