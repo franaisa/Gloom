@@ -45,7 +45,7 @@ namespace Logic {
 			_canShoot = false;
 			_cooldownTimer = 0;
 				
-			drawParticle("fire", "ShootParticle");
+			drawParticle("fire", "shootParticle");
 
 			for(int i = 0; i < _numberShots; ++i)
 				fireWeapon();

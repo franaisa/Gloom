@@ -132,7 +132,7 @@ namespace Logic
 		int y = hudPanelInitialPositionY;
 
 
-		for(int i=0; i< NONE; ++i){
+		for(int i=0; i< PRIMARY_SKILL; ++i){
 
 			eWeaponIndex current = (eWeaponIndex)i;
 			std::string currentOnText = toText(current);

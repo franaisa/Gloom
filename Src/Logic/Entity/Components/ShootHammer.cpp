@@ -50,6 +50,13 @@ namespace Logic {
 	
 	//__________________________________________________________________
 
+	void CShootHammer::resetAmmo() {
+		//si yo soy el weapon
+		_currentAmmo = 1;
+	} // resetAmmo
+	
+	//__________________________________________________________________
+
 	void CShootHammer::triggerHitMessages(std::pair<CEntity*, Ray> entityHit) {
 		if(entityHit.first->getType().compare("World")==0){
 			Vector3 direccionOpuestaRay= entityHit.second.getDirection()*-1;

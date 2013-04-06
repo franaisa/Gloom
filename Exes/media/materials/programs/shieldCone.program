@@ -1,0 +1,7 @@
+vertex_program SHIELDCONESH hlsl
+{
+	source shieldCone.hlsl
+	entry_point vsMain
+	target vs_2_0
+}
+

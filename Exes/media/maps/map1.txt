@@ -280,12 +280,14 @@ Map = {
 		maxLife=250,
 		PorcentShield=23,
 		isPlayer = false,
-		model = "marine.mesh",
+		model = "loco.mesh",
 		physic_shape = "capsule",
 		physic_radius = 6,
 		physic_height = 6,
 
 	},
+	
+	
 	
 	lava = {
 		type = "Lava",

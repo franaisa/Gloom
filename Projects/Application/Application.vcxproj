@@ -140,6 +140,7 @@
     <ClInclude Include="..\..\Src\Application\SinglePlayerState.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="AppDiagram7FEB.cd" />
     <None Include="Galeon.ico" />
     <None Include="small.ico" />
   </ItemGroup>

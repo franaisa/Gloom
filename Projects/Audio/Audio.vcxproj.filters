@@ -20,7 +20,10 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+
+
     <ClInclude Include="..\..\Src\Audio\Server.h">
+
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
