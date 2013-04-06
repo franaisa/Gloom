@@ -89,7 +89,7 @@ namespace Audio
 		//Iniciamos
 		result = _system->init(32, FMOD_INIT_NORMAL, 0);
 		ERRCHECK(result);
-		FMOD::Reverb *reverb;
+
 		//Configuración 3D, el parámetro central es el factor de distancia (FMOD trabaja en metros/segundos)
 		_system->set3DSettings(_doppler,1.0,_rolloff);
 
