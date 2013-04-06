@@ -113,6 +113,8 @@ namespace Graphics
 		size_t vertexCount, indexCount;
 		Ogre::Vector3* vertexBuffer;
 		unsigned* indexBuffer;
+
+		getMeshInformation(_entity->getMesh(), vertexCount, vertexBuffer, indexCount, indexBuffer);
 			
 		return _loaded = true;
 
