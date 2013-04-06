@@ -59,7 +59,9 @@ namespace Logic
 
 			_particle = new Graphics::CParticle( _entity->getName(), particleName );
 			_particle->setPosition( _entity->getPosition() + ( _particleOffset * _entity->getOrientation() ) );
-			_particle->setDirection( _particleEmitterDirection * _entity->getOrientation() );
+
+			if( entityInfo->hasAttribute("particleEmitterDirection") )
+				_particle->setDirection( _particleEmitterDirection * _entity->getOrientation() );
 		}
 		return true;
 

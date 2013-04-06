@@ -1,0 +1,93 @@
+material marine_rojo
+{
+	set $diffuse_tex "marine_rojo.tga"
+	
+    set $ambient "0 0 0 1"
+    set $diffuse "1 1 1 1"
+    set $specular "2 2 2 100"
+    set $shininess "60"
+	
+	set $glow_tex "marineGlow.tga"
+
+    technique
+    {
+        pass
+        {
+            illumination_stage ambient
+
+            ambient $ambient
+            diffuse $diffuse
+            specular $specular $shininess
+            emissive 0 0 0 0
+
+            vertex_program_ref ambient_vs
+            {
+            }
+
+            fragment_program_ref ambient_ps
+            {
+            }
+
+            texture_unit diffuseMap
+            {
+                texture $diffuse_tex
+            }
+
+            texture_unit aoMap
+            {
+                texture $diffuse_tex
+            }
+        }
+
+        pass
+        {
+            illumination_stage per_light
+
+            scene_blend add
+            iteration once_per_light
+
+            vertex_program_ref diffuse_vs
+            {
+            }
+
+            fragment_program_ref diffuse_ps
+            {
+            }
+
+            diffuse $diffuse
+            specular $specular $shininess
+            ambient $ambient
+
+            texture_unit diffuseMap
+            {
+                texture $diffuse_tex
+            }
+
+            texture_unit specMap
+            {
+                texture spec.tga
+            }
+
+            texture_unit normalMap
+            {
+                texture marine_Nbump.tga
+            }
+        }
+    }
+	
+	technique
+	{
+		scheme glow
+		pass
+		{
+			texture_unit
+			{
+				texture $glow_tex
+			}
+			ambient 1 1 1
+			diffuse 1 1 1
+			specular 0 0 0 1
+			emissive 0 0 0
+		}
+	}
+}
