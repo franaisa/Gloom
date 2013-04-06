@@ -38,7 +38,9 @@ namespace Logic
 		/**
 		Constructor por defecto; en la clase base no hace nada.
 		*/
-		CHudOverlay() : IComponent(), _health(0), _shield(0), _ammo(1), _actualWeapon(0), _numWeapons(0), _panelMira(0), _temporal(0){
+		CHudOverlay() : IComponent(), _health(0), _shield(0), _ammo(1), _actualWeapon(0), _numWeapons(0), _panelMira(0), _temporal(0),
+						_overlayPlay(0), _overlayDie(0), _textAreaDie(0), _overlayDebug(0), _panelDebug(0), _textAreaDebug(0) {
+			
 			for(int i=0;i<3;++i){
 				_panelElementsText[i]=1;
 			}

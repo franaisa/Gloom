@@ -132,7 +132,7 @@ namespace Logic
 			if(!_dead){
 				// Y la posición hacia donde mira la cámara.
 				Vector3 direction = Math::getDirection(_target->getOrientation());
-				_graphicsCamera->setTargetCameraPosition(position + direction);
+				_graphicsCamera->setCameraDirection(direction);
 			}
 			//Si estamos muertos miramos al enemigo, diferenciamos entre nosotros mismos o el rival
 			else if(_enemy){
