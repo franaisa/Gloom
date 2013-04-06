@@ -36,16 +36,17 @@ namespace Logic {
 	Net::CBuffer* CMessageCreateParticle::serialize() {
 		assert(_tempBuffer == NULL);
 
-		_tempBuffer = new Net::CBuffer(sizeof(int) + sizeof(_name));
+		_tempBuffer = new Net::CBuffer(sizeof(int) + sizeof(_name)+ sizeof(_position));
 		_tempBuffer->serialize(std::string("CMessageCreateParticle"),true);
 		_tempBuffer->serialize(_name, false);
-		
+		_tempBuffer->serialize(_position);
 		return _tempBuffer;
 	}//
 	//----------------------------------------------------------
 
 	void CMessageCreateParticle::deserialize(Net::CBuffer& buffer) {
 		buffer.deserialize(_name);
+		buffer.deserialize(_position);
 	}
 
 };
