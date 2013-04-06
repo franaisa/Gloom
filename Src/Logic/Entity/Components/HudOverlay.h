@@ -44,6 +44,33 @@ namespace Logic
 			for(int i=0;i<3;++i){
 				_panelElementsText[i]=1;
 			}
+
+				delete _overlayPlay;
+			_overlayDie = NULL;
+			_textAreaDie = NULL;
+		
+			for(int i=0;i<3;++i){
+				_panelElements[i] = NULL;
+				_panelElementsTextArea[i] = NULL;
+			}
+		
+			_panelMira = NULL;
+
+			for(int i=0;i<6;++i){
+				_panelWeapon[i] = NULL;
+			
+				_overlayWeapon3D[i] = NULL;
+				//Graphics::CServer::getSingletonPtr()->getActiveScene()->removeEntity( _weaponsEntities[i]);
+				_weaponsEntities[i] = NULL;
+				for(int j=0;j<3;++j){
+					_weaponsBox[i][j] = NULL;
+				}
+			}
+
+			_overlayDebug = NULL;
+			_panelDebug = NULL;
+			_textAreaDebug = NULL;
+
 		}
 		
 
