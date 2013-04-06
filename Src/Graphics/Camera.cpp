@@ -106,5 +106,8 @@ namespace Graphics
 		_targetNode->setPosition(newPosition);
 	}
 
+	void CCamera::setCameraDirection(const Vector3& direction) {
+		_camera->setDirection(direction);
+	}
 
 } // namespace Graphics

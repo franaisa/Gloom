@@ -199,20 +199,18 @@ namespace Logic {
 
 	void CScreamer::refreshShieldPosition() {
 		// Sacamos la posicion del escudo (que debe estar situada a la altura de disparo)
-		Vector3 entityPosition = _entity->getPosition();
-		Vector3 shootPosition = entityPosition + ( Math::getDirection( _entity->getOrientation() ) * _capsuleRadius );
+		Vector3 shootPosition = _entity->getPosition() + ( Math::getDirection( _entity->getOrientation() ) * _capsuleRadius );
 		shootPosition.y += _heightShoot;
 
 		// Sacamos la orientacion de la entidad para setearsela al escudo
 		Matrix4 shootTransform;
 		shootTransform.setTrans(shootPosition);
-		Math::setPitchYaw( _entity->getPitch(), _entity->getYaw(), shootTransform);
+		Math::setPitchYaw( _entity->getPitch(), _entity->getYaw() + Math::HALF_PI, shootTransform);
 
 		// Posicionamos el centro del escudo justo en el punto de mira		
 		CPhysicDynamicEntity* physicDynamic = _screamerShield->getComponent<CPhysicDynamicEntity>("CPhysicDynamicEntity");
 		assert(physicDynamic && "Error la entidad ScreamerShield no tiene un componente fisico");
 		physicDynamic->setTransform(shootTransform, false);
-		//physicDynamic->setPosition(shootPosition, false);
 	}
 
 	//__________________________________________________________________

@@ -51,8 +51,8 @@ namespace Logic {
 		int inverse = 1;
 		if(_entity->getComponent<CAvatarController>("CAvatarController")->getWalkingBack())
 			inverse = 2;
-		Vector3 entityPosition = _entity->getPosition();
-		Vector3 shootPosition = entityPosition + (Math::getDirection( _entity->getOrientation() )* (_capsuleRadius) * inverse );
+
+		Vector3 shootPosition = _entity->getPosition() + (Math::getDirection( _entity->getOrientation() )* (_capsuleRadius) * inverse );
 		shootPosition.y += _heightShoot;
 
 		CEntity* rocket = CEntityFactory::getSingletonPtr()->createEntity(entityInfo, Logic::CServer::getSingletonPtr()->getMap(), shootPosition);
