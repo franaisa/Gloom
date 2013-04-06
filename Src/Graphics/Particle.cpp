@@ -91,6 +91,7 @@ namespace Graphics
 		
 		Ogre::ParticleAffector *aff = _particleSystem->addAffector("LinearForce");
 		std::string aux= Ogre::StringConverter::toString(direction);
+		//aff->
 		aff->setParameter("force_vector",aux );
 		aff->setParameter("force_application","add");
 	}
