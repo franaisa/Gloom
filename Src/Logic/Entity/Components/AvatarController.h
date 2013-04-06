@@ -345,6 +345,16 @@ namespace Logic
 		*/
 		std::string _audioSideJump;
 
+		/**
+		Atributo que lleva el tiempo de el movimiento rectilineo uniformemente acelerado.
+		*/
+		unsigned int _timeMrua;
+	
+		/**
+		Atributo que lleva la velocidad inicial con la que inicias.
+		*/
+		float _vo;
+
 	}; // class CAvatarController
 
 	REG_FACTORY(CAvatarController);
