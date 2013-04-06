@@ -360,7 +360,6 @@ namespace Logic
 		//Control de concatenacion de saltos (siempre y cuando hubo salto lateral)
 		//Si hubo salto lateral, si llevamos mas de uno hecho,no estoy cayendo y el tiempo es inferior a _maxTimeConcatSideJump activamos la concatenacion (dará velocidad)
 		if(_sideJump && _nConcatSideJump>1 && _timeConcatSideJump<_maxTimeConcatSideJump && !_falling){
-			std::cout << "activo concatenacion" << std::endl;
 			_activeConcat=true;
 			_timeConcatSideJump=0;
 			_sideContact=false;
@@ -502,12 +501,10 @@ namespace Logic
 		}
 		else{
 			if(_activeConcat){
-				std::cout << "HACIENDO CONCATENACION" << std::endl;
 				directXZY.x *= msecs * _speed * _sumSpeedSideJumpConcat;
 				directXZY.z *= msecs * _speed * _sumSpeedSideJumpConcat;
 			}
 			else{
-
 				directXZY.x *= msecs * _speed * _sumSpeedSideJump;
 				directXZY.z *= msecs * _speed * _sumSpeedSideJump;
 			}
