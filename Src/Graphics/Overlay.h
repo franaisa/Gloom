@@ -73,7 +73,7 @@ namespace Graphics
 		
 		*/
 		COverlay(const std::string &name);
-		COverlay(const std::string &name, const std::string& type = "");
+		COverlay(const std::string &name, CScene* scene, const std::string& type = "");
 
 		/**
 		Destructor de la aplicación.
@@ -223,7 +223,7 @@ namespace Graphics
 		Ogre::Overlay *_overlay;
 		Ogre::OverlayContainer *_overlayContainer;
 		Ogre::TextAreaOverlayElement *_overlayText;
-
+		CScene* _scene;
 
 	}; // class COverlay
 

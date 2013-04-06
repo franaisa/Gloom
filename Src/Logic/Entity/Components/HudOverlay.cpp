@@ -24,6 +24,7 @@ Contiene la implementaci�n del componente que controla la vida de una entidad.
 #include "Graphics/Camera.h"
 #include "Graphics/Scene.h"
 #include "Graphics/Entity.h"
+#include "Graphics/Scene.h"
 #include "Graphics/Overlay.h"
 #include "Graphics/StaticEntity.h"
 
@@ -46,6 +47,7 @@ Contiene la implementaci�n del componente que controla la vida de una entidad.
 #include "Logic/Messages/MessageHudAmmo.h"
 #include "Logic/Messages/MessageHudWeapon.h"
 #include "Logic/Messages/MessageHudSpawn.h"
+#include "Logic/Server.h"
 
 #include "Logic/Messages/MessageHudDebug.h"
 
@@ -71,7 +73,8 @@ namespace Logic
 			delete _panelWeapon[i];
 			
 			delete _overlayWeapon3D[i];
-			delete _weaponsEntities[i];
+			//Graphics::CServer::getSingletonPtr()->getActiveScene()->removeEntity( _weaponsEntities[i]);
+			_weaponsEntities[i] = 0;
 			for(int j=0;j<3;++j){
 				delete _weaponsBox[i][j];
 			}
@@ -90,7 +93,7 @@ namespace Logic
 		if(!IComponent::spawn(entity,map,entityInfo))
 			return false;
 
-		
+		Graphics::CScene* scene = map->getScene();
 		_numWeapons = entityInfo->getIntAttribute("numWeapons");
 	
 		_server = Graphics::CServer::getSingletonPtr();
@@ -112,10 +115,10 @@ namespace Logic
 
 		////////////////Todo esto para la mira
          // Create an overlay
-		_overlayPlay = _server->createOverlay( "_overlayPlay" );		
+		_overlayPlay = _server->createOverlay( "_overlayPlay", scene );		
          
 		// Create a panel de Mira
-		_panelMira = _server->createOverlay("Mira",  "Panel" );
+		_panelMira = _server->createOverlay("Mira", scene, "Panel" );
 		float sizeCrossFire = entityInfo->getFloatAttribute("hudCross");
 		float positionCrossFire = 0.5f-((sizeCrossFire/2)/100) ;
         _panelMira->setPosition( positionCrossFire,positionCrossFire);
@@ -135,7 +138,7 @@ namespace Logic
 			std::string currentOnText = toText(current);
 		
 			// Primero me creo el panel que estaba debajo
-			_panelWeapon[current] = _server->createOverlay( "PanelWeapon" + currentOnText, "Panel");
+			_panelWeapon[current] = _server->createOverlay( "PanelWeapon" + currentOnText, scene, "Panel");
 			_panelWeapon[current]->setMetricsMode("pixel");
 			_panelWeapon[current]->setPosition( x*relativeWidth, y*relativeHeight);
 			_panelWeapon[current]->setDimensions( relativeWidth*hudPanelSizeX, relativeHeight*hudPanelSizeX );
@@ -148,7 +151,7 @@ namespace Logic
 				eOverlayWeaponState currentState = (eOverlayWeaponState)j;
 				std::string currentStateOnText = toText(currentState);
 				
-				_weaponsBox[current][currentState] = _server->createOverlay( "_weaponsBox["+currentOnText+"]["+currentStateOnText+"]", "Panel");
+				_weaponsBox[current][currentState] = _server->createOverlay( "_weaponsBox["+currentOnText+"]["+currentStateOnText+"]", scene, "Panel");
 				_weaponsBox[current][currentState]->setMetricsMode("pixel");
 				_weaponsBox[current][currentState]->setPosition( x*relativeWidth, y*relativeHeight);
 				_weaponsBox[current][currentState]->setDimensions( relativeWidth*hudPanelSizeX, relativeHeight*hudPanelSizeY );
@@ -168,7 +171,7 @@ namespace Logic
 
 			////////////////////////////////////////////////////// Ahora voy a crear los overlays por cada arma
 
-			_overlayWeapon3D[current] = _server->createOverlay( "_overlay3D"+currentOnText );
+			_overlayWeapon3D[current] = _server->createOverlay( "_overlay3D"+currentOnText, scene );
 			std::string modelWeapon = entityInfo->getStringAttribute("weapon"+currentOnText+"Model");
 			Vector3 offsetPositionWeapon = entityInfo->getVector3Attribute("weapon"+currentOnText+"Offset");
 			
@@ -221,13 +224,13 @@ namespace Logic
 			hudPanelTextPositionXRelative = entityInfo->getFloatAttribute("hudPanel"+currentOnText+"TextPositionXRelative");
 			hudPanelTextPositionYRelative = entityInfo->getFloatAttribute("hudPanel"+currentOnText+"TextPositionYRelative");
 			
-			_panelElements[current] = _server->createOverlay(currentOnText,  "Panel" );
+			_panelElements[current] = _server->createOverlay(currentOnText, scene,  "Panel" );
 			_panelElements[current]->setMetricsMode("pixel");
 			_panelElements[current]->setPosition( hudPanelpositionX*relativeWidth, hudPanelpositionY*relativeHeight);
 			_panelElements[current]->setDimensions( relativeWidth * hudPanelWidth, relativeHeight * hudPanelHeight );
 			_panelElements[current]->setMaterial("hud_"+currentOnText);
 
-			_panelElementsTextArea[current] = _server->createOverlay(currentOnText+"_TextArea", "TextArea");
+			_panelElementsTextArea[current] = _server->createOverlay(currentOnText+"_TextArea", scene, "TextArea");
 				
 				_panelElementsTextArea[current]->setMetricsMode("pixel");
 				_panelElementsTextArea[current]->setPosition(relativeWidth*hudPanelTextPositionXRelative, hudPanelTextPositionYRelative);
@@ -258,15 +261,15 @@ namespace Logic
 
 		 //////////////////////////////////////AQUI ME CREO EL OVERLAY PARA CUANDO SE MUERA
 
-		_overlayDie = _server->createOverlay( "_overlayDie" );
+		_overlayDie = _server->createOverlay( "_overlayDie", scene );
 
-		Graphics::COverlay* panelDie = _server->createOverlay("panelDie",  "Panel");
+		Graphics::COverlay* panelDie = _server->createOverlay("panelDie", scene, "Panel");
 		panelDie->setMetricsMode("pixel");
 		panelDie->setPosition( 5*relativeWidth, 12*relativeHeight);
 		panelDie->setDimensions( relativeWidth*10, relativeHeight*10 );
         //panelDie->setMaterial("cuadroArmas");
 
-		_textAreaDie = _server->createOverlay("_textAreaDie", "TextArea");
+		_textAreaDie = _server->createOverlay("_textAreaDie", scene, "TextArea");
 
 				_textAreaDie->setMetricsMode("pixel");
 				_textAreaDie->setPosition(0.5, 0.5);
@@ -285,9 +288,9 @@ namespace Logic
 
 		//////////////////////////////////////AQUI ME CREO EL OVERLAY PARA EL DEBBUG
 
-		_overlayDebug = _server->createOverlay( "_overlayDebug" );
+		_overlayDebug = _server->createOverlay( "_overlayDebug", scene );
 
-		_panelDebug = _server->createOverlay("panelDebug",  "Panel");
+		_panelDebug = _server->createOverlay("panelDebug", scene, "Panel");
 		panelDie->setMetricsMode("pixel");
 
 		//_panelDebug->setPosition(0,0);
@@ -301,7 +304,7 @@ namespace Logic
 		
 		_panelDebug->setVisible(true);
 
-		_textAreaDebug = _server->createOverlay("_textAreaDebug", "TextArea");
+		_textAreaDebug = _server->createOverlay("_textAreaDebug", scene, "TextArea");
 				
 				_textAreaDebug->setMetricsMode("pixel");
 				_textAreaDebug->setPosition(0, 0);

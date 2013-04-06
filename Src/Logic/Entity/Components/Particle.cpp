@@ -25,28 +25,38 @@ Contiene la implementación del componente que controla la vida de una entidad.
 namespace Logic 
 {
 	IMP_FACTORY(CParticle);
-	
+
+	//---------------------------------------------------------
+
+	CParticle::CParticle() : _particleOffset(Vector3::ZERO),
+							 _particleEmitterDirection(Vector3::ZERO) {
+		// Nada que hacer
+	}
+
 	//---------------------------------------------------------
 	
-	bool CParticle::spawn(CEntity *entity, CMap *map, const Map::CEntity *entityInfo) 
-	{
-		if(!IComponent::spawn(entity,map,entityInfo))
+	CParticle::~CParticle() {
+		delete _particle;
+	}
+
+	//---------------------------------------------------------
+	
+	bool CParticle::spawn(CEntity *entity, CMap *map, const Map::CEntity *entityInfo) {
+		if( !IComponent::spawn(entity,map,entityInfo) )
 			return false;
 
-		
+		if( entityInfo->hasAttribute("particleOffset") )
+			_particleOffset = entityInfo->getVector3Attribute("particleOffset");
 
-		Vector3 position;
-		if(entityInfo->hasAttribute("particlePosition"))
-			position = entityInfo->getVector3Attribute("particlePosition");
-		
-		Vector3 direction;
+		if( entityInfo->hasAttribute("particleEmitterDirection") )
+			_particleEmitterDirection = entityInfo->getVector3Attribute("particleEmitterDirection");
 
-		if(entityInfo->hasAttribute("particleDirection"))
-			direction = entityInfo->getVector3Attribute("particleDirection");
-
+		assert( entityInfo->hasAttribute("particleName") && "Error: No se ha establecido un nombre de particula" );
 		std::string particleName = entityInfo->getStringAttribute("particleName");
-		
-		_particle = new Graphics::CParticle(_entity->getName(), particleName);
+
+		_particle = new Graphics::CParticle( _entity->getName(), particleName );
+		_particle->setPosition( _entity->getPosition() + ( _particleOffset * _entity->getOrientation() ) );
+		_particle->setDirection( _particleEmitterDirection * _entity->getOrientation() );
 
 		return true;
 
@@ -56,8 +66,7 @@ namespace Logic
 
 
 	
-	void CParticle::activate()
-	{
+	void CParticle::activate() {
 		IComponent::activate();
 
 	} // activate
@@ -65,8 +74,7 @@ namespace Logic
 
 
 
-	bool CParticle::accept(CMessage *message)
-	{
+	bool CParticle::accept(CMessage *message) {
 		return false;
 		//return message->getMessageType() == Message::DAMAGED;
 		
@@ -74,8 +82,7 @@ namespace Logic
 	
 	//---------------------------------------------------------
 
-	void CParticle::process(CMessage *message)
-	{
+	void CParticle::process(CMessage *message) {
 		/*
 		switch(message->getMessageType())
 		{
@@ -85,15 +92,14 @@ namespace Logic
 
 	} // process
 	//----------------------------------------------------------
-/*
-	void CParticle::tick(unsigned int msecs)
-	{
+
+	void CParticle::tick(unsigned int msecs) {
 		IComponent::tick(msecs);
 
-		
+		_particle->setPosition(_entity->getPosition() + _particleOffset);
 	} // tick
 	//----------------------------------------------------------
-*/
+
 
 
 } // namespace Logic

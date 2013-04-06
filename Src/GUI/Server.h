@@ -164,6 +164,9 @@ namespace GUI
 		*/
 		Hikari::FlashControl* addLayoutToState(Application::CApplicationState* state, const std::string& layoutName, Hikari::Position pos);
 
+
+		void destroyLayout(Hikari::FlashControl* overlay);
+
 		//________________________________________________________________________
 
 		/**
