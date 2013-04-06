@@ -190,10 +190,6 @@ namespace Physics {
 
 	void CDynamicEntity::setTransform(const Matrix4 &transform, bool makeConversionToLogicWorld) {
 		if(makeConversionToLogicWorld) {
-			Matrix4 transf (transform);
-			Vector3 position = transform.getTrans();
-			transf.setTrans(convertPhysxCoordsToLogicCoords(position));
-
 			Matrix4 convertedTransform = transform;
 			convertedTransform.setTrans( convertPhysxCoordsToLogicCoords( transform.getTrans() ) );
 

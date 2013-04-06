@@ -97,6 +97,8 @@ namespace Graphics
 		*/
 		void setTargetCameraPosition(const Vector3 &newPosition);
 
+		void setCameraDirection(const Vector3& direction);
+
 		Ogre::Camera* getOgreCamera() { return _camera; }
 
 
