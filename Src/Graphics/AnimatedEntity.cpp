@@ -99,11 +99,11 @@ namespace Graphics
 	} // tick
 	//--------------------------------------------------------
 
-	void CAnimatedEntity::attachWeapon(CEntity &arma){
+	void CAnimatedEntity::attachWeapon(CEntity &arma, unsigned int id){
 		if(_weapon)
 			_scene->getSceneMgr()->destroyEntity(_weapon);
 		Ogre::String asd = arma.getMesh();
-		_weapon = _scene->getSceneMgr()->createEntity("weapon", arma.getMesh());
+		_weapon = _scene->getSceneMgr()->createEntity("weapon"+id, arma.getMesh());
 		_entity->attachObjectToBone("Bip01 R Hand",_weapon);
 
 	}

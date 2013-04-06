@@ -106,7 +106,7 @@ namespace Graphics
 
 		
 		*/
-		void attachWeapon(CEntity &arma);
+		void attachWeapon(CEntity &arma, unsigned int id);
 		
 		/**
 		Desactiva una animación a partir de su nombre.
