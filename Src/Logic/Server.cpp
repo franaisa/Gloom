@@ -28,7 +28,7 @@ namespace Logic {
 
 	//--------------------------------------------------------
 
-	CServer::CServer() : _map(0)
+	CServer::CServer() : _map(0), _player(0)
 	{
 		_instance = this;
 

@@ -23,6 +23,7 @@
 #include "Logic/Messages/MessageDamaged.h"
 #include "Logic/Messages/MessageAddForcePlayer.h"
 #include "Logic/Messages/MessageAudio.h"
+#include "Logic/Messages/MessageCreateParticle.h"
 
 #include "Graphics/Server.h"
 #include "Graphics/Scene.h"
@@ -48,7 +49,6 @@ namespace Logic {
 		if(_timer > _explotionTime) {
 			// Eliminamos la entidad en diferido
 			CEntityFactory::getSingletonPtr()->deferredDeleteEntity(_entity);
-			Logic::CGameNetMsgManager::getSingletonPtr()->sendDestroyEntity(_entity->getEntityID());
 			// Creamos la explosion
 			createExplotion();
 		}
@@ -108,12 +108,10 @@ namespace Logic {
 
 					// Eliminamos la entidad en diferido
 					CEntityFactory::getSingletonPtr()->deferredDeleteEntity(_entity);
-					Logic::CGameNetMsgManager::getSingletonPtr()->sendDestroyEntity( _entity->getEntityID() );
 				}
 				else {
 					// Eliminamos la entidad en diferido
 					CEntityFactory::getSingletonPtr()->deferredDeleteEntity(_entity);
-					Logic::CGameNetMsgManager::getSingletonPtr()->sendDestroyEntity( _entity->getEntityID() );
 					// Creamos la explosion
 					createExplotion();
 				}
@@ -188,7 +186,11 @@ namespace Logic {
 		maudio->setIsPlayer(false);
 		_entity->emitMessage(maudio);
 
-		Graphics::CParticle *particle = Graphics::CServer::getSingletonPtr()->getActiveScene()->createParticle(_entity->getName(),"ExplosionParticle", _entity->getPosition());
+		CMessageCreateParticle *particle = new CMessageCreateParticle();
+		particle->setParticle("ExplosionParticle");
+		particle->setPosition(_entity->getPosition());
+
+		_entity->emitMessage(particle);
 	} // createExplotion
 
 	//________________________________________________________________________
