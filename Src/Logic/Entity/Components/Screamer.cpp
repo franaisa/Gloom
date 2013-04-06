@@ -196,7 +196,6 @@ namespace Logic {
 	//__________________________________________________________________
 
 	void CScreamer::refreshShieldPosition() {
-		// Spawneamos la granada justo delante del jugador y a la altura de disparo que corresponda
 		Vector3 entityPosition = _entity->getPosition();
 		Vector3 shootPosition = entityPosition + ( Math::getDirection( _entity->getOrientation() ) * _capsuleRadius );
 		shootPosition.y = entityPosition.y + _heightShoot;
