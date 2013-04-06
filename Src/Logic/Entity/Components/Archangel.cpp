@@ -14,6 +14,7 @@ implementa las habilidades del personaje
 */
 
 #include "Archangel.h"
+#include "Graphics.h"
 #include "Map/MapEntity.h"
 #include "Logic/Entity/Entity.h"
 
@@ -51,6 +52,7 @@ namespace Logic {
 		assert( entityInfo->hasAttribute("archangelPrimarySkillCooldown") );
 		// Pasamos el tiempo a msecs
 		_inmuneDuration = entityInfo->getFloatAttribute("archangelPrimarySkillCooldown") * 1000;
+		
 		return true; //Para quitar el warning?
 	} // spawn
 
@@ -74,7 +76,7 @@ namespace Logic {
 				pReducedDmgMsg->setReducedDamage(0);
 				_entity->emitMessage(pReducedDmgMsg);
 
-				// Desacctivamos el shader de inmunidad
+				// Desactivamos el shader de inmunidad
 				CMessageChangeMaterial* materialMsg = new CMessageChangeMaterial();
 				materialMsg->setMaterialName("marine");
 				_entity->emitMessage(materialMsg);
@@ -86,6 +88,12 @@ namespace Logic {
 
 	void CArchangel::activate() {
 		CPlayerClass::activate();
+
+		// Ñapa temporal para el ideame
+		// Cambiamos el color del marine en funcion de la clase con un changeMaterial
+		CMessageChangeMaterial* materialMsg = new CMessageChangeMaterial();
+		materialMsg->setMaterialName("marine_amarillo");
+		_entity->emitMessage(materialMsg);
 
 		_inmuneTimer = 0;
 	}

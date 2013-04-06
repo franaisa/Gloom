@@ -26,6 +26,7 @@ implementa las habilidades del personaje
 #include "Logic/Messages/MessageSetPhysicPosition.h"
 #include "Logic/Messages/MessageAddForcePlayer.h"
 #include "Logic/Messages/MessageDamaged.h"
+#include "Logic/Messages/MessageChangeMaterial.h"
 
 // Física
 #include "Physics/Server.h"
@@ -79,6 +80,7 @@ namespace Logic {
 		_screamerShieldRecoveryOverTime = entityInfo->getFloatAttribute("screamerShieldRecoveryOverTime");
 		_screamerExplotionDamage = entityInfo->getFloatAttribute("screamerExplotionDamage");
 		_screamerExplotionRadius = entityInfo->getFloatAttribute("screamerExplotionRadius");
+
 	} // spawn
 
 	//__________________________________________________________________
@@ -136,6 +138,12 @@ namespace Logic {
 
 	void CScreamer::activate() {
 		CPlayerClass::activate();
+
+		// Ñapa temporal para el ideame
+		// Cambiamos el color del marine en funcion de la clase con un changeMaterial
+		CMessageChangeMaterial* materialMsg = new CMessageChangeMaterial();
+		materialMsg->setMaterialName("marine_verde");
+		_entity->emitMessage(materialMsg);
 
 		_primarySkillIsActive = false;
 		_currentScreamerShield = _screamerShieldThreshold;
