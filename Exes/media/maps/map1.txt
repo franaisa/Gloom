@@ -131,36 +131,6 @@ Map = {
 		physic_groupList = "1",
 	},
 	
-	Point1 = {
-		type = "SpawnPoint",
-		position = {-75.0, 0.0, 0.0},
-		physic_entity = "rigid",
-		physic_trigger = true,
-		physic_type = "static",
-		physic_shape = "box",
-		physic_dimensions = { 4, 7, 4 },
-	},
-	
-	Point2 = {
-		type = "SpawnPoint",
-		position = {-150.0, 0.0, 0.0},
-		physic_entity = "rigid",
-		physic_trigger = true,
-		physic_type = "static",
-		physic_shape = "box",
-		physic_dimensions = { 4, 7, 4 },
-	},
-	
-	Point3 = {
-		type = "SpawnPoint",
-		position = {130.0, 0.0, 0.0},
-		physic_entity = "rigid",
-		physic_trigger = true,
-		physic_type = "static",
-		physic_shape = "box",
-		physic_dimensions = { 4, 7, 4 },
-	},
-	
 	Orb1 = {
 		type = "ItemSpawn",
 		position = {67.0, 2.0, 42.0},

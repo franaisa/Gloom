@@ -212,7 +212,7 @@ namespace Net {
 		assert(_clienteRed && "Cliente Red es null"); // Solo se puede ejecutar el connectTo si somos cliente
 		assert(_connections.empty() && "Ya hay una conexion"); // Capamos al cliente a 1 conexión max: la de con el server
 
-		CConexion* connection = _clienteRed->connect(address, port, channels, timeout); // CONNECT
+		CConexion* connection = _clienteRed->connect(address, port, channels, timeout*100); // CONNECT
 		
 		// Almacenamos esa conexión y le otorgamos un ID de red
 		connection->setId(Net::ID::SERVER); // Un cliente sólo se conecta al SERVER
