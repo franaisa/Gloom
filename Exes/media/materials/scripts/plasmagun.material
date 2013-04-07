@@ -8,7 +8,12 @@ material Default_OgreMax
 			ambient 0.7 0.7 0.7 1
 			diffuse 0.7 0.7 0.7 1
 			specular 0.707 0.707 0.707 1 50
+			depth_check off
 
+			scene_blend alpha_blend
+			lighting off
+			
+            illumination_stage ambient
 			texture_unit Map#14
 			{
 				texture plasma.jpg
