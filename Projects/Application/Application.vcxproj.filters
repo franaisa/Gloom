@@ -48,9 +48,6 @@
     <ClCompile Include="..\..\Src\Application\LobbyServerState.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Src\Application\LobbyClientState.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Src\Application\NetMenuState.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -67,6 +64,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Src\Application\SelectScenario.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Application\LobbyClientState.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
