@@ -50,6 +50,7 @@ Contiene la implementaci�n del componente que controla la vida de una entidad.
 #include "Logic/Server.h"
 
 #include "Logic/Messages/MessageHudDebug.h"
+#include "Logic/Messages/MessageHudDebugData.h"
 
 namespace Logic 
 {
@@ -81,6 +82,10 @@ namespace Logic
 			if(_panelWeapon[i])
 				delete _panelWeapon[i];
 			
+			if(_panelWeaponKey[i]){
+				delete _panelWeaponKey[i];	
+			}
+
 			if(_overlayWeapon3D[i])
 				delete _overlayWeapon3D[i];
 			//Graphics::CServer::getSingletonPtr()->getActiveScene()->removeEntity( _weaponsEntities[i]);
@@ -111,6 +116,15 @@ namespace Logic
 	{
 		if(!IComponent::spawn(entity,map,entityInfo))
 			return false;
+
+		char keysAux[8] = {'1','2','3','4','5','6','Q','E'};
+
+		for (int i =0 ; i<8;++i){
+			keysPanelWeapon[i] = keysAux[i];
+		}
+		
+		
+		//memcpy (keysAux, keysPanelWeapon, sizeof (keysAux)) ;
 
 		Graphics::CScene* scene = map->getScene();
 		_numWeapons = entityInfo->getIntAttribute("numWeapons");
@@ -144,7 +158,24 @@ namespace Logic
 		_panelMira->setDimensions( sizeCrossFire/100, sizeCrossFire/100 );
         _panelMira->setMaterial("hudMira");
 
+
+		// overlay para controlar las teclas
+			Graphics::COverlay *textAreaDummy = _server->createOverlay("dummy", scene, "TextArea");
+				
+			textAreaDummy->setMetricsMode("pixel");
+			textAreaDummy->setPosition(200, 200);
+			textAreaDummy->setDimensions(0, 0);
+			textAreaDummy->setText("dummy text");
+
+			// hardcodea el tamaño y tipo de la fuente
+			textAreaDummy->setTextSize(16);
+			textAreaDummy->setFont("fuenteSimple");
+
+			_panelMira->addChild(textAreaDummy);
+
 		_overlayPlay->add2D( _panelMira );
+
+
          // Add the panel to the overlay
 
 		int x = hudPanelInitialPositionX;
@@ -163,6 +194,27 @@ namespace Logic
 			_panelWeapon[current]->setDimensions( relativeWidth*hudPanelSizeX, relativeHeight*hudPanelSizeX );
 			_panelWeapon[current]->setMaterial("cuadroArmas");
 
+			
+
+		
+			// overlay para controlar las teclas
+			_panelWeaponKey[current] = _server->createOverlay(currentOnText+"_Key", scene, "TextArea");
+				
+			_panelWeaponKey[current]->setMetricsMode("pixel");
+			_panelWeaponKey[current]->setPosition(1*relativeWidth, -1*relativeHeight);
+			_panelWeaponKey[current]->setDimensions(relativeWidth, relativeHeight);
+				std::stringstream sString;//create a stringstream
+				sString << keysPanelWeapon[current];
+			_panelWeaponKey[current]->setText(sString.str());
+
+			// hardcodea el tamaño y tipo de la fuente
+			_panelWeaponKey[current]->setTextSize(24);
+			_panelWeaponKey[current]->setFont("fuenteSimple");
+
+			_panelWeapon[current]->addChild(_panelWeaponKey[current]);
+			_panelWeapon[current]->setZBuffer(0);
+			
+				
 			_overlayPlay->add2D( _panelWeapon[current]);
 
 			//Aqui me creo el cuadro de ACTIVE, NO_AMMO, NO_WEAPON
@@ -209,17 +261,64 @@ namespace Logic
 
 			_overlayWeapon3D[current]->setVisible(false);
 
-		 } // For de gestin de cada arma.
+		 } // For de gestion de cada arma.
 
 
 		// Bucle para la gestion de la primary skill.
 
+		x -= hudPanelSizeX*4;
+		y -= hudPanelSizeY*1.5;
 
+		for(int i=PRIMARY_SKILL; i< NONE; ++i){
 
+			eWeaponIndex current = (eWeaponIndex)i;
+			std::string currentOnText = toText(current);
+			// Primero me creo el panel que estaba debajo
+			_panelWeapon[current] = _server->createOverlay( "PanelWeapon" + currentOnText, scene, "Panel");
+			_panelWeapon[current]->setMetricsMode("pixel");
+			_panelWeapon[current]->setPosition( x*relativeWidth, y*relativeHeight);
+			_panelWeapon[current]->setDimensions( relativeWidth*hudPanelSizeX, relativeHeight*hudPanelSizeX );
+			_panelWeapon[current]->setMaterial("cuadroArmas");
+
+			_overlayPlay->add2D( _panelWeapon[current]);
+
+			// overlay para controlar las teclas
+			_panelWeaponKey[current] = _server->createOverlay(currentOnText+"_Key", scene, "TextArea");
+
+			_panelWeaponKey[current]->setMetricsMode("pixel");
+			_panelWeaponKey[current]->setPosition(1*relativeWidth, -1*relativeHeight);
+			_panelWeaponKey[current]->setDimensions(relativeWidth, relativeHeight);
+				std::stringstream sString;//create a stringstream
+				sString << keysPanelWeapon[current];
+			_panelWeaponKey[current]->setText(sString.str());
+
+			// hardcodea el tamaño y tipo de la fuente
+			_panelWeaponKey[current]->setTextSize(24);
+			_panelWeaponKey[current]->setFont("fuenteSimple");
+
+			_panelWeapon[current]->addChild(_panelWeaponKey[current]);
+
+			//Aqui me creo el cuadro de ACTIVE, NO_AMMO, NO_WEAPON
+			for(int j=0; j<=NO_WEAPON; ++j){
+				eOverlayWeaponState currentState = (eOverlayWeaponState)j;
+				std::string currentStateOnText = toText(currentState);
+				
+				_weaponsBox[current][currentState] = _server->createOverlay( "_weaponsBox["+currentOnText+"]["+currentStateOnText+"]", scene, "Panel");
+				_weaponsBox[current][currentState]->setMetricsMode("pixel");
+				_weaponsBox[current][currentState]->setPosition( x*relativeWidth, y*relativeHeight);
+				_weaponsBox[current][currentState]->setDimensions( relativeWidth*hudPanelSizeX, relativeHeight*hudPanelSizeY );
+				_weaponsBox[current][currentState]->setMaterial(currentOnText +"_"+ currentStateOnText);
+				_weaponsBox[current][currentState]->setVisible(false);
+
+				_overlayPlay->add2D( _weaponsBox[current][currentState] );
+			}
+			// Ya que todos los he puesto invisibles, el sin arma me lo pongo a visible
+			_weaponsBox[current][NO_WEAPON]->setVisible(true);
+		}
 
 		// fin de la introduccion de la primary skill
-
 		
+	
 		// en el HAMMER (que es el arma inicial, debe de estar active)
 		_weaponsBox[HAMMER][ACTIVE]->setVisible(true);
 		_weaponsBox[HAMMER][NO_WEAPON]->setVisible(false);
@@ -365,7 +464,8 @@ namespace Logic
 			|| message->getMessageType() == Message::HUD_AMMO
 			|| message->getMessageType() == Message::HUD_WEAPON
 			|| message->getMessageType() == Message::HUD_SPAWN
-			|| message->getMessageType() == Message::HUD_DEBUG;
+			|| message->getMessageType() == Message::HUD_DEBUG
+			|| message->getMessageType() == Message::HUD_DEBUG_DATA;
 
 	} // accept
 	
@@ -375,18 +475,39 @@ namespace Logic
 	{
 		switch(message->getMessageType())
 		{
-		case Message::HUD_LIFE: hudLife(((CMessageHudLife*)message)->getLife());
-			break;
-		case Message::HUD_SHIELD: hudShield(((CMessageHudShield*)message)->getShield());
-			break;
-		case Message::HUD_AMMO: hudAmmo( ((CMessageHudAmmo*)message)->getAmmo(), ((CMessageHudAmmo*)message)->getWeapon());
-			break;
-		case Message::HUD_WEAPON: hudWeapon(((CMessageHudWeapon*)message)->getAmmo(), ((CMessageHudWeapon*)message)->getWeapon());
-			break;
-		case Message::HUD_SPAWN: hudSpawn(((CMessageHudSpawn*)message)->getTime());
-			break;
-		case Message::HUD_DEBUG: hudDebug();
-			break;
+			case Message::HUD_LIFE: {
+				hudLife(((CMessageHudLife*)message)->getLife());
+				break;
+			}
+			case Message::HUD_SHIELD: {
+				hudShield(((CMessageHudShield*)message)->getShield());
+				break;
+			}
+			case Message::HUD_AMMO: {
+				CMessageHudAmmo *aux = static_cast<CMessageHudAmmo *>(message);
+				hudAmmo( aux->getAmmo(), aux->getWeapon());
+				break;
+			}
+			case Message::HUD_WEAPON: {
+				CMessageHudWeapon *aux = static_cast<CMessageHudWeapon *>(message);
+				hudWeapon(aux->getAmmo(), aux->getWeapon());
+				break;
+			}
+			case Message::HUD_SPAWN: {
+				CMessageHudSpawn *aux = static_cast<CMessageHudSpawn *>(message);
+				_spawnTime = aux->getTime();
+				hudSpawn(aux->getTime());
+				break;
+			}
+			case Message::HUD_DEBUG: {
+				hudDebug();
+				break;
+			}
+			case Message::HUD_DEBUG_DATA: {
+				CMessageHudDebugData *aux = static_cast<CMessageHudDebugData *>(message); 
+				hudDebugData(aux->getKey(),aux->getValue() );
+				break;
+			}
 		}
 
 	} // process
@@ -509,6 +630,10 @@ namespace Logic
 				break;
 			case ROCKETLAUNCHER: return "RocketLauncher";
 				break;
+			case PRIMARY_SKILL: return "PrimarySkill";
+				break;
+			case SECUNDARY_SKILL: return "SecondarySkill";
+				break;
 			default: return "";
 			}
 	}
@@ -547,22 +672,64 @@ namespace Logic
 		_overlayDebug->setVisible(!_overlayDebug->isVisible());
 	}
 
+	void CHudOverlay::hudDebugData(const std::string &key, const std::string &value){
+		
+		
+
+		if(_textDebug.find(key) == _textDebug.end()){
+			std::pair<std::string, std::string> aux(key, value);
+
+			_textDebug.insert(aux);
+		}else{
+			_textDebug.find(key)->second = value;
+		}
+
+		/*
+		std::pair<std::string, std::string> res = _textDebug.insert(std::make_pair(key,value));
+		if ( res.second.empty()) {
+			res.second = value;	
+		}
+		*/
+	}
+
 	void CHudOverlay::tick(unsigned int msecs)
 	{
 		IComponent::tick(msecs);
-		
+	
+		_acumSpawn += msecs;
+		if(_acumSpawn>1000){
+			hudSpawn((_spawnTime - _acumSpawn));
+			_acumSpawn = 0;
+		}
 
 		if(_overlayDebug->isVisible())
 		{
-			_temporal+=msecs;
-			if(_temporal>200)
-			{
-				std::stringstream sDebug;
-				sDebug << "FPS: " << 1000/msecs;
-				_textAreaDebug->setText(sDebug.str());
-				_temporal=0;
+			
+			_sDebug.str("");
+			_sDebug.clear();
+
+			_acumDebug+=msecs;
+			// han pasado el tiempo para actualizar el fps
+			if(_acumDebug>200)
+			{		
+				std::stringstream aux;
+				aux << 1000.0f/(float)msecs;
+
+				hudDebugData("FPS", aux.str());
+				_acumDebug=0;
 			}
+			
+			for (std::map<std::string,std::string>::iterator it=_textDebug.begin(); it!=_textDebug.end(); ++it){
+				_sDebug << it->first << " => " << it->second << '\n';
+			}
+
+			Logic::CMessageHudDebugData *m=new Logic::CMessageHudDebugData();
+			m->setKey("Posicion");
+			m->setValue(_entity->getPosition());
+			_entity->emitMessage(m);
 		}
+
+		_textAreaDebug->setText(_sDebug.str());
 	}
 
 	void CHudOverlay::deactivate(){

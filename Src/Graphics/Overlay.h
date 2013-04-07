@@ -182,6 +182,13 @@ namespace Graphics
 		*/
 		void setFont(const std::string& font);
 
+		/**
+		Especifica la profundidad del overlay
+
+		@param zBuffer, profundidad.
+		*/
+		void setZBuffer(const int zBuffer);
+
 
 		/**
 		Añade un overlayContainer a otro, estableciendo una secuencia de padres e hijos.

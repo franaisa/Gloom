@@ -252,6 +252,12 @@ namespace Graphics
 
 	//------------------------------------------------------------
 
+	void COverlay::setZBuffer(const int zBuffer){
+		if(_overlay){ _overlay->setZOrder(zBuffer);}
+	} // setText
+
+	//------------------------------------------------------------
+
 
 	void COverlay::setTextSize(const int textSize){
 		if(_overlayText){ _overlayText->setCharHeight((Ogre::Real)textSize);}

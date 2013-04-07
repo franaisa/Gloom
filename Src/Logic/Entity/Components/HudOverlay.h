@@ -38,8 +38,8 @@ namespace Logic
 		/**
 		Constructor por defecto; en la clase base no hace nada.
 		*/
-		CHudOverlay() : IComponent(), _health(0), _shield(0), _ammo(1), _actualWeapon(0), _numWeapons(0), _panelMira(0), _temporal(0),
-						_overlayPlay(0), _overlayDie(0), _textAreaDie(0), _overlayDebug(0), _panelDebug(0), _textAreaDebug(0) {
+		CHudOverlay() : IComponent(), _health(0), _shield(0), _ammo(1), _actualWeapon(0), _numWeapons(0), _panelMira(0), _spawnTime(0),
+			_overlayPlay(0), _overlayDie(0), _textAreaDie(0), _overlayDebug(0), _panelDebug(0), _textAreaDebug(0), _acumDebug(0) {
 			
 			for(int i=0;i<3;++i){
 				_panelElementsText[i]=1;
@@ -65,6 +65,10 @@ namespace Logic
 				for(int j=0;j<3;++j){
 					_weaponsBox[i][j] = NULL;
 				}
+			}
+
+			for(int i = 0; i<8; ++i){
+				keysPanelWeapon[i] = NULL;
 			}
 
 			_overlayDebug = NULL;
@@ -120,6 +124,8 @@ namespace Logic
 
 		void hudDebug();
 
+		void hudDebugData(const std::string &key, const std::string &value);
+
 		std::string toText(eWeaponIndex weapon);
 		std::string toText(eOverlayWeaponState state);
 		std::string toText(eOverlayElements element);
@@ -171,9 +177,14 @@ namespace Logic
 		Graphics::COverlay *_panelWeapon[6];
 
 		/** 
+		Panel de las teclas de los paneles
+		*/
+		Graphics::COverlay *_panelWeaponKey[6];
+
+		/** 
 		tiene las teclas que)
 		*/
-		char keysPanelWeapon[6];
+		char keysPanelWeapon[8];
 		/**
 		Gestion los paneles de las armas (6) en este caso, en cada uno de sus estados: ACTIVE, NO_AMMO, NO_WEAPON
 		*/
@@ -188,15 +199,21 @@ namespace Logic
 		*/
 		Graphics::CEntity *_weaponsEntities[6];
 
+
+
+
 		/**
-		
+		objetos para debug
 		*/
 		Graphics::COverlay *_overlayDebug;
 		Graphics::COverlay *_panelDebug;
 		Graphics::COverlay *_textAreaDebug;
+		std::map<std::string, std::string> _textDebug;
+		std::stringstream _sDebug;
+		int _acumDebug;
 
-
-		int _temporal;
+		int _spawnTime;
+		int _acumSpawn;
 	}; // class CHudOverlay
 
 	REG_FACTORY(CHudOverlay);

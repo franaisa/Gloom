@@ -46,12 +46,11 @@ namespace Logic {
 		// Obtenemos la informacion asociada al arquetipo de la granada
 		Map::CEntity *entityInfo = CEntityFactory::getSingletonPtr()->getInfo("Grenade");
 
-		// Separacion para que la granada no toque al jugador
-		int _grenadeSeparation=2;
-
 		// Spawneamos la granada justo delante del jugador y a la altura de disparo que corresponda
-		Vector3 shootPosition = _entity->getPosition() + ( Math::getDirection( _entity->getOrientation() )* (_capsuleRadius) * _grenadeSeparation );
+		Vector3 shootPosition = _entity->getPosition() + ( Math::getDirection( _entity->getOrientation() )* (_capsuleRadius));
 		shootPosition.y += _heightShoot;
+		//Y le quitamos la mitad de la altura del cohete, ajustando al gusto
+		shootPosition.y-=2.8;
 		
 		// Creamos la entidad y la activamos
 		CEntity* grenade = CEntityFactory::getSingletonPtr()->createEntity(entityInfo, Logic::CServer::getSingletonPtr()->getMap(), shootPosition);
