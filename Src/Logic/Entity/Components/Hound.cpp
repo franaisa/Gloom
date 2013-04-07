@@ -53,7 +53,6 @@ namespace Logic {
 
 	//__________________________________________________________________
 
-
 	void CHound::tick(unsigned int msecs) {
 		CPlayerClass::tick(msecs);
 
@@ -91,7 +90,6 @@ namespace Logic {
 	}
 
 	//__________________________________________________________________
-
 
 	void CHound::primarySkill() {
 		std::cout << "Primary Skill - Hound" << std::endl;
