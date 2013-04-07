@@ -44,6 +44,7 @@ package
 			this.gotoAndPlay("clicked");
 			this.removeEventListener(MouseEvent.MOUSE_OUT, onMouseOut);
 			this.removeEventListener(MouseEvent.MOUSE_OVER, onMouseOver);
+			trace(nick);
 			ExternalInterface.call("connect", ip, nick);
 		}
 		
