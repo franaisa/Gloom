@@ -216,7 +216,6 @@ namespace Logic {
 		//Math::setPitchYaw( _entity->getPitch(), _entity->getYaw() + Math::HALF_PI, shootTransform);
 		Math::setPitchYaw( _entity->getPitch(), _entity->getYaw(), shootTransform);
 
-
 		// Posicionamos el centro del escudo justo en el punto de mira		
 		CPhysicDynamicEntity* physicDynamic = _screamerShield->getComponent<CPhysicDynamicEntity>("CPhysicDynamicEntity");
 		assert(physicDynamic && "Error la entidad ScreamerShield no tiene un componente fisico");
