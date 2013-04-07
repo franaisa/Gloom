@@ -109,87 +109,95 @@ namespace Application {
 		//memcpy(&msg, packet->getData(), sizeof(msg));
 		buffer.read(&msg, sizeof(msg));
 
-		switch (msg)
-		{
-		case Net::LOAD_PLAYER_INFO:
-		{
-			// Obtenemos el nombre del mesh que va a usar el player
-			std::string playerModel = "marine.mesh";
+		switch (msg) {
+			case Net::LOAD_PLAYER_INFO: {
+				// Obtenemos el nombre del mesh que va a usar el player
+				std::string playerModel = "marine.mesh";
 
-			// Obtenemos el nombre del player
-			std::string playerNick = _menu->callFunction("getNick",Hikari::Args()).getString();
+				// Obtenemos el nombre del player
+				std::string playerNick = _menu->callFunction("getNick",Hikari::Args()).getString();
 
-			// Enviamos los datos del player al servidor
-			Net::NetMessageType msg = Net::PLAYER_INFO;
+				// Enviamos los datos del player al servidor
+				Net::NetMessageType msg = Net::PLAYER_INFO;
 
-			Net::CBuffer playerData(sizeof(msg) + playerNick.size() + playerModel.size());
-			playerData.write(&msg, sizeof(msg)); // Por problemas con enumerados serializamos manualmente
-			playerData.serialize(playerNick, false);
-			playerData.serialize(playerModel, false);
+				Net::CBuffer playerData(sizeof(msg) + playerNick.size() + playerModel.size());
+				playerData.write(&msg, sizeof(msg)); // Por problemas con enumerados serializamos manualmente
+				playerData.serialize(playerNick, false);
+				playerData.serialize(playerModel, false);
 
-			Net::CManager::getSingletonPtr()->send(playerData.getbuffer(), playerData.getSize());
+				Net::CManager::getSingletonPtr()->send(playerData.getbuffer(), playerData.getSize());
 
-			break;
-		}
-		case Net::LOAD_MAP:
-			// Cargamos el archivo con las definiciones de las entidades del nivel.
-			if (!Logic::CEntityFactory::getSingletonPtr()->loadBluePrints("blueprints_client.txt"))
-			{
-				Net::CManager::getSingletonPtr()->deactivateNetwork();
-				_app->exitRequest();
+				break;
 			}
-			if (!Logic::CEntityFactory::getSingletonPtr()->loadArchetypes("archetypes.txt")) {
-				Net::CManager::getSingletonPtr()->deactivateNetwork();
-				_app->exitRequest();
-			}
-			// Cargamos el nivel a partir del nombre del mapa. 
-			if (!Logic::CServer::getSingletonPtr()->loadLevel("map_client.txt"))
-			{
-				Net::CManager::getSingletonPtr()->deactivateNetwork();
-				_app->exitRequest();
-			}
-			else
-			{
-				//Avisamos de que hemos terminado la carga.
-				Net::NetMessageType ackMsg = Net::MAP_LOADED;
-				Net::CBuffer ackBuffer(sizeof(ackMsg));
+			case Net::LOAD_MAP: {
+				// Cargamos el archivo con las definiciones de las entidades del nivel.
+				if (!Logic::CEntityFactory::getSingletonPtr()->loadBluePrints("blueprints_client.txt")) {
+					Net::CManager::getSingletonPtr()->deactivateNetwork();
+					_app->exitRequest();
+				}
+				if (!Logic::CEntityFactory::getSingletonPtr()->loadArchetypes("archetypes.txt")) {
+					Net::CManager::getSingletonPtr()->deactivateNetwork();
+					_app->exitRequest();
+				}
+				// Cargamos el nivel a partir del nombre del mapa. 
+				if (!Logic::CServer::getSingletonPtr()->loadLevel("map_client.txt")) {
+					Net::CManager::getSingletonPtr()->deactivateNetwork();
+					_app->exitRequest();
+				}
+				else {
+					//Avisamos de que hemos terminado la carga.
+					Net::NetMessageType ackMsg = Net::MAP_LOADED;
+					Net::CBuffer ackBuffer(sizeof(ackMsg));
 
+					ackBuffer.write(&ackMsg, sizeof(ackMsg));
+					Net::CManager::getSingletonPtr()->send(ackBuffer.getbuffer(), ackBuffer.getSize());
+				}
+
+				break;
+			}
+			case Net::LOAD_PLAYER: {
+				// Creamos el player. Deberíamos poder propocionar caracteríasticas
+				// diferentes según el cliente (nombre, modelo, etc.). Esto es una
+				// aproximación, solo cambiamos el nombre y decimos si es el jugador
+				// local. Los datos deberían llegar en el paquete de red.
+				Net::NetID id;
+				Logic::TEntityID entityID;
+				//memcpy(&id, packet->getData() + sizeof(msg), sizeof(id));
+				buffer.read(&id, sizeof(id));
+				buffer.read(&entityID, sizeof(entityID));
+				std::string name;
+				buffer.deserialize(name);
+
+				//llamo al metodo de creacion del jugador
+				if(id == Net::CManager::getSingletonPtr()->getID()) {//si soy yo, me creo como jugador local
+					Logic::CEntity * player = Logic::CServer::getSingletonPtr()->getMap()->createLocalPlayer(name, entityID);
+					player->getEntityID();
+				}else{//si no soy yo, me creo como jugador remoto
+					Logic::CEntity * player = Logic::CServer::getSingletonPtr()->getMap()->createPlayer(name, entityID);
+				}
+				//Enviamos el mensaje de que se ha creado el jugador
+				Net::NetMessageType ackMsg = Net::PLAYER_LOADED;
+				Net::CBuffer ackBuffer(sizeof(ackMsg) + sizeof(id));
 				ackBuffer.write(&ackMsg, sizeof(ackMsg));
+				ackBuffer.write(&id, sizeof(id));
 				Net::CManager::getSingletonPtr()->send(ackBuffer.getbuffer(), ackBuffer.getSize());
+				
+				break;
 			}
-			break;
-		case Net::LOAD_PLAYER:
-			{
-			// Creamos el player. Deberíamos poder propocionar caracteríasticas
-			// diferentes según el cliente (nombre, modelo, etc.). Esto es una
-			// aproximación, solo cambiamos el nombre y decimos si es el jugador
-			// local. Los datos deberían llegar en el paquete de red.
-			Net::NetID id;
-			Logic::TEntityID entityID;
-			//memcpy(&id, packet->getData() + sizeof(msg), sizeof(id));
-			buffer.read(&id, sizeof(id));
-			buffer.read(&entityID, sizeof(entityID));
-			std::string name;
-			buffer.deserialize(name);
+			case Net::START_GAME: {
+				_app->setState("multiplayerTeamDeathmatchClient");
+				break;
+			}
+			case Net::PLAYER_LEFT: {
+				// Obtenemos el id del player que ha dejado la partida
+				Logic::TEntityID playerLeftId;
+				buffer.read( &playerLeftId, sizeof(playerLeftId) );
 
-			//llamo al metodo de creacion del jugador
-			if(id == Net::CManager::getSingletonPtr()->getID()) {//si soy yo, me creo como jugador local
-				Logic::CEntity * player = Logic::CServer::getSingletonPtr()->getMap()->createLocalPlayer(name, entityID);
-				player->getEntityID();
-			}else{//si no soy yo, me creo como jugador remoto
-				Logic::CEntity * player = Logic::CServer::getSingletonPtr()->getMap()->createPlayer(name, entityID);
+				// Obtenemos el puntero a la entidad que corresponde con el id dado
+				Logic::CEntity* entityToBeDeleted = Logic::CServer::getSingletonPtr()->getMap()->getEntityByID(playerLeftId);
+				// Borramos la entidad
+				Logic::CEntityFactory::getSingletonPtr()->deferredDeleteEntity(entityToBeDeleted);
 			}
-			//Enviamos el mensaje de que se ha creado el jugador
-			Net::NetMessageType ackMsg = Net::PLAYER_LOADED;
-			Net::CBuffer ackBuffer(sizeof(ackMsg) + sizeof(id));
-			ackBuffer.write(&ackMsg, sizeof(ackMsg));
-			ackBuffer.write(&id, sizeof(id));
-			Net::CManager::getSingletonPtr()->send(ackBuffer.getbuffer(), ackBuffer.getSize());
-			}
-			break;
-		case Net::START_GAME:
-			_app->setState("multiplayerTeamDeathmatchClient");
-			break;
 		}
 	} // dataPacketReceived
 

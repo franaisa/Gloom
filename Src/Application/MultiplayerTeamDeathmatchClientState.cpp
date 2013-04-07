@@ -39,6 +39,8 @@ namespace Application {
 		
 		return true;
 	}
+	//______________________________________________________________________________
+
 	void CMultiplayerTeamDeathmatchClientState::activate() {
 		CGameState::activate();
 

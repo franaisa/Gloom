@@ -123,11 +123,11 @@ namespace Logic
 
 		//Hacia la posicion final
 		if(_toFinal && !_wait){
-			float distanciaToFinal=(_positionFinal-_entity->getPosition()).absDotProduct(Vector3(1,1,1));
+			float distanciaToFinal=_positionFinal.squaredDistance(_entity->getPosition());
 			if(distanciaToFinal>=0){
 				toDirection = _directionFinal * msecs * _velocity;
 				//Por si nos pasasemos de la posición final
-				if(toDirection.absDotProduct(Vector3(1,1,1))>distanciaToFinal){
+				if((_entity->getPosition()+toDirection).squaredDistance(_positionFinal)>distanciaToFinal){
 					toDirection=(_positionFinal-_entity->getPosition());
 					_wait=true;
 				}
@@ -138,11 +138,11 @@ namespace Logic
 		}
 		//Hacia la posicion inicial
 		else if(!_wait){
-			float distanciaToInitial=(_positionInitial-_entity->getPosition()).absDotProduct(Vector3(1,1,1));
+			float distanciaToInitial=_positionInitial.squaredDistance(_entity->getPosition());
 			if(distanciaToInitial>=0){
 				toDirection = _directionInitial* msecs * _velocity;
 				//Por si nos pasasemos de la posición inicial
-				if(toDirection.absDotProduct(Vector3(1,1,1))>distanciaToInitial){
+				if((_entity->getPosition()+toDirection).squaredDistance(_positionInitial)>distanciaToInitial){
 					toDirection=(_positionInitial-_entity->getPosition());
 					_wait=true;
 				}
