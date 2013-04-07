@@ -25,7 +25,6 @@ package
 			manager.registerNick(this);
 			
 			var txt: TextField = getChildByName("inputNick") as TextField;
-			
 			txt.text = "rub0te";
 			
 			_nick = txt.text;
@@ -42,10 +41,14 @@ package
 		}
 		
 		public function getNick(): String {
+			var txt: TextField = getChildByName("inputNick") as TextField;
+			_nick = txt.text;
 			return _nick;
 		}
 		
 		public function get nick():String {
+			var txt: TextField = getChildByName("inputNick") as TextField;
+			_nick = txt.text;
 			return _nick;
 		}
 		
@@ -55,8 +58,9 @@ package
 		
 		private function onTextEnter(e: TextEvent): void {
 			var txt: TextField = getChildByName("inputNick") as TextField;
-			
-			_nick = txt.text+e.text;
+			trace(_nick);
+			_nick = txt.text + e.text;
+			trace(_nick);
 		}
 		
 		private function onMouseOver(event: MouseEvent): void {

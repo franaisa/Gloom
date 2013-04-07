@@ -188,16 +188,6 @@ namespace Application {
 				_app->setState("multiplayerTeamDeathmatchClient");
 				break;
 			}
-			case Net::PLAYER_LEFT: {
-				// Obtenemos el id del player que ha dejado la partida
-				Logic::TEntityID playerLeftId;
-				buffer.read( &playerLeftId, sizeof(playerLeftId) );
-
-				// Obtenemos el puntero a la entidad que corresponde con el id dado
-				Logic::CEntity* entityToBeDeleted = Logic::CServer::getSingletonPtr()->getMap()->getEntityByID(playerLeftId);
-				// Borramos la entidad
-				Logic::CEntityFactory::getSingletonPtr()->deferredDeleteEntity(entityToBeDeleted);
-			}
 		}
 	} // dataPacketReceived
 

@@ -1,0 +1,13 @@
+vertex_program ShaderShieldShadow hlsl
+{
+	source shieldShadow.hlsl
+	entry_point vsMain
+	target vs_2_0
+}
+
+fragment_program shieldShadowShader hlsl
+{
+	source shieldShadow.hlsl
+	entry_point mainPS
+	target ps_2_0
+}

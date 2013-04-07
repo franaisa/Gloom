@@ -81,48 +81,50 @@ namespace Application {
 		Net::NetMessageType msg;
 		buffer.read(&msg, sizeof(msg));
 
-		switch (msg)
-		{
-		case Net::LOAD_PLAYER: {
-			// Creamos el player. Deberíamos poder propocionar caracteríasticas
-			// diferentes según el cliente (nombre, modelo, etc.). Esto es una
-			// aproximación, solo cambiamos el nombre y decimos si es el jugador
-			// local. Los datos deberían llegar en el paquete de red.
-			Net::NetID id;
-			Logic::TEntityID entityID;
-			//memcpy(&id, packet->getData() + sizeof(msg), sizeof(id));
-			buffer.read(&id, sizeof(id));
-			buffer.read(&entityID, sizeof(entityID));
-			std::string name;
-			buffer.deserialize(name);
-			std::cout << "RECEIVED creando player con id" << entityID << std::endl << std::endl << std::endl << std::endl << std::endl << std::endl << std::endl << std::endl;
-			Logic::CEntity * player = Logic::CServer::getSingletonPtr()->getMap()->createPlayer(name, entityID);
-			player->activate();
-			break;
-		}
-		case Net::PING:
-			//me llega la respuesta de un ping, por lo tanto tomo el tiempo y calculo mi ping
-			unsigned int time = clock();
-			unsigned int ping = time - _reloj;
-			_npings++;
-			_pingActual += ping/2;
+		switch (msg) {
+			case Net::LOAD_PLAYER: {
+				// Creamos el player. Deberíamos poder propocionar caracteríasticas
+				// diferentes según el cliente (nombre, modelo, etc.). Esto es una
+				// aproximación, solo cambiamos el nombre y decimos si es el jugador
+				// local. Los datos deberían llegar en el paquete de red.
+				Net::NetID id;
+				Logic::TEntityID entityID;
+				//memcpy(&id, packet->getData() + sizeof(msg), sizeof(id));
+				buffer.read(&id, sizeof(id));
+				buffer.read(&entityID, sizeof(entityID));
+				std::string name;
+				buffer.deserialize(name);
 
-			if(_npings>5){//si ya he tomado suficientes pings, calculo la media y la seteo al server
-				_pingActual = _pingActual/_npings;
-				clock_t serverTime;
-				buffer.read(&serverTime,sizeof(serverTime));
-				serverTime+=_pingActual;
-				Logic::CServer::getSingletonPtr()->setDiffTime(serverTime-time);
-			}else{//si no he tomado suficientes pings, me guardo el ping y envío otro
-				Net::NetMessageType msgping = Net::PING;
-				Net::NetID id = Net::CManager::getSingletonPtr()->getID();
-				Net::CBuffer ackBuffer(sizeof(msgping) + sizeof(id));
-				ackBuffer.write(&msgping, sizeof(msgping));
-				ackBuffer.write(&id, sizeof(id));
-				_reloj = clock();
-				Net::CManager::getSingletonPtr()->send(ackBuffer.getbuffer(), ackBuffer.getSize());
+				Logic::CEntity * player = Logic::CServer::getSingletonPtr()->getMap()->createPlayer(name, entityID);
+				player->activate();
+				break;
 			}
-			break;
+			case Net::PING: {
+				// me llega la respuesta de un ping, por lo tanto tomo el tiempo y calculo mi ping
+				unsigned int time = clock();
+				unsigned int ping = time - _reloj;
+				_npings++;
+				_pingActual += ping/2;
+
+				if(_npings>5) { //si ya he tomado suficientes pings, calculo la media y la seteo al server
+					_pingActual = _pingActual/_npings;
+					clock_t serverTime;
+					buffer.read(&serverTime,sizeof(serverTime));
+					serverTime+=_pingActual;
+					Logic::CServer::getSingletonPtr()->setDiffTime(serverTime-time);
+				}
+				else { //si no he tomado suficientes pings, me guardo el ping y envío otro
+					Net::NetMessageType msgping = Net::PING;
+					Net::NetID id = Net::CManager::getSingletonPtr()->getID();
+					Net::CBuffer ackBuffer(sizeof(msgping) + sizeof(id));
+					ackBuffer.write(&msgping, sizeof(msgping));
+					ackBuffer.write(&id, sizeof(id));
+					_reloj = clock();
+					Net::CManager::getSingletonPtr()->send(ackBuffer.getbuffer(), ackBuffer.getSize());
+				}
+
+				break;
+			}
 		}
 	}
 
