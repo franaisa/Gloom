@@ -119,6 +119,8 @@ namespace Application {
 			// Obtenemos el nombre del player
 			std::string playerNick = _menu->callFunction("getNick",Hikari::Args()).getString();
 
+			std::cout << "el nick del menda es " << playerNick << std::endl;
+
 			// Enviamos los datos del player al servidor
 			Net::NetMessageType msg = Net::PLAYER_INFO;
 

@@ -2,6 +2,7 @@ Map = {
 
 	World = {
 		type = "World",
+		model = "Object081.mesh",
 	},
 	
 	Hacksaw = {
