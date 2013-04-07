@@ -188,7 +188,7 @@ namespace Logic
 			//y += hudPanelSizeY;
 
 
-			////////////////////////////////////////////////////// Ahora voy a crear los overlays por cada arma
+			////////////////////////////////////////////////////// Ahora voy a crear los overlays por cada arma en 3D
 
 			_overlayWeapon3D[current] = _server->createOverlay( "_overlay3D"+currentOnText, scene );
 			std::string modelWeapon = entityInfo->getStringAttribute("weapon"+currentOnText+"Model");
