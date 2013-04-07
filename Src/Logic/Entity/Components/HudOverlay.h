@@ -45,7 +45,7 @@ namespace Logic
 				_panelElementsText[i]=1;
 			}
 
-				delete _overlayPlay;
+			 _overlayPlay = NULL;
 			_overlayDie = NULL;
 			_textAreaDie = NULL;
 		

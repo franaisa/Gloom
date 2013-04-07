@@ -188,6 +188,7 @@ namespace Logic
 			//y += hudPanelSizeY;
 
 
+
 			////////////////////////////////////////////////////// Ahora voy a crear los overlays por cada arma en 3D
 
 			_overlayWeapon3D[current] = _server->createOverlay( "_overlay3D"+currentOnText, scene );
@@ -209,6 +210,14 @@ namespace Logic
 			_overlayWeapon3D[current]->setVisible(false);
 
 		 } // For de gestin de cada arma.
+
+
+		// Bucle para la gestion de la primary skill.
+
+
+
+
+		// fin de la introduccion de la primary skill
 
 		
 		// en el HAMMER (que es el arma inicial, debe de estar active)
