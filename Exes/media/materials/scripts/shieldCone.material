@@ -1,6 +1,5 @@
 material shieldCone
 {
-
 	receive_shadows on
    //transparency_casts_shadows on
 
@@ -23,10 +22,9 @@ material shieldCone
 		
 			texture_unit
 			{
-				texture WaterNormal1.tga
+				texture shieldCone2.tga
 				scroll_anim 0.125 0
 				wave_xform scroll_y sine 0 0.1 0 0.25
-
 			}
 		}	
 	}
