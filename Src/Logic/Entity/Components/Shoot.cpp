@@ -61,7 +61,7 @@ namespace Logic {
 		_damage= entityInfo->getIntAttribute(weapon+"Damage");
 		_defaultDamage=_damage;
 		_numberShots = entityInfo->getIntAttribute(weapon+"NumberShoots");
-		_cooldown = entityInfo->getIntAttribute(weapon+"ColdDown") * 1000;
+		_cooldown = entityInfo->getFloatAttribute(weapon+"ColdDown") * 1000;
 		_defaultCooldown=_cooldown;
 		_maxAmmo = entityInfo->getIntAttribute(weapon+"MaxAmmo");
 		_id = entityInfo->getIntAttribute(weapon+"Id");

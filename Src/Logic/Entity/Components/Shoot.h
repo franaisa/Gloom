@@ -259,10 +259,10 @@ namespace Logic {
 		int _currentAmmo;
 
 		/** Timer para el cooldown. */
-		int _cooldownTimer;
+		float _cooldownTimer;
 
 		/** Cooldown actual (modificable por powerups). */
-		int _cooldown;
+		float _cooldown;
 
 		/** Cooldown por defecto del arma (tiempo entre disparo y disparo). */
 		int _defaultCooldown;
