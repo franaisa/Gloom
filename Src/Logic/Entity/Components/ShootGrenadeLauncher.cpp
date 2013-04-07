@@ -46,13 +46,11 @@ namespace Logic {
 		// Obtenemos la informacion asociada al arquetipo de la granada
 		Map::CEntity *entityInfo = CEntityFactory::getSingletonPtr()->getInfo("Grenade");
 
-		// Ojo si vamos hacia atras necesitamos mas separacion o la liamos ( no se si la jode la orientacion o la posicion o estoy del reves )
-		int inverse = 1;
-		if(_entity->getComponent<CAvatarController>("CAvatarController")->getWalkingBack())
-			inverse = 2;
+		// Separacion para que la granada no toque al jugador
+		int _grenadeSeparation=2;
 
 		// Spawneamos la granada justo delante del jugador y a la altura de disparo que corresponda
-		Vector3 shootPosition = _entity->getPosition() + ( Math::getDirection( _entity->getOrientation() )* (_capsuleRadius) * inverse );
+		Vector3 shootPosition = _entity->getPosition() + ( Math::getDirection( _entity->getOrientation() )* (_capsuleRadius) * _grenadeSeparation );
 		shootPosition.y += _heightShoot;
 		
 		// Creamos la entidad y la activamos
