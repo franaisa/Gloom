@@ -696,10 +696,12 @@ namespace Logic
 	{
 		IComponent::tick(msecs);
 	
-		_acumSpawn += msecs;
-		if(_acumSpawn>1000){
-			hudSpawn((_spawnTime - _acumSpawn));
-			_acumSpawn = 0;
+		if(_overlayDie->isVisible()){
+			_acumSpawn += msecs;
+			if(_acumSpawn>1000){
+				hudSpawn((--_spawnTime));
+				_acumSpawn = 0;
+			}
 		}
 
 		if(_overlayDebug->isVisible())
