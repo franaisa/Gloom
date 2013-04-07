@@ -636,7 +636,7 @@ Map = {
 		explotionRadius = 6,
 		explotionAudio = "media/audio/explotion.wav",
 		particleOffset = {0.0, 0.0, 0.0},
-		particleEmitterDirection = {0.0, 0.0, -1.0},
+		comment_particleEmitterDirection = {0.0, 0.0, -1.0},
 		particleName = "rocketParticles",
 	},
 	
