@@ -86,7 +86,7 @@ namespace Logic
 
 		//Habria que quitare el string que se pasa por parametro porque no tiene sentido
 		animationFinished("random");
-		_animatedGraphicsEntity->attachWeapon(*_weapons[0]);
+		_animatedGraphicsEntity->attachWeapon(*_weapons[0], _entity->getEntityID());
 	}
 	//---------------------------------------------------------
 
@@ -162,7 +162,7 @@ namespace Logic
 
 
 	void CAnimatedGraphics::changeWeapon(int newWeapon){
-		_animatedGraphicsEntity->attachWeapon(*_weapons[newWeapon]);
+		_animatedGraphicsEntity->attachWeapon(*_weapons[newWeapon], _entity->getEntityID());
 	}
 
 } // namespace Logic
