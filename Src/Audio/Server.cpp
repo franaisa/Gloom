@@ -29,7 +29,7 @@ namespace Audio
 		assert(!_instance && "Segunda inicialización de Audio::CServer no permitida!");
 		_volume=0.5;
 		_doppler=0.005f;
-		_rolloff=0.005f;
+		_rolloff=0.0001f;
 		_soundAvatar=NULL;
 		_playerHeight=8;
 		_isMute=false;
@@ -91,7 +91,7 @@ namespace Audio
 		ERRCHECK(result);
 
 		//Configuración 3D, el parámetro central es el factor de distancia (FMOD trabaja en metros/segundos)
-		_system->set3DSettings(_doppler,1.0,_rolloff);
+		_system->set3DSettings(_doppler,2.0,_rolloff);
 
 		//Cargamos la banda sonora del juego
 		playStreamingLoopSound("media/audio/themeGloom.wav", "theme");

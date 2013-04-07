@@ -46,29 +46,20 @@ namespace Logic {
 	void CShootRocketLauncher::fireWeapon() {
 		// Obtenemos la informacion asociada al arquetipo del cohete
 		Map::CEntity *entityInfo = CEntityFactory::getSingletonPtr()->getInfo("Rocket");
-		
-		// Separacion para que la granada no toque al jugador
-		int _rocketSeparation=6;
-		// Sacamos la posicion del rocket (que debe estar situada a la altura de disparo)
-		Vector3 shootPosition = _entity->getPosition() + (Math::getDirection( _entity->getOrientation() )* (_capsuleRadius) * _rocketSeparation );
+
+		Vector3 shootPosition = _entity->getPosition() + (Math::getDirection( _entity->getOrientation() )* (_capsuleRadius));
 		shootPosition.y += _heightShoot;
 
 		CEntity* rocket = CEntityFactory::getSingletonPtr()->createEntity(entityInfo, Logic::CServer::getSingletonPtr()->getMap(), shootPosition);
 		assert(rocket != NULL);
 
 		// Sacamos la orientacion de la entidad para setearsela al misil
-		Matrix4 shootTransform=rocket->getTransform();
-
-
+		//Matrix4 shootTransform=rocket->getTransform();
 		//Math::setPitchYaw( _entity->getPitch(), _entity->getYaw() + Math::HALF_PI, shootTransform);
-		Math::setPitchYaw( _entity->getPitch(), _entity->getYaw(), shootTransform);
-
-		rocket->setTransform(shootTransform);
+		//Math::setPitchYaw( _entity->getPitch(), _entity->getYaw(), shootTransform);
+		//rocket->setTransform(shootTransform);
 		
 		rocket->activate();
-
-		
-
 		// Seteamos la entidad que dispara el cohete
 		CRocketController* comp = rocket->getComponent<CRocketController>("CRocketController");
 		assert(comp != NULL);
