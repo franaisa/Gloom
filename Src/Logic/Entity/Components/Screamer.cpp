@@ -100,7 +100,7 @@ namespace Logic {
 				_screamerShieldDamageTimer = 0;
 
 				if(_currentScreamerShield > 0) {
-					// Colocamos el escudo delante nuestra
+					// Colocamos el escudo delante nuestro
 					refreshShieldPosition();
 				}
 				else {
@@ -209,7 +209,7 @@ namespace Logic {
 		// Sacamos la posicion del escudo (que debe estar situada a la altura de disparo)
 		Vector3 shootPosition = _entity->getPosition() + ( Math::getDirection( _entity->getOrientation() ) * _capsuleRadius );
 		shootPosition.y += _heightShoot;
-
+		
 		// Sacamos la orientacion de la entidad para setearsela al escudo
 		Matrix4 shootTransform;
 		shootTransform.setTrans(shootPosition);

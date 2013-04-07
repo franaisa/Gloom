@@ -9,6 +9,7 @@ Grenade CGraphics CPhysicDynamicEntity CGrenadeController CParticle CAudio
 Explotion CGraphics
 Rocket CGraphics CPhysicDynamicEntity CRocketController CAudio CParticle
 Lava CGraphics CPhysicStaticEntity CLava
+LavaFondo CGraphics CPhysicStaticEntity CLava
 ContenedorLava CGraphics CPhysicStaticEntity
 Elevator CGraphics CPhysicDynamicEntity CElevator
 ElevatorTrigger CPhysicDynamicEntity CElevatorTrigger
