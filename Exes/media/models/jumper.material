@@ -1,13 +1,35 @@
 
-material 03-Default
+material jumperRing
 {
 	technique
 	{
 		pass
 		{
-			ambient 0.164706 0.164706 0.392157 1
-			diffuse 0.164706 0.164706 0.392157 1
+			ambient 0.917647 0.745098 0.0509804 1
+			diffuse 0.917647 0.745098 0.0509804 1
 			specular 0 0 0 1 10
+		}
+
+	}
+
+}
+
+
+
+material jumper
+{
+	technique
+	{
+		pass
+		{
+			ambient 0.588235 0.588235 0.588235 1
+			diffuse 0.588235 0.588235 0.588235 1
+			specular 0 0 0 1 10
+
+			texture_unit
+			{
+				texture metalblanco.jpg
+			}
 		}
 
 	}

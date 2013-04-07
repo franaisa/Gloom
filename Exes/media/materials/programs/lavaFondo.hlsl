@@ -21,7 +21,7 @@ VsOutput vsMain(const VsInput In) {
 	VsOutput vsOut;
 	float4 pos = In.position;
 	float random = clamp(tiempo, 1, 5);
-	pos.y += (sin(pos.x+tiempo*random) + sin(pos.z + tiempo*random))*0.9;
+	pos.y += (sin(pos.x+tiempo*random) + sin(pos.z + tiempo*random))*0.5;
 	pos.x += (sin(pos.y+tiempo*random) + sin(pos.z + tiempo*random))*0.15;
 	pos.z += (sin(pos.x+tiempo*random) + sin(pos.y + tiempo*random))*0.15;
 	vsOut.position = mul(ViewProjectionMatrix, pos);
