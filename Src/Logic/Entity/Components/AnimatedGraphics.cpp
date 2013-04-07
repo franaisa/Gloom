@@ -13,13 +13,15 @@ gráfica de una entidad estática.
 
 #include "AnimatedGraphics.h"
 
-#include "Logic/Entity/Entity.h"
-#include "Logic/Maps/Map.h"
 #include "Map/MapEntity.h"
 
+#include "Logic/Entity/Entity.h"
+#include "Logic/Maps/Map.h"
 #include "Logic/Messages/MessageSetAnimation.h"
 #include "Logic/Messages/MessageStopAnimation.h"
 #include "Logic/Messages/MessageChangeWeaponGraphics.h"
+#include "Logic/Messages/MessageTransform.h"
+#include "Logic/Messages/MessageChangeMaterial.h"
 
 #include "Graphics/Scene.h"
 #include "Graphics/Entity.h"
@@ -116,11 +118,29 @@ namespace Logic
 
 	void CAnimatedGraphics::process(CMessage *message)
 	{
-		
-		CGraphics::process(message);
 
 		switch(message->getMessageType())
 		{
+		case Message::SET_TRANSFORM: {
+			Matrix4 transform = static_cast<CMessageTransform*>(message)->getTransform();
+			Math::setYaw(Math::getYaw(transform), transform);
+
+			_graphicsEntity->setTransform( transform );
+			break;
+		}
+		case Message::ACTIVATE: {
+			setVisible(true);
+			break;
+		}
+		case Message::DEACTIVATE: {
+			setVisible(false);
+			break;
+		}
+		case Message::CHANGE_MATERIAL: {
+			changeMaterial( static_cast<CMessageChangeMaterial*>(message)->getMaterialName() );
+			break;
+		}
+
 		case Message::SET_ANIMATION:
 			// Paramos todas las animaciones antes de poner una nueva.
 			// Un control más sofisticado debería permitir interpolación
@@ -166,4 +186,3 @@ namespace Logic
 	}
 
 } // namespace Logic
-

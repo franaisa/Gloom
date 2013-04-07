@@ -1,0 +1,17 @@
+
+material 03-Default
+{
+	technique
+	{
+		pass
+		{
+			ambient 0.164706 0.164706 0.392157 1
+			diffuse 0.164706 0.164706 0.392157 1
+			specular 0 0 0 1 10
+		}
+
+	}
+
+}
+
+

@@ -1,0 +1,55 @@
+
+material jumperRing
+{
+	technique
+	{
+		pass
+		{
+			//TRANSPARENCIAS SHADER 
+			ambient 0.1 0.1 0.1
+			scene_blend add
+			depth_write off
+			cull_software none
+			cull_hardware none
+			
+			vertex_program_ref ShaderJumperRing
+			{
+				param_named_auto ViewProjectionMatrix worldviewproj_matrix
+				param_named_auto tiempo time
+			}
+			
+			texture_unit
+			{
+				texture jumperRing.tga
+				scroll_anim 0.125 0
+				wave_xform scroll_y sine 0 0.1 0 0.25
+			}
+		}
+
+	}
+
+}
+
+
+
+material jumper
+{
+	technique
+	{
+		pass
+		{
+			ambient 0.588235 0.588235 0.588235 1
+			diffuse 0.588235 0.588235 0.588235 1
+			specular 0 0 0 1 10
+
+			texture_unit
+			{
+				texture metalblanco.jpg
+			}
+		}
+
+	}
+
+}
+
+

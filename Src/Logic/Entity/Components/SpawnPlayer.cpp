@@ -58,6 +58,7 @@ namespace Logic
 		
 		_isDead=false;
 		_actualTimeSpawn=0;
+		
 
 	} // activate
 	//--------------------------------------------------------
@@ -87,14 +88,6 @@ namespace Logic
 		//Solamente si estamos muertos (se recibió el mensaje)
 		if(_isDead){
 			_actualTimeSpawn+=msecs;
-			//Actualizamos el HUD para el respawn
-			if(_timeSpawn/1000-_actualTimeSpawn/1000!=_timeToSendHud && _timeToSendHud>1){
-				_timeToSendHud=_timeSpawn/1000-_actualTimeSpawn/1000;
-				//Mensaje para el Hud (tiempo de spawn)
-				Logic::CMessageHudSpawn *m=new Logic::CMessageHudSpawn();
-				m->setTime(_timeToSendHud);
-				_entity->emitMessage(m);
-			}
 		
 			//Si superamos el tiempo de spawn tenemos que revivir
 			if(_actualTimeSpawn>_timeSpawn){
@@ -163,7 +156,6 @@ namespace Logic
 			m->setTime(_timeSpawn/1000);
 			_entity->emitMessage(m);
 
-			_timeToSendHud=_timeSpawn/1000;
 		}
 
 	} // process

@@ -135,7 +135,6 @@ namespace Application {
 				Logic::CEntity* player = Logic::CServer::getSingletonPtr()->getMap()->createPlayer(name);
 				// Extraemos la id asignada a dicha entidad y la asociamos al player del gestor
 				entityId = player->getEntityID();
-				std::cout << "creando player con id" << entityId << std::endl << std::endl << std::endl << std::endl << std::endl << std::endl << std::endl << std::endl;
 				Logic::CGameNetPlayersManager::getSingletonPtr()->setEntityID(playerNetId, entityId);
 			
 				// Ordenamos la carga del player a todos los clientes conectados
@@ -215,27 +214,15 @@ namespace Application {
 	//______________________________________________________________________________
 
 	void CMultiplayerTeamDeathmatchServerState::disconnexionPacketReceived(Net::CPaquete* packet) {
-		// Nos quedamos con el puntero al manager de players y el net id del player que ha mandado el 
-		// paquete de desconexión
+		// Obtenemos el puntero al gestor de jugadores y el id de red del cliente que se quiere desconectar
 		Logic::CGameNetPlayersManager* playersMgr = Logic::CGameNetPlayersManager::getSingletonPtr();
 		Net::NetID playerNetId = packet->getConexion()->getId();
-		
-		// El buffer contendrá el mensaje de player desconectado + la id lógica del player que se desconecta
-		Net::CBuffer buffer( sizeof(Net::NetMessageType) + sizeof(Logic::TEntityID) );
-		
-		// Cabecera del mensaje de player desconectado para los clientes
-		Net::NetMessageType playerLeftMsg = Net::PLAYER_LEFT;
-		buffer.write( &playerLeftMsg, sizeof(playerLeftMsg) );
-		
-		// Id logico del cliente que se desconecta
-		Logic::TEntityID playerId = playersMgr->getPlayerId(playerNetId);
-		buffer.write( &playerId, sizeof(playerId) );
-
-		// Enviamos el mensaje de cliente desconectado a todos los clientes (broadcast)
-		Net::CManager::getSingletonPtr()->send( buffer.getbuffer(), buffer.getSize() );
 
 		// Eliminamos el jugador que se desconecta del manager de jugadores
 		playersMgr->removePlayer(playerNetId);
+		// Eliminamos la entidad (este mensaje se forwardea automaticamente a los clientes).
+		Logic::CEntity* entityToBeDeleted = Logic::CServer::getSingletonPtr()->getMap()->getEntityByID( playersMgr->getPlayerId(playerNetId) );
+		Logic::CEntityFactory::getSingletonPtr()->deferredDeleteEntity(entityToBeDeleted);
 	} // disconnexionPacketReceived
 	
 } // namespace Application

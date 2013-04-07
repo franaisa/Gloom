@@ -83,14 +83,11 @@ namespace Logic
 		unsigned int _actualTimeSpawn;
 
 		/**
-		Nos sirve para no actualizar continuamente el hud con el tiempo de spawn.
-		*/
-		int _timeToSendHud;
-
-		/**
 		Ruta del sonido de spawn.
 		*/
 		std::string _audioSpawn;
+
+
 
 	}; // class CShoot
 

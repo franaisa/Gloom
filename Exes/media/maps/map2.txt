@@ -112,7 +112,6 @@ Map = {
 		physic_group = 6,
 		physic_groupList = "1",
 	},
-
 	
 	Jumper1 = {
 		type = "Jumper",
@@ -129,6 +128,7 @@ Map = {
 		physic_group = 7,
 		physic_groupList = "1",
 	},
+
 	
 	Point1 = {
 		type = "SpawnPoint",
@@ -267,6 +267,22 @@ Map = {
 		physic_type = "static",
 		physic_shape = "box",
 		physic_dimensions = { 13, 5, 13 },
+		physic_group = 2,
+		physic_groupList = "1",
+	},
+	
+	lavaFondo = {
+		type = "Lava",
+		position = {-80.0,-20.0, 45.0},
+		model = "lavaFondo.mesh",
+		scale = 1,
+		damage = 500,
+		timeDamage = 500,
+		physic_entity = "rigid",
+		physic_trigger = true,
+		physic_type = "static",
+		physic_shape = "box",
+		physic_dimensions = { 100, 0.1, 100 },
 		physic_group = 2,
 		physic_groupList = "1",
 	},

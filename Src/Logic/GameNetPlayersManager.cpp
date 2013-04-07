@@ -199,7 +199,7 @@ namespace Logic {
 		std::pair<TEntityID, bool> logicIdPair = it->second->getEntityId();
 		assert(logicIdPair.second && "El id logico de player no ha sido inicializado");
 
-		return logicIdPair.second;
+		return logicIdPair.first;
 	}
 
 	//______________________________________________________________________________

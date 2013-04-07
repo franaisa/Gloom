@@ -1,0 +1,6 @@
+vertex_program ShaderJumperRing hlsl
+{
+	source jumper.hlsl
+	entry_point vsMain
+	target vs_2_0
+}
