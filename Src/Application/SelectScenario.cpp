@@ -176,7 +176,8 @@ namespace Application {
 		while (FindNextFile(hFind, &FindData))
 		{     
 			filename = FindData.cFileName;
-			_menu->callFunction("pushFile",Hikari::Args(filename.substr(0,filename.find(".txt"))));
+			if(filename == "map2.txt" || filename == "map1.txt")
+				_menu->callFunction("pushFile",Hikari::Args(filename.substr(0,filename.find(".txt"))));
 
 		}
 	}
