@@ -85,7 +85,7 @@ namespace Logic {
 			maudio->setRuta(_noAmmo);
 			maudio->setId("noAmmo");
 			maudio->setPosition(_entity->getPosition());
-			maudio->setNotIfPlay(false);
+			maudio->setNotIfPlay(true);
 			maudio->setIsPlayer(_entity->isPlayer());
 			_entity->emitMessage(maudio);
 		}
