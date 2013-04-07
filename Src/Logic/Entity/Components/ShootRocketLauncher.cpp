@@ -45,11 +45,8 @@ namespace Logic {
 	void CShootRocketLauncher::fireWeapon() {
 		// Obtenemos la informacion asociada al arquetipo del cohete
 		Map::CEntity *entityInfo = CEntityFactory::getSingletonPtr()->getInfo("Rocket");
-		
-		// Separacion para que la granada no toque al jugador
-		int _rocketSeparation=6;
 
-		Vector3 shootPosition = _entity->getPosition() + (Math::getDirection( _entity->getOrientation() )* (_capsuleRadius) * _rocketSeparation );
+		Vector3 shootPosition = _entity->getPosition() + (Math::getDirection( _entity->getOrientation() )* (_capsuleRadius));
 		shootPosition.y += _heightShoot;
 
 		CEntity* rocket = CEntityFactory::getSingletonPtr()->createEntity(entityInfo, Logic::CServer::getSingletonPtr()->getMap(), shootPosition);
