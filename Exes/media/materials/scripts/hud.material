@@ -467,3 +467,126 @@ material RocketLauncher_NO_WEAPON
 		}
 	}
 }
+
+material PrimarySkill_ACTIVE
+{
+	technique
+	{
+		pass
+		{
+			depth_check off
+			depth_write off
+			scene_blend alpha_blend
+			lighting off
+			cull_hardware none
+			cull_software none
+			
+			texture_unit escopeta
+			{
+				texture rocket.png 2d
+			}
+		}
+	}
+}
+material PrimarySkill_NO_AMMO
+{
+	technique
+	{
+		pass
+		{
+			depth_check off
+			depth_write off
+			scene_blend alpha_blend
+			lighting off
+			cull_hardware none
+			cull_software none
+			
+			texture_unit weapon6
+			{
+				texture rocketBN.png 2d
+			}
+		}
+	}
+}
+material PrimarySkill_NO_WEAPON
+{
+	technique
+	{
+		pass
+		{
+			depth_check off
+			depth_write off
+			scene_blend alpha_blend
+			lighting off
+			cull_hardware none
+			cull_software none
+			
+			texture_unit weapon6
+			{
+				texture rocketSinBalas.png 2d
+			}
+		}
+	}
+}
+
+material SecondarySkill_ACTIVE
+{
+	technique
+	{
+		pass
+		{
+			depth_check off
+			depth_write off
+			scene_blend alpha_blend
+			lighting off
+			cull_hardware none
+			cull_software none
+			
+			texture_unit escopeta
+			{
+				texture rocket.png 2d
+			}
+		}
+	}
+}
+material SecondarySkill_NO_AMMO
+{
+	technique
+	{
+		pass
+		{
+			depth_check off
+			depth_write off
+			scene_blend alpha_blend
+			lighting off
+			cull_hardware none
+			cull_software none
+			
+			texture_unit weapon6
+			{
+				texture rocketBN.png 2d
+			}
+		}
+	}
+}
+material SecondarySkill_NO_WEAPON
+{
+	technique
+	{
+		pass
+		{
+			depth_check off
+			depth_write off
+			scene_blend alpha_blend
+			lighting off
+			cull_hardware none
+			cull_software none
+			
+			texture_unit weapon6
+			{
+				texture rocketSinBalas.png 2d
+			}
+		}
+	}
+}
+

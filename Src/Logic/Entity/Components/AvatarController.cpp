@@ -534,6 +534,7 @@ namespace Logic
 				Logic::CMessageAudio *maudio=new Logic::CMessageAudio();
 				maudio->setRuta(_audioStep);
 				maudio->setId(_entity->getEntityID()+"steps");
+				std::cout << "entityID: " << _entity->getEntityID() << std::endl;
 				maudio->setPosition(_entity->getPosition());
 				maudio->setNotIfPlay(true);
 				maudio->setIsPlayer(_entity->isPlayer());
