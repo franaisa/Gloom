@@ -376,6 +376,9 @@
     <ClCompile Include="..\..\Src\Logic\Messages\MessageCreateParticle.cpp">
       <Filter>Messages\Source</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Messages\MessageHudDebugData.cpp">
+      <Filter>Messages\Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Src\Logic\Maps\ComponentFactory.h">
@@ -715,6 +718,9 @@
       <Filter>Maps\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Messages\MessageCreateParticle.h">
+      <Filter>Messages\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Messages\MessageHudDebugData.h">
       <Filter>Messages\Header</Filter>
     </ClInclude>
   </ItemGroup>
