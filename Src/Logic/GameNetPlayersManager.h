@@ -199,6 +199,16 @@ namespace Logic {
 		//________________________________________________________________________
 
 		/**
+		Devuelve el id lógico del player dado su id de red
+
+		@param playerNetId Id de red del player.
+		@return Id lógico para el id de red del player dado.
+		*/
+		Logic::TEntityID getPlayerId(Net::NetID playerNetId);
+
+		//________________________________________________________________________
+
+		/**
 		Devuelve toda la informacion asociada a un jugador dado su identificador de red.
 
 		@param entityId Identificador logico del player.
