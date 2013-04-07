@@ -220,6 +220,8 @@ namespace Application {
 		Logic::CGameNetPlayersManager* playersMgr = Logic::CGameNetPlayersManager::getSingletonPtr();
 		Net::NetID playerNetId = packet->getConexion()->getId();
 		
+		std::cout << playersMgr->getPlayerNickname(playerNetId) << " me ha pedido una desconexion" << std::endl;
+
 		// El buffer contendrá el mensaje de player desconectado + la id lógica del player que se desconecta
 		Net::CBuffer buffer( sizeof(Net::NetMessageType) + sizeof(Logic::TEntityID) );
 		
@@ -230,6 +232,11 @@ namespace Application {
 		// Id logico del cliente que se desconecta
 		Logic::TEntityID playerId = playersMgr->getPlayerId(playerNetId);
 		buffer.write( &playerId, sizeof(playerId) );
+
+		std::cout << "Indico a los clientes que eliminen la id de entidad: " << playerId << std::endl;
+		
+		Logic::CEntity* ent = Logic::CServer::getSingletonPtr()->getMap()->getEntityByID(playerId);
+		std::cout << "Cuyo nombre de identidad es: " << ent->getName() << std::endl;
 
 		// Enviamos el mensaje de cliente desconectado a todos los clientes (broadcast)
 		Net::CManager::getSingletonPtr()->send( buffer.getbuffer(), buffer.getSize() );
