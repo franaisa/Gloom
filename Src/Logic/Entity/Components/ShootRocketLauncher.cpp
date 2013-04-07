@@ -49,6 +49,8 @@ namespace Logic {
 
 		Vector3 shootPosition = _entity->getPosition() + (Math::getDirection( _entity->getOrientation() )* (_capsuleRadius));
 		shootPosition.y += _heightShoot;
+		//Y le quitamos la mitad de la altura del cohete, ajustando al gusto
+		shootPosition.y-=1;
 
 		CEntity* rocket = CEntityFactory::getSingletonPtr()->createEntity(entityInfo, Logic::CServer::getSingletonPtr()->getMap(), shootPosition);
 		assert(rocket != NULL);

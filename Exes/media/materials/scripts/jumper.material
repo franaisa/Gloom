@@ -41,11 +41,12 @@ material jumper
 			ambient 0.588235 0.588235 0.588235 1
 			diffuse 0.588235 0.588235 0.588235 1
 			specular 0 0 0 1 10
-
+			
 			texture_unit
-			{
-				texture metalblanco.jpg
-			}
+            {
+               texture techo1.jpg alpha
+			   alpha_op_ex source1 src_manual src_current 0.9
+            }
 		}
 
 	}

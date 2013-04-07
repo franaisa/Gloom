@@ -82,6 +82,10 @@ namespace Logic
 			if(_panelWeapon[i])
 				delete _panelWeapon[i];
 			
+			if(_panelWeaponKey[i]){
+				delete _panelWeaponKey[i];	
+			}
+
 			if(_overlayWeapon3D[i])
 				delete _overlayWeapon3D[i];
 			//Graphics::CServer::getSingletonPtr()->getActiveScene()->removeEntity( _weaponsEntities[i]);
@@ -694,7 +698,7 @@ namespace Logic
 	
 		_acumSpawn += msecs;
 		if(_acumSpawn>1000){
-			hudSpawn(_spawnTime - _acumSpawn);
+			hudSpawn((_spawnTime - _acumSpawn));
 			_acumSpawn = 0;
 		}
 
