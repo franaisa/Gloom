@@ -8,7 +8,8 @@ de disparo del lanzacohetes.
 @see Logic::IComponent
 
 @author Jose Antonio García Yáñez
-@date Febrero, 2013
+@author Javier Fernández Villanueva
+@date Febrero,Abril 2013
 */
 
 #include "ShootRocketLauncher.h"
@@ -51,8 +52,14 @@ namespace Logic {
 
 		CEntity* rocket = CEntityFactory::getSingletonPtr()->createEntity(entityInfo, Logic::CServer::getSingletonPtr()->getMap(), shootPosition);
 		assert(rocket != NULL);
-		rocket->activate();
 
+		// Sacamos la orientacion de la entidad para setearsela al misil
+		//Matrix4 shootTransform=rocket->getTransform();
+		//Math::setPitchYaw( _entity->getPitch(), _entity->getYaw() + Math::HALF_PI, shootTransform);
+		//Math::setPitchYaw( _entity->getPitch(), _entity->getYaw(), shootTransform);
+		//rocket->setTransform(shootTransform);
+		
+		rocket->activate();
 		// Seteamos la entidad que dispara el cohete
 		CRocketController* comp = rocket->getComponent<CRocketController>("CRocketController");
 		assert(comp != NULL);
