@@ -83,7 +83,7 @@ namespace Logic {
 			// Ejecutar sonidos y animaciones de falta de balas
 			Logic::CMessageAudio *maudio=new Logic::CMessageAudio();
 			maudio->setRuta(_noAmmo);
-			maudio->setId("noAmmo");
+			maudio->setId(_entity->getEntityID()+"noAmmo");
 			maudio->setPosition(_entity->getPosition());
 			maudio->setNotIfPlay(true);
 			maudio->setIsPlayer(_entity->isPlayer());
@@ -110,7 +110,7 @@ namespace Logic {
 		Ray ray(origin, dispersionDirection);
 			
 		// Dibujamos el rayo en ogre para poder depurar
-		drawRaycast(ray);
+		//drawRaycast(ray);
 
 		// Rayo lanzado por el servidor de físicas de acuerdo a la distancia de potencia del arma
 		CEntity *entity = Physics::CServer::getSingletonPtr()->raycastClosestInverse(ray, _distance,_entity->getEntityID());

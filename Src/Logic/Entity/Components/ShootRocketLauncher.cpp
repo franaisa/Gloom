@@ -46,13 +46,10 @@ namespace Logic {
 		// Obtenemos la informacion asociada al arquetipo del cohete
 		Map::CEntity *entityInfo = CEntityFactory::getSingletonPtr()->getInfo("Rocket");
 		
-		// Creamos la entidad y la activamos// Spawneamos el cohete justo delante del jugador y a la altura de disparo que corresponda
-		// Ojo si vamos hacia atras necesitamos mas separacion o la liamos ( no se si la jode la orientacion o la posicion o estoy del reves )
-		int inverse = 1;
-		if(_entity->getComponent<CAvatarController>("CAvatarController")->getWalkingBack())
-			inverse = 2;
+		// Separacion para que la granada no toque al jugador
+		int _rocketSeparation=2;
 
-		Vector3 shootPosition = _entity->getPosition() + (Math::getDirection( _entity->getOrientation() )* (_capsuleRadius) * inverse );
+		Vector3 shootPosition = _entity->getPosition() + (Math::getDirection( _entity->getOrientation() )* (_capsuleRadius) * _rocketSeparation );
 		shootPosition.y += _heightShoot;
 
 		CEntity* rocket = CEntityFactory::getSingletonPtr()->createEntity(entityInfo, Logic::CServer::getSingletonPtr()->getMap(), shootPosition);

@@ -2,6 +2,8 @@ Map = {
 
 	World = {
 		type = "World",
+		model = "ola.mesh",
+		physic_file = "media/models/ola.RepX",
 	},
 	
 	Hacksaw = {
@@ -110,7 +112,6 @@ Map = {
 		physic_group = 6,
 		physic_groupList = "1",
 	},
-
 	
 	Jumper1 = {
 		type = "Jumper",
@@ -127,6 +128,7 @@ Map = {
 		physic_group = 7,
 		physic_groupList = "1",
 	},
+
 	
 	Point1 = {
 		type = "SpawnPoint",
@@ -269,6 +271,22 @@ Map = {
 		physic_groupList = "1",
 	},
 	
+	lavaFondo = {
+		type = "Lava",
+		position = {-200.0,-1.5, 75.0},
+		model = "lavaFondo.mesh",
+		scale = 1,
+		damage = 5,
+		timeDamage = 500,
+		physic_entity = "rigid",
+		physic_trigger = true,
+		physic_type = "static",
+		physic_shape = "box",
+		physic_dimensions = { 13, 5, 13 },
+		physic_group = 2,
+		physic_groupList = "1",
+	},
+	
 	contenedorLava = {
 		type = "ContenedorLava",
 		position = {-64.0,0.2, -37.0},
@@ -285,6 +303,7 @@ Map = {
 	David = {
 		type = "LocalPlayer",
 		isPlayer = true,
+		position = {160,100,40},
 	},
 	
 	Camera = {

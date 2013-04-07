@@ -307,7 +307,7 @@ namespace Audio
 			ERRCHECK(result);
 
 		//Distancia a la que empieza a atenuarse y a la cual ya no se atenua mas respectivamente
-			result = canal->set3DMinMaxDistance(1,800);
+		result = canal->set3DMinMaxDistance(1,800);
 		ERRCHECK(result);
 
 		int can;

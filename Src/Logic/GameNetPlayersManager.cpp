@@ -192,6 +192,18 @@ namespace Logic {
 
 	//______________________________________________________________________________
 
+	Logic::TEntityID CGameNetPlayersManager::getPlayerId(Net::NetID playerNetId) {
+		TNetConnectedPlayersTable::const_iterator it = _netConnectedPlayers.find(playerNetId);
+		assert(it != _netConnectedPlayers.end() && "No se ha encontrado el id de player buscado");
+
+		std::pair<TEntityID, bool> logicIdPair = it->second->getEntityId();
+		assert(logicIdPair.second && "El id logico de player no ha sido inicializado");
+
+		return logicIdPair.first;
+	}
+
+	//______________________________________________________________________________
+
 	CPlayerInfo CGameNetPlayersManager::getPlayerByEntityId(Logic::TEntityID entityId) {
 		TLogicConnectedPlayersTable::const_iterator it = _logicConnectedPlayers.find(entityId);
 		assert(it != _logicConnectedPlayers.end() && "No se ha encontrado el id logico buscado");
