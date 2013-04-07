@@ -2,6 +2,8 @@ Map = {
 
 	World = {
 		type = "World",
+		model = "ola.mesh",
+		physic_file = "media/models/ola.RepX",
 	},
 	
 	Hacksaw = {
@@ -285,6 +287,7 @@ Map = {
 	David = {
 		type = "LocalPlayer",
 		isPlayer = true,
+		position = {160,100,40},
 	},
 	
 	Camera = {
