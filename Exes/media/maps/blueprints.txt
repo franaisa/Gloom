@@ -4,7 +4,7 @@ RemotePlayer CAvatarController CAnimatedGraphics CPhysicController CLife CSpawnP
 Camera CCamera 
 ItemSpawn CGraphics CPhysicStaticEntity CFloatingMovement CSpawnItemManager 
 SpawnPoint CPhysicStaticEntity
-Jumper CGraphics CPhysicStaticEntity CJumper CAudio
+Jumper CGraphics CPhysicStaticEntity CJumper CAudio CParticle
 Grenade CGraphics CPhysicDynamicEntity CGrenadeController CParticle CAudio
 Explotion CGraphics
 Rocket CGraphics CPhysicDynamicEntity CRocketController CAudio CParticle

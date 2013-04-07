@@ -20,7 +20,7 @@ Contiene la implementación del componente que gestiona la aplicacion de una fuer
 #include "Logic/Messages/MessageAddForcePlayer.h"
 #include "Logic/Messages/MessageAudio.h"
 
-
+#include "Logic/Messages/MessageCreateParticle.h"
 
 
 namespace Logic 
@@ -80,6 +80,13 @@ namespace Logic
 			maudio->setNotIfPlay(false);
 			maudio->setIsPlayer(false);
 			_entity->emitMessage(maudio);
+
+			CMessageCreateParticle *particle = new CMessageCreateParticle();
+			particle->setParticle("JumperParticle");
+			particle->setPosition(_entity->getPosition());
+			std::cout << _entity->getPosition() << std::endl;
+
+			_entity->emitMessage(particle);
 			break;
 		}
 
@@ -96,12 +103,16 @@ namespace Logic
 		m->setVelocity(_velocity);
 		m->setDirection(_direction);
 		entity->emitMessage(m);
+
+
 	} // applyJump
 	//---------------------------------------------------------
 
 		//---------------------------------------------------------
 	void CJumper::tick(unsigned int msecs) {
 		IComponent::tick(msecs);
+
+
 
 	} // tick
 
