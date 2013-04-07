@@ -58,7 +58,7 @@ namespace Logic
 		
 		_isDead=false;
 		_actualTimeSpawn=0;
-		_oneTimeHud=false;
+		
 
 	} // activate
 	//--------------------------------------------------------

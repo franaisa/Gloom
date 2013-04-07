@@ -47,7 +47,7 @@ namespace Logic {
 		Map::CEntity *entityInfo = CEntityFactory::getSingletonPtr()->getInfo("Rocket");
 		
 		// Separacion para que la granada no toque al jugador
-		int _rocketSeparation=2;
+		int _rocketSeparation=6;
 
 		Vector3 shootPosition = _entity->getPosition() + (Math::getDirection( _entity->getOrientation() )* (_capsuleRadius) * _rocketSeparation );
 		shootPosition.y += _heightShoot;
