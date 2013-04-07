@@ -135,7 +135,6 @@ namespace Application {
 				Logic::CEntity* player = Logic::CServer::getSingletonPtr()->getMap()->createPlayer(name);
 				// Extraemos la id asignada a dicha entidad y la asociamos al player del gestor
 				entityId = player->getEntityID();
-				std::cout << "creando player con id" << entityId << std::endl << std::endl << std::endl << std::endl << std::endl << std::endl << std::endl << std::endl;
 				Logic::CGameNetPlayersManager::getSingletonPtr()->setEntityID(playerNetId, entityId);
 			
 				// Ordenamos la carga del player a todos los clientes conectados
@@ -219,7 +218,7 @@ namespace Application {
 		// paquete de desconexión
 		Logic::CGameNetPlayersManager* playersMgr = Logic::CGameNetPlayersManager::getSingletonPtr();
 		Net::NetID playerNetId = packet->getConexion()->getId();
-		
+
 		// El buffer contendrá el mensaje de player desconectado + la id lógica del player que se desconecta
 		Net::CBuffer buffer( sizeof(Net::NetMessageType) + sizeof(Logic::TEntityID) );
 		
@@ -236,6 +235,10 @@ namespace Application {
 
 		// Eliminamos el jugador que se desconecta del manager de jugadores
 		playersMgr->removePlayer(playerNetId);
+		// Eliminamos la entidad
+		Logic::CEntity* entityToBeDeleted = Logic::CServer::getSingletonPtr()->getMap()->getEntityByID(playerId);
+		std::cout << "Vamos a eliminar a la entidad con id " << playerId << ", con nombre: " << entityToBeDeleted->getName();
+		Logic::CEntityFactory::getSingletonPtr()->deferredDeleteEntity(entityToBeDeleted);
 	} // disconnexionPacketReceived
 	
 } // namespace Application

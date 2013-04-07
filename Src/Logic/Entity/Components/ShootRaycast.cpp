@@ -83,7 +83,7 @@ namespace Logic {
 			// Ejecutar sonidos y animaciones de falta de balas
 			Logic::CMessageAudio *maudio=new Logic::CMessageAudio();
 			maudio->setRuta(_noAmmo);
-			maudio->setId("noAmmo");
+			maudio->setId(_entity->getEntityID()+"noAmmo");
 			maudio->setPosition(_entity->getPosition());
 			maudio->setNotIfPlay(true);
 			maudio->setIsPlayer(_entity->isPlayer());
