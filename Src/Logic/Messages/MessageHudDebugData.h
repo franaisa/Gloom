@@ -14,6 +14,9 @@ namespace Logic {
 		void setKey(std::string key);
 		void setValue(std::string value);
 
+		void setValue(float value);
+		void setValue(Vector3 value);
+
 		std::string getKey();
 		std::string getValue();
 		

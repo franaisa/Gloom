@@ -23,6 +23,22 @@ namespace Logic {
 	}//
 	//----------------------------------------------------------
 
+	void CMessageHudDebugData::setValue(float value){
+		std::stringstream aux;
+		aux << value;
+		_value = aux.str();
+
+	}//
+	//----------------------------------------------------------
+
+	void CMessageHudDebugData::setValue(Vector3 value){
+		std::stringstream aux;
+		aux << value;
+		_value = aux.str();
+
+	}//
+	//----------------------------------------------------------
+
 	std::string CMessageHudDebugData::getKey(){
 		return _key;
 
