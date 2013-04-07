@@ -94,7 +94,7 @@ namespace Application {
 				buffer.read(&entityID, sizeof(entityID));
 				std::string name;
 				buffer.deserialize(name);
-				std::cout << "RECEIVED creando player con id" << entityID << std::endl << std::endl << std::endl << std::endl << std::endl << std::endl << std::endl << std::endl;
+
 				Logic::CEntity * player = Logic::CServer::getSingletonPtr()->getMap()->createPlayer(name, entityID);
 				player->activate();
 				break;
@@ -132,8 +132,6 @@ namespace Application {
 
 				// Obtenemos el puntero a la entidad que corresponde con el id dado
 				Logic::CEntity* entityToBeDeleted = Logic::CServer::getSingletonPtr()->getMap()->getEntityByID(playerLeftId);
-
-				std::cout << "Elimino a la entidad numero " << playerLeftId << " cuyo nombre es: " << entityToBeDeleted->getName() << std::endl;
 
 				// Borramos la entidad
 				Logic::CEntityFactory::getSingletonPtr()->deferredDeleteEntity(entityToBeDeleted);

@@ -135,7 +135,6 @@ namespace Application {
 				Logic::CEntity* player = Logic::CServer::getSingletonPtr()->getMap()->createPlayer(name);
 				// Extraemos la id asignada a dicha entidad y la asociamos al player del gestor
 				entityId = player->getEntityID();
-				std::cout << "creando player con id" << entityId << std::endl << std::endl << std::endl << std::endl << std::endl << std::endl << std::endl << std::endl;
 				Logic::CGameNetPlayersManager::getSingletonPtr()->setEntityID(playerNetId, entityId);
 			
 				// Ordenamos la carga del player a todos los clientes conectados
@@ -219,8 +218,6 @@ namespace Application {
 		// paquete de desconexión
 		Logic::CGameNetPlayersManager* playersMgr = Logic::CGameNetPlayersManager::getSingletonPtr();
 		Net::NetID playerNetId = packet->getConexion()->getId();
-		
-		std::cout << playersMgr->getPlayerNickname(playerNetId) << " me ha pedido una desconexion" << std::endl;
 
 		// El buffer contendrá el mensaje de player desconectado + la id lógica del player que se desconecta
 		Net::CBuffer buffer( sizeof(Net::NetMessageType) + sizeof(Logic::TEntityID) );
@@ -233,16 +230,15 @@ namespace Application {
 		Logic::TEntityID playerId = playersMgr->getPlayerId(playerNetId);
 		buffer.write( &playerId, sizeof(playerId) );
 
-		std::cout << "Indico a los clientes que eliminen la id de entidad: " << playerId << std::endl;
-		
-		Logic::CEntity* ent = Logic::CServer::getSingletonPtr()->getMap()->getEntityByID(playerId);
-		std::cout << "Cuyo nombre de identidad es: " << ent->getName() << std::endl;
-
 		// Enviamos el mensaje de cliente desconectado a todos los clientes (broadcast)
 		Net::CManager::getSingletonPtr()->send( buffer.getbuffer(), buffer.getSize() );
 
 		// Eliminamos el jugador que se desconecta del manager de jugadores
 		playersMgr->removePlayer(playerNetId);
+		// Eliminamos la entidad
+		Logic::CEntity* entityToBeDeleted = Logic::CServer::getSingletonPtr()->getMap()->getEntityByID(playerId);
+		std::cout << "Vamos a eliminar a la entidad con id " << playerId << ", con nombre: " << entityToBeDeleted->getName();
+		Logic::CEntityFactory::getSingletonPtr()->deferredDeleteEntity(entityToBeDeleted);
 	} // disconnexionPacketReceived
 	
 } // namespace Application
