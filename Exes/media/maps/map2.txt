@@ -115,6 +115,8 @@ Map = {
 	
 	Jumper1 = {
 		type = "Jumper",
+		position = {5001.0, 0.0, 100.0},
+		model = "health1.mesh",
 		position = {51.0, 0.0, 1.0},
 		model = "jumper.mesh",
 		power = 0.35,
@@ -142,7 +144,7 @@ Map = {
 	
 	Point2 = {
 		type = "SpawnPoint",
-		position = {-150.0, 0.0, 0.0},
+		position = {-189,0,-10},
 		physic_entity = "rigid",
 		physic_trigger = true,
 		physic_type = "static",
@@ -152,7 +154,7 @@ Map = {
 	
 	Point3 = {
 		type = "SpawnPoint",
-		position = {130.0, 0.0, 0.0},
+		position = {-95,0,-53},
 		physic_entity = "rigid",
 		physic_trigger = true,
 		physic_type = "static",
@@ -162,7 +164,25 @@ Map = {
 	
 	Orb1 = {
 		type = "ItemSpawn",
-		position = {67.0, 2.0, 42.0},
+		position = {-29, 66, -28},
+		model = "health1.mesh",
+		id = "orb",
+		reward = 17,
+		respawnTime = 5,
+	},
+	
+	Orb2 = {
+		type = "ItemSpawn",
+		position = {-115, 0, 119},
+		model = "health1.mesh",
+		id = "orb",
+		reward = 17,
+		respawnTime = 5,
+	},
+	
+	Orb3 = {
+		type = "ItemSpawn",
+		position = {-146,98,47},
 		model = "health1.mesh",
 		id = "orb",
 		reward = 17,
@@ -171,7 +191,7 @@ Map = {
 	
 	Shotgun = {
 		type = "ItemSpawn",
-		position = {-67.0, 5.0, 42.0},
+		position = {-259,62,133},
 		model = "shotGun01.mesh",
 		id = "weapon",
 		weaponType = 2,
@@ -181,8 +201,8 @@ Map = {
 	
 	Sniper = {
 		type = "ItemSpawn",
-		position = {-47.0, 5.0, 42.0},
-		model = "rocketLauncher.mesh",
+		position = {-267,0,-55} ,
+		model = "AK47.mesh",
 		id = "weapon",
 		weaponType = 1,
 		reward = 10,
@@ -231,7 +251,7 @@ Map = {
 	
 	SuperShield = {
 		type = "ItemSpawn",
-		position = {67.0, 2.0, -42.0},
+		position = {140,103,69},
 		model = "shield1.mesh",
 		id = "armor",
 		reward = 100,
@@ -254,23 +274,6 @@ Map = {
 
 	},
 	
-	
-	lava = {
-		type = "Lava",
-		position = {-64.0,3.0, -37.0},
-		model = "lava.mesh",
-		scale = 1,
-		damage = 5,
-		timeDamage = 500,
-		physic_entity = "rigid",
-		physic_trigger = true,
-		physic_type = "static",
-		physic_shape = "box",
-		physic_dimensions = { 13, 5, 13 },
-		physic_group = 2,
-		physic_groupList = "1",
-	},
-	
 	lavaFondo = {
 		type = "Lava",
 		position = {-80.0,-20.0, 45.0},
@@ -287,19 +290,6 @@ Map = {
 		physic_groupList = "1",
 	},
 	
-	contenedorLava = {
-		type = "ContenedorLava",
-		position = {-64.0,0.2, -37.0},
-		model = "contenedorLava.mesh",
-		physic_entity = "rigid",
-		physic_trigger = false,
-		physic_type = "static",
-		physic_shape = "box",
-		physic_dimensions = { 22, 4, 22 },
-		physic_group = 1,
-		physic_groupList = "-1",
-	},
-	
 	David = {
 		type = "LocalPlayer",
 		isPlayer = true,
@@ -309,27 +299,5 @@ Map = {
 	Camera = {
 		type = "Camera",
 		height = 8,
-	},
-	SpotLight0 = {
-		type = "SpotLight",
-		position = {0.0,75.0,00.0},
-		outerAngle = 3.14,
-		intensity = 20,
-	},
-	SpotLight6 = {
-		type = "SpotLight",
-		position = {-153.0,40.0,171},
-	},
-	SpotLight7 = {
-		type = "SpotLight",
-		position = {-153.0,40.0,-171},
-	},
-	SpotLight8 = {
-		type = "SpotLight",
-		position = {153.0,40.0,171},
-	},
-	SpotLight9 = {
-		type = "SpotLight",
-		position = {153.0,40.0,-171},
 	},
 }

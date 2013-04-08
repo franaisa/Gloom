@@ -88,12 +88,12 @@ namespace Math
 	/**
 	Definición de la constante PI.
 	*/
-	static const float PI = float( 4.0 * atan( 1.0 ) );
+	static const float PI = float( 4.0f * atan( 1.0f ) );
 
 	/**
 	Definición de la constante PI.
 	*/
-	static const float HALF_PI = PI * 0.5;
+	static const float HALF_PI = PI * 0.5f;
 	/**
 	Constante para pasar de grados a radianes.
 	*/

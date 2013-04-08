@@ -131,6 +131,8 @@ namespace Application {
 			}
 			case Net::LOAD_MAP: {
 				// Cargamos el archivo con las definiciones de las entidades del nivel.
+				std::string map;
+				buffer.deserialize(map);
 				if (!Logic::CEntityFactory::getSingletonPtr()->loadBluePrints("blueprints_client.txt")) {
 					Net::CManager::getSingletonPtr()->deactivateNetwork();
 					_app->exitRequest();
@@ -140,7 +142,7 @@ namespace Application {
 					_app->exitRequest();
 				}
 				// Cargamos el nivel a partir del nombre del mapa. 
-				if (!Logic::CServer::getSingletonPtr()->loadLevel("map_client.txt")) {
+				if (!Logic::CServer::getSingletonPtr()->loadLevel(map+"_client.txt")) {
 					Net::CManager::getSingletonPtr()->deactivateNetwork();
 					_app->exitRequest();
 				}
