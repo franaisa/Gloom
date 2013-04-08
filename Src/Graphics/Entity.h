@@ -222,7 +222,7 @@ namespace Graphics
 		@return true si la entidad pudo crear los objetos necesarios en Ogre
 		o si la entidad ya estaba cargada.
 		*/
-		bool load();
+		virtual bool load();
 
 		/**
 		Elimina las estructuras creadas en Ogre mediante load(). No hace 

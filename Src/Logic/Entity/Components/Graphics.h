@@ -19,6 +19,7 @@ gráfica de la entidad.
 namespace Graphics 
 {
 	class CEntity;
+	class CGlowingEntity;
 	class CScene;
 }
 
