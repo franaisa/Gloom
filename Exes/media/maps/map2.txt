@@ -293,7 +293,7 @@ Map = {
 	David = {
 		type = "LocalPlayer",
 		isPlayer = true,
-		position = {160,100,40},
+		position = {160,50,40},
 	},
 	
 	Camera = {
