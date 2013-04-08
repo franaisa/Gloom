@@ -179,12 +179,7 @@ namespace Logic {
 		particle->setDirectionWithForce(directionWithForce);
 		_entity->emitMessage(particle);
 
-		//Solo para bug :D
-		Logic::CMessageHudDebugData *m=new Logic::CMessageHudDebugData();
-			m->setKey("ParticlePosition");
-			m->setValue(positionParticle);
-			_entity->emitMessage(m);
-		//_scen->createParticle(_entity->getName(),particula, positionParticle);
+		
 	}
 	
 	//__________________________________________________________________
