@@ -122,7 +122,7 @@ namespace Logic
 
 				
 				CMessageCreateParticle *particle = new CMessageCreateParticle();
-				particle->setParticle("ExplosionParticle");
+				particle->setParticle("SpawnParticle");
 				particle->setPosition(_entity->getPosition());
 
 				//Sonido Spawn

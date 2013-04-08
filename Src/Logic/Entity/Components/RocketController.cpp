@@ -163,7 +163,8 @@ namespace Logic {
 		//Graphics::CParticle *particle = Graphics::CServer::getSingletonPtr()->getActiveScene()->createParticle(_entity->getName(),"ExplosionParticle", _entity->getPosition());
 
 		CMessageCreateParticle *particle = new CMessageCreateParticle();
-		particle->setParticle("ExplosionParticle");
+		particle->setParticle("SpawnParticle");
+		//particle->setParticle("ExplosionParticle");
 		particle->setPosition(_entity->getPosition());
 
 		_entity->emitMessage(particle);

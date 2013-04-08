@@ -80,13 +80,6 @@ namespace Logic
 			maudio->setNotIfPlay(false);
 			maudio->setIsPlayer(false);
 			_entity->emitMessage(maudio);
-
-			CMessageCreateParticle *particle = new CMessageCreateParticle();
-			particle->setParticle("JumperParticle");
-			particle->setPosition(_entity->getPosition());
-			std::cout << _entity->getPosition() << std::endl;
-
-			_entity->emitMessage(particle);
 			break;
 		}
 

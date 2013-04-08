@@ -215,14 +215,22 @@ namespace Graphics
 		sceneNode->removeChild(entity->getName());
 	}
 */
-	CParticle * CScene::createParticle(const std::string &unicName, const std::string &particleName, const Vector3 &position, Vector3 *direction){
+
+	CParticle * CScene::createParticle(const std::string &unicName, const std::string &particleName, const Vector3 &position){
+	
+		return createParticle(unicName,particleName, position,Vector3::ZERO);
+	
+	}
+
+	CParticle * CScene::createParticle(const std::string &unicName, const std::string &particleName, const Vector3 &position, const Vector3 &directionWithForce){
 
 		CParticle *particle = new CParticle(unicName, particleName);
 
 		particle->setPosition(position);
 
-		if(direction)
-			particle->setDirection(*direction);
+		
+		if(!directionWithForce.isZeroLength())
+			particle->setDirection(directionWithForce);
 
 		return particle;
 

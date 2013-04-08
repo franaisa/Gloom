@@ -13,6 +13,9 @@ namespace Logic {
 		Vector3 getPosition();
 		void setParticle(const std::string &name);
 		void setPosition(const Vector3 &pos);
+
+		Vector3 getDirectionWithForce();
+		void setDirectionWithForce(const Vector3 &dirWithForce);
 		~CMessageCreateParticle(){};
 		
 		virtual Net::CBuffer* serialize();
@@ -20,6 +23,7 @@ namespace Logic {
 	private:
 		 std::string _name;
 		 Vector3 _position;
+		 Vector3 _directionWithForce;
 	};
 	REG_FACTORYMESSAGE(CMessageCreateParticle);
 };

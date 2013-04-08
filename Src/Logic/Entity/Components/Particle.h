@@ -76,6 +76,7 @@ namespace Logic
 		*/
 		Graphics::CParticle *_particle;
 
+		std::string _particleName;
 		Vector3 _particleOffset;
 		Vector3 _particleEmitterDirection;
 

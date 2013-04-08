@@ -208,7 +208,7 @@ namespace Logic
 			_panelWeaponKey[current]->setText(sString.str());
 
 			// hardcodea el tamaño y tipo de la fuente
-			_panelWeaponKey[current]->setTextSize(24);
+			_panelWeaponKey[current]->setTextSize(20);
 			_panelWeaponKey[current]->setFont("fuenteSimple");
 
 			_panelWeapon[current]->addChild(_panelWeaponKey[current]);
