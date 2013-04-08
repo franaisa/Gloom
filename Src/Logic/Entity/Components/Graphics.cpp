@@ -19,6 +19,7 @@ gráfica de la entidad.
 
 #include "Graphics/Scene.h"
 #include "Graphics/Entity.h"
+#include "Graphics/GlowingEntity.h"
 #include "Graphics/StaticEntity.h"
 
 #include "Logic/Messages/MessageTransform.h"

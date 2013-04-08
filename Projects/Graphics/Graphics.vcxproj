@@ -81,6 +81,7 @@
     <ClCompile Include="..\..\Src\Graphics\Billboard.cpp" />
     <ClCompile Include="..\..\Src\Graphics\Camera.cpp" />
     <ClCompile Include="..\..\Src\Graphics\Entity.cpp" />
+    <ClCompile Include="..\..\Src\Graphics\GlowingEntity.cpp" />
     <ClCompile Include="..\..\Src\Graphics\Light.cpp" />
     <ClCompile Include="..\..\Src\Graphics\MovableText.cpp" />
     <ClCompile Include="..\..\Src\Graphics\MutableEntity.cpp" />
@@ -97,6 +98,7 @@
     <ClInclude Include="..\..\Src\Graphics\Camera.h" />
     <ClInclude Include="..\..\Src\Graphics\Documentation.h" />
     <ClInclude Include="..\..\Src\Graphics\Entity.h" />
+    <ClInclude Include="..\..\Src\Graphics\GlowingEntity.h" />
     <ClInclude Include="..\..\Src\Graphics\Light.h" />
     <ClInclude Include="..\..\Src\Graphics\MovableText.h" />
     <ClInclude Include="..\..\Src\Graphics\MutableEntity.h" />

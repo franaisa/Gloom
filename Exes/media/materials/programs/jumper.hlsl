@@ -19,7 +19,8 @@ VsOutput vsMain(const VsInput In)
 {
 	VsOutput vsOut;
 	float4 pos = In.position;
-	pos.y += (sin(pos.y+tiempo))*0.5;
+	float random = clamp(tiempo, 2, 5);
+	pos.y += (sin(pos.y+tiempo*random)) * 1.4;
 	vsOut.position = mul(ViewProjectionMatrix, pos);
 	vsOut.uv0 = In.uv0;
 	return vsOut;

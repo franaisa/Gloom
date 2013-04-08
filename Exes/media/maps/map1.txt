@@ -4,6 +4,15 @@ Map = {
 		type = "World",
 	},
 	
+	Orb1 = {
+		type = "ItemSpawn",
+		position = {67.0, 2.0, 42.0},
+		model = "health1.mesh",
+		id = "orb",
+		reward = 17,
+		respawnTime = 5,
+	},
+	
 	Point1 = {
 		type = "SpawnPoint",
 		position = {-75.0, 0.0, 0.0},
@@ -161,14 +170,7 @@ Map = {
 		physic_groupList = "1",
 	},
 	
-	Orb1 = {
-		type = "ItemSpawn",
-		position = {67.0, 2.0, 42.0},
-		model = "health1.mesh",
-		id = "orb",
-		reward = 17,
-		respawnTime = 5,
-	},
+	
 	
 	RocketLauncher = {
 		type = "ItemSpawn",

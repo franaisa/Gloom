@@ -1,0 +1,64 @@
+particle_system JumperParticle
+{
+	material JumperSpecial
+	particle_width 1.50
+	particle_height 1.500
+	quota 42
+	cull_each false
+	sorted false
+	local_space false
+	iteration_interval 0.0
+	nonvisible_update_timeout 0.0
+	billboard_type point
+	billboard_origin center
+	billboard_rotation_type texcoord
+	point_rendering false
+	accurate_facing false
+
+
+
+	emitter Ring
+	{
+		position 0.0 0.0 0.0
+		direction 0.0 1.0 0.0
+		angle 0
+		width 7
+		height 7
+		depth 7
+		inner_width 0.5
+		inner_height 0.5
+		emission_rate 70
+		velocity_min 0.5
+		velocity_max 50
+		time_to_live_min 0.15
+		time_to_live_max 1.5
+		duration_min 0
+		duration_max 0
+		repeat_delay_min 0
+		repeat_delay_max 0
+		colour_range_start 1 1 1 1
+		colour_range_end 1 1 1 1
+	}
+
+	affector LinearForce
+	{
+		force_vector 0.0 1.0 0.0
+		force_application add
+	}
+
+	affector ColourInterpolator
+	{
+		time0 0
+		colour0 0.670588 0.670588 0.603922 1
+		time1 0.2
+		colour1 0.756863 1 0.952941 1
+		time2 0.4
+		colour2 0 0.666667 1 1
+		time3 0.6
+		colour3 0 0.333333 1 1
+		time4 0.8
+		colour4 0 0.333333 1 1
+		time5 1
+		colour5 0 0 1 1
+	}
+}

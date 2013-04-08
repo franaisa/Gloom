@@ -58,7 +58,6 @@ namespace Logic
 		
 		_isDead=false;
 		_actualTimeSpawn=0;
-		
 
 	} // activate
 	//--------------------------------------------------------
