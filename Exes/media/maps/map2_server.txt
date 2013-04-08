@@ -360,7 +360,7 @@ Map = {
 		physic_dimensions = { 4, 7, 4 },
 	},
 	
-	Point9 = {
+	Point10 = {
 		type = "SpawnPoint",
 		position = {-146,108,130},
 		physic_entity = "rigid",
@@ -370,7 +370,7 @@ Map = {
 		physic_dimensions = { 4, 7, 4 },
 	},
 	
-	Point10 = {
+	Point11 = {
 		type = "SpawnPoint",
 		position = {28,110,-29},
 		physic_entity = "rigid",
