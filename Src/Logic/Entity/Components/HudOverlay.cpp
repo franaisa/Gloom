@@ -208,7 +208,7 @@ namespace Logic
 			_panelWeaponKey[current]->setText(sString.str());
 
 			// hardcodea el tamaño y tipo de la fuente
-			_panelWeaponKey[current]->setTextSize(24);
+			_panelWeaponKey[current]->setTextSize(20);
 			_panelWeaponKey[current]->setFont("fuenteSimple");
 
 			_panelWeapon[current]->addChild(_panelWeaponKey[current]);
@@ -696,10 +696,12 @@ namespace Logic
 	{
 		IComponent::tick(msecs);
 	
-		_acumSpawn += msecs;
-		if(_acumSpawn>1000){
-			hudSpawn((_spawnTime - _acumSpawn));
-			_acumSpawn = 0;
+		if(_overlayDie->isVisible()){
+			_acumSpawn += msecs;
+			if(_acumSpawn>1000){
+				hudSpawn((--_spawnTime));
+				_acumSpawn = 0;
+			}
 		}
 
 		if(_overlayDebug->isVisible())

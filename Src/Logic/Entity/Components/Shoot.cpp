@@ -31,6 +31,11 @@ Contiene la implementación del componente que gestiona las armas y que administr
 #include "Logic/Messages/MessageHudAmmo.h"
 #include "Logic/Messages/MessageHudWeapon.h"
 #include "Logic/Messages/MessageBerserker.h"
+#include "Logic/Messages/MessageCreateParticle.h"
+
+
+// mensaje para debbug
+#include "Logic/Messages/MessageHudDebugData.h"
 
 #include <OgreSceneManager.h>
 #include <OgreMaterialManager.h>
@@ -160,11 +165,21 @@ namespace Logic {
 
 	void CShoot::drawParticle(const std::string &nombreParticula, const std::string &particula){
 	
-		Vector3 positionParticle = _entity->getPosition() + (Math::getDirection(_entity->getOrientation()) * _particlePosition);
+		Vector3 directionWithForce = Math::getDirection(_entity->getOrientation());
+		Vector3 positionParticle = (_entity->getPosition()+ Vector3(0,_heightShoot,0)) + ((directionWithForce) * _particlePosition);
 		Graphics::CScene* _scen = Graphics::CServer::getSingletonPtr()->getActiveScene();
 		
-		_scen->createParticle(_entity->getName(),particula, positionParticle, &Math::getDirection(_entity->getOrientation()));
-		//_scen->createParticle(_entity->getName(),particula, positionParticle);
+		directionWithForce *= 10;
+
+
+		//
+		CMessageCreateParticle *particle = new CMessageCreateParticle();
+		particle->setParticle(particula);
+		particle->setPosition(positionParticle);
+		particle->setDirectionWithForce(directionWithForce);
+		_entity->emitMessage(particle);
+
+		
 	}
 	
 	//__________________________________________________________________

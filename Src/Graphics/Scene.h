@@ -183,9 +183,10 @@ namespace Graphics
 		Ogre::SceneNode* getSceneNode(const std::string &nameSceneNode);
 		
 		/**
-		crea una particula
+		crea una particula, impor
 		*/
-		CParticle* createParticle(const std::string &unicName, const std::string &particleName, const Vector3 &position, Vector3 *direction = NULL);
+		CParticle *createParticle(const std::string &unicName, const std::string &particleName, const Vector3 &position);
+		CParticle *createParticle(const std::string &unicName, const std::string &particleName, const Vector3 &position, const Vector3 &directionWithForce);
 
 		void changeAmbientLight(Vector3 Light);
 

@@ -27,6 +27,18 @@ namespace Logic {
 	}//
 	//----------------------------------------------------------
 
+	Vector3 CMessageCreateParticle::getDirectionWithForce(){
+		return _directionWithForce;
+	}//
+
+	//----------------------------------------------------------
+
+	void CMessageCreateParticle::setDirectionWithForce(const Vector3 &directionWithForce){
+		_directionWithForce = directionWithForce;
+	}//
+	//----------------------------------------------------------
+
+
 	std::string CMessageCreateParticle::getParticle(){
 		return _name;
 	}//

@@ -1,0 +1,62 @@
+particle_system SpawnParticle
+{
+	material RelucienteChachi
+	particle_width 8.69520004272461
+	particle_height 10.0
+	quota 300
+	cull_each false
+	sorted false
+	local_space false
+	iteration_interval 0.0
+	nonvisible_update_timeout 0.0
+	billboard_type point
+	billboard_origin bottom_right
+	billboard_rotation_type vertex
+	point_rendering false
+	accurate_facing true
+
+	emitter Point
+	{
+		position 0.0 0.0 0.0
+		direction 1.0 0.0 0.0
+		angle 154.8
+		emission_rate 60
+		velocity_min 50
+		velocity_max 150
+		time_to_live_min 0
+		time_to_live_max 3.38
+		duration_min 1
+		duration_max 1
+		repeat_delay_min 0
+		repeat_delay_max 0
+		colour_range_start 1 1 1 1
+		colour_range_end 1 1 1 1
+	}
+
+	affector LinearForce
+	{
+		force_vector 0.0 12.32 0.0
+		force_application add
+	}
+
+	affector Rotator
+	{
+		rotation_speed_range_start 100
+		rotation_speed_range_end 500
+		rotation_range_start 0
+		rotation_range_end 180
+	}
+
+	affector Scaler
+	{
+		rate -3
+	}
+
+	affector ColourFader
+	{
+		red -0.93
+		green -1
+		blue 1
+		alpha -1
+	}
+}

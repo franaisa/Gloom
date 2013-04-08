@@ -88,19 +88,27 @@ namespace Graphics
 
 	//--------------------------------------------------------
 	
-	void CParticle::setDirection(Vector3 &direction){
+	void CParticle::setDirection(const Vector3 &directionWithForce){
 		
-		Ogre::ParticleAffector *aff = _particleSystem->addAffector("LinearForce");
-		
-		direction.normalise();
-		direction *=-1;
-		std::string aux= Ogre::StringConverter::toString(direction);
+		_particleSystem->getEmitter(0)->setDirection(directionWithForce*10);
 		
 		/*
-		aff->setParameter("PT_VECTOR3",aux );
+		Ogre::ParticleAffector *aff = _particleSystem->getAffector(0);
+		//Ogre::ParticleAffector *aff = _particleSystem->addAffector("LinearForce");
+		
+		
+		std::string &aux= Ogre::StringConverter::toString(direction);
+		
+		
+		Ogre::String key = Ogre::StringInterface::getParameter("force_vector");
+		aff->setParameter(key,aux);
+		*/
+
+		/*
+		Ogre::String &key2 = Ogre::StringConverter::toString(Ogre::ParameterType::PT_STRING);
+		Ogre::String &key3 = Ogre::StringConverter::toString();
 		aff->setParameter("PT_STRING","FA_ADD");
 		*/
-		Ogre::ParamDictionary *aux2 = aff->getParamDictionary();
 		
 	}
 	//--------------------------------------------------------
