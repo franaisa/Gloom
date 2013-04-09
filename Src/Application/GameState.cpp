@@ -74,7 +74,9 @@ namespace Application {
 		
 		//LAYOUT MIRA
 		//GUI::CServer::getSingletonPtr()->addLayoutToState(this, "Mira");
-
+		_time = 0;
+		_timelogic=0;
+		_timephysics=0;
 		return true;
 	} // init
 
@@ -127,18 +129,12 @@ namespace Application {
 
 	void CGameState::deactivate() 
 	{
-		// Desactivamos la ventana de tiempo.
-		//_timeWindow->deactivate();
-		//_timeWindow->setVisible(false);
-
-		//LAYOUT TIME
-		//GUI::CServer::getSingletonPtr()->deactivateGUI();
-
+		std::cout << "tiempo de procesado fisico: " << _timephysics << std::endl;
+		std::cout << "tiempo de procesado logico: " << _timelogic << std::endl;
+		std::cout << "tiempo total jugado: " << _time << std::endl;
 		// Desactivamos la clase que procesa eventos de entrada para 
 		// controlar al jugador.
 		Input::CServer::getSingletonPtr()->getPlayerController()->deactivate();
-		// Desactivamos el mapa de la partida.
-		//Logic::CServer::getSingletonPtr()->deactivateMap();
 
 		Logic::CServer::getSingletonPtr()->unLoadLevel();
 		
@@ -151,21 +147,21 @@ namespace Application {
 
 	void CGameState::tick(unsigned int msecs) 
 	{
-		CApplicationState::tick(msecs);
-
+		unsigned int time = clock();
 		// TODO: realizar la simulación física
 		Physics::CServer::getSingletonPtr()->tick(msecs);
+		//tiempo que ha tardado la fisica
+		time = clock()-time;
+		_timephysics+=time;
+		
+		time = clock();
 
 		// Actualizamos la lógica de juego.
 		Logic::CServer::getSingletonPtr()->tick(msecs);
-
+		//tiempo que ha tardado la logica
+		time = clock()-time;
+		_timelogic+=time;
 		_time += msecs;
-		
-		std::stringstream text;
-		text << "Time: " << _time/1000;
-
-		//TEXTO DEL LAYOUT TIME
-		//GUI::CServer::getSingletonPtr()->setText(text.str());
 
 	} // tick
 

@@ -187,7 +187,8 @@ namespace Application
 		Tiempo de juego en milisegundos.
 		*/
 		unsigned int _time;
-
+		unsigned int _timelogic;
+		unsigned int _timephysics;
 		
 
 	}; // CGameState

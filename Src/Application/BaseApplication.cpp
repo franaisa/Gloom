@@ -54,7 +54,7 @@ namespace Application {
 		assert(!_initialized && "La aplicación ya está inicializada");
 
 		_initialized = true;
-
+		playing=false;
 		return true;
 
 	} // init
@@ -133,6 +133,8 @@ namespace Application {
 
 		_nextState = it->second;
 
+		
+
 		return true;
 
 	} // setState
@@ -153,6 +155,8 @@ namespace Application {
 		// Ejecución del bucle principal. Simplemente miramos si
 		// tenemos que hacer una transición de estado, y si no hay que
 		// hacerla, ejecutamos la vuelta
+		_CrtSetReportMode( _CRT_ERROR, _CRTDBG_MODE_DEBUG );
+		//_CrtSetBreakAlloc(598913);
 		while (!exitRequested()) 
 		{
 			if (!_currentState ||
@@ -176,7 +180,8 @@ namespace Application {
 			}
 		
 		}
-
+		//_CrtDumpMemoryLeaks();
+		
 	} // run
 
 	//--------------------------------------------------------
@@ -198,6 +203,13 @@ namespace Application {
 		assert(_nextState);
 		_nextState->activate();
 		_currentState = _nextState;
+		
+		std::cout << "frames: " << _frames << std::endl;
+		std::cout << "tiempo de procesado gráfico: " << _timegraphics << std::endl;
+
+		_timerAudio=0;
+		_timegraphics=0;
+		_frames=0;
 
 	} // changeState
 
