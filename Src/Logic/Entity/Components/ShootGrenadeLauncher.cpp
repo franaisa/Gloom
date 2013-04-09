@@ -47,7 +47,7 @@ namespace Logic {
 		Map::CEntity *entityInfo = CEntityFactory::getSingletonPtr()->getInfo("Grenade");
 
 		// Spawneamos la granada justo delante del jugador y a la altura de disparo que corresponda
-		Vector3 shootPosition = _entity->getPosition() + ( Math::getDirection( _entity->getOrientation() )* (_capsuleRadius));
+		Vector3 shootPosition = _entity->getPosition() + ( Math::getDirection( _entity->getOrientation() ));
 		shootPosition.y += _heightShoot;
 		//Y le quitamos la mitad de la altura del cohete, ajustando al gusto
 		shootPosition.y-=2.8;
