@@ -114,7 +114,7 @@ namespace Logic
 		
 		_enemy=message->getEnemy();
 		//std::cout << "el enemigo a apuntar se llama " << _enemy->getName() << std::endl;
-		s//td::cout << "y su tipo es " << _enemy->getType() << std::endl;
+		//td::cout << "y su tipo es " << _enemy->getType() << std::endl;
 		_dead=true;
 	}
 
