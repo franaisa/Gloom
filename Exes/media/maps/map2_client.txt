@@ -133,7 +133,7 @@ Map = {
 	
 	Orb1 = {
 		type = "ItemSpawn",
-		position = {-29, 66, -28},
+		position = {-29, 68, -28},
 		model = "health1.mesh",
 		id = "orb",
 		reward = 17,
@@ -142,7 +142,7 @@ Map = {
 	
 	Orb2 = {
 		type = "ItemSpawn",
-		position = {-115, 0, 119},
+		position = {-115, 3, 119},
 		model = "health1.mesh",
 		id = "orb",
 		reward = 17,
@@ -151,7 +151,7 @@ Map = {
 	
 	Orb3 = {
 		type = "ItemSpawn",
-		position = {-146,98,47},
+		position = {-146,99,47},
 		model = "health1.mesh",
 		id = "orb",
 		reward = 17,
@@ -160,7 +160,7 @@ Map = {
 	
 	Orb4 = {
 		type = "ItemSpawn",
-		position = {-259,62,133},
+		position = {-259,64,133},
 		model = "health1.mesh",
 		id = "orb",
 		reward = 17,
@@ -169,7 +169,7 @@ Map = {
 	
 	Shotgun = {
 		type = "ItemSpawn",
-		position = {18,0,112},
+		position = {18,4,112},
 		model = "shotGun01.mesh",
 		id = "weapon",
 		weaponType = 2,
@@ -179,7 +179,7 @@ Map = {
 	
 	Sniper = {
 		type = "ItemSpawn",
-		position = {-265,98,-55} ,
+		position = {-265,103,-55} ,
 		model = "AK47.mesh",
 		id = "weapon",
 		weaponType = 1,
@@ -199,7 +199,7 @@ Map = {
 	
 	Minigun = {
 		type = "ItemSpawn",
-		position = {-91.0, 0.0, -35.0},
+		position = {-91.0, 4.0, -35.0},
 		model = "plasmagun.mesh",
 		id = "weapon",
 		weaponType = 4,
@@ -209,7 +209,7 @@ Map = {
 	
 	GrenadeLauncherAmmo1 = {
 		type = "ItemSpawn",
-		position = {-30.0, 104.0, 120.0},
+		position = {-30.0, 111.0, 120.0},
 		model = "grenadelauncher.mesh",
 		id = "ammo",
 		weaponType = 4,
@@ -219,7 +219,7 @@ Map = {
 	
 	RocketLauncherAmmo1 = {
 		type = "ItemSpawn",
-		position = {-264,0.0,-53.0},
+		position = {-264,4,-53.0},
 		model = "rocketq3.mesh",
 		id = "ammo",
 		weaponType = 5,
@@ -229,7 +229,7 @@ Map = {
 	
 	SuperShield = {
 		type = "ItemSpawn",
-		position = {-265,123,47},
+		position = {-265,125,47},
 		model = "shield1.mesh",
 		id = "armor",
 		reward = 100,
@@ -238,7 +238,7 @@ Map = {
 	
 	miniShield = {
 		type = "ItemSpawn",
-		position = {-182.0, 0.0, 47.0},
+		position = {-182.0, 2.0, 47.0},
 		scale = 0.5,
 		model = "shield1.mesh",
 		id = "armor",
@@ -260,12 +260,6 @@ Map = {
 		physic_dimensions = { 100, 0.1, 100 },
 		physic_group = 2,
 		physic_groupList = "1",
-	},
-	
-	David = {
-		type = "LocalPlayer",
-		isPlayer = true,
-		position = {160,100,40},
 	},
 	
 	Camera = {
