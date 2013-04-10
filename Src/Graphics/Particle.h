@@ -74,12 +74,11 @@ namespace Graphics
 
 
 		/**
-		Setea la direccion del emisor que se le introduce a la particula, el 0 por defecto
+		Setea la direccion del emisor que se le introduce a la particula, lleva la magnitud ya multiplicada por la direccion
 
-		@param direccion de la particula
-		@param emitter, campo opcional.
+		@param directionWithForce direcion de la particula con la fuerza ya multiplicada
 		*/
-		void setDirection(Vector3 &direction);
+		void setDirection(const Vector3 &directionWithForce);
 
 		/**
 		Devuelve el objeto ogre de la particula

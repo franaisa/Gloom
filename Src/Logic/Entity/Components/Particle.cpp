@@ -55,10 +55,7 @@ namespace Logic
 			_particleEmitterDirection = entityInfo->getVector3Attribute("particleEmitterDirection");
 
 		if ( entityInfo->hasAttribute("particleName")){
-			std::string particleName = entityInfo->getStringAttribute("particleName");
-
-			_particle = new Graphics::CParticle( _entity->getName(), particleName );
-			_particle->setPosition( _entity->getPosition() + ( _particleOffset * _entity->getOrientation() ) );
+			_particleName = entityInfo->getStringAttribute("particleName");
 
 			if( entityInfo->hasAttribute("particleEmitterDirection") )
 				_particle->setDirection( _particleEmitterDirection * _entity->getOrientation() );
@@ -73,6 +70,11 @@ namespace Logic
 	
 	void CParticle::activate() {
 		IComponent::activate();
+
+		if(!_particleName.empty()){
+			_particle = new Graphics::CParticle( _entity->getName(), _particleName );
+			_particle->setPosition( _entity->getPosition() + ( _particleOffset * _entity->getOrientation() ) );
+		}
 
 	} // activate
 	//---------------------------------------------------------
@@ -95,12 +97,11 @@ namespace Logic
 		case Message::CREATE_PARTICLE:
 			CMessageCreateParticle *msg = static_cast<CMessageCreateParticle*>(message);
 			Graphics::CParticle *particle = Graphics::CServer::getSingletonPtr()->getActiveScene()->createParticle(
-						_entity->getName(),msg->getParticle(), msg->getPosition());
+				_entity->getName(),msg->getParticle(), msg->getPosition(), msg->getDirectionWithForce());
 			break;
 
 		}
-		
-
+	
 	} // process
 	//----------------------------------------------------------
 
@@ -110,8 +111,6 @@ namespace Logic
 			_particle->setPosition(_entity->getPosition() + _particleOffset);
 	} // tick
 	//----------------------------------------------------------
-
-
 
 } // namespace Logic
 

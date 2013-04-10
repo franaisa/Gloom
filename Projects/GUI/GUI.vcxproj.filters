@@ -33,8 +33,5 @@
     <ClInclude Include="..\..\Src\GUI\GUIEventArgs.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Src\GUI\Conversion.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
   </ItemGroup>
 </Project>

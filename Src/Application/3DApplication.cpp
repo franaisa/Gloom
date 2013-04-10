@@ -51,6 +51,8 @@ namespace Application {
 
 	bool C3DApplication::init() 
 	{
+		_timegraphics=0;
+		_frames=0;
 		// Inicializamos la clase base.
 		if (!CBaseApplication::init())
 			return false;
@@ -156,19 +158,25 @@ namespace Application {
 	void C3DApplication::tick(unsigned int msecs) 
 	{
 		//primero queremos actualizar los paquetes de red recibidos
+		_frames++;
 		Net::CManager::getSingletonPtr()->tick(msecs);
-
+		unsigned int time=0;
 		Input::CInputManager::getSingletonPtr()->tick();
 		
 		// Ejecutar el tick del estado
 		_acumAudio+=msecs;
 
-
+		//logica y fisica
 		CBaseApplication::tick(msecs);
 
+		//GUI
 		GUI::CServer::getSingletonPtr()->tick();
 
+		//grafica
+		time = clock();
 		Graphics::CServer::getSingletonPtr()->tick(msecs/1000.0f);
+		time = clock()-time;
+		_timegraphics+=time;
 
 		//El tick del server de audio solo se ejecuta cada X tiempo por cuestiones de eficiencia ( solo hace un update para los sonidos sin loop liberen canales al acabar )
 		if(_acumAudio>=_timerAudio){

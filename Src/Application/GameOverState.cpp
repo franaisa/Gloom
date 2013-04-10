@@ -18,11 +18,6 @@ Contiene la implementación del estado de game over.
 
 #include "Input/Server.h"
 
-#include <CEGUISystem.h>
-#include <CEGUIWindowManager.h>
-#include <CEGUIWindow.h>
-#include <elements/CEGUIPushButton.h>
-
 namespace Application {
 
 	CGameOverState::~CGameOverState() 
@@ -34,14 +29,6 @@ namespace Application {
 	bool CGameOverState::init() 
 	{
 		CApplicationState::init();
-
-		// Cargamos la ventana que muestra el menú
-		CEGUI::WindowManager::getSingletonPtr()->loadWindowLayout("GameOver.layout");
-		_gameOverWindow = CEGUI::WindowManager::getSingleton().getWindow("GameOver");
-		
-		CEGUI::WindowManager::getSingleton().getWindow("GameOver/Exit")->
-			subscribeEvent(CEGUI::PushButton::EventClicked, 
-				CEGUI::SubscriberSlot(&CGameOverState::exitReleased, this));
 	
 		return true;
 
@@ -61,23 +48,12 @@ namespace Application {
 	{
 		CApplicationState::activate();
 
-		// Activamos la ventana que nos muestra el menú y activamos el ratón.
-		CEGUI::System::getSingletonPtr()->setGUISheet(_gameOverWindow);
-		_gameOverWindow->setVisible(true);
-		_gameOverWindow->activate();
-		CEGUI::MouseCursor::getSingleton().show();
-
 	} // activate
 
 	//--------------------------------------------------------
 
 	void CGameOverState::deactivate() 
 	{		
-		// Desactivamos la ventana GUI con el menú y el ratón.
-		CEGUI::MouseCursor::getSingleton().hide();
-		_gameOverWindow->deactivate();
-		_gameOverWindow->setVisible(false);
-		
 		CApplicationState::deactivate();
 
 	} // deactivate
@@ -138,14 +114,5 @@ namespace Application {
 		return false;
 
 	} // mouseReleased
-			
-	//--------------------------------------------------------
-
-	bool CGameOverState::exitReleased(const CEGUI::EventArgs& e)
-	{
-		_app->exitRequest();
-		return true;
-
-	} // exitReleased
 
 } // namespace Application

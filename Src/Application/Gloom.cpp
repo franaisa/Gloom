@@ -12,6 +12,10 @@ leaks. En función de la configuración y plataforma se usa un main o un WinMain.
 @date Julio, 2010
 */
 
+#define _CRTDBG_MAP_ALLOC
+#include <stdlib.h>
+#include <crtdbg.h>
+
 #ifdef _DEBUG
 // VLD: Completa biblioteca para detectar leaks y donde se produjeron en modo de
 // depuración. Ralentiza moderadamente el lanzamiento de la aplicación aunque no 
@@ -44,7 +48,7 @@ WinMain(HINSTANCE zhInstance, HINSTANCE prevInstance, LPSTR lpCmdLine, int nCmdS
 	// Aqui llegamos a lo que verdaderamente importa. Lanzamos la aplicación.
 	{
 		Application::CGloomApplication miApp;
-
+		
 		if (miApp.init())
 			miApp.run();
 

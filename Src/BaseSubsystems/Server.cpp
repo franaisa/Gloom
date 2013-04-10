@@ -32,16 +32,6 @@ usados. La mayoría de ellos son parte de Ogre.
 #include <OISMouse.h>
 #include <OISKeyboard.h>
 
-// CEGUI
-#include <CEGUISystem.h>
-#include <RendererModules/Ogre/CEGUIOgreRenderer.h>
-#include <CEGUIDefaultResourceProvider.h>
-#include <CEGUIFont.h>
-#include <CEGUIImageset.h>
-#include <CEGUIWindowManager.h>
-#include <falagard/CEGUIFalWidgetLookManager.h>
-#include <CEGUIScheme.h>
-
 // Para cerrar la aplicación si se cierra la ventana
 #include "Application/BaseApplication.h"
 
@@ -290,33 +280,7 @@ namespace BaseSubsystems
 
 	bool CServer::initCEGUI()
 	{
-		CEGUI::OgreRenderer& CEGUIRenderer =
-				 CEGUI::OgreRenderer::create(*_renderWindow);
-
-		CEGUI::System::create(CEGUIRenderer);
-		_GUISystem = CEGUI::System::getSingletonPtr();
-
-
 		_hikariMgr = new Hikari::HikariManager("media/gui");
-
-
-		// Inicializamos los directorios necesarios para el Resource Provider,
-		// así cuando creemos un recurso no tenemos que dar una ruta completa.
-		CEGUI::DefaultResourceProvider* rp = static_cast<CEGUI::DefaultResourceProvider*>(
-			CEGUI::System::getSingleton().getResourceProvider());
-
-		rp->setResourceGroupDirectory("fonts", "media/gui/fonts/");
-		rp->setResourceGroupDirectory("imagesets", "media/gui/imagesets/");
-		rp->setResourceGroupDirectory("layouts", "media/gui/layouts");
-		rp->setResourceGroupDirectory("looknfeels", "media/gui/looknfeel/");
-		rp->setResourceGroupDirectory("schemes", "media/gui/schemes/");
-
-		// Definimos los grupos de recursos que usaremos
-		CEGUI::Font::setDefaultResourceGroup("fonts");
-		CEGUI::Imageset::setDefaultResourceGroup("imagesets");
-		CEGUI::WindowManager::setDefaultResourceGroup("layouts");
-		CEGUI::WidgetLookManager::setDefaultResourceGroup("looknfeels");
-		CEGUI::Scheme::setDefaultResourceGroup("schemes");
 
 		return true;
 
@@ -376,12 +340,9 @@ namespace BaseSubsystems
 
 	void CServer::releaseCEGUI()
 	{
-		if(_GUISystem)
-		{
-			CEGUI::System::destroy();
-			_GUISystem = 0;
+		if(_hikariMgr){
+			_hikariMgr->destroyAllControls();
 		}
-
 	} // releaseCEGUI
 
 	//--------------------------------------------------------

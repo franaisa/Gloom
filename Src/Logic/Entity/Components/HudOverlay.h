@@ -38,7 +38,7 @@ namespace Logic
 		/**
 		Constructor por defecto; en la clase base no hace nada.
 		*/
-		CHudOverlay() : IComponent(), _health(0), _shield(0), _ammo(1), _actualWeapon(0), _numWeapons(0), _panelMira(0), _spawnTime(0),
+		CHudOverlay() : IComponent(), _health(0), _shield(0), _ammo(1), _actualWeapon(0), _numWeapons(0), _panelMira(0), _spawnTime(0), _acumSpawn(0),
 			_overlayPlay(0), _overlayDie(0), _textAreaDie(0), _overlayDebug(0), _panelDebug(0), _textAreaDebug(0), _acumDebug(0) {
 			
 			for(int i=0;i<3;++i){
@@ -110,7 +110,7 @@ namespace Logic
 
 		int _numWeapons;
 
-		enum eWeaponIndex { HAMMER, SNIPER, SHOTGUN, MINIGUN, GRENADELAUNCHER, ROCKETLAUNCHER, PRIMARY_SKILL, SECUNDARY_SKILL, NONE };
+		enum eWeaponIndex { HAMMER, SNIPER, SHOTGUN, MINIGUN, GRENADELAUNCHER, ROCKETLAUNCHER, PRIMARY_SKILL, SECONDARY_SKILL, NONE };
 		enum eOverlayWeaponState { ACTIVE, NO_AMMO, NO_WEAPON };
 		enum eOverlayElements {HEALTH, SHIELD, AMMO };
 
@@ -174,12 +174,12 @@ namespace Logic
 		/** 
 		Gestiona los paneles de armas basicas (el 6 esta a hierro, deberia se ser el num de armas, pero bueno)
 		*/
-		Graphics::COverlay *_panelWeapon[6];
+		Graphics::COverlay *_panelWeapon[8];
 
 		/** 
 		Panel de las teclas de los paneles
 		*/
-		Graphics::COverlay *_panelWeaponKey[6];
+		Graphics::COverlay *_panelWeaponKey[8];
 
 		/** 
 		tiene las teclas que)
@@ -188,7 +188,7 @@ namespace Logic
 		/**
 		Gestion los paneles de las armas (6) en este caso, en cada uno de sus estados: ACTIVE, NO_AMMO, NO_WEAPON
 		*/
-		Graphics::COverlay *_weaponsBox[6][3];
+		Graphics::COverlay *_weaponsBox[8][3];
 
 
 		//////////////////////Gestion de armas

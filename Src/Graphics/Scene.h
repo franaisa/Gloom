@@ -183,9 +183,10 @@ namespace Graphics
 		Ogre::SceneNode* getSceneNode(const std::string &nameSceneNode);
 		
 		/**
-		crea una particula
+		crea una particula, impor
 		*/
-		CParticle* createParticle(const std::string &unicName, const std::string &particleName, const Vector3 &position, Vector3 *direction = NULL);
+		CParticle *createParticle(const std::string &unicName, const std::string &particleName, const Vector3 &position);
+		CParticle *createParticle(const std::string &unicName, const std::string &particleName, const Vector3 &position, const Vector3 &directionWithForce);
 
 		void changeAmbientLight(Vector3 Light);
 
@@ -217,6 +218,10 @@ namespace Graphics
 					}
 
 					return NULL;
+				}
+
+				~GlowMaterialListener(){
+					Ogre::MaterialManager::getSingleton().destroyResourcePool("mGlowBlack");
 				}
 			};
 
@@ -378,7 +383,11 @@ namespace Graphics
 		Escena cuyo padre es la grande. Se usa principalmente para los overlays
 		*/
 		//Ogre::SceneNode *_sceneNode;
-
+		/**
+		Un material listener para añadir los scheme en los materiales. En este caso solo es de glow asi que lo llamo asi.
+		Quizas en un futuro sea un material listener generico.
+		*/
+		GlowMaterialListener *_glowMaterialListener;
 	}; // class CScene
 
 } // namespace Graphics

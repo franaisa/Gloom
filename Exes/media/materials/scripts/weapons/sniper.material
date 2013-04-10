@@ -1,0 +1,80 @@
+
+material sniper
+{
+	technique
+	{
+		pass
+		{
+			specular 0.9 0.9 0.9 1 10.083
+
+			texture_unit
+			{
+				texture assault_rifle.png
+			}
+		}
+
+	}
+
+}
+
+
+
+material _AssaultRifle_2___Default
+{
+	technique
+	{
+		pass
+		{
+			specular 0 0 0 1 10.083
+
+			texture_unit
+			{
+				texture display.png
+			}
+		}
+
+	}
+
+}
+
+
+
+material _AssaultRifleLeft_Number
+{
+	technique
+	{
+		pass
+		{
+			specular 0 0 0 1 10.083
+
+			texture_unit
+			{
+				texture numbers_plate3.png
+			}
+		}
+
+	}
+
+}
+
+
+
+material _AssaultRifleRight_Number
+{
+	technique
+	{
+		pass
+		{
+			specular 0 0 0 1 10.083
+
+			texture_unit
+			{
+				texture numbers_plate2.png
+			}
+		}
+
+	}
+
+}
+
+

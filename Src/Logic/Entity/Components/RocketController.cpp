@@ -164,6 +164,7 @@ namespace Logic {
 
 		CMessageCreateParticle *particle = new CMessageCreateParticle();
 		particle->setParticle("ExplosionParticle");
+		//particle->setParticle("ExplosionParticle");
 		particle->setPosition(_entity->getPosition());
 
 		_entity->emitMessage(particle);

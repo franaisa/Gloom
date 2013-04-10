@@ -98,11 +98,12 @@ namespace Logic
 		{
 		case Message::CAMERA_TO_ENEMY:
 				setTargetEnemy((CMessageCameraToEnemy*)message);
+				//std::cout << "MENSAJE DE CAMERATOENEMY: " << std::endl;
 			break;
 
 		case Message::PLAYER_SPAWN:
 				_dead=false;
-				std::cout << "mensaje respawn recibido" << std::endl;
+				//std::cout << "mensaje respawn recibido" << std::endl;
 			break;
 		}
 
@@ -112,6 +113,8 @@ namespace Logic
 	void CCamera::setTargetEnemy(CMessageCameraToEnemy* message){
 		
 		_enemy=message->getEnemy();
+		//std::cout << "el enemigo a apuntar se llama " << _enemy->getName() << std::endl;
+		//td::cout << "y su tipo es " << _enemy->getType() << std::endl;
 		_dead=true;
 	}
 

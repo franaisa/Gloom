@@ -23,7 +23,7 @@ material shadowInvisibility
 			texture_unit diffuseMap
             {
                 texture lava_COLOR.tga alpha
-				alpha_op_ex source1 src_manual src_current 0.2
+				alpha_op_ex source1 src_manual src_current 0.05
             }
 		}
 

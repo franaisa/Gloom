@@ -182,7 +182,7 @@ namespace Logic
 		int y = hudPanelInitialPositionY;
 
 
-		for(int i=0; i< PRIMARY_SKILL; ++i){
+		for(int i=HAMMER; i< PRIMARY_SKILL; ++i){
 
 			eWeaponIndex current = (eWeaponIndex)i;
 			std::string currentOnText = toText(current);
@@ -208,7 +208,7 @@ namespace Logic
 			_panelWeaponKey[current]->setText(sString.str());
 
 			// hardcodea el tamaño y tipo de la fuente
-			_panelWeaponKey[current]->setTextSize(24);
+			_panelWeaponKey[current]->setTextSize(20);
 			_panelWeaponKey[current]->setFont("fuenteSimple");
 
 			_panelWeapon[current]->addChild(_panelWeaponKey[current]);
@@ -241,7 +241,7 @@ namespace Logic
 
 
 
-			////////////////////////////////////////////////////// Ahora voy a crear los overlays por cada arma en 3D
+		////////////////////////////////////////////////////// Ahora voy a crear los overlays por cada arma en 3D
 
 			_overlayWeapon3D[current] = _server->createOverlay( "_overlay3D"+currentOnText, scene );
 			std::string modelWeapon = entityInfo->getStringAttribute("weapon"+currentOnText+"Model");
@@ -249,6 +249,9 @@ namespace Logic
 			
 			
 			_weaponsEntities[current] = _overlayWeapon3D[current]->add3D(currentOnText, modelWeapon, &offsetPositionWeapon);
+			Vector3 posicion = _weaponsEntities[current]->getTransform().getTrans();
+
+
 			//_weaponsEntities[current] = _overlayWeapon3D[current]->add3D(currentOnText, modelWeapon, new Vector3(0,0,-10));
 			float yaw = entityInfo->getFloatAttribute("weapon"+currentOnText+"ModelYaw");
 			float pitch = entityInfo->getFloatAttribute("weapon"+currentOnText+"ModelPitch");
@@ -256,7 +259,6 @@ namespace Logic
 			
 			Math::yaw(yaw, transformModificado);
 			Math::pitch(pitch, transformModificado);
-			
 			_weaponsEntities[current]->setTransform(transformModificado);
 
 			_overlayWeapon3D[current]->setVisible(false);
@@ -268,8 +270,11 @@ namespace Logic
 
 		x -= hudPanelSizeX*4;
 		y -= hudPanelSizeY*1.5;
+		
 
-		for(int i=PRIMARY_SKILL; i< NONE; ++i){
+		// por ahora esta hasta secondary skill para que haga cosas raras, cuando esta este sera com la linea comentada
+		//for(int i=PRIMARY_SKILL; i< NONE; ++i){
+		for(int i=PRIMARY_SKILL; i< SECONDARY_SKILL; ++i){
 
 			eWeaponIndex current = (eWeaponIndex)i;
 			std::string currentOnText = toText(current);
@@ -319,10 +324,7 @@ namespace Logic
 		// fin de la introduccion de la primary skill
 		
 	
-		// en el HAMMER (que es el arma inicial, debe de estar active)
-		_weaponsBox[HAMMER][ACTIVE]->setVisible(true);
-		_weaponsBox[HAMMER][NO_WEAPON]->setVisible(false);
-		_overlayWeapon3D[HAMMER]->setVisible(true);
+		
 		
 		// Ahora me voy a crear otro bucle para los paneles.
 		
@@ -373,7 +375,10 @@ namespace Logic
 		_overlayPlay->add2D( _panelElements[current] );
 
 		}
-
+		// en el HAMMER (que es el arma inicial, debe de estar active)
+		_weaponsBox[HAMMER][ACTIVE]->setVisible(true);
+		_weaponsBox[HAMMER][NO_WEAPON]->setVisible(false);
+		_overlayWeapon3D[HAMMER]->setVisible(true);
 		//Pongo a false los visibles por si acaso no los pone solos
 		for(int i = 1; i < _numWeapons; ++i){
 			_weaponsBox[i][NO_AMMO]->setVisible(false);
@@ -618,21 +623,21 @@ namespace Logic
 	
 	std::string CHudOverlay::toText(eWeaponIndex weapon){
 		switch(weapon){
-			case HAMMER: return "Hammer";
+			case HAMMER: return "hammer";
 				break;
-			case SNIPER: return "Sniper";
+			case SNIPER: return "sniper";
 				break;
-			case SHOTGUN: return "ShotGun";
+			case SHOTGUN: return "shotGun";
 				break;
-			case MINIGUN: return "MiniGun";
+			case MINIGUN: return "miniGun";
 				break;
-			case GRENADELAUNCHER: return "GrenadeLauncher";
+			case GRENADELAUNCHER: return "grenadeLauncher";
 				break;
-			case ROCKETLAUNCHER: return "RocketLauncher";
+			case ROCKETLAUNCHER: return "rocketLauncher";
 				break;
-			case PRIMARY_SKILL: return "PrimarySkill";
+			case PRIMARY_SKILL: return "primarySkill";
 				break;
-			case SECUNDARY_SKILL: return "SecondarySkill";
+			case SECONDARY_SKILL: return "secondarySkill";
 				break;
 			default: return "";
 			}
@@ -696,10 +701,12 @@ namespace Logic
 	{
 		IComponent::tick(msecs);
 	
-		_acumSpawn += msecs;
-		if(_acumSpawn>1000){
-			hudSpawn((_spawnTime - _acumSpawn));
-			_acumSpawn = 0;
+		if(_overlayDie->isVisible()){
+			_acumSpawn += msecs;
+			if(_acumSpawn>1000){
+				hudSpawn((--_spawnTime));
+				_acumSpawn = 0;
+			}
 		}
 
 		if(_overlayDebug->isVisible())

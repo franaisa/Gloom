@@ -24,6 +24,7 @@ Contiene la implementación del componente que gestiona el spawn del jugador.
 #include "Logic/Messages/MessageSetPhysicPosition.h"
 #include "Logic/Messages/MessageHudSpawn.h"
 #include "Logic/Messages/MessageAudio.h"
+#include "Logic/Messages/MessageCreateParticle.h"
 
 
 
@@ -118,6 +119,11 @@ namespace Logic
 				Logic::CMessageHudSpawn *mS=new Logic::CMessageHudSpawn();
 				mS->setTime(0);
 				_entity->emitMessage(mS);
+
+				
+				CMessageCreateParticle *particle = new CMessageCreateParticle();
+				particle->setParticle("SpawnParticle");
+				particle->setPosition(_entity->getPosition());
 
 				//Sonido Spawn
 				Logic::CMessageAudio *maudio=new Logic::CMessageAudio();

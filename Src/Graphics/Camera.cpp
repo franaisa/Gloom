@@ -50,7 +50,7 @@ namespace Graphics
 		_camera = scene->getSceneMgr()->createCamera(name + "_camera");
 		//HACK: Valores cableados de las distancias para reenderizar. 
 		// Deberían poder configurarse.
-		_camera->setNearClipDistance(5);
+		_camera->setNearClipDistance(2);
 		_camera->setFarClipDistance(500);
 
 		_camera->setFOVy(Ogre::Radian(70));

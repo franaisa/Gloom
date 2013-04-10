@@ -184,7 +184,7 @@ namespace Application {
 		
 
 		//cogemos el mapa en el que crear la partida
-		_map=args.at(0).getString()+".txt";
+		_map=args.at(0).getString();
 
 		//mostramos en el gui lo que esta pasando
 		_menu->callFunction("pushCommand",Hikari::Args("Status: Server up. Waiting for clients ..."));
@@ -218,7 +218,7 @@ namespace Application {
 		}
 
 		// Cargamos el nivel a partir del nombre del mapa. 
-		if (!Logic::CServer::getSingletonPtr()->loadLevel("map_server.txt")) {
+		if (!Logic::CServer::getSingletonPtr()->loadLevel(_map+"_server.txt")) {
 			Net::CManager::getSingletonPtr()->deactivateNetwork();
 			_app->exitRequest();
 		}
@@ -256,8 +256,9 @@ namespace Application {
 			// comenzamos la fase de carga del mapa
 			if( ++_playersFetched == Logic::CGameNetPlayersManager::getSingletonPtr()->getNumberOfPlayersConnected() ) {
 				Net::NetMessageType msg = Net::LOAD_MAP;
-				Net::CBuffer buffer(sizeof(msg));
+				Net::CBuffer buffer(sizeof(msg)+_map.size()*sizeof(char));
 				buffer.write(&msg, sizeof(msg));
+				buffer.serialize(_map,false);
 
 				Net::CManager::getSingletonPtr()->send(buffer.getbuffer(), buffer.getSize());
 			}
