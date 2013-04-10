@@ -60,7 +60,8 @@ namespace Graphics
 		_sceneMgr->destroyStaticGeometry(_staticGeometry);
 		delete _camera;
 		_root->destroySceneManager(_sceneMgr);
-
+		
+		Ogre::MaterialManager::getSingletonPtr()->destroyAllResourcePools();
 	} // ~CScene
 
 	//--------------------------------------------------------
@@ -119,7 +120,7 @@ namespace Graphics
 		/*
 		_sceneMgr->setAmbientLight(Ogre::ColourValue(1,1,1));
 		/*/
-		_sceneMgr->setAmbientLight(Ogre::ColourValue(0.4f,0.4f,0.4f));
+		_sceneMgr->setAmbientLight(Ogre::ColourValue(0.7f,0.7f,0.7f));
 		/* */
 		
 		
@@ -127,8 +128,8 @@ namespace Graphics
 
 		Ogre::CompositorManager::getSingletonPtr()->setCompositorEnabled(_camera->getOgreCamera()->getViewport(), "Glow", true);
 		
-		GlowMaterialListener *gml = new GlowMaterialListener();
-		Ogre::MaterialManager::getSingletonPtr()->addListener(gml);
+		_glowMaterialListener = new GlowMaterialListener();
+		Ogre::MaterialManager::getSingletonPtr()->addListener(_glowMaterialListener);
 
 	} // activate
 
