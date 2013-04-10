@@ -618,21 +618,21 @@ namespace Logic
 	
 	std::string CHudOverlay::toText(eWeaponIndex weapon){
 		switch(weapon){
-			case HAMMER: return "Hammer";
+			case HAMMER: return "hammer";
 				break;
-			case SNIPER: return "Sniper";
+			case SNIPER: return "sniper";
 				break;
-			case SHOTGUN: return "ShotGun";
+			case SHOTGUN: return "shotGun";
 				break;
-			case MINIGUN: return "MiniGun";
+			case MINIGUN: return "miniGun";
 				break;
-			case GRENADELAUNCHER: return "GrenadeLauncher";
+			case GRENADELAUNCHER: return "grenadeLauncher";
 				break;
-			case ROCKETLAUNCHER: return "RocketLauncher";
+			case ROCKETLAUNCHER: return "rocketLauncher";
 				break;
-			case PRIMARY_SKILL: return "PrimarySkill";
+			case PRIMARY_SKILL: return "primarySkill";
 				break;
-			case SECUNDARY_SKILL: return "SecondarySkill";
+			case SECUNDARY_SKILL: return "secondarySkill";
 				break;
 			default: return "";
 			}

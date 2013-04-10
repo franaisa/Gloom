@@ -35,7 +35,7 @@ namespace Logic {
 	public:
 
 		/** Constructor por defecto. */
-		CShootShotGun() : CShootRaycast("ShotGun") { }
+		CShootShotGun() : CShootRaycast("shotGun") { }
 
 		//__________________________________________________________________
 

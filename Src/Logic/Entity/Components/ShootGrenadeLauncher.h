@@ -39,7 +39,7 @@ namespace Logic {
 	public:
 
 		/** Constructor por defecto. */
-		CShootGrenadeLauncher() : CShootProjectile("GrenadeLauncher") { }
+		CShootGrenadeLauncher() : CShootProjectile("grenadeLauncher") { }
 
 		//__________________________________________________________________
 

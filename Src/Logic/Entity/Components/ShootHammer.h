@@ -36,7 +36,7 @@ namespace Logic {
 	public:
 
 		/** Constructor por defecto. */
-		CShootHammer() : CShootRaycast("Hammer") { }
+		CShootHammer() : CShootRaycast("hammer") { }
 
 		//__________________________________________________________________
 
