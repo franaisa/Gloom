@@ -663,11 +663,13 @@ namespace Logic
 	}
 
 	void CHudOverlay::hudDebug(){
+		/*
 		if(_overlayDebug->isVisible()){
 			printf("\nBorrate! ");	
 		}else{
 			printf("\npintate! ");
 		}
+		*/
 
 		_overlayDebug->setVisible(!_overlayDebug->isVisible());
 	}
