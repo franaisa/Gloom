@@ -1,17 +1,17 @@
-
-material Material#25
+material Pared
 {
 	technique
 	{
 		pass
 		{
-			ambient 0.588 0.588 0.588 1
-			diffuse 0.588 0.588 0.588 1
+			ambient 0.768628 0.701961 0.992157 1
+			diffuse 0.768628 0.701961 0.992157 1
 			specular 0 0 0 1 10
-
-			texture_unit
+			
+			texture_unit Map#9
 			{
-				texture piedra_COLOR2.tga
+				texture pared2.jpg
+				scale 0.2 1
 			}
 		}
 
@@ -21,19 +21,21 @@ material Material#25
 
 
 
-material Material#53
+material scenario_OgreMax
 {
-	technique
+	technique Map#1
 	{
-		pass
+		pass Suelo
 		{
-			ambient 0.588 0.588 0.588 1
-			diffuse 0.588 0.588 0.588 1
-			specular 0 0 0 1 10
-
-			texture_unit
+			ambient 0.0470588 0.0431373 0 1
+			diffuse 0.0705882 0.0705882 0 1
+			specular 0.0705882 0.0784314 0 1 20
+			
+			texture_unit Map#9
 			{
-				texture viga_COLOR.tga
+				texture sueloMetalico2.jpg
+				filtering linear linear linear
+				scale 0.2 0.2
 			}
 		}
 
@@ -43,186 +45,24 @@ material Material#53
 
 
 
-material Material#92
+material Suelo_OgreMax
 {
-	technique
+	technique Map#5
 	{
-		pass
+		pass Map#6
 		{
-			ambient 0.588 0.588 0.588 1
-			diffuse 0.588 0.588 0.588 1
-			specular 0 0 0 1 10
-			scene_blend one one_minus_src_alpha
-
-			texture_unit
+			ambient 0.02 0.02 0.1 1
+			diffuse 0.02 0.02 0.1 1
+			specular 0.02 0.02 0.1 1 10
+			
+			texture_unit Map#9
 			{
-				texture ventana_COLOR.tga
+				texture techo1.jpg
+				filtering linear linear linear
+				scale 0.2 0.2
 			}
 		}
 
 	}
 
 }
-
-
-
-material Material#93
-{
-	technique
-	{
-		pass
-		{
-			ambient 0.588 0.588 0.588 1
-			diffuse 0.588 0.588 0.588 1
-			specular 0 0 0 1 10
-			scene_blend one one_minus_src_alpha
-
-			texture_unit
-			{
-				texture MetalContainer_COLOR.tga
-			}
-		}
-
-	}
-
-}
-
-
-
-material Material#94
-{
-	technique
-	{
-		pass
-		{
-			ambient 0.588 0.588 0.588 1
-			diffuse 0.588 0.588 0.588 1
-			specular 0 0 0 1 10
-			scene_blend one one_minus_src_alpha
-
-			texture_unit
-			{
-				texture MetalContainer_COLOR.tga
-			}
-		}
-
-	}
-
-}
-
-
-
-material Material#107
-{
-	technique
-	{
-		pass
-		{
-			ambient 0.588 0.588 0.588 1
-			diffuse 0.588 0.588 0.588 1
-			specular 0 0 0 1 10
-			scene_blend one one_minus_src_alpha
-
-			texture_unit
-			{
-				texture techometal_COLOR2.tga
-			}
-		}
-
-	}
-
-}
-
-
-
-material Material#37
-{
-	technique
-	{
-		pass
-		{
-			ambient 0.588 0.588 0.588 1
-			diffuse 0.588 0.588 0.588 1
-			specular 0 0 0 1 10
-			scene_blend one one_minus_src_alpha
-
-			texture_unit
-			{
-				texture suelometal_COLOR2.tga
-			}
-		}
-
-	}
-
-}
-
-
-
-material Material#52
-{
-	technique
-	{
-		pass
-		{
-			ambient 0.588 0.588 0.588 1
-			diffuse 0.588 0.588 0.588 1
-			specular 0 0 0 1 10
-			scene_blend one one_minus_src_alpha
-
-			texture_unit
-			{
-				texture metalpuerta_COLOR.tga
-			}
-		}
-
-	}
-
-}
-
-
-
-material Material#39
-{
-	technique
-	{
-		pass
-		{
-			ambient 0.588 0.588 0.588 1
-			diffuse 0.588 0.588 0.588 1
-			specular 0 0 0 1 10
-			scene_blend one one_minus_src_alpha
-
-			texture_unit
-			{
-				texture BronzeCopper0030_L_COLOR3.tga
-			}
-		}
-
-	}
-
-}
-
-
-
-material Material#38
-{
-	technique
-	{
-		pass
-		{
-			ambient 0.588 0.588 0.588 1
-			diffuse 0.588 0.588 0.588 1
-			specular 0 0 0 1 10
-			scene_blend one one_minus_src_alpha
-
-			texture_unit
-			{
-				texture metal comluman tileado_COLOR1.tga
-			}
-		}
-
-	}
-
-}
-
-
