@@ -279,8 +279,8 @@ Map = {
 
 			weaponhammerName = "hammer",
 			weaponhammerModel = "hammer.mesh",
-			weaponhammerModelYaw = 1.55,
-			weaponhammerModelPitch = -0.80,
+			weaponhammerModelYaw = 0,
+			weaponhammerModelPitch = 0.0,
 			weaponhammerOffset = {0.0, -3.0,-10.0},
 			weaponhammerDamage = 80.0,
 			weaponhammerDamageReflect = 2,
