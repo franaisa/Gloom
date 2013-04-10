@@ -14,12 +14,6 @@ la gestión de la entrada de periféricos.
 #include "PlayerController.h"
 #include "BaseSubsystems/Server.h"
 
-#include <CEGUISystem.h>
-#include <CEGUIWindowManager.h>
-#include <CEGUIWindow.h>
-#include <CEGUISchemeManager.h>
-#include <CEGUIFontManager.h>
-
 #include "Hikari.h"
 
 #include <cassert>
@@ -136,7 +130,7 @@ namespace Input {
 		_GUISystem->injectMouseMove(mouseState.posAbsX, mouseState.posAbsY);
 #endif	
 		// Queremos que si hay más oyentes también reciban el evento
-		return false;
+		return true;
 
 	} // mouseMoved
 
@@ -144,20 +138,10 @@ namespace Input {
 		
 	bool CServer::mousePressed(const CMouseState &mouseState)
 	{
-		/*switch (mouseState.button)
-		{
-		case Button::LEFT:
-			_GUISystem->injectMouseButtonDown(CEGUI::LeftButton);
-		case Button::RIGHT:
-			_GUISystem->injectMouseButtonDown(CEGUI::RightButton);
-		case Button::MIDDLE:
-			_GUISystem->injectMouseButtonDown(CEGUI::MiddleButton);
-		}*/
-
 		_GUISystem->injectMouseDown(mouseState.button);
 
 		// Queremos que si hay más oyentes también reciban el evento
-		return false;
+		return true;
 
 	} // mousePressed
 
@@ -165,20 +149,10 @@ namespace Input {
 
 	bool CServer::mouseReleased(const CMouseState &mouseState)
 	{
-		/*switch (mouseState.button)
-		{
-		case Button::LEFT:
-			_GUISystem->injectMouseButtonUp(CEGUI::LeftButton);
-		case Button::RIGHT:
-			_GUISystem->injectMouseButtonUp(CEGUI::RightButton);
-		case Button::MIDDLE:
-			_GUISystem->injectMouseButtonUp(CEGUI::MiddleButton);
-		}*/
-
 		_GUISystem->injectMouseUp(mouseState.button);
 
 		// Queremos que si hay más oyentes también reciban el evento
-		return false;
+		return true;
 
 	} // mouseReleased
 

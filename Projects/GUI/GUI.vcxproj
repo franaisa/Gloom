@@ -76,7 +76,6 @@
     <ClCompile Include="..\..\Src\GUI\Server.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\Src\GUI\Conversion.h" />
     <ClInclude Include="..\..\Src\GUI\Documentation.h" />
     <ClInclude Include="..\..\Src\GUI\GUIDescriptor.h" />
     <ClInclude Include="..\..\Src\GUI\GUIEventArgs.h" />

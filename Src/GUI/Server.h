@@ -23,12 +23,6 @@ namespace Logic
 	class CAvatarController;
 }
 
-namespace CEGUI
-{
-	class System;
-	class Window;
-}
-
 namespace Hikari {
 	class HikariManager;
 	class FlashControl;
@@ -247,12 +241,6 @@ namespace GUI
 		estáticos se hace en Release().
 		*/
 		void close();
-
-		/**
-		 * Puntero a la ventana CEGUI que esta actualmente siendo renderizada.
-		 * Si no se esta renderizando ninguna interfaz de usuario es NULL
-		 */
-		CEGUI::Window* _currentWindow;
 
 		/** 
 		 * Table to hold pointers to state and their respective possible layouts

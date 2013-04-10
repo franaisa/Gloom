@@ -17,11 +17,6 @@ la gestión de la interfaz con el usuario (entrada de periféricos, CEGui...).
 #include "BaseSubsystems/Server.h"
 
 #include <cassert>
-#include <CEGUISystem.h>
-#include <CEGUIWindowManager.h>
-#include <CEGUIWindow.h>
-#include <CEGUISchemeManager.h>
-#include <CEGUIFontManager.h>
 #include "Hikari.h"
 #include "FlashControl.h"
 #include "FlashValue.h"
@@ -36,7 +31,7 @@ namespace GUI {
 
 	//--------------------------------------------------------
 
-	CServer::CServer() : _currentWindow(NULL)
+	CServer::CServer()
 	{
 		_instance = this;
 	} // CServer
@@ -46,7 +41,6 @@ namespace GUI {
 	CServer::~CServer()
 	{
 		_instance = 0;
-		_currentWindow = NULL;
 
 		// Dealloc the memory reserved for the tables
 		StateLayoutTable::const_iterator it = _layoutTable.begin();
@@ -95,29 +89,7 @@ namespace GUI {
 
 	bool CServer::open()
 	{
-
-		//_GUISystem = BaseSubsystems::CServer::getSingletonPtr()->getGUISystem();
-
-		// Cargamos las distintas plantillas o esquemas de fichero
-		// que usaremos en nuestro GUI.
-		// (automáticamente cargan los archivos looknfeel e imageset)
-		CEGUI::SchemeManager::getSingleton().create("TaharezLook.scheme");
-		CEGUI::SchemeManager::getSingleton().create("OgreTray.scheme");
-		CEGUI::SchemeManager::getSingleton().create("SleekSpace.scheme");
-		CEGUI::SchemeManager::getSingleton().create("CrossHair.scheme");
-		// Cargamos los archivos con las fuentes que usaremos.
-		CEGUI::FontManager::getSingleton().create("DejaVuSans-10.font");
-		CEGUI::FontManager::getSingleton().create("FairChar-30.font");
-		CEGUI::FontManager::getSingleton().create("Batang-26.font");
-
-		#ifndef NON_EXCLUSIVE_MODE_IN_WINDOW_MODE 
-		// Establecemos cual será el puntero del ratón.
-		CEGUI::SchemeManager::getSingleton().create("raton.scheme");
-		BaseSubsystems::CServer::getSingletonPtr()->getGUISystem()->setDefaultMouseCursor("raton","miraRaton");
-		#endif	
-
 		_manager = BaseSubsystems::CServer::getSingletonPtr()->getHikari();
-
 		return true;
 
 	} // open
@@ -237,28 +209,22 @@ namespace GUI {
 
 	void CServer::activateMouseCursor() {
 		// Show mouse cursor
-		CEGUI::MouseCursor::getSingleton().show();
 	} // activateMouseCursor
 
 	//________________________________________________________________________
 
 	void CServer::deactivateGUI() {
-		_currentWindow->deactivate();
-		_currentWindow->setVisible(false);
-		_currentWindow = NULL;
 	} // deactivateGUI
 
 	//________________________________________________________________________
 
 	void CServer::deactivateMouseCursor() {
 		// Desactivamos la ventana GUI con el menú y el ratón.
-		CEGUI::MouseCursor::getSingleton().hide();
 	} // deactivateMouseCursor
 
 	//________________________________________________________________________
 
 	void CServer::setText(const std::string& msg) {
-		_currentWindow->setText(msg.c_str());
 	}
 
 } // namespace GUI

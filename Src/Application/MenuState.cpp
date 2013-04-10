@@ -24,12 +24,6 @@ Contiene la implementación del estado de menú.
 
 #include "GUI/Server.h"
 
-#include <CEGUISystem.h>
-#include <CEGUIWindowManager.h>
-#include <CEGUIWindow.h>
-#include <elements/CEGUIPushButton.h>
-
-
 #include "Physics/Server.h"
 
 namespace Application {
@@ -77,13 +71,6 @@ namespace Application {
 	{
 		CApplicationState::activate();
 		_menu->show();
-		//GUI::CServer::getSingletonPtr()->activateMouseCursor();
-		//_menuWindow->setVisible(false);
-		// Activamos la ventana que nos muestra el menú y activamos el ratón.
-		//CEGUI::System::getSingletonPtr()->setGUISheet(_menuWindow);
-		//_menuWindow->setVisible(true);
-		//_menuWindow->activate();
-		//CEGUI::MouseCursor::getSingleton().show();
 
 	} // activate
 
@@ -107,7 +94,7 @@ namespace Application {
 
 	bool CMenuState::keyPressed(Input::TKey key)
 	{
-		return false;
+		return true;
 
 	} // keyPressed
 
@@ -144,7 +131,7 @@ namespace Application {
 	
 	bool CMenuState::mouseMoved(const Input::CMouseState &mouseState)
 	{
-		return false;
+		return true;
 
 	} // mouseMoved
 
@@ -152,7 +139,7 @@ namespace Application {
 		
 	bool CMenuState::mousePressed(const Input::CMouseState &mouseState)
 	{
-		return false;
+		return true;
 
 	} // mousePressed
 
@@ -161,7 +148,7 @@ namespace Application {
 
 	bool CMenuState::mouseReleased(const Input::CMouseState &mouseState)
 	{
-		return false;
+		return true;
 
 	} // mouseReleased
 			
