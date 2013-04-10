@@ -1,0 +1,58 @@
+
+material Jump
+{
+	technique
+	{
+		pass
+		{
+			ambient 0.588 0.588 0.588 1
+			diffuse 0.588 0.588 0.588 1
+			specular 0.72 0.72 0.72 1 45
+			cull_hardware none
+			cull_software none
+
+			texture_unit diffuseMap
+			{
+				texture Jump_RGB.jpg
+			}
+			
+			texture_unit specularMap
+            {
+				texture Jump_SP.jpg
+            }			
+	
+			texture_unit normalMap
+            {
+                texture Jump_NM.jpg	
+            }
+		}
+
+	}
+
+}
+
+
+
+material Jump_Halo
+{
+	technique
+	{
+		pass
+		{
+			ambient 0.588 0.588 0.588 1
+			diffuse 0.588 0.588 0.588 1
+			specular 0 0 0 10 0
+			scene_blend alpha_blend
+			cull_hardware none
+			cull_software none
+
+			texture_unit
+			{
+				texture Halo_Azul.tga
+			}
+		}
+	}
+	
+}
+
+
