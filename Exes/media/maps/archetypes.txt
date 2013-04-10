@@ -102,7 +102,7 @@ Map = {
 			weaponHammerAudio = "media/audio/hammer.wav",
 			
 			weaponSniperName = "Sniper",
-			weaponSniperModel = "AK47.mesh",
+			weaponSniperModel = "sniper.mesh",
 			weaponSniperModelYaw = 1.55,
 			weaponSniperModelPitch = -0.80,
 			weaponSniperOffset = {0.0,-3.0,-10.0},
@@ -117,7 +117,7 @@ Map = {
 			weaponSniperAudio = "media/audio/sniper.wav",
 			
 			weaponShotGunName = "Shotgun",
-			weaponShotGunModel = "UziLeft.mesh",
+			weaponShotGunModel = "shotGun.mesh",
 			weaponShotGunModelYaw = 1.55,
 			weaponShotGunModelPitch = 3.14,
 			weaponShotGunOffset = {0.0,-3.0,-10.0},
@@ -132,7 +132,7 @@ Map = {
 			weaponShotGunAudio = "media/audio/shotgun.wav",
 			
 			weaponMiniGunName = "MiniGun",
-			weaponMiniGunModel = "plasmagun.mesh",
+			weaponMiniGunModel = "miniGun.mesh",
 			weaponMiniGunModelYaw = 1.55,
 			weaponMiniGunModelPitch = 3.14,
 			weaponMiniGunOffset = {0.0,-6.0,-25.0},
@@ -147,7 +147,7 @@ Map = {
 			weaponMiniGunAudio = "media/audio/minigun.wav",
 			
 			weaponGrenadeLauncherName = "GrenadeLauncher",
-			weaponGrenadeLauncherModel = "grenadelauncher.mesh",
+			weaponGrenadeLauncherModel = "grenadeLauncher.mesh",
 			weaponGrenadeLauncherModelYaw = 0.10,
 			weaponGrenadeLauncherModelPitch = 1.12,
 			weaponGrenadeLauncherOffset = {0.0,-3.0,-1.0},
@@ -162,7 +162,7 @@ Map = {
 			weaponGrenadeLauncherAudio = "media/audio/grenadeLauncher.wav",
 			
 			weaponRocketLauncherName = "RocketLauncher",
-			weaponRocketLauncherModel = "FreezeGun.mesh",
+			weaponRocketLauncherModel = "rocketLauncher.mesh",
 			weaponRocketLauncherModelYaw = 3.10,
 			weaponRocketLauncherModelPitch = 0,
 			weaponRocketLauncherOffset = {0.0,-3.0,-10.0},
@@ -308,7 +308,7 @@ Map = {
 			weaponSniperAudio = "media/audio/sniper.wav",
 			
 			weaponShotGunName = "Shotgun",
-			weaponShotGunModel = "UziLeft.mesh",
+			weaponShotGunModel = "shotGun.mesh",
 			weaponShotGunModelYaw = 1.55,
 			weaponShotGunModelPitch = 3.14,
 			weaponShotGunOffset = {0.0,-3.0,-10.0},
@@ -323,7 +323,7 @@ Map = {
 			weaponShotGunAudio = "media/audio/shotgun.wav",
 			
 			weaponMiniGunName = "MiniGun",
-			weaponMiniGunModel = "plasmagun.mesh",
+			weaponMiniGunModel = "miniGun.mesh",
 			weaponMiniGunModelYaw = 1.55,
 			weaponMiniGunModelPitch = -0.80,
 			weaponMiniGunOffset = {0.0,-3.0,-10.0},
@@ -353,7 +353,7 @@ Map = {
 			weaponGrenadeLauncherAudio = "media/audio/grenadeLauncher.wav",
 			
 			weaponRocketLauncherName = "RocketLauncher",
-			weaponRocketLauncherModel = "FreezeGun.mesh",
+			weaponRocketLauncherModel = "rocketLauncher.mesh",
 			weaponRocketLauncherModelYaw = 3.10,
 			weaponRocketLauncherModelPitch = 0,
 			weaponRocketLauncherOffset = {0.0,-3.0,-10.0},
@@ -479,7 +479,7 @@ Map = {
 			weaponHammerAudio = "media/audio/hammer.wav",
 			
 			weaponSniperName = "Sniper",
-			weaponSniperModel = "AK47.mesh",
+			weaponSniperModel = "sniper.mesh",
 			weaponSniperModelYaw = 1.55,
 			weaponSniperModelPitch = -0.80,
 			weaponSniperOffset = {0.0,-3.0,-10.0},
@@ -494,7 +494,7 @@ Map = {
 			weaponSniperAudio = "media/audio/sniper.wav",
 			
 			weaponShotGunName = "Shotgun",
-			weaponShotGunModel = "UziLeft.mesh",
+			weaponShotGunModel = "shotGun.mesh",
 			weaponShotGunModelYaw = 1.55,
 			weaponShotGunModelPitch = 3.14,
 			weaponShotGunOffset = {0.0,-3.0,-10.0},
@@ -509,7 +509,7 @@ Map = {
 			weaponShotGunAudio = "media/audio/shotgun.wav",
 			
 			weaponMiniGunName = "MiniGun",
-			weaponMiniGunModel = "plasmagun.mesh",
+			weaponMiniGunModel = "miniGun.mesh",
 			weaponMiniGunModelYaw = 1.55,
 			weaponMiniGunModelPitch = -0.80,
 			weaponMiniGunOffset = {0.0,-3.0,-10.0},
@@ -524,7 +524,7 @@ Map = {
 			weaponMiniGunAudio = "media/audio/minigun.wav",
 			
 			weaponGrenadeLauncherName = "GrenadeLauncher",
-			weaponGrenadeLauncherModel = "grenadelauncher.mesh",
+			weaponGrenadeLauncherModel = "grenadeLauncher.mesh",
 			weaponGrenadeLauncherModelYaw = 3.10,
 			weaponGrenadeLauncherModelPitch = 0,
 			weaponGrenadeLauncherOffset = {0.0,-3.0,-10.0},
@@ -539,7 +539,7 @@ Map = {
 			weaponGrenadeLauncherAudio = "media/audio/grenadeLauncher.wav",
 			
 			weaponRocketLauncherName = "RocketLauncher",
-			weaponRocketLauncherModel = "FreezeGun.mesh",
+			weaponRocketLauncherModel = "rocketLauncher.mesh",
 			weaponRocketLauncherModelYaw = 3.10,
 			weaponRocketLauncherModelPitch = 0,
 			weaponRocketLauncherOffset = {0.0,-3.0,-10.0},
