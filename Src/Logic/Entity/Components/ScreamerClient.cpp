@@ -56,7 +56,6 @@ namespace Logic {
 		_screamerShield = CEntityFactory::getSingletonPtr()->createEntity( screamerShieldInfo, Logic::CServer::getSingletonPtr()->getMap() );
 		assert(_screamerShield != NULL);
 
-		// @deprecated El servidor no va a tener graficos
 		CGraphics* shieldGraphics = _screamerShield->getComponent<CGraphics>("CGraphics");
 		assert(shieldGraphics && "Error: La entidad ScreamerShield no tiene un componente CGraphics");
 		shieldGraphics->setVisible(false);
@@ -84,9 +83,13 @@ namespace Logic {
 		switch( message->getMessageType() ) {
 			case Message::ACTIVATE_SCREAMER_SHIELD: {
 				activateScreamerShield();
+
+				break;
 			}
 			case Message::DEACTIVATE_SCREAMER_SHIELD: {
 				deactivateScreamerShield();
+
+				break;
 			}
 		}
 	}
@@ -136,8 +139,6 @@ namespace Logic {
 	//__________________________________________________________________
 
 	void CScreamerClient::activateScreamerShield() {
-		std::cout << "Activo escudo" << std::endl;
-
 		_shieldIsActive = true;
 
 		// Activamos el escudo
@@ -152,8 +153,6 @@ namespace Logic {
 	//__________________________________________________________________
 
 	void CScreamerClient::deactivateScreamerShield() {
-		std::cout << "Desactivo escudo" << std::endl;
-
 		_shieldIsActive = false;
 
 		CGraphics* shieldGraphics = _screamerShield->getComponent<CGraphics>("CGraphics");
