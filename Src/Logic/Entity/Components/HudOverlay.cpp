@@ -152,10 +152,12 @@ namespace Logic
          
 		// Create a panel de Mira
 		_panelMira = _server->createOverlay("Mira", scene, "Panel" );
-		float sizeCrossFire = entityInfo->getFloatAttribute("hudCross");
-		float positionCrossFire = 0.5f-((sizeCrossFire/2)/100) ;
-        _panelMira->setPosition( positionCrossFire,positionCrossFire);
-		_panelMira->setDimensions( sizeCrossFire/100, sizeCrossFire/100 );
+		float sizeCrossFireX = entityInfo->getFloatAttribute("hudCrossX");
+		float sizeCrossFireY = entityInfo->getFloatAttribute("hudCrossY");
+		float positionCrossFireX = 0.5f-((sizeCrossFireX/2)*0.01) ;
+		float positionCrossFireY = 0.5f-((sizeCrossFireY/2)*0.01) ;
+        _panelMira->setPosition( positionCrossFireX,positionCrossFireY);
+		_panelMira->setDimensions( sizeCrossFireX/100, sizeCrossFireY/100 );
         _panelMira->setMaterial("hudMira");
 
 

@@ -13,7 +13,7 @@ material hudMira
 			
 			texture_unit mira1
 			{
-				texture mira1.png 2d
+				texture mira2.png 2d
 			}
 		}
 	}

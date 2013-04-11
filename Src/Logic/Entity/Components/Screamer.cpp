@@ -161,7 +161,7 @@ namespace Logic {
 		// en el spawn (por la forma de asignar nombres).
 		if(_screamerShield == NULL) {
 			Vector3 entityPosition = _entity->getPosition();
-			Vector3 shootPosition = entityPosition + ( Math::getDirection( _entity->getOrientation() ) * _capsuleRadius );
+			Vector3 shootPosition = entityPosition + ( Math::getDirection( _entity->getOrientation() ) * _capsuleRadius+10 );
 			shootPosition.y = entityPosition.y + _heightShoot;
 
 			// Obtenemos la informacion asociada al arquetipo de la granada
@@ -207,7 +207,7 @@ namespace Logic {
 
 	void CScreamer::refreshShieldPosition() {
 		// Sacamos la posicion del escudo (que debe estar situada a la altura de disparo)
-		Vector3 shootPosition = _entity->getPosition() + ( Math::getDirection( _entity->getOrientation() ) * _capsuleRadius );
+		Vector3 shootPosition = _entity->getPosition() + ( Math::getDirection( _entity->getOrientation() ) * _capsuleRadius*10 );
 		shootPosition.y += _heightShoot;
 		
 		// Sacamos la orientacion de la entidad para setearsela al escudo

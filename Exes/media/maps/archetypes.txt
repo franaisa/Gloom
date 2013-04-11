@@ -176,8 +176,8 @@ Map = {
 			weaponrocketLauncherParticlePosition = {6, 5, 6},
 			weaponrocketLauncherAudio = "media/audio/rocketLauncher.wav",
 			
-		hudMira = 3,
-		hudCross = 3,
+		hudCrossX = 4,
+		hudCrossY = 5,
 		hudScreenWidth = 26,
 		hudScreenHeight = 31,
 		hudPanelInitialPositionX = 9,
@@ -367,8 +367,8 @@ Map = {
 			weaponrocketLauncherParticlePosition = {6, 5, 6},
 			weaponrocketLauncherAudio = "media/audio/rocketLauncher.wav",
 			
-		hudMira = 3,
-		hudCross = 3,
+		hudCrossX = 4,
+		hudCrossY = 5,
 		hudScreenWidth = 26,
 		hudScreenHeight = 31,
 		hudPanelInitialPositionX = 9,
@@ -553,8 +553,8 @@ Map = {
 			weaponrocketLauncherParticlePosition = {6, 5, 6},
 			weaponrocketLauncherAudio = "media/audio/rocketLauncher.wav",
 			
-		hudMira = 3,
-		hudCross = 3,
+		hudCrossX = 4,
+		hudCrossY = 5,
 		hudScreenWidth = 26,
 		hudScreenHeight = 31,
 		hudPanelInitialPositionX = 9,
