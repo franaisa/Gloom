@@ -222,7 +222,7 @@ namespace Graphics
 		//assert(_overlayManager->hasOverlayElement(name));
 
 		COverlay *overlay = new COverlay(name, scene, type);
-		std::pair<std::string,COverlay*> aux(name, overlay);
+		//std::pair<std::string,COverlay*> aux(name, overlay);
 		//_overlays.insert(aux);
 
 		return overlay;

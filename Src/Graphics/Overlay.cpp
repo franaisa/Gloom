@@ -161,6 +161,8 @@ namespace Graphics
 			else
 				entity = _scene->getSceneMgr()->getEntity("hud3D_"+name);
 
+			
+
 			Ogre::MaterialPtr aux= Ogre::MaterialManager::getSingleton().getByName(name);
 			//Ogre::MaterialPtr material = static_cast<Ogre::Material *>(Ogre::MaterialManager::getSingleton().getByName(name).get())->clone(name+"_3D");
 			

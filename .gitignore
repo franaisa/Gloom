@@ -140,3 +140,7 @@ build.xml
 
 # Bring resources.cfg
 !/Exes/resources.cfg
+
+# Profile files
+*.psess
+*.vsp

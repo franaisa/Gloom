@@ -44,7 +44,7 @@ namespace Application
 	Clase C3DApplication, que contiene el control de la aplicación
 	del juego. Extiende CBaseApplication y su máquina de estados para
 	realizar las tareas de pintado de la escena usando Ogre. Para 
-	la interfaz de usuario utiliza OIS y CeGUI.
+	la interfaz de usuario utiliza OIS e Hikari.
 
 	@ingroup applicationGroup
 
@@ -92,7 +92,6 @@ namespace Application
 	private:
 
 		unsigned int _acumAudio;
-		unsigned int _timerAudio;
 	}; // class 3DApplication
 
 } // namespace Application

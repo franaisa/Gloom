@@ -13,7 +13,7 @@ material hudMira
 			
 			texture_unit mira1
 			{
-				texture mira1.png 2d
+				texture mira2.png 2d
 			}
 		}
 	}
@@ -100,7 +100,7 @@ material cuadroArmas
 	}
 }
 
-material Hammer_ACTIVE
+material hammer_ACTIVE
 {
 	technique
 	{
@@ -120,7 +120,7 @@ material Hammer_ACTIVE
 		}
 	}
 }
-material Hammer_NO_AMMO
+material hammer_NO_AMMO
 {
 	technique
 	{
@@ -140,7 +140,7 @@ material Hammer_NO_AMMO
 		}
 	}
 }
-material Hammer_NO_WEAPON
+material hammer_NO_WEAPON
 {
 	technique
 	{
@@ -160,7 +160,7 @@ material Hammer_NO_WEAPON
 		}
 	}
 }
-material Sniper_ACTIVE
+material sniper_ACTIVE
 {
 	technique
 	{
@@ -180,7 +180,7 @@ material Sniper_ACTIVE
 		}
 	}
 }
-material Sniper_NO_WEAPON
+material sniper_NO_WEAPON
 {
 	technique
 	{
@@ -200,7 +200,7 @@ material Sniper_NO_WEAPON
 		}
 	}
 }
-material Sniper_NO_AMMO
+material sniper_NO_AMMO
 {
 	technique
 	{
@@ -221,7 +221,7 @@ material Sniper_NO_AMMO
 	}
 }
 
-material ShotGun_ACTIVE
+material shotGun_ACTIVE
 {
 	technique
 	{
@@ -241,7 +241,7 @@ material ShotGun_ACTIVE
 		}
 	}
 }
-material ShotGun_NO_AMMO
+material shotGun_NO_AMMO
 {
 	technique
 	{
@@ -261,7 +261,7 @@ material ShotGun_NO_AMMO
 		}
 	}
 }
-material ShotGun_NO_WEAPON
+material shotGun_NO_WEAPON
 {
 	technique
 	{
@@ -282,7 +282,7 @@ material ShotGun_NO_WEAPON
 	}
 }
 
-material MiniGun_ACTIVE
+material miniGun_ACTIVE
 {
 	technique
 	{
@@ -303,7 +303,7 @@ material MiniGun_ACTIVE
 	}
 }
 
-material MiniGun_NO_WEAPON
+material miniGun_NO_WEAPON
 {
 	technique
 	{
@@ -324,7 +324,7 @@ material MiniGun_NO_WEAPON
 	}
 }
 
-material MiniGun_NO_AMMO
+material miniGun_NO_AMMO
 {
 	technique
 	{
@@ -345,7 +345,7 @@ material MiniGun_NO_AMMO
 	}
 }
 
-material GrenadeLauncher_ACTIVE
+material grenadeLauncher_ACTIVE
 {
 	technique
 	{
@@ -365,7 +365,7 @@ material GrenadeLauncher_ACTIVE
 		}
 	}
 }
-material GrenadeLauncher_NO_AMMO
+material grenadeLauncher_NO_AMMO
 {
 	technique
 	{
@@ -385,7 +385,7 @@ material GrenadeLauncher_NO_AMMO
 		}
 	}
 }
-material GrenadeLauncher_NO_WEAPON
+material grenadeLauncher_NO_WEAPON
 {
 	technique
 	{
@@ -407,7 +407,7 @@ material GrenadeLauncher_NO_WEAPON
 }
 
 
-material RocketLauncher_ACTIVE
+material rocketLauncher_ACTIVE
 {
 	technique
 	{
@@ -427,7 +427,7 @@ material RocketLauncher_ACTIVE
 		}
 	}
 }
-material RocketLauncher_NO_AMMO
+material rocketLauncher_NO_AMMO
 {
 	technique
 	{
@@ -447,7 +447,7 @@ material RocketLauncher_NO_AMMO
 		}
 	}
 }
-material RocketLauncher_NO_WEAPON
+material rocketLauncher_NO_WEAPON
 {
 	technique
 	{
@@ -468,7 +468,7 @@ material RocketLauncher_NO_WEAPON
 	}
 }
 
-material PrimarySkill_ACTIVE
+material primarySkill_ACTIVE
 {
 	technique
 	{
@@ -488,7 +488,7 @@ material PrimarySkill_ACTIVE
 		}
 	}
 }
-material PrimarySkill_NO_AMMO
+material primarySkill_NO_AMMO
 {
 	technique
 	{
@@ -508,7 +508,7 @@ material PrimarySkill_NO_AMMO
 		}
 	}
 }
-material PrimarySkill_NO_WEAPON
+material primarySkill_NO_WEAPON
 {
 	technique
 	{
@@ -529,7 +529,7 @@ material PrimarySkill_NO_WEAPON
 	}
 }
 
-material SecondarySkill_ACTIVE
+material secondarySkill_ACTIVE
 {
 	technique
 	{
@@ -549,7 +549,7 @@ material SecondarySkill_ACTIVE
 		}
 	}
 }
-material SecondarySkill_NO_AMMO
+material secondarySkill_NO_AMMO
 {
 	technique
 	{
@@ -569,7 +569,7 @@ material SecondarySkill_NO_AMMO
 		}
 	}
 }
-material SecondarySkill_NO_WEAPON
+material secondarySkill_NO_WEAPON
 {
 	technique
 	{
