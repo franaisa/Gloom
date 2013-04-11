@@ -1,5 +1,5 @@
 World CGraphics CPhysicStaticEntity
-LocalPlayer CAvatarController CInterpolation CPhysicController CHudOverlay CClientRespawn CAudio CNetConnector CParticle
+LocalPlayer CScreamerClient CAvatarController CInterpolation CPhysicController CHudOverlay CClientRespawn CAudio CNetConnector CParticle
 Camera CCamera
 RemotePlayer CAvatarController CInterpolation CPhysicController CAnimatedGraphics CNetConnector CClientRespawn CAudio CParticle
 ItemSpawn CFloatingMovement CSpawnItemManager CGraphics
@@ -16,3 +16,4 @@ PointLight CLight CGraphics
 ContenedorLava CGraphics CPhysicStaticEntity
 Spike CGraphics CSpike
 Hacksaw CGraphics CHacksaw
+ScreamerShield CGraphics

@@ -99,6 +99,8 @@
     <ClCompile Include="..\..\Src\Logic\Entity\Components\PhysicDynamicEntity.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\PhysicStaticEntity.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\RocketController.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\ScreamerClient.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\ScreamerServer.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\ScreamerShieldDamageNotifier.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\Shoot.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\ShootGrenadeLauncher.cpp" />
@@ -112,7 +114,6 @@
     <ClCompile Include="..\..\Src\Logic\Entity\Components\PlayerClass.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\Archangel.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\Hound.cpp" />
-    <ClCompile Include="..\..\Src\Logic\Entity\Components\Screamer.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\Shadow.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\SpawnItemManager.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\SpawnPlayer.cpp" />
@@ -140,6 +141,7 @@
     <ClCompile Include="..\..\Src\Logic\Entity\Components\Graphics.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\Message.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageActivate.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Messages\MessageActivateScreamerShield.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageAddAmmo.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageAddForcePhysics.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageAddForcePlayer.cpp" />
@@ -162,6 +164,7 @@
     <ClCompile Include="..\..\Src\Logic\Messages\MessageCreateParticle.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageDamaged.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageDeactivate.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Messages\MessageDeactivateScreamerShield.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageHudAmmo.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageHudDebug.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageHudDebugData.cpp" />
@@ -213,6 +216,8 @@
     <ClInclude Include="..\..\Src\Logic\Entity\Components\PhysicController.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\PhysicStaticEntity.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\RocketController.h" />
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\ScreamerClient.h" />
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\ScreamerServer.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\ScreamerShieldDamageNotifier.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\Shoot.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\ShootGrenadeLauncher.h" />
@@ -226,7 +231,6 @@
     <ClInclude Include="..\..\Src\Logic\Entity\Components\PlayerClass.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\Archangel.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\Hound.h" />
-    <ClInclude Include="..\..\Src\Logic\Entity\Components\Screamer.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\Shadow.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\SpawnItemManager.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\SpawnPlayer.h" />
@@ -255,6 +259,7 @@
     <ClInclude Include="..\..\Src\Logic\Entity\Components\Camera.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\Graphics.h" />
     <ClInclude Include="..\..\Src\Logic\Documentation.h" />
+    <ClInclude Include="..\..\Src\Logic\Messages\MessageActivateScreamerShield.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageCreateParticle.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\Message.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageActivate.h" />
@@ -279,6 +284,7 @@
     <ClInclude Include="..\..\Src\Logic\Messages\MessageControl.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageDamaged.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageDeactivate.h" />
+    <ClInclude Include="..\..\Src\Logic\Messages\MessageDeactivateScreamerShield.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageHudAmmo.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageHudDebug.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageHudDebugData.h" />
