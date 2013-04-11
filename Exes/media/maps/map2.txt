@@ -118,7 +118,7 @@ Map = {
 		position = {-199.0, 0.0, 112.0},
 		model = "health1.mesh",
 		model = "jumper.mesh",
-		power = 0.25,
+		power = 0.35,
 		velocity = 0.12,
 		direction = {1,0,0.1},
 		physic_entity = "rigid",
@@ -133,7 +133,7 @@ Map = {
 	
 	Orb1 = {
 		type = "ItemSpawn",
-		position = {-29, 66, -28},
+		position = {-29, 68, -28},
 		model = "health1.mesh",
 		id = "orb",
 		reward = 17,
@@ -142,7 +142,7 @@ Map = {
 	
 	Orb2 = {
 		type = "ItemSpawn",
-		position = {-115, 0, 119},
+		position = {-115, 3, 119},
 		model = "health1.mesh",
 		id = "orb",
 		reward = 17,
@@ -151,7 +151,7 @@ Map = {
 	
 	Orb3 = {
 		type = "ItemSpawn",
-		position = {-146,98,47},
+		position = {-146,99,47},
 		model = "health1.mesh",
 		id = "orb",
 		reward = 17,
@@ -160,7 +160,7 @@ Map = {
 	
 	Orb4 = {
 		type = "ItemSpawn",
-		position = {-259,62,133},
+		position = {-259,64,133},
 		model = "health1.mesh",
 		id = "orb",
 		reward = 17,
@@ -179,7 +179,7 @@ Map = {
 	
 	Sniper = {
 		type = "ItemSpawn",
-		position = {-265,98,-55} ,
+		position = {-265,3,-55} ,
 		model = "sniper.mesh",
 		id = "weapon",
 		weaponType = 1,
@@ -229,7 +229,7 @@ Map = {
 	
 	SuperShield = {
 		type = "ItemSpawn",
-		position = {-265,123,47},
+		position = {-265,125,47},
 		model = "shield1.mesh",
 		id = "armor",
 		reward = 100,
@@ -238,7 +238,7 @@ Map = {
 	
 	miniShield = {
 		type = "ItemSpawn",
-		position = {-182.0, 0.0, 47.0},
+		position = {-182.0, 2.0, 47.0},
 		scale = 0.5,
 		model = "shield1.mesh",
 		id = "armor",

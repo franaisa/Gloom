@@ -33,11 +33,6 @@ namespace Graphics
 	class CAnimatedEntity;
 }
 
-namespace CEGUI
-{
-	class Window;
-}
-
 namespace Application 
 {
 	/**
@@ -52,7 +47,7 @@ namespace Application
 	<p>
 	Como ejemplo de Ventana 2D para el GUI se tiene una pequeña ventana 
 	que muestra el tiempo transcurrido. 
-	Esto provoca que este estado sea CEGUI dependiente, lo cual no es 
+	Esto provoca que este estado sea Hikari dependiente, lo cual no es 
 	deseable. La aplicación	debería ser independiente de las tecnologías 
 	usadas.
 
@@ -177,11 +172,6 @@ namespace Application
 		Escena del estado.
 		*/
 		Graphics::CScene* _scene;
-
-		/**
-		Ventana que muestra el tiempo de juego transcurrido.
-		*/
-		//CEGUI::Window* _timeWindow;
 
 		/**
 		Tiempo de juego en milisegundos.

@@ -40,6 +40,7 @@ namespace Graphics
 	class CEntity;
 	class CStaticEntity;
 	class CParticle;
+	class CompositorManager;
 }
 
 namespace Graphics 
@@ -164,6 +165,13 @@ namespace Graphics
 		*/
 		void createSceneNode(const std::string &name);
 
+
+		void createCompositor(std::string &name);
+
+		void setCompositorVisible(std::string &name, bool visible);
+
+		void destroyCompositor(std::string &name);
+
 		/**
 		Añade una entidad al scene node. Dicha entidad tendra que tener el material las entradas:
 		<ul>
@@ -189,6 +197,7 @@ namespace Graphics
 		CParticle *createParticle(const std::string &unicName, const std::string &particleName, const Vector3 &position, const Vector3 &directionWithForce);
 
 		void changeAmbientLight(Vector3 Light);
+
 
 
 		/////////////////////////////////////////////////////////////////////////////////////////
@@ -388,6 +397,12 @@ namespace Graphics
 		Quizas en un futuro sea un material listener generico.
 		*/
 		GlowMaterialListener *_glowMaterialListener;
+
+		/**
+		Compositor manager para manejar eventos de compositor
+		*/
+		Ogre::CompositorManager* _compositorManager;
+
 	}; // class CScene
 
 } // namespace Graphics

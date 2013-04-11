@@ -39,11 +39,6 @@ namespace OIS
 	class Keyboard;
 }
 
-namespace CEGUI
-{
-	class System;
-}
-
 namespace Hikari{
 	class HikariManager;
 }
@@ -181,12 +176,11 @@ namespace BaseSubsystems
 		OIS::Keyboard* getBufferedKeyboard(){return _keyboard;}
 
 		/**
-		Devuelve el sistema de la interfaz gráfica de usuario CEGUI.
+		Devuelve el sistema de la interfaz gráfica de usuario Hikari.
 
 		@return Puntero al sistema de la interfaz gráfica de usuario 
-		CEGUI.
+		Hikari.
 		*/
-		CEGUI::System *getGUISystem() {return _GUISystem;}
 
 		Hikari::HikariManager *getHikari() {return _hikariMgr;}
 
@@ -328,11 +322,6 @@ namespace BaseSubsystems
 		Buffer de la entrada del teclado OIS.
 		*/
 		OIS::Keyboard *_keyboard;
-
-		/**
-		Sistema de la interfaz gráfica de usuario CEGUI.
-		*/
-		CEGUI::System *_GUISystem;
 
 		/**
 		Sistema de la interfaz gráfica de usuario de Hikari

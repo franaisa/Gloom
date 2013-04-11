@@ -30,12 +30,6 @@ namespace Input
 	class CPlayerController;
 }
 
-namespace CEGUI
-{
-	class System;
-	class Window;
-}
-
 namespace Application {
 	class CApplicationState;
 }

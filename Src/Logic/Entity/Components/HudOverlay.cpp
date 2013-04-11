@@ -184,7 +184,7 @@ namespace Logic
 		int y = hudPanelInitialPositionY;
 
 
-		for(int i=0; i< PRIMARY_SKILL; ++i){
+		for(int i=HAMMER; i< PRIMARY_SKILL; ++i){
 
 			eWeaponIndex current = (eWeaponIndex)i;
 			std::string currentOnText = toText(current);
@@ -243,7 +243,7 @@ namespace Logic
 
 
 
-			////////////////////////////////////////////////////// Ahora voy a crear los overlays por cada arma en 3D
+		////////////////////////////////////////////////////// Ahora voy a crear los overlays por cada arma en 3D
 
 			_overlayWeapon3D[current] = _server->createOverlay( "_overlay3D"+currentOnText, scene );
 			std::string modelWeapon = entityInfo->getStringAttribute("weapon"+currentOnText+"Model");
@@ -251,6 +251,9 @@ namespace Logic
 			
 			
 			_weaponsEntities[current] = _overlayWeapon3D[current]->add3D(currentOnText, modelWeapon, &offsetPositionWeapon);
+			Vector3 posicion = _weaponsEntities[current]->getTransform().getTrans();
+
+
 			//_weaponsEntities[current] = _overlayWeapon3D[current]->add3D(currentOnText, modelWeapon, new Vector3(0,0,-10));
 			float yaw = entityInfo->getFloatAttribute("weapon"+currentOnText+"ModelYaw");
 			float pitch = entityInfo->getFloatAttribute("weapon"+currentOnText+"ModelPitch");
@@ -258,7 +261,6 @@ namespace Logic
 			
 			Math::yaw(yaw, transformModificado);
 			Math::pitch(pitch, transformModificado);
-			
 			_weaponsEntities[current]->setTransform(transformModificado);
 
 			_overlayWeapon3D[current]->setVisible(false);
@@ -270,8 +272,11 @@ namespace Logic
 
 		x -= hudPanelSizeX*4;
 		y -= hudPanelSizeY*1.5;
+		
 
-		for(int i=PRIMARY_SKILL; i< NONE; ++i){
+		// por ahora esta hasta secondary skill para que haga cosas raras, cuando esta este sera com la linea comentada
+		//for(int i=PRIMARY_SKILL; i< NONE; ++i){
+		for(int i=PRIMARY_SKILL; i< SECONDARY_SKILL; ++i){
 
 			eWeaponIndex current = (eWeaponIndex)i;
 			std::string currentOnText = toText(current);
@@ -321,10 +326,7 @@ namespace Logic
 		// fin de la introduccion de la primary skill
 		
 	
-		// en el HAMMER (que es el arma inicial, debe de estar active)
-		_weaponsBox[HAMMER][ACTIVE]->setVisible(true);
-		_weaponsBox[HAMMER][NO_WEAPON]->setVisible(false);
-		_overlayWeapon3D[HAMMER]->setVisible(true);
+		
 		
 		// Ahora me voy a crear otro bucle para los paneles.
 		
@@ -375,7 +377,10 @@ namespace Logic
 		_overlayPlay->add2D( _panelElements[current] );
 
 		}
-
+		// en el HAMMER (que es el arma inicial, debe de estar active)
+		_weaponsBox[HAMMER][ACTIVE]->setVisible(true);
+		_weaponsBox[HAMMER][NO_WEAPON]->setVisible(false);
+		_overlayWeapon3D[HAMMER]->setVisible(true);
 		//Pongo a false los visibles por si acaso no los pone solos
 		for(int i = 1; i < _numWeapons; ++i){
 			_weaponsBox[i][NO_AMMO]->setVisible(false);
@@ -634,7 +639,7 @@ namespace Logic
 				break;
 			case PRIMARY_SKILL: return "primarySkill";
 				break;
-			case SECUNDARY_SKILL: return "secondarySkill";
+			case SECONDARY_SKILL: return "secondarySkill";
 				break;
 			default: return "";
 			}
