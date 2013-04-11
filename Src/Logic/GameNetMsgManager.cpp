@@ -190,7 +190,10 @@ namespace Logic {
 		//ahora le seteamos la posición
 		// TIENE QUE TRATARSE DE UN COMPONENTE FISICO DINAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMICO SI NO EXPLOTA
 		// (tenemos entidades fisicas dinamicas y estaticas y controllers).
-		newEntity->getComponent<CPhysicDynamicEntity>("CPhysicDynamicEntity")->setPosition(transform.getTrans(), false);
+		CPhysicDynamicEntity* physicComponent = newEntity->getComponent<CPhysicDynamicEntity>("CPhysicDynamicEntity");
+		if(physicComponent) {
+			physicComponent->setPosition(transform.getTrans(), false);
+		}
 
 		//seteamos la orientación
 		Matrix3 orientation;

@@ -16,7 +16,7 @@ clase.
 #include "Hound.h"
 #include "Archangel.h"
 #include "Shadow.h"
-#include "Screamer.h"
+#include "ScreamerServer.h"
 #include "Logic/Entity/Entity.h"
 #include "Map/MapEntity.h"
 
@@ -176,7 +176,7 @@ namespace Logic {
 				selectedClassComponent = _entity->getComponent<CArchangel>("CArchangel");
 				break;
 			case CPlayerClass::Type::eSCREAMER:
-				selectedClassComponent = _entity->getComponent<CScreamer>("CScreamer");
+				selectedClassComponent = _entity->getComponent<CScreamerServer>("CScreamer");
 				break;
 			case CPlayerClass::Type::eSHADOW:
 				selectedClassComponent = _entity->getComponent<CShadow>("CShadow");

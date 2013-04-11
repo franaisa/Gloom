@@ -138,7 +138,8 @@ namespace Input {
 		
 	bool CServer::mousePressed(const CMouseState &mouseState)
 	{
-		_GUISystem->injectMouseDown(mouseState.button);
+		if(mouseState.button == Button::LEFT)
+			_GUISystem->injectMouseDown(mouseState.button);
 
 		// Queremos que si hay más oyentes también reciban el evento
 		return true;
@@ -149,7 +150,8 @@ namespace Input {
 
 	bool CServer::mouseReleased(const CMouseState &mouseState)
 	{
-		_GUISystem->injectMouseUp(mouseState.button);
+		if(mouseState.button == Button::LEFT)
+			_GUISystem->injectMouseUp(mouseState.button);
 
 		// Queremos que si hay más oyentes también reciban el evento
 		return true;

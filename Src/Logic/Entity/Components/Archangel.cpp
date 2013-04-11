@@ -95,7 +95,7 @@ namespace Logic {
 		materialMsg->setMaterialName("marine_amarillo");
 		_entity->emitMessage(materialMsg);
 
-		_inmuneTimer = 0;
+		_inmuneTimer = 1;
 	}
 
 	//__________________________________________________________________
