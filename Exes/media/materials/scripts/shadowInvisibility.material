@@ -1,33 +1,17 @@
 material shadowInvisibility
 {
-	technique
-	{
-		pass 
-		{
-			ambient 0 0 0 1
-			diffuse 0 0 0 0
-			specular 2 2 2 100
-			emissive 1 1 1 1 
-			
-			//vertex_program_ref MiVSShader
-			//{
-			//	param_named_auto ViewProjectionMatrix worldviewproj_matrix
-			//	param_named_auto worldMatrix world_matrix
-			//	param_named_auto tiempo time
-			//}
-			//fragment_program_ref lavapsshader
-			//{
-			//}
-			scene_blend alpha_blend
-			depth_write off
-			texture_unit diffuseMap
-            {
-                texture lava_COLOR.tga alpha
-				alpha_op_ex source1 src_manual src_current 0.05
-            }
-		}
-
-	}
-
-}
-
+   technique
+   {
+     pass
+     {
+       scene_blend alpha_blend
+       depth_write off
+ 
+       texture_unit
+       {
+         colour_op_ex source1 src_manual src_current 0 0 0
+         alpha_op_ex source1 src_manual src_current 0.05
+       }
+     }
+   }
+ }

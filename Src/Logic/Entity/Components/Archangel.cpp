@@ -78,7 +78,7 @@ namespace Logic {
 
 				// Desactivamos el shader de inmunidad
 				CMessageChangeMaterial* materialMsg = new CMessageChangeMaterial();
-				materialMsg->setMaterialName("marine");
+				materialMsg->setMaterialName("marine_amarillo");
 				_entity->emitMessage(materialMsg);
 			}
 		}
@@ -113,7 +113,7 @@ namespace Logic {
 
 		// Activamos el shader de inmunidad
 		CMessageChangeMaterial* materialMsg = new CMessageChangeMaterial();
-		materialMsg->setMaterialName("shadowInvisibility"); // En el futuro debe ser el material del archangel
+		materialMsg->setMaterialName("ArchangelDiamond"); // En el futuro debe ser el material del archangel
 		_entity->emitMessage(materialMsg);
 	}
 
