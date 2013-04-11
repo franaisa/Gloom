@@ -165,6 +165,8 @@ namespace Logic
 		Graphics::CScene *getScene() {
 			return _scene;}
 		
+		std::string getMapName(){return _name;}
+
 		/**
 		Crea un nuevo jugador y le porporciona un nombre determinado.
 

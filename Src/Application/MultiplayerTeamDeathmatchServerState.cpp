@@ -79,10 +79,12 @@ namespace Application {
 
 				// Una vez recibida la informacion del cliente, le indicamos que cargue el mapa (solo
 				// a ese cliente concreto)
+				std::string map = Logic::CServer::getSingletonPtr()->getMap()->getMapName();
+				map = map.substr(0,map.find("_"));
 				Net::NetMessageType msg = Net::LOAD_MAP;
-				Net::CBuffer buffer(sizeof(msg));
+				Net::CBuffer buffer(sizeof(msg)+map.size()*sizeof(char));
 				buffer.write(&msg, sizeof(msg));
-
+				buffer.serialize(map,false);
 				Net::CManager::getSingletonPtr()->send(buffer.getbuffer(), buffer.getSize(), playerNetId);
 
 				break;
