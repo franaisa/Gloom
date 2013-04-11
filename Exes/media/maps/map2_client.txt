@@ -262,12 +262,6 @@ Map = {
 		physic_groupList = "1",
 	},
 	
-	David = {
-		type = "LocalPlayer",
-		isPlayer = true,
-		position = {160,100,40},
-	},
-	
 	Camera = {
 		type = "Camera",
 		height = 8,
