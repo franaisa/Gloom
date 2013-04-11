@@ -27,10 +27,6 @@ Contiene la implementación del estado de juego.
 #include "Physics/Server.h"
 #include "Audio\Server.h"
 
-//#include <CEGUISystem.h>
-//#include <CEGUIWindowManager.h>
-//#include <CEGUIWindow.h>
-
 namespace Application {
 
 	bool CGameState::init() 
@@ -39,42 +35,9 @@ namespace Application {
 		// En este caso no hace nada, solo retorna true
 		CApplicationState::init();
 
-		// INICIALIZACIÓN DE LA FÍSICA
-		// ---------------------------
-
-		// TODO: desactivar colisiones entre los grupos 0 y 1
-		//Physics::CServer::getSingletonPtr()->setGroupCollisions(0, 1, false);
-
-		// TODO: Crear la escena física usando el servidor de física
-		//Physics::CServer::getSingletonPtr()->createScene();
-
-		// INICIALIZACIÓN DE LA LÓGICA
-		// ---------------------------
-
-		// Cargamos el archivo con las definiciones de las entidades del nivel.
-		/*if (!Logic::CEntityFactory::getSingletonPtr()->loadBluePrints("blueprints.txt"))
-			return false;
-
-		// Cargamos el nivel a partir del nombre del mapa. 
-		if (!Logic::CServer::getSingletonPtr()->loadLevel("map.txt"))
-			return false;*/
-
-		// INICIALIZACIÓN DEL GUI
-		// ----------------------
-
-		// Ahora mismo la implementación está totalmente acoplada a CEGUI
-		// Hay que desacoplarlo utilizando un nuevo paquete donde se abstraiga
-		// el subsistema utilizado
-
-		// Cargamos la ventana que muestra el tiempo de juego transcurrido.
-		//CEGUI::WindowManager::getSingletonPtr()->loadWindowLayout("Time.layout");
-		//_timeWindow = CEGUI::WindowManager::getSingleton().getWindow("Time");
-		//LAYOUT TIME
-		//GUI::CServer::getSingletonPtr()->addLayoutToState(this, "Time");
-		
-		//LAYOUT MIRA
-		//GUI::CServer::getSingletonPtr()->addLayoutToState(this, "Mira");
-
+		_time = 0;
+		_timelogic=0;
+		_timephysics=0;
 		return true;
 	} // init
 
@@ -107,38 +70,20 @@ namespace Application {
 		Input::CServer::getSingletonPtr()->getPlayerController()->activate();
 		Logic::CEntityFactory::getSingletonPtr()->dynamicCreation(true);
 
-		//La picadura no te escapas
+		//paramos el sonido de menu
 		Audio::CServer::getSingletonPtr()->stopSound("theme");
-		//Audio::CServer::getSingletonPtr()->playLoopSound("media/audio/picadura.mp3","picadura");
-
-		// Activamos la ventana que nos muestra el tiempo transcurrido.
-		//CEGUI::System::getSingletonPtr()->setGUISheet(_timeWindow);
-		//_timeWindow->setVisible(true);
-		//_timeWindow->activate();
-
-		//LAYOUT TIME
-		//GUI::CServer::getSingletonPtr()->activateGUI(this, "Time");
-	
-		//LAYOUT MIRA
-		//GUI::CServer::getSingletonPtr()->activateGUI(this, "Mira");
 	} // activate
 
 	//--------------------------------------------------------
 
 	void CGameState::deactivate() 
 	{
-		// Desactivamos la ventana de tiempo.
-		//_timeWindow->deactivate();
-		//_timeWindow->setVisible(false);
-
-		//LAYOUT TIME
-		//GUI::CServer::getSingletonPtr()->deactivateGUI();
-
+		std::cout << "tiempo de procesado fisico: " << _timephysics << std::endl;
+		std::cout << "tiempo de procesado logico: " << _timelogic << std::endl;
+		std::cout << "tiempo total jugado: " << _time << std::endl;
 		// Desactivamos la clase que procesa eventos de entrada para 
 		// controlar al jugador.
 		Input::CServer::getSingletonPtr()->getPlayerController()->deactivate();
-		// Desactivamos el mapa de la partida.
-		//Logic::CServer::getSingletonPtr()->deactivateMap();
 
 		Logic::CServer::getSingletonPtr()->unLoadLevel();
 		
@@ -151,21 +96,21 @@ namespace Application {
 
 	void CGameState::tick(unsigned int msecs) 
 	{
-		CApplicationState::tick(msecs);
-
+		unsigned int time = clock();
 		// TODO: realizar la simulación física
 		Physics::CServer::getSingletonPtr()->tick(msecs);
+		//tiempo que ha tardado la fisica
+		time = clock()-time;
+		_timephysics+=time;
+		
+		time = clock();
 
 		// Actualizamos la lógica de juego.
 		Logic::CServer::getSingletonPtr()->tick(msecs);
-
+		//tiempo que ha tardado la logica
+		time = clock()-time;
+		_timelogic+=time;
 		_time += msecs;
-		
-		std::stringstream text;
-		text << "Time: " << _time/1000;
-
-		//TEXTO DEL LAYOUT TIME
-		//GUI::CServer::getSingletonPtr()->setText(text.str());
 
 	} // tick
 

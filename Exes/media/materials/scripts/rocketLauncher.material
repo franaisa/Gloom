@@ -1,4 +1,5 @@
-material rocket_launcher_rocket_launcher_d_dds
+
+material rocketLauncher
 {
 	technique
 	{
@@ -18,3 +19,5 @@ material rocket_launcher_rocket_launcher_d_dds
 	}
 
 }
+
+

@@ -110,7 +110,7 @@ namespace Logic
 
 		int _numWeapons;
 
-		enum eWeaponIndex { HAMMER, SNIPER, SHOTGUN, MINIGUN, GRENADELAUNCHER, ROCKETLAUNCHER, PRIMARY_SKILL, SECUNDARY_SKILL, NONE };
+		enum eWeaponIndex { HAMMER, SNIPER, SHOTGUN, MINIGUN, GRENADELAUNCHER, ROCKETLAUNCHER, PRIMARY_SKILL, SECONDARY_SKILL, NONE };
 		enum eOverlayWeaponState { ACTIVE, NO_AMMO, NO_WEAPON };
 		enum eOverlayElements {HEALTH, SHIELD, AMMO };
 
@@ -174,12 +174,12 @@ namespace Logic
 		/** 
 		Gestiona los paneles de armas basicas (el 6 esta a hierro, deberia se ser el num de armas, pero bueno)
 		*/
-		Graphics::COverlay *_panelWeapon[6];
+		Graphics::COverlay *_panelWeapon[8];
 
 		/** 
 		Panel de las teclas de los paneles
 		*/
-		Graphics::COverlay *_panelWeaponKey[6];
+		Graphics::COverlay *_panelWeaponKey[8];
 
 		/** 
 		tiene las teclas que)
@@ -188,7 +188,7 @@ namespace Logic
 		/**
 		Gestion los paneles de las armas (6) en este caso, en cada uno de sus estados: ACTIVE, NO_AMMO, NO_WEAPON
 		*/
-		Graphics::COverlay *_weaponsBox[6][3];
+		Graphics::COverlay *_weaponsBox[8][3];
 
 
 		//////////////////////Gestion de armas

@@ -39,7 +39,7 @@ namespace Logic {
 	public:
 
 		/** Constructor por defecto. */
-		CShootRocketLauncher() : CShootProjectile("RocketLauncher") { }
+		CShootRocketLauncher() : CShootProjectile("rocketLauncher") { }
 
 
 		virtual bool spawn(CEntity* entity, CMap *map, const Map::CEntity *entityInfo);

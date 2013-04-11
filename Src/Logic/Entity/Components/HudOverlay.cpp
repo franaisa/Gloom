@@ -152,10 +152,12 @@ namespace Logic
          
 		// Create a panel de Mira
 		_panelMira = _server->createOverlay("Mira", scene, "Panel" );
-		float sizeCrossFire = entityInfo->getFloatAttribute("hudCross");
-		float positionCrossFire = 0.5f-((sizeCrossFire/2)/100) ;
-        _panelMira->setPosition( positionCrossFire,positionCrossFire);
-		_panelMira->setDimensions( sizeCrossFire/100, sizeCrossFire/100 );
+		float sizeCrossFireX = entityInfo->getFloatAttribute("hudCrossX");
+		float sizeCrossFireY = entityInfo->getFloatAttribute("hudCrossY");
+		float positionCrossFireX = 0.5f-((sizeCrossFireX/2)*0.01) ;
+		float positionCrossFireY = 0.5f-((sizeCrossFireY/2)*0.01) ;
+        _panelMira->setPosition( positionCrossFireX,positionCrossFireY);
+		_panelMira->setDimensions( sizeCrossFireX/100, sizeCrossFireY/100 );
         _panelMira->setMaterial("hudMira");
 
 
@@ -182,7 +184,7 @@ namespace Logic
 		int y = hudPanelInitialPositionY;
 
 
-		for(int i=0; i< PRIMARY_SKILL; ++i){
+		for(int i=HAMMER; i< PRIMARY_SKILL; ++i){
 
 			eWeaponIndex current = (eWeaponIndex)i;
 			std::string currentOnText = toText(current);
@@ -241,7 +243,7 @@ namespace Logic
 
 
 
-			////////////////////////////////////////////////////// Ahora voy a crear los overlays por cada arma en 3D
+		////////////////////////////////////////////////////// Ahora voy a crear los overlays por cada arma en 3D
 
 			_overlayWeapon3D[current] = _server->createOverlay( "_overlay3D"+currentOnText, scene );
 			std::string modelWeapon = entityInfo->getStringAttribute("weapon"+currentOnText+"Model");
@@ -249,6 +251,9 @@ namespace Logic
 			
 			
 			_weaponsEntities[current] = _overlayWeapon3D[current]->add3D(currentOnText, modelWeapon, &offsetPositionWeapon);
+			Vector3 posicion = _weaponsEntities[current]->getTransform().getTrans();
+
+
 			//_weaponsEntities[current] = _overlayWeapon3D[current]->add3D(currentOnText, modelWeapon, new Vector3(0,0,-10));
 			float yaw = entityInfo->getFloatAttribute("weapon"+currentOnText+"ModelYaw");
 			float pitch = entityInfo->getFloatAttribute("weapon"+currentOnText+"ModelPitch");
@@ -256,7 +261,6 @@ namespace Logic
 			
 			Math::yaw(yaw, transformModificado);
 			Math::pitch(pitch, transformModificado);
-			
 			_weaponsEntities[current]->setTransform(transformModificado);
 
 			_overlayWeapon3D[current]->setVisible(false);
@@ -268,8 +272,11 @@ namespace Logic
 
 		x -= hudPanelSizeX*4;
 		y -= hudPanelSizeY*1.5;
+		
 
-		for(int i=PRIMARY_SKILL; i< NONE; ++i){
+		// por ahora esta hasta secondary skill para que haga cosas raras, cuando esta este sera com la linea comentada
+		//for(int i=PRIMARY_SKILL; i< NONE; ++i){
+		for(int i=PRIMARY_SKILL; i< SECONDARY_SKILL; ++i){
 
 			eWeaponIndex current = (eWeaponIndex)i;
 			std::string currentOnText = toText(current);
@@ -319,10 +326,7 @@ namespace Logic
 		// fin de la introduccion de la primary skill
 		
 	
-		// en el HAMMER (que es el arma inicial, debe de estar active)
-		_weaponsBox[HAMMER][ACTIVE]->setVisible(true);
-		_weaponsBox[HAMMER][NO_WEAPON]->setVisible(false);
-		_overlayWeapon3D[HAMMER]->setVisible(true);
+		
 		
 		// Ahora me voy a crear otro bucle para los paneles.
 		
@@ -373,7 +377,10 @@ namespace Logic
 		_overlayPlay->add2D( _panelElements[current] );
 
 		}
-
+		// en el HAMMER (que es el arma inicial, debe de estar active)
+		_weaponsBox[HAMMER][ACTIVE]->setVisible(true);
+		_weaponsBox[HAMMER][NO_WEAPON]->setVisible(false);
+		_overlayWeapon3D[HAMMER]->setVisible(true);
 		//Pongo a false los visibles por si acaso no los pone solos
 		for(int i = 1; i < _numWeapons; ++i){
 			_weaponsBox[i][NO_AMMO]->setVisible(false);
@@ -618,21 +625,21 @@ namespace Logic
 	
 	std::string CHudOverlay::toText(eWeaponIndex weapon){
 		switch(weapon){
-			case HAMMER: return "Hammer";
+			case HAMMER: return "hammer";
 				break;
-			case SNIPER: return "Sniper";
+			case SNIPER: return "sniper";
 				break;
-			case SHOTGUN: return "ShotGun";
+			case SHOTGUN: return "shotGun";
 				break;
-			case MINIGUN: return "MiniGun";
+			case MINIGUN: return "miniGun";
 				break;
-			case GRENADELAUNCHER: return "GrenadeLauncher";
+			case GRENADELAUNCHER: return "grenadeLauncher";
 				break;
-			case ROCKETLAUNCHER: return "RocketLauncher";
+			case ROCKETLAUNCHER: return "rocketLauncher";
 				break;
-			case PRIMARY_SKILL: return "PrimarySkill";
+			case PRIMARY_SKILL: return "primarySkill";
 				break;
-			case SECUNDARY_SKILL: return "SecondarySkill";
+			case SECONDARY_SKILL: return "secondarySkill";
 				break;
 			default: return "";
 			}
@@ -663,11 +670,13 @@ namespace Logic
 	}
 
 	void CHudOverlay::hudDebug(){
+		/*
 		if(_overlayDebug->isVisible()){
 			printf("\nBorrate! ");	
 		}else{
 			printf("\npintate! ");
 		}
+		*/
 
 		_overlayDebug->setVisible(!_overlayDebug->isVisible());
 	}

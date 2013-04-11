@@ -27,25 +27,19 @@ namespace Application
 	class CBaseApplication;
 }
 
-namespace CEGUI
-{
-	class EventArgs;
-	class Window;
-}
-
 namespace Application 
 {
 	/**
 	Como su nombre indica, esta clase es la clase del menú
 	principal del juego. Es muy sencilla y lo único que hace es cargar
-	un layout de CEGUI al inicio y activarlo y desactivarlo cuando
+	un layout de Hikari al inicio y activarlo y desactivarlo cuando
 	se activa o desactiva el estado (haciéndo visible/invisible también
 	el puntero del ratón). También asocia los eventos de los botones 
 	del menú a las funciones C++ que se deben invocar cuando los botones
 	son pulsados.
 	<p>
 	// HACK Arreglar
-	Este estado es CEGUI dependiente, lo cual no es deseable, la aplicación
+	Este estado es Hikari dependiente, lo cual no es deseable, la aplicación
 	debería ser independiente de las tecnologías usadas.
 
 	@ingroup applicationGroup
@@ -165,12 +159,9 @@ namespace Application
 		virtual bool mouseReleased(const Input::CMouseState &mouseState);
 
 	private:
-
 		/**
-		Ventana GUI que muestra el menú.
+		Ventana que muestra el menu
 		*/
-		CEGUI::Window* _menuWindow;
-
 		Hikari::FlashControl* _menu;
 		
 		/**

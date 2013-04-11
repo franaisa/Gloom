@@ -60,7 +60,8 @@ namespace Graphics
 		_sceneMgr->destroyStaticGeometry(_staticGeometry);
 		delete _camera;
 		_root->destroySceneManager(_sceneMgr);
-
+		
+		Ogre::MaterialManager::getSingletonPtr()->destroyAllResourcePools();
 	} // ~CScene
 
 	//--------------------------------------------------------
@@ -119,16 +120,16 @@ namespace Graphics
 		/*
 		_sceneMgr->setAmbientLight(Ogre::ColourValue(1,1,1));
 		/*/
-		_sceneMgr->setAmbientLight(Ogre::ColourValue(0.4f,0.4f,0.4f));
+		_sceneMgr->setAmbientLight(Ogre::ColourValue(0.7f,0.7f,0.7f));
 		/* */
+		_compositorManager = Ogre::CompositorManager::getSingletonPtr();
 		
-		
-		Ogre::CompositorManager::getSingletonPtr()->addCompositor(_camera->getOgreCamera()->getViewport(), "Glow");
+		_compositorManager->addCompositor(_camera->getOgreCamera()->getViewport(), "Glow");
 
-		Ogre::CompositorManager::getSingletonPtr()->setCompositorEnabled(_camera->getOgreCamera()->getViewport(), "Glow", true);
+		_compositorManager->setCompositorEnabled(_camera->getOgreCamera()->getViewport(), "Glow", true);
 		
-		GlowMaterialListener *gml = new GlowMaterialListener();
-		Ogre::MaterialManager::getSingletonPtr()->addListener(gml);
+		_glowMaterialListener = new GlowMaterialListener();
+		Ogre::MaterialManager::getSingletonPtr()->addListener(_glowMaterialListener);
 
 	} // activate
 
@@ -234,6 +235,18 @@ namespace Graphics
 
 		return particle;
 
+	}
+
+	void CScene::createCompositor(std::string &name){
+		_compositorManager->addCompositor(_camera->getOgreCamera()->getViewport(), name);
+	}
+
+	void CScene::setCompositorVisible(std::string &name, bool enabled){
+		_compositorManager->setCompositorEnabled(_camera->getOgreCamera()->getViewport(), name, enabled);
+	}
+
+	void CScene::destroyCompositor(std::string &name){
+		_compositorManager->removeCompositor(_camera->getOgreCamera()->getViewport(),name);
 	}
 
 } // namespace Graphics
