@@ -6,6 +6,7 @@
 namespace Logic {
 
 	class CMessageRebound : public CMessage{
+		DEC_FACTORYMESSAGE(CMessageRebound);
 	public:
 		CMessageRebound();
 		Vector3 getDir();
@@ -18,7 +19,7 @@ namespace Logic {
 	private:
 		Vector3 _dir;
 	};
-
+	REG_FACTORYMESSAGE(CMessageRebound);
 };
 
 #endif

@@ -47,7 +47,7 @@ namespace Logic {
 		// Obtenemos la informacion asociada al arquetipo del cohete
 		Map::CEntity *entityInfo = CEntityFactory::getSingletonPtr()->getInfo("Rocket");
 
-		Vector3 shootPosition = _entity->getPosition() + (Math::getDirection( _entity->getOrientation() )* (_capsuleRadius));
+		Vector3 shootPosition = _entity->getPosition() + (Math::getDirection( _entity->getOrientation() )* (_capsuleRadius/*+_speed*msecs*/));
 		shootPosition.y += _heightShoot;
 		//Y le quitamos la mitad de la altura del cohete, ajustando al gusto
 		shootPosition.y-=1;

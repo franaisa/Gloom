@@ -3,6 +3,7 @@
 #include <string>
 
 namespace Logic {
+	IMP_FACTORYMESSAGE(CMessageRebound);
 
 	CMessageRebound::CMessageRebound() : CMessage(Message::REBOUND) {
 		// Nada que hacer
