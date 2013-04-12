@@ -245,7 +245,6 @@ namespace Logic {
 
 		// Activamos el escudo
 		_screamerShield->activate();
-
 		// Activamos los gráficos del escudo
 		CGraphics* shieldGraphics = _screamerShield->getComponent<CGraphics>("CGraphics");
 		assert(shieldGraphics && "Error: La entidad ScreamerShield no tiene un componente CGraphics");
@@ -257,7 +256,6 @@ namespace Logic {
 	void CScreamerServer::deactivateScreamerShield() {
 		// Mandamos el mensaje de desactivacion para la red
 		_entity->emitMessage( new CMessageDeactivateScreamerShield );
-
 		CGraphics* shieldGraphics = _screamerShield->getComponent<CGraphics>("CGraphics");
 		assert(shieldGraphics && "Error: La entidad ScreamerShield no tiene un componente CGraphics");
 		shieldGraphics->setVisible(false);

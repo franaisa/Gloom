@@ -169,7 +169,7 @@ Map = {
 	
 	Shotgun = {
 		type = "ItemSpawn",
-		position = {18,0,112},
+		position = {18,5,112},
 		model = "shotGun.mesh",
 		id = "weapon",
 		weaponType = 2,
