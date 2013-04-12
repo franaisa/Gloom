@@ -49,6 +49,7 @@ material Jump_Halo
 			texture_unit
 			{
 				texture Halo_Azul.tga
+				
 			}
 		}
 	}

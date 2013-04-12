@@ -8,7 +8,7 @@ material shieldCone
 		pass
 		{
 			//TRANSPARENCIAS SHADER 
-			ambient 0.1 0.1 0.1
+			ambient 0.05 0.05 0.05
 			scene_blend add
 			depth_write off
 			cull_software none
@@ -24,7 +24,7 @@ material shieldCone
 			{
 				texture shieldCone2.tga
 				scroll_anim 0.125 0
-				wave_xform scroll_y sine 0 0.1 0 0.25
+				wave_xform scroll_y sine 0 0.1 0 0.15
 			}
 		}	
 	}
