@@ -6,9 +6,13 @@ del juego.
 
 @see Logic::CEntityFactory
 
-@author David Llansó García, Marco Antonio Gómez Martín
+@author David Llansó García.
+@author Marco Antonio Gómez Martín.
+@author Ruben Mulero Guerrero.
+@author Francisco Aisa García.
 @date Agosto, 2010
 */
+
 #include "EntityFactory.h"
 #include "ComponentFactory.h"
 #include "Logic/Entity/Entity.h"
@@ -33,54 +37,50 @@ del juego.
 Sobrecargamos el operador >> para la lectura de blueprints.
 Cada línea equivaldrá a una entidad donde la primera palabra es el tipo
 y las siguientes son los componentes que tiene.
+
+@param is Flujo de entrada.
+@param blueprint Tipo de dato blueprint que va a ser leido.
 */
-std::istream& operator>>(std::istream& is, Logic::CEntityFactory::TBluePrint& blueprint) 
-{
+std::istream& operator>>(std::istream& is, Logic::CEntityFactory::TBluePrint& blueprint) {
 	is >> blueprint.type;
 	std::string aux;
 	getline(is,aux,'\n');
 	std::istringstream components(aux);
-	while(!components.eof())
-	{
+
+	while( !components.eof() ) {
 		aux.clear();
 		components >> aux;
-		if(!aux.empty())
+		if( !aux.empty() )
 			blueprint.components.push_back(aux);
 	}
+
 	return is;
 }
 
-namespace Logic
-{
+namespace Logic {
 
 	CEntityFactory *CEntityFactory::_instance = 0;
 	
-	//---------------------------------------------------------
+	//________________________________________________________________________
 
-	CEntityFactory::CEntityFactory() : _dynamicCreation(false)
-	{
+	CEntityFactory::CEntityFactory() : _dynamicCreation(false) {
 		_instance = this;
-
 	} // CEntityFactory
 	
-	//---------------------------------------------------------
+	//________________________________________________________________________
 
-	CEntityFactory::~CEntityFactory()
-	{
+	CEntityFactory::~CEntityFactory() {
 		_instance = 0;
 
 	} // ~CEntityFactory
 	
-	//---------------------------------------------------------
+	//________________________________________________________________________
 
-	bool CEntityFactory::Init() 
-	{
+	bool CEntityFactory::Init() {
 		assert(!_instance && "Segunda inicialización de Logic::CEntityFactory no permitida!");
-
 		new CEntityFactory();
 
-		if (!_instance->open())
-		{
+		if ( !_instance->open() ) {
 			Release();
 			return false;
 		}
@@ -89,58 +89,57 @@ namespace Logic
 
 	} // Init
 	
-	//---------------------------------------------------------
+	//________________________________________________________________________
 
-	void CEntityFactory::Release() 
-	{
+	void CEntityFactory::Release() {
 		assert(_instance && "Logic::CEntityFactory no está inicializado!");
 
-		if(_instance)
-		{
+		if(_instance) {
 			_instance->close();
 			delete _instance;
 		}
-
 	} // Release
 
-	//--------------------------------------------------------
+	//________________________________________________________________________
 
-	bool CEntityFactory::open()
-	{
+	CEntityFactory* CEntityFactory::getSingletonPtr() { 
+		return _instance; 
+	}
+
+	//________________________________________________________________________
+
+	bool CEntityFactory::open() {
 		return true;
 
 	} // open
 
-	//--------------------------------------------------------
+	//________________________________________________________________________
 
-	void CEntityFactory::close() 
-	{
+	void CEntityFactory::close() {
 		unloadBluePrints();
 
 	} // close
 	
-	//---------------------------------------------------------
+	//________________________________________________________________________
 
 	typedef std::pair<std::string,CEntityFactory::TBluePrint> TStringBluePrintPair;
 
-	bool CEntityFactory::loadBluePrints(const std::string &filename)
-	{
+	bool CEntityFactory::loadBluePrints(const std::string &filename) {
 		// Completamos la ruta con el nombre proporcionado
 		std::string completePath(BLUEPRINTS_FILE_PATH);
 		completePath = completePath + filename;
+		
 		// Abrimos el fichero
 		std::ifstream in(completePath.c_str());        
 		if(!in)
 			return false;
 
-		while(!in.eof())
-		{
+		while( !in.eof() ) {
 			// Se lee un TBluePrint del fichero
 			TBluePrint b;
 			in >> b;
 			// Si no era una línea en blanco
-			if(!b.type.empty())
-			{
+			if( !b.type.empty() ) {
 				// Si el tipo ya estaba definido lo eliminamos.
 				if(_bluePrints.count(b.type))
 					_bluePrints.erase(b.type);
@@ -151,15 +150,18 @@ namespace Logic
 		}
 
 		return true;
-
 	} // loadBluePrints
+
+	//________________________________________________________________________
+
 	typedef std::pair<std::string,Map::CEntity*> archetype;
+
 	bool CEntityFactory::loadArchetypes(const std::string &filename){
 		std::string completePath(BLUEPRINTS_FILE_PATH);
 		completePath = completePath + filename;
+
 		// Parseamos el fichero
-		if(!Map::CMapParser::getSingletonPtr()->parseFile(completePath))
-		{
+		if( !Map::CMapParser::getSingletonPtr()->parseFile(completePath) ) {
 			assert(!"No se ha podido parsear el mapa.");
 			return false;
 		}
@@ -172,131 +174,119 @@ namespace Logic
 		end = entityList.end();
 		
 		// Creamos los arquetipos de todo lo que ha leido el parser
-		for(; it != end; it++)
-		{
-			
+		for(; it != end; ++it) {
 			Map::CEntity  *clone = (*it)->clone();
 			archetype elem((*it)->getType(), clone);
 				_archetypes.insert(elem);
 		}
+
 		Map::CMapParser::getSingletonPtr()->releaseEntityList();
 		return true;
-
 	} // loadArchetypes
 	
-	//---------------------------------------------------------
+	//________________________________________________________________________
 
-	void CEntityFactory::unloadBluePrints()
-	{
+	void CEntityFactory::unloadBluePrints() {
 		_bluePrints.clear();
-
 	} // unloadBluePrints
 	
-		//---------------------------------------------------------
+	//________________________________________________________________________
 
-	Logic::CEntity *CEntityFactory::assembleEntity(const std::string &type) 
-	{
+	Logic::CEntity *CEntityFactory::assembleEntity(const std::string &type) {
 		TBluePrintMap::const_iterator it;
 		it = _bluePrints.find(type);
+
 		// si el tipo se encuentra registrado.
-		if (it != _bluePrints.end()) 
-		{
+		if ( it != _bluePrints.end() ) {
 			CEntity* ent = new CEntity(EntityID::NextID());
 			std::list<std::string>::const_iterator itc;
+			
 			// Añadimos todos sus componentes.
 			IComponent* comp;
-			for(itc = (*it).second.components.begin(); 
-				itc !=(*it).second.components.end(); itc++)
-			{
-				if(CComponentFactory::getSingletonPtr()->has((*itc)))
-				{
-					comp = CComponentFactory::getSingletonPtr()->create((*itc));
+			for(itc = (*it).second.components.begin(); itc !=(*it).second.components.end(); ++itc) {
+				if( CComponentFactory::getSingletonPtr()->has(*itc) ) {
+					comp = CComponentFactory::getSingletonPtr()->create(*itc);
 				}
-				else
-				{
+				else {
 					assert(!"Nombre erroneo de un componente, Mira a ver si están todos bien escritos en el fichero de blueprints");
 					delete ent;
 					return 0;
 				}
+
 				if(comp)
 					ent->addComponent(comp, *itc);
 			}
 			return ent;
 		}
-		return 0;
 
+		return 0;
 	} // assembleEntity
 
 
-	//---------------------------------------------------------
+	//________________________________________________________________________
 
-	Logic::CEntity *CEntityFactory::assembleEntity(const std::string &type, const TEntityID id) 
-	{
+	Logic::CEntity *CEntityFactory::assembleEntity(const std::string &type, const TEntityID id) {
 		TBluePrintMap::const_iterator it;
 		it = _bluePrints.find(type);
+
 		// si el tipo se encuentra registrado.
-		if (it != _bluePrints.end()) 
-		{
-			
+		if ( it != _bluePrints.end() ) {
 			CEntity* ent = new CEntity(id);
 			std::list<std::string>::const_iterator itc;
+			
 			// Añadimos todos sus componentes.
 			IComponent* comp;
-			for(itc = (*it).second.components.begin(); 
-				itc !=(*it).second.components.end(); itc++)
-			{
-				if(CComponentFactory::getSingletonPtr()->has((*itc)))
-				{
+			for(itc = (*it).second.components.begin(); itc !=(*it).second.components.end(); ++itc) {
+				if( CComponentFactory::getSingletonPtr()->has(*itc) ) {
 					comp = CComponentFactory::getSingletonPtr()->create((*itc));
 				}
-				else
-				{
+				else {
 					assert(!"Nombre erroneo de un componente, Mira a ver si están todos bien escritos en el fichero de blueprints");
 					delete ent;
 					return 0;
 				}
+
 				if(comp)
 					ent->addComponent(comp, *itc);
 			}
 			return ent;
 		}
-		return 0;
 
+		return 0;
 	} // assembleEntity
 	
-	//---------------------------------------------------------
+	//________________________________________________________________________
 
-	Logic::CEntity *CEntityFactory::createEntity(
-								Map::CEntity *entityInfo,
-								Logic::CMap *map)
-	{
+	Logic::CEntity *CEntityFactory::createEntity(Map::CEntity *entityInfo, Logic::CMap *map) {
 		std::string entityType = entityInfo->getType();
-		CEntity *ret = assembleEntity(entityType);
-		if (!ret)
-			return 0;
+		CEntity* ret = assembleEntity(entityType);
+		
+		if(!ret) 
+			return NULL;
 
 		// Añadimos la nueva entidad en el mapa antes de inicializarla.
 		map->addEntity(ret);
+		
 		// Y lo inicializamos
-		if (_dynamicCreation ? ret->dynamicSpawn(map, entityInfo) : ret->spawn(map, entityInfo)){
-			if(Net::CManager::getSingletonPtr()->imServer() && _dynamicCreation && entityType != "ServerPlayer"){
-				Logic::CGameNetMsgManager::getSingletonPtr()->sendCreateEntity(ret->getEntityID());
+		if ( _dynamicCreation ? ret->dynamicSpawn(map, entityInfo) : ret->spawn(map, entityInfo) ) {
+			if(Net::CManager::getSingletonPtr()->imServer() && _dynamicCreation && entityType != "ServerPlayer") {
+				Logic::CGameNetMsgManager::getSingletonPtr()->sendCreateEntity( ret->getEntityID() );
 			}
 
 			return ret;
-		} else {
+		} 
+		else {
 			map->removeEntity(ret);
 			delete ret;
-			return 0;
+			return NULL;
 		}
-
 	} // createEntity
 
-	//---------------------------------------------------------
+	//________________________________________________________________________
 
-	Logic::CEntity *CEntityFactory::createEntity(Map::CEntity *entityInfo,
-							  CMap *map, Vector3 position)
-	{
+	Logic::CEntity* CEntityFactory::createEntityWithPosition(Map::CEntity *entityInfo, CMap *map, const Vector3& position) {
+		// Pasamos el vector3 a string y se lo seteamos al entityInfo para mas tarde
+		// llamar al createEntity
 		std::stringstream ss (std::stringstream::in | std::stringstream::out);
 
 		ss << position.x;
@@ -310,101 +300,124 @@ namespace Logic
 		return createEntity(entityInfo, map);
 	} // createEntity
 
-	//---------------------------------------------------------
+	//________________________________________________________________________
+
+	Logic::CEntity* CEntityFactory::createEntityWithName(Map::CEntity* entityInfo, CMap *map, const std::string& name) {
+		entityInfo->setAttribute("name", name);
+		return createEntity(entityInfo, map);
+	}
+
+	//________________________________________________________________________
+
+	Logic::CEntity* CEntityFactory::createEntityWithNameAndPos(Map::CEntity* entityInfo, CMap* map, 
+															   const std::string& name, const Vector3& position) {
+		// Seteamos el nombre
+		entityInfo->setAttribute("name", name);
+		
+		// Seteamos la posicion de la entidad
+		std::stringstream ss (std::stringstream::in | std::stringstream::out);
+
+		ss << position.x;
+		ss << " ";
+		ss << position.y;
+		ss << " ";
+		ss << position.z;
+
+		entityInfo->setAttribute( "position", ss.str() );
+
+		// Creamos la entidad con la nueva información dada
+		return createEntity(entityInfo, map);
+	}
+
+	//________________________________________________________________________
+
+	Logic::CEntity *CEntityFactory::createEntityById(Map::CEntity *entityInfo, Logic::CMap *map, TEntityID id) {
+		std::string entityType = entityInfo->getType();
+		CEntity *ret = assembleEntity(entityType, id);
+		
+		if (!ret)
+			return NULL;
+
+		// Añadimos la nueva entidad en el mapa antes de inicializarla.
+		map->addEntity(ret);
+		// Y lo inicializamos
+		if( ret->spawn(map, entityInfo) ) {
+			if(Net::CManager::getSingletonPtr()->imServer() && _dynamicCreation && entityType != "ServerPlayer") {
+				Logic::CGameNetMsgManager::getSingletonPtr()->sendCreateEntity( ret->getEntityID() );
+			}
+
+			return ret;
+		} 
+		else {
+			map->removeEntity(ret);
+			delete ret;
+			return NULL;
+		}
+	} // createEntity
+
+	//________________________________________________________________________
 
 	Logic::CEntity* CEntityFactory::createEntityWithTimeOut(Map::CEntity *entityInfo, CMap *map, unsigned int msecs) {
 		CEntity* createdEntity = createEntity(entityInfo, map);
 		deferredDeleteEntity(createdEntity , msecs);
 		return createdEntity;
 	}
-
-	//---------------------------------------------------------
-
-
-	Logic::CEntity *CEntityFactory::createEntity(Map::CEntity *entityInfo, Logic::CMap *map, TEntityID id)
-	{
-		std::string entityType = entityInfo->getType();
-		CEntity *ret = assembleEntity(entityType, id);
-		if (!ret)
-			return 0;
-
-		// Añadimos la nueva entidad en el mapa antes de inicializarla.
-		map->addEntity(ret);
-		// Y lo inicializamos
-		if (ret->spawn(map, entityInfo)){
-
-			if(Net::CManager::getSingletonPtr()->imServer() && _dynamicCreation && entityType != "ServerPlayer"){
-				Logic::CGameNetMsgManager::getSingletonPtr()->sendCreateEntity(ret->getEntityID());
-			}
-
-			return ret;
-		} else {
-			map->removeEntity(ret);
-			delete ret;
-			return 0;
-		}
-
-	} // createEntity
 	
-	//---------------------------------------------------------
+	//________________________________________________________________________
 
-	void CEntityFactory::deleteEntity(Logic::CEntity *entity)
-	{
+	void CEntityFactory::deleteEntity(Logic::CEntity *entity) {
 		assert(entity);
 		// Si la entidad estaba activada se desactiva al sacarla
 		// del mapa.
 		entity->getMap()->removeEntity(entity);
 
-		
-
 		delete entity;
 
 	} // deleteEntity
 	
-	//---------------------------------------------------------
+	//________________________________________________________________________
 
-	void CEntityFactory::deferredDeleteEntity(Logic::CEntity *entity)
-	{
+	void CEntityFactory::deferredDeleteEntity(Logic::CEntity *entity) {
 		assert(entity);
 		_pendingEntities.push_back(entity);
 
-		if(Net::CManager::getSingletonPtr()->imServer())
-			Logic::CGameNetMsgManager::getSingletonPtr()->sendDestroyEntity(entity->getEntityID());
-
+		if( Net::CManager::getSingletonPtr()->imServer() )
+			Logic::CGameNetMsgManager::getSingletonPtr()->sendDestroyEntity( entity->getEntityID() );
 	} // deferredDeleteEntity
 
-	//---------------------------------------------------------
+	//________________________________________________________________________
 
 	void CEntityFactory::deferredDeleteEntity(CEntity *entity, unsigned int msecs) {
 		assert(entity);
 		Logic::CServer::getSingletonPtr()->getMap()->entityTimeToLive(entity, msecs);
 	}
 	
-	//---------------------------------------------------------
+	//________________________________________________________________________
 
-	void CEntityFactory::deleteDefferedEntities()
-	{
+	void CEntityFactory::deleteDefferedEntities() {
 		TEntityList::const_iterator it(_pendingEntities.begin());
 		TEntityList::const_iterator end(_pendingEntities.end());
 
-		while(it != end)
-		{
+		while(it != end) {
 			CEntity *entity = *it;
-			it++;
+			++it;
 			deleteEntity(entity);
 		}
 
-		if (!_pendingEntities.empty())
+		if ( !_pendingEntities.empty() )
 			_pendingEntities.clear();
 
 	} // deleteDefferedObjects
 
+	//________________________________________________________________________
 
-	Map::CEntity * CEntityFactory::getInfo(std::string type){
+	Map::CEntity * CEntityFactory::getInfo(std::string type) {
 		std::map<std::string,Map::CEntity *>::const_iterator it = _archetypes.find(type);
-		if(it!=_archetypes.end()){
+
+		if( it!=_archetypes.end() ){
 			return (*it).second;
 		}
+
 		return NULL;
 	}
 

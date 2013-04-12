@@ -52,7 +52,9 @@ namespace Logic {
 		//Y le quitamos la mitad de la altura del cohete, ajustando al gusto
 		shootPosition.y-=1;
 
-		CEntity* rocket = CEntityFactory::getSingletonPtr()->createEntity(entityInfo, Logic::CServer::getSingletonPtr()->getMap(), shootPosition);
+		CEntity* rocket = CEntityFactory::getSingletonPtr()->createEntityWithPosition(
+			entityInfo, Logic::CServer::getSingletonPtr()->getMap(), shootPosition );
+		
 		assert(rocket != NULL);
 
 		// Sacamos la orientacion de la entidad para setearsela al misil

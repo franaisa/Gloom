@@ -49,10 +49,11 @@ namespace Logic {
 										_shieldIsActive(false) {
 
 		// Creamos la entidad escudo que en el cliente solo será un gráfico
-											
+		
 		// Obtenemos la informacion asociada al arquetipo de la granada
 		Map::CEntity* screamerShieldInfo = CEntityFactory::getSingletonPtr()->getInfo("ScreamerShield"); // deberia ser screamerShieldClient
-		// Creamos la entidad y la activamos
+
+		// Creamos la entidad y la activamos <--- CREACIÓN DINÁMICA!!!
 		_screamerShield = CEntityFactory::getSingletonPtr()->createEntity( screamerShieldInfo, Logic::CServer::getSingletonPtr()->getMap() );
 		assert(_screamerShield != NULL);
 

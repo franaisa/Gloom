@@ -15,7 +15,7 @@
 #define __Graphics_GlowingEntity_H
 
 #include "BaseSubsystems/Math.h"
-#include "Entity.h"
+#include "AnimatedEntity.h"
 
 #include <OgreRenderQueueListener.h>
 #include <OgreRoot.h>
@@ -34,7 +34,7 @@ namespace Graphics {
 	@author David Llansó
 	@date Julio, 2010
 	*/
-	class CGlowingEntity : public CEntity {
+	class CGlowingEntity : public CAnimatedEntity {
 	public:
 
 		class StencilOpQueueListener;

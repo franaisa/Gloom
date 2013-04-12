@@ -87,7 +87,7 @@ namespace Logic
 		CGraphics::activate();
 
 		//Habria que quitare el string que se pasa por parametro porque no tiene sentido
-		animationFinished("random");
+		//animationFinished("random");
 		_animatedGraphicsEntity->attachWeapon(*_weapons[0], _entity->getEntityID());
 	}
 	//---------------------------------------------------------

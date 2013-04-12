@@ -44,12 +44,14 @@ namespace Logic {
 	//---------------------------------------------------------
 
 	Graphics::CEntity* CGlowingGraphics::createGraphicsEntity(const Map::CEntity *entityInfo) {
+
+		CAnimatedGraphics::createGraphicsEntity(entityInfo);
 		bool isStatic = false;
 		if(entityInfo->hasAttribute("static"))
 			isStatic = entityInfo->getBoolAttribute("static");
 
 		if(isStatic) {
-			return CGraphics::createGraphicsEntity(entityInfo);
+			//return CAnimatedGraphics::createGraphicsEntity(entityInfo);
 		}
 		else {
 			_glowingGraphicsEntity = new Graphics::CGlowingEntity(_entity->getName(),_model);
