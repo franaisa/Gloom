@@ -246,6 +246,57 @@ namespace Math
 
 	} // setPitch
 
+	
+
+	/**
+	Aplica un viraje a una matriz de transformación.
+
+	@param turn Giro en radianes que se quiere aplicar.
+	@param transform Matriz de transformación a modificar.
+	*/
+	static void roll(float turn, Matrix4& transform) 
+	{
+		Matrix3 rotation;
+		transform.extract3x3Matrix(rotation);
+		Ogre::Radian yaw, pitch, roll;
+		rotation.ToEulerAnglesYXZ(yaw, pitch, roll);
+		Ogre::Radian newRoll = roll + Ogre::Radian(turn);
+		rotation.FromEulerAnglesYXZ(yaw, pitch, newRoll);
+		transform = rotation;
+
+	} // roll
+	
+	/**
+	Extrae el estado del viraje de una matriz de transformación.
+
+	@param transform Matriz de transformación.
+	@return Viraje de la entidad.
+	*/
+	static float getRoll(const Matrix4& transform) 
+	{
+		Matrix3 rotation;
+		transform.extract3x3Matrix(rotation);
+		Ogre::Radian yaw, pitch, roll;
+		rotation.ToEulerAnglesYXZ(yaw, pitch, roll);
+		return roll.valueRadians();
+
+	} // getRoll
+	
+	/**
+	Establece un viraje a una matriz de transformación.
+
+	@param turn Giro en radianes que se quiere etablecer.
+	@param transform Matriz de transformación a modificar.
+	*/
+	static void setRoll(float turn, Matrix4& transform)
+	{
+		// Reiniciamos la matriz de rotación
+		transform = Matrix3::IDENTITY;
+		// Sobre esta rotamos.
+		Math::roll(turn,transform);
+
+	} // setRoll
+
 	/**
 	Establece un subviraje a una matriz de transformación.
 
@@ -261,7 +312,26 @@ namespace Math
 		Math::pitch(turnP,transform);
 		Math::yaw(turnY,transform);
 
-	} // setPitch
+	} // setPitchYaw
+
+	/**
+	Establece un subviraje a una matriz de transformación.
+
+	@param turnP Giro en radianes que se quiere etablecer en el eje Y.
+	@param turnY Giro en radianes que se quiere etablecer en el eje X.
+	@param turnR Giro en radianes que se quiere etablecer en el eje Z.
+	@param transform Matriz de transformación a modificar.
+	*/
+	static void setPitchYawRoll(float turnP, float turnY, float turnR, Matrix4& transform) 
+	{
+		// Reiniciamos la matriz de rotación
+		transform = Matrix3::IDENTITY;
+		// Sobre esta rotamos.
+		Math::pitch(turnP,transform);
+		Math::yaw(turnY,transform);
+		Math::roll(turnR,transform);
+
+	} // setPitchYawRoll
 	
 	/**
 	Crea un vector unitario de dirección en el plano XZ a partir 
