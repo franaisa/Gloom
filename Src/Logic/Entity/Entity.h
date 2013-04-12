@@ -340,6 +340,8 @@ namespace Logic
 		*/
 		void pitch(float pitch);
 
+		//__________________________________________________________________________
+
 		/**
 		Devuelve el subviraje de la entidad.
 		<p>
@@ -351,12 +353,14 @@ namespace Logic
 		*/
 		float getPitch() const { return Math::getPitch(_transform); }
 
+		//__________________________________________________________________________
+
 		/**
 		Indica si la entidad se encuentra activa.
 
 		@return true si la entidad está activa.
 		*/
-		bool isActivated() {return _activated;}
+		inline bool isActivated() { return _activated; }
 
 		//__________________________________________________________________________
 

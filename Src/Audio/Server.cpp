@@ -27,9 +27,9 @@ namespace Audio
 	CServer::CServer()
 	{
 		assert(!_instance && "Segunda inicialización de Audio::CServer no permitida!");
-		_volume=0.5;
-		_doppler=0.005f;
-		_rolloff=0.0001f;
+		_volume=0.5f;
+		_doppler=1.0f;
+		_rolloff=1.0f;
 		_soundAvatar=NULL;
 		_playerHeight=8;
 		_isMute=false;
@@ -69,6 +69,7 @@ namespace Audio
 
 	void CServer::Release()
 	{
+		std::cout << "Liberamos el server de audio" << std::endl;
 		if(_instance)
 		{
 			_instance->close();
@@ -87,11 +88,11 @@ namespace Audio
 		ERRCHECK(result);
 			
 		//Iniciamos
-		result = _system->init(32, FMOD_INIT_NORMAL, 0);
+		result = _system->init(32, FMOD_INIT_3D_RIGHTHANDED, 0);
 		ERRCHECK(result);
 
 		//Configuración 3D, el parámetro central es el factor de distancia (FMOD trabaja en metros/segundos)
-		_system->set3DSettings(_doppler,2.0,_rolloff);
+		_system->set3DSettings(_doppler,1.0f,_rolloff);
 
 		//Cargamos la banda sonora del juego
 		playStreamingLoopSound("media/audio/themeGloom.wav", "theme");
@@ -104,6 +105,8 @@ namespace Audio
 
 	void CServer::close() 
 	{
+		stopAllSounds();
+		_soundAvatar=NULL;
 		_system->release();
 
 	} // close
@@ -119,15 +122,16 @@ namespace Audio
 			Vector3 directionAvatar=Math::getDirection(_soundAvatar->getOrientation());
 
 			FMOD_VECTOR
-				listenerPos = {positionAvatar.x,positionAvatar.y+_playerHeight,positionAvatar.z}, // posición del listener
-				listenerVel = {0,0,0}, // velocidad
-				up = {0,1,0},          // vector up: hacia la “coronilla”
+				listenerPos = {positionAvatar.x,positionAvatar.y,positionAvatar.z}, // posición del listener
+				listenerVel = {0.0f,0.0f,0.0f}, // velocidad
+				up = {0.0f,1.0f,0.0f},          // vector up: hacia la “coronilla”
 				at = {directionAvatar.x,directionAvatar.y,directionAvatar.z};          // vector at: hacia donde se mira
 
 			// se coloca el listener
 			_system->set3DListenerAttributes(0,&listenerPos, &listenerVel,
-                                     &up, &at);
+                                     &at, &up);
 		}
+
 
 
 		//Actualizamos el sistema
@@ -245,8 +249,9 @@ namespace Audio
 		& sound); // devolución del handle al buffer
 		ERRCHECK(result);
 
-		//Reproducción en canal
+		
 		Channel *canal;
+		//Reproducción en canal
 		result = _system->playSound(
 		FMOD_CHANNEL_FREE , // dejamos que FMOD seleccione cualquiera
 		sound, // sonido que se “engancha” a ese canal
@@ -264,7 +269,7 @@ namespace Audio
 			ERRCHECK(result);
 
 		//Distancia a la que empieza a atenuarse y a la cual ya no se atenua mas respectivamente
-		result = canal->set3DMinMaxDistance(1,800);
+		result = canal->set3DMinMaxDistance(50.0f,10000.0f);
 		ERRCHECK(result);
 	/*	int can;
 		canal->getIndex(&can);

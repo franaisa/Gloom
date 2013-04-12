@@ -17,3 +17,4 @@ SpotLight CLight CGraphics
 DirectionalLight CLight CGraphics
 PointLight CLight CGraphics
 ContenedorLava CGraphics CPhysicStaticEntity
+ScreamerShield CGraphics CPhysicDynamicEntity CScreamerShieldDamageNotifier
