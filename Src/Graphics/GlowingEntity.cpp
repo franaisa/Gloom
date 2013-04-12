@@ -14,7 +14,7 @@
 #include <OgreEntity.h>
 
 namespace Graphics {
-	CGlowingEntity::CGlowingEntity(const std::string &name, const std::string &mesh) : CEntity(name, mesh) {
+	CGlowingEntity::CGlowingEntity(const std::string &name, const std::string &mesh) : CAnimatedEntity(name, mesh) {
 		
 	} // CGlowingEntity
 
