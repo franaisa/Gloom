@@ -15,7 +15,7 @@ Elevator CGraphics CPhysicDynamicEntity CElevator
 ElevatorTrigger CPhysicDynamicEntity CElevatorTrigger
 Spike CGraphics CPhysicDynamicEntity CSpike
 Hacksaw CGraphics CPhysicDynamicEntity CHacksaw
+PointLight CLight CGraphics
 SpotLight CLight CGraphics
 DirectionalLight CLight CGraphics
-PointLight CLight CGraphics
 ScreamerShield CGraphics CPhysicDynamicEntity CScreamerShieldDamageNotifier

@@ -28,6 +28,7 @@ namespace Logic
 	
 	//---------------------------------------------------------
 	
+	
 	bool CLight::spawn(CEntity *entity, CMap *map, const Map::CEntity *entityInfo) 
 	{
 		if(!IComponent::spawn(entity,map,entityInfo))
@@ -36,7 +37,7 @@ namespace Logic
 		_light = new Graphics::CLight();
 		Vector3 position = entityInfo->getVector3Attribute("position");
 		Vector3 direction;
-
+		
 		if(entityInfo->hasAttribute("direction"))
 			direction = entityInfo->getVector3Attribute("direction");
 
