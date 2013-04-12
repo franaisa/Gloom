@@ -185,8 +185,9 @@ namespace Logic {
 		//creamos la entidad
 		Map::CEntity * info = Logic::CEntityFactory::getSingletonPtr()->getInfo(type);
 		info->setName(name);
-		CEntity * newEntity = Logic::CEntityFactory::getSingletonPtr()->createEntity(info, CServer::getSingletonPtr()->getMap(), destID);
+		CEntity * newEntity = Logic::CEntityFactory::getSingletonPtr()->createEntityById(info, CServer::getSingletonPtr()->getMap(), destID);
 		newEntity->activate();
+
 		//ahora le seteamos la posición
 		// TIENE QUE TRATARSE DE UN COMPONENTE FISICO DINAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMICO SI NO EXPLOTA
 		// (tenemos entidades fisicas dinamicas y estaticas y controllers).

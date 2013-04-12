@@ -56,9 +56,12 @@ namespace Logic {
 		// Nada que hacer
 		// Obtenemos la informacion asociada al arquetipo de la granada
 		Map::CEntity* screamerShieldInfo = CEntityFactory::getSingletonPtr()->getInfo("ScreamerShield");
+
 		// Creamos la entidad y la activamos
 		_screamerShield = CEntityFactory::getSingletonPtr()->createEntity( screamerShieldInfo, Logic::CServer::getSingletonPtr()->getMap() );
 		assert(_screamerShield != NULL);
+
+		// MANDAR UN MENSAJE DE SET_OWNER
 
 		// Fijamos a nuestra entidad como dueña de la entidad creada en el componente
 		// que recibe las notificaciones de daño.
@@ -190,7 +193,9 @@ namespace Logic {
 			// Obtenemos la informacion asociada al arquetipo de la granada
 			Map::CEntity* screamerShieldInfo = CEntityFactory::getSingletonPtr()->getInfo("ScreamerShield");
 			// Creamos la entidad y la activamos
-			_screamerShield = CEntityFactory::getSingletonPtr()->createEntity( screamerShieldInfo, Logic::CServer::getSingletonPtr()->getMap(), shootPosition );
+			_screamerShield = CEntityFactory::getSingletonPtr()->createEntityWithPosition( 
+				screamerShieldInfo, Logic::CServer::getSingletonPtr()->getMap(), shootPosition );
+			
 			assert(_screamerShield != NULL);
 
 			// Fijamos a nuestra entidad como dueña de la entidad creada en el componente

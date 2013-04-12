@@ -142,8 +142,8 @@ namespace Audio
 	// función para dar salida de error y terminar aplicación
 	void CServer::ERRCHECK(FMOD_RESULT result){
 		if (result != FMOD_OK){
-		//std::cout << "FMOD error! " << result << std::endl <<FMOD_ErrorString(result);
-		exit(-1);
+			std::cerr << "FMOD error! " << result << std::endl <<FMOD_ErrorString(result);
+			exit(-1);
 		}
 	}//ERRCHECK
 	//--------------------------------------------------------

@@ -53,7 +53,9 @@ namespace Logic {
 		shootPosition.y-=2.8;
 		
 		// Creamos la entidad y la activamos
-		CEntity* grenade = CEntityFactory::getSingletonPtr()->createEntity(entityInfo, Logic::CServer::getSingletonPtr()->getMap(), shootPosition);
+		CEntity* grenade = CEntityFactory::getSingletonPtr()->createEntityWithPosition(
+			entityInfo, Logic::CServer::getSingletonPtr()->getMap(), shootPosition );
+		
 		assert(grenade != NULL);
 		grenade->activate();
 

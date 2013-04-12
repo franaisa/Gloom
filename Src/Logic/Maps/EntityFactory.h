@@ -6,7 +6,10 @@ del juego.
 
 @see Logic::CEntityFactory
 
-@author David Llansó García, Marco Antonio Gómez Martín
+@author David Llansó García.
+@author Marco Antonio Gómez Martín.
+@author Ruben Mulero Guerrero.
+@author Francisco Aisa García.
 @date Agosto, 2010
 */
 
@@ -21,21 +24,19 @@ del juego.
 #include "Map/MapEntity.h"
 
 // Predeclaración de clases para ahorrar tiempo de compilación
-namespace Map
-{
+namespace Map {
 	class CEntity;
 }
 
-namespace Logic 
-{
+namespace Logic {
 	class CMap;
 	class CEntity;
 	class CBluePrint;
 }
 
 // Definición de la clase
-namespace Logic 
-{
+namespace Logic {
+	
 	/**
 	Factoría de CEntity que centraliza tanto la construcción
 	como la destrucción de entidades del juego. Es un singleton
@@ -49,11 +50,14 @@ namespace Logic
 	@ingroup logicGroup
 	@ingroup mapGroup
 
-	@author David Llansó
+	@author David Llansó García.
+	@author Marco Antonio Gómez Martín.
+	@author Ruben Mulero Guerrero.
+	@author Francisco Aisa García.
 	@date Agosto, 2010
 	*/
-	class CEntityFactory 
-	{
+
+	class CEntityFactory {
 	public:
 
 		/**
@@ -63,17 +67,21 @@ namespace Logic
 		*/
 		static bool Init();
 
-		/**
-		Libera la base de datos. Debe llamarse al finalizar la aplicación.
-		*/
+		//________________________________________________________________________
+
+		/** Libera la base de datos. Debe llamarse al finalizar la aplicación. */
 		static void Release();
+
+		//________________________________________________________________________
 
 		/**
 		Devuelve un puntero al único objeto de la clase.
 
 		@return Factoría de entidades.
 		*/
-		static CEntityFactory *getSingletonPtr() {return _instance;}
+		static CEntityFactory *getSingletonPtr();
+
+		//________________________________________________________________________
 
 		/**
 		Carga un nuevo listado de entidades que se pueden crear mediante 
@@ -92,6 +100,8 @@ namespace Logic
 		*/
 		bool loadBluePrints(const std::string &filename);
 
+		//________________________________________________________________________
+
 		/**
 		Carga y crea entidades genéricas que se han especificado en el
 		archivo de arquetipos. Estas entidades se guardan en una lista
@@ -103,10 +113,12 @@ namespace Logic
 		*/
 		bool loadArchetypes(const std::string &filename);
 
-		/**
-		Descarga el listado de entidades creadas
-		*/
+		//________________________________________________________________________
+
+		/** Descarga el listado de entidades creadas */
 		void unloadBluePrints();
+
+		//________________________________________________________________________
 
 		/**
 		Crea una nueva entidad de juego en un mapa determinado a partir de
@@ -124,15 +136,9 @@ namespace Logic
 		@note Las entidades aquí creadas pueden eliminarse al final del 
 		juego o bien utilizando deferredDeleteEntity.
 		*/
-		CEntity *createEntity(Map::CEntity *entityInfo,
-							  CMap *map);
+		CEntity* createEntity(Map::CEntity *entityInfo, CMap *map);
 
-
-
-		CEntity* createEntityWithTimeOut(Map::CEntity *entityInfo,
-							  CMap *map, unsigned int msecs);
-
-
+		//________________________________________________________________________
 
 		/**
 		Crea una nueva entidad de juego en un mapa determinado a partir de
@@ -152,14 +158,25 @@ namespace Logic
 		@note Las entidades aquí creadas pueden eliminarse al final del 
 		juego o bien utilizando deferredDeleteEntity.
 		*/
-		CEntity *createEntity(Map::CEntity *entityInfo,
-							  CMap *map, TEntityID id);
+		CEntity *createEntityById(Map::CEntity *entityInfo, CMap *map, TEntityID id);
 
+		//________________________________________________________________________
 		
-		
-		CEntity *createEntity(Map::CEntity *entityInfo,
-							  CMap *map, Vector3 position);
+		CEntity *createEntityWithPosition(Map::CEntity *entityInfo, CMap *map, const Vector3& position);
 
+		//________________________________________________________________________
+
+		CEntity* createEntityWithName(Map::CEntity* entityInfo, CMap *map, const std::string& name);
+
+		//________________________________________________________________________
+
+		CEntity* createEntityWithNameAndPos(Map::CEntity* entityInfo, CMap *map, const std::string& name, const Vector3& position);
+
+		//________________________________________________________________________
+
+		CEntity* createEntityWithTimeOut(Map::CEntity *entityInfo, CMap *map, unsigned int msecs);
+
+		//________________________________________________________________________
 		
 		/**
 		Destruye el CEntity pasado como parámetro. La destrucción
@@ -177,6 +194,8 @@ namespace Logic
 		@param entidad Entidad de juego que se borrará.
 		*/
 		void deleteEntity(CEntity *entity);
+
+		//________________________________________________________________________
 
 		/**
 		Solicita la destrucción retrasada de la entidad que se pasa como 
@@ -206,13 +225,19 @@ namespace Logic
 		*/
 		void deferredDeleteEntity(CEntity *entity);
 
+		//________________________________________________________________________
+
 		void deferredDeleteEntity(CEntity *entity, unsigned int msecs);
+
+		//________________________________________________________________________
 
 		/**
 		Método invocado por el bucle del juego para que la factoría
 		elimine todos los objetos pendientes de ser borrados.
 		*/
 		void deleteDefferedEntities();
+
+		//________________________________________________________________________
 
 		/**
 		Método que dado un tipo de entidad, devuelve su informacion.
@@ -223,13 +248,16 @@ namespace Logic
 		*/
 		Map::CEntity * getInfo(std::string type);
 
+		//________________________________________________________________________
+
 		void dynamicCreation(bool enable) { _dynamicCreation = enable; }
+
+		//________________________________________________________________________
 
 		/**
 		Estructura que define una entidad blueprint.
 		*/
-		typedef struct
-		{
+		typedef struct {
 			/**
 			Nombre del tipo de entidad
 			*/
@@ -240,7 +268,7 @@ namespace Logic
 			*/
 			std::list<std::string> components;
 
-		}TBluePrint;
+		} TBluePrint;
 
 	protected:
 
@@ -267,14 +295,14 @@ namespace Logic
 
 		@return true si todo fue correctamente.
 		*/
-		bool open();
+		inline bool open();
 
 		/**
 		Segunda fase de la destrucción del objeto. Sirve para hacer liberar 
 		los recursos de la propia instancia, la liberación de los recursos 
 		estáticos se hace en Release().
 		*/
-		void close();
+		inline void close();
 
 		/** 
 		Ensambla una nueva entidad de juego a partir de su tipo de entidad.
@@ -292,6 +320,7 @@ namespace Logic
 		CEntity *assembleEntity(const std::string &type, TEntityID id);
 
 		CEntity *assembleEntity(const std::string &type);
+
 		/**
 		Tipo lista de CEntity donde guardaremos los pendientes de borrar.
 		*/
