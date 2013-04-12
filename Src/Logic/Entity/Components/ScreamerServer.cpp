@@ -29,6 +29,7 @@ implementa las habilidades del personaje
 #include "Logic/Messages/MessageChangeMaterial.h"
 #include "Logic/Messages/MessageActivateScreamerShield.h"
 #include "Logic/Messages/MessageDeactivateScreamerShield.h"
+#include "Logic/Messages/MessageSetRelatedEntity.h"
 
 // Física
 #include "Physics/Server.h"
@@ -52,25 +53,6 @@ namespace Logic {
 										_screamerShieldDamageTimer(0),
 										_screamerShieldRecoveryTimer(0),
 										_screamerShield(NULL) {
-		
-		// Nada que hacer
-		// Obtenemos la informacion asociada al arquetipo de la granada
-		Map::CEntity* screamerShieldInfo = CEntityFactory::getSingletonPtr()->getInfo("ScreamerShield");
-		// Creamos la entidad y la activamos
-		_screamerShield = CEntityFactory::getSingletonPtr()->createEntity( screamerShieldInfo, Logic::CServer::getSingletonPtr()->getMap() );
-		assert(_screamerShield != NULL);
-
-		// Fijamos a nuestra entidad como dueña de la entidad creada en el componente
-		// que recibe las notificaciones de daño.
-		CScreamerShieldDamageNotifier* shieldDmgNotifier = _screamerShield->getComponent<CScreamerShieldDamageNotifier>("CScreamerShieldDamageNotifier");
-		assert(shieldDmgNotifier && "Error: La entidad ScreamerShield no tiene ningun componente llamado CScreamerShieldDamageNotifier");
-		shieldDmgNotifier->setOwner(_entity);
-
-		// @deprecated El servidor no va a tener graficos
-		CGraphics* shieldGraphics = _screamerShield->getComponent<CGraphics>("CGraphics");
-		assert(shieldGraphics && "Error: La entidad ScreamerShield no tiene un componente CGraphics");
-		shieldGraphics->setVisible(false);
-		_screamerShield->deactivate();
 	}
 
 	//__________________________________________________________________
@@ -101,6 +83,15 @@ namespace Logic {
 		_screamerExplotionRadius = entityInfo->getFloatAttribute("screamerExplotionRadius");
 
 	} // spawn
+
+	//__________________________________________________________________
+
+	void CScreamerServer::onStart(unsigned int msecs) {
+		CPlayerClass::onStart(msecs);
+
+		// Mandar el mensaje de set related entity aqui si es que vamos
+		// a hacerlo con una sola inicializacion
+	}
 
 	//__________________________________________________________________
 
@@ -176,28 +167,33 @@ namespace Logic {
 
 		_primarySkillIsActive = true;
 
-		// Me he visto obligado a realizar esta comprobacion aqui porque de momento no podemos crear entidades dinamicas
-		// en el spawn (por la forma de asignar nombres).
-		
-		// SOLUCION: Crear un metodo onStart para los componentes
-		// vendria bien tener un onUpdate y onFixedUpdate
-
+		// @deprecated DE MOMENTO HAGO ESTA COMPROBACIÓN ÑAPERA
+		// porque el cliente no recibe el mensaje si lo hacemos en el onStart
+		// otra posibilidad es crear el escudo cada vez que pulsemos la tecla.
 		if(_screamerShield == NULL) {
-			Vector3 entityPosition = _entity->getPosition();
-			Vector3 shootPosition = entityPosition + ( Math::getDirection( _entity->getOrientation() ) * _capsuleRadius+10 );
-			shootPosition.y = entityPosition.y + _heightShoot;
-
+			// Nada que hacer
 			// Obtenemos la informacion asociada al arquetipo de la granada
 			Map::CEntity* screamerShieldInfo = CEntityFactory::getSingletonPtr()->getInfo("ScreamerShield");
+
 			// Creamos la entidad y la activamos
-			_screamerShield = CEntityFactory::getSingletonPtr()->createEntity( screamerShieldInfo, Logic::CServer::getSingletonPtr()->getMap(), shootPosition );
+			_screamerShield = CEntityFactory::getSingletonPtr()->createEntity( screamerShieldInfo, Logic::CServer::getSingletonPtr()->getMap() );
 			assert(_screamerShield != NULL);
+
+			CMessageSetRelatedEntity* relatedEntityMsg = new CMessageSetRelatedEntity;
+			relatedEntityMsg->setRelatedEntity(_screamerShield);
+			_entity->emitMessage(relatedEntityMsg);
 
 			// Fijamos a nuestra entidad como dueña de la entidad creada en el componente
 			// que recibe las notificaciones de daño.
 			CScreamerShieldDamageNotifier* shieldDmgNotifier = _screamerShield->getComponent<CScreamerShieldDamageNotifier>("CScreamerShieldDamageNotifier");
 			assert(shieldDmgNotifier && "Error: La entidad ScreamerShield no tiene ningun componente llamado CScreamerShieldDamageNotifier");
 			shieldDmgNotifier->setOwner(_entity);
+
+			// @deprecated El servidor no va a tener graficos
+			CGraphics* shieldGraphics = _screamerShield->getComponent<CGraphics>("CGraphics");
+			assert(shieldGraphics && "Error: La entidad ScreamerShield no tiene un componente CGraphics");
+			shieldGraphics->setVisible(false);
+			_screamerShield->deactivate();
 		}
 
 		// Activamos los gráficos y la entidad
@@ -253,7 +249,6 @@ namespace Logic {
 
 		// Activamos el escudo
 		_screamerShield->activate();
-
 		// Activamos los gráficos del escudo
 		CGraphics* shieldGraphics = _screamerShield->getComponent<CGraphics>("CGraphics");
 		assert(shieldGraphics && "Error: La entidad ScreamerShield no tiene un componente CGraphics");
@@ -265,7 +260,6 @@ namespace Logic {
 	void CScreamerServer::deactivateScreamerShield() {
 		// Mandamos el mensaje de desactivacion para la red
 		_entity->emitMessage( new CMessageDeactivateScreamerShield );
-
 		CGraphics* shieldGraphics = _screamerShield->getComponent<CGraphics>("CGraphics");
 		assert(shieldGraphics && "Error: La entidad ScreamerShield no tiene un componente CGraphics");
 		shieldGraphics->setVisible(false);

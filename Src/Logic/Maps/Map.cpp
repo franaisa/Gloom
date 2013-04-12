@@ -323,7 +323,7 @@ namespace Logic {
 		playerInfo->setName(name);
 
 		// Creamos la entidad y modificamos el resto de parametros que necesitamos
-		CEntity* playerCreated = CEntityFactory::getSingletonPtr()->createEntity(playerInfo, this, id);
+		CEntity* playerCreated = CEntityFactory::getSingletonPtr()->createEntityById(playerInfo, this, id);
 		playerCreated->setPosition( playerCreated->getPosition());
 
 		// Configuramos el jugador como local si lo es
@@ -349,7 +349,7 @@ namespace Logic {
 		playerInfo->setName(name);
 
 		// Creamos la entidad y modificamos el resto de parametros que necesitamos
-		CEntity* playerCreated = CEntityFactory::getSingletonPtr()->createEntity(playerInfo, this, id);
+		CEntity* playerCreated = CEntityFactory::getSingletonPtr()->createEntityById(playerInfo, this, id);
 		playerCreated->setPosition( playerCreated->getPosition());
 		return playerCreated;
 	}

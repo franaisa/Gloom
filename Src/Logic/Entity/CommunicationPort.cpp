@@ -38,7 +38,7 @@ namespace Logic {
 	void CCommunicationPort::processMessages()
 	{
 		CMessageList::const_iterator it = _messages.begin();
-		for(; it != _messages.end(); it++){
+		for(; it != _messages.end(); ++it){
 			process(*it);
 			(*it)->subSmartP();
 		}

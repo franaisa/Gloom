@@ -1,0 +1,67 @@
+
+material Jump
+{
+	technique
+	{
+		pass
+		{
+			ambient 0.588 0.588 0.588 1
+			diffuse 0.588 0.588 0.588 1
+			specular 0.72 0.72 0.72 1 45
+			cull_hardware none
+			cull_software none
+
+			texture_unit
+			{
+				texture Jump_RGB.jpg
+			}
+		}
+
+	}
+
+}
+
+
+
+material Jump_Halo
+{
+	technique
+	{
+		pass
+		{
+			ambient 0.588 0.588 0.588 1
+			diffuse 0.588 0.588 0.588 1
+			specular 0 0 0 1 10
+			emissive 1 1 1 1
+			scene_blend one one_minus_src_alpha
+			cull_hardware none
+			cull_software none
+
+			texture_unit
+			{
+				texture Halo_Azul.tga
+			}
+		}
+
+	}
+
+}
+
+
+
+material jumperRing
+{
+	technique
+	{
+		pass
+		{
+			ambient 0.0509804 0.243137 0.529412 1
+			diffuse 0.0509804 0.243137 0.529412 1
+			specular 0 0 0 1 10
+		}
+
+	}
+
+}
+
+

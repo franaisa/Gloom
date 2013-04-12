@@ -23,12 +23,6 @@
     <Filter Include="Entity\Components">
       <UniqueIdentifier>{e9ceafce-bc53-40d2-a4a3-6ebdb6c987aa}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Entity\Components\Source Files">
-      <UniqueIdentifier>{0d3eb664-af15-498e-9e00-23d67b9c271e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Entity\Components\Header Files">
-      <UniqueIdentifier>{40d43982-4d6f-4a4a-b427-ce5753f432e3}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Messages">
       <UniqueIdentifier>{4e179dc2-b36c-453e-be46-be0147457b46}</UniqueIdentifier>
     </Filter>
@@ -46,6 +40,69 @@
     </Filter>
     <Filter Include="Net\Source">
       <UniqueIdentifier>{772c75e6-854b-4b26-8162-58fc8aa37601}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entity\Components\Skills">
+      <UniqueIdentifier>{9cc8418f-48f8-43a1-89df-35219bdd9094}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entity\Components\Weapons">
+      <UniqueIdentifier>{2e18f618-28c8-447c-ba40-44c0a6894e72}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entity\Components\Weapons\Header">
+      <UniqueIdentifier>{488abf5e-d8fa-4d1b-ad83-03c7547b87c7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entity\Components\Weapons\Source">
+      <UniqueIdentifier>{4284771d-620e-4461-a22c-02a82ca6cc13}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entity\Components\Skills\Header">
+      <UniqueIdentifier>{fb3a6c1f-27bf-4b41-aa63-36406d8f4003}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entity\Components\Skills\Source">
+      <UniqueIdentifier>{8f77be88-84f4-461f-80f3-b83babfed4e3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entity\Components\Physics">
+      <UniqueIdentifier>{445a7ed2-25ee-44e6-9ff8-947cd533a89c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entity\Components\Graphics">
+      <UniqueIdentifier>{503a1cf2-563f-426d-8ba4-0d30b7c31906}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entity\Components\Network">
+      <UniqueIdentifier>{e8bbe86f-3ebf-4496-b1ee-45319751e476}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entity\Components\Graphics\Header">
+      <UniqueIdentifier>{ce31b8c5-10ae-4646-9de6-44ac536c42a5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entity\Components\Graphics\Source">
+      <UniqueIdentifier>{2093b710-51df-484d-a188-2135c500ef42}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entity\Components\Network\Header">
+      <UniqueIdentifier>{0a2b7dc7-3b91-49ec-951a-cd996c5119a2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entity\Components\Network\Source">
+      <UniqueIdentifier>{8c1cf4ef-8517-442b-8ffc-f1b730d72f04}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entity\Components\Physics\Header">
+      <UniqueIdentifier>{c5a9809c-2297-46ee-8133-a367c6d4f9b3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entity\Components\Physics\Source">
+      <UniqueIdentifier>{b9f98bce-519d-44df-ae85-f7afb190d4a9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entity\Components\Audio">
+      <UniqueIdentifier>{0ea859e6-c36b-4d53-b5e6-d49d33c1df7e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entity\Components\Audio\Header">
+      <UniqueIdentifier>{0509619d-92f4-42fa-aa84-5a3232f2fb3b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entity\Components\Audio\Source">
+      <UniqueIdentifier>{81418795-6b74-4dc5-ae6c-8acfe2746d8c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entity\Components\Gameplay">
+      <UniqueIdentifier>{d4f47776-92fa-4417-ae4c-f251566ed388}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entity\Components\Gameplay\Header">
+      <UniqueIdentifier>{48beb9a4-1d4c-4d4f-bd33-e92a0cacfeff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entity\Components\Gameplay\Source">
+      <UniqueIdentifier>{4028113e-3235-4f07-b8e5-671a198a9ce5}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -73,50 +130,14 @@
     <ClCompile Include="..\..\Src\Logic\Server.cpp">
       <Filter>Maps\Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Src\Logic\Entity\Components\AnimatedGraphics.cpp">
-      <Filter>Entity\Components\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Logic\Entity\Components\AvatarController.cpp">
-      <Filter>Entity\Components\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Logic\Entity\Components\Camera.cpp">
-      <Filter>Entity\Components\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Logic\Entity\Components\DamageTrigger.cpp">
-      <Filter>Entity\Components\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Logic\Entity\Components\Graphics.cpp">
-      <Filter>Entity\Components\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Logic\Entity\Components\Life.cpp">
-      <Filter>Entity\Components\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Logic\Entity\Components\SwitchPosition.cpp">
-      <Filter>Entity\Components\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Logic\Entity\Components\PhysicController.cpp">
-      <Filter>Entity\Components\Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Src\Logic\Maps\IIdentifier.cpp">
       <Filter>Entity\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Src\Logic\Maps\ComponentID.cpp">
       <Filter>Entity\Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Src\Logic\Entity\Components\NetConnector.cpp">
-      <Filter>Entity\Components\Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Src\Logic\GameNetMsgManager.cpp">
       <Filter>Maps\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Logic\Entity\Components\ArrayGraphics.cpp">
-      <Filter>Entity\Components\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Logic\Entity\Components\WeaponsManager.cpp">
-      <Filter>Entity\Components\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Logic\Entity\Components\ShootShotGun.cpp">
-      <Filter>Entity\Components\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Src\Logic\Messages\Message.cpp">
       <Filter>Messages\Source</Filter>
@@ -169,15 +190,6 @@
     <ClCompile Include="..\..\Src\Logic\Messages\MessageRebound.cpp">
       <Filter>Messages\Source</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Src\Logic\Entity\Components\Shoot.cpp">
-      <Filter>Entity\Components\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Logic\Entity\Components\HudOverlay.cpp">
-      <Filter>Entity\Components\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Logic\Entity\Components\ShootHammer.cpp">
-      <Filter>Entity\Components\Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Src\Logic\Messages\MessageHudLife.cpp">
       <Filter>Messages\Source</Filter>
     </ClCompile>
@@ -189,12 +201,6 @@
     </ClCompile>
     <ClCompile Include="..\..\Src\Logic\Messages\MessageAddShield.cpp">
       <Filter>Messages\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Logic\Entity\Components\FloatingMovement.cpp">
-      <Filter>Entity\Components\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Logic\Entity\Components\SpawnItemManager.cpp">
-      <Filter>Entity\Components\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Src\Logic\Messages\MessagePlayerDead.cpp">
       <Filter>Messages\Source</Filter>
@@ -211,9 +217,6 @@
     <ClCompile Include="..\..\Src\Logic\Messages\MessageAddWeapon.cpp">
       <Filter>Messages\Source</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Src\Logic\Entity\Components\SpawnPlayer.cpp">
-      <Filter>Entity\Components\Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Src\Logic\GameSpawnManager.cpp">
       <Filter>Maps\Source Files</Filter>
     </ClCompile>
@@ -223,17 +226,11 @@
     <ClCompile Include="..\..\Src\Logic\Messages\MessageCameraToEnemy.cpp">
       <Filter>Messages\Source</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Src\Logic\Entity\Components\Jumper.cpp">
-      <Filter>Entity\Components\Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Src\Logic\Messages\MessageWakeUp.cpp">
       <Filter>Messages\Source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Src\Logic\Messages\MessageSleep.cpp">
       <Filter>Messages\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Logic\Entity\Components\ShootGrenadeLauncher.cpp">
-      <Filter>Entity\Components\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Src\Logic\Messages\MessageActivate.cpp">
       <Filter>Messages\Source</Filter>
@@ -253,68 +250,20 @@
     <ClCompile Include="..\..\Src\Logic\Messages\MessageSyncPosition.cpp">
       <Filter>Messages\Source</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Src\Logic\Entity\Components\Interpolation.cpp">
-      <Filter>Entity\Components\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Logic\Entity\Components\UpdateClientPosition.cpp">
-      <Filter>Entity\Components\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Logic\Entity\Components\ShootProjectile.cpp">
-      <Filter>Entity\Components\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Logic\Entity\Components\ShootRaycast.cpp">
-      <Filter>Entity\Components\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Logic\Entity\Components\Lava.cpp">
-      <Filter>Entity\Components\Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Src\Logic\Messages\MessageSide.cpp">
       <Filter>Messages\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Logic\Entity\Components\ShootSniper.cpp">
-      <Filter>Entity\Components\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Logic\Entity\Components\ShootMiniGun.cpp">
-      <Filter>Entity\Components\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Src\Logic\Messages\MessageAddForcePlayer.cpp">
       <Filter>Messages\Source</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Src\Logic\Entity\Components\Elevator.cpp">
-      <Filter>Entity\Components\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Logic\Entity\Components\ElevatorTrigger.cpp">
-      <Filter>Entity\Components\Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Src\Logic\Messages\MessageAddForcePhysics.cpp">
       <Filter>Messages\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Logic\Entity\Components\Spike.cpp">
-      <Filter>Entity\Components\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Logic\Entity\Components\Hacksaw.cpp">
-      <Filter>Entity\Components\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Src\Logic\Messages\MessageContactEnter.cpp">
       <Filter>Messages\Source</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Src\Logic\Entity\Components\ShootRocketLauncher.cpp">
-      <Filter>Entity\Components\Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Src\Logic\Messages\MessageSetPhysicPosition.cpp">
       <Filter>Messages\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Logic\Entity\Components\RocketController.cpp">
-      <Filter>Entity\Components\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Logic\Entity\Components\GrenadeController.cpp">
-      <Filter>Entity\Components\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Logic\Entity\Components\Light.cpp">
-      <Filter>Entity\Components\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Logic\Entity\Components\ClientRespawn.cpp">
-      <Filter>Entity\Components\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Src\Logic\Messages\MessagePlayerSpawn.cpp">
       <Filter>Messages\Source</Filter>
@@ -322,29 +271,8 @@
     <ClCompile Include="..\..\Src\Logic\Messages\MessageContactExit.cpp">
       <Filter>Messages\Source</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Src\Logic\Entity\Components\Audio.cpp">
-      <Filter>Entity\Components\Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Src\Logic\Messages\MessageAudio.cpp">
       <Filter>Messages\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Logic\Entity\Components\PhysicStaticEntity.cpp">
-      <Filter>Entity\Components\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Logic\Entity\Components\PhysicDynamicEntity.cpp">
-      <Filter>Entity\Components\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Logic\Entity\Components\PlayerClass.cpp">
-      <Filter>Entity\Components\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Logic\Entity\Components\Archangel.cpp">
-      <Filter>Entity\Components\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Logic\Entity\Components\Hound.cpp">
-      <Filter>Entity\Components\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Logic\Entity\Components\Shadow.cpp">
-      <Filter>Entity\Components\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Src\Logic\Messages\MessageChangePlayerClass.cpp">
       <Filter>Messages\Source</Filter>
@@ -358,14 +286,8 @@
     <ClCompile Include="..\..\Src\Logic\Messages\MessageBerserker.cpp">
       <Filter>Messages\Source</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Src\Logic\Entity\Components\ScreamerShieldDamageNotifier.cpp">
-      <Filter>Entity\Components\Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Src\Logic\Messages\MessageHudDebug.cpp">
       <Filter>Messages\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Logic\Entity\Components\Particle.cpp">
-      <Filter>Entity\Components\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Src\Logic\Maps\GUIManager.cpp">
       <Filter>Maps\Source Files</Filter>
@@ -376,19 +298,157 @@
     <ClCompile Include="..\..\Src\Logic\Messages\MessageHudDebugData.cpp">
       <Filter>Messages\Source</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Src\Logic\Entity\Components\GlowingGraphics.cpp">
-      <Filter>Entity\Components\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Logic\Entity\Components\ScreamerClient.cpp">
-      <Filter>Entity\Components\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Logic\Entity\Components\ScreamerServer.cpp">
-      <Filter>Entity\Components\Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Src\Logic\Messages\MessageDeactivateScreamerShield.cpp">
       <Filter>Messages\Source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Src\Logic\Messages\MessageActivateScreamerShield.cpp">
+      <Filter>Messages\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\AnimatedGraphics.cpp">
+      <Filter>Entity\Components\Graphics\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\ArrayGraphics.cpp">
+      <Filter>Entity\Components\Graphics\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\Camera.cpp">
+      <Filter>Entity\Components\Graphics\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\GlowingGraphics.cpp">
+      <Filter>Entity\Components\Graphics\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\Graphics.cpp">
+      <Filter>Entity\Components\Graphics\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\HudOverlay.cpp">
+      <Filter>Entity\Components\Graphics\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\Light.cpp">
+      <Filter>Entity\Components\Graphics\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\Particle.cpp">
+      <Filter>Entity\Components\Graphics\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\Interpolation.cpp">
+      <Filter>Entity\Components\Network\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\NetConnector.cpp">
+      <Filter>Entity\Components\Network\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\UpdateClientPosition.cpp">
+      <Filter>Entity\Components\Network\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\Audio.cpp">
+      <Filter>Entity\Components\Audio\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\AvatarController.cpp">
+      <Filter>Entity\Components\Gameplay\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\ClientRespawn.cpp">
+      <Filter>Entity\Components\Gameplay\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\DamageTrigger.cpp">
+      <Filter>Entity\Components\Gameplay\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\Elevator.cpp">
+      <Filter>Entity\Components\Gameplay\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\ElevatorTrigger.cpp">
+      <Filter>Entity\Components\Gameplay\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\FloatingMovement.cpp">
+      <Filter>Entity\Components\Gameplay\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\Hacksaw.cpp">
+      <Filter>Entity\Components\Gameplay\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\Jumper.cpp">
+      <Filter>Entity\Components\Gameplay\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\Lava.cpp">
+      <Filter>Entity\Components\Gameplay\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\Life.cpp">
+      <Filter>Entity\Components\Gameplay\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\SpawnItemManager.cpp">
+      <Filter>Entity\Components\Gameplay\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\SpawnPlayer.cpp">
+      <Filter>Entity\Components\Gameplay\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\Spike.cpp">
+      <Filter>Entity\Components\Gameplay\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\SwitchPosition.cpp">
+      <Filter>Entity\Components\Gameplay\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\PhysicController.cpp">
+      <Filter>Entity\Components\Physics\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\PhysicDynamicEntity.cpp">
+      <Filter>Entity\Components\Physics\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\PhysicStaticEntity.cpp">
+      <Filter>Entity\Components\Physics\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\Shoot.cpp">
+      <Filter>Entity\Components\Weapons\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\ShootSniper.cpp">
+      <Filter>Entity\Components\Weapons\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\ShootGrenadeLauncher.cpp">
+      <Filter>Entity\Components\Weapons\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\ShootHammer.cpp">
+      <Filter>Entity\Components\Weapons\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\ShootMiniGun.cpp">
+      <Filter>Entity\Components\Weapons\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\ShootProjectile.cpp">
+      <Filter>Entity\Components\Weapons\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\ShootRaycast.cpp">
+      <Filter>Entity\Components\Weapons\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\ShootRocketLauncher.cpp">
+      <Filter>Entity\Components\Weapons\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\ShootShotGun.cpp">
+      <Filter>Entity\Components\Weapons\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\RocketController.cpp">
+      <Filter>Entity\Components\Weapons\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\GrenadeController.cpp">
+      <Filter>Entity\Components\Weapons\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\Shadow.cpp">
+      <Filter>Entity\Components\Skills\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\ScreamerShieldDamageNotifier.cpp">
+      <Filter>Entity\Components\Skills\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\ScreamerServer.cpp">
+      <Filter>Entity\Components\Skills\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\ScreamerClient.cpp">
+      <Filter>Entity\Components\Skills\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\PlayerClass.cpp">
+      <Filter>Entity\Components\Skills\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\Hound.cpp">
+      <Filter>Entity\Components\Skills\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\Archangel.cpp">
+      <Filter>Entity\Components\Skills\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\WeaponsManager.cpp">
+      <Filter>Entity\Components\Weapons\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Messages\MessageSetRelatedEntity.cpp">
       <Filter>Messages\Source</Filter>
     </ClCompile>
   </ItemGroup>
@@ -420,38 +480,11 @@
     <ClInclude Include="..\..\Src\Logic\Entity\Entity.h">
       <Filter>Entity\Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Src\Logic\Entity\Components\AnimatedGraphics.h">
-      <Filter>Entity\Components\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Logic\Entity\Components\AvatarController.h">
-      <Filter>Entity\Components\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Logic\Entity\Components\Camera.h">
-      <Filter>Entity\Components\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Logic\Entity\Components\Graphics.h">
-      <Filter>Entity\Components\Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Documentation.h">
       <Filter>Maps\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Server.h">
       <Filter>Maps\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Logic\Entity\Components\DamageTrigger.h">
-      <Filter>Entity\Components\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Logic\Entity\Components\Life.h">
-      <Filter>Entity\Components\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Logic\Entity\Components\SwitchPosition.h">
-      <Filter>Entity\Components\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Logic\Entity\Components\PhysicController.h">
-      <Filter>Entity\Components\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Logic\Entity\Components\Physics.h">
-      <Filter>Entity\Components\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Maps\ComponentID.h">
       <Filter>Entity\Header Files</Filter>
@@ -459,20 +492,8 @@
     <ClInclude Include="..\..\Src\Logic\Maps\IIdentifier.h">
       <Filter>Entity\Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Src\Logic\Entity\Components\NetConnector.h">
-      <Filter>Entity\Components\Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Src\Logic\GameNetMsgManager.h">
       <Filter>Maps\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Logic\Entity\Components\ArrayGraphics.h">
-      <Filter>Entity\Components\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Logic\Entity\Components\WeaponsManager.h">
-      <Filter>Entity\Components\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Logic\Entity\Components\ShootShotGun.h">
-      <Filter>Entity\Components\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Messages\Message.h">
       <Filter>Messages\Header</Filter>
@@ -519,17 +540,8 @@
     <ClInclude Include="..\..\Src\Logic\Messages\MessageRebound.h">
       <Filter>Messages\Header</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Src\Logic\Entity\Components\Shoot.h">
-      <Filter>Entity\Components\Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Messages\MessageDamaged.h">
       <Filter>Messages\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Logic\Entity\Components\HudOverlay.h">
-      <Filter>Entity\Components\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Logic\Entity\Components\ShootHammer.h">
-      <Filter>Entity\Components\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Entity\MessageFactory.h">
       <Filter>Entity\Header Files</Filter>
@@ -546,12 +558,6 @@
     <ClInclude Include="..\..\Src\Logic\Messages\MessageAddLife.h">
       <Filter>Messages\Header</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Src\Logic\Entity\Components\FloatingMovement.h">
-      <Filter>Entity\Components\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Logic\Entity\Components\SpawnItemManager.h">
-      <Filter>Entity\Components\Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Messages\MessagePlayerDead.h">
       <Filter>Messages\Header</Filter>
     </ClInclude>
@@ -567,9 +573,6 @@
     <ClInclude Include="..\..\Src\Logic\Messages\MessageAddWeapon.h">
       <Filter>Messages\Header</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Src\Logic\Entity\Components\SpawnPlayer.h">
-      <Filter>Entity\Components\Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Src\Logic\GameSpawnManager.h">
       <Filter>Maps\Header Files</Filter>
     </ClInclude>
@@ -579,17 +582,11 @@
     <ClInclude Include="..\..\Src\Logic\Messages\MessageCameraToEnemy.h">
       <Filter>Messages\Header</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Src\Logic\Entity\Components\Jumper.h">
-      <Filter>Entity\Components\Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Messages\MessageWakeUp.h">
       <Filter>Messages\Header</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Messages\MessageSleep.h">
       <Filter>Messages\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Logic\Entity\Components\ShootGrenadeLauncher.h">
-      <Filter>Entity\Components\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Messages\MessageActivate.h">
       <Filter>Messages\Header</Filter>
@@ -609,68 +606,20 @@
     <ClInclude Include="..\..\Src\Logic\Messages\MessageSyncPosition.h">
       <Filter>Messages\Header</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Src\Logic\Entity\Components\Interpolation.h">
-      <Filter>Entity\Components\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Logic\Entity\Components\UpdateClientPosition.h">
-      <Filter>Entity\Components\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Logic\Entity\Components\ShootProjectile.h">
-      <Filter>Entity\Components\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Logic\Entity\Components\ShootRaycast.h">
-      <Filter>Entity\Components\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Logic\Entity\Components\Lava.h">
-      <Filter>Entity\Components\Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Messages\MessageSide.h">
       <Filter>Messages\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Logic\Entity\Components\ShootSniper.h">
-      <Filter>Entity\Components\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Logic\Entity\Components\ShootMiniGun.h">
-      <Filter>Entity\Components\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Messages\MessageAddForcePlayer.h">
       <Filter>Messages\Header</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Src\Logic\Entity\Components\Elevator.h">
-      <Filter>Entity\Components\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Logic\Entity\Components\ElevatorTrigger.h">
-      <Filter>Entity\Components\Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Messages\MessageAddForcePhysics.h">
       <Filter>Messages\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Logic\Entity\Components\Spike.h">
-      <Filter>Entity\Components\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Logic\Entity\Components\Hacksaw.h">
-      <Filter>Entity\Components\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Messages\MessageContactEnter.h">
       <Filter>Messages\Header</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Src\Logic\Entity\Components\ShootRocketLauncher.h">
-      <Filter>Entity\Components\Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Messages\MessageSetPhysicPosition.h">
       <Filter>Messages\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Logic\Entity\Components\RocketController.h">
-      <Filter>Entity\Components\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Logic\Entity\Components\GrenadeController.h">
-      <Filter>Entity\Components\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Logic\Entity\Components\Light.h">
-      <Filter>Entity\Components\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Logic\Entity\Components\ClientRespawn.h">
-      <Filter>Entity\Components\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Messages\MessageContactExit.h">
       <Filter>Messages\Header</Filter>
@@ -678,29 +627,8 @@
     <ClInclude Include="..\..\Src\Logic\Messages\MessagePlayerSpawn.h">
       <Filter>Messages\Header</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Src\Logic\Entity\Components\Audio.h">
-      <Filter>Entity\Components\Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Messages\MessageAudio.h">
       <Filter>Messages\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Logic\Entity\Components\PhysicStaticEntity.h">
-      <Filter>Entity\Components\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Logic\Entity\Components\PhysicDynamicEntity.h">
-      <Filter>Entity\Components\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Logic\Entity\Components\PlayerClass.h">
-      <Filter>Entity\Components\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Logic\Entity\Components\Archangel.h">
-      <Filter>Entity\Components\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Logic\Entity\Components\Hound.h">
-      <Filter>Entity\Components\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Logic\Entity\Components\Shadow.h">
-      <Filter>Entity\Components\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Messages\MessageChangePlayerClass.h">
       <Filter>Messages\Header</Filter>
@@ -714,14 +642,8 @@
     <ClInclude Include="..\..\Src\Logic\Messages\MessageBerserker.h">
       <Filter>Messages\Header</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Src\Logic\Entity\Components\ScreamerShieldDamageNotifier.h">
-      <Filter>Entity\Components\Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Messages\MessageHudDebug.h">
       <Filter>Messages\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Logic\Entity\Components\Particle.h">
-      <Filter>Entity\Components\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Maps\GUIManager.h">
       <Filter>Maps\Header Files</Filter>
@@ -732,19 +654,160 @@
     <ClInclude Include="..\..\Src\Logic\Messages\MessageHudDebugData.h">
       <Filter>Messages\Header</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Src\Logic\Entity\Components\GlowingGraphics.h">
-      <Filter>Entity\Components\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Logic\Entity\Components\ScreamerClient.h">
-      <Filter>Entity\Components\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Logic\Entity\Components\ScreamerServer.h">
-      <Filter>Entity\Components\Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Messages\MessageDeactivateScreamerShield.h">
       <Filter>Messages\Header</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Messages\MessageActivateScreamerShield.h">
+      <Filter>Messages\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\ShootRocketLauncher.h">
+      <Filter>Entity\Components\Weapons\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\ShootRaycast.h">
+      <Filter>Entity\Components\Weapons\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\ShootProjectile.h">
+      <Filter>Entity\Components\Weapons\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\ShootMiniGun.h">
+      <Filter>Entity\Components\Weapons\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\ShootHammer.h">
+      <Filter>Entity\Components\Weapons\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\ShootGrenadeLauncher.h">
+      <Filter>Entity\Components\Weapons\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\Shoot.h">
+      <Filter>Entity\Components\Weapons\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\ShootShotGun.h">
+      <Filter>Entity\Components\Weapons\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\ShootSniper.h">
+      <Filter>Entity\Components\Weapons\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\WeaponsManager.h">
+      <Filter>Entity\Components\Weapons\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\RocketController.h">
+      <Filter>Entity\Components\Weapons\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\GrenadeController.h">
+      <Filter>Entity\Components\Weapons\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\Shadow.h">
+      <Filter>Entity\Components\Skills\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\ScreamerShieldDamageNotifier.h">
+      <Filter>Entity\Components\Skills\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\ScreamerServer.h">
+      <Filter>Entity\Components\Skills\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\ScreamerClient.h">
+      <Filter>Entity\Components\Skills\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\PlayerClass.h">
+      <Filter>Entity\Components\Skills\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\Hound.h">
+      <Filter>Entity\Components\Skills\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\Archangel.h">
+      <Filter>Entity\Components\Skills\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\PhysicStaticEntity.h">
+      <Filter>Entity\Components\Physics\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\Physics.h">
+      <Filter>Entity\Components\Physics\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\PhysicDynamicEntity.h">
+      <Filter>Entity\Components\Physics\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\PhysicController.h">
+      <Filter>Entity\Components\Physics\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\UpdateClientPosition.h">
+      <Filter>Entity\Components\Network\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\NetConnector.h">
+      <Filter>Entity\Components\Network\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\Interpolation.h">
+      <Filter>Entity\Components\Network\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\AnimatedGraphics.h">
+      <Filter>Entity\Components\Graphics\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\ArrayGraphics.h">
+      <Filter>Entity\Components\Graphics\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\GlowingGraphics.h">
+      <Filter>Entity\Components\Graphics\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\Graphics.h">
+      <Filter>Entity\Components\Graphics\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\Light.h">
+      <Filter>Entity\Components\Graphics\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\Particle.h">
+      <Filter>Entity\Components\Graphics\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\Audio.h">
+      <Filter>Entity\Components\Audio\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\Camera.h">
+      <Filter>Entity\Components\Graphics\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\HudOverlay.h">
+      <Filter>Entity\Components\Graphics\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\SwitchPosition.h">
+      <Filter>Entity\Components\Gameplay\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\AvatarController.h">
+      <Filter>Entity\Components\Gameplay\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\ClientRespawn.h">
+      <Filter>Entity\Components\Gameplay\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\DamageTrigger.h">
+      <Filter>Entity\Components\Gameplay\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\Elevator.h">
+      <Filter>Entity\Components\Gameplay\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\ElevatorTrigger.h">
+      <Filter>Entity\Components\Gameplay\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\FloatingMovement.h">
+      <Filter>Entity\Components\Gameplay\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\Hacksaw.h">
+      <Filter>Entity\Components\Gameplay\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\Jumper.h">
+      <Filter>Entity\Components\Gameplay\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\Lava.h">
+      <Filter>Entity\Components\Gameplay\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\Life.h">
+      <Filter>Entity\Components\Gameplay\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\SpawnItemManager.h">
+      <Filter>Entity\Components\Gameplay\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\SpawnPlayer.h">
+      <Filter>Entity\Components\Gameplay\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\Spike.h">
+      <Filter>Entity\Components\Gameplay\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Messages\MessageSetRelatedEntity.h">
       <Filter>Messages\Header</Filter>
     </ClInclude>
   </ItemGroup>

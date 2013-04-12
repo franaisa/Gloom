@@ -12,7 +12,7 @@
 #define __Logic_GlowingGraphics_H
 
 #include "Logic/Entity/Component.h"
-#include "Graphics.h"
+#include "AnimatedGraphics.h"
 
 // Predeclaración de clases para ahorrar tiempo de compilación
 namespace Graphics {
@@ -31,7 +31,7 @@ namespace Logic {
 	@date Agosto, 2010
 	*/
 	
-	class CGlowingGraphics : public CGraphics {
+	class CGlowingGraphics : public CAnimatedGraphics {
 		DEC_FACTORY(CGlowingGraphics);
 	public:
 

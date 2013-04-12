@@ -80,6 +80,8 @@ namespace Logic {
 
 		//__________________________________________________________________
 
+		virtual void onStart(unsigned int msecs);
+
 		/**
 		Método llamado en cada frame.
 

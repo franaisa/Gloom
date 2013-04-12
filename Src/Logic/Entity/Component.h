@@ -85,7 +85,7 @@ namespace Logic
 		/**
 		Constructor por defecto; en la clase base no hace nada.
 		*/
-		IComponent() : _entity(0), _activate(true) {}
+		IComponent();
 
 		/**
 		Destructor (virtual); en la clase base no hace nada.
@@ -117,7 +117,10 @@ namespace Logic
 
 		@return true si todo ha ido correctamente.
 		*/
-		virtual bool isActivate() {return _activate;}
+		inline bool isActivated() { return _isActivated; }
+
+		inline bool isStartingUp() { return _isStartingUp; }
+
 		/**
 		Método que activa el componente; invocado cuando se activa
 		el mapa donde está la entidad a la que pertenece el componente.
@@ -128,9 +131,7 @@ namespace Logic
 
 		@return true si todo ha ido correctamente.
 		*/
-		virtual void activate() {_activate = true;
-				clearMessages();
-		}
+		virtual void activate();
 		
 		/**
 		Método que desactiva el componente; invocado cuando se
@@ -141,7 +142,11 @@ namespace Logic
 		La implementación eliminará al componente de algunos observers en los 
 		que pueda estar registrado (como el cronómetro del sistema, etc.).
 		*/
-		virtual void deactivate() {_activate = false;}
+		virtual void deactivate();
+
+		// Es muy importante que se llame en los hijos a onStart de la clase padre
+		// si no, no se reciben mensajes ni se setean bien las colas.
+		virtual void onStart(unsigned int msecs);
 
 		/**
 		Método llamado en cada frame que actualiza el estado del componente.
@@ -184,7 +189,9 @@ namespace Logic
 		Entidad que contiene al componente. Para reenviar el mensaje a 
 		los otros componentes
 		*/
-		bool _activate;
+		bool _isActivated;
+
+		bool _isStartingUp;
 
 	}; // class IComponent
 

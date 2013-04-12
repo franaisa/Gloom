@@ -27,6 +27,8 @@ implementa las habilidades del personaje
 #include "Logic/Messages/MessageAddForcePlayer.h"
 #include "Logic/Messages/MessageDamaged.h"
 #include "Logic/Messages/MessageChangeMaterial.h"
+#include "Logic/Messages/MessageSetRelatedEntity.h"
+#include "Logic/Maps/Map.h"
 
 // Física
 #include "Physics/Server.h"
@@ -48,18 +50,6 @@ namespace Logic {
 	CScreamerClient::CScreamerClient() : CPlayerClass("screamer"),
 										_shieldIsActive(false) {
 
-		// Creamos la entidad escudo que en el cliente solo será un gráfico
-											
-		// Obtenemos la informacion asociada al arquetipo de la granada
-		Map::CEntity* screamerShieldInfo = CEntityFactory::getSingletonPtr()->getInfo("ScreamerShield"); // deberia ser screamerShieldClient
-		// Creamos la entidad y la activamos
-		_screamerShield = CEntityFactory::getSingletonPtr()->createEntity( screamerShieldInfo, Logic::CServer::getSingletonPtr()->getMap() );
-		assert(_screamerShield != NULL);
-
-		CGraphics* shieldGraphics = _screamerShield->getComponent<CGraphics>("CGraphics");
-		assert(shieldGraphics && "Error: La entidad ScreamerShield no tiene un componente CGraphics");
-		shieldGraphics->setVisible(false);
-		_screamerShield->deactivate();
 	}
 
 	//__________________________________________________________________
@@ -73,8 +63,9 @@ namespace Logic {
 	bool CScreamerClient::accept(CMessage* message) {
 		Logic::TMessageType msgType = message->getMessageType();
 
-		return msgType == Message::ACTIVATE_SCREAMER_SHIELD || 
-			   msgType == Message::DEACTIVATE_SCREAMER_SHIELD;
+		return msgType == Message::ACTIVATE_SCREAMER_SHIELD		|| 
+			   msgType == Message::DEACTIVATE_SCREAMER_SHIELD	||
+			   msgType == Message::SET_RELATED_ENTITY;
 	}
 
 	//__________________________________________________________________
@@ -83,12 +74,15 @@ namespace Logic {
 		switch( message->getMessageType() ) {
 			case Message::ACTIVATE_SCREAMER_SHIELD: {
 				activateScreamerShield();
-
 				break;
 			}
 			case Message::DEACTIVATE_SCREAMER_SHIELD: {
 				deactivateScreamerShield();
-
+				break;
+			}
+			case Message::SET_RELATED_ENTITY: {
+				_screamerShield = static_cast<CMessageSetRelatedEntity*>(message)->getRelatedEntity();
+				deactivateScreamerShield();
 				break;
 			}
 		}
