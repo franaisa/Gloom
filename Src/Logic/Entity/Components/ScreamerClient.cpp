@@ -27,6 +27,8 @@ implementa las habilidades del personaje
 #include "Logic/Messages/MessageAddForcePlayer.h"
 #include "Logic/Messages/MessageDamaged.h"
 #include "Logic/Messages/MessageChangeMaterial.h"
+#include "Logic/Messages/MessageSetOwner.h"
+#include "Logic/Maps/Map.h"
 
 // Física
 #include "Physics/Server.h"
@@ -48,19 +50,6 @@ namespace Logic {
 	CScreamerClient::CScreamerClient() : CPlayerClass("screamer"),
 										_shieldIsActive(false) {
 
-		// Creamos la entidad escudo que en el cliente solo será un gráfico
-		
-		// Obtenemos la informacion asociada al arquetipo de la granada
-		Map::CEntity* screamerShieldInfo = CEntityFactory::getSingletonPtr()->getInfo("ScreamerShield"); // deberia ser screamerShieldClient
-
-		// Creamos la entidad y la activamos <--- CREACIÓN DINÁMICA!!!
-		_screamerShield = CEntityFactory::getSingletonPtr()->createEntity( screamerShieldInfo, Logic::CServer::getSingletonPtr()->getMap() );
-		assert(_screamerShield != NULL);
-
-		CGraphics* shieldGraphics = _screamerShield->getComponent<CGraphics>("CGraphics");
-		assert(shieldGraphics && "Error: La entidad ScreamerShield no tiene un componente CGraphics");
-		shieldGraphics->setVisible(false);
-		_screamerShield->deactivate();
 	}
 
 	//__________________________________________________________________
@@ -74,8 +63,9 @@ namespace Logic {
 	bool CScreamerClient::accept(CMessage* message) {
 		Logic::TMessageType msgType = message->getMessageType();
 
-		return msgType == Message::ACTIVATE_SCREAMER_SHIELD || 
-			   msgType == Message::DEACTIVATE_SCREAMER_SHIELD;
+		return msgType == Message::ACTIVATE_SCREAMER_SHIELD		|| 
+			   msgType == Message::DEACTIVATE_SCREAMER_SHIELD	||
+			   msgType == Message::SET_OWNER;
 	}
 
 	//__________________________________________________________________
@@ -83,13 +73,19 @@ namespace Logic {
 	void CScreamerClient::process(CMessage* message) {
 		switch( message->getMessageType() ) {
 			case Message::ACTIVATE_SCREAMER_SHIELD: {
+				std::cout << "Recibo activar el escudo" << std::endl;
 				activateScreamerShield();
-
 				break;
 			}
 			case Message::DEACTIVATE_SCREAMER_SHIELD: {
+				std::cout << "Recibo desactivar el escudo" << std::endl;
 				deactivateScreamerShield();
-
+				break;
+			}
+			case Message::SET_OWNER: {
+				std::cout << "Recibo un set owner" << std::endl;
+				_screamerShield = static_cast<CMessageSetOwner*>(message)->getOwner();
+				deactivateScreamerShield();
 				break;
 			}
 		}

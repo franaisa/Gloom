@@ -375,4 +375,5 @@ Map = {
 		physic_shape = "box",
 		physic_dimensions = { 4, 7, 4 },
 	},
+
 }
