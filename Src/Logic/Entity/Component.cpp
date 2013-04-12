@@ -33,6 +33,7 @@ namespace Logic
 	//---------------------------------------------------------
 	
 	void IComponent::activate() {
+		if(_isActivated)return;
 		_isActivated = true;
 		_isStartingUp = true;
 		clearMessages();

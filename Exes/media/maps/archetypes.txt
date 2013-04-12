@@ -463,6 +463,26 @@ Map = {
 		audioSpawn = "media/audio/spawn.wav",
 		audioNoAmmo = "media/audio/noammo.wav",
 		
+		shadowPrimarySkillCooldown = 15,
+		shadowSecondarySkillCooldown = 3,
+		shadowInvisibilityDuration = 5,
+		
+		screamerPrimarySkillCooldown = 0,
+		screamerSecondarySkillCooldown = 2,
+		screamerShieldThreshold = 100,
+		screamerShieldDamageTimeStep = 2,
+		screamerShieldDamageOverTime = 1,
+		screamerShieldRecoveryTimeStep = 0.5,
+		screamerShieldRecoveryOverTime = 2,
+		screamerExplotionDamage = 200,
+		screamerExplotionRadius = 15,
+		
+		houndPrimarySkillCooldown = 1,
+		houndSecondarySkillCooldown = 1,
+		
+		archangelPrimarySkillCooldown = 0.5,
+		archangelSecondarySkillCooldown = 0.5,
+		
 			weaponhammerName = "hammer",
 			weaponhammerModel = "hammer.mesh",
 			weaponhammerModelYaw = 0,

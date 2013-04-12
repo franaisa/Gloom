@@ -56,6 +56,8 @@ namespace Logic  {
 		*/
 		virtual bool accept(CMessage *message);
 
+		virtual void activate(){}
+
 		//________________________________________________________________________
 
 		/**
