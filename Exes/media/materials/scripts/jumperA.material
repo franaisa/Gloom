@@ -45,10 +45,12 @@ material Jump_Halo
 			scene_blend alpha_blend
 			cull_hardware none
 			cull_software none
-
+			depth_write off
 			texture_unit
 			{
+				colour_op alpha_blend
 				texture Halo_Azul.tga
+				
 			}
 		}
 	}
