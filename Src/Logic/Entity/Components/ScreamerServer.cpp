@@ -29,7 +29,7 @@ implementa las habilidades del personaje
 #include "Logic/Messages/MessageChangeMaterial.h"
 #include "Logic/Messages/MessageActivateScreamerShield.h"
 #include "Logic/Messages/MessageDeactivateScreamerShield.h"
-#include "Logic/Messages/MessageSetOwner.h"
+#include "Logic/Messages/MessageSetRelatedEntity.h"
 
 // Física
 #include "Physics/Server.h"
@@ -89,7 +89,8 @@ namespace Logic {
 	void CScreamerServer::onStart(unsigned int msecs) {
 		CPlayerClass::onStart(msecs);
 
-		
+		// Mandar el mensaje de set related entity aqui si es que vamos
+		// a hacerlo con una sola inicializacion
 	}
 
 	//__________________________________________________________________
@@ -175,9 +176,9 @@ namespace Logic {
 			_screamerShield = CEntityFactory::getSingletonPtr()->createEntity( screamerShieldInfo, Logic::CServer::getSingletonPtr()->getMap() );
 			assert(_screamerShield != NULL);
 
-			CMessageSetOwner* setOwnerMsg = new CMessageSetOwner;
-			setOwnerMsg->setOwner(_screamerShield);
-			_entity->emitMessage(setOwnerMsg);
+			CMessageSetRelatedEntity* relatedEntityMsg = new CMessageSetRelatedEntity;
+			relatedEntityMsg->setRelatedEntity(_screamerShield);
+			_entity->emitMessage(relatedEntityMsg);
 
 			// Fijamos a nuestra entidad como dueña de la entidad creada en el componente
 			// que recibe las notificaciones de daño.

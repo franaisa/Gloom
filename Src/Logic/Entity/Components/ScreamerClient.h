@@ -64,6 +64,7 @@ namespace Logic {
 		<ul>
 			<li>ACTIVATE_SCREAMER_SHIELD</li>
 			<li>DEACTIVATE_SCREAMER_SHIELD</li>
+			<li>SET_RELATED_ENTITY</li>
 		</ul>
 		
 		@param message Mensaje a chequear.

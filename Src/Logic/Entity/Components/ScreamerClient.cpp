@@ -27,7 +27,7 @@ implementa las habilidades del personaje
 #include "Logic/Messages/MessageAddForcePlayer.h"
 #include "Logic/Messages/MessageDamaged.h"
 #include "Logic/Messages/MessageChangeMaterial.h"
-#include "Logic/Messages/MessageSetOwner.h"
+#include "Logic/Messages/MessageSetRelatedEntity.h"
 #include "Logic/Maps/Map.h"
 
 // Física
@@ -65,7 +65,7 @@ namespace Logic {
 
 		return msgType == Message::ACTIVATE_SCREAMER_SHIELD		|| 
 			   msgType == Message::DEACTIVATE_SCREAMER_SHIELD	||
-			   msgType == Message::SET_OWNER;
+			   msgType == Message::SET_RELATED_ENTITY;
 	}
 
 	//__________________________________________________________________
@@ -73,18 +73,15 @@ namespace Logic {
 	void CScreamerClient::process(CMessage* message) {
 		switch( message->getMessageType() ) {
 			case Message::ACTIVATE_SCREAMER_SHIELD: {
-				std::cout << "Recibo activar el escudo" << std::endl;
 				activateScreamerShield();
 				break;
 			}
 			case Message::DEACTIVATE_SCREAMER_SHIELD: {
-				std::cout << "Recibo desactivar el escudo" << std::endl;
 				deactivateScreamerShield();
 				break;
 			}
-			case Message::SET_OWNER: {
-				std::cout << "Recibo un set owner" << std::endl;
-				_screamerShield = static_cast<CMessageSetOwner*>(message)->getOwner();
+			case Message::SET_RELATED_ENTITY: {
+				_screamerShield = static_cast<CMessageSetRelatedEntity*>(message)->getRelatedEntity();
 				deactivateScreamerShield();
 				break;
 			}

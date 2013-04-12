@@ -448,7 +448,7 @@
     <ClCompile Include="..\..\Src\Logic\Entity\Components\WeaponsManager.cpp">
       <Filter>Entity\Components\Weapons\Source</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Src\Logic\Messages\MessageSetOwner.cpp">
+    <ClCompile Include="..\..\Src\Logic\Messages\MessageSetRelatedEntity.cpp">
       <Filter>Messages\Source</Filter>
     </ClCompile>
   </ItemGroup>
@@ -807,7 +807,7 @@
     <ClInclude Include="..\..\Src\Logic\Entity\Components\Spike.h">
       <Filter>Entity\Components\Gameplay\Header</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Src\Logic\Messages\MessageSetOwner.h">
+    <ClInclude Include="..\..\Src\Logic\Messages\MessageSetRelatedEntity.h">
       <Filter>Messages\Header</Filter>
     </ClInclude>
   </ItemGroup>
