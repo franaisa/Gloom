@@ -257,17 +257,12 @@ namespace Logic {
 	
 	//________________________________________________________________________
 
-	Logic::CEntity *CEntityFactory::createEntity(Map::CEntity *entityInfo, Logic::CMap *map, CEntity* owner) {
+	Logic::CEntity *CEntityFactory::createEntity(Map::CEntity *entityInfo, Logic::CMap *map) {
 		std::string entityType = entityInfo->getType();
-		CEntity *ret = assembleEntity(entityType);
+		CEntity* ret = assembleEntity(entityType);
 		
 		if(!ret) 
 			return NULL;
-		
-		if(owner) {
-			// Asignamos el owner a la entidad creada
-
-		}
 
 		// Añadimos la nueva entidad en el mapa antes de inicializarla.
 		map->addEntity(ret);
@@ -289,7 +284,7 @@ namespace Logic {
 
 	//________________________________________________________________________
 
-	Logic::CEntity* CEntityFactory::createEntityWithPosition(Map::CEntity *entityInfo, CMap *map, const Vector3& position, CEntity* owner) {
+	Logic::CEntity* CEntityFactory::createEntityWithPosition(Map::CEntity *entityInfo, CMap *map, const Vector3& position) {
 		// Pasamos el vector3 a string y se lo seteamos al entityInfo para mas tarde
 		// llamar al createEntity
 		std::stringstream ss (std::stringstream::in | std::stringstream::out);
@@ -302,20 +297,20 @@ namespace Logic {
 
 		entityInfo->setAttribute( "position", ss.str() );
 
-		return createEntity(entityInfo, map, owner);
+		return createEntity(entityInfo, map);
 	} // createEntity
 
 	//________________________________________________________________________
 
-	Logic::CEntity* CEntityFactory::createEntityWithName(Map::CEntity* entityInfo, CMap *map, const std::string& name, CEntity* owner) {
+	Logic::CEntity* CEntityFactory::createEntityWithName(Map::CEntity* entityInfo, CMap *map, const std::string& name) {
 		entityInfo->setAttribute("name", name);
-		return createEntity(entityInfo, map, owner);
+		return createEntity(entityInfo, map);
 	}
 
 	//________________________________________________________________________
 
 	Logic::CEntity* CEntityFactory::createEntityWithNameAndPos(Map::CEntity* entityInfo, CMap* map, 
-															   const std::string& name, const Vector3& position, CEntity* owner) {
+															   const std::string& name, const Vector3& position) {
 		// Seteamos el nombre
 		entityInfo->setAttribute("name", name);
 		
@@ -331,12 +326,12 @@ namespace Logic {
 		entityInfo->setAttribute( "position", ss.str() );
 
 		// Creamos la entidad con la nueva información dada
-		return createEntity(entityInfo, map, owner);
+		return createEntity(entityInfo, map);
 	}
 
 	//________________________________________________________________________
 
-	Logic::CEntity *CEntityFactory::createEntityById(Map::CEntity *entityInfo, Logic::CMap *map, TEntityID id, CEntity* owner) {
+	Logic::CEntity *CEntityFactory::createEntityById(Map::CEntity *entityInfo, Logic::CMap *map, TEntityID id) {
 		std::string entityType = entityInfo->getType();
 		CEntity *ret = assembleEntity(entityType, id);
 		

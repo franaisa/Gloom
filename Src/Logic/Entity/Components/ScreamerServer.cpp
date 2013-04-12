@@ -61,6 +61,8 @@ namespace Logic {
 		_screamerShield = CEntityFactory::getSingletonPtr()->createEntity( screamerShieldInfo, Logic::CServer::getSingletonPtr()->getMap() );
 		assert(_screamerShield != NULL);
 
+		// MANDAR UN MENSAJE DE SET_OWNER
+
 		// Fijamos a nuestra entidad como dueña de la entidad creada en el componente
 		// que recibe las notificaciones de daño.
 		CScreamerShieldDamageNotifier* shieldDmgNotifier = _screamerShield->getComponent<CScreamerShieldDamageNotifier>("CScreamerShieldDamageNotifier");

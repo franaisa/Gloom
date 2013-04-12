@@ -115,9 +115,7 @@ namespace Logic {
 
 		//________________________________________________________________________
 
-		/**
-		Descarga el listado de entidades creadas
-		*/
+		/** Descarga el listado de entidades creadas */
 		void unloadBluePrints();
 
 		//________________________________________________________________________
@@ -138,7 +136,7 @@ namespace Logic {
 		@note Las entidades aquí creadas pueden eliminarse al final del 
 		juego o bien utilizando deferredDeleteEntity.
 		*/
-		CEntity* createEntity(Map::CEntity *entityInfo, CMap *map, CEntity* owner = NULL);
+		CEntity* createEntity(Map::CEntity *entityInfo, CMap *map);
 
 		//________________________________________________________________________
 
@@ -160,19 +158,19 @@ namespace Logic {
 		@note Las entidades aquí creadas pueden eliminarse al final del 
 		juego o bien utilizando deferredDeleteEntity.
 		*/
-		CEntity *createEntityById(Map::CEntity *entityInfo, CMap *map, TEntityID id, CEntity* owner = NULL);
+		CEntity *createEntityById(Map::CEntity *entityInfo, CMap *map, TEntityID id);
 
 		//________________________________________________________________________
 		
-		CEntity *createEntityWithPosition(Map::CEntity *entityInfo, CMap *map, const Vector3& position, CEntity* owner = NULL);
+		CEntity *createEntityWithPosition(Map::CEntity *entityInfo, CMap *map, const Vector3& position);
 
 		//________________________________________________________________________
 
-		CEntity* createEntityWithName(Map::CEntity* entityInfo, CMap *map, const std::string& name, CEntity* owner = NULL);
+		CEntity* createEntityWithName(Map::CEntity* entityInfo, CMap *map, const std::string& name);
 
 		//________________________________________________________________________
 
-		CEntity* createEntityWithNameAndPos(Map::CEntity* entityInfo, CMap *map, const std::string& name, const Vector3& position, CEntity* owner = NULL);
+		CEntity* createEntityWithNameAndPos(Map::CEntity* entityInfo, CMap *map, const std::string& name, const Vector3& position);
 
 		//________________________________________________________________________
 

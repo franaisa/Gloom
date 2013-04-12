@@ -448,6 +448,9 @@
     <ClCompile Include="..\..\Src\Logic\Entity\Components\WeaponsManager.cpp">
       <Filter>Entity\Components\Weapons\Source</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Messages\MessageSetOwner.cpp">
+      <Filter>Messages\Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Src\Logic\Maps\ComponentFactory.h">
@@ -803,6 +806,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Entity\Components\Spike.h">
       <Filter>Entity\Components\Gameplay\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Messages\MessageSetOwner.h">
+      <Filter>Messages\Header</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

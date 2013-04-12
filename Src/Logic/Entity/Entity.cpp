@@ -131,7 +131,7 @@ namespace Logic
 
 		for(; it != _componentList.end(); ++it){
 			(*it)->activate();
-			_activated = (*it)->isActivate() && _activated;
+			_activated = (*it)->isActivated() && _activated;
 		}
 
 		return _activated;
@@ -188,9 +188,20 @@ namespace Logic
 	{
 		TComponentList::const_iterator it = _componentList.begin();
 
+		IComponent* component;
 		for(; it != _componentList.end(); ++it) {
-			if((*it)->isActivate()) {
-				(*it)->tick(msecs);
+			component = *it;
+			if( component->isActivated() ) {
+				// De momento se hace esta comprobación extra para
+				// ver si lanzamos onStart
+				// Lo suyo es hacer colas distintas para evitar estas
+				// comprobaciones tontas
+				if( component->isStartingUp() ) {
+					component->onStart(msecs);
+				}
+				else {
+					component->tick(msecs);
+				}
 			}
 		}
 
@@ -267,7 +278,7 @@ namespace Logic
 		for(; it != _componentList.end(); ++it)
 		{
 			// Al emisor no se le envia el mensaje y si esta desactivado el componente tampoco se le envia
-			if( emitter != *it && (*it)->isActivate())
+			if( emitter != *it && (*it)->isActivated() )
 				anyReceiver = (*it)->set(message) || anyReceiver;
 		}
 		//Por si nadie quiso el mensaje
