@@ -167,6 +167,9 @@ namespace Logic {
 
 		_primarySkillIsActive = true;
 
+		// @deprecated DE MOMENTO HAGO ESTA COMPROBACIÓN ÑAPERA
+		// porque el cliente no recibe el mensaje si lo hacemos en el onStart
+		// otra posibilidad es crear el escudo cada vez que pulsemos la tecla.
 		if(_screamerShield == NULL) {
 			// Nada que hacer
 			// Obtenemos la informacion asociada al arquetipo de la granada
