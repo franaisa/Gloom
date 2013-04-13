@@ -202,7 +202,7 @@ Map = {
 		position = {-91.0, 0.0, -35.0},
 		model = "miniGun.mesh",
 		id = "weapon",
-		weaponType = 4,
+		weaponType = 3,
 		reward = 200,
 		respawnTime = 5,
 	},
