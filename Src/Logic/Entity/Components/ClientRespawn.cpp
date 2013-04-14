@@ -37,7 +37,7 @@ namespace Logic  {
 	//________________________________________________________________________
 
 	void CClientRespawn::process(CMessage *message) {
-		switch(message->getMessageType()) {
+		switch( message->getMessageType() ) {
 		case Message::PLAYER_DEAD:
 			{
 			// El servidor nos notifica de que hemos muerto, desactivamos

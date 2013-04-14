@@ -149,7 +149,7 @@ namespace Application {
 	Hikari::FlashValue CSelectScenario::backReleased(Hikari::FlashControl* caller, const Hikari::Arguments& args)
 	{
 		_app->setState("menu");
-		return true;
+		return FLASH_VOID;
 
 	} // backReleased
 

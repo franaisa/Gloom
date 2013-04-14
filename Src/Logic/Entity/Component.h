@@ -144,8 +144,18 @@ namespace Logic
 		*/
 		virtual void deactivate();
 
-		// Es muy importante que se llame en los hijos a onStart de la clase padre
-		// si no, no se reciben mensajes ni se setean bien las colas.
+		/**
+		Representa el primer tick de la entidad. Se ejecuta una sola vez tras la activación
+		del jugador.
+
+		Es muy útil para inicializar datos ya que en esta fase SI que se pueden mandar
+		mensajes a otras entidades (ya que su spawn ya ha sido realizado).
+
+		IMPORTANTE: Los hijos deben llamar al método onStart del padre (tal y como sucede
+		con el tick) para que todo funcione correctamente.
+
+		@param msecs Milisegundos transcurridos para este primer tick.
+		*/
 		virtual void onStart(unsigned int msecs);
 
 		/**

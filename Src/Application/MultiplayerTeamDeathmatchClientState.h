@@ -19,8 +19,12 @@ Contiene la declaración del estado de juego.
 
 #include "GameState.h"
 #include "Net/Manager.h"
-
+#include "FlashValue.h"
 #include <iostream>
+
+namespace Hikari{
+	class FlashControl;
+}
 
 namespace Application {
 	
@@ -117,11 +121,78 @@ namespace Application {
 		*/
 		virtual void disconnexionPacketReceived(Net::CPaquete* packet) { /* Los clientes no reciben este tipo de mensajes */ }
 
+		// Métodos de CKeyboardListener
+		
+		/**
+		Método que será invocado siempre que se pulse una tecla. 
+		Será la aplicación quién llame a este método cuando el 
+		estado esté activo. Esta clase NO se registra en el 
+		InputManager sino que es la aplicación quien lo hace y 
+		delega en los estados.
+
+		@param key Código de la tecla pulsada.
+		@return true si el evento ha sido procesado. En este caso 
+		el gestor no llamará a otros listeners.
+		*/
+		virtual bool keyPressed(Input::TKey key);
+		
+		/**
+		Método que será invocado siempre que se termine la pulsación
+		de una tecla. Será la aplicación quién llame a este método 
+		cuando el estado esté activo. Esta clase NO se registra en
+		el InputManager sino que es la aplicación quien lo hace y 
+		delega en los estados.
+
+		@param key Código de la tecla pulsada.
+		@return true si el evento ha sido procesado. En este caso 
+		el gestor no llamará a otros listeners.
+		*/
+		virtual bool keyReleased(Input::TKey key);
+
+		// Métodos de CMouseListener
+		
+		/**
+		Método que será invocado siempre que se mueva el ratón. La
+		aplicación avisa de este evento al estado actual.
+
+		@param mouseState Estado del ratón cuando se lanza el evento.
+		@return true si el evento ha sido procesado. En este caso 
+		el gestor no llamará a otros listeners.
+		*/
+		virtual bool mouseMoved(const Input::CMouseState &mouseState);
+		
+		/**
+		Método que será invocado siempre que se pulse un botón. La
+		aplicación avisa de este evento al estado actual.
+
+		@param mouseState Estado del ratón cuando se lanza el evento.
+		@return true si el evento ha sido procesado. En este caso 
+		el gestor no llamará a otros listeners.
+		*/
+		virtual bool mousePressed(const Input::CMouseState &mouseState);
+
+		/**
+		Método que será invocado siempre que se termine la pulsación
+		de un botón. La aplicación avisa de este evento al estado 
+		actual.
+
+		@param mouseState Estado del ratón cuando se lanza el evento.
+		@return true si el evento ha sido procesado. En este caso 
+		el gestor no llamará a otros listeners. 
+		*/
+		virtual bool mouseReleased(const Input::CMouseState &mouseState);
+
+		Hikari::FlashValue CMultiplayerTeamDeathmatchClientState::classSelected(Hikari::FlashControl* caller, const Hikari::Arguments& args);
+	
+
 	protected:
 
 		unsigned int _npings;
 		unsigned int _time;
 		unsigned int _pingActual;
+
+		//menu de seleccion de personaje
+		Hikari::FlashControl* _seleccion;
 	}; // CMultiplayerTeamDeathmatchClientState
 
 } // namespace Application
