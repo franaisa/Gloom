@@ -41,11 +41,11 @@ namespace Application {
 	bool CMultiplayerTeamDeathmatchClientState::init(){
 
 		//iniciamos el menu de seleccion de personaje
-		_seleccion = GUI::CServer::getSingletonPtr()->addLayout("selecion", Hikari::Position(Hikari::Center));
+		_seleccion = GUI::CServer::getSingletonPtr()->addLayout("seleccion", Hikari::Position(Hikari::Center));
 		_seleccion->load("SeleccionPersonaje.swf");
 		_seleccion->bind("selected",Hikari::FlashDelegate(this, &CMultiplayerTeamDeathmatchClientState::classSelected));
 		_seleccion->hide();
-
+		_seleccion->setTransparent(true, true);
 		
 		return true;
 	}
@@ -53,7 +53,6 @@ namespace Application {
 
 	void CMultiplayerTeamDeathmatchClientState::activate() {
 		CGameState::activate();
-
 		
 		//_seleccion->show();
 
@@ -153,11 +152,6 @@ namespace Application {
 			//mostramos la gui
 			_seleccion->show();
 			break;
-
-		case Input::Key::ESCAPE://cambio de clase
-			//primero, quitamos al player de escuchar las teclas, para ello lo desactivamos del playerController
-			_app->setState("menu");
-			break;
 		default:
 			return true;
 		}
@@ -208,6 +202,11 @@ namespace Application {
 		switch(selectedClass)
 		{
 			case 0:
+				if(Input::CServer::getSingletonPtr()->getPlayerController()->getControllerAvatar()){
+					Input::CServer::getSingletonPtr()->getPlayerController()->activate();
+				}else{
+
+				}
 
 				break;
 			case 1:

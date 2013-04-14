@@ -37,7 +37,7 @@ package
 		}
 		
 		private function onMouseClick(e:MouseEvent):void {
-			ExternalInterface.call("archangel");
+			ExternalInterface.call("selected", 3);
 		}
 		
 	}

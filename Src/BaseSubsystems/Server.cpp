@@ -281,7 +281,6 @@ namespace BaseSubsystems
 	bool CServer::initCEGUI()
 	{
 		_hikariMgr = new Hikari::HikariManager("media/gui");
-
 		return true;
 
 	} // initCEGUI

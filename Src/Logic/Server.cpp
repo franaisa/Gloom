@@ -185,7 +185,11 @@ namespace Logic {
 
 	void CServer::tick(unsigned int msecs) 
 	{
+		//tick de logica
 		_map->tick(msecs);
+		//_guiManager->tick(msecs);
+		//tick de GUI
+
 
 		// Eliminamos las entidades que se han marcado para ser eliminadas.
 		Logic::CEntityFactory::getSingletonPtr()->deleteDefferedEntities();
