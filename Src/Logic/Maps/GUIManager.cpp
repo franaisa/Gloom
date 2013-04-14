@@ -49,11 +49,11 @@ namespace Logic {
 
 	bool CGUIManager::open(){
 
-		Hikari::FlashControl* menuSeleccion = GUI::CServer::getSingletonPtr()->addLayout("menuseleccion", Hikari::Position(Hikari::Center), 0.8f);
+		//Hikari::FlashControl* menuSeleccion = GUI::CServer::getSingletonPtr()->addLayout("menuseleccion", Hikari::Position(Hikari::Center), 0.8f);
 		
-		menuSeleccion->hide();
+		//menuSeleccion->hide();
 
-		addGUI(menuSeleccion,"menuseleccion");
+		//addGUI(menuSeleccion,"menuseleccion");
 		return true;
 	}
 
@@ -76,7 +76,7 @@ namespace Logic {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	void CGUIManager::activate(){
-		Hikari::FlashControl* menuS = _loadedGUIs.find("menuseleccion")->second;
+		//Hikari::FlashControl* menuS = _loadedGUIs.find("menuseleccion")->second;
 		//menuS->load("SeleccionPersonaje.swf");
 		//menuS->show();
 	}

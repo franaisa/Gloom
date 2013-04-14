@@ -29,13 +29,23 @@ Contiene la implementación del estado de juego.
 #include "Logic/Maps/Map.h"
 #include "Logic/Maps/EntityID.h"
 
+#include "Hikari.h"
+#include "FlashValue.h"
+#include "GUI\Server.h"
+#include "Input\PlayerController.h"
+#include "Input/Server.h"
+
 namespace Application {
 
 	
 	bool CMultiplayerTeamDeathmatchClientState::init(){
 
-		
-		
+		//iniciamos el menu de seleccion de personaje
+		_seleccion = GUI::CServer::getSingletonPtr()->addLayout("selecion", Hikari::Position(Hikari::Center));
+		_seleccion->load("SeleccionPersonaje.swf");
+		_seleccion->bind("selected",Hikari::FlashDelegate(this, &CMultiplayerTeamDeathmatchClientState::classSelected));
+		_seleccion->hide();
+
 		
 		return true;
 	}
@@ -43,6 +53,9 @@ namespace Application {
 
 	void CMultiplayerTeamDeathmatchClientState::activate() {
 		CGameState::activate();
+
+		
+		//_seleccion->show();
 
 		// Registramos a este estado como observador de red para que sea notificado
 		Net::CManager::getSingletonPtr()->addObserver(this);
@@ -127,5 +140,91 @@ namespace Application {
 			}
 		}
 	}
+
+	bool CMultiplayerTeamDeathmatchClientState::keyPressed(Input::TKey key)
+	{
+		CGameState::keyPressed(key);
+		
+		switch(key.keyId)
+		{
+		case Input::Key::C://cambio de clase
+			//primero, quitamos al player de escuchar las teclas, para ello lo desactivamos del playerController
+			Input::CServer::getSingletonPtr()->getPlayerController()->deactivate();
+			//mostramos la gui
+			_seleccion->show();
+			break;
+
+		case Input::Key::ESCAPE://cambio de clase
+			//primero, quitamos al player de escuchar las teclas, para ello lo desactivamos del playerController
+			_app->setState("menu");
+			break;
+		default:
+			return true;
+		}
+		
+		return true;
+
+	} // keyPressed
+
+	//--------------------------------------------------------
+
+	bool CMultiplayerTeamDeathmatchClientState::keyReleased(Input::TKey key)
+	{
+		return true;
+
+	} // keyReleased
+
+	//--------------------------------------------------------
+	
+	bool CMultiplayerTeamDeathmatchClientState::mouseMoved(const Input::CMouseState &mouseState)
+	{
+		return false;
+
+	} // mouseMoved
+
+	//--------------------------------------------------------
+		
+	bool CMultiplayerTeamDeathmatchClientState::mousePressed(const Input::CMouseState &mouseState)
+	{
+		return false;
+
+	} // mousePressed
+
+	//--------------------------------------------------------
+
+
+	bool CMultiplayerTeamDeathmatchClientState::mouseReleased(const Input::CMouseState &mouseState)
+	{
+		return false;
+
+	} // mouseReleased
+
+	//--------------------------------------------------------
+
+	Hikari::FlashValue CMultiplayerTeamDeathmatchClientState::classSelected(Hikari::FlashControl* caller, const Hikari::Arguments& args)
+	{
+		_seleccion->hide();
+		int selectedClass = args.at(0).getNumber();
+		switch(selectedClass)
+		{
+			case 0:
+
+				break;
+			case 1:
+
+				break;
+			case 2:
+
+				break;
+			case 3:
+
+				break;
+			case 4:
+
+				break;
+		}
+		return FLASH_VOID;
+
+	} // backReleased
 
 };
