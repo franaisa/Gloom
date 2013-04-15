@@ -278,6 +278,7 @@ namespace Logic {
 	void CLife::triggerDeathState(CEntity* enemy) {
 		// Mensaje de playerDead para tratar el respawn y desactivar los componentes
 		// del personaje.
+		Vector3 pos = _entity->getPosition();
 		Logic::CMessagePlayerDead* playerDeadMsg = new Logic::CMessagePlayerDead();
 		_entity->emitMessage(playerDeadMsg);
 

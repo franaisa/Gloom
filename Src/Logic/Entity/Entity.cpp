@@ -196,12 +196,12 @@ namespace Logic
 				// ver si lanzamos onStart
 				// Lo suyo es hacer colas distintas para evitar estas
 				// comprobaciones tontas
-				if( component->isStartingUp() ) {
-					component->onStart(msecs);
-				}
-				else {
+				//if( component->isStartingUp() ) {
+				//	component->onStart(msecs);
+				//}
+				//else {
 					component->tick(msecs);
-				}
+				//}
 			}
 		}
 
@@ -305,7 +305,8 @@ namespace Logic
 	void CEntity::setPosition(const Vector3 &position) 
 	{
 		_transform.setTrans(position);
-
+		if(getType()=="Screamer")
+			int a = 5;
 		// Avisamos a los componentes del cambio.
 		Logic::CMessageTransform *m=new Logic::CMessageTransform();
 		m->setTransform(_transform);

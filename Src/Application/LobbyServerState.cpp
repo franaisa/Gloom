@@ -267,91 +267,13 @@ namespace Application {
 		}
 		case Net::MAP_LOADED:
 		{
-			//Almacenamos el ID del usuario que se ha cargado el mapa.
-			_mapLoadedByClients.push_back(packet->getConexion()->getId());
-
-			//Si todos los clientes han cargado los mapas pasamos a crear jugadores.
-			if(_clients.size() == _mapLoadedByClients.size()) {
-				// Se debe crear un jugador por cada cliente registrado.
-				for(TNetIDList::const_iterator it = _clients.begin(); it != _clients.end(); it++) {
-					//Preparamos la lista de control de carga de jugadores.
-					//Esto quiere decir que el cliente (*it) ha cargado 0 jugadores
-					TNetIDCounterPair elem(*it,0);
-					_playersLoadedByClients.insert(elem);
-
-					// @todo Hay que enviar un paquete tipo LOAD_PLAYER con 
-					// el NetID del cliente del que estamos creando el jugador (*it)
-					Net::NetMessageType msg = Net::LOAD_PLAYER;
-					Net::NetID netId = *it;
-					std::string name( Logic::CGameNetPlayersManager::getSingletonPtr()->getPlayerNickname(netId) );
-					std::stringstream number;
-					number << *it;
-					Net::CBuffer buffer(sizeof(msg) + sizeof(netId) + sizeof(Logic::EntityID) + (sizeof(char) * name.size()));
-					buffer.write(&msg, sizeof(msg));
-					buffer.write(&netId, sizeof(netId));
-
-					// Mandar el ID del cliente actual a todos los clientes para que
-					// lo carguen
-					
-					// Creamos el player. Deberíamos poder propocionar caracteríasticas
-					// diferentes según el cliente (nombre, modelo, etc.). Esto es una
-					// aproximación, solo cambiamos el nombre y decimos si es el jugador
-					// local
-					
-					// @todo Llamar al método de creación del jugador. Deberemos decidir
-					// si el jugador es el jugador local. Al ser el servidor ninguno lo es
-					Logic::CEntity * player = Logic::CServer::getSingletonPtr()->getMap()->createPlayer(name);
-					Logic::TEntityID id = player->getEntityID();
-					Logic::CGameNetPlayersManager::getSingletonPtr()->setEntityID(netId, id);
-					
-					buffer.write(&id, sizeof(id));
-
-					// Metemos el nombre del jugador en el buffer
-					buffer.serialize(name, false);
-
-					Net::CManager::getSingletonPtr()->send(buffer.getbuffer(), buffer.getSize());
-				}
-			}
+			//Enviamos el mensaje de que empieza el juego a todos los clientes
+			Net::NetMessageType msg = Net::START_GAME;
+			Net::CManager::getSingletonPtr()->send(&msg, sizeof(msg));
+			_app->setState("multiplayerTeamDeathmatchServer");
 			break;
 		}
-		case Net::PLAYER_LOADED:
-		{
-			//Aumentamos el número de jugadores cargados por el cliente
-			(*_playersLoadedByClients.find(packet->getConexion()->getId())).second++;
-
-			// Incrementamos el numero de clientes cargados para todos los clientes
-			Net::NetID playerLoadedNetId;
-			buffer.read(&playerLoadedNetId, sizeof(playerLoadedNetId));
-			Logic::CGameNetPlayersManager::getSingletonPtr()->loadPlayer( packet->getConexion()->getId(), playerLoadedNetId );
-
-			// @todo Comprobar si todos los clientes han terminado de 
-			// cargar todos los jugadores
-			bool loadFinished = true;
-			TNetIDCounterMap::const_iterator it2;
-			for(TNetIDList::const_iterator it = _clients.begin(); it != _clients.end() && loadFinished; it++) {
-				// Obtener la pareja (NetID, jugadores cargados)
-				it2 = _playersLoadedByClients.find(*it);
-				
-				if(it2 != _playersLoadedByClients.end()) {
-					// Si el numero de jugadores cargados para este cliente es menor
-					// que el numero total de clientes cargar, entonces es que aun
-					// hay clientes que no han cargado a todos los jugadores
-					if(it2->second < _clients.size()) {
-						loadFinished = false;
-					}
-				}
-			}
-			//Si todos los clientes han cargado todos los players
-			if(loadFinished)
-			{
-				//Enviamos el mensaje de que empieza el juego a todos los clientes
-				Net::NetMessageType msg = Net::START_GAME;
-				Net::CManager::getSingletonPtr()->send(&msg, sizeof(msg));
-				_app->setState("multiplayerTeamDeathmatchServer");
-			}
-			break;
-		}
-		}
+		}//switch
 
 	} // dataPacketReceived
 

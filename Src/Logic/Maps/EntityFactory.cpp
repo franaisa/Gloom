@@ -269,7 +269,7 @@ namespace Logic {
 		
 		// Y lo inicializamos
 		if ( _dynamicCreation ? ret->dynamicSpawn(map, entityInfo) : ret->spawn(map, entityInfo) ) {
-			if(Net::CManager::getSingletonPtr()->imServer() && _dynamicCreation && entityType != "ServerPlayer") {
+			if(checkRestrictions(entityType)) {
 				Logic::CGameNetMsgManager::getSingletonPtr()->sendCreateEntity( ret->getEntityID() );
 			}
 
@@ -342,7 +342,7 @@ namespace Logic {
 		map->addEntity(ret);
 		// Y lo inicializamos
 		if( ret->spawn(map, entityInfo) ) {
-			if(Net::CManager::getSingletonPtr()->imServer() && _dynamicCreation && entityType != "ServerPlayer") {
+			if(checkRestrictions(entityType)) {
 				Logic::CGameNetMsgManager::getSingletonPtr()->sendCreateEntity( ret->getEntityID() );
 			}
 
@@ -419,6 +419,16 @@ namespace Logic {
 		}
 
 		return NULL;
+	}
+
+	bool CEntityFactory::checkRestrictions(const std::string &entityType){
+		return (Net::CManager::getSingletonPtr()->imServer() && 
+			_dynamicCreation && 
+			entityType != "Screamer" &&
+			entityType != "Archangel" &&
+			entityType != "Hound" &&
+			entityType != "Shadow" 
+			);
 	}
 
 } // namespace Logic

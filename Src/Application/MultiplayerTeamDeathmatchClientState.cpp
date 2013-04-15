@@ -28,6 +28,7 @@ Contiene la implementación del estado de juego.
 #include "Logic/Maps/EntityFactory.h"
 #include "Logic/Maps/Map.h"
 #include "Logic/Maps/EntityID.h"
+#include "Logic\Entity\Components\Camera.h"
 
 #include "Hikari.h"
 #include "FlashValue.h"
@@ -54,7 +55,7 @@ namespace Application {
 	void CMultiplayerTeamDeathmatchClientState::activate() {
 		CGameState::activate();
 		
-		//_seleccion->show();
+		_seleccion->show();
 
 		// Registramos a este estado como observador de red para que sea notificado
 		Net::CManager::getSingletonPtr()->addObserver(this);
@@ -95,19 +96,24 @@ namespace Application {
 
 		switch (msg) {
 			case Net::LOAD_PLAYER: {
-				// Creamos el player. Deberíamos poder propocionar caracteríasticas
-				// diferentes según el cliente (nombre, modelo, etc.). Esto es una
-				// aproximación, solo cambiamos el nombre y decimos si es el jugador
-				// local. Los datos deberían llegar en el paquete de red.
+				// cargamos la informacion del player que nos han enviado
 				Net::NetID id;
 				Logic::TEntityID entityID;
-				//memcpy(&id, packet->getData() + sizeof(msg), sizeof(id));
 				buffer.read(&id, sizeof(id));
 				buffer.read(&entityID, sizeof(entityID));
-				std::string name;
+				std::string type, name;
+				buffer.deserialize(type);
 				buffer.deserialize(name);
 
-				Logic::CEntity * player = Logic::CServer::getSingletonPtr()->getMap()->createPlayer(name, entityID);
+				//llamo al metodo de creacion del jugador
+				Logic::CEntity * player = Logic::CServer::getSingletonPtr()->getMap()->createPlayer(name, type, entityID);
+
+				//Enviamos el mensaje de que se ha creado el jugador
+				Net::NetMessageType ackMsg = Net::PLAYER_LOADED;
+				Net::CBuffer ackBuffer(sizeof(ackMsg) + sizeof(id));
+				ackBuffer.write(&ackMsg, sizeof(ackMsg));
+				ackBuffer.write(&id, sizeof(id));
+				Net::CManager::getSingletonPtr()->send(ackBuffer.getbuffer(), ackBuffer.getSize());
 				player->activate();
 				break;
 			}
@@ -134,6 +140,30 @@ namespace Application {
 					_reloj = clock();
 					Net::CManager::getSingletonPtr()->send(ackBuffer.getbuffer(), ackBuffer.getSize());
 				}
+
+				break;
+			}
+			case Net::LOAD_LOCAL_PLAYER: {
+				// cargamos la informacion del player que nos han enviado
+				Logic::TEntityID entityID;
+				buffer.read(&entityID, sizeof(entityID));
+				std::string type, name;
+				buffer.deserialize(type);
+				buffer.deserialize(name);
+
+				//llamo al metodo de creacion del jugador
+				Logic::CEntity * player = Logic::CServer::getSingletonPtr()->getMap()->createLocalPlayer(name, type, entityID);
+
+				//Enviamos el mensaje de que se ha creado el jugador
+				Net::NetMessageType ackMsg = Net::LOCAL_PLAYER_LOADED;
+				Net::CBuffer ackBuffer(sizeof(ackMsg) + sizeof(player->getEntityID()));
+				ackBuffer.serialize(ackMsg);
+				ackBuffer.serialize(player->getEntityID());
+				Net::CManager::getSingletonPtr()->send(ackBuffer.getbuffer(), ackBuffer.getSize());
+				player->activate();
+				std::cout << " he creado el local player con id " << entityID << std::endl;
+				Logic::CServer::getSingletonPtr()->getMap()->getEntityByType("Camera")->getComponent<Logic::CCamera>("CCamera")->setTarget(player);
+
 
 				break;
 			}
@@ -197,8 +227,10 @@ namespace Application {
 
 	Hikari::FlashValue CMultiplayerTeamDeathmatchClientState::classSelected(Hikari::FlashControl* caller, const Hikari::Arguments& args)
 	{
-		_seleccion->hide();
+		
 		int selectedClass = args.at(0).getNumber();
+		Net::NetMessageType msgType = Net::CLASS_SELECTED;
+		Net::CBuffer msg (sizeof(msgType) + sizeof(selectedClass));
 		switch(selectedClass)
 		{
 			case 0:
@@ -210,18 +242,30 @@ namespace Application {
 
 				break;
 			case 1:
-
-				break;
 			case 2:
-
-				break;
 			case 3:
-
-				break;
 			case 4:
-
+				_seleccion->hide();
+				//enviamos la clase elegida
+				msg.serialize(msgType);
+				msg.serialize(selectedClass);
+				Net::CManager::getSingletonPtr()->send(msg.getbuffer(), msg.getSize());
 				break;
-		}
+			case 5:
+				{
+				_seleccion->hide();
+				//random de la clase y lo enviamos por red
+				int randomclass = ((rand()*clock())%4)+1;
+				msg.serialize(msgType);
+				msg.serialize(randomclass);
+				Net::CManager::getSingletonPtr()->send(msg.getbuffer(), msg.getSize());
+				break;
+				}
+		}//switch
+
+		//enviamos el mensaje
+		
+
 		return FLASH_VOID;
 
 	} // backReleased

@@ -120,6 +120,8 @@ namespace Logic
 		*/
 		void setTargetEnemy(CMessageCameraToEnemy* message);
 
+		void setTarget(CEntity * entity){_target = entity;}
+
 
 	protected:
 		

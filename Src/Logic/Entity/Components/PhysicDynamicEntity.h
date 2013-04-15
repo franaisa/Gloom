@@ -106,9 +106,9 @@ namespace Logic {
 
 		void setTransform(const Matrix4 &transform, bool makeConversionToLogicWorld);
 
-		void addForce(const Vector3& force, Physics::ForceMode mode = Physics::ForceMode::eFORCE, bool autowake = true);
+		void addForce(const Vector3& force, Physics::ForceMode mode = Physics::eFORCE, bool autowake = true);
 
-		void addTorque(const Vector3& force, Physics::ForceMode mode = Physics::ForceMode::eFORCE, bool autowake = true);
+		void addTorque(const Vector3& force, Physics::ForceMode mode = Physics::eFORCE, bool autowake = true);
 
 		void deactivateSimulation();
 

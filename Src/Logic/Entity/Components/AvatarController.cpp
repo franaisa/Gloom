@@ -521,7 +521,7 @@ namespace Logic
 		//Calculamos el desplazamiento del salto y lo añadimos al vector que se mandará por mensaje
 		direction.y *= msecs * _speedJump;
 		directXZY.y=direction.y;
-
+		//std::cout << _falling << std::endl;
 		//Pasamos a la Física la dirección del movimiento para que se encargue ella de movernos
 		Logic::CMessageAvatarWalk* m = new Logic::CMessageAvatarWalk();
 		m->setDirection(directXZY);

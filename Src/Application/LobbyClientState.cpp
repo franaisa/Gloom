@@ -158,25 +158,17 @@ namespace Application {
 				break;
 			}
 			case Net::LOAD_PLAYER: {
-				// Creamos el player. Deberíamos poder propocionar caracteríasticas
-				// diferentes según el cliente (nombre, modelo, etc.). Esto es una
-				// aproximación, solo cambiamos el nombre y decimos si es el jugador
-				// local. Los datos deberían llegar en el paquete de red.
+				// Creamos el player
 				Net::NetID id;
 				Logic::TEntityID entityID;
 				//memcpy(&id, packet->getData() + sizeof(msg), sizeof(id));
 				buffer.read(&id, sizeof(id));
 				buffer.read(&entityID, sizeof(entityID));
-				std::string name;
+				std::string type, name;
+				buffer.deserialize(type);
 				buffer.deserialize(name);
-
 				//llamo al metodo de creacion del jugador
-				if(id == Net::CManager::getSingletonPtr()->getID()) {//si soy yo, me creo como jugador local
-					Logic::CEntity * player = Logic::CServer::getSingletonPtr()->getMap()->createLocalPlayer(name, entityID);
-					player->getEntityID();
-				}else{//si no soy yo, me creo como jugador remoto
-					Logic::CEntity * player = Logic::CServer::getSingletonPtr()->getMap()->createPlayer(name, entityID);
-				}
+				Logic::CEntity * player = Logic::CServer::getSingletonPtr()->getMap()->createPlayer(name, type, entityID);
 				//Enviamos el mensaje de que se ha creado el jugador
 				Net::NetMessageType ackMsg = Net::PLAYER_LOADED;
 				Net::CBuffer ackBuffer(sizeof(ackMsg) + sizeof(id));

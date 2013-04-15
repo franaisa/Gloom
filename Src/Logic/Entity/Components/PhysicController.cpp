@@ -53,7 +53,7 @@ bool CPhysicController::spawn(CEntity* entity, CMap *map, const Map::CEntity *en
 	// Crear el character controller asociado al componente
 	createController(entityInfo);
 	// Seteo de _falling a false para que se envie el primer mensaje de actualizacion
-	_falling = false;
+	_falling = true;
 
 
 	return true;
@@ -74,7 +74,6 @@ void CPhysicController::process(CMessage *message) {
 		// el método tick. De esa forma, si recibimos varios mensajes AVATAR_WALK
 		// en el mismo ciclo sólo tendremos en cuenta el último.
 		_movement = static_cast<CMessageAvatarWalk*>(message)->getDirection();
-		
 		break;
 	}
 }

@@ -299,8 +299,7 @@ namespace Input{
 			it = _mouseListeners.begin();
 			for (; it != _mouseListeners.end(); it++) 
 			{
-				if ((*it)->mouseMoved(_mouseState))
-				  return true;
+				((*it)->mouseMoved(_mouseState));
 			}
 		}
 
@@ -326,8 +325,7 @@ namespace Input{
 			it = _mouseListeners.begin();
 			for (; it != _mouseListeners.end(); it++) 
 			{
-				if ((*it)->mousePressed(_mouseState))
-				  return true;
+				((*it)->mousePressed(_mouseState));
 			}
 		}
 
@@ -353,8 +351,7 @@ namespace Input{
 			it = _mouseListeners.begin();
 			for (; it != _mouseListeners.end(); it++) 
 			{
-				if ((*it)->mouseReleased(_mouseState))
-				  return true;
+				((*it)->mouseReleased(_mouseState));
 			}
 		}
 
