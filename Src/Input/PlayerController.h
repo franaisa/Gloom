@@ -131,6 +131,8 @@ namespace Input
 		*/
 		bool mouseReleased(const CMouseState &mouseState);
 
+
+
 	protected:
 
 		/**
@@ -138,6 +140,44 @@ namespace Input
 		función de las teclas pulsadas y el movimiento del ratón.
 		*/
 		Logic::CEntity *_controlledAvatar;
+
+
+		//Métodos privados
+	private:
+		
+		/**
+		Método para saber de qué tipo es la tecla pulsada. Para una lectura de código más clara
+		@param key Tecla pulsada.
+		@return int con el tipo de tecla 0 = Movimiento; 1 = Cambio de arma; 2 = Habilidad ; 
+				3=Otro (Ej.Debug) ; -1 = Ninguna tecla asignada
+		*/
+		int typeOfKey(TKey key);
+
+		/**
+		Método para emitir el mensaje de cambiar de arma, en función de la tecla de arma que se pulse
+		@param key Tecla pulsada.
+		*/
+		void ChangeWeaponMessage(TKey key);
+
+		/**
+		Método para emitir el mensaje de movimiento
+		@param key Tecla pulsada.
+		*/
+		void MovementMessage(TKey key);
+
+		/**
+		Método para emitir el mensaje de la habilidad
+		@param key Tecla pulsada.
+		*/
+		void HabilityMessage(TKey key);
+
+		/**
+		Método para emitir otros mensajes como los de debug, quitarse vida, o tecla escape
+		@param key Tecla pulsada.
+		*/
+		void OtherMessages(TKey key);
+
+
 
 	}; // class CPlayerController
 
