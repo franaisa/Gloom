@@ -30,6 +30,7 @@ namespace Logic
 //declaración de la clase
 namespace Logic 
 {
+
 /**
 	Clase base de los componentes que forman las entidades.
 	<p>
@@ -90,7 +91,7 @@ namespace Logic
 		/**
 		Destructor (virtual); en la clase base no hace nada.
 		*/
-		virtual ~IComponent() {}
+		virtual ~IComponent();
 		
 		/**
 		Inicialización del componente, utilizando la información extraída de
