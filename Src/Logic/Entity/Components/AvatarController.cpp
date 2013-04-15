@@ -187,7 +187,7 @@ namespace Logic
 			force();
 			break;
 		case Message::CEALING:
-			_speedJump=-0.02;
+			_vo=-0.02;
 			break;
 		case Message::SIDE:
 			_direccionSaltoCaida=Vector3(0,0,0);
