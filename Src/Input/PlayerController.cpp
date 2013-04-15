@@ -19,20 +19,17 @@ mover al jugador.
 #include "Logic/Entity/Components/AvatarController.h"
 #include "Logic/Entity/Components/WeaponsManager.h"
 #include "Logic/Entity/Components/ArrayGraphics.h"
-#include "Logic/Entity/Components/AvatarController.h"
 
-#include "Logic/Messages/MessageChangePlayerClass.h"
 #include "Logic/Messages/MessageChangeWeapon.h"
+
 #include "Logic/Messages/MessageControl.h"
 #include "Logic/Messages/MessageMouse.h"
 
 #include <cassert>
 
-//PRUEBAS,QUITAR LUEGO el INCLUDE SIGUIENTE
-#include "Audio/Server.h"
-#include "Logic/Server.h"
-#include "Logic/Maps/Map.h"
-#include "Logic/Messages/MessageDamaged.h"
+//PRUEBAS,QUITAR LUEGO LOS DOS INCLUDE SIGUIENTES
+#include "Logic/Messages/MessageAddLife.h"
+#include "Logic/Messages/MessageAddShield.h"
 
 //MENSAJE PARA DEBBUG
 #include "Logic/Messages/MessageHudDebug.h"
@@ -61,25 +58,6 @@ namespace Input {
 	{		
 		CInputManager::getSingletonPtr()->addKeyListener(this);
 		CInputManager::getSingletonPtr()->addMouseListener(this);
-		_time=clock();
-
-		_strafingRight=false;
-		_strafingLeft=false;
-		_unpressLeft=false;
-		_unpressRight=false;
-
-		//Inicializacion variables de control ( salto, salto lateral, concatenacion salto lateral y rebote )
-		_jumpLeft=0;
-		_jumpRight=0;
-		_timeSideJump=0;
-
-		_unpressRight=false;
-		_unpressLeft=false;
-		_readySideJumpLeft=false;
-		_readySideJumpRight=false;
-		_dontCountUntilUnpress=false;
-
-		_maxTimeSideJump=300;
 
 	} // activate
 
@@ -99,11 +77,12 @@ namespace Input {
 		{
 			if(key.keyId == Input::Key::NUMBER1 || key.keyId == Input::Key::NUMBER2 || key.keyId == Input::Key::NUMBER3 || key.keyId == Input::Key::NUMBER4 || 
 				key.keyId == Input::Key::NUMBER5 || key.keyId == Input::Key::NUMBER6 || key.keyId == Input::Key::NUMBER7 || key.keyId == Input::Key::NUMBER8){
-				
+
 					Logic::CMessageChangeWeapon *message=new Logic::CMessageChangeWeapon();
-					Logic::CMessageDamaged *damage;
-					Vector3 position;										
-					
+
+					//A quitar en un futuro, usado ahora para debuguear
+					Logic::CMessageAddLife *message2=new Logic::CMessageAddLife();
+					Logic::CMessageAddShield *message3=new Logic::CMessageAddShield();
 					switch(key.keyId)
 					{
 					case Input::Key::NUMBER1:
@@ -125,31 +104,23 @@ namespace Input {
 						message->setWeapon(5);
 						break;
 					case Input::Key::NUMBER7:
-						position=Logic::CServer::getSingletonPtr()->getMap()->getEntityByName("Jumper1")->getPosition();
-						Audio::CServer::getSingletonPtr()->playSound3D("media/audio/plasma.wav", "cosa", position, false);
-						damage=new Logic::CMessageDamaged();
-						damage->setDamage(100);
-						damage->setEnemy(Logic::CServer::getSingletonPtr()->getMap()->getEntityByName("Jumper1"));
-						_controlledAvatar->emitMessage(damage);
+						message2->setAddLife(20);
+						_controlledAvatar->emitMessage(message2);
 						break;
 					case Input::Key::NUMBER8:
-						Audio::CServer::getSingletonPtr()->mute();
+						message3->setAddShield(20);
+						_controlledAvatar->emitMessage(message3);
 						break;
 					}
 
-					_controlledAvatar->emitMessage(message);	
-			}
-			else{
+					_controlledAvatar->emitMessage(message);
+
+
+			}else{
 				Logic::CMessageControl *m=new Logic::CMessageControl();
 				Logic::CMessageHudDebug *m2=new Logic::CMessageHudDebug();
 				switch(key.keyId)
 				{
-				case Input::Key::Q:
-					m->setType(Logic::Control::USE_PRIMARY_SKILL);
-					break;
-				case Input	::Key::E:
-					m->setType(Logic::Control::USE_SECONDARY_SKILL);
-					break;
 				case Input::Key::W:
 					m->setType(Logic::Control::WALK);
 					break;
@@ -158,11 +129,9 @@ namespace Input {
 					break;
 				case Input::Key::A:
 					m->setType(Logic::Control::STRAFE_LEFT);
-					_strafingLeft=true;
 					break;
 				case Input::Key::D:
 					m->setType(Logic::Control::STRAFE_RIGHT);
-					_strafingRight=true;
 					break;
 				case Input::Key::SPACE:
 					m->setType(Logic::Control::JUMP);
@@ -171,120 +140,19 @@ namespace Input {
 					_controlledAvatar->emitMessage(m2);
 					break;
 				case Input::Key::ESCAPE:// esto debe desaparecer en el futuro
+					std::cout << "escape pulsado" << std::endl;
 					return false;
 					break;
 				default:
 					return true;
 				}
-				if (key.keyId != Input::Key::O){
-					//Tomamos el tiempo actual, calculamos la diferencia y actualizamos para la siguiente comprobacion
-					unsigned int actualTime = clock();
-					unsigned int diffTime= (_time-actualTime)%1000; //Diferencia de tiempo en msecs
-					_time=actualTime;
-
-			
-					//Antes de emitir el tipico mensaje vemos si se trata de un doble "click" hacia algun lado
-					
-					//Control del tiempo para el salto lateral(al contar aqui cuando se activa no se cuenta el primer tick)
-					if(_jumpLeft!=0 || _jumpRight!=0){
-						_timeSideJump+=diffTime;
-					}
-					else{
-						_timeSideJump=0;
-					}
-
-					//Controlamos cuando soltamos la tecla para hacer que la siguiente vez se active el salto
-					if(_unpressLeft && _jumpLeft==1 && !_dontCountUntilUnpress){
-						_readySideJumpLeft=true;
-						_readySideJumpRight=false;
-						_jumpRight=0;
-						_unpressLeft=false;
-					}
-					else if(_unpressRight && _jumpRight==1 && !_dontCountUntilUnpress){
-						_readySideJumpRight=true;
-						_readySideJumpLeft=false;
-						_jumpLeft=0;
-						_unpressRight=false;
-					}
-					//Cuando soltemos la segunda presión entonces empezamos el conteo de presiones otra vez
-					else if((_unpressRight || _unpressLeft) && _dontCountUntilUnpress){
-						_dontCountUntilUnpress=false;
-						_unpressRight=false;
-						_unpressLeft=false;
-						_jumpRight=0;
-						_jumpLeft=0;
-						_readySideJumpLeft=false;
-						_readySideJumpRight=false;
-						_timeSideJump=0;
-					}
-					else if(_unpressRight || _unpressLeft){
-						_unpressRight=false;
-						_unpressLeft=false;
-					}
-
-					//Izquierda/Derecha
-					if(_strafingLeft || _strafingRight)
-					{
-						//Si se presionaron ambas teclas
-						if(_strafingRight && _strafingLeft){
-							_timeSideJump=0;
-							_jumpRight=0;
-							_jumpLeft=0;
-							_readySideJumpLeft=false;
-							_readySideJumpRight=false;
-						}
-						//Si se presionó la izq , el contador esta a 0 y puedo contar || o el salto izq esta listo y le di a la izq
-						else if((_strafingLeft && _jumpLeft==0 && !_dontCountUntilUnpress) || (_readySideJumpLeft && _strafingLeft)){
-							if(_jumpRight!=0)
-								_timeSideJump=0;
-							_jumpLeft++;
-							_jumpRight=0;
-							_readySideJumpLeft=false;
-							_readySideJumpRight=false;
-						}
-						//contrario al de arriba
-						else if((_strafingRight  && _jumpRight==0 && !_dontCountUntilUnpress) || (_readySideJumpRight && _strafingRight)){
-							if(_jumpLeft!=0)
-								_timeSideJump=0;
-							_jumpRight++;
-							_jumpLeft=0;
-							_readySideJumpLeft=false;
-							_readySideJumpRight=false;
-						}
-
-						//Si se activo el salto lateral hacia algun lado, está dentro del tiempo
-						if((_jumpRight==2 || _jumpLeft==2) && _timeSideJump<_maxTimeSideJump){ 
-							if(_jumpRight==2){
-								m->setType(Logic::Control::SIDEJUMP_RIGHT);
-							}
-							else{
-								m->setType(Logic::Control::SIDEJUMP_LEFT);
-							}
-							_dontCountUntilUnpress=true;
-							_timeSideJump=0;
-							_readySideJumpRight=false;
-							_readySideJumpLeft=false;
-							_jumpRight=0;
-							_jumpLeft=0;
-							
-						}
-						//Si se pasó el tiempo reseteo
-						else if(_timeSideJump>_maxTimeSideJump){
-							_timeSideJump=0;
-							_jumpLeft=0;
-							_jumpRight=0;
-							_readySideJumpRight=false;
-							_readySideJumpLeft=false;
-						}
-					}
-
+				if (key.keyId != Input::Key::O)
 					_controlledAvatar->emitMessage(m);
-				}
 
 				return true;
 			}
 		}
-		return true;
+		return false;
 
 	} // keyPressed
 
@@ -297,12 +165,6 @@ namespace Input {
 			Logic::CMessageControl *m=new Logic::CMessageControl();
 			switch(key.keyId)
 			{
-			case Input::Key::Q:
-				m->setType(Logic::Control::STOP_PRIMARY_SKILL);
-				break;
-			case Input::Key::E:
-				m->setType(Logic::Control::STOP_SECONDARY_SKILL);
-				break;
 			case Input::Key::W:
 				m->setType(Logic::Control::STOP_WALK);
 				break;
@@ -311,13 +173,9 @@ namespace Input {
 				break;
 			case Input::Key::A:
 				m->setType(Logic::Control::STOP_STRAFE_LEFT);
-				_strafingLeft = false;
-				_unpressLeft = true;
 				break;
 			case Input::Key::D:
 				m->setType(Logic::Control::STOP_STRAFE_RIGHT);
-				_strafingRight = false;
-				_unpressRight = true;
 				break;
 			case Input::Key::ESCAPE:// esto debe desaparecer en el futuro
 					std::cout << "escape pulsado" << std::endl;
@@ -328,12 +186,12 @@ namespace Input {
 			_controlledAvatar->emitMessage(m);
 			return true;
 		}
-		return true;
+		return false;
 
 	} // keyReleased
 
 	//--------------------------------------------------------
-	
+
 	bool CPlayerController::mouseMoved(const CMouseState &mouseState)
 	{
 		if(_controlledAvatar)
@@ -345,12 +203,12 @@ namespace Input {
 			_controlledAvatar->emitMessage(m);
 			return true;
 		}
-		return true;
+		return false;
 
 	} // mouseMoved
 
 	//--------------------------------------------------------
-		
+
 	bool CPlayerController::mousePressed(const CMouseState &mouseState)
 	{
 		if(_controlledAvatar)
@@ -370,22 +228,22 @@ namespace Input {
 			case Input::Button::BUTTON_3:
 				m->setType(Logic::Control::BUTTON3_CLICK);
 				break;
-			
+
 			default:
-				return true;
+				return false;
 			}
 			_controlledAvatar->emitMessage(m);
 			return true;
 		}
-		return true;
+		return false;
 
 	} // mousePressed
 
 	//--------------------------------------------------------
-	
+
 	bool CPlayerController::mouseReleased(const CMouseState &mouseState)
 	{
-		
+
 		if(_controlledAvatar)
 		{
 			Logic::CMessageControl *m=new Logic::CMessageControl();
@@ -403,9 +261,9 @@ namespace Input {
 			case Input::Button::BUTTON_3:
 				m->setType(Logic::Control::UNBUTTON3_CLICK);
 				break;
-			
+
 			default:
-				return true;
+				return false;
 			}
 			_controlledAvatar->emitMessage(m);
 			return true;

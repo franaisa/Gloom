@@ -79,7 +79,7 @@ namespace Input
 		/***************************************************************
 		Métodos de CKeyboardListener
 		***************************************************************/
-		
+
 		/**
 		Método que será invocado siempre que se pulse una tecla.
 
@@ -88,7 +88,7 @@ namespace Input
 		el gestor no llamará a otros listeners.
 		*/
 		bool keyPressed(TKey key);
-		
+
 		/**
 		Método que será invocado siempre que se termine la pulsación
 		de una tecla.
@@ -102,7 +102,7 @@ namespace Input
 		/***************************************************************
 		Métodos de CKeyboardListener
 		***************************************************************/
-		
+
 		/**
 		Método que será invocado siempre que se mueva el ratón.
 
@@ -111,7 +111,7 @@ namespace Input
 		el gestor no llamará a otros listeners.
 		*/
 		bool mouseMoved(const CMouseState &mouseState);
-		
+
 		/**
 		Método que será invocado siempre que se pulse un botón.
 
@@ -138,37 +138,6 @@ namespace Input
 		función de las teclas pulsadas y el movimiento del ratón.
 		*/
 		Logic::CEntity *_controlledAvatar;
-
-
-		/*Atributos que se encargan de contar/llevar el tiempo para ver si se hizo un salto lateral
-		*/
-		unsigned int _time;
-
-		int _jumpLeft;
-		int _jumpRight;
-		int _timeSideJump;
-
-		bool _unpressRight;
-		bool _unpressLeft;
-		bool _readySideJumpLeft;
-		bool _readySideJumpRight;
-		bool _dontCountUntilUnpress;
-
-		bool _strafingRight;
-		bool _strafingLeft;
-
-		/**
-		Atributo que lleva el conteo de saltos concatenados para el aumento de velocidad
-		*/
-		int _nConcatSideJump;
-		int _timeConcatSideJump;
-		bool _activeConcat;
-		bool _sideFly;
-		bool _sideContact;
-		int _maxTimeSideJump;
-
-
-
 
 	}; // class CPlayerController
 
