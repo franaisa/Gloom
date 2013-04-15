@@ -209,15 +209,9 @@ namespace Application {
 				serialMsg.serialize(player->getEntityID());
 				serialMsg.serialize(player->getType(), false);
 				serialMsg.serialize(player->getName(), false);
-
+				player->activate();
 				Net::CManager::getSingletonPtr()->send(serialMsg.getbuffer(), serialMsg.getSize(),playerNetId);
 				break;
-				}
-				case Net::LOCAL_PLAYER_LOADED: 
-				{
-					unsigned int id;
-					buffer.deserialize(id);
-					Logic::CServer::getSingletonPtr()->getMap()->getEntityByID(id)->activate();
 				}
 			
 		}

@@ -275,15 +275,9 @@ namespace Logic  {
 
 		//seteo la distancia real
 		distance = distance-myDistance;
-		//std::cout << ">>>>>>>>>>>> \tmi posi" << _entity->getPosition() << std::endl;
-		//std::cout << ">>>>>>>>>>>>>>>\t server posi" << _serverPos.getTrans() << std::endl;
-		//si la distancia es mayor de maxDistance .. set transform por cojones
-		//std::cout << "distancia ->" << distance << std::endl;
-		//std::cout << "speed ->" << speed << std::endl;
 		if(distance > _maxDistance){
 			_entity->getComponent<CPhysicController>("CPhysicController")->setPhysicPosition(_serverPos.getTrans());
 			//Movemos la orientacion logica/grafica
-			//std::cout << "<<<<<<< SETEO A LO ANIMAL >>>>>>>" << std::endl;
 			Matrix3 tmpMatrix;
 			_serverPos.extract3x3Matrix(tmpMatrix);
 			_entity->setOrientation(tmpMatrix);

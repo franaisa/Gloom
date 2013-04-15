@@ -154,14 +154,7 @@ namespace Application {
 				//llamo al metodo de creacion del jugador
 				Logic::CEntity * player = Logic::CServer::getSingletonPtr()->getMap()->createLocalPlayer(name, type, entityID);
 
-				//Enviamos el mensaje de que se ha creado el jugador
-				Net::NetMessageType ackMsg = Net::LOCAL_PLAYER_LOADED;
-				Net::CBuffer ackBuffer(sizeof(ackMsg) + sizeof(player->getEntityID()));
-				ackBuffer.serialize(ackMsg);
-				ackBuffer.serialize(player->getEntityID());
-				Net::CManager::getSingletonPtr()->send(ackBuffer.getbuffer(), ackBuffer.getSize());
 				player->activate();
-				std::cout << " he creado el local player con id " << entityID << std::endl;
 				Logic::CServer::getSingletonPtr()->getMap()->getEntityByType("Camera")->getComponent<Logic::CCamera>("CCamera")->setTarget(player);
 
 

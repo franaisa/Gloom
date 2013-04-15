@@ -136,7 +136,6 @@ namespace Logic
 
 	void CAvatarController::process(CMessage *message)
 	{
-		//std::cout << "menssaje de avatar controller recibido" << std::endl;
 		switch(message->getMessageType())
 		{
 		case Message::CONTROL:
@@ -321,7 +320,6 @@ namespace Logic
 	{
 		IComponent::tick(msecs);
 		//if(_entity->getName().compare("David")==0)
-			//std::cout << _entity->getPosition().y << std::endl;
 		//Vector dirección que mandaremos a la física
 		Vector3 direction(Vector3::ZERO);
 

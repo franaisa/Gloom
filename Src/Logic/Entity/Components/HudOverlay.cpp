@@ -531,7 +531,6 @@ namespace Logic
 		std::stringstream sShield;
 		sShield << shield;
 		_panelElementsTextArea[SHIELD]->setText(sShield.str());
-		std::cout << "mensaje de escudo recibido y procesado" << std::endl;
 	}
 
 	void CHudOverlay::hudAmmo(int ammo, int weapon){

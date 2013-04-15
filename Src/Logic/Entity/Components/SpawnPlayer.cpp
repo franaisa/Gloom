@@ -88,11 +88,9 @@ namespace Logic
 		//Solamente si estamos muertos (se recibió el mensaje)
 		if(_isDead){
 			_actualTimeSpawn+=msecs;
-			std::cout << "muerto..." << _actualTimeSpawn << ":" << _timeSpawn << std::endl;
 			//Si superamos el tiempo de spawn tenemos que revivir
 			if(_actualTimeSpawn>_timeSpawn){
 
-				std::cout << "reviviendo" << std::endl;
 				//LLamamos al manager de spawn que nos devolverá una posición ( ahora hecho a lo cutre)
 				Vector3 spawn = CServer::getSingletonPtr()->getSpawnManager()->getSpawnPosition();
 
@@ -143,7 +141,6 @@ namespace Logic
 	void CSpawnPlayer::dead()
 	{
 		//Si no esto muerto ya hago las acciones
-		std::cout << "el jugador ha muerto" << std::endl;
 		if(!_isDead){
 			//Desactivamos todos menos el cspawnplayer
 			std::vector<std::string> except;
