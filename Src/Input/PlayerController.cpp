@@ -112,10 +112,7 @@ namespace Input {
 						_controlledAvatar->emitMessage(message3);
 						break;
 					}
-
 					_controlledAvatar->emitMessage(message);
-
-
 			}else{
 				Logic::CMessageControl *m=new Logic::CMessageControl();
 				Logic::CMessageHudDebug *m2=new Logic::CMessageHudDebug();
@@ -228,7 +225,6 @@ namespace Input {
 			case Input::Button::BUTTON_3:
 				m->setType(Logic::Control::BUTTON3_CLICK);
 				break;
-
 			default:
 				return false;
 			}
@@ -236,14 +232,12 @@ namespace Input {
 			return true;
 		}
 		return false;
-
 	} // mousePressed
 
 	//--------------------------------------------------------
 
 	bool CPlayerController::mouseReleased(const CMouseState &mouseState)
 	{
-
 		if(_controlledAvatar)
 		{
 			Logic::CMessageControl *m=new Logic::CMessageControl();
@@ -269,7 +263,9 @@ namespace Input {
 			return true;
 		}
 		return false;
-
 	} // mouseReleased
+
+	//--------------------------------------------------------
+
 
 } // namespace Input
