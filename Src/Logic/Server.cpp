@@ -28,7 +28,7 @@ namespace Logic {
 
 	//--------------------------------------------------------
 
-	CServer::CServer() : _map(0), _player(0)
+	CServer::CServer() : _map(0), _player(0), _MESSAGE_CONSTRUCTOR_COUNTER(0), _MESSAGE_DESTRUCTOR_COUNTER(0)
 	{
 		_instance = this;
 
@@ -40,6 +40,8 @@ namespace Logic {
 	{
 		_instance = 0;
 
+		std::cout << "MESSAGE_CONSTRUCTOR_COUNTER = " << _MESSAGE_CONSTRUCTOR_COUNTER << std::endl;
+		std::cout << "MESSAGE_DESTRUCTOR_COUNTER = " << _MESSAGE_DESTRUCTOR_COUNTER << std::endl;
 	} // ~CServer
 	
 	//--------------------------------------------------------
