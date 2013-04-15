@@ -75,80 +75,23 @@ namespace Input {
 	{
 		if(_controlledAvatar)
 		{
-			if(key.keyId == Input::Key::NUMBER1 || key.keyId == Input::Key::NUMBER2 || key.keyId == Input::Key::NUMBER3 || key.keyId == Input::Key::NUMBER4 || 
-				key.keyId == Input::Key::NUMBER5 || key.keyId == Input::Key::NUMBER6 || key.keyId == Input::Key::NUMBER7 || key.keyId == Input::Key::NUMBER8){
-
-					Logic::CMessageChangeWeapon *message=new Logic::CMessageChangeWeapon();
-
-					//A quitar en un futuro, usado ahora para debuguear
-					Logic::CMessageAddLife *message2=new Logic::CMessageAddLife();
-					Logic::CMessageAddShield *message3=new Logic::CMessageAddShield();
-					switch(key.keyId)
-					{
-					case Input::Key::NUMBER1:
-						message->setWeapon(0);
-						break;
-					case Input::Key::NUMBER2:
-						message->setWeapon(1);
-						break;
-					case Input::Key::NUMBER3:
-						message->setWeapon(2);
-						break;
-					case Input::Key::NUMBER4:
-						message->setWeapon(3);
-						break;
-					case Input::Key::NUMBER5:
-						message->setWeapon(4);
-						break;
-					case Input::Key::NUMBER6:
-						message->setWeapon(5);
-						break;
-					case Input::Key::NUMBER7:
-						message2->setAddLife(20);
-						_controlledAvatar->emitMessage(message2);
-						break;
-					case Input::Key::NUMBER8:
-						message3->setAddShield(20);
-						_controlledAvatar->emitMessage(message3);
-						break;
-					}
-					_controlledAvatar->emitMessage(message);
-			}else{
-				Logic::CMessageControl *m=new Logic::CMessageControl();
-				Logic::CMessageHudDebug *m2=new Logic::CMessageHudDebug();
-				switch(key.keyId)
-				{
-				case Input::Key::W:
-					m->setType(Logic::Control::WALK);
-					break;
-				case Input::Key::S:
-					m->setType(Logic::Control::WALKBACK);
-					break;
-				case Input::Key::A:
-					m->setType(Logic::Control::STRAFE_LEFT);
-					break;
-				case Input::Key::D:
-					m->setType(Logic::Control::STRAFE_RIGHT);
-					break;
-				case Input::Key::SPACE:
-					m->setType(Logic::Control::JUMP);
-					break;
-				case Input::Key::O:
-					_controlledAvatar->emitMessage(m2);
-					break;
-				case Input::Key::ESCAPE:// esto debe desaparecer en el futuro
-					std::cout << "escape pulsado" << std::endl;
-					return false;
-					break;
-				default:
+			int iType = typeOfKey(key);
+			switch (iType)
+			{
+				case 0: //Change weapons
+					ChangeWeaponMessage(key);
+				break;
+				case 1: //Movement
+					MovementMessage(key);
+				case 2: //Habilities
+					HabilityMessage(key);
+				break;
+				case 3: //Other (debug)
+					OtherMessages(key);
 					return true;
-				}
-				if (key.keyId != Input::Key::O)
-					_controlledAvatar->emitMessage(m);
-
-				return true;
-			}
-		}
+				break;				
+			}//switch iType
+		}//if _controlledAvatar
 		return false;
 
 	} // keyPressed
@@ -164,7 +107,7 @@ namespace Input {
 			{
 			case Input::Key::W:
 				m->setType(Logic::Control::STOP_WALK);
-				break;
+ 				break;
 			case Input::Key::S:
 				m->setType(Logic::Control::STOP_WALKBACK);
 				break;
@@ -174,11 +117,18 @@ namespace Input {
 			case Input::Key::D:
 				m->setType(Logic::Control::STOP_STRAFE_RIGHT);
 				break;
+
+			case Input::Key::Q:
+				m->setType(Logic::Control::STOP_PRIMARY_SKILL);
+				break;
+			case Input::Key::E:
+				m->setType(Logic::Control::STOP_SECONDARY_SKILL);
+				break;
 			case Input::Key::ESCAPE:// esto debe desaparecer en el futuro
 					std::cout << "escape pulsado" << std::endl;
 					return false;
-			default:
-				return true;
+			//default:
+				//return true;
 			}
 			_controlledAvatar->emitMessage(m);
 			return true;
@@ -217,10 +167,12 @@ namespace Input {
 				m->setType(Logic::Control::LEFT_CLICK);
 				break;
 			case Input::Button::RIGHT:
-				m->setType(Logic::Control::RIGHT_CLICK);
+				//m->setType(Logic::Control::RIGHT_CLICK);
+				m->setType(Logic::Control::USE_PRIMARY_SKILL);
 				break;
 			case Input::Button::MIDDLE:
-				m->setType(Logic::Control::MIDDLE_CLICK);
+				//m->setType(Logic::Control::MIDDLE_CLICK);
+				m->setType(Logic::Control::USE_SECONDARY_SKILL);
 				break;
 			case Input::Button::BUTTON_3:
 				m->setType(Logic::Control::BUTTON3_CLICK);
@@ -232,12 +184,14 @@ namespace Input {
 			return true;
 		}
 		return false;
+
 	} // mousePressed
 
 	//--------------------------------------------------------
 
 	bool CPlayerController::mouseReleased(const CMouseState &mouseState)
 	{
+
 		if(_controlledAvatar)
 		{
 			Logic::CMessageControl *m=new Logic::CMessageControl();
@@ -247,10 +201,12 @@ namespace Input {
 				m->setType(Logic::Control::UNLEFT_CLICK);
 				break;
 			case Input::Button::RIGHT:
-				m->setType(Logic::Control::UNRIGHT_CLICK);
+				//m->setType(Logic::Control::UNRIGHT_CLICK);
+				m->setType(Logic::Control::STOP_PRIMARY_SKILL);
 				break;
 			case Input::Button::MIDDLE:
-				m->setType(Logic::Control::UNMIDDLE_CLICK);
+				//m->setType(Logic::Control::UNMIDDLE_CLICK);
+				m->setType(Logic::Control::STOP_SECONDARY_SKILL);
 				break;
 			case Input::Button::BUTTON_3:
 				m->setType(Logic::Control::UNBUTTON3_CLICK);
@@ -263,9 +219,139 @@ namespace Input {
 			return true;
 		}
 		return false;
+
 	} // mouseReleased
 
 	//--------------------------------------------------------
 
+	int CPlayerController::typeOfKey(TKey key)
+	{
+		if ( key.keyId == Input::Key::NUMBER1 || key.keyId == Input::Key::NUMBER2 || key.keyId == Input::Key::NUMBER3 || key.keyId == Input::Key::NUMBER4 || 
+				key.keyId == Input::Key::NUMBER5 )
+		{		
+			return 0;//Change weapon
+		}
+		else if (key.keyId == Input::Key::W || key.keyId == Input::Key::A || key.keyId == Input::Key::S || key.keyId == Input::Key::D 
+			|| key.keyId == Input::Key::Q || key.keyId == Input::Key::E || key.keyId == Input::Key::SPACE )
+		{
+			return 1; //Movement
+		}
+		else if (key.keyId == Input::Key::Q || key.keyId == Input::Key::E)
+		{
+			return 2; //Habilities
+		}
+		else if (key.keyId == Input::Key::O || key.keyId == Input::Key::NUMBER6 || key.keyId == Input::Key::NUMBER7 
+			|| key.keyId == Input::Key::NUMBER8 || key.keyId == Input::Key::ESCAPE)
+		{
+			return 3; //Other
+		}
+		return -1;
+	} // typeOfKey
 
+	//--------------------------------------------------------
+
+	void CPlayerController::ChangeWeaponMessage(TKey key)
+	{
+		Logic::CMessageChangeWeapon *message=new Logic::CMessageChangeWeapon();
+
+		switch(key.keyId)
+		{
+		case Input::Key::NUMBER1:
+			message->setWeapon(0);
+			break;
+		case Input::Key::NUMBER2:
+			message->setWeapon(1);
+			break;
+		case Input::Key::NUMBER3:
+			message->setWeapon(2);
+			break;
+		case Input::Key::NUMBER4:
+			message->setWeapon(3);
+			break;
+		case Input::Key::NUMBER5:
+			message->setWeapon(4);
+			break;
+		case Input::Key::NUMBER6:
+			message->setWeapon(5);
+			break;
+		}
+
+		_controlledAvatar->emitMessage(message);
+	}//EmitMessageChangeWeapon
+
+	//--------------------------------------------------------
+
+	void CPlayerController::MovementMessage(TKey key)
+	{
+		Logic::CMessageControl *m=new Logic::CMessageControl();
+		switch(key.keyId)
+		{
+			case Input::Key::W:
+				m->setType(Logic::Control::WALK);
+				break;
+			case Input::Key::S:
+				m->setType(Logic::Control::WALKBACK);
+				break;
+			case Input::Key::A:
+				m->setType(Logic::Control::STRAFE_LEFT);
+				break;
+			case Input::Key::D:
+				m->setType(Logic::Control::STRAFE_RIGHT);
+				break;
+			case Input::Key::SPACE:
+				m->setType(Logic::Control::JUMP);
+				break;
+			break;
+		}
+
+		_controlledAvatar->emitMessage(m);
+	}//EmitMessageMovement
+
+	//--------------------------------------------------------
+
+	void CPlayerController::HabilityMessage(TKey key)
+	{
+		Logic::CMessageControl *m=new Logic::CMessageControl();
+		switch (key.keyId)
+		{
+			case Input::Key::Q:
+				m->setType(Logic::Control::USE_PRIMARY_SKILL);
+			break;
+			case Input	::Key::E:
+				m->setType(Logic::Control::USE_SECONDARY_SKILL);
+			break;
+		}
+		_controlledAvatar->emitMessage(m);
+	}//HabilityMessage
+
+	//--------------------------------------------------------
+
+	void CPlayerController::OtherMessages(TKey key)
+	{
+		//No me deja crear los mensajes dentro del switch (error=la inicialización de message se omite en la etiqueta 'case')
+		Logic::CMessageAddLife *message2=new Logic::CMessageAddLife();
+		Logic::CMessageAddShield *message3=new Logic::CMessageAddShield();
+		Logic::CMessageHudDebug *m2=new Logic::CMessageHudDebug();
+		switch (key.keyId)
+		{					
+			case Input::Key::NUMBER7:				
+				message2->setAddLife(20);
+				_controlledAvatar->emitMessage(message2);
+			break;
+			case Input::Key::NUMBER8:
+
+				message3->setAddShield(20);
+				_controlledAvatar->emitMessage(message3);
+			break;
+			case Input::Key::O:
+
+				_controlledAvatar->emitMessage(m2);
+			break;
+			case Input::Key::ESCAPE:// esto debe desaparecer en el futuro
+				std::cout << "escape pulsado" << std::endl;
+				//return false;
+			break;
+		}
+
+	}//EmitOtherMessages
 } // namespace Input
