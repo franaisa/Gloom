@@ -51,6 +51,9 @@ namespace Logic
 	{
 	public:
 
+		__int64 _MESSAGE_CONSTRUCTOR_COUNTER;
+		__int64 _MESSAGE_DESTRUCTOR_COUNTER;
+
 		/**
 		Devuelve la única instancia de la clase CServer.
 		
