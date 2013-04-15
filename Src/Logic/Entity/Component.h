@@ -144,18 +144,8 @@ namespace Logic
 		*/
 		virtual void deactivate();
 
-		/**
-		Representa el primer tick de la entidad. Se ejecuta una sola vez tras la activación
-		del jugador.
-
-		Es muy útil para inicializar datos ya que en esta fase SI que se pueden mandar
-		mensajes a otras entidades (ya que su spawn ya ha sido realizado).
-
-		IMPORTANTE: Los hijos deben llamar al método onStart del padre (tal y como sucede
-		con el tick) para que todo funcione correctamente.
-
-		@param msecs Milisegundos transcurridos para este primer tick.
-		*/
+		// Es muy importante que se llame en los hijos a onStart de la clase padre
+		// si no, no se reciben mensajes ni se setean bien las colas.
 		virtual void onStart(unsigned int msecs);
 
 		/**
@@ -196,11 +186,11 @@ namespace Logic
 		CEntity *_entity;
 
 		/**
-		Entidad que contiene al componente. Para reenviar el mensaje a 
-		los otros componentes
+		True si el componente esta activado.
 		*/
 		bool _isActivated;
 
+		/** True si el componente va a ejecutar la fase onStart en vez del tick */
 		bool _isStartingUp;
 
 	}; // class IComponent

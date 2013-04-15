@@ -91,19 +91,22 @@ namespace Logic {
 	
 	//________________________________________________________________________
 
-	bool CSpawnItemManager::accept(CMessage *message) {
-		return (message->getMessageType() == Message::TOUCHED);
+	bool CSpawnItemManager::accept(const std::shared_ptr<CMessage>& message) {
+		return message->getMessageType() == Message::TOUCHED;
 	} // accept
 	
 	//________________________________________________________________________
 
-	void CSpawnItemManager::process(CMessage *message) {
-		switch(message->getMessageType()) {
-		case Message::TOUCHED:
-			// Si se ha disparado el trigger del item recompensamos a la entidad
-			// que ha disparado el trigger con la ventaja que de el item cogido.
-			itemGrabbed( ((CMessageTouched*)message)->getEntity() );
-			break;
+	void CSpawnItemManager::process(const std::shared_ptr<CMessage>& message) {
+		switch( message->getMessageType() ) {
+			case Message::TOUCHED: {
+				std::shared_ptr<CMessageTouched> touchedMsg = std::static_pointer_cast<CMessageTouched>(message);
+
+				// Si se ha disparado el trigger del item recompensamos a la entidad
+				// que ha disparado el trigger con la ventaja que de el item cogido.
+				itemGrabbed( touchedMsg->getEntity() );
+				break;
+			}
 		}
 	} // process
 

@@ -85,7 +85,7 @@ namespace Logic
 
 
 
-	bool CElevatorTrigger::accept(CMessage *message)
+	bool CElevatorTrigger::accept(const std::shared_ptr<CMessage>& message)
 	{
 		return message->getMessageType() == Message::TOUCHED|| 
 			message->getMessageType() == Message::UNTOUCHED;
@@ -93,10 +93,8 @@ namespace Logic
 	
 	//---------------------------------------------------------
 
-	void CElevatorTrigger::process(CMessage *message)
+	void CElevatorTrigger::process(const std::shared_ptr<CMessage>& message)
 	{
-		Logic::CMessageTouched *t;
-		Logic::CMessageUntouched *u;
 		switch(message->getMessageType())
 		{
 		case Message::TOUCHED:

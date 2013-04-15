@@ -75,14 +75,14 @@ namespace Logic
 
 
 
-	bool CElevator::accept(CMessage *message)
+	bool CElevator::accept(const std::shared_ptr<CMessage>& message)
 	{
 		return message->getMessageType() == Message::TOUCHED;
 	} // accept
 	
 	//---------------------------------------------------------
 
-	void CElevator::process(CMessage *message)
+	void CElevator::process(const std::shared_ptr<CMessage>& message)
 	{
 		switch(message->getMessageType())
 		{

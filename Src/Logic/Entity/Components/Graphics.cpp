@@ -119,7 +119,7 @@ namespace Logic
 
 	//---------------------------------------------------------
 
-	bool CGraphics::accept(CMessage *message) {
+	bool CGraphics::accept(const std::shared_ptr<CMessage>& message) {
 		Logic::TMessageType msgType = message->getMessageType();
 
 		return msgType == Message::SET_TRANSFORM    ||
@@ -130,10 +130,11 @@ namespace Logic
 	
 	//---------------------------------------------------------
 
-	void CGraphics::process(CMessage *message) {
+	void CGraphics::process(const std::shared_ptr<CMessage>& message) {
 		switch( message->getMessageType() ) {
 			case Message::SET_TRANSFORM: {
-				_graphicsEntity->setTransform( static_cast<CMessageTransform*>(message)->getTransform() );
+				std::shared_ptr<CMessageTransform> transformMsg = std::static_pointer_cast<CMessageTransform>(message);
+				_graphicsEntity->setTransform( transformMsg->getTransform() );
 				break;
 			}
 			case Message::ACTIVATE: {
@@ -145,7 +146,8 @@ namespace Logic
 				break;
 			}
 			case Message::CHANGE_MATERIAL: {
-				changeMaterial( static_cast<CMessageChangeMaterial*>(message)->getMaterialName() );
+				std::shared_ptr<CMessageChangeMaterial> chgMatMsg = std::static_pointer_cast<CMessageChangeMaterial>(message);
+				changeMaterial( chgMatMsg->getMaterialName() );
 				break;
 			}
 		}

@@ -122,76 +122,88 @@ namespace Logic
 	
 	//---------------------------------------------------------
 
-	bool CAvatarController::accept(CMessage *message)
+	bool CAvatarController::accept(const std::shared_ptr<CMessage>& message)
 	{
-		return message->getMessageType() == Message::CONTROL || 
-			message->getMessageType() == Message::COLLISION_DOWN ||
-			message->getMessageType() == Message::REBOUND ||
-			message->getMessageType() == Message::ADDFORCEPLAYER ||
-			message->getMessageType() == Message::CEALING ||
-			message->getMessageType() == Message::SIDE;
+		Logic::TMessageType msgType = message->getMessageType();
+
+		return msgType == Message::CONTROL || 
+			   msgType == Message::COLLISION_DOWN ||
+			   msgType == Message::REBOUND ||
+			   msgType == Message::ADDFORCEPLAYER ||
+			   msgType == Message::CEALING ||
+			   msgType == Message::SIDE;
 	} // accept
 	
 	//---------------------------------------------------------
 
-	void CAvatarController::process(CMessage *message)
+	void CAvatarController::process(const std::shared_ptr<CMessage>& message)
 	{
 		//std::cout << "menssaje de avatar controller recibido" << std::endl;
-		switch(message->getMessageType())
-		{
-		case Message::CONTROL:
-			if(((CMessageControl*)message)->getType()==Control::WALK)
-				walk();
-			else if(((CMessageControl*)message)->getType()==Control::WALKBACK)
-				walkBack();
-			else if(((CMessageControl*)message)->getType()==Control::STOP_WALK)
-				stopWalk();
-			else if(((CMessageControl*)message)->getType()==Control::STOP_WALKBACK)
-				stopWalkBack();
-			else if(((CMessageControl*)message)->getType()==Control::STRAFE_LEFT)
-				strafeLeft();
-			else if(((CMessageControl*)message)->getType()==Control::STRAFE_RIGHT)
-				strafeRight();
-			else if(((CMessageControl*)message)->getType()==Control::STOP_STRAFE_LEFT)
-				stopStrafeLeft();
-			else if(((CMessageControl*)message)->getType()==Control::STOP_STRAFE_RIGHT)
-				stopStrafeRight();
-			else if(((CMessageControl*)message)->getType()==Control::MOUSE)
-				mouse(((CMessageMouse*)message)->getMouse());
-			else if(((CMessageControl*)message)->getType()==Control::JUMP)
-				jump();
-			else if(((CMessageControl*)message)->getType()==Control::SIDEJUMP_LEFT){
-				strafeLeft();
-				_nConcatSideJump++;
-				_sideJump=true;
-				_jumping=true;
+		switch(message->getMessageType()) {
+			case Message::CONTROL: {
+				std::shared_ptr<CMessageControl> controlMsg = std::static_pointer_cast<CMessageControl>(message);
+				Logic::ControlType controlType = controlMsg->getType();
+
+				if(controlType==Control::WALK)
+					walk();
+				else if(controlType==Control::WALKBACK)
+					walkBack();
+				else if(controlType==Control::STOP_WALK)
+					stopWalk();
+				else if(controlType==Control::STOP_WALKBACK)
+					stopWalkBack();
+				else if(controlType==Control::STRAFE_LEFT)
+					strafeLeft();
+				else if(controlType==Control::STRAFE_RIGHT)
+					strafeRight();
+				else if(controlType==Control::STOP_STRAFE_LEFT)
+					stopStrafeLeft();
+				else if(controlType==Control::STOP_STRAFE_RIGHT)
+					stopStrafeRight();
+				else if(controlType==Control::MOUSE)
+					mouse(std::static_pointer_cast<CMessageMouse>(controlMsg)->getMouse());
+				else if(controlType==Control::JUMP)
+					jump();
+				else if(controlType==Control::SIDEJUMP_LEFT){
+					strafeLeft();
+					_nConcatSideJump++;
+					_sideJump=true;
+					_jumping=true;
+				}
+				else if(controlType==Control::SIDEJUMP_RIGHT){
+					strafeRight();
+					_nConcatSideJump++;
+					_sideJump=true;
+					_jumping=true;
+				}
+				break;
 			}
-			else if(((CMessageControl*)message)->getType()==Control::SIDEJUMP_RIGHT){
-				strafeRight();
-				_nConcatSideJump++;
-				_sideJump=true;
-				_jumping=true;
+			case Message::COLLISION_DOWN: {
+				_falling=std::static_pointer_cast<CMessageCollisionDown>(message)->getCollisionDown();
+				break;
 			}
-			break;
-		case Message::COLLISION_DOWN:
-			_falling=((CMessageCollisionDown*)message)->getCollisionDown();
-			break;
-		case Message::REBOUND:
-			_dirRebound=((CMessageRebound*)message)->getDir();
-			rebound();
-			break;
-		case Message::ADDFORCEPLAYER:
-			_powerJumpForce=((CMessageAddForcePlayer*)message)->getPower();
-			_velocityForce=((CMessageAddForcePlayer*)message)->getVelocity();
-			_directionForce=((CMessageAddForcePlayer*)message)->getDirection();
-			force();
-			break;
-		case Message::CEALING:
-			_speedJump=-0.02;
-			break;
-		case Message::SIDE:
-			_direccionSaltoCaida=Vector3(0,0,0);
-			break;
+			case Message::REBOUND: {
+				_dirRebound=std::static_pointer_cast<CMessageRebound>(message)->getDir();
+				rebound();
+				break;
+			}
+			case Message::ADDFORCEPLAYER: {
+				std::shared_ptr<CMessageAddForcePlayer> addForceMsg = std::static_pointer_cast<CMessageAddForcePlayer>(message);
+
+				_powerJumpForce=addForceMsg->getPower();
+				_velocityForce=addForceMsg->getVelocity();
+				_directionForce=addForceMsg->getDirection();
+				force();
+				break;
+			}
+			case Message::CEALING: {
+				_speedJump=-0.02;
+				break;
+			}
+			case Message::SIDE: {
+				_direccionSaltoCaida=Vector3(0,0,0);
+				break;
+			}
 		}
 
 	} // process

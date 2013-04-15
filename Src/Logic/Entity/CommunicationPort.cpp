@@ -14,34 +14,30 @@ de los mensajes.
 
 namespace Logic {
 
-	CCommunicationPort::~CCommunicationPort()
-	{
+	CCommunicationPort::~CCommunicationPort() {
 		_messages.clear();
 
 	} // ~CCommunicationPort
 	
 	//---------------------------------------------------------
 
-	bool CCommunicationPort::set(CMessage *message)
-	{
+	bool CCommunicationPort::set(const std::shared_ptr<CMessage>& message) {
 		bool accepted = accept(message);
-		if(accepted){
-			message->addSmartP();
+		if(accepted) {
 			_messages.push_back(message);
 		}
-		return accepted;
 
+		return accepted;
 	} // set
 	
 	//---------------------------------------------------------
 
-	void CCommunicationPort::processMessages()
-	{
+	void CCommunicationPort::processMessages() {
 		CMessageList::const_iterator it = _messages.begin();
-		for(; it != _messages.end(); ++it){
+		for(; it != _messages.end(); ++it) {
 			process(*it);
-			(*it)->subSmartP();
 		}
+
 		_messages.clear();
 	} // processMessages
 

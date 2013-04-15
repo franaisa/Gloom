@@ -464,46 +464,47 @@ namespace Logic
 	
 	//---------------------------------------------------------
 
-	bool CHudOverlay::accept(CMessage *message)
-	{
-		return message->getMessageType() == Message::HUD_LIFE
-			|| message->getMessageType() == Message::HUD_SHIELD
-			|| message->getMessageType() == Message::HUD_AMMO
-			|| message->getMessageType() == Message::HUD_WEAPON
-			|| message->getMessageType() == Message::HUD_SPAWN
-			|| message->getMessageType() == Message::HUD_DEBUG
-			|| message->getMessageType() == Message::HUD_DEBUG_DATA;
+	bool CHudOverlay::accept(const std::shared_ptr<CMessage>& message) {
+		Logic::TMessageType msgType = message->getMessageType();
+
+		return msgType == Message::HUD_LIFE			|| 
+			   msgType == Message::HUD_SHIELD		|| 
+			   msgType == Message::HUD_AMMO			|| 
+			   msgType == Message::HUD_WEAPON		|| 
+			   msgType == Message::HUD_SPAWN		|| 
+			   msgType == Message::HUD_DEBUG		|| 
+			   msgType == Message::HUD_DEBUG_DATA;
 
 	} // accept
 	
 	//---------------------------------------------------------
 
-	void CHudOverlay::process(CMessage *message)
-	{
-		switch(message->getMessageType())
-		{
+	void CHudOverlay::process(const std::shared_ptr<CMessage>& message) {
+		switch( message->getMessageType() ) {
 			case Message::HUD_LIFE: {
-				hudLife(((CMessageHudLife*)message)->getLife());
+				std::shared_ptr<CMessageHudLife> hudLifeMsg = std::static_pointer_cast<CMessageHudLife>(message);
+				hudLife( hudLifeMsg->getLife() );
 				break;
 			}
 			case Message::HUD_SHIELD: {
-				hudShield(((CMessageHudShield*)message)->getShield());
+				std::shared_ptr<CMessageHudShield> hudShieldMsg = std::static_pointer_cast<CMessageHudShield>(message);
+				hudShield( hudShieldMsg->getShield() );
 				break;
 			}
 			case Message::HUD_AMMO: {
-				CMessageHudAmmo *aux = static_cast<CMessageHudAmmo *>(message);
-				hudAmmo( aux->getAmmo(), aux->getWeapon());
+				std::shared_ptr<CMessageHudAmmo> hudAmmoMsg = std::static_pointer_cast<CMessageHudAmmo>(message);
+				hudAmmo( hudAmmoMsg->getAmmo(), hudAmmoMsg->getWeapon() );
 				break;
 			}
 			case Message::HUD_WEAPON: {
-				CMessageHudWeapon *aux = static_cast<CMessageHudWeapon *>(message);
-				hudWeapon(aux->getAmmo(), aux->getWeapon());
+				std::shared_ptr<CMessageHudWeapon> hudWeaponMsg = std::static_pointer_cast<CMessageHudWeapon>(message);
+				hudWeapon( hudWeaponMsg->getAmmo(), hudWeaponMsg->getWeapon() );
 				break;
 			}
 			case Message::HUD_SPAWN: {
-				CMessageHudSpawn *aux = static_cast<CMessageHudSpawn *>(message);
-				_spawnTime = aux->getTime();
-				hudSpawn(aux->getTime());
+				std::shared_ptr<CMessageHudSpawn> hudSpawnMsg = std::static_pointer_cast<CMessageHudSpawn>(message);
+				_spawnTime = hudSpawnMsg->getTime();
+				hudSpawn(hudSpawnMsg->getTime());
 				break;
 			}
 			case Message::HUD_DEBUG: {
@@ -511,8 +512,8 @@ namespace Logic
 				break;
 			}
 			case Message::HUD_DEBUG_DATA: {
-				CMessageHudDebugData *aux = static_cast<CMessageHudDebugData *>(message); 
-				hudDebugData(aux->getKey(),aux->getValue() );
+				std::shared_ptr<CMessageHudDebugData> hudDebugDataMsg = std::static_pointer_cast<CMessageHudDebugData>(message);
+				hudDebugData( hudDebugDataMsg->getKey(), hudDebugDataMsg->getValue() );
 				break;
 			}
 		}

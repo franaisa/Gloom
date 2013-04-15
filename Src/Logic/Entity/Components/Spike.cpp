@@ -78,24 +78,26 @@ namespace Logic
 	//---------------------------------------------------------
 
 
-	bool CSpike::accept(CMessage *message)
+	bool CSpike::accept(const std::shared_ptr<CMessage>& message)
 	{
 		return message->getMessageType() == Message::TOUCHED;
 	} // accept
 	
 	//---------------------------------------------------------
 
-	void CSpike::process(CMessage *message)
-	{
-		Logic::CMessageDamaged* m;
-		switch(message->getMessageType())
-		{
-		case Message::TOUCHED:
-			m = new Logic::CMessageDamaged();
-			m->setDamage(1000);
-			m->setEnemy(_entity);
-			((CMessageTouched*)message)->getEntity()->emitMessage(m);
-			break;
+	void CSpike::process(const std::shared_ptr<CMessage>& message) {
+		
+		switch( message->getMessageType() ) {
+			case Message::TOUCHED: {
+				std::shared_ptr<CMessageTouched> touchedMsg = std::static_pointer_cast<CMessageTouched>(message);
+				std::shared_ptr<CMessageDamaged> damagedMsg = std::make_shared<CMessageDamaged>();
+
+				damagedMsg->setDamage(1000);
+				damagedMsg->setEnemy(_entity);
+				touchedMsg->getEntity()->emitMessage(damagedMsg);
+				
+				break;
+			}
 		}
 
 	} // process

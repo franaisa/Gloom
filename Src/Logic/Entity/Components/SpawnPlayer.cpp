@@ -64,19 +64,19 @@ namespace Logic
 	//--------------------------------------------------------
 
 
-	bool CSpawnPlayer::accept(CMessage *message)
+	bool CSpawnPlayer::accept(const std::shared_ptr<CMessage>& message)
 	{
 		return message->getMessageType() == Message::PLAYER_DEAD;
 	} // accept
 	//---------------------------------------------------------
 
 
-	void CSpawnPlayer::process(CMessage *message)
+	void CSpawnPlayer::process(const std::shared_ptr<CMessage>& message)
 	{
 		switch(message->getMessageType())
 		{
 		case Message::PLAYER_DEAD:
-					dead();
+			dead();
 			break;
 		}
 

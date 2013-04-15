@@ -87,7 +87,7 @@ namespace Logic
 
 
 
-	bool CLight::accept(CMessage *message)
+	bool CLight::accept(const std::shared_ptr<CMessage>& message)
 	{
 		return false;
 		//return message->getMessageType() == Message::DAMAGED;
@@ -96,7 +96,7 @@ namespace Logic
 	
 	//---------------------------------------------------------
 
-	void CLight::process(CMessage *message)
+	void CLight::process(const std::shared_ptr<CMessage>& message)
 	{
 		/*
 		switch(message->getMessageType())

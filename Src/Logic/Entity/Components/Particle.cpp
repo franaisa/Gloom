@@ -81,7 +81,7 @@ namespace Logic
 
 
 
-	bool CParticle::accept(CMessage *message) {
+	bool CParticle::accept(const std::shared_ptr<CMessage>& message) {
 		
 		return message->getMessageType() == Message::CREATE_PARTICLE;
 		
@@ -89,17 +89,17 @@ namespace Logic
 	
 	//---------------------------------------------------------
 
-	void CParticle::process(CMessage *message) {
+	void CParticle::process(const std::shared_ptr<CMessage>& message) {
 		
-		switch(message->getMessageType())
-		{
+		switch(message->getMessageType()) {
+			case Message::CREATE_PARTICLE: {
+				std::shared_ptr<CMessageCreateParticle> createParticleMsg = std::static_pointer_cast<CMessageCreateParticle>(message);
 
-		case Message::CREATE_PARTICLE:
-			CMessageCreateParticle *msg = static_cast<CMessageCreateParticle*>(message);
-			Graphics::CParticle *particle = Graphics::CServer::getSingletonPtr()->getActiveScene()->createParticle(
-				_entity->getName(),msg->getParticle(), msg->getPosition(), msg->getDirectionWithForce());
-			break;
-
+				Graphics::CParticle *particle = Graphics::CServer::getSingletonPtr()->getActiveScene()->createParticle(
+					_entity->getName(),createParticleMsg->getParticle(), createParticleMsg->getPosition(), createParticleMsg->getDirectionWithForce());
+				
+				break;
+			}
 		}
 	
 	} // process

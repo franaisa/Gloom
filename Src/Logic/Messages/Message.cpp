@@ -24,21 +24,7 @@ namespace Logic
 
 	CMessage::CMessage(TMessageType t) : _type(t), _smartP(0), _tempBuffer(NULL) {
 		// Nada que hacer
-	}//
-	//----------------------------------------------------------
-
-	void CMessage::addSmartP(){
-		_smartP+=1;
-	}//
-	//----------------------------------------------------------
-
-	void CMessage::subSmartP(){
-		_smartP-=1;
-		if(_smartP==0){
-			delete this;
-		}
-	}//
-	//----------------------------------------------------------
+	}
 	
 }
 

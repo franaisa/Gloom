@@ -115,7 +115,7 @@ namespace Logic {
 	
 	//________________________________________________________________________
 
-	bool CLife::accept(CMessage* message) {
+	bool CLife::accept(const std::shared_ptr<CMessage>& message) {
 		Logic::TMessageType msgType = message->getMessageType();
 
 		return msgType == Message::DAMAGED				|| 
@@ -126,24 +126,27 @@ namespace Logic {
 	
 	//________________________________________________________________________
 
-	void CLife::process(CMessage* message) {
+	void CLife::process(const std::shared_ptr<CMessage>& message) {
 		switch( message->getMessageType() ) {
 			case Message::DAMAGED: {
-				CMessageDamaged* dmgMsg = static_cast<CMessageDamaged*>(message);
+				std::shared_ptr<CMessageDamaged> dmgMsg = std::static_pointer_cast<CMessageDamaged>(message);
 				damaged( dmgMsg->getDamage(), dmgMsg->getEnemy() );
 				std::cout << "soy " << _entity->getName() << " y me hace " << dmgMsg->getDamage() << " el enemigo " << dmgMsg->getEnemy()->getName() << std::endl;
 				break;
 			}
 			case Message::ADD_LIFE: {
-				addLife( static_cast<CMessageAddLife*>(message)->getAddLife() );
+				std::shared_ptr<CMessageAddLife> addLifeMsg = std::static_pointer_cast<CMessageAddLife>(message);
+				addLife( addLifeMsg->getAddLife() );
 				break;
 			}	
 			case Message::ADD_SHIELD: {
-				addShield( static_cast<CMessageAddShield*>(message)->getAddShield() );
+				std::shared_ptr<CMessageAddShield> addShieldMsg = std::static_pointer_cast<CMessageAddShield>(message);
+				addShield( addShieldMsg->getAddShield() );
 				break;
 			}
 			case Message::SET_REDUCED_DAMAGE: {
-				reducedDamageAbsorption( static_cast<CMessageSetReducedDamage*>(message)->getReducedDamage() );
+				std::shared_ptr<CMessageSetReducedDamage> reducedDmgMsg = std::static_pointer_cast<CMessageSetReducedDamage>(message);
+				reducedDamageAbsorption( reducedDmgMsg->getReducedDamage() );
 				break;
 			}
 		}
