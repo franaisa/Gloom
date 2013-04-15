@@ -220,7 +220,7 @@ namespace Logic
 
 	void CAvatarController::walk()
 	{	
-		CMessageSetAnimation * anim = new CMessageSetAnimation();
+		std::shared_ptr<CMessageSetAnimation> anim = std::make_shared<CMessageSetAnimation>();
 		anim->setString("Walk");
 		anim->setBool(true);
 		_entity->emitMessage(anim);
@@ -231,7 +231,7 @@ namespace Logic
 
 	void CAvatarController::walkBack() 
 	{
-		CMessageSetAnimation * anim = new CMessageSetAnimation();
+		std::shared_ptr<CMessageSetAnimation> anim = std::make_shared<CMessageSetAnimation>();
 		anim->setString("WalkBack");
 		anim->setBool(true);
 		_entity->emitMessage(anim, this);
@@ -242,7 +242,7 @@ namespace Logic
 
 	void CAvatarController::stopWalk() 
 	{
-		CMessageSetAnimation * anim = new CMessageSetAnimation();
+		std::shared_ptr<CMessageSetAnimation> anim = std::make_shared<CMessageSetAnimation>();
 		anim->setString("Idle");
 		anim->setBool(true);
 		_entity->emitMessage(anim, this);
@@ -253,7 +253,7 @@ namespace Logic
 
 	void CAvatarController::stopWalkBack() 
 	{
-		CMessageSetAnimation * anim = new CMessageSetAnimation();
+		std::shared_ptr<CMessageSetAnimation> anim = std::make_shared<CMessageSetAnimation>();
 		anim->setString("Idle");
 		anim->setBool(true);
 		_entity->emitMessage(anim, this); 
@@ -265,7 +265,7 @@ namespace Logic
 
 	void CAvatarController::strafeLeft() 
 	{
-		CMessageSetAnimation * anim = new CMessageSetAnimation();
+		std::shared_ptr<CMessageSetAnimation> anim = std::make_shared<CMessageSetAnimation>();
 		anim->setString("StrafeLeft");
 		anim->setBool(true);
 		_entity->emitMessage(anim);
@@ -276,7 +276,7 @@ namespace Logic
 
 	void CAvatarController::strafeRight() 
 	{
-		CMessageSetAnimation * anim = new CMessageSetAnimation();
+		std::shared_ptr<CMessageSetAnimation> anim = std::make_shared<CMessageSetAnimation>();
 		anim->setString("StrafeRight");
 		anim->setBool(true);
 		_entity->emitMessage(anim);
@@ -287,7 +287,7 @@ namespace Logic
 
 	void CAvatarController::stopStrafeLeft() 
 	{
-		CMessageSetAnimation * anim = new CMessageSetAnimation();
+		std::shared_ptr<CMessageSetAnimation> anim = std::make_shared<CMessageSetAnimation>();
 		anim->setString("Idle");
 		anim->setBool(true);
 		_entity->emitMessage(anim, this);
@@ -299,7 +299,7 @@ namespace Logic
 
 		void CAvatarController::stopStrafeRight() 
 	{
-		CMessageSetAnimation * anim = new CMessageSetAnimation();
+		std::shared_ptr<CMessageSetAnimation> anim = std::make_shared<CMessageSetAnimation>();
 		anim->setString("Idle");
 		anim->setBool(true);
 		_entity->emitMessage(anim, this);
@@ -468,13 +468,13 @@ namespace Logic
 				_direccionSaltoCaida=direction; //Guardamos la dirección del salto al iniciarse
 				//Sonido salto normal
 				if(!Net::CManager::getSingletonPtr()->imServer()){
-					Logic::CMessageAudio *maudio=new Logic::CMessageAudio();
-					maudio->setRuta(_audioJump);
-					maudio->setId("Jump");
-					maudio->setPosition(_entity->getPosition());
-					maudio->setNotIfPlay(false);
-					maudio->setIsPlayer(_entity->isPlayer());
-					_entity->emitMessage(maudio);
+					std::shared_ptr<CMessageAudio> audioMsg = std::make_shared<CMessageAudio>();
+					audioMsg->setRuta(_audioJump);
+					audioMsg->setId("Jump");
+					audioMsg->setPosition(_entity->getPosition());
+					audioMsg->setNotIfPlay(false);
+					audioMsg->setIsPlayer(_entity->isPlayer());
+					_entity->emitMessage(audioMsg);
 				}
 			}
 			//Sino es un salto lateral
@@ -485,13 +485,13 @@ namespace Logic
 				_direccionSaltoCaida=direction; //Guardamos la dirección del salto al iniciarse
 				//Sonido salto lateral
 				if(!Net::CManager::getSingletonPtr()->imServer()){
-				Logic::CMessageAudio *maudio=new Logic::CMessageAudio();
-					maudio->setRuta(_audioSideJump);
-					maudio->setId("sideJump");
-					maudio->setPosition(_entity->getPosition());
-					maudio->setNotIfPlay(false);
-					maudio->setIsPlayer(_entity->isPlayer());
-					_entity->emitMessage(maudio);
+					std::shared_ptr<CMessageAudio> audioMsg = std::make_shared<CMessageAudio>();
+					audioMsg->setRuta(_audioSideJump);
+					audioMsg->setId("sideJump");
+					audioMsg->setPosition(_entity->getPosition());
+					audioMsg->setNotIfPlay(false);
+					audioMsg->setIsPlayer(_entity->isPlayer());
+					_entity->emitMessage(audioMsg);
 				}
 			}
 			_jumpingControl=true;
@@ -535,7 +535,7 @@ namespace Logic
 		directXZY.y=direction.y;
 
 		//Pasamos a la Física la dirección del movimiento para que se encargue ella de movernos
-		Logic::CMessageAvatarWalk* m = new Logic::CMessageAvatarWalk();
+		std::shared_ptr<CMessageAvatarWalk> m = std::make_shared<CMessageAvatarWalk>();
 		m->setDirection(directXZY);
 		_entity->emitMessage(m);
 
@@ -543,13 +543,13 @@ namespace Logic
 		//Si nos estamos moviendo pero no saltando/ni cayendo mandamos un mensaje de audio (pasos)
 		if(!Net::CManager::getSingletonPtr()->imServer()){
 			if((directXZY.x!=0 || directXZY.z!=0) && !_jumpingControl && !_caida){
-				Logic::CMessageAudio *maudio=new Logic::CMessageAudio();
-				maudio->setRuta(_audioStep);
-				maudio->setId(_entity->getEntityID()+"steps");
-				maudio->setPosition(_entity->getPosition());
-				maudio->setNotIfPlay(true);
-				maudio->setIsPlayer(_entity->isPlayer());
-				_entity->emitMessage(maudio);
+				std::shared_ptr<CMessageAudio> audioMsg = std::make_shared<CMessageAudio>();
+				audioMsg->setRuta(_audioStep);
+				audioMsg->setId(_entity->getEntityID()+"steps");
+				audioMsg->setPosition(_entity->getPosition());
+				audioMsg->setNotIfPlay(true);
+				audioMsg->setIsPlayer(_entity->isPlayer());
+				_entity->emitMessage(audioMsg);
 			}
 		}
 

@@ -133,7 +133,7 @@ namespace Logic
 					toDirection=(_positionFinal-_entity->getPosition());
 					_wait=true;
 				}
-				Logic::CMessageKinematicMove* m = new Logic::CMessageKinematicMove();
+				std::shared_ptr<CMessageKinematicMove> m = std::make_shared<CMessageKinematicMove>();
 				m->setMovement(toDirection);
 				_entity->emitMessage(m);
 			}
@@ -149,7 +149,7 @@ namespace Logic
 					_wait=true;
 				}
 
-				Logic::CMessageKinematicMove* m = new Logic::CMessageKinematicMove();
+				std::shared_ptr<CMessageKinematicMove> m = std::make_shared<CMessageKinematicMove>();
 				m->setMovement(toDirection);
 				_entity->emitMessage(m);
 			}

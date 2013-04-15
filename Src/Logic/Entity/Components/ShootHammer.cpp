@@ -30,6 +30,12 @@ Contiene la implementación del componente que representa al hammer.
 
 namespace Logic {
 	IMP_FACTORY(CShootHammer);
+
+	CShootHammer::~CShootHammer() {
+		// Nada que hacer
+	}
+
+	//__________________________________________________________________
 	
 	bool CShootHammer::spawn(CEntity* entity, CMap *map, const Map::CEntity *entityInfo) {
 		if(!CShootRaycast::spawn(entity,map,entityInfo)) return false;
@@ -60,11 +66,11 @@ namespace Logic {
 	void CShootHammer::triggerHitMessages(std::pair<CEntity*, Ray> entityHit) {
 		if(entityHit.first->getType().compare("World")==0){
 			Vector3 direccionOpuestaRay= entityHit.second.getDirection()*-1;
-			Logic::CMessageRebound *m=new Logic::CMessageRebound();
+			std::shared_ptr<CMessageRebound> m = std::make_shared<CMessageRebound>();
 			m->setDir(direccionOpuestaRay);
 			_entity->emitMessage(m);
 
-			Logic::CMessageDamaged *damage=new Logic::CMessageDamaged();
+			std::shared_ptr<CMessageDamaged> damage = std::make_shared<CMessageDamaged>();
 			damage->setDamage(_damageReflect);
 			damage->setEnemy(_entity);
 			_entity->emitMessage(damage);
@@ -72,7 +78,7 @@ namespace Logic {
 		}
 		// LLamar al componente que corresponda con el daño hecho (solamente si no fuera el mundo el del choque)
 		else{
-			Logic::CMessageDamaged *m=new Logic::CMessageDamaged();
+			std::shared_ptr<CMessageDamaged> m = std::make_shared<CMessageDamaged>();
 			m->setDamage(_damage);
 			m->setEnemy(_entity);
 			entityHit.first->emitMessage(m);

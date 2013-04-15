@@ -70,7 +70,7 @@ namespace Logic {
 	
 	//__________________________________________________________________
 
-	bool CPlayerClass::accept(CMessage* message) {
+	bool CPlayerClass::accept(const std::shared_ptr<CMessage>& message) {
 		Logic::TMessageType msgType = message->getMessageType();
 
 		return msgType == Message::CONTROL || msgType == Message::CHANGE_PLAYER_CLASS;
@@ -78,12 +78,12 @@ namespace Logic {
 	
 	//__________________________________________________________________
 
-	void CPlayerClass::process(CMessage* message) {
+	void CPlayerClass::process(const std::shared_ptr<CMessage>& message) {
 		Logic::TMessageType msgType = message->getMessageType();
 
 		switch(msgType) {
 			case Message::CHANGE_PLAYER_CLASS: {
-				CMessageChangePlayerClass* changeClassMsg = static_cast<CMessageChangePlayerClass*>(message);
+				std::shared_ptr<CMessageChangePlayerClass> changeClassMsg = std::static_pointer_cast<CMessageChangePlayerClass>(message);
 
 				// Cambiar a la clase que toque en funcion del enumerado recibido
 				changePlayerClass( changeClassMsg->getPlayerClass() );
@@ -91,7 +91,7 @@ namespace Logic {
 				break;
 			}
 			case Message::CONTROL: {
-				ControlType type = static_cast<CMessageControl*>(message)->getType();
+				ControlType type = std::static_pointer_cast<CMessageControl>(message)->getType();
 
 				if(type == ControlType::USE_PRIMARY_SKILL) {
 					if( canUsePrimarySkill() ) {

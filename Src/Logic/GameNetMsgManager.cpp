@@ -205,7 +205,7 @@ namespace Logic {
 
 	//---------------------------------------------------------
 		
-	void CGameNetMsgManager::sendEntityMessage(CMessage* txMsg, TEntityID destID)
+	void CGameNetMsgManager::sendEntityMessage(const std::shared_ptr<CMessage>& txMsg, TEntityID destID)
 	{
 
 		Net::CBuffer* bufferAux = txMsg->serialize();
@@ -223,7 +223,7 @@ namespace Logic {
 
 	//---------------------------------------------------------
 		
-	void CGameNetMsgManager::sendMessageToOne(CMessage* txMsg, TEntityID destID, TEntityID player)
+	void CGameNetMsgManager::sendMessageToOne(const std::shared_ptr<CMessage>& txMsg, TEntityID destID, TEntityID player)
 	{
 
 		Net::CBuffer* bufferAux = txMsg->serialize();
@@ -265,7 +265,7 @@ namespace Logic {
 		int typeMessage;
 		serialMsg.read(&typeMessage, sizeof(int));
 		//std::cout << "mensaje de tipo " << typeMessage << std::endl;
-		CMessage * messageReceived = Logic::CMessageFactory::getSingletonPtr()->create(typeMessage);
+		std::shared_ptr<CMessage> messageReceived( Logic::CMessageFactory::getSingletonPtr()->create(typeMessage) );
 			messageReceived->deserialize(serialMsg);
 
 		// Me saco la entidad a la que va destinado el mensaje y se lo envío

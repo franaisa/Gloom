@@ -66,7 +66,7 @@ namespace Logic {
 				_invisibilityTimer = 0;
 
 				// Desactivamos el shader de invisibilidad
-				CMessageChangeMaterial* materialMsg = new CMessageChangeMaterial();
+				std::shared_ptr<CMessageChangeMaterial> materialMsg = std::make_shared<CMessageChangeMaterial>();
 				materialMsg->setMaterialName("marine_azul");
 				_entity->emitMessage(materialMsg);
 			}
@@ -81,7 +81,7 @@ namespace Logic {
 		// Ñapa temporal para el ideame
 		// Cambiamos el color del marine en funcion de la clase con un changeMaterial
 
-		CMessageChangeMaterial* materialMsg = new CMessageChangeMaterial();
+		std::shared_ptr<CMessageChangeMaterial> materialMsg = std::make_shared<CMessageChangeMaterial>();
 		materialMsg->setMaterialName("marine_azul");
 		_entity->emitMessage(materialMsg);
 
@@ -97,7 +97,7 @@ namespace Logic {
 		_invisibilityTimer = _invisibilityDuration;
 		
 		// Activamos el shader de invisibilidad
-		CMessageChangeMaterial* materialMsg = new CMessageChangeMaterial();
+		std::shared_ptr<CMessageChangeMaterial> materialMsg = std::make_shared<CMessageChangeMaterial>();
 		materialMsg->setMaterialName("shadowInvisibility");
 		_entity->emitMessage(materialMsg);
 	}

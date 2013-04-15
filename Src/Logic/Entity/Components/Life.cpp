@@ -104,11 +104,11 @@ namespace Logic {
 		_currentShield = 0;
 
 		// Actualizamos la info del HUD
-		Logic::CMessageHudLife* hudLifeMsg = new Logic::CMessageHudLife();
+		std::shared_ptr<CMessageHudLife> hudLifeMsg = std::make_shared<CMessageHudLife>();
 		hudLifeMsg->setLife(_currentLife);
 		_entity->emitMessage(hudLifeMsg);	
 		
-		Logic::CMessageHudShield* hudShieldMsg = new Logic::CMessageHudShield();
+		std::shared_ptr<CMessageHudShield> hudShieldMsg = std::make_shared<CMessageHudShield>();
 		hudShieldMsg->setShield(_currentShield);
 		_entity->emitMessage(hudShieldMsg);	
 	} // activate
@@ -164,7 +164,7 @@ namespace Logic {
 			_currentLife =  _damageOverTime < _currentLife ? (_currentLife - _damageOverTime) : 1;
 
 			// Actualización la información de vida del HUD
-			Logic::CMessageHudLife* hudLifeMsg = new Logic::CMessageHudLife();
+			std::shared_ptr<CMessageHudLife> hudLifeMsg = std::make_shared<CMessageHudLife>();
 			hudLifeMsg->setLife(_currentLife);
 			_entity->emitMessage(hudLifeMsg);	
 
@@ -198,7 +198,7 @@ namespace Logic {
 			else
 				_currentLife = _maxLife;
 
-			Logic::CMessageHudLife* hudLifeMsg = new Logic::CMessageHudLife();
+			std::shared_ptr<CMessageHudLife> hudLifeMsg = std::make_shared<CMessageHudLife>();
 			hudLifeMsg->setLife(_currentLife);
 			_entity->emitMessage(hudLifeMsg);
 		}
@@ -213,7 +213,7 @@ namespace Logic {
 			else
 				_currentShield = _maxShield;
 
-			Logic::CMessageHudShield* hudShieldMsg = new Logic::CMessageHudShield();
+			std::shared_ptr<CMessageHudShield> hudShieldMsg = std::make_shared<CMessageHudShield>();
 			hudShieldMsg->setShield(_currentShield);
 			_entity->emitMessage(hudShieldMsg);
 		}// addShield
@@ -255,7 +255,7 @@ namespace Logic {
 			}
 
 			// Actualizamos los puntos de armadura mostrados en el HUD
-			Logic::CMessageHudShield* hudShieldMsg = new Logic::CMessageHudShield();
+			std::shared_ptr<CMessageHudShield> hudShieldMsg = std::make_shared<CMessageHudShield>();
 			hudShieldMsg->setShield(_currentShield);
 			_entity->emitMessage(hudShieldMsg);
 		}
@@ -267,7 +267,7 @@ namespace Logic {
 			_currentLife = 0;
 
 		// Actualizamos los puntos de salud mostrados en el HUD
-		Logic::CMessageHudLife* hudLifeMsg = new Logic::CMessageHudLife();
+		std::shared_ptr<CMessageHudLife> hudLifeMsg = std::make_shared<CMessageHudLife>();
 		hudLifeMsg->setLife(_currentLife);
 		_entity->emitMessage(hudLifeMsg);
 
@@ -281,13 +281,13 @@ namespace Logic {
 	void CLife::triggerDeathState(CEntity* enemy) {
 		// Mensaje de playerDead para tratar el respawn y desactivar los componentes
 		// del personaje.
-		Logic::CMessagePlayerDead* playerDeadMsg = new Logic::CMessagePlayerDead();
+		std::shared_ptr<CMessagePlayerDead> playerDeadMsg = std::make_shared<CMessagePlayerDead>();
 		_entity->emitMessage(playerDeadMsg);
 
 		// Mensaje para que la camara enfoque al jugador que nos ha matado
 		// En el caso de la red, hay que enviar un mensaje especial para el cliente
 		// Siempre y cuando no haya muerto un remotePlayer/enemigo (debug singlePlayer)
-		Logic::CMessageCameraToEnemy* cteMsg=cteMsg = new Logic::CMessageCameraToEnemy();
+		std::shared_ptr<CMessageCameraToEnemy> cteMsg = std::make_shared<CMessageCameraToEnemy>();
 		CEntity* camera=camera = CServer::getSingletonPtr()->getMap()->getEntityByType("Camera");
 		cteMsg->setEnemy(enemy);
 		//Solo si soy el jugador local envio mensaje de recolocación de camara (no quiero que enemigos muertos me seteen mi camara)
@@ -302,7 +302,7 @@ namespace Logic {
 	//________________________________________________________________________
 
 	void CLife::triggerDeathSound() {
-		Logic::CMessageAudio* audioMsg = new Logic::CMessageAudio();
+		std::shared_ptr<CMessageAudio> audioMsg = std::make_shared<CMessageAudio>();
 		audioMsg->setRuta(_audioDeath);
 		audioMsg->setId("death");
 		audioMsg->setPosition( _entity->getPosition() );
@@ -314,7 +314,7 @@ namespace Logic {
 	//________________________________________________________________________
 
 	void CLife::triggerHurtSound() {
-		Logic::CMessageAudio* audioMsg = new Logic::CMessageAudio();
+		std::shared_ptr<CMessageAudio> audioMsg = std::make_shared<CMessageAudio>();
 		audioMsg->setRuta(_audioPain);
 		audioMsg->setId("pain");
 		audioMsg->setPosition( _entity->getPosition() );

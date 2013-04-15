@@ -86,7 +86,7 @@ namespace Logic
 		if(_intrigger.size()>0 && _timestamp > _timeDamage){
 			std::list<CEntity*>::const_iterator it = _intrigger.begin();
 			for(; it != _intrigger.end(); ++it) {
-				Logic::CMessageDamaged *damage=new Logic::CMessageDamaged();
+				std::shared_ptr<CMessageDamaged> damage = std::make_shared<CMessageDamaged>();
 				damage->setDamage(_damage);
 				damage->setEnemy(_entity);
 				(*it)->emitMessage(damage);

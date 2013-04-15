@@ -67,7 +67,7 @@ namespace Logic {
 
 				// Volvemos a los valores de daño y cd's originales
 				//Ponemos los valores de daño y cd's del berserker (mensaje con porcentajes de incremento y reduccion respecto al original)
-				CMessageBerserker* berserkerMsg = new CMessageBerserker();
+				std::shared_ptr<CMessageBerserker> berserkerMsg = std::make_shared<CMessageBerserker>();
 				berserkerMsg->setPercentCooldown(0);
 				berserkerMsg->setPercentDamage(0);
 				_entity->emitMessage(berserkerMsg);
@@ -82,7 +82,7 @@ namespace Logic {
 
 		// Ñapa temporal para el ideame
 		// Cambiamos el color del marine en funcion de la clase con un changeMaterial
-		CMessageChangeMaterial* materialMsg = new CMessageChangeMaterial();
+		std::shared_ptr<CMessageChangeMaterial> materialMsg = std::make_shared<CMessageChangeMaterial>();
 		materialMsg->setMaterialName("marine_rojo");
 		_entity->emitMessage(materialMsg);
 
@@ -98,7 +98,7 @@ namespace Logic {
 		_berserkerTimer= _berserkerDuration;
 
 		//Ponemos los valores de daño y cd's del berserker (mensaje con porcentajes de incremento y reduccion respecto al original)
-		CMessageBerserker* berserkerMsg = new CMessageBerserker();
+		std::shared_ptr<CMessageBerserker> berserkerMsg = std::make_shared<CMessageBerserker>();
 		berserkerMsg->setPercentCooldown(_berserkerCooldownPercent);
 		berserkerMsg->setPercentDamage(_berserkerDamagePercent);
 		_entity->emitMessage(berserkerMsg);

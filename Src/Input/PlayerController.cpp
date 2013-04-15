@@ -27,6 +27,7 @@ mover al jugador.
 #include "Logic/Messages/MessageMouse.h"
 
 #include <cassert>
+#include <memory>
 
 //PRUEBAS,QUITAR LUEGO el INCLUDE SIGUIENTE
 #include "Audio/Server.h"
@@ -100,48 +101,56 @@ namespace Input {
 			if(key.keyId == Input::Key::NUMBER1 || key.keyId == Input::Key::NUMBER2 || key.keyId == Input::Key::NUMBER3 || key.keyId == Input::Key::NUMBER4 || 
 				key.keyId == Input::Key::NUMBER5 || key.keyId == Input::Key::NUMBER6 || key.keyId == Input::Key::NUMBER7 || key.keyId == Input::Key::NUMBER8){
 				
-					Logic::CMessageChangeWeapon *message=new Logic::CMessageChangeWeapon();
-					Logic::CMessageDamaged *damage;
-					Vector3 position;										
+					std::shared_ptr<Logic::CMessageChangeWeapon> message = std::make_shared<Logic::CMessageChangeWeapon>();							
 					
-					switch(key.keyId)
-					{
-					case Input::Key::NUMBER1:
-						message->setWeapon(0);
-						break;
-					case Input::Key::NUMBER2:
-						message->setWeapon(1);
-						break;
-					case Input::Key::NUMBER3:
-						message->setWeapon(2);
-						break;
-					case Input::Key::NUMBER4:
-						message->setWeapon(3);
-						break;
-					case Input::Key::NUMBER5:
-						message->setWeapon(4);
-						break;
-					case Input::Key::NUMBER6:
-						message->setWeapon(5);
-						break;
-					case Input::Key::NUMBER7:
-						position=Logic::CServer::getSingletonPtr()->getMap()->getEntityByName("Jumper1")->getPosition();
-						Audio::CServer::getSingletonPtr()->playSound3D("media/audio/plasma.wav", "cosa", position, false);
-						damage=new Logic::CMessageDamaged();
-						damage->setDamage(100);
-						damage->setEnemy(Logic::CServer::getSingletonPtr()->getMap()->getEntityByName("Jumper1"));
-						_controlledAvatar->emitMessage(damage);
-						break;
-					case Input::Key::NUMBER8:
-						Audio::CServer::getSingletonPtr()->mute();
-						break;
+					switch(key.keyId) {
+						case Input::Key::NUMBER1: {
+							message->setWeapon(0);
+							break;
+						}
+						case Input::Key::NUMBER2: {
+							message->setWeapon(1);
+							break;
+						}
+						case Input::Key::NUMBER3: {
+							message->setWeapon(2);
+							break;
+						}
+						case Input::Key::NUMBER4: {
+							message->setWeapon(3);
+							break;
+						}
+						case Input::Key::NUMBER5: {
+							message->setWeapon(4);
+							break;
+						}
+						case Input::Key::NUMBER6: {
+							message->setWeapon(5);
+							break;
+						}
+						case Input::Key::NUMBER7: {
+							Vector3 position = Logic::CServer::getSingletonPtr()->getMap()->getEntityByName("Jumper1")->getPosition();
+							Audio::CServer::getSingletonPtr()->playSound3D("media/audio/plasma.wav", "cosa", position, false);
+							
+							std::shared_ptr<Logic::CMessageDamaged> damage = std::make_shared<Logic::CMessageDamaged>();
+							damage->setDamage(100);
+							damage->setEnemy(Logic::CServer::getSingletonPtr()->getMap()->getEntityByName("Jumper1"));
+							
+							_controlledAvatar->emitMessage(damage);
+							break;
+						}
+						case Input::Key::NUMBER8: {
+							Audio::CServer::getSingletonPtr()->mute();
+							break;
+						}
 					}
 
 					_controlledAvatar->emitMessage(message);	
 			}
 			else{
-				Logic::CMessageControl *m=new Logic::CMessageControl();
-				Logic::CMessageHudDebug *m2=new Logic::CMessageHudDebug();
+				std::shared_ptr<Logic::CMessageControl> m = std::make_shared<Logic::CMessageControl>();
+				std::shared_ptr<Logic::CMessageHudDebug> m2 = std::make_shared<Logic::CMessageHudDebug>();
+
 				switch(key.keyId)
 				{
 				case Input::Key::Q:
@@ -294,7 +303,7 @@ namespace Input {
 	{
 		if(_controlledAvatar)
 		{
-			Logic::CMessageControl *m=new Logic::CMessageControl();
+			std::shared_ptr<Logic::CMessageControl> m = std::make_shared<Logic::CMessageControl>();
 			switch(key.keyId)
 			{
 			case Input::Key::Q:
@@ -338,7 +347,7 @@ namespace Input {
 	{
 		if(_controlledAvatar)
 		{
-			Logic::CMessageMouse *m=new Logic::CMessageMouse();
+			std::shared_ptr<Logic::CMessageMouse> m = std::make_shared<Logic::CMessageMouse>();
 			m->setType(Logic::Control::MOUSE);
 			float mouse[]={-(float)mouseState.movX * TURN_FACTOR_X,-(float)mouseState.movY * TURN_FACTOR_Y};
 			m->setMouse(mouse);
@@ -355,7 +364,7 @@ namespace Input {
 	{
 		if(_controlledAvatar)
 		{
-			Logic::CMessageControl *m=new Logic::CMessageControl();
+			std::shared_ptr<Logic::CMessageControl> m = std::make_shared<Logic::CMessageControl>();
 			switch(mouseState.button)
 			{
 			case Input::Button::LEFT:
@@ -388,7 +397,7 @@ namespace Input {
 		
 		if(_controlledAvatar)
 		{
-			Logic::CMessageControl *m=new Logic::CMessageControl();
+			std::shared_ptr<Logic::CMessageControl> m = std::make_shared<Logic::CMessageControl>();
 			switch(mouseState.button)
 			{
 			case Input::Button::LEFT:

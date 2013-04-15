@@ -28,6 +28,12 @@ de disparo del lanzacohetes.
 namespace Logic {
 	IMP_FACTORY(CShootRocketLauncher);
 
+	CShootRocketLauncher::~CShootRocketLauncher() {
+		// Nada que hacer
+	}
+
+	//__________________________________________________________________
+
 	bool CShootRocketLauncher::spawn(CEntity* entity, CMap *map, const Map::CEntity *entityInfo) {
 		if(!CShootProjectile::spawn(entity, map, entityInfo)) return false;
 
@@ -70,7 +76,7 @@ namespace Logic {
 		comp->setOwner(_entity);
 
 		// Mandar mensaje add force
-		Logic::CMessageAddForcePhysics* forceMsg = new Logic::CMessageAddForcePhysics();
+		std::shared_ptr<CMessageAddForcePhysics> forceMsg = std::make_shared<CMessageAddForcePhysics>();
 		forceMsg->setForce( (Math::getDirection( _entity->getOrientation()) * _shootForce), Physics::ForceMode::eFORCE );
 		forceMsg->setGravity(false);
 		rocket->emitMessage(forceMsg);

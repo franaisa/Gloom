@@ -14,19 +14,23 @@ Contiene la implementación del componente que gestiona las armas y que administr
 namespace Logic {
 	IMP_FACTORY(CShootMiniGun);
 	
+	CShootMiniGun::~CShootMiniGun() {
+		// Nada que hacer
+	}
 
+	void CShootMiniGun::process(const std::shared_ptr<CMessage>& message) {
+		ControlType type = std::static_pointer_cast<CMessageControl>(message)->getType();
 
-	void CShootMiniGun::process(CMessage *message) {
-		switch(message->getMessageType()) {
-			case Message::CONTROL:
-				if(((CMessageControl*)message)->getType()==Control::LEFT_CLICK) {
+		switch( message->getMessageType() ) {
+			case Message::CONTROL: {
+				if(type==Control::LEFT_CLICK) {
 					_pressThenShoot=true;
 				}
-				else if(((CMessageControl*)message)->getType()==Control::UNLEFT_CLICK) {
+				else if(type==Control::UNLEFT_CLICK) {
 					_pressThenShoot=false;
 				}
 				break;
-			break;
+			}
 		}
 	} // process
 	//__________________________________________________________________

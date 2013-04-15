@@ -26,7 +26,7 @@ namespace Logic
 		IComponent::tick(msecs);
 		
 		if(_timer > _syncPosTimeStamp) {
-			CMessageSyncPosition* msg = new CMessageSyncPosition;
+			std::shared_ptr<CMessageSyncPosition> msg = std::make_shared<CMessageSyncPosition>();
 			msg->setTransform( _entity->getTransform() );
 			msg->setTime(clock());
 			_entity->emitMessage(msg);

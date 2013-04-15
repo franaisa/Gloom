@@ -288,7 +288,7 @@ namespace Logic
 		_transform = transform;
 
 		// Avisamos a los componentes del cambio.
-		Logic::CMessageTransform *m=new Logic::CMessageTransform();
+		std::shared_ptr<CMessageTransform> m = std::make_shared<CMessageTransform>();
 		m->setTransform(_transform);
 		emitMessage(m);
 	} // setTransform
@@ -300,7 +300,7 @@ namespace Logic
 		_transform.setTrans(position);
 
 		// Avisamos a los componentes del cambio.
-		Logic::CMessageTransform *m=new Logic::CMessageTransform();
+		std::shared_ptr<CMessageTransform> m = std::make_shared<CMessageTransform>();
 		m->setTransform(_transform);
 		emitMessage(m);
 		
@@ -313,7 +313,7 @@ namespace Logic
 		_transform = orientation;
 
 		// Avisamos a los componentes del cambio.
-		Logic::CMessageTransform *m=new Logic::CMessageTransform();
+		std::shared_ptr<CMessageTransform> m = std::make_shared<CMessageTransform>();
 		m->setTransform(_transform);
 		emitMessage(m);
 
@@ -336,7 +336,7 @@ namespace Logic
 		Math::setYaw(yaw,_transform);
 
 		// Avisamos a los componentes del cambio.
-		Logic::CMessageTransform *m=new Logic::CMessageTransform();
+		std::shared_ptr<CMessageTransform> m = std::make_shared<CMessageTransform>();
 		m->setTransform(_transform);
 		emitMessage(m);
 
@@ -349,7 +349,7 @@ namespace Logic
 		Math::yaw(yaw,_transform);
 
 		// Avisamos a los componentes del cambio.
-		Logic::CMessageTransform *m=new Logic::CMessageTransform();
+		std::shared_ptr<CMessageTransform> m = std::make_shared<CMessageTransform>();
 		m->setTransform(_transform);
 		emitMessage(m);
 	} // yaw
@@ -361,7 +361,7 @@ namespace Logic
 		Math::setYaw(pitch,_transform);
 
 		// Avisamos a los componentes del cambio.
-		Logic::CMessageTransform *m=new Logic::CMessageTransform();
+		std::shared_ptr<CMessageTransform> m = std::make_shared<CMessageTransform>();
 		m->setTransform(_transform);
 		emitMessage(m);
 	} // setPitch
@@ -373,7 +373,7 @@ namespace Logic
 		Math::pitch(pitch,_transform);
 
 		// Avisamos a los componentes del cambio.
-		Logic::CMessageTransform *m=new Logic::CMessageTransform();
+		std::shared_ptr<CMessageTransform> m = std::make_shared<CMessageTransform>();
 		m->setTransform(_transform);
 		emitMessage(m);
 	} // pitch

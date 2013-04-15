@@ -735,7 +735,7 @@ namespace Logic
 				_sDebug << it->first << " => " << it->second << '\n';
 			}
 
-			Logic::CMessageHudDebugData *m=new Logic::CMessageHudDebugData();
+			std::shared_ptr<CMessageHudDebugData> m = std::make_shared<CMessageHudDebugData>();
 			m->setKey("Posicion");
 			m->setValue(_entity->getPosition());
 			_entity->emitMessage(m);

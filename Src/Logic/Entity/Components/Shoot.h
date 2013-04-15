@@ -75,6 +75,11 @@ namespace Logic {
 			
 			// No hay memoria dinámica que inicializar
 		}
+
+		//__________________________________________________________________
+
+		/** Destructor virtual */
+		virtual ~CShoot();
 		
 
 		// =======================================================================
@@ -115,7 +120,7 @@ namespace Logic {
 		@param message Mensaje a chequear.
 		@return true si el mensaje es aceptado.
 		*/
-		virtual bool accept(CMessage *message);
+		virtual bool accept(const std::shared_ptr<CMessage>& message);
 
 		//__________________________________________________________________
 
@@ -124,7 +129,7 @@ namespace Logic {
 
 		@param message Mensaje a procesar.
 		*/
-		virtual void process(CMessage *message);
+		virtual void process(const std::shared_ptr<CMessage>& message);
 
 		//__________________________________________________________________
 

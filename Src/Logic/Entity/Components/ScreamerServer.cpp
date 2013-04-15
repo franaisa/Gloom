@@ -151,7 +151,7 @@ namespace Logic {
 
 		// Ñapa temporal para el ideame
 		// Cambiamos el color del marine en funcion de la clase con un changeMaterial
-		CMessageChangeMaterial* materialMsg = new CMessageChangeMaterial();
+		std::shared_ptr<CMessageChangeMaterial> materialMsg = std::make_shared<CMessageChangeMaterial>();
 		materialMsg->setMaterialName("marine_verde");
 		_entity->emitMessage(materialMsg);
 
@@ -179,7 +179,7 @@ namespace Logic {
 			_screamerShield = CEntityFactory::getSingletonPtr()->createEntity( screamerShieldInfo, Logic::CServer::getSingletonPtr()->getMap() );
 			assert(_screamerShield != NULL);
 
-			CMessageSetRelatedEntity* relatedEntityMsg = new CMessageSetRelatedEntity;
+			std::shared_ptr<CMessageSetRelatedEntity> relatedEntityMsg = std::make_shared<CMessageSetRelatedEntity>();
 			relatedEntityMsg->setRelatedEntity(_screamerShield);
 			_entity->emitMessage(relatedEntityMsg);
 
@@ -245,7 +245,7 @@ namespace Logic {
 
 	void CScreamerServer::activateScreamerShield() {
 		// Mandamos el mensaje de activacion para la red
-		_entity->emitMessage( new CMessageActivateScreamerShield );
+		_entity->emitMessage( std::make_shared<CMessageActivateScreamerShield>() );
 
 		// Activamos el escudo
 		_screamerShield->activate();
@@ -259,7 +259,7 @@ namespace Logic {
 
 	void CScreamerServer::deactivateScreamerShield() {
 		// Mandamos el mensaje de desactivacion para la red
-		_entity->emitMessage( new CMessageDeactivateScreamerShield );
+		_entity->emitMessage( std::make_shared<CMessageDeactivateScreamerShield>() );
 		CGraphics* shieldGraphics = _screamerShield->getComponent<CGraphics>("CGraphics");
 		assert(shieldGraphics && "Error: La entidad ScreamerShield no tiene un componente CGraphics");
 		shieldGraphics->setVisible(false);
@@ -285,13 +285,13 @@ namespace Logic {
 			// Si la entidad golpeada es valida
 			if(entitiesHit[i] != NULL) {
 				// Emitimos el mensaje de daño
-				CMessageDamaged* dmgMsg = new CMessageDamaged;
+				std::shared_ptr<CMessageDamaged> dmgMsg = std::make_shared<CMessageDamaged>();
 				dmgMsg->setDamage(_screamerExplotionDamage);
 				dmgMsg->setEnemy(_entity);
 				entitiesHit[i]->emitMessage(dmgMsg);
 				
 				// Emitimos el mensaje de desplazamiento por daños
-				CMessageAddForcePlayer* forceMsg = new CMessageAddForcePlayer;
+				std::shared_ptr<CMessageAddForcePlayer> forceMsg = std::make_shared<CMessageAddForcePlayer>();
 				// Seteamos la fuerza y la velocidad
 				forceMsg->setPower(0.1f);
 				forceMsg->setVelocity(0.12f);

@@ -89,7 +89,7 @@ namespace Logic
 		@param message Mensaje que debe ser serializado y enviado.
 		@param destination ID de la entidad a la que va dirigido el mensaje.
 		*/
-		void sendEntityMessage(CMessage* message, TEntityID destination);
+		void sendEntityMessage(const std::shared_ptr<CMessage>& txMsg, TEntityID destination);
 
 		/**
 		Método que envía por la red un mensaje de destruccion de entidad
@@ -122,7 +122,7 @@ namespace Logic
 		@param message Mensaje que debe ser serializado y enviado.
 		@param destination ID de la entidad a la que va dirigido el mensaje.
 		*/
-		void sendMessageToOne(CMessage * message, TEntityID destination, TEntityID player);
+		void sendMessageToOne(const std::shared_ptr<CMessage>& txMsg, TEntityID destination, TEntityID player);
 
 		/// IOBSERVER
 		virtual void dataPacketReceived(Net::CPaquete* packet);

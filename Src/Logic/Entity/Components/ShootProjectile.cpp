@@ -16,6 +16,18 @@ del disparo de proyectiles.
 
 namespace Logic {
 	//IMP_FACTORY(CShootProjectile);
+
+	CShootProjectile::CShootProjectile() {
+		// Nada que hacer
+	}
+
+	//__________________________________________________________________
+
+	CShootProjectile::~CShootProjectile() {
+		// Nada que hacer
+	}
+
+	//__________________________________________________________________
 	
 	bool CShootProjectile::spawn(CEntity* entity, CMap *map, const Map::CEntity *entityInfo) {
 		if(!CShoot::spawn(entity, map, entityInfo)) return false;
@@ -53,23 +65,23 @@ namespace Logic {
 			decrementAmmo();
 
 			//Sonido de disparo
-			Logic::CMessageAudio *maudio=new Logic::CMessageAudio();
-			maudio->setRuta(_audioShoot);
-			maudio->setId("audioShoot");
-			maudio->setPosition(_entity->getPosition());
-			maudio->setNotIfPlay(false);
-			maudio->setIsPlayer(_entity->isPlayer());
-			_entity->emitMessage(maudio);
+			std::shared_ptr<CMessageAudio> audioMsg = std::make_shared<CMessageAudio>();
+			audioMsg->setRuta(_audioShoot);
+			audioMsg->setId("audioShoot");
+			audioMsg->setPosition(_entity->getPosition());
+			audioMsg->setNotIfPlay(false);
+			audioMsg->setIsPlayer(_entity->isPlayer());
+			_entity->emitMessage(audioMsg);
 		}
 		else if(_currentAmmo == 0) {
 			// Ejecutar sonidos y animaciones de falta de balas
-			Logic::CMessageAudio *maudio=new Logic::CMessageAudio();
-			maudio->setRuta(_noAmmo);
-			maudio->setId("noAmmo");
-			maudio->setPosition(_entity->getPosition());
-			maudio->setNotIfPlay(false);
-			maudio->setIsPlayer(_entity->isPlayer());
-			_entity->emitMessage(maudio);
+			std::shared_ptr<CMessageAudio> audioMsg = std::make_shared<CMessageAudio>();
+			audioMsg->setRuta(_noAmmo);
+			audioMsg->setId("noAmmo");
+			audioMsg->setPosition(_entity->getPosition());
+			audioMsg->setNotIfPlay(false);
+			audioMsg->setIsPlayer(_entity->isPlayer());
+			_entity->emitMessage(audioMsg);
 		}
 	}
 

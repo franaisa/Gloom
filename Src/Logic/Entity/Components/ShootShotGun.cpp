@@ -12,5 +12,9 @@ Contiene la implementación del componente que representa a la escopeta.
 namespace Logic {
 	IMP_FACTORY(CShootShotGun);
 
+	CShootShotGun::~CShootShotGun() {
+		// Nada que hacer
+	}
+
 } // namespace Logic
 
