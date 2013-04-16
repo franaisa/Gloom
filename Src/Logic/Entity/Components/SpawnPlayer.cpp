@@ -125,10 +125,12 @@ namespace Logic
 				mS->setTime(0);
 				_entity->emitMessage(mS);
 
-				
-				CMessageCreateParticle *particle = new CMessageCreateParticle();
+				//Mirar porque se creó esto, lo mismo antonio sabe
+				/*
+				std::shared_ptr<CMessageCreateParticle> particle =std::make_shared<CMessageCreateParticle>();
 				particle->setParticle("SpawnParticle");
 				particle->setPosition(_entity->getPosition());
+				*/
 
 				//Sonido Spawn
 				std::shared_ptr<CMessageAudio> audioMsg = std::make_shared<CMessageAudio>();

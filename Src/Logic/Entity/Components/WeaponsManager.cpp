@@ -220,7 +220,7 @@ namespace Logic
 
 		/*
 		// Enviamos un mensaje de actualizacion del hud
-		Logic::CMessageHudAmmo *m=new Logic::CMessageHudAmmo();
+		std::shared_ptr<CMessageHudAmmo> *m=std::make_shared<CMessageHudAmmo>();
 		m->setWeapon(weaponIndex);
 		m->setAmmo(ammo);//No es necesario esto, ya que solo actualizare el hud como que puedo coger el arma pero no mostrara sus balas(en este caso concreto)
 		_entity->emitMessage(m);
