@@ -12,6 +12,7 @@ Contiene la implementación de la clase base de los componentes.
 
 #include "Component.h"
 #include "Entity.h"
+#include "Logic/Server.h"
 
 namespace Logic 
 {
@@ -19,6 +20,11 @@ namespace Logic
 							   _isActivated(true), 
 							   _isStartingUp(true) {
 
+		Logic::CServer::getSingletonPtr()->COMPONENT_CONSTRUCTOR_COUNTER += 1;
+	}
+
+	IComponent::~IComponent() {
+		Logic::CServer::getSingletonPtr()->COMPONENT_DESTRUCTOR_COUNTER += 1;
 	}
 
 	//---------------------------------------------------------
@@ -33,9 +39,10 @@ namespace Logic
 	//---------------------------------------------------------
 	
 	void IComponent::activate() {
-		if(_isActivated)return;
-		_isActivated = true;
-		_isStartingUp = true;
+		if(_isActivated) 
+			return;
+
+		_isActivated = _isStartingUp = true;
 		clearMessages();
 	}
 

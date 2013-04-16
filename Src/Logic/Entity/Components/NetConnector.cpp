@@ -65,21 +65,21 @@ namespace Logic {
 		return true;
 	}
 
-	bool CNetConnector::accept(CMessage* message) {
+	bool CNetConnector::accept(const std::shared_ptr<CMessage>& message) {
 		// TODO Vemos si es uno de los mensajes que debemos trasmitir 
 		// por red. Para eso usamos la lista de mensajes que se ha
 		// leido del mapa.
 		// Vemos si es uno de los mensajes que debemos trasmitir 
 		// por red.
-		if( _forwardedMsgTypes.find(message->getMessageType()) != _forwardedMsgTypes.end() ) {
+		Logic::TMessageType msgType = message->getMessageType();
+		if( _forwardedMsgTypes.find(msgType) != _forwardedMsgTypes.end() ) {
 			// Grano fino, en vez de aceptar el mensaje directamente
 			// solo se retransmitirá por la red si no se ha transmitido 
 			// hace poco (_timeOfBlocking milisegundos) un mensaje del 
 			// mismo tipo
-			if(_timeToUnblockMsgDelivery.count(message->getMessageType()) == 0) { // TODO probar sin ajuste fino qué tal va de fino :P
+			if(_timeToUnblockMsgDelivery.count(msgType) == 0) { // TODO probar sin ajuste fino qué tal va de fino :P
 				if(_timeOfBlocking)
-					_timeToUnblockMsgDelivery.insert(
-						TTimeToUnblockMsgDeliveryPair(message->getMessageType(), _timeOfBlocking));
+					_timeToUnblockMsgDelivery.insert(TTimeToUnblockMsgDeliveryPair(msgType, _timeOfBlocking));
 				return true;
 			}// TODO no hace falta ir descontando tiempo y eliminar el par en algún momento?
 		}
@@ -90,19 +90,22 @@ namespace Logic {
 		
 	//---------------------------------------------------------------------------------
 
-	void CNetConnector::process(CMessage* message) {
+	void CNetConnector::process(const std::shared_ptr<CMessage>& message) {
 		// TODO Es un mensaje para enviar por el tubo.
 		// Lo enviamos por la red usando el front-end CGameNetMsgManager
-		if(message->getMessageType() == Logic::TMessageType::CAMERA_TO_ENEMY) {
+		Logic::TMessageType msgType = message->getMessageType();
+		if(msgType == Logic::TMessageType::CAMERA_TO_ENEMY) {
 			std::cout << "Recibido un mensaje de tipo camera to enemy" << std::endl;
-		std::cout << "menssaje de avatar controller ENVIADO" << std::endl;
-			if( _forwardedMsgTypes.find(message->getMessageType()) != _forwardedMsgTypes.end() ) {
+			std::cout << "menssaje de avatar controller ENVIADO" << std::endl;
+			
+			if( _forwardedMsgTypes.find(msgType) != _forwardedMsgTypes.end() ) {
 				std::cout << "El mensaje se encuentra en nuestra lista de mensajes, por lo tanto lo enviamos" << std::endl;
 			}
 
 			Logic::TEntityID id = _entity->getEntityID();
 			
 		}
+
 		CGameNetMsgManager::getSingletonPtr()->
 			sendEntityMessage(message, _entity->getEntityID());
 

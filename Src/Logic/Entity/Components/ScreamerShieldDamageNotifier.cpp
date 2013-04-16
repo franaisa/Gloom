@@ -45,7 +45,7 @@ namespace Logic {
 	
 	//________________________________________________________________________
 
-	bool CScreamerShieldDamageNotifier::accept(CMessage* message) {
+	bool CScreamerShieldDamageNotifier::accept(const std::shared_ptr<CMessage>& message) {
 		Logic::TMessageType msgType = message->getMessageType();
 
 		return msgType == Message::DAMAGED || msgType == Message::SET_REDUCED_DAMAGE;
@@ -53,15 +53,16 @@ namespace Logic {
 	
 	//________________________________________________________________________
 
-	void CScreamerShieldDamageNotifier::process(CMessage* message) {
+	void CScreamerShieldDamageNotifier::process(const std::shared_ptr<CMessage>& message) {
 		switch( message->getMessageType() ) {
 			case Message::DAMAGED: {
-				CMessageDamaged* dmgMsg = static_cast<CMessageDamaged*>(message);
+				std::shared_ptr<CMessageDamaged> dmgMsg = std::static_pointer_cast<CMessageDamaged>(message);
 				damaged( dmgMsg->getDamage(), dmgMsg->getEnemy() );
 				break;
 			}
 			case Message::SET_REDUCED_DAMAGE: {
-				reducedDamageAbsorption( static_cast<CMessageSetReducedDamage*>(message)->getReducedDamage() );
+				std::shared_ptr<CMessageSetReducedDamage> reducedDmgMsg = std::static_pointer_cast<CMessageSetReducedDamage>(message);
+				reducedDamageAbsorption( reducedDmgMsg->getReducedDamage() );
 				break;
 			}
 		}

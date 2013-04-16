@@ -63,14 +63,14 @@ namespace Logic {
 		Este componente sólo acepta mensajes de tipo KINEMATIC_MOVE. Estos mensajes  
 		sólo se utilizan para mover entidades de tipo cinemático.
 		*/
-		virtual bool accept(CMessage *message);
+		virtual bool accept(const std::shared_ptr<CMessage>& message);
 
 		/**
 		Cuando recibe mensajes de tipo KINEMATIC_MOVE almacena los movimientos para aplicarlos 
 		en el próximo tick sobre la entidad cinemática. Si en un ciclo se reciben varios 
 		mensajes KINEMATIC_MOVE se acumulan. 
 		*/
-		virtual void process(CMessage *message);
+		virtual void process(const std::shared_ptr<CMessage>& message);
 
 		/**
 		Este método se invoca en cada ciclo de la simulación y hace lo siguiente:

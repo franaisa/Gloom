@@ -72,7 +72,7 @@ namespace Logic
 		/**
 		Este componente sólo acepta mensajes de tipo AVATAR_WALK.
 		*/
-		virtual bool accept(CMessage *message);
+		virtual bool accept(const std::shared_ptr<CMessage>& message);
 		
 		/**
 		Cuando se recibe un mensaje de tipo AVATAR_WALK, se almacena su vector de 
@@ -80,7 +80,7 @@ namespace Logic
 		De esta forma, si en un ciclo se reciben varios mensaje de tipo AVATAR_WALK 
 		sólo tendrá efecto el último.
 		*/
-		virtual void process(CMessage *message);
+		virtual void process(const std::shared_ptr<CMessage>& message);
 
 		/**
 		Este método se invoca en cada ciclo de la simulación y hace lo siguiente:

@@ -84,35 +84,36 @@ namespace Logic
 	
 	//---------------------------------------------------------
 
-		bool CCamera::accept(CMessage *message)
-	{
-		return message->getMessageType() == Message::CAMERA_TO_ENEMY ||
-				 message->getMessageType() == Message::PLAYER_SPAWN;
+	bool CCamera::accept(const std::shared_ptr<CMessage>& message) {
+		Logic::TMessageType msgType = message->getMessageType();
+		
+		return msgType == Message::CAMERA_TO_ENEMY ||
+			   msgType == Message::PLAYER_SPAWN;
 	} // accept
 	//---------------------------------------------------------
 
 
-	void CCamera::process(CMessage *message)
-	{
-		switch(message->getMessageType())
-		{
-		case Message::CAMERA_TO_ENEMY:
-				setTargetEnemy((CMessageCameraToEnemy*)message);
+	void CCamera::process(const std::shared_ptr<CMessage>& message) {
+		switch( message->getMessageType() ) {
+			case Message::CAMERA_TO_ENEMY: {
+				std::shared_ptr<CMessageCameraToEnemy> cameraToEnemyMsg = std::static_pointer_cast<CMessageCameraToEnemy>(message);
+				setTargetEnemy( cameraToEnemyMsg->getEnemy() );
 				//std::cout << "MENSAJE DE CAMERATOENEMY: " << std::endl;
-			break;
-
-		case Message::PLAYER_SPAWN:
+				break;
+			}
+			case Message::PLAYER_SPAWN: {
 				_dead=false;
 				//std::cout << "mensaje respawn recibido" << std::endl;
-			break;
+				break;
+			}
 		}
 
 	} // process
 	//---------------------------------------------------------
 
-	void CCamera::setTargetEnemy(CMessageCameraToEnemy* message){
+	void CCamera::setTargetEnemy(CEntity* enemy){
 		
-		_enemy=message->getEnemy();
+		this->_enemy=enemy;
 		//std::cout << "el enemigo a apuntar se llama " << _enemy->getName() << std::endl;
 		//td::cout << "y su tipo es " << _enemy->getType() << std::endl;
 		_dead=true;

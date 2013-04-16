@@ -40,6 +40,8 @@ namespace Logic {
 		/** Constructor por defecto. */
 		CShootSniper() : CShootRaycast("sniper") {}
 
+		virtual ~CShootSniper();
+
 		//__________________________________________________________________
 
 		/**

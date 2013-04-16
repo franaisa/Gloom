@@ -59,12 +59,12 @@ namespace Logic
 		/**
 		Este componente sólo acepta mensajes de tipo touched (por ahora).
 		*/
-		virtual bool accept(CMessage *message);
+		virtual bool accept(const std::shared_ptr<CMessage>& message);
 
 		/**
 		Al recibir un mensaje de tipo TOUCHED aplicamos una fuerza de salto al jugador.
 		*/
-		virtual void process(CMessage *message);
+		virtual void process(const std::shared_ptr<CMessage>& message);
 	
 
 	protected:

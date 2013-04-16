@@ -75,14 +75,14 @@ namespace Logic
 
 
 
-	bool CElevator::accept(CMessage *message)
+	bool CElevator::accept(const std::shared_ptr<CMessage>& message)
 	{
 		return message->getMessageType() == Message::TOUCHED;
 	} // accept
 	
 	//---------------------------------------------------------
 
-	void CElevator::process(CMessage *message)
+	void CElevator::process(const std::shared_ptr<CMessage>& message)
 	{
 		switch(message->getMessageType())
 		{
@@ -130,7 +130,8 @@ namespace Logic
 					_waitInFinal=true;
 					_waitTimeInFinal=0;
 				}
-				Logic::CMessageKinematicMove* m = new Logic::CMessageKinematicMove();
+
+				std::shared_ptr<CMessageKinematicMove> m = std::make_shared<CMessageKinematicMove>();
 				m->setMovement(toDirection);
 				_entity->emitMessage(m);
 			}
@@ -147,7 +148,7 @@ namespace Logic
 					_active=false;
 				}
 
-				Logic::CMessageKinematicMove* m = new Logic::CMessageKinematicMove();
+				std::shared_ptr<CMessageKinematicMove> m = std::make_shared<CMessageKinematicMove>();
 				m->setMovement(toDirection);
 				_entity->emitMessage(m);
 			}

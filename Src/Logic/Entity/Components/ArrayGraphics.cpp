@@ -135,24 +135,27 @@ namespace Logic
 	
 	//---------------------------------------------------------
 
-	bool CArrayGraphics::accept(CMessage *message)
-	{
-		return (message->getMessageType() == Message::SET_TRANSFORM)
-			|| (message->getMessageType() == Message::CHANGE_WEAPON_GRAPHICS);
+	bool CArrayGraphics::accept(const std::shared_ptr<CMessage>& message) {
+		Logic::TMessageType msgType = message->getMessageType();
+
+		return msgType == Message::SET_TRANSFORM				||
+			   msgType == Message::CHANGE_WEAPON_GRAPHICS;
 	} // accept
 	
 	//---------------------------------------------------------
 
-	void CArrayGraphics::process(CMessage *message)
-	{
-		switch(message->getMessageType())
-		{
-		case Message::SET_TRANSFORM:
-			setTransform(((CMessageTransform*)message)->getTransform());
-			break;
-		case Message::CHANGE_WEAPON_GRAPHICS:
-			changeWeapon( ((CMessageChangeWeaponGraphics*)message)->getWeapon() );
-			break;
+	void CArrayGraphics::process(const std::shared_ptr<CMessage>& message) {
+		switch( message->getMessageType() ) {
+			case Message::SET_TRANSFORM: {
+				std::shared_ptr<CMessageTransform> transformMsg = std::static_pointer_cast<CMessageTransform>(message);
+				setTransform( transformMsg->getTransform() );
+				break;
+			}
+			case Message::CHANGE_WEAPON_GRAPHICS: {
+				std::shared_ptr<CMessageChangeWeaponGraphics> chgWpnMsg = std::static_pointer_cast<CMessageChangeWeaponGraphics>(message);
+				changeWeapon( chgWpnMsg->getWeapon() );
+				break;
+			}
 		}
 
 	} // process

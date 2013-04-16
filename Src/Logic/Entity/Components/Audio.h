@@ -58,12 +58,12 @@ namespace Logic
 		/**
 		Este componente sólo acepta mensajes de tipo AUDIO.
 		*/
-		virtual bool accept(CMessage *message);
+		virtual bool accept(const std::shared_ptr<CMessage>& message);
 
 		/**
 		Al recibir un mensaje de tipo AUDIO se encarga de comunicarselo al server de audio.
 		*/
-		virtual void process(CMessage *message);
+		virtual void process(const std::shared_ptr<CMessage>& message);
 
 	protected:
 

@@ -41,13 +41,13 @@ namespace Logic
 		/**
 		Este componente sólo acepta mensajes de tipo PLAYER_DEAD (por ahora).
 		*/
-		virtual bool accept(CMessage *message);
+		virtual bool accept(const std::shared_ptr<CMessage>& message);
 
 		/**
 		Al recibir un mensaje de tipo PLAYER_DEAD desactivamos los componentes pertinentes y activamos el contador de tiempo para que
 		en el tick si esta muerta y ha pasado cierto tiempo devolvamos a la vida al jugador.
 		*/
-		virtual void process(CMessage *message);
+		virtual void process(const std::shared_ptr<CMessage>& message);
 
 		/**
 		Método llamado en cada frame que actualiza el estado del componente de la vida,

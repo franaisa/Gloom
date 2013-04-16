@@ -53,7 +53,7 @@ namespace Logic  {
 
 	//________________________________________________________________________
 
-	bool CInterpolation::accept(CMessage *message) {
+	bool CInterpolation::accept(const std::shared_ptr<CMessage>& message) {
 		return message->getMessageType() == Message::SYNC_POSITION ||
 				message->getMessageType() == Message::CONTROL;
 	} // accept
@@ -130,80 +130,79 @@ namespace Logic  {
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	void CInterpolation::process(CMessage *message) {
-		switch(message->getMessageType())
-		{
-		case Message::SYNC_POSITION:
-			{
-			CMessageSyncPosition* syncMsg = static_cast<CMessageSyncPosition*>(message);
+	void CInterpolation::process(const std::shared_ptr<CMessage>& message) {
+		switch( message->getMessageType() ) {
+			case Message::SYNC_POSITION: {
+				std::shared_ptr<CMessageSyncPosition> syncMsg = std::static_pointer_cast<CMessageSyncPosition>(message);
 
-			// nos guardamos la posi que nos han dado por si tenemos que interpolar
-			_serverPos = syncMsg->getTransform();
-			//calculo el ping que tengo ahora mismo
-			_actualPing = clock()+Logic::CServer::getSingletonPtr()->getDiffTime()-syncMsg->getTime();
-			//calculamos la interpolacion
-			calculateInterpolation();
+				// nos guardamos la posi que nos han dado por si tenemos que interpolar
+				_serverPos = syncMsg->getTransform();
+				//calculo el ping que tengo ahora mismo
+				_actualPing = clock()+Logic::CServer::getSingletonPtr()->getDiffTime()-syncMsg->getTime();
+				//calculamos la interpolacion
+				calculateInterpolation();
 
-			break;
+				break;
 			}
-		case Message::CONTROL:
-			{
+			case Message::CONTROL: {
+				std::shared_ptr<CMessageControl> controlMsg = std::static_pointer_cast<CMessageControl>(message);
+
 				_canInterpolateMove = true;
 
-			//calculamos la dirección del movimiento
-			switch(((CMessageControl*)message)->getType()){
-			case Control::WALK:
-				_keyWS+=1;
+				//calculamos la dirección del movimiento
+				switch( controlMsg->getType() ) {
+					case Control::WALK: {
+						_keyWS+=1;
+						break;
+					}
+					case Control::STRAFE_LEFT: {
+						_keyAD+=1;
+						_canInterpolateMove = true;
+						break;
+					}
+					case Control::SIDEJUMP_LEFT: {
+						_keyAD+=1;
+						_canInterpolateMove = true;
+						break;
+					}
+					case Control::STRAFE_RIGHT: {
+						_keyAD-=1;
+						break;
+					}
+					case Control::SIDEJUMP_RIGHT: {
+						_keyAD-=1;
+						break;
+					}
+					case Control::WALKBACK: {
+						_keyWS-=1;
+						break;
+					}
+					case Control::STOP_WALK: {
+						_keyWS-=1;
+						break;
+					}
+					case Control::STOP_WALKBACK: {
+						_keyWS+=1;
+						break;
+					}
+					case Control::STOP_STRAFE_LEFT: {
+						_keyAD-=1;
+						break;
+					}
+					case Control::STOP_STRAFE_RIGHT: {
+						std::cout << "stop -> "<< _keyAD << std::endl;
+						_keyAD+=1;
+						break;
+					}
+					case Control::MOUSE: {
+						std::shared_ptr<CMessageMouse> mouseMsg = std::static_pointer_cast<CMessageMouse>(message);
+						Math::yaw( mouseMsg->getMouse()[0], _serverPos);
+						_canInterpolateRotation = true;
+						break;
+					}
+				}//switch
+
 				break;
-
-			case Control::STRAFE_LEFT:
-				_keyAD+=1;
-				_canInterpolateMove = true;
-				break;
-
-			case Control::SIDEJUMP_LEFT:
-				_keyAD+=1;
-				_canInterpolateMove = true;
-				break;
-
-			case Control::STRAFE_RIGHT:
-				_keyAD-=1;
-				break;
-
-			case Control::SIDEJUMP_RIGHT:
-				_keyAD-=1;
-				break;
-
-			case Control::WALKBACK:
-				_keyWS-=1;
-				break;
-
-			case Control::STOP_WALK:
-				_keyWS-=1;
-				break;
-
-			case Control::STOP_WALKBACK:
-				_keyWS+=1;
-				break;
-
-			case Control::STOP_STRAFE_LEFT:
-				_keyAD-=1;
-				break;
-
-			case Control::STOP_STRAFE_RIGHT:
-				std::cout << "stop -> "<< _keyAD << std::endl;
-				_keyAD+=1;
-				
-				break;
-
-			case Control::MOUSE:
-				Math::yaw(((CMessageMouse*)message)->getMouse()[0], _serverPos);;
-				_canInterpolateRotation = true;
-				break;
-
-			}//switch
-
-			break;
 			}//case Message::CONTROL:
 
 		}//switch

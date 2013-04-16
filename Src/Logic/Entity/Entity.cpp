@@ -258,31 +258,24 @@ namespace Logic
 
 	//---------------------------------------------------------
 
-	bool CEntity::emitMessage(CMessage *message, IComponent* emitter)
-	{
+	bool CEntity::emitMessage(const std::shared_ptr<CMessage>& message, IComponent* emitter) {
 		
 		// Interceptamos los mensajes que además de al resto de los
 		// componentes, interesan a la propia entidad.
-		switch(message->getMessageType())
-		{
-		case Message::SET_TRANSFORM:
-			_transform = ((CMessageTransform*)message)->getTransform();
+		switch( message->getMessageType() ) {
+			case Message::SET_TRANSFORM: {
+				_transform = std::static_pointer_cast<CMessageTransform>(message)->getTransform();
+			}
 		}
 		
-
 		TComponentList::const_iterator it = _componentList.begin();
-		//Por si nadie quiso el mensaje
-		message->addSmartP();
 		// Para saber si alguien quiso el mensaje.
 		bool anyReceiver = false;
-		for(; it != _componentList.end(); ++it)
-		{
+		for(; it != _componentList.end(); ++it) {
 			// Al emisor no se le envia el mensaje y si esta desactivado el componente tampoco se le envia
 			if( emitter != *it && (*it)->isActivated() )
 				anyReceiver = (*it)->set(message) || anyReceiver;
 		}
-		//Por si nadie quiso el mensaje
-		message->subSmartP();
 
 		return anyReceiver;
 
@@ -295,7 +288,7 @@ namespace Logic
 		_transform = transform;
 
 		// Avisamos a los componentes del cambio.
-		Logic::CMessageTransform *m=new Logic::CMessageTransform();
+		std::shared_ptr<CMessageTransform> m = std::make_shared<CMessageTransform>();
 		m->setTransform(_transform);
 		emitMessage(m);
 	} // setTransform
@@ -307,7 +300,7 @@ namespace Logic
 		_transform.setTrans(position);
 
 		// Avisamos a los componentes del cambio.
-		Logic::CMessageTransform *m=new Logic::CMessageTransform();
+		std::shared_ptr<CMessageTransform> m = std::make_shared<CMessageTransform>();
 		m->setTransform(_transform);
 		emitMessage(m);
 		
@@ -320,7 +313,7 @@ namespace Logic
 		_transform = orientation;
 
 		// Avisamos a los componentes del cambio.
-		Logic::CMessageTransform *m=new Logic::CMessageTransform();
+		std::shared_ptr<CMessageTransform> m = std::make_shared<CMessageTransform>();
 		m->setTransform(_transform);
 		emitMessage(m);
 
@@ -343,7 +336,7 @@ namespace Logic
 		Math::setYaw(yaw,_transform);
 
 		// Avisamos a los componentes del cambio.
-		Logic::CMessageTransform *m=new Logic::CMessageTransform();
+		std::shared_ptr<CMessageTransform> m = std::make_shared<CMessageTransform>();
 		m->setTransform(_transform);
 		emitMessage(m);
 
@@ -356,7 +349,7 @@ namespace Logic
 		Math::yaw(yaw,_transform);
 
 		// Avisamos a los componentes del cambio.
-		Logic::CMessageTransform *m=new Logic::CMessageTransform();
+		std::shared_ptr<CMessageTransform> m = std::make_shared<CMessageTransform>();
 		m->setTransform(_transform);
 		emitMessage(m);
 	} // yaw
@@ -368,7 +361,7 @@ namespace Logic
 		Math::setYaw(pitch,_transform);
 
 		// Avisamos a los componentes del cambio.
-		Logic::CMessageTransform *m=new Logic::CMessageTransform();
+		std::shared_ptr<CMessageTransform> m = std::make_shared<CMessageTransform>();
 		m->setTransform(_transform);
 		emitMessage(m);
 	} // setPitch
@@ -380,7 +373,7 @@ namespace Logic
 		Math::pitch(pitch,_transform);
 
 		// Avisamos a los componentes del cambio.
-		Logic::CMessageTransform *m=new Logic::CMessageTransform();
+		std::shared_ptr<CMessageTransform> m = std::make_shared<CMessageTransform>();
 		m->setTransform(_transform);
 		emitMessage(m);
 	} // pitch

@@ -25,6 +25,7 @@ de juego. Es una colección de componentes.
 #include <list>
 #include <string>
 #include <map>
+#include <memory>
 
 // Predeclaración de clases para ahorrar tiempo de compilación
 namespace Map
@@ -168,7 +169,7 @@ namespace Logic
 		@param emitter Componente emisor, si lo hay. No se le enviará el mensaje.
 		@return true si al menos un componente aceptó el mensaje
 		*/
-		bool emitMessage(CMessage *message, IComponent* emitter = 0);
+		bool emitMessage(const std::shared_ptr<CMessage>& message, IComponent* emitter = 0);
 
 		/**
 		Devuelve el identificador único de la entidad.

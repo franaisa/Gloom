@@ -40,7 +40,12 @@ namespace Logic {
 
 
 		/** Constructor por defecto. */
-		CShootProjectile() : CShoot() {}
+		CShootProjectile();
+
+		//__________________________________________________________________
+
+		/** Destructor virtual */
+		virtual ~CShootProjectile();
 
 		//__________________________________________________________________
 

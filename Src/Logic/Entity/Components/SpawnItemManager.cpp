@@ -44,8 +44,8 @@ namespace Logic {
 				_timer = 0;
 
 				// Activar entidad grafica y fisica
-				CMessageActivate* m = new CMessageActivate();
-				_entity->emitMessage(m);
+				std::shared_ptr<CMessageActivate> activateMsg = std::make_shared<CMessageActivate>();
+				_entity->emitMessage(activateMsg);
 
 				// Activar la entidad fisica (solo si soy el servidor o single player)
 				if(Net::CManager::getSingletonPtr()->imServer() || (!Net::CManager::getSingletonPtr()->imServer() && !Net::CManager::getSingletonPtr()->imClient()))
@@ -91,19 +91,22 @@ namespace Logic {
 	
 	//________________________________________________________________________
 
-	bool CSpawnItemManager::accept(CMessage *message) {
-		return (message->getMessageType() == Message::TOUCHED);
+	bool CSpawnItemManager::accept(const std::shared_ptr<CMessage>& message) {
+		return message->getMessageType() == Message::TOUCHED;
 	} // accept
 	
 	//________________________________________________________________________
 
-	void CSpawnItemManager::process(CMessage *message) {
-		switch(message->getMessageType()) {
-		case Message::TOUCHED:
-			// Si se ha disparado el trigger del item recompensamos a la entidad
-			// que ha disparado el trigger con la ventaja que de el item cogido.
-			itemGrabbed( ((CMessageTouched*)message)->getEntity() );
-			break;
+	void CSpawnItemManager::process(const std::shared_ptr<CMessage>& message) {
+		switch( message->getMessageType() ) {
+			case Message::TOUCHED: {
+				std::shared_ptr<CMessageTouched> touchedMsg = std::static_pointer_cast<CMessageTouched>(message);
+
+				// Si se ha disparado el trigger del item recompensamos a la entidad
+				// que ha disparado el trigger con la ventaja que de el item cogido.
+				itemGrabbed( touchedMsg->getEntity() );
+				break;
+			}
 		}
 	} // process
 
@@ -112,8 +115,8 @@ namespace Logic {
 	void CSpawnItemManager::itemGrabbed(CEntity* actor) {
 
 		// Desactivamos la entidad grafica y fisica.
-		CMessageDeactivate* m = new CMessageDeactivate();
-		_entity->emitMessage(m);
+		std::shared_ptr<CMessageDeactivate> deactivateMsg = std::make_shared<CMessageDeactivate>();
+		_entity->emitMessage(deactivateMsg);
 		
 		// Si se trata del servidor o del single player
 		if(Net::CManager::getSingletonPtr()->imServer() || (!Net::CManager::getSingletonPtr()->imServer() && !Net::CManager::getSingletonPtr()->imClient())){
@@ -123,26 +126,26 @@ namespace Logic {
 			// Mandar el mensaje que corresponda a la entidad actuadora
 			// en funcion del item que se haya cogido (comprobando el id)
 			if(_id == "orb") {
-				CMessageAddLife* m = new CMessageAddLife();
-				m->setAddLife(_reward);
-				actor->emitMessage(m);
+				std::shared_ptr<CMessageAddLife> addLifeMsg = std::make_shared<CMessageAddLife>();
+				addLifeMsg->setAddLife(_reward);
+				actor->emitMessage(addLifeMsg);
 			}
 			else if(_id == "armor") {
-				CMessageAddShield* m = new CMessageAddShield();
-				m->setAddShield(_reward);
-				actor->emitMessage(m);
+				std::shared_ptr<CMessageAddShield> addShieldMsg = std::make_shared<CMessageAddShield>();
+				addShieldMsg->setAddShield(_reward);
+				actor->emitMessage(addShieldMsg);
 			}
 			else if(_id == "ammo") {
-				CMessageAddAmmo* m = new CMessageAddAmmo();
-				m->setAddAmmo(_reward);
-				m->setAddWeapon(_weaponType);
-				actor->emitMessage(m);
+				std::shared_ptr<CMessageAddAmmo> addAmmoMsg = std::make_shared<CMessageAddAmmo>();
+				addAmmoMsg->setAddAmmo(_reward);
+				addAmmoMsg->setAddWeapon(_weaponType);
+				actor->emitMessage(addAmmoMsg);
 			}
 			else if(_id == "weapon") {
-				CMessageAddWeapon* m = new CMessageAddWeapon();
-				m->setAddAmmo(_reward);
-				m->setAddWeapon(_weaponType);
-				actor->emitMessage(m);
+				std::shared_ptr<CMessageAddWeapon> addWeaponMsg = std::make_shared<CMessageAddWeapon>();
+				addWeaponMsg->setAddAmmo(_reward);
+				addWeaponMsg->setAddWeapon(_weaponType);
+				actor->emitMessage(addWeaponMsg);
 			}
 		}
 

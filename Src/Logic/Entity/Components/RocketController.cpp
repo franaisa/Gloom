@@ -50,22 +50,20 @@ namespace Logic {
 
 	//________________________________________________________________________
 
-	bool CRocketController::accept(CMessage *message) {
+	bool CRocketController::accept(const std::shared_ptr<CMessage>& message) {
 		//Solamente podemos aceptar un contacto porque luego explotamos
-		if(message->getMessageType() == Message::CONTACT_ENTER && !_explotionActive)
-			return true;
-		else
-			return false;
+		return message->getMessageType() == Message::CONTACT_ENTER && !_explotionActive;
 	} // accept
 	
 	//________________________________________________________________________
 
-	void CRocketController::process(CMessage *message) {
+	void CRocketController::process(const std::shared_ptr<CMessage>& message) {
 		switch(message->getMessageType()) {
 			case Message::CONTACT_ENTER: {		
-				CMessageContactEnter* contactMsg = static_cast<CMessageContactEnter*>(message);
+				std::shared_ptr<CMessageContactEnter> contactMsg = std::static_pointer_cast<CMessageContactEnter>(message);
 				Logic::CEntity* playerHit = contactMsg->getEntity();
-				if(playerHit!=_owner && !_explotionActive){
+
+				if(playerHit!=_owner && !_explotionActive) {
 					// Los cohetes solos se destruyen al colisionar con algo que no sea yo
 					// Este mensaje deberia recibirse al tocar cualquier otro
 					// rigidbody del mundo
@@ -75,7 +73,7 @@ namespace Logic {
 					if(playerHit->getType() == "ScreamerShield") {
 						// Mandar mensaje de daño
 						// Emitimos el mensaje de daño
-						CMessageDamaged* dmgMsg = new CMessageDamaged();
+						std::shared_ptr<CMessageDamaged> dmgMsg = std::make_shared<CMessageDamaged>();
 						dmgMsg->setDamage(_explotionDamage);
 						dmgMsg->setEnemy(_owner); // No tiene importancia en este caso
 						playerHit->emitMessage(dmgMsg);
@@ -92,13 +90,13 @@ namespace Logic {
 						createExplotion();
 
 						//Sonido de explosion
-						Logic::CMessageAudio *maudio=new Logic::CMessageAudio();
-						maudio->setRuta(_audioExplotion);
-						maudio->setId("audioExplotion");
-						maudio->setPosition(_entity->getPosition());
-						maudio->setNotIfPlay(false);
-						maudio->setIsPlayer(false);
-						_entity->emitMessage(maudio);
+						std::shared_ptr<CMessageAudio> audioMsg = std::make_shared<CMessageAudio>();
+						audioMsg->setRuta(_audioExplotion);
+						audioMsg->setId("audioExplotion");
+						audioMsg->setPosition(_entity->getPosition());
+						audioMsg->setNotIfPlay(false);
+						audioMsg->setIsPlayer(false);
+						_entity->emitMessage(audioMsg);
 					}
 				break;
 				}
@@ -125,21 +123,21 @@ namespace Logic {
 			// Si la entidad golpeada es valida
 			if(entitiesHit[i] != NULL) {
 				// Emitimos el mensaje de daño
-				CMessageDamaged* msg = new CMessageDamaged();
-				msg->setDamage(_explotionDamage);
-				msg->setEnemy(_owner);
-				entitiesHit[i]->emitMessage(msg);
+				std::shared_ptr<CMessageDamaged> dmgMsg = std::make_shared<CMessageDamaged>();
+				dmgMsg->setDamage(_explotionDamage);
+				dmgMsg->setEnemy(_owner);
+				entitiesHit[i]->emitMessage(dmgMsg);
 
 				// Emitimos el mensaje de desplazamiento por daños
-				CMessageAddForcePlayer* msg2 = new CMessageAddForcePlayer();
+				std::shared_ptr<CMessageAddForcePlayer> addForcePlayerMsg = std::make_shared<CMessageAddForcePlayer>();
 				// Seteamos la fuerza y la velocidad
-				msg2->setPower(0.1f);
-				msg2->setVelocity(0.12f);
+				addForcePlayerMsg->setPower(0.1f);
+				addForcePlayerMsg->setVelocity(0.12f);
 				// Seteamos el vector director del desplazamiento
 				Vector3 direccionImpacto = entitiesHit[i]->getPosition() - _entity->getPosition();
 				direccionImpacto.normalise();
-				msg2->setDirection(direccionImpacto);
-				entitiesHit[i]->emitMessage(msg2);
+				addForcePlayerMsg->setDirection(direccionImpacto);
+				entitiesHit[i]->emitMessage(addForcePlayerMsg);
 			}
 		}
 
@@ -162,12 +160,12 @@ namespace Logic {
 
 		//Graphics::CParticle *particle = Graphics::CServer::getSingletonPtr()->getActiveScene()->createParticle(_entity->getName(),"ExplosionParticle", _entity->getPosition());
 
-		CMessageCreateParticle *particle = new CMessageCreateParticle();
-		particle->setParticle("ExplosionParticle");
-		//particle->setParticle("ExplosionParticle");
-		particle->setPosition(_entity->getPosition());
+		std::shared_ptr<CMessageCreateParticle> particleMsg = std::make_shared<CMessageCreateParticle>();
+		particleMsg->setParticle("ExplosionParticle");
+		//particleMsg->setParticle("ExplosionParticle");
+		particleMsg->setPosition(_entity->getPosition());
 
-		_entity->emitMessage(particle);
+		_entity->emitMessage(particleMsg);
 
 	} // createExplotion
 

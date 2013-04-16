@@ -14,6 +14,7 @@ de los mensajes.
 #define __Logic_CommunicationPort_H
 
 #include <list>
+#include <memory>
 
 #include "Logic/Messages/Message.h"
 
@@ -67,7 +68,7 @@ namespace Logic
 		@param message Mensaje a procesar.
 		@return true si el mensaje ha sido admitido y puesto en cola.
 		*/
-		bool set(CMessage *message);
+		bool set(const std::shared_ptr<CMessage>& message);
 
 		/**
 		Método virtual que elige que mensajes son aceptados. Las clases
@@ -78,14 +79,14 @@ namespace Logic
 		@param message Mensaje a chequear.
 		@return true si el mensaje es aceptado.
 		*/
-		virtual bool accept(CMessage *message) {return false;}
+		virtual bool accept(const std::shared_ptr<CMessage>& message) { return false; }
 
 		/**
 		Método virtual que procesa un mensaje.
 
 		@param message Mensaje a procesar.
 		*/
-		virtual void process(CMessage *message) {}
+		virtual void process(const std::shared_ptr<CMessage>& message) {}
 
 		/**
 		Método que procesa la lista de mensajes que faltan por procesar.
@@ -100,7 +101,7 @@ namespace Logic
 		/**
 		Tipo lista de CEntity donde guardaremos los pendientes de borrar.
 		*/
-		typedef std::list<CMessage*> CMessageList;
+		typedef std::list< std::shared_ptr<CMessage> > CMessageList;
 
 		/**
 		Lista de mensajes por procesar

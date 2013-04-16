@@ -64,19 +64,19 @@ namespace Logic
 	//--------------------------------------------------------
 
 
-	bool CSpawnPlayer::accept(CMessage *message)
+	bool CSpawnPlayer::accept(const std::shared_ptr<CMessage>& message)
 	{
 		return message->getMessageType() == Message::PLAYER_DEAD;
 	} // accept
 	//---------------------------------------------------------
 
 
-	void CSpawnPlayer::process(CMessage *message)
+	void CSpawnPlayer::process(const std::shared_ptr<CMessage>& message)
 	{
 		switch(message->getMessageType())
 		{
 		case Message::PLAYER_DEAD:
-					dead();
+			dead();
 			break;
 		}
 
@@ -107,16 +107,21 @@ namespace Logic
 				_entity->setYaw(180);
 
 				// Si eres el server mandar un mensaje de spawn
-				Logic::CMessagePlayerSpawn* spawnMsg = new Logic::CMessagePlayerSpawn();
+				std::shared_ptr<CMessagePlayerSpawn> spawnMsg = std::make_shared<CMessagePlayerSpawn>();
 				spawnMsg->setSpawnTransform( _entity->getTransform() );
-				_entity->emitMessage(new CMessagePlayerSpawn());
-				CEntity * camera = CServer::getSingletonPtr()->getMap()->getEntityByType("Camera");
-					
-				camera->emitMessage(spawnMsg);
-				if(Net::CManager::getSingletonPtr()->imServer())
-					Logic::CGameNetMsgManager::getSingletonPtr()->sendMessageToOne(new CMessagePlayerSpawn(), camera->getEntityID(), _entity->getEntityID());
 
-				Logic::CMessageHudSpawn *mS=new Logic::CMessageHudSpawn();
+				std::shared_ptr<CMessagePlayerSpawn> entitySpawnMsg = std::make_shared<CMessagePlayerSpawn>();
+				_entity->emitMessage(entitySpawnMsg);
+
+				CEntity * camera = CServer::getSingletonPtr()->getMap()->getEntityByType("Camera");
+				camera->emitMessage(spawnMsg);
+
+				if(Net::CManager::getSingletonPtr()->imServer()) {
+					std::shared_ptr<CMessagePlayerSpawn> serverSpawnMsg = std::make_shared<CMessagePlayerSpawn>();
+					Logic::CGameNetMsgManager::getSingletonPtr()->sendMessageToOne(serverSpawnMsg, camera->getEntityID(), _entity->getEntityID());
+				}
+
+				std::shared_ptr<CMessageHudSpawn> mS = std::make_shared<CMessageHudSpawn>();
 				mS->setTime(0);
 				_entity->emitMessage(mS);
 
@@ -126,13 +131,13 @@ namespace Logic
 				particle->setPosition(_entity->getPosition());
 
 				//Sonido Spawn
-				Logic::CMessageAudio *maudio=new Logic::CMessageAudio();
-				maudio->setRuta(_audioSpawn);
-				maudio->setId("spawn");
-				maudio->setPosition(_entity->getPosition());
-				maudio->setNotIfPlay(false);
-				maudio->setIsPlayer(_entity->isPlayer());
-				_entity->emitMessage(maudio);
+				std::shared_ptr<CMessageAudio> audioMsg = std::make_shared<CMessageAudio>();
+				audioMsg->setRuta(_audioSpawn);
+				audioMsg->setId("spawn");
+				audioMsg->setPosition(_entity->getPosition());
+				audioMsg->setNotIfPlay(false);
+				audioMsg->setIsPlayer(_entity->isPlayer());
+				_entity->emitMessage(audioMsg);
 			}
 		}
 	} // tick
@@ -157,7 +162,7 @@ namespace Logic
 			_entity->deactivateAllComponentsExcept(except);
 			_isDead=true;
 			//Mensaje para el Hud (tiempo de spawn)
-			Logic::CMessageHudSpawn *m=new Logic::CMessageHudSpawn();
+			std::shared_ptr<CMessageHudSpawn> m = std::make_shared<CMessageHudSpawn>();
 			m->setTime(_timeSpawn/1000);
 			_entity->emitMessage(m);
 

@@ -17,7 +17,7 @@ namespace Logic
 		if(_tempBuffer != NULL)
 			delete _tempBuffer;
 
-		Logic::CServer::getSingletonPtr()->_MESSAGE_DESTRUCTOR_COUNTER += 1;
+		Logic::CServer::getSingletonPtr()->MESSAGE_DESTRUCTOR_COUNTER += 1;
 	}
 
 	TMessageType CMessage::getMessageType(){
@@ -27,22 +27,8 @@ namespace Logic
 
 	CMessage::CMessage(TMessageType t) : _type(t), _smartP(0), _tempBuffer(NULL) {
 		// Nada que hacer
-		Logic::CServer::getSingletonPtr()->_MESSAGE_CONSTRUCTOR_COUNTER += 1;
-	}//
-	//----------------------------------------------------------
-
-	void CMessage::addSmartP(){
-		_smartP+=1;
-	}//
-	//----------------------------------------------------------
-
-	void CMessage::subSmartP(){
-		_smartP-=1;
-		if(_smartP==0){
-			delete this;
-		}
-	}//
-	//----------------------------------------------------------
+		Logic::CServer::getSingletonPtr()->MESSAGE_CONSTRUCTOR_COUNTER += 1;
+	}
 	
 }
 

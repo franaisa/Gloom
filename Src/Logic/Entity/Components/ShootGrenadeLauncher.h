@@ -43,6 +43,10 @@ namespace Logic {
 
 		//__________________________________________________________________
 
+		virtual ~CShootGrenadeLauncher();
+
+		//__________________________________________________________________
+
 		virtual bool spawn(CEntity* entity, CMap *map, const Map::CEntity *entityInfo);
 
 		//__________________________________________________________________

@@ -102,71 +102,81 @@ namespace Logic
 	}
 	//---------------------------------------------------------
 
-	bool CAnimatedGraphics::accept(CMessage *message)
-	{
-		return CGraphics::accept(message) ||
-			message->getMessageType() == Message::SET_ANIMATION				||
-			message->getMessageType() == Message::STOP_ANIMATION			||
-			message->getMessageType() == Message::CHANGE_WEAPON_GRAPHICS	|| 
-			message->getMessageType() == Message::PLAYER_DEAD				||
-			message->getMessageType() == Message::DAMAGED					||
-			message->getMessageType() == Message::HUD_SPAWN;
+	bool CAnimatedGraphics::accept(const std::shared_ptr<CMessage>& message) {
+		Logic::TMessageType msgType = message->getMessageType();
+
+		return CGraphics::accept(message)					||
+			   msgType == Message::SET_ANIMATION			||
+			   msgType == Message::STOP_ANIMATION			||
+			   msgType == Message::CHANGE_WEAPON_GRAPHICS	|| 
+			   msgType == Message::PLAYER_DEAD				||
+			   msgType == Message::DAMAGED					||
+			   msgType == Message::HUD_SPAWN;
 
 	} // accept
 	
 	//---------------------------------------------------------
 
-	void CAnimatedGraphics::process(CMessage *message)
-	{
+	void CAnimatedGraphics::process(const std::shared_ptr<CMessage>& message) {
 
-		switch(message->getMessageType())
-		{
-		case Message::SET_TRANSFORM: {
-			Matrix4 transform = static_cast<CMessageTransform*>(message)->getTransform();
-			Math::setYaw(Math::getYaw(transform), transform);
+		switch( message->getMessageType() ) {
+			case Message::SET_TRANSFORM: {
+				Matrix4 transform = std::static_pointer_cast<CMessageTransform>(message)->getTransform();
+				Math::setYaw(Math::getYaw(transform), transform);
 
-			_graphicsEntity->setTransform( transform );
-			break;
-		}
-		case Message::ACTIVATE: {
-			setVisible(true);
-			break;
-		}
-		case Message::DEACTIVATE: {
-			setVisible(false);
-			break;
-		}
-		case Message::CHANGE_MATERIAL: {
-			changeMaterial( static_cast<CMessageChangeMaterial*>(message)->getMaterialName() );
-			break;
-		}
+				_graphicsEntity->setTransform( transform );
+				break;
+			}
+			case Message::ACTIVATE: {
+				setVisible(true);
+				break;
+			}
+			case Message::DEACTIVATE: {
+				setVisible(false);
+				break;
+			}
+			case Message::CHANGE_MATERIAL: {
+				std::shared_ptr<CMessageChangeMaterial> chgMatMsg = std::static_pointer_cast<CMessageChangeMaterial>(message);
+				changeMaterial( chgMatMsg->getMaterialName() );
+				break;
+			}
+			case Message::SET_ANIMATION: {
+				std::shared_ptr<CMessageSetAnimation> setAnimMsg = std::static_pointer_cast<CMessageSetAnimation>(message);
 
-		case Message::SET_ANIMATION:
-			// Paramos todas las animaciones antes de poner una nueva.
-			// Un control más sofisticado debería permitir interpolación
-			// de animaciones. Galeon no lo plantea.
-			_animatedGraphicsEntity->stopAllAnimations();
-			_animatedGraphicsEntity->setAnimation(((CMessageSetAnimation*)message)->getString(),((CMessageSetAnimation*)message)->getBool());
-			break;
-		case Message::STOP_ANIMATION:
-			_animatedGraphicsEntity->stopAnimation(((CMessageStopAnimation*)message)->getString());
-			break;
-		case Message::CHANGE_WEAPON_GRAPHICS:
-			changeWeapon( ((CMessageChangeWeaponGraphics*)message)->getWeapon() );
-			break;
-		case Message::PLAYER_DEAD:
-			_animatedGraphicsEntity->stopAllAnimations();
-			_animatedGraphicsEntity->setAnimation("Death",false);
-			break;
-		case Message::DAMAGED:
-			_animatedGraphicsEntity->stopAllAnimations();
-			_animatedGraphicsEntity->setAnimation("Damage",false);
-			break;
-		//Por si en redes se utilizara para algo hay que cambiarlo porque es un nonsense
-		/*case Message::HUD_SPAWN:
-			_animatedGraphicsEntity->stopAllAnimations();
-			_animatedGraphicsEntity->setAnimation("Idle",true);
-			break;*/
+				// Paramos todas las animaciones antes de poner una nueva.
+				// Un control más sofisticado debería permitir interpolación
+				// de animaciones. Galeon no lo plantea.
+				_animatedGraphicsEntity->stopAllAnimations();
+				_animatedGraphicsEntity->setAnimation( setAnimMsg->getString(), setAnimMsg->getBool() );
+				break;
+			}
+			case Message::STOP_ANIMATION: {
+				std::shared_ptr<CMessageStopAnimation> stopAnimMsg = std::static_pointer_cast<CMessageStopAnimation>(message);
+				_animatedGraphicsEntity->stopAnimation( stopAnimMsg->getString() );
+				break;
+			}
+			case Message::CHANGE_WEAPON_GRAPHICS: {
+				std::shared_ptr<CMessageChangeWeaponGraphics> chgWeaponGraphMsg = std::static_pointer_cast<CMessageChangeWeaponGraphics>(message);
+				changeWeapon( chgWeaponGraphMsg->getWeapon() );
+				break;
+			}
+			case Message::PLAYER_DEAD: {
+				_animatedGraphicsEntity->stopAllAnimations();
+				_animatedGraphicsEntity->setAnimation("Death",false);
+				break;
+			}
+			case Message::DAMAGED: {
+				_animatedGraphicsEntity->stopAllAnimations();
+				_animatedGraphicsEntity->setAnimation("Damage",false);
+				break;
+			}
+			//Por si en redes se utilizara para algo hay que cambiarlo porque es un nonsense
+			/*case Message::HUD_SPAWN: {
+				_animatedGraphicsEntity->stopAllAnimations();
+				_animatedGraphicsEntity->setAnimation("Idle",true);
+				break;
+			}
+				*/
 		}
 
 	} // process
