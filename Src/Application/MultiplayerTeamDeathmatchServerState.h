@@ -102,6 +102,67 @@ namespace Application {
 		*/
 		virtual void disconnexionPacketReceived(Net::CPaquete* packet);
 
+		// Métodos de CKeyboardListener
+		
+		/**
+		Método que será invocado siempre que se pulse una tecla. 
+		Será la aplicación quién llame a este método cuando el 
+		estado esté activo. Esta clase NO se registra en el 
+		InputManager sino que es la aplicación quien lo hace y 
+		delega en los estados.
+
+		@param key Código de la tecla pulsada.
+		@return true si el evento ha sido procesado. En este caso 
+		el gestor no llamará a otros listeners.
+		*/
+		virtual bool keyPressed(Input::TKey key);
+		
+		/**
+		Método que será invocado siempre que se termine la pulsación
+		de una tecla. Será la aplicación quién llame a este método 
+		cuando el estado esté activo. Esta clase NO se registra en
+		el InputManager sino que es la aplicación quien lo hace y 
+		delega en los estados.
+
+		@param key Código de la tecla pulsada.
+		@return true si el evento ha sido procesado. En este caso 
+		el gestor no llamará a otros listeners.
+		*/
+		virtual bool keyReleased(Input::TKey key);
+
+		// Métodos de CMouseListener
+		
+		/**
+		Método que será invocado siempre que se mueva el ratón. La
+		aplicación avisa de este evento al estado actual.
+
+		@param mouseState Estado del ratón cuando se lanza el evento.
+		@return true si el evento ha sido procesado. En este caso 
+		el gestor no llamará a otros listeners.
+		*/
+		virtual bool mouseMoved(const Input::CMouseState &mouseState);
+		
+		/**
+		Método que será invocado siempre que se pulse un botón. La
+		aplicación avisa de este evento al estado actual.
+
+		@param mouseState Estado del ratón cuando se lanza el evento.
+		@return true si el evento ha sido procesado. En este caso 
+		el gestor no llamará a otros listeners.
+		*/
+		virtual bool mousePressed(const Input::CMouseState &mouseState);
+
+		/**
+		Método que será invocado siempre que se termine la pulsación
+		de un botón. La aplicación avisa de este evento al estado 
+		actual.
+
+		@param mouseState Estado del ratón cuando se lanza el evento.
+		@return true si el evento ha sido procesado. En este caso 
+		el gestor no llamará a otros listeners. 
+		*/
+		virtual bool mouseReleased(const Input::CMouseState &mouseState);
+
 	}; // CMultiplayerTeamDeathmatchServerState
 
 } // namespace Application
