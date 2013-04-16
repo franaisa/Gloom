@@ -226,8 +226,7 @@ namespace Application {
 
 	//--------------------------------------------------------
 
-	void CLobbyServerState::dataPacketReceived(Net::CPaquete* packet)
-	{
+	void CLobbyServerState::dataPacketReceived(Net::CPaquete* packet) {
 		Net::NetID playerId = packet->getConexion()->getId();
 
 		Net::CBuffer buffer(packet->getDataLength());
@@ -239,40 +238,37 @@ namespace Application {
 		//memcpy(&msg, packet->getData(), sizeof(msg));
 		buffer.read(&msg, sizeof(msg));
 		
-		switch (msg)
-		{
-		case Net::PLAYER_INFO:
-		{
-			// Deserializamos el nombre del player y el mesh (en un futuro la clase del player)
-			std::string playerNick, playerMesh;
-			buffer.deserialize(playerNick);
-			buffer.deserialize(playerMesh);
+		switch (msg) {
+			case Net::PLAYER_INFO: {
+				// Deserializamos el nombre del player y el mesh (en un futuro la clase del player)
+				std::string playerNick, playerMesh;
+				buffer.deserialize(playerNick);
+				buffer.deserialize(playerMesh);
 
-			// Registramos estos datos en el gestor de players
-			Logic::CGameNetPlayersManager::getSingletonPtr()->setPlayerNickname(playerId, playerNick);
-			Logic::CGameNetPlayersManager::getSingletonPtr()->setPlayerMesh(playerId, playerMesh);
+				// Registramos estos datos en el gestor de players
+				Logic::CGameNetPlayersManager::getSingletonPtr()->setPlayerNickname(playerId, playerNick);
+				Logic::CGameNetPlayersManager::getSingletonPtr()->setPlayerMesh(playerId, playerMesh);
 
-			// Si se ha cargado la información de todos los clientes, entonces
-			// comenzamos la fase de carga del mapa
-			if( ++_playersFetched == Logic::CGameNetPlayersManager::getSingletonPtr()->getNumberOfPlayersConnected() ) {
-				Net::NetMessageType msg = Net::LOAD_MAP;
-				Net::CBuffer buffer(sizeof(msg)+_map.size()*sizeof(char));
-				buffer.write(&msg, sizeof(msg));
-				buffer.serialize(_map,false);
+				// Si se ha cargado la información de todos los clientes, entonces
+				// comenzamos la fase de carga del mapa
+				if( ++_playersFetched == Logic::CGameNetPlayersManager::getSingletonPtr()->getNumberOfPlayersConnected() ) {
+					Net::NetMessageType msg = Net::LOAD_MAP;
+					Net::CBuffer buffer(sizeof(msg)+_map.size()*sizeof(char));
+					buffer.write(&msg, sizeof(msg));
+					buffer.serialize(_map,false);
 
-				Net::CManager::getSingletonPtr()->send(buffer.getbuffer(), buffer.getSize());
+					Net::CManager::getSingletonPtr()->send(buffer.getbuffer(), buffer.getSize());
+				}
+
+				break;
 			}
-
-			break;
-		}
-		case Net::MAP_LOADED:
-		{
-			//Enviamos el mensaje de que empieza el juego a todos los clientes
-			Net::NetMessageType msg = Net::START_GAME;
-			Net::CManager::getSingletonPtr()->send(&msg, sizeof(msg));
-			_app->setState("multiplayerTeamDeathmatchServer");
-			break;
-		}
+			case Net::MAP_LOADED: {
+				//Enviamos el mensaje de que empieza el juego a todos los clientes
+				Net::NetMessageType msg = Net::START_GAME;
+				Net::CManager::getSingletonPtr()->send(&msg, sizeof(msg));
+				_app->setState("gameServer");
+				break;
+			}
 		}//switch
 
 	} // dataPacketReceived

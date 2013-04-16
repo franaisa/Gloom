@@ -179,7 +179,7 @@ namespace Application {
 				break;
 			}
 			case Net::START_GAME: {
-				_app->setState("multiplayerTeamDeathmatchClient");
+				_app->setState("gameClient");
 				break;
 			}
 		}
