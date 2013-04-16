@@ -112,9 +112,11 @@ namespace Input {
 				m->setType(Logic::Control::STOP_WALKBACK);
 				break;
 			case Input::Key::A:
+				std::cout << "Stop strafe left" << std::endl;
 				m->setType(Logic::Control::STOP_STRAFE_LEFT);
 				break;
 			case Input::Key::D:
+				std::cout << "Stop strafe right" << std::endl;
 				m->setType(Logic::Control::STOP_STRAFE_RIGHT);
 				break;
 
@@ -191,9 +193,9 @@ namespace Input {
 
 	bool CPlayerController::mouseReleased(const CMouseState &mouseState)
 	{
-
 		if(_controlledAvatar)
 		{
+			int a = mouseState.scrool;
 			Logic::CMessageControl *m=new Logic::CMessageControl();
 			switch(mouseState.button)
 			{
@@ -227,7 +229,7 @@ namespace Input {
 	int CPlayerController::typeOfKey(TKey key)
 	{
 		if ( key.keyId == Input::Key::NUMBER1 || key.keyId == Input::Key::NUMBER2 || key.keyId == Input::Key::NUMBER3 || key.keyId == Input::Key::NUMBER4 || 
-				key.keyId == Input::Key::NUMBER5 )
+				key.keyId == Input::Key::NUMBER5 || key.keyId == Input::Key::NUMBER6)
 		{		
 			return 0;//Change weapon
 		}
@@ -284,19 +286,64 @@ namespace Input {
 	void CPlayerController::MovementMessage(TKey key)
 	{
 		Logic::CMessageControl *m=new Logic::CMessageControl();
+		unsigned int iDiffTime = clock() - m_iLastTime;
 		switch(key.keyId)
 		{
 			case Input::Key::W:
-				m->setType(Logic::Control::WALK);
+				if ((iDiffTime < MAX_TIME_DOBULE_PUSH)	&& (m_eLastMove == WALK))	
+				{
+					std::cout << "Salto adelante!!!" << iDiffTime << std::endl;
+					m->setType(Logic::Control::DODGE_FORWARD);
+				}
+				else
+				{
+					std::cout << "Walk" << iDiffTime  << std::endl;
+					m->setType(Logic::Control::WALK);
+				}
+				m_iLastTime=clock();
+				m_eLastMove = WALK;
 				break;
 			case Input::Key::S:
-				m->setType(Logic::Control::WALKBACK);
+				if ((iDiffTime < MAX_TIME_DOBULE_PUSH)	&& (m_eLastMove == WALKBACK))	
+				{
+					std::cout << "Salto atrás!!!" << iDiffTime << std::endl;
+					m->setType(Logic::Control::DODGE_BACKWARDS);
+				}
+				else
+				{
+					std::cout << "Walkback " << iDiffTime  << std::endl;
+					m->setType(Logic::Control::WALKBACK);				
+				}
+				m_iLastTime=clock();
+				m_eLastMove = WALKBACK;
 				break;
 			case Input::Key::A:
-				m->setType(Logic::Control::STRAFE_LEFT);
+				if ((iDiffTime < MAX_TIME_DOBULE_PUSH)	&& (m_eLastMove == LEFT))	
+				{
+					std::cout << "SALTO IZQUIERDA!!!" << iDiffTime << std::endl;
+					m->setType(Logic::Control::SIDEJUMP_LEFT);
+				}
+				else
+				{
+					std::cout << "Stafe left - Time" << iDiffTime  << std::endl;
+					m->setType(Logic::Control::STRAFE_LEFT);
+				}
+				m_eLastMove = LEFT;
+				m_iLastTime=clock();
 				break;
 			case Input::Key::D:
-				m->setType(Logic::Control::STRAFE_RIGHT);
+				if ((iDiffTime < MAX_TIME_DOBULE_PUSH) && (m_eLastMove == RIGHT))
+				{
+					std::cout << "SALTO DERECHA!!!" << iDiffTime  << std::endl;
+					m->setType(Logic::Control::SIDEJUMP_RIGHT);
+				}
+				else
+				{
+					std::cout << "Stafe right - Time" <<  iDiffTime << std::endl;
+					m->setType(Logic::Control::STRAFE_RIGHT);
+				}
+				m_iLastTime=clock();
+				m_eLastMove = RIGHT;
 				break;
 			case Input::Key::SPACE:
 				m->setType(Logic::Control::JUMP);
@@ -328,24 +375,27 @@ namespace Input {
 
 	void CPlayerController::OtherMessages(TKey key)
 	{
-		//No me deja crear los mensajes dentro del switch (error=la inicialización de message se omite en la etiqueta 'case')
-		Logic::CMessageAddLife *message2=new Logic::CMessageAddLife();
-		Logic::CMessageAddShield *message3=new Logic::CMessageAddShield();
-		Logic::CMessageHudDebug *m2=new Logic::CMessageHudDebug();
 		switch (key.keyId)
 		{					
-			case Input::Key::NUMBER7:				
+			case Input::Key::NUMBER7:	
+			{
+				Logic::CMessageAddLife *message2=new Logic::CMessageAddLife();
 				message2->setAddLife(20);
 				_controlledAvatar->emitMessage(message2);
+			}
 			break;
 			case Input::Key::NUMBER8:
-
+			{
+				Logic::CMessageAddShield *message3=new Logic::CMessageAddShield();
 				message3->setAddShield(20);
 				_controlledAvatar->emitMessage(message3);
+			}
 			break;
 			case Input::Key::O:
-
+			{
+				Logic::CMessageHudDebug *m2=new Logic::CMessageHudDebug();
 				_controlledAvatar->emitMessage(m2);
+			}
 			break;
 			case Input::Key::ESCAPE:// esto debe desaparecer en el futuro
 				std::cout << "escape pulsado" << std::endl;

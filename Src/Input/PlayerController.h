@@ -15,6 +15,8 @@ mover al jugador.
 
 #include "InputManager.h"
 
+
+
 // Predeclaración de clases para ahorrar tiempo de compilación
 namespace Logic 
 {
@@ -38,10 +40,13 @@ namespace Input
 	@author David Llansó
 	@date Agosto, 2010
 	*/
+
+	//'Constante' de máximo tiempo para dar la doble pulsación del salto hacia los lados
+	#define MAX_TIME_DOBULE_PUSH 150
+
 	class CPlayerController : public CKeyboardListener, public CMouseListener
 	{
 	public:
-
 		/**
 		Constructor.
 		*/
@@ -131,7 +136,10 @@ namespace Input
 		*/
 		bool mouseReleased(const CMouseState &mouseState);
 
-
+		/**
+		Enumerado con las acciones de movimiento
+		*/
+		enum E_MOVE {LEFT, RIGHT, WALK, WALKBACK };
 
 	protected:
 
@@ -142,8 +150,10 @@ namespace Input
 		Logic::CEntity *_controlledAvatar;
 
 
-		//Métodos privados
 	private:
+		//-------------------------------------------
+		//             Métodos privados
+		//------------------------------------------
 
 		/**
 		Método para saber de qué tipo es la tecla pulsada. Para una lectura de código más clara
@@ -177,7 +187,19 @@ namespace Input
 		*/
 		void OtherMessages(TKey key);
 
+		//-------------------------------------------
+		//             Variables privados
+		//------------------------------------------
 
+		/**
+		Tiempo de la última pulsación
+		*/
+		unsigned int m_iLastTime;
+
+		/**
+		Último movimiento realizado
+		*/
+		E_MOVE m_eLastMove;
 
 	}; // class CPlayerController
 
