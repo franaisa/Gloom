@@ -90,13 +90,18 @@ namespace Logic {
 
 	//---------------------------------------------------------
 	
-	Vector3 CGameSpawnManager::getSpawnPosition(){
-		//std::cout << "EL NUMERO DE PUNTOS SON: " << _listSpawnPoints.size() << std::endl;
+	CEntity* CGameSpawnManager::getSpawnPosition(){
+		/*std::cout << "EL NUMERO DE PUNTOS DE SPAWN ES: " << _listSpawnPoints.size() << std::endl;
+		int disponibles=0;
+		for(int i =0;i<_listSpawnPoints.size();i++)
+			if(!_listSpawnPoints[i]->getComponent<CPhysicStaticEntity>("CPhysicStaticEntity")->getInTrigger())
+				disponibles++;
+		std::cout << "EL NUMERO DE PUNTOS DE SPAWN DISPONIBLES ES: " << _listSpawnPoints.size() << std::endl;*/
 		int random=rand()%_listSpawnPoints.size();
 		//Mientras que nos devuelva que el trigger esta activado buscamos otro punto
 		while(_listSpawnPoints[random]->getComponent<CPhysicStaticEntity>("CPhysicStaticEntity")->getInTrigger())
 			random=rand()%_listSpawnPoints.size();
-		return _listSpawnPoints[random]->getPosition();
+		return _listSpawnPoints[random];
 	}
 
 } // namespace Logic

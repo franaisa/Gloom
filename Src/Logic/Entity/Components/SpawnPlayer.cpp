@@ -92,19 +92,19 @@ namespace Logic
 			//Si superamos el tiempo de spawn tenemos que revivir
 			if(_actualTimeSpawn>_timeSpawn){
 				//LLamamos al manager de spawn que nos devolverá una posición ( ahora hecho a lo cutre)
-				Vector3 spawn = CServer::getSingletonPtr()->getSpawnManager()->getSpawnPosition();
+				CEntity *spawn = CServer::getSingletonPtr()->getSpawnManager()->getSpawnPosition();
 
 				//Activamos la simulación física (fue desactivada al morir)
 				_entity->getComponent<CPhysicController>("CPhysicController")->activateSimulation();
 
 				//Ponemos la entidad física en la posición instantaneamente ( no se puede permitir el envio de mensajes )
-				_entity->getComponent<CPhysicController>("CPhysicController")->setPhysicPosition(spawn);
+				_entity->getComponent<CPhysicController>("CPhysicController")->setPhysicPosition(spawn->getPosition());
 
 				//Volvemos a activar todos los componentes
 				_entity->activate();
 
 				//Establecemos la orientación adecuada segun la devolución del manager de spawn
-				_entity->setYaw(180);
+				_entity->setOrientation(spawn->getOrientation());
 
 				// Si eres el server mandar un mensaje de spawn
 				std::shared_ptr<CMessagePlayerSpawn> spawnMsg = std::make_shared<CMessagePlayerSpawn>();
