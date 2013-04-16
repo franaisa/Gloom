@@ -70,7 +70,7 @@ namespace Logic
 	{
 		switch( message->getMessageType() ) {
 			case Message::TOUCHED: {
-				std::shared_ptr<CMessageAudio> audioMsg = std::static_pointer_cast<CMessageAudio>(message);
+				std::shared_ptr<CMessageAudio> audioMsg = std::make_shared<CMessageAudio>();
 				std::shared_ptr<CMessageTouched> touchedMsg = std::static_pointer_cast<CMessageTouched>(message);
 
 				applyJump(touchedMsg->getEntity());
