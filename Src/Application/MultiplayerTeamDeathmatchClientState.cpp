@@ -187,6 +187,7 @@ namespace Application {
 
 	bool CMultiplayerTeamDeathmatchClientState::keyReleased(Input::TKey key)
 	{
+		CGameState::keyReleased(key);
 		return true;
 
 	} // keyReleased

@@ -248,5 +248,47 @@ namespace Application {
 		// Eliminamos el jugador que se desconecta del manager de jugadores
 		playersMgr->removePlayer(playerNetId);
 	} // disconnexionPacketReceived
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	bool CMultiplayerTeamDeathmatchServerState::keyPressed(Input::TKey key)
+	{
+		return CGameState::keyPressed(key);;
+
+	} // keyPressed
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	bool CMultiplayerTeamDeathmatchServerState::keyReleased(Input::TKey key)
+	{
+		
+		return CGameState::keyReleased(key);;
+
+	} // keyReleased
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	
+	bool CMultiplayerTeamDeathmatchServerState::mouseMoved(const Input::CMouseState &mouseState)
+	{
+		return false;
+
+	} // mouseMoved
+
+	//--------------------------------------------------------
+		
+	bool CMultiplayerTeamDeathmatchServerState::mousePressed(const Input::CMouseState &mouseState)
+	{
+		return false;
+
+	} // mousePressed
+
+	//--------------------------------------------------------
+
+
+	bool CMultiplayerTeamDeathmatchServerState::mouseReleased(const Input::CMouseState &mouseState)
+	{
+		return false;
+
+	} // mouseReleased
 	
 } // namespace Application
