@@ -17,14 +17,13 @@ namespace Logic
 {
 	IComponent::IComponent() : _entity(0), 
 							   _isActivated(true), 
-							   _isStartingUp(true) {
+							   updater(&IComponent::tick) {
 
 	}
 
 	//---------------------------------------------------------
 
-	bool IComponent::spawn(CEntity *entity, CMap *map, const Map::CEntity *entityInfo) 
-	{
+	bool IComponent::spawn(CEntity *entity, CMap *map, const Map::CEntity *entityInfo) {
 		_entity = entity;
 		return true;
 
@@ -33,9 +32,14 @@ namespace Logic
 	//---------------------------------------------------------
 	
 	void IComponent::activate() {
-		if(_isActivated)return;
+		if(_isActivated) return;
+		
+		// Por defecto no forzamos a que se arranque onStart
+		// queda abierto para que el cliente lo haga
+		// solo tendria que setear updater como onStart
+		// al ejecutar onStart se vuelve a setear tick
+		
 		_isActivated = true;
-		_isStartingUp = true;
 		clearMessages();
 	}
 
@@ -48,15 +52,17 @@ namespace Logic
 	//---------------------------------------------------------
 
 	void IComponent::onStart(unsigned int msecs) {
-		_isStartingUp = false;
+		// Seteamos el puntero a funcion como el tick
+		updater = &IComponent::tick;
+		// Procesamos los mensajes que nos hayan llegado
 		processMessages();
 	}
 
 	//---------------------------------------------------------
 
 	void IComponent::tick(unsigned int msecs) {
+		// Procesamos los mensajes que nos hayan llegado
 		processMessages();
-
 	} // tick
 
 } // namespace Logic
