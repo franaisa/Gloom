@@ -27,6 +27,8 @@ ratón y teclado.
 #include <sstream>
 #include <cassert>
 
+#include <iostream>
+
 
 namespace Input{
 
@@ -295,6 +297,15 @@ namespace Input{
 			_mouseState.movY = e.state.Y.rel;
 			_mouseState.scrool = e.state.Z.rel;
 			_mouseState.button = Button::UNASSIGNED;
+
+			//AbsZ sólo toma los valores {-120,0,120}, en función de si se sube o se baja.
+			//Cada vez que se mueve el ratón, se pone a 0.
+			_mouseState.posAbsZ = e.state.Z.rel;
+			//posRelZ guarda el valor de rotación del ratón. Cada vez que se gira la rueda,
+			//se suma (rueda arriba) o se resta (rueda abajo) 120. No tiene rango de valores,
+			//puede tomar desde -muchos hasta +muchos (+-64000 que haya probado)
+			//No se resetea el valor a 0 cuando se mueve el ratón.
+			_mouseState.posRelZ = e.state.Z.abs;
 
 			std::list<CMouseListener*>::const_iterator it;
 			it = _mouseListeners.begin();

@@ -187,6 +187,11 @@ namespace Input
 		*/
 		void OtherMessages(TKey key);
 
+
+		void ScrollWheelChangeWeapon(const CMouseState &mouseState);
+
+		void ChangeWeaponMessage(int iWeapon);
+
 		//-------------------------------------------
 		//             Variables privados
 		//------------------------------------------
@@ -200,6 +205,10 @@ namespace Input
 		Último movimiento realizado
 		*/
 		E_MOVE m_eLastMove;
+
+		int m_iLastScrollWheelPos;
+
+		int m_iCurrentWeapon;
 
 	}; // class CPlayerController
 
