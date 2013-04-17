@@ -157,13 +157,11 @@ namespace Application {
 			case Net::LOAD_PLAYERS: {
 				// Cargamos los players que ya estaban en la partida
 				int nbPlayers;
-				Net::NetID netId;
 				Logic::TEntityID entityID;
 				std::string playerClass, name;
 
 				buffer.read(&nbPlayers, sizeof(nbPlayers));
 				for(int i = 0; i < nbPlayers; ++i) {
-					buffer.read(&netId, sizeof(netId));
 					buffer.read(&entityID, sizeof(entityID));
 					buffer.deserialize(name);
 					buffer.deserialize(playerClass);

@@ -103,7 +103,6 @@ namespace Application {
 
 				// Variables locales
 				Net::NetMessageType loadPlayersMsg = Net::LOAD_PLAYERS;
-				Net::NetID netId;
 				Logic::TEntityID entityId;
 				std::string name, playerClass;
 				int nbPlayersSpawned = _playersMgr->getNumberOfPlayersSpawned();
@@ -124,13 +123,11 @@ namespace Application {
 					// Solo mandamos la informacion de aquellos players que ya estan dentro
 					// de la partida
 					if( tempPlayerInfo.isSpawned() ) {
-						netId = tempPlayerInfo.getNetId(); // id de red
 						entityId = tempPlayerInfo.getEntityId().first; // id logico
 						name = tempPlayerInfo.getName(); // nickname
 						playerClass = tempPlayerInfo.getPlayerClass(); // playerclass
 
 						// Escribimos los datos asociados a este player
-						playersInfoBuffer.write( &netId, sizeof(netId) );
 						playersInfoBuffer.write( &entityId, sizeof(entityId) );
 						playersInfoBuffer.serialize(name, false);
 						playersInfoBuffer.serialize(playerClass, false);
@@ -193,26 +190,32 @@ namespace Application {
 						break;
 				}
 
-				_playersMgr->setEntityID(playerNetId, player->getEntityID());
+				_playersMgr->setEntityID( playerNetId, player->getEntityID() );
 				
-				Net::NetMessageType msgType = Net::LOAD_PLAYER;// Escribimos el tipo de mensaje de red a enviar
-				Net::CBuffer serialMsg;
+				Net::NetMessageType netMsg = Net::LOAD_PLAYERS;// Escribimos el tipo de mensaje de red a enviar
+				int nbPlayers = 1;
+				Logic::TEntityID playerId = player->getEntityID();
+				
 				//serializamos toda la información que se necesita para la creación de la entidad
-				serialMsg.write(&msgType, sizeof(msgType));
-				serialMsg.serialize(player->getEntityID());
-				serialMsg.serialize(player->getType(), false);
-				serialMsg.serialize(player->getName(), false);
-		
+				Net::CBuffer serialMsg;
+				serialMsg.write(&netMsg, sizeof(netMsg));
+				serialMsg.write(&nbPlayers, sizeof(nbPlayers));
+				serialMsg.write(&playerId, sizeof(playerId));
+				serialMsg.serialize(player->getName(), false); // Nombre del player
+				serialMsg.serialize(player->getType(), false); // Clase del player
+				
 				//enviamos la entidad nueva al jugador local
 				Net::CManager::getSingletonPtr()->sendAllExcept(serialMsg.getbuffer(), serialMsg.getSize(),playerNetId);
+
 				serialMsg.reset();
 				//enviamos la entidad nueva al resto de jugadores
-				msgType = Net::LOAD_LOCAL_PLAYER;// Escribimos el tipo de mensaje de red a enviar
+				netMsg = Net::LOAD_LOCAL_PLAYER;// Escribimos el tipo de mensaje de red a enviar
 				//serializamos toda la información que se necesita para la creación de la entidad
-				serialMsg.write(&msgType, sizeof(msgType));
+				serialMsg.write(&netMsg, sizeof(netMsg));
 				serialMsg.serialize(player->getEntityID());
-				serialMsg.serialize(player->getType(), false);
-				serialMsg.serialize(player->getName(), false);
+				serialMsg.serialize(player->getName(), false); // Nombre del player
+				serialMsg.serialize(player->getType(), false); // Clase del player
+
 				player->activate();
 
 				Net::CManager::getSingletonPtr()->send(serialMsg.getbuffer(), serialMsg.getSize(),playerNetId);
