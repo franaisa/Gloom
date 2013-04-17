@@ -110,6 +110,17 @@ namespace Logic {
 		//________________________________________________________________________
 
 		/**
+		Inserta un nuevo jugador con un nickname dado.
+		
+		@param playerNetId Identificador de red del player a insertar.
+		@param playerNickname Nickname del player que acaba de conectarse.
+		@return true si no existe otro player con el mismo identificador de red.
+		*/
+		bool addPlayer(Net::NetID playerNetId, const std::string& playerNickname);
+
+		//________________________________________________________________________
+
+		/**
 		Elimina a un jugador del gestor dado su identificador de red.
 
 		@param playerNetId Identificador de red del player que se desea eliminar.

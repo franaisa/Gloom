@@ -20,6 +20,10 @@ Contiene la declaración del estado de juego.
 #include "GameState.h"
 #include "Net/Manager.h"
 
+namespace Logic {
+	class CGameNetPlayersManager;
+}
+
 namespace Application {
 	
 	/**
@@ -50,7 +54,7 @@ namespace Application {
 
 		@param app Aplicacion que se encarga de manejar los estados.
 		*/
-		CGameServerState(CBaseApplication *app) : CGameState(app) {}
+		CGameServerState(CBaseApplication *app) : CGameState(app), _playersMgr(NULL) {}
 
 
 		// =======================================================================
@@ -102,6 +106,9 @@ namespace Application {
 		*/
 		virtual void disconnexionPacketReceived(Net::CPaquete* packet);
 
+	private:
+
+		Logic::CGameNetPlayersManager* _playersMgr;
 	}; // CMultiplayerTeamDeathmatchServerState
 
 } // namespace Application
