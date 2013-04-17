@@ -291,6 +291,7 @@ namespace Logic {
 		// Mensaje de playerDead para tratar el respawn y desactivar los componentes
 		// del personaje.
 		Logic::CMessagePlayerDead* playerDeadMsg = new Logic::CMessagePlayerDead();
+		playerDeadMsg->setKiller(enemy->getEntityID());
 		_entity->emitMessage(playerDeadMsg);
 
 		// Mensaje para que la camara enfoque al jugador que nos ha matado
@@ -306,6 +307,7 @@ namespace Logic {
 		// Enviamos el mensaje por la red
 		if( Net::CManager::getSingletonPtr()->imServer() )
 			Logic::CGameNetMsgManager::getSingletonPtr()->sendMessageToOne(cteMsg, camera->getEntityID(), _entity->getEntityID());
+
 	}
 
 	//________________________________________________________________________

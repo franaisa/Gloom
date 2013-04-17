@@ -17,6 +17,7 @@
 
 #include "Logic/Messages/MessagePlayerDead.h"
 #include "Logic/Messages/MessagePlayerSpawn.h"
+#include "Logic/Maps/GUIKillersMessage.h"
 
 #include <math.h>
 
@@ -59,6 +60,12 @@ namespace Logic  {
 			}
 
 			_entity->deactivateAllComponentsExcept(exceptionList);
+			;
+			//mostramos en pantalla el mensaje de quien ha matado a quien
+			//Logic::GUIKillersMessage::getSingletonPtr()->addKillers(
+			Logic::GUIKillersMessage::getSingletonPtr()->addKiller(
+				Logic::CServer::getSingletonPtr()->getMap()->getEntityByID(static_cast<CMessagePlayerDead*>(message)->getKiller())->getName(),
+				_entity->getName());
 			
 			break;
 			}

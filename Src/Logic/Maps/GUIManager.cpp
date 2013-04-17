@@ -3,6 +3,7 @@
 #include "Hikari.h"
 #include "GUI/Server.h"
 #include "BaseSubsystems\Server.h"
+#include "GUIKillersMessage.h"
 
 #include <cassert>
 
@@ -20,7 +21,7 @@ namespace Logic {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	bool CGUIManager::Init(){
-		assert(!_instance && "Segunda inicialización de Logic::CServer no permitida!");
+		assert(!_instance && "Segunda inicialización de Logic::CGUIManager no permitida!");
 
 		new CGUIManager();
 
@@ -29,6 +30,8 @@ namespace Logic {
 			Release();
 			return false;
 		}
+
+
 		return true;
 	}
 
@@ -159,6 +162,11 @@ namespace Logic {
 	}
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	void CGUIManager::addGUI(const std::string &name,const Hikari::Position &pos){
+		GUIPair elem(name,GUI::CServer::getSingletonPtr()->addLayout("menuseleccion", Hikari::Position(Hikari::Center), 0.8f));
+		_loadedGUIs.insert(elem);
+	}
 
 
 }//namespace Logic

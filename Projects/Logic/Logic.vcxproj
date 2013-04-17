@@ -129,6 +129,7 @@
     <ClCompile Include="..\..\Src\Logic\Maps\ComponentID.cpp" />
     <ClCompile Include="..\..\Src\Logic\Maps\EntityFactory.cpp" />
     <ClCompile Include="..\..\Src\Logic\Maps\EntityID.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Maps\GUIKillersMessage.cpp" />
     <ClCompile Include="..\..\Src\Logic\Maps\GUIManager.cpp" />
     <ClCompile Include="..\..\Src\Logic\Maps\IIdentifier.cpp" />
     <ClCompile Include="..\..\Src\Logic\Maps\Map.cpp" />
@@ -248,6 +249,7 @@
     <ClInclude Include="..\..\Src\Logic\Maps\Documentation.h" />
     <ClInclude Include="..\..\Src\Logic\Maps\EntityFactory.h" />
     <ClInclude Include="..\..\Src\Logic\Maps\EntityID.h" />
+    <ClInclude Include="..\..\Src\Logic\Maps\GUIKillersMessage.h" />
     <ClInclude Include="..\..\Src\Logic\Maps\GUIManager.h" />
     <ClInclude Include="..\..\Src\Logic\Maps\IIdentifier.h" />
     <ClInclude Include="..\..\Src\Logic\Maps\Map.h" />

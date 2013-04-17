@@ -451,6 +451,9 @@
     <ClCompile Include="..\..\Src\Logic\Messages\MessageSetRelatedEntity.cpp">
       <Filter>Messages\Source</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Maps\GUIKillersMessage.cpp">
+      <Filter>Maps\Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Src\Logic\Maps\ComponentFactory.h">
@@ -809,6 +812,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Messages\MessageSetRelatedEntity.h">
       <Filter>Messages\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Maps\GUIKillersMessage.h">
+      <Filter>Maps\Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

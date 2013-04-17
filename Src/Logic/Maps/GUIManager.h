@@ -1,7 +1,7 @@
 #include <string>
 #include <map>
 #include <vector>
-
+#include "Position.h"
 
 #ifndef __Logic_GUIManager_H
 #define __Logic_GUIManager_H
@@ -136,6 +136,8 @@ namespace Logic
 		static void Release();
 
 		void activate();
+
+		void addGUI(const std::string &name ,const Hikari::Position &pos);
 
 	protected:
 
