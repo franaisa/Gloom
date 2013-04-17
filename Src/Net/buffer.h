@@ -16,6 +16,7 @@ Implementa un buffer dinámico que los objetos utilizan para serializarse o deser
 #define __BUFFER_H
 
 #include "BaseSubsystems\Math.h"
+#include "Logic/PlayerInfo.h"
 
 namespace Net {
 
@@ -311,6 +312,7 @@ namespace Net {
 		@param data Datos a deserializar.
 		*/
 		void deserialize(Matrix4& data);
+
 
 	private:
 

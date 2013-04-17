@@ -154,26 +154,33 @@ namespace Application {
 
 				break;
 			}
-			case Net::LOAD_PLAYER: {
-				// Creamos el player
-				Net::NetID id;
+			case Net::LOAD_PLAYERS: {
+				// Cargamos los players que ya estaban en la partida
+				int nbPlayers;
 				Logic::TEntityID entityID;
-				//memcpy(&id, packet->getData() + sizeof(msg), sizeof(id));
-				buffer.read(&id, sizeof(id));
-				buffer.read(&entityID, sizeof(entityID));
-				std::string type, name;
-				buffer.deserialize(type);
-				buffer.deserialize(name);
-				//llamo al metodo de creacion del jugador
-				Logic::CEntity * player = Logic::CServer::getSingletonPtr()->getMap()->createPlayer(name, type, entityID);
-				//Enviamos el mensaje de que se ha creado el jugador
-				Net::NetMessageType ackMsg = Net::PLAYER_LOADED;
-				Net::CBuffer ackBuffer(sizeof(ackMsg) + sizeof(id));
-				ackBuffer.write(&ackMsg, sizeof(ackMsg));
-				ackBuffer.write(&id, sizeof(id));
-				Net::CManager::getSingletonPtr()->send(ackBuffer.getbuffer(), ackBuffer.getSize());
+				std::string playerClass, name;
+
+				buffer.read(&nbPlayers, sizeof(nbPlayers));
+				for(int i = 0; i < nbPlayers; ++i) {
+					buffer.read(&entityID, sizeof(entityID));
+					buffer.deserialize(name);
+					buffer.deserialize(playerClass);
+
+					// Llamo al metodo de creacion del jugador
+					Logic::CEntity * player = Logic::CServer::getSingletonPtr()->getMap()->createPlayer(name, playerClass, entityID);
+				}
+				
+				// Confirmamos de que se han cargado todos los players con exito
+				Net::NetMessageType ackMsg = Net::PLAYERS_LOADED;
+				Net::CManager::getSingletonPtr()->send( &ackMsg, sizeof(ackMsg) );
 				
 				break;
+			}
+			case Net::LOAD_WORLD_STATE: {
+				// Deserializar el estado del mundo
+
+				Net::NetMessageType worldStateLoadedMsg = Net::NetMessageType::WORLD_STATE_LOADED;
+				Net::CManager::getSingletonPtr()->send( &worldStateLoadedMsg, sizeof(worldStateLoadedMsg) );
 			}
 			case Net::START_GAME: {
 				_app->setState("gameClient");

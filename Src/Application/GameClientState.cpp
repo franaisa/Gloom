@@ -94,26 +94,24 @@ namespace Application {
 		buffer.read(&msg, sizeof(msg));
 
 		switch (msg) {
-			case Net::LOAD_PLAYER: {
+			case Net::LOAD_PLAYERS: {
 				// cargamos la informacion del player que nos han enviado
-				Net::NetID id;
 				Logic::TEntityID entityID;
-				buffer.read(&id, sizeof(id));
+				std::string playerClass, name;
+				int nbPlayers;
+
+				buffer.read(&nbPlayers, sizeof(nbPlayers));
 				buffer.read(&entityID, sizeof(entityID));
-				std::string type, name;
-				buffer.deserialize(type);
 				buffer.deserialize(name);
+				buffer.deserialize(playerClass);
 
 				//llamo al metodo de creacion del jugador
-				Logic::CEntity * player = Logic::CServer::getSingletonPtr()->getMap()->createPlayer(name, type, entityID);
+				Logic::CEntity * player = Logic::CServer::getSingletonPtr()->getMap()->createPlayer(name, playerClass, entityID);
 
-				//Enviamos el mensaje de que se ha creado el jugador
-				Net::NetMessageType ackMsg = Net::PLAYER_LOADED;
-				Net::CBuffer ackBuffer(sizeof(ackMsg) + sizeof(id));
-				ackBuffer.write(&ackMsg, sizeof(ackMsg));
-				ackBuffer.write(&id, sizeof(id));
-				Net::CManager::getSingletonPtr()->send(ackBuffer.getbuffer(), ackBuffer.getSize());
+				// No es necesario enviar confirmacion
+
 				player->activate();
+
 				break;
 			}
 			case Net::PING: {
@@ -146,12 +144,12 @@ namespace Application {
 				// cargamos la informacion del player que nos han enviado
 				Logic::TEntityID entityID;
 				buffer.read(&entityID, sizeof(entityID));
-				std::string type, name;
-				buffer.deserialize(type);
+				std::string playerClass, name;
 				buffer.deserialize(name);
+				buffer.deserialize(playerClass);
 
 				//llamo al metodo de creacion del jugador
-				Logic::CEntity * player = Logic::CServer::getSingletonPtr()->getMap()->createLocalPlayer(name, type, entityID);
+				Logic::CEntity * player = Logic::CServer::getSingletonPtr()->getMap()->createLocalPlayer(name, playerClass, entityID);
 
 				player->activate();
 				Logic::CServer::getSingletonPtr()->getMap()->getEntityByType("Camera")->getComponent<Logic::CCamera>("CCamera")->setTarget(player);
