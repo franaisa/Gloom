@@ -176,7 +176,7 @@ namespace Net
 
 		void activateAsClient(unsigned int maxConnections = 1, unsigned int maxinbw = 0, unsigned int maxoutbw = 0);
 
-		void connectTo(char* address, int port, int channels = 1, unsigned int timeout = 5000);
+		bool connectTo(char* address, int port, int channels = 1, unsigned int timeout = 5);
 
 		void deactivateNetwork();
 

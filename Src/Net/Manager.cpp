@@ -207,16 +207,21 @@ namespace Net {
 
 	//---------------------------------------------------------
 
-	void CManager::connectTo(char* address, int port, int channels, unsigned int timeout)
+	bool CManager::connectTo(char* address, int port, int channels, unsigned int timeout)
 	{
 		assert(_clienteRed && "Cliente Red es null"); // Solo se puede ejecutar el connectTo si somos cliente
 		assert(_connections.empty() && "Ya hay una conexion"); // Capamos al cliente a 1 conexión max: la de con el server
 
-		CConexion* connection = _clienteRed->connect(address, port, channels, timeout*100); // CONNECT
+		CConexion* connection = _clienteRed->connect(address, port, channels, timeout); // CONNECT
+		
+		if(!connection)
+			return false;
 		
 		// Almacenamos esa conexión y le otorgamos un ID de red
 		connection->setId(Net::ID::SERVER); // Un cliente sólo se conecta al SERVER
 		addConnection(Net::ID::SERVER, connection); // Guardamos en la tabla
+
+		return true;
 	} // connectTo
 
 	//---------------------------------------------------------

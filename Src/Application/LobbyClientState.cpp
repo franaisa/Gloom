@@ -259,7 +259,9 @@ namespace Application {
 	void CLobbyClientState::doStart(string ip)
 	{
 		// Conectamos
-		Net::CManager::getSingletonPtr()->connectTo((char*)ip.c_str(),1234,1);
+		if (!Net::CManager::getSingletonPtr()->connectTo((char*)ip.c_str(),1234,1)){
+			_menu->callFunction("enableButton",Hikari::Args());
+		}
 	} // doStart
 
 } // namespace Application
