@@ -94,11 +94,11 @@ namespace Logic
 				//LLamamos al manager de spawn que nos devolverá una posición ( ahora hecho a lo cutre)
 				CEntity *spawn = CServer::getSingletonPtr()->getSpawnManager()->getSpawnPosition();
 
-				//Activamos la simulación física (fue desactivada al morir)
-				_entity->getComponent<CPhysicController>("CPhysicController")->activateSimulation();
-
 				//Ponemos la entidad física en la posición instantaneamente ( no se puede permitir el envio de mensajes )
 				_entity->getComponent<CPhysicController>("CPhysicController")->setPhysicPosition(spawn->getPosition());
+
+				//Una vez posicionado, activamos la simulación física (fue desactivada al morir)
+				_entity->getComponent<CPhysicController>("CPhysicController")->activateSimulation();
 
 				//Volvemos a activar todos los componentes
 				_entity->activate();
