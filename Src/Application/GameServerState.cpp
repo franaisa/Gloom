@@ -102,62 +102,57 @@ namespace Application {
 				// y vicerversa, los players que ya estabán online deberán cargar al nuevo.
 
 				// Variables locales
-				std::string name;
-				Logic::TEntityID entityId;
+				Net::NetMessageType loadPlayersMsg = Net::LOAD_PLAYERS;
 				Net::NetID netId;
-				Net::NetMessageType loadPlayerMsg = Net::LOAD_PLAYER;
-
-				// Mandamos la informacion de los players de la partida al cliente que esta intentando conectarse
+				Logic::TEntityID entityId;
+				std::string name, playerClass;
+				int nbPlayersSpawned = _playersMgr->getNumberOfPlayersSpawned();
+				
+				// Mandamos la información asociada a los players que ya están conectados al player que desea
+				// conectarse
 				Logic::CPlayerInfo tempPlayerInfo;
-				Net::CBuffer tempBuffer( sizeof(loadPlayerMsg) +sizeof(netId) + sizeof(entityId) + sizeof(name) );
+				Net::CBuffer playersInfoBuffer;
+				// Escribimos la cabecera
+				playersInfoBuffer.write(&loadPlayersMsg, sizeof(loadPlayersMsg));
+				// Escribimos el numero de players que hay online
+				playersInfoBuffer.write(&nbPlayersSpawned, sizeof(nbPlayersSpawned));
 
 				Logic::CGameNetPlayersManager::iterator it = _playersMgr->begin();
 				for(; it != _playersMgr->end(); ++it) {
-					tempPlayerInfo = *it;
-					netId = tempPlayerInfo.getNetId();
+					tempPlayerInfo = *it; // Informacion asociada al player
+					
+					// Solo mandamos la informacion de aquellos players que ya estan dentro
+					// de la partida
+					if( tempPlayerInfo.isSpawned() ) {
+						netId = tempPlayerInfo.getNetId(); // id de red
+						entityId = tempPlayerInfo.getEntityId().first; // id logico
+						name = tempPlayerInfo.getName(); // nickname
+						playerClass = tempPlayerInfo.getPlayerClass(); // playerclass
 
-					// Debido a que fuera de este bucle enviaremos la informacion de este player mediante broadcast
-					// evitamos enviar la informacion en esta fase (ya que la id de entidad aun no ha sido asignada)
-					if(netId != playerNetId) {
-						entityId = tempPlayerInfo.getEntityId().first;
-						name = tempPlayerInfo.getName();
-
-						// Mensaje LOAD_PLAYER
-						tempBuffer.write(&loadPlayerMsg, sizeof(loadPlayerMsg));
-						tempBuffer.write(&netId, sizeof(netId));
-						tempBuffer.write(&entityId, sizeof(entityId));
-						tempBuffer.serialize(name, false);
-
-						Net::CManager::getSingletonPtr()->send(tempBuffer.getbuffer(), tempBuffer.getSize(), playerNetId);
-
-						// Reseteamos el puntero de escritura del buffer para escribir en la siguiente vuelta del bucle
-						tempBuffer.reset();
+						// Escribimos los datos asociados a este player
+						playersInfoBuffer.write( &netId, sizeof(netId) );
+						playersInfoBuffer.write( &entityId, sizeof(entityId) );
+						playersInfoBuffer.serialize(name, false);
+						playersInfoBuffer.serialize(playerClass, false);
 					}
 				}
+				
+				// Enviamos los datos asociados a los players online al nuevo player
+				Net::CManager::getSingletonPtr()->send(playersInfoBuffer.getbuffer(), playersInfoBuffer.getSize(), playerNetId);
 
 				break;
 			}
-			case Net::PLAYER_LOADED: {
-				//Aumentamos el número de jugadores cargados por el cliente
-				Net::NetID playerLoadedNetId;
-				inBuffer.read(&playerLoadedNetId, sizeof(playerLoadedNetId));
-				_playersMgr->loadPlayer( playerNetId, playerLoadedNetId );
-
-				// MANDAR EL MENSAJE DE ARRANQUE A TAN SOLO UNO DE ELLOS (EL QUE SE QUIERE CONECTAR)
-
-				unsigned int playersLoadedByClient = _playersMgr->getPlayersLoaded(playerNetId);
-				unsigned int playersConnected = _playersMgr->getNumberOfPlayersConnected();
-
-				//Si todos los clientes han cargado todos los players
-				if( _playersMgr->getPlayersLoaded(playerNetId) == _playersMgr->getNumberOfPlayersConnected() - 1) {
-				
-					// Si el cliente que queria conectarse a cargado a todos los players mandamos el mensaje
-					// de empezar
-					Net::NetMessageType msg = Net::START_GAME;
-					Net::CManager::getSingletonPtr()->send(&msg, sizeof(msg), playerNetId);
-				}
+			case Net::PLAYERS_LOADED: {
+				Net::NetMessageType loadWorldStateMsg = Net::LOAD_WORLD_STATE;
+				// De momento no serializamos nada, pero aqui habria que liarla
+				// parda para mandarle todo lo que toque al cliente
+				Net::CManager::getSingletonPtr()->send(&loadWorldStateMsg, sizeof(loadWorldStateMsg), playerNetId);
 
 				break;
+			}
+			case Net::WORLD_STATE_LOADED: {
+				Net::NetMessageType startGameMsg = Net::START_GAME;
+				Net::CManager::getSingletonPtr()->send(&startGameMsg, sizeof(startGameMsg), playerNetId);
 			}
 			case Net::PING: {
 				Net::NetMessageType ackMsg = Net::PING;
@@ -183,8 +178,7 @@ namespace Application {
 
 				//creamos el jugador que el cliente ha elegido
 				Logic::CEntity* player;
-				switch(race)
-				{
+				switch(race) {
 					case 1:
 						player = Logic::CServer::getSingletonPtr()->getMap()->createPlayer(name, "Screamer");
 						break;
@@ -198,7 +192,9 @@ namespace Application {
 						player = Logic::CServer::getSingletonPtr()->getMap()->createPlayer(name, "Shadow");
 						break;
 				}
+
 				_playersMgr->setEntityID(playerNetId, player->getEntityID());
+				
 				Net::NetMessageType msgType = Net::LOAD_PLAYER;// Escribimos el tipo de mensaje de red a enviar
 				Net::CBuffer serialMsg;
 				//serializamos toda la información que se necesita para la creación de la entidad
@@ -218,9 +214,11 @@ namespace Application {
 				serialMsg.serialize(player->getType(), false);
 				serialMsg.serialize(player->getName(), false);
 				player->activate();
+
 				Net::CManager::getSingletonPtr()->send(serialMsg.getbuffer(), serialMsg.getSize(),playerNetId);
+				
 				break;
-				}
+			}
 			
 		}
 

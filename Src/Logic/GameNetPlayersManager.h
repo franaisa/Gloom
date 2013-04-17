@@ -30,6 +30,13 @@ namespace Logic {
 	// Predeclaracion del typedef TEntityID
 	typedef unsigned int TEntityID;
 
+	/** Estados del jugador online */
+	/*enum NetPlayerMode {
+		eCONNECTING,
+		eSPECTATING,
+		ePLAYING
+	};*/
+
 	/**
 	Esta clase es la encargada de controlar toda la información lógica 
 	asociada a los jugadores conectados a una partida (nombre, clase, 
@@ -128,26 +135,6 @@ namespace Logic {
 		*/
 		bool removePlayer(Net::NetID playerNetId);
 
-		//________________________________________________________________________
-
-		/**
-		Añade un jugador a la lista de jugadores cargados de otro jugador.
-
-		@param playerNetId Identificador de red del player que ha cargado un nuevo jugador.
-		@param idPlayerToLoad Identificador de red del jugador que ha cargado el player.
-		*/
-		void loadPlayer(Net::NetID playerNetId, Net::NetID idPlayerToLoad);
-
-		//________________________________________________________________________
-
-		/**
-		Elimina un jugador de la lista de jugadores cargados de un player concreto.
-
-		@param playerNetId Identificador de red del player que debe eliminar a un jugador de su lista.
-		@param idPlayerToUnload Identificador de red del player que debe eliminarse de la lista.
-		*/
-		void unloadPlayer(Net::NetID playerNetId, Net::NetID idPlayerToUnload);
-
 
 		// =======================================================================
 		//                                SETTERS
@@ -182,22 +169,21 @@ namespace Logic {
 		*/
 		void setEntityID(Net::NetID playerNetId, TEntityID entityId);
 
+		//________________________________________________________________________
+
+		/**
+		Indica el estado en el que se encuentra un player dado su identificador de red.
+
+		@param playerNetId Identificador de red del player.
+		@param isSpawned true si la entidad está spawneada y en la partida.
+		*/
+		void setPlayerState(Net::NetID playerNetId, bool isSpawned);
+
 
 		// =======================================================================
 		//                                GETTERS
 		// =======================================================================
 		
-
-		/**
-		Devuelve el numero de jugadores que ha cargado un player dado su identificador
-		de red.
-
-		@param playerNetId Identificador de red del player.
-		@return Numero de jugadores que el player ha cargado.
-		*/
-		unsigned int getPlayersLoaded(Net::NetID playerNetId);
-
-		//________________________________________________________________________
 
 		/**
 		Devuelve toda la informacion asociada a un jugador dado su identificador de red.
@@ -245,6 +231,15 @@ namespace Logic {
 		@return Numero total de jugadores conectados.
 		*/
 		unsigned int getNumberOfPlayersConnected();
+
+		//________________________________________________________________________
+
+		/**
+		Devuelve el numero de jugadores spawneados.
+
+		@return Numero de jugadores spawneados.
+		*/
+		unsigned int getNumberOfPlayersSpawned();
 
 
 		// =======================================================================
@@ -301,7 +296,6 @@ namespace Logic {
 
 		/** Única instancia de la clase. */
 		static CGameNetPlayersManager* _instance;
-		
 	};
 
 
