@@ -183,6 +183,7 @@ namespace Application {
 
 	bool CGameClientState::keyReleased(Input::TKey key)
 	{
+		CGameState::keyReleased(key);
 		return true;
 
 	} // keyReleased
@@ -225,6 +226,7 @@ namespace Application {
 			case 0:
 				if(Input::CServer::getSingletonPtr()->getPlayerController()->getControllerAvatar()){
 					Input::CServer::getSingletonPtr()->getPlayerController()->activate();
+					_seleccion->hide();
 				}else{
 
 				}
@@ -234,6 +236,7 @@ namespace Application {
 			case 2:
 			case 3:
 			case 4:
+
 				_seleccion->hide();
 				//enviamos la clase elegida
 				msg.serialize(msgType);

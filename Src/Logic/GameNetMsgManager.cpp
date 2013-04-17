@@ -132,7 +132,7 @@ namespace Logic {
 
 		//le decimos al mapa que elimine la entidad
 		CEntity * entity = CServer::getSingletonPtr()->getMap()->getEntityByID(destID);
-		CEntityFactory::getSingletonPtr()->deferredDeleteEntity(entity);
+		CEntityFactory::getSingletonPtr()->deleteEntity(entity);
 	}
 
 	//---------------------------------------------------------
