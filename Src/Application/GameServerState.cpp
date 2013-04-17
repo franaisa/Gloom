@@ -28,6 +28,8 @@ Contiene la implementación del estado de juego.
 #include "Logic/Maps/EntityFactory.h"
 #include "Logic/Maps/Map.h"
 #include "Logic/Maps/EntityID.h"
+#include "Input\PlayerController.h"
+#include "Input/Server.h"
 
 namespace Application {
 
@@ -162,6 +164,14 @@ namespace Application {
 				break;
 			}
 			case Net::CLASS_SELECTED: {
+				//primero comprobamos si habia una entidad correspondiente a este jugador
+				//en caso de que la haya la eliminamos para crear la nueva
+				Logic::CEntity* deletePlayer = Logic::CServer::getSingletonPtr()->getMap()->getEntityByID(
+					Logic::CGameNetPlayersManager::getSingletonPtr()->getPlayer(playerNetId).getEntityId().first);
+				if(deletePlayer){
+					Logic::CEntityFactory::getSingletonPtr()->deferredDeleteEntity(deletePlayer);
+				}
+
 				int race;
 				std::string name;
 
@@ -248,5 +258,45 @@ namespace Application {
 		// Eliminamos el jugador que se desconecta del manager de jugadores
 		playersMgr->removePlayer(playerNetId);
 	} // disconnexionPacketReceived
+
+	bool CGameServerState::keyPressed(Input::TKey key)
+	{
+		return CGameState::keyPressed(key);;
+
+	} // keyPressed
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	bool CGameServerState::keyReleased(Input::TKey key)
+	{
+
+		return CGameState::keyReleased(key);
+
+	} // keyReleased
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	bool CGameServerState::mouseMoved(const Input::CMouseState &mouseState)
+	{
+		return false;
+
+	} // mouseMoved
+
+	//--------------------------------------------------------
+
+	bool CGameServerState::mousePressed(const Input::CMouseState &mouseState)
+	{
+		return false;
+
+	} // mousePressed
+
+	//--------------------------------------------------------
+
+
+	bool CGameServerState::mouseReleased(const Input::CMouseState &mouseState)
+	{
+		return false;
+
+	} // mouseReleased
 	
 } // namespace Application

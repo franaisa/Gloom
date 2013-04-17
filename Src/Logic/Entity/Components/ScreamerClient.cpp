@@ -120,14 +120,17 @@ namespace Logic {
 		Vector3 shootPosition = _entity->getPosition() + ( Math::getDirection( _entity->getOrientation() ) * _capsuleRadius*10 );
 		shootPosition.y += _heightShoot;
 		
-		// Sacamos el transform de la entidad y luego le seteamos la posicion de disparo
+		_screamerShield->setPosition(shootPosition);
+		_screamerShield->setOrientation(_entity->getOrientation());
+
+		/*// Sacamos el transform de la entidad y luego le seteamos la posicion de disparo
 		Matrix4 shootTransform = _entity->getTransform();
 		shootTransform.setTrans(shootPosition);
 
 		// Posicionamos el centro del escudo justo en el punto de mira		
 		CGraphics* shieldGraphics = _screamerShield->getComponent<CGraphics>("CGraphics");
 		assert(shieldGraphics && "Error: La entidad ScreamerShield no tiene un componente CGraphics");
-		shieldGraphics->setTransform(shootTransform);
+		shieldGraphics->setTransform(shootTransform);*/
 	}
 
 	//__________________________________________________________________
