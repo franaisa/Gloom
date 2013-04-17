@@ -144,12 +144,12 @@ namespace Application {
 				// cargamos la informacion del player que nos han enviado
 				Logic::TEntityID entityID;
 				buffer.read(&entityID, sizeof(entityID));
-				std::string type, name;
-				buffer.deserialize(type);
+				std::string playerClass, name;
 				buffer.deserialize(name);
+				buffer.deserialize(playerClass);
 
 				//llamo al metodo de creacion del jugador
-				Logic::CEntity * player = Logic::CServer::getSingletonPtr()->getMap()->createLocalPlayer(name, type, entityID);
+				Logic::CEntity * player = Logic::CServer::getSingletonPtr()->getMap()->createLocalPlayer(name, playerClass, entityID);
 
 				player->activate();
 				Logic::CServer::getSingletonPtr()->getMap()->getEntityByType("Camera")->getComponent<Logic::CCamera>("CCamera")->setTarget(player);
