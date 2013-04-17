@@ -184,24 +184,16 @@ namespace Logic
 
 	//---------------------------------------------------------
 
-	void CEntity::tick(unsigned int msecs) 
-	{
+	void CEntity::tick(unsigned int msecs) {
 		TComponentList::const_iterator it = _componentList.begin();
 
 		IComponent* component;
 		for(; it != _componentList.end(); ++it) {
 			component = *it;
 			if( component->isActivated() ) {
-				// De momento se hace esta comprobación extra para
-				// ver si lanzamos onStart
-				// Lo suyo es hacer colas distintas para evitar estas
-				// comprobaciones tontas
-				if( component->isStartingUp() ) {
-					component->onStart(msecs);
-				}
-				else {
-					component->tick(msecs);
-				}
+				// El propio componente setea el puntero a funcion de actualizacion
+				// el es el que nos indica si ejecutar onStart u onTick
+				(component->*component->updater)(msecs);
 			}
 		}
 

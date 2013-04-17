@@ -119,8 +119,6 @@ namespace Logic
 		*/
 		inline bool isActivated() { return _isActivated; }
 
-		inline bool isStartingUp() { return _isStartingUp; }
-
 		/**
 		Método que activa el componente; invocado cuando se activa
 		el mapa donde está la entidad a la que pertenece el componente.
@@ -143,6 +141,9 @@ namespace Logic
 		que pueda estar registrado (como el cronómetro del sistema, etc.).
 		*/
 		virtual void deactivate();
+
+
+		void (IComponent::*updater)(unsigned int);
 
 		/**
 		Representa el primer tick de la entidad. Se ejecuta una sola vez tras la activación
@@ -200,8 +201,6 @@ namespace Logic
 		los otros componentes
 		*/
 		bool _isActivated;
-
-		bool _isStartingUp;
 
 	}; // class IComponent
 
