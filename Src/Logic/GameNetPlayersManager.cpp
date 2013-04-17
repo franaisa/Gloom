@@ -91,6 +91,12 @@ namespace Logic {
 
 	//______________________________________________________________________________
 
+	bool CGameNetPlayersManager::addPlayer(Net::NetID playerNetId, const std::string& playerNickname) {
+		return (_netConnectedPlayers.insert( TLogicConnectedPlayersPair(playerNetId, new CPlayerInfo(playerNetId, playerNickname)) ) ).second;
+	} // addPlayer
+
+	//______________________________________________________________________________
+
 	bool CGameNetPlayersManager::removePlayer(Net::NetID playerNetId) {
 		// Buscamos el player que queremos borrar. 
 		TNetConnectedPlayersTable::iterator itWantedPlayer = _netConnectedPlayers.find(playerNetId);

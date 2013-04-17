@@ -26,9 +26,20 @@ namespace Logic {
 
 	//______________________________________________________________________________
 
+	CPlayerInfo::CPlayerInfo(Net::NetID netId, const std::string& nickname) : _netId(netId), 
+																			  _rank(0),
+																			  _name(nickname),
+																			  _entityIdInitialized(false) {
+		
+		// No hay memoria dinamica que inicializar
+	}
+
+	//______________________________________________________________________________
+
 	CPlayerInfo::CPlayerInfo(const CPlayerInfo& rhs) : _name(rhs._name), 
 													   _mesh(rhs._mesh), 
 													   _clan(rhs._clan), 
+													   _playerClass(rhs._playerClass),
 													   _rank(rhs._rank),
 													   _entityId(rhs._entityId),
 													   _entityIdInitialized(rhs._entityIdInitialized),
@@ -44,6 +55,7 @@ namespace Logic {
 			_name = rhs._name;
 			_mesh = rhs._mesh;
 			_clan = rhs._clan;
+			_playerClass = rhs._playerClass;
 			_rank = rhs._rank;
 			_entityId = rhs._entityId;
 			_entityIdInitialized = rhs._entityIdInitialized;
@@ -58,6 +70,7 @@ namespace Logic {
 
 	std::ostream& operator<<(std::ostream& out, const CPlayerInfo& playerInfo) {
 	   out << "Nombre = " << playerInfo._name << std::endl;
+	   out << "Clase = " << playerInfo._playerClass << std::endl;
 	   out << "Mesh = " << playerInfo._mesh << std::endl;
 	   out << "Clan = " << playerInfo._clan << std::endl;
 	   out << "Rank = " << playerInfo._rank << std::endl;
@@ -78,6 +91,12 @@ namespace Logic {
 
 	std::string CPlayerInfo::getName() {
 		return _name;
+	}
+
+	//______________________________________________________________________________
+
+	std::string CPlayerInfo::getPlayerClass() {
+		return _playerClass;
 	}
 
 	//______________________________________________________________________________
@@ -108,6 +127,12 @@ namespace Logic {
 	
 	void CPlayerInfo::setName(const std::string& name) {
 		this->_name = name;
+	}
+
+	//______________________________________________________________________________
+
+	void CPlayerInfo::setPlayerClass(const std::string& playerClass) {
+		this->_playerClass = playerClass;
 	}
 
 	//______________________________________________________________________________

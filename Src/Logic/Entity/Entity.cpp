@@ -196,12 +196,12 @@ namespace Logic
 				// ver si lanzamos onStart
 				// Lo suyo es hacer colas distintas para evitar estas
 				// comprobaciones tontas
-				//if( component->isStartingUp() ) {
-				//	component->onStart(msecs);
-				//}
-				//else {
+				if( component->isStartingUp() ) {
+					component->onStart(msecs);
+				}
+				else {
 					component->tick(msecs);
-				//}
+				}
 			}
 		}
 

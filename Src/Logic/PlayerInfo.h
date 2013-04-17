@@ -61,6 +61,16 @@ namespace Logic {
 		@param netId Identificador de red del player que se va a crear.
 		*/
 		CPlayerInfo(Net::NetID netId);
+
+		//________________________________________________________________________
+
+		/**
+		Constructor por parametro
+		
+		@param netId Identificador de red del player que se va a crear.
+		@param nickname Nickname del player que se va a crear.
+		*/
+		CPlayerInfo(Net::NetID netId, const std::string& nickname);
 		
 		//________________________________________________________________________
 
@@ -117,6 +127,15 @@ namespace Logic {
 		//________________________________________________________________________
 
 		/**
+		Devuelve la clase que esta usando el player.
+
+		@return La clase del player.
+		*/
+		std::string getPlayerClass();
+
+		//________________________________________________________________________
+
+		/**
 		Devuelve el mesh del player.
 
 		@return El mesh del player.
@@ -165,6 +184,15 @@ namespace Logic {
 		@param name Nombre que se le desea asignar al player.
 		*/
 		void setName(const std::string& name);
+
+		//________________________________________________________________________
+
+		/**
+		Asigna una clase al player.
+
+		@param playerClass Clase que va a usar el player.
+		*/
+		void setPlayerClass(const std::string& playerClass);
 
 		//________________________________________________________________________
 
@@ -235,6 +263,9 @@ namespace Logic {
 
 		/** Nickname del player. */
 		std::string _name;
+
+		/** Clase que está usando el jugador. */
+		std::string _playerClass;
 
 		/** Nombre del mesh que esta usando el player. */
 		std::string _mesh;

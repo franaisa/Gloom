@@ -92,8 +92,7 @@ namespace Application {
 
 	//--------------------------------------------------------
 
-	void CLobbyClientState::tick(unsigned int msecs) 
-	{
+	void CLobbyClientState::tick(unsigned int msecs) {
 		CApplicationState::tick(msecs);
 
 	} // tick
@@ -110,22 +109,20 @@ namespace Application {
 		buffer.read(&msg, sizeof(msg));
 
 		switch (msg) {
-			case Net::LOAD_PLAYER_INFO: {
-				// Obtenemos el nombre del mesh que va a usar el player
-				std::string playerModel = "marine.mesh";
-
-				// Obtenemos el nombre del player
+			case Net::SEND_PLAYER_INFO: {
+				// Obtenemos el nickname del player, que de momento es la única información asociada al
+				// player que tenemos
 				std::string playerNick = _menu->callFunction("getNick",Hikari::Args()).getString();
 
 				// Enviamos los datos del player al servidor
 				Net::NetMessageType msg = Net::PLAYER_INFO;
-
-				Net::CBuffer playerData(sizeof(msg) + playerNick.size() + playerModel.size());
-				playerData.write(&msg, sizeof(msg)); // Por problemas con enumerados serializamos manualmente
+				
+				// El tamaño del buffer es: cabecera + entero para el tam del nick + num de letras del nick
+				Net::CBuffer playerData( sizeof(msg) + sizeof(unsigned int) + (playerNick.size() * sizeof(char)) );
+				playerData.write( &msg, sizeof(msg) ); // Por problemas con enumerados serializamos manualmente
 				playerData.serialize(playerNick, false);
-				playerData.serialize(playerModel, false);
 
-				Net::CManager::getSingletonPtr()->send(playerData.getbuffer(), playerData.getSize());
+				Net::CManager::getSingletonPtr()->send( playerData.getbuffer(), playerData.getSize() );
 
 				break;
 			}
