@@ -230,6 +230,8 @@ namespace Application {
 				player->activate();
 
 				Net::CManager::getSingletonPtr()->send(serialMsg.getbuffer(), serialMsg.getSize(),playerNetId);
+
+				_playersMgr->setPlayerState(playerNetId, true);
 				
 				break;
 			}
