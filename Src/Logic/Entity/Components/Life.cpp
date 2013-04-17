@@ -45,7 +45,8 @@ namespace Logic {
 	//________________________________________________________________________
 
 	CLife::CLife() : _damageTimer(0), 
-					 _reducedDamageAbsorption(0) {
+					 _reducedDamageAbsorption(0),
+					_starting(true){
 
 		// Nada que hacer
 	}
@@ -172,6 +173,17 @@ namespace Logic {
 
 	//________________________________________________________________________
 
+	void CLife::onStart(unsigned int msecs) {
+		IComponent::onStart(msecs);
+		if(_starting){
+			Logic::CMessagePlayerDead* playerDeadMsg = new Logic::CMessagePlayerDead();
+			_entity->emitMessage(playerDeadMsg);
+		}
+		_starting=false;
+	}
+
+	//________________________________________________________________________
+
 	void CLife::damaged(int damage, CEntity* enemy) {
 		// Actualizamos los puntos de salud y armadura del personaje.
 		// En caso de muerte activamos la escena de muerte y disparamos los sonidos
@@ -278,7 +290,6 @@ namespace Logic {
 	void CLife::triggerDeathState(CEntity* enemy) {
 		// Mensaje de playerDead para tratar el respawn y desactivar los componentes
 		// del personaje.
-		Vector3 pos = _entity->getPosition();
 		Logic::CMessagePlayerDead* playerDeadMsg = new Logic::CMessagePlayerDead();
 		_entity->emitMessage(playerDeadMsg);
 
@@ -289,7 +300,7 @@ namespace Logic {
 		CEntity* camera=camera = CServer::getSingletonPtr()->getMap()->getEntityByType("Camera");
 		cteMsg->setEnemy(enemy);
 		//Solo si soy el jugador local envio mensaje de recolocación de camara (no quiero que enemigos muertos me seteen mi camara)
-		if(_entity->getType().compare("LocalPlayer")==0){
+		if(_entity->isPlayer()){
 			camera->emitMessage(cteMsg);
 		}
 		// Enviamos el mensaje por la red
