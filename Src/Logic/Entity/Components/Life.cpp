@@ -222,6 +222,7 @@ namespace Logic {
 	//________________________________________________________________________
 
 	void CLife::reducedDamageAbsorption(float percentage) {
+		std::cout << "reduced damage absortion = " << percentage << std::endl;
 		_reducedDamageAbsorption = percentage;
 	}
 

@@ -65,10 +65,9 @@ namespace Logic {
 		// efectivo siendo inmune. Cuando se cumpla el tiempo,
 		// deshabilitamos la reducción de daño
 		if(_inmuneTimer > 0) {
-			std::cout << "Inmune" << _inmuneTimer << std::endl; //Para probar el tiempo mientras el que es inmune
 			_inmuneTimer -= msecs;
 
-			if(_inmuneTimer < 0) {
+			if(_inmuneTimer <= 0) {
 				_inmuneTimer = 0;
 
 				// Seteamos la reducción de daño a 0 de manera que recibimos los daños normales
@@ -95,7 +94,7 @@ namespace Logic {
 		materialMsg->setMaterialName("marine_amarillo");
 		_entity->emitMessage(materialMsg);
 
-		_inmuneTimer = 1;
+		_inmuneTimer = 0;
 	}
 
 	//__________________________________________________________________
