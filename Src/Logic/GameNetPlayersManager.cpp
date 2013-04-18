@@ -200,6 +200,9 @@ namespace Logic {
 
 	//______________________________________________________________________________
 
+	// Esta hecho de forma un poco bestia, pero como son solo 8 jugadores y solo se
+	// hace en las conexiones tampoco pasa nada (y me facilita mucho la vida hacerlo
+	// asi).
 	unsigned int CGameNetPlayersManager::getNumberOfPlayersSpawned() {
 		TNetConnectedPlayersTable::const_iterator it = _netConnectedPlayers.begin();
 
@@ -211,6 +214,18 @@ namespace Logic {
 		}
 
 		return playersSpawned;
+	}
+
+	//______________________________________________________________________________
+
+	bool CGameNetPlayersManager::existsByNetId(Net::NetID playerNetId) {
+		return _netConnectedPlayers.count(playerNetId) > 0;
+	}
+
+	//______________________________________________________________________________
+
+	bool CGameNetPlayersManager::existsByLogicId(Logic::TEntityID playerId) {
+		return _logicConnectedPlayers.count(playerId) > 0;
 	}
 
 	//______________________________________________________________________________
