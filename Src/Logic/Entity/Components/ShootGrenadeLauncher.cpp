@@ -27,6 +27,12 @@ de disparo del lanzagranadas.
 namespace Logic {
 	IMP_FACTORY(CShootGrenadeLauncher);
 
+	CShootGrenadeLauncher::~CShootGrenadeLauncher() {
+		// Nada que hacer
+	}
+
+	//__________________________________________________________________
+
 	bool CShootGrenadeLauncher::spawn(CEntity* entity, CMap *map, const Map::CEntity *entityInfo) {
 		if(!CShootProjectile::spawn(entity, map, entityInfo)) return false;
 
@@ -65,7 +71,7 @@ namespace Logic {
 		comp->setOwner(_entity);
 		
 		// Mandar mensaje add force
-		Logic::CMessageAddForcePhysics* forceMsg = new Logic::CMessageAddForcePhysics();
+		std::shared_ptr<CMessageAddForcePhysics> forceMsg = std::make_shared<CMessageAddForcePhysics>();
 		forceMsg->setForce( (Math::getDirection( _entity->getOrientation() ) * _shootForce), Physics::ForceMode::eIMPULSE );
 		forceMsg->setGravity(true);
 		grenade->emitMessage(forceMsg);

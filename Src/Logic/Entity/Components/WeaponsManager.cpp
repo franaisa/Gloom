@@ -114,8 +114,7 @@ namespace Logic
 	
 	//---------------------------------------------------------
 
-	bool CWeaponsManager::accept(CMessage *message)
-	{
+	bool CWeaponsManager::accept(const std::shared_ptr<CMessage>& message) {
 		Logic::TMessageType msgType = message->getMessageType();
 
 		return msgType == Message::CHANGE_WEAPON 
@@ -126,25 +125,26 @@ namespace Logic
 	
 	//---------------------------------------------------------
 
-	void CWeaponsManager::process(CMessage* message) {
+	void CWeaponsManager::process(const std::shared_ptr<CMessage>& message) {
 		switch( message->getMessageType() ) {
 			case Message::CHANGE_WEAPON: {
-				changeWeapon( static_cast<CMessageChangeWeapon*>(message)->getWeapon() );
+				std::shared_ptr<CMessageChangeWeapon> changeWeaponMsg = std::static_pointer_cast<CMessageChangeWeapon>(message);
+				changeWeapon( changeWeaponMsg->getWeapon() );
 				break;
 			}
 			case Message::ADD_AMMO: {
-				CMessageAddAmmo* addAmmoMsg = static_cast<CMessageAddAmmo*>(message);
+				std::shared_ptr<CMessageAddAmmo> addAmmoMsg = std::static_pointer_cast<CMessageAddAmmo>(message);
 				unsigned int weaponIndex = addAmmoMsg->getAddWeapon();
 				_weaponry[weaponIndex].second->addAmmo(weaponIndex, addAmmoMsg->getAddAmmo(), _weaponry[weaponIndex].first);
 				break;
 			}
 			case Message::ADD_WEAPON: {
-				CMessageAddWeapon* addWeaponMsg = static_cast<CMessageAddWeapon*>(message);
+				std::shared_ptr<CMessageAddWeapon> addWeaponMsg = std::static_pointer_cast<CMessageAddWeapon>(message);
 				addWeapon( addWeaponMsg->getAddAmmo(), addWeaponMsg->getAddWeapon() );
 				break;
 			}
 			case Message::BERSERKER: {
-				CMessageBerserker* berserkerMsg = static_cast<CMessageBerserker*>(message);
+				std::shared_ptr<CMessageBerserker> berserkerMsg = std::static_pointer_cast<CMessageBerserker>(message);
 				amplifyDamage( berserkerMsg->getPercentDamage() );
 				reduceCooldowns( berserkerMsg->getPercentCooldown() );
 				break;
@@ -178,9 +178,9 @@ namespace Logic
 			_currentWeapon = newWeapon;
 
 			// Mandamos un mensaje para actualizar el HUD
-			Logic::CMessageChangeWeaponGraphics *m=new Logic::CMessageChangeWeaponGraphics();
-			m->setWeapon(_currentWeapon);
-			_entity->emitMessage(m);
+			std::shared_ptr<CMessageChangeWeaponGraphics> chgWpnGraphicsMsg = std::make_shared<CMessageChangeWeaponGraphics>();
+			chgWpnGraphicsMsg->setWeapon(_currentWeapon);
+			_entity->emitMessage(chgWpnGraphicsMsg);
 		}
 		
 	}
@@ -220,7 +220,7 @@ namespace Logic
 
 		/*
 		// Enviamos un mensaje de actualizacion del hud
-		Logic::CMessageHudAmmo *m=new Logic::CMessageHudAmmo();
+		std::shared_ptr<CMessageHudAmmo> *m=std::make_shared<CMessageHudAmmo>();
 		m->setWeapon(weaponIndex);
 		m->setAmmo(ammo);//No es necesario esto, ya que solo actualizare el hud como que puedo coger el arma pero no mostrara sus balas(en este caso concreto)
 		_entity->emitMessage(m);

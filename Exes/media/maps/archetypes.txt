@@ -79,7 +79,7 @@ Map = {
 		screamerShieldRecoveryTimeStep = 0.5,
 		screamerShieldRecoveryOverTime = 2,
 		screamerExplotionDamage = 200,
-		screamerExplotionRadius = 15,
+		screamerExplotionRadius = 50,
 		
 		houndPrimarySkillCooldown = 1,
 		houndSecondarySkillCooldown = 1,

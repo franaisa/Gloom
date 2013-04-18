@@ -66,7 +66,7 @@ bool CPhysicStaticEntity::spawn(Logic::CEntity *entity, CMap *map, const Map::CE
 
 //---------------------------------------------------------
 
-bool CPhysicStaticEntity::accept(CMessage *message) {
+bool CPhysicStaticEntity::accept(const std::shared_ptr<CMessage>& message) {
 	Logic::TMessageType msgType = message->getMessageType();
 
 	return msgType == Message::ACTIVATE ||
@@ -75,8 +75,8 @@ bool CPhysicStaticEntity::accept(CMessage *message) {
 
 //---------------------------------------------------------
 
-void CPhysicStaticEntity::process(CMessage *message) {
-	switch(message->getMessageType()) {
+void CPhysicStaticEntity::process(const std::shared_ptr<CMessage>& message) {
+	switch( message->getMessageType() ) {
 		case Message::ACTIVATE:
 			activateSimulation();
 			break;
@@ -224,12 +224,12 @@ void CPhysicStaticEntity::onTrigger(IPhysics *otherComponent, bool enter) {
 
 	if (enter) {
 		_inTrigger=true;
-		Logic::CMessageTouched *m = new Logic::CMessageTouched();
+		std::shared_ptr<CMessageTouched> m = std::make_shared<CMessageTouched>();
 		m->setEntity(otherComponent->getEntity());
 		_entity->emitMessage(m);
 	} else {
 		_inTrigger=false;
-		Logic::CMessageUntouched *m = new Logic::CMessageUntouched();
+		std::shared_ptr<CMessageUntouched> m = std::make_shared<CMessageUntouched>();
 		m->setEntity(otherComponent->getEntity());
 		_entity->emitMessage(m);
 	}
@@ -240,12 +240,12 @@ void CPhysicStaticEntity::onTrigger(IPhysics *otherComponent, bool enter) {
 void CPhysicStaticEntity::onContact (IPhysics *otherComponent,bool enter) {
 	if (enter) {
 		_inContact=true;
-			Logic::CMessageContactEnter* msg = new Logic::CMessageContactEnter();
+			std::shared_ptr<CMessageContactEnter> msg = std::make_shared<CMessageContactEnter>();
 			msg->setEntity( otherComponent->getEntity() );
 			_entity->emitMessage(msg);
 	} else {
 		_inContact=false;
-		Logic::CMessageContactExit *m = new Logic::CMessageContactExit();
+		std::shared_ptr<CMessageContactExit> m = std::make_shared<CMessageContactExit>();
 		m->setEntity(otherComponent->getEntity());
 		_entity->emitMessage(m);
 	}

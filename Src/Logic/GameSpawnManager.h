@@ -66,7 +66,7 @@ namespace Logic
 		/**
 		Función llamada desactivar la escucha.
 		*/
-		Vector3 getSpawnPosition();
+		CEntity* getSpawnPosition();
 
 	protected:
 		

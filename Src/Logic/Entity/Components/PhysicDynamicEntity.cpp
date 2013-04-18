@@ -65,7 +65,7 @@ bool CPhysicDynamicEntity::spawn(Logic::CEntity *entity, CMap *map, const Map::C
 
 //---------------------------------------------------------
 
-bool CPhysicDynamicEntity::accept(CMessage *message) {
+bool CPhysicDynamicEntity::accept(const std::shared_ptr<CMessage>& message) {
 	Logic::TMessageType msgType = message->getMessageType();
 
 	return msgType == Message::KINEMATIC_MOVE ||
@@ -77,33 +77,29 @@ bool CPhysicDynamicEntity::accept(CMessage *message) {
 
 //---------------------------------------------------------
 
-void CPhysicDynamicEntity::process(CMessage *message) {
-	switch(message->getMessageType()) {
-		case Message::KINEMATIC_MOVE:
+void CPhysicDynamicEntity::process(const std::shared_ptr<CMessage>& message) {
+	switch( message->getMessageType() ) {
+		case Message::KINEMATIC_MOVE: {
 			// Acumulamos el vector de desplazamiento para usarlo posteriormente en 
 			// el método tick.
-			_movement += static_cast<CMessageKinematicMove*>(message)->getMovement();
+			_movement += std::static_pointer_cast<CMessageKinematicMove>(message)->getMovement();
 			break;
-		case Message::ACTIVATE:
+		}
+		case Message::ACTIVATE: {
 			activateSimulation();
-		
 			break;
-		case Message::DEACTIVATE:
-		{
+		}
+		case Message::DEACTIVATE: {
 			deactivateSimulation();
-		
 			break;
 		}
-		case Message::SET_PHYSIC_POSITION:
-		{
-			CMessageSetPhysicPosition* setPosMsg = static_cast<CMessageSetPhysicPosition*>(message);
+		case Message::SET_PHYSIC_POSITION: {
+			std::shared_ptr<CMessageSetPhysicPosition> setPosMsg = std::static_pointer_cast<CMessageSetPhysicPosition>(message);
 			setPosition( setPosMsg->getPosition(), setPosMsg->getMakeConversion() );
-		
 			break;
 		}
-		case Message::ADD_FORCE_PHYSICS:
-		{
-			CMessageAddForcePhysics* forceMsg = static_cast<CMessageAddForcePhysics*>(message);
+		case Message::ADD_FORCE_PHYSICS: {
+			std::shared_ptr<CMessageAddForcePhysics> forceMsg = std::static_pointer_cast<CMessageAddForcePhysics>(message);
 
 			if( !forceMsg->getGravity() )
 				_physicEntity.disableGravity(true);
@@ -251,12 +247,12 @@ void CPhysicDynamicEntity::onTrigger(IPhysics *otherComponent, bool enter) {
 
 	if (enter) {
 		_inTrigger=true;
-		Logic::CMessageTouched *m = new Logic::CMessageTouched();
+		std::shared_ptr<CMessageTouched> m = std::make_shared<CMessageTouched>();
 		m->setEntity(otherComponent->getEntity());
 		_entity->emitMessage(m);
 	} else {
 		_inTrigger=false;
-		Logic::CMessageUntouched *m = new Logic::CMessageUntouched();
+		std::shared_ptr<CMessageUntouched> m = std::make_shared<CMessageUntouched>();
 		m->setEntity(otherComponent->getEntity());
 		_entity->emitMessage(m);
 	}
@@ -267,12 +263,12 @@ void CPhysicDynamicEntity::onTrigger(IPhysics *otherComponent, bool enter) {
 void CPhysicDynamicEntity::onContact (IPhysics *otherComponent,bool enter) {
 	if (enter) {
 		_inContact=true;
-		Logic::CMessageContactEnter* msg = new Logic::CMessageContactEnter();
+		std::shared_ptr<CMessageContactEnter> msg = std::make_shared<CMessageContactEnter>();
 		msg->setEntity( otherComponent->getEntity() );
 		_entity->emitMessage(msg);
 	} else {
 		_inContact=false;
-		Logic::CMessageContactExit *m = new Logic::CMessageContactExit();
+		std::shared_ptr<CMessageContactExit> m = std::make_shared<CMessageContactExit>();
 		m->setEntity(otherComponent->getEntity());
 		_entity->emitMessage(m);
 	}

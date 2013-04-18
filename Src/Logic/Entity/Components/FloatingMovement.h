@@ -40,7 +40,7 @@ namespace Logic {
 
 		
 		/** Constructor por defecto; en la clase base no hace nada. */
-		CFloatingMovement() : IComponent(), _currentOrbitalPos(0) {}
+		CFloatingMovement();
 
 		
 		// =======================================================================

@@ -30,6 +30,7 @@ namespace Logic
 //declaración de la clase
 namespace Logic 
 {
+
 /**
 	Clase base de los componentes que forman las entidades.
 	<p>
@@ -90,7 +91,7 @@ namespace Logic
 		/**
 		Destructor (virtual); en la clase base no hace nada.
 		*/
-		virtual ~IComponent() {}
+		virtual ~IComponent();
 		
 		/**
 		Inicialización del componente, utilizando la información extraída de
@@ -186,11 +187,11 @@ namespace Logic
 		CEntity *_entity;
 
 		/**
-		Entidad que contiene al componente. Para reenviar el mensaje a 
-		los otros componentes
+		True si el componente esta activado.
 		*/
 		bool _isActivated;
 
+		/** True si el componente va a ejecutar la fase onStart en vez del tick */
 		bool _isStartingUp;
 
 	}; // class IComponent

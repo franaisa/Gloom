@@ -156,10 +156,6 @@ namespace Logic
 		CMessage(TMessageType t);
 		virtual ~CMessage();
 
-		// Control de referencias
-		void addSmartP();
-		void subSmartP();
-
 		/**
 		* Método virtual puro que serializa los datos internos de cada mensaje.
 		* El puntero de escritura/lectura NO SE RESETEA en ningún caso. Si el

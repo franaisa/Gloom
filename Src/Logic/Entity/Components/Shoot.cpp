@@ -46,6 +46,12 @@ namespace Logic {
 	
 	//__________________________________________________________________
 
+	CShoot::~CShoot() {
+		// Nada que destruir
+	}
+
+	//__________________________________________________________________
+
 	bool CShoot::spawn(CEntity *entity, CMap *map, const Map::CEntity *entityInfo) {
 		if(!IComponent::spawn(entity,map,entityInfo))
 			return false;
@@ -78,16 +84,17 @@ namespace Logic {
 	
 	//__________________________________________________________________
 
-	bool CShoot::accept(CMessage *message) {
+	bool CShoot::accept(const std::shared_ptr<CMessage>& message) {
 		return _isInUse && message->getMessageType() == Message::CONTROL;
 	} // accept
 	
 	//__________________________________________________________________
 
-	void CShoot::process(CMessage *message) {
-		switch(message->getMessageType()) {
-			case Message::CONTROL:{
-				ControlType type = static_cast<CMessageControl*>(message)->getType();
+	void CShoot::process(const std::shared_ptr<CMessage>& message) {
+		switch( message->getMessageType() ) {
+			case Message::CONTROL: {
+				ControlType type = std::static_pointer_cast<CMessageControl>(message)->getType();
+				
 				if(type == Control::LEFT_CLICK) {
 					shoot();
 				}
@@ -131,7 +138,7 @@ namespace Logic {
 			_currentAmmo += ammo;
 
 		if(iAmCatch) {
-			Logic::CMessageHudAmmo *message = new Logic::CMessageHudAmmo();
+			std::shared_ptr<CMessageHudAmmo> message = std::make_shared<CMessageHudAmmo>();
 			message->setWeapon(_id);
 			message->setAmmo(_currentAmmo);
 			_entity->emitMessage(message);
@@ -145,7 +152,7 @@ namespace Logic {
 
 		// Notificamos al hud para que cambie la cantidad de municion
 		// que tenemos
-		Logic::CMessageHudAmmo *message = new Logic::CMessageHudAmmo();
+		std::shared_ptr<CMessageHudAmmo> message = std::make_shared<CMessageHudAmmo>();
 		message->setAmmo(_currentAmmo);
 
 		//Cambio sobre uno, hay q cambiarlo ;-)
@@ -173,7 +180,7 @@ namespace Logic {
 
 
 		//
-		CMessageCreateParticle *particle = new CMessageCreateParticle();
+		std::shared_ptr<CMessageCreateParticle> particle = std::make_shared<CMessageCreateParticle>();
 		particle->setParticle(particula);
 		particle->setPosition(positionParticle);
 		particle->setDirectionWithForce(directionWithForce);
@@ -221,7 +228,7 @@ namespace Logic {
 
 		if(_isInUse)
 		{
-			Logic::CMessageHudWeapon *message = new Logic::CMessageHudWeapon();
+			std::shared_ptr<CMessageHudWeapon> message = std::make_shared<CMessageHudWeapon>();
 			message->setWeapon(_id);
 			message->setAmmo(_currentAmmo);
 			_entity->emitMessage(message);

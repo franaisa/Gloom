@@ -49,24 +49,31 @@ namespace Logic
 	//--------------------------------------------------------
 
 
-	bool CLava::accept(CMessage *message)
+	bool CLava::accept(const std::shared_ptr<CMessage>& message)
 	{
-		return	message->getMessageType() == Message::TOUCHED || 
-				message->getMessageType() == Message::UNTOUCHED;
+		Logic::TMessageType msgType = message->getMessageType();
+
+		return	msgType == Message::TOUCHED || 
+				msgType == Message::UNTOUCHED;
 	} // accept
 	//---------------------------------------------------------
 
 
-	void CLava::process(CMessage *message)
+	void CLava::process(const std::shared_ptr<CMessage>& message)
 	{
-		switch(message->getMessageType())
-		{
-		case Message::TOUCHED:
-			_intrigger.push_back(((CMessageTouched*)message)->getEntity());
-			break;
-		case Message::UNTOUCHED:
-			_intrigger.remove(((CMessageUntouched*)message)->getEntity());
-			break;
+		switch(message->getMessageType()) {
+			case Message::TOUCHED: {
+				std::shared_ptr<CMessageTouched> touchedMsg = std::static_pointer_cast<CMessageTouched>(message);
+
+				_intrigger.push_back(touchedMsg->getEntity());
+				break;
+			}
+			case Message::UNTOUCHED: {
+				std::shared_ptr<CMessageUntouched> untouchedMsg = std::static_pointer_cast<CMessageUntouched>(message);
+
+				_intrigger.remove(untouchedMsg->getEntity());
+				break;
+			}
 		}
 
 	} // process
@@ -79,7 +86,7 @@ namespace Logic
 		if(_intrigger.size()>0 && _timestamp > _timeDamage){
 			std::list<CEntity*>::const_iterator it = _intrigger.begin();
 			for(; it != _intrigger.end(); ++it) {
-				Logic::CMessageDamaged *damage=new Logic::CMessageDamaged();
+				std::shared_ptr<CMessageDamaged> damage = std::make_shared<CMessageDamaged>();
 				damage->setDamage(_damage);
 				damage->setEnemy(_entity);
 				(*it)->emitMessage(damage);

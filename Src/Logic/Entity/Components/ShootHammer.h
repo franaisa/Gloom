@@ -40,6 +40,10 @@ namespace Logic {
 
 		//__________________________________________________________________
 
+		virtual ~CShootHammer();
+
+		//__________________________________________________________________
+
 		/**
 		Inicialización del componente utilizando la información extraída de
 		la entidad leída del mapa (Maps::CEntity). Toma del mapa el atributo

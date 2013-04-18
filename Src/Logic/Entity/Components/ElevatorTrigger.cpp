@@ -85,7 +85,7 @@ namespace Logic
 
 
 
-	bool CElevatorTrigger::accept(CMessage *message)
+	bool CElevatorTrigger::accept(const std::shared_ptr<CMessage>& message)
 	{
 		return message->getMessageType() == Message::TOUCHED|| 
 			message->getMessageType() == Message::UNTOUCHED;
@@ -93,10 +93,8 @@ namespace Logic
 	
 	//---------------------------------------------------------
 
-	void CElevatorTrigger::process(CMessage *message)
+	void CElevatorTrigger::process(const std::shared_ptr<CMessage>& message)
 	{
-		Logic::CMessageTouched *t;
-		Logic::CMessageUntouched *u;
 		switch(message->getMessageType())
 		{
 		case Message::TOUCHED:
@@ -113,9 +111,7 @@ namespace Logic
 	void CElevatorTrigger::tick(unsigned int msecs)
 	{
 		IComponent::tick(msecs);
-		Logic::CMessageTouched *t;
-		Logic::CMessageUntouched *u;
-		Vector3 toDirection;
+
 		//Activación del ascensor solo si has pasado el _launchTime encima (tocando el trigger) y no estamos en un recorrido
 		if(!_active){
 			if(_touching)
@@ -132,8 +128,9 @@ namespace Logic
 			_active=true;
 			_toFinal=true;
 			_wait=false;
+
 			//Mensaje para que la parte física haga el camino también.
-			t = new Logic::CMessageTouched();
+			std::shared_ptr<CMessageTouched> t = std::make_shared<CMessageTouched>();
 			t->setEntity(getEntity());
 			_elevatorLink->emitMessage(t);
  
@@ -147,6 +144,7 @@ namespace Logic
 			_waitTimeInFinal=0;
 		}
 
+		Vector3 toDirection;
 		//Hacia la posicion final
 		if(_toFinal && !_wait){
 			float distanciaToFinal=(_positionFinal-_entity->getPosition()).absDotProduct(Vector3(1,1,1));
@@ -159,7 +157,8 @@ namespace Logic
 					_waitInFinal=true;
 					_waitTimeInFinal=0;
 				}
-				Logic::CMessageKinematicMove* m = new Logic::CMessageKinematicMove();
+
+				std::shared_ptr<CMessageKinematicMove> m = std::make_shared<CMessageKinematicMove>();
 				m->setMovement(toDirection);
 				_entity->emitMessage(m);
 			}
@@ -177,7 +176,7 @@ namespace Logic
 					_timer=0;
 				}
 
-				Logic::CMessageKinematicMove* m = new Logic::CMessageKinematicMove();
+				std::shared_ptr<CMessageKinematicMove> m = std::make_shared<CMessageKinematicMove>();
 				m->setMovement(toDirection);
 				_entity->emitMessage(m);
 			}

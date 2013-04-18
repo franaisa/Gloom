@@ -46,6 +46,8 @@ namespace Logic {
 		/** Constructor por defecto. */
 		CShootRaycast() : CShoot(), _temporal(0) { }
 
+		virtual ~CShootRaycast();
+
 		//__________________________________________________________________
 
 		/**

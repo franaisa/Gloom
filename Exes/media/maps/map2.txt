@@ -288,9 +288,11 @@ Map = {
 		type = "Camera",
 		height = 8,
 	},
+	
 	Point1 = {
 		type = "SpawnPoint",
-		position = {-219.0, 0.0, -52.0},
+		position = {-219.0, 3.0, -52.0},
+		orientation = 180,
 		physic_entity = "rigid",
 		physic_trigger = true,
 		physic_type = "static",
@@ -300,7 +302,8 @@ Map = {
 	
 	Point2 = {
 		type = "SpawnPoint",
-		position = {73,0,-49},
+		position = {73,3,-49},
+		orientation = 180,
 		physic_entity = "rigid",
 		physic_trigger = true,
 		physic_type = "static",
@@ -310,7 +313,8 @@ Map = {
 	
 	Point3 = {
 		type = "SpawnPoint",
-		position = {27,0,116},
+		position = {27,3,116},
+		orientation = 0,
 		physic_entity = "rigid",
 		physic_trigger = true,
 		physic_type = "static",
@@ -319,7 +323,8 @@ Map = {
 	},
 	Point4 = {
 		type = "SpawnPoint",
-		position = {-68.0, 24.0, 117.0},
+		position = {-68.0, 28.0, 117.0},
+		orientation = 0,
 		physic_entity = "rigid",
 		physic_trigger = true,
 		physic_type = "static",
@@ -329,7 +334,8 @@ Map = {
 	
 	Point5 = {
 		type = "SpawnPoint",
-		position = {46,0,116},
+		position = {46,3,116},
+		orientation = 0,
 		physic_entity = "rigid",
 		physic_trigger = true,
 		physic_type = "static",
@@ -339,7 +345,8 @@ Map = {
 	
 	Point6 = {
 		type = "SpawnPoint",
-		position = {189,0,-10},
+		position = {189,3,-10},
+		orientation = 90,
 		physic_entity = "rigid",
 		physic_trigger = true,
 		physic_type = "static",
@@ -348,7 +355,8 @@ Map = {
 	},
 	Point7 = {
 		type = "SpawnPoint",
-		position = {27.0, 62.0, -28.0},
+		position = {27.0, 66.0, -28.0},
+		orientation = 90,
 		physic_entity = "rigid",
 		physic_trigger = true,
 		physic_type = "static",
@@ -358,7 +366,8 @@ Map = {
 	
 	Point8 = {
 		type = "SpawnPoint",
-		position = {188,103,58},
+		position = {188,106,58},
+		orientation = 90,
 		physic_entity = "rigid",
 		physic_trigger = true,
 		physic_type = "static",
@@ -368,7 +377,8 @@ Map = {
 	
 	Point9 = {
 		type = "SpawnPoint",
-		position = {69,104,131},
+		position = {69,106,131},
+		orientation = 90,
 		physic_entity = "rigid",
 		physic_trigger = true,
 		physic_type = "static",
@@ -378,7 +388,8 @@ Map = {
 	
 	Point10 = {
 		type = "SpawnPoint",
-		position = {-146,108,130},
+		position = {-146,106,130},
+		orientation = 0,
 		physic_entity = "rigid",
 		physic_trigger = true,
 		physic_type = "static",
@@ -389,6 +400,7 @@ Map = {
 	Point11 = {
 		type = "SpawnPoint",
 		position = {28,110,-29},
+		orientation = 90,
 		physic_entity = "rigid",
 		physic_trigger = true,
 		physic_type = "static",

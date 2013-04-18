@@ -60,7 +60,7 @@ namespace Logic {
 
 	//__________________________________________________________________
 
-	bool CScreamerClient::accept(CMessage* message) {
+	bool CScreamerClient::accept(const std::shared_ptr<CMessage>& message) {
 		Logic::TMessageType msgType = message->getMessageType();
 
 		return msgType == Message::ACTIVATE_SCREAMER_SHIELD		|| 
@@ -70,7 +70,7 @@ namespace Logic {
 
 	//__________________________________________________________________
 
-	void CScreamerClient::process(CMessage* message) {
+	void CScreamerClient::process(const std::shared_ptr<CMessage>& message) {
 		switch( message->getMessageType() ) {
 			case Message::ACTIVATE_SCREAMER_SHIELD: {
 				activateScreamerShield();
@@ -81,7 +81,7 @@ namespace Logic {
 				break;
 			}
 			case Message::SET_RELATED_ENTITY: {
-				_screamerShield = static_cast<CMessageSetRelatedEntity*>(message)->getRelatedEntity();
+				_screamerShield = std::static_pointer_cast<CMessageSetRelatedEntity>(message)->getRelatedEntity();
 				deactivateScreamerShield();
 				break;
 			}

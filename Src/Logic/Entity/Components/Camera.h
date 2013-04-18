@@ -94,12 +94,12 @@ namespace Logic
 		/**
 		Este componente sólo acepta mensajes de situar la camara al morir.
 		*/
-		virtual bool accept(CMessage *message);
+		virtual bool accept(const std::shared_ptr<CMessage>& message);
 
 		/**
 		Al tratar el mensaje de situar la camara al morir, nos quedaremos mirando al jugador que nos ha matado.
 		*/
-		virtual void process(CMessage *message);
+		virtual void process(const std::shared_ptr<CMessage>& message);
 
 
 		/**
@@ -118,7 +118,7 @@ namespace Logic
 
 		@param enemy Entidad enemiga.
 		*/
-		void setTargetEnemy(CMessageCameraToEnemy* message);
+		void setTargetEnemy(CEntity* enemy);
 
 
 	protected:

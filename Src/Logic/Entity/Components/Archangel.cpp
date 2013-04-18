@@ -65,19 +65,18 @@ namespace Logic {
 		// efectivo siendo inmune. Cuando se cumpla el tiempo,
 		// deshabilitamos la reducción de daño
 		if(_inmuneTimer > 0) {
-			std::cout << "Inmune" << _inmuneTimer << std::endl; //Para probar el tiempo mientras el que es inmune
 			_inmuneTimer -= msecs;
 
-			if(_inmuneTimer < 0) {
+			if(_inmuneTimer <= 0) {
 				_inmuneTimer = 0;
 
 				// Seteamos la reducción de daño a 0 de manera que recibimos los daños normales
-				CMessageSetReducedDamage* pReducedDmgMsg = new CMessageSetReducedDamage();
+				std::shared_ptr<CMessageSetReducedDamage> pReducedDmgMsg = std::make_shared<CMessageSetReducedDamage>();
 				pReducedDmgMsg->setReducedDamage(0);
 				_entity->emitMessage(pReducedDmgMsg);
 
 				// Desactivamos el shader de inmunidad
-				CMessageChangeMaterial* materialMsg = new CMessageChangeMaterial();
+				std::shared_ptr<CMessageChangeMaterial> materialMsg = std::make_shared<CMessageChangeMaterial>();
 				materialMsg->setMaterialName("marine_amarillo");
 				_entity->emitMessage(materialMsg);
 			}
@@ -91,11 +90,11 @@ namespace Logic {
 
 		// Ñapa temporal para el ideame
 		// Cambiamos el color del marine en funcion de la clase con un changeMaterial
-		CMessageChangeMaterial* materialMsg = new CMessageChangeMaterial();
+		std::shared_ptr<CMessageChangeMaterial> materialMsg = std::make_shared<CMessageChangeMaterial>();
 		materialMsg->setMaterialName("marine_amarillo");
 		_entity->emitMessage(materialMsg);
 
-		_inmuneTimer = 1;
+		_inmuneTimer = 0;
 	}
 
 	//__________________________________________________________________
@@ -107,12 +106,12 @@ namespace Logic {
 		_inmuneTimer = _inmuneDuration;
 
 		// Seteamos la reducción de daño al máximo de manera que no se reciban daños
-		CMessageSetReducedDamage* pReducedDmgMsg = new CMessageSetReducedDamage();
+		std::shared_ptr<CMessageSetReducedDamage> pReducedDmgMsg = std::make_shared<CMessageSetReducedDamage>();
 		pReducedDmgMsg->setReducedDamage(1);
 		_entity->emitMessage(pReducedDmgMsg);
 
 		// Activamos el shader de inmunidad
-		CMessageChangeMaterial* materialMsg = new CMessageChangeMaterial();
+		std::shared_ptr<CMessageChangeMaterial> materialMsg = std::make_shared<CMessageChangeMaterial>();
 		materialMsg->setMaterialName("ArchangelDiamond"); // En el futuro debe ser el material del archangel
 		_entity->emitMessage(materialMsg);
 	}

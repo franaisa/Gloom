@@ -61,21 +61,22 @@ bool CPhysicController::spawn(CEntity* entity, CMap *map, const Map::CEntity *en
 
 //________________________________________________________________________
 
-bool CPhysicController::accept(CMessage *message) {
+bool CPhysicController::accept(const std::shared_ptr<CMessage>& message) {
 	return message->getMessageType() == Message::AVATAR_WALK;
 }
 
 //________________________________________________________________________
 
-void CPhysicController::process(CMessage *message) {
-	switch(message->getMessageType()) {
-	case Message::AVATAR_WALK:
-		// Anotamos el vector de desplazamiento para usarlo posteriormente en 
-		// el método tick. De esa forma, si recibimos varios mensajes AVATAR_WALK
-		// en el mismo ciclo sólo tendremos en cuenta el último.
-		_movement = static_cast<CMessageAvatarWalk*>(message)->getDirection();
+void CPhysicController::process(const std::shared_ptr<CMessage>& message) {
+	switch( message->getMessageType() ) {
+		case Message::AVATAR_WALK: {
+			// Anotamos el vector de desplazamiento para usarlo posteriormente en 
+			// el método tick. De esa forma, si recibimos varios mensajes AVATAR_WALK
+			// en el mismo ciclo sólo tendremos en cuenta el último.
+			_movement = std::static_pointer_cast<CMessageAvatarWalk>(message)->getDirection();
 		
-		break;
+			break;
+		}
 	}
 }
 
@@ -225,12 +226,12 @@ void CPhysicController::moveController(Vector3& movement, unsigned int msecs) {
 
 	// Si tocamos con el techo lo notificamos
 	if((flags & CharacterControllerFlag::eCOLLISION_UP)) {
-		Logic::CMessageCealing* em = new Logic::CMessageCealing();
+		std::shared_ptr<CMessageCealing> em = std::make_shared<CMessageCealing>();
 		_entity->emitMessage(em);
 	}
 	// Si tocamos el lateral tenemos que parar la inercia de la direccion
 	if((flags & CharacterControllerFlag::eCOLLISION_SIDES)) {
-		Logic::CMessageSide* side = new Logic::CMessageSide();
+		std::shared_ptr<CMessageSide> side = std::make_shared<CMessageSide>();
 		_entity->emitMessage(side);
 	}
 	// Si hay cambio de estado en el flag de tocar suelo
@@ -238,7 +239,7 @@ void CPhysicController::moveController(Vector3& movement, unsigned int msecs) {
 		// Actualizamos el flag que indica si estamos cayendo
 		_falling =  !(flags & CharacterControllerFlag::eCOLLISION_DOWN);
 		// Mandamos un mensaje que dirá si hay collision con el suelo para la lógica
-		Logic::CMessageCollisionDown *m = new Logic::CMessageCollisionDown();
+		std::shared_ptr<CMessageCollisionDown> m = std::make_shared<CMessageCollisionDown>();
 		m->setCollisionDown(_falling);
 		_entity->emitMessage(m);
 	}

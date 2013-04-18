@@ -19,6 +19,12 @@
 namespace Logic {
 	
 	IMP_FACTORY(CFloatingMovement);
+
+	//________________________________________________________________________
+
+	CFloatingMovement::CFloatingMovement() : _currentOrbitalPos(0) {
+		// Nada que hacer
+	}
 	
 	//________________________________________________________________________
 

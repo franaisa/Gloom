@@ -120,9 +120,10 @@ namespace Audio
 		if(_soundAvatar){
 			Vector3 positionAvatar=_soundAvatar->getPosition();
 			Vector3 directionAvatar=Math::getDirection(_soundAvatar->getOrientation());
+			directionAvatar.normalise();
 
 			FMOD_VECTOR
-				listenerPos = {positionAvatar.x,positionAvatar.y,positionAvatar.z}, // posición del listener
+				listenerPos = {positionAvatar.x,positionAvatar.y+_playerHeight,positionAvatar.z}, // posición del listener
 				listenerVel = {0.0f,0.0f,0.0f}, // velocidad
 				up = {0.0f,1.0f,0.0f},          // vector up: hacia la “coronilla”
 				at = {directionAvatar.x,directionAvatar.y,directionAvatar.z};          // vector at: hacia donde se mira
@@ -312,7 +313,7 @@ namespace Audio
 			ERRCHECK(result);
 
 		//Distancia a la que empieza a atenuarse y a la cual ya no se atenua mas respectivamente
-		result = canal->set3DMinMaxDistance(1,800);
+		result = canal->set3DMinMaxDistance(50.0f,10000.0f);
 		ERRCHECK(result);
 
 		int can;

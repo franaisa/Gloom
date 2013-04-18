@@ -42,6 +42,10 @@ namespace Logic {
 
 		//__________________________________________________________________
 
+		virtual ~CShootMiniGun();
+
+		//__________________________________________________________________
+
 		/**
 		Método que se encarga de mandar los mensajes que correspondan a la entidad
 		que se ha golpeado en caso de hacer hit.
@@ -59,7 +63,7 @@ namespace Logic {
 
 		@param message Mensaje a procesar.
 		*/
-		virtual void process(CMessage *message);
+		virtual void process(const std::shared_ptr<CMessage>& message);
 
 		//__________________________________________________________________
 

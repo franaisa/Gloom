@@ -58,7 +58,7 @@ namespace Logic
 	
 	//---------------------------------------------------------
 
-	bool CSwitchPosition::accept(CMessage *message)
+	bool CSwitchPosition::accept(const std::shared_ptr<CMessage>& message)
 	{
 		// TODO: recibir mensajes de tipo SWITCH
 		return message->getMessageType() == Message::SWITCH;
@@ -67,17 +67,17 @@ namespace Logic
 	
 	//---------------------------------------------------------
 
-	void CSwitchPosition::process(CMessage *message)
+	void CSwitchPosition::process(const std::shared_ptr<CMessage>& message)
 	{
-		switch(message->getMessageType())
-		{
-		case Message::SWITCH:
-			// TODO: procesar mensajes de tipo SWITCH
-			// Almacenar en _targetPosition la posición objetivo 
-			// (_position[0]) ó position[1])
-			//_targetPosition = _position
+		switch( message->getMessageType() ) {
+			case Message::SWITCH: {
+				// TODO: procesar mensajes de tipo SWITCH
+				// Almacenar en _targetPosition la posición objetivo 
+				// (_position[0]) ó position[1])
+				//_targetPosition = _position
 
-			break;
+				break;
+			}
 		}
 
 	} // process

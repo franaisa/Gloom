@@ -88,12 +88,12 @@ namespace Logic
 		/**
 		Este componente sólo acepta mensajes de tipo DAMAGED.
 		*/
-		virtual bool accept(CMessage *message);
+		virtual bool accept(const std::shared_ptr<CMessage>& message);
 
 		/**
 		Al recibir un mensaje de tipo DAMAGED la vida de la entidad disminuye.
 		*/
-		virtual void process(CMessage *message);
+		virtual void process(const std::shared_ptr<CMessage>& message);
 		
 		/**
 		Método llamado en cada frame que actualiza el estado del componente.

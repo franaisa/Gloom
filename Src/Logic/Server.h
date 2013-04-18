@@ -36,6 +36,7 @@ sus componentes, mensajes, factorias de entidades y componentes, etc.
 */
 namespace Logic
 {
+
 	/**
 	Servidor de la lógica que se se encarga de la creación del mundo, su 
 	destrucción y actualización a lo largo de la partida. Se encarga de 
@@ -50,6 +51,11 @@ namespace Logic
 	class CServer
 	{
 	public:
+
+		__int64 COMPONENT_CONSTRUCTOR_COUNTER;
+		__int64 COMPONENT_DESTRUCTOR_COUNTER;
+		__int64 MESSAGE_CONSTRUCTOR_COUNTER;
+		__int64 MESSAGE_DESTRUCTOR_COUNTER;
 
 		/**
 		Devuelve la única instancia de la clase CServer.

@@ -39,13 +39,13 @@ namespace Logic
 	} // activate
 	//---------------------------------------------------------
 
-	bool CAudio::accept(CMessage *message)
+	bool CAudio::accept(const std::shared_ptr<CMessage>& message)
 	{
 		return message->getMessageType() == Message::AUDIO;
 	} // accept
 	//---------------------------------------------------------
 
-	void CAudio::process(CMessage *message)
+	void CAudio::process(const std::shared_ptr<CMessage>& message)
 	{
 		std::string ruta,id;
 		Vector3 position;
@@ -57,11 +57,13 @@ namespace Logic
 		case Message::AUDIO:
 			{
 				//Recogemos los datos
-				ruta=((CMessageAudio*)message)->getRuta();
-				id=((CMessageAudio*)message)->getId();
-				position=((CMessageAudio*)message)->getPosition();
-				notIfPlay=((CMessageAudio*)message)->getNotIfPlay();
-				localPlayer=((CMessageAudio*)message)->getIsPlayer();
+				std::shared_ptr<CMessageAudio> audioMsg = std::static_pointer_cast<CMessageAudio>(message);
+
+				ruta=audioMsg->getRuta();
+				id=audioMsg->getId();
+				position=audioMsg->getPosition();
+				notIfPlay=audioMsg->getNotIfPlay();
+				localPlayer=audioMsg->getIsPlayer();
 				//Le decimos al server de audio lo que queremos reproducir
 				char *aux=new char[ruta.size()+1];
 				aux[ruta.size()]=0;

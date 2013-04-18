@@ -37,7 +37,7 @@ namespace Logic
 
 	//---------------------------------------------------------
 
-	bool CDamageTrigger::accept(CMessage *message)
+	bool CDamageTrigger::accept(const std::shared_ptr<CMessage>& message)
 	{
 		// TODO: 2. Aceptar mensajes de tipo TOUCHED
 		return false;
@@ -46,7 +46,7 @@ namespace Logic
 	
 	//---------------------------------------------------------
 
-	void CDamageTrigger::process(CMessage *message)
+	void CDamageTrigger::process(const std::shared_ptr<CMessage>& message)
 	{
 		//switch(message->getMessageType())
 		//{
