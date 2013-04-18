@@ -142,7 +142,7 @@ namespace Input{
 	{
 		if(_keyboard)
 			_keyListeners.push_front(keyListener);
-		
+
 	} // addKeyListener
 
 	//--------------------------------------------------------
@@ -210,7 +210,7 @@ namespace Input{
 			}
 		}
 
-		return false;
+		return true;
 
 	} // keyPressed
 
@@ -229,7 +229,7 @@ namespace Input{
 			}
 		}
 
-		return false;
+		return true;
 
 	} // keyReleased
 
@@ -316,7 +316,7 @@ namespace Input{
 			}
 		}
 
-		return false;
+		return true;
 
 	} // mouseMoved
 
@@ -343,7 +343,7 @@ namespace Input{
 			}
 		}
 
-		return false;
+		return true;
 
 	} // mousePressed
 
@@ -370,7 +370,7 @@ namespace Input{
 			}
 		}
 
-		return false;
+		return true;
 
 	} // mouseReleased
 	
