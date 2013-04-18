@@ -9,9 +9,13 @@ namespace Logic{
 	public:
 		GUIKillersMessage();
 
-		~GUIKillersMessage();
+		~GUIKillersMessage(){};
 
 		static GUIKillersMessage* getSingletonPtr(){return _instance;}
+
+		static void Init();
+
+		static void Release();
 
 		void addKiller(const std::string &killer, const std::string &killed);
 

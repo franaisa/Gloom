@@ -82,6 +82,10 @@ namespace Logic
 		@param name El nombre de la gui que se desea ocultar
 		*/
 		void hideGUI(const std::string &name);
+
+		void load(const std::string &name, const std::string &swf);
+
+		void setTransparent(const std::string &name, bool transparent);
 		
 		/**
 		Método genérico para añadir a la gui que se desea un callback asociado a una función
@@ -138,6 +142,10 @@ namespace Logic
 		void activate();
 
 		void addGUI(const std::string &name ,const Hikari::Position &pos);
+
+		void addGUI(const std::string &name ,const Hikari::Position &pos, float relativeSize);
+
+		void addGUI(const std::string &name ,const Hikari::Position &pos, unsigned int width, unsigned int height);
 
 	protected:
 

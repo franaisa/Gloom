@@ -28,7 +28,7 @@ package
 				killerbox.y += 30;
 			}
 			//creamos la nueva killedbox
-			var tempKill: KilledBox = new KilledBox(stage.stageWidth / 2, 15);
+			var tempKill: KilledBox = new KilledBox(stage.stageWidth / 2, 8);
 			
 			
 			//la seteamos

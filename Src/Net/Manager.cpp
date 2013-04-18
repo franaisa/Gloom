@@ -320,7 +320,6 @@ namespace Net {
 			_clienteRed = 0;
 		}
 		if(!_connections.empty()) {
-			CConexion* connection;
 			for(TConnectionTable::const_iterator it = _connections.begin(); it != _connections.end(); it++)
 				delete it->second;
 			

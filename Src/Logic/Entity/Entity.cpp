@@ -170,7 +170,7 @@ namespace Logic
 		bool desactivar=true;
 		for(; it!=_components.end(); ++it){
 
-			for(int i = 0; i < exceptionList.size(); ++i){
+			for(unsigned int i = 0; i < exceptionList.size(); ++i){
 				if( exceptionList[i] == it->first )
 					desactivar=false;
 			}

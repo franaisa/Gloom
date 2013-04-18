@@ -81,7 +81,7 @@ namespace Logic {
 		_screamerShieldRecoveryOverTime = entityInfo->getFloatAttribute("screamerShieldRecoveryOverTime");
 		_screamerExplotionDamage = entityInfo->getFloatAttribute("screamerExplotionDamage");
 		_screamerExplotionRadius = entityInfo->getFloatAttribute("screamerExplotionRadius");
-
+		return true;
 	} // spawn
 
 	//__________________________________________________________________

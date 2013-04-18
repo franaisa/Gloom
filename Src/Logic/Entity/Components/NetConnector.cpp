@@ -93,7 +93,7 @@ namespace Logic {
 	void CNetConnector::process(CMessage* message) {
 		// TODO Es un mensaje para enviar por el tubo.
 		// Lo enviamos por la red usando el front-end CGameNetMsgManager
-		if(message->getMessageType() == Logic::TMessageType::CAMERA_TO_ENEMY) {
+		if(message->getMessageType() == Message::CAMERA_TO_ENEMY) {
 			std::cout << "Recibido un mensaje de tipo camera to enemy" << std::endl;
 		std::cout << "menssaje de avatar controller ENVIADO" << std::endl;
 			if( _forwardedMsgTypes.find(message->getMessageType()) != _forwardedMsgTypes.end() ) {

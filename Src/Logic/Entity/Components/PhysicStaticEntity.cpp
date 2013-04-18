@@ -158,7 +158,7 @@ void CPhysicStaticEntity::createPlane(const Map::CEntity *entityInfo, int group,
 	const Vector3 normal = entityInfo->getVector3Attribute("physic_normal");
  
 	Physics::PlaneGeometry plane = _geometryFactory->createPlane(point, normal);
-	Physics::Material* defaultMaterial = _materialManager->getMaterial(MaterialType::eDEFAULT);
+	Physics::Material* defaultMaterial = _materialManager->getMaterial(eDEFAULT);
 
 	_physicEntity.load(plane, *defaultMaterial, group, groupList, this);
 }
@@ -190,7 +190,7 @@ void CPhysicStaticEntity::createRigid(const Map::CEntity *entityInfo, int group,
 		const Vector3 physicDimensions = entityInfo->getVector3Attribute("physic_dimensions");
 
 		Physics::BoxGeometry box = _geometryFactory->createBox(physicDimensions);
-		Physics::Material* defaultMaterial = _materialManager->getMaterial(MaterialType::eDEFAULT);
+		Physics::Material* defaultMaterial = _materialManager->getMaterial(eDEFAULT);
 		
 		_physicEntity.load(position, box, *defaultMaterial, isTrigger, group, groupList, this);
 	}
@@ -199,7 +199,7 @@ void CPhysicStaticEntity::createRigid(const Map::CEntity *entityInfo, int group,
 		const float physicRadius = entityInfo->getFloatAttribute("physic_radius");
 		
 		Physics::SphereGeometry sphere = _geometryFactory->createSphere(physicRadius);
-		Physics::Material* defaultMaterial = _materialManager->getMaterial(MaterialType::eDEFAULT);
+		Physics::Material* defaultMaterial = _materialManager->getMaterial(eDEFAULT);
 
 		_physicEntity.load(position, sphere, *defaultMaterial, isTrigger, group, groupList, this);
 	}

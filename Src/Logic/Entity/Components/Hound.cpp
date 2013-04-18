@@ -48,7 +48,7 @@ namespace Logic {
 		_berserkerDuration = entityInfo->getFloatAttribute("houndBerserkerDuration") * 1000;
 		_berserkerDamagePercent = entityInfo->getFloatAttribute("houndBerserkerDamagePercent");
 		_berserkerCooldownPercent = entityInfo->getFloatAttribute("houndBerserkerCooldownPercent");
-		
+		return true;
 	} // spawn
 
 	//__________________________________________________________________

@@ -30,7 +30,7 @@ namespace Logic {
 			Release();
 			return false;
 		}
-
+		Logic::GUIKillersMessage::Init();
 
 		return true;
 	}
@@ -45,6 +45,7 @@ namespace Logic {
 		{
 			_instance->close();
 			delete _instance;
+			Logic::GUIKillersMessage::Release();
 		}
 	} // Release
 
@@ -139,19 +140,19 @@ namespace Logic {
 
 		//primero metemos los parametros de tipo string
 		if(!stringPars.empty()){
-			for(int i=0;i<stringPars.size();++i){
+			for(unsigned int i=0;i<stringPars.size();++i){
 				args(stringPars[i]);
 			}
 		}
 		//despues metemos los parametros de tipo float
 		if(!intPars.empty()){
-			for(int i=0;i<floatPars.size();++i){
+			for(unsigned int i=0;i<floatPars.size();++i){
 				args(floatPars[i]);
 			}
 		}
 		//por ultimo metemos los parametros de tipo int
 		if(!intPars.empty()){
-			for(int i=0;i<intPars.size();++i){
+			for(unsigned int i=0;i<intPars.size();++i){
 				args(intPars[i]);
 			}
 		}
@@ -161,10 +162,28 @@ namespace Logic {
 
 	}
 
+	void CGUIManager::setTransparent(const std::string &name, bool transparent){
+		_loadedGUIs.find(name)->second->setTransparent(transparent, transparent);;
+	}
+
+	void CGUIManager::load(const std::string &name, const std::string &swf){
+		_loadedGUIs.find(name)->second->load(swf);;
+	}
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+	void CGUIManager::addGUI(const std::string &name,const Hikari::Position &pos,unsigned int width, unsigned int height){
+		GUIPair elem(name,GUI::CServer::getSingletonPtr()->addLayout(name, Hikari::Position(Hikari::Center), width, height));
+		_loadedGUIs.insert(elem);
+	}
+
+	void CGUIManager::addGUI(const std::string &name,const Hikari::Position &pos, float relativeSize){
+		GUIPair elem(name,GUI::CServer::getSingletonPtr()->addLayout(name, Hikari::Position(Hikari::Center), relativeSize));
+		_loadedGUIs.insert(elem);
+	}
+
 	void CGUIManager::addGUI(const std::string &name,const Hikari::Position &pos){
-		GUIPair elem(name,GUI::CServer::getSingletonPtr()->addLayout("menuseleccion", Hikari::Position(Hikari::Center), 0.8f));
+		GUIPair elem(name,GUI::CServer::getSingletonPtr()->addLayout(name, Hikari::Position(Hikari::Center)));
 		_loadedGUIs.insert(elem);
 	}
 

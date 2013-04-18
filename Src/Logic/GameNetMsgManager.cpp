@@ -228,7 +228,7 @@ namespace Logic {
 
 		Net::CBuffer* bufferAux = txMsg->serialize();
 
-		Net::NetMessageType msgType = Net::NetMessageType::ENTITY_MSG;// Escribimos el tipo de mensaje de red a enviar
+		Net::NetMessageType msgType = Net::ENTITY_MSG;// Escribimos el tipo de mensaje de red a enviar
 		Net::CBuffer serialMsg;
 			serialMsg.write(&msgType, sizeof(msgType));
 			serialMsg.write(&destID, sizeof(destID)); // Escribimos el id de la entidad destino
@@ -273,7 +273,7 @@ namespace Logic {
 		if(destEntity != 0)
 			destEntity->emitMessage(messageReceived);
 
-		if(Net::CManager::getSingletonPtr()->imServer() && messageReceived->getMessageType()==Logic::TMessageType::CONTROL){
+		if(Net::CManager::getSingletonPtr()->imServer() && messageReceived->getMessageType()==Message::CONTROL){
 			Net::NetMessageType msgType = Net::ENTITY_MSG;// Escribimos el tipo de mensaje de red a enviar
 			Net::CBuffer serialMsg;
 			Net::CBuffer *buffer = messageReceived->serialize();

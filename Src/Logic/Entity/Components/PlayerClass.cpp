@@ -93,22 +93,22 @@ namespace Logic {
 			case Message::CONTROL: {
 				ControlType type = static_cast<CMessageControl*>(message)->getType();
 
-				if(type == ControlType::USE_PRIMARY_SKILL) {
+				if(type == Control::USE_PRIMARY_SKILL) {
 					if( canUsePrimarySkill() ) {
 						primarySkill();
 						_primarySkillTimer = _primarySkillCooldown;
 					}
 				}
-				else if(type == ControlType::USE_SECONDARY_SKILL) {
+				else if(type == Control::USE_SECONDARY_SKILL) {
 					if( canUseSecondarySkill() ) {
 						secondarySkill();
 						_secondarySkillTimer = _secondarySkillCooldown;
 					}
 				}
-				else if(type == ControlType::STOP_PRIMARY_SKILL) {
+				else if(type == Control::STOP_PRIMARY_SKILL) {
 					stopPrimarySkill();
 				}
-				else if(type == ControlType::STOP_SECONDARY_SKILL) {
+				else if(type == Control::STOP_SECONDARY_SKILL) {
 					stopSecondarySkill();
 				}
 
@@ -169,16 +169,16 @@ namespace Logic {
 
 		IComponent* selectedClassComponent;
 		switch(classType) {
-			case CPlayerClass::Type::eHOUND:
+			case CPlayerClass::eHOUND:
 				selectedClassComponent = _entity->getComponent<CHound>("CHound");
 				break;
-			case CPlayerClass::Type::eARCHANGEL:
+			case CPlayerClass::eARCHANGEL:
 				selectedClassComponent = _entity->getComponent<CArchangel>("CArchangel");
 				break;
-			case CPlayerClass::Type::eSCREAMER:
+			case CPlayerClass::eSCREAMER:
 				selectedClassComponent = _entity->getComponent<CScreamerServer>("CScreamer");
 				break;
-			case CPlayerClass::Type::eSHADOW:
+			case CPlayerClass::eSHADOW:
 				selectedClassComponent = _entity->getComponent<CShadow>("CShadow");
 				break;
 		}

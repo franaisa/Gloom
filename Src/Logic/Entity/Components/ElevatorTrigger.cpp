@@ -95,8 +95,6 @@ namespace Logic
 
 	void CElevatorTrigger::process(CMessage *message)
 	{
-		Logic::CMessageTouched *t;
-		Logic::CMessageUntouched *u;
 		switch(message->getMessageType())
 		{
 		case Message::TOUCHED:
@@ -114,7 +112,6 @@ namespace Logic
 	{
 		IComponent::tick(msecs);
 		Logic::CMessageTouched *t;
-		Logic::CMessageUntouched *u;
 		Vector3 toDirection;
 		//Activación del ascensor solo si has pasado el _launchTime encima (tocando el trigger) y no estamos en un recorrido
 		if(!_active){

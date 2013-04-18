@@ -359,7 +359,7 @@ namespace Physics {
 		// Sabremos si debemos comprobar colisiones con un objeto si al chocar contra nosotros
 		// devuelve true al realizar un AND logico con nuestra mascara y su grupo (lo cual
 		// querria decir que su grupo esta incluido en la lista de actores a tener en cuenta).
-		for(int i = 1; i < groupList.size(); ++i) {
+		for(unsigned int i = 1; i < groupList.size(); ++i) {
 			filterMask |= (1 << groupList[i]);
 		}
 

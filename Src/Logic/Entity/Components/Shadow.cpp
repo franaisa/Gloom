@@ -48,7 +48,7 @@ namespace Logic {
 		assert( entityInfo->hasAttribute("shadowInvisibilityDuration") );
 		// Pasamos el tiempo a msecs
 		_invisibilityDuration = entityInfo->getFloatAttribute("shadowInvisibilityDuration") * 1000;
-		
+		return true;
 	} // spawn
 
 	//__________________________________________________________________
