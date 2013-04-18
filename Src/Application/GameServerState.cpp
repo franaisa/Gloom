@@ -95,7 +95,7 @@ namespace Application {
 				outBuffer.serialize(map, false);
 				
 				// Enviamos el mensaje de carga de mapa al cliente
-				Net::CManager::getSingletonPtr()->send(outBuffer.getbuffer(), outBuffer.getSize(), playerNetId);
+				Net::CManager::getSingletonPtr()->sendTo(playerNetId, outBuffer.getbuffer(), outBuffer.getSize());
 
 				break;
 			}
@@ -138,7 +138,7 @@ namespace Application {
 				}
 				
 				// Enviamos los datos asociados a los players online al nuevo player
-				Net::CManager::getSingletonPtr()->send(playersInfoBuffer.getbuffer(), playersInfoBuffer.getSize(), playerNetId);
+				Net::CManager::getSingletonPtr()->sendTo(playerNetId, playersInfoBuffer.getbuffer(), playersInfoBuffer.getSize());
 
 				break;
 			}
@@ -146,13 +146,13 @@ namespace Application {
 				Net::NetMessageType loadWorldStateMsg = Net::LOAD_WORLD_STATE;
 				// De momento no serializamos nada, pero aqui habria que liarla
 				// parda para mandarle todo lo que toque al cliente
-				Net::CManager::getSingletonPtr()->send(&loadWorldStateMsg, sizeof(loadWorldStateMsg), playerNetId);
+				Net::CManager::getSingletonPtr()->sendTo(playerNetId, &loadWorldStateMsg, sizeof(loadWorldStateMsg));
 
 				break;
 			}
 			case Net::WORLD_STATE_LOADED: {
 				Net::NetMessageType startGameMsg = Net::START_GAME;
-				Net::CManager::getSingletonPtr()->send(&startGameMsg, sizeof(startGameMsg), playerNetId);
+				Net::CManager::getSingletonPtr()->sendTo(playerNetId, &startGameMsg, sizeof(startGameMsg));
 			}
 			case Net::PING: {
 				Net::NetMessageType ackMsg = Net::PING;
@@ -161,7 +161,7 @@ namespace Application {
 				Net::CBuffer ackBuffer(sizeof(ackMsg) + sizeof(time));
 				ackBuffer.write(&ackMsg, sizeof(ackMsg));
 				ackBuffer.write(&time, sizeof(time));
-				Net::CManager::getSingletonPtr()->send(ackBuffer.getbuffer(), ackBuffer.getSize(), playerNetId);
+				Net::CManager::getSingletonPtr()->sendTo(playerNetId, ackBuffer.getbuffer(), ackBuffer.getSize());
 				break;
 			}
 			case Net::CLASS_SELECTED: {
@@ -210,7 +210,7 @@ namespace Application {
 				serialMsg.serialize(player->getType(), false); // Clase del player
 				
 				//enviamos la entidad nueva al jugador local
-				Net::CManager::getSingletonPtr()->sendAllExcept(serialMsg.getbuffer(), serialMsg.getSize(),playerNetId);
+				Net::CManager::getSingletonPtr()->broadcastIgnoring(playerNetId, serialMsg.getbuffer(), serialMsg.getSize());
 
 				serialMsg.reset();
 				//enviamos la entidad nueva al resto de jugadores
@@ -223,7 +223,7 @@ namespace Application {
 
 				player->activate();
 
-				Net::CManager::getSingletonPtr()->send(serialMsg.getbuffer(), serialMsg.getSize(),playerNetId);
+				Net::CManager::getSingletonPtr()->sendTo(playerNetId, serialMsg.getbuffer(), serialMsg.getSize());
 
 				_playersMgr->setPlayerState(playerNetId, true);
 				
@@ -236,7 +236,7 @@ namespace Application {
 
 	//______________________________________________________________________________
 
-	void CGameServerState::connexionPacketReceived(Net::CPaquete* packet) {
+	void CGameServerState::connectionPacketReceived(Net::CPaquete* packet) {
 		Net::NetID playerId = packet->getConexion()->getId();
 		
 		// Actualizamos el manager de jugadores
@@ -246,12 +246,12 @@ namespace Application {
 		// asociada a su player
 		Net::NetMessageType msg = Net::SEND_PLAYER_INFO;
 
-		Net::CManager::getSingletonPtr()->send(&msg, sizeof(msg), playerId);
+		Net::CManager::getSingletonPtr()->sendTo(playerId, &msg, sizeof(msg));
 	} // connexionPacketReceived
 
 	//______________________________________________________________________________
 
-	void CGameServerState::disconnexionPacketReceived(Net::CPaquete* packet) {
+	void CGameServerState::disconnectionPacketReceived(Net::CPaquete* packet) {
 		// Obtenemos el puntero al gestor de jugadores y el id de red del cliente que se quiere desconectar
 		Net::NetID playerNetId = packet->getConexion()->getId();
 

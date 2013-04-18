@@ -69,7 +69,7 @@ namespace Application {
 		_reloj = clock();
 		_npings = 0;
 		_pingActual = 0;
-		Net::CManager::getSingletonPtr()->send(ackBuffer.getbuffer(), ackBuffer.getSize());
+		Net::CManager::getSingletonPtr()->broadcast(ackBuffer.getbuffer(), ackBuffer.getSize());
 	} // activate
 
 	//______________________________________________________________________________
@@ -135,7 +135,7 @@ namespace Application {
 					ackBuffer.write(&msgping, sizeof(msgping));
 					ackBuffer.write(&id, sizeof(id));
 					_reloj = clock();
-					Net::CManager::getSingletonPtr()->send(ackBuffer.getbuffer(), ackBuffer.getSize());
+					Net::CManager::getSingletonPtr()->broadcast(ackBuffer.getbuffer(), ackBuffer.getSize());
 				}
 
 				break;
@@ -241,7 +241,7 @@ namespace Application {
 				//enviamos la clase elegida
 				msg.serialize(msgType);
 				msg.serialize(selectedClass);
-				Net::CManager::getSingletonPtr()->send(msg.getbuffer(), msg.getSize());
+				Net::CManager::getSingletonPtr()->broadcast(msg.getbuffer(), msg.getSize());
 				break;
 			case 5:
 				{
@@ -250,7 +250,7 @@ namespace Application {
 				int randomclass = ((rand()*clock())%4)+1;
 				msg.serialize(msgType);
 				msg.serialize(randomclass);
-				Net::CManager::getSingletonPtr()->send(msg.getbuffer(), msg.getSize());
+				Net::CManager::getSingletonPtr()->broadcast(msg.getbuffer(), msg.getSize());
 				break;
 				}
 		}//switch

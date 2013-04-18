@@ -122,7 +122,7 @@ namespace Application {
 				playerData.write( &msg, sizeof(msg) ); // Por problemas con enumerados serializamos manualmente
 				playerData.serialize(playerNick, false);
 
-				Net::CManager::getSingletonPtr()->send( playerData.getbuffer(), playerData.getSize() );
+				Net::CManager::getSingletonPtr()->broadcast( playerData.getbuffer(), playerData.getSize() );
 
 				break;
 			}
@@ -149,7 +149,7 @@ namespace Application {
 					Net::CBuffer ackBuffer(sizeof(ackMsg));
 
 					ackBuffer.write(&ackMsg, sizeof(ackMsg));
-					Net::CManager::getSingletonPtr()->send(ackBuffer.getbuffer(), ackBuffer.getSize());
+					Net::CManager::getSingletonPtr()->broadcast(ackBuffer.getbuffer(), ackBuffer.getSize());
 				}
 
 				break;
@@ -172,7 +172,7 @@ namespace Application {
 				
 				// Confirmamos de que se han cargado todos los players con exito
 				Net::NetMessageType ackMsg = Net::PLAYERS_LOADED;
-				Net::CManager::getSingletonPtr()->send( &ackMsg, sizeof(ackMsg) );
+				Net::CManager::getSingletonPtr()->broadcast( &ackMsg, sizeof(ackMsg) );
 				
 				break;
 			}
@@ -180,7 +180,7 @@ namespace Application {
 				// Deserializar el estado del mundo
 
 				Net::NetMessageType worldStateLoadedMsg = Net::NetMessageType::WORLD_STATE_LOADED;
-				Net::CManager::getSingletonPtr()->send( &worldStateLoadedMsg, sizeof(worldStateLoadedMsg) );
+				Net::CManager::getSingletonPtr()->broadcast( &worldStateLoadedMsg, sizeof(worldStateLoadedMsg) );
 			}
 			case Net::START_GAME: {
 				_app->setState("gameClient");
