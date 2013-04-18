@@ -119,7 +119,7 @@ namespace GUI {
 
 			return BaseSubsystems::CServer::getSingletonPtr()->getHikari()->
 							createFlashOverlay(layoutName,Graphics::CServer::getSingletonPtr()->getActiveScene()->getViewport(),
-							width, height, Hikari::Position(Hikari::Center),1);
+							width, height, pos,1);
 	}
 
 	//________________________________________________________________________
@@ -130,7 +130,7 @@ namespace GUI {
 							createFlashOverlay(layoutName,Graphics::CServer::getSingletonPtr()->getActiveScene()->getViewport(),
 							BaseSubsystems::CServer::getSingletonPtr()->getRenderWindow()->getWidth()*relativePos, 
 							BaseSubsystems::CServer::getSingletonPtr()->getRenderWindow()->getHeight()*relativePos, 
-							Hikari::Position(Hikari::Center),1);
+							pos,1);
 	}
 
 	//________________________________________________________________________
@@ -141,7 +141,7 @@ namespace GUI {
 							createFlashOverlay(layoutName,Graphics::CServer::getSingletonPtr()->getActiveScene()->getViewport(),
 							BaseSubsystems::CServer::getSingletonPtr()->getRenderWindow()->getWidth(), 
 							BaseSubsystems::CServer::getSingletonPtr()->getRenderWindow()->getHeight(), 
-							Hikari::Position(Hikari::Center),1);
+							pos,1);
 	}
 
 	//________________________________________________________________________
@@ -153,7 +153,7 @@ namespace GUI {
 			return BaseSubsystems::CServer::getSingletonPtr()->getHikari()->
 							createFlashOverlay(layoutName,Graphics::CServer::getSingletonPtr()->getActiveScene()->getViewport(),
 							BaseSubsystems::CServer::getSingletonPtr()->getRenderWindow()->getWidth(), 
-							BaseSubsystems::CServer::getSingletonPtr()->getRenderWindow()->getHeight(), Hikari::Position(Hikari::Center),1);
+							BaseSubsystems::CServer::getSingletonPtr()->getRenderWindow()->getHeight(), pos,1);
 	}
 
 	//________________________________________________________________________

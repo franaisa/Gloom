@@ -15,10 +15,8 @@ namespace Logic{
 
 		_instance = this;
 
-		//unsigned int width = Logic::CServer::getSingletonPtr()->getMap()->getScene()->getViewport()->getWidth()-450;
-
 		_guiManager = CGUIManager::getSingletonPtr();
-		_guiManager->addGUI("killerbox", Hikari::Position(450,5), 450, 300);
+		_guiManager->addGUI("killerbox", Hikari::Position(Hikari::TopRight), 450, 300);
 		_guiManager->load("killerbox", "KilledBox.swf");
 		_guiManager->showGUI("killerbox");
 		_guiManager->setTransparent("killerbox",true);

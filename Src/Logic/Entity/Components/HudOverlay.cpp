@@ -88,7 +88,6 @@ namespace Logic
 
 			if(_overlayWeapon3D[i])
 				delete _overlayWeapon3D[i];
-			//Graphics::CServer::getSingletonPtr()->getActiveScene()->removeEntity( _weaponsEntities[i]);
 
 			if(_weaponsEntities[i])
 				_weaponsEntities[i] = 0;
@@ -390,8 +389,6 @@ namespace Logic
 		//_overlayPlay->add3D("AK47", "AK47.mesh", new Vector3(0,0,-5));
 		
 		_overlayPlay->setVisible(true);
-
-
 
 		 //////////////////////////////////////AQUI ME CREO EL OVERLAY PARA CUANDO SE MUERA
 

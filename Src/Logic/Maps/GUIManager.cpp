@@ -173,17 +173,17 @@ namespace Logic {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	void CGUIManager::addGUI(const std::string &name,const Hikari::Position &pos,unsigned int width, unsigned int height){
-		GUIPair elem(name,GUI::CServer::getSingletonPtr()->addLayout(name, Hikari::Position(Hikari::Center), width, height));
+		GUIPair elem(name,GUI::CServer::getSingletonPtr()->addLayout(name, pos, width, height));
 		_loadedGUIs.insert(elem);
 	}
 
 	void CGUIManager::addGUI(const std::string &name,const Hikari::Position &pos, float relativeSize){
-		GUIPair elem(name,GUI::CServer::getSingletonPtr()->addLayout(name, Hikari::Position(Hikari::Center), relativeSize));
+		GUIPair elem(name,GUI::CServer::getSingletonPtr()->addLayout(name, pos, relativeSize));
 		_loadedGUIs.insert(elem);
 	}
 
 	void CGUIManager::addGUI(const std::string &name,const Hikari::Position &pos){
-		GUIPair elem(name,GUI::CServer::getSingletonPtr()->addLayout(name, Hikari::Position(Hikari::Center)));
+		GUIPair elem(name,GUI::CServer::getSingletonPtr()->addLayout(name, pos));
 		_loadedGUIs.insert(elem);
 	}
 

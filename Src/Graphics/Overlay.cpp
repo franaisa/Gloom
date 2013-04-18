@@ -158,8 +158,17 @@ namespace Graphics
 			Ogre::Entity *entity;
 			if (!_scene->getSceneMgr()->hasEntity("hud3D_"+name))
 				entity = _scene->getSceneMgr()->createEntity("hud3D_"+name, mesh);
-			else
+			else{
 				entity = _scene->getSceneMgr()->getEntity("hud3D_"+name);
+				if(entity)
+				{
+					Ogre::SceneNode * node = entity->getParentSceneNode();
+					node->detachAllObjects();
+					//_scene->getSceneMgr()->destroySceneNode(node);
+					_scene->getSceneMgr()->destroyEntity(entity);
+				}
+				entity = _scene->getSceneMgr()->createEntity("hud3D_"+name, mesh);
+			}
 
 			
 
@@ -177,7 +186,6 @@ namespace Graphics
 			}
 			Ogre::SceneNode* sceneNode = new Ogre::SceneNode(_scene->getSceneMgr(), nameSceneNode);
 			//scene->getSceneMgr()->getRootSceneNode()->addChild(sceneNode);
-
 			sceneNode->attachObject((Ogre::MovableObject *)entity);
 			_overlay->add3D(sceneNode);
 
