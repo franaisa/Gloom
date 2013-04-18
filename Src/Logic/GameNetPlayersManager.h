@@ -241,6 +241,28 @@ namespace Logic {
 		*/
 		unsigned int getNumberOfPlayersSpawned();
 
+		//________________________________________________________________________
+
+		/**
+		Método para saber si un jugador está listado en el gestor de jugadores
+		dado su id de red.
+
+		@return true Si el jugador con el id de red dado está en la lista de jugadores
+		conectados.
+		*/
+		bool existsByNetId(Net::NetID playerNetId);
+
+		//________________________________________________________________________
+
+		/**
+		Método para saber si un jugador está listado en el gestor de jugadores
+		dado su id lógico.
+
+		@return true Si el jugador con el id lógico dado está en la lista de jugadores
+		conectados.
+		*/
+		bool existsByLogicId(Logic::TEntityID playerId);
+
 
 		// =======================================================================
 		//                                ITERADORES
