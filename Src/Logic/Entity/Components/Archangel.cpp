@@ -46,12 +46,12 @@ namespace Logic {
 			return false;
 
 		// Leer atributos propios
-		_inmuneTimer = 0;
+		_inmunityTimer = 0;
 
 		// Leer el tiempo que dura la invisibilidad
-		assert( entityInfo->hasAttribute("archangelPrimarySkillCooldown") );
+		assert( entityInfo->hasAttribute("inmunityDuration") );
 		// Pasamos el tiempo a msecs
-		_inmuneDuration = entityInfo->getFloatAttribute("archangelPrimarySkillCooldown") * 1000;
+		_inmunityDuration = entityInfo->getFloatAttribute("inmunityDuration") * 1000;
 		
 		return true; //Para quitar el warning?
 	} // spawn
@@ -64,12 +64,11 @@ namespace Logic {
 		// Si la habilidad primaria esta en uso, controlar el tiempo
 		// efectivo siendo inmune. Cuando se cumpla el tiempo,
 		// deshabilitamos la reducción de daño
-		if(_inmuneTimer > 0) {
-			std::cout << "Inmune" << _inmuneTimer << std::endl; //Para probar el tiempo mientras el que es inmune
-			_inmuneTimer -= msecs;
+		if(_inmunityTimer > 0) {
+			std::cout << "Inmune" << _inmunityTimer << std::endl; //Para probar el tiempo mientras el que es inmune
 
-			if(_inmuneTimer < 0) {
-				_inmuneTimer = 0;
+			if(msecs >= _inmunityTimer) {
+				_inmunityTimer = 0;
 
 				// Seteamos la reducción de daño a 0 de manera que recibimos los daños normales
 				CMessageSetReducedDamage* pReducedDmgMsg = new CMessageSetReducedDamage();
@@ -80,6 +79,9 @@ namespace Logic {
 				CMessageChangeMaterial* materialMsg = new CMessageChangeMaterial();
 				materialMsg->setMaterialName("marine_amarillo");
 				_entity->emitMessage(materialMsg);
+			}
+			else {
+				_inmunityTimer -= msecs;
 			}
 		}
 	}
@@ -95,7 +97,7 @@ namespace Logic {
 		materialMsg->setMaterialName("marine_amarillo");
 		_entity->emitMessage(materialMsg);
 
-		_inmuneTimer = 1;
+		_inmunityTimer = 0;
 	}
 
 	//__________________________________________________________________
@@ -104,7 +106,7 @@ namespace Logic {
 		std::cout << "Primary Skill - Archangel" << std::endl;
 
 		// Arrancamos el cronometro
-		_inmuneTimer = _inmuneDuration;
+		_inmunityTimer = _inmunityDuration;
 
 		// Seteamos la reducción de daño al máximo de manera que no se reciban daños
 		CMessageSetReducedDamage* pReducedDmgMsg = new CMessageSetReducedDamage();

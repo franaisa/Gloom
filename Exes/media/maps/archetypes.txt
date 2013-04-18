@@ -66,8 +66,8 @@ Map = {
 		audioSpawn = "media/audio/spawn.wav",
 		audioNoAmmo = "media/audio/noammo.wav",
 		
-		screamerPrimarySkillCooldown = 0,
-		screamerSecondarySkillCooldown = 2,
+		primarySkillCooldown = 0,
+		secondarySkillCooldown = 2,
 		screamerShieldThreshold = 100,
 		screamerShieldDamageTimeStep = 2,
 		screamerShieldDamageOverTime = 1,
@@ -244,9 +244,9 @@ Map = {
 		audioSpawn = "media/audio/spawn.wav",
 		audioNoAmmo = "media/audio/noammo.wav",
 		
-		shadowPrimarySkillCooldown = 15,
-		shadowSecondarySkillCooldown = 3,
-		shadowInvisibilityDuration = 5,
+		primarySkillCooldown = 15,
+		secondarySkillCooldown = 3,
+		invisibilityDuration = 5,
 		
 			weaponhammerName = "hammer",
 			weaponhammerModel = "hammer.mesh",
@@ -416,8 +416,9 @@ Map = {
 		audioSpawn = "media/audio/spawn.wav",
 		audioNoAmmo = "media/audio/noammo.wav",
 		
-		archangelPrimarySkillCooldown = 0.5,
-		archangelSecondarySkillCooldown = 0.5,
+		primarySkillCooldown = 0.5,
+		secondarySkillCooldown = 0.5,
+		inmunityDuration = 5,
 		
 			weaponhammerName = "hammer",
 			weaponhammerModel = "hammer.mesh",
@@ -587,11 +588,11 @@ Map = {
 		audioSpawn = "media/audio/spawn.wav",
 		audioNoAmmo = "media/audio/noammo.wav",
 		
-		houndPrimarySkillCooldown = 1,
-		houndSecondarySkillCooldown = 1,
-		houndBerserkerDuration=15,
-		houndBerserkerDamagePercent=50,
-		houndBerserkerCooldownPercent=50,
+		primarySkillCooldown = 1,
+		secondarySkillCooldown = 1,
+		berserkerDuration=15,
+		berserkerDamagePercent=50,
+		berserkerCooldownPercent=50,
 		
 			weaponhammerName = "hammer",
 			weaponhammerModel = "hammer.mesh",
@@ -760,12 +761,8 @@ Map = {
 		audioSpawn = "media/audio/spawn.wav",
 		audioNoAmmo = "media/audio/noammo.wav",
 		
-		shadowPrimarySkillCooldown = 15,
-		shadowSecondarySkillCooldown = 3,
-		shadowInvisibilityDuration = 5,
-		
-		screamerPrimarySkillCooldown = 0,
-		screamerSecondarySkillCooldown = 2,
+		primarySkillCooldown = 0,
+		secondarySkillCooldown = 2,
 		screamerShieldThreshold = 100,
 		screamerShieldDamageTimeStep = 2,
 		screamerShieldDamageOverTime = 1,
@@ -773,16 +770,6 @@ Map = {
 		screamerShieldRecoveryOverTime = 2,
 		screamerExplotionDamage = 200,
 		screamerExplotionRadius = 15,
-		
-		houndPrimarySkillCooldown = 10,
-		houndSecondarySkillCooldown = 1,
-
-		houndBerserkerDuration=15,
-		houndBerserkerDamagePercent=50,
-		houndBerserkerCooldownPercent=50,
-		
-		archangelPrimarySkillCooldown = 4.0,
-		archangelSecondarySkillCooldown = 0.5,
 
 			weaponhammerName = "hammer",
 			weaponhammerModel = "hammer.mesh",
@@ -956,9 +943,9 @@ Map = {
 		audioSpawn = "media/audio/spawn.wav",
 		audioNoAmmo = "media/audio/noammo.wav",
 		
-		shadowPrimarySkillCooldown = 15,
-		shadowSecondarySkillCooldown = 3,
-		shadowInvisibilityDuration = 5,
+		primarySkillCooldown = 15,
+		secondarySkillCooldown = 3,
+		invisibilityDuration = 5,
 
 			weaponhammerName = "hammer",
 			weaponhammerModel = "hammer.mesh",
@@ -1132,8 +1119,8 @@ Map = {
 		audioSpawn = "media/audio/spawn.wav",
 		audioNoAmmo = "media/audio/noammo.wav",
 		
-		archangelPrimarySkillCooldown = 4.0,
-		archangelSecondarySkillCooldown = 0.5,
+		primarySkillCooldown = 4.0,
+		secondarySkillCooldown = 0.5,
 
 			weaponhammerName = "hammer",
 			weaponhammerModel = "hammer.mesh",
@@ -1307,11 +1294,11 @@ Map = {
 		audioSpawn = "media/audio/spawn.wav",
 		audioNoAmmo = "media/audio/noammo.wav",
 
-		houndPrimarySkillCooldown = 1,
-		houndSecondarySkillCooldown = 1,
-		houndBerserkerDuration=15,
-		houndBerserkerDamagePercent=50,
-		houndBerserkerCooldownPercent=50,
+		primarySkillCooldown = 1,
+		secondarySkillCooldown = 1,
+		berserkerDuration=15,
+		berserkerDamagePercent=50,
+		berserkerCooldownPercent=50,
 
 			weaponhammerName = "hammer",
 			weaponhammerModel = "hammer.mesh",
@@ -1498,26 +1485,6 @@ Map = {
 		audioDeath = "media/audio/death.wav",
 		audioSpawn = "media/audio/spawn.wav",
 		audioNoAmmo = "media/audio/noammo.wav",
-		
-		shadowPrimarySkillCooldown = 15,
-		shadowSecondarySkillCooldown = 3,
-		shadowInvisibilityDuration = 5,
-		
-		screamerPrimarySkillCooldown = 0,
-		screamerSecondarySkillCooldown = 2,
-		screamerShieldThreshold = 100,
-		screamerShieldDamageTimeStep = 2,
-		screamerShieldDamageOverTime = 1,
-		screamerShieldRecoveryTimeStep = 0.5,
-		screamerShieldRecoveryOverTime = 2,
-		screamerExplotionDamage = 200,
-		screamerExplotionRadius = 15,
-		
-		houndPrimarySkillCooldown = 1,
-		houndSecondarySkillCooldown = 1,
-		
-		archangelPrimarySkillCooldown = 0.5,
-		archangelSecondarySkillCooldown = 0.5,
 		
 			weaponhammerName = "hammer",
 			weaponhammerModel = "hammer.mesh",

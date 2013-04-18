@@ -42,10 +42,10 @@ namespace Logic {
 	bool CShadow::spawn(CEntity* entity, CMap* map, const Map::CEntity* entityInfo) {
 		if( !CPlayerClass::spawn(entity,map,entityInfo) ) return false;
 
-		_invisibilityTimer=0;
+		_invisibilityTimer = 0;
 
 		// Leer el tiempo que dura la invisibilidad
-		assert( entityInfo->hasAttribute("shadowInvisibilityDuration") );
+		assert( entityInfo->hasAttribute("invisibilityDuration") );
 		// Pasamos el tiempo a msecs
 		_invisibilityDuration = entityInfo->getFloatAttribute("shadowInvisibilityDuration") * 1000;
 		return true;
