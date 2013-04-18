@@ -116,9 +116,7 @@ namespace Logic
 				//if(Net::CManager::getSingletonPtr()->imServer())
 				//	Logic::CGameNetMsgManager::getSingletonPtr()->sendMessageToOne(new CMessagePlayerSpawn(), camera->getEntityID(), _entity->getEntityID());
 
-				Logic::CMessageHudSpawn *mS=new Logic::CMessageHudSpawn();
-				mS->setTime(0);
-				_entity->emitMessage(mS);
+				
 
 				
 				CMessageCreateParticle *particle = new CMessageCreateParticle();

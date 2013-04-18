@@ -19,6 +19,7 @@
 #include "Logic/Messages/MessagePlayerSpawn.h"
 #include "Logic/Maps/GUIKillersMessage.h"
 #include "../../GameNetPlayersManager.h"
+#include "Logic/Messages/MessageHudSpawn.h"
 
 #include <math.h>
 
@@ -104,6 +105,11 @@ namespace Logic  {
 			// Volvemos a activar todos los componentes
 			_entity->activate();
 			CServer::getSingletonPtr()->getMap()->getEntityByType("Camera")->emitMessage(new CMessagePlayerSpawn());
+
+
+			Logic::CMessageHudSpawn *mS=new Logic::CMessageHudSpawn();
+				mS->setTime(0);
+				_entity->emitMessage(mS);
 
 			break;
 			}

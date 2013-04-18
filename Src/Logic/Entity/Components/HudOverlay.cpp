@@ -500,7 +500,12 @@ namespace Logic
 			case Message::HUD_SPAWN: {
 				CMessageHudSpawn *aux = static_cast<CMessageHudSpawn *>(message);
 				_spawnTime = aux->getTime();
-				hudSpawn(aux->getTime());
+				_acumSpawn=3000;
+				if(_spawnTime==0){
+					hudRespawn();
+				}else{
+					hudDeath();
+				}
 				break;
 			}
 			case Message::HUD_DEBUG: {
@@ -582,31 +587,33 @@ namespace Logic
 
 	void CHudOverlay::hudSpawn(int spawmTime){
 		
+		std::stringstream sSpawn;
+		sSpawn << "HAS MUERTO, LOSER \n Tiempo de respawn: " << spawmTime;
+		_textAreaDie->setText(sSpawn.str());
+
+	}
+
+	void CHudOverlay::hudDeath(){
 		if(_overlayPlay->isVisible()){
 			_overlayPlay->setVisible(false);
 			_overlayWeapon3D[_actualWeapon]->setVisible(false);
 		}
 
-		std::stringstream sSpawn;
-		sSpawn << "HAS MUERTO, LOSER \n Tiempo de respawn: " << spawmTime;
-		_textAreaDie->setText(sSpawn.str());
-		
 		if(!_overlayDie->isVisible())
 			_overlayDie->setVisible(true);
-		if(spawmTime <= 0.1){
+	}
 
-			_overlayDie->setVisible(false);
+	void CHudOverlay::hudRespawn(){
+		_overlayDie->setVisible(false);
 			//reset para volver a mostrar solo el arma inicial al hacer show
-			for(int i=1; i<_numWeapons;++i){
-				_weaponsBox[i][NO_WEAPON]->setVisible(true);
-				_weaponsBox[i][ACTIVE]->setVisible(false);
-				_weaponsBox[i][NO_AMMO]->setVisible(false);
-			}
-			_overlayPlay->setVisible(true);
-			_overlayWeapon3D[HAMMER]->setVisible(true);
-			_actualWeapon = HAMMER;
+		for(int i=1; i<_numWeapons;++i){
+			_weaponsBox[i][NO_WEAPON]->setVisible(true);
+			_weaponsBox[i][ACTIVE]->setVisible(false);
+			_weaponsBox[i][NO_AMMO]->setVisible(false);
 		}
-
+		_overlayPlay->setVisible(true);
+		_overlayWeapon3D[HAMMER]->setVisible(true);
+		_actualWeapon = HAMMER;
 	}
 
 	void CHudOverlay::hudParticle(const std::string &nameParticle){

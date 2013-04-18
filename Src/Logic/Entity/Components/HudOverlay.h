@@ -85,6 +85,8 @@ namespace Logic
 		*/
 		virtual bool spawn(CEntity* entity, CMap *map, const Map::CEntity *entityInfo);
 
+
+
 		/**
 		Este componente sólo acepta mensajes de tipo DAMAGED.
 		*/
@@ -119,6 +121,9 @@ namespace Logic
 		void hudWeapon(int ammo, int weapon);
 		void hudAmmo(int ammo, int weapon);
 		void hudSpawn(int spawn);
+
+		void hudDeath();
+		void hudRespawn();
 
 		void hudParticle(const std::string &nameParticle);
 
