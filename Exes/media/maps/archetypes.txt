@@ -246,7 +246,7 @@ Map = {
 		
 		primarySkillCooldown = 15,
 		secondarySkillCooldown = 3,
-		shadowInvisibilityDuration = 5,
+		invisibilityDuration = 5,
 		
 			weaponhammerName = "hammer",
 			weaponhammerModel = "hammer.mesh",
@@ -418,6 +418,7 @@ Map = {
 		
 		primarySkillCooldown = 0.5,
 		secondarySkillCooldown = 0.5,
+		inmunityDuration = 5,
 		
 			weaponhammerName = "hammer",
 			weaponhammerModel = "hammer.mesh",
@@ -589,9 +590,9 @@ Map = {
 		
 		primarySkillCooldown = 1,
 		secondarySkillCooldown = 1,
-		houndBerserkerDuration=15,
-		houndBerserkerDamagePercent=50,
-		houndBerserkerCooldownPercent=50,
+		berserkerDuration=15,
+		berserkerDamagePercent=50,
+		berserkerCooldownPercent=50,
 		
 			weaponhammerName = "hammer",
 			weaponhammerModel = "hammer.mesh",
@@ -944,7 +945,7 @@ Map = {
 		
 		primarySkillCooldown = 15,
 		secondarySkillCooldown = 3,
-		shadowInvisibilityDuration = 5,
+		invisibilityDuration = 5,
 
 			weaponhammerName = "hammer",
 			weaponhammerModel = "hammer.mesh",
@@ -1295,9 +1296,9 @@ Map = {
 
 		primarySkillCooldown = 1,
 		secondarySkillCooldown = 1,
-		houndBerserkerDuration=15,
-		houndBerserkerDamagePercent=50,
-		houndBerserkerCooldownPercent=50,
+		berserkerDuration=15,
+		berserkerDamagePercent=50,
+		berserkerCooldownPercent=50,
 
 			weaponhammerName = "hammer",
 			weaponhammerModel = "hammer.mesh",

@@ -43,10 +43,10 @@ namespace Logic {
 		_berserkerTimer=0;
 
 		// Leer el tiempo que dura el Berserker
-		assert( entityInfo->hasAttribute("houndBerserkerDuration") );
+		assert( entityInfo->hasAttribute("berserkerDuration") );
 		// Pasamos el tiempo a msecs
-		_berserkerDuration = entityInfo->getFloatAttribute("houndBerserkerDuration") * 1000;
-		_berserkerDamagePercent = entityInfo->getFloatAttribute("houndBerserkerDamagePercent");
+		_berserkerDuration = entityInfo->getFloatAttribute("berserkerDuration") * 1000;
+		_berserkerDamagePercent = entityInfo->getFloatAttribute("berserkerDamagePercent");
 		_berserkerCooldownPercent = entityInfo->getFloatAttribute("houndBerserkerCooldownPercent");
 		
 	} // spawn
