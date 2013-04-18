@@ -86,7 +86,7 @@ namespace Net {
 		else
 		{
 			/* Wait up to 5 seconds for the connection attempt to succeed.*/
-			if (enet_host_service (client, & event, timeout) > 0 &&
+			if (enet_host_service (client, & event, timeout*1000) > 0 &&
 				event.type == ENET_EVENT_TYPE_CONNECT)
 			{		
 				if(DEBUG_CLIENT)

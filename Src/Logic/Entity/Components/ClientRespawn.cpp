@@ -64,10 +64,17 @@ namespace Logic  {
 			_entity->deactivateAllComponentsExcept(exceptionList);
 			;
 			//mostramos en pantalla el mensaje de quien ha matado a quien
-			TEntityID id = static_cast<CMessagePlayerDead*>(message)->getKiller();
-			if(Logic::CGameNetPlayersManager::getSingletonPtr()->existsByLogicId(id)){
+			CEntity* entity = Logic::CServer::getSingletonPtr()->getMap()->getEntityByID(static_cast<CMessagePlayerDead*>(message)->getKiller());
+			
+			if(!entity)
+				break;
+
+			std::string type = entity->getType();
+			
+			if(type == "Screamer" || type == "Shadow" || type == "Hound" || type == "Archangel" ||
+				type == "LocalScreamer" || type == "LocalShadow" || type == "LocalHound" || type == "LocalArchangel"){
 				Logic::GUIKillersMessage::getSingletonPtr()->addKiller(
-					Logic::CServer::getSingletonPtr()->getMap()->getEntityByID(id)->getName(),
+					entity->getName(),
 					_entity->getName());
 			}
 			

@@ -59,7 +59,9 @@ namespace Logic
 		convert << entityId;
 		std::string nameId = convert.str();
 
-		newEntityInfo->setName(entityInfo->getStringAttribute("name") + nameId);
+		if(map->getEntityByName(newEntityInfo->getName()))
+			newEntityInfo->setName(entityInfo->getStringAttribute("name") + nameId);
+
 
 		return spawn(map, newEntityInfo);
 	}
