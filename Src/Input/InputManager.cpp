@@ -303,7 +303,7 @@ namespace Input{
 			}
 		}
 
-		return false;
+		return true;
 
 	} // mouseMoved
 
@@ -329,7 +329,7 @@ namespace Input{
 			}
 		}
 
-		return false;
+		return true;
 
 	} // mousePressed
 
@@ -355,7 +355,7 @@ namespace Input{
 			}
 		}
 
-		return false;
+		return true;
 
 	} // mouseReleased
 	

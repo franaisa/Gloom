@@ -30,7 +30,7 @@ namespace Logic {
 			Release();
 			return false;
 		}
-		Logic::GUIKillersMessage::Init();
+		
 
 		return true;
 	}
@@ -45,7 +45,6 @@ namespace Logic {
 		{
 			_instance->close();
 			delete _instance;
-			Logic::GUIKillersMessage::Release();
 		}
 	} // Release
 
@@ -80,10 +79,20 @@ namespace Logic {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	void CGUIManager::activate(){
-		//Hikari::FlashControl* menuS = _loadedGUIs.find("menuseleccion")->second;
-		//menuS->load("SeleccionPersonaje.swf");
-		//menuS->show();
+		Logic::GUIKillersMessage::Init();
 	}
+
+	void CGUIManager::deactivate(){
+
+		TGUI::const_iterator deletedGUI = _loadedGUIs.begin();
+
+		for(;deletedGUI!= _loadedGUIs.end();++deletedGUI){
+			GUI::CServer::getSingletonPtr()->destroyLayout(deletedGUI->second);
+		}
+
+		_loadedGUIs.clear();
+		Logic::GUIKillersMessage::Release();
+	} 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 

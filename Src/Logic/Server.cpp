@@ -156,7 +156,7 @@ namespace Logic {
 			_map = 0;
 		}
 		_player = 0;
-
+		_guiManager->deactivate();
 	} // unLoadLevel
 
 	//---------------------------------------------------------
@@ -177,6 +177,7 @@ namespace Logic {
 	{
 		_gameSpawnManager->deactivate();
 		_gameNetMsgManager->deactivate();
+		
 		_map->deactivate();
 
 	} // deactivateMap
