@@ -115,7 +115,6 @@ namespace Logic {
 		<ul>
 			<li>USE_PRIMARY_SKILL</li>
 			<li>USE_SECONDARY_SKILL</li>
-			<li>CHANGE_PLAYER_CLASS</li>
 			<li>STOP_PRIMARY_SKILL</li>
 			<li>STOP_SECONDARY_SKILL</li>
 		</ul>
@@ -213,14 +212,6 @@ namespace Logic {
 		// =======================================================================
 
 
-		/**
-		Dado un enumerado que representa el tipo de la clase al que queremos cambiar,
-		activa dicho componente y desactiva el actual.
-		*/
-		void changePlayerClass(unsigned int classType);
-
-		//__________________________________________________________________
-
 		/** 
 		Indica si la habilidad primaria puede usarse.
 
@@ -242,9 +233,6 @@ namespace Logic {
 		//                          MIEMBROS PROTEGIDOS
 		// =======================================================================
 
-
-		/** Nombre de la clase del personaje. */
-		std::string _playerClassName;
 
 		/** Tiempo de recarga de la habilidad primaria del personaje. */
 		float _primarySkillCooldown;
