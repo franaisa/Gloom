@@ -6,6 +6,7 @@ Map = {
 		msgList= "0",
 		scale = {1, 1, 1},
 		orientation = 0,
+		
 		static = true,
 		model = "scenario.mesh",
 		physic_entity = "fromFile",

@@ -2,8 +2,9 @@ Map = {
 
 	World = {
 		type = "World",
-		model = "ola.mesh",
-		physic_file = "media/models/ola.RepX",
+		model = "scenarioTest.mesh",
+		physic_entity = "plane",
+		physic_normal= "{0.0,1.0,0.0}",
 	},
 	
 	Hacksaw = {
@@ -217,8 +218,7 @@ Map = {
 		respawnTime = 5,
 	},
 	
-	
-	LauncherAmmo1 = {
+	RocketLauncherAmmo1 = {
 		type = "ItemSpawn",
 		position = {-264,0.0,-53.0},
 		model = "rocketLauncher.mesh",
@@ -258,123 +258,13 @@ Map = {
 		physic_trigger = true,
 		physic_type = "static",
 		physic_shape = "box",
-		physic_dimensions = { 250, 0.5, 250 },
+		physic_dimensions = { 100, 0.1, 100 },
 		physic_group = 2,
 		physic_groupList = "1",
 	},
 	
 	Camera = {
 		type = "Camera",
-		position = {28.0, 60.0, -17.0},
-		target = {-233.0, 2, 116.0},
 		height = 8,
 	},
-	Point1 = {
-		type = "SpawnPoint",
-		position = {-219.0, 3.0, -52.0},
-		physic_entity = "rigid",
-		physic_trigger = true,
-		physic_type = "static",
-		physic_shape = "box",
-		physic_dimensions = { 4, 7, 4 },
-	},
-	
-	Point2 = {
-		type = "SpawnPoint",
-		position = {73,3,-49},
-		physic_entity = "rigid",
-		physic_trigger = true,
-		physic_type = "static",
-		physic_shape = "box",
-		physic_dimensions = { 4, 7, 4 },
-	},
-	
-	Point3 = {
-		type = "SpawnPoint",
-		position = {27,3,116},
-		physic_entity = "rigid",
-		physic_trigger = true,
-		physic_type = "static",
-		physic_shape = "box",
-		physic_dimensions = { 4, 7, 4 },
-	},
-	Point4 = {
-		type = "SpawnPoint",
-		position = {-68.0, 26.0, 117.0},
-		physic_entity = "rigid",
-		physic_trigger = true,
-		physic_type = "static",
-		physic_shape = "box",
-		physic_dimensions = { 4, 7, 4 },
-	},
-	
-	Point5 = {
-		type = "SpawnPoint",
-		position = {46,2,116},
-		physic_entity = "rigid",
-		physic_trigger = true,
-		physic_type = "static",
-		physic_shape = "box",
-		physic_dimensions = { 4, 7, 4 },
-	},
-	
-	Point6 = {
-		type = "SpawnPoint",
-		position = {189,0,-10},
-		physic_entity = "rigid",
-		physic_trigger = true,
-		physic_type = "static",
-		physic_shape = "box",
-		physic_dimensions = { 4, 7, 4 },
-	},
-	Point7 = {
-		type = "SpawnPoint",
-		position = {27.0, 62.0, -28.0},
-		physic_entity = "rigid",
-		physic_trigger = true,
-		physic_type = "static",
-		physic_shape = "box",
-		physic_dimensions = { 4, 7, 4 },
-	},
-	
-	Point8 = {
-		type = "SpawnPoint",
-		position = {188,106,58},
-		physic_entity = "rigid",
-		physic_trigger = true,
-		physic_type = "static",
-		physic_shape = "box",
-		physic_dimensions = { 4, 7, 4 },
-	},
-	
-	Point9 = {
-		type = "SpawnPoint",
-		position = {69,108,131},
-		physic_entity = "rigid",
-		physic_trigger = true,
-		physic_type = "static",
-		physic_shape = "box",
-		physic_dimensions = { 4, 7, 4 },
-	},
-	
-	Point10 = {
-		type = "SpawnPoint",
-		position = {-146,108,130},
-		physic_entity = "rigid",
-		physic_trigger = true,
-		physic_type = "static",
-		physic_shape = "box",
-		physic_dimensions = { 4, 7, 4 },
-	},
-	
-	Point11 = {
-		type = "SpawnPoint",
-		position = {28,110,-29},
-		physic_entity = "rigid",
-		physic_trigger = true,
-		physic_type = "static",
-		physic_shape = "box",
-		physic_dimensions = { 4, 7, 4 },
-	},
-
 }
