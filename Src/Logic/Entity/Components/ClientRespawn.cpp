@@ -66,9 +66,15 @@ namespace Logic  {
 			TEntityID id = static_cast<CMessagePlayerDead*>(message)->getKiller();
 			if(Logic::CGameNetPlayersManager::getSingletonPtr()->existsByLogicId(id)){
 				Logic::GUIKillersMessage::getSingletonPtr()->addKiller(
-					Logic::CServer::getSingletonPtr()->getMap()->getEntityByID()->getName(),
+					Logic::CServer::getSingletonPtr()->getMap()->getEntityByID(id)->getName(),
 					_entity->getName());
 			}
+			
+			//sino ha sido un player es que se ha suicidado el retard
+			else{
+				Logic::GUIKillersMessage::getSingletonPtr()->suicide(_entity->getName());
+			}
+			
 			break;
 			}
 		case Message::PLAYER_SPAWN:

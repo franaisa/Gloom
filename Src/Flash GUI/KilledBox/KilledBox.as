@@ -25,7 +25,7 @@ package
 			this.y = y;
 			
 			this.addEventListener(Event.ENTER_FRAME, update);
-			updatealpha = 700;
+			updatealpha = 300;
 		}
 		
 		public function addkillers(kill:String, victim:String) {

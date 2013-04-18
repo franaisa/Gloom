@@ -19,6 +19,8 @@ namespace Logic{
 
 		void addKiller(const std::string &killer, const std::string &killed);
 
+		void suicide(const std::string &name);
+
 	private:
 		static GUIKillersMessage* _instance;
 		CGUIManager* _guiManager;
