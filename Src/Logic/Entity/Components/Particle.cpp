@@ -106,7 +106,6 @@ namespace Logic
 	//----------------------------------------------------------
 
 	void CParticle::tick(unsigned int msecs) {
-		IComponent::tick(msecs);
 		if(_particle)
 			_particle->setPosition(_entity->getPosition() + _particleOffset);
 	} // tick

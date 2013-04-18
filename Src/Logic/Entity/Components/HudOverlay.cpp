@@ -706,8 +706,6 @@ namespace Logic
 
 	void CHudOverlay::tick(unsigned int msecs)
 	{
-		IComponent::tick(msecs);
-	
 		if(_overlayDie->isVisible()){
 			_acumSpawn += msecs;
 			if(_acumSpawn>1000){

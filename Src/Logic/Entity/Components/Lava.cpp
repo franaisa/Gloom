@@ -75,7 +75,6 @@ namespace Logic
 
 	//---------------------------------------------------------
 	void CLava::tick(unsigned int msecs) {
-		IComponent::tick(msecs);
 		if(_intrigger.size()>0 && _timestamp > _timeDamage){
 			std::list<CEntity*>::const_iterator it = _intrigger.begin();
 			for(; it != _intrigger.end(); ++it) {

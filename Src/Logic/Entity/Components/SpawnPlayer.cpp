@@ -84,7 +84,6 @@ namespace Logic
 	//---------------------------------------------------------
 
 	void CSpawnPlayer::tick(unsigned int msecs) {
-		IComponent::tick(msecs);
 		//Solamente si estamos muertos (se recibió el mensaje)
 		if(_isDead){
 			_actualTimeSpawn+=msecs;

@@ -110,7 +110,6 @@ namespace Logic
 
 	void CElevatorTrigger::tick(unsigned int msecs)
 	{
-		IComponent::tick(msecs);
 		Logic::CMessageTouched *t;
 		Vector3 toDirection;
 		//Activación del ascensor solo si has pasado el _launchTime encima (tocando el trigger) y no estamos en un recorrido

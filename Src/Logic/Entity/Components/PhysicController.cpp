@@ -81,8 +81,6 @@ void CPhysicController::process(CMessage *message) {
 //________________________________________________________________________
 
 void CPhysicController::tick(unsigned int msecs) {
-	IComponent::tick(msecs);
-
 	// Sino hay movimiento no hacemos nada
 	if(_movement == Vector3(0,0,0)) return;
 

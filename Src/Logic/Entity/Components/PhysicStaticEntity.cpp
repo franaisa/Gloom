@@ -90,10 +90,7 @@ void CPhysicStaticEntity::process(CMessage *message) {
 
 
 void CPhysicStaticEntity::tick(unsigned int msecs) {
-	// Invocar al método de la clase padre (IMPORTANTE)
-	IComponent::tick(msecs);
 
-	// Por ser estatico nada que hacer
 }
 
 //---------------------------------------------------------

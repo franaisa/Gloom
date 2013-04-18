@@ -23,8 +23,6 @@ namespace Logic
 	//________________________________________________________________________
 
 	void CUpdateClientPosition::tick(unsigned int msecs) {
-		IComponent::tick(msecs);
-		
 		if(_timer > _syncPosTimeStamp) {
 			CMessageSyncPosition* msg = new CMessageSyncPosition;
 			msg->setTransform( _entity->getTransform() );

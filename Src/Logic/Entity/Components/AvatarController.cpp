@@ -318,7 +318,6 @@ namespace Logic
 	//---------------------------------------------------------
 	void CAvatarController::tick(unsigned int msecs)
 	{
-		IComponent::tick(msecs);
 		//if(_entity->getName().compare("David")==0)
 		//Vector dirección que mandaremos a la física
 		Vector3 direction(Vector3::ZERO);

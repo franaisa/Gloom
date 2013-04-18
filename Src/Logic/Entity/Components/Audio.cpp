@@ -82,7 +82,6 @@ namespace Logic
 
 	void CAudio::tick(unsigned int msecs)
 	{
-		IComponent::tick(msecs);
 
 	} // tick
 	//----------------------------------------------------------

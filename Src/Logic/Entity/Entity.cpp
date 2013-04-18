@@ -132,7 +132,7 @@ namespace Logic
 		_activated = true;
 
 		for(; it != _componentList.end(); ++it){
-			(*it)->activate();
+			(*it)->activateSetup();
 			_activated = (*it)->isActivated() && _activated;
 		}
 

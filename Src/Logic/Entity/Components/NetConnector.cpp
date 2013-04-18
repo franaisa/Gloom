@@ -111,7 +111,6 @@ namespace Logic {
 	//---------------------------------------------------------------------------------
 		
 	void CNetConnector::tick(unsigned int msecs) {
-		IComponent::tick(msecs);
 	}
 
 } // namespace Logic

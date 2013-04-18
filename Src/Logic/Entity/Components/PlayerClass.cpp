@@ -108,9 +108,6 @@ namespace Logic {
 	//__________________________________________________________________
 
 	void CPlayerClass::tick(unsigned int msecs) {
-		// Se encarga de procesar los mensajes encolados
-		IComponent::tick(msecs);
-
 		// Controlamos el cooldown de la habilidad primaria y secundaria
 		if(_primarySkillTimer > 0) {
 			_primarySkillTimer -= msecs;

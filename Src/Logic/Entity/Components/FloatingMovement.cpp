@@ -44,8 +44,6 @@ namespace Logic {
 	//________________________________________________________________________
 
 	void CFloatingMovement::tick(unsigned int msecs) {
-		IComponent::tick(msecs);
-		
 		// Calculamos la nueva posicion de la vertical del item
 		_entity->setPosition( estimateItemFloatingPos(_entity->getPosition(), msecs) );
 		// Calculamos la nueva orientacion del item

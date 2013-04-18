@@ -61,8 +61,6 @@ namespace Logic  {
 	//________________________________________________________________________
 
 	void CInterpolation::tick(unsigned int msecs){
-		IComponent::tick(msecs);
-
 		_oldPos = _entity->getPosition();
 		_msecs = msecs;
 

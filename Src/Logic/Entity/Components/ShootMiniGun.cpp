@@ -32,9 +32,6 @@ namespace Logic {
 	//__________________________________________________________________
 
 	void CShootMiniGun::tick(unsigned int msecs) {
-		IComponent::tick(msecs);
-		//std::cout << "HOLA EJECUTO EL TICK DE LA MINIGUN" << std::endl;
-
 		if(_cooldownTimer < _cooldown)
 			_cooldownTimer += msecs;
 		else{

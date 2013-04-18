@@ -92,7 +92,6 @@ namespace Logic
 
 	void CHacksaw::tick(unsigned int msecs)
 	{
-		IComponent::tick(msecs);
 		Vector3 toDirection;
 		
 		//Hacia la posicion final

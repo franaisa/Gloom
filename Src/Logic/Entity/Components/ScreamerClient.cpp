@@ -91,8 +91,6 @@ namespace Logic {
 	//__________________________________________________________________
 
 	void CScreamerClient::tick(unsigned int msecs) {
-		IComponent::tick(msecs);
-
 		// Si la habilidad primaria está siendo usada
 		if(_shieldIsActive) {
 			refreshShieldGraphicsPos();

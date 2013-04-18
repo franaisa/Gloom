@@ -183,6 +183,12 @@ namespace Logic
 		*/
 		friend class CEntity;
 
+		inline void tickSetup(unsigned int msecs);
+
+		inline void onStartSetup(unsigned int msecs);
+
+		void activateSetup();
+
 		/**
 		Método que establece la entidad a la que pertenece el componente.
 

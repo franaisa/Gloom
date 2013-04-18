@@ -118,9 +118,6 @@ void CPhysicDynamicEntity::process(CMessage *message) {
 //---------------------------------------------------------
 
 void CPhysicDynamicEntity::tick(unsigned int msecs) {
-	// Invocar al método de la clase padre (IMPORTANTE)
-	IComponent::tick(msecs);
-
 	// Actualizar la posición y la orientación de la entidad lógica usando la 
 	// información proporcionada por el motor de física	
 	_entity->setTransform( _physicEntity.getTransform() );

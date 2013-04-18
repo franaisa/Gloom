@@ -99,7 +99,6 @@ namespace Logic {
 	
 	void CLife::activate() {
 		IComponent::activate();
-		updater = &IComponent::onStart;
 		
 		// Resteamos los valores de salud y escudo a los valores por defecto
 		_currentLife = _defaultLife;
@@ -154,9 +153,6 @@ namespace Logic {
 	//________________________________________________________________________
 
 	void CLife::tick(unsigned int msecs) {
-		// Necesario para que se procesen todos los mensajes aceptados
-		IComponent::tick(msecs);
-
 		_damageTimer += msecs;
 		if(_damageTimer >= _damageTimeStep && _currentLife != 1) {
 			// Reducimos la vida hasta un minimo de un punto de salud
@@ -175,8 +171,6 @@ namespace Logic {
 	//________________________________________________________________________
 
 	void CLife::onStart(unsigned int msecs) {
-		IComponent::onStart(msecs);
-
 		if(_starting){
 			Logic::CMessagePlayerDead* playerDeadMsg = new Logic::CMessagePlayerDead();
 			_entity->emitMessage(playerDeadMsg);

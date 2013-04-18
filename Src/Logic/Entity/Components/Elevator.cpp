@@ -96,7 +96,6 @@ namespace Logic
 
 	void CElevator::tick(unsigned int msecs)
 	{
-		IComponent::tick(msecs);
 		Vector3 toDirection;
 	
 		//Timer para cuando llegamos arriba

@@ -110,8 +110,6 @@ namespace Logic
 /*
 	void CLight::tick(unsigned int msecs)
 	{
-		IComponent::tick(msecs);
-
 		
 	} // tick
 	//----------------------------------------------------------

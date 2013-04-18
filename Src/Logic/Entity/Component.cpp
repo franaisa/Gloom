@@ -17,7 +17,7 @@ namespace Logic
 {
 	IComponent::IComponent() : _entity(0), 
 							   _isActivated(true), 
-							   updater(&IComponent::tick) {
+							   updater(&IComponent::onStartSetup) {
 
 	}
 
@@ -31,6 +31,15 @@ namespace Logic
 
 	//---------------------------------------------------------
 	
+	void IComponent::activateSetup() {
+		// Seteamos el puntero para que se ejecute onStart al comenzar
+		updater = &IComponent::onStartSetup;
+		// Llamamos al activar que los hijos deben redefinir
+		activate();
+	}
+
+	//---------------------------------------------------------
+
 	void IComponent::activate() {
 		if(_isActivated) return;
 		
@@ -51,18 +60,33 @@ namespace Logic
 
 	//---------------------------------------------------------
 
+	void IComponent::onStartSetup(unsigned int msecs) {
+		// Fijamos el puntero a funcion al tick
+		updater = &IComponent::tickSetup;
+		// Procesamos los mensajes recibidos
+		processMessages();
+		// Ejecutamos el onStart definido por el componente hijo
+		onStart(msecs);
+	}
+
+	//---------------------------------------------------------
+
 	void IComponent::onStart(unsigned int msecs) {
-		// Seteamos el puntero a funcion como el tick
-		updater = &IComponent::tick;
+		// Los hijos deben redefinir su comportamiento
+	}
+
+	//---------------------------------------------------------
+
+	void IComponent::tickSetup(unsigned int msecs) {
 		// Procesamos los mensajes que nos hayan llegado
 		processMessages();
+		tick(msecs);
 	}
 
 	//---------------------------------------------------------
 
 	void IComponent::tick(unsigned int msecs) {
-		// Procesamos los mensajes que nos hayan llegado
-		processMessages();
+		// Los hijos deben redefinir su comportamiento
 	} // tick
 
 } // namespace Logic
