@@ -174,15 +174,9 @@ namespace Application {
 				}
 
 				int race;
-				std::string name;
-
 				inBuffer.deserialize(race);
 
-				Logic::CPlayerInfo playerInfo = _playersMgr->getPlayer(playerNetId);
-				name = playerInfo.getName();
-				std::stringstream number;
-				number << playerNetId;
-				name.append(number.str());
+				std::string name = _playersMgr->getPlayerNickname(playerNetId);
 
 				//creamos el jugador que el cliente ha elegido
 				Logic::CEntity* player;
