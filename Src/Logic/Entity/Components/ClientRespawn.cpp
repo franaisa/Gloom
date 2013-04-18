@@ -18,6 +18,7 @@
 #include "Logic/Messages/MessagePlayerDead.h"
 #include "Logic/Messages/MessagePlayerSpawn.h"
 #include "Logic/Maps/GUIKillersMessage.h"
+#include "../../GameNetPlayersManager.h"
 
 #include <math.h>
 
@@ -62,11 +63,12 @@ namespace Logic  {
 			_entity->deactivateAllComponentsExcept(exceptionList);
 			;
 			//mostramos en pantalla el mensaje de quien ha matado a quien
-			//Logic::GUIKillersMessage::getSingletonPtr()->addKillers(
-			Logic::GUIKillersMessage::getSingletonPtr()->addKiller(
-				Logic::CServer::getSingletonPtr()->getMap()->getEntityByID(static_cast<CMessagePlayerDead*>(message)->getKiller())->getName(),
-				_entity->getName());
-			
+			TEntityID id = static_cast<CMessagePlayerDead*>(message)->getKiller();
+			if(Logic::CGameNetPlayersManager::getSingletonPtr()->existsByLogicId(id)){
+				Logic::GUIKillersMessage::getSingletonPtr()->addKiller(
+					Logic::CServer::getSingletonPtr()->getMap()->getEntityByID()->getName(),
+					_entity->getName());
+			}
 			break;
 			}
 		case Message::PLAYER_SPAWN:

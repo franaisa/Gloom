@@ -12,7 +12,7 @@ namespace Logic{
 		_instance = this;
 
 		_guiManager = CGUIManager::getSingletonPtr();
-		_guiManager->addGUI("killerbox", Hikari::Position(Hikari::TopRight));
+		_guiManager->addGUI("killerbox", Hikari::Position(Hikari::TopRight), 450, 300);
 		_guiManager->load("killerbox", "KilledBox.swf");
 		_guiManager->showGUI("killerbox");
 		_guiManager->setTransparent("killerbox",true);
