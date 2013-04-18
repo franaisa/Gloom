@@ -112,7 +112,7 @@ namespace Logic {
 		serialMsg.serialize(destID);
 
 		//enviamos el mensaje
-		Net::CManager::getSingletonPtr()->send(serialMsg.getbuffer(), serialMsg.getSize());
+		Net::CManager::getSingletonPtr()->broadcast(serialMsg.getbuffer(), serialMsg.getSize());
 	}
 
 	//---------------------------------------------------------
@@ -151,7 +151,7 @@ namespace Logic {
 		serialMsg.serialize(destEntity->getTransform());
 
 		//enviamos el mensaje
-		Net::CManager::getSingletonPtr()->send(serialMsg.getbuffer(), serialMsg.getSize());
+		Net::CManager::getSingletonPtr()->broadcast(serialMsg.getbuffer(), serialMsg.getSize());
 	}
 
 	//---------------------------------------------------------
@@ -216,7 +216,7 @@ namespace Logic {
 			serialMsg.write(&destID, sizeof(destID)); // Escribimos el id de la entidad destino
 			serialMsg.write(bufferAux->getbuffer(), bufferAux->getSize()); //Guardamos el mensaje en el buffer
 			
-		Net::CManager::getSingletonPtr()->send(serialMsg.getbuffer(), serialMsg.getSize());
+		Net::CManager::getSingletonPtr()->broadcast(serialMsg.getbuffer(), serialMsg.getSize());
 		//std::cout << "Enviado mensaje tipo " << txMsg->getMessageType() << " para la entidad " << destID << " de tamaño " << serialMsg.getSize() << std::endl;
 		//LOG("TX ENTITY_MSG " << txMsg._type << " to EntityID " << destID);
 	} // sendEntityMessage
@@ -236,7 +236,7 @@ namespace Logic {
 			
 		Net::NetID idMsg = Logic::CGameNetPlayersManager::getSingletonPtr()->getPlayerByEntityId(player).getNetId();
 
-		Net::CManager::getSingletonPtr()->send(serialMsg.getbuffer(), serialMsg.getSize(), idMsg);
+		Net::CManager::getSingletonPtr()->sendTo(idMsg, serialMsg.getbuffer(), serialMsg.getSize());
 	} // sendMessageToOne
 
 	//---------------------------------------------------------
@@ -280,7 +280,7 @@ namespace Logic {
 			serialMsg.write(&msgType, sizeof(msgType));
 			serialMsg.write(&destID, sizeof(destID)); // Escribimos el id de la entidad destino
 			serialMsg.write(buffer->getbuffer(), buffer->getSize());
-			Net::CManager::getSingletonPtr()->sendAllExcept(serialMsg.getbuffer(),serialMsg.getSize(),packet->getConexion()->getId());
+			Net::CManager::getSingletonPtr()->broadcastIgnoring(packet->getConexion()->getId(), serialMsg.getbuffer(), serialMsg.getSize());
 		}
 
 		//LOG("RX ENTITY_MSG " << rxMsg._type << " from EntityID " << destID);

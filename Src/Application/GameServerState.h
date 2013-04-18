@@ -94,7 +94,7 @@ namespace Application {
 		@see Net::CManager::IObserver
 		@param packet Paquete de conexion recibido.
 		*/
-		virtual void connexionPacketReceived(Net::CPaquete* packet);
+		virtual void connectionPacketReceived(Net::CPaquete* packet);
 
 		//______________________________________________________________________________
 
@@ -104,7 +104,7 @@ namespace Application {
 		@see Net::CManager::IObserver
 		@param packet Paquete de desconexion recibido.
 		*/
-		virtual void disconnexionPacketReceived(Net::CPaquete* packet);
+		virtual void disconnectionPacketReceived(Net::CPaquete* packet);
 
 		// Métodos de CKeyboardListener
 
