@@ -219,27 +219,5 @@ unsigned CPhysicController::moveController(Vector3& movement, unsigned int msecs
 	// Actualizar la posición y orientación de la entidad lógica usando la 
 	// información proporcionada por el motor de física	
 	_entity->setPosition( _controller.getPosition() );
-
-	// Si tocamos con el techo lo notificamos
-	if((flags & CharacterControllerFlag::eCOLLISION_UP)) {
-		Logic::CMessageCealing* em = new Logic::CMessageCealing();
-		_entity->emitMessage(em);
-	}
-	// Si tocamos el lateral tenemos que parar la inercia de la direccion
-	if((flags & CharacterControllerFlag::eCOLLISION_SIDES)) {
-		Logic::CMessageSide* side = new Logic::CMessageSide();
-		_entity->emitMessage(side);
-	}
-	// Si hay cambio de estado en el flag de tocar suelo
-	if(_falling != !(flags & CharacterControllerFlag::eCOLLISION_DOWN)) {
-		// Actualizamos el flag que indica si estamos cayendo
-		_falling =  !(flags & CharacterControllerFlag::eCOLLISION_DOWN);
-		// Mandamos un mensaje que dirá si hay collision con el suelo para la lógica
-		Logic::CMessageCollisionDown *m = new Logic::CMessageCollisionDown();
-		m->setCollisionDown(_falling);
-		_entity->emitMessage(m);
-	}
-
-	movement = Vector3::ZERO;
 	*/
 }

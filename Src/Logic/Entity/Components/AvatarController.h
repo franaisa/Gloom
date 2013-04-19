@@ -122,6 +122,9 @@ namespace Logic
 		void mouse(const float* amount);
 
 
+		void manageCollisions(unsigned flags);
+
+
 	protected:
 
 		void initWalkCommands();

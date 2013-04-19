@@ -94,27 +94,47 @@ namespace Logic
 	void CAvatarController::tick(unsigned int msecs) {
 		//@deprecated
 		IComponent::tick(msecs);
-		if(_directionSpeed == Vector3::ZERO)return;
-		float yaw = asin(_directionSpeed.normalisedCopy().x);
-		Matrix4 dir = _entity->getTransform();
-		Math::yaw(yaw, dir);
-		Vector3 direction;
 
-		if(_directionSpeed.z!=0)
-			direction = (Math::getDirection(dir)).normalisedCopy()*_directionSpeed.z;
-		else
-			direction = (Math::getDirection(dir)).normalisedCopy();
+		Vector3 direction;
+		//si no nos estamos moviendo, no ejecutamos la parte del movimiento con teclas
+		if(_directionSpeed == Vector3::ZERO){
+			float yaw = asin(_directionSpeed.normalisedCopy().x);
+			Matrix4 dir = _entity->getTransform();
+			Math::yaw(yaw, dir);
+			
+
+			if(_directionSpeed.z!=0)
+				direction = (Math::getDirection(dir)).normalisedCopy()*_directionSpeed.z;
+			else
+				direction = (Math::getDirection(dir)).normalisedCopy();
+		}
+
+
+
+
+
+
 		direction*=_speed*msecs;
 
-		unsigned flags = _entity->getComponent<CPhysicController>("CPhysicController")->moveController(direction,msecs);
+		manageCollisions( _entity->getComponent<CPhysicController>("CPhysicController")->moveController(direction,msecs) );
 
 		_entity->setPosition(_entity->getPosition()+direction);
 
 	} // tick
 
+	//---------------------------------------------------------
+
 	void CAvatarController::executeControlCommand(CMessageControl *controlMsg){
 		_directionSpeed += _walkCommands[ controlMsg->getType() ];
 	}
+
+	//---------------------------------------------------------
+
+	void CAvatarController::manageCollisions(unsigned flags){
+
+	}
+
+	//---------------------------------------------------------
 
 	void CAvatarController::initWalkCommands() {
 		_walkCommands[Control::WALK]				= Vector3(0,0,1);
