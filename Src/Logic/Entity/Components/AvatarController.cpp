@@ -15,10 +15,14 @@ de la entidad.
 #include "AvatarController.h"
 #include "Logic/Entity/Entity.h"
 #include "Map/MapEntity.h"
+#include "Logic/Messages/MessageControl.h"
+#include "Logic/Entity/Components/PhysicController.h"
 
 namespace Logic 
 {
 	IMP_FACTORY(CAvatarController);
+
+	CAvatarController::CAvatarController(){}
 	
 	//---------------------------------------------------------
 
@@ -63,6 +67,13 @@ namespace Logic
 		//std::cout << "menssaje de avatar controller recibido" << std::endl;
 		switch(message->getMessageType())
 		{
+			case Message::CONTROL:{
+				CMessageControl* controlMsg = static_cast<CMessageControl*> (message) ;
+
+				executeControlCommand(controlMsg);
+
+				break;
+			}
 		}
 
 	} // process
@@ -77,11 +88,64 @@ namespace Logic
 	
 	//---------------------------------------------------------
 
-
 	void CAvatarController::tick(unsigned int msecs)
 	{
 		//@deprecated
 		IComponent::tick(msecs);
+		if(_directionSpeed == Vector3::ZERO)return;
+		unsigned flags;
+
+		Vector3 _finalMovement = _directionSpeed*msecs*_speed*Math::getDirection(_entity->getOrientation());
+
+		_entity->getComponent<CPhysicController>("CPhysicController")->moveController(_finalMovement,msecs, flags);
+
+		_entity->setPosition(_entity->getPosition()+_finalMovement);
+
 	} // tick
+
+
+	void CAvatarController::executeControlCommand(CMessageControl *controlMsg){
+
+
+		switch(controlMsg->getType()){
+			case Control::WALK:{
+				_directionSpeed+=Vector3(0,0,1);
+				break;
+			}
+			case Control::WALKBACK:{
+				_directionSpeed+=Vector3(0,0,-1);
+				break;
+			}
+			case Control::STRAFE_LEFT:{
+				_directionSpeed+=Vector3(1,0,0);
+				break;
+			}
+
+			case Control::STRAFE_RIGHT:{
+				_directionSpeed+=Vector3(-1,0,0);
+				break;
+			}
+
+			case Control::STOP_WALK:{
+				_directionSpeed+=Vector3(0,0,-1);
+				break;
+			}
+			case Control::STOP_WALKBACK:{
+				_directionSpeed+=Vector3(0,0,1);
+				break;
+			}
+			case Control::STOP_STRAFE_LEFT:{
+				_directionSpeed+=Vector3(-1,0,0);
+				break;
+			}
+
+			case Control::STOP_STRAFE_RIGHT:{
+				_directionSpeed+=Vector3(1,0,0);
+				break;
+			}
+
+		}
+	}
+
 } // namespace Logic
 
