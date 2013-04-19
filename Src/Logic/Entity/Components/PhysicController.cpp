@@ -32,16 +32,15 @@ IMP_FACTORY(CPhysicController);
 
 //________________________________________________________________________
 
-CPhysicController::CPhysicController() : IPhysics(), _movement(0,0,0), _falling(false) {
+CPhysicController::CPhysicController() {
 	// _controller <- Su valor se auto inicializa
-	_server = CServer::getSingletonPtr();
+	// en el proyecto de física
 }
 
 //________________________________________________________________________
 
 CPhysicController::~CPhysicController() {
 	// El destructor de _controller se auto ejecuta
-	_server = NULL;
 } 
 
 //________________________________________________________________________
@@ -52,16 +51,13 @@ bool CPhysicController::spawn(CEntity* entity, CMap *map, const Map::CEntity *en
 
 	// Crear el character controller asociado al componente
 	createController(entityInfo);
-	// Seteo de _falling a false para que se envie el primer mensaje de actualizacion
-	_falling = false;
-
 
 	return true;
 }
 
 //________________________________________________________________________
 
-bool CPhysicController::accept(CMessage *message) {
+/*bool CPhysicController::accept(CMessage *message) {
 	return message->getMessageType() == Message::AVATAR_WALK;
 }
 
@@ -85,11 +81,11 @@ void CPhysicController::tick(unsigned int msecs) {
 	IComponent::tick(msecs);
 
 	// Sino hay movimiento no hacemos nada
-	if(_movement == Vector3(0,0,0)) return;
+	if(_movement == Vector3::ZERO) return;
 
 	// Movemos el character controller
 	moveController(_movement, msecs);
-}
+}*/
 
 //________________________________________________________________________
 
@@ -214,11 +210,12 @@ void CPhysicController::activateSimulation() {
 
 //________________________________________________________________________
 
-void CPhysicController::moveController(Vector3& movement, unsigned int msecs) {
+unsigned CPhysicController::moveController(Vector3& movement, unsigned int msecs) {
 	// Intentamos mover el controller a la posición recibida en el último mensaje 
 	// de tipo AVATAR_WALK. 
-	unsigned flags = _controller.move(movement, msecs);
+	return _controller.move(movement, msecs);
 
+	/*
 	// Actualizar la posición y orientación de la entidad lógica usando la 
 	// información proporcionada por el motor de física	
 	_entity->setPosition( _controller.getPosition() );
@@ -244,4 +241,5 @@ void CPhysicController::moveController(Vector3& movement, unsigned int msecs) {
 	}
 
 	movement = Vector3::ZERO;
+	*/
 }

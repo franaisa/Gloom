@@ -25,10 +25,6 @@ namespace physx {
 	struct PxControllerShapeHit;
 };
 
-namespace Physics {
-	class CServer;
-};
-
 // Los componentes se definen dentro del namespace Logica
 namespace Logic 
 {
@@ -70,29 +66,6 @@ namespace Logic
 		virtual bool spawn(CEntity* entity, CMap *map, const Map::CEntity *entityInfo);
 
 		/**
-		Este componente sólo acepta mensajes de tipo AVATAR_WALK.
-		*/
-		virtual bool accept(CMessage *message);
-		
-		/**
-		Cuando se recibe un mensaje de tipo AVATAR_WALK, se almacena su vector de 
-		desplazamiento para mover el character controller en el próximo tick.
-		De esta forma, si en un ciclo se reciben varios mensaje de tipo AVATAR_WALK 
-		sólo tendrá efecto el último.
-		*/
-		virtual void process(CMessage *message);
-
-		/**
-		Este método se invoca en cada ciclo de la simulación y hace lo siguiente:
-		<ul>
-		<li> Actualiza la posición de la entidad lógica usando la información porporcionada por
-		     el motor de física. </li>
-		<li> Mueve el character controller de acuerdo al último mensaje AVATAR_WALK recibido. </li>
-		</ul>
-		*/
-		virtual void tick(unsigned int msecs);
-
-		/**
 		Setea la posición del controlador
 		*/
 		void  setPhysicPosition (const Vector3 &position);
@@ -120,7 +93,17 @@ namespace Logic
 
 		void deactivateSimulation();
 
-		void moveController(Vector3& movement, unsigned int msecs);
+		/**
+		Dado un vector de desplazamiento mueve la cápsula del player en esa dirección.
+		Si se produce alguna colisión durante el desplazamiento se levantan los flags
+		que correspondan en el entero devuelto.
+
+		@param movement Vector de desplazamiento.
+		@param msecs Tiempo durante el que queremos que se produzca el movimiento.
+		@return Flags de colisión. Mirar los flags de characterController en el proyecto
+		de físicas para más información.
+		*/
+		unsigned moveController(Vector3& movement, unsigned int msecs);
 
 	private:
 
@@ -132,18 +115,9 @@ namespace Logic
 		*/
 		void createController(const Map::CEntity *entityInfo);
 
-		// Servidor de física
-		Physics::CServer *_server;
-
 		// Character controller que representa la entidad física en PhysX
 		//physx::PxCapsuleController *_controller;
 		Physics::CCharacterController _controller;
-
-		// Vector de desplazamiento recibido en el último mensaje de tipo AVATAR_WALK. 
-		Vector3 _movement;
-
-		// Indica si el character controller esta apoyado sobre una superficie o cayendo.
-		bool _falling;
 
 	}; // class CPhysicController
 
