@@ -123,7 +123,12 @@ namespace Logic
 
 
 	protected:
+
+		void initWalkCommands();
+
 		float _speed;
+
+		Vector3 _walkCommands[8];
 
 		Vector3 _directionSpeed;
 	}; // class CAvatarController

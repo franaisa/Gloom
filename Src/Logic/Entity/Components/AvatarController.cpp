@@ -22,7 +22,11 @@ namespace Logic
 {
 	IMP_FACTORY(CAvatarController);
 
-	CAvatarController::CAvatarController(){}
+	CAvatarController::CAvatarController() {
+		// Inicializamos el array que contiene los vectores
+		// de cada tecla de movimiento
+		initWalkCommands();
+	}
 	
 	//---------------------------------------------------------
 
@@ -65,10 +69,9 @@ namespace Logic
 	void CAvatarController::process(CMessage *message)
 	{
 		//std::cout << "menssaje de avatar controller recibido" << std::endl;
-		switch(message->getMessageType())
-		{
-			case Message::CONTROL:{
-				CMessageControl* controlMsg = static_cast<CMessageControl*> (message) ;
+		switch(message->getMessageType()) {
+			case Message::CONTROL: {
+				CMessageControl* controlMsg = static_cast<CMessageControl*>(message);
 
 				executeControlCommand(controlMsg);
 
@@ -88,12 +91,14 @@ namespace Logic
 	
 	//---------------------------------------------------------
 
-	void CAvatarController::tick(unsigned int msecs)
-	{
+	void CAvatarController::tick(unsigned int msecs) {
 		//@deprecated
 		IComponent::tick(msecs);
+
 		//if(_directionSpeed == Vector3::ZERO)return;
-		Vector3 or = Math::getDirection(_entity->getOrientation());
+		
+		Vector3 charOrientation = Math::getDirection( _entity->getOrientation() );
+		//Vector3 displacement = ;
 
 		Vector3 _finalMovement = _directionSpeed.normalisedCopy()*msecs*_speed*Math::getDirection(_entity->getOrientation());
 
@@ -103,48 +108,19 @@ namespace Logic
 
 	} // tick
 
-
 	void CAvatarController::executeControlCommand(CMessageControl *controlMsg){
+		_directionSpeed += _walkCommands[ controlMsg->getType() ];
+	}
 
-
-		switch(controlMsg->getType()){
-			case Control::WALK:{
-				_directionSpeed+=Vector3(0,0,1);
-				break;
-			}
-			case Control::WALKBACK:{
-				_directionSpeed+=Vector3(0,0,-1);
-				break;
-			}
-			case Control::STRAFE_LEFT:{
-				_directionSpeed+=Vector3(1,0,0);
-				break;
-			}
-
-			case Control::STRAFE_RIGHT:{
-				_directionSpeed+=Vector3(-1,0,0);
-				break;
-			}
-
-			case Control::STOP_WALK:{
-				_directionSpeed+=Vector3(0,0,-1);
-				break;
-			}
-			case Control::STOP_WALKBACK:{
-				_directionSpeed+=Vector3(0,0,1);
-				break;
-			}
-			case Control::STOP_STRAFE_LEFT:{
-				_directionSpeed+=Vector3(-1,0,0);
-				break;
-			}
-
-			case Control::STOP_STRAFE_RIGHT:{
-				_directionSpeed+=Vector3(1,0,0);
-				break;
-			}
-
-		}
+	void CAvatarController::initWalkCommands() {
+		_walkCommands[Control::WALK]				= Vector3(0,0,1);
+		_walkCommands[Control::WALKBACK]			= Vector3(0,0,-1);
+		_walkCommands[Control::STRAFE_LEFT]			= Vector3(1,0,0);
+		_walkCommands[Control::STRAFE_RIGHT]		= Vector3(-1,0,0);
+		_walkCommands[Control::STOP_WALK]			= Vector3(0,0,-1);
+		_walkCommands[Control::STOP_WALKBACK]		= Vector3(0,0,1);
+		_walkCommands[Control::STOP_STRAFE_LEFT]	= Vector3(-1,0,0);
+		_walkCommands[Control::STOP_STRAFE_RIGHT]	= Vector3(1,0,0);
 	}
 
 } // namespace Logic
