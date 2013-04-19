@@ -163,9 +163,9 @@ namespace Application
 
 		virtual void dataPacketReceived(Net::CPaquete* packet);
 
-		virtual void connexionPacketReceived(Net::CPaquete* packet){}
+		virtual void connectionPacketReceived(Net::CPaquete* packet) { /* Los clientes no reciben este tipo de mensajes */ }
 
-		virtual void disconnexionPacketReceived(Net::CPaquete* packet){}
+		virtual void disconnectionPacketReceived(Net::CPaquete* packet) { /* Los clientes no reciben este tipo de mensajes */ }
 
 	private:
 

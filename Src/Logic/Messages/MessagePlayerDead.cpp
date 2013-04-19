@@ -17,13 +17,14 @@ namespace Logic {
 
 		_tempBuffer = new Net::CBuffer(sizeof(int));
 		_tempBuffer->serialize(std::string("CMessagePlayerDead"),true);
-		
+		_tempBuffer->serialize(_killer);
+
 		return _tempBuffer;
 	}//
 	//----------------------------------------------------------
 
 	void CMessagePlayerDead::deserialize(Net::CBuffer& buffer) {
-	// Nada que hacer
+		buffer.deserialize(_killer);
 	}
 
 };

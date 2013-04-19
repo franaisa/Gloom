@@ -61,6 +61,16 @@ namespace Logic {
 		@param netId Identificador de red del player que se va a crear.
 		*/
 		CPlayerInfo(Net::NetID netId);
+
+		//________________________________________________________________________
+
+		/**
+		Constructor por parametro
+		
+		@param netId Identificador de red del player que se va a crear.
+		@param nickname Nickname del player que se va a crear.
+		*/
+		CPlayerInfo(Net::NetID netId, const std::string& nickname);
 		
 		//________________________________________________________________________
 
@@ -117,6 +127,15 @@ namespace Logic {
 		//________________________________________________________________________
 
 		/**
+		Devuelve la clase que esta usando el player.
+
+		@return La clase del player.
+		*/
+		std::string getPlayerClass();
+
+		//________________________________________________________________________
+
+		/**
 		Devuelve el mesh del player.
 
 		@return El mesh del player.
@@ -152,6 +171,15 @@ namespace Logic {
 		@return Numero de clientes que este player ha cargado.
 		*/
 		unsigned int playersLoaded();
+
+		//________________________________________________________________________
+
+		/**
+		Indica si el player ha sido spawneado en la partida online o no.
+
+		@return True si la entidad ha sido spawneada.
+		*/
+		bool isSpawned();
 
 
 		// =======================================================================
@@ -192,38 +220,15 @@ namespace Logic {
 		@param Identificador de red que se le va a asignar al player.
 		*/
 		void setNetId(Net::NetID netId);
+
+		//________________________________________________________________________
 		
-
-		// =======================================================================
-		//                            MODIFICADORES
-		// =======================================================================
-
-
 		/**
-		Añade un player a la lista de players cargados de nuestro player con el 
-		identificador de red dado.
+		Setea el estado del jugador, si jugando o espectando/conectandose.
 
-		@param playerNetId Identificador de red del player que se ha cargado.
-		@return true si el player no existia en la lista de players cargados.
+		@param playing True si el jugador esta spawneado.
 		*/
-		bool loadPlayer(Net::NetID playerNetId);
-
-		//________________________________________________________________________
-
-		/**
-		Elimina un player de la lista de players cargados.
-
-		@param playerNetId Identificador de red del player que se desea eliminar.
-		@return true si el player estaba en la lista de players cargados.
-		*/
-		bool unloadPlayer(Net::NetID playerNetId);
-
-		//________________________________________________________________________
-
-		/**
-		Limpiar la lista de players cargados.
-		*/
-		void clearLoadedPlayers();
+		void isSpawned(bool playing);
 
 	private:
 
@@ -253,12 +258,11 @@ namespace Logic {
 
 		/** Identificador de la entidad de red */
 		Net::NetID _netId;
-		
-		/**
-		Arbol binario que contiene los id's de red de los jugadores
-		que este player ya ha cargado.
-		*/
-		std::set<Net::NetID> _playersLoaded;
+
+		/** 
+		True si el jugador esta dentro de la partida, false si se esta conectando
+		o está en modo espectador. */
+		bool _isPlaying;
 	};
 
 };

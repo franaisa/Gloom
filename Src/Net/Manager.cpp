@@ -100,7 +100,7 @@ namespace Net {
 
 	//---------------------------------------------------------
 
-	void CManager::send(void* data, size_t longdata) {
+	void CManager::broadcast(void* data, size_t longdata) {
 		// Si hay jugadores conectados
 		if(!_connections.empty()) {
 			// Si somos el servidor realizar un broadcast a todos los clientes
@@ -115,7 +115,7 @@ namespace Net {
 
 	//---------------------------------------------------------
 
-	void CManager::send(void* data, size_t longdata, Net::NetID id) {
+	void CManager::sendTo(Net::NetID id, void* data, size_t longdata) {
 		if(!_connections.empty()) {
 			// Si somos el servidor mandamos el mensaje al cliente que nos han indicado
 			// por parametro
@@ -130,13 +130,13 @@ namespace Net {
 
 	//---------------------------------------------------------
 
-	void CManager::sendAllExcept(void* data, size_t longdata, Net::NetID id) {
+	void CManager::broadcastIgnoring(Net::NetID id, void* data, size_t longdata) {
 		// Si hay jugadores conectados
 		if(!_connections.empty()) {
 			// Si somos el servidor realizar un broadcast a todos los clientes
 			if(_servidorRed) {
 				TConnectionTable::iterator it = _connections.find(id);
-				assert(it != _connections.end() && "sendAllExcept no puede ejecutarse porque no existe ninguna conexion con el id dado");
+				assert(it != _connections.end() && "broadcastIgnoring no puede ejecutarse porque no existe ninguna conexion con el id dado");
 
 				_servidorRed->sendAllExcept(data, longdata, 0, 1, it->second);
 			}
@@ -160,7 +160,7 @@ namespace Net {
 				case Net::CONEXION:
 					connect(paquete->getConexion());
 					for(std::vector<IObserver*>::iterator iter = _observers.begin();iter != _observers.end();++iter)
-						(*iter)->connexionPacketReceived(paquete);
+						(*iter)->connectionPacketReceived(paquete);
 					break;
 				case Net::DATOS:
 					
@@ -172,7 +172,7 @@ namespace Net {
 					break;
 				case Net::DESCONEXION:
 					for(std::vector<IObserver*>::iterator iter = _observers.begin();iter != _observers.end();++iter)
-						(*iter)->disconnexionPacketReceived(paquete);
+						(*iter)->disconnectionPacketReceived(paquete);
 					disconnect(paquete->getConexion());
 					break;
 			}
@@ -207,16 +207,21 @@ namespace Net {
 
 	//---------------------------------------------------------
 
-	void CManager::connectTo(char* address, int port, int channels, unsigned int timeout)
+	bool CManager::connectTo(char* address, int port, int channels, unsigned int timeout)
 	{
 		assert(_clienteRed && "Cliente Red es null"); // Solo se puede ejecutar el connectTo si somos cliente
 		assert(_connections.empty() && "Ya hay una conexion"); // Capamos al cliente a 1 conexión max: la de con el server
 
-		CConexion* connection = _clienteRed->connect(address, port, channels, timeout*100); // CONNECT
+		CConexion* connection = _clienteRed->connect(address, port, channels, timeout); // CONNECT
+		
+		if(!connection)
+			return false;
 		
 		// Almacenamos esa conexión y le otorgamos un ID de red
 		connection->setId(Net::ID::SERVER); // Un cliente sólo se conecta al SERVER
 		addConnection(Net::ID::SERVER, connection); // Guardamos en la tabla
+
+		return true;
 	} // connectTo
 
 	//---------------------------------------------------------
@@ -315,7 +320,6 @@ namespace Net {
 			_clienteRed = 0;
 		}
 		if(!_connections.empty()) {
-			CConexion* connection;
 			for(TConnectionTable::const_iterator it = _connections.begin(); it != _connections.end(); it++)
 				delete it->second;
 			

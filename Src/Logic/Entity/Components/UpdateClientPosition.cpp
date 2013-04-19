@@ -23,11 +23,12 @@ namespace Logic
 	//________________________________________________________________________
 
 	void CUpdateClientPosition::tick(unsigned int msecs) {
-		IComponent::tick(msecs);
-		
 		if(_timer > _syncPosTimeStamp) {
 			std::shared_ptr<CMessageSyncPosition> msg = std::make_shared<CMessageSyncPosition>();
 			msg->setTransform( _entity->getTransform() );
+
+			Vector3 position = _entity->getPosition();
+
 			msg->setTime(clock());
 			_entity->emitMessage(msg);
 			_timer = 0;

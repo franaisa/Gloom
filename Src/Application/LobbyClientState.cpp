@@ -92,8 +92,7 @@ namespace Application {
 
 	//--------------------------------------------------------
 
-	void CLobbyClientState::tick(unsigned int msecs) 
-	{
+	void CLobbyClientState::tick(unsigned int msecs) {
 		CApplicationState::tick(msecs);
 
 	} // tick
@@ -110,22 +109,20 @@ namespace Application {
 		buffer.read(&msg, sizeof(msg));
 
 		switch (msg) {
-			case Net::LOAD_PLAYER_INFO: {
-				// Obtenemos el nombre del mesh que va a usar el player
-				std::string playerModel = "marine.mesh";
-
-				// Obtenemos el nombre del player
+			case Net::SEND_PLAYER_INFO: {
+				// Obtenemos el nickname del player, que de momento es la única información asociada al
+				// player que tenemos
 				std::string playerNick = _menu->callFunction("getNick",Hikari::Args()).getString();
 
 				// Enviamos los datos del player al servidor
 				Net::NetMessageType msg = Net::PLAYER_INFO;
-
-				Net::CBuffer playerData(sizeof(msg) + playerNick.size() + playerModel.size());
-				playerData.write(&msg, sizeof(msg)); // Por problemas con enumerados serializamos manualmente
+				
+				// El tamaño del buffer es: cabecera + entero para el tam del nick + num de letras del nick
+				Net::CBuffer playerData( sizeof(msg) + sizeof(unsigned int) + (playerNick.size() * sizeof(char)) );
+				playerData.write( &msg, sizeof(msg) ); // Por problemas con enumerados serializamos manualmente
 				playerData.serialize(playerNick, false);
-				playerData.serialize(playerModel, false);
 
-				Net::CManager::getSingletonPtr()->send(playerData.getbuffer(), playerData.getSize());
+				Net::CManager::getSingletonPtr()->broadcast( playerData.getbuffer(), playerData.getSize() );
 
 				break;
 			}
@@ -152,42 +149,41 @@ namespace Application {
 					Net::CBuffer ackBuffer(sizeof(ackMsg));
 
 					ackBuffer.write(&ackMsg, sizeof(ackMsg));
-					Net::CManager::getSingletonPtr()->send(ackBuffer.getbuffer(), ackBuffer.getSize());
+					Net::CManager::getSingletonPtr()->broadcast(ackBuffer.getbuffer(), ackBuffer.getSize());
 				}
 
 				break;
 			}
-			case Net::LOAD_PLAYER: {
-				// Creamos el player. Deberíamos poder propocionar caracteríasticas
-				// diferentes según el cliente (nombre, modelo, etc.). Esto es una
-				// aproximación, solo cambiamos el nombre y decimos si es el jugador
-				// local. Los datos deberían llegar en el paquete de red.
-				Net::NetID id;
+			case Net::LOAD_PLAYERS: {
+				// Cargamos los players que ya estaban en la partida
+				int nbPlayers;
 				Logic::TEntityID entityID;
-				//memcpy(&id, packet->getData() + sizeof(msg), sizeof(id));
-				buffer.read(&id, sizeof(id));
-				buffer.read(&entityID, sizeof(entityID));
-				std::string name;
-				buffer.deserialize(name);
+				std::string playerClass, name;
 
-				//llamo al metodo de creacion del jugador
-				if(id == Net::CManager::getSingletonPtr()->getID()) {//si soy yo, me creo como jugador local
-					Logic::CEntity * player = Logic::CServer::getSingletonPtr()->getMap()->createLocalPlayer(name, entityID);
-					player->getEntityID();
-				}else{//si no soy yo, me creo como jugador remoto
-					Logic::CEntity * player = Logic::CServer::getSingletonPtr()->getMap()->createPlayer(name, entityID);
+				buffer.read(&nbPlayers, sizeof(nbPlayers));
+				for(int i = 0; i < nbPlayers; ++i) {
+					buffer.read(&entityID, sizeof(entityID));
+					buffer.deserialize(name);
+					buffer.deserialize(playerClass);
+
+					// Llamo al metodo de creacion del jugador
+					Logic::CEntity * player = Logic::CServer::getSingletonPtr()->getMap()->createPlayer(name, playerClass, entityID);
 				}
-				//Enviamos el mensaje de que se ha creado el jugador
-				Net::NetMessageType ackMsg = Net::PLAYER_LOADED;
-				Net::CBuffer ackBuffer(sizeof(ackMsg) + sizeof(id));
-				ackBuffer.write(&ackMsg, sizeof(ackMsg));
-				ackBuffer.write(&id, sizeof(id));
-				Net::CManager::getSingletonPtr()->send(ackBuffer.getbuffer(), ackBuffer.getSize());
+				
+				// Confirmamos de que se han cargado todos los players con exito
+				Net::NetMessageType ackMsg = Net::PLAYERS_LOADED;
+				Net::CManager::getSingletonPtr()->broadcast( &ackMsg, sizeof(ackMsg) );
 				
 				break;
 			}
+			case Net::LOAD_WORLD_STATE: {
+				// Deserializar el estado del mundo
+
+				Net::NetMessageType worldStateLoadedMsg = Net::NetMessageType::WORLD_STATE_LOADED;
+				Net::CManager::getSingletonPtr()->broadcast( &worldStateLoadedMsg, sizeof(worldStateLoadedMsg) );
+			}
 			case Net::START_GAME: {
-				_app->setState("multiplayerTeamDeathmatchClient");
+				_app->setState("gameClient");
 				break;
 			}
 		}
@@ -270,7 +266,9 @@ namespace Application {
 	void CLobbyClientState::doStart(string ip)
 	{
 		// Conectamos
-		Net::CManager::getSingletonPtr()->connectTo((char*)ip.c_str(),1234,1);
+		if (!Net::CManager::getSingletonPtr()->connectTo((char*)ip.c_str(),1234,1)){
+			_menu->callFunction("enableButton",Hikari::Args());
+		}
 	} // doStart
 
 } // namespace Application

@@ -120,6 +120,8 @@ namespace Logic
 		*/
 		void setTargetEnemy(CEntity* enemy);
 
+		void setTarget(CEntity * entity){_target = entity;}
+
 
 	protected:
 		

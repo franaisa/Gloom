@@ -128,7 +128,7 @@ namespace Physics {
 		@param autowake True si queremos que el actor se despierte al ser empujado (si estaba
 		durmiendo).
 		*/
-		void addForce(const Vector3& forceVector, ForceMode forceMode = ForceMode::eFORCE, bool autowake = true);
+		void addForce(const Vector3& forceVector, ForceMode forceMode = eFORCE, bool autowake = true);
 
 		//________________________________________________________________________
 
@@ -140,7 +140,7 @@ namespace Physics {
 		@param autowake True si queremos que el actor se despierte al ser empujado (si estaba
 		durmiendo).
 		*/
-		void addTorque(const Vector3& forceVector, ForceMode forceMode = ForceMode::eFORCE, bool autowake = true);
+		void addTorque(const Vector3& forceVector, ForceMode forceMode = eFORCE, bool autowake = true);
 
 		//________________________________________________________________________
 

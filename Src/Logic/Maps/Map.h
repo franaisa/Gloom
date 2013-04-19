@@ -172,9 +172,8 @@ namespace Logic
 
 		@param name Nombre del jugador.
 		*/
-		CEntity* createLocalPlayer(std::string name);
 
-		CEntity* createPlayer(std::string name);
+		CEntity* createPlayer(const std::string &name, const std::string &type);
 
 		/**
 		Crea un nuevo jugador y le porporciona un nombre determinado.
@@ -182,9 +181,9 @@ namespace Logic
 		@param name Nombre del jugador.
 		@param id La id de la entidad que devuelve el método.
 		*/
-		CEntity* createLocalPlayer(std::string name, TEntityID id);
+		CEntity* createLocalPlayer(const std::string &name, const std::string &type, TEntityID id);
 
-		CEntity* createPlayer(std::string name, TEntityID id);
+		CEntity* createPlayer(const std::string &name, const std::string &type, TEntityID id);
 
 		/**
 			Método que elimina una entidad en el siguiente tick del mapa

@@ -120,8 +120,6 @@ namespace Logic
 		*/
 		inline bool isActivated() { return _isActivated; }
 
-		inline bool isStartingUp() { return _isStartingUp; }
-
 		/**
 		Método que activa el componente; invocado cuando se activa
 		el mapa donde está la entidad a la que pertenece el componente.
@@ -145,8 +143,20 @@ namespace Logic
 		*/
 		virtual void deactivate();
 
-		// Es muy importante que se llame en los hijos a onStart de la clase padre
-		// si no, no se reciben mensajes ni se setean bien las colas.
+		void (IComponent::*updater)(unsigned int);
+
+		/**
+		Representa el primer tick de la entidad. Se ejecuta una sola vez tras la activación
+		del jugador.
+
+		Es muy útil para inicializar datos ya que en esta fase SI que se pueden mandar
+		mensajes a otras entidades (ya que su spawn ya ha sido realizado).
+
+		IMPORTANTE: Los hijos deben llamar al método onStart del padre (tal y como sucede
+		con el tick) para que todo funcione correctamente.
+
+		@param msecs Milisegundos transcurridos para este primer tick.
+		*/
 		virtual void onStart(unsigned int msecs);
 
 		/**
@@ -173,6 +183,12 @@ namespace Logic
 		*/
 		friend class CEntity;
 
+		inline void tickSetup(unsigned int msecs);
+
+		inline void onStartSetup(unsigned int msecs);
+
+		void activateSetup();
+
 		/**
 		Método que establece la entidad a la que pertenece el componente.
 
@@ -190,10 +206,6 @@ namespace Logic
 		True si el componente esta activado.
 		*/
 		bool _isActivated;
-
-		/** True si el componente va a ejecutar la fase onStart en vez del tick */
-		bool _isStartingUp;
-
 	}; // class IComponent
 
 

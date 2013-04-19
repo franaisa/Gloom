@@ -109,8 +109,6 @@ namespace Logic {
 	//__________________________________________________________________
 
 	void CShoot::tick(unsigned int msecs) {
-		IComponent::tick(msecs);
-		
 		if(_cooldownTimer < _cooldown)
 			_cooldownTimer += msecs;
 		else

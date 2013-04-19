@@ -59,7 +59,9 @@ namespace Logic
 		convert << entityId;
 		std::string nameId = convert.str();
 
-		newEntityInfo->setName(entityInfo->getStringAttribute("name") + nameId);
+		if(map->getEntityByName(newEntityInfo->getName()))
+			newEntityInfo->setName(entityInfo->getStringAttribute("name") + nameId);
+
 
 		return spawn(map, newEntityInfo);
 	}
@@ -130,7 +132,7 @@ namespace Logic
 		_activated = true;
 
 		for(; it != _componentList.end(); ++it){
-			(*it)->activate();
+			(*it)->activateSetup();
 			_activated = (*it)->isActivated() && _activated;
 		}
 
@@ -170,7 +172,7 @@ namespace Logic
 		bool desactivar=true;
 		for(; it!=_components.end(); ++it){
 
-			for(int i = 0; i < exceptionList.size(); ++i){
+			for(unsigned int i = 0; i < exceptionList.size(); ++i){
 				if( exceptionList[i] == it->first )
 					desactivar=false;
 			}
@@ -184,24 +186,16 @@ namespace Logic
 
 	//---------------------------------------------------------
 
-	void CEntity::tick(unsigned int msecs) 
-	{
+	void CEntity::tick(unsigned int msecs) {
 		TComponentList::const_iterator it = _componentList.begin();
 
 		IComponent* component;
 		for(; it != _componentList.end(); ++it) {
 			component = *it;
 			if( component->isActivated() ) {
-				// De momento se hace esta comprobación extra para
-				// ver si lanzamos onStart
-				// Lo suyo es hacer colas distintas para evitar estas
-				// comprobaciones tontas
-				if( component->isStartingUp() ) {
-					component->onStart(msecs);
-				}
-				else {
-					component->tick(msecs);
-				}
+				// El propio componente setea el puntero a funcion de actualizacion
+				// el es el que nos indica si ejecutar onStart u onTick
+				(component->*component->updater)(msecs);
 			}
 		}
 
@@ -298,7 +292,8 @@ namespace Logic
 	void CEntity::setPosition(const Vector3 &position) 
 	{
 		_transform.setTrans(position);
-
+		if(getType()=="Screamer")
+			int a = 5;
 		// Avisamos a los componentes del cambio.
 		std::shared_ptr<CMessageTransform> m = std::make_shared<CMessageTransform>();
 		m->setTransform(_transform);

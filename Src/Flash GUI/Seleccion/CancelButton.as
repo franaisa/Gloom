@@ -36,7 +36,7 @@ package
 		}
 		
 		private function onMouseClick(e:MouseEvent):void {
-			ExternalInterface.call("cancel");
+			ExternalInterface.call("selected", 0);
 		}
 		
 	}

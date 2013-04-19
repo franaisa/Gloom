@@ -112,8 +112,8 @@
     <ClCompile Include="..\..\Src\Application\LobbyClientState.cpp" />
     <ClCompile Include="..\..\Src\Application\LobbyServerState.cpp" />
     <ClCompile Include="..\..\Src\Application\MenuState.cpp" />
-    <ClCompile Include="..\..\Src\Application\MultiplayerTeamDeathmatchClientState.cpp" />
-    <ClCompile Include="..\..\Src\Application\MultiplayerTeamDeathmatchServerState.cpp" />
+    <ClCompile Include="..\..\Src\Application\GameClientState.cpp" />
+    <ClCompile Include="..\..\Src\Application\GameServerState.cpp" />
     <ClCompile Include="..\..\Src\Application\NetMenuState.cpp" />
     <ClCompile Include="..\..\Src\Application\OgreClock.cpp" />
     <ClCompile Include="..\..\Src\Application\SelectScenario.cpp" />
@@ -134,15 +134,14 @@
     <ClInclude Include="..\..\Src\Application\LobbyClientState.h" />
     <ClInclude Include="..\..\Src\Application\LobbyServerState.h" />
     <ClInclude Include="..\..\Src\Application\MenuState.h" />
-    <ClInclude Include="..\..\Src\Application\MultiplayerTeamDeathmatchClientState.h" />
-    <ClInclude Include="..\..\Src\Application\MultiplayerTeamDeathmatchServerState.h" />
+    <ClInclude Include="..\..\Src\Application\GameClientState.h" />
+    <ClInclude Include="..\..\Src\Application\GameServerState.h" />
     <ClInclude Include="..\..\Src\Application\NetMenuState.h" />
     <ClInclude Include="..\..\Src\Application\OgreClock.h" />
     <ClInclude Include="..\..\Src\Application\SelectScenario.h" />
     <ClInclude Include="..\..\Src\Application\SinglePlayerState.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="AppDiagram7FEB.cd" />
     <None Include="Galeon.ico" />
     <None Include="small.ico" />
   </ItemGroup>

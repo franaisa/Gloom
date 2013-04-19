@@ -86,9 +86,6 @@ namespace Logic
 
 	void CSwitchPosition::tick(unsigned int msecs)
 	{
-		// Invocamos al método de la clase padre
-		IComponent::tick(msecs);
-
 		// Calcular la dirección en la que debemos mover la entidad
 		Vector3 displ = _targetPosition - _entity->getPosition();
 	

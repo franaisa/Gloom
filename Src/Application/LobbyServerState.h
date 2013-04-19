@@ -50,7 +50,7 @@ namespace Application
 	@author David Llansó
 	@date Agosto, 2010
 	*/
-	class CLobbyServerState : public CApplicationState , public Net::CManager::IObserver
+	class CLobbyServerState : public CApplicationState
 	{
 	public:
 		/** 
@@ -166,14 +166,6 @@ namespace Application
 		virtual bool mouseReleased(const Input::CMouseState &mouseState);
 
 
-		/******************
-			IOBSERVER
-		******************/
-		virtual void dataPacketReceived(Net::CPaquete* packet);
-		virtual void connexionPacketReceived(Net::CPaquete* packet);
-		virtual void disconnexionPacketReceived(Net::CPaquete* packet);
-
-
 	private:
 
 		/**
@@ -231,13 +223,6 @@ namespace Application
 		Simplemente cambia al estado de menu.
 		*/
 		Hikari::FlashValue createReleased(Hikari::FlashControl* caller, const Hikari::Arguments& args);
-
-		/**
-		* Función que ejecuta la acción start. 
-		Centraliza el código y será invocada cuando se pulse la tecla correspondiente o se
-		genere el evento de ratón
-		*/
-		void doStart();
 
 		/**
 		Método que lista los ficheros que hay en el directorio /media/maps y los muestra en el gui sin la extension

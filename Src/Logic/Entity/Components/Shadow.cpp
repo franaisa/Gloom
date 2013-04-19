@@ -42,20 +42,18 @@ namespace Logic {
 	bool CShadow::spawn(CEntity* entity, CMap* map, const Map::CEntity* entityInfo) {
 		if( !CPlayerClass::spawn(entity,map,entityInfo) ) return false;
 
-		_invisibilityTimer=0;
+		_invisibilityTimer = 0;
 
 		// Leer el tiempo que dura la invisibilidad
-		assert( entityInfo->hasAttribute("shadowInvisibilityDuration") );
+		assert( entityInfo->hasAttribute("invisibilityDuration") );
 		// Pasamos el tiempo a msecs
-		_invisibilityDuration = entityInfo->getFloatAttribute("shadowInvisibilityDuration") * 1000;
-		
+		_invisibilityDuration = entityInfo->getFloatAttribute("invisibilityDuration") * 1000;
+		return true;
 	} // spawn
 
 	//__________________________________________________________________
 
 	void CShadow::tick(unsigned int msecs) {
-		CPlayerClass::tick(msecs);
-
 		// Si la habilidad primaria esta en uso, controlar el tiempo
 		// efectivo de la invisibilidad. Cuando se cumpla el tiempo,
 		// deshabilitamos el shader de transparencia.

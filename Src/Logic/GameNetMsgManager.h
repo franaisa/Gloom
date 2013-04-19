@@ -126,8 +126,8 @@ namespace Logic
 
 		/// IOBSERVER
 		virtual void dataPacketReceived(Net::CPaquete* packet);
-		virtual void connexionPacketReceived(Net::CPaquete* packet){}
-		virtual void disconnexionPacketReceived(Net::CPaquete* packet){}
+		virtual void connectionPacketReceived(Net::CPaquete* packet) { /* GameNetMsgManager no recibe este tipo de mensajes */ }
+		virtual void disconnectionPacketReceived(Net::CPaquete* packet) { /* GameNetMsgManager no recibe este tipo de mensajes */ }
 
 	protected:
 		

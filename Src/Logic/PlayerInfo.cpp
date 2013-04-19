@@ -14,12 +14,27 @@ Contiene la implementación de la clase PlayerInfo para el proyecto de logica.
 */
 
 #include "PlayerInfo.h"
+#include "Logic/Server.h"
+#include "Logic/Maps/Map.h"
+#include "Logic/Entity/Entity.h"
 
 namespace Logic {
 
 	CPlayerInfo::CPlayerInfo(Net::NetID netId) : _netId(netId), 
 											     _rank(0), 
-												 _entityIdInitialized(false) {
+												 _entityIdInitialized(false),
+												 _isPlaying(false) {
+		
+		// No hay memoria dinamica que inicializar
+	}
+
+	//______________________________________________________________________________
+
+	CPlayerInfo::CPlayerInfo(Net::NetID netId, const std::string& nickname) : _netId(netId), 
+																			  _rank(0),
+																			  _name(nickname),
+																			  _entityIdInitialized(false),
+																			  _isPlaying(false) {
 		
 		// No hay memoria dinamica que inicializar
 	}
@@ -33,7 +48,7 @@ namespace Logic {
 													   _entityId(rhs._entityId),
 													   _entityIdInitialized(rhs._entityIdInitialized),
 													   _netId(rhs._netId),
-													   _playersLoaded(rhs._playersLoaded) {
+													   _isPlaying(rhs._isPlaying) {
 		// No hay memoria dinamica que inicializar
 	}
 
@@ -48,7 +63,7 @@ namespace Logic {
 			_entityId = rhs._entityId;
 			_entityIdInitialized = rhs._entityIdInitialized;
 			_netId = rhs._netId;
-			_playersLoaded = rhs._playersLoaded;
+			_isPlaying = rhs._isPlaying;
 		}
 
 		return *this;
@@ -64,12 +79,7 @@ namespace Logic {
 	   out << "EntityID = " << playerInfo._entityId << std::endl;
 	   out << "EntityIDInitialized = " << (playerInfo._entityIdInitialized ? "true" : "false") << std::endl;
 	   out << "NetID = " << playerInfo._netId << std::endl;
-	   out << "NetID's de jugadores cargados =";
-
-	   std::set<Net::NetID>::iterator it = playerInfo._playersLoaded.begin();
-	   for(; it != playerInfo._playersLoaded.end(); ++it) {
-		   out << " " << *it;
-	   }
+	   out << "spawned = " << (playerInfo._isPlaying ? "true" : "false") << std::endl;
 
 	   return out;
 	}
@@ -78,6 +88,15 @@ namespace Logic {
 
 	std::string CPlayerInfo::getName() {
 		return _name;
+	}
+
+	//______________________________________________________________________________
+
+	std::string CPlayerInfo::getPlayerClass() {
+		CEntity* entity = CServer::getSingletonPtr()->getMap()->getEntityByID(_entityId);
+		assert(entity && "Error: El gestor no puede devolver la clase del jugador porque no existe en el mapa");
+		
+		return entity->getType();
 	}
 
 	//______________________________________________________________________________
@@ -99,9 +118,9 @@ namespace Logic {
 	}
 
 	//______________________________________________________________________________
-	
-	unsigned int CPlayerInfo::playersLoaded() {
-		return _playersLoaded.size();
+
+	bool CPlayerInfo::isSpawned() {
+		return _isPlaying;
 	}
 
 	//______________________________________________________________________________
@@ -131,20 +150,8 @@ namespace Logic {
 
 	//______________________________________________________________________________
 
-	bool CPlayerInfo::loadPlayer(Net::NetID playerNetId) {
-		return _playersLoaded.insert(playerNetId).second;
-	}
-
-	//______________________________________________________________________________
-
-	bool CPlayerInfo::unloadPlayer(Net::NetID playerNetId) {
-		return _playersLoaded.erase(playerNetId) > 0;
-	}
-
-	//______________________________________________________________________________
-
-	void CPlayerInfo::clearLoadedPlayers() {
-		_playersLoaded.clear();
+	void CPlayerInfo::isSpawned(bool playing) {
+		_isPlaying = playing;
 	}
 
 };

@@ -10,7 +10,7 @@ implementa las habilidades del personaje
 
 @author Francisco Aisa García.
 @author Jaime Chapinal Cervantes
-@date Marzo, 2013
+@date Marzo, 2013f
 */
 
 #include "Archangel.h"
@@ -46,12 +46,12 @@ namespace Logic {
 			return false;
 
 		// Leer atributos propios
-		_inmuneTimer = 0;
+		_inmunityTimer = 0;
 
 		// Leer el tiempo que dura la invisibilidad
-		assert( entityInfo->hasAttribute("archangelPrimarySkillCooldown") );
+		assert( entityInfo->hasAttribute("inmunityDuration") );
 		// Pasamos el tiempo a msecs
-		_inmuneDuration = entityInfo->getFloatAttribute("archangelPrimarySkillCooldown") * 1000;
+		_inmunityDuration = entityInfo->getFloatAttribute("inmunityDuration") * 1000;
 		
 		return true; //Para quitar el warning?
 	} // spawn
@@ -59,16 +59,14 @@ namespace Logic {
 	//__________________________________________________________________
 
 	void CArchangel::tick(unsigned int msecs) {
-		CPlayerClass::tick(msecs);
-
 		// Si la habilidad primaria esta en uso, controlar el tiempo
 		// efectivo siendo inmune. Cuando se cumpla el tiempo,
 		// deshabilitamos la reducción de daño
-		if(_inmuneTimer > 0) {
-			_inmuneTimer -= msecs;
+		if(_inmunityTimer > 0) {
+			_inmunityTimer -= msecs;
 
-			if(_inmuneTimer <= 0) {
-				_inmuneTimer = 0;
+			if(_inmunityTimer <= 0) {
+				_inmunityTimer = 0;
 
 				// Seteamos la reducción de daño a 0 de manera que recibimos los daños normales
 				std::shared_ptr<CMessageSetReducedDamage> pReducedDmgMsg = std::make_shared<CMessageSetReducedDamage>();
@@ -79,6 +77,9 @@ namespace Logic {
 				std::shared_ptr<CMessageChangeMaterial> materialMsg = std::make_shared<CMessageChangeMaterial>();
 				materialMsg->setMaterialName("marine_amarillo");
 				_entity->emitMessage(materialMsg);
+			}
+			else {
+				_inmunityTimer -= msecs;
 			}
 		}
 	}
@@ -93,8 +94,7 @@ namespace Logic {
 		std::shared_ptr<CMessageChangeMaterial> materialMsg = std::make_shared<CMessageChangeMaterial>();
 		materialMsg->setMaterialName("marine_amarillo");
 		_entity->emitMessage(materialMsg);
-
-		_inmuneTimer = 0;
+		_inmunityTimer = 0;
 	}
 
 	//__________________________________________________________________
@@ -103,7 +103,7 @@ namespace Logic {
 		std::cout << "Primary Skill - Archangel" << std::endl;
 
 		// Arrancamos el cronometro
-		_inmuneTimer = _inmuneDuration;
+		_inmunityTimer = _inmunityDuration;
 
 		// Seteamos la reducción de daño al máximo de manera que no se reciban daños
 		std::shared_ptr<CMessageSetReducedDamage> pReducedDmgMsg = std::make_shared<CMessageSetReducedDamage>();

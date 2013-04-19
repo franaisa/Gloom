@@ -30,6 +30,13 @@ namespace Logic {
 	// Predeclaracion del typedef TEntityID
 	typedef unsigned int TEntityID;
 
+	/** Estados del jugador online */
+	/*enum NetPlayerMode {
+		eCONNECTING,
+		eSPECTATING,
+		ePLAYING
+	};*/
+
 	/**
 	Esta clase es la encargada de controlar toda la información lógica 
 	asociada a los jugadores conectados a una partida (nombre, clase, 
@@ -110,32 +117,23 @@ namespace Logic {
 		//________________________________________________________________________
 
 		/**
+		Inserta un nuevo jugador con un nickname dado.
+		
+		@param playerNetId Identificador de red del player a insertar.
+		@param playerNickname Nickname del player que acaba de conectarse.
+		@return true si no existe otro player con el mismo identificador de red.
+		*/
+		bool addPlayer(Net::NetID playerNetId, const std::string& playerNickname);
+
+		//________________________________________________________________________
+
+		/**
 		Elimina a un jugador del gestor dado su identificador de red.
 
 		@param playerNetId Identificador de red del player que se desea eliminar.
 		@return true si el player estaba registrado.
 		*/
 		bool removePlayer(Net::NetID playerNetId);
-
-		//________________________________________________________________________
-
-		/**
-		Añade un jugador a la lista de jugadores cargados de otro jugador.
-
-		@param playerNetId Identificador de red del player que ha cargado un nuevo jugador.
-		@param idPlayerToLoad Identificador de red del jugador que ha cargado el player.
-		*/
-		void loadPlayer(Net::NetID playerNetId, Net::NetID idPlayerToLoad);
-
-		//________________________________________________________________________
-
-		/**
-		Elimina un jugador de la lista de jugadores cargados de un player concreto.
-
-		@param playerNetId Identificador de red del player que debe eliminar a un jugador de su lista.
-		@param idPlayerToUnload Identificador de red del player que debe eliminarse de la lista.
-		*/
-		void unloadPlayer(Net::NetID playerNetId, Net::NetID idPlayerToUnload);
 
 
 		// =======================================================================
@@ -171,22 +169,21 @@ namespace Logic {
 		*/
 		void setEntityID(Net::NetID playerNetId, TEntityID entityId);
 
+		//________________________________________________________________________
+
+		/**
+		Indica el estado en el que se encuentra un player dado su identificador de red.
+
+		@param playerNetId Identificador de red del player.
+		@param isSpawned true si la entidad está spawneada y en la partida.
+		*/
+		void setPlayerState(Net::NetID playerNetId, bool isSpawned);
+
 
 		// =======================================================================
 		//                                GETTERS
 		// =======================================================================
 		
-
-		/**
-		Devuelve el numero de jugadores que ha cargado un player dado su identificador
-		de red.
-
-		@param playerNetId Identificador de red del player.
-		@return Numero de jugadores que el player ha cargado.
-		*/
-		unsigned int getPlayersLoaded(Net::NetID playerNetId);
-
-		//________________________________________________________________________
 
 		/**
 		Devuelve toda la informacion asociada a un jugador dado su identificador de red.
@@ -234,6 +231,37 @@ namespace Logic {
 		@return Numero total de jugadores conectados.
 		*/
 		unsigned int getNumberOfPlayersConnected();
+
+		//________________________________________________________________________
+
+		/**
+		Devuelve el numero de jugadores spawneados.
+
+		@return Numero de jugadores spawneados.
+		*/
+		unsigned int getNumberOfPlayersSpawned();
+
+		//________________________________________________________________________
+
+		/**
+		Método para saber si un jugador está listado en el gestor de jugadores
+		dado su id de red.
+
+		@return true Si el jugador con el id de red dado está en la lista de jugadores
+		conectados.
+		*/
+		bool existsByNetId(Net::NetID playerNetId);
+
+		//________________________________________________________________________
+
+		/**
+		Método para saber si un jugador está listado en el gestor de jugadores
+		dado su id lógico.
+
+		@return true Si el jugador con el id lógico dado está en la lista de jugadores
+		conectados.
+		*/
+		bool existsByLogicId(Logic::TEntityID playerId);
 
 
 		// =======================================================================
@@ -290,7 +318,6 @@ namespace Logic {
 
 		/** Única instancia de la clase. */
 		static CGameNetPlayersManager* _instance;
-		
 	};
 
 

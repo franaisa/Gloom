@@ -332,9 +332,7 @@ namespace Logic
 	//---------------------------------------------------------
 	void CAvatarController::tick(unsigned int msecs)
 	{
-		IComponent::tick(msecs);
 		//if(_entity->getName().compare("David")==0)
-			//std::cout << _entity->getPosition().y << std::endl;
 		//Vector dirección que mandaremos a la física
 		Vector3 direction(Vector3::ZERO);
 
@@ -534,7 +532,7 @@ namespace Logic
 		//Calculamos el desplazamiento del salto y lo añadimos al vector que se mandará por mensaje
 		direction.y *= msecs * _speedJump;
 		directXZY.y=direction.y;
-
+		//std::cout << _falling << std::endl;
 		//Pasamos a la Física la dirección del movimiento para que se encargue ella de movernos
 		std::shared_ptr<CMessageAvatarWalk> m = std::make_shared<CMessageAvatarWalk>();
 		m->setDirection(directXZY);

@@ -17,6 +17,9 @@
 
 #include "Logic/Messages/MessagePlayerDead.h"
 #include "Logic/Messages/MessagePlayerSpawn.h"
+#include "Logic/Maps/GUIKillersMessage.h"
+#include "../../GameNetPlayersManager.h"
+#include "Logic/Messages/MessageHudSpawn.h"
 
 #include <math.h>
 
@@ -38,26 +41,47 @@ namespace Logic  {
 
 	void CClientRespawn::process(const std::shared_ptr<CMessage>& message) {
 		switch( message->getMessageType() ) {
-			case Message::PLAYER_DEAD: {
-				// El servidor nos notifica de que hemos muerto, desactivamos
-				// la entidad al completo y su simulacion fisica para que no
-				// podamos colisionar con la cápsula del jugador.
+		case Message::PLAYER_DEAD:{
+			// El servidor nos notifica de que hemos muerto, desactivamos
+			// la entidad al completo y su simulacion fisica para que no
+			// podamos colisionar con la cápsula del jugador.
 
-				// Desactivamos todos los componentes menos estos
-				std::vector<std::string> exceptionList;
-				exceptionList.push_back( std::string("CClientRespawn") );
-				exceptionList.push_back( std::string("CAnimatedGraphics") );
-				exceptionList.push_back( std::string("CHudOverlay") );
-				exceptionList.push_back( std::string("CNetConnector") );
+			// Desactivamos todos los componentes menos estos
+			std::vector<std::string> exceptionList;
+			exceptionList.push_back( std::string("CClientRespawn") );
+			exceptionList.push_back( std::string("CAnimatedGraphics") );
+			exceptionList.push_back( std::string("CHudOverlay") );
+			exceptionList.push_back( std::string("CNetConnector") );
 
-				// En caso de estar simulando fisica en el cliente, desactivamos
-				// la cápsula.
-				CPhysicController* controllerComponent = _entity->getComponent<CPhysicController>("CPhysicController");
-				if(controllerComponent != NULL) {
-					controllerComponent->deactivateSimulation();
-				}
+			// En caso de estar simulando fisica en el cliente, desactivamos
+			// la cápsula.
+			CPhysicController* controllerComponent = _entity->getComponent<CPhysicController>("CPhysicController");
+			if(controllerComponent != NULL) {
+				controllerComponent->deactivateSimulation();
+			}
 
-				_entity->deactivateAllComponentsExcept(exceptionList);
+			_entity->deactivateAllComponentsExcept(exceptionList);
+			;
+			//mostramos en pantalla el mensaje de quien ha matado a quien
+			std::shared_ptr<CMessagePlayerDead> playerDeadMsg = std::static_pointer_cast<CMessagePlayerDead> (message);
+			CEntity* entity = Logic::CServer::getSingletonPtr()->getMap()->getEntityByID(playerDeadMsg->getKiller());
+			
+			if(!entity)
+				break;
+
+			std::string type = entity->getType();
+			
+			if(type == "Screamer" || type == "Shadow" || type == "Hound" || type == "Archangel" ||
+				type == "LocalScreamer" || type == "LocalShadow" || type == "LocalHound" || type == "LocalArchangel"){
+				Logic::GUIKillersMessage::getSingletonPtr()->addKiller(
+					entity->getName(),
+					_entity->getName());
+			}
+			
+			//sino ha sido un player es que se ha suicidado el retard
+			else{
+				Logic::GUIKillersMessage::getSingletonPtr()->suicide(_entity->getName());
+			}
 			
 				break;
 			}
@@ -90,6 +114,11 @@ namespace Logic  {
 
 				std::shared_ptr<CMessagePlayerSpawn> cameraPlayerSpawnMsg = std::make_shared<CMessagePlayerSpawn>();
 				CServer::getSingletonPtr()->getMap()->getEntityByType("Camera")->emitMessage(cameraPlayerSpawnMsg);
+
+
+				std::shared_ptr<CMessageHudSpawn> messageHudSpawn = std::make_shared<CMessageHudSpawn>();
+				messageHudSpawn->setTime(0);
+				_entity->emitMessage(messageHudSpawn);
 
 				break;
 			}

@@ -203,12 +203,11 @@ namespace Input{
 			it = _keyListeners.begin();
 			for (; it != _keyListeners.end(); it++) 
 			{
-				if ((*it)->keyPressed(ois2gloom(e)))
-				  return true;
+				(*it)->keyPressed(ois2gloom(e));
 			}
 		}
 
-		return false;
+		return true;
 
 	} // keyPressed
 
@@ -300,12 +299,11 @@ namespace Input{
 			it = _mouseListeners.begin();
 			for (; it != _mouseListeners.end(); it++) 
 			{
-				if ((*it)->mouseMoved(_mouseState))
-				  return true;
+				((*it)->mouseMoved(_mouseState));
 			}
 		}
 
-		return false;
+		return true;
 
 	} // mouseMoved
 
@@ -327,12 +325,11 @@ namespace Input{
 			it = _mouseListeners.begin();
 			for (; it != _mouseListeners.end(); it++) 
 			{
-				if ((*it)->mousePressed(_mouseState))
-				  return true;
+				((*it)->mousePressed(_mouseState));
 			}
 		}
 
-		return false;
+		return true;
 
 	} // mousePressed
 
@@ -354,12 +351,11 @@ namespace Input{
 			it = _mouseListeners.begin();
 			for (; it != _mouseListeners.end(); it++) 
 			{
-				if ((*it)->mouseReleased(_mouseState))
-				  return true;
+				((*it)->mouseReleased(_mouseState));
 			}
 		}
 
-		return false;
+		return true;
 
 	} // mouseReleased
 	

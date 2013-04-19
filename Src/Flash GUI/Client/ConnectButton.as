@@ -20,6 +20,13 @@ package
 			this.buttonMode = true;
 			this.addEventListener(MouseEvent.MOUSE_OVER, onMouseOver);
 			this.addEventListener(MouseEvent.CLICK, onMouseClick);
+			ExternalInterface.addCallback("enableButton", enable);
+		}
+		
+		public function enable(): void {
+			this.addEventListener(MouseEvent.MOUSE_OVER, onMouseOver);
+			this.addEventListener(MouseEvent.CLICK, onMouseClick);
+			gotoAndPlay("idle");
 		}
 		
 		private function onMouseOver(event: MouseEvent): void {

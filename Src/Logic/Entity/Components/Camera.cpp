@@ -123,8 +123,6 @@ namespace Logic
 
 	void CCamera::tick(unsigned int msecs)
 	{
-		IComponent::tick(msecs);
-		
 		if(_target)
 		{
 			// Actualizamos la posición de la cámara.

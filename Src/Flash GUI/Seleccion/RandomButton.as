@@ -38,7 +38,7 @@ package
 		}
 		
 		private function onMouseClick(e:MouseEvent):void {
-			ExternalInterface.call("hound");
+			ExternalInterface.call("selected", 5);
 		}
 		
 	}

@@ -91,17 +91,16 @@ namespace Logic {
 
 	//______________________________________________________________________________
 
+	bool CGameNetPlayersManager::addPlayer(Net::NetID playerNetId, const std::string& playerNickname) {
+		return (_netConnectedPlayers.insert( TLogicConnectedPlayersPair(playerNetId, new CPlayerInfo(playerNetId, playerNickname)) ) ).second;
+	} // addPlayer
+
+	//______________________________________________________________________________
+
 	bool CGameNetPlayersManager::removePlayer(Net::NetID playerNetId) {
 		// Buscamos el player que queremos borrar. 
 		TNetConnectedPlayersTable::iterator itWantedPlayer = _netConnectedPlayers.find(playerNetId);
 		if( itWantedPlayer != _netConnectedPlayers.end() ) {
-			// Si el player que desea desconectarse ha sido cargado por algun otro cliente
-			// lo eliminamos de su lista de jugadores cargados
-			TNetConnectedPlayersTable::iterator it = _netConnectedPlayers.begin();
-			for(; it != _netConnectedPlayers.end(); ++it) {
-				it->second->unloadPlayer(playerNetId);
-			}
-
 			// Comprobamos si existia una referencia en la tabla de identificadores logicos
 			std::pair<Logic::TEntityID, bool> ret = itWantedPlayer->second->getEntityId();
 			if(ret.second) {
@@ -156,29 +155,11 @@ namespace Logic {
 
 	//______________________________________________________________________________
 
-	void CGameNetPlayersManager::loadPlayer(Net::NetID playerNetId, Net::NetID idPlayerToLoad) {
+	void CGameNetPlayersManager::setPlayerState(Net::NetID playerNetId, bool isSpawned) {
 		TNetConnectedPlayersTable::iterator it = _netConnectedPlayers.find(playerNetId);
-		assert(it != _netConnectedPlayers.end() && "No se puede aumentar el contador de players porque no existe el player en el Manager");
+		assert(it != _netConnectedPlayers.end() && "No se puede asignar un estado al player porque no existe en el Manager");
 
-		it->second->loadPlayer(idPlayerToLoad);
-	}
-
-	//______________________________________________________________________________
-
-	void CGameNetPlayersManager::unloadPlayer(Net::NetID playerNetId, Net::NetID idPlayerToUnload) {
-		TNetConnectedPlayersTable::iterator it = _netConnectedPlayers.find(playerNetId);
-		assert(it != _netConnectedPlayers.end() && "No se puede decrementar el contador de players porque no existe el player en el Manager");
-
-		it->second->unloadPlayer(idPlayerToUnload);
-	}
-
-	//______________________________________________________________________________
-
-	unsigned int CGameNetPlayersManager::getPlayersLoaded(Net::NetID playerNetId) {
-		TNetConnectedPlayersTable::iterator it = _netConnectedPlayers.find(playerNetId);
-		assert(it != _netConnectedPlayers.end() && "No se puede devolver cuantos players ha cargado el jugador porque no existe en el Manager");
-
-		return it->second->playersLoaded();
+		it->second->isSpawned(isSpawned);
 	}
 
 	//______________________________________________________________________________
@@ -215,6 +196,36 @@ namespace Logic {
 
 	unsigned int CGameNetPlayersManager::getNumberOfPlayersConnected() {
 		return _netConnectedPlayers.size();
+	}
+
+	//______________________________________________________________________________
+
+	// Esta hecho de forma un poco bestia, pero como son solo 8 jugadores y solo se
+	// hace en las conexiones tampoco pasa nada (y me facilita mucho la vida hacerlo
+	// asi).
+	unsigned int CGameNetPlayersManager::getNumberOfPlayersSpawned() {
+		TNetConnectedPlayersTable::const_iterator it = _netConnectedPlayers.begin();
+
+		int playersSpawned = 0;
+		for(; it != _netConnectedPlayers.end(); ++it) {
+			if( it->second->isSpawned() ) {
+				++playersSpawned;
+			}
+		}
+
+		return playersSpawned;
+	}
+
+	//______________________________________________________________________________
+
+	bool CGameNetPlayersManager::existsByNetId(Net::NetID playerNetId) {
+		return _netConnectedPlayers.count(playerNetId) > 0;
+	}
+
+	//______________________________________________________________________________
+
+	bool CGameNetPlayersManager::existsByLogicId(Logic::TEntityID playerId) {
+		return _logicConnectedPlayers.count(playerId) > 0;
 	}
 
 	//______________________________________________________________________________
