@@ -43,7 +43,7 @@ namespace Logic
 	void CAvatarController::activate()
 	{
 		IComponent::activate();
-
+		_directionSpeed = Vector3::ZERO;
 	} // activate
 	
 	//---------------------------------------------------------
@@ -57,7 +57,7 @@ namespace Logic
 
 	bool CAvatarController::accept(CMessage *message)
 	{
-		return false;
+		return message->getMessageType() == Message::CONTROL;
 	} // accept
 	
 	//---------------------------------------------------------
@@ -92,12 +92,12 @@ namespace Logic
 	{
 		//@deprecated
 		IComponent::tick(msecs);
-		if(_directionSpeed == Vector3::ZERO)return;
-		unsigned flags;
+		//if(_directionSpeed == Vector3::ZERO)return;
+		Vector3 or = Math::getDirection(_entity->getOrientation());
 
 		Vector3 _finalMovement = _directionSpeed.normalisedCopy()*msecs*_speed*Math::getDirection(_entity->getOrientation());
 
-		_entity->getComponent<CPhysicController>("CPhysicController")->moveController(_finalMovement,msecs, flags);
+		unsigned flags = _entity->getComponent<CPhysicController>("CPhysicController")->moveController(_finalMovement,msecs);
 
 		_entity->setPosition(_entity->getPosition()+_finalMovement);
 
