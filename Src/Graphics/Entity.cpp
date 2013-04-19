@@ -47,7 +47,11 @@ namespace Graphics
 
 	CEntity::~CEntity() 
 	{
-		assert(!_scene && "¡¡Para destruir una entidad esta no puede pertenecer a una escena!!");
+		//assert(!_scene && "¡¡Para destruir una entidad esta no puede pertenecer a una escena!!");
+		if(_scene){
+			unload();
+			_scene = 0;
+		}
 		
 	} // ~CEntity
 	
