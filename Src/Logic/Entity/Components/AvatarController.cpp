@@ -95,7 +95,7 @@ namespace Logic
 		if(_directionSpeed == Vector3::ZERO)return;
 		unsigned flags;
 
-		Vector3 _finalMovement = _directionSpeed*msecs*_speed*Math::getDirection(_entity->getOrientation());
+		Vector3 _finalMovement = _directionSpeed.normalisedCopy()*msecs*_speed*Math::getDirection(_entity->getOrientation());
 
 		_entity->getComponent<CPhysicController>("CPhysicController")->moveController(_finalMovement,msecs, flags);
 
