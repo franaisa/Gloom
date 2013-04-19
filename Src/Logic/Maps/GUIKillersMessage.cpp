@@ -32,8 +32,6 @@ namespace Logic{
 
 	void GUIKillersMessage::Release()
 	{
-		assert(_instance && "Logic::GUIKillersMessage no está inicializado!");
-
 		if(_instance)
 		{
 			delete _instance;

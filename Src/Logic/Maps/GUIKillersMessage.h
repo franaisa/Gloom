@@ -25,7 +25,7 @@ el solo
 	public:
 		GUIKillersMessage();
 
-		~GUIKillersMessage(){};
+		~GUIKillersMessage(){_instance = 0;}
 
 		/**
 		Devuelve la única instancia de la clase GUIKillersMessage.
