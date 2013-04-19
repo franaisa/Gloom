@@ -92,14 +92,21 @@ namespace Logic
 	{
 		//@deprecated
 		IComponent::tick(msecs);
-		//if(_directionSpeed == Vector3::ZERO)return;
-		Vector3 or = Math::getDirection(_entity->getOrientation());
+		if(_directionSpeed == Vector3::ZERO)return;
+		float yaw = asin(_directionSpeed.normalisedCopy().x);
+		Matrix4 dir = _entity->getTransform();
+		Math::yaw(yaw, dir);
+		Vector3 direction;
 
-		Vector3 _finalMovement = _directionSpeed.normalisedCopy()*msecs*_speed*Math::getDirection(_entity->getOrientation());
+		if(_directionSpeed.z!=0)
+			direction = (Math::getDirection(dir)).normalisedCopy()*_directionSpeed.z;
+		else
+			direction = (Math::getDirection(dir)).normalisedCopy();
+		direction*=_speed*msecs;
 
-		unsigned flags = _entity->getComponent<CPhysicController>("CPhysicController")->moveController(_finalMovement,msecs);
+		unsigned flags = _entity->getComponent<CPhysicController>("CPhysicController")->moveController(direction,msecs);
 
-		_entity->setPosition(_entity->getPosition()+_finalMovement);
+		_entity->setPosition(_entity->getPosition()+direction);
 
 	} // tick
 
