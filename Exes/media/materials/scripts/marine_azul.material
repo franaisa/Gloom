@@ -1,3 +1,23 @@
+vertex_program glow_vs_cg cg
+{
+	source vs_glow.cg
+	entry_point main
+	profiles vs_1_1 arbvp1
+
+}
+
+fragment_program glow_ps_cg cg
+{
+	source ps_glow.cg
+	entry_point main
+	profiles ps_2_0 arbfp1	
+	
+
+
+}
+
+
+
 material marine_azul
 {
 	set $diffuse_tex "marine_azul.tga"

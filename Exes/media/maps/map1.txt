@@ -319,7 +319,7 @@ Map = {
 	},
 	
 	David = {
-		type = "LocalPlayer",
+		type = "LocalScreamer",
 		isPlayer = true,
 	},
 	
