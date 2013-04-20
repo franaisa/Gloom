@@ -1,6 +1,6 @@
 World CGraphics CPhysicStaticEntity
 LocalScreamer CAvatarController CPhysicController CArchangel CShootRocketLauncher CShootGrenadeLauncher CShootMiniGun CShootShotGun CShootSniper CShootHammer CWeaponsManager CHudOverlay CLife CSpawnPlayer CAudio CParticle
-RemotePlayer CAvatarController CAnimatedGraphics CPhysicController CLife CSpawnPlayer CAudio CParticle CScreamerClient
+RemotePlayer CAvatarController CAnimatedGraphics CPhysicController CLife CSpawnPlayer CAudio CParticle
 Camera CCamera 
 ItemSpawn CGraphics CPhysicStaticEntity CFloatingMovement CSpawnItemManager 
 SpawnPoint CPhysicStaticEntity

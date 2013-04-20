@@ -44,21 +44,21 @@ namespace Logic {
 		if( !IComponent::spawn(entity,map,entityInfo) ) return false;
 
 		// Leemos el tiempo de cooldown de la habilidad primaria
-		assert( entityInfo->hasAttribute("primarySkillCooldown") );
+		assert( entityInfo->hasAttribute("primarySkillCooldown") && "Error: primarySkillCooldown no esta definido en el mapa" );
 		// Pasamos el tiempo a msecs
 		_primarySkillCooldown = entityInfo->getFloatAttribute("primarySkillCooldown") * 1000;
 
 		// Leemos el tiempo de cooldown de la habilidad secundaria
-		assert( entityInfo->hasAttribute("secondarySkillCooldown") );
+		assert( entityInfo->hasAttribute("secondarySkillCooldown") && "Error: secondarySkillCooldown no esta definido en el mapa" );
 		// Pasamos el tiempo a msecs
 		_secondarySkillCooldown = entityInfo->getFloatAttribute("secondarySkillCooldown") * 1000;
 
 		// Leemos la altura de disparo
-		assert( entityInfo->hasAttribute("heightShoot") );
+		assert( entityInfo->hasAttribute("heightShoot") && "Error: heightShoot no esta definido en el mapa" );
 		_heightShoot = entityInfo->getFloatAttribute("heightShoot");
 
 		// Leemos el radio de la cápsula del player
-		assert( entityInfo->hasAttribute("physic_radius") );
+		assert( entityInfo->hasAttribute("physic_radius") && "Error: physic_radius no esta definido en el mapa" );
 		_capsuleRadius = entityInfo->getFloatAttribute("physic_radius");
 
 		return true;
