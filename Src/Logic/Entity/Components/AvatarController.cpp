@@ -96,31 +96,32 @@ namespace Logic {
 		//@deprecated
 		IComponent::tick(msecs);
 
-		Vector3 direction;
-		//si no nos estamos moviendo, no ejecutamos la parte del movimiento con teclas
-		if(_displacement == Vector3::ZERO) {
-			float yaw = asin(_displacement.normalisedCopy().x);
-			Matrix4 dir = _entity->getTransform();
-			Math::yaw(yaw, dir);
-			
+		// Si nuestro movimiento es nulo no hacemos nada
+		if(_displacement == Vector3::ZERO) return;
 
-			if(_displacement.z!=0)
-				direction = (Math::getDirection(dir)).normalisedCopy() * _displacement.z;
-			else
-				direction = (Math::getDirection(dir)).normalisedCopy();
-		}
+		// Mediante trigonometria basica sacamos el angulo que forma el desplazamiento
+		// que queremos llevar a cabo
+		float displacementYaw = asin(_displacement.normalisedCopy().x);
+		// Obtenemos una copia de la matriz de transformación del personaje
+		Matrix4 characterTransform = _entity->getTransform();
+		// Rotamos la matriz de transformacion tantos grados como diga el vector 
+		// desplazamiento calculado de pulsar las teclas
+		Math::yaw(displacementYaw, characterTransform);
+		
+		// Obtenemos el vector unitario de orientación de la matriz de transformación
+		Vector3 characterMovement = Math::getDirection(characterTransform);
+		// Seteamos la direccion del movimiento teniendo en cuenta el signo de la z
+		// ya que los valores obtenidos por el arco seno están entre 90 y -90 grados
+		// (justo el angulo de movimiento frontal).
+		if(_displacement.z < 0) characterMovement.z *= -1;
 
+		// Aplicamos la velocidad de movimiento
+		//characterMovement *= _acceleration * msecs;
+		characterMovement *= _acceleration * msecs;
 
+		manageCollisions( _physicController->moveController(characterMovement, msecs) );
 
-
-
-
-		//direction *= _acceleration * msecs;
-		direction *= _acceleration;
-
-		manageCollisions( _physicController->moveController(direction, msecs) );
-
-		_entity->setPosition( _entity->getPosition() + direction );
+		_entity->setPosition( _entity->getPosition() + characterMovement );
 
 	} // tick
 
@@ -131,6 +132,9 @@ namespace Logic {
 
 		if(commandType >= 0 && commandType < 8) {
 			_displacement += _walkCommands[commandType];
+		}
+		else {
+			std::cout << "Recibo el comando numero " << commandType << std::endl;
 		}
 	}
 
