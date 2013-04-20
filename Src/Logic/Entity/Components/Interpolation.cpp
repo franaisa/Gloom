@@ -87,7 +87,7 @@ namespace Logic  {
 				direction*=(_distance/direction.length());
 			}
 			
-			_entity->getComponent<CPhysicController>("CPhysicController")->moveController(Vector3(direction), msecs);
+			_entity->getComponent<CPhysicController>("CPhysicController")->move(Vector3(direction), msecs);
 			//std::cout << "nueva pos lenght " << _distance << std::endl << std::endl;
 			_distance -= direction.length();
 			

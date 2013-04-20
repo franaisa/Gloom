@@ -377,7 +377,6 @@ namespace Logic
 			std::map<std::string, IComponent*>::iterator it;
 			it = _components.find(id);
 			if(it == _components.end()) {
-				//exit(-1);
 				return NULL;
 			}
 

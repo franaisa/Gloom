@@ -128,11 +128,9 @@ namespace Logic
 
 		void executeControlCommand(CMessageControl * controlMsg);
 
-		void manageCollisions(unsigned flags);
-
 		void initWalkCommands();
 
-
+		/** Puntero al controlador fisico del player. */
 		CPhysicController* _physicController;
 
 		/** Velocidad de aceleración del personaje al desplazarse. */
@@ -144,9 +142,11 @@ namespace Logic
 		/** Vector de inercia. */
 		Vector3 _momentum;
 
-		/** Array que contiene los enumerados asignados a cada una de las posibles teclas que se pueden enviar */
+		/** Array que contiene los enumerados asignados a cada una de las posibles teclas que se pueden enviar. */
 		Vector3 _walkCommands[8];
 
+		/** Vector de gravedad, puede ser sustituido por un flotante. */
+		Vector3 _gravity;
 
 	}; // class CAvatarController
 

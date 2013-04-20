@@ -21,7 +21,7 @@ de la entidad.
 namespace Logic {
 	IMP_FACTORY(CAvatarController);
 
-	CAvatarController::CAvatarController() {
+	CAvatarController::CAvatarController() : _gravity(0, -9.81f, 0) {
 		// Inicializamos el array que contiene los vectores
 		// de cada tecla de movimiento
 		initWalkCommands();
@@ -43,7 +43,7 @@ namespace Logic {
 
 	void CAvatarController::activate() {
 		IComponent::activate(); // Necesario para el onStart
-		_displacement = Vector3::ZERO;
+		_displacement = _momentum = Vector3::ZERO;
 	} // activate
 	
 	//________________________________________________________________________
@@ -119,10 +119,9 @@ namespace Logic {
 		//characterMovement *= _acceleration * msecs;
 		characterMovement *= _acceleration * msecs;
 
-		manageCollisions( _physicController->moveController(characterMovement, msecs) );
-
-		_entity->setPosition( _entity->getPosition() + characterMovement );
-
+		// Tratamos de mover el controlador fisico con el movimiento estimado
+		// en caso de colision, el controlador fisico nos informará.
+		_physicController->move(characterMovement, msecs);
 	} // tick
 
 	//________________________________________________________________________
@@ -136,12 +135,6 @@ namespace Logic {
 		else {
 			std::cout << "Recibo el comando numero " << commandType << std::endl;
 		}
-	}
-
-	//________________________________________________________________________
-
-	void CAvatarController::manageCollisions(unsigned flags) {
-		// Cambiar el estado de la clase en funcion de los flags de colision
 	}
 
 	//________________________________________________________________________
