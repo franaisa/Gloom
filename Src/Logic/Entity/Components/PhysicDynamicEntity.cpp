@@ -68,48 +68,43 @@ bool CPhysicDynamicEntity::spawn(Logic::CEntity *entity, CMap *map, const Map::C
 bool CPhysicDynamicEntity::accept(CMessage *message) {
 	Logic::TMessageType msgType = message->getMessageType();
 
-	return msgType == Message::KINEMATIC_MOVE ||
-		   msgType == Message::ACTIVATE ||
-		   msgType == Message::DEACTIVATE ||
-		   msgType == Message::SET_PHYSIC_POSITION ||
+	return msgType == Message::KINEMATIC_MOVE		||
+		   msgType == Message::ACTIVATE				||
+		   msgType == Message::DEACTIVATE			||
+		   msgType == Message::SET_PHYSIC_POSITION	||
 		   msgType == Message::ADD_FORCE_PHYSICS;
 }
 
 //---------------------------------------------------------
 
 void CPhysicDynamicEntity::process(CMessage *message) {
-	switch(message->getMessageType()) {
-		case Message::KINEMATIC_MOVE:
+	switch( message->getMessageType() ) {
+		case Message::KINEMATIC_MOVE: {
 			// Acumulamos el vector de desplazamiento para usarlo posteriormente en 
 			// el método tick.
 			_movement += static_cast<CMessageKinematicMove*>(message)->getMovement();
 			break;
-		case Message::ACTIVATE:
+		}
+		case Message::ACTIVATE: {
 			activateSimulation();
-		
-			break;
-		case Message::DEACTIVATE:
-		{
-			deactivateSimulation();
-		
 			break;
 		}
-		case Message::SET_PHYSIC_POSITION:
-		{
+		case Message::DEACTIVATE: {
+			deactivateSimulation();
+			break;
+		}
+		case Message::SET_PHYSIC_POSITION: {
 			CMessageSetPhysicPosition* setPosMsg = static_cast<CMessageSetPhysicPosition*>(message);
 			setPosition( setPosMsg->getPosition(), setPosMsg->getMakeConversion() );
-		
 			break;
 		}
-		case Message::ADD_FORCE_PHYSICS:
-		{
+		case Message::ADD_FORCE_PHYSICS: {
 			CMessageAddForcePhysics* forceMsg = static_cast<CMessageAddForcePhysics*>(message);
 
 			if( !forceMsg->getGravity() )
 				_physicEntity.disableGravity(true);
 		
 			addForce( forceMsg->getForceVector(), forceMsg->getForceMode() );
-		
 			break;
 		}
 	}

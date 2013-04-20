@@ -17,6 +17,7 @@ de la entidad.
 
 namespace Logic{
 	class CMessageControl;
+	class CPhysicController;
 }
 
 //declaración de la clase
@@ -36,8 +37,7 @@ namespace Logic
 	@author David Llansó García
 	@date Agosto, 2010
 */
-	class CAvatarController : public IComponent
-	{
+	class CAvatarController : public IComponent {
 		DEC_FACTORY(CAvatarController);
 	public:
 
@@ -84,6 +84,8 @@ namespace Logic
 		*/
 		virtual void deactivate();
 
+		virtual void onStart(unsigned int msecs);
+
 		/**
 		Método llamado en cada frame que actualiza el estado del componente.
 		<p>
@@ -110,7 +112,7 @@ namespace Logic
 		*/
 		virtual void process(CMessage *message);
 
-		void executeControlCommand(CMessageControl * controlMsg);
+		
 
 		/**
 		Provoca que la entidad gire. Números Positivos para	giro a 
@@ -121,19 +123,31 @@ namespace Logic
 		*/
 		void mouse(const float* amount);
 
+		
+	protected:
+
+		void executeControlCommand(CMessageControl * controlMsg);
 
 		void manageCollisions(unsigned flags);
 
-
-	protected:
-
 		void initWalkCommands();
 
-		float _speed;
 
+		CPhysicController* _physicController;
+
+		/** Velocidad de aceleración del personaje al desplazarse. */
+		float _acceleration;
+
+		/** Vector de movimiento/desplazamiento. */
+		Vector3 _displacement;
+
+		/** Vector de inercia. */
+		Vector3 _momentum;
+
+		/** Array que contiene los enumerados asignados a cada una de las posibles teclas que se pueden enviar */
 		Vector3 _walkCommands[8];
 
-		Vector3 _directionSpeed;
+
 	}; // class CAvatarController
 
 	REG_FACTORY(CAvatarController);

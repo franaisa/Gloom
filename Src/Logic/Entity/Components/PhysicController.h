@@ -82,7 +82,7 @@ namespace Logic
 		*/
 		//void onShapeHit (const physx::PxControllerShapeHit &hit);
 
-		virtual void onShapeHit(IPhysics *otherComponent);
+		virtual void onShapeHit(IPhysics *otherComponent, const Vector3& colisionPos, const Vector3& colisionNormal);
 
 		/**
 		Se invoca cuando se produce una colisión entre dos character controllers.
