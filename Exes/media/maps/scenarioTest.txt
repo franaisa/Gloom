@@ -101,8 +101,6 @@ Map = {
 		respawnTime = 5,
 	},
 	
-
-
 	Enemigo1 = {
 		type = "RemotePlayer",
 		position = {0, 0.2, -20},

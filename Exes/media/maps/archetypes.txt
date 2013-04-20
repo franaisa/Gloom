@@ -1122,6 +1122,7 @@ Map = {
 		
 		primarySkillCooldown = 4.0,
 		secondarySkillCooldown = 0.5,
+		inmunityDuration = 5,
 
 			weaponhammerName = "hammer",
 			weaponhammerModel = "hammer.mesh",
