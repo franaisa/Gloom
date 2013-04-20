@@ -192,7 +192,7 @@ namespace Graphics
 			
 				entity->setMaterial(material);
 			}
-			Ogre::SceneNode* sceneNode = new Ogre::SceneNode(_scene->getSceneMgr(), nameSceneNode);
+			
 			//scene->getSceneMgr()->getRootSceneNode()->addChild(sceneNode);
 
 			sceneNode->attachObject((Ogre::MovableObject *)entity);
