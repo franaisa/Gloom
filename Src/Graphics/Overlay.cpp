@@ -156,7 +156,7 @@ namespace Graphics
 			std::string nameSceneNode = "SceneNode_"+name;// + num;
 			std::string nameEntity =  "hud3D_"+name;
 
-			std::set<CEntity *>::const_iterator it = _entities3D.begin() ;
+			std::vector<CEntity *>::const_iterator it = _entities3D.begin() ;
 			bool findIt = false;
 			while(it != _entities3D.end() && !findIt){
 				if((*it)->getName() == nameEntity){
@@ -177,24 +177,8 @@ namespace Graphics
 			sceneNode = new Ogre::SceneNode(_scene->getSceneMgr(), nameSceneNode);
 				
 			Ogre::Entity *entity;
-<<<<<<< HEAD
 			entity = _scene->getSceneMgr()->createEntity(nameEntity, mesh);
-=======
-			if (!_scene->getSceneMgr()->hasEntity("hud3D_"+name))
-				entity = _scene->getSceneMgr()->createEntity("hud3D_"+name, mesh);
-			else{
-				entity = _scene->getSceneMgr()->getEntity("hud3D_"+name);
-				if(entity)
-				{
-					Ogre::SceneNode * node = entity->getParentSceneNode();
-					node->detachAllObjects();
-					//_scene->getSceneMgr()->destroySceneNode(node);
-					_scene->getSceneMgr()->destroyEntity(entity);
-				}
-				entity = _scene->getSceneMgr()->createEntity("hud3D_"+name, mesh);
-			}
 
->>>>>>> c5a9cc6346399baccf21a5972a3cd149ca8561b1
 			
 			Ogre::MaterialPtr aux= Ogre::MaterialManager::getSingleton().getByName(name);
 			//Ogre::MaterialPtr material = static_cast<Ogre::Material *>(Ogre::MaterialManager::getSingleton().getByName(name).get())->clone(name+"_3D");
@@ -208,12 +192,9 @@ namespace Graphics
 			
 				entity->setMaterial(material);
 			}
-<<<<<<< HEAD
-			
-=======
 			Ogre::SceneNode* sceneNode = new Ogre::SceneNode(_scene->getSceneMgr(), nameSceneNode);
 			//scene->getSceneMgr()->getRootSceneNode()->addChild(sceneNode);
->>>>>>> c5a9cc6346399baccf21a5972a3cd149ca8561b1
+
 			sceneNode->attachObject((Ogre::MovableObject *)entity);
 			
 			_overlay->add3D(sceneNode);
@@ -227,7 +208,7 @@ namespace Graphics
 			entityTemp->setSceneNode(sceneNode);
 			entityTemp->setScene(_scene);
 
-			_entities3D.insert(entityTemp);
+			_entities3D.push_back(entityTemp);
 
 			return entityTemp;
 		}
