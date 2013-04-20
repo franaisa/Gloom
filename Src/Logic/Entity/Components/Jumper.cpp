@@ -105,9 +105,6 @@ namespace Logic
 
 		//---------------------------------------------------------
 	void CJumper::tick(unsigned int msecs) {
-		IComponent::tick(msecs);
-
-
 
 	} // tick
 

@@ -1,7 +1,7 @@
 #include <string>
 #include <map>
 #include <vector>
-
+#include "Position.h"
 
 #ifndef __Logic_GUIManager_H
 #define __Logic_GUIManager_H
@@ -82,6 +82,22 @@ namespace Logic
 		@param name El nombre de la gui que se desea ocultar
 		*/
 		void hideGUI(const std::string &name);
+
+		/**
+		Método que carga un swf dado y lo asocia al overlay que se desea
+
+		@param name el nombre de la GUI de la que se desea cargar el swf
+		@param swf el nombre del archivo swf (con la extensión incluida)
+		*/
+		void load(const std::string &name, const std::string &swf);
+
+		/**
+		Método que hace que un GUI concreto tenga un fondo transparente.
+		Por defecto el fondo de todas las GUIs es opaco
+		@param name el nombre de la GUI
+		@param transparent Si se quiere que sea transparente o no
+		*/
+		void setTransparent(const std::string &name, bool transparent);
 		
 		/**
 		Método genérico para añadir a la gui que se desea un callback asociado a una función
@@ -135,7 +151,44 @@ namespace Logic
 		*/
 		static void Release();
 
+		/**
+		Método que activa/desactiva el manager para la gestión de las GUIs
+		*/
 		void activate();
+		void deactivate();
+
+		/**
+		Añade una nueva GUI al gestor de GUIs, de manera que la lógica no tiene que saber
+		nada de como se gestiona y se manejan los eventos de la GUI.
+		Este método añade la GUI con tamaño toda la ventana del juego
+
+		@param name El nombre de la GUI que se va a crear
+		@param pos Posición de la pantalla donde se va a crear la GUI
+		*/
+		void addGUI(const std::string &name ,const Hikari::Position &pos);
+
+		/**
+		Añade una nueva GUI al gestor de GUIs, de manera que la lógica no tiene que saber
+		nada de como se gestiona y se manejan los eventos de la GUI.
+		Este método añade la GUI con un tamaño relativo al tamaño total de la pantalla
+
+		@param name El nombre de la GUI que se va a crear
+		@param pos Posición de la pantalla donde se va a crear la GUI
+		@param relativeSize tamaño relativo al tamaño de la ventana
+		*/
+		void addGUI(const std::string &name ,const Hikari::Position &pos, float relativeSize);
+
+		/**
+		Añade una nueva GUI al gestor de GUIs, de manera que la lógica no tiene que saber
+		nada de como se gestiona y se manejan los eventos de la GUI.
+		Este método añade la GUI con un tamaño dado
+
+		@param name El nombre de la GUI que se va a crear
+		@param pos Posición de la pantalla donde se va a crear la GUI
+		@param width Ancho que ocupa la GUI en pixels
+		@param height Alto que ocupa la GUI en pixels
+		*/
+		void addGUI(const std::string &name ,const Hikari::Position &pos, unsigned int width, unsigned int height);
 
 	protected:
 

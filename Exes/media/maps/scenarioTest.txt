@@ -101,8 +101,6 @@ Map = {
 		respawnTime = 5,
 	},
 	
-
-
 	Enemigo1 = {
 		type = "RemotePlayer",
 		position = {0, 0.2, -20},
@@ -120,7 +118,7 @@ Map = {
 	},
 	
 	David = {
-		type = "LocalPlayer",
+		type = "LocalScreamer",
 		isPlayer = true,
 		position = {0,5,00},
 	},

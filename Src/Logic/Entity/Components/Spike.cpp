@@ -105,7 +105,6 @@ namespace Logic
 
 	void CSpike::tick(unsigned int msecs)
 	{
-		IComponent::tick(msecs);
 		Vector3 toDirection;
 		_timer+=msecs;
 		//Si ha pasado el tiempo mostramos los pinchos

@@ -296,11 +296,11 @@ namespace Logic {
 	//--------------------------------------------------------
 	//--------------------------------------------------------
 	
-	CEntity* CMap::createPlayer(std::string name)
+	CEntity* CMap::createPlayer(const std::string &name, const std::string &type)
 	{
 
 		//cogemos el player necesario
-		Map::CEntity *playerInfo = CEntityFactory::getSingletonPtr()->getInfo("ServerPlayer");
+		Map::CEntity *playerInfo = CEntityFactory::getSingletonPtr()->getInfo(type);
 
 		// Asignar nombre
 		playerInfo->setName(name);
@@ -314,10 +314,10 @@ namespace Logic {
 	//--------------------------------------------------------
 	//--------------------------------------------------------
 
-	CEntity* CMap::createLocalPlayer(std::string name, TEntityID id){
+	CEntity* CMap::createLocalPlayer(const std::string &name, const std::string &type , TEntityID id){
 
 		//cogemos el player necesario
-		Map::CEntity *playerInfo = CEntityFactory::getSingletonPtr()->getInfo("LocalPlayer");
+		Map::CEntity *playerInfo = CEntityFactory::getSingletonPtr()->getInfo("Local"+type);
 
 		// Asignar nombre
 		playerInfo->setName(name);
@@ -340,11 +340,11 @@ namespace Logic {
 	//--------------------------------------------------------
 	//--------------------------------------------------------
 
-	CEntity* CMap::createPlayer(std::string name, TEntityID id){
+	CEntity* CMap::createPlayer(const std::string &name, const std::string &type, TEntityID id){
 
 
 		//cogemos el player necesario
-		Map::CEntity *playerInfo = CEntityFactory::getSingletonPtr()->getInfo("RemotePlayer");
+		Map::CEntity *playerInfo = CEntityFactory::getSingletonPtr()->getInfo(type);
 		// Asignar nombre
 		playerInfo->setName(name);
 

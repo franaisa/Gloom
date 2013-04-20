@@ -43,19 +43,17 @@ namespace Logic {
 		_berserkerTimer=0;
 
 		// Leer el tiempo que dura el Berserker
-		assert( entityInfo->hasAttribute("houndBerserkerDuration") );
+		assert( entityInfo->hasAttribute("berserkerDuration") );
 		// Pasamos el tiempo a msecs
-		_berserkerDuration = entityInfo->getFloatAttribute("houndBerserkerDuration") * 1000;
-		_berserkerDamagePercent = entityInfo->getFloatAttribute("houndBerserkerDamagePercent");
-		_berserkerCooldownPercent = entityInfo->getFloatAttribute("houndBerserkerCooldownPercent");
-		
+		_berserkerDuration = entityInfo->getFloatAttribute("berserkerDuration") * 1000;
+		_berserkerDamagePercent = entityInfo->getFloatAttribute("berserkerDamagePercent");
+		_berserkerCooldownPercent = entityInfo->getFloatAttribute("berserkerCooldownPercent");
+		return true;
 	} // spawn
 
 	//__________________________________________________________________
 
 	void CHound::tick(unsigned int msecs) {
-		CPlayerClass::tick(msecs);
-
 		// Si la habilidad primaria esta en uso, controlar el tiempo
 		// de duración de la habilidad. Cuando se cumpla el tiempo,
 		// deshabilitamos el shader y el efecto beserker.

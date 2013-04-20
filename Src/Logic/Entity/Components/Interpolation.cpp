@@ -61,8 +61,6 @@ namespace Logic  {
 	//________________________________________________________________________
 
 	void CInterpolation::tick(unsigned int msecs){
-		IComponent::tick(msecs);
-
 		_oldPos = _entity->getPosition();
 		_msecs = msecs;
 
@@ -131,18 +129,24 @@ namespace Logic  {
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	void CInterpolation::process(const std::shared_ptr<CMessage>& message) {
-		switch( message->getMessageType() ) {
-			case Message::SYNC_POSITION: {
-				std::shared_ptr<CMessageSyncPosition> syncMsg = std::static_pointer_cast<CMessageSyncPosition>(message);
+		switch(message->getMessageType())
+		{
+		case Message::SYNC_POSITION:
+			{
+			std::shared_ptr<CMessageSyncPosition> syncMsg = std::static_pointer_cast<CMessageSyncPosition>(message);
 
-				// nos guardamos la posi que nos han dado por si tenemos que interpolar
-				_serverPos = syncMsg->getTransform();
-				//calculo el ping que tengo ahora mismo
-				_actualPing = clock()+Logic::CServer::getSingletonPtr()->getDiffTime()-syncMsg->getTime();
-				//calculamos la interpolacion
-				calculateInterpolation();
+			std::cout << "el server me dice que esto en: " << syncMsg->getTransform().getTrans() << std::endl;
 
-				break;
+			std::cout << "yo estoy en: " << _entity->getPosition() << std::endl;
+
+			// nos guardamos la posi que nos han dado por si tenemos que interpolar
+			_serverPos = syncMsg->getTransform();
+			//calculo el ping que tengo ahora mismo
+			_actualPing = clock()+Logic::CServer::getSingletonPtr()->getDiffTime()-syncMsg->getTime();
+			//calculamos la interpolacion
+			calculateInterpolation();
+
+			break;
 			}
 			case Message::CONTROL: {
 				std::shared_ptr<CMessageControl> controlMsg = std::static_pointer_cast<CMessageControl>(message);
@@ -270,15 +274,9 @@ namespace Logic  {
 
 		//seteo la distancia real
 		distance = distance-myDistance;
-		//std::cout << ">>>>>>>>>>>> \tmi posi" << _entity->getPosition() << std::endl;
-		//std::cout << ">>>>>>>>>>>>>>>\t server posi" << _serverPos.getTrans() << std::endl;
-		//si la distancia es mayor de maxDistance .. set transform por cojones
-		//std::cout << "distancia ->" << distance << std::endl;
-		//std::cout << "speed ->" << speed << std::endl;
 		if(distance > _maxDistance){
 			_entity->getComponent<CPhysicController>("CPhysicController")->setPhysicPosition(_serverPos.getTrans());
 			//Movemos la orientacion logica/grafica
-			//std::cout << "<<<<<<< SETEO A LO ANIMAL >>>>>>>" << std::endl;
 			Matrix3 tmpMatrix;
 			_serverPos.extract3x3Matrix(tmpMatrix);
 			_entity->setOrientation(tmpMatrix);

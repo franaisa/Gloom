@@ -28,14 +28,25 @@ Contiene la implementación del estado de juego.
 #include "Logic/Maps/EntityFactory.h"
 #include "Logic/Maps/Map.h"
 #include "Logic/Maps/EntityID.h"
+#include "Logic\Entity\Components\Camera.h"
+
+#include "Hikari.h"
+#include "FlashValue.h"
+#include "GUI\Server.h"
+#include "Input\PlayerController.h"
+#include "Input/Server.h"
 
 namespace Application {
 
 	
 	bool CMultiplayerTeamDeathmatchClientState::init(){
 
-		
-		
+		//iniciamos el menu de seleccion de personaje
+		_seleccion = GUI::CServer::getSingletonPtr()->addLayout("seleccion", Hikari::Position(Hikari::Center));
+		_seleccion->load("SeleccionPersonaje.swf");
+		_seleccion->bind("selected",Hikari::FlashDelegate(this, &CMultiplayerTeamDeathmatchClientState::classSelected));
+		_seleccion->hide();
+		_seleccion->setTransparent(true, true);
 		
 		return true;
 	}
@@ -43,6 +54,8 @@ namespace Application {
 
 	void CMultiplayerTeamDeathmatchClientState::activate() {
 		CGameState::activate();
+		
+		_seleccion->show();
 
 		// Registramos a este estado como observador de red para que sea notificado
 		Net::CManager::getSingletonPtr()->addObserver(this);
@@ -83,19 +96,24 @@ namespace Application {
 
 		switch (msg) {
 			case Net::LOAD_PLAYER: {
-				// Creamos el player. Deberíamos poder propocionar caracteríasticas
-				// diferentes según el cliente (nombre, modelo, etc.). Esto es una
-				// aproximación, solo cambiamos el nombre y decimos si es el jugador
-				// local. Los datos deberían llegar en el paquete de red.
+				// cargamos la informacion del player que nos han enviado
 				Net::NetID id;
 				Logic::TEntityID entityID;
-				//memcpy(&id, packet->getData() + sizeof(msg), sizeof(id));
 				buffer.read(&id, sizeof(id));
 				buffer.read(&entityID, sizeof(entityID));
-				std::string name;
+				std::string type, name;
+				buffer.deserialize(type);
 				buffer.deserialize(name);
 
-				Logic::CEntity * player = Logic::CServer::getSingletonPtr()->getMap()->createPlayer(name, entityID);
+				//llamo al metodo de creacion del jugador
+				Logic::CEntity * player = Logic::CServer::getSingletonPtr()->getMap()->createPlayer(name, type, entityID);
+
+				//Enviamos el mensaje de que se ha creado el jugador
+				Net::NetMessageType ackMsg = Net::PLAYER_LOADED;
+				Net::CBuffer ackBuffer(sizeof(ackMsg) + sizeof(id));
+				ackBuffer.write(&ackMsg, sizeof(ackMsg));
+				ackBuffer.write(&id, sizeof(id));
+				Net::CManager::getSingletonPtr()->send(ackBuffer.getbuffer(), ackBuffer.getSize());
 				player->activate();
 				break;
 			}
@@ -125,7 +143,125 @@ namespace Application {
 
 				break;
 			}
+			case Net::LOAD_LOCAL_PLAYER: {
+				// cargamos la informacion del player que nos han enviado
+				Logic::TEntityID entityID;
+				buffer.read(&entityID, sizeof(entityID));
+				std::string type, name;
+				buffer.deserialize(type);
+				buffer.deserialize(name);
+
+				//llamo al metodo de creacion del jugador
+				Logic::CEntity * player = Logic::CServer::getSingletonPtr()->getMap()->createLocalPlayer(name, type, entityID);
+
+				player->activate();
+				Logic::CServer::getSingletonPtr()->getMap()->getEntityByType("Camera")->getComponent<Logic::CCamera>("CCamera")->setTarget(player);
+
+
+				break;
+			}
 		}
 	}
+
+	bool CMultiplayerTeamDeathmatchClientState::keyPressed(Input::TKey key)
+	{
+		CGameState::keyPressed(key);
+		
+		switch(key.keyId)
+		{
+		case Input::Key::C://cambio de clase
+			//primero, quitamos al player de escuchar las teclas, para ello lo desactivamos del playerController
+			Input::CServer::getSingletonPtr()->getPlayerController()->deactivate();
+			//mostramos la gui
+			_seleccion->show();
+			break;
+		default:
+			return true;
+		}
+		
+		return true;
+
+	} // keyPressed
+
+	//--------------------------------------------------------
+
+	bool CMultiplayerTeamDeathmatchClientState::keyReleased(Input::TKey key)
+	{
+		CGameState::keyReleased(key);
+		return true;
+
+	} // keyReleased
+
+	//--------------------------------------------------------
+	
+	bool CMultiplayerTeamDeathmatchClientState::mouseMoved(const Input::CMouseState &mouseState)
+	{
+		return false;
+
+	} // mouseMoved
+
+	//--------------------------------------------------------
+		
+	bool CMultiplayerTeamDeathmatchClientState::mousePressed(const Input::CMouseState &mouseState)
+	{
+		return false;
+
+	} // mousePressed
+
+	//--------------------------------------------------------
+
+
+	bool CMultiplayerTeamDeathmatchClientState::mouseReleased(const Input::CMouseState &mouseState)
+	{
+		return false;
+
+	} // mouseReleased
+
+	//--------------------------------------------------------
+
+	Hikari::FlashValue CMultiplayerTeamDeathmatchClientState::classSelected(Hikari::FlashControl* caller, const Hikari::Arguments& args)
+	{
+		
+		int selectedClass = args.at(0).getNumber();
+		Net::NetMessageType msgType = Net::CLASS_SELECTED;
+		Net::CBuffer msg (sizeof(msgType) + sizeof(selectedClass));
+		switch(selectedClass)
+		{
+			case 0:
+				if(Input::CServer::getSingletonPtr()->getPlayerController()->getControllerAvatar()){
+					Input::CServer::getSingletonPtr()->getPlayerController()->activate();
+				}else{
+
+				}
+
+				break;
+			case 1:
+			case 2:
+			case 3:
+			case 4:
+				_seleccion->hide();
+				//enviamos la clase elegida
+				msg.serialize(msgType);
+				msg.serialize(selectedClass);
+				Net::CManager::getSingletonPtr()->send(msg.getbuffer(), msg.getSize());
+				break;
+			case 5:
+				{
+				_seleccion->hide();
+				//random de la clase y lo enviamos por red
+				int randomclass = ((rand()*clock())%4)+1;
+				msg.serialize(msgType);
+				msg.serialize(randomclass);
+				Net::CManager::getSingletonPtr()->send(msg.getbuffer(), msg.getSize());
+				break;
+				}
+		}//switch
+
+		//enviamos el mensaje
+		
+
+		return FLASH_VOID;
+
+	} // backReleased
 
 };

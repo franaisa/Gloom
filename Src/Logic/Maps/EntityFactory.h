@@ -177,7 +177,11 @@ namespace Logic {
 		CEntity* createEntityWithTimeOut(Map::CEntity *entityInfo, CMap *map, unsigned int msecs);
 
 		//________________________________________________________________________
+
+		bool checkRestrictions(const std::string &entityType);
 		
+		//________________________________________________________________________
+
 		/**
 		Destruye el CEntity pasado como parámetro. La destrucción
 		es inmediata, por lo que el <em>invocante debe garantizar</em>

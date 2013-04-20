@@ -94,7 +94,7 @@ namespace Logic {
 		// TODO Es un mensaje para enviar por el tubo.
 		// Lo enviamos por la red usando el front-end CGameNetMsgManager
 		Logic::TMessageType msgType = message->getMessageType();
-		if(msgType == Logic::TMessageType::CAMERA_TO_ENEMY) {
+		if(msgType == Logic::Message::CAMERA_TO_ENEMY) {
 			std::cout << "Recibido un mensaje de tipo camera to enemy" << std::endl;
 			std::cout << "menssaje de avatar controller ENVIADO" << std::endl;
 			
@@ -114,7 +114,6 @@ namespace Logic {
 	//---------------------------------------------------------------------------------
 		
 	void CNetConnector::tick(unsigned int msecs) {
-		IComponent::tick(msecs);
 	}
 
 } // namespace Logic

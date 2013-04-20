@@ -58,20 +58,20 @@ namespace Logic
 		_weaponry.resize(_numWeapons);
 
 		// Rellenamos el vector con los punteros a los componentes correspondientes
-		_weaponry[WeaponType::eHAMMER].second = _entity->getComponent<CShootHammer>("CShootHammer");
-		_weaponry[WeaponType::eSNIPER].second = _entity->getComponent<CShootSniper>("CShootSniper");
-		_weaponry[WeaponType::eSHOTGUN].second = _entity->getComponent<CShootShotGun>("CShootShotGun");
-		_weaponry[WeaponType::eMINIGUN].second = _entity->getComponent<CShootMiniGun>("CShootMiniGun");
-		_weaponry[WeaponType::eGRENADE_LAUNCHER].second = _entity->getComponent<CShootGrenadeLauncher>("CShootGrenadeLauncher");
-		_weaponry[WeaponType::eROCKET_LAUNCHER].second = _entity->getComponent<CShootRocketLauncher>("CShootRocketLauncher");
+		_weaponry[eHAMMER].second = _entity->getComponent<CShootHammer>("CShootHammer");
+		_weaponry[eSNIPER].second = _entity->getComponent<CShootSniper>("CShootSniper");
+		_weaponry[eSHOTGUN].second = _entity->getComponent<CShootShotGun>("CShootShotGun");
+		_weaponry[eMINIGUN].second = _entity->getComponent<CShootMiniGun>("CShootMiniGun");
+		_weaponry[eGRENADE_LAUNCHER].second = _entity->getComponent<CShootGrenadeLauncher>("CShootGrenadeLauncher");
+		_weaponry[eROCKET_LAUNCHER].second = _entity->getComponent<CShootRocketLauncher>("CShootRocketLauncher");
 
 		// Por defecto la primera arma está activada y equipada (es el arma 0).
-		_weaponry[WeaponType::eHAMMER].first = true;
-		_weaponry[WeaponType::eHAMMER].second->activate();
-		_weaponry[WeaponType::eHAMMER].second->inUse(true);
+		_weaponry[eHAMMER].first = true;
+		_weaponry[eHAMMER].second->activate();
+		_weaponry[eHAMMER].second->inUse(true);
 
 		// El resto de las armas están desactivadas, ya que no las tenemos
-		for(int i = 1; i < _weaponry.size(); ++i) {
+		for(unsigned int i = 1; i < _weaponry.size(); ++i) {
 			_weaponry[i].first = false;
 			_weaponry[i].second->deactivate();
 		}
@@ -86,12 +86,12 @@ namespace Logic
 		IComponent::activate();
 
 		// Por defecto la primera arma está activada y equipadda
-		_weaponry[WeaponType::eHAMMER].first = true;
-		_weaponry[WeaponType::eHAMMER].second->activate();
-		_weaponry[WeaponType::eHAMMER].second->inUse(true);
+		_weaponry[eHAMMER].first = true;
+		_weaponry[eHAMMER].second->activate();
+		_weaponry[eHAMMER].second->inUse(true);
 
 		// El resto de las armas están desactivadas, ya que no las tenemos
-		for(int i = 1; i < _weaponry.size(); ++i) {
+		for(unsigned int i = 1; i < _weaponry.size(); ++i) {
 			_weaponry[i].first = false; // Por si acaso habian sido activadas anteriormente
 			_weaponry[i].second->deactivate();
 		}
@@ -101,7 +101,7 @@ namespace Logic
 
 	void CWeaponsManager::deactivate(){
 		//reset de armas y balas
-		for(int i = 0; i<_weaponry.size();++i){
+		for(unsigned int i = 0; i<_weaponry.size();++i){
 			_weaponry[i].first = false;
 			_weaponry[i].second->resetAmmo();
 			_weaponry[i].second->inUse(false);
@@ -189,7 +189,7 @@ namespace Logic
 
 	void CWeaponsManager::amplifyDamage(int percentage) {
 		// Amplificamos el daño de todas las armas en base al porcentaje dado
-		for(int i = 0; i < _weaponry.size(); ++i) {
+		for(unsigned int i = 0; i < _weaponry.size(); ++i) {
 			_weaponry[i].second->incrementDamage(percentage);
 		}
 	}
@@ -198,7 +198,7 @@ namespace Logic
 
 	void CWeaponsManager::reduceCooldowns(int percentage) {
 		// Reducimos el cooldown de todas las armas en base al porcentaje dado
-		for(int i = 0; i < _weaponry.size(); ++i) {
+		for(unsigned int i = 0; i < _weaponry.size(); ++i) {
 			_weaponry[i].second->reduceCooldown(percentage);
 		}
 	}

@@ -98,19 +98,6 @@ namespace Application {
 
 	bool CSelectScenario::keyReleased(Input::TKey key)
 	{
-		switch(key.keyId)
-		{
-		//case Input::Key::NUMBER1:
-			//return loadScenario("1");
-			//_app->setState("lobbyserver");
-			//break;
-		//case Input::Key::NUMBER2:
-			//return loadScenario("2");
-			//_app->setState("lobbyclient");
-			//break;
-		default:
-			return true;
-		}
 		return true;
 
 	} // keyReleased
@@ -119,7 +106,7 @@ namespace Application {
 	
 	bool CSelectScenario::mouseMoved(const Input::CMouseState &mouseState)
 	{
-		return false;
+		return true;
 
 	} // mouseMoved
 
@@ -127,7 +114,7 @@ namespace Application {
 		
 	bool CSelectScenario::mousePressed(const Input::CMouseState &mouseState)
 	{
-		return false;
+		return true;
 
 	} // mousePressed
 
@@ -136,7 +123,7 @@ namespace Application {
 
 	bool CSelectScenario::mouseReleased(const Input::CMouseState &mouseState)
 	{
-		return false;
+		return true;
 
 	} // mouseReleased
 			
@@ -162,7 +149,7 @@ namespace Application {
 	Hikari::FlashValue CSelectScenario::backReleased(Hikari::FlashControl* caller, const Hikari::Arguments& args)
 	{
 		_app->setState("menu");
-		return true;
+		return FLASH_VOID;
 
 	} // backReleased
 

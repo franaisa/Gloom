@@ -3,6 +3,7 @@
 #include "Hikari.h"
 #include "GUI/Server.h"
 #include "BaseSubsystems\Server.h"
+#include "GUIKillersMessage.h"
 
 #include <cassert>
 
@@ -20,7 +21,7 @@ namespace Logic {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	bool CGUIManager::Init(){
-		assert(!_instance && "Segunda inicialización de Logic::CServer no permitida!");
+		assert(!_instance && "Segunda inicialización de Logic::CGUIManager no permitida!");
 
 		new CGUIManager();
 
@@ -29,6 +30,8 @@ namespace Logic {
 			Release();
 			return false;
 		}
+		
+
 		return true;
 	}
 
@@ -49,11 +52,11 @@ namespace Logic {
 
 	bool CGUIManager::open(){
 
-		Hikari::FlashControl* menuSeleccion = GUI::CServer::getSingletonPtr()->addLayout("menuseleccion", Hikari::Position(Hikari::Center), 0.8f);
+		//Hikari::FlashControl* menuSeleccion = GUI::CServer::getSingletonPtr()->addLayout("menuseleccion", Hikari::Position(Hikari::Center), 0.8f);
 		
-		menuSeleccion->hide();
+		//menuSeleccion->hide();
 
-		addGUI(menuSeleccion,"menuseleccion");
+		//addGUI(menuSeleccion,"menuseleccion");
 		return true;
 	}
 
@@ -76,10 +79,20 @@ namespace Logic {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	void CGUIManager::activate(){
-		Hikari::FlashControl* menuS = _loadedGUIs.find("menuseleccion")->second;
-		//menuS->load("SeleccionPersonaje.swf");
-		//menuS->show();
+		Logic::GUIKillersMessage::Init();
 	}
+
+	void CGUIManager::deactivate(){
+
+		TGUI::const_iterator deletedGUI = _loadedGUIs.begin();
+
+		for(;deletedGUI!= _loadedGUIs.end();++deletedGUI){
+			GUI::CServer::getSingletonPtr()->destroyLayout(deletedGUI->second);
+		}
+
+		_loadedGUIs.clear();
+		Logic::GUIKillersMessage::Release();
+	} 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -136,19 +149,19 @@ namespace Logic {
 
 		//primero metemos los parametros de tipo string
 		if(!stringPars.empty()){
-			for(int i=0;i<stringPars.size();++i){
+			for(unsigned int i=0;i<stringPars.size();++i){
 				args(stringPars[i]);
 			}
 		}
 		//despues metemos los parametros de tipo float
 		if(!intPars.empty()){
-			for(int i=0;i<floatPars.size();++i){
+			for(unsigned int i=0;i<floatPars.size();++i){
 				args(floatPars[i]);
 			}
 		}
 		//por ultimo metemos los parametros de tipo int
 		if(!intPars.empty()){
-			for(int i=0;i<intPars.size();++i){
+			for(unsigned int i=0;i<intPars.size();++i){
 				args(intPars[i]);
 			}
 		}
@@ -158,7 +171,30 @@ namespace Logic {
 
 	}
 
+	void CGUIManager::setTransparent(const std::string &name, bool transparent){
+		_loadedGUIs.find(name)->second->setTransparent(transparent, transparent);;
+	}
+
+	void CGUIManager::load(const std::string &name, const std::string &swf){
+		_loadedGUIs.find(name)->second->load(swf);;
+	}
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	void CGUIManager::addGUI(const std::string &name,const Hikari::Position &pos,unsigned int width, unsigned int height){
+		GUIPair elem(name,GUI::CServer::getSingletonPtr()->addLayout(name, pos, width, height));
+		_loadedGUIs.insert(elem);
+	}
+
+	void CGUIManager::addGUI(const std::string &name,const Hikari::Position &pos, float relativeSize){
+		GUIPair elem(name,GUI::CServer::getSingletonPtr()->addLayout(name, pos, relativeSize));
+		_loadedGUIs.insert(elem);
+	}
+
+	void CGUIManager::addGUI(const std::string &name,const Hikari::Position &pos){
+		GUIPair elem(name,GUI::CServer::getSingletonPtr()->addLayout(name, pos));
+		_loadedGUIs.insert(elem);
+	}
 
 
 }//namespace Logic

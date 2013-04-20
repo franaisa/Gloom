@@ -38,7 +38,7 @@ package
 		}
 		
 		private function onMouseClick(e:MouseEvent):void {
-			ExternalInterface.call("shadow");
+			ExternalInterface.call("selected", 4);
 		}
 		
 		

@@ -45,7 +45,8 @@ namespace Logic {
 	//________________________________________________________________________
 
 	CLife::CLife() : _damageTimer(0), 
-					 _reducedDamageAbsorption(0) {
+					 _reducedDamageAbsorption(0),
+					_starting(true){
 
 		// Nada que hacer
 	}
@@ -155,9 +156,6 @@ namespace Logic {
 	//________________________________________________________________________
 
 	void CLife::tick(unsigned int msecs) {
-		// Necesario para que se procesen todos los mensajes aceptados
-		IComponent::tick(msecs);
-
 		_damageTimer += msecs;
 		if(_damageTimer >= _damageTimeStep && _currentLife != 1) {
 			// Reducimos la vida hasta un minimo de un punto de salud
@@ -172,6 +170,16 @@ namespace Logic {
 			_damageTimer = 0;
 		}
 	} // tick
+
+	//________________________________________________________________________
+
+	void CLife::onStart(unsigned int msecs) {
+		if(_starting){
+			std::shared_ptr<CMessagePlayerDead> playerDeadMsg = std::make_shared<CMessagePlayerDead>();
+			_entity->emitMessage(playerDeadMsg);
+		}
+		_starting=false;
+	}
 
 	//________________________________________________________________________
 
@@ -283,6 +291,7 @@ namespace Logic {
 		// Mensaje de playerDead para tratar el respawn y desactivar los componentes
 		// del personaje.
 		std::shared_ptr<CMessagePlayerDead> playerDeadMsg = std::make_shared<CMessagePlayerDead>();
+		playerDeadMsg->setKiller(enemy->getEntityID());
 		_entity->emitMessage(playerDeadMsg);
 
 		// Mensaje para que la camara enfoque al jugador que nos ha matado
@@ -292,12 +301,13 @@ namespace Logic {
 		CEntity* camera=camera = CServer::getSingletonPtr()->getMap()->getEntityByType("Camera");
 		cteMsg->setEnemy(enemy);
 		//Solo si soy el jugador local envio mensaje de recolocación de camara (no quiero que enemigos muertos me seteen mi camara)
-		if(_entity->getType().compare("LocalPlayer")==0){
+		if(_entity->isPlayer()){
 			camera->emitMessage(cteMsg);
 		}
 		// Enviamos el mensaje por la red
 		if( Net::CManager::getSingletonPtr()->imServer() )
 			Logic::CGameNetMsgManager::getSingletonPtr()->sendMessageToOne(cteMsg, camera->getEntityID(), _entity->getEntityID());
+
 	}
 
 	//________________________________________________________________________

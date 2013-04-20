@@ -53,7 +53,7 @@ bool CPhysicController::spawn(CEntity* entity, CMap *map, const Map::CEntity *en
 	// Crear el character controller asociado al componente
 	createController(entityInfo);
 	// Seteo de _falling a false para que se envie el primer mensaje de actualizacion
-	_falling = false;
+	_falling = true;
 
 
 	return true;
@@ -83,8 +83,6 @@ void CPhysicController::process(const std::shared_ptr<CMessage>& message) {
 //________________________________________________________________________
 
 void CPhysicController::tick(unsigned int msecs) {
-	IComponent::tick(msecs);
-
 	// Sino hay movimiento no hacemos nada
 	if(_movement == Vector3(0,0,0)) return;
 
@@ -225,19 +223,19 @@ void CPhysicController::moveController(Vector3& movement, unsigned int msecs) {
 	_entity->setPosition( _controller.getPosition() );
 
 	// Si tocamos con el techo lo notificamos
-	if((flags & CharacterControllerFlag::eCOLLISION_UP)) {
+	if((flags & eCOLLISION_UP)) {
 		std::shared_ptr<CMessageCealing> em = std::make_shared<CMessageCealing>();
 		_entity->emitMessage(em);
 	}
 	// Si tocamos el lateral tenemos que parar la inercia de la direccion
-	if((flags & CharacterControllerFlag::eCOLLISION_SIDES)) {
+	if((flags & eCOLLISION_SIDES)) {
 		std::shared_ptr<CMessageSide> side = std::make_shared<CMessageSide>();
 		_entity->emitMessage(side);
 	}
 	// Si hay cambio de estado en el flag de tocar suelo
-	if(_falling != !(flags & CharacterControllerFlag::eCOLLISION_DOWN)) {
+	if(_falling != !(flags & eCOLLISION_DOWN)) {
 		// Actualizamos el flag que indica si estamos cayendo
-		_falling =  !(flags & CharacterControllerFlag::eCOLLISION_DOWN);
+		_falling =  !(flags & eCOLLISION_DOWN);
 		// Mandamos un mensaje que dirá si hay collision con el suelo para la lógica
 		std::shared_ptr<CMessageCollisionDown> m = std::make_shared<CMessageCollisionDown>();
 		m->setCollisionDown(_falling);

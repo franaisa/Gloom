@@ -114,9 +114,6 @@ void CPhysicDynamicEntity::process(const std::shared_ptr<CMessage>& message) {
 //---------------------------------------------------------
 
 void CPhysicDynamicEntity::tick(unsigned int msecs) {
-	// Invocar al método de la clase padre (IMPORTANTE)
-	IComponent::tick(msecs);
-
 	// Actualizar la posición y la orientación de la entidad lógica usando la 
 	// información proporcionada por el motor de física	
 	_entity->setTransform( _physicEntity.getTransform() );
@@ -211,7 +208,7 @@ void CPhysicDynamicEntity::createRigid(const Map::CEntity *entityInfo, int group
 		const Vector3 physicDimensions = entityInfo->getVector3Attribute("physic_dimensions");
 
 		Physics::BoxGeometry box = _geometryFactory->createBox(physicDimensions);
-		Physics::Material* defaultMaterial = _materialManager->getMaterial(MaterialType::eDEFAULT);
+		Physics::Material* defaultMaterial = _materialManager->getMaterial(eDEFAULT);
 		float density = mass / (physicDimensions.x * physicDimensions.y * physicDimensions.z);
 		
 		_physicEntity.load(position, box, *defaultMaterial, density, isKinematic, isTrigger, group, groupList, this);
@@ -221,7 +218,7 @@ void CPhysicDynamicEntity::createRigid(const Map::CEntity *entityInfo, int group
 		const float physicRadius = entityInfo->getFloatAttribute("physic_radius");
 		
 		Physics::SphereGeometry sphere = _geometryFactory->createSphere(physicRadius);
-		Physics::Material* defaultMaterial = _materialManager->getMaterial(MaterialType::eDEFAULT);
+		Physics::Material* defaultMaterial = _materialManager->getMaterial(eDEFAULT);
 		float density = mass / (4.0/3.0 * Math::PI * physicRadius * physicRadius * physicRadius);
 
 		_physicEntity.load(position, sphere, *defaultMaterial, density, isKinematic, isTrigger, group, groupList, this);

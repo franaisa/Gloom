@@ -81,14 +81,12 @@ namespace Logic {
 		_screamerShieldRecoveryOverTime = entityInfo->getFloatAttribute("screamerShieldRecoveryOverTime");
 		_screamerExplotionDamage = entityInfo->getFloatAttribute("screamerExplotionDamage");
 		_screamerExplotionRadius = entityInfo->getFloatAttribute("screamerExplotionRadius");
-
+		return true;
 	} // spawn
 
 	//__________________________________________________________________
 
 	void CScreamerServer::onStart(unsigned int msecs) {
-		CPlayerClass::onStart(msecs);
-
 		// Mandar el mensaje de set related entity aqui si es que vamos
 		// a hacerlo con una sola inicializacion
 	}
@@ -96,8 +94,6 @@ namespace Logic {
 	//__________________________________________________________________
 
 	void CScreamerServer::tick(unsigned int msecs) {
-		CPlayerClass::tick(msecs);
-
 		// Si la habilidad primaria está siendo usada
 		if(_primarySkillIsActive) {
 			// Deberia funcionar este bucle como el de la fisica? restando

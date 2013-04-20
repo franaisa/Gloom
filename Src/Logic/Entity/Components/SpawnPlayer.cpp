@@ -84,13 +84,12 @@ namespace Logic
 	//---------------------------------------------------------
 
 	void CSpawnPlayer::tick(unsigned int msecs) {
-		IComponent::tick(msecs);
 		//Solamente si estamos muertos (se recibió el mensaje)
 		if(_isDead){
 			_actualTimeSpawn+=msecs;
-		
 			//Si superamos el tiempo de spawn tenemos que revivir
 			if(_actualTimeSpawn>_timeSpawn){
+
 				//LLamamos al manager de spawn que nos devolverá una posición ( ahora hecho a lo cutre)
 				CEntity *spawn = CServer::getSingletonPtr()->getSpawnManager()->getSpawnPosition();
 
@@ -115,15 +114,8 @@ namespace Logic
 
 				CEntity * camera = CServer::getSingletonPtr()->getMap()->getEntityByType("Camera");
 				camera->emitMessage(spawnMsg);
-
-				if(Net::CManager::getSingletonPtr()->imServer()) {
-					std::shared_ptr<CMessagePlayerSpawn> serverSpawnMsg = std::make_shared<CMessagePlayerSpawn>();
-					Logic::CGameNetMsgManager::getSingletonPtr()->sendMessageToOne(serverSpawnMsg, camera->getEntityID(), _entity->getEntityID());
-				}
-
-				std::shared_ptr<CMessageHudSpawn> mS = std::make_shared<CMessageHudSpawn>();
-				mS->setTime(0);
-				_entity->emitMessage(mS);
+				//if(Net::CManager::getSingletonPtr()->imServer())
+				//	Logic::CGameNetMsgManager::getSingletonPtr()->sendMessageToOne(new CMessagePlayerSpawn(), camera->getEntityID(), _entity->getEntityID());
 
 				//Mirar porque se creó esto, lo mismo antonio sabe
 				/*

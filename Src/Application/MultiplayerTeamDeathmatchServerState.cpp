@@ -126,29 +126,6 @@ namespace Application {
 						tempBuffer.reset();
 					}
 				}
-
-				// Extraemos la informacion asociada al player que quiere conectarse
-				Logic::CPlayerInfo playerInfo = Logic::CGameNetPlayersManager::getSingletonPtr()->getPlayer(playerNetId);
-				name = playerInfo.getName();
-				std::stringstream number;
-				number << playerNetId;
-				name.append(number.str());
-				// Creamos un player en el mundo con el nombre del jugador que solicita entrar
-				Logic::CEntity* player = Logic::CServer::getSingletonPtr()->getMap()->createPlayer(name);
-				// Extraemos la id asignada a dicha entidad y la asociamos al player del gestor
-				entityId = player->getEntityID();
-				Logic::CGameNetPlayersManager::getSingletonPtr()->setEntityID(playerNetId, entityId);
-			
-				// Ordenamos la carga del player a todos los clientes conectados
-				Net::CBuffer buffer( sizeof(msg) + sizeof(playerNetId) + sizeof(entityId) + (sizeof(char) * name.size()) );
-				buffer.write(&msg, sizeof(msg)); // El contenido de msg es LOAD_PLAYER
-				buffer.write(&playerNetId, sizeof(playerNetId));
-				buffer.write(&entityId, sizeof(entityId));
-				buffer.serialize(name, false);
-
-				// Broadcast a todos los jugadores con el id del player que se quiere conectar
-				Net::CManager::getSingletonPtr()->send(buffer.getbuffer(), buffer.getSize());
-				player->activate();
 				break;
 			}
 			case Net::PLAYER_LOADED: {
@@ -159,17 +136,12 @@ namespace Application {
 
 				// MANDAR EL MENSAJE DE ARRANQUE A TAN SOLO UNO DE ELLOS (EL QUE SE QUIERE CONECTAR)
 
-				// @deprecated
-				// Problema, si se conecta alguien antes de llegar a este if, el numero de jugadores conectados
-				// incrementa (cosa que se hace cuando se recibe un paquete de conexion) y ya no se cumpliria
-				// el if
-
 				unsigned int playersLoadedByClient = Logic::CGameNetPlayersManager::getSingletonPtr()->getPlayersLoaded(playerNetId);
 				unsigned int playersConnected = Logic::CGameNetPlayersManager::getSingletonPtr()->getNumberOfPlayersConnected();
 
 				//Si todos los clientes han cargado todos los players
 				if( Logic::CGameNetPlayersManager::getSingletonPtr()->getPlayersLoaded(playerNetId) == 
-					Logic::CGameNetPlayersManager::getSingletonPtr()->getNumberOfPlayersConnected() ) {
+					Logic::CGameNetPlayersManager::getSingletonPtr()->getNumberOfPlayersConnected() - 1) {
 				
 					// Si el cliente que queria conectarse a cargado a todos los players mandamos el mensaje
 					// de empezar
@@ -189,6 +161,59 @@ namespace Application {
 				Net::CManager::getSingletonPtr()->send(ackBuffer.getbuffer(), ackBuffer.getSize(), playerNetId);
 				break;
 			}
+			case Net::CLASS_SELECTED: {
+				int race;
+				std::string name;
+
+				buffer.deserialize(race);
+
+				Logic::CPlayerInfo playerInfo = Logic::CGameNetPlayersManager::getSingletonPtr()->getPlayer(playerNetId);
+				name = playerInfo.getName();
+				std::stringstream number;
+				number << playerNetId;
+				name.append(number.str());
+
+				//creamos el jugador que el cliente ha elegido
+				Logic::CEntity* player;
+				switch(race)
+				{
+					case 1:
+						player = Logic::CServer::getSingletonPtr()->getMap()->createPlayer(name, "Screamer");
+						break;
+					case 2:
+						player = Logic::CServer::getSingletonPtr()->getMap()->createPlayer(name, "Hound");
+						break;
+					case 3:
+						player = Logic::CServer::getSingletonPtr()->getMap()->createPlayer(name, "Archangel");
+						break;
+					case 4:
+						player = Logic::CServer::getSingletonPtr()->getMap()->createPlayer(name, "Shadow");
+						break;
+				}
+				Logic::CGameNetPlayersManager::getSingletonPtr()->setEntityID(playerNetId, player->getEntityID());
+				Net::NetMessageType msgType = Net::LOAD_PLAYER;// Escribimos el tipo de mensaje de red a enviar
+				Net::CBuffer serialMsg;
+				//serializamos toda la información que se necesita para la creación de la entidad
+				serialMsg.write(&msgType, sizeof(msgType));
+				serialMsg.serialize(player->getEntityID());
+				serialMsg.serialize(player->getType(), false);
+				serialMsg.serialize(player->getName(), false);
+		
+				//enviamos la entidad nueva al jugador local
+				Net::CManager::getSingletonPtr()->sendAllExcept(serialMsg.getbuffer(), serialMsg.getSize(),playerNetId);
+				serialMsg.reset();
+				//enviamos la entidad nueva al resto de jugadores
+				msgType = Net::LOAD_LOCAL_PLAYER;// Escribimos el tipo de mensaje de red a enviar
+				//serializamos toda la información que se necesita para la creación de la entidad
+				serialMsg.write(&msgType, sizeof(msgType));
+				serialMsg.serialize(player->getEntityID());
+				serialMsg.serialize(player->getType(), false);
+				serialMsg.serialize(player->getName(), false);
+				player->activate();
+				Net::CManager::getSingletonPtr()->send(serialMsg.getbuffer(), serialMsg.getSize(),playerNetId);
+				break;
+				}
+			
 		}
 
 	} // dataPacketReceived
@@ -197,10 +222,6 @@ namespace Application {
 
 	void CMultiplayerTeamDeathmatchServerState::connexionPacketReceived(Net::CPaquete* packet) {
 		Net::NetID playerId = packet->getConexion()->getId();
-
-		// @todo
-		// Garantizar que todos los clientes se conectan en la fase adecuada de manera que no se
-		// produzcan condiciones indeseables a causa de la concurrencia
 		
 		// Actualizamos el manager de jugadores
 		Logic::CGameNetPlayersManager::getSingletonPtr()->addPlayer(playerId);
@@ -227,5 +248,47 @@ namespace Application {
 		// Eliminamos el jugador que se desconecta del manager de jugadores
 		playersMgr->removePlayer(playerNetId);
 	} // disconnexionPacketReceived
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	bool CMultiplayerTeamDeathmatchServerState::keyPressed(Input::TKey key)
+	{
+		return CGameState::keyPressed(key);;
+
+	} // keyPressed
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	bool CMultiplayerTeamDeathmatchServerState::keyReleased(Input::TKey key)
+	{
+		
+		return CGameState::keyReleased(key);;
+
+	} // keyReleased
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	
+	bool CMultiplayerTeamDeathmatchServerState::mouseMoved(const Input::CMouseState &mouseState)
+	{
+		return false;
+
+	} // mouseMoved
+
+	//--------------------------------------------------------
+		
+	bool CMultiplayerTeamDeathmatchServerState::mousePressed(const Input::CMouseState &mouseState)
+	{
+		return false;
+
+	} // mousePressed
+
+	//--------------------------------------------------------
+
+
+	bool CMultiplayerTeamDeathmatchServerState::mouseReleased(const Input::CMouseState &mouseState)
+	{
+		return false;
+
+	} // mouseReleased
 	
 } // namespace Application

@@ -166,7 +166,7 @@ namespace Logic {
 			_map = 0;
 		}
 		_player = 0;
-
+		_guiManager->deactivate();
 	} // unLoadLevel
 
 	//---------------------------------------------------------
@@ -187,6 +187,7 @@ namespace Logic {
 	{
 		_gameSpawnManager->deactivate();
 		_gameNetMsgManager->deactivate();
+		
 		_map->deactivate();
 
 	} // deactivateMap
@@ -195,7 +196,11 @@ namespace Logic {
 
 	void CServer::tick(unsigned int msecs) 
 	{
+		//tick de logica
 		_map->tick(msecs);
+		//_guiManager->tick(msecs);
+		//tick de GUI
+
 
 		// Eliminamos las entidades que se han marcado para ser eliminadas.
 		Logic::CEntityFactory::getSingletonPtr()->deleteDefferedEntities();

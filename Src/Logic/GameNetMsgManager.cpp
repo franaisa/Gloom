@@ -105,14 +105,14 @@ namespace Logic {
 		//cogemos la entidad que hemos creado para enviar la información por la red
 		CEntity * destEntity = CServer::getSingletonPtr()->getMap()->getEntityByID(destID);
 
-		Net::NetMessageType msgType = Net::NetMessageType::DESTROY_ENTITY;// Escribimos el tipo de mensaje de red a enviar
+		Net::NetMessageType msgType = Net::DESTROY_ENTITY;// Escribimos el tipo de mensaje de red a enviar
 		Net::CBuffer serialMsg;
 		//serializamos toda la información que se necesita para la creación de la entidad
 		serialMsg.write(&msgType, sizeof(msgType));
 		serialMsg.serialize(destID);
 
 		//enviamos el mensaje
-		Net::CManager::getSingletonPtr()->send(serialMsg.getbuffer(), serialMsg.getSize());
+		Net::CManager::getSingletonPtr()->broadcast(serialMsg.getbuffer(), serialMsg.getSize());
 	}
 
 	//---------------------------------------------------------
@@ -132,7 +132,7 @@ namespace Logic {
 
 		//le decimos al mapa que elimine la entidad
 		CEntity * entity = CServer::getSingletonPtr()->getMap()->getEntityByID(destID);
-		CEntityFactory::getSingletonPtr()->deferredDeleteEntity(entity);
+		CEntityFactory::getSingletonPtr()->deleteEntity(entity);
 	}
 
 	//---------------------------------------------------------
@@ -141,7 +141,7 @@ namespace Logic {
 		//cogemos la entidad que hemos creado para enviar la información por la red
 		CEntity * destEntity = CServer::getSingletonPtr()->getMap()->getEntityByID(destID);
 
-		Net::NetMessageType msgType = Net::NetMessageType::CREATE_ENTITY;// Escribimos el tipo de mensaje de red a enviar
+		Net::NetMessageType msgType = Net::CREATE_ENTITY;// Escribimos el tipo de mensaje de red a enviar
 		Net::CBuffer serialMsg;
 		//serializamos toda la información que se necesita para la creación de la entidad
 		serialMsg.write(&msgType, sizeof(msgType));
@@ -151,7 +151,7 @@ namespace Logic {
 		serialMsg.serialize(destEntity->getTransform());
 
 		//enviamos el mensaje
-		Net::CManager::getSingletonPtr()->send(serialMsg.getbuffer(), serialMsg.getSize());
+		Net::CManager::getSingletonPtr()->broadcast(serialMsg.getbuffer(), serialMsg.getSize());
 	}
 
 	//---------------------------------------------------------
@@ -210,13 +210,13 @@ namespace Logic {
 
 		Net::CBuffer* bufferAux = txMsg->serialize();
 
-		Net::NetMessageType msgType = Net::NetMessageType::ENTITY_MSG;// Escribimos el tipo de mensaje de red a enviar
+		Net::NetMessageType msgType = Net::ENTITY_MSG;// Escribimos el tipo de mensaje de red a enviar
 		Net::CBuffer serialMsg;
 			serialMsg.write(&msgType, sizeof(msgType));
 			serialMsg.write(&destID, sizeof(destID)); // Escribimos el id de la entidad destino
 			serialMsg.write(bufferAux->getbuffer(), bufferAux->getSize()); //Guardamos el mensaje en el buffer
 			
-		Net::CManager::getSingletonPtr()->send(serialMsg.getbuffer(), serialMsg.getSize());
+		Net::CManager::getSingletonPtr()->broadcast(serialMsg.getbuffer(), serialMsg.getSize());
 		//std::cout << "Enviado mensaje tipo " << txMsg->getMessageType() << " para la entidad " << destID << " de tamaño " << serialMsg.getSize() << std::endl;
 		//LOG("TX ENTITY_MSG " << txMsg._type << " to EntityID " << destID);
 	} // sendEntityMessage
@@ -228,7 +228,7 @@ namespace Logic {
 
 		Net::CBuffer* bufferAux = txMsg->serialize();
 
-		Net::NetMessageType msgType = Net::NetMessageType::ENTITY_MSG;// Escribimos el tipo de mensaje de red a enviar
+		Net::NetMessageType msgType = Net::ENTITY_MSG;// Escribimos el tipo de mensaje de red a enviar
 		Net::CBuffer serialMsg;
 			serialMsg.write(&msgType, sizeof(msgType));
 			serialMsg.write(&destID, sizeof(destID)); // Escribimos el id de la entidad destino
@@ -236,7 +236,7 @@ namespace Logic {
 			
 		Net::NetID idMsg = Logic::CGameNetPlayersManager::getSingletonPtr()->getPlayerByEntityId(player).getNetId();
 
-		Net::CManager::getSingletonPtr()->send(serialMsg.getbuffer(), serialMsg.getSize(), idMsg);
+		Net::CManager::getSingletonPtr()->sendTo(idMsg, serialMsg.getbuffer(), serialMsg.getSize());
 	} // sendMessageToOne
 
 	//---------------------------------------------------------
@@ -273,14 +273,14 @@ namespace Logic {
 		if(destEntity != 0)
 			destEntity->emitMessage(messageReceived);
 
-		if(Net::CManager::getSingletonPtr()->imServer() && messageReceived->getMessageType()==Logic::TMessageType::CONTROL){
-			Net::NetMessageType msgType = Net::NetMessageType::ENTITY_MSG;// Escribimos el tipo de mensaje de red a enviar
+		if(Net::CManager::getSingletonPtr()->imServer() && messageReceived->getMessageType()==Message::CONTROL){
+			Net::NetMessageType msgType = Net::ENTITY_MSG;// Escribimos el tipo de mensaje de red a enviar
 			Net::CBuffer serialMsg;
 			Net::CBuffer *buffer = messageReceived->serialize();
 			serialMsg.write(&msgType, sizeof(msgType));
 			serialMsg.write(&destID, sizeof(destID)); // Escribimos el id de la entidad destino
 			serialMsg.write(buffer->getbuffer(), buffer->getSize());
-			Net::CManager::getSingletonPtr()->sendAllExcept(serialMsg.getbuffer(),serialMsg.getSize(),packet->getConexion()->getId());
+			Net::CManager::getSingletonPtr()->broadcastIgnoring(packet->getConexion()->getId(), serialMsg.getbuffer(), serialMsg.getSize());
 		}
 
 		//LOG("RX ENTITY_MSG " << rxMsg._type << " from EntityID " << destID);
@@ -302,18 +302,18 @@ namespace Logic {
 		switch (rxMsgType)
 		{
 
-		case Net::NetMessageType::DESTROY_ENTITY:	
+		case Net::DESTROY_ENTITY:	
 			processDestroyEntity(packet);
 			break;	
-		case Net::NetMessageType::ENTITY_MSG:	
+		case Net::ENTITY_MSG:	
 			processEntityMessage(packet);
 			break;	
 
-		case Net::NetMessageType::CREATE_ENTITY:	
+		case Net::CREATE_ENTITY:	
 			processCreateEntity(packet);
 			break;	
 
-		case Net::NetMessageType::END_GAME:	
+		case Net::END_GAME:	
 
 			TEntityID entityID; 
 				rxSerialMsg.read(&entityID, sizeof(entityID) );  //	Packet: "NetMessageType | extraData(NetID)"	

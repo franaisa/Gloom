@@ -18,7 +18,7 @@ namespace Logic
 {
 	IComponent::IComponent() : _entity(0), 
 							   _isActivated(true), 
-							   _isStartingUp(true) {
+							   updater(&IComponent::onStartSetup) {
 
 		Logic::CServer::getSingletonPtr()->COMPONENT_CONSTRUCTOR_COUNTER += 1;
 	}
@@ -29,8 +29,7 @@ namespace Logic
 
 	//---------------------------------------------------------
 
-	bool IComponent::spawn(CEntity *entity, CMap *map, const Map::CEntity *entityInfo) 
-	{
+	bool IComponent::spawn(CEntity *entity, CMap *map, const Map::CEntity *entityInfo) {
 		_entity = entity;
 		return true;
 
@@ -38,11 +37,24 @@ namespace Logic
 
 	//---------------------------------------------------------
 	
-	void IComponent::activate() {
-		if(_isActivated) 
-			return;
+	void IComponent::activateSetup() {
+		// Seteamos el puntero para que se ejecute onStart al comenzar
+		updater = &IComponent::onStartSetup;
+		// Llamamos al activar que los hijos deben redefinir
+		activate();
+	}
 
-		_isActivated = _isStartingUp = true;
+	//---------------------------------------------------------
+
+	void IComponent::activate() {
+		if(_isActivated) return;
+		
+		// Por defecto no forzamos a que se arranque onStart
+		// queda abierto para que el cliente lo haga
+		// solo tendria que setear updater como onStart
+		// al ejecutar onStart se vuelve a setear tick
+		
+		_isActivated = true;
 		clearMessages();
 	}
 
@@ -54,16 +66,33 @@ namespace Logic
 
 	//---------------------------------------------------------
 
-	void IComponent::onStart(unsigned int msecs) {
-		_isStartingUp = false;
+	void IComponent::onStartSetup(unsigned int msecs) {
+		// Fijamos el puntero a funcion al tick
+		updater = &IComponent::tickSetup;
+		// Procesamos los mensajes recibidos
 		processMessages();
+		// Ejecutamos el onStart definido por el componente hijo
+		onStart(msecs);
+	}
+
+	//---------------------------------------------------------
+
+	void IComponent::onStart(unsigned int msecs) {
+		// Los hijos deben redefinir su comportamiento
+	}
+
+	//---------------------------------------------------------
+
+	void IComponent::tickSetup(unsigned int msecs) {
+		// Procesamos los mensajes que nos hayan llegado
+		processMessages();
+		tick(msecs);
 	}
 
 	//---------------------------------------------------------
 
 	void IComponent::tick(unsigned int msecs) {
-		processMessages();
-
+		// Los hijos deben redefinir su comportamiento
 	} // tick
 
 } // namespace Logic

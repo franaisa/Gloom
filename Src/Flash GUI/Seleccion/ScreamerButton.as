@@ -39,7 +39,7 @@ package
 		}
 		
 		private function onMouseClick(e:MouseEvent):void {
-			ExternalInterface.call("screamer");
+			ExternalInterface.call("selected", 1);
 		}
 		
 	}

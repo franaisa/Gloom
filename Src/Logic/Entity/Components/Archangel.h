@@ -110,10 +110,10 @@ namespace Logic {
 
 
 		/** Tiempo que dura siendo inmune (piel de diamante) */
-		float _inmuneDuration;
+		float _inmunityDuration;
 
 		/** Timer que controla la duración que lleva siendo inmune. */
-		float _inmuneTimer;
+		float _inmunityTimer;
 
 	}; // class CArchangel
 
