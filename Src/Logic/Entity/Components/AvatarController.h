@@ -144,6 +144,8 @@ namespace Logic
 
 		void executeMovementCommand(ControlType commandType);
 
+		void normalizeDirection();
+
 		void initMovementCommands();
 
 		float _maxVelocity;
@@ -170,6 +172,7 @@ namespace Logic
 
 		/** Vector de gravedad, puede ser sustituido por un flotante. */
 		Vector3 _gravity;
+		float _maxGravVelocity;
 
 	}; // class CAvatarController
 

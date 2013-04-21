@@ -23,7 +23,7 @@ de la entidad.
 namespace Logic {
 	IMP_FACTORY(CAvatarController);
 
-	CAvatarController::CAvatarController() : _gravity(0, -9.81f, 0),
+	CAvatarController::CAvatarController() : _gravity(0, -1.0f, 0),
 											 _touchingGround(false) {
 		// Inicializamos el array que contiene los vectores
 		// de cada tecla de movimiento
@@ -40,7 +40,7 @@ namespace Logic {
 
 		assert( entityInfo->hasAttribute("maxVelocity") && "Error: No se ha definido el atributo maxVelocity en el mapa" );
 		_maxVelocity = entityInfo->getFloatAttribute("maxVelocity");
-
+		_maxGravVelocity = _maxVelocity*2;
 		return true;
 
 	} // spawn
@@ -114,20 +114,38 @@ namespace Logic {
 
 		// Calculamos el vector de movimiento del personaje
 		std::cout << msecs << std::endl;
-		_momentum*=10.0f/(double)msecs;
+		
+
+		if(_touchingGround)
+			_momentum *= 10.0f/(double)msecs;
+		
 		_momentum+= _touchingGround ? estimateGroundMotion(msecs) : estimateAirMotion(msecs);
+
+		
+		
+		normalizeDirection();
 
 		// Tratamos de mover el controlador fisico con el movimiento estimado
 		// en caso de colision, el controlador fisico nos informará.
-		
-		float momVelocity = _momentum.length();
-		if(momVelocity >_maxVelocity){
-			double coef = _maxVelocity/momVelocity;
-			_momentum*=coef;
-		}
-
 		manageCollisions( _physicController->move(_momentum, msecs) );
 	} // tick
+
+	void CAvatarController::normalizeDirection(){
+
+		//normalizamos la velocidad horizontal
+		float momVelocity = (_momentum*Vector3(1,0,1)).length();
+		if(momVelocity >_maxVelocity){
+			double coef = _maxVelocity/momVelocity;
+			_momentum*=Vector3(coef,1,coef);
+		}
+
+		//normalizamos la velocidad vertical
+		float gVelocity = (_momentum*Vector3(1,0,1)).length();
+		if(gVelocity >_maxGravVelocity){
+			double coef = _maxGravVelocity/gVelocity;
+			_momentum*=Vector3(1,coef,1);
+		}
+	}
 
 	//________________________________________________________________________
 

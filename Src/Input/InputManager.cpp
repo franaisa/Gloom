@@ -205,8 +205,7 @@ namespace Input{
 			it = _keyListeners.begin();
 			for (; it != _keyListeners.end(); it++) 
 			{
-				if ((*it)->keyPressed(ois2gloom(e)))
-				  return true;
+				(*it)->keyPressed(ois2gloom(e));
 			}
 		}
 
@@ -224,8 +223,7 @@ namespace Input{
 			it = _keyListeners.begin();
 			for (; it != _keyListeners.end(); it++) 
 			{
-				if ((*it)->keyReleased(ois2gloom(e)))
-				  return true;
+				(*it)->keyReleased(ois2gloom(e));
 			}
 		}
 
