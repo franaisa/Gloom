@@ -139,32 +139,37 @@ namespace Logic {
 
 	//________________________________________________________________________
 
-	Vector3 CAvatarController::estimateGroundMotion(unsigned int msecs) {
-		// Si nuestro movimiento es nulo no hacemos nada
-		if(_displacement == Vector3::ZERO) return Vector3::ZERO;
-
+	Vector3 CAvatarController::estimateMotionDirection() {
 		// Mediante trigonometria basica sacamos el angulo que forma el desplazamiento
 		// que queremos llevar a cabo
 		float displacementYaw = asin(_displacement.normalisedCopy().x);
 		// Obtenemos una copia de la matriz de transformación del personaje
 		Matrix4 characterTransform = _entity->getTransform();
+		// Si estamos andando hacia atras, invertimos el giro
+		if(_displacement.z < 0) displacementYaw *= -1;
+		
 		// Rotamos la matriz de transformacion tantos grados como diga el vector 
 		// desplazamiento calculado de pulsar las teclas
-		if(_displacement.z<0)displacementYaw*=-1;
-		
 		Math::yaw(displacementYaw, characterTransform);
-		std::cout << displacementYaw << std::endl;
 		// Obtenemos el vector unitario de orientación de la matriz de transformación
-		Vector3 characterMovement = Math::getDirection(characterTransform);
-		// Seteamos la direccion del movimiento teniendo en cuenta el signo de la z
-		// ya que los valores obtenidos por el arco seno están entre 90 y -90 grados
-		// (justo el angulo de movimiento frontal).
+		Vector3 motionDirection = Math::getDirection(characterTransform);
+		// Invertimos el vector resultante si nos estamos desplazando hacia atras
+		// porque el yaw se calcula de forma contraria al andar hacia atras
+		if(_displacement.z < 0) motionDirection *= -1;
 
-		if(_displacement.z < 0) characterMovement *= -1;
+		// Devolvemos la dirección del movimiento estimado
+		return motionDirection;
+	}
+
+	//________________________________________________________________________
+
+	Vector3 CAvatarController::estimateGroundMotion(unsigned int msecs) {
+		// Si nuestro movimiento es nulo no hacemos nada
+		if(_displacement == Vector3::ZERO) return Vector3::ZERO;
 
 		// Aplicamos la velocidad de movimiento
 		//characterMovement *= _acceleration * msecs;s
-		return characterMovement * _acceleration * msecs;
+		return estimateMotionDirection() * _acceleration * msecs;
 	}
 
 	//________________________________________________________________________

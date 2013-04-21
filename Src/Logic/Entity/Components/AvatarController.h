@@ -136,6 +136,8 @@ namespace Logic
 		
 		void manageCollisions(unsigned collisionFlags);
 
+		Vector3 estimateMotionDirection();
+
 		Vector3 estimateGroundMotion(unsigned int msecs);
 
 		Vector3 estimateAirMotion(unsigned int msecs);
