@@ -146,8 +146,7 @@ namespace Logic
 
 		void initMovementCommands();
 
-
-
+		float _maxVelocity;
 
 		bool _touchingGround;
 
