@@ -38,6 +38,9 @@ namespace Logic {
 		assert( entityInfo->hasAttribute("acceleration") && "Error: No se ha definido el atributo acceleration en el mapa" );
 		_acceleration = entityInfo->getFloatAttribute("acceleration");
 
+		assert( entityInfo->hasAttribute("maxVelocity") && "Error: No se ha definido el atributo maxVelocity en el mapa" );
+		_maxVelocity = entityInfo->getFloatAttribute("maxVelocity");
+
 		return true;
 
 	} // spawn
