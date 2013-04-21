@@ -100,10 +100,14 @@ namespace Logic
 
 		@param movement Vector de desplazamiento.
 		@param msecs Tiempo durante el que queremos que se produzca el movimiento.
+		@return Los flags de colisión que indican las colisiones que se han producido
+		durante el desplazamiento del controlador.
 		*/
-		void move(const Vector3& movement, unsigned int msecs);
+		unsigned move(const Vector3& movement, unsigned int msecs);
+
 
 	private:
+
 
 		void readCollisionGroupInfo(const Map::CEntity *entityInfo, int& group, std::vector<int>& groupList);
 
@@ -112,8 +116,6 @@ namespace Logic
 		información del mapa.
 		*/
 		void createController(const Map::CEntity *entityInfo);
-
-		void manageCollisions(unsigned collisionFlags);
 
 		// Character controller que representa la entidad física en PhysX
 		//physx::PxCapsuleController *_controller;

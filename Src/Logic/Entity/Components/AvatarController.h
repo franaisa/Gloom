@@ -128,7 +128,18 @@ namespace Logic
 
 		void executeControlCommand(CMessageControl * controlMsg);
 
+		void manageCollisions(unsigned collisionFlags);
+
+		Vector3 estimateGroundMotion(unsigned int msecs);
+
+		Vector3 estimateAirMotion(unsigned int msecs);
+
 		void initWalkCommands();
+
+
+
+
+		bool _touchingGround;
 
 		/** Puntero al controlador fisico del player. */
 		CPhysicController* _physicController;

@@ -21,7 +21,8 @@ de la entidad.
 namespace Logic {
 	IMP_FACTORY(CAvatarController);
 
-	CAvatarController::CAvatarController() : _gravity(0, -9.81f, 0) {
+	CAvatarController::CAvatarController() : _gravity(0, -9.81f, 0),
+											 _touchingGround(false) {
 		// Inicializamos el array que contiene los vectores
 		// de cada tecla de movimiento
 		initWalkCommands();
@@ -96,8 +97,52 @@ namespace Logic {
 		//@deprecated
 		IComponent::tick(msecs);
 
+		// Calculamos el vector de movimiento del personaje
+		//Vector3 characterMovement = _touchingGround ? estimateGroundMotion(msecs) : estimateAirMotion(msecs);
+		Vector3 characterMovement = estimateGroundMotion(msecs) + _gravity; // esta mal aposta (es para que el tio caiga)
+
+		// Tratamos de mover el controlador fisico con el movimiento estimado
+		// en caso de colision, el controlador fisico nos informará.
+		manageCollisions( _physicController->move(characterMovement, msecs) );
+	} // tick
+
+	//________________________________________________________________________
+
+	void CAvatarController::executeControlCommand(CMessageControl *controlMsg) {
+		ControlType commandType = controlMsg->getType();
+
+		if(commandType >= 0 && commandType < 8) {
+			_displacement += _walkCommands[commandType];
+		}
+		else {
+			std::cout << "Recibo el comando numero " << commandType << std::endl;
+		}
+	}
+
+	//________________________________________________________________________
+
+	void CAvatarController::manageCollisions(unsigned collisionFlags) {
+		// En función de los flags de colisión que se disparen, informamos al
+		// componente que corresponda (en este caso avatarController)
+
+		_touchingGround = collisionFlags & Physics::eCOLLISION_DOWN;
+
+		/*if(collisionFlags & Physics::eCOLLISION_DOWN) {
+			// Colisión en los pies
+		}
+		if(collisionFlags & Physics::eCOLLISION_SIDES) {
+			// Colisión en los lados
+		}
+		if(collisionFlags & Physics::eCOLLISION_UP) {
+			// Colisión con la cabeza
+		}*/
+	}
+
+	//________________________________________________________________________
+
+	Vector3 CAvatarController::estimateGroundMotion(unsigned int msecs) {
 		// Si nuestro movimiento es nulo no hacemos nada
-		if(_displacement == Vector3::ZERO) return;
+		if(_displacement == Vector3::ZERO) return Vector3::ZERO;
 
 		// Mediante trigonometria basica sacamos el angulo que forma el desplazamiento
 		// que queremos llevar a cabo
@@ -116,25 +161,14 @@ namespace Logic {
 		if(_displacement.z < 0) characterMovement.z *= -1;
 
 		// Aplicamos la velocidad de movimiento
-		//characterMovement *= _acceleration * msecs;
-		characterMovement *= _acceleration * msecs;
-
-		// Tratamos de mover el controlador fisico con el movimiento estimado
-		// en caso de colision, el controlador fisico nos informará.
-		_physicController->move(characterMovement, msecs);
-	} // tick
+		//characterMovement *= _acceleration * msecs;s
+		return characterMovement * _acceleration * msecs;
+	}
 
 	//________________________________________________________________________
 
-	void CAvatarController::executeControlCommand(CMessageControl *controlMsg) {
-		ControlType commandType = controlMsg->getType();
-
-		if(commandType >= 0 && commandType < 8) {
-			_displacement += _walkCommands[commandType];
-		}
-		else {
-			std::cout << "Recibo el comando numero " << commandType << std::endl;
-		}
+	Vector3 CAvatarController::estimateAirMotion(unsigned int msecs) {
+		return Vector3::ZERO;
 	}
 
 	//________________________________________________________________________

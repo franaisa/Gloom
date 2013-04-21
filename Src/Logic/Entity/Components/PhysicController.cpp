@@ -188,28 +188,14 @@ void CPhysicController::activateSimulation() {
 
 //________________________________________________________________________
 
-void CPhysicController::move(const Vector3& movement, unsigned int msecs) {
+unsigned CPhysicController::move(const Vector3& movement, unsigned int msecs) {
 	// Intentamos mover el controller a la posición que se haya calculado
 	// desde avatarController
-	manageCollisions( _controller.move(movement, msecs) );
+	unsigned collisionFlags = _controller.move(movement, msecs);
 
 	// Actualizar la posición y orientación de la entidad lógica usando la 
 	// información proporcionada por el motor de física	
 	_entity->setPosition( _controller.getPosition() );
-}
 
-//________________________________________________________________________
-
-void CPhysicController::manageCollisions(unsigned collisionFlags) {
-	// En función de los flags de colisión que se disparen, informamos al
-	// componente que corresponda (en este caso avatarController)
-	if(collisionFlags & Physics::eCOLLISION_DOWN) {
-		// Colisión en los pies
-	}
-	if(collisionFlags & Physics::eCOLLISION_SIDES) {
-		// Colisión en los lados
-	}
-	if(collisionFlags & Physics::eCOLLISION_UP) {
-		// Colisión con la cabeza
-	}
+	return collisionFlags;
 }
