@@ -55,11 +55,11 @@ namespace Logic {
 
 		// Spawneamos la granada justo delante del jugador y a la altura de disparo que corresponda
 		Vector3 shootPosition = _entity->getPosition() + (Math::getDirection( _entity->getOrientation() )* (_capsuleRadius+3.4));//3.4 es el radio de la granada
-		shootPosition.y += _heightShoot-3.4; //Altura del pj menos el radio del cohete para que salga en el centro de la mira
+		shootPosition.y += _heightShoot-1.7; //Altura del pj menos algo menos del radio de la granada para que salga en el centro de la mira
 		
 		//Comprobamos si la granada tiene espacio para ser disparado
 		//Creamos el origen del rayo que sera igual al de la posicion de disparo menos el desplazamiento
-		Vector3 origin = _entity->getPosition()+Math::getDirection( _entity->getOrientation())+Vector3(0,_heightShoot-2,0);
+		Vector3 origin = _entity->getPosition()+Math::getDirection( _entity->getOrientation())+Vector3(0,_heightShoot-1.7,0);
 		Vector3 noSpacePosition=origin;
 		//Calculamos la distancia entre la posicion de disparo y el origen
 		float distance=origin.distance(shootPosition);
