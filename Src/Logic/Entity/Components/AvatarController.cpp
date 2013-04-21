@@ -110,8 +110,7 @@ namespace Logic {
 		IComponent::tick(msecs);
 
 		// Calculamos el vector de movimiento del personaje
-		//Vector3 characterMovement = _touchingGround ? estimateGroundMotion(msecs) : estimateAirMotion(msecs);
-		Vector3 characterMovement = estimateGroundMotion(msecs) + _gravity; // esta mal aposta (es para que el tio caiga)
+		Vector3 characterMovement = _touchingGround ? estimateGroundMotion(msecs) : estimateAirMotion(msecs);
 
 		// Tratamos de mover el controlador fisico con el movimiento estimado
 		// en caso de colision, el controlador fisico nos informará.
@@ -175,7 +174,7 @@ namespace Logic {
 	//________________________________________________________________________
 
 	Vector3 CAvatarController::estimateAirMotion(unsigned int msecs) {
-		return Vector3::ZERO;
+		return estimateGroundMotion(msecs) + _gravity;
 	}
 
 	//________________________________________________________________________
