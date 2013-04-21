@@ -340,6 +340,8 @@ namespace Logic
 		*/
 		void pitch(float pitch);
 
+		void roll(float roll);
+
 		//__________________________________________________________________________
 
 		/**

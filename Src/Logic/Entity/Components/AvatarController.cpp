@@ -16,6 +16,7 @@ de la entidad.
 #include "Logic/Entity/Entity.h"
 #include "Map/MapEntity.h"
 #include "Logic/Entity/Components/PhysicController.h"
+#include "Logic/Entity/Components/Camera.h"
 
 #include "Logic/Messages/MessageControl.h"
 #include "Logic/Messages/MessageMouse.h"
@@ -23,18 +24,20 @@ de la entidad.
 namespace Logic {
 	IMP_FACTORY(CAvatarController);
 
-	CAvatarController::CAvatarController() : _gravity(0, -1.0f, 0),
+	CAvatarController::CAvatarController() : _gravity(0, -0.01f, 0),
+											 _maxFallSpeed(-2.0f),
+											 _airFrictionCoef(0.9f),
 											 _touchingGround(false) {
 		// Inicializamos el array que contiene los vectores
 		// de cada tecla de movimiento
 		initMovementCommands();
 	}
-	
+
 	//________________________________________________________________________
 
 	bool CAvatarController::spawn(CEntity *entity, CMap *map, const Map::CEntity *entityInfo) {
 		if( !IComponent::spawn(entity,map,entityInfo) ) return false;
-		
+
 		assert( entityInfo->hasAttribute("acceleration") && "Error: No se ha definido el atributo acceleration en el mapa" );
 		_acceleration = entityInfo->getFloatAttribute("acceleration");
 
@@ -44,26 +47,26 @@ namespace Logic {
 		return true;
 
 	} // spawn
-	
+
 	//________________________________________________________________________
 
 	void CAvatarController::activate() {
 		IComponent::activate(); // Necesario para el onStart
-		_displacement = _momentum = Vector3::ZERO;
+		_displacementDir = _momentum = Vector3::ZERO;
 	} // activate
-	
+
 	//________________________________________________________________________
 
 	void CAvatarController::deactivate() {
 		IComponent::deactivate();
 	} // deactivate
-	
+
 	//________________________________________________________________________
 
 	bool CAvatarController::accept(CMessage *message) {
 		return message->getMessageType() == Message::CONTROL;
 	} // accept
-	
+
 	//________________________________________________________________________
 
 	void CAvatarController::process(CMessage *message) {
@@ -86,14 +89,14 @@ namespace Logic {
 		}
 
 	} // process
-	
+
 	//________________________________________________________________________
 
 	void CAvatarController::mouse(float XYturn[]) {
 		_entity->yaw(XYturn[0]);
 		_entity->pitch(XYturn[1]);
 	} // turn
-	
+
 	//________________________________________________________________________
 
 	void CAvatarController::onStart(unsigned int msecs) {
@@ -112,40 +115,16 @@ namespace Logic {
 		//@deprecated
 		IComponent::tick(msecs);
 
-		// Calculamos el vector de movimiento del personaje
-		std::cout << msecs << std::endl;
-		
+		// Calculamos el vector de desplazamiento
+		//Vector3 displacement = _touchingGround ? estimateGroundMotion(msecs) : estimateAirMotion(msecs);
+		Vector3 displacement = estimateGroundMotion(msecs);
 
-		if(_touchingGround)
-			_momentum *= 10.0f/(double)msecs;
-		
-		_momentum+= _touchingGround ? estimateGroundMotion(msecs) : estimateAirMotion(msecs);
-
-		
-		
+		// Tratamos de mover el controlador fisico con el desplazamiento estimado.
+		// En caso de colision, el controlador fisico nos informa.
 		normalizeDirection();
 
-		// Tratamos de mover el controlador fisico con el movimiento estimado
-		// en caso de colision, el controlador fisico nos informará.
-		manageCollisions( _physicController->move(_momentum, msecs) );
+		manageCollisions( _physicController->move(displacement, msecs) );
 	} // tick
-
-	void CAvatarController::normalizeDirection(){
-
-		//normalizamos la velocidad horizontal
-		float momVelocity = (_momentum*Vector3(1,0,1)).length();
-		if(momVelocity >_maxVelocity){
-			double coef = _maxVelocity/momVelocity;
-			_momentum*=Vector3(coef,1,coef);
-		}
-
-		//normalizamos la velocidad vertical
-		float gVelocity = (_momentum*Vector3(1,0,1)).length();
-		if(gVelocity >_maxGravVelocity){
-			double coef = _maxGravVelocity/gVelocity;
-			_momentum*=Vector3(1,coef,1);
-		}
-	}
 
 	//________________________________________________________________________
 
@@ -154,7 +133,7 @@ namespace Logic {
 		// componente que corresponda (en este caso avatarController)
 
 		_touchingGround = collisionFlags & Physics::eCOLLISION_DOWN;
-		
+
 		/*if(collisionFlags & Physics::eCOLLISION_DOWN) {
 			// Colisión en los pies
 		}
@@ -169,14 +148,17 @@ namespace Logic {
 	//________________________________________________________________________
 
 	Vector3 CAvatarController::estimateMotionDirection() {
+		// Si nuestro movimiento es nulo no hacemos nada
+		if(_displacementDir == Vector3::ZERO) return Vector3::ZERO;
+
 		// Mediante trigonometria basica sacamos el angulo que forma el desplazamiento
 		// que queremos llevar a cabo
-		float displacementYaw = asin(_displacement.normalisedCopy().x);
+		float displacementYaw = asin(_displacementDir.normalisedCopy().x);
 		// Obtenemos una copia de la matriz de transformación del personaje
 		Matrix4 characterTransform = _entity->getTransform();
 		// Si estamos andando hacia atras, invertimos el giro
-		if(_displacement.z < 0) displacementYaw *= -1;
-		
+		if(_displacementDir.z < 0) displacementYaw *= -1;
+
 		// Rotamos la matriz de transformacion tantos grados como diga el vector 
 		// desplazamiento calculado de pulsar las teclas
 		Math::yaw(displacementYaw, characterTransform);
@@ -184,7 +166,7 @@ namespace Logic {
 		Vector3 motionDirection = Math::getDirection(characterTransform);
 		// Invertimos el vector resultante si nos estamos desplazando hacia atras
 		// porque el yaw se calcula de forma contraria al andar hacia atras
-		if(_displacement.z < 0) motionDirection *= -1;
+		if(_displacementDir.z < 0) motionDirection *= -1;
 
 		// Devolvemos la dirección del movimiento estimado
 		return motionDirection;
@@ -193,24 +175,53 @@ namespace Logic {
 	//________________________________________________________________________
 
 	Vector3 CAvatarController::estimateGroundMotion(unsigned int msecs) {
-		// Si nuestro movimiento es nulo no hacemos nada
-		if(_displacement == Vector3::ZERO) return Vector3::ZERO;
+		_momentum*=13.0f/(double)msecs;
+		//_momentum*=0.95f;
+		_momentum+= estimateMotionDirection() * _acceleration * msecs;
 
-		// Aplicamos la velocidad de movimiento
-		//characterMovement *= _acceleration * msecs;s
-		return estimateMotionDirection() * _acceleration * msecs;
+		return _momentum;
 	}
 
 	//________________________________________________________________________
 
 	Vector3 CAvatarController::estimateAirMotion(unsigned int msecs) {
-		return estimateGroundMotion(msecs) + _gravity;
+		_momentum *= _airFrictionCoef;
+		if(_momentum.y > _maxFallSpeed) {
+			_momentum += _gravity * msecs;
+
+			if(_momentum.y < _maxFallSpeed) {
+				_momentum.y = _maxFallSpeed;
+			}
+		}
+
+		//std::cout << _momentum.y << std::endl;
+
+		return _momentum;
+	}
+
+	void CAvatarController::normalizeDirection(){
+
+		//normalizamos la velocidad horizontal
+		float momVelocity = (_momentum*Vector3(1,0,1)).length();
+		std::cout << momVelocity << std::endl;
+		if(momVelocity >_maxVelocity){
+			double coef = _maxVelocity/momVelocity;
+			_momentum*=Vector3(coef,1,coef);
+			std::cout << "normalizo" << std::endl;
+		}
+
+		//normalizamos la velocidad vertical
+		float gVelocity = (_momentum*Vector3(0,1,0)).length();
+		if(gVelocity >_maxGravVelocity){
+			double coef = _maxGravVelocity/gVelocity;
+			_momentum*=Vector3(1,coef,1);
+		}
 	}
 
 	//________________________________________________________________________
 
 	void CAvatarController::executeMovementCommand(ControlType commandType) {
-		_displacement += _movementCommands[commandType];
+		_displacementDir += _movementCommands[commandType];
 	}
 
 	//________________________________________________________________________
@@ -227,4 +238,3 @@ namespace Logic {
 	}
 
 } // namespace Logic
-
