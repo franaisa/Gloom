@@ -40,7 +40,7 @@ namespace Logic {
 
 	bool CRocketController::spawn(CEntity *entity, CMap *map, const Map::CEntity *entityInfo) {
 		if(!IComponent::spawn(entity,map,entityInfo)) return false;
-			
+
 		_explotionDamage = entityInfo->getFloatAttribute("explotionDamage");
 		_explotionRadius = entityInfo->getFloatAttribute("explotionRadius");
 		_audioExplotion = entityInfo->getStringAttribute("explotionAudio");
@@ -52,18 +52,20 @@ namespace Logic {
 
 	bool CRocketController::accept(const std::shared_ptr<CMessage>& message) {
 		//Solamente podemos aceptar un contacto porque luego explotamos
-		return message->getMessageType() == Message::CONTACT_ENTER && !_explotionActive;
+		return message->getMessageType() == Message::CONTACT_ENTER && !_explotionActive ||
+			message->getMessageType() == Message::CONTACT_EXIT && !_explotionActive;
 	} // accept
 	
 	//________________________________________________________________________
 
 	void CRocketController::process(const std::shared_ptr<CMessage>& message) {
-		switch(message->getMessageType()) {
-			case Message::CONTACT_ENTER: {		
-				std::shared_ptr<CMessageContactEnter> contactMsg = std::static_pointer_cast<CMessageContactEnter>(message);
-				Logic::CEntity* playerHit = contactMsg->getEntity();
+		if(!_explotionActive) {
+			switch(message->getMessageType()) {
+				case Message::CONTACT_ENTER: {	
+					std::cout << "CONTACT ENTER DEL COHETE" << std::endl;
+					std::shared_ptr<CMessageContactEnter> contactMsg = std::static_pointer_cast<CMessageContactEnter>(message);
+					Logic::CEntity* playerHit = contactMsg->getEntity();
 
-				if(playerHit!=_owner && !_explotionActive) {
 					// Los cohetes solos se destruyen al colisionar con algo que no sea yo
 					// Este mensaje deberia recibirse al tocar cualquier otro
 					// rigidbody del mundo
@@ -98,15 +100,19 @@ namespace Logic {
 						audioMsg->setIsPlayer(false);
 						_entity->emitMessage(audioMsg);
 					}
-				break;
+					break;	
 				}
-			}
-		}
+				case Message::CONTACT_EXIT: {
+						std::cout << "CONTACT EXIT DEL COHETE" << std::endl;
+				}
+			}//switch(message->getMessageType())
+		}//	if(!_explotionActive)
 	} // process
 
 	//________________________________________________________________________
 
 	void CRocketController::createExplotion() {
+		//std::cout << "CREO LA EXPLOSION EN LA POSICION : " << _entity->getPosition() << std::endl;
 		// EntitiesHit sera el buffer que contendra la lista de entidades que ha colisionado
 		// con el overlap
 		CEntity** entitiesHit = NULL;
