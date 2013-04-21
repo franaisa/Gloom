@@ -123,6 +123,9 @@ namespace Logic
 		void setTarget(CEntity * entity){_target = entity;}
 
 
+		void UpdateOffset();
+
+
 	protected:
 		
 		/**
@@ -168,6 +171,13 @@ namespace Logic
 		altura del punto al que mirará la cámara respecto del suelo o plano XZ.
 		*/
 		float _targetHeight;
+
+		float _fOffest;
+		bool  _bOffsetDirection; //false = right; 1 = left
+
+		bool  _bCameraOffset;
+
+		float _fOffsetTimer;
 
 	}; // class CCamera
 

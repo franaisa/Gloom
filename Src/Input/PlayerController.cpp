@@ -26,6 +26,8 @@ mover al jugador.
 #include "Logic/Messages/MessageControl.h"
 #include "Logic/Messages/MessageMouse.h"
 
+#include "Logic/Messages/MessageCameraOffset.h"
+
 #include <cassert>
 #include <memory>
 
@@ -95,7 +97,7 @@ namespace Input {
 	//--------------------------------------------------------
 
 	bool CPlayerController::keyPressed(TKey key)
-	{
+	{						
 		if(_controlledAvatar)
 		{
 			if(key.keyId == Input::Key::NUMBER1 || key.keyId == Input::Key::NUMBER2 || key.keyId == Input::Key::NUMBER3 || key.keyId == Input::Key::NUMBER4 || 
@@ -182,6 +184,18 @@ namespace Input {
 				case Input::Key::ESCAPE:// esto debe desaparecer en el futuro
 					return false;
 					break;
+
+				case Input::Key::T:
+					{
+						std::shared_ptr<Logic::CMessageCameraOffset> m3 = std::make_shared<Logic::CMessageCameraOffset>();
+						m3->setOffset(2.0f);
+						_controlledAvatar->emitMessage(m3); 
+								 
+						Logic::CEntity * camera = Logic::CServer::getSingletonPtr()->getMap()->getEntityByType("Camera");
+						camera->emitMessage(m3);
+					}
+					break;
+
 				default:
 					return true;
 				}
