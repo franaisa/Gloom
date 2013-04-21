@@ -209,9 +209,9 @@ namespace Math
 		transform.extract3x3Matrix(rotation);
 		Ogre::Radian yaw, pitch, roll;
 		
-		rotation.ToEulerAnglesYXZ(yaw, pitch, roll);
+		rotation.ToEulerAnglesYZX(yaw, pitch, roll);
 		Ogre::Radian newPitch = pitch + Ogre::Radian(turn);
-		rotation.FromEulerAnglesYXZ(yaw, newPitch, roll);
+		rotation.FromEulerAnglesYZX(yaw, newPitch, roll);
 		transform = rotation;
 
 		//CON ZXY y YXZ consigo que vaya a la inversa
@@ -228,7 +228,7 @@ namespace Math
 		Matrix3 rotation;
 		transform.extract3x3Matrix(rotation);
 		Ogre::Radian yaw, pitch, roll;
-		rotation.ToEulerAnglesYXZ(yaw, pitch, roll);
+		rotation.ToEulerAnglesYZX(yaw, pitch, roll);
 		return pitch.valueRadians();
 
 	} // getPitch
