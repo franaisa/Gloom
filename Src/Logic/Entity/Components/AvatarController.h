@@ -133,6 +133,11 @@ namespace Logic
 		
 	protected:
 
+
+		// =======================================================================
+		//                          MÉTODOS PROTEGIDOS
+		// =======================================================================
+
 		
 		void manageCollisions(unsigned collisionFlags);
 
@@ -146,18 +151,31 @@ namespace Logic
 
 		void initMovementCommands();
 
+
+		// =======================================================================
+		//                          MIEMBROS PROTEGIDOS
+		// =======================================================================
+
+		/** Velocidad máxima a la que nuestro personaje se puede desplazar. */
 		float _maxVelocity;
 
-		bool _touchingGround;
+		/** Velocidad máxima de caida. */
+		float _maxFallSpeed;
 
-		/** Puntero al controlador fisico del player. */
-		CPhysicController* _physicController;
+		/** 
+		Coeficiente de rozamiento del aire, entre 0 y 1. A menor valor, menor
+		recorrido en el aire. 
+		*/
+		float _airFrictionCoef;
+
+		/** true si el personaje está tocando el suelo, false si esta en el aire. */
+		bool _touchingGround;
 
 		/** Velocidad de aceleración del personaje al desplazarse. */
 		float _acceleration;
 
-		/** Vector de movimiento/desplazamiento. */
-		Vector3 _displacement;
+		/** Vector que indica la dirección del desplazamiento que el controlador debe realizar. */
+		Vector3 _displacementDir;
 
 		/** Vector de inercia. */
 		Vector3 _momentum;
@@ -170,6 +188,11 @@ namespace Logic
 
 		/** Vector de gravedad, puede ser sustituido por un flotante. */
 		Vector3 _gravity;
+
+
+
+		/** Puntero al controlador fisico del player. */
+		CPhysicController* _physicController;
 
 	}; // class CAvatarController
 
