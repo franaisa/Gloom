@@ -24,7 +24,7 @@ de la entidad.
 namespace Logic {
 	IMP_FACTORY(CAvatarController);
 
-	CAvatarController::CAvatarController() : _gravity(0, -0.01f, 0),
+	CAvatarController::CAvatarController() : _gravity(0, -0.005f, 0),
 											 _maxFallSpeed(-2.0f),
 											 _airFrictionCoef(0.9f),
 											 _touchingGround(false) {
@@ -119,6 +119,12 @@ namespace Logic {
 		//Vector3 displacement = _touchingGround ? estimateGroundMotion(msecs) : estimateAirMotion(msecs);
 		Vector3 displacement = estimateGroundMotion(msecs);
 
+		//aplicamos la gravedad (solo si no estamos cayendo)
+		if(_touchingGround)
+			_momentum.y=_gravity.y*msecs;
+		else
+			_momentum.y+=_gravity.y*msecs;
+
 		// Tratamos de mover el controlador fisico con el desplazamiento estimado.
 		// En caso de colision, el controlador fisico nos informa.
 		normalizeDirection();
@@ -175,7 +181,8 @@ namespace Logic {
 	//________________________________________________________________________
 
 	Vector3 CAvatarController::estimateGroundMotion(unsigned int msecs) {
-		_momentum*=13.0f/(double)msecs;
+		float coef = 13.0f/(double)msecs;
+		_momentum*=Vector3(coef,1,coef);
 		//_momentum*=0.95f;
 		_momentum+= estimateMotionDirection() * _acceleration * msecs;
 
