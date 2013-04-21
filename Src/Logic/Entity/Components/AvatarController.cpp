@@ -150,14 +150,17 @@ namespace Logic {
 		Matrix4 characterTransform = _entity->getTransform();
 		// Rotamos la matriz de transformacion tantos grados como diga el vector 
 		// desplazamiento calculado de pulsar las teclas
-		Math::yaw(displacementYaw, characterTransform);
+		if(_displacement.z<0)displacementYaw*=-1;
 		
+		Math::yaw(displacementYaw, characterTransform);
+		std::cout << displacementYaw << std::endl;
 		// Obtenemos el vector unitario de orientación de la matriz de transformación
 		Vector3 characterMovement = Math::getDirection(characterTransform);
 		// Seteamos la direccion del movimiento teniendo en cuenta el signo de la z
 		// ya que los valores obtenidos por el arco seno están entre 90 y -90 grados
 		// (justo el angulo de movimiento frontal).
-		if(_displacement.z < 0) characterMovement.z *= -1;
+
+		if(_displacement.z < 0) characterMovement *= -1;
 
 		// Aplicamos la velocidad de movimiento
 		//characterMovement *= _acceleration * msecs;s
