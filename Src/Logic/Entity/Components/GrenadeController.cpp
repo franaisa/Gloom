@@ -76,18 +76,19 @@ namespace Logic {
 
 	bool CGrenadeController::accept(const std::shared_ptr<CMessage>& message) {
 		//Solamente podemos aceptar un contacto porque luego explotamos
-		return message->getMessageType() == Message::CONTACT_ENTER && !_explotionActive;
+		return message->getMessageType() == Message::CONTACT_ENTER && !_explotionActive ||
+			message->getMessageType() == Message::CONTACT_EXIT && !_explotionActive;
 	} // accept
 	
 	//________________________________________________________________________
 
 	void CGrenadeController::process(const std::shared_ptr<CMessage>& message) {
-		switch( message->getMessageType() ) {
-			case Message::CONTACT_ENTER: {
-				std::shared_ptr<CMessageContactEnter> contactMsg = std::static_pointer_cast<CMessageContactEnter>(message);
-				Logic::CEntity* playerHit = contactMsg->getEntity();
-				
-				if(playerHit!=_owner && !_explotionActive) {
+		if(!_explotionActive) {
+			switch( message->getMessageType() ) {
+				case Message::CONTACT_ENTER: {
+					std::shared_ptr<CMessageContactEnter> contactMsg = std::static_pointer_cast<CMessageContactEnter>(message);
+					Logic::CEntity* playerHit = contactMsg->getEntity();
+					
 					_explotionActive=true;
 					// Si es el escudo del screamer mandar directamente esos daños a la
 					// entidad contra la que hemos golpeado (el escudo), sino, crear explosion
@@ -110,9 +111,11 @@ namespace Logic {
 						// Creamos la explosion
 						createExplotion();
 					}
+					break;
 				}
-
-				break;
+				case Message::CONTACT_EXIT: {
+						std::cout << "CONTACT EXIT DE LA GRANADA" << std::endl;
+				}
 			}
 		}
 	} // process

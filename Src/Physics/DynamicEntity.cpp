@@ -18,6 +18,9 @@
 #include "Physics/Server.h"
 #include "Physics/CollisionManager.h"
 #include "Conversions.h"
+#include "Logic/Entity/Entity.h"
+#include "Logic/Maps/EntityFactory.h"
+#include "Logic/Server.h"
 
 #include "Logic/Entity/Components/Physics.h"
 
@@ -33,6 +36,13 @@
 
 using namespace physx;
 using namespace std;
+
+namespace Logic 
+{
+	class CMap;
+	class IComponent;
+	class CEntityFactory;
+}
 
 namespace Physics {
 
@@ -59,7 +69,7 @@ namespace Physics {
 
 	//________________________________________________________________________
 
-	void CDynamicEntity::load(const Vector3 &position, const PxGeometry& geometry, PxMaterial& material,
+	void CDynamicEntity::load(const Matrix4& transform, const PxGeometry& geometry, PxMaterial& material,
 							  float density, bool kinematic, bool trigger, int group, 
 							  const vector<int>& groupList, const Logic::IPhysics *component) {
 
@@ -68,7 +78,7 @@ namespace Physics {
 		_isTrigger = trigger;
 
 		// Creamos una esfera dinámica
-		PxTransform globalPose( Vector3ToPxVec3(position) );
+		PxTransform globalPose( Matrix4ToPxTransform(transform));
 		
 		// Transformación de coordenadas lógicas a coodenadas de PhysX
 		PxTransform shapeOffset( PxVec3(0, getLogicPivotOffset(geometry), 0) );

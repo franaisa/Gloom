@@ -85,12 +85,19 @@ namespace Logic
 		}
 
 		// Por comodidad en el mapa escribimos los ángulos en grados.
-		if(entityInfo->hasAttribute("orientation"))
+		if(entityInfo->hasAttribute("yaw"))
 		{
-			float yaw = Math::fromDegreesToRadians(entityInfo->getFloatAttribute("orientation"));
+			float yaw = Math::fromDegreesToRadians(entityInfo->getFloatAttribute("yaw"));
 			Math::yaw(yaw,_transform);
 		}
 
+		// Por comodidad en el mapa escribimos los ángulos en grados.
+		if(entityInfo->hasAttribute("pitch"))
+		{ 
+			float pitch = Math::fromDegreesToRadians(entityInfo->getFloatAttribute("pitch"));
+			Math::pitch(pitch,_transform);
+		}
+	
 		if(entityInfo->hasAttribute("isPlayer"))
 			_isPlayer = entityInfo->getBoolAttribute("isPlayer");
 		
@@ -306,7 +313,7 @@ namespace Logic
 	void CEntity::setOrientation(const Matrix3& orientation) 
 	{
 		_transform = orientation;
-
+		
 		// Avisamos a los componentes del cambio.
 		std::shared_ptr<CMessageTransform> m = std::make_shared<CMessageTransform>();
 		m->setTransform(_transform);
@@ -353,7 +360,7 @@ namespace Logic
 
 	void CEntity::setPitch(float pitch) 
 	{
-		Math::setYaw(pitch,_transform);
+		Math::setPitch(pitch,_transform);
 
 		// Avisamos a los componentes del cambio.
 		std::shared_ptr<CMessageTransform> m = std::make_shared<CMessageTransform>();

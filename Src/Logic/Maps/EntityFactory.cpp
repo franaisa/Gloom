@@ -329,6 +329,32 @@ namespace Logic {
 		return createEntity(entityInfo, map);
 	}
 
+
+	Logic::CEntity* CEntityFactory::createEntityWithPositionAndOrientation(Map::CEntity *entityInfo, CMap *map, const Vector3& position, float yaw, float pitch){
+		// Pasamos el vector3 a string y se lo seteamos al entityInfo para mas tarde
+		// llamar al createEntity
+		std::stringstream ss (std::stringstream::in | std::stringstream::out);
+
+		ss << position.x;
+		ss << " ";
+		ss << position.y;
+		ss << " ";
+		ss << position.z;
+
+		entityInfo->setAttribute( "position", ss.str() );
+
+		//Yaw y Pitch
+		std::stringstream sy (std::stringstream::in | std::stringstream::out);
+		std::stringstream sp (std::stringstream::in | std::stringstream::out);
+		sy << yaw;
+		sp << pitch;
+
+		entityInfo->setAttribute( "yaw", sy.str());
+		entityInfo->setAttribute( "pitch", sp.str());
+
+		return createEntity(entityInfo, map);
+	}
+
 	//________________________________________________________________________
 
 	Logic::CEntity *CEntityFactory::createEntityById(Map::CEntity *entityInfo, Logic::CMap *map, TEntityID id) {
