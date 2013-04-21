@@ -16,6 +16,7 @@ de la entidad.
 #include "Logic/Entity/Entity.h"
 #include "Map/MapEntity.h"
 #include "Logic/Entity/Components/PhysicController.h"
+#include "Logic/Entity/Components/Camera.h"
 
 #include "Logic/Messages/MessageControl.h"
 #include "Logic/Messages/MessageMouse.h"
@@ -38,8 +39,8 @@ namespace Logic {
 		assert( entityInfo->hasAttribute("acceleration") && "Error: No se ha definido el atributo acceleration en el mapa" );
 		_acceleration = entityInfo->getFloatAttribute("acceleration");
 
-		assert( entityInfo->hasAttribute("maxVelocity") && "Error: No se ha definido el atributo maxVelocity en el mapa" );
-		_maxVelocity = entityInfo->getFloatAttribute("maxVelocity");
+		//assert( entityInfo->hasAttribute("maxVelocity") && "Error: No se ha definido el atributo maxVelocity en el mapa" );
+		//_maxVelocity = entityInfo->getFloatAttribute("maxVelocity");
 
 		return true;
 
@@ -170,7 +171,7 @@ namespace Logic {
 		if(_displacement == Vector3::ZERO) return Vector3::ZERO;
 
 		// Aplicamos la velocidad de movimiento
-		//characterMovement *= _acceleration * msecs;s
+		//characterMovement *= _acceleration * msecs;
 		return estimateMotionDirection() * _acceleration * msecs;
 	}
 

@@ -24,6 +24,7 @@ namespace Graphics
 
 namespace Logic{
 	class CMessageCameraToEnemy;
+	class CAvatarController;
 }
 
 //declaración de la clase
@@ -122,7 +123,8 @@ namespace Logic
 
 
 	protected:
-		
+
+
 		/**
 		Cámara gráfica.
 		*/
