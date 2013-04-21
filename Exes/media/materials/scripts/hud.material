@@ -88,13 +88,34 @@ material cuadroArmas
 			depth_check off
 			depth_write off
 			scene_blend alpha_blend
-			lighting off
+			lighting on
 			cull_hardware none
 			cull_software none
 			
 			texture_unit cuadro
 			{
 				texture cuadro.png 2d
+			}
+		}
+	}
+}
+
+material cuadroArmasInUse
+{
+	technique
+	{
+		pass
+		{
+			depth_check off
+			depth_write off
+			scene_blend alpha_blend
+			lighting on
+			cull_hardware none
+			cull_software none
+			
+			texture_unit cuadroInUse
+			{
+				texture cuadroInUse.png 2d
 			}
 		}
 	}

@@ -207,9 +207,9 @@ Map = {
 		respawnTime = 5,
 	},
 	
-	GrenadeLauncher = {
+	GrenadeLauncher1 = {
 		type = "ItemSpawn",
-		position = {-30.0, 104.0, 120.0},
+		position = {-30.0, 107.0, 120.0},
 		model = "grenadeLauncher.mesh",
 		id = "weapon",
 		weaponType = 4,

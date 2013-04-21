@@ -166,7 +166,7 @@ namespace Logic
 			textAreaDummy->setMetricsMode("pixel");
 			textAreaDummy->setPosition(200, 200);
 			textAreaDummy->setDimensions(0, 0);
-			textAreaDummy->setText("dummy text");
+			textAreaDummy->setText(" ");
 
 			// hardcodea el tamaño y tipo de la fuente
 			textAreaDummy->setTextSize(16);
@@ -194,10 +194,7 @@ namespace Logic
 			_panelWeapon[current]->setPosition( x*relativeWidth, y*relativeHeight);
 			_panelWeapon[current]->setDimensions( relativeWidth*hudPanelSizeX, relativeHeight*hudPanelSizeX );
 			_panelWeapon[current]->setMaterial("cuadroArmas");
-
-			
-
-		
+	
 			// overlay para controlar las teclas
 			_panelWeaponKey[current] = _server->createOverlay(currentOnText+"_Key", scene, "TextArea");
 				
@@ -213,10 +210,10 @@ namespace Logic
 			_panelWeaponKey[current]->setFont("fuenteSimple");
 
 			_panelWeapon[current]->addChild(_panelWeaponKey[current]);
-			_panelWeapon[current]->setZBuffer(0);
-			
+			//_panelWeapon[current]->setZBuffer(0);
 				
 			_overlayPlay->add2D( _panelWeapon[current]);
+
 
 			//Aqui me creo el cuadro de ACTIVE, NO_AMMO, NO_WEAPON
 			for(int j=0; j<=NO_WEAPON; ++j){
@@ -380,6 +377,11 @@ namespace Logic
 		_weaponsBox[HAMMER][ACTIVE]->setVisible(true);
 		_weaponsBox[HAMMER][NO_WEAPON]->setVisible(false);
 		_overlayWeapon3D[HAMMER]->setVisible(true);
+		_panelElements[AMMO]->setVisible(false);
+		
+		//desactivo el cuadro estandar y activo el de arma activa.
+		_panelWeapon[HAMMER]->setMaterial("cuadroArmasInUse");
+
 		//Pongo a false los visibles por si acaso no los pone solos
 		for(int i = 1; i < _numWeapons; ++i){
 			_weaponsBox[i][NO_AMMO]->setVisible(false);
@@ -569,17 +571,29 @@ namespace Logic
 
 	void CHudOverlay::hudWeapon(int ammo, int weapon){
 
-		hudParticle("partilcle");
+		//hudParticle("partilcle");
 		//if(weapon != _actualWeapon && _actualWeapon != 0)
 		if(weapon != _actualWeapon)
 		{
 			_overlayWeapon3D[_actualWeapon]->setVisible(false);
 			_overlayWeapon3D[weapon]->setVisible(true);
+			
 
+			_panelWeapon[_actualWeapon]->setMaterial("cuadroArmas");
+			_panelWeapon[weapon]->setMaterial("cuadroArmasInUse");
+			// cambio el arma activa por la recien pulsada
 			_actualWeapon = weapon;
+					
 			_weaponsBox[_actualWeapon][ACTIVE]->setVisible(true);
 			_weaponsBox[_actualWeapon][NO_AMMO]->setVisible(false);
 			_weaponsBox[_actualWeapon][NO_WEAPON]->setVisible(false);
+
+			if((eWeaponIndex)_actualWeapon == HAMMER){
+				_panelElements[AMMO]->setVisible(false);
+			}else{
+				_panelElements[AMMO]->setVisible(true);
+			}
+
 
 			
 		}
@@ -591,7 +605,6 @@ namespace Logic
 		std::stringstream sSpawn;
 		sSpawn << "HAS MUERTO, LOSER \n Tiempo de respawn: " << spawmTime;
 		_textAreaDie->setText(sSpawn.str());
-
 	}
 
 	void CHudOverlay::hudDeath(){
@@ -712,6 +725,11 @@ namespace Logic
 			if(_acumSpawn>1000){
 				hudSpawn((--_spawnTime));
 				_acumSpawn = 0;
+				/////////////////////////////////////////////////////////////////////////////////////
+				////////	Borrar en un futuro, espero que el server no llegue a -5		/////////
+				/////////////////////////////////////////////////////////////////////////////////////
+				if(_spawnTime<-5)
+					hudRespawn();
 			}
 		}
 
@@ -747,7 +765,9 @@ namespace Logic
 
 	void CHudOverlay::deactivate(){
 		_overlayPlay->setVisible(false);
+		_overlayDie->setVisible(false);	
+		_overlayDebug->setVisible(false);
 	}
+	
 
 } // namespace Logic
-

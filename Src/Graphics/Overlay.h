@@ -231,6 +231,7 @@ namespace Graphics
 		Ogre::OverlayContainer *_overlayContainer;
 		Ogre::TextAreaOverlayElement *_overlayText;
 		CScene* _scene;
+		std::vector<CEntity *> _entities3D;
 
 	}; // class COverlay
 
