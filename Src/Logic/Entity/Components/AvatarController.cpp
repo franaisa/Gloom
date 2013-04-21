@@ -114,11 +114,20 @@ namespace Logic {
 		IComponent::tick(msecs);
 
 		// Calculamos el vector de movimiento del personaje
-		Vector3 characterMovement = _touchingGround ? estimateGroundMotion(msecs) : estimateAirMotion(msecs);
+		std::cout << msecs << std::endl;
+		_momentum*=10.0f/(double)msecs;
+		_momentum+= _touchingGround ? estimateGroundMotion(msecs) : estimateAirMotion(msecs);
 
 		// Tratamos de mover el controlador fisico con el movimiento estimado
 		// en caso de colision, el controlador fisico nos informará.
-		manageCollisions( _physicController->move(characterMovement, msecs) );
+		
+		float momVelocity = _momentum.length();
+		if(momVelocity >_maxVelocity){
+			double coef = _maxVelocity/momVelocity;
+			_momentum*=coef;
+		}
+
+		manageCollisions( _physicController->move(_momentum, msecs) );
 	} // tick
 
 	//________________________________________________________________________
@@ -128,7 +137,7 @@ namespace Logic {
 		// componente que corresponda (en este caso avatarController)
 
 		_touchingGround = collisionFlags & Physics::eCOLLISION_DOWN;
-
+		
 		/*if(collisionFlags & Physics::eCOLLISION_DOWN) {
 			// Colisión en los pies
 		}
