@@ -121,20 +121,28 @@ namespace Logic
 		@param amount Cantidad de giro. Positivos giro a derechas,
 		negativos a izquierdas.
 		*/
-		void mouse(const float* amount);
+
+		/**
+		Dado un giro en X y otro en Y provoca que la entidad (y la camara
+		giren).
+
+		@param XYturn array con los valores de giro del raton.
+		*/
+		void mouse(float XYturn[]);
 
 		
 	protected:
 
-		void executeControlCommand(CMessageControl * controlMsg);
-
+		
 		void manageCollisions(unsigned collisionFlags);
 
 		Vector3 estimateGroundMotion(unsigned int msecs);
 
 		Vector3 estimateAirMotion(unsigned int msecs);
 
-		void initWalkCommands();
+		void executeMovementCommand(ControlType commandType);
+
+		void initMovementCommands();
 
 
 
@@ -153,8 +161,11 @@ namespace Logic
 		/** Vector de inercia. */
 		Vector3 _momentum;
 
-		/** Array que contiene los enumerados asignados a cada una de las posibles teclas que se pueden enviar. */
-		Vector3 _walkCommands[8];
+		/** 
+		Array que contiene los vectores que corresponden a cada uno de los movimientos
+		de desplazamiento y salto que se pueden realizar. 
+		*/
+		Vector3 _movementCommands[15];
 
 		/** Vector de gravedad, puede ser sustituido por un flotante. */
 		Vector3 _gravity;

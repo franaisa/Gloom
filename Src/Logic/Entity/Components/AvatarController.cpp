@@ -15,8 +15,10 @@ de la entidad.
 #include "AvatarController.h"
 #include "Logic/Entity/Entity.h"
 #include "Map/MapEntity.h"
-#include "Logic/Messages/MessageControl.h"
 #include "Logic/Entity/Components/PhysicController.h"
+
+#include "Logic/Messages/MessageControl.h"
+#include "Logic/Messages/MessageMouse.h"
 
 namespace Logic {
 	IMP_FACTORY(CAvatarController);
@@ -25,7 +27,7 @@ namespace Logic {
 											 _touchingGround(false) {
 		// Inicializamos el array que contiene los vectores
 		// de cada tecla de movimiento
-		initWalkCommands();
+		initMovementCommands();
 	}
 	
 	//________________________________________________________________________
@@ -64,8 +66,18 @@ namespace Logic {
 	void CAvatarController::process(CMessage *message) {
 		switch( message->getMessageType() ) {
 			case Message::CONTROL: {
-				CMessageControl* controlMsg = static_cast<CMessageControl*>(message);
-				executeControlCommand(controlMsg);
+				ControlType commandType = static_cast<CMessageControl*>(message)->getType();
+
+				// Comando de movimiento
+				if(commandType >=0 && commandType < 8) {
+					executeMovementCommand(commandType);
+				}
+				// Comando de raton
+				else if(commandType == Control::MOUSE) {
+					CMessageMouse* mouseMsg = static_cast<CMessageMouse*>(message);
+					mouse( mouseMsg->getMouse() );
+				}
+
 				break;
 			}
 		}
@@ -74,9 +86,9 @@ namespace Logic {
 	
 	//________________________________________________________________________
 
-	void CAvatarController::mouse(const float* amount) {
-		_entity->yaw(amount[0]);
-		_entity->pitch(amount[1]);
+	void CAvatarController::mouse(float XYturn[]) {
+		_entity->yaw(XYturn[0]);
+		_entity->pitch(XYturn[1]);
 	} // turn
 	
 	//________________________________________________________________________
@@ -105,19 +117,6 @@ namespace Logic {
 		// en caso de colision, el controlador fisico nos informará.
 		manageCollisions( _physicController->move(characterMovement, msecs) );
 	} // tick
-
-	//________________________________________________________________________
-
-	void CAvatarController::executeControlCommand(CMessageControl *controlMsg) {
-		ControlType commandType = controlMsg->getType();
-
-		if(commandType >= 0 && commandType < 8) {
-			_displacement += _walkCommands[commandType];
-		}
-		else {
-			std::cout << "Recibo el comando numero " << commandType << std::endl;
-		}
-	}
 
 	//________________________________________________________________________
 
@@ -173,15 +172,21 @@ namespace Logic {
 
 	//________________________________________________________________________
 
-	void CAvatarController::initWalkCommands() {
-		_walkCommands[Control::WALK]				= Vector3(0,0,1);
-		_walkCommands[Control::WALKBACK]			= Vector3(0,0,-1);
-		_walkCommands[Control::STRAFE_LEFT]			= Vector3(1,0,0);
-		_walkCommands[Control::STRAFE_RIGHT]		= Vector3(-1,0,0);
-		_walkCommands[Control::STOP_WALK]			= Vector3(0,0,-1);
-		_walkCommands[Control::STOP_WALKBACK]		= Vector3(0,0,1);
-		_walkCommands[Control::STOP_STRAFE_LEFT]	= Vector3(-1,0,0);
-		_walkCommands[Control::STOP_STRAFE_RIGHT]	= Vector3(1,0,0);
+	void CAvatarController::executeMovementCommand(ControlType commandType) {
+		_displacement += _movementCommands[commandType];
+	}
+
+	//________________________________________________________________________
+
+	void CAvatarController::initMovementCommands() {
+		_movementCommands[Control::WALK]				= Vector3(0,0,1);
+		_movementCommands[Control::WALKBACK]			= Vector3(0,0,-1);
+		_movementCommands[Control::STRAFE_LEFT]			= Vector3(1,0,0);
+		_movementCommands[Control::STRAFE_RIGHT]		= Vector3(-1,0,0);
+		_movementCommands[Control::STOP_WALK]			= Vector3(0,0,-1);
+		_movementCommands[Control::STOP_WALKBACK]		= Vector3(0,0,1);
+		_movementCommands[Control::STOP_STRAFE_LEFT]	= Vector3(-1,0,0);
+		_movementCommands[Control::STOP_STRAFE_RIGHT]	= Vector3(1,0,0);
 	}
 
 } // namespace Logic
