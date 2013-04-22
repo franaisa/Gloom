@@ -114,7 +114,7 @@ namespace Physics {
 		@param groupList Grupos de colisión con los que queremos que la entidad interactue.
 		@param component Componente lógico asociado.
 		*/
-		void load(const Vector3 &position, const physx::PxGeometry& geometry, physx::PxMaterial& material, 
+		void load(const Matrix4& transform, const physx::PxGeometry& geometry, physx::PxMaterial& material, 
 				  float density, bool kinematic, bool trigger, int group, 
 				  const std::vector<int>& groupList, const Logic::IPhysics* component);
 

@@ -5,7 +5,7 @@ Map = {
 		position = {0, 0, 0},
 		msgList= "0",
 		scale = {1, 1, 1},
-		orientation = 0,
+		yaw = 0,
 		
 		static = true,
 		model = "scenario.mesh",
@@ -1639,7 +1639,7 @@ Map = {
 		physic_groupList = "1, 5",
 		explotionTime = 4,
 		explotionDamage = 70,
-		explotionRadius = 6,
+		explotionRadius = 10,
 		explotionAudio = "media/audio/explotion.wav",
 	},
 	
@@ -1662,7 +1662,7 @@ Map = {
 		physic_group = 10,
 		physic_groupList = "-1",
 		explotionDamage = 15,
-		explotionRadius = 6,
+		explotionRadius = 10,
 		explotionAudio = "media/audio/explotion.wav",
 		particleOffset = {0.0, 0.0, 0.0},
 		comment_particleEmitterDirection = {0.0, 0.0, -1.0},

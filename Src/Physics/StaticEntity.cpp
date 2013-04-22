@@ -47,7 +47,7 @@ namespace Physics {
 
 	//________________________________________________________________________
 
-	void CStaticEntity::load(const Vector3 &position, const Geometry& geometry, Material& material, 
+	void CStaticEntity::load(const Matrix4& transform, const Geometry& geometry, Material& material, 
 					         bool trigger, int group, const vector<int>& groupList, const Logic::IPhysics* component) {
 
 		assert(_scene);
@@ -55,7 +55,7 @@ namespace Physics {
 		_isTrigger = trigger;
 						
 		// Creamos una esfera estática
-		PxTransform globalPose(Vector3ToPxVec3(position));
+		PxTransform globalPose(Matrix4ToPxTransform(transform));
 		
 		// Transformación de coordenadas lógicas a coodenadas de PhysX
 		PxTransform shapeOffset( PxVec3(0, getLogicPivotOffset(geometry), 0) );

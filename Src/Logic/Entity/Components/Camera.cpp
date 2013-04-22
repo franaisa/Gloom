@@ -25,6 +25,7 @@ de una escena.
 #include "AvatarController.h"
 
 #include "Logic/Messages/MessageCameraToEnemy.h"
+#include "Logic/Messages/MessageCameraOffset.h"
 
 namespace Logic 
 {
@@ -68,6 +69,11 @@ namespace Logic
 			//deactivate();
 		}
 
+		_bCameraOffset = false;
+		_fOffest = 0.0f;
+		_bOffsetDirection = false;
+		_fOffsetTimer = 0.0f;
+
 		//return true;
 
 	} // activate
@@ -88,7 +94,8 @@ namespace Logic
 		Logic::TMessageType msgType = message->getMessageType();
 		
 		return msgType == Message::CAMERA_TO_ENEMY ||
-			   msgType == Message::PLAYER_SPAWN;
+			   msgType == Message::PLAYER_SPAWN || 
+			   msgType == Message::CAMERA_OFFSET;
 	} // accept
 	//---------------------------------------------------------
 
@@ -104,6 +111,13 @@ namespace Logic
 			case Message::PLAYER_SPAWN: {
 				_dead=false;
 				//std::cout << "mensaje respawn recibido" << std::endl;
+				break;
+			}
+			case Message::CAMERA_OFFSET: {
+				_bCameraOffset = true;
+				_fOffsetTimer = 2000.0f; 
+				std::shared_ptr<CMessageCameraToEnemy> cameraToEnemyMsg = std::static_pointer_cast<CMessageCameraToEnemy>(message);
+
 				break;
 			}
 		}
@@ -126,16 +140,21 @@ namespace Logic
 		if(_target)
 		{
 			// Actualizamos la posición de la cámara.
+			UpdateOffset();
 			Vector3 position = _target->getPosition();
 			position.y+=_height;
-			_graphicsCamera->setCameraPosition(position);
 
+			if ((_bCameraOffset) && (_fOffsetTimer > 0))
+			{
+				_fOffsetTimer -= msecs ;
+				position.x += _fOffest;
+			}
+			_graphicsCamera->setCameraPosition(position);
 			
 			if(!_dead){
 				// Y la posición hacia donde mira la cámara.
 				Vector3 direction = Math::getDirection(_target->getOrientation());
 				_graphicsCamera->setTargetCameraPosition(position + direction);
-				//_graphicsCamera->setCameraDirection(direction);
 			}
 			//Si estamos muertos miramos al enemigo, diferenciamos entre nosotros mismos o el rival
 			else if(_enemy){
@@ -151,6 +170,29 @@ namespace Logic
 			_graphicsCamera->setTargetCameraPosition(_targetV);
 		}
 	} // tick
+
+	//---------------------------------------------------------
+	void CCamera::UpdateOffset()
+	{
+		if (_bOffsetDirection)
+		{
+			_fOffest += 0.8f;
+			if (_fOffest > 2.0f)
+			{
+				_bOffsetDirection =false;
+			}
+		}
+		else
+		{
+			_fOffest -= 0.8f;
+			if (_fOffest < -2.0f)
+			{
+				_bOffsetDirection = true;
+			}
+		}
+	
+	} //UpdateOffset
+
 
 } // namespace Logic
 

@@ -176,7 +176,7 @@ void CPhysicDynamicEntity::createPhysicEntity(const Map::CEntity *entityInfo) {
 
 void CPhysicDynamicEntity::createRigid(const Map::CEntity *entityInfo, int group, const std::vector<int>& groupList) {
 	// Leer la posición de la entidad
-	const Vector3 position = _entity->getPosition();
+	const Matrix4 transform = _entity->getTransform();
 	
 	// Leer el tipo de entidad: estáticos, dinámico o cinemático
 	assert(entityInfo->hasAttribute("physic_type"));
@@ -211,7 +211,7 @@ void CPhysicDynamicEntity::createRigid(const Map::CEntity *entityInfo, int group
 		Physics::Material* defaultMaterial = _materialManager->getMaterial(eDEFAULT);
 		float density = mass / (physicDimensions.x * physicDimensions.y * physicDimensions.z);
 		
-		_physicEntity.load(position, box, *defaultMaterial, density, isKinematic, isTrigger, group, groupList, this);
+		_physicEntity.load(transform, box, *defaultMaterial, density, isKinematic, isTrigger, group, groupList, this);
 	}
 	else if (physicShape == "sphere") {
 		assert(entityInfo->hasAttribute("physic_radius"));
@@ -221,7 +221,7 @@ void CPhysicDynamicEntity::createRigid(const Map::CEntity *entityInfo, int group
 		Physics::Material* defaultMaterial = _materialManager->getMaterial(eDEFAULT);
 		float density = mass / (4.0/3.0 * Math::PI * physicRadius * physicRadius * physicRadius);
 
-		_physicEntity.load(position, sphere, *defaultMaterial, density, isKinematic, isTrigger, group, groupList, this);
+		_physicEntity.load(transform, sphere, *defaultMaterial, density, isKinematic, isTrigger, group, groupList, this);
 	}
 }
 

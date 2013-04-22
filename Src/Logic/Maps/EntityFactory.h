@@ -165,6 +165,10 @@ namespace Logic {
 		CEntity *createEntityWithPosition(Map::CEntity *entityInfo, CMap *map, const Vector3& position);
 
 		//________________________________________________________________________
+		
+		CEntity *createEntityWithPositionAndOrientation(Map::CEntity *entityInfo, CMap *map, const Vector3& position, float yaw, float pitch);
+
+		//________________________________________________________________________
 
 		CEntity* createEntityWithName(Map::CEntity* entityInfo, CMap *map, const std::string& name);
 

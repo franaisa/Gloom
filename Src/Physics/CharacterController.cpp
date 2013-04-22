@@ -89,6 +89,7 @@ namespace Physics {
 		// Crear descriptor del controller
 		PxCapsuleControllerDesc desc;
 		desc.position = PxExtendedVec3(pos.x, pos.y, pos.z);
+		
 		desc.height = height;
 		desc.radius = radius;
 		desc.material = _physxSDK->createMaterial(0.5f, 0.5f, 0.1f); // En realidad sera getDefaultMaterial en el futuro
@@ -103,13 +104,21 @@ namespace Physics {
 
 		// Retorna un PxController que podemos castear a capsule controller por ser nuestro caso
 		_controller = static_cast<PxCapsuleController*>( _controllerManager->createController(*_physxSDK, _scene, desc) );
-	
+
 		// Anotar el componente lógico asociado al actor dentro del controller (No es automático)
 		_controller->getActor()->userData = (void *) component;
 
 		// Establecer el grupo de colisión
 		PxSetGroup(*_controller->getActor(), group);
 		Physics::CServer::getSingletonPtr()->setupFiltering(_controller->getActor(), group, groupList);
+
+		//Orientacion del jugador (Por si algun dia hiciera falta
+		/*PxRigidDynamic* actor = _controller->getActor(); // get the actor
+		PxShape* shapes[1]; // There is only one shape in this controller
+		actor->getShapes(shapes,1,0); // get that shape
+		PxShape* shape = shapes[0]; // Here is your shape
+		PxReal yawValue = [yourMeshOrientationHere] // the values must be in radian
+		shape->setLocalPose(PxTransform(PxQuat(yawValue,PxVec3(1,0,0)))); // turns the PxShape around yaw ( y axis )*/
 	}
 
 	//________________________________________________________________________

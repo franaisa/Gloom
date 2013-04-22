@@ -455,6 +455,9 @@
       <Filter>Maps\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Src\Logic\Messages\MessageChangeMaterialHudWeapon.cpp">
+	  <Filter>Messages\Source</Filter>
+	</ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Messages\MessageCameraOffset.cpp">
       <Filter>Messages\Source</Filter>
     </ClCompile>
   </ItemGroup>
@@ -820,6 +823,9 @@
       <Filter>Maps\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Messages\MessageChangeMaterialHudWeapon.h">
+      <Filter>Messages\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Messages\MessageCameraOffset.h">
       <Filter>Messages\Header</Filter>
     </ClInclude>
   </ItemGroup>
