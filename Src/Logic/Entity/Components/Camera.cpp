@@ -116,7 +116,7 @@ namespace Logic
 			case Message::CAMERA_OFFSET: {
 				_bCameraOffset = true;
 				_fOffsetTimer = 2000.0f; 
-				std::shared_ptr<> cameraToEnemyMsg = std::static_pointer_cast<CMessageCameraToEnemy>(message);
+				std::shared_ptr<CMessageCameraToEnemy> cameraToEnemyMsg = std::static_pointer_cast<CMessageCameraToEnemy>(message);
 
 				break;
 			}
