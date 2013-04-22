@@ -12,7 +12,7 @@ Map = {
 		physic_normal = { 0, 1, 0 },
 		physic_file = "media/models/scenario.RepX",
 		physic_group = 0,
-		physic_groupList = "10",
+		physic_groupList = "1, 10, 30",
 	},
 	
 	Spawn = {
@@ -215,6 +215,17 @@ Map = {
 
 	},
 	
+	Spectator = {
+		type = "Spectator",
+		position = {0, 8, 0},
+		acceleration = 0.00075,
+		maxVelocity = 1.1,
+		physic_shape = "capsule",
+		physic_radius = 3,
+		physic_height = 6,
+		physic_group = 30,
+		physic_groupList = "0",
+	},
 	
 	JugadorLocal = {
 		type = "LocalPlayer",

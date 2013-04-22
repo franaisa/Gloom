@@ -2,6 +2,7 @@ World CGraphics CPhysicStaticEntity
 LocalPlayer CScreamerClient CAvatarController CInterpolation CPhysicController CHudOverlay CClientRespawn CAudio CNetConnector CParticle
 Camera CCamera
 RemotePlayer CAvatarController CInterpolation CPhysicController CScreamerClient CNetConnector CClientRespawn CAudio CParticle CAnimatedGraphics
+Spectator CSpectatorController CPhysicController
 ItemSpawn CFloatingMovement CSpawnItemManager CGraphics
 SpawnPoint CPhysicStaticEntity
 Jumper CGraphics CPhysicStaticEntity CJumper CAudio CParticle
