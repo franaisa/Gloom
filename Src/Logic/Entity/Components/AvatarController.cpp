@@ -43,7 +43,7 @@ namespace Logic {
 
 		assert( entityInfo->hasAttribute("maxVelocity") && "Error: No se ha definido el atributo maxVelocity en el mapa" );
 		_maxVelocity = entityInfo->getFloatAttribute("maxVelocity");
-		_maxGravVelocity = _maxVelocity*1.5;
+		_maxGravVelocity = _maxVelocity*6;
 		return true;
 
 	} // spawn
@@ -69,15 +69,19 @@ namespace Logic {
 
 	//________________________________________________________________________
 
+	
 	void CAvatarController::process(CMessage *message) {
 		switch( message->getMessageType() ) {
 			case Message::CONTROL: {
 				ControlType commandType = static_cast<CMessageControl*>(message)->getType();
 
 				// Comando de movimiento
-				if(commandType >=0 && commandType < 8) {
+				if(commandType >=0 && commandType < MAX_MOVEMENT_COMMANDS) {
 					executeMovementCommand(commandType);
 				}
+
+				if(commandType==Control::JUMP)
+					executeJump();
 				// Comando de raton
 				else if(commandType == Control::MOUSE) {
 					CMessageMouse* mouseMsg = static_cast<CMessageMouse*>(message);
@@ -179,7 +183,7 @@ namespace Logic {
 		float coef =1;
 		if(_displacementDir==Vector3::ZERO)
 			coef = 15.0f/(double)msecs;
-		std::cout << coef << std::endl;
+		
 		_momentum*=Vector3(coef,1,coef);
 		//_momentum*=0.95f;
 
@@ -249,6 +253,26 @@ namespace Logic {
 		_movementCommands[Control::STOP_WALKBACK]		= Vector3(0,0,1);
 		_movementCommands[Control::STOP_STRAFE_LEFT]	= Vector3(-1,0,0);
 		_movementCommands[Control::STOP_STRAFE_RIGHT]	= Vector3(1,0,0);
+		//comandos de salto
+		_movementCommands[Control::JUMP]				= Vector3(0,2,0);
+		_movementCommands[Control::SIDEJUMP_LEFT]		= Vector3(1,0,0);
+		_movementCommands[Control::SIDEJUMP_RIGHT]		= Vector3(-1,0,0);
+		_movementCommands[Control::DODGE_BACKWARDS]		= Vector3(0,0,-1);
+		_movementCommands[Control::DODGE_FORWARD]		= Vector3(0,0,1);
+
+	}
+
+	void CAvatarController::executeJump(){
+		if(_touchingGround){
+			_momentum.y+=2;
+			_touchingGround = false;
+		}
+	}
+
+	void CAvatarController::addForce(const Vector3 &force){
+		_momentum+=force;
+		if(_momentum.y>0 && _touchingGround)
+			_touchingGround=false;
 	}
 
 } // namespace Logic

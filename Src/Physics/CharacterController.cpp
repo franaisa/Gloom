@@ -94,7 +94,7 @@ namespace Physics {
 		desc.material = _physxSDK->createMaterial(0.5f, 0.5f, 0.1f); // En realidad sera getDefaultMaterial en el futuro
 		desc.climbingMode = PxCapsuleClimbingMode::eEASY;
 
-		//desc.contactOffset <-- Tamaño que recubre el volumen de la capsula, physx lo usa para no permitir que la capsula se introduzca en otros shapes
+		desc.contactOffset=0.001f; //<-- Tamaño que recubre el volumen de la capsula, physx lo usa para no permitir que la capsula se introduzca en otros shapes
 		//desc.stepOffset <-- Tamaño de los escalones que el player puede subir
 		//desc.slopeLimit = 0.707f;
 

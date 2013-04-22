@@ -153,6 +153,9 @@ namespace Logic
 
 		void initMovementCommands();
 
+		void executeJump();
+
+		void addForce(const Vector3 &force);
 
 		// =======================================================================
 		//                          MIEMBROS PROTEGIDOS
@@ -192,7 +195,7 @@ namespace Logic
 		Vector3 _gravity;
 		float _maxGravVelocity;
 
-
+		static const int MAX_MOVEMENT_COMMANDS = Control::JUMP;
 
 		/** Puntero al controlador fisico del player. */
 		CPhysicController* _physicController;
