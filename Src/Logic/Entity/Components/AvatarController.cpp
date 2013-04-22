@@ -88,7 +88,7 @@ namespace Logic {
 			}
 		}
 
-	} // process
+	} // process	
 
 	//________________________________________________________________________
 
@@ -184,7 +184,8 @@ namespace Logic {
 		float coef = 13.0f/(double)msecs;
 		_momentum*=Vector3(coef,1,coef);
 		//_momentum*=0.95f;
-		_momentum+= estimateMotionDirection() * _acceleration * msecs;
+		Vector3 displacement = estimateMotionDirection() * _acceleration * msecs;
+		_momentum+= displacement * Vector3(1,0,1);
 
 		return _momentum;
 	}
@@ -210,11 +211,11 @@ namespace Logic {
 
 		//normalizamos la velocidad horizontal
 		float momVelocity = (_momentum*Vector3(1,0,1)).length();
-		std::cout << momVelocity << std::endl;
+	//	std::cout << momVelocity << std::endl;
 		if(momVelocity >_maxVelocity){
 			double coef = _maxVelocity/momVelocity;
 			_momentum*=Vector3(coef,1,coef);
-			std::cout << "normalizo" << std::endl;
+			//std::cout << "normalizo" << std::endl;
 		}
 
 		//normalizamos la velocidad vertical

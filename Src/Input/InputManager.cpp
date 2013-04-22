@@ -290,6 +290,7 @@ namespace Input{
 		{
 			// Actualizamos el estado antes de enviarlo
 			_mouseState.setExtents(e.state.width, e.state.height);
+			
 			_mouseState.setPosition(e.state.X.abs,e.state.Y.abs);
 			_mouseState.movX = e.state.X.rel;
 			_mouseState.movY = e.state.Y.rel;
@@ -325,7 +326,7 @@ namespace Input{
 		if (!_mouseListeners.empty()) 
 		{
 			// Actualizamos el estado antes de enviarlo
-			_mouseState.setExtents(e.state.width, e.state.height);
+			//_mouseState.setExtents(e.state.width, e.state.height);
 			_mouseState.setPosition(e.state.X.abs,e.state.Y.abs);
 			_mouseState.movX = e.state.X.rel;
 			_mouseState.movY = e.state.Y.rel;
@@ -352,7 +353,8 @@ namespace Input{
 		if (!_mouseListeners.empty()) 
 		{
 			// Actualizamos el estado antes de enviarlo
-			_mouseState.setExtents(e.state.width, e.state.height);
+			//_mouseState.setExtents(e.state.width, e.state.height);
+			
 			_mouseState.setPosition(e.state.X.abs,e.state.Y.abs);
 			_mouseState.movX = e.state.X.rel;
 			_mouseState.movY = e.state.Y.rel;
