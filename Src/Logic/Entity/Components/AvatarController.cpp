@@ -133,7 +133,7 @@ namespace Logic {
 		// En caso de colision, el controlador fisico nos informa.
 		normalizeDirection();
 
-		manageCollisions( _physicController->move(displacement, msecs) );
+		manageCollisions( _physicController->move(displacement-Vector3(0,0.15f,0), msecs) );
 	} // tick
 
 	//________________________________________________________________________
@@ -210,7 +210,7 @@ namespace Logic {
 		
 		_momentum*=Vector3(_airFrictionCoef,1,_airFrictionCoef);
 		//_momentum*=0.95f;
-		Vector3 displacement = Vector3(3.0f/(double)msecs,0,3.0f/(double)msecs) * estimateMotionDirection() * _acceleration * msecs * msecs * 0.5f;
+		Vector3 displacement = Vector3(3.0f/(double)msecs,0,3.0f/(double)msecs) * estimateMotionDirection(_displacementDir) * _acceleration * msecs * msecs * 0.5f;
 		_momentum+= displacement;
 
 

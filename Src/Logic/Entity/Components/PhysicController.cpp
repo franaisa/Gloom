@@ -191,7 +191,7 @@ void CPhysicController::activateSimulation() {
 unsigned CPhysicController::move(const Vector3& movement, unsigned int msecs) {
 	// Intentamos mover el controller a la posición que se haya calculado
 	// desde avatarController
-	unsigned collisionFlags = _controller.move(movement-Vector3(0,0.15f,0), msecs);
+	unsigned collisionFlags = _controller.move(movement, msecs);
 
 	// Actualizar la posición y orientación de la entidad lógica usando la 
 	// información proporcionada por el motor de física	
