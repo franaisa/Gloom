@@ -1,18 +1,17 @@
 /**
-@file AvatarController.cpp
+@file SpectatorController.cpp
 
 Contiene la implementación del componente que controla el movimiento 
-de la entidad.
+del espectador.
  
-@see Logic::CAvatarController
+@see Logic::CSpectatorController
 @see Logic::IComponent
 
-@author Rubén Mulero Guerrero
 @author Francisco Aisa García
 @date Abril, 2013
 */
 
-#include "AvatarController.h"
+#include "SpectatorController.h"
 #include "Logic/Entity/Entity.h"
 #include "Map/MapEntity.h"
 #include "Logic/Entity/Components/PhysicController.h"
@@ -22,12 +21,11 @@ de la entidad.
 #include "Logic/Messages/MessageMouse.h"
 
 namespace Logic {
-	IMP_FACTORY(CAvatarController);
+	IMP_FACTORY(CSpectatorController);
 
-	CAvatarController::CAvatarController() : _gravity(0, -0.0004f, 0),
-											 _maxFallSpeed(-2.0f),
-											 _airFrictionCoef(0.98f),
-											 _touchingGround(false) {
+	CSpectatorController::CSpectatorController() : _frictionCoef(0.95f),
+												   _acceleration(0.0018f), 
+												   _maxVelocity(2.0f) {
 		// Inicializamos el array que contiene los vectores
 		// de cada tecla de movimiento
 		initMovementCommands();
@@ -35,41 +33,37 @@ namespace Logic {
 
 	//________________________________________________________________________
 
-	bool CAvatarController::spawn(CEntity *entity, CMap *map, const Map::CEntity *entityInfo) {
+	bool CSpectatorController::spawn(CEntity *entity, CMap *map, const Map::CEntity *entityInfo) {
 		if( !IComponent::spawn(entity,map,entityInfo) ) return false;
 
 		assert( entityInfo->hasAttribute("acceleration") && "Error: No se ha definido el atributo acceleration en el mapa" );
-		_acceleration = entityInfo->getFloatAttribute("acceleration");
+		//_acceleration = entityInfo->getFloatAttribute("acceleration");
+		//_acceleration = 0.0018f;
 
 		assert( entityInfo->hasAttribute("maxVelocity") && "Error: No se ha definido el atributo maxVelocity en el mapa" );
-		_maxVelocity = entityInfo->getFloatAttribute("maxVelocity");
-		_maxGravVelocity = _maxVelocity*2.5;
+		//_maxVelocity = entityInfo->getFloatAttribute("maxVelocity");
+		//_maxVelocity = 2.0f;
+
 		return true;
 
 	} // spawn
 
 	//________________________________________________________________________
 
-	void CAvatarController::activate() {
+	void CSpectatorController::activate() {
 		IComponent::activate(); // Necesario para el onStart
 		_displacementDir = _momentum = Vector3::ZERO;
 	} // activate
 
 	//________________________________________________________________________
 
-	void CAvatarController::deactivate() {
-		IComponent::deactivate();
-	} // deactivate
-
-	//________________________________________________________________________
-
-	bool CAvatarController::accept(CMessage *message) {
+	bool CSpectatorController::accept(CMessage *message) {
 		return message->getMessageType() == Message::CONTROL;
 	} // accept
 
 	//________________________________________________________________________
 
-	void CAvatarController::process(CMessage *message) {
+	void CSpectatorController::process(CMessage *message) {
 		switch( message->getMessageType() ) {
 			case Message::CONTROL: {
 				ControlType commandType = static_cast<CMessageControl*>(message)->getType();
@@ -92,14 +86,14 @@ namespace Logic {
 
 	//________________________________________________________________________
 
-	void CAvatarController::mouse(float XYturn[]) {
+	void CSpectatorController::mouse(float XYturn[]) {
 		_entity->yaw(XYturn[0]);
 		_entity->pitch(XYturn[1]);
 	} // turn
 
 	//________________________________________________________________________
 
-	void CAvatarController::onStart(unsigned int msecs) {
+	void CSpectatorController::onStart(unsigned int msecs) {
 		IComponent::onStart(msecs);
 
 		// Nos quedamos con el puntero al componente CPhysicController
@@ -111,44 +105,21 @@ namespace Logic {
 
 	//________________________________________________________________________
 
-	void CAvatarController::tick(unsigned int msecs) {
+	void CSpectatorController::tick(unsigned int msecs) {
 		//@deprecated
 		IComponent::tick(msecs);
 
 		// Calculamos el vector de desplazamiento
-		Vector3 displacement = _touchingGround ? estimateGroundMotion(msecs) : estimateAirMotion(msecs);
-		//Vector3 displacement = estimateGroundMotion(msecs);
+		estimateMotion(msecs);
 
-
-		// Tratamos de mover el controlador fisico con el desplazamiento estimado.
-		// En caso de colision, el controlador fisico nos informa.
-		normalizeDirection();
-
-		manageCollisions( _physicController->move(displacement, msecs) );
+		// Movemos la cápsula en la dirección estimada por el vector de
+		// desplazamiento y acumulada en el vector momentum
+		_physicController->move(_momentum, msecs);
 	} // tick
 
 	//________________________________________________________________________
 
-	void CAvatarController::manageCollisions(unsigned collisionFlags) {
-		// En función de los flags de colisión que se disparen, informamos al
-		// componente que corresponda (en este caso avatarController)
-
-		_touchingGround = collisionFlags & Physics::eCOLLISION_DOWN;
-
-		/*if(collisionFlags & Physics::eCOLLISION_DOWN) {
-			// Colisión en los pies
-		}
-		if(collisionFlags & Physics::eCOLLISION_SIDES) {
-			// Colisión en los lados
-		}
-		if(collisionFlags & Physics::eCOLLISION_UP) {
-			// Colisión con la cabeza
-		}*/
-	}
-
-	//________________________________________________________________________
-
-	Vector3 CAvatarController::estimateMotionDirection() {
+	Vector3 CSpectatorController::estimateMotionDirection() {
 		// Si nuestro movimiento es nulo no hacemos nada
 		if(_displacementDir == Vector3::ZERO) return Vector3::ZERO;
 
@@ -175,72 +146,40 @@ namespace Logic {
 
 	//________________________________________________________________________
 
-	Vector3 CAvatarController::estimateGroundMotion(unsigned int msecs) {
-		float coef =1;
-		if(_displacementDir==Vector3::ZERO)
-			coef = 15.0f/(double)msecs;
-		std::cout << coef << std::endl;
-		_momentum*=Vector3(coef,1,coef);
-		//_momentum*=0.95f;
+	void CSpectatorController::estimateMotion(unsigned int msecs) {
+		// Aplicamos un coeficiente de rozamiento constante
+		// OJO! Al no tener en cuenta los msecs, los clientes que tengan
+		// un mayor frame rate se desplazaran de forma distinta
+		_momentum *= _frictionCoef;
 
-		float accel;
-		if(_displacementDir.z!=0)
-			accel = _acceleration*2;
-		else
-			accel = _acceleration;
+		// s = u · t + 1/2 a · t^2 <- Formula del desplazamiento
+		_momentum += estimateMotionDirection() * _acceleration * msecs * msecs * 0.5f;
 
-		Vector3 displacement = estimateMotionDirection() * accel * msecs * msecs * 0.5f;
-		_momentum+= displacement * Vector3(1,0,1);
-		_momentum.y=_gravity.y*msecs;
-		return _momentum;
+		// Seteamos la velocidad máxima a la que se puede ir
+		normalizeDirection();
 	}
 
 	//________________________________________________________________________
 
-	Vector3 CAvatarController::estimateAirMotion(unsigned int msecs) {
-		
-		_momentum*=Vector3(_airFrictionCoef,1,_airFrictionCoef);
-		//_momentum*=0.95f;
-		Vector3 displacement = Vector3(3.0f/(double)msecs,0,3.0f/(double)msecs) * estimateMotionDirection() * _acceleration * msecs * msecs * 0.5f;
-		_momentum+= displacement;
-
-
-
-		_momentum.y+=_gravity.y*msecs*msecs * 0.5f;
-
-		//std::cout << _momentum.y << std::endl;
-
-		return _momentum;
-	}
-
-	void CAvatarController::normalizeDirection(){
-
-		//normalizamos la velocidad horizontal
-		float momVelocity = (_momentum*Vector3(1,0,1)).length();
-	//	std::cout << momVelocity << std::endl;
-		if(momVelocity >_maxVelocity){
-			double coef = _maxVelocity/momVelocity;
-			_momentum*=Vector3(coef,1,coef);
+	void CSpectatorController::normalizeDirection() {
+		// Normalizamos la velocidad al máximo
+		float momVelocity = _momentum.length();
+		if(momVelocity >_maxVelocity) {
+			double coef = _maxVelocity / momVelocity;
+			_momentum *= coef;
 			
 		}
-
-		//normalizamos la velocidad vertical
-		float gVelocity = (_momentum*Vector3(0,1,0)).length();
-		if(gVelocity >_maxGravVelocity){
-			double coef = _maxGravVelocity/gVelocity;
-			_momentum*=Vector3(1,coef,1);
-		}
 	}
 
 	//________________________________________________________________________
 
-	void CAvatarController::executeMovementCommand(ControlType commandType) {
+	void CSpectatorController::executeMovementCommand(ControlType commandType) {
 		_displacementDir += _movementCommands[commandType];
 	}
 
 	//________________________________________________________________________
 
-	void CAvatarController::initMovementCommands() {
+	void CSpectatorController::initMovementCommands() {
 		_movementCommands[Control::WALK]				= Vector3(0,0,1);
 		_movementCommands[Control::WALKBACK]			= Vector3(0,0,-1);
 		_movementCommands[Control::STRAFE_LEFT]			= Vector3(1,0,0);
