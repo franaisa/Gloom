@@ -141,7 +141,7 @@ namespace Logic
 		
 		void manageCollisions(unsigned collisionFlags);
 
-		Vector3 estimateMotionDirection();
+		Vector3 estimateMotionDirection(Vector3 displacement);
 
 		Vector3 estimateGroundMotion(unsigned int msecs);
 
@@ -156,6 +156,8 @@ namespace Logic
 		void executeJump();
 
 		void addForce(const Vector3 &force);
+
+		void executeDodge(ControlType commandType);
 
 		// =======================================================================
 		//                          MIEMBROS PROTEGIDOS
@@ -199,6 +201,9 @@ namespace Logic
 
 		/** Puntero al controlador fisico del player. */
 		CPhysicController* _physicController;
+
+
+		Vector3 _dodgeForce;
 
 	}; // class CAvatarController
 

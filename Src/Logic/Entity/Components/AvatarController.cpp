@@ -43,11 +43,7 @@ namespace Logic {
 
 		assert( entityInfo->hasAttribute("maxVelocity") && "Error: No se ha definido el atributo maxVelocity en el mapa" );
 		_maxVelocity = entityInfo->getFloatAttribute("maxVelocity");
-<<<<<<< HEAD
 		_maxGravVelocity = _maxVelocity*6;
-=======
-		_maxGravVelocity = _maxVelocity*2.5;
->>>>>>> 2e5411eeff3df1b2ec9c3aebf25fecd97ce8f14c
 		return true;
 
 	} // spawn
@@ -83,9 +79,14 @@ namespace Logic {
 				if(commandType >=0 && commandType < MAX_MOVEMENT_COMMANDS) {
 					executeMovementCommand(commandType);
 				}
-
-				if(commandType==Control::JUMP)
+				else if(commandType==Control::JUMP){
 					executeJump();
+				}
+				
+				else if(commandType >=Control::JUMP && commandType < Control::MOUSE) {
+					executeDodge(commandType);
+				}
+					
 				// Comando de raton
 				else if(commandType == Control::MOUSE) {
 					CMessageMouse* mouseMsg = static_cast<CMessageMouse*>(message);
@@ -156,17 +157,17 @@ namespace Logic {
 
 	//________________________________________________________________________
 
-	Vector3 CAvatarController::estimateMotionDirection() {
+	Vector3 CAvatarController::estimateMotionDirection(Vector3 displacement) {
 		// Si nuestro movimiento es nulo no hacemos nada
-		if(_displacementDir == Vector3::ZERO) return Vector3::ZERO;
+		if(displacement == Vector3::ZERO) return Vector3::ZERO;
 
 		// Mediante trigonometria basica sacamos el angulo que forma el desplazamiento
 		// que queremos llevar a cabo
-		float displacementYaw = asin(_displacementDir.normalisedCopy().x);
+		float displacementYaw = asin(displacement.normalisedCopy().x);
 		// Obtenemos una copia de la matriz de transformación del personaje
 		Matrix4 characterTransform = _entity->getTransform();
 		// Si estamos andando hacia atras, invertimos el giro
-		if(_displacementDir.z < 0) displacementYaw *= -1;
+		if(displacement.z < 0) displacementYaw *= -1;
 
 		// Rotamos la matriz de transformacion tantos grados como diga el vector 
 		// desplazamiento calculado de pulsar las teclas
@@ -175,7 +176,7 @@ namespace Logic {
 		Vector3 motionDirection = Math::getDirection(characterTransform);
 		// Invertimos el vector resultante si nos estamos desplazando hacia atras
 		// porque el yaw se calcula de forma contraria al andar hacia atras
-		if(_displacementDir.z < 0) motionDirection *= -1;
+		if(displacement.z < 0) motionDirection *= -1;
 
 		// Devolvemos la dirección del movimiento estimado
 		return motionDirection;
@@ -197,7 +198,7 @@ namespace Logic {
 		else
 			accel = _acceleration;
 
-		Vector3 displacement = estimateMotionDirection() * accel * msecs * msecs * 0.5f;
+		Vector3 displacement = estimateMotionDirection(_displacementDir) * accel * msecs * msecs * 0.5f;
 		_momentum+= displacement * Vector3(1,0,1);
 		_momentum.y=_gravity.y*msecs;
 		return _momentum;
@@ -220,6 +221,8 @@ namespace Logic {
 
 		return _momentum;
 	}
+
+	//________________________________________________________________________
 
 	void CAvatarController::normalizeDirection(){
 
@@ -266,6 +269,8 @@ namespace Logic {
 
 	}
 
+	//________________________________________________________________________
+
 	void CAvatarController::executeJump(){
 		if(_touchingGround){
 			_momentum.y+=2;
@@ -273,10 +278,22 @@ namespace Logic {
 		}
 	}
 
+	//________________________________________________________________________
+
 	void CAvatarController::addForce(const Vector3 &force){
 		_momentum+=force;
 		if(_momentum.y>0 && _touchingGround)
 			_touchingGround=false;
 	}
+
+	//________________________________________________________________________
+
+	void CAvatarController::executeDodge(ControlType commandType){
+		_displacementDir += _movementCommands[commandType];
+		Vector3 dir = estimateMotionDirection(_movementCommands[commandType])+Vector3(0,1,0);
+		addForce(dir*_dodgeForce);
+	}
+
+	//________________________________________________________________________
 
 } // namespace Logic
