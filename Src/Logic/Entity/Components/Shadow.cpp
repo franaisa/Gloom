@@ -72,9 +72,11 @@ namespace Logic {
 				materialMsg->setMaterialName("original");
 				_entity->emitMessage(materialMsg);
 
+				/*
 				std::shared_ptr<CMessageChangeMaterialHudWeapon> materialMsgHud = std::make_shared<CMessageChangeMaterialHudWeapon>();
 				materialMsgHud->setMaterialName("original");
 				_entity->emitMessage(materialMsgHud);
+				*/
 			}
 		}
 	}
@@ -114,9 +116,11 @@ namespace Logic {
 		materialMsg->setMaterialName("shadowInvisibility");
 		_entity->emitMessage(materialMsg);
 
+		/*
 		std::shared_ptr<CMessageChangeMaterialHudWeapon> materialMsgHud = std::make_shared<CMessageChangeMaterialHudWeapon>();
 		materialMsgHud->setMaterialName("shadowInvisibility");
 		_entity->emitMessage(materialMsgHud);
+		*/
 
 
 

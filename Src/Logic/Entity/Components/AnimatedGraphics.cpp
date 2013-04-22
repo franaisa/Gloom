@@ -205,7 +205,7 @@ namespace Logic
 		if(newWeapon != _currentWeapon)
 			_currentWeapon = newWeapon;
 			_animatedGraphicsEntity->attachWeapon(*_weapons[_currentWeapon], _entity->getEntityID());
-			changeMaterial(_currentMaterialWeapon);
+			//changeMaterial(_currentMaterialWeapon);
 	}
 
 	//---------------------------------------------------------
@@ -213,11 +213,13 @@ namespace Logic
 		if(materialName != _currentMaterialWeapon){
 			_currentMaterialWeapon = materialName;
 			CGraphics::changeMaterial(_currentMaterialWeapon);
+			/*
 			if(_currentMaterialWeapon != "original"){
 				_weapons[_currentWeapon]->changeMaterial(materialName);
 			}else{
 				_weapons[_currentWeapon]->changeMaterial(toText((eWeaponIndex)_currentWeapon));
 			}
+			*/
 		}
 	}
 
