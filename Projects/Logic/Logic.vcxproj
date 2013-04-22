@@ -155,6 +155,7 @@
     <ClCompile Include="..\..\Src\Logic\Messages\MessageCameraToEnemy.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageCealing.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageChangeMaterial.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Messages\MessageChangeMaterialHudWeapon.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageChangePlayerClass.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageChangeWeapon.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageChangeWeaponGraphics.cpp" />
@@ -263,6 +264,7 @@
     <ClInclude Include="..\..\Src\Logic\Entity\Components\Graphics.h" />
     <ClInclude Include="..\..\Src\Logic\Documentation.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageActivateScreamerShield.h" />
+    <ClInclude Include="..\..\Src\Logic\Messages\MessageChangeMaterialHudWeapon.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageCreateParticle.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\Message.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageActivate.h" />

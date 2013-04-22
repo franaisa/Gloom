@@ -61,17 +61,27 @@ namespace Logic
 
 			std::string armas[] = {"hammer","sniper","shotGun","miniGun", "grenadeLauncher", "rocketLauncher"};
 
-			
+			_scene = _entity->getMap()->getScene();
+			eWeaponIndex current;
 			for(int i = 0; i < numWeapons; ++i){
 				
+				current = (eWeaponIndex)i;
 				std::stringstream aux;
-				aux << "weapon" << armas[i];
+				aux << "weapon" << toText(current);
 				std::string weapon = aux.str();
-				
+
+				aux << "_" << _entity->getEntityID();
+
+				std::string nameWeapon = (aux.str());
 				//creamos la entidad gráfica del arma para poder atacharla al monigote
-				_weapons[i] = new Graphics::CEntity(weapon,entityInfo->getStringAttribute(weapon+"Model")); 
+
+				_weapons[i] = new Graphics::CEntity(nameWeapon,entityInfo->getStringAttribute(weapon+"Model")); 
+				
 				
 			}
+
+			//_scene->addEntity(_weapons[0]);
+
 			if(!_weapons)
 				return NULL;
 		}
@@ -190,9 +200,47 @@ namespace Logic
 		_animatedGraphicsEntity->setAnimation(_defaultAnimation,true);
 	}
 
-
+	//---------------------------------------------------------
 	void CAnimatedGraphics::changeWeapon(int newWeapon){
-		_animatedGraphicsEntity->attachWeapon(*_weapons[newWeapon], _entity->getEntityID());
+		if(newWeapon != _currentWeapon)
+			_currentWeapon = newWeapon;
+			_animatedGraphicsEntity->attachWeapon(*_weapons[_currentWeapon], _entity->getEntityID());
+			changeMaterial(_currentMaterialWeapon);
 	}
 
+	//---------------------------------------------------------
+	void CAnimatedGraphics::changeMaterial(const std::string& materialName) {
+		if(materialName != _currentMaterialWeapon){
+			_currentMaterialWeapon = materialName;
+			CGraphics::changeMaterial(_currentMaterialWeapon);
+			if(_currentMaterialWeapon != "original"){
+				_weapons[_currentWeapon]->changeMaterial(materialName);
+			}else{
+				_weapons[_currentWeapon]->changeMaterial(toText((eWeaponIndex)_currentWeapon));
+			}
+		}
+	}
+
+
+	std::string CAnimatedGraphics::toText(eWeaponIndex weapon){
+		switch(weapon){
+			case HAMMER: return "hammer";
+				break;
+			case SNIPER: return "sniper";
+				break;
+			case SHOTGUN: return "shotGun";
+				break;
+			case MINIGUN: return "miniGun";
+				break;
+			case GRENADELAUNCHER: return "grenadeLauncher";
+				break;
+			case ROCKETLAUNCHER: return "rocketLauncher";
+				break;
+			case PRIMARY_SKILL: return "primarySkill";
+				break;
+			case SECONDARY_SKILL: return "secondarySkill";
+				break;
+			default: return "";
+		}
+	}
 } // namespace Logic

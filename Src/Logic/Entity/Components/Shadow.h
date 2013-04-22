@@ -70,6 +70,11 @@ namespace Logic {
 		virtual bool spawn(CEntity* entity, CMap* map, const Map::CEntity *entityInfo);
 
 		//__________________________________________________________________
+		
+
+		virtual void onStart(unsigned int msecs);
+
+		//__________________________________________________________________
 
 		/**
 		Método llamado en cada frame.
@@ -115,6 +120,10 @@ namespace Logic {
 		/** Timer que controla la duración de la invisibilidad. */
 		float _invisibilityTimer;
 
+		/**
+		Nombre del material original de la entidad
+		*/
+		std::string _materialName;
 	}; // class CShadow
 
 	REG_FACTORY(CShadow);

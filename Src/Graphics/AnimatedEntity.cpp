@@ -100,11 +100,17 @@ namespace Graphics
 	//--------------------------------------------------------
 
 	void CAnimatedEntity::attachWeapon(CEntity &arma, unsigned int id){
-		if(_weapon)
-			_scene->getSceneMgr()->destroyEntity(_weapon);
-		Ogre::String asd = arma.getMesh();
-		_weapon = _scene->getSceneMgr()->createEntity("weapon"+id, arma.getMesh());
-		_entity->attachObjectToBone("Bip01 R Hand",_weapon);
+		
+		if(_graphicsWeapon)
+			_scene->getSceneMgr()->destroyEntity(_graphicsWeapon->getName());
+
+		_graphicsWeapon = &arma;
+		_graphicsWeapon->setOgreEntity (_scene->getSceneMgr()->createEntity(_graphicsWeapon->getName(), arma.getMesh()));
+		
+
+		//_scene->addEntity(_graphicsWeapon);
+		
+		_entity->attachObjectToBone("Bip01 R Hand",_graphicsWeapon->getEntity());
 
 	}
 

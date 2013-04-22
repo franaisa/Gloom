@@ -125,6 +125,11 @@ namespace Logic {
 		/** Porcentaje de reduccion de cooldown del berserker. */
 		float _berserkerCooldownPercent;
 
+		/**
+		Nombre del material original de la entidad
+		*/
+		std::string _materialName;
+
 	}; // class CHound
 
 	REG_FACTORY(CHound);

@@ -18,6 +18,7 @@ implementa las habilidades del personaje
 #include "Logic/Entity/Entity.h"
 
 #include "Logic/Messages/MessageChangeMaterial.h"
+#include "Logic/Messages/MessageChangeMaterialHudWeapon.h"
 
 #include <assert.h>
 
@@ -44,6 +45,9 @@ namespace Logic {
 
 		_invisibilityTimer = 0;
 
+		if(entityInfo->hasAttribute("materialName"))
+			_materialName = entityInfo->getStringAttribute("materialName");
+
 		// Leer el tiempo que dura la invisibilidad
 		assert( entityInfo->hasAttribute("invisibilityDuration") );
 		// Pasamos el tiempo a msecs
@@ -65,8 +69,12 @@ namespace Logic {
 
 				// Desactivamos el shader de invisibilidad
 				std::shared_ptr<CMessageChangeMaterial> materialMsg = std::make_shared<CMessageChangeMaterial>();
-				materialMsg->setMaterialName("marine_azul");
+				materialMsg->setMaterialName("original");
 				_entity->emitMessage(materialMsg);
+
+				std::shared_ptr<CMessageChangeMaterialHudWeapon> materialMsgHud = std::make_shared<CMessageChangeMaterialHudWeapon>();
+				materialMsgHud->setMaterialName("original");
+				_entity->emitMessage(materialMsgHud);
 			}
 		}
 	}
@@ -79,8 +87,15 @@ namespace Logic {
 		// Ñapa temporal para el ideame
 		// Cambiamos el color del marine en funcion de la clase con un changeMaterial
 
+		
+	}
+
+	//__________________________________________________________________
+
+	void CShadow::onStart(unsigned int msecs) {
+
 		std::shared_ptr<CMessageChangeMaterial> materialMsg = std::make_shared<CMessageChangeMaterial>();
-		materialMsg->setMaterialName("marine_azul");
+		materialMsg->setMaterialName("original");
 		_entity->emitMessage(materialMsg);
 
 		_invisibilityTimer = 1;
@@ -98,6 +113,13 @@ namespace Logic {
 		std::shared_ptr<CMessageChangeMaterial> materialMsg = std::make_shared<CMessageChangeMaterial>();
 		materialMsg->setMaterialName("shadowInvisibility");
 		_entity->emitMessage(materialMsg);
+
+		std::shared_ptr<CMessageChangeMaterialHudWeapon> materialMsgHud = std::make_shared<CMessageChangeMaterialHudWeapon>();
+		materialMsgHud->setMaterialName("shadowInvisibility");
+		_entity->emitMessage(materialMsgHud);
+
+
+
 	}
 
 	//__________________________________________________________________

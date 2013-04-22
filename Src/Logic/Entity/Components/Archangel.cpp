@@ -48,6 +48,9 @@ namespace Logic {
 		// Leer atributos propios
 		_inmunityTimer = 0;
 
+		if(entityInfo->hasAttribute("materialName"))
+			_materialName = entityInfo->getStringAttribute("materialName");
+
 		// Leer el tiempo que dura la invisibilidad
 		assert( entityInfo->hasAttribute("inmunityDuration") );
 		// Pasamos el tiempo a msecs
@@ -75,7 +78,7 @@ namespace Logic {
 
 				// Desactivamos el shader de inmunidad
 				std::shared_ptr<CMessageChangeMaterial> materialMsg = std::make_shared<CMessageChangeMaterial>();
-				materialMsg->setMaterialName("marine_amarillo");
+				materialMsg->setMaterialName(_materialName);
 				_entity->emitMessage(materialMsg);
 			}
 			else {
@@ -92,7 +95,7 @@ namespace Logic {
 		// Ñapa temporal para el ideame
 		// Cambiamos el color del marine en funcion de la clase con un changeMaterial
 		std::shared_ptr<CMessageChangeMaterial> materialMsg = std::make_shared<CMessageChangeMaterial>();
-		materialMsg->setMaterialName("marine_amarillo");
+		materialMsg->setMaterialName(_materialName);
 		_entity->emitMessage(materialMsg);
 		_inmunityTimer = 0;
 	}

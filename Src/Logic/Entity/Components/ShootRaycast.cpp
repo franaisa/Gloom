@@ -111,7 +111,7 @@ namespace Logic {
 
 		//El origen debe ser mínimo la capsula (si chocamos el disparo en la capsula al mirar en diferentes direcciones ya esta tratado en la funcion de colision)
 		//Posicion de la entidad + altura de disparo(coincidente con la altura de la camara)
-		Vector3 origin = _entity->getPosition()+Vector3(0,_heightShoot,0);
+		Vector3 origin = _entity->getPosition()+Vector3(0.0f,_heightShoot,0.0f);
 		// Creamos el ray desde el origen en la direccion del raton (desvio ya aplicado)
 		Ray ray(origin, dispersionDirection);
 			

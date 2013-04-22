@@ -29,6 +29,7 @@ namespace Ogre
 namespace Graphics 
 {
 	class CScene;
+	class CEntity;
 }
 	
 namespace Graphics 
@@ -85,7 +86,7 @@ namespace Graphics
 		@param mesh Nombre del modelo que debe cargarse.
 		*/
 		CAnimatedEntity(const std::string &name, const std::string &mesh):
-					CEntity(name,mesh), _currentAnimation(0), _weapon(0) {}
+					CEntity(name,mesh), _currentAnimation(0), _weapon(0), _graphicsWeapon(0) {}
 
 		/**
 		Destructor de la aplicación.
@@ -162,6 +163,8 @@ namespace Graphics
 		Ogre::AnimationState *_currentAnimation;
 
 		Ogre::Entity *_weapon;
+
+		Graphics::CEntity *_graphicsWeapon;
 
 		Ogre::SceneNode* _ObjectentityNode;
 
