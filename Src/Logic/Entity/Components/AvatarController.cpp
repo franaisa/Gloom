@@ -24,7 +24,7 @@ de la entidad.
 namespace Logic {
 	IMP_FACTORY(CAvatarController);
 
-	CAvatarController::CAvatarController() : _gravity(0, -0.0003f, 0),
+	CAvatarController::CAvatarController() : _gravity(0, -0.0004f, 0),
 											 _maxFallSpeed(-2.0f),
 											 _airFrictionCoef(0.98f),
 											 _touchingGround(false) {
@@ -43,7 +43,11 @@ namespace Logic {
 
 		assert( entityInfo->hasAttribute("maxVelocity") && "Error: No se ha definido el atributo maxVelocity en el mapa" );
 		_maxVelocity = entityInfo->getFloatAttribute("maxVelocity");
+<<<<<<< HEAD
 		_maxGravVelocity = _maxVelocity*6;
+=======
+		_maxGravVelocity = _maxVelocity*2.5;
+>>>>>>> 2e5411eeff3df1b2ec9c3aebf25fecd97ce8f14c
 		return true;
 
 	} // spawn
