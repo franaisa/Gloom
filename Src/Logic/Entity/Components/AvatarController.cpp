@@ -183,7 +183,11 @@ namespace Logic {
 		_momentum*=Vector3(coef,1,coef);
 		//_momentum*=0.95f;
 
-
+		float accel;
+		if(_displacementDir.z!=0)
+			accel = _acceleration*2;
+		else
+			accel = _acceleration;
 
 		Vector3 displacement = estimateMotionDirection() * accel * msecs * msecs * 0.5f;
 		_momentum+= displacement * Vector3(1,0,1);
