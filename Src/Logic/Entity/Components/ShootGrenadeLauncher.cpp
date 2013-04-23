@@ -58,12 +58,12 @@ namespace Logic {
 		Vector3 directionNormalise=Math::getDirection( _entity->getOrientation());
 		directionNormalise.normalise();
 		Vector3 shootPosition = _entity->getPosition() + directionNormalise* (_capsuleRadius+6.0);////3.4 es el radio del cohete y lo demas es la separacion para que vaya tanto en sp como mp (culpa del mp)
-		shootPosition.y += _heightShoot; //Altura del pj menos algo menos del radio de la granada para que salga en el centro de la mira
+		shootPosition.y += _heightShoot-1.7; //Altura del pj menos algo menos del radio de la granada para que salga en el centro de la mira
 		//std::cout << "Posicion de la granada a disparar x,y,z: " << shootPosition.x <<"," << shootPosition.y <<"," << shootPosition.z << std::endl;
 		
 		//Comprobamos si la granada tiene espacio para ser disparado
 		//Creamos el origen del rayo que sera igual al de la posicion de disparo menos el desplazamiento
-		Vector3 origin = _entity->getPosition()+Vector3(0,_heightShoot,0);
+		Vector3 origin = _entity->getPosition()+Vector3(0,_heightShoot-1.7,0);
 		Vector3 noSpacePosition=origin;
 		//Calculamos la distancia entre la posicion de disparo y el origen
 		float distance=origin.distance(shootPosition);
