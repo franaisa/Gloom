@@ -181,6 +181,11 @@ namespace Logic {
 			// Colisión con la cabeza
 			_momentum.y = 0;
 		}
+
+		if(collisionFlags & Physics::eCOLLISION_SIDES){
+			//necesitamos la posicion anterior del personaje, para ver la dirección 
+			//y la velocidad a la que nos hemos movido
+		}
 	}
 
 	//________________________________________________________________________

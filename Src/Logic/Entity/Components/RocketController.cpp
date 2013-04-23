@@ -3,7 +3,7 @@
 
 @see Logic::IComponent
 
-@author Jose Antonio García Yáñez
+@author Francisco Aisa García
 @date Marzo, 2013
 */
 
@@ -32,7 +32,7 @@ namespace Logic {
 	
 	IMP_FACTORY(CRocketController);
 
-	CRocketController::CRocketController() : _enemyHit(false) { 
+	CRocketController::CRocketController() : { 
 		// Nada que hacer
 	}
 
@@ -131,14 +131,12 @@ namespace Logic {
 				entitiesHit[i]->emitMessage(msg);
 
 				// Emitimos el mensaje de desplazamiento por daños
-			/*	CMessageAddForcePlayer* msg2 = new CMessageAddForcePlayer();
+				CMessageAddForcePlayer* msg2 = new CMessageAddForcePlayer();
 				// Seteamos la fuerza y la velocidad
-				msg2->setPower(0.1f);
-				msg2->setVelocity(0.12f);
 				// Seteamos el vector director del desplazamiento
-				Vector3 direccionImpacto = entitiesHit[i]->getPosition() - _entity->getPosition();
+				/*Vector3 direccionImpacto = entitiesHit[i]->getPosition() - _entity->getPosition();
 				direccionImpacto.normalise();
-				msg2->setDirection(direccionImpacto);
+				msg2->setForce(direccionImpacto*_force);
 				entitiesHit[i]->emitMessage(msg2);*/
 			}
 		}

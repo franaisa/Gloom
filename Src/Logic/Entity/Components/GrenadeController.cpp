@@ -68,6 +68,7 @@ namespace Logic {
 
 		_explotionDamage = entityInfo->getFloatAttribute("explotionDamage");
 		_explotionRadius = entityInfo->getFloatAttribute("explotionRadius");
+		_explotionForce = entityInfo->getFloatAttribute("explotionForce");
 		_audioExplotion = entityInfo->getStringAttribute("explotionAudio");
 		_explotionActive = false;
 
@@ -140,22 +141,37 @@ namespace Logic {
 			// Si la entidad golpeada es valida
 			// y no se trata del escudo
 			if(entitiesHit[i] != NULL && entitiesHit[i]->getType() != "ScreamerShield") {
-				// Emitimos el mensaje de daño
-				CMessageDamaged* msg = new CMessageDamaged();
-				msg->setDamage(_explotionDamage);
-				msg->setEnemy(_owner);
-				entitiesHit[i]->emitMessage(msg);
-				
-				// Emitimos el mensaje de desplazamiento por daños
-				/*CMessageAddForcePlayer* msg2 = new CMessageAddForcePlayer();
-				// Seteamos la fuerza y la velocidad
-				msg2->setPower(0.1f);
-				msg2->setVelocity(0.12f);
-				// Seteamos el vector director del desplazamiento
+
+				//queremos que la explosion se reduzca con el tiempo, asi que calculamos
+				//la distancia que hay entre el impacto y el jugador, después partimos
+				//la distancia maxima de impacto en cachitos de igual damage, y calculamos
+				//cuantos cachitos de damage se le tienen que poner al hit
 				Vector3 direccionImpacto = entitiesHit[i]->getPosition() - _entity->getPosition();
-				direccionImpacto.normalise();
-				msg2->setDirection(direccionImpacto);
-				entitiesHit[i]->emitMessage(msg2);*/
+				float damage = (_explotionDamage/_explotionRadius)*direccionImpacto.length();
+
+				//final damage
+				damage = _explotionDamage - damage;
+
+				//send damage message
+				CMessageDamaged* damageDone = new CMessageDamaged();
+				damageDone->setDamage(damage);
+				damageDone->setEnemy(_owner);
+				entitiesHit[i]->emitMessage(damageDone);
+				
+				// queremos que el desplazamiento sea más grande cuanto más cerca ha 
+				//caido del objetivo (porque ha recibido más daño y la onda expansiva
+				//se reduce con la distancia, así que calculamos cuanta fuerza le 
+				//tenemos que dar al jugador en el desplazamiento de la explosión
+				CMessageAddForcePlayer* explotionForce = new CMessageAddForcePlayer();
+				// Seteamos la fuerza y la velocidad
+				// Seteamos el vector director del desplazamiento
+				
+				Vector3 forceDirection = direccionImpacto.normalisedCopy();
+
+				float pushForce=3;
+
+				explotionForce->setForce(forceDirection*pushForce);
+				entitiesHit[i]->emitMessage(explotionForce);
 			}
 		}
 

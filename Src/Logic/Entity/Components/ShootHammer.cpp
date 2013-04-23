@@ -20,7 +20,7 @@ Contiene la implementación del componente que representa al hammer.
 
 #include "Logic/Messages/MessageControl.h"
 #include "Logic/Messages/MessageDamaged.h"
-#include "Logic/Messages/MessageRebound.h"
+#include "Logic/Messages/MessageAddForcePlayer.h"
 
 #include "Graphics/Camera.h"
 
@@ -36,6 +36,7 @@ namespace Logic {
 		
 		_currentAmmo = 1;
 		_damageReflect = entityInfo->getIntAttribute("weapon"+_nameWeapon+"DamageReflect");
+		_reboundForce = entityInfo->getIntAttribute("reboundForce");
 
 		return true;
 	}
@@ -59,10 +60,10 @@ namespace Logic {
 
 	void CShootHammer::triggerHitMessages(std::pair<CEntity*, Ray> entityHit) {
 		if(entityHit.first->getType().compare("World")==0){
-			Vector3 direccionOpuestaRay= entityHit.second.getDirection()*-1;
-			Logic::CMessageRebound *m=new Logic::CMessageRebound();
-			m->setDir(direccionOpuestaRay);
-			_entity->emitMessage(m);
+			Vector3 reboundDirection= entityHit.second.getDirection()*-1;
+			Logic::CMessageAddForcePlayer *forceRebound=new Logic::CMessageAddForcePlayer();
+			forceRebound->setForce(reboundDirection*_reboundForce);
+			_entity->emitMessage(forceRebound);
 
 			Logic::CMessageDamaged *damage=new Logic::CMessageDamaged();
 			damage->setDamage(_damageReflect);
