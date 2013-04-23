@@ -12,9 +12,9 @@ namespace Logic {
 		virtual ~CMessageCameraOffset();
 
 		CEntity* getRelatedEntity();
-		void setRelatedEntity(CEntity* entity);
 
-		void setOffset(float fOffset);
+		float getOffsetTimer() { return _fOffsetTimer; }
+		void setOffsetTimer(float fOffsetTimer);
 		
 		virtual Net::CBuffer* serialize();
 		virtual void deserialize(Net::CBuffer& buffer);
@@ -22,7 +22,10 @@ namespace Logic {
 	private:
 		CEntity* _entity;
 
-		float	_fOffset;
+		/**
+			Timer que se le asignará a la cámara con la vibración (offset) que tendrá
+		*/
+		float	_fOffsetTimer; 
 	};
 	REG_FACTORYMESSAGE(CMessageCameraOffset);
 };

@@ -123,9 +123,6 @@ namespace Logic
 		void setTarget(CEntity * entity){_target = entity;}
 
 
-		void UpdateOffset();
-
-
 	protected:
 		
 		/**
@@ -172,11 +169,9 @@ namespace Logic
 		*/
 		float _targetHeight;
 
-		float _fOffest;
-		bool  _bOffsetDirection; //false = right; 1 = left
-
-		bool  _bCameraOffset;
-
+		/**
+		Timer con el tiemop que la cámara "vibra" porque ha recibido daño el jugador.
+		*/
 		float _fOffsetTimer;
 
 	}; // class CCamera
