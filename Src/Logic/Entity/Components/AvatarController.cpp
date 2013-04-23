@@ -203,7 +203,7 @@ namespace Logic {
 	Vector3 CAvatarController::estimateGroundMotion(unsigned int msecs) {
 		// Si no nos queremos desplazar en ninguna dirección aplicamos el coeficiente
 		// de rozamiento
-		float coef = (_displacementDir == Vector3::ZERO) ? _frictionCoef/(double)msecs : 1;
+		float coef = (_displacementDir == Vector3::ZERO) ? _frictionCoef/(double)msecs : _maxVelocity/(_maxVelocity+(0.5*_acceleration*msecs*msecs));;
 		
 		// Multiplicamos la inercia por el coeficiente de rozamiento (para decelerarla)
 		_momentum *= coef;
