@@ -7,8 +7,8 @@ de disparo del lanzagranadas.
 @see Logic::CShootGrenadeLauncher
 @see Logic::IComponent
 
-@author Francisco Aisa García
-@date Febrero, 2013
+@author Jose Antonio García Yáñez
+@date Abril, 2013
 */
 
 #include "ShootGrenadeLauncher.h"
@@ -53,13 +53,17 @@ namespace Logic {
 		// Obtenemos la informacion asociada al arquetipo de la granada
 		Map::CEntity *entityInfo = CEntityFactory::getSingletonPtr()->getInfo("Grenade");
 
+		//std::cout << "Posicion del jugador x,y,z: " << _entity->getPosition().x << "," << _entity->getPosition().y <<"," << _entity->getPosition().z << std::endl;
 		// Spawneamos la granada justo delante del jugador y a la altura de disparo que corresponda
-		Vector3 shootPosition = _entity->getPosition() + (Math::getDirection( _entity->getOrientation() )* (_capsuleRadius+3.4));//3.4 es el radio de la granada
+		Vector3 directionNormalise=Math::getDirection( _entity->getOrientation());
+		directionNormalise.normalise();
+		Vector3 shootPosition = _entity->getPosition() + directionNormalise* (_capsuleRadius+6.0);////3.4 es el radio del cohete y lo demas es la separacion para que vaya tanto en sp como mp (basura de interpolacion)
 		shootPosition.y += _heightShoot-1.7; //Altura del pj menos algo menos del radio de la granada para que salga en el centro de la mira
+		//std::cout << "Posicion de la granada a disparar x,y,z: " << shootPosition.x <<"," << shootPosition.y <<"," << shootPosition.z << std::endl;
 		
 		//Comprobamos si la granada tiene espacio para ser disparado
 		//Creamos el origen del rayo que sera igual al de la posicion de disparo menos el desplazamiento
-		Vector3 origin = _entity->getPosition()+Math::getDirection( _entity->getOrientation())+Vector3(0,_heightShoot-1.7,0);
+		Vector3 origin = _entity->getPosition()+Vector3(0,_heightShoot-1.7,0);
 		Vector3 noSpacePosition=origin;
 		//Calculamos la distancia entre la posicion de disparo y el origen
 		float distance=origin.distance(shootPosition);
@@ -69,7 +73,7 @@ namespace Logic {
 		Ray ray(origin, direction);
 		//Desde el centro del jugador en la dirección que será disparado la granada sin tenernos en cuenta a nosotros mismos.
 		//Si hemos tocado algo es que no hay espacio por lo tanto lo lanzamos desde el centro del jugador (creo que seria mejor explotarlo directamente por movidas de shapes)
-		if(Physics::CServer::getSingletonPtr()->raycastClosestInverse(ray, distance,_entity->getEntityID()) != NULL){
+		if(Physics::CServer::getSingletonPtr()->raycastClosestInverse(ray, distance+10,_entity->getEntityID()) != NULL){ //se le ha puesto 10 porque las unidades de physx no coinciden con las de ogre y fui a ojo
 			std::cout << "La granada no tiene espacio para salir"<< std::endl;
 			shootPosition=noSpacePosition;
 		}

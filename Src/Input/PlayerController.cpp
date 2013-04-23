@@ -188,8 +188,8 @@ namespace Input {
 				case Input::Key::T:
 					{
 						std::shared_ptr<Logic::CMessageCameraOffset> m3 = std::make_shared<Logic::CMessageCameraOffset>();
-						m3->setOffset(2.0f);
-						_controlledAvatar->emitMessage(m3); 
+						m3->setOffsetTimer(100.0f);
+						//_controlledAvatar->emitMessage(m3); 
 								 
 						Logic::CEntity * camera = Logic::CServer::getSingletonPtr()->getMap()->getEntityByType("Camera");
 						camera->emitMessage(m3);

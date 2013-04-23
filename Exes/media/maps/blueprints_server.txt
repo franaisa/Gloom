@@ -9,7 +9,6 @@ ItemSpawn CGraphics CPhysicStaticEntity CFloatingMovement CSpawnItemManager CNet
 SpawnPoint CPhysicStaticEntity
 Jumper CGraphics CPhysicStaticEntity CJumper
 Grenade CGraphics CPhysicDynamicEntity CGrenadeController CNetConnector
-Explotion CGraphics CPhysicDynamicEntity CExplotionHitNotifier
 Rocket CGraphics CPhysicDynamicEntity CRocketController CNetConnector
 Lava CGraphics CPhysicStaticEntity CLava
 Elevator CGraphics CPhysicDynamicEntity CElevator

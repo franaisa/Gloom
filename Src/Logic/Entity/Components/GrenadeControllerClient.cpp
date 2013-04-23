@@ -1,13 +1,13 @@
 /**
-@file ExplotionController.cpp
+@file ExplotionControllerClient.cpp
 
 @see Logic::IComponent
 
-@author Francisco Aisa García
-@date Febrero, 2013
+@author Jose Antonio García Yáñez
+@date Abril, 2013
 */
 
-#include "GrenadeController.h"
+#include "GrenadeControllerClient.h"
 
 #include "Physics/Server.h"
 
@@ -30,17 +30,17 @@
 
 namespace Logic {
 	
-	IMP_FACTORY(CGrenadeController);
+	IMP_FACTORY(CGrenadeControllerClient);
 
 	//________________________________________________________________________
 
-	CGrenadeController::CGrenadeController() : _timer(0) { 
+	CGrenadeControllerClient::CGrenadeControllerClient() : _timer(0) { 
 		// Nada que hacer
 	}
 	
 	//________________________________________________________________________
 
-	void CGrenadeController::tick(unsigned int msecs) {
+	void CGrenadeControllerClient::tick(unsigned int msecs) {
 		// Actualizamos el timer. Si se ha cumplido el tiempo limite de explosion
 		// eliminamos la entidad granada y creamos la entidad explosion.
 		_timer += msecs;
@@ -54,7 +54,7 @@ namespace Logic {
 
 	//________________________________________________________________________
 
-	bool CGrenadeController::spawn(CEntity *entity, CMap *map, const Map::CEntity *entityInfo) {
+	bool CGrenadeControllerClient::spawn(CEntity *entity, CMap *map, const Map::CEntity *entityInfo) {
 		if(!IComponent::spawn(entity,map,entityInfo))
 			return false;
 
@@ -63,9 +63,6 @@ namespace Logic {
 			// Pasamos a msecs
 			_explotionTime = entityInfo->getFloatAttribute("explotionTime") * 1000;
 		}
-
-		_explotionDamage = entityInfo->getFloatAttribute("explotionDamage");
-		_explotionRadius = entityInfo->getFloatAttribute("explotionRadius");
 		_audioExplotion = entityInfo->getStringAttribute("explotionAudio");
 		_explotionActive = false;
 
@@ -74,7 +71,7 @@ namespace Logic {
 
 	//________________________________________________________________________
 
-	bool CGrenadeController::accept(const std::shared_ptr<CMessage>& message) {
+	bool CGrenadeControllerClient::accept(const std::shared_ptr<CMessage>& message) {
 		//Solamente podemos aceptar un contacto porque luego explotamos
 		return message->getMessageType() == Message::CONTACT_ENTER && !_explotionActive ||
 			message->getMessageType() == Message::CONTACT_EXIT && !_explotionActive;
@@ -82,7 +79,7 @@ namespace Logic {
 	
 	//________________________________________________________________________
 
-	void CGrenadeController::process(const std::shared_ptr<CMessage>& message) {
+	void CGrenadeControllerClient::process(const std::shared_ptr<CMessage>& message) {
 		if(!_explotionActive) {
 			switch( message->getMessageType() ) {
 				case Message::CONTACT_ENTER: {
@@ -94,13 +91,6 @@ namespace Logic {
 					// Si es el escudo del screamer mandar directamente esos daños a la
 					// entidad contra la que hemos golpeado (el escudo), sino, crear explosion
 					if(playerHit->getType() == "ScreamerShield") {
-						// Mandar mensaje de daño
-						// Emitimos el mensaje de daño
-						std::shared_ptr<CMessageDamaged> dmgMsg = std::make_shared<CMessageDamaged>();
-						dmgMsg->setDamage(_explotionDamage);
-						dmgMsg->setEnemy(_owner); // No tiene importancia en este caso
-						playerHit->emitMessage(dmgMsg);
-
 						// Crear efecto y sonido de absorcion
 
 						// Eliminamos la entidad en diferido
@@ -123,46 +113,7 @@ namespace Logic {
 
 	//________________________________________________________________________
 
-	void CGrenadeController::createExplotion() {
-		// EntitiesHit sera el buffer que contendra la lista de entidades que ha colisionado
-		// con el overlap
-		CEntity** entitiesHit = NULL;
-		int nbHits = 0;
-
-		// Hacemos una query de overlap con la geometria de una esfera en la posicion 
-		// en la que se encuentra la granada con el radio que se indique de explosion
-		Physics::SphereGeometry explotionGeom = Physics::CGeometryFactory::getSingletonPtr()->createSphere(_explotionRadius);
-		Physics::CServer::getSingletonPtr()->overlapMultiple(explotionGeom, _entity->getPosition(), entitiesHit, nbHits);
-
-		// Mandamos el mensaje de daño a cada una de las entidades que hayamos golpeado
-		// Además aplicamos un desplazamiento al jugador 
-		for(int i = 0; i < nbHits; ++i) {
-			// Si la entidad golpeada es valida
-			// y no se trata del escudo
-			if(entitiesHit[i] != NULL && entitiesHit[i]->getType() != "ScreamerShield") {
-				// Emitimos el mensaje de daño
-				std::shared_ptr<CMessageDamaged> dmgMsg = std::make_shared<CMessageDamaged>();
-				dmgMsg->setDamage(_explotionDamage);
-				dmgMsg->setEnemy(_owner);
-				entitiesHit[i]->emitMessage(dmgMsg);
-				
-				// Emitimos el mensaje de desplazamiento por daños
-				std::shared_ptr<CMessageAddForcePlayer> addForcePlayerMsg = std::make_shared<CMessageAddForcePlayer>();
-				// Seteamos la fuerza y la velocidad
-				addForcePlayerMsg->setPower(0.1f);
-				addForcePlayerMsg->setVelocity(0.12f);
-				// Seteamos el vector director del desplazamiento
-				Vector3 direccionImpacto = entitiesHit[i]->getPosition() - _entity->getPosition();
-				direccionImpacto.normalise();
-				addForcePlayerMsg->setDirection(direccionImpacto);
-				entitiesHit[i]->emitMessage(addForcePlayerMsg);
-			}
-		}
-
-		// Limpiamos el buffer si es necesario
-		if(nbHits > 0) delete [] entitiesHit;
-
-		//Solo para singlePlayer, quitar al terminar
+	void CGrenadeControllerClient::createExplotion() {
 		//Sonido de explosion
 		std::shared_ptr<CMessageAudio> audioMsg = std::make_shared<CMessageAudio>();
 		audioMsg->setRuta(_audioExplotion);
@@ -179,10 +130,6 @@ namespace Logic {
 	} // createExplotion
 
 	//________________________________________________________________________
-
-	void CGrenadeController::setOwner(CEntity* owner) {
-		this->_owner = owner;
-	}
 
 } // namespace Logic
 

@@ -14,12 +14,12 @@ namespace Logic {
 	} //
 	//----------------------------------------------------------
 
-	CEntity* CMessageContactEnter::getEntity(){
+	Logic::TEntityID CMessageContactEnter::getEntity(){
 		return _entity;
 	}//
 	//----------------------------------------------------------
 	
-	void CMessageContactEnter::setEntity(CEntity *c){
+	void CMessageContactEnter::setEntity(Logic::TEntityID c){
 		 _entity=c;
 	}//
 	//----------------------------------------------------------
@@ -27,17 +27,16 @@ namespace Logic {
 	Net::CBuffer* CMessageContactEnter::serialize() {
 		assert(_tempBuffer == NULL);
 
-		_tempBuffer = new Net::CBuffer(sizeof(int) + sizeof(_entity->getEntityID()));
+		_tempBuffer = new Net::CBuffer(sizeof(int)*2);
 		_tempBuffer->serialize(std::string("CMessageContactEnter"),true);
-		_tempBuffer->serialize(_entity->getEntityID());
+		_tempBuffer->serialize(_entity);
 		
 		return _tempBuffer;
 	}//
 	//----------------------------------------------------------
 
 	void CMessageContactEnter::deserialize(Net::CBuffer& buffer) {
-		TEntityID id;
-        buffer.deserialize(id);
+        buffer.deserialize(_entity);
 	}
 
 };

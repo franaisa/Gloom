@@ -69,9 +69,6 @@ namespace Logic
 			//deactivate();
 		}
 
-		_bCameraOffset = false;
-		_fOffest = 0.0f;
-		_bOffsetDirection = false;
 		_fOffsetTimer = 0.0f;
 
 		//return true;
@@ -114,10 +111,11 @@ namespace Logic
 				break;
 			}
 			case Message::CAMERA_OFFSET: {
-				_bCameraOffset = true;
-				_fOffsetTimer = 2000.0f; 
-				std::shared_ptr<CMessageCameraToEnemy> cameraToEnemyMsg = std::static_pointer_cast<CMessageCameraToEnemy>(message);
-
+				std::shared_ptr<CMessageCameraOffset> camOffset = std::static_pointer_cast<CMessageCameraOffset>(message);
+				_fOffsetTimer = camOffset->getOffsetTimer(); //asignamos el tiempo del offset
+				//_bCameraOffset = true;
+				//_fOffsetTimer = 2000.0f; 
+				//std::shared_ptr<CMessageCameraToEnemy> cameraToEnemyMsg = std::static_pointer_cast<CMessageCameraToEnemy>(message);
 				break;
 			}
 		}
@@ -140,14 +138,24 @@ namespace Logic
 		if(_target)
 		{
 			// Actualizamos la posición de la cámara.
-			UpdateOffset();
 			Vector3 position = _target->getPosition();
 			position.y+=_height;
 
-			if ((_bCameraOffset) && (_fOffsetTimer > 0))
+			//Si hay offset (vibración) de cámara
+			if (_fOffsetTimer > 0)
 			{
-				_fOffsetTimer -= msecs ;
-				position.x += _fOffest;
+				//Actualizo el timer
+				_fOffsetTimer -= msecs;
+
+				//"Vibración" de la cámara
+				Matrix4 transf = _entity->getTransform();
+ 				Math::yaw(Math::HALF_PI, transf);
+				_entity->setTransform(transf);
+				
+				//En el eje de movimiento horizontal
+				Vector3 directionStrafe = Math::getDirection(_entity->getYaw() + Math::PI/2);
+				position += directionStrafe;
+				std::cout << "CamaraOffset!!!" << std::endl;
 			}
 			_graphicsCamera->setCameraPosition(position);
 			
@@ -170,28 +178,6 @@ namespace Logic
 			_graphicsCamera->setTargetCameraPosition(_targetV);
 		}
 	} // tick
-
-	//---------------------------------------------------------
-	void CCamera::UpdateOffset()
-	{
-		if (_bOffsetDirection)
-		{
-			_fOffest += 0.8f;
-			if (_fOffest > 2.0f)
-			{
-				_bOffsetDirection =false;
-			}
-		}
-		else
-		{
-			_fOffest -= 0.8f;
-			if (_fOffest < -2.0f)
-			{
-				_bOffsetDirection = true;
-			}
-		}
-	
-	} //UpdateOffset
 
 
 } // namespace Logic

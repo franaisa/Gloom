@@ -1,18 +1,18 @@
 /**
-@file RocketController.h
+@file RocketControllerClient.h
 
 Contiene la declaración de la cabecera del componente
-que controla el movimiento del cohete y su explosión.
+que controla la explosión del cohete sin quitar vida.
 
-@see Logic::CRocketController
+@see Logic::CRocketControllerClient
 @see Logic::IComponent
 
 @author Jose Antonio García Yáñez
 @date Marzo, 2013
 */
 
-#ifndef __Logic_RocketController_H
-#define __Logic_RocketController_H
+#ifndef __Logic_RocketControllerClient_H
+#define __Logic_RocketControllerClient_H
 
 #include "Logic/Entity/Component.h"
 
@@ -22,11 +22,11 @@ namespace Logic {
     @ingroup logicGroup
 
 	@author Jose Antonio García Yáñez
-	@date Marzo, 2013
+	@date Abril, 2013
 	*/
 	
-	class CRocketController : public IComponent {
-		DEC_FACTORY(CRocketController);
+	class CRocketControllerClient : public IComponent {
+		DEC_FACTORY(CRocketControllerClient);
 	public:
 
 
@@ -36,7 +36,7 @@ namespace Logic {
 
 
 		/** Constructor por defecto; en la clase base no hace nada. */
-		CRocketController();
+		CRocketControllerClient();
 
 
 		// =======================================================================
@@ -86,21 +86,6 @@ namespace Logic {
 		virtual void process(const std::shared_ptr<CMessage>& message);
 
 
-		// =======================================================================
-		//                            METODOS PROPIOS
-		// =======================================================================
-
-
-		/**
-		Setea el puntero a la entidad que ha disparado la granada
-
-		@param CEntity Puntero a la entidad que disparo la granada.
-		*/
-		void setOwner(CEntity* _owner);
-
-		//________________________________________________________________________
-
-
 	private:
 
 
@@ -122,18 +107,12 @@ namespace Logic {
 		/** Entidad que ha disparado la granada. */
 		CEntity* _owner;
 
-		/** Radio de explosion del misil. */
-		float _explotionRadius;
-
-		/** Daño de la explosion. */
-		float _explotionDamage;
-
 		/** Ruta del sonido de la explosion. */
 		std::string _audioExplotion;
 
-	}; // class CRocketController
+	}; // class CRocketControllerClient
 
-	REG_FACTORY(CRocketController);
+	REG_FACTORY(CRocketControllerClient);
 
 } // namespace Logic
 

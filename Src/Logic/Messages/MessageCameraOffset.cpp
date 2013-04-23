@@ -21,18 +21,8 @@ namespace Logic {
 	}
 	//----------------------------------------------------------
 
-	CEntity* CMessageCameraOffset::getRelatedEntity() {
-		return _entity;
-	}//
-	//----------------------------------------------------------
-
-	void CMessageCameraOffset::setRelatedEntity(CEntity* entity) {
-		this->_entity = entity;
-	}//
-	//----------------------------------------------------------
-
-	void CMessageCameraOffset::setOffset(float fOffset) {
-		this->_fOffset = fOffset;
+	void CMessageCameraOffset::setOffsetTimer(float fOffsetTimer) {
+		this->_fOffsetTimer = fOffsetTimer;
 	}//
 	//----------------------------------------------------------
 	

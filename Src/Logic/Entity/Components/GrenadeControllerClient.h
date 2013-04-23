@@ -1,18 +1,18 @@
 /**
-@file RocketController.h
+@file GrenadeControllerClient.h
 
 Contiene la declaración de la cabecera del componente
-que controla el movimiento del cohete y su explosión.
+que controla el funcionamiento de la granada.
 
-@see Logic::CRocketController
+@see Logic::CGrenadeControllerClient
 @see Logic::IComponent
 
 @author Jose Antonio García Yáñez
-@date Marzo, 2013
+@date Abril, 2013
 */
 
-#ifndef __Logic_RocketController_H
-#define __Logic_RocketController_H
+#ifndef __Logic_GrenadeControllerClient_H
+#define __Logic_GrenadeControllerClient_H
 
 #include "Logic/Entity/Component.h"
 
@@ -21,12 +21,17 @@ namespace Logic {
 	/**
     @ingroup logicGroup
 
+	Controla el timer de la explosion de la granada. No puede implementarse
+	como una creacion con tiempo porque hay cosas que tienen que hacerse
+	al desaparecer la granada (como crear la explosion - y esta si que 
+	puede crearse con un timer).
+
 	@author Jose Antonio García Yáñez
-	@date Marzo, 2013
+	@date Abril, 2013
 	*/
 	
-	class CRocketController : public IComponent {
-		DEC_FACTORY(CRocketController);
+	class CGrenadeControllerClient : public IComponent {
+		DEC_FACTORY(CGrenadeControllerClient);
 	public:
 
 
@@ -36,13 +41,23 @@ namespace Logic {
 
 
 		/** Constructor por defecto; en la clase base no hace nada. */
-		CRocketController();
+		CGrenadeControllerClient();
 
 
 		// =======================================================================
 		//                    METODOS HEREDADOS DE ICOMPONENT
 		// =======================================================================
 
+
+		/**
+		Método llamado en cada frame que controla el timer para la creacion de la
+		explosion.
+
+		@param msecs Milisegundos transcurridos desde el último tick.
+		*/
+		virtual void tick(unsigned int msecs);
+
+		//________________________________________________________________________
 
 		/**
 		Inicialización del componente utilizando la información extraída de
@@ -85,22 +100,6 @@ namespace Logic {
 		*/
 		virtual void process(const std::shared_ptr<CMessage>& message);
 
-
-		// =======================================================================
-		//                            METODOS PROPIOS
-		// =======================================================================
-
-
-		/**
-		Setea el puntero a la entidad que ha disparado la granada
-
-		@param CEntity Puntero a la entidad que disparo la granada.
-		*/
-		void setOwner(CEntity* _owner);
-
-		//________________________________________________________________________
-
-
 	private:
 
 
@@ -111,7 +110,6 @@ namespace Logic {
 		/** Crea una entidad GrenadeExplotion justo en el lugar en el que se encuentre la granada (_entity). */
 		void createExplotion();
 
-
 		// =======================================================================
 		//                            CAMPOS PRIVADOS
 		// =======================================================================
@@ -119,21 +117,18 @@ namespace Logic {
 		/** Booleano que controla que solo se trate el primer contacto ( debe explotar ). */
 		bool _explotionActive;
 
-		/** Entidad que ha disparado la granada. */
-		CEntity* _owner;
+		/** Transcurrido este tiempo, la se destruye la entidad granada y se ejecuta la explosion. */
+		float _explotionTime;
 
-		/** Radio de explosion del misil. */
-		float _explotionRadius;
-
-		/** Daño de la explosion. */
-		float _explotionDamage;
+		/** Timer que controla cuando explota la granada. */
+		unsigned int _timer;
 
 		/** Ruta del sonido de la explosion. */
 		std::string _audioExplotion;
 
-	}; // class CRocketController
+	}; // class CGrenadeControllerClient
 
-	REG_FACTORY(CRocketController);
+	REG_FACTORY(CGrenadeControllerClient);
 
 } // namespace Logic
 
