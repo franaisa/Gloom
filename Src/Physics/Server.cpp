@@ -470,7 +470,7 @@ namespace Physics {
 
 			if(component != NULL) {
 				Logic::CEntity* entityHit = component->getEntity();
-
+				std::cout << "Nombre de lo tocado: " << entityHit->getName() << std::endl;
 				if(entityHit->getEntityID() != id && !(*flags & PxShapeFlag::eTRIGGER_SHAPE)) {
 					return entityHit;
 				}
