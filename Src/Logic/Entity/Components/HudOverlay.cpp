@@ -47,6 +47,7 @@ Contiene la implementaci�n del componente que controla la vida de una entidad.
 #include "Logic/Messages/MessageHudAmmo.h"
 #include "Logic/Messages/MessageHudWeapon.h"
 #include "Logic/Messages/MessageHudSpawn.h"
+#include "Logic/Messages/MessageChangeMaterialHudWeapon.h"
 #include "Logic/Server.h"
 
 #include "Logic/Messages/MessageHudDebug.h"
@@ -136,14 +137,14 @@ namespace Logic
 
 		int hudPanelInitialPositionX = entityInfo->getIntAttribute("hudPanelInitialPositionX");
 		int hudPanelInitialPositionY = entityInfo->getIntAttribute("hudPanelInitialPositionY");
-		int hudPanelSizeX = entityInfo->getIntAttribute("hudPanelSizeX");
-		int hudPanelSizeY = entityInfo->getIntAttribute("hudPanelSizeY");
+		float hudPanelSizeX = entityInfo->getIntAttribute("hudPanelSizeX");
+		float hudPanelSizeY = entityInfo->getIntAttribute("hudPanelSizeY");
 
-		int height = _server->getHeight();
-		int width = _server->getWidth();
+		float height = _server->getHeight();
+		float width = _server->getWidth();
 
-		float relativeWidth = ((float)width)/hudScreenWidth;
-		float relativeHeight = ((float)height)/hudScreenHeight;
+		float relativeWidth = width/hudScreenWidth;
+		float relativeHeight = height/hudScreenHeight;
 
 		////////////////Todo esto para la mira
          // Create an overlay
@@ -153,8 +154,8 @@ namespace Logic
 		_panelMira = _server->createOverlay("Mira", scene, "Panel" );
 		float sizeCrossFireX = entityInfo->getFloatAttribute("hudCrossX");
 		float sizeCrossFireY = entityInfo->getFloatAttribute("hudCrossY");
-		float positionCrossFireX = 0.5f-((sizeCrossFireX/2)*0.01) ;
-		float positionCrossFireY = 0.5f-((sizeCrossFireY/2)*0.01) ;
+		float positionCrossFireX = 0.5f-((sizeCrossFireX/2)*0.01f) ;
+		float positionCrossFireY = 0.5f-((sizeCrossFireY/2)*0.01f) ;
         _panelMira->setPosition( positionCrossFireX,positionCrossFireY);
 		_panelMira->setDimensions( sizeCrossFireX/100, sizeCrossFireY/100 );
         _panelMira->setMaterial("hudMira");
@@ -466,13 +467,14 @@ namespace Logic
 	bool CHudOverlay::accept(const std::shared_ptr<CMessage>& message) {
 		Logic::TMessageType msgType = message->getMessageType();
 
-		return msgType == Message::HUD_LIFE			|| 
-			   msgType == Message::HUD_SHIELD		|| 
-			   msgType == Message::HUD_AMMO			|| 
-			   msgType == Message::HUD_WEAPON		|| 
-			   msgType == Message::HUD_SPAWN		|| 
-			   msgType == Message::HUD_DEBUG		|| 
-			   msgType == Message::HUD_DEBUG_DATA;
+		return	msgType == Message::HUD_LIFE		|| 
+				msgType == Message::HUD_SHIELD		|| 
+				msgType == Message::HUD_AMMO		|| 
+				msgType == Message::HUD_WEAPON		|| 
+				msgType == Message::HUD_SPAWN		|| 
+				msgType == Message::HUD_DEBUG		|| 
+				msgType == Message::HUD_DEBUG_DATA	||
+				msgType == Message::CHANGE_MATERIAL_HUD_WEAPON;
 
 	} // accept
 	
@@ -518,6 +520,11 @@ namespace Logic
 			case Message::HUD_DEBUG_DATA: {
 				std::shared_ptr<CMessageHudDebugData> hudDebugDataMsg = std::static_pointer_cast<CMessageHudDebugData>(message);
 				hudDebugData( hudDebugDataMsg->getKey(), hudDebugDataMsg->getValue() );
+				break;
+			}
+			case Message::CHANGE_MATERIAL_HUD_WEAPON: {
+				std::shared_ptr<CMessageChangeMaterialHudWeapon> chgMatMsg = std::static_pointer_cast<CMessageChangeMaterialHudWeapon>(message);
+				changeMaterialActualWeapon( chgMatMsg->getMaterialName() );
 				break;
 			}
 		}
@@ -640,51 +647,7 @@ namespace Logic
 		*/
 	}
 	
-	std::string CHudOverlay::toText(eWeaponIndex weapon){
-		switch(weapon){
-			case HAMMER: return "hammer";
-				break;
-			case SNIPER: return "sniper";
-				break;
-			case SHOTGUN: return "shotGun";
-				break;
-			case MINIGUN: return "miniGun";
-				break;
-			case GRENADELAUNCHER: return "grenadeLauncher";
-				break;
-			case ROCKETLAUNCHER: return "rocketLauncher";
-				break;
-			case PRIMARY_SKILL: return "primarySkill";
-				break;
-			case SECONDARY_SKILL: return "secondarySkill";
-				break;
-			default: return "";
-			}
-	}
 
-	std::string CHudOverlay::toText(eOverlayWeaponState state){
-		switch(state){
-			case ACTIVE: return "ACTIVE";
-				break;
-			case NO_AMMO: return "NO_AMMO";
-				break;
-			case NO_WEAPON: return "NO_WEAPON";
-				break;
-			default: return "";
-			}
-	}
-
-	std::string CHudOverlay::toText(eOverlayElements element){
-		switch(element){
-			case HEALTH: return "HEALTH";
-				break;
-			case SHIELD: return "SHIELD";
-				break;
-			case AMMO: return "AMMO";
-				break;
-			default: return "";
-			}
-	}
 
 	void CHudOverlay::hudDebug(){
 		/*
@@ -718,6 +681,20 @@ namespace Logic
 		*/
 	}
 
+	void CHudOverlay::changeMaterialActualWeapon(const std::string &materialName){
+		if(materialName == "original"){
+			eWeaponIndex current;
+			for(int i = 0; i < 6 ; ++i){
+				current = (eWeaponIndex)i;
+				_weaponsEntities[i]->changeMaterial(toText(current));
+			}
+		}else{
+			for(int i = 0; i < 6 ; ++i){
+				_weaponsEntities[i]->changeMaterial(materialName);
+			}
+		}
+	}
+
 	void CHudOverlay::tick(unsigned int msecs)
 	{
 		if(_overlayDie->isVisible()){
@@ -735,7 +712,6 @@ namespace Logic
 
 		if(_overlayDebug->isVisible())
 		{
-			
 			_sDebug.str("");
 			_sDebug.clear();
 
@@ -745,7 +721,6 @@ namespace Logic
 			{		
 				std::stringstream aux;
 				aux << 1000.0f/(float)msecs;
-
 				hudDebugData("FPS", aux.str());
 				_acumDebug=0;
 			}
@@ -768,6 +743,50 @@ namespace Logic
 		_overlayDie->setVisible(false);	
 		_overlayDebug->setVisible(false);
 	}
-	
 
+	
+	
+	std::string CHudOverlay::toText(eWeaponIndex weapon){
+		switch(weapon){
+			case HAMMER: return "hammer";
+				break;
+			case SNIPER: return "sniper";
+				break;
+			case SHOTGUN: return "shotGun";
+				break;
+			case MINIGUN: return "miniGun";
+				break;
+			case GRENADELAUNCHER: return "grenadeLauncher";
+				break;
+			case ROCKETLAUNCHER: return "rocketLauncher";
+				break;
+			case PRIMARY_SKILL: return "primarySkill";
+				break;
+			case SECONDARY_SKILL: return "secondarySkill";
+				break;
+			default: return "";
+			}
+	}
+	std::string CHudOverlay::toText(eOverlayWeaponState state){
+		switch(state){
+			case ACTIVE: return "ACTIVE";
+				break;
+			case NO_AMMO: return "NO_AMMO";
+				break;
+			case NO_WEAPON: return "NO_WEAPON";
+				break;
+			default: return "";
+			}
+	}
+	std::string CHudOverlay::toText(eOverlayElements element){
+		switch(element){
+			case HEALTH: return "HEALTH";
+				break;
+			case SHIELD: return "SHIELD";
+				break;
+			case AMMO: return "AMMO";
+				break;
+			default: return "";
+			}
+	}
 } // namespace Logic

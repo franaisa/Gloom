@@ -108,6 +108,8 @@ namespace Logic
 
 
 		virtual void deactivate();
+
+		void changeMaterialActualWeapon(const std::string &materialName);
 	protected:
 
 		int _numWeapons;

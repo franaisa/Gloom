@@ -48,7 +48,7 @@ namespace Logic
 		Constructor por defecto; inicializa los atributos a su valor por 
 		defecto.
 		*/
-		CAnimatedGraphics() : CGraphics(), _animatedGraphicsEntity(0),
+		CAnimatedGraphics() : CGraphics(), _animatedGraphicsEntity(0), _currentWeapon(0), _currentMaterialWeapon("original"),
 				_defaultAnimation("") {}
 
 		/**
@@ -103,7 +103,12 @@ namespace Logic
 
 		void changeWeapon(int newWeapon);
 
+		virtual void changeMaterial(const std::string& materialName);
 	protected:
+
+		enum eWeaponIndex { HAMMER, SNIPER, SHOTGUN, MINIGUN, GRENADELAUNCHER, ROCKETLAUNCHER, PRIMARY_SKILL, SECONDARY_SKILL, NONE };
+
+		std::string toText(eWeaponIndex weapon);
 
 		/**
 		Método virtual que construye la entidad gráfica animada de la entidad. 
@@ -129,6 +134,11 @@ namespace Logic
 		Animación por defecto de una entidad gráfica animada.
 		*/
 		std::string _defaultAnimation;
+
+
+		int _currentWeapon;
+
+		std::string _currentMaterialWeapon;
 
 	}; // class CAnimatedGraphics
 

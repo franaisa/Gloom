@@ -105,7 +105,7 @@ namespace Logic
 
 		void setVisible(bool renderGraphicEntity);
 
-		void changeMaterial(const std::string& materialName);
+		virtual void changeMaterial(const std::string& materialName);
 
 	protected:
 
@@ -125,6 +125,11 @@ namespace Logic
 		*/
 		std::string _model;
 		
+		/**
+		Nombre del material de la entidad
+		*/
+		std::string _materialName;
+
 		/**
 		Entidad gráfica.
 		*/

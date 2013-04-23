@@ -1,13 +1,13 @@
 /**
-@file RocketController.cpp
+@file RocketControllerClient.cpp
 
 @see Logic::IComponent
 
 @author Jose Antonio García Yáñez
-@date Marzo, 2013
+@date Abril, 2013
 */
 
-#include "RocketController.h"
+#include "RocketControllerClient.h"
 
 #include "Physics/Server.h"
 
@@ -31,19 +31,17 @@
 
 namespace Logic {
 	
-	IMP_FACTORY(CRocketController);
+	IMP_FACTORY(CRocketControllerClient);
 
-	CRocketController::CRocketController() { 
+	CRocketControllerClient::CRocketControllerClient(){ 
 		// Nada que hacer
 	}
 
 	//________________________________________________________________________
 
-	bool CRocketController::spawn(CEntity *entity, CMap *map, const Map::CEntity *entityInfo) {
+	bool CRocketControllerClient::spawn(CEntity *entity, CMap *map, const Map::CEntity *entityInfo) {
 		if(!IComponent::spawn(entity,map,entityInfo)) return false;
 
-		_explotionDamage = entityInfo->getFloatAttribute("explotionDamage");
-		_explotionRadius = entityInfo->getFloatAttribute("explotionRadius");
 		_audioExplotion = entityInfo->getStringAttribute("explotionAudio");
 		_explotionActive = false;
 		return true;
@@ -51,7 +49,7 @@ namespace Logic {
 
 	//________________________________________________________________________
 
-	bool CRocketController::accept(const std::shared_ptr<CMessage>& message) {
+	bool CRocketControllerClient::accept(const std::shared_ptr<CMessage>& message) {
 		//Solamente podemos aceptar un contacto porque luego explotamos
 		return message->getMessageType() == Message::CONTACT_ENTER && !_explotionActive ||
 			message->getMessageType() == Message::CONTACT_EXIT && !_explotionActive;
@@ -59,10 +57,10 @@ namespace Logic {
 	
 	//________________________________________________________________________
 
-	void CRocketController::process(const std::shared_ptr<CMessage>& message) {
+	void CRocketControllerClient::process(const std::shared_ptr<CMessage>& message) {
 		if(!_explotionActive) {
 			switch(message->getMessageType()) {
-				case Message::CONTACT_ENTER: {
+				case Message::CONTACT_ENTER: {	
 					std::shared_ptr<CMessageContactEnter> contactMsg = std::static_pointer_cast<CMessageContactEnter>(message);
 					Logic::TEntityID idPlayerHit = contactMsg->getEntity();
 					CEntity * playerHit = CServer::getSingletonPtr()->getMap()->getEntityByID(idPlayerHit);
@@ -74,12 +72,6 @@ namespace Logic {
 					// Si es el escudo del screamer mandar directamente esos daños a la
 					// entidad contra la que hemos golpeado (el escudo), sino, crear explosion
 					if(playerHit->getType() == "ScreamerShield") {
-						// Mandar mensaje de daño
-						// Emitimos el mensaje de daño
-						std::shared_ptr<CMessageDamaged> dmgMsg = std::make_shared<CMessageDamaged>();
-						dmgMsg->setDamage(_explotionDamage);
-						dmgMsg->setEnemy(_owner); // No tiene importancia en este caso
-						playerHit->emitMessage(dmgMsg);
 
 						// Crear efecto y sonido de absorcion
 
@@ -90,7 +82,7 @@ namespace Logic {
 						// Eliminamos la entidad en diferido
 						CEntityFactory::getSingletonPtr()->deferredDeleteEntity(_entity,false);
 						// Creamos la explosion
-						createExplotion();	
+						createExplotion();
 					}
 					break;	
 				}
@@ -103,45 +95,7 @@ namespace Logic {
 
 	//________________________________________________________________________
 
-	void CRocketController::createExplotion() {
-		//std::cout << "CREO LA EXPLOSION EN LA POSICION : " << _entity->getPosition() << std::endl;
-		// EntitiesHit sera el buffer que contendra la lista de entidades que ha colisionado
-		// con el overlap
-		CEntity** entitiesHit = NULL;
-		int nbHits = 0;
-
-		// Hacemos una query de overlap con la geometria de una esfera en la posicion 
-		// en la que se encuentra la granada con el radio que se indique de explosion
-		Physics::SphereGeometry explotionGeom = Physics::CGeometryFactory::getSingletonPtr()->createSphere(_explotionRadius);
-		Physics::CServer::getSingletonPtr()->overlapMultiple(explotionGeom, _entity->getPosition(), entitiesHit, nbHits);
-
-		// Mandamos el mensaje de daño a cada una de las entidades que hayamos golpeado
-		// Además aplicamos un desplazamiento al jugador 
-		for(int i = 0; i < nbHits; ++i) {
-			// Si la entidad golpeada es valida
-			if(entitiesHit[i] != NULL) {
-				// Emitimos el mensaje de daño
-				std::shared_ptr<CMessageDamaged> dmgMsg = std::make_shared<CMessageDamaged>();
-				dmgMsg->setDamage(_explotionDamage);
-				dmgMsg->setEnemy(_owner);
-				entitiesHit[i]->emitMessage(dmgMsg);
-
-				// Emitimos el mensaje de desplazamiento por daños
-				std::shared_ptr<CMessageAddForcePlayer> addForcePlayerMsg = std::make_shared<CMessageAddForcePlayer>();
-				// Seteamos la fuerza y la velocidad
-				addForcePlayerMsg->setPower(0.1f);
-				addForcePlayerMsg->setVelocity(0.12f);
-				// Seteamos el vector director del desplazamiento
-				Vector3 direccionImpacto = entitiesHit[i]->getPosition() - _entity->getPosition();
-				direccionImpacto.normalise();
-				addForcePlayerMsg->setDirection(direccionImpacto);
-				entitiesHit[i]->emitMessage(addForcePlayerMsg);
-			}
-		}
-
-		if(nbHits > 0) delete [] entitiesHit;
-
-		//Solo para singlePlayer, quitar al terminar
+	void CRocketControllerClient::createExplotion() {
 		//Sonido de explosion
 		std::shared_ptr<CMessageAudio> audioMsg = std::make_shared<CMessageAudio>();
 		audioMsg->setRuta(_audioExplotion);
@@ -150,19 +104,12 @@ namespace Logic {
 		audioMsg->setNotIfPlay(false);
 		audioMsg->setIsPlayer(false);
 		_entity->emitMessage(audioMsg);
-
+		//Particulas
 		std::shared_ptr<CMessageCreateParticle> particleMsg = std::make_shared<CMessageCreateParticle>();
 		particleMsg->setParticle("ExplosionParticle");
 		particleMsg->setPosition(_entity->getPosition());
 		_entity->emitMessage(particleMsg);
-
 	} // createExplotion
-
-	//________________________________________________________________________
-
-	void CRocketController::setOwner(CEntity* owner) {
-		this->_owner = owner;
-	}
 
 	//________________________________________________________________________
 

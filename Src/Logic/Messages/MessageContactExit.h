@@ -9,14 +9,14 @@ namespace Logic {
 	DEC_FACTORYMESSAGE(CMessageContactExit);
 	public:
 		CMessageContactExit();
-		CEntity* getEntity();
-		void setEntity(CEntity *c);
+		Logic::TEntityID getEntity();
+		void setEntity(Logic::TEntityID c);
 		~CMessageContactExit(){};
 		
 		virtual Net::CBuffer* serialize();
 		virtual void deserialize(Net::CBuffer& buffer);
 	private:
-		CEntity *_entity;
+		Logic::TEntityID _entity;
 	};
 	REG_FACTORYMESSAGE(CMessageContactExit);
 };

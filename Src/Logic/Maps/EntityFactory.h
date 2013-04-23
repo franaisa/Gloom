@@ -231,7 +231,7 @@ namespace Logic {
 		sino que se confía en que el mapa que aún contiene el objeto
 		eliminará esa entidad.
 		*/
-		void deferredDeleteEntity(CEntity *entity);
+		void deferredDeleteEntity(CEntity *entity, bool toClients);
 
 		//________________________________________________________________________
 

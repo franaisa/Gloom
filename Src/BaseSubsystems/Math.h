@@ -214,7 +214,6 @@ namespace Math
 		rotation.FromEulerAnglesYXZ(yaw, newPitch, roll);
 		transform = rotation;
 
-		//CON ZXY y YXZ consigo que vaya a la inversa
 	} // pitch
 	
 	/**
@@ -300,6 +299,29 @@ namespace Math
 	} // setRoll
 
 	/**
+	Aplica un viraje a una matriz de transformación.
+
+	@param turnP Giro en radianes que se quiere aplicar al pitch.
+	@param turnY Giro en radianes que se quiere aplicar al yaw.
+	@param transform Matriz de transformación a modificar.
+	*/
+	static void pitchYaw(float turnP, float turnY, Matrix4& transform) 
+	{
+
+		Matrix3 rotation;
+		transform.extract3x3Matrix(rotation);
+		Ogre::Radian yaw, pitch, roll;
+		rotation.ToEulerAnglesYXZ(yaw, pitch, roll);
+		Ogre::Radian newPitch = pitch + Ogre::Radian(turnP);
+		Ogre::Radian newYaw = yaw + Ogre::Radian(turnY);
+
+		rotation.FromEulerAnglesYXZ(newYaw, newPitch, roll);
+		transform = rotation;
+
+	} // pitchYaw
+
+
+	/**
 	Establece un subviraje a una matriz de transformación.
 
 	@param turnP Giro en radianes que se quiere etablecer en el eje Y.
@@ -311,10 +333,33 @@ namespace Math
 		// Reiniciamos la matriz de rotación
 		transform = Matrix3::IDENTITY;
 		// Sobre esta rotamos.
-		Math::pitch(turnP,transform);
-		Math::yaw(turnY,transform);
-
+		Math::pitchYaw(turnP,turnY,transform);
 	} // setPitchYaw
+
+	/**
+	Aplica un viraje a una matriz de transformación.
+
+	@param turnP Giro en radianes que se quiere aplicar al pitch.
+	@param turnY Giro en radianes que se quiere aplicar al yaw.
+	@param turnR Giro en radianes que se quiere aplicar al roll.
+	@param transform Matriz de transformación a modificar.
+	*/
+	static void pitchYawRoll(float turnP, float turnY,float turnR, Matrix4& transform) 
+	{
+
+		Matrix3 rotation;
+		transform.extract3x3Matrix(rotation);
+		Ogre::Radian yaw, pitch, roll;
+		rotation.ToEulerAnglesYXZ(yaw, pitch, roll);
+		Ogre::Radian newPitch = pitch + Ogre::Radian(turnP);
+		Ogre::Radian newYaw = yaw + Ogre::Radian(turnY);
+		Ogre::Radian newRoll = roll + Ogre::Radian(turnR);
+
+		rotation.FromEulerAnglesYXZ(newYaw, newPitch, newRoll);
+		transform = rotation;
+
+	} // pitch
+
 
 	/**
 	Establece un subviraje a una matriz de transformación.
@@ -329,9 +374,7 @@ namespace Math
 		// Reiniciamos la matriz de rotación
 		transform = Matrix3::IDENTITY;
 		// Sobre esta rotamos.
-		Math::pitch(turnP,transform);
-		Math::yaw(turnY,transform);
-		Math::roll(turnR,transform);
+		Math::pitchYawRoll(turnP,turnY,turnR,transform);
 
 	} // setPitchYawRoll
 	
@@ -346,7 +389,6 @@ namespace Math
 	{
 		Vector3 yaw = getDirection(getYaw(transform));
 		Vector3 pitch = getDirectionPitch(getPitch(transform));
-		
 		return yaw + pitch;
 
 	} // getDirection

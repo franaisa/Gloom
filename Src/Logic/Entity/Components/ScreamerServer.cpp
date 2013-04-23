@@ -66,6 +66,9 @@ namespace Logic {
 	bool CScreamerServer::spawn(CEntity* entity, CMap* map, const Map::CEntity* entityInfo) {
 		if( !CPlayerClass::spawn(entity,map,entityInfo) ) return false;
 
+		if(entityInfo->hasAttribute("materialName"))
+			_materialName = entityInfo->getStringAttribute("materialName");
+
 		assert( entityInfo->hasAttribute("screamerShieldThreshold") );
 		assert( entityInfo->hasAttribute("screamerShieldDamageTimeStep") );
 		assert( entityInfo->hasAttribute("screamerShieldDamageOverTime") );
@@ -148,7 +151,7 @@ namespace Logic {
 		// Ñapa temporal para el ideame
 		// Cambiamos el color del marine en funcion de la clase con un changeMaterial
 		std::shared_ptr<CMessageChangeMaterial> materialMsg = std::make_shared<CMessageChangeMaterial>();
-		materialMsg->setMaterialName("marine_verde");
+		materialMsg->setMaterialName(_materialName);
 		_entity->emitMessage(materialMsg);
 
 		_primarySkillIsActive = false;

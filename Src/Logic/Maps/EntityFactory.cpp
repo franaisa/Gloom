@@ -329,6 +329,7 @@ namespace Logic {
 		return createEntity(entityInfo, map);
 	}
 
+	//________________________________________________________________________
 
 	Logic::CEntity* CEntityFactory::createEntityWithPositionAndOrientation(Map::CEntity *entityInfo, CMap *map, const Vector3& position, float yaw, float pitch){
 		// Pasamos el vector3 a string y se lo seteamos al entityInfo para mas tarde
@@ -383,6 +384,7 @@ namespace Logic {
 
 	//________________________________________________________________________
 
+	//Al metodo le falta un control de si quieres que el server envie o no a los clientes el borrado
 	Logic::CEntity* CEntityFactory::createEntityWithTimeOut(Map::CEntity *entityInfo, CMap *map, unsigned int msecs) {
 		CEntity* createdEntity = createEntity(entityInfo, map);
 		deferredDeleteEntity(createdEntity , msecs);
@@ -403,11 +405,11 @@ namespace Logic {
 	
 	//________________________________________________________________________
 
-	void CEntityFactory::deferredDeleteEntity(Logic::CEntity *entity) {
+	void CEntityFactory::deferredDeleteEntity(Logic::CEntity *entity, bool toClients) {
 		assert(entity);
 		_pendingEntities.push_back(entity);
-
-		if( Net::CManager::getSingletonPtr()->imServer() )
+		//Comprobamos si debe enviarse a los clientes, porque hay casos en los que no deberia
+		if( Net::CManager::getSingletonPtr()->imServer() && toClients )
 			Logic::CGameNetMsgManager::getSingletonPtr()->sendDestroyEntity( entity->getEntityID() );
 	} // deferredDeleteEntity
 

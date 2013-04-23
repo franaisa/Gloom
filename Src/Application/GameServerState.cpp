@@ -170,7 +170,7 @@ namespace Application {
 				Logic::CEntity* deletePlayer = Logic::CServer::getSingletonPtr()->getMap()->getEntityByID(
 					Logic::CGameNetPlayersManager::getSingletonPtr()->getPlayer(playerNetId).getEntityId().first);
 				if(deletePlayer){
-					Logic::CEntityFactory::getSingletonPtr()->deferredDeleteEntity(deletePlayer);
+					Logic::CEntityFactory::getSingletonPtr()->deferredDeleteEntity(deletePlayer,true);
 				}
 
 				int race;
@@ -257,7 +257,7 @@ namespace Application {
 
 		// Eliminamos la entidad (este mensaje se forwardea automaticamente a los clientes).
 		Logic::CEntity* entityToBeDeleted = Logic::CServer::getSingletonPtr()->getMap()->getEntityByID( _playersMgr->getPlayerId(playerNetId) );
-		Logic::CEntityFactory::getSingletonPtr()->deferredDeleteEntity(entityToBeDeleted);
+		Logic::CEntityFactory::getSingletonPtr()->deferredDeleteEntity(entityToBeDeleted,true);
 
 		// Eliminamos el jugador que se desconecta del manager de jugadores
 		_playersMgr->removePlayer(playerNetId);

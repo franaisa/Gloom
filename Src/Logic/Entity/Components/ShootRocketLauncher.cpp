@@ -8,8 +8,7 @@ de disparo del lanzacohetes.
 @see Logic::IComponent
 
 @author Jose Antonio García Yáñez
-@author Javier Fernández Villanueva
-@date Febrero,Abril 2013
+@date Abril, 2013
 */
 
 #include "ShootRocketLauncher.h"
@@ -54,13 +53,45 @@ namespace Logic {
 		// Obtenemos la informacion asociada al arquetipo del cohete
 		Map::CEntity *entityInfo = CEntityFactory::getSingletonPtr()->getInfo("Rocket");
 
+		//Paso1
+		//Lo primero es ver el punto exacto en el que saldría el centro del cohete de la capsula
+		//Sacamos un punto en la dirección que apuntamos muy fuera de la capsula y trazamos un raycast para el cual solo nos interesa en que punta choca con nosotros
+
+
+
+		//Paso2
+		//Separamos el cohete de la capsula en la direccion en la que se apuntaba
+
+
+
+		//Paso3
+		//Ahora creamos mediante overlap el cohete y nos aseguramos que no toque con nada
+		//Con la separacion anterior no nos puede tocar a nosotros y si toca cualquier otra significa que no tiene espacio
+		//Si no tiene espacio tenemos que crear el cohete solo graficamente y automaticamente explotarlo
+		//Para ello creo que una nueva entidad(sin fisicas) con un componente ExplotionRocketServer/Client
+		//Para red el server tendria el tipo server que ademas aplica daño, y el cliente tendria solo lo gráfico
+
+
+
+
+		//Paso4
+		//Si el overlap fue bien y no tocamos con nada, es el momento de crear el cohete en la posicion validada
+		//Ojo con las separaciones extra por el rollo de la mierder interpolation y el papapatrás ( lo mismo hay que modificar la posicion del paso 2 )
+
+
+
+
+		//std::cout << "Posicion del jugador x,y,z: " << _entity->getPosition().x << "," << _entity->getPosition().y <<"," << _entity->getPosition().z << std::endl;
 		//Calculamos la situacion de origen del cohete
-		Vector3 shootPosition = _entity->getPosition() + (Math::getDirection( _entity->getOrientation() )* (_capsuleRadius+2));//2 es el radio del cohete
+		Vector3 directionNormalise=Math::getDirection( _entity->getOrientation());
+		directionNormalise.normalise();
+		Vector3 shootPosition = _entity->getPosition() + directionNormalise* (_capsuleRadius+6.0);//2 es el radio del cohete y lo demas es la separacion para que vaya tanto en sp como mp (basura de interpolacion)
 		shootPosition.y += _heightShoot; //Altura del pj menos el radio del cohete para que salga en el centro de la mira
+		//std::cout << "Posicion del cohete a disparar x,y,z: " << shootPosition.x <<"," << shootPosition.y <<"," << shootPosition.z << std::endl;
 
 		//Comprobamos si el misil tiene espacio para ser disparado
 		//Creamos el origen del rayo que sera igual al de la posicion de disparo menos el desplazamiento
-		Vector3 origin = _entity->getPosition()+Math::getDirection( _entity->getOrientation())+Vector3(0,_heightShoot,0);
+		Vector3 origin = _entity->getPosition()+Vector3(0,_heightShoot,0);
 		Vector3 noSpacePosition=origin;
 		//Calculamos la distancia entre la posicion de disparo y el origen
 		float distance=origin.distance(shootPosition);

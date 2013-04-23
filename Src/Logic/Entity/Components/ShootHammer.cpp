@@ -5,6 +5,9 @@ Contiene la implementación del componente que representa al hammer.
  
 @see Logic::CShootHammer
 @see Logic::CShootRaycast
+
+@author Jose Antonio García Yáñez
+@date Febrero,2013
 */
 
 #include "ShootHammer.h"

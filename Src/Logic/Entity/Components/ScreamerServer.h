@@ -206,6 +206,11 @@ namespace Logic {
 		/** Puntero a la entidad que representa al escudo generado por la habilidad primaria. */
 		Logic::CEntity* _screamerShield;
 
+		/**
+		Nombre del material original de la entidad
+		*/
+		std::string _materialName;
+
 	}; // class CScreamerServer
 
 	REG_FACTORY(CScreamerServer);

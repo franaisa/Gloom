@@ -42,6 +42,9 @@ namespace Logic {
 
 		_berserkerTimer=0;
 
+		if(entityInfo->hasAttribute("materialName"))
+			_materialName = entityInfo->getStringAttribute("materialName");
+
 		// Leer el tiempo que dura el Berserker
 		assert( entityInfo->hasAttribute("berserkerDuration") );
 		// Pasamos el tiempo a msecs
@@ -81,7 +84,7 @@ namespace Logic {
 		// Ñapa temporal para el ideame
 		// Cambiamos el color del marine en funcion de la clase con un changeMaterial
 		std::shared_ptr<CMessageChangeMaterial> materialMsg = std::make_shared<CMessageChangeMaterial>();
-		materialMsg->setMaterialName("marine_rojo");
+		materialMsg->setMaterialName(_materialName);
 		_entity->emitMessage(materialMsg);
 
 		_berserkerTimer = 0;

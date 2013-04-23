@@ -238,12 +238,12 @@ void CPhysicStaticEntity::onContact (IPhysics *otherComponent,bool enter) {
 	if (enter) {
 		_inContact=true;
 			std::shared_ptr<CMessageContactEnter> msg = std::make_shared<CMessageContactEnter>();
-			msg->setEntity( otherComponent->getEntity() );
+			msg->setEntity( otherComponent->getEntity()->getEntityID() );
 			_entity->emitMessage(msg);
 	} else {
 		_inContact=false;
 		std::shared_ptr<CMessageContactExit> m = std::make_shared<CMessageContactExit>();
-		m->setEntity(otherComponent->getEntity());
+		m->setEntity(otherComponent->getEntity()->getEntityID());
 		_entity->emitMessage(m);
 	}
 }

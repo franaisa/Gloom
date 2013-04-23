@@ -130,9 +130,11 @@ namespace Logic {
 		TEntityID destID; 
 			serialMsg.read(&destID, sizeof(destID));
 
-		//le decimos al mapa que elimine la entidad
+		//le decimos al mapa que elimine la entidad si no fue ya eliminada
 		CEntity * entity = CServer::getSingletonPtr()->getMap()->getEntityByID(destID);
-		CEntityFactory::getSingletonPtr()->deleteEntity(entity);
+		//Comprobamos por si acaso para hacerlo bien
+		if(entity!=NULL)
+			CEntityFactory::getSingletonPtr()->deleteEntity(entity);
 	}
 
 	//---------------------------------------------------------
@@ -140,7 +142,6 @@ namespace Logic {
 	void CGameNetMsgManager::sendCreateEntity(TEntityID destID){
 		//cogemos la entidad que hemos creado para enviar la información por la red
 		CEntity * destEntity = CServer::getSingletonPtr()->getMap()->getEntityByID(destID);
-
 		Net::NetMessageType msgType = Net::CREATE_ENTITY;// Escribimos el tipo de mensaje de red a enviar
 		Net::CBuffer serialMsg;
 		//serializamos toda la información que se necesita para la creación de la entidad
@@ -157,8 +158,6 @@ namespace Logic {
 	//---------------------------------------------------------
 		
 	void CGameNetMsgManager::processCreateEntity(Net::CPaquete* packet){
-
-		
 
 		Net::CBuffer serialMsg;
 			serialMsg.write(packet->getData(),packet->getDataLength());
@@ -182,24 +181,31 @@ namespace Logic {
 		Matrix4 transform;
 		serialMsg.deserialize(transform);
 
-		//creamos la entidad
+		//creamos la entidad con nombre..
 		Map::CEntity * info = Logic::CEntityFactory::getSingletonPtr()->getInfo(type);
 		info->setName(name);
+
+		//Posicion
+		std::stringstream sp (std::stringstream::in | std::stringstream::out);
+		sp << transform.getTrans().x;
+		sp << " ";
+		sp << transform.getTrans().y;
+		sp << " ";
+		sp << transform.getTrans().z;
+		info->setAttribute( "position", sp.str() );
+		//Pitch
+		std::stringstream spitch (std::stringstream::in | std::stringstream::out);
+		spitch << Math::fromRadiansToDegrees(Math::getPitch(transform));
+		info->setAttribute( "pitch", spitch.str() );
+		//Yaw
+		std::stringstream syaw (std::stringstream::in | std::stringstream::out);
+		syaw << Math::fromRadiansToDegrees(Math::getYaw(transform));
+		info->setAttribute( "yaw", syaw.str() );
+
+
 		CEntity * newEntity = Logic::CEntityFactory::getSingletonPtr()->createEntityById(info, CServer::getSingletonPtr()->getMap(), destID);
 		newEntity->activate();
-
-		//ahora le seteamos la posición
-		// TIENE QUE TRATARSE DE UN COMPONENTE FISICO DINAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMICO SI NO EXPLOTA
-		// (tenemos entidades fisicas dinamicas y estaticas y controllers).
-		CPhysicDynamicEntity* physicComponent = newEntity->getComponent<CPhysicDynamicEntity>("CPhysicDynamicEntity");
-		if(physicComponent) {
-			physicComponent->setPosition(transform.getTrans(), false);
-		}
-
-		//seteamos la orientación
-		Matrix3 orientation;
-		transform.extract3x3Matrix(orientation);
-		newEntity->setOrientation(orientation);
+		//Aunque esta bastante arreglado para la puta mierda que habia antes se podria retocar con el roll o hacer que la creacion pille transforms y no tengas que hacer 2000 conversiones
 	}
 
 
