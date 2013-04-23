@@ -60,6 +60,8 @@ namespace Logic {
 
 		/** Constructor por defecto. */
 		CAvatarController();
+
+		//________________________________________________________________________
 		
 		/** Destructor por defecto. */
 		virtual ~CAvatarController();
@@ -71,43 +73,49 @@ namespace Logic {
 
 
 		/**
-		Inicialización del componente, utilizando la información extraída de
+		Inicialización del componente utilizando la información extraída de
 		la entidad leída del mapa (Maps::CEntity). Toma del mapa el atributo
 		speed que indica a la velocidad a la que se moverá el jugador.
 
+		Inicialización del componente a partir de la información extraida de la entidad
+		leida del mapa:
+		<ul>
+			<li><strong>acceleration:</strong> Aceleración del movimiento del player. </li>
+			<li><strong>maxVelocity:</strong> Máxima velocidad a la que puede correr el player. </li>
+			<li><strong>frictionCoef:</strong> Coeficiente de deceleración del movimiento terrestre. </li>
+			<li><strong>airFrictionCoef:</strong> Coeficiente de deceleración del movimiento aereo. </li>
+			<li><strong>airSpeedCoef:</strong> Coeficiente de movimiento aereo. </li>
+			<li><strong>gravity:</strong> Valor de la aceleración de la gravedad del player. </li>
+			<li><strong>jumpForce:</strong> Fuerza de salto. </li>
+			<li><strong>dodgeForce:</strong> Fuerza del salto de esquiva. </li>
+		</ul>
+
 		@param entity Entidad a la que pertenece el componente.
 		@param map Mapa Lógico en el que se registrará el objeto.
-		@param entityInfo Información de construcción del objeto leído del
-			fichero de disco.
+		@param entityInfo Información de construcción del objeto leído del fichero de disco.
 		@return Cierto si la inicialización ha sido satisfactoria.
 		*/
 		virtual bool spawn(CEntity* entity, CMap *map, const Map::CEntity *entityInfo);
 
-		/**
-		Método que activa el componente; invocado cuando se activa
-		el mapa donde está la entidad a la que pertenece el componente.
-		<p>
-		Si el componente pertenece a la entidad del jugador, el componente
-		se registra así mismo en el controlador del GUI para que las ordenes 
-		se reciban a partir de los eventos de teclado y ratón.
+		//________________________________________________________________________
 
-		@return true si todo ha ido correctamente.
+		/**
+		Metodo que se llama al activar el componente.
+		Resetea los valores de inercia y desplazamiento.
 		*/
 		virtual void activate();
-		
-		/**
-		Método que desactiva el componente; invocado cuando se
-		desactiva el mapa donde está la entidad a la que pertenece el
-		componente. Se invocará siempre, independientemente de si estamos
-		activados o no.
-		<p>
-		Si el componente pertenece a la entidad del jugador, el componente
-		se deregistra así mismo en el controlador del GUI para dejar de
-		recibir las ordenes dadas a partir de los eventos de teclado y ratón.
-		*/
-		virtual void deactivate();
 
+		//________________________________________________________________________
+
+		/**
+		Setea el puntero al componente del controlador físico, para evitar overhead
+		de mensajes en el tick.
+
+		@param unsigned int msecs Milisegundos transcurridos desde el último tick.
+		*/
 		virtual void onStart(unsigned int msecs);
+
+		//________________________________________________________________________
 
 		/**
 		Método llamado en cada frame que actualiza el estado del componente.
@@ -119,14 +127,22 @@ namespace Logic {
 		*/
 		virtual void tick(unsigned int msecs);
 
-		/**
-		Método virtual que elige que mensajes son aceptados. Son válidos
-		CONTROL.
+		//________________________________________________________________________
 
+		/** 
+		Este componente acepta los siguientes mensajes:
+
+		<ul>
+			<li>CONTROL</li>
+			<li>ADD_FORCE</li>
+		</ul>
+		
 		@param message Mensaje a chequear.
 		@return true si el mensaje es aceptado.
 		*/
 		virtual bool accept(CMessage *message);
+
+		//________________________________________________________________________
 
 		/**
 		Método virtual que procesa un mensaje.
@@ -135,13 +151,11 @@ namespace Logic {
 		*/
 		virtual void process(CMessage *message);
 
-		/**
-		Provoca que la entidad gire. Números Positivos para	giro a 
-		derechas, negativos para giro izquierdas.
 
-		@param amount Cantidad de giro. Positivos giro a derechas,
-		negativos a izquierdas.
-		*/
+		// =======================================================================
+		//                            METODOS PROPIOS
+		// =======================================================================
+
 
 		/**
 		Dado un giro en X y otro en Y provoca que la entidad (y la camara
@@ -151,7 +165,43 @@ namespace Logic {
 		*/
 		void mouse(float XYturn[]);
 
+		//________________________________________________________________________
+
+		/**
+		Dado un enumerado indicando el tipo de movimiento se desplaza al player.
+
+		@param commandType Enumerado que indica el tipo de movimiento a realizar.
+		*/
+		void executeMovementCommand(ControlType commandType);
 		
+		//________________________________________________________________________
+
+		/**
+		Provoca que la entidad salte en vertical.
+		*/
+		void executeJump();
+
+		//________________________________________________________________________
+
+		/**
+		Dado un enumerado indicando el tipo de salto esquiva se ejecuto dicho salto
+		en el player.
+
+		@param commandType Enumerado que indica el tipo de esquiva a realizar.
+		*/
+		void executeDodge(ControlType commandType);
+
+		//________________________________________________________________________
+
+		/**
+		Dado un vector de fuerza (dirección + magnitud) empuja al player en dicha
+		dirección.
+
+		@param force Vector de fuerza.
+		*/
+		void addForce(const Vector3 &force);
+
+
 	protected:
 
 
@@ -160,31 +210,76 @@ namespace Logic {
 		// =======================================================================
 
 		
+		/**
+		Dado un entero con los flags de colisión reportados por el controlador 
+		físico, actua sobre el movimiento del player.
+
+		@param collisionFlags Flags de colisión generados por el controlador 
+		físico del player.
+		*/
 		void manageCollisions(unsigned collisionFlags);
 
-		Vector3 estimateMotionDirection(Vector3 displacement);
+		//________________________________________________________________________
 
+		/**
+		Dado un vector de dirección simplificado (con cada coordenada entre 0 y 1)
+		devuelve la dirección en la que el player debería mirar una vez aplicada
+		la rotación.
+
+		@param direction Dirección relativa en la que queremos que el player se
+		desplace.
+		*/
+		Vector3 estimateMotionDirection(const Vector3& direction);
+
+		//________________________________________________________________________
+
+		/**
+		Calcula el desplazamiento del jugador sobre el suelo.
+
+		@param msecs Milisegundos transcurridos desde el último tick.
+		@return El vector de desplazamiento.
+		*/
 		Vector3 estimateGroundMotion(unsigned int msecs);
 
+		//________________________________________________________________________
+
+		/**
+		Calcula el desplazamiento del jugador en el aire.
+
+		@param msecs Milisegundos transcurridos desde el último tick.
+		@return El vector de desplazamiento.
+		*/
 		Vector3 estimateAirMotion(unsigned int msecs);
 
-		void executeMovementCommand(ControlType commandType);
+		//________________________________________________________________________
 
+		/**
+		Normaliza el desplazamiento horizontal si nuestra velocidad es mayor al
+		máximo establecido.
+		*/
 		void normalizeDirection();
 
+		//________________________________________________________________________
+
+		/**
+		Normaliza el desplazamiento vertical si nuestra velocidad de caida es mayor
+		al máximo establecido.
+		*/
 		void normalizeGravity();
 
+		//________________________________________________________________________
+
+		/**
+		Inicializa el array que contiene los vectores que corresponden a cada comando
+		de movimiento.
+		*/
 		void initMovementCommands();
 
-		void executeJump();
-
-		void addForce(const Vector3 &force);
-
-		void executeDodge(ControlType commandType);
-
+		
 		// =======================================================================
 		//                          MIEMBROS PROTEGIDOS
 		// =======================================================================
+
 
 		/** Velocidad máxima a la que nuestro personaje se puede desplazar. */
 		float _maxVelocity;
@@ -198,8 +293,16 @@ namespace Logic {
 		*/
 		float _airFrictionCoef;
 
+		/** 
+		Coeficiente de rozamiento en el suelo, entre 0 y el tamaño de los msecs
+		del tick. A mayor valor, mayor deslizamiento.
+		*/
 		float _frictionCoef;
 
+		/**
+		Coeficiente de movimiento aereo, entre 0 y el tamaño de los msecs del tick.
+		A mayor valor, mayor desplazamiento aereo.
+		*/
 		float _airSpeedCoef;
 
 		float _jumpForce;
