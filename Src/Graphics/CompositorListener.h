@@ -78,7 +78,7 @@ namespace Graphics
 		/**
 		multimapa con las variables que tendra un compositor, es un multimapa por que puede tener varias variables
 		*/
-		std::multimap < int, TkeyValue >  _compositorsAndVariables;
+		std::map < int, TkeyValue >  _compositorsAndVariables;
 
 		//std::map < int, TkeyValue > _compositorsAndVariables;
 

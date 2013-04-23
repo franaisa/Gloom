@@ -79,13 +79,12 @@ namespace Graphics
 			mat->load();
 			Ogre::GpuProgramParametersSharedPtr fpParams = mat->getTechnique(0)->getPass(0)->getFragmentProgramParameters();
 			//const Ogre::String& progName = mat->getBestTechnique()->getPass(0)->getFragmentProgramName();
-			std::pair<std::multimap<int, TkeyValue>::iterator,std::multimap<int, TkeyValue>::iterator> it= _compositorsAndVariables.equal_range(pass_id);
+			std::pair<std::map<int, TkeyValue>::iterator,std::map<int, TkeyValue>::iterator> it= _compositorsAndVariables.equal_range(pass_id);
 
-			for (std::multimap<int, TkeyValue>::iterator it2 = it.first; it2 != it.second; ++it2)
+			for (std::map<int, TkeyValue>::iterator it2 = it.first; it2 != it.second; ++it2)
 			{
 				fpParams->setNamedConstant((*it2).second.first,(*it2).second.second);
 			}
-				
 		}
 }
 

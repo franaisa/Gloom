@@ -178,6 +178,7 @@ namespace Graphics
 				
 			Ogre::Entity *entity;
 			entity = _scene->getSceneMgr()->createEntity(nameEntity, mesh);
+			
 
 			
 			Ogre::MaterialPtr aux= Ogre::MaterialManager::getSingleton().getByName(name);
@@ -196,10 +197,10 @@ namespace Graphics
 			//scene->getSceneMgr()->getRootSceneNode()->addChild(sceneNode);
 
 			sceneNode->attachObject((Ogre::MovableObject *)entity);
-			
-			_overlay->add3D(sceneNode);
 
 			sceneNode->setPosition(*position);
+
+			_overlay->add3D(sceneNode);
 
 			// Esto es una pequeña ñapa, me creo un entidad grafica pero sin inicializar, y le añado una escena ahierro
 			// Hago esto para que se pueda desplazar desde la logica sin ningun problema.
