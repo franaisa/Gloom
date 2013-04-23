@@ -457,6 +457,12 @@
     <ClCompile Include="..\..\Src\Logic\Messages\MessageCameraOffset.cpp">
       <Filter>Messages\Source</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\RocketControllerClient.cpp">
+      <Filter>Entity\Components\Weapons\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\GrenadeControllerClient.cpp">
+      <Filter>Entity\Components\Weapons\Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Src\Logic\Maps\ComponentFactory.h">
@@ -821,6 +827,12 @@
     </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Messages\MessageCameraOffset.h">
       <Filter>Messages\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\RocketControllerClient.h">
+      <Filter>Entity\Components\Weapons\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\GrenadeControllerClient.h">
+      <Filter>Entity\Components\Weapons\Header</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

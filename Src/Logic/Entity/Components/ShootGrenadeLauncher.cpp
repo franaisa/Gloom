@@ -53,13 +53,17 @@ namespace Logic {
 		// Obtenemos la informacion asociada al arquetipo de la granada
 		Map::CEntity *entityInfo = CEntityFactory::getSingletonPtr()->getInfo("Grenade");
 
+		//std::cout << "Posicion del jugador x,z: " << _entity->getPosition().x << "," << _entity->getPosition().z << std::endl;
 		// Spawneamos la granada justo delante del jugador y a la altura de disparo que corresponda
-		Vector3 shootPosition = _entity->getPosition() + (Math::getDirection( _entity->getOrientation() )* (_capsuleRadius+3.4));//3.4 es el radio de la granada
+		Vector3 directionNormalise=Math::getDirection( _entity->getOrientation());
+		directionNormalise.normalise();
+		Vector3 shootPosition = _entity->getPosition() + directionNormalise* (_capsuleRadius+6.0);////3.4 es el radio del cohete y lo demas es la separacion para que vaya tanto en sp como mp (culpa del mp)
+		//std::cout << "Posicion de la granada a disparar x,z: " << shootPosition.x << "," << shootPosition.z << std::endl;
 		shootPosition.y += _heightShoot-1.7; //Altura del pj menos algo menos del radio de la granada para que salga en el centro de la mira
 		
 		//Comprobamos si la granada tiene espacio para ser disparado
 		//Creamos el origen del rayo que sera igual al de la posicion de disparo menos el desplazamiento
-		Vector3 origin = _entity->getPosition()+Math::getDirection( _entity->getOrientation())+Vector3(0,_heightShoot-1.7,0);
+		Vector3 origin = _entity->getPosition()+Vector3(0,_heightShoot-1.7,0);
 		Vector3 noSpacePosition=origin;
 		//Calculamos la distancia entre la posicion de disparo y el origen
 		float distance=origin.distance(shootPosition);

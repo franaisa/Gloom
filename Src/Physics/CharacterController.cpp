@@ -89,7 +89,7 @@ namespace Physics {
 		// Crear descriptor del controller
 		PxCapsuleControllerDesc desc;
 		desc.position = PxExtendedVec3(pos.x, pos.y, pos.z);
-		
+		desc.contactOffset=0.01f;
 		desc.height = height;
 		desc.radius = radius;
 		desc.material = _physxSDK->createMaterial(0.5f, 0.5f, 0.1f); // En realidad sera getDefaultMaterial en el futuro

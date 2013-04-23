@@ -130,9 +130,10 @@ namespace Logic {
 		TEntityID destID; 
 			serialMsg.read(&destID, sizeof(destID));
 
-		//le decimos al mapa que elimine la entidad
+		//le decimos al mapa que elimine la entidad si no fue ya eliminada
 		CEntity * entity = CServer::getSingletonPtr()->getMap()->getEntityByID(destID);
-		CEntityFactory::getSingletonPtr()->deleteEntity(entity);
+		if(entity!=NULL)
+			CEntityFactory::getSingletonPtr()->deleteEntity(entity);
 	}
 
 	//---------------------------------------------------------

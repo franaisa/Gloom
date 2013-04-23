@@ -389,7 +389,6 @@ namespace Math
 	{
 		Vector3 yaw = getDirection(getYaw(transform));
 		Vector3 pitch = getDirectionPitch(getPitch(transform));
-		
 		return yaw + pitch;
 
 	} // getDirection

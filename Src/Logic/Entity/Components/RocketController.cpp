@@ -16,6 +16,7 @@
 #include "Logic/Server.h"
 #include "Logic/GameNetMsgManager.h"
 #include "Logic/Entity/Components/Graphics.h"
+#include "Logic/Maps/Map.h"
 
 #include "Logic/Messages/MessageAudio.h"
 #include "Logic/Messages/MessageSetPhysicPosition.h"
@@ -32,7 +33,7 @@ namespace Logic {
 	
 	IMP_FACTORY(CRocketController);
 
-	CRocketController::CRocketController() : _enemyHit(false) { 
+	CRocketController::CRocketController() { 
 		// Nada que hacer
 	}
 
@@ -61,10 +62,10 @@ namespace Logic {
 	void CRocketController::process(const std::shared_ptr<CMessage>& message) {
 		if(!_explotionActive) {
 			switch(message->getMessageType()) {
-				case Message::CONTACT_ENTER: {	
-					std::cout << "CONTACT ENTER DEL COHETE" << std::endl;
+				case Message::CONTACT_ENTER: {
 					std::shared_ptr<CMessageContactEnter> contactMsg = std::static_pointer_cast<CMessageContactEnter>(message);
-					Logic::CEntity* playerHit = contactMsg->getEntity();
+					Logic::TEntityID idPlayerHit = contactMsg->getEntity();
+					CEntity * playerHit = CServer::getSingletonPtr()->getMap()->getEntityByID(idPlayerHit);
 
 					// Los cohetes solos se destruyen al colisionar con algo que no sea yo
 					// Este mensaje deberia recibirse al tocar cualquier otro
@@ -83,27 +84,18 @@ namespace Logic {
 						// Crear efecto y sonido de absorcion
 
 						// Eliminamos la entidad en diferido
-						CEntityFactory::getSingletonPtr()->deferredDeleteEntity(_entity);
+						CEntityFactory::getSingletonPtr()->deferredDeleteEntity(_entity,false);
 					}
 					else {
 						// Eliminamos la entidad en diferido
-						CEntityFactory::getSingletonPtr()->deferredDeleteEntity(_entity);
+						CEntityFactory::getSingletonPtr()->deferredDeleteEntity(_entity,false);
 						// Creamos la explosion
-						createExplotion();
-
-						//Sonido de explosion
-						std::shared_ptr<CMessageAudio> audioMsg = std::make_shared<CMessageAudio>();
-						audioMsg->setRuta(_audioExplotion);
-						audioMsg->setId("audioExplotion");
-						audioMsg->setPosition(_entity->getPosition());
-						audioMsg->setNotIfPlay(false);
-						audioMsg->setIsPlayer(false);
-						_entity->emitMessage(audioMsg);
+						createExplotion();	
 					}
 					break;	
 				}
 				case Message::CONTACT_EXIT: {
-						std::cout << "CONTACT EXIT DEL COHETE" << std::endl;
+						std::cout << "CONTACT EXIT DEL COHETE, no deberia entrar nunca" << std::endl;
 				}
 			}//switch(message->getMessageType())
 		}//	if(!_explotionActive)
@@ -166,11 +158,19 @@ namespace Logic {
 
 		//Graphics::CParticle *particle = Graphics::CServer::getSingletonPtr()->getActiveScene()->createParticle(_entity->getName(),"ExplosionParticle", _entity->getPosition());
 
+		//Solo para singlePlayer, quitar al terminar
+		//Sonido de explosion
+		std::shared_ptr<CMessageAudio> audioMsg = std::make_shared<CMessageAudio>();
+		audioMsg->setRuta(_audioExplotion);
+		audioMsg->setId("audioExplotion");
+		audioMsg->setPosition(_entity->getPosition());
+		audioMsg->setNotIfPlay(false);
+		audioMsg->setIsPlayer(false);
+		_entity->emitMessage(audioMsg);
+
 		std::shared_ptr<CMessageCreateParticle> particleMsg = std::make_shared<CMessageCreateParticle>();
 		particleMsg->setParticle("ExplosionParticle");
-		//particleMsg->setParticle("ExplosionParticle");
 		particleMsg->setPosition(_entity->getPosition());
-
 		_entity->emitMessage(particleMsg);
 
 	} // createExplotion

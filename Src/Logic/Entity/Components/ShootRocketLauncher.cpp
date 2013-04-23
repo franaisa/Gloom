@@ -54,13 +54,17 @@ namespace Logic {
 		// Obtenemos la informacion asociada al arquetipo del cohete
 		Map::CEntity *entityInfo = CEntityFactory::getSingletonPtr()->getInfo("Rocket");
 
+		//std::cout << "Posicion del jugador x,z: " << _entity->getPosition().x << "," << _entity->getPosition().z << std::endl;
 		//Calculamos la situacion de origen del cohete
-		Vector3 shootPosition = _entity->getPosition() + (Math::getDirection( _entity->getOrientation() )* (_capsuleRadius+2));//2 es el radio del cohete
+		Vector3 directionNormalise=Math::getDirection( _entity->getOrientation());
+		directionNormalise.normalise();
+		Vector3 shootPosition = _entity->getPosition() + directionNormalise* (_capsuleRadius+6.0);//2 es el radio del cohete y lo demas es la separacion para que vaya tanto en sp como mp (culpa del mp)
+		//std::cout << "Posicion del cohete a disparar x,z: " << shootPosition.x << "," << shootPosition.z << std::endl;
 		shootPosition.y += _heightShoot; //Altura del pj menos el radio del cohete para que salga en el centro de la mira
 
 		//Comprobamos si el misil tiene espacio para ser disparado
 		//Creamos el origen del rayo que sera igual al de la posicion de disparo menos el desplazamiento
-		Vector3 origin = _entity->getPosition()+Math::getDirection( _entity->getOrientation())+Vector3(0,_heightShoot,0);
+		Vector3 origin = _entity->getPosition()+Vector3(0,_heightShoot,0);
 		Vector3 noSpacePosition=origin;
 		//Calculamos la distancia entre la posicion de disparo y el origen
 		float distance=origin.distance(shootPosition);

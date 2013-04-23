@@ -69,7 +69,9 @@ namespace Logic {
 		std::string weapon = aux.str();
 												
 		_name = entityInfo->getStringAttribute(weapon+"Name");
-		_damage= entityInfo->getIntAttribute(weapon+"Damage");
+		if(entityInfo->hasAttribute(weapon+"Damage")) {
+			_damage= entityInfo->getIntAttribute(weapon+"Damage");
+		}
 		_defaultDamage=_damage;
 		_numberShots = entityInfo->getIntAttribute(weapon+"NumberShoots");
 		_cooldown = entityInfo->getFloatAttribute(weapon+"ColdDown") * 1000;

@@ -146,7 +146,7 @@ namespace Logic {
 				it->second = msecs >= it->second ? 0 : (it->second - msecs);
 
 				if(it->second <= 0) {
-					CEntityFactory::getSingletonPtr()->deferredDeleteEntity(it->first);
+					CEntityFactory::getSingletonPtr()->deferredDeleteEntity(it->first,true);
 					//removeEntity(it->first);
 					it = _entitiesToBeDeleted.erase(it);
 				}

@@ -403,11 +403,11 @@ namespace Logic {
 	
 	//________________________________________________________________________
 
-	void CEntityFactory::deferredDeleteEntity(Logic::CEntity *entity) {
+	void CEntityFactory::deferredDeleteEntity(Logic::CEntity *entity, bool toClients) {
 		assert(entity);
 		_pendingEntities.push_back(entity);
 
-		if( Net::CManager::getSingletonPtr()->imServer() )
+		if( Net::CManager::getSingletonPtr()->imServer() && toClients )
 			Logic::CGameNetMsgManager::getSingletonPtr()->sendDestroyEntity( entity->getEntityID() );
 	} // deferredDeleteEntity
 
