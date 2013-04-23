@@ -53,6 +53,34 @@ namespace Logic {
 		// Obtenemos la informacion asociada al arquetipo del cohete
 		Map::CEntity *entityInfo = CEntityFactory::getSingletonPtr()->getInfo("Rocket");
 
+		//Paso1
+		//Lo primero es ver el punto exacto en el que saldría el centro del cohete de la capsula
+		//Sacamos un punto en la dirección que apuntamos muy fuera de la capsula y trazamos un raycast para el cual solo nos interesa en que punta choca con nosotros
+
+
+
+		//Paso2
+		//Separamos el cohete de la capsula en la direccion en la que se apuntaba
+
+
+
+		//Paso3
+		//Ahora creamos mediante overlap el cohete y nos aseguramos que no toque con nada
+		//Con la separacion anterior no nos puede tocar a nosotros y si toca cualquier otra significa que no tiene espacio
+		//Si no tiene espacio tenemos que crear el cohete solo graficamente y automaticamente explotarlo
+		//Para ello creo que una nueva entidad(sin fisicas) con un componente ExplotionRocketServer/Client
+		//Para red el server tendria el tipo server que ademas aplica daño, y el cliente tendria solo lo gráfico
+
+
+
+
+		//Paso4
+		//Si el overlap fue bien y no tocamos con nada, es el momento de crear el cohete en la posicion validada
+		//Ojo con las separaciones extra por el rollo de la mierder interpolation y el papapatrás ( lo mismo hay que modificar la posicion del paso 2 )
+
+
+
+
 		//std::cout << "Posicion del jugador x,y,z: " << _entity->getPosition().x << "," << _entity->getPosition().y <<"," << _entity->getPosition().z << std::endl;
 		//Calculamos la situacion de origen del cohete
 		Vector3 directionNormalise=Math::getDirection( _entity->getOrientation());
