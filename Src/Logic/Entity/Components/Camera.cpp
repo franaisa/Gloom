@@ -111,15 +111,11 @@ namespace Logic
 				break;
 			}
 			case Message::CAMERA_OFFSET: {
-<<<<<<< HEAD
 				std::shared_ptr<CMessageCameraOffset> camOffset = std::static_pointer_cast<CMessageCameraOffset>(message);
 				_fOffsetTimer = camOffset->getOffsetTimer(); //asignamos el tiempo del offset
-=======
-				_bCameraOffset = true;
-				_fOffsetTimer = 2000.0f; 
-				std::shared_ptr<CMessageCameraToEnemy> cameraToEnemyMsg = std::static_pointer_cast<CMessageCameraToEnemy>(message);
-
->>>>>>> 2374cb4a86f485e369637a785a3f40d78157ba67
+				//_bCameraOffset = true;
+				//_fOffsetTimer = 2000.0f; 
+				//std::shared_ptr<CMessageCameraToEnemy> cameraToEnemyMsg = std::static_pointer_cast<CMessageCameraToEnemy>(message);
 				break;
 			}
 		}
