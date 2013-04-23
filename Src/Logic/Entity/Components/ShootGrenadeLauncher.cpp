@@ -7,8 +7,8 @@ de disparo del lanzagranadas.
 @see Logic::CShootGrenadeLauncher
 @see Logic::IComponent
 
-@author Francisco Aisa García
-@date Febrero, 2013
+@author Jose Antonio García Yáñez
+@date Abril, 2013
 */
 
 #include "ShootGrenadeLauncher.h"
@@ -57,7 +57,7 @@ namespace Logic {
 		// Spawneamos la granada justo delante del jugador y a la altura de disparo que corresponda
 		Vector3 directionNormalise=Math::getDirection( _entity->getOrientation());
 		directionNormalise.normalise();
-		Vector3 shootPosition = _entity->getPosition() + directionNormalise* (_capsuleRadius+6.0);////3.4 es el radio del cohete y lo demas es la separacion para que vaya tanto en sp como mp (culpa del mp)
+		Vector3 shootPosition = _entity->getPosition() + directionNormalise* (_capsuleRadius+6.0);////3.4 es el radio del cohete y lo demas es la separacion para que vaya tanto en sp como mp (basura de interpolacion)
 		shootPosition.y += _heightShoot-1.7; //Altura del pj menos algo menos del radio de la granada para que salga en el centro de la mira
 		//std::cout << "Posicion de la granada a disparar x,y,z: " << shootPosition.x <<"," << shootPosition.y <<"," << shootPosition.z << std::endl;
 		

@@ -132,6 +132,7 @@ namespace Logic {
 
 		//le decimos al mapa que elimine la entidad si no fue ya eliminada
 		CEntity * entity = CServer::getSingletonPtr()->getMap()->getEntityByID(destID);
+		//Comprobamos por si acaso para hacerlo bien
 		if(entity!=NULL)
 			CEntityFactory::getSingletonPtr()->deleteEntity(entity);
 	}
@@ -204,7 +205,7 @@ namespace Logic {
 
 		CEntity * newEntity = Logic::CEntityFactory::getSingletonPtr()->createEntityById(info, CServer::getSingletonPtr()->getMap(), destID);
 		newEntity->activate();
-		
+		//Aunque esta bastante arreglado para la puta mierda que habia antes se podria retocar con el roll o hacer que la creacion pille transforms y no tengas que hacer 2000 conversiones
 	}
 
 

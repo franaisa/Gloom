@@ -141,23 +141,6 @@ namespace Logic {
 
 		if(nbHits > 0) delete [] entitiesHit;
 
-		/*
-		// Obtenemos la informacion asociada al arquetipo de la explosion del cohete
-		Map::CEntity *entityInfo = CEntityFactory::getSingletonPtr()->getInfo("Explotion");
-		// Creamos la entidad y la activamos
-		CEntity* rocketExplotion = CEntityFactory::getSingletonPtr()->createEntityWithTimeOut(entityInfo, Logic::CServer::getSingletonPtr()->getMap(), 200);
-		rocketExplotion->activate();
-
-		// Debido a que la explosion es un mero grafico, situamos la entidad grafica
-		// en el centro de la posicion en la que esta el misil (restando el radio ya
-		// que los graficos tienen el pivote en el pie).
-		CGraphics* graphicComponent = rocketExplotion->getComponent<CGraphics>("CGraphics");
-		assert(graphicComponent != NULL && "No se puede colocar la explosion porque no tiene componente grafico");
-		graphicComponent->setTransform( _entity->getTransform() );
-		*/
-
-		//Graphics::CParticle *particle = Graphics::CServer::getSingletonPtr()->getActiveScene()->createParticle(_entity->getName(),"ExplosionParticle", _entity->getPosition());
-
 		//Solo para singlePlayer, quitar al terminar
 		//Sonido de explosion
 		std::shared_ptr<CMessageAudio> audioMsg = std::make_shared<CMessageAudio>();

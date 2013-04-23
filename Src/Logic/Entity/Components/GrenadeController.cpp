@@ -162,20 +162,6 @@ namespace Logic {
 		// Limpiamos el buffer si es necesario
 		if(nbHits > 0) delete [] entitiesHit;
 
-		/*
-		// Obtenemos la informacion asociada al arquetipo de la explosion de la granada
-		Map::CEntity *entityInfo = CEntityFactory::getSingletonPtr()->getInfo("Explotion");
-		// Creamos la entidad y la activamos
-		CEntity* grenadeExplotion = CEntityFactory::getSingletonPtr()->createEntityWithTimeOut(entityInfo, Logic::CServer::getSingletonPtr()->getMap(), 200);
-		grenadeExplotion->activate();
-
-		// Debido a que la explosion es un mero grafico, situamos la entidad grafica
-		// en el centro de la posicion en la que esta la granada (restando el radio ya
-		// que los graficos tienen el pivote en el pie).
-		CGraphics* graphicComponent = grenadeExplotion->getComponent<CGraphics>("CGraphics");
-		assert(graphicComponent != NULL && "No se puede colocar la explosion porque no tiene componente grafico");
-		graphicComponent->setTransform( _entity->getTransform() );
-		*/
 		//Solo para singlePlayer, quitar al terminar
 		//Sonido de explosion
 		std::shared_ptr<CMessageAudio> audioMsg = std::make_shared<CMessageAudio>();

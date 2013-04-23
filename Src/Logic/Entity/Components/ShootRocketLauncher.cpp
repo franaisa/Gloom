@@ -8,8 +8,7 @@ de disparo del lanzacohetes.
 @see Logic::IComponent
 
 @author Jose Antonio García Yáñez
-@author Javier Fernández Villanueva
-@date Febrero,Abril 2013
+@date Abril, 2013
 */
 
 #include "ShootRocketLauncher.h"
@@ -58,7 +57,7 @@ namespace Logic {
 		//Calculamos la situacion de origen del cohete
 		Vector3 directionNormalise=Math::getDirection( _entity->getOrientation());
 		directionNormalise.normalise();
-		Vector3 shootPosition = _entity->getPosition() + directionNormalise* (_capsuleRadius+6.0);//2 es el radio del cohete y lo demas es la separacion para que vaya tanto en sp como mp (culpa del mp)
+		Vector3 shootPosition = _entity->getPosition() + directionNormalise* (_capsuleRadius+6.0);//2 es el radio del cohete y lo demas es la separacion para que vaya tanto en sp como mp (basura de interpolacion)
 		shootPosition.y += _heightShoot; //Altura del pj menos el radio del cohete para que salga en el centro de la mira
 		//std::cout << "Posicion del cohete a disparar x,y,z: " << shootPosition.x <<"," << shootPosition.y <<"," << shootPosition.z << std::endl;
 
