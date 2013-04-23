@@ -108,7 +108,7 @@ namespace Logic {
 		//________________________________________________________________________
 
 		/**
-		Setea el puntero al componente del controlador físico, para evitar overhead
+		Setea el puntero al componente del controlador físico para evitar overhead
 		de mensajes en el tick.
 
 		@param unsigned int msecs Milisegundos transcurridos desde el último tick.
