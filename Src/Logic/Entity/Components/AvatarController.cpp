@@ -65,6 +65,9 @@ namespace Logic {
 		assert( entityInfo->hasAttribute("jumpForce") && "Error: No se ha definido el atributo jumpForce en el mapa" );
 		_jumpForce = entityInfo->getFloatAttribute("jumpForce");
 
+		assert( entityInfo->hasAttribute("dodgeForce") && "Error: No se ha definido el atributo dodgeForce en el mapa" );
+		_dodgeForce = entityInfo->getVector3Attribute("dodgeForce");
+
 		return true;
 
 	} // spawn
@@ -312,8 +315,10 @@ namespace Logic {
 
 	void CAvatarController::executeDodge(ControlType commandType){
 		_displacementDir += _movementCommands[commandType];
+		if(!_touchingGround)
+			return;
 		Vector3 dir = estimateMotionDirection(_movementCommands[commandType])+Vector3(0,1,0);
-		addForce(dir*_dodgeForce);
+		addForce(dir.normalisedCopy()*_dodgeForce);
 	}
 
 } // namespace Logic
