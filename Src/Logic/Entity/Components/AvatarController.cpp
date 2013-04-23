@@ -22,7 +22,10 @@ de la entidad.
 #include "Logic/Messages/MessageMouse.h"
 
 namespace Logic {
+
 	IMP_FACTORY(CAvatarController);
+
+	//________________________________________________________________________
 
 	CAvatarController::CAvatarController() : _gravity(Vector3::ZERO),
 											 _touchingGround(false) {
@@ -78,12 +81,6 @@ namespace Logic {
 		IComponent::activate(); // Necesario para el onStart
 		_displacementDir = _momentum = Vector3::ZERO;
 	} // activate
-
-	//________________________________________________________________________
-
-	void CAvatarController::deactivate() {
-		IComponent::deactivate();
-	} // deactivate
 
 	//________________________________________________________________________
 
@@ -173,7 +170,7 @@ namespace Logic {
 
 	//________________________________________________________________________
 
-	Vector3 CAvatarController::estimateMotionDirection(Vector3 direction) {
+	Vector3 CAvatarController::estimateMotionDirection(const Vector3& direction) {
 		// Si nuestro movimiento es nulo no hacemos nada
 		if(direction == Vector3::ZERO) return Vector3::ZERO;
 
