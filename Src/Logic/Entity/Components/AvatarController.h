@@ -47,7 +47,7 @@ namespace Logic {
 	@author Francisco Aisa García
 	@date Abril, 2013
 	*/
-	
+
 	class CAvatarController : public IComponent {
 		DEC_FACTORY(CAvatarController);
 	public:
@@ -62,7 +62,7 @@ namespace Logic {
 		CAvatarController();
 
 		//________________________________________________________________________
-		
+
 		/** Destructor por defecto. */
 		virtual ~CAvatarController();
 
@@ -173,7 +173,7 @@ namespace Logic {
 		@param commandType Enumerado que indica el tipo de movimiento a realizar.
 		*/
 		void executeMovementCommand(ControlType commandType);
-		
+
 		//________________________________________________________________________
 
 		/**
@@ -209,7 +209,7 @@ namespace Logic {
 		//                          MÉTODOS PROTEGIDOS
 		// =======================================================================
 
-		
+
 		/**
 		Dado un entero con los flags de colisión reportados por el controlador 
 		físico, actua sobre el movimiento del player.
@@ -275,7 +275,7 @@ namespace Logic {
 		*/
 		void initMovementCommands();
 
-		
+
 		// =======================================================================
 		//                          MIEMBROS PROTEGIDOS
 		// =======================================================================

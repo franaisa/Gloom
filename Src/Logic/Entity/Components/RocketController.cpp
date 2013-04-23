@@ -131,7 +131,7 @@ namespace Logic {
 				entitiesHit[i]->emitMessage(msg);
 
 				// Emitimos el mensaje de desplazamiento por daños
-				CMessageAddForcePlayer* msg2 = new CMessageAddForcePlayer();
+			/*	CMessageAddForcePlayer* msg2 = new CMessageAddForcePlayer();
 				// Seteamos la fuerza y la velocidad
 				msg2->setPower(0.1f);
 				msg2->setVelocity(0.12f);
@@ -139,7 +139,7 @@ namespace Logic {
 				Vector3 direccionImpacto = entitiesHit[i]->getPosition() - _entity->getPosition();
 				direccionImpacto.normalise();
 				msg2->setDirection(direccionImpacto);
-				entitiesHit[i]->emitMessage(msg2);
+				entitiesHit[i]->emitMessage(msg2);*/
 			}
 		}
 

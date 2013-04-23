@@ -34,14 +34,8 @@ namespace Logic
 		if(!IComponent::spawn(entity,map,entityInfo))
 			return false;
 
-		if(entityInfo->hasAttribute("power"))
-			_power = entityInfo->getFloatAttribute("power");
-
-		if(entityInfo->hasAttribute("velocity"))
-			_velocity = entityInfo->getFloatAttribute("velocity");
-
-		if(entityInfo->hasAttribute("direction"))
-			_direction = entityInfo->getVector3Attribute("direction");
+		if(entityInfo->hasAttribute("force"))
+			_force = entityInfo->getVector3Attribute("force");
 
 		if(entityInfo->hasAttribute("audio"))
 			_audio = entityInfo->getStringAttribute("audio");
@@ -92,9 +86,7 @@ namespace Logic
 	void CJumper::applyJump(CEntity *entity)
 	{
 		CMessageAddForcePlayer *m=new Logic::CMessageAddForcePlayer();
-		m->setPower(_power);
-		m->setVelocity(_velocity);
-		m->setDirection(_direction);
+		m->setForce(_force+Vector3(0,5,0));
 		entity->emitMessage(m);
 
 
