@@ -115,6 +115,11 @@ namespace Logic {
 		/** Timer que controla la duración que lleva siendo inmune. */
 		float _inmunityTimer;
 
+		/**
+		Nombre del material original de la entidad
+		*/
+		std::string _materialName;
+
 	}; // class CArchangel
 
 	REG_FACTORY(CArchangel);

@@ -100,6 +100,7 @@ namespace Graphics
 	//--------------------------------------------------------
 
 	void CAnimatedEntity::attachWeapon(CEntity &arma, unsigned int id){
+		
 		if(_weapon)
 			_scene->getSceneMgr()->destroyEntity(_weapon);
 		Ogre::String asd = arma.getMesh();

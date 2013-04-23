@@ -58,6 +58,9 @@ namespace Logic
 		if(entityInfo->hasAttribute("model"))
 			_model = entityInfo->getStringAttribute("model");
 
+		if(entityInfo->hasAttribute("materialName"))
+			_materialName = entityInfo->getStringAttribute("materialName");
+
 		_graphicsEntity = createGraphicsEntity(entityInfo);
 		if(!_graphicsEntity)
 			return false;
@@ -163,7 +166,11 @@ namespace Logic
 	//---------------------------------------------------------
 
 	void CGraphics::changeMaterial(const std::string& materialName) {
-		_graphicsEntity->changeMaterial(materialName);
+		if(materialName != "original")
+			_graphicsEntity->changeMaterial(materialName);
+		else
+			_graphicsEntity->changeMaterial(_materialName);
+		
 	}
 
 	//---------------------------------------------------------
