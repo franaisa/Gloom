@@ -8,6 +8,7 @@ de disparo del lanzagranadas.
 @see Logic::IComponent
 
 @author Jose Antonio García Yáñez
+@author Francisco Aisa García
 @date Abril, 2013
 */
 
