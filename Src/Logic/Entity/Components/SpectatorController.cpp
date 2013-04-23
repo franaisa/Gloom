@@ -153,7 +153,10 @@ namespace Logic {
 		_momentum *= _frictionCoef;
 
 		// s = u · t + 1/2 a · t^2 <- Formula del desplazamiento
-		_momentum += estimateMotionDirection() * _acceleration * msecs * msecs * 0.5f;
+		if(_displacementDir.z == 0)
+			_momentum += Vector3(1, 0, 1) * estimateMotionDirection() * _acceleration * msecs * msecs * 0.5f;
+		else
+			_momentum += estimateMotionDirection() * _acceleration * msecs * msecs * 0.5f;
 
 		// Seteamos la velocidad máxima a la que se puede ir
 		normalizeDirection();

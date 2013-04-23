@@ -48,7 +48,7 @@ Map = {
 		airSpeedCoef = 3.0,
 		gravity = -0.0004,
 		jumpForce = 1.5,
-		dodgeForce = {4.5,3,4.5},
+		dodgeForce = {2.5,2,2.5},
 
 		powerSideJump = 0.1,
 		sumSpeedSideJump = 1.5,
@@ -474,7 +474,7 @@ Map = {
 		airFrictionCoef = 0.98,
 		airSpeedCoef = 3.0,
 		gravity = -0.0004,
-		jumpForce = 1.5,
+		jumpForce = 1.4,
 		dodgeForce = {4,1.3,4},
 
 		powerSideJump = 0.1,

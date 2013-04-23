@@ -301,7 +301,7 @@ namespace Logic {
 		del tick. A mayor valor, mayor deslizamiento.
 		*/
 		float _frictionCoef;
-
+		
 		/** 
 		Coeficiente de rozamiento del aire, entre 0 y 1. A menor valor, menor
 		recorrido en el aire. 
