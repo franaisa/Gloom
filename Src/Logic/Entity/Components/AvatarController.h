@@ -281,23 +281,32 @@ namespace Logic {
 		// =======================================================================
 
 
+		/** true si el personaje está tocando el suelo, false si esta en el aire. */
+		bool _touchingGround;
+
+		/** Vector de gravedad, puede ser sustituido por un flotante. */
+		Vector3 _gravity;
+
+		/** Velocidad máxima de caida. */
+		float _maxGravVelocity;
+
 		/** Velocidad máxima a la que nuestro personaje se puede desplazar. */
 		float _maxVelocity;
 
-		/** Velocidad máxima de caida. */
-		float _maxFallSpeed;
-
-		/** 
-		Coeficiente de rozamiento del aire, entre 0 y 1. A menor valor, menor
-		recorrido en el aire. 
-		*/
-		float _airFrictionCoef;
+		/** Velocidad de aceleración del personaje al desplazarse. */
+		float _acceleration;
 
 		/** 
 		Coeficiente de rozamiento en el suelo, entre 0 y el tamaño de los msecs
 		del tick. A mayor valor, mayor deslizamiento.
 		*/
 		float _frictionCoef;
+		
+		/** 
+		Coeficiente de rozamiento del aire, entre 0 y 1. A menor valor, menor
+		recorrido en el aire. 
+		*/
+		float _airFrictionCoef;
 
 		/**
 		Coeficiente de movimiento aereo, entre 0 y el tamaño de los msecs del tick.
@@ -305,13 +314,11 @@ namespace Logic {
 		*/
 		float _airSpeedCoef;
 
+		/** Fuerza de salto vertical. */
 		float _jumpForce;
 
-		/** true si el personaje está tocando el suelo, false si esta en el aire. */
-		bool _touchingGround;
-
-		/** Velocidad de aceleración del personaje al desplazarse. */
-		float _acceleration;
+		/** Vector de salto esquiva. */
+		Vector3 _dodgeForce;
 
 		/** Vector que indica la dirección del desplazamiento que el controlador debe realizar. */
 		Vector3 _displacementDir;
@@ -319,23 +326,17 @@ namespace Logic {
 		/** Vector de inercia. */
 		Vector3 _momentum;
 
+		/** Puntero al controlador fisico del player. Nos lo quedamos por motivos de eficiencia. */
+		CPhysicController* _physicController;
+
 		/** 
 		Array que contiene los vectores que corresponden a cada uno de los movimientos
 		de desplazamiento y salto que se pueden realizar. 
 		*/
 		Vector3 _movementCommands[15];
 
-		/** Vector de gravedad, puede ser sustituido por un flotante. */
-		Vector3 _gravity;
-		float _maxGravVelocity;
-
+		/** Número máximo de comandos de movimiento. */
 		static const int MAX_MOVEMENT_COMMANDS = Control::JUMP;
-
-		/** Puntero al controlador fisico del player. */
-		CPhysicController* _physicController;
-
-
-		Vector3 _dodgeForce;
 
 	}; // class CAvatarController
 

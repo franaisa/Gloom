@@ -1,3 +1,7 @@
+//---------------------------------------------------------------------------
+// AvatarController.cpp
+//---------------------------------------------------------------------------
+
 /**
 @file AvatarController.cpp
 
@@ -72,7 +76,6 @@ namespace Logic {
 		_dodgeForce = entityInfo->getVector3Attribute("dodgeForce");
 
 		return true;
-
 	} // spawn
 
 	//________________________________________________________________________
@@ -295,7 +298,7 @@ namespace Logic {
 
 	void CAvatarController::executeJump(){
 		if(_touchingGround) {
-			_momentum.y += _jumpForce;
+			_momentum.y = _jumpForce;
 			_touchingGround = false;
 		}
 	}
