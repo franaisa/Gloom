@@ -151,6 +151,8 @@ namespace Logic
 
 		void normalizeDirection();
 
+		void normalizeGravity();
+
 		void initMovementCommands();
 
 		void executeJump();
@@ -174,6 +176,12 @@ namespace Logic
 		recorrido en el aire. 
 		*/
 		float _airFrictionCoef;
+
+		float _frictionCoef;
+
+		float _airSpeedCoef;
+
+		float _jumpForce;
 
 		/** true si el personaje está tocando el suelo, false si esta en el aire. */
 		bool _touchingGround;
