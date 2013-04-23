@@ -8,8 +8,8 @@ el mundo físico usando character controllers.
 @see Logic::CPhysicEntity
 @see Logic::IPhysics
 
-@author Antonio Sánchez Ruiz-Granados
-@date Noviembre, 2012
+@author Francisco Aisa García
+@date Febrero, 2013
 */
 
 #ifndef __Logic_PhysicController_H
@@ -26,8 +26,8 @@ namespace physx {
 };
 
 // Los componentes se definen dentro del namespace Logica
-namespace Logic 
-{
+namespace Logic {
+	
 	/**
 	Componente que se utiliza para representar jugadores y enemigos en el mundo físico usando 
 	character controllers.
@@ -43,9 +43,10 @@ namespace Logic
 	
     @ingroup logicGroup
 
-	@author Antonio Sánchez Ruiz-Granados
-	@date Noviembre, 2012
+	@author Francisco Aisa García
+	@date Febrero, 2013
 	*/
+
 	class CPhysicController : public IPhysics {
 		DEC_FACTORY(CPhysicController);
 	public:

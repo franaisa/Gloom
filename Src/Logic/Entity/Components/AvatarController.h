@@ -1,3 +1,7 @@
+//---------------------------------------------------------------------------
+// AvatarController.h
+//---------------------------------------------------------------------------
+
 /**
 @file AvatarController.h
 
@@ -7,46 +11,65 @@ de la entidad.
 @see Logic::CAvatarController
 @see Logic::IComponent
 
-@author David Llansó
-@date Agosto, 2010
+@author Rubén Mulero Guerrero
+@author Francisco Aisa García
+@date Abril, 2013
 */
+
 #ifndef __Logic_AvatarController_H
 #define __Logic_AvatarController_H
 
 #include "Logic/Entity/Component.h"
 
-namespace Logic{
+// Predeclaración de clases
+namespace Logic {
 	class CMessageControl;
 	class CPhysicController;
 }
 
-//declaración de la clase
-namespace Logic 
-{
-/**
+// Declaración de la clase
+namespace Logic {
+
+	/**
 	Este componente es el encargado de mover a una entidad animada. Tiene
 	diferentes métodos que permiten avances o giros. El uso de este componente
 	es un poco atípico ya que se puede registrar en otro controlador externo
 	(i.e. GUI::CPlayerController) que sea el que de las órdenes que se deben
-	llevar a cabo mediante llamadas a métodos públicos del componente. Puede
-	no obstante ampliarse este componente para aceptar mensajes tradicionales
-	con las órdenes, sin embargo de momento así es suficiente.
+	llevar a cabo mediante llamadas a métodos públicos del componente.
+
+	Realmente este es el componente que da las ordenes al character controller.
+	Esta hecho así para facilitar la implementación de otro tipo de controladores
+	de entidad como por ejemplo el espectador.
 	
     @ingroup logicGroup
 
-	@author David Llansó García
-	@date Agosto, 2010
-*/
+	@author Rubén Mulero Guerrero
+	@author Francisco Aisa García
+	@date Abril, 2013
+	*/
+	
 	class CAvatarController : public IComponent {
 		DEC_FACTORY(CAvatarController);
 	public:
 
-		/**
-		Constructor por defecto; inicializa los atributos a su valor por 
-		defecto.
-		*/
+
+		// =======================================================================
+		//                      CONSTRUCTORES Y DESTRUCTOR
+		// =======================================================================
+
+
+		/** Constructor por defecto. */
 		CAvatarController();
 		
+		/** Destructor por defecto. */
+		virtual ~CAvatarController();
+
+
+		// =======================================================================
+		//                    METODOS HEREDADOS DE ICOMPONENT
+		// =======================================================================
+
+
 		/**
 		Inicialización del componente, utilizando la información extraída de
 		la entidad leída del mapa (Maps::CEntity). Toma del mapa el atributo
@@ -111,8 +134,6 @@ namespace Logic
 		@param message Mensaje a procesar.
 		*/
 		virtual void process(CMessage *message);
-
-		
 
 		/**
 		Provoca que la entidad gire. Números Positivos para	giro a 
