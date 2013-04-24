@@ -72,6 +72,11 @@ namespace Logic {
 				berserkerMsg->setPercentCooldown(0);
 				berserkerMsg->setPercentDamage(0);
 				_entity->emitMessage(berserkerMsg);
+
+				//le seteamos el material al material por defecto
+				std::shared_ptr<CMessageChangeMaterial> materialMsg = std::make_shared<CMessageChangeMaterial>();
+				materialMsg->setMaterialName(_materialName);
+				_entity->emitMessage(materialMsg);
 			}
 		}
 	}
@@ -103,6 +108,11 @@ namespace Logic {
 		berserkerMsg->setPercentCooldown(_berserkerCooldownPercent);
 		berserkerMsg->setPercentDamage(_berserkerDamagePercent);
 		_entity->emitMessage(berserkerMsg);
+
+		//le cambiamos el material para que empiece a brillar
+		std::shared_ptr<CMessageChangeMaterial> materialMsg = std::make_shared<CMessageChangeMaterial>();
+		materialMsg->setMaterialName("berserk");
+		_entity->emitMessage(materialMsg);
 	}
 
 	//__________________________________________________________________

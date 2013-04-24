@@ -24,6 +24,7 @@ con animaciones.
 #include <OgreEntity.h>
 #include <OgreAnimationState.h>
 #include <OgreSceneManager.h>
+#include <OgreSubEntity.h>
 
 namespace Graphics 
 {
@@ -109,9 +110,13 @@ namespace Graphics
 
 	}
 
+	std::string CAnimatedEntity::getWeaponMaterial(){
+		return _weapon->getSubEntity(0)->getMaterialName();
+	}
 
 	void CAnimatedEntity::changeMaterialToWeapon(const std::string& materialName){
 		_weapon->setMaterialName(materialName);
+		//_weapon->getSubEntity(0)->getMaterialName();
 	}
 
 

@@ -22,8 +22,16 @@ material lavaMaterial
             }
 			texture_unit normalMap
             {
-                texture lava_NRM.tga
+                cubic_texture lava_NRM.tga combinedUVW
+
+				tex_coord_set 2
+
+				tex_address_mode clamp
+				
             }
+			
+			
+			
 		}
 
 	}

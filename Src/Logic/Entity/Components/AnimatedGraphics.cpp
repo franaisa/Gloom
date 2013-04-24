@@ -89,6 +89,7 @@ namespace Logic
 
 		//Habria que quitare el string que se pasa por parametro porque no tiene sentido
 		//animationFinished("random");
+		_animatedGraphicsEntity->setAnimation( _defaultAnimation, true );
 		_animatedGraphicsEntity->attachWeapon(*_weapons[0], _entity->getEntityID());
 	}
 	//---------------------------------------------------------
@@ -196,6 +197,14 @@ namespace Logic
 		if(newWeapon != _currentWeapon)
 			_currentWeapon = newWeapon;
 			_animatedGraphicsEntity->attachWeapon(*_weapons[_currentWeapon], _entity->getEntityID());
+
+			//comprobamos si el material que tenia el arma anterior no era el original
+			// y si no lo era se lo tenemos que cambiar
+
+			_originalMaterialWeapon = _animatedGraphicsEntity->getWeaponMaterial();
+
+			if(_currentMaterialWeapon != "original")
+				_animatedGraphicsEntity->changeMaterialToWeapon(_currentMaterialWeapon);
 			//changeMaterial(_currentMaterialWeapon);
 	}
 
@@ -205,9 +214,10 @@ namespace Logic
 			_currentMaterialWeapon = materialName;
 			CGraphics::changeMaterial(_currentMaterialWeapon);
 			if(_currentMaterialWeapon != "original"){
+				_originalMaterialWeapon = _animatedGraphicsEntity->getWeaponMaterial();
 				_animatedGraphicsEntity->changeMaterialToWeapon(materialName);
 			}else{
-				_animatedGraphicsEntity->changeMaterialToWeapon(toText((eWeaponIndex)_currentWeapon));
+				_animatedGraphicsEntity->changeMaterialToWeapon(_originalMaterialWeapon);
 			}
 		}
 	}

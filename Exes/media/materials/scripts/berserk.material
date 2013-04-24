@@ -1,4 +1,4 @@
-material marine_rojo
+material berserk
 {
 	set $diffuse_tex "marine_rojo.tga"
 	
@@ -38,6 +38,24 @@ material marine_rojo
                 texture $diffuse_tex
             }
         }
+		pass 
+		{
+			illumination_stage ambient
+            scene_blend alpha_blend
+			
+			depth_write off
+			
+			vertex_program_ref berserk_vs
+			{
+				param_named_auto ViewProjectionMatrix worldviewproj_matrix
+				param_named_auto tiempo time
+			}
+			fragment_program_ref berserk_ps
+            {
+				param_named alpha float 0.25
+				param_named_auto tiempo time
+            }
+		}
 
         pass
         {

@@ -138,6 +138,8 @@ namespace Graphics
 
 		void changeMaterialToWeapon(const std::string& materialName);
 
+		std::string getWeaponMaterial();
+
 
 	protected:
 
