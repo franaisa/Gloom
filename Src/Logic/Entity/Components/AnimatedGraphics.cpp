@@ -54,12 +54,7 @@ namespace Logic
 
 		if(entityInfo->hasAttribute("numWeapons")){
 			int numWeapons = entityInfo->getIntAttribute("numWeapons");
-		_weapons = new  Graphics::CEntity*[numWeapons];	
-			//_weapons[numWeapons];
-
-			// Por ahora leo a mano cada una de las armas que tiene el usuario
-
-			std::string armas[] = {"hammer","sniper","shotGun","miniGun", "grenadeLauncher", "rocketLauncher"};
+			_weapons = new  Graphics::CEntity*[numWeapons];	
 
 			_scene = _entity->getMap()->getScene();
 			eWeaponIndex current;
@@ -76,11 +71,7 @@ namespace Logic
 				//creamos la entidad gráfica del arma para poder atacharla al monigote
 
 				_weapons[i] = new Graphics::CEntity(nameWeapon,entityInfo->getStringAttribute(weapon+"Model")); 
-				
-				
 			}
-
-			//_scene->addEntity(_weapons[0]);
 
 			if(!_weapons)
 				return NULL;
@@ -98,6 +89,7 @@ namespace Logic
 
 		//Habria que quitare el string que se pasa por parametro porque no tiene sentido
 		//animationFinished("random");
+		_animatedGraphicsEntity->setAnimation( _defaultAnimation, true );
 		_animatedGraphicsEntity->attachWeapon(*_weapons[0], _entity->getEntityID());
 	}
 	//---------------------------------------------------------
@@ -205,6 +197,14 @@ namespace Logic
 		if(newWeapon != _currentWeapon)
 			_currentWeapon = newWeapon;
 			_animatedGraphicsEntity->attachWeapon(*_weapons[_currentWeapon], _entity->getEntityID());
+
+			//comprobamos si el material que tenia el arma anterior no era el original
+			// y si no lo era se lo tenemos que cambiar
+
+			_originalMaterialWeapon = _animatedGraphicsEntity->getWeaponMaterial();
+
+			if(_currentMaterialWeapon != "original")
+				_animatedGraphicsEntity->changeMaterialToWeapon(_currentMaterialWeapon);
 			//changeMaterial(_currentMaterialWeapon);
 	}
 
@@ -213,13 +213,12 @@ namespace Logic
 		if(materialName != _currentMaterialWeapon){
 			_currentMaterialWeapon = materialName;
 			CGraphics::changeMaterial(_currentMaterialWeapon);
-			/*
 			if(_currentMaterialWeapon != "original"){
-				_weapons[_currentWeapon]->changeMaterial(materialName);
+				_originalMaterialWeapon = _animatedGraphicsEntity->getWeaponMaterial();
+				_animatedGraphicsEntity->changeMaterialToWeapon(materialName);
 			}else{
-				_weapons[_currentWeapon]->changeMaterial(toText((eWeaponIndex)_currentWeapon));
+				_animatedGraphicsEntity->changeMaterialToWeapon(_originalMaterialWeapon);
 			}
-			*/
 		}
 	}
 

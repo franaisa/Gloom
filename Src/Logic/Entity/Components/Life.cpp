@@ -135,10 +135,13 @@ namespace Logic {
 				damaged( dmgMsg->getDamage(), dmgMsg->getEnemy() );
 				std::cout << "soy " << _entity->getName() << " y me hace " << dmgMsg->getDamage() << " el enemigo " << dmgMsg->getEnemy()->getName() << std::endl;
 
+				if (_entity->isPlayer())
+				{
 				std::shared_ptr<Logic::CMessageCameraOffset> m3 = std::make_shared<Logic::CMessageCameraOffset>();
 				m3->setOffsetTimer(100.0f);								 
 				Logic::CEntity * camera = Logic::CServer::getSingletonPtr()->getMap()->getEntityByType("Camera");
 				camera->emitMessage(m3);
+				}
 				break;
 			}
 			case Message::ADD_LIFE: {

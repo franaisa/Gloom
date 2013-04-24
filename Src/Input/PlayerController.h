@@ -15,6 +15,8 @@ mover al jugador.
 
 #include "InputManager.h"
 
+
+
 // Predeclaración de clases para ahorrar tiempo de compilación
 namespace Logic 
 {
@@ -38,10 +40,13 @@ namespace Input
 	@author David Llansó
 	@date Agosto, 2010
 	*/
+
+	//'Constante' de máximo tiempo para dar la doble pulsación del salto hacia los lados
+	#define MAX_TIME_DOBULE_PUSH 150
+
 	class CPlayerController : public CKeyboardListener, public CMouseListener
 	{
 	public:
-
 		/**
 		Constructor.
 		*/
@@ -82,7 +87,7 @@ namespace Input
 		/***************************************************************
 		Métodos de CKeyboardListener
 		***************************************************************/
-		
+
 		/**
 		Método que será invocado siempre que se pulse una tecla.
 
@@ -91,7 +96,7 @@ namespace Input
 		el gestor no llamará a otros listeners.
 		*/
 		bool keyPressed(TKey key);
-		
+
 		/**
 		Método que será invocado siempre que se termine la pulsación
 		de una tecla.
@@ -105,7 +110,7 @@ namespace Input
 		/***************************************************************
 		Métodos de CKeyboardListener
 		***************************************************************/
-		
+
 		/**
 		Método que será invocado siempre que se mueva el ratón.
 
@@ -114,7 +119,7 @@ namespace Input
 		el gestor no llamará a otros listeners.
 		*/
 		bool mouseMoved(const CMouseState &mouseState);
-		
+
 		/**
 		Método que será invocado siempre que se pulse un botón.
 
@@ -134,6 +139,11 @@ namespace Input
 		*/
 		bool mouseReleased(const CMouseState &mouseState);
 
+		/**
+		Enumerado con las acciones de movimiento
+		*/
+		enum E_MOVE {LEFT, RIGHT, WALK, WALKBACK };
+
 	protected:
 
 		/**
@@ -143,35 +153,65 @@ namespace Input
 		Logic::CEntity *_controlledAvatar;
 
 
-		/*Atributos que se encargan de contar/llevar el tiempo para ver si se hizo un salto lateral
-		*/
-		unsigned int _time;
-
-		int _jumpLeft;
-		int _jumpRight;
-		int _timeSideJump;
-
-		bool _unpressRight;
-		bool _unpressLeft;
-		bool _readySideJumpLeft;
-		bool _readySideJumpRight;
-		bool _dontCountUntilUnpress;
-
-		bool _strafingRight;
-		bool _strafingLeft;
+	private:
+		//-------------------------------------------
+		//             Métodos privados
+		//------------------------------------------
 
 		/**
-		Atributo que lleva el conteo de saltos concatenados para el aumento de velocidad
+		Método para saber de qué tipo es la tecla pulsada. Para una lectura de código más clara
+		@param key Tecla pulsada.
+		@return int con el tipo de tecla 0 = Movimiento; 1 = Cambio de arma; 2 = Habilidad ; 
+				3=Otro (Ej.Debug) ; -1 = Ninguna tecla asignada
 		*/
-		int _nConcatSideJump;
-		int _timeConcatSideJump;
-		bool _activeConcat;
-		bool _sideFly;
-		bool _sideContact;
-		int _maxTimeSideJump;
+		int typeOfKey(TKey key);
+
+		/**
+		Método para emitir el mensaje de cambiar de arma, en función de la tecla de arma que se pulse
+		@param key Tecla pulsada.
+		*/
+		void ChangeWeaponMessage(TKey key);
+
+		/**
+		Método para emitir el mensaje de movimiento
+		@param key Tecla pulsada.
+		*/
+		void MovementMessage(TKey key);
+
+		/**
+		Método para emitir el mensaje de la habilidad
+		@param key Tecla pulsada.
+		*/
+		void HabilityMessage(TKey key);
+
+		/**
+		Método para emitir otros mensajes como los de debug, quitarse vida, o tecla escape
+		@param key Tecla pulsada.
+		*/
+		void OtherMessages(TKey key);
 
 
+		void ScrollWheelChangeWeapon(const CMouseState &mouseState);
 
+		void ChangeWeaponMessage(int iWeapon);
+
+		//-------------------------------------------
+		//             Variables privados
+		//------------------------------------------
+
+		/**
+		Tiempo de la última pulsación
+		*/
+		unsigned int m_iLastTime;
+
+		/**
+		Último movimiento realizado
+		*/
+		E_MOVE m_eLastMove;
+
+		int m_iLastScrollWheelPos;
+
+		int m_iCurrentWeapon;
 
 	}; // class CPlayerController
 

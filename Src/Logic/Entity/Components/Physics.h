@@ -24,8 +24,7 @@ namespace physx {
 };
 
 // Los componentes pertenecen al namespace Logic
-namespace Logic 
-{	
+namespace Logic {	
 	/**
 	Clase abstracta de la que deben heredar todos los componentes físicos. Proporciona un interfaz
 	común para recibir eventos desde el motor de física.
@@ -35,8 +34,7 @@ namespace Logic
 	@author Antonio Sánchez Ruiz-Granados
 	@date Noviembre, 2012
 	*/
-	class IPhysics : public IComponent
-	{
+	class IPhysics : public IComponent {
 	public:
  
 		/**
@@ -66,7 +64,7 @@ namespace Logic
 		// Me he sacado el on shape hit aqui para evitar la ñapa de jose, pero aun asi, no deberia
 		// estar aqui (o al menos eso me dice la intuicion). Quizas la interfaz Iphysics es demasiado
 		// generalista.
-		virtual void onShapeHit(IPhysics *otherComponent) = 0;
+		virtual void onShapeHit(IPhysics *otherComponent, const Vector3& colisionPos, const Vector3& colisionNormal) = 0;
 
 	}; // class IPhysics
 

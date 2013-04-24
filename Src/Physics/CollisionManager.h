@@ -29,7 +29,8 @@ namespace Physics {
 	@date Marzo, 2013
 	*/
 
-	class CCollisionManager : public physx::PxSimulationEventCallback, public physx::PxUserControllerHitReport {
+	class CCollisionManager : public physx::PxSimulationEventCallback, 
+							  public physx::PxUserControllerHitReport {
 	public:
 
 

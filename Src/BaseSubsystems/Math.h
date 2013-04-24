@@ -212,8 +212,22 @@ namespace Math
 		rotation.ToEulerAnglesYXZ(yaw, pitch, roll);
 		Ogre::Radian newPitch = pitch + Ogre::Radian(turn);
 		rotation.FromEulerAnglesYXZ(yaw, newPitch, roll);
-		transform = rotation;
 
+		/*
+<<<<<<< HEAD
+		rotation.ToEulerAnglesYXZ(yaw, pitch, roll);
+		Ogre::Radian newPitch = pitch + Ogre::Radian(turn);
+		rotation.FromEulerAnglesYXZ(yaw, newPitch, roll);
+=======
+		rotation.ToEulerAnglesYZX(yaw, pitch, roll);
+
+		Ogre::Radian newPitch = pitch + Ogre::Radian(turn);
+
+		rotation.FromEulerAnglesYZX(yaw, newPitch, roll);
+>>>>>>> movimiento
+		*/
+
+		transform = rotation;
 	} // pitch
 	
 	/**

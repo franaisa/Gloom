@@ -8,6 +8,7 @@ Screamer CAvatarController CInterpolation CPhysicController CScreamerClient CCli
 Shadow CAvatarController CInterpolation CPhysicController CShadow CClientRespawn CAudio CParticle CAnimatedGraphics
 Hound CAvatarController CInterpolation CPhysicController CHound CClientRespawn CAudio CParticle CAnimatedGraphics
 Archangel CAvatarController CInterpolation CPhysicController CArchangel CClientRespawn CAudio CParticle CAnimatedGraphics
+LocalSpectator CSpectatorController CPhysicController
 ItemSpawn CFloatingMovement CSpawnItemManager CGraphics
 SpawnPoint CPhysicStaticEntity
 Jumper CGraphics CPhysicStaticEntity CJumper CAudio CParticle

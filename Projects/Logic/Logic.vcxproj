@@ -119,6 +119,7 @@
     <ClCompile Include="..\..\Src\Logic\Entity\Components\Shadow.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\SpawnItemManager.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\SpawnPlayer.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\SpectatorController.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\Spike.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\UpdateClientPosition.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\WeaponsManager.cpp" />
@@ -242,6 +243,7 @@
     <ClInclude Include="..\..\Src\Logic\Entity\Components\Shadow.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\SpawnItemManager.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\SpawnPlayer.h" />
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\SpectatorController.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\Spike.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\UpdateClientPosition.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\WeaponsManager.h" />
