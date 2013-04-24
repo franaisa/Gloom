@@ -1258,6 +1258,10 @@ Map = {
 	
 	Spectator = {
 		type = "Spectator",
+	},
+	
+	LocalSpectator = {
+		type = "LocalSpectator",
 		position = {0, 8, 0},
 		acceleration = 0.00075,
 		maxVelocity = 1.1,
@@ -1267,7 +1271,7 @@ Map = {
 		physic_group = 30,
 		physic_groupList = "0",
 	},
-
+	
 	LocalHound = {
 		type = "LocalHound",
 		position = {-182.0, 15.0, 47.0},
