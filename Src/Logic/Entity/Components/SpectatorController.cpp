@@ -21,11 +21,15 @@ del espectador.
 #include "Logic/Messages/MessageMouse.h"
 
 namespace Logic {
+
 	IMP_FACTORY(CSpectatorController);
 
+	//________________________________________________________________________
+
 	CSpectatorController::CSpectatorController() : _frictionCoef(0.95f),
-												   _acceleration(0.0018f), 
+												   _acceleration(0.025f), 
 												   _maxVelocity(2.0f) {
+
 		// Inicializamos el array que contiene los vectores
 		// de cada tecla de movimiento
 		initMovementCommands();
@@ -33,19 +37,25 @@ namespace Logic {
 
 	//________________________________________________________________________
 
+	CSpectatorController::~CSpectatorController() {
+		// Nada que hacer
+	}
+
+	//________________________________________________________________________
+
 	bool CSpectatorController::spawn(CEntity *entity, CMap *map, const Map::CEntity *entityInfo) {
 		if( !IComponent::spawn(entity,map,entityInfo) ) return false;
 
+		/*assert( entityInfo->hasAttribute("frictionCoef") && "Error: No se ha definido el atributo frictionCoef en el mapa" );
+		_frictionCoef = entityInfo->getFloatAttribute("frictionCoef");
+
 		assert( entityInfo->hasAttribute("acceleration") && "Error: No se ha definido el atributo acceleration en el mapa" );
-		//_acceleration = entityInfo->getFloatAttribute("acceleration");
-		//_acceleration = 0.0018f;
+		_acceleration = entityInfo->getFloatAttribute("acceleration");
 
 		assert( entityInfo->hasAttribute("maxVelocity") && "Error: No se ha definido el atributo maxVelocity en el mapa" );
-		//_maxVelocity = entityInfo->getFloatAttribute("maxVelocity");
-		//_maxVelocity = 2.0f;
+		_maxVelocity = entityInfo->getFloatAttribute("maxVelocity");*/
 
 		return true;
-
 	} // spawn
 
 	//________________________________________________________________________
@@ -71,6 +81,10 @@ namespace Logic {
 				// Comando de movimiento
 				if(commandType >=0 && commandType < 8) {
 					executeMovementCommand(commandType);
+				}
+				else if(commandType == Control::JUMP) {
+					// Setear el vector para que flote hacia arriba
+					// el espectador
 				}
 				// Comando de raton
 				else if(commandType == Control::MOUSE) {
@@ -154,9 +168,9 @@ namespace Logic {
 
 		// s = u · t + 1/2 a · t^2 <- Formula del desplazamiento
 		if(_displacementDir.z == 0)
-			_momentum += Vector3(1, 0, 1) * estimateMotionDirection() * _acceleration * msecs * msecs * 0.5f;
+			_momentum += Vector3(1, 0, 1) * estimateMotionDirection() * _acceleration * msecs * 0.5f;
 		else
-			_momentum += estimateMotionDirection() * _acceleration * msecs * msecs * 0.5f;
+			_momentum += estimateMotionDirection() * _acceleration * msecs * 0.5f;
 
 		// Seteamos la velocidad máxima a la que se puede ir
 		normalizeDirection();

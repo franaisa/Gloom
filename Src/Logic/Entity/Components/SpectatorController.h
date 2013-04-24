@@ -1,3 +1,7 @@
+//---------------------------------------------------------------------------
+// SpectatorController.h
+//---------------------------------------------------------------------------
+
 /**
 @file SpectatorController.h
 
@@ -16,54 +20,89 @@ del espectador.
 
 #include "Logic/Entity/Component.h"
 
+// Predeclaración de clases
 namespace Logic {
 	class CMessageControl;
 	class CPhysicController;
 }
 
-//declaración de la clase
+// Declaración de la clase
 namespace Logic {
 
 	/**
-	
+	Componente que controla el manejo del espectador. Se encarga
+	de mandar los comandos de movimiento al controlador físico y
+	de procesar los comandos de movimiento recibidos.
+
+	@ingroup logicGroup
+
+	@author Francisco Aisa García
+	@date Abril, 2013
 	*/
 
 	class CSpectatorController : public IComponent {
 		DEC_FACTORY(CSpectatorController);
 	public:
 
-		/**
-		Constructor por defecto; inicializa los atributos a su valor por 
-		defecto.
-		*/
+
+		// =======================================================================
+		//                      CONSTRUCTORES Y DESTRUCTOR
+		// =======================================================================
+
+
+		/** Constructor por defecto. */
 		CSpectatorController();
 		
+		//________________________________________________________________________
+
+		/** Destructor. */
+		virtual ~CSpectatorController();
+
+
+		// =======================================================================
+		//                    METODOS HEREDADOS DE ICOMPONENT
+		// =======================================================================
+
+
 		/**
-		Inicialización del componente, utilizando la información extraída de
+		Inicialización del componente utilizando la información extraída de
 		la entidad leída del mapa (Maps::CEntity). Toma del mapa el atributo
 		speed que indica a la velocidad a la que se moverá el jugador.
 
+		Inicialización del componente a partir de la información extraida de la entidad
+		leida del mapa:
+		<ul>
+			<li><strong>acceleration:</strong> Aceleración del movimiento del espectador. </li>
+			<li><strong>maxVelocity:</strong> Máxima velocidad a la que se puede mover el espectador. </li>
+			<li><strong>frictionCoef:</strong> Coeficiente de deslizamiento del espectador. </li>
+		</ul>
+
 		@param entity Entidad a la que pertenece el componente.
 		@param map Mapa Lógico en el que se registrará el objeto.
-		@param entityInfo Información de construcción del objeto leído del
-			fichero de disco.
+		@param entityInfo Información de construcción del objeto leído del fichero de disco.
 		@return Cierto si la inicialización ha sido satisfactoria.
 		*/
 		virtual bool spawn(CEntity* entity, CMap *map, const Map::CEntity *entityInfo);
 
-		/**
-		Método que activa el componente; invocado cuando se activa
-		el mapa donde está la entidad a la que pertenece el componente.
-		<p>
-		Si el componente pertenece a la entidad del jugador, el componente
-		se registra así mismo en el controlador del GUI para que las ordenes 
-		se reciban a partir de los eventos de teclado y ratón.
+		//________________________________________________________________________
 
-		@return true si todo ha ido correctamente.
+		/**
+		Metodo que se llama al activar el componente.
+		Resetea los valores de inercia y desplazamiento.
 		*/
 		virtual void activate();
 
+		//________________________________________________________________________
+
+		/**
+		Setea el puntero al componente del controlador físico para evitar overhead
+		de mensajes en el tick.
+
+		@param unsigned int msecs Milisegundos transcurridos desde el último tick.
+		*/
 		virtual void onStart(unsigned int msecs);
+
+		//________________________________________________________________________
 
 		/**
 		Método llamado en cada frame que actualiza el estado del componente.
@@ -75,14 +114,21 @@ namespace Logic {
 		*/
 		virtual void tick(unsigned int msecs);
 
-		/**
-		Método virtual que elige que mensajes son aceptados. Son válidos
-		CONTROL.
+		//________________________________________________________________________
 
+		/** 
+		Este componente acepta los siguientes mensajes:
+
+		<ul>
+			<li>CONTROL</li>
+		</ul>
+		
 		@param message Mensaje a chequear.
 		@return true si el mensaje es aceptado.
 		*/
 		virtual bool accept(CMessage *message);
+
+		//________________________________________________________________________
 
 		/**
 		Método virtual que procesa un mensaje.
@@ -92,14 +138,10 @@ namespace Logic {
 		virtual void process(CMessage *message);
 
 		
+		// =======================================================================
+		//                            METODOS PROPIOS
+		// =======================================================================
 
-		/**
-		Provoca que la entidad gire. Números Positivos para	giro a 
-		derechas, negativos para giro izquierdas.
-
-		@param amount Cantidad de giro. Positivos giro a derechas,
-		negativos a izquierdas.
-		*/
 
 		/**
 		Dado un giro en X y otro en Y provoca que la entidad (y la camara
@@ -109,7 +151,16 @@ namespace Logic {
 		*/
 		void mouse(float XYturn[]);
 
+		//________________________________________________________________________
+
+		/**
+		Dado un enumerado indicando el tipo de movimiento se desplaza al player.
+
+		@param commandType Enumerado que indica el tipo de movimiento a realizar.
+		*/
+		void executeMovementCommand(ControlType commandType);
 		
+
 	protected:
 
 
@@ -118,20 +169,43 @@ namespace Logic {
 		// =======================================================================
 
 
+		/**
+		Dado un vector de dirección simplificado (con cada coordenada entre 0 y 1)
+		devuelve la dirección en la que el player debería mirar una vez aplicada
+		la rotación.
+
+		@param direction Dirección relativa en la que queremos que el player se
+		desplace.
+		*/
 		Vector3 estimateMotionDirection();
 
+		//________________________________________________________________________
+
+		/**
+		Calcula el desplazamiento del espectador.
+
+		@param msecs Milisegundos transcurridos desde el último tick.
+		*/
 		void estimateMotion(unsigned int msecs);
 
-		void executeMovementCommand(ControlType commandType);
+		//________________________________________________________________________
 
+		/** Normaliza el vector de desplazamiento al máximo establecido. */
 		void normalizeDirection();
 
+		//________________________________________________________________________	
+
+		/**
+		Inicializa el array que contiene los vectores que corresponden a cada comando
+		de movimiento.
+		*/
 		void initMovementCommands();
 
 
 		// =======================================================================
 		//                          MIEMBROS PROTEGIDOS
 		// =======================================================================
+
 
 		/** Velocidad máxima a la que nuestro personaje se puede desplazar. */
 		float _maxVelocity;
@@ -151,17 +225,14 @@ namespace Logic {
 		/** Vector de inercia. */
 		Vector3 _momentum;
 
+		/** Puntero al controlador fisico del player. Nos lo quedamos por motivos de eficiencia. */
+		CPhysicController* _physicController;
+
 		/** 
 		Array que contiene los vectores que corresponden a cada uno de los movimientos
 		de desplazamiento y salto que se pueden realizar. 
 		*/
 		Vector3 _movementCommands[8];
-
-
-
-
-		/** Puntero al controlador fisico del player. */
-		CPhysicController* _physicController;
 
 	}; // class CSpectatorController
 
