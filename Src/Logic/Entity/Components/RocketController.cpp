@@ -3,7 +3,7 @@
 
 @see Logic::IComponent
 
-@author Jose Antonio García Yáñez
+@author Francisco Aisa García
 @date Marzo, 2013
 */
 
@@ -129,13 +129,13 @@ namespace Logic {
 				// Emitimos el mensaje de desplazamiento por daños
 				std::shared_ptr<CMessageAddForcePlayer> addForcePlayerMsg = std::make_shared<CMessageAddForcePlayer>();
 				// Seteamos la fuerza y la velocidad
-				addForcePlayerMsg->setPower(0.1f);
-				addForcePlayerMsg->setVelocity(0.12f);
+
 				// Seteamos el vector director del desplazamiento
-				Vector3 direccionImpacto = entitiesHit[i]->getPosition() - _entity->getPosition();
+				/*Vector3 direccionImpacto = entitiesHit[i]->getPosition() - _entity->getPosition();
 				direccionImpacto.normalise();
-				addForcePlayerMsg->setDirection(direccionImpacto);
-				entitiesHit[i]->emitMessage(addForcePlayerMsg);
+
+				msg2->setForce(direccionImpacto*_force);
+				entitiesHit[i]->emitMessage(msg2);*/
 			}
 		}
 

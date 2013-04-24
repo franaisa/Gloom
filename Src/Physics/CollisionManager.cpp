@@ -10,6 +10,7 @@ Contiene la implementación del gestor de colisiones.
 */
 
 #include "CollisionManager.h"
+#include "Conversions.h"
 #include "Logic/Entity/Components/PhysicController.h"
 #include "Logic/Entity/Entity.h"
 
@@ -126,9 +127,14 @@ namespace Physics {
 		// Obtenemos los datos lógicos asociados a la shape que el controller ha golpeado
 		IPhysics* otherComponent = (IPhysics*)hit.shape->getActor().userData;
 
+		// Obtenemos información de la colisión que será relevante para la lógica
+		// de momento solo nos interesa el punto de impacto y su normal
+		Vector3 colisionPos = PxExtendedVec3ToVector3( hit.worldPos );
+		Vector3 colisionNormal = PxVec3ToVector3( hit.worldNormal );
+
 		// Disparamos los metodos onShapeHit de la interfaz logica
-		component->onShapeHit(otherComponent);
-		otherComponent->onShapeHit(component); 
+		component->onShapeHit(otherComponent, colisionPos, colisionNormal);
+		otherComponent->onShapeHit(component, colisionPos, colisionNormal); 
 	}
 
 	//________________________________________________________________________

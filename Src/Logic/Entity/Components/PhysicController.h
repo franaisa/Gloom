@@ -8,8 +8,8 @@ el mundo físico usando character controllers.
 @see Logic::CPhysicEntity
 @see Logic::IPhysics
 
-@author Antonio Sánchez Ruiz-Granados
-@date Noviembre, 2012
+@author Francisco Aisa García
+@date Febrero, 2013
 */
 
 #ifndef __Logic_PhysicController_H
@@ -25,13 +25,9 @@ namespace physx {
 	struct PxControllerShapeHit;
 };
 
-namespace Physics {
-	class CServer;
-};
-
 // Los componentes se definen dentro del namespace Logica
-namespace Logic 
-{
+namespace Logic {
+	
 	/**
 	Componente que se utiliza para representar jugadores y enemigos en el mundo físico usando 
 	character controllers.
@@ -47,9 +43,10 @@ namespace Logic
 	
     @ingroup logicGroup
 
-	@author Antonio Sánchez Ruiz-Granados
-	@date Noviembre, 2012
+	@author Francisco Aisa García
+	@date Febrero, 2013
 	*/
+
 	class CPhysicController : public IPhysics {
 		DEC_FACTORY(CPhysicController);
 	public:
@@ -70,29 +67,6 @@ namespace Logic
 		virtual bool spawn(CEntity* entity, CMap *map, const Map::CEntity *entityInfo);
 
 		/**
-		Este componente sólo acepta mensajes de tipo AVATAR_WALK.
-		*/
-		virtual bool accept(const std::shared_ptr<CMessage>& message);
-		
-		/**
-		Cuando se recibe un mensaje de tipo AVATAR_WALK, se almacena su vector de 
-		desplazamiento para mover el character controller en el próximo tick.
-		De esta forma, si en un ciclo se reciben varios mensaje de tipo AVATAR_WALK 
-		sólo tendrá efecto el último.
-		*/
-		virtual void process(const std::shared_ptr<CMessage>& message);
-
-		/**
-		Este método se invoca en cada ciclo de la simulación y hace lo siguiente:
-		<ul>
-		<li> Actualiza la posición de la entidad lógica usando la información porporcionada por
-		     el motor de física. </li>
-		<li> Mueve el character controller de acuerdo al último mensaje AVATAR_WALK recibido. </li>
-		</ul>
-		*/
-		virtual void tick(unsigned int msecs);
-
-		/**
 		Setea la posición del controlador
 		*/
 		void  setPhysicPosition (const Vector3 &position);
@@ -109,7 +83,7 @@ namespace Logic
 		*/
 		//void onShapeHit (const physx::PxControllerShapeHit &hit);
 
-		virtual void onShapeHit(IPhysics *otherComponent);
+		virtual void onShapeHit(IPhysics *otherComponent, const Vector3& colisionPos, const Vector3& colisionNormal);
 
 		/**
 		Se invoca cuando se produce una colisión entre dos character controllers.
@@ -120,9 +94,21 @@ namespace Logic
 
 		void deactivateSimulation();
 
-		void moveController(Vector3& movement, unsigned int msecs);
+		/**
+		Dado un vector de desplazamiento mueve la cápsula del player en esa dirección.
+		Si se produce alguna colisión durante el desplazamiento se levantan los flags
+		que correspondan en el entero devuelto.
+
+		@param movement Vector de desplazamiento.
+		@param msecs Tiempo durante el que queremos que se produzca el movimiento.
+		@return Los flags de colisión que indican las colisiones que se han producido
+		durante el desplazamiento del controlador.
+		*/
+		unsigned move(const Vector3& movement, unsigned int msecs);
+
 
 	private:
+
 
 		void readCollisionGroupInfo(const Map::CEntity *entityInfo, int& group, std::vector<int>& groupList);
 
@@ -132,18 +118,8 @@ namespace Logic
 		*/
 		void createController(const Map::CEntity *entityInfo);
 
-		// Servidor de física
-		Physics::CServer *_server;
-
 		// Character controller que representa la entidad física en PhysX
-		//physx::PxCapsuleController *_controller;
 		Physics::CCharacterController _controller;
-
-		// Vector de desplazamiento recibido en el último mensaje de tipo AVATAR_WALK. 
-		Vector3 _movement;
-
-		// Indica si el character controller esta apoyado sobre una superficie o cayendo.
-		bool _falling;
 
 	}; // class CPhysicController
 
