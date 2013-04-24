@@ -110,4 +110,9 @@ namespace Graphics
 	}
 
 
+	void CAnimatedEntity::changeMaterialToWeapon(const std::string& materialName){
+		_weapon->setMaterialName(materialName);
+	}
+
+
 } // namespace Graphics

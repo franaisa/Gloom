@@ -54,12 +54,7 @@ namespace Logic
 
 		if(entityInfo->hasAttribute("numWeapons")){
 			int numWeapons = entityInfo->getIntAttribute("numWeapons");
-		_weapons = new  Graphics::CEntity*[numWeapons];	
-			//_weapons[numWeapons];
-
-			// Por ahora leo a mano cada una de las armas que tiene el usuario
-
-			std::string armas[] = {"hammer","sniper","shotGun","miniGun", "grenadeLauncher", "rocketLauncher"};
+			_weapons = new  Graphics::CEntity*[numWeapons];	
 
 			_scene = _entity->getMap()->getScene();
 			eWeaponIndex current;
@@ -76,11 +71,7 @@ namespace Logic
 				//creamos la entidad gráfica del arma para poder atacharla al monigote
 
 				_weapons[i] = new Graphics::CEntity(nameWeapon,entityInfo->getStringAttribute(weapon+"Model")); 
-				
-				
 			}
-
-			//_scene->addEntity(_weapons[0]);
 
 			if(!_weapons)
 				return NULL;
@@ -213,13 +204,11 @@ namespace Logic
 		if(materialName != _currentMaterialWeapon){
 			_currentMaterialWeapon = materialName;
 			CGraphics::changeMaterial(_currentMaterialWeapon);
-			/*
 			if(_currentMaterialWeapon != "original"){
-				_weapons[_currentWeapon]->changeMaterial(materialName);
+				_animatedGraphicsEntity->changeMaterialToWeapon(materialName);
 			}else{
-				_weapons[_currentWeapon]->changeMaterial(toText((eWeaponIndex)_currentWeapon));
+				_animatedGraphicsEntity->changeMaterialToWeapon(toText((eWeaponIndex)_currentWeapon));
 			}
-			*/
 		}
 	}
 

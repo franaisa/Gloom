@@ -136,6 +136,9 @@ namespace Graphics
 		void removeObserver(CAnimatedEntityListener *observer)
 							{if(_observer = observer) _observer = 0;}
 
+		void changeMaterialToWeapon(const std::string& materialName);
+
+
 	protected:
 
 		/**
