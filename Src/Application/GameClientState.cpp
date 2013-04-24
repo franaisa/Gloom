@@ -156,6 +156,17 @@ namespace Application {
 
 				break;
 			}
+			case Net::LOAD_LOCAL_SPECTATOR: {
+				Logic::TEntityID entityId;
+				std::string nickname;
+				
+				buffer.read( &entityId, sizeof(entityId) );
+				buffer.deserialize(nickname);
+				
+				Logic::CEntity* spectator = Logic::CServer::getSingletonPtr()->getMap()->createLocalPlayer(nickname, "Spectator", entityId);
+				spectator->activate();
+				Logic::CServer::getSingletonPtr()->getMap()->getEntityByType("Camera")->getComponent<Logic::CCamera>("CCamera")->setTarget(spectator);
+			}
 		}
 	}
 
@@ -215,19 +226,17 @@ namespace Application {
 
 	//--------------------------------------------------------
 
-	Hikari::FlashValue CGameClientState::classSelected(Hikari::FlashControl* caller, const Hikari::Arguments& args)
-	{
-		
+	Hikari::FlashValue CGameClientState::classSelected(Hikari::FlashControl* caller, const Hikari::Arguments& args) {
 		int selectedClass = args.at(0).getNumber();
 		Net::NetMessageType msgType = Net::CLASS_SELECTED;
-		Net::CBuffer msg (sizeof(msgType) + sizeof(selectedClass));
-		switch(selectedClass)
-		{
+		Net::CBuffer msg ( sizeof(msgType) + sizeof(selectedClass) );
+
+		switch(selectedClass) {
 			case 0:
-				if(Input::CServer::getSingletonPtr()->getPlayerController()->getControllerAvatar()){
+				if(Input::CServer::getSingletonPtr()->getPlayerController()->getControllerAvatar()) {
 					Input::CServer::getSingletonPtr()->getPlayerController()->activate();
 					_seleccion->hide();
-				}else{
+				} else {
 
 				}
 
@@ -241,25 +250,33 @@ namespace Application {
 				//enviamos la clase elegida
 				msg.serialize(msgType);
 				msg.serialize(selectedClass);
-				Net::CManager::getSingletonPtr()->broadcast(msg.getbuffer(), msg.getSize());
+				Net::CManager::getSingletonPtr()->broadcast( msg.getbuffer(), msg.getSize() );
 				break;
-			case 5:
-				{
+			case 5: {
 				_seleccion->hide();
+				
 				//random de la clase y lo enviamos por red
-				int randomclass = ((rand()*clock())%4)+1;
+				/*int randomclass = ((rand()*clock())%4)+1;
 				msg.serialize(msgType);
 				msg.serialize(randomclass);
-				Net::CManager::getSingletonPtr()->broadcast(msg.getbuffer(), msg.getSize());
+				Net::CManager::getSingletonPtr()->broadcast( msg.getbuffer(), msg.getSize() );
+				*/
+
+				// @deprecated Provisionalmente usamos el boton de random como boton
+				// espectador
+				Net::NetMessageType spectatorSelectedMsg = Net::SPECTATE_REQUEST;
+				Net::CBuffer buffer ( sizeof(spectatorSelectedMsg) + sizeof(selectedClass) );
+				buffer.write(&spectatorSelectedMsg, sizeof(spectatorSelectedMsg));
+				buffer.serialize(selectedClass);
+				Net::CManager::getSingletonPtr()->broadcast( buffer.getbuffer(), buffer.getSize() );
+
 				break;
-				}
+			}
 		}//switch
 
 		//enviamos el mensaje
 		
-
 		return FLASH_VOID;
-
 	} // backReleased
 
 };

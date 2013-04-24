@@ -455,7 +455,8 @@ namespace Logic {
 			entityType != "Screamer" &&
 			entityType != "Archangel" &&
 			entityType != "Hound" &&
-			entityType != "Shadow" 
+			entityType != "Shadow" &&
+			entityType != "Spectator"
 			);
 	}
 

@@ -164,11 +164,34 @@ namespace Application {
 				Net::CManager::getSingletonPtr()->sendTo(playerNetId, ackBuffer.getbuffer(), ackBuffer.getSize());
 				break;
 			}
+			case Net::SPECTATE_REQUEST: {
+				// Obtenemos el nickname del jugador que quiere espectar
+				std::string nickname = _playersMgr->getPlayerNickname(playerNetId);
+				// Creamos la entidad espectador con el nombre del jugador
+				Logic::CEntity* spectator = Logic::CServer::getSingletonPtr()->getMap()->createPlayer(nickname, "Spectator");
+				// Obtenemos la id logica de la entidad espectador
+				Logic::TEntityID spectatorId = spectator->getEntityID();
+				// Seteamos la id logica del jugador en el gestor de jugadores
+				_playersMgr->setEntityID(playerNetId, spectatorId);
+
+				// Enviamos el mensaje de carga de espectador
+				Net::NetMessageType msgType = Net::LOAD_LOCAL_SPECTATOR;
+				Net::CBuffer buffer;
+				buffer.write( &msgType, sizeof(msgType) );
+				buffer.write( &spectatorId, sizeof(spectatorId) );
+				buffer.serialize(nickname, false);
+				Net::CManager::getSingletonPtr()->sendTo( playerNetId, buffer.getbuffer(), buffer.getSize() );
+
+				// Activamos al espectador
+				spectator->activate();
+				//_playersMgr->setPlayerState(playerNetId, true);
+				break;
+			}
 			case Net::CLASS_SELECTED: {
 				//primero comprobamos si habia una entidad correspondiente a este jugador
 				//en caso de que la haya la eliminamos para crear la nueva
 				Logic::CEntity* deletePlayer = Logic::CServer::getSingletonPtr()->getMap()->getEntityByID(
-					Logic::CGameNetPlayersManager::getSingletonPtr()->getPlayer(playerNetId).getEntityId().first);
+					_playersMgr->getPlayer(playerNetId).getEntityId().first);
 				if(deletePlayer){
 					Logic::CEntityFactory::getSingletonPtr()->deferredDeleteEntity(deletePlayer,true);
 				}
