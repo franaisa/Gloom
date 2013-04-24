@@ -89,16 +89,14 @@ namespace Logic {
 	//________________________________________________________________________
 
 	bool CAvatarController::accept(CMessage *message) {
-		return message->getMessageType() == Message::CONTROL ||
-			message->getMessageType() == Message::ADDFORCEPLAYER;
+		return message->getMessageType() == Message::CONTROL			||
+			   message->getMessageType() == Message::ADDFORCEPLAYER;
 	} // accept
 
 	//________________________________________________________________________
 
-	
 	void CAvatarController::process(CMessage *message) {
-		switch( message->getMessageType() )
-		{
+		switch( message->getMessageType() ) {
 			case Message::CONTROL: {
 				ControlType commandType = static_cast<CMessageControl*>(message)->getType();
 
@@ -127,8 +125,6 @@ namespace Logic {
 				addForce(static_cast<CMessageAddForcePlayer*>(message)->getForce());
 				break;
 			}
-
-							
 		}
 
 	} // process	
@@ -175,8 +171,6 @@ namespace Logic {
 		// Colision con los pies detectada
 		_touchingGround = collisionFlags & Physics::eCOLLISION_DOWN;
 		
-
-
 		if(collisionFlags & Physics::eCOLLISION_UP) {
 			// Colisión con la cabeza
 			_momentum.y = 0;
@@ -215,22 +209,15 @@ namespace Logic {
 	Vector3 CAvatarController::estimateGroundMotion(unsigned int msecs) {
 		// Si no nos queremos desplazar en ninguna dirección aplicamos el coeficiente
 		// de rozamiento
-		float coef = (_displacementDir == Vector3::ZERO) ? 0.8f : _maxVelocity/(_maxVelocity+(0.5*_acceleration*msecs));;
-		
-		// Multiplicamos la inercia por el coeficiente de rozamiento (para decelerarla)
-
-		//std::cout << "suelo" << std::endl;
+		float coef = (_displacementDir == Vector3::ZERO) ? 0.8f : _maxVelocity/(_maxVelocity+(0.5*_acceleration*msecs));
 		
 		// Aumentamos el desplazamiento en la dirección dada en función de la aceleración
 		// y el tiempo transcurrido -> s = u · t + 1/2 · a · t^2
 		_momentum += Vector3(1,0,1) * estimateMotionDirection(_displacementDir) * _acceleration * msecs * 0.5f;
-		// Seteamos una gravedad fija para que la cápsula colisione contra el suelo
+		// Multiplicamos la inercia por el coeficiente de rozamiento (para decelerarla)
 		_momentum *= coef;
-		
+		// Seteamos una gravedad fija para que la cápsula colisione contra el suelo
 		_momentum.y = _gravity.y * msecs;
-
-		// Fijamos la velocidad de movimiento a la velocidad máxima si es necesario
-		//normalizeDirection();
 		
 		return _momentum;
 	}
@@ -247,32 +234,14 @@ namespace Logic {
 
 		// Aumentamos el desplazamiento en la dirección dada teniendo en cuenta
 		// que nos movemos más lento en el aire -> -> s = u · t + 1/2 · a · t^2
-		std::cout << _momentum << std::endl;
-
 		_momentum += Vector3(speedCoef, 0, speedCoef) * estimateMotionDirection(_displacementDir) * _acceleration * msecs * 0.5f;
 		// Incrementamos el empuje de la gravedad
 		_momentum.y += _gravity.y * msecs * 0.5f;
 
-		//std::cout << (_momentum*Vector3(1,0,1)).length() << " vel max " << _maxVelocity << std::endl;
-
-		// Fijamos la velocidad de movimiento a la velocidad máxima si es necesario
-		//normalizeDirection();
 		// Fijamos la velocidad de caida a la velocidad máxima de caida si es necesario
 		normalizeGravity();
 
 		return _momentum;
-	}
-
-	//________________________________________________________________________
-
-	void CAvatarController::normalizeDirection() {
-		// Normalizamos la velocidad horizontal
-		float momVelocity = (_momentum*Vector3(1,0,1)).length();
-		if(momVelocity >_maxVelocity){
-			double coef = _maxVelocity/momVelocity;
-			_momentum*=Vector3(coef,1,coef);
-			
-		}
 	}
 
 	//________________________________________________________________________

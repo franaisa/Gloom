@@ -79,12 +79,8 @@ namespace Logic {
 				ControlType commandType = static_cast<CMessageControl*>(message)->getType();
 
 				// Comando de movimiento
-				if(commandType >=0 && commandType < 8) {
+				if(commandType >=0 && commandType < 12) {
 					executeMovementCommand(commandType);
-				}
-				else if(commandType == Control::JUMP) {
-					// Setear el vector para que flote hacia arriba
-					// el espectador
 				}
 				// Comando de raton
 				else if(commandType == Control::MOUSE) {
@@ -133,9 +129,9 @@ namespace Logic {
 
 	//________________________________________________________________________
 
-	Vector3 CSpectatorController::estimateMotionDirection() {
+	Vector3 CSpectatorController::estimateMotionDirection() const {
 		// Si nuestro movimiento es nulo no hacemos nada
-		if(_displacementDir == Vector3::ZERO) return Vector3::ZERO;
+		if(_displacementDir * Vector3(1, 0, 1) == Vector3::ZERO) return Vector3::ZERO;
 
 		// Mediante trigonometria basica sacamos el angulo que forma el desplazamiento
 		// que queremos llevar a cabo
@@ -167,10 +163,21 @@ namespace Logic {
 		_momentum *= _frictionCoef;
 
 		// s = u · t + 1/2 a · t^2 <- Formula del desplazamiento
-		if(_displacementDir.z == 0)
+		if(_displacementDir.z == 0) {
 			_momentum += Vector3(1, 0, 1) * estimateMotionDirection() * _acceleration * msecs * 0.5f;
-		else
-			_momentum += estimateMotionDirection() * _acceleration * msecs * 0.5f;
+
+			if(_displacementDir.y != 0)
+				_momentum += Vector3(0, 1, 0) * _displacementDir * _acceleration * msecs * 0.5f;
+		}
+		else {
+			if(_displacementDir.y == 0) {
+				_momentum += estimateMotionDirection() * _acceleration * msecs * 0.5f;
+			}
+			else {
+				_momentum += Vector3(1, 0, 1) * estimateMotionDirection() * _acceleration * msecs * 0.5f;
+				_momentum += Vector3(0, 1, 0) * _displacementDir * _acceleration * msecs * 0.5f;
+			}
+		}
 
 		// Seteamos la velocidad máxima a la que se puede ir
 		normalizeDirection();
@@ -205,6 +212,10 @@ namespace Logic {
 		_movementCommands[Control::STOP_WALKBACK]		= Vector3(0,0,1);
 		_movementCommands[Control::STOP_STRAFE_LEFT]	= Vector3(-1,0,0);
 		_movementCommands[Control::STOP_STRAFE_RIGHT]	= Vector3(1,0,0);
+		_movementCommands[Control::CROUCH]				= Vector3(0, -1, 0);
+		_movementCommands[Control::STOP_CROUCH]			= Vector3(0, 1, 0);
+		_movementCommands[Control::JUMP]				= Vector3(0, 1, 0);
+		_movementCommands[Control::STOP_JUMP]			= Vector3(0, -1, 0);
 	}
 
 } // namespace Logic

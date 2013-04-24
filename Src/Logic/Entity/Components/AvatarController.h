@@ -254,14 +254,6 @@ namespace Logic {
 		//________________________________________________________________________
 
 		/**
-		Normaliza el desplazamiento horizontal si nuestra velocidad es mayor al
-		máximo establecido.
-		*/
-		void normalizeDirection();
-
-		//________________________________________________________________________
-
-		/**
 		Normaliza el desplazamiento vertical si nuestra velocidad de caida es mayor
 		al máximo establecido.
 		*/
@@ -333,10 +325,10 @@ namespace Logic {
 		Array que contiene los vectores que corresponden a cada uno de los movimientos
 		de desplazamiento y salto que se pueden realizar. 
 		*/
-		Vector3 _movementCommands[15];
+		Vector3 _movementCommands[18];
 
 		/** Número máximo de comandos de movimiento. */
-		static const int MAX_MOVEMENT_COMMANDS = Control::JUMP;
+		static const int MAX_MOVEMENT_COMMANDS = Control::CROUCH;
 
 	}; // class CAvatarController
 

@@ -177,7 +177,7 @@ namespace Logic {
 		@param direction Dirección relativa en la que queremos que el player se
 		desplace.
 		*/
-		Vector3 estimateMotionDirection();
+		Vector3 estimateMotionDirection() const;
 
 		//________________________________________________________________________
 
@@ -232,7 +232,7 @@ namespace Logic {
 		Array que contiene los vectores que corresponden a cada uno de los movimientos
 		de desplazamiento y salto que se pueden realizar. 
 		*/
-		Vector3 _movementCommands[8];
+		Vector3 _movementCommands[12];
 
 	}; // class CSpectatorController
 

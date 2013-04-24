@@ -107,8 +107,11 @@ namespace Logic
 			STRAFE_RIGHT,
 			STOP_STRAFE_LEFT,
 			STOP_STRAFE_RIGHT,
-			
+			CROUCH,
+			STOP_CROUCH,
+
 			// Salto
+			STOP_JUMP,
 			JUMP,
 			SIDEJUMP_LEFT,
 			SIDEJUMP_RIGHT,
