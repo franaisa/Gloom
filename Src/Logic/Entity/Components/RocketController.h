@@ -122,9 +122,6 @@ namespace Logic {
 		/** Entidad que ha disparado la granada. */
 		CEntity* _owner;
 
-		/** true si la granada a golpeado a un enemigo. */
-		bool _enemyHit;
-
 		/** Velocidad a la que viaja el misil. */
 		float _rocketSpeed;
 

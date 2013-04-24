@@ -6,6 +6,9 @@ Contiene la implementación del componente que gestiona la aplicacion de una fuer
 @see Logic::CJumper
 @see Logic::IComponent
 
+
+@author Rubén Mulero Guerrero
+@date april, 2013
 */
 
 #include "Jumper.h"
@@ -89,15 +92,12 @@ namespace Logic
 		m->setForce(_force+Vector3(0,5,0));
 		entity->emitMessage(m);
 
-
 	} // applyJump
 	//---------------------------------------------------------
 
 		//---------------------------------------------------------
 	void CJumper::tick(unsigned int msecs) {
 		IComponent::tick(msecs);
-
-
 
 	} // tick
 
