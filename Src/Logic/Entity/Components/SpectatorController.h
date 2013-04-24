@@ -1,17 +1,16 @@
 //---------------------------------------------------------------------------
-// AvatarController.h
+// SpectatorController.h
 //---------------------------------------------------------------------------
 
 /**
-@file AvatarController.h
+@file SpectatorController.h
 
 Contiene la declaración del componente que controla el movimiento 
-de la entidad.
+del espectador.
 
-@see Logic::CAvatarController
+@see Logic::CSpectatorController
 @see Logic::IComponent
 
-@author Rubén Mulero Guerrero
 @author Francisco Aisa García
 @date Abril, 2013
 */
@@ -31,25 +30,18 @@ namespace Logic {
 namespace Logic {
 
 	/**
-	Este componente es el encargado de mover a una entidad animada. Tiene
-	diferentes métodos que permiten avances o giros. El uso de este componente
-	es un poco atípico ya que se puede registrar en otro controlador externo
-	(i.e. GUI::CPlayerController) que sea el que de las órdenes que se deben
-	llevar a cabo mediante llamadas a métodos públicos del componente.
+	Componente que controla el manejo del espectador. Se encarga
+	de mandar los comandos de movimiento al controlador físico y
+	de procesar los comandos de movimiento recibidos.
 
-	Realmente este es el componente que da las ordenes al character controller.
-	Esta hecho así para facilitar la implementación de otro tipo de controladores
-	de entidad como por ejemplo el espectador.
-	
-    @ingroup logicGroup
+	@ingroup logicGroup
 
-	@author Rubén Mulero Guerrero
 	@author Francisco Aisa García
 	@date Abril, 2013
 	*/
 
-	class CAvatarController : public IComponent {
-		DEC_FACTORY(CAvatarController);
+	class CSpectatorController : public IComponent {
+		DEC_FACTORY(CSpectatorController);
 	public:
 
 
@@ -59,12 +51,12 @@ namespace Logic {
 
 
 		/** Constructor por defecto. */
-		CAvatarController();
-
+		CSpectatorController();
+		
 		//________________________________________________________________________
 
-		/** Destructor por defecto. */
-		virtual ~CAvatarController();
+		/** Destructor. */
+		virtual ~CSpectatorController();
 
 
 		// =======================================================================
@@ -80,14 +72,9 @@ namespace Logic {
 		Inicialización del componente a partir de la información extraida de la entidad
 		leida del mapa:
 		<ul>
-			<li><strong>acceleration:</strong> Aceleración del movimiento del player. </li>
-			<li><strong>maxVelocity:</strong> Máxima velocidad a la que puede correr el player. </li>
-			<li><strong>frictionCoef:</strong> Coeficiente de deceleración del movimiento terrestre. </li>
-			<li><strong>airFrictionCoef:</strong> Coeficiente de deceleración del movimiento aereo. </li>
-			<li><strong>airSpeedCoef:</strong> Coeficiente de movimiento aereo. </li>
-			<li><strong>gravity:</strong> Valor de la aceleración de la gravedad del player. </li>
-			<li><strong>jumpForce:</strong> Fuerza de salto. </li>
-			<li><strong>dodgeForce:</strong> Fuerza del salto de esquiva. </li>
+			<li><strong>acceleration:</strong> Aceleración del movimiento del espectador. </li>
+			<li><strong>maxVelocity:</strong> Máxima velocidad a la que se puede mover el espectador. </li>
+			<li><strong>frictionCoef:</strong> Coeficiente de deslizamiento del espectador. </li>
 		</ul>
 
 		@param entity Entidad a la que pertenece el componente.
@@ -134,7 +121,6 @@ namespace Logic {
 
 		<ul>
 			<li>CONTROL</li>
-			<li>ADDFORCEPLAYER</li>
 		</ul>
 		
 		@param message Mensaje a chequear.
@@ -151,7 +137,7 @@ namespace Logic {
 		*/
 		virtual void process(const std::shared_ptr<CMessage>& message);
 
-
+		
 		// =======================================================================
 		//                            METODOS PROPIOS
 		// =======================================================================
@@ -173,34 +159,7 @@ namespace Logic {
 		@param commandType Enumerado que indica el tipo de movimiento a realizar.
 		*/
 		void executeMovementCommand(ControlType commandType);
-
-		//________________________________________________________________________
-
-		/**
-		Provoca que la entidad salte en vertical.
-		*/
-		void executeJump();
-
-		//________________________________________________________________________
-
-		/**
-		Dado un enumerado indicando el tipo de salto esquiva se ejecuto dicho salto
-		en el player.
-
-		@param commandType Enumerado que indica el tipo de esquiva a realizar.
-		*/
-		void executeDodge(ControlType commandType);
-
-		//________________________________________________________________________
-
-		/**
-		Dado un vector de fuerza (dirección + magnitud) empuja al player en dicha
-		dirección.
-
-		@param force Vector de fuerza.
-		*/
-		void addForce(const Vector3 &force);
-
+		
 
 	protected:
 
@@ -211,17 +170,6 @@ namespace Logic {
 
 
 		/**
-		Dado un entero con los flags de colisión reportados por el controlador 
-		físico, actua sobre el movimiento del player.
-
-		@param collisionFlags Flags de colisión generados por el controlador 
-		físico del player.
-		*/
-		void manageCollisions(unsigned collisionFlags);
-
-		//________________________________________________________________________
-
-		/**
 		Dado un vector de dirección simplificado (con cada coordenada entre 0 y 1)
 		devuelve la dirección en la que el player debería mirar una vez aplicada
 		la rotación.
@@ -229,37 +177,23 @@ namespace Logic {
 		@param direction Dirección relativa en la que queremos que el player se
 		desplace.
 		*/
-		Vector3 estimateMotionDirection(const Vector3& direction);
+		Vector3 estimateMotionDirection() const;
 
 		//________________________________________________________________________
 
 		/**
-		Calcula el desplazamiento del jugador sobre el suelo.
+		Calcula el desplazamiento del espectador.
 
 		@param msecs Milisegundos transcurridos desde el último tick.
-		@return El vector de desplazamiento.
 		*/
-		Vector3 estimateGroundMotion(unsigned int msecs);
+		void estimateMotion(unsigned int msecs);
 
 		//________________________________________________________________________
 
-		/**
-		Calcula el desplazamiento del jugador en el aire.
+		/** Normaliza el vector de desplazamiento al máximo establecido. */
+		void normalizeDirection();
 
-		@param msecs Milisegundos transcurridos desde el último tick.
-		@return El vector de desplazamiento.
-		*/
-		Vector3 estimateAirMotion(unsigned int msecs);
-
-		//________________________________________________________________________
-
-		/**
-		Normaliza el desplazamiento vertical si nuestra velocidad de caida es mayor
-		al máximo establecido.
-		*/
-		void normalizeGravity();
-
-		//________________________________________________________________________
+		//________________________________________________________________________	
 
 		/**
 		Inicializa el array que contiene los vectores que corresponden a cada comando
@@ -273,44 +207,17 @@ namespace Logic {
 		// =======================================================================
 
 
-		/** true si el personaje está tocando el suelo, false si esta en el aire. */
-		bool _touchingGround;
-
-		/** Vector de gravedad, puede ser sustituido por un flotante. */
-		Vector3 _gravity;
-
-		/** Velocidad máxima de caida. */
-		float _maxGravVelocity;
-
 		/** Velocidad máxima a la que nuestro personaje se puede desplazar. */
 		float _maxVelocity;
 
-		/** Velocidad de aceleración del personaje al desplazarse. */
-		float _acceleration;
-
-		/** 
-		Coeficiente de rozamiento en el suelo, entre 0 y el tamaño de los msecs
-		del tick. A mayor valor, mayor deslizamiento.
-		*/
-		float _frictionCoef;
-		
 		/** 
 		Coeficiente de rozamiento del aire, entre 0 y 1. A menor valor, menor
 		recorrido en el aire. 
 		*/
-		float _airFrictionCoef;
+		float _frictionCoef;
 
-		/**
-		Coeficiente de movimiento aereo, entre 0 y el tamaño de los msecs del tick.
-		A mayor valor, mayor desplazamiento aereo.
-		*/
-		float _airSpeedCoef;
-
-		/** Fuerza de salto vertical. */
-		float _jumpForce;
-
-		/** Vector de salto esquiva. */
-		Vector3 _dodgeForce;
+		/** Velocidad de aceleración del personaje al desplazarse. */
+		float _acceleration;
 
 		/** Vector que indica la dirección del desplazamiento que el controlador debe realizar. */
 		Vector3 _displacementDir;
@@ -327,12 +234,9 @@ namespace Logic {
 		*/
 		Vector3 _movementCommands[18];
 
-		/** Número máximo de comandos de movimiento. */
-		static const int MAX_MOVEMENT_COMMANDS = Control::CROUCH;
+	}; // class CSpectatorController
 
-	}; // class CAvatarController
-
-	REG_FACTORY(CAvatarController);
+	REG_FACTORY(CSpectatorController);
 
 } // namespace Logic
 

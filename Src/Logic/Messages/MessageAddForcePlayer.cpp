@@ -10,53 +10,30 @@ namespace Logic {
 		// Nada que hacer
 	} //
 	//----------------------------------------------------------
-	float CMessageAddForcePlayer::getPower(){
-		return _power;
+
+	void CMessageAddForcePlayer::setForce(Vector3 force){
+		_force=force;
 	}//
 	//----------------------------------------------------------
 
-	void CMessageAddForcePlayer::setPower(float power){
-		_power=power;
-	}//
-	//----------------------------------------------------------
-
-	void CMessageAddForcePlayer::setVelocity(float velocity){
-		_velocity=velocity;;
-	}//
-	//----------------------------------------------------------
-
-	float CMessageAddForcePlayer::getVelocity(){
-		return _velocity;
-	}//
-	//----------------------------------------------------------
-
-	void CMessageAddForcePlayer::setDirection(Vector3 direction){
-		_direction=direction;
-	}//
-	//----------------------------------------------------------
-
-	Vector3 CMessageAddForcePlayer::getDirection(){
-		return _direction;
+	Vector3 CMessageAddForcePlayer::getForce(){
+		return _force;
 	}//
 	//----------------------------------------------------------
 
 	Net::CBuffer* CMessageAddForcePlayer::serialize() {
 		assert(_tempBuffer == NULL);
 		//
-		_tempBuffer = new Net::CBuffer(sizeof(int) + (sizeof(float) * 5));
+		_tempBuffer = new Net::CBuffer(sizeof(int) + sizeof(float));
 		_tempBuffer->serialize(std::string("CMessageAddForcePlayer"), true);
-		_tempBuffer->serialize(_power);
-		_tempBuffer->serialize(_velocity);
-		_tempBuffer->serialize(_direction);
+		_tempBuffer->serialize(_force);
 
 		return _tempBuffer;
 	}//
 	//----------------------------------------------------------
 
 	void CMessageAddForcePlayer::deserialize(Net::CBuffer& buffer) {
-		buffer.deserialize(_power);
-		buffer.deserialize(_velocity);
-		buffer.deserialize(_direction);
+		buffer.deserialize(_force);
 	}
 
 };

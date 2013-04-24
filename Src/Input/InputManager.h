@@ -341,6 +341,9 @@ namespace Input
 			movY = 0;
 			scrool = 0;
 			button =  Button::UNASSIGNED;
+
+			posAbsZ = 0;
+			posRelZ = 0;
 		}
 
 		/**
@@ -434,6 +437,8 @@ namespace Input
 		Button::UNASSIGNED.
 		*/
 		TButton button;
+
+		float posAbsZ, posRelZ;
 	};
 	
 	/**
