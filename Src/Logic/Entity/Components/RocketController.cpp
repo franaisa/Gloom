@@ -32,7 +32,7 @@ namespace Logic {
 	
 	IMP_FACTORY(CRocketController);
 
-	CRocketController::CRocketController() : { 
+	CRocketController::CRocketController() { 
 		// Nada que hacer
 	}
 
