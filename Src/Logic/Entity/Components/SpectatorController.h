@@ -232,7 +232,7 @@ namespace Logic {
 		Array que contiene los vectores que corresponden a cada uno de los movimientos
 		de desplazamiento y salto que se pueden realizar. 
 		*/
-		Vector3 _movementCommands[12];
+		Vector3 _movementCommands[18];
 
 	}; // class CSpectatorController
 

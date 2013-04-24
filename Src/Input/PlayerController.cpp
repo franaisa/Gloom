@@ -124,7 +124,7 @@ namespace Input {
 			case Input::Key::SPACE:
 				m->setType(Logic::Control::STOP_JUMP);
 				break;
-			case Input::Key::C:
+			case Input::Key::Z:
 				m->setType(Logic::Control::STOP_CROUCH);
 				break;
 			case Input::Key::Q:
@@ -248,7 +248,7 @@ namespace Input {
 			return 0;//Change weapon
 		}
 		else if (key.keyId == Input::Key::W || key.keyId == Input::Key::A || key.keyId == Input::Key::S || key.keyId == Input::Key::D 
-			|| key.keyId == Input::Key::Q || key.keyId == Input::Key::E || key.keyId == Input::Key::SPACE || key.keyId == Input::Key::C )
+			|| key.keyId == Input::Key::Q || key.keyId == Input::Key::E || key.keyId == Input::Key::SPACE || key.keyId == Input::Key::Z )
 		{
 			return 1; //Movement
 		}
@@ -430,7 +430,7 @@ namespace Input {
 			case Input::Key::SPACE:
 				m->setType(Logic::Control::JUMP);
 				break;
-			case Input::Key::C:
+			case Input::Key::Z:
 				m->setType(Logic::Control::CROUCH);
 				break;
 

@@ -134,7 +134,7 @@ namespace Logic {
 
 		<ul>
 			<li>CONTROL</li>
-			<li>ADD_FORCE</li>
+			<li>ADDFORCEPLAYER</li>
 		</ul>
 		
 		@param message Mensaje a chequear.
