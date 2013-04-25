@@ -115,11 +115,9 @@ namespace Input {
 				m->setType(Logic::Control::STOP_WALKBACK);
 				break;
 			case Input::Key::A:
-				std::cout << "Stop strafe left" << std::endl;
 				m->setType(Logic::Control::STOP_STRAFE_LEFT);
 				break;
 			case Input::Key::D:
-				std::cout << "Stop strafe right" << std::endl;
 				m->setType(Logic::Control::STOP_STRAFE_RIGHT);
 				break;
 			case Input::Key::SPACE:
@@ -135,7 +133,6 @@ namespace Input {
 				m->setType(Logic::Control::STOP_SECONDARY_SKILL);
 				break;
 			case Input::Key::ESCAPE:// esto debe desaparecer en el futuro
-					std::cout << "escape pulsado" << std::endl;
 					return false;
 			//default:
 				//return true;
@@ -325,12 +322,10 @@ namespace Input {
 			case Input::Key::W:
 				if ((iDiffTime < MAX_TIME_DOBULE_PUSH)	&& (m_eLastMove == WALK))	
 				{
-					std::cout << "Salto adelante!!!" << iDiffTime << std::endl;
 					m->setType(Logic::Control::DODGE_FORWARD);
 				}
 				else
 				{
-					std::cout << "Walk" << iDiffTime  << std::endl;
 					m->setType(Logic::Control::WALK);
 				}
 				m_iLastTime=clock();
@@ -339,12 +334,10 @@ namespace Input {
 			case Input::Key::S:
 				if ((iDiffTime < MAX_TIME_DOBULE_PUSH)	&& (m_eLastMove == WALKBACK))	
 				{
-					std::cout << "Salto atrás!!!" << iDiffTime << std::endl;
 					m->setType(Logic::Control::DODGE_BACKWARDS);
 				}
 				else
 				{
-					std::cout << "Walkback " << iDiffTime  << std::endl;
 					m->setType(Logic::Control::WALKBACK);				
 				}
 				m_iLastTime=clock();
@@ -353,12 +346,10 @@ namespace Input {
 			case Input::Key::A:
 				if ((iDiffTime < MAX_TIME_DOBULE_PUSH)	&& (m_eLastMove == LEFT))	
 				{
-					std::cout << "SALTO IZQUIERDA!!!" << iDiffTime << std::endl;
 					m->setType(Logic::Control::SIDEJUMP_LEFT);
 				}
 				else
 				{
-					std::cout << "Stafe left - Time" << iDiffTime  << std::endl;
 					m->setType(Logic::Control::STRAFE_LEFT);
 				}
 				m_eLastMove = LEFT;
@@ -367,12 +358,10 @@ namespace Input {
 			case Input::Key::D:
 				if ((iDiffTime < MAX_TIME_DOBULE_PUSH) && (m_eLastMove == RIGHT))
 				{
-					std::cout << "SALTO DERECHA!!!" << iDiffTime  << std::endl;
 					m->setType(Logic::Control::SIDEJUMP_RIGHT);
 				}
 				else
 				{
-					std::cout << "Stafe right - Time" <<  iDiffTime << std::endl;
 					m->setType(Logic::Control::STRAFE_RIGHT);
 				}
 				m_iLastTime=clock();

@@ -175,7 +175,7 @@ namespace Logic  {
 		/**
 		variable que indica el ping con el que estamos corrigiendo
 		*/
-		float _actualPing;
+		unsigned int _actualPing;
 
 		/**
 		dirección en la que se está moviendo el server

@@ -10,6 +10,7 @@
 
 #include "Logic/Entity/Entity.h"
 #include "PhysicController.h"
+#include "AvatarController.h"
 #include "Logic/Server.h"
 #include "Logic/Maps/Map.h"
 #include "Map/MapEntity.h"
@@ -78,14 +79,15 @@ namespace Logic  {
 			Vector3 direction = _serverDirection*Vector3(1,0,1);
 		
 			//calculamos el movimiento que debe hacer el monigote, mucho mas lento del que debe hacer de normal
-			direction *=(_speed/10)*msecs;
+			direction *=(_entity->getComponent<CAvatarController>("CAvatarController")->getVelocity()/5);
 			
 			//si nos hemos pasado, debemos moverlo al sitio
 			if(direction.length() > _distance){
 				direction*=(_distance/direction.length());
 			}
-			
-			_entity->getComponent<CPhysicController>("CPhysicController")->move(Vector3(direction), msecs);
+			//std::cout << direction.length() << " contra " << _entity->getComponent<CAvatarController>("CAvatarController")->getVelocity().length() << std::endl;
+			//_entity->getComponent<CAvatarController>("CAvatarController")->addForce(Vector3(direction));
+			_entity->getComponent<CPhysicController>("CPhysicController")->move(direction,msecs);
 			//std::cout << "nueva pos lenght " << _distance << std::endl << std::endl;
 			_distance -= direction.length();
 			
@@ -142,7 +144,8 @@ namespace Logic  {
 			// nos guardamos la posi que nos han dado por si tenemos que interpolar
 			_serverPos = syncMsg->getTransform();
 			//calculo el ping que tengo ahora mismo
-			_actualPing = clock()+Logic::CServer::getSingletonPtr()->getDiffTime()-syncMsg->getTime();
+			int ping = clock()+Logic::CServer::getSingletonPtr()->getDiffTime()-syncMsg->getTime();
+			_actualPing = abs(ping);
 			//calculamos la interpolacion
 			calculateInterpolation();
 
@@ -257,23 +260,23 @@ namespace Logic  {
 
 	void CInterpolation::calculateInterpolation(){
 		
-		//calculamos la distancia que hay entre donde estoy y donde me dice el servidor que debería estar
+		//primero debemos setear la posición del servidor, suponiendo donde debe estar en el tiempo
+		//que ha tardado la información en llegar hasta aquí
 		Vector3 serverPos = _serverPos.getTrans();
-		serverPos = (_entity->getPosition() - serverPos)*Vector3(1,0,1);
-		float distance = serverPos.length();
+		Vector3 serverDisplacement = _entity->getComponent<CAvatarController>("CAvatarController")->getVelocity();
+		//serverDisplacement*=_actualPing/_msecs;
 
-		//calculo la distancia que habría recorrido trasladándome hacia la posi que me ha dado el servidor
-		Vector3 direction = serverPos.normalisedCopy();
-		float speed = (_oldPos-_entity->getPosition()).length()/_msecs;
-		float myDistance = direction.length() * _actualPing * speed;
+		//esta es la posi que suponemos que tiene el server en eeste momento
+		serverPos+=serverDisplacement;
 
-		//re seteamos la posi del servidor en donde nos debe tener ahora mas o menos
-		direction *= _actualPing * speed;
+		//direccion de interpolación
+		Vector3 intDirection = serverPos - _entity->getPosition();
 
-		_serverPos.setTrans(_serverPos.getTrans()+direction);
+		float distance = intDirection.length();
 
-		//seteo la distancia real
-		distance = distance-myDistance;
+		//std::cout << "estoy en " << _entity->getPosition() << */" y el server en " << _serverPos.getTrans() << std::endl;
+		std::cout << "supongo que el server esta en " << _actualPing/_msecs << std::endl << std::endl;
+
 		if(distance > _maxDistance){
 			_entity->getComponent<CPhysicController>("CPhysicController")->setPhysicPosition(_serverPos.getTrans());
 			//Movemos la orientacion logica/grafica
@@ -285,9 +288,8 @@ namespace Logic  {
 		//si la distancia es mayor que min distance y menor que maxDistance interpolamos
 		else if(distance > _minDistance){
 			//calculamos donde nos debería tener el server mas o menos
-			direction = (_serverPos.getTrans() - _entity->getPosition())*Vector3(1,0,1);
 
-			_serverDirection = direction.normalisedCopy();
+			_serverDirection = intDirection.normalisedCopy();
 			_distance = distance;
 
 			_interpolating = true;
