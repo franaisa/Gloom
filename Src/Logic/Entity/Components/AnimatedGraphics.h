@@ -135,6 +135,7 @@ namespace Logic
 		*/
 		std::string _defaultAnimation;
 
+		std::string _originalMaterialWeapon;
 
 		int _currentWeapon;
 

@@ -6,6 +6,8 @@ Contiene la implementación del componente que gestiona la aplicacion de una fuer
 @see Logic::CJumper
 @see Logic::IComponent
 
+@author Rubén Mulero Guerrero
+@date april, 2013
 */
 
 #include "Jumper.h"
@@ -34,14 +36,8 @@ namespace Logic
 		if(!IComponent::spawn(entity,map,entityInfo))
 			return false;
 
-		if(entityInfo->hasAttribute("power"))
-			_power = entityInfo->getFloatAttribute("power");
-
-		if(entityInfo->hasAttribute("velocity"))
-			_velocity = entityInfo->getFloatAttribute("velocity");
-
-		if(entityInfo->hasAttribute("direction"))
-			_direction = entityInfo->getVector3Attribute("direction");
+		if(entityInfo->hasAttribute("force"))
+			_force = entityInfo->getVector3Attribute("force");
 
 		if(entityInfo->hasAttribute("audio"))
 			_audio = entityInfo->getStringAttribute("audio");
@@ -88,25 +84,12 @@ namespace Logic
 	} // process
 	//---------------------------------------------------------
 
-	
-	//---------------------------------------------------------
-
-	void CJumper::applyJump(CEntity *entity)
-	{
+	void CJumper::applyJump(CEntity *entity) {
 		std::shared_ptr<CMessageAddForcePlayer> forcePlayerMsg = std::make_shared<CMessageAddForcePlayer>();
-		forcePlayerMsg->setPower(_power);
-		forcePlayerMsg->setVelocity(_velocity);
-		forcePlayerMsg->setDirection(_direction);
+		forcePlayerMsg->setForce(_force+Vector3(0,5,0));
 		entity->emitMessage(forcePlayerMsg);
-
-
 	} // applyJump
 	//---------------------------------------------------------
-
-		//---------------------------------------------------------
-	void CJumper::tick(unsigned int msecs) {
-
-	} // tick
 
 } // namespace Logic
 

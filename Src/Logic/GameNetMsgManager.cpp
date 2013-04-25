@@ -10,7 +10,8 @@ Contiene la implementación del gestor de los mensajes de red durante la partida.
 @see Logic::Manager::IObserver
 @see Logic::CGameNetMsgManager
 
-@author David Llansó
+@author Rubén Mulero
+@author Francisco Aisa
 @date Febrero, 2011
 */
 

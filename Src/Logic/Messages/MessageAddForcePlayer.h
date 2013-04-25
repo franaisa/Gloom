@@ -9,21 +9,15 @@ namespace Logic {
 	DEC_FACTORYMESSAGE(CMessageAddForcePlayer);
 	public:
 		CMessageAddForcePlayer();
-		void setPower(float power);
-		float getPower();
-		void setVelocity(float velocity);
-		float getVelocity();
-		void setDirection(Vector3 direction);
-		Vector3 getDirection();
+		void setForce(Vector3 force);
+		Vector3 getForce();
 		~CMessageAddForcePlayer(){};
 		
 		virtual Net::CBuffer* serialize();
 		virtual void deserialize(Net::CBuffer& buffer);
 
 	protected:
-		float _power;
-		float _velocity;
-		Vector3 _direction;
+		Vector3 _force;
 	};
 	REG_FACTORYMESSAGE(CMessageAddForcePlayer);
 

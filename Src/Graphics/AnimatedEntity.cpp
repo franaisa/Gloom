@@ -24,6 +24,7 @@ con animaciones.
 #include <OgreEntity.h>
 #include <OgreAnimationState.h>
 #include <OgreSceneManager.h>
+#include <OgreSubEntity.h>
 
 namespace Graphics 
 {
@@ -107,6 +108,15 @@ namespace Graphics
 		_weapon = _scene->getSceneMgr()->createEntity("weapon"+id, arma.getMesh());
 		_entity->attachObjectToBone("Bip01 R Hand",_weapon);
 
+	}
+
+	std::string CAnimatedEntity::getWeaponMaterial(){
+		return _weapon->getSubEntity(0)->getMaterialName();
+	}
+
+	void CAnimatedEntity::changeMaterialToWeapon(const std::string& materialName){
+		_weapon->setMaterialName(materialName);
+		//_weapon->getSubEntity(0)->getMaterialName();
 	}
 
 

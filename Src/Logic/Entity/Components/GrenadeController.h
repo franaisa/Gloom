@@ -145,6 +145,9 @@ namespace Logic {
 		/** Daño de la explosion. */
 		float _explotionDamage;
 
+		/** Fuerza de la explosion*/
+		float _explotionForce;
+
 		/** Ruta del sonido de la explosion. */
 		std::string _audioExplotion;
 

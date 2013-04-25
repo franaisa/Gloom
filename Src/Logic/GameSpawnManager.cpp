@@ -97,10 +97,10 @@ namespace Logic {
 			if(!_listSpawnPoints[i]->getComponent<CPhysicStaticEntity>("CPhysicStaticEntity")->getInTrigger())
 				disponibles++;
 		std::cout << "EL NUMERO DE PUNTOS DE SPAWN DISPONIBLES ES: " << _listSpawnPoints.size() << std::endl;*/
-		int random=rand()%_listSpawnPoints.size();
+		int random=(rand()*clock())%_listSpawnPoints.size();
 		//Mientras que nos devuelva que el trigger esta activado buscamos otro punto
 		while(_listSpawnPoints[random]->getComponent<CPhysicStaticEntity>("CPhysicStaticEntity")->getInTrigger())
-			random=rand()%_listSpawnPoints.size();
+			random=(rand()*clock())%_listSpawnPoints.size();
 		return _listSpawnPoints[random];
 	}
 

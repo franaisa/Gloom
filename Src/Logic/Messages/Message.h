@@ -96,11 +96,11 @@ namespace Logic
 	/**
 	Namespace para los tipos de mensajes de control posibles.
 	*/
-	namespace Control
-	{
-		enum ControlType
-		{
+	namespace Control {
+		enum ControlType {
 			UNASSIGNED = 0xFFFFFFFF,
+			
+			// Movimiento
 			WALK,
 			WALKBACK,
 			STOP_WALK,
@@ -109,24 +109,36 @@ namespace Logic
 			STRAFE_RIGHT,
 			STOP_STRAFE_LEFT,
 			STOP_STRAFE_RIGHT,
+			CROUCH,
+			STOP_CROUCH,
+
+			// Salto
+			STOP_JUMP,
+			JUMP,
+			SIDEJUMP_LEFT,
+			SIDEJUMP_RIGHT,
+			DODGE_FORWARD,
+			DODGE_BACKWARDS,
+			DODGE_RIGHT,
+			DODGE_LEFT,
+
+			// Raton
 			MOUSE,
 			LEFT_CLICK,
 			RIGHT_CLICK,
 			MIDDLE_CLICK,
 			BUTTON3_CLICK,
-			JUMP,
 			UNLEFT_CLICK,
 			UNRIGHT_CLICK,
 			UNMIDDLE_CLICK,
 			UNBUTTON3_CLICK,
-			SIDEJUMP_LEFT,
-			SIDEJUMP_RIGHT,
+			
+			// Habilidades
 			USE_PRIMARY_SKILL,
 			USE_SECONDARY_SKILL,
 			STOP_PRIMARY_SKILL,
 			STOP_SECONDARY_SKILL
 		};
-
 	}
 
 	/**

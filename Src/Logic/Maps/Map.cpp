@@ -318,6 +318,7 @@ namespace Logic {
 	CEntity* CMap::createLocalPlayer(const std::string &name, const std::string &type , TEntityID id){
 
 		//cogemos el player necesario
+		std::string temp = "Local"+type;
 		Map::CEntity *playerInfo = CEntityFactory::getSingletonPtr()->getInfo("Local"+type);
 
 		// Asignar nombre
