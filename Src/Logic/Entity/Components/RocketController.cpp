@@ -37,6 +37,26 @@ namespace Logic {
 		// Nada que hacer
 	}
 
+
+	void CRocketController::tick(unsigned int msecs){
+	/*	inicio+=msecs;
+		if(inicio>=1600 && contamosparada==false){
+			inicio1=_entity->getPosition();
+			contamosparada=true;
+		}
+		if(contamosparada)
+			parada+=msecs;
+		if(parada>=1600){
+			parada1=_entity->getPosition();
+			float distance=parada1.distance(inicio1);
+			std::cout << "La distancia recorrida es : " << distance << std::endl;
+			std::cout << "Cada 16msecs recorre: " << distance*100/1600;
+			parada=0;
+			contamosparada=false;
+		}
+		*/
+	}
+
 	//________________________________________________________________________
 
 	bool CRocketController::spawn(CEntity *entity, CMap *map, const Map::CEntity *entityInfo) {
@@ -46,6 +66,8 @@ namespace Logic {
 		_explotionRadius = entityInfo->getFloatAttribute("explotionRadius");
 		_audioExplotion = entityInfo->getStringAttribute("explotionAudio");
 		_explotionActive = false;
+		inicio=parada=0;
+		contamosparada=false;
 		return true;
 	} // spawn
 

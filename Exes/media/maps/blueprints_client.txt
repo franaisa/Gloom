@@ -13,6 +13,7 @@ SpawnPoint CPhysicStaticEntity
 Jumper CGraphics CPhysicStaticEntity CJumper CAudio CParticle
 Grenade CPhysicDynamicEntity CGrenadeControllerClient CParticle CGraphics CAudio
 Rocket CPhysicDynamicEntity CRocketControllerClient CParticle CGraphics CAudio
+RocketExplotion CRocketControllerClient CParticle CGraphics CAudio
 Lava CPhysicStaticEntity CLava CGraphics
 Elevator CPhysicDynamicEntity CElevator CGraphics
 ElevatorTrigger CPhysicDynamicEntity CElevatorTrigger

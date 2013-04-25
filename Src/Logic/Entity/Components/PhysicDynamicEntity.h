@@ -82,7 +82,7 @@ namespace Logic {
 		</ul>
 		*/
 		virtual void tick(unsigned int msecs);
- 
+
 		/**
 		Se invoca cuando se produce una colisión entre una entidad física y un trigger.
 		*/

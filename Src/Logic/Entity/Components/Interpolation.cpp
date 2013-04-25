@@ -143,6 +143,7 @@ namespace Logic  {
 			_serverPos = syncMsg->getTransform();
 			//calculo el ping que tengo ahora mismo
 			_actualPing = clock()+Logic::CServer::getSingletonPtr()->getDiffTime()-syncMsg->getTime();
+			std::cout << "Mi ping actual es : " << _actualPing << std::endl;
 			//calculamos la interpolacion
 			calculateInterpolation();
 

@@ -96,12 +96,13 @@ namespace Application {
 
 	void CGameState::tick(unsigned int msecs) 
 	{
-		// TODO: realizar la simulación física
-		Physics::CServer::getSingletonPtr()->tick(msecs);
-		//tiempo que ha tardado la fisica
-
-		// Actualizamos la lógica de juego.
-		Logic::CServer::getSingletonPtr()->tick(msecs);
+		unsigned int pieces=msecs/16;
+		for(int i=0;i<pieces;i++){
+			//Actualizamos la física del juego.
+			Physics::CServer::getSingletonPtr()->tick(16);
+			// Actualizamos la lógica de juego.
+			Logic::CServer::getSingletonPtr()->tick(16);
+		}
 
 	} // tick
 

@@ -10,6 +10,7 @@ SpawnPoint CPhysicStaticEntity
 Jumper CGraphics CPhysicStaticEntity CJumper
 Grenade CGraphics CPhysicDynamicEntity CGrenadeController CNetConnector
 Rocket CGraphics CPhysicDynamicEntity CRocketController CNetConnector
+RocketExplotion CGraphics CRocketController CNetConnector
 Lava CGraphics CPhysicStaticEntity CLava
 Elevator CGraphics CPhysicDynamicEntity CElevator
 ElevatorTrigger CGraphics CPhysicDynamicEntity CElevatorTrigger

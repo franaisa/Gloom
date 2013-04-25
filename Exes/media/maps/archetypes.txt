@@ -148,7 +148,7 @@ Map = {
 			weapongrenadeLauncherMaxAmmo = 18,
 			weapongrenadeLauncherId = 4,
 			weapongrenadeLauncherShootForce = 5000,
-			weapongrenadeLauncherProjectileRadius = 3,
+			weapongrenadeLauncherProjectileRadius = 3.4,
 			weapongrenadeLauncherParticlePosition = {6, 5, 6},
 			weapongrenadeLauncherAudio = "media/audio/grenadeLauncher.wav",
 			
@@ -162,7 +162,7 @@ Map = {
 			weaponrocketLauncherMaxAmmo = 18,
 			weaponrocketLauncherId = 5,
 			weaponrocketLauncherShootForce = 25000,
-			weaponrocketLauncherProjectileRadius = 3,
+			weaponrocketLauncherProjectileRadius = 2,
 			weaponrocketLauncherParticlePosition = {6, 5, 6},
 			weaponrocketLauncherAudio = "media/audio/rocketLauncher.wav",
 			
@@ -319,7 +319,7 @@ Map = {
 			weapongrenadeLauncherMaxAmmo = 18,
 			weapongrenadeLauncherId = 4,
 			weapongrenadeLauncherShootForce = 5000,
-			weapongrenadeLauncherProjectileRadius = 3,
+			weapongrenadeLauncherProjectileRadius = 3.4,
 			weapongrenadeLauncherParticlePosition = {6, 5, 6},
 			weapongrenadeLauncherAudio = "media/audio/grenadeLauncher.wav",
 			
@@ -333,7 +333,7 @@ Map = {
 			weaponrocketLauncherMaxAmmo = 18,
 			weaponrocketLauncherId = 5,
 			weaponrocketLauncherShootForce = 25000,
-			weaponrocketLauncherProjectileRadius = 3,
+			weaponrocketLauncherProjectileRadius = 2,
 			weaponrocketLauncherParticlePosition = {6, 5, 6},
 			weaponrocketLauncherAudio = "media/audio/rocketLauncher.wav",
 			
@@ -490,7 +490,7 @@ Map = {
 			weapongrenadeLauncherMaxAmmo = 18,
 			weapongrenadeLauncherId = 4,
 			weapongrenadeLauncherShootForce = 5000,
-			weapongrenadeLauncherProjectileRadius = 3,
+			weapongrenadeLauncherProjectileRadius = 3.4,
 			weapongrenadeLauncherParticlePosition = {6, 5, 6},
 			weapongrenadeLauncherAudio = "media/audio/grenadeLauncher.wav",
 			
@@ -504,7 +504,7 @@ Map = {
 			weaponrocketLauncherMaxAmmo = 18,
 			weaponrocketLauncherId = 5,
 			weaponrocketLauncherShootForce = 25000,
-			weaponrocketLauncherProjectileRadius = 3,
+			weaponrocketLauncherProjectileRadius = 2,
 			weaponrocketLauncherParticlePosition = {6, 5, 6},
 			weaponrocketLauncherAudio = "media/audio/rocketLauncher.wav",
 			
@@ -663,7 +663,7 @@ Map = {
 			weapongrenadeLauncherMaxAmmo = 18,
 			weapongrenadeLauncherId = 4,
 			weapongrenadeLauncherShootForce = 5000,
-			weapongrenadeLauncherProjectileRadius = 3,
+			weapongrenadeLauncherProjectileRadius = 3.4,
 			weapongrenadeLauncherParticlePosition = {6, 5, 6},
 			weapongrenadeLauncherAudio = "media/audio/grenadeLauncher.wav",
 			
@@ -677,7 +677,7 @@ Map = {
 			weaponrocketLauncherMaxAmmo = 18,
 			weaponrocketLauncherId = 5,
 			weaponrocketLauncherShootForce = 25000,
-			weaponrocketLauncherProjectileRadius = 3,
+			weaponrocketLauncherProjectileRadius = 2,
 			weaponrocketLauncherParticlePosition = {6, 5, 6},
 			weaponrocketLauncherAudio = "media/audio/rocketLauncher.wav",
 			
@@ -838,7 +838,7 @@ Map = {
 			weapongrenadeLauncherMaxAmmo = 18,
 			weapongrenadeLauncherId = 4,
 			weapongrenadeLauncherShootForce = 5000,
-			weapongrenadeLauncherProjectileRadius = 3,
+			weapongrenadeLauncherProjectileRadius = 3.4,
 			weapongrenadeLauncherParticlePosition = {6, 5, 6},
 			weapongrenadeLauncherAudio = "media/audio/grenadeLauncher.wav",
 			
@@ -852,7 +852,7 @@ Map = {
 			weaponrocketLauncherMaxAmmo = 18,
 			weaponrocketLauncherId = 5,
 			weaponrocketLauncherShootForce = 25000,
-			weaponrocketLauncherProjectileRadius = 3,
+			weaponrocketLauncherProjectileRadius = 2,
 			weaponrocketLauncherParticlePosition = {6, 5, 6},
 			weaponrocketLauncherAudio = "media/audio/rocketLauncher.wav",
 			
@@ -1012,7 +1012,7 @@ Map = {
 			weapongrenadeLauncherMaxAmmo = 18,
 			weapongrenadeLauncherId = 4,
 			weapongrenadeLauncherShootForce = 5000,
-			weapongrenadeLauncherProjectileRadius = 3,
+			weapongrenadeLauncherProjectileRadius = 3.4,
 			weapongrenadeLauncherParticlePosition = {6, 5, 6},
 			weapongrenadeLauncherAudio = "media/audio/grenadeLauncher.wav",
 			
@@ -1026,7 +1026,7 @@ Map = {
 			weaponrocketLauncherMaxAmmo = 18,
 			weaponrocketLauncherId = 5,
 			weaponrocketLauncherShootForce = 25000,
-			weaponrocketLauncherProjectileRadius = 3,
+			weaponrocketLauncherProjectileRadius = 2,
 			weaponrocketLauncherParticlePosition = {6, 5, 6},
 			weaponrocketLauncherAudio = "media/audio/rocketLauncher.wav",
 			
@@ -1186,7 +1186,7 @@ Map = {
 			weapongrenadeLauncherMaxAmmo = 18,
 			weapongrenadeLauncherId = 4,
 			weapongrenadeLauncherShootForce = 5000,
-			weapongrenadeLauncherProjectileRadius = 3,
+			weapongrenadeLauncherProjectileRadius = 3.4,
 			weapongrenadeLauncherParticlePosition = {6, 5, 6},
 			weapongrenadeLauncherAudio = "media/audio/grenadeLauncher.wav",
 			
@@ -1200,7 +1200,7 @@ Map = {
 			weaponrocketLauncherMaxAmmo = 18,
 			weaponrocketLauncherId = 5,
 			weaponrocketLauncherShootForce = 25000,
-			weaponrocketLauncherProjectileRadius = 3,
+			weaponrocketLauncherProjectileRadius = 2,
 			weaponrocketLauncherParticlePosition = {6, 5, 6},
 			weaponrocketLauncherAudio = "media/audio/rocketLauncher.wav",
 			
@@ -1362,7 +1362,7 @@ Map = {
 			weapongrenadeLauncherMaxAmmo = 18,
 			weapongrenadeLauncherId = 4,
 			weapongrenadeLauncherShootForce = 5000,
-			weapongrenadeLauncherProjectileRadius = 3,
+			weapongrenadeLauncherProjectileRadius = 3.4,
 			weapongrenadeLauncherParticlePosition = {6, 5, 6},
 			weapongrenadeLauncherAudio = "media/audio/grenadeLauncher.wav",
 			
@@ -1376,7 +1376,7 @@ Map = {
 			weaponrocketLauncherMaxAmmo = 18,
 			weaponrocketLauncherId = 5,
 			weaponrocketLauncherShootForce = 25000,
-			weaponrocketLauncherProjectileRadius = 3,
+			weaponrocketLauncherProjectileRadius = 2,
 			weaponrocketLauncherParticlePosition = {6, 5, 6},
 			weaponrocketLauncherAudio = "media/audio/rocketLauncher.wav",
 			
@@ -1546,7 +1546,7 @@ Map = {
 			weapongrenadeLauncherMaxAmmo = 18,
 			weapongrenadeLauncherId = 4,
 			weapongrenadeLauncherShootForce = 5000,
-			weapongrenadeLauncherProjectileRadius = 3,
+			weapongrenadeLauncherProjectileRadius = 3.4,
 			weapongrenadeLauncherParticlePosition = {6, 5, 6},
 			weapongrenadeLauncherAudio = "media/audio/grenadeLauncher.wav",
 			
@@ -1560,7 +1560,7 @@ Map = {
 			weaponrocketLauncherMaxAmmo = 18,
 			weaponrocketLauncherId = 5,
 			weaponrocketLauncherShootForce = 25000,
-			weaponrocketLauncherProjectileRadius = 3,
+			weaponrocketLauncherProjectileRadius = 2,
 			weaponrocketLauncherParticlePosition = {6, 5, 6},
 			weaponrocketLauncherAudio = "media/audio/rocketLauncher.wav",
 			
@@ -1637,6 +1637,18 @@ Map = {
 		physic_mass = 0.7,
 		physic_group = 10,
 		physic_groupList = "-1",
+		explotionDamage = 35,
+		explotionRadius = 10,
+		explotionAudio = "media/audio/explotion.wav",
+		particleOffset = {0.0, 0.0, 0.0},
+		comment_particleEmitterDirection = {0.0, 0.0, -1.0},
+		particleName = "rocketParticles",
+	},
+	
+	RocketExplotion = {
+		type = "RocketExplotion",
+		model = "rocket.mesh",
+		msgList = "32,36,37",
 		explotionDamage = 35,
 		explotionRadius = 10,
 		explotionAudio = "media/audio/explotion.wav",

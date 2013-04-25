@@ -85,6 +85,7 @@ namespace Logic {
 		*/
 		virtual void process(const std::shared_ptr<CMessage>& message);
 
+		virtual void tick(unsigned int msecs);
 
 		// =======================================================================
 		//                            METODOS PROPIOS
@@ -130,6 +131,10 @@ namespace Logic {
 
 		/** Ruta del sonido de la explosion. */
 		std::string _audioExplotion;
+
+		unsigned int inicio, parada;
+		Vector3 inicio1,parada1;
+		bool contamosparada;
 
 	}; // class CRocketController
 

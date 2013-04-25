@@ -281,7 +281,6 @@ Map = {
 	David = {
 		type = "LocalScreamer",
 		isPlayer = true,
-		position = {160,50,40},
 	},
 	
 	Camera = {

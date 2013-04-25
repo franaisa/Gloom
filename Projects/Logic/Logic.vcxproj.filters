@@ -455,8 +455,8 @@
       <Filter>Maps\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Src\Logic\Messages\MessageChangeMaterialHudWeapon.cpp">
-	  <Filter>Messages\Source</Filter>
-	</ClCompile>
+      <Filter>Messages\Source</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Src\Logic\Messages\MessageCameraOffset.cpp">
       <Filter>Messages\Source</Filter>
     </ClCompile>

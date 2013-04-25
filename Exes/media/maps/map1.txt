@@ -284,7 +284,7 @@ Map = {
 		isPlayer = false,
 		model = "marine.mesh",
 		physic_shape = "capsule",
-		physic_radius = 6,
+		physic_radius = 3,
 		physic_height = 6,
 
 	},

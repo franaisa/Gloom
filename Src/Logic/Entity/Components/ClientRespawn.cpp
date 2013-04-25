@@ -52,6 +52,7 @@ namespace Logic  {
 			exceptionList.push_back( std::string("CAnimatedGraphics") );
 			exceptionList.push_back( std::string("CHudOverlay") );
 			exceptionList.push_back( std::string("CNetConnector") );
+			exceptionList.push_back( std::string("CAudio") );
 
 			// En caso de estar simulando fisica en el cliente, desactivamos
 			// la cápsula.
@@ -59,9 +60,8 @@ namespace Logic  {
 			if(controllerComponent != NULL) {
 				controllerComponent->deactivateSimulation();
 			}
-
 			_entity->deactivateAllComponentsExcept(exceptionList);
-			;
+
 			//mostramos en pantalla el mensaje de quien ha matado a quien
 			std::shared_ptr<CMessagePlayerDead> playerDeadMsg = std::static_pointer_cast<CMessagePlayerDead> (message);
 			CEntity* entity = Logic::CServer::getSingletonPtr()->getMap()->getEntityByID(playerDeadMsg->getKiller());

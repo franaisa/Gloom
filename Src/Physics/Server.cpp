@@ -485,6 +485,45 @@ namespace Physics {
 
 	//________________________________________________________________________
 
+	Vector3 CServer::raycastClosestSpecificPoint(const Ray& ray, float maxDist, unsigned int id) const {
+		assert(_scene);
+
+		// Establecer parámettros del rayo
+		PxVec3 origin = Vector3ToPxVec3(ray.getOrigin());      // origen     
+		PxVec3 unitDir = Vector3ToPxVec3(ray.getDirection());  // dirección normalizada   
+		PxReal maxDistance = maxDist;                          // distancia máxima
+		PxRaycastHit hit;                 
+		const PxSceneQueryFlags outputFlags;				   // Info que queremos recuperar	
+
+		// Lanzar el rayo
+		PxRaycastHit hits[60];
+		bool blockingHit;
+
+		PxI32 nHits = _scene->raycastMultiple(origin, unitDir, maxDistance, outputFlags, hits, 60, blockingHit); 
+	
+		// Buscar un actot que pertenezca al grupo de colisión indicado
+		for (int i = nHits - 1; i >= 0; --i) {
+			PxRigidActor* actor = &hits[i].shape->getActor();
+			PxShapeFlags* flags = &hits[i].shape->getFlags();
+			IPhysics *component = static_cast<IPhysics*>(actor->userData);
+	
+			if(component != NULL) {
+				Logic::CEntity* entityHit = component->getEntity();
+				//std::cout << "Nombre de lo tocado: " << entityHit->getName() << std::endl;
+				if(entityHit->getEntityID() == id && !(*flags & PxShapeFlag::eTRIGGER_SHAPE)) {
+					return PxVec3ToVector3(hits[i].impact);
+				}
+			}
+		}
+
+		return Vector3(-5,-5,-5);
+
+		// Nota: seguro que se puede hacer de manera mucho más eficiente usando los filtros
+		// de PhysX.
+	}
+
+	//________________________________________________________________________
+
 	void CServer::overlapMultiple(const PxGeometry& geometry, const Vector3& position, Logic::CEntity** & entitiesHit, int& nbHits) {
 		// Comprobar que es una de las geometrias soportadas por la query de overlap
 
@@ -496,11 +535,11 @@ namespace Physics {
 		PxShape** hitBuffer = new(std::nothrow) PxShape* [bufferSize];
 		assert(hitBuffer != NULL && "Error en la reserva de memoria");
 
-		// Calculamos el overlap contra objetos dinamicos (ya que los estaticos no nos interesan).
+		// Calculamos el overlap contra objetos dinamicos y contra estaticos.
 		// El valor de retorno es el numero de hits del buffer o -1 si el buffer no es lo suficientemente
 		// grande.
-		PxSceneQueryFilterData filterData(PxSceneQueryFilterFlag::eDYNAMIC);
-
+		PxSceneQueryFilterFlags filter(PxSceneQueryFilterFlag::eDYNAMIC | PxSceneQueryFilterFlag::eSTATIC);
+		PxSceneQueryFilterData filterData(filter);
 		nbHits = _scene->overlapMultiple(geometry, pose, hitBuffer, bufferSize, filterData);
 		while(nbHits == -1) {
 			// Si el buffer se ha desbordado aumentamos su tamaño al doble
