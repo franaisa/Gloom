@@ -132,9 +132,6 @@ namespace Logic {
 		m->setDamage(_damage);
 		m->setEnemy(_entity);
 		entityHit.first->emitMessage(m);
-
-
-
 	}// triggerHitMessages
 
 	//__________________________________________________________________
