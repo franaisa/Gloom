@@ -132,13 +132,15 @@ namespace Application {
 
 	Hikari::FlashValue CSelectScenario::loadScenario(Hikari::FlashControl* caller, const Hikari::Arguments& args){
 	
-		if (!Logic::CEntityFactory::getSingletonPtr()->loadBluePrints("blueprints.txt"))
+		//if (!Logic::CEntityFactory::getSingletonPtr()->loadBluePrints("blueprints.txt"))
+		std::string map = args.at(0).getString();
+		if (!Logic::CEntityFactory::getSingletonPtr()->loadBluePrints(map+".xml", "Single"))
 			return false;
-		if (!Logic::CEntityFactory::getSingletonPtr()->loadArchetypes("archetypes.txt")) {
+		if (!Logic::CEntityFactory::getSingletonPtr()->loadArchetypes("archetypes.txt"))
 			return false;
-		}
+
 		// Cargamos el nivel a partir del nombre del mapa. 
-		if (!Logic::CServer::getSingletonPtr()->loadLevel(args.at(0).getString()+".txt"))
+		if (!Logic::CServer::getSingletonPtr()->loadLevel(map+".txt"))
 			return false;
 		
 		_app->setState("singlePlayer");

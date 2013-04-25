@@ -96,9 +96,10 @@ namespace Logic {
 		el último añadido.
 
 		@param filename Fichero con la descripción de las entidades.
+		@param ambit Que tipo de jugador eres, Client, Server o Single
 		@return true si la carga se hizo correctamente.
 		*/
-		bool loadBluePrints(const std::string &filename);
+		bool loadBluePrints(const std::string &filename, const std::string &ambit);
 
 		//________________________________________________________________________
 

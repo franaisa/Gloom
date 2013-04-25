@@ -26,6 +26,8 @@ del juego.
 #include "../../Application/BaseApplication.h"
 #include "../../Application/ApplicationState.h"
 
+#include "tinyxml.h"
+
 #include <iostream>
 #include <fstream>
 #include <cassert>
@@ -124,11 +126,13 @@ namespace Logic {
 
 	typedef std::pair<std::string,CEntityFactory::TBluePrint> TStringBluePrintPair;
 
-	bool CEntityFactory::loadBluePrints(const std::string &filename) {
+	bool CEntityFactory::loadBluePrints(const std::string &filename, const std::string &ambit) {
 		// Completamos la ruta con el nombre proporcionado
 		std::string completePath(BLUEPRINTS_FILE_PATH);
 		completePath = completePath + filename;
 		
+	/*
+
 		// Abrimos el fichero
 		std::ifstream in(completePath.c_str());        
 		if(!in)
@@ -148,7 +152,104 @@ namespace Logic {
 				_bluePrints.insert(elem);
 			}
 		}
+	/*/
+		
+		char * aux =(char*)completePath.c_str();
+		TiXmlDocument doc2(aux);
 
+		
+		
+		assert("Error al leer el XML: " && doc2.LoadFile());
+		if (!doc2.LoadFile()){ 
+			
+			return false;
+		}
+		
+
+		// Aqui estoy en el nivel entities
+		TiXmlElement* entitiesTag= doc2.FirstChildElement();
+		assert( "No se detecta la etiqueta entities: " && entitiesTag);
+
+		std::string nameEntity;
+		std::string typeEntity;
+		std::string nameAmbit;
+		std::string nameComponent;
+
+		// Ahora voy a recorrer todas las entity dentro de entities
+
+		TiXmlElement* entityTag= entitiesTag->FirstChildElement();
+		assert( "No se detecta la etiqueta entity de la entidad: " && entityTag);
+		
+		while (entityTag != NULL){
+
+			if (entityTag->Attribute("type") != NULL){
+				TBluePrint blueprintElement;
+		
+				nameEntity = entityTag->Attribute("name");
+				typeEntity = entityTag->Attribute("type");
+
+				
+				blueprintElement.type = entityTag->Attribute("type");
+				assert("No se detecta el atributo type de la entidad" && !blueprintElement.type.empty());
+
+				// esto lo hago en dos pasos para comprobacion de errores
+				TiXmlElement *attributesTag = entityTag->FirstChildElement();
+				//Compruebo que no sea NULL				
+				assert( "No se detecta la etiqueta attributes de la entidad: " && attributesTag);
+				
+				TiXmlElement *ambitsTag = attributesTag->NextSiblingElement();
+				//assert( "No se detecta la etiqueta ambits de la entidad: " && ambitsTag);
+
+				if(ambitsTag != NULL){
+
+					TiXmlElement *ambitTag = ambitsTag->FirstChildElement();
+					assert( "No se detecta la etiqueta ambit de la entidad: " && ambitTag);
+				
+					std::list<std::string> listComponents;
+
+					//itero entre todos los ambios necesarios
+					while(ambitTag != NULL){
+					
+						// Obtengo el nombre, debe de ser 
+						nameAmbit = ambitTag->Attribute("name");
+						assert( "No se detecta el atributo name en la etiqueta ambit de la entidad: " && !nameAmbit.empty());
+						assert("El name del ambit debe de ser Always, Single, Server o Client" && 
+							!((nameAmbit != "Always") && (nameAmbit != "Single") && (nameAmbit != "Client") && (nameAmbit != "Server")) );
+					
+						if(nameAmbit == "Always" || nameAmbit == ambit){
+							if(!ambitTag->NoChildren()){
+								TiXmlElement *componentsTag = ambitTag->FirstChildElement();
+								assert( "No se detecta la etiqueta components de la entidad: " && componentsTag != NULL);
+								TiXmlElement *componentTag = componentsTag->FirstChildElement();
+								assert( "No se detecta la etiqueta component de la entidad: " && componentTag != NULL);
+								//meto todos los componentes de un ambito especifico
+								while(componentTag != NULL){
+									nameComponent = componentTag->Attribute("name");
+									assert( "No se detecta el atributo name en la etiqueta component de la entidad: " && !nameComponent.empty());
+									listComponents.push_back(nameComponent);
+
+									componentTag = componentTag->NextSiblingElement();
+								}
+							}
+						}
+						ambitTag = ambitTag->NextSiblingElement();
+					}// fin while ambitTag
+
+					// Ya que tengo todos los componentes los pongo en blueprintElement
+					blueprintElement.components = listComponents;
+				
+					// miro si ya existe, y si es assi 
+					assert("Ya existe en una entidad con ese tipo " && !_bluePrints.count(blueprintElement.type));
+
+					// Añadimos a la tabla
+					TStringBluePrintPair elem(blueprintElement.type,blueprintElement);
+					_bluePrints.insert(elem);
+				}
+			}// fin if entity type
+			entityTag = entityTag->NextSiblingElement();
+		}
+
+	/* */
 		return true;
 	} // loadBluePrints
 

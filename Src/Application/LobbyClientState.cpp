@@ -130,7 +130,7 @@ namespace Application {
 				// Cargamos el archivo con las definiciones de las entidades del nivel.
 				std::string map;
 				buffer.deserialize(map);
-				if (!Logic::CEntityFactory::getSingletonPtr()->loadBluePrints("blueprints_client.txt")) {
+				if (!Logic::CEntityFactory::getSingletonPtr()->loadBluePrints(map+".xml", "Client")) {
 					Net::CManager::getSingletonPtr()->deactivateNetwork();
 					_app->exitRequest();
 				}

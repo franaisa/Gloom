@@ -1,0 +1,1120 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<entities>
+<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  W O R L D - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+	<entity name="World" type="World">
+		<attributes>
+			<attribute name="position" value="{0,0,0}"/>
+			<attribute name="orientation" value="0"/>
+			<attribute name="static" value="true"/>
+			<attribute name="msgList" value="0"/>
+			<attribute name="model" value="ola.mesh" />
+			<attribute name="physic_entity" value="fromFile"/>
+			<attribute name="physic_normal" value="{0,1,0}"/>
+			<attribute name="physic_file" value="media/models/ola.RepX"/>
+			<attribute name="physic_group" value="0"/>
+			<attribute name="physic_groupList" value="10"/>
+		</attributes>
+		<ambits>
+			<ambit name="Always">
+				<components>
+					<component name="CPhysicStaticEntity" priorityType = "low" priorityLevel="2" />
+					<component name="CGraphics" priorityType = "low" priorityLevel="2" />
+				</components>
+			</ambit>
+			<ambit name="Server">
+			</ambit>
+			<ambit name="Client">
+			</ambit>
+			<ambit name="Single">				
+			</ambit>			
+		</ambits>	
+	</entity>
+	
+
+<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - S P A W N   P O I N T - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+	
+	<entity name="Spawn" type="SpawnPoint">
+		<attributes>
+			<attribute name="physic_entity" value="rigid"/>
+			<attribute name="physic_shape" value="box"/>
+			<attribute name="physic_trigger" value="true"/>
+			<attribute name="physic_type" value="static"/>
+			<attribute name="physic_dimensions" value="{4,7,4}"/>
+			<attribute name="physic_group" value="2"/>
+			<attribute name="physic_groupList" value="1"/>
+		</attributes>
+		<ambits>
+			<ambit name="Always">
+				<components>
+					<component name="CPhysicStaticEntity" priorityType = "low" priorityLevel="2" >
+						
+					</component>
+				</components>
+			</ambit>
+			<ambit name="Server">				
+			</ambit>
+			<ambit name="Client">
+			</ambit>
+			<ambit name="Single">						
+			</ambit>			
+		</ambits>		
+	</entity>
+	
+	<entity name="Point1" type="SpawnPoint">
+		<attributes>
+			<attribute name="position" value="{-219.0, 0.0, -52}"/>
+		</attributes>
+	</entity>
+	
+	<entity name="Point2" type="SpawnPoint">
+		<attributes>
+			<attribute name="position" value="{73,0,-49}"/>
+		</attributes>
+	</entity>
+
+	<entity name="Point3" type="SpawnPoint">
+		<attributes>
+			<attribute name="position" value="{27,0,116}"/>
+		</attributes>
+	</entity>
+	
+	<entity name="Point4" type="SpawnPoint">
+		<attributes>
+			<attribute name="position" value="{-68.0, 24.0, 117.0}"/>
+		</attributes>
+	</entity>
+	
+	<entity name="Point5" type="SpawnPoint">
+		<attributes>
+			<attribute name="position" value="{46,0,116}"/>
+		</attributes>
+	</entity>
+	
+	<entity name="Point6" type="SpawnPoint">
+		<attributes>
+			<attribute name="position" value="{189,0,-10}"/>
+		</attributes>
+	</entity>
+		
+	<entity name="Point7" type="SpawnPoint">
+		<attributes>
+			<attribute name="position" value="{27.0, 62.0, -28.0}"/>
+		</attributes>
+	</entity>
+	
+	<entity name="Point8" type="SpawnPoint">
+		<attributes>
+			<attribute name="position" value="{188,103,58}"/>
+		</attributes>
+	</entity>
+	
+	<entity name="Point9" type="SpawnPoint">
+		<attributes>
+			<attribute name="position" value="{69,104,131}"/>
+		</attributes>
+	</entity>
+	
+	<entity name="Point10" type="SpawnPoint">
+		<attributes>
+			<attribute name="position" value="{-146,108,130}"/>
+		</attributes>
+	</entity>
+	
+	<entity name="Point11" type="SpawnPoint">
+		<attributes>
+			<attribute name="position" value="{28,110,-29}"/>
+		</attributes>
+	</entity>
+	
+<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  I T E M   S P A W N - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+	
+	<entity name="Item" type="ItemSpawn">
+		<attributes>
+			<attribute name="orbitalOffset" value="0.013"/>
+			<attribute name="orbitalSpeed" value="0.004"/>
+			<attribute name="orbitalRotationSpeed" value="0.001"/>
+			
+			<attribute name="physic_entity" value="rigid"/>
+			<attribute name="physic_trigger" value="true"/>
+			<attribute name="physic_type" value="static"/>
+			<attribute name="physic_shape" value="sphere"/>
+			<attribute name="physic_radius" value="3"/>
+			<attribute name="physic_group" value="2"/>
+			<attribute name="physic_groupList" value="1"/>
+			
+		</attributes>
+		<ambits>
+			<ambit name="Always">
+				<components>
+					<component name="CGraphics" priorityType = "low" priorityLevel="2" >
+					</component>
+					<component name="CFloatingMovement" priorityType = "low" priorityLevel="2" >
+						
+					</component>
+					<component name="CSpawnItemManager" priorityType = "low" priorityLevel="2" >
+						<attributes>
+						</attributes>
+					</component>
+				</components>
+			</ambit>
+			<ambit name="Server">
+				<components>
+					<component name="CPhysicStaticEntity" priorityType = "low" priorityLevel="2" >
+					</component>
+					<component name="CNetConnector" priorityType = "low" priorityLevel="2" >
+					</component>					
+				</components>
+			</ambit>
+			<ambit name="Client">
+			</ambit>
+			<ambit name="Single">
+				<components>
+					<component name="CPhysicStaticEntity" priorityType = "low" priorityLevel="2" >
+					</component>					
+				</components>
+			</ambit>			
+		</ambits>
+	</entity>
+	
+	<entity name="Orb1" type="ItemSpawn">
+		<attributes>
+			<attribute name="position" value="{-29, 68, -28}"/>
+			<attribute name="model" value="health1.mesh"/>
+			<attribute name="id" value="orb"/>
+			<attribute name="reward" value="17"/>
+			<attribute name="respawnTime" value="5"/>
+		</attributes>
+	</entity>
+	
+	<entity name="Orb2" type="ItemSpawn">
+		<attributes>
+			<attribute name="position" value="{-115, 3, 119}"/>
+			<attribute name="model" value="health1.mesh"/>
+			<attribute name="id" value="orb"/>
+			<attribute name="reward" value="17"/>
+			<attribute name="respawnTime" value="5"/>
+		</attributes>
+	</entity>
+	
+	<entity name="Orb3" type="ItemSpawn">
+		<attributes>
+			<attribute name="position" value="{-146,99,47}"/>
+			<attribute name="model" value="health1.mesh"/>
+			<attribute name="id" value="orb"/>
+			<attribute name="reward" value="17"/>
+			<attribute name="respawnTime" value="5"/>
+		</attributes>
+	</entity>
+	
+	<entity name="Orb4" type="ItemSpawn">
+		<attributes>
+			<attribute name="position" value="{-259,64,133}"/>
+			<attribute name="model" value="health1.mesh"/>
+			<attribute name="id" value="orb"/>
+			<attribute name="reward" value="17"/>
+			<attribute name="respawnTime" value="5"/>
+		</attributes>
+	</entity>
+	
+	<entity name="ShotgunWeapon1" type="ItemSpawn">
+		<attributes>
+			<attribute name="position" value="{18,0,112}"/>
+			<attribute name="model" value="shotGun.mesh"/>
+			<attribute name="id" value="weapon"/>
+			<attribute name="weapon_type" value="2"/>
+			<attribute name="reward" value="30"/>
+			<attribute name="respawnTime" value="5"/>
+		</attributes>
+	</entity>
+	
+	<entity name="SniperWeapon1" type="ItemSpawn">
+		<attributes>
+			<attribute name="position" value="{-265,105,-55}"/>
+			<attribute name="model" value="sniper.mesh"/>
+			<attribute name="id" value="weapon"/>
+			<attribute name="weapon_type" value="1"/>
+			<attribute name="reward" value="10"/>
+			<attribute name="respawnTime" value="5"/>
+		</attributes>
+	</entity>
+	
+	<entity name="ShotGunAmmo1" type="ItemSpawn">
+		<attributes>
+			<attribute name="position" value="{-67.0, 4.0, -42.0}"/>
+			<attribute name="model" value="shotGun.mesh"/>
+			<attribute name="id" value="ammo"/>
+			<attribute name="weapon_type" value="2"/>
+			<attribute name="reward" value="15"/>
+			<attribute name="respawnTime" value="5"/>
+		</attributes>
+	</entity>
+	
+	<entity name="MiniGunWeapon1" type="ItemSpawn">
+		<attributes>
+			<attribute name="position" value="{-91.0, 0.0, -35.0}"/>
+			<attribute name="model" value="miniGun.mesh"/>
+			<attribute name="id" value="weapon"/>
+			<attribute name="weapon_type" value="3" />
+			<attribute name="reward" value="200"/>
+			<attribute name="respawnTime" value="5"/>
+		</attributes>
+	</entity>
+	
+	<entity name="GrenadeLauncherWeapon1" type="ItemSpawn">
+		<attributes>
+			<attribute name="position" value="{-30.0, 104.0, 120.0}"/>
+			<attribute name="model" value="grenadeLauncher.mesh"/>
+			<attribute name="id" value="weapon"/>
+			<attribute name="weapon_type" value="4"/>
+			<attribute name="reward" value="5"/>
+			<attribute name="respawnTime" value="5"/>
+		</attributes>
+	</entity>
+	
+	<entity name="RocketLauncherWeapon1" type="ItemSpawn">
+		<attributes>
+			<attribute name="position" value="{-264,0.0,-53.0}"/>
+			<attribute name="model" value="rocketLauncher.mesh"/>
+			<attribute name="id" value="weapon"/>
+			<attribute name="weapon_type" value="5"/>
+			<attribute name="reward" value="5"/>
+			<attribute name="respawnTime" value="5"/>
+		</attributes>
+	</entity>
+	
+	<entity name="SuperShield1" type="ItemSpawn">
+		<attributes>
+			<attribute name="position" value="{-265,125,47},"/>
+			<attribute name="model" value="shield1.mesh"/>
+			<attribute name="id" value="armor"/>
+			<attribute name="reward" value="100"/>
+			<attribute name="respawnTime" value="5"/>
+		</attributes>
+	</entity>
+	
+	<entity name="miniShield" type="ItemSpawn">
+		<attributes>
+			<attribute name="position" value="{-182.0, 2.0, 47.0}"/>
+			<attribute name="model" value="shotGun.mesh"/>
+			<attribute name="id" value="armor"/>
+			<attribute name="reward" value="50"/>
+			<attribute name="respawnTime" value="5"/>
+			<attribute name="scale" value="0.5"/>
+		</attributes>
+	</entity>	
+	
+<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  C A M E R A - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+	<entity name="Camera" type="Camera">
+	<attributes>
+		<attribute name="height" value="8"/>
+		<attribute name="msgList" value="25"/>
+		<attribute name="height" value="8"/>
+		<attribute name="position" value="{28.0, 60.0, -17.0}"/>
+		<attribute name="target" value="{-233.0, 2, 116.0}"/>
+	</attributes>
+		<ambits>
+			<ambit name="Always">
+				<components>
+					<component name="CCamera" priorityType = "low" priorityLevel="2" >
+					</component>
+				</components>
+			</ambit>
+			<ambit name="Server">
+			</ambit>
+			<ambit name="Client">				
+			</ambit>
+			<ambit name="Single">
+			</ambit>			
+		</ambits>
+	</entity>
+
+<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  G R E N A D E - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+	<entity name="Grenade" type="Grenade">
+	<attributes>
+		<attribute name="model" value="mine.mesh"/>
+		
+		<attribute name="physic_entity" value="rigid"/>
+		<attribute name="physic_entity" value="rigid"/>
+		<attribute name="physic_trigger" value="false"/>
+		<attribute name="physic_type" value="dinamic"/>
+		<attribute name="physic_shape" value="sphere"/>
+		<attribute name="physic_radius" value="3.4"/>
+		<attribute name="physic_mass" value="55"/>
+		<attribute name="physic_group" value="3"/>							
+		<attribute name="physic_groupList" value="1,5"/>
+		
+		<attribute name="explotionTime" value="4"/>
+		<attribute name="explotionDamage" value="70"/>
+		<attribute name="explotionRadius" value="6"/>
+		
+			
+		<attribute name="explotionTime" value="5"/>
+		<attribute name="explotionDamage" value="10"/>
+		<attribute name="explotionRadius" value="6"/>
+					
+	</attributes>
+		<ambits>
+			<ambit name="Always">
+				<components>
+					<component name="CPhysicDynamicEntity" priorityType = "low" priorityLevel="2" >
+					</component>
+					<component name="CGraphics" priorityType = "low" priorityLevel="2" >
+					</component>
+				</components>
+			</ambit>
+			<ambit name="Server">
+				<components>
+					<component name="CGrenadeController" priorityType = "low" priorityLevel="2" >
+					</component>
+					<component name="CNetConnector" priorityType = "low" priorityLevel="2">
+					</component>
+				</components>
+			</ambit>
+			<ambit name="Client">
+				<components>
+					<component name="CParticle" priorityType = "low" priorityLevel="2">
+					</component>
+					<component name="CAudio" priorityType = "low" priorityLevel="2">
+					</component>	
+				</components>
+			</ambit>
+			<ambit name="Single">
+				<components>
+					<component name="CGrenadeController" priorityType = "low" priorityLevel="2">	
+					</component>
+					<component name="CParticle" priorityType = "low" priorityLevel="2">
+					</component>
+					<component name="CAudio" priorityType = "low" priorityLevel="2">
+					</component>					
+				</components>
+			</ambit>			
+		</ambits>
+	</entity>
+	
+<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  S P O T  L I G H T  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+	
+	<entity name="SpotLight" type="SpotLight">
+	<attributes>
+		<attribute name="position" value="{10.0,10.0,10.0}"/>
+		<attribute name="direction" value="{0.0,-1.0,0.0}"/>
+		<attribute name="castShadows" value="true"/>
+		<attribute name="colour" value="{1.0,1.0,1.0}"/>
+		<attribute name="specularColour" value="{0.0,0.0,0.0}"/>
+		<attribute name="intensity" value="1500"/>
+		<attribute name="innerAngle" value="0.8"/>
+		<attribute name="outerAngle" value="1.6"/>
+		<attribute name="static" value="true"/>
+		<attribute name="model" value="esfera.mesh"/>
+		<attribute name="scale" value="{25.0,25.0,25.0}"/>
+	</attributes>
+		<ambits>
+			<ambit name="Always">
+				<components>
+					<component name="CLight" priorityType = "low" priorityLevel="2">
+					</component>
+					<component name="CGraphics" priorityType = "low" priorityLevel="2">
+					</component>
+				</components>
+			</ambit>
+			<ambit name="Server">
+			</ambit>
+			<ambit name="Client">
+			</ambit>
+			<ambit name="Single">
+			</ambit>			
+		</ambits>
+		
+	</entity>
+	
+<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  P O I N T  L I G H T  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+	
+	<entity name="PointLight" type="PointLight">
+		<attributes>
+			<attribute name="position" value="{10.0,10.0,10.0}"/>
+			<attribute name="castShadows" value="true"/>
+			<attribute name="colour" value="{1.0,1.0,1.0}"/>
+			<attribute name="specularColour" value="{0.0,0.0,0.0}"/>
+			<attribute name="intensity" value="1500"/>
+			<attribute name="static" value="true"/>
+			<attribute name="model" value="esfera.mesh"/>
+			<attribute name="scale" value="{25.0,25.0,25.0}"/>
+		</attributes>
+		<ambits>
+			<ambit name="Always">				
+			</ambit>
+			<ambit name="Server">
+				<components>
+					<component name="CLight" priorityType = "low" priorityLevel="2">
+						
+					</component>
+					<component name="CGraphics" priorityType = "low" priorityLevel="2">
+						
+					</component>
+				</components>
+			</ambit>
+			<ambit name="Client">
+				<components>
+					<component name="CLight" priorityType = "low" priorityLevel="2">
+						
+					</component>
+					<component name="CGraphics" priorityType = "low" priorityLevel="2">
+						
+					</component>
+				</components>
+			</ambit>
+			<ambit name="Single">
+			</ambit>			
+		</ambits>
+		
+	</entity>
+	
+<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - D I R E C T I O N A L  L I G H T- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+	
+	<entity name="DirectionalLight" type="DirectionalLight">
+		<attributes>
+			<attribute name="position" value="{10.0,10.0,10.0}"/>
+			<attribute name="direction" value="{0.0,-1.0,0.0}"/>
+			<attribute name="castShadows" value="true"/>
+			<attribute name="colour" value="{1.0,1.0,1.0}"/>
+			<attribute name="specularColour" value="{0.0,0.0,0.0}"/>
+			<attribute name="intensity" value="1500"/>
+			<attribute name="static" value="true"/>
+			<attribute name="model" value="esfera.mesh"/>
+			<attribute name="scale" value="{25.0,25.0,25.0}"/>
+		</attributes>
+		<ambits>
+			<ambit name="Always">
+				<components>
+					<component name="CGraphics" priorityType = "low" priorityLevel="2">
+					</component>
+					<component name="CLight" priorityType = "low" priorityLevel="2">
+					</component>
+				</components>
+			</ambit>
+			<ambit name="Server">
+			</ambit>
+			<ambit name="Client">
+			</ambit>
+			<ambit name="Single">
+			</ambit>			
+		</ambits>
+	</entity>
+	
+<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - J U M P E R - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+	
+	<entity name="Jumper" type="Jumper">
+		<attributes>
+			<attribute name="power" value="0.25"/>
+			<attribute name="velocity" value="0.12"/>
+			<attribute name="direction" value="{-1,0,0}"/>
+			<attribute name="audio" value="media/audio/plama.wav"/>
+			<attribute name="model" value="jumper.mesh"/>
+			
+			<attribute name="physic_entity" value="rigid"/>
+			<attribute name="physic_shape" value="box"/>
+			<attribute name="physic_trigger" value="true"/>
+			<attribute name="physic_type" value="static"/>
+			<attribute name="physic_dimensions" value="{2,2,2}"/>
+			<attribute name="physic_group" value="7"/>
+			<attribute name="physic_groupList" value="1"/>
+			<attribute name="particleName" value="JumperParticle"/>
+		</attributes>
+		<ambits>
+			<ambit name="Always">
+				<components>
+					<component name="CGraphics" priorityType = "low" priorityLevel="2">
+						
+					</component>
+					<component name="CPhysicStaticEntity" priorityType = "low" priorityLevel="2">
+						
+					</component>
+					<component name="CJumper" priorityType = "low" priorityLevel="2">
+						
+					</component>
+				</components>
+			</ambit>
+			<ambit name="Server">
+			</ambit>
+			<ambit name="Client">
+				<components>
+					<component name="CParticle" priorityType = "low" priorityLevel="2">
+						
+					</component>
+					<component name="CAudio" priorityType = "low" priorityLevel="2">
+						
+					</component>					
+				</components>
+			</ambit>
+			<ambit name="Single">
+				<components>
+					<component name="CParticle" priorityType = "low" priorityLevel="2">
+						
+					</component>
+					<component name="CAudio" priorityType = "low" priorityLevel="2">
+						
+					</component>					
+				</components>
+			</ambit>			
+		</ambits>
+	</entity>
+
+<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - E X P L O T I O N - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+	
+	<entity name="Explotion" type="Explotion">
+		<attributes>
+			<attribute name="model" value="rocketLauncher.mesh"/>
+		</attributes>
+		<ambits>
+			<ambit name="Always">
+				
+			</ambit>
+			<ambit name="Server">
+				<components>
+					<component name="CGraphics" priorityType = "low" priorityLevel="2">
+						
+					</component>
+					<component name="CPhysicDynamicEntity" priorityType = "low" priorityLevel="2">
+						
+					</component>
+					<component name="CExplotionHitNotifier" priorityType = "low" priorityLevel="2">
+						
+					</component>
+				</components>
+			</ambit>
+			<ambit name="Client">
+			</ambit>
+			<ambit name="Single">
+				<components>
+					<component name="CGraphics" priorityType = "low" priorityLevel="2">
+						
+					</component>
+				</components>
+			</ambit>			
+		</ambits>
+	</entity>
+
+<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - R O C K E T - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+	
+	<entity name="Rocket" type="Rocket">
+		<attributes>
+			<attribute name="model" value="rocket.mesh"/>
+			<attribute name="msgList" value="36,41,46"/>
+			<attribute name="audio" value="media/audio/explotion.wav"/>
+			
+			<attribute name="physic_entity" value="rigid"/>
+			<attribute name="physic_shape" value="sphere"/>
+			<attribute name="physic_trigger" value="false"/>
+			<attribute name="physic_type" value="dynamic"/>
+			<attribute name="physic_radius" value="2"/>
+			<attribute name="physic_mass" value="0.7"/>
+			<attribute name="physic_group" value="10"/>
+			<attribute name="physic_groupList" value="-1"/>
+			<attribute name="particleName" value="rocketParticles"/>
+			<attribute name="particleOffset" value="{0.0,0.0,0.0}"/>
+		</attributes>
+		<ambits>
+			<ambit name="Always">
+				<components>
+					<component name="CGraphics" priorityType = "low" priorityLevel="2">
+					</component>
+					<component name="CPhysicDynamicEntity" priorityType = "low" priorityLevel="2">
+					</component>
+				</components>
+			</ambit>
+			<ambit name="Server">
+				<components>
+					<component name="CRocketController" priorityType = "low" priorityLevel="2">
+					</component>
+					<component name="CNetConnector" priorityType = "low" priorityLevel="2">
+					</component>
+				</components>
+			</ambit>
+			<ambit name="Client">
+				<components>			
+					<component name="CParticle" priorityType = "low" priorityLevel="2">
+					</component>
+					<component name="CAudio" priorityType = "low" priorityLevel="2">
+					</component>
+				</components>
+			</ambit>
+			<ambit name="Single">
+				<components>
+					<component name="CRocketController" priorityType = "low" priorityLevel="2">
+					</component>				
+					<component name="CParticle" priorityType = "low" priorityLevel="2">
+					</component>
+					<component name="CAudio" priorityType = "low" priorityLevel="2">
+					</component>
+				</components>
+			</ambit>			
+		</ambits>
+	</entity>
+
+<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - L A V A - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+	
+	<entity name="Lava" type="Lava">
+		<attributes>
+			<attribute name="model" value="lavaFondo.mesh"/>
+			<attribute name="position" value="{-80.0,-20.0, 45.0}"/>
+			<attribute name="damage" value="500"/>
+			<attribute name="timeDamage" value="500"/>
+			
+			<attribute name="physic_entity" value="rigid"/>
+			<attribute name="physic_shape" value="box"/>
+			<attribute name="physic_trigger" value="true"/>
+			<attribute name="physic_type" value="static"/>
+			<attribute name="physic_group" value="2"/>
+			<attribute name="physic_groupList" value="1"/>
+			<attribute name="physic_dimensions" value="{ 250, 0.5, 250 }"/>
+		</attributes>
+		<ambits>
+			<ambit name="Always">
+				<components>
+					<component name="CGraphics" priorityType = "low" priorityLevel="2">
+					</component>
+					<component name="CPhysicStaticEntity" priorityType = "low" priorityLevel="2">
+					</component>
+					<component name="CLava" priorityType = "low" priorityLevel="2">
+					</component>
+				</components>
+			</ambit>
+			<ambit name="Server">
+			</ambit>
+			<ambit name="Client">
+			</ambit>
+			<ambit name="Single">
+			</ambit>			
+		</ambits>
+	</entity>
+
+
+
+<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - E L E V A T O R - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+	
+	<entity name="Elevator" type="Elevator">
+		<attributes>
+			<attribute name="model" value="health1.mesh"/>
+			<attribute name="position" value="{-51.0,0.0, 1.0}"/>
+			<attribute name="positionInitial" value="{-51.0,0.0, 1.0}"/>
+			<attribute name="positionFinal" value="{-51.0,60.0, 1.0}"/>
+			
+			<attribute name="velocity" value="0.035"/>
+			
+			<attribute name="physic_mass" value="1"/>
+			<attribute name="physic_entity" value="rigid"/>
+			<attribute name="physic_shape" value="box"/>
+			<attribute name="physic_trigger" value="false"/>
+			<attribute name="physic_type" value="kinematic"/>
+			<attribute name="physic_group" value="5"/>
+			<attribute name="physic_groupList" value="1"/>
+			<attribute name="physic_dimensions" value="{ 2, 2, 2 }"/>
+		</attributes>
+		<ambits>
+			<ambit name="Always">
+				<components>
+					<component name="CGraphics" priorityType = "low" priorityLevel="2">
+						
+					</component>
+					<component name="CPhysicDynamicEntity" priorityType = "low" priorityLevel="2">
+						
+					</component>
+					<component name="CElevator" priorityType = "low" priorityLevel="2">
+						
+					</component>
+				</components>
+			</ambit>
+			<ambit name="Server">
+			</ambit>
+			<ambit name="Client">
+			</ambit>
+			<ambit name="Single">
+			</ambit>			
+		</ambits>
+	</entity>
+
+<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - E L E V A T O R  T R I G G E R- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+	
+	<entity name="ElevatorTrigger" type="ElevatorTrigger">
+		<attributes>
+			<attribute name="model" value="health1.mesh"/>
+			<attribute name="position" value="{-51.0,0.0, 1.0}"/>
+			<attribute name="positionInitial" value="{-51.0,5.0, 1.0}"/>
+			<attribute name="positionFinal" value="{-51.0,65.0, 1.0}"/>
+			
+			<attribute name="velocity" value="0.035"/>
+			<attribute name="link" value="Elevator"/>
+			
+			<attribute name="physic_mass" value="10"/>
+			<attribute name="physic_entity" value="rigid"/>
+			<attribute name="physic_shape" value="box"/>
+			<attribute name="physic_trigger" value="true"/>
+			<attribute name="physic_type" value="kinematic"/>
+			<attribute name="physic_group" value="6"/>
+			<attribute name="physic_groupList" value="1"/>
+			<attribute name="physic_dimensions" value="{ 1, 1, 1 }"/>
+		</attributes>
+		<ambits>
+			<ambit name="Always">
+				<components>
+					<component name="CPhysicDynamicEntity" priorityType = "low" priorityLevel="2">
+						
+					</component>
+					<component name="CElevatorTrigger" priorityType = "low" priorityLevel="2">
+						
+					</component>
+				</components>
+			</ambit>
+			<ambit name="Server">
+				<components>
+					<component name="CGraphics" priorityType = "low" priorityLevel="2">
+						
+					</component>
+				</components>
+			</ambit>
+			<ambit name="Client">
+			</ambit>
+			<ambit name="Single">
+			</ambit>			
+		</ambits>
+	</entity>
+
+<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - S P I K E- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+	
+	<entity name="Spike" type="Spike">
+		<attributes>
+			<attribute name="model" value="cone.mesh"/>
+			<attribute name="position" value="{100.0,-3.0, -12.0}"/>
+			<attribute name="positionInitial" value="{100.0,-3.0, -12.0}"/>
+			<attribute name="positionFinal" value="{100.0,2.0, -12.0}"/>
+			
+			<attribute name="velocity" value="0.02"/>
+			<attribute name="timeToShow" value="8.0"/>
+			<attribute name="timeToUnShow" value="4.0"/>
+			
+			<attribute name="physic_mass" value="1"/>
+			<attribute name="physic_entity" value="rigid"/>
+			<attribute name="physic_shape" value="box"/>
+			<attribute name="physic_trigger" value="true"/>
+			<attribute name="physic_type" value="kinematic"/>
+			<attribute name="physic_group" value="9"/>
+			<attribute name="physic_groupList" value="1"/>
+			<attribute name="physic_dimensions" value="{ 1, 1, 1 }"/>
+		</attributes>
+		<ambits>
+			<ambit name="Always">
+				<components>
+					<component name="CGraphics" priorityType = "low" priorityLevel="2">
+						
+					</component>
+					<component name="CSpike" priorityType = "low" priorityLevel="2">
+						
+					</component>
+				</components>
+			</ambit>
+			<ambit name="Server">
+				<components>
+					<component name="CPhysicDynamicEntity" priorityType = "low" priorityLevel="2">
+						
+					</component>
+				</components>
+			</ambit>
+			<ambit name="Client">
+			</ambit>
+			<ambit name="Single">
+				<components>
+					<component name="CPhysicDynamicEntity" priorityType = "low" priorityLevel="2">
+						
+					</component>
+				</components>
+			</ambit>			
+		</ambits>
+	</entity>
+
+<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - H A C K S A W- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+	
+	<entity name="Hacksaw" type="Hacksaw">
+		<attributes>
+			<attribute name="model" value="sierra.mesh"/>
+			<attribute name="position" value="{100.0,-3.0, -12.0}"/>
+			<attribute name="positionInitial" value="{100.0,-3.0, -12.0}"/>
+			<attribute name="positionFinal" value="{100.0,2.0, -12.0}"/>
+			
+			<attribute name="velocity" value="0.02"/>
+			<attribute name="timeToShow" value="8.0"/>
+			<attribute name="timeToUnShow" value="4.0"/>
+			
+			<attribute name="physic_mass" value="1"/>
+			<attribute name="physic_entity" value="rigid"/>
+			<attribute name="physic_shape" value="box"/>
+			<attribute name="physic_trigger" value="true"/>
+			<attribute name="physic_type" value="kinematic"/>
+			<attribute name="physic_group" value="9"/>
+			<attribute name="physic_groupList" value="1"/>
+			<attribute name="physic_dimensions" value="{ 1, 1, 1 }"/>
+		</attributes>
+		<ambits>
+			<ambit name="Always">
+				<components>
+					<component name="CGraphics" priorityType = "low" priorityLevel="2">
+						
+					</component>
+					<component name="CHacksaw" priorityType = "low" priorityLevel="2">
+						
+					</component>
+				</components>
+			</ambit>
+			<ambit name="Server">
+				<components>
+					<component name="CPhysicDynamicEntity" priorityType = "low" priorityLevel="2">
+						
+					</component>
+				</components>
+			</ambit>
+			<ambit name="Client">
+			</ambit>
+			<ambit name="Single">
+				<components>
+					<component name="CPhysicDynamicEntity" priorityType = "low" priorityLevel="2">
+						
+					</component>
+				</components>
+			</ambit>			
+		</ambits>
+	</entity>
+	
+
+<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - S C R E A M E R  S H I E L D- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+	
+	<entity name="ScreamerShield" type="ScreamerShield">
+		<attributes>
+			<attribute name="physic_mass" value="10"/>
+			<attribute name="physic_entity" value="rigid"/>
+			<attribute name="physic_shape" value="sphere"/>
+			<attribute name="physic_trigger" value="false"/>
+			<attribute name="physic_type" value="kinematic"/>
+			<attribute name="physic_group" value="5"/>
+			<attribute name="physic_groupList" value="3,10"/>
+		</attributes>
+		<ambits>
+			<ambit name="Always">
+			</ambit>
+			<ambit name="Server">
+			</ambit>
+			<ambit name="Client">
+			</ambit>
+			<ambit name="Single">
+				<components>
+					<component name="CGraphics" priorityType = "low" priorityLevel="2">
+					</component>
+					<component name="CPhysicDynamicEntity" priorityType = "low" priorityLevel="2">
+					</component>
+					<component name="CScreamerShieldDamageNotifier" priorityType = "low" priorityLevel="2">
+					</component>
+				</components>
+			</ambit>			
+		</ambits>
+	</entity>
+		
+<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  L O C A L  P L A Y E R - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+	
+	<entity name="LocalPlayer" type="LocalPlayer">
+		<ambits>
+			<ambit name="Always">
+			</ambit>
+			<ambit name="Server">
+			</ambit>
+			<ambit name="Client">
+				<components>
+					<component name="CAvatarController">
+					</component>
+					<component name="CInterpolation">
+					</component>
+					<component name="CPhysicController">
+					</component>
+					<component name="CHudOverlay">
+					</component>
+					<component name="CClientRespawn">
+					</component>
+					<component name="CNetConnector">
+					</component>
+					<component name="CParticle">
+					</component>
+					<component name="CAudio">
+					</component>					
+				</components>
+			</ambit>
+			<ambit name="Single">
+				<components>
+					<component name="CAvatarController">
+					</component>
+					<component name="CScreamer">
+					</component>
+					<component name="CPhysicController">
+					</component>
+					<component name="CShootRocketLauncher">
+					</component>
+					<component name="CShootGrenadeLauncher">
+					</component>
+					<component name="CShootMiniGun">
+					</component>
+					<component name="CShootShotGun">
+					</component>
+					<component name="CShootSniper">
+					</component>
+					<component name="CShootHammer">
+					</component>
+					<component name="CWeaponsManager">
+					</component>
+					<component name="CHudOverlay">
+					</component>
+					<component name="CLife">
+					</component>
+					<component name="CSpawnPlayer">
+					</component>
+					<component name="CParticle">
+					</component>
+					<component name="CAudio">
+					</component>					
+				</components>
+			</ambit>			
+		</ambits>
+	</entity>
+	
+<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  R E M O T E  P L A Y E R - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+	
+	<entity name="RemotePlayer" type="RemotePlayer">
+		<ambits>
+			<ambit name="Always">
+			</ambit>
+			<ambit name="Server">
+			</ambit>
+			<ambit name="Client">
+				<components>
+					<component name="CAvatarController">
+					</component>
+					<component name="CInterpolation">
+					</component>
+					<component name="CPhysicController">
+					</component>
+					<component name="CAnimatedGraphics">
+					</component>
+					<component name="CClientRespawn">
+					</component>
+					<component name="CNetConnector">
+					</component>
+					<component name="CParticle">
+					</component>
+					<component name="CAudio">
+					</component>					
+				</components>
+			</ambit>
+			<ambit name="Single">
+				<components>
+					<component name="CAvatarController">
+					</component>
+					<component name="CAnimatedGraphics">
+					</component>
+					<component name="CPhysicController">
+					</component>
+					<component name="CLife">
+					</component>
+					<component name="CSpawnPlayer">
+					</component>
+					<component name="CParticle">
+					</component>
+					<component name="CAudio">
+					</component>					
+				</components>
+			</ambit>			
+		</ambits>
+	</entity>
+	
+<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  S E R V E R  P L A Y E R - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+	
+	<entity name="ServerPlayer" type="ServerPlayer">
+		<ambits>
+			<ambit name="Always">
+			</ambit>
+			<ambit name="Server">
+				<components>
+					<component name="CAvatarController">
+					</component>
+					<component name="CPhysicController">
+					</component>
+					<component name="CShadow">
+					</component>
+					<component name="CShootRocketLauncher">
+					</component>
+					<component name="CShootGrenadeLauncher">
+					</component>
+					<component name="CShootMiniGun">
+					</component>
+					<component name="CShootShotGun">
+					</component>
+					<component name="CShootSniper">
+					</component>
+					<component name="CShootHammer">
+					</component>
+					<component name="CWeaponsManager">
+					</component>
+					<component name="CLife">
+					</component>
+					<component name="CSpawnPlayer">
+					</component>
+					<component name="CUpdateClientPosition">
+					</component>
+					<component name="CNetConnector">
+					</component>
+					<component name="CGraphics">
+					</component>					
+				</components>
+			</ambit>
+			<ambit name="Client">
+			</ambit>
+			<ambit name="Single">
+			</ambit>			
+		</ambits>
+	</entity>
+</entities>
