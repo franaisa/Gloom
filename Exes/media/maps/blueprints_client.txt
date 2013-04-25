@@ -11,7 +11,7 @@ Archangel CAvatarController CInterpolation CPhysicController CArchangel CClientR
 LocalSpectator CSpectatorController CPhysicController
 ItemSpawn CFloatingMovement CSpawnItemManager CGraphics
 SpawnPoint CPhysicStaticEntity
-Jumper CGraphics CPhysicStaticEntity CJumper CAudio CParticle
+Jumper CGraphics CAudio CParticle
 Grenade CPhysicDynamicEntity CGrenadeControllerClient CParticle CGraphics CAudio
 Rocket CPhysicDynamicEntity CRocketControllerClient CParticle CGraphics CAudio
 Lava CPhysicStaticEntity CLava CGraphics

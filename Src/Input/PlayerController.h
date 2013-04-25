@@ -42,7 +42,7 @@ namespace Input
 	*/
 
 	//'Constante' de máximo tiempo para dar la doble pulsación del salto hacia los lados
-	#define MAX_TIME_DOBULE_PUSH 150
+	#define MAX_TIME_DOBULE_PUSH 300
 
 	class CPlayerController : public CKeyboardListener, public CMouseListener
 	{

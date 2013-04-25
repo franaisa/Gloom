@@ -8,7 +8,7 @@ Enemy CPhysicDynamicEntity CLife
 Camera CCamera 
 ItemSpawn CGraphics CPhysicStaticEntity CFloatingMovement CSpawnItemManager CNetConnector
 SpawnPoint CPhysicStaticEntity
-Jumper CGraphics CPhysicStaticEntity CJumper
+Jumper CGraphics CPhysicStaticEntity CJumper CNetConnector
 Grenade CGraphics CPhysicDynamicEntity CGrenadeController CNetConnector
 Rocket CGraphics CPhysicDynamicEntity CRocketController CNetConnector
 Lava CGraphics CPhysicStaticEntity CLava
