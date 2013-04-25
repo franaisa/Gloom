@@ -138,25 +138,29 @@ namespace Logic {
 				std::cout << "Analizando " << entitiesHit[i]->getName() << std::endl;
 
 				// Comprobamos el punto de contacto
-				Ogre::Ray ray( explotionPos, entitiesHit[i]->getPosition().normalisedCopy() );
+				Vector3 dir = entitiesHit[i]->getPosition();
+				dir.y += 3;
+				dir = dir - explotionPos;
+				Ogre::Ray ray( explotionPos, dir.normalisedCopy() );
 				int bufferSize;
 				Physics::CRaycastHit* hitBuffer;
-				Physics::CServer::getSingletonPtr()->raycastMultiple(ray, 10 * _explotionRadius, hitBuffer, bufferSize);
+				Physics::CServer::getSingletonPtr()->raycastMultiple(ray, _explotionRadius, hitBuffer, bufferSize);
 
-				drawRaycast(ray, 10 * _explotionRadius);
+				//drawRaycast(ray, _explotionRadius);
 
 				float dmg = 0;
 
 				std::cout << "El raycast ha golpeado a " << bufferSize << " entidades" << std::endl;
 
 				for(int k = 0; k < bufferSize; ++k) {
-					std::cout << "lalolale --- " << hitBuffer[k].entity->getName() << std::endl;
+					std::cout << "Entidad golpeada[" << k << "]: " << hitBuffer[k].entity->getName() << std::endl;
 					if(hitBuffer[k].entity == entitiesHit[i]) {
 						std::cout << "***************************************************************************" << std::endl;
 						std::cout << "He golpeado a la entidad " << hitBuffer[k].entity->getName() << std::endl;
 						std::cout << "La posicion del misil es: " << explotionPos << std::endl;
-						std::cout << "La posicion de la entidad es:  " << hitBuffer[k].entity->getPosition() << std::endl;
-						dmg = _explotionDamage * ( 1 - (hitBuffer[k].distance/_explotionRadius) );
+						std::cout << "La posicion de la entidad es:  " << hitBuffer[k].impact << std::endl;
+						std::cout << "La distancia de golpeo es: " << hitBuffer[k].distance << std::endl;
+						dmg = _explotionDamage * ( 1 - ( (0.5 * hitBuffer[k].distance)/_explotionRadius) );
 						std::cout << "El dano estipulado es: " << dmg << std::endl;
 						std::cout << "***************************************************************************" << std::endl;
 					}
