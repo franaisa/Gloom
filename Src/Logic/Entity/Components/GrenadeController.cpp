@@ -68,7 +68,7 @@ namespace Logic {
 
 		_explotionDamage = entityInfo->getFloatAttribute("explotionDamage");
 		_explotionRadius = entityInfo->getFloatAttribute("explotionRadius");
-		_explotionForce = entityInfo->getFloatAttribute("explotionForce");
+		//_explotionForce = entityInfo->getFloatAttribute("explotionForce");
 		_audioExplotion = entityInfo->getStringAttribute("explotionAudio");
 		_explotionActive = false;
 
