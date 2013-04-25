@@ -114,7 +114,7 @@ Map = {
 		physic_shape = "capsule",
 		physic_radius = 6,
 		physic_height = 6,
-
+		playerDead = false,
 	},
 	
 	David = {

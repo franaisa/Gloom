@@ -30,6 +30,7 @@ namespace Logic {
 namespace Physics {
 	class CCollisionManager;
 	class CErrorManager;
+	class CRaycastHit;
 };
 
 namespace physx {
@@ -283,6 +284,13 @@ namespace Physics {
 		//________________________________________________________________________
 
 		/**
+
+		*/
+		void raycastMultiple(const Ray& ray, float maxDistance, CRaycastHit* & hits, int& nbHits) const;
+
+		//________________________________________________________________________
+
+		/**
 		Dada una geometría, realiza una query de overlap y devuelve un vector con los punteros
 		a las entidades que colisionan con dicha geometría.
 
@@ -317,6 +325,52 @@ namespace Physics {
 		@return True si existe colisión con algún actor, falso en caso contrario.
 		*/
 		bool overlapAny(const physx::PxGeometry& geometry, const Vector3& position);
+
+
+		//________________________________________________________________________
+
+		/**
+		Dada una geometría, realiza una query de sweep y devuelve un vector con los puntos
+		de colisión encontrados.
+
+		IMPORTANTE: Esta función puede ser realmente cara. Usar con mucho cuidado.
+
+		@param geometry Geometría para la query de sweep. Mirar la documentación para ver cuales
+		están soportadas.
+		@param position Posición en la que queremos situar el centro de la geometría.
+		@param unitDir Dirección unitaria en la que queremos que se realice el barrido.
+		@param distance Distancia máxima del barrido.
+		@param hitSpots Array de puntos de colisión encontrados. Este vector NO DEBE SER
+		INICIALIZADO!! ya que la propia función se encarga de inicializarlo y rellenarlo.
+		De no haber colisiones, el número de colisiones devuelto es 0 y por lo tanto no 
+		se reserva memoria (no hay que liberar en ese caso - pete asegurado si se libera).
+		EL CLIENTE ES RESPONSABLE DE LIBERAR LA MEMORIA RESERVADA.
+		@param nbHits Número de entidades que colisionan contra la geometría dada, 0 en caso de
+		no haber contacto con ninguna entidad.
+		*/
+		void sweepMultiple(const physx::PxGeometry& geometry, const Vector3& position,
+						   const Vector3& unitDir, float distance, Vector3* & hitSpots, int& nbHits);
+
+		//________________________________________________________________________
+
+		/**
+		Dada una geometría, realiza una query de sweep y devuelve true si la geometría dada
+		colisiona contra un actor (dinámico o estático).
+
+		Es mucho más eficiente que sweepMultiple. Usar cuando solo estemos interesados
+		en un hit.
+
+		@param geometry Geometría para la query de sweep. Mirar la documentación para ver que geometrías
+		están soportadas.
+		@param position Posición donde queremos colocar el centro de la geometría dada.
+		@param unitDir Dirección unitaria en la que queremos que se realice el barrido.
+		@param distance Distancia máxima del barrido.
+		@param hitSpot Si ha habido colisión en el barrido, se guarda en esta variable
+		el punto de colisión.
+		@return True si existe colisión con algún actor, falso en caso contrario.
+		*/
+		bool sweepSingle(const physx::PxGeometry& sweepGeometry, const Vector3& position, 
+						 const Vector3& unitDir, float distance, Vector3& hitSpot);
 
 
 		// =======================================================================
