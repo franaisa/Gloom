@@ -33,8 +33,8 @@ namespace Logic  {
 	bool CInterpolation::spawn(CEntity *entity, CMap *map, const Map::CEntity *entityInfo) {
 		if(!IComponent::spawn(entity,map,entityInfo))
 			return false;
-		if(entityInfo->hasAttribute("speed"))
-			_speed = entityInfo->getFloatAttribute("speed");
+		assert( entityInfo->hasAttribute("maxVelocity") && "Error: No se ha definido el atributo maxVelocity en el mapa" );
+		_speed = entityInfo->getFloatAttribute("maxVelocity");
 		// Indicar parametros de interpolacion (ñapeado de momento)
 		_interpolating = false;
 		_maxDistance = 15;
