@@ -62,8 +62,6 @@ namespace Input {
 		CInputManager::getSingletonPtr()->addKeyListener(this);
 		CInputManager::getSingletonPtr()->addMouseListener(this);
 
-		m_iLastScrollWheelPos = 0;
-
 	} // activate
 
 	//--------------------------------------------------------
@@ -161,11 +159,8 @@ namespace Input {
 			m->setMouse(mouse);
 			_controlledAvatar->emitMessage(m);
 
-			if (m_iLastScrollWheelPos != mouseState.posAbsZ)
-			{
+			if (mouseState.posAbsZ != 0) //Ha movido el scroll del mouse
 				ScrollWheelChangeWeapon(mouseState);
-			}
-			m_iLastScrollWheelPos = mouseState.posAbsZ;
 			
 			return true;
 		}
@@ -271,25 +266,11 @@ namespace Input {
 
 	void CPlayerController::ScrollWheelChangeWeapon(const CMouseState &mouseState)
 	{
-		Logic::CMessageChangeWeapon *message=new Logic::CMessageChangeWeapon();
-		if (m_iLastScrollWheelPos > mouseState.posAbsZ)
-		{
-			std::cout << "Arma anterior" << std::endl;
-			//Arma anterior
-			if (m_iCurrentWeapon > 0)
-			{
-				ChangeWeaponMessage(m_iCurrentWeapon - 1);
-			}
-		}
-		else
-		{
-			//Arma posterior
-			std::cout << "Arma posterior" << std::endl;
-			if (m_iCurrentWeapon < 5)
-			{
-				ChangeWeaponMessage(m_iCurrentWeapon + 1);
-			}
-		}
+		int iScrollValue = -1;
+		//Asigno 100 he movido la rueda para adelante y -100 si la he movido hacia atrás
+		iScrollValue = (mouseState.posAbsZ > 0) ? 100 : -100; 
+		ChangeWeaponMessage(iScrollValue);
+		
 	}
 
 	//--------------------------------------------------------
@@ -302,27 +283,21 @@ namespace Input {
 		{
 		case Input::Key::NUMBER1:
 			message->setWeapon(0);
-			m_iCurrentWeapon = 0;
 			break;
 		case Input::Key::NUMBER2:
 			message->setWeapon(1);
-			m_iCurrentWeapon = 1;
 			break;
 		case Input::Key::NUMBER3:
 			message->setWeapon(2);
-			m_iCurrentWeapon = 2;
 			break;
 		case Input::Key::NUMBER4:
 			message->setWeapon(3);
-			m_iCurrentWeapon = 3;
 			break;
 		case Input::Key::NUMBER5:
 			message->setWeapon(4);
-			m_iCurrentWeapon = 4;
 			break;
 		case Input::Key::NUMBER6:
 			message->setWeapon(5);
-			m_iCurrentWeapon = 5;
 			break;
 		}
 
@@ -330,40 +305,13 @@ namespace Input {
 	}//EmitMessageChangeWeapon
 
 	//--------------------------------------------------------
-
+	//Método sobrecargado para cambiar el arma con un entero (y no con una tecla TKey)
 	void CPlayerController::ChangeWeaponMessage(int iWeapon)
 	{
 		std::shared_ptr<Logic::CMessageChangeWeapon> message = std::make_shared<Logic::CMessageChangeWeapon>();
-
-		switch(iWeapon)
-		{
-		case 0:
-			message->setWeapon(0);
-			m_iCurrentWeapon = 0;
-			break;
-		case 1:
-			message->setWeapon(1);
-			m_iCurrentWeapon = 1;
-			break;
-		case 2:
-			message->setWeapon(2);
-			m_iCurrentWeapon = 2;
-			break;
-		case 3:
-			message->setWeapon(3);
-			m_iCurrentWeapon = 3;
-			break;
-		case 4:
-			message->setWeapon(4);
-			m_iCurrentWeapon = 4;
-			break;
-		case 5:
-			message->setWeapon(5);
-			m_iCurrentWeapon = 5;
-			break;
-		}
-
+		message->setWeapon(iWeapon);
 		_controlledAvatar->emitMessage(message);
+
 	}//EmitMessageChangeWeapon
 
 	//--------------------------------------------------------
