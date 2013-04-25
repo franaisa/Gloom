@@ -162,12 +162,13 @@ namespace Logic {
 		// En caso de colision, el controlador fisico nos informa.
 		// Debido al reposicionamiento de la cápsula que hace PhysX, le seteamos un offset fijo
 		// al movernos para asegurarnos de que hay colision
-		manageCollisions( _physicController->move(displacement-Vector3(0,0.15f,0), msecs) );
+		Vector3 oldPosition = _entity->getPosition();
+		manageCollisions( _physicController->move(displacement-Vector3(0,0.15f,0), msecs), oldPosition );
 	} // tick
 
 	//________________________________________________________________________
 
-	void CAvatarController::manageCollisions(unsigned collisionFlags) {
+	void CAvatarController::manageCollisions(unsigned collisionFlags, Vector3 oldPosition) {
 		// Colision con los pies detectada
 		_touchingGround = collisionFlags & Physics::eCOLLISION_DOWN;
 		
@@ -178,7 +179,9 @@ namespace Logic {
 
 		if(collisionFlags & Physics::eCOLLISION_SIDES){
 			//necesitamos la posicion anterior del personaje, para ver la dirección 
-			//y la velocidad a la que nos hemos movido
+			//y la velocidad a la que nos hemos movido, y calculamos el momentum
+			//resultado de habernos movido y haber chocado contra las paredes
+			_momentum = _entity->getPosition() - oldPosition;
 		}
 	}
 

@@ -222,7 +222,7 @@ namespace Logic {
 		@param collisionFlags Flags de colisión generados por el controlador 
 		físico del player.
 		*/
-		void manageCollisions(unsigned collisionFlags);
+		void manageCollisions(unsigned collisionFlags, Vector3 oldPosition);
 
 		//________________________________________________________________________
 

@@ -86,7 +86,7 @@ namespace Logic
 
 	void CJumper::applyJump(CEntity *entity) {
 		std::shared_ptr<CMessageAddForcePlayer> forcePlayerMsg = std::make_shared<CMessageAddForcePlayer>();
-		forcePlayerMsg->setForce(_force+Vector3(0,5,0));
+		forcePlayerMsg->setForce(_force);
 		entity->emitMessage(forcePlayerMsg);
 	} // applyJump
 	//---------------------------------------------------------

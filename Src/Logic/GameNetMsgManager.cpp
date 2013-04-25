@@ -26,6 +26,9 @@ Contiene la implementación del gestor de los mensajes de red durante la partida.
 #include "Net/buffer.h"
 #include "Entity\MessageFactory.h"
 #include "Logic/Messages/Message.h"
+#include "Input/Server.h"
+#include "Input/PlayerController.h"
+#include "Logic/Entity/Components/Interpolation.h"
 
 #include "Logic/GameNetPlayersManager.h"
 #include "Logic/PlayerInfo.h"
@@ -89,6 +92,7 @@ namespace Logic {
 	{
 		// TODO Escuchamos los mensajes de red. Engancharnos a Net::CManager
 		Net::CManager::getSingletonPtr()->addObserver(this);
+
 	} // activate
 
 	//--------------------------------------------------------
@@ -188,11 +192,37 @@ namespace Logic {
 
 		//Posicion
 		std::stringstream sp (std::stringstream::in | std::stringstream::out);
-		sp << transform.getTrans().x;
-		sp << " ";
-		sp << transform.getTrans().y;
-		sp << " ";
-		sp << transform.getTrans().z;
+
+		if(type.compare("Rocket")==0){
+			CEntity* player=Input::CServer::getSingletonPtr()->getPlayerController()->getControllerAvatar();
+
+			CInterpolation* comp = player->getComponent<CInterpolation>("CInterpolation");
+			
+			float _actualPing = comp->getPing();
+			std::cout << "El cohete se crea y el ping es de : " << _actualPing << std::endl;
+			float avanceCadaMsec=0.16;//era 0.1414 pero no quiero comermelo
+			float adelantar=avanceCadaMsec*_actualPing;
+
+			Vector3 direccion=Math::getDirection(transform);
+			direccion.normalise();
+			Vector3 direccionNormalizada=direccion*-1;
+			Vector3 newPosition(transform.getTrans()+direccionNormalizada*adelantar);
+			//std::cout << "El cohete nos vino con creacion en : " << transform.getTrans() << std::endl;
+			//std::cout << "Lo movi al punto : " << newPosition<< std::endl;
+			sp << newPosition.x;
+			sp << " ";
+			sp << newPosition.y;
+			sp << " ";
+			sp << newPosition.z;
+		}
+		else{
+			sp << transform.getTrans().x;
+			sp << " ";
+			sp << transform.getTrans().y;
+			sp << " ";
+			sp << transform.getTrans().z;
+		}
+
 		info->setAttribute( "position", sp.str() );
 		//Pitch
 		std::stringstream spitch (std::stringstream::in | std::stringstream::out);

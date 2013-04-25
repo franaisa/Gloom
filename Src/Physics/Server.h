@@ -283,6 +283,20 @@ namespace Physics {
 
 		//________________________________________________________________________
 
+
+		/**
+		Lanza un rayo y devuelve el punto de choque de la entidad contra la que queremos que choque indicada en el ID.
+		Si el rayo no choca contra ninguna entidad devuelve el vector3 (-5,-5,-5).
+		 
+		@param ray Rayo lanzado.
+		@param maxDist distancia máxima de la primera intersección.
+		@param id Id del que nos interesa el choque.
+		@return Punto de impacto en la entidad que queremos o (-5,-5,-5).
+		*/
+		Vector3 raycastClosestSpecificPoint (const Ray& ray, float maxDist, unsigned int id) const;
+
+		//________________________________________________________________________
+
 		/**
 
 		*/
