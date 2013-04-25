@@ -209,10 +209,6 @@ namespace Input
 		*/
 		E_MOVE m_eLastMove;
 
-		int m_iLastScrollWheelPos;
-
-		int m_iCurrentWeapon;
-
 	}; // class CPlayerController
 
 }

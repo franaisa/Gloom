@@ -91,7 +91,14 @@ namespace Logic
 		void addWeapon(int ammo, int weaponIndex);
 
 	protected:
-
+		/**
+		Función que se llama cuando se quiere cambiar de arma utilizando el scroll. A partir del arma actual,
+		recorre el array del inventario de armas hacia adelante (iWeapon == 100) o hacia atrá (iWeapon == -100),
+		en función de la dirección que se le haya dado al scroll.
+		@return Devuelve el índice del siguiente arma que tenemos (hacia arriba del inventario u hacia abajo)
+		Si no ha encontrado ningún arma siguiente, devuelve -1
+		*/
+		int selectScrollWeapon(int iWeapon);
 
 		/**
 		arma actual equipada
