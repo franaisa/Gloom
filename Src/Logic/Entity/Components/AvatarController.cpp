@@ -25,6 +25,8 @@ de la entidad.
 #include "Logic/Messages/MessageControl.h"
 #include "Logic/Messages/MessageMouse.h"
 #include "Logic/Messages/MessageAddForcePlayer.h"
+#include "Logic/Messages/MessageSetAnimation.h"
+#include "Logic/Messages/MessageStopAnimation.h"
 
 namespace Logic {
 
@@ -259,7 +261,14 @@ namespace Logic {
 	//________________________________________________________________________
 
 	void CAvatarController::executeMovementCommand(ControlType commandType) {
-		_displacementDir += _movementCommands[commandType];
+		Vector3 dir = _movementCommands[commandType];
+
+		//seteamos la animacion correcta con el resultado de las teclas pulsadas
+		//stopAnimation(dir);
+
+		_displacementDir += dir;
+
+		executeAnimation(dir);
 	}
 
 	//________________________________________________________________________
@@ -310,5 +319,66 @@ namespace Logic {
 		Vector3 dir = estimateMotionDirection(_movementCommands[commandType])+Vector3(0,1,0);
 		addForce(dir.normalisedCopy()*_dodgeForce);
 	}
+
+	//________________________________________________________________________
+
+	void CAvatarController::executeAnimation(Vector3 dir){
+
+		std::shared_ptr<CMessageSetAnimation> anim = std::make_shared<CMessageSetAnimation>();
+		
+		if(dir.x!=0){
+			if(_displacementDir.x==0){
+				anim->setString("Idle");
+				anim->setBool(true);
+			}else if(_displacementDir.x==1){
+				anim->setString("StrafeLeft");
+				anim->setBool(true);
+			}else if(_displacementDir.x==-1){
+				anim->setString("StrafeRight");
+				anim->setBool(true);
+			}
+		}else if(dir.z!=0){
+			if(_displacementDir.z==0){
+				anim->setString("Idle");
+				anim->setBool(true);
+			}else if(_displacementDir.z==1){
+				anim->setString("Walk");
+				anim->setBool(true);
+			}else if(_displacementDir.z==-1){
+				anim->setString("WalkBack");
+				anim->setBool(true);
+			}
+		}
+		_entity->emitMessage(anim, this); 
+	}
+
+	//________________________________________________________________________
+
+	void CAvatarController::stopAnimation(Vector3 dir){
+		//primero paramos la animación que este corriendo en sentido contrario a lo que hacemos
+		std::shared_ptr<CMessageSetAnimation> stopAnim = std::make_shared<CMessageSetAnimation>();
+
+		if(_displacementDir == Vector3::ZERO){
+			stopAnim->setString("Idle");
+		}else{
+			if(dir.x!= _displacementDir.x){
+				if (_displacementDir.x==0)
+					return;
+				else if(dir.x == -1)
+					stopAnim->setString("StrafeLeft");
+				else
+					stopAnim->setString("StrafeRight");
+			}else if(dir.z!= _displacementDir.z){
+				if (_displacementDir.z==0)
+					return;
+				else if(dir.z == -1)
+					stopAnim->setString("Walk");
+				else
+					stopAnim->setString("WalkBack");
+			}
+		}
+		_entity->emitMessage(stopAnim, this); 
+	}
+	//________________________________________________________________________
 
 } // namespace Logic

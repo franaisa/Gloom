@@ -201,6 +201,10 @@ namespace Logic {
 		*/
 		void addForce(const Vector3 &force);
 
+		void executeAnimation(Vector3 dir);
+
+		void stopAnimation(Vector3 dir);
+
 
 	protected:
 

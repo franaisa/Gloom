@@ -135,9 +135,9 @@ namespace Logic  {
 			{
 			std::shared_ptr<CMessageSyncPosition> syncMsg = std::static_pointer_cast<CMessageSyncPosition>(message);
 
-			std::cout << "el server me dice que esto en: " << syncMsg->getTransform().getTrans() << std::endl;
+			//std::cout << "el server me dice que esto en: " << syncMsg->getTransform().getTrans() << std::endl;
 
-			std::cout << "yo estoy en: " << _entity->getPosition() << std::endl;
+			//std::cout << "yo estoy en: " << _entity->getPosition() << std::endl;
 
 			// nos guardamos la posi que nos han dado por si tenemos que interpolar
 			_serverPos = syncMsg->getTransform();
