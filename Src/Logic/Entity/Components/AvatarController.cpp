@@ -221,7 +221,7 @@ namespace Logic {
 		_momentum *= coef;
 		// Seteamos una gravedad fija para que la cápsula colisione contra el suelo
 		_momentum.y = _gravity.y * msecs;
-		
+
 		return _momentum;
 	}
 
