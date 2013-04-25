@@ -8,8 +8,10 @@
 */
 
 #include "GrenadeController.h"
+#include "PhysicDynamicEntity.h"
 
 #include "Physics/Server.h"
+#include "Physics/RaycastHit.h"
 
 #include "Logic/Maps/EntityFactory.h"
 #include "Logic/Entity/Entity.h"
@@ -133,6 +135,7 @@ namespace Logic {
 		// Hacemos una query de overlap con la geometria de una esfera en la posicion 
 		// en la que se encuentra la granada con el radio que se indique de explosion
 		Physics::SphereGeometry explotionGeom = Physics::CGeometryFactory::getSingletonPtr()->createSphere(_explotionRadius);
+		Vector3 explotionPos = _entity->getPosition();
 		Physics::CServer::getSingletonPtr()->overlapMultiple(explotionGeom, _entity->getPosition(), entitiesHit, nbHits);
 
 		// Mandamos el mensaje de daño a cada una de las entidades que hayamos golpeado
@@ -141,19 +144,38 @@ namespace Logic {
 			// Si la entidad golpeada es valida
 			// y no se trata del escudo
 			if(entitiesHit[i] != NULL && entitiesHit[i]->getType() != "ScreamerShield") {
-				//queremos que la explosion se reduzca con el tiempo, asi que calculamos
-				//la distancia que hay entre el impacto y el jugador, después partimos
-				//la distancia maxima de impacto en cachitos de igual damage, y calculamos
-				//cuantos cachitos de damage se le tienen que poner al hit
-				Vector3 direccionImpacto = entitiesHit[i]->getPosition() - _entity->getPosition();
-				float damage = (_explotionDamage/_explotionRadius)*direccionImpacto.length();
+				// Comprobamos el punto de contacto
+				Vector3 rayDirection = entitiesHit[i]->getPosition();
 
-				//final damage
-				damage = _explotionDamage - damage;
+				// Tiramos el rayo al centro de la capsula del enemigo
+				// No podemos tirar el rayo directamente porque se lo tira a los pies y a veces no hay contacto
+				// Como solucion rapida (aehem.. ñapa) voy a sacar la info de la altura del screamer
+				// que teoricamente es la misma que la de todos los players
+				Map::CEntity * info = Logic::CEntityFactory::getSingletonPtr()->getInfo("Screamer");
+				if(info != NULL) rayDirection.y += info->getIntAttribute("physic_height");
+				rayDirection = rayDirection - explotionPos;
+				
+				// Hacemos una query de raycast desde el punto de explosion hasta la entidad analizada
+				// de la query de overlap (para saber el punto de colision).
+				// No es ni lo mas exacto ni lo mas eficiente, pero soluciona la papeleta.
+				Ogre::Ray ray( explotionPos, rayDirection.normalisedCopy() );
+				int bufferSize;
+				Physics::CRaycastHit* hitBuffer;
+				Physics::CServer::getSingletonPtr()->raycastMultiple(ray, _explotionRadius, hitBuffer, bufferSize);
+
+				// Calculamos el daño en base a la distancia del golpe
+				float dmg = 0;
+				for(int k = 0; k < bufferSize; ++k) {
+					if(hitBuffer[k].entity == entitiesHit[i]) {
+						dmg = _explotionDamage * ( 1 - (hitBuffer[k].distance/_explotionRadius) );
+					}
+				}
+
+				if(bufferSize > 0) delete [] hitBuffer;
 
 				//send damage message
 				std::shared_ptr<CMessageDamaged> damageDone = std::make_shared<CMessageDamaged>();
-				damageDone->setDamage(damage);
+				damageDone->setDamage(dmg);
 				damageDone->setEnemy(_owner);
 				entitiesHit[i]->emitMessage(damageDone);
 				
@@ -164,7 +186,7 @@ namespace Logic {
 				std::shared_ptr<CMessageAddForcePlayer> explotionForce = std::make_shared<CMessageAddForcePlayer>();
 				// Seteamos la fuerza y la velocidad
 				// Seteamos el vector director del desplazamiento
-				
+				Vector3 direccionImpacto = entitiesHit[i]->getPosition() - _entity->getPosition();
 				Vector3 forceDirection = direccionImpacto.normalisedCopy();
 
 				float pushForce=3;
