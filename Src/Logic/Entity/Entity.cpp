@@ -390,6 +390,17 @@ namespace Logic
 
 	//---------------------------------------------------------
 
+	void CEntity::roll(float roll) {
+		Math::roll(roll, _transform);
+
+		// Avisamos a los componentes del cambio.
+		std::shared_ptr<CMessageTransform> transformMsg = std::make_shared<CMessageTransform>();
+		transformMsg->setTransform(_transform);
+		emitMessage(transformMsg);
+	}
+
+	//---------------------------------------------------------
+
 	
 
 

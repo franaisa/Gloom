@@ -112,6 +112,9 @@ namespace Logic {
 		/** Crea una entidad GrenadeExplotion justo en el lugar en el que se encuentre la granada (_entity). */
 		void createExplotion();
 
+		void drawRaycast(const Ray& raycast, float dist);
+
+		int _temporal;
 
 		// =======================================================================
 		//                            CAMPOS PRIVADOS

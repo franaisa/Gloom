@@ -16,8 +16,12 @@ GENERAL NOTES
 * Technology: C++/Ogre3d/PhysX/Flash/Enet - Windows.
 * Authors:
 
-	** Artists:
+	** Concept Artist:
 		- Ángel Arenas Civantos
+
+	** 3D Artists:
+		- Ángel Arenas Civantos
+		- Aaron Pérez
 		- Alberto Moro
 
 	** Designers:

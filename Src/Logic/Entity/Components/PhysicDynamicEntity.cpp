@@ -68,10 +68,10 @@ bool CPhysicDynamicEntity::spawn(Logic::CEntity *entity, CMap *map, const Map::C
 bool CPhysicDynamicEntity::accept(const std::shared_ptr<CMessage>& message) {
 	Logic::TMessageType msgType = message->getMessageType();
 
-	return msgType == Message::KINEMATIC_MOVE ||
-		   msgType == Message::ACTIVATE ||
-		   msgType == Message::DEACTIVATE ||
-		   msgType == Message::SET_PHYSIC_POSITION ||
+	return msgType == Message::KINEMATIC_MOVE		||
+		   msgType == Message::ACTIVATE				||
+		   msgType == Message::DEACTIVATE			||
+		   msgType == Message::SET_PHYSIC_POSITION	||
 		   msgType == Message::ADD_FORCE_PHYSICS;
 }
 
@@ -105,7 +105,6 @@ void CPhysicDynamicEntity::process(const std::shared_ptr<CMessage>& message) {
 				_physicEntity.disableGravity(true);
 		
 			addForce( forceMsg->getForceVector(), forceMsg->getForceMode() );
-		
 			break;
 		}
 	}

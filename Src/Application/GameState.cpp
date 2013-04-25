@@ -78,9 +78,9 @@ namespace Application {
 
 	void CGameState::deactivate() 
 	{
-		std::cout << "tiempo de procesado fisico: " << _timephysics << std::endl;
-		std::cout << "tiempo de procesado logico: " << _timelogic << std::endl;
-		std::cout << "tiempo total jugado: " << _time << std::endl;
+		//std::cout << "tiempo de procesado fisico: " << _timephysics << std::endl;
+		//std::cout << "tiempo de procesado logico: " << _timelogic << std::endl;
+		//std::cout << "tiempo total jugado: " << _time << std::endl;
 		// Desactivamos la clase que procesa eventos de entrada para 
 		// controlar al jugador.
 		Input::CServer::getSingletonPtr()->getPlayerController()->deactivate();

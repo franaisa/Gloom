@@ -188,7 +188,7 @@ namespace Graphics
 
 		void setScene(CScene *scene){_scene=scene;}
 
-		void changeMaterial(const std::string& materialName);
+		virtual void changeMaterial(const std::string& materialName);
 
 		void getMeshInformation(const Ogre::MeshPtr& mesh,size_t &vertex_count, Ogre::Vector3* &vertices,
 								size_t &index_count, unsigned* &indices,

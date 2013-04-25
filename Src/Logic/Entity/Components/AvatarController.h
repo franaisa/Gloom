@@ -1,3 +1,7 @@
+//---------------------------------------------------------------------------
+// AvatarController.h
+//---------------------------------------------------------------------------
+
 /**
 @file AvatarController.h
 
@@ -7,79 +11,111 @@ de la entidad.
 @see Logic::CAvatarController
 @see Logic::IComponent
 
-@author David Llansó
-@date Agosto, 2010
+@author Rubén Mulero Guerrero
+@author Francisco Aisa García
+@date Abril, 2013
 */
+
 #ifndef __Logic_AvatarController_H
 #define __Logic_AvatarController_H
 
 #include "Logic/Entity/Component.h"
 
-//declaración de la clase
-namespace Logic 
-{
-/**
+// Predeclaración de clases
+namespace Logic {
+	class CMessageControl;
+	class CPhysicController;
+}
+
+// Declaración de la clase
+namespace Logic {
+
+	/**
 	Este componente es el encargado de mover a una entidad animada. Tiene
 	diferentes métodos que permiten avances o giros. El uso de este componente
 	es un poco atípico ya que se puede registrar en otro controlador externo
 	(i.e. GUI::CPlayerController) que sea el que de las órdenes que se deben
-	llevar a cabo mediante llamadas a métodos públicos del componente. Puede
-	no obstante ampliarse este componente para aceptar mensajes tradicionales
-	con las órdenes, sin embargo de momento así es suficiente.
+	llevar a cabo mediante llamadas a métodos públicos del componente.
+
+	Realmente este es el componente que da las ordenes al character controller.
+	Esta hecho así para facilitar la implementación de otro tipo de controladores
+	de entidad como por ejemplo el espectador.
 	
     @ingroup logicGroup
 
-	@author David Llansó García
-	@date Agosto, 2010
-*/
-	class CAvatarController : public IComponent
-	{
+	@author Rubén Mulero Guerrero
+	@author Francisco Aisa García
+	@date Abril, 2013
+	*/
+
+	class CAvatarController : public IComponent {
 		DEC_FACTORY(CAvatarController);
 	public:
 
+
+		// =======================================================================
+		//                      CONSTRUCTORES Y DESTRUCTOR
+		// =======================================================================
+
+
+		/** Constructor por defecto. */
+		CAvatarController();
+
+		//________________________________________________________________________
+
+		/** Destructor por defecto. */
+		virtual ~CAvatarController();
+
+
+		// =======================================================================
+		//                    METODOS HEREDADOS DE ICOMPONENT
+		// =======================================================================
+
+
 		/**
-		Constructor por defecto; inicializa los atributos a su valor por 
-		defecto.
-		*/
-		CAvatarController() : IComponent(), _jumping(false), _walking(false), _walkingBack(false), 
-			_strafingLeft(false), _strafingRight(false), _speed(0.05f) {}
-		
-		/**
-		Inicialización del componente, utilizando la información extraída de
+		Inicialización del componente utilizando la información extraída de
 		la entidad leída del mapa (Maps::CEntity). Toma del mapa el atributo
 		speed que indica a la velocidad a la que se moverá el jugador.
 
+		Inicialización del componente a partir de la información extraida de la entidad
+		leida del mapa:
+		<ul>
+			<li><strong>acceleration:</strong> Aceleración del movimiento del player. </li>
+			<li><strong>maxVelocity:</strong> Máxima velocidad a la que puede correr el player. </li>
+			<li><strong>frictionCoef:</strong> Coeficiente de deceleración del movimiento terrestre. </li>
+			<li><strong>airFrictionCoef:</strong> Coeficiente de deceleración del movimiento aereo. </li>
+			<li><strong>airSpeedCoef:</strong> Coeficiente de movimiento aereo. </li>
+			<li><strong>gravity:</strong> Valor de la aceleración de la gravedad del player. </li>
+			<li><strong>jumpForce:</strong> Fuerza de salto. </li>
+			<li><strong>dodgeForce:</strong> Fuerza del salto de esquiva. </li>
+		</ul>
+
 		@param entity Entidad a la que pertenece el componente.
 		@param map Mapa Lógico en el que se registrará el objeto.
-		@param entityInfo Información de construcción del objeto leído del
-			fichero de disco.
+		@param entityInfo Información de construcción del objeto leído del fichero de disco.
 		@return Cierto si la inicialización ha sido satisfactoria.
 		*/
 		virtual bool spawn(CEntity* entity, CMap *map, const Map::CEntity *entityInfo);
 
-		/**
-		Método que activa el componente; invocado cuando se activa
-		el mapa donde está la entidad a la que pertenece el componente.
-		<p>
-		Si el componente pertenece a la entidad del jugador, el componente
-		se registra así mismo en el controlador del GUI para que las ordenes 
-		se reciban a partir de los eventos de teclado y ratón.
+		//________________________________________________________________________
 
-		@return true si todo ha ido correctamente.
+		/**
+		Metodo que se llama al activar el componente.
+		Resetea los valores de inercia y desplazamiento.
 		*/
 		virtual void activate();
-		
+
+		//________________________________________________________________________
+
 		/**
-		Método que desactiva el componente; invocado cuando se
-		desactiva el mapa donde está la entidad a la que pertenece el
-		componente. Se invocará siempre, independientemente de si estamos
-		activados o no.
-		<p>
-		Si el componente pertenece a la entidad del jugador, el componente
-		se deregistra así mismo en el controlador del GUI para dejar de
-		recibir las ordenes dadas a partir de los eventos de teclado y ratón.
+		Setea el puntero al componente del controlador físico para evitar overhead
+		de mensajes en el tick.
+
+		@param unsigned int msecs Milisegundos transcurridos desde el último tick.
 		*/
-		virtual void deactivate();
+		virtual void onStart(unsigned int msecs);
+
+		//________________________________________________________________________
 
 		/**
 		Método llamado en cada frame que actualiza el estado del componente.
@@ -91,14 +127,22 @@ namespace Logic
 		*/
 		virtual void tick(unsigned int msecs);
 
-		/**
-		Método virtual que elige que mensajes son aceptados. Son válidos
-		CONTROL.
+		//________________________________________________________________________
 
+		/** 
+		Este componente acepta los siguientes mensajes:
+
+		<ul>
+			<li>CONTROL</li>
+			<li>ADDFORCEPLAYER</li>
+		</ul>
+		
 		@param message Mensaje a chequear.
 		@return true si el mensaje es aceptado.
 		*/
 		virtual bool accept(const std::shared_ptr<CMessage>& message);
+
+		//________________________________________________________________________
 
 		/**
 		Método virtual que procesa un mensaje.
@@ -107,253 +151,189 @@ namespace Logic
 		*/
 		virtual void process(const std::shared_ptr<CMessage>& message);
 
-		/**
-		Provoca que la entidad avance.
-		*/
-		void walk();
+
+		// =======================================================================
+		//                            METODOS PROPIOS
+		// =======================================================================
+
 
 		/**
-		Provoca que la entidad retroceda.
+		Dado un giro en X y otro en Y provoca que la entidad (y la camara
+		giren).
+
+		@param XYturn array con los valores de giro del raton.
 		*/
-		void walkBack();
+		void mouse(float XYturn[]);
+
+		//________________________________________________________________________
 
 		/**
-		Provoca que la entidad cese el avance.
+		Dado un enumerado indicando el tipo de movimiento se desplaza al player.
+
+		@param commandType Enumerado que indica el tipo de movimiento a realizar.
 		*/
-		void stopWalk();
+		void executeMovementCommand(ControlType commandType);
+
+		//________________________________________________________________________
 
 		/**
-		Provoca que la entidad cese el retroceso
+		Provoca que la entidad salte en vertical.
 		*/
-		void stopWalkBack();
+		void executeJump();
+
+		//________________________________________________________________________
 
 		/**
-		Provoca que la entidad se desplace lateralmente a la izquierda.
+		Dado un enumerado indicando el tipo de salto esquiva se ejecuto dicho salto
+		en el player.
+
+		@param commandType Enumerado que indica el tipo de esquiva a realizar.
 		*/
-		void strafeLeft();
+		void executeDodge(ControlType commandType);
+
+		//________________________________________________________________________
 
 		/**
-		Provoca que la entidad se desplace lateralmente a la derecha.
-		*/
-		void strafeRight();
+		Dado un vector de fuerza (dirección + magnitud) empuja al player en dicha
+		dirección.
 
-		/**
-		Provoca que la entidad cese el desplazamiento lateral derecho.
+		@param force Vector de fuerza.
 		*/
-		void stopStrafeRight();
-		
-		/**
-		Provoca que la entidad cese el desplazamiento lateral izquierdo.
-		*/
-		void stopStrafeLeft();
+		void addForce(const Vector3 &force);
 
-		/**
-		Provoca que la entidad salte.
-		*/
-		void jump();
+		void executeAnimation(Vector3 dir);
 
-		/**
-		Provoca que la entidad rebote
-		*/
-		void rebound();
+		void stopAnimation(Vector3 dir);
 
-		/**
-		Provoca que a la entidad se le aplique una fuerza
-		*/
-		void force();
-
-		/**
-		Provoca que la entidad gire. Números Positivos para	giro a 
-		derechas, negativos para giro izquierdas.
-
-		@param amount Cantidad de giro. Positivos giro a derechas,
-		negativos a izquierdas.
-		*/
-		void mouse(const float* amount);
-
-		/**
-		Devuelve el estado del booleano falling
-		*/
-		bool getFalling(){
-			return _falling;
-		};
-
-		/**
-		Devuelve el estado del booleano WalkingBack
-		*/
-		bool getWalkingBack(){
-			return _walkingBack;
-		};
+		Vector3 getVelocity(){return _momentum;}
 
 	protected:
 
-		/**
-		Atributo para saber si la entidad está avanzando.
-		*/
-		bool _walking;
 
-		/**
-		Atributo para saber si la entidad está retrocediendo.
-		*/
-		bool _walkingBack;
-
-		/**
-		Atributo para saber si la entidad está moviendose lateralmente
-		a la izquierda.
-		*/
-		bool _strafingLeft;
-
-		/**
-		Atributo para saber si la entidad está moviendose lateralmente
-		a la derecha.
-		*/
-		bool _strafingRight;
-
-		/**
-		Atributos para el control del salto de la entidad
-		*/
-		bool _jumping;
-		bool _jumpingControl;
-		bool _canJump;
-
-		/**
-		Atributo que indica la magnitud de velocidad de la entidad.
-		*/
-		float _speed;
-
-		/**
-		Atributo que indica la magnitud de velocidad del salto de la entidad.
-		*/
-		double _speedJump;
-
-		/**
-		Atributo que indica la magnitud de la gravedad para el MRUA
-		*/
-		double _gravity;
-
-		/**
-		Atributo que indica si estamos cayendo (se actualizará mediante un mensaje que nos envia el PhysicController)
-		*/
-		bool _falling;
-
-		/**
-		Atributo que indica la dirección en el momento de saltar o de empezar a caer
-		*/
-		Vector3 _direccionSaltoCaida;
-
-		/**
-		Atributo que indica si la entidad empezó a caer
-		*/
-		bool _caida;
-
-		/**
-		Atributos que se encargan de los saltos laterales (activacion y velocidad)
-		*/
-		bool _sideJump;
-		bool _velocitySideJump;
-
-		int _nConcatSideJump;
-		bool _sideContact;
-		bool _sideFly;
-		int _timeConcatSideJump;
-		bool _activeContact;
-
-		/**
-		Atributo que lleva la activacion de la concatenacion de saltos laterales
-		*/
-		bool _activeConcat;
-
-		/**
-		Atributo que lleva la dirección en la que tiene que ir el rebote del jugador
-		*/
-		Vector3 _dirRebound;
-
-		/**
-		Atributo que dice si el rebote está activo
-		*/
-		bool _rebound;
-
-		/**
-		Atributo que dice si hay que aplicar una fuerza
-		*/
-		bool _force;
-
-		/**
-		Atributo que indica la potencia explosiva que se el aplicará al salto lateral al iniciarse
-		*/
-		float _powerSideJump;
-
-		/**
-		Atributo que indica la potencia explosiva que se el aplicará al salto al iniciarse
-		*/
-		float _powerJump;
-
-		/**
-		Atributo que indica la potencia explosiva que se el aplicará al salto en jumper al iniciarse (eje Y)
-		*/
-		float _powerJumpForce;
-
-		/**
-		Atributo que indica la potencia explosiva que se el aplicará al salto en jumper al iniciarse (eje X y Z)
-		*/
-		float _velocityForce;
-
-		/**
-		Atributo que indica la potencia explosiva que se el aplicará al salto en jumper al iniciarse (eje X y Z)
-		*/
-		Vector3 _directionForce;
-
-		/**
-		Atributo que indica que hay que aplicar la velocidad de jumper
-		*/
-		bool _applyForce;
+		// =======================================================================
+		//                          MÉTODOS PROTEGIDOS
+		// =======================================================================
 
 
 		/**
-		Atributos que indican que velocidad extra tendrá el salto lateral, segun si no es concatenado o sí respectivamente
+		Dado un entero con los flags de colisión reportados por el controlador 
+		físico, actua sobre el movimiento del player.
+
+		@param collisionFlags Flags de colisión generados por el controlador 
+		físico del player.
 		*/
-		float _sumSpeedSideJump;
-		float _sumSpeedSideJumpConcat;
+		void manageCollisions(unsigned collisionFlags, Vector3 oldPosition);
+
+		//________________________________________________________________________
 
 		/**
-		Atributo que indica el factor con el que el movimiento actual afectará a la dirección del jugador cuando se encuentra en el aire
+		Dado un vector de dirección simplificado (con cada coordenada entre 0 y 1)
+		devuelve la dirección en la que el player debería mirar una vez aplicada
+		la rotación.
+
+		@param direction Dirección relativa en la que queremos que el player se
+		desplace.
 		*/
-		float _restitutionMoveAir;
+		Vector3 estimateMotionDirection(const Vector3& direction);
+
+		//________________________________________________________________________
 
 		/**
-		Atributo que indica el maximo tiempo para contabilizar la concatenacion de un salto lateral
+		Calcula el desplazamiento del jugador sobre el suelo.
+
+		@param msecs Milisegundos transcurridos desde el último tick.
+		@return El vector de desplazamiento.
 		*/
-		int _maxTimeConcatSideJump;
+		Vector3 estimateGroundMotion(unsigned int msecs);
+
+		//________________________________________________________________________
 
 		/**
-		Atributos que indica la velocidad máxima de caida que puedes llegar a alcanzar
+		Calcula el desplazamiento del jugador en el aire.
+
+		@param msecs Milisegundos transcurridos desde el último tick.
+		@return El vector de desplazamiento.
 		*/
-		float _maxSpeedDown;
+		Vector3 estimateAirMotion(unsigned int msecs);
+
+		//________________________________________________________________________
 
 		/**
-		Atributo que indica la ruta del sonido de pasos
+		Normaliza el desplazamiento vertical si nuestra velocidad de caida es mayor
+		al máximo establecido.
 		*/
-		std::string _audioStep;
+		void normalizeGravity();
+
+		//________________________________________________________________________
 
 		/**
-		Atributo que indica la ruta del sonido de salto
+		Inicializa el array que contiene los vectores que corresponden a cada comando
+		de movimiento.
 		*/
-		std::string _audioJump;
+		void initMovementCommands();
+
+
+		// =======================================================================
+		//                          MIEMBROS PROTEGIDOS
+		// =======================================================================
+
+
+		/** true si el personaje está tocando el suelo, false si esta en el aire. */
+		bool _touchingGround;
+
+		/** Vector de gravedad, puede ser sustituido por un flotante. */
+		Vector3 _gravity;
+
+		/** Velocidad máxima de caida. */
+		float _maxGravVelocity;
+
+		/** Velocidad máxima a la que nuestro personaje se puede desplazar. */
+		float _maxVelocity;
+
+		/** Velocidad de aceleración del personaje al desplazarse. */
+		float _acceleration;
+
+		/** 
+		Coeficiente de rozamiento en el suelo, entre 0 y el tamaño de los msecs
+		del tick. A mayor valor, mayor deslizamiento.
+		*/
+		float _frictionCoef;
+		
+		/** 
+		Coeficiente de rozamiento del aire, entre 0 y 1. A menor valor, menor
+		recorrido en el aire. 
+		*/
+		float _airFrictionCoef;
 
 		/**
-		Atributo que indica la ruta del sonido de salto lateral
+		Coeficiente de movimiento aereo, entre 0 y el tamaño de los msecs del tick.
+		A mayor valor, mayor desplazamiento aereo.
 		*/
-		std::string _audioSideJump;
+		float _airSpeedCoef;
 
-		/**
-		Atributo que lleva el tiempo de el movimiento rectilineo uniformemente acelerado.
+		/** Fuerza de salto vertical. */
+		float _jumpForce;
+
+		/** Vector de salto esquiva. */
+		Vector3 _dodgeForce;
+
+		/** Vector que indica la dirección del desplazamiento que el controlador debe realizar. */
+		Vector3 _displacementDir;
+
+		/** Vector de inercia. */
+		Vector3 _momentum;
+
+		/** Puntero al controlador fisico del player. Nos lo quedamos por motivos de eficiencia. */
+		CPhysicController* _physicController;
+
+		/** 
+		Array que contiene los vectores que corresponden a cada uno de los movimientos
+		de desplazamiento y salto que se pueden realizar. 
 		*/
-		unsigned int _timeMrua;
-	
-		/**
-		Atributo que lleva la velocidad inicial con la que inicias.
-		*/
-		float _vo;
+		Vector3 _movementCommands[18];
+
+		/** Número máximo de comandos de movimiento. */
+		static const int MAX_MOVEMENT_COMMANDS = Control::CROUCH;
 
 	}; // class CAvatarController
 

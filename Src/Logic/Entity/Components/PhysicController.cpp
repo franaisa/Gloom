@@ -32,16 +32,15 @@ IMP_FACTORY(CPhysicController);
 
 //________________________________________________________________________
 
-CPhysicController::CPhysicController() : IPhysics(), _movement(0,0,0), _falling(false) {
+CPhysicController::CPhysicController() {
 	// _controller <- Su valor se auto inicializa
-	_server = CServer::getSingletonPtr();
+	// en el proyecto de física
 }
 
 //________________________________________________________________________
 
 CPhysicController::~CPhysicController() {
 	// El destructor de _controller se auto ejecuta
-	_server = NULL;
 } 
 
 //________________________________________________________________________
@@ -52,16 +51,13 @@ bool CPhysicController::spawn(CEntity* entity, CMap *map, const Map::CEntity *en
 
 	// Crear el character controller asociado al componente
 	createController(entityInfo);
-	// Seteo de _falling a false para que se envie el primer mensaje de actualizacion
-	_falling = true;
-
 
 	return true;
 }
 
 //________________________________________________________________________
 
-bool CPhysicController::accept(const std::shared_ptr<CMessage>& message) {
+/*bool CPhysicController::accept(CMessage *message) {
 	return message->getMessageType() == Message::AVATAR_WALK;
 }
 
@@ -84,11 +80,11 @@ void CPhysicController::process(const std::shared_ptr<CMessage>& message) {
 
 void CPhysicController::tick(unsigned int msecs) {
 	// Sino hay movimiento no hacemos nada
-	if(_movement == Vector3(0,0,0)) return;
+	if(_movement == Vector3::ZERO) return;
 
 	// Movemos el character controller
 	moveController(_movement, msecs);
-}
+}*/
 
 //________________________________________________________________________
 
@@ -164,33 +160,11 @@ void CPhysicController::onTrigger(IPhysics *otherComponent, bool enter) {
 
 //________________________________________________________________________
 
-/*void CPhysicController::onShapeHit (const PxControllerShapeHit &hit) {
-	// Si chocamos contra una entidad estática no hacemos nada
-	PxRigidDynamic* actor = hit.shape->getActor().isRigidDynamic();
-	if(!actor) return;
-
-	// Si chocamos contra una entidad cinemática no hacemos nada
-	if (_server->isKinematic(actor)){
-		//std::cout << _entity->getName() << " es un actor que chocó con " << ((IPhysics*)((PxRigidActor&)hit.shape->getActor()).userData)->getEntity()->getName() << std::endl;
-		return;
-	}
-	// Aplicar una fuerza a la entidad en la dirección del movimiento
-	//actor->addForce(hit.dir * hit.length * 1000.0f);
-}*/
-
-//________________________________________________________________________
-
-void CPhysicController::onShapeHit(IPhysics *otherComponent) {
+void CPhysicController::onShapeHit(IPhysics *otherComponent, const Vector3& colisionPos, const Vector3& colisionNormal) {
 	// Implementar la funcionalidad que corresponda en IPhysics, aunque
 	// si nos vemos forzados a hacer este tipo de ñapas es que algo estamos
 	// haciendo mal. Hay que ser mas elegantes for the win.
 }
-
-//________________________________________________________________________
-
-/*void CPhysicController::onControllerHit (const PxControllersHit &hit) {
-
-}*/
 
 //________________________________________________________________________
 
@@ -213,34 +187,14 @@ void CPhysicController::activateSimulation() {
 
 //________________________________________________________________________
 
-void CPhysicController::moveController(Vector3& movement, unsigned int msecs) {
-	// Intentamos mover el controller a la posición recibida en el último mensaje 
-	// de tipo AVATAR_WALK. 
-	unsigned flags = _controller.move(movement, msecs);
+unsigned CPhysicController::move(const Vector3& movement, unsigned int msecs) {
+	// Intentamos mover el controller a la posición que se haya calculado
+	// desde avatarController
+	unsigned collisionFlags = _controller.move(movement, msecs);
 
 	// Actualizar la posición y orientación de la entidad lógica usando la 
 	// información proporcionada por el motor de física	
 	_entity->setPosition( _controller.getPosition() );
 
-	// Si tocamos con el techo lo notificamos
-	if((flags & eCOLLISION_UP)) {
-		std::shared_ptr<CMessageCealing> em = std::make_shared<CMessageCealing>();
-		_entity->emitMessage(em);
-	}
-	// Si tocamos el lateral tenemos que parar la inercia de la direccion
-	if((flags & eCOLLISION_SIDES)) {
-		std::shared_ptr<CMessageSide> side = std::make_shared<CMessageSide>();
-		_entity->emitMessage(side);
-	}
-	// Si hay cambio de estado en el flag de tocar suelo
-	if(_falling != !(flags & eCOLLISION_DOWN)) {
-		// Actualizamos el flag que indica si estamos cayendo
-		_falling =  !(flags & eCOLLISION_DOWN);
-		// Mandamos un mensaje que dirá si hay collision con el suelo para la lógica
-		std::shared_ptr<CMessageCollisionDown> m = std::make_shared<CMessageCollisionDown>();
-		m->setCollisionDown(_falling);
-		_entity->emitMessage(m);
-	}
-
-	movement = Vector3::ZERO;
+	return collisionFlags;
 }

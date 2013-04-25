@@ -173,14 +173,10 @@ namespace Logic  {
 		*/
 		bool _interpolating;
 
-		bool _canInterpolateMove;
-
-		bool _canInterpolateRotation;
-
 		/**
 		variable que indica el ping con el que estamos corrigiendo
 		*/
-		float _actualPing;
+		unsigned int _actualPing;
 
 		/**
 		dirección en la que se está moviendo el server
@@ -188,23 +184,14 @@ namespace Logic  {
 		Vector3 _serverDirection;
 
 		/**
-		posicion de la entidad el tick anterior, para calcular la velocidad
+		tiempo del tick anterior, para calculos de sincronizacion
 		*/
-		Vector3 _oldPos;
 		int _msecs;
 
 		/**
 		distancia que hay que interpolar
 		*/
 		float _distance;
-
-		/**
-		Teclas pulsadas
-		*/
-		int _keyAD;
-		int _keyWS;
-
-		float _speed;
 
 		float _rotationSpeed;
 	}; // class CInterpolation

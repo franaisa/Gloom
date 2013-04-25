@@ -247,18 +247,25 @@ namespace Logic
 			Vector3 offsetPositionWeapon = entityInfo->getVector3Attribute("weapon"+currentOnText+"Offset");
 			
 			
-			_weaponsEntities[current] = _overlayWeapon3D[current]->add3D(currentOnText, modelWeapon, &offsetPositionWeapon);
+			_weaponsEntities[current] = _overlayWeapon3D[current]->add3D(currentOnText, modelWeapon, new Vector3(0.0,0.0,0.0) );
+			//_weaponsEntities[current] = _overlayWeapon3D[current]->add3D(currentOnText, modelWeapon, &offsetPositionWeapon);
 			Vector3 posicion = _weaponsEntities[current]->getTransform().getTrans();
 
 
 			//_weaponsEntities[current] = _overlayWeapon3D[current]->add3D(currentOnText, modelWeapon, new Vector3(0,0,-10));
 			float yaw = entityInfo->getFloatAttribute("weapon"+currentOnText+"ModelYaw");
 			float pitch = entityInfo->getFloatAttribute("weapon"+currentOnText+"ModelPitch");
+
 			Matrix4 transformModificado = _weaponsEntities[current]->getTransform();
 			
-			Math::yaw(yaw, transformModificado);
+			//yaw=1.6;
+			Math::setPitchYaw(pitch, yaw, transformModificado);
+			/*
 			Math::pitch(pitch, transformModificado);
+			*/
+
 			_weaponsEntities[current]->setTransform(transformModificado);
+			_weaponsEntities[current]->setPosition(offsetPositionWeapon);
 
 			_overlayWeapon3D[current]->setVisible(false);
 

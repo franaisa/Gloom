@@ -129,7 +129,21 @@ namespace Logic
 		switch( message->getMessageType() ) {
 			case Message::CHANGE_WEAPON: {
 				std::shared_ptr<CMessageChangeWeapon> changeWeaponMsg = std::static_pointer_cast<CMessageChangeWeapon>(message);
-				changeWeapon( changeWeaponMsg->getWeapon() );
+				int iWeapon = changeWeaponMsg->getWeapon();
+
+				//Si iWeapon no es scroll de rueda de ratón hacia adelante o hacia atrás, 
+				//asignamos directamente el arma con el índice recibido
+				if ((iWeapon != 100) && (iWeapon != -100))
+				{
+					changeWeapon(iWeapon);
+				}
+				else
+				{
+					//Obtenemos el índice del arma nueva al que se va a cambiar por el scroll
+					iWeapon = selectScrollWeapon(iWeapon);
+					if (iWeapon != -1)
+						changeWeapon(iWeapon); //Si hemos obtenido arma, se la asignamos
+				}
 				break;
 			}
 			case Message::ADD_AMMO: {
@@ -226,6 +240,34 @@ namespace Logic
 		_entity->emitMessage(m);
 		*/
 	}
+
+	//---------------------------------------------------------
+
+	int CWeaponsManager::selectScrollWeapon(int iWeapon) 
+	{
+		if (iWeapon == 100) //Armas siguientes
+		{
+			//Recorremos todas las armas del inventario desde la actual hasta el final
+			for (int i = _currentWeapon + 1; i < _weaponry.size(); ++i)
+			{
+				//Comprobamos si en ese índice tenemos arma
+				if (_weaponry[i].first)
+					return i;
+			}
+		}
+		else //iWeapon == -100 Armas anteriores
+		{
+			//Recorremos todas las armas del inventario desde la actual hasta el principio
+			for (int i = _currentWeapon - 1; i >= 0; --i)
+			{
+				//Comprobamos si en ese índice tenemos arma
+				if (_weaponry[i].first)
+					return i;
+			}
+		}
+
+		return -1; //No hemos obtenido arma
+	}//selectScrollWeapon
 
 } // namespace Logic
 
