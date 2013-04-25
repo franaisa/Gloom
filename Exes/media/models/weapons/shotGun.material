@@ -1,17 +1,15 @@
-
 material shotGun
 {
+	set $glow_tex ARMA_B_GLOW2.png
 	technique
 	{
 		pass
 		{
-			ambient 0.588 0.588 0.588 1
-			diffuse 0.588 0.588 0.588 1
-			specular 0 0 0 1 10
-
+			cull_software none
+			cull_hardware none
 			texture_unit
 			{
-				texture frame.png
+				texture ARMA_B.png
 			}
 		}
 
