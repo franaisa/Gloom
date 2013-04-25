@@ -34,8 +34,6 @@ namespace Logic  {
 	bool CInterpolation::spawn(CEntity *entity, CMap *map, const Map::CEntity *entityInfo) {
 		if(!IComponent::spawn(entity,map,entityInfo))
 			return false;
-		assert( entityInfo->hasAttribute("maxVelocity") && "Error: No se ha definido el atributo maxVelocity en el mapa" );
-		_speed = entityInfo->getFloatAttribute("maxVelocity");
 		// Indicar parametros de interpolacion (ñapeado de momento)
 		_interpolating = false;
 		_maxDistance = 15;
@@ -46,23 +44,18 @@ namespace Logic  {
 		_rotationSpeed = 0.2;
 		_serverDirection = Vector3(0,0,0);
 		_distance = 0;
-		_keyWS = 0;
-		_keyAD = 0;
-		_oldPos = _entity->getPosition();
 		return true;
 	} // spawn
 
 	//________________________________________________________________________
 
 	bool CInterpolation::accept(const std::shared_ptr<CMessage>& message) {
-		return message->getMessageType() == Message::SYNC_POSITION ||
-				message->getMessageType() == Message::CONTROL;
+		return message->getMessageType() == Message::SYNC_POSITION;
 	} // accept
 	
 	//________________________________________________________________________
 
 	void CInterpolation::tick(unsigned int msecs){
-		_oldPos = _entity->getPosition();
 		_msecs = msecs;
 
 		//si no estamos interpolando, gl
@@ -84,8 +77,8 @@ namespace Logic  {
 		//_entity->getComponent<CAvatarController>("CAvatarController")->addForce(Vector3(direction));
 		_entity->getComponent<CPhysicController>("CPhysicController")->move(direction,msecs);
 		_distance -= direction.length();
-		std::cout << "nueva pos lenght " << _distance << std::endl ;
-		if(_canInterpolateRotation){
+		//std::cout << "nueva pos lenght " << _distance << std::endl ;
+		/*if(_canInterpolateRotation){
 
 			//si la diferencia es demasiado grande, lo movemos a pelo
 			if(_yawDifference > _maxYaw || _yawDifference < _maxYaw*(-1)){
@@ -112,7 +105,7 @@ namespace Logic  {
 			}//if
 			//si la diferencia es pequeña no hacemos nada
 			_canInterpolateRotation = false;
-		}//if(_canInterpolateRotation)
+		}//if(_canInterpolateRotation)*/
 
 		//si hemos terminado de interpolar, lo dejamos
 		if((_distance < _minDistance)/* && ( _yawDifference < _minYaw || _yawDifference > _minYaw*(-1) )*/){
