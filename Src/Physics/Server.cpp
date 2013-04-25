@@ -521,7 +521,9 @@ namespace Physics {
 
 		// Nota: seguro que se puede hacer de manera mucho más eficiente usando los filtros
 		// de PhysX.
-}
+	}
+
+	//________________________________________________________________________
 
 	void CServer::raycastMultiple(const Ray& ray, float maxDistance, CRaycastHit* & hits, int& nbHits) const {
 		// Establecer parámettros del rayo

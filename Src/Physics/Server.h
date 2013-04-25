@@ -298,7 +298,17 @@ namespace Physics {
 		//________________________________________________________________________
 
 		/**
+		Lanza un rayo y devuelve información sobre las entidades golpeadas. En caso de no golpear
+		a ninguna entidad nbHits es igual a 0.
 
+		@param ray Rayo que queremos disparar.
+		@param maxDistance Longitud máxima del rayo.
+		@param hits Array de hits obtenido al lanzar el rayo. El propio método se encarga de
+		reservar memoria para este array por lo que es muy importante que no se reserve memoria
+		al pasar el puntero. Si la query golpea al menos a un elemento nbHits será mayor que 0
+		y hits tendrá memoria dinámica reservada. EL CLIENTE ES RESPONSABLE DE LIBERAR
+		LA MEMORIA RESERVADA EN hits POR ESTE MÉTODO.
+		@param nbHits Número de entidades golpeadas. Corresponde con el tamaño del array de hits.
 		*/
 		void raycastMultiple(const Ray& ray, float maxDistance, CRaycastHit* & hits, int& nbHits) const;
 
