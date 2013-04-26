@@ -78,7 +78,6 @@
     <ClCompile Include="..\..\Src\Physics\Fluid.cpp" />
     <ClCompile Include="..\..\Src\Physics\GeometryFactory.cpp" />
     <ClCompile Include="..\..\Src\Physics\MaterialManager.cpp" />
-    <ClCompile Include="..\..\Src\Physics\RaycastHit.cpp" />
     <ClCompile Include="..\..\Src\Physics\Server.cpp" />
     <ClCompile Include="..\..\Src\Physics\StaticEntity.cpp" />
   </ItemGroup>

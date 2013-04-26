@@ -150,37 +150,35 @@ namespace Logic {
 		Vector3 explotionPos = _entity->getPosition();
 		Physics::CServer::getSingletonPtr()->overlapMultiple(explotionGeom, explotionPos, entitiesHit, nbHits);
 
-		std::cout << "El numero de hits que se han detectado es de " << nbHits << std::endl;
-
 		// Mandamos el mensaje de daño a cada una de las entidades que hayamos golpeado
 		// Además aplicamos un desplazamiento al jugador 
 		for(int i = 0; i < nbHits; ++i) {
 			// Si la entidad golpeada es valida
 			if(entitiesHit[i] != NULL) {
-				std::cout << "Analizando " << entitiesHit[i]->getName() << std::endl;
-
 				// Comprobamos el punto de contacto
-				Ogre::Ray ray( explotionPos, entitiesHit[i]->getPosition().normalisedCopy() );
+				Vector3 rayDirection = entitiesHit[i]->getPosition();
+
+				// Tiramos el rayo al centro de la capsula del enemigo
+				// No podemos tirar el rayo directamente porque se lo tira a los pies y a veces no hay contacto
+				// Como solucion rapida (aehem.. ñapa) voy a sacar la info de la altura del screamer
+				// que teoricamente es la misma que la de todos los players
+				Map::CEntity * info = Logic::CEntityFactory::getSingletonPtr()->getInfo("Screamer");
+				if(info != NULL) rayDirection.y += info->getIntAttribute("physic_height");
+				rayDirection = rayDirection - explotionPos;
+				
+				// Hacemos una query de raycast desde el punto de explosion hasta la entidad analizada
+				// de la query de overlap (para saber el punto de colision).
+				// No es ni lo mas exacto ni lo mas eficiente, pero soluciona la papeleta.
+				Ogre::Ray ray( explotionPos, rayDirection.normalisedCopy() );
 				int bufferSize;
 				Physics::CRaycastHit* hitBuffer;
-				Physics::CServer::getSingletonPtr()->raycastMultiple(ray, 10 * _explotionRadius, hitBuffer, bufferSize);
+				Physics::CServer::getSingletonPtr()->raycastMultiple(ray, _explotionRadius, hitBuffer, bufferSize);
 
-				drawRaycast(ray, 10 * _explotionRadius);
-
+				// Calculamos el daño en base a la distancia del golpe
 				float dmg = 0;
-
-				std::cout << "El raycast ha golpeado a " << bufferSize << " entidades" << std::endl;
-
 				for(int k = 0; k < bufferSize; ++k) {
-					std::cout << "lalolale --- " << hitBuffer[k].entity->getName() << std::endl;
 					if(hitBuffer[k].entity == entitiesHit[i]) {
-						std::cout << "***************************************************************************" << std::endl;
-						std::cout << "He golpeado a la entidad " << hitBuffer[k].entity->getName() << std::endl;
-						std::cout << "La posicion del misil es: " << explotionPos << std::endl;
-						std::cout << "La posicion de la entidad es:  " << hitBuffer[k].entity->getPosition() << std::endl;
 						dmg = _explotionDamage * ( 1 - (hitBuffer[k].distance/_explotionRadius) );
-						std::cout << "El dano estipulado es: " << dmg << std::endl;
-						std::cout << "***************************************************************************" << std::endl;
 					}
 				}
 
