@@ -135,9 +135,12 @@ namespace Logic {
 		/** Ruta del sonido de la explosion. */
 		std::string _audioExplotion;
 
-		unsigned int inicio, parada;
+		/** Fuerza de desplazamiento del cohete. */
+		float _displacement;
+
+		/*unsigned int inicio, parada;
 		Vector3 inicio1,parada1;
-		bool contamosparada;
+		bool contamosparada;*/
 
 	}; // class CRocketController
 

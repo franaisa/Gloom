@@ -71,9 +71,10 @@ namespace Logic {
 		_explotionDamage = entityInfo->getFloatAttribute("explotionDamage");
 		_explotionRadius = entityInfo->getFloatAttribute("explotionRadius");
 		_audioExplotion = entityInfo->getStringAttribute("explotionAudio");
+		_displacement = entityInfo->getFloatAttribute("displacement");
 		_explotionActive = false;
-		inicio=parada=0;
-		contamosparada=false;
+		//inicio=parada=0;
+		//contamosparada=false;
 		return true;
 	} // spawn
 
@@ -192,14 +193,11 @@ namespace Logic {
 
 				// Emitimos el mensaje de desplazamiento por daños
 				std::shared_ptr<CMessageAddForcePlayer> addForcePlayerMsg = std::make_shared<CMessageAddForcePlayer>();
-				// Seteamos la fuerza y la velocidad
-
-				// Seteamos el vector director del desplazamiento
-				/*Vector3 direccionImpacto = entitiesHit[i]->getPosition() - _entity->getPosition();
+				Vector3 playerPosition= entitiesHit[i]->getPosition() + Vector3(0,8,0); // Heightshoot hardcodeado
+				Vector3 direccionImpacto =playerPosition- _entity->getPosition();
 				direccionImpacto.normalise();
-
-				msg2->setForce(direccionImpacto*_force);
-				entitiesHit[i]->emitMessage(msg2);*/
+				addForcePlayerMsg->setForce(direccionImpacto*_displacement);
+				entitiesHit[i]->emitMessage(addForcePlayerMsg);
 			}
 		}
 

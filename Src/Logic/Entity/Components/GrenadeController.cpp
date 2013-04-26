@@ -68,7 +68,7 @@ namespace Logic {
 
 		_explotionDamage = entityInfo->getFloatAttribute("explotionDamage");
 		_explotionRadius = entityInfo->getFloatAttribute("explotionRadius");
-		//_explotionForce = entityInfo->getFloatAttribute("explotionForce");
+		_displacement = entityInfo->getFloatAttribute("displacement");
 		_audioExplotion = entityInfo->getStringAttribute("explotionAudio");
 		_explotionActive = false;
 
@@ -184,14 +184,10 @@ namespace Logic {
 				//se reduce con la distancia, así que calculamos cuanta fuerza le 
 				//tenemos que dar al jugador en el desplazamiento de la explosión
 				std::shared_ptr<CMessageAddForcePlayer> explotionForce = std::make_shared<CMessageAddForcePlayer>();
-				// Seteamos la fuerza y la velocidad
-				// Seteamos el vector director del desplazamiento
-				Vector3 direccionImpacto = entitiesHit[i]->getPosition() - _entity->getPosition();
-				Vector3 forceDirection = direccionImpacto.normalisedCopy();
-
-				float pushForce=3;
-
-				explotionForce->setForce(forceDirection*pushForce);
+				Vector3 playerPosition= entitiesHit[i]->getPosition() + Vector3(0,8,0); // Heightshoot hardcodeado
+				Vector3 direccionImpacto =playerPosition- _entity->getPosition();
+				direccionImpacto.normalise();
+				explotionForce->setForce(direccionImpacto*_displacement);
 				entitiesHit[i]->emitMessage(explotionForce);
 			}
 		}
