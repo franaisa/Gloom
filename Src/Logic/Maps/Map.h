@@ -60,7 +60,7 @@ namespace Logic
 		@param filename Nombre del archivo a cargar.
 		@return Mapa generado.
 		*/
-		static CMap *createMapFromFile(const std::string &filename);
+		static CMap *createMapFromFile(const std::string &filename, const std::string &ambit);
 
 		/**
 		Constructor.

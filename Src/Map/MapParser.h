@@ -173,7 +173,7 @@ Map = {
 		@param name Nombre del stream para mensajes de error.
 		@return true si el parseo fue satisfactorio.
 		*/
-		bool parseFile(const std::string& filename);
+		bool parseFile(const std::string& filename, const std::string &ambit);
 
 		/** 
 		Para escritura de errores en caso de fallo en el parseo. escribe

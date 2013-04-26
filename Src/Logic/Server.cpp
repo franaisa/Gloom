@@ -139,12 +139,12 @@ namespace Logic {
 
 	//--------------------------------------------------------
 
-	bool CServer::loadLevel(const std::string &filename)
+	bool CServer::loadLevel(const std::string &filename, const std::string &ambit)
 	{
 		// solo admitimos un mapa cargado, si iniciamos un nuevo nivel 
 		// se borra el mapa anterior.
 
-		if(_map = CMap::createMapFromFile(filename))
+		if(_map = CMap::createMapFromFile(filename,ambit)
 		{
 			return true;
 		}

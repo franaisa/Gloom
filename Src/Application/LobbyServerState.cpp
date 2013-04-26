@@ -175,27 +175,27 @@ namespace Application {
 
 		//cogemos el mapa en el que crear la partida
 		_map=args.at(0).getString();
-		//_map += ".xml";
+		_map += ".xml";
 
 		//mostramos en el gui lo que esta pasando
 		//_menu->callFunction("pushCommand",Hikari::Args("Status: Server up. Waiting for clients ..."));
 
 		//cargamos el mapa que hemos seleccionado
 
-		if (!Logic::CEntityFactory::getSingletonPtr()->loadBluePrints(_map+".xml", "Server")) {
+		if (!Logic::CEntityFactory::getSingletonPtr()->loadBluePrints(_map, "Server")) {
 		//if (!Logic::CEntityFactory::getSingletonPtr()->loadBluePrints(_map+"", "Server")) {
 			Net::CManager::getSingletonPtr()->deactivateNetwork();
 			_app->exitRequest();
 		}
-
+		/*
 		if (!Logic::CEntityFactory::getSingletonPtr()->loadArchetypes("archetypes.xml")) {
 			Net::CManager::getSingletonPtr()->deactivateNetwork();
 			_app->exitRequest();
 		}
-
+		*/
 		// Cargamos el nivel a partir del nombre del mapa. 
 		//if (!Logic::CServer::getSingletonPtr()->loadLevel(_map, "Server") {
-		if (!Logic::CServer::getSingletonPtr()->loadLevel(_map+"_server.txt")) {
+		if (!Logic::CServer::getSingletonPtr()->loadLevel(_map,"Server")) {
 			Net::CManager::getSingletonPtr()->deactivateNetwork();
 			_app->exitRequest();
 		}

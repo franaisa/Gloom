@@ -30,13 +30,13 @@ Contiene la implementación de la clase CMap, Un mapa lógico.
 
 namespace Logic {
 		
-	CMap* CMap::createMapFromFile(const std::string &filename)
+	CMap* CMap::createMapFromFile(const std::string &filename, const std::string &ambit)
 	{
 		// Completamos la ruta con el nombre proporcionado
 		std::string completePath(MAP_FILE_PATH);
 		completePath = completePath + filename;
 		// Parseamos el fichero
-		if(!Map::CMapParser::getSingletonPtr()->parseFile(completePath))
+		if(!Map::CMapParser::getSingletonPtr()->parseFile(completePath, ambit))
 		{
 			assert(!"No se ha podido parsear el mapa.");
 			return false;

@@ -168,7 +168,7 @@ namespace Logic {
 
 		// Aqui estoy en el nivel entities
 		TiXmlElement* entitiesTag= doc2.FirstChildElement();
-		assert( "No se detecta la etiqueta entities: " && entitiesTag);
+		assert(entitiesTag && "No se detecta la etiqueta entities: " );
 
 		std::string nameEntity;
 		std::string typeEntity;
@@ -178,7 +178,7 @@ namespace Logic {
 		// Ahora voy a recorrer todas las entity dentro de entities
 
 		TiXmlElement* entityTag= entitiesTag->FirstChildElement();
-		assert( "No se detecta la etiqueta entity de la entidad: " && entityTag);
+		assert(entityTag &&  "No se detecta la etiqueta entity de la entidad: ");
 		
 		while (entityTag != NULL){
 
@@ -190,12 +190,12 @@ namespace Logic {
 
 				
 				blueprintElement.type = entityTag->Attribute("type");
-				assert("No se detecta el atributo type de la entidad" && !blueprintElement.type.empty());
+				assert(!blueprintElement.type.empty() && "No se detecta el atributo type de la entidad");
 
 				// esto lo hago en dos pasos para comprobacion de errores
 				TiXmlElement *attributesTag = entityTag->FirstChildElement();
 				//Compruebo que no sea NULL				
-				assert( "No se detecta la etiqueta attributes de la entidad: " && attributesTag);
+				assert( attributesTag && "No se detecta la etiqueta attributes de la entidad: ");
 				
 				TiXmlElement *ambitsTag = attributesTag->NextSiblingElement();
 				//assert( "No se detecta la etiqueta ambits de la entidad: " && ambitsTag);
@@ -203,7 +203,7 @@ namespace Logic {
 				if(ambitsTag != NULL){
 
 					TiXmlElement *ambitTag = ambitsTag->FirstChildElement();
-					assert( "No se detecta la etiqueta ambit de la entidad: " && ambitTag);
+					assert(ambitTag && "No se detecta la etiqueta ambit de la entidad: ");
 				
 					std::list<std::string> listComponents;
 
@@ -212,20 +212,20 @@ namespace Logic {
 					
 						// Obtengo el nombre, debe de ser 
 						nameAmbit = ambitTag->Attribute("name");
-						assert( "No se detecta el atributo name en la etiqueta ambit de la entidad: " && !nameAmbit.empty());
-						assert("El name del ambit debe de ser Always, Single, Server o Client" && 
-							!((nameAmbit != "Always") && (nameAmbit != "Single") && (nameAmbit != "Client") && (nameAmbit != "Server")) );
+						assert( !nameAmbit.empty() && "No se detecta el atributo name en la etiqueta ambit de la entidad: ");
+						assert(!((nameAmbit != "Always") && (nameAmbit != "Single") && (nameAmbit != "Client") && (nameAmbit != "Server")) && 
+							"El name del ambit debe de ser Always, Single, Server o Client");
 					
 						if(nameAmbit == "Always" || nameAmbit == ambit){
 							if(!ambitTag->NoChildren()){
 								TiXmlElement *componentsTag = ambitTag->FirstChildElement();
-								assert( "No se detecta la etiqueta components de la entidad: " && componentsTag != NULL);
+								assert( componentsTag && "No se detecta la etiqueta components de la entidad: ");
 								TiXmlElement *componentTag = componentsTag->FirstChildElement();
-								assert( "No se detecta la etiqueta component de la entidad: " && componentTag != NULL);
+								assert( ( componentsTag != NULL) && "No se detecta la etiqueta component de la entidad: ");
 								//meto todos los componentes de un ambito especifico
 								while(componentTag != NULL){
 									nameComponent = componentTag->Attribute("name");
-									assert( "No se detecta el atributo name en la etiqueta component de la entidad: " && !nameComponent.empty());
+									assert( (!nameComponent.empty()) && "No se detecta el atributo name en la etiqueta component de la entidad: ");
 									listComponents.push_back(nameComponent);
 
 									componentTag = componentTag->NextSiblingElement();
@@ -239,7 +239,7 @@ namespace Logic {
 					blueprintElement.components = listComponents;
 				
 					// miro si ya existe, y si es assi 
-					assert("Ya existe en una entidad con ese tipo " && !_bluePrints.count(blueprintElement.type));
+					assert( ( !_bluePrints.count(blueprintElement.type)) && "Ya existe en una entidad con ese tipo ");
 
 					// Añadimos a la tabla
 					TStringBluePrintPair elem(blueprintElement.type,blueprintElement);
