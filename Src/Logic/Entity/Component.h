@@ -143,8 +143,6 @@ namespace Logic
 		*/
 		virtual void deactivate();
 
-		void (IComponent::*updater)(unsigned int);
-
 		/**
 		Representa el primer tick de la entidad. Se ejecuta una sola vez tras la activación
 		del jugador.
@@ -183,9 +181,9 @@ namespace Logic
 		*/
 		friend class CEntity;
 
-		inline void tickSetup(unsigned int msecs);
+		void tickSetup(unsigned int msecs);
 
-		inline void onStartSetup(unsigned int msecs);
+		void onStartSetup(unsigned int msecs);
 
 		void activateSetup();
 

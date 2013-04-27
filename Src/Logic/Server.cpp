@@ -196,11 +196,13 @@ namespace Logic {
 
 	void CServer::tick(unsigned int msecs) 
 	{
-		//tick de logica
-		_map->tick(msecs);
+		// Hacemos el tick al gestor del mapa.
+		// Ejecutamos el puntero a función updater, que al principio será
+		// start y en el resto de las ocasiones será tick
+		(_map->*_map->updater)(msecs);
+
 		//_guiManager->tick(msecs);
 		//tick de GUI
-
 
 		// Eliminamos las entidades que se han marcado para ser eliminadas.
 		Logic::CEntityFactory::getSingletonPtr()->deleteDefferedEntities();

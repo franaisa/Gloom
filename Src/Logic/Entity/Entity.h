@@ -127,6 +127,17 @@ namespace Logic
 		void deactivate();
 
 		/**
+		Función llamada como primer tick tras la carga del mapa. Se garantiza
+		que todas las entidades han sido creadas con sus componentes inicializados.
+		Útil para hacer labores de inicialización.
+
+		Tras la ejecución de start se pasa a la ejecución normal de los ticks.
+
+		@param msecs Milisegundos transcurridos para el primer tick.
+		*/
+		void start(unsigned int msecs);
+
+		/**
 		Función llamada en cada frame para que se realicen las funciones
 		de actualización adecuadas.
 		<p>

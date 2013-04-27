@@ -90,6 +90,20 @@ namespace Logic
 		void deactivate();
 
 		/**
+		Puntero a función que se encarga de alternar entre start y tick
+		según convenga.
+		*/
+		void (CMap::*updater)(unsigned int);
+
+		/**
+		Función llamada en el primer frame tras cargar el mapa.
+		Se encarga de llamar a todos los métodos start de las entidades.
+
+		@param msecs Milisegundos transcurridos para este primer tick.
+		*/
+		void start(unsigned int msecs);
+
+		/**
 		Función llamada en cada frame para que se realicen las funciones
 		de actualización adecuadas.
 		<p>
@@ -195,12 +209,16 @@ namespace Logic
 
 	private:
 
+		/**
+		Lista de entidades que han sido marcadas para ser borradas en
+		un tiempo dado.
+		*/
 		std::list< std::pair<CEntity*, unsigned int> > _entitiesToBeDeleted;
 
 		/**
 		Tipo tabla de entidades de mapa.
 		*/
-		typedef std::map<TEntityID,CEntity*> TEntityMap;
+		typedef std::map<TEntityID, CEntity*> TEntityMap;
 
 		/**
 		tabla con las entidades del mapa localizadas por su ID.
@@ -224,6 +242,7 @@ namespace Logic
 		Graphics::CScene* _scene;
 
 		/**
+		@deprectaed -> no se usa en ninguna parte.
 		Número de jugadores creados hasta el momento.
 		*/
 		unsigned int _numOfPlayers;

@@ -147,6 +147,7 @@ namespace Logic {
 		// Para evitar overhead de mensajes nos quedamos con el puntero al 
 		// componente CPhysicController que es el que realmente se encargará 
 		// de desplazar al controlador del jugador.
+		std::cout << "Me llaman al onStart" << std::endl;
 		_physicController = _entity->getComponent<CPhysicController>("CPhysicController");
 		assert(_physicController && "Error: El player no tiene un controlador fisico");
 	}

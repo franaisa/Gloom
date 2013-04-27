@@ -17,11 +17,12 @@ Contiene la implementación de la clase base de los componentes.
 namespace Logic 
 {
 	IComponent::IComponent() : _entity(0), 
-							   _isActivated(true), 
-							   updater(&IComponent::onStartSetup) {
+							   _isActivated(true) {
 
 		Logic::CServer::getSingletonPtr()->COMPONENT_CONSTRUCTOR_COUNTER += 1;
 	}
+
+	//---------------------------------------------------------
 
 	IComponent::~IComponent() {
 		Logic::CServer::getSingletonPtr()->COMPONENT_DESTRUCTOR_COUNTER += 1;
@@ -38,8 +39,6 @@ namespace Logic
 	//---------------------------------------------------------
 	
 	void IComponent::activateSetup() {
-		// Seteamos el puntero para que se ejecute onStart al comenzar
-		updater = &IComponent::onStartSetup;
 		// Llamamos al activar que los hijos deben redefinir
 		activate();
 	}
@@ -67,8 +66,6 @@ namespace Logic
 	//---------------------------------------------------------
 
 	void IComponent::onStartSetup(unsigned int msecs) {
-		// Fijamos el puntero a funcion al tick
-		updater = &IComponent::tickSetup;
 		// Procesamos los mensajes recibidos
 		processMessages();
 		// Ejecutamos el onStart definido por el componente hijo

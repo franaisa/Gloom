@@ -201,6 +201,20 @@ namespace Logic
 
 	//---------------------------------------------------------
 
+	void CEntity::start(unsigned int msecs) {
+		TComponentList::const_iterator it = _componentList.begin();
+
+		IComponent* component;
+		for(; it != _componentList.end(); ++it) {
+			component = *it;
+			if( component->isActivated() ) {
+				component->onStartSetup(msecs);
+			}
+		}
+	}
+
+	//---------------------------------------------------------
+
 	void CEntity::tick(unsigned int msecs) {
 		TComponentList::const_iterator it = _componentList.begin();
 
@@ -208,9 +222,7 @@ namespace Logic
 		for(; it != _componentList.end(); ++it) {
 			component = *it;
 			if( component->isActivated() ) {
-				// El propio componente setea el puntero a funcion de actualizacion
-				// el es el que nos indica si ejecutar onStart u onTick
-				(component->*component->updater)(msecs);
+				component->tickSetup(msecs);
 			}
 		}
 
