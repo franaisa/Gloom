@@ -22,7 +22,7 @@ namespace Logic
 
 	//________________________________________________________________________
 
-	void CUpdateClientPosition::tick(unsigned int msecs) {
+	void CUpdateClientPosition::onTick(unsigned int msecs) {
 		if(_timer > _syncPosTimeStamp) {
 			std::shared_ptr<CMessageSyncPosition> msg = std::make_shared<CMessageSyncPosition>();
 			msg->setTransform( _entity->getTransform() );

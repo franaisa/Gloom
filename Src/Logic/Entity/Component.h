@@ -31,7 +31,7 @@ namespace Logic
 namespace Logic 
 {
 
-/**
+	/**
 	Clase base de los componentes que forman las entidades.
 	<p>
 	Un componente puede recibir mensajes y reaccionar ante ellos
@@ -78,9 +78,9 @@ namespace Logic
 
 	@author David Llansó García
 	@date Julio, 2010
-*/
-	class IComponent : public CCommunicationPort 
-	{
+	*/
+
+	class IComponent : public CCommunicationPort {
 	public:
 
 		/**
@@ -144,28 +144,27 @@ namespace Logic
 		virtual void deactivate();
 
 		/**
-		Representa el primer tick de la entidad. Se ejecuta una sola vez tras la activación
-		del jugador.
+		Método llamado en cada frame que actualiza el estado del componente.
+		Los milisegundos dados son variables.
 
-		Es muy útil para inicializar datos ya que en esta fase SI que se pueden mandar
-		mensajes a otras entidades (ya que su spawn ya ha sido realizado).
+		Se encarga de procesar los mensajes y llamar a onTick que es el método
+		que realmente ejecuta el comportamiento de los componentes derivados.
 
-		IMPORTANTE: Los hijos deben llamar al método onStart del padre (tal y como sucede
-		con el tick) para que todo funcione correctamente.
-
-		@param msecs Milisegundos transcurridos para este primer tick.
+		@param msecs Milisegundos transcurridos desde el último tick (variable).
 		*/
-		virtual void onStart(unsigned int msecs);
-
+		void tick(unsigned int msecs);
+		
 		/**
 		Método llamado en cada frame que actualiza el estado del componente.
-		<p>
-		Las clases hijas deberán sobreescribir este método con las 
-		instrucciones que quieran realizar cada ciclo.
+		Se encarga de procesar los mensajes y llamar al método que realmente
+		tienen que redefinir los componentes (onFixedTick).
 
-		@param msecs Milisegundos transcurridos desde el último tick.
+		IMPORTANTE: Se diferencia del tick, en que msecs siempre es constante.
+
+		@param msecs Milisegundos transcurridos desde el último tick. Siempre
+		son constantes.
 		*/
-		virtual void tick(unsigned int msecs);
+		void fixedTick(unsigned int msecs);
 
 		/**
 		Método que devuelve la entidad a la que pertenece el componente.
@@ -177,13 +176,37 @@ namespace Logic
 	protected:
 
 		/**
+		Llamado en cada frame por fixedTick. Los clientes que hereden de esta
+		clase deben redefinir su comportamiento.
+
+		@param msecs Milisegundos transcurridos desde el último tick. Siempre
+		son constantes.
+		*/
+		virtual void onFixedTick(unsigned int msecs);
+
+		/**
+		Método llamado en cada frame que actualiza el estado del componente.
+		<p>
+		Las clases hijas deberán sobreescribir este método con las 
+		instrucciones que quieran realizar cada ciclo.
+
+		@param msecs Milisegundos transcurridos desde el último tick.
+		*/
+		virtual void onTick(unsigned int msecs);
+
+		/**
+		Se ejecuta la primera vez que la entidad se activa. Garantiza que todas las 
+		entidades (incluidos sus componentes) han ejecutado el spawn y están listas
+		para hacer el tick.
+		*/
+		virtual void onStart();
+
+		/**
 		clase amiga que puede establecerse como poseedor del componente.
 		*/
 		friend class CEntity;
 
-		void tickSetup(unsigned int msecs);
-
-		void onStartSetup(unsigned int msecs);
+		
 
 		void activateSetup();
 

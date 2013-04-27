@@ -110,7 +110,7 @@ namespace Logic {
 
 	//__________________________________________________________________
 
-	void CShoot::tick(unsigned int msecs) {
+	void CShoot::onTick(unsigned int msecs) {
 		if(_cooldownTimer < _cooldown)
 			_cooldownTimer += msecs;
 		else

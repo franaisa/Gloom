@@ -12,6 +12,7 @@ Contiene la declaración de la clase CMap, Un mapa lógico.
 #define __Logic_Map_H
 
 #include <map>
+#include <set>
 #include <list>
 #include "EntityID.h"
 
@@ -49,9 +50,9 @@ namespace Logic
 	@author David Llansó
 	@date Agosto, 2010
 	*/
-	class CMap
-	{
+	class CMap {
 	public:
+
 		/**
 		Método factoría que carga un mapa de fichero. Tras el parseo de
 		todas las entidades del mapa mediante CMapParser, genera todas las
@@ -90,18 +91,10 @@ namespace Logic
 		void deactivate();
 
 		/**
-		Puntero a función que se encarga de alternar entre start y tick
-		según convenga.
+		Función llamada tras la carga del mapa antes de que se ejecute
+		el primer tick.
 		*/
-		void (CMap::*updater)(unsigned int);
-
-		/**
-		Función llamada en el primer frame tras cargar el mapa.
-		Se encarga de llamar a todos los métodos start de las entidades.
-
-		@param msecs Milisegundos transcurridos para este primer tick.
-		*/
-		void start(unsigned int msecs);
+		void start();
 
 		/**
 		Función llamada en cada frame para que se realicen las funciones
@@ -207,7 +200,24 @@ namespace Logic
 
 		void entityTimeToLive(CEntity* entity, unsigned int msecs);
 
+		void setFixedTimeStep(unsigned int stepSize);
+
+		void wantsTick(CEntity* entity, bool tickeable);
+
+		void wantsFixedTick(CEntity* entity, bool tickeable);
+
 	private:
+
+		void checkTimeOuts(unsigned int msecs);
+
+		void executeTick(unsigned int msecs);
+
+		void executeFixedTick(unsigned int msecs);
+
+		/** Tiempo acumulado para el tick fijo. */
+		unsigned int _acumTime;
+
+		unsigned int _fixedTimeStep;
 
 		/**
 		Lista de entidades que han sido marcadas para ser borradas en
@@ -224,6 +234,10 @@ namespace Logic
 		tabla con las entidades del mapa localizadas por su ID.
 		*/
 		TEntityMap _entityMap;
+
+		std::set<CEntity*> _entitiesWithTick;
+
+		std::set<CEntity*> _entitiesWithFixedTick;
 
 		/**
 		Lista de entidades que hay que borrar

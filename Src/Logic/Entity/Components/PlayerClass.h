@@ -136,15 +136,6 @@ namespace Logic {
 		//__________________________________________________________________
 
 		/**
-		Método llamado en cada frame.
-
-		@param msecs Milisegundos transcurridos desde el último tick.
-		*/
-		virtual void tick(unsigned int msecs);
-
-		//__________________________________________________________________
-
-		/**
 		Extiende el comportamiento de la clase padre ya que cuando se activa
 		este componente puede ser porque el jugador haya cambiado de clase
 		por lo que los timers de los cooldowns tienen que volver a 0.
@@ -211,6 +202,15 @@ namespace Logic {
 		//                          MÉTODOS PROTEGIDOS
 		// =======================================================================
 
+
+		/**
+		Método llamado en cada frame.
+
+		@param msecs Milisegundos transcurridos desde el último tick.
+		*/
+		virtual void onTick(unsigned int msecs);
+
+		//__________________________________________________________________
 
 		/** 
 		Indica si la habilidad primaria puede usarse.

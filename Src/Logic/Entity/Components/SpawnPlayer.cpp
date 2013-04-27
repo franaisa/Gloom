@@ -83,7 +83,7 @@ namespace Logic
 	} // process
 	//---------------------------------------------------------
 
-	void CSpawnPlayer::tick(unsigned int msecs) {
+	void CSpawnPlayer::onTick(unsigned int msecs) {
 		//Solamente si estamos muertos (se recibió el mensaje)
 		if(_isDead){
 			_actualTimeSpawn+=msecs;

@@ -103,14 +103,7 @@ namespace Logic
 		virtual void process(const std::shared_ptr<CMessage>& message);
 
 
-		/**
-		Método llamado en cada frame que actualiza el estado del componente.
-		<p>
-		Se encarga de mover la cámara siguiendo al jugador.
-
-		@param msecs Milisegundos transcurridos desde el último tick.
-		*/
-		virtual void tick(unsigned int msecs);
+		
 
 		/**
 		Método llamado cuando nos llega un mensaje de mirar al enemigo que nos ha matado.
@@ -126,6 +119,15 @@ namespace Logic
 
 	protected:
 
+
+		/**
+		Método llamado en cada frame que actualiza el estado del componente.
+		<p>
+		Se encarga de mover la cámara siguiendo al jugador.
+
+		@param msecs Milisegundos transcurridos desde el último tick.
+		*/
+		virtual void onTick(unsigned int msecs);
 
 		/**
 		Cámara gráfica.

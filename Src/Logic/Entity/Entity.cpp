@@ -201,32 +201,52 @@ namespace Logic
 
 	//---------------------------------------------------------
 
-	void CEntity::start(unsigned int msecs) {
+	void CEntity::start() {
 		TComponentList::const_iterator it = _componentList.begin();
 
-		IComponent* component;
 		for(; it != _componentList.end(); ++it) {
-			component = *it;
-			if( component->isActivated() ) {
-				component->onStartSetup(msecs);
+			if( (*it)->isActivated() ) {
+				(*it)->onStart();
 			}
+
+			_componentsWithTick.insert(*it);
+			_componentsWithFixedTick.insert(*it);
 		}
+
+		// De primeras indicamos que todos los componentes van a tener
+		// tick y fixed tick. En caso de que la entidad no tenga ningun
+		// componente que quiera alguno de estos dos eventos, el comportamiento
+		// por defecto se encarga de borrarlas de ambos sets
+		_map->wantsTick(this, true);
+		_map->wantsFixedTick(this, true);	
 	}
 
 	//---------------------------------------------------------
 
 	void CEntity::tick(unsigned int msecs) {
-		TComponentList::const_iterator it = _componentList.begin();
-
 		IComponent* component;
-		for(; it != _componentList.end(); ++it) {
+		std::set<IComponent*>::iterator it = _componentsWithTick.begin();
+		for(; it != _componentsWithTick.end(); ++it) {
 			component = *it;
 			if( component->isActivated() ) {
-				component->tickSetup(msecs);
+				component->tick(msecs);
 			}
 		}
 
 	} // tick
+
+	//---------------------------------------------------------
+
+	void CEntity::fixedTick(unsigned int msecs) {
+		IComponent* component;
+		std::set<IComponent*>::iterator it = _componentsWithFixedTick.begin();
+		for(; it != _componentsWithFixedTick.end(); ++it) {
+			component = *it;
+			if( component->isActivated() ) {
+				component->fixedTick(msecs);
+			}
+		}
+	}
 
 	//---------------------------------------------------------
 
@@ -413,7 +433,45 @@ namespace Logic
 
 	//---------------------------------------------------------
 
-	
+	void CEntity::wantsTick(IComponent* component, bool tickeable) {
+		if(tickeable) {
+			_componentsWithTick.insert(component);
+
+			if( _componentsWithTick.size() == 1 ) {
+				// Indicar al mapa que si quiero recibir ticks
+				_map->wantsTick(this, true);
+			}
+		}
+		else {
+			_componentsWithTick.erase(component);
+
+			if( _componentsWithTick.empty() ) {
+				// Indicar al mapa que no quiero recibir ticks
+				_map->wantsTick(this, false);
+			}
+		}
+	}
+
+	//---------------------------------------------------------
+
+	void CEntity::wantsFixedTick(IComponent* component, bool tickeable) {
+		if(tickeable) {
+			_componentsWithFixedTick.insert(component);
+
+			if( _componentsWithFixedTick.size() == 1) {
+				// Indicar al mapa que si quiero recibir fixed ticks
+				_map->wantsFixedTick(this, true);
+			}
+		}
+		else {
+			_componentsWithFixedTick.erase(component);
+
+			if( _componentsWithFixedTick.empty() ) {
+				// Indicar al mapa que no quiero recibir fixed ticks
+				_map->wantsFixedTick(this, false);
+			}
+		}
+	}
 
 
 } // namespace Logic

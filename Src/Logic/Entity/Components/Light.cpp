@@ -108,7 +108,7 @@ namespace Logic
 	} // process
 	//----------------------------------------------------------
 /*
-	void CLight::tick(unsigned int msecs)
+	void CLight::onTick(unsigned int msecs)
 	{
 		
 	} // tick

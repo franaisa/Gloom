@@ -66,7 +66,6 @@ namespace Logic
 	} // activate
 	//---------------------------------------------------------
 
-
 	bool CHacksaw::accept(const std::shared_ptr<CMessage>& message)
 	{
 		return message->getMessageType() == Message::TOUCHED;
@@ -91,7 +90,7 @@ namespace Logic
 	} // process
 	//----------------------------------------------------------
 
-	void CHacksaw::tick(unsigned int msecs)
+	void CHacksaw::onTick(unsigned int msecs)
 	{
 		Vector3 toDirection;
 		

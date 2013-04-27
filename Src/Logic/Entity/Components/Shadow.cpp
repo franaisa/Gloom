@@ -57,7 +57,7 @@ namespace Logic {
 
 	//__________________________________________________________________
 
-	void CShadow::tick(unsigned int msecs) {
+	void CShadow::onTick(unsigned int msecs) {
 		// Si la habilidad primaria esta en uso, controlar el tiempo
 		// efectivo de la invisibilidad. Cuando se cumpla el tiempo,
 		// deshabilitamos el shader de transparencia.

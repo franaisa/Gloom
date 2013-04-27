@@ -105,7 +105,7 @@ namespace Logic
 	} // process
 	//----------------------------------------------------------
 
-	void CParticle::tick(unsigned int msecs) {
+	void CParticle::onTick(unsigned int msecs) {
 		if(_particle)
 			_particle->setPosition(_entity->getPosition() + _particleOffset);
 	} // tick

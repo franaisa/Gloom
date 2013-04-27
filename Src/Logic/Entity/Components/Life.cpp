@@ -165,7 +165,7 @@ namespace Logic {
 	
 	//________________________________________________________________________
 
-	void CLife::tick(unsigned int msecs) {
+	void CLife::onTick(unsigned int msecs) {
 		_damageTimer += msecs;
 		if(_damageTimer >= _damageTimeStep && _currentLife != 1) {
 			// Reducimos la vida hasta un minimo de un punto de salud

@@ -65,31 +65,41 @@ namespace Logic
 
 	//---------------------------------------------------------
 
-	void IComponent::onStartSetup(unsigned int msecs) {
-		// Procesamos los mensajes recibidos
-		processMessages();
-		// Ejecutamos el onStart definido por el componente hijo
-		onStart(msecs);
-	}
-
-	//---------------------------------------------------------
-
-	void IComponent::onStart(unsigned int msecs) {
+	void IComponent::onStart() {
 		// Los hijos deben redefinir su comportamiento
-	}
-
-	//---------------------------------------------------------
-
-	void IComponent::tickSetup(unsigned int msecs) {
-		// Procesamos los mensajes que nos hayan llegado
-		processMessages();
-		tick(msecs);
 	}
 
 	//---------------------------------------------------------
 
 	void IComponent::tick(unsigned int msecs) {
-		// Los hijos deben redefinir su comportamiento
+		// Procesamos los mensajes que nos hayan llegado
+		processMessages();
+		onTick(msecs);
+	}
+
+	//---------------------------------------------------------
+
+	void IComponent::onTick(unsigned int msecs) {
+		// Por defecto el componente indica que no quiere recibir
+		// ticks. Si algún hijo redefine este método entonces
+		// automáticamente se le llama.
+		_entity->wantsTick(this, false);
 	} // tick
+
+	//---------------------------------------------------------
+
+	void IComponent::fixedTick(unsigned int msecs) {
+		processMessages();
+		onFixedTick(msecs);
+	}
+
+	//---------------------------------------------------------
+
+	void IComponent::onFixedTick(unsigned int msecs) {
+		// Por defecto el componente indica que no quiere 
+		// recibir ticks fijos. Si algún hijo redefine este método
+		// entonces automáticamente se le llama.
+		_entity->wantsFixedTick(this, false);
+	}
 
 } // namespace Logic

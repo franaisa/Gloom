@@ -55,7 +55,7 @@ namespace Logic  {
 	
 	//________________________________________________________________________
 
-	void CInterpolation::tick(unsigned int msecs){
+	void CInterpolation::onTick(unsigned int msecs){
 		_msecs = msecs;
 
 		//si no estamos interpolando, gl

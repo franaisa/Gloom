@@ -36,14 +36,7 @@ namespace Logic
 		*/
 		CAudio() : IComponent(){};
 
-		/**
-		Método llamado en cada frame que actualiza el estado del componente de la vida,
-		<p>
-		la cual bajará cada n milisegundos.
-
-		@param msecs Milisegundos transcurridos desde el último tick.
-		*/
-		virtual void tick(unsigned int msecs);
+		
 		/**
 		Inicialización del componente usando la descripción de la entidad que hay en 
 		el fichero de mapa.
@@ -67,6 +60,14 @@ namespace Logic
 
 	protected:
 
+		/**
+		Método llamado en cada frame que actualiza el estado del componente de la vida,
+		<p>
+		la cual bajará cada n milisegundos.
+
+		@param msecs Milisegundos transcurridos desde el último tick.
+		*/
+		virtual void onTick(unsigned int msecs);
 	// VACIO
 
 	}; // class CAudio

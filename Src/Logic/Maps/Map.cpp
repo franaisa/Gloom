@@ -76,8 +76,9 @@ namespace Logic {
 
 	//--------------------------------------------------------
 
-	CMap::CMap(const std::string &name) : _numOfPlayers(0), updater(&CMap::start)
-	{
+	CMap::CMap(const std::string &name) : _numOfPlayers(0), 
+									      _acumTime(0),
+										  _fixedTimeStep(16) {
 		_name = name;
 		_scene = Graphics::CServer::getSingletonPtr()->createScene(name);
 
@@ -97,9 +98,6 @@ namespace Logic {
 
 	bool CMap::activate()
 	{
-		// El primer tick debe ser start
-		updater = &CMap::start;
-
 		Graphics::CServer::getSingletonPtr()->setScene(_scene);
 
 		TEntityMap::const_iterator it, end;
@@ -118,8 +116,7 @@ namespace Logic {
 
 	//--------------------------------------------------------
 
-	void CMap::deactivate()
-	{
+	void CMap::deactivate() {
 		TEntityMap::const_iterator it, end;
 		end = _entityMap.end();
 		it = _entityMap.begin();
@@ -135,21 +132,33 @@ namespace Logic {
 
 	//---------------------------------------------------------
 
-	void CMap::start(unsigned int msecs) {
+	void CMap::start() {
 		// Ejecutamos el start de todas nuestras entidades
 		TEntityMap::const_iterator it;
 		for( it = _entityMap.begin(); it != _entityMap.end(); ++it )
-			(*it).second->start(msecs);
-
-		// Fijamos updater al tick, para que el resto de frames
-		// se han ejecutados por el tick
-		updater = &CMap::tick;
+			(*it).second->start();
 	}
 
 	//---------------------------------------------------------
 
-	void CMap::tick(unsigned int msecs) 
-	{
+	void CMap::tick(unsigned int msecs) {
+		// Comprobamos los timers de las entidades que tienen
+		// un tiempo de vida
+		checkTimeOuts(msecs);
+
+		// @deprecated deberiamos solo ejecutar el tick y el fixedTick de las entidades
+		// que lo hayan solicitado
+
+		// Ejecutamos el tick de las entidades
+		executeTick(msecs);
+		// Ejecutamos el tick fijo de las entidades
+		executeFixedTick(msecs);
+
+	} // tick
+
+	//--------------------------------------------------------
+
+	void CMap::checkTimeOuts(unsigned int msecs) {
 		// Si hay entidades con cronometros de autodestruccion
 		// comprobamos el cronometro y si hay que destruirlas avisamos
 		// a la factoria para que se encargue de ello en diferido.
@@ -172,22 +181,35 @@ namespace Logic {
 				}
 			}
 		}
+	}
 
-		// @deprectaed -> Esta tarea deberia llevarla a cabo la factoria justo al final
-		// del tick del mapa
-		//primero comprobamos si hay entidades que han de ser eliminadas
-		std::list<CEntity*>::const_iterator del;
-		for(del = _deleteEntities.begin();del!=_deleteEntities.end();++del){
-			removeEntity(*del);
+	//--------------------------------------------------------
+
+	void CMap::executeTick(unsigned int msecs) {
+		// Ejecutamos el tick de todas nuestras entidades
+		std::set<CEntity*>::const_iterator it = _entitiesWithTick.begin();
+		for(; it != _entitiesWithTick.end(); ++it) {
+			(*it)->tick(msecs);
 		}
-		_deleteEntities.clear();
-		
-		//ejecutamos el tick de todas nuestras entidades
-		TEntityMap::const_iterator it;
-		for( it = _entityMap.begin(); it != _entityMap.end(); ++it )
-			(*it).second->tick(msecs);
+	}
 
-	} // tick
+	//--------------------------------------------------------
+
+	void CMap::executeFixedTick(unsigned int msecs) {
+		_acumTime += msecs;
+		
+		std::set<CEntity*>::const_iterator it;
+		
+		// Ejecutamos el tick fijo el máximo número de steps posibles
+		// teniendo en cuenta el time step dado.
+		while(_acumTime >= _fixedTimeStep) {
+			for(it = _entitiesWithFixedTick.begin(); it != _entitiesWithFixedTick.end(); ++it) {
+				(*it)->fixedTick(_fixedTimeStep);
+			}
+
+			_acumTime -= _fixedTimeStep;
+		}
+	}
 
 	//--------------------------------------------------------
 
@@ -385,6 +407,29 @@ namespace Logic {
 
 	void CMap::entityTimeToLive(CEntity* entity, unsigned int msecs) {
 		_entitiesToBeDeleted.push_back( std::pair<CEntity*, unsigned int>(entity, msecs) );
+	}
+
+	void CMap::setFixedTimeStep(unsigned int stepSize) {
+		_fixedTimeStep = stepSize;
+	}
+
+	void CMap::wantsTick(CEntity* entity, bool tickeable) {
+		if(tickeable) {
+			// Anotar como tickeable
+			_entitiesWithTick.insert(entity);
+		}
+		else {
+			_entitiesWithTick.erase(entity);
+		}
+	}
+
+	void CMap::wantsFixedTick(CEntity* entity, bool tickeable) {
+		if(tickeable) {
+			_entitiesWithFixedTick.insert(entity);
+		}
+		else {
+			_entitiesWithFixedTick.erase(entity);
+		}
 	}
 
 } // namespace Logic

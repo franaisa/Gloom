@@ -56,7 +56,7 @@ namespace Logic {
 
 	//__________________________________________________________________
 
-	void CHound::tick(unsigned int msecs) {
+	void CHound::onTick(unsigned int msecs) {
 		// Si la habilidad primaria esta en uso, controlar el tiempo
 		// de duración de la habilidad. Cuando se cumpla el tiempo,
 		// deshabilitamos el shader y el efecto beserker.

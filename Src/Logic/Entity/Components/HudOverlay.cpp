@@ -702,7 +702,7 @@ namespace Logic
 		}
 	}
 
-	void CHudOverlay::tick(unsigned int msecs)
+	void CHudOverlay::onTick(unsigned int msecs)
 	{
 		if(_overlayDie->isVisible()){
 			_acumSpawn += msecs;

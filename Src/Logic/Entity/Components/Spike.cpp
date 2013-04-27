@@ -103,7 +103,7 @@ namespace Logic
 	} // process
 	//----------------------------------------------------------
 
-	void CSpike::tick(unsigned int msecs)
+	void CSpike::onTick(unsigned int msecs)
 	{
 		Vector3 toDirection;
 		_timer+=msecs;

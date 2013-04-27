@@ -94,7 +94,7 @@ namespace Logic
 	} // process
 	//----------------------------------------------------------
 
-	void CElevator::tick(unsigned int msecs)
+	void CElevator::onFixedTick(unsigned int msecs)
 	{
 		Vector3 toDirection;
 	

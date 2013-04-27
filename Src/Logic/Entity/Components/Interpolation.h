@@ -63,11 +63,6 @@ namespace Logic  {
 
 		//________________________________________________________________________
 
-		/** Tick de reloj del componente. */
-		virtual void tick(unsigned int msecs);
-
-		//________________________________________________________________________
-
 		/** 
 		Este componente acepta los siguientes mensajes:
 
@@ -120,6 +115,12 @@ namespace Logic  {
 		Devuelve el ping actual del jugador
 		*/
 		float getPing(){return _actualPing;};
+
+
+	protected:
+
+		/** Tick de reloj del componente. */
+		virtual void onTick(unsigned int msecs);
 
 	private:
 

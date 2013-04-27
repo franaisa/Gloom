@@ -97,6 +97,14 @@ namespace Logic
 		*/
 		virtual void process(const std::shared_ptr<CMessage>& message);
 		
+		
+
+
+		virtual void deactivate();
+
+		void changeMaterialActualWeapon(const std::string &materialName);
+	protected:
+
 		/**
 		Método llamado en cada frame que actualiza el estado del componente.
 		<p>
@@ -104,13 +112,7 @@ namespace Logic
 
 		@param msecs Milisegundos transcurridos desde el último tick.
 		*/
-		virtual void tick(unsigned int msecs);
-
-
-		virtual void deactivate();
-
-		void changeMaterialActualWeapon(const std::string &materialName);
-	protected:
+		virtual void onTick(unsigned int msecs);
 
 		int _numWeapons;
 

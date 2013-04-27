@@ -133,7 +133,7 @@ namespace Logic
 
 	//---------------------------------------------------------
 
-	void CCamera::tick(unsigned int msecs)
+	void CCamera::onTick(unsigned int msecs)
 	{
 		if(_target)
 		{
