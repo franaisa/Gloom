@@ -110,7 +110,7 @@ namespace Logic  {
 		//si hemos terminado de interpolar, lo dejamos
 		if((_distance < _minDistance)/* && ( _yawDifference < _minYaw || _yawDifference > _minYaw*(-1) )*/){
 			_interpolating = false;
-			std::cout << "interpolate a false " << _distance << " ---- " << _minDistance << std::endl << std::endl;
+			//std::cout << "interpolate a false " << _distance << " ---- " << _minDistance << std::endl << std::endl;
 		}
 		
 	}

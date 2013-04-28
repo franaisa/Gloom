@@ -175,8 +175,12 @@ namespace Logic {
 		//cargamos todos los datos que se nos envían por mensaje
 		TEntityID destID; 
 			serialMsg.read(&destID, sizeof(destID));
-
-
+		
+		//Si el ID no lo tenemos ya en nuestro mapa proseguimos con la creacion
+		if(CServer::getSingletonPtr()->getMap()->getEntityByID(destID)!=0){//si lo encontramos terminamos
+			std::cout << "Intento de crear una entidad que ya esta creada" << std::endl;
+			return;
+		}
 		std::string type;
 		serialMsg.deserialize(type);
 
@@ -193,7 +197,7 @@ namespace Logic {
 		//Posicion
 		std::stringstream sp (std::stringstream::in | std::stringstream::out);
 
-		if(type.compare("Rocket")==0){
+		/*if(type.compare("Rocket")==0){
 			CEntity* player=Input::CServer::getSingletonPtr()->getPlayerController()->getControllerAvatar();
 
 			CInterpolation* comp = player->getComponent<CInterpolation>("CInterpolation");
@@ -215,13 +219,13 @@ namespace Logic {
 			sp << " ";
 			sp << newPosition.z;
 		}
-		else{
+		else{*/
 			sp << transform.getTrans().x;
 			sp << " ";
 			sp << transform.getTrans().y;
 			sp << " ";
 			sp << transform.getTrans().z;
-		}
+		//}
 
 		info->setAttribute( "position", sp.str() );
 		//Pitch

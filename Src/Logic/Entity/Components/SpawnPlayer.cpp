@@ -141,7 +141,7 @@ namespace Logic
 	{
 		//Si no esto muerto ya hago las acciones
 		if(!_isDead){
-			//Desactivamos todos menos el cspawnplayer
+			//Desactivamos todos los listados a continuación
 			std::vector<std::string> except;
 			except.reserve(5); // Solo necesitamos 5 slots
 			except.push_back( std::string("CAnimatedGraphics") );
