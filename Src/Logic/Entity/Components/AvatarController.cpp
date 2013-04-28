@@ -83,8 +83,8 @@ namespace Logic {
 
 	//________________________________________________________________________
 
-	void CAvatarController::activate() {
-		IComponent::activate();
+	void CAvatarController::onActivate() {
+		IComponent::onActivate();
 		_displacementDir = _momentum = Vector3::ZERO;
 	} // activate
 

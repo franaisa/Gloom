@@ -745,7 +745,7 @@ namespace Logic
 		_textAreaDebug->setText(_sDebug.str());
 	}
 
-	void CHudOverlay::deactivate(){
+	void CHudOverlay::onDeactivate(){
 		_overlayPlay->setVisible(false);
 		_overlayDie->setVisible(false);	
 		_overlayDebug->setVisible(false);

@@ -53,9 +53,9 @@ namespace Logic
 	} // spawn
 	//---------------------------------------------------------
 
-	void CSpawnPlayer::activate()
+	void CSpawnPlayer::onActivate()
 	{
-		IComponent::activate();
+		IComponent::onActivate();
 		
 		_isDead=false;
 		_actualTimeSpawn=0;

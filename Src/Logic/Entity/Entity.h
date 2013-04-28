@@ -41,8 +41,27 @@ namespace Logic
 }
 
 // Declaración de la clase
-namespace Logic 
-{
+namespace Logic {
+
+	struct ComponentState {
+		enum Enum {
+			eSLEEPING,
+			eAWAKE,
+			eBUSY,
+			eMAX
+		};
+	};
+
+	struct TickMode {
+		enum Enum {
+			eNONE,
+			eTICK,
+			eFIXED_TICK,
+			eBOTH,
+			eMAX,
+		};
+	};
+
 	/**
 	Clase que representa una entidad en el entorno virtual. Las entidades
 	son meros contenedores de componentes, y su funcionamiento depende
@@ -66,6 +85,8 @@ namespace Logic
 	*/
 	class CEntity {
 	public:
+
+		static void setFixedTimeStep(unsigned int stepSize) { _fixedTimeStep = stepSize; }
 
 		/**
 		Activa la entidad. Esto significa que el mapa ha sido activado.
@@ -103,19 +124,6 @@ namespace Logic
 		@param msecs Milisegundos transcurridos desde el último tick.
 		*/
 		void tick(unsigned int msecs);
-
-		/**
-		Función llamada en cada frame para que se realicen las funciones
-		de actualización adecuadas. Se diferencia del tick en que msecs
-		siempre es constante.
-
-		Se encarga de llamar a los métodos de onFixedTick() de todos sus
-		componentes.
-
-		@param msecs Milisegundos transcurridos desde el último ticks. Siempre
-		son constantes.
-		*/
-		void fixedTick(unsigned int msecs);
 
 		/**
 		Método que añade un nuevo componente a la lista de la entidad.
@@ -379,11 +387,11 @@ namespace Logic
 
 		bool dynamicSpawn(CMap* map, Map::CEntity* entityInfo);
 
-		void wantsTick(IComponent* component, bool tickeable);
-
-		void wantsFixedTick(IComponent* component, bool tickeable);
-
 	protected:
+
+		static unsigned int _fixedTimeStep;
+
+		unsigned int _acumTime;
 
 		/**
 		Clase amiga que crea y destruye objetos de la clase.
@@ -458,9 +466,7 @@ namespace Logic
 		 */
 		TComponentList _componentList;
 
-		std::set<IComponent*> _componentsWithTick;
-
-		std::set<IComponent*> _componentsWithFixedTick;
+		void (CEntity::*entityProcessMode[ComponentState::eMAX][TickMode::eMAX])(IComponent*, unsigned int, unsigned int);
 
 		/**
 		Indica si la entidad está activa.
@@ -502,6 +508,40 @@ namespace Logic
 		es false a no ser que se lea otra cosa de los atributos.
 		*/
 		bool _isPlayer;
+
+
+	private:
+
+		void initFunctionPointers();
+
+
+		void sleepingWithoutTick(IComponent* component, unsigned int msecs, unsigned int steps);
+
+		void sleepingWithTick(IComponent* component, unsigned int msecs, unsigned int steps);
+
+		void sleepingWithFixedTick(IComponent* component, unsigned int msecs, unsigned int steps);
+
+		void sleepingWithBothTicks(IComponent* component, unsigned int msecs, unsigned int steps);
+
+
+
+		void awakeWithoutTick(IComponent* component, unsigned int msecs, unsigned int steps);
+
+		void awakeWithTick(IComponent* component, unsigned int msecs, unsigned int steps);
+
+		void awakeWithFixedTick(IComponent* component, unsigned int msecs, unsigned int steps);
+
+		void awakeWithBothTicks(IComponent* component, unsigned int msecs, unsigned int steps);
+
+
+
+		void busyWithoutTick(IComponent* component, unsigned int msecs, unsigned int steps);
+
+		void busyWithTick(IComponent* component, unsigned int msecs, unsigned int steps);
+
+		void busyWithFixedTick(IComponent* component, unsigned int msecs, unsigned int steps);
+
+		void busyWithBothTicks(IComponent* component, unsigned int msecs, unsigned int steps);
 
 	}; // class CEntity
 

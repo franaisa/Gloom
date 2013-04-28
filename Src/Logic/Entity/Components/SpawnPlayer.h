@@ -36,7 +36,7 @@ namespace Logic
 		Método que activa el componente; invocado cuando se activa
 		el mapa donde está la entidad a la que pertenece el componente.
 		*/
-		virtual void activate();
+		virtual void onActivate();
 
 		/**
 		Este componente sólo acepta mensajes de tipo PLAYER_DEAD (por ahora).

@@ -56,7 +56,7 @@ namespace Logic  {
 		*/
 		virtual bool accept(const std::shared_ptr<CMessage>& message);
 
-		virtual void activate(){}
+		virtual void onActivate(){}
 
 		//________________________________________________________________________
 

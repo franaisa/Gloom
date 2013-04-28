@@ -122,8 +122,8 @@ namespace Logic {
 
 	// Cuando activo una entidad de disparo, actulio la hub indicandole cuanta municion tengo
 	
-	void CShoot::activate() {
-		IComponent::activate();
+	void CShoot::onActivate() {
+		IComponent::onActivate();
 
 		
 

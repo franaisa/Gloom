@@ -89,8 +89,8 @@ namespace Logic {
 
 	//________________________________________________________________________
 
-	void CArchangel::activate() {
-		CPlayerClass::activate();
+	void CArchangel::onActivate() {
+		CPlayerClass::onActivate();
 
 		// Ñapa temporal para el ideame
 		// Cambiamos el color del marine en funcion de la clase con un changeMaterial

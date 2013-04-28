@@ -75,7 +75,7 @@ namespace Logic {
 		Metodo que se llama al activar el componente.
 		Restea los campos de la clase a los valores por defecto.
 		*/
-		virtual void activate();
+		virtual void onActivate();
 
 
 		// =======================================================================

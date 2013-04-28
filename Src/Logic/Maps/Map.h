@@ -202,22 +202,11 @@ namespace Logic
 
 		void setFixedTimeStep(unsigned int stepSize);
 
-		void wantsTick(CEntity* entity, bool tickeable);
-
-		void wantsFixedTick(CEntity* entity, bool tickeable);
-
 	private:
 
 		void checkTimeOuts(unsigned int msecs);
 
-		void executeTick(unsigned int msecs);
-
-		void executeFixedTick(unsigned int msecs);
-
-		/** Tiempo acumulado para el tick fijo. */
-		unsigned int _acumTime;
-
-		unsigned int _fixedTimeStep;
+		void doTick(unsigned int msecs);
 
 		/**
 		Lista de entidades que han sido marcadas para ser borradas en
@@ -234,10 +223,6 @@ namespace Logic
 		tabla con las entidades del mapa localizadas por su ID.
 		*/
 		TEntityMap _entityMap;
-
-		std::set<CEntity*> _entitiesWithTick;
-
-		std::set<CEntity*> _entitiesWithFixedTick;
 
 		/**
 		Lista de entidades que hay que borrar

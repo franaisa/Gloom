@@ -47,7 +47,7 @@ namespace Logic
 		/**
 		Metodo que se llama al activar el componente.
 		*/
-		virtual void activate();
+		virtual void onActivate();
 
 		/**
 		Este componente sólo acepta mensajes de tipo touched (por ahora).

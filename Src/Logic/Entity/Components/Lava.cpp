@@ -41,9 +41,9 @@ namespace Logic
 	} // spawn
 	//---------------------------------------------------------
 
-	void CLava::activate()
+	void CLava::onActivate()
 	{
-		IComponent::activate();
+		IComponent::onActivate();
 		_timestamp = 0;
 	} // activate
 	//--------------------------------------------------------

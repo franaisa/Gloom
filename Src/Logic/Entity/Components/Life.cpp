@@ -98,8 +98,8 @@ namespace Logic {
 	
 	//________________________________________________________________________
 	
-	void CLife::activate() {
-		IComponent::activate();
+	void CLife::onActivate() {
+		IComponent::onActivate();
 		
 		// Resteamos los valores de salud y escudo a los valores por defecto
 		_currentLife = _defaultLife;

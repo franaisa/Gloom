@@ -53,9 +53,9 @@ namespace Logic
 
 
 	
-	void CHacksaw::activate()
+	void CHacksaw::onActivate()
 	{
-		IComponent::activate();
+		IComponent::onActivate();
 
 		_directionInitial=(_positionInitial-_positionFinal);
 		_directionFinal=(_positionFinal-_positionInitial);

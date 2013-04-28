@@ -100,7 +100,7 @@ namespace Logic
 		
 
 
-		virtual void deactivate();
+		virtual void onDeactivate();
 
 		void changeMaterialActualWeapon(const std::string &materialName);
 	protected:

@@ -90,7 +90,7 @@ namespace Logic {
 		Metodo que se llama al activar el componente.
 		Resetea los valores de inercia y desplazamiento.
 		*/
-		virtual void activate();
+		virtual void onActivate();
 
 		//________________________________________________________________________
 

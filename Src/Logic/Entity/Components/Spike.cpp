@@ -59,9 +59,9 @@ namespace Logic
 
 
 	
-	void CSpike::activate()
+	void CSpike::onActivate()
 	{
-		IComponent::activate();
+		IComponent::onActivate();
 		_timer=0;
 		_active=false;
 		_wait=true;

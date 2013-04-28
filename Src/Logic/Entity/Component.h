@@ -13,6 +13,7 @@ Contiene la declaración de la clase base de los componentes.
 #define __Logic_Component_H
 
 #include "CommunicationPort.h"
+#include "Entity.h"
 #include "Logic/Maps/ComponentFactory.h"
 
 // Predeclaración de clases para ahorrar tiempo de compilación
@@ -24,7 +25,6 @@ namespace Map
 namespace Logic 
 {
 	class CMap;
-	class CEntity;
 }
 
 //declaración de la clase
@@ -120,28 +120,15 @@ namespace Logic
 		*/
 		inline bool isActivated() { return _isActivated; }
 
-		/**
-		Método que activa el componente; invocado cuando se activa
-		el mapa donde está la entidad a la que pertenece el componente.
-		<p>
-		La implementación registrará al componente en algunos observers en 
-		los que pueda necesitar estar registrado (como el cronómetro del 
-		sistema, etc.).
+		void activate();
 
-		@return true si todo ha ido correctamente.
-		*/
-		virtual void activate();
 		
-		/**
-		Método que desactiva el componente; invocado cuando se
-		desactiva el mapa donde está la entidad a la que pertenece el
-		componente. Se invocará siempre, independientemente de si estamos
-		activados o no.
-		<p>
-		La implementación eliminará al componente de algunos observers en los 
-		que pueda estar registrado (como el cronómetro del sistema, etc.).
-		*/
-		virtual void deactivate();
+		void deactivate();
+		
+
+		void putToSleep();
+
+		void wakeUp();
 
 		/**
 		Método llamado en cada frame que actualiza el estado del componente.
@@ -175,6 +162,13 @@ namespace Logic
 
 	protected:
 
+		ComponentState::Enum _state;
+		TickMode::Enum _tickMode;
+
+		virtual void onSleep();
+
+		virtual void onWake();
+
 		/**
 		Llamado en cada frame por fixedTick. Los clientes que hereden de esta
 		clase deben redefinir su comportamiento.
@@ -206,9 +200,28 @@ namespace Logic
 		*/
 		friend class CEntity;
 
-		
+		/**
+		Método que activa el componente; invocado cuando se activa
+		el mapa donde está la entidad a la que pertenece el componente.
+		<p>
+		La implementación registrará al componente en algunos observers en 
+		los que pueda necesitar estar registrado (como el cronómetro del 
+		sistema, etc.).
 
-		void activateSetup();
+		@return true si todo ha ido correctamente.
+		*/
+		virtual void onActivate();
+
+		/**
+		Método que desactiva el componente; invocado cuando se
+		desactiva el mapa donde está la entidad a la que pertenece el
+		componente. Se invocará siempre, independientemente de si estamos
+		activados o no.
+		<p>
+		La implementación eliminará al componente de algunos observers en los 
+		que pueda estar registrado (como el cronómetro del sistema, etc.).
+		*/
+		virtual void onDeactivate();
 
 		/**
 		Método que establece la entidad a la que pertenece el componente.

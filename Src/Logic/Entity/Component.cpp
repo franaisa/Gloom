@@ -11,13 +11,14 @@ Contiene la implementación de la clase base de los componentes.
 */
 
 #include "Component.h"
-#include "Entity.h"
 #include "Logic/Server.h"
 
 namespace Logic 
 {
 	IComponent::IComponent() : _entity(0), 
-							   _isActivated(true) {
+							   _isActivated(true),
+							   _state(ComponentState::eAWAKE),
+							   _tickMode(TickMode::eBOTH) {
 
 		Logic::CServer::getSingletonPtr()->COMPONENT_CONSTRUCTOR_COUNTER += 1;
 	}
@@ -38,14 +39,14 @@ namespace Logic
 
 	//---------------------------------------------------------
 	
-	void IComponent::activateSetup() {
+	void IComponent::activate() {
 		// Llamamos al activar que los hijos deben redefinir
-		activate();
+		onActivate();
 	}
 
 	//---------------------------------------------------------
 
-	void IComponent::activate() {
+	void IComponent::onActivate() {
 		if(_isActivated) return;
 		
 		// Por defecto no forzamos a que se arranque onStart
@@ -60,6 +61,12 @@ namespace Logic
 	//---------------------------------------------------------
 
 	void IComponent::deactivate() {
+		onDeactivate();
+	}
+
+	//---------------------------------------------------------
+
+	void IComponent::onDeactivate() {
 		_isActivated = false;
 	}
 
@@ -72,34 +79,56 @@ namespace Logic
 	//---------------------------------------------------------
 
 	void IComponent::tick(unsigned int msecs) {
-		// Procesamos los mensajes que nos hayan llegado
-		processMessages();
 		onTick(msecs);
 	}
 
 	//---------------------------------------------------------
 
 	void IComponent::onTick(unsigned int msecs) {
-		// Por defecto el componente indica que no quiere recibir
-		// ticks. Si algún hijo redefine este método entonces
-		// automáticamente se le llama.
-		_entity->wantsTick(this, false);
+		if(_tickMode == TickMode::eBOTH) {
+			_tickMode = TickMode::eFIXED_TICK;
+		}
+		else if(_tickMode == TickMode::eTICK) {
+			_tickMode = TickMode::eNONE;
+		}
+
 	} // tick
 
 	//---------------------------------------------------------
 
 	void IComponent::fixedTick(unsigned int msecs) {
-		processMessages();
 		onFixedTick(msecs);
 	}
 
 	//---------------------------------------------------------
 
 	void IComponent::onFixedTick(unsigned int msecs) {
-		// Por defecto el componente indica que no quiere 
-		// recibir ticks fijos. Si algún hijo redefine este método
-		// entonces automáticamente se le llama.
-		_entity->wantsFixedTick(this, false);
+		if(_tickMode == TickMode::eBOTH) {
+			_tickMode = TickMode::eTICK;
+		}
+		else if(_tickMode == TickMode::eFIXED_TICK) {
+			_tickMode = TickMode::eNONE;
+		}
+	}
+
+	void IComponent::putToSleep() {
+		_state = ComponentState::eSLEEPING;
+
+		onSleep();
+	}
+
+	void IComponent::onSleep() {
+		// Redefinir por hijos
+	}
+
+	void IComponent::wakeUp() {
+		_state = ComponentState::eAWAKE;
+
+		onWake();
+	}
+
+	void IComponent::onWake() {
+		// Redefinir por hijos
 	}
 
 } // namespace Logic

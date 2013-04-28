@@ -76,9 +76,7 @@ namespace Logic {
 
 	//--------------------------------------------------------
 
-	CMap::CMap(const std::string &name) : _numOfPlayers(0), 
-									      _acumTime(0),
-										  _fixedTimeStep(16) {
+	CMap::CMap(const std::string &name) : _numOfPlayers(0) {
 		_name = name;
 		_scene = Graphics::CServer::getSingletonPtr()->createScene(name);
 
@@ -86,8 +84,7 @@ namespace Logic {
 
 	//--------------------------------------------------------
 
-	CMap::~CMap()
-	{
+	CMap::~CMap() {
 		destroyAllEntities();
 		if(Graphics::CServer::getSingletonPtr())
 			Graphics::CServer::getSingletonPtr()->removeScene(_scene);
@@ -96,8 +93,7 @@ namespace Logic {
 
 	//--------------------------------------------------------
 
-	bool CMap::activate()
-	{
+	bool CMap::activate() {
 		Graphics::CServer::getSingletonPtr()->setScene(_scene);
 
 		TEntityMap::const_iterator it, end;
@@ -134,9 +130,11 @@ namespace Logic {
 
 	void CMap::start() {
 		// Ejecutamos el start de todas nuestras entidades
-		TEntityMap::const_iterator it;
-		for( it = _entityMap.begin(); it != _entityMap.end(); ++it )
-			(*it).second->start();
+		TEntityMap::const_iterator it = _entityMap.begin();
+		for(; it != _entityMap.end(); ++it ) {
+			// Ejecutamos el start de todas las entidades
+			it->second->start();
+		}
 	}
 
 	//---------------------------------------------------------
@@ -145,15 +143,12 @@ namespace Logic {
 		// Comprobamos los timers de las entidades que tienen
 		// un tiempo de vida
 		checkTimeOuts(msecs);
-
-		// @deprecated deberiamos solo ejecutar el tick y el fixedTick de las entidades
-		// que lo hayan solicitado
-
+		
 		// Ejecutamos el tick de las entidades
-		executeTick(msecs);
-		// Ejecutamos el tick fijo de las entidades
-		executeFixedTick(msecs);
-
+		// Ejecutamos el tick de todas las entidades activadas del mapa
+		// La propia entidad se encarga de hacer el process, tick y fixed tick
+		// de sus componentes (dependiendo del estado)
+		doTick(msecs);
 	} // tick
 
 	//--------------------------------------------------------
@@ -185,29 +180,11 @@ namespace Logic {
 
 	//--------------------------------------------------------
 
-	void CMap::executeTick(unsigned int msecs) {
+	void CMap::doTick(unsigned int msecs) {
 		// Ejecutamos el tick de todas nuestras entidades
-		std::set<CEntity*>::const_iterator it = _entitiesWithTick.begin();
-		for(; it != _entitiesWithTick.end(); ++it) {
-			(*it)->tick(msecs);
-		}
-	}
-
-	//--------------------------------------------------------
-
-	void CMap::executeFixedTick(unsigned int msecs) {
-		_acumTime += msecs;
-		
-		std::set<CEntity*>::const_iterator it;
-		
-		// Ejecutamos el tick fijo el máximo número de steps posibles
-		// teniendo en cuenta el time step dado.
-		while(_acumTime >= _fixedTimeStep) {
-			for(it = _entitiesWithFixedTick.begin(); it != _entitiesWithFixedTick.end(); ++it) {
-				(*it)->fixedTick(_fixedTimeStep);
-			}
-
-			_acumTime -= _fixedTimeStep;
+		TEntityMap::const_iterator it = _entityMap.begin();
+		for(; it != _entityMap.end(); ++it) {
+			it->second->tick(msecs);
 		}
 	}
 
@@ -410,26 +387,7 @@ namespace Logic {
 	}
 
 	void CMap::setFixedTimeStep(unsigned int stepSize) {
-		_fixedTimeStep = stepSize;
-	}
-
-	void CMap::wantsTick(CEntity* entity, bool tickeable) {
-		if(tickeable) {
-			// Anotar como tickeable
-			_entitiesWithTick.insert(entity);
-		}
-		else {
-			_entitiesWithTick.erase(entity);
-		}
-	}
-
-	void CMap::wantsFixedTick(CEntity* entity, bool tickeable) {
-		if(tickeable) {
-			_entitiesWithFixedTick.insert(entity);
-		}
-		else {
-			_entitiesWithFixedTick.erase(entity);
-		}
+		CEntity::setFixedTimeStep(stepSize);
 	}
 
 } // namespace Logic

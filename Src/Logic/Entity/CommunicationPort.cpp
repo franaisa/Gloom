@@ -32,13 +32,15 @@ namespace Logic {
 	
 	//---------------------------------------------------------
 
-	void CCommunicationPort::processMessages() {
+	bool CCommunicationPort::processMessages() {
 		CMessageList::const_iterator it = _messages.begin();
+		bool success = ( it != _messages.end() );
 		for(; it != _messages.end(); ++it) {
 			process(*it);
 		}
 
 		_messages.clear();
+		return success;
 	} // processMessages
 
 } // namespace Logic

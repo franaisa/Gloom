@@ -109,7 +109,7 @@ namespace Logic  {
 		/**
 		Activa el componente
 		*/
-		virtual void activate();
+		virtual void onActivate();
 
 		/**
 		Devuelve el ping actual del jugador

@@ -68,8 +68,8 @@ namespace Logic
 
 
 	
-	void CParticle::activate() {
-		IComponent::activate();
+	void CParticle::onActivate() {
+		IComponent::onActivate();
 
 		if(!_particleName.empty()){
 			_particle = new Graphics::CParticle( _entity->getName(), _particleName );

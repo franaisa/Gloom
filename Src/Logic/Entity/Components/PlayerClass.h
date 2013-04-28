@@ -144,7 +144,7 @@ namespace Logic {
 		por lo que las clases hijas deberán sobreescribir este método para
 		resetear todos sus campos.
 		*/
-		virtual void activate();
+		virtual void onActivate();
 
 		
 		// =======================================================================

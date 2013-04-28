@@ -149,7 +149,7 @@ namespace Logic {
 		Activa el componente. Lo utilizaremos para activar el componente del arma
 		que esté en uso.
 		*/
-		virtual void activate();
+		virtual void onActivate();
 
 		//__________________________________________________________________
 

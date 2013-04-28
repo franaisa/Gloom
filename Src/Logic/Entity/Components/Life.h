@@ -81,7 +81,7 @@ namespace Logic {
 		Metodo que se llama al activar el componente.
 		Resetea los valores de vida y escudo a los fijados por defecto.
 		*/
-		virtual void activate();
+		virtual void onActivate();
 
 		//__________________________________________________________________
 

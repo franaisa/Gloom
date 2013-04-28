@@ -78,9 +78,9 @@ namespace Logic
 
 
 	
-	void CLight::activate()
+	void CLight::onActivate()
 	{
-		IComponent::activate();
+		IComponent::onActivate();
 
 	} // activate
 	//---------------------------------------------------------

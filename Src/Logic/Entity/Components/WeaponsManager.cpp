@@ -67,7 +67,7 @@ namespace Logic
 
 		// Por defecto la primera arma está activada y equipada (es el arma 0).
 		_weaponry[eHAMMER].first = true;
-		_weaponry[eHAMMER].second->activate();
+		_weaponry[eHAMMER].second->onActivate();
 		_weaponry[eHAMMER].second->inUse(true);
 
 		// El resto de las armas están desactivadas, ya que no las tenemos
@@ -82,12 +82,12 @@ namespace Logic
 	
 	//---------------------------------------------------------
 
-	void CWeaponsManager::activate() {
-		IComponent::activate();
+	void CWeaponsManager::onActivate() {
+		IComponent::onActivate();
 
 		// Por defecto la primera arma está activada y equipadda
 		_weaponry[eHAMMER].first = true;
-		_weaponry[eHAMMER].second->activate();
+		_weaponry[eHAMMER].second->onActivate();
 		_weaponry[eHAMMER].second->inUse(true);
 
 		// El resto de las armas están desactivadas, ya que no las tenemos
@@ -99,7 +99,7 @@ namespace Logic
 	
 	//---------------------------------------------------------
 
-	void CWeaponsManager::deactivate(){
+	void CWeaponsManager::onDeactivate(){
 		//reset de armas y balas
 		for(unsigned int i = 0; i<_weaponry.size();++i){
 			_weaponry[i].first = false;
@@ -185,7 +185,7 @@ namespace Logic
 
 			// Activamos el componente del nuevo arma que vamos
 			// a equipar e indicamos que el arma está equipada
-			_weaponry[newWeapon].second->activate();
+			_weaponry[newWeapon].second->onActivate();
 			_weaponry[newWeapon].second->inUse(true);
 			
 			// Actualizamo el indice de arma
@@ -226,7 +226,7 @@ namespace Logic
 
 		// Activamos el componente pero indicamos que
 		// no es el arma equipada.
-		_weaponry[weaponIndex].second->activate();
+		_weaponry[weaponIndex].second->onActivate();
 		
 		// El arma estara en uso si es la actual, si no estara sin uso
 		_weaponry[weaponIndex].second->inUse( _currentWeapon == weaponIndex );

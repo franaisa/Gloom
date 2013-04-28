@@ -47,9 +47,9 @@ namespace Logic
 	} // spawn
 	//---------------------------------------------------------
 
-	void CJumper::activate()
+	void CJumper::onActivate()
 	{
-		IComponent::activate();
+		IComponent::onActivate();
 		
 	} // activate
 	//--------------------------------------------------------

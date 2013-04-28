@@ -83,9 +83,9 @@ namespace Logic
 	
 	//---------------------------------------------------------
 
-	void CAnimatedGraphics::activate()
+	void CAnimatedGraphics::onActivate()
 	{
-		CGraphics::activate();
+		CGraphics::onActivate();
 
 		//Habria que quitare el string que se pasa por parametro porque no tiene sentido
 		//animationFinished("random");
@@ -94,9 +94,9 @@ namespace Logic
 	}
 	//---------------------------------------------------------
 
-	void CAnimatedGraphics::deactivate()
+	void CAnimatedGraphics::onDeactivate()
 	{
-		CGraphics::deactivate();
+		CGraphics::onDeactivate();
 
 		//En verdad hay que dejar la animación de morir porque desactivaremos al morir
 		//_animatedGraphicsEntity->stopAllAnimations();

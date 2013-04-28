@@ -32,9 +32,9 @@ namespace Logic
 	} // spawn
 	//---------------------------------------------------------
 
-	void CAudio::activate()
+	void CAudio::onActivate()
 	{
-		IComponent::activate();
+		IComponent::onActivate();
 
 	} // activate
 	//---------------------------------------------------------

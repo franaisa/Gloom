@@ -182,8 +182,8 @@ namespace Logic  {
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	void CInterpolation::activate(){
-		IComponent::activate();
+	void CInterpolation::onActivate(){
+		IComponent::onActivate();
 		_serverDirection = Vector3(0,0,0);
 		_interpolating = false;
 		_distance = 0;

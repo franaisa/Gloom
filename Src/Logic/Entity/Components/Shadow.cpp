@@ -83,8 +83,8 @@ namespace Logic {
 
 	//________________________________________________________________________
 
-	void CShadow::activate() {
-		CPlayerClass::activate();
+	void CShadow::onActivate() {
+		CPlayerClass::onActivate();
 
 		// Ñapa temporal para el ideame
 		// Cambiamos el color del marine en funcion de la clase con un changeMaterial
