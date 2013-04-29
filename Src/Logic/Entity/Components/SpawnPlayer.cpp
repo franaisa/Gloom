@@ -26,9 +26,6 @@ Contiene la implementación del componente que gestiona el spawn del jugador.
 #include "Logic/Messages/MessageAudio.h"
 #include "Logic/Messages/MessageCreateParticle.h"
 
-
-
-
 namespace Logic 
 {
 	IMP_FACTORY(CSpawnPlayer);
@@ -90,6 +87,7 @@ namespace Logic
 			//Si superamos el tiempo de spawn tenemos que revivir
 			if(_actualTimeSpawn>_timeSpawn){
 				_isDead = false;
+				_actualTimeSpawn = 0;
 				//LLamamos al manager de spawn que nos devolverá una posición ( ahora hecho a lo cutre)
 				CEntity *spawn = CServer::getSingletonPtr()->getSpawnManager()->getSpawnPosition();
 
