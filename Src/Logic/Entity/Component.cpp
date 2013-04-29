@@ -16,7 +16,7 @@ Contiene la implementación de la clase base de los componentes.
 namespace Logic 
 {
 	IComponent::IComponent() : _entity(0), 
-							   _isActivated(true),
+							   _isActivated(false),
 							   _state(ComponentState::eAWAKE),
 							   _tickMode(TickMode::eBOTH) {
 
@@ -40,13 +40,6 @@ namespace Logic
 	//---------------------------------------------------------
 	
 	void IComponent::activate() {
-		// Llamamos al activar que los hijos deben redefinir
-		onActivate();
-	}
-
-	//---------------------------------------------------------
-
-	void IComponent::onActivate() {
 		if(_isActivated) return;
 		
 		// Por defecto no forzamos a que se arranque onStart
@@ -57,8 +50,14 @@ namespace Logic
 		_isActivated = true;
 		clearMessages();
 
-		// Redefinir por hijos
+		// Llamamos al activar que los hijos deben redefinir
 		onActivate();
+	}
+
+	//---------------------------------------------------------
+
+	void IComponent::onActivate() {
+		// Redefinir por hijos
 	}
 
 	//---------------------------------------------------------
@@ -71,6 +70,7 @@ namespace Logic
 	//---------------------------------------------------------
 
 	void IComponent::onDeactivate() {
+		// Redefinir por hijos
 	}
 
 	//---------------------------------------------------------

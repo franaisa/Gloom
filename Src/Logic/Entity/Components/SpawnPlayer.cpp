@@ -89,11 +89,9 @@ namespace Logic
 			_actualTimeSpawn+=msecs;
 			//Si superamos el tiempo de spawn tenemos que revivir
 			if(_actualTimeSpawn>_timeSpawn){
-
+				_isDead = false;
 				//LLamamos al manager de spawn que nos devolverá una posición ( ahora hecho a lo cutre)
 				CEntity *spawn = CServer::getSingletonPtr()->getSpawnManager()->getSpawnPosition();
-
-				Vector3 spawnPos = spawn->getPosition();
 
 				//Ponemos la entidad física en la posición instantaneamente ( no se puede permitir el envio de mensajes )
 				_entity->getComponent<CPhysicController>("CPhysicController")->setPhysicPosition(spawn->getPosition());

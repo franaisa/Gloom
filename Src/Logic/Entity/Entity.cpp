@@ -197,7 +197,7 @@ namespace Logic
 					desactivar=false;
 			}
 			if(desactivar)
-				(it->second)->onDeactivate();
+				(it->second)->deactivate();
 			desactivar=true;
 		}
 
