@@ -93,6 +93,8 @@ namespace Logic
 				//LLamamos al manager de spawn que nos devolverá una posición ( ahora hecho a lo cutre)
 				CEntity *spawn = CServer::getSingletonPtr()->getSpawnManager()->getSpawnPosition();
 
+				Vector3 spawnPos = spawn->getPosition();
+
 				//Ponemos la entidad física en la posición instantaneamente ( no se puede permitir el envio de mensajes )
 				_entity->getComponent<CPhysicController>("CPhysicController")->setPhysicPosition(spawn->getPosition());
 

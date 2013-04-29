@@ -130,11 +130,7 @@ namespace Logic
 
 		void stayBusy();
 
-		virtual void onBusy();
-
 		void stayAvailable();
-
-		virtual void onAvailable();
 
 		/**
 		Método llamado en cada frame que actualiza el estado del componente.
@@ -174,6 +170,10 @@ namespace Logic
 		virtual void onSleep();
 
 		virtual void onWake();
+
+		virtual void onBusy();
+
+		virtual void onAvailable();
 
 		/**
 		Llamado en cada frame por fixedTick. Los clientes que hereden de esta

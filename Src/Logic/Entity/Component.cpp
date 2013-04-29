@@ -111,15 +111,21 @@ namespace Logic
 		}
 	}
 
+	//---------------------------------------------------------
+
 	void IComponent::putToSleep() {
 		_state = ComponentState::eSLEEPING;
 
 		onSleep();
 	}
 
+	//---------------------------------------------------------
+
 	void IComponent::onSleep() {
 		// Redefinir por hijos
 	}
+
+	//---------------------------------------------------------
 
 	void IComponent::wakeUp() {
 		_state = ComponentState::eAWAKE;
@@ -127,9 +133,13 @@ namespace Logic
 		onWake();
 	}
 
+	//---------------------------------------------------------
+
 	void IComponent::onWake() {
 		// Redefinir por hijos
 	}
+
+	//---------------------------------------------------------
 
 	void IComponent::stayBusy() {
 		_state = ComponentState::eBUSY;
@@ -137,9 +147,13 @@ namespace Logic
 		onBusy();
 	}
 
+	//---------------------------------------------------------
+
 	void IComponent::onBusy() {
 		// Redefinir por hijos
 	}
+
+	//---------------------------------------------------------
 
 	void IComponent::stayAvailable() {
 		_state = ComponentState::eAWAKE;
@@ -147,10 +161,10 @@ namespace Logic
 		onAvailable();
 	}
 
+	//---------------------------------------------------------
+
 	void IComponent::onAvailable() {
 		// Redefinir por hijos
 	}
-
-
 
 } // namespace Logic
