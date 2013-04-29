@@ -1,4 +1,3 @@
-
 material Material#25
 {
 	technique
@@ -71,16 +70,34 @@ material Material#25
             {
                 texture piedra_NRM.tga
             }
+			
         }
+		pass
+		{
+			
+			illumination_stage per_light
+
 		
-		
-		
+			scene_blend add
+			
+			// Bump map fragment program, support for this is optional
+			fragment_program Examples/BumpMapFPSpecular cg
+			{
+				source Example_BumpMapping.cg
+				entry_point specular_fp
+				profiles ps_2_0 arbfp1 fp20
+			}
+			
+			texture_unit normalmap
+			{
+				texture piedra_NRM.tga
+				colour_op replace
+			}
+		}
 
 	}
 
 }
-
-
 
 material Material#52
 {
@@ -155,6 +172,18 @@ material Material#52
                 texture metalpuerta_NRM.tga
             }
         }
+		
+		pass
+		{
+			
+			illumination_stage per_light
+			
+			texture_unit normalmap
+			{
+				texture metalpuerta_NRM.tga
+				colour_op replace
+			}
+		}
 
 	}
 
@@ -235,6 +264,18 @@ material Material#39
                 texture BronzeCopper0030_L_NRM.tga
             }
         }
+		
+		pass
+		{
+			
+			illumination_stage per_light
+			
+			texture_unit normalmap
+			{
+				texture BronzeCopper0030_L_NRM.tga
+				colour_op replace
+			}
+		}
 
 	}
 
@@ -315,6 +356,18 @@ material Material#38
                 texture metal_columna_tileado_NRM.tga
             }
         }
+		
+		pass
+		{
+			
+			illumination_stage per_light
+			
+			texture_unit normalmap
+			{
+				texture metal_columna_tileado_NRM.tga
+				colour_op replace
+			}
+		}
 
 	}
 
@@ -395,6 +448,18 @@ material Material#53
                 texture viga_NRM.tga
             }
         }
+		
+		pass
+		{
+			
+			illumination_stage per_light
+			
+			texture_unit normalmap
+			{
+				texture viga_NRM.tga
+				colour_op replace
+			}
+		}
 
 	}
 
@@ -475,6 +540,29 @@ material Material#93
                 texture MetalContainer_NRM.tga
             }
         }
+		
+		pass
+		{
+			
+			illumination_stage per_light
+
+		
+			scene_blend add
+			
+			// Bump map fragment program, support for this is optional
+			fragment_program Examples/BumpMapFPSpecular cg
+			{
+				source Example_BumpMapping.cg
+				entry_point specular_fp
+				profiles ps_2_0 arbfp1 fp20
+			}
+			
+			texture_unit normalmap
+			{
+				texture MetalContainer_NRM.tga
+				colour_op replace
+			}
+		}
 
 	}
 
@@ -556,6 +644,29 @@ material Material#94
                 texture MetalContainer_NRM.tga
             }
         }
+		
+		pass
+		{
+			
+			illumination_stage per_light
+
+		
+			scene_blend add
+			
+			// Bump map fragment program, support for this is optional
+			fragment_program Examples/BumpMapFPSpecular cg
+			{
+				source Example_BumpMapping.cg
+				entry_point specular_fp
+				profiles ps_2_0 arbfp1 fp20
+			}
+			
+			texture_unit normalmap
+			{
+				texture MetalContainer_NRM.tga
+				colour_op replace
+			}
+		}
 
 	}
 
@@ -636,6 +747,18 @@ material Material#37
                 texture suelometal_NRM.tga
             }
         }
+		
+		pass
+		{
+			
+			illumination_stage per_light
+			
+			texture_unit normalmap
+			{
+				texture suelometal_NRM.tga
+				colour_op replace
+			}
+		}
 
 	}
 
@@ -716,6 +839,18 @@ material Material#92
                 texture ventana_NRM.tga
             }
         }
+		
+		pass
+		{
+			
+			illumination_stage per_light
+			
+			texture_unit normalmap
+			{
+				texture ventana_NRM.tga
+				colour_op replace
+			}
+		}
 
 	}
 
@@ -796,6 +931,18 @@ material Material#107
                 texture techometal_NRM.tga
             }
         }
+		
+		pass
+		{
+			
+			illumination_stage per_light
+			
+			texture_unit normalmap
+			{
+				texture techometal_NRM.tga
+				colour_op replace
+			}
+		}
 
 	}
 

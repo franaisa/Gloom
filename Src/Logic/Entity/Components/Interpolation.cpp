@@ -66,51 +66,18 @@ namespace Logic  {
 		Vector3 newPos;
 		//calculamos la direccion en la que debemos interpolar
 		Vector3 direction = _serverDirection*Vector3(1,0,1);
-					//calculamos el movimiento que debe hacer el monigote, mucho mas lento del que debe hacer de normal
-		//direction *=(_entity->getComponent<CAvatarController>("CAvatarController")->getVelocity()/5);
+		//calculamos el movimiento que debe hacer el monigote, mucho mas lento del que debe hacer de normal
 		direction*=(_entity->getComponent<CAvatarController>("CAvatarController")->getVelocity()*Vector3(1,0,1)).length()*0.3;
 		//si nos hemos pasado, debemos moverlo al sitio
 		if(direction.length() > _distance){
 			direction*=(_distance/direction.length());
 		}
-		//std::cout << direction.length() << " contra " << _entity->getComponent<CAvatarController>("CAvatarController")->getVelocity().length() << std::endl;
-		//_entity->getComponent<CAvatarController>("CAvatarController")->addForce(Vector3(direction));
 		_entity->getComponent<CPhysicController>("CPhysicController")->move(direction,msecs);
 		_distance -= direction.length();
-		//std::cout << "nueva pos lenght " << _distance << std::endl ;
-		/*if(_canInterpolateRotation){
-
-			//si la diferencia es demasiado grande, lo movemos a pelo
-			if(_yawDifference > _maxYaw || _yawDifference < _maxYaw*(-1)){
-				Matrix3 a;
-				_serverPos.extract3x3Matrix(a);
-				_entity->setOrientation(a);
-				_yawDifference = 0;
-			}
-
-			//si la diferencia no es demasiado grande, interpolamos
-			else if(_yawDifference > _minYaw || _yawDifference < _minYaw*(-1)){
-
-				//nos movemos el raton
-				if(_yawDifference > _rotationSpeed){
-
-				}else if(_yawDifference < _rotationSpeed*(-1)){
-					_entity->yaw(_rotationSpeed);
-
-				}else{
-					_entity->yaw(_yawDifference);
-					_yawDifference = 0;
-				}//if(_yawDifference > _rotationSpeed)
-
-			}//if
-			//si la diferencia es pequeña no hacemos nada
-			_canInterpolateRotation = false;
-		}//if(_canInterpolateRotation)*/
 
 		//si hemos terminado de interpolar, lo dejamos
-		if((_distance < _minDistance)/* && ( _yawDifference < _minYaw || _yawDifference > _minYaw*(-1) )*/){
+		if((_distance < _minDistance)){
 			_interpolating = false;
-			//std::cout << "interpolate a false " << _distance << " ---- " << _minDistance << std::endl << std::endl;
 		}
 		
 	}
