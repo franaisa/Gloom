@@ -47,14 +47,6 @@ namespace Logic
 	} // spawn
 	//---------------------------------------------------------
 
-	void CJumper::onActivate()
-	{
-		IComponent::onActivate();
-		
-	} // activate
-	//--------------------------------------------------------
-
-
 	bool CJumper::accept(const std::shared_ptr<CMessage>& message)
 	{
 		return message->getMessageType() == Message::TOUCHED;

@@ -91,9 +91,6 @@ namespace Logic
 		*/
 		virtual void onActivate();
 
-		virtual void onDeactivate();
-
-
 		/**
 		Método virtual que procesa un mensaje.
 

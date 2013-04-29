@@ -131,4 +131,26 @@ namespace Logic
 		// Redefinir por hijos
 	}
 
+	void IComponent::stayBusy() {
+		_state = ComponentState::eBUSY;
+
+		onBusy();
+	}
+
+	void IComponent::onBusy() {
+		// Redefinir por hijos
+	}
+
+	void IComponent::stayAvailable() {
+		_state = ComponentState::eAWAKE;
+
+		onAvailable();
+	}
+
+	void IComponent::onAvailable() {
+		// Redefinir por hijos
+	}
+
+
+
 } // namespace Logic

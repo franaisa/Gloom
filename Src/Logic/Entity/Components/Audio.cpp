@@ -32,13 +32,6 @@ namespace Logic
 	} // spawn
 	//---------------------------------------------------------
 
-	void CAudio::onActivate()
-	{
-		IComponent::onActivate();
-
-	} // activate
-	//---------------------------------------------------------
-
 	bool CAudio::accept(const std::shared_ptr<CMessage>& message)
 	{
 		return message->getMessageType() == Message::AUDIO;

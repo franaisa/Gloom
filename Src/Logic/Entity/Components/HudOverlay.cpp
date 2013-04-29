@@ -751,8 +751,6 @@ namespace Logic
 		_overlayDebug->setVisible(false);
 	}
 
-	
-	
 	std::string CHudOverlay::toText(eWeaponIndex weapon){
 		switch(weapon){
 			case HAMMER: return "hammer";

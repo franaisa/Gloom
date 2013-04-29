@@ -120,17 +120,6 @@ namespace Logic {
 
 	//__________________________________________________________________
 
-	// Cuando activo una entidad de disparo, actulio la hub indicandole cuanta municion tengo
-	
-	void CShoot::onActivate() {
-		IComponent::onActivate();
-
-		
-
-	} // activate
-
-	//__________________________________________________________________
-
 	void CShoot::addAmmo(int weapon, int ammo, bool iAmCatch) {
 		if(_currentAmmo + ammo>_maxAmmo)
 			_currentAmmo = _maxAmmo;

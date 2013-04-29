@@ -122,13 +122,19 @@ namespace Logic
 
 		void activate();
 
-		
 		void deactivate();
-		
 
 		void putToSleep();
 
 		void wakeUp();
+
+		void stayBusy();
+
+		virtual void onBusy();
+
+		void stayAvailable();
+
+		virtual void onAvailable();
 
 		/**
 		Método llamado en cada frame que actualiza el estado del componente.

@@ -146,14 +146,6 @@ namespace Logic {
 		//__________________________________________________________________
 
 		/** 
-		Activa el componente. Lo utilizaremos para activar el componente del arma
-		que esté en uso.
-		*/
-		virtual void onActivate();
-
-		//__________________________________________________________________
-
-		/** 
 		Añade munición a un arma concreta.
 
 		@param weapon Número de arma a la que queremos añadir munición.

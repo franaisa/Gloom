@@ -76,17 +76,6 @@ namespace Logic
 	
 	//---------------------------------------------------------
 
-
-	
-	void CLight::onActivate()
-	{
-		IComponent::onActivate();
-
-	} // activate
-	//---------------------------------------------------------
-
-
-
 	bool CLight::accept(const std::shared_ptr<CMessage>& message)
 	{
 		return false;
