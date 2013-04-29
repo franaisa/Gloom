@@ -674,7 +674,6 @@ namespace Logic
 
 		if(_textDebug.find(key) == _textDebug.end()){
 			std::pair<std::string, std::string> aux(key, value);
-
 			_textDebug.insert(aux);
 		}else{
 			_textDebug.find(key)->second = value;
@@ -746,6 +745,8 @@ namespace Logic
 	}
 
 	void CHudOverlay::onDeactivate(){
+		IComponent::onDeactivate();
+
 		_overlayPlay->setVisible(false);
 		_overlayDie->setVisible(false);	
 		_overlayDebug->setVisible(false);

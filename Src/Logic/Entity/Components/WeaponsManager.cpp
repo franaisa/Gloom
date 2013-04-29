@@ -65,16 +65,20 @@ namespace Logic
 		_weaponry[eGRENADE_LAUNCHER].second = _entity->getComponent<CShootGrenadeLauncher>("CShootGrenadeLauncher");
 		_weaponry[eROCKET_LAUNCHER].second = _entity->getComponent<CShootRocketLauncher>("CShootRocketLauncher");
 
+		/*
 		// Por defecto la primera arma está activada y equipada (es el arma 0).
 		_weaponry[eHAMMER].first = true;
-		_weaponry[eHAMMER].second->onActivate();
+		_weaponry[eHAMMER].second->stayAvailable();
 		_weaponry[eHAMMER].second->inUse(true);
 
+		
 		// El resto de las armas están desactivadas, ya que no las tenemos
 		for(unsigned int i = 1; i < _weaponry.size(); ++i) {
 			_weaponry[i].first = false;
-			_weaponry[i].second->deactivate();
+			_weaponry[i].second->stayBusy();
+			_weaponry[i].second->inUse(false);
 		}
+		*/
 
 		return true;
 
@@ -85,31 +89,37 @@ namespace Logic
 	void CWeaponsManager::onActivate() {
 		IComponent::onActivate();
 
+		// El arma actual tiene que ser el hammer, que
+		// es la única que tenemos de primeras
+		_currentWeapon=eHAMMER;
+
 		// Por defecto la primera arma está activada y equipadda
 		_weaponry[eHAMMER].first = true;
-		_weaponry[eHAMMER].second->onActivate();
+		_weaponry[eHAMMER].second->stayAvailable();
 		_weaponry[eHAMMER].second->inUse(true);
 
 		// El resto de las armas están desactivadas, ya que no las tenemos
 		for(unsigned int i = 1; i < _weaponry.size(); ++i) {
 			_weaponry[i].first = false; // Por si acaso habian sido activadas anteriormente
-			_weaponry[i].second->deactivate();
+			_weaponry[i].second->stayBusy();
+			_weaponry[i].second->resetAmmo();
+			_weaponry[i].second->inUse(false);
 		}
 	} // activate
 	
 	//---------------------------------------------------------
 
 	void CWeaponsManager::onDeactivate(){
+		IComponent::onDeactivate();
+		/*
 		//reset de armas y balas
 		for(unsigned int i = 0; i<_weaponry.size();++i){
 			_weaponry[i].first = false;
 			_weaponry[i].second->resetAmmo();
 			_weaponry[i].second->inUse(false);
 		}
-
-		// El arma actual tiene que ser el hammer, que
-		// es la única que tenemos de primeras
-		_currentWeapon=0;
+		*/
+		
 	}// deactivate
 	
 	//---------------------------------------------------------
@@ -133,12 +143,10 @@ namespace Logic
 
 				//Si iWeapon no es scroll de rueda de ratón hacia adelante o hacia atrás, 
 				//asignamos directamente el arma con el índice recibido
-				if ((iWeapon != 100) && (iWeapon != -100))
-				{
+				if ((iWeapon != 100) && (iWeapon != -100)){
 					changeWeapon(iWeapon);
 				}
-				else
-				{
+				else{
 					//Obtenemos el índice del arma nueva al que se va a cambiar por el scroll
 					iWeapon = selectScrollWeapon(iWeapon);
 					if (iWeapon != -1)
@@ -181,11 +189,11 @@ namespace Logic
 			// Desactivamos el componente Shoot del arma actual
 			// e indicamos que ya no está equipada
 			_weaponry[_currentWeapon].second->inUse(false);
-			_weaponry[_currentWeapon].second->deactivate();
+			_weaponry[_currentWeapon].second->stayBusy();
 
 			// Activamos el componente del nuevo arma que vamos
 			// a equipar e indicamos que el arma está equipada
-			_weaponry[newWeapon].second->onActivate();
+			_weaponry[newWeapon].second->stayAvailable();
 			_weaponry[newWeapon].second->inUse(true);
 			
 			// Actualizamo el indice de arma
@@ -226,10 +234,20 @@ namespace Logic
 
 		// Activamos el componente pero indicamos que
 		// no es el arma equipada.
-		_weaponry[weaponIndex].second->onActivate();
+
+		if(_currentWeapon != weaponIndex){
+			_weaponry[weaponIndex].second->stayBusy();
+			_weaponry[weaponIndex].second->inUse( false );
+		}
+		/*
+		else{
+			//_weaponry[weaponIndex].second->stayAvailable();
+			//_weaponry[weaponIndex].second->inUse( true );
+		}
+		*/
 		
 		// El arma estara en uso si es la actual, si no estara sin uso
-		_weaponry[weaponIndex].second->inUse( _currentWeapon == weaponIndex );
+		
 		_weaponry[weaponIndex].second->addAmmo(weaponIndex, ammo, _weaponry[weaponIndex].first);
 
 		/*

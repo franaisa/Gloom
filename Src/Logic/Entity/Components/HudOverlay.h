@@ -44,18 +44,14 @@ namespace Logic
 			for(int i=0;i<3;++i){
 				_panelElementsText[i]=1;
 			}
-
 			 _overlayPlay = NULL;
 			_overlayDie = NULL;
 			_textAreaDie = NULL;
-		
 			for(int i=0;i<3;++i){
 				_panelElements[i] = NULL;
 				_panelElementsTextArea[i] = NULL;
 			}
-		
 			_panelMira = NULL;
-
 			for(int i=0;i<6;++i){
 				_panelWeapon[i] = NULL;
 			
@@ -66,15 +62,12 @@ namespace Logic
 					_weaponsBox[i][j] = NULL;
 				}
 			}
-
 			for(int i = 0; i<8; ++i){
 				keysPanelWeapon[i] = NULL;
 			}
-
 			_overlayDebug = NULL;
 			_panelDebug = NULL;
 			_textAreaDebug = NULL;
-
 		}
 		
 
@@ -84,8 +77,6 @@ namespace Logic
 		el fichero de mapa.
 		*/
 		virtual bool spawn(CEntity* entity, CMap *map, const Map::CEntity *entityInfo);
-
-
 
 		/**
 		Este componente sólo acepta mensajes de tipo DAMAGED.
