@@ -44,7 +44,7 @@ namespace Logic {
 	}
 
 
-	void CRocketController::tick(unsigned int msecs){
+	void CRocketController::onTick(unsigned int msecs){
 	/*	inicio+=msecs;
 		if(inicio>=1600 && contamosparada==false){
 			inicio1=_entity->getPosition();

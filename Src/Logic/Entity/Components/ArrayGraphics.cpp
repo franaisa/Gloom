@@ -55,18 +55,18 @@ namespace Logic
 	} // ~CGraphics
 	//---------------------------------------------------------
 	
-	void CArrayGraphics::activate()
+	void CArrayGraphics::onActivate()
 	{
-		IComponent::activate();
+		IComponent::onActivate();
 		//Cuando activamos el componente solo tendremos visible el arma 0( arma melee)
 		_graphicsEntities[0]._graphicsEntity->setVisible(true);
 
 	} // activate
 	//---------------------------------------------------------
 
-	void CArrayGraphics::deactivate()
+	void CArrayGraphics::onDeactivate()
 	{
-		IComponent::deactivate();
+		IComponent::onDeactivate();
 		//Cuando desactivamos el componente, desactivaremos el arma actual
 		_graphicsEntities[_actualWeapon]._graphicsEntity->setVisible(false);
 

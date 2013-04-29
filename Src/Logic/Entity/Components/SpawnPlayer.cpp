@@ -53,9 +53,9 @@ namespace Logic
 	} // spawn
 	//---------------------------------------------------------
 
-	void CSpawnPlayer::activate()
+	void CSpawnPlayer::onActivate()
 	{
-		IComponent::activate();
+		IComponent::onActivate();
 		
 		_isDead=false;
 		_actualTimeSpawn=0;
@@ -83,7 +83,7 @@ namespace Logic
 	} // process
 	//---------------------------------------------------------
 
-	void CSpawnPlayer::tick(unsigned int msecs) {
+	void CSpawnPlayer::onTick(unsigned int msecs) {
 		//Solamente si estamos muertos (se recibió el mensaje)
 		if(_isDead){
 			_actualTimeSpawn+=msecs;
@@ -93,9 +93,7 @@ namespace Logic
 				//LLamamos al manager de spawn que nos devolverá una posición ( ahora hecho a lo cutre)
 				CEntity *spawn = CServer::getSingletonPtr()->getSpawnManager()->getSpawnPosition();
 
-				//No se encontró actualmente un punto de spawn, por tanto esperamos al siguiente tick
-				if(spawn==NULL)
-					return;
+				Vector3 spawnPos = spawn->getPosition();
 
 				//Ponemos la entidad física en la posición instantaneamente ( no se puede permitir el envio de mensajes )
 				_entity->getComponent<CPhysicController>("CPhysicController")->setPhysicPosition(spawn->getPosition());
@@ -112,9 +110,7 @@ namespace Logic
 				// Si eres el server mandar un mensaje de spawn
 				std::shared_ptr<CMessagePlayerSpawn> spawnMsg = std::make_shared<CMessagePlayerSpawn>();
 				spawnMsg->setSpawnTransform( _entity->getTransform() );
-
-				std::shared_ptr<CMessagePlayerSpawn> entitySpawnMsg = std::make_shared<CMessagePlayerSpawn>();
-				_entity->emitMessage(entitySpawnMsg);
+				_entity->emitMessage(spawnMsg);
 
 				CEntity * camera = CServer::getSingletonPtr()->getMap()->getEntityByType("Camera");
 				camera->emitMessage(spawnMsg);

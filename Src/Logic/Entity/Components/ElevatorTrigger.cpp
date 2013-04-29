@@ -60,9 +60,9 @@ namespace Logic
 
 
 	
-	void CElevatorTrigger::activate()
+	void CElevatorTrigger::onActivate()
 	{
-		IComponent::activate();
+		IComponent::onActivate();
 		_timer=0;
 		_waitTimeInFinal=0;
 		_active=false;
@@ -108,7 +108,7 @@ namespace Logic
 	} // process
 	//----------------------------------------------------------
 
-	void CElevatorTrigger::tick(unsigned int msecs)
+	void CElevatorTrigger::onTick(unsigned int msecs)
 	{
 		//Activación del ascensor solo si has pasado el _launchTime encima (tocando el trigger) y no estamos en un recorrido
 		if(!_active){

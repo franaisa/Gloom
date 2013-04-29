@@ -40,7 +40,7 @@ namespace Logic {
 	
 	//________________________________________________________________________
 
-	void CGrenadeControllerClient::tick(unsigned int msecs) {
+	void CGrenadeControllerClient::onTick(unsigned int msecs) {
 		// Actualizamos el timer. Si se ha cumplido el tiempo limite de explosion
 		// eliminamos la entidad granada y creamos la entidad explosion.
 		_timer += msecs;

@@ -70,8 +70,8 @@ namespace Logic {
 
 	//________________________________________________________________________
 
-	void CScreamerShieldDamageNotifier::activate() {
-		IComponent::activate();
+	void CScreamerShieldDamageNotifier::onActivate() {
+		IComponent::onActivate();
 
 		_reducedDamageAbsorption = 0;
 	}

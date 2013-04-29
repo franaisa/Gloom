@@ -13,6 +13,7 @@ Contiene la declaración de la clase base de los componentes.
 #define __Logic_Component_H
 
 #include "CommunicationPort.h"
+#include "Entity.h"
 #include "Logic/Maps/ComponentFactory.h"
 
 // Predeclaración de clases para ahorrar tiempo de compilación
@@ -24,14 +25,13 @@ namespace Map
 namespace Logic 
 {
 	class CMap;
-	class CEntity;
 }
 
 //declaración de la clase
 namespace Logic 
 {
 
-/**
+	/**
 	Clase base de los componentes que forman las entidades.
 	<p>
 	Un componente puede recibir mensajes y reaccionar ante ellos
@@ -78,9 +78,9 @@ namespace Logic
 
 	@author David Llansó García
 	@date Julio, 2010
-*/
-	class IComponent : public CCommunicationPort 
-	{
+	*/
+
+	class IComponent : public CCommunicationPort {
 	public:
 
 		/**
@@ -120,54 +120,40 @@ namespace Logic
 		*/
 		inline bool isActivated() { return _isActivated; }
 
-		/**
-		Método que activa el componente; invocado cuando se activa
-		el mapa donde está la entidad a la que pertenece el componente.
-		<p>
-		La implementación registrará al componente en algunos observers en 
-		los que pueda necesitar estar registrado (como el cronómetro del 
-		sistema, etc.).
+		void activate();
 
-		@return true si todo ha ido correctamente.
-		*/
-		virtual void activate();
-		
-		/**
-		Método que desactiva el componente; invocado cuando se
-		desactiva el mapa donde está la entidad a la que pertenece el
-		componente. Se invocará siempre, independientemente de si estamos
-		activados o no.
-		<p>
-		La implementación eliminará al componente de algunos observers en los 
-		que pueda estar registrado (como el cronómetro del sistema, etc.).
-		*/
-		virtual void deactivate();
+		void deactivate();
 
-		void (IComponent::*updater)(unsigned int);
+		void putToSleep();
 
-		/**
-		Representa el primer tick de la entidad. Se ejecuta una sola vez tras la activación
-		del jugador.
+		void wakeUp();
 
-		Es muy útil para inicializar datos ya que en esta fase SI que se pueden mandar
-		mensajes a otras entidades (ya que su spawn ya ha sido realizado).
+		void stayBusy();
 
-		IMPORTANTE: Los hijos deben llamar al método onStart del padre (tal y como sucede
-		con el tick) para que todo funcione correctamente.
-
-		@param msecs Milisegundos transcurridos para este primer tick.
-		*/
-		virtual void onStart(unsigned int msecs);
+		void stayAvailable();
 
 		/**
 		Método llamado en cada frame que actualiza el estado del componente.
-		<p>
-		Las clases hijas deberán sobreescribir este método con las 
-		instrucciones que quieran realizar cada ciclo.
+		Los milisegundos dados son variables.
 
-		@param msecs Milisegundos transcurridos desde el último tick.
+		Se encarga de procesar los mensajes y llamar a onTick que es el método
+		que realmente ejecuta el comportamiento de los componentes derivados.
+
+		@param msecs Milisegundos transcurridos desde el último tick (variable).
 		*/
-		virtual void tick(unsigned int msecs);
+		void tick(unsigned int msecs);
+		
+		/**
+		Método llamado en cada frame que actualiza el estado del componente.
+		Se encarga de procesar los mensajes y llamar al método que realmente
+		tienen que redefinir los componentes (onFixedTick).
+
+		IMPORTANTE: Se diferencia del tick, en que msecs siempre es constante.
+
+		@param msecs Milisegundos transcurridos desde el último tick. Siempre
+		son constantes.
+		*/
+		void fixedTick(unsigned int msecs);
 
 		/**
 		Método que devuelve la entidad a la que pertenece el componente.
@@ -178,16 +164,70 @@ namespace Logic
 
 	protected:
 
+		ComponentState::Enum _state;
+		TickMode::Enum _tickMode;
+
+		virtual void onSleep();
+
+		virtual void onWake();
+
+		virtual void onBusy();
+
+		virtual void onAvailable();
+
+		/**
+		Llamado en cada frame por fixedTick. Los clientes que hereden de esta
+		clase deben redefinir su comportamiento.
+
+		@param msecs Milisegundos transcurridos desde el último tick. Siempre
+		son constantes.
+		*/
+		virtual void onFixedTick(unsigned int msecs);
+
+		/**
+		Método llamado en cada frame que actualiza el estado del componente.
+		<p>
+		Las clases hijas deberán sobreescribir este método con las 
+		instrucciones que quieran realizar cada ciclo.
+
+		@param msecs Milisegundos transcurridos desde el último tick.
+		*/
+		virtual void onTick(unsigned int msecs);
+
+		/**
+		Se ejecuta la primera vez que la entidad se activa. Garantiza que todas las 
+		entidades (incluidos sus componentes) han ejecutado el spawn y están listas
+		para hacer el tick.
+		*/
+		virtual void onStart();
+
 		/**
 		clase amiga que puede establecerse como poseedor del componente.
 		*/
 		friend class CEntity;
 
-		inline void tickSetup(unsigned int msecs);
+		/**
+		Método que activa el componente; invocado cuando se activa
+		el mapa donde está la entidad a la que pertenece el componente.
+		<p>
+		La implementación registrará al componente en algunos observers en 
+		los que pueda necesitar estar registrado (como el cronómetro del 
+		sistema, etc.).
 
-		inline void onStartSetup(unsigned int msecs);
+		@return true si todo ha ido correctamente.
+		*/
+		virtual void onActivate();
 
-		void activateSetup();
+		/**
+		Método que desactiva el componente; invocado cuando se
+		desactiva el mapa donde está la entidad a la que pertenece el
+		componente. Se invocará siempre, independientemente de si estamos
+		activados o no.
+		<p>
+		La implementación eliminará al componente de algunos observers en los 
+		que pueda estar registrado (como el cronómetro del sistema, etc.).
+		*/
+		virtual void onDeactivate();
 
 		/**
 		Método que establece la entidad a la que pertenece el componente.

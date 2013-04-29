@@ -84,7 +84,7 @@ namespace Logic
 	
 	//---------------------------------------------------------
 
-	void CSwitchPosition::tick(unsigned int msecs)
+	void CSwitchPosition::onTick(unsigned int msecs)
 	{
 		// Calcular la dirección en la que debemos mover la entidad
 		Vector3 displ = _targetPosition - _entity->getPosition();

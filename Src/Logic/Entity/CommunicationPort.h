@@ -91,8 +91,10 @@ namespace Logic
 		/**
 		Método que procesa la lista de mensajes que faltan por procesar.
 		Simplemente invoca a process() con cada uno de los mensajes.
+		
+		@return true Si se ha procesado algun mensaje.
 		*/
-		void processMessages();
+		bool processMessages();
 
 
 		void clearMessages(){ _messages.clear(); }

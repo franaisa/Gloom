@@ -35,7 +35,7 @@ namespace Logic {
 	} // process
 	//__________________________________________________________________
 
-	void CShootMiniGun::tick(unsigned int msecs) {
+	void CShootMiniGun::onTick(unsigned int msecs) {
 		if(_cooldownTimer < _cooldown)
 			_cooldownTimer += msecs;
 		else{

@@ -36,7 +36,7 @@ namespace Logic
 		Método que activa el componente; invocado cuando se activa
 		el mapa donde está la entidad a la que pertenece el componente.
 		*/
-		virtual void activate();
+		virtual void onActivate();
 
 		/**
 		Este componente sólo acepta mensajes de tipo PLAYER_DEAD (por ahora).
@@ -49,6 +49,11 @@ namespace Logic
 		*/
 		virtual void process(const std::shared_ptr<CMessage>& message);
 
+		
+	
+
+	protected:
+
 		/**
 		Método llamado en cada frame que actualiza el estado del componente de la vida,
 		<p>
@@ -56,10 +61,7 @@ namespace Logic
 
 		@param msecs Milisegundos transcurridos desde el último tick.
 		*/
-		virtual void tick(unsigned int msecs);
-	
-
-	protected:
+		virtual void onTick(unsigned int msecs);
 
 		/**
 		Método que hace las acciones correspondientes a una muerte.

@@ -90,29 +90,7 @@ namespace Logic {
 		Metodo que se llama al activar el componente.
 		Resetea los valores de inercia y desplazamiento.
 		*/
-		virtual void activate();
-
-		//________________________________________________________________________
-
-		/**
-		Setea el puntero al componente del controlador físico para evitar overhead
-		de mensajes en el tick.
-
-		@param unsigned int msecs Milisegundos transcurridos desde el último tick.
-		*/
-		virtual void onStart(unsigned int msecs);
-
-		//________________________________________________________________________
-
-		/**
-		Método llamado en cada frame que actualiza el estado del componente.
-		<p>
-		Se encarga de mover la entidad en cada vuelta de ciclo cuando es
-		necesario (cuando está andando o desplazándose lateralmente).
-
-		@param msecs Milisegundos transcurridos desde el último tick.
-		*/
-		virtual void tick(unsigned int msecs);
+		virtual void onActivate();
 
 		//________________________________________________________________________
 
@@ -168,6 +146,28 @@ namespace Logic {
 		//                          MÉTODOS PROTEGIDOS
 		// =======================================================================
 
+
+		/**
+		Se ejecuta la primera vez que la entidad se activa. Garantiza que todas las 
+		entidades (incluidos sus componentes) han ejecutado el spawn y están listas
+		para hacer el tick.
+		*/
+		virtual void onStart();
+
+		//________________________________________________________________________
+
+		/**
+		Método llamado en cada frame que actualiza el estado del componente.
+		<p>
+		Se encarga de mover la entidad en cada vuelta de ciclo cuando es
+		necesario (cuando está andando o desplazándose lateralmente).
+
+		@param msecs Milisegundos transcurridos desde el último tick. Siempre son
+		constantes.
+		*/
+		virtual void onFixedTick(unsigned int msecs);
+
+		//________________________________________________________________________
 
 		/**
 		Dado un vector de dirección simplificado (con cada coordenada entre 0 y 1)

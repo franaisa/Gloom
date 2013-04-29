@@ -57,9 +57,9 @@ namespace Logic
 	
 	//---------------------------------------------------------
 
-	void CCamera::activate()
+	void CCamera::onActivate()
 	{
-		IComponent::activate();
+		IComponent::onActivate();
 		
 		_target = CServer::getSingletonPtr()->getPlayer();
 
@@ -77,9 +77,9 @@ namespace Logic
 	
 	//---------------------------------------------------------
 
-	void CCamera::deactivate()
+	void CCamera::onDeactivate()
 	{
-		IComponent::deactivate();
+		IComponent::onDeactivate();
 
 		_target = 0;
 
@@ -133,7 +133,7 @@ namespace Logic
 
 	//---------------------------------------------------------
 
-	void CCamera::tick(unsigned int msecs)
+	void CCamera::onTick(unsigned int msecs)
 	{
 		if(_target)
 		{

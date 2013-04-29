@@ -68,8 +68,8 @@ namespace Logic
 
 
 	
-	void CParticle::activate() {
-		IComponent::activate();
+	void CParticle::onActivate() {
+		IComponent::onActivate();
 
 		if(!_particleName.empty()){
 			_particle = new Graphics::CParticle( _entity->getName(), _particleName );
@@ -105,7 +105,7 @@ namespace Logic
 	} // process
 	//----------------------------------------------------------
 
-	void CParticle::tick(unsigned int msecs) {
+	void CParticle::onTick(unsigned int msecs) {
 		if(_particle)
 			_particle->setPosition(_entity->getPosition() + _particleOffset);
 	} // tick

@@ -223,7 +223,7 @@ namespace Physics {
 			// Simulamos un timestep
 			// La llamada a simulate provoca que PhysX mueva a los actores físicos durante
 			// el tiempo especificado.
-			_scene->simulate(_fixedTime / 1000.0f);
+			_scene->simulate(_fixedTime * 0.001f);
 			_acumTime -= 4;
 
 			// Si aún tenemos que hacer más simulaciones, le pedimos a PhysX que nos devuelva

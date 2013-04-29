@@ -31,12 +31,6 @@ namespace Logic
 		virtual bool spawn(CEntity* entity, CMap *map, const Map::CEntity *entityInfo);
 
 		/**
-		Método que activa el componente; invocado cuando se activa
-		el mapa donde está la entidad a la que pertenece el componente.
-		*/
-		virtual void activate();
-
-		/**
 		Este componente sólo acepta mensajes de tipo touched (por ahora).
 		*/
 		virtual bool accept(const std::shared_ptr<CMessage>& message);

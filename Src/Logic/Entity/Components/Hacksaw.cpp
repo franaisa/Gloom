@@ -53,9 +53,9 @@ namespace Logic
 
 
 	
-	void CHacksaw::activate()
+	void CHacksaw::onActivate()
 	{
-		IComponent::activate();
+		IComponent::onActivate();
 
 		_directionInitial=(_positionInitial-_positionFinal);
 		_directionFinal=(_positionFinal-_positionInitial);
@@ -65,7 +65,6 @@ namespace Logic
 
 	} // activate
 	//---------------------------------------------------------
-
 
 	bool CHacksaw::accept(const std::shared_ptr<CMessage>& message)
 	{
@@ -91,7 +90,7 @@ namespace Logic
 	} // process
 	//----------------------------------------------------------
 
-	void CHacksaw::tick(unsigned int msecs)
+	void CHacksaw::onTick(unsigned int msecs)
 	{
 		Vector3 toDirection;
 		

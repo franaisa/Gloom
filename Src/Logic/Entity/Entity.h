@@ -41,8 +41,27 @@ namespace Logic
 }
 
 // Declaración de la clase
-namespace Logic 
-{
+namespace Logic {
+
+	struct ComponentState {
+		enum Enum {
+			eSLEEPING,
+			eAWAKE,
+			eBUSY,
+			eMAX
+		};
+	};
+
+	struct TickMode {
+		enum Enum {
+			eNONE,
+			eTICK,
+			eFIXED_TICK,
+			eBOTH,
+			eMAX,
+		};
+	};
+
 	/**
 	Clase que representa una entidad en el entorno virtual. Las entidades
 	son meros contenedores de componentes, y su funcionamiento depende
@@ -64,49 +83,10 @@ namespace Logic
 	@author David Llansó
 	@date Agosto, 2010
 	*/
-	class CEntity 
-	{
-	protected:
-
-		/**
-		Clase amiga que crea y destruye objetos de la clase.
-		*/
-		friend class CEntityFactory;
-
-		/**
-		Constructor protegido de la clase (para crear CEntity debe
-		utilizarse la factoría CEntityFactory). El constructor
-		no hace más que poner el identificador único de la entidad
-		, pues la inicialización efectiva se hace en el método spawn().
-		
-		@param entityID Identificador único de la entidad.
-		*/
-		CEntity(TEntityID entityID);
-
-		/**
-		Destructor de la clase. Es un método protegido pues para
-		eliminar CEntity debe utilizarse la factoría
-		CEntityFactory. El destructor invoca al destructor de
-		cada componente.
-		Cuando el destructor es invocado, éste _ya ha sido desenganchado
-		del mapa al que perteneció_, por lo que los destructores de los
-		componentes no pueden utilizar el mapa.
-		*/
-		~CEntity();
-
-		/**
-		Inicialización del objeto Logic, utilizando la información extraída de
-		la entidad leída del mapa (Map::CEntity). Avisará a los componentes
-		de la entidad para que se inicialicen.
-
-		@param map Mapa Logic en el que se registrará la entidad.
-		@param entity Información de construcción de la entidad leída del
-		fichero de disco.
-		@return Cierto si la inicialización ha sido satisfactoria.
-		*/
-		bool spawn(CMap *map, const Map::CEntity *entity);
-
+	class CEntity {
 	public:
+
+		static void setFixedTimeStep(unsigned int stepSize) { _fixedTimeStep = stepSize; }
 
 		/**
 		Activa la entidad. Esto significa que el mapa ha sido activado.
@@ -125,6 +105,15 @@ namespace Logic
 		se den por enterados y hagan lo que necesiten.
 		*/
 		void deactivate();
+
+		/**
+		Función llamada tras la activación de la entidad antes de que se ejecute
+		el primer tick. Se garantiza que todas las entidades han sido creadas
+		con sus componentes inicializados.
+
+		Esta función SOLO se ejecuta una vez al principio.
+		*/
+		void start();
 
 		/**
 		Función llamada en cada frame para que se realicen las funciones
@@ -400,6 +389,48 @@ namespace Logic
 
 	protected:
 
+		static unsigned int _fixedTimeStep;
+
+		unsigned int _acumTime;
+
+		/**
+		Clase amiga que crea y destruye objetos de la clase.
+		*/
+		friend class CEntityFactory;
+
+		/**
+		Constructor protegido de la clase (para crear CEntity debe
+		utilizarse la factoría CEntityFactory). El constructor
+		no hace más que poner el identificador único de la entidad
+		, pues la inicialización efectiva se hace en el método spawn().
+		
+		@param entityID Identificador único de la entidad.
+		*/
+		CEntity(TEntityID entityID);
+
+		/**
+		Destructor de la clase. Es un método protegido pues para
+		eliminar CEntity debe utilizarse la factoría
+		CEntityFactory. El destructor invoca al destructor de
+		cada componente.
+		Cuando el destructor es invocado, éste _ya ha sido desenganchado
+		del mapa al que perteneció_, por lo que los destructores de los
+		componentes no pueden utilizar el mapa.
+		*/
+		~CEntity();
+
+		/**
+		Inicialización del objeto Logic, utilizando la información extraída de
+		la entidad leída del mapa (Map::CEntity). Avisará a los componentes
+		de la entidad para que se inicialicen.
+
+		@param map Mapa Logic en el que se registrará la entidad.
+		@param entity Información de construcción de la entidad leída del
+		fichero de disco.
+		@return Cierto si la inicialización ha sido satisfactoria.
+		*/
+		bool spawn(CMap *map, const Map::CEntity *entity);
+
 		/**
 		Clase amiga que puede modificar los atributos (en concreto se 
 		usa para modificar el mapa.
@@ -434,6 +465,8 @@ namespace Logic
 		 * estén en el orden adecuado.
 		 */
 		TComponentList _componentList;
+
+		void (CEntity::*entityProcessMode[ComponentState::eMAX][TickMode::eMAX])(IComponent*, unsigned int, unsigned int);
 
 		/**
 		Indica si la entidad está activa.
@@ -475,6 +508,40 @@ namespace Logic
 		es false a no ser que se lea otra cosa de los atributos.
 		*/
 		bool _isPlayer;
+
+
+	private:
+
+		void initFunctionPointers();
+
+
+		void sleepingWithoutTick(IComponent* component, unsigned int msecs, unsigned int steps);
+
+		void sleepingWithTick(IComponent* component, unsigned int msecs, unsigned int steps);
+
+		void sleepingWithFixedTick(IComponent* component, unsigned int msecs, unsigned int steps);
+
+		void sleepingWithBothTicks(IComponent* component, unsigned int msecs, unsigned int steps);
+
+
+
+		void awakeWithoutTick(IComponent* component, unsigned int msecs, unsigned int steps);
+
+		void awakeWithTick(IComponent* component, unsigned int msecs, unsigned int steps);
+
+		void awakeWithFixedTick(IComponent* component, unsigned int msecs, unsigned int steps);
+
+		void awakeWithBothTicks(IComponent* component, unsigned int msecs, unsigned int steps);
+
+
+
+		void busyWithoutTick(IComponent* component, unsigned int msecs, unsigned int steps);
+
+		void busyWithTick(IComponent* component, unsigned int msecs, unsigned int steps);
+
+		void busyWithFixedTick(IComponent* component, unsigned int msecs, unsigned int steps);
+
+		void busyWithBothTicks(IComponent* component, unsigned int msecs, unsigned int steps);
 
 	}; // class CEntity
 

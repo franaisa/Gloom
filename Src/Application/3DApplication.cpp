@@ -34,16 +34,14 @@ basadas en Ogre. Esta clase maneja la ejecución de todo el juego.
 
 namespace Application {
 
-	C3DApplication::C3DApplication() : CBaseApplication()
-	{
+	C3DApplication::C3DApplication() : CBaseApplication() {
 		_timerAudio=100;
 		_acumAudio=0;
 	} // C3DApplication
 
 	//--------------------------------------------------------
 
-	C3DApplication::~C3DApplication()
-	{
+	C3DApplication::~C3DApplication() {
 
 	} // ~C3DApplication
 
@@ -69,10 +67,13 @@ namespace Application {
 		// Inicializamos el gestor de entrada de periféricos.
 		if (!Input::CInputManager::Init())
 			return false;
+
 		// Nos registramos como oyentes de los eventos del teclado.
 		Input::CInputManager::getSingletonPtr()->addKeyListener(this);
+
 		// Y como oyentes de los eventos del ratón.
 		Input::CInputManager::getSingletonPtr()->addMouseListener(this);
+
 		// Inicializamos el servidor de interfaz con el usuario.
 		if (!GUI::CServer::Init())
 			return false;
@@ -100,16 +101,13 @@ namespace Application {
 		// Creamos el reloj basado en Ogre.
 		_clock = new COgreClock();
 
-
-
 		return true;
 
 	} // init
 
 	//--------------------------------------------------------
 
-	void C3DApplication::release()
-	{
+	void C3DApplication::release() {
 		// Eliminamos el reloj de la aplicación.
 		delete _clock;
 
@@ -134,8 +132,7 @@ namespace Application {
 		if(Input::CServer::getSingletonPtr())
 			Input::CServer::Release();
 
-		if(Input::CInputManager::getSingletonPtr())
-		{
+		if(Input::CInputManager::getSingletonPtr()) {
 			// Dejamos de ser oyentes de los eventos del teclado.
 			Input::CInputManager::getSingletonPtr()->removeKeyListener(this);
 			// Y de los eventos del ratón
@@ -155,30 +152,36 @@ namespace Application {
 
 	//--------------------------------------------------------
 
-	void C3DApplication::tick(unsigned int msecs) 
-	{
-		//primero queremos actualizar los paquetes de red recibidos
-		_frames++;
-		Net::CManager::getSingletonPtr()->tick(msecs);
+	void C3DApplication::tick(unsigned int msecs) {
+		++_frames;
 		unsigned int time=0;
+		
+		// TICK DE RED
+		
+		//primero queremos actualizar los paquetes de red recibidos
+		Net::CManager::getSingletonPtr()->tick(msecs);
+
+		// TICK DE INPUT
 		Input::CInputManager::getSingletonPtr()->tick();
 		
-		// Ejecutar el tick del estado
-		_acumAudio+=msecs;
-
-		//logica y fisica
+		// TICK DE FISICA Y LOGICA
 		CBaseApplication::tick(msecs);
 
-		//GUI
+		// TICK DEL GUI
 		GUI::CServer::getSingletonPtr()->tick();
 
-		//grafica
+		// TICK DE GRÁFICOS
 		time = clock();
 		Graphics::CServer::getSingletonPtr()->tick(msecs/1000.0f);
 		time = clock()-time;
 		_timegraphics+=time;
 
-		//El tick del server de audio solo se ejecuta cada X tiempo por cuestiones de eficiencia ( solo hace un update para los sonidos sin loop liberen canales al acabar )
+		// TICK DE AUDIO
+		
+		//El tick del server de audio solo se ejecuta cada X tiempo 
+		// por cuestiones de eficiencia ( solo hace un update para 
+		// los sonidos sin loop liberen canales al acabar )
+		_acumAudio+=msecs;
 		if(_acumAudio>=_timerAudio){
 			Audio::CServer::getSingletonPtr()->tick(msecs);
 			_acumAudio=0;

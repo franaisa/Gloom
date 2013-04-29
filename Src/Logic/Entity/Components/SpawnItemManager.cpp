@@ -31,7 +31,7 @@ namespace Logic {
 	
 	//________________________________________________________________________
 
-	void CSpawnItemManager::tick(unsigned int msecs) {
+	void CSpawnItemManager::onTick(unsigned int msecs) {
 		// Si el item esta en la fase de respawn, comprobamos si se ha cumplido el tiempo
 		// limite para resucitar las entidades graficas y fisicas.
 		if(_isRespawning) {
