@@ -56,6 +56,9 @@ namespace Logic
 		
 		_isActivated = true;
 		clearMessages();
+
+		// Redefinir por hijos
+		onActivate();
 	}
 
 	//---------------------------------------------------------
@@ -67,6 +70,7 @@ namespace Logic
 	//---------------------------------------------------------
 
 	void IComponent::onDeactivate() {
+		// Redefinir por hijos
 		_isActivated = false;
 	}
 

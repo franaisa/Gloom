@@ -110,9 +110,7 @@ namespace Logic
 				// Si eres el server mandar un mensaje de spawn
 				std::shared_ptr<CMessagePlayerSpawn> spawnMsg = std::make_shared<CMessagePlayerSpawn>();
 				spawnMsg->setSpawnTransform( _entity->getTransform() );
-
-				std::shared_ptr<CMessagePlayerSpawn> entitySpawnMsg = std::make_shared<CMessagePlayerSpawn>();
-				_entity->emitMessage(entitySpawnMsg);
+				_entity->emitMessage(spawnMsg);
 
 				CEntity * camera = CServer::getSingletonPtr()->getMap()->getEntityByType("Camera");
 				camera->emitMessage(spawnMsg);

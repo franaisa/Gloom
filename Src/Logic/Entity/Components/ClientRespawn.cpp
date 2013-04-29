@@ -112,9 +112,10 @@ namespace Logic  {
 				// Volvemos a activar todos los componentes
 				_entity->activate();
 
+				Vector3 entityPos = _entity->getPosition();
+
 				std::shared_ptr<CMessagePlayerSpawn> cameraPlayerSpawnMsg = std::make_shared<CMessagePlayerSpawn>();
 				CServer::getSingletonPtr()->getMap()->getEntityByType("Camera")->emitMessage(cameraPlayerSpawnMsg);
-
 
 				std::shared_ptr<CMessageHudSpawn> messageHudSpawn = std::make_shared<CMessageHudSpawn>();
 				messageHudSpawn->setTime(0);
