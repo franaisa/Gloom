@@ -101,6 +101,8 @@ namespace Logic {
 		//Mientras que nos devuelva que el trigger esta activado buscamos otro punto
 		while(_listSpawnPoints[random]->getComponent<CPhysicStaticEntity>("CPhysicStaticEntity")->getInTrigger())
 			random=(rand()*clock())%_listSpawnPoints.size();
+		//Ademas por si acaso se pide mas de un punto en el mismo tick hay que marcarlo instantaneamente
+		_listSpawnPoints[random]->getComponent<CPhysicStaticEntity>("CPhysicStaticEntity")->setInTrigger(true);
 		return _listSpawnPoints[random];
 	}
 

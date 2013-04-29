@@ -107,6 +107,8 @@ namespace Logic {
 
 		void activateSimulation();
 
+		void setInTrigger(bool enter){ _inTrigger=enter;};
+
 	private:
 
 		void readCollisionGroupInfo(const Map::CEntity *entityInfo, int& group, std::vector<int>& groupList);
