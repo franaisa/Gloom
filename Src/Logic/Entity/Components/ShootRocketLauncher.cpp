@@ -17,6 +17,7 @@ de disparo del lanzacohetes.
 #include "Logic/Entity/Entity.h"
 #include "Logic/Server.h"
 #include "RocketController.h"
+#include "RocketControllerClient.h"
 #include "Logic/GameNetMsgManager.h"
 #include "../../../Net/Manager.h"
 #include "Logic/Entity/Components/AvatarController.h"
@@ -52,6 +53,8 @@ namespace Logic {
 	//__________________________________________________________________
 
 	void CShootRocketLauncher::fireWeapon() {
+		if(!Net::CManager::getSingletonPtr()->imServer()) 
+			std::cout << "Disparo desde el cliente " << std::endl;
 		//Paso1
 		//Lo primero es ver el punto exacto en el que saldría el centro del cohete de la capsula
 		//Sacamos un punto en la dirección que apuntamos muy fuera de la capsula y trazamos un raycast para el cual solo nos interesa en que punto choca con nosotros
@@ -71,10 +74,10 @@ namespace Logic {
 
 		//Paso2
 		//Separamos el cohete de la capsula en la direccion en la que se apuntaba con el radio(o más por interpolamierder)
-		Vector3 separationPoint=capsulleCollisionPoint+directionNormalise*(_projectileRadius+3);//radio del cohete y algo mas por posibles errores decimales/inet/correr hacia delante.
+		Vector3 separationPoint=capsulleCollisionPoint+directionNormalise*(_projectileRadius+3.3);//radio del cohete y algo mas por posibles errores decimales/inet/correr hacia delante.
 		// r+1.5 no te das al saltar, con 1 falla a veces, se podria probar a reducir algo . Si le añades inet el servidor bien (evidentemente) y el cliente falla forever
 		// r+6 no le da al cliente, lo mismo el primero por no tener precarga, esto no es escalable, cuanto mas ping mas te comes
-		// Con el nuevo estilo de cohete r+2.5 ha fallado en el cliente al delante/salto, lo mismo por la interpolacion, poner a 3 y reducir en la nueva version si es conveniente
+		// Con el nuevo estilo de cohete r+2.5 ha fallado en el cliente al delante/salto ( y con 3 una vez ), lo mismo por la interpolacion, poner a 3 y reducir en la nueva version si es conveniente
 		//std::cout << "El punto de separacion para la creación del cohete es : " << separationPoint << std::endl;
 		//std::cout << "La separacion entre el punto de capsula y el punto de separacion es : " << separationPoint.distance(capsulleCollisionPoint) << std::endl;
 
@@ -126,10 +129,13 @@ namespace Logic {
 				entityInfoRocketExplotion, Logic::CServer::getSingletonPtr()->getMap(), separationPoint, yaw, pitch);
 			assert(rocketExplotion != NULL);
 			rocketExplotion->activate();
-			CRocketController* comp = rocketExplotion->getComponent<CRocketController>("CRocketController");
-			assert(comp != NULL);
-			// Seteamos la entidad que dispara el cohete
-			comp->setOwner(_entity);
+			//Si somos el server
+			if(Net::CManager::getSingletonPtr()->imServer()){
+				CRocketController* comp = rocketExplotion->getComponent<CRocketController>("CRocketController");
+				assert(comp != NULL);
+				// Seteamos la entidad que dispara el cohete
+				comp->setOwner(_entity);
+			}
 			//Mandamos un mensaje de contacto
 			std::shared_ptr<CMessageContactEnter> msg = std::make_shared<CMessageContactEnter>();
 			msg->setEntity(_entity->getEntityID());
@@ -148,66 +154,21 @@ namespace Logic {
 			entityInfoRocket, Logic::CServer::getSingletonPtr()->getMap(), separationPoint, yaw, pitch);
 		assert(rocket != NULL);
 		rocket->activate();
-
-		CRocketController* comp = rocket->getComponent<CRocketController>("CRocketController");
-		assert(comp != NULL);
-		// Seteamos la entidad que dispara el cohete
-		comp->setOwner(_entity);
-
-		// Mandar mensaje add force / o hacerlo a lo bestia todo?
 		
+		//Si somos el server seteamos el owner
+		if(Net::CManager::getSingletonPtr()->imServer()){
+			CRocketController* comp = rocket->getComponent<CRocketController>("CRocketController");
+			assert(comp != NULL);
+			// Seteamos la entidad que dispara el cohete
+			comp->setOwner(_entity);
+		}
+
+		// Mensaje de fuerza
 		std::shared_ptr<CMessageAddForcePhysics> forceMsg = std::make_shared<CMessageAddForcePhysics>();
 		forceMsg->setForce(directionNormalise* _shootForce, Physics::ForceMode::eFORCE );
 		forceMsg->setGravity(false);
 		rocket->emitMessage(forceMsg);
 
-
-		/*//ANTIGUO COHETE DESPUES DE CONSEGUIR XUSKERAMENTE KE MEDIO FUESE, no quitar hasta estar seguros
-		//std::cout << "Posicion del jugador x,y,z: " << _entity->getPosition().x << "," << _entity->getPosition().y <<"," << _entity->getPosition().z << std::endl;
-		//Calculamos la situacion de origen del cohete
-		directionNormalise=Math::getDirection( _entity->getOrientation());
-		directionNormalise.normalise();
-		Vector3 shootPosition = _entity->getPosition() + directionNormalise* (_capsuleRadius+6.0);//2 es el radio del cohete y lo demas es la separacion para que vaya tanto en sp como mp (basura de interpolacion)
-		shootPosition.y += _heightShoot; //Altura del pj menos el radio del cohete para que salga en el centro de la mira
-		//std::cout << "Posicion del cohete a disparar x,y,z: " << shootPosition.x <<"," << shootPosition.y <<"," << shootPosition.z << std::endl;
-
-		//Comprobamos si el misil tiene espacio para ser disparado
-		//Creamos el origen del rayo que sera igual al de la posicion de disparo menos el desplazamiento
-		Vector3 origin = _entity->getPosition()+Vector3(0,_heightShoot,0);
-		Vector3 noSpacePosition=origin;
-		//Calculamos la distancia entre la posicion de disparo y el origen
-		float distance=origin.distance(shootPosition);
-		// Creamos el ray desde el origen en la direccion del raton
-		Vector3 direction=Math::getDirection(_entity->getOrientation());
-		direction.normalise();
-		Ray ray1(origin, direction);
-		//Desde el centro del jugador en la dirección que será disparado el misil sin tenernos en cuenta a nosotros mismos.
-		//Si hemos tocado algo es que no hay espacio por lo tanto lo lanzamos desde el centro del jugador (creo que seria mejor explotarlo directamente por movidas de shapes)
-		if(Physics::CServer::getSingletonPtr()->raycastClosestInverse(ray1, distance,_entity->getEntityID()) != NULL){
-			std::cout << "El cohete no tiene espacio para salir"<< std::endl;
-			shootPosition=noSpacePosition;
-		}
-
-		float yaw=Math::fromRadiansToDegrees(_entity->getYaw())+180; //+180 porque esta del reves el modelo cohete	
-		float pitch=360-Math::fromRadiansToDegrees(_entity->getPitch());
-
-		CEntity* rocket = CEntityFactory::getSingletonPtr()->createEntityWithPositionAndOrientation(
-			entityInfo, Logic::CServer::getSingletonPtr()->getMap(), shootPosition, yaw, pitch);
-		
-		assert(rocket != NULL);
-		
-		rocket->activate();
-
-		CRocketController* comp = rocket->getComponent<CRocketController>("CRocketController");
-		assert(comp != NULL);
-		// Seteamos la entidad que dispara el cohete
-		comp->setOwner(_entity);
-
-		// Mandar mensaje add force
-		std::shared_ptr<CMessageAddForcePhysics> forceMsg = std::make_shared<CMessageAddForcePhysics>();
-		forceMsg->setForce( (Math::getDirection( _entity->getOrientation()) * _shootForce), Physics::ForceMode::eFORCE );
-		forceMsg->setGravity(false);
-		rocket->emitMessage(forceMsg);*/
 	}
 
 

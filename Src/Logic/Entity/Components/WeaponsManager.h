@@ -14,12 +14,7 @@ namespace Logic {
 namespace Logic 
 {
 /**
-	Este componente controla la capacidad de disparo de una entidad, asi como las armas que puede tener. Procesa mensajes de tipo 
-	SHOOT (indican que la entidad ha disparado)
-	<p>
-	Poseera una vector, con las armas que tiene, asi como su daño y alcance.
-	Tambien poseera un vector de booleanos que indicara las armas que posee.
-
+	Este componente controla la activacion/desactivacion de las armas que tenemos.
 */
 
 

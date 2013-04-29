@@ -79,6 +79,7 @@
   <ItemGroup>
     <ClCompile Include="..\..\Src\Logic\Entity\Components\ArrayGraphics.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\Audio.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\CameraFeedbackNotifier.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\ClientRespawn.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\DamageTrigger.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\Elevator.cpp" />
@@ -124,6 +125,7 @@
     <ClCompile Include="..\..\Src\Logic\Entity\Components\UpdateClientPosition.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\WeaponsManager.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\SwitchPosition.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\WeaponsManagerClient.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\MessageFactory.cpp" />
     <ClCompile Include="..\..\Src\Logic\GameNetMsgManager.cpp" />
     <ClCompile Include="..\..\Src\Logic\GameNetPlayersManager.cpp" />
@@ -201,6 +203,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Src\Logic\Entity\Components\Audio.h" />
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\CameraFeedbackNotifier.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\ClientRespawn.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\Elevator.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\ElevatorTrigger.h" />
@@ -248,6 +251,7 @@
     <ClInclude Include="..\..\Src\Logic\Entity\Components\UpdateClientPosition.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\WeaponsManager.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\SwitchPosition.h" />
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\WeaponsManagerClient.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\MessageFactory.h" />
     <ClInclude Include="..\..\Src\Logic\GameNetMsgManager.h" />
     <ClInclude Include="..\..\Src\Logic\GameNetPlayersManager.h" />

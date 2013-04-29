@@ -95,7 +95,7 @@ namespace Input {
 				break;				
 			}//switch iType
 		}//if _controlledAvatar
-		return false;
+		return true;
 
 	} // keyPressed
 
@@ -133,14 +133,14 @@ namespace Input {
 				m->setType(Logic::Control::STOP_SECONDARY_SKILL);
 				break;
 			case Input::Key::ESCAPE:// esto debe desaparecer en el futuro
-					return false;
+					return true;
 			//default:
 				//return true;
 			}
 			_controlledAvatar->emitMessage(m);
 			return true;
 		}
-		return false;
+		return true;
 
 	} // keyReleased
 
@@ -161,7 +161,7 @@ namespace Input {
 			
 			return true;
 		}
-		return false;
+		return true;
 
 	} // mouseMoved
 
@@ -189,12 +189,12 @@ namespace Input {
 				m->setType(Logic::Control::BUTTON3_CLICK);
 				break;
 			default:
-				return false;
+				return true;
 			}
 			_controlledAvatar->emitMessage(m);
 			return true;
 		}
-		return false;
+		return true;
 
 	} // mousePressed
 
@@ -224,12 +224,12 @@ namespace Input {
 				break;
 
 			default:
-				return false;
+				return true;
 			}
 			_controlledAvatar->emitMessage(m);
 			return true;
 		}
-		return false;
+		return true;
 
 	} // mouseReleased
 
@@ -425,7 +425,7 @@ namespace Input {
 			break;
 			case Input::Key::ESCAPE:// esto debe desaparecer en el futuro
 				std::cout << "escape pulsado" << std::endl;
-				//return false;
+				//return true;
 			break;
 		}
 

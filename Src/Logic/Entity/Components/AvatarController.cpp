@@ -125,7 +125,7 @@ namespace Logic {
 				break;
 			}
 			case Message::ADDFORCEPLAYER:{
-				//megahipertetrahackeado porque el mensaje addforce este es una mierda como una puta catedral
+				//Fuerza aplicada al jugador
 				std::shared_ptr<CMessageAddForcePlayer> addForceMsg = std::static_pointer_cast<CMessageAddForcePlayer>(message);
 				addForce( addForceMsg->getForce() );
 				break;

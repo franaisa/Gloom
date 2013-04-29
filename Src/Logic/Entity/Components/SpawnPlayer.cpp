@@ -89,7 +89,7 @@ namespace Logic
 			_actualTimeSpawn+=msecs;
 			//Si superamos el tiempo de spawn tenemos que revivir
 			if(_actualTimeSpawn>_timeSpawn){
-
+				_isDead = false;
 				//LLamamos al manager de spawn que nos devolverá una posición ( ahora hecho a lo cutre)
 				CEntity *spawn = CServer::getSingletonPtr()->getSpawnManager()->getSpawnPosition();
 
@@ -99,7 +99,7 @@ namespace Logic
 				//Una vez posicionado, activamos la simulación física (fue desactivada al morir)
 				_entity->getComponent<CPhysicController>("CPhysicController")->activateSimulation();
 
-				//Volvemos a activar todos los componentes
+				//Volvemos a activar todos los componentes(lo que hace resetea _isDead y _actualTimeSpawn)
 				_entity->activate();
 
 				//Establecemos la orientación adecuada segun la devolución del manager de spawn

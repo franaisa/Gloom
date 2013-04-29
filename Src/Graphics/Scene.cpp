@@ -35,6 +35,9 @@ de una escena.
 #include <OgreColourValue.h>
 #include <OgreSceneNode.h>
 #include <OgreParticleSystem.h>
+#include <OgreCompositionTargetPass.h>
+#include <OgreCompositionPass.h>
+
 
 #include <OgreCompositorManager.h>
 #include <OgreMaterialManager.h>
@@ -127,7 +130,10 @@ namespace Graphics
 		_compositorManager->addCompositor(_camera->getOgreCamera()->getViewport(), "Glow");
 
 		_compositorManager->setCompositorEnabled(_camera->getOgreCamera()->getViewport(), "Glow", true);
-		
+
+		_compositorManager->addCompositor(_camera->getOgreCamera()->getViewport(), "Motion Blur");
+		_compositorManager->setCompositorEnabled(_camera->getOgreCamera()->getViewport(), "Motion Blur", true);
+
 		_glowMaterialListener = new GlowMaterialListener();
 		Ogre::MaterialManager::getSingletonPtr()->addListener(_glowMaterialListener);
 

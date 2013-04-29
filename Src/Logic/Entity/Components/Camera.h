@@ -56,8 +56,7 @@ namespace Logic
 		/**
 		Constructor por defecto; en la clase base no hace nada.
 		*/
-		CCamera() : IComponent(), _graphicsCamera(0), _distance(10), _height(7),
-			_targetDistance(7), _targetHeight(3) {}
+		CCamera() : IComponent(), _graphicsCamera(0), _height(8) {}
 		
 		/**
 		Inicialización del componente, utilizando la información extraída de
