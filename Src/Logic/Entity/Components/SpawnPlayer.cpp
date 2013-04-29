@@ -140,13 +140,12 @@ namespace Logic
 		//Si no esto muerto ya hago las acciones
 		if(!_isDead){
 			//Desactivamos todos menos el cspawnplayer
-			std::vector<std::string> except;
-			except.reserve(5); // Solo necesitamos 5 slots
-			except.push_back( std::string("CAnimatedGraphics") );
-			except.push_back( std::string("CSpawnPlayer") );
-			except.push_back( std::string("CHudOverlay") );
-			except.push_back( std::string("CNetConnector") );
-			except.push_back( std::string("CAudio") );
+			std::set<std::string> except;
+			except.insert( std::string("CAnimatedGraphics") );
+			except.insert( std::string("CSpawnPlayer") );
+			except.insert( std::string("CHudOverlay") );
+			except.insert( std::string("CNetConnector") );
+			except.insert( std::string("CAudio") );
 
 			//Desactivamos la simulación física (no puede estar activo en la escena física al morir)
 			_entity->getComponent<CPhysicController>("CPhysicController")->deactivateSimulation();

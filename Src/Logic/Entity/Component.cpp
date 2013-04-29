@@ -40,15 +40,7 @@ namespace Logic
 	//---------------------------------------------------------
 	
 	void IComponent::activate() {
-		if(_isActivated) return;
 		
-		// Por defecto no forzamos a que se arranque onStart
-		// queda abierto para que el cliente lo haga
-		// solo tendria que setear updater como onStart
-		// al ejecutar onStart se vuelve a setear tick
-		
-		_isActivated = true;
-		clearMessages();
 
 		// Llamamos al activar que los hijos deben redefinir
 		onActivate();
@@ -58,6 +50,15 @@ namespace Logic
 
 	void IComponent::onActivate() {
 		// Redefinir por hijos
+		if(_isActivated) return;
+		
+		// Por defecto no forzamos a que se arranque onStart
+		// queda abierto para que el cliente lo haga
+		// solo tendria que setear updater como onStart
+		// al ejecutar onStart se vuelve a setear tick
+		
+		_isActivated = true;
+		clearMessages();
 	}
 
 	//---------------------------------------------------------

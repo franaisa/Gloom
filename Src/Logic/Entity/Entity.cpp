@@ -185,23 +185,13 @@ namespace Logic
 	} // deactivate
 	//---------------------------------------------------------
 
-	
-	void CEntity::deactivateAllComponentsExcept (std::vector<std::string> exceptionList) {
+	void CEntity::deactivateAllComponentsExcept (std::set<std::string> exceptionList) {
 		TComponentMap::iterator it = _components.begin();
-
-		bool desactivar=true;
-		for(; it!=_components.end(); ++it){
-
-			for(unsigned int i = 0; i < exceptionList.size(); ++i){
-				if( exceptionList[i] == it->first )
-					desactivar=false;
+		for(; it != _components.end(); ++it) {
+			if( !exceptionList.count(it->first) ) {
+				it->second->deactivate();
 			}
-			if(desactivar)
-				(it->second)->deactivate();
-			desactivar=true;
 		}
-
-
 	}// deactivateAllComponentsExcept
 
 	//---------------------------------------------------------
