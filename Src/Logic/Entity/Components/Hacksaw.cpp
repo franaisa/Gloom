@@ -55,8 +55,6 @@ namespace Logic
 	
 	void CHacksaw::onActivate()
 	{
-		IComponent::onActivate();
-
 		_directionInitial=(_positionInitial-_positionFinal);
 		_directionFinal=(_positionFinal-_positionInitial);
 		_directionInitial.normalise();

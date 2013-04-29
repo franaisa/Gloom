@@ -59,8 +59,6 @@ namespace Logic
 
 	void CCamera::onActivate()
 	{
-		IComponent::onActivate();
-		
 		_target = CServer::getSingletonPtr()->getPlayer();
 
 		if(!_target){
@@ -79,8 +77,6 @@ namespace Logic
 
 	void CCamera::onDeactivate()
 	{
-		IComponent::onDeactivate();
-
 		_target = 0;
 
 	} // deactivate

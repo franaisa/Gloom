@@ -61,7 +61,6 @@ namespace Logic {
 	//________________________________________________________________________
 
 	void CSpectatorController::onActivate() {
-		IComponent::onActivate(); // Necesario para el onStart
 		_displacementDir = _momentum = Vector3::ZERO;
 	} // activate
 

@@ -69,8 +69,6 @@ namespace Logic
 
 	
 	void CParticle::onActivate() {
-		IComponent::onActivate();
-
 		if(!_particleName.empty()){
 			_particle = new Graphics::CParticle( _entity->getName(), _particleName );
 			_particle->setPosition( _entity->getPosition() + ( _particleOffset * _entity->getOrientation() ) );

@@ -43,7 +43,6 @@ namespace Logic
 
 	void CLava::onActivate()
 	{
-		IComponent::onActivate();
 		_timestamp = 0;
 	} // activate
 	//--------------------------------------------------------

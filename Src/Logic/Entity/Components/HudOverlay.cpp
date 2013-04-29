@@ -745,8 +745,6 @@ namespace Logic
 	}
 
 	void CHudOverlay::onDeactivate(){
-		IComponent::onDeactivate();
-
 		_overlayPlay->setVisible(false);
 		_overlayDie->setVisible(false);	
 		_overlayDebug->setVisible(false);

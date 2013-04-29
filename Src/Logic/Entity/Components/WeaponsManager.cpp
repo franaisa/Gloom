@@ -87,8 +87,6 @@ namespace Logic
 	//---------------------------------------------------------
 
 	void CWeaponsManager::onActivate() {
-		IComponent::onActivate();
-
 		// El arma actual tiene que ser el hammer, que
 		// es la única que tenemos de primeras
 		_currentWeapon=eHAMMER;
@@ -110,7 +108,6 @@ namespace Logic
 	//---------------------------------------------------------
 
 	void CWeaponsManager::onDeactivate(){
-		IComponent::onDeactivate();
 		/*
 		//reset de armas y balas
 		for(unsigned int i = 0; i<_weaponry.size();++i){

@@ -57,7 +57,6 @@ namespace Logic
 	
 	void CArrayGraphics::onActivate()
 	{
-		IComponent::onActivate();
 		//Cuando activamos el componente solo tendremos visible el arma 0( arma melee)
 		_graphicsEntities[0]._graphicsEntity->setVisible(true);
 
@@ -66,7 +65,6 @@ namespace Logic
 
 	void CArrayGraphics::onDeactivate()
 	{
-		IComponent::onDeactivate();
 		//Cuando desactivamos el componente, desactivaremos el arma actual
 		_graphicsEntities[_actualWeapon]._graphicsEntity->setVisible(false);
 

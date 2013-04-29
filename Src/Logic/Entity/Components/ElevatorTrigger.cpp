@@ -62,7 +62,6 @@ namespace Logic
 	
 	void CElevatorTrigger::onActivate()
 	{
-		IComponent::onActivate();
 		_timer=0;
 		_waitTimeInFinal=0;
 		_active=false;

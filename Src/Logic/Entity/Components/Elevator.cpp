@@ -56,7 +56,6 @@ namespace Logic
 	
 	void CElevator::onActivate()
 	{
-		IComponent::onActivate();
 		_wait=true;
 		_waitTimeInFinal=0;
 		_active=false;
