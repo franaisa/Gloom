@@ -25,6 +25,7 @@ de juego. Es una colección de componentes.
 #include <list>
 #include <string>
 #include <map>
+#include <set>
 #include <memory>
 
 // Predeclaración de clases para ahorrar tiempo de compilación
@@ -383,7 +384,7 @@ namespace Logic {
 		 * @param id String que identifica al componente. Es el mismo nombre
 		 * que el asignado en el blueprints.
 		 */
-		void deactivateAllComponentsExcept(std::vector<std::string> exceptionList);
+		void deactivateAllComponentsExcept(std::set<std::string> exceptionList);
 
 		bool dynamicSpawn(CMap* map, Map::CEntity* entityInfo);
 

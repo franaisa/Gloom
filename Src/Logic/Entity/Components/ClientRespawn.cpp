@@ -47,12 +47,12 @@ namespace Logic  {
 			// podamos colisionar con la cápsula del jugador.
 
 			// Desactivamos todos los componentes menos estos
-			std::vector<std::string> exceptionList;
-			exceptionList.push_back( std::string("CClientRespawn") );
-			exceptionList.push_back( std::string("CAnimatedGraphics") );
-			exceptionList.push_back( std::string("CHudOverlay") );
-			exceptionList.push_back( std::string("CNetConnector") );
-			exceptionList.push_back( std::string("CAudio") );
+			std::set<std::string> exceptionList;
+			exceptionList.insert( std::string("CClientRespawn") );
+			exceptionList.insert( std::string("CAnimatedGraphics") );
+			exceptionList.insert( std::string("CHudOverlay") );
+			exceptionList.insert( std::string("CNetConnector") );
+			exceptionList.insert( std::string("CAudio") );
 
 			// En caso de estar simulando fisica en el cliente, desactivamos
 			// la cápsula.

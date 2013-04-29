@@ -57,7 +57,7 @@ namespace Logic
 	//---------------------------------------------------------
 
 	void IComponent::onActivate() {
-		// Redefinir por hijos
+		// Redefinir por los hijos
 	}
 
 	//---------------------------------------------------------
