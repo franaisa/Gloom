@@ -85,17 +85,17 @@ namespace Logic {
 			entityInfo, Logic::CServer::getSingletonPtr()->getMap(), shootPosition, yaw, pitch);
 		
 		assert(grenade != NULL);
+
 		grenade->activate();
 
 		// Seteamos la entidad que dispara la granada
 		CGrenadeController* comp = grenade->getComponent<CGrenadeController>("CGrenadeController");
 		assert(comp != NULL);
 		comp->setOwner(_entity);
-		
+
 		// Mandar mensaje add force
 		std::shared_ptr<CMessageAddForcePhysics> forceMsg = std::make_shared<CMessageAddForcePhysics>();
 		forceMsg->setForce( (Math::getDirection( _entity->getOrientation() ) * _shootForce), Physics::eIMPULSE );
-
 		forceMsg->setGravity(true);
 		grenade->emitMessage(forceMsg);
 

@@ -110,7 +110,7 @@ namespace Logic  {
 		//si hemos terminado de interpolar, lo dejamos
 		if((_distance < _minDistance)/* && ( _yawDifference < _minYaw || _yawDifference > _minYaw*(-1) )*/){
 			_interpolating = false;
-			std::cout << "interpolate a false " << _distance << " ---- " << _minDistance << std::endl << std::endl;
+			//std::cout << "interpolate a false " << _distance << " ---- " << _minDistance << std::endl << std::endl;
 		}
 		
 	}
@@ -126,12 +126,11 @@ namespace Logic  {
 
 			// nos guardamos la posi que nos han dado por si tenemos que interpolar
 			_serverPos = syncMsg->getTransform();
-			//calculo el ping que tengo ahora mismo
+			//calculo el ping que tengo ahora mismo	
 			int ping = clock()+Logic::CServer::getSingletonPtr()->getDiffTime()-syncMsg->getTime();
 			_actualPing = abs(ping);
 			//calculamos la interpolacion
 			calculateInterpolation();
-
 			break;
 			}
 		}

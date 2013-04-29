@@ -1,10 +1,10 @@
 /**
-@file GeometryFactory.h
+@file RaycastHit.h
 
-Contiene la declaración de la factoría de geometrías
-físicas.
+Contiene la declaración del struct que contiene
+información del hit de un raycast de físicas.
 
-@see Logic::CGeometryFactory
+@see Logic::CRaycastHit
 
 @author Francisco Aisa García.
 @date Abril, 2013.
@@ -15,9 +15,6 @@ físicas.
 
 #include "BaseSubsystems/Math.h"
 
-// La factoria devuelve tipos estaticos (nada de punteros)
-// por ello incluimos las cabeceras y no hacemos predeclaraciones
-
 namespace Logic {
 	class CEntity;
 }
@@ -25,27 +22,21 @@ namespace Logic {
 namespace Physics {
 
 	/**
-	Factoría de geometrías físicas. Los actores están formados de shapes, que
-	a su vez están formados por geometrías. La factoría nos da la posibilidad
-	de crear actores y hacer queries especificando la geometría que queremos.
+	Este struct condensa los atributos más relevantes
+	devueltos por la query de raycast de físicas.
 
 	@author Francisco Aisa García
 	@date Abril, 2013
 	*/
 
-	class CRaycastHit {
-	public:
-		CRaycastHit();
-		CRaycastHit(Logic::CEntity* entity, float distance, const Vector3& impact, const Vector3& normal);
-		CRaycastHit(const CRaycastHit& rhs);
-		~CRaycastHit();
-
-		CRaycastHit& operator=(const CRaycastHit& rhs);
-
-		// Miembros
+	struct CRaycastHit {
+		/** Puntero a la entidad golpeada */
 		Logic::CEntity* entity;
+		/** Distancia desde el punto de salida del ray hasta el golpeo. */
 		float distance;
+		/** Punto de impacto del raycast. */
 		Vector3 impact;
+		/** Normal de impacto del raycast. */
 		Vector3 normal;
 	}; 
 

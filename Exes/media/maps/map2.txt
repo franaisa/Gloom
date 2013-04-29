@@ -118,8 +118,6 @@ Map = {
 		position = {-199.0, 0.0, 112.0},
 		model = "health1.mesh",
 		model = "jumpy.mesh",
-		power = 0.35,
-		velocity = 0.12,
 		force = {1,5,0.1},
 		physic_entity = "rigid",
 		physic_trigger = true,
@@ -281,7 +279,6 @@ Map = {
 	David = {
 		type = "LocalScreamer",
 		isPlayer = true,
-		position = {160,50,40},
 	},
 	
 	Camera = {

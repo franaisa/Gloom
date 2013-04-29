@@ -70,9 +70,6 @@
     <ClCompile Include="..\..\Src\Physics\Cloth.cpp">
       <Filter>Actors\Source</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Src\Physics\RaycastHit.cpp">
-      <Filter>Utils\Source</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Src\Physics\Fluid.h">

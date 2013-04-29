@@ -1,5 +1,5 @@
 World CGraphics CPhysicStaticEntity
-LocalScreamer CAvatarController CPhysicController CScreamerClient CShootRocketLauncher CShootGrenadeLauncher CShootMiniGun CShootShotGun CShootSniper CShootHammer CWeaponsManager CHudOverlay CLife CSpawnPlayer CAudio CParticle CClientRespawn
+LocalScreamer CAvatarController CPhysicController CScreamerClient CShootRocketLauncher CShootGrenadeLauncher CShootMiniGun CShootShotGun CShootSniper CShootHammer CWeaponsManager CHudOverlay CLife CSpawnPlayer CAudio CParticle CClientRespawn CCameraFeedbackNotifier
 RemotePlayer CAvatarController CAnimatedGraphics CPhysicController CLife CSpawnPlayer CAudio CParticle
 Spectator CSpectatorController CPhysicController
 Camera CCamera 
@@ -7,7 +7,8 @@ ItemSpawn CGraphics CPhysicStaticEntity CFloatingMovement CSpawnItemManager
 SpawnPoint CPhysicStaticEntity
 Jumper CGraphics CPhysicStaticEntity CJumper CAudio CParticle
 Grenade CGraphics CPhysicDynamicEntity CGrenadeController CParticle CAudio
-Rocket CGraphics CPhysicDynamicEntity CRocketController CAudio CParticle
+Rocket CGraphics CRocketController CPhysicDynamicEntity CAudio CParticle
+RocketExplotion CGraphics CRocketController CAudio CParticle
 Lava CGraphics CPhysicStaticEntity CLava
 LavaFondo CGraphics CPhysicStaticEntity CLava
 ContenedorLava CGraphics CPhysicStaticEntity

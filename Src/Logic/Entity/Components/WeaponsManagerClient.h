@@ -1,5 +1,18 @@
-#ifndef __Logic_WeaponsManager_H
-#define __Logic_WeaponsManager_H
+/**
+@file CWeaponsManagerClient.h
+
+Contiene la declaración de la cabecera del componente
+que controla el manejo de las armas en el cliente.
+
+@see Logic::CWeaponsManagerClient
+@see Logic::IComponent
+
+@author Jose Antonio García Yáñez
+@date Abril, 2013
+*/
+
+#ifndef __Logic_WeaponsManagerClient_H
+#define __Logic_WeaponsManagerClient_H
 
 #include "Logic/Entity/Component.h"
 
@@ -15,12 +28,13 @@ namespace Logic
 {
 /**
 	Este componente controla la activacion/desactivacion de las armas que tenemos.
+	En este caso al ser el cliente solo interesan los proyectiles.
 */
 
 
-	class CWeaponsManager : public IComponent
+	class CWeaponsManagerClient : public IComponent
 	{
-		DEC_FACTORY(CWeaponsManager);
+		DEC_FACTORY(CWeaponsManagerClient);
 
 	public:
 
@@ -37,7 +51,7 @@ namespace Logic
 		Constructor por defecto; en la clase base no hace nada.
 		*/
 
-		CWeaponsManager();
+		CWeaponsManagerClient();
 		
 
 	
@@ -78,10 +92,6 @@ namespace Logic
 		virtual void deactivate();
 
 		void changeWeapon(unsigned char newWeapon);
-	
-		void amplifyDamage(int percentage);
-
-		void reduceCooldowns(int percentage);
 
 		void addWeapon(int ammo, int weaponIndex);
 
@@ -100,7 +110,6 @@ namespace Logic
 		*/
 		int _currentWeapon;
 
-
 		/**
 		numero de armas que tengo
 		*/
@@ -108,10 +117,10 @@ namespace Logic
 
 		std::vector< std::pair<bool, CShoot*> > _weaponry;
 
-	}; // class CShoot
+	}; // class WeaponsManagerClient
 
-	REG_FACTORY(CWeaponsManager);
+	REG_FACTORY(CWeaponsManagerClient);
 
 } // namespace Logic
 
-#endif // __Logic_Shoot_H
+#endif // __Logic_WeaponsManagerClient_H

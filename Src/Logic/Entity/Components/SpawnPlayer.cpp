@@ -93,13 +93,17 @@ namespace Logic
 				//LLamamos al manager de spawn que nos devolverá una posición ( ahora hecho a lo cutre)
 				CEntity *spawn = CServer::getSingletonPtr()->getSpawnManager()->getSpawnPosition();
 
+				//No se encontró actualmente un punto de spawn, por tanto esperamos al siguiente tick
+				if(spawn==NULL)
+					return;
+
 				//Ponemos la entidad física en la posición instantaneamente ( no se puede permitir el envio de mensajes )
 				_entity->getComponent<CPhysicController>("CPhysicController")->setPhysicPosition(spawn->getPosition());
 
 				//Una vez posicionado, activamos la simulación física (fue desactivada al morir)
 				_entity->getComponent<CPhysicController>("CPhysicController")->activateSimulation();
 
-				//Volvemos a activar todos los componentes
+				//Volvemos a activar todos los componentes(lo que hace resetea _isDead y _actualTimeSpawn)
 				_entity->activate();
 
 				//Establecemos la orientación adecuada segun la devolución del manager de spawn
@@ -141,7 +145,7 @@ namespace Logic
 	{
 		//Si no esto muerto ya hago las acciones
 		if(!_isDead){
-			//Desactivamos todos menos el cspawnplayer
+			//Desactivamos todos los listados a continuación
 			std::vector<std::string> except;
 			except.reserve(5); // Solo necesitamos 5 slots
 			except.push_back( std::string("CAnimatedGraphics") );

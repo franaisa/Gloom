@@ -8,7 +8,7 @@ que controla la explosión del cohete sin quitar vida.
 @see Logic::IComponent
 
 @author Jose Antonio García Yáñez
-@date Marzo, 2013
+@date Abril, 2013
 */
 
 #ifndef __Logic_RocketControllerClient_H
@@ -103,9 +103,6 @@ namespace Logic {
 
 		/** Booleano que controla que solo se trate el primer contacto ( debe explotar ). */
 		bool _explotionActive;
-
-		/** Entidad que ha disparado la granada. */
-		CEntity* _owner;
 
 		/** Ruta del sonido de la explosion. */
 		std::string _audioExplotion;

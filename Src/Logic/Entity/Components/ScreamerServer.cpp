@@ -225,7 +225,7 @@ namespace Logic {
 
 	void CScreamerServer::refreshShieldPosition() {
 		// Sacamos la posicion del escudo (que debe estar situada a la altura de disparo)
-		Vector3 shootPosition = _entity->getPosition() + ( Math::getDirection( _entity->getOrientation() ) * _capsuleRadius*10 );
+		Vector3 shootPosition = _entity->getPosition() +( Math::getDirection( _entity->getOrientation() ) * _capsuleRadius );
 		shootPosition.y += _heightShoot;
 		
 		// Sacamos la orientacion de la entidad para setearsela al escudo

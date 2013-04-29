@@ -192,6 +192,7 @@ namespace Logic
 		tiene las teclas que)
 		*/
 		char keysPanelWeapon[8];
+
 		/**
 		Gestion los paneles de las armas (6) en este caso, en cada uno de sus estados: ACTIVE, NO_AMMO, NO_WEAPON
 		*/
