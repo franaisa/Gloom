@@ -40,13 +40,6 @@ namespace Logic
 	//---------------------------------------------------------
 	
 	void IComponent::activate() {
-		// Llamamos al activar que los hijos deben redefinir
-		onActivate();
-	}
-
-	//---------------------------------------------------------
-
-	void IComponent::onActivate() {
 		if(_isActivated) return;
 		
 		// Por defecto no forzamos a que se arranque onStart
@@ -57,13 +50,21 @@ namespace Logic
 		_isActivated = true;
 		clearMessages();
 
-		// Redefinir por hijos
+		// Llamamos al activar que los hijos deben redefinir
 		onActivate();
 	}
 
 	//---------------------------------------------------------
 
+	void IComponent::onActivate() {
+		// Redefinir por hijos
+	}
+
+	//---------------------------------------------------------
+
 	void IComponent::deactivate() {
+		_isActivated = false;
+
 		onDeactivate();
 	}
 
@@ -71,7 +72,6 @@ namespace Logic
 
 	void IComponent::onDeactivate() {
 		// Redefinir por hijos
-		_isActivated = false;
 	}
 
 	//---------------------------------------------------------
