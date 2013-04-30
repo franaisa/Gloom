@@ -7,19 +7,27 @@ de los mensajes.
 @see Logic::CCommunicationPort
 
 @author David Llansó García
-@date Julio, 2010
+@author Francisco Aisa García
+@date Abril, 2013
 */
 
 #include "CommunicationPort.h"
 
 namespace Logic {
 
+	CCommunicationPort::CCommunicationPort() {
+		// Nada que hacer
+	}
+
+	//__________________________________________________________________
+
 	CCommunicationPort::~CCommunicationPort() {
+		// Realmente esto no es necesario
 		_messages.clear();
 
 	} // ~CCommunicationPort
 	
-	//---------------------------------------------------------
+	//__________________________________________________________________
 
 	bool CCommunicationPort::set(const std::shared_ptr<CMessage>& message) {
 		bool accepted = accept(message);
@@ -30,7 +38,20 @@ namespace Logic {
 		return accepted;
 	} // set
 	
-	//---------------------------------------------------------
+	//__________________________________________________________________
+
+	// Por defecto retornamos false. La idea es que los hijos redefinan este método
+	bool CCommunicationPort::accept(const std::shared_ptr<CMessage>& message) {
+		return false;
+	}
+
+	//__________________________________________________________________
+
+	void CCommunicationPort::process(const std::shared_ptr<CMessage>& message) {
+		// Debe ser redefinido por los hijos
+	}
+
+	//__________________________________________________________________
 
 	bool CCommunicationPort::processMessages() {
 		CMessageList::const_iterator it = _messages.begin();
@@ -42,5 +63,11 @@ namespace Logic {
 		_messages.clear();
 		return success;
 	} // processMessages
+
+	//__________________________________________________________________
+
+	void CCommunicationPort::clearMessages() {
+		_messages.clear();
+	}
 
 } // namespace Logic

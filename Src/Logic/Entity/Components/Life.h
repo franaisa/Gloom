@@ -168,6 +168,12 @@ namespace Logic {
 
 	protected:
 
+
+		// =======================================================================
+		//                    METODOS HEREDADOS DE ICOMPONENT
+		// =======================================================================
+
+
 		/**
 		Método que se ejecuta en lugar del tick en el primer frame.
 		Sirve para inicializar algunas de las estructuras y funcionalidad
@@ -185,6 +191,7 @@ namespace Logic {
 		@param msecs Milisegundos transcurridos desde el último tick.
 		*/
 		virtual void onTick(unsigned int msecs);
+
 
 	private:
 

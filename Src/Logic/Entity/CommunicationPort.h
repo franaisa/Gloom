@@ -7,7 +7,8 @@ de los mensajes.
 @see Logic::CCommunicationPort
 
 @author David Llansó García
-@date Julio, 2010
+@author Francisco Aisa García
+@date Abril, 2013
 */
 
 #ifndef __Logic_CommunicationPort_H
@@ -19,23 +20,23 @@ de los mensajes.
 #include "Logic/Messages/Message.h"
 
 // Declaración de la clase
-namespace Logic 
-{
+namespace Logic {
 
-/**
+	/**
 	La clase CCommunicationPort se encarga de toda la gestion de 
 	los mensajes que pueden ser enviados. la interfaz de componente
 	heredará de esta clase para delegar en ella toda la comunicación
 	entre componentes. 
-	<p>
+
 	En cualquier momento se puede enviar un mensaje mediante el 
 	método set() que verá si el mensaje es aceptado y en ese caso
 	lo meterá en una cola para que sea procesado posteriormente. Los 
 	mensajes por tanto no se procesan automáticamente sino que se 
 	guardan y posteriormente, generalmente una vez por frame, se
 	procesan todos los mensajes recibidos invocando al método
-	processMessages().
-	<p>
+	processMessages(), siempre y cuando el estado del componente lo
+	permita.
+
 	Para que esto funcione correctamente, las clases hijas deberán
 	implementar los métodos virtuales accept() y process().
 	El método accept() decidirá si el mensaje recibido es aceptado 
@@ -45,22 +46,33 @@ namespace Logic
     @ingroup logicGroup
     @ingroup entityGroup
 
-	@author David Llansó
-	@date Julio, 2010
-*/
-	class CCommunicationPort 
-	{
+	@author David Llansó García
+	@author Francisco Aisa García
+	@date Abril, 2013
+	*/
+
+	class CCommunicationPort {
 	public:
 
-		/**
-		Constructor por defecto; en la clase base no hace nada.
-		*/
-		CCommunicationPort() {}
 
-		/**
-		Destructor. Vacía el vector de mensajes.
-		*/
+		// =======================================================================
+		//                      CONSTRUCTORES Y DESTRUCTOR
+		// =======================================================================
+
+
+		/** Constructor por defecto. */
+		CCommunicationPort();
+
+		//__________________________________________________________________
+
+		/** Destructor. Vacía el vector de mensajes. */
 		virtual ~CCommunicationPort();
+
+
+		// =======================================================================
+		//                            METODOS PROPIOS
+		// =======================================================================
+
 
 		/**
 		Método que añade un mensaje a la cola si éste es aceptado.
@@ -69,6 +81,8 @@ namespace Logic
 		@return true si el mensaje ha sido admitido y puesto en cola.
 		*/
 		bool set(const std::shared_ptr<CMessage>& message);
+
+		//__________________________________________________________________
 
 		/**
 		Método virtual que elige que mensajes son aceptados. Las clases
@@ -79,14 +93,18 @@ namespace Logic
 		@param message Mensaje a chequear.
 		@return true si el mensaje es aceptado.
 		*/
-		virtual bool accept(const std::shared_ptr<CMessage>& message) { return false; }
+		virtual bool accept(const std::shared_ptr<CMessage>& message);
+
+		//__________________________________________________________________
 
 		/**
 		Método virtual que procesa un mensaje.
 
 		@param message Mensaje a procesar.
 		*/
-		virtual void process(const std::shared_ptr<CMessage>& message) {}
+		virtual void process(const std::shared_ptr<CMessage>& message);
+
+		//__________________________________________________________________
 
 		/**
 		Método que procesa la lista de mensajes que faltan por procesar.
@@ -96,18 +114,26 @@ namespace Logic
 		*/
 		bool processMessages();
 
+		//__________________________________________________________________
 
-		void clearMessages(){ _messages.clear(); }
+		/** Limpia la lista de mensajes a procesar. */
+		void clearMessages();
+
 
 	protected:
-		/**
-		Tipo lista de CEntity donde guardaremos los pendientes de borrar.
-		*/
+
+
+		// =======================================================================
+		//                          MIEMBROS PRIVADOS
+		// =======================================================================
+
+
+		/** typedef para la lista de mensajes. */
 		typedef std::list< std::shared_ptr<CMessage> > CMessageList;
 
-		/**
-		Lista de mensajes por procesar
-		*/
+		//__________________________________________________________________
+
+		/**Lista de mensajes por procesar. */
 		CMessageList _messages;
 
 	}; // CCommunicationPort
