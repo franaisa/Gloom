@@ -106,7 +106,6 @@ namespace Logic {
 		*/
 		unsigned move(const Vector3& movement, unsigned int msecs);
 
-
 	private:
 
 

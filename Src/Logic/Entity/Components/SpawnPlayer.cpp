@@ -26,9 +26,6 @@ Contiene la implementación del componente que gestiona el spawn del jugador.
 #include "Logic/Messages/MessageAudio.h"
 #include "Logic/Messages/MessageCreateParticle.h"
 
-
-
-
 namespace Logic 
 {
 	IMP_FACTORY(CSpawnPlayer);
@@ -53,10 +50,8 @@ namespace Logic
 	} // spawn
 	//---------------------------------------------------------
 
-	void CSpawnPlayer::activate()
+	void CSpawnPlayer::onActivate()
 	{
-		IComponent::activate();
-		
 		_isDead=false;
 		_actualTimeSpawn=0;
 
@@ -83,19 +78,16 @@ namespace Logic
 	} // process
 	//---------------------------------------------------------
 
-	void CSpawnPlayer::tick(unsigned int msecs) {
+	void CSpawnPlayer::onTick(unsigned int msecs) {
 		//Solamente si estamos muertos (se recibió el mensaje)
 		if(_isDead){
 			_actualTimeSpawn+=msecs;
 			//Si superamos el tiempo de spawn tenemos que revivir
 			if(_actualTimeSpawn>_timeSpawn){
-
+				_isDead = false;
+				_actualTimeSpawn = 0;
 				//LLamamos al manager de spawn que nos devolverá una posición ( ahora hecho a lo cutre)
 				CEntity *spawn = CServer::getSingletonPtr()->getSpawnManager()->getSpawnPosition();
-
-				//No se encontró actualmente un punto de spawn, por tanto esperamos al siguiente tick
-				if(spawn==NULL)
-					return;
 
 				//Ponemos la entidad física en la posición instantaneamente ( no se puede permitir el envio de mensajes )
 				_entity->getComponent<CPhysicController>("CPhysicController")->setPhysicPosition(spawn->getPosition());
@@ -112,9 +104,7 @@ namespace Logic
 				// Si eres el server mandar un mensaje de spawn
 				std::shared_ptr<CMessagePlayerSpawn> spawnMsg = std::make_shared<CMessagePlayerSpawn>();
 				spawnMsg->setSpawnTransform( _entity->getTransform() );
-
-				std::shared_ptr<CMessagePlayerSpawn> entitySpawnMsg = std::make_shared<CMessagePlayerSpawn>();
-				_entity->emitMessage(entitySpawnMsg);
+				_entity->emitMessage(spawnMsg);
 
 				CEntity * camera = CServer::getSingletonPtr()->getMap()->getEntityByType("Camera");
 				camera->emitMessage(spawnMsg);
@@ -145,14 +135,13 @@ namespace Logic
 	{
 		//Si no esto muerto ya hago las acciones
 		if(!_isDead){
-			//Desactivamos todos los listados a continuación
-			std::vector<std::string> except;
-			except.reserve(5); // Solo necesitamos 5 slots
-			except.push_back( std::string("CAnimatedGraphics") );
-			except.push_back( std::string("CSpawnPlayer") );
-			except.push_back( std::string("CHudOverlay") );
-			except.push_back( std::string("CNetConnector") );
-			except.push_back( std::string("CAudio") );
+			//Desactivamos todos menos el cspawnplayer
+			std::set<std::string> except;
+			except.insert( std::string("CAnimatedGraphics") );
+			except.insert( std::string("CSpawnPlayer") );
+			except.insert( std::string("CHudOverlay") );
+			except.insert( std::string("CNetConnector") );
+			except.insert( std::string("CAudio") );
 
 			//Desactivamos la simulación física (no puede estar activo en la escena física al morir)
 			_entity->getComponent<CPhysicController>("CPhysicController")->deactivateSimulation();

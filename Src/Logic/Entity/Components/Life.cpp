@@ -98,9 +98,7 @@ namespace Logic {
 	
 	//________________________________________________________________________
 	
-	void CLife::activate() {
-		IComponent::activate();
-		
+	void CLife::onActivate() {
 		// Resteamos los valores de salud y escudo a los valores por defecto
 		_currentLife = _defaultLife;
 		_currentShield = 0;
@@ -165,7 +163,7 @@ namespace Logic {
 	
 	//________________________________________________________________________
 
-	void CLife::tick(unsigned int msecs) {
+	void CLife::onTick(unsigned int msecs) {
 		_damageTimer += msecs;
 		if(_damageTimer >= _damageTimeStep && _currentLife != 1) {
 			// Reducimos la vida hasta un minimo de un punto de salud

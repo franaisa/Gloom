@@ -55,24 +55,6 @@ namespace Logic {
 
 
 		/**
-		Método llamado en cada frame. En este componente se encarga
-		de reducir la vida del individuo paulatinamente en base a los
-		parámetros fijados desde fichero.
-
-		@param msecs Milisegundos transcurridos desde el último tick.
-		*/
-		virtual void tick(unsigned int msecs);
-
-		/**
-		Método que se ejecuta en lugar del tick en el primer frame.
-		Sirve para inicializar algunas de las estructuras y funcionalidad
-		que si fueran en el tick se convertirian en un dolor de cabeza.
-		*/
-		virtual void onStart(unsigned int msecs);
-
-		//__________________________________________________________________
-
-		/**
 		Inicialización del componente a partir de la información extraida de la entidad
 		leida del mapa:
 		<ul>
@@ -99,7 +81,7 @@ namespace Logic {
 		Metodo que se llama al activar el componente.
 		Resetea los valores de vida y escudo a los fijados por defecto.
 		*/
-		virtual void activate();
+		virtual void onActivate();
 
 		//__________________________________________________________________
 
@@ -183,6 +165,33 @@ namespace Logic {
 		la situación o los powerups que tenga.
 		*/
 		void suicide();
+
+	protected:
+
+
+		// =======================================================================
+		//                    METODOS HEREDADOS DE ICOMPONENT
+		// =======================================================================
+
+
+		/**
+		Método que se ejecuta en lugar del tick en el primer frame.
+		Sirve para inicializar algunas de las estructuras y funcionalidad
+		que si fueran en el tick se convertirian en un dolor de cabeza.
+		*/
+		virtual void onStart(unsigned int msecs);
+
+		//__________________________________________________________________
+
+		/**
+		Método llamado en cada frame. En este componente se encarga
+		de reducir la vida del individuo paulatinamente en base a los
+		parámetros fijados desde fichero.
+
+		@param msecs Milisegundos transcurridos desde el último tick.
+		*/
+		virtual void onTick(unsigned int msecs);
+
 
 	private:
 

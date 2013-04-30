@@ -157,6 +157,8 @@ namespace Logic
 			_diffTime = time;
 		}
 
+		void setFixedTimeStep(unsigned int stepSize);
+
 	protected:
 		/**
 		Constructor.

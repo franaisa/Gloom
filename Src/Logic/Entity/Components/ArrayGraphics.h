@@ -93,7 +93,7 @@ namespace Logic
 
 		@return true si todo ha ido correctamente.
 		*/
-		virtual void activate();
+		virtual void onActivate();
 
 		/**
 		Método que desactiva el componente; invocado cuando se
@@ -103,7 +103,7 @@ namespace Logic
 		<p>
 		Se pone el objetivo a seguir a NULL.
 		*/
-		virtual void deactivate();
+		virtual void onDeactivate();
 
 		/**
 		Metodo para cambiar el grafico en funcion del arma actual

@@ -113,7 +113,7 @@ namespace Logic {
 		
 	//---------------------------------------------------------------------------------
 		
-	void CNetConnector::tick(unsigned int msecs) {
+	void CNetConnector::onTick(unsigned int msecs) {
 	}
 
 } // namespace Logic

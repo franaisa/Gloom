@@ -70,26 +70,12 @@ namespace Logic {
 		virtual bool spawn(CEntity* entity, CMap* map, const Map::CEntity *entityInfo);
 
 		//__________________________________________________________________
-		
-
-		virtual void onStart(unsigned int msecs);
-
-		//__________________________________________________________________
-
-		/**
-		Método llamado en cada frame.
-
-		@param msecs Milisegundos transcurridos desde el último tick.
-		*/
-		virtual void tick(unsigned int msecs);
-
-		//__________________________________________________________________
 
 		/**
 		Metodo que se llama al activar el componente.
 		Restea los campos de la clase a los valores por defecto.
 		*/
-		virtual void activate();
+		virtual void onActivate();
 
 
 		// =======================================================================
@@ -105,6 +91,19 @@ namespace Logic {
 		/** Habilidad por definir. */
 		virtual void secondarySkill();
 
+
+	protected:
+
+		virtual void onStart(unsigned int msecs);
+
+		//__________________________________________________________________
+
+		/**
+		Método llamado en cada frame.
+
+		@param msecs Milisegundos transcurridos desde el último tick.
+		*/
+		virtual void onTick(unsigned int msecs);
 
 	private:
 

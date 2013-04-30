@@ -78,7 +78,7 @@ void CPhysicController::process(const std::shared_ptr<CMessage>& message) {
 
 //________________________________________________________________________
 
-void CPhysicController::tick(unsigned int msecs) {
+void CPhysicController::onTick(unsigned int msecs) {
 	// Sino hay movimiento no hacemos nada
 	if(_movement == Vector3::ZERO) return;
 

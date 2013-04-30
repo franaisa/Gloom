@@ -112,7 +112,7 @@ void CPhysicDynamicEntity::process(const std::shared_ptr<CMessage>& message) {
 
 //---------------------------------------------------------
 
-void CPhysicDynamicEntity::tick(unsigned int msecs) {
+void CPhysicDynamicEntity::onTick(unsigned int msecs) {
 	// Actualizar la posición y la orientación de la entidad lógica usando la 
 	// información proporcionada por el motor de física	
 	_entity->setTransform( _physicEntity.getTransform() );

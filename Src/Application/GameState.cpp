@@ -68,6 +68,9 @@ namespace Application {
 
 		// Queremos que el GUI maneje al jugador.
 		Input::CServer::getSingletonPtr()->getPlayerController()->activate();
+		// Seteamos el tamaño del time step fijo para la logica
+		Logic::CServer::getSingletonPtr()->setFixedTimeStep(16);
+		// Indicamos que a partir de ahora la creación de objetos es dinámica
 		Logic::CEntityFactory::getSingletonPtr()->dynamicCreation(true);
 
 		//paramos el sonido de menu
@@ -96,13 +99,17 @@ namespace Application {
 
 	void CGameState::tick(unsigned int msecs) 
 	{
-		unsigned int pieces=msecs/16;
+		/*unsigned int pieces=msecs/16;
 		for(int i=0;i<pieces;i++){
 			//Actualizamos la física del juego.
 			Physics::CServer::getSingletonPtr()->tick(16);
 			// Actualizamos la lógica de juego.
 			Logic::CServer::getSingletonPtr()->tick(16);
-		}
+		}*/
+		// Ejecutamos el tick de la física del juego.
+		Physics::CServer::getSingletonPtr()->tick(msecs);
+		// Ejecutamos el tick de la lógica del juego
+		Logic::CServer::getSingletonPtr()->tick(msecs);
 
 	} // tick
 

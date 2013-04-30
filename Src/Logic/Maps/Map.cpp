@@ -76,8 +76,7 @@ namespace Logic {
 
 	//--------------------------------------------------------
 
-	CMap::CMap(const std::string &name) : _numOfPlayers(0)
-	{
+	CMap::CMap(const std::string &name) : _numOfPlayers(0) {
 		_name = name;
 		_scene = Graphics::CServer::getSingletonPtr()->createScene(name);
 
@@ -85,8 +84,7 @@ namespace Logic {
 
 	//--------------------------------------------------------
 
-	CMap::~CMap()
-	{
+	CMap::~CMap() {
 		destroyAllEntities();
 		if(Graphics::CServer::getSingletonPtr())
 			Graphics::CServer::getSingletonPtr()->removeScene(_scene);
@@ -95,8 +93,7 @@ namespace Logic {
 
 	//--------------------------------------------------------
 
-	bool CMap::activate()
-	{
+	bool CMap::activate() {
 		Graphics::CServer::getSingletonPtr()->setScene(_scene);
 
 		TEntityMap::const_iterator it, end;
@@ -115,8 +112,7 @@ namespace Logic {
 
 	//--------------------------------------------------------
 
-	void CMap::deactivate()
-	{
+	void CMap::deactivate() {
 		TEntityMap::const_iterator it, end;
 		end = _entityMap.end();
 		it = _entityMap.begin();
@@ -132,23 +128,47 @@ namespace Logic {
 
 	//---------------------------------------------------------
 
-	void CMap::tick(unsigned int msecs) 
-	{
+	void CMap::start() {
+		// Ejecutamos el start de todas nuestras entidades
+		TEntityMap::const_iterator it = _entityMap.begin();
+		for(; it != _entityMap.end(); ++it ) {
+			// Ejecutamos el start de todas las entidades
+			it->second->start();
+		}
+	}
+
+	//---------------------------------------------------------
+
+	void CMap::tick(unsigned int msecs) {
+		// Comprobamos los timers de las entidades que tienen
+		// un tiempo de vida
+		checkTimeOuts(msecs);
+		
+		// Ejecutamos el tick de las entidades
+		// Ejecutamos el tick de todas las entidades activadas del mapa
+		// La propia entidad se encarga de hacer el process, tick y fixed tick
+		// de sus componentes (dependiendo del estado)
+		doTick(msecs);
+	} // tick
+
+	//--------------------------------------------------------
+
+	void CMap::checkTimeOuts(unsigned int msecs) {
 		// Si hay entidades con cronometros de autodestruccion
 		// comprobamos el cronometro y si hay que destruirlas avisamos
 		// a la factoria para que se encargue de ello en diferido.
 		if( !_entitiesToBeDeleted.empty() ) {
 			std::list< std::pair<CEntity*, unsigned int> >::iterator it = _entitiesToBeDeleted.begin();
-			while(it != _entitiesToBeDeleted.end()) {
+			while( it != _entitiesToBeDeleted.end() ) {
 				// Dado que estamos tratando con un unsigned int, comprobamos si la resta saldria menor
 				// que 0, ya que si hacemos directamente la resta el numero pasa a ser el unsigned int 
-				//mas alto y por lo tanto seria un fail.
+				// mas alto y por lo tanto seria un fail.
 				it->second = msecs >= it->second ? 0 : (it->second - msecs);
 
 				if(it->second <= 0) {
-					// Puesto por defecto a true pero deberia de ser apuntado cuando se llama al createEntityWithTimeOut y recuperarse al llegar a este caso
-					CEntityFactory::getSingletonPtr()->deferredDeleteEntity(it->first,true);
-					//removeEntity(it->first);
+					// Puesto por defecto a true pero deberia de ser apuntado cuando se llama 
+					// al createEntityWithTimeOut y recuperarse al llegar a este caso
+					CEntityFactory::getSingletonPtr()->deferredDeleteEntity(it->first, true);
 					it = _entitiesToBeDeleted.erase(it);
 				}
 				else {
@@ -156,20 +176,17 @@ namespace Logic {
 				}
 			}
 		}
+	}
 
-		//primero comprobamos si hay entidades que han de ser eliminadas
-		std::list<CEntity*>::const_iterator del;
-		for(del = _deleteEntities.begin();del!=_deleteEntities.end();++del){
-			removeEntity(*del);
+	//--------------------------------------------------------
+
+	void CMap::doTick(unsigned int msecs) {
+		// Ejecutamos el tick de todas nuestras entidades
+		TEntityMap::const_iterator it = _entityMap.begin();
+		for(; it != _entityMap.end(); ++it) {
+			it->second->tick(msecs);
 		}
-		_deleteEntities.clear();
-		//ejecutamos el tick de todas nuestras entidades
-		TEntityMap::const_iterator it;
-
-		for( it = _entityMap.begin(); it != _entityMap.end(); ++it )
-			(*it).second->tick(msecs);
-
-	} // tick
+	}
 
 	//--------------------------------------------------------
 
@@ -367,6 +384,10 @@ namespace Logic {
 
 	void CMap::entityTimeToLive(CEntity* entity, unsigned int msecs) {
 		_entitiesToBeDeleted.push_back( std::pair<CEntity*, unsigned int>(entity, msecs) );
+	}
+
+	void CMap::setFixedTimeStep(unsigned int stepSize) {
+		CEntity::setFixedTimeStep(stepSize);
 	}
 
 } // namespace Logic

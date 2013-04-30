@@ -84,6 +84,8 @@ namespace Logic {
 		*/
 		virtual void process(const std::shared_ptr<CMessage>& message);
 
+	protected:
+
 		/**
 		Método llamado en cada frame que actualiza el estado del componente.
 		Se controla el número de mensajes del mismo tipo que se envían al 
@@ -91,9 +93,7 @@ namespace Logic {
 
 		@param msecs Milisegundos transcurridos desde el último tick.
 		*/
-		virtual void tick(unsigned int msecs);
-
-	protected:
+		virtual void onTick(unsigned int msecs);
 
 		/** 
 		Arbol binario de busqueda que contiene los tipos de mensajes
