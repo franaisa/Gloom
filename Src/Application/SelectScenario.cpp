@@ -136,11 +136,11 @@ namespace Application {
 		std::string map = args.at(0).getString();
 		if (!Logic::CEntityFactory::getSingletonPtr()->loadBluePrints(map+".xml", "Single"))
 			return false;
-		if (!Logic::CEntityFactory::getSingletonPtr()->loadArchetypes("archetypes.txt"))
-			return false;
+		//if (!Logic::CEntityFactory::getSingletonPtr()->loadArchetypes("archetypes.txt"))
+//			return false;
 
 		// Cargamos el nivel a partir del nombre del mapa. 
-		if (!Logic::CServer::getSingletonPtr()->loadLevel(map+".txt"))
+		if (!Logic::CServer::getSingletonPtr()->loadLevel(map+".xml", "Single"))
 			return false;
 		
 		_app->setState("singlePlayer");

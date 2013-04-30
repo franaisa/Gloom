@@ -134,12 +134,14 @@ namespace Application {
 					Net::CManager::getSingletonPtr()->deactivateNetwork();
 					_app->exitRequest();
 				}
+				/*
 				if (!Logic::CEntityFactory::getSingletonPtr()->loadArchetypes("archetypes.txt")) {
 					Net::CManager::getSingletonPtr()->deactivateNetwork();
 					_app->exitRequest();
 				}
+				*/
 				// Cargamos el nivel a partir del nombre del mapa. 
-				if (!Logic::CServer::getSingletonPtr()->loadLevel(map+"_client.txt")) {
+				if (!Logic::CServer::getSingletonPtr()->loadLevel(map+".xml", "Client")) {
 					Net::CManager::getSingletonPtr()->deactivateNetwork();
 					_app->exitRequest();
 				}

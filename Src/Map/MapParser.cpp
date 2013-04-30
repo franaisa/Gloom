@@ -110,9 +110,8 @@ namespace Map {
 
 		std::string nameEntity;
 		std::string typeEntity;
-		std::string nameAmbit;
-		std::string nameComponent;
-
+		std::string nameAttribute;
+		std::string valueAttribute;
 		// Ahora voy a recorrer todas las entity dentro de entities
 
 		TiXmlElement* entityTag= entitiesTag->FirstChildElement();
@@ -137,59 +136,35 @@ namespace Map {
 				//Compruebo que no sea NULL				
 				assert( attributesTag && "No se detecta la etiqueta attributes de la entidad: ");
 
-				
-				TiXmlElement *ambitsTag = attributesTag->NextSiblingElement();
-				//assert( "No se detecta la etiqueta ambits de la entidad: " && ambitsTag);
+				if(attributesTag != NULL){
 
-				if(ambitsTag != NULL){
+					TiXmlElement *attribute = attributesTag->FirstChildElement();
+					assert(attribute && "No se detecta la etiqueta attribute de la entidad: ");
 
-					TiXmlElement *ambitTag = ambitsTag->FirstChildElement();
-					assert(ambitTag && "No se detecta la etiqueta ambit de la entidad: ");
-				
-					std::list<std::string> listComponents;
+					Map::CEntity *entidad = new Map::CEntity(nameEntity);
+					entidad->setType(typeEntity);
 
 					//itero entre todos los ambios necesarios
-					while(ambitTag != NULL){
+					while(attribute != NULL){
 					
 						// Obtengo el nombre, debe de ser 
-						nameAmbit = ambitTag->Attribute("name");
-						assert( !nameAmbit.empty() && "No se detecta el atributo name en la etiqueta ambit de la entidad: ");
-						assert(!((nameAmbit != "Always") && (nameAmbit != "Single") && (nameAmbit != "Client") && (nameAmbit != "Server")) && 
-							"El name del ambit debe de ser Always, Single, Server o Client");
+						nameAttribute = attribute->Attribute("name");
+						assert( !nameAttribute.empty() && "No se detecta el atributo name en la etiqueta attribute de la entidad: ");
 					
-						if(nameAmbit == "Always" || nameAmbit == ambit){
-							if(!ambitTag->NoChildren()){
-								TiXmlElement *componentsTag = ambitTag->FirstChildElement();
-								assert( componentsTag && "No se detecta la etiqueta components de la entidad: ");
-								TiXmlElement *componentTag = componentsTag->FirstChildElement();
-								assert( ( componentsTag != NULL) && "No se detecta la etiqueta component de la entidad: ");
-								//meto todos los componentes de un ambito especifico
-								while(componentTag != NULL){
-									nameComponent = componentTag->Attribute("name");
-									assert( (!nameComponent.empty()) && "No se detecta el atributo name en la etiqueta component de la entidad: ");
-									listComponents.push_back(nameComponent);
+						valueAttribute = attribute->Attribute("name");
+						assert( !valueAttribute.empty() && "No se detecta el atributo value en la etiqueta attribute de la entidad: ");
 
-									componentTag = componentTag->NextSiblingElement();
-								}
-							}
-						}
-						ambitTag = ambitTag->NextSiblingElement();
+						entidad->setAttribute(nameAttribute, valueAttribute);
+
+						attribute = attribute->NextSiblingElement();
 					}// fin while ambitTag
-
-					// Ya que tengo todos los componentes los pongo en blueprintElement
-					blueprintElement.components = listComponents;
-				
-					// miro si ya existe, y si es assi 
-					assert( "Ya existe en una entidad con ese tipo ");
-
-					// Añadimos a la tabla
-					
+					_entityList.push_back(entidad);
 				}
 			}// fin if entity type
 			entityTag = entityTag->NextSiblingElement();
 		}
 
-
+		return true;
 		/* */
 	} // parseFile
 

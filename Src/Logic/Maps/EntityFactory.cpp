@@ -257,6 +257,7 @@ namespace Logic {
 
 	typedef std::pair<std::string,Map::CEntity*> archetype;
 
+	/*
 	bool CEntityFactory::loadArchetypes(const std::string &filename){
 		std::string completePath(BLUEPRINTS_FILE_PATH);
 		completePath = completePath + filename;
@@ -284,6 +285,7 @@ namespace Logic {
 		Map::CMapParser::getSingletonPtr()->releaseEntityList();
 		return true;
 	} // loadArchetypes
+	*/
 	
 	//________________________________________________________________________
 

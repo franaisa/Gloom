@@ -144,7 +144,7 @@ namespace Logic {
 		// solo admitimos un mapa cargado, si iniciamos un nuevo nivel 
 		// se borra el mapa anterior.
 
-		if(_map = CMap::createMapFromFile(filename,ambit)
+		if(_map = CMap::createMapFromFile(filename,ambit))
 		{
 			return true;
 		}
