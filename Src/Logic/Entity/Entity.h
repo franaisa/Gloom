@@ -7,18 +7,15 @@ de juego. Es una colección de componentes.
 @see Logic::CEntity
 @see Logic::IComponent
 
-@author David Llansó
-@date Agosto, 2010
+@author Francisco Aisa García
+@date Abril, 2013
 */
 
 #ifndef __Logic_Entity_H
 #define __Logic_Entity_H
 
 #include "BaseSubsystems/Math.h"
-
 #include "Logic/Maps/EntityID.h"
-
-// Mensaje
 #include "Logic/Messages/Message.h"
 #include "Logic/Maps/ComponentID.h"
 
@@ -29,13 +26,11 @@ de juego. Es una colección de componentes.
 #include <memory>
 
 // Predeclaración de clases para ahorrar tiempo de compilación
-namespace Map
-{
+namespace Map {
 	class CEntity;
 }
 
-namespace Logic 
-{
+namespace Logic {
 	class CMap;
 	class IComponent;
 	class CEntityFactory;
@@ -44,24 +39,35 @@ namespace Logic
 // Declaración de la clase
 namespace Logic {
 
+
+	/**
+	Contiene un enumerado que representa los estados
+	de un componente.
+	*/
 	struct ComponentState {
 		enum Enum {
-			eSLEEPING,
-			eAWAKE,
-			eBUSY,
+			eSLEEPING,		// (Durmiendo) Recibe mensajes pero no tiene tick, despierta al recibir un mensaje
+			eAWAKE,			// (Despierto/Disponible) Recibe mensajes y tiene tick
+			eBUSY,			// /Ocupado) No recibe mensajes pero tiene tick
 			eMAX
 		};
 	};
 
+
+	/**
+	Contiene un enumerado que indica el tipo de tick que
+	tiene el componente.
+	*/
 	struct TickMode {
 		enum Enum {
-			eNONE,
-			eTICK,
-			eFIXED_TICK,
-			eBOTH,
+			eNONE,			// No tiene tick
+			eTICK,			// Tiene tick
+			eFIXED_TICK,	// Tiene tick fijo
+			eBOTH,			// Tiene tick fijo y variable
 			eMAX,
 		};
 	};
+
 
 	/**
 	Clase que representa una entidad en el entorno virtual. Las entidades
@@ -73,25 +79,34 @@ namespace Logic {
 	entidad a su valor por defecto, se invocará a su método spawn() en el
 	que se inicializarán los atributos de la entidad con los valores leidos 
 	del fichero del mapa. Tras esto, en algún momento, cuando se active
-	el mapa se llamará al método activate() de la entidad. En este momento
-	los componentes harán visibles los componentes gráficos y demás ya que 
-	apartir de ahí es cuando la entidad empieza su función siendo actualizada 
-	por el tick() en cada vuelta de bucle.
+	el mapa se llamará al método activate() de la entidad. Tras el activate
+	se llamará al start, para garantizar labores de inicialización en las que
+	es necesario que el resto de componentes hayan ejecutado el spawn. En 
+	este momento los componentes harán visibles los componentes gráficos y 
+	demás ya que apartir de ahí es cuando la entidad empieza su función 
+	siendo actualizada por el tick() en cada vuelta de bucle.
 
     @ingroup logicGroup
     @ingroup entityGroup
 
-	@author David Llansó
-	@date Agosto, 2010
+	@author Francisco Aisa García
+	@date Abril, 2013
 	*/
+
 	class CEntity {
 	public:
 
-		static void setFixedTimeStep(unsigned int stepSize) { _fixedTimeStep = stepSize; }
 
+		// =======================================================================
+		//                       MÉTODOS DE CENTRALES
+		// =======================================================================
+
+		
 		/**
-		Activa la entidad. Esto significa que el mapa ha sido activado.
-		<p>
+		Activa la entidad. Cuando el mapa se activa se activan todas las 
+		entidades. Sin embargo, las entidades también se pueden activar
+		desde la lógica del juego.
+
 		El método llama al activate() de todos los componentes para que
 		se den por enterados y hagan lo que necesiten.
 		 
@@ -99,13 +114,30 @@ namespace Logic {
 		*/
 		bool activate();
 
+		//__________________________________________________________________
+
 		/**
-		Desactiva la entidad. Esto significa que el mapa ha sido desactivado.
-		<p>
+		Desactiva la entidad. Cuando el mapa se desactiva se desactivan todas
+		las entidades. Sin embargo, las entidades también se pueden desactivar
+		desde la lógica del juego.
+		
 		El método llama al deactivate() de todos los componentes para que
 		se den por enterados y hagan lo que necesiten.
 		*/
 		void deactivate();
+
+		//__________________________________________________________________________
+
+		/**
+		Desactiva todos los componentes excepto los indicados en el set pasado
+		por parámetro.
+
+		@param id string que identifica al componente. Es el mismo nombre que el
+		asignado en el blueprints.
+		*/
+		void deactivateAllComponentsExcept(std::set<std::string> exceptionList);
+
+		//__________________________________________________________________
 
 		/**
 		Función llamada tras la activación de la entidad antes de que se ejecute
@@ -116,15 +148,36 @@ namespace Logic {
 		*/
 		void start();
 
+		//__________________________________________________________________
+
 		/**
 		Función llamada en cada frame para que se realicen las funciones
 		de actualización adecuadas.
-		<p>
-		Llamará a los métodos tick() de todos sus componentes.
+
+		Se encarga de que se procesen los mensajes y se llamen a los
+		ticks de los componentes que posee. Dependiendo del estado
+		de cada componente se harán unas cosas u otras.
 
 		@param msecs Milisegundos transcurridos desde el último tick.
 		*/
 		void tick(unsigned int msecs);
+
+		//__________________________________________________________________
+
+		/**
+		Recibe un mensaje que envia a todos los componentes de la lista menos 
+		al componente que lo envia, si éste se especifica en el segundo campo.
+
+		Por supuesto la emisión del mensaje dependerá del estado de cada 
+		componente.
+
+		@param message Mensaje a enviar.
+		@param emitter Componente emisor, si lo hay. No se le enviará el mensaje.
+		@return true si al menos un componente aceptó el mensaje
+		*/
+		bool emitMessage(const std::shared_ptr<CMessage>& message, IComponent* emitter = 0);
+
+		//__________________________________________________________________
 
 		/**
 		Método que añade un nuevo componente a la lista de la entidad.
@@ -132,6 +185,8 @@ namespace Logic {
 		@param component Componente a añadir.
 		*/
 		void addComponent(IComponent* component, const std::string& id);
+
+		//__________________________________________________________________
 
 		/**
 		Método que quita un componente de la lista.
@@ -145,92 +200,12 @@ namespace Logic {
 		no estaba en el objeto).
 		*/
 		bool removeComponent(IComponent* component);
-		
-		/**
-		Método que destruye todos los componentes de una entidad.
-		*/
-		void destroyAllComponents();
-
-		/**
-		Recibe un mensaje que envia a todos los componentes de la lista menos 
-		al componente que lo envia, si éste se especifica en el segundo campo.
-
-		@param message Mensaje a enviar.
-		@param emitter Componente emisor, si lo hay. No se le enviará el mensaje.
-		@return true si al menos un componente aceptó el mensaje
-		*/
-		bool emitMessage(const std::shared_ptr<CMessage>& message, IComponent* emitter = 0);
-
-		/**
-		Devuelve el identificador único de la entidad.
-
-		@return Identificador.
-		*/
-		Logic::TEntityID getEntityID() const { return _entityID; }
 
 
-		void setEntityID(TEntityID id) {_entityID = id; }
-		/**
-		Método que indica si la entidad es o no el jugador.
-		Seguro que hay formas mejores desde el punto de vista de
-		diseño de hacerlo, pero esta es la más rápida: la entidad 
-		con la descripción de la entidad tiene esta descripción que
-		establece en el spawn().
-		
-		@return true si la entidad es el jugador.
-		*/
-		bool isPlayer() { return _isPlayer; }
+		// =======================================================================
+		//          MÉTODOS DE ROTACIÓN Y POSICIONAMIENTO DE LA ENTIDAD
+		// =======================================================================
 
-
-		/**
-		Método que indica si la entidad es o no el jugador.
-		Seguro que hay formas mejores desde el punto de vista de
-		diseño de hacerlo, pero esta es la más rápida: la entidad 
-		con la descripción de la entidad tiene esta descripción que
-		establece en el spawn().
-		
-		@return true si la entidad es el jugador.
-		*/
-		void setIsPlayer(bool isPlayer){ _isPlayer = isPlayer;}
-
-		/**
-		Devuelve el mapa donde está la entidad.
-
-		@return Puntero al mapa que contiene la entidad.
-		*/
-		CMap *getMap() { return _map; }
-
-		/**
-		Devuelve el mapa donde está la entidad.
-
-		@return Puntero al mapa que contiene la entidad.
-		*/
-		const CMap *getMap() const { return _map; }
-
-		/**
-		Devuelve el nombre de la entidad.
-
-		@return Nombre de la entidad.
-		*/
-		const std::string &getName() const { return _name; }
-
-		void setName(const std::string& name) { this->_name = name; }
-
-		/**
-		Devuelve el tipo de la entidad. Este atributo es leido de
-		la entidad del mapa en spawn().
-
-		@return Tipo de la entidad.
-		*/
-		const std::string &getType() const { return _type; }
-
-		/**
-		Establece la matriz de transformación de la entidad. Avisa a los 
-		componentes del cambio.
-
-		@param transform Nueva matriz de transformación de la entidad.
-		*/
-		void setTransform(const Matrix4& transform);
 
 		/**
 		Devuelve la metriz de transformación de la entidad.
@@ -244,14 +219,8 @@ namespace Logic {
 		*/
 		Matrix4 getTransform() const { return _transform; }
 
-		/**
-		Establece la posición de la entidad. Avisa a los componentes
-		del cambio.
-
-		@param position Nueva posición.
-		*/
-		void setPosition(const Vector3 &position);
-
+		//__________________________________________________________________
+		
 		/**
 		Devuelve la posición de la entidad.
 		<p>
@@ -263,13 +232,7 @@ namespace Logic {
 		*/
 		Vector3 getPosition() const { return _transform.getTrans(); }
 
-		/**
-		Establece la orientación de la entidad. Avisa a los componentes
-		del cambio.
-
-		@param pos Nueva orientación.
-		*/
-		void setOrientation(const Matrix3& orientation);
+		//__________________________________________________________________
 
 		/**
 		Devuelve la matriz de rotación de la entidad.
@@ -282,20 +245,7 @@ namespace Logic {
 		*/
 		Matrix3 getOrientation() const;
 
-		/**
-		Establece el viraje de la entidad. Avisa a los componentes
-		del cambio.
-
-		@param yaw Nuevo viraje.
-		*/
-		void setYaw(float yaw);
-
-		/**
-		Vira la entidad. Avisa a los componentes del cambio.
-
-		@param yaw Viraje a aplicar.
-		*/
-		void yaw(float yaw);
+		//__________________________________________________________________
 
 		/**
 		Devuelve el viraje de la entidad.
@@ -307,31 +257,6 @@ namespace Logic {
 		@return Viraje en el entorno.
 		*/
 		float getYaw() const { return Math::getYaw(_transform); }
-
-		/**
-		Indica si la entidad se encuentra activa.
-
-		@return true si la entidad está activa.
-		*/
-
-		//////////////////
-
-		/**
-		Establece el subviraje de la entidad. Avisa a los componentes
-		del cambio.
-
-		@param yaw Nuevo viraje.
-		*/
-		void setPitch(float pitch);
-
-		/**
-		Gira verticalmente la entidad. Avisa a los componentes del cambio.
-
-		@param pitch subviraje a aplicar.
-		*/
-		void pitch(float pitch);
-
-		void roll(float roll);
 
 		//__________________________________________________________________________
 
@@ -346,7 +271,89 @@ namespace Logic {
 		*/
 		float getPitch() const { return Math::getPitch(_transform); }
 
-		//__________________________________________________________________________
+		//__________________________________________________________________
+
+		/**
+		Establece la matriz de transformación de la entidad. Avisa a los 
+		componentes del cambio.
+
+		@param transform Nueva matriz de transformación de la entidad.
+		*/
+		void setTransform(const Matrix4& transform);
+
+		//__________________________________________________________________
+
+		/**
+		Establece la posición de la entidad. Avisa a los componentes
+		del cambio.
+
+		@param position Nueva posición.
+		*/
+		void setPosition(const Vector3 &position);
+
+		//__________________________________________________________________
+
+		
+		/**
+		Establece la orientación de la entidad. Avisa a los componentes
+		del cambio.
+
+		@param pos Nueva orientación.
+		*/
+		void setOrientation(const Matrix3& orientation);
+
+		//__________________________________________________________________
+
+		/**
+		Establece el viraje de la entidad. Avisa a los componentes
+		del cambio.
+
+		@param yaw Nuevo viraje.
+		*/
+		void setYaw(float yaw);
+
+		//__________________________________________________________________
+
+		/**
+		Vira la entidad. Avisa a los componentes del cambio.
+
+		@param yaw Viraje a aplicar.
+		*/
+		void yaw(float yaw);
+
+		//__________________________________________________________________
+
+		/**
+		Establece el subviraje de la entidad. Avisa a los componentes
+		del cambio.
+
+		@param yaw Nuevo viraje.
+		*/
+		void setPitch(float pitch);
+
+		//__________________________________________________________________
+
+		/**
+		Gira verticalmente la entidad. Avisa a los componentes del cambio.
+
+		@param pitch subviraje a aplicar.
+		*/
+		void pitch(float pitch);
+
+		//__________________________________________________________________
+
+		/**
+		Establece el roll de la entidad. Avisa a los componentes del cambio.
+
+		@param roll Grado de inclinación para el roll.
+		*/
+		void roll(float roll);
+
+
+		// =======================================================================
+		//                         MÉTODOS DE CONSULTA
+		// =======================================================================
+
 
 		/**
 		Indica si la entidad se encuentra activa.
@@ -355,16 +362,32 @@ namespace Logic {
 		*/
 		inline bool isActivated() { return _activated; }
 
-		//__________________________________________________________________________
+		//__________________________________________________________________
 
 		/**
-		 * Obtiene un puntero al componente que buscamos por id.
-		 * 
-		 * @param id String que identifica al componente. Es el mismo nombre
-		 * que el asignado en el blueprints.
-		 * @return Puntero al componente que buscamos.
-		 */
+		Método que indica si la entidad es o no el jugador.
+		Seguro que hay formas mejores desde el punto de vista de
+		diseño de hacerlo, pero esta es la más rápida: la entidad 
+		con la descripción de la entidad tiene esta descripción que
+		establece en el spawn().
+		
+		@return true si la entidad es el jugador.
+		*/
+		bool isPlayer() const { return _isPlayer; }
 
+
+		// =======================================================================
+		//                               GETTERS
+		// =======================================================================
+
+
+		/**
+		Obtiene un puntero al componente que buscamos por id.
+
+		@param id String que identifica al componente. Es el mismo nombre
+		que el asignado en el blueprints.
+		@return Puntero al componente que buscamos.
+		*/
 		template<typename T>
 		T* getComponent(const std::string id) {
 			std::map<std::string, IComponent*>::iterator it;
@@ -375,29 +398,118 @@ namespace Logic {
 
 			return static_cast<T*>(it->second);
 		}
-		//__________________________________________________________________________
 
-		
+		//__________________________________________________________________
+
 		/**
-		 * Desactiva todos los componentes excepto el paso por parámetro como id.
-		 * 
-		 * @param id String que identifica al componente. Es el mismo nombre
-		 * que el asignado en el blueprints.
-		 */
-		void deactivateAllComponentsExcept(std::set<std::string> exceptionList);
+		Devuelve el identificador único de la entidad.
 
-		bool dynamicSpawn(CMap* map, Map::CEntity* entityInfo);
+		@return Identificador.
+		*/
+		TEntityID getEntityID() const { return _entityID; }
+
+		//__________________________________________________________________
+
+		/**
+		Devuelve el mapa donde está la entidad.
+
+		@return Puntero al mapa que contiene la entidad.
+		*/
+		CMap* getMap() { return _map; }
+
+		//__________________________________________________________________
+
+		/**
+		Devuelve el mapa donde está la entidad.
+
+		@return Puntero al mapa que contiene la entidad.
+		*/
+		const CMap* getMap() const { return _map; }
+
+		//__________________________________________________________________
+
+		/**
+		Devuelve el nombre de la entidad.
+
+		@return Nombre de la entidad.
+		*/
+		const std::string &getName() const { return _name; }
+
+		//__________________________________________________________________
+
+		/**
+		Devuelve el tipo de la entidad. Este atributo es leido de
+		la entidad del mapa en spawn().
+
+		@return Tipo de la entidad.
+		*/
+		const std::string &getType() const { return _type; }
+
+
+		// =======================================================================
+		//                               SETTERS
+		// =======================================================================
+
+
+		/**
+		Función estática que establece la cantidad de milisegundos que el tick
+		fijo procesa cada vez.
+
+		@param stepSize Número de milisegundos que el fixed tick procesa en cada
+		paso.
+		*/
+		static void setFixedTimeStep(unsigned int stepSize) { _fixedTimeStep = stepSize; }
+
+		//__________________________________________________________________
+
+		/**
+		Setea el id de una entidad.
+		*/
+		void setEntityID(TEntityID id) { _entityID = id; }
+
+		//__________________________________________________________________
+
+		/**
+		Setea a una entidad como jugador (o no).
+
+		@param isPlayer true si queremos que la entidad sea un player.
+		*/
+		void setIsPlayer(bool isPlayer) { _isPlayer = isPlayer; }
+
+		//__________________________________________________________________
+
+		/**
+		Setea un nombre de entidad.
+
+		@param name Nombre que queremos asignar a la entidad.
+		*/
+		void setName(const std::string& name) { this->_name = name; }
+
 
 	protected:
 
-		static unsigned int _fixedTimeStep;
 
-		unsigned int _acumTime;
+		// =======================================================================
+		//                           CLASES AMIGAS
+		// =======================================================================
+
 
 		/**
 		Clase amiga que crea y destruye objetos de la clase.
 		*/
 		friend class CEntityFactory;
+
+		/**
+		Clase amiga que puede modificar los atributos (en concreto se 
+		usa para modificar el mapa.
+		*/
+		friend class CMap;
+
+
+		// =======================================================================
+		//                      CONSTRUCTORES Y DESTRUCTOR
+		// =======================================================================
+
 
 		/**
 		Constructor protegido de la clase (para crear CEntity debe
@@ -409,6 +521,8 @@ namespace Logic {
 		*/
 		CEntity(TEntityID entityID);
 
+		//__________________________________________________________________
+
 		/**
 		Destructor de la clase. Es un método protegido pues para
 		eliminar CEntity debe utilizarse la factoría
@@ -419,6 +533,19 @@ namespace Logic {
 		componentes no pueden utilizar el mapa.
 		*/
 		~CEntity();
+
+
+		// =======================================================================
+		//                         MÉTODOS PROTEGIDOS
+		// =======================================================================
+		
+
+		/**
+		Método que destruye todos los componentes de una entidad (usando delete).
+		*/
+		void destroyAllComponents();
+
+		//__________________________________________________________________
 
 		/**
 		Inicialización del objeto Logic, utilizando la información extraída de
@@ -432,77 +559,79 @@ namespace Logic {
 		*/
 		bool spawn(CMap *map, const Map::CEntity *entity);
 
-		/**
-		Clase amiga que puede modificar los atributos (en concreto se 
-		usa para modificar el mapa.
-		*/
-		friend class CMap;
+		//__________________________________________________________________
 
 		/**
-		Identificador único de la entidad.
+		Llama al spawn de la entidad asignandole un nombre generado en tiempo
+		de ejecución (nombre de entidad + id).
+
+		@param map Mapa Logic en el que se registrará la entidad.
+		@param entity Información de construcción de la entidad leída del
+		fichero de disco.
+		@return Cierto si la inicialización ha sido satisfactoria.
 		*/
+		bool dynamicSpawn(CMap* map, Map::CEntity* entityInfo);
+
+
+		// =======================================================================
+		//                         MIEMBROS PROTEGIDOS
+		// =======================================================================
+
+
+		/**
+		Matriz de punteros a función que indican la traza a seguir dependiendo el
+		estado del componente. Evita hacer comprobaciones de ningún tipo.
+		*/
+		void (CEntity::*entityProcessMode[ComponentState::eMAX][TickMode::eMAX])(IComponent*, unsigned int, unsigned int);
+
+		/** Identificador único de la entidad. */
 		Logic::TEntityID _entityID;
-
-		//typedef std::map<CComponentID, IComponent*> IComponentMap;
+		
+		// typedef
 		typedef std::map<std::string, IComponent*> TComponentMap;
 
 		/**
-		 * Hash para indexar a los componentes que nos interesen.
-		 * OJO! Nunca usar esta estructura para recorrer secuencialmente
-		 * los componentes, para eso tenemos la lista de componentes (que
-		 * es mucho más eficiente en el recorrido secuencial).
-		 */
+		Hash para indexar a los componentes que nos interesen.
+		OJO! Nunca usar esta estructura para recorrer secuencialmente
+		los componentes, para eso tenemos la lista de componentes (que
+		es mucho más eficiente en el recorrido secuencial).
+		*/
 		TComponentMap _components;
 
+		// typedef
 		typedef std::list<IComponent*> TComponentList;
 
-		/** 
-		 * @Deprecated
-		 *
-		 * Lista de componentes usada para ejecutar los ticks. Lo ideal sería
-		 * utilizar una lista de prioridades (como por ejemplo un Fibonacci Heap)
-		 * para que se llame por orden a los ticks de los componentes.
-		 * De momento usaremos una lista teniendo cuidado de que los componentes
-		 * estén en el orden adecuado.
-		 */
+		/**
+		Lista de componentes usada para ejecutar los ticks. En el futuro
+		tendremos varias listas de prioridades.
+		*/
 		TComponentList _componentList;
 
-		void (CEntity::*entityProcessMode[ComponentState::eMAX][TickMode::eMAX])(IComponent*, unsigned int, unsigned int);
-
 		/**
-		Indica si la entidad está activa.
+		Variable de clase que indica el número de milisegundos que se procesan en cada
+		iteración del tick fijo.
 		*/
+		static unsigned int _fixedTimeStep;
+
+		/** Tiempo acumulado a tener en cuenta para el tick fijo. */
+		unsigned int _acumTime;
+
+		/** Indica si la entidad está activada. */
 		bool _activated;
 
-		/**
-		Tipo de la entidad declarado en el archivo blueprints.
-		*/
+		/** Tipo de la entidad declarado en el archivo blueprints. */
 		std::string _type;
 
-		/**
-		Nombre de la entidad.
-		*/
+		/** Nombre de la entidad. */
 		std::string _name;
 
-		/**
-		Mapa lógico donde está la entidad.
-		*/
+		/** Mapa lógico donde está la entidad. */
 		Logic::CMap *_map;
 
 		/**
 		Matriz de transformación de la entidad. Contiene posición y orientación.
 		*/
 		Matrix4 _transform;
-
-		/*
-		Posición de la entidad.
-		*
-		Vector3 _position;
-
-		/*
-		Posición de la entidad.
-		*
-		float _orientation;
 
 		/**
 		Atributo que indica si la entidad es el jugador; por defecto
@@ -513,35 +642,152 @@ namespace Logic {
 
 	private:
 
+
+		// =======================================================================
+		//              MÉTODOS PARA EL PROCESAMIENTO DE COMPONENTES
+		// =======================================================================
+
+
+		/**
+		Inicializa los punteros de la matriz de punteros a función.
+		*/
 		void initFunctionPointers();
 
+		//__________________________________________________________________
 
+		/**
+		Este caso no debería darse nunca ya que un componente que no tiene tick no debería
+		ponerse a dormir.
+
+		@param component Componente a procesar.
+		@param msecs Milisegundos transcurridos desde el último frame.
+		@steps Número de steps para el fixed tick.
+		*/
 		void sleepingWithoutTick(IComponent* component, unsigned int msecs, unsigned int steps);
 
+		//__________________________________________________________________
+
+		/**
+		Si hay mensajes los procesa y despierta al componente. Si no los hay deja al componente
+		dormido (sin tick).
+
+		@param component Componente a procesar.
+		@param msecs Milisegundos transcurridos desde el último frame.
+		@steps Número de steps para el fixed tick.
+		*/
 		void sleepingWithTick(IComponent* component, unsigned int msecs, unsigned int steps);
 
+		//__________________________________________________________________
+
+		/**
+		Si hay mensajes los procesa y despierta al componente. Si no los hay deja al componente
+		dormido (sin fixed tick).
+
+		@param component Componente a procesar.
+		@param msecs Milisegundos transcurridos desde el último frame.
+		@steps Número de steps para el fixed tick.
+		*/
 		void sleepingWithFixedTick(IComponent* component, unsigned int msecs, unsigned int steps);
 
+		//__________________________________________________________________
+
+		/**
+		Si hay mensajes los procesa y despierta al componente. Si no los hay deja al componente
+		dormido (sin tick ni fixed tick).
+
+		@param component Componente a procesar.
+		@param msecs Milisegundos transcurridos desde el último frame.
+		@steps Número de steps para el fixed tick.
+		*/
 		void sleepingWithBothTicks(IComponent* component, unsigned int msecs, unsigned int steps);
 
+		//__________________________________________________________________
 
+		/**
+		Si hay mensajes los procesa. No ejecuta tick.
 
+		@param component Componente a procesar.
+		@param msecs Milisegundos transcurridos desde el último frame.
+		@steps Número de steps para el fixed tick.
+		*/
 		void awakeWithoutTick(IComponent* component, unsigned int msecs, unsigned int steps);
 
+		//__________________________________________________________________
+
+		/**
+		Si hay mensajes los procesa y ejecuta el tick.
+
+		@param component Componente a procesar.
+		@param msecs Milisegundos transcurridos desde el último frame.
+		@steps Número de steps para el fixed tick.
+		*/
 		void awakeWithTick(IComponent* component, unsigned int msecs, unsigned int steps);
 
+		//__________________________________________________________________
+
+		/**
+		Si hay mensajes los procesa y ejecuta el fixed tick.
+
+		@param component Componente a procesar.
+		@param msecs Milisegundos transcurridos desde el último frame.
+		@steps Número de steps para el fixed tick.
+		*/
 		void awakeWithFixedTick(IComponent* component, unsigned int msecs, unsigned int steps);
 
+		//__________________________________________________________________
+
+		/**
+		Si hay mensajes los procesa y ejecuta el tick y el fixed tick.
+
+		@param component Componente a procesar.
+		@param msecs Milisegundos transcurridos desde el último frame.
+		@steps Número de steps para el fixed tick.
+		*/
 		void awakeWithBothTicks(IComponent* component, unsigned int msecs, unsigned int steps);
 
+		//__________________________________________________________________
 
+		/**
+		Este caso no debería darse nunca. Tener un componente que no procesa mensajes ni
+		tiene tick es como tenerlo desactivado.
 
+		@param component Componente a procesar.
+		@param msecs Milisegundos transcurridos desde el último frame.
+		@steps Número de steps para el fixed tick.
+		*/
 		void busyWithoutTick(IComponent* component, unsigned int msecs, unsigned int steps);
 
+		//__________________________________________________________________
+
+		/**
+		Ejecuta el tick pero no procesa mensajes.
+
+		@param component Componente a procesar.
+		@param msecs Milisegundos transcurridos desde el último frame.
+		@steps Número de steps para el fixed tick.
+		*/
 		void busyWithTick(IComponent* component, unsigned int msecs, unsigned int steps);
 
+		//__________________________________________________________________
+
+		/**
+		Ejecuta el fixed tick pero no procesa mensajes.
+
+		@param component Componente a procesar.
+		@param msecs Milisegundos transcurridos desde el último frame.
+		@steps Número de steps para el fixed tick.
+		*/
 		void busyWithFixedTick(IComponent* component, unsigned int msecs, unsigned int steps);
 
+		//__________________________________________________________________
+
+		/**
+		Ejecuta el tick y el fixed tick pero no procesa mensajes.
+
+		@param component Componente a procesar.
+		@param msecs Milisegundos transcurridos desde el último frame.
+		@steps Número de steps para el fixed tick.
+		*/
 		void busyWithBothTicks(IComponent* component, unsigned int msecs, unsigned int steps);
 
 	}; // class CEntity

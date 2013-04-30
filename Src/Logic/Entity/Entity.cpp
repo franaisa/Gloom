@@ -71,7 +71,6 @@ namespace Logic
 		if(map->getEntityByName(newEntityInfo->getName()))
 			newEntityInfo->setName(entityInfo->getStringAttribute("name") + nameId);
 
-
 		return spawn(map, newEntityInfo);
 	}
 
@@ -202,7 +201,7 @@ namespace Logic
 		for(; it != _componentList.end(); ++it) {
 			component = *it;
 			if( component->isActivated() ) {
-				component->onStart();
+				component->start();
 			}
 		}
 	}
