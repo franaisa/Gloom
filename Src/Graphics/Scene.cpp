@@ -55,6 +55,8 @@ namespace Graphics
 		_camera = new CCamera(name,this);
 		_name = name;
 
+		_compositorManager = Ogre::CompositorManager::getSingletonPtr();
+
 	} // CScene
 
 	//--------------------------------------------------------
@@ -127,7 +129,7 @@ namespace Graphics
 		/*/
 		_sceneMgr->setAmbientLight(Ogre::ColourValue(0.7f,0.7f,0.7f));
 		/* */
-		_compositorManager = Ogre::CompositorManager::getSingletonPtr();
+		
 		
 		_compositorManager->addCompositor(_camera->getOgreCamera()->getViewport(), "Glow");
 
@@ -136,11 +138,11 @@ namespace Graphics
 		_compositorManager->addCompositor(_camera->getOgreCamera()->getViewport(), "Motion Blur");
 		_compositorManager->setCompositorEnabled(_camera->getOgreCamera()->getViewport(), "Motion Blur", true);
 
-		_compositorManager->addCompositor(_camera->getOgreCamera()->getViewport(), "Old TV");
+		/*_compositorManager->addCompositor(_camera->getOgreCamera()->getViewport(), "Old TV");
 		_compositorManager->setCompositorEnabled(_camera->getOgreCamera()->getViewport(), "Old TV", true);
 
 		_compositorManager->addCompositor(_camera->getOgreCamera()->getViewport(), "Old Movie");
-		_compositorManager->setCompositorEnabled(_camera->getOgreCamera()->getViewport(), "Old Movie", true);
+		_compositorManager->setCompositorEnabled(_camera->getOgreCamera()->getViewport(), "Old Movie", true);*/
 
 		_glowMaterialListener = new GlowMaterialListener();
 		Ogre::MaterialManager::getSingletonPtr()->addListener(_glowMaterialListener);
@@ -264,6 +266,10 @@ namespace Graphics
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	void CScene::createCompositor(std::string &name){
+
+		if(_compositorList.find(name)!=_compositorList.end())
+			return;
+
 		CCompositorListener* newListener = new CCompositorListener();
 		_compositorManager->addCompositor(_camera->getOgreCamera()->getViewport(), name)->addListener(newListener);
 		std::pair<std::string,CCompositorListener*> aux(name,newListener);

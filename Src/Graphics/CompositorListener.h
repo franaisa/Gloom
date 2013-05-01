@@ -62,7 +62,11 @@ namespace Graphics
 		void notifyMaterialRender(Ogre::uint32 pass_id, Ogre::MaterialPtr &mat);
 
 	protected:
-		
+		/**
+		Método que setea las variables modificadas al material del compositor
+
+		OJO, no soporta multipasada, hay que pensar si es necesario para el futuro
+		*/
 		void necesaryOperations(int pass_id, Ogre::MaterialPtr &mat);
 		/**
 		tipo para facilitad el par
