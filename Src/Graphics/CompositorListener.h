@@ -48,27 +48,26 @@ namespace Graphics
 	class CCompositorListener:public Ogre::CompositorInstance::Listener
 	{
 	public:
+
 		CCompositorListener();
 
 		~CCompositorListener();
 
-		void addCompositor(const std::string &nameCompositor, int id);
-
 		void deleteCompositor(const std::string &nameCompositor);
 
-		bool inputCompositor(const std::string &nameCompositor, const std::string &nameVar, int value);
+		void inputCompositor(const std::string &nameVar, float value);
 
 		void notifyMaterialSetup(Ogre::uint32 pass_id, Ogre::MaterialPtr &mat);
 
 		void notifyMaterialRender(Ogre::uint32 pass_id, Ogre::MaterialPtr &mat);
 
 	protected:
-
+		
 		void necesaryOperations(int pass_id, Ogre::MaterialPtr &mat);
 		/**
 		tipo para facilitad el par
 		*/
-		typedef std::pair<std::string, int> TkeyValue;
+		typedef std::map<std::string, float> TVariables;
 
 		/**
 		mapa para guardar por cada nombre su identificador
@@ -78,7 +77,7 @@ namespace Graphics
 		/**
 		multimapa con las variables que tendra un compositor, es un multimapa por que puede tener varias variables
 		*/
-		std::map < int, TkeyValue >  _compositorsAndVariables;
+		TVariables _compositorVariables;
 
 		//std::map < int, TkeyValue > _compositorsAndVariables;
 
@@ -87,6 +86,7 @@ namespace Graphics
 
 		Ogre::CompositorManager *_compositorManager;
 		Ogre::Viewport *_cameraViewport;
+
 	};
 
 } // namespace Graphics

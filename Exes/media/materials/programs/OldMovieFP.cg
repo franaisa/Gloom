@@ -1,0 +1,39 @@
+sampler RT : register(s0);
+sampler Texture2 : register(s1);
+sampler SepiaTx : register(s2);
+
+float2 calcSpriteAddr(float2 texCoord, float DirtFrequency, float period)
+{
+   return texCoord + tex1D(Texture2, period  * DirtFrequency);
+}
+
+float4 OldMovie_ps (float2 texCoord  : TEXCOORD0,
+				uniform float time_cycle_period,
+				uniform float flicker,
+				uniform float DirtFrequency,
+				uniform float3 luminance,
+				uniform float frameJitter
+				) : COLOR
+{
+
+   // get sprite address
+   float2 spriteAddr = texCoord; //calcSpriteAddr(texCoord, DirtFrequency, time_cycle_period);
+
+    // add some dark and light splotches to the film
+
+   // convert color to base luminance
+   float4 base = tex2D(RT, texCoord + float2(0, spriteAddr.y * frameJitter));
+   float lumi = dot(base.rgb, luminance);
+   // randomly shift luminance
+   // tone map luminance
+   base.rgb = tex1D(SepiaTx, lumi );
+
+   // calc flicker speed
+   float darken = frac(flicker * time_cycle_period);
+
+   // we want darken to cycle between 0.6 and 1.0
+   darken = abs(darken - 0.5f) * 0.4f + 0.6f;
+   // composite dirt onto film
+   return base * darken;
+}
+
