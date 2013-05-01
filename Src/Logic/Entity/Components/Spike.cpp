@@ -59,9 +59,8 @@ namespace Logic
 
 
 	
-	void CSpike::activate()
+	void CSpike::onActivate()
 	{
-		IComponent::activate();
 		_timer=0;
 		_active=false;
 		_wait=true;
@@ -103,7 +102,7 @@ namespace Logic
 	} // process
 	//----------------------------------------------------------
 
-	void CSpike::tick(unsigned int msecs)
+	void CSpike::onTick(unsigned int msecs)
 	{
 		Vector3 toDirection;
 		_timer+=msecs;

@@ -36,24 +36,12 @@ namespace Logic
 		*/
 		CAudio() : IComponent(){};
 
-		/**
-		Método llamado en cada frame que actualiza el estado del componente de la vida,
-		<p>
-		la cual bajará cada n milisegundos.
-
-		@param msecs Milisegundos transcurridos desde el último tick.
-		*/
-		virtual void tick(unsigned int msecs);
+		
 		/**
 		Inicialización del componente usando la descripción de la entidad que hay en 
 		el fichero de mapa.
 		*/
 		virtual bool spawn(CEntity* entity, CMap *map, const Map::CEntity *entityInfo);
-
-		/**
-		Metodo que se llama al activar el componente.
-		*/
-		virtual void activate();
 
 		/**
 		Este componente sólo acepta mensajes de tipo AUDIO.
@@ -67,6 +55,14 @@ namespace Logic
 
 	protected:
 
+		/**
+		Método llamado en cada frame que actualiza el estado del componente de la vida,
+		<p>
+		la cual bajará cada n milisegundos.
+
+		@param msecs Milisegundos transcurridos desde el último tick.
+		*/
+		virtual void onTick(unsigned int msecs);
 	// VACIO
 
 	}; // class CAudio

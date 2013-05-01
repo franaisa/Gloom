@@ -81,14 +81,14 @@ namespace Logic
 
 		@return true si todo ha ido correctamente.
 		*/
-		virtual void activate();
+		virtual void onActivate();
 
 		/**
 		Método que desactiva el componente.
 
 		@return true si todo ha ido correctamente.
 		*/
-		virtual void deactivate();
+		virtual void onDeactivate();
 		
 		////////////////////////////////////////
 		// Métodos de CAnimatedEntityListener //

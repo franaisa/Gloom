@@ -1,0 +1,34 @@
+fragment_program berserkCompositorHLSL hlsl
+{
+   source berserkCompositor.hlsl
+   entry_point vsMain
+   default_params
+   {
+      param_named radius float 10
+      param_named darkness float 5
+   }
+   profiles ps_2_x
+}
+
+material berserkCompositor
+{
+   technique
+   {
+      pass
+      {
+         depth_check off
+
+         fragment_program_ref berserkCompositorHLSL
+         {
+         }
+
+         texture_unit RT
+         {
+            tex_coord_set 0
+            tex_address_mode clamp
+            filtering linear linear linear
+         }
+      }
+   }
+}
+

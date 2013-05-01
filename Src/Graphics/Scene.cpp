@@ -142,8 +142,10 @@ namespace Graphics
 		_compositorManager->setCompositorEnabled(_camera->getOgreCamera()->getViewport(), "Old TV", true);
 
 		_compositorManager->addCompositor(_camera->getOgreCamera()->getViewport(), "Old Movie");
-		_compositorManager->setCompositorEnabled(_camera->getOgreCamera()->getViewport(), "Old Movie", true);*/
-
+		_compositorManager->setCompositorEnabled(_camera->getOgreCamera()->getViewport(), "Old Movie", true);
+		_compositorManager->addCompositor(_camera->getOgreCamera()->getViewport(), "berserkCompositor");
+		_compositorManager->setCompositorEnabled(_camera->getOgreCamera()->getViewport(), "berserkCompositor", true);
+		*/
 		_glowMaterialListener = new GlowMaterialListener();
 		Ogre::MaterialManager::getSingletonPtr()->addListener(_glowMaterialListener);
 

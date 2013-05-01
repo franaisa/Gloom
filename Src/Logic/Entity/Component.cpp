@@ -6,46 +6,39 @@ Contiene la implementación de la clase base de los componentes.
 @see Logic::IComponent
 @see Logic::CCommunicationPort
 
-@author David Llansó
-@date Julio, 2010
+@author Francisco Aisa García
+@date Abril, 2013
 */
 
 #include "Component.h"
-#include "Entity.h"
 #include "Logic/Server.h"
 
-namespace Logic 
-{
+namespace Logic {
 	IComponent::IComponent() : _entity(0), 
-							   _isActivated(true), 
-							   updater(&IComponent::onStartSetup) {
+							   _isActivated(false),
+							   _state(ComponentState::eAWAKE),
+							   _tickMode(TickMode::eBOTH) {
 
+		// Espia de debug
 		Logic::CServer::getSingletonPtr()->COMPONENT_CONSTRUCTOR_COUNTER += 1;
 	}
+
+	//__________________________________________________________________
 
 	IComponent::~IComponent() {
 		Logic::CServer::getSingletonPtr()->COMPONENT_DESTRUCTOR_COUNTER += 1;
 	}
 
-	//---------------------------------------------------------
+	//__________________________________________________________________
 
 	bool IComponent::spawn(CEntity *entity, CMap *map, const Map::CEntity *entityInfo) {
 		_entity = entity;
 		return true;
-
 	} // spawn
 
-	//---------------------------------------------------------
+	//__________________________________________________________________
 	
-	void IComponent::activateSetup() {
-		// Seteamos el puntero para que se ejecute onStart al comenzar
-		updater = &IComponent::onStartSetup;
-		// Llamamos al activar que los hijos deben redefinir
-		activate();
-	}
-
-	//---------------------------------------------------------
-
+	//@deprecated -> estoy hay que implementarlo como dios manda
 	void IComponent::activate() {
 		if(_isActivated) return;
 		
@@ -56,43 +49,117 @@ namespace Logic
 		
 		_isActivated = true;
 		clearMessages();
+
+		// Llamamos al activar que los hijos deben redefinir
+		onActivate();
 	}
 
-	//---------------------------------------------------------
+	//__________________________________________________________________
+
+	void IComponent::onActivate() {
+		// Redefinir por los hijos
+	}
+
+	//__________________________________________________________________
 
 	void IComponent::deactivate() {
 		_isActivated = false;
+		onDeactivate();
 	}
 
-	//---------------------------------------------------------
+	//__________________________________________________________________
 
-	void IComponent::onStartSetup(unsigned int msecs) {
-		// Fijamos el puntero a funcion al tick
-		updater = &IComponent::tickSetup;
-		// Procesamos los mensajes recibidos
-		processMessages();
-		// Ejecutamos el onStart definido por el componente hijo
-		onStart(msecs);
-	}
-
-	//---------------------------------------------------------
-
-	void IComponent::onStart(unsigned int msecs) {
+	void IComponent::onDeactivate() {
 		// Los hijos deben redefinir su comportamiento
 	}
 
-	//---------------------------------------------------------
+	//__________________________________________________________________
 
-	void IComponent::tickSetup(unsigned int msecs) {
-		// Procesamos los mensajes que nos hayan llegado
-		processMessages();
-		tick(msecs);
+	void IComponent::onStart() {
+		// Los hijos deben redefinir su comportamiento
 	}
 
-	//---------------------------------------------------------
+	//__________________________________________________________________
 
-	void IComponent::tick(unsigned int msecs) {
+	void IComponent::onTick(unsigned int msecs) {
+		if(_tickMode == TickMode::eBOTH) {
+			_tickMode = TickMode::eFIXED_TICK;
+		}
+		else if(_tickMode == TickMode::eTICK) {
+			_tickMode = TickMode::eNONE;
+		}
+
+	}
+
+	//__________________________________________________________________
+
+	void IComponent::onFixedTick(unsigned int msecs) {
+		if(_tickMode == TickMode::eBOTH) {
+			_tickMode = TickMode::eTICK;
+		}
+		else if(_tickMode == TickMode::eFIXED_TICK) {
+			_tickMode = TickMode::eNONE;
+		}
+	}
+
+	//__________________________________________________________________
+
+	void IComponent::putToSleep() {
+		_state = ComponentState::eSLEEPING;
+
+		onSleep();
+	}
+
+	//__________________________________________________________________
+
+	void IComponent::onSleep() {
 		// Los hijos deben redefinir su comportamiento
-	} // tick
+	}
+
+	//__________________________________________________________________
+
+	void IComponent::wakeUp() {
+		if(_state == ComponentState::eSLEEPING) {
+			_state = ComponentState::eAWAKE;
+
+			onWake();
+		}
+	}
+
+	//__________________________________________________________________
+
+	void IComponent::onWake() {
+		// Los hijos deben redefinir su comportamiento
+	}
+
+	//__________________________________________________________________
+
+	void IComponent::stayBusy() {
+		_state = ComponentState::eBUSY;
+
+		onBusy();
+	}
+
+	//__________________________________________________________________
+
+	void IComponent::onBusy() {
+		// Los hijos deben redefinir su comportamiento
+	}
+
+	//__________________________________________________________________
+
+	void IComponent::stayAvailable() {
+		if(_state == ComponentState::eBUSY) {
+			_state = ComponentState::eAWAKE;
+
+			onAvailable();
+		}
+	}
+
+	//__________________________________________________________________
+
+	void IComponent::onAvailable() {
+		// Los hijos deben redefinir su comportamiento
+	}
 
 } // namespace Logic

@@ -27,7 +27,7 @@ namespace Logic {
 	//________________________________________________________________________
 
 	CSpectatorController::CSpectatorController() : _frictionCoef(0.95f),
-												   _acceleration(0.025f), 
+												   _acceleration(0.018f), 
 												   _maxVelocity(2.0f) {
 
 		// Inicializamos el array que contiene los vectores
@@ -60,8 +60,7 @@ namespace Logic {
 
 	//________________________________________________________________________
 
-	void CSpectatorController::activate() {
-		IComponent::activate(); // Necesario para el onStart
+	void CSpectatorController::onActivate() {
 		_displacementDir = _momentum = Vector3::ZERO;
 	} // activate
 
@@ -103,7 +102,7 @@ namespace Logic {
 
 	//________________________________________________________________________
 
-	void CSpectatorController::onStart(unsigned int msecs) {
+	void CSpectatorController::onStart() {
 		// Nos quedamos con el puntero al componente CPhysicController
 		// que es el que realmente se encargará de desplazar al controlador
 		// del jugador.
@@ -113,7 +112,7 @@ namespace Logic {
 
 	//________________________________________________________________________
 
-	void CSpectatorController::tick(unsigned int msecs) {
+	void CSpectatorController::onFixedTick(unsigned int msecs) {
 		// Calculamos el vector de desplazamiento
 		estimateMotion(msecs);
 
@@ -159,18 +158,18 @@ namespace Logic {
 
 		// s = u · t + 1/2 a · t^2 <- Formula del desplazamiento
 		if(_displacementDir.z == 0) {
-			_momentum += Vector3(1, 0, 1) * estimateMotionDirection() * _acceleration * msecs * 0.5f;
+			_momentum += Vector3(1, 0, 1) * estimateMotionDirection() * _acceleration * msecs * msecs * 0.5f;
 
 			if(_displacementDir.y != 0)
-				_momentum += Vector3(0, 1, 0) * _displacementDir * _acceleration * msecs * 0.5f;
+				_momentum += Vector3(0, 1, 0) * _displacementDir * _acceleration * msecs * msecs * 0.5f;
 		}
 		else {
 			if(_displacementDir.y == 0) {
-				_momentum += estimateMotionDirection() * _acceleration * msecs * 0.5f;
+				_momentum += estimateMotionDirection() * _acceleration * msecs * msecs * 0.5f;
 			}
 			else {
-				_momentum += Vector3(1, 0, 1) * estimateMotionDirection() * _acceleration * msecs * 0.5f;
-				_momentum += Vector3(0, 1, 0) * _displacementDir * _acceleration * msecs * 0.5f;
+				_momentum += Vector3(1, 0, 1) * estimateMotionDirection() * _acceleration * msecs * msecs * 0.5f;
+				_momentum += Vector3(0, 1, 0) * _displacementDir * _acceleration * msecs * msecs * 0.5f;
 			}
 		}
 

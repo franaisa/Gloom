@@ -96,7 +96,7 @@ namespace Logic {
 
 	//__________________________________________________________________
 
-	void CScreamerServer::tick(unsigned int msecs) {
+	void CScreamerServer::onTick(unsigned int msecs) {
 		// Si la habilidad primaria está siendo usada
 		if(_primarySkillIsActive) {
 			// Deberia funcionar este bucle como el de la fisica? restando
@@ -145,8 +145,8 @@ namespace Logic {
 
 	//________________________________________________________________________
 
-	void CScreamerServer::activate() {
-		CPlayerClass::activate();
+	void CScreamerServer::onActivate() {
+		CPlayerClass::onActivate();
 
 		// Ñapa temporal para el ideame
 		// Cambiamos el color del marine en funcion de la clase con un changeMaterial

@@ -81,15 +81,6 @@ namespace Logic {
 		*/
 		virtual void process(const std::shared_ptr<CMessage>& message);
 
-		//__________________________________________________________________
-
-		/**
-		Método llamado en cada frame.
-
-		@param msecs Milisegundos transcurridos desde el último tick.
-		*/
-		virtual void tick(unsigned int msecs);
-
 		
 		// =======================================================================
 		//                  METODOS HEREDADOS DE CPlayerClass
@@ -106,6 +97,16 @@ namespace Logic {
 
 		/** Habilidad por definir. */
 		virtual void secondarySkill();
+
+
+	protected:
+
+		/**
+		Método llamado en cada frame.
+
+		@param msecs Milisegundos transcurridos desde el último tick.
+		*/
+		virtual void onTick(unsigned int msecs);
 
 
 	private:

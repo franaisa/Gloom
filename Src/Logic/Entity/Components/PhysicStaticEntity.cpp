@@ -86,12 +86,6 @@ void CPhysicStaticEntity::process(const std::shared_ptr<CMessage>& message) {
 			break;
 	}
 }
-//---------------------------------------------------------
-
-
-void CPhysicStaticEntity::tick(unsigned int msecs) {
-
-}
 
 //---------------------------------------------------------
 

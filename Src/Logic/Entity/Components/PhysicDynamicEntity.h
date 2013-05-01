@@ -72,18 +72,6 @@ namespace Logic {
 		virtual void process(const std::shared_ptr<CMessage>& message);
 
 		/**
-		Este método se invoca en cada ciclo de la simulación y hace lo siguiente:
-		<ul>
-		<li> Si la entidad física es de tipo estático no hace nada. </li>
-		<li> Si la entidad física es de tipo dinámico actualiza la posición y rotación de 
-		     la entidad lógica usando la información proporcionada por el motor de física. </li>
-		<li> Si la entidad física es de tipo cinemático, además solicita al motor de física
-		     que mueva la entidad de acuerdo al último mensaje KINEMATIC_MOVE recibido. </li>
-		</ul>
-		*/
-		virtual void tick(unsigned int msecs);
-
-		/**
 		Se invoca cuando se produce una colisión entre una entidad física y un trigger.
 		*/
 		virtual void onTrigger (IPhysics *otherComponent, bool enter);
@@ -113,6 +101,20 @@ namespace Logic {
 		void deactivateSimulation();
 
 		void activateSimulation();
+
+	protected:
+
+		/**
+		Este método se invoca en cada ciclo de la simulación y hace lo siguiente:
+		<ul>
+		<li> Si la entidad física es de tipo estático no hace nada. </li>
+		<li> Si la entidad física es de tipo dinámico actualiza la posición y rotación de 
+		     la entidad lógica usando la información proporcionada por el motor de física. </li>
+		<li> Si la entidad física es de tipo cinemático, además solicita al motor de física
+		     que mueva la entidad de acuerdo al último mensaje KINEMATIC_MOVE recibido. </li>
+		</ul>
+		*/
+		virtual void onTick(unsigned int msecs);
 
 	private:
 

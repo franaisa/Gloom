@@ -171,13 +171,19 @@ namespace Logic {
 
 	//---------------------------------------------------------
 
-	bool CServer::activateMap() 
-	{
+	bool CServer::activateMap() {
 		_gameSpawnManager->activate();
 		_gameNetMsgManager->activate();
 		_guiManager->activate();
-		return _map->activate();
 
+		// Activamos el mapa
+		bool success = _map->activate();
+		// Si no ha habido problemas, ejecutamos
+		// el start de todas las entidades
+		if(success)
+			_map->start();
+
+		return success;
 
 	} // activateMap
 
@@ -194,16 +200,21 @@ namespace Logic {
 
 	//---------------------------------------------------------
 
-	void CServer::tick(unsigned int msecs) 
-	{
-		//tick de logica
+	void CServer::tick(unsigned int msecs) {
+		// Hacemos el tick al gestor del mapa.
 		_map->tick(msecs);
+
 		//_guiManager->tick(msecs);
 		//tick de GUI
-
 
 		// Eliminamos las entidades que se han marcado para ser eliminadas.
 		Logic::CEntityFactory::getSingletonPtr()->deleteDefferedEntities();
 	} // tick
+
+	//---------------------------------------------------------
+
+	void CServer::setFixedTimeStep(unsigned int stepSize) {
+		_map->setFixedTimeStep(stepSize);
+	}
 
 } // namespace Logic

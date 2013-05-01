@@ -22,7 +22,7 @@ namespace Logic{
 		return true;
 	} // spawn
 
-	void CLocalShadow::activate(){
+	void CLocalShadow::onActivate(){
 		_distorsion = "Old TV";
 		_scene->createCompositor(_distorsion);
 		_scene->setCompositorVisible(_distorsion, false);

@@ -83,8 +83,7 @@ namespace Logic {
 
 	//________________________________________________________________________
 
-	void CAvatarController::activate() {
-		IComponent::activate(); // Necesario para el onStart
+	void CAvatarController::onActivate() {
 		_displacementDir = _momentum = Vector3::ZERO;
 	} // activate
 
@@ -143,7 +142,7 @@ namespace Logic {
 
 	//________________________________________________________________________
 
-	void CAvatarController::onStart(unsigned int msecs) {
+	void CAvatarController::onStart() {
 		// Para evitar overhead de mensajes nos quedamos con el puntero al 
 		// componente CPhysicController que es el que realmente se encargará 
 		// de desplazar al controlador del jugador.
@@ -153,7 +152,7 @@ namespace Logic {
 
 	//________________________________________________________________________
 
-	void CAvatarController::tick(unsigned int msecs) {
+	void CAvatarController::onFixedTick(unsigned int msecs) {
 		// Calculamos el vector de desplazamiento teniendo en cuenta
 		// si estamos en el aire o en el suelo
 		Vector3 displacement = _touchingGround ? estimateGroundMotion(msecs) : estimateAirMotion(msecs);
