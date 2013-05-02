@@ -152,7 +152,7 @@ namespace Logic {
 		float yaw=Math::fromRadiansToDegrees(_entity->getYaw())+180; //+180 porque esta del reves el modelo cohete	
 		float pitch=360-Math::fromRadiansToDegrees(_entity->getPitch());
 		CEntity* rocket = CEntityFactory::getSingletonPtr()->createEntityWithPositionAndOrientation(
-			entityInfoRocket, Logic::CServer::getSingletonPtr()->getMap(), separationPoint, yaw, pitch);
+			entityInfoRocket, Logic::CServer::getSingletonPtr()->getMap(), separationPoint, yaw, pitch, false);
 		assert(rocket != NULL);
 		rocket->activate();
 		rocket->start();

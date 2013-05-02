@@ -148,7 +148,7 @@ namespace Logic {
 		float yaw=Math::fromRadiansToDegrees(_entity->getYaw());
 		float pitch=360-Math::fromRadiansToDegrees(_entity->getPitch());
 		CEntity* grenade = CEntityFactory::getSingletonPtr()->createEntityWithPositionAndOrientation(
-			entityInfoGrenade, Logic::CServer::getSingletonPtr()->getMap(), separationPoint, yaw, pitch);
+			entityInfoGrenade, Logic::CServer::getSingletonPtr()->getMap(), separationPoint, yaw, pitch, false);
 		assert(grenade != NULL);
 		grenade->activate();
 		grenade->start();
