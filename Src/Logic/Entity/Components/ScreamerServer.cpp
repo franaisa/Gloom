@@ -97,6 +97,8 @@ namespace Logic {
 	//__________________________________________________________________
 
 	void CScreamerServer::onTick(unsigned int msecs) {
+		CPlayerClass::onTick(msecs);
+
 		// Si la habilidad primaria está siendo usada
 		if(_primarySkillIsActive) {
 			// Deberia funcionar este bucle como el de la fisica? restando

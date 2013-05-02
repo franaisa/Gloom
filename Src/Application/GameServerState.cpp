@@ -184,6 +184,7 @@ namespace Application {
 
 				// Activamos al espectador
 				spectator->activate();
+				spectator->start();
 				//_playersMgr->setPlayerState(playerNetId, true);
 				break;
 			}
@@ -245,6 +246,7 @@ namespace Application {
 				serialMsg.serialize(player->getType(), false); // Clase del player
 
 				player->activate();
+				player->start();
 
 				Net::CManager::getSingletonPtr()->sendTo(playerNetId, serialMsg.getbuffer(), serialMsg.getSize());
 
