@@ -41,6 +41,7 @@ namespace Graphics
 	class CStaticEntity;
 	class CParticle;
 	class CompositorManager;
+	class CCompositorListener;
 }
 
 namespace Graphics 
@@ -165,12 +166,31 @@ namespace Graphics
 		*/
 		void createSceneNode(const std::string &name);
 
+		/**
+		Método que crea un compositor a partir de un nombre
+		NOTA IMPORTANTE: el nombre del compositor debe ser el nombre que tiene en su 
+		definición como compositor, sino petará.
+		Además, el compositor se guarda en una lista desde la que podremos acceder a
+		sus variables de shader y setearle parametros.
 
+		@param name El nombre del compositor que queremos crear.
+
+		*/
 		void createCompositor(std::string &name);
 
 		void setCompositorVisible(std::string &name, bool visible);
 
 		void destroyCompositor(std::string &name);
+
+		/**
+		Método que cambia una variable del compositor, se utiliza para cambiar el
+		material del compositor en tiempo de ejecución.
+
+		@param name El nombre del compositor que queremos referenciar.
+		@param variable La variable que queremos cambiar en el compositor.
+		@param value el valor que tiene la variable que estamos cambiando.
+		*/
+		void updateCompositorVariable(std::string name, std::string variable, float value);
 
 		/**
 		Añade una entidad al scene node. Dicha entidad tendra que tener el material las entradas:
@@ -367,6 +387,16 @@ namespace Graphics
 		Tipos para la lista de sceneNodes
 		*/
 		typedef std::map<std::string, Ogre::SceneNode *> TSceneNodeList;
+
+		/**
+		Tipo para la lista de compositor listeners
+		*/
+		typedef std::map<std::string, CCompositorListener *> TCompositorList;
+
+		/**
+		Lista de compositorListeners
+		*/
+		TCompositorList _compositorList;
 
 		/**
 		Lista de entidades estáticas.

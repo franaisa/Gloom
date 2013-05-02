@@ -246,7 +246,7 @@ Map = {
 		audioSpawn = "media/audio/spawn.wav",
 		audioNoAmmo = "media/audio/noammo.wav",
 		
-		primarySkillCooldown = 15,
+		primarySkillCooldown = 0.25,
 		secondarySkillCooldown = 3,
 		invisibilityDuration = 5,
 		

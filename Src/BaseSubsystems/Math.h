@@ -125,7 +125,7 @@ namespace Math
 	orientación en radianes.
 
 	@param orientation Orientación en radianes.
-	@return Vector unitario en el plano XZ.
+	@return Vector unitario en el plano ZX.
 	*/
 	static Vector3 getDirection(float orientation) 
 	{
@@ -138,7 +138,7 @@ namespace Math
 	orientación en radianes.
 
 	@param orientation Orientación en radianes.
-	@return Vector unitario en el plano XZ.
+	@return Vector unitario en el plano ZX.
 	*/
 	static Vector3 getDirectionPitch(float orientation) 
 	{
@@ -158,9 +158,9 @@ namespace Math
 		Matrix3 rotation;
 		transform.extract3x3Matrix(rotation);
 		Ogre::Radian yaw, pitch, roll;
-		rotation.ToEulerAnglesYXZ(yaw, pitch, roll);
+		rotation.ToEulerAnglesYZX(yaw, pitch, roll);
 		Ogre::Radian newYaw = yaw + Ogre::Radian(turn);
-		rotation.FromEulerAnglesYXZ(newYaw, pitch, roll);
+		rotation.FromEulerAnglesYZX(newYaw, pitch, roll);
 		transform = rotation;
 
 	} // yaw
@@ -176,7 +176,7 @@ namespace Math
 		Matrix3 rotation;
 		transform.extract3x3Matrix(rotation);
 		Ogre::Radian yaw, pitch, roll;
-		rotation.ToEulerAnglesYXZ(yaw, pitch, roll);
+		rotation.ToEulerAnglesYZX(yaw, pitch, roll);
 		return yaw.valueRadians();
 
 	} // getYaw
@@ -209,15 +209,15 @@ namespace Math
 		transform.extract3x3Matrix(rotation);
 		Ogre::Radian yaw, pitch, roll;
 		
-		rotation.ToEulerAnglesYXZ(yaw, pitch, roll);
+		rotation.ToEulerAnglesYZX(yaw, pitch, roll);
 		Ogre::Radian newPitch = pitch + Ogre::Radian(turn);
-		rotation.FromEulerAnglesYXZ(yaw, newPitch, roll);
+		rotation.FromEulerAnglesYZX(yaw, newPitch, roll);
 
 		/*
 <<<<<<< HEAD
-		rotation.ToEulerAnglesYXZ(yaw, pitch, roll);
+		rotation.ToEulerAnglesYZX(yaw, pitch, roll);
 		Ogre::Radian newPitch = pitch + Ogre::Radian(turn);
-		rotation.FromEulerAnglesYXZ(yaw, newPitch, roll);
+		rotation.FromEulerAnglesYZX(yaw, newPitch, roll);
 =======
 		rotation.ToEulerAnglesYZX(yaw, pitch, roll);
 
@@ -241,7 +241,7 @@ namespace Math
 		Matrix3 rotation;
 		transform.extract3x3Matrix(rotation);
 		Ogre::Radian yaw, pitch, roll;
-		rotation.ToEulerAnglesYXZ(yaw, pitch, roll);
+		rotation.ToEulerAnglesYZX(yaw, pitch, roll);
 		return pitch.valueRadians();
 
 	} // getPitch
@@ -274,9 +274,9 @@ namespace Math
 		Matrix3 rotation;
 		transform.extract3x3Matrix(rotation);
 		Ogre::Radian yaw, pitch, roll;
-		rotation.ToEulerAnglesYXZ(yaw, pitch, roll);
+		rotation.ToEulerAnglesYZX(yaw, pitch, roll);
 		Ogre::Radian newRoll = roll + Ogre::Radian(turn);
-		rotation.FromEulerAnglesYXZ(yaw, pitch, newRoll);
+		rotation.FromEulerAnglesYZX(yaw, pitch, newRoll);
 		transform = rotation;
 
 	} // roll
@@ -292,7 +292,7 @@ namespace Math
 		Matrix3 rotation;
 		transform.extract3x3Matrix(rotation);
 		Ogre::Radian yaw, pitch, roll;
-		rotation.ToEulerAnglesYXZ(yaw, pitch, roll);
+		rotation.ToEulerAnglesYZX(yaw, pitch, roll);
 		return roll.valueRadians();
 
 	} // getRoll
@@ -325,11 +325,11 @@ namespace Math
 		Matrix3 rotation;
 		transform.extract3x3Matrix(rotation);
 		Ogre::Radian yaw, pitch, roll;
-		rotation.ToEulerAnglesYXZ(yaw, pitch, roll);
+		rotation.ToEulerAnglesYZX(yaw, pitch, roll);
 		Ogre::Radian newPitch = pitch + Ogre::Radian(turnP);
 		Ogre::Radian newYaw = yaw + Ogre::Radian(turnY);
 
-		rotation.FromEulerAnglesYXZ(newYaw, newPitch, roll);
+		rotation.FromEulerAnglesYZX(newYaw, newPitch, roll);
 		transform = rotation;
 
 	} // pitchYaw
@@ -364,12 +364,12 @@ namespace Math
 		Matrix3 rotation;
 		transform.extract3x3Matrix(rotation);
 		Ogre::Radian yaw, pitch, roll;
-		rotation.ToEulerAnglesYXZ(yaw, pitch, roll);
+		rotation.ToEulerAnglesYZX(yaw, pitch, roll);
 		Ogre::Radian newPitch = pitch + Ogre::Radian(turnP);
 		Ogre::Radian newYaw = yaw + Ogre::Radian(turnY);
 		Ogre::Radian newRoll = roll + Ogre::Radian(turnR);
 
-		rotation.FromEulerAnglesYXZ(newYaw, newPitch, newRoll);
+		rotation.FromEulerAnglesYZX(newYaw, newPitch, newRoll);
 		transform = rotation;
 
 	} // pitch
@@ -393,11 +393,11 @@ namespace Math
 	} // setPitchYawRoll
 	
 	/**
-	Crea un vector unitario de dirección en el plano XZ a partir 
+	Crea un vector unitario de dirección en el plano ZX a partir 
 	de una matriz de transformación.
 
 	@param transform Matriz de transformación.
-	@return Vector unitario en el plano XZ.
+	@return Vector unitario en el plano ZX.
 	*/
 	static Vector3 getDirection(const Matrix4& transform) 
 	{

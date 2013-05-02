@@ -10,8 +10,9 @@ de una escena.
 
 @see Graphics::CScene
 
-@author David Llansó
-@date Julio, 2010
+@author Antonio Jesús Narvaez Corrales
+@author Rubén Mulero Guerrero
+@date February, 2010
 */
 
 #include "Particle.h"
@@ -41,6 +42,7 @@ de una escena.
 
 #include <OgreCompositorManager.h>
 #include <OgreMaterialManager.h>
+#include "CompositorListener.h"
 
 
 namespace Graphics 
@@ -52,6 +54,8 @@ namespace Graphics
 		_sceneMgr = _root->createSceneManager(Ogre::ST_INTERIOR, name);
 		_camera = new CCamera(name,this);
 		_name = name;
+
+		_compositorManager = Ogre::CompositorManager::getSingletonPtr();
 
 	} // CScene
 
@@ -125,7 +129,7 @@ namespace Graphics
 		/*/
 		_sceneMgr->setAmbientLight(Ogre::ColourValue(0.7f,0.7f,0.7f));
 		/* */
-		_compositorManager = Ogre::CompositorManager::getSingletonPtr();
+		
 		
 		_compositorManager->addCompositor(_camera->getOgreCamera()->getViewport(), "Glow");
 
@@ -134,8 +138,17 @@ namespace Graphics
 		_compositorManager->addCompositor(_camera->getOgreCamera()->getViewport(), "Motion Blur");
 		_compositorManager->setCompositorEnabled(_camera->getOgreCamera()->getViewport(), "Motion Blur", true);
 
+		/*_compositorManager->addCompositor(_camera->getOgreCamera()->getViewport(), "Old TV");
+		_compositorManager->setCompositorEnabled(_camera->getOgreCamera()->getViewport(), "Old TV", true);
+
+		_compositorManager->addCompositor(_camera->getOgreCamera()->getViewport(), "Old Movie");
+		_compositorManager->setCompositorEnabled(_camera->getOgreCamera()->getViewport(), "Old Movie", true);
+		_compositorManager->addCompositor(_camera->getOgreCamera()->getViewport(), "berserkCompositor");
+		_compositorManager->setCompositorEnabled(_camera->getOgreCamera()->getViewport(), "berserkCompositor", true);
+		*/
 		_glowMaterialListener = new GlowMaterialListener();
 		Ogre::MaterialManager::getSingletonPtr()->addListener(_glowMaterialListener);
+
 
 	} // activate
 
@@ -191,6 +204,8 @@ namespace Graphics
 
 	} // buildStaticGeometry
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 	void CScene::createSceneNode(const std::string &nameSceneNode){
 
 		Ogre::SceneNode *sceneNode = getSceneNode(nameSceneNode);
@@ -201,6 +216,8 @@ namespace Graphics
 		
 	}
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 	Ogre::SceneNode* CScene::getSceneNode(const std::string &nameSceneNode){
 		
 		std::map<std::string, Ogre::SceneNode*>::iterator aux = _sceneNodes.find(nameSceneNode); 
@@ -210,6 +227,9 @@ namespace Graphics
 		return aux->second;
 
 	}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 /*
 	bool CScene::addEntityToSceneNode(std::string &nameSceneNode, CEntity* entity){
 		Ogre::SceneNode *sceneNode = _sceneNodes.find(nameSceneNode)->second;
@@ -229,6 +249,8 @@ namespace Graphics
 	
 	}
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 	CParticle * CScene::createParticle(const std::string &unicName, const std::string &particleName, const Vector3 &position, const Vector3 &directionWithForce){
 
 		CParticle *particle = new CParticle(unicName, particleName);
@@ -243,16 +265,47 @@ namespace Graphics
 
 	}
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 	void CScene::createCompositor(std::string &name){
-		_compositorManager->addCompositor(_camera->getOgreCamera()->getViewport(), name);
+
+		if(_compositorList.find(name)!=_compositorList.end())
+			return;
+
+		CCompositorListener* newListener = new CCompositorListener();
+		_compositorManager->addCompositor(_camera->getOgreCamera()->getViewport(), name)->addListener(newListener);
+		std::pair<std::string,CCompositorListener*> aux(name,newListener);
+
+		//insert in the list for later access
+		_compositorList.insert(aux);
 	}
 
-	void CScene::setCompositorVisible(std::string &name, bool enabled){
-		_compositorManager->setCompositorEnabled(_camera->getOgreCamera()->getViewport(), name, enabled);
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	void CScene::setCompositorVisible(std::string &name, bool visible){
+		_compositorManager->setCompositorEnabled(_camera->getOgreCamera()->getViewport(), name, visible);
 	}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	void CScene::destroyCompositor(std::string &name){
-		_compositorManager->removeCompositor(_camera->getOgreCamera()->getViewport(),name);
+		_compositorManager->removeCompositor(_camera->getOgreCamera()->getViewport(), name);
+		//remove from our compositorList and delete listener
+		CCompositorListener* listenerToDelete = _compositorList[name];
+		_compositorList.erase(name);
+		delete listenerToDelete;
+	}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	void CScene::updateCompositorVariable(std::string name, std::string variable, float value){
+
+		//if not created, we do nothing
+		if(_compositorList.find(name)==_compositorList.end())
+			return;
+
+		_compositorList[name]->inputCompositor(variable, value);
+
 	}
 
 } // namespace Graphics
