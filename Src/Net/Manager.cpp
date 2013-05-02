@@ -6,8 +6,9 @@ la gestión de la red del juego.
 
 @see Net::CManager
 
-@author David Llansó
-@date Diciembre, 2010
+@author Francisco Aisa García
+@author Ruben Mulero Guerrero
+@date Febrero, 2013
 */
 
 #include "Manager.h"
@@ -21,6 +22,7 @@ la gestión de la red del juego.
 
 #include "factoriaredenet.h"
 #include "factoriared.h"
+#include "NetIdDispatcher.h"
 #include <cassert>
 
 namespace Net {
@@ -29,47 +31,46 @@ namespace Net {
 
 	//--------------------------------------------------------
 
-	CManager::CManager(): _factoriaRed(0), _servidorRed(0), _clienteRed(0),
-		_id(Net::ID::UNASSIGNED),_nextId(Net::ID::FIRSTCLIENT)
-	{
+	CManager::CManager(): _factoriaRed(0), 
+						  _servidorRed(0), 
+						  _clienteRed(0),
+						  _idDispatcher(0) {
+		
 		_instance = this;
-
 	} // CManager
 
 	//--------------------------------------------------------
 
-	CManager::~CManager()
-	{
-		_instance = 0;
+	CManager::~CManager() {
+		if(_idDispatcher != NULL) {
+			delete _idDispatcher;
+			_idDispatcher = NULL;
+		}
 
+		_instance = 0;
 	} // ~CManager
 	
 	//--------------------------------------------------------
 
-	bool CManager::Init()
-	{
+	bool CManager::Init() {
 		assert(!_instance && "Segunda inicialización de Net::CManager no permitida!");
 
 		new CManager();
 
-		if (!_instance->open())
-		{
+		if ( !_instance->open() ) {
 			Release();
 			return false;
 		}
 
 		return true;
-
 	} // Init
 
 	//--------------------------------------------------------
 
-	void CManager::Release()
-	{
+	void CManager::Release() {
 		assert(_instance && "Net::CManager no está inicializado!");
 
-		if(_instance)
-		{
+		if(_instance) {
 			_instance->close();
 			delete _instance;
 			_instance = 0;
@@ -79,23 +80,19 @@ namespace Net {
 
 	//--------------------------------------------------------
 
-	bool CManager::open()
-	{
+	bool CManager::open() {
 		 // Inicializamos la factoria de objetos de red
 		_factoriaRed = new Net::CFactoriaRedEnet();
 
 		return true;
-
 	} // open
 
 	//--------------------------------------------------------
 
-	void CManager::close() 
-	{
+	void CManager::close() {
 		deactivateNetwork();
 		if(_factoriaRed)
 			delete _factoriaRed;
-
 	} // close
 
 	//---------------------------------------------------------
@@ -109,7 +106,7 @@ namespace Net {
 
 			// Si somos el cliente enviamos la informacion al servidor
 			if(_clienteRed)
-				_clienteRed->sendData(getConnection(Net::ID::SERVER), data, longdata, 0, 1);
+				_clienteRed->sendData(getConnection(_idDispatcher->getServerId()), data, longdata, 0, 1);
 		}
 	} // send
 
@@ -124,7 +121,7 @@ namespace Net {
 
 			// Si somos el cliente enviamos la información al servidor
 			if(_clienteRed)
-				_clienteRed->sendData(getConnection(Net::ID::SERVER), data, longdata, 0, 1);
+				_clienteRed->sendData(getConnection(_idDispatcher->getServerId()), data, longdata, 0, 1);
 		}
 	} // send
 
@@ -174,6 +171,7 @@ namespace Net {
 					for(std::vector<IObserver*>::iterator iter = _observers.begin();iter != _observers.end();++iter)
 						(*iter)->disconnectionPacketReceived(paquete);
 					disconnect(paquete->getConexion());
+					//retornar id
 					break;
 			}
 			delete paquete;
@@ -183,14 +181,15 @@ namespace Net {
 
 	//---------------------------------------------------------
 
-	void CManager::activateAsServer(int port, int clients, unsigned int maxinbw, unsigned int maxoutbw)
-	{
+	void CManager::activateAsServer(int port, int clients, unsigned int maxinbw, unsigned int maxoutbw) {
+		_idDispatcher = new CNetIdDispatcher(clients);
+
 		//Creamos el servidor de red
 		_servidorRed = _factoriaRed->buildServidor();
 
 		_servidorRed->init(port,clients, maxinbw, maxoutbw);
 
-		_id = Net::ID::SERVER;
+		_id = _idDispatcher->getServerId();
 
 	} // activateAsServer
 
@@ -218,8 +217,8 @@ namespace Net {
 			return false;
 		
 		// Almacenamos esa conexión y le otorgamos un ID de red
-		connection->setId(Net::ID::SERVER); // Un cliente sólo se conecta al SERVER
-		addConnection(Net::ID::SERVER, connection); // Guardamos en la tabla
+		connection->setId(_idDispatcher->getServerId()); // Un cliente sólo se conecta al SERVER
+		addConnection(_idDispatcher->getServerId(), connection); // Guardamos en la tabla
 
 		return true;
 	} // connectTo
@@ -250,31 +249,33 @@ namespace Net {
 
 	void CManager::connect(CConexion* connection)// Una nueva conexión de un cliente al sevidor
 	{
+		unsigned int nextId = _idDispatcher->getNextClientId();
+
 		// Almacenamos esa conexión y le otorgamos un ID de red
-		connection->setId(_nextId);
-		addConnection(_nextId,connection);
+		connection->setId(nextId);
+		addConnection(nextId,connection);
 
 		NetMessageType type = Net::ASSIGNED_ID;// Escribimos el tipo de mensaje de red a enviar
 		CBuffer buf;// Avisamos al cliente de cual es su nuevo ID	
 			buf.write(&type,sizeof(type));		
-			buf.write(&_nextId,sizeof(_nextId));// Escribimos el id del cliente
+			buf.write(&nextId,sizeof(nextId));// Escribimos el id del cliente
 		_servidorRed->sendData(connection, buf.getbuffer(),buf.getSize(),0,1);
-
-		// Preparamos para la siguiente conexión
-		_nextId = ID::NextID(_nextId);
-
 	} // connect
 
 	//---------------------------------------------------------
 
 	void CManager::disconnect(CConexion* connection) {
 		if(_servidorRed) {
+			unsigned int clientId = connection->getId();
+			
 			_servidorRed->disconnect(connection);
-			removeConnection(connection->getId());
+			removeConnection(clientId);
+
+			_idDispatcher->returnClientId(clientId);
 		}
 		else if(_clienteRed) {
-			_clienteRed->disconnect(getConnection(Net::ID::SERVER));
-			removeConnection(Net::ID::SERVER);
+			_clienteRed->disconnect(getConnection(_idDispatcher->getServerId()));
+			removeConnection(_idDispatcher->getServerId());
 		}
 	} // disconnect
 		
@@ -354,26 +355,5 @@ namespace Net {
 				break;
 			}
 	} // removeObserver
-
-	//---------------------------------------------------------
-	
-	namespace ID
-	{
-		/**
-			Devuelve el siguiente ID dado el anterior.
-
-			@param id Último ID asignado.
-			@return Nuevo ID.
-		*/
-		NetID NextID(const NetID &id)
-		{
-			NetID ret = id + 1;
-			assert( id != UNASSIGNED && id != SERVER && 
-					ret != UNASSIGNED && ret != SERVER);
-			return ret;
-		
-		} // NextClientID
-
-	} // namespace ID
 
 } // namespace Net
