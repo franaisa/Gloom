@@ -172,22 +172,36 @@ namespace Logic {
 		assert(componentsPriorityTag && "No se detecta la etiqueta componentsPriority: " );
 
 		std::string nameComponent;
-		std::string priorityTypeComponent;
-		std::string priorityLevelcomponent;
+		std::string priorityType;
+		std::string priorityLevel;
 
 		TiXmlElement* componentPriorityTag= componentsPriorityTag->FirstChildElement();
-		while(componentPriorityTag != NULL){
+		if (!_defaultPriorityComponents.empty()){
+			while(componentPriorityTag != NULL){
 				
-			nameComponent = componentPriorityTag->Attribute("name");
-				assert(!nameComponent.empty() && "No se detecta el atributo name de la entidad");
-			priorityTypeComponent = componentPriorityTag->Attribute("priorityType");
-				assert(!priorityTypeComponent.empty() && "No se detecta el atributo priorityType de la entidad");
-			priorityLevelcomponent = componentPriorityTag->Attribute("priorityLevel");
-				assert(!priorityLevelcomponent.empty() && "No se detecta el atributo priorityLevel de la entidad");
+				nameComponent = componentPriorityTag->Attribute("name");
+				if(!nameComponent.empty()){
+					priorityType= componentPriorityTag->Attribute("priorityType");
+						assert(!priorityType.empty() && "No se detecta el atributo priorityType de la entidad");
+					priorityLevel = componentPriorityTag->Attribute("priorityLevel");
+						assert(!priorityLevel.empty() && "No se detecta el atributo priorityLevel de la entidad");
 
+					TPriority priority;
+					priority.priorityLevel = atoi(priorityLevel.c_str());
+					if( priorityLevel == "low")
+						priority.priorityType = TPriority::eLOW;
+					else if( priorityLevel == "medium")
+						priority.priorityType = TPriority::eMEDIUM;
+					else if( priorityLevel == "high")
+						priority.priorityType = TPriority::eHIGH;
+					else assert(!"priority level no permitida, tiene que ser low, medium o high");
+
+					_defaultPriorityComponents.insert(std::pair<std::string,TPriority>(nameComponent, aux));
+				}
 
 				//voy al siguiente componentes
-			componentPriorityTag= componentPriorityTag->FirstChildElement();
+				componentPriorityTag= componentPriorityTag->FirstChildElement();
+			}
 		}
 
 		// Aqui estoy en el nivel entities

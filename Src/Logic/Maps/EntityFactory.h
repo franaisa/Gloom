@@ -278,7 +278,10 @@ namespace Logic {
 			int priorityType;
 		} TPriority;
 
-
+			/**
+				Lista de nombres de componentes que componen la entidad.
+			*/
+		typedef	std::map<std::string,TPriority> TBluePrintPriority;
 		
 		/**
 		Estructura que define una entidad blueprint.
@@ -293,7 +296,7 @@ namespace Logic {
 			Lista de nombres de componentes que componen la entidad.
 			*/
 			//std::list<std::string> components;
-			std::list< std::pair<std::string, TPriority> > components;
+			std::list<std::string> components;
 
 		} TBluePrint;
 
@@ -374,6 +377,12 @@ namespace Logic {
 		TBluePrintMap _bluePrints;
 
 		bool _dynamicCreation;
+
+		/**
+		
+		*/
+		TBluePrintPriority _defaultPriorityComponents;
+
 
 	}; // CEntityFactory
 

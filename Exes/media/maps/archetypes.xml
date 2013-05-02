@@ -1675,7 +1675,6 @@
 						<component name="CParticle" />
 						<component name="CShootRocketLauncher" />
 						<component name="CShootGrenadeLauncher" />
-						<component name="CShadow" />
 					</components>
 				</ambit>
 				<ambit name="Server">
@@ -1690,24 +1689,26 @@
 						<component name="CSpawnPlayer" />
 						<component name="CUpdateClientPosition" />
 						<component name="CGraphics" /> 
+						<component name="CShadow" />
 					</components>
 				</ambit>
 				<ambit name="Client">
 					<components>
 						<component name="CInterpolation" />
+						<component name="CLocalShadow" />
 						<component name="CHudOverlay" />
 						<component name="CNetConnector" />						
 						<component name="CClientRespawn" />
 						<component name="CAudio" />
 						<component name="CWeaponsManagerClient" />
 						<component name="CCameraFeedbackNotifier" />
-						<component name="CAnimatedGraphics" />						
+											
 					</components>
 				</ambit>
 				<ambit name="Single">
 					<components>
 						<component name="CPhysicController" />
-						<component name="CNetConnector" />
+						<component name="CLocalShadow" />
 						<component name="CClientRespawn" />						
 						<component name="CShootMiniGun" />
 						<component name="CShootShotGun" />
@@ -1723,6 +1724,5 @@
 				</ambit>			
 			</ambits>
 		</entity>	
-		
 	</entities>
 </archetypes>
