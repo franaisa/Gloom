@@ -62,6 +62,8 @@ namespace Logic {
 	//__________________________________________________________________
 
 	void CArchangel::onTick(unsigned int msecs) {
+		CPlayerClass::onTick(msecs);
+
 		// Si la habilidad primaria esta en uso, controlar el tiempo
 		// efectivo siendo inmune. Cuando se cumpla el tiempo,
 		// deshabilitamos la reducción de daño

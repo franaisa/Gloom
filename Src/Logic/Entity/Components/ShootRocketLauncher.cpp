@@ -92,7 +92,7 @@ namespace Logic {
 		int nbHits = 0;
 		// Hacemos una query de overlap con la geometria de una esfera en la posicion 
 		// en la que se encuentra el cohete con el radio que posea
-		Physics::SphereGeometry explotionGeom = Physics::CGeometryFactory::getSingletonPtr()->createSphere(2);//radio del cohete
+		Physics::SphereGeometry explotionGeom = Physics::CGeometryFactory::getSingletonPtr()->createSphere(_projectileRadius);
 		Physics::CServer::getSingletonPtr()->overlapMultiple(explotionGeom, separationPoint, entitiesHit, nbHits);
 		//No valen estaticos como itemSpawn o SpawnPoint
 		int hitsValidos=0;

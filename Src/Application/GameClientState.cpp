@@ -111,6 +111,7 @@ namespace Application {
 				// No es necesario enviar confirmacion
 
 				player->activate();
+				player->start();
 
 				break;
 			}
@@ -152,6 +153,7 @@ namespace Application {
 				Logic::CEntity * player = Logic::CServer::getSingletonPtr()->getMap()->createLocalPlayer(name, playerClass, entityID);
 
 				player->activate();
+				player->start();
 				Logic::CServer::getSingletonPtr()->getMap()->getEntityByType("Camera")->getComponent<Logic::CCamera>("CCamera")->setTarget(player);
 
 				break;
@@ -165,6 +167,7 @@ namespace Application {
 				
 				Logic::CEntity* spectator = Logic::CServer::getSingletonPtr()->getMap()->createLocalPlayer(nickname, "Spectator", entityId);
 				spectator->activate();
+				spectator->start();
 				Logic::CServer::getSingletonPtr()->getMap()->getEntityByType("Camera")->getComponent<Logic::CCamera>("CCamera")->setTarget(spectator);
 			}
 		}

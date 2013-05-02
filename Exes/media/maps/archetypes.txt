@@ -1685,6 +1685,16 @@ Map = {
 		comment_particleEmitterDirection = {0.0, 0.0, -1.0},
 		particleName = "rocketParticles",
 	},
+	
+	GrenadeExplotion = {
+		type = "GrenadeExplotion",
+		model = "mine.mesh",
+		msgList = "32,36,37",
+		explotionDamage = 40,
+		explotionRadius = 10,
+		displacement = 2,
+		explotionAudio = "media/audio/explotion.wav",
+	},
 
 	SpotLight = {
 		type = "SpotLight",
