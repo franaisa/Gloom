@@ -257,7 +257,7 @@ namespace Logic {
 	
 	//________________________________________________________________________
 
-	Logic::CEntity *CEntityFactory::createEntity(Map::CEntity *entityInfo, Logic::CMap *map) {
+	Logic::CEntity *CEntityFactory::createEntity(Map::CEntity *entityInfo, Logic::CMap *map, bool replicate) {
 		std::string entityType = entityInfo->getType();
 		CEntity* ret = assembleEntity(entityType);
 		
@@ -269,7 +269,7 @@ namespace Logic {
 		
 		// Y lo inicializamos
 		if ( _dynamicCreation ? ret->dynamicSpawn(map, entityInfo) : ret->spawn(map, entityInfo) ) {
-			if(checkRestrictions(entityType)) {
+			if(replicate) {
 				Logic::CGameNetMsgManager::getSingletonPtr()->sendCreateEntity( ret->getEntityID() );
 			}
 
@@ -284,7 +284,7 @@ namespace Logic {
 
 	//________________________________________________________________________
 
-	Logic::CEntity* CEntityFactory::createEntityWithPosition(Map::CEntity *entityInfo, CMap *map, const Vector3& position) {
+	Logic::CEntity* CEntityFactory::createEntityWithPosition(Map::CEntity *entityInfo, CMap *map, const Vector3& position, bool replicate) {
 		// Pasamos el vector3 a string y se lo seteamos al entityInfo para mas tarde
 		// llamar al createEntity
 		std::stringstream ss (std::stringstream::in | std::stringstream::out);
@@ -297,20 +297,20 @@ namespace Logic {
 
 		entityInfo->setAttribute( "position", ss.str() );
 
-		return createEntity(entityInfo, map);
+		return createEntity(entityInfo, map, replicate);
 	} // createEntity
 
 	//________________________________________________________________________
 
-	Logic::CEntity* CEntityFactory::createEntityWithName(Map::CEntity* entityInfo, CMap *map, const std::string& name) {
+	Logic::CEntity* CEntityFactory::createEntityWithName(Map::CEntity* entityInfo, CMap *map, const std::string& name, bool replicate) {
 		entityInfo->setAttribute("name", name);
-		return createEntity(entityInfo, map);
+		return createEntity(entityInfo, map, replicate);
 	}
 
 	//________________________________________________________________________
 
 	Logic::CEntity* CEntityFactory::createEntityWithNameAndPos(Map::CEntity* entityInfo, CMap* map, 
-															   const std::string& name, const Vector3& position) {
+															   const std::string& name, const Vector3& position, bool replicate) {
 		// Seteamos el nombre
 		entityInfo->setAttribute("name", name);
 		
@@ -326,12 +326,13 @@ namespace Logic {
 		entityInfo->setAttribute( "position", ss.str() );
 
 		// Creamos la entidad con la nueva información dada
-		return createEntity(entityInfo, map);
+		return createEntity(entityInfo, map, replicate);
 	}
 
 	//________________________________________________________________________
 
-	Logic::CEntity* CEntityFactory::createEntityWithPositionAndOrientation(Map::CEntity *entityInfo, CMap *map, const Vector3& position, float yaw, float pitch){
+	Logic::CEntity* CEntityFactory::createEntityWithPositionAndOrientation(Map::CEntity *entityInfo, CMap *map, const Vector3& position, 
+										float yaw, float pitch, bool replicate){
 		// Pasamos el vector3 a string y se lo seteamos al entityInfo para mas tarde
 		// llamar al createEntity
 		std::stringstream ss (std::stringstream::in | std::stringstream::out);
@@ -353,12 +354,12 @@ namespace Logic {
 		entityInfo->setAttribute( "yaw", sy.str());
 		entityInfo->setAttribute( "pitch", sp.str());
 
-		return createEntity(entityInfo, map);
+		return createEntity(entityInfo, map, replicate);
 	}
 
 	//________________________________________________________________________
 
-	Logic::CEntity *CEntityFactory::createEntityById(Map::CEntity *entityInfo, Logic::CMap *map, TEntityID id) {
+	Logic::CEntity *CEntityFactory::createEntityById(Map::CEntity *entityInfo, Logic::CMap *map, TEntityID id, bool replicate) {
 		std::string entityType = entityInfo->getType();
 		CEntity *ret = assembleEntity(entityType, id);
 		
@@ -369,7 +370,7 @@ namespace Logic {
 		map->addEntity(ret);
 		// Y lo inicializamos
 		if( ret->spawn(map, entityInfo) ) {
-			if(checkRestrictions(entityType)) {
+			if(replicate) {
 				Logic::CGameNetMsgManager::getSingletonPtr()->sendCreateEntity( ret->getEntityID() );
 			}
 
@@ -385,8 +386,8 @@ namespace Logic {
 	//________________________________________________________________________
 
 	//Al metodo le falta un control de si quieres que el server envie o no a los clientes el borrado
-	Logic::CEntity* CEntityFactory::createEntityWithTimeOut(Map::CEntity *entityInfo, CMap *map, unsigned int msecs) {
-		CEntity* createdEntity = createEntity(entityInfo, map);
+	Logic::CEntity* CEntityFactory::createEntityWithTimeOut(Map::CEntity *entityInfo, CMap *map, unsigned int msecs, bool replicate) {
+		CEntity* createdEntity = createEntity(entityInfo, map, replicate);
 		deferredDeleteEntity(createdEntity , msecs);
 		return createdEntity;
 	}
@@ -447,17 +448,6 @@ namespace Logic {
 		}
 
 		return NULL;
-	}
-
-	bool CEntityFactory::checkRestrictions(const std::string &entityType){
-		return (Net::CManager::getSingletonPtr()->imServer() && 
-			_dynamicCreation && 
-			entityType != "Screamer" &&
-			entityType != "Archangel" &&
-			entityType != "Hound" &&
-			entityType != "Shadow" &&
-			entityType != "Spectator"
-			);
 	}
 
 } // namespace Logic

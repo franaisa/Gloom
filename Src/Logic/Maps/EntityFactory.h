@@ -136,7 +136,7 @@ namespace Logic {
 		@note Las entidades aquí creadas pueden eliminarse al final del 
 		juego o bien utilizando deferredDeleteEntity.
 		*/
-		CEntity* createEntity(Map::CEntity *entityInfo, CMap *map);
+		CEntity* createEntity(Map::CEntity *entityInfo, CMap *map, bool replicate = true);
 
 		//________________________________________________________________________
 
@@ -158,31 +158,27 @@ namespace Logic {
 		@note Las entidades aquí creadas pueden eliminarse al final del 
 		juego o bien utilizando deferredDeleteEntity.
 		*/
-		CEntity *createEntityById(Map::CEntity *entityInfo, CMap *map, TEntityID id);
+		CEntity *createEntityById(Map::CEntity *entityInfo, CMap *map, TEntityID id, bool replicate = false);
 
 		//________________________________________________________________________
 		
-		CEntity *createEntityWithPosition(Map::CEntity *entityInfo, CMap *map, const Vector3& position);
+		CEntity *createEntityWithPosition(Map::CEntity *entityInfo, CMap *map, const Vector3& position, bool replicate = true);
 
 		//________________________________________________________________________
 		
-		CEntity *createEntityWithPositionAndOrientation(Map::CEntity *entityInfo, CMap *map, const Vector3& position, float yaw, float pitch);
+		CEntity *createEntityWithPositionAndOrientation(Map::CEntity *entityInfo, CMap *map, const Vector3& position, float yaw, float pitch, bool replicate = true);
 
 		//________________________________________________________________________
 
-		CEntity* createEntityWithName(Map::CEntity* entityInfo, CMap *map, const std::string& name);
+		CEntity* createEntityWithName(Map::CEntity* entityInfo, CMap *map, const std::string& name, bool replicate = true);
 
 		//________________________________________________________________________
 
-		CEntity* createEntityWithNameAndPos(Map::CEntity* entityInfo, CMap *map, const std::string& name, const Vector3& position);
+		CEntity* createEntityWithNameAndPos(Map::CEntity* entityInfo, CMap *map, const std::string& name, const Vector3& position, bool replicate = true);
 
 		//________________________________________________________________________
 
-		CEntity* createEntityWithTimeOut(Map::CEntity *entityInfo, CMap *map, unsigned int msecs);
-
-		//________________________________________________________________________
-
-		bool checkRestrictions(const std::string &entityType);
+		CEntity* createEntityWithTimeOut(Map::CEntity *entityInfo, CMap *map, unsigned int msecs, bool replicate = true);
 		
 		//________________________________________________________________________
 
