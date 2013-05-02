@@ -246,7 +246,7 @@ Map = {
 		audioSpawn = "media/audio/spawn.wav",
 		audioNoAmmo = "media/audio/noammo.wav",
 		
-		primarySkillCooldown = 15,
+		primarySkillCooldown = 0.25,
 		secondarySkillCooldown = 3,
 		invisibilityDuration = 5,
 		
@@ -1684,6 +1684,16 @@ Map = {
 		particleOffset = {0.0, 0.0, 0.0},
 		comment_particleEmitterDirection = {0.0, 0.0, -1.0},
 		particleName = "rocketParticles",
+	},
+	
+	GrenadeExplotion = {
+		type = "GrenadeExplotion",
+		model = "mine.mesh",
+		msgList = "32,36,37",
+		explotionDamage = 40,
+		explotionRadius = 10,
+		displacement = 2,
+		explotionAudio = "media/audio/explotion.wav",
 	},
 
 	SpotLight = {

@@ -13,6 +13,7 @@ ItemSpawn CFloatingMovement CSpawnItemManager CGraphics
 SpawnPoint CPhysicStaticEntity
 Jumper CGraphics CAudio CParticle
 Grenade CPhysicDynamicEntity CGrenadeControllerClient CParticle CGraphics CAudio
+GrenadeExplotion CGrenadeControllerClient CParticle CGraphics CAudio
 Rocket CPhysicDynamicEntity CRocketControllerClient CParticle CGraphics CAudio
 RocketExplotion CRocketControllerClient CParticle CGraphics CAudio
 Lava CPhysicStaticEntity CLava CGraphics

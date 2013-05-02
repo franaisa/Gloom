@@ -49,7 +49,7 @@ namespace Logic {
 			_materialName = entityInfo->getStringAttribute("materialName");
 
 		// Leer el tiempo que dura la invisibilidad
-		assert( entityInfo->hasAttribute("invisibilityDuration") );
+		assert( entityInfo->hasAttribute("invisibilityDuration") && "no tienes invisibilityduration mendrugo" );
 		// Pasamos el tiempo a msecs
 		_invisibilityDuration = entityInfo->getFloatAttribute("invisibilityDuration") * 1000;
 		return true;
