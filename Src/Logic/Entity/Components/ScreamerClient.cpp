@@ -91,6 +91,8 @@ namespace Logic {
 	//__________________________________________________________________
 
 	void CScreamerClient::onTick(unsigned int msecs) {
+		CPlayerClass::onTick(msecs);
+
 		// Si la habilidad primaria está siendo usada
 		if(_shieldIsActive) {
 			refreshShieldGraphicsPos();
