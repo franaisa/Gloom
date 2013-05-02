@@ -87,6 +87,7 @@
   <ItemGroup>
     <ClCompile Include="..\..\Src\Net\buffer.cpp" />
     <ClCompile Include="..\..\Src\Net\Manager.cpp" />
+    <ClCompile Include="..\..\Src\Net\NetIdDispatcher.cpp" />
     <ClCompile Include="..\..\Src\Net\paquete.cpp" />
     <ClCompile Include="..\..\Src\Net\serializable.cpp" />
     <ClCompile Include="..\..\Src\Net\clienteENet.cpp" />
@@ -99,6 +100,7 @@
     <ClInclude Include="..\..\Src\Net\conexion.h" />
     <ClInclude Include="..\..\Src\Net\factoriared.h" />
     <ClInclude Include="..\..\Src\Net\Manager.h" />
+    <ClInclude Include="..\..\Src\Net\NetIdDispatcher.h" />
     <ClInclude Include="..\..\Src\Net\paquete.h" />
     <ClInclude Include="..\..\Src\Net\serializable.h" />
     <ClInclude Include="..\..\Src\Net\servidor.h" />

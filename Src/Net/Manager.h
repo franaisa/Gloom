@@ -31,6 +31,7 @@ namespace Net {
 	class CFactoriaRed;
 	class CFactoriaRedEnet;
 	class CPaquete;
+	class CNetIdDispatcher;
 };
 
 /**
@@ -47,24 +48,6 @@ namespace Net {
 
 	/** ID de identificación en la red. */
 	typedef unsigned int NetID;
-
-	/** Namespace para los tipos de IDs posibles. */
-	namespace ID {
-		enum { 
-			UNASSIGNED  = 0xFFFFFFFF, // Sin asignar
-			SERVER      = 0x00000000, // Servidor
-			FIRSTCLIENT = 0x00000001  // Primer cliente
-		};
-
-		/**
-		Devuelve la siguiente id dada la última id asignada.
-
-		@param id Última id de red asignada.
-		@return La nueva id de red a asignar.
-		*/
-		NetID NextID(const NetID &id);
-
-	}; // namespace ID
 
 	/** Tipos de mensajes que pueden mandarse por la red. */
 	enum NetMessageType {
@@ -496,11 +479,7 @@ namespace Net {
 		/** ID de red una vez conectado. */
 		NetID _id;
 
-		/**
-		Siguiente ID de red que se asignará al próximo cliente. Solo se usa en modo 
-		servidor.
-		*/
-		NetID _nextId;
+		CNetIdDispatcher* _idDispatcher;
 
 	}; // class CManager
 

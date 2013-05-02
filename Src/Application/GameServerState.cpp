@@ -39,7 +39,7 @@ namespace Application {
 
 		// Añadir a este estado como observador de la red para ser notificado
 		Net::CManager::getSingletonPtr()->addObserver(this);
-		Net::CManager::getSingletonPtr()->activateAsServer(1234,16);
+		Net::CManager::getSingletonPtr()->activateAsServer(1234,12);
 
 		_playersMgr = Logic::CGameNetPlayersManager::getSingletonPtr();
 	} // activate
