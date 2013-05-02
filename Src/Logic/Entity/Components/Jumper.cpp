@@ -47,14 +47,6 @@ namespace Logic
 	} // spawn
 	//---------------------------------------------------------
 
-	void CJumper::activate()
-	{
-		IComponent::activate();
-		
-	} // activate
-	//--------------------------------------------------------
-
-
 	bool CJumper::accept(const std::shared_ptr<CMessage>& message)
 	{
 		return message->getMessageType() == Message::TOUCHED;
@@ -86,7 +78,7 @@ namespace Logic
 
 	void CJumper::applyJump(CEntity *entity) {
 		std::shared_ptr<CMessageAddForcePlayer> forcePlayerMsg = std::make_shared<CMessageAddForcePlayer>();
-		forcePlayerMsg->setForce(_force+Vector3(0,5,0));
+		forcePlayerMsg->setForce(_force);
 		entity->emitMessage(forcePlayerMsg);
 	} // applyJump
 	//---------------------------------------------------------

@@ -674,7 +674,6 @@ namespace Logic
 
 		if(_textDebug.find(key) == _textDebug.end()){
 			std::pair<std::string, std::string> aux(key, value);
-
 			_textDebug.insert(aux);
 		}else{
 			_textDebug.find(key)->second = value;
@@ -702,7 +701,7 @@ namespace Logic
 		}
 	}
 
-	void CHudOverlay::tick(unsigned int msecs)
+	void CHudOverlay::onTick(unsigned int msecs)
 	{
 		if(_overlayDie->isVisible()){
 			_acumSpawn += msecs;
@@ -745,14 +744,12 @@ namespace Logic
 		_textAreaDebug->setText(_sDebug.str());
 	}
 
-	void CHudOverlay::deactivate(){
+	void CHudOverlay::onDeactivate(){
 		_overlayPlay->setVisible(false);
 		_overlayDie->setVisible(false);	
 		_overlayDebug->setVisible(false);
 	}
 
-	
-	
 	std::string CHudOverlay::toText(eWeaponIndex weapon){
 		switch(weapon){
 			case HAMMER: return "hammer";

@@ -89,10 +89,7 @@ namespace Logic
 
 		@return true si todo ha ido correctamente.
 		*/
-		virtual void activate();
-
-		virtual void deactivate();
-
+		virtual void onActivate();
 
 		/**
 		Método virtual que procesa un mensaje.

@@ -25,6 +25,8 @@ de la entidad.
 #include "Logic/Messages/MessageControl.h"
 #include "Logic/Messages/MessageMouse.h"
 #include "Logic/Messages/MessageAddForcePlayer.h"
+#include "Logic/Messages/MessageSetAnimation.h"
+#include "Logic/Messages/MessageStopAnimation.h"
 
 namespace Logic {
 
@@ -81,16 +83,17 @@ namespace Logic {
 
 	//________________________________________________________________________
 
-	void CAvatarController::activate() {
-		IComponent::activate(); // Necesario para el onStart
+	void CAvatarController::onActivate() {
 		_displacementDir = _momentum = Vector3::ZERO;
 	} // activate
 
 	//________________________________________________________________________
 
 	bool CAvatarController::accept(const std::shared_ptr<CMessage>& message) {
-		return message->getMessageType() == Message::CONTROL			||
-			   message->getMessageType() == Message::ADDFORCEPLAYER;
+		TMessageType msgType = message->getMessageType();
+		
+		return msgType == Message::CONTROL			||
+			   msgType == Message::ADDFORCEPLAYER;
 	} // accept
 
 	//________________________________________________________________________
@@ -121,7 +124,7 @@ namespace Logic {
 				break;
 			}
 			case Message::ADDFORCEPLAYER:{
-				//megahipertetrahackeado porque el mensaje addforce este es una mierda como una puta catedral
+				//Fuerza aplicada al jugador
 				std::shared_ptr<CMessageAddForcePlayer> addForceMsg = std::static_pointer_cast<CMessageAddForcePlayer>(message);
 				addForce( addForceMsg->getForce() );
 				break;
@@ -139,7 +142,7 @@ namespace Logic {
 
 	//________________________________________________________________________
 
-	void CAvatarController::onStart(unsigned int msecs) {
+	void CAvatarController::onStart() {
 		// Para evitar overhead de mensajes nos quedamos con el puntero al 
 		// componente CPhysicController que es el que realmente se encargará 
 		// de desplazar al controlador del jugador.
@@ -149,7 +152,7 @@ namespace Logic {
 
 	//________________________________________________________________________
 
-	void CAvatarController::tick(unsigned int msecs) {
+	void CAvatarController::onFixedTick(unsigned int msecs) {
 		// Calculamos el vector de desplazamiento teniendo en cuenta
 		// si estamos en el aire o en el suelo
 		Vector3 displacement = _touchingGround ? estimateGroundMotion(msecs) : estimateAirMotion(msecs);
@@ -158,12 +161,13 @@ namespace Logic {
 		// En caso de colision, el controlador fisico nos informa.
 		// Debido al reposicionamiento de la cápsula que hace PhysX, le seteamos un offset fijo
 		// al movernos para asegurarnos de que hay colision
-		manageCollisions( _physicController->move(displacement-Vector3(0,0.15f,0), msecs) );
+		Vector3 oldPosition = _entity->getPosition();
+		manageCollisions( _physicController->move(displacement-Vector3(0,0.15f,0), msecs), oldPosition );
 	} // tick
 
 	//________________________________________________________________________
 
-	void CAvatarController::manageCollisions(unsigned collisionFlags) {
+	void CAvatarController::manageCollisions(unsigned collisionFlags, Vector3 oldPosition) {
 		// Colision con los pies detectada
 		_touchingGround = collisionFlags & Physics::eCOLLISION_DOWN;
 		
@@ -174,7 +178,9 @@ namespace Logic {
 
 		if(collisionFlags & Physics::eCOLLISION_SIDES){
 			//necesitamos la posicion anterior del personaje, para ver la dirección 
-			//y la velocidad a la que nos hemos movido
+			//y la velocidad a la que nos hemos movido, y calculamos el momentum
+			//resultado de habernos movido y haber chocado contra las paredes
+			_momentum = _entity->getPosition() - oldPosition;
 		}
 	}
 
@@ -219,7 +225,7 @@ namespace Logic {
 		_momentum *= coef;
 		// Seteamos una gravedad fija para que la cápsula colisione contra el suelo
 		_momentum.y = _gravity.y * msecs;
-		
+
 		return _momentum;
 	}
 
@@ -259,7 +265,14 @@ namespace Logic {
 	//________________________________________________________________________
 
 	void CAvatarController::executeMovementCommand(ControlType commandType) {
-		_displacementDir += _movementCommands[commandType];
+		Vector3 dir = _movementCommands[commandType];
+
+		//seteamos la animacion correcta con el resultado de las teclas pulsadas
+		//stopAnimation(dir);
+
+		_displacementDir += dir;
+
+		executeAnimation(dir);
 	}
 
 	//________________________________________________________________________
@@ -310,5 +323,66 @@ namespace Logic {
 		Vector3 dir = estimateMotionDirection(_movementCommands[commandType])+Vector3(0,1,0);
 		addForce(dir.normalisedCopy()*_dodgeForce);
 	}
+
+	//________________________________________________________________________
+
+	void CAvatarController::executeAnimation(Vector3 dir){
+
+		std::shared_ptr<CMessageSetAnimation> anim = std::make_shared<CMessageSetAnimation>();
+		
+		if(dir.x!=0){
+			if(_displacementDir.x==0){
+				anim->setString("Idle");
+				anim->setBool(true);
+			}else if(_displacementDir.x==1){
+				anim->setString("StrafeLeft");
+				anim->setBool(true);
+			}else if(_displacementDir.x==-1){
+				anim->setString("StrafeRight");
+				anim->setBool(true);
+			}
+		}else if(dir.z!=0){
+			if(_displacementDir.z==0){
+				anim->setString("Idle");
+				anim->setBool(true);
+			}else if(_displacementDir.z==1){
+				anim->setString("Walk");
+				anim->setBool(true);
+			}else if(_displacementDir.z==-1){
+				anim->setString("WalkBack");
+				anim->setBool(true);
+			}
+		}
+		_entity->emitMessage(anim, this); 
+	}
+
+	//________________________________________________________________________
+
+	void CAvatarController::stopAnimation(Vector3 dir){
+		//primero paramos la animación que este corriendo en sentido contrario a lo que hacemos
+		std::shared_ptr<CMessageSetAnimation> stopAnim = std::make_shared<CMessageSetAnimation>();
+
+		if(_displacementDir == Vector3::ZERO){
+			stopAnim->setString("Idle");
+		}else{
+			if(dir.x!= _displacementDir.x){
+				if (_displacementDir.x==0)
+					return;
+				else if(dir.x == -1)
+					stopAnim->setString("StrafeLeft");
+				else
+					stopAnim->setString("StrafeRight");
+			}else if(dir.z!= _displacementDir.z){
+				if (_displacementDir.z==0)
+					return;
+				else if(dir.z == -1)
+					stopAnim->setString("Walk");
+				else
+					stopAnim->setString("WalkBack");
+			}
+		}
+		_entity->emitMessage(stopAnim, this); 
+	}
+	//________________________________________________________________________
 
 } // namespace Logic

@@ -81,7 +81,7 @@ namespace Input
 		/**
 		Devuelve la instancia de la clase GUI que se encarga de procesar los
 		eventos de entrada para controlar al jugador por si se desea configurar
-		externemante.
+		externamante.
 
 		@return Instancia de la clase GUI que controla al jugador.
 		*/

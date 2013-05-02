@@ -12,6 +12,7 @@ Contiene la declaración de la clase CMap, Un mapa lógico.
 #define __Logic_Map_H
 
 #include <map>
+#include <set>
 #include <list>
 #include "EntityID.h"
 
@@ -49,9 +50,9 @@ namespace Logic
 	@author David Llansó
 	@date Agosto, 2010
 	*/
-	class CMap
-	{
+	class CMap {
 	public:
+
 		/**
 		Método factoría que carga un mapa de fichero. Tras el parseo de
 		todas las entidades del mapa mediante CMapParser, genera todas las
@@ -88,6 +89,12 @@ namespace Logic
 		entidades para que se den por enterados y hagan lo que necesiten.
 		*/
 		void deactivate();
+
+		/**
+		Función llamada tras la carga del mapa antes de que se ejecute
+		el primer tick.
+		*/
+		void start();
 
 		/**
 		Función llamada en cada frame para que se realicen las funciones
@@ -193,14 +200,24 @@ namespace Logic
 
 		void entityTimeToLive(CEntity* entity, unsigned int msecs);
 
+		void setFixedTimeStep(unsigned int stepSize);
+
 	private:
 
+		void checkTimeOuts(unsigned int msecs);
+
+		void doTick(unsigned int msecs);
+
+		/**
+		Lista de entidades que han sido marcadas para ser borradas en
+		un tiempo dado.
+		*/
 		std::list< std::pair<CEntity*, unsigned int> > _entitiesToBeDeleted;
 
 		/**
 		Tipo tabla de entidades de mapa.
 		*/
-		typedef std::map<TEntityID,CEntity*> TEntityMap;
+		typedef std::map<TEntityID, CEntity*> TEntityMap;
 
 		/**
 		tabla con las entidades del mapa localizadas por su ID.
@@ -224,6 +241,7 @@ namespace Logic
 		Graphics::CScene* _scene;
 
 		/**
+		@deprectaed -> no se usa en ninguna parte.
 		Número de jugadores creados hasta el momento.
 		*/
 		unsigned int _numOfPlayers;

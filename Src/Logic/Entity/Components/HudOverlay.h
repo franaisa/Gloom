@@ -44,18 +44,14 @@ namespace Logic
 			for(int i=0;i<3;++i){
 				_panelElementsText[i]=1;
 			}
-
 			 _overlayPlay = NULL;
 			_overlayDie = NULL;
 			_textAreaDie = NULL;
-		
 			for(int i=0;i<3;++i){
 				_panelElements[i] = NULL;
 				_panelElementsTextArea[i] = NULL;
 			}
-		
 			_panelMira = NULL;
-
 			for(int i=0;i<6;++i){
 				_panelWeapon[i] = NULL;
 			
@@ -66,15 +62,12 @@ namespace Logic
 					_weaponsBox[i][j] = NULL;
 				}
 			}
-
 			for(int i = 0; i<8; ++i){
 				keysPanelWeapon[i] = NULL;
 			}
-
 			_overlayDebug = NULL;
 			_panelDebug = NULL;
 			_textAreaDebug = NULL;
-
 		}
 		
 
@@ -84,8 +77,6 @@ namespace Logic
 		el fichero de mapa.
 		*/
 		virtual bool spawn(CEntity* entity, CMap *map, const Map::CEntity *entityInfo);
-
-
 
 		/**
 		Este componente sólo acepta mensajes de tipo DAMAGED.
@@ -97,6 +88,14 @@ namespace Logic
 		*/
 		virtual void process(const std::shared_ptr<CMessage>& message);
 		
+		
+
+
+		virtual void onDeactivate();
+
+		void changeMaterialActualWeapon(const std::string &materialName);
+	protected:
+
 		/**
 		Método llamado en cada frame que actualiza el estado del componente.
 		<p>
@@ -104,13 +103,7 @@ namespace Logic
 
 		@param msecs Milisegundos transcurridos desde el último tick.
 		*/
-		virtual void tick(unsigned int msecs);
-
-
-		virtual void deactivate();
-
-		void changeMaterialActualWeapon(const std::string &materialName);
-	protected:
+		virtual void onTick(unsigned int msecs);
 
 		int _numWeapons;
 
@@ -192,6 +185,7 @@ namespace Logic
 		tiene las teclas que)
 		*/
 		char keysPanelWeapon[8];
+
 		/**
 		Gestion los paneles de las armas (6) en este caso, en cada uno de sus estados: ACTIVE, NO_AMMO, NO_WEAPON
 		*/

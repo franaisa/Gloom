@@ -10,6 +10,7 @@
 <!-- - - - - - - - - - - - - S P A W N   P O I N T - - - - - - - - - - - - -->
 <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 	
+
 	<entity name="Point1" type="SpawnPoint">
 		<attributes>
 			<attribute name="position" 				value="{-219.0, 0.0, -52}"/>
@@ -122,6 +123,7 @@
 	
 	<entity name="ShotgunWeapon1" type="ItemSpawn">
 		<attributes>
+
 			<attribute name="position" 				value="{18,0,112}"/>
 			<attribute name="model" 				value="shotGun.mesh"/>
 			<attribute name="id" 					value="weapon"/>
@@ -133,6 +135,7 @@
 	
 	<entity name="SniperWeapon1" type="ItemSpawn">
 		<attributes>
+
 			<attribute name="position" 				value="{-265,105,-55}"/>
 			<attribute name="model" 				value="sniper.mesh"/>
 			<attribute name="id" 					value="weapon"/>
@@ -144,6 +147,7 @@
 	
 	<entity name="ShotGunAmmo1" type="ItemSpawn">
 		<attributes>
+
 			<attribute name="position" 				value="{-67.0, 4.0, -42.0}"/>
 			<attribute name="model" 				value="shotGun.mesh"/>
 			<attribute name="id" 					value="ammo"/>
@@ -155,6 +159,7 @@
 	
 	<entity name="MiniGunWeapon1" type="ItemSpawn">
 		<attributes>
+
 			<attribute name="position" 				value="{-91.0, 0.0, -35.0}"/>
 			<attribute name="model" 				value="miniGun.mesh"/>
 			<attribute name="id" 					value="weapon"/>
@@ -166,6 +171,7 @@
 	
 	<entity name="GrenadeLauncherWeapon1" type="ItemSpawn">
 		<attributes>
+
 			<attribute name="position" 				value="{-30.0, 104.0, 120.0}"/>
 			<attribute name="model" 				value="grenadeLauncher.mesh"/>
 			<attribute name="id" 					value="weapon"/>
@@ -177,6 +183,7 @@
 	
 	<entity name="RocketLauncherWeapon1" type="ItemSpawn">
 		<attributes>
+
 			<attribute name="position" 				value="{-264,0.0,-53.0}"/>
 			<attribute name="model" 				value="rocketLauncher.mesh"/>
 			<attribute name="id" 					value="weapon"/>
@@ -188,6 +195,7 @@
 	
 	<entity name="SuperShield1" type="ItemSpawn">
 		<attributes>
+
 			<attribute name="position" 				value="{-265,125,47},"/>
 			<attribute name="model" 				value="shield1.mesh"/>
 			<attribute name="id" 					value="armor"/>
@@ -198,6 +206,7 @@
 	
 	<entity name="miniShield" type="ItemSpawn">
 		<attributes>
+
 			<attribute name="position" 				value="{-182.0, 2.0, 47.0}"/>
 			<attribute name="model" 				value="shotGun.mesh"/>
 			<attribute name="id" 					value="armor"/>
@@ -213,13 +222,6 @@
 
 	<entity name="Camera" type="Camera">
 	</entity>
-	
-<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-<!-- - - - - - - - - - - - - J U M P E R - - - - - - - - - - - - - - - - -->
-<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-	
-	<entity name="Jumper" type="Jumper">
-	</entity>
 
 <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 <!-- - - - - - - - - - - - - L A V A - - - - - - - - - - - - - - - - -->
@@ -227,6 +229,7 @@
 	
 	<entity name="Lava" type="Lava">
 	</entity>
+
 
 <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 <!-- - - - - - - - - - - - - E L E V A T O R - - - - - - - - - - - - - - - - -->

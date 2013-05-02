@@ -56,7 +56,7 @@ namespace Logic {
 
 	//__________________________________________________________________
 
-	void CHound::tick(unsigned int msecs) {
+	void CHound::onTick(unsigned int msecs) {
 		// Si la habilidad primaria esta en uso, controlar el tiempo
 		// de duración de la habilidad. Cuando se cumpla el tiempo,
 		// deshabilitamos el shader y el efecto beserker.
@@ -83,8 +83,8 @@ namespace Logic {
 
 	//________________________________________________________________________
 
-	void CHound::activate() {
-		CPlayerClass::activate();
+	void CHound::onActivate() {
+		CPlayerClass::onActivate();
 
 		// Ñapa temporal para el ideame
 		// Cambiamos el color del marine en funcion de la clase con un changeMaterial

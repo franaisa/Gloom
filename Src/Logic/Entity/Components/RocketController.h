@@ -85,6 +85,7 @@ namespace Logic {
 		*/
 		virtual void process(const std::shared_ptr<CMessage>& message);
 
+		
 
 		// =======================================================================
 		//                            METODOS PROPIOS
@@ -101,6 +102,10 @@ namespace Logic {
 		//________________________________________________________________________
 
 
+	protected:
+
+		virtual void onTick(unsigned int msecs);
+
 	private:
 
 
@@ -111,6 +116,9 @@ namespace Logic {
 		/** Crea una entidad GrenadeExplotion justo en el lugar en el que se encuentre la granada (_entity). */
 		void createExplotion();
 
+		void drawRaycast(const Ray& raycast, float dist);
+
+		int _temporal;
 
 		// =======================================================================
 		//                            CAMPOS PRIVADOS
@@ -130,6 +138,13 @@ namespace Logic {
 
 		/** Ruta del sonido de la explosion. */
 		std::string _audioExplotion;
+
+		/** Fuerza de desplazamiento del cohete. */
+		float _displacement;
+
+		/*unsigned int inicio, parada;
+		Vector3 inicio1,parada1;
+		bool contamosparada;*/
 
 	}; // class CRocketController
 

@@ -131,15 +131,6 @@ namespace Logic {
 		*/
 		virtual void process(const std::shared_ptr<CMessage>& message);
 
-		//__________________________________________________________________
-
-		/**
-		Método llamado en cada frame que actualiza la posicion flotante del item.
-
-		@param msecs Milisegundos transcurridos desde el último tick.
-		*/
-		virtual void tick(unsigned int msecs);
-
 		
 		// =======================================================================
 		//                            METODOS PROPIOS
@@ -151,14 +142,6 @@ namespace Logic {
 		la acción de disparar.
 		*/
 		virtual void shoot() = 0;
-
-		//__________________________________________________________________
-
-		/** 
-		Activa el componente. Lo utilizaremos para activar el componente del arma
-		que esté en uso.
-		*/
-		virtual void activate();
 
 		//__________________________________________________________________
 
@@ -226,6 +209,13 @@ namespace Logic {
 
 
 	protected:
+
+		/**
+		Método llamado en cada frame que actualiza la posicion flotante del item.
+
+		@param msecs Milisegundos transcurridos desde el último tick.
+		*/
+		virtual void onTick(unsigned int msecs);
 
 
 		// =======================================================================

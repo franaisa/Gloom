@@ -50,16 +50,6 @@ namespace Logic {
 
 
 		/**
-		Método llamado en cada frame que controla el timer para la creacion de la
-		explosion.
-
-		@param msecs Milisegundos transcurridos desde el último tick.
-		*/
-		virtual void tick(unsigned int msecs);
-
-		//________________________________________________________________________
-
-		/**
 		Inicialización del componente utilizando la información extraída de
 		la entidad leída del mapa (Maps::CEntity). Toma del mapa el atributo
 		speed que indica a la velocidad a la que se moverá el jugador.
@@ -113,6 +103,16 @@ namespace Logic {
 		*/
 		void setOwner(CEntity* _owner);
 
+	protected:
+
+		/**
+		Método llamado en cada frame que controla el timer para la creacion de la
+		explosion.
+
+		@param msecs Milisegundos transcurridos desde el último tick.
+		*/
+		virtual void onTick(unsigned int msecs);
+
 	private:
 
 
@@ -147,6 +147,9 @@ namespace Logic {
 
 		/** Fuerza de la explosion*/
 		float _explotionForce;
+
+		/** Fuerza de desplazamiento de la granada. */
+		float _displacement;
 
 		/** Ruta del sonido de la explosion. */
 		std::string _audioExplotion;

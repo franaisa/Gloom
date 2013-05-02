@@ -6,71 +6,96 @@ Contiene la declaración de la clase base de los componentes.
 @see Logic::IComponent
 @see Logic::CCommunicationPort
 
-@author David Llansó
-@date Julio, 2010
+@author Francisco Aisa García
+@date Abril, 2013
 */
+
 #ifndef __Logic_Component_H
 #define __Logic_Component_H
 
 #include "CommunicationPort.h"
+#include "Entity.h"
 #include "Logic/Maps/ComponentFactory.h"
 
 // Predeclaración de clases para ahorrar tiempo de compilación
-namespace Map
-{
+namespace Map {
 	class CEntity;
 }
 
-namespace Logic 
-{
+namespace Logic {
 	class CMap;
-	class CEntity;
 }
 
-//declaración de la clase
-namespace Logic 
-{
+// Declaración de la clase
+namespace Logic {
 
-/**
+	/**
 	Clase base de los componentes que forman las entidades.
 	<p>
 	Un componente puede recibir mensajes y reaccionar ante ellos
 	enviando otros mensajes al resto de componentes hermanos o
 	realizando alguna acción sobre el entorno.
 	<p>
-	Para procesar los mensajes y para realizar cualquier otro
-	comportamiento, la entidad a la que el componente pertenece
-	invoca periódicamente a la función tick() del componente. 
-	La implementación por defecto de ese método simplemente procesa todos
-	los mensajes pendientes recibidos por el componente.
-	<p>
-	Si las clases hija sobreescriben este método, <em>son responsables</em>
-	de invocar al método de procesado de mensajes (o en su defecto al
-	método tick() de la clase padre). En caso de no hacerlo, el
-	componente <em>no procesará ningún mensaje</em>.
-	<p>
+	Dependiendo del estado en el que se encuentre el componente
+	y de si ha redefinido o no los métodos de onTick y onFixedTick
+	la entidad invoca al método que corresponda en cada frame.
+
+	onTick y onFixedTick se llaman en cada frame con la diferencia
+	de que onFixedTick siempre se llama con una cantidad de msecs
+	constantes (tantas veces como haga falta para procesar los msecs
+	que realmente han transcurrido en ese frame).
+
 	El ciclo de vida de un componente típico viene determinado por
-	el ciclo de vida de la entidad a la que pertenece. El componente 
-	puede estar activado o desactivado:
+	el ciclo de vida de la entidad a la que pertenece:
+	<ol>
+		<li>
+			Cuando se crea la entidad se crea el componente.
+		</li>
+		<li>
+			Tras la llamada al constructor se llama al spawn,
+			que es el método de donde podemos leer los parámetros
+			del mapa/arquetipos.
+		</li>
+		<li>
+			Al cargarse el mapa se activan todas las entidades y con
+			ello todos los componentes de la entidad (onActivate se invoca).
+		</li>
+		<li>
+			Antes de comenzar con los ticks se invoca al start de la entidad
+			y de los componentes (onStart en este caso).
+		</li>
+		<li>
+			Durante la partida se llama periodicamente al método onTick o
+			onFixedTick de los componentes.
+		</li>
+		<li>
+			Al salir de la partida o desactivar la entidad se desactivan
+			todos sus componentes (onDeactivate se invoca).
+		</li>
+		<li>
+			Al borrar el mapa se eliminan todas las entidades y se ejecuta
+			el destructor de todos los componentes.
+		</li>
+	</ol>
+
+	A groso modo el componente puede estar activado o desactivado.
+	Si el componente está desactivado ni procesa mensajes ni tiene tick.
+	Sin embargo, si el componente está activado puede encontrarse
+	en uno de los siguientes estados:
 	<ul>
-	   <li> El componente es creado cuando se crea la entidad a la que pertenece
-	   al leer el mapa. Después de llamar al constructor de la clase
-	   se invoca al método spawn() que podrá leer los parámetros leidos del mapa
-	   para inicializar sus atributos. En ese momento se pueden crear recursos
-	   que necesite el componente, como las entidades gráficas, físicas, etc.</li>
-
-	   <li> El componente es <em>activado</em> llamando al método activate().
-	   Un componente se activa cuando <em>se activa el mapa donde está la
-	   entidad a la que pertenece</em>,
-	   es decir, cuando el motor de juego decide que se empezará a simular
-	   el entorno de ese mapa.</li>
-
-	   <li> El componente finalmente es <em>desactivado</em>, cuando el motor del
-	   juego establece que no se desea simular el entorno virtual del mapa
-	   donde está el componente. En ese caso, se invoca al método deactivate().</li>
-
-	   <li> Cuando se destruye el mapa cargado (típicamente al final del juego/estado
-	   del juego), se invoca al destructor de la entidad.</li>
+		<li>
+			<strong>AWAKE/AVAILABLE: </strong> El componente está 
+			despierto/disponible. Recibe mensajes y tiene tick.
+		</li>
+		<li>
+			<strong>SLEEPING: </strong> El componente está dormido.
+			No tiene tick pero recibe mensajes. Al recibir mensajes
+			vuelve a tener tick y pasa al estado AWAKE/AVAILABLE.
+		</li>
+		<li>
+			<strong>BUSY: </strong> El componente está ocupado.
+			Tiene tick pero no recibe mensajes.
+		</li>
 	</ul>
 	
     @ingroup logicGroup
@@ -78,21 +103,33 @@ namespace Logic
 
 	@author David Llansó García
 	@date Julio, 2010
-*/
-	class IComponent : public CCommunicationPort 
-	{
+	*/
+
+	class IComponent : public CCommunicationPort {
 	public:
 
-		/**
-		Constructor por defecto; en la clase base no hace nada.
-		*/
+
+		// =======================================================================
+		//                      CONSTRUCTORES Y DESTRUCTOR
+		// =======================================================================
+
+
+		/** Constructor por defecto. */
 		IComponent();
+
+		//__________________________________________________________________
 
 		/**
 		Destructor (virtual); en la clase base no hace nada.
 		*/
 		virtual ~IComponent();
+
+
+		// =======================================================================
+		//                            METODOS PROPIOS
+		// =======================================================================
 		
+
 		/**
 		Inicialización del componente, utilizando la información extraída de
 		la entidad leída del mapa (Maps::CEntity). El método es extendido
@@ -108,56 +145,173 @@ namespace Logic
 		*/
 		virtual bool spawn(CEntity* entity, CMap *map, const Map::CEntity *entityInfo);
 
-		/**
-		Método que activa el componente; invocado cuando se activa
-		el mapa donde está la entidad a la que pertenece el componente.
-		<p>
-		La implementación registrará al componente en algunos observers en 
-		los que pueda necesitar estar registrado (como el cronómetro del 
-		sistema, etc.).
-
-		@return true si todo ha ido correctamente.
-		*/
-		inline bool isActivated() { return _isActivated; }
-
-		/**
-		Método que activa el componente; invocado cuando se activa
-		el mapa donde está la entidad a la que pertenece el componente.
-		<p>
-		La implementación registrará al componente en algunos observers en 
-		los que pueda necesitar estar registrado (como el cronómetro del 
-		sistema, etc.).
-
-		@return true si todo ha ido correctamente.
-		*/
-		virtual void activate();
+		//__________________________________________________________________
 		
 		/**
-		Método que desactiva el componente; invocado cuando se
-		desactiva el mapa donde está la entidad a la que pertenece el
-		componente. Se invocará siempre, independientemente de si estamos
-		activados o no.
-		<p>
-		La implementación eliminará al componente de algunos observers en los 
-		que pueda estar registrado (como el cronómetro del sistema, etc.).
+		Método llamado una única vez tras la activación del componente. Se
+		encarga de invocar a onStart.
 		*/
-		virtual void deactivate();
+		inline void start() { onStart(); }
 
-		void (IComponent::*updater)(unsigned int);
+		//__________________________________________________________________
 
 		/**
-		Representa el primer tick de la entidad. Se ejecuta una sola vez tras la activación
-		del jugador.
+		Método llamado en cada frame que actualiza el estado del componente.
+		Los milisegundos dados son variables.
 
-		Es muy útil para inicializar datos ya que en esta fase SI que se pueden mandar
-		mensajes a otras entidades (ya que su spawn ya ha sido realizado).
+		Se encarga de llamar a onTick que es el método que realmente ejecuta 
+		el comportamiento de los componentes derivados.
 
-		IMPORTANTE: Los hijos deben llamar al método onStart del padre (tal y como sucede
-		con el tick) para que todo funcione correctamente.
-
-		@param msecs Milisegundos transcurridos para este primer tick.
+		@param msecs Milisegundos transcurridos desde el último tick (variable).
 		*/
-		virtual void onStart(unsigned int msecs);
+		inline void tick(unsigned int msecs) { onTick(msecs); }
+
+		//__________________________________________________________________
+		
+		/**
+		Método llamado en cada frame que actualiza el estado del componente.
+		Se encarga llamar al método que realmente tienen que redefinir los 
+		componentes (onFixedTick).
+
+		IMPORTANTE: Se diferencia del tick, en que msecs siempre es constante.
+
+		@param msecs Milisegundos transcurridos desde el último tick. Siempre
+		son constantes.
+		*/
+		inline void fixedTick(unsigned int msecs) { onFixedTick(msecs); }
+		
+		//__________________________________________________________________
+
+		/**
+		Si el componente estaba desactivado lo activa. Si se lleva a cabo
+		la activación invoca al método onActivate para que los componentes
+		hijos hagan lo que necesiten en el evento de activación.
+		*/
+		void activate();
+
+		//__________________________________________________________________
+
+		/**
+		Si el componente estaba activado lo desactiva. Si se lleva a cabo
+		la desactivación invoca al método onDeactivate para que los componentes
+		hijos hagan lo que necesiten en el evento de desactivación.
+		*/
+		void deactivate();
+
+		//__________________________________________________________________
+
+		/**
+		Pone el componente a dormir (deja de tener tick). Si el componente 
+		recibe un mensaje en este estado se despierta. También podemos 
+		despertarlo explicitamente llamando a wakeUp.
+
+		Invoca al método onSleep para que el componente haga lo que necesite
+		al ponerse a dormir.
+		*/
+		void putToSleep();
+
+		//__________________________________________________________________
+
+		/**
+		Despierta al componente e invoca al método onWake SOLO si el componente
+		estaba dormido.
+		*/
+		void wakeUp();
+
+		//__________________________________________________________________
+
+		/**
+		Pone el componente en estado ocupado (deja de recibir mensajes pero
+		tiene tick). Invoca al método onBusy.
+
+		La única forma de sacar al componente de este estado es llamando a
+		stayAvailable.
+		*/
+		void stayBusy();
+
+		//__________________________________________________________________
+
+		/**
+		Pone el componente en estado disponible (realmente lo que hace es
+		despertarlo ya que disponible y despierto son el mismo estado) e
+		invoca al método onAvailable SOLO si el componente estaba en el estado
+		BUSY.
+		*/
+		void stayAvailable();
+
+		//__________________________________________________________________
+
+		/** 
+		Devuelve true si el componente está activado. 
+
+		@return true si el componente está activado.
+		*/
+		inline bool isActivated() const { return _isActivated; }
+
+		//__________________________________________________________________
+
+		/** 
+		Devuelve true si el componente está ocupado. 
+		
+		@return true si el componente está ocupado.
+		*/
+		inline bool isBusy() const { return _state == ComponentState::eBUSY; }
+
+		//__________________________________________________________________
+
+		/** 
+		Devuelve true si el componente está despierto/disponible. 
+		
+		@return true si el componente está despierto.
+		*/
+		inline bool isAwake() const { return _state == ComponentState::eAWAKE; }
+
+		//__________________________________________________________________
+
+		/** 
+		Devuelve true si el componente está durmiendo. 
+
+		@return true si el componente está durmiendo.
+		*/
+		inline bool isSleeping() const { return _state == ComponentState::eSLEEPING; }
+
+		//__________________________________________________________________
+
+		/**
+		Método que devuelve la entidad a la que pertenece el componente.
+
+		@return La entidad a la que pertenece el componente.
+		*/
+		inline CEntity* getEntity() const { return _entity; }
+
+	
+	protected:
+
+
+		// =======================================================================
+		//                          MÉTODOS PROTEGIDOS
+		// =======================================================================
+
+
+		/**
+		Se ejecuta la primera vez que la entidad se activa. Garantiza que todas las 
+		entidades (incluidos sus componentes) han ejecutado el spawn y están listas
+		para hacer el tick.
+		*/
+		virtual void onStart();
+
+		//__________________________________________________________________
+
+		/**
+		Llamado en cada frame por fixedTick. Los clientes que hereden de esta
+		clase deben redefinir su comportamiento.
+
+		@param msecs Milisegundos transcurridos desde el último tick. Siempre
+		son constantes.
+		*/
+		virtual void onFixedTick(unsigned int msecs);
+
+		//__________________________________________________________________
 
 		/**
 		Método llamado en cada frame que actualiza el estado del componente.
@@ -167,27 +321,53 @@ namespace Logic
 
 		@param msecs Milisegundos transcurridos desde el último tick.
 		*/
-		virtual void tick(unsigned int msecs);
+		virtual void onTick(unsigned int msecs);
+
+		//__________________________________________________________________
 
 		/**
-		Método que devuelve la entidad a la que pertenece el componente.
-
-		@return La entidad a la que pertenece el componente.
+		Invocado cuando se activa el componente. Los componentes derivados
+		deberán redefinir este método para hacer sus labores de activación.
 		*/
-		CEntity *getEntity() const { return _entity; }
+		virtual void onActivate();
 
-	protected:
+		//__________________________________________________________________
 
 		/**
-		clase amiga que puede establecerse como poseedor del componente.
+		Invocado cuando se desactiva el componente. Los componentes derivados
+		deberán redefinir este método para hacer sus labores de desactivación.
 		*/
-		friend class CEntity;
+		virtual void onDeactivate();
 
-		inline void tickSetup(unsigned int msecs);
+		//__________________________________________________________________
 
-		inline void onStartSetup(unsigned int msecs);
+		/**
+		Invocado al poner a dormir un componente. 
+		*/
+		virtual void onSleep();
 
-		void activateSetup();
+		//__________________________________________________________________
+
+		/**
+		Invocado al despertar un componente.
+		*/
+		virtual void onWake();
+
+		//__________________________________________________________________
+
+		/**
+		Invocado al poner un componente como ocupado.
+		*/
+		virtual void onBusy();
+
+		//__________________________________________________________________
+
+		/**
+		Invocado al poner un componente como disponible.
+		*/
+		virtual void onAvailable();
+
+		//__________________________________________________________________
 
 		/**
 		Método que establece la entidad a la que pertenece el componente.
@@ -196,16 +376,54 @@ namespace Logic
 		*/
 		void setEntity(CEntity *entity) { _entity = entity; }
 
+
+		// =======================================================================
+		//                          MIEMBROS PROTEGIDOS
+		// =======================================================================
+
 		/**
 		Entidad que contiene al componente. Para reenviar el mensaje a 
 		los otros componentes
 		*/
 		CEntity *_entity;
 
-		/**
-		True si el componente esta activado.
-		*/
+
+	private:
+
+
+		// =======================================================================
+		//                          MIEMBROS PRIVADOS
+		// =======================================================================
+
+
+		/** clase amiga que puede establecerse como poseedor del componente. */
+		friend class CEntity;
+
+		/** true si el componente esta activado. */
 		bool _isActivated;
+
+		/** 
+		Enumerado que indica el estado en el que se encuentra el componente:
+		<ul>
+			<li>eAWAKE: El componete está despierto/disponible.</li>
+			<li>eBUSY: El componente está ocupado.</li>
+			<li>eSLEEPING: El componente está durmiendo.</li>
+		</ul>
+		*/
+		ComponentState::Enum _state;
+
+		/** 
+		Enumerado que indica el tipo de tick que tiene el componente: 
+		<ul>
+			<li>eNONE: No tiene tick de ningún tipo.</li>
+			<li>eTICK: Tiene tick.</li>
+			<li>eFIXED_TICK: Tiene fixed tick.</li>
+			<li>eBOTH: Tiene tick y fixed tick.</li>
+		</ul>
+		*/
+		TickMode::Enum _tickMode;
+
+		
 	}; // class IComponent
 
 

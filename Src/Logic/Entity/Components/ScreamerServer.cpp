@@ -96,7 +96,7 @@ namespace Logic {
 
 	//__________________________________________________________________
 
-	void CScreamerServer::tick(unsigned int msecs) {
+	void CScreamerServer::onTick(unsigned int msecs) {
 		// Si la habilidad primaria está siendo usada
 		if(_primarySkillIsActive) {
 			// Deberia funcionar este bucle como el de la fisica? restando
@@ -145,8 +145,8 @@ namespace Logic {
 
 	//________________________________________________________________________
 
-	void CScreamerServer::activate() {
-		CPlayerClass::activate();
+	void CScreamerServer::onActivate() {
+		CPlayerClass::onActivate();
 
 		// Ñapa temporal para el ideame
 		// Cambiamos el color del marine en funcion de la clase con un changeMaterial
@@ -225,7 +225,7 @@ namespace Logic {
 
 	void CScreamerServer::refreshShieldPosition() {
 		// Sacamos la posicion del escudo (que debe estar situada a la altura de disparo)
-		Vector3 shootPosition = _entity->getPosition() + ( Math::getDirection( _entity->getOrientation() ) * _capsuleRadius*10 );
+		Vector3 shootPosition = _entity->getPosition() +( Math::getDirection( _entity->getOrientation() ) * _capsuleRadius );
 		shootPosition.y += _heightShoot;
 		
 		// Sacamos la orientacion de la entidad para setearsela al escudo

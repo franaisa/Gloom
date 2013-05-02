@@ -14,12 +14,7 @@ namespace Logic {
 namespace Logic 
 {
 /**
-	Este componente controla la capacidad de disparo de una entidad, asi como las armas que puede tener. Procesa mensajes de tipo 
-	SHOOT (indican que la entidad ha disparado)
-	<p>
-	Poseera una vector, con las armas que tiene, asi como su daño y alcance.
-	Tambien poseera un vector de booleanos que indicara las armas que posee.
-
+	Este componente controla la activacion/desactivacion de las armas que tenemos.
 */
 
 
@@ -70,7 +65,7 @@ namespace Logic
 
 		@return true si todo ha ido correctamente.
 		*/
-		virtual void activate();
+		virtual void onActivate();
 
 		/**
 		Método que desactiva el componente; invocado cuando se
@@ -80,7 +75,7 @@ namespace Logic
 		<p>
 		Se pone el objetivo a seguir a NULL.
 		*/
-		virtual void deactivate();
+		virtual void onDeactivate();
 
 		void changeWeapon(unsigned char newWeapon);
 	
@@ -91,7 +86,14 @@ namespace Logic
 		void addWeapon(int ammo, int weaponIndex);
 
 	protected:
-
+		/**
+		Función que se llama cuando se quiere cambiar de arma utilizando el scroll. A partir del arma actual,
+		recorre el array del inventario de armas hacia adelante (iWeapon == 100) o hacia atrá (iWeapon == -100),
+		en función de la dirección que se le haya dado al scroll.
+		@return Devuelve el índice del siguiente arma que tenemos (hacia arriba del inventario u hacia abajo)
+		Si no ha encontrado ningún arma siguiente, devuelve -1
+		*/
+		int selectScrollWeapon(int iWeapon);
 
 		/**
 		arma actual equipada

@@ -8,8 +8,10 @@
 */
 
 #include "RocketController.h"
+#include "PhysicDynamicEntity.h"
 
 #include "Physics/Server.h"
+#include "Physics/RaycastHit.h"
 
 #include "Logic/Maps/EntityFactory.h"
 #include "Logic/Entity/Entity.h"
@@ -29,12 +31,36 @@
 #include "Graphics/Server.h"
 #include "Graphics/Scene.h"
 
+#include <OgreSceneManager.h>
+#include <OgreMaterialManager.h>
+#include <OgreManualObject.h>
+
 namespace Logic {
 	
 	IMP_FACTORY(CRocketController);
 
-	CRocketController::CRocketController() { 
+	CRocketController::CRocketController() : _temporal(0) { 
 		// Nada que hacer
+	}
+
+
+	void CRocketController::onTick(unsigned int msecs){
+	/*	inicio+=msecs;
+		if(inicio>=1600 && contamosparada==false){
+			inicio1=_entity->getPosition();
+			contamosparada=true;
+		}
+		if(contamosparada)
+			parada+=msecs;
+		if(parada>=1600){
+			parada1=_entity->getPosition();
+			float distance=parada1.distance(inicio1);
+			std::cout << "La distancia recorrida es : " << distance << std::endl;
+			std::cout << "Cada 16msecs recorre: " << distance*100/1600;
+			parada=0;
+			contamosparada=false;
+		}
+		*/
 	}
 
 	//________________________________________________________________________
@@ -45,7 +71,10 @@ namespace Logic {
 		_explotionDamage = entityInfo->getFloatAttribute("explotionDamage");
 		_explotionRadius = entityInfo->getFloatAttribute("explotionRadius");
 		_audioExplotion = entityInfo->getStringAttribute("explotionAudio");
+		_displacement = entityInfo->getFloatAttribute("displacement");
 		_explotionActive = false;
+		//inicio=parada=0;
+		//contamosparada=false;
 		return true;
 	} // spawn
 
@@ -110,32 +139,65 @@ namespace Logic {
 		CEntity** entitiesHit = NULL;
 		int nbHits = 0;
 
+		// Desactivamos el cohete para que no intervenga en la query
+		CPhysicDynamicEntity* comp;
+		if(comp = _entity->getComponent<CPhysicDynamicEntity>("CPhysicDynamicEntity")) {
+			comp->deactivateSimulation();
+		}
+
 		// Hacemos una query de overlap con la geometria de una esfera en la posicion 
 		// en la que se encuentra la granada con el radio que se indique de explosion
 		Physics::SphereGeometry explotionGeom = Physics::CGeometryFactory::getSingletonPtr()->createSphere(_explotionRadius);
-		Physics::CServer::getSingletonPtr()->overlapMultiple(explotionGeom, _entity->getPosition(), entitiesHit, nbHits);
+		Vector3 explotionPos = _entity->getPosition();
+		Physics::CServer::getSingletonPtr()->overlapMultiple(explotionGeom, explotionPos, entitiesHit, nbHits);
 
 		// Mandamos el mensaje de daño a cada una de las entidades que hayamos golpeado
 		// Además aplicamos un desplazamiento al jugador 
 		for(int i = 0; i < nbHits; ++i) {
 			// Si la entidad golpeada es valida
 			if(entitiesHit[i] != NULL) {
+				// Comprobamos el punto de contacto
+				Vector3 rayDirection = entitiesHit[i]->getPosition();
+
+				// Tiramos el rayo al centro de la capsula del enemigo
+				// No podemos tirar el rayo directamente porque se lo tira a los pies y a veces no hay contacto
+				// Como solucion rapida (aehem.. ñapa) voy a sacar la info de la altura del screamer
+				// que teoricamente es la misma que la de todos los players
+				Map::CEntity * info = Logic::CEntityFactory::getSingletonPtr()->getInfo("Screamer");
+				if(info != NULL) rayDirection.y += info->getIntAttribute("physic_height");
+				rayDirection = rayDirection - explotionPos;
+				
+				// Hacemos una query de raycast desde el punto de explosion hasta la entidad analizada
+				// de la query de overlap (para saber el punto de colision).
+				// No es ni lo mas exacto ni lo mas eficiente, pero soluciona la papeleta.
+				Ogre::Ray ray( explotionPos, rayDirection.normalisedCopy() );
+				int bufferSize;
+				Physics::CRaycastHit* hitBuffer;
+				Physics::CServer::getSingletonPtr()->raycastMultiple(ray, _explotionRadius, hitBuffer, bufferSize);
+
+				// Calculamos el daño en base a la distancia del golpe
+				float dmg = 0;
+				for(int k = 0; k < bufferSize; ++k) {
+					if(hitBuffer[k].entity == entitiesHit[i]) {
+						dmg = _explotionDamage * ( 1 - (hitBuffer[k].distance/_explotionRadius) );
+					}
+				}
+
+				if(bufferSize > 0) delete [] hitBuffer;
+
 				// Emitimos el mensaje de daño
 				std::shared_ptr<CMessageDamaged> dmgMsg = std::make_shared<CMessageDamaged>();
-				dmgMsg->setDamage(_explotionDamage);
+				dmgMsg->setDamage(dmg);
 				dmgMsg->setEnemy(_owner);
 				entitiesHit[i]->emitMessage(dmgMsg);
 
 				// Emitimos el mensaje de desplazamiento por daños
 				std::shared_ptr<CMessageAddForcePlayer> addForcePlayerMsg = std::make_shared<CMessageAddForcePlayer>();
-				// Seteamos la fuerza y la velocidad
-
-				// Seteamos el vector director del desplazamiento
-				/*Vector3 direccionImpacto = entitiesHit[i]->getPosition() - _entity->getPosition();
+				Vector3 playerPosition= entitiesHit[i]->getPosition() + Vector3(0,8,0); // Heightshoot hardcodeado
+				Vector3 direccionImpacto =playerPosition- _entity->getPosition();
 				direccionImpacto.normalise();
-
-				msg2->setForce(direccionImpacto*_force);
-				entitiesHit[i]->emitMessage(msg2);*/
+				addForcePlayerMsg->setForce(direccionImpacto*_displacement);
+				entitiesHit[i]->emitMessage(addForcePlayerMsg);
 			}
 		}
 
@@ -166,6 +228,31 @@ namespace Logic {
 
 	//________________________________________________________________________
 
+	// Dibujado de raycast para depurar
+	void CRocketController::drawRaycast(const Ray& raycast, float dist) {
+		Graphics::CScene *scene = Graphics::CServer::getSingletonPtr()->getActiveScene();
+		Ogre::SceneManager *mSceneMgr = scene->getSceneMgr();
+
+		std::stringstream aux;
+		aux << "laser" << _temporal++;
+		std::string laser = aux.str();
+
+		Ogre::ManualObject* myManualObject =  mSceneMgr->createManualObject(laser); 
+		Ogre::SceneNode* myManualObjectNode = mSceneMgr->getRootSceneNode()->createChildSceneNode(laser+"_node"); 
+ 
+		myManualObject->begin("laser", Ogre::RenderOperation::OT_LINE_STRIP);
+		Vector3 v = raycast.getOrigin();
+		myManualObject->position(v.x,v.y,v.z);
+
+		for(int i=0; i < dist;++i){
+			Vector3 v = raycast.getPoint(i);
+			myManualObject->position(v.x,v.y,v.z);
+			// etc 
+		}
+
+		myManualObject->end(); 
+		myManualObjectNode->attachObject(myManualObject);
+	}// drawRaycast
 
 } // namespace Logic
 

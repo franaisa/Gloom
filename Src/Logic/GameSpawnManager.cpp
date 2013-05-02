@@ -79,6 +79,7 @@ namespace Logic {
 			if(entidad!=NULL)
 				_listSpawnPoints.push_back(entidad);
 		}
+		_maxTrys=15;
 	} // activate
 
 	//--------------------------------------------------------
@@ -99,8 +100,15 @@ namespace Logic {
 		std::cout << "EL NUMERO DE PUNTOS DE SPAWN DISPONIBLES ES: " << _listSpawnPoints.size() << std::endl;*/
 		int random=(rand()*clock())%_listSpawnPoints.size();
 		//Mientras que nos devuelva que el trigger esta activado buscamos otro punto
-		while(_listSpawnPoints[random]->getComponent<CPhysicStaticEntity>("CPhysicStaticEntity")->getInTrigger())
+		int intentos=0;
+		while(_listSpawnPoints[random]->getComponent<CPhysicStaticEntity>("CPhysicStaticEntity")->getInTrigger()){
 			random=(rand()*clock())%_listSpawnPoints.size();
+			intentos++;
+			if(intentos>_maxTrys)
+				return NULL;
+		}
+		//Ademas por si acaso se pide mas de un punto en el mismo tick hay que marcarlo instantaneamente
+		_listSpawnPoints[random]->getComponent<CPhysicStaticEntity>("CPhysicStaticEntity")->setInTrigger(true);
 		return _listSpawnPoints[random];
 	}
 

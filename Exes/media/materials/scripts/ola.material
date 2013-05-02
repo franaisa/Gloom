@@ -1,41 +1,188 @@
-
 material Material#25
 {
 	technique
 	{
+		set $ambient "0 0 0 1"
+		set $diffuse "1 1 1 1"
+		set $specular "2 2 2 100"
+		set $shininess "60"
+		
+		
+		
 		pass
 		{
-			ambient 0.588 0.588 0.588 1
-			diffuse 0.588 0.588 0.588 1
-			specular 0 0 0 1 10
+			illumination_stage ambient
 
-			
-			texture_unit diffuseMap
+            ambient $ambient
+            diffuse $diffuse
+            specular $specular $shininess
+            emissive 0 0 0 0
+
+            vertex_program_ref ambient_vs
+            {
+            }
+
+            fragment_program_ref ambient_ps
+            {
+            }
+
+            texture_unit diffuseMap
+            {
+                texture piedra_COLOR2.tga
+            }
+
+            texture_unit aoMap
             {
 				texture piedra_COLOR2.tga
             }
 			
+		}
+		
+		pass
+        {
+            illumination_stage per_light
+
+            scene_blend add
+            iteration once_per_light
+
+            vertex_program_ref diffuse_vs
+            {
+            }
+
+            fragment_program_ref diffuse_ps
+            {
+            }
+
+            diffuse $diffuse
+            specular $specular $shininess
+            ambient $ambient
+
+            texture_unit diffuseMap
+            {
+                texture piedra_COLOR2.tga
+            }
+
+            texture_unit specMap
+            {
+                texture piedra_SPEC.tga
+            }
+
+            texture_unit normalMap
+            {
+                texture piedra_NRM.tga
+            }
+			
+        }
+		pass
+		{
+			
+			illumination_stage per_light
+
+		
+			scene_blend add
+			
+			// Bump map fragment program, support for this is optional
+			fragment_program Examples/BumpMapFPSpecular cg
+			{
+				source Example_BumpMapping.cg
+				entry_point specular_fp
+				profiles ps_2_0 arbfp1 fp20
+			}
+			
+			texture_unit normalmap
+			{
+				texture piedra_NRM.tga
+				colour_op replace
+			}
 		}
 
 	}
 
 }
 
-
-
 material Material#52
 {
 	technique
 	{
+		set $ambient "0 0 0 1"
+		set $diffuse "1 1 1 1"
+		set $specular "2 2 2 100"
+		set $shininess "60"
+		
+		
+		
 		pass
 		{
-			ambient 0.588 0.588 0.588 1
-			diffuse 0.588 0.588 0.588 1
-			specular 0 0 0 1 10
+			illumination_stage ambient
 
-			texture_unit
-			{
+            ambient $ambient
+            diffuse $diffuse
+            specular $specular $shininess
+            emissive 0 0 0 0
+
+            vertex_program_ref ambient_vs
+            {
+            }
+
+            fragment_program_ref ambient_ps
+            {
+            }
+
+            texture_unit diffuseMap
+            {
+                texture metalpuerta_COLOR.tga
+            }
+
+            texture_unit aoMap
+            {
 				texture metalpuerta_COLOR.tga
+            }
+		}
+		
+		pass
+        {
+            illumination_stage per_light
+
+            scene_blend add
+            iteration once_per_light
+
+            vertex_program_ref diffuse_vs
+            {
+            }
+
+            fragment_program_ref diffuse_ps
+            {
+            }
+
+            diffuse $diffuse
+            specular $specular $shininess
+            ambient $ambient
+
+            texture_unit diffuseMap
+            {
+                texture metalpuerta_COLOR.tga
+            }
+
+            texture_unit specMap
+            {
+                texture metalpuerta_SPEC.tga
+            }
+
+            texture_unit normalMap
+            {
+                texture metalpuerta_NRM.tga
+            }
+        }
+		
+		pass
+		{
+			
+			illumination_stage per_light
+			
+			texture_unit normalmap
+			{
+				texture metalpuerta_NRM.tga
+				colour_op replace
 			}
 		}
 
@@ -49,15 +196,85 @@ material Material#39
 {
 	technique
 	{
+		set $ambient "0 0 0 1"
+		set $diffuse "1 1 1 1"
+		set $specular "2 2 2 100"
+		set $shininess "60"
+		
+		
+		
 		pass
 		{
-			ambient 0.588 0.588 0.588 1
-			diffuse 0.588 0.588 0.588 1
-			specular 0 0 0 1 10
+			illumination_stage ambient
 
-			texture_unit
-			{
+            ambient $ambient
+            diffuse $diffuse
+            specular $specular $shininess
+            emissive 0 0 0 0
+
+            vertex_program_ref ambient_vs
+            {
+            }
+
+            fragment_program_ref ambient_ps
+            {
+            }
+
+            texture_unit diffuseMap
+            {
+                texture BronzeCopper0030_L_COLOR3.tga
+            }
+
+            texture_unit aoMap
+            {
 				texture BronzeCopper0030_L_COLOR3.tga
+            }
+		}
+		
+		pass
+        {
+            illumination_stage per_light
+
+            scene_blend add
+            iteration once_per_light
+
+            vertex_program_ref diffuse_vs
+            {
+            }
+
+            fragment_program_ref diffuse_ps
+            {
+            }
+
+            diffuse $diffuse
+            specular $specular $shininess
+            ambient $ambient
+
+            texture_unit diffuseMap
+            {
+                texture BronzeCopper0030_L_COLOR3.tga
+            }
+
+            texture_unit specMap
+            {
+                texture BronzeCopper0030_L_SPEC.tga
+            }
+
+            texture_unit normalMap
+            {
+                texture BronzeCopper0030_L_NRM.tga
+            }
+        }
+		
+		pass
+		{
+			
+			illumination_stage per_light
+			
+			texture_unit normalmap
+			{
+				texture BronzeCopper0030_L_NRM.tga
+				colour_op replace
 			}
 		}
 
@@ -71,15 +288,85 @@ material Material#38
 {
 	technique
 	{
+		set $ambient "0 0 0 1"
+		set $diffuse "1 1 1 1"
+		set $specular "2 2 2 100"
+		set $shininess "60"
+		
+		
+		
 		pass
 		{
-			ambient 0.588 0.588 0.588 1
-			diffuse 0.588 0.588 0.588 1
-			specular 0 0 0 1 10
+			illumination_stage ambient
 
-			texture_unit
-			{
+            ambient $ambient
+            diffuse $diffuse
+            specular $specular $shininess
+            emissive 0 0 0 0
+
+            vertex_program_ref ambient_vs
+            {
+            }
+
+            fragment_program_ref ambient_ps
+            {
+            }
+
+            texture_unit diffuseMap
+            {
+                texture metal_columna_tileado_COLOR.tga
+            }
+
+            texture_unit aoMap
+            {
 				texture metal_columna_tileado_COLOR.tga
+            }
+		}
+		
+		pass
+        {
+            illumination_stage per_light
+
+            scene_blend add
+            iteration once_per_light
+
+            vertex_program_ref diffuse_vs
+            {
+            }
+
+            fragment_program_ref diffuse_ps
+            {
+            }
+
+            diffuse $diffuse
+            specular $specular $shininess
+            ambient $ambient
+
+            texture_unit diffuseMap
+            {
+                texture metal_columna_tileado_COLOR.tga
+            }
+
+            texture_unit specMap
+            {
+                texture metal_columna_tileado_SPEC.tga
+            }
+
+            texture_unit normalMap
+            {
+                texture metal_columna_tileado_NRM.tga
+            }
+        }
+		
+		pass
+		{
+			
+			illumination_stage per_light
+			
+			texture_unit normalmap
+			{
+				texture metal_columna_tileado_NRM.tga
+				colour_op replace
 			}
 		}
 
@@ -93,15 +380,85 @@ material Material#53
 {
 	technique
 	{
+		set $ambient "0 0 0 1"
+		set $diffuse "1 1 1 1"
+		set $specular "2 2 2 100"
+		set $shininess "60"
+		
+		
+		
 		pass
 		{
-			ambient 0.588 0.588 0.588 1
-			diffuse 0.588 0.588 0.588 1
-			specular 0 0 0 1 10
+			illumination_stage ambient
 
-			texture_unit
-			{
+            ambient $ambient
+            diffuse $diffuse
+            specular $specular $shininess
+            emissive 0 0 0 0
+
+            vertex_program_ref ambient_vs
+            {
+            }
+
+            fragment_program_ref ambient_ps
+            {
+            }
+
+            texture_unit diffuseMap
+            {
+                texture viga_COLOR.tga
+            }
+
+            texture_unit aoMap
+            {
 				texture viga_COLOR.tga
+            }
+		}
+		
+		pass
+        {
+            illumination_stage per_light
+
+            scene_blend add
+            iteration once_per_light
+
+            vertex_program_ref diffuse_vs
+            {
+            }
+
+            fragment_program_ref diffuse_ps
+            {
+            }
+
+            diffuse $diffuse
+            specular $specular $shininess
+            ambient $ambient
+
+            texture_unit diffuseMap
+            {
+                texture viga_COLOR.tga
+            }
+
+            texture_unit specMap
+            {
+                texture viga_SPEC.tga
+            }
+
+            texture_unit normalMap
+            {
+                texture viga_NRM.tga
+            }
+        }
+		
+		pass
+		{
+			
+			illumination_stage per_light
+			
+			texture_unit normalmap
+			{
+				texture viga_NRM.tga
+				colour_op replace
 			}
 		}
 
@@ -115,15 +472,96 @@ material Material#93
 {
 	technique
 	{
+		set $ambient "0 0 0 1"
+		set $diffuse "1 1 1 1"
+		set $specular "2 2 2 100"
+		set $shininess "60"
+		
+		
+		
 		pass
 		{
-			ambient 0.588 0.588 0.588 1
-			diffuse 0.588 0.588 0.588 1
-			specular 0 0 0 1 10
+			illumination_stage ambient
 
-			texture_unit
-			{
+            ambient $ambient
+            diffuse $diffuse
+            specular $specular $shininess
+            emissive 0 0 0 0
+
+            vertex_program_ref ambient_vs
+            {
+            }
+
+            fragment_program_ref ambient_ps
+            {
+            }
+
+            texture_unit diffuseMap
+            {
+                texture MetalContainer_COLOR_OXID.tga
+            }
+
+            texture_unit aoMap
+            {
 				texture MetalContainer_COLOR_OXID.tga
+            }
+		}
+		
+		pass
+        {
+            illumination_stage per_light
+
+            scene_blend add
+            iteration once_per_light
+
+            vertex_program_ref diffuse_vs
+            {
+            }
+
+            fragment_program_ref diffuse_ps
+            {
+            }
+
+            diffuse $diffuse
+            specular $specular $shininess
+            ambient $ambient
+
+            texture_unit diffuseMap
+            {
+                texture MetalContainer_COLOR_OXID.tga
+            }
+
+            texture_unit specMap
+            {
+                texture MetalContainer_SPEC.tga
+            }
+
+            texture_unit normalMap
+            {
+                texture MetalContainer_NRM.tga
+            }
+        }
+		
+		pass
+		{
+			
+			illumination_stage per_light
+
+		
+			scene_blend add
+			
+			// Bump map fragment program, support for this is optional
+			fragment_program Examples/BumpMapFPSpecular cg
+			{
+				source Example_BumpMapping.cg
+				entry_point specular_fp
+				profiles ps_2_0 arbfp1 fp20
+			}
+			
+			texture_unit normalmap
+			{
+				texture MetalContainer_NRM.tga
+				colour_op replace
 			}
 		}
 
@@ -137,15 +575,97 @@ material Material#94
 {
 	technique
 	{
+		
+		set $ambient "0 0 0 1"
+		set $diffuse "1 1 1 1"
+		set $specular "2 2 2 100"
+		set $shininess "60"
+		
+		
+		
 		pass
 		{
-			ambient 0.588 0.588 0.588 1
-			diffuse 0.588 0.588 0.588 1
-			specular 0 0 0 1 10
+			illumination_stage ambient
 
-			texture_unit
-			{
+            ambient $ambient
+            diffuse $diffuse
+            specular $specular $shininess
+            emissive 0 0 0 0
+
+            vertex_program_ref ambient_vs
+            {
+            }
+
+            fragment_program_ref ambient_ps
+            {
+            }
+
+            texture_unit diffuseMap
+            {
+                texture MetalContainer_COLOR.tga
+            }
+
+            texture_unit aoMap
+            {
 				texture MetalContainer_COLOR.tga
+            }
+		}
+		
+		pass
+        {
+            illumination_stage per_light
+
+            scene_blend add
+            iteration once_per_light
+
+            vertex_program_ref diffuse_vs
+            {
+            }
+
+            fragment_program_ref diffuse_ps
+            {
+            }
+
+            diffuse $diffuse
+            specular $specular $shininess
+            ambient $ambient
+
+            texture_unit diffuseMap
+            {
+                texture MetalContainer_COLOR.tga
+            }
+
+            texture_unit specMap
+            {
+                texture MetalContainer_SPEC.tga
+            }
+
+            texture_unit normalMap
+            {
+                texture MetalContainer_NRM.tga
+            }
+        }
+		
+		pass
+		{
+			
+			illumination_stage per_light
+
+		
+			scene_blend add
+			
+			// Bump map fragment program, support for this is optional
+			fragment_program Examples/BumpMapFPSpecular cg
+			{
+				source Example_BumpMapping.cg
+				entry_point specular_fp
+				profiles ps_2_0 arbfp1 fp20
+			}
+			
+			texture_unit normalmap
+			{
+				texture MetalContainer_NRM.tga
+				colour_op replace
 			}
 		}
 
@@ -159,15 +679,85 @@ material Material#37
 {
 	technique
 	{
+		set $ambient "0 0 0 1"
+		set $diffuse "1 1 1 1"
+		set $specular "2 2 2 100"
+		set $shininess "60"
+		
+		
+		
 		pass
 		{
-			ambient 0.588 0.588 0.588 1
-			diffuse 0.588 0.588 0.588 1
-			specular 0 0 0 1 10
+			illumination_stage ambient
 
-			texture_unit
-			{
+            ambient $ambient
+            diffuse $diffuse
+            specular $specular $shininess
+            emissive 0 0 0 0
+
+            vertex_program_ref ambient_vs
+            {
+            }
+
+            fragment_program_ref ambient_ps
+            {
+            }
+
+            texture_unit diffuseMap
+            {
+                texture suelometal_COLOR2.tga
+            }
+
+            texture_unit aoMap
+            {
 				texture suelometal_COLOR2.tga
+            }
+		}
+		
+		pass
+        {
+            illumination_stage per_light
+
+            scene_blend add
+            iteration once_per_light
+
+            vertex_program_ref diffuse_vs
+            {
+            }
+
+            fragment_program_ref diffuse_ps
+            {
+            }
+
+            diffuse $diffuse
+            specular $specular $shininess
+            ambient $ambient
+
+            texture_unit diffuseMap
+            {
+                texture suelometal_COLOR2.tga
+            }
+
+            texture_unit specMap
+            {
+                texture suelometal_SPEC.tga
+            }
+
+            texture_unit normalMap
+            {
+                texture suelometal_NRM.tga
+            }
+        }
+		
+		pass
+		{
+			
+			illumination_stage per_light
+			
+			texture_unit normalmap
+			{
+				texture suelometal_NRM.tga
+				colour_op replace
 			}
 		}
 
@@ -181,15 +771,85 @@ material Material#92
 {
 	technique
 	{
+		set $ambient "0 0 0 1"
+		set $diffuse "1 1 1 1"
+		set $specular "2 2 2 100"
+		set $shininess "60"
+		
+		
+		
 		pass
 		{
-			ambient 0.588 0.588 0.588 1
-			diffuse 0.588 0.588 0.588 1
-			specular 0 0 0 1 10
+			illumination_stage ambient
 
-			texture_unit
-			{
+            ambient $ambient
+            diffuse $diffuse
+            specular $specular $shininess
+            emissive 0 0 0 0
+
+            vertex_program_ref ambient_vs
+            {
+            }
+
+            fragment_program_ref ambient_ps
+            {
+            }
+
+            texture_unit diffuseMap
+            {
+                texture ventana_COLOR.tga
+            }
+
+            texture_unit aoMap
+            {
 				texture ventana_COLOR.tga
+            }
+		}
+		
+		pass
+        {
+            illumination_stage per_light
+
+            scene_blend add
+            iteration once_per_light
+
+            vertex_program_ref diffuse_vs
+            {
+            }
+
+            fragment_program_ref diffuse_ps
+            {
+            }
+
+            diffuse $diffuse
+            specular $specular $shininess
+            ambient $ambient
+
+            texture_unit diffuseMap
+            {
+                texture ventana_COLOR.tga
+            }
+
+            texture_unit specMap
+            {
+                texture ventana_SPEC.tga
+            }
+
+            texture_unit normalMap
+            {
+                texture ventana_NRM.tga
+            }
+        }
+		
+		pass
+		{
+			
+			illumination_stage per_light
+			
+			texture_unit normalmap
+			{
+				texture ventana_NRM.tga
+				colour_op replace
 			}
 		}
 
@@ -203,15 +863,85 @@ material Material#107
 {
 	technique
 	{
+		set $ambient "0 0 0 1"
+		set $diffuse "1 1 1 1"
+		set $specular "2 2 2 100"
+		set $shininess "60"
+		
+		
+		
 		pass
 		{
-			ambient 0.588 0.588 0.588 1
-			diffuse 0.588 0.588 0.588 1
-			specular 0 0 0 1 10
+			illumination_stage ambient
 
-			texture_unit
-			{
+            ambient $ambient
+            diffuse $diffuse
+            specular $specular $shininess
+            emissive 0 0 0 0
+
+            vertex_program_ref ambient_vs
+            {
+            }
+
+            fragment_program_ref ambient_ps
+            {
+            }
+
+            texture_unit diffuseMap
+            {
+                texture techometal_COLOR2.tga
+            }
+
+            texture_unit aoMap
+            {
 				texture techometal_COLOR2.tga
+            }
+		}
+		
+		pass
+        {
+            illumination_stage per_light
+
+            scene_blend add
+            iteration once_per_light
+
+            vertex_program_ref diffuse_vs
+            {
+            }
+
+            fragment_program_ref diffuse_ps
+            {
+            }
+
+            diffuse $diffuse
+            specular $specular $shininess
+            ambient $ambient
+
+            texture_unit diffuseMap
+            {
+                texture techometal_COLOR2.tga
+            }
+
+            texture_unit specMap
+            {
+                texture techometal_SPEC.tga
+            }
+
+            texture_unit normalMap
+            {
+                texture techometal_NRM.tga
+            }
+        }
+		
+		pass
+		{
+			
+			illumination_stage per_light
+			
+			texture_unit normalmap
+			{
+				texture techometal_NRM.tga
+				colour_op replace
 			}
 		}
 

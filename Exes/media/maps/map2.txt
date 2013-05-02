@@ -118,8 +118,6 @@ Map = {
 		position = {-199.0, 0.0, 112.0},
 		model = "health1.mesh",
 		model = "jumpy.mesh",
-		power = 0.35,
-		velocity = 0.12,
 		force = {1,5,0.1},
 		physic_entity = "rigid",
 		physic_trigger = true,
@@ -262,22 +260,6 @@ Map = {
 
 	},
 	
-	Enemigo2 = {
-		type = "RemotePlayer",
-		position = {10, 0.2, -6},
-		yaw = 90,
-		defaultLife = 120,
-		maxShield=100,
-		maxLife=250,
-		PorcentShield=23,
-		isPlayer = false,
-		model = "marine.mesh",
-		physic_shape = "capsule",
-		physic_radius = 6,
-		physic_height = 6,
-
-	},
-	
 	lavaFondo = {
 		type = "Lava",
 		position = {-80.0,-20.0, 45.0},
@@ -295,9 +277,8 @@ Map = {
 	},
 	
 	David = {
-		type = "LocalScreamer",
+		type = "LocalShadow",
 		isPlayer = true,
-		position = {160,50,40},
 	},
 	
 	Camera = {

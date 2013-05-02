@@ -98,9 +98,7 @@ namespace Logic {
 	
 	//________________________________________________________________________
 	
-	void CLife::activate() {
-		IComponent::activate();
-		
+	void CLife::onActivate() {
 		// Resteamos los valores de salud y escudo a los valores por defecto
 		_currentLife = _defaultLife;
 		_currentShield = 0;
@@ -135,13 +133,14 @@ namespace Logic {
 				damaged( dmgMsg->getDamage(), dmgMsg->getEnemy() );
 				std::cout << "soy " << _entity->getName() << " y me hace " << dmgMsg->getDamage() << " el enemigo " << dmgMsg->getEnemy()->getName() << std::endl;
 
-				if (_entity->isPlayer())
+				//Si es el player, movemos la cámara (para moverla solo cuando hacemos daño, y no cuando nos lo hacen). .
+				/*if (_entity->isPlayer()) 
 				{
-				std::shared_ptr<Logic::CMessageCameraOffset> m3 = std::make_shared<Logic::CMessageCameraOffset>();
-				m3->setOffsetTimer(100.0f);								 
-				Logic::CEntity * camera = Logic::CServer::getSingletonPtr()->getMap()->getEntityByType("Camera");
-				camera->emitMessage(m3);
-				}
+					std::shared_ptr<Logic::CMessageCameraOffset> m3 = std::make_shared<Logic::CMessageCameraOffset>();
+					m3->setOffsetTimer(100.0f);								 
+					Logic::CEntity * camera = Logic::CServer::getSingletonPtr()->getMap()->getEntityByType("Camera");
+					camera->emitMessage(m3);
+				}*/
 				break;
 			}
 			case Message::ADD_LIFE: {
@@ -164,7 +163,7 @@ namespace Logic {
 	
 	//________________________________________________________________________
 
-	void CLife::tick(unsigned int msecs) {
+	void CLife::onTick(unsigned int msecs) {
 		_damageTimer += msecs;
 		if(_damageTimer >= _damageTimeStep && _currentLife != 1) {
 			// Reducimos la vida hasta un minimo de un punto de salud

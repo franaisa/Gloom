@@ -76,17 +76,6 @@ namespace Logic
 	
 	//---------------------------------------------------------
 
-
-	
-	void CLight::activate()
-	{
-		IComponent::activate();
-
-	} // activate
-	//---------------------------------------------------------
-
-
-
 	bool CLight::accept(const std::shared_ptr<CMessage>& message)
 	{
 		return false;
@@ -108,7 +97,7 @@ namespace Logic
 	} // process
 	//----------------------------------------------------------
 /*
-	void CLight::tick(unsigned int msecs)
+	void CLight::onTick(unsigned int msecs)
 	{
 		
 	} // tick

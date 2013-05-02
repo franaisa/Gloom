@@ -82,7 +82,7 @@ namespace Logic {
 		se llama a este metodo cuando la entidad muere y vuelve a ser
 		despertada.
 		*/
-		virtual void activate();
+		virtual void onActivate();
 
 		
 		// =======================================================================

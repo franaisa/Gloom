@@ -62,13 +62,15 @@ namespace Logic
 		*/
 		virtual void process(const std::shared_ptr<CMessage>& message);
 
+		
+
+	protected:
+
 		/**
 		Mueve el componente hacia la posición de destino. Una vez la alcance se para
 		(loop = false) o empieza a moverse hacia la otra posición (loop = true).
 		*/
-		virtual void tick(unsigned int msecs);
-
-	protected:
+		virtual void onTick(unsigned int msecs);
 
 		/**
 		Posición inicial (_position[0]) y final (_position[1]).

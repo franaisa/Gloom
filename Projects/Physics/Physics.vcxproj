@@ -92,6 +92,7 @@
     <ClInclude Include="..\..\Src\Physics\Fluid.h" />
     <ClInclude Include="..\..\Src\Physics\GeometryFactory.h" />
     <ClInclude Include="..\..\Src\Physics\MaterialManager.h" />
+    <ClInclude Include="..\..\Src\Physics\RaycastHit.h" />
     <ClInclude Include="..\..\Src\Physics\Server.h" />
     <ClInclude Include="..\..\Src\Physics\StaticEntity.h" />
   </ItemGroup>

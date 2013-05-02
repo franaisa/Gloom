@@ -20,6 +20,7 @@ Contiene la implementación del servidor de física.
 #include "Cloth.h"
 #include "MaterialManager.h"
 #include "GeometryFactory.h"
+#include "RaycastHit.h"
 
 #include <assert.h>
 #include <algorithm>
@@ -222,7 +223,7 @@ namespace Physics {
 			// Simulamos un timestep
 			// La llamada a simulate provoca que PhysX mueva a los actores físicos durante
 			// el tiempo especificado.
-			_scene->simulate(_fixedTime / 1000.0f);
+			_scene->simulate(_fixedTime * 0.001f);
 			_acumTime -= 4;
 
 			// Si aún tenemos que hacer más simulaciones, le pedimos a PhysX que nos devuelva
@@ -485,6 +486,172 @@ namespace Physics {
 
 	//________________________________________________________________________
 
+	Vector3 CServer::raycastClosestSpecificPoint(const Ray& ray, float maxDist, unsigned int id) const {
+		assert(_scene);
+
+		// Establecer parámettros del rayo
+		PxVec3 origin = Vector3ToPxVec3(ray.getOrigin());      // origen     
+		PxVec3 unitDir = Vector3ToPxVec3(ray.getDirection());  // dirección normalizada   
+		PxReal maxDistance = maxDist;                          // distancia máxima
+		PxRaycastHit hit;                 
+		const PxSceneQueryFlags outputFlags;				   // Info que queremos recuperar	
+
+		// Lanzar el rayo
+		PxRaycastHit hits[60];
+		bool blockingHit;
+
+		PxI32 nHits = _scene->raycastMultiple(origin, unitDir, maxDistance, outputFlags, hits, 60, blockingHit); 
+	
+		// Buscar un actot que pertenezca al grupo de colisión indicado
+		for (int i = nHits - 1; i >= 0; --i) {
+			PxRigidActor* actor = &hits[i].shape->getActor();
+			PxShapeFlags* flags = &hits[i].shape->getFlags();
+			IPhysics *component = static_cast<IPhysics*>(actor->userData);
+	
+			if(component != NULL) {
+				Logic::CEntity* entityHit = component->getEntity();
+				//std::cout << "Nombre de lo tocado: " << entityHit->getName() << std::endl;
+				if(entityHit->getEntityID() == id && !(*flags & PxShapeFlag::eTRIGGER_SHAPE)) {
+					return PxVec3ToVector3(hits[i].impact);
+				}
+			}
+		}
+
+		return Vector3(-5,-5,-5);
+
+		// Nota: seguro que se puede hacer de manera mucho más eficiente usando los filtros
+		// de PhysX.
+	}
+
+	//________________________________________________________________________
+
+	void CServer::raycastMultiple(const Ray& ray, float maxDistance, CRaycastHit* & hits, int& nbHits) const {
+		// Establecer parámettros del rayo
+		PxVec3 origin = Vector3ToPxVec3( ray.getOrigin() );      // origen     
+		PxVec3 unitDir = Vector3ToPxVec3( ray.getDirection() );  // dirección normalizada
+
+		// Seteamos los flags que indican que información queremos extraer
+		const PxSceneQueryFlags outputFlags = PxSceneQueryFlag::eDISTANCE | PxSceneQueryFlag::eIMPACT | PxSceneQueryFlag::eNORMAL;
+
+		// Variable que indicara si existe un elemento bloqueante
+		bool blockingHit;
+
+		// Reservamos memoria para el buffer de colisiones
+		PxU32 bufferSize = 256;
+		PxRaycastHit* hitBuffer = new(std::nothrow) PxRaycastHit [bufferSize];
+		assert(hitBuffer != NULL && "Error: Fallo en la reserva de memoria");
+
+		nbHits = _scene->raycastMultiple(origin, unitDir, maxDistance, outputFlags, hitBuffer, bufferSize, blockingHit);
+		while(nbHits == -1) {
+			// Si el buffer se ha desbordado aumentamos su tamaño al doble
+			// y volvemos ha realizar la query
+			delete [] hitBuffer;
+		
+			bufferSize *= 2;
+			hitBuffer = new(std::nothrow) PxRaycastHit [bufferSize];
+			assert(hitBuffer != NULL && "Error en la reserva de memoria");
+
+			// Realizamos de nuevo la query
+			nbHits = _scene->raycastMultiple(origin, unitDir, maxDistance, outputFlags, hitBuffer, bufferSize, blockingHit);
+		}
+
+		if(nbHits > 0) {
+			// Si hemos golpeado a otras entidades creamos un buffer
+			hits = new(std::nothrow) CRaycastHit [nbHits];
+			assert(hits != NULL && "Error en la reserva de memoria");
+
+			// Rellenamos el buffer con un puntero a cada una de las entidades golpeadas
+			for(int i = 0; i < nbHits; ++i) {
+				IPhysics* component = static_cast<IPhysics*>( hitBuffer[i].shape->getActor().userData );
+
+				hits[i].entity = component->getEntity();
+				hits[i].distance = hitBuffer[i].distance;
+				hits[i].impact = PxVec3ToVector3(hitBuffer[i].impact);
+				hits[i].normal = PxVec3ToVector3(hitBuffer[i].normal);
+			}
+		}
+		else {
+			hits = NULL;
+		}
+
+		delete [] hitBuffer;
+	}
+
+	//________________________________________________________________________
+
+	void CServer::sweepMultiple(const physx::PxGeometry& geometry, const Vector3& position,
+								const Vector3& unitDir, float distance, Vector3* & hitSpots, int& nbHits) {
+
+		// Booleano que indicara si hay elementos que bloquean el hit
+		bool blockingHit;
+		// La situamos en la posicion dada
+		PxTransform pose( Vector3ToPxVec3(position) );
+		// Seteamos el tamaño del buffer de colisiones a 5
+		PxU32 bufferSize = 5;
+		// Reservamos memoria para el buffer
+		PxSweepHit* hitBuffer = new(std::nothrow) PxSweepHit [bufferSize];
+		assert(hitBuffer != NULL && "Error en la reserva de memoria");
+
+		// Seteamos los flags de sweep
+		const PxSceneQueryFlags outputFlags = PxSceneQueryFlag::eDISTANCE | PxSceneQueryFlag::eIMPACT | 
+											  PxSceneQueryFlag::eNORMAL | PxSceneQueryFlag::eINITIAL_OVERLAP;
+
+		nbHits = _scene->sweepMultiple(geometry, pose, Vector3ToPxVec3(unitDir), 100, outputFlags, hitBuffer, bufferSize, blockingHit);
+		while(nbHits == -1) {
+			// Si el buffer se ha desbordado aumentamos su tamaño al doble
+			// y volvemos ha realizar la query
+			delete [] hitBuffer;
+		
+			bufferSize *= 2;
+			hitBuffer = new(std::nothrow) PxSweepHit [bufferSize];
+			assert(hitBuffer != NULL && "Error en la reserva de memoria");
+
+			// Realizamos de nuevo la query
+			nbHits = _scene->sweepMultiple(geometry, pose, Vector3ToPxVec3(unitDir), 100, outputFlags, hitBuffer, bufferSize, blockingHit);
+		}
+
+		if(nbHits > 0) {
+			// Si hemos golpeado a otras entidades creamos un buffer
+			hitSpots = new(std::nothrow) Vector3 [nbHits];
+			assert(hitSpots != NULL && "Error en la reserva de memoria");
+
+			// Rellenamos el buffer con un puntero a cada una de las entidades golpeadas
+			for(int i = 0; i < nbHits; ++i) {
+				hitSpots[i] = PxVec3ToVector3(hitBuffer[i].impact);
+			}
+		}
+		else {
+			hitSpots = NULL;
+		}
+
+		delete [] hitBuffer;
+	}
+
+	//________________________________________________________________________
+
+	bool CServer::sweepSingle(const physx::PxGeometry& sweepGeometry, const Vector3& position, 
+						      const Vector3& unitDir, float distance, Vector3& hitSpot) {
+
+		// Seteamos los flags de sweep
+		const PxSceneQueryFlags outputFlags = PxSceneQueryFlag::eDISTANCE | PxSceneQueryFlag::eIMPACT | 
+											  PxSceneQueryFlag::eNORMAL | PxSceneQueryFlag::eINITIAL_OVERLAP;
+
+		// Situamos la geometria de sweep en la posicion dada
+		PxTransform pose( Vector3ToPxVec3(position) );
+		// Contendra el hit obtenido
+		PxSweepHit hit;
+
+		// Hacer un barrido contra objetos estaticos y dinamicos. 
+		// El resultado de esta llamada es un booleano que devuelve true si se ha golpeado algo y false de lo contrario.
+		bool status = _scene->sweepSingle(sweepGeometry, pose, Vector3ToPxVec3(unitDir), distance, outputFlags, hit);
+
+		hitSpot = status ? PxVec3ToVector3(hit.impact) : Vector3::ZERO;
+		return status;
+
+	}
+
+	//________________________________________________________________________
+
 	void CServer::overlapMultiple(const PxGeometry& geometry, const Vector3& position, Logic::CEntity** & entitiesHit, int& nbHits) {
 		// Comprobar que es una de las geometrias soportadas por la query de overlap
 
@@ -496,11 +663,11 @@ namespace Physics {
 		PxShape** hitBuffer = new(std::nothrow) PxShape* [bufferSize];
 		assert(hitBuffer != NULL && "Error en la reserva de memoria");
 
-		// Calculamos el overlap contra objetos dinamicos (ya que los estaticos no nos interesan).
+		// Calculamos el overlap contra objetos dinamicos y contra estaticos.
 		// El valor de retorno es el numero de hits del buffer o -1 si el buffer no es lo suficientemente
 		// grande.
-		PxSceneQueryFilterData filterData(PxSceneQueryFilterFlag::eDYNAMIC);
-
+		PxSceneQueryFilterFlags filter(PxSceneQueryFilterFlag::eDYNAMIC | PxSceneQueryFilterFlag::eSTATIC);
+		PxSceneQueryFilterData filterData(filter);
 		nbHits = _scene->overlapMultiple(geometry, pose, hitBuffer, bufferSize, filterData);
 		while(nbHits == -1) {
 			// Si el buffer se ha desbordado aumentamos su tamaño al doble
@@ -525,6 +692,9 @@ namespace Physics {
 				IPhysics *component = static_cast<IPhysics*>( hitBuffer[i]->getActor().userData );
 				entitiesHit[i] = component != NULL ? component->getEntity() : NULL;
 			}
+		}
+		else {
+			entitiesHit = NULL;
 		}
 
 		delete [] hitBuffer;

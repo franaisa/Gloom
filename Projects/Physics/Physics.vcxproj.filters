@@ -31,6 +31,12 @@
     <Filter Include="Managers\Source">
       <UniqueIdentifier>{daf1ee2d-488f-40b6-9aab-411d88ba0ff9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Utils\Header">
+      <UniqueIdentifier>{68bbb913-3457-40a1-8c29-a0d423c0709d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utils\Source">
+      <UniqueIdentifier>{7b697c03-e981-49d5-8d7e-bf8d43a675b1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Src\Physics\Fluid.cpp">
@@ -79,9 +85,6 @@
       <Filter>Managers\Header</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Src\Physics\Server.h" />
-    <ClInclude Include="..\..\Src\Physics\Conversions.h">
-      <Filter>Utils</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Src\Physics\GeometryFactory.h">
       <Filter>Factories\Header</Filter>
     </ClInclude>
@@ -99,6 +102,12 @@
     </ClInclude>
     <ClInclude Include="..\..\Src\Physics\Cloth.h">
       <Filter>Actors\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Physics\Conversions.h">
+      <Filter>Utils\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Physics\RaycastHit.h">
+      <Filter>Utils\Header</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

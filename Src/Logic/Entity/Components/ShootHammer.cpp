@@ -45,7 +45,7 @@ namespace Logic {
 		
 		_currentAmmo = 1;
 		_damageReflect = entityInfo->getIntAttribute("weapon"+_nameWeapon+"DamageReflect");
-		_reboundForce = entityInfo->getFloatAttribute("reboundForce");
+		_reboundForce = entityInfo->getFloatAttribute("weapon"+_nameWeapon+"ReboundForce");
 
 		return true;
 	}

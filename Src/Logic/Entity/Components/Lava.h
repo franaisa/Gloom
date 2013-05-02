@@ -30,20 +30,12 @@ namespace Logic
 		*/
 		virtual bool spawn(CEntity* entity, CMap *map, const Map::CEntity *entityInfo);
 
-		/**
-		Método llamado en cada frame que actualiza el estado del componente de la vida,
-		<p>
-		la cual bajará cada n milisegundos.
-
-		@param msecs Milisegundos transcurridos desde el último tick.
-		*/
-		virtual void tick(unsigned int msecs);
 
 		/**
 		Método que activa el componente; invocado cuando se activa
 		el mapa donde está la entidad a la que pertenece el componente.
 		*/
-		virtual void activate();
+		virtual void onActivate();
 
 		/**
 		Este componente sólo acepta mensajes de tipo touched (por ahora).
@@ -61,6 +53,15 @@ namespace Logic
 		//void applyJump(CEntity *entity);
 
 	protected:
+
+		/**
+		Método llamado en cada frame que actualiza el estado del componente de la vida,
+		<p>
+		la cual bajará cada n milisegundos.
+
+		@param msecs Milisegundos transcurridos desde el último tick.
+		*/
+		virtual void onTick(unsigned int msecs);
 
 		/**
 		Atributo que lleva la potencia del jumper

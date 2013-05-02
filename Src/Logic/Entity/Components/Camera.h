@@ -56,8 +56,7 @@ namespace Logic
 		/**
 		Constructor por defecto; en la clase base no hace nada.
 		*/
-		CCamera() : IComponent(), _graphicsCamera(0), _distance(10), _height(7),
-			_targetDistance(7), _targetHeight(3) {}
+		CCamera() : IComponent(), _graphicsCamera(0), _height(8) {}
 		
 		/**
 		Inicialización del componente, utilizando la información extraída de
@@ -80,7 +79,7 @@ namespace Logic
 
 		@return true si todo ha ido correctamente.
 		*/
-		virtual void activate();
+		virtual void onActivate();
 		
 		/**
 		Método que desactiva el componente; invocado cuando se
@@ -90,7 +89,7 @@ namespace Logic
 		<p>
 		Se pone el objetivo a seguir a NULL.
 		*/
-		virtual void deactivate();
+		virtual void onDeactivate();
 
 		/**
 		Este componente sólo acepta mensajes de situar la camara al morir.
@@ -103,14 +102,7 @@ namespace Logic
 		virtual void process(const std::shared_ptr<CMessage>& message);
 
 
-		/**
-		Método llamado en cada frame que actualiza el estado del componente.
-		<p>
-		Se encarga de mover la cámara siguiendo al jugador.
-
-		@param msecs Milisegundos transcurridos desde el último tick.
-		*/
-		virtual void tick(unsigned int msecs);
+		
 
 		/**
 		Método llamado cuando nos llega un mensaje de mirar al enemigo que nos ha matado.
@@ -126,6 +118,15 @@ namespace Logic
 
 	protected:
 
+
+		/**
+		Método llamado en cada frame que actualiza el estado del componente.
+		<p>
+		Se encarga de mover la cámara siguiendo al jugador.
+
+		@param msecs Milisegundos transcurridos desde el último tick.
+		*/
+		virtual void onTick(unsigned int msecs);
 
 		/**
 		Cámara gráfica.

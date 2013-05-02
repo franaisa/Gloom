@@ -54,9 +54,8 @@ namespace Logic
 
 
 	
-	void CElevator::activate()
+	void CElevator::onActivate()
 	{
-		IComponent::activate();
 		_wait=true;
 		_waitTimeInFinal=0;
 		_active=false;
@@ -94,7 +93,7 @@ namespace Logic
 	} // process
 	//----------------------------------------------------------
 
-	void CElevator::tick(unsigned int msecs)
+	void CElevator::onFixedTick(unsigned int msecs)
 	{
 		Vector3 toDirection;
 	

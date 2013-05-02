@@ -489,6 +489,15 @@
     </ClCompile>
     <ClCompile Include="..\..\Src\Logic\XML\tinyxmlparser.cpp">
       <Filter>XML\Source</Filter>
+	</ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\WeaponsManagerClient.cpp">
+      <Filter>Entity\Components\Weapons\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\CameraFeedbackNotifier.cpp">
+      <Filter>Entity\Components\Graphics\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\LocalShadow.cpp">
+      <Filter>Entity\Components\Graphics\Source</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -872,6 +881,15 @@
     </ClInclude>
     <ClInclude Include="..\..\Src\Logic\XML\tinyxml.h">
       <Filter>XML\Header</Filter>
+	</ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\WeaponsManagerClient.h">
+      <Filter>Entity\Components\Weapons\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\CameraFeedbackNotifier.h">
+      <Filter>Entity\Components\Graphics\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\LocalShadow.h">
+      <Filter>Entity\Components\Graphics\Header</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

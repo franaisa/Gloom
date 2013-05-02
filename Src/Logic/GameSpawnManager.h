@@ -64,7 +64,7 @@ namespace Logic
 
 
 		/**
-		Función llamada desactivar la escucha.
+		Devuelve una entidad de spawn si la encuentre en un máximo de _maxTrys sino NULL.
 		*/
 		CEntity* getSpawnPosition();
 
@@ -90,6 +90,11 @@ namespace Logic
 		Única instancia de la clase.
 		*/
 		static CGameSpawnManager* _instance;
+
+		/**
+		Número de intentos para encontrar un punto de spawn.
+		*/
+		int _maxTrys;
 
 	}; // CGameSpawngManager
 

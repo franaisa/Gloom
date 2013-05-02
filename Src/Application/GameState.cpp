@@ -68,6 +68,9 @@ namespace Application {
 
 		// Queremos que el GUI maneje al jugador.
 		Input::CServer::getSingletonPtr()->getPlayerController()->activate();
+		// Seteamos el tamaño del time step fijo para la logica
+		Logic::CServer::getSingletonPtr()->setFixedTimeStep(16);
+		// Indicamos que a partir de ahora la creación de objetos es dinámica
 		Logic::CEntityFactory::getSingletonPtr()->dynamicCreation(true);
 
 		//paramos el sonido de menu
@@ -78,9 +81,9 @@ namespace Application {
 
 	void CGameState::deactivate() 
 	{
-		std::cout << "tiempo de procesado fisico: " << _timephysics << std::endl;
-		std::cout << "tiempo de procesado logico: " << _timelogic << std::endl;
-		std::cout << "tiempo total jugado: " << _time << std::endl;
+		//std::cout << "tiempo de procesado fisico: " << _timephysics << std::endl;
+		//std::cout << "tiempo de procesado logico: " << _timelogic << std::endl;
+		//std::cout << "tiempo total jugado: " << _time << std::endl;
 		// Desactivamos la clase que procesa eventos de entrada para 
 		// controlar al jugador.
 		Input::CServer::getSingletonPtr()->getPlayerController()->deactivate();
@@ -96,11 +99,16 @@ namespace Application {
 
 	void CGameState::tick(unsigned int msecs) 
 	{
-		// TODO: realizar la simulación física
+		/*unsigned int pieces=msecs/16;
+		for(int i=0;i<pieces;i++){
+			//Actualizamos la física del juego.
+			Physics::CServer::getSingletonPtr()->tick(16);
+			// Actualizamos la lógica de juego.
+			Logic::CServer::getSingletonPtr()->tick(16);
+		}*/
+		// Ejecutamos el tick de la física del juego.
 		Physics::CServer::getSingletonPtr()->tick(msecs);
-		//tiempo que ha tardado la fisica
-
-		// Actualizamos la lógica de juego.
+		// Ejecutamos el tick de la lógica del juego
 		Logic::CServer::getSingletonPtr()->tick(msecs);
 
 	} // tick

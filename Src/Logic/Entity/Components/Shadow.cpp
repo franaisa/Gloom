@@ -49,7 +49,7 @@ namespace Logic {
 			_materialName = entityInfo->getStringAttribute("materialName");
 
 		// Leer el tiempo que dura la invisibilidad
-		assert( entityInfo->hasAttribute("invisibilityDuration") );
+		assert( entityInfo->hasAttribute("invisibilityDuration") && "no tienes invisibilityduration mendrugo" );
 		// Pasamos el tiempo a msecs
 		_invisibilityDuration = entityInfo->getFloatAttribute("invisibilityDuration") * 1000;
 		return true;
@@ -57,7 +57,7 @@ namespace Logic {
 
 	//__________________________________________________________________
 
-	void CShadow::tick(unsigned int msecs) {
+	void CShadow::onTick(unsigned int msecs) {
 		// Si la habilidad primaria esta en uso, controlar el tiempo
 		// efectivo de la invisibilidad. Cuando se cumpla el tiempo,
 		// deshabilitamos el shader de transparencia.
@@ -83,8 +83,8 @@ namespace Logic {
 
 	//________________________________________________________________________
 
-	void CShadow::activate() {
-		CPlayerClass::activate();
+	void CShadow::onActivate() {
+		CPlayerClass::onActivate();
 
 		// Ñapa temporal para el ideame
 		// Cambiamos el color del marine en funcion de la clase con un changeMaterial

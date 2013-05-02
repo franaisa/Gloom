@@ -90,7 +90,7 @@ namespace Logic {
 
 	//__________________________________________________________________
 
-	void CScreamerClient::tick(unsigned int msecs) {
+	void CScreamerClient::onTick(unsigned int msecs) {
 		// Si la habilidad primaria está siendo usada
 		if(_shieldIsActive) {
 			refreshShieldGraphicsPos();
@@ -115,7 +115,7 @@ namespace Logic {
 
 	void CScreamerClient::refreshShieldGraphicsPos() {
 		// Sacamos la posicion del escudo (que debe estar situada a la altura de disparo)
-		Vector3 shootPosition = _entity->getPosition() + ( Math::getDirection( _entity->getOrientation() ) * _capsuleRadius*10 );
+		Vector3 shootPosition = _entity->getPosition() + ( Math::getDirection( _entity->getOrientation() ) * _capsuleRadius );
 		shootPosition.y += _heightShoot;
 		
 		_screamerShield->setPosition(shootPosition);
