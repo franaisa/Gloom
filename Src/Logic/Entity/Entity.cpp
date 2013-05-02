@@ -89,21 +89,18 @@ namespace Logic
 			float pitch = Math::fromDegreesToRadians(entityInfo->getFloatAttribute("pitch"));
 			float yaw = Math::fromDegreesToRadians(entityInfo->getFloatAttribute("yaw"));
 			Math::setPitchYaw(pitch,yaw,_transform);
-		}
-
-
-		// Por comodidad en el mapa escribimos los ángulos en grados.
-		else if(entityInfo->hasAttribute("pitch"))
-		{ 
-			float pitch = Math::fromDegreesToRadians(entityInfo->getFloatAttribute("pitch"));
-			Math::pitch(pitch,_transform);
-		}
-
-		// Por comodidad en el mapa escribimos los ángulos en grados.
-		else if(entityInfo->hasAttribute("yaw"))
-		{
-			float yaw = Math::fromDegreesToRadians(entityInfo->getFloatAttribute("yaw"));
-			Math::yaw(yaw,_transform);
+		}// Por comodidad en el mapa escribimos los ángulos en grados.
+		else{
+			if(entityInfo->hasAttribute("pitch")){ 
+				float pitch = Math::fromDegreesToRadians(entityInfo->getFloatAttribute("pitch"));
+				Math::pitch(pitch,_transform);
+			}// Por comodidad en el mapa escribimos los ángulos en grados.
+			else{
+				if(entityInfo->hasAttribute("yaw")){
+					float yaw = Math::fromDegreesToRadians(entityInfo->getFloatAttribute("yaw"));
+					Math::yaw(yaw,_transform);
+				}
+			}
 		}
 
 		if(entityInfo->hasAttribute("isPlayer"))

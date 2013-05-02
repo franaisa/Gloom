@@ -103,10 +103,54 @@ namespace Map {
 			return false;
 		}
 		
+		/*
+		TiXmlElement* componentsPriorityTag= doc2.FirstChildElement();
+		assert(componentsPriorityTag && "No se detecta la etiqueta entities: " );
 
-		// Aqui estoy en el nivel entities
-		TiXmlElement* entitiesTag= doc2.FirstChildElement();
-		assert(entitiesTag && "No se detecta la etiqueta entities: " );
+		TiXmlElement* entitiesTag= componentsPriorityTag->NextSiblingElement();
+		
+		// Si es nulo, significa que no tiene etiqueta componentsPriority, por lo que la leida en componentsPriority es realmente la de entity
+		if(entitiesTag != NULL ){
+			
+		}else{
+			entitiesTag = componentsPriorityTag;
+		}
+		*/
+
+
+		TiXmlElement* archetypesTag = doc2.FirstChildElement();
+		TiXmlElement* entitiesTag;
+
+		if( std::strcmp(archetypesTag->ValueTStr().c_str(),"archetypes") == 0){
+			TiXmlElement* componentsPriorityTag= archetypesTag->FirstChild()->ToElement();
+			assert(componentsPriorityTag && "No se detecta la etiqueta componentsPriority: " );
+
+			std::string nameComponent;
+			std::string priorityTypeComponent;
+			std::string priorityLevelcomponent;
+
+			TiXmlElement* componentPriorityTag= componentsPriorityTag->FirstChildElement();
+			while(componentPriorityTag != NULL){
+				
+				nameComponent = componentPriorityTag->Attribute("name");
+					assert(!nameComponent.empty() && "No se detecta el atributo name de la entidad");
+				priorityTypeComponent = componentPriorityTag->Attribute("priorityType");
+					assert(!priorityTypeComponent.empty() && "No se detecta el atributo priorityType de la entidad");
+				priorityLevelcomponent = componentPriorityTag->Attribute("priorityLevel");
+					assert(!priorityLevelcomponent.empty() && "No se detecta el atributo priorityLevel de la entidad");
+				
+				
+
+				//voy al siguiente componentes
+				componentPriorityTag= componentPriorityTag->FirstChildElement();
+			}
+			// Aqui estoy en el nivel entities
+			//TiXmlElement* entitiesTag= archetypesTag->NextSiblingElement();
+			entitiesTag= archetypesTag->LastChild()->ToElement();
+			assert(entitiesTag && "No se detecta la etiqueta entities: " );
+		}else{
+			entitiesTag = archetypesTag;
+		}
 
 		std::string nameEntity;
 		std::string typeEntity;
@@ -128,21 +172,21 @@ namespace Map {
 
 				Map::CEntity *entidad = new Map::CEntity(nameEntity);
 				entidad->setType(typeEntity);
+				//pongo el atributo necesario name
+				entidad->setAttribute("name", nameEntity);
 
 				assert("No se detecta el atributo type de la entidad");
 
 				// esto lo hago en dos pasos para comprobacion de errores
 				TiXmlElement *attributesTag = entityTag->FirstChildElement();
-				//Compruebo que no sea NULL				
-				assert( attributesTag && "No se detecta la etiqueta attributes de la entidad: ");
+				// esta etiqueta puede ser null, lo puede ser cuando queremos cargar algo en el mapa que es directamente el arquetipo
+				
+				//assert( attributesTag && "No se detecta la etiqueta attributes de la entidad: ");
 
 				if(attributesTag != NULL){
 
 					TiXmlElement *attribute = attributesTag->FirstChildElement();
-					assert(attribute && "No se detecta la etiqueta attribute de la entidad: ");
-
-					Map::CEntity *entidad = new Map::CEntity(nameEntity);
-					entidad->setType(typeEntity);
+					//assert(attribute && "No se detecta la etiqueta attribute de la entidad");
 
 					//itero entre todos los ambios necesarios
 					while(attribute != NULL){
@@ -151,15 +195,17 @@ namespace Map {
 						nameAttribute = attribute->Attribute("name");
 						assert( !nameAttribute.empty() && "No se detecta el atributo name en la etiqueta attribute de la entidad: ");
 					
-						valueAttribute = attribute->Attribute("name");
+						valueAttribute = attribute->Attribute("value");
 						assert( !valueAttribute.empty() && "No se detecta el atributo value en la etiqueta attribute de la entidad: ");
 
 						entidad->setAttribute(nameAttribute, valueAttribute);
 
 						attribute = attribute->NextSiblingElement();
 					}// fin while ambitTag
-					_entityList.push_back(entidad);
-				}
+					
+				}// fin if attributesTag
+				//Guardo la entidad en la lista de entidades
+				_entityList.push_back(entidad);
 			}// fin if entity type
 			entityTag = entityTag->NextSiblingElement();
 		}

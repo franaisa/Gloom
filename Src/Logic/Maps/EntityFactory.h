@@ -112,7 +112,7 @@ namespace Logic {
 		@param filename Fichero con la descripción de las entidades.
 		@return true si la carga se hizo correctamente.
 		*/
-		bool loadArchetypes(const std::string &filename);
+		bool loadArchetypes(const std::string &filename, const std::string &ambit);
 
 		//________________________________________________________________________
 

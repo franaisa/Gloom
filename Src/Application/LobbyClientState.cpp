@@ -130,18 +130,16 @@ namespace Application {
 				// Cargamos el archivo con las definiciones de las entidades del nivel.
 				std::string map;
 				buffer.deserialize(map);
-				if (!Logic::CEntityFactory::getSingletonPtr()->loadBluePrints(map+".xml", "Client")) {
+				if (!Logic::CEntityFactory::getSingletonPtr()->loadBluePrints("archetypes.xml", "Client")) {
 					Net::CManager::getSingletonPtr()->deactivateNetwork();
 					_app->exitRequest();
 				}
-				/*
-				if (!Logic::CEntityFactory::getSingletonPtr()->loadArchetypes("archetypes.txt")) {
+				if (!Logic::CEntityFactory::getSingletonPtr()->loadArchetypes("archetypes.xml", "Client")) {
 					Net::CManager::getSingletonPtr()->deactivateNetwork();
 					_app->exitRequest();
 				}
-				*/
 				// Cargamos el nivel a partir del nombre del mapa. 
-				if (!Logic::CServer::getSingletonPtr()->loadLevel(map+".xml", "Client")) {
+				if (!Logic::CServer::getSingletonPtr()->loadLevel(map, "Client")) {
 					Net::CManager::getSingletonPtr()->deactivateNetwork();
 					_app->exitRequest();
 				}

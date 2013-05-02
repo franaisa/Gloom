@@ -165,9 +165,14 @@ namespace Logic {
 			return false;
 		}
 		
+		TiXmlElement* archetypesTag = doc2.FirstChildElement();
+		assert(archetypesTag && "No se detecta la etiqueta archetypes " );
 
+		TiXmlElement* componentsPriorityTag= archetypesTag->FirstChild()->ToElement();
+		assert(componentsPriorityTag && "No se detecta la etiqueta componentsPriority: " );
 		// Aqui estoy en el nivel entities
-		TiXmlElement* entitiesTag= doc2.FirstChildElement();
+		//TiXmlElement* entitiesTag= archetypesTag->NextSiblingElement();
+		TiXmlElement* entitiesTag= archetypesTag->LastChild()->ToElement();
 		assert(entitiesTag && "No se detecta la etiqueta entities: " );
 
 		std::string nameEntity;
@@ -257,13 +262,13 @@ namespace Logic {
 
 	typedef std::pair<std::string,Map::CEntity*> archetype;
 
-	/*
-	bool CEntityFactory::loadArchetypes(const std::string &filename){
+	
+	bool CEntityFactory::loadArchetypes(const std::string &filename, const std::string &ambit){
 		std::string completePath(BLUEPRINTS_FILE_PATH);
 		completePath = completePath + filename;
 
 		// Parseamos el fichero
-		if( !Map::CMapParser::getSingletonPtr()->parseFile(completePath) ) {
+		if( !Map::CMapParser::getSingletonPtr()->parseFile(completePath, ambit) ) {
 			assert(!"No se ha podido parsear el mapa.");
 			return false;
 		}
@@ -285,7 +290,7 @@ namespace Logic {
 		Map::CMapParser::getSingletonPtr()->releaseEntityList();
 		return true;
 	} // loadArchetypes
-	*/
+	
 	
 	//________________________________________________________________________
 

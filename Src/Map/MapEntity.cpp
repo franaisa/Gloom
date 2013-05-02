@@ -119,11 +119,17 @@ namespace Map {
 	{
 		// Recuperamos la cadena  "x y z"
 		std::string position = (*_attributes.find(attr)).second;
-		int space1 = position.find(' ');
-		float x = (float)atof(position.substr(0,space1).c_str());
+		int space1 = position.find(',');
+		float x = (float)atof(position.substr(1,space1).c_str());
+		/*
 		int space2 = position.find(' ',space1+1);
 		float y = (float)atof(position.substr(space1+1,space2-(space1+1)).c_str());
 		float z = (float)atof(position.substr(space2+1,position.size()-(space2+1)).c_str());
+		*/
+		int space2 = position.find(',',space1+1);
+		float y = (float)atof((position.substr(space1+1,space2)).c_str());
+		int space3 = position.find('}',space2+1);
+		float z = (float)atof((position.substr(space2+1,space3)).c_str());
 
 		return Vector3(x,y,z);
 

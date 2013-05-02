@@ -98,6 +98,14 @@ namespace Application {
 
 	bool CSelectScenario::keyReleased(Input::TKey key)
 	{
+		switch(key.keyId)
+		{
+		case Input::Key::ESCAPE:
+			_app->setState("menu");
+			break;
+		default:
+			return false;
+		}
 		return true;
 
 	} // keyReleased
@@ -134,10 +142,10 @@ namespace Application {
 	
 		//if (!Logic::CEntityFactory::getSingletonPtr()->loadBluePrints("blueprints.txt"))
 		std::string map = args.at(0).getString();
-		if (!Logic::CEntityFactory::getSingletonPtr()->loadBluePrints(map+".xml", "Single"))
+		if (!Logic::CEntityFactory::getSingletonPtr()->loadBluePrints("archetypes.txt", "Single"))
 			return false;
-		//if (!Logic::CEntityFactory::getSingletonPtr()->loadArchetypes("archetypes.txt"))
-//			return false;
+		if (!Logic::CEntityFactory::getSingletonPtr()->loadArchetypes("archetypes.txt", "Single"))
+			return false;
 
 		// Cargamos el nivel a partir del nombre del mapa. 
 		if (!Logic::CServer::getSingletonPtr()->loadLevel(map+".xml", "Single"))
