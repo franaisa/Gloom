@@ -108,7 +108,6 @@ namespace Logic {
 	//__________________________________________________________________
 
 	void CPlayerClass::onTick(unsigned int msecs) {
-		std::cout << "ola k ase?" << std::endl;
 
 		// Controlamos el cooldown de la habilidad primaria y secundaria
 		if(_primarySkillTimer > 0) {

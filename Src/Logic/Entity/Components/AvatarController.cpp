@@ -91,7 +91,7 @@ namespace Logic {
 
 	bool CAvatarController::accept(const std::shared_ptr<CMessage>& message) {
 		TMessageType msgType = message->getMessageType();
-		
+
 		return msgType == Message::CONTROL			||
 			   msgType == Message::ADDFORCEPLAYER;
 	} // accept

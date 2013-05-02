@@ -324,7 +324,7 @@ namespace Logic {
 		playerInfo->setName(name);
 
 		// Creamos la entidad y modificamos el resto de parametros que necesitamos
-		CEntity* playerCreated = CEntityFactory::getSingletonPtr()->createEntity(playerInfo, this);
+		CEntity* playerCreated = CEntityFactory::getSingletonPtr()->createEntity(playerInfo, this, false);
 		playerCreated->setPosition( playerCreated->getPosition());
 		return playerCreated;
 	}
