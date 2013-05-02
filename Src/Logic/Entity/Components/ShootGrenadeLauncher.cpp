@@ -125,8 +125,9 @@ namespace Logic {
 				entityInfoGrenadeExplotion, Logic::CServer::getSingletonPtr()->getMap(), separationPoint, yaw, pitch);
 			assert(grenadeExplotion != NULL);
 			grenadeExplotion->activate();
-			//Si somos el server
-			if(Net::CManager::getSingletonPtr()->imServer()){
+			grenadeExplotion->start();
+			//Si somos el server o SP
+			if(Net::CManager::getSingletonPtr()->imServer() || !Net::CManager::getSingletonPtr()->imServer() && !Net::CManager::getSingletonPtr()->imClient()){
 				CGrenadeController* comp = grenadeExplotion->getComponent<CGrenadeController>("CGrenadeController");
 				assert(comp != NULL);
 				// Seteamos la entidad que dispara el cohete
@@ -150,9 +151,10 @@ namespace Logic {
 			entityInfoGrenade, Logic::CServer::getSingletonPtr()->getMap(), separationPoint, yaw, pitch);
 		assert(grenade != NULL);
 		grenade->activate();
+		grenade->start();
 		
-		//Si somos el server seteamos el owner
-		if(Net::CManager::getSingletonPtr()->imServer()){
+		//Si somos el server o SP seteamos el owner
+		if(Net::CManager::getSingletonPtr()->imServer() || !Net::CManager::getSingletonPtr()->imServer() && !Net::CManager::getSingletonPtr()->imClient()){
 			CGrenadeController* comp = grenade->getComponent<CGrenadeController>("CGrenadeController");
 			assert(comp != NULL);
 			// Seteamos la entidad que dispara el cohete
