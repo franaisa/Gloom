@@ -170,6 +170,26 @@ namespace Logic {
 
 		TiXmlElement* componentsPriorityTag= archetypesTag->FirstChild()->ToElement();
 		assert(componentsPriorityTag && "No se detecta la etiqueta componentsPriority: " );
+
+		std::string nameComponent;
+		std::string priorityTypeComponent;
+		std::string priorityLevelcomponent;
+
+		TiXmlElement* componentPriorityTag= componentsPriorityTag->FirstChildElement();
+		while(componentPriorityTag != NULL){
+				
+			nameComponent = componentPriorityTag->Attribute("name");
+				assert(!nameComponent.empty() && "No se detecta el atributo name de la entidad");
+			priorityTypeComponent = componentPriorityTag->Attribute("priorityType");
+				assert(!priorityTypeComponent.empty() && "No se detecta el atributo priorityType de la entidad");
+			priorityLevelcomponent = componentPriorityTag->Attribute("priorityLevel");
+				assert(!priorityLevelcomponent.empty() && "No se detecta el atributo priorityLevel de la entidad");
+
+
+				//voy al siguiente componentes
+			componentPriorityTag= componentPriorityTag->FirstChildElement();
+		}
+
 		// Aqui estoy en el nivel entities
 		//TiXmlElement* entitiesTag= archetypesTag->NextSiblingElement();
 		TiXmlElement* entitiesTag= archetypesTag->LastChild()->ToElement();

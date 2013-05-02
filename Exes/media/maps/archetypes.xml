@@ -1,53 +1,53 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <archetypes>
 	<components>
-		<component name="CAnimatedGraphics" 				priorityType = "low" priorityLevel="2"/>
-		<component name="CArchangel" 						priorityType = "low" priorityLevel="2"/>
-		<component name="CAudio" 							priorityType = "low" priorityLevel="2"/>
-		<component name="CAvatarController" 				priorityType = "low" priorityLevel="2"/>
-		<component name="CCamera" 							priorityType = "low" priorityLevel="2"/>
-		<component name="CCamera" 							priorityType = "low" priorityLevel="2"/>
-		<component name="CCameraFeedbackNotifier" 			priorityType = "low" priorityLevel="2"/>
-		<component name="CClientRespawn" 					priorityType = "low" priorityLevel="2"/>
-		<component name="CElevator" 						priorityType = "low" priorityLevel="2"/>
-		<component name="CElevatorTrigger" 					priorityType = "low" priorityLevel="2"/>
-		<component name="CFloatingMovement" 				priorityType = "low" priorityLevel="2"/>
-		<component name="CGraphics" 						priorityType = "low" priorityLevel="2"/>
-		<component name="CGrenadeController" 				priorityType = "low" priorityLevel="2"/>
-		<component name="CHacksaw" 							priorityType = "low" priorityLevel="2"/>
-		<component name="CHound" 							priorityType = "low" priorityLevel="2"/>
-		<component name="CHudOverlay" 						priorityType = "low" priorityLevel="2"/>
-		<component name="CInterpolation" 					priorityType = "low" priorityLevel="2"/>
-		<component name="CJumper" 							priorityType = "low" priorityLevel="2"/>
-		<component name="CLava" 							priorityType = "low" priorityLevel="2"/>
-		<component name="CLife" 							priorityType = "low" priorityLevel="2"/>
-		<component name="CLight" 							priorityType = "low" priorityLevel="2"/>
-		<component name="CLocalShadow" 						priorityType = "low" priorityLevel="2"/>
-		<component name="CNetConnector" 					priorityType = "low" priorityLevel="2"/>
-		<component name="ContenedorLava" 					priorityType = "low" priorityLevel="2"/>
-		<component name="CParticle" 						priorityType = "low" priorityLevel="2"/>
-		<component name="CPhysicController" 				priorityType = "low" priorityLevel="2"/>
-		<component name="CPhysicDynamicEntity" 				priorityType = "low" priorityLevel="2"/>
-		<component name="CPhysicStaticEntity" 				priorityType = "low" priorityLevel="2"/>
-		<component name="CRocketController" 				priorityType = "low" priorityLevel="2"/>
-		<component name="CRocketControllerClient" 			priorityType = "low" priorityLevel="2"/>
-		<component name="CScreamerClient" 					priorityType = "low" priorityLevel="2"/>
-		<component name="CScreamerServer" 					priorityType = "low" priorityLevel="2"/>
-		<component name="CScreamerShieldDamageNotifier" 	priorityType = "low" priorityLevel="2"/>
-		<component name="CShadow" 							priorityType = "low" priorityLevel="2"/>
-		<component name="CShootGrenadeLauncher" 			priorityType = "low" priorityLevel="2"/>
-		<component name="CShootHammer"						priorityType = "low" priorityLevel="2"/>
-		<component name="CShootMiniGun" 					priorityType = "low" priorityLevel="2"/>
-		<component name="CShootRocketLauncher" 				priorityType = "low" priorityLevel="2"/>
-		<component name="CShootShotGun" 					priorityType = "low" priorityLevel="2"/>
-		<component name="CShootSniper" 						priorityType = "low" priorityLevel="2"/>
-		<component name="CSpawnItemManager" 				priorityType = "low" priorityLevel="2"/>
-		<component name="CSpawnPlayer" 						priorityType = "low" priorityLevel="2"/>
-		<component name="CSpectatorController" 				priorityType = "low" priorityLevel="2"/>
-		<component name="CSpike" 							priorityType = "low" priorityLevel="2"/>
-		<component name="CUpdateClientPosition" 			priorityType = "low" priorityLevel="2"/>
-		<component name="CWeaponsManager" 					priorityType = "low" priorityLevel="2"/>
-		<component name="CWeaponsManagerClient" 			priorityType = "low" priorityLevel="2"/>
+		<component name="CAnimatedGraphics" 				priorityType = "medium" priorityLevel="2"/>
+		<component name="CArchangel" 						priorityType = "medium" priorityLevel="2"/>
+		<component name="CAudio" 							priorityType = "medium" priorityLevel="2"/>
+		<component name="CAvatarController" 				priorityType = "medium" priorityLevel="2"/>
+		<component name="CCamera" 							priorityType = "medium" priorityLevel="2"/>
+		<component name="CCamera" 							priorityType = "medium" priorityLevel="2"/>
+		<component name="CCameraFeedbackNotifier" 			priorityType = "medium" priorityLevel="2"/>
+		<component name="CClientRespawn" 					priorityType = "medium" priorityLevel="2"/>
+		<component name="CElevator" 						priorityType = "medium" priorityLevel="2"/>
+		<component name="CElevatorTrigger" 					priorityType = "medium" priorityLevel="2"/>
+		<component name="CFloatingMovement" 				priorityType = "medium" priorityLevel="2"/>
+		<component name="CGraphics" 						priorityType = "medium" priorityLevel="2"/>
+		<component name="CGrenadeController" 				priorityType = "medium" priorityLevel="2"/>
+		<component name="CHacksaw" 							priorityType = "medium" priorityLevel="2"/>
+		<component name="CHound" 							priorityType = "medium" priorityLevel="2"/>
+		<component name="CHudOverlay" 						priorityType = "medium" priorityLevel="2"/>
+		<component name="CInterpolation" 					priorityType = "medium" priorityLevel="2"/>
+		<component name="CJumper" 							priorityType = "medium" priorityLevel="2"/>
+		<component name="CLava" 							priorityType = "medium" priorityLevel="2"/>
+		<component name="CLife" 							priorityType = "medium" priorityLevel="2"/>
+		<component name="CLight" 							priorityType = "medium" priorityLevel="2"/>
+		<component name="CLocalShadow" 						priorityType = "medium" priorityLevel="2"/>
+		<component name="CNetConnector" 					priorityType = "medium" priorityLevel="2"/>
+		<component name="ContenedorLava" 					priorityType = "medium" priorityLevel="2"/>
+		<component name="CParticle" 						priorityType = "medium" priorityLevel="2"/>
+		<component name="CPhysicController" 				priorityType = "medium" priorityLevel="2"/>
+		<component name="CPhysicDynamicEntity" 				priorityType = "medium" priorityLevel="2"/>
+		<component name="CPhysicStaticEntity" 				priorityType = "medium" priorityLevel="2"/>
+		<component name="CRocketController" 				priorityType = "medium" priorityLevel="2"/>
+		<component name="CRocketControllerClient" 			priorityType = "medium" priorityLevel="2"/>
+		<component name="CScreamerClient" 					priorityType = "medium" priorityLevel="2"/>
+		<component name="CScreamerServer" 					priorityType = "medium" priorityLevel="2"/>
+		<component name="CScreamerShieldDamageNotifier" 	priorityType = "medium" priorityLevel="2"/>
+		<component name="CShadow" 							priorityType = "medium" priorityLevel="2"/>
+		<component name="CShootGrenadeLauncher" 			priorityType = "medium" priorityLevel="2"/>
+		<component name="CShootHammer"						priorityType = "medium" priorityLevel="2"/>
+		<component name="CShootMiniGun" 					priorityType = "medium" priorityLevel="2"/>
+		<component name="CShootRocketLauncher" 				priorityType = "medium" priorityLevel="2"/>
+		<component name="CShootShotGun" 					priorityType = "medium" priorityLevel="2"/>
+		<component name="CShootSniper" 						priorityType = "medium" priorityLevel="2"/>
+		<component name="CSpawnItemManager" 				priorityType = "medium" priorityLevel="2"/>
+		<component name="CSpawnPlayer" 						priorityType = "medium" priorityLevel="2"/>
+		<component name="CSpectatorController" 				priorityType = "medium" priorityLevel="2"/>
+		<component name="CSpike" 							priorityType = "medium" priorityLevel="2"/>
+		<component name="CUpdateClientPosition" 			priorityType = "medium" priorityLevel="2"/>
+		<component name="CWeaponsManager" 					priorityType = "medium" priorityLevel="2"/>
+		<component name="CWeaponsManagerClient" 			priorityType = "medium" priorityLevel="2"/>
 	</components>
 	<entities>
 	<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
@@ -1672,24 +1672,23 @@
 					<components>
 						<component name="CAvatarController" />
 						<component name="CPhysicController" />
-						<component name="CNetConnector" />
 						<component name="CParticle" />
 						<component name="CShootRocketLauncher" />
 						<component name="CShootGrenadeLauncher" />
+						<component name="CShadow" />
 					</components>
 				</ambit>
 				<ambit name="Server">
 					<components>
 						<component name="CShootMiniGun" />
+						<component name="CNetConnector" />
 						<component name="CShootShotGun" />
 						<component name="CShootSniper" />
 						<component name="CShootHammer" />
-						<component name="CShadow" />
 						<component name="CWeaponsManager" />
 						<component name="CLife" />
 						<component name="CSpawnPlayer" />
 						<component name="CUpdateClientPosition" />
-						<component name="CWeaponsManager" />
 						<component name="CGraphics" /> 
 					</components>
 				</ambit>
@@ -1697,19 +1696,19 @@
 					<components>
 						<component name="CInterpolation" />
 						<component name="CHudOverlay" />
+						<component name="CNetConnector" />						
 						<component name="CClientRespawn" />
 						<component name="CAudio" />
 						<component name="CWeaponsManagerClient" />
 						<component name="CCameraFeedbackNotifier" />
+						<component name="CAnimatedGraphics" />						
 					</components>
 				</ambit>
 				<ambit name="Single">
 					<components>
-						<component name="CAvatarController" />
-						<component name="CShadow" />
 						<component name="CPhysicController" />
-						<component name="CShootRocketLauncher" />
-						<component name="CShootGrenadeLauncher" />
+						<component name="CNetConnector" />
+						<component name="CClientRespawn" />						
 						<component name="CShootMiniGun" />
 						<component name="CShootShotGun" />
 						<component name="CShootSniper" />
@@ -1718,7 +1717,8 @@
 						<component name="CHudOverlay" />
 						<component name="CLife" />
 						<component name="CSpawnPlayer" />
-						<component name="CAudio" />					
+						<component name="CAudio" />
+						<component name="CCameraFeedbackNotifier" />
 					</components>
 				</ambit>			
 			</ambits>

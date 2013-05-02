@@ -263,6 +263,23 @@ namespace Logic {
 
 		//________________________________________________________________________
 
+
+		/**
+		 T
+		*/
+		typedef struct {
+			enum PriorityType {
+				eLOW,
+				eMEDIUM,
+				eHIGH
+			};
+    
+			int priorityLevel;
+			int priorityType;
+		} TPriority;
+
+
+		
 		/**
 		Estructura que define una entidad blueprint.
 		*/
@@ -275,7 +292,8 @@ namespace Logic {
 			/**
 			Lista de nombres de componentes que componen la entidad.
 			*/
-			std::list<std::string> components;
+			//std::list<std::string> components;
+			std::list< std::pair<std::string, TPriority> > components;
 
 		} TBluePrint;
 
