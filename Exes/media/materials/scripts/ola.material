@@ -29,12 +29,17 @@ material Material#25
             texture_unit diffuseMap
             {
                 texture piedra_COLOR2.tga
+				
+				filtering anisotropic
             }
 
             texture_unit aoMap
             {
 				texture piedra_COLOR2.tga
+				filtering anisotropic
             }
+			
+			
 		}
 		
 		pass
@@ -59,16 +64,19 @@ material Material#25
             texture_unit diffuseMap
             {
                 texture piedra_COLOR2.tga
+				filtering anisotropic
             }
 
             texture_unit specMap
             {
                 texture piedra_SPEC.tga
+				filtering anisotropic
             }
 
             texture_unit normalMap
             {
                 texture piedra_NRM.tga
+				filtering anisotropic
             }
 			
         }

@@ -125,7 +125,7 @@ namespace Logic
 	bool CGraphics::accept(const std::shared_ptr<CMessage>& message) {
 		Logic::TMessageType msgType = message->getMessageType();
 
-		return msgType == Message::SET_TRANSFORM    ||
+		return //msgType == Message::SET_TRANSFORM    ||
 			   msgType == Message::ACTIVATE			|| 
 			   msgType == Message::DEACTIVATE		||
 			   msgType == Message::CHANGE_MATERIAL;
@@ -179,6 +179,9 @@ namespace Logic
 		_graphicsEntity->setTransform(_entity->getTransform());
 	}
 
+	void CGraphics::onTick(unsigned int msecs){
+		_graphicsEntity->setTransform(_entity->getTransform());
+	}
 
 } // namespace Logic
 

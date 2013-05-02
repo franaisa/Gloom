@@ -279,13 +279,6 @@ namespace Logic
 
 	bool CEntity::emitMessage(const std::shared_ptr<CMessage>& message, IComponent* emitter) {
 		
-		// Interceptamos los mensajes que además de al resto de los
-		// componentes, interesan a la propia entidad.
-		switch( message->getMessageType() ) {
-			case Message::SET_TRANSFORM: {
-				_transform = std::static_pointer_cast<CMessageTransform>(message)->getTransform();
-			}
-		}
 		
 		TComponentList::const_iterator it = _componentList.begin();
 		// Para saber si alguien quiso el mensaje.
@@ -307,11 +300,6 @@ namespace Logic
 	void CEntity::setTransform(const Matrix4& transform) 
 	{
 		_transform = transform;
-
-		// Avisamos a los componentes del cambio.
-		std::shared_ptr<CMessageTransform> m = std::make_shared<CMessageTransform>();
-		m->setTransform(_transform);
-		emitMessage(m);
 	} // setTransform
 
 	//---------------------------------------------------------
@@ -319,12 +307,6 @@ namespace Logic
 	void CEntity::setPosition(const Vector3 &position) 
 	{
 		_transform.setTrans(position);
-
-		// Avisamos a los componentes del cambio.
-		std::shared_ptr<CMessageTransform> m = std::make_shared<CMessageTransform>();
-		m->setTransform(_transform);
-		emitMessage(m);
-		
 	} // setPosition
 
 	//---------------------------------------------------------
@@ -332,12 +314,6 @@ namespace Logic
 	void CEntity::setOrientation(const Matrix3& orientation) 
 	{
 		_transform = orientation;
-		
-		// Avisamos a los componentes del cambio.
-		std::shared_ptr<CMessageTransform> m = std::make_shared<CMessageTransform>();
-		m->setTransform(_transform);
-		emitMessage(m);
-
 	} // setOrientation
 
 	//---------------------------------------------------------
@@ -347,7 +323,6 @@ namespace Logic
 		Matrix3 orientation;
 		_transform.extract3x3Matrix(orientation);
 		return orientation;
-
 	} // getOrientation
 
 	//---------------------------------------------------------
@@ -355,12 +330,6 @@ namespace Logic
 	void CEntity::setYaw(float yaw) 
 	{
 		Math::setYaw(yaw,_transform);
-
-		// Avisamos a los componentes del cambio.
-		std::shared_ptr<CMessageTransform> m = std::make_shared<CMessageTransform>();
-		m->setTransform(_transform);
-		emitMessage(m);
-
 	} // setYaw
 
 	//---------------------------------------------------------
@@ -368,11 +337,6 @@ namespace Logic
 	void CEntity::yaw(float yaw) 
 	{
 		Math::yaw(yaw,_transform);
-
-		// Avisamos a los componentes del cambio.
-		std::shared_ptr<CMessageTransform> m = std::make_shared<CMessageTransform>();
-		m->setTransform(_transform);
-		emitMessage(m);
 	} // yaw
 
 	//---------------------------------------------------------
@@ -380,11 +344,6 @@ namespace Logic
 	void CEntity::setPitch(float pitch) 
 	{
 		Math::setPitch(pitch,_transform);
-
-		// Avisamos a los componentes del cambio.
-		std::shared_ptr<CMessageTransform> m = std::make_shared<CMessageTransform>();
-		m->setTransform(_transform);
-		emitMessage(m);
 	} // setPitch
 
 	//---------------------------------------------------------
@@ -392,22 +351,12 @@ namespace Logic
 	void CEntity::pitch(float pitch) 
 	{
 		Math::pitch(pitch,_transform);
-
-		// Avisamos a los componentes del cambio.
-		std::shared_ptr<CMessageTransform> m = std::make_shared<CMessageTransform>();
-		m->setTransform(_transform);
-		emitMessage(m);
 	} // pitch
 
 	//---------------------------------------------------------
 
 	void CEntity::roll(float roll) {
 		Math::roll(roll, _transform);
-
-		// Avisamos a los componentes del cambio.
-		std::shared_ptr<CMessageTransform> transformMsg = std::make_shared<CMessageTransform>();
-		transformMsg->setTransform(_transform);
-		emitMessage(transformMsg);
 	}
 
 

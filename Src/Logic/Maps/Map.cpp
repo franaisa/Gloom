@@ -61,11 +61,11 @@ namespace Logic {
 			CEntity *entity;
 			Map::CEntity * info = entityFactory->getInfo((*it)->getType());
 			if(!info){
-				entity = entityFactory->createEntity((*it),map);
+				entity = entityFactory->createEntity((*it),map, false);
 			}else{
 				info->setAttribute((*it));
 				info->setName((*it)->getName());
-				entity = entityFactory->createEntity(info,map);
+				entity = entityFactory->createEntity(info,map, false);
 			}
 			assert(entity && "No se pudo crear una entidad del mapa");
 		}
@@ -324,7 +324,7 @@ namespace Logic {
 		playerInfo->setName(name);
 
 		// Creamos la entidad y modificamos el resto de parametros que necesitamos
-		CEntity* playerCreated = CEntityFactory::getSingletonPtr()->createEntity(playerInfo, this);
+		CEntity* playerCreated = CEntityFactory::getSingletonPtr()->createEntity(playerInfo, this, false);
 		playerCreated->setPosition( playerCreated->getPosition());
 		return playerCreated;
 	}

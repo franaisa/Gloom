@@ -104,6 +104,8 @@ namespace Logic
 
 		virtual void changeMaterial(const std::string& materialName);
 
+		virtual void onTick(unsigned int msecs);
+
 	protected:
 
 		/**
