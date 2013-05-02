@@ -46,6 +46,7 @@ namespace Logic {
 		_timer += msecs;
 		if(_timer > _explotionTime) {
 			// Eliminamos la entidad en diferido
+			std::cout << "salta el timer de granada" << std::endl;
 			CEntityFactory::getSingletonPtr()->deferredDeleteEntity(_entity,false);
 			// Creamos la explosion
 			createExplotion();

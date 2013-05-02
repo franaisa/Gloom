@@ -129,8 +129,9 @@ namespace Logic {
 				entityInfoRocketExplotion, Logic::CServer::getSingletonPtr()->getMap(), separationPoint, yaw, pitch);
 			assert(rocketExplotion != NULL);
 			rocketExplotion->activate();
-			//Si somos el server
-			if(Net::CManager::getSingletonPtr()->imServer()){
+			rocketExplotion->start();
+			//Si somos el server o SP
+			if(Net::CManager::getSingletonPtr()->imServer() || !Net::CManager::getSingletonPtr()->imServer() && !Net::CManager::getSingletonPtr()->imClient()){
 				CRocketController* comp = rocketExplotion->getComponent<CRocketController>("CRocketController");
 				assert(comp != NULL);
 				// Seteamos la entidad que dispara el cohete
@@ -154,9 +155,9 @@ namespace Logic {
 			entityInfoRocket, Logic::CServer::getSingletonPtr()->getMap(), separationPoint, yaw, pitch);
 		assert(rocket != NULL);
 		rocket->activate();
-		
-		//Si somos el server seteamos el owner
-		if(Net::CManager::getSingletonPtr()->imServer()){
+		rocket->start();
+		//Si somos el server o SP seteamos el owner
+		if(Net::CManager::getSingletonPtr()->imServer() || !Net::CManager::getSingletonPtr()->imServer() && !Net::CManager::getSingletonPtr()->imClient()){
 			CRocketController* comp = rocket->getComponent<CRocketController>("CRocketController");
 			assert(comp != NULL);
 			// Seteamos la entidad que dispara el cohete
