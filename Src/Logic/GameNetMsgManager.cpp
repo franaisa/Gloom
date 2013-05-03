@@ -240,6 +240,7 @@ namespace Logic {
 
 		CEntity * newEntity = Logic::CEntityFactory::getSingletonPtr()->createEntityById(info, CServer::getSingletonPtr()->getMap(), destID);
 		newEntity->activate();
+		newEntity->start();
 		//Aunque esta bastante arreglado para la puta mierda que habia antes se podria retocar con el roll o hacer que la creacion pille transforms y no tengas que hacer 2000 conversiones
 	}
 
