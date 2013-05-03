@@ -357,8 +357,23 @@ namespace Logic {
 					return 0;
 				}
 
-				if(comp)
-					ent->addComponent(comp, *itc);
+				if(comp) {
+					// Comprobamos el nivel de prioridad del componente
+					// y se lo pasamos a la entidad
+					TBluePrintPriority::const_iterator priorityIt = _defaultPriorityComponents.find(*itc);
+					TPriority priority;
+					if(priorityIt != _defaultPriorityComponents.end()) {
+						priority.priorityLevel = priorityIt->second.priorityLevel;
+						priority.priorityType = priorityIt->second.priorityType;
+					}
+					else {
+						priority.priorityLevel = 0;
+						priority.priorityType = TPriority::eMEDIUM;
+					}
+
+					ent->addComponent(comp, *itc, priority);
+
+				}
 			}
 			return ent;
 		}
@@ -390,8 +405,22 @@ namespace Logic {
 					return 0;
 				}
 
-				if(comp)
-					ent->addComponent(comp, *itc);
+				if(comp) {
+					// Comprobamos el nivel de prioridad del componente
+					// y se lo pasamos a la entidad
+					TBluePrintPriority::const_iterator priorityIt = _defaultPriorityComponents.find(*itc);
+					TPriority priority;
+					if(priorityIt != _defaultPriorityComponents.end()) {
+						priority.priorityLevel = priorityIt->second.priorityLevel;
+						priority.priorityType = priorityIt->second.priorityType;
+					}
+					else {
+						priority.priorityLevel = 0;
+						priority.priorityType = TPriority::eMEDIUM;
+					}
+
+					ent->addComponent(comp, *itc, priority);
+				}
 			}
 			return ent;
 		}
