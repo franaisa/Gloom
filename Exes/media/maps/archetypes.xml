@@ -24,7 +24,6 @@
 		<component name="CLight" 							priorityType = "medium" priorityLevel="2"/>
 		<component name="CLocalShadow" 						priorityType = "medium" priorityLevel="2"/>
 		<component name="CNetConnector" 					priorityType = "medium" priorityLevel="2"/>
-		<component name="ContenedorLava" 					priorityType = "medium" priorityLevel="2"/>
 		<component name="CParticle" 						priorityType = "medium" priorityLevel="2"/>
 		<component name="CPhysicController" 				priorityType = "medium" priorityLevel="2"/>
 		<component name="CPhysicDynamicEntity" 				priorityType = "medium" priorityLevel="2"/>
@@ -964,46 +963,44 @@
 				<ambit name="Always">
 					<components>
 						<component name="CAvatarController" />
-						<component name="CPhysicController"/>
-						<component name="CNetConnector" />
+						<component name="CPhysicController" />
 						<component name="CParticle" />
 						<component name="CShootRocketLauncher" />
-						<component name="CShootGrenadeLauncher"/>
+						<component name="CShootGrenadeLauncher" />
 					</components>
 				</ambit>
 				<ambit name="Server">
 					<components>
 						<component name="CShootMiniGun" />
+						<component name="CNetConnector" />
 						<component name="CShootShotGun" />
 						<component name="CShootSniper" />
 						<component name="CShootHammer" />
-						<component name="CScreamerServer" />
 						<component name="CWeaponsManager" />
 						<component name="CLife" />
 						<component name="CSpawnPlayer" />
 						<component name="CUpdateClientPosition" />
-						<component name="CWeaponsManager" />
 						<component name="CGraphics" /> 
+						<component name="CScreamer" />
 					</components>
 				</ambit>
 				<ambit name="Client">
 					<components>
-						<component name="CScreamerClient" />
 						<component name="CInterpolation" />
+						<component name="CScreamer" />
 						<component name="CHudOverlay" />
+						<component name="CNetConnector" />						
 						<component name="CClientRespawn" />
 						<component name="CAudio" />
 						<component name="CWeaponsManagerClient" />
-						<component name="CCameraFeedbackNotifier" />
+						<component name="CCameraFeedbackNotifier" />			
 					</components>
 				</ambit>
 				<ambit name="Single">
 					<components>
-						<component name="CAvatarController" />
-						<component name="CScreamer" />
 						<component name="CPhysicController" />
-						<component name="CShootRocketLauncher" />
-						<component name="CShootGrenadeLauncher" />
+						<component name="CScreamer" />
+						<component name="CClientRespawn" />						
 						<component name="CShootMiniGun" />
 						<component name="CShootShotGun" />
 						<component name="CShootSniper" />
@@ -1012,7 +1009,8 @@
 						<component name="CHudOverlay" />
 						<component name="CLife" />
 						<component name="CSpawnPlayer" />
-						<component name="CAudio" />					
+						<component name="CAudio" />
+						<component name="CCameraFeedbackNotifier" />
 					</components>
 				</ambit>			
 			</ambits>
@@ -1203,7 +1201,6 @@
 					<components>
 						<component name="CAvatarController" />
 						<component name="CPhysicController" />
-						<component name="CNetConnector" />
 						<component name="CParticle" />
 						<component name="CShootRocketLauncher" />
 						<component name="CShootGrenadeLauncher" />
@@ -1212,35 +1209,35 @@
 				<ambit name="Server">
 					<components>
 						<component name="CShootMiniGun" />
+						<component name="CNetConnector" />
 						<component name="CShootShotGun" />
 						<component name="CShootSniper" />
 						<component name="CShootHammer" />
-						<component name="CHound" />
 						<component name="CWeaponsManager" />
 						<component name="CLife" />
 						<component name="CSpawnPlayer" />
 						<component name="CUpdateClientPosition" />
-						<component name="CWeaponsManager" />
 						<component name="CGraphics" /> 
+						<component name="CHound" />
 					</components>
 				</ambit>
 				<ambit name="Client">
 					<components>
 						<component name="CInterpolation" />
+						<component name="CHound" />
 						<component name="CHudOverlay" />
+						<component name="CNetConnector" />						
 						<component name="CClientRespawn" />
 						<component name="CAudio" />
 						<component name="CWeaponsManagerClient" />
-						<component name="CCameraFeedbackNotifier" />
+						<component name="CCameraFeedbackNotifier" />			
 					</components>
 				</ambit>
 				<ambit name="Single">
 					<components>
-						<component name="CAvatarController" />
-						<component name="CHound" />
 						<component name="CPhysicController" />
-						<component name="CShootRocketLauncher" />
-						<component name="CShootGrenadeLauncher" />
+						<component name="CHound" />
+						<component name="CClientRespawn" />						
 						<component name="CShootMiniGun" />
 						<component name="CShootShotGun" />
 						<component name="CShootSniper" />
@@ -1249,7 +1246,8 @@
 						<component name="CHudOverlay" />
 						<component name="CLife" />
 						<component name="CSpawnPlayer" />
-						<component name="CAudio" />					
+						<component name="CAudio" />
+						<component name="CCameraFeedbackNotifier" />
 					</components>
 				</ambit>			
 			</ambits>
@@ -1437,7 +1435,6 @@
 					<components>
 						<component name="CAvatarController" />
 						<component name="CPhysicController" />
-						<component name="CNetConnector" />
 						<component name="CParticle" />
 						<component name="CShootRocketLauncher" />
 						<component name="CShootGrenadeLauncher" />
@@ -1446,35 +1443,35 @@
 				<ambit name="Server">
 					<components>
 						<component name="CShootMiniGun" />
+						<component name="CNetConnector" />
 						<component name="CShootShotGun" />
 						<component name="CShootSniper" />
 						<component name="CShootHammer" />
-						<component name="CArchangel" />
 						<component name="CWeaponsManager" />
 						<component name="CLife" />
 						<component name="CSpawnPlayer" />
 						<component name="CUpdateClientPosition" />
-						<component name="CWeaponsManager" />
 						<component name="CGraphics" /> 
+						<component name="CArchangel" />
 					</components>
 				</ambit>
 				<ambit name="Client">
 					<components>
 						<component name="CInterpolation" />
+						<component name="CArchangel" />
 						<component name="CHudOverlay" />
+						<component name="CNetConnector" />						
 						<component name="CClientRespawn" />
 						<component name="CAudio" />
 						<component name="CWeaponsManagerClient" />
-						<component name="CCameraFeedbackNotifier" />
+						<component name="CCameraFeedbackNotifier" />			
 					</components>
 				</ambit>
 				<ambit name="Single">
 					<components>
-						<component name="CAvatarController" />
-						<component name="CArchangel" />
 						<component name="CPhysicController" />
-						<component name="CShootRocketLauncher" />
-						<component name="CShootGrenadeLauncher" />
+						<component name="CArchangel" />
+						<component name="CClientRespawn" />						
 						<component name="CShootMiniGun" />
 						<component name="CShootShotGun" />
 						<component name="CShootSniper" />
@@ -1483,7 +1480,8 @@
 						<component name="CHudOverlay" />
 						<component name="CLife" />
 						<component name="CSpawnPlayer" />
-						<component name="CAudio" />					
+						<component name="CAudio" />
+						<component name="CCameraFeedbackNotifier" />
 					</components>
 				</ambit>			
 			</ambits>

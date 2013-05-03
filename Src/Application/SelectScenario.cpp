@@ -142,9 +142,9 @@ namespace Application {
 	
 		//if (!Logic::CEntityFactory::getSingletonPtr()->loadBluePrints("blueprints.txt"))
 		std::string map = args.at(0).getString();
-		if (!Logic::CEntityFactory::getSingletonPtr()->loadBluePrints("archetypes.txt", "Single"))
+		if (!Logic::CEntityFactory::getSingletonPtr()->loadBluePrints("archetypes.xml", "Single"))
 			return false;
-		if (!Logic::CEntityFactory::getSingletonPtr()->loadArchetypes("archetypes.txt", "Single"))
+		if (!Logic::CEntityFactory::getSingletonPtr()->loadArchetypes("archetypes.xml", "Single"))
 			return false;
 
 		// Cargamos el nivel a partir del nombre del mapa. 

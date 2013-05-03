@@ -154,8 +154,8 @@ namespace Logic {
 		}
 	/*/
 		
-		char * aux =(char*)completePath.c_str();
-		TiXmlDocument doc2(aux);
+		char * route =(char*)completePath.c_str();
+		TiXmlDocument doc2(route);
 
 		
 		
@@ -171,36 +171,38 @@ namespace Logic {
 		TiXmlElement* componentsPriorityTag= archetypesTag->FirstChild()->ToElement();
 		assert(componentsPriorityTag && "No se detecta la etiqueta componentsPriority: " );
 
-		std::string nameComponent;
+		std::string nameComp;
 		std::string priorityType;
 		std::string priorityLevel;
 
 		TiXmlElement* componentPriorityTag= componentsPriorityTag->FirstChildElement();
-		if (!_defaultPriorityComponents.empty()){
+		if (_defaultPriorityComponents.empty()){
+			TPriority priority;
 			while(componentPriorityTag != NULL){
 				
-				nameComponent = componentPriorityTag->Attribute("name");
-				if(!nameComponent.empty()){
+				nameComp = componentPriorityTag->Attribute("name");
+				if(!nameComp.empty()){
 					priorityType= componentPriorityTag->Attribute("priorityType");
 						assert(!priorityType.empty() && "No se detecta el atributo priorityType de la entidad");
 					priorityLevel = componentPriorityTag->Attribute("priorityLevel");
 						assert(!priorityLevel.empty() && "No se detecta el atributo priorityLevel de la entidad");
 
-					TPriority priority;
+					
 					priority.priorityLevel = atoi(priorityLevel.c_str());
-					if( priorityLevel == "low")
+					if( priorityType == "low")
 						priority.priorityType = TPriority::eLOW;
-					else if( priorityLevel == "medium")
+					else if( priorityType == "medium")
 						priority.priorityType = TPriority::eMEDIUM;
-					else if( priorityLevel == "high")
+					else if( priorityType == "high")
 						priority.priorityType = TPriority::eHIGH;
 					else assert(!"priority level no permitida, tiene que ser low, medium o high");
 
-					_defaultPriorityComponents.insert(std::pair<std::string,TPriority>(nameComponent, aux));
+					
+					_defaultPriorityComponents.insert(std::pair<std::string,TPriority>(nameComp, priority));
 				}
 
 				//voy al siguiente componentes
-				componentPriorityTag= componentPriorityTag->FirstChildElement();
+				componentPriorityTag= componentPriorityTag->NextSiblingElement();
 			}
 		}
 
