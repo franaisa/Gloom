@@ -180,7 +180,7 @@ namespace Logic
 		/**
 			Grados del roll de la cámara. Si es 0, no hará roll.
 		*/
-		int _iRoll;
+		float _fRoll;
 
 	}; // class CCamera
 
