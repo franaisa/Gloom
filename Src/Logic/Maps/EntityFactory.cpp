@@ -260,9 +260,8 @@ namespace Logic {
 						if(nameAmbit == "Always" || nameAmbit == ambit){
 							if(!ambitTag->NoChildren()){
 								TiXmlElement *componentsTag = ambitTag->FirstChildElement();
-								assert( componentsTag && "No se detecta la etiqueta components de la entidad: ");
+								//assert( componentsTag && "No se detecta la etiqueta components de la entidad: ");
 								TiXmlElement *componentTag = componentsTag->FirstChildElement();
-								assert( ( componentsTag != NULL) && "No se detecta la etiqueta component de la entidad: ");
 								//meto todos los componentes de un ambito especifico
 								while(componentTag != NULL){
 									nameComponent = componentTag->Attribute("name");

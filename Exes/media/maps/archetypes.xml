@@ -803,6 +803,7 @@
 				<attribute name="airSpeedCoef" 								value="4.0"/>
 				<attribute name="jumpForce" 								value="1.5"/>
 				<attribute name="dodgeForce" 								value="{2,2,2}"/>
+				<attribute name="rollCamera" 								value="0.15"/>
 				
 				<attribute name="physic_shape" 								value="capsule"/>
 				<attribute name="physic_radius" 							value="3"/>
@@ -967,6 +968,7 @@
 						<component name="CParticle" />
 						<component name="CShootRocketLauncher" />
 						<component name="CShootGrenadeLauncher" />
+						<component name="CNetConnector" />						
 					</components>
 				</ambit>
 				<ambit name="Server">
@@ -981,25 +983,24 @@
 						<component name="CSpawnPlayer" />
 						<component name="CUpdateClientPosition" />
 						<component name="CGraphics" /> 
-						<component name="CScreamer" />
+						<component name="CScreamerServer" />
 					</components>
 				</ambit>
 				<ambit name="Client">
 					<components>
 						<component name="CInterpolation" />
-						<component name="CScreamer" />
-						<component name="CHudOverlay" />
-						<component name="CNetConnector" />						
+						<component name="CScreamerClient" />
 						<component name="CClientRespawn" />
 						<component name="CAudio" />
 						<component name="CWeaponsManagerClient" />
-						<component name="CCameraFeedbackNotifier" />			
+						<component name="CAnimatedGraphics" />
 					</components>
 				</ambit>
 				<ambit name="Single">
 					<components>
 						<component name="CPhysicController" />
-						<component name="CScreamer" />
+						<component name="CScreamerClient" />
+						<component name="CScreamerServer" />
 						<component name="CClientRespawn" />						
 						<component name="CShootMiniGun" />
 						<component name="CShootShotGun" />
@@ -1016,6 +1017,214 @@
 			</ambits>
 		</entity>
 
+		
+		<entity name="LocalScreamer" type="LocalScreamer">
+			<attributes>
+				<attribute name="position" 									value="{0.0, 50.0, 0.0}"/>
+				<attribute name="msgList" 									value="1,2,6,9,11,13,14,15,16,17,20,21,22,23,24,25,26,32,38,41,43,48,49,50"/>
+				<attribute name="model" 									value="marine.mesh"/>
+				<attribute name="materialName" 								value="marine_verde"/>
+				<attribute name="syncPosTimeStamp" 							value="0.05"/>
+				<attribute name="timeSpawn" 								value="4"/>
+				<attribute name="defaultLife" 								value="120"/>
+				<attribute name="maxShield" 								value="100"/>
+				<attribute name="maxLife" 									value="250"/>
+				<attribute name="shieldDamageAbsorption" 					value="20"/>
+				<attribute name="damageTimeStep" 							value="1"/>
+				<attribute name="damageOverTime" 							value="1"/>
+				<attribute name="playerDead" 								value="true"/>
+				
+				<attribute name="acceleration" 								value="0.015"/>
+				<attribute name="maxVelocity" 								value="1.5"/>
+				<attribute name="frictionCoef" 								value="14.0"/>
+				<attribute name="airFrictionCoef" 							value="0.98"/>
+				<attribute name="gravity" 									value="-0.007"/>
+				<attribute name="airSpeedCoef" 								value="4.0"/>
+				<attribute name="jumpForce" 								value="1.5"/>
+				<attribute name="dodgeForce" 								value="{2,2,2}"/>
+				<attribute name="rollCamera" 								value="0.15"/>
+				
+				<attribute name="physic_shape" 								value="capsule"/>
+				<attribute name="physic_radius" 							value="3"/>
+				<attribute name="physic_height" 							value="6"/>
+				<attribute name="physic_group" 								value="1"/>
+				<attribute name="physic_groupList" 							value="-1"/>
+				<attribute name="numWeapons" 								value="6"/>
+				<attribute name="heightShoot" 								value="8"/>
+				
+				<attribute name="defaultAnimation" 							value="Idle"/>
+				<attribute name="audioStep" 								value="media/audio/step1.wav"/>
+				<attribute name="audioJump" 								value="media/audio/jump.wav"/>
+				<attribute name="audioSideJump" 							value="media/audio/sideJump.wav"/>
+				<attribute name="audioPain" 								value="media/audio/pain.wav"/>
+				<attribute name="audioDeath" 								value="media/audio/death.wav"/>
+				<attribute name="audioSpawn" 								value="media/audio/spawn.wav"/>
+				<attribute name="audioNoAmmo" 								value="media/audio/noammo.wav"/>
+				
+				<attribute name="primarySkillCooldown" 						value="0"/>
+				<attribute name="secondarySkillCooldown" 					value="2"/>
+				<attribute name="screamerShieldThreshold" 					value="100"/>
+				<attribute name="screamerShieldDamageTimeStep" 				value="2"/>
+				<attribute name="screamerShieldDamageOverTime" 				value="1"/>
+				<attribute name="screamerShieldRecoveryTimeStep" 			value="0.5"/>
+				<attribute name="screamerShieldRecoveryOverTime" 			value="2"/>
+				<attribute name="screamerExplotionDamage" 					value="200"/>
+				<attribute name="screamerExplotionRadius" 					value="50"/>
+				
+				<attribute name="weaponhammerName" 							value="hammer"/>
+				<attribute name="weaponhammerModel" 						value="hammer.mesh"/>
+				<attribute name="weaponhammerModelYaw" 						value="0"/>
+				<attribute name="weaponhammerModelPitch" 					value="0.0"/>
+				<attribute name="weaponhammerOffset" 						value="{0.0,-3.0,-10.0}"/>
+				<attribute name="weaponhammerDamage" 						value="80.0"/>
+				<attribute name="weaponhammerDamageReflect" 				value="2"/>
+				<attribute name="weaponhammerDispersion" 					value="0"/>
+				<attribute name="weaponhammerNumberShoots" 					value="1"/>
+				<attribute name="weaponhammerReboundForce" 					value="2"/>
+				<attribute name="weaponhammerDistance" 						value="15.0"/>
+				<attribute name="weaponhammerColdDown"						value="0.5"/>
+				<attribute name="weaponhammerMaxAmmo" 						value="1"/>
+				<attribute name="weaponhammerId" 							value="0"/>
+				<attribute name="weaponhammerAudio" 						value="media/audio/hammer.wav"/>
+				
+				<attribute name="weaponsniperName" 							value="sniper"/>
+				<attribute name="weaponsniperModel" 						value="sniper.mesh"/>
+				<attribute name="weaponsniperModelYaw" 						value="1.55"/>
+				<attribute name="weaponsniperModelPitch" 					value="-0.80"/>
+				<attribute name="weaponsniperOffset"			 			value="{0.0,3.0,-10.0}"/>
+				<attribute name="weaponsniperDamage" 						value="60.0"/>
+				<attribute name="weaponsniperDispersion"					value="0"/>
+				<attribute name="weaponsniperNumberShoots" 					value="1"/>
+				<attribute name="weaponsniperDistance" 						value="600"/>
+				<attribute name="weaponsniperColdDown" 						value="2.0"/>
+				<attribute name="weaponsniperMaxAmmo"						value="10"/>
+				<attribute name="weaponsniperId" 							value="1"/>
+				<attribute name="weaponsniperParticlePosition" 				value="{6,5,6}"/>
+				<attribute name="weaponsniperAudio" 						value="media/audio/sniper.wav"/>
+				
+				<attribute name="weaponshotGunName" 						value="shotGun"/>
+				<attribute name="weaponshotGunModel"			 			value="shotGun.mesh"/>
+				<attribute name="weaponshotGunModelYaw" 					value="0"/>
+				<attribute name="weaponshotGunModelPitch" 					value="0"/>
+				<attribute name="weaponshotGunOffset" 						value="{0.0,3.0,-10.0}"/>
+				<attribute name="weaponshotGunDamage" 						value="9.0"/>
+				<attribute name="weaponshotGunDispersion"				 	value="20"/>
+				<attribute name="weaponshotGunNumberShoots" 				value="8"/>
+				<attribute name="weaponshotGunDistance" 					value="600.0"/>
+				<attribute name="weaponshotGunColdDown" 					value="1.5"/>
+				<attribute name="weaponshotGunMaxAmmo" 						value="48"/>
+				<attribute name="weaponshotGunId" 							value="2"/>
+				<attribute name="weaponshotGunParticlePosition" 			value="{6,5,6}"/>
+				<attribute name="weaponshotGunAudio"			 			value="media/audio/shotGun.wav"/>
+				
+				<attribute name="weaponminiGunName" 						value="miniGun"/>
+				<attribute name="weaponminiGunModel" 						value="miniGun.mesh"/>
+				<attribute name="weaponminiGunModelYaw" 					value="3.14"/>
+				<attribute name="weaponminiGunModelPitch" 					value="0"/>
+				<attribute name="weaponminiGunOffset" 						value="{0.0,-4.5,-10.0}"/>
+				<attribute name="weaponminiGunDamage" 						value="3.0"/>
+				<attribute name="weaponminiGunDispersion"			 		value="2"/>
+				<attribute name="weaponminiGunNumberShoots"			 		value="1"/>
+				<attribute name="weaponminiGunDistance" 					value="600"/>
+				<attribute name="weaponminiGunColdDown"				 		value="0.1"/>
+				<attribute name="weaponminiGunMaxAmmo"					 	value="200"/>
+				<attribute name="weaponminiGunId"					 		value="3"/>
+				<attribute name="weaponminiGunParticlePosition" 			value="{6,5,6}"/>
+				<attribute name="weaponminiGunAudio" 						value="media/audio/miniGun.wav"/>
+				
+				<attribute name="weapongrenadeLauncherName" 				value="grenadeLauncher"/>
+				<attribute name="weapongrenadeLauncherModel" 				value="grenadeLauncher.mesh"/>
+				<attribute name="weapongrenadeLauncherModelYaw" 			value="3.10"/>
+				<attribute name="weapongrenadeLauncherModelPitch"			value="0"/>
+				<attribute name="weapongrenadeLauncherOffset" 				value="{0.0,-3.0,-10.0}"/>
+				<attribute name="weapongrenadeLauncherDamageReflect" 		value="10"/>
+				<attribute name="weapongrenadeLauncherNumberShoots" 		value="1"/>
+				<attribute name="weapongrenadeLauncherColdDown" 			value="1.5"/>
+				<attribute name="weapongrenadeLauncherMaxAmmo" 				value="18"/>
+				<attribute name="weapongrenadeLauncherId"					value="4"/>
+				<attribute name="weapongrenadeLauncherShootForce" 			value="5000"/>
+				<attribute name="weapongrenadeLauncherProjectileRadius" 	value="3.4"/>
+				<attribute name="weapongrenadeLauncherParticlePosition" 	value="{6,5,6}"/>
+				<attribute name="weapongrenadeLauncherAudio" 				value="media/audio/grenadeLauncher.wav"/>
+				
+				<attribute name="weaponrocketLauncherName" 					value="rocketLauncher"/>
+				<attribute name="weaponrocketLauncherModel" 				value="rocketLauncher.mesh"/>
+				<attribute name="weaponrocketLauncherModelYaw" 				value="3.10"/>
+				<attribute name="weaponrocketLauncherModelPitch" 			value="0"/>
+				<attribute name="weaponrocketLauncherOffset" 				value="{0.0,-4.5,-10.0}"/>
+				<attribute name="weaponrocketLauncherDamageReflect" 		value="10"/>
+				<attribute name="weaponrocketLauncherNumberShoots" 			value="1"/>
+				<attribute name="weaponrocketLauncherColdDown" 				value="1.5"/>
+				<attribute name="weaponrocketLauncherMaxAmmo" 				value="18"/>
+				<attribute name="weaponrocketLauncherId" 					value="5"/>
+				<attribute name="weaponrocketLauncherShootForce"			value="25000"/>
+				<attribute name="weaponrocketLauncherProjectileRadius" 		value="2"/>
+				<attribute name="weaponrocketLauncherParticlePosition"		value="{6,5,6}"/>
+				<attribute name="weaponrocketLauncherAudio" 				value="media/audio/rocketLauncher.wav"/>
+				
+				<attribute name="hudCrossX" 								value="4"/>
+				<attribute name="hudCrossY" 								value="5"/>
+				<attribute name="hudScreenWidth" 							value="26"/>
+				<attribute name="hudScreenHeight" 							value="31"/>
+				<attribute name="hudPanelInitialPositionX" 					value="9"/>
+				<attribute name="hudPanelInitialPositionY" 					value="29"/>
+				<attribute name="hudPanelSizeX" 							value="2"/>
+				<attribute name="hudPanelSizeY"					 			value="2"/>
+				
+				<attribute name="hudPanelHEALTHPositionX"					value="3"/>
+				<attribute name="hudPanelHEALTHPositionY" 					value="29"/>
+				<attribute name="hudPanelHEALTHWidth" 						value="1.5"/>
+				<attribute name="hudPanelHEALTHHeight" 						value="1.5"/>
+				<attribute name="hudPanelHEALTHFont" 						value="fuenteSimple"/>
+				<attribute name="hudPanelHEALTHFontSize" 					value="46"/>
+				<attribute name="hudPanelHEALTHTextPositionXRelative" 		value="-1.5"/>
+				<attribute name="hudPanelHEALTHTextPositionYRelative" 		value="0"/>
+				
+				<attribute name="hudPanelSHIELDPositionX" 					value="7"/>
+				<attribute name="hudPanelSHIELDPositionY" 					value="29"/>
+				<attribute name="hudPanelSHIELDWidth" 						value="1.5"/>
+				<attribute name="hudPanelSHIELDHeight" 						value="1.5"/>
+				<attribute name="hudPanelSHIELDFont" 						value="fuenteSimple"/>
+				<attribute name="hudPanelSHIELDFontSize" 					value="46"/>
+				<attribute name="hudPanelSHIELDTextPositionXRelative" 		value="-1.5"/>
+				<attribute name="hudPanelSHIELDTextPositionYRelative" 		value="0"/>
+				
+				<attribute name="hudPanelAMMOPositionX" 					value="24"/>
+				<attribute name="hudPanelAMMOPositionY" 					value="29"/>
+				<attribute name="hudPanelAMMOWidth" 						value="1"/>
+				<attribute name="hudPanelAMMOHeight" 						value="1.5"/>
+				<attribute name="hudPanelAMMOFont" 							value="fuenteSimple"/>
+				<attribute name="hudPanelAMMOFontSize" 						value="46"/>
+				<attribute name="hudPanelAMMOTextPositionXRelative" 		value="-1.5"/>
+				<attribute name="hudPanelAMMOTextPositionYRelative" 		value="0"/>
+				
+			</attributes>
+			<ambits>
+				<ambit name="Always">
+					<components>
+						<component name="CScreamerClient" />
+						<component name="CAvatarController" />
+						<component name="CInterpolation" />
+						<component name="CPhysicController" />
+						<component name="CShootRocketLauncher" />
+						<component name="CShootGrenadeLauncher" />
+						<component name="CWeaponsManagerClient" />
+						<component name="CHudOverlay" />
+						<component name="CClientRespawn" />
+						<component name="CNetConnector" />
+						<component name="CParticle" />
+						<component name="CCameraFeedbackNotifier" />
+					</components>
+				</ambit>
+				<ambit name="Server">
+				</ambit>
+				<ambit name="Client">
+				</ambit>
+				<ambit name="Single">
+				</ambit>			
+			</ambits>
+		</entity>
+		
 	<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 	<!-- - - - - - - - - - - -  H O U N D  - - - - - - - - - - - -->
 	<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
@@ -1044,6 +1253,242 @@
 				<attribute name="airSpeedCoef" 								value="4.0"/>
 				<attribute name="jumpForce" 								value="1.5"/>
 				<attribute name="dodgeForce" 								value="{2,2,2}"/>
+				<attribute name="rollCamera" 								value="0.15"/>
+				
+				<attribute name="physic_shape" 								value="capsule"/>
+				<attribute name="physic_radius" 							value="3"/>
+				<attribute name="physic_height" 							value="6"/>
+				<attribute name="physic_group" 								value="1"/>
+				<attribute name="physic_groupList" 							value="-1"/>
+				<attribute name="numWeapons" 								value="6"/>
+				<attribute name="heightShoot" 								value="8"/>
+				<attribute name="rollCamera" 								value="0.15"/>
+				
+				<attribute name="defaultAnimation" 							value="Idle"/>
+				<attribute name="audioStep" 								value="media/audio/step1.wav"/>
+				<attribute name="audioJump" 								value="media/audio/jump.wav"/>
+				<attribute name="audioSideJump" 							value="media/audio/sideJump.wav"/>
+				<attribute name="audioPain" 								value="media/audio/pain.wav"/>
+				<attribute name="audioDeath" 								value="media/audio/death.wav"/>
+				<attribute name="audioSpawn" 								value="media/audio/spawn.wav"/>
+				<attribute name="audioNoAmmo" 								value="media/audio/noammo.wav"/>
+				
+				<attribute name="primarySkillCooldown" 						value="1"/>
+				<attribute name="secondarySkillCooldown" 					value="1"/>
+				<attribute name="berserkerDuration" 						value="15"/>
+				<attribute name="berserkerDamagePercent" 					value="50"/>
+				<attribute name="berserkerCooldownPercent"					value="50"/>
+				
+				<attribute name="weaponhammerName" 							value="hammer"/>
+				<attribute name="weaponhammerModel" 						value="hammer.mesh"/>
+				<attribute name="weaponhammerModelYaw" 						value="0"/>
+				<attribute name="weaponhammerModelPitch" 					value="0.0"/>
+				<attribute name="weaponhammerOffset" 						value="{0.0,-3.0,-10.0}"/>
+				<attribute name="weaponhammerDamage" 						value="80.0"/>
+				<attribute name="weaponhammerDamageReflect" 				value="2"/>
+				<attribute name="weaponhammerDispersion" 					value="0"/>
+				<attribute name="weaponhammerNumberShoots" 					value="1"/>
+				<attribute name="weaponhammerReboundForce" 					value="2"/>
+				<attribute name="weaponhammerDistance" 						value="15.0"/>
+				<attribute name="weaponhammerColdDown"						value="0.5"/>
+				<attribute name="weaponhammerMaxAmmo" 						value="1"/>
+				<attribute name="weaponhammerId" 							value="0"/>
+				<attribute name="weaponhammerAudio" 						value="media/audio/hammer.wav"/>
+				
+				<attribute name="weaponsniperName" 							value="sniper"/>
+				<attribute name="weaponsniperModel" 						value="sniper.mesh"/>
+				<attribute name="weaponsniperModelYaw" 						value="1.55"/>
+				<attribute name="weaponsniperModelPitch" 					value="-0.80"/>
+				<attribute name="weaponsniperOffset"			 			value="{0.0,3.0,-10.0}"/>
+				<attribute name="weaponsniperDamage" 						value="60.0"/>
+				<attribute name="weaponsniperDispersion"					value="0"/>
+				<attribute name="weaponsniperNumberShoots" 					value="1"/>
+				<attribute name="weaponsniperDistance" 						value="600"/>
+				<attribute name="weaponsniperColdDown" 						value="2.0"/>
+				<attribute name="weaponsniperMaxAmmo"						value="10"/>
+				<attribute name="weaponsniperId" 							value="1"/>
+				<attribute name="weaponsniperParticlePosition" 				value="{6,5,6}"/>
+				<attribute name="weaponsniperAudio" 						value="media/audio/sniper.wav"/>
+				
+				<attribute name="weaponshotGunName" 						value="shotGun"/>
+				<attribute name="weaponshotGunModel"			 			value="shotGun.mesh"/>
+				<attribute name="weaponshotGunModelYaw" 					value="0"/>
+				<attribute name="weaponshotGunModelPitch" 					value="0"/>
+				<attribute name="weaponshotGunOffset" 						value="{0.0,3.0,-10.0}"/>
+				<attribute name="weaponshotGunDamage" 						value="9.0"/>
+				<attribute name="weaponshotGunDispersion"				 	value="20"/>
+				<attribute name="weaponshotGunNumberShoots" 				value="8"/>
+				<attribute name="weaponshotGunDistance" 					value="600.0"/>
+				<attribute name="weaponshotGunColdDown" 					value="1.5"/>
+				<attribute name="weaponshotGunMaxAmmo" 						value="48"/>
+				<attribute name="weaponshotGunId" 							value="2"/>
+				<attribute name="weaponshotGunParticlePosition" 			value="{6,5,6}"/>
+				<attribute name="weaponshotGunAudio"			 			value="media/audio/shotGun.wav"/>
+				
+				<attribute name="weaponminiGunName" 						value="miniGun"/>
+				<attribute name="weaponminiGunModel" 						value="miniGun.mesh"/>
+				<attribute name="weaponminiGunModelYaw" 					value="3.14"/>
+				<attribute name="weaponminiGunModelPitch" 					value="0"/>
+				<attribute name="weaponminiGunOffset" 						value="{0.0,-4.5,-10.0}"/>
+				<attribute name="weaponminiGunDamage" 						value="3.0"/>
+				<attribute name="weaponminiGunDispersion"			 		value="2"/>
+				<attribute name="weaponminiGunNumberShoots"			 		value="1"/>
+				<attribute name="weaponminiGunDistance" 					value="600"/>
+				<attribute name="weaponminiGunColdDown"				 		value="0.1"/>
+				<attribute name="weaponminiGunMaxAmmo"					 	value="200"/>
+				<attribute name="weaponminiGunId"					 		value="3"/>
+				<attribute name="weaponminiGunParticlePosition" 			value="{6,5,6}"/>
+				<attribute name="weaponminiGunAudio" 						value="media/audio/miniGun.wav"/>
+				
+				<attribute name="weapongrenadeLauncherName" 				value="grenadeLauncher"/>
+				<attribute name="weapongrenadeLauncherModel" 				value="grenadeLauncher.mesh"/>
+				<attribute name="weapongrenadeLauncherModelYaw" 			value="3.10"/>
+				<attribute name="weapongrenadeLauncherModelPitch"			value="0"/>
+				<attribute name="weapongrenadeLauncherOffset" 				value="{0.0,-3.0,-10.0}"/>
+				<attribute name="weapongrenadeLauncherDamageReflect" 		value="10"/>
+				<attribute name="weapongrenadeLauncherNumberShoots" 		value="1"/>
+				<attribute name="weapongrenadeLauncherColdDown" 			value="1.5"/>
+				<attribute name="weapongrenadeLauncherMaxAmmo" 				value="18"/>
+				<attribute name="weapongrenadeLauncherId"					value="4"/>
+				<attribute name="weapongrenadeLauncherShootForce" 			value="5000"/>
+				<attribute name="weapongrenadeLauncherProjectileRadius" 	value="3.4"/>
+				<attribute name="weapongrenadeLauncherParticlePosition" 	value="{6,5,6}"/>
+				<attribute name="weapongrenadeLauncherAudio" 				value="media/audio/grenadeLauncher.wav"/>
+				
+				<attribute name="weaponrocketLauncherName" 					value="rocketLauncher"/>
+				<attribute name="weaponrocketLauncherModel" 				value="rocketLauncher.mesh"/>
+				<attribute name="weaponrocketLauncherModelYaw" 				value="3.10"/>
+				<attribute name="weaponrocketLauncherModelPitch" 			value="0"/>
+				<attribute name="weaponrocketLauncherOffset" 				value="{0.0,-4.5,-10.0}"/>
+				<attribute name="weaponrocketLauncherDamageReflect" 		value="10"/>
+				<attribute name="weaponrocketLauncherNumberShoots" 			value="1"/>
+				<attribute name="weaponrocketLauncherColdDown" 				value="1.5"/>
+				<attribute name="weaponrocketLauncherMaxAmmo" 				value="18"/>
+				<attribute name="weaponrocketLauncherId" 					value="5"/>
+				<attribute name="weaponrocketLauncherShootForce"			value="25000"/>
+				<attribute name="weaponrocketLauncherProjectileRadius" 		value="2"/>
+				<attribute name="weaponrocketLauncherParticlePosition"		value="{6,5,6}"/>
+				<attribute name="weaponrocketLauncherAudio" 				value="media/audio/rocketLauncher.wav"/>
+				
+				<attribute name="hudCrossX" 								value="4"/>
+				<attribute name="hudCrossY" 								value="5"/>
+				<attribute name="hudScreenWidth" 							value="26"/>
+				<attribute name="hudScreenHeight" 							value="31"/>
+				<attribute name="hudPanelInitialPositionX" 					value="9"/>
+				<attribute name="hudPanelInitialPositionY" 					value="29"/>
+				<attribute name="hudPanelSizeX" 							value="2"/>
+				<attribute name="hudPanelSizeY"					 			value="2"/>
+				
+				<attribute name="hudPanelHEALTHPositionX"					value="3"/>
+				<attribute name="hudPanelHEALTHPositionY" 					value="29"/>
+				<attribute name="hudPanelHEALTHWidth" 						value="1.5"/>
+				<attribute name="hudPanelHEALTHHeight" 						value="1.5"/>
+				<attribute name="hudPanelHEALTHFont" 						value="fuenteSimple"/>
+				<attribute name="hudPanelHEALTHFontSize" 					value="46"/>
+				<attribute name="hudPanelHEALTHTextPositionXRelative" 		value="-1.5"/>
+				<attribute name="hudPanelHEALTHTextPositionYRelative" 		value="0"/>
+				
+				<attribute name="hudPanelSHIELDPositionX" 					value="7"/>
+				<attribute name="hudPanelSHIELDPositionY" 					value="29"/>
+				<attribute name="hudPanelSHIELDWidth" 						value="1.5"/>
+				<attribute name="hudPanelSHIELDHeight" 						value="1.5"/>
+				<attribute name="hudPanelSHIELDFont" 						value="fuenteSimple"/>
+				<attribute name="hudPanelSHIELDFontSize" 					value="46"/>
+				<attribute name="hudPanelSHIELDTextPositionXRelative" 		value="-1.5"/>
+				<attribute name="hudPanelSHIELDTextPositionYRelative" 		value="0"/>
+				
+				<attribute name="hudPanelAMMOPositionX" 					value="24"/>
+				<attribute name="hudPanelAMMOPositionY" 					value="29"/>
+				<attribute name="hudPanelAMMOWidth" 						value="1"/>
+				<attribute name="hudPanelAMMOHeight" 						value="1.5"/>
+				<attribute name="hudPanelAMMOFont" 							value="fuenteSimple"/>
+				<attribute name="hudPanelAMMOFontSize" 						value="46"/>
+				<attribute name="hudPanelAMMOTextPositionXRelative" 		value="-1.5"/>
+				<attribute name="hudPanelAMMOTextPositionYRelative" 		value="0"/>
+				
+			</attributes>
+			<ambits>
+				<ambit name="Always">
+					<components>
+						<component name="CAvatarController" />
+						<component name="CPhysicController" />
+						<component name="CParticle" />
+						<component name="CShootRocketLauncher" />
+						<component name="CShootGrenadeLauncher" />
+						<component name="CNetConnector" />
+					</components>
+				</ambit>
+				<ambit name="Server">
+					<components>
+						<component name="CShootMiniGun" />
+						<component name="CShootShotGun" />
+						<component name="CShootSniper" />
+						<component name="CShootHammer" />
+						<component name="CWeaponsManager" />
+						<component name="CLife" />
+						<component name="CSpawnPlayer" />
+						<component name="CUpdateClientPosition" />
+						<component name="CGraphics" /> 
+						<component name="CHound" />
+					</components>
+				</ambit>
+				<ambit name="Client">
+					<components>
+						<component name="CInterpolation" />
+						<component name="CHound" />
+						<component name="CHudOverlay" />
+						<component name="CClientRespawn" />
+						<component name="CAudio" />
+						<component name="CWeaponsManagerClient" />
+						<component name="CAnimatedGraphics" />
+					</components>
+				</ambit>
+				<ambit name="Single">
+					<components>
+						<component name="CPhysicController" />
+						<component name="CHound" />
+						<component name="CClientRespawn" />						
+						<component name="CShootMiniGun" />
+						<component name="CShootShotGun" />
+						<component name="CShootSniper" />
+						<component name="CShootHammer" />
+						<component name="CWeaponsManager" />
+						<component name="CHudOverlay" />
+						<component name="CLife" />
+						<component name="CSpawnPlayer" />
+						<component name="CAudio" />
+						<component name="CCameraFeedbackNotifier" />
+					</components>
+				</ambit>			
+			</ambits>
+		</entity>
+		
+		
+		<entity name="LocalHound" type="LocalHound">
+			<attributes>
+				<attribute name="position" 									value="{0.0, 50.0, 0.0}"/>
+				<attribute name="msgList" 									value="1,2,6,9,11,13,14,15,16,17,20,21,22,23,24,25,26,32,38,41,43,48,49,50"/>
+				<attribute name="model" 									value="marine.mesh"/>
+				<attribute name="materialName" 								value="marine_rojo"/>
+				<attribute name="syncPosTimeStamp" 							value="0.05"/>
+				<attribute name="timeSpawn" 								value="4"/>
+				<attribute name="defaultLife" 								value="120"/>
+				<attribute name="maxShield" 								value="100"/>
+				<attribute name="maxLife" 									value="250"/>
+				<attribute name="shieldDamageAbsorption" 					value="20"/>
+				<attribute name="damageTimeStep" 							value="1"/>
+				<attribute name="damageOverTime" 							value="1"/>
+				<attribute name="playerDead" 								value="true"/>
+				
+				<attribute name="acceleration" 								value="0.015"/>
+				<attribute name="maxVelocity" 								value="1.5"/>
+				<attribute name="frictionCoef" 								value="14.0"/>
+				<attribute name="airFrictionCoef" 							value="0.98"/>
+				<attribute name="gravity" 									value="-0.007"/>
+				<attribute name="airSpeedCoef" 								value="4.0"/>
+				<attribute name="jumpForce" 								value="1.5"/>
+				<attribute name="dodgeForce" 								value="{2,2,2}"/>
+				<attribute name="rollCamera" 								value="0.15"/>
 				
 				<attribute name="physic_shape" 								value="capsule"/>
 				<attribute name="physic_radius" 							value="3"/>
@@ -1201,54 +1646,23 @@
 					<components>
 						<component name="CAvatarController" />
 						<component name="CPhysicController" />
+						<component name="CInterpolation" />
 						<component name="CParticle" />
 						<component name="CShootRocketLauncher" />
 						<component name="CShootGrenadeLauncher" />
-					</components>
-				</ambit>
-				<ambit name="Server">
-					<components>
-						<component name="CShootMiniGun" />
 						<component name="CNetConnector" />
-						<component name="CShootShotGun" />
-						<component name="CShootSniper" />
-						<component name="CShootHammer" />
-						<component name="CWeaponsManager" />
-						<component name="CLife" />
-						<component name="CSpawnPlayer" />
-						<component name="CUpdateClientPosition" />
-						<component name="CGraphics" /> 
-						<component name="CHound" />
-					</components>
-				</ambit>
-				<ambit name="Client">
-					<components>
-						<component name="CInterpolation" />
-						<component name="CHound" />
 						<component name="CHudOverlay" />
-						<component name="CNetConnector" />						
 						<component name="CClientRespawn" />
 						<component name="CAudio" />
 						<component name="CWeaponsManagerClient" />
-						<component name="CCameraFeedbackNotifier" />			
-					</components>
-				</ambit>
-				<ambit name="Single">
-					<components>
-						<component name="CPhysicController" />
-						<component name="CHound" />
-						<component name="CClientRespawn" />						
-						<component name="CShootMiniGun" />
-						<component name="CShootShotGun" />
-						<component name="CShootSniper" />
-						<component name="CShootHammer" />
-						<component name="CWeaponsManager" />
-						<component name="CHudOverlay" />
-						<component name="CLife" />
-						<component name="CSpawnPlayer" />
-						<component name="CAudio" />
 						<component name="CCameraFeedbackNotifier" />
 					</components>
+				</ambit>
+				<ambit name="Server">
+				</ambit>
+				<ambit name="Client">
+				</ambit>
+				<ambit name="Single">
 				</ambit>			
 			</ambits>
 		</entity>
@@ -1281,6 +1695,7 @@
 				<attribute name="airSpeedCoef" 								value="4.0"/>
 				<attribute name="jumpForce" 								value="1.5"/>
 				<attribute name="dodgeForce" 								value="{2,2,2}"/>
+				<attribute name="rollCamera" 								value="0.15"/>
 				
 				<attribute name="physic_shape" 								value="capsule"/>
 				<attribute name="physic_radius" 							value="3"/>
@@ -1438,12 +1853,12 @@
 						<component name="CParticle" />
 						<component name="CShootRocketLauncher" />
 						<component name="CShootGrenadeLauncher" />
+						<component name="CNetConnector" />
 					</components>
 				</ambit>
 				<ambit name="Server">
 					<components>
 						<component name="CShootMiniGun" />
-						<component name="CNetConnector" />
 						<component name="CShootShotGun" />
 						<component name="CShootSniper" />
 						<component name="CShootHammer" />
@@ -1459,12 +1874,10 @@
 					<components>
 						<component name="CInterpolation" />
 						<component name="CArchangel" />
-						<component name="CHudOverlay" />
-						<component name="CNetConnector" />						
 						<component name="CClientRespawn" />
 						<component name="CAudio" />
 						<component name="CWeaponsManagerClient" />
-						<component name="CCameraFeedbackNotifier" />			
+						<component name="CAnimatedGraphics" />
 					</components>
 				</ambit>
 				<ambit name="Single">
@@ -1483,6 +1896,206 @@
 						<component name="CAudio" />
 						<component name="CCameraFeedbackNotifier" />
 					</components>
+				</ambit>			
+			</ambits>
+		</entity>
+		
+		<entity name="LocalArchangel" type="LocalArchangel">
+			<attributes>
+				<attribute name="position" 									value="{0.0, 50.0, 0.0}"/>
+				<attribute name="msgList" 									value="1,2,6,9,11,13,14,15,16,17,20,21,22,23,24,25,26,32,38,41,43,48,49,50"/>
+				<attribute name="model" 									value="marine.mesh"/>
+				<attribute name="materialName" 								value="marine_amarillo"/>
+				<attribute name="syncPosTimeStamp" 							value="0.05"/>
+				<attribute name="timeSpawn" 								value="4"/>
+				<attribute name="defaultLife" 								value="120"/>
+				<attribute name="maxShield" 								value="100"/>
+				<attribute name="maxLife" 									value="250"/>
+				<attribute name="shieldDamageAbsorption" 					value="20"/>
+				<attribute name="damageTimeStep" 							value="1"/>
+				<attribute name="damageOverTime" 							value="1"/>
+				<attribute name="playerDead" 								value="true"/>
+				
+				<attribute name="acceleration" 								value="0.015"/>
+				<attribute name="maxVelocity" 								value="1.5"/>
+				<attribute name="frictionCoef" 								value="14.0"/>
+				<attribute name="airFrictionCoef" 							value="0.98"/>
+				<attribute name="gravity" 									value="-0.007"/>
+				<attribute name="airSpeedCoef" 								value="4.0"/>
+				<attribute name="jumpForce" 								value="1.5"/>
+				<attribute name="dodgeForce" 								value="{2,2,2}"/>
+				<attribute name="rollCamera" 								value="0.15"/>
+				
+				<attribute name="physic_shape" 								value="capsule"/>
+				<attribute name="physic_radius" 							value="3"/>
+				<attribute name="physic_height" 							value="6"/>
+				<attribute name="physic_group" 								value="1"/>
+				<attribute name="physic_groupList" 							value="-1"/>
+				<attribute name="numWeapons" 								value="6"/>
+				<attribute name="heightShoot" 								value="8"/>
+				
+				<attribute name="defaultAnimation" 							value="Idle"/>
+				<attribute name="audioStep" 								value="media/audio/step1.wav"/>
+				<attribute name="audioJump" 								value="media/audio/jump.wav"/>
+				<attribute name="audioSideJump" 							value="media/audio/sideJump.wav"/>
+				<attribute name="audioPain" 								value="media/audio/pain.wav"/>
+				<attribute name="audioDeath" 								value="media/audio/death.wav"/>
+				<attribute name="audioSpawn" 								value="media/audio/spawn.wav"/>
+				<attribute name="audioNoAmmo" 								value="media/audio/noammo.wav"/>
+				
+				<attribute name="primarySkillCooldown" 						value="0.5"/>
+				<attribute name="secondarySkillCooldown" 					value="0.5"/>
+				<attribute name="inmunityDuration" 							value="5"/>
+				
+				<attribute name="weaponhammerName" 							value="hammer"/>
+				<attribute name="weaponhammerModel" 						value="hammer.mesh"/>
+				<attribute name="weaponhammerModelYaw" 						value="0"/>
+				<attribute name="weaponhammerModelPitch" 					value="0.0"/>
+				<attribute name="weaponhammerOffset" 						value="{0.0,-3.0,-10.0}"/>
+				<attribute name="weaponhammerDamage" 						value="80.0"/>
+				<attribute name="weaponhammerDamageReflect" 				value="2"/>
+				<attribute name="weaponhammerDispersion" 					value="0"/>
+				<attribute name="weaponhammerNumberShoots" 					value="1"/>
+				<attribute name="weaponhammerReboundForce" 					value="2"/>
+				<attribute name="weaponhammerDistance" 						value="15.0"/>
+				<attribute name="weaponhammerColdDown"						value="0.5"/>
+				<attribute name="weaponhammerMaxAmmo" 						value="1"/>
+				<attribute name="weaponhammerId" 							value="0"/>
+				<attribute name="weaponhammerAudio" 						value="media/audio/hammer.wav"/>
+				
+				<attribute name="weaponsniperName" 							value="sniper"/>
+				<attribute name="weaponsniperModel" 						value="sniper.mesh"/>
+				<attribute name="weaponsniperModelYaw" 						value="1.55"/>
+				<attribute name="weaponsniperModelPitch" 					value="-0.80"/>
+				<attribute name="weaponsniperOffset"			 			value="{0.0,3.0,-10.0}"/>
+				<attribute name="weaponsniperDamage" 						value="60.0"/>
+				<attribute name="weaponsniperDispersion"					value="0"/>
+				<attribute name="weaponsniperNumberShoots" 					value="1"/>
+				<attribute name="weaponsniperDistance" 						value="600"/>
+				<attribute name="weaponsniperColdDown" 						value="2.0"/>
+				<attribute name="weaponsniperMaxAmmo"						value="10"/>
+				<attribute name="weaponsniperId" 							value="1"/>
+				<attribute name="weaponsniperParticlePosition" 				value="{6,5,6}"/>
+				<attribute name="weaponsniperAudio" 						value="media/audio/sniper.wav"/>
+				
+				<attribute name="weaponshotGunName" 						value="shotGun"/>
+				<attribute name="weaponshotGunModel"			 			value="shotGun.mesh"/>
+				<attribute name="weaponshotGunModelYaw" 					value="0"/>
+				<attribute name="weaponshotGunModelPitch" 					value="0"/>
+				<attribute name="weaponshotGunOffset" 						value="{0.0,3.0,-10.0}"/>
+				<attribute name="weaponshotGunDamage" 						value="9.0"/>
+				<attribute name="weaponshotGunDispersion"				 	value="20"/>
+				<attribute name="weaponshotGunNumberShoots" 				value="8"/>
+				<attribute name="weaponshotGunDistance" 					value="600.0"/>
+				<attribute name="weaponshotGunColdDown" 					value="1.5"/>
+				<attribute name="weaponshotGunMaxAmmo" 						value="48"/>
+				<attribute name="weaponshotGunId" 							value="2"/>
+				<attribute name="weaponshotGunParticlePosition" 			value="{6,5,6}"/>
+				<attribute name="weaponshotGunAudio"			 			value="media/audio/shotGun.wav"/>
+				
+				<attribute name="weaponminiGunName" 						value="miniGun"/>
+				<attribute name="weaponminiGunModel" 						value="miniGun.mesh"/>
+				<attribute name="weaponminiGunModelYaw" 					value="3.14"/>
+				<attribute name="weaponminiGunModelPitch" 					value="0"/>
+				<attribute name="weaponminiGunOffset" 						value="{0.0,-4.5,-10.0}"/>
+				<attribute name="weaponminiGunDamage" 						value="3.0"/>
+				<attribute name="weaponminiGunDispersion"			 		value="2"/>
+				<attribute name="weaponminiGunNumberShoots"			 		value="1"/>
+				<attribute name="weaponminiGunDistance" 					value="600"/>
+				<attribute name="weaponminiGunColdDown"				 		value="0.1"/>
+				<attribute name="weaponminiGunMaxAmmo"					 	value="200"/>
+				<attribute name="weaponminiGunId"					 		value="3"/>
+				<attribute name="weaponminiGunParticlePosition" 			value="{6,5,6}"/>
+				<attribute name="weaponminiGunAudio" 						value="media/audio/miniGun.wav"/>
+				
+				<attribute name="weapongrenadeLauncherName" 				value="grenadeLauncher"/>
+				<attribute name="weapongrenadeLauncherModel" 				value="grenadeLauncher.mesh"/>
+				<attribute name="weapongrenadeLauncherModelYaw" 			value="3.10"/>
+				<attribute name="weapongrenadeLauncherModelPitch"			value="0"/>
+				<attribute name="weapongrenadeLauncherOffset" 				value="{0.0,-3.0,-10.0}"/>
+				<attribute name="weapongrenadeLauncherDamageReflect" 		value="10"/>
+				<attribute name="weapongrenadeLauncherNumberShoots" 		value="1"/>
+				<attribute name="weapongrenadeLauncherColdDown" 			value="1.5"/>
+				<attribute name="weapongrenadeLauncherMaxAmmo" 				value="18"/>
+				<attribute name="weapongrenadeLauncherId"					value="4"/>
+				<attribute name="weapongrenadeLauncherShootForce" 			value="5000"/>
+				<attribute name="weapongrenadeLauncherProjectileRadius" 	value="3.4"/>
+				<attribute name="weapongrenadeLauncherParticlePosition" 	value="{6,5,6}"/>
+				<attribute name="weapongrenadeLauncherAudio" 				value="media/audio/grenadeLauncher.wav"/>
+				
+				<attribute name="weaponrocketLauncherName" 					value="rocketLauncher"/>
+				<attribute name="weaponrocketLauncherModel" 				value="rocketLauncher.mesh"/>
+				<attribute name="weaponrocketLauncherModelYaw" 				value="3.10"/>
+				<attribute name="weaponrocketLauncherModelPitch" 			value="0"/>
+				<attribute name="weaponrocketLauncherOffset" 				value="{0.0,-4.5,-10.0}"/>
+				<attribute name="weaponrocketLauncherDamageReflect" 		value="10"/>
+				<attribute name="weaponrocketLauncherNumberShoots" 			value="1"/>
+				<attribute name="weaponrocketLauncherColdDown" 				value="1.5"/>
+				<attribute name="weaponrocketLauncherMaxAmmo" 				value="18"/>
+				<attribute name="weaponrocketLauncherId" 					value="5"/>
+				<attribute name="weaponrocketLauncherShootForce"			value="25000"/>
+				<attribute name="weaponrocketLauncherProjectileRadius" 		value="2"/>
+				<attribute name="weaponrocketLauncherParticlePosition"		value="{6,5,6}"/>
+				<attribute name="weaponrocketLauncherAudio" 				value="media/audio/rocketLauncher.wav"/>
+				
+				<attribute name="hudCrossX" 								value="4"/>
+				<attribute name="hudCrossY" 								value="5"/>
+				<attribute name="hudScreenWidth" 							value="26"/>
+				<attribute name="hudScreenHeight" 							value="31"/>
+				<attribute name="hudPanelInitialPositionX" 					value="9"/>
+				<attribute name="hudPanelInitialPositionY" 					value="29"/>
+				<attribute name="hudPanelSizeX" 							value="2"/>
+				<attribute name="hudPanelSizeY"					 			value="2"/>
+				
+				<attribute name="hudPanelHEALTHPositionX"					value="3"/>
+				<attribute name="hudPanelHEALTHPositionY" 					value="29"/>
+				<attribute name="hudPanelHEALTHWidth" 						value="1.5"/>
+				<attribute name="hudPanelHEALTHHeight" 						value="1.5"/>
+				<attribute name="hudPanelHEALTHFont" 						value="fuenteSimple"/>
+				<attribute name="hudPanelHEALTHFontSize" 					value="46"/>
+				<attribute name="hudPanelHEALTHTextPositionXRelative" 		value="-1.5"/>
+				<attribute name="hudPanelHEALTHTextPositionYRelative" 		value="0"/>
+				
+				<attribute name="hudPanelSHIELDPositionX" 					value="7"/>
+				<attribute name="hudPanelSHIELDPositionY" 					value="29"/>
+				<attribute name="hudPanelSHIELDWidth" 						value="1.5"/>
+				<attribute name="hudPanelSHIELDHeight" 						value="1.5"/>
+				<attribute name="hudPanelSHIELDFont" 						value="fuenteSimple"/>
+				<attribute name="hudPanelSHIELDFontSize" 					value="46"/>
+				<attribute name="hudPanelSHIELDTextPositionXRelative" 		value="-1.5"/>
+				<attribute name="hudPanelSHIELDTextPositionYRelative" 		value="0"/>
+				
+				<attribute name="hudPanelAMMOPositionX" 					value="24"/>
+				<attribute name="hudPanelAMMOPositionY" 					value="29"/>
+				<attribute name="hudPanelAMMOWidth" 						value="1"/>
+				<attribute name="hudPanelAMMOHeight" 						value="1.5"/>
+				<attribute name="hudPanelAMMOFont" 							value="fuenteSimple"/>
+				<attribute name="hudPanelAMMOFontSize" 						value="46"/>
+				<attribute name="hudPanelAMMOTextPositionXRelative" 		value="-1.5"/>
+				<attribute name="hudPanelAMMOTextPositionYRelative" 		value="0"/>
+			</attributes>
+			<ambits>
+				<ambit name="Always">
+					<components>
+						<component name="CAvatarController" />
+						<component name="CPhysicController" />
+						<component name="CParticle" />
+						<component name="CShootRocketLauncher" />
+						<component name="CShootGrenadeLauncher" />
+						<component name="CNetConnector" />
+						<component name="CInterpolation" />
+						<component name="CArchangel" />
+						<component name="CClientRespawn" />
+						<component name="CAudio" />
+						<component name="CWeaponsManagerClient" />
+						<component name="CCameraFeedbackNotifier" />
+					</components>
+				</ambit>
+				<ambit name="Server">
+				</ambit>
+				<ambit name="Client">
+				</ambit>
+				<ambit name="Single">
 				</ambit>			
 			</ambits>
 		</entity>
@@ -1515,6 +2128,7 @@
 				<attribute name="airSpeedCoef" 								value="4.0"/>
 				<attribute name="jumpForce" 								value="1.5"/>
 				<attribute name="dodgeForce" 								value="{2,2,2}"/>
+				<attribute name="rollCamera" 								value="0.15"/>
 				
 				<attribute name="physic_shape" 								value="capsule"/>
 				<attribute name="physic_radius" 							value="3"/>
@@ -1673,12 +2287,12 @@
 						<component name="CParticle" />
 						<component name="CShootRocketLauncher" />
 						<component name="CShootGrenadeLauncher" />
+						<component name="CNetConnector" />
 					</components>
 				</ambit>
 				<ambit name="Server">
 					<components>
 						<component name="CShootMiniGun" />
-						<component name="CNetConnector" />
 						<component name="CShootShotGun" />
 						<component name="CShootSniper" />
 						<component name="CShootHammer" />
@@ -1693,21 +2307,19 @@
 				<ambit name="Client">
 					<components>
 						<component name="CInterpolation" />
-						<component name="CLocalShadow" />
-						<component name="CHudOverlay" />
 						<component name="CNetConnector" />						
 						<component name="CClientRespawn" />
 						<component name="CAudio" />
 						<component name="CWeaponsManagerClient" />
-						<component name="CCameraFeedbackNotifier" />
-											
+						<component name="CAnimatedGraphics" />
+						<component name="CShadow" />
 					</components>
 				</ambit>
 				<ambit name="Single">
 					<components>
 						<component name="CPhysicController" />
 						<component name="CLocalShadow" />
-						<component name="CClientRespawn" />						
+						<component name="CClientRespawn" />
 						<component name="CShootMiniGun" />
 						<component name="CShootShotGun" />
 						<component name="CShootSniper" />
@@ -1721,6 +2333,211 @@
 					</components>
 				</ambit>			
 			</ambits>
-		</entity>	
+		</entity>
+		
+		
+		<entity name="LocalShadow" type="LocalShadow">
+			<attributes>
+				<attribute name="position" 									value="{0.0, 50.0, 0.0}"/>
+				<attribute name="msgList" 									value="1,2,6,9,11,13,14,15,16,17,20,21,22,23,24,25,26,32,38,41,43,48,49,50"/>
+				<attribute name="model" 									value="marine.mesh"/>
+				<attribute name="materialName" 								value="marine_azul"/>
+				<attribute name="syncPosTimeStamp" 							value="0.05"/>
+				<attribute name="timeSpawn" 								value="4"/>
+				<attribute name="defaultLife" 								value="120"/>
+				<attribute name="maxShield" 								value="100"/>
+				<attribute name="maxLife" 									value="250"/>
+				<attribute name="shieldDamageAbsorption" 					value="20"/>
+				<attribute name="damageTimeStep" 							value="1"/>
+				<attribute name="damageOverTime" 							value="1"/>
+				<attribute name="playerDead" 								value="true"/>
+				
+				<attribute name="acceleration" 								value="0.015"/>
+				<attribute name="maxVelocity" 								value="1.5"/>
+				<attribute name="frictionCoef" 								value="14.0"/>
+				<attribute name="airFrictionCoef" 							value="0.98"/>
+				<attribute name="gravity" 									value="-0.007"/>
+				<attribute name="airSpeedCoef" 								value="4.0"/>
+				<attribute name="jumpForce" 								value="1.5"/>
+				<attribute name="dodgeForce" 								value="{2,2,2}"/>
+				<attribute name="rollCamera" 								value="0.15"/>
+				
+				<attribute name="physic_shape" 								value="capsule"/>
+				<attribute name="physic_radius" 							value="3"/>
+				<attribute name="physic_height" 							value="6"/>
+				<attribute name="physic_group" 								value="1"/>
+				<attribute name="physic_groupList" 							value="-1"/>
+				<attribute name="numWeapons" 								value="6"/>
+				<attribute name="heightShoot" 								value="8"/>
+				
+				<attribute name="defaultAnimation" 							value="Idle"/>
+				<attribute name="audioStep" 								value="media/audio/step1.wav"/>
+				<attribute name="audioJump" 								value="media/audio/jump.wav"/>
+				<attribute name="audioSideJump" 							value="media/audio/sideJump.wav"/>
+				<attribute name="audioPain" 								value="media/audio/pain.wav"/>
+				<attribute name="audioDeath" 								value="media/audio/death.wav"/>
+				<attribute name="audioSpawn" 								value="media/audio/spawn.wav"/>
+				<attribute name="audioNoAmmo" 								value="media/audio/noammo.wav"/>
+				
+				<attribute name="primarySkillCooldown" 						value="10"/>
+				<attribute name="secondarySkillCooldown" 					value="3"/>
+				<attribute name="invisibilityDuration" 						value="5"/>
+				
+				<attribute name="weaponhammerName" 							value="hammer"/>
+				<attribute name="weaponhammerModel" 						value="hammer.mesh"/>
+				<attribute name="weaponhammerModelYaw" 						value="0"/>
+				<attribute name="weaponhammerModelPitch" 					value="0.0"/>
+				<attribute name="weaponhammerOffset" 						value="{0.0,-3.0,-10.0}"/>
+				<attribute name="weaponhammerDamage" 						value="80.0"/>
+				<attribute name="weaponhammerDamageReflect" 				value="2"/>
+				<attribute name="weaponhammerDispersion" 					value="0"/>
+				<attribute name="weaponhammerNumberShoots" 					value="1"/>
+				<attribute name="weaponhammerReboundForce" 					value="2"/>
+				<attribute name="weaponhammerDistance" 						value="15.0"/>
+				<attribute name="weaponhammerColdDown"						value="0.5"/>
+				<attribute name="weaponhammerMaxAmmo" 						value="1"/>
+				<attribute name="weaponhammerId" 							value="0"/>
+				<attribute name="weaponhammerAudio" 						value="media/audio/hammer.wav"/>
+				
+				<attribute name="weaponsniperName" 							value="sniper"/>
+				<attribute name="weaponsniperModel" 						value="sniper.mesh"/>
+				<attribute name="weaponsniperModelYaw" 						value="1.55"/>
+				<attribute name="weaponsniperModelPitch" 					value="-0.80"/>
+				<attribute name="weaponsniperOffset"			 			value="{0.0,3.0,-10.0}"/>
+				<attribute name="weaponsniperDamage" 						value="60.0"/>
+				<attribute name="weaponsniperDispersion"					value="0"/>
+				<attribute name="weaponsniperNumberShoots" 					value="1"/>
+				<attribute name="weaponsniperDistance" 						value="600"/>
+				<attribute name="weaponsniperColdDown" 						value="2.0"/>
+				<attribute name="weaponsniperMaxAmmo"						value="10"/>
+				<attribute name="weaponsniperId" 							value="1"/>
+				<attribute name="weaponsniperParticlePosition" 				value="{6,5,6}"/>
+				<attribute name="weaponsniperAudio" 						value="media/audio/sniper.wav"/>
+				
+				<attribute name="weaponshotGunName" 						value="shotGun"/>
+				<attribute name="weaponshotGunModel"			 			value="shotGun.mesh"/>
+				<attribute name="weaponshotGunModelYaw" 					value="0"/>
+				<attribute name="weaponshotGunModelPitch" 					value="0"/>
+				<attribute name="weaponshotGunOffset" 						value="{0.0,3.0,-10.0}"/>
+				<attribute name="weaponshotGunDamage" 						value="9.0"/>
+				<attribute name="weaponshotGunDispersion"				 	value="20"/>
+				<attribute name="weaponshotGunNumberShoots" 				value="8"/>
+				<attribute name="weaponshotGunDistance" 					value="600.0"/>
+				<attribute name="weaponshotGunColdDown" 					value="1.5"/>
+				<attribute name="weaponshotGunMaxAmmo" 						value="48"/>
+				<attribute name="weaponshotGunId" 							value="2"/>
+				<attribute name="weaponshotGunParticlePosition" 			value="{6,5,6}"/>
+				<attribute name="weaponshotGunAudio"			 			value="media/audio/shotGun.wav"/>
+				
+				<attribute name="weaponminiGunName" 						value="miniGun"/>
+				<attribute name="weaponminiGunModel" 						value="miniGun.mesh"/>
+				<attribute name="weaponminiGunModelYaw" 					value="3.14"/>
+				<attribute name="weaponminiGunModelPitch" 					value="0"/>
+				<attribute name="weaponminiGunOffset" 						value="{0.0,-4.5,-10.0}"/>
+				<attribute name="weaponminiGunDamage" 						value="3.0"/>
+				<attribute name="weaponminiGunDispersion"			 		value="2"/>
+				<attribute name="weaponminiGunNumberShoots"			 		value="1"/>
+				<attribute name="weaponminiGunDistance" 					value="600"/>
+				<attribute name="weaponminiGunColdDown"				 		value="0.1"/>
+				<attribute name="weaponminiGunMaxAmmo"					 	value="200"/>
+				<attribute name="weaponminiGunId"					 		value="3"/>
+				<attribute name="weaponminiGunParticlePosition" 			value="{6,5,6}"/>
+				<attribute name="weaponminiGunAudio" 						value="media/audio/miniGun.wav"/>
+				
+				<attribute name="weapongrenadeLauncherName" 				value="grenadeLauncher"/>
+				<attribute name="weapongrenadeLauncherModel" 				value="grenadeLauncher.mesh"/>
+				<attribute name="weapongrenadeLauncherModelYaw" 			value="3.10"/>
+				<attribute name="weapongrenadeLauncherModelPitch"			value="0"/>
+				<attribute name="weapongrenadeLauncherOffset" 				value="{0.0,-3.0,-10.0}"/>
+				<attribute name="weapongrenadeLauncherDamageReflect" 		value="10"/>
+				<attribute name="weapongrenadeLauncherNumberShoots" 		value="1"/>
+				<attribute name="weapongrenadeLauncherColdDown" 			value="1.5"/>
+				<attribute name="weapongrenadeLauncherMaxAmmo" 				value="18"/>
+				<attribute name="weapongrenadeLauncherId"					value="4"/>
+				<attribute name="weapongrenadeLauncherShootForce" 			value="5000"/>
+				<attribute name="weapongrenadeLauncherProjectileRadius" 	value="3.4"/>
+				<attribute name="weapongrenadeLauncherParticlePosition" 	value="{6,5,6}"/>
+				<attribute name="weapongrenadeLauncherAudio" 				value="media/audio/grenadeLauncher.wav"/>
+				
+				<attribute name="weaponrocketLauncherName" 					value="rocketLauncher"/>
+				<attribute name="weaponrocketLauncherModel" 				value="rocketLauncher.mesh"/>
+				<attribute name="weaponrocketLauncherModelYaw" 				value="3.10"/>
+				<attribute name="weaponrocketLauncherModelPitch" 			value="0"/>
+				<attribute name="weaponrocketLauncherOffset" 				value="{0.0,-4.5,-10.0}"/>
+				<attribute name="weaponrocketLauncherDamageReflect" 		value="10"/>
+				<attribute name="weaponrocketLauncherNumberShoots" 			value="1"/>
+				<attribute name="weaponrocketLauncherColdDown" 				value="1.5"/>
+				<attribute name="weaponrocketLauncherMaxAmmo" 				value="18"/>
+				<attribute name="weaponrocketLauncherId" 					value="5"/>
+				<attribute name="weaponrocketLauncherShootForce"			value="25000"/>
+				<attribute name="weaponrocketLauncherProjectileRadius" 		value="2"/>
+				<attribute name="weaponrocketLauncherParticlePosition"		value="{6,5,6}"/>
+				<attribute name="weaponrocketLauncherAudio" 				value="media/audio/rocketLauncher.wav"/>
+				
+				<attribute name="hudCrossX" 								value="4"/>
+				<attribute name="hudCrossY" 								value="5"/>
+				<attribute name="hudScreenWidth" 							value="26"/>
+				<attribute name="hudScreenHeight" 							value="31"/>
+				<attribute name="hudPanelInitialPositionX" 					value="9"/>
+				<attribute name="hudPanelInitialPositionY" 					value="29"/>
+				<attribute name="hudPanelSizeX" 							value="2"/>
+				<attribute name="hudPanelSizeY"					 			value="2"/>
+				
+				<attribute name="hudPanelHEALTHPositionX"					value="3"/>
+				<attribute name="hudPanelHEALTHPositionY" 					value="29"/>
+				<attribute name="hudPanelHEALTHWidth" 						value="1.5"/>
+				<attribute name="hudPanelHEALTHHeight" 						value="1.5"/>
+				<attribute name="hudPanelHEALTHFont" 						value="fuenteSimple"/>
+				<attribute name="hudPanelHEALTHFontSize" 					value="46"/>
+				<attribute name="hudPanelHEALTHTextPositionXRelative" 		value="-1.5"/>
+				<attribute name="hudPanelHEALTHTextPositionYRelative" 		value="0"/>
+				
+				<attribute name="hudPanelSHIELDPositionX" 					value="7"/>
+				<attribute name="hudPanelSHIELDPositionY" 					value="29"/>
+				<attribute name="hudPanelSHIELDWidth" 						value="1.5"/>
+				<attribute name="hudPanelSHIELDHeight" 						value="1.5"/>
+				<attribute name="hudPanelSHIELDFont" 						value="fuenteSimple"/>
+				<attribute name="hudPanelSHIELDFontSize" 					value="46"/>
+				<attribute name="hudPanelSHIELDTextPositionXRelative" 		value="-1.5"/>
+				<attribute name="hudPanelSHIELDTextPositionYRelative" 		value="0"/>
+				
+				<attribute name="hudPanelAMMOPositionX" 					value="24"/>
+				<attribute name="hudPanelAMMOPositionY" 					value="29"/>
+				<attribute name="hudPanelAMMOWidth" 						value="1"/>
+				<attribute name="hudPanelAMMOHeight" 						value="1.5"/>
+				<attribute name="hudPanelAMMOFont" 							value="fuenteSimple"/>
+				<attribute name="hudPanelAMMOFontSize" 						value="46"/>
+				<attribute name="hudPanelAMMOTextPositionXRelative" 		value="-1.5"/>
+				<attribute name="hudPanelAMMOTextPositionYRelative" 		value="0"/>
+				
+			</attributes>
+			<ambits>
+				<ambit name="Always">
+					<components>
+						<component name="CAvatarController" />
+						<component name="CPhysicController" />
+						<component name="CParticle" />
+						<component name="CShootRocketLauncher" />
+						<component name="CShootGrenadeLauncher" />
+						<component name="CNetConnector" />
+						<component name="CInterpolation" />
+						<component name="CHudOverlay" />
+						<component name="CNetConnector" />						
+						<component name="CClientRespawn" />
+						<component name="CAudio" />
+						<component name="CWeaponsManagerClient" />
+						<component name="CCameraFeedbackNotifier" />
+					</components>
+				</ambit>
+				<ambit name="Server">
+				</ambit>
+				<ambit name="Client">
+				</ambit>
+				<ambit name="Single">
+				</ambit>			
+			</ambits>
+		</entity>
+		
+		
 	</entities>
 </archetypes>
