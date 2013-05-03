@@ -480,7 +480,10 @@
     </ClCompile>
     <ClCompile Include="..\..\Src\Logic\Maps\EntityIdDispatcher.cpp">
       <Filter>Maps\Source Files</Filter>
-    </ClCompile>
+	</ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Messages\MessageCameraRoll.cpp">
+      <Filter>Messages\Source</Filter>
+	</ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Src\Logic\Maps\ComponentFactory.h">
@@ -869,6 +872,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Maps\EntityIdDispatcher.h">
       <Filter>Maps\Header Files</Filter>
+	</ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Messages\MessageCameraRoll.h">
+      <Filter>Messages\Header</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

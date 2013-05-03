@@ -160,6 +160,7 @@
     <ClCompile Include="..\..\Src\Logic\Messages\MessageAvatarWalk.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageBerserker.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageCameraOffset.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Messages\MessageCameraRoll.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageCameraToEnemy.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageCealing.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageChangeMaterial.cpp" />
@@ -279,6 +280,7 @@
     <ClInclude Include="..\..\Src\Logic\Entity\Components\Graphics.h" />
     <ClInclude Include="..\..\Src\Logic\Documentation.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageActivateScreamerShield.h" />
+    <ClInclude Include="..\..\Src\Logic\Messages\MessageCameraRoll.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageChangeMaterialHudWeapon.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageCameraOffset.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageCreateParticle.h" />

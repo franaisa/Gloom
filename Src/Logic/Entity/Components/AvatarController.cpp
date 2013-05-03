@@ -106,6 +106,8 @@ namespace Logic {
 				// Comando de movimiento
 				if(commandType >=0 && commandType < MAX_MOVEMENT_COMMANDS) {
 					executeMovementCommand(commandType);
+					if ((commandType == ControlType::STRAFE_LEFT) || (commandType == ControlType::STRAFE_RIGHT))
+						std::cout << "rotar camaraaaaa" << std::endl;
 				}
 				// Comando de salto
 				else if(commandType == Control::JUMP) {

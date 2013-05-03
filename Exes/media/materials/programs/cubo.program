@@ -21,3 +21,10 @@ fragment_program Examples/OffsetMappingPS asm
 	// sorry, only for ps_1_4 and above:)
 	syntax ps_1_4
 }
+
+fragment_program cubo_ps hlsl
+{
+	source cubo.hlsl
+	entry_point mainPS
+	target ps_2_0
+}
