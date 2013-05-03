@@ -480,10 +480,13 @@
     </ClCompile>
     <ClCompile Include="..\..\Src\Logic\Maps\EntityIdDispatcher.cpp">
       <Filter>Maps\Source Files</Filter>
-	</ClCompile>
+    </ClCompile>
     <ClCompile Include="..\..\Src\Logic\Messages\MessageCameraRoll.cpp">
       <Filter>Messages\Source</Filter>
-	</ClCompile>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\SpikeTramp.cpp">
+      <Filter>Entity\Components\Gameplay\Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Src\Logic\Maps\ComponentFactory.h">
@@ -872,9 +875,12 @@
     </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Maps\EntityIdDispatcher.h">
       <Filter>Maps\Header Files</Filter>
-	</ClInclude>
+    </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Messages\MessageCameraRoll.h">
       <Filter>Messages\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\SpikeTramp.h">
+      <Filter>Entity\Components\Gameplay\Header</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

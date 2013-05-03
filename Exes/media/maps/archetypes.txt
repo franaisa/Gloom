@@ -1779,4 +1779,19 @@ Map = {
 		particleName="JumperParticle",
 	},
 	
+	SpikeTramp = {
+		type = "SpikeTramp",
+		position = {51.0, 6.0, 1.0},
+		model = "miniGun.mesh",
+		audio = "media/audio/plasma.wav",
+		coolDown = 4,
+		physic_entity = "rigid",
+		physic_trigger = true,
+		physic_type = "static",
+		physic_shape = "box",
+		physic_dimensions = { 2, 2, 2 },
+		physic_group = 7,
+		physic_groupList = "1",
+	},
+	
 }
