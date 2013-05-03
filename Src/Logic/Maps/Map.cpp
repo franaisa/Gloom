@@ -142,7 +142,7 @@ namespace Logic {
 	void CMap::tick(unsigned int msecs) {
 		// Comprobamos los timers de las entidades que tienen
 		// un tiempo de vida
-		checkTimeOuts(msecs);
+		checkTimeouts(msecs);
 		
 		// Ejecutamos el tick de las entidades
 		// Ejecutamos el tick de todas las entidades activadas del mapa
@@ -153,7 +153,7 @@ namespace Logic {
 
 	//--------------------------------------------------------
 
-	void CMap::checkTimeOuts(unsigned int msecs) {
+	void CMap::checkTimeouts(unsigned int msecs) {
 		// Si hay entidades con cronometros de autodestruccion
 		// comprobamos el cronometro y si hay que destruirlas avisamos
 		// a la factoria para que se encargue de ello en diferido.

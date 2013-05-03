@@ -26,6 +26,10 @@ namespace Hikari{
 	class FlashControl;
 }
 
+namespace Net {
+	class CManager;
+}
+
 namespace Application {
 	
 	/**
@@ -193,6 +197,8 @@ namespace Application {
 
 		//menu de seleccion de personaje
 		Hikari::FlashControl* _seleccion;
+
+		Net::CManager* _netMgr;
 	}; // CMultiplayerTeamDeathmatchClientState
 
 } // namespace Application
