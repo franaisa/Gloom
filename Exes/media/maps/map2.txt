@@ -23,12 +23,6 @@ Map = {
 		physic_groupList = "1",
 	},
 	
-	SpikeTramp1 = {
-		type = "SpikeTramp",
-		position = {-199.0, 5.0, 112.0},
-		coolDown = 4,
-	},
-	
 	Pincho11 = {
 		type = "Spike",
 		position = {100.0,-3.0,-12.0},
