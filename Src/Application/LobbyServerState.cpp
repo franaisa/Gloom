@@ -181,6 +181,10 @@ namespace Application {
 
 		//cargamos el mapa que hemos seleccionado
 
+		// Inicializar dispatcher - 0 es el id del server
+		// @deprecated El numero de jugadores maximo debe leerse de flash
+		Logic::CEntityFactory::getSingletonPtr()->initDispatcher(0, 12);
+
 		if (!Logic::CEntityFactory::getSingletonPtr()->loadBluePrints("blueprints_server.txt")) {
 			Net::CManager::getSingletonPtr()->deactivateNetwork();
 			_app->exitRequest();

@@ -15,6 +15,7 @@ la gestión de la lógica del juego.
 #include <string>
 #include <iostream>
 #include <ctime>
+
 // Predeclaración de clases para ahorrar tiempo de compilación
 namespace Logic 
 {
@@ -36,7 +37,6 @@ sus componentes, mensajes, factorias de entidades y componentes, etc.
 */
 namespace Logic
 {
-
 	/**
 	Servidor de la lógica que se se encarga de la creación del mundo, su 
 	destrucción y actualización a lo largo de la partida. Se encarga de 

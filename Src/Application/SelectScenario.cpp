@@ -131,12 +131,13 @@ namespace Application {
 	//--------------------------------------------------------
 
 	Hikari::FlashValue CSelectScenario::loadScenario(Hikari::FlashControl* caller, const Hikari::Arguments& args){
-	
+		// Inicializar dispatcher para SP
+		Logic::CEntityFactory::getSingletonPtr()->initDispatcher();
+
 		if (!Logic::CEntityFactory::getSingletonPtr()->loadBluePrints("blueprints.txt"))
 			return false;
-		if (!Logic::CEntityFactory::getSingletonPtr()->loadArchetypes("archetypes.txt")) {
+		if (!Logic::CEntityFactory::getSingletonPtr()->loadArchetypes("archetypes.txt"))
 			return false;
-		}
 		// Cargamos el nivel a partir del nombre del mapa. 
 		if (!Logic::CServer::getSingletonPtr()->loadLevel(args.at(0).getString()+".txt"))
 			return false;
