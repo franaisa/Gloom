@@ -261,14 +261,16 @@ namespace Logic {
 							if(!ambitTag->NoChildren()){
 								TiXmlElement *componentsTag = ambitTag->FirstChildElement();
 								//assert( componentsTag && "No se detecta la etiqueta components de la entidad: ");
-								TiXmlElement *componentTag = componentsTag->FirstChildElement();
-								//meto todos los componentes de un ambito especifico
-								while(componentTag != NULL){
-									nameComponent = componentTag->Attribute("name");
-									assert( (!nameComponent.empty()) && "No se detecta el atributo name en la etiqueta component de la entidad: ");
-									listComponents.push_back(nameComponent);
+								if(componentsTag != NULL){
+									TiXmlElement *componentTag = componentsTag->FirstChildElement();
+									//meto todos los componentes de un ambito especifico
+									while(componentTag != NULL){
+										nameComponent = componentTag->Attribute("name");
+										assert( (!nameComponent.empty()) && "No se detecta el atributo name en la etiqueta component de la entidad: ");
+										listComponents.push_back(nameComponent);
 
-									componentTag = componentTag->NextSiblingElement();
+										componentTag = componentTag->NextSiblingElement();
+									}
 								}
 							}
 						}
