@@ -8,6 +8,8 @@
 Contiene la implementacion del compositor listener, este se usa para pasar parametros a los compositor (y los shader aplicados a estos)
 
 @author Antonio Jesus Narvaez
+@author Ruben Mulero
+
 @date Abril, 2013
 */
 

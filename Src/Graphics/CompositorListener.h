@@ -8,6 +8,7 @@
 Contiene la implementacion del compositor listener, este se usa para pasar parametros a los compositor (y los shader aplicados a estos)
 
 @author Antonio Jesus Narvaez
+@author Ruben Mulero
 @date Abril, 2013
 */
 
@@ -35,6 +36,7 @@ se apoyan en Ogre.
 (para más información ver @ref graphicsGroup).
 
 @author Antonio Jesus Narvaez
+@author Ruben Mulero
 @date Abril, 2013
 */
 namespace Graphics 
