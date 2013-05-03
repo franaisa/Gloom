@@ -217,8 +217,9 @@ namespace Net {
 			return false;
 		
 		// Almacenamos esa conexión y le otorgamos un ID de red
-		connection->setId(_idDispatcher->getServerId()); // Un cliente sólo se conecta al SERVER
-		addConnection(_idDispatcher->getServerId(), connection); // Guardamos en la tabla
+		NetID serverId = _idDispatcher->getServerId();
+		connection->setId(serverId); // Un cliente sólo se conecta al SERVER
+		addConnection(serverId, connection); // Guardamos en la tabla
 
 		return true;
 	} // connectTo
@@ -274,8 +275,9 @@ namespace Net {
 			_idDispatcher->returnClientId(clientId);
 		}
 		else if(_clienteRed) {
-			_clienteRed->disconnect(getConnection(_idDispatcher->getServerId()));
-			removeConnection(_idDispatcher->getServerId());
+			NetID serverId = _idDispatcher->getServerId();
+			_clienteRed->disconnect(getConnection(serverId));
+			removeConnection(serverId);
 		}
 	} // disconnect
 		

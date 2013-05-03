@@ -39,6 +39,7 @@ namespace Application {
 
 		// Añadir a este estado como observador de la red para ser notificado
 		Net::CManager::getSingletonPtr()->addObserver(this);
+		// Seteamos el máximo de jugadores a 12 (8 players + 4 espectadores)
 		Net::CManager::getSingletonPtr()->activateAsServer(1234,12);
 
 		_playersMgr = Logic::CGameNetPlayersManager::getSingletonPtr();
