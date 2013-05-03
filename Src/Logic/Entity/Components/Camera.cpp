@@ -69,7 +69,7 @@ namespace Logic
 		}
 
 		_fOffsetTimer = 0.0f;
-		_iRoll = 0;
+		_fRoll = 0.0f;
 
 		//return true;
 
@@ -118,9 +118,8 @@ namespace Logic
 				break;
 			}
 			case Message::CAMERA_ROLL: {
-				std::cout << "Recibido" << std::endl;
 				std::shared_ptr<CMessageCameraRoll> camOffset = std::static_pointer_cast<CMessageCameraRoll>(message);
-				_iRoll = camOffset->getRollDegrees(); //asignamos el tiempo del offset
+				_fRoll = camOffset->getRollDegrees(); //asignamos el tiempo del offset
 			}
 		}
 
@@ -159,14 +158,13 @@ namespace Logic
 				//En el eje de movimiento horizontal
 				Vector3 directionStrafe = Math::getDirection(_entity->getYaw() + Math::PI/2);
 				position += directionStrafe;
-				std::cout << "CamaraOffset!!!" << std::endl;
 			}
 
 			//Ajustamos el roll si lo hay
-			if (_iRoll != 0)
+			if ((_fRoll > 0.01f) || (_fRoll < 0.01)) //Al ser un float no puedo comparar con 0.0f
 			{
-				_graphicsCamera->rollCamera(_iRoll);
-				_iRoll = 0; //Inicializamos el roll para que en el siguiente tick no entre
+				_graphicsCamera->rollCamera(_fRoll);
+				_fRoll = 0.0f; //Inicializamos el roll para que en el siguiente tick no entre
 			}
 
 			_graphicsCamera->setCameraPosition(position);

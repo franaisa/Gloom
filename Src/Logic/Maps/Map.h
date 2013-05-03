@@ -204,7 +204,7 @@ namespace Logic
 
 	private:
 
-		void checkTimeOuts(unsigned int msecs);
+		void checkTimeouts(unsigned int msecs);
 
 		void doTick(unsigned int msecs);
 

@@ -160,7 +160,6 @@ namespace Net {
 						(*iter)->connectionPacketReceived(paquete);
 					break;
 				case Net::DATOS:
-					
 					if(!internalData(paquete)){ // Analiza si trae contenido -> TODO: ver funcion
 						//std::cout << "mensaje recibido:  " <<  _observers.size() << std::endl;
 						for(std::vector<IObserver*>::iterator iter = _observers.begin();iter != _observers.end();++iter)

@@ -207,8 +207,11 @@ namespace Logic {
 
 		Invoca al método onSleep para que el componente haga lo que necesite
 		al ponerse a dormir.
+		
+		@param deepSleep true si no queremos que el componente se despierte
+		al recibir mensajes.
 		*/
-		void putToSleep();
+		void putToSleep(bool deepSleep = false);
 
 		//__________________________________________________________________
 
@@ -423,6 +426,11 @@ namespace Logic {
 		*/
 		TickMode::Enum _tickMode;
 
+		/** 
+		true si el componente no se va a despertar al recibir 
+		mensajes cuando este dormido 
+		*/
+		bool _deepSleep;
 		
 	}; // class IComponent
 

@@ -101,18 +101,17 @@ namespace Graphics
 		void				setCameraDirection				(const Vector3& direction);
 		Ogre::Vector3				getCameraDirection			();
 
-
+		/**
+			Devuelve el quaternion en el mundo real de la cámara
+		*/
 		Ogre::Quaternion	getRealOrientation				();
-
 
 		/**
 			Roll de cámara con los grados pasado por parámetro.
 			Negativo: Roll hacia la izquierda.
 			Positivo: Roll hacia la derecha.
 		*/
-		void				rollCamera					(int iDegre);
-
-
+		void				rollCamera					(float fDegre);
 
 		Ogre::Camera* getOgreCamera() { return _camera; }	
 

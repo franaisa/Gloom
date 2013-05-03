@@ -32,6 +32,8 @@ namespace Logic {
 			// Estimamos cuantos bits necesitamos para indexar a los players
 			_bitsForPlayers = ceil( log((float)nbPlayers) / log(2.0f) );
 
+			assert(_bitsForPlayers < _nbBits && "Error: No quedan bits para asignar ids de entidad");
+
 			// Ponemos la máscara todo a unos
 			setAllBitsToOne<T>(_entityMask);
 			// Reservamos los último bits para el id del player

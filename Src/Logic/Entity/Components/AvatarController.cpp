@@ -22,11 +22,17 @@ de la entidad.
 #include "Logic/Entity/Components/PhysicController.h"
 #include "Logic/Entity/Components/Camera.h"
 
+#include "Logic/Server.h"
+#include "Logic/Maps/Map.h"
+
 #include "Logic/Messages/MessageControl.h"
 #include "Logic/Messages/MessageMouse.h"
 #include "Logic/Messages/MessageAddForcePlayer.h"
 #include "Logic/Messages/MessageSetAnimation.h"
 #include "Logic/Messages/MessageStopAnimation.h"
+#include "Logic/Messages/MessageCameraRoll.h"
+
+#define ROLL_DEGREES 0.15f
 
 namespace Logic {
 
@@ -78,6 +84,9 @@ namespace Logic {
 		assert( entityInfo->hasAttribute("dodgeForce") && "Error: No se ha definido el atributo dodgeForce en el mapa" );
 		_dodgeForce = entityInfo->getVector3Attribute("dodgeForce");
 
+		assert( entityInfo->hasAttribute("rollCamera") && "Error: No se ha definido el atributo rollCamera en el mapa" );
+		_rollCamera = entityInfo->getFloatAttribute("rollCamera");
+
 		return true;
 	} // spawn
 
@@ -106,8 +115,6 @@ namespace Logic {
 				// Comando de movimiento
 				if(commandType >=0 && commandType < MAX_MOVEMENT_COMMANDS) {
 					executeMovementCommand(commandType);
-					if ((commandType == ControlType::STRAFE_LEFT) || (commandType == ControlType::STRAFE_RIGHT))
-						std::cout << "rotar camaraaaaa" << std::endl;
 				}
 				// Comando de salto
 				else if(commandType == Control::JUMP) {
@@ -275,6 +282,17 @@ namespace Logic {
 		_displacementDir += dir;
 
 		executeAnimation(dir);
+
+		//Mensaje de roll si estamos "strafeando"
+		if ((dir == _movementCommands[Control::STRAFE_LEFT]) || (dir == _movementCommands[Control::STRAFE_RIGHT]))
+		{
+			//emitir mensaje de roll
+			std::shared_ptr<Logic::CMessageCameraRoll> messageRoll = std::make_shared<Logic::CMessageCameraRoll>();
+			//Le envío en el mensaje el roll de cámara leído del mapa con su sentido (izquierda=positivo ; derecha = negativo)
+			messageRoll->setRollDegrees( dir == _movementCommands[Control::STRAFE_LEFT] ? _rollCamera : -_rollCamera);
+			Logic::CEntity * camera = Logic::CServer::getSingletonPtr()->getMap()->getEntityByType("Camera");
+			camera->emitMessage(messageRoll);
+		}
 	}
 
 	//________________________________________________________________________

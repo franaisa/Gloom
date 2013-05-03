@@ -22,6 +22,7 @@ del juego.
 
 #include "EntityID.h"
 #include "Map/MapEntity.h"
+#include "EntityIdDispatcher.h"
 
 // Predeclaración de clases para ahorrar tiempo de compilación
 namespace Map {
@@ -258,6 +259,24 @@ namespace Logic {
 
 		//________________________________________________________________________
 
+		// Es necesario hacer el init, el release ya se encarga de hacerlo el unload
+		// blueprints.
+		void initDispatcher(unsigned int idPlayer = 0, unsigned int nbPlayers = 0) {
+			// Para evitar memory leaks, ya que del borrado se encarga esta clase
+			// pero de la creacion el cliente (asi aseguramos que no se crea mas de un dispatcher).
+			assert(_idDispatcher == NULL && "Error: Ya existe una instancia del dispatcher");
+			_idDispatcher = new CEntityIdDispatcher<Logic::TEntityID>(idPlayer, nbPlayers);
+		}
+
+		void releaseDispatcher() {
+			if(_idDispatcher != NULL) {
+				delete _idDispatcher;
+				_idDispatcher = NULL;
+			}
+		}
+
+		//________________________________________________________________________
+
 		/**
 		Estructura que define una entidad blueprint.
 		*/
@@ -351,6 +370,8 @@ namespace Logic {
 		TBluePrintMap _bluePrints;
 
 		bool _dynamicCreation;
+
+		Logic::CEntityIdDispatcher<Logic::TEntityID>* _idDispatcher;
 
 	}; // CEntityFactory
 

@@ -21,8 +21,8 @@ namespace Logic {
 	}
 	//----------------------------------------------------------
 
-	void CMessageCameraRoll::setRollDegrees(int iDegrees) {
-		this->_iRollDegrees = iDegrees;
+	void CMessageCameraRoll::setRollDegrees(float fDegrees) {
+		this->_fRollDegrees = fDegrees;
 	}//
 	//----------------------------------------------------------
 	

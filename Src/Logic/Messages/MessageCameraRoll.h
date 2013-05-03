@@ -13,8 +13,8 @@ namespace Logic {
 
 		CEntity* getRelatedEntity();
 
-		float getRollDegrees			()					{ return _iRollDegrees; }
-			void setRollDegrees			(int iDegrees);
+		float getRollDegrees			()					{ return _fRollDegrees; }
+			void setRollDegrees			(float fDegrees);
 		
 		virtual Net::CBuffer* serialize();
 		virtual void deserialize(Net::CBuffer& buffer);
@@ -26,7 +26,7 @@ namespace Logic {
 			Grados que se rotará la cámara.
 			Negativo = Hacia la izquierda ; Positivo = Hacia la derecha
 		*/
-		int	_iRollDegrees; 
+		float	_fRollDegrees; 
 	};
 	REG_FACTORYMESSAGE(CMessageCameraRoll);
 };

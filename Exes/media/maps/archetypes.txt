@@ -51,6 +51,8 @@ Map = {
 		airSpeedCoef =4.0,
 		jumpForce = 1.5,
 		dodgeForce = {2,2,2},
+		rollCamera = 0.15,
+
 
 		physic_shape = "capsule",
 		physic_radius = 3,
@@ -229,6 +231,8 @@ Map = {
 		airSpeedCoef =4.0,
 		jumpForce = 1.5,
 		dodgeForce = {2,2,2},
+		rollCamera = 0.15,
+
 		
 		physic_shape = "capsule",
 		physic_radius = 3,
@@ -401,6 +405,8 @@ Map = {
 		airSpeedCoef =4.0,
 		jumpForce = 1.5,
 		dodgeForce = {2,2,2},
+		rollCamera = 0.15,
+
 		
 		physic_shape = "capsule",
 		physic_radius = 3,
@@ -573,6 +579,8 @@ Map = {
 		airSpeedCoef =4.0,
 		jumpForce = 1.5,
 		dodgeForce = {2,2,2},
+		rollCamera = 0.15,
+
 		
 		physic_shape = "capsule",
 		physic_radius = 3,
@@ -745,6 +753,8 @@ Map = {
 		airSpeedCoef =4.0,
 		jumpForce = 1.5,
 		dodgeForce = {2,2,2},
+		rollCamera = 0.15,
+
 
 		physic_shape = "capsule",
 		physic_radius = 3,
@@ -926,6 +936,7 @@ Map = {
 		airSpeedCoef =4.0,
 		jumpForce = 1.5,
 		dodgeForce = {2,2,2},
+		rollCamera = 0.15,
 
 		physic_shape = "capsule",
 		physic_radius = 3,
@@ -1101,6 +1112,8 @@ Map = {
 		airSpeedCoef =4.0,
 		jumpForce = 1.5,
 		dodgeForce = {2,2,2},
+		rollCamera = 0.15,
+
 
 		physic_shape = "capsule",
 		physic_radius = 3,
@@ -1292,6 +1305,8 @@ Map = {
 		airSpeedCoef =4.0,
 		jumpForce = 1.5,
 		dodgeForce = {2,2,2},
+		rollCamera = 0.15,
+
 
 		physic_shape = "capsule",
 		physic_radius = 3,
@@ -1484,6 +1499,8 @@ Map = {
 		airSpeedCoef =4.0,
 		jumpForce = 1.5,
 		dodgeForce = {2,2,2},
+		rollCamera = 0.15,
+
 
 		physic_shape = "capsule",
 		physic_radius = 3,
