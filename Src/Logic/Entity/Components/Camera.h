@@ -177,6 +177,11 @@ namespace Logic
 		*/
 		float _fOffsetTimer;
 
+		/**
+			Grados del roll de la cámara. Si es 0, no hará roll.
+		*/
+		int _iRoll;
+
 	}; // class CCamera
 
 	REG_FACTORY(CCamera);

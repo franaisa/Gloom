@@ -84,7 +84,6 @@ namespace Graphics
 
 		/**
 		Cambia la posición de la cámara.
-
 		@param newPosition Nueva posición para el nodo que contiene la cámara 
 		de Ogre.
 		*/
@@ -92,15 +91,30 @@ namespace Graphics
 
 		/**
 		Cambia la posición de la posición a la que apunta la cámara.
-
 		@param newPosition Nueva posición para el _targetNode.
 		*/
 		void setTargetCameraPosition(const Vector3 &newPosition);
 
-		void setCameraDirection(const Vector3& direction);
+		/**
+			get & set de CameraDirection
+		*/
+		void				setCameraDirection				(const Vector3& direction);
+		Ogre::Vector3				getCameraDirection			();
 
-		Ogre::Camera* getOgreCamera() { return _camera; }
 
+		Ogre::Quaternion	getRealOrientation				();
+
+
+		/**
+			Roll de cámara con los grados pasado por parámetro.
+			Negativo: Roll hacia la izquierda.
+			Positivo: Roll hacia la derecha.
+		*/
+		void				rollCamera					(int iDegre);
+
+
+
+		Ogre::Camera* getOgreCamera() { return _camera; }	
 
 
 	protected:

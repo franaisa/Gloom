@@ -110,4 +110,21 @@ namespace Graphics
 		_camera->setDirection(direction);
 	}
 
+	Ogre::Vector3 CCamera::getCameraDirection() {
+		return _camera->getRealDirection(); 
+
+	}
+
+	Ogre::Quaternion CCamera::getRealOrientation(){
+		return _camera->getRealOrientation();
+	}
+
+
+	void CCamera::rollCamera(int iDegree){
+		Ogre::Degree deg(iDegree);
+		Ogre::Radian rad(deg);
+		_camera->roll(rad);
+	}
+
+
 } // namespace Graphics

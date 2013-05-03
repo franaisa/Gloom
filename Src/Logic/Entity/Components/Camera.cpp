@@ -26,6 +26,7 @@ de una escena.
 
 #include "Logic/Messages/MessageCameraToEnemy.h"
 #include "Logic/Messages/MessageCameraOffset.h"
+#include "Logic/Messages/MessageCameraRoll.h"
 
 namespace Logic 
 {
@@ -68,6 +69,7 @@ namespace Logic
 		}
 
 		_fOffsetTimer = 0.0f;
+		_iRoll = 0;
 
 		//return true;
 
@@ -88,7 +90,8 @@ namespace Logic
 		
 		return msgType == Message::CAMERA_TO_ENEMY ||
 			   msgType == Message::PLAYER_SPAWN || 
-			   msgType == Message::CAMERA_OFFSET;
+			   msgType == Message::CAMERA_OFFSET || 
+			   msgType == Message::CAMERA_ROLL;
 	} // accept
 	//---------------------------------------------------------
 
@@ -113,6 +116,11 @@ namespace Logic
 				//_fOffsetTimer = 2000.0f; 
 				//std::shared_ptr<CMessageCameraToEnemy> cameraToEnemyMsg = std::static_pointer_cast<CMessageCameraToEnemy>(message);
 				break;
+			}
+			case Message::CAMERA_ROLL: {
+				std::cout << "Recibido" << std::endl;
+				std::shared_ptr<CMessageCameraRoll> camOffset = std::static_pointer_cast<CMessageCameraRoll>(message);
+				_iRoll = camOffset->getRollDegrees(); //asignamos el tiempo del offset
 			}
 		}
 
@@ -153,6 +161,14 @@ namespace Logic
 				position += directionStrafe;
 				std::cout << "CamaraOffset!!!" << std::endl;
 			}
+
+			//Ajustamos el roll si lo hay
+			if (_iRoll != 0)
+			{
+				_graphicsCamera->rollCamera(_iRoll);
+				_iRoll = 0; //Inicializamos el roll para que en el siguiente tick no entre
+			}
+
 			_graphicsCamera->setCameraPosition(position);
 			
 			if(!_dead){
