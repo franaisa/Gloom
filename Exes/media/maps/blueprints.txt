@@ -15,7 +15,6 @@ LavaFondo CGraphics CPhysicStaticEntity CLava
 ContenedorLava CGraphics CPhysicStaticEntity
 Elevator CGraphics CPhysicDynamicEntity CElevator
 ElevatorTrigger CPhysicDynamicEntity CElevatorTrigger
-SpikeTramp CGraphics CPhysicStaticEntity CSpikeTramp CAudio
 Spike CGraphics CPhysicDynamicEntity CSpike
 Hacksaw CGraphics CPhysicDynamicEntity CHacksaw
 PointLight CLight CGraphics
