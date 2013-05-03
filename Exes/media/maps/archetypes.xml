@@ -965,16 +965,16 @@
 					<components>
 						<component name="CAvatarController" />
 						<component name="CPhysicController" />
-						<component name="CParticle" />
 						<component name="CShootRocketLauncher" />
 						<component name="CShootGrenadeLauncher" />
-						<component name="CNetConnector" />						
+						<component name="CNetConnector" />
+						<component name="CParticle" />
 					</components>
 				</ambit>
 				<ambit name="Server">
 					<components>
+						<component name="CScreamerServer" />
 						<component name="CShootMiniGun" />
-						<component name="CNetConnector" />
 						<component name="CShootShotGun" />
 						<component name="CShootSniper" />
 						<component name="CShootHammer" />
@@ -983,16 +983,16 @@
 						<component name="CSpawnPlayer" />
 						<component name="CUpdateClientPosition" />
 						<component name="CGraphics" /> 
-						<component name="CScreamerServer" />
+						
 					</components>
 				</ambit>
 				<ambit name="Client">
 					<components>
 						<component name="CInterpolation" />
+						<component name="CWeaponsManagerClient" />
 						<component name="CScreamerClient" />
 						<component name="CClientRespawn" />
 						<component name="CAudio" />
-						<component name="CWeaponsManagerClient" />
 						<component name="CAnimatedGraphics" />
 					</components>
 				</ambit>
@@ -1198,6 +1198,12 @@
 				<attribute name="hudPanelAMMOTextPositionXRelative" 		value="-1.5"/>
 				<attribute name="hudPanelAMMOTextPositionYRelative" 		value="0"/>
 				
+				<attribute name="hudPanelDebugPositionX" 					value="0"/>
+				<attribute name="hudPanelDebugPositionY" 					value="0"/>
+				<attribute name="hudPanelDebugWidth" 						value="2"/>
+				<attribute name="hudPanelDebugHeight" 						value="5"/>
+				<attribute name="hudPanelDebugFontSize" 					value="22"/>
+				
 			</attributes>
 			<ambits>
 				<ambit name="Always">
@@ -1211,6 +1217,7 @@
 						<component name="CWeaponsManagerClient" />
 						<component name="CHudOverlay" />
 						<component name="CClientRespawn" />
+						<component name="CAudio" />
 						<component name="CNetConnector" />
 						<component name="CParticle" />
 						<component name="CCameraFeedbackNotifier" />
@@ -1639,6 +1646,12 @@
 				<attribute name="hudPanelAMMOFontSize" 						value="46"/>
 				<attribute name="hudPanelAMMOTextPositionXRelative" 		value="-1.5"/>
 				<attribute name="hudPanelAMMOTextPositionYRelative" 		value="0"/>
+				
+				<attribute name="hudPanelDebugPositionX" 					value="0"/>
+				<attribute name="hudPanelDebugPositionY" 					value="0"/>
+				<attribute name="hudPanelDebugWidth" 						value="2"/>
+				<attribute name="hudPanelDebugHeight" 						value="5"/>
+				<attribute name="hudPanelDebugFontSize" 					value="22"/>
 				
 			</attributes>
 			<ambits>
@@ -2073,6 +2086,12 @@
 				<attribute name="hudPanelAMMOFontSize" 						value="46"/>
 				<attribute name="hudPanelAMMOTextPositionXRelative" 		value="-1.5"/>
 				<attribute name="hudPanelAMMOTextPositionYRelative" 		value="0"/>
+				
+				<attribute name="hudPanelDebugPositionX" 					value="0"/>
+				<attribute name="hudPanelDebugPositionY" 					value="0"/>
+				<attribute name="hudPanelDebugWidth" 						value="2"/>
+				<attribute name="hudPanelDebugHeight" 						value="5"/>
+				<attribute name="hudPanelDebugFontSize" 					value="22"/>
 			</attributes>
 			<ambits>
 				<ambit name="Always">
@@ -2084,11 +2103,12 @@
 						<component name="CShootGrenadeLauncher" />
 						<component name="CNetConnector" />
 						<component name="CInterpolation" />
-						<component name="CArchangel" />
 						<component name="CClientRespawn" />
 						<component name="CAudio" />
 						<component name="CWeaponsManagerClient" />
 						<component name="CCameraFeedbackNotifier" />
+						<component name="CHudOverlay" />
+						
 					</components>
 				</ambit>
 				<ambit name="Server">
@@ -2301,13 +2321,12 @@
 						<component name="CSpawnPlayer" />
 						<component name="CUpdateClientPosition" />
 						<component name="CGraphics" /> 
-						<component name="CShadow" />
+						<component name="CShadow"/>
 					</components>
 				</ambit>
 				<ambit name="Client">
 					<components>
-						<component name="CInterpolation" />
-						<component name="CNetConnector" />						
+						<component name="CInterpolation" />				
 						<component name="CClientRespawn" />
 						<component name="CAudio" />
 						<component name="CWeaponsManagerClient" />
@@ -2510,6 +2529,12 @@
 				<attribute name="hudPanelAMMOTextPositionXRelative" 		value="-1.5"/>
 				<attribute name="hudPanelAMMOTextPositionYRelative" 		value="0"/>
 				
+				<attribute name="hudPanelDebugPositionX" 					value="0"/>
+				<attribute name="hudPanelDebugPositionY" 					value="0"/>
+				<attribute name="hudPanelDebugWidth" 						value="2"/>
+				<attribute name="hudPanelDebugHeight" 						value="5"/>
+				<attribute name="hudPanelDebugFontSize" 					value="22"/>
+				
 			</attributes>
 			<ambits>
 				<ambit name="Always">
@@ -2522,11 +2547,12 @@
 						<component name="CNetConnector" />
 						<component name="CInterpolation" />
 						<component name="CHudOverlay" />
-						<component name="CNetConnector" />						
 						<component name="CClientRespawn" />
 						<component name="CAudio" />
 						<component name="CWeaponsManagerClient" />
 						<component name="CCameraFeedbackNotifier" />
+						<component name="CLocalShadow" />
+						<component name="CShadow" />
 					</components>
 				</ambit>
 				<ambit name="Server">

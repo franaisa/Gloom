@@ -184,6 +184,7 @@ namespace Application {
 
 				// Activamos al espectador
 				spectator->activate();
+				spectator->start();
 				//_playersMgr->setPlayerState(playerNetId, true);
 				break;
 			}
