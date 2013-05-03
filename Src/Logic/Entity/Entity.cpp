@@ -228,7 +228,19 @@ namespace Logic
 
 	//---------------------------------------------------------
 
-	void CEntity::addComponent(IComponent* component, const std::string& id) {
+	void CEntity::addComponent(IComponent* component, const std::string& id, const TPriority& priority) {
+		switch(priority.priorityType) {
+			case TPriority::eHIGH: {
+				
+			}
+			case TPriority::eMEDIUM: {
+
+			}
+			case TPriority::eLOW: {
+
+			}
+		}
+
 		_components[id] = component;
 		_componentList.push_back(component);
 

@@ -16,6 +16,7 @@ de juego. Es una colección de componentes.
 
 #include "BaseSubsystems/Math.h"
 #include "Logic/Maps/EntityID.h"
+#include "Logic/Maps/EntityFactory.h"
 #include "Logic/Messages/Message.h"
 #include "Logic/Maps/ComponentID.h"
 
@@ -33,7 +34,6 @@ namespace Map {
 namespace Logic {
 	class CMap;
 	class IComponent;
-	class CEntityFactory;
 }
 
 // Declaración de la clase
@@ -184,7 +184,7 @@ namespace Logic {
 
 		@param component Componente a añadir.
 		*/
-		void addComponent(IComponent* component, const std::string& id);
+		void addComponent(IComponent* component, const std::string& id, const TPriority& priority);
 
 		//__________________________________________________________________
 
@@ -606,6 +606,14 @@ namespace Logic {
 		tendremos varias listas de prioridades.
 		*/
 		TComponentList _componentList;
+
+		std::list<IComponent*> _activatedMediumPriorityComponents;
+		std::map<unsigned int, IComponent*> _activatedHighPriorityComponents;
+		std::map<unsigned int, IComponent*> _activatedLowPriorityComponents;
+
+		std::list<IComponent*> _deactivatedMediumPriorityComponents;
+		std::map<unsigned int, IComponent*> _deactivatedHighPriorityComponents;
+		std::map<unsigned int, IComponent*> _deactivatedLowPriorityComponents;
 
 		/**
 		Variable de clase que indica el número de milisegundos que se procesan en cada

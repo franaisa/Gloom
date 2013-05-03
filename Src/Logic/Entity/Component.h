@@ -423,6 +423,8 @@ namespace Logic {
 		*/
 		TickMode::Enum _tickMode;
 
+		std::list<IComponent*>::iterator _mediumPriorityToken;
+		std::map<unsigned int, IComponent*>::iterator _priorityToken;
 		
 	}; // class IComponent
 

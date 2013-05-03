@@ -38,6 +38,20 @@ namespace Logic {
 namespace Logic {
 	
 	/**
+		T
+	*/
+	typedef struct {
+		enum PriorityType {
+			eLOW,
+			eMEDIUM,
+			eHIGH
+		};
+    
+		int priorityLevel;
+		int priorityType;
+	} TPriority;
+
+	/**
 	Factoría de CEntity que centraliza tanto la construcción
 	como la destrucción de entidades del juego. Es un singleton
 	de inicialización explícita. Hace uso de la factoría de 
@@ -264,19 +278,7 @@ namespace Logic {
 		//________________________________________________________________________
 
 
-		/**
-		 T
-		*/
-		typedef struct {
-			enum PriorityType {
-				eLOW,
-				eMEDIUM,
-				eHIGH
-			};
-    
-			int priorityLevel;
-			int priorityType;
-		} TPriority;
+		
 
 			/**
 				Lista de nombres de componentes que componen la entidad.

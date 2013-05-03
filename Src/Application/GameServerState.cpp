@@ -245,6 +245,7 @@ namespace Application {
 				serialMsg.serialize(player->getType(), false); // Clase del player
 
 				player->activate();
+				player->start();
 
 				Net::CManager::getSingletonPtr()->sendTo(playerNetId, serialMsg.getbuffer(), serialMsg.getSize());
 
