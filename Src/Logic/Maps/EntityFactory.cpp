@@ -427,7 +427,7 @@ namespace Logic {
 	void CEntityFactory::deleteDefferedEntities() {
 		TEntityList::const_iterator it(_pendingEntities.begin());
 		TEntityList::const_iterator end(_pendingEntities.end());
-
+		
 		while(it != end) {
 			CEntity *entity = *it;
 			++it;
@@ -436,7 +436,6 @@ namespace Logic {
 
 		if ( !_pendingEntities.empty() )
 			_pendingEntities.clear();
-
 	} // deleteDefferedObjects
 
 	//________________________________________________________________________

@@ -70,7 +70,7 @@ namespace Physics {
 	//________________________________________________________________________
 
 	void CDynamicEntity::load(const Matrix4& transform, const PxGeometry& geometry, PxMaterial& material,
-							  float density, bool kinematic, bool trigger, int group, 
+							  float density, bool kinematic, bool trigger, bool noGravity, int group, 
 							  const vector<int>& groupList, const Logic::IPhysics *component) {
 
 		assert(_scene);
@@ -95,6 +95,9 @@ namespace Physics {
 			_dynamicActor->getShapes(&shape, 1, 0);
 			shape->setFlag(PxShapeFlag::eTRIGGER_SHAPE, true);
 		}
+
+		if(noGravity)
+			_dynamicActor->setActorFlag(PxActorFlag::eDISABLE_GRAVITY, true);
 
 		// Anotar el componente lógico asociado a la entidad física
 		_dynamicActor->userData = (void*) component;

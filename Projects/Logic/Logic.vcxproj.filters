@@ -484,7 +484,7 @@
     <ClCompile Include="..\..\Src\Logic\Messages\MessageCameraRoll.cpp">
       <Filter>Messages\Source</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Src\Logic\Entity\Components\SpikeTramp.cpp">
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\SpikeTrap.cpp">
       <Filter>Entity\Components\Gameplay\Source</Filter>
     </ClCompile>
   </ItemGroup>
@@ -879,7 +879,7 @@
     <ClInclude Include="..\..\Src\Logic\Messages\MessageCameraRoll.h">
       <Filter>Messages\Header</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Src\Logic\Entity\Components\SpikeTramp.h">
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\SpikeTrap.h">
       <Filter>Entity\Components\Gameplay\Header</Filter>
     </ClInclude>
   </ItemGroup>

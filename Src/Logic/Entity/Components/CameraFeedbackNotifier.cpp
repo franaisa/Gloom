@@ -13,6 +13,7 @@ del Screamer.
 */
 
 #include "CameraFeedbackNotifier.h"
+#include "Camera.h"
 #include "Logic/Server.h"
 #include "Logic/Entity/Entity.h"
 #include "Logic/Maps/Map.h"
@@ -23,6 +24,7 @@ del Screamer.
 #include "Logic/Messages/MessageDamaged.h"
 #include "Logic/Messages/MessageSetReducedDamage.h"
 #include "Logic/Messages/MessageCameraOffset.h"
+#include "Logic/Messages/MessageControl.h"
 
 
 namespace Logic {
@@ -31,8 +33,11 @@ namespace Logic {
 
 	//________________________________________________________________________
 
-	CCameraFeedbackNotifier::CCameraFeedbackNotifier() :
-					 _owner(NULL) {
+	CCameraFeedbackNotifier::CCameraFeedbackNotifier() : _owner(NULL),
+														 _playerIsWalking(false),
+														 _walkingRollSpeed(0.012f),
+														 _walkingRollOffset(0.007f),
+														 _currentWalkingRoll(0) {
 
 		// Nada que hacer
 	}
@@ -48,7 +53,8 @@ namespace Logic {
 	bool CCameraFeedbackNotifier::accept(const std::shared_ptr<CMessage>& message) {
 		Logic::TMessageType msgType = message->getMessageType();
 
-		return msgType == Message::DAMAGED || msgType == Message::SET_REDUCED_DAMAGE;
+		return msgType == Message::DAMAGED				|| 
+			   msgType == Message::SET_REDUCED_DAMAGE;
 	} // accept
 	
 	//________________________________________________________________________
@@ -70,9 +76,31 @@ namespace Logic {
 
 	//________________________________________________________________________
 
-	void CCameraFeedbackNotifier::activate() {
-		IComponent::activate();
+	void CCameraFeedbackNotifier::onStart() {
+		Logic::CEntity* cameraEntity = Logic::CServer::getSingletonPtr()->getMap()->getEntityByType("Camera");
+		assert(cameraEntity != NULL && "Error: No existe una entidad camara");
+		_cameraComponent = cameraEntity->getComponent<CCamera>("CCamera");
+		assert(_cameraComponent != NULL && "Error: La entidad camara no tiene un componente de camara");
+	}
 
+	//________________________________________________________________________
+
+	void CCameraFeedbackNotifier::onFixedTick(unsigned int msecs) {
+		if(_playerIsWalking) {
+			walkEffect(msecs);
+		}
+		else if(_currentWalkingRoll != 0) {
+			walkEffect(msecs);
+		}
+	}
+
+	//________________________________________________________________________
+
+	void CCameraFeedbackNotifier::walkEffect(unsigned int msecs) {
+		_currentWalkingRoll += _walkingRollSpeed * msecs;
+		if(_currentWalkingRoll > 2 * Math::PI) _currentWalkingRoll = 0;
+
+		_cameraComponent->rollCamera(sin(_currentWalkingRoll) * _walkingRollOffset);
 	}
 
 	//________________________________________________________________________

@@ -109,6 +109,7 @@ namespace Logic
 
 	void CElevatorTrigger::onTick(unsigned int msecs)
 	{
+		
 		//Activación del ascensor solo si has pasado el _launchTime encima (tocando el trigger) y no estamos en un recorrido
 		if(!_active){
 			if(_touching)

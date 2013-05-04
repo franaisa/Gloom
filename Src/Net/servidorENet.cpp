@@ -14,6 +14,7 @@
 
 #include "servidorENet.h"
 #include "conexionENet.h"
+#include <iostream>
 
 #define DEBUG_SERVER 0
 
@@ -207,10 +208,10 @@ namespace Net {
 		ENetEvent event;
     
 		enet_peer_disconnect (((CConexionENet*)conexion)->getENetPeer(),0);
-
+		
 		/* Allow up to 3 seconds for the disconnect to succeed
 			and drop any packets received packets.     */
-		while (enet_host_service (server, & event, 3000) > 0)
+		while (enet_host_service (server, & event, 50) > 0)
 		{
 			switch (event.type)
 			{

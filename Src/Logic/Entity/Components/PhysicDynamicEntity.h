@@ -165,6 +165,7 @@ namespace Logic {
 
 		bool _isTrigger;
 
+		bool _noGravity;
 	}; // class CPhysicDynamicEntity
 
 	REG_FACTORY(CPhysicDynamicEntity);

@@ -22,6 +22,8 @@ Contiene la implementación del estado de juego.
 #include "Net/paquete.h"
 #include "Net/buffer.h"
 
+#include "Input/InputManager.h"
+
 #include "Logic/GameNetPlayersManager.h"
 #include "Logic/Entity/Entity.h"
 #include "Logic/Server.h"
@@ -60,6 +62,9 @@ namespace Application {
 
 		// Registramos a este estado como observador de red para que sea notificado
 		_netMgr->addObserver(this);
+
+		//nos registramos como observadores del teclado
+		Input::CInputManager::getSingletonPtr()->addKeyListener(this);
 		
 		//comenzamos el proceso de sincronizacion, para ello enviamos un mensaje de ping
 		//y tomamos el tiempo para cronometrar cuanto tarda el servidor en respondernos
@@ -81,6 +86,7 @@ namespace Application {
 		_netMgr->removeObserver(this);
 		// Nos desconectamos
 		_netMgr->deactivateNetwork();
+		Input::CInputManager::getSingletonPtr()->removeKeyListener(this);
 
 		CGameState::deactivate();
 	} // deactivate
@@ -180,11 +186,6 @@ namespace Application {
 		CGameState::keyPressed(key);
 		
 		switch(key.keyId) {
-			case Input::Key::ESCAPE: {
-				//_netMgr->deactivateNetwork();
-				_app->setState("menu");
-				break;
-			}
 			case Input::Key::C: {//cambio de clase
 				//primero, quitamos al player de escuchar las teclas, para ello lo desactivamos del playerController
 				Input::CServer::getSingletonPtr()->getPlayerController()->deactivate();
@@ -206,6 +207,20 @@ namespace Application {
 	bool CGameClientState::keyReleased(Input::TKey key)
 	{
 		CGameState::keyReleased(key);
+		/*switch(key.keyId)
+		{
+		case Input::Key::ESCAPE:
+			{
+			break;
+			}
+		default:
+			return false;
+		}
+		return true;
+
+
+		*/
+
 		return true;
 
 	} // keyReleased
