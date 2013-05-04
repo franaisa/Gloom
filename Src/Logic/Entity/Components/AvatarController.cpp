@@ -33,8 +33,8 @@ de la entidad.
 #include "Logic/Messages/MessageStopAnimation.h"
 #include "Logic/Messages/MessageCameraRoll.h"
 
-#define ROLL_OFFSET 0.01f
-#define ROLL_SPEED 0.01f
+#define ROLL_OFFSET 0.007f
+#define ROLL_SPEED 0.012f
 
 namespace Logic {
 
