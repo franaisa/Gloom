@@ -79,8 +79,9 @@ namespace Logic {
 				_entity->emitMessage(pReducedDmgMsg);
 
 				// Desactivamos el shader de inmunidad
+				// Desactivamos el shader de invisibilidad
 				std::shared_ptr<CMessageChangeMaterial> materialMsg = std::make_shared<CMessageChangeMaterial>();
-				materialMsg->setMaterialName(_materialName);
+				materialMsg->setMaterialName("original");
 				_entity->emitMessage(materialMsg);
 			}
 			else {

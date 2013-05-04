@@ -281,7 +281,7 @@ Map = {
 	},
 	
 	David = {
-		type = "LocalShadow",
+		type = "LocalArchangel",
 		isPlayer = true,
 	},
 	

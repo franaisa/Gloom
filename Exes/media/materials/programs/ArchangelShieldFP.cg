@@ -1,0 +1,52 @@
+sampler screenSampler: register(s0);
+sampler shieldSampler: register(s1);
+
+struct PsInput
+{
+	float2 uv0 : TEXCOORD0;
+	float2 uv1: TEXCOORD1;
+	
+	uniform float1 strength: register(c0);
+};
+
+
+
+float4 shield_ps(const PsInput psIn) : COLOR {
+
+	float4 imageColor = 0;
+	float4 screen;
+	float4 tempShield;
+	float4 shield;
+	
+	// obtengo la imagen de la pantalla
+	screen = tex2D(screenSampler, psIn.uv0);
+	
+	//obtengo la textura del escudo
+	tempShield = tex2D(shieldSampler, psIn.uv0);
+	
+	
+	//clacula la distancia al centro.
+	float2 dir = 0.5 - psIn.uv0;
+	// obtengo la distancia la pantalla, exagero el valor con un *2
+	float dist = sqrt( dir.x*dir.x + dir.y*dir.y )*2;
+	
+	//aqui le quito a la textura del escudo la parte central
+	
+	//aqui consigo efecto tunel
+	//shield = (tempShield, 1-(dist*1.5));
+
+	// varible que usare para el lerp, en la variable strength se me pasara cuando se internara en la pantalla.
+	
+	//float1 aux = (1-(dist))*psIn.strength;
+	float1 aux = (1-(dist))*4;
+	// saturo para obtener un valor entre 0 y 1
+	saturate(aux);
+	shield = lerp(tempShield, float4(1,1,1,0), min(aux,1));
+	
+	// Aqui mezclo ambas imagnes
+	imageColor = screen * shield;
+
+	return imageColor;
+
+}
+
