@@ -25,6 +25,7 @@ de la entidad.
 namespace Logic {
 	class CMessageControl;
 	class CPhysicController;
+	class CCameraFeedbackNotifier;
 }
 
 // Declaración de la clase
@@ -273,6 +274,13 @@ namespace Logic {
 		*/
 		void initMovementCommands();
 
+		//________________________________________________________________________
+
+		/**
+		Según el tipo de movimiento configura el feedback de la camara.
+		*/
+		void setCameraEffect();
+
 
 		// =======================================================================
 		//                          MIEMBROS PROTEGIDOS
@@ -331,6 +339,13 @@ namespace Logic {
 		CPhysicController* _physicController;
 
 		/** 
+		Puntero al notificador de feedback de la camara. Para evitar mandar mensajes en cada tick.
+		Será distinto de null solo en el caso del local player (que son los unicos que deberian mover
+		a la camara).
+		*/
+		CCameraFeedbackNotifier* _cameraFX;
+
+		/** 
 		Array que contiene los vectores que corresponden a cada uno de los movimientos
 		de desplazamiento y salto que se pueden realizar. 
 		*/
@@ -338,11 +353,6 @@ namespace Logic {
 
 		/** Número máximo de comandos de movimiento. */
 		static const int MAX_MOVEMENT_COMMANDS = Control::CROUCH;
-
-		// @deprecated Esto va a otra clase
-		void walkCameraEffect(unsigned int msecs);
-
-		float _roll;
 
 	}; // class CAvatarController
 
