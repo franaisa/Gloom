@@ -84,9 +84,6 @@ namespace Logic {
 		assert( entityInfo->hasAttribute("dodgeForce") && "Error: No se ha definido el atributo dodgeForce en el mapa" );
 		_dodgeForce = entityInfo->getVector3Attribute("dodgeForce");
 
-		assert( entityInfo->hasAttribute("rollCamera") && "Error: No se ha definido el atributo rollCamera en el mapa" );
-		_rollCamera = entityInfo->getFloatAttribute("rollCamera");
-
 		return true;
 	} // spawn
 
@@ -145,8 +142,7 @@ namespace Logic {
 	//________________________________________________________________________
 
 	void CAvatarController::mouse(float XYturn[]) {
-		_entity->yaw(XYturn[0]);
-		_entity->pitch(XYturn[1]);
+		_entity->setYawPitch(XYturn[0],XYturn[1]);
 	} // turn
 
 	//________________________________________________________________________
@@ -169,7 +165,7 @@ namespace Logic {
 		Vector3 displacement = _touchingGround ? estimateGroundMotion(msecs) : estimateAirMotion(msecs);
 
 		// Seteamos el efecto de camara
-		setCameraEffect();
+		//setCameraEffect();
 		
 		// Tratamos de mover el controlador fisico con el desplazamiento estimado.
 		// En caso de colision, el controlador fisico nos informa.

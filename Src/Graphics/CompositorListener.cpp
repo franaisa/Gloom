@@ -67,16 +67,39 @@ namespace Graphics
 
 		void CCompositorListener::necesaryOperations(int pass_id, Ogre::MaterialPtr &mat){
 			mat->load();
-			Ogre::GpuProgramParametersSharedPtr fpParams = mat->getTechnique(0)->getPass(0)->getFragmentProgramParameters();
 			//const Ogre::String& progName = mat->getBestTechnique()->getPass(0)->getFragmentProgramName();
-			
+			//*
+			Ogre::GpuProgramParametersSharedPtr fpParams = mat->getTechnique(0)->getPass(0)->getFragmentProgramParameters();
 
-			for (TVariables::const_iterator it = _compositorVariables.begin(); it!= _compositorVariables.end(); ++it)
-			{
-				//we must check if the variable we are changing is defined
-				if(fpParams->getConstantDefinitions().map.find(it->first)!=fpParams->getConstantDefinitions().map.end())
+			for (TVariables::const_iterator it = _compositorVariables.begin(); it!= _compositorVariables.end(); ++it){
+					//we must check if the variable we are changing is defined
+					if(fpParams->getConstantDefinitions().map.find(it->first)!=fpParams->getConstantDefinitions().map.end())
 					fpParams->setNamedConstant(it->first, it->second);
 			}
+			
+			/*/
+
+			Ogre::GpuProgramParametersSharedPtr fpParams;
+			Ogre::Technique *tech= mat->getTechnique(0);
+			if( tech  != 0){
+				Ogre::Pass *pass = tech->getPass(0);
+				if(( pass != 0) && (pass->hasFragmentProgram())){
+					fpParams = pass->getFragmentProgramParameters();
+					if(!fpParams.isNull()){
+					
+						for (TVariables::const_iterator it = _compositorVariables.begin(); it!= _compositorVariables.end(); ++it)
+						{
+							//we must check if the variable we are changing is defined
+							if(fpParams->getConstantDefinitions().map.find(it->first)!=fpParams->getConstantDefinitions().map.end())
+							fpParams->setNamedConstant(it->first, it->second);
+						}
+					}
+				}
+			}
+			/* */
+			
+
+			
 		}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -95,6 +95,7 @@
     <ClCompile Include="..\..\Src\Logic\Entity\Components\Lava.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\Life.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\Light.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\LocalArchangel.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\LocalShadow.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\NetConnector.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\Particle.cpp" />
@@ -221,6 +222,7 @@
     <ClInclude Include="..\..\Src\Logic\Entity\Components\Interpolation.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\Lava.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\Light.h" />
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\LocalArchangel.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\LocalShadow.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\NetConnector.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\ArrayGraphics.h" />

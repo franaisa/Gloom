@@ -184,7 +184,7 @@ namespace Logic {
 
 		void stopAnimation(Vector3 dir);
 
-		Vector3 getVelocity(){return _momentum;}
+		Vector3 getVelocity(){ return _momentum; }
 
 	protected:
 
@@ -331,9 +331,6 @@ namespace Logic {
 
 		/** Vector de inercia. */
 		Vector3 _momentum;
-
-		/** Rotación en ángulos de la cámara al hacer el roll. */
-		float	_rollCamera;
 
 		/** Puntero al controlador fisico del player. Nos lo quedamos por motivos de eficiencia. */
 		CPhysicController* _physicController;

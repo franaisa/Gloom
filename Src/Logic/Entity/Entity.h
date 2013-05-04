@@ -350,6 +350,17 @@ namespace Logic {
 		void roll(float roll);
 
 
+		//__________________________________________________________________
+
+		/**
+		Establece el yaw y el pitch de la entidad. Avisa a los componentes del cambio.
+
+		@param yaw Grado de inclinación para el yaw.
+		@param pitch Grado de inclinación para el pitch.
+		*/
+		void CEntity::setYawPitch(float yaw, float pitch);
+
+
 		// =======================================================================
 		//                         MÉTODOS DE CONSULTA
 		// =======================================================================

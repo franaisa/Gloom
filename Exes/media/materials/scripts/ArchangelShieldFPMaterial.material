@@ -1,0 +1,40 @@
+fragment_program ArchangelShieldFP_ps cg
+{
+	source ArchangelShieldFP.cg
+	entry_point shield_ps
+	profiles ps_2_0 arbfp1
+}
+
+material ArchangelShieldFPMaterial
+{
+	technique
+	{
+
+		pass
+		{
+			depth_check off
+
+			fragment_program_ref ArchangelShieldFP_ps
+			{
+                param_named strength float1 4.0
+				
+			}
+
+			texture_unit 0
+			{
+                tex_coord_set 0
+				tex_address_mode clamp
+				filtering linear linear linear
+			}
+
+			texture_unit 1
+			{
+				texture PielDiamanteFP.png 2d
+                tex_coord_set 1
+				tex_address_mode clamp
+				filtering linear linear linear
+			}
+
+		}
+	}
+}

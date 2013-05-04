@@ -487,6 +487,9 @@
     <ClCompile Include="..\..\Src\Logic\Entity\Components\SpikeTrap.cpp">
       <Filter>Entity\Components\Gameplay\Source</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\LocalArchangel.cpp">
+      <Filter>Entity\Components\Graphics\Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Src\Logic\Maps\ComponentFactory.h">
@@ -881,6 +884,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Entity\Components\SpikeTrap.h">
       <Filter>Entity\Components\Gameplay\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\LocalArchangel.h">
+      <Filter>Entity\Components\Graphics\Header</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

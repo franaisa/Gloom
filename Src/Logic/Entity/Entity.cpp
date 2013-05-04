@@ -359,6 +359,10 @@ namespace Logic
 		Math::roll(roll, _transform);
 	}
 
+	void CEntity::setYawPitch(float yaw, float pitch) {
+		Math::pitchYaw(pitch, yaw, _transform);
+	}
+
 
 
 
