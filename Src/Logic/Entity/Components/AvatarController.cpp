@@ -176,7 +176,7 @@ namespace Logic {
 		Vector3 oldPosition = _entity->getPosition();
 		manageCollisions( _physicController->move(displacement-Vector3(0,0.15f,0), msecs), oldPosition );
 
-
+		
 
 
 		

@@ -435,6 +435,7 @@ namespace Input {
 				std::shared_ptr<Logic::CMessageAddLife> message2 = std::make_shared<Logic::CMessageAddLife>();
 				message2->setAddLife(20);
 				_controlledAvatar->emitMessage(message2);
+				std::cout << "Mi posicion actual es : " << _controlledAvatar->getPosition() << std::endl;
 			}
 			break;
 			case Input::Key::NUMBER8:

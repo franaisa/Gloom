@@ -79,6 +79,11 @@ namespace Logic
 		int _numSpikes;
 
 		/**
+		Velocidad de los pinchos.
+		*/
+		int _velocitySpikes;
+
+		/**
 		Pinchos asociados a la trampa.
 		*/
 		CEntity** _spikes;

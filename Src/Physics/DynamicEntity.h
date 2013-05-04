@@ -115,7 +115,7 @@ namespace Physics {
 		@param component Componente lógico asociado.
 		*/
 		void load(const Matrix4& transform, const physx::PxGeometry& geometry, physx::PxMaterial& material, 
-				  float density, bool kinematic, bool trigger, int group, 
+				  float density, bool kinematic, bool trigger, bool noGravity, int group, 
 				  const std::vector<int>& groupList, const Logic::IPhysics* component);
 
 		//________________________________________________________________________

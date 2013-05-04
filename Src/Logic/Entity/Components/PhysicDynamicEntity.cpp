@@ -35,6 +35,7 @@ IMP_FACTORY(CPhysicDynamicEntity);
 
 CPhysicDynamicEntity::CPhysicDynamicEntity() : _movement(0,0,0),
 											   _inTrigger(false),
+											   _noGravity(false),
 											   _inContact(false),
 											   _sleepUntil(false) {
 
@@ -201,6 +202,10 @@ void CPhysicDynamicEntity::createRigid(const Map::CEntity *entityInfo, int group
 	// Leer si se trata de un actor cinemático
 	bool isKinematic = (physicType == "kinematic");
 
+	//Leemos si se le quita la gravedad al dinámico
+	if (entityInfo->hasAttribute("physic_noGravity"))
+		_noGravity = entityInfo->getBoolAttribute("physic_noGravity");
+
 	if (physicShape == "box") {
 		// Leer las dimensiones de la caja
 		assert(entityInfo->hasAttribute("physic_dimensions"));
@@ -210,7 +215,7 @@ void CPhysicDynamicEntity::createRigid(const Map::CEntity *entityInfo, int group
 		Physics::Material* defaultMaterial = _materialManager->getMaterial(eDEFAULT);
 		float density = mass / (physicDimensions.x * physicDimensions.y * physicDimensions.z);
 		
-		_physicEntity.load(transform, box, *defaultMaterial, density, isKinematic, isTrigger, group, groupList, this);
+		_physicEntity.load(transform, box, *defaultMaterial, density, isKinematic, isTrigger, _noGravity, group, groupList, this);
 	}
 	else if (physicShape == "sphere") {
 		assert(entityInfo->hasAttribute("physic_radius"));
@@ -220,7 +225,7 @@ void CPhysicDynamicEntity::createRigid(const Map::CEntity *entityInfo, int group
 		Physics::Material* defaultMaterial = _materialManager->getMaterial(eDEFAULT);
 		float density = mass / (4.0/3.0 * Math::PI * physicRadius * physicRadius * physicRadius);
 
-		_physicEntity.load(transform, sphere, *defaultMaterial, density, isKinematic, isTrigger, group, groupList, this);
+		_physicEntity.load(transform, sphere, *defaultMaterial, density, isKinematic, isTrigger, _noGravity, group, groupList, this);
 	}
 }
 
