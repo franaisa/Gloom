@@ -41,6 +41,10 @@ namespace Application {
 
 		// Añadir a este estado como observador de la red para ser notificado
 		_netMgr->addObserver(this);
+
+		//nos registramos como observadores del teclado
+		Input::CInputManager::getSingletonPtr()->addKeyListener(this);
+
 		// Seteamos el máximo de jugadores a 12 (8 players + 4 espectadores)
 		_netMgr->activateAsServer(1234,12);
 
@@ -51,6 +55,8 @@ namespace Application {
 	//______________________________________________________________________________
 
 	void CGameServerState::deactivate() {
+		CGameState::deactivate();
+		
 		_playersMgr = NULL;
 		_netMgr = NULL;
 
@@ -59,7 +65,9 @@ namespace Application {
 		// Nos desconectamos
 		_netMgr->deactivateNetwork();
 
-		CGameState::deactivate();
+		Input::CInputManager::getSingletonPtr()->removeKeyListener(this);
+
+		
 	} // deactivate
 
 	//______________________________________________________________________________
@@ -259,7 +267,6 @@ namespace Application {
 				
 				break;
 			}
-			
 		}
 
 	} // dataPacketReceived
@@ -284,11 +291,9 @@ namespace Application {
 	void CGameServerState::disconnectionPacketReceived(Net::CPaquete* packet) {
 		// Obtenemos el puntero al gestor de jugadores y el id de red del cliente que se quiere desconectar
 		Net::NetID playerNetId = packet->getConexion()->getId();
-
 		// Eliminamos la entidad (este mensaje se forwardea automaticamente a los clientes).
 		Logic::CEntity* entityToBeDeleted = Logic::CServer::getSingletonPtr()->getMap()->getEntityByID( _playersMgr->getPlayerId(playerNetId) );
 		Logic::CEntityFactory::getSingletonPtr()->deferredDeleteEntity(entityToBeDeleted,true);
-
 		// Eliminamos el jugador que se desconecta del manager de jugadores
 		_playersMgr->removePlayer(playerNetId);
 	} // disconnexionPacketReceived

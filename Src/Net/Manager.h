@@ -65,6 +65,7 @@ namespace Net {
 		WORLD_STATE_LOADED,
 		START_GAME,
 		END_GAME,
+		DISCONNECT,
 
 		CLASS_SELECTED,
 		LOAD_LOCAL_PLAYER,
@@ -324,6 +325,12 @@ namespace Net {
 		*/
 		void removeObserver(IObserver* listener);
 
+		/**
+		Dada una "conexión" realiza la desconexión.
+
+		@param connection Objeto que representa la conexión.
+		*/
+		void disconnect(CConexion* connection);
 		//________________________________________________________________________
 
 		/**
@@ -408,12 +415,7 @@ namespace Net {
 
 		//________________________________________________________________________
 
-		/**
-		Dada una "conexión" realiza la desconexión.
-
-		@param connection Objeto que representa la conexión.
-		*/
-		void disconnect(CConexion* connection);
+		
 
 
 	private:

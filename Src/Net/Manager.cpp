@@ -160,6 +160,7 @@ namespace Net {
 						(*iter)->connectionPacketReceived(paquete);
 					break;
 				case Net::DATOS:
+					
 					if(!internalData(paquete)){ // Analiza si trae contenido -> TODO: ver funcion
 						//std::cout << "mensaje recibido:  " <<  _observers.size() << std::endl;
 						for(std::vector<IObserver*>::iterator iter = _observers.begin();iter != _observers.end();++iter)
@@ -216,9 +217,8 @@ namespace Net {
 			return false;
 		
 		// Almacenamos esa conexión y le otorgamos un ID de red
-		NetID serverId = _idDispatcher->getServerId();
-		connection->setId(serverId); // Un cliente sólo se conecta al SERVER
-		addConnection(serverId, connection); // Guardamos en la tabla
+		connection->setId(_idDispatcher->getServerId()); // Un cliente sólo se conecta al SERVER
+		addConnection(_idDispatcher->getServerId(), connection); // Guardamos en la tabla
 
 		return true;
 	} // connectTo
@@ -274,9 +274,8 @@ namespace Net {
 			_idDispatcher->returnClientId(clientId);
 		}
 		else if(_clienteRed) {
-			NetID serverId = _idDispatcher->getServerId();
-			_clienteRed->disconnect(getConnection(serverId));
-			removeConnection(serverId);
+			_clienteRed->disconnect(getConnection(_idDispatcher->getServerId()));
+			removeConnection(_idDispatcher->getServerId());
 		}
 	} // disconnect
 		
