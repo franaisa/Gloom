@@ -23,6 +23,14 @@ Map = {
 		physic_groupList = "1",
 	},
 	
+	SpikeTramp1 = {
+		type = "SpikeTrap",
+		position = {-199.0, 5.0, 112.0},
+		coolDown = 4,
+		numSpikes = 3,
+		numTrap= 1,
+	},
+
 	Pincho11 = {
 		type = "Spike",
 		position = {100.0,-3.0,-12.0},
@@ -100,7 +108,7 @@ Map = {
 		position = {-51.0, 5.0, 1.0},
 		positionInitial = {-51.0, 5.0, 1.0},
 		positionFinal = {-51.0, 65.0, 1.0},
-		link = "Elevator",
+		link = "Ascensor1",
 		velocity = 0.035,
 		model = "health1.mesh",
 		physic_entity = "rigid",

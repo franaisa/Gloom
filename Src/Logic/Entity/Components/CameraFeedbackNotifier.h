@@ -18,6 +18,10 @@ del Screamer.
 #include "Logic/Entity/Component.h"
 
 namespace Logic {
+	class CCamera;
+}
+
+namespace Logic {
 	
 	/**
 	
@@ -74,16 +78,6 @@ namespace Logic {
 		*/
 		virtual void process(const std::shared_ptr<CMessage>& message);
 
-		//__________________________________________________________________
-
-		/**
-		Metodo que se llama al activar el componente.
-		Resetea el valor del porcentaje de daños absorbido. Se entiende que
-		se llama a este metodo cuando la entidad muere y vuelve a ser
-		despertada.
-		*/
-		virtual void activate();
-
 		
 		// =======================================================================
 		//                            METODOS PROPIOS
@@ -105,6 +99,15 @@ namespace Logic {
 		*/
 		void setOwner(Logic::CEntity* owner);
 
+		void playerIsWalking(bool walking) { _playerIsWalking = walking; }
+
+		void walkEffect(unsigned int msecs);
+
+	protected:
+
+		virtual void onStart();
+
+		virtual void onFixedTick(unsigned int msecs);
 
 	private:
 
@@ -116,6 +119,16 @@ namespace Logic {
 
 		/** Entidad dueña de esta entidad. */
 		CEntity* _owner;
+
+		CCamera* _cameraComponent;
+
+		float _currentWalkingRoll;
+
+		float _walkingRollSpeed;
+
+		float _walkingRollOffset;
+
+		bool _playerIsWalking;
 
 	}; // class CScreamerShieldDamageNotifier
 
