@@ -39,8 +39,12 @@ float4 shield_ps(const PsInput psIn) : COLOR {
 	
 	//float1 aux = (1-(dist))*psIn.strength;
 	float1 aux = (1-(dist))*4;
+	
 	// saturo para obtener un valor entre 0 y 1
-	saturate(aux);
+	//saturate(aux);
+	//MENTIRA!! el saturate no me devuelve el valor entre 0 y 1, me da otros valores.
+	
+	//asi que me hago lo del minimo para que sea 1 como mucho.
 	shield = lerp(tempShield, float4(1,1,1,0), min(aux,1));
 	
 	// Aqui mezclo ambas imagnes
