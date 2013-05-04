@@ -126,6 +126,11 @@ namespace Logic
 	} // process
 	//---------------------------------------------------------
 
+	void CCamera::rollCamera(float radians) {
+		_graphicsCamera->rollCamera( (-1 * _currentRoll) + radians );
+		_currentRoll = radians;
+	}
+
 	void CCamera::setTargetEnemy(CEntity* enemy){
 		
 		this->_enemy=enemy;
@@ -161,11 +166,11 @@ namespace Logic
 			}
 
 			//Ajustamos el roll si lo hay
-			if ((_fRoll > 0.01f) || (_fRoll < 0.01)) //Al ser un float no puedo comparar con 0.0f
+			/*if ((_fRoll > 0.01f) || (_fRoll < 0.01f)) //Al ser un float no puedo comparar con 0.0f
 			{
 				_graphicsCamera->rollCamera(_fRoll);
 				_fRoll = 0.0f; //Inicializamos el roll para que en el siguiente tick no entre
-			}
+			}*/
 
 			_graphicsCamera->setCameraPosition(position);
 			
