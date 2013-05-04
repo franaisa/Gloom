@@ -61,7 +61,22 @@ namespace Logic
 		*/
 		virtual void process(const std::shared_ptr<CMessage>& message);
 
+	protected:
+
+		/**
+		Método llamado en cada frame que actualiza la posicion flotante del item.
+
+		@param msecs Milisegundos transcurridos desde el último tick.
+		*/
+		virtual void onTick(unsigned int msecs);
+
+
 	private:
+
+		/**
+		Timer que lleva el control del cooldown.
+		*/
+		int _timer;
 
 		/**
 		CoolDown de activación de la trampa de pinchos.
@@ -82,6 +97,16 @@ namespace Logic
 		Velocidad de los pinchos.
 		*/
 		int _velocitySpikes;
+
+		/**
+		Booleano que controla que la trampa ya ha sido activada y esta en cd.
+		*/
+		bool _isRespawning;
+
+		/**
+		Direccion de los pinchos.
+		*/
+		Vector3 _directionSpikes;
 
 		/**
 		Pinchos asociados a la trampa.

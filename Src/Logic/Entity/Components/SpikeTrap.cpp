@@ -20,6 +20,8 @@ Contiene la implementación del componente que controla el movimiento de los pinc
 
 #include "Logic/Messages/MessageTouched.h"
 #include "Logic/Messages/MessageAddForcePhysics.h"
+#include "Logic/Messages/MessageActivate.h"
+#include "Logic/Messages/MessageDeactivate.h"
 
 
 namespace Logic 
@@ -35,11 +37,13 @@ namespace Logic
 
 		if(entityInfo->hasAttribute("coolDown"))
 			_coolDownTime = entityInfo->getIntAttribute("coolDown");
+		_coolDownTime*=1000;
 
 		_numTrap = entityInfo->getIntAttribute("numTrap");
 		_numSpikes = entityInfo->getIntAttribute("numSpikes");
 		_spikes = new CEntity*[_numSpikes];
-		_velocitySpikes= entityInfo->getIntAttribute("velocitySpikes");
+		_velocitySpikes = entityInfo->getIntAttribute("velocitySpikes");
+		_directionSpikes = entityInfo->getVector3Attribute("directionSpikes");
 		return true;
 
 	} // spawn
@@ -50,17 +54,22 @@ namespace Logic
 	
 	void CSpikeTrap::onActivate()
 	{
+		std::shared_ptr<CMessageDeactivate> deactivateMsg = std::make_shared<CMessageDeactivate>();
 		// Leer los parametros que toquen para los proyectiles
 		std::stringstream numTrap;
 		numTrap << _numTrap;
 		std::string nTrap = numTrap.str();
-		//Cogemos los pinchos asociados a esta trampa
+		//Cogemos los pinchos asociados a esta trampa 
+		//Hay que desactivarlos en el onStart si es que esta bien o hacer la creacion de entidades de forma desactivada grafica/fisicamente
 		for(int i=1; i<=_numSpikes; i++){
 			std::stringstream numI;
 			numI << i;
 			std::string nI = numI.str();
 			_spikes[i-1] = CServer::getSingletonPtr()->getMap()->getEntityByName("Pincho"+nTrap+nI);
+			_spikes[i-1]->emitMessage(deactivateMsg);
 		}
+		_isRespawning=false;
+		_timer=0;
 
 	} // activate
 	//---------------------------------------------------------
@@ -77,19 +86,19 @@ namespace Logic
 		
 		switch( message->getMessageType() ) {
 			case Message::TOUCHED: {
-				//LLamamos a la activacion de los pinchos asociados y los lanzamos
-				std::cout << "ACTIVAMOS LA TRAMPA" << std::endl;
-				//Dirección en la que irán los pinchos
-				Vector3 directionSpikes=Math::getDirection(_spikes[0]->getOrientation());
-				directionSpikes.normalise();
-				//Creamos el mensaje de fuerza para los pinchos
-				std::shared_ptr<CMessageAddForcePhysics> forceMsg = std::make_shared<CMessageAddForcePhysics>();
-				forceMsg->setForce(directionSpikes* _velocitySpikes, Physics::ForceMode::eFORCE );
-				forceMsg->setGravity(false);
-				//Lo suyo seria activarlos para que se vean y se pueda contactar con ellos fisicamente
-				//Y luego darles el mensaje de fuerza ( ambos en el bucle de abajo )
-				for(int i=0; i<_numSpikes; i++){
-					_spikes[i]->emitMessage(forceMsg);
+				if(!_isRespawning){
+					std::cout << "ACTIVAMOS LA TRAMPA" << std::endl;
+					//Creamos el mensaje de fuerza para los pinchos
+					std::shared_ptr<CMessageAddForcePhysics> forceMsg = std::make_shared<CMessageAddForcePhysics>();
+					forceMsg->setForce(_directionSpikes* _velocitySpikes, Physics::ForceMode::eFORCE );
+					forceMsg->setGravity(false);
+					//Activacion y fuerza
+					std::shared_ptr<CMessageActivate> activateMsg = std::make_shared<CMessageActivate>();
+					for(int i=0; i<_numSpikes; i++){
+						_spikes[i]->emitMessage(activateMsg);
+						_spikes[i]->emitMessage(forceMsg);
+					}
+					_isRespawning=true;
 				}
 				break;
 			}
@@ -98,6 +107,18 @@ namespace Logic
 	} // process
 	//----------------------------------------------------------
 
+
+	void CSpikeTrap::onTick(unsigned int msecs){
+		// Si la trampa esta en la fase de spawn
+		if(_isRespawning) {
+			_timer += msecs;
+			if(_timer >= _coolDownTime) {
+				_isRespawning = false;
+				_timer = 0;
+			}
+		}
+	} // onTick
+	//----------------------------------------------------------
 
 } // namespace Logic
 

@@ -30,6 +30,7 @@ Map = {
 		numSpikes = 3,
 		numTrap= 1,
 		velocitySpikes = 25000,
+		directionSpikes = { 0, 0, 1},
 	},
 
 	Pincho11 = {
