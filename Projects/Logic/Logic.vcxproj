@@ -123,7 +123,7 @@
     <ClCompile Include="..\..\Src\Logic\Entity\Components\SpawnPlayer.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\SpectatorController.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\Spike.cpp" />
-    <ClCompile Include="..\..\Src\Logic\Entity\Components\SpikeTramp.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\SpikeTrap.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\UpdateClientPosition.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\WeaponsManager.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\SwitchPosition.cpp" />
@@ -253,7 +253,7 @@
     <ClInclude Include="..\..\Src\Logic\Entity\Components\SpawnPlayer.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\SpectatorController.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\Spike.h" />
-    <ClInclude Include="..\..\Src\Logic\Entity\Components\SpikeTramp.h" />
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\SpikeTrap.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\UpdateClientPosition.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\WeaponsManager.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\SwitchPosition.h" />
