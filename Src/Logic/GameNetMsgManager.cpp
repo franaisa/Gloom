@@ -369,6 +369,7 @@ namespace Logic {
 
 			break;
 		}
+		
 	} // dataPacketReceived
 
 	//--------------------------------------------------------

@@ -197,7 +197,28 @@ namespace Application {
 
 	bool CGameClientState::keyReleased(Input::TKey key)
 	{
-		CGameState::keyReleased(key);
+		switch(key.keyId)
+		{
+		case Input::Key::ESCAPE:
+			{
+			Net::NetMessageType msgping = Net::DISCONNECT;
+			Net::NetID id = Net::CManager::getSingletonPtr()->getID();
+			Net::CBuffer ackBuffer(sizeof(msgping) + sizeof(id));
+			ackBuffer.write(&msgping, sizeof(msgping));
+			ackBuffer.write(&id, sizeof(id));
+			Net::CManager::getSingletonPtr()->broadcast(ackBuffer.getbuffer(), ackBuffer.getSize());
+
+			_app->setState("menu");
+			break;
+			}
+		default:
+			return false;
+		}
+		return true;
+
+
+		
+
 		return true;
 
 	} // keyReleased

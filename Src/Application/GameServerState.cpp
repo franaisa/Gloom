@@ -254,7 +254,11 @@ namespace Application {
 				
 				break;
 			}
-			
+			case Net::DISCONNECT:
+			Net::CManager::getSingletonPtr()->disconnect(packet->getConexion());
+			std::cout << "me estoy desconectando buey" << std::endl;
+			disconnectionPacketReceived(packet);
+			break;
 		}
 
 	} // dataPacketReceived
@@ -279,7 +283,7 @@ namespace Application {
 	void CGameServerState::disconnectionPacketReceived(Net::CPaquete* packet) {
 		// Obtenemos el puntero al gestor de jugadores y el id de red del cliente que se quiere desconectar
 		Net::NetID playerNetId = packet->getConexion()->getId();
-
+		std::cout << "llamada a disconectionpacket" << std::endl;
 		// Eliminamos la entidad (este mensaje se forwardea automaticamente a los clientes).
 		Logic::CEntity* entityToBeDeleted = Logic::CServer::getSingletonPtr()->getMap()->getEntityByID( _playersMgr->getPlayerId(playerNetId) );
 		Logic::CEntityFactory::getSingletonPtr()->deferredDeleteEntity(entityToBeDeleted,true);
