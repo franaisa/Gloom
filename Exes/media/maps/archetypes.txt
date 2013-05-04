@@ -13,7 +13,7 @@ Map = {
 		physic_normal = { 0, 1, 0 },
 		physic_file = "media/models/scenario.RepX",
 		physic_group = 0,
-		physic_groupList = "1, 10, 30",
+		physic_groupList = "1, 9, 10, 30",
 	},
 	
 	Spawn = {

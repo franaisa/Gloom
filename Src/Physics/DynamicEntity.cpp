@@ -163,6 +163,20 @@ namespace Physics {
 
 	//________________________________________________________________________
 
+	void CDynamicEntity::clearForce(ForceMode forceMode, bool autowake) {
+			switch(forceMode) {
+			case eFORCE:
+				_dynamicActor->clearForce(PxForceMode::eFORCE,autowake);
+				break;
+
+			case eIMPULSE:
+				_dynamicActor->clearForce(PxForceMode::eIMPULSE,autowake);
+				break;
+		}
+	}
+
+	//________________________________________________________________________
+
 	bool CDynamicEntity::isKinematic() {
 		return _dynamicActor->getRigidDynamicFlags() & PxRigidDynamicFlag::eKINEMATIC;
 	}

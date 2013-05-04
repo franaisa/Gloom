@@ -276,7 +276,7 @@ namespace Physics {
 		// Crear la escena física
 		_scene = _physics->createScene(sceneDesc);
 		_acumTime = 0;
-		_fixedTime = 16;
+		_fixedTime = 4;
 		assert(_scene && "Error en PxPhysics::createScene");
 
 		// Activamos la notificación de eventos entre entidades kinemáticas.

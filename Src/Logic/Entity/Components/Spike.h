@@ -1,13 +1,13 @@
 /**
 @file Spike.h
 
-Contiene la declaración del componente que controla la aparicion de pinchos.
+Contiene la implementación del componente que controla los contactos con el pincho.
 
 @see Logic::CSpike
 @see Logic::IComponent
 
 @author Jose Antonio García Yáñez
-@date Febrero, 2013
+@date Febrero,Mayo, 2013
 */
 #ifndef __Logic_Spike_H
 #define __Logic_Spike_H
@@ -18,14 +18,14 @@ Contiene la declaración del componente que controla la aparicion de pinchos.
 namespace Logic 
 {
 /**
-	Este componente controla la aparicion de los pinchos en el mapa.
+	Este componente controla el contacto de los pinchos con los objetos.
 	<p>
-	Los pinchos aparecerán cada cierto tiempo.
+	Los pinchos volaran hasta tocar cualquier cosa y se destruiran.
 	
     @ingroup logicGroup
 
 	@author Jose Antonio García Yáñez
-	@date Febrero, 2013
+	@date Febrero,Mayo, 2013
 */
 	class CSpike : public IComponent
 	{
@@ -45,11 +45,6 @@ namespace Logic
 		virtual bool spawn(CEntity* entity, CMap *map, const Map::CEntity *entityInfo);
 
 		/**
-		Metodo que se llama al activar el componente.
-		*/
-		virtual void onActivate();
-
-		/**
 		Este componente sólo acepta mensajes de tipo touched (por ahora).
 		*/
 		virtual bool accept(const std::shared_ptr<CMessage>& message);
@@ -59,56 +54,12 @@ namespace Logic
 		*/
 		virtual void process(const std::shared_ptr<CMessage>& message);
 	
-
-	protected:
-
-		/**
-		Método llamado en cada frame que actualiza el estado del componente de la vida,
-		<p>
-		la cual bajará cada n milisegundos.
-
-		@param msecs Milisegundos transcurridos desde el último tick.
-		*/
-		virtual void onTick(unsigned int msecs);
+	private:
 
 		/**
-		Timers que controlan la aparición de los pinchos.
+		Posicion inicial del pincho.
 		*/
-		unsigned int _timer;
-		unsigned int _timeToShow;
-		unsigned int _timeToUnshow;
-		
-		/**
-		Booleano que controla si esta activo.
-		*/
-		bool _active;
-
-			/**
-		Posició inicial y final del pincho.
-		*/
-		Vector3 _positionInitial;
-		Vector3 _positionFinal;
-
-		/**
-		Controla si vamos hacia la posicion final o no.
-		*/
-		bool _toFinal;
-	
-		/**
-		Dirección inicial y final del pincho.
-		*/
-		Vector3 _directionFinal;
-		Vector3 _directionInitial;
-
-		/**
-		Velocidad del pincho
-		*/
-		float _velocity;
-
-		/**
-		Booleano que controla la espera para no ejecutar instrucciones inutiles.
-		*/
-		bool _wait;
+		Vector3 _initialPosition;
 
 	}; // class CSpike
 
