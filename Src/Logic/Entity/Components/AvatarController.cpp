@@ -17,6 +17,7 @@ de la entidad.
 */
 
 #include "AvatarController.h"
+#include <math.h>
 #include "Logic/Entity/Entity.h"
 #include "Map/MapEntity.h"
 #include "Logic/Entity/Components/PhysicController.h"
@@ -32,7 +33,8 @@ de la entidad.
 #include "Logic/Messages/MessageStopAnimation.h"
 #include "Logic/Messages/MessageCameraRoll.h"
 
-#define ROLL_DEGREES 0.15f
+#define ROLL_OFFSET 0.007f
+#define ROLL_SPEED 0.012f
 
 namespace Logic {
 
@@ -41,7 +43,8 @@ namespace Logic {
 	//________________________________________________________________________
 
 	CAvatarController::CAvatarController() : _gravity(Vector3::ZERO),
-											 _touchingGround(false) {
+											 _touchingGround(false),
+											 _roll(0) {
 		
 		// Inicializamos el array que contiene los vectores
 		// de cada tecla de movimiento
@@ -172,7 +175,30 @@ namespace Logic {
 		// al movernos para asegurarnos de que hay colision
 		Vector3 oldPosition = _entity->getPosition();
 		manageCollisions( _physicController->move(displacement-Vector3(0,0.15f,0), msecs), oldPosition );
+
+
+
+
+		
+		// @deprecated esto no deberia ser calculado en el avatarController
+		// CONTROL DE MOVIMIENTO DE CAMARA
+		walkCameraEffect(msecs);
 	} // tick
+
+	//________________________________________________________________________
+
+	void CAvatarController::walkCameraEffect(unsigned int msecs) {
+		if( (_touchingGround && ((_displacementDir != Vector3::ZERO) || (_displacementDir == Vector3::ZERO && _roll != 0)))
+			|| (!_touchingGround && _roll != 0) ) {
+			
+			_roll += ROLL_SPEED * msecs;
+			if(_roll > 2 * Math::PI) _roll = 0;
+
+			Logic::CEntity * camera = Logic::CServer::getSingletonPtr()->getMap()->getEntityByType("Camera");
+			CCamera* cam = camera->getComponent<CCamera>("CCamera");
+			cam->rollCamera( (sin(_roll) * ROLL_OFFSET) );
+		}
+	}
 
 	//________________________________________________________________________
 
@@ -284,15 +310,14 @@ namespace Logic {
 		executeAnimation(dir);
 
 		//Mensaje de roll si estamos "strafeando"
-		if ((dir == _movementCommands[Control::STRAFE_LEFT]) || (dir == _movementCommands[Control::STRAFE_RIGHT]))
-		{
+		/*if ((dir == _movementCommands[Control::STRAFE_LEFT]) || (dir == _movementCommands[Control::STRAFE_RIGHT])) {
 			//emitir mensaje de roll
 			std::shared_ptr<Logic::CMessageCameraRoll> messageRoll = std::make_shared<Logic::CMessageCameraRoll>();
 			//Le envío en el mensaje el roll de cámara leído del mapa con su sentido (izquierda=positivo ; derecha = negativo)
 			messageRoll->setRollDegrees( dir == _movementCommands[Control::STRAFE_LEFT] ? _rollCamera : -_rollCamera);
 			Logic::CEntity * camera = Logic::CServer::getSingletonPtr()->getMap()->getEntityByType("Camera");
 			camera->emitMessage(messageRoll);
-		}
+		}*/
 	}
 
 	//________________________________________________________________________

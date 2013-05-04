@@ -107,11 +107,16 @@ namespace Graphics
 		Ogre::Quaternion	getRealOrientation				();
 
 		/**
-			Roll de cámara con los grados pasado por parámetro.
-			Negativo: Roll hacia la izquierda.
-			Positivo: Roll hacia la derecha.
+		Roll de camera. Gira la camara en el sentido contrario
+		a las agujas del reloj.
+
+		El giro comienza a partir de la z local (o el norte):
+		- Un giro de 2pi deja a la camara sin rotar, un giro
+		de pi dejaria la camara boca abajo.
+
+		@param Radianes de giro de la camara.
 		*/
-		void				rollCamera					(float fDegre);
+		void				rollCamera					(float fRadian);
 
 		Ogre::Camera* getOgreCamera() { return _camera; }	
 

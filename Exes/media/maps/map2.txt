@@ -30,7 +30,7 @@ Map = {
 		numSpikes = 3,
 		numTrap= 1,
 	},
-	
+
 	Pincho11 = {
 		type = "Spike",
 		position = {100.0,-3.0,-12.0},

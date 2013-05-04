@@ -120,9 +120,8 @@ namespace Graphics
 	}
 
 
-	void CCamera::rollCamera(float fDegree){
-		Ogre::Degree deg(fDegree);
-		Ogre::Radian rad(deg);
+	void CCamera::rollCamera(float fRadian){
+		Ogre::Radian rad(fRadian);
 		_camera->roll(rad);
 	}
 
