@@ -339,6 +339,9 @@ namespace Logic {
 		/** Número máximo de comandos de movimiento. */
 		static const int MAX_MOVEMENT_COMMANDS = Control::CROUCH;
 
+		// @deprecated Esto va a otra clase
+		void walkCameraEffect(unsigned int msecs);
+
 		float _roll;
 
 	}; // class CAvatarController
