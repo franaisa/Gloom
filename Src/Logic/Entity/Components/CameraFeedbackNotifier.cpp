@@ -36,7 +36,7 @@ namespace Logic {
 	CCameraFeedbackNotifier::CCameraFeedbackNotifier() : _owner(NULL),
 														 _playerIsWalking(false),
 														 _walkingRollSpeed(0.012f),
-														 _walkingRollOffset(0.007f),
+														 _walkingRollOffset(0.003f),
 														 _currentWalkingRoll(0) {
 
 		// Nada que hacer
