@@ -1796,8 +1796,8 @@ Map = {
 		particleName="JumperParticle",
 	},
 	
-	SpikeTramp = {
-		type = "SpikeTramp",
+	SpikeTrap = {
+		type = "SpikeTrap",
 		position = {51.0, 6.0, 1.0},
 		model = "miniGun.mesh",
 		audio = "media/audio/plasma.wav",
