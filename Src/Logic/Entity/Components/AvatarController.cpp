@@ -179,8 +179,9 @@ namespace Logic {
 		//_roll += sin(ROLL_SPEED * msecs) * ROLL_DEGREES;
 		//_roll += ROLL_SPEED * msecs;
 		_roll += ROLL_SPEED * msecs;
-		if(_roll > 2 * Math::PI) _roll = 0;
+		if(_roll > 2 * Math::PI) _roll = -2*Math::PI;
 
+		//std::cout << "sin(roll) = " << sin(_roll) * ROLL_DEGREES << "\t"<<_roll << "\t" << msecs << std::endl;
 		std::cout << "sin(roll) = " << sin(_roll) * ROLL_DEGREES << std::endl;
 
 		std::shared_ptr<Logic::CMessageCameraRoll> messageRoll = std::make_shared<Logic::CMessageCameraRoll>();
