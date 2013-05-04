@@ -165,7 +165,7 @@ namespace Logic {
 		Vector3 displacement = _touchingGround ? estimateGroundMotion(msecs) : estimateAirMotion(msecs);
 
 		// Seteamos el efecto de camara
-		setCameraEffect();
+		//setCameraEffect();
 		
 		// Tratamos de mover el controlador fisico con el desplazamiento estimado.
 		// En caso de colision, el controlador fisico nos informa.

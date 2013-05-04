@@ -184,7 +184,7 @@ namespace Logic {
 
 		void stopAnimation(Vector3 dir);
 
-		Vector3 getVelocity(){return _momentum;}
+		Vector3 getVelocity(){ return _momentum; }
 
 	protected:
 
