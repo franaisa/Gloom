@@ -22,6 +22,8 @@ Contiene la implementación del estado de juego.
 #include "Net/paquete.h"
 #include "Net/buffer.h"
 
+#include "Input/InputManager.h"
+
 #include "Logic/GameNetPlayersManager.h"
 #include "Logic/Entity/Entity.h"
 #include "Logic/Server.h"
@@ -47,6 +49,8 @@ namespace Application {
 		_seleccion->hide();
 		_seleccion->setTransparent(true, true);
 		
+		_netMgr = Net::CManager::getSingletonPtr();
+
 		return true;
 	}
 	//______________________________________________________________________________
@@ -57,28 +61,32 @@ namespace Application {
 		_seleccion->show();
 
 		// Registramos a este estado como observador de red para que sea notificado
-		Net::CManager::getSingletonPtr()->addObserver(this);
+		_netMgr->addObserver(this);
+
+		//nos registramos como observadores del teclado
+		Input::CInputManager::getSingletonPtr()->addKeyListener(this);
 		
 		//comenzamos el proceso de sincronizacion, para ello enviamos un mensaje de ping
 		//y tomamos el tiempo para cronometrar cuanto tarda el servidor en respondernos
 		Net::NetMessageType ackMsg = Net::PING;
-		Net::NetID id = Net::CManager::getSingletonPtr()->getID();
+		Net::NetID id = _netMgr->getID();
 		Net::CBuffer ackBuffer(sizeof(ackMsg) + sizeof(id));
 		ackBuffer.write(&ackMsg, sizeof(ackMsg));
 		ackBuffer.write(&id, sizeof(id));
 		_reloj = clock();
 		_npings = 0;
 		_pingActual = 0;
-		Net::CManager::getSingletonPtr()->broadcast(ackBuffer.getbuffer(), ackBuffer.getSize());
+		_netMgr->broadcast(ackBuffer.getbuffer(), ackBuffer.getSize());
 	} // activate
 
 	//______________________________________________________________________________
 
 	void CGameClientState::deactivate() {
 		// Indicamos que ya no queremos ser notificados por la red
-		Net::CManager::getSingletonPtr()->removeObserver(this);
+		_netMgr->removeObserver(this);
 		// Nos desconectamos
-		Net::CManager::getSingletonPtr()->deactivateNetwork();
+		_netMgr->deactivateNetwork();
+		Input::CInputManager::getSingletonPtr()->removeKeyListener(this);
 
 		CGameState::deactivate();
 	} // deactivate
@@ -131,12 +139,12 @@ namespace Application {
 				}
 				else { //si no he tomado suficientes pings, me guardo el ping y envío otro
 					Net::NetMessageType msgping = Net::PING;
-					Net::NetID id = Net::CManager::getSingletonPtr()->getID();
+					Net::NetID id = _netMgr->getID();
 					Net::CBuffer ackBuffer(sizeof(msgping) + sizeof(id));
 					ackBuffer.write(&msgping, sizeof(msgping));
 					ackBuffer.write(&id, sizeof(id));
 					_reloj = clock();
-					Net::CManager::getSingletonPtr()->broadcast(ackBuffer.getbuffer(), ackBuffer.getSize());
+					_netMgr->broadcast(ackBuffer.getbuffer(), ackBuffer.getSize());
 				}
 
 				break;
@@ -177,16 +185,17 @@ namespace Application {
 	{
 		CGameState::keyPressed(key);
 		
-		switch(key.keyId)
-		{
-		case Input::Key::C://cambio de clase
-			//primero, quitamos al player de escuchar las teclas, para ello lo desactivamos del playerController
-			Input::CServer::getSingletonPtr()->getPlayerController()->deactivate();
-			//mostramos la gui
-			_seleccion->show();
-			break;
-		default:
-			return true;
+		switch(key.keyId) {
+			case Input::Key::C: {//cambio de clase
+				//primero, quitamos al player de escuchar las teclas, para ello lo desactivamos del playerController
+				Input::CServer::getSingletonPtr()->getPlayerController()->deactivate();
+				//mostramos la gui
+				_seleccion->show();
+				break;
+			}
+			default: {
+				return true;
+			}
 		}
 		
 		return true;
@@ -197,18 +206,11 @@ namespace Application {
 
 	bool CGameClientState::keyReleased(Input::TKey key)
 	{
-		switch(key.keyId)
+		CGameState::keyReleased(key);
+		/*switch(key.keyId)
 		{
 		case Input::Key::ESCAPE:
 			{
-			Net::NetMessageType msgping = Net::DISCONNECT;
-			Net::NetID id = Net::CManager::getSingletonPtr()->getID();
-			Net::CBuffer ackBuffer(sizeof(msgping) + sizeof(id));
-			ackBuffer.write(&msgping, sizeof(msgping));
-			ackBuffer.write(&id, sizeof(id));
-			Net::CManager::getSingletonPtr()->broadcast(ackBuffer.getbuffer(), ackBuffer.getSize());
-
-			_app->setState("menu");
 			break;
 			}
 		default:
@@ -217,7 +219,7 @@ namespace Application {
 		return true;
 
 
-		
+		*/
 
 		return true;
 
@@ -274,7 +276,7 @@ namespace Application {
 				//enviamos la clase elegida
 				msg.serialize(msgType);
 				msg.serialize(selectedClass);
-				Net::CManager::getSingletonPtr()->broadcast( msg.getbuffer(), msg.getSize() );
+				_netMgr->broadcast( msg.getbuffer(), msg.getSize() );
 				break;
 			case 5: {
 				_seleccion->hide();
@@ -283,7 +285,7 @@ namespace Application {
 				/*int randomclass = ((rand()*clock())%4)+1;
 				msg.serialize(msgType);
 				msg.serialize(randomclass);
-				Net::CManager::getSingletonPtr()->broadcast( msg.getbuffer(), msg.getSize() );
+				_netMgr->broadcast( msg.getbuffer(), msg.getSize() );
 				*/
 
 				// @deprecated Provisionalmente usamos el boton de random como boton
@@ -292,7 +294,7 @@ namespace Application {
 				Net::CBuffer buffer ( sizeof(spectatorSelectedMsg) + sizeof(selectedClass) );
 				buffer.write(&spectatorSelectedMsg, sizeof(spectatorSelectedMsg));
 				buffer.serialize(selectedClass);
-				Net::CManager::getSingletonPtr()->broadcast( buffer.getbuffer(), buffer.getSize() );
+				_netMgr->broadcast( buffer.getbuffer(), buffer.getSize() );
 
 				break;
 			}

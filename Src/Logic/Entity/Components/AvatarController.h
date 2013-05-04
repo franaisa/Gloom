@@ -324,6 +324,9 @@ namespace Logic {
 		/** Vector de inercia. */
 		Vector3 _momentum;
 
+		/** Rotación en ángulos de la cámara al hacer el roll. */
+		float	_rollCamera;
+
 		/** Puntero al controlador fisico del player. Nos lo quedamos por motivos de eficiencia. */
 		CPhysicController* _physicController;
 
@@ -335,6 +338,11 @@ namespace Logic {
 
 		/** Número máximo de comandos de movimiento. */
 		static const int MAX_MOVEMENT_COMMANDS = Control::CROUCH;
+
+		// @deprecated Esto va a otra clase
+		void walkCameraEffect(unsigned int msecs);
+
+		float _roll;
 
 	}; // class CAvatarController
 

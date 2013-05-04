@@ -170,6 +170,8 @@ namespace Application {
 	private:
 
 		Logic::CGameNetPlayersManager* _playersMgr;
+
+		Net::CManager* _netMgr;
 	}; // CMultiplayerTeamDeathmatchServerState
 
 } // namespace Application

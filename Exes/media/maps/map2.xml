@@ -979,6 +979,7 @@
 			<attribute name="airSpeedCoef" value="4.0"/>
 			<attribute name="jumpForce" value="1.5"/>
 			<attribute name="dodgeForce" value="{2,2,2}"/>
+			<attribute name="rollCamera" value="0.15"/>
 			
 			<attribute name="physic_shape" value="capsule"/>
 			<attribute name="physic_radius" value="3"/>
@@ -1259,6 +1260,7 @@
 			<attribute name="airSpeedCoef" value="4.0"/>
 			<attribute name="jumpForce" value="1.5"/>
 			<attribute name="dodgeForce" value="{2,2,2}"/>
+			<attribute name="rollCamera" value="0.15"/>
 			
 			<attribute name="physic_shape" value="capsule"/>
 			<attribute name="physic_radius" value="3"/>
@@ -1533,7 +1535,8 @@
 			<attribute name="airSpeedCoef" value="4.0"/>
 			<attribute name="jumpForce" value="1.5"/>
 			<attribute name="dodgeForce" value="{2,2,2}"/>
-			
+			<attribute name="rollCamera" value="0.15"/>
+
 			<attribute name="physic_shape" value="capsule"/>
 			<attribute name="physic_radius" value="3"/>
 			<attribute name="physic_height" value="6"/>
@@ -1805,6 +1808,7 @@
 			<attribute name="airSpeedCoef" value="4.0"/>
 			<attribute name="jumpForce" value="1.5"/>
 			<attribute name="dodgeForce" value="{2,2,2}"/>
+			<attribute name="rollCamera" value="0.15"/>
 			
 			<attribute name="physic_shape" value="capsule"/>
 			<attribute name="physic_radius" value="3"/>

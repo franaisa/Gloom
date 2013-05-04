@@ -26,6 +26,7 @@ de una escena.
 
 #include "Logic/Messages/MessageCameraToEnemy.h"
 #include "Logic/Messages/MessageCameraOffset.h"
+#include "Logic/Messages/MessageCameraRoll.h"
 
 namespace Logic 
 {
@@ -68,6 +69,7 @@ namespace Logic
 		}
 
 		_fOffsetTimer = 0.0f;
+		_fRoll = 0.0f;
 
 		//return true;
 
@@ -88,7 +90,8 @@ namespace Logic
 		
 		return msgType == Message::CAMERA_TO_ENEMY ||
 			   msgType == Message::PLAYER_SPAWN || 
-			   msgType == Message::CAMERA_OFFSET;
+			   msgType == Message::CAMERA_OFFSET || 
+			   msgType == Message::CAMERA_ROLL;
 	} // accept
 	//---------------------------------------------------------
 
@@ -114,10 +117,19 @@ namespace Logic
 				//std::shared_ptr<CMessageCameraToEnemy> cameraToEnemyMsg = std::static_pointer_cast<CMessageCameraToEnemy>(message);
 				break;
 			}
+			case Message::CAMERA_ROLL: {
+				std::shared_ptr<CMessageCameraRoll> camOffset = std::static_pointer_cast<CMessageCameraRoll>(message);
+				_fRoll = camOffset->getRollDegrees(); //asignamos el tiempo del offset
+			}
 		}
 
 	} // process
 	//---------------------------------------------------------
+
+	void CCamera::rollCamera(float radians) {
+		_graphicsCamera->rollCamera( (-1 * _currentRoll) + radians );
+		_currentRoll = radians;
+	}
 
 	void CCamera::setTargetEnemy(CEntity* enemy){
 		
@@ -151,8 +163,15 @@ namespace Logic
 				//En el eje de movimiento horizontal
 				Vector3 directionStrafe = Math::getDirection(_entity->getYaw() + Math::PI/2);
 				position += directionStrafe;
-				std::cout << "CamaraOffset!!!" << std::endl;
 			}
+
+			//Ajustamos el roll si lo hay
+			/*if ((_fRoll > 0.01f) || (_fRoll < 0.01f)) //Al ser un float no puedo comparar con 0.0f
+			{
+				_graphicsCamera->rollCamera(_fRoll);
+				_fRoll = 0.0f; //Inicializamos el roll para que en el siguiente tick no entre
+			}*/
+
 			_graphicsCamera->setCameraPosition(position);
 			
 			if(!_dead){

@@ -26,6 +26,10 @@ mover al jugador.
 #include "Logic/Messages/MessageMouse.h"
 
 #include "Logic/Messages/MessageCameraOffset.h"
+#include "Logic/Server.h"
+#include "Logic/Maps/Map.h"
+
+//#include "Logic/Messages/MessageCameraRoll.h"
 
 #include <cassert>
 #include <memory>
@@ -39,6 +43,8 @@ mover al jugador.
 
 #define TURN_FACTOR_X 0.001f
 #define TURN_FACTOR_Y 0.001f
+
+#define ROLL_DEGREES 0.8f
 
 namespace Input {
 
@@ -115,11 +121,27 @@ namespace Input {
 				m->setType(Logic::Control::STOP_WALKBACK);
 				break;
 			case Input::Key::A:
+			{
 				m->setType(Logic::Control::STOP_STRAFE_LEFT);
+				/*std::cout << "StopStrafeLeft" << std::endl;
+				//emitir mensaje de roll
+				std::shared_ptr<Logic::CMessageCameraRoll> messageRoll = std::make_shared<Logic::CMessageCameraRoll>();
+				messageRoll->setRollDegrees(ROLL_DEGREES);//Roll para que vuelva a posición original
+				Logic::CEntity * camera = Logic::CServer::getSingletonPtr()->getMap()->getEntityByType("Camera");
+				camera->emitMessage(messageRoll);*/
 				break;
+			}
 			case Input::Key::D:
+			{
 				m->setType(Logic::Control::STOP_STRAFE_RIGHT);
+				/*
+				std::cout << "StopStrafeRight" << std::endl;
+				std::shared_ptr<Logic::CMessageCameraRoll> messageRoll = std::make_shared<Logic::CMessageCameraRoll>();
+				messageRoll->setRollDegrees(-ROLL_DEGREES); //Roll para que vuelva a posición original
+				Logic::CEntity * camera = Logic::CServer::getSingletonPtr()->getMap()->getEntityByType("Camera");
+				camera->emitMessage(messageRoll);	*/			
 				break;
+			}
 			case Input::Key::SPACE:
 				m->setType(Logic::Control::STOP_JUMP);
 				break;
@@ -252,7 +274,7 @@ namespace Input {
 			return 2; //Habilities
 		}
 		else if (key.keyId == Input::Key::O || key.keyId == Input::Key::NUMBER6 || key.keyId == Input::Key::NUMBER7 
-			|| key.keyId == Input::Key::NUMBER8 || key.keyId == Input::Key::ESCAPE)
+			|| key.keyId == Input::Key::NUMBER8 || key.keyId == Input::Key::ESCAPE || key.keyId == Input::Key::T)
 		{
 			return 3; //Other
 		}
@@ -351,6 +373,11 @@ namespace Input {
 				else
 				{
 					m->setType(Logic::Control::STRAFE_LEFT);
+					//emitir mensaje de roll
+					/*std::shared_ptr<Logic::CMessageCameraRoll> messageRoll = std::make_shared<Logic::CMessageCameraRoll>();
+					messageRoll->setRollDegrees(-ROLL_DEGREES);
+					Logic::CEntity *camera = Logic::CServer::getSingletonPtr()->getMap()->getEntityByType("Camera");
+					camera->emitMessage(messageRoll);*/
 				}
 				m_eLastMove = LEFT;
 				m_iLastTime=clock();
@@ -421,6 +448,19 @@ namespace Input {
 			{
 				std::shared_ptr<Logic::CMessageHudDebug> m2 = std::make_shared<Logic::CMessageHudDebug>();
 				_controlledAvatar->emitMessage(m2);
+			}
+			break;
+			case Input::Key::T:
+			{
+				/*std::shared_ptr<Logic::CMessageCameraOffset> m3 = std::make_shared<Logic::CMessageCameraOffset>();
+				m3->setOffsetTimer(100.0f);//Timer								 
+				Logic::CEntity * camera = Logic::CServer::getSingletonPtr()->getMap()->getEntityByType("Camera");
+				camera->emitMessage(m3);*/
+
+				/*std::shared_ptr<Logic::CMessageCameraRoll> m3 = std::make_shared<Logic::CMessageCameraRoll>();
+				m3->setRollDegrees(ROLL_DEGREES);//Grados								 
+				Logic::CEntity * camera = Logic::CServer::getSingletonPtr()->getMap()->getEntityByType("Camera");
+				camera->emitMessage(m3);*/
 			}
 			break;
 			case Input::Key::ESCAPE:// esto debe desaparecer en el futuro

@@ -331,6 +331,18 @@ namespace Net {
 		@param connection Objeto que representa la conexión.
 		*/
 		void disconnect(CConexion* connection);
+		//________________________________________________________________________
+
+		/**
+		Devuelve el número de clientes conectados. En el caso de ser un cliente
+		devuelve 1.
+
+		@return Número de clientes conectados.
+		*/
+		unsigned int nbClients() {
+			return _connections.size();
+		}
+
 		
 	protected:
 
@@ -481,6 +493,7 @@ namespace Net {
 		/** ID de red una vez conectado. */
 		NetID _id;
 
+		/** Asigna ids de red */
 		CNetIdDispatcher* _idDispatcher;
 
 	}; // class CManager

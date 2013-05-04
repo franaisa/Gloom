@@ -16,6 +16,7 @@ Contiene la implementación de la clase base de los componentes.
 namespace Logic {
 	IComponent::IComponent() : _entity(0), 
 							   _isActivated(false),
+							   _deepSleep(false),
 							   _state(ComponentState::eAWAKE),
 							   _tickMode(TickMode::eBOTH) {
 
@@ -104,10 +105,13 @@ namespace Logic {
 
 	//__________________________________________________________________
 
-	void IComponent::putToSleep() {
-		_state = ComponentState::eSLEEPING;
+	void IComponent::putToSleep(bool deepSleep) {
+		if(_state != ComponentState::eSLEEPING) {
+			_state = ComponentState::eSLEEPING;
+			this->_deepSleep = deepSleep;
 
-		onSleep();
+			onSleep();
+		}
 	}
 
 	//__________________________________________________________________
@@ -135,9 +139,11 @@ namespace Logic {
 	//__________________________________________________________________
 
 	void IComponent::stayBusy() {
-		_state = ComponentState::eBUSY;
+		if(_state != ComponentState::eBUSY) {
+			_state = ComponentState::eBUSY;
 
-		onBusy();
+			onBusy();
+		}
 	}
 
 	//__________________________________________________________________

@@ -37,24 +37,37 @@ namespace Application {
 	void CGameServerState::activate() {
 		CGameState::activate();
 
+		_netMgr = Net::CManager::getSingletonPtr();
+
 		// Añadir a este estado como observador de la red para ser notificado
-		Net::CManager::getSingletonPtr()->addObserver(this);
-		Net::CManager::getSingletonPtr()->activateAsServer(1234,12);
+		_netMgr->addObserver(this);
+
+		//nos registramos como observadores del teclado
+		Input::CInputManager::getSingletonPtr()->addKeyListener(this);
+
+		// Seteamos el máximo de jugadores a 12 (8 players + 4 espectadores)
+		_netMgr->activateAsServer(1234,12);
 
 		_playersMgr = Logic::CGameNetPlayersManager::getSingletonPtr();
+		
 	} // activate
 
 	//______________________________________________________________________________
 
 	void CGameServerState::deactivate() {
+		CGameState::deactivate();
+		
 		_playersMgr = NULL;
+		_netMgr = NULL;
 
 		// Solicitamos dejar de ser notificados
-		Net::CManager::getSingletonPtr()->removeObserver(this);
+		_netMgr->removeObserver(this);
 		// Nos desconectamos
-		Net::CManager::getSingletonPtr()->deactivateNetwork();
+		_netMgr->deactivateNetwork();
 
-		CGameState::deactivate();
+		Input::CInputManager::getSingletonPtr()->removeKeyListener(this);
+
+		
 	} // deactivate
 
 	//______________________________________________________________________________
@@ -95,7 +108,7 @@ namespace Application {
 				outBuffer.serialize(map, false);
 				
 				// Enviamos el mensaje de carga de mapa al cliente
-				Net::CManager::getSingletonPtr()->sendTo(playerNetId, outBuffer.getbuffer(), outBuffer.getSize());
+				_netMgr->sendTo(playerNetId, outBuffer.getbuffer(), outBuffer.getSize());
 
 				break;
 			}
@@ -138,7 +151,7 @@ namespace Application {
 				}
 				
 				// Enviamos los datos asociados a los players online al nuevo player
-				Net::CManager::getSingletonPtr()->sendTo(playerNetId, playersInfoBuffer.getbuffer(), playersInfoBuffer.getSize());
+				_netMgr->sendTo(playerNetId, playersInfoBuffer.getbuffer(), playersInfoBuffer.getSize());
 
 				break;
 			}
@@ -146,22 +159,22 @@ namespace Application {
 				Net::NetMessageType loadWorldStateMsg = Net::LOAD_WORLD_STATE;
 				// De momento no serializamos nada, pero aqui habria que liarla
 				// parda para mandarle todo lo que toque al cliente
-				Net::CManager::getSingletonPtr()->sendTo(playerNetId, &loadWorldStateMsg, sizeof(loadWorldStateMsg));
+				_netMgr->sendTo(playerNetId, &loadWorldStateMsg, sizeof(loadWorldStateMsg));
 
 				break;
 			}
 			case Net::WORLD_STATE_LOADED: {
 				Net::NetMessageType startGameMsg = Net::START_GAME;
-				Net::CManager::getSingletonPtr()->sendTo(playerNetId, &startGameMsg, sizeof(startGameMsg));
+				_netMgr->sendTo(playerNetId, &startGameMsg, sizeof(startGameMsg));
 			}
 			case Net::PING: {
 				Net::NetMessageType ackMsg = Net::PING;
 				clock_t time = clock();
-				Net::NetID id = Net::CManager::getSingletonPtr()->getID();
+				Net::NetID id = _netMgr->getID();
 				Net::CBuffer ackBuffer(sizeof(ackMsg) + sizeof(time));
 				ackBuffer.write(&ackMsg, sizeof(ackMsg));
 				ackBuffer.write(&time, sizeof(time));
-				Net::CManager::getSingletonPtr()->sendTo(playerNetId, ackBuffer.getbuffer(), ackBuffer.getSize());
+				_netMgr->sendTo(playerNetId, ackBuffer.getbuffer(), ackBuffer.getSize());
 				break;
 			}
 			case Net::SPECTATE_REQUEST: {
@@ -180,7 +193,7 @@ namespace Application {
 				buffer.write( &msgType, sizeof(msgType) );
 				buffer.write( &spectatorId, sizeof(spectatorId) );
 				buffer.serialize(nickname, false);
-				Net::CManager::getSingletonPtr()->sendTo( playerNetId, buffer.getbuffer(), buffer.getSize() );
+				_netMgr->sendTo( playerNetId, buffer.getbuffer(), buffer.getSize() );
 
 				// Activamos al espectador
 				spectator->activate();
@@ -234,7 +247,7 @@ namespace Application {
 				serialMsg.serialize(player->getType(), false); // Clase del player
 				
 				//enviamos la entidad nueva al jugador local
-				Net::CManager::getSingletonPtr()->broadcastIgnoring(playerNetId, serialMsg.getbuffer(), serialMsg.getSize());
+				_netMgr->broadcastIgnoring(playerNetId, serialMsg.getbuffer(), serialMsg.getSize());
 
 				serialMsg.reset();
 				//enviamos la entidad nueva al resto de jugadores
@@ -248,17 +261,12 @@ namespace Application {
 				player->activate();
 				player->start();
 
-				Net::CManager::getSingletonPtr()->sendTo(playerNetId, serialMsg.getbuffer(), serialMsg.getSize());
+				_netMgr->sendTo(playerNetId, serialMsg.getbuffer(), serialMsg.getSize());
 
 				_playersMgr->setPlayerState(playerNetId, true);
 				
 				break;
 			}
-			case Net::DISCONNECT:
-			Net::CManager::getSingletonPtr()->disconnect(packet->getConexion());
-			std::cout << "me estoy desconectando buey" << std::endl;
-			disconnectionPacketReceived(packet);
-			break;
 		}
 
 	} // dataPacketReceived
@@ -275,7 +283,7 @@ namespace Application {
 		// asociada a su player
 		Net::NetMessageType msg = Net::SEND_PLAYER_INFO;
 
-		Net::CManager::getSingletonPtr()->sendTo(playerId, &msg, sizeof(msg));
+		_netMgr->sendTo(playerId, &msg, sizeof(msg));
 	} // connexionPacketReceived
 
 	//______________________________________________________________________________
@@ -283,11 +291,9 @@ namespace Application {
 	void CGameServerState::disconnectionPacketReceived(Net::CPaquete* packet) {
 		// Obtenemos el puntero al gestor de jugadores y el id de red del cliente que se quiere desconectar
 		Net::NetID playerNetId = packet->getConexion()->getId();
-		std::cout << "llamada a disconectionpacket" << std::endl;
 		// Eliminamos la entidad (este mensaje se forwardea automaticamente a los clientes).
 		Logic::CEntity* entityToBeDeleted = Logic::CServer::getSingletonPtr()->getMap()->getEntityByID( _playersMgr->getPlayerId(playerNetId) );
 		Logic::CEntityFactory::getSingletonPtr()->deferredDeleteEntity(entityToBeDeleted,true);
-
 		// Eliminamos el jugador que se desconecta del manager de jugadores
 		_playersMgr->removePlayer(playerNetId);
 	} // disconnexionPacketReceived

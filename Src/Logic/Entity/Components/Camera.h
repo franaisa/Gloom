@@ -56,7 +56,7 @@ namespace Logic
 		/**
 		Constructor por defecto; en la clase base no hace nada.
 		*/
-		CCamera() : IComponent(), _graphicsCamera(0), _height(8) {}
+		CCamera() : IComponent(), _graphicsCamera(0), _height(8), _currentRoll(0.0f) {}
 		
 		/**
 		Inicialización del componente, utilizando la información extraída de
@@ -114,6 +114,8 @@ namespace Logic
 		void setTargetEnemy(CEntity* enemy);
 
 		void setTarget(CEntity * entity){_target = entity;}
+
+		void rollCamera(float radians);
 
 
 	protected:
@@ -176,6 +178,13 @@ namespace Logic
 		Timer con el tiemop que la cámara "vibra" porque ha recibido daño el jugador.
 		*/
 		float _fOffsetTimer;
+
+		/**
+			Grados del roll de la cámara. Si es 0, no hará roll.
+		*/
+		float _fRoll;
+
+		float _currentRoll;
 
 	}; // class CCamera
 

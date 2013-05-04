@@ -389,7 +389,7 @@ namespace Logic
 
 
 	void CEntity::sleepingWithoutTick(IComponent* component, unsigned int msecs, unsigned int steps) {
-		if( component->processMessages() ) {
+		if( !component->_deepSleep && component->processMessages() ) {
 			component->_state = ComponentState::eAWAKE;
 
 			// No deberia ocurrir nunca
@@ -398,7 +398,7 @@ namespace Logic
 	}
 
 	void CEntity::sleepingWithTick(IComponent* component, unsigned int msecs, unsigned int steps) {
-		if( component->processMessages() ) {
+		if( !component->_deepSleep && component->processMessages() ) {
 			component->_state = ComponentState::eAWAKE;
 
 			component->tick(msecs);
@@ -406,7 +406,7 @@ namespace Logic
 	}
 
 	void CEntity::sleepingWithFixedTick(IComponent* component, unsigned int msecs, unsigned int steps) {
-		if( component->processMessages() ) {
+		if( !component->_deepSleep && component->processMessages() ) {
 			component->_state = ComponentState::eAWAKE;
 
 			for(int i = 0; i < steps; ++i) {
@@ -416,7 +416,7 @@ namespace Logic
 	}
 
 	void CEntity::sleepingWithBothTicks(IComponent* component, unsigned int msecs, unsigned int steps) {
-		if( component->processMessages() ) {
+		if( !component->_deepSleep && component->processMessages() ) {
 			component->_state = ComponentState::eAWAKE;
 
 			component->tick(msecs);

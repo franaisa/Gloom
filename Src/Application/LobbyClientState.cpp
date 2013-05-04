@@ -128,8 +128,13 @@ namespace Application {
 			}
 			case Net::LOAD_MAP: {
 				// Cargamos el archivo con las definiciones de las entidades del nivel.
-				std::string map;
-				buffer.deserialize(map);
+				std::string mapName;
+				buffer.deserialize(mapName);
+
+				// Inicializar dispatcher
+				// @deprecated lo ideal es que el server mande el numero de players de la partida
+				Logic::CEntityFactory::getSingletonPtr()->initDispatcher( Net::CManager::getSingletonPtr()->getID(), 12 );
+
 				if (!Logic::CEntityFactory::getSingletonPtr()->loadBluePrints("blueprints_client.txt")) {
 					Net::CManager::getSingletonPtr()->deactivateNetwork();
 					_app->exitRequest();
@@ -139,7 +144,7 @@ namespace Application {
 					_app->exitRequest();
 				}
 				// Cargamos el nivel a partir del nombre del mapa. 
-				if (!Logic::CServer::getSingletonPtr()->loadLevel(map+"_client.txt")) {
+				if (!Logic::CServer::getSingletonPtr()->loadLevel(mapName+"_client.txt")) {
 					Net::CManager::getSingletonPtr()->deactivateNetwork();
 					_app->exitRequest();
 				}

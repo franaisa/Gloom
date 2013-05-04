@@ -63,7 +63,7 @@ namespace Logic {
 	
 	//________________________________________________________________________
 
-	CEntityFactory::CEntityFactory() : _dynamicCreation(false) {
+	CEntityFactory::CEntityFactory() : _dynamicCreation(false), _idDispatcher(0) {
 		_instance = this;
 	} // CEntityFactory
 	
@@ -188,6 +188,7 @@ namespace Logic {
 
 	void CEntityFactory::unloadBluePrints() {
 		_bluePrints.clear();
+		releaseDispatcher();
 	} // unloadBluePrints
 	
 	//________________________________________________________________________
@@ -198,7 +199,7 @@ namespace Logic {
 
 		// si el tipo se encuentra registrado.
 		if ( it != _bluePrints.end() ) {
-			CEntity* ent = new CEntity(EntityID::NextID());
+			CEntity* ent = new CEntity( _idDispatcher->getNextId() );
 			std::list<std::string>::const_iterator itc;
 			
 			// Añadimos todos sus componentes.
@@ -426,7 +427,7 @@ namespace Logic {
 	void CEntityFactory::deleteDefferedEntities() {
 		TEntityList::const_iterator it(_pendingEntities.begin());
 		TEntityList::const_iterator end(_pendingEntities.end());
-
+		
 		while(it != end) {
 			CEntity *entity = *it;
 			++it;
@@ -435,7 +436,6 @@ namespace Logic {
 
 		if ( !_pendingEntities.empty() )
 			_pendingEntities.clear();
-
 	} // deleteDefferedObjects
 
 	//________________________________________________________________________

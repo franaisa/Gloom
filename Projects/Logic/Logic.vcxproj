@@ -123,6 +123,7 @@
     <ClCompile Include="..\..\Src\Logic\Entity\Components\SpawnPlayer.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\SpectatorController.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\Spike.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\SpikeTramp.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\UpdateClientPosition.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\WeaponsManager.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\SwitchPosition.cpp" />
@@ -135,6 +136,7 @@
     <ClCompile Include="..\..\Src\Logic\Maps\ComponentID.cpp" />
     <ClCompile Include="..\..\Src\Logic\Maps\EntityFactory.cpp" />
     <ClCompile Include="..\..\Src\Logic\Maps\EntityID.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Maps\EntityIdDispatcher.cpp" />
     <ClCompile Include="..\..\Src\Logic\Maps\GUIKillersMessage.cpp" />
     <ClCompile Include="..\..\Src\Logic\Maps\GUIManager.cpp" />
     <ClCompile Include="..\..\Src\Logic\Maps\IIdentifier.cpp" />
@@ -159,6 +161,7 @@
     <ClCompile Include="..\..\Src\Logic\Messages\MessageAvatarWalk.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageBerserker.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageCameraOffset.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Messages\MessageCameraRoll.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageCameraToEnemy.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageCealing.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageChangeMaterial.cpp" />
@@ -250,6 +253,7 @@
     <ClInclude Include="..\..\Src\Logic\Entity\Components\SpawnPlayer.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\SpectatorController.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\Spike.h" />
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\SpikeTramp.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\UpdateClientPosition.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\WeaponsManager.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\SwitchPosition.h" />
@@ -263,6 +267,7 @@
     <ClInclude Include="..\..\Src\Logic\Maps\Documentation.h" />
     <ClInclude Include="..\..\Src\Logic\Maps\EntityFactory.h" />
     <ClInclude Include="..\..\Src\Logic\Maps\EntityID.h" />
+    <ClInclude Include="..\..\Src\Logic\Maps\EntityIdDispatcher.h" />
     <ClInclude Include="..\..\Src\Logic\Maps\GUIKillersMessage.h" />
     <ClInclude Include="..\..\Src\Logic\Maps\GUIManager.h" />
     <ClInclude Include="..\..\Src\Logic\Maps\IIdentifier.h" />
@@ -277,6 +282,7 @@
     <ClInclude Include="..\..\Src\Logic\Entity\Components\Graphics.h" />
     <ClInclude Include="..\..\Src\Logic\Documentation.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageActivateScreamerShield.h" />
+    <ClInclude Include="..\..\Src\Logic\Messages\MessageCameraRoll.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageChangeMaterialHudWeapon.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageCameraOffset.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageCreateParticle.h" />
