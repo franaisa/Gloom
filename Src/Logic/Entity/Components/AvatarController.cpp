@@ -206,7 +206,9 @@ namespace Logic {
 			//necesitamos la posicion anterior del personaje, para ver la dirección 
 			//y la velocidad a la que nos hemos movido, y calculamos el momentum
 			//resultado de habernos movido y haber chocado contra las paredes
-			_momentum = _entity->getPosition() - oldPosition;
+			Vector3 newMom = _entity->getPosition() - oldPosition;
+			_momentum.x=newMom.x;
+			_momentum.z=newMom.z;
 		}
 	}
 
