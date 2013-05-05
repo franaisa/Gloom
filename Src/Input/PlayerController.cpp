@@ -265,7 +265,7 @@ namespace Input {
 			return 0;//Change weapon
 		}
 		else if (key.keyId == Input::Key::W || key.keyId == Input::Key::A || key.keyId == Input::Key::S || key.keyId == Input::Key::D 
-			|| key.keyId == Input::Key::Q || key.keyId == Input::Key::E || key.keyId == Input::Key::SPACE || key.keyId == Input::Key::Z )
+			|| key.keyId == Input::Key::SPACE || key.keyId == Input::Key::Z )
 		{
 			return 1; //Movement
 		}

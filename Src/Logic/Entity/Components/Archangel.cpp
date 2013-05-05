@@ -67,25 +67,22 @@ namespace Logic {
 		// Si la habilidad primaria esta en uso, controlar el tiempo
 		// efectivo siendo inmune. Cuando se cumpla el tiempo,
 		// deshabilitamos la reducción de daño
-		if(_inmunityTimer > 0) {
-			_inmunityTimer -= msecs;
-
-			if(_inmunityTimer <= 0) {
-				_inmunityTimer = 0;
-
+		if(_doingPrimarySkill){
+			if(_inmunityTimer > 0) {
+				_inmunityTimer -= msecs;
+			}else{
 				// Seteamos la reducción de daño a 0 de manera que recibimos los daños normales
-				std::shared_ptr<CMessageSetReducedDamage> pReducedDmgMsg = std::make_shared<CMessageSetReducedDamage>();
+ 				std::shared_ptr<CMessageSetReducedDamage> pReducedDmgMsg = std::make_shared<CMessageSetReducedDamage>();
 				pReducedDmgMsg->setReducedDamage(0);
 				_entity->emitMessage(pReducedDmgMsg);
-
+					
+	
 				// Desactivamos el shader de inmunidad
 				// Desactivamos el shader de invisibilidad
 				std::shared_ptr<CMessageChangeMaterial> materialMsg = std::make_shared<CMessageChangeMaterial>();
 				materialMsg->setMaterialName("original");
 				_entity->emitMessage(materialMsg);
-			}
-			else {
-				_inmunityTimer -= msecs;
+				_doingPrimarySkill = false;
 			}
 		}
 	}
@@ -100,7 +97,7 @@ namespace Logic {
 		std::shared_ptr<CMessageChangeMaterial> materialMsg = std::make_shared<CMessageChangeMaterial>();
 		materialMsg->setMaterialName(_materialName);
 		_entity->emitMessage(materialMsg);
-		_inmunityTimer = 0;
+		_inmunityTimer = _inmunityDuration;
 	}
 
 	//__________________________________________________________________
@@ -120,6 +117,8 @@ namespace Logic {
 		std::shared_ptr<CMessageChangeMaterial> materialMsg = std::make_shared<CMessageChangeMaterial>();
 		materialMsg->setMaterialName("ArchangelDiamond"); // En el futuro debe ser el material del archangel
 		_entity->emitMessage(materialMsg);
+
+		_doingPrimarySkill = true;
 	}
 
 	//__________________________________________________________________
@@ -127,6 +126,9 @@ namespace Logic {
 	void CArchangel::secondarySkill() {
 		std::cout << "Secondary Skill - Archangel" << std::endl;
 	}
+
+	//__________________________________________________________________
+
 
 } // namespace Logic
 

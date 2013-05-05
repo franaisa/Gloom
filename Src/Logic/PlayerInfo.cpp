@@ -21,7 +21,8 @@ Contiene la implementación de la clase PlayerInfo para el proyecto de logica.
 namespace Logic {
 
 	CPlayerInfo::CPlayerInfo(Net::NetID netId) : _netId(netId), 
-											     _rank(0), 
+											     _rank(0),
+												 _entityId(0),
 												 _entityIdInitialized(false),
 												 _isPlaying(false) {
 		
@@ -32,6 +33,7 @@ namespace Logic {
 
 	CPlayerInfo::CPlayerInfo(Net::NetID netId, const std::string& nickname) : _netId(netId), 
 																			  _rank(0),
+																			  _entityId(0),
 																			  _name(nickname),
 																			  _entityIdInitialized(false),
 																			  _isPlaying(false) {
@@ -94,7 +96,7 @@ namespace Logic {
 
 	std::string CPlayerInfo::getPlayerClass() {
 		CEntity* entity = CServer::getSingletonPtr()->getMap()->getEntityByID(_entityId);
-		assert(entity && "Error: El gestor no puede devolver la clase del jugador porque no existe en el mapa");
+		assert(entity && "Error: El gestor no puede devolver la clase del jugador porque no se encuentra su id de entidad");
 		
 		return entity->getType();
 	}

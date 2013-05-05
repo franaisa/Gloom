@@ -199,9 +199,10 @@ namespace Logic {
 		Devuelve el id lógico del player dado su id de red
 
 		@param playerNetId Id de red del player.
-		@return Id lógico para el id de red del player dado.
+		@return Una pareja con el id lógico del player y un booleano que indica si 
+		el id es válido. Si es false indica que el player no tiene ninguna entidad asociada.
 		*/
-		Logic::TEntityID getPlayerId(Net::NetID playerNetId);
+		std::pair<TEntityID, bool> getPlayerId(Net::NetID playerNetId);
 
 		//________________________________________________________________________
 

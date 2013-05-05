@@ -18,35 +18,28 @@ Contiene la implementación del estado de lobby del servidor.
 
 #include "Logic/Server.h"
 #include "Logic/Maps/EntityFactory.h"
-#include "Logic/Maps/Map.h"
-#include "Logic/Maps/EntityID.h"
 
-#include "Logic/Entity/Entity.h"
 #include "GUI/Server.h"
-#include "Net/Manager.h"
-#include "Net/Servidor.h"
-#include "Net/factoriared.h"
-#include "Net/paquete.h"
-#include "Net/buffer.h"
 #include "Hikari.h"
 
-#include <iostream>
-#include <fstream>
 #include <cstdlib>
 #include <direct.h>
 
-#include "Logic/GameNetPlayersManager.h"
-
 namespace Application {
 
-	CLobbyServerState::~CLobbyServerState() 
-	{
-	} // ~CLobbyServerState
+	CLobbyServerState::CLobbyServerState(CBaseApplication *app) : CApplicationState(app) {
+		// Nada que hacer
+	}
 
-	//--------------------------------------------------------
+	//__________________________________________________________________
 
-	bool CLobbyServerState::init() 
-	{
+	CLobbyServerState::~CLobbyServerState() {
+		// Nada que borrar
+	}
+
+	//__________________________________________________________________
+
+	bool CLobbyServerState::init() {
 		CApplicationState::init();
 
 		// Cargamos la ventana que muestra el menú
@@ -59,168 +52,122 @@ namespace Application {
 		listFiles();
 	
 		return true;
+	}
 
-	} // init
+	//__________________________________________________________________
 
-	//--------------------------------------------------------
-
-	void CLobbyServerState::release() 
-	{
-		CApplicationState::release();
-
-	} // release
-
-	//--------------------------------------------------------
-
-	void CLobbyServerState::activate() 
-	{
+	void CLobbyServerState::activate() {
 		CApplicationState::activate();
+
 		// Activamos la ventana que nos muestra el menú y activamos el ratón.
 		_menu->show();
+	}
 
-		
-	} // activate
+	//__________________________________________________________________
 
-	//--------------------------------------------------------
-
-	void CLobbyServerState::deactivate() 
-	{	
+	void CLobbyServerState::deactivate() {	
 		CApplicationState::deactivate();
+
+		// Desactivamos el menú
 		_menu->hide();
+	}
 
-	} // deactivate
+	//__________________________________________________________________
 
-	//--------------------------------------------------------
-
-	void CLobbyServerState::tick(unsigned int msecs) 
-	{
-		CApplicationState::tick(msecs);
-
-	} // tick
-
-	//--------------------------------------------------------
-
-	bool CLobbyServerState::keyPressed(Input::TKey key)
-	{
+	bool CLobbyServerState::keyPressed(Input::TKey key){
 	   return false;
-
 	} // keyPressed
 
-	//--------------------------------------------------------
+	//__________________________________________________________________
 
-	bool CLobbyServerState::keyReleased(Input::TKey key)
-	{
-		switch(key.keyId)
-		{
-		case Input::Key::ESCAPE:
-			Net::CManager::getSingletonPtr()->deactivateNetwork();
-			_app->setState("netmenu");
-			break;
-		default:
-			return false;
+	bool CLobbyServerState::keyReleased(Input::TKey key) {
+		switch(key.keyId) {
+			case Input::Key::ESCAPE: {
+				_app->setState("netmenu");
+				break;
+			}
+			default: {
+				return false;
+			}
 		}
-		return true;
 
+		return true;
 	} // keyReleased
 
-	//--------------------------------------------------------
+	//__________________________________________________________________
 	
-	bool CLobbyServerState::mouseMoved(const Input::CMouseState &mouseState)
-	{
+	bool CLobbyServerState::mouseMoved(const Input::CMouseState &mouseState) {
 		return false;
-
 	} // mouseMoved
 
-	//--------------------------------------------------------
+	//__________________________________________________________________
 		
-	bool CLobbyServerState::mousePressed(const Input::CMouseState &mouseState)
-	{
+	bool CLobbyServerState::mousePressed(const Input::CMouseState &mouseState) {
 		return false;
-
 	} // mousePressed
 
-	//--------------------------------------------------------
+	//__________________________________________________________________
 
 
-	bool CLobbyServerState::mouseReleased(const Input::CMouseState &mouseState)
-	{
+	bool CLobbyServerState::mouseReleased(const Input::CMouseState &mouseState) {
 		return false;
-
 	} // mouseReleased
 			
-	//--------------------------------------------------------
+	//__________________________________________________________________
 		
-	Hikari::FlashValue CLobbyServerState::startReleased(Hikari::FlashControl* caller, const Hikari::Arguments& args)
-	{
+	Hikari::FlashValue CLobbyServerState::startReleased(Hikari::FlashControl* caller, const Hikari::Arguments& args) {
 		return FLASH_VOID;
-
 	} // startReleased
 			
-	//--------------------------------------------------------
+	//__________________________________________________________________
 
-	Hikari::FlashValue CLobbyServerState::backReleased(Hikari::FlashControl* caller, const Hikari::Arguments& args)
-	{
-		Net::CManager::getSingletonPtr()->deactivateNetwork();
+	Hikari::FlashValue CLobbyServerState::backReleased(Hikari::FlashControl* caller, const Hikari::Arguments& args) {
 		_app->setState("netmenu");
 		return FLASH_VOID;
-
 	} // backReleased
 
-	Hikari::FlashValue CLobbyServerState::createReleased(Hikari::FlashControl* caller, const Hikari::Arguments& args)
-	{
+	//__________________________________________________________________
 
-		//deshabilitamos el boton crear partida
+	Hikari::FlashValue CLobbyServerState::createReleased(Hikari::FlashControl* caller, const Hikari::Arguments& args) {
+		// Deshabilitamos el boton crear partida
 		_menu->callFunction("disableCreate",Hikari::Args());
 		
-
-		//cogemos el mapa en el que crear la partida
+		// Cogemos el mapa en el que crear la partida y lo cargamos
 		_map=args.at(0).getString();
-
-		//mostramos en el gui lo que esta pasando
-		//_menu->callFunction("pushCommand",Hikari::Args("Status: Server up. Waiting for clients ..."));
-
-		//cargamos el mapa que hemos seleccionado
 
 		// Inicializar dispatcher - 0 es el id del server
 		// @deprecated El numero de jugadores maximo debe leerse de flash
 		Logic::CEntityFactory::getSingletonPtr()->initDispatcher(0, 12);
 
 		if (!Logic::CEntityFactory::getSingletonPtr()->loadBluePrints("blueprints_server.txt")) {
-			Net::CManager::getSingletonPtr()->deactivateNetwork();
 			_app->exitRequest();
 		}
 
 		if (!Logic::CEntityFactory::getSingletonPtr()->loadArchetypes("archetypes.txt")) {
-			Net::CManager::getSingletonPtr()->deactivateNetwork();
 			_app->exitRequest();
 		}
 
 		// Cargamos el nivel a partir del nombre del mapa. 
 		if (!Logic::CServer::getSingletonPtr()->loadLevel(_map+"_server.txt")) {
-			Net::CManager::getSingletonPtr()->deactivateNetwork();
 			_app->exitRequest();
 		}
 
-		//empezamos la partida
-
+		// Empezamos la partida en modo servidor
 		_app->setState("gameServer");
 		return FLASH_VOID;
-
 	} // backReleased
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	void CLobbyServerState::listFiles(){
+	void CLobbyServerState::listFiles() {
 		WIN32_FIND_DATA FindData;
 		HANDLE hFind;
 		hFind = FindFirstFile("media\\maps\\*.txt", &FindData);
 
 		std::string filename;
-		while (FindNextFile(hFind, &FindData))
-		{     
+		while (FindNextFile(hFind, &FindData)) {     
 			filename = FindData.cFileName;
 			_menu->callFunction("pushFile",Hikari::Args(filename.substr(0,filename.find(".txt"))));
-
 		}
 	}
 

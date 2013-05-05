@@ -49,6 +49,8 @@ namespace Application {
 		_netMgr->activateAsServer(1234,12);
 
 		_playersMgr = Logic::CGameNetPlayersManager::getSingletonPtr();
+
+		_map = Logic::CServer::getSingletonPtr()->getMap();
 		
 	} // activate
 
@@ -57,9 +59,6 @@ namespace Application {
 	void CGameServerState::deactivate() {
 		CGameState::deactivate();
 		
-		_playersMgr = NULL;
-		_netMgr = NULL;
-
 		// Solicitamos dejar de ser notificados
 		_netMgr->removeObserver(this);
 		// Nos desconectamos
@@ -67,7 +66,9 @@ namespace Application {
 
 		Input::CInputManager::getSingletonPtr()->removeKeyListener(this);
 
-		
+		_playersMgr = NULL;
+		_netMgr = NULL;
+		_map = NULL;
 	} // deactivate
 
 	//______________________________________________________________________________
@@ -98,14 +99,14 @@ namespace Application {
 				// Una vez recibida la informacion del cliente, le indicamos que cargue el mapa
 				
 				// Obtenemos el nombre del mapa que el servidor tiene en uso
-				std::string map = Logic::CServer::getSingletonPtr()->getMap()->getMapName();
-				map = map.substr( 0, map.find("_") );
+				std::string mapName = _map->getMapName();
+				mapName = mapName.substr( 0, mapName.find("_") );
 
 				// Construimos el mensaje de load_map con el nombre del mapa
 				Net::NetMessageType loadMapMsg = Net::LOAD_MAP;
-				Net::CBuffer outBuffer( sizeof(loadMapMsg) + sizeof(unsigned int) + (map.size() * sizeof(char)) );
+				Net::CBuffer outBuffer( sizeof(loadMapMsg) + sizeof(unsigned int) + (mapName.size() * sizeof(char)) );
 				outBuffer.write( &loadMapMsg, sizeof(loadMapMsg) );
-				outBuffer.serialize(map, false);
+				outBuffer.serialize(mapName, false);
 				
 				// Enviamos el mensaje de carga de mapa al cliente
 				_netMgr->sendTo(playerNetId, outBuffer.getbuffer(), outBuffer.getSize());
@@ -166,6 +167,7 @@ namespace Application {
 			case Net::WORLD_STATE_LOADED: {
 				Net::NetMessageType startGameMsg = Net::START_GAME;
 				_netMgr->sendTo(playerNetId, &startGameMsg, sizeof(startGameMsg));
+				break;
 			}
 			case Net::PING: {
 				Net::NetMessageType ackMsg = Net::PING;
@@ -181,7 +183,7 @@ namespace Application {
 				// Obtenemos el nickname del jugador que quiere espectar
 				std::string nickname = _playersMgr->getPlayerNickname(playerNetId);
 				// Creamos la entidad espectador con el nombre del jugador
-				Logic::CEntity* spectator = Logic::CServer::getSingletonPtr()->getMap()->createPlayer(nickname, "Spectator");
+				Logic::CEntity* spectator = _map->createPlayer(nickname, "Spectator");
 				// Obtenemos la id logica de la entidad espectador
 				Logic::TEntityID spectatorId = spectator->getEntityID();
 				// Seteamos la id logica del jugador en el gestor de jugadores
@@ -204,8 +206,7 @@ namespace Application {
 			case Net::CLASS_SELECTED: {
 				//primero comprobamos si habia una entidad correspondiente a este jugador
 				//en caso de que la haya la eliminamos para crear la nueva
-				Logic::CEntity* deletePlayer = Logic::CServer::getSingletonPtr()->getMap()->getEntityByID(
-					_playersMgr->getPlayer(playerNetId).getEntityId().first);
+				Logic::CEntity* deletePlayer = _map->getEntityByID(_playersMgr->getPlayer(playerNetId).getEntityId().first);
 				if(deletePlayer){
 					Logic::CEntityFactory::getSingletonPtr()->deferredDeleteEntity(deletePlayer,true);
 				}
@@ -219,16 +220,16 @@ namespace Application {
 				Logic::CEntity* player;
 				switch(race) {
 					case 1:
-						player = Logic::CServer::getSingletonPtr()->getMap()->createPlayer(name, "Screamer");
+						player = _map->createPlayer(name, "Screamer");
 						break;
 					case 2:
-						player = Logic::CServer::getSingletonPtr()->getMap()->createPlayer(name, "Hound");
+						player = _map->createPlayer(name, "Hound");
 						break;
 					case 3:
-						player = Logic::CServer::getSingletonPtr()->getMap()->createPlayer(name, "Archangel");
+						player = _map->createPlayer(name, "Archangel");
 						break;
 					case 4:
-						player = Logic::CServer::getSingletonPtr()->getMap()->createPlayer(name, "Shadow");
+						player = _map->createPlayer(name, "Shadow");
 						break;
 				}
 
@@ -291,12 +292,21 @@ namespace Application {
 	void CGameServerState::disconnectionPacketReceived(Net::CPaquete* packet) {
 		// Obtenemos el puntero al gestor de jugadores y el id de red del cliente que se quiere desconectar
 		Net::NetID playerNetId = packet->getConexion()->getId();
-		// Eliminamos la entidad (este mensaje se forwardea automaticamente a los clientes).
-		Logic::CEntity* entityToBeDeleted = Logic::CServer::getSingletonPtr()->getMap()->getEntityByID( _playersMgr->getPlayerId(playerNetId) );
-		Logic::CEntityFactory::getSingletonPtr()->deferredDeleteEntity(entityToBeDeleted,true);
+
+		// Eliminamos la entidad manejada por el cliente que se quiere desconectar.
+		// Para ello comprobamos si tiene asignado un id de entidad. Si no lo tiene, es que
+		// no ha sido creada ninguna entidad (podria estar conectandose).
+		std::pair<Logic::TEntityID, bool> logicIdPair = _playersMgr->getPlayerId(playerNetId);
+		if(logicIdPair.second) {
+			Logic::CEntity* entityToBeDeleted = _map->getEntityByID(logicIdPair.first);
+			Logic::CEntityFactory::getSingletonPtr()->deferredDeleteEntity(entityToBeDeleted,true);
+		}
+		
 		// Eliminamos el jugador que se desconecta del manager de jugadores
 		_playersMgr->removePlayer(playerNetId);
 	} // disconnexionPacketReceived
+
+	//______________________________________________________________________________
 
 	bool CGameServerState::keyPressed(Input::TKey key)
 	{

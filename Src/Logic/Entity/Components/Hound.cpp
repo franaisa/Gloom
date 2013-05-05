@@ -62,23 +62,23 @@ namespace Logic {
 		// Si la habilidad primaria esta en uso, controlar el tiempo
 		// de duración de la habilidad. Cuando se cumpla el tiempo,
 		// deshabilitamos el shader y el efecto beserker.
-		if(_berserkerTimer > 0) {
-			_berserkerTimer -= msecs;
-
-			if(_berserkerTimer <= 0) {
-				_berserkerTimer = 0;
-
+		if(_doingPrimarySkill){
+			if(_berserkerTimer > 0) {
+				_berserkerTimer -= msecs;
+			}else{
 				// Volvemos a los valores de daño y cd's originales
 				//Ponemos los valores de daño y cd's del berserker (mensaje con porcentajes de incremento y reduccion respecto al original)
  				std::shared_ptr<CMessageBerserker> berserkerMsg = std::make_shared<CMessageBerserker>();
 				berserkerMsg->setPercentCooldown(0);
 				berserkerMsg->setPercentDamage(0);
 				_entity->emitMessage(berserkerMsg);
-
+	
 				//le seteamos el material al material por defecto
 				std::shared_ptr<CMessageChangeMaterial> materialMsg = std::make_shared<CMessageChangeMaterial>();
 				materialMsg->setMaterialName("original");
 				_entity->emitMessage(materialMsg);
+				_berserkerTimer = _berserkerDuration;
+				_doingPrimarySkill = false;
 			}
 		}
 	}
@@ -94,7 +94,7 @@ namespace Logic {
 		materialMsg->setMaterialName(_materialName);
 		_entity->emitMessage(materialMsg);
 
-		_berserkerTimer = 0;
+		_berserkerTimer = _berserkerDuration;
 	}
 
 	//__________________________________________________________________
@@ -115,6 +115,8 @@ namespace Logic {
 		std::shared_ptr<CMessageChangeMaterial> materialMsg = std::make_shared<CMessageChangeMaterial>();
 		materialMsg->setMaterialName("berserk");
 		_entity->emitMessage(materialMsg);
+
+		_doingPrimarySkill = true;
 	}
 
 	//__________________________________________________________________

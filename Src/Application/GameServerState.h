@@ -22,6 +22,7 @@ Contiene la declaración del estado de juego.
 
 namespace Logic {
 	class CGameNetPlayersManager;
+	class CMap;
 }
 
 namespace Application {
@@ -172,6 +173,8 @@ namespace Application {
 		Logic::CGameNetPlayersManager* _playersMgr;
 
 		Net::CManager* _netMgr;
+
+		Logic::CMap* _map;
 	}; // CMultiplayerTeamDeathmatchServerState
 
 } // namespace Application
