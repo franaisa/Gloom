@@ -1,5 +1,5 @@
 /**
-@file LocalArchangel.h
+@file LocalHound.h
 
 Contiene la declaración del componente que controla los efectos de
 cámara de la entidad archangel.
@@ -9,8 +9,8 @@ cámara de la entidad archangel.
 @author Antonio Jesus Narvaez
 @date Mayo, 2013
 */
-#ifndef __Logic_LocalArchangel_H
-#define __Logic_LocalArchangel_H
+#ifndef __Logic_LocalHound_H
+#define __Logic_LocalHound_H
 
 #include "Logic/Entity/Component.h"
 
@@ -35,21 +35,21 @@ namespace Logic
 
 	*/
 
-	class CLocalArchangel: public IComponent
+	class CLocalHound: public IComponent
 	{
-		DEC_FACTORY(CLocalArchangel);
+		DEC_FACTORY(CLocalHound);
 
 	public:
 		/**
 		Constructor por defecto; inicializa los atributos a su valor por 
 		defecto.
 		*/
-		CLocalArchangel(): _scene(0) {}
+		CLocalHound(): _scene(0) {}
 
 		/**
 		Destructor (virtual); Quita de la escena y destruye la entidad gráfica.
 		*/
-		virtual ~CLocalArchangel(){}
+		virtual ~CLocalHound(){}
 		
 		/**
 		Inicialización del componente, utilizando la información extraída de
@@ -92,7 +92,6 @@ namespace Logic
 		@param message Mensaje a procesar.
 		*/
 		virtual void process(const std::shared_ptr<CMessage>& message);
-	
 	protected:
 
 		/**
@@ -107,6 +106,7 @@ namespace Logic
 		@param msecs Milisegundos transcurridos desde el último tick.
 		*/
 		virtual void onTick(unsigned int msecs);
+
 	private:
 
 		Graphics::CScene* _scene;
@@ -116,8 +116,8 @@ namespace Logic
 
 		int _timestamp;
 		
-	};//class CLocalArchangel
-	REG_FACTORY(CLocalArchangel);
+	};//class CLocalHound
+	REG_FACTORY(CLocalHound);
 }
 
 #endif

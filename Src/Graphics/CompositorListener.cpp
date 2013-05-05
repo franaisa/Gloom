@@ -47,7 +47,7 @@ namespace Graphics
 			
 			std::pair<std::string, float> elem(nameVar,value);
 
-			_compositorVariables.insert(elem);
+			_compositorVariables[nameVar] = value;
 		}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
