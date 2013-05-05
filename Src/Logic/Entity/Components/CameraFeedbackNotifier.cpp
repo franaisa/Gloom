@@ -41,7 +41,7 @@ namespace Logic {
 														 _landForce(0),
 														 _landRecoverySpeed(0.007f),
 														 _currentLandOffset(0),
-														 _walkingRollSpeed(0.012f),
+														 _walkingRollSpeed(0.008f),
 														 _walkingRollOffset(0.003f),
 														 _currentWalkingRoll(0) {
 
@@ -166,9 +166,9 @@ namespace Logic {
 	//________________________________________________________________________
 
 	void CCameraFeedbackNotifier::playerIsTouchingGround(float hitForce) {
-		if(hitForce < -1.0f) {
+		if(hitForce < -0.3f) {
 			_playerIsLanding = true;
-			_landForce = abs(hitForce) * 0.6f;
+			_landForce = abs(hitForce);
 		}
 	}
 
