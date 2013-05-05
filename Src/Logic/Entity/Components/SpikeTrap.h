@@ -70,6 +70,11 @@ namespace Logic
 		*/
 		virtual void onTick(unsigned int msecs);
 
+		/**
+		Metodo que se ejecuta antes del primer ticky despues de las activaciones.
+		*/
+		virtual void onStart();
+
 
 	private:
 

@@ -60,7 +60,6 @@ namespace Logic
 		numTrap << _numTrap;
 		std::string nTrap = numTrap.str();
 		//Cogemos los pinchos asociados a esta trampa 
-		//Hay que desactivarlos en el onStart si es que esta bien o hacer la creacion de entidades de forma desactivada grafica/fisicamente
 		for(int i=1; i<=_numSpikes; i++){
 			std::stringstream numI;
 			numI << i;
@@ -72,6 +71,15 @@ namespace Logic
 		_timer=0;
 
 	} // activate
+	//---------------------------------------------------------
+
+	void CSpikeTrap::onStart(){
+		//Desactivamos los pinchos para que solo salgan al darle a la trampa
+		std::shared_ptr<CMessageDeactivate> deactivateMsg = std::make_shared<CMessageDeactivate>();
+		for(int i=0; i<_numSpikes; i++){
+			_spikes[i]->emitMessage(deactivateMsg);
+		}
+	}// onStart
 	//---------------------------------------------------------
 
 
@@ -95,6 +103,7 @@ namespace Logic
 					//Activacion y fuerza
 					std::shared_ptr<CMessageActivate> activateMsg = std::make_shared<CMessageActivate>();
 					for(int i=0; i<_numSpikes; i++){
+						std::cout << "Pincho" << i << " en posicion: " << _spikes[i]->getPosition() << std::endl;
 						_spikes[i]->emitMessage(activateMsg);
 						_spikes[i]->emitMessage(forceMsg);
 					}

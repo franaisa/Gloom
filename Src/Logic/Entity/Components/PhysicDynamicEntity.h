@@ -96,6 +96,11 @@ namespace Logic {
 
 		void addForce(const Vector3& force, Physics::ForceMode mode = Physics::eFORCE, bool autowake = true);
 
+		/**
+		Limpia las fuerzas acumuladas que podria llevar la entidad.
+		*/
+		void clearForce(Physics::ForceMode mode = Physics::eFORCE, bool autowake = true);
+
 		void addTorque(const Vector3& force, Physics::ForceMode mode = Physics::eFORCE, bool autowake = true);
 
 		void deactivateSimulation();

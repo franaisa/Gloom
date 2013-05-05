@@ -159,6 +159,15 @@ namespace Physics {
 		//________________________________________________________________________
 
 		/**
+		Desactiva las fuerzas acumuladas en la entidad.
+
+		@param forceMode el modo de fuerza que queremos que sea reseteado.
+		*/
+		void clearForce(ForceMode forceMode = eFORCE,bool autowake = true);
+
+		//________________________________________________________________________
+
+		/**
 		Método para saber si la entidad física es kinemática.
 
 		@return True si la entidad es kinemática.

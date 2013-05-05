@@ -104,7 +104,7 @@ void CPhysicDynamicEntity::process(const std::shared_ptr<CMessage>& message) {
 
 			if( !forceMsg->getGravity() )
 				_physicEntity.disableGravity(true);
-		
+
 			addForce( forceMsg->getForceVector(), forceMsg->getForceMode() );
 			break;
 		}
@@ -295,6 +295,12 @@ void CPhysicDynamicEntity::setTransform(const Matrix4 &transform, bool makeConve
 
 void CPhysicDynamicEntity::addForce(const Vector3& force, Physics::ForceMode mode, bool autowake) {
 	_physicEntity.addForce(force, mode, autowake);
+}
+
+//---------------------------------------------------------
+
+void CPhysicDynamicEntity::clearForce(Physics::ForceMode mode, bool autowake) {
+	_physicEntity.clearForce(mode,autowake);
 }
 
 //---------------------------------------------------------
