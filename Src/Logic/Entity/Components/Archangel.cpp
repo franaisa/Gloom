@@ -69,24 +69,20 @@ namespace Logic {
 		// deshabilitamos la reducción de daño
 		if(_inmunityTimer > 0) {
 			_inmunityTimer -= msecs;
-
-			if(_inmunityTimer <= 0) {
-				_inmunityTimer = 0;
-
+		}else{
 				// Seteamos la reducción de daño a 0 de manera que recibimos los daños normales
 				std::shared_ptr<CMessageSetReducedDamage> pReducedDmgMsg = std::make_shared<CMessageSetReducedDamage>();
 				pReducedDmgMsg->setReducedDamage(0);
 				_entity->emitMessage(pReducedDmgMsg);
+				
 
 				// Desactivamos el shader de inmunidad
 				// Desactivamos el shader de invisibilidad
 				std::shared_ptr<CMessageChangeMaterial> materialMsg = std::make_shared<CMessageChangeMaterial>();
 				materialMsg->setMaterialName("original");
 				_entity->emitMessage(materialMsg);
-			}
-			else {
-				_inmunityTimer -= msecs;
-			}
+				_inmunityTimer = _inmunityDuration;
+				this->putToSleep();
 		}
 	}
 
@@ -101,6 +97,7 @@ namespace Logic {
 		materialMsg->setMaterialName(_materialName);
 		_entity->emitMessage(materialMsg);
 		_inmunityTimer = 0;
+		this->putToSleep();
 	}
 
 	//__________________________________________________________________

@@ -65,21 +65,18 @@ namespace Logic {
 		// deshabilitamos el shader de transparencia.
 		if(_invisibilityTimer > 0) {
 			_invisibilityTimer -= msecs;
-
-			if(_invisibilityTimer < 0) {
-				_invisibilityTimer = 0;
-
-				// Desactivamos el shader de invisibilidad
-				std::shared_ptr<CMessageChangeMaterial> materialMsg = std::make_shared<CMessageChangeMaterial>();
-				materialMsg->setMaterialName("original");
-				_entity->emitMessage(materialMsg);
-
-				/*
-				std::shared_ptr<CMessageChangeMaterialHudWeapon> materialMsgHud = std::make_shared<CMessageChangeMaterialHudWeapon>();
-				materialMsgHud->setMaterialName("original");
-				_entity->emitMessage(materialMsgHud);
-				*/
-			}
+		}else{
+			// Desactivamos el shader de invisibilidad
+			std::shared_ptr<CMessageChangeMaterial> materialMsg = std::make_shared<CMessageChangeMaterial>();
+			materialMsg->setMaterialName("original");
+			_entity->emitMessage(materialMsg);
+			/*
+			std::shared_ptr<CMessageChangeMaterialHudWeapon> materialMsgHud = std::make_shared<CMessageChangeMaterialHudWeapon>();
+			materialMsgHud->setMaterialName("original");
+			_entity->emitMessage(materialMsgHud);
+			*/
+			_invisibilityTimer = _invisibilityDuration;
+			this->putToSleep();
 		}
 	}
 
@@ -87,11 +84,8 @@ namespace Logic {
 
 	void CShadow::onActivate() {
 		CPlayerClass::onActivate();
-
-		// Ñapa temporal para el ideame
-		// Cambiamos el color del marine en funcion de la clase con un changeMaterial
-
 		
+		this->putToSleep();
 	}
 
 	//__________________________________________________________________
@@ -102,7 +96,7 @@ namespace Logic {
 		materialMsg->setMaterialName("original");
 		_entity->emitMessage(materialMsg);
 
-		_invisibilityTimer = 1;
+		_invisibilityTimer = _invisibilityDuration;
 	}
 
 	//__________________________________________________________________

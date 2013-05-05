@@ -64,22 +64,20 @@ namespace Logic {
 		// deshabilitamos el shader y el efecto beserker.
 		if(_berserkerTimer > 0) {
 			_berserkerTimer -= msecs;
+		}else{
+			// Volvemos a los valores de daño y cd's originales
+			//Ponemos los valores de daño y cd's del berserker (mensaje con porcentajes de incremento y reduccion respecto al original)
+ 			std::shared_ptr<CMessageBerserker> berserkerMsg = std::make_shared<CMessageBerserker>();
+			berserkerMsg->setPercentCooldown(0);
+			berserkerMsg->setPercentDamage(0);
+			_entity->emitMessage(berserkerMsg);
 
-			if(_berserkerTimer <= 0) {
-				_berserkerTimer = 0;
-
-				// Volvemos a los valores de daño y cd's originales
-				//Ponemos los valores de daño y cd's del berserker (mensaje con porcentajes de incremento y reduccion respecto al original)
- 				std::shared_ptr<CMessageBerserker> berserkerMsg = std::make_shared<CMessageBerserker>();
-				berserkerMsg->setPercentCooldown(0);
-				berserkerMsg->setPercentDamage(0);
-				_entity->emitMessage(berserkerMsg);
-
-				//le seteamos el material al material por defecto
-				std::shared_ptr<CMessageChangeMaterial> materialMsg = std::make_shared<CMessageChangeMaterial>();
-				materialMsg->setMaterialName("original");
-				_entity->emitMessage(materialMsg);
-			}
+			//le seteamos el material al material por defecto
+			std::shared_ptr<CMessageChangeMaterial> materialMsg = std::make_shared<CMessageChangeMaterial>();
+			materialMsg->setMaterialName("original");
+			_entity->emitMessage(materialMsg);
+			_berserkerTimer = _berserkerDuration;
+			this->putToSleep();
 		}
 	}
 
@@ -95,6 +93,7 @@ namespace Logic {
 		_entity->emitMessage(materialMsg);
 
 		_berserkerTimer = 0;
+		this->putToSleep();
 	}
 
 	//__________________________________________________________________
