@@ -74,7 +74,7 @@ namespace Logic{
 		_timestamp -= msecs;
 		if(_timestamp > 100){
 			_scene->updateCompositorVariable(_effect, _strengthEffect, _timestamp*0.01);
-			printf("\nDisminuyendo: %d \t\t le paso: %f", _timestamp, _timestamp*0.01);
+			//printf("\nDisminuyendo: %d \t\t le paso: %f", _timestamp, _timestamp*0.01);
 			
 		}else{
 			_timestamp = 1300;

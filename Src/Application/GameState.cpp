@@ -106,7 +106,7 @@ namespace Application {
 			// Actualizamos la lógica de juego.
 			Logic::CServer::getSingletonPtr()->tick(16);
 		}*/
-		std::cout << "msecs para fisica y logica: " << msecs << std::endl;
+		//std::cout << "msecs para fisica y logica: " << msecs << std::endl;
 		// Ejecutamos el tick de la física del juego.
 		Physics::CServer::getSingletonPtr()->tick(msecs);
 		// Ejecutamos el tick de la lógica del juego

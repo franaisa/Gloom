@@ -59,9 +59,9 @@ namespace Logic{
 		_timestamp += msecs;
 		if(_timestamp < 2200){
 			_scene->updateCompositorVariable(_effect, _strengthEffect, _timestamp*0.001);
-			printf("\nDisminuyendo: %d \t\t le paso: %f", _timestamp, _timestamp*0.001);
+			//printf("\nDisminuyendo: %d \t le paso: %f y el seno: %f - %f", _timestamp, _timestamp*0.001, sin(_timestamp*0.001)*0.5, sin(_timestamp*0.001)*0.5+1.8);
 		}else{
-			_scene->updateCompositorVariable(_effect, _strengthEffect, std::sin(_timestamp*0.001)+2.2);
+			_scene->updateCompositorVariable(_effect, _strengthEffect, (std::sin(_timestamp*0.001)*0.5)+1.8);
 /*/
 	void CLocalHound::onWake(){
 		_timestamp = 2000;
