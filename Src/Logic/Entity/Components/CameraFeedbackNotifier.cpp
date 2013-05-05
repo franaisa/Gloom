@@ -137,6 +137,10 @@ namespace Logic {
 
 		//Ahora actualizamos el motion blur
 		float blur = (_avatarc->getVelocity().length()/_maxVelocity)/2;
+
+		if(blur>0.5)
+			blur=0.5f;
+
 		_scene->updateCompositorVariable(_motionblur, "blur", blur);
 	}
 
