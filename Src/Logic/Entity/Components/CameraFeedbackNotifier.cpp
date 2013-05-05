@@ -38,6 +38,9 @@ namespace Logic {
 	CCameraFeedbackNotifier::CCameraFeedbackNotifier() : _owner(NULL),
 														 _playerIsWalking(false),
 														 _playerIsLanding(false),
+														 _landForce(0),
+														 _landRecoverySpeed(0.007f),
+														 _currentLandOffset(0),
 														 _walkingRollSpeed(0.012f),
 														 _walkingRollOffset(0.003f),
 														 _currentWalkingRoll(0) {
@@ -139,14 +142,7 @@ namespace Logic {
 		}
 
 		if(_playerIsLanding) {
-			float camVerticalOffset = _cameraComponent->getVerticalOffset();
-			if(camVerticalOffset < 0) {
-				_cameraComponent->setVerticalOffset(camVerticalOffset + (0.01f * msecs));
-			}
-			else {
-				_cameraComponent->setVerticalOffset(0);
-				_playerIsLanding = false;
-			}
+			landEffect(msecs);
 		}	
 
 		//Ahora actualizamos el motion blur
@@ -170,9 +166,24 @@ namespace Logic {
 	//________________________________________________________________________
 
 	void CCameraFeedbackNotifier::playerIsTouchingGround(float hitForce) {
-		if(hitForce < -0.8f) {
+		if(hitForce < -1.0f) {
 			_playerIsLanding = true;
-			_cameraComponent->setVerticalOffset(hitForce);
+			_landForce = abs(hitForce) * 0.6f;
+		}
+	}
+
+	//________________________________________________________________________
+
+	void CCameraFeedbackNotifier::landEffect(unsigned int msecs) {
+		_currentLandOffset += _landRecoverySpeed * msecs;
+		float vOffset = sin(_currentLandOffset + Math::PI) * _landForce;
+		if(vOffset >= 0.0f) {
+			_currentLandOffset =  _landForce = 0;
+			_cameraComponent->setVerticalOffset(0);
+			_playerIsLanding = false;
+		}
+		else {
+			_cameraComponent->setVerticalOffset( sin(_currentLandOffset + Math::PI) * _landForce);
 		}
 	}
 

@@ -75,6 +75,11 @@ namespace Logic
 		bool _isDead;
 
 		/**
+		Nos sirve para saber cuando reactivar la simulación fisica.
+		*/
+		bool _reactivePhysicSimulation;
+
+		/**
 		Nos lleva el tiempo que permanecerá muerta.
 		*/
 		unsigned int _timeSpawn;
