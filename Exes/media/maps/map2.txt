@@ -36,7 +36,7 @@ Map = {
 	Pincho11 = {
 		type = "Spike",
 		position = {26.0,7.0,-56.0},
-		yaw = 90,
+		yaw = 0,
 		pitch = 90,
 		model = "cone.mesh",
 		physic_entity = "rigid",
@@ -52,7 +52,7 @@ Map = {
 	Pincho12 = {
 		type = "Spike",
 		position = {18.0,7.0,-56.0},
-		yaw = 90,
+		yaw = 0,
 		pitch = 90,
 		model = "cone.mesh",
 		physic_entity = "rigid",
@@ -68,7 +68,7 @@ Map = {
 	Pincho13 = {
 		type = "Spike",
 		position = {10.0,7.0,-56.0},
-		yaw = 90,
+		yaw = 0,
 		pitch = 90,
 		model = "cone.mesh",
 		physic_entity = "rigid",
@@ -281,7 +281,7 @@ Map = {
 	},
 	
 	David = {
-		type = "LocalHound",
+		type = "LocalArchangel",
 		isPlayer = true,
 	},
 	

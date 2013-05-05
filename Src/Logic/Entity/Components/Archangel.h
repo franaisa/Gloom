@@ -93,9 +93,7 @@ namespace Logic {
 		/** El personaje cura a los aliados que tiene en un radio. */
 		virtual void secondarySkill();
 
-
 	protected:
-
 
 		/**
 		Método llamado en cada frame.

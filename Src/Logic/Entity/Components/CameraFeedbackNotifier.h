@@ -17,6 +17,10 @@ del Screamer.
 
 #include "Logic/Entity/Component.h"
 
+namespace Graphics{
+	class CScene;
+}
+
 namespace Logic {
 	class CCamera;
 }
@@ -129,6 +133,13 @@ namespace Logic {
 		float _walkingRollOffset;
 
 		bool _playerIsWalking;
+
+		bool _effectIsActivated;
+		std::string _effect;
+		std::string _strengthEffect;
+		Graphics::CScene *_scene;
+		int _timestamp;
+
 
 	}; // class CScreamerShieldDamageNotifier
 

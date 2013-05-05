@@ -12,6 +12,7 @@ del Screamer.
 @date Abril, 2013
 */
 
+#include "Graphics/Scene.h"
 #include "CameraFeedbackNotifier.h"
 #include "Camera.h"
 #include "Logic/Server.h"
@@ -67,10 +68,10 @@ namespace Logic {
 				damaged();
 				break;
 			}
-			case Message::SET_REDUCED_DAMAGE: {
+			/*case Message::SET_REDUCED_DAMAGE: {
 				damaged();
 				break;
-			}
+			}*/
 		}
 	} // process
 
@@ -81,6 +82,17 @@ namespace Logic {
 		assert(cameraEntity != NULL && "Error: No existe una entidad camara");
 		_cameraComponent = cameraEntity->getComponent<CCamera>("CCamera");
 		assert(_cameraComponent != NULL && "Error: La entidad camara no tiene un componente de camara");
+		
+		_scene = _entity->getMap()->getScene();
+		_effect = "damageCompositor";
+		_strengthEffect = "strength";
+		_effectIsActivated = false;
+		_scene->createCompositor(_effect);
+		_scene->setCompositorVisible(_effect, false);
+		// Por ahora esta a hierro, lo suyo es ponerlo por el mapa
+		_scene->updateCompositorVariable(_effect, _strengthEffect, 1);
+		
+		
 	}
 
 	//________________________________________________________________________
@@ -92,6 +104,15 @@ namespace Logic {
 		else if(_currentWalkingRoll != 0) {
 			walkEffect(msecs);
 		}
+		if(_effectIsActivated){
+			_timestamp += msecs;
+			if(_timestamp > 500){
+				_effectIsActivated = false;
+				_scene->setCompositorVisible(_effect, false);
+			}
+		}
+
+
 	}
 
 	//________________________________________________________________________
@@ -110,6 +131,10 @@ namespace Logic {
 		m3->setOffsetTimer(100.0f);//Timer								 
 		Logic::CEntity * camera = Logic::CServer::getSingletonPtr()->getMap()->getEntityByType("Camera");
 		camera->emitMessage(m3);
+
+		_scene->setCompositorVisible(_effect, true);
+		_effectIsActivated = true;
+		_timestamp = 0;
 	}// damaged
 
 	//________________________________________________________________________
