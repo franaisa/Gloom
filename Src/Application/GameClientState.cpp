@@ -30,19 +30,19 @@ Contiene la implementación del estado de juego.
 #include "Logic/Maps/EntityFactory.h"
 #include "Logic/Maps/Map.h"
 #include "Logic/Maps/EntityID.h"
-#include "Logic\Entity\Components\Camera.h"
+#include "Logic/Entity/Components/Camera.h"
 
 #include "Hikari.h"
 #include "FlashValue.h"
-#include "GUI\Server.h"
-#include "Input\PlayerController.h"
+#include "GUI/Server.h"
+#include "Input/PlayerController.h"
 #include "Input/Server.h"
 
 namespace Application {
 
 	
 	bool CGameClientState::init(){
-		//iniciamos el menu de seleccion de personaje
+		// Iniciamos el menu de seleccion de personaje
 		_seleccion = GUI::CServer::getSingletonPtr()->addLayout("seleccion", Hikari::Position(Hikari::Center));
 		_seleccion->load("SeleccionPersonaje.swf");
 		_seleccion->bind("selected",Hikari::FlashDelegate(this, &CGameClientState::classSelected));
@@ -53,29 +53,34 @@ namespace Application {
 
 		return true;
 	}
+
 	//______________________________________________________________________________
 
 	void CGameClientState::activate() {
 		CGameState::activate();
 		
+		// Mostramos el menú de selección de personaje
 		_seleccion->show();
 
 		// Registramos a este estado como observador de red para que sea notificado
 		_netMgr->addObserver(this);
 
-		//nos registramos como observadores del teclado
+		// Nos registramos como observadores del teclado
 		Input::CInputManager::getSingletonPtr()->addKeyListener(this);
 		
-		//comenzamos el proceso de sincronizacion, para ello enviamos un mensaje de ping
-		//y tomamos el tiempo para cronometrar cuanto tarda el servidor en respondernos
+		// Configuramos los valores iniciales
+		_reloj = clock();
+		_npings = 0;
+		_pingActual = 0;
+
+		// Comenzamos el proceso de sincronizacion, para ello enviamos un mensaje de ping
+		// y tomamos el tiempo para cronometrar cuanto tarda el servidor en respondernos
 		Net::NetMessageType ackMsg = Net::PING;
 		Net::NetID id = _netMgr->getID();
 		Net::CBuffer ackBuffer(sizeof(ackMsg) + sizeof(id));
 		ackBuffer.write(&ackMsg, sizeof(ackMsg));
 		ackBuffer.write(&id, sizeof(id));
-		_reloj = clock();
-		_npings = 0;
-		_pingActual = 0;
+		
 		_netMgr->broadcast(ackBuffer.getbuffer(), ackBuffer.getSize());
 	} // activate
 
@@ -86,6 +91,7 @@ namespace Application {
 		_netMgr->removeObserver(this);
 		// Nos desconectamos
 		_netMgr->deactivateNetwork();
+		// Indicamos que ya no queremos ser notificados de la pulsación de teclas
 		Input::CInputManager::getSingletonPtr()->removeKeyListener(this);
 
 		CGameState::deactivate();
@@ -94,16 +100,20 @@ namespace Application {
 	//______________________________________________________________________________
 
 	void CGameClientState::dataPacketReceived(Net::CPaquete* packet) {
-		Net::CBuffer buffer(packet->getDataLength());
-		buffer.write(packet->getData(), packet->getDataLength());
+		// Introducimos los datos recibidos en un buffer para leerlo
+		// facilmente
+		Net::CBuffer buffer( packet->getDataLength() );
+		buffer.write( packet->getData(), packet->getDataLength() );
 		buffer.reset();
 
+		// Obtenemos la cabecera del mensaje
 		Net::NetMessageType msg;
-		buffer.read(&msg, sizeof(msg));
+		buffer.read( &msg, sizeof(msg) );
 
+		// Dependiendo del tipo de mensaje
 		switch (msg) {
 			case Net::LOAD_PLAYERS: {
-				// cargamos la informacion del player que nos han enviado
+				// Cargamos la informacion del player que nos han enviado
 				Logic::TEntityID entityID;
 				std::string playerClass, name;
 				int nbPlayers;
@@ -113,15 +123,47 @@ namespace Application {
 				buffer.deserialize(name);
 				buffer.deserialize(playerClass);
 
-				//llamo al metodo de creacion del jugador
+				// Llamo al metodo de creacion del jugador
 				Logic::CEntity * player = Logic::CServer::getSingletonPtr()->getMap()->createPlayer(name, playerClass, entityID);
 
 				// No es necesario enviar confirmacion
-
 				player->activate();
 				player->start();
 
 				break;
+			}
+			case Net::LOAD_LOCAL_PLAYER: {
+				// Deserializamos la información de nuestro player
+				Logic::TEntityID entityID;
+				buffer.read(&entityID, sizeof(entityID));
+				std::string playerClass, name;
+				buffer.deserialize(name);
+				buffer.deserialize(playerClass);
+
+				// Creamos al jugador como local (es decir, lo seteamos
+				// como el jugador controlado por las teclas).
+				Logic::CEntity* player = Logic::CServer::getSingletonPtr()->getMap()->createLocalPlayer(name, playerClass, entityID);
+
+				player->activate();
+				player->start();
+
+				// Fijamos el objetivo de la camara
+				Logic::CServer::getSingletonPtr()->getMap()->getEntityByType("Camera")->getComponent<Logic::CCamera>("CCamera")->setTarget(player);
+
+				break;
+			}
+			case Net::LOAD_LOCAL_SPECTATOR: {
+				// Deserializamos la info del espectador y lo cargamos
+				Logic::TEntityID entityId;
+				std::string nickname;
+				
+				buffer.read( &entityId, sizeof(entityId) );
+				buffer.deserialize(nickname);
+				
+				Logic::CEntity* spectator = Logic::CServer::getSingletonPtr()->getMap()->createLocalPlayer(nickname, "Spectator", entityId);
+				spectator->activate();
+				spectator->start();
+				Logic::CServer::getSingletonPtr()->getMap()->getEntityByType("Camera")->getComponent<Logic::CCamera>("CCamera")->setTarget(spectator);
 			}
 			case Net::PING: {
 				// me llega la respuesta de un ping, por lo tanto tomo el tiempo y calculo mi ping
@@ -149,40 +191,12 @@ namespace Application {
 
 				break;
 			}
-			case Net::LOAD_LOCAL_PLAYER: {
-				// cargamos la informacion del player que nos han enviado
-				Logic::TEntityID entityID;
-				buffer.read(&entityID, sizeof(entityID));
-				std::string playerClass, name;
-				buffer.deserialize(name);
-				buffer.deserialize(playerClass);
-
-				//llamo al metodo de creacion del jugador
-				Logic::CEntity * player = Logic::CServer::getSingletonPtr()->getMap()->createLocalPlayer(name, playerClass, entityID);
-
-				player->activate();
-				player->start();
-				Logic::CServer::getSingletonPtr()->getMap()->getEntityByType("Camera")->getComponent<Logic::CCamera>("CCamera")->setTarget(player);
-
-				break;
-			}
-			case Net::LOAD_LOCAL_SPECTATOR: {
-				Logic::TEntityID entityId;
-				std::string nickname;
-				
-				buffer.read( &entityId, sizeof(entityId) );
-				buffer.deserialize(nickname);
-				
-				Logic::CEntity* spectator = Logic::CServer::getSingletonPtr()->getMap()->createLocalPlayer(nickname, "Spectator", entityId);
-				spectator->activate();
-				spectator->start();
-				Logic::CServer::getSingletonPtr()->getMap()->getEntityByType("Camera")->getComponent<Logic::CCamera>("CCamera")->setTarget(spectator);
-			}
 		}
 	}
 
-	bool CGameClientState::keyPressed(Input::TKey key)
-	{
+	//______________________________________________________________________________
+
+	bool CGameClientState::keyPressed(Input::TKey key) {
 		CGameState::keyPressed(key);
 		
 		switch(key.keyId) {
@@ -199,58 +213,35 @@ namespace Application {
 		}
 		
 		return true;
-
 	} // keyPressed
 
-	//--------------------------------------------------------
+	//______________________________________________________________________________
 
-	bool CGameClientState::keyReleased(Input::TKey key)
-	{
+	bool CGameClientState::keyReleased(Input::TKey key) {
 		CGameState::keyReleased(key);
-		/*switch(key.keyId)
-		{
-		case Input::Key::ESCAPE:
-			{
-			break;
-			}
-		default:
-			return false;
-		}
-		return true;
-
-
-		*/
 
 		return true;
-
 	} // keyReleased
 
-	//--------------------------------------------------------
+	//______________________________________________________________________________
 	
-	bool CGameClientState::mouseMoved(const Input::CMouseState &mouseState)
-	{
+	bool CGameClientState::mouseMoved(const Input::CMouseState &mouseState) {
 		return false;
-
 	} // mouseMoved
 
-	//--------------------------------------------------------
+	//______________________________________________________________________________
 		
-	bool CGameClientState::mousePressed(const Input::CMouseState &mouseState)
-	{
+	bool CGameClientState::mousePressed(const Input::CMouseState &mouseState) {
 		return false;
-
 	} // mousePressed
 
-	//--------------------------------------------------------
+	//______________________________________________________________________________
 
-
-	bool CGameClientState::mouseReleased(const Input::CMouseState &mouseState)
-	{
+	bool CGameClientState::mouseReleased(const Input::CMouseState &mouseState) {
 		return false;
-
 	} // mouseReleased
 
-	//--------------------------------------------------------
+	//______________________________________________________________________________
 
 	Hikari::FlashValue CGameClientState::classSelected(Hikari::FlashControl* caller, const Hikari::Arguments& args) {
 		int selectedClass = args.at(0).getNumber();

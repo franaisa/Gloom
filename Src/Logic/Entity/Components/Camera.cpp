@@ -141,13 +141,25 @@ namespace Logic
 
 	//---------------------------------------------------------
 
+	void CCamera::setPosition(const Vector3& position) {
+		_graphicsCamera->setCameraPosition(position);
+	}
+
+	Vector3 CCamera::getPosition() {
+		return _graphicsCamera->getCameraPosition();
+	}
+
+	void CCamera::setVerticalOffset(float y) {
+		_verticalOffset = y;
+	}
+
 	void CCamera::onTick(unsigned int msecs)
 	{
 		if(_target)
 		{
 			// Actualizamos la posición de la cámara.
 			Vector3 position = _target->getPosition();
-			position.y+=_height;
+			position.y+=_height + _verticalOffset;
 
 			//Si hay offset (vibración) de cámara
 			if (_fOffsetTimer > 0)

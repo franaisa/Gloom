@@ -278,8 +278,6 @@ namespace Logic
 	//---------------------------------------------------------
 
 	bool CEntity::emitMessage(const std::shared_ptr<CMessage>& message, IComponent* emitter) {
-		
-		
 		TComponentList::const_iterator it = _componentList.begin();
 		// Para saber si alguien quiso el mensaje.
 		IComponent* component;

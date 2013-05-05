@@ -188,7 +188,6 @@ namespace Logic {
 
 	void CEntityFactory::unloadBluePrints() {
 		_bluePrints.clear();
-		releaseDispatcher();
 	} // unloadBluePrints
 	
 	//________________________________________________________________________

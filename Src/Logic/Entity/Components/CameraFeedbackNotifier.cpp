@@ -15,6 +15,7 @@ del Screamer.
 #include "Graphics/Scene.h"
 #include "CameraFeedbackNotifier.h"
 #include "Camera.h"
+#include "AvatarController.h"
 #include "Logic/Server.h"
 #include "Logic/Entity/Entity.h"
 #include "Logic/Maps/Map.h"
@@ -36,6 +37,7 @@ namespace Logic {
 
 	CCameraFeedbackNotifier::CCameraFeedbackNotifier() : _owner(NULL),
 														 _playerIsWalking(false),
+														 _playerIsLanding(false),
 														 _walkingRollSpeed(0.012f),
 														 _walkingRollOffset(0.003f),
 														 _currentWalkingRoll(0) {
@@ -48,6 +50,19 @@ namespace Logic {
 	CCameraFeedbackNotifier::~CCameraFeedbackNotifier() {
 		// Nada que borrar
 	}
+
+	//________________________________________________________________________
+
+	bool CCameraFeedbackNotifier::spawn(CEntity *entity, CMap *map, const Map::CEntity *entityInfo) {
+		if( !IComponent::spawn(entity,map,entityInfo) )
+			return false;
+
+		assert( entityInfo->hasAttribute("maxVelocity") && "Error: No se ha definido el atributo maxVelocity en el mapa" );
+		_maxVelocity = entityInfo->getFloatAttribute("maxVelocity");
+		
+
+		return true;
+	} // spawn
 	
 	//________________________________________________________________________
 
@@ -83,14 +98,23 @@ namespace Logic {
 		_cameraComponent = cameraEntity->getComponent<CCamera>("CCamera");
 		assert(_cameraComponent != NULL && "Error: La entidad camara no tiene un componente de camara");
 		
+		_avatarc = _entity->getComponent<CAvatarController>("CAvatarController");
+		assert(_avatarc != NULL && "Error: no tenemos avatar controller lol");
+
 		_scene = _entity->getMap()->getScene();
 		_effect = "damageCompositor";
+		_motionblur = "Motion Blur";
 		_strengthEffect = "strength";
 		_effectIsActivated = false;
 		_scene->createCompositor(_effect);
 		_scene->setCompositorVisible(_effect, false);
 		// Por ahora esta a hierro, lo suyo es ponerlo por el mapa
 		_scene->updateCompositorVariable(_effect, _strengthEffect, 1);
+
+		_scene->createCompositor(_motionblur);
+		_scene->setCompositorVisible(_motionblur, true);
+		// Por ahora esta a hierro, lo suyo es ponerlo por el mapa
+		_scene->updateCompositorVariable(_motionblur, "blur", 0.75);
 		
 		
 	}
@@ -104,7 +128,9 @@ namespace Logic {
 		else if(_currentWalkingRoll != 0) {
 			walkEffect(msecs);
 		}
+		
 		if(_effectIsActivated){
+			_scene->updateCompositorVariable(_effect, _strengthEffect, 1+_timestamp*0.01);
 			_timestamp += msecs;
 			if(_timestamp > 500){
 				_effectIsActivated = false;
@@ -112,7 +138,24 @@ namespace Logic {
 			}
 		}
 
+		if(_playerIsLanding) {
+			float camVerticalOffset = _cameraComponent->getVerticalOffset();
+			if(camVerticalOffset < 0) {
+				_cameraComponent->setVerticalOffset(camVerticalOffset + (0.01f * msecs));
+			}
+			else {
+				_cameraComponent->setVerticalOffset(0);
+				_playerIsLanding = false;
+			}
+		}	
 
+		//Ahora actualizamos el motion blur
+		float blur = (_avatarc->getVelocity().length()/_maxVelocity)/2;
+
+		if(blur>0.5)
+			blur=0.5f;
+
+		_scene->updateCompositorVariable(_motionblur, "blur", blur);
 	}
 
 	//________________________________________________________________________
@@ -122,6 +165,15 @@ namespace Logic {
 		if(_currentWalkingRoll > 2 * Math::PI) _currentWalkingRoll = 0;
 
 		_cameraComponent->rollCamera(sin(_currentWalkingRoll) * _walkingRollOffset);
+	}
+
+	//________________________________________________________________________
+
+	void CCameraFeedbackNotifier::playerIsTouchingGround(float hitForce) {
+		if(hitForce < -0.8f) {
+			_playerIsLanding = true;
+			_cameraComponent->setVerticalOffset(hitForce);
+		}
 	}
 
 	//________________________________________________________________________

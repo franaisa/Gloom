@@ -56,7 +56,7 @@ namespace Logic
 		/**
 		Constructor por defecto; en la clase base no hace nada.
 		*/
-		CCamera() : IComponent(), _graphicsCamera(0), _height(8), _currentRoll(0.0f) {}
+		CCamera() : IComponent(), _graphicsCamera(0), _height(8), _currentRoll(0.0f), _verticalOffset(0) {}
 		
 		/**
 		Inicialización del componente, utilizando la información extraída de
@@ -101,8 +101,13 @@ namespace Logic
 		*/
 		virtual void process(const std::shared_ptr<CMessage>& message);
 
+		void setPosition(const Vector3& position);
 
+		Vector3 getPosition();
 		
+		void setVerticalOffset(float y);
+
+		float getVerticalOffset() { return _verticalOffset; }
 
 		/**
 		Método llamado cuando nos llega un mensaje de mirar al enemigo que nos ha matado.
@@ -185,6 +190,8 @@ namespace Logic
 		float _fRoll;
 
 		float _currentRoll;
+
+		float _verticalOffset;
 
 	}; // class CCamera
 
