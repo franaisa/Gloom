@@ -23,6 +23,7 @@ namespace Graphics{
 
 namespace Logic {
 	class CCamera;
+	class CAvatarController;
 }
 
 namespace Logic {
@@ -58,6 +59,7 @@ namespace Logic {
 		//                    METODOS HEREDADOS DE ICOMPONENT
 		// =======================================================================
 
+		virtual bool spawn(CEntity *entity, CMap *map, const Map::CEntity *entityInfo);
 
 		/** 
 		Este componente acepta los siguientes mensajes:
@@ -138,8 +140,11 @@ namespace Logic {
 
 		bool _playerIsLanding;
 
+		float _maxVelocity;
+		Logic::CAvatarController* _avatarc;
+
 		bool _effectIsActivated;
-		std::string _effect;
+		std::string _effect, _motionblur;
 		std::string _strengthEffect;
 		Graphics::CScene *_scene;
 		int _timestamp;

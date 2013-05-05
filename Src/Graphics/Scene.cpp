@@ -130,8 +130,8 @@ namespace Graphics
 		_compositorManager->addCompositor(_camera->getOgreCamera()->getViewport(), "Glow");
 		_compositorManager->setCompositorEnabled(_camera->getOgreCamera()->getViewport(), "Glow", true);
 
-		_compositorManager->addCompositor(_camera->getOgreCamera()->getViewport(), "Motion Blur");
-		_compositorManager->setCompositorEnabled(_camera->getOgreCamera()->getViewport(), "Motion Blur", true);
+		/*_compositorManager->addCompositor(_camera->getOgreCamera()->getViewport(), "Motion Blur");
+		_compositorManager->setCompositorEnabled(_camera->getOgreCamera()->getViewport(), "Motion Blur", true);*/
 
 		/*_compositorManager->addCompositor(_camera->getOgreCamera()->getViewport(), "Old TV");
 		_compositorManager->setCompositorEnabled(_camera->getOgreCamera()->getViewport(), "Old TV", true);
