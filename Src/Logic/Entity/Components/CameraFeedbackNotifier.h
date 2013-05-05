@@ -109,7 +109,10 @@ namespace Logic {
 
 		void walkEffect(unsigned int msecs);
 
+
 		void playerIsTouchingGround(float hitForce);
+
+		void landEffect(unsigned int msecs);
 
 	protected:
 
@@ -139,6 +142,12 @@ namespace Logic {
 		bool _playerIsWalking;
 
 		bool _playerIsLanding;
+
+		float _landForce;
+
+		float _landRecoverySpeed;
+
+		float _currentLandOffset;
 
 		float _maxVelocity;
 		Logic::CAvatarController* _avatarc;
