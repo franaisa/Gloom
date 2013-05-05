@@ -51,12 +51,7 @@ namespace Logic{
 // Descomentar esta linea para ver los dos modos que se pueden poner (obviamente las variables son seteables)
 //*
 	void CLocalHound::onWake(){
-		std::cout << "Me despierto" << std::endl;
 		_timestamp = 0;
-	}
-
-	void CLocalHound::onSleep() {
-		std::cout << "Me pongo a dormir" << std::endl;
 	}
 
 	void CLocalHound::onTick(unsigned int msecs) {
