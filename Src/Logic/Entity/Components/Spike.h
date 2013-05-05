@@ -59,7 +59,7 @@ namespace Logic
 		/**
 		Posicion inicial del pincho.
 		*/
-		Vector3 _initialPosition;
+		Matrix4 _initialPosition;
 
 	}; // class CSpike
 

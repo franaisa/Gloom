@@ -54,7 +54,6 @@ namespace Logic
 	
 	void CSpikeTrap::onActivate()
 	{
-		std::shared_ptr<CMessageDeactivate> deactivateMsg = std::make_shared<CMessageDeactivate>();
 		// Leer los parametros que toquen para los proyectiles
 		std::stringstream numTrap;
 		numTrap << _numTrap;
@@ -65,7 +64,6 @@ namespace Logic
 			numI << i;
 			std::string nI = numI.str();
 			_spikes[i-1] = CServer::getSingletonPtr()->getMap()->getEntityByName("Pincho"+nTrap+nI);
-			_spikes[i-1]->emitMessage(deactivateMsg);
 		}
 		_isRespawning=false;
 		_timer=0;

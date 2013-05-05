@@ -22,14 +22,22 @@ namespace Logic {
 	}//
 	//----------------------------------------------------------
 	
+	void CMessageTransform::setMakeConversion(bool convertCoordsToLogicWorld) {
+		_convertCoordsToLogicWorld = convertCoordsToLogicWorld;
+	}//
+	//----------------------------------------------------------
+
+	bool CMessageTransform::getMakeConversion() {
+		return _convertCoordsToLogicWorld;
+	}//
+	//----------------------------------------------------------
+
 	Net::CBuffer* CMessageTransform::serialize() {
 		assert(_tempBuffer == NULL);
-
-		// IMPLEMENTAR EL ENVIO DEL MATRIX4
-
-		_tempBuffer = new Net::CBuffer(sizeof(int)+( sizeof(float) * 5));
+		_tempBuffer = new Net::CBuffer(sizeof(int)+( sizeof(float) * 5)+sizeof(bool));
 		_tempBuffer->serialize(std::string("CMessageTransform"),true);
 		_tempBuffer->serialize(_transform);
+		_tempBuffer->serialize(_convertCoordsToLogicWorld);
 		
 		return _tempBuffer;
 	}//
@@ -37,6 +45,7 @@ namespace Logic {
 
 	void CMessageTransform::deserialize(Net::CBuffer& buffer) {
 		buffer.deserialize(_transform);
+		buffer.deserialize(_convertCoordsToLogicWorld);
 	}
 
 };

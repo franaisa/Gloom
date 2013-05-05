@@ -19,6 +19,7 @@
 #include "Logic/Messages/MessageTouched.h"
 #include "Logic/Messages/MessageUntouched.h"
 #include "Logic/Messages/MessageSetPhysicPosition.h"
+#include "Logic/Messages/MessageTransform.h"
 #include "Logic/Messages/MessageAddForcePhysics.h"
 #include "Logic/Messages/MessageContactEnter.h"
 #include "Logic/Messages/MessageContactExit.h"
@@ -73,7 +74,8 @@ bool CPhysicDynamicEntity::accept(const std::shared_ptr<CMessage>& message) {
 		   msgType == Message::ACTIVATE				||
 		   msgType == Message::DEACTIVATE			||
 		   msgType == Message::SET_PHYSIC_POSITION	||
-		   msgType == Message::ADD_FORCE_PHYSICS;
+		   msgType == Message::ADD_FORCE_PHYSICS	||
+		   msgType == Message::SET_TRANSFORM;
 }
 
 //---------------------------------------------------------
@@ -97,6 +99,11 @@ void CPhysicDynamicEntity::process(const std::shared_ptr<CMessage>& message) {
 		case Message::SET_PHYSIC_POSITION: {
 			std::shared_ptr<CMessageSetPhysicPosition> setPosMsg = std::static_pointer_cast<CMessageSetPhysicPosition>(message);
 			setPosition( setPosMsg->getPosition(), setPosMsg->getMakeConversion() );
+			break;
+		}
+		case Message::SET_TRANSFORM: {
+			std::shared_ptr<CMessageTransform> transMsg = std::static_pointer_cast<CMessageTransform>(message);
+			setTransform(transMsg->getTransform(),transMsg->getMakeConversion());
 			break;
 		}
 		case Message::ADD_FORCE_PHYSICS: {
