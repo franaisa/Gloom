@@ -37,6 +37,7 @@ namespace Logic {
 
 	CCameraFeedbackNotifier::CCameraFeedbackNotifier() : _owner(NULL),
 														 _playerIsWalking(false),
+														 _playerIsLanding(false),
 														 _walkingRollSpeed(0.012f),
 														 _walkingRollOffset(0.003f),
 														 _currentWalkingRoll(0) {
@@ -127,6 +128,7 @@ namespace Logic {
 		else if(_currentWalkingRoll != 0) {
 			walkEffect(msecs);
 		}
+		
 		if(_effectIsActivated){
 			_scene->updateCompositorVariable(_effect, _strengthEffect, 1+_timestamp*0.01);
 			_timestamp += msecs;
@@ -135,6 +137,17 @@ namespace Logic {
 				_scene->setCompositorVisible(_effect, false);
 			}
 		}
+
+		if(_playerIsLanding) {
+			float camVerticalOffset = _cameraComponent->getVerticalOffset();
+			if(camVerticalOffset < 0) {
+				_cameraComponent->setVerticalOffset(camVerticalOffset + (0.01f * msecs));
+			}
+			else {
+				_cameraComponent->setVerticalOffset(0);
+				_playerIsLanding = false;
+			}
+		}	
 
 		//Ahora actualizamos el motion blur
 		float blur = (_avatarc->getVelocity().length()/_maxVelocity)/2;
@@ -152,6 +165,15 @@ namespace Logic {
 		if(_currentWalkingRoll > 2 * Math::PI) _currentWalkingRoll = 0;
 
 		_cameraComponent->rollCamera(sin(_currentWalkingRoll) * _walkingRollOffset);
+	}
+
+	//________________________________________________________________________
+
+	void CCameraFeedbackNotifier::playerIsTouchingGround(float hitForce) {
+		if(hitForce < -0.8f) {
+			_playerIsLanding = true;
+			_cameraComponent->setVerticalOffset(hitForce);
+		}
 	}
 
 	//________________________________________________________________________

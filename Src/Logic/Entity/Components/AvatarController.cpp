@@ -165,7 +165,7 @@ namespace Logic {
 		Vector3 displacement = _touchingGround ? estimateGroundMotion(msecs) : estimateAirMotion(msecs);
 
 		// Seteamos el efecto de camara
-		//setCameraEffect();
+		setCameraEffect();
 		
 		// Tratamos de mover el controlador fisico con el desplazamiento estimado.
 		// En caso de colision, el controlador fisico nos informa.
@@ -173,7 +173,6 @@ namespace Logic {
 		// al movernos para asegurarnos de que hay colision
 		Vector3 oldPosition = _entity->getPosition();
 		manageCollisions( _physicController->move(displacement-Vector3(0,0.15f,0), msecs), oldPosition );
-
 	} // tick
 
 	//________________________________________________________________________
@@ -194,8 +193,10 @@ namespace Logic {
 	//________________________________________________________________________
 
 	void CAvatarController::manageCollisions(unsigned collisionFlags, Vector3 oldPosition) {
-		// Colision con los pies detectada
-		_touchingGround = collisionFlags & Physics::eCOLLISION_DOWN;
+		if(_touchingGround = collisionFlags & Physics::eCOLLISION_DOWN) {
+			// Colision con los pies detectada
+			_cameraFX->playerIsTouchingGround(_momentum.y);
+		}
 		
 		if(collisionFlags & Physics::eCOLLISION_UP) {
 			// Colisión con la cabeza

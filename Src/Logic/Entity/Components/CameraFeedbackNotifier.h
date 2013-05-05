@@ -109,6 +109,8 @@ namespace Logic {
 
 		void walkEffect(unsigned int msecs);
 
+		void playerIsTouchingGround(float hitForce);
+
 	protected:
 
 		virtual void onStart();
@@ -135,6 +137,8 @@ namespace Logic {
 		float _walkingRollOffset;
 
 		bool _playerIsWalking;
+
+		bool _playerIsLanding;
 
 		float _maxVelocity;
 		Logic::CAvatarController* _avatarc;
