@@ -18,6 +18,7 @@ Contiene la implementación del componente que gestiona el spawn del jugador.
 #include "Logic/GameSpawnManager.h"
 #include "PhysicController.h"
 #include "Logic/GameNetMsgManager.h"
+#include "Logic/Entity/Components/Life.h"
 
 #include "Logic/Messages/MessagePlayerDead.h"
 #include "Logic/Messages/MessagePlayerSpawn.h"
@@ -54,6 +55,7 @@ namespace Logic
 	{
 		_isDead=false;
 		_actualTimeSpawn=0;
+		_reactivePhysicSimulation=false;
 
 	} // activate
 	//--------------------------------------------------------
@@ -86,14 +88,13 @@ namespace Logic
 			if(_actualTimeSpawn>_timeSpawn){
 				_isDead = false;
 				_actualTimeSpawn = 0;
-				//LLamamos al manager de spawn que nos devolverá una posición ( ahora hecho a lo cutre)
+				//LLamamos al manager de spawn que nos devolverá una posición
 				CEntity *spawn = CServer::getSingletonPtr()->getSpawnManager()->getSpawnPosition();
 
 				//Ponemos la entidad física en la posición instantaneamente ( no se puede permitir el envio de mensajes )
+				//La simulacion fisica tiene que ser activada en el siguiente tick, para que el player se resitue bien
 				_entity->getComponent<CPhysicController>("CPhysicController")->setPhysicPosition(spawn->getPosition());
-
-				//Una vez posicionado, activamos la simulación física (fue desactivada al morir)
-				_entity->getComponent<CPhysicController>("CPhysicController")->activateSimulation();
+				_reactivePhysicSimulation=true;
 
 				//Volvemos a activar todos los componentes(lo que hace resetea _isDead y _actualTimeSpawn)
 				_entity->activate();
@@ -127,6 +128,10 @@ namespace Logic
 				audioMsg->setIsPlayer(_entity->isPlayer());
 				_entity->emitMessage(audioMsg);
 			}
+		}
+		else if(_reactivePhysicSimulation){
+			_entity->getComponent<CPhysicController>("CPhysicController")->activateSimulation();
+			_reactivePhysicSimulation=false;
 		}
 	} // tick
 	//---------------------------------------------------------
