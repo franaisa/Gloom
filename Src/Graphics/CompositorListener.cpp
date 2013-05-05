@@ -67,6 +67,10 @@ namespace Graphics
 
 		void CCompositorListener::necesaryOperations(int pass_id, Ogre::MaterialPtr &mat){
 			mat->load();
+
+			
+			if(!mat->getTechnique(0)->getPass(0)->hasFragmentProgram())
+				return;
 			//const Ogre::String& progName = mat->getBestTechnique()->getPass(0)->getFragmentProgramName();
 			//*
 			Ogre::GpuProgramParametersSharedPtr fpParams = mat->getTechnique(0)->getPass(0)->getFragmentProgramParameters();

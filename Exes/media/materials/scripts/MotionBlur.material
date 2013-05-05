@@ -4,10 +4,6 @@ fragment_program Ogre/Compositor/Combine_fp cg
 	profiles ps_2_0 arbfp1
 	entry_point Combine_fp
 
-	default_params
-	{
-		param_named blur float 0.25
-	}
 }
 
 material Ogre/Compositor/Combine
@@ -20,6 +16,7 @@ material Ogre/Compositor/Combine
 
 			fragment_program_ref Ogre/Compositor/Combine_fp
 			{
+				param_named blur float 0.75
 			}
 
 			vertex_program_ref Ogre/Compositor/StdQuad_Cg_vp
