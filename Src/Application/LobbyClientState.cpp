@@ -17,38 +17,45 @@ Contiene la implementación del estado de lobby del cliente.
 #include "LobbyClientState.h"
 
 #include "Logic/Server.h"
+#include "Logic/Entity/Entity.h"
 #include "Logic/Maps/EntityFactory.h"
 #include "Logic/Maps/Map.h"
 
+#include "Hikari.h"
 #include "GUI/Server.h"
-#include "Input\Server.h"
-#include "Logic/Entity/Entity.h"
+
+#include "Input/Server.h"
+
 #include "Net/Manager.h"
-#include "Net/Cliente.h"
-#include "Net/factoriared.h"
 #include "Net/paquete.h"
 #include "Net/conexion.h"
 #include "Net/buffer.h"
-#include "Hikari.h"
 
 #include <iostream>
-#include <fstream>
+
 using namespace std;
 
 namespace Application {
 
-	CLobbyClientState::~CLobbyClientState() 
-	{
-	} // ~CLobbyClientState
+	CLobbyClientState::CLobbyClientState(CBaseApplication *app) : CApplicationState(app),
+																  _netMgr(NULL) {
+		// Nada que hacer
+	}
 
-	//--------------------------------------------------------
+	//__________________________________________________________________
 
-	bool CLobbyClientState::init() 
-	{
+	CLobbyClientState::~CLobbyClientState() {
+		// Nada que borrar
+	}
+
+	//__________________________________________________________________
+
+	bool CLobbyClientState::init() {
 		CApplicationState::init();
 
+		_netMgr = Net::CManager::getSingletonPtr();
+
 		// Cargamos la ventana que muestra el menú
-		
 		_menu = GUI::CServer::getSingletonPtr()->addLayoutToState(this,"joinGame", Hikari::Position(Hikari::Center));
 		_menu->load("MultiplayerClient.swf");
 		_menu->bind("connect",Hikari::FlashDelegate(this, &CLobbyClientState::startReleased));
@@ -56,105 +63,109 @@ namespace Application {
 		_menu->hide();
 		
 		return true;
-
 	} // init
 
-	//--------------------------------------------------------
+	//__________________________________________________________________
 
-	void CLobbyClientState::release() 
-	{
+	void CLobbyClientState::release() {
 		CApplicationState::release();
 
+		_netMgr = NULL;
 	} // release
 
-	//--------------------------------------------------------
+	//__________________________________________________________________
 
-	void CLobbyClientState::activate() 
-	{
+	void CLobbyClientState::activate() {
 		CApplicationState::activate();
-		_menu->show();
-		Net::CManager::getSingletonPtr()->addObserver(this);
-		// Activar la red
-		Net::CManager::getSingletonPtr()->activateAsClient();
 
+		// Mostramos el menu del cliente
+		_menu->show();
+
+		// Nos registramos como observadores de la red para ser notificados de
+		// eventos y nos activamos como clientes.
+		_netMgr->addObserver(this);
+		_netMgr->activateAsClient();
 	} // activate
 
-	//--------------------------------------------------------
+	//__________________________________________________________________
 
-	void CLobbyClientState::deactivate() 
-	{	
-		Net::CManager::getSingletonPtr()->removeObserver(this);
+	// Se llama al cambiar de estado
+	void CLobbyClientState::deactivate() {
+		// Ocultamos el menú de cliente
 		_menu->hide();
+
 		CApplicationState::deactivate();
-
-
 	} // deactivate
 
-	//--------------------------------------------------------
+	//__________________________________________________________________
 
-	void CLobbyClientState::tick(unsigned int msecs) {
-		CApplicationState::tick(msecs);
+	void CLobbyClientState::sendPlayerInfo() {
+		// Obtenemos el nickname del player, que de momento es la única información asociada al
+		// player que tenemos
+		std::string playerNick = _menu->callFunction("getNick",Hikari::Args()).getString();
 
-	} // tick
+		// Enviamos los datos del player al servidor
+		Net::NetMessageType msg = Net::PLAYER_INFO;
+				
+		// El tamaño del buffer es: cabecera + entero para el tam del nick + num de letras del nick
+		Net::CBuffer playerData( sizeof(msg) + sizeof(unsigned int) + (playerNick.size() * sizeof(char)) );
+		playerData.write( &msg, sizeof(msg) ); // Por problemas con enumerados serializamos manualmente
+		playerData.serialize(playerNick, false);
 
-	//--------------------------------------------------------
+		// Enviamos nuestra información al server
+		_netMgr->broadcast( playerData.getbuffer(), playerData.getSize() );
+	}
+
+	//__________________________________________________________________
+
+	bool CLobbyClientState::loadMap(const string& mapName) {
+		return Logic::CEntityFactory::getSingletonPtr()->loadBluePrints("blueprints_client.txt")	&&
+			   Logic::CEntityFactory::getSingletonPtr()->loadArchetypes("archetypes.txt")			&&
+			   Logic::CServer::getSingletonPtr()->loadLevel(mapName + "_client.txt");
+	}
+
+	//__________________________________________________________________
 
 	void CLobbyClientState::dataPacketReceived(Net::CPaquete* packet) {
-		Net::CBuffer buffer(packet->getDataLength());
+		// Escribimos en un buffer los datos recibidos para ir leyendolos
+		// poco a poco
+		Net::CBuffer buffer( packet->getDataLength() );
 		buffer.write(packet->getData(), packet->getDataLength());
 		buffer.reset();
 
+		// Obtenemos la cabecera del buffer que nos indica el tipo de mensaje
+		// recibido
 		Net::NetMessageType msg;
-		//memcpy(&msg, packet->getData(), sizeof(msg));
-		buffer.read(&msg, sizeof(msg));
+		buffer.read( &msg, sizeof(msg) );
 
+		// En función del tipo de mensaje
 		switch (msg) {
 			case Net::SEND_PLAYER_INFO: {
-				// Obtenemos el nickname del player, que de momento es la única información asociada al
-				// player que tenemos
-				std::string playerNick = _menu->callFunction("getNick",Hikari::Args()).getString();
-
-				// Enviamos los datos del player al servidor
-				Net::NetMessageType msg = Net::PLAYER_INFO;
-				
-				// El tamaño del buffer es: cabecera + entero para el tam del nick + num de letras del nick
-				Net::CBuffer playerData( sizeof(msg) + sizeof(unsigned int) + (playerNick.size() * sizeof(char)) );
-				playerData.write( &msg, sizeof(msg) ); // Por problemas con enumerados serializamos manualmente
-				playerData.serialize(playerNick, false);
-
-				Net::CManager::getSingletonPtr()->broadcast( playerData.getbuffer(), playerData.getSize() );
-
+				// Enviamos nuestros datos al servidor (nickname...)
+				sendPlayerInfo();
 				break;
 			}
 			case Net::LOAD_MAP: {
-				// Cargamos el archivo con las definiciones de las entidades del nivel.
-				std::string mapName;
+				// Obtenemos el nombre del mapa que está ejecutando el servidor
+				string mapName;
 				buffer.deserialize(mapName);
 
-				// Inicializar dispatcher
+				// Inicializamos el dispatcher de entidades lógicas en base a nuestro id de red y el
+				// número de jugadores que hay en la partida
 				// @deprecated lo ideal es que el server mande el numero de players de la partida
-				Logic::CEntityFactory::getSingletonPtr()->initDispatcher( Net::CManager::getSingletonPtr()->getID(), 12 );
+				Logic::CEntityFactory::getSingletonPtr()->initDispatcher( _netMgr->getID(), 12 );
 
-				if (!Logic::CEntityFactory::getSingletonPtr()->loadBluePrints("blueprints_client.txt")) {
-					Net::CManager::getSingletonPtr()->deactivateNetwork();
-					_app->exitRequest();
-				}
-				if (!Logic::CEntityFactory::getSingletonPtr()->loadArchetypes("archetypes.txt")) {
-					Net::CManager::getSingletonPtr()->deactivateNetwork();
-					_app->exitRequest();
-				}
-				// Cargamos el nivel a partir del nombre del mapa. 
-				if (!Logic::CServer::getSingletonPtr()->loadLevel(mapName+"_client.txt")) {
-					Net::CManager::getSingletonPtr()->deactivateNetwork();
-					_app->exitRequest();
+				// Si la carga del mapa tiene éxito, notificamos al servidor y continuamos. En 
+				// caso contrario abortamos la ejecución.
+				if( loadMap(mapName) ) {
+					// Avisamos de que hemos terminado la carga.
+					Net::NetMessageType ackMsg = Net::MAP_LOADED;
+					_netMgr->broadcast( &ackMsg, sizeof(ackMsg) );
 				}
 				else {
-					//Avisamos de que hemos terminado la carga.
-					Net::NetMessageType ackMsg = Net::MAP_LOADED;
-					Net::CBuffer ackBuffer(sizeof(ackMsg));
-
-					ackBuffer.write(&ackMsg, sizeof(ackMsg));
-					Net::CManager::getSingletonPtr()->broadcast(ackBuffer.getbuffer(), ackBuffer.getSize());
+					_netMgr->removeObserver(this);
+					_netMgr->deactivateNetwork();
+					_app->exitRequest();
 				}
 
 				break;
@@ -163,7 +174,8 @@ namespace Application {
 				// Cargamos los players que ya estaban en la partida
 				int nbPlayers;
 				Logic::TEntityID entityID;
-				std::string playerClass, name;
+				Logic::CEntity* player;
+				string playerClass, name;
 
 				buffer.read(&nbPlayers, sizeof(nbPlayers));
 				for(int i = 0; i < nbPlayers; ++i) {
@@ -172,20 +184,21 @@ namespace Application {
 					buffer.deserialize(playerClass);
 
 					// Llamo al metodo de creacion del jugador
-					Logic::CEntity * player = Logic::CServer::getSingletonPtr()->getMap()->createPlayer(name, playerClass, entityID);
+					player = Logic::CServer::getSingletonPtr()->getMap()->
+							 createPlayer(name, playerClass, entityID);
 				}
 				
 				// Confirmamos de que se han cargado todos los players con exito
 				Net::NetMessageType ackMsg = Net::PLAYERS_LOADED;
-				Net::CManager::getSingletonPtr()->broadcast( &ackMsg, sizeof(ackMsg) );
+				_netMgr->broadcast( &ackMsg, sizeof(ackMsg) );
 				
 				break;
 			}
 			case Net::LOAD_WORLD_STATE: {
 				// Deserializar el estado del mundo
-
-				Net::NetMessageType worldStateLoadedMsg = Net::NetMessageType::WORLD_STATE_LOADED;
-				Net::CManager::getSingletonPtr()->broadcast( &worldStateLoadedMsg, sizeof(worldStateLoadedMsg) );
+				Net::NetMessageType ackMsg = Net::NetMessageType::WORLD_STATE_LOADED;
+				_netMgr->broadcast( &ackMsg, sizeof(ackMsg) );
+				break;
 			}
 			case Net::START_GAME: {
 				_app->setState("gameClient");
@@ -194,86 +207,87 @@ namespace Application {
 		}
 	} // dataPacketReceived
 
-	//--------------------------------------------------------
+	//__________________________________________________________________
 
-	bool CLobbyClientState::keyPressed(Input::TKey key)
-	{
+	bool CLobbyClientState::keyPressed(Input::TKey key) {
 	   return false;
-
 	} // keyPressed
 
-	//--------------------------------------------------------
+	//__________________________________________________________________
 
-	bool CLobbyClientState::keyReleased(Input::TKey key)
-	{
-		switch(key.keyId)
-		{
-		case Input::Key::ESCAPE:
-			Net::CManager::getSingletonPtr()->deactivateNetwork();
-			_app->setState("netmenu");
-			break;
-		case Input::Key::RETURN:
-			doStart(_menu->callFunction("getIp",Hikari::Args()).getString());
-			break;
-		default:
-			return false;
+	bool CLobbyClientState::keyReleased(Input::TKey key) {
+		switch(key.keyId) {
+			case Input::Key::ESCAPE: {
+				// Si pulsamos la tecla escape volvemos al menú de red
+				// Indicamos que ya no queremos ser notificados de eventos de red
+				// y desactivamos la red
+				_netMgr->removeObserver(this);
+				_netMgr->deactivateNetwork();
+				_app->setState("netmenu");
+				break;
+			}
+			case Input::Key::RETURN: {
+				// Si pulsamos el enter intentamos conectarnos a la ip
+				// dada
+				requestConnectionTo(_menu->callFunction("getIp",Hikari::Args()).getString());
+				break;
+			}
+			default: {
+				return false;
+			}
 		}
-		return true;
 
+		return true;
 	} // keyReleased
 
-	//--------------------------------------------------------
+	//__________________________________________________________________
 
-	bool CLobbyClientState::mouseMoved(const Input::CMouseState &mouseState)
-	{
+	bool CLobbyClientState::mouseMoved(const Input::CMouseState &mouseState) {
 		return true;
-
 	} // mouseMoved
 
-	//--------------------------------------------------------
+	//__________________________________________________________________
 
-	bool CLobbyClientState::mousePressed(const Input::CMouseState &mouseState)
-	{
+	bool CLobbyClientState::mousePressed(const Input::CMouseState &mouseState) {
 		return true;
-
 	} // mousePressed
 
-	//--------------------------------------------------------
+	//__________________________________________________________________
 
 
-	bool CLobbyClientState::mouseReleased(const Input::CMouseState &mouseState)
-	{
+	bool CLobbyClientState::mouseReleased(const Input::CMouseState &mouseState) {
 		return true;
-
 	} // mouseReleased
 
-	//--------------------------------------------------------
+	//__________________________________________________________________
 
-	Hikari::FlashValue CLobbyClientState::startReleased(Hikari::FlashControl* caller, const Hikari::Arguments& args)
-	{
-		doStart(args.at(0).getString());
+	Hikari::FlashValue CLobbyClientState::startReleased(Hikari::FlashControl* caller, const Hikari::Arguments& args) {
+		// Conectamos con la ip obtenida
+		requestConnectionTo( args.at(0).getString() );
 
 		return true;
 	} // startReleased
 
-	//--------------------------------------------------------
+	//__________________________________________________________________
 
-	Hikari::FlashValue CLobbyClientState::backReleased(Hikari::FlashControl* caller, const Hikari::Arguments& args)
-	{
-		Net::CManager::getSingletonPtr()->deactivateNetwork();
+	Hikari::FlashValue CLobbyClientState::backReleased(Hikari::FlashControl* caller, const Hikari::Arguments& args) {
+		// Volvemos al menú de red
+		// Indicamos que ya no queremos ser notificados de eventos de red
+		// y desactivamos la red
+		_netMgr->removeObserver(this);
+		_netMgr->deactivateNetwork();
 		_app->setState("netmenu");
+		
 		return true;
-
 	} // backReleased
 
-	//--------------------------------------------------------
+	//__________________________________________________________________
 
-	void CLobbyClientState::doStart(string ip)
-	{
-		// Conectamos
-		if (!Net::CManager::getSingletonPtr()->connectTo((char*)ip.c_str(),1234,1)){
-			_menu->callFunction("enableButton",Hikari::Args());
+	void CLobbyClientState::requestConnectionTo(const string& ip) {
+		// Pedimos la conexion a la ip dada
+		if ( !_netMgr->connectTo( (char*)ip.c_str(), 1234, 1) ) {
+			_menu->callFunction( "enableButton", Hikari::Args() );
 		}
-	} // doStart
+	} // requestConnectionTo
 
 } // namespace Application

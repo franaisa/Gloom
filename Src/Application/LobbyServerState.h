@@ -18,21 +18,19 @@ Contiene la declaración del estado de lobby del servidor.
 #define __Application_LobbyServerState_H
 
 #include "ApplicationState.h"
-#include "Net/Manager.h"
-#include <list>
-#include <map>
 #include "FlashValue.h"
 
 // Predeclaración de clases para ahorrar tiempo de compilación
-namespace Application 
-{
+namespace Application {
 	class CBaseApplication;
 }
-namespace Hikari{
+
+namespace Hikari {
 	class FlashControl;
 }
-namespace Application 
-{
+
+namespace Application {
+	
 	/**
 	Como su nombre indica, esta clase es la clase del menú
 	principal del juego. Es muy sencilla y lo único que hace es cargar
@@ -50,23 +48,21 @@ namespace Application
 	@author David Llansó
 	@date Agosto, 2010
 	*/
-	class CLobbyServerState : public CApplicationState
-	{
+
+	class CLobbyServerState : public CApplicationState {
 	public:
-		/** 
-		Constructor de la clase 
-		*/
-		CLobbyServerState(CBaseApplication *app) : CApplicationState(app), 
-											       _waiting(true), 
-												   _playersFetched(0) 
-		{
-			// Nada que hacer
-		}
+
+		/** Constructor de la clase */
+		CLobbyServerState(CBaseApplication *app);
+
+		//__________________________________________________________________
 
 		/** 
 		Destructor 
 		*/
 		virtual ~CLobbyServerState();
+
+		//__________________________________________________________________
 
 		/**
 		Función llamada cuando se crea el estado (se "engancha" en la
@@ -76,11 +72,7 @@ namespace Application
 		*/
 		virtual bool init();
 
-		/**
-		Función llamada cuando se elimina ("desengancha") el
-		estado de la aplicación.
-		*/
-		virtual void release();
+		//__________________________________________________________________
 
 		/**
 		Función llamada por la aplicación cuando se activa
@@ -88,21 +80,15 @@ namespace Application
 		*/
 		virtual void activate();
 
+		//__________________________________________________________________
+
 		/**
 		Función llamada por la aplicación cuando se desactiva
 		el estado.
 		*/
 		virtual void deactivate();
 
-		/**
-		Función llamada por la aplicación para que se ejecute
-		la funcionalidad del estado.
-
-		@param msecs Número de milisegundos transcurridos desde
-		la última llamada (o desde la áctivación del estado, en caso
-		de ser la primera vez...).
-		*/
-		virtual void tick(unsigned int msecs);
+		//__________________________________________________________________
 
 		// Métodos de CKeyboardListener
 		
@@ -118,6 +104,8 @@ namespace Application
 		el gestor no llamará a otros listeners.
 		*/
 		virtual bool keyPressed(Input::TKey key);
+
+		//__________________________________________________________________
 		
 		/**
 		Método que será invocado siempre que se termine la pulsación
@@ -132,6 +120,8 @@ namespace Application
 		*/
 		virtual bool keyReleased(Input::TKey key);
 
+		//__________________________________________________________________
+
 		// Métodos de CMouseListener
 		
 		/**
@@ -144,6 +134,8 @@ namespace Application
 		*/
 		virtual bool mouseMoved(const Input::CMouseState &mouseState);
 		
+		//__________________________________________________________________
+
 		/**
 		Método que será invocado siempre que se pulse un botón. La
 		aplicación avisa de este evento al estado actual.
@@ -153,6 +145,8 @@ namespace Application
 		el gestor no llamará a otros listeners.
 		*/
 		virtual bool mousePressed(const Input::CMouseState &mouseState);
+
+		//__________________________________________________________________
 
 		/**
 		Método que será invocado siempre que se termine la pulsación
@@ -168,6 +162,38 @@ namespace Application
 
 	private:
 
+		
+		/**
+		Función que se quiere realizar cuando se pulse el botón start.
+		Simplemente cambia al estado de juego.
+		*/
+		Hikari::FlashValue startReleased(Hikari::FlashControl* caller, const Hikari::Arguments& args);
+
+		//__________________________________________________________________
+
+		/**
+		Función que se quiere realizar cuando se pulse el botón back.
+		Simplemente cambia al estado de menu.
+		*/
+		Hikari::FlashValue backReleased(Hikari::FlashControl* caller, const Hikari::Arguments& args);
+
+		//__________________________________________________________________
+
+		/**
+		Función que se quiere realizar cuando se pulse el botón create game.
+		Simplemente cambia al estado de menu.
+		*/
+		Hikari::FlashValue createReleased(Hikari::FlashControl* caller, const Hikari::Arguments& args);
+
+		//__________________________________________________________________
+
+		/**
+		Método que lista los ficheros que hay en el directorio /media/maps y los muestra en el gui sin la extension
+		*/
+		void listFiles();
+
+
+
 		/**
 		layout de hikari que muestra el menu
 		*/
@@ -177,57 +203,6 @@ namespace Application
 		map en el que se va a crear la partida
 		*/
 		std::string _map;
-
-		typedef std::list<Net::NetID> TNetIDList;
-
-		/**
-		lista donde almacenamos los clientes conectados
-		*/
-		TNetIDList _clients;
-
-		/**
-		lista donde almacenamos los clientes que han cargado el mapa
-		*/
-		TNetIDList _mapLoadedByClients;
-
-		typedef std::map<Net::NetID,unsigned int> TNetIDCounterMap;
-		typedef std::pair<Net::NetID,unsigned int> TNetIDCounterPair;
-
-		/**
-		Tabla donde almacenamos por cada cliente cuantos jugadores han creado
-		*/
-		TNetIDCounterMap _playersLoadedByClients;
-		
-		/** Contador para la informacion obtenida de los players */
-		unsigned int _playersFetched;
-
-		/**
-		Indica si estamos en fase de espera de jugadores
-		*/
-		bool _waiting;
-
-		/**
-		Función que se quiere realizar cuando se pulse el botón start.
-		Simplemente cambia al estado de juego.
-		*/
-		Hikari::FlashValue startReleased(Hikari::FlashControl* caller, const Hikari::Arguments& args);
-
-		/**
-		Función que se quiere realizar cuando se pulse el botón back.
-		Simplemente cambia al estado de menu.
-		*/
-		Hikari::FlashValue backReleased(Hikari::FlashControl* caller, const Hikari::Arguments& args);
-
-		/**
-		Función que se quiere realizar cuando se pulse el botón create game.
-		Simplemente cambia al estado de menu.
-		*/
-		Hikari::FlashValue createReleased(Hikari::FlashControl* caller, const Hikari::Arguments& args);
-
-		/**
-		Método que lista los ficheros que hay en el directorio /media/maps y los muestra en el gui sin la extension
-		*/
-		void listFiles();
 
 	}; // CMenuState
 
