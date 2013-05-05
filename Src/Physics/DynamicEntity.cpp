@@ -116,7 +116,6 @@ namespace Physics {
 	void CDynamicEntity::addForce(const Vector3& forceVector, ForceMode forceMode, bool autowake) {
 		switch(forceMode) {
 			case eFORCE:
-				std::cout << "ADDFORCE" << std::endl;
 				_dynamicActor->addForce( Vector3ToPxVec3(forceVector), PxForceMode::eFORCE, autowake );
 				break;
 
@@ -167,12 +166,15 @@ namespace Physics {
 	void CDynamicEntity::clearForce(ForceMode forceMode, bool autowake) {
 			switch(forceMode) {
 			case eFORCE:
-				std::cout << "CLEARFORCE" << std::endl;
-				_dynamicActor->clearForce(PxForceMode::eFORCE,autowake);
+				//_dynamicActor->clearForce(PxForceMode::eFORCE,autowake);
+				//Poniendo velocidad a pelo porque el clearForce no hace lo que dice
+				_dynamicActor->setLinearVelocity(PxVec3(0.0,0.0,0.0),autowake);
 				break;
 
 			case eIMPULSE:
-				_dynamicActor->clearForce(PxForceMode::eIMPULSE,autowake);
+				//_dynamicActor->clearForce(PxForceMode::eIMPULSE,autowake);
+				//Poniendo velocidad a pelo porque el clearForce no hace lo que dice
+				_dynamicActor->setLinearVelocity(PxVec3(0.0,0.0,0.0),autowake);
 				break;
 		}
 	}

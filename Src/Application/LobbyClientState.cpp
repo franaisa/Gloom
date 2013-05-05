@@ -177,6 +177,7 @@ namespace Application {
 				Logic::CEntity* player;
 				string playerClass, name;
 
+				// Obtenemos el número de jugadores conectados
 				buffer.read(&nbPlayers, sizeof(nbPlayers));
 				for(int i = 0; i < nbPlayers; ++i) {
 					buffer.read(&entityID, sizeof(entityID));

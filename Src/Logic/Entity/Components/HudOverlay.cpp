@@ -80,19 +80,20 @@ namespace Logic
 			delete _panelMira;
 
 		for(int i=0;i<6;++i){
+			if(_overlayWeapon3D[i])
+				delete _overlayWeapon3D[i];
+
+			if(_weaponsEntities[i])
+				_weaponsEntities[i] = 0;
+		}
+
+		for(int i=0;i<8;++i){
 			if(_panelWeapon[i])
 				delete _panelWeapon[i];
 			
 			if(_panelWeaponKey[i]){
 				delete _panelWeaponKey[i];	
 			}
-
-			if(_overlayWeapon3D[i])
-				delete _overlayWeapon3D[i];
-
-			if(_weaponsEntities[i])
-				_weaponsEntities[i] = 0;
-			
 			for(int j=0;j<3;++j){
 				if(_weaponsBox[i][j])
 					delete _weaponsBox[i][j];
@@ -117,7 +118,8 @@ namespace Logic
 		if(!IComponent::spawn(entity,map,entityInfo))
 			return false;
 
-		char keysAux[8] = {'1','2','3','4','5','6','Q','E'};
+		// Pongo Q Q para que salga esa tecla, todo eto cambiara cuando se tenga el hud definitivo.
+		char keysAux[8] = {'1','2','3','4','5','6','Q','Q'};
 
 		for (int i =0 ; i<8;++i){
 			keysPanelWeapon[i] = keysAux[i];
@@ -280,7 +282,7 @@ namespace Logic
 
 		// por ahora esta hasta secondary skill para que haga cosas raras, cuando esta este sera com la linea comentada
 		//for(int i=PRIMARY_SKILL; i< NONE; ++i){
-		for(int i=PRIMARY_SKILL; i< SECONDARY_SKILL; ++i){
+		for(int i=PRIMARY_SKILL; i< NONE; ++i){
 
 			eWeaponIndex current = (eWeaponIndex)i;
 			std::string currentOnText = toText(current);

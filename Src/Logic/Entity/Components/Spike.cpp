@@ -53,7 +53,6 @@ namespace Logic
 		
 		switch( message->getMessageType() ) {
 			case Message::TOUCHED: {
-				std::cout << "El pincho toca" << std::endl;
 				//Aplicamos el daño
 				std::shared_ptr<CMessageTouched> touchedMsg = std::static_pointer_cast<CMessageTouched>(message);
 				std::shared_ptr<CMessageDamaged> damagedMsg = std::make_shared<CMessageDamaged>();
@@ -63,8 +62,8 @@ namespace Logic
 				//Desactivamos la fuerza que lleva el pincho
 				_entity->getComponent<CPhysicDynamicEntity>("CPhysicDynamicEntity")->clearForce(Physics::ForceMode::eFORCE);
 				//Desactivamos grafica y fisicamente
-				//std::shared_ptr<CMessageDeactivate> deactivateMsg = std::make_shared<CMessageDeactivate>();
-				//_entity->emitMessage(deactivateMsg);
+				std::shared_ptr<CMessageDeactivate> deactivateMsg = std::make_shared<CMessageDeactivate>();
+				_entity->emitMessage(deactivateMsg);
 				//Recolocamos la entidad fisicamente en su inicio para cuando se active nuevamente la trampa
 				std::shared_ptr<CMessageTransform> setTransformMsg = std::make_shared<CMessageTransform>();
 				setTransformMsg->setTransform(_initialPosition);

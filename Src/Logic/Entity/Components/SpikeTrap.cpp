@@ -93,7 +93,6 @@ namespace Logic
 		switch( message->getMessageType() ) {
 			case Message::TOUCHED: {
 				if(!_isRespawning){
-					std::cout << "ACTIVAMOS LA TRAMPA" << std::endl;
 					//Creamos el mensaje de fuerza para los pinchos
 					std::shared_ptr<CMessageAddForcePhysics> forceMsg = std::make_shared<CMessageAddForcePhysics>();
 					forceMsg->setForce(_directionSpikes* _velocitySpikes, Physics::ForceMode::eFORCE );
@@ -101,7 +100,6 @@ namespace Logic
 					//Activacion y fuerza
 					std::shared_ptr<CMessageActivate> activateMsg = std::make_shared<CMessageActivate>();
 					for(int i=0; i<_numSpikes; i++){
-						std::cout << "Pincho" << i << " en posicion: " << _spikes[i]->getPosition() << std::endl;
 						_spikes[i]->emitMessage(activateMsg);
 						_spikes[i]->emitMessage(forceMsg);
 					}

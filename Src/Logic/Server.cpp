@@ -167,6 +167,7 @@ namespace Logic {
 		}
 		_player = 0;
 		_guiManager->deactivate();
+		Logic::CEntityFactory::getSingletonPtr()->releaseDispatcher();
 	} // unLoadLevel
 
 	//---------------------------------------------------------
