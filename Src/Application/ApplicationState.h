@@ -37,8 +37,7 @@ namespace Application
 	@date Julio, 2010
 	*/
 	class CApplicationState : public Input::CKeyboardListener, 
-							  public Input::CMouseListener
-	{
+							  public Input::CMouseListener {
 	public:
 		/** 
 		Constructor de la clase 

@@ -395,6 +395,7 @@ namespace Logic
 	void CEntity::sleepingWithoutTick(IComponent* component, unsigned int msecs, unsigned int steps) {
 		if( !component->_deepSleep && component->processMessages() ) {
 			component->_state = ComponentState::eAWAKE;
+			component->onWake();
 
 			// No deberia ocurrir nunca
 			std::cerr << "WARNING!!! Existe un componente durmiendo sin tick" << std::endl;
@@ -404,6 +405,7 @@ namespace Logic
 	void CEntity::sleepingWithTick(IComponent* component, unsigned int msecs, unsigned int steps) {
 		if( !component->_deepSleep && component->processMessages() ) {
 			component->_state = ComponentState::eAWAKE;
+			component->onWake();
 
 			component->tick(msecs);
 		}
@@ -412,6 +414,7 @@ namespace Logic
 	void CEntity::sleepingWithFixedTick(IComponent* component, unsigned int msecs, unsigned int steps) {
 		if( !component->_deepSleep && component->processMessages() ) {
 			component->_state = ComponentState::eAWAKE;
+			component->onWake();
 
 			for(int i = 0; i < steps; ++i) {
 				component->fixedTick(_fixedTimeStep);
@@ -422,6 +425,7 @@ namespace Logic
 	void CEntity::sleepingWithBothTicks(IComponent* component, unsigned int msecs, unsigned int steps) {
 		if( !component->_deepSleep && component->processMessages() ) {
 			component->_state = ComponentState::eAWAKE;
+			component->onWake();
 
 			component->tick(msecs);
 			for(int i = 0; i < steps; ++i) {

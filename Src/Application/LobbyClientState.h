@@ -16,22 +16,22 @@ Contiene la declaración del estado de lobby del cliente.
 
 #ifndef __Application_LobbyClientState_H
 #define __Application_LobbyClientState_H
+
 #include "ApplicationState.h"
 #include "Net/Manager.h"
 #include "FlashValue.h"
 
 // Predeclaración de clases para ahorrar tiempo de compilación
-namespace Application 
-{
+namespace Application {
 	class CBaseApplication;
 }
 
-namespace Hikari{
+namespace Hikari {
 	class FlashControl;
 }
 
-namespace Application 
-{
+namespace Application {
+
 	/**
 	Como su nombre indica, esta clase es la clase del menú
 	principal del juego. Es muy sencilla y lo único que hace es cargar
@@ -49,14 +49,15 @@ namespace Application
 	@author David Llansó
 	@date Agosto, 2010
 	*/
-	class CLobbyClientState : public CApplicationState, public Net::CManager::IObserver
-	{
+
+	class CLobbyClientState : public CApplicationState, 
+							  public Net::CManager::IObserver {
 	public:
+		
 		/** 
 		Constructor de la clase 
 		*/
-		CLobbyClientState(CBaseApplication *app) : CApplicationState(app)
-				{}
+		CLobbyClientState(CBaseApplication *app);
 
 		/** 
 		Destructor 
@@ -88,16 +89,6 @@ namespace Application
 		el estado.
 		*/
 		virtual void deactivate();
-
-		/**
-		Función llamada por la aplicación para que se ejecute
-		la funcionalidad del estado.
-
-		@param msecs Número de milisegundos transcurridos desde
-		la última llamada (o desde la áctivación del estado, en caso
-		de ser la primera vez...).
-		*/
-		virtual void tick(unsigned int msecs);
 
 		// Métodos de CKeyboardListener
 
@@ -192,7 +183,13 @@ namespace Application
 		Centraliza el código y será invocada cuando se pulse la tecla correspondiente o se
 		genere el evento de ratón
 		*/
-		void doStart(std::string ip);
+		void requestConnectionTo(const std::string& ip);
+
+		void sendPlayerInfo();
+
+		bool loadMap(const std::string& mapName);
+
+		Net::CManager* _netMgr;
 
 	}; // CMenuState
 

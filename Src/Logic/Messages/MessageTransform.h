@@ -11,6 +11,8 @@ namespace Logic {
 		CMessageTransform();
 		Matrix4 getTransform();
 		void setTransform(Matrix4 transform);
+		void setMakeConversion(bool convertCoordsToLogicWorld);
+		bool getMakeConversion();
 		~CMessageTransform(){};
 		
 		virtual Net::CBuffer* serialize();
@@ -18,6 +20,7 @@ namespace Logic {
 
 	private:
 		Matrix4 _transform;
+		bool _convertCoordsToLogicWorld;
 	};
 	REG_FACTORYMESSAGE(CMessageTransform);
 };

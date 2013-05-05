@@ -51,7 +51,7 @@ namespace Logic {
 
 
 		/** Constructor por defecto. */
-		CPlayerInfo() : _rank(0), _entityIdInitialized(false) {}
+		CPlayerInfo() : _rank(0), _entityIdInitialized(false), _entityId(0) {}
 		
 		//________________________________________________________________________
 

@@ -158,9 +158,9 @@ namespace Math
 		Matrix3 rotation;
 		transform.extract3x3Matrix(rotation);
 		Ogre::Radian yaw, pitch, roll;
-		rotation.ToEulerAnglesYZX(yaw, pitch, roll);
+		rotation.ToEulerAnglesYXZ(yaw, pitch, roll);
 		Ogre::Radian newYaw = yaw + Ogre::Radian(turn);
-		rotation.FromEulerAnglesYZX(newYaw, pitch, roll);
+		rotation.FromEulerAnglesYXZ(newYaw, pitch, roll);
 		transform = rotation;
 
 	} // yaw
@@ -176,7 +176,7 @@ namespace Math
 		Matrix3 rotation;
 		transform.extract3x3Matrix(rotation);
 		Ogre::Radian yaw, pitch, roll;
-		rotation.ToEulerAnglesYZX(yaw, pitch, roll);
+		rotation.ToEulerAnglesYXZ(yaw, pitch, roll);
 		return yaw.valueRadians();
 
 	} // getYaw
@@ -209,21 +209,21 @@ namespace Math
 		transform.extract3x3Matrix(rotation);
 		Ogre::Radian yaw, pitch, roll;
 		
-		rotation.ToEulerAnglesYZX(yaw, pitch, roll);
+		rotation.ToEulerAnglesYXZ(yaw, pitch, roll);
 		Ogre::Radian newPitch = pitch + Ogre::Radian(turn);
-		rotation.FromEulerAnglesYZX(yaw, newPitch, roll);
+		rotation.FromEulerAnglesYXZ(yaw, newPitch, roll);
 
 		/*
 <<<<<<< HEAD
-		rotation.ToEulerAnglesYZX(yaw, pitch, roll);
+		rotation.ToEulerAnglesYXZ(yaw, pitch, roll);
 		Ogre::Radian newPitch = pitch + Ogre::Radian(turn);
-		rotation.FromEulerAnglesYZX(yaw, newPitch, roll);
+		rotation.FromEulerAnglesYXZ(yaw, newPitch, roll);
 =======
-		rotation.ToEulerAnglesYZX(yaw, pitch, roll);
+		rotation.ToEulerAnglesYXZ(yaw, pitch, roll);
 
 		Ogre::Radian newPitch = pitch + Ogre::Radian(turn);
 
-		rotation.FromEulerAnglesYZX(yaw, newPitch, roll);
+		rotation.FromEulerAnglesYXZ(yaw, newPitch, roll);
 >>>>>>> movimiento
 		*/
 
@@ -241,7 +241,7 @@ namespace Math
 		Matrix3 rotation;
 		transform.extract3x3Matrix(rotation);
 		Ogre::Radian yaw, pitch, roll;
-		rotation.ToEulerAnglesYZX(yaw, pitch, roll);
+		rotation.ToEulerAnglesYXZ(yaw, pitch, roll);
 		return pitch.valueRadians();
 
 	} // getPitch
@@ -274,9 +274,9 @@ namespace Math
 		Matrix3 rotation;
 		transform.extract3x3Matrix(rotation);
 		Ogre::Radian yaw, pitch, roll;
-		rotation.ToEulerAnglesYZX(yaw, pitch, roll);
+		rotation.ToEulerAnglesYXZ(yaw, pitch, roll);
 		Ogre::Radian newRoll = roll + Ogre::Radian(turn);
-		rotation.FromEulerAnglesYZX(yaw, pitch, newRoll);
+		rotation.FromEulerAnglesYXZ(yaw, pitch, newRoll);
 		transform = rotation;
 
 	} // roll
@@ -292,7 +292,7 @@ namespace Math
 		Matrix3 rotation;
 		transform.extract3x3Matrix(rotation);
 		Ogre::Radian yaw, pitch, roll;
-		rotation.ToEulerAnglesYZX(yaw, pitch, roll);
+		rotation.ToEulerAnglesYXZ(yaw, pitch, roll);
 		return roll.valueRadians();
 
 	} // getRoll
@@ -325,11 +325,11 @@ namespace Math
 		Matrix3 rotation;
 		transform.extract3x3Matrix(rotation);
 		Ogre::Radian yaw, pitch, roll;
-		rotation.ToEulerAnglesYZX(yaw, pitch, roll);
+		rotation.ToEulerAnglesYXZ(yaw, pitch, roll);
 		Ogre::Radian newPitch = pitch + Ogre::Radian(turnP);
 		Ogre::Radian newYaw = yaw + Ogre::Radian(turnY);
 
-		rotation.FromEulerAnglesYZX(newYaw, newPitch, roll);
+		rotation.FromEulerAnglesYXZ(newYaw, newPitch, roll);
 		transform = rotation;
 
 	} // pitchYaw
@@ -364,12 +364,12 @@ namespace Math
 		Matrix3 rotation;
 		transform.extract3x3Matrix(rotation);
 		Ogre::Radian yaw, pitch, roll;
-		rotation.ToEulerAnglesYZX(yaw, pitch, roll);
+		rotation.ToEulerAnglesYXZ(yaw, pitch, roll);
 		Ogre::Radian newPitch = pitch + Ogre::Radian(turnP);
 		Ogre::Radian newYaw = yaw + Ogre::Radian(turnY);
 		Ogre::Radian newRoll = roll + Ogre::Radian(turnR);
 
-		rotation.FromEulerAnglesYZX(newYaw, newPitch, newRoll);
+		rotation.FromEulerAnglesYXZ(newYaw, newPitch, newRoll);
 		transform = rotation;
 
 	} // pitch

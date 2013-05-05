@@ -22,7 +22,7 @@ Contiene la implementación del componente que controla los contactos con el pinc
 #include "Logic/Messages/MessageDeactivate.h"
 #include "Logic/Messages/MessageDamaged.h"
 #include "Logic/Messages/MessageTouched.h"
-#include "Logic/Messages/MessageSetPhysicPosition.h"
+#include "Logic/Messages/MessageTransform.h"
 
 namespace Logic 
 {
@@ -35,7 +35,7 @@ namespace Logic
 		if(!IComponent::spawn(entity,map,entityInfo))
 			return false;
 		
-		_initialPosition = entityInfo->getVector3Attribute("position");
+		_initialPosition = entity->getTransform();
 
 		return true;
 
@@ -66,9 +66,10 @@ namespace Logic
 				//std::shared_ptr<CMessageDeactivate> deactivateMsg = std::make_shared<CMessageDeactivate>();
 				//_entity->emitMessage(deactivateMsg);
 				//Recolocamos la entidad fisicamente en su inicio para cuando se active nuevamente la trampa
-				std::shared_ptr<CMessageSetPhysicPosition> setPhysicPositionMsg = std::make_shared<CMessageSetPhysicPosition>();
-				setPhysicPositionMsg->setPosition(_initialPosition);
-				_entity->emitMessage(setPhysicPositionMsg);
+				std::shared_ptr<CMessageTransform> setTransformMsg = std::make_shared<CMessageTransform>();
+				setTransformMsg->setTransform(_initialPosition);
+				setTransformMsg->setMakeConversion(true);
+				_entity->emitMessage(setTransformMsg);
 				break;
 			}
 		}
