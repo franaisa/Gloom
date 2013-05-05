@@ -27,7 +27,7 @@ namespace Logic {
 	//IMP_FACTORY(CPlayerClass);
 	
 	CPlayerClass::CPlayerClass(const std::string& playerClassName) : _primarySkillTimer(0),
-																	 _secondarySkillTimer(0) {
+						_secondarySkillTimer(0), _doingPrimarySkill(false), _doingSecondarySkill(false) {
 		
 		// No hay memoria dinamica que reservar
 	}
@@ -68,7 +68,7 @@ namespace Logic {
 
 	bool CPlayerClass::accept(const std::shared_ptr<CMessage>& message) {
 		Logic::TMessageType msgType = message->getMessageType();
-
+		
 		return msgType == Message::CONTROL;
 	} // accept
 	

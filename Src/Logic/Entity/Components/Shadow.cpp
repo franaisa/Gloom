@@ -63,20 +63,22 @@ namespace Logic {
 		// Si la habilidad primaria esta en uso, controlar el tiempo
 		// efectivo de la invisibilidad. Cuando se cumpla el tiempo,
 		// deshabilitamos el shader de transparencia.
-		if(_invisibilityTimer > 0) {
-			_invisibilityTimer -= msecs;
-		}else{
-			// Desactivamos el shader de invisibilidad
-			std::shared_ptr<CMessageChangeMaterial> materialMsg = std::make_shared<CMessageChangeMaterial>();
-			materialMsg->setMaterialName("original");
-			_entity->emitMessage(materialMsg);
-			/*
-			std::shared_ptr<CMessageChangeMaterialHudWeapon> materialMsgHud = std::make_shared<CMessageChangeMaterialHudWeapon>();
-			materialMsgHud->setMaterialName("original");
-			_entity->emitMessage(materialMsgHud);
-			*/
-			_invisibilityTimer = _invisibilityDuration;
-			this->putToSleep();
+		if(_doingPrimarySkill){
+			if(_invisibilityTimer > 0) {
+				_invisibilityTimer -= msecs;
+			}else{
+				// Desactivamos el shader de invisibilidad
+				std::shared_ptr<CMessageChangeMaterial> materialMsg = std::make_shared<CMessageChangeMaterial>();
+				materialMsg->setMaterialName("original");
+				_entity->emitMessage(materialMsg);
+				/*
+				std::shared_ptr<CMessageChangeMaterialHudWeapon> materialMsgHud = std::make_shared<CMessageChangeMaterialHudWeapon>();
+				materialMsgHud->setMaterialName("original");
+				_entity->emitMessage(materialMsgHud);
+				*/
+				_invisibilityTimer = _invisibilityDuration;
+				_doingPrimarySkill = false;
+			}
 		}
 	}
 
@@ -84,8 +86,6 @@ namespace Logic {
 
 	void CShadow::onActivate() {
 		CPlayerClass::onActivate();
-		
-		this->putToSleep();
 	}
 
 	//__________________________________________________________________
@@ -111,6 +111,8 @@ namespace Logic {
 		std::shared_ptr<CMessageChangeMaterial> materialMsg = std::make_shared<CMessageChangeMaterial>();
 		materialMsg->setMaterialName("shadowInvisibility");
 		_entity->emitMessage(materialMsg);
+
+		_doingPrimarySkill = true;
 
 		/*
 		std::shared_ptr<CMessageChangeMaterialHudWeapon> materialMsgHud = std::make_shared<CMessageChangeMaterialHudWeapon>();
