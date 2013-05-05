@@ -36,6 +36,8 @@ namespace Logic {
 
 	CCameraFeedbackNotifier::CCameraFeedbackNotifier() : _owner(NULL),
 														 _playerIsWalking(false),
+														 _playerIsLanding(false),
+														 _landOffset(0),
 														 _walkingRollSpeed(0.012f),
 														 _walkingRollOffset(0.003f),
 														 _currentWalkingRoll(0) {
@@ -104,6 +106,7 @@ namespace Logic {
 		else if(_currentWalkingRoll != 0) {
 			walkEffect(msecs);
 		}
+		
 		if(_effectIsActivated){
 			_timestamp += msecs;
 			if(_timestamp > 500){
@@ -112,7 +115,16 @@ namespace Logic {
 			}
 		}
 
-
+		if(_playerIsLanding) {
+			float camVerticalOffset = _cameraComponent->getVerticalOffset();
+			if(camVerticalOffset < 0) {
+				_cameraComponent->setVerticalOffset(camVerticalOffset + (0.01f * msecs));
+			}
+			else {
+				_cameraComponent->setVerticalOffset(0);
+				_playerIsLanding = false;
+			}
+		}	
 	}
 
 	//________________________________________________________________________
@@ -122,6 +134,15 @@ namespace Logic {
 		if(_currentWalkingRoll > 2 * Math::PI) _currentWalkingRoll = 0;
 
 		_cameraComponent->rollCamera(sin(_currentWalkingRoll) * _walkingRollOffset);
+	}
+
+	//________________________________________________________________________
+
+	void CCameraFeedbackNotifier::playerIsTouchingGround(float hitForce) {
+		if(hitForce < -0.8f) {
+			_playerIsLanding = true;
+			_cameraComponent->setVerticalOffset(hitForce);
+		}
 	}
 
 	//________________________________________________________________________
