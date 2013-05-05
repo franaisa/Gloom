@@ -128,6 +128,7 @@ namespace Logic {
 			walkEffect(msecs);
 		}
 		if(_effectIsActivated){
+			_scene->updateCompositorVariable(_effect, _strengthEffect, 1+_timestamp*0.01);
 			_timestamp += msecs;
 			if(_timestamp > 500){
 				_effectIsActivated = false;
