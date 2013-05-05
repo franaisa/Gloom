@@ -170,6 +170,14 @@ namespace Application {
 
 	private:
 
+		void sendMapInfo(Net::NetID playerNetId);
+
+		void sendConnectedPlayersInfo(Net::NetID playerNetId);
+
+		void createAndMirrorSpectator(Net::NetID playerNetId);
+
+		void createAndMirrorPlayer(int race, Net::NetID playerNetId);
+
 		Logic::CGameNetPlayersManager* _playersMgr;
 
 		Net::CManager* _netMgr;

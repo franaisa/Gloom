@@ -268,6 +268,8 @@ namespace Logic {
 			_idDispatcher = new CEntityIdDispatcher<Logic::TEntityID>(idPlayer, nbPlayers);
 		}
 
+		//________________________________________________________________________
+
 		void releaseDispatcher() {
 			if(_idDispatcher != NULL) {
 				delete _idDispatcher;

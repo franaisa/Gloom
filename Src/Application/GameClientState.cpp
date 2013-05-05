@@ -30,12 +30,12 @@ Contiene la implementación del estado de juego.
 #include "Logic/Maps/EntityFactory.h"
 #include "Logic/Maps/Map.h"
 #include "Logic/Maps/EntityID.h"
-#include "Logic\Entity\Components\Camera.h"
+#include "Logic/Entity/Components/Camera.h"
 
 #include "Hikari.h"
 #include "FlashValue.h"
-#include "GUI\Server.h"
-#include "Input\PlayerController.h"
+#include "GUI/Server.h"
+#include "Input/PlayerController.h"
 #include "Input/Server.h"
 
 namespace Application {
