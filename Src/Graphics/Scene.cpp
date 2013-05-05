@@ -120,19 +120,14 @@ namespace Graphics
 		_viewport = BaseSubsystems::CServer::getSingletonPtr()->getRenderWindow()
 						->addViewport(_camera->getCamera());
 		_viewport->setBackgroundColour(Ogre::ColourValue::Black);
-
-		//_sceneMgr->setShadowTechnique(Ogre::SHADOWTYPE_STENCIL_ADDITIVE);
 		_sceneMgr->setShadowTechnique(Ogre::SHADOWTYPE_STENCIL_ADDITIVE);
-
 		/*
 		_sceneMgr->setAmbientLight(Ogre::ColourValue(1,1,1));
 		/*/
 		_sceneMgr->setAmbientLight(Ogre::ColourValue(0.7f,0.7f,0.7f));
 		/* */
 		
-		
 		_compositorManager->addCompositor(_camera->getOgreCamera()->getViewport(), "Glow");
-
 		_compositorManager->setCompositorEnabled(_camera->getOgreCamera()->getViewport(), "Glow", true);
 
 		_compositorManager->addCompositor(_camera->getOgreCamera()->getViewport(), "Motion Blur");
@@ -146,10 +141,6 @@ namespace Graphics
 		_compositorManager->addCompositor(_camera->getOgreCamera()->getViewport(), "berserkCompositor");
 		_compositorManager->setCompositorEnabled(_camera->getOgreCamera()->getViewport(), "berserkCompositor", true);
 		*/
-
-		_compositorManager->addCompositor(_camera->getOgreCamera()->getViewport(), "berserkCompositor");
-		_compositorManager->setCompositorEnabled(_camera->getOgreCamera()->getViewport(), "berserkCompositor", true);
-
 		_glowMaterialListener = new GlowMaterialListener();
 		Ogre::MaterialManager::getSingletonPtr()->addListener(_glowMaterialListener);
 
