@@ -98,10 +98,10 @@ namespace Logic  {
 				// y reposicionamos la capsula donde nos diga el servidor.
 				CPhysicController* controllerComponent = _entity->getComponent<CPhysicController>("CPhysicController");
 				if(controllerComponent != NULL) {
-					// Reactivamos la simulacion
-					controllerComponent->activateSimulation();
 					// Colocamos al player en la posicion dada por el manager de spawn del server
 					controllerComponent->setPhysicPosition( spawnTransform.getTrans() );
+					// Reactivamos la simulacion
+					controllerComponent->activateSimulation();
 
 					// Seteamos la orientacion a la dada por el server
 					Matrix3 spawnOrientation;
