@@ -99,6 +99,8 @@ namespace Logic
 		*/
 		virtual void onWake();
 
+		virtual void onSleep();
+
 		/**
 		Método llamado en cada frame que actualiza el estado del componente de la particula.
 				
