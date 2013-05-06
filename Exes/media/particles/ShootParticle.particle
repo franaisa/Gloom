@@ -25,8 +25,8 @@ particle_system shootParticle
 		velocity_max 1
 		time_to_live_min 0.1
 		time_to_live_max 0.1
-		duration_min 0.1
-		duration_max 0.1
+		duration_min 0.2
+		duration_max 0.2
 		repeat_delay_min 0
 		repeat_delay_max 0
 		colour_range_start 1 1 1 1
