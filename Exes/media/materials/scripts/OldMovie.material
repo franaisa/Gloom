@@ -1,7 +1,7 @@
 fragment_program Ogre/Compositor/OldMovieFP cg
 {
-	source OldMovieFP.cg
-	entry_point OldMovie_ps
+	source azulate.cg
+	entry_point Azulate_ps
 	profiles ps_2_0 arbfp1
 }
 
@@ -18,10 +18,9 @@ material Ogre/Compositor/OldMovie
 
 			fragment_program_ref Ogre/Compositor/OldMovieFP
 			{
-				param_named_auto time_cycle_period time 20
-				param_named flicker float 0.2
-				param_named DirtFrequency float 0.0005
-				param_named luminance float3 0.30 0.59 0.11
+				//param_named_auto time_cycle_period time 20
+				//param_named flicker float 0.2
+				//param_named luminance float3 0.30 0.59 0.11
 				param_named frameJitter float 0.004
 			}
 
