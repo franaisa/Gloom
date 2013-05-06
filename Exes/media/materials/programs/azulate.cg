@@ -1,16 +1,9 @@
 sampler RT : register(s0);
-sampler Texture2 : register(s1);
-sampler SepiaTx : register(s2);
 
 //float time_cycle_period;
 float flicker;
 //float3 luminance;
 float frameJitter;
-
-float2 calcSpriteAddr(float2 texCoord, float DirtFrequency, float period)
-{
-   return texCoord + tex1D(Texture2, period  * DirtFrequency);
-}
 
 float4 Azulate_ps (float2 texCoord  : TEXCOORD0
 				) : COLOR
