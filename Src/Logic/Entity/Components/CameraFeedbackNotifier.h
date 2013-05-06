@@ -17,6 +17,7 @@ del Screamer.
 
 #include "Logic/Entity/Component.h"
 
+
 namespace Graphics{
 	class CScene;
 }
@@ -113,6 +114,13 @@ namespace Logic {
 		void playerIsTouchingGround(float hitForce);
 
 		void landEffect(unsigned int msecs);
+
+
+		/*
+		Método que calcula desde donde nos han dañado, para indicarlo como feedback en el 
+		circulito de la mirilla en función de dicha posición
+		*/
+		void calculateEnemyPosition();
 
 	protected:
 

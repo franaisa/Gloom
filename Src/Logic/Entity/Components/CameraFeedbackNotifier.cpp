@@ -29,6 +29,9 @@ del Screamer.
 #include "Logic/Messages/MessageControl.h"
 
 
+
+
+
 namespace Logic {
 	
 	IMP_FACTORY(CCameraFeedbackNotifier);
@@ -198,6 +201,8 @@ namespace Logic {
 		_scene->setCompositorVisible(_effect, true);
 		_effectIsActivated = true;
 		_timestamp = 0;
+
+		calculateEnemyPosition();
 	}// damaged
 
 	//________________________________________________________________________
@@ -205,6 +210,70 @@ namespace Logic {
 	void CCameraFeedbackNotifier::setOwner(Logic::CEntity* owner) { 
 		this->_owner = owner; 
 	}
+
+	//________________________________________________________________________
+
+	/** Cuadrantes:  
+	      +z 90º				
+	  	 2  |  1			Los ángulos se miden en sentido contrario al sentido del reloj.
+  180º -z___|___ +x 0º
+			|
+		 3  |  4
+		  -z 270º
+	*/
+	//SIN ACABAR
+	void CCameraFeedbackNotifier::calculateEnemyPosition() { 
+		//Obtengo la posición del enemigo
+		Ogre::Vector3 vEnemyPos;
+		//Obtengo mi posición (entidad a la que han dañado)
+		Ogre::Vector3 vMyPos;
+
+		//Obtengo desde qué cuadrante me ha disparado
+		short sCuadrante; 
+		if ((vEnemyPos.x > vMyPos.x) && (vEnemyPos.z > vMyPos.z))
+			sCuadrante = 1;
+		else if ((vEnemyPos.x > vMyPos.x) && (vEnemyPos.z < vMyPos.z))
+			sCuadrante = 4;
+		else if ((vEnemyPos.x < vMyPos.x) && (vEnemyPos.z > vMyPos.z))
+			sCuadrante = 2;
+		else if ((vEnemyPos.x < vMyPos.x) && (vEnemyPos.z < vMyPos.z))
+			sCuadrante = 3;
+
+		//En función del cuadrante, hallo el ángulo de disparo
+		float fAngulo; //Angulo en radianes
+		float fCateto, fHipotenusa;
+
+		fHipotenusa = (vEnemyPos - vMyPos).length();
+		fCateto = vEnemyPos.z - vMyPos.z;
+		fHipotenusa = (vEnemyPos - vMyPos).length(); //En radianes
+		fAngulo = asin(fCateto / fHipotenusa);
+
+		//switch de cuadrante para poner el signo del cateto y para sumar ángulos en función del cuadrante
+		switch (sCuadrante)
+		{
+			/*
+			case 1:
+				//Ya hecho antes del switch
+			break;
+			*/
+			case 2:
+				fAngulo += Math::HALF_PI;
+			break;
+			case 3:
+				fAngulo = asin(-fCateto / fHipotenusa);
+				fAngulo += Math::PI;				
+			break;
+			case 4:
+				fAngulo = asin(-fCateto / fHipotenusa);
+				fAngulo += (Math::PI + Math::HALF_PI);
+			break;
+		}
+
+		//Trabajar con el fAngulo para poner la flecha en el hud, o darle efecto al compositor
+
+	}
+
+	//________________________________________________________________________
 
 } // namespace Logic
 
