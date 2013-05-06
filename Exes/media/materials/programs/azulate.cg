@@ -1,0 +1,40 @@
+sampler RT : register(s0);
+
+//float time_cycle_period;
+float flicker;
+//float3 luminance;
+float frameJitter;
+
+float4 Azulate_ps (float2 texCoord  : TEXCOORD0
+				) : COLOR
+{
+
+   // get sprite address
+   float2 spriteAddr = texCoord; //calcSpriteAddr(texCoord, DirtFrequency, time_cycle_period);
+
+    // add some dark and light splotches to the film
+
+   // convert color to base luminance
+   float4 base = tex2D(RT, texCoord + float2(0, spriteAddr.y * frameJitter));
+   
+   //extract the tone of the color combination
+   float tone = (base.r+base.g+base.b)/3;
+   
+	if(tone>0.4){
+		base.bg=1.0;
+	}else{
+		base.bg = saturate(tone/2);
+	}
+	
+	base.r = saturate(saturate (tone-0.4) * 2);
+   
+	/*if(tone<0.25){
+		base.g = 0.0;
+	}else if (tone > 0.75){
+		base.g = 1.0;
+	}else{*/
+		//base.g = saturate(saturate (tone-0.25) * 2);
+	//}
+   return base;
+}
+

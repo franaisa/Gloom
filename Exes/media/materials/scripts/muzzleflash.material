@@ -1,11 +1,11 @@
-fragment_program Ogre/Compositor/OldMovieFP cg
+fragment_program flash cg
 {
-	source azulate.cg
-	entry_point Azulate_ps
+	source MuzzleFlash.cg
+	entry_point flash_ps
 	profiles ps_2_0 arbfp1
 }
 
-material Ogre/Compositor/OldMovie
+material MuzzleFlash
 {
     technique
     {
@@ -16,9 +16,9 @@ material Ogre/Compositor/OldMovie
 			cull_software none
 			depth_func always_pass
 
-			fragment_program_ref Ogre/Compositor/OldMovieFP
+			fragment_program_ref flash
 			{
-				param_named frameJitter float 0.004
+				param_named flashLevel float 8
 			}
 
 			texture_unit RT
