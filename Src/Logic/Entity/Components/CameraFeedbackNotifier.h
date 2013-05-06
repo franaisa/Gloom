@@ -105,7 +105,7 @@ namespace Logic {
 		*/
 		void setOwner(Logic::CEntity* owner);
 
-		void playerIsWalking(bool walking) { _playerIsWalking = walking; }
+		void playerIsWalking(bool walking);
 
 		void walkEffect(unsigned int msecs);
 
@@ -135,9 +135,9 @@ namespace Logic {
 
 		float _currentWalkingRoll;
 
-		float _walkingRollSpeed;
-
-		float _walkingRollOffset;
+		float _stepForce;
+		float _stepRecoveryAccel;
+		float _acumStepForce;
 
 		bool _playerIsWalking;
 

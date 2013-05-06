@@ -41,11 +41,10 @@ namespace Logic {
 														 _landForce(0),
 														 _landRecoverySpeed(0.007f),
 														 _currentLandOffset(0),
-														 _walkingRollSpeed(0.008f),
-														 _walkingRollOffset(0.003f),
+														 _stepForce(0.00008f),
+														 _stepRecoveryAccel(0.000025f),
 														 _currentWalkingRoll(0) {
 
-		// Nada que hacer
 	}
 
 	//________________________________________________________________________
@@ -128,9 +127,6 @@ namespace Logic {
 		if(_playerIsWalking) {
 			walkEffect(msecs);
 		}
-		else if(_currentWalkingRoll != 0) {
-			walkEffect(msecs);
-		}
 		
 		if(_effectIsActivated){
 			_scene->updateCompositorVariable(_effect, _strengthEffect, 1+_timestamp*0.01);
@@ -156,11 +152,31 @@ namespace Logic {
 
 	//________________________________________________________________________
 
-	void CCameraFeedbackNotifier::walkEffect(unsigned int msecs) {
-		_currentWalkingRoll += _walkingRollSpeed * msecs;
-		if(_currentWalkingRoll > 2 * Math::PI) _currentWalkingRoll = 0;
+	void CCameraFeedbackNotifier::playerIsWalking(bool walking) { 
+		_playerIsWalking = walking;
+		if(!_playerIsWalking)
+			_cameraComponent->rollCamera(0);
+	}
 
-		_cameraComponent->rollCamera(sin(_currentWalkingRoll) * _walkingRollOffset);
+	//________________________________________________________________________
+
+	void CCameraFeedbackNotifier::walkEffect(unsigned int msecs) {
+		if(_cameraComponent->getRoll() == 0) {
+			_acumStepForce = _currentWalkingRoll = _stepForce *= -1;
+		}
+
+		_currentWalkingRoll += _acumStepForce * msecs;
+		_acumStepForce *= 0.9f;
+		if(_stepForce < 0) {
+			_currentWalkingRoll += _stepRecoveryAccel * msecs;
+			if(_currentWalkingRoll > 0) _currentWalkingRoll = 0;
+		}
+		else {
+			_currentWalkingRoll -= _stepRecoveryAccel * msecs;
+			if(_currentWalkingRoll < 0) _currentWalkingRoll = 0;
+		}
+
+		_cameraComponent->rollCamera(_currentWalkingRoll);
 	}
 
 	//________________________________________________________________________
@@ -168,7 +184,7 @@ namespace Logic {
 	void CCameraFeedbackNotifier::playerIsTouchingGround(float hitForce) {
 		if(hitForce < -0.3f) {
 			_playerIsLanding = true;
-			_landForce = abs(hitForce);
+			_landForce = hitForce * 0.6;
 		}
 	}
 
@@ -176,14 +192,14 @@ namespace Logic {
 
 	void CCameraFeedbackNotifier::landEffect(unsigned int msecs) {
 		_currentLandOffset += _landRecoverySpeed * msecs;
-		float vOffset = sin(_currentLandOffset + Math::PI) * _landForce;
+		float vOffset = sin(_currentLandOffset) * _landForce;
 		if(vOffset >= 0.0f) {
 			_currentLandOffset =  _landForce = 0;
 			_cameraComponent->setVerticalOffset(0);
 			_playerIsLanding = false;
 		}
 		else {
-			_cameraComponent->setVerticalOffset( sin(_currentLandOffset + Math::PI) * _landForce);
+			_cameraComponent->setVerticalOffset(vOffset);
 		}
 	}
 
