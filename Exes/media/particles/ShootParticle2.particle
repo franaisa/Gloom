@@ -1,0 +1,32 @@
+particle_system shootParticle2
+{
+	quota				1
+	material 			Particles/Sun.000
+	particle_width		1
+	particle_height		1
+	renderer			billboard
+	billboard_type		point
+	local_space			true
+     
+	emitter Point
+	{
+		emission_rate		100
+		angle				0
+		time_to_live_min 	0.1
+		time_to_live_max 	0.1
+		duration_min 		0.1
+		duration_max 		0.1
+		velocity			0
+		direction			1 1 0
+		colour_range_start	0 0 0 0
+		colour_range_end	0 0 0 0
+		repeat_delay_min 0
+		repeat_delay_max 0
+	}
+
+	affector Scaler
+	{
+		rate 2
+	}
+
+}
