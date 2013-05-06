@@ -254,7 +254,7 @@ namespace Graphics
 
 		
 		if(!directionWithForce.isZeroLength())
-			particle->setDirection(directionWithForce);
+			//particle->setDirection(directionWithForce);
 
 		return particle;
 
