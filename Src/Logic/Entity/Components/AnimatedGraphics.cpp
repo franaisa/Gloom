@@ -31,7 +31,7 @@ namespace Logic
 	IMP_FACTORY(CAnimatedGraphics);
 
 	CAnimatedGraphics::~CAnimatedGraphics(){
-		delete _weapons;
+		if(_weapons != NULL) delete _weapons;
 	}
 	
 	//---------------------------------------------------------

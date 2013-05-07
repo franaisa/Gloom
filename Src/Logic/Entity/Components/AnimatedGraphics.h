@@ -49,7 +49,7 @@ namespace Logic
 		defecto.
 		*/
 		CAnimatedGraphics() : CGraphics(), _animatedGraphicsEntity(0), _currentWeapon(0), _currentMaterialWeapon("original"),
-				_defaultAnimation("") {}
+				_defaultAnimation(""), _weapons(NULL) {}
 
 		/**
 		Destructor (virtual); Quita de la escena y destruye la entidad gráfica y la animada.
