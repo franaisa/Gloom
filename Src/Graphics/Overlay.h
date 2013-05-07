@@ -206,6 +206,40 @@ namespace Graphics
 		void setRotation(float radianAngle);
 
 		/**
+		Devuelve el ancho del overlay;
+
+		@param, opcional, si se pone "pixel" te dara el tamaño en pixeles
+		@return, la anchura en valor relativo [0,1]
+		*/
+		float getWidth(std::string mode = "absolute");
+
+		/**
+		Devuelve el alto del overlay;
+
+		@param, opcional, si se pone "pixel" te dara el tamaño en pixeles
+		@return, la altura en valor relativo [0,1]
+		*/
+		float getHeight(std::string mode = "absolute");
+
+		/**
+		Devuelve la posicion del overlay en el eje X
+		La posicion es relativa, donde 0 es la izquierda de la pantalla
+
+		@param, opcional, si se pone "pixel" te da la posicion en pixeles
+		@return, el valor x, en posicion relativa [0,1]
+		*/
+		float getPositionX(std::string mode = "absolute");
+
+		/**
+		Devuelve la posicion del overlay en el eje Y
+		La posicion es relativa, donde 0 es la parte superior de la pantalla
+
+		@param, opcional, si se pone "pixel" te da la posicion en pixeles
+		@return, el valor y, en posicion relativa [0,1]
+		*/
+		float getPositionY(std::string mode = "absolute");
+
+		/**
 		metodo que devuelve el overlayContainer
 
 		@return la variable que contiene el elemento

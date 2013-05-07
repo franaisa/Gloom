@@ -307,4 +307,52 @@ namespace Graphics
 		if(_overlay){_overlay->setRotate(Ogre::Radian(radianAngle));}
 	}
 	//------------------------------------------------------------
+
+	float COverlay::getWidth(std::string mode){
+		if(mode == "pixel"){
+			if(_overlayContainer){return _overlayContainer->getWidth()*Ogre::OverlayManager::getSingletonPtr()->getViewportWidth();}
+			if(_overlayText){ return _overlayText->getWidth()*Ogre::OverlayManager::getSingletonPtr()->getViewportWidth();}
+		}else{
+			if(_overlayContainer){return _overlayContainer->getWidth();}
+			if(_overlayText){ return _overlayText->getWidth();}
+		}
+		return 0;
+	}
+	//------------------------------------------------------------
+
+	float COverlay::getHeight(std::string mode){
+		if(mode == "pixel"){
+			if(_overlayContainer){return _overlayContainer->getHeight()*Ogre::OverlayManager::getSingletonPtr()->getViewportHeight();}
+			if(_overlayText){ return _overlayText->getHeight()*Ogre::OverlayManager::getSingletonPtr()->getViewportHeight();}
+		}else{
+			if(_overlayContainer){return _overlayContainer->getHeight();}
+			if(_overlayText){ return _overlayText->getHeight();}
+		}
+		return 0;
+	}
+	//------------------------------------------------------------
+
+	float COverlay::getPositionX(std::string mode){
+		if(mode == "pixel"){
+			if(_overlayContainer){return _overlayContainer->getLeft()*Ogre::OverlayManager::getSingletonPtr()->getViewportWidth();}
+			if(_overlayText){ return _overlayText->getLeft()*Ogre::OverlayManager::getSingletonPtr()->getViewportWidth();}
+		}else{
+			if(_overlayContainer){return _overlayContainer->getLeft();}
+			if(_overlayText){ return _overlayText->getLeft();}
+		}
+		return 0;	
+	}
+	//------------------------------------------------------------
+
+	float COverlay::getPositionY(std::string mode){
+		if(mode == "pixel"){
+			if(_overlayContainer){return _overlayContainer->getTop()*Ogre::OverlayManager::getSingletonPtr()->getViewportHeight();}
+			if(_overlayText){ return _overlayText->getTop()*Ogre::OverlayManager::getSingletonPtr()->getViewportHeight();}
+		}else{
+			if(_overlayContainer){return _overlayContainer->getTop();}
+			if(_overlayText){ return _overlayText->getTop();}
+		}
+		return 0;	
+	}
+	//------------------------------------------------------------
 } // namespace Graphics

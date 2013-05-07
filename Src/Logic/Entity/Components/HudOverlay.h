@@ -40,7 +40,7 @@ namespace Logic
 		*/
 		CHudOverlay() : IComponent(), _health(0), _shield(0), _ammo(1), _actualWeapon(0), _numWeapons(0), _panelMira(0), _spawnTime(0), _acumSpawn(0),
 			_overlayPlay(0), _overlayDie(0), _panelDie(0), _textAreaDie(0), _overlayDebug(0), _panelDebug(0), _textAreaDebug(0), 
-			_overlayLocationImpact(0), _overlayPanelLocationImpact(0), _acumDebug(0) {
+			_overlayLocationImpact(0), _overlayPanelLocationImpact(0), _acumDebug(0), temporal(0) {
 			
 			for(int i=0;i<3;++i){
 				_panelElementsText[i]=1;
@@ -143,6 +143,13 @@ namespace Logic
 		*/
 		void hudDirectionImpact(float radianAngle);
 
+		/**
+		Establece el tamaño de la mirila, para realizar la secuancia de disparo y su feedback de perdida de punteria.
+
+		@param width, establece el ancho de la mirilla en pantalla.
+		@param height, establece el alto de la mirilla en pantalla.
+		*/
+		void CHudOverlay::hudSizeCrossfire(float width, float height);
 
 		std::string toText(eWeaponIndex weapon);
 		std::string toText(eOverlayWeaponState state);
@@ -192,6 +199,11 @@ namespace Logic
 		Maneja el overlay de la mira.
 		*/
 		Graphics::COverlay *_panelMira;
+
+		/**
+		Maneja el overlay de la mira que se mueve, es decir, que aumenta cuanto mas dispara.
+		*/
+		Graphics::COverlay *_panelMiraMovible;
 
 		/** 
 		Gestiona los paneles de armas basicas
@@ -246,6 +258,8 @@ namespace Logic
 
 		int _contadorLocalizadorImpacto;
 
+
+		float temporal;
 	}; // class CHudOverlay
 
 	REG_FACTORY(CHudOverlay);

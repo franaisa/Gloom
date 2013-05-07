@@ -151,7 +151,7 @@ namespace Logic
 		float relativeWidth = width/hudScreenWidth;
 		float relativeHeight = height/hudScreenHeight;
 
-		////////////////Todo esto para la mira
+		///////////////////////////////////Todo esto para la mira
          // Create an overlay
 		_overlayPlay = _server->createOverlay( "_overlayPlay", scene );		
          
@@ -162,8 +162,8 @@ namespace Logic
 		float positionCrossFireX = 0.5f-((sizeCrossFireX/2)*0.01f) ;
 		float positionCrossFireY = 0.5f-((sizeCrossFireY/2)*0.01f) ;
         _panelMira->setPosition( positionCrossFireX,positionCrossFireY);
-		_panelMira->setDimensions( sizeCrossFireX/100, sizeCrossFireY/100 );
-        _panelMira->setMaterial("hudMira");
+		_panelMira->setDimensions( sizeCrossFireX*0.01, sizeCrossFireY*0.01);
+        _panelMira->setMaterial("hudMira3");
 
 
 		// overlay para controlar las teclas
@@ -182,6 +182,14 @@ namespace Logic
 
 		_overlayPlay->add2D( _panelMira );
 
+
+		///////////////////////////////////Esto para la mira dinamica
+
+		_panelMiraMovible = _server->createOverlay("Mira dinamica", scene, "Panel" );
+        _panelMiraMovible->setPosition( positionCrossFireX,positionCrossFireY);
+		_panelMiraMovible->setDimensions( sizeCrossFireX*0.01, sizeCrossFireY*0.01 );
+        _panelMiraMovible->setMaterial("hudMira4");
+		_overlayPlay->add2D(_panelMiraMovible);
 
          // Add the panel to the overlay
 
@@ -720,6 +728,12 @@ namespace Logic
 
 	void CHudOverlay::onTick(unsigned int msecs)
 	{
+		/*Descomentar para ver efecto de la mira.
+		temporal += 0.1;
+		float temp = (std::sin(temporal)*0.001);
+		hudSizeCrossfire(temp, temp);
+
+		*/
 
 		if(_overlayLocationImpact->isVisible()){
 			//dura 3 ticks
@@ -774,6 +788,11 @@ namespace Logic
 		_overlayLocationImpact->setRotation(radianAngle);
 		_overlayLocationImpact->setVisible(false);
 		_contadorLocalizadorImpacto = 0;
+	}
+
+	void CHudOverlay::hudSizeCrossfire(float width, float height){
+		_panelMiraMovible->setPosition(_panelMiraMovible->getPositionX() - width*0.5, _panelMiraMovible->getPositionY() - height*0.5);
+		_panelMiraMovible->setDimensions(_panelMiraMovible->getWidth() + width,_panelMiraMovible->getHeight() + height);  
 	}
 
 	void CHudOverlay::onDeactivate(){

@@ -18,6 +18,46 @@ material hudMira
 		}
 	}
 }
+material hudMira3
+{
+	technique
+	{
+		pass
+		{
+			depth_check off
+			depth_write off
+			scene_blend alpha_blend
+			lighting off
+			cull_hardware none
+			cull_software none
+			
+			texture_unit mira1
+			{
+				texture mira3.png 2d
+			}
+		}
+	}
+}
+material hudMira4
+{
+	technique
+	{
+		pass
+		{
+			depth_check off
+			depth_write off
+			scene_blend alpha_blend
+			lighting off
+			cull_hardware none
+			cull_software none
+			
+			texture_unit mira1
+			{
+				texture mira4.png 2d
+			}
+		}
+	}
+}
 
 material hud_HEALTH
 {
