@@ -218,7 +218,7 @@ namespace Logic {
 		_effectIsActivated = true;
 		_timestamp = 0;
 
-		calculateEnemyPosition();
+		//calculateEnemyPosition();
 	}// damaged
 
 	//________________________________________________________________________
