@@ -94,6 +94,7 @@ namespace Application {
 		// Ocultamos el menú de cliente
 		_menu->hide();
 
+		_netMgr->removeObserver(this);
 		CApplicationState::deactivate();
 	} // deactivate
 
@@ -228,7 +229,6 @@ namespace Application {
 				// Si pulsamos la tecla escape volvemos al menú de red
 				// Indicamos que ya no queremos ser notificados de eventos de red
 				// y desactivamos la red
-				_netMgr->removeObserver(this);
 				_netMgr->deactivateNetwork();
 				_app->setState("netmenu");
 				break;
@@ -281,7 +281,6 @@ namespace Application {
 		// Volvemos al menú de red
 		// Indicamos que ya no queremos ser notificados de eventos de red
 		// y desactivamos la red
-		_netMgr->removeObserver(this);
 		_netMgr->deactivateNetwork();
 		_app->setState("netmenu");
 		
