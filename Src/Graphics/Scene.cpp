@@ -68,7 +68,11 @@ namespace Graphics
 		delete _camera;
 		_root->destroySceneManager(_sceneMgr);
 		
+		
 		Ogre::MaterialManager::getSingletonPtr()->destroyAllResourcePools();
+		Ogre::MaterialManager::getSingletonPtr()->removeAll();
+		_compositorManager->destroyAllResourcePools();
+		_compositorManager->removeAll();
 	} // ~CScene
 
 	//--------------------------------------------------------
