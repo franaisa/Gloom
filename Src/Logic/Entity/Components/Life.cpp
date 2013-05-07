@@ -230,7 +230,6 @@ namespace Logic {
 	//________________________________________________________________________
 
 	void CLife::reducedDamageAbsorption(float percentage) {
-		std::cout << "reduced damage absortion = " << percentage << std::endl;
 		_reducedDamageAbsorption = percentage;
 	}
 
@@ -247,7 +246,6 @@ namespace Logic {
 		// Si hay una reduccion de daño activa, reducimos el daño aplicado
 		damage -= damage * _reducedDamageAbsorption;
 
-		std::cout << "Me quitan " << damage << std::endl;
 
 		if(_currentShield > 0) {
 			int damageAbsorbedByShield = _shieldDamageAbsorption * damage;
@@ -280,7 +278,6 @@ namespace Logic {
 		hudLifeMsg->setLife(_currentLife);
 		_entity->emitMessage(hudLifeMsg);
 
-		std::cout << "Me quedan " << _currentLife << " puntos de salud" << std::endl;
 
 		return _currentLife == 0;
 	}

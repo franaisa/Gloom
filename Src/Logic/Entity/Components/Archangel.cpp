@@ -103,7 +103,6 @@ namespace Logic {
 	//__________________________________________________________________
 
 	void CArchangel::primarySkill() {
-		std::cout << "Primary Skill - Archangel" << std::endl;
 
 		// Arrancamos el cronometro
 		_inmunityTimer = _inmunityDuration;
@@ -124,7 +123,6 @@ namespace Logic {
 	//__________________________________________________________________
 
 	void CArchangel::secondarySkill() {
-		std::cout << "Secondary Skill - Archangel" << std::endl;
 	}
 
 	//__________________________________________________________________

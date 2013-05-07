@@ -95,12 +95,6 @@ namespace Logic {
 		// Lo enviamos por la red usando el front-end CGameNetMsgManager
 		Logic::TMessageType msgType = message->getMessageType();
 		if(msgType == Logic::Message::CAMERA_TO_ENEMY) {
-			std::cout << "Recibido un mensaje de tipo camera to enemy" << std::endl;
-			std::cout << "menssaje de avatar controller ENVIADO" << std::endl;
-			
-			if( _forwardedMsgTypes.find(msgType) != _forwardedMsgTypes.end() ) {
-				std::cout << "El mensaje se encuentra en nuestra lista de mensajes, por lo tanto lo enviamos" << std::endl;
-			}
 
 			Logic::TEntityID id = _entity->getEntityID();
 			

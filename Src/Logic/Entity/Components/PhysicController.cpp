@@ -170,7 +170,6 @@ void CPhysicController::onShapeHit(IPhysics *otherComponent, const Vector3& coli
 
 void CPhysicController::onContact (IPhysics *otherComponent, bool enter) {
 	//std::cout<< "contacto entre kinematics en oncontact" << std::endl;
-	std::cout << "ONCONTACT. Estoy en "<<_entity->getName() <<" contacto con algo que es " << otherComponent->getEntity()->getName() << std::endl;
 }
 
 //________________________________________________________________________

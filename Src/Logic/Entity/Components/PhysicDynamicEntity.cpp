@@ -255,7 +255,6 @@ void CPhysicDynamicEntity::onTrigger(IPhysics *otherComponent, bool enter) {
 
 	if (enter) {
 		_inTrigger=true;
-		std::cout << "Envio mensaje de touched" << std::endl;
 		std::shared_ptr<CMessageTouched> m = std::make_shared<CMessageTouched>();
 		m->setEntity(otherComponent->getEntity());
 		_entity->emitMessage(m);

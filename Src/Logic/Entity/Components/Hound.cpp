@@ -100,7 +100,6 @@ namespace Logic {
 	//__________________________________________________________________
 
 	void CHound::primarySkill() {
-		std::cout << "Primary Skill - Hound" << std::endl;
 
 		//Arrancamos el cronometro
 		_berserkerTimer= _berserkerDuration;
@@ -123,7 +122,6 @@ namespace Logic {
 
 	void CHound::secondarySkill() {
 		// Habilidad por definir
-		std::cout << "Secondary Skill - Hound" << std::endl;
 	}
 
 } // namespace Logic

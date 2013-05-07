@@ -455,7 +455,7 @@ namespace Logic
 	void CEntity::awakeWithBothTicks(IComponent* component, unsigned int msecs, unsigned int steps) {
 		component->processMessages();
 		component->tick(msecs);
-		if(steps>1)std::cout << steps << std::endl;
+		if(steps>1)std::cout << "WARNING: estas ejecutando la logica " << steps  << " veces!" << std::endl;
 		for(int i = 0; i < steps; ++i) {
 			component->fixedTick(_fixedTimeStep);
 		}

@@ -183,14 +183,11 @@ namespace Logic {
 	void CShoot::incrementDamage(int percent) {
 		//Si es 0 significa que hay que restaurar al que habia por defecto
 		if(percent==0){
-			std::cout << "daño por defecto  " << _nameWeapon << std::endl;
 			_damage=_defaultDamage;
 		}
 		//Sino aplicamos el porcentaje pasado por parámetro
 		else{
-			std::cout << "daño por defecto" << _damage << std::endl;
 			_damage+=(percent*_damage)/100;
-			std::cout << "daño incrementado en " << _damage << std::endl;
 		}
 	} // incrementDamage
 	
@@ -200,12 +197,10 @@ namespace Logic {
 		
 		//Si es 0 significa que hay que restaurar al que habia por defecto
 		if(percent==0){
-			std::cout << "cd por defecto " << _nameWeapon << std::endl;
 			_cooldown=_defaultCooldown;
 		}
 		//Sino aplicamos el porcentaje pasado por parámetro
 		else{
-			std::cout << "decrementamos cd en " << _nameWeapon << std::endl;
 			_cooldown=_cooldown-(percent*_cooldown)/100;
 		}
 	} // reduceCooldown
