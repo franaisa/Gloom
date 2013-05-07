@@ -50,6 +50,8 @@ Contiene todo lo que respecta al hud del jugador
 #include "Logic/Messages/MessageHudDebug.h"
 #include "Logic/Messages/MessageHudDebugData.h"
 
+#include "Logic/Messages/MessageImpact.h"
+
 namespace Logic 
 {
 	IMP_FACTORY(CHudOverlay);
@@ -506,7 +508,8 @@ namespace Logic
 				msgType == Message::HUD_SPAWN		|| 
 				msgType == Message::HUD_DEBUG		|| 
 				msgType == Message::HUD_DEBUG_DATA	||
-				msgType == Message::CHANGE_MATERIAL_HUD_WEAPON;
+				msgType == Message::CHANGE_MATERIAL_HUD_WEAPON ||
+				msgType == Message::IMPACT;
 
 	} // accept
 	
@@ -557,6 +560,11 @@ namespace Logic
 			case Message::CHANGE_MATERIAL_HUD_WEAPON: {
 				std::shared_ptr<CMessageChangeMaterialHudWeapon> chgMatMsg = std::static_pointer_cast<CMessageChangeMaterialHudWeapon>(message);
 				changeMaterialActualWeapon( chgMatMsg->getMaterialName() );
+				break;
+			}
+			case Message::IMPACT: {
+				std::shared_ptr<CMessageImpact> impMes = std::static_pointer_cast<CMessageImpact>(message);
+				hudDirectionImpact( impMes->getDirectionImpact() );
 				break;
 			}
 		}
@@ -678,7 +686,6 @@ namespace Logic
 		overlayParticle->add3D(particle, new Vector3(0,0,-20));
 		*/
 	}
-	
 
 
 	void CHudOverlay::hudDebug(){
@@ -736,9 +743,9 @@ namespace Logic
 		*/
 
 		if(_overlayLocationImpact->isVisible()){
-			//dura 3 ticks
+			//dura 20 ticks
 			++_contadorLocalizadorImpacto;
-			if(_contadorLocalizadorImpacto >= 2){
+			if(_contadorLocalizadorImpacto >= 20){
 				_overlayLocationImpact->setVisible(false);
 			}
 		}
@@ -786,7 +793,7 @@ namespace Logic
 
 	void CHudOverlay::hudDirectionImpact(float radianAngle){
 		_overlayLocationImpact->setRotation(radianAngle);
-		_overlayLocationImpact->setVisible(false);
+		_overlayLocationImpact->setVisible(true);
 		_contadorLocalizadorImpacto = 0;
 	}
 

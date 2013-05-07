@@ -94,7 +94,7 @@ namespace Logic {
 		/**
 		Manda un mensaje a la cámara para que vibre
 		*/
-		void damaged();
+		void damaged(Vector3 vPosEnemy);
 
 		//__________________________________________________________________
 
@@ -120,7 +120,7 @@ namespace Logic {
 		Método que calcula desde donde nos han dañado, para indicarlo como feedback en el 
 		circulito de la mirilla en función de dicha posición
 		*/
-		void calculateEnemyPosition();
+		void calculateEnemyPosition(Vector3 vPosEnemy);
 
 	protected:
 
@@ -165,6 +165,11 @@ namespace Logic {
 		std::string _strengthEffect;
 		Graphics::CScene *_scene;
 		int _timestamp;
+
+		/**
+		Posición del enemigo recibido en el mensaje de daño
+		*/
+		Vector3 _vPosEnemy;
 
 
 	}; // class CScreamerShieldDamageNotifier
