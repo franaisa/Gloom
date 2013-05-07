@@ -7,8 +7,129 @@ material ArchangelDiamond
  
        texture_unit
        {
-         colour_op_ex source1 src_manual src_current 0.8 0 0.8
+         colour_op_ex source1 src_current src_manual 0.8 0 0.8
        }
      }
    }
  }
+ 
+ material ArchangelDiamond2
+{
+	set $diffuse_tex "marine_amarillo.tga"
+	set $diffuse_tex_shield "PielDiamanteTP.png"
+	
+    set $ambient "0 0 0 1"
+    set $diffuse "1 1 1 1"
+    set $specular "2 2 2 100"
+    set $shininess "60"
+	
+	set $glow_tex "marineGlow.tga"
+	set $glow_tex_shield "PielDiamanteTPGlow.png"
+
+    technique
+    {
+        pass
+        {
+            illumination_stage ambient
+
+            ambient $ambient
+            diffuse $diffuse
+            specular $specular $shininess
+            emissive 0 0 0 0
+
+            vertex_program_ref ambient_vs
+            {
+            }
+
+            fragment_program_ref ambient_ps
+            {
+            }
+
+            texture_unit diffuseMap
+            {
+                texture $diffuse_tex
+            }
+
+            texture_unit aoMap
+            {
+                texture $diffuse_tex
+            }
+			texture_unit shield
+			{
+				texture $diffuse_tex_shield
+				scale 0.1 0.1
+				colour_op add
+			}
+        }
+
+        pass
+        {
+            illumination_stage per_light
+
+            scene_blend add
+            iteration once_per_light
+
+            vertex_program_ref diffuse_vs
+            {
+            }
+
+            fragment_program_ref diffuse_ps
+            {
+            }
+
+            diffuse $diffuse
+            specular $specular $shininess
+            ambient $ambient
+
+            texture_unit diffuseMap
+            {
+                texture $diffuse_tex
+            }
+
+            texture_unit specMap
+            {
+                texture spec.tga
+            }
+
+            texture_unit normalMap
+            {
+                texture marine_Nbump.tga
+            }
+			texture_unit shield
+			{
+				texture $diffuse_tex_shield
+				scale 0.1 0.1
+				colour_op add
+			}
+        }
+    }
+	
+	technique
+	{
+		scheme glow
+		pass
+		{
+			texture_unit
+			{
+				texture $glow_tex
+				colour_op replace
+			}
+			ambient 1 1 1
+			diffuse 1 1 1
+			specular 0 0 0 1
+			emissive 0 0 0
+		}
+		pass
+		{
+			texture_unit
+			{
+				texture $glow_tex_shield
+				colour_op replace
+			}
+			ambient 1 1 1
+			diffuse 1 1 1
+			specular 0 0 0 1
+			emissive 0 0 0
+		}
+	}
+}
