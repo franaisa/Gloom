@@ -1,13 +1,13 @@
 ﻿/**
-@file Life.cpp
+@file HudOverlay.cpp
 
-Contiene la implementaci�n del componente que controla la vida de una entidad.
+Contiene todo lo que respecta al hud del jugador
  
 @see Logic::CLife
 @see Logic::IComponent
 
-@author David Llans�
-@date Octubre, 2010
+@author Antonio Jesus Narvaez
+@date Enero?, 2013
 */
 
 #include "HudOverlay.h"
@@ -37,9 +37,6 @@ Contiene la implementaci�n del componente que controla la vida de una entidad.
 #include <OgreTextAreaOverlayElement.h>
 #include <OgreEntity.h>
 */
-
-
-
 
 #include "Logic/Messages/Message.h"
 #include "Logic/Messages/MessageHudLife.h"
@@ -108,6 +105,12 @@ namespace Logic
 
 		if(_textAreaDebug)
 			delete _textAreaDebug;
+
+		if(_overlayLocationImpact)
+			delete _overlayLocationImpact;
+
+		if (_overlayPanelLocationImpact)
+			delete _overlayPanelLocationImpact;
 
 	}
 
@@ -405,11 +408,11 @@ namespace Logic
 		 //////////////////////////////////////AQUI ME CREO EL OVERLAY PARA CUANDO SE MUERA
 
 		_overlayDie = _server->createOverlay( "_overlayDie", scene );
-
-		Graphics::COverlay* panelDie = _server->createOverlay("panelDie", scene, "Panel");
-		panelDie->setMetricsMode("pixel");
-		panelDie->setPosition( 5*relativeWidth, 12*relativeHeight);
-		panelDie->setDimensions( relativeWidth*10, relativeHeight*10 );
+		
+		_panelDie = _server->createOverlay("panelDie", scene, "Panel");
+		_panelDie->setMetricsMode("pixel");
+		_panelDie->setPosition( 5*relativeWidth, 12*relativeHeight);
+		_panelDie->setDimensions( relativeWidth*10, relativeHeight*10 );
         //panelDie->setMaterial("cuadroArmas");
 
 		_textAreaDie = _server->createOverlay("_textAreaDie", scene, "TextArea");
@@ -422,19 +425,32 @@ namespace Logic
 				_textAreaDie->setTextSize(46);
 				_textAreaDie->setFont("fuenteSimple");
 				
-				panelDie->addChild(_textAreaDie);
+				_panelDie->addChild(_textAreaDie);
 
-		_overlayDie->add2D( panelDie );
+		_overlayDie->add2D( _panelDie );
 
 		//_overlayDie->show();
 
+		///////////////////////////////////////OVERLAY PARA LA LOCALIZACION DE IMPACTOS
+
+		_overlayLocationImpact = _server->createOverlay("_overlayLocationImpact", scene);
+
+		_overlayPanelLocationImpact = _server->createOverlay("_overlayPanelLocationImpact", scene, "Panel");
+		_overlayPanelLocationImpact->setMetricsMode("pixel");
+		_overlayPanelLocationImpact->setPosition((width*0.5)-128, (height*0.5)-128);
+		_overlayPanelLocationImpact->setDimensions(256,256);
+		_overlayPanelLocationImpact->setMaterial("localizadorImpacto");
+		_overlayPanelLocationImpact->setVisible(true);
+
+		_overlayLocationImpact->add2D(_overlayPanelLocationImpact);
+		_overlayLocationImpact->setVisible(false);		
 
 		//////////////////////////////////////AQUI ME CREO EL OVERLAY PARA EL DEBBUG
 
 		_overlayDebug = _server->createOverlay( "_overlayDebug", scene );
 
 		_panelDebug = _server->createOverlay("panelDebug", scene, "Panel");
-		panelDie->setMetricsMode("pixel");
+		_panelDebug->setMetricsMode("pixel");
 
 		//_panelDebug->setPosition(0,0);
 
@@ -465,7 +481,6 @@ namespace Logic
 		_overlayDebug->add2D( _panelDebug );
 
 		_overlayDebug->setVisible(false);
-
 
 		return true;
 
@@ -705,6 +720,15 @@ namespace Logic
 
 	void CHudOverlay::onTick(unsigned int msecs)
 	{
+
+		if(_overlayLocationImpact->isVisible()){
+			//dura 3 ticks
+			++_contadorLocalizadorImpacto;
+			if(_contadorLocalizadorImpacto >= 2){
+				_overlayLocationImpact->setVisible(false);
+			}
+		}
+
 		if(_overlayDie->isVisible()){
 			_acumSpawn += msecs;
 			if(_acumSpawn>1000){
@@ -746,10 +770,17 @@ namespace Logic
 		_textAreaDebug->setText(_sDebug.str());
 	}
 
+	void CHudOverlay::hudDirectionImpact(float radianAngle){
+		_overlayLocationImpact->setRotation(radianAngle);
+		_overlayLocationImpact->setVisible(false);
+		_contadorLocalizadorImpacto = 0;
+	}
+
 	void CHudOverlay::onDeactivate(){
 		_overlayPlay->setVisible(false);
 		_overlayDie->setVisible(false);	
 		_overlayDebug->setVisible(false);
+		_overlayLocationImpact->setVisible(false);
 	}
 
 	std::string CHudOverlay::toText(eWeaponIndex weapon){
