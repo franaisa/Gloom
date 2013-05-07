@@ -32,7 +32,7 @@ namespace Application {
 	unsigned long COgreClock::getPhysicalTime()
 	{
 		assert(_timer);
-		return _timer->getMicroseconds();
+		return _timer->getMilliseconds();
 	} // getPhysicalTime
 
 

@@ -211,6 +211,7 @@ namespace Logic
 	void CEntity::tick(unsigned int msecs) {
 		// Estimamos el numero de pasos que tiene que hacer el fixed tick
 		unsigned int steps = (_acumTime + msecs) / _fixedTimeStep;
+
 		if(steps == 0) {
 			_acumTime += msecs % _fixedTimeStep;
 		}
@@ -454,6 +455,7 @@ namespace Logic
 	void CEntity::awakeWithBothTicks(IComponent* component, unsigned int msecs, unsigned int steps) {
 		component->processMessages();
 		component->tick(msecs);
+		if(steps>1)std::cout << steps << std::endl;
 		for(int i = 0; i < steps; ++i) {
 			component->fixedTick(_fixedTimeStep);
 		}

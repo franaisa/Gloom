@@ -160,24 +160,12 @@ namespace Application {
 		while (!exitRequested()) 
 		{
 			if (!_currentState ||
-					(_nextState && (_currentState != _nextState))){
+					(_nextState && (_currentState != _nextState)))
 				changeState();
-				_clock->updateTime();
-				continue;
-			}
 
 			_clock->updateTime();
 
-			//Como mínimo 16 milisegundos para ejecutar un tick desde la ultima vez, el resto me lo guardo
-			//Salvo que sea multiplo en cuyo caso ejecuto el tick entero (Ej; 32 del tiron y no guardo nada)
-			_clock->setAcumTime(_clock->getAcumTime()+_clock->getLastFrameDuration());		
-			if(_clock->getAcumTime()>=16000){
-				multiplo=_clock->getAcumTime()/16000;
-				fixedTick=16*multiplo;
-				tick(fixedTick);
-				resto=_clock->getAcumTime()-fixedTick*1000;
-				_clock->setAcumTime(resto);
-			}
+			tick(_clock->getLastFrameDuration());
 		
 		}
 		//_CrtDumpMemoryLeaks();

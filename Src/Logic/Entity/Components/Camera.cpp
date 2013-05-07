@@ -131,6 +131,10 @@ namespace Logic
 		_currentRoll = radians;
 	}
 
+	float CCamera::getRoll() {
+		return _currentRoll;
+	}
+
 	void CCamera::setTargetEnemy(CEntity* enemy){
 		
 		this->_enemy=enemy;

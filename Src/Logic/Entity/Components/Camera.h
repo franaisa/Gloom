@@ -122,6 +122,7 @@ namespace Logic
 
 		void rollCamera(float radians);
 
+		float getRoll();
 
 	protected:
 

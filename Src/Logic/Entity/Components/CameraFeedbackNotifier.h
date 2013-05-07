@@ -17,6 +17,7 @@ del Screamer.
 
 #include "Logic/Entity/Component.h"
 
+
 namespace Graphics{
 	class CScene;
 }
@@ -105,7 +106,7 @@ namespace Logic {
 		*/
 		void setOwner(Logic::CEntity* owner);
 
-		void playerIsWalking(bool walking) { _playerIsWalking = walking; }
+		void playerIsWalking(bool walking);
 
 		void walkEffect(unsigned int msecs);
 
@@ -113,6 +114,13 @@ namespace Logic {
 		void playerIsTouchingGround(float hitForce);
 
 		void landEffect(unsigned int msecs);
+
+
+		/*
+		Método que calcula desde donde nos han dañado, para indicarlo como feedback en el 
+		circulito de la mirilla en función de dicha posición
+		*/
+		void calculateEnemyPosition();
 
 	protected:
 
@@ -135,9 +143,9 @@ namespace Logic {
 
 		float _currentWalkingRoll;
 
-		float _walkingRollSpeed;
-
-		float _walkingRollOffset;
+		float _stepForce;
+		float _stepRecoveryAccel;
+		float _acumStepForce;
 
 		bool _playerIsWalking;
 

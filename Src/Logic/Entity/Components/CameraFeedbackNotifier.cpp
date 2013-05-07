@@ -29,6 +29,9 @@ del Screamer.
 #include "Logic/Messages/MessageControl.h"
 
 
+
+
+
 namespace Logic {
 	
 	IMP_FACTORY(CCameraFeedbackNotifier);
@@ -41,11 +44,10 @@ namespace Logic {
 														 _landForce(0),
 														 _landRecoverySpeed(0.007f),
 														 _currentLandOffset(0),
-														 _walkingRollSpeed(0.008f),
-														 _walkingRollOffset(0.003f),
+														 _stepForce(0.00008f),
+														 _stepRecoveryAccel(0.000025f),
 														 _currentWalkingRoll(0) {
 
-		// Nada que hacer
 	}
 
 	//________________________________________________________________________
@@ -128,9 +130,6 @@ namespace Logic {
 		if(_playerIsWalking) {
 			walkEffect(msecs);
 		}
-		else if(_currentWalkingRoll != 0) {
-			walkEffect(msecs);
-		}
 		
 		if(_effectIsActivated){
 			_scene->updateCompositorVariable(_effect, _strengthEffect, 1+_timestamp*0.01);
@@ -156,11 +155,31 @@ namespace Logic {
 
 	//________________________________________________________________________
 
-	void CCameraFeedbackNotifier::walkEffect(unsigned int msecs) {
-		_currentWalkingRoll += _walkingRollSpeed * msecs;
-		if(_currentWalkingRoll > 2 * Math::PI) _currentWalkingRoll = 0;
+	void CCameraFeedbackNotifier::playerIsWalking(bool walking) { 
+		_playerIsWalking = walking;
+		if(!_playerIsWalking)
+			_cameraComponent->rollCamera(0);
+	}
 
-		_cameraComponent->rollCamera(sin(_currentWalkingRoll) * _walkingRollOffset);
+	//________________________________________________________________________
+
+	void CCameraFeedbackNotifier::walkEffect(unsigned int msecs) {
+		if(_cameraComponent->getRoll() == 0) {
+			_acumStepForce = _currentWalkingRoll = _stepForce *= -1;
+		}
+
+		_currentWalkingRoll += _acumStepForce * msecs;
+		_acumStepForce *= 0.9f;
+		if(_stepForce < 0) {
+			_currentWalkingRoll += _stepRecoveryAccel * msecs;
+			if(_currentWalkingRoll > 0) _currentWalkingRoll = 0;
+		}
+		else {
+			_currentWalkingRoll -= _stepRecoveryAccel * msecs;
+			if(_currentWalkingRoll < 0) _currentWalkingRoll = 0;
+		}
+
+		_cameraComponent->rollCamera(_currentWalkingRoll);
 	}
 
 	//________________________________________________________________________
@@ -168,7 +187,7 @@ namespace Logic {
 	void CCameraFeedbackNotifier::playerIsTouchingGround(float hitForce) {
 		if(hitForce < -0.3f) {
 			_playerIsLanding = true;
-			_landForce = abs(hitForce);
+			_landForce = hitForce * 0.6;
 		}
 	}
 
@@ -176,14 +195,14 @@ namespace Logic {
 
 	void CCameraFeedbackNotifier::landEffect(unsigned int msecs) {
 		_currentLandOffset += _landRecoverySpeed * msecs;
-		float vOffset = sin(_currentLandOffset + Math::PI) * _landForce;
+		float vOffset = sin(_currentLandOffset) * _landForce;
 		if(vOffset >= 0.0f) {
 			_currentLandOffset =  _landForce = 0;
 			_cameraComponent->setVerticalOffset(0);
 			_playerIsLanding = false;
 		}
 		else {
-			_cameraComponent->setVerticalOffset( sin(_currentLandOffset + Math::PI) * _landForce);
+			_cameraComponent->setVerticalOffset(vOffset);
 		}
 	}
 
@@ -198,6 +217,8 @@ namespace Logic {
 		_scene->setCompositorVisible(_effect, true);
 		_effectIsActivated = true;
 		_timestamp = 0;
+
+		calculateEnemyPosition();
 	}// damaged
 
 	//________________________________________________________________________
@@ -205,6 +226,70 @@ namespace Logic {
 	void CCameraFeedbackNotifier::setOwner(Logic::CEntity* owner) { 
 		this->_owner = owner; 
 	}
+
+	//________________________________________________________________________
+
+	/** Cuadrantes:  
+	      +z 90º				
+	  	 2  |  1			Los ángulos se miden en sentido contrario al sentido del reloj.
+  180º -z___|___ +x 0º
+			|
+		 3  |  4
+		  -z 270º
+	*/
+	//SIN ACABAR
+	void CCameraFeedbackNotifier::calculateEnemyPosition() { 
+		//Obtengo la posición del enemigo
+		Ogre::Vector3 vEnemyPos;
+		//Obtengo mi posición (entidad a la que han dañado)
+		Ogre::Vector3 vMyPos;
+
+		//Obtengo desde qué cuadrante me ha disparado
+		short sCuadrante; 
+		if ((vEnemyPos.x > vMyPos.x) && (vEnemyPos.z > vMyPos.z))
+			sCuadrante = 1;
+		else if ((vEnemyPos.x > vMyPos.x) && (vEnemyPos.z < vMyPos.z))
+			sCuadrante = 4;
+		else if ((vEnemyPos.x < vMyPos.x) && (vEnemyPos.z > vMyPos.z))
+			sCuadrante = 2;
+		else if ((vEnemyPos.x < vMyPos.x) && (vEnemyPos.z < vMyPos.z))
+			sCuadrante = 3;
+
+		//En función del cuadrante, hallo el ángulo de disparo
+		float fAngulo; //Angulo en radianes
+		float fCateto, fHipotenusa;
+
+		fHipotenusa = (vEnemyPos - vMyPos).length();
+		fCateto = vEnemyPos.z - vMyPos.z;
+		fHipotenusa = (vEnemyPos - vMyPos).length(); //En radianes
+		fAngulo = asin(fCateto / fHipotenusa);
+
+		//switch de cuadrante para poner el signo del cateto y para sumar ángulos en función del cuadrante
+		switch (sCuadrante)
+		{
+			/*
+			case 1:
+				//Ya hecho antes del switch
+			break;
+			*/
+			case 2:
+				fAngulo += Math::HALF_PI;
+			break;
+			case 3:
+				fAngulo = asin(-fCateto / fHipotenusa);
+				fAngulo += Math::PI;				
+			break;
+			case 4:
+				fAngulo = asin(-fCateto / fHipotenusa);
+				fAngulo += (Math::PI + Math::HALF_PI);
+			break;
+		}
+
+		//Trabajar con el fAngulo para poner la flecha en el hud, o darle efecto al compositor
+
+	}
+
+	//________________________________________________________________________
 
 } // namespace Logic
 
