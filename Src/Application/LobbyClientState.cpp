@@ -150,10 +150,8 @@ namespace Application {
 				string mapName;
 				buffer.deserialize(mapName);
 
-				// Inicializamos el dispatcher de entidades lógicas en base a nuestro id de red y el
-				// número de jugadores que hay en la partida
-				// @deprecated lo ideal es que el server mande el numero de players de la partida
-				Logic::CEntityFactory::getSingletonPtr()->initDispatcher( _netMgr->getID(), 12 );
+				// La carga de entidades del mapa debe hacerse con las ids del servidor
+				Logic::CEntityFactory::getSingletonPtr()->initDispatcher();
 
 				// Si la carga del mapa tiene éxito, notificamos al servidor y continuamos. En 
 				// caso contrario abortamos la ejecución.
@@ -167,6 +165,14 @@ namespace Application {
 					_netMgr->deactivateNetwork();
 					_app->exitRequest();
 				}
+
+				// Liberamos el dispatcher para las entidades por defecto
+				Logic::CEntityFactory::getSingletonPtr()->releaseDispatcher();
+
+				// Inicializamos el dispatcher de entidades lógicas en base a nuestro id de red y el
+				// número de jugadores que hay en la partida
+				// @deprecated lo ideal es que el server mande el numero de players de la partida
+				Logic::CEntityFactory::getSingletonPtr()->initDispatcher( _netMgr->getID(), 12 );
 
 				break;
 			}
