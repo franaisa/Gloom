@@ -198,6 +198,14 @@ namespace Graphics
 		void addChild(COverlay* child);
 
 		/**
+		Establece la rotacion del overlay, el unico que puede rotar es el overlay padre (los paneles no).
+		El giro es en sentido contrario a las agujas del reloj (AntiClockWise)
+
+		@param rotation, rotacion en radianes.
+		*/
+		void setRotation(float radianAngle);
+
+		/**
 		metodo que devuelve el overlayContainer
 
 		@return la variable que contiene el elemento

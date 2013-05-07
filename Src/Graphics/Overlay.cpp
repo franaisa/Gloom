@@ -303,5 +303,8 @@ namespace Graphics
 
 	//------------------------------------------------------------
 
-
+	void COverlay::setRotation(float radianAngle){
+		if(_overlay){_overlay->setRotate(Ogre::Radian(radianAngle));}
+	}
+	//------------------------------------------------------------
 } // namespace Graphics

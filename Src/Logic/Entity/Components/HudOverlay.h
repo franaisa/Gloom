@@ -39,13 +39,15 @@ namespace Logic
 		Constructor por defecto; en la clase base no hace nada.
 		*/
 		CHudOverlay() : IComponent(), _health(0), _shield(0), _ammo(1), _actualWeapon(0), _numWeapons(0), _panelMira(0), _spawnTime(0), _acumSpawn(0),
-			_overlayPlay(0), _overlayDie(0), _textAreaDie(0), _overlayDebug(0), _panelDebug(0), _textAreaDebug(0), _acumDebug(0) {
+			_overlayPlay(0), _overlayDie(0), _panelDie(0), _textAreaDie(0), _overlayDebug(0), _panelDebug(0), _textAreaDebug(0), 
+			_overlayLocationImpact(0), _overlayPanelLocationImpact(0), _acumDebug(0) {
 			
 			for(int i=0;i<3;++i){
 				_panelElementsText[i]=1;
 			}
 			 _overlayPlay = NULL;
 			_overlayDie = NULL;
+			_panelDie = NULL;
 			_textAreaDie = NULL;
 			for(int i=0;i<3;++i){
 				_panelElements[i] = NULL;
@@ -71,6 +73,10 @@ namespace Logic
 			_overlayDebug = NULL;
 			_panelDebug = NULL;
 			_textAreaDebug = NULL;
+
+			_overlayLocationImpact = NULL;
+
+			_overlayPanelLocationImpact = NULL;
 		}
 		
 
@@ -114,6 +120,7 @@ namespace Logic
 		enum eOverlayWeaponState {ACTIVE, NO_AMMO, NO_WEAPON };
 		enum eOverlayElements {HEALTH, SHIELD, AMMO };
 
+
 		void hudLife(int health);
 		void hudShield(int shield);
 		void hudWeapon(int ammo, int weapon);
@@ -128,6 +135,14 @@ namespace Logic
 		void hudDebug();
 
 		void hudDebugData(const std::string &key, const std::string &value);
+
+		/**
+		Se usa para mostrar el localizador de impacto y setearle una posicion.
+
+		@param radianAngle, angulos en radianes que se girara, sentido anti horario
+		*/
+		void hudDirectionImpact(float radianAngle);
+
 
 		std::string toText(eWeaponIndex weapon);
 		std::string toText(eOverlayWeaponState state);
@@ -151,6 +166,10 @@ namespace Logic
 		*/
 		Graphics::COverlay *_overlayDie;
 		
+		/** 
+		Overlay con el panel
+		*/
+		Graphics::COverlay* _panelDie;
 		/**
 		Texto que se muestra cuando el jugador se muere
 		*/
@@ -202,9 +221,15 @@ namespace Logic
 		Aqui guardare un puntero a cada entidad, para poder moverla y rotarla
 		*/
 		Graphics::CEntity *_weaponsEntities[6];
-
-
-
+		
+		/**
+		Aqui se guardara el panel de localizador de impacto para el feedback de las colisiones
+		*/
+		Graphics::COverlay *_overlayLocationImpact;
+		/**
+		Aqui se guardara el panel de localizador de impacto para el feedback de las colisiones
+		*/
+		Graphics::COverlay *_overlayPanelLocationImpact;
 
 		/**
 		objetos para debug
@@ -218,6 +243,9 @@ namespace Logic
 
 		int _spawnTime;
 		int _acumSpawn;
+
+		int _contadorLocalizadorImpacto;
+
 	}; // class CHudOverlay
 
 	REG_FACTORY(CHudOverlay);
