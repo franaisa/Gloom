@@ -289,11 +289,6 @@ namespace Application
 		*/
 		IClock *_clock;
 
-
-		//profiling
-		unsigned int _timerAudio;
-		unsigned int _timegraphics;
-		unsigned int _frames;
 		bool playing;
 
 	}; // class BaseApplication

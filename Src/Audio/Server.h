@@ -200,6 +200,15 @@ namespace Audio
 		*/
 		bool _isMute;
 
+		/**
+		tiempo de fixed tick del audio
+		*/
+		unsigned int _fixedTimeStep;
+
+		/**
+		tiempo acumulado hasta el siguiente fixed
+		*/
+		unsigned int _acumTime;
 	}; // class CServer
 
 } // namespace Audio
