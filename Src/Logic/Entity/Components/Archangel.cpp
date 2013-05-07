@@ -115,7 +115,7 @@ namespace Logic {
 
 		// Activamos el shader de inmunidad
 		std::shared_ptr<CMessageChangeMaterial> materialMsg = std::make_shared<CMessageChangeMaterial>();
-		materialMsg->setMaterialName("ArchangelDiamond"); // En el futuro debe ser el material del archangel
+		materialMsg->setMaterialName("ArchangelDiamond2"); // En el futuro debe ser el material del archangel
 		_entity->emitMessage(materialMsg);
 
 		_doingPrimarySkill = true;
