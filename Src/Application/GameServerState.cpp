@@ -275,9 +275,12 @@ namespace Application {
 				// Primero comprobamos si habia una entidad correspondiente a este jugador
 				// ya que durante el juego tambien podemos cambiar de clase.
 				// En caso de que la haya la eliminamos para crear la nueva
-				Logic::CEntity* deletePlayer = _map->getEntityByID( _playersMgr->getPlayerId(playerNetId).first );
-				if(deletePlayer) {
-					Logic::CEntityFactory::getSingletonPtr()->deferredDeleteEntity(deletePlayer, true);
+				std::pair<Logic::TEntityID, bool> playerId = _playersMgr->getPlayerId(playerNetId);
+				if(playerId.second) { // Si el id devuelto es valido
+					Logic::CEntity* deletePlayer = _map->getEntityByID( playerId.first );
+					if(deletePlayer) {
+						Logic::CEntityFactory::getSingletonPtr()->deferredDeleteEntity(deletePlayer, true);
+					}
 				}
 
 				int race;

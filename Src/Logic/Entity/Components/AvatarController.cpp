@@ -41,7 +41,8 @@ namespace Logic {
 	//________________________________________________________________________
 
 	CAvatarController::CAvatarController() : _gravity(Vector3::ZERO),
-											 _touchingGround(false) {
+											 _touchingGround(false),
+											 _cameraFX(NULL) {
 		
 		// Inicializamos el array que contiene los vectores
 		// de cada tecla de movimiento
@@ -195,7 +196,8 @@ namespace Logic {
 	void CAvatarController::manageCollisions(unsigned collisionFlags, Vector3 oldPosition) {
 		if(_touchingGround = collisionFlags & Physics::eCOLLISION_DOWN) {
 			// Colision con los pies detectada
-			_cameraFX->playerIsTouchingGround(_momentum.y);
+			if(_cameraFX != NULL)
+				_cameraFX->playerIsTouchingGround(_momentum.y);
 		}
 		
 		if(collisionFlags & Physics::eCOLLISION_UP) {
