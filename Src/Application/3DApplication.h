@@ -91,7 +91,6 @@ namespace Application
 
 	private:
 
-		unsigned int _acumAudio;
 	}; // class 3DApplication
 
 } // namespace Application

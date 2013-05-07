@@ -34,7 +34,8 @@ namespace Audio
 		_playerHeight=8;
 		_isMute=false;
 		_instance = this;
-
+		_fixedTimeStep = 100;
+		_acumTime = 0;
 	} // CServer
 
 	//--------------------------------------------------------
@@ -113,30 +114,40 @@ namespace Audio
 
 	//--------------------------------------------------------
 
-	void CServer::tick(unsigned int secs) 
+	void CServer::tick(unsigned int msecs) 
 	{
-		//El tick se ejecuta ahora mismo cada 0.001secs (controlado en el nivel superior)
-		//Si hay un player con el que actualizarnos, seteamos la nueva posición
-		if(_soundAvatar){
-			Vector3 positionAvatar=_soundAvatar->getPosition();
-			Vector3 directionAvatar=Math::getDirection(_soundAvatar->getOrientation());
-			directionAvatar.normalise();
+		//El tick se ejecuta ahora mismo cada 0.1secs, por lo tanto, si no ha pasado el tiempo,
+		//no me ejecuto
+		unsigned int steps = (_acumTime + msecs) / _fixedTimeStep;
 
-			FMOD_VECTOR
-				listenerPos = {positionAvatar.x,positionAvatar.y+_playerHeight,positionAvatar.z}, // posición del listener
-				listenerVel = {0.0f,0.0f,0.0f}, // velocidad
-				up = {0.0f,1.0f,0.0f},          // vector up: hacia la “coronilla”
-				at = {directionAvatar.x,directionAvatar.y,directionAvatar.z};          // vector at: hacia donde se mira
-
-			// se coloca el listener
-			_system->set3DListenerAttributes(0,&listenerPos, &listenerVel,
-                                     &at, &up);
+		if(steps == 0) {
+			_acumTime += msecs % _fixedTimeStep;
+		}
+		else {
+			_acumTime = msecs % _fixedTimeStep;
 		}
 
+		//actualizamos el audio tantas veces como sea necesario
+		for(int i = 0; i<steps; ++i){
+			//Si hay un player con el que actualizarnos, seteamos la nueva posición
+			if(_soundAvatar){
+				Vector3 positionAvatar=_soundAvatar->getPosition();
+				Vector3 directionAvatar=Math::getDirection(_soundAvatar->getOrientation());
+				directionAvatar.normalise();
 
+				FMOD_VECTOR
+					listenerPos = {positionAvatar.x,positionAvatar.y+_playerHeight,positionAvatar.z}, // posición del listener
+					listenerVel = {0.0f,0.0f,0.0f}, // velocidad
+					up = {0.0f,1.0f,0.0f},          // vector up: hacia la “coronilla”
+					at = {directionAvatar.x,directionAvatar.y,directionAvatar.z};          // vector at: hacia donde se mira
 
-		//Actualizamos el sistema
-		_system->update();
+				// se coloca el listener
+				_system->set3DListenerAttributes(0,&listenerPos, &listenerVel,
+										 &at, &up);
+			}
+			//Actualizamos el sistema
+			_system->update();
+		}
 	} // tick
 	//--------------------------------------------------------
 

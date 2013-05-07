@@ -35,8 +35,6 @@ basadas en Ogre. Esta clase maneja la ejecución de todo el juego.
 namespace Application {
 
 	C3DApplication::C3DApplication() : CBaseApplication() {
-		_timerAudio=100;
-		_acumAudio=0;
 	} // C3DApplication
 
 	//--------------------------------------------------------
@@ -49,8 +47,6 @@ namespace Application {
 
 	bool C3DApplication::init() 
 	{
-		_timegraphics=0;
-		_frames=0;
 		// Inicializamos la clase base.
 		if (!CBaseApplication::init())
 			return false;
@@ -128,6 +124,10 @@ namespace Application {
 		//Liberar los recursos del servidor de audio
 		if(Audio::CServer::getSingletonPtr())
 			Audio::CServer::Release();
+
+		//liberamos los recursos del servidor de GUI
+		if(GUI::CServer::getSingletonPtr())
+			GUI::CServer::Release();
 		
 		if(Input::CServer::getSingletonPtr())
 			Input::CServer::Release();
@@ -153,12 +153,9 @@ namespace Application {
 	//--------------------------------------------------------
 
 	void C3DApplication::tick(unsigned int msecs) {
-		++_frames;
 		unsigned int time=0;
 		
 		// TICK DE RED
-		
-		//primero queremos actualizar los paquetes de red recibidos
 		Net::CManager::getSingletonPtr()->tick(msecs);
 
 		// TICK DE INPUT
@@ -171,21 +168,10 @@ namespace Application {
 		GUI::CServer::getSingletonPtr()->tick();
 
 		// TICK DE GRÁFICOS
-		time = clock();
 		Graphics::CServer::getSingletonPtr()->tick(msecs/1000.0f);
-		time = clock()-time;
-		_timegraphics+=time;
 
 		// TICK DE AUDIO
-		
-		//El tick del server de audio solo se ejecuta cada X tiempo 
-		// por cuestiones de eficiencia ( solo hace un update para 
-		// los sonidos sin loop liberen canales al acabar )
-		_acumAudio+=msecs;
-		if(_acumAudio>=_timerAudio){
-			Audio::CServer::getSingletonPtr()->tick(msecs);
-			_acumAudio=0;
-		}
+		Audio::CServer::getSingletonPtr()->tick(msecs);
 
 	} // tick
 

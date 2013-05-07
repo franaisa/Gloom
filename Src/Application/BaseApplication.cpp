@@ -191,13 +191,6 @@ namespace Application {
 		assert(_nextState);
 		_nextState->activate();
 		_currentState = _nextState;
-		
-		//std::cout << "frames: " << _frames << std::endl;
-		//std::cout << "tiempo de procesado gráfico: " << _timegraphics << std::endl;
-
-		_timerAudio=0;
-		_timegraphics=0;
-		_frames=0;
 
 	} // changeState
 
