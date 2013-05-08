@@ -104,8 +104,7 @@ namespace Graphics
 		
 		if(_weapon)
 			_scene->getSceneMgr()->destroyEntity(_weapon);
-		Ogre::String asd = arma.getMesh();
-		_weapon = _scene->getSceneMgr()->createEntity("weapon"+id, arma.getMesh());
+		_weapon = _scene->getSceneMgr()->createEntity(arma.getMesh());
 		_entity->attachObjectToBone("Bip01 R Hand",_weapon);
 
 	}

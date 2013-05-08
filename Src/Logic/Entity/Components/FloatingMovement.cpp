@@ -32,7 +32,7 @@ namespace Logic {
 		// La velocidad a la que el item recorre la funcion seno depende de _orbitalSpeed
 		// Si llegamos 2Pi, reseteamos el valor a cero.
 		_currentOrbitalPos += _orbitalSpeed * msecs;
-		if(_currentOrbitalPos > 6.283) _currentOrbitalPos = 0;
+		if(_currentOrbitalPos > 2 * Math::PI) _currentOrbitalPos = 0;
 
 		// Calculamos la posicion de la vertical en funcion del valor obtenido al calcular el seno.
 		// Multiplicamos el resultado por el offset para conseguir que el objeto recorra mas distancia

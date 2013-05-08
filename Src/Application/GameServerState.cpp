@@ -184,6 +184,8 @@ namespace Application {
 		Logic::TEntityID playerId = player->getEntityID();
 		_playersMgr->setEntityID(playerNetId, playerId);
 		
+		std::cout << "creando " << name << std::endl;
+
 		// Escribimos el tipo de mensaje de red a enviar
 		Net::NetMessageType netMsg = Net::LOAD_PLAYERS;
 		int nbPlayers = 1;
@@ -240,8 +242,12 @@ namespace Application {
 				inBuffer.deserialize(playerNick);
 				//comprobamos si hay algún jugador con el mismo nombre en la partida, y si es así,
 				//se lo cambiamos para que no haya problemas en el futuro
-				if(_map->getEntityByName(playerNick))
-					playerNick=playerNick.append(""+playerNetId);
+				if(_map->getEntityByName(playerNick)){
+					std::ostringstream convert;
+					convert << playerNetId;
+					std::string nameId = convert.str();
+					playerNick+=nameId;
+				}
 				// Registramos al player en el gestor de jugadores
 				_playersMgr->addPlayer(playerNetId, playerNick);
 				// Enviamos la informacion de carga de mapa al cliente
