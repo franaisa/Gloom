@@ -361,7 +361,6 @@ namespace Logic {
 
 	CEntity* CMap::createPlayer(const std::string &name, const std::string &type, TEntityID id){
 
-
 		//cogemos el player necesario
 		Map::CEntity *playerInfo = CEntityFactory::getSingletonPtr()->getInfo(type);
 		// Asignar nombre
@@ -379,7 +378,6 @@ namespace Logic {
 
 	void CMap::deleteDeferredEntity(CEntity* entity){
 		_deleteEntities.push_back(entity);
-		
 	}
 
 	void CMap::entityTimeToLive(CEntity* entity, unsigned int msecs) {

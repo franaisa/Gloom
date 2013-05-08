@@ -122,9 +122,11 @@ namespace Logic
 
 		bool correct = true;
 
-		for(; it != _componentList.end() && correct; ++it )
+		for(int i = 1; it != _componentList.end() && correct; ++it, ++i ){
 			correct = (*it)->spawn(this,map,entityInfo) && correct;
-
+			if(!correct)
+				std::cout << "ERROR: La entidad no ha podido ser ensamblada porque el componente " << i << " se ha muerto en el spawn" << std::endl;
+		}
 		return correct;
 
 	} // spawn
