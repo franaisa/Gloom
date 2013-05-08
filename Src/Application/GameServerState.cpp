@@ -238,7 +238,10 @@ namespace Application {
 				// Deserializamos el nombre del player y el mesh (en un futuro la clase del player)
 				std::string playerNick;
 				inBuffer.deserialize(playerNick);
-
+				//comprobamos si hay algún jugador con el mismo nombre en la partida, y si es así,
+				//se lo cambiamos para que no haya problemas en el futuro
+				if(_map->getEntityByName(playerNick))
+					playerNick=playerNick.append(""+playerNetId);
 				// Registramos al player en el gestor de jugadores
 				_playersMgr->addPlayer(playerNetId, playerNick);
 				// Enviamos la informacion de carga de mapa al cliente

@@ -188,15 +188,16 @@ namespace Graphics
 				Ogre::MaterialPtr material = aux.get()->clone(nameEntity);
 
 				material->getTechnique(0)->getPass(0)->setDepthCheckEnabled(false);
-				material->getTechnique(0)->getPass(0)->setDepthWriteEnabled(false);
-				material->getTechnique(0)->setSceneBlending(Ogre::SBT_TRANSPARENT_ALPHA);
+				//material->getTechnique(0)->getPass(0)->setDepthWriteEnabled(false);
+				//material->getTechnique(0)->setSceneBlending(Ogre::SBT_TRANSPARENT_ALPHA);
 			
 				entity->setMaterial(material);
 			}
 			
 			//scene->getSceneMgr()->getRootSceneNode()->addChild(sceneNode);
 
-			sceneNode->attachObject((Ogre::MovableObject *)entity);
+			//sceneNode->attachObject((Ogre::MovableObject *)entity);
+			sceneNode->attachObject(static_cast<Ogre::MovableObject*>(entity));
 
 			sceneNode->setPosition(*position);
 

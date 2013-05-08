@@ -102,7 +102,6 @@ namespace Logic {
 	//__________________________________________________________________
 
 	void CShadow::primarySkill() {
-		std::cout << "Primary Skill - Shadow" << std::endl;
 
 		// Arrancamos el cronometro
 		_invisibilityTimer = _invisibilityDuration;

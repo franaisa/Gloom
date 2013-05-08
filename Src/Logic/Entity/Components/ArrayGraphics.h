@@ -48,7 +48,7 @@ namespace Logic
 		Constructor por defecto; inicializa los atributos a su valor por 
 		defecto.
 		*/
-		CArrayGraphics() : IComponent(), _actualWeapon(0), _graphicsEntities(), _numWeapons(0) {}
+		CArrayGraphics() : IComponent(), _currentWeapon(0), _graphicsEntities(), _numWeapons(0) {}
 
 		/**
 		Destructor (virtual); Quita de la escena y destruye la entidad gráfica.
@@ -114,9 +114,18 @@ namespace Logic
 		/**
 		Aqui se actualizara la funcion, la saco fuera para hacer uso de ella
 		*/
-		void setTransform(const Matrix4 &transform);
+		void setTransform();
 
 	protected:
+
+		/**
+		Método llamado en cada frame que actualiza el estado del componente.
+		<p>
+		Lo uso para cambiar los valores del debug
+
+		@param msecs Milisegundos transcurridos desde el último tick.
+		*/
+		virtual void onTick(unsigned int msecs);
 
 		/**
 		Método virtual que construye la entidad gráfica de la entidad. Otros
@@ -141,7 +150,7 @@ namespace Logic
 		/**
 		arma actual equipada
 		*/
-		int _actualWeapon;
+		int _currentWeapon;
 		
 		/**
 		Estructura donde se guardara el offset y las modificaciones en el arma
@@ -151,6 +160,7 @@ namespace Logic
 			Vector3 *offset;
 			float yaw;
 			float pitch;
+			float roll;
 		};
 
 		/**

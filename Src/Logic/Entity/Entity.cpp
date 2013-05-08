@@ -122,9 +122,11 @@ namespace Logic
 
 		bool correct = true;
 
-		for(; it != _componentList.end() && correct; ++it )
+		for(int i = 1; it != _componentList.end() && correct; ++it, ++i ){
 			correct = (*it)->spawn(this,map,entityInfo) && correct;
-
+			if(!correct)
+				std::cout << "ERROR: La entidad no ha podido ser ensamblada porque el componente " << i << " se ha muerto en el spawn" << std::endl;
+		}
 		return correct;
 
 	} // spawn
@@ -455,7 +457,7 @@ namespace Logic
 	void CEntity::awakeWithBothTicks(IComponent* component, unsigned int msecs, unsigned int steps) {
 		component->processMessages();
 		component->tick(msecs);
-		if(steps>1)std::cout << steps << std::endl;
+		if(steps>1)std::cout << "WARNING: estas ejecutando la logica " << steps  << " veces!" << std::endl;
 		for(int i = 0; i < steps; ++i) {
 			component->fixedTick(_fixedTimeStep);
 		}

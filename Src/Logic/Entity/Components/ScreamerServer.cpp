@@ -164,7 +164,6 @@ namespace Logic {
 	//__________________________________________________________________
 
 	void CScreamerServer::primarySkill() {
-		std::cout << "Primary Skill - Screamer" << std::endl;
 
 		_primarySkillIsActive = true;
 

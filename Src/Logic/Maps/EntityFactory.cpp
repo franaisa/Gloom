@@ -363,9 +363,10 @@ namespace Logic {
 		std::string entityType = entityInfo->getType();
 		CEntity *ret = assembleEntity(entityType, id);
 		
-		if (!ret)
+		if (!ret){
+			std::cout << "ERROR: La entidad no ha podido ser ensamblada porque assemble entity ha fallado" << std::endl;
 			return NULL;
-
+		}
 		// Añadimos la nueva entidad en el mapa antes de inicializarla.
 		map->addEntity(ret);
 		// Y lo inicializamos
