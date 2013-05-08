@@ -27,6 +27,7 @@ del Screamer.
 #include "Logic/Messages/MessageSetReducedDamage.h"
 #include "Logic/Messages/MessageCameraOffset.h"
 #include "Logic/Messages/MessageControl.h"
+#include "Logic/Messages/MessageImpact.h"
 
 
 
@@ -85,7 +86,8 @@ namespace Logic {
 		//comportamientos distintos en función del daño
 		switch( message->getMessageType() ) {
 			case Message::DAMAGED: {
-				damaged();
+				std::shared_ptr<CMessageDamaged> damageMess = std::static_pointer_cast<CMessageDamaged>(message);
+				damaged(damageMess->getEnemy()->getPosition());
 				break;
 			}
 			/*case Message::SET_REDUCED_DAMAGE: {
@@ -208,7 +210,7 @@ namespace Logic {
 
 	//________________________________________________________________________
 
-	void CCameraFeedbackNotifier::damaged() {
+	void CCameraFeedbackNotifier::damaged(Vector3 vEnemyPosition) {
 		std::shared_ptr<Logic::CMessageCameraOffset> m3 = std::make_shared<Logic::CMessageCameraOffset>();
 		m3->setOffsetTimer(100.0f);//Timer								 
 		Logic::CEntity * camera = Logic::CServer::getSingletonPtr()->getMap()->getEntityByType("Camera");
@@ -218,7 +220,7 @@ namespace Logic {
 		_effectIsActivated = true;
 		_timestamp = 0;
 
-		//calculateEnemyPosition();
+		calculateEnemyPosition(vEnemyPosition);
 	}// damaged
 
 	//________________________________________________________________________
@@ -238,55 +240,65 @@ namespace Logic {
 		  -z 270º
 	*/
 	//SIN ACABAR
-	void CCameraFeedbackNotifier::calculateEnemyPosition() { 
+	void CCameraFeedbackNotifier::calculateEnemyPosition(Vector3 vPosEnemy) { 
 		//Obtengo la posición del enemigo
-		Ogre::Vector3 vEnemyPos;
+		Ogre::Vector3 vEnemyPos = vPosEnemy;
 		//Obtengo mi posición (entidad a la que han dañado)
-		Ogre::Vector3 vMyPos;
-
-		//Obtengo desde qué cuadrante me ha disparado
-		short sCuadrante; 
-		if ((vEnemyPos.x > vMyPos.x) && (vEnemyPos.z > vMyPos.z))
-			sCuadrante = 1;
-		else if ((vEnemyPos.x > vMyPos.x) && (vEnemyPos.z < vMyPos.z))
-			sCuadrante = 4;
-		else if ((vEnemyPos.x < vMyPos.x) && (vEnemyPos.z > vMyPos.z))
-			sCuadrante = 2;
-		else if ((vEnemyPos.x < vMyPos.x) && (vEnemyPos.z < vMyPos.z))
-			sCuadrante = 3;
-
-		//En función del cuadrante, hallo el ángulo de disparo
-		float fAngulo; //Angulo en radianes
-		float fCateto, fHipotenusa;
-
-		fHipotenusa = (vEnemyPos - vMyPos).length();
-		fCateto = vEnemyPos.z - vMyPos.z;
-		fHipotenusa = (vEnemyPos - vMyPos).length(); //En radianes
-		fAngulo = asin(fCateto / fHipotenusa);
-
-		//switch de cuadrante para poner el signo del cateto y para sumar ángulos en función del cuadrante
-		switch (sCuadrante)
+		Ogre::Vector3 vMyPos = this->_entity->getPosition();
+		
+		//Angulo en radianes
+		float fAngulo; 
+		if (vEnemyPos != vMyPos)
 		{
-			/*
-			case 1:
-				//Ya hecho antes del switch
-			break;
-			*/
-			case 2:
-				fAngulo += Math::HALF_PI;
-			break;
-			case 3:
-				fAngulo = asin(-fCateto / fHipotenusa);
-				fAngulo += Math::PI;				
-			break;
-			case 4:
-				fAngulo = asin(-fCateto / fHipotenusa);
-				fAngulo += (Math::PI + Math::HALF_PI);
-			break;
+			//Obtengo desde qué cuadrante me ha disparado
+			short sCuadrante; 
+			if ((vEnemyPos.x >= vMyPos.x) && (vEnemyPos.z >= vMyPos.z))
+				sCuadrante = 1;
+			else if ((vEnemyPos.x > vMyPos.x) && (vEnemyPos.z < vMyPos.z))
+				sCuadrante = 4;
+			else if ((vEnemyPos.x < vMyPos.x) && (vEnemyPos.z > vMyPos.z))
+				sCuadrante = 2;
+			else if ((vEnemyPos.x < vMyPos.x) && (vEnemyPos.z < vMyPos.z))
+				sCuadrante = 3;
+
+			//En función del cuadrante, hallo el ángulo de disparo
+			float fCateto, fHipotenusa;
+
+			fHipotenusa = (vEnemyPos - vMyPos).length();
+			fCateto = vEnemyPos.z - vMyPos.z;
+			fHipotenusa = (vEnemyPos - vMyPos).length(); //En radianes
+			fAngulo = asin(fCateto / fHipotenusa);
+
+			//switch de cuadrante para poner el signo del cateto y para sumar ángulos en función del cuadrante
+			switch (sCuadrante)
+			{
+				/*
+				case 1:
+					//Ya hecho antes del switch
+				break;
+				*/
+				case 2:
+					fAngulo += Math::HALF_PI;
+				break;
+				case 3:
+					fAngulo = asin(-fCateto / fHipotenusa);
+					fAngulo += Math::PI;				
+				break;
+				case 4:
+					fAngulo = asin(-fCateto / fHipotenusa);
+					fAngulo += (Math::PI + Math::HALF_PI);
+				break;
+			}
 		}
+		else
+			fAngulo = 0.0f;
 
 		//Trabajar con el fAngulo para poner la flecha en el hud, o darle efecto al compositor
+		std::cout << "Angulo (en radianes) con el que ha impactado: " << fAngulo << std::endl;
 
+		std::shared_ptr<Logic::CMessageImpact> impact = std::make_shared<Logic::CMessageImpact>();
+		impact->setDirectionImpact(fAngulo);//Timer								 
+		_entity->emitMessage(impact);
 	}
 
 	//________________________________________________________________________
