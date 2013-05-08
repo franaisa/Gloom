@@ -171,7 +171,6 @@ namespace Graphics
 				return (*it);
 			}
 
-			
 			//scene->getSceneMgr()->getRootSceneNode()->addChild(sceneNode);
 			Ogre::SceneNode* sceneNode;
 			sceneNode = new Ogre::SceneNode(_scene->getSceneMgr(), nameSceneNode);
@@ -179,7 +178,6 @@ namespace Graphics
 			Ogre::Entity *entity;
 			entity = _scene->getSceneMgr()->createEntity(nameEntity, mesh);
 			
-
 			
 			Ogre::MaterialPtr aux= Ogre::MaterialManager::getSingleton().getByName(name);
 			//Ogre::MaterialPtr material = static_cast<Ogre::Material *>(Ogre::MaterialManager::getSingleton().getByName(name).get())->clone(name+"_3D");
