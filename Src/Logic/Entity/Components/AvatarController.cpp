@@ -25,6 +25,7 @@ de la entidad.
 
 #include "Logic/Server.h"
 #include "Logic/Maps/Map.h"
+#include "Logic/Messages/MessageHudDebugData.h"
 
 #include "Logic/Messages/MessageControl.h"
 #include "Logic/Messages/MessageMouse.h"
@@ -251,6 +252,16 @@ namespace Logic {
 		
 		// Aumentamos el desplazamiento en la dirección dada en función de la aceleración
 		// y el tiempo transcurrido -> s = u · t + 1/2 · a · t^2
+
+		if(_displacementDir != Vector3::ZERO){
+		std::cout << Vector3(1,0,1) * estimateMotionDirection(_displacementDir) * _acceleration * msecs * 0.5f << std::endl;
+
+		std::shared_ptr<CMessageHudDebugData> m = std::make_shared<CMessageHudDebugData>();
+		m->setKey("incremento");
+		m->setValue(_momentum);
+		_entity->emitMessage(m);
+
+		}
 		_momentum += Vector3(1,0,1) * estimateMotionDirection(_displacementDir) * _acceleration * msecs * 0.5f;
 		// Multiplicamos la inercia por el coeficiente de rozamiento (para decelerarla)
 		_momentum *= coef;
