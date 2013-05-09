@@ -212,14 +212,9 @@ namespace Logic
 
 	void CEntity::tick(unsigned int msecs) {
 		// Estimamos el numero de pasos que tiene que hacer el fixed tick
-		unsigned int steps = (_acumTime + msecs) / _fixedTimeStep;
-
-		if(steps == 0) {
-			_acumTime += msecs % _fixedTimeStep;
-		}
-		else {
-			_acumTime = msecs % _fixedTimeStep;
-		}
+		_acumTime += msecs;
+		unsigned int steps = _acumTime / _fixedTimeStep;
+		_acumTime  = _acumTime % _fixedTimeStep;
 
 		IComponent* component;
 		TComponentList::const_iterator it = _componentList.begin();
