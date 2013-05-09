@@ -64,32 +64,23 @@ namespace Logic
 			delete _overlayDie;
 		if(_textAreaDie)
 			delete _textAreaDie;
-		
 		for(int i=0;i<3;++i){
-		
 			if(_panelElements[i])
 				delete _panelElements[i];
-
 			if(_panelElementsTextArea)
 				delete _panelElementsTextArea[i];
-
 		}
-
 		if(_panelMira)
 			delete _panelMira;
-
 		for(int i=0;i<6;++i){
 			if(_overlayWeapon3D[i])
 				delete _overlayWeapon3D[i];
-
 			if(_weaponsEntities[i])
 				_weaponsEntities[i] = 0;
 		}
-
 		for(int i=0;i<8;++i){
 			if(_panelWeapon[i])
-				delete _panelWeapon[i];
-			
+				delete _panelWeapon[i];	
 			if(_panelWeaponKey[i]){
 				delete _panelWeaponKey[i];	
 			}
@@ -98,22 +89,16 @@ namespace Logic
 					delete _weaponsBox[i][j];
 			}
 		}
-
 		if(_overlayDebug)
 			delete _overlayDebug;
-
 		if(_panelDebug)
 			delete _panelDebug;
-
 		if(_textAreaDebug)
 			delete _textAreaDebug;
-
 		if(_overlayLocationImpact)
 			delete _overlayLocationImpact;
-
 		if (_overlayPanelLocationImpact)
 			delete _overlayPanelLocationImpact;
-
 	}
 
 	//---------------------------------------------------------
@@ -129,24 +114,22 @@ namespace Logic
 		for (int i =0 ; i<8;++i){
 			keysPanelWeapon[i] = keysAux[i];
 		}
-		
-		
-		//memcpy (keysAux, keysPanelWeapon, sizeof (keysAux)) ;
-
 		Graphics::CScene* scene = map->getScene();
 		_numWeapons = entityInfo->getIntAttribute("numWeapons");
 	
 		_server = Graphics::CServer::getSingletonPtr();
 
-
+		// Divido la pantalla en cuadriculas, leo la cantidad de estas en pantalla
 		int hudScreenWidth = entityInfo->getIntAttribute("hudScreenWidth");
 		int hudScreenHeight = entityInfo->getIntAttribute("hudScreenHeight");
 
+		// 
 		int hudPanelInitialPositionX = entityInfo->getIntAttribute("hudPanelInitialPositionX");
 		int hudPanelInitialPositionY = entityInfo->getIntAttribute("hudPanelInitialPositionY");
 		float hudPanelSizeX = entityInfo->getIntAttribute("hudPanelSizeX");
 		float hudPanelSizeY = entityInfo->getIntAttribute("hudPanelSizeY");
 
+		// obtengo el tamaño de la pantalla.
 		float height = _server->getHeight();
 		float width = _server->getWidth();
 
@@ -167,38 +150,31 @@ namespace Logic
 		_panelMira->setDimensions( sizeCrossFireX*0.01, sizeCrossFireY*0.01);
         _panelMira->setMaterial("hudMira3");
 
-
 		// overlay para controlar las teclas
 			Graphics::COverlay *textAreaDummy = _server->createOverlay("dummy", scene, "TextArea");
-				
 			textAreaDummy->setMetricsMode("pixel");
 			textAreaDummy->setPosition(200, 200);
 			textAreaDummy->setDimensions(0, 0);
 			textAreaDummy->setText(" ");
-
 			// hardcodea el tamaño y tipo de la fuente
 			textAreaDummy->setTextSize(16);
 			textAreaDummy->setFont("fuenteSimple");
-
 			_panelMira->addChild(textAreaDummy);
-
 		_overlayPlay->add2D( _panelMira );
 
-
 		///////////////////////////////////Esto para la mira dinamica
-
 		_panelMiraMovible = _server->createOverlay("Mira dinamica", scene, "Panel" );
         _panelMiraMovible->setPosition( positionCrossFireX,positionCrossFireY);
 		_panelMiraMovible->setDimensions( sizeCrossFireX*0.01, sizeCrossFireY*0.01 );
         _panelMiraMovible->setMaterial("hudMira4");
 		_overlayPlay->add2D(_panelMiraMovible);
 
-         // Add the panel to the overlay
 
+         // Add the panel to the overlay
 		int x = hudPanelInitialPositionX;
 		int y = hudPanelInitialPositionY;
 
-
+		// Aqui me creo los cuadros para cada arma
 		for(int i=HAMMER; i< PRIMARY_SKILL; ++i){
 
 			eWeaponIndex current = (eWeaponIndex)i;
@@ -254,7 +230,6 @@ namespace Logic
 			//y += hudPanelSizeY;
 
 
-
 		////////////////////////////////////////////////////// Ahora voy a crear los overlays por cada arma en 3D
 
 			_overlayWeapon3D[current] = _server->createOverlay( "_overlay3D"+currentOnText, scene );
@@ -264,20 +239,13 @@ namespace Logic
 			
 			_weaponsEntities[current] = _overlayWeapon3D[current]->add3D(currentOnText, modelWeapon, new Vector3(0.0,0.0,0.0) );
 			//_weaponsEntities[current] = _overlayWeapon3D[current]->add3D(currentOnText, modelWeapon, &offsetPositionWeapon);
-			Vector3 posicion = _weaponsEntities[current]->getTransform().getTrans();
 
-
-			//_weaponsEntities[current] = _overlayWeapon3D[current]->add3D(currentOnText, modelWeapon, new Vector3(0,0,-10));
+			//leo el pitch y el yaw del arma
 			float yaw = entityInfo->getFloatAttribute("weapon"+currentOnText+"ModelYaw");
 			float pitch = entityInfo->getFloatAttribute("weapon"+currentOnText+"ModelPitch");
 
 			Matrix4 transformModificado = _weaponsEntities[current]->getTransform();
-			
-			//yaw=1.6;
 			Math::setPitchYaw(pitch, yaw, transformModificado);
-			/*
-			Math::pitch(pitch, transformModificado);
-			*/
 
 			_weaponsEntities[current]->setTransform(transformModificado);
 			_weaponsEntities[current]->setPosition(offsetPositionWeapon);
@@ -292,9 +260,7 @@ namespace Logic
 		x -= hudPanelSizeX*4;
 		y -= hudPanelSizeY*1.5;
 		
-
-		// por ahora esta hasta secondary skill para que haga cosas raras, cuando esta este sera com la linea comentada
-		//for(int i=PRIMARY_SKILL; i< NONE; ++i){
+		// Pinto los cuadros de las habilidades PRIMARY_SKILL Y SECONDARY_SKILL
 		for(int i=PRIMARY_SKILL; i< NONE; ++i){
 
 			eWeaponIndex current = (eWeaponIndex)i;
@@ -358,7 +324,7 @@ namespace Logic
 		float hudPanelTextPositionXRelative;
 		float hudPanelTextPositionYRelative;
 
-
+		//bucle para pintar el LIFE, SHIELD, AMMO
 		for(int i=0; i<3;++i){
 		
 			eOverlayElements current = (eOverlayElements)i;
@@ -495,7 +461,6 @@ namespace Logic
 		return true;
 
 	} // spawn
-	
 	//---------------------------------------------------------
 
 	bool CHudOverlay::accept(const std::shared_ptr<CMessage>& message) {
@@ -512,7 +477,6 @@ namespace Logic
 				msgType == Message::IMPACT;
 
 	} // accept
-	
 	//---------------------------------------------------------
 
 	void CHudOverlay::process(const std::shared_ptr<CMessage>& message) {
@@ -570,6 +534,7 @@ namespace Logic
 		}
 
 	} // process
+	//-------------------------------------------------------
 
 	void CHudOverlay::hudLife(int health){
 		_panelElementsText[HEALTH]= health;
@@ -577,6 +542,7 @@ namespace Logic
 		sHealth << health;
 		_panelElementsTextArea[HEALTH]->setText(sHealth.str());
 	}
+	//-------------------------------------------------------
 
 	void CHudOverlay::hudShield(int shield){
 		_panelElementsText[SHIELD] = shield;
@@ -584,6 +550,7 @@ namespace Logic
 		sShield << shield;
 		_panelElementsTextArea[SHIELD]->setText(sShield.str());
 	}
+	//-------------------------------------------------------
 
 	void CHudOverlay::hudAmmo(int ammo, int weapon){
 
@@ -615,6 +582,7 @@ namespace Logic
 			}
 		}
 	}
+	//-------------------------------------------------------
 
 	void CHudOverlay::hudWeapon(int ammo, int weapon){
 
@@ -624,8 +592,6 @@ namespace Logic
 		{
 			_overlayWeapon3D[_actualWeapon]->setVisible(false);
 			_overlayWeapon3D[weapon]->setVisible(true);
-			
-
 			_panelWeapon[_actualWeapon]->setMaterial("cuadroArmas");
 			_panelWeapon[weapon]->setMaterial("cuadroArmasInUse");
 			// cambio el arma activa por la recien pulsada
@@ -646,23 +612,24 @@ namespace Logic
 		}
 		hudAmmo(ammo, weapon);
 	}
+	//-------------------------------------------------------
 
 	void CHudOverlay::hudSpawn(int spawmTime){
-		
 		std::stringstream sSpawn;
 		sSpawn << "HAS MUERTO, LOSER \n Tiempo de respawn: " << spawmTime;
 		_textAreaDie->setText(sSpawn.str());
 	}
+	//-------------------------------------------------------
 
 	void CHudOverlay::hudDeath(){
 		if(_overlayPlay->isVisible()){
 			_overlayPlay->setVisible(false);
 			_overlayWeapon3D[_actualWeapon]->setVisible(false);
 		}
-
 		if(!_overlayDie->isVisible())
 			_overlayDie->setVisible(true);
 	}
+	//-------------------------------------------------------
 
 	void CHudOverlay::hudRespawn(){
 		_overlayDie->setVisible(false);
@@ -676,6 +643,7 @@ namespace Logic
 		_overlayWeapon3D[HAMMER]->setVisible(true);
 		_actualWeapon = HAMMER;
 	}
+	//-------------------------------------------------------
 
 	void CHudOverlay::hudParticle(const std::string &nameParticle){
 		
@@ -686,38 +654,22 @@ namespace Logic
 		overlayParticle->add3D(particle, new Vector3(0,0,-20));
 		*/
 	}
-
+	//-------------------------------------------------------
 
 	void CHudOverlay::hudDebug(){
-		/*
-		if(_overlayDebug->isVisible()){
-			printf("\nBorrate! ");	
-		}else{
-			printf("\npintate! ");
-		}
-		*/
-
 		_overlayDebug->setVisible(!_overlayDebug->isVisible());
 	}
+	//-------------------------------------------------------
 
 	void CHudOverlay::hudDebugData(const std::string &key, const std::string &value){
-		
-		
-
 		if(_textDebug.find(key) == _textDebug.end()){
 			std::pair<std::string, std::string> aux(key, value);
 			_textDebug.insert(aux);
 		}else{
 			_textDebug.find(key)->second = value;
 		}
-
-		/*
-		std::pair<std::string, std::string> res = _textDebug.insert(std::make_pair(key,value));
-		if ( res.second.empty()) {
-			res.second = value;	
-		}
-		*/
 	}
+	//-------------------------------------------------------
 
 	void CHudOverlay::changeMaterialActualWeapon(const std::string &materialName){
 		if(materialName == "original"){
@@ -732,15 +684,14 @@ namespace Logic
 			}
 		}
 	}
+	//-------------------------------------------------------
 
 	void CHudOverlay::onTick(unsigned int msecs)
 	{
-		/*Descomentar para ver efecto de la mira.
-		temporal += 0.1;
-		float temp = (std::sin(temporal)*0.001);
-		hudSizeCrossfire(temp, temp);
-
-		*/
+		temporal += msecs;
+		Matrix4 aux;
+		Math::yaw(temporal, aux);
+		_weaponsEntities[HAMMER]->setTransform(aux);
 
 		if(_overlayLocationImpact->isVisible()){
 			//dura 20 ticks
@@ -762,45 +713,42 @@ namespace Logic
 					hudRespawn();
 			}
 		}
-
 		if(_overlayDebug->isVisible())
 		{
 			_sDebug.str("");
 			_sDebug.clear();
-
 			_acumDebug+=msecs;
 			// han pasado el tiempo para actualizar el fps
-			if(_acumDebug>200)
-			{		
+			if(_acumDebug>200){		
 				std::stringstream aux;
 				aux << 1000.0f/(float)msecs;
 				hudDebugData("FPS", aux.str());
 				_acumDebug=0;
 			}
-			
 			for (std::map<std::string,std::string>::iterator it=_textDebug.begin(); it!=_textDebug.end(); ++it){
 				_sDebug << it->first << " => " << it->second << '\n';
 			}
-
 			std::shared_ptr<CMessageHudDebugData> m = std::make_shared<CMessageHudDebugData>();
 			m->setKey("Posicion");
 			m->setValue(_entity->getPosition());
 			_entity->emitMessage(m);
 		}
-
 		_textAreaDebug->setText(_sDebug.str());
 	}
+	//-------------------------------------------------------
 
 	void CHudOverlay::hudDirectionImpact(float radianAngle){
 		_overlayLocationImpact->setRotation(radianAngle);
 		_overlayLocationImpact->setVisible(true);
 		_contadorLocalizadorImpacto = 0;
 	}
+	//-------------------------------------------------------
 
 	void CHudOverlay::hudSizeCrossfire(float width, float height){
 		_panelMiraMovible->setPosition(_panelMiraMovible->getPositionX() - width*0.5, _panelMiraMovible->getPositionY() - height*0.5);
 		_panelMiraMovible->setDimensions(_panelMiraMovible->getWidth() + width,_panelMiraMovible->getHeight() + height);  
 	}
+	//-------------------------------------------------------
 
 	void CHudOverlay::onDeactivate(){
 		_overlayPlay->setVisible(false);
@@ -808,6 +756,7 @@ namespace Logic
 		_overlayDebug->setVisible(false);
 		_overlayLocationImpact->setVisible(false);
 	}
+	//-------------------------------------------------------
 
 	std::string CHudOverlay::toText(eWeaponIndex weapon){
 		switch(weapon){
@@ -830,6 +779,8 @@ namespace Logic
 			default: return "";
 			}
 	}
+	//-------------------------------------------------------
+
 	std::string CHudOverlay::toText(eOverlayWeaponState state){
 		switch(state){
 			case ACTIVE: return "ACTIVE";
@@ -841,6 +792,8 @@ namespace Logic
 			default: return "";
 			}
 	}
+	//-------------------------------------------------------
+
 	std::string CHudOverlay::toText(eOverlayElements element){
 		switch(element){
 			case HEALTH: return "HEALTH";
@@ -852,4 +805,5 @@ namespace Logic
 			default: return "";
 			}
 	}
+	//-------------------------------------------------------
 } // namespace Logic
