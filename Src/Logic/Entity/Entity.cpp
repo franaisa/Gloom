@@ -30,6 +30,8 @@ de juego. Es una colección de componentes.
 
 #include "../../Audio/Server.h"
 
+#include "Logic/Messages/MessageHudDebugData.h"
+
 namespace Logic 
 {
 
@@ -212,14 +214,19 @@ namespace Logic
 
 	void CEntity::tick(unsigned int msecs) {
 		// Estimamos el numero de pasos que tiene que hacer el fixed tick
-		unsigned int steps = (_acumTime + msecs) / _fixedTimeStep;
+		_acumTime += msecs;
+		unsigned int steps = _acumTime / _fixedTimeStep;
 
-		if(steps == 0) {
-			_acumTime += msecs % _fixedTimeStep;
-		}
-		else {
-			_acumTime = msecs % _fixedTimeStep;
-		}
+		_acumTime  = _acumTime % _fixedTimeStep;
+		std::shared_ptr<CMessageHudDebugData> m = std::make_shared<CMessageHudDebugData>();
+		m->setKey("msecs");
+		m->setValue(msecs);
+		this->emitMessage(m);
+
+		std::shared_ptr<CMessageHudDebugData> m2 = std::make_shared<CMessageHudDebugData>();
+		m2->setKey("steps");
+		m2->setValue(steps);
+		this->emitMessage(m2);
 
 		IComponent* component;
 		TComponentList::const_iterator it = _componentList.begin();
@@ -449,6 +456,37 @@ namespace Logic
 
 	void CEntity::awakeWithFixedTick(IComponent* component, unsigned int msecs, unsigned int steps) {
 		component->processMessages();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		
+
 		for(int i = 0; i < steps; ++i) {
 			component->fixedTick(_fixedTimeStep);
 		}
