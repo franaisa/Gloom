@@ -103,6 +103,7 @@
     <ClCompile Include="..\..\Src\Logic\Entity\Components\PhysicController.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\PhysicDynamicEntity.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\PhysicStaticEntity.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\PlayerSnapshot.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\RocketController.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\RocketControllerClient.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\ScreamerClient.cpp" />
@@ -121,6 +122,8 @@
     <ClCompile Include="..\..\Src\Logic\Entity\Components\Archangel.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\Hound.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\Shadow.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\SnapshotGenerator.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\SnapshotInterpolator.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\SpawnItemManager.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\SpawnPlayer.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\SpectatorController.cpp" />
@@ -190,6 +193,7 @@
     <ClCompile Include="..\..\Src\Logic\Messages\MessageKinematicMove.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageMouse.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessagePlayerDead.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Messages\MessagePositionSnapshot.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageRebound.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageSetAnimation.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageSetRelatedEntity.cpp" />
@@ -203,6 +207,7 @@
     <ClCompile Include="..\..\Src\Logic\Messages\MessageSyncPosition.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageTouched.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageTransform.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Messages\MessageTransformSnapshot.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageUntouched.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageWakeUp.cpp" />
     <ClCompile Include="..\..\Src\Logic\PlayerInfo.cpp" />
@@ -236,6 +241,7 @@
     <ClInclude Include="..\..\Src\Logic\Entity\Components\Life.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\PhysicController.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\PhysicStaticEntity.h" />
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\PlayerSnapshot.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\RocketController.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\RocketControllerClient.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\ScreamerClient.h" />
@@ -254,6 +260,8 @@
     <ClInclude Include="..\..\Src\Logic\Entity\Components\Archangel.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\Hound.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\Shadow.h" />
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\SnapshotGenerator.h" />
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\SnapshotInterpolator.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\SpawnItemManager.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\SpawnPlayer.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\SpectatorController.h" />
@@ -326,6 +334,7 @@
     <ClInclude Include="..\..\Src\Logic\Messages\MessageKinematicMove.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageMouse.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessagePlayerDead.h" />
+    <ClInclude Include="..\..\Src\Logic\Messages\MessagePositionSnapshot.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageRebound.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageSetAnimation.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageSetRelatedEntity.h" />
@@ -339,6 +348,7 @@
     <ClInclude Include="..\..\Src\Logic\Messages\MessageSyncPosition.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageTouched.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageTransform.h" />
+    <ClInclude Include="..\..\Src\Logic\Messages\MessageTransformSnapshot.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageUntouched.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageWakeUp.h" />
     <ClInclude Include="..\..\Src\Logic\PlayerInfo.h" />

@@ -496,6 +496,21 @@
     <ClCompile Include="..\..\Src\Logic\Messages\MessageImpact.cpp">
       <Filter>Messages\Source</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\SnapshotGenerator.cpp">
+      <Filter>Entity\Components\Network\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\PlayerSnapshot.cpp">
+      <Filter>Entity\Components\Network\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Messages\MessageTransformSnapshot.cpp">
+      <Filter>Messages\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Messages\MessagePositionSnapshot.cpp">
+      <Filter>Messages\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\SnapshotInterpolator.cpp">
+      <Filter>Entity\Components\Network\Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Src\Logic\Maps\ComponentFactory.h">
@@ -899,6 +914,21 @@
     </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Messages\MessageImpact.h">
       <Filter>Messages\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\SnapshotGenerator.h">
+      <Filter>Entity\Components\Network\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\PlayerSnapshot.h">
+      <Filter>Entity\Components\Network\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Messages\MessageTransformSnapshot.h">
+      <Filter>Messages\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Messages\MessagePositionSnapshot.h">
+      <Filter>Messages\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\SnapshotInterpolator.h">
+      <Filter>Entity\Components\Network\Header</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

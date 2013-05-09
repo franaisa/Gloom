@@ -89,13 +89,6 @@ namespace Logic {
 
 	//__________________________________________________________________
 
-	void CScreamerServer::onStart(unsigned int msecs) {
-		// Mandar el mensaje de set related entity aqui si es que vamos
-		// a hacerlo con una sola inicializacion
-	}
-
-	//__________________________________________________________________
-
 	void CScreamerServer::onTick(unsigned int msecs) {
 		CPlayerClass::onTick(msecs);
 

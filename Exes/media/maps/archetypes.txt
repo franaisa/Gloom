@@ -30,7 +30,7 @@ Map = {
 	Screamer = {
 		type = "Screamer",
 		position = {0.0, 50.0, 0.0},
-		msgList= "1,2,6,9,11,13,14,15,16,17,20,21,22,23,24,25,26,32,38,41,43,48,49,50",
+		msgList= "1,2,6,9,11,13,14,15,16,17,20,21,22,23,24,25,26,32,38,41,43,48,49,50,55,56",
 		model = "marine.mesh",
 		materialName="marine_verde",
 		syncPosTimeStamp = 0.05,
@@ -53,6 +53,8 @@ Map = {
 		dodgeForce = {2,2,2},
 		rollCamera = 0.15,
 
+		snapshotsPerSecond = 20,
+		samplesPerSnapshot = 5,
 
 		physic_shape = "capsule",
 		physic_radius = 3,
@@ -210,7 +212,7 @@ Map = {
 	Shadow = {
 		type = "Shadow",
 		position = {0.0, 50.0, 0.0},
-		msgList= "1,2,6,9,11,13,14,15,16,17,20,21,22,23,24,25,26,32,38,41,43,48,49,50",
+		msgList= "1,2,6,9,11,13,14,15,16,17,20,21,22,23,24,25,26,32,38,41,43,48,49,50,55,56",
 		model = "marine.mesh",
 		materialName="marine_azul",
 		syncPosTimeStamp = 0.05,
@@ -233,6 +235,8 @@ Map = {
 		dodgeForce = {2,2,2},
 		rollCamera = 0.15,
 
+		snapshotsPerSecond = 20,
+		samplesPerSnapshot = 5,
 		
 		physic_shape = "capsule",
 		physic_radius = 3,
@@ -384,7 +388,7 @@ Map = {
 	Archangel = {
 		type = "Archangel",
 		position = {0.0, 50.0, 0.0},
-		msgList= "1,2,6,9,11,13,14,15,16,17,20,21,22,23,24,25,26,32,38,41,43,48,49,50",
+		msgList= "1,2,6,9,11,13,14,15,16,17,20,21,22,23,24,25,26,32,38,41,43,48,49,50,55,56",
 		model = "marine.mesh",
 		materialName="marine_amarillo",
 		syncPosTimeStamp = 0.05,
@@ -407,6 +411,8 @@ Map = {
 		dodgeForce = {2,2,2},
 		rollCamera = 0.15,
 
+		snapshotsPerSecond = 20,
+		samplesPerSnapshot = 5,
 		
 		physic_shape = "capsule",
 		physic_radius = 3,
@@ -558,7 +564,7 @@ Map = {
 	Hound = {
 		type = "Hound",
 		position = {0.0, 50.0, 0.0},
-		msgList= "1,2,6,9,11,13,14,15,16,17,20,21,22,23,24,25,26,32,38,41,43,48,49,50",
+		msgList= "1,2,6,9,11,13,14,15,16,17,20,21,22,23,24,25,26,32,38,41,43,48,49,50,55,56",
 		model = "marine.mesh",
 		materialName="marine_rojo",
 		syncPosTimeStamp = 0.05,
@@ -581,6 +587,8 @@ Map = {
 		dodgeForce = {2,2,2},
 		rollCamera = 0.15,
 
+		snapshotsPerSecond = 20,
+		samplesPerSnapshot = 5,
 		
 		physic_shape = "capsule",
 		physic_radius = 3,
@@ -755,6 +763,8 @@ Map = {
 		dodgeForce = {2,2,2},
 		rollCamera = 0.15,
 
+		snapshotsPerSecond = 20,
+		samplesPerSnapshot = 5,
 
 		physic_shape = "capsule",
 		physic_radius = 3,
@@ -938,6 +948,9 @@ Map = {
 		dodgeForce = {2,2,2},
 		rollCamera = 0.15,
 
+		snapshotsPerSecond = 20,
+		samplesPerSnapshot = 5,
+		
 		physic_shape = "capsule",
 		physic_radius = 3,
 		physic_height = 6,
@@ -1114,6 +1127,8 @@ Map = {
 		dodgeForce = {2,2,2},
 		rollCamera = 0.15,
 
+		snapshotsPerSecond = 20,
+		samplesPerSnapshot = 5,
 
 		physic_shape = "capsule",
 		physic_radius = 3,
@@ -1307,6 +1322,8 @@ Map = {
 		dodgeForce = {2,2,2},
 		rollCamera = 0.15,
 
+		snapshotsPerSecond = 20,
+		samplesPerSnapshot = 5,
 
 		physic_shape = "capsule",
 		physic_radius = 3,
