@@ -14,6 +14,8 @@
 
 #include "Logic/Entity/Component.h"
 
+#include <deque>
+
 namespace Logic {
 	
 	/**
@@ -120,6 +122,7 @@ namespace Logic {
 
 		float _interpolationTimer;
 
+		//std::deque<Matrix4> _buffer;
 
 	}; // class CSnapshotInterpolator
 

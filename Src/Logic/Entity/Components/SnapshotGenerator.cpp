@@ -62,15 +62,6 @@ namespace Logic {
 	//__________________________________________________________________
 
 	void CSnapshotGenerator::onTick(unsigned int msecs) {
-		_snapshotTimer -= msecs;
-		if(_snapshotTimer < 0) {
-			_snapshotTimer *= -1;
-			_snapshotTimer += _snapshotTimestep;
-
-			// Enviar snapshot
-			sendSnapshot();
-		}
-		
 		_intervalTimer -= msecs;
 		if(_intervalTimer < 0) {
 			_intervalTimer *= -1;
@@ -78,6 +69,15 @@ namespace Logic {
 
 			// Almacenar datos
 			takeSnapshot();
+		}
+
+		_snapshotTimer -= msecs;
+		if(_snapshotTimer < 0) {
+			_snapshotTimer *= -1;
+			_snapshotTimer += _snapshotTimestep;
+
+			// Enviar snapshot
+			sendSnapshot();
 		}
 	}
 
