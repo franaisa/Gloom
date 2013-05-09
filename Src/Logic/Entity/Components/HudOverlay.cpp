@@ -57,7 +57,7 @@ namespace Logic
 	IMP_FACTORY(CHudOverlay);
 	
 	CHudOverlay::~CHudOverlay(){
-		
+
 		if(_overlayPlay)
 			delete _overlayPlay;
 		if(_overlayDie)
