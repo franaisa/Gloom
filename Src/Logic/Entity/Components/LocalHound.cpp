@@ -20,6 +20,7 @@ namespace Logic{
 		
 		return true;
 	} // spawn
+	//------------------------------------------------------
 
 	void CLocalHound::onActivate(){
 		_effect = "berserkCompositor";
@@ -27,13 +28,16 @@ namespace Logic{
 		_scene->setCompositorVisible(_effect, false);
 		_strengthEffect = "strength";
 		_timestamp = 0;
+		_offsetTimeSin = 0;
 		this->putToSleep();
 	}
+	//------------------------------------------------------
 
 	bool CLocalHound::accept(const std::shared_ptr<CMessage>& message) {
 		Logic::TMessageType msgType = message->getMessageType();
 		return msgType == Message::CHANGE_MATERIAL;
 	} // accept
+	//------------------------------------------------------
 
 	void CLocalHound::process(const std::shared_ptr<CMessage>& message) {
 		std::shared_ptr<CMessageChangeMaterial> materialMsg = std::static_pointer_cast<CMessageChangeMaterial>(message);
@@ -47,21 +51,24 @@ namespace Logic{
 			_scene->setCompositorVisible(_effect, true);
 		}
 	}
+	//------------------------------------------------------
 
 // Descomentar esta linea para ver los dos modos que se pueden poner (obviamente las variables son seteables)
 //*
 	void CLocalHound::onWake(){
 		_timestamp = 0;
 	}
+	//------------------------------------------------------
 
 	void CLocalHound::onTick(unsigned int msecs) {
 
 		_timestamp += msecs;
 		if(_timestamp < 2200){
 			_scene->updateCompositorVariable(_effect, _strengthEffect, _timestamp*0.001);
-			//printf("\nDisminuyendo: %d \t le paso: %f y el seno: %f - %f", _timestamp, _timestamp*0.001, sin(_timestamp*0.001)*0.5, sin(_timestamp*0.001)*0.5+1.8);
+			printf("\nDisminuyendo: %d \t le paso: %f y el seno: %f - %f", _timestamp, _timestamp*0.003, sin(_timestamp*0.003)*0.5, sin(_timestamp*0.003)*0.5+1.8);
 		}else{
-			_scene->updateCompositorVariable(_effect, _strengthEffect, (std::sin(_timestamp*0.001)*0.5)+1.8);
+			if(_offsetTimeSin == 0){ _offsetTimeSin = ((_timestamp*0.001) - sin(_timestamp*0.003)*0.5); }
+			_scene->updateCompositorVariable(_effect, _strengthEffect, (std::sin(_timestamp*0.003)*0.5)+_offsetTimeSin);
 /*/
 	void CLocalHound::onWake(){
 		_timestamp = 2000;

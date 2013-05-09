@@ -243,9 +243,12 @@ namespace Logic
 			//leo el pitch y el yaw del arma
 			float yaw = entityInfo->getFloatAttribute("weapon"+currentOnText+"ModelYaw");
 			float pitch = entityInfo->getFloatAttribute("weapon"+currentOnText+"ModelPitch");
+			float roll = 0;
+			if(entityInfo->hasAttribute("weapon"+currentOnText+"ModelRoll"))
+				roll = entityInfo->getFloatAttribute("weapon"+currentOnText+"ModelRoll");
 
 			Matrix4 transformModificado = _weaponsEntities[current]->getTransform();
-			Math::setPitchYaw(pitch, yaw, transformModificado);
+			Math::pitchYawRoll(pitch, yaw, roll, transformModificado);
 
 			_weaponsEntities[current]->setTransform(transformModificado);
 			_weaponsEntities[current]->setPosition(offsetPositionWeapon);

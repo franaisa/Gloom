@@ -115,6 +115,7 @@ namespace Logic
 		std::string _strengthEffect;
 
 		int _timestamp;
+		float _offsetTimeSin;
 		
 	};//class CLocalHound
 	REG_FACTORY(CLocalHound);

@@ -187,7 +187,7 @@ Map = {
 	},
 	
 	David = {
-		type = "LocalArchangel",
+		type = "LocalHound",
 		isPlayer = true,
 	},
 	
