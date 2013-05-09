@@ -183,7 +183,7 @@ namespace Logic {
 
 		if(_touchingGround && _displacementDir != Vector3::ZERO) {
 			// Efecto de andar
-			_cameraFX->playerIsWalking(true);
+			_cameraFX->playerIsWalking(true, _displacementDir.x);
 		}
 		else {
 			// Parar efecto de andar

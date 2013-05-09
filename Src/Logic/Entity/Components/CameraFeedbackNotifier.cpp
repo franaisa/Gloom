@@ -157,10 +157,20 @@ namespace Logic {
 
 	//________________________________________________________________________
 
-	void CCameraFeedbackNotifier::playerIsWalking(bool walking) { 
+	void CCameraFeedbackNotifier::playerIsWalking(bool walking, int direction) { 
+		if(_playerIsWalking == walking) return;
+
 		_playerIsWalking = walking;
-		if(!_playerIsWalking)
+		if(!_playerIsWalking) {
 			_cameraComponent->rollCamera(0);
+		}
+		else {
+			if( (_stepForce < 0 && direction < 0) ||
+				(_stepForce >= 0 && direction >= 0) ) {
+				
+				_stepForce *= -1;
+			}
+		}
 	}
 
 	//________________________________________________________________________

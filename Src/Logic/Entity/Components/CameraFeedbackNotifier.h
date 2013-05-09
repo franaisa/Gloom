@@ -106,7 +106,7 @@ namespace Logic {
 		*/
 		void setOwner(Logic::CEntity* owner);
 
-		void playerIsWalking(bool walking);
+		void playerIsWalking(bool walking, int direction = 1);
 
 		void walkEffect(unsigned int msecs);
 

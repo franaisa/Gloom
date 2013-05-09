@@ -1364,9 +1364,9 @@ Map = {
 			
 			weaponshotGunName = "shotGun",
 			weaponshotGunModel = "shotGun.mesh",
-			weaponshotGunModelYaw = 3.54,
-			weaponshotGunModelPitch = -0.3,
-			weaponshotGunOffset = {2.0,-4.5,-10.0},
+			weaponshotGunModelYaw = 3.16,
+			weaponshotGunModelPitch = -0.03,
+			weaponshotGunOffset = {3.0,-4.5,-7.0},
 			weaponshotGunDamage = 9.0,
 			weaponshotGunDispersion = 20,
 			weaponshotGunNumberShoots = 8,
