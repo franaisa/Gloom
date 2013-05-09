@@ -900,5 +900,8 @@
     <ClInclude Include="..\..\Src\Logic\Messages\MessageImpact.h">
       <Filter>Messages\Header</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\WeaponType.h">
+      <Filter>Entity\Components\Weapons\Header</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
