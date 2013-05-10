@@ -17,8 +17,9 @@ namespace Logic {
 	IComponent::IComponent() : _entity(0), 
 							   _isActivated(false),
 							   _deepSleep(false),
+							   _wantsTick(true),
 							   _state(ComponentState::eAWAKE),
-							   _tickMode(TickMode::eBOTH) {
+							   _tickMask(TickMode::eTICK | TickMode::eFIXED_TICK) {
 
 		// Espia de debug
 		Logic::CServer::getSingletonPtr()->COMPONENT_CONSTRUCTOR_COUNTER += 1;
@@ -83,24 +84,15 @@ namespace Logic {
 	//__________________________________________________________________
 
 	void IComponent::onTick(unsigned int msecs) {
-		if(_tickMode == TickMode::eBOTH) {
-			_tickMode = TickMode::eFIXED_TICK;
-		}
-		else if(_tickMode == TickMode::eTICK) {
-			_tickMode = TickMode::eNONE;
-		}
-
+		_wantsTick = false;
+		_tickMask = _tickMask & TickMode::eFIXED_TICK;
 	}
 
 	//__________________________________________________________________
 
 	void IComponent::onFixedTick(unsigned int msecs) {
-		if(_tickMode == TickMode::eBOTH) {
-			_tickMode = TickMode::eTICK;
-		}
-		else if(_tickMode == TickMode::eFIXED_TICK) {
-			_tickMode = TickMode::eNONE;
-		}
+		_wantsTick = false;
+		_tickMask = _tickMask & TickMode::eTICK;
 	}
 
 	//__________________________________________________________________

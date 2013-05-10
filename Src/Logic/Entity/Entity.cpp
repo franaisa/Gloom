@@ -210,22 +210,56 @@ namespace Logic
 
 	//---------------------------------------------------------
 
-	void CEntity::tick(unsigned int msecs) {
-		// Estimamos el numero de pasos que tiene que hacer el fixed tick
-		_acumTime += msecs;
-		unsigned int steps = _acumTime / _fixedTimeStep;
-		_acumTime  = _acumTime % _fixedTimeStep;
-
+	void CEntity::processNonTickableComponents() {
 		IComponent* component;
-		TComponentList::const_iterator it = _componentList.begin();
-		for(; it != _componentList.end(); ++it) {
+		std::set<IComponent*>::const_iterator it = _componentsWithoutTick.begin();
+		for(; it != _componentsWithoutTick.end(); ++it) {
 			component = *it;
 			if( component->isActivated() ) {
-				// Ejecutamos el puntero a funcion que toque
-				(this->*this->entityProcessMode[component->_state][component->_tickMode])(component, msecs, steps);
+				component->processMessages();
 			}
 		}
+	}
+
+	//---------------------------------------------------------
+
+	void CEntity::tick(unsigned int msecs) {
+		IComponent* component;
+		std::list<IComponent*>::const_iterator it = _componentsWithTick.begin();
+		while(it != _componentsWithTick.end()) {
+			component = *it;
+
+			if( component->isActivated() ) {
+				if( !component->tick(msecs) ) {
+					it = _componentsWithTick.erase(it);
+					_componentsWithoutTick.insert(component);
+					continue;
+				}
+			}
+			
+			++it;
+		}
 	} // tick
+
+	//---------------------------------------------------------
+
+	void CEntity::fixedTick(unsigned int msecs) {
+		IComponent* component;
+		std::list<IComponent*>::const_iterator it = _componentsWithFixedTick.begin();
+		while(it != _componentsWithFixedTick.end()) {
+			component = *it;
+
+			if( component->isActivated() ) {
+				if( !component->fixedTick(msecs) ) {
+					it = _componentsWithFixedTick.erase(it);
+					_componentsWithoutTick.insert(component);
+					continue;
+				}
+			}
+
+			++it;
+		}
+	}
 
 	//---------------------------------------------------------
 

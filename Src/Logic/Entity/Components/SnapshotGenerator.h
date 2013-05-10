@@ -63,29 +63,6 @@ namespace Logic {
 		*/
 		virtual bool spawn(CEntity* entity, CMap *map, const Map::CEntity *entityInfo);
 
-		//__________________________________________________________________
-
-		/** 
-		Este componente acepta los siguientes mensajes:
-
-		<ul>
-			<li></li>
-		</ul>
-		
-		@param message Mensaje a chequear.
-		@return true si el mensaje es aceptado.
-		*/
-		virtual bool accept(const std::shared_ptr<CMessage>& message);
-
-		//__________________________________________________________________
-
-		/**
-		Método virtual que procesa un mensaje.
-
-		@param message Mensaje a procesar.
-		*/
-		virtual void process(const std::shared_ptr<CMessage>& message);
-
 		
 		// =======================================================================
 		//                            METODOS PROPIOS
@@ -113,7 +90,7 @@ namespace Logic {
 
 		@param msecs Milisegundos transcurridos desde el último tick.
 		*/
-		virtual void onTick(unsigned int msecs);
+		virtual void onFixedTick(unsigned int msecs);
 
 
 	private:
@@ -123,14 +100,13 @@ namespace Logic {
 		//                          MIEMBROS PRIVADOS
 		// =======================================================================
 		
-		float _snapshotTimestep;
+		unsigned int _ticksPerSample;
 
-		float _snapshotTimer;
+		unsigned int _samplesPerSnapshot;
 
-		float _intervalTimestep;
+		unsigned int _ticksPerSampleCounter;
 
-		float _intervalTimer;
-
+		unsigned int _samplesPerSnapshotCounter;
 
 	}; // class CSnapshotGenerator
 

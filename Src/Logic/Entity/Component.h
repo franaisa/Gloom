@@ -163,8 +163,13 @@ namespace Logic {
 		el comportamiento de los componentes derivados.
 
 		@param msecs Milisegundos transcurridos desde el último tick (variable).
+		@return true si desea seguir recibiendo ticks.
 		*/
-		inline void tick(unsigned int msecs) { onTick(msecs); }
+		inline bool tick(unsigned int msecs) {
+			processMessages();
+			onTick(msecs); 
+			return _wantsTick;
+		}
 
 		//__________________________________________________________________
 		
@@ -177,8 +182,13 @@ namespace Logic {
 
 		@param msecs Milisegundos transcurridos desde el último tick. Siempre
 		son constantes.
+		@return true si se desea seguir recibiendo ticks.
 		*/
-		inline void fixedTick(unsigned int msecs) { onFixedTick(msecs); }
+		inline bool fixedTick(unsigned int msecs) {
+			processMessages();
+			onFixedTick(msecs);
+			return _wantsTick;
+		}
 		
 		//__________________________________________________________________
 
@@ -415,22 +425,24 @@ namespace Logic {
 		*/
 		ComponentState::Enum _state;
 
-		/** 
-		Enumerado que indica el tipo de tick que tiene el componente: 
-		<ul>
-			<li>eNONE: No tiene tick de ningún tipo.</li>
-			<li>eTICK: Tiene tick.</li>
-			<li>eFIXED_TICK: Tiene fixed tick.</li>
-			<li>eBOTH: Tiene tick y fixed tick.</li>
-		</ul>
+		/**
+		Mascara para saber si un componente tiene tick y/o fixed tick (
+		o ninguno).
+
+		00 -> el componente no tiene tick
+		01 -> el componente tiene tick
+		10 -> el componente tiene fixed tick
+		11 -> el componente tiene los dos ticks
 		*/
-		TickMode::Enum _tickMode;
+		unsigned char _tickMask;
 
 		/** 
 		true si el componente no se va a despertar al recibir 
 		mensajes cuando este dormido 
 		*/
 		bool _deepSleep;
+
+		bool _wantsTick;
 		
 	}; // class IComponent
 

@@ -94,6 +94,8 @@ namespace Logic {
 	//--------------------------------------------------------
 
 	bool CMap::activate() {
+		_acumTime = 0;
+		_fixedTimeStep = 16;
 		Graphics::CServer::getSingletonPtr()->setScene(_scene);
 
 		TEntityMap::const_iterator it, end;
@@ -144,11 +146,17 @@ namespace Logic {
 		// un tiempo de vida
 		checkTimeouts(msecs);
 		
+		// Es muuuuuy importante que primero se ejecute esta función
+		// si no se hace así, el sleep por ejemplo no funciona bien.
+		processNonTickeableComponents();
+
 		// Ejecutamos el tick de las entidades
 		// Ejecutamos el tick de todas las entidades activadas del mapa
 		// La propia entidad se encarga de hacer el process, tick y fixed tick
 		// de sus componentes (dependiendo del estado)
 		doTick(msecs);
+
+		doFixedTick(msecs);	
 	} // tick
 
 	//--------------------------------------------------------
@@ -180,11 +188,37 @@ namespace Logic {
 
 	//--------------------------------------------------------
 
+	void CMap::processNonTickeableComponents() {
+		// Ejecutamos el tick de todas nuestras entidades
+		TEntityMap::const_iterator it = _entityMap.begin();
+		for(; it != _entityMap.end(); ++it) {
+			it->second->processNonTickableComponents();
+		}
+	}
+
+	//--------------------------------------------------------
+	
 	void CMap::doTick(unsigned int msecs) {
 		// Ejecutamos el tick de todas nuestras entidades
 		TEntityMap::const_iterator it = _entityMap.begin();
 		for(; it != _entityMap.end(); ++it) {
 			it->second->tick(msecs);
+		}
+	}
+
+	//--------------------------------------------------------
+	
+	void CMap::doFixedTick(unsigned int msecs) {
+		_acumTime += msecs;
+		unsigned int steps = _acumTime / _fixedTimeStep;
+		_acumTime  = _acumTime % _fixedTimeStep;
+
+		// Ejecutamos el fixed tick
+		TEntityMap::const_iterator it = _entityMap.begin();
+		for(int i = 0; i < steps; ++i) {
+			for(; it != _entityMap.end(); ++it) {
+				it->second->fixedTick(_fixedTimeStep);
+			}
 		}
 	}
 
@@ -385,7 +419,7 @@ namespace Logic {
 	}
 
 	void CMap::setFixedTimeStep(unsigned int stepSize) {
-		CEntity::setFixedTimeStep(stepSize);
+		_fixedTimeStep = stepSize;
 	}
 
 } // namespace Logic

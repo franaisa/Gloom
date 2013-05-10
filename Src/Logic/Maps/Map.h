@@ -206,7 +206,11 @@ namespace Logic
 
 		void checkTimeouts(unsigned int msecs);
 
+		void processNonTickeableComponents();
+
 		void doTick(unsigned int msecs);
+
+		void doFixedTick(unsigned int msecs);
 
 		/**
 		Lista de entidades que han sido marcadas para ser borradas en
@@ -245,6 +249,15 @@ namespace Logic
 		Número de jugadores creados hasta el momento.
 		*/
 		unsigned int _numOfPlayers;
+
+		/**
+		Variable de clase que indica el número de milisegundos que se procesan en cada
+		iteración del tick fijo.
+		*/
+		unsigned int _fixedTimeStep;
+
+		/** Tiempo acumulado a tener en cuenta para el tick fijo. */
+		unsigned int _acumTime;
 
 	}; // class CMap
 

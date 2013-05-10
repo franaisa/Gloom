@@ -18,7 +18,8 @@ namespace Logic {
 	
 	//IMP_FACTORY(CSnapshotGenerator);
 
-	CSnapshotGenerator::CSnapshotGenerator() {
+	CSnapshotGenerator::CSnapshotGenerator() : _ticksPerSampleCounter(0), 
+											   _samplesPerSnapshotCounter(0) {
 		// Nada que hacer
 	}
 
@@ -33,51 +34,27 @@ namespace Logic {
 	bool CSnapshotGenerator::spawn(CEntity* entity, CMap *map, const Map::CEntity *entityInfo) {
 		if( !IComponent::spawn(entity, map, entityInfo) ) return false;
 
-		assert( entityInfo->hasAttribute("snapshotsPerSecond") );
+		assert( entityInfo->hasAttribute("ticksPerSample") );
 		assert( entityInfo->hasAttribute("samplesPerSnapshot") );
 
-		// Cada cuanto tomamos una snapshot
-		//_snapshotTimestep = _snapshotTimer = 1000 / entityInfo->getIntAttribute("snapshotsPerSecond");
-		// Cuantas muestras tomamos por snapshot
-		//_intervalTimestep = _intervalTimer = _snapshotTimer / entityInfo->getIntAttribute("samplesPerSnapshot");
-
-		_snapshotTimestep = _snapshotTimer = 500;
-		_intervalTimestep = _intervalTimer = 100;
+		// Cada cuantos fixed ticks tomamos una muestra
+		_ticksPerSample = entityInfo->getIntAttribute("ticksPerSample");
+		// Cada cuantas muestras tomamos una snapshot
+		_samplesPerSnapshot = entityInfo->getIntAttribute("samplesPerSnapshot");
 
 		return true;
 	}
 
 	//__________________________________________________________________
 
-	bool CSnapshotGenerator::accept(const std::shared_ptr<CMessage>& message) {
-		return false;
-	}
-
-	//__________________________________________________________________
-
-	void CSnapshotGenerator::process(const std::shared_ptr<CMessage>& message) {
-
-	}
-
-	//__________________________________________________________________
-
-	void CSnapshotGenerator::onTick(unsigned int msecs) {
-		_intervalTimer -= msecs;
-		if(_intervalTimer < 0) {
-			_intervalTimer *= -1;
-			_intervalTimer += _intervalTimestep;
-
-			// Almacenar datos
+	void CSnapshotGenerator::onFixedTick(unsigned int msecs) {
+		if( ++_ticksPerSampleCounter == _ticksPerSample ) {
 			takeSnapshot();
-		}
-
-		_snapshotTimer -= msecs;
-		if(_snapshotTimer < 0) {
-			_snapshotTimer *= -1;
-			_snapshotTimer += _snapshotTimestep;
-
-			// Enviar snapshot
-			sendSnapshot();
+			_ticksPerSampleCounter = 0;
+			
+			if( ++_samplesPerSnapshotCounter = _samplesPerSnapshot) {
+				sendSnapshot();
+			}
 		}
 	}
 

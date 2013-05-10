@@ -48,7 +48,7 @@ namespace Logic {
 		enum Enum {
 			eSLEEPING,		// (Durmiendo) Recibe mensajes pero no tiene tick, despierta al recibir un mensaje
 			eAWAKE,			// (Despierto/Disponible) Recibe mensajes y tiene tick
-			eBUSY,			// /Ocupado) No recibe mensajes pero tiene tick
+			eBUSY,			// (Ocupado) No recibe mensajes pero tiene tick
 			eMAX
 		};
 	};
@@ -60,11 +60,9 @@ namespace Logic {
 	*/
 	struct TickMode {
 		enum Enum {
-			eNONE,			// No tiene tick
-			eTICK,			// Tiene tick
-			eFIXED_TICK,	// Tiene tick fijo
-			eBOTH,			// Tiene tick fijo y variable
-			eMAX,
+			eNONE			= 0,	  // No tiene tick
+			eTICK			= 1 << 0, // Tiene tick
+			eFIXED_TICK		= 1 << 1, // Tiene tick fijo
 		};
 	};
 
@@ -150,6 +148,8 @@ namespace Logic {
 
 		//__________________________________________________________________
 
+		void processNonTickableComponents();
+
 		/**
 		Función llamada en cada frame para que se realicen las funciones
 		de actualización adecuadas.
@@ -161,6 +161,8 @@ namespace Logic {
 		@param msecs Milisegundos transcurridos desde el último tick.
 		*/
 		void tick(unsigned int msecs);
+
+		void fixedTick(unsigned int msecs);
 
 		//__________________________________________________________________
 
@@ -593,7 +595,11 @@ namespace Logic {
 		Matriz de punteros a función que indican la traza a seguir dependiendo el
 		estado del componente. Evita hacer comprobaciones de ningún tipo.
 		*/
-		void (CEntity::*entityProcessMode[ComponentState::eMAX][TickMode::eMAX])(IComponent*, unsigned int, unsigned int);
+		//void (CEntity::*entityProcessMode[ComponentState::eMAX][TickMode::eMAX])(IComponent*, unsigned int, unsigned int);
+
+		std::set<IComponent*> _componentsWithoutTick;
+		std::list<IComponent*> _componentsWithTick;
+		std::list<IComponent*> _componentsWithFixedTick;
 
 		/** Identificador único de la entidad. */
 		Logic::TEntityID _entityID;
@@ -658,6 +664,8 @@ namespace Logic {
 		//              MÉTODOS PARA EL PROCESAMIENTO DE COMPONENTES
 		// =======================================================================
 
+
+		// DANGER ZONE!
 
 		/**
 		Inicializa los punteros de la matriz de punteros a función.
