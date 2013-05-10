@@ -237,10 +237,6 @@ namespace Logic
 				component->wakeUp();
 			}
 		}
-
-		//std::cout << "Componentes totales de " << getName() << " = " << _componentList.size() << std::endl;
-		//std::cout << "Componentes con tick = " << _componentsWithTick.size() << std::endl;
-		//std::cout << "Componentes con fixed tick = " << _componentsWithFixedTick.size() << std::endl;
 	}
 
 	//---------------------------------------------------------

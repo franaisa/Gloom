@@ -21,6 +21,8 @@ Contiene la implementación de la clase CMap, Un mapa lógico.
 #include "Graphics/Server.h"
 #include "Graphics/Scene.h"
 
+#include "Logic/Messages/MessageHudDebugData.h"
+
 #include <cassert>
 
 #include <fstream>
@@ -211,16 +213,22 @@ namespace Logic {
 	void CMap::doFixedTick(unsigned int msecs) {
 		_acumTime += msecs;
 		unsigned int steps = _acumTime / _fixedTimeStep;
-		_acumTime  = _acumTime % _fixedTimeStep;
-
-		if(steps > 1)
-			std::cout << "Ejecutando " << steps << " steps" << std::endl; 
+		_acumTime = _acumTime % _fixedTimeStep; 
 
 		// Ejecutamos el fixed tick
-		TEntityMap::const_iterator it = _entityMap.begin();
 		for(int i = 0; i < steps; ++i) {
-			for(; it != _entityMap.end(); ++it) {
+			for(TEntityMap::const_iterator it = _entityMap.begin(); it != _entityMap.end(); ++it) {
 				it->second->fixedTick(_fixedTimeStep);
+
+				std::shared_ptr<CMessageHudDebugData> m = std::make_shared<CMessageHudDebugData>();
+				m->setKey("msecs");
+				m->setValue(msecs);
+				it->second->emitMessage(m);
+	
+				std::shared_ptr<CMessageHudDebugData> m2 = std::make_shared<CMessageHudDebugData>();
+				m2->setKey("steps");
+				m2->setValue(steps);
+				it->second->emitMessage(m2);
 			}
 		}
 	}
