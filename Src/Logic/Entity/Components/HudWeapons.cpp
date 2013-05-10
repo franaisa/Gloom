@@ -28,7 +28,7 @@ gráfica de la entidad.
 #include "Graphics/Overlay.h"
 
 #include "Logic/Messages/MessageTransform.h"
-#include "Logic/Messages/MessageChangeWeaponGraphics.h"
+#include "Logic/Messages/MessageChangeWeapon.h"
 
 #include "OgreEntity.h"
 #include "OgreSceneNode.h"
@@ -62,7 +62,9 @@ namespace Logic
 	void CHudWeapons::onActivate()
 	{
 		//Cuando activamos el componente solo tendremos visible el arma 0( arma melee)
-		_graphicsEntities[0].graphicsEntity->setVisible(true);
+		_currentWeapon = 0;
+		_graphicsEntities[_currentWeapon].graphicsEntity->setVisible(true);
+		
 
 	} // activate
 	//---------------------------------------------------------
@@ -70,7 +72,8 @@ namespace Logic
 	void CHudWeapons::onDeactivate()
 	{
 		//Cuando desactivamos el componente, desactivaremos el arma actual
-		_graphicsEntities[_currentWeapon].graphicsEntity->setVisible(false);
+
+		_overlayWeapon3D[_currentWeapon]->setVisible(false);
 
 	} // deactivate
 	//---------------------------------------------------------
@@ -99,7 +102,7 @@ namespace Logic
 			std::string weapon = aux.str();
 				
 			//_graphicsEntities[i]._graphicsEntity = createGraphicsEntity(weapon, entityInfo->getStringAttribute(weapon+"Model"));
-				
+			_graphicsEntities[current].yaw = _graphicsEntities[current].pitch = _graphicsEntities[current].roll = 0;
 			if(entityInfo->hasAttribute(weapon+"ModelYaw"))
 				_graphicsEntities[current].yaw = entityInfo->getFloatAttribute(weapon+"ModelYaw");
 			if(entityInfo->hasAttribute(weapon+"ModelPitch"))
@@ -121,21 +124,24 @@ namespace Logic
 			_overlayWeapon3D[current] = server->createOverlay( "_overlay3D"+currentOnText, _scene );
 			std::string modelWeapon = entityInfo->getStringAttribute("weapon"+currentOnText+"Model");			
 			
-			_graphicsEntities[current].graphicsEntity = _overlayWeapon3D[current]->add3D(currentOnText, modelWeapon);
+			_graphicsEntities[current].graphicsEntity = _overlayWeapon3D[current]->add3D(currentOnText, modelWeapon,_graphicsEntities[current].offset);
 			assert(_graphicsEntities[current].graphicsEntity != 0 && "error al cargar la entidad grafica");
 			//_weaponsEntities[current] = _overlayWeapon3D[current]->add3D(currentOnText, modelWeapon, &offsetPositionWeapon);
 
-			_graphicsEntities[current].graphicsEntity->setPosition(_graphicsEntities[current].offset);
+			
 			Matrix4 transformModificado = _graphicsEntities[current].graphicsEntity->getTransform();
 			Math::pitchYawRoll(_graphicsEntities[current].pitch, _graphicsEntities[current].yaw, _graphicsEntities[current].roll, transformModificado);
 
+			
 			_graphicsEntities[current].graphicsEntity->setTransform(transformModificado);
+			//_graphicsEntities[current].graphicsEntity->setPosition(_graphicsEntities[current].offset);
 			
 
 			_overlayWeapon3D[current]->setVisible(false);
 
 			}
 		}
+		_overlayWeapon3D[WeaponType::eHAMMER]->setVisible(true);
 		if(!_graphicsEntities)
 			return false;
 		
@@ -149,15 +155,15 @@ namespace Logic
 		Logic::TMessageType msgType = message->getMessageType();
 
 		return msgType == Message::SET_TRANSFORM				||
-			   msgType == Message::CHANGE_WEAPON_GRAPHICS;
+			   msgType == Message::CHANGE_WEAPON;
 	} // accept
 	
 	//---------------------------------------------------------
 
 	void CHudWeapons::process(const std::shared_ptr<CMessage>& message) {
 		switch( message->getMessageType() ) {
-			case Message::CHANGE_WEAPON_GRAPHICS: {
-				std::shared_ptr<CMessageChangeWeaponGraphics> chgWpnMsg = std::static_pointer_cast<CMessageChangeWeaponGraphics>(message);
+			case Message::CHANGE_WEAPON: {
+				std::shared_ptr<CMessageChangeWeapon> chgWpnMsg = std::static_pointer_cast<CMessageChangeWeapon>(message);
 				changeWeapon( chgWpnMsg->getWeapon() );
 				break;
 			}
@@ -168,8 +174,8 @@ namespace Logic
 
 	void CHudWeapons::changeWeapon(int newWeapon){
 		
-		_graphicsEntities[_currentWeapon].graphicsEntity->setVisible(false);
-		_graphicsEntities[newWeapon].graphicsEntity->setVisible(true);
+		_overlayWeapon3D[_currentWeapon]->setVisible(false);
+		_overlayWeapon3D[newWeapon]->setVisible(true);
 		_currentWeapon = newWeapon;
 
 	}

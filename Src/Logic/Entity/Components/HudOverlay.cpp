@@ -72,12 +72,6 @@ namespace Logic
 		}
 		if(_panelMira)
 			delete _panelMira;
-		for(int i=0;i<6;++i){
-			if(_overlayWeapon3D[i])
-				delete _overlayWeapon3D[i];
-			if(_weaponsEntities[i])
-				_weaponsEntities[i] = 0;
-		}
 		for(int i=0;i<8;++i){
 			if(_panelWeapon[i])
 				delete _panelWeapon[i];	
@@ -229,32 +223,6 @@ namespace Logic
 			// La posicion y no debe cambiar, ya que todo ira a la misma altura.
 			//y += hudPanelSizeY;
 
-
-		////////////////////////////////////////////////////// Ahora voy a crear los overlays por cada arma en 3D
-
-			_overlayWeapon3D[current] = _server->createOverlay( "_overlay3D"+currentOnText, scene );
-			std::string modelWeapon = entityInfo->getStringAttribute("weapon"+currentOnText+"Model");
-			Vector3 offsetPositionWeapon = entityInfo->getVector3Attribute("weapon"+currentOnText+"Offset");
-			
-			
-			_weaponsEntities[current] = _overlayWeapon3D[current]->add3D(currentOnText, modelWeapon );
-			//_weaponsEntities[current] = _overlayWeapon3D[current]->add3D(currentOnText, modelWeapon, &offsetPositionWeapon);
-
-			//leo el pitch y el yaw del arma
-			float yaw = entityInfo->getFloatAttribute("weapon"+currentOnText+"ModelYaw");
-			float pitch = entityInfo->getFloatAttribute("weapon"+currentOnText+"ModelPitch");
-			float roll = 0;
-			if(entityInfo->hasAttribute("weapon"+currentOnText+"ModelRoll"))
-				roll = entityInfo->getFloatAttribute("weapon"+currentOnText+"ModelRoll");
-
-			Matrix4 transformModificado = _weaponsEntities[current]->getTransform();
-			Math::pitchYawRoll(pitch, yaw, roll, transformModificado);
-
-			_weaponsEntities[current]->setTransform(transformModificado);
-			_weaponsEntities[current]->setPosition(offsetPositionWeapon);
-
-			_overlayWeapon3D[current]->setVisible(false);
-
 		 } // For de gestion de cada arma.
 
 
@@ -368,7 +336,6 @@ namespace Logic
 		// en el HAMMER (que es el arma inicial, debe de estar active)
 		_weaponsBox[HAMMER][ACTIVE]->setVisible(true);
 		_weaponsBox[HAMMER][NO_WEAPON]->setVisible(false);
-		_overlayWeapon3D[HAMMER]->setVisible(true);
 		_panelElements[AMMO]->setVisible(false);
 		
 		//desactivo el cuadro estandar y activo el de arma activa.
@@ -593,8 +560,6 @@ namespace Logic
 		//if(weapon != _actualWeapon && _actualWeapon != 0)
 		if(weapon != _actualWeapon)
 		{
-			_overlayWeapon3D[_actualWeapon]->setVisible(false);
-			_overlayWeapon3D[weapon]->setVisible(true);
 			_panelWeapon[_actualWeapon]->setMaterial("cuadroArmas");
 			_panelWeapon[weapon]->setMaterial("cuadroArmasInUse");
 			// cambio el arma activa por la recien pulsada
@@ -627,7 +592,6 @@ namespace Logic
 	void CHudOverlay::hudDeath(){
 		if(_overlayPlay->isVisible()){
 			_overlayPlay->setVisible(false);
-			_overlayWeapon3D[_actualWeapon]->setVisible(false);
 		}
 		if(!_overlayDie->isVisible())
 			_overlayDie->setVisible(true);
@@ -643,7 +607,6 @@ namespace Logic
 			_weaponsBox[i][NO_AMMO]->setVisible(false);
 		}
 		_overlayPlay->setVisible(true);
-		_overlayWeapon3D[HAMMER]->setVisible(true);
 		_actualWeapon = HAMMER;
 	}
 	//-------------------------------------------------------
@@ -679,11 +642,9 @@ namespace Logic
 			eWeaponIndex current;
 			for(int i = 0; i < 6 ; ++i){
 				current = (eWeaponIndex)i;
-				_weaponsEntities[i]->changeMaterial(toText(current));
 			}
 		}else{
 			for(int i = 0; i < 6 ; ++i){
-				_weaponsEntities[i]->changeMaterial(materialName);
 			}
 		}
 	}
@@ -692,9 +653,6 @@ namespace Logic
 	void CHudOverlay::onTick(unsigned int msecs)
 	{
 		temporal += msecs;
-		Matrix4 aux;
-		Math::yaw(temporal, aux);
-		_weaponsEntities[HAMMER]->setTransform(aux);
 
 		if(_overlayLocationImpact->isVisible()){
 			//dura 20 ticks

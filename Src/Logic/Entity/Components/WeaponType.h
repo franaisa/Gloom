@@ -22,9 +22,9 @@ namespace Logic {
 				case eSNIPER:
 					return "sniper";
 				case eSHOTGUN:
-					return "shotgun";
+					return "shotGun";
 				case eMINIGUN:
-					return "minigun";
+					return "miniGun";
 				case eROCKET_LAUNCHER:
 					return "rocketLauncher";
 				case eGRENADE_LAUNCHER:
