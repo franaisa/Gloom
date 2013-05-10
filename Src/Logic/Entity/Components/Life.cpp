@@ -173,7 +173,10 @@ namespace Logic {
 	//________________________________________________________________________
 
 	void CLife::onStart() {
-		suicide();
+		// Lo dejo comentao que me molesta morir na mas entrar. No te preocupes
+		// que en su momento te lo pongo de vuelta Ruben!
+		/*std::shared_ptr<CMessagePlayerDead> playerDeadMsg = std::make_shared<CMessagePlayerDead>();
+		_entity->emitMessage(playerDeadMsg);*/
 	}
 
 	//________________________________________________________________________
