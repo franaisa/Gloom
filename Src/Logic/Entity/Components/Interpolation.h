@@ -117,10 +117,13 @@ namespace Logic  {
 		float getPing(){return _actualPing;};
 
 
+		void setLerpLevel(Vector3 lerp);
+
+
 	protected:
 
 		/** Tick de reloj del componente. */
-		virtual void onTick(unsigned int msecs);
+		virtual void onFixedTick(unsigned int msecs);
 
 	private:
 

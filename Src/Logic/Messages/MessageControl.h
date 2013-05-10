@@ -11,12 +11,15 @@ namespace Logic {
 		CMessageControl();
 		ControlType getType();
 		void setType(ControlType controltype);
+		void setSeqNumber(unsigned int seq);
+		unsigned int getSeqNumber();
 		~CMessageControl(){};
 
 		virtual Net::CBuffer* serialize();
 		virtual void deserialize(Net::CBuffer& buffer);
 	protected:
 		ControlType _controlType;
+		unsigned int _seq;
 	};
 	REG_FACTORYMESSAGE(CMessageControl);
 };

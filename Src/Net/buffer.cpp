@@ -185,6 +185,18 @@ namespace Net {
 
 	//__________________________________________________________________
 
+	void CBuffer::serialize(int data) {
+		write(&data, sizeof(data));
+	}
+
+	//__________________________________________________________________
+
+	void CBuffer::deserialize(int& data) {
+		read(&data, sizeof(data));
+	}
+
+	//__________________________________________________________________
+
 	void CBuffer::serialize(const Vector3& data) {
 		Vector3 temp = data;
 		write(&(temp.x), sizeof(temp.x));
@@ -225,17 +237,7 @@ namespace Net {
 		data.assign(aux, size);
 	}
 
-	//__________________________________________________________________
-
-	void CBuffer::serialize(int data) {
-		write(&data, sizeof(data));
-	}
-
-	//__________________________________________________________________
-
-	void CBuffer::deserialize(int& data) {
-		read(&data, sizeof(data));
-	}
+	
 
 	//__________________________________________________________________
 

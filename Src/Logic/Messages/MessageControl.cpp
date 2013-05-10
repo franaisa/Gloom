@@ -21,6 +21,18 @@ namespace Logic {
 	ControlType CMessageControl::getType(){
 		return _controlType;
 	}//
+
+	void CMessageControl::setSeqNumber(unsigned int seq){
+		_seq=seq;
+	}
+
+	//----------------------------------------------------------
+
+	unsigned int CMessageControl::getSeqNumber(){
+		return _seq;
+	}
+
+
 	//----------------------------------------------------------
 
 	Net::CBuffer* CMessageControl::serialize() {
@@ -28,14 +40,18 @@ namespace Logic {
 
 		_tempBuffer = new Net::CBuffer(sizeof(int) + sizeof(_controlType));
 		_tempBuffer->serialize(std::string("CMessageControl"),true);
+		_tempBuffer->serialize(_seq);
 		_tempBuffer->serialize(_controlType);
+		
 		
 		return _tempBuffer;
 	}//
 	//----------------------------------------------------------
 
 	void CMessageControl::deserialize(Net::CBuffer& buffer) {
+		buffer.deserialize(_seq);
 		buffer.read(&_controlType, sizeof(_controlType));
+		
 	}
 
 };

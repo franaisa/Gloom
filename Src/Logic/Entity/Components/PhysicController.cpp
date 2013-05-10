@@ -18,7 +18,6 @@ el mundo físico usando character controllers.
 #include "Map/MapEntity.h"
 #include "Physics/Server.h"
 
-#include "Logic/Messages/MessageAvatarWalk.h"
 #include "Logic/Messages/MessageCollisionDown.h"
 #include "Logic/Messages/MessageCealing.h"
 #include "Logic/Messages/MessageSide.h"

@@ -98,6 +98,7 @@
     <ClCompile Include="..\..\Src\Logic\Entity\Components\LocalArchangel.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\LocalHound.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\LocalShadow.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\NetCommands.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\NetConnector.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\Particle.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\PhysicController.cpp" />
@@ -160,7 +161,6 @@
     <ClCompile Include="..\..\Src\Logic\Messages\MessageAddShield.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageAddWeapon.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageAudio.cpp" />
-    <ClCompile Include="..\..\Src\Logic\Messages\MessageAvatarWalk.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageBerserker.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageCameraOffset.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageCameraRoll.cpp" />
@@ -227,6 +227,7 @@
     <ClInclude Include="..\..\Src\Logic\Entity\Components\LocalArchangel.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\LocalHound.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\LocalShadow.h" />
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\NetCommands.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\NetConnector.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\ArrayGraphics.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\Particle.h" />
@@ -300,7 +301,6 @@
     <ClInclude Include="..\..\Src\Logic\Messages\MessageAddShield.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageAddWeapon.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageAudio.h" />
-    <ClInclude Include="..\..\Src\Logic\Messages\MessageAvatarWalk.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageBerserker.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageCameraToEnemy.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageCealing.h" />

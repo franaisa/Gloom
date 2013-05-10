@@ -1,30 +1,38 @@
 /**
-@file UpdateClientPosition.h
+@file NetCommands.h
 
 Contiene la declaración del componente que envia con cierta frecuencia
 desde el servidor al cliente la posicion que existe en el servidor.
 
-@author Francisco Aisa García
-@date Octubre, 2010
+@author Rubén Mulero Guerrero
+@date May, 2010
 */
 
-#ifndef __Logic_UpdateClientPosition_H
-#define __Logic_UpdateClientPosition_H
+#ifndef __Logic_NetCommands_H
+#define __Logic_NetCommands_H
 
 #include "Logic/Entity/Component.h"
+#include <deque>
+
+namespace Logic{
+	class CMessageControl;
+	class CMessageSyncPosition;
+	class CPhysicController;
+	class CInterpolation;
+}
+
 
 namespace Logic  {
 
 	/**
     @ingroup logicGroup
 
-	@author Francisco Aisa García
 	@author Rubén Mulero Guerrero
 	@date Febrero, 2013
 	*/
 
-	class CUpdateClientPosition : public IComponent {
-		DEC_FACTORY(CUpdateClientPosition);
+	class CNetCommands : public IComponent {
+		DEC_FACTORY(CNetCommands);
 	public:
 
 
@@ -34,7 +42,7 @@ namespace Logic  {
 
 
 		/** Constructor por defecto. Inicializa el timer a 0. */
-		CUpdateClientPosition() : IComponent(), _timer(0) {}
+		CNetCommands() : IComponent(), _timer(0), _seqNumber(0) {}
 
 
 		// =======================================================================
@@ -82,9 +90,24 @@ namespace Logic  {
 		*/
 		virtual void process(const std::shared_ptr<CMessage>& message);
 
+		
+
 	protected:
 
-		void sendACKMessage(unsigned int sequenceNumber);
+		/**
+		Método llamado en cada frame que actualiza la posicion flotante del item.
+
+		@param msecs Milisegundos transcurridos desde el último tick.
+		*/
+		virtual void onTick(unsigned int msecs);
+
+		void sendControlMessage(const std::shared_ptr<CMessageControl>& message);
+
+		void acceptAndInterpolate(const std::shared_ptr<CMessageSyncPosition>& message);
+
+		void calculateInterpolation(const Vector3 &myPosition, const Vector3 &srvPosition);
+
+		void lerp();
 
 	private:
 
@@ -99,9 +122,26 @@ namespace Logic  {
 
 		/** Limite de tiempo para mandar el mensaje de sincronizacion. */
 		float _syncPosTimeStamp;
+
+		/** non acknowledged messages buffer */
+		typedef std::pair <unsigned int,Vector3> TSyncMessage; 
+		std::deque<TSyncMessage> _msgBuffer;
+
+		/** ack sequence number */
+		unsigned int _seqNumber;
+
+		/** lerp component */
+		CInterpolation* _interpolater;;
+
+		/** shortcut for entity phisic controller */
+		CPhysicController* _physicController;
+
+		/** min and max lerp distance */
+		float _minDist;
+		float _maxDist;
 	}; // class CUpdateClientPosition
 
-	REG_FACTORY(CUpdateClientPosition);
+	REG_FACTORY(CNetCommands);
 
 } // namespace Logic
 

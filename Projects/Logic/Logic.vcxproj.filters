@@ -145,9 +145,6 @@
     <ClCompile Include="..\..\Src\Logic\Messages\MessageCollisionDown.cpp">
       <Filter>Messages\Source</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Src\Logic\Messages\MessageAvatarWalk.cpp">
-      <Filter>Messages\Source</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Src\Logic\Messages\MessageChangeWeapon.cpp">
       <Filter>Messages\Source</Filter>
     </ClCompile>
@@ -496,6 +493,9 @@
     <ClCompile Include="..\..\Src\Logic\Messages\MessageImpact.cpp">
       <Filter>Messages\Source</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\NetCommands.cpp">
+      <Filter>Entity\Components\Network\Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Src\Logic\Maps\ComponentFactory.h">
@@ -544,9 +544,6 @@
       <Filter>Messages\Header</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Messages\MessageCollisionDown.h">
-      <Filter>Messages\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Logic\Messages\MessageAvatarWalk.h">
       <Filter>Messages\Header</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Messages\MessageChangeWeapon.h">
@@ -899,6 +896,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Messages\MessageImpact.h">
       <Filter>Messages\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\NetCommands.h">
+      <Filter>Entity\Components\Network\Header</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

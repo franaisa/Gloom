@@ -25,6 +25,7 @@ namespace Logic {
 
 		_tempBuffer = new Net::CBuffer(sizeof(int) + sizeof(float) * 2);
 		_tempBuffer->serialize(std::string("CMessageMouse"),true);
+		_tempBuffer->serialize(_seq);
 		_tempBuffer->serialize(_mouse[0]);
 		_tempBuffer->serialize(_mouse[1]);
 		
@@ -34,7 +35,7 @@ namespace Logic {
 
 	void CMessageMouse::deserialize(Net::CBuffer& buffer) {
 		_controlType = Control::MOUSE;
-
+		buffer.deserialize(_seq);
 		buffer.deserialize(_mouse[0]);
 		buffer.deserialize(_mouse[1]);
 	}

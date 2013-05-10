@@ -36,7 +36,7 @@ namespace Logic  {
 			return false;
 		// Indicar parametros de interpolacion (ñapeado de momento)
 		_interpolating = false;
-		_maxDistance = 15;
+		_maxDistance = 3.5f;
 		_minDistance = 0.1f;
 		_minYaw = 1.5;
 		_maxYaw = 15;
@@ -50,12 +50,12 @@ namespace Logic  {
 	//________________________________________________________________________
 
 	bool CInterpolation::accept(const std::shared_ptr<CMessage>& message) {
-		return message->getMessageType() == Message::SYNC_POSITION;
+		return false;
 	} // accept
 	
 	//________________________________________________________________________
 
-	void CInterpolation::onTick(unsigned int msecs){
+	void CInterpolation::onFixedTick(unsigned int msecs){
 		_msecs = msecs;
 
 		//si no estamos interpolando, gl
@@ -65,7 +65,7 @@ namespace Logic  {
 		//lo primero de todo, movemos la posición del servidor para poder interpolar con más exactitud
 		Vector3 newPos;
 		//calculamos la direccion en la que debemos interpolar
-		Vector3 direction = _serverDirection*Vector3(1,0,1);
+		Vector3 direction = _serverDirection.normalisedCopy();
 		//calculamos el movimiento que debe hacer el monigote, mucho mas lento del que debe hacer de normal
 		direction*=(_entity->getComponent<CAvatarController>("CAvatarController")->getVelocity()*Vector3(1,0,1)).length()*0.3;
 		//si nos hemos pasado, debemos moverlo al sitio
@@ -92,12 +92,16 @@ namespace Logic  {
 			std::shared_ptr<CMessageSyncPosition> syncMsg = std::static_pointer_cast<CMessageSyncPosition>(message);
 
 			// nos guardamos la posi que nos han dado por si tenemos que interpolar
-			_serverPos = syncMsg->getTransform();
+			/*_serverPos = syncMsg->getTransform();
 			//calculo el ping que tengo ahora mismo	
+			int time = clock()+Logic::CServer::getSingletonPtr()->getDiffTime();
+
+			std::cout << time << std::endl;
+
 			int ping = clock()+Logic::CServer::getSingletonPtr()->getDiffTime()-syncMsg->getTime();
 			_actualPing = abs(ping);
 			//calculamos la interpolacion
-			calculateInterpolation();
+			calculateInterpolation();*/
 			break;
 			}
 		}
@@ -145,6 +149,18 @@ namespace Logic  {
 			_interpolating = true;
 
 		}
+	}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	void CInterpolation::setLerpLevel(Vector3 lerp){
+		if(lerp==Vector3::ZERO){
+			_interpolating=false;
+			return;
+		}
+		_serverDirection = lerp;
+		_distance = lerp.length();
+		_interpolating = true;
 	}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////

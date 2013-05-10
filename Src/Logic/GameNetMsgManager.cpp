@@ -314,7 +314,7 @@ namespace Logic {
 		if(destEntity != 0)
 			destEntity->emitMessage(messageReceived);
 
-		if(Net::CManager::getSingletonPtr()->imServer() && messageReceived->getMessageType()==Message::CONTROL){
+		/*if(Net::CManager::getSingletonPtr()->imServer() && messageReceived->getMessageType()==Message::CONTROL){
 			Net::NetMessageType msgType = Net::ENTITY_MSG;// Escribimos el tipo de mensaje de red a enviar
 			Net::CBuffer serialMsg;
 			Net::CBuffer *buffer = messageReceived->serialize();
@@ -322,7 +322,7 @@ namespace Logic {
 			serialMsg.write(&destID, sizeof(destID)); // Escribimos el id de la entidad destino
 			serialMsg.write(buffer->getbuffer(), buffer->getSize());
 			Net::CManager::getSingletonPtr()->broadcastIgnoring(packet->getConexion()->getId(), serialMsg.getbuffer(), serialMsg.getSize());
-		}
+		}*/
 
 		//LOG("RX ENTITY_MSG " << rxMsg._type << " from EntityID " << destID);
 	} // processEntityMessage
