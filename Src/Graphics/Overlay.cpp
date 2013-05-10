@@ -143,7 +143,7 @@ namespace Graphics
 	//------------------------------------------------------------
 
 	
-	CEntity* COverlay::add3D(const std::string &name, const std::string &mesh, const Vector3 *position){
+	CEntity* COverlay::add3D(const std::string &name, const std::string &mesh, const Vector3 &position){
 		
 		if(_overlay){
 
@@ -198,7 +198,7 @@ namespace Graphics
 			//sceneNode->attachObject((Ogre::MovableObject *)entity);
 			sceneNode->attachObject(entity);
 
-			sceneNode->setPosition(*position);
+			sceneNode->setPosition(position);
 
 			_overlay->add3D(sceneNode);
 

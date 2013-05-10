@@ -90,6 +90,7 @@
     <ClCompile Include="..\..\Src\Logic\Entity\Components\GrenadeControllerClient.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\Hacksaw.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\HudOverlay.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\HudWeapons.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\Jumper.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\Interpolation.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\Lava.cpp" />
@@ -220,6 +221,7 @@
     <ClInclude Include="..\..\Src\Logic\Entity\Components\GrenadeControllerClient.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\Hacksaw.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\HudOverlay.h" />
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\HudWeapons.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\Jumper.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\Interpolation.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\Lava.h" />

@@ -237,7 +237,7 @@ namespace Logic
 			Vector3 offsetPositionWeapon = entityInfo->getVector3Attribute("weapon"+currentOnText+"Offset");
 			
 			
-			_weaponsEntities[current] = _overlayWeapon3D[current]->add3D(currentOnText, modelWeapon, new Vector3(0.0,0.0,0.0) );
+			_weaponsEntities[current] = _overlayWeapon3D[current]->add3D(currentOnText, modelWeapon );
 			//_weaponsEntities[current] = _overlayWeapon3D[current]->add3D(currentOnText, modelWeapon, &offsetPositionWeapon);
 
 			//leo el pitch y el yaw del arma

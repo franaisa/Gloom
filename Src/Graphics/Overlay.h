@@ -110,7 +110,7 @@ namespace Graphics
 		@param mesh, mesh de la entidad a añadir en el overlay.
 		@param position, posicion donde se pondra dicha entidad. Para que aparezca en pantalla se recomienda que la Z sea -5 como minimo y que el resto no se exceda ya que podria no verse en la pantalla.
 		*/
-		CEntity* add3D(const std::string &name, const std::string &mesh, const Vector3 *position);
+		CEntity* add3D(const std::string &name, const std::string &mesh, const Vector3 &position = Vector3::ZERO);
 
 		void add3D(Graphics::CParticle *particle, const Vector3 *position);
 
