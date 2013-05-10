@@ -94,7 +94,7 @@ namespace Logic {
 
 	protected:
 
-		virtual void onStart(unsigned int msecs);
+		virtual void onStart();
 
 		//__________________________________________________________________
 

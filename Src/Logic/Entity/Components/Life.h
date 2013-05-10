@@ -179,7 +179,7 @@ namespace Logic {
 		Sirve para inicializar algunas de las estructuras y funcionalidad
 		que si fueran en el tick se convertirian en un dolor de cabeza.
 		*/
-		virtual void onStart(unsigned int msecs);
+		virtual void onStart();
 
 		//__________________________________________________________________
 
@@ -272,11 +272,6 @@ namespace Logic {
 
 		/** Ruta del sonido de muerte. */
 		std::string _audioDeath;
-
-		/**
-		Variable que indica si es la primera vez que ejecuta tick
-		*/
-		bool _starting;
 
 	}; // class CLife
 

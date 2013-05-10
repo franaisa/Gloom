@@ -90,7 +90,7 @@ namespace Logic {
 
 	//__________________________________________________________________
 
-	void CShadow::onStart(unsigned int msecs) {
+	void CShadow::onStart() {
 
 		std::shared_ptr<CMessageChangeMaterial> materialMsg = std::make_shared<CMessageChangeMaterial>();
 		materialMsg->setMaterialName("original");

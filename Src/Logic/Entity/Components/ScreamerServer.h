@@ -127,10 +127,6 @@ namespace Logic {
 
 	protected:
 
-		virtual void onStart(unsigned int msecs);
-
-		//__________________________________________________________________
-
 		/**
 		Método llamado en cada frame.
 
