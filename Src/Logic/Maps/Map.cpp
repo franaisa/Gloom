@@ -213,6 +213,9 @@ namespace Logic {
 		unsigned int steps = _acumTime / _fixedTimeStep;
 		_acumTime  = _acumTime % _fixedTimeStep;
 
+		if(steps > 1)
+			std::cout << "Ejecutando " << steps << " steps" << std::endl; 
+
 		// Ejecutamos el fixed tick
 		TEntityMap::const_iterator it = _entityMap.begin();
 		for(int i = 0; i < steps; ++i) {
