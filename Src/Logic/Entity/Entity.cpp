@@ -33,13 +33,8 @@ de juego. Es una colección de componentes.
 namespace Logic 
 {
 
-	unsigned int CEntity::_fixedTimeStep = 16;
-
-	//---------------------------------------------------------
-
 	CEntity::CEntity(TEntityID entityID) : _entityID(entityID), 
 										   _map(0),
-										   _acumTime(0),
 										   _type(""), 
 										   _name(""), 
 										   _transform(Matrix4::IDENTITY),
@@ -134,8 +129,6 @@ namespace Logic
 	//---------------------------------------------------------
 
 	bool CEntity::activate() {
-		initFunctionPointers();
-
 		// Si somos jugador, se lo decimos al servidor
 		// y nos registramos para que nos informen
 		// de los movimientos que debemos realizar
@@ -205,20 +198,38 @@ namespace Logic
 			if( component->isActivated() ) {
 				component->start();
 			}
+
+			// Registramos en todas las listas a todos los componentes
+			// ellos solos se desapuntaran en funcion de lo que quieran
+			_componentsWithTick.push_back(component);
+			_componentsWithFixedTick.push_back(component);
 		}
 	}
 
 	//---------------------------------------------------------
 
-	void CEntity::processNonTickableComponents() {
+	void CEntity::processComponentMessages() {
 		IComponent* component;
-		std::set<IComponent*>::const_iterator it = _componentsWithoutTick.begin();
-		for(; it != _componentsWithoutTick.end(); ++it) {
+		std::list<IComponent*>::const_iterator it = _componentList.begin();
+		for(; it != _componentList.end(); ++it) {
 			component = *it;
-			if( component->isActivated() ) {
-				component->processMessages();
+
+			// No hace falta comprobar si estamos activados o no u ociosos
+			// para procesar mensajes, ya que eso se tiene en cuenta en el
+			// emitMessage
+			if( component->processMessages() && component->isSleeping() && !component->isInDeepSleep() ) {
+				component->wakeUp();
 			}
+	
+			//if(component->_wantsTick)
+			//	_componentsWithTick.push_back(component);
+			//if(component->_wantsFixedTick)
+			//	_componentsWithFixedTick.push_back(component);
 		}
+
+		//std::cout << "Componentes totales de " << getName() << " = " << _componentList.size() << std::endl;
+		//std::cout << "Componentes con tick = " << _componentsWithTick.size() << std::endl;
+		//std::cout << "Componentes con fixed tick = " << _componentsWithFixedTick.size() << std::endl;
 	}
 
 	//---------------------------------------------------------
@@ -232,7 +243,6 @@ namespace Logic
 			if( component->isActivated() ) {
 				if( !component->tick(msecs) ) {
 					it = _componentsWithTick.erase(it);
-					_componentsWithoutTick.insert(component);
 					continue;
 				}
 			}
@@ -252,7 +262,6 @@ namespace Logic
 			if( component->isActivated() ) {
 				if( !component->fixedTick(msecs) ) {
 					it = _componentsWithFixedTick.erase(it);
-					_componentsWithoutTick.insert(component);
 					continue;
 				}
 			}
@@ -316,8 +325,9 @@ namespace Logic
 		bool anyReceiver = false;
 		for(; it != _componentList.end(); ++it) {
 			component = *it;
-			// Al emisor no se le envia el mensaje y si esta desactivado el componente tampoco se le envia
-			if( emitter != component && component->isActivated() && component->_state != ComponentState::eBUSY )
+			// Si el componente es el propio emisor no se le envia el mensaje
+			// Ademas solo recibe mensajes si esta activado y no esta ocioso
+			if( emitter != component && component->isActivated() && !component->isBusy() )
 				anyReceiver = component->set(message) || anyReceiver;
 		}
 
@@ -391,130 +401,6 @@ namespace Logic
 
 	void CEntity::setYawPitch(float yaw, float pitch) {
 		Math::pitchYaw(pitch, yaw, _transform);
-	}
-
-
-
-
-
-
-
-
-
-
-	void CEntity::initFunctionPointers() {
-		entityProcessMode[ComponentState::eSLEEPING][TickMode::eNONE]		= &CEntity::sleepingWithoutTick;
-		entityProcessMode[ComponentState::eSLEEPING][TickMode::eTICK]		= &CEntity::sleepingWithTick;
-		entityProcessMode[ComponentState::eSLEEPING][TickMode::eFIXED_TICK] = &CEntity::sleepingWithFixedTick;
-		entityProcessMode[ComponentState::eSLEEPING][TickMode::eBOTH]		= &CEntity::sleepingWithBothTicks;
-
-		entityProcessMode[ComponentState::eAWAKE][TickMode::eNONE]			= &CEntity::awakeWithoutTick;
-		entityProcessMode[ComponentState::eAWAKE][TickMode::eTICK]			= &CEntity::awakeWithTick;
-		entityProcessMode[ComponentState::eAWAKE][TickMode::eFIXED_TICK]	= &CEntity::awakeWithFixedTick;
-		entityProcessMode[ComponentState::eAWAKE][TickMode::eBOTH]			= &CEntity::awakeWithBothTicks;
-
-		entityProcessMode[ComponentState::eBUSY][TickMode::eNONE]			= &CEntity::busyWithoutTick;
-		entityProcessMode[ComponentState::eBUSY][TickMode::eTICK]			= &CEntity::busyWithTick;
-		entityProcessMode[ComponentState::eBUSY][TickMode::eFIXED_TICK]		= &CEntity::busyWithFixedTick;
-		entityProcessMode[ComponentState::eBUSY][TickMode::eBOTH]			= &CEntity::busyWithBothTicks;
-	}
-
-
-
-
-	void CEntity::sleepingWithoutTick(IComponent* component, unsigned int msecs, unsigned int steps) {
-		if( !component->_deepSleep && component->processMessages() ) {
-			component->_state = ComponentState::eAWAKE;
-			component->onWake();
-
-			// No deberia ocurrir nunca
-			std::cerr << "WARNING!!! Existe un componente durmiendo sin tick" << std::endl;
-		}
-	}
-
-	void CEntity::sleepingWithTick(IComponent* component, unsigned int msecs, unsigned int steps) {
-		if( !component->_deepSleep && component->processMessages() ) {
-			component->_state = ComponentState::eAWAKE;
-			component->onWake();
-
-			component->tick(msecs);
-		}
-	}
-
-	void CEntity::sleepingWithFixedTick(IComponent* component, unsigned int msecs, unsigned int steps) {
-		if( !component->_deepSleep && component->processMessages() ) {
-			component->_state = ComponentState::eAWAKE;
-			component->onWake();
-
-			for(int i = 0; i < steps; ++i) {
-				component->fixedTick(_fixedTimeStep);
-			}
-		}
-	}
-
-	void CEntity::sleepingWithBothTicks(IComponent* component, unsigned int msecs, unsigned int steps) {
-		if( !component->_deepSleep && component->processMessages() ) {
-			component->_state = ComponentState::eAWAKE;
-			component->onWake();
-
-			component->tick(msecs);
-			for(int i = 0; i < steps; ++i) {
-				component->fixedTick(_fixedTimeStep);
-			}
-		}
-	}
-
-
-
-
-	void CEntity::awakeWithoutTick(IComponent* component, unsigned int msecs, unsigned int steps) {
-		component->processMessages();
-	}
-
-	void CEntity::awakeWithTick(IComponent* component, unsigned int msecs, unsigned int steps) {
-		component->processMessages();
-		component->tick(msecs);
-	}
-
-	void CEntity::awakeWithFixedTick(IComponent* component, unsigned int msecs, unsigned int steps) {
-		component->processMessages();
-		for(int i = 0; i < steps; ++i) {
-			component->fixedTick(_fixedTimeStep);
-		}
-	}
-
-	void CEntity::awakeWithBothTicks(IComponent* component, unsigned int msecs, unsigned int steps) {
-		component->processMessages();
-		component->tick(msecs);
-		if(steps>1)std::cout << "WARNING: estas ejecutando la logica " << steps  << " veces!" << std::endl;
-		for(int i = 0; i < steps; ++i) {
-			component->fixedTick(_fixedTimeStep);
-		}
-	}
-
-
-
-
-	void CEntity::busyWithoutTick(IComponent* component, unsigned int msecs, unsigned int steps) {
-		// No deberia de ocurrir nunca
-		std::cerr << "WARNING!!! Existe un componente busy sin tick" << std::endl;
-	}
-
-	void CEntity::busyWithTick(IComponent* component, unsigned int msecs, unsigned int steps) {
-		component->tick(msecs);
-	}
-
-	void CEntity::busyWithFixedTick(IComponent* component, unsigned int msecs, unsigned int steps) {
-		for(int i = 0; i < steps; ++i) {
-			component->fixedTick(_fixedTimeStep);
-		}
-	}
-
-	void CEntity::busyWithBothTicks(IComponent* component, unsigned int msecs, unsigned int steps) {
-		component->tick(msecs);
-		for(int i = 0; i < steps; ++i) {
-			component->fixedTick(_fixedTimeStep);
-		}
 	}
 
 } // namespace Logic

@@ -166,7 +166,6 @@ namespace Logic {
 		@return true si desea seguir recibiendo ticks.
 		*/
 		inline bool tick(unsigned int msecs) {
-			processMessages();
 			onTick(msecs); 
 			return _wantsTick;
 		}
@@ -185,9 +184,8 @@ namespace Logic {
 		@return true si se desea seguir recibiendo ticks.
 		*/
 		inline bool fixedTick(unsigned int msecs) {
-			processMessages();
 			onFixedTick(msecs);
-			return _wantsTick;
+			return _wantsFixedTick;
 		}
 		
 		//__________________________________________________________________
@@ -287,6 +285,16 @@ namespace Logic {
 		@return true si el componente está durmiendo.
 		*/
 		inline bool isSleeping() const { return _state == ComponentState::eSLEEPING; }
+
+		//__________________________________________________________________
+
+		/**
+		Indica si el componente esta en sueño profundo o no. Si lo esta, solo
+		se le puede despertar llamando explicitamente al wakeup.
+
+		@return true si el componente esta en sueño profundo.
+		*/
+		inline bool isInDeepSleep() const { return _deepSleep; }
 
 		//__________________________________________________________________
 
@@ -421,9 +429,16 @@ namespace Logic {
 			<li>eAWAKE: El componete está despierto/disponible.</li>
 			<li>eBUSY: El componente está ocupado.</li>
 			<li>eSLEEPING: El componente está durmiendo.</li>
+			<li>eDEACTIVATED: El componente está desactivado.
 		</ul>
 		*/
 		ComponentState::Enum _state;
+
+		/** 
+		true si el componente no se va a despertar al recibir 
+		mensajes cuando este dormido 
+		*/
+		bool _deepSleep;
 
 		/**
 		Mascara para saber si un componente tiene tick y/o fixed tick (
@@ -436,13 +451,9 @@ namespace Logic {
 		*/
 		unsigned char _tickMask;
 
-		/** 
-		true si el componente no se va a despertar al recibir 
-		mensajes cuando este dormido 
-		*/
-		bool _deepSleep;
-
 		bool _wantsTick;
+
+		bool _wantsFixedTick;
 		
 	}; // class IComponent
 

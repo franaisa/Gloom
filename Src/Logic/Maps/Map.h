@@ -206,7 +206,7 @@ namespace Logic
 
 		void checkTimeouts(unsigned int msecs);
 
-		void processNonTickeableComponents();
+		void processComponentMessages();
 
 		void doTick(unsigned int msecs);
 

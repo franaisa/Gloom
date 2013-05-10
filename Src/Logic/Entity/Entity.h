@@ -46,10 +46,9 @@ namespace Logic {
 	*/
 	struct ComponentState {
 		enum Enum {
-			eSLEEPING,		// (Durmiendo) Recibe mensajes pero no tiene tick, despierta al recibir un mensaje
-			eAWAKE,			// (Despierto/Disponible) Recibe mensajes y tiene tick
-			eBUSY,			// (Ocupado) No recibe mensajes pero tiene tick
-			eMAX
+			eSLEEPING		= 1 << 0, // (Durmiendo) Recibe mensajes pero no tiene tick, despierta al recibir un mensaje
+			eAWAKE			= 1 << 1, // (Despierto/Disponible) Recibe mensajes y tiene tick
+			eBUSY			= 1 << 2  // (Ocupado) No recibe mensajes pero tiene tick
 		};
 	};
 
@@ -63,6 +62,7 @@ namespace Logic {
 			eNONE			= 0,	  // No tiene tick
 			eTICK			= 1 << 0, // Tiene tick
 			eFIXED_TICK		= 1 << 1, // Tiene tick fijo
+			eBOTH			= eTICK | eFIXED_TICK
 		};
 	};
 
@@ -148,7 +148,7 @@ namespace Logic {
 
 		//__________________________________________________________________
 
-		void processNonTickableComponents();
+		void processComponentMessages();
 
 		/**
 		Función llamada en cada frame para que se realicen las funciones
@@ -465,17 +465,6 @@ namespace Logic {
 
 
 		/**
-		Función estática que establece la cantidad de milisegundos que el tick
-		fijo procesa cada vez.
-
-		@param stepSize Número de milisegundos que el fixed tick procesa en cada
-		paso.
-		*/
-		static void setFixedTimeStep(unsigned int stepSize) { _fixedTimeStep = stepSize; }
-
-		//__________________________________________________________________
-
-		/**
 		Setea el id de una entidad.
 		*/
 		void setEntityID(TEntityID id) { _entityID = id; }
@@ -591,13 +580,6 @@ namespace Logic {
 		// =======================================================================
 
 
-		/**
-		Matriz de punteros a función que indican la traza a seguir dependiendo el
-		estado del componente. Evita hacer comprobaciones de ningún tipo.
-		*/
-		//void (CEntity::*entityProcessMode[ComponentState::eMAX][TickMode::eMAX])(IComponent*, unsigned int, unsigned int);
-
-		std::set<IComponent*> _componentsWithoutTick;
 		std::list<IComponent*> _componentsWithTick;
 		std::list<IComponent*> _componentsWithFixedTick;
 
@@ -624,15 +606,6 @@ namespace Logic {
 		*/
 		TComponentList _componentList;
 
-		/**
-		Variable de clase que indica el número de milisegundos que se procesan en cada
-		iteración del tick fijo.
-		*/
-		static unsigned int _fixedTimeStep;
-
-		/** Tiempo acumulado a tener en cuenta para el tick fijo. */
-		unsigned int _acumTime;
-
 		/** Indica si la entidad está activada. */
 		bool _activated;
 
@@ -655,159 +628,6 @@ namespace Logic {
 		es false a no ser que se lea otra cosa de los atributos.
 		*/
 		bool _isPlayer;
-
-
-	private:
-
-
-		// =======================================================================
-		//              MÉTODOS PARA EL PROCESAMIENTO DE COMPONENTES
-		// =======================================================================
-
-
-		// DANGER ZONE!
-
-		/**
-		Inicializa los punteros de la matriz de punteros a función.
-		*/
-		void initFunctionPointers();
-
-		//__________________________________________________________________
-
-		/**
-		Este caso no debería darse nunca ya que un componente que no tiene tick no debería
-		ponerse a dormir.
-
-		@param component Componente a procesar.
-		@param msecs Milisegundos transcurridos desde el último frame.
-		@steps Número de steps para el fixed tick.
-		*/
-		void sleepingWithoutTick(IComponent* component, unsigned int msecs, unsigned int steps);
-
-		//__________________________________________________________________
-
-		/**
-		Si hay mensajes los procesa y despierta al componente. Si no los hay deja al componente
-		dormido (sin tick).
-
-		@param component Componente a procesar.
-		@param msecs Milisegundos transcurridos desde el último frame.
-		@steps Número de steps para el fixed tick.
-		*/
-		void sleepingWithTick(IComponent* component, unsigned int msecs, unsigned int steps);
-
-		//__________________________________________________________________
-
-		/**
-		Si hay mensajes los procesa y despierta al componente. Si no los hay deja al componente
-		dormido (sin fixed tick).
-
-		@param component Componente a procesar.
-		@param msecs Milisegundos transcurridos desde el último frame.
-		@steps Número de steps para el fixed tick.
-		*/
-		void sleepingWithFixedTick(IComponent* component, unsigned int msecs, unsigned int steps);
-
-		//__________________________________________________________________
-
-		/**
-		Si hay mensajes los procesa y despierta al componente. Si no los hay deja al componente
-		dormido (sin tick ni fixed tick).
-
-		@param component Componente a procesar.
-		@param msecs Milisegundos transcurridos desde el último frame.
-		@steps Número de steps para el fixed tick.
-		*/
-		void sleepingWithBothTicks(IComponent* component, unsigned int msecs, unsigned int steps);
-
-		//__________________________________________________________________
-
-		/**
-		Si hay mensajes los procesa. No ejecuta tick.
-
-		@param component Componente a procesar.
-		@param msecs Milisegundos transcurridos desde el último frame.
-		@steps Número de steps para el fixed tick.
-		*/
-		void awakeWithoutTick(IComponent* component, unsigned int msecs, unsigned int steps);
-
-		//__________________________________________________________________
-
-		/**
-		Si hay mensajes los procesa y ejecuta el tick.
-
-		@param component Componente a procesar.
-		@param msecs Milisegundos transcurridos desde el último frame.
-		@steps Número de steps para el fixed tick.
-		*/
-		void awakeWithTick(IComponent* component, unsigned int msecs, unsigned int steps);
-
-		//__________________________________________________________________
-
-		/**
-		Si hay mensajes los procesa y ejecuta el fixed tick.
-
-		@param component Componente a procesar.
-		@param msecs Milisegundos transcurridos desde el último frame.
-		@steps Número de steps para el fixed tick.
-		*/
-		void awakeWithFixedTick(IComponent* component, unsigned int msecs, unsigned int steps);
-
-		//__________________________________________________________________
-
-		/**
-		Si hay mensajes los procesa y ejecuta el tick y el fixed tick.
-
-		@param component Componente a procesar.
-		@param msecs Milisegundos transcurridos desde el último frame.
-		@steps Número de steps para el fixed tick.
-		*/
-		void awakeWithBothTicks(IComponent* component, unsigned int msecs, unsigned int steps);
-
-		//__________________________________________________________________
-
-		/**
-		Este caso no debería darse nunca. Tener un componente que no procesa mensajes ni
-		tiene tick es como tenerlo desactivado.
-
-		@param component Componente a procesar.
-		@param msecs Milisegundos transcurridos desde el último frame.
-		@steps Número de steps para el fixed tick.
-		*/
-		void busyWithoutTick(IComponent* component, unsigned int msecs, unsigned int steps);
-
-		//__________________________________________________________________
-
-		/**
-		Ejecuta el tick pero no procesa mensajes.
-
-		@param component Componente a procesar.
-		@param msecs Milisegundos transcurridos desde el último frame.
-		@steps Número de steps para el fixed tick.
-		*/
-		void busyWithTick(IComponent* component, unsigned int msecs, unsigned int steps);
-
-		//__________________________________________________________________
-
-		/**
-		Ejecuta el fixed tick pero no procesa mensajes.
-
-		@param component Componente a procesar.
-		@param msecs Milisegundos transcurridos desde el último frame.
-		@steps Número de steps para el fixed tick.
-		*/
-		void busyWithFixedTick(IComponent* component, unsigned int msecs, unsigned int steps);
-
-		//__________________________________________________________________
-
-		/**
-		Ejecuta el tick y el fixed tick pero no procesa mensajes.
-
-		@param component Componente a procesar.
-		@param msecs Milisegundos transcurridos desde el último frame.
-		@steps Número de steps para el fixed tick.
-		*/
-		void busyWithBothTicks(IComponent* component, unsigned int msecs, unsigned int steps);
 
 	}; // class CEntity
 

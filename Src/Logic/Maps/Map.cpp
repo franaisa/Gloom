@@ -148,7 +148,7 @@ namespace Logic {
 		
 		// Es muuuuuy importante que primero se ejecute esta función
 		// si no se hace así, el sleep por ejemplo no funciona bien.
-		processNonTickeableComponents();
+		processComponentMessages();
 
 		// Ejecutamos el tick de las entidades
 		// Ejecutamos el tick de todas las entidades activadas del mapa
@@ -188,11 +188,11 @@ namespace Logic {
 
 	//--------------------------------------------------------
 
-	void CMap::processNonTickeableComponents() {
+	void CMap::processComponentMessages() {
 		// Ejecutamos el tick de todas nuestras entidades
 		TEntityMap::const_iterator it = _entityMap.begin();
 		for(; it != _entityMap.end(); ++it) {
-			it->second->processNonTickableComponents();
+			it->second->processComponentMessages();
 		}
 	}
 

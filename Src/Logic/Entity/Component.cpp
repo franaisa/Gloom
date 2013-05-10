@@ -18,6 +18,7 @@ namespace Logic {
 							   _isActivated(false),
 							   _deepSleep(false),
 							   _wantsTick(true),
+							   _wantsFixedTick(true),
 							   _state(ComponentState::eAWAKE),
 							   _tickMask(TickMode::eTICK | TickMode::eFIXED_TICK) {
 
@@ -39,20 +40,12 @@ namespace Logic {
 	} // spawn
 
 	//__________________________________________________________________
-	
-	//@deprecated -> estoy hay que implementarlo como dios manda
+
 	void IComponent::activate() {
 		if(_isActivated) return;
-		
-		// Por defecto no forzamos a que se arranque onStart
-		// queda abierto para que el cliente lo haga
-		// solo tendria que setear updater como onStart
-		// al ejecutar onStart se vuelve a setear tick
-		
+
 		_isActivated = true;
 		clearMessages();
-
-		// Llamamos al activar que los hijos deben redefinir
 		onActivate();
 	}
 
@@ -65,6 +58,8 @@ namespace Logic {
 	//__________________________________________________________________
 
 	void IComponent::deactivate() {
+		if(!_isActivated) return;
+
 		_isActivated = false;
 		onDeactivate();
 	}
@@ -91,17 +86,20 @@ namespace Logic {
 	//__________________________________________________________________
 
 	void IComponent::onFixedTick(unsigned int msecs) {
-		_wantsTick = false;
-		_tickMask = _tickMask & TickMode::eTICK;
+		_wantsFixedTick = false;
+		_wantsTick = _tickMask = _tickMask & TickMode::eTICK;
 	}
 
 	//__________________________________________________________________
 
 	void IComponent::putToSleep(bool deepSleep) {
+		assert(_tickMask != 0 && "Error: No tiene sentido el uso de estados con componentes no tickeables.");
+
 		if(_state != ComponentState::eSLEEPING) {
 			_state = ComponentState::eSLEEPING;
 			this->_deepSleep = deepSleep;
-
+			_wantsTick = _wantsFixedTick = false;
+			
 			onSleep();
 		}
 	}
@@ -115,8 +113,12 @@ namespace Logic {
 	//__________________________________________________________________
 
 	void IComponent::wakeUp() {
+		assert(_tickMask != 0 && "Error: No tiene sentido el uso de estados con componentes no tickeables.");
+
 		if(_state == ComponentState::eSLEEPING) {
 			_state = ComponentState::eAWAKE;
+			_wantsTick = _tickMask & TickMode::eTICK;
+			_wantsFixedTick = _tickMask & TickMode::eFIXED_TICK;
 
 			onWake();
 		}
@@ -131,6 +133,8 @@ namespace Logic {
 	//__________________________________________________________________
 
 	void IComponent::stayBusy() {
+		assert(_tickMask != 0 && "Error: No tiene sentido el uso de estados con componentes no tickeables.");
+
 		if(_state != ComponentState::eBUSY) {
 			_state = ComponentState::eBUSY;
 
@@ -147,6 +151,8 @@ namespace Logic {
 	//__________________________________________________________________
 
 	void IComponent::stayAvailable() {
+		assert(_tickMask != 0 && "Error: No tiene sentido el uso de estados con componentes no tickeables.");
+
 		if(_state == ComponentState::eBUSY) {
 			_state = ComponentState::eAWAKE;
 

@@ -34,13 +34,13 @@ namespace Logic {
 	bool CSnapshotGenerator::spawn(CEntity* entity, CMap *map, const Map::CEntity *entityInfo) {
 		if( !IComponent::spawn(entity, map, entityInfo) ) return false;
 
-		assert( entityInfo->hasAttribute("ticksPerSample") );
-		assert( entityInfo->hasAttribute("samplesPerSnapshot") );
+		//assert( entityInfo->hasAttribute("ticksPerSample") );
+		//assert( entityInfo->hasAttribute("samplesPerSnapshot") );
 
 		// Cada cuantos fixed ticks tomamos una muestra
-		_ticksPerSample = entityInfo->getIntAttribute("ticksPerSample");
+		//_ticksPerSample = entityInfo->getIntAttribute("ticksPerSample");
 		// Cada cuantas muestras tomamos una snapshot
-		_samplesPerSnapshot = entityInfo->getIntAttribute("samplesPerSnapshot");
+		//_samplesPerSnapshot = entityInfo->getIntAttribute("samplesPerSnapshot");
 
 		return true;
 	}
