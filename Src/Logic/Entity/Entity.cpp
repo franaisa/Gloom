@@ -208,6 +208,22 @@ namespace Logic
 
 	//---------------------------------------------------------
 
+	// @deprecated
+	// Ahora mismo puedo hacer esta llamada y en cualquier momento
+	// por que la lista de la stl me permite introducir el componente 
+	// al final sin problemas incluso cuando se esta ejecutando un bucle for.
+	// Cuando cambiemos a listas de prioridades esto puede ser un problema.
+	void CEntity::wakeUp(IComponent* component) {
+		if(component->_wantsTick) {
+			_componentsWithTick.push_back(component);
+		}
+		if(component->_wantsFixedTick) {
+			_componentsWithFixedTick.push_back(component);
+		}
+	}
+
+	//---------------------------------------------------------
+
 	void CEntity::processComponentMessages() {
 		IComponent* component;
 		std::list<IComponent*>::const_iterator it = _componentList.begin();
@@ -220,11 +236,6 @@ namespace Logic
 			if( component->processMessages() && component->isSleeping() && !component->isInDeepSleep() ) {
 				component->wakeUp();
 			}
-	
-			//if(component->_wantsTick)
-			//	_componentsWithTick.push_back(component);
-			//if(component->_wantsFixedTick)
-			//	_componentsWithFixedTick.push_back(component);
 		}
 
 		//std::cout << "Componentes totales de " << getName() << " = " << _componentList.size() << std::endl;

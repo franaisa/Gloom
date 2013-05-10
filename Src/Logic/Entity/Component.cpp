@@ -120,6 +120,8 @@ namespace Logic {
 			_wantsTick = _tickMask & TickMode::eTICK;
 			_wantsFixedTick = _tickMask & TickMode::eFIXED_TICK;
 
+			_entity->wakeUp(this);
+
 			onWake();
 		}
 	}
