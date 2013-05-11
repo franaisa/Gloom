@@ -160,9 +160,9 @@ namespace Logic {
 
 		@param msecs Milisegundos transcurridos desde el último tick.
 		*/
-		void tick(unsigned int msecs);
+		bool tick(unsigned int msecs);
 
-		void fixedTick(unsigned int msecs);
+		bool fixedTick(unsigned int msecs);
 
 		//__________________________________________________________________
 

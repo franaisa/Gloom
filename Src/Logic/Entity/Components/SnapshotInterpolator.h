@@ -17,6 +17,10 @@
 #include <deque>
 
 namespace Logic {
+	class CPhysicController;
+}
+
+namespace Logic {
 	
 	/**
 	
@@ -100,6 +104,8 @@ namespace Logic {
 		//                    METODOS HEREDADOS DE ICOMPONENT
 		// =======================================================================
 
+		virtual void onStart();
+
 
 		/**
 		Método llamado en cada frame. En este componente se encarga
@@ -108,11 +114,13 @@ namespace Logic {
 
 		@param msecs Milisegundos transcurridos desde el último tick.
 		*/
-		virtual void onTick(unsigned int msecs);
+		virtual void onFixedTick(unsigned int msecs);
 
 
 	private:
 
+
+		void interpolateSnapshot(const std::vector<Matrix4>& buffer);
 
 		// =======================================================================
 		//                          MIEMBROS PRIVADOS
@@ -122,7 +130,14 @@ namespace Logic {
 
 		float _interpolationTimer;
 
-		//std::deque<Matrix4> _buffer;
+		unsigned int _ticksPerInterpolation;
+		unsigned int _tickCounter;
+		unsigned int _ticksPerSample;
+		unsigned int _samplesPerSnapshot;
+
+		std::deque<Matrix4> _buffer;
+
+		CPhysicController* _controller;
 
 	}; // class CSnapshotInterpolator
 
