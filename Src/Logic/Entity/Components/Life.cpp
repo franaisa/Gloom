@@ -47,8 +47,7 @@ namespace Logic {
 	//________________________________________________________________________
 
 	CLife::CLife() : _damageTimer(0), 
-					 _reducedDamageAbsorption(0),
-					_starting(true){
+					 _reducedDamageAbsorption(0) {
 
 		// Nada que hacer
 	}
@@ -173,12 +172,11 @@ namespace Logic {
 
 	//________________________________________________________________________
 
-	void CLife::onStart(unsigned int msecs) {
-		if(_starting){
-			std::shared_ptr<CMessagePlayerDead> playerDeadMsg = std::make_shared<CMessagePlayerDead>();
-			_entity->emitMessage(playerDeadMsg);
-		}
-		_starting=false;
+	void CLife::onStart() {
+		// Lo dejo comentao que me molesta morir na mas entrar. No te preocupes
+		// que en su momento te lo pongo de vuelta Ruben!
+		/*std::shared_ptr<CMessagePlayerDead> playerDeadMsg = std::make_shared<CMessagePlayerDead>();
+		_entity->emitMessage(playerDeadMsg);*/
 	}
 
 	//________________________________________________________________________

@@ -8,27 +8,29 @@ namespace Logic {
 	struct WeaponType {
 		enum Enum {
 			eHAMMER,
+			eSNIPER,
 			eSHOTGUN,
 			eMINIGUN,
 			eROCKET_LAUNCHER,
 			eGRENADE_LAUNCHER,
-			eSNIPER
+			eSIZE
 		};
 
 		static std::string toString(WeaponType::Enum weaponType) {
 			switch(weaponType) {
 				case eHAMMER:
-					return "Hammer";
-				case eSHOTGUN:
-					return "Shotgun";
-				case eMINIGUN:
-					return "Minigun";
-				case eROCKET_LAUNCHER:
-					return "RocketLauncher";
-				case eGRENADE_LAUNCHER:
-					return "GrenadeLauncher";
+					return "hammer";
 				case eSNIPER:
-					return "Sniper";
+					return "sniper";
+				case eSHOTGUN:
+					return "shotGun";
+				case eMINIGUN:
+					return "miniGun";
+				case eROCKET_LAUNCHER:
+					return "rocketLauncher";
+				case eGRENADE_LAUNCHER:
+					return "grenadeLauncher";
+
 			}
 		}
 	};

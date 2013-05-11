@@ -91,17 +91,7 @@ namespace Logic {
 	//---------------------------------------------------------------------------------
 
 	void CNetConnector::process(const std::shared_ptr<CMessage>& message) {
-		// TODO Es un mensaje para enviar por el tubo.
-		// Lo enviamos por la red usando el front-end CGameNetMsgManager
-		Logic::TMessageType msgType = message->getMessageType();
-		if(msgType == Logic::Message::CAMERA_TO_ENEMY) {
-
-			Logic::TEntityID id = _entity->getEntityID();
-			
-		}
-
-		CGameNetMsgManager::getSingletonPtr()->
-			sendEntityMessage(message, _entity->getEntityID());
+		CGameNetMsgManager::getSingletonPtr()->sendEntityMessage( message, _entity->getEntityID() );
 
 	} // process
 		

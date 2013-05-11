@@ -54,12 +54,6 @@ namespace Logic
 				_panelElementsTextArea[i] = NULL;
 			}
 			_panelMira = NULL;
-			for(int i=0;i<6;++i){
-				_overlayWeapon3D[i] = NULL;
-				//Graphics::CServer::getSingletonPtr()->getActiveScene()->removeEntity( _weaponsEntities[i]);
-				_weaponsEntities[i] = NULL;
-				
-			}
 			for(int i = 0; i<8; ++i){
 
 				_panelWeapon[i] = NULL;
@@ -224,15 +218,6 @@ namespace Logic
 		Gestion los paneles de las armas (6) en este caso, en cada uno de sus estados: ACTIVE, NO_AMMO, NO_WEAPON
 		*/
 		Graphics::COverlay *_weaponsBox[8][3];
-
-
-		//////////////////////Gestion de armas
-		Graphics::COverlay *_overlayWeapon3D[6];
-
-		/**
-		Aqui guardare un puntero a cada entidad, para poder moverla y rotarla
-		*/
-		Graphics::CEntity *_weaponsEntities[6];
 		
 		/**
 		Aqui se guardara el panel de localizador de impacto para el feedback de las colisiones
