@@ -27,7 +27,7 @@ gráfica de la entidad.
 #include "Graphics/Overlay.h"
 
 #include "Logic/Messages/MessageTransform.h"
-#include "Logic/Messages/MessageChangeWeapon.h"
+#include "Logic/Messages/MessageChangeWeaponGraphics.h"
 
 #include "OgreEntity.h"
 #include "OgreSceneNode.h"
@@ -154,15 +154,15 @@ namespace Logic
 		Logic::TMessageType msgType = message->getMessageType();
 
 		return msgType == Message::SET_TRANSFORM				||
-			   msgType == Message::CHANGE_WEAPON;
+			   msgType == Message::CHANGE_WEAPON_GRAPHICS;
 	} // accept
 	
 	//---------------------------------------------------------
 
 	void CHudWeapons::process(const std::shared_ptr<CMessage>& message) {
 		switch( message->getMessageType() ) {
-			case Message::CHANGE_WEAPON: {
-				std::shared_ptr<CMessageChangeWeapon> chgWpnMsg = std::static_pointer_cast<CMessageChangeWeapon>(message);
+			case Message::CHANGE_WEAPON_GRAPHICS: {
+				std::shared_ptr<CMessageChangeWeaponGraphics> chgWpnMsg = std::static_pointer_cast<CMessageChangeWeaponGraphics>(message);
 				changeWeapon( chgWpnMsg->getWeapon() );
 				break;
 			}

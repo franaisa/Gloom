@@ -34,8 +34,8 @@ namespace Audio
 		_playerHeight=8;
 		_isMute=false;
 		_instance = this;
-		_fixedTimeStep = 100;
-		_acumTime = 0;
+		_minimumExecuteTime=100;
+		_timeToExecute=0;
 	} // CServer
 
 	//--------------------------------------------------------
@@ -116,14 +116,11 @@ namespace Audio
 
 	void CServer::tick(unsigned int msecs) 
 	{
-		// Estimamos el numero de pasos que tiene que hacer el fixed tick
-		_acumTime += msecs;
-		unsigned int steps = _acumTime / _fixedTimeStep;
-
-		_acumTime  = _acumTime % _fixedTimeStep;
-
-		//actualizamos el audio tantas veces como sea necesario
-		for(int i = 0; i<steps; ++i){
+		_timeToExecute+=msecs;
+		//Si ha pasado el tiempo mínimo para actualizarnos lo hacemos
+		if(_timeToExecute>=_minimumExecuteTime){
+			//Reseteamos el tiempo
+			_timeToExecute=0;
 			//Si hay un player con el que actualizarnos, seteamos la nueva posición
 			if(_soundAvatar){
 				Vector3 positionAvatar=_soundAvatar->getPosition();
