@@ -32,6 +32,7 @@ Contiene la implementación del estado de lobby del cliente.
 #include "Net/buffer.h"
 
 #include <iostream>
+#include <process.h>
 
 using namespace std;
 
@@ -61,7 +62,9 @@ namespace Application {
 		_menu->bind("connect",Hikari::FlashDelegate(this, &CLobbyClientState::startReleased));
 		_menu->bind("back",Hikari::FlashDelegate(this, &CLobbyClientState::backReleased));
 		_menu->hide();
-		
+		_loadMenu = GUI::CServer::getSingletonPtr()->addLayoutToState(this,"loadMenu", Hikari::Position(Hikari::Center));
+		_loadMenu->load("LoadingMenu.swf");
+		_loadMenu->hide();
 		return true;
 	} // init
 
@@ -93,7 +96,7 @@ namespace Application {
 	void CLobbyClientState::deactivate() {
 		// Ocultamos el menú de cliente
 		_menu->hide();
-
+		_loadMenu->hide();
 		_netMgr->removeObserver(this);
 		CApplicationState::deactivate();
 	} // deactivate
@@ -149,13 +152,26 @@ namespace Application {
 			case Net::LOAD_MAP: {
 				// Obtenemos el nombre del mapa que está ejecutando el servidor
 				string mapName;
-				buffer.deserialize(mapName);
+				buffer.deserialize(_mapName);
 
 				// La carga de entidades del mapa debe hacerse con las ids del servidor
 				Logic::CEntityFactory::getSingletonPtr()->initDispatcher();
 
 				// Si la carga del mapa tiene éxito, notificamos al servidor y continuamos. En 
 				// caso contrario abortamos la ejecución.
+				_loadMenu->show();
+				_menu->hide();
+
+				//_beginthread( CLobbyClientState::loadMapThread, 0, mapName );
+
+				/*_beginthreadex( NULL,         // security
+                                   0,            // stack size
+                                   CLobbyClientState::loadMapThread,  // entry-point-function
+								   this,           // arg list holding the "this" pointer
+                                   CREATE_SUSPENDED,  // so we can later call ResumeThread()
+                                   NULL );*/
+
+				
 				if( loadMap(mapName) ) {
 					// Avisamos de que hemos terminado la carga.
 					Net::NetMessageType ackMsg = Net::MAP_LOADED;
@@ -166,7 +182,7 @@ namespace Application {
 					_netMgr->deactivateNetwork();
 					_app->exitRequest();
 				}
-
+				
 				// Liberamos el dispatcher para las entidades por defecto
 				Logic::CEntityFactory::getSingletonPtr()->releaseDispatcher();
 
@@ -295,5 +311,25 @@ namespace Application {
 			_menu->callFunction( "enableButton", Hikari::Args() );
 		}
 	} // requestConnectionTo
+
+	unsigned __stdcall CLobbyClientState::loadMapThread(void* arg){
+
+		//std::string* mapName = reinterpret_cast<std::string*>(arg);
+
+		CLobbyClientState * lobby = (CLobbyClientState*)arg;
+
+		if( lobby->loadMap(lobby->_mapName) ) {
+			// Avisamos de que hemos terminado la carga.
+			Net::NetMessageType ackMsg = Net::MAP_LOADED;
+			lobby->_netMgr->broadcast( &ackMsg, sizeof(ackMsg) );
+		}
+		else {
+			lobby->_netMgr->removeObserver(lobby);
+			lobby->_netMgr->deactivateNetwork();
+			lobby->_app->exitRequest();
+		}
+		return 0;
+	}
+
 
 } // namespace Application

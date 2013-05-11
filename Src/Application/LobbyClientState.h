@@ -158,12 +158,14 @@ namespace Application {
 
 		virtual void disconnectionPacketReceived(Net::CPaquete* packet) { /* Los clientes no reciben este tipo de mensajes */ }
 
+		static unsigned __stdcall loadMapThread(void* arg);
+
 	private:
 
 		/**
 		layout de hikari que muestra el menu
 		*/
-		Hikari::FlashControl* _menu;
+		Hikari::FlashControl* _menu, *_loadMenu;
 
 		/**
 		Función que se quiere realizar cuando se pulse el botón start.
@@ -190,6 +192,8 @@ namespace Application {
 		bool loadMap(const std::string& mapName);
 
 		Net::CManager* _netMgr;
+
+		std::string _mapName;
 
 	}; // CMenuState
 
