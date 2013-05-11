@@ -52,23 +52,34 @@ namespace Graphics
 	CParticle::CParticle(const std::string &unicName, const std::string &particleName, bool isOverlay)
 	{
 		static int counter = 0;
-		_nameParticle = unicName;	
+	
 		
 		CScene *scene = Graphics::CServer::getSingletonPtr()->getActiveScene();
 		//scene->createSceneNode(nameSceneNode);
 		char num[5];
 		sprintf(num, "%d", counter);
 		std::string nameSceneNode = "SceneNode_"+_nameParticle + num;
-
-		_particleSystem = scene->getSceneMgr()->createParticleSystem(_nameParticle+num, particleName);
-		if(isOverlay){
-			_sceneNode = new Ogre::SceneNode(scene->getSceneMgr(), nameSceneNode);
+		_nameParticle = unicName + num;	
+		/*
+		if(scene->getSceneMgr()->hasParticleSystem(_nameParticle)){
+			_particleSystem = scene->getSceneMgr()->getParticleSystem(_nameParticle);
+			
+			_sceneNode = scene->getSceneMgr()->getSceneNode(nameSceneNode + "_node");
 		}else{
-			_sceneNode = scene->getSceneMgr()->getRootSceneNode()->createChildSceneNode(nameSceneNode + "_node");
-		}
+		*/
+			_particleSystem = scene->getSceneMgr()->createParticleSystem(_nameParticle, particleName);
+
+			if(isOverlay){
+				_sceneNode = new Ogre::SceneNode(scene->getSceneMgr(), nameSceneNode);
+			}else{
+				_sceneNode = scene->getSceneMgr()->getRootSceneNode()->createChildSceneNode(nameSceneNode + "_node");
+			}
 		
 		
-		_sceneNode->attachObject(_particleSystem);
+			_sceneNode->attachObject(_particleSystem);
+		//}
+
+		//_particleSystem->createParticle();
 
 		++counter;
 	} // CParticle
@@ -77,7 +88,6 @@ namespace Graphics
 
 	void CParticle::setPosition(const Vector3 &position){
 		_sceneNode->setPosition(position);
-
 	} // setPosition
 
 	//--------------------------------------------------------
