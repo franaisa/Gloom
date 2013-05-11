@@ -15,6 +15,7 @@ Contiene la implementación de la clase que maneja la cámara.
 
 #include "Camera.h"
 #include "Scene.h"
+#include "Entity.h"
 
 #include "BaseSubsystems/Server.h"
 #include "BaseSubsystems/Math.h"
@@ -105,25 +106,42 @@ namespace Graphics
 	{
 		_targetNode->setPosition(newPosition);
 	}
+	//--------------------------------------------------------
 
 	void CCamera::setCameraDirection(const Vector3& direction) {
 		_camera->setDirection(direction);
 	}
+	//--------------------------------------------------------
 
 	Ogre::Vector3 CCamera::getCameraDirection() {
 		return _camera->getRealDirection(); 
 
 	}
+	//--------------------------------------------------------
 
 	Ogre::Quaternion CCamera::getRealOrientation(){
 		return _camera->getRealOrientation();
 	}
-
+	//--------------------------------------------------------
 
 	void CCamera::rollCamera(float fRadian){
 		Ogre::Radian rad(fRadian);
 		_camera->roll(rad);
 	}
 
+	//--------------------------------------------------------
+
+	Graphics::CEntity* CCamera::addEntityChild(const std::string &nameEntity, const std::string &nameMesh, Vector3 position){
+	
+		Ogre::SceneNode* sceneNode;
+		sceneNode = new Ogre::SceneNode(_scene->getSceneMgr(), "_SceneCamera_"+nameEntity);
+
+		Ogre::Entity *entity;
+		entity = _scene->getSceneMgr()->createEntity(nameEntity, nameMesh);
+
+
+
+		return 0;
+	}
 
 } // namespace Graphics

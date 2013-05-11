@@ -118,7 +118,7 @@ Map = {
 	},
 	
 	David = {
-		type = "LocalScreamer",
+		type = "LocalArchangel",
 		isPlayer = true,
 		position = {0,5,00},
 	},

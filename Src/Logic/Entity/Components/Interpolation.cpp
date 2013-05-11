@@ -36,8 +36,8 @@ namespace Logic  {
 			return false;
 		// Indicar parametros de interpolacion (ñapeado de momento)
 		_interpolating = false;
-		_maxDistance = 3.5f;
-		_minDistance = 0.1f;
+		_maxDistance = 25.0f;
+		_minDistance = 0.05f;
 		_minYaw = 1.5;
 		_maxYaw = 15;
 		_yawDifference = 0;
@@ -65,9 +65,10 @@ namespace Logic  {
 		//lo primero de todo, movemos la posición del servidor para poder interpolar con más exactitud
 		Vector3 newPos;
 		//calculamos la direccion en la que debemos interpolar
-		Vector3 direction = _serverDirection.normalisedCopy();
+		Vector3 direction = (_serverDirection*Vector3(1,0,1)).normalisedCopy();
 		//calculamos el movimiento que debe hacer el monigote, mucho mas lento del que debe hacer de normal
-		direction*=(_entity->getComponent<CAvatarController>("CAvatarController")->getVelocity()*Vector3(1,0,1)).length()*0.3;
+		direction*=(_entity->getComponent<CAvatarController>("CAvatarController")->getVelocity()*Vector3(1,0,1)).length()*0.25f;
+
 		//si nos hemos pasado, debemos moverlo al sitio
 		if(direction.length() > _distance){
 			direction*=(_distance/direction.length());

@@ -28,6 +28,7 @@ namespace Graphics
 {
 	class CScene;
 	class CServer;
+	class CEntity;
 }
 
 namespace Graphics 
@@ -116,10 +117,20 @@ namespace Graphics
 
 		@param Radianes de giro de la camara.
 		*/
-		void				rollCamera					(float fRadian);
+		void rollCamera(float fRadian);
 
 		Ogre::Camera* getOgreCamera() { return _camera; }	
 
+		/**
+		Metodo que crea una entidad grafica asociada a la camara, de tal modo que la posicion sera relativa a la camara.
+		¡IMPORTANTE! esto crea una entidad, el destructor de la camara no elimina dicha entidad, se debera de eliminar ella por separado
+
+		@param nameEntity, nombre de la entidad que se creara
+		@param nameMesh, nombre de la maya que se creara.
+		@param position, Vector3 con la posicion 
+		@return CEntity* devuelve un puntero a una entidad grafica. 
+		*/
+		Graphics::CEntity* CCamera::addEntityChild(const std::string &nameEntity, const std::string &nameMesh, Vector3 position = Vector3::ZERO);
 
 	protected:
 		

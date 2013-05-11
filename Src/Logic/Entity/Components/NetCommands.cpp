@@ -27,15 +27,14 @@ namespace Logic
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	void CNetCommands::onTick(unsigned int msecs) {
+	void CNetCommands::onFixedTick(unsigned int msecs) {
 
-		if(_timer > _syncPosTimeStamp) {
+		/*if(_timer > _syncPosTimeStamp) {
 			std::shared_ptr<CMessageSyncPosition> msg = std::make_shared<CMessageSyncPosition>();
 			Vector3 position = _entity->getPosition();
 			msg->setPosition( position );
 			msg->setSeq(++_seqNumber);
-			CGameNetMsgManager::getSingletonPtr()->sendEntityMessage(msg, _entity->getEntityID());
-
+			//CGameNetMsgManager::getSingletonPtr()->sendEntityMessage(msg, _entity->getEntityID());
 			//insertamos el mensaje en la lista de mensajes no aceptados todavía
 			TSyncMessage elem(_seqNumber,position);
 			_msgBuffer.push_back(elem);
@@ -44,7 +43,7 @@ namespace Logic
 			_timer = _timer-_syncPosTimeStamp;
 		}
 
-		_timer += msecs;
+		_timer += msecs;*/
 	} // tick
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -65,8 +64,8 @@ namespace Logic
 		if(!_physicController || !_interpolater)
 			return false;
 
-		_minDist = 0.1f;
-		_maxDist = 3.0f;
+		_minDist = 0.05f;
+		_maxDist = 7.0f;
 		return true;
 	} // spawn
 
@@ -101,11 +100,12 @@ namespace Logic
 	void CNetCommands::sendControlMessage(const std::shared_ptr<CMessageControl>& message){
 		//completamos el mensaje de control, nos lo guardamos en la lista de mensajes no
 		//aceptados y lo enviamos por la red
+
 		Vector3 position = _entity->getPosition();
 		TSyncMessage elem(++_seqNumber,position);
 		_msgBuffer.push_back(elem);
 
-		std::cout << "mensaje " << _seqNumber << " resultado " << _entity->getComponent<CAvatarController>("CAvatarController")->getVelocity() << std::endl;
+		//std::cout << "mensaje " << _seqNumber << " resultado " << _entity->getComponent<CAvatarController>("CAvatarController")->getVelocity() << std::endl;
 
 		//añadimos el numero de secuencia al mensaje
 		message->setSeqNumber(_seqNumber);
@@ -120,25 +120,22 @@ namespace Logic
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	void CNetCommands::acceptAndInterpolate(const std::shared_ptr<CMessageSyncPosition>& message){
+		//ensure the list is not empty
+		if(_msgBuffer.empty())
+			return;
+		
 		unsigned int seq = message->getSeq();
 
 		std::deque<TSyncMessage>::iterator it = _msgBuffer.begin();
 		std::deque<TSyncMessage>::iterator end = _msgBuffer.end();
 
-		if(it==end)
-			return;
-
-		//this is possible because we can't get an ack message if we never send a sync message
-		//TSyncMessage lastSeq =(*it);
-		//it=_msgBuffer.erase(it);
-		while(it!=_msgBuffer.end()){
+		while(it!=end){
 			if((*it).first<seq){
 				it = _msgBuffer.erase(it);
 			}else if((*it).first==seq){
 				//calculate interpolation and return
 				calculateInterpolation((*it).second, message->getPosition());
-
-				_msgBuffer.clear();
+				it = _msgBuffer.erase(it);
 				return;
 			}else{
 				++it;
@@ -160,7 +157,7 @@ namespace Logic
 			return;
 		}
 
-		//std::cout << distance.length() << std::endl;
+		
 
 		//update non acknowledged points
 		for(int i =0; i< _msgBuffer.size();++i){
@@ -173,7 +170,8 @@ namespace Logic
 			_interpolater->setLerpLevel(Vector3::ZERO);
 			return;
 		}
-		
+		distance*=Vector3(1,0,1);
+		std::cout << distance.length() << std::endl;
 		//interpolate
 		_interpolater->setLerpLevel(distance);
 

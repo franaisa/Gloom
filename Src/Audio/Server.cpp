@@ -116,16 +116,11 @@ namespace Audio
 
 	void CServer::tick(unsigned int msecs) 
 	{
-		//El tick se ejecuta ahora mismo cada 0.1secs, por lo tanto, si no ha pasado el tiempo,
-		//no me ejecuto
-		unsigned int steps = (_acumTime + msecs) / _fixedTimeStep;
+		// Estimamos el numero de pasos que tiene que hacer el fixed tick
+		_acumTime += msecs;
+		unsigned int steps = _acumTime / _fixedTimeStep;
 
-		if(steps == 0) {
-			_acumTime += msecs % _fixedTimeStep;
-		}
-		else {
-			_acumTime = msecs % _fixedTimeStep;
-		}
+		_acumTime  = _acumTime % _fixedTimeStep;
 
 		//actualizamos el audio tantas veces como sea necesario
 		for(int i = 0; i<steps; ++i){

@@ -37,7 +37,7 @@ namespace Logic
 		switch(message->getMessageType())
 		{
 		case Message::SYNC_POSITION:
-				//sendACKMessage(std::static_pointer_cast<CMessageSyncPosition>(message)->getSeq());
+				sendACKMessage(std::static_pointer_cast<CMessageSyncPosition>(message)->getSeq());
 			break;
 		case Message::CONTROL:
 				sendACKMessage(std::static_pointer_cast<CMessageControl>(message)->getSeqNumber());
@@ -68,9 +68,9 @@ namespace Logic
 		ack->setPosition( position );
 		ack->setSeq(sequenceNumber);
 
-		std::cout << "mensaje " << sequenceNumber << " resultado " << _entity->getComponent<CAvatarController>("CAvatarController")->getVelocity() << std::endl;
+		//std::cout << "mensaje " << sequenceNumber << " resultado " << _entity->getComponent<CAvatarController>("CAvatarController")->getVelocity() << std::endl;
 
-		CGameNetMsgManager::getSingletonPtr()->sendEntityMessage(ack, _entity->getEntityID());
+		CGameNetMsgManager::getSingletonPtr()->sendMessageToOne(ack, _entity->getEntityID(), _entity->getEntityID());
 	}
 
 

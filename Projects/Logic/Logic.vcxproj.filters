@@ -899,6 +899,8 @@
     </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Entity\Components\NetCommands.h">
       <Filter>Entity\Components\Network\Header</Filter>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\WeaponType.h">
+      <Filter>Entity\Components\Weapons\Header</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

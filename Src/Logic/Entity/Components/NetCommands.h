@@ -99,7 +99,7 @@ namespace Logic  {
 
 		@param msecs Milisegundos transcurridos desde el último tick.
 		*/
-		virtual void onTick(unsigned int msecs);
+		virtual void onFixedTick(unsigned int msecs);
 
 		void sendControlMessage(const std::shared_ptr<CMessageControl>& message);
 

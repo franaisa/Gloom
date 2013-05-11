@@ -25,6 +25,7 @@ de la entidad.
 
 #include "Logic/Server.h"
 #include "Logic/Maps/Map.h"
+#include "Logic/Messages/MessageHudDebugData.h"
 
 #include "Logic/Messages/MessageControl.h"
 #include "Logic/Messages/MessageMouse.h"
@@ -183,7 +184,7 @@ namespace Logic {
 
 		if(_touchingGround && _displacementDir != Vector3::ZERO) {
 			// Efecto de andar
-			_cameraFX->playerIsWalking(true);
+			_cameraFX->playerIsWalking(true, _displacementDir.x);
 		}
 		else {
 			// Parar efecto de andar
@@ -251,6 +252,20 @@ namespace Logic {
 		
 		// Aumentamos el desplazamiento en la dirección dada en función de la aceleración
 		// y el tiempo transcurrido -> s = u · t + 1/2 · a · t^2
+
+		///////////////////////////////////////////////////////////////
+		////////////////////////// DEBUG MODE /////////////////////////
+		///////////////////////////////////////////////////////////////
+		if(_displacementDir != Vector3::ZERO){
+			++ticks;
+		}else{
+			if(ticks>0)
+				std::cout << "el avatar controller se ha ejecutado " << ticks << " ticks" << std::endl;
+			ticks=0;
+		}
+		///////////////////////////////////////////////////////////////
+		///////////////////////////////////////////////////////////////
+
 		_momentum += Vector3(1,0,1) * estimateMotionDirection(_displacementDir) * _acceleration * msecs * 0.5f;
 		// Multiplicamos la inercia por el coeficiente de rozamiento (para decelerarla)
 		_momentum *= coef;

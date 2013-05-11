@@ -30,6 +30,7 @@ namespace Logic{
 		_timestamp = 0;
 		this->putToSleep();
 	}
+	//------------------------------------------------------
 
 	bool CLocalArchangel::accept(const std::shared_ptr<CMessage>& message) {
 		Logic::TMessageType msgType = message->getMessageType();
@@ -48,6 +49,7 @@ namespace Logic{
 			_timestamp = 1300;
 		}
 	}
+	//------------------------------------------------------
 
 	// Descomentar esta linea para ver los dos modos que se pueden poner (obviamente las variables son seteables)
 /*
@@ -68,6 +70,7 @@ namespace Logic{
 	void CLocalArchangel::onWake(){
 		_timestamp = 1300;
 	}
+	//------------------------------------------------------
 
 	void CLocalArchangel::onTick(unsigned int msecs) {
 
