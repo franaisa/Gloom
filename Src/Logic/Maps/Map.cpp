@@ -132,12 +132,23 @@ namespace Logic {
 
 	//---------------------------------------------------------
 
+	void CMap::wantsTick(CEntity* entity) {
+		_entitiesWithTick.push_back(entity);
+	}
+
+	void CMap::wantsFixedTick(CEntity* entity) {
+		_entitiesWithFixedTick.push_back(entity);
+	}
+
 	void CMap::start() {
 		// Ejecutamos el start de todas nuestras entidades
 		TEntityMap::const_iterator it = _entityMap.begin();
 		for(; it != _entityMap.end(); ++it ) {
 			// Ejecutamos el start de todas las entidades
 			it->second->start();
+
+			_entitiesWithTick.push_back(it->second);
+			_entitiesWithFixedTick.push_back(it->second);
 		}
 	}
 
@@ -151,7 +162,7 @@ namespace Logic {
 		// Es muuuuuy importante que primero se ejecute esta función
 		// si no se hace así, el sleep por ejemplo no funciona bien.
 		processComponentMessages();
-
+		
 		// Ejecutamos el tick de las entidades
 		// Ejecutamos el tick de todas las entidades activadas del mapa
 		// La propia entidad se encarga de hacer el process, tick y fixed tick
@@ -200,11 +211,34 @@ namespace Logic {
 
 	//--------------------------------------------------------
 	
+	/*IComponent* component;
+	std::list<IComponent*>::const_iterator it = _componentsWithTick.begin();
+	while(it != _componentsWithTick.end()) {
+		component = *it;
+
+		if( component->isActivated() ) {
+			if( !component->tick(msecs) ) {
+				it = _componentsWithTick.erase(it);
+				continue;
+			}
+		}
+			
+		++it;
+	}*/
+
 	void CMap::doTick(unsigned int msecs) {
-		// Ejecutamos el tick de todas nuestras entidades
-		TEntityMap::const_iterator it = _entityMap.begin();
-		for(; it != _entityMap.end(); ++it) {
-			it->second->tick(msecs);
+		// Ejecutamos el tick de las entidades que lo quieren
+		CEntity* entity;
+		std::list<CEntity*>::iterator it = _entitiesWithTick.begin();
+		while(it != _entitiesWithTick.end()) {
+			entity = *it;
+
+			if( !entity->tick(msecs) ) {
+				it = _entitiesWithTick.erase(it);
+				continue;
+			}
+
+			++it;
 		}
 	}
 
@@ -217,8 +251,17 @@ namespace Logic {
 
 		// Ejecutamos el fixed tick
 		for(int i = 0; i < steps; ++i) {
-			for(TEntityMap::const_iterator it = _entityMap.begin(); it != _entityMap.end(); ++it) {
-				it->second->fixedTick(_fixedTimeStep);
+			CEntity* entity;
+			std::list<CEntity*>::iterator it = _entitiesWithFixedTick.begin();
+			while( it != _entitiesWithFixedTick.end() ) {
+				entity = *it;
+
+				if( !entity->fixedTick(_fixedTimeStep) ) {
+					it = _entitiesWithFixedTick.erase(it);
+					continue;
+				}
+
+				++it;
 
 				/*std::shared_ptr<CMessageHudDebugData> m = std::make_shared<CMessageHudDebugData>();
 				m->setKey("msecs");

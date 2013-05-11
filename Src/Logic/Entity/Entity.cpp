@@ -216,9 +216,13 @@ namespace Logic
 	void CEntity::wakeUp(IComponent* component) {
 		if(component->_wantsTick) {
 			_componentsWithTick.push_back(component);
+			// Reclamar tick para la entidad
+			_map->wantsTick(this);
 		}
 		if(component->_wantsFixedTick) {
 			_componentsWithFixedTick.push_back(component);
+			// Reclamar fixedTick para la entidad
+			_map->wantsFixedTick(this);
 		}
 	}
 
@@ -241,7 +245,7 @@ namespace Logic
 
 	//---------------------------------------------------------
 
-	void CEntity::tick(unsigned int msecs) {
+	bool CEntity::tick(unsigned int msecs) {
 		IComponent* component;
 		std::list<IComponent*>::const_iterator it = _componentsWithTick.begin();
 		while(it != _componentsWithTick.end()) {
@@ -256,11 +260,13 @@ namespace Logic
 			
 			++it;
 		}
+
+		return !_componentsWithTick.empty();
 	} // tick
 
 	//---------------------------------------------------------
 
-	void CEntity::fixedTick(unsigned int msecs) {
+	bool CEntity::fixedTick(unsigned int msecs) {
 		IComponent* component;
 		std::list<IComponent*>::const_iterator it = _componentsWithFixedTick.begin();
 		while(it != _componentsWithFixedTick.end()) {
@@ -275,6 +281,8 @@ namespace Logic
 
 			++it;
 		}
+
+		return !_componentsWithFixedTick.empty();
 	}
 
 	//---------------------------------------------------------

@@ -10,6 +10,7 @@
 */
 
 #include "SnapshotInterpolator.h"
+#include "PhysicController.h"
 
 // Map
 #include "Logic/Maps/Map.h"
@@ -27,7 +28,7 @@ namespace Logic {
 
 	//__________________________________________________________________
 
-	CSnapshotInterpolator::CSnapshotInterpolator() {
+	CSnapshotInterpolator::CSnapshotInterpolator() : _tickCounter(0) {
 		// Nada que hacer
 	}
 
@@ -46,7 +47,9 @@ namespace Logic {
 
 		// Tiempo de interpolación en msecs
 		//_interpolationTimestep = _interpolationTimer = entityInfo->getIntAttribute("interpolationTimestep");
-		_interpolationTimestep = _interpolationTimer = 50.0f;
+		_ticksPerInterpolation = 6;
+		_ticksPerSample = 2;
+		_samplesPerSnapshot = 3;
 
 		return true;
 	}
@@ -61,11 +64,38 @@ namespace Logic {
 
 	//__________________________________________________________________
 
+	void CSnapshotInterpolator::interpolateSnapshot(const vector<Matrix4>& buffer) {
+		Matrix4 incrementMatrix, temp;
+		unsigned int bufferSize = buffer.size();
+		for(int i = 0; i < bufferSize - 1; ++i) {
+			// Insertamos la posicion inicial
+			_buffer.push_back(buffer[i]);
+			
+			// Calculamos el incremento para las posiciones
+			// interpoladas
+			incrementMatrix = (buffer[i+1] - buffer[i]) * (1.0f / (float)_ticksPerSample);
+			// Generamos las posiciones intermedias
+			temp = buffer[i] + incrementMatrix;
+			for(int k = 0; k < _ticksPerSample; ++k) {
+				_buffer.push_back(temp);
+				temp = temp + incrementMatrix;
+			}
+		}
+
+		// Insertamos la ultima posicion
+		_buffer.push_back( buffer[bufferSize - 1] );
+	}
+
+	//__________________________________________________________________
+
 	void CSnapshotInterpolator::process(const std::shared_ptr<CMessage>& message) {
 		switch( message->getMessageType() ) {
 			case Message::TRANSFORM_SNAPSHOT: {
 				std::vector<Matrix4> buffer = static_pointer_cast<CMessageTransformSnapshot>(message)->getBuffer();
-				std::cout << "Recibo un buffer de tamano = " << buffer.size() << std::endl;
+				//std::cout << "Recibo un buffer de tamano = " << buffer.size() << std::endl;
+
+				interpolateSnapshot(buffer);
+
 				break;
 			}
 		}
@@ -73,10 +103,20 @@ namespace Logic {
 
 	//__________________________________________________________________
 
-	void CSnapshotInterpolator::onTick(unsigned int msecs) {
-		_interpolationTimer -= msecs;
-		if(_interpolationTimer < 0) {
-			_interpolationTimer = _interpolationTimestep;
+	void CSnapshotInterpolator::onStart() {
+		_controller = _entity->getComponent<CPhysicController>("CPhysicController");
+	}
+
+	//__________________________________________________________________
+
+	void CSnapshotInterpolator::onFixedTick(unsigned int msecs) {
+		/*if(++_tickCounter == _ticksPerInterpolation) {
+			_tickCounter = 0;
+		}*/
+		if( !_buffer.empty() ) {
+			_controller->setPhysicPosition(_buffer.front().getTrans());
+			_entity->setTransform(_buffer.front());
+			_buffer.pop_front();
 		}
 	}
 

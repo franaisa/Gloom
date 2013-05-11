@@ -202,6 +202,10 @@ namespace Logic
 
 		void setFixedTimeStep(unsigned int stepSize);
 
+		void wantsTick(CEntity* entity);
+
+		void wantsFixedTick(CEntity* entity);
+
 	private:
 
 		void checkTimeouts(unsigned int msecs);
@@ -227,6 +231,9 @@ namespace Logic
 		tabla con las entidades del mapa localizadas por su ID.
 		*/
 		TEntityMap _entityMap;
+
+		std::list<CEntity*> _entitiesWithTick;
+		std::list<CEntity*> _entitiesWithFixedTick;
 
 		/**
 		Lista de entidades que hay que borrar
