@@ -211,21 +211,6 @@ namespace Logic {
 
 	//--------------------------------------------------------
 	
-	/*IComponent* component;
-	std::list<IComponent*>::const_iterator it = _componentsWithTick.begin();
-	while(it != _componentsWithTick.end()) {
-		component = *it;
-
-		if( component->isActivated() ) {
-			if( !component->tick(msecs) ) {
-				it = _componentsWithTick.erase(it);
-				continue;
-			}
-		}
-			
-		++it;
-	}*/
-
 	void CMap::doTick(unsigned int msecs) {
 		// Ejecutamos el tick de las entidades que lo quieren
 		CEntity* entity;
@@ -262,16 +247,6 @@ namespace Logic {
 				}
 
 				++it;
-
-				/*std::shared_ptr<CMessageHudDebugData> m = std::make_shared<CMessageHudDebugData>();
-				m->setKey("msecs");
-				m->setValue(msecs);
-				it->second->emitMessage(m);
-	
-				std::shared_ptr<CMessageHudDebugData> m2 = std::make_shared<CMessageHudDebugData>();
-				m2->setKey("steps");
-				m2->setValue(steps);
-				it->second->emitMessage(m2);*/
 			}
 		}
 	}
@@ -324,6 +299,8 @@ namespace Logic {
 		}
 
 		_entityMap.clear();
+		_entitiesWithTick.clear();
+		_entitiesWithFixedTick.clear();
 
 	} // removeEntity
 

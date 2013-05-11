@@ -83,7 +83,7 @@ namespace Logic {
 		}
 
 		// Insertamos la ultima posicion
-		_buffer.push_back( buffer[bufferSize - 1] );
+		//_buffer.push_back( buffer[bufferSize - 1] );
 	}
 
 	//__________________________________________________________________
@@ -94,7 +94,7 @@ namespace Logic {
 				std::vector<Matrix4> buffer = static_pointer_cast<CMessageTransformSnapshot>(message)->getBuffer();
 				//std::cout << "Recibo un buffer de tamano = " << buffer.size() << std::endl;
 
-				interpolateSnapshot(buffer);
+				//interpolateSnapshot(buffer);
 
 				break;
 			}
@@ -113,11 +113,12 @@ namespace Logic {
 		/*if(++_tickCounter == _ticksPerInterpolation) {
 			_tickCounter = 0;
 		}*/
-		if( !_buffer.empty() ) {
+		/*if( !_buffer.empty() ) {
+
 			_controller->setPhysicPosition(_buffer.front().getTrans());
 			_entity->setTransform(_buffer.front());
 			_buffer.pop_front();
-		}
+		}*/
 	}
 
 } // namespace Logic
