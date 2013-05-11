@@ -41,6 +41,8 @@ namespace Logic {
 		//_ticksPerSample = entityInfo->getIntAttribute("ticksPerSample");
 		// Cada cuantas muestras tomamos una snapshot
 		//_samplesPerSnapshot = entityInfo->getIntAttribute("samplesPerSnapshot");
+		_ticksPerSample = 2;
+		_samplesPerSnapshot = 3;
 
 		return true;
 	}
@@ -52,8 +54,9 @@ namespace Logic {
 			takeSnapshot();
 			_ticksPerSampleCounter = 0;
 			
-			if( ++_samplesPerSnapshotCounter = _samplesPerSnapshot) {
+			if( ++_samplesPerSnapshotCounter == _samplesPerSnapshot) {
 				sendSnapshot();
+				_samplesPerSnapshotCounter = 0;
 			}
 		}
 	}
