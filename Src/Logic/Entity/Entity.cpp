@@ -216,13 +216,15 @@ namespace Logic
 	void CEntity::wakeUp(IComponent* component) {
 		if(component->_wantsTick) {
 			_componentsWithTick.push_back(component);
-			// Reclamar tick para la entidad
-			_map->wantsTick(this);
+
+			// Reclamar ticks para la entidad si es necesario
+			if( _componentsWithTick.size() == 1 ) _map->wantsTick(this);
 		}
 		if(component->_wantsFixedTick) {
 			_componentsWithFixedTick.push_back(component);
-			// Reclamar fixedTick para la entidad
-			_map->wantsFixedTick(this);
+
+			// Reclamar fixed ticks para la entidad si es necesario
+			if( _componentsWithFixedTick.size() == 1 ) _map->wantsFixedTick(this);
 		}
 	}
 
