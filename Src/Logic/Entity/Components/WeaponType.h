@@ -12,7 +12,8 @@ namespace Logic {
 			eSHOTGUN,
 			eMINIGUN,
 			eROCKET_LAUNCHER,
-			eGRENADE_LAUNCHER
+			eGRENADE_LAUNCHER,
+			eSIZE
 		};
 
 		static std::string toString(WeaponType::Enum weaponType) {

@@ -13,7 +13,6 @@ gráfica de la entidad.
 
 #include "HudWeapons.h"
 
-#include "WeaponType.h"
 #include "Logic/Entity/Entity.h"
 #include "Logic/Maps/Map.h"
 #include "Map/MapEntity.h"
@@ -39,6 +38,16 @@ namespace Logic
 {
 	IMP_FACTORY(CHudWeapons);
 	
+	//---------------------------------------------------------
+
+	CHudWeapons::CHudWeapons() : _currentWeapon(0), 
+								 _graphicsEntities(0), 
+								 _numWeapons(0),
+								 _currentHeight(0),
+								 _verticalSpeed(0.0035f) {
+
+	}
+
 	//---------------------------------------------------------
 
 	CHudWeapons::~CHudWeapons() 
@@ -181,12 +190,21 @@ namespace Logic
 	}
 	//---------------------------------------------------------
 
-	void CHudWeapons::onTick(unsigned int msecs){
-		movement();
+	void CHudWeapons::onFixedTick(unsigned int msecs){
+		movement(msecs);
 	}
 	//---------------------------------------------------------
-	void CHudWeapons::movement(){
-		
+	void CHudWeapons::movement(unsigned int msecs){
+		Vector3 weaponPosition = _graphicsEntities[_currentWeapon].graphicsEntity->getTransform().getTrans();
+
+		_currentHeight += _verticalSpeed * msecs;
+		if(_currentHeight > 2 * Math::PI) _currentHeight = 0;
+
+		weaponPosition.y += sin(_currentHeight) * 0.00045f;
+		_graphicsEntities[_currentWeapon].graphicsEntity->setPosition(weaponPosition);
+		/*Matrix4 trans = _graphicsEntities[_currentWeapon].graphicsEntity->getTransform();
+		Math::yaw(0.01f, trans);
+		_graphicsEntities[_currentWeapon].graphicsEntity->setTransform(trans);*/
 	}
 	//---------------------------------------------------------
 

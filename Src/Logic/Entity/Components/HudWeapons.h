@@ -14,6 +14,7 @@ gráfica del jugador, es decir, todas las armas que este portara.
 #define __Logic_HudWeapons_H
 
 #include "Logic/Entity/Component.h"
+#include "WeaponType.h"
 
 // Predeclaración de clases para ahorrar tiempo de compilación
 namespace Graphics 
@@ -49,7 +50,7 @@ namespace Logic
 		Constructor por defecto; inicializa los atributos a su valor por 
 		defecto.
 		*/
-		CHudWeapons() : IComponent(), _currentWeapon(0), _graphicsEntities(0), _numWeapons(0) {}
+		CHudWeapons();
 
 		/**
 		Destructor (virtual); Quita de la escena y destruye la entidad gráfica.
@@ -115,7 +116,7 @@ namespace Logic
 		Metodo que controla el movimiento del arma,
 		el comentario te lo dejo a ti fran :D
 		*/
-		void movement();
+		void movement(unsigned int msecs);
 
 	protected:
 
@@ -126,7 +127,7 @@ namespace Logic
 
 		@param msecs Milisegundos transcurridos desde el último tick.
 		*/
-		virtual void onTick(unsigned int msecs);
+		virtual void onFixedTick(unsigned int msecs);
 
 		/**
 		arma actual equipada
@@ -161,9 +162,11 @@ namespace Logic
 		//Graphics::SceneNode* _scene;
 		Graphics::CScene* _scene;
 
+		float _currentHeight;
+		float _verticalSpeed;
 		
 		//////////////////////Gestion de armas
-		Graphics::COverlay *_overlayWeapon3D[6];
+		Graphics::COverlay *_overlayWeapon3D[WeaponType::eSIZE];
 	}; // class CGraphics
 
 	REG_FACTORY(CHudWeapons);
