@@ -18,7 +18,7 @@ del Screamer.
 #include "Logic/Entity/Component.h"
 
 
-namespace Graphics{
+namespace Graphics {
 	class CScene;
 }
 
@@ -110,7 +110,6 @@ namespace Logic {
 
 		void walkEffect(unsigned int msecs);
 
-
 		void playerIsTouchingGround(float hitForce);
 
 		void landEffect(unsigned int msecs);
@@ -141,21 +140,28 @@ namespace Logic {
 
 		CCamera* _cameraComponent;
 
+		//______________________
+
+		// Animacion de strafe
 		float _currentWalkingRoll;
 
+		// Animacion de andar
 		float _stepForce;
 		float _stepRecoveryAccel;
 		float _acumStepForce;
-
 		bool _playerIsWalking;
 
+		// Animacion de aterrizaje
 		bool _playerIsLanding;
-
 		float _landForce;
-
 		float _landRecoverySpeed;
-
 		float _currentLandOffset;
+
+		// Offset total que se le aplica a la
+		// camara con todos los efectos
+		Vector3 _cameraOffset;
+
+		//______________________
 
 		float _maxVelocity;
 		Logic::CAvatarController* _avatarc;

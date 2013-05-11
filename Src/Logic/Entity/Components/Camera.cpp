@@ -34,8 +34,18 @@ namespace Logic
 	
 	//---------------------------------------------------------
 
-	bool CCamera::spawn(CEntity *entity, CMap *map, const Map::CEntity *entityInfo) 
-	{
+	CCamera::CCamera() : _graphicsCamera(0), 
+						 _height(8), 
+						 _currentRoll(0.0f), 
+						 _verticalOffset(0),
+						 _offset(Vector3::ZERO) {
+
+		// Nada que hacer
+	}
+
+	//---------------------------------------------------------
+
+	bool CCamera::spawn(CEntity *entity, CMap *map, const Map::CEntity *entityInfo) {
 		if(!IComponent::spawn(entity,map,entityInfo))
 			return false;
 		Vector3 camPos;
@@ -58,8 +68,7 @@ namespace Logic
 	
 	//---------------------------------------------------------
 
-	void CCamera::onActivate()
-	{
+	void CCamera::onActivate() {
 		_target = CServer::getSingletonPtr()->getPlayer();
 
 		if(!_target){
@@ -77,8 +86,7 @@ namespace Logic
 	
 	//---------------------------------------------------------
 
-	void CCamera::onDeactivate()
-	{
+	void CCamera::onDeactivate() {
 		_target = 0;
 
 	} // deactivate
@@ -149,25 +157,41 @@ namespace Logic
 		_graphicsCamera->setCameraPosition(position);
 	}
 
+	//---------------------------------------------------------
+
 	Vector3 CCamera::getPosition() {
 		return _graphicsCamera->getCameraPosition();
 	}
 
+	//---------------------------------------------------------
+
 	void CCamera::setVerticalOffset(float y) {
-		_verticalOffset = y;
+		_offset.y = y;
 	}
 
-	void CCamera::onTick(unsigned int msecs)
-	{
-		if(_target)
-		{
+	void CCamera::setOffset(const Vector3& offset) {
+		this->_offset = offset;
+	}
+
+	void CCamera::addOffset(const Vector3& offset) {
+		this->_offset += offset;
+	}
+
+	Vector3 CCamera::getOffset() const {
+		return _offset;
+	}
+
+	//---------------------------------------------------------
+
+	void CCamera::onFixedTick(unsigned int msecs) {
+		if(_target) {
 			// Actualizamos la posición de la cámara.
 			Vector3 position = _target->getPosition();
-			position.y+=_height + _verticalOffset;
+			position.y += _height;
+			position += _offset; // Seteamos el offset de la camara
 
 			//Si hay offset (vibración) de cámara
-			if (_fOffsetTimer > 0)
-			{
+			if (_fOffsetTimer > 0) {
 				//Actualizo el timer
 				_fOffsetTimer -= msecs;
 

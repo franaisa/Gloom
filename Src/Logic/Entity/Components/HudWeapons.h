@@ -41,8 +41,7 @@ namespace Logic
 	@author David Llansó García
 	@date Agosto, 2010
 */
-	class CHudWeapons : public IComponent
-	{
+	class CHudWeapons : public IComponent {
 		DEC_FACTORY(CHudWeapons);
 	public:
 
