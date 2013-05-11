@@ -220,7 +220,7 @@ namespace Logic {
 			for(TEntityMap::const_iterator it = _entityMap.begin(); it != _entityMap.end(); ++it) {
 				it->second->fixedTick(_fixedTimeStep);
 
-				std::shared_ptr<CMessageHudDebugData> m = std::make_shared<CMessageHudDebugData>();
+				/*std::shared_ptr<CMessageHudDebugData> m = std::make_shared<CMessageHudDebugData>();
 				m->setKey("msecs");
 				m->setValue(msecs);
 				it->second->emitMessage(m);
@@ -228,9 +228,10 @@ namespace Logic {
 				std::shared_ptr<CMessageHudDebugData> m2 = std::make_shared<CMessageHudDebugData>();
 				m2->setKey("steps");
 				m2->setValue(steps);
-				it->second->emitMessage(m2);
+				it->second->emitMessage(m2);*/
 			}
 		}
+
 	}
 
 	//--------------------------------------------------------
