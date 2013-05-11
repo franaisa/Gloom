@@ -184,6 +184,16 @@ namespace Audio
 		float _volume;
 
 		/**
+		Variable que define el tiempo mínimo para que se ejecute el tick del servidor.
+		*/
+		unsigned int _minimumExecuteTime;
+
+		/**
+		Variable que lleva el tiempo para ejecutar el tick del servidor.
+		*/
+		unsigned int _timeToExecute;
+
+		/**
 		Factores doppler y rolloff del sistema
 		*/
 		float _doppler; 
@@ -200,15 +210,6 @@ namespace Audio
 		*/
 		bool _isMute;
 
-		/**
-		tiempo de fixed tick del audio
-		*/
-		unsigned int _fixedTimeStep;
-
-		/**
-		tiempo acumulado hasta el siguiente fixed
-		*/
-		unsigned int _acumTime;
 	}; // class CServer
 
 } // namespace Audio
