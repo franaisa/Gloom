@@ -1,16 +1,16 @@
 /**
-@file SnapshotInterpolator.h
+@file PositionInterpolator.h
 
 
-@see Logic::CSnapshotInterpolator
+@see Logic::CPositionInterpolator
 @see Logic::IComponent
 
 @author Francisco Aisa García
 @date Mayo, 2013
 */
 
-#ifndef __Logic_SnapshotInterpolator_H
-#define __Logic_SnapshotInterpolator_H
+#ifndef __Logic_PositionInterpolator_H
+#define __Logic_PositionInterpolator_H
 
 #include "Logic/Entity/Component.h"
 
@@ -30,8 +30,8 @@ namespace Logic {
 	@date Mayo, 2013
 	*/
 	
-	class CSnapshotInterpolator : public IComponent {
-		DEC_FACTORY(CSnapshotInterpolator);
+	class CPositionInterpolator : public IComponent {
+		DEC_FACTORY(CPositionInterpolator);
 	public:
 
 
@@ -41,12 +41,12 @@ namespace Logic {
 
 
 		/** Constructor por defecto. */
-		CSnapshotInterpolator();
+		CPositionInterpolator();
 
 		//__________________________________________________________________
 
 		/** Destructor. */
-		virtual ~CSnapshotInterpolator();
+		virtual ~CPositionInterpolator();
 
 
 		// =======================================================================
@@ -120,7 +120,7 @@ namespace Logic {
 	private:
 
 
-		void interpolateSnapshot(const std::vector<Matrix4>& buffer);
+		void interpolateSnapshot(const std::vector<Vector3>& buffer);
 
 		// =======================================================================
 		//                          MIEMBROS PRIVADOS
@@ -131,14 +131,13 @@ namespace Logic {
 		unsigned int _ticksPerSample;
 		unsigned int _samplesPerSnapshot;
 
-		std::deque<Matrix4> _buffer;
-		//std::deque<Vector3> _buffer;
+		std::deque<Vector3> _buffer;
 
 		CPhysicController* _controller;
 
-	}; // class CSnapshotInterpolator
+	}; // class CPositionInterpolator
 
-	REG_FACTORY(CSnapshotInterpolator);
+	REG_FACTORY(CPositionInterpolator);
 
 } // namespace Logic
 

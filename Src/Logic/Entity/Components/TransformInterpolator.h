@@ -1,16 +1,16 @@
 /**
-@file SnapshotInterpolator.h
+@file TransformInterpolator.h
 
 
-@see Logic::CSnapshotInterpolator
+@see Logic::CTransformInterpolator
 @see Logic::IComponent
 
 @author Francisco Aisa García
 @date Mayo, 2013
 */
 
-#ifndef __Logic_SnapshotInterpolator_H
-#define __Logic_SnapshotInterpolator_H
+#ifndef __Logic_TransformInterpolator_H
+#define __Logic_TransformInterpolator_H
 
 #include "Logic/Entity/Component.h"
 
@@ -30,8 +30,8 @@ namespace Logic {
 	@date Mayo, 2013
 	*/
 	
-	class CSnapshotInterpolator : public IComponent {
-		DEC_FACTORY(CSnapshotInterpolator);
+	class CTransformInterpolator : public IComponent {
+		DEC_FACTORY(CTransformInterpolator);
 	public:
 
 
@@ -41,12 +41,12 @@ namespace Logic {
 
 
 		/** Constructor por defecto. */
-		CSnapshotInterpolator();
+		CTransformInterpolator();
 
 		//__________________________________________________________________
 
 		/** Destructor. */
-		virtual ~CSnapshotInterpolator();
+		virtual ~CTransformInterpolator();
 
 
 		// =======================================================================
@@ -132,14 +132,13 @@ namespace Logic {
 		unsigned int _samplesPerSnapshot;
 
 		std::deque<Matrix4> _buffer;
-		//std::deque<Vector3> _buffer;
 
 		CPhysicController* _controller;
 
-	}; // class CSnapshotInterpolator
+	}; // class CTransformInterpolator
 
-	REG_FACTORY(CSnapshotInterpolator);
+	REG_FACTORY(CTransformInterpolator);
 
 } // namespace Logic
 
-#endif // __Logic_SnapshotInterpolator_H
+#endif // __Logic_TransformInterpolator_H
