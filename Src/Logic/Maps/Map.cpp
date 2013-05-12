@@ -146,9 +146,6 @@ namespace Logic {
 		for(; it != _entityMap.end(); ++it ) {
 			// Ejecutamos el start de todas las entidades
 			it->second->start();
-
-			_entitiesWithTick.push_back(it->second);
-			_entitiesWithFixedTick.push_back(it->second);
 		}
 	}
 
@@ -211,21 +208,6 @@ namespace Logic {
 
 	//--------------------------------------------------------
 	
-	/*IComponent* component;
-	std::list<IComponent*>::const_iterator it = _componentsWithTick.begin();
-	while(it != _componentsWithTick.end()) {
-		component = *it;
-
-		if( component->isActivated() ) {
-			if( !component->tick(msecs) ) {
-				it = _componentsWithTick.erase(it);
-				continue;
-			}
-		}
-			
-		++it;
-	}*/
-
 	void CMap::doTick(unsigned int msecs) {
 		// Ejecutamos el tick de las entidades que lo quieren
 		CEntity* entity;
@@ -262,16 +244,6 @@ namespace Logic {
 				}
 
 				++it;
-
-				/*std::shared_ptr<CMessageHudDebugData> m = std::make_shared<CMessageHudDebugData>();
-				m->setKey("msecs");
-				m->setValue(msecs);
-				it->second->emitMessage(m);
-	
-				std::shared_ptr<CMessageHudDebugData> m2 = std::make_shared<CMessageHudDebugData>();
-				m2->setKey("steps");
-				m2->setValue(steps);
-				it->second->emitMessage(m2);*/
 			}
 		}
 	}
@@ -280,14 +252,14 @@ namespace Logic {
 
 	typedef std::pair<TEntityID,CEntity*> TEntityPair;
 
-	void CMap::addEntity(CEntity *entity)
-	{
-		if(_entityMap.count(entity->getEntityID()) == 0)
-		{
-			TEntityPair elem(entity->getEntityID(),entity);
+	void CMap::addEntity(CEntity *entity) {
+		if(_entityMap.count(entity->getEntityID()) == 0) {
+			TEntityPair elem(entity->getEntityID(), entity);
 			_entityMap.insert(elem);
 		}
 
+		_entitiesWithTick.push_back(entity);
+		_entitiesWithFixedTick.push_back(entity);
 	} // addEntity
 
 	//--------------------------------------------------------
@@ -324,6 +296,8 @@ namespace Logic {
 		}
 
 		_entityMap.clear();
+		_entitiesWithTick.clear();
+		_entitiesWithFixedTick.clear();
 
 	} // removeEntity
 
