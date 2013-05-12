@@ -159,8 +159,12 @@ namespace Logic
 
 	//---------------------------------------------------------
 
-	Vector3 CCamera::getPosition() {
+	Vector3 CCamera::getPosition() const {
 		return _graphicsCamera->getCameraPosition();
+	}
+
+	Quaternion CCamera::getOrientation() const {
+		return _graphicsCamera->getCameraOrientation();
 	}
 
 	//---------------------------------------------------------
