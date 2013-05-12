@@ -56,7 +56,7 @@ namespace Logic {
 
 	//__________________________________________________________________
 
-	bool CSnapshotInterpolator::accept(const std::shared_ptr<CMessage>& message) {
+	bool CSnapshotInterpolator::accept(const shared_ptr<CMessage>& message) {
 		TMessageType msgType = message->getMessageType();
 
 		return msgType == Message::TRANSFORM_SNAPSHOT;
@@ -67,6 +67,18 @@ namespace Logic {
 	void CSnapshotInterpolator::interpolateSnapshot(const vector<Matrix4>& buffer) {
 		Matrix4 incrementMatrix, temp;
 		unsigned int bufferSize = buffer.size();
+		
+		if(!_buffer.empty()) {
+			unsigned int lastIndex = _buffer.size() - 1;
+			Matrix4 inc = (buffer[0] - _buffer[lastIndex]) * (1.0f / (float)_ticksPerSample);
+
+			Matrix4 aux = _buffer[lastIndex] + inc;
+			for(int k = 0; k < _ticksPerSample - 1; ++k) {
+				_buffer.push_back(aux);
+				aux = aux + inc;
+			}
+		}
+		
 		for(int i = 0; i < bufferSize - 1; ++i) {
 			// Insertamos la posicion inicial
 			_buffer.push_back(buffer[i]);
@@ -76,22 +88,48 @@ namespace Logic {
 			incrementMatrix = (buffer[i+1] - buffer[i]) * (1.0f / (float)_ticksPerSample);
 			// Generamos las posiciones intermedias
 			temp = buffer[i] + incrementMatrix;
-			for(int k = 0; k < _ticksPerSample; ++k) {
-				_buffer.push_back(temp);
-				temp = temp + incrementMatrix;
-			}
+			for(int k = 0; k < _ticksPerSample - 1; ++k) {
+                _buffer.push_back(temp);
+                temp = temp + incrementMatrix;
+            }
 		}
 
 		// Insertamos la ultima posicion
-		//_buffer.push_back( buffer[bufferSize - 1] );
+		_buffer.push_back( buffer[bufferSize - 1] );
+
+		// Interpolar la primera posicion
+		/*if(!_buffer.empty()) {
+			unsigned int lastIndex = _buffer.size() - 1;
+			Vector3 inc = (buffer[0].getTrans() - _buffer[lastIndex]) / (float)_ticksPerSample;
+
+			Vector3 vec = _buffer[lastIndex] + inc;
+			for(int k = 0; k < _ticksPerSample - 1; ++k) {
+				_buffer.push_back(vec);
+				vec += inc;
+			}
+		}
+
+		for(int i = 0; i < bufferSize - 1; ++i) {
+			_buffer.push_back(buffer[i].getTrans());
+
+			Vector3 inc = (buffer[i+1].getTrans() - buffer[i].getTrans()) / (float)_ticksPerSample;
+
+			Vector3 vec = buffer[i].getTrans() + inc;
+			for(int k = 0; k < _ticksPerSample - 1; ++k) {
+				_buffer.push_back(vec);
+				vec += inc;
+			}
+		}
+
+		_buffer.push_back( buffer[bufferSize - 1].getTrans() );*/
 	}
 
 	//__________________________________________________________________
 
-	void CSnapshotInterpolator::process(const std::shared_ptr<CMessage>& message) {
+	void CSnapshotInterpolator::process(const shared_ptr<CMessage>& message) {
 		switch( message->getMessageType() ) {
 			case Message::TRANSFORM_SNAPSHOT: {
-				std::vector<Matrix4> buffer = static_pointer_cast<CMessageTransformSnapshot>(message)->getBuffer();
+				vector<Matrix4> buffer = static_pointer_cast<CMessageTransformSnapshot>(message)->getBuffer();
 
 				interpolateSnapshot(buffer);
 
@@ -104,6 +142,7 @@ namespace Logic {
 
 	void CSnapshotInterpolator::onStart() {
 		_controller = _entity->getComponent<CPhysicController>("CPhysicController");
+		//_buffer.push_back( _entity->getPosition() );
 	}
 
 	//__________________________________________________________________
@@ -114,11 +153,15 @@ namespace Logic {
 			_entity->setTransform(_buffer.front());
 			_buffer.pop_front();
 		}
+		/*if( !_buffer.empty() ) {
+			_controller->setPhysicPosition(_buffer.front());
+			_buffer.pop_front();
+		}*/
 		// Estamos perdiendo ticks por algun motivo
 		// hay que extrapolar y descartar del buffer
 		// que recibamos las que hemos perdido
 		else {
-			//std::cout << "Perdiendo snapshots" << std::endl;
+			//cout << "Perdiendo snapshots" << endl;
 		}
 	}
 

@@ -132,6 +132,7 @@ namespace Logic {
 		unsigned int _samplesPerSnapshot;
 
 		std::deque<Matrix4> _buffer;
+		//std::deque<Vector3> _buffer;
 
 		CPhysicController* _controller;
 
