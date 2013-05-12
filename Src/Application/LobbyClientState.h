@@ -151,6 +151,8 @@ namespace Application {
 		*/
 		virtual bool mouseReleased(const Input::CMouseState &mouseState);
 
+		virtual void tick(unsigned int msecs);
+
 
 		virtual void dataPacketReceived(Net::CPaquete* packet);
 
@@ -158,7 +160,8 @@ namespace Application {
 
 		virtual void disconnectionPacketReceived(Net::CPaquete* packet) { /* Los clientes no reciben este tipo de mensajes */ }
 
-		static unsigned __stdcall loadMapThread(void* arg);
+
+		static DWORD WINAPI loadMapThread(LPVOID lpParam);
 
 	private:
 
@@ -194,6 +197,10 @@ namespace Application {
 		Net::CManager* _netMgr;
 
 		std::string _mapName;
+
+		HANDLE loadHandle;
+
+		bool load—apa;
 
 	}; // CMenuState
 
