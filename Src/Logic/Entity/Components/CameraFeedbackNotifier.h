@@ -142,6 +142,10 @@ namespace Logic {
 
 		//______________________
 
+		/*float _currentShake;
+		float _shakeSpeed;
+		float _shakeOffset;*/
+
 		// Animacion de strafe
 		float _currentWalkingRoll;
 

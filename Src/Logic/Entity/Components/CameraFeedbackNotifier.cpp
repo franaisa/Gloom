@@ -28,7 +28,7 @@ del Screamer.
 #include "Logic/Messages/MessageCameraOffset.h"
 #include "Logic/Messages/MessageControl.h"
 #include "Logic/Messages/MessageImpact.h"
-
+#include "Logic/Messages/MessageHudDebugData.h"
 
 
 
@@ -49,6 +49,9 @@ namespace Logic {
 														 _stepRecoveryAccel(0.000025f),
 														 _currentWalkingRoll(0) {
 
+		/*_currentShake = Math::PI;
+		_shakeSpeed = 0.012f;
+		_shakeOffset = 0.04f;*/
 	}
 
 	//________________________________________________________________________
@@ -171,6 +174,14 @@ namespace Logic {
 				_stepForce *= -1;
 			}
 		}
+
+		/*if(_playerIsWalking == walking) return;
+
+		_playerIsWalking = walking;
+		if(!_playerIsWalking) {
+			_currentShake = Math::PI;
+			_cameraComponent->setOffset(Vector3::ZERO);
+		}*/
 	}
 
 	//________________________________________________________________________
@@ -192,6 +203,14 @@ namespace Logic {
 		}
 
 		_cameraComponent->rollCamera(_currentWalkingRoll);
+		
+		/*_currentShake += _shakeSpeed * msecs;
+		if(_currentShake > (3 * Math::PI)) _currentShake = Math::PI;
+
+		Vector3 offset = _cameraComponent->getOffset();
+		offset.y += sin(_currentShake) * _shakeOffset;
+
+		_cameraComponent->setOffset(offset);*/
 	}
 
 	//________________________________________________________________________
