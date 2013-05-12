@@ -126,12 +126,8 @@ namespace Logic {
 		//                          MIEMBROS PRIVADOS
 		// =======================================================================
 		
-		float _interpolationTimestep;
-
-		float _interpolationTimer;
-
 		unsigned int _ticksPerInterpolation;
-		unsigned int _tickCounter;
+		unsigned int _lostTicks;
 		unsigned int _ticksPerSample;
 		unsigned int _samplesPerSnapshot;
 

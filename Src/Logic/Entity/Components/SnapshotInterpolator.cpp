@@ -28,7 +28,7 @@ namespace Logic {
 
 	//__________________________________________________________________
 
-	CSnapshotInterpolator::CSnapshotInterpolator() : _tickCounter(0) {
+	CSnapshotInterpolator::CSnapshotInterpolator() : _lostTicks(0) {
 		// Nada que hacer
 	}
 
@@ -92,9 +92,8 @@ namespace Logic {
 		switch( message->getMessageType() ) {
 			case Message::TRANSFORM_SNAPSHOT: {
 				std::vector<Matrix4> buffer = static_pointer_cast<CMessageTransformSnapshot>(message)->getBuffer();
-				//std::cout << "Recibo un buffer de tamano = " << buffer.size() << std::endl;
 
-				//interpolateSnapshot(buffer);
+				interpolateSnapshot(buffer);
 
 				break;
 			}
@@ -110,15 +109,17 @@ namespace Logic {
 	//__________________________________________________________________
 
 	void CSnapshotInterpolator::onFixedTick(unsigned int msecs) {
-		/*if(++_tickCounter == _ticksPerInterpolation) {
-			_tickCounter = 0;
-		}*/
-		/*if( !_buffer.empty() ) {
-
+		if( !_buffer.empty() ) {
 			_controller->setPhysicPosition(_buffer.front().getTrans());
 			_entity->setTransform(_buffer.front());
 			_buffer.pop_front();
-		}*/
+		}
+		// Estamos perdiendo ticks por algun motivo
+		// hay que extrapolar y descartar del buffer
+		// que recibamos las que hemos perdido
+		else {
+			//std::cout << "Perdiendo snapshots" << std::endl;
+		}
 	}
 
 } // namespace Logic
