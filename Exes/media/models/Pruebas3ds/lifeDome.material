@@ -6,7 +6,7 @@ material LifeDome
 		{
 			texture_unit
 			{
-				colour_op_ex source1 src_current src_manual 0 0.8 1
+				colour_op_ex source1 src_current src_manual 0 0.8 1 0.2
 			}
 		}
 
