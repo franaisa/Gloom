@@ -216,19 +216,20 @@ namespace Logic {
 		Vector3 horizontal = Math::getDirection(transform);
 		
 		Vector3 offset = _cameraComponent->getOffset();
-
 		_walkAnim.currentHorizontalPos += _walkAnim.horizontalSpeed * msecs;
 		if(_walkAnim.currentHorizontalPos > 2 * Math::PI) _walkAnim.currentHorizontalPos = 0;
 
+		horizontal.normalise();
+		offset = sin(_walkAnim.currentHorizontalPos) * (horizontal *_walkAnim.horizontalOffset);
+		/*
 		float res = sin(_walkAnim.currentHorizontalPos) * _walkAnim.horizontalOffset;
 		offset.x += res;
 		offset.z += res;
-
+		*/
 		_walkAnim.currentVerticalPos += _walkAnim.verticalSpeed * msecs;
 		if(_walkAnim.currentVerticalPos > 2 * Math::PI) _walkAnim.currentVerticalPos = 0;
 
 		offset.y += sin(_walkAnim.currentVerticalPos) * _walkAnim.verticalOffset;
-
 		_cameraComponent->setOffset(offset);
 	}
 
