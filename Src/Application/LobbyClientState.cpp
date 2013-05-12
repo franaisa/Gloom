@@ -85,7 +85,8 @@ namespace Application {
 
 		// Mostramos el menu del cliente
 		_menu->show();
-
+		int menu = ((rand()*clock())%7)+1;
+		_loadMenu->callFunction("loadMenu",Hikari::Args(menu));
 		// Nos registramos como observadores de la red para ser notificados de
 		// eventos y nos activamos como clientes.
 		_netMgr->addObserver(this);
@@ -163,16 +164,17 @@ namespace Application {
 				// Si la carga del mapa tiene éxito, notificamos al servidor y continuamos. En 
 				// caso contrario abortamos la ejecución.
 				_loadMenu->show();
-				_menu->hide();
 
-				//_beginthread(CLobbyClientState::loadMapThread,0,this);
+				
+
+				
+				_menu->hide();
 
 				loadHandle = 0;
 
+				//creamos el thread que maneja la carga del mapa
 				loadHandle = CreateThread( NULL, 0, CLobbyClientState::loadMapThread, this, 0, NULL);
 
-				//WaitForMultipleObjects( 1,&loadHandle, TRUE, INFINITE);
-				//CloseHandle(loadHandle);
 				/*if( loadMap(mapName) ) {
 					// Avisamos de que hemos terminado la carga.
 					Net::NetMessageType ackMsg = Net::MAP_LOADED;
