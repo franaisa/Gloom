@@ -40,14 +40,9 @@ namespace Logic {
 			if(_timer >= _respawnTime) {
 				_isRespawning = false;
 				_timer = 0;
-
 				// Activar entidad grafica y fisica
 				std::shared_ptr<CMessageActivate> activateMsg = std::make_shared<CMessageActivate>();
 				_entity->emitMessage(activateMsg);
-
-				// Activar la entidad fisica (solo si soy el servidor o single player)
-				if(Net::CManager::getSingletonPtr()->imServer() || (!Net::CManager::getSingletonPtr()->imServer() && !Net::CManager::getSingletonPtr()->imClient()))
-					;//_entity->getComponent<CPhysicEntity>("CPhysicEntity")->activate();
 			}
 		}
 	} // tick
@@ -80,7 +75,7 @@ namespace Logic {
 		// Tiempo de respawn del item en segundos
 		if(entityInfo->hasAttribute("respawnTime")) {
 			_respawnTime = entityInfo->getFloatAttribute("respawnTime");
-			_respawnTime *= 1000; // Convertimos en segundos
+			_respawnTime *= 1000; // Convertimos en milisegundos
 		}
 
 		return true;
@@ -99,7 +94,6 @@ namespace Logic {
 		switch( message->getMessageType() ) {
 			case Message::TOUCHED: {
 				std::shared_ptr<CMessageTouched> touchedMsg = std::static_pointer_cast<CMessageTouched>(message);
-
 				// Si se ha disparado el trigger del item recompensamos a la entidad
 				// que ha disparado el trigger con la ventaja que de el item cogido.
 				itemGrabbed( touchedMsg->getEntity() );
@@ -118,9 +112,6 @@ namespace Logic {
 		
 		// Si se trata del servidor o del single player
 		if(Net::CManager::getSingletonPtr()->imServer() || (!Net::CManager::getSingletonPtr()->imServer() && !Net::CManager::getSingletonPtr()->imClient())){
-			// Desactivar entidad fisica
-			//_entity->getComponent<CPhysicEntity>("CPhysicEntity")->deactivate();
-		
 			// Mandar el mensaje que corresponda a la entidad actuadora
 			// en funcion del item que se haya cogido (comprobando el id)
 			if(_id == "orb") {
@@ -146,7 +137,6 @@ namespace Logic {
 				actor->emitMessage(addWeaponMsg);
 			}
 		}
-
 		// Arrancamos el timer.
 		_isRespawning = true;
 	}
