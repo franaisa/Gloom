@@ -52,13 +52,15 @@ namespace Logic {
 		/*_currentShake = 0;
 		_shakeSpeed = 0.015f;
 		_shakeOffset = 0.05f;*/
-		_walkAnim.currentHorizontalPos = 0;
+		_walkAnim.currentHorizontalPos = Math::HALF_PI;
 		_walkAnim.horizontalSpeed = 0.0075f;
-		_walkAnim.horizontalOffset = 0.5f;
+		_walkAnim.horizontalOffset = 0.1f;
 
-		_walkAnim.currentVerticalPos = 0;
+		_walkAnim.currentVerticalPos = Math::HALF_PI;
 		_walkAnim.verticalSpeed = _walkAnim.horizontalSpeed * 2;
-		_walkAnim.verticalOffset = 0.5f;
+		_walkAnim.verticalOffset = 0.1f;
+
+		_strafingDir = 0;
 	}
 
 	//________________________________________________________________________
@@ -142,6 +144,9 @@ namespace Logic {
 		if(_playerIsWalking) {
 			walkEffect(msecs);
 		}
+		/*else {
+			walkRecovery(msecs);
+		}*/
 		
 		if(_effectIsActivated){
 			_scene->updateCompositorVariable(_effect, _strengthEffect, 1+_timestamp*0.01);
@@ -185,13 +190,19 @@ namespace Logic {
 		if(_playerIsWalking == walking) return;
 
 		_playerIsWalking = walking;
+		_strafingDir = direction;
+
 		if(!_playerIsWalking) {
-			_walkAnim.currentVerticalPos = 0;
+			_walkAnim.currentVerticalPos = _walkAnim.currentHorizontalPos = Math::HALF_PI;
 			_cameraComponent->setOffset(Vector3::ZERO);
 		}
 	}
 
 	//________________________________________________________________________
+
+	void CCameraFeedbackNotifier::walkRecovery(unsigned int msecs) {
+		_cameraComponent->setOffset( _cameraComponent->getOffset() * 0.85f );
+	}
 
 	void CCameraFeedbackNotifier::walkEffect(unsigned int msecs) {
 		/*if(_cameraComponent->getRoll() == 0) {
@@ -211,26 +222,28 @@ namespace Logic {
 
 		_cameraComponent->rollCamera(_currentWalkingRoll);*/
 		
-		Matrix4 transform = _entity->getTransform();
-		Math::yaw(Math::HALF_PI, transform);
-		Vector3 horizontal = Math::getDirection(transform);
-		
 		Vector3 offset = _cameraComponent->getOffset();
+		if(_strafingDir == 0) {
+			Matrix4 transform = _entity->getTransform();
+			Math::yaw(Math::HALF_PI, transform);
+			Vector3 horizontal = Math::getDirection(transform);
 
-		_walkAnim.currentHorizontalPos += _walkAnim.horizontalSpeed * msecs;
-		if(_walkAnim.currentHorizontalPos > 2 * Math::PI) _walkAnim.currentHorizontalPos = 0;
+			_walkAnim.currentHorizontalPos += _walkAnim.horizontalSpeed * msecs;
+			if(_walkAnim.currentHorizontalPos > ((2 * Math::PI) + Math::HALF_PI)) _walkAnim.currentHorizontalPos = Math::HALF_PI;
 
-		horizontal.normalise();
-		offset = sin(_walkAnim.currentHorizontalPos) * (horizontal *_walkAnim.horizontalOffset);
-		/*
-		float res = sin(_walkAnim.currentHorizontalPos) * _walkAnim.horizontalOffset;
-		offset.x += res;
-		offset.z += res;
-		*/
+			// Multiplicamos el vector horizontal normalizado por el desplazamiento y lo sumamos al offset
+			horizontal *= sin(_walkAnim.currentHorizontalPos) * _walkAnim.horizontalOffset;
+			offset += horizontal;
+		}
+		else {
+			offset = offset * Vector3(0.0f, 1.0f, 0.0f);
+		}
+
 		_walkAnim.currentVerticalPos += _walkAnim.verticalSpeed * msecs;
-		if(_walkAnim.currentVerticalPos > 2 * Math::PI) _walkAnim.currentVerticalPos = 0;
+		if(_walkAnim.currentVerticalPos > ((2 * Math::PI) + Math::HALF_PI)) _walkAnim.currentVerticalPos = Math::HALF_PI; 
 
 		offset.y += sin(_walkAnim.currentVerticalPos) * _walkAnim.verticalOffset;
+		
 		_cameraComponent->setOffset(offset);
 	}
 

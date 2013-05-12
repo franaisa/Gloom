@@ -110,6 +110,8 @@ namespace Logic {
 
 		void walkEffect(unsigned int msecs);
 
+		void walkRecovery(unsigned int msecs);
+
 		void playerIsTouchingGround(float hitForce);
 
 		void landEffect(unsigned int msecs);
@@ -153,6 +155,8 @@ namespace Logic {
 		};
 
 		CameraWalkAnim _walkAnim;
+
+		int _strafingDir;
 
 		/*float _currentShake;
 		float _shakeSpeed;
