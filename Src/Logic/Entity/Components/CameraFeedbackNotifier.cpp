@@ -49,9 +49,16 @@ namespace Logic {
 														 _stepRecoveryAccel(0.000025f),
 														 _currentWalkingRoll(0) {
 
-		/*_currentShake = Math::PI;
-		_shakeSpeed = 0.012f;
-		_shakeOffset = 0.04f;*/
+		/*_currentShake = 0;
+		_shakeSpeed = 0.015f;
+		_shakeOffset = 0.05f;*/
+		_walkAnim.currentHorizontalPos = 0;
+		_walkAnim.horizontalSpeed = 0.0075f;
+		_walkAnim.horizontalOffset = 0.05f;
+
+		_walkAnim.currentVerticalPos = 0;
+		_walkAnim.verticalSpeed = _walkAnim.horizontalSpeed * 2;
+		_walkAnim.verticalOffset = 0.05f;
 	}
 
 	//________________________________________________________________________
@@ -161,7 +168,7 @@ namespace Logic {
 	//________________________________________________________________________
 
 	void CCameraFeedbackNotifier::playerIsWalking(bool walking, int direction) { 
-		if(_playerIsWalking == walking) return;
+		/*if(_playerIsWalking == walking) return;
 
 		_playerIsWalking = walking;
 		if(!_playerIsWalking) {
@@ -173,21 +180,21 @@ namespace Logic {
 				
 				_stepForce *= -1;
 			}
-		}
+		}*/
 
-		/*if(_playerIsWalking == walking) return;
+		if(_playerIsWalking == walking) return;
 
 		_playerIsWalking = walking;
 		if(!_playerIsWalking) {
-			_currentShake = Math::PI;
+			_walkAnim.currentVerticalPos = 0;
 			_cameraComponent->setOffset(Vector3::ZERO);
-		}*/
+		}
 	}
 
 	//________________________________________________________________________
 
 	void CCameraFeedbackNotifier::walkEffect(unsigned int msecs) {
-		if(_cameraComponent->getRoll() == 0) {
+		/*if(_cameraComponent->getRoll() == 0) {
 			_acumStepForce = _currentWalkingRoll = _stepForce *= -1;
 		}
 
@@ -202,15 +209,27 @@ namespace Logic {
 			if(_currentWalkingRoll < 0) _currentWalkingRoll = 0;
 		}
 
-		_cameraComponent->rollCamera(_currentWalkingRoll);
+		_cameraComponent->rollCamera(_currentWalkingRoll);*/
 		
-		/*_currentShake += _shakeSpeed * msecs;
-		if(_currentShake > (3 * Math::PI)) _currentShake = Math::PI;
-
+		Matrix4 transform = _entity->getTransform();
+		Math::yaw(Math::HALF_PI, transform);
+		Vector3 horizontal = Math::getDirection(transform);
+		
 		Vector3 offset = _cameraComponent->getOffset();
-		offset.y += sin(_currentShake) * _shakeOffset;
 
-		_cameraComponent->setOffset(offset);*/
+		_walkAnim.currentHorizontalPos += _walkAnim.horizontalSpeed * msecs;
+		if(_walkAnim.currentHorizontalPos > 2 * Math::PI) _walkAnim.currentHorizontalPos = 0;
+
+		float res = sin(_walkAnim.currentHorizontalPos) * _walkAnim.horizontalOffset;
+		offset.x += res;
+		offset.z += res;
+
+		_walkAnim.currentVerticalPos += _walkAnim.verticalSpeed * msecs;
+		if(_walkAnim.currentVerticalPos > 2 * Math::PI) _walkAnim.currentVerticalPos = 0;
+
+		offset.y += sin(_walkAnim.currentVerticalPos) * _walkAnim.verticalOffset;
+
+		_cameraComponent->setOffset(offset);
 	}
 
 	//________________________________________________________________________

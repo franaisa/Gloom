@@ -28,7 +28,7 @@ namespace Logic {
 }
 
 namespace Logic {
-	
+
 	/**
 	
     @ingroup logicGroup
@@ -141,6 +141,18 @@ namespace Logic {
 		CCamera* _cameraComponent;
 
 		//______________________
+
+		struct CameraWalkAnim {
+			float verticalSpeed;
+			float verticalOffset;
+			float currentVerticalPos;
+
+			float horizontalSpeed;
+			float horizontalOffset;
+			float currentHorizontalPos;
+		};
+
+		CameraWalkAnim _walkAnim;
 
 		/*float _currentShake;
 		float _shakeSpeed;
