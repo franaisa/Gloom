@@ -45,14 +45,16 @@ namespace Logic {
 
 		virtual bool spawn(CEntity* entity, CMap *map, const Map::CEntity *entityInfo);
 
+		void drawRaycast(const Ray& raycast);
 		//__________________________________________________________________
 
-		/** Al ejecutarse dispara una granada. */
+		/** Al ejecutarse dispara un cohete. */
 		virtual void fireWeapon();
 
 	private:
 
 		float _shootForce;
+		int _temporal;
 
 	};
 
