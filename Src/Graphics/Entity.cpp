@@ -101,11 +101,12 @@ namespace Graphics
 	{
 		try
 		{
-			_entity = _scene->getSceneMgr()->createEntity(_name, _mesh);
+			_entity = _scene->getSceneMgr()->createEntity(_mesh);
 			//_entity->setCastShadows(true);
 		}
 		catch(std::exception e)
 		{
+			std::cout << e.what() << std::endl;
 			return false;
 		}
 		_entityNode = _scene->getSceneMgr()->getRootSceneNode()->createChildSceneNode(_name + "_node");

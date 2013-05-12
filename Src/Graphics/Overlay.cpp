@@ -176,7 +176,7 @@ namespace Graphics
 			sceneNode = new Ogre::SceneNode(_scene->getSceneMgr(), nameSceneNode);
 				
 			Ogre::Entity *entity;
-			entity = _scene->getSceneMgr()->createEntity(nameEntity, mesh);
+			entity = _scene->getSceneMgr()->createEntity(mesh);
 			
 			/*
 			Ogre::MaterialPtr aux= Ogre::MaterialManager::getSingleton().getByName(name);
