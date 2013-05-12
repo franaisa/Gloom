@@ -23,10 +23,18 @@ de disparo del lanzacohetes.
 #include "Logic/Entity/Components/AvatarController.h"
 #include "Physics/Server.h"
 #include "PhysicDynamicEntity.h"
+#include "PhysicController.h"
 
 #include "Logic/Messages/MessageSetPhysicPosition.h"
 #include "Logic/Messages/MessageAddForcePhysics.h"
 #include "Logic/Messages/MessageContactEnter.h"
+
+#include <OgreSceneManager.h>
+#include <OgreMaterialManager.h>
+#include <OgreManualObject.h>
+#include "Graphics/Camera.h"
+#include "Graphics/Server.h"
+#include "Graphics/Scene.h"
 
 namespace Logic {
 	IMP_FACTORY(CShootRocketLauncher);
@@ -60,17 +68,21 @@ namespace Logic {
 		//Sacamos un punto en la dirección que apuntamos muy fuera de la capsula y trazamos un raycast para el cual solo nos interesa en que punto choca con nosotros
 		Vector3 directionNormalise=Math::getDirection(_entity->getOrientation());
 		directionNormalise.normalise();
-		Vector3 outPosition = _entity->getPosition() +Vector3(0,_heightShoot,0)+directionNormalise*10;//Nos separamos lo suficiente
-		//std::cout << "Posicion del jugador: " << _entity->getPosition()+Vector3(0,_heightShoot,0) << std::endl;
-		//std::cout << "El punto exterior para hacer el punto de impacto es: " << outPosition << std::endl;
+		Vector3 outPosition = _entity->getPosition() +Vector3(0,_heightShoot,0)+directionNormalise*15;//Nos separamos lo suficiente
+		std::cout << "Posicion LOGICA del jugador: " << _entity->getPosition()+Vector3(0,_heightShoot,0) << std::endl;
+		//std::cout << "Posicion FISICA del jugador: " << _entity->getComponent<CPhysicController>("CPhysicController")->getPhysicPosition()+Vector3(0,_heightShoot,0) << std::endl;
+		std::cout << "El punto exterior para hacer el punto de impacto es: " << outPosition << std::endl;
+		//std::cout << "La distancia entre el jugador y el punto exterior es: " << outPosition.distance(_entity->getPosition() +Vector3(0,_heightShoot,0)) << std::endl;
 		Vector3 inverseDirection=directionNormalise*-1;
 		Ray ray(outPosition, inverseDirection);
-		Vector3 capsulleCollisionPoint=Physics::CServer::getSingletonPtr()->raycastClosestSpecificPoint(ray, 10, _entity->getEntityID());
-		/*if( capsulleCollisionPoint!=Vector3(-5,-5,-5) ){
+		// Dibujamos el rayo en ogre para poder depurar
+		drawRaycast(ray);
+		Vector3 capsulleCollisionPoint=Physics::CServer::getSingletonPtr()->raycastClosestSpecificPoint(ray, 30, _entity->getEntityID());
+		if( capsulleCollisionPoint!=Vector3(-5,-5,-5) ){
 			std::cout << "El punto de choque con la capsula es: "<< capsulleCollisionPoint  <<std::endl;
 		}
 		else
-			std::cout << "Algo hay mal" << std::endl;*/
+			std::cout << "Algo hay mal" << std::endl;
 
 		//Paso2
 		//Separamos el cohete de la capsula en la direccion en la que se apuntaba con el radio(o más por interpolamierder)
@@ -151,6 +163,7 @@ namespace Logic {
 		Map::CEntity *entityInfoRocket = CEntityFactory::getSingletonPtr()->getInfo("Rocket");
 		float yaw=Math::fromRadiansToDegrees(_entity->getYaw())+180; //+180 porque esta del reves el modelo cohete	
 		float pitch=360-Math::fromRadiansToDegrees(_entity->getPitch());
+		std::cout << "El punto de separacion es : " << separationPoint << std::endl;
 		CEntity* rocket = CEntityFactory::getSingletonPtr()->createEntityWithPositionAndOrientation(
 			entityInfoRocket, Logic::CServer::getSingletonPtr()->getMap(), separationPoint, yaw, pitch, false);
 		assert(rocket != NULL);
@@ -171,6 +184,33 @@ namespace Logic {
 		rocket->emitMessage(forceMsg);
 
 	}
+
+	// Dibujado de raycast para depurar
+	void CShootRocketLauncher::drawRaycast(const Ray& raycast) {
+		Graphics::CScene *scene = Graphics::CServer::getSingletonPtr()->getActiveScene();
+		Ogre::SceneManager *mSceneMgr = scene->getSceneMgr();
+
+		std::stringstream aux;
+		aux << "laser" << "rocket" << _temporal;
+		++_temporal;
+		std::string laser = aux.str();
+
+		Ogre::ManualObject* myManualObject =  mSceneMgr->createManualObject(laser); 
+		Ogre::SceneNode* myManualObjectNode = mSceneMgr->getRootSceneNode()->createChildSceneNode(laser+"_node"); 
+ 
+		myManualObject->begin("laser", Ogre::RenderOperation::OT_LINE_STRIP);
+		Vector3 v = raycast.getOrigin();
+		myManualObject->position(v.x,v.y,v.z);
+
+		for(int i=0; i < 20;++i){
+			Vector3 v = raycast.getPoint(i);
+			myManualObject->position(v.x,v.y,v.z);
+			// etc 
+		}
+
+		myManualObject->end(); 
+		myManualObjectNode->attachObject(myManualObject);
+	}// drawRaycast
 
 
 } // namespace Logic

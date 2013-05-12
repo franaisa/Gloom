@@ -72,6 +72,11 @@ namespace Logic {
 		void  setPhysicPosition (const Vector3 &position);
 
 		/**
+		Obtiene la posicion del controlador
+		*/
+		const Vector3& getPhysicPosition();
+
+		/**
 		Se invoca cuando se produce una colisión entre una entidad física y un trigger.
 		*/
 		virtual void  onTrigger (IPhysics *otherComponent, bool enter);

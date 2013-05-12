@@ -274,7 +274,7 @@ namespace Physics {
 		// Crear la escena física
 		_scene = _physics->createScene(sceneDesc);
 		_acumTime = 0;
-		_fixedTime = 16;
+		_fixedTime = 8;
 		assert(_scene && "Error en PxPhysics::createScene");
 
 		// Activamos la notificación de eventos entre entidades kinemáticas.
@@ -486,7 +486,8 @@ namespace Physics {
 
 	Vector3 CServer::raycastClosestSpecificPoint(const Ray& ray, float maxDist, unsigned int id) const {
 		assert(_scene);
-
+		std::cout << "Origen: " << ray.getOrigin() << std::endl;
+		std::cout << "Direccion normalizada: " << ray.getDirection() << std::endl;
 		// Establecer parámettros del rayo
 		PxVec3 origin = Vector3ToPxVec3(ray.getOrigin());      // origen     
 		PxVec3 unitDir = Vector3ToPxVec3(ray.getDirection());  // dirección normalizada   
@@ -508,7 +509,7 @@ namespace Physics {
 	
 			if(component != NULL) {
 				Logic::CEntity* entityHit = component->getEntity();
-				//std::cout << "Nombre de lo tocado: " << entityHit->getName() << std::endl;
+				std::cout << "Nombre de lo tocado: " << entityHit->getName() << std::endl;
 				if(entityHit->getEntityID() == id && !(*flags & PxShapeFlag::eTRIGGER_SHAPE)) {
 					return PxVec3ToVector3(hits[i].impact);
 				}
