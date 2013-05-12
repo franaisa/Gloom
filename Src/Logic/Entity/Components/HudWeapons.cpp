@@ -50,12 +50,9 @@ namespace Logic
 
 	//---------------------------------------------------------
 
-	CHudWeapons::~CHudWeapons() 
-	{
-		if(_graphicsEntities)
-		{
-			for(int i = 0; i < _numWeapons; ++i)
-			{
+	CHudWeapons::~CHudWeapons() {
+		if(_graphicsEntities) {
+			for(int i = 0; i < _numWeapons; ++i) {
 				//_scene->removeChild(_graphicsEntities[i]._graphicsEntity);
 				delete _graphicsEntities[i].graphicsEntity;
 				_graphicsEntities[i].graphicsEntity = NULL;
@@ -68,27 +65,20 @@ namespace Logic
 	} // ~CGraphics
 	//---------------------------------------------------------
 	
-	void CHudWeapons::onActivate()
-	{
+	void CHudWeapons::onActivate() {
 		//Cuando activamos el componente solo tendremos visible el arma 0( arma melee)
 		_currentWeapon = 0;
 		_graphicsEntities[_currentWeapon].graphicsEntity->setVisible(true);
-		
-
 	} // activate
 	//---------------------------------------------------------
 
-	void CHudWeapons::onDeactivate()
-	{
+	void CHudWeapons::onDeactivate() {
 		//Cuando desactivamos el componente, desactivaremos el arma actual
-
 		_overlayWeapon3D[_currentWeapon]->setVisible(false);
-
 	} // deactivate
 	//---------------------------------------------------------
 
-	bool CHudWeapons::spawn(CEntity *entity, CMap *map, const Map::CEntity *entityInfo) 
-	{
+	bool CHudWeapons::spawn(CEntity *entity, CMap *map, const Map::CEntity *entityInfo) {
 		if(!IComponent::spawn(entity,map,entityInfo))
 			return false;
 		
@@ -177,24 +167,21 @@ namespace Logic
 				break;
 			}
 		}
-
 	} // process
 	//---------------------------------------------------------
 
-	void CHudWeapons::changeWeapon(int newWeapon){
-		
+	void CHudWeapons::changeWeapon(int newWeapon) {
 		_overlayWeapon3D[_currentWeapon]->setVisible(false);
 		_overlayWeapon3D[newWeapon]->setVisible(true);
 		_currentWeapon = newWeapon;
-
 	}
 	//---------------------------------------------------------
 
-	void CHudWeapons::onFixedTick(unsigned int msecs){
+	void CHudWeapons::onFixedTick(unsigned int msecs) {
 		movement(msecs);
 	}
 	//---------------------------------------------------------
-	void CHudWeapons::movement(unsigned int msecs){
+	void CHudWeapons::movement(unsigned int msecs) {
 		Vector3 weaponPosition = _graphicsEntities[_currentWeapon].graphicsEntity->getTransform().getTrans();
 
 		_currentHeight += _verticalSpeed * msecs;
@@ -202,9 +189,6 @@ namespace Logic
 
 		weaponPosition.y += sin(_currentHeight) * 0.00045f;
 		_graphicsEntities[_currentWeapon].graphicsEntity->setPosition(weaponPosition);
-		/*Matrix4 trans = _graphicsEntities[_currentWeapon].graphicsEntity->getTransform();
-		Math::yaw(0.01f, trans);
-		_graphicsEntities[_currentWeapon].graphicsEntity->setTransform(trans);*/
 	}
 	//---------------------------------------------------------
 

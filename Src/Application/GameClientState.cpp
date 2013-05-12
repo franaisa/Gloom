@@ -268,6 +268,12 @@ namespace Application {
 				msg.serialize(msgType);
 				msg.serialize(selectedClass);
 				_netMgr->broadcast( msg.getbuffer(), msg.getSize() );
+
+				if(Input::CServer::getSingletonPtr()->getPlayerController()->getControllerAvatar()){
+					Input::CServer::getSingletonPtr()->getPlayerController()->setControlledAvatar(NULL);
+					Input::CServer::getSingletonPtr()->getPlayerController()->activate();
+				}
+
 				break;
 			case 5: {
 				_seleccion->hide();
@@ -286,6 +292,11 @@ namespace Application {
 				buffer.write(&spectatorSelectedMsg, sizeof(spectatorSelectedMsg));
 				buffer.serialize(selectedClass);
 				_netMgr->broadcast( buffer.getbuffer(), buffer.getSize() );
+
+				if(Input::CServer::getSingletonPtr()->getPlayerController()->getControllerAvatar()){
+					Input::CServer::getSingletonPtr()->getPlayerController()->setControlledAvatar(NULL);
+					Input::CServer::getSingletonPtr()->getPlayerController()->activate();
+				}
 
 				break;
 			}

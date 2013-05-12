@@ -92,6 +92,11 @@ void  CPhysicController::setPhysicPosition (const Vector3 &position){
 	_controller.setPosition(position);
 	_entity->setPosition( _controller.getPosition() );
 }
+//________________________________________________________________________
+
+const Vector3& CPhysicController::getPhysicPosition (){
+	return _controller.getPosition() ;
+}
 
 //________________________________________________________________________
 

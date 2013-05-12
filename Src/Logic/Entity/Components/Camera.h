@@ -48,15 +48,14 @@ namespace Logic
 	@author David Llansó García
 	@date Septiembre, 2010
 */
-	class CCamera : public IComponent
-	{
+	class CCamera : public IComponent {
 		DEC_FACTORY(CCamera);
 	public:
 
 		/**
 		Constructor por defecto; en la clase base no hace nada.
 		*/
-		CCamera() : IComponent(), _graphicsCamera(0), _height(8), _currentRoll(0.0f), _verticalOffset(0) {}
+		CCamera();
 		
 		/**
 		Inicialización del componente, utilizando la información extraída de
@@ -124,6 +123,10 @@ namespace Logic
 
 		float getRoll();
 
+		void setOffset(const Vector3& offset);
+		void addOffset(const Vector3& offset);
+		Vector3 getOffset() const;
+
 	protected:
 
 
@@ -134,7 +137,7 @@ namespace Logic
 
 		@param msecs Milisegundos transcurridos desde el último tick.
 		*/
-		virtual void onTick(unsigned int msecs);
+		virtual void onFixedTick(unsigned int msecs);
 
 		/**
 		Cámara gráfica.
@@ -147,6 +150,9 @@ namespace Logic
 		CEntity *_target;
 
 		Vector3 _targetV;
+
+		Vector3 _offset;
+
 		/**
 		Entidad enemiga que se usa como objetivo
 		*/
