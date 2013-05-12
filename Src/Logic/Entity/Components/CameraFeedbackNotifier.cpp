@@ -54,11 +54,11 @@ namespace Logic {
 		_shakeOffset = 0.05f;*/
 		_walkAnim.currentHorizontalPos = 0;
 		_walkAnim.horizontalSpeed = 0.0075f;
-		_walkAnim.horizontalOffset = 0.05f;
+		_walkAnim.horizontalOffset = 0.5f;
 
 		_walkAnim.currentVerticalPos = 0;
 		_walkAnim.verticalSpeed = _walkAnim.horizontalSpeed * 2;
-		_walkAnim.verticalOffset = 0.05f;
+		_walkAnim.verticalOffset = 0.5f;
 	}
 
 	//________________________________________________________________________
@@ -216,6 +216,7 @@ namespace Logic {
 		Vector3 horizontal = Math::getDirection(transform);
 		
 		Vector3 offset = _cameraComponent->getOffset();
+
 		_walkAnim.currentHorizontalPos += _walkAnim.horizontalSpeed * msecs;
 		if(_walkAnim.currentHorizontalPos > 2 * Math::PI) _walkAnim.currentHorizontalPos = 0;
 
