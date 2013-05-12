@@ -220,7 +220,7 @@ namespace Logic {
 		if(_walkAnim.currentHorizontalPos > 2 * Math::PI) _walkAnim.currentHorizontalPos = 0;
 
 		horizontal.normalise();
-		offset = sin(_walkAnim.currentHorizontalPos) * (horizontal *_walkAnim.horizontalOffset);
+		offset = sin(_walkAnim.currentHorizontalPos) * (horizontal *_walkAnim.horizontalOffset*10);
 		/*
 		float res = sin(_walkAnim.currentHorizontalPos) * _walkAnim.horizontalOffset;
 		offset.x += res;
@@ -229,7 +229,7 @@ namespace Logic {
 		_walkAnim.currentVerticalPos += _walkAnim.verticalSpeed * msecs;
 		if(_walkAnim.currentVerticalPos > 2 * Math::PI) _walkAnim.currentVerticalPos = 0;
 
-		offset.y += sin(_walkAnim.currentVerticalPos) * _walkAnim.verticalOffset;
+		offset.y += sin(_walkAnim.currentVerticalPos) * _walkAnim.verticalOffset*5;
 		_cameraComponent->setOffset(offset);
 	}
 
