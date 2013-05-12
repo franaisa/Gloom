@@ -146,9 +146,6 @@ namespace Logic {
 		for(; it != _entityMap.end(); ++it ) {
 			// Ejecutamos el start de todas las entidades
 			it->second->start();
-
-			_entitiesWithTick.push_back(it->second);
-			_entitiesWithFixedTick.push_back(it->second);
 		}
 	}
 
@@ -255,14 +252,14 @@ namespace Logic {
 
 	typedef std::pair<TEntityID,CEntity*> TEntityPair;
 
-	void CMap::addEntity(CEntity *entity)
-	{
-		if(_entityMap.count(entity->getEntityID()) == 0)
-		{
-			TEntityPair elem(entity->getEntityID(),entity);
+	void CMap::addEntity(CEntity *entity) {
+		if(_entityMap.count(entity->getEntityID()) == 0) {
+			TEntityPair elem(entity->getEntityID(), entity);
 			_entityMap.insert(elem);
 		}
 
+		_entitiesWithTick.push_back(entity);
+		_entitiesWithFixedTick.push_back(entity);
 	} // addEntity
 
 	//--------------------------------------------------------
