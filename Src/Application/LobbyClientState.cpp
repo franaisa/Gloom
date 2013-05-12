@@ -32,13 +32,16 @@ Contiene la implementaciÛn del estado de lobby del cliente.
 #include "Net/buffer.h"
 
 #include <iostream>
+#include <windows.h>
 
 using namespace std;
 
 namespace Application {
 
-	CLobbyClientState::CLobbyClientState(CBaseApplication *app) : CApplicationState(app),
-																  _netMgr(NULL) {
+	CLobbyClientState::CLobbyClientState(CBaseApplication *app) :	CApplicationState(app),
+																	_netMgr(NULL),
+																	loadHandle(0),
+																	load—apa(0){
 		// Nada que hacer
 	}
 
@@ -61,7 +64,9 @@ namespace Application {
 		_menu->bind("connect",Hikari::FlashDelegate(this, &CLobbyClientState::startReleased));
 		_menu->bind("back",Hikari::FlashDelegate(this, &CLobbyClientState::backReleased));
 		_menu->hide();
-		
+		_loadMenu = GUI::CServer::getSingletonPtr()->addLayoutToState(this,"loadMenu", Hikari::Position(Hikari::Center));
+		_loadMenu->load("LoadingMenu.swf");
+		_loadMenu->hide();
 		return true;
 	} // init
 
@@ -93,9 +98,10 @@ namespace Application {
 	void CLobbyClientState::deactivate() {
 		// Ocultamos el men˙ de cliente
 		_menu->hide();
-
+		_loadMenu->hide();
 		_netMgr->removeObserver(this);
 		CApplicationState::deactivate();
+		
 	} // deactivate
 
 	//__________________________________________________________________
@@ -149,14 +155,25 @@ namespace Application {
 			case Net::LOAD_MAP: {
 				// Obtenemos el nombre del mapa que est· ejecutando el servidor
 				string mapName;
-				buffer.deserialize(mapName);
+				buffer.deserialize(_mapName);
 
 				// La carga de entidades del mapa debe hacerse con las ids del servidor
 				Logic::CEntityFactory::getSingletonPtr()->initDispatcher();
 
 				// Si la carga del mapa tiene Èxito, notificamos al servidor y continuamos. En 
 				// caso contrario abortamos la ejecuciÛn.
-				if( loadMap(mapName) ) {
+				_loadMenu->show();
+				_menu->hide();
+
+				//_beginthread(CLobbyClientState::loadMapThread,0,this);
+
+				loadHandle = 0;
+
+				loadHandle = CreateThread( NULL, 0, CLobbyClientState::loadMapThread, this, 0, NULL);
+
+				//WaitForMultipleObjects( 1,&loadHandle, TRUE, INFINITE);
+				//CloseHandle(loadHandle);
+				/*if( loadMap(mapName) ) {
 					// Avisamos de que hemos terminado la carga.
 					Net::NetMessageType ackMsg = Net::MAP_LOADED;
 					_netMgr->broadcast( &ackMsg, sizeof(ackMsg) );
@@ -165,15 +182,9 @@ namespace Application {
 					_netMgr->removeObserver(this);
 					_netMgr->deactivateNetwork();
 					_app->exitRequest();
-				}
-
-				// Liberamos el dispatcher para las entidades por defecto
-				Logic::CEntityFactory::getSingletonPtr()->releaseDispatcher();
-
-				// Inicializamos el dispatcher de entidades lÛgicas en base a nuestro id de red y el
-				// n˙mero de jugadores que hay en la partida
-				// @deprecated lo ideal es que el server mande el numero de players de la partida
-				Logic::CEntityFactory::getSingletonPtr()->initDispatcher( _netMgr->getID(), 12 );
+				}*/
+				
+				
 
 				break;
 			}
@@ -295,5 +306,47 @@ namespace Application {
 			_menu->callFunction( "enableButton", Hikari::Args() );
 		}
 	} // requestConnectionTo
+
+	DWORD WINAPI CLobbyClientState::loadMapThread(LPVOID arg){
+
+		//std::string* mapName = reinterpret_cast<std::string*>(arg);
+
+		CLobbyClientState * lobby = (CLobbyClientState*)arg;
+
+		if( lobby->loadMap(lobby->_mapName) ) {
+			// Avisamos de que hemos terminado la carga.
+			Net::NetMessageType ackMsg = Net::MAP_LOADED;
+			lobby->_netMgr->broadcast( &ackMsg, sizeof(ackMsg) );
+		}
+		else {
+			lobby->_netMgr->removeObserver(lobby);
+			lobby->_netMgr->deactivateNetwork();
+			lobby->_app->exitRequest();
+		}
+
+		// Liberamos el dispatcher para las entidades por defecto
+		Logic::CEntityFactory::getSingletonPtr()->releaseDispatcher();
+		// Inicializamos el dispatcher de entidades lÛgicas en base a nuestro id de red y el
+		// n˙mero de jugadores que hay en la partida
+		// @deprecated lo ideal es que el server mande el numero de players de la partida
+		Logic::CEntityFactory::getSingletonPtr()->initDispatcher( lobby->_netMgr->getID(), 12 );
+
+		return 0;
+	}
+
+	void CLobbyClientState::tick(unsigned int msecs){
+		CApplicationState::tick(msecs);
+		if(loadHandle){
+			if(!load—apa){
+				load—apa=true;
+				return;
+			}
+			WaitForMultipleObjects( 1,&loadHandle, TRUE, INFINITE);
+			CloseHandle(loadHandle);
+			loadHandle=0;
+		}
+	}
+
+
 
 } // namespace Application
