@@ -24,8 +24,9 @@ Contiene la implementación de la clase CMap, Un mapa lógico.
 #include "Logic/Messages/MessageHudDebugData.h"
 
 #include <cassert>
-
 #include <fstream>
+
+using namespace std;
 
 // HACK. Debería leerse de algún fichero de configuración
 #define MAP_FILE_PATH "./media/maps/"
@@ -100,15 +101,18 @@ namespace Logic {
 		_fixedTimeStep = 16;
 		Graphics::CServer::getSingletonPtr()->setScene(_scene);
 
-		TEntityMap::const_iterator it, end;
+		/*TEntityMap::const_iterator it, end;
 		end = _entityMap.end();
-		it = _entityMap.begin();
+		it = _entityMap.begin();*/
+
+		list<CEntity*>::const_iterator it = _entityList.begin();
+		list<CEntity*>::const_iterator end = _entityList.end();
 
 		bool correct = true;
 
 		// Activamos todas las entidades registradas en el mapa.
-		for(; it != end; it++)
-			correct = (*it).second->activate() && correct;
+		for(; it != end; ++it)
+			correct = (*it)->activate() && correct;
 
 		return correct;
 
@@ -117,14 +121,19 @@ namespace Logic {
 	//--------------------------------------------------------
 
 	void CMap::deactivate() {
-		TEntityMap::const_iterator it, end;
+		/*TEntityMap::const_iterator it, end;
 		end = _entityMap.end();
-		it = _entityMap.begin();
+		it = _entityMap.begin();*/
+
+		list<CEntity*>::const_iterator it = _entityList.begin();
+		list<CEntity*>::const_iterator end = _entityList.end();
 
 		// Desactivamos todas las entidades activas registradas en el mapa.
-		for(; it != end; it++)
-			if((*it).second->isActivated())
-				(*it).second->deactivate();
+		for(; it != end; ++it) {
+			if((*it)->isActivated()) {
+				(*it)->deactivate();
+			}
+		}
 
 		Graphics::CServer::getSingletonPtr()->setScene(0);
 
@@ -142,10 +151,17 @@ namespace Logic {
 
 	void CMap::start() {
 		// Ejecutamos el start de todas nuestras entidades
-		TEntityMap::const_iterator it = _entityMap.begin();
+		/*TEntityMap::const_iterator it = _entityMap.begin();
 		for(; it != _entityMap.end(); ++it ) {
 			// Ejecutamos el start de todas las entidades
 			it->second->start();
+		}*/
+
+		list<CEntity*>::const_iterator it = _entityList.begin();
+		list<CEntity*>::const_iterator end = _entityList.end();
+
+		for(; it != end; ++it) {
+			(*it)->start();
 		}
 	}
 
@@ -200,9 +216,16 @@ namespace Logic {
 
 	void CMap::processComponentMessages() {
 		// Ejecutamos el tick de todas nuestras entidades
-		TEntityMap::const_iterator it = _entityMap.begin();
+		/*TEntityMap::const_iterator it = _entityMap.begin();
 		for(; it != _entityMap.end(); ++it) {
 			it->second->processComponentMessages();
+		}*/
+
+		list<CEntity*>::const_iterator it = _entityList.begin();
+		list<CEntity*>::const_iterator end = _entityList.end();
+
+		for(; it != end; ++it) {
+			(*it)->processComponentMessages();
 		}
 	}
 

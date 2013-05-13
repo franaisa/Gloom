@@ -14,6 +14,7 @@ Contiene la declaración de la clase CMap, Un mapa lógico.
 #include <map>
 #include <set>
 #include <list>
+#include <unordered_map>
 #include "EntityID.h"
 
 // Predeclaración de clases para ahorrar tiempo de compilación
@@ -222,15 +223,26 @@ namespace Logic
 		*/
 		std::list< std::pair<CEntity*, unsigned int> > _entitiesToBeDeleted;
 
+		struct EntityInfo {
+			CEntity* _entityPtr;
+			std::list<CEntity*>::iterator _processIterator;
+			std::list<CEntity*>::iterator _tickIterator;
+			std::list<CEntity*>::iterator _fixedTickIterator;
+		};
+
+		std::unordered_map<TEntityID, EntityInfo> _entityInfoTable;
+
+		std::list<CEntity*> _entityList;
+
 		/**
 		Tipo tabla de entidades de mapa.
 		*/
-		typedef std::map<TEntityID, CEntity*> TEntityMap;
+		//typedef std::map<TEntityID, CEntity*> TEntityMap;
 
 		/**
 		tabla con las entidades del mapa localizadas por su ID.
 		*/
-		TEntityMap _entityMap;
+		//TEntityMap _entityMap;
 
 		std::list<CEntity*> _entitiesWithTick;
 		std::list<CEntity*> _entitiesWithFixedTick;

@@ -43,7 +43,7 @@ namespace Logic {
 		_ticksPerSample = entityInfo->getIntAttribute("ticksPerSample");
 		// Cada cuantas muestras tomamos una snapshot
 		_samplesPerSnapshot = entityInfo->getIntAttribute("samplesPerSnapshot");
-
+		
 		return true;
 	}
 
