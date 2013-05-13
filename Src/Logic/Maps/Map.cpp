@@ -277,13 +277,29 @@ namespace Logic {
 	typedef std::pair<TEntityID,CEntity*> TEntityPair;
 
 	void CMap::addEntity(CEntity *entity) {
-		if(_entityMap.count(entity->getEntityID()) == 0) {
-			TEntityPair elem(entity->getEntityID(), entity);
-			_entityMap.insert(elem);
+		// HACER INSERT, no me vale el push_back.. o utilizar un reverse iterator!!
+		std::list<CEntity*>::const_iterator listIt = _entityList.push_back(entity);
+		std::list<CEntity*>::const_iterator tickIt = _entitiesWithTick.push_back(entity);
+		std::list<CEntity*>::const_iterator fixedTickIt = _entitiesWithFixedTick.push_back(entity);
+
+		TEntityID entityId = entity->getEntityID();
+		// Añadimos la entidad si no existia
+		if( _entityInfoTable.find(entityId) == _entityInfoTable.end() ) {
+			EntityInfo info;
+			info._entityPtr = entity;
+			info._fixedTickIterator = fixedTickIt;
+			info._processIterator = listIt;
+			info._tickIterator = tickIt;
+			
+			_entityInfoTable[entityId] = info;
 		}
 
-		_entitiesWithTick.push_back(entity);
-		_entitiesWithFixedTick.push_back(entity);
+		/*if(_entityMap.count(entity->getEntityID()) == 0) {
+			TEntityPair elem(entity->getEntityID(), entity);
+			_entityMap.insert(elem);
+		}*/
+
+		
 	} // addEntity
 
 	//--------------------------------------------------------
