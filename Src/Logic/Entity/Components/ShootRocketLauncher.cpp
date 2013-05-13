@@ -69,20 +69,20 @@ namespace Logic {
 		Vector3 directionNormalise=Math::getDirection(_entity->getOrientation());
 		directionNormalise.normalise();
 		Vector3 outPosition = _entity->getPosition() +Vector3(0,_heightShoot,0)+directionNormalise*15;//Nos separamos lo suficiente
-		std::cout << "Posicion LOGICA del jugador: " << _entity->getPosition()+Vector3(0,_heightShoot,0) << std::endl;
+		//std::cout << "Posicion LOGICA del jugador: " << _entity->getPosition()+Vector3(0,_heightShoot,0) << std::endl;
 		//std::cout << "Posicion FISICA del jugador: " << _entity->getComponent<CPhysicController>("CPhysicController")->getPhysicPosition()+Vector3(0,_heightShoot,0) << std::endl;
-		std::cout << "El punto exterior para hacer el punto de impacto es: " << outPosition << std::endl;
+		//std::cout << "El punto exterior para hacer el punto de impacto es: " << outPosition << std::endl;
 		//std::cout << "La distancia entre el jugador y el punto exterior es: " << outPosition.distance(_entity->getPosition() +Vector3(0,_heightShoot,0)) << std::endl;
 		Vector3 inverseDirection=directionNormalise*-1;
 		Ray ray(outPosition, inverseDirection);
 		// Dibujamos el rayo en ogre para poder depurar
-		drawRaycast(ray);
+		//drawRaycast(ray);
 		Vector3 capsulleCollisionPoint=Physics::CServer::getSingletonPtr()->raycastClosestSpecificPoint(ray, 30, _entity->getEntityID());
-		if( capsulleCollisionPoint!=Vector3(-5,-5,-5) ){
+		/*if( capsulleCollisionPoint!=Vector3(-5,-5,-5) ){
 			std::cout << "El punto de choque con la capsula es: "<< capsulleCollisionPoint  <<std::endl;
 		}
 		else
-			std::cout << "Algo hay mal" << std::endl;
+			std::cout << "Algo hay mal" << std::endl;*/
 
 		//Paso2
 		//Separamos el cohete de la capsula en la direccion en la que se apuntaba con el radio(o más por interpolamierder)
@@ -126,7 +126,6 @@ namespace Logic {
 			float distance=capsulleCollisionPoint.distance(separationPoint);
 			Ray ray(capsulleCollisionPoint, directionNormalise);
 			if(Physics::CServer::getSingletonPtr()->raycastClosestInverse(ray, distance,_entity->getEntityID()) != NULL){
-				std::cout << "El rayo toca por lo que hay que lanzar un cohete falso"<< std::endl;
 				noDistance=true;
 			}
 		}
@@ -163,7 +162,6 @@ namespace Logic {
 		Map::CEntity *entityInfoRocket = CEntityFactory::getSingletonPtr()->getInfo("Rocket");
 		float yaw=Math::fromRadiansToDegrees(_entity->getYaw())+180; //+180 porque esta del reves el modelo cohete	
 		float pitch=360-Math::fromRadiansToDegrees(_entity->getPitch());
-		std::cout << "El punto de separacion es : " << separationPoint << std::endl;
 		CEntity* rocket = CEntityFactory::getSingletonPtr()->createEntityWithPositionAndOrientation(
 			entityInfoRocket, Logic::CServer::getSingletonPtr()->getMap(), separationPoint, yaw, pitch, false);
 		assert(rocket != NULL);

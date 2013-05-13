@@ -440,6 +440,7 @@ namespace Logic
 				msgType == Message::HUD_SHIELD		|| 
 				msgType == Message::HUD_AMMO		|| 
 				msgType == Message::HUD_WEAPON		|| 
+				msgType == Message::HUD_DISPERSION  ||
 				msgType == Message::HUD_SPAWN		|| 
 				msgType == Message::HUD_DEBUG		|| 
 				msgType == Message::HUD_DEBUG_DATA	||
@@ -469,6 +470,10 @@ namespace Logic
 			case Message::HUD_WEAPON: {
 				std::shared_ptr<CMessageHudWeapon> hudWeaponMsg = std::static_pointer_cast<CMessageHudWeapon>(message);
 				hudWeapon( hudWeaponMsg->getAmmo(), hudWeaponMsg->getWeapon() );
+				break;
+			}
+ 			case Message::HUD_DISPERSION: {
+				hudDispersion();
 				break;
 			}
 			case Message::HUD_SPAWN: {
@@ -584,10 +589,17 @@ namespace Logic
 
 	void CHudOverlay::hudSpawn(int spawmTime){
 		std::stringstream sSpawn;
-		sSpawn << "HAS MUERTO, LOSER \n Tiempo de respawn: " << spawmTime;
+		sSpawn << "OWNED \n Tiempo de respawn: " << spawmTime;
 		_textAreaDie->setText(sSpawn.str());
 	}
 	//-------------------------------------------------------
+
+	void CHudOverlay::hudDispersion(){
+		//Aplicamos dispersion
+		
+	}
+	//-------------------------------------------------------
+
 
 	void CHudOverlay::hudDeath(){
 		if(_overlayPlay->isVisible()){
