@@ -1,17 +1,35 @@
 float4 ambient;
 
+float4 cameraPosition;
+
 sampler diffuseTexture: register(s0);
 sampler specularTexture: register(s1);
 sampler normalTexture: register(s2);
 
-struct PsInput
+struct VsInput
 {
+	float4 position : POSITION;
+	float3 normal : NORMAL;
 	float2 uv0 : TEXCOORD0;
 };
 
+struct VsOutput
+{
+	float2 uv0 : TEXCOORD0;
+	float4 position : POSITION;
+};
 
 
-float4 ilumination_ps(const PsInput psIn) : COLOR {
+VsOutput ilumination_vs(const VsInput vsIn){
+	VsOutput result;
+	
+	result.uv0 = vsIn.uv0;
+	result.position = vsIn.position;
+	
+	return result;
+}
+
+float4 ilumination_ps(const VsOutput psIn) : COLOR {
 
 	float4 imageColor = 0;
 	
@@ -19,10 +37,10 @@ float4 ilumination_ps(const PsInput psIn) : COLOR {
 	float4 emissiveColor = 0;
 	
 	// Diffuse
-	float4 diffuseColor = tex2D(diffuseTexture, psIn.uv0);
+	float4 diffuseColor = tex2D(diffuseTexture, psIn.uv0) /2;
 	
 	// Ambient
-	float4 ambientColor = diffuseColor * ambient;
+	float4 ambientColor = diffuseColor * ambient /2;
 	
 	//specular
 	float4 specularColor = tex2D(specularTexture, psIn.uv0);
@@ -33,7 +51,7 @@ float4 ilumination_ps(const PsInput psIn) : COLOR {
 	
 	//calculo general
 	//imageColor = emissiveColor + ambientColor + diffuseColor + specularColor;
-	imageColor = diffuseColor;
+	imageColor = ambientColor + diffuseColor;
 	return imageColor;
 }
 
