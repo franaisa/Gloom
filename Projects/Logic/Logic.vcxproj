@@ -82,6 +82,7 @@
     <ClCompile Include="..\..\Src\Logic\Entity\Components\CameraFeedbackNotifier.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\ClientRespawn.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\DamageTrigger.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\PositionSnapshot.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\Elevator.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\ElevatorTrigger.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\FloatingMovement.cpp" />
@@ -103,7 +104,8 @@
     <ClCompile Include="..\..\Src\Logic\Entity\Components\PhysicController.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\PhysicDynamicEntity.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\PhysicStaticEntity.cpp" />
-    <ClCompile Include="..\..\Src\Logic\Entity\Components\PlayerSnapshot.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\TransformSnapshot.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\PositionInterpolator.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\RocketController.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\RocketControllerClient.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\ScreamerClient.cpp" />
@@ -123,12 +125,12 @@
     <ClCompile Include="..\..\Src\Logic\Entity\Components\Hound.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\Shadow.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\SnapshotGenerator.cpp" />
-    <ClCompile Include="..\..\Src\Logic\Entity\Components\SnapshotInterpolator.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\SpawnItemManager.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\SpawnPlayer.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\SpectatorController.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\Spike.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\SpikeTrap.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\TransformInterpolator.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\UpdateClientPosition.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\WeaponsManager.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\SwitchPosition.cpp" />
@@ -217,6 +219,7 @@
     <ClInclude Include="..\..\Src\Logic\Entity\Components\Audio.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\CameraFeedbackNotifier.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\ClientRespawn.h" />
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\PositionSnapshot.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\Elevator.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\ElevatorTrigger.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\FloatingMovement.h" />
@@ -241,7 +244,8 @@
     <ClInclude Include="..\..\Src\Logic\Entity\Components\Life.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\PhysicController.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\PhysicStaticEntity.h" />
-    <ClInclude Include="..\..\Src\Logic\Entity\Components\PlayerSnapshot.h" />
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\TransformSnapshot.h" />
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\PositionInterpolator.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\RocketController.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\RocketControllerClient.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\ScreamerClient.h" />
@@ -261,12 +265,12 @@
     <ClInclude Include="..\..\Src\Logic\Entity\Components\Hound.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\Shadow.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\SnapshotGenerator.h" />
-    <ClInclude Include="..\..\Src\Logic\Entity\Components\SnapshotInterpolator.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\SpawnItemManager.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\SpawnPlayer.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\SpectatorController.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\Spike.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\SpikeTrap.h" />
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\TransformInterpolator.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\UpdateClientPosition.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\WeaponsManager.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\SwitchPosition.h" />

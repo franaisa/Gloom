@@ -18,7 +18,9 @@ namespace Logic {
 	
 	//IMP_FACTORY(CSnapshotGenerator);
 
-	CSnapshotGenerator::CSnapshotGenerator() : _ticksPerSampleCounter(0), 
+	// Arranco en 1 para tomar la snapshot de la primera posicion, las demas
+	// ya van solas
+	CSnapshotGenerator::CSnapshotGenerator() : _ticksPerSampleCounter(1), 
 											   _samplesPerSnapshotCounter(0) {
 		// Nada que hacer
 	}
@@ -34,15 +36,13 @@ namespace Logic {
 	bool CSnapshotGenerator::spawn(CEntity* entity, CMap *map, const Map::CEntity *entityInfo) {
 		if( !IComponent::spawn(entity, map, entityInfo) ) return false;
 
-		//assert( entityInfo->hasAttribute("ticksPerSample") );
-		//assert( entityInfo->hasAttribute("samplesPerSnapshot") );
+		assert( entityInfo->hasAttribute("ticksPerSample") );
+		assert( entityInfo->hasAttribute("samplesPerSnapshot") );
 
 		// Cada cuantos fixed ticks tomamos una muestra
-		//_ticksPerSample = entityInfo->getIntAttribute("ticksPerSample");
+		_ticksPerSample = entityInfo->getIntAttribute("ticksPerSample");
 		// Cada cuantas muestras tomamos una snapshot
-		//_samplesPerSnapshot = entityInfo->getIntAttribute("samplesPerSnapshot");
-		_ticksPerSample = 2;
-		_samplesPerSnapshot = 3;
+		_samplesPerSnapshot = entityInfo->getIntAttribute("samplesPerSnapshot");
 
 		return true;
 	}
@@ -50,11 +50,11 @@ namespace Logic {
 	//__________________________________________________________________
 
 	void CSnapshotGenerator::onFixedTick(unsigned int msecs) {
-		if( ++_ticksPerSampleCounter == _ticksPerSample ) {
+		if(--_ticksPerSampleCounter == 0) {
 			takeSnapshot();
-			_ticksPerSampleCounter = 0;
+			_ticksPerSampleCounter = _ticksPerSample;
 			
-			if( ++_samplesPerSnapshotCounter == _samplesPerSnapshot) {
+			if(++_samplesPerSnapshotCounter == _samplesPerSnapshot) {
 				sendSnapshot();
 				_samplesPerSnapshotCounter = 0;
 			}

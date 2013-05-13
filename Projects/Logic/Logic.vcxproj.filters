@@ -499,16 +499,22 @@
     <ClCompile Include="..\..\Src\Logic\Entity\Components\SnapshotGenerator.cpp">
       <Filter>Entity\Components\Network\Source</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Src\Logic\Entity\Components\PlayerSnapshot.cpp">
-      <Filter>Entity\Components\Network\Source</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Src\Logic\Messages\MessageTransformSnapshot.cpp">
       <Filter>Messages\Source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Src\Logic\Messages\MessagePositionSnapshot.cpp">
       <Filter>Messages\Source</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Src\Logic\Entity\Components\SnapshotInterpolator.cpp">
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\PositionInterpolator.cpp">
+      <Filter>Entity\Components\Network\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\TransformInterpolator.cpp">
+      <Filter>Entity\Components\Network\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\PositionSnapshot.cpp">
+      <Filter>Entity\Components\Network\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\TransformSnapshot.cpp">
       <Filter>Entity\Components\Network\Source</Filter>
     </ClCompile>
   </ItemGroup>
@@ -918,16 +924,22 @@
     <ClInclude Include="..\..\Src\Logic\Entity\Components\SnapshotGenerator.h">
       <Filter>Entity\Components\Network\Header</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Src\Logic\Entity\Components\PlayerSnapshot.h">
-      <Filter>Entity\Components\Network\Header</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Messages\MessageTransformSnapshot.h">
       <Filter>Messages\Header</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Messages\MessagePositionSnapshot.h">
       <Filter>Messages\Header</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Src\Logic\Entity\Components\SnapshotInterpolator.h">
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\PositionInterpolator.h">
+      <Filter>Entity\Components\Network\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\TransformInterpolator.h">
+      <Filter>Entity\Components\Network\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\PositionSnapshot.h">
+      <Filter>Entity\Components\Network\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\TransformSnapshot.h">
       <Filter>Entity\Components\Network\Header</Filter>
     </ClInclude>
   </ItemGroup>

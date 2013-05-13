@@ -53,8 +53,8 @@ Map = {
 		dodgeForce = {2,2,2},
 		rollCamera = 0.15,
 
-		snapshotsPerSecond = 20,
-		samplesPerSnapshot = 5,
+		ticksPerSample = 2,
+		samplesPerSnapshot = 3,
 
 		physic_shape = "capsule",
 		physic_radius = 3,
@@ -235,8 +235,8 @@ Map = {
 		dodgeForce = {2,2,2},
 		rollCamera = 0.15,
 
-		snapshotsPerSecond = 20,
-		samplesPerSnapshot = 5,
+		ticksPerSample = 2,
+		samplesPerSnapshot = 3,
 		
 		physic_shape = "capsule",
 		physic_radius = 3,
@@ -411,8 +411,8 @@ Map = {
 		dodgeForce = {2,2,2},
 		rollCamera = 0.15,
 
-		snapshotsPerSecond = 20,
-		samplesPerSnapshot = 5,
+		ticksPerSample = 2,
+		samplesPerSnapshot = 3,
 		
 		physic_shape = "capsule",
 		physic_radius = 3,
@@ -587,8 +587,8 @@ Map = {
 		dodgeForce = {2,2,2},
 		rollCamera = 0.15,
 
-		snapshotsPerSecond = 20,
-		samplesPerSnapshot = 5,
+		ticksPerSample = 2,
+		samplesPerSnapshot = 3,
 		
 		physic_shape = "capsule",
 		physic_radius = 3,
@@ -763,8 +763,8 @@ Map = {
 		dodgeForce = {2,2,2},
 		rollCamera = 0.15,
 
-		snapshotsPerSecond = 20,
-		samplesPerSnapshot = 5,
+		ticksPerSample = 2,
+		samplesPerSnapshot = 3,
 
 		physic_shape = "capsule",
 		physic_radius = 3,
@@ -948,8 +948,8 @@ Map = {
 		dodgeForce = {2,2,2},
 		rollCamera = 0.15,
 
-		snapshotsPerSecond = 20,
-		samplesPerSnapshot = 5,
+		ticksPerSample = 2,
+		samplesPerSnapshot = 3,
 		
 		physic_shape = "capsule",
 		physic_radius = 3,
@@ -1127,8 +1127,8 @@ Map = {
 		dodgeForce = {2,2,2},
 		rollCamera = 0.15,
 
-		snapshotsPerSecond = 20,
-		samplesPerSnapshot = 5,
+		ticksPerSample = 2,
+		samplesPerSnapshot = 3,
 
 		physic_shape = "capsule",
 		physic_radius = 3,
@@ -1322,8 +1322,8 @@ Map = {
 		dodgeForce = {2,2,2},
 		rollCamera = 0.15,
 
-		snapshotsPerSecond = 20,
-		samplesPerSnapshot = 5,
+		ticksPerSample = 2,
+		samplesPerSnapshot = 3,
 
 		physic_shape = "capsule",
 		physic_radius = 3,
