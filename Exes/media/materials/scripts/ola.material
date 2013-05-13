@@ -1,16 +1,49 @@
+fragment_program ilumination_ps cg
+{
+	source ilumination.cg
+	entry_point ilumination_ps
+	profiles ps_2_x arbfp1
+}
+
 material Material#25
 {
+
 	technique
 	{
+		set $ambient "0 0 0 1"
+		set $diffuse "1 1 1 1"
+		set $specular "2 2 2 100"
+		set $shininess "60"
 		
 		pass
 		{
 			illumination_stage decal
-
-
+			
+			fragment_program_ref ilumination_ps
+			{
+				param_named diffuse $ambient;
+				param_named diffuse $diffuse;
+				param_named specular $specular;
+				
+				param_named_auto ambient ambient_light_colour
+				
+			}
+			
             texture_unit diffuseMap
             {
                 texture piedra_COLOR2.tga
+				
+				filtering anisotropic
+            }
+			texture_unit specularMap
+            {
+                texture piedra_SPEC.tga
+				
+				filtering anisotropic
+            }
+			texture_unit normalMap
+            {
+                texture piedra_NRM.tga
 				
 				filtering anisotropic
             }

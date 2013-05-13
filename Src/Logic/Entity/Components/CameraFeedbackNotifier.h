@@ -28,7 +28,7 @@ namespace Logic {
 }
 
 namespace Logic {
-	
+
 	/**
 	
     @ingroup logicGroup
@@ -110,6 +110,8 @@ namespace Logic {
 
 		void walkEffect(unsigned int msecs);
 
+		void walkRecovery(unsigned int msecs);
+
 		void playerIsTouchingGround(float hitForce);
 
 		void landEffect(unsigned int msecs);
@@ -141,6 +143,20 @@ namespace Logic {
 		CCamera* _cameraComponent;
 
 		//______________________
+
+		struct CameraWalkAnim {
+			float verticalSpeed;
+			float verticalOffset;
+			float currentVerticalPos;
+
+			float horizontalSpeed;
+			float horizontalOffset;
+			float currentHorizontalPos;
+		};
+
+		CameraWalkAnim _walkAnim;
+
+		int _strafingDir;
 
 		/*float _currentShake;
 		float _shakeSpeed;

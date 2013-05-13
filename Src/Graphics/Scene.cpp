@@ -128,7 +128,7 @@ namespace Graphics
 		/*
 		_sceneMgr->setAmbientLight(Ogre::ColourValue(1,1,1));
 		/*/
-		_sceneMgr->setAmbientLight(Ogre::ColourValue(0.7f,0.7f,0.7f));
+		_sceneMgr->setAmbientLight(Ogre::ColourValue(0.3f,0.3f,0.3f));
 		/* */
 		
 		_compositorManager->addCompositor(_camera->getOgreCamera()->getViewport(), "Glow");

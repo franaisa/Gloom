@@ -102,7 +102,9 @@ namespace Logic
 
 		void setPosition(const Vector3& position);
 
-		Vector3 getPosition();
+		Vector3 getPosition() const;
+
+		Quaternion getOrientation() const;
 		
 		void setVerticalOffset(float y);
 

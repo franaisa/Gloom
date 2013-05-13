@@ -1,0 +1,39 @@
+float4 ambient;
+
+sampler diffuseTexture: register(s0);
+sampler specularTexture: register(s1);
+sampler normalTexture: register(s2);
+
+struct PsInput
+{
+	float2 uv0 : TEXCOORD0;
+};
+
+
+
+float4 ilumination_ps(const PsInput psIn) : COLOR {
+
+	float4 imageColor = 0;
+	
+	// emisive
+	float4 emissiveColor = 0;
+	
+	// Diffuse
+	float4 diffuseColor = tex2D(diffuseTexture, psIn.uv0);
+	
+	// Ambient
+	float4 ambientColor = diffuseColor * ambient;
+	
+	//specular
+	float4 specularColor = tex2D(specularTexture, psIn.uv0);
+	
+	//normal
+	float4 normalColor = tex2D(normalTexture, psIn.uv0);
+
+	
+	//calculo general
+	//imageColor = emissiveColor + ambientColor + diffuseColor + specularColor;
+	imageColor = diffuseColor;
+	return imageColor;
+}
+
