@@ -19,6 +19,7 @@ Contiene la implementación del componente que gestiona las armas y que administr
 #include "Logic/Entity/Components/Life.h"
 #include "Logic/Entity/Components/Shoot.h"
 #include "Logic/Messages/MessageAudio.h"
+#include "Logic/Messages/MessageHudDispersion.h"
 
 #include "Logic/Messages/MessageControl.h"
 #include "Logic/Messages/MessageDamaged.h"
@@ -84,6 +85,10 @@ namespace Logic {
 			audioMsg->setNotIfPlay(false);
 			audioMsg->setIsPlayer(_entity->isPlayer());
 			_entity->emitMessage(audioMsg);
+
+			//Mensaje de dispersion en mira
+			std::shared_ptr<CMessageHudDispersion> dispersionMsg = std::make_shared<CMessageHudDispersion>();
+			_entity->emitMessage(dispersionMsg);
 		}
 		else if(_currentAmmo == 0) {
 			// Ejecutar sonidos y animaciones de falta de balas
