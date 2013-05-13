@@ -338,15 +338,10 @@ namespace Application {
 
 	void CLobbyClientState::tick(unsigned int msecs){
 		CApplicationState::tick(msecs);
-		if(loadHandle){
-			if(!load—apa){
-				load—apa=true;
-				return;
-			}
-			WaitForMultipleObjects( 1,&loadHandle, TRUE, INFINITE);
+
+		//asking the thread for completion ... if not the main thread crashes
+		if (WaitForSingleObject (loadHandle, 0) == WAIT_OBJECT_0)
 			CloseHandle(loadHandle);
-			loadHandle=0;
-		}
 	}
 
 
