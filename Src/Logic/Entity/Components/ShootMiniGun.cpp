@@ -41,7 +41,7 @@ namespace Logic {
 		else{
 			if(_pressThenShoot){
 				_canShoot=true;
-				shoot();
+				primaryShoot();
 			}
 		}
 	} // tick

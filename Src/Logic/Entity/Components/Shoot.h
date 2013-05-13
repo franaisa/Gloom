@@ -138,10 +138,31 @@ namespace Logic {
 
 
 		/**
-		Este es el método que todas las armas deben redefinir. Es el que implementa
+		Este es el método que todas las armas deben redefinir para el disparo principal. Es el que implementa
 		la acción de disparar.
 		*/
-		virtual void shoot() = 0;
+		virtual void primaryShoot() = 0;
+
+		//__________________________________________________________________
+
+		/**
+		Este es el método que todas las armas deben redefinir para el disparo secundario.
+		*/
+		virtual void secondaryShoot(){};
+
+		//__________________________________________________________________
+
+		/**
+		Este es el método que todas las armas deben redefinir para el disparo secundario.
+		*/
+		virtual void stopPrimaryShoot(){};
+
+		//__________________________________________________________________
+
+		/**
+		Este es el método que todas las armas deben redefinir para el disparo secundario.
+		*/
+		virtual void stopSecondaryShoot(){};
 
 		//__________________________________________________________________
 

@@ -201,7 +201,7 @@ namespace Input {
 				break;
 			case Input::Button::RIGHT:
 				//m->setType(Logic::Control::RIGHT_CLICK);
-				m->setType(Logic::Control::USE_PRIMARY_SKILL);
+				m->setType(Logic::Control::RIGHT_CLICK);
 				break;
 			case Input::Button::MIDDLE:
 				//m->setType(Logic::Control::MIDDLE_CLICK);

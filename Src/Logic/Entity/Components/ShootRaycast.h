@@ -96,7 +96,7 @@ namespace Logic {
 		Notar, que la función shoot no se ha hecho estática en CShoot porque los
 		proyectiles y los raycast tienen comportamientos muy distintos.
 		*/
-		virtual void shoot();
+		virtual void primaryShoot();
 
 		
 		// =======================================================================

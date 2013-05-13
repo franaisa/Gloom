@@ -49,7 +49,6 @@ namespace Logic {
 	CShoot::~CShoot() {
 		// Nada que destruir
 	}
-
 	//__________________________________________________________________
 
 	bool CShoot::spawn(CEntity *entity, CMap *map, const Map::CEntity *entityInfo) {
@@ -83,13 +82,11 @@ namespace Logic {
 		}
 		return true;
 	} // spawn
-	
 	//__________________________________________________________________
 
 	bool CShoot::accept(const std::shared_ptr<CMessage>& message) {
 		return _isInUse && message->getMessageType() == Message::CONTROL;
 	} // accept
-	
 	//__________________________________________________________________
 
 	void CShoot::process(const std::shared_ptr<CMessage>& message) {
@@ -98,16 +95,15 @@ namespace Logic {
 				ControlType type = std::static_pointer_cast<CMessageControl>(message)->getType();
 				
 				if(type == Control::LEFT_CLICK) {
-					shoot();
+					primaryShoot();
 				}
 				else if(type == Control::RIGHT_CLICK) {
-					printf("\nx: %f, y: %f, z: %f",_entity->getPosition().x, _entity->getPosition().y, _entity->getPosition().z);
+					secondaryShoot();
 				}
 				break;
 			}
 		}
 	} // process
-
 	//__________________________________________________________________
 
 	void CShoot::onTick(unsigned int msecs) {
@@ -117,7 +113,6 @@ namespace Logic {
 			_canShoot = true;
 
 	} // tick
-
 	//__________________________________________________________________
 
 	void CShoot::addAmmo(int weapon, int ammo, bool iAmCatch) {
@@ -133,7 +128,6 @@ namespace Logic {
 			_entity->emitMessage(message);
 		}
 	} // addAmmo
-
 	//__________________________________________________________________
 
 	void CShoot::decrementAmmo() {
@@ -148,14 +142,12 @@ namespace Logic {
 		message->setWeapon(_id);
 		_entity->emitMessage(message);
 	}// decrementAmmo
-
 	//__________________________________________________________________
 
 	void CShoot::resetAmmo() {
 		//si yo soy el weapon
 		_currentAmmo = 0;
 	} // resetAmmo
-	
 	//__________________________________________________________________
 
 
@@ -177,7 +169,6 @@ namespace Logic {
 
 		
 	}
-	
 	//__________________________________________________________________
 
 	void CShoot::incrementDamage(int percent) {
@@ -190,7 +181,6 @@ namespace Logic {
 			_damage+=(percent*_damage)/100;
 		}
 	} // incrementDamage
-	
 	//__________________________________________________________________
 
 	void CShoot::reduceCooldown(int percent) {
@@ -204,7 +194,6 @@ namespace Logic {
 			_cooldown=_cooldown-(percent*_cooldown)/100;
 		}
 	} // reduceCooldown
-
 	//__________________________________________________________________
 
 	void CShoot::inUse(bool state) {
@@ -218,6 +207,8 @@ namespace Logic {
 			_entity->emitMessage(message);
 		}
 	}
+	//__________________________________________________________________
 
+	
 } // namespace Logic
 
