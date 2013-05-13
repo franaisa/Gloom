@@ -43,22 +43,21 @@ namespace Logic {
 														 _playerIsWalking(false),
 														 _playerIsLanding(false),
 														 _landForce(0),
+														 _strafingDir(0),
 														 _landRecoverySpeed(0.007f),
 														 _currentLandOffset(0),
 														 _stepForce(0.00008f),
 														 _stepRecoveryAccel(0.000025f),
 														 _currentWalkingRoll(0) {
 
-		/*_currentShake = 0;
-		_shakeSpeed = 0.015f;
-		_shakeOffset = 0.05f;*/
-		_walkAnim.currentHorizontalPos = 0;
-		_walkAnim.horizontalSpeed = 0.0075f;
-		_walkAnim.horizontalOffset = 0.05f;
 
-		_walkAnim.currentVerticalPos = 0;
+		_walkAnim.currentHorizontalPos = Math::HALF_PI;
+		_walkAnim.horizontalSpeed = 0.0075f;
+		_walkAnim.horizontalOffset = 0.06f;
+
+		_walkAnim.currentVerticalPos = Math::HALF_PI;
 		_walkAnim.verticalSpeed = _walkAnim.horizontalSpeed * 2;
-		_walkAnim.verticalOffset = 0.05f;
+		_walkAnim.verticalOffset = 0.06f;
 	}
 
 	//________________________________________________________________________
@@ -139,9 +138,12 @@ namespace Logic {
 	//________________________________________________________________________
 
 	void CCameraFeedbackNotifier::onFixedTick(unsigned int msecs) {
-		if(_playerIsWalking) {
+		if(_playerIsLanding) 
+			landEffect(msecs);
+		else if(_playerIsWalking && !_playerIsSideColliding)
 			walkEffect(msecs);
-		}
+		else
+			offsetRecovery(msecs);
 		
 		if(_effectIsActivated){
 			_scene->updateCompositorVariable(_effect, _strengthEffect, 1+_timestamp*0.01);
@@ -151,10 +153,6 @@ namespace Logic {
 				_scene->setCompositorVisible(_effect, false);
 			}
 		}
-
-		if(_playerIsLanding) {
-			landEffect(msecs);
-		}	
 
 		//Ahora actualizamos el motion blur
 		float blur = (_avatarc->getVelocity().length()/_maxVelocity)/2;
@@ -181,14 +179,14 @@ namespace Logic {
 				_stepForce *= -1;
 			}
 		}*/
-
-		if(_playerIsWalking == walking) return;
-
 		_playerIsWalking = walking;
-		if(!_playerIsWalking) {
-			_walkAnim.currentVerticalPos = 0;
-			_cameraComponent->setOffset(Vector3::ZERO);
-		}
+		_strafingDir = direction;
+	}
+
+	//________________________________________________________________________
+
+	void CCameraFeedbackNotifier::offsetRecovery(unsigned int msecs) {
+		_cameraComponent->setOffset( _cameraComponent->getOffset() * 0.95f );
 	}
 
 	//________________________________________________________________________
@@ -211,25 +209,29 @@ namespace Logic {
 
 		_cameraComponent->rollCamera(_currentWalkingRoll);*/
 		
-		Matrix4 transform = _entity->getTransform();
-		Math::yaw(Math::HALF_PI, transform);
-		Vector3 horizontal = Math::getDirection(transform);
-		
 		Vector3 offset = _cameraComponent->getOffset();
-		_walkAnim.currentHorizontalPos += _walkAnim.horizontalSpeed * msecs;
-		if(_walkAnim.currentHorizontalPos > 2 * Math::PI) _walkAnim.currentHorizontalPos = 0;
 
-		horizontal.normalise();
-		offset = sin(_walkAnim.currentHorizontalPos) * (horizontal *_walkAnim.horizontalOffset*10);
-		/*
-		float res = sin(_walkAnim.currentHorizontalPos) * _walkAnim.horizontalOffset;
-		offset.x += res;
-		offset.z += res;
-		*/
+		if(_strafingDir == 0) {
+			Matrix4 transform = _entity->getTransform();
+			Math::yaw(Math::HALF_PI, transform);
+			Vector3 horizontal = Math::getDirection(transform);
+
+			_walkAnim.currentHorizontalPos += _walkAnim.horizontalSpeed * msecs;
+			if(_walkAnim.currentHorizontalPos > ((2 * Math::PI) + Math::HALF_PI)) _walkAnim.currentHorizontalPos = Math::HALF_PI;
+
+			// Multiplicamos el vector horizontal normalizado por el desplazamiento y lo sumamos al offset
+			horizontal *= sin(_walkAnim.currentHorizontalPos) * _walkAnim.horizontalOffset;
+			offset += horizontal;
+		}
+		else {
+			offset = offset * Vector3(0.95f, 1.0f, 0.95f);
+		}
+
+
 		_walkAnim.currentVerticalPos += _walkAnim.verticalSpeed * msecs;
-		if(_walkAnim.currentVerticalPos > 2 * Math::PI) _walkAnim.currentVerticalPos = 0;
+		if(_walkAnim.currentVerticalPos > ((2 * Math::PI) + Math::HALF_PI)) _walkAnim.currentVerticalPos = Math::HALF_PI; 
 
-		offset.y += sin(_walkAnim.currentVerticalPos) * _walkAnim.verticalOffset*5;
+		offset.y += sin(_walkAnim.currentVerticalPos) * _walkAnim.verticalOffset;
 		_cameraComponent->setOffset(offset);
 	}
 
@@ -240,6 +242,12 @@ namespace Logic {
 			_playerIsLanding = true;
 			_landForce = hitForce * 0.6;
 		}
+	}
+
+	//________________________________________________________________________
+
+	void CCameraFeedbackNotifier::playerIsSideColliding(bool colliding, float force) {
+		_playerIsSideColliding = colliding;
 	}
 
 	//________________________________________________________________________

@@ -44,7 +44,7 @@ Map = {
 		playerDead = true,
 		
 		acceleration = 0.015,
-		maxVelocity = 1.2,
+		maxVelocity = 1.5,
 		frictionCoef = 14.0,
 		airFrictionCoef = 0.98,
 		gravity = -0.007,
@@ -226,7 +226,7 @@ Map = {
 		playerDead = true,
 		
 		acceleration = 0.015,
-		maxVelocity = 1.2,
+		maxVelocity = 1.5,
 		frictionCoef = 14.0,
 		airFrictionCoef = 0.98,
 		gravity = -0.007,
@@ -402,7 +402,7 @@ Map = {
 		playerDead = false,
 		
 		acceleration = 0.015,
-		maxVelocity = 1.2,
+		maxVelocity = 1.5,
 		frictionCoef = 14.0,
 		airFrictionCoef = 0.98,
 		gravity = -0.007,
@@ -578,7 +578,7 @@ Map = {
 		playerDead = false,
 		
 		acceleration = 0.015,
-		maxVelocity = 1.2,
+		maxVelocity = 1.5,
 		frictionCoef = 14.0,
 		airFrictionCoef = 0.98,
 		gravity = -0.007,
@@ -754,7 +754,7 @@ Map = {
 		playerDead = false,
 		
 		acceleration = 0.015,
-		maxVelocity = 1.2,
+		maxVelocity = 1.5,
 		frictionCoef = 14.0,
 		airFrictionCoef = 0.98,
 		gravity = -0.007,
@@ -939,7 +939,7 @@ Map = {
 		playerDead = true,
 		
 		acceleration = 0.015,
-		maxVelocity = 1.2,
+		maxVelocity = 1.5,
 		frictionCoef = 14.0,
 		airFrictionCoef = 0.98,
 		gravity = -0.007,
@@ -1118,7 +1118,7 @@ Map = {
 		playerDead = false,
 		
 		acceleration = 0.015,
-		maxVelocity = 1.2,
+		maxVelocity = 1.5,
 		frictionCoef = 14.0,
 		airFrictionCoef = 0.98,
 		gravity = -0.007,
@@ -1313,7 +1313,7 @@ Map = {
 		playerDead = false,
 	
 		acceleration = 0.015,
-		maxVelocity = 1.2,
+		maxVelocity = 1.5,
 		frictionCoef = 14.0,
 		airFrictionCoef = 0.98,
 		gravity = -0.007,
@@ -1509,7 +1509,7 @@ Map = {
 		damageOverTime = 1,
 
 		acceleration = 0.015,
-		maxVelocity = 1.2,
+		maxVelocity = 1.5,
 		frictionCoef = 14.0,
 		airFrictionCoef = 0.98,
 		gravity = -0.007,

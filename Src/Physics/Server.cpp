@@ -461,7 +461,7 @@ namespace Physics {
 
 		PxI32 nHits = _scene->raycastMultiple(origin, unitDir, maxDistance, outputFlags, hits, 60, blockingHit); 
 	
-		// Buscar un actot que pertenezca al grupo de colisión indicado
+		// Buscar un actor que no pertenezca al grupo de colisión indicado
 		for (int i = nHits - 1; i >= 0; --i) {
 			PxRigidActor* actor = &hits[i].shape->getActor();
 			PxShapeFlags* flags = &hits[i].shape->getFlags();
@@ -486,9 +486,7 @@ namespace Physics {
 
 	Vector3 CServer::raycastClosestSpecificPoint(const Ray& ray, float maxDist, unsigned int id) const {
 		assert(_scene);
-		std::cout << "Origen: " << ray.getOrigin() << std::endl;
-		std::cout << "Direccion normalizada: " << ray.getDirection() << std::endl;
-		// Establecer parámettros del rayo
+		// Establecer parámetros del rayo
 		PxVec3 origin = Vector3ToPxVec3(ray.getOrigin());      // origen     
 		PxVec3 unitDir = Vector3ToPxVec3(ray.getDirection());  // dirección normalizada   
 		PxReal maxDistance = maxDist;                          // distancia máxima
@@ -501,7 +499,7 @@ namespace Physics {
 
 		PxI32 nHits = _scene->raycastMultiple(origin, unitDir, maxDistance, outputFlags, hits, 60, blockingHit); 
 	
-		// Buscar un actot que pertenezca al grupo de colisión indicado
+		// Buscar un actor que pertenezca al grupo de colisión indicado
 		for (int i = nHits - 1; i >= 0; --i) {
 			PxRigidActor* actor = &hits[i].shape->getActor();
 			PxShapeFlags* flags = &hits[i].shape->getFlags();
@@ -509,7 +507,6 @@ namespace Physics {
 	
 			if(component != NULL) {
 				Logic::CEntity* entityHit = component->getEntity();
-				std::cout << "Nombre de lo tocado: " << entityHit->getName() << std::endl;
 				if(entityHit->getEntityID() == id && !(*flags & PxShapeFlag::eTRIGGER_SHAPE)) {
 					return PxVec3ToVector3(hits[i].impact);
 				}

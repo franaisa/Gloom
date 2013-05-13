@@ -213,7 +213,15 @@ namespace Logic {
 			Vector3 newMom = _entity->getPosition() - oldPosition;
 			_momentum.x=newMom.x;
 			_momentum.z=newMom.z;
+
+			if(_cameraFX != NULL)
+				_cameraFX->playerIsSideColliding( true, _momentum.length() );
 		}
+		else {
+			if(_cameraFX != NULL)
+				_cameraFX->playerIsSideColliding(false, 0);
+		}
+
 	}
 
 	//________________________________________________________________________

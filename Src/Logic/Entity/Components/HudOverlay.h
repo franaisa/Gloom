@@ -120,6 +120,7 @@ namespace Logic
 		void hudWeapon(int ammo, int weapon);
 		void hudAmmo(int ammo, int weapon);
 		void hudSpawn(int spawn);
+		void hudDispersion();
 
 		void hudDeath();
 		void hudRespawn();

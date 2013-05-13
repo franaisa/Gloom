@@ -110,7 +110,11 @@ namespace Logic {
 
 		void walkEffect(unsigned int msecs);
 
+		void offsetRecovery(unsigned int msecs);
+
 		void playerIsTouchingGround(float hitForce);
+
+		void playerIsSideColliding(bool colliding, float force);
 
 		void landEffect(unsigned int msecs);
 
@@ -154,9 +158,9 @@ namespace Logic {
 
 		CameraWalkAnim _walkAnim;
 
-		/*float _currentShake;
-		float _shakeSpeed;
-		float _shakeOffset;*/
+		bool _playerIsSideColliding;
+
+		int _strafingDir;
 
 		// Animacion de strafe
 		float _currentWalkingRoll;
