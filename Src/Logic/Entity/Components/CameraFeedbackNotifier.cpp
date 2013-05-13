@@ -186,7 +186,7 @@ namespace Logic {
 	//________________________________________________________________________
 
 	void CCameraFeedbackNotifier::offsetRecovery(unsigned int msecs) {
-		_cameraComponent->setOffset( _cameraComponent->getOffset() * 0.95f );
+		_cameraComponent->setOffset( _cameraComponent->getOffset() * Vector3(0.75f, 0.95f, 0.75f));
 	}
 
 	//________________________________________________________________________
