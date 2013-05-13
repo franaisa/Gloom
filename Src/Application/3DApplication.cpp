@@ -161,7 +161,7 @@ namespace Application {
 		// TICK DE INPUT
 		Input::CInputManager::getSingletonPtr()->tick();
 		
-		// TICK DE FISICA Y LOGICA
+		// TICK DE LOGICA-FISICA
 		CBaseApplication::tick(msecs);
 
 		// TICK DEL GUI
