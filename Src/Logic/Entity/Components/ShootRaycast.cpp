@@ -78,13 +78,7 @@ namespace Logic {
 				}
 			}
 			//Sonido de disparo
-			std::shared_ptr<CMessageAudio> audioMsg = std::make_shared<CMessageAudio>();
-			audioMsg->setRuta(_audioShoot);
-			audioMsg->setId("audioShoot");
-			audioMsg->setPosition(_entity->getPosition());
-			audioMsg->setNotIfPlay(false);
-			audioMsg->setIsPlayer(_entity->isPlayer());
-			_entity->emitMessage(audioMsg);
+			emitSound(_audioShoot, "audioShoot");
 
 			//Mensaje de dispersion en mira
 			std::shared_ptr<CMessageHudDispersion> dispersionMsg = std::make_shared<CMessageHudDispersion>();
@@ -92,16 +86,14 @@ namespace Logic {
 		}
 		else if(_currentAmmo == 0) {
 			// Ejecutar sonidos y animaciones de falta de balas
-			std::shared_ptr<CMessageAudio> audioMsg = std::make_shared<CMessageAudio>();
-			audioMsg->setRuta(_noAmmo);
-			audioMsg->setId(_entity->getEntityID()+"noAmmo");
-			audioMsg->setPosition(_entity->getPosition());
-			audioMsg->setNotIfPlay(true);
-			audioMsg->setIsPlayer(_entity->isPlayer());
-			_entity->emitMessage(audioMsg);
+			emitSound(_noAmmo, "noAmmo", true);
 		}
 	}// shoot
-	
+	//__________________________________________________________________
+
+	void CShootRaycast::secondaryShoot() {
+
+	} // secondaryShoot
 	//__________________________________________________________________
 
 	// Dispara rayos mediante raycast dependiendo de los parametros del arquetipo del arma

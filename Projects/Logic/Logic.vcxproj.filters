@@ -394,9 +394,6 @@
     <ClCompile Include="..\..\Src\Logic\Entity\Components\ShootSniper.cpp">
       <Filter>Entity\Components\Weapons\Source</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Src\Logic\Entity\Components\ShootGrenadeLauncher.cpp">
-      <Filter>Entity\Components\Weapons\Source</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Src\Logic\Entity\Components\ShootHammer.cpp">
       <Filter>Entity\Components\Weapons\Source</Filter>
     </ClCompile>
@@ -736,9 +733,6 @@
       <Filter>Entity\Components\Weapons\Header</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Entity\Components\ShootHammer.h">
-      <Filter>Entity\Components\Weapons\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Logic\Entity\Components\ShootGrenadeLauncher.h">
       <Filter>Entity\Components\Weapons\Header</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Entity\Components\Shoot.h">

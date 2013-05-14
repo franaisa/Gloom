@@ -15,6 +15,7 @@ que controla el manejo de las armas en el cliente.
 #define __Logic_WeaponsManagerClient_H
 
 #include "Logic/Entity/Component.h"
+#include "WeaponType.h"
 
 #include <vector>
 
@@ -37,15 +38,6 @@ namespace Logic
 		DEC_FACTORY(CWeaponsManagerClient);
 
 	public:
-
-		enum WeaponType {
-			eHAMMER,
-			eSNIPER,
-			eSHOTGUN,
-			eMINIGUN,
-			eGRENADE_LAUNCHER,
-			eROCKET_LAUNCHER
-		};
 
 		/**
 		Constructor por defecto; en la clase base no hace nada.

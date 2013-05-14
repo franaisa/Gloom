@@ -154,7 +154,7 @@ namespace Audio
 
 	void CServer::playSound(char* rutaSonido, const std::string& id, bool notIfPlay){
 
-		//Si queremos que suena solamente si no esta sonando ya
+		//Si queremos que suene solamente si no esta sonando ya
 		if(notIfPlay){
 			bool isPlaying;
 			_soundChannel[id]->isPlaying(&isPlaying);

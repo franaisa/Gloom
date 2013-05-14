@@ -32,6 +32,7 @@ Contiene la implementación del componente que gestiona las armas y que administr
 #include "Logic/Messages/MessageHudWeapon.h"
 #include "Logic/Messages/MessageBerserker.h"
 #include "Logic/Messages/MessageCreateParticle.h"
+#include "Logic/Messages/MessageAudio.h"
 
 
 // mensaje para debbug
@@ -85,7 +86,7 @@ namespace Logic {
 	//__________________________________________________________________
 
 	bool CShoot::accept(const std::shared_ptr<CMessage>& message) {
-		return _isInUse && message->getMessageType() == Message::CONTROL;
+		return message->getMessageType() == Message::CONTROL;
 	} // accept
 	//__________________________________________________________________
 
@@ -99,6 +100,12 @@ namespace Logic {
 				}
 				else if(type == Control::RIGHT_CLICK) {
 					secondaryShoot();
+				}
+				else if(type == Control::UNLEFT_CLICK) {
+					stopPrimaryShoot();
+				}
+				else if(type == Control::UNRIGHT_CLICK) {
+					stopSecondaryShoot();
 				}
 				break;
 			}
@@ -159,16 +166,25 @@ namespace Logic {
 		
 		directionWithForce *= 10;
 
-
-		//
 		std::shared_ptr<CMessageCreateParticle> particle = std::make_shared<CMessageCreateParticle>();
 		particle->setParticle(particula);
 		particle->setPosition(positionParticle);
 		particle->setDirectionWithForce(directionWithForce);
 		_entity->emitMessage(particle);
 
+	} // drawParticle
+	//__________________________________________________________________
+
+	void CShoot::emitSound(const std::string &ruta, const std::string &sound, bool notIfPlay){
 		
-	}
+		std::shared_ptr<CMessageAudio> audioMsg = std::make_shared<CMessageAudio>();
+			audioMsg->setRuta(ruta);
+			audioMsg->setId(sound);
+			audioMsg->setPosition(_entity->getPosition());
+			audioMsg->setNotIfPlay(notIfPlay);
+			audioMsg->setIsPlayer(_entity->isPlayer());
+			_entity->emitMessage(audioMsg);
+	} // emitSound
 	//__________________________________________________________________
 
 	void CShoot::incrementDamage(int percent) {
@@ -209,6 +225,15 @@ namespace Logic {
 	}
 	//__________________________________________________________________
 
+	void CShoot::stopPrimaryShoot(){
 	
+	} // stopPrimaryShoot
+	//__________________________________________________________________
+
+	void CShoot::stopSecondaryShoot(){
+	
+	} // stopSecondaryShoot
+	//__________________________________________________________________
+
 } // namespace Logic
 

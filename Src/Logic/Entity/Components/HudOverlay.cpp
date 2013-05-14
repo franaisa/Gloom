@@ -72,7 +72,7 @@ namespace Logic
 		}
 		if(_panelMira)
 			delete _panelMira;
-		for(int i=0;i<8;++i){
+		for(int i=0;i<7;++i){
 			if(_panelWeapon[i])
 				delete _panelWeapon[i];	
 			if(_panelWeaponKey[i]){
@@ -103,13 +103,13 @@ namespace Logic
 			return false;
 
 		// Pongo Q Q para que salga esa tecla, todo eto cambiara cuando se tenga el hud definitivo.
-		char keysAux[8] = {'1','2','3','4','5','6','Q','Q'};
+		char keysAux[7] = {'1','2','3','4','5','Q','Q'};
 
-		for (int i =0 ; i<8;++i){
+		for (int i =0 ; i<7;++i){
 			keysPanelWeapon[i] = keysAux[i];
 		}
 		Graphics::CScene* scene = map->getScene();
-		_numWeapons = entityInfo->getIntAttribute("numWeapons");
+		//_numWeapons = entityInfo->getIntAttribute("numWeapons");
 	
 		_server = Graphics::CServer::getSingletonPtr();
 
@@ -169,10 +169,10 @@ namespace Logic
 		int y = hudPanelInitialPositionY;
 
 		// Aqui me creo los cuadros para cada arma
-		for(int i=HAMMER; i< PRIMARY_SKILL; ++i){
+		for(int i=WeaponType::eHAMMER; i< WeaponType::eSIZE; ++i){
 
-			eWeaponIndex current = (eWeaponIndex)i;
-			std::string currentOnText = toText(current);
+			WeaponType::Enum current = (WeaponType::Enum)i;
+			std::string currentOnText = WeaponType::toString(current);
 		
 			// Primero me creo el panel que estaba debajo
 			_panelWeapon[current] = _server->createOverlay( "PanelWeapon" + currentOnText, scene, "Panel");
@@ -232,10 +232,10 @@ namespace Logic
 		y -= hudPanelSizeY*1.5;
 		
 		// Pinto los cuadros de las habilidades PRIMARY_SKILL Y SECONDARY_SKILL
-		for(int i=PRIMARY_SKILL; i< NONE; ++i){
+		for(int i=PRIMARY_SKILL + WeaponType::eSIZE; i< NONE + WeaponType::eSIZE; ++i){
 
-			eWeaponIndex current = (eWeaponIndex)i;
-			std::string currentOnText = toText(current);
+			eSkillIndex current = (eSkillIndex)i;
+			std::string currentOnText = toText((eSkillIndex)(i - WeaponType::eSIZE));
 			// Primero me creo el panel que estaba debajo
 			_panelWeapon[current] = _server->createOverlay( "PanelWeapon" + currentOnText, scene, "Panel");
 			_panelWeapon[current]->setMetricsMode("pixel");
@@ -334,15 +334,15 @@ namespace Logic
 
 		}
 		// en el HAMMER (que es el arma inicial, debe de estar active)
-		_weaponsBox[HAMMER][ACTIVE]->setVisible(true);
-		_weaponsBox[HAMMER][NO_WEAPON]->setVisible(false);
+		_weaponsBox[WeaponType::eHAMMER][ACTIVE]->setVisible(true);
+		_weaponsBox[WeaponType::eHAMMER][NO_WEAPON]->setVisible(false);
 		_panelElements[AMMO]->setVisible(false);
 		
 		//desactivo el cuadro estandar y activo el de arma activa.
-		_panelWeapon[HAMMER]->setMaterial("cuadroArmasInUse");
+		_panelWeapon[WeaponType::eHAMMER]->setMaterial("cuadroArmasInUse");
 
 		//Pongo a false los visibles por si acaso no los pone solos
-		for(int i = 1; i < _numWeapons; ++i){
+		for(int i = 1; i < WeaponType::eSIZE; ++i){
 			_weaponsBox[i][NO_AMMO]->setVisible(false);
 			_weaponsBox[i][ACTIVE]->setVisible(false);
 		}
@@ -574,7 +574,7 @@ namespace Logic
 			_weaponsBox[_actualWeapon][NO_AMMO]->setVisible(false);
 			_weaponsBox[_actualWeapon][NO_WEAPON]->setVisible(false);
 
-			if((eWeaponIndex)_actualWeapon == HAMMER){
+			if((WeaponType::Enum)_actualWeapon == WeaponType::eHAMMER){
 				_panelElements[AMMO]->setVisible(false);
 			}else{
 				_panelElements[AMMO]->setVisible(true);
@@ -613,13 +613,13 @@ namespace Logic
 	void CHudOverlay::hudRespawn(){
 		_overlayDie->setVisible(false);
 			//reset para volver a mostrar solo el arma inicial al hacer show
-		for(int i=1; i<_numWeapons;++i){
+		for(int i=1; i<WeaponType::eSIZE;++i){
 			_weaponsBox[i][NO_WEAPON]->setVisible(true);
 			_weaponsBox[i][ACTIVE]->setVisible(false);
 			_weaponsBox[i][NO_AMMO]->setVisible(false);
 		}
 		_overlayPlay->setVisible(true);
-		_actualWeapon = HAMMER;
+		_actualWeapon = WeaponType::eHAMMER;
 	}
 	//-------------------------------------------------------
 
@@ -651,9 +651,9 @@ namespace Logic
 
 	void CHudOverlay::changeMaterialActualWeapon(const std::string &materialName){
 		if(materialName == "original"){
-			eWeaponIndex current;
+			WeaponType::Enum current;
 			for(int i = 0; i < 6 ; ++i){
-				current = (eWeaponIndex)i;
+				current = (WeaponType::Enum)i;
 			}
 		}else{
 			for(int i = 0; i < 6 ; ++i){
@@ -731,20 +731,8 @@ namespace Logic
 	}
 	//-------------------------------------------------------
 
-	std::string CHudOverlay::toText(eWeaponIndex weapon){
-		switch(weapon){
-			case HAMMER: return "hammer";
-				break;
-			case SNIPER: return "sniper";
-				break;
-			case SHOTGUN: return "shotGun";
-				break;
-			case MINIGUN: return "miniGun";
-				break;
-			case GRENADELAUNCHER: return "grenadeLauncher";
-				break;
-			case ROCKETLAUNCHER: return "rocketLauncher";
-				break;
+	std::string CHudOverlay::toText(eSkillIndex skill){
+		switch(skill){
 			case PRIMARY_SKILL: return "primarySkill";
 				break;
 			case SECONDARY_SKILL: return "secondarySkill";

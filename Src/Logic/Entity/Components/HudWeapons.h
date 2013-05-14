@@ -150,11 +150,6 @@ namespace Logic
 		TGraphicsWeapon *_graphicsEntities;
 
 		/**
-		Aqui almaceno el numero de aramas (lo mas seguro que esto deba de ser borrado) !!!! cuidado que en el destructor se usa
-		*/
-		int _numWeapons;
-
-		/**
 		Escena gráfica donde se encontrarán las representaciones gráficas de
 		las entidades. La guardamos para la destrucción de la entidad gráfica.
 		*/
@@ -165,7 +160,7 @@ namespace Logic
 		float _verticalSpeed;
 		
 		//////////////////////Gestion de armas
-		Graphics::COverlay *_overlayWeapon3D[WeaponType::eSIZE];
+		Graphics::COverlay *_overlayWeapon3D[5];
 	}; // class CGraphics
 
 	REG_FACTORY(CHudWeapons);

@@ -22,7 +22,6 @@ Contiene la implementación del componente que gestiona las armas y que administr
 #include "Logic/Entity/Components/ShootSniper.h"
 #include "Logic/Entity/Components/ShootMiniGun.h"
 #include "Logic/Entity/Components/ShootHammer.h"
-#include "Logic/Entity/Components/ShootGrenadeLauncher.h"
 #include "Logic/Entity/Components/ShootRocketLauncher.h"
 
 #include "Logic/Messages/MessageChangeWeapon.h"
@@ -55,15 +54,14 @@ namespace Logic
 		// Inicializamos el vector de armas.
 		// De momento no tiene mucho sentido que comprobemos el número de armas que hay
 		// por que luego usamos el getComponent a piñon.
-		_weaponry.resize(_numWeapons);
+		_weaponry.resize(WeaponType::eSIZE);
 
 		// Rellenamos el vector con los punteros a los componentes correspondientes
-		_weaponry[eHAMMER].second = _entity->getComponent<CShootHammer>("CShootHammer");
-		_weaponry[eSNIPER].second = _entity->getComponent<CShootSniper>("CShootSniper");
-		_weaponry[eSHOTGUN].second = _entity->getComponent<CShootShotGun>("CShootShotGun");
-		_weaponry[eMINIGUN].second = _entity->getComponent<CShootMiniGun>("CShootMiniGun");
-		_weaponry[eGRENADE_LAUNCHER].second = _entity->getComponent<CShootGrenadeLauncher>("CShootGrenadeLauncher");
-		_weaponry[eROCKET_LAUNCHER].second = _entity->getComponent<CShootRocketLauncher>("CShootRocketLauncher");
+		_weaponry[WeaponType::eHAMMER].second = _entity->getComponent<CShootHammer>("CShootHammer");
+		_weaponry[WeaponType::eSNIPER].second = _entity->getComponent<CShootSniper>("CShootSniper");
+		_weaponry[WeaponType::eSHOTGUN].second = _entity->getComponent<CShootShotGun>("CShootShotGun");
+		_weaponry[WeaponType::eMINIGUN].second = _entity->getComponent<CShootMiniGun>("CShootMiniGun");
+		_weaponry[WeaponType::eROCKET_LAUNCHER].second = _entity->getComponent<CShootRocketLauncher>("CShootRocketLauncher");
 
 		/*
 		// Por defecto la primera arma está activada y equipada (es el arma 0).
@@ -89,19 +87,19 @@ namespace Logic
 	void CWeaponsManager::onActivate() {
 		// El arma actual tiene que ser el hammer, que
 		// es la única que tenemos de primeras
-		_currentWeapon=eHAMMER;
+		_currentWeapon=WeaponType::eHAMMER;
 
 		// Por defecto la primera arma está activada y equipadda
-		_weaponry[eHAMMER].first = true;
-		_weaponry[eHAMMER].second->stayAvailable();
-		_weaponry[eHAMMER].second->inUse(true);
+		_weaponry[WeaponType::eHAMMER].first = true;
+		_weaponry[WeaponType::eHAMMER].second->stayAvailable();
+//_weaponry[eHAMMER].second->inUse(true);
 
 		// El resto de las armas están desactivadas, ya que no las tenemos
 		for(unsigned int i = 1; i < _weaponry.size(); ++i) {
 			_weaponry[i].first = false; // Por si acaso habian sido activadas anteriormente
 			_weaponry[i].second->stayBusy();
 			_weaponry[i].second->resetAmmo();
-			_weaponry[i].second->inUse(false);
+//_weaponry[i].second->inUse(false);
 		}
 	} // activate
 	
@@ -185,13 +183,13 @@ namespace Logic
 			// Indicamos que el arma actual ya no está equipada
 			// Desactivamos el componente Shoot del arma actual
 			// e indicamos que ya no está equipada
-			_weaponry[_currentWeapon].second->inUse(false);
+//_weaponry[_currentWeapon].second->inUse(false);
 			_weaponry[_currentWeapon].second->stayBusy();
 
 			// Activamos el componente del nuevo arma que vamos
 			// a equipar e indicamos que el arma está equipada
 			_weaponry[newWeapon].second->stayAvailable();
-			_weaponry[newWeapon].second->inUse(true);
+//_weaponry[newWeapon].second->inUse(true);
 			
 			// Actualizamo el indice de arma
 			_currentWeapon = newWeapon;
@@ -226,14 +224,14 @@ namespace Logic
 
 	void CWeaponsManager::addWeapon(int ammo, int weaponIndex){
 		// Si el arma dada no la teniamos, indicamos que ahora la tenemos
-		if(weaponIndex < _numWeapons && !_weaponry[weaponIndex].first)
+		if(weaponIndex < WeaponType::eSIZE && !_weaponry[weaponIndex].first)
 			_weaponry[weaponIndex].first = true;
 
 		// Activamos el componente pero indicamos que
 		// no es el arma equipada.
 		if(_currentWeapon != weaponIndex){
 			_weaponry[weaponIndex].second->stayBusy();
-			_weaponry[weaponIndex].second->inUse( false );
+//_weaponry[weaponIndex].second->inUse( false );
 		}
 		/*
 		else{

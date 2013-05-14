@@ -12,6 +12,8 @@
 #include "Graphics/Server.h"
 #include "Graphics/Entity.h"
 #include "Logic/Entity/Component.h"
+#include "WeaponType.h"
+
 
 /*
 #include <OgreOverlay.h>
@@ -54,7 +56,7 @@ namespace Logic
 				_panelElementsTextArea[i] = NULL;
 			}
 			_panelMira = NULL;
-			for(int i = 0; i<8; ++i){
+			for(int i = 0; i<7; ++i){
 
 				_panelWeapon[i] = NULL;
 
@@ -110,7 +112,8 @@ namespace Logic
 
 		int _numWeapons;
 
-		enum eWeaponIndex { HAMMER, SNIPER, SHOTGUN, MINIGUN, GRENADELAUNCHER, ROCKETLAUNCHER, PRIMARY_SKILL, SECONDARY_SKILL, NONE };
+		
+		enum eSkillIndex {PRIMARY_SKILL, SECONDARY_SKILL, NONE };
 		enum eOverlayWeaponState {ACTIVE, NO_AMMO, NO_WEAPON };
 		enum eOverlayElements {HEALTH, SHIELD, AMMO };
 
@@ -144,9 +147,9 @@ namespace Logic
 		@param width, establece el ancho de la mirilla en pantalla.
 		@param height, establece el alto de la mirilla en pantalla.
 		*/
-		void CHudOverlay::hudSizeCrossfire(float width, float height);
+		void hudSizeCrossfire(float width, float height);
 
-		std::string toText(eWeaponIndex weapon);
+		std::string toText(eSkillIndex skill);
 		std::string toText(eOverlayWeaponState state);
 		std::string toText(eOverlayElements element);
 
@@ -203,22 +206,22 @@ namespace Logic
 		/** 
 		Gestiona los paneles de armas basicas
 		*/
-		Graphics::COverlay *_panelWeapon[8];
+		Graphics::COverlay *_panelWeapon[7];
 
 		/** 
 		Panel de las teclas de los paneles
 		*/
-		Graphics::COverlay *_panelWeaponKey[8];
+		Graphics::COverlay *_panelWeaponKey[7];
 
 		/** 
 		tiene las teclas que)
 		*/
-		char keysPanelWeapon[8];
+		char keysPanelWeapon[7];
 
 		/**
 		Gestion los paneles de las armas (6) en este caso, en cada uno de sus estados: ACTIVE, NO_AMMO, NO_WEAPON
 		*/
-		Graphics::COverlay *_weaponsBox[8][3];
+		Graphics::COverlay *_weaponsBox[7][3];
 		
 		/**
 		Aqui se guardara el panel de localizador de impacto para el feedback de las colisiones

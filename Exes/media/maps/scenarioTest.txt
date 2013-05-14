@@ -72,22 +72,12 @@ Map = {
 		respawnTime = 5,
 	},
 	
-	GrenadeLauncher = {
-		type = "ItemSpawn",
-		position = {20,0,50},
-		model = "grenadeLauncher.mesh",
-		id = "weapon",
-		weaponType = 4,
-		reward = 5,
-		respawnTime = 5,
-	},
-	
 	RocketLauncherAmmo1 = {
 		type = "ItemSpawn",
 		position = {20,0,60},
 		model = "rocketLauncher.mesh",
 		id = "weapon",
-		weaponType = 5,
+		weaponType = 4,
 		reward = 5,
 		respawnTime = 5,
 	},

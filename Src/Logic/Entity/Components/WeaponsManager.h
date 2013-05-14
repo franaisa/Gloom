@@ -2,6 +2,7 @@
 #define __Logic_WeaponsManager_H
 
 #include "Logic/Entity/Component.h"
+#include "WeaponType.h"
 
 #include <vector>
 
@@ -23,15 +24,6 @@ namespace Logic
 		DEC_FACTORY(CWeaponsManager);
 
 	public:
-
-		enum WeaponType {
-			eHAMMER,
-			eSNIPER,
-			eSHOTGUN,
-			eMINIGUN,
-			eGRENADE_LAUNCHER,
-			eROCKET_LAUNCHER
-		};
 
 		/**
 		Constructor por defecto; en la clase base no hace nada.

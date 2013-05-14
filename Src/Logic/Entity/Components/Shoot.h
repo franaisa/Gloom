@@ -136,7 +136,14 @@ namespace Logic {
 		//                            METODOS PROPIOS
 		// =======================================================================
 
+		/**
+		Metodo para facilitar la emision de sonidos.
 
+		@param ruta, ruta donde esta el sonido
+		@param sound, sonido que se emitira
+		@param notIfPlay, variable que inidica si queremos que suene aunque ya este sonando
+		*/
+		void emitSound(const std::string &ruta, const std::string &sound, bool notIfPlay = false);
 		/**
 		Este es el método que todas las armas deben redefinir para el disparo principal. Es el que implementa
 		la acción de disparar.
@@ -148,21 +155,23 @@ namespace Logic {
 		/**
 		Este es el método que todas las armas deben redefinir para el disparo secundario.
 		*/
-		virtual void secondaryShoot(){};
+		virtual void secondaryShoot()= 0;
 
 		//__________________________________________________________________
 
 		/**
-		Este es el método que todas las armas deben redefinir para el disparo secundario.
+		Este es el método que todas las armas deben redefinir si quieren una accion cuando se suelta el boton de disparo primario.
+		Si no se redefine, no hara nada.
 		*/
-		virtual void stopPrimaryShoot(){};
+		virtual void stopPrimaryShoot();
 
 		//__________________________________________________________________
 
 		/**
-		Este es el método que todas las armas deben redefinir para el disparo secundario.
+		Este es el método que todas las armas deben redefinir si quieren una accion cuando se suelta el boton de disparo secundario.
+		Si no se redefine, no hara nada.
 		*/
-		virtual void stopSecondaryShoot(){};
+		virtual void stopSecondaryShoot();
 
 		//__________________________________________________________________
 

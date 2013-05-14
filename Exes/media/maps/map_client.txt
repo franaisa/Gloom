@@ -144,21 +144,10 @@ Map = {
 		position = {-51.0, 5.0, 20.0},
 		model = "rocketLauncher.mesh",
 		id = "weapon",
-		weaponType = 5,
-		reward = 5,
-		respawnTime = 5,
-	},
-	
-	GranadeLauncher = {
-		type = "ItemSpawn",
-		position = {-48.0, 5.0, 1.0},
-		model = "grenadelauncher.mesh",
-		id = "weapon",
 		weaponType = 4,
 		reward = 5,
 		respawnTime = 5,
-	},
-	
+	},	
 	
 	Shotgun = {
 		type = "ItemSpawn",
@@ -210,23 +199,14 @@ Map = {
 		reward = 100,
 		respawnTime = 5,
 	},
-	
-	GrenadeLauncherAmmo1 = {
-		type = "ItemSpawn",
-		position = {150.0, 4.0, 0.0},
-		model = "grenadelauncher.mesh",
-		id = "ammo",
-		weaponType = 4,
-		reward = 5,
-		respawnTime = 5,
-	},
+
 	
 	RocketLauncherAmmo1 = {
 		type = "ItemSpawn",
 		position = {140,4.0,-16.0},
 		model = "rocketq3.mesh",
 		id = "ammo",
-		weaponType = 5,
+		weaponType = 4,
 		reward = 5,
 		respawnTime = 5,
 	},

@@ -130,17 +130,7 @@ Map = {
 		reward = 10,
 		respawnTime = 5,
 	},
-	
-	ShotgunAmmo1 = {
-		type = "ItemSpawn",
-		position = {-67.0, 4.0, -42.0},
-		model = "shotGun.mesh",
-		id = "ammo",
-		weaponType = 2,
-		reward = 15,
-		respawnTime = 5,
-	},
-	
+		
 	Minigun = {
 		type = "ItemSpawn",
 		position = {-91.0, 0.0, -35.0},
@@ -151,22 +141,12 @@ Map = {
 		respawnTime = 5,
 	},
 	
-	GrenadeLauncher1 = {
-		type = "ItemSpawn",
-		position = {-30.0, 107.0, 120.0},
-		model = "grenadeLauncher.mesh",
-		id = "weapon",
-		weaponType = 4,
-		reward = 5,
-		respawnTime = 5,
-	},
-	
 	RocketLauncherAmmo1 = {
 		type = "ItemSpawn",
 		position = {-264,0.0,-53.0},
 		model = "rocketLauncher.mesh",
 		id = "weapon",
-		weaponType = 5,
+		weaponType = 4,
 		reward = 5,
 		respawnTime = 5,
 	},

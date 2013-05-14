@@ -112,7 +112,6 @@
     <ClCompile Include="..\..\Src\Logic\Entity\Components\ScreamerServer.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\ScreamerShieldDamageNotifier.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\Shoot.cpp" />
-    <ClCompile Include="..\..\Src\Logic\Entity\Components\ShootGrenadeLauncher.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\ShootHammer.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\ShootMiniGun.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\ShootProjectile.cpp" />
@@ -252,7 +251,6 @@
     <ClInclude Include="..\..\Src\Logic\Entity\Components\ScreamerServer.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\ScreamerShieldDamageNotifier.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\Shoot.h" />
-    <ClInclude Include="..\..\Src\Logic\Entity\Components\ShootGrenadeLauncher.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\ShootHammer.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\ShootMiniGun.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\ShootProjectile.h" />

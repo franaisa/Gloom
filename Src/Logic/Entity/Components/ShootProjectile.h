@@ -85,6 +85,11 @@ namespace Logic {
 		*/
 		virtual void primaryShoot();
 
+		/**
+		Los disparos secundarios si fieren bastante unos de otros, por ahora se ha hecho un metodo vacio,
+		para poder compilar por ahora, pero todos tendran que ser redefinidos.
+		*/
+		virtual void secondaryShoot();
 
 		// =======================================================================
 		//                          METODOS PROPIOS

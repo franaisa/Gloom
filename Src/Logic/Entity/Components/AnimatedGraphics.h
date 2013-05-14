@@ -106,10 +106,6 @@ namespace Logic
 		virtual void changeMaterial(const std::string& materialName);
 	protected:
 
-		enum eWeaponIndex { HAMMER, SNIPER, SHOTGUN, MINIGUN, GRENADELAUNCHER, ROCKETLAUNCHER, PRIMARY_SKILL, SECONDARY_SKILL, NONE };
-
-		std::string toText(eWeaponIndex weapon);
-
 		/**
 		Método virtual que construye la entidad gráfica animada de la entidad. 
 		Sobreescribe el método de la clase CGraphics.

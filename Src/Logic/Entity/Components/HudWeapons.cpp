@@ -42,7 +42,6 @@ namespace Logic
 
 	CHudWeapons::CHudWeapons() : _currentWeapon(0), 
 								 _graphicsEntities(0), 
-								 _numWeapons(0),
 								 _currentHeight(0),
 								 _verticalSpeed(0.0035f) {
 
@@ -52,7 +51,7 @@ namespace Logic
 
 	CHudWeapons::~CHudWeapons() {
 		if(_graphicsEntities) {
-			for(int i = 0; i < _numWeapons; ++i) {
+			for(int i = 0; i < WeaponType::eSIZE; ++i) {
 				//_scene->removeChild(_graphicsEntities[i]._graphicsEntity);
 				delete _graphicsEntities[i].graphicsEntity;
 				_graphicsEntities[i].graphicsEntity = NULL;
@@ -83,15 +82,12 @@ namespace Logic
 			return false;
 		
 		_scene = _entity->getMap()->getScene();
-		
-		if(entityInfo->hasAttribute("numWeapons")){
-			int numWeapons = entityInfo->getIntAttribute("numWeapons");
 			
-		_graphicsEntities = new TGraphicsWeapon[numWeapons];
+		_graphicsEntities = new TGraphicsWeapon[WeaponType::eSIZE];
 		
 		// Por ahora leo a mano cada una de las armas que tiene el usuario
 	
-		for(int i = 0; i < numWeapons; ++i){
+		for(int i = WeaponType::eHAMMER; i < WeaponType::eSIZE; ++i){
 				
 			WeaponType::Enum current = (WeaponType::Enum)i;
 			std::string currentOnText = WeaponType::toString(current);
@@ -138,7 +134,7 @@ namespace Logic
 
 			_overlayWeapon3D[current]->setVisible(false);
 
-			}
+			
 		}
 		_overlayWeapon3D[WeaponType::eHAMMER]->setVisible(true);
 		if(!_graphicsEntities)

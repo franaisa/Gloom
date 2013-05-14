@@ -25,7 +25,6 @@ Contiene la implementación del componente que gestiona las armas y que administr
 #include "Logic/Entity/Components/ShootSniper.h"
 #include "Logic/Entity/Components/ShootMiniGun.h"
 #include "Logic/Entity/Components/ShootHammer.h"
-#include "Logic/Entity/Components/ShootGrenadeLauncher.h"
 #include "Logic/Entity/Components/ShootRocketLauncher.h"
 
 #include "Logic/Messages/MessageChangeWeapon.h"
@@ -56,15 +55,14 @@ namespace Logic
 		// Inicializamos el vector de armas.
 		// De momento no tiene mucho sentido que comprobemos el número de armas que hay
 		// por que luego usamos el getComponent a piñon.
-		_weaponry.resize(_numWeapons);
+		_weaponry.resize(WeaponType::eSIZE);
 
 		// Rellenamos el vector con los punteros a los componentes correspondientes
-		_weaponry[eHAMMER].second = NULL;
-		_weaponry[eSNIPER].second = NULL;
-		_weaponry[eSHOTGUN].second = NULL;
-		_weaponry[eMINIGUN].second = NULL;
-		_weaponry[eGRENADE_LAUNCHER].second = _entity->getComponent<CShootGrenadeLauncher>("CShootGrenadeLauncher");
-		_weaponry[eROCKET_LAUNCHER].second = _entity->getComponent<CShootRocketLauncher>("CShootRocketLauncher");
+		_weaponry[WeaponType::eHAMMER].second = NULL;
+		_weaponry[WeaponType::eSNIPER].second = NULL;
+		_weaponry[WeaponType::eSHOTGUN].second = NULL;
+		_weaponry[WeaponType::eMINIGUN].second = NULL;
+		_weaponry[WeaponType::eROCKET_LAUNCHER].second = _entity->getComponent<CShootRocketLauncher>("CShootRocketLauncher");
 
 		return true;
 
@@ -75,7 +73,7 @@ namespace Logic
 	void CWeaponsManagerClient::activate() {
 		IComponent::activate();
 		// Por defecto la primera arma está activada y equipada (es el arma 0).
-		_weaponry[eHAMMER].first = true;
+		_weaponry[WeaponType::eHAMMER].first = true;
 
 		// El resto de las armas están desactivadas, ya que no las tenemos
 		for(unsigned int i = 1; i < _weaponry.size(); ++i) {
@@ -96,7 +94,8 @@ namespace Logic
 		}
 		for(unsigned int i = 4; i<_weaponry.size();++i){
 			_weaponry[i].second->resetAmmo();
-			_weaponry[i].second->inUse(false);
+			_weaponry[i].second->stayBusy();
+//_weaponry[i].second->inUse(false);
 		}
 		// El arma actual tiene que ser el hammer, que
 		// es la única que tenemos de primeras
@@ -166,14 +165,15 @@ namespace Logic
 			// Desactivamos el componente Shoot del arma actual
 			// e indicamos que ya no está equipada
 			if(_currentWeapon==4 || _currentWeapon==5){
-				_weaponry[_currentWeapon].second->inUse(false);
-				_weaponry[_currentWeapon].second->deactivate();
+
+//_weaponry[_currentWeapon].second->inUse(false);
+				_weaponry[_currentWeapon].second->stayBusy();
 			}
 			// Activamos el componente del nuevo arma que vamos
 			// a equipar e indicamos que el arma está equipada
 			if(newWeapon==4 || newWeapon==5){
-				_weaponry[newWeapon].second->activate();
-				_weaponry[newWeapon].second->inUse(true);
+				_weaponry[newWeapon].second->stayAvailable();
+//_weaponry[newWeapon].second->inUse(true);
 			}
 			// Actualizamos el indice de arma
 			_currentWeapon = newWeapon;
@@ -192,14 +192,21 @@ namespace Logic
 		// Si el arma dada no la teniamos, indicamos que ahora la tenemos
 		if(weaponIndex < _numWeapons && !_weaponry[weaponIndex].first)
 			_weaponry[weaponIndex].first = true;
-		// Activamos el componente pero indicamos que
-		// no es el arma equipada.
+		
+		if(_currentWeapon != weaponIndex){
+			_weaponry[weaponIndex].second->stayBusy();
+		}
+		_weaponry[weaponIndex].second->addAmmo(weaponIndex, ammo, _weaponry[weaponIndex].first);
+
+
 		if(weaponIndex==4 || weaponIndex==5){
-			_weaponry[weaponIndex].second->activate();
+			//_weaponry[weaponIndex].second->activate();
 			// El arma estara en uso si es la actual, si no estara sin uso
-			_weaponry[weaponIndex].second->inUse( _currentWeapon == weaponIndex );
+		
 			_weaponry[weaponIndex].second->addAmmo(weaponIndex, ammo, _weaponry[weaponIndex].first);
 		}
+
+
 		/*
 		// Enviamos un mensaje de actualizacion del hud
 		std::shared_ptr<CMessageHudAmmo> *m=std::make_shared<CMessageHudAmmo>();

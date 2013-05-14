@@ -22,6 +22,7 @@ gráfica de una entidad estática.
 #include "Logic/Messages/MessageChangeWeaponGraphics.h"
 #include "Logic/Messages/MessageTransform.h"
 #include "Logic/Messages/MessageChangeMaterial.h"
+#include "WeaponType.h"
 
 #include "Graphics/Scene.h"
 #include "Graphics/Entity.h"
@@ -52,17 +53,15 @@ namespace Logic
 
 		//cargamos los modelos de las armas para poder ponerselas en la mano conforme los jugadores cambien de arma
 
-		if(entityInfo->hasAttribute("numWeapons")){
-			int numWeapons = entityInfo->getIntAttribute("numWeapons");
-			_weapons = new  Graphics::CEntity*[numWeapons];	
+			_weapons = new  Graphics::CEntity*[WeaponType::eSIZE];	
 
 			_scene = _entity->getMap()->getScene();
-			eWeaponIndex current;
-			for(int i = 0; i < numWeapons; ++i){
+			WeaponType::Enum current;
+			for(int i = WeaponType::eHAMMER; i < WeaponType::eSIZE; ++i){
 				
-				current = (eWeaponIndex)i;
+				current = (WeaponType::Enum)i;
 				std::stringstream aux;
-				aux << "weapon" << toText(current);
+				aux << "weapon" << WeaponType::toString(current);
 				std::string weapon = aux.str();
 
 				aux << "_" << _entity->getEntityID();
@@ -73,9 +72,9 @@ namespace Logic
 				_weapons[i] = new Graphics::CEntity(nameWeapon,entityInfo->getStringAttribute(weapon+"Model")); 
 			}
 
-			if(!_weapons)
-				return NULL;
-		}
+		if(!_weapons)
+			return NULL;
+		
 		
 		return _animatedGraphicsEntity;
 
@@ -219,29 +218,6 @@ namespace Logic
 			}else{
 				_animatedGraphicsEntity->changeMaterialToWeapon(_originalMaterialWeapon);
 			}
-		}
-	}
-
-
-	std::string CAnimatedGraphics::toText(eWeaponIndex weapon){
-		switch(weapon){
-			case HAMMER: return "hammer";
-				break;
-			case SNIPER: return "sniper";
-				break;
-			case SHOTGUN: return "shotGun";
-				break;
-			case MINIGUN: return "miniGun";
-				break;
-			case GRENADELAUNCHER: return "grenadeLauncher";
-				break;
-			case ROCKETLAUNCHER: return "rocketLauncher";
-				break;
-			case PRIMARY_SKILL: return "primarySkill";
-				break;
-			case SECONDARY_SKILL: return "secondarySkill";
-				break;
-			default: return "";
 		}
 	}
 } // namespace Logic

@@ -235,7 +235,7 @@ namespace Input {
 				break;
 			case Input::Button::RIGHT:
 				//m->setType(Logic::Control::UNRIGHT_CLICK);
-				m->setType(Logic::Control::STOP_PRIMARY_SKILL);
+				m->setType(Logic::Control::UNRIGHT_CLICK);
 				break;
 			case Input::Button::MIDDLE:
 				//m->setType(Logic::Control::UNMIDDLE_CLICK);
@@ -260,7 +260,7 @@ namespace Input {
 	int CPlayerController::typeOfKey(TKey key)
 	{
 		if ( key.keyId == Input::Key::NUMBER1 || key.keyId == Input::Key::NUMBER2 || key.keyId == Input::Key::NUMBER3 || key.keyId == Input::Key::NUMBER4 || 
-				key.keyId == Input::Key::NUMBER5 || key.keyId == Input::Key::NUMBER6)
+				key.keyId == Input::Key::NUMBER5)
 		{		
 			return 0;//Change weapon
 		}
@@ -273,7 +273,7 @@ namespace Input {
 		{
 			return 2; //Habilities
 		}
-		else if (key.keyId == Input::Key::O || key.keyId == Input::Key::NUMBER6 || key.keyId == Input::Key::NUMBER7 
+		else if (key.keyId == Input::Key::O || key.keyId == Input::Key::NUMBER7 
 			|| key.keyId == Input::Key::NUMBER8 || key.keyId == Input::Key::ESCAPE || key.keyId == Input::Key::T)
 		{
 			return 3; //Other
@@ -314,9 +314,6 @@ namespace Input {
 			break;
 		case Input::Key::NUMBER5:
 			message->setWeapon(4);
-			break;
-		case Input::Key::NUMBER6:
-			message->setWeapon(5);
 			break;
 		}
 

@@ -35,7 +35,6 @@
 		<component name="CScreamerServer" 					priorityType = "medium" priorityLevel="2"/>
 		<component name="CScreamerShieldDamageNotifier" 	priorityType = "medium" priorityLevel="2"/>
 		<component name="CShadow" 							priorityType = "medium" priorityLevel="2"/>
-		<component name="CShootGrenadeLauncher" 			priorityType = "medium" priorityLevel="2"/>
 		<component name="CShootHammer"						priorityType = "medium" priorityLevel="2"/>
 		<component name="CShootMiniGun" 					priorityType = "medium" priorityLevel="2"/>
 		<component name="CShootRocketLauncher" 				priorityType = "medium" priorityLevel="2"/>
@@ -893,21 +892,6 @@
 				<attribute name="weaponminiGunParticlePosition" 			value="{6,5,6}"/>
 				<attribute name="weaponminiGunAudio" 						value="media/audio/miniGun.wav"/>
 				
-				<attribute name="weapongrenadeLauncherName" 				value="grenadeLauncher"/>
-				<attribute name="weapongrenadeLauncherModel" 				value="grenadeLauncher.mesh"/>
-				<attribute name="weapongrenadeLauncherModelYaw" 			value="3.10"/>
-				<attribute name="weapongrenadeLauncherModelPitch"			value="0"/>
-				<attribute name="weapongrenadeLauncherOffset" 				value="{0.0,-3.0,-10.0}"/>
-				<attribute name="weapongrenadeLauncherDamageReflect" 		value="10"/>
-				<attribute name="weapongrenadeLauncherNumberShoots" 		value="1"/>
-				<attribute name="weapongrenadeLauncherColdDown" 			value="1.5"/>
-				<attribute name="weapongrenadeLauncherMaxAmmo" 				value="18"/>
-				<attribute name="weapongrenadeLauncherId"					value="4"/>
-				<attribute name="weapongrenadeLauncherShootForce" 			value="5000"/>
-				<attribute name="weapongrenadeLauncherProjectileRadius" 	value="3.4"/>
-				<attribute name="weapongrenadeLauncherParticlePosition" 	value="{6,5,6}"/>
-				<attribute name="weapongrenadeLauncherAudio" 				value="media/audio/grenadeLauncher.wav"/>
-				
 				<attribute name="weaponrocketLauncherName" 					value="rocketLauncher"/>
 				<attribute name="weaponrocketLauncherModel" 				value="rocketLauncher.mesh"/>
 				<attribute name="weaponrocketLauncherModelYaw" 				value="3.10"/>
@@ -968,7 +952,6 @@
 						<component name="CNetConnector" />
 						<component name="CParticle" />
 						<component name="CShootRocketLauncher" />
-						<component name="CShootGrenadeLauncher"/>
 					</components>
 				</ambit>
 				<ambit name="Server">
@@ -1003,7 +986,6 @@
 						<component name="CScreamer" />
 						<component name="CPhysicController" />
 						<component name="CShootRocketLauncher" />
-						<component name="CShootGrenadeLauncher" />
 						<component name="CShootMiniGun" />
 						<component name="CShootShotGun" />
 						<component name="CShootSniper" />
@@ -1131,21 +1113,6 @@
 				<attribute name="weaponminiGunParticlePosition" 			value="{6,5,6}"/>
 				<attribute name="weaponminiGunAudio" 						value="media/audio/miniGun.wav"/>
 				
-				<attribute name="weapongrenadeLauncherName" 				value="grenadeLauncher"/>
-				<attribute name="weapongrenadeLauncherModel" 				value="grenadeLauncher.mesh"/>
-				<attribute name="weapongrenadeLauncherModelYaw" 			value="3.10"/>
-				<attribute name="weapongrenadeLauncherModelPitch"			value="0"/>
-				<attribute name="weapongrenadeLauncherOffset" 				value="{0.0,-3.0,-10.0}"/>
-				<attribute name="weapongrenadeLauncherDamageReflect" 		value="10"/>
-				<attribute name="weapongrenadeLauncherNumberShoots" 		value="1"/>
-				<attribute name="weapongrenadeLauncherColdDown" 			value="1.5"/>
-				<attribute name="weapongrenadeLauncherMaxAmmo" 				value="18"/>
-				<attribute name="weapongrenadeLauncherId"					value="4"/>
-				<attribute name="weapongrenadeLauncherShootForce" 			value="5000"/>
-				<attribute name="weapongrenadeLauncherProjectileRadius" 	value="3.4"/>
-				<attribute name="weapongrenadeLauncherParticlePosition" 	value="{6,5,6}"/>
-				<attribute name="weapongrenadeLauncherAudio" 				value="media/audio/grenadeLauncher.wav"/>
-				
 				<attribute name="weaponrocketLauncherName" 					value="rocketLauncher"/>
 				<attribute name="weaponrocketLauncherModel" 				value="rocketLauncher.mesh"/>
 				<attribute name="weaponrocketLauncherModelYaw" 				value="3.10"/>
@@ -1206,7 +1173,6 @@
 						<component name="CNetConnector" />
 						<component name="CParticle" />
 						<component name="CShootRocketLauncher" />
-						<component name="CShootGrenadeLauncher" />
 					</components>
 				</ambit>
 				<ambit name="Server">
@@ -1240,7 +1206,6 @@
 						<component name="CHound" />
 						<component name="CPhysicController" />
 						<component name="CShootRocketLauncher" />
-						<component name="CShootGrenadeLauncher" />
 						<component name="CShootMiniGun" />
 						<component name="CShootShotGun" />
 						<component name="CShootSniper" />
@@ -1365,21 +1330,6 @@
 				<attribute name="weaponminiGunId"					 		value="3"/>
 				<attribute name="weaponminiGunParticlePosition" 			value="{6,5,6}"/>
 				<attribute name="weaponminiGunAudio" 						value="media/audio/miniGun.wav"/>
-				
-				<attribute name="weapongrenadeLauncherName" 				value="grenadeLauncher"/>
-				<attribute name="weapongrenadeLauncherModel" 				value="grenadeLauncher.mesh"/>
-				<attribute name="weapongrenadeLauncherModelYaw" 			value="3.10"/>
-				<attribute name="weapongrenadeLauncherModelPitch"			value="0"/>
-				<attribute name="weapongrenadeLauncherOffset" 				value="{0.0,-3.0,-10.0}"/>
-				<attribute name="weapongrenadeLauncherDamageReflect" 		value="10"/>
-				<attribute name="weapongrenadeLauncherNumberShoots" 		value="1"/>
-				<attribute name="weapongrenadeLauncherColdDown" 			value="1.5"/>
-				<attribute name="weapongrenadeLauncherMaxAmmo" 				value="18"/>
-				<attribute name="weapongrenadeLauncherId"					value="4"/>
-				<attribute name="weapongrenadeLauncherShootForce" 			value="5000"/>
-				<attribute name="weapongrenadeLauncherProjectileRadius" 	value="3.4"/>
-				<attribute name="weapongrenadeLauncherParticlePosition" 	value="{6,5,6}"/>
-				<attribute name="weapongrenadeLauncherAudio" 				value="media/audio/grenadeLauncher.wav"/>
 				
 				<attribute name="weaponrocketLauncherName" 					value="rocketLauncher"/>
 				<attribute name="weaponrocketLauncherModel" 				value="rocketLauncher.mesh"/>

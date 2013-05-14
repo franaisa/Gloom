@@ -12,7 +12,7 @@ del disparo de proyectiles.
 
 #include "Map/MapEntity.h"
 #include "Logic/Entity/Entity.h"
-#include "Logic/Messages/MessageAudio.h"
+
 
 namespace Logic {
 	//IMP_FACTORY(CShootProjectile);
@@ -47,7 +47,6 @@ namespace Logic {
 
 		return true;
 	}
-
 	//__________________________________________________________________
 
 	// Implementa el patrón template, las clases derivadas solo deben
@@ -65,25 +64,19 @@ namespace Logic {
 			decrementAmmo();
 
 			//Sonido de disparo
-			std::shared_ptr<CMessageAudio> audioMsg = std::make_shared<CMessageAudio>();
-			audioMsg->setRuta(_audioShoot);
-			audioMsg->setId("audioShoot");
-			audioMsg->setPosition(_entity->getPosition());
-			audioMsg->setNotIfPlay(false);
-			audioMsg->setIsPlayer(_entity->isPlayer());
-			_entity->emitMessage(audioMsg);
+			emitSound(_audioShoot, "audioShot");
 		}
 		else if(_currentAmmo == 0) {
 			// Ejecutar sonidos y animaciones de falta de balas
-			std::shared_ptr<CMessageAudio> audioMsg = std::make_shared<CMessageAudio>();
-			audioMsg->setRuta(_noAmmo);
-			audioMsg->setId("noAmmo");
-			audioMsg->setPosition(_entity->getPosition());
-			audioMsg->setNotIfPlay(false);
-			audioMsg->setIsPlayer(_entity->isPlayer());
-			_entity->emitMessage(audioMsg);
+			emitSound(_noAmmo, "noAmmo", true);
 		}
 	}
+	//__________________________________________________________________
+
+	void CShootProjectile::secondaryShoot() {
+
+	}
+	//__________________________________________________________________
 
 } // namespace Logic
 

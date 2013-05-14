@@ -98,6 +98,12 @@ namespace Logic {
 		*/
 		virtual void primaryShoot();
 
+		/**
+		Los disparos secundarios si fieren bastante unos de otros, por ahora se ha hecho un metodo vacio,
+		para poder compilar por ahora, pero todos tendran que ser redefinidos.
+		*/
+		virtual void secondaryShoot();
+
 		
 		// =======================================================================
 		//                          METODOS PROPIOS
@@ -114,7 +120,7 @@ namespace Logic {
 		@return Un puntero a la entidad con la que se ha colisionado (o NULL si no
 		ha habido colisión) y el rayo que se lanzó para comprobar dicha colisión.
 		*/
-		std::pair<CEntity*, Ray> fireWeapon();
+		virtual std::pair<CEntity*, Ray> fireWeapon();
 
 		//__________________________________________________________________
 
