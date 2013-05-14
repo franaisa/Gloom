@@ -221,13 +221,13 @@ namespace Logic
 		Lista de entidades que han sido marcadas para ser borradas en
 		un tiempo dado.
 		*/
-		std::list< std::pair<CEntity*, unsigned int> > _entitiesToBeDeleted;
+		std::list< std::pair<CEntity*, unsigned int> > _entitiesWithTimeout;
 
 		struct EntityInfo {
 			CEntity* _entityPtr;
-			std::list<CEntity*>::iterator _processIterator;
-			std::list<CEntity*>::iterator _tickIterator;
-			std::list<CEntity*>::iterator _fixedTickIterator;
+			std::list<CEntity*>::const_iterator _processIterator;
+			std::list<CEntity*>::const_iterator _tickIterator;
+			std::list<CEntity*>::const_iterator _fixedTickIterator;
 		};
 
 		std::unordered_map<TEntityID, EntityInfo> _entityInfoTable;

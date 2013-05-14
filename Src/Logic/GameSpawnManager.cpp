@@ -67,6 +67,9 @@ namespace Logic {
 
 	//--------------------------------------------------------
 
+	// @deprecated la busqueda debe hacerse sobre un unordered_multimap
+	// por lo que no deberiamos dar la posicion de la entidad sobre la
+	// que empezar
 	void CGameSpawnManager::activate() 
 	{
 		//Cargamos los las entidades de tipo SpawnPoint para tenerlas

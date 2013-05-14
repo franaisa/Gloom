@@ -97,8 +97,7 @@ namespace Application {
 
 	//--------------------------------------------------------
 
-	void CGameState::tick(unsigned int msecs) 
-	{
+	void CGameState::tick(unsigned int msecs) {
 		/*unsigned int pieces=msecs/16;
 		for(int i=0;i<pieces;i++){
 			//Actualizamos la física del juego.

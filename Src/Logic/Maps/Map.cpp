@@ -191,9 +191,9 @@ namespace Logic {
 		// Si hay entidades con cronometros de autodestruccion
 		// comprobamos el cronometro y si hay que destruirlas avisamos
 		// a la factoria para que se encargue de ello en diferido.
-		if( !_entitiesToBeDeleted.empty() ) {
-			std::list< std::pair<CEntity*, unsigned int> >::iterator it = _entitiesToBeDeleted.begin();
-			while( it != _entitiesToBeDeleted.end() ) {
+		if( !_entitiesWithTimeout.empty() ) {
+			std::list< std::pair<CEntity*, unsigned int> >::iterator it = _entitiesWithTimeout.begin();
+			while( it != _entitiesWithTimeout.end() ) {
 				// Dado que estamos tratando con un unsigned int, comprobamos si la resta saldria menor
 				// que 0, ya que si hacemos directamente la resta el numero pasa a ser el unsigned int 
 				// mas alto y por lo tanto seria un fail.
@@ -203,7 +203,7 @@ namespace Logic {
 					// Puesto por defecto a true pero deberia de ser apuntado cuando se llama 
 					// al createEntityWithTimeOut y recuperarse al llegar a este caso
 					CEntityFactory::getSingletonPtr()->deferredDeleteEntity(it->first, true);
-					it = _entitiesToBeDeleted.erase(it);
+					it = _entitiesWithTimeout.erase(it);
 				}
 				else {
 					++it;
@@ -277,19 +277,23 @@ namespace Logic {
 	typedef std::pair<TEntityID,CEntity*> TEntityPair;
 
 	void CMap::addEntity(CEntity *entity) {
-		// HACER INSERT, no me vale el push_back.. o utilizar un reverse iterator!!
-		std::list<CEntity*>::const_iterator listIt = _entityList.push_back(entity);
-		std::list<CEntity*>::const_iterator tickIt = _entitiesWithTick.push_back(entity);
-		std::list<CEntity*>::const_iterator fixedTickIt = _entitiesWithFixedTick.push_back(entity);
+		_entityList.push_front(entity);
+		std::list<CEntity*>::const_iterator listIt = _entityList.begin();
+
+		_entitiesWithTick.push_front(entity);
+		std::list<CEntity*>::const_iterator tickIt = _entitiesWithTick.begin();
+
+		_entitiesWithFixedTick.push_front(entity);
+		std::list<CEntity*>::const_iterator fixedTickIt = _entitiesWithFixedTick.begin();
 
 		TEntityID entityId = entity->getEntityID();
 		// Añadimos la entidad si no existia
 		if( _entityInfoTable.find(entityId) == _entityInfoTable.end() ) {
 			EntityInfo info;
 			info._entityPtr = entity;
-			info._fixedTickIterator = fixedTickIt;
 			info._processIterator = listIt;
 			info._tickIterator = tickIt;
+			info._fixedTickIterator = fixedTickIt;
 			
 			_entityInfoTable[entityId] = info;
 		}
@@ -304,64 +308,91 @@ namespace Logic {
 
 	//--------------------------------------------------------
 
-	void CMap::removeEntity(CEntity *entity)
-	{
-		if(_entityMap.count(entity->getEntityID()) != 0)
-		{
-			if(entity->isActivated())
-				entity->deactivate();
-			entity->_map = 0;
-			_entityMap.erase(entity->getEntityID());
-		}
+	void CMap::removeEntity(CEntity *entity) {
+		// Eliminamos la entidad si existe
+		std::unordered_map<TEntityID, EntityInfo>::const_iterator it = _entityInfoTable.find( entity->getEntityID() );
+		if( it != _entityInfoTable.end() ) {
+			EntityInfo info = it->second;
 
+			if(info._entityPtr->isActivated())
+				info._entityPtr->deactivate();
+
+			info._entityPtr->_map = NULL;
+			
+			// Borramos el elemento de cada lista en la que este
+			// presente
+			if( info._processIterator != _entityList.end() ) 
+				_entityList.erase(info._processIterator);
+			if( info._tickIterator != _entitiesWithTick.end() ) 
+				_entitiesWithTick.erase(info._tickIterator);
+			if( info._fixedTickIterator != _entitiesWithFixedTick.end() ) 
+				_entitiesWithFixedTick.erase(info._fixedTickIterator);
+
+			_entityInfoTable.erase(it);
+		}
 	} // removeEntity
 
 	//--------------------------------------------------------
 
-	void CMap::destroyAllEntities()
-	{
+	// @deprecated WHAT THE FUCK? hay que decirle a la factoria que llame a un metodo nuestro
+	// para borrar. Pero es que estamos tontos ya o q? encima al ejecutarlo hay que hacer una
+	// busqueda. Esto es ineficiencia por deporte...
+	void CMap::destroyAllEntities() {
 		CEntityFactory* entityFactory = CEntityFactory::getSingletonPtr();
 
-		TEntityMap::const_iterator it, end;
+		/*TEntityMap::const_iterator it, end;
 		it = _entityMap.begin();
-		end = _entityMap.end();
+		end = _entityMap.end();*/
+
+		std::unordered_map<TEntityID, EntityInfo>::const_iterator it = _entityInfoTable.begin();
+		std::unordered_map<TEntityID, EntityInfo>::const_iterator end = _entityInfoTable.end();
 
 		// Eliminamos todas las entidades. La factoría se encarga de
 		// desactivarlas y sacarlas previamente del mapa.
-		while(it != end)
-		{
-			CEntity* entity = (*it).second;
-			it++;
-			entityFactory->deleteEntity(entity);
+		for(; it != end; ++it) {	
+			entityFactory->deleteEntity(it->second._entityPtr);
 		}
 
-		_entityMap.clear();
-		_entitiesWithTick.clear();
-		_entitiesWithFixedTick.clear();
+		//_entityMap.clear();
+		//_entitiesWithTick.clear();
+		//_entitiesWithFixedTick.clear();
 
 	} // removeEntity
 
 	//--------------------------------------------------------
 
-	CEntity* CMap::getEntityByID(TEntityID entityID)
-	{
-		if(_entityMap.count(entityID) == 0)
-			return 0;
-		return (*_entityMap.find(entityID)).second;
+	CEntity* CMap::getEntityByID(TEntityID entityID) {
+		std::unordered_map<TEntityID, EntityInfo>::const_iterator it = _entityInfoTable.find(entityID);
+		if( it != _entityInfoTable.end() )
+			return it->second._entityPtr;
+		
+		return NULL;
 
+		/*if(_entityMap.count(entityID) == 0)
+			return 0;
+		return (*_entityMap.find(entityID)).second;*/
 	} // getEntityByID
 
 	//--------------------------------------------------------
 
-	CEntity* CMap::getEntityByName(const std::string &name, CEntity *start)
-	{
-		TEntityMap::const_iterator it, end;
+	// @deprecated esta funcion es un mojon como una casa. Deberiamos tener varias
+	// tablas de punteros a informacion del player (tal y como se hace en el gestor de jugadores)
+	// es un poco mas complejo de mantener pero infinitamente mas eficiente de ejecutar
+	CEntity* CMap::getEntityByName(const std::string &name, CEntity *start) {
+		std::unordered_map<TEntityID, EntityInfo>::const_iterator it = _entityInfoTable.begin();
+		for(; it != _entityInfoTable.end(); ++it) {
+			if( it->second._entityPtr->getName() == name )
+				return it->second._entityPtr;
+		}
+
+		return NULL;
+		
+		/*TEntityMap::const_iterator it, end;
 		end = _entityMap.end();
 
 		// Si se definió entidad desde la que comenzar la búsqueda 
 		// cogemos su posición y empezamos desde la siguiente.
-		if (start)
-		{
+		if (start) {
 			it = _entityMap.find(start->getEntityID());
 			// si la entidad no existe devolvemos NULL.
 			if(it == end)
@@ -371,22 +402,31 @@ namespace Logic {
 		else
 			it = _entityMap.begin();
 
-		for(; it != end; it++)
-		{
+		for(; it != end; it++) {
 			// si hay coincidencia de nombres devolvemos la entidad.
 			if (!(*it).second->getName().compare(name))
 				return (*it).second;
 		}
 		// si no se encontró la entidad devolvemos NULL.
-		return 0;
-
+		return 0;*/
 	} // getEntityByName
 
 	//--------------------------------------------------------
 
-	CEntity* CMap::getEntityByType(const std::string &type, CEntity *start)
-	{
-		TEntityMap::const_iterator it, end;
+	// @deprecated esta funcion es un mojon como una casa. Deberiamos tener varias
+	// tablas de punteros a informacion del player (tal y como se hace en el gestor de jugadores)
+	// es un poco mas complejo de mantener pero infinitamente mas eficiente de ejecutar
+	CEntity* CMap::getEntityByType(const std::string &type, CEntity *start) {
+		std::unordered_map<TEntityID, EntityInfo>::const_iterator it = _entityInfoTable.begin();
+		for(; it != _entityInfoTable.end(); ++it) {
+			std::cout << it->second._entityPtr->getName() << std::endl;
+			if( it->second._entityPtr->getType() == type )
+				return it->second._entityPtr;
+		}
+
+		return NULL;
+
+		/*TEntityMap::const_iterator it, end;
 		end = _entityMap.end();
 
 		// Si se definió entidad desde la que comenzar la búsqueda 
@@ -410,14 +450,13 @@ namespace Logic {
 		}
 		// si no se encontró la entidad devolvemos NULL.
 		return 0;
-
+		*/
 	} // getEntityByType
 
 	//--------------------------------------------------------
 	//--------------------------------------------------------
 	
-	CEntity* CMap::createPlayer(const std::string &name, const std::string &type)
-	{
+	CEntity* CMap::createPlayer(const std::string &name, const std::string &type) {
 
 		//cogemos el player necesario
 		Map::CEntity *playerInfo = CEntityFactory::getSingletonPtr()->getInfo(type);
@@ -483,7 +522,7 @@ namespace Logic {
 	}
 
 	void CMap::entityTimeToLive(CEntity* entity, unsigned int msecs) {
-		_entitiesToBeDeleted.push_back( std::pair<CEntity*, unsigned int>(entity, msecs) );
+		_entitiesWithTimeout.push_back( std::pair<CEntity*, unsigned int>(entity, msecs) );
 	}
 
 	void CMap::setFixedTimeStep(unsigned int stepSize) {
