@@ -70,18 +70,16 @@ namespace Logic {
 	// @deprecated la busqueda debe hacerse sobre un unordered_multimap
 	// por lo que no deberiamos dar la posicion de la entidad sobre la
 	// que empezar
-	void CGameSpawnManager::activate() 
-	{
+	void CGameSpawnManager::activate() {
 		//Cargamos los las entidades de tipo SpawnPoint para tenerlas
-		CEntity *entidad;
-		entidad=CServer::getSingletonPtr()->getMap()->getEntityByType("SpawnPoint");
-		if(entidad!=NULL)
-			_listSpawnPoints.push_back(entidad);
-		while(entidad!=NULL){
-			entidad=CServer::getSingletonPtr()->getMap()->getEntityByType("SpawnPoint",entidad);
-			if(entidad!=NULL)
-				_listSpawnPoints.push_back(entidad);
+		std::list<CEntity*> spawnPointsFound = CServer::getSingletonPtr()->getMap()->getEntitiesByType("SpawnPoint");
+		std::list<CEntity*>::const_iterator it = spawnPointsFound.begin();
+		std::list<CEntity*>::const_iterator end = spawnPointsFound.end();
+
+		for(; it != end; ++it) {
+			_listSpawnPoints.push_back(*it);
 		}
+		
 		_maxTrys=15;
 	} // activate
 

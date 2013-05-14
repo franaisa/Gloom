@@ -151,7 +151,7 @@ namespace Logic
 		Si no se especifica se empieza desde el principio.
 		@return Entidad con el nombre pedido, NULL si no se encuentra.
 		*/
-		CEntity *getEntityByName(const std::string &name, CEntity *start = 0);
+		CEntity *getEntityByName(const std::string &name);
 
 		/**
 		Recupera una entidad del mapa a partir de su tipo.
@@ -163,7 +163,7 @@ namespace Logic
 		Si no se especifica se empieza desde el principio.
 		@return Entidad con el nombre pedido, NULL si no se encuentra.
 		*/
-		CEntity *getEntityByType(const std::string &type, CEntity *start = 0);
+		std::list<CEntity*> getEntitiesByType(const std::string &type);
 
 		/**
 		Devuelve la escena gráfica correspondiente a este mapa.
@@ -230,9 +230,17 @@ namespace Logic
 			std::list<CEntity*>::const_iterator _fixedTickIterator;
 		};
 
-		std::unordered_map<TEntityID, EntityInfo> _entityInfoTable;
+		//std::unordered_map<TEntityID, EntityInfo> _entityInfoTable;
 
+		// Hash de punteros a informacion de entidades
+		std::unordered_map<TEntityID, EntityInfo*> _entityIdLookupTable;
+		std::unordered_map<std::string, EntityInfo*> _entityNameLookupTable;
+		std::unordered_multimap<std::string, EntityInfo*> _entityTypeLookupTable;
+		
+		// Listas de entidades a recorrer
 		std::list<CEntity*> _entityList;
+		std::list<CEntity*> _entitiesWithTick;
+		std::list<CEntity*> _entitiesWithFixedTick;
 
 		/**
 		Tipo tabla de entidades de mapa.
@@ -243,9 +251,6 @@ namespace Logic
 		tabla con las entidades del mapa localizadas por su ID.
 		*/
 		//TEntityMap _entityMap;
-
-		std::list<CEntity*> _entitiesWithTick;
-		std::list<CEntity*> _entitiesWithFixedTick;
 
 		/**
 		Lista de entidades que hay que borrar

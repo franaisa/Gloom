@@ -33,14 +33,12 @@ using namespace std;
 
 namespace Logic {
 		
-	CMap* CMap::createMapFromFile(const std::string &filename)
-	{
+	CMap* CMap::createMapFromFile(const std::string &filename) {
 		// Completamos la ruta con el nombre proporcionado
 		std::string completePath(MAP_FILE_PATH);
 		completePath = completePath + filename;
 		// Parseamos el fichero
-		if(!Map::CMapParser::getSingletonPtr()->parseFile(completePath))
-		{
+		if(!Map::CMapParser::getSingletonPtr()->parseFile(completePath)) {
 			assert(!"No se ha podido parsear el mapa.");
 			return false;
 		}
@@ -59,8 +57,7 @@ namespace Logic {
 		end = entityList.end();
 		
 		// Creamos todas las entidades lógicas.
-		for(; it != end; it++)
-		{
+		for(; it != end; it++) {
 			CEntity *entity;
 			Map::CEntity * info = entityFactory->getInfo((*it)->getType());
 			if(!info){
@@ -101,10 +98,6 @@ namespace Logic {
 		_fixedTimeStep = 16;
 		Graphics::CServer::getSingletonPtr()->setScene(_scene);
 
-		/*TEntityMap::const_iterator it, end;
-		end = _entityMap.end();
-		it = _entityMap.begin();*/
-
 		list<CEntity*>::const_iterator it = _entityList.begin();
 		list<CEntity*>::const_iterator end = _entityList.end();
 
@@ -121,10 +114,6 @@ namespace Logic {
 	//--------------------------------------------------------
 
 	void CMap::deactivate() {
-		/*TEntityMap::const_iterator it, end;
-		end = _entityMap.end();
-		it = _entityMap.begin();*/
-
 		list<CEntity*>::const_iterator it = _entityList.begin();
 		list<CEntity*>::const_iterator end = _entityList.end();
 
@@ -136,7 +125,6 @@ namespace Logic {
 		}
 
 		Graphics::CServer::getSingletonPtr()->setScene(0);
-
 	} // getEntity
 
 	//---------------------------------------------------------
@@ -145,18 +133,16 @@ namespace Logic {
 		_entitiesWithTick.push_back(entity);
 	}
 
+	//---------------------------------------------------------
+
 	void CMap::wantsFixedTick(CEntity* entity) {
 		_entitiesWithFixedTick.push_back(entity);
 	}
 
+	//---------------------------------------------------------
+
 	void CMap::start() {
 		// Ejecutamos el start de todas nuestras entidades
-		/*TEntityMap::const_iterator it = _entityMap.begin();
-		for(; it != _entityMap.end(); ++it ) {
-			// Ejecutamos el start de todas las entidades
-			it->second->start();
-		}*/
-
 		list<CEntity*>::const_iterator it = _entityList.begin();
 		list<CEntity*>::const_iterator end = _entityList.end();
 
@@ -177,11 +163,9 @@ namespace Logic {
 		processComponentMessages();
 		
 		// Ejecutamos el tick de las entidades
-		// Ejecutamos el tick de todas las entidades activadas del mapa
-		// La propia entidad se encarga de hacer el process, tick y fixed tick
-		// de sus componentes (dependiendo del estado)
 		doTick(msecs);
 
+		// Ejecutamos el fixed tick de las entidades
 		doFixedTick(msecs);	
 	} // tick
 
@@ -215,12 +199,6 @@ namespace Logic {
 	//--------------------------------------------------------
 
 	void CMap::processComponentMessages() {
-		// Ejecutamos el tick de todas nuestras entidades
-		/*TEntityMap::const_iterator it = _entityMap.begin();
-		for(; it != _entityMap.end(); ++it) {
-			it->second->processComponentMessages();
-		}*/
-
 		list<CEntity*>::const_iterator it = _entityList.begin();
 		list<CEntity*>::const_iterator end = _entityList.end();
 
@@ -269,7 +247,6 @@ namespace Logic {
 				++it;
 			}
 		}
-
 	}
 
 	//--------------------------------------------------------
@@ -277,6 +254,9 @@ namespace Logic {
 	typedef std::pair<TEntityID,CEntity*> TEntityPair;
 
 	void CMap::addEntity(CEntity *entity) {
+		// Insertamos las entidades en la listas que vamos a usar para recorrer
+		// y nos apuntamos el iterador (que nos hara falta mas tarde para los
+		// borrados).
 		_entityList.push_front(entity);
 		std::list<CEntity*>::const_iterator listIt = _entityList.begin();
 
@@ -288,47 +268,50 @@ namespace Logic {
 
 		TEntityID entityId = entity->getEntityID();
 		// Añadimos la entidad si no existia
-		if( _entityInfoTable.find(entityId) == _entityInfoTable.end() ) {
-			EntityInfo info;
-			info._entityPtr = entity;
-			info._processIterator = listIt;
-			info._tickIterator = tickIt;
-			info._fixedTickIterator = fixedTickIt;
+		if( _entityIdLookupTable.find(entityId) == _entityIdLookupTable.end() ) {
+			EntityInfo* info = new(std::nothrow) EntityInfo;
+			assert(info != NULL && "Error: En la reserva de memoria");
+
+			info->_entityPtr = entity;
+			info->_processIterator = listIt;
+			info->_tickIterator = tickIt;
+			info->_fixedTickIterator = fixedTickIt;
 			
-			_entityInfoTable[entityId] = info;
+			_entityIdLookupTable[entityId] = info;
+			// @todo añadir a las listas que toque
+			//_entityNameLookupTable[info->_entityPtr->getName()] = info;
+			//_entityTypeLookupTable[info->_entityPtr->getType()] = info;
 		}
-
-		/*if(_entityMap.count(entity->getEntityID()) == 0) {
-			TEntityPair elem(entity->getEntityID(), entity);
-			_entityMap.insert(elem);
-		}*/
-
-		
 	} // addEntity
 
 	//--------------------------------------------------------
 
 	void CMap::removeEntity(CEntity *entity) {
 		// Eliminamos la entidad si existe
-		std::unordered_map<TEntityID, EntityInfo>::const_iterator it = _entityInfoTable.find( entity->getEntityID() );
-		if( it != _entityInfoTable.end() ) {
-			EntityInfo info = it->second;
+		std::unordered_map<TEntityID, EntityInfo*>::const_iterator it = _entityIdLookupTable.find( entity->getEntityID() );
+		if( it != _entityIdLookupTable.end() ) {
+			EntityInfo* info = it->second;
 
-			if(info._entityPtr->isActivated())
-				info._entityPtr->deactivate();
+			if(info->_entityPtr->isActivated())
+				info->_entityPtr->deactivate();
 
-			info._entityPtr->_map = NULL;
+			info->_entityPtr->_map = NULL;
 			
 			// Borramos el elemento de cada lista en la que este
 			// presente
-			if( info._processIterator != _entityList.end() ) 
-				_entityList.erase(info._processIterator);
-			if( info._tickIterator != _entitiesWithTick.end() ) 
-				_entitiesWithTick.erase(info._tickIterator);
-			if( info._fixedTickIterator != _entitiesWithFixedTick.end() ) 
-				_entitiesWithFixedTick.erase(info._fixedTickIterator);
+			if( info->_processIterator != _entityList.end() ) 
+				_entityList.erase(info->_processIterator);
+			if( info->_tickIterator != _entitiesWithTick.end() ) 
+				_entitiesWithTick.erase(info->_tickIterator);
+			if( info->_fixedTickIterator != _entitiesWithFixedTick.end() ) 
+				_entitiesWithFixedTick.erase(info->_fixedTickIterator);
 
-			_entityInfoTable.erase(it);
+			_entityIdLookupTable.erase(it);
+			//@todo borrar en la tabla de nombre y tipo
+
+			// Borramos el puntero a la estructura que contenia
+			// la informacion relativa a la estructura
+			delete info;
 		}
 	} // removeEntity
 
@@ -340,117 +323,48 @@ namespace Logic {
 	void CMap::destroyAllEntities() {
 		CEntityFactory* entityFactory = CEntityFactory::getSingletonPtr();
 
-		/*TEntityMap::const_iterator it, end;
-		it = _entityMap.begin();
-		end = _entityMap.end();*/
-
-		std::unordered_map<TEntityID, EntityInfo>::const_iterator it = _entityInfoTable.begin();
-		std::unordered_map<TEntityID, EntityInfo>::const_iterator end = _entityInfoTable.end();
+		std::unordered_map<TEntityID, EntityInfo*>::const_iterator it = _entityIdLookupTable.begin();
+		std::unordered_map<TEntityID, EntityInfo*>::const_iterator end = _entityIdLookupTable.end();
 
 		// Eliminamos todas las entidades. La factoría se encarga de
 		// desactivarlas y sacarlas previamente del mapa.
 		for(; it != end; ++it) {	
-			entityFactory->deleteEntity(it->second._entityPtr);
+			entityFactory->deleteEntity(it->second->_entityPtr);
 		}
-
-		//_entityMap.clear();
-		//_entitiesWithTick.clear();
-		//_entitiesWithFixedTick.clear();
-
 	} // removeEntity
 
 	//--------------------------------------------------------
 
 	CEntity* CMap::getEntityByID(TEntityID entityID) {
-		std::unordered_map<TEntityID, EntityInfo>::const_iterator it = _entityInfoTable.find(entityID);
-		if( it != _entityInfoTable.end() )
-			return it->second._entityPtr;
+		std::unordered_map<TEntityID, EntityInfo*>::const_iterator it = _entityIdLookupTable.find(entityID);
+		if( it != _entityIdLookupTable.end() )
+			return it->second->_entityPtr;
 		
 		return NULL;
-
-		/*if(_entityMap.count(entityID) == 0)
-			return 0;
-		return (*_entityMap.find(entityID)).second;*/
 	} // getEntityByID
 
 	//--------------------------------------------------------
 
-	// @deprecated esta funcion es un mojon como una casa. Deberiamos tener varias
-	// tablas de punteros a informacion del player (tal y como se hace en el gestor de jugadores)
-	// es un poco mas complejo de mantener pero infinitamente mas eficiente de ejecutar
-	CEntity* CMap::getEntityByName(const std::string &name, CEntity *start) {
-		std::unordered_map<TEntityID, EntityInfo>::const_iterator it = _entityInfoTable.begin();
-		for(; it != _entityInfoTable.end(); ++it) {
-			if( it->second._entityPtr->getName() == name )
-				return it->second._entityPtr;
-		}
+	CEntity* CMap::getEntityByName(const std::string &name) {
+		std::unordered_map<std::string, EntityInfo*>::const_iterator it = _entityNameLookupTable.find(name);
+		if( it != _entityNameLookupTable.end() )
+			return it->second->_entityPtr;
 
 		return NULL;
-		
-		/*TEntityMap::const_iterator it, end;
-		end = _entityMap.end();
-
-		// Si se definió entidad desde la que comenzar la búsqueda 
-		// cogemos su posición y empezamos desde la siguiente.
-		if (start) {
-			it = _entityMap.find(start->getEntityID());
-			// si la entidad no existe devolvemos NULL.
-			if(it == end)
-				return 0;
-			it++;
-		}
-		else
-			it = _entityMap.begin();
-
-		for(; it != end; it++) {
-			// si hay coincidencia de nombres devolvemos la entidad.
-			if (!(*it).second->getName().compare(name))
-				return (*it).second;
-		}
-		// si no se encontró la entidad devolvemos NULL.
-		return 0;*/
 	} // getEntityByName
 
 	//--------------------------------------------------------
 
-	// @deprecated esta funcion es un mojon como una casa. Deberiamos tener varias
-	// tablas de punteros a informacion del player (tal y como se hace en el gestor de jugadores)
-	// es un poco mas complejo de mantener pero infinitamente mas eficiente de ejecutar
-	CEntity* CMap::getEntityByType(const std::string &type, CEntity *start) {
-		std::unordered_map<TEntityID, EntityInfo>::const_iterator it = _entityInfoTable.begin();
-		for(; it != _entityInfoTable.end(); ++it) {
-			std::cout << it->second._entityPtr->getName() << std::endl;
-			if( it->second._entityPtr->getType() == type )
-				return it->second._entityPtr;
+	std::list<CEntity*> CMap::getEntitiesByType(const std::string &type) {
+		std::unordered_multimap<std::string, EntityInfo*>::const_iterator it;
+		std::list<CEntity*> entities;
+
+		auto range = _entityTypeLookupTable.equal_range(type);
+		for(it = range.first; it != range.second; ++it) {
+			entities.push_back(it->second->_entityPtr);
 		}
 
-		return NULL;
-
-		/*TEntityMap::const_iterator it, end;
-		end = _entityMap.end();
-
-		// Si se definió entidad desde la que comenzar la búsqueda 
-		// cogemos su posición y empezamos desde la siguiente.
-		if (start)
-		{
-			it = _entityMap.find(start->getEntityID());
-			// si la entidad no existe devolvemos NULL.
-			if(it == end)
-				return 0;
-			it++;
-		}
-		else
-			it = _entityMap.begin();
-
-		for(; it != end; it++)
-		{
-			// si hay coincidencia de nombres devolvemos la entidad.
-			if (!(*it).second->getType().compare(type))
-				return (*it).second;
-		}
-		// si no se encontró la entidad devolvemos NULL.
-		return 0;
-		*/
+		return entities;
 	} // getEntityByType
 
 	//--------------------------------------------------------
