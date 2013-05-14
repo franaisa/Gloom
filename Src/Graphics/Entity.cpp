@@ -133,7 +133,8 @@ namespace Graphics
 		{
 			// desacoplamos la entidad de su nodo
 			_entityNode->detachAllObjects();
-			_scene->getSceneMgr()->destroySceneNode(_entityNode);
+			if(_scene->getSceneMgr()->hasSceneNode(_entityNode->getName()))
+				_scene->getSceneMgr()->destroySceneNode(_entityNode);
 			_entityNode = 0;
 		}
 		if(_entity)
