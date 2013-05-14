@@ -37,10 +37,10 @@ float4 ilumination_ps(const VsOutput psIn) : COLOR {
 	float4 emissiveColor = 0;
 	
 	// Diffuse
-	float4 diffuseColor = tex2D(diffuseTexture, psIn.uv0) /2;
+	float4 diffuseColor = tex2D(diffuseTexture, psIn.uv0)/2;
 	
 	// Ambient
-	float4 ambientColor = diffuseColor * ambient /2;
+	float4 ambientColor = diffuseColor * ambient ;
 	
 	//specular
 	float4 specularColor = tex2D(specularTexture, psIn.uv0);
@@ -51,7 +51,7 @@ float4 ilumination_ps(const VsOutput psIn) : COLOR {
 	
 	//calculo general
 	//imageColor = emissiveColor + ambientColor + diffuseColor + specularColor;
-	imageColor = ambientColor + diffuseColor;
+	imageColor = (ambientColor + (diffuseColor * specularColor)) * normalColor.zzzw ;
 	return imageColor;
 }
 
