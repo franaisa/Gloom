@@ -63,18 +63,7 @@ namespace Logic {
 		Vector3 inc, temp;
 		unsigned int bufferSize = buffer.size();
 
-		// Interpolar la primera posicion
-		if(!_buffer.empty()) {
-			unsigned int lastIndex = _buffer.size() - 1;
-			inc = (buffer[0] - _buffer[lastIndex]) / (float)_ticksPerSample;
-
-			temp = _buffer[lastIndex] + inc;
-			for(int k = 0; k < _ticksPerSample - 1; ++k) {
-				_buffer.push_back(temp);
-				temp += inc;
-			}
-		}
-
+		// Interpolamos las posiciones intermedias del buffer
 		for(int i = 0; i < bufferSize - 1; ++i) {
 			_buffer.push_back(buffer[i]);
 
@@ -122,7 +111,7 @@ namespace Logic {
 		// hay que extrapolar y descartar del buffer
 		// que recibamos las que hemos perdido
 		else {
-			//cout << "Perdiendo snapshots" << endl;
+			cout << "Perdiendo snapshots" << endl;
 		}
 	}
 

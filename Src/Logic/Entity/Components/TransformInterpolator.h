@@ -126,13 +126,13 @@ namespace Logic {
 		//                          MIEMBROS PRIVADOS
 		// =======================================================================
 		
-
+		unsigned int _extrapolatedTicks;
 		unsigned int _lostTicks;
 		unsigned int _ticksPerSample;
 		unsigned int _samplesPerSnapshot;
 
 		std::deque<Matrix4> _buffer;
-
+		Vector3 _extrapolatedMovement;
 		CPhysicController* _controller;
 
 	}; // class CTransformInterpolator
