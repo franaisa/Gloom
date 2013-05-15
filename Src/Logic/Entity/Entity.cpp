@@ -165,6 +165,7 @@ namespace Logic
 		// debemos realizar
 		if ( isPlayer() ) {
 			Input::CServer::getSingletonPtr()->getPlayerController()->setControlledAvatar(0);
+			Audio::CServer::getSingletonPtr()->setSoundAvatar(NULL);
 			CServer::getSingletonPtr()->setPlayer(0);
 		}
 

@@ -228,8 +228,6 @@ namespace Logic {
 			entity = *it;
 
 			if( !entity->tick(msecs) ) {
-				TEntityID id = entity->getEntityID();
-
 				auto otherIt = _entityInfoTable.find( entity->getEntityID() );
 				otherIt->second._tickIterator = _entitiesWithTick.end();
 				it = _entitiesWithTick.erase(it);
@@ -255,8 +253,6 @@ namespace Logic {
 				entity = *it;
 
 				if( !entity->fixedTick(_fixedTimeStep) ) {
-					TEntityID id = entity->getEntityID();
-
 					auto otherIt = _entityInfoTable.find( entity->getEntityID() );
 					otherIt->second._fixedTickIterator = _entitiesWithFixedTick.end();
 					it = _entitiesWithFixedTick.erase(it);
@@ -270,8 +266,6 @@ namespace Logic {
 	}
 
 	//--------------------------------------------------------
-
-	typedef std::pair<TEntityID,CEntity*> TEntityPair;
 
 	void CMap::addEntity(CEntity *entity) {
 		TEntityID entityId = entity->getEntityID();
@@ -314,6 +308,8 @@ namespace Logic {
 				_entitiesWithTick.erase(info._tickIterator);
 			if( info._fixedTickIterator != _entitiesWithFixedTick.end() ) 
 				_entitiesWithFixedTick.erase(info._fixedTickIterator);
+
+			_entityInfoTable.erase(it);
 		}
 	} // removeEntity
 
