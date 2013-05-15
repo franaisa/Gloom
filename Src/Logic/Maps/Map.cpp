@@ -136,11 +136,17 @@ namespace Logic {
 	//---------------------------------------------------------
 
 	void CMap::wantsTick(CEntity* entity) {
-		_entitiesWithTick.push_back(entity);
+		_entitiesWithTick.push_front(entity);
+
+		auto it = _entityInfoTable.find( entity->getEntityID() );
+		it->second._tickIterator = _entitiesWithTick.begin();
 	}
 
 	void CMap::wantsFixedTick(CEntity* entity) {
-		_entitiesWithFixedTick.push_back(entity);
+		_entitiesWithFixedTick.push_front(entity);
+
+		auto it = _entityInfoTable.find( entity->getEntityID() );
+		it->second._fixedTickIterator = _entitiesWithFixedTick.begin();
 	}
 
 	void CMap::start() {
@@ -222,8 +228,10 @@ namespace Logic {
 			entity = *it;
 
 			if( !entity->tick(msecs) ) {
-				//auto otherIt = _entityInfoTable.find( entity->getEntityID() );
-				//otherIt->second._tickIterator = _entitiesWithTick.end();
+				TEntityID id = entity->getEntityID();
+
+				auto otherIt = _entityInfoTable.find( entity->getEntityID() );
+				otherIt->second._tickIterator = _entitiesWithTick.end();
 				it = _entitiesWithTick.erase(it);
 				continue;
 			}
@@ -247,8 +255,10 @@ namespace Logic {
 				entity = *it;
 
 				if( !entity->fixedTick(_fixedTimeStep) ) {
-					//auto otherIt = _entityInfoTable.find( entity->getEntityID() );
-					//otherIt->second._fixedTickIterator = _entitiesWithFixedTick.end();
+					TEntityID id = entity->getEntityID();
+
+					auto otherIt = _entityInfoTable.find( entity->getEntityID() );
+					otherIt->second._fixedTickIterator = _entitiesWithFixedTick.end();
 					it = _entitiesWithFixedTick.erase(it);
 					continue;
 				}
@@ -280,6 +290,8 @@ namespace Logic {
 			info._entityPtr = entity;
 			info._tickIterator = tickIt;
 			info._fixedTickIterator = fixedTickIt;
+
+			_entityInfoTable.insert( pair<TEntityID, EntityInfo>(entityId, info) );
 		}
 	} // addEntity
 
@@ -386,7 +398,7 @@ namespace Logic {
 
 		for(; it != end; ++it) {
 			// si hay coincidencia de nombres devolvemos la entidad.
-			if (!it->second._entityPtr->getName().compare(type))
+			if (!it->second._entityPtr->getType().compare(type))
 				return it->second._entityPtr;
 		}
 		// si no se encontró la entidad devolvemos NULL.
