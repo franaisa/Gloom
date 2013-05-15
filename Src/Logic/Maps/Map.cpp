@@ -143,7 +143,7 @@ namespace Logic {
 		// Comprobamos los timers de las entidades que tienen
 		// un tiempo de vida
 		checkTimeouts(msecs);
-		
+		Logic::CEntityFactory::getSingletonPtr()->deleteDefferedEntities();
 		// Ejecutamos el tick de las entidades
 		// Ejecutamos el tick de todas las entidades activadas del mapa
 		// La propia entidad se encarga de hacer el process, tick y fixed tick
