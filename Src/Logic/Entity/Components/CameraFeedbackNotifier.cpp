@@ -58,6 +58,13 @@ namespace Logic {
 		_walkAnim.currentVerticalPos = Math::HALF_PI;
 		_walkAnim.verticalSpeed = _walkAnim.horizontalSpeed * 2;
 		_walkAnim.verticalOffset = 0.06f;
+
+		_walkAnim.currentRoll = 0.0f;
+		_walkAnim.rollSpeed = 0.00005f;
+		_walkAnim.rollOffset = 0.012f;
+		_walkAnim.rollCoef = 0.95f;
+		_walkAnim.recoveringRoll = false;
+		_walkAnim.currentStrafingDir = 0;
 	}
 
 	//________________________________________________________________________
@@ -144,7 +151,7 @@ namespace Logic {
 			walkEffect(msecs);
 		else
 			offsetRecovery(msecs);
-		
+
 		if(_effectIsActivated){
 			_scene->updateCompositorVariable(_effect, _strengthEffect, 1+_timestamp*0.01);
 			_timestamp += msecs;
@@ -166,49 +173,26 @@ namespace Logic {
 	//________________________________________________________________________
 
 	void CCameraFeedbackNotifier::playerIsWalking(bool walking, int direction) { 
-		/*if(_playerIsWalking == walking) return;
-
 		_playerIsWalking = walking;
-		if(!_playerIsWalking) {
-			_cameraComponent->rollCamera(0);
+		if(_playerIsWalking) {
+			_walkAnim.currentStrafingDir = _strafingDir;
+			_strafingDir = direction;
 		}
-		else {
-			if( (_stepForce < 0 && direction < 0) ||
-				(_stepForce >= 0 && direction >= 0) ) {
-				
-				_stepForce *= -1;
-			}
-		}*/
-		_playerIsWalking = walking;
-		_strafingDir = direction;
 	}
 
 	//________________________________________________________________________
 
 	void CCameraFeedbackNotifier::offsetRecovery(unsigned int msecs) {
-		_cameraComponent->setOffset( _cameraComponent->getOffset() * Vector3(0.75f, 0.95f, 0.75f));
+		_cameraComponent->setOffset( _cameraComponent->getOffset() * Vector3(0.75f, 0.95f, 0.75f) );
+		if(_walkAnim.currentRoll != 0) {
+			_walkAnim.currentRoll *= 0.85f; // Coeficiente un poco más fuerte
+			_cameraComponent->rollCamera(_walkAnim.currentRoll);
+		}
 	}
 
 	//________________________________________________________________________
 
 	void CCameraFeedbackNotifier::walkEffect(unsigned int msecs) {
-		/*if(_cameraComponent->getRoll() == 0) {
-			_acumStepForce = _currentWalkingRoll = _stepForce *= -1;
-		}
-
-		_currentWalkingRoll += _acumStepForce * msecs;
-		_acumStepForce *= 0.9f;
-		if(_stepForce < 0) {
-			_currentWalkingRoll += _stepRecoveryAccel * msecs;
-			if(_currentWalkingRoll > 0) _currentWalkingRoll = 0;
-		}
-		else {
-			_currentWalkingRoll -= _stepRecoveryAccel * msecs;
-			if(_currentWalkingRoll < 0) _currentWalkingRoll = 0;
-		}
-
-		_cameraComponent->rollCamera(_currentWalkingRoll);*/
-		
 		Vector3 offset = _cameraComponent->getOffset();
 
 		if(_strafingDir == 0) {
@@ -224,9 +208,31 @@ namespace Logic {
 			offset += horizontal;
 		}
 		else {
+			// Reducimos el offset horizontal
 			offset = offset * Vector3(0.95f, 1.0f, 0.95f);
+
+			// Si no estamos recuperando el offset por haber llegado al máximo
+			// incrementamos el roll
+			if(!_walkAnim.recoveringRoll) {
+				_walkAnim.currentRoll += _strafingDir * _walkAnim.rollSpeed * msecs;
+
+				if(abs(_walkAnim.currentRoll) >= _walkAnim.rollOffset) {
+					_walkAnim.currentRoll = _walkAnim.rollOffset * _walkAnim.rollCoef * _strafingDir;
+					_walkAnim.recoveringRoll = true;
+				}
+			}
+			// Si cambiamos de direccion dejamos de recuperar el offset
+			else if(_walkAnim.currentStrafingDir != _strafingDir) {
+				_walkAnim.recoveringRoll = false;
+			}
 		}
 
+		// Recuperamos la posicion inicial multiplicando por el coeficiente
+		// de recuperacion
+		if(_walkAnim.recoveringRoll)
+			_walkAnim.currentRoll *= _walkAnim.rollCoef;
+		
+		_cameraComponent->rollCamera(_walkAnim.currentRoll);
 
 		_walkAnim.currentVerticalPos += _walkAnim.verticalSpeed * msecs;
 		if(_walkAnim.currentVerticalPos > ((2 * Math::PI) + Math::HALF_PI)) _walkAnim.currentVerticalPos = Math::HALF_PI; 
