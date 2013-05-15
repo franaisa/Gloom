@@ -154,6 +154,14 @@ namespace Logic {
 			float horizontalSpeed;
 			float horizontalOffset;
 			float currentHorizontalPos;
+
+			float currentRoll;
+			float rollSpeed;
+			float rollOffset;
+			float rollCoef;
+
+			int currentStrafingDir;
+			bool recoveringRoll;
 		};
 
 		CameraWalkAnim _walkAnim;
