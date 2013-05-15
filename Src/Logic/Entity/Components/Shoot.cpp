@@ -212,16 +212,11 @@ namespace Logic {
 	} // reduceCooldown
 	//__________________________________________________________________
 
-	void CShoot::inUse(bool state) {
-		_isInUse = state;
-
-		if(_isInUse)
-		{
-			std::shared_ptr<CMessageHudWeapon> message = std::make_shared<CMessageHudWeapon>();
-			message->setWeapon(_id);
-			message->setAmmo(_currentAmmo);
-			_entity->emitMessage(message);
-		}
+	void CShoot::onAvailable() {
+		std::shared_ptr<CMessageHudWeapon> message = std::make_shared<CMessageHudWeapon>();
+		message->setWeapon(_id);
+		message->setAmmo(_currentAmmo);
+		_entity->emitMessage(message);
 	}
 	//__________________________________________________________________
 

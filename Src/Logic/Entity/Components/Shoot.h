@@ -131,10 +131,16 @@ namespace Logic {
 		*/
 		virtual void process(const std::shared_ptr<CMessage>& message);
 
+		/**
+		Invocado al despertar un componente.
+		*/
+		virtual void onAvailable();
 		
 		// =======================================================================
 		//                            METODOS PROPIOS
 		// =======================================================================
+
+
 
 		/**
 		Metodo para facilitar la emision de sonidos.
@@ -223,20 +229,6 @@ namespace Logic {
 		@param percent Porcentaje de reducción de cooldown.
 		*/
 		void reduceCooldown(int percent);
-
-		//__________________________________________________________________
-
-		/**
-		Sirve para indicar si este arma es el arma actualmente equipada.
-
-		Este método es necesario para evitar que se acepten mensajes en 
-		armas que no están siendo equipadas, ya que las armas no pueden desactivarse
-		(de lo contrario seria imposible actualizar los timers de los cooldowns).
-
-		@param state true si el arma está equipada, false si no esta en uso.
-		*/
-		void inUse(bool state);
-
 
 	protected:
 

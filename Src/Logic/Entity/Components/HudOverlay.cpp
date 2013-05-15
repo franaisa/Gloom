@@ -448,19 +448,13 @@ namespace Logic
 				msgType == Message::HUD_DEBUG		|| 
 				msgType == Message::HUD_DEBUG_DATA	||
 				msgType == Message::CHANGE_MATERIAL_HUD_WEAPON ||
-				msgType == Message::IMPACT ||
-				msgType == Message::CHANGE_WEAPON_GRAPHICS;
+				msgType == Message::IMPACT;
 
 	} // accept
 	//---------------------------------------------------------
 
 	void CHudOverlay::process(const std::shared_ptr<CMessage>& message) {
 		switch( message->getMessageType() ) {
-		case Message::CHANGE_WEAPON_GRAPHICS: {
-				std::shared_ptr<CMessageChangeWeaponGraphics> changeWeaponMsg = std::static_pointer_cast<CMessageChangeWeaponGraphics>(message);
-				_actualWeapon=changeWeaponMsg->getWeapon();
-				break;
-			}
 			case Message::HUD_LIFE: {
 				std::shared_ptr<CMessageHudLife> hudLifeMsg = std::static_pointer_cast<CMessageHudLife>(message);
 				hudLife( hudLifeMsg->getLife() );
@@ -477,6 +471,7 @@ namespace Logic
 				break;
 			}
 			case Message::HUD_WEAPON: {
+				std::cout << "llega mensaje hud weapon" << std::endl;
 				std::shared_ptr<CMessageHudWeapon> hudWeaponMsg = std::static_pointer_cast<CMessageHudWeapon>(message);
 				hudWeapon( hudWeaponMsg->getAmmo(), hudWeaponMsg->getWeapon() );
 				break;
