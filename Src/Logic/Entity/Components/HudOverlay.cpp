@@ -45,6 +45,7 @@ Contiene todo lo que respecta al hud del jugador
 #include "Logic/Messages/MessageHudWeapon.h"
 #include "Logic/Messages/MessageHudSpawn.h"
 #include "Logic/Messages/MessageChangeMaterialHudWeapon.h"
+#include "Logic/Messages/MessageChangeWeaponGraphics.h"
 #include "Logic/Server.h"
 
 #include "Logic/Messages/MessageHudDebug.h"
@@ -134,14 +135,16 @@ namespace Logic
          // Create an overlay
 		_overlayPlay = _server->createOverlay( "_overlayPlay", scene );		
          
-		// Create a panel de Mira
+		// Create a panel de Mira-> MIS CORNEAS
 		_panelMira = _server->createOverlay("Mira", scene, "Panel" );
-		float sizeCrossFireX = entityInfo->getFloatAttribute("hudCrossX");
-		float sizeCrossFireY = entityInfo->getFloatAttribute("hudCrossY");
-		float positionCrossFireX = 0.5f-((sizeCrossFireX/2)*0.01f) ;
-		float positionCrossFireY = 0.5f-((sizeCrossFireY/2)*0.01f) ;
+		_dimCrossX = entityInfo->getFloatAttribute("hudCrossX");
+		_dimCrossY = entityInfo->getFloatAttribute("hudCrossY");
+		_actualDimCrossX=_dimCrossX;
+		_actualDimCrossY=_dimCrossY;
+		float positionCrossFireX = 0.5f-((_dimCrossX/2)*0.01f) ;
+		float positionCrossFireY = 0.5f-((_dimCrossY/2)*0.01f) ;
         _panelMira->setPosition( positionCrossFireX,positionCrossFireY);
-		_panelMira->setDimensions( sizeCrossFireX*0.01, sizeCrossFireY*0.01);
+		_panelMira->setDimensions( _dimCrossX*0.01, _dimCrossY*0.01);
         _panelMira->setMaterial("hudMira3");
 
 		// overlay para controlar las teclas
@@ -159,7 +162,7 @@ namespace Logic
 		///////////////////////////////////Esto para la mira dinamica
 		_panelMiraMovible = _server->createOverlay("Mira dinamica", scene, "Panel" );
         _panelMiraMovible->setPosition( positionCrossFireX,positionCrossFireY);
-		_panelMiraMovible->setDimensions( sizeCrossFireX*0.01, sizeCrossFireY*0.01 );
+		_panelMiraMovible->setDimensions( _dimCrossX*0.01, _dimCrossY*0.01 );
         _panelMiraMovible->setMaterial("hudMira4");
 		_overlayPlay->add2D(_panelMiraMovible);
 
@@ -445,13 +448,19 @@ namespace Logic
 				msgType == Message::HUD_DEBUG		|| 
 				msgType == Message::HUD_DEBUG_DATA	||
 				msgType == Message::CHANGE_MATERIAL_HUD_WEAPON ||
-				msgType == Message::IMPACT;
+				msgType == Message::IMPACT ||
+				msgType == Message::CHANGE_WEAPON_GRAPHICS;
 
 	} // accept
 	//---------------------------------------------------------
 
 	void CHudOverlay::process(const std::shared_ptr<CMessage>& message) {
 		switch( message->getMessageType() ) {
+		case Message::CHANGE_WEAPON_GRAPHICS: {
+				std::shared_ptr<CMessageChangeWeaponGraphics> changeWeaponMsg = std::static_pointer_cast<CMessageChangeWeaponGraphics>(message);
+				_actualWeapon=changeWeaponMsg->getWeapon();
+				break;
+			}
 			case Message::HUD_LIFE: {
 				std::shared_ptr<CMessageHudLife> hudLifeMsg = std::static_pointer_cast<CMessageHudLife>(message);
 				hudLife( hudLifeMsg->getLife() );
@@ -569,7 +578,7 @@ namespace Logic
 			_panelWeapon[weapon]->setMaterial("cuadroArmasInUse");
 			// cambio el arma activa por la recien pulsada
 			_actualWeapon = weapon;
-					
+
 			_weaponsBox[_actualWeapon][ACTIVE]->setVisible(true);
 			_weaponsBox[_actualWeapon][NO_AMMO]->setVisible(false);
 			_weaponsBox[_actualWeapon][NO_WEAPON]->setVisible(false);
@@ -595,8 +604,26 @@ namespace Logic
 	//-------------------------------------------------------
 
 	void CHudOverlay::hudDispersion(){
-		//Aplicamos dispersion
-		
+		//Primera version chusquera para ver como queda el efecto en minigun
+		//Con un switch/case se podria tratar todas las armas
+		//Y en el tick comprobariamos los timers activos y se haria lo mismo pero llamando a la mira correspondiente
+		if(_actualWeapon==WeaponType::eMINIGUN){
+			//Esta funcion podria recibir del mensaje cuanto impulso de apertura/cierre va a tener"
+			//El tick se encargará de poner la mirilla a su tamaño original si es que ha sido modificada
+			//Aplicamos dispersion por el momento solo tratamos la minigun(impulso de cierre)
+			_actualDimCrossX=_actualDimCrossX-0.3;// el numerito es el impulso de cierre/apertura
+			_actualDimCrossY=_actualDimCrossY-0.3;
+			//Ojo que los valores estan puestos a mano ya que la X y la Y tienen diferentes dimensiones actualmente
+			if(_actualDimCrossX<2){
+				_actualDimCrossX=2;
+				_actualDimCrossY=3;
+			}
+			float positionCrossFireX = 0.5f-((_actualDimCrossX/2)*0.01f) ;
+			float positionCrossFireY = 0.5f-((_actualDimCrossY/2)*0.01f) ;
+			_panelMiraMovible->setPosition( positionCrossFireX,positionCrossFireY);
+			_panelMiraMovible->setDimensions( _actualDimCrossX*0.01, _actualDimCrossY*0.01);
+			_activeTimerMinigunCrossFire=true;
+		}
 	}
 	//-------------------------------------------------------
 
@@ -664,6 +691,37 @@ namespace Logic
 
 	void CHudOverlay::onTick(unsigned int msecs)
 	{
+
+		//Control del tamaño de mirillas
+		//En un futuro lo mismo es mejor tener un componente HudFX que se encargue de unicamente llamar a este cuando su tick lo crea conveniente
+		
+		if(_activeTimerMinigunCrossFire)
+			_timerMinigunCrossFire+=msecs;
+		//Si pasan X milisegundos significa que fue activado y tenemos que dejarla en su estado original
+		if(_timerMinigunCrossFire>100){
+			_actualDimCrossX=_actualDimCrossX+0.15;
+			_actualDimCrossY=_actualDimCrossY+0.15;
+			//Si nos pasamos de incrementar lo dejamos a su valor por defecto
+			if(_actualDimCrossX>4){
+				_actualDimCrossX=4;
+				_actualDimCrossY=5;
+			}
+			float positionCrossFireX = 0.5f-((_actualDimCrossX/2)*0.01f) ;
+			float positionCrossFireY = 0.5f-((_actualDimCrossY/2)*0.01f) ;
+			_panelMiraMovible->setPosition( positionCrossFireX,positionCrossFireY);
+			_panelMiraMovible->setDimensions( _actualDimCrossX*0.01, _actualDimCrossY*0.01);
+			//Ponemos a 0 el timer para no restaurar continuamente solo cada X milisegundos
+			_timerMinigunCrossFire=0;
+			//Si restauramos por completo el tamaño original
+			if(_actualDimCrossX==_dimCrossX){
+				_activeTimerMinigunCrossFire=false;
+				_timerMinigunCrossFire=0;
+			}
+		}
+
+		//////////////////////////////////////////////////////////////////////////////////////
+		//////////////////////////////////////////////////////////////////////////////////////
+
 		temporal += msecs;
 
 		if(_overlayLocationImpact->isVisible()){
