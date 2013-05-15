@@ -107,8 +107,13 @@ namespace Logic
 				spawnMsg->setSpawnTransform( _entity->getTransform() );
 				_entity->emitMessage(spawnMsg);
 
-				CEntity * camera = CServer::getSingletonPtr()->getMap()->getEntityByType("Camera");
+				// @deprecated
+				// Teoricamente solo hay un elemento de tipo camara.
+				// De todas formas para esto deberiamos coger al elemento por nombre y NO por tipo
+				CEntity* camera = CServer::getSingletonPtr()->getMap()->getEntityByName("Camera");
+				assert(camera != NULL && "Error: Esto no se puede hacer asi que sois unos lamers, ahora el servidor que hace?");
 				camera->emitMessage(spawnMsg);
+				
 				//if(Net::CManager::getSingletonPtr()->imServer())
 				//	Logic::CGameNetMsgManager::getSingletonPtr()->sendMessageToOne(new CMessagePlayerSpawn(), camera->getEntityID(), _entity->getEntityID());
 

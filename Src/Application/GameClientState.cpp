@@ -148,7 +148,9 @@ namespace Application {
 				player->start();
 
 				// Fijamos el objetivo de la camara
-				Logic::CServer::getSingletonPtr()->getMap()->getEntityByType("Camera")->getComponent<Logic::CCamera>("CCamera")->setTarget(player);
+				Logic::CEntity* camera = Logic::CServer::getSingletonPtr()->getMap()->getEntityByName("Camera");
+				assert(camera != NULL && "Error: Esto no se puede hacer asi que sois unos lamers, ahora el servidor que hace?");
+				camera->getComponent<Logic::CCamera>("CCamera")->setTarget(player);
 
 				break;
 			}
@@ -163,7 +165,10 @@ namespace Application {
 				Logic::CEntity* spectator = Logic::CServer::getSingletonPtr()->getMap()->createLocalPlayer(nickname, "Spectator", entityId);
 				spectator->activate();
 				spectator->start();
-				Logic::CServer::getSingletonPtr()->getMap()->getEntityByType("Camera")->getComponent<Logic::CCamera>("CCamera")->setTarget(spectator);
+
+				Logic::CEntity* camera = Logic::CServer::getSingletonPtr()->getMap()->getEntityByName("Camera");
+				assert(camera != NULL && "Error, eres un lamer");
+				camera->getComponent<Logic::CCamera>("CCamera")->setTarget(spectator);
 			}
 			case Net::PING: {
 				// me llega la respuesta de un ping, por lo tanto tomo el tiempo y calculo mi ping

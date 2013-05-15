@@ -261,14 +261,13 @@ namespace Logic {
 		std::string entityType = entityInfo->getType();
 		CEntity* ret = assembleEntity(entityType);
 		
-		if(!ret) 
-			return NULL;
+		if(!ret) return NULL;
 
-		// Añadimos la nueva entidad en el mapa antes de inicializarla.
-		map->addEntity(ret);
-		
 		// Y lo inicializamos
 		if ( _dynamicCreation ? ret->dynamicSpawn(map, entityInfo) : ret->spawn(map, entityInfo) ) {
+			// Añadimos la nueva entidad en el mapa antes de inicializarla.
+			map->addEntity(ret);
+
 			if(replicate) {
 				Logic::CGameNetMsgManager::getSingletonPtr()->sendCreateEntity( ret->getEntityID() );
 			}
@@ -276,7 +275,6 @@ namespace Logic {
 			return ret;
 		} 
 		else {
-			map->removeEntity(ret);
 			delete ret;
 			return NULL;
 		}

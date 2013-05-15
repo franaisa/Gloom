@@ -254,21 +254,21 @@ namespace Logic {
 	typedef std::pair<TEntityID,CEntity*> TEntityPair;
 
 	void CMap::addEntity(CEntity *entity) {
-		// Insertamos las entidades en la listas que vamos a usar para recorrer
-		// y nos apuntamos el iterador (que nos hara falta mas tarde para los
-		// borrados).
-		_entityList.push_front(entity);
-		std::list<CEntity*>::const_iterator listIt = _entityList.begin();
-
-		_entitiesWithTick.push_front(entity);
-		std::list<CEntity*>::const_iterator tickIt = _entitiesWithTick.begin();
-
-		_entitiesWithFixedTick.push_front(entity);
-		std::list<CEntity*>::const_iterator fixedTickIt = _entitiesWithFixedTick.begin();
-
 		TEntityID entityId = entity->getEntityID();
 		// Añadimos la entidad si no existia
 		if( _entityIdLookupTable.find(entityId) == _entityIdLookupTable.end() ) {
+			// Insertamos las entidades en la listas que vamos a usar para recorrer
+			// y nos apuntamos el iterador (que nos hara falta mas tarde para los
+			// borrados).
+			_entityList.push_front(entity);
+			std::list<CEntity*>::const_iterator listIt = _entityList.begin();
+
+			_entitiesWithTick.push_front(entity);
+			std::list<CEntity*>::const_iterator tickIt = _entitiesWithTick.begin();
+
+			_entitiesWithFixedTick.push_front(entity);
+			std::list<CEntity*>::const_iterator fixedTickIt = _entitiesWithFixedTick.begin();
+
 			EntityInfo* info = new(std::nothrow) EntityInfo;
 			assert(info != NULL && "Error: En la reserva de memoria");
 
@@ -278,9 +278,11 @@ namespace Logic {
 			info->_fixedTickIterator = fixedTickIt;
 			
 			_entityIdLookupTable[entityId] = info;
-			// @todo añadir a las listas que toque
-			//_entityNameLookupTable[info->_entityPtr->getName()] = info;
-			//_entityTypeLookupTable[info->_entityPtr->getType()] = info;
+			
+			auto ret = _entityNameLookupTable.insert( pair<string, EntityInfo*>( info->_entityPtr->getName(), info) );
+			assert(ret.second && "Error: Ya existe un nombre de entidad con el nombre dado");
+
+			_entityTypeLookupTable.insert( pair<string, EntityInfo*>( info->_entityPtr->getType(), info) );
 		}
 	} // addEntity
 
@@ -306,11 +308,25 @@ namespace Logic {
 			if( info->_fixedTickIterator != _entitiesWithFixedTick.end() ) 
 				_entitiesWithFixedTick.erase(info->_fixedTickIterator);
 
+			// Borramos de la tabla de ids
 			_entityIdLookupTable.erase(it);
-			//@todo borrar en la tabla de nombre y tipo
+			
+			// Borramos de las tabla de nombres
+			_entityNameLookupTable.erase( info->_entityPtr->getName() );
+
+			// Borramos de la tabla de tipos
+			auto range = _entityTypeLookupTable.equal_range( info->_entityPtr->getType() );
+			for(auto it = range.first; it != range.second; ++it) {
+				if(it->second->_entityPtr == info->_entityPtr) {
+					_entityTypeLookupTable.erase(it);
+					break;
+				}
+			}
 
 			// Borramos el puntero a la estructura que contenia
-			// la informacion relativa a la estructura
+			// la informacion relativa a la estructura pero no borramos
+			// a la entidad, ya que ésta sencillamente ya no está asociada
+			// a este mapa
 			delete info;
 		}
 	} // removeEntity
@@ -326,11 +342,25 @@ namespace Logic {
 		std::unordered_map<TEntityID, EntityInfo*>::const_iterator it = _entityIdLookupTable.begin();
 		std::unordered_map<TEntityID, EntityInfo*>::const_iterator end = _entityIdLookupTable.end();
 
-		// Eliminamos todas las entidades. La factoría se encarga de
-		// desactivarlas y sacarlas previamente del mapa.
-		for(; it != end; ++it) {	
-			entityFactory->deleteEntity(it->second->_entityPtr);
+		// Eliminamos todas los punteros a entidad
+		for(; it != end; ++it) {
+			EntityInfo* info = it->second;
+
+			info->_entityPtr->_map = NULL;
+
+			if(info->_entityPtr->isActivated())
+				info->_entityPtr->deactivate();
+
+			delete info->_entityPtr;
+			delete info;
 		}
+
+		// Limpiamos las tablas que mantienen informacion sobre
+		// las entidades.
+		_entityIdLookupTable.clear();
+		_entityNameLookupTable.clear();
+		_entityTypeLookupTable.clear();
+
 	} // removeEntity
 
 	//--------------------------------------------------------
