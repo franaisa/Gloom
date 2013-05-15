@@ -30,8 +30,7 @@ de juego. Es una colección de componentes.
 
 #include "../../Audio/Server.h"
 
-namespace Logic 
-{
+namespace Logic {
 
 	CEntity::CEntity(TEntityID entityID) : _entityID(entityID), 
 										   _map(0),
@@ -355,29 +354,25 @@ namespace Logic
 
 	//---------------------------------------------------------
 
-	void CEntity::setTransform(const Matrix4& transform) 
-	{
+	void CEntity::setTransform(const Matrix4& transform) {
 		_transform = transform;
 	} // setTransform
 
 	//---------------------------------------------------------
 
-	void CEntity::setPosition(const Vector3 &position) 
-	{
+	void CEntity::setPosition(const Vector3 &position) {
 		_transform.setTrans(position);
 	} // setPosition
 
 	//---------------------------------------------------------
 
-	void CEntity::setOrientation(const Matrix3& orientation) 
-	{
+	void CEntity::setOrientation(const Matrix3& orientation) {
 		_transform = orientation;
 	} // setOrientation
 
 	//---------------------------------------------------------
 
-	Matrix3 CEntity::getOrientation() const
-	{
+	Matrix3 CEntity::getOrientation() const {
 		Matrix3 orientation;
 		_transform.extract3x3Matrix(orientation);
 		return orientation;
@@ -385,29 +380,25 @@ namespace Logic
 
 	//---------------------------------------------------------
 
-	void CEntity::setYaw(float yaw) 
-	{
+	void CEntity::setYaw(float yaw) {
 		Math::setYaw(yaw,_transform);
 	} // setYaw
 
 	//---------------------------------------------------------
 
-	void CEntity::yaw(float yaw) 
-	{
+	void CEntity::yaw(float yaw) {
 		Math::yaw(yaw,_transform);
 	} // yaw
 
 	//---------------------------------------------------------
 
-	void CEntity::setPitch(float pitch) 
-	{
+	void CEntity::setPitch(float pitch) {
 		Math::setPitch(pitch,_transform);
 	} // setPitch
 
 	//---------------------------------------------------------
 
-	void CEntity::pitch(float pitch) 
-	{
+	void CEntity::pitch(float pitch) {
 		Math::pitch(pitch,_transform);
 	} // pitch
 
