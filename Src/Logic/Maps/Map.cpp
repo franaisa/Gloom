@@ -142,12 +142,16 @@ namespace Logic {
 		it->second._tickIterator = _entitiesWithTick.begin();
 	}
 
+	//---------------------------------------------------------
+
 	void CMap::wantsFixedTick(CEntity* entity) {
 		_entitiesWithFixedTick.push_front(entity);
 
 		auto it = _entityInfoTable.find( entity->getEntityID() );
 		it->second._fixedTickIterator = _entitiesWithFixedTick.begin();
 	}
+
+	//---------------------------------------------------------
 
 	void CMap::start() {
 		// Ejecutamos el start de todas nuestras entidades
