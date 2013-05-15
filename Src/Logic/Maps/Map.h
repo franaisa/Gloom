@@ -151,7 +151,7 @@ namespace Logic
 		Si no se especifica se empieza desde el principio.
 		@return Entidad con el nombre pedido, NULL si no se encuentra.
 		*/
-		CEntity *getEntityByName(const std::string &name);
+		CEntity *getEntityByName(const std::string &name, CEntity *start = 0);
 
 		/**
 		Recupera una entidad del mapa a partir de su tipo.
@@ -163,7 +163,7 @@ namespace Logic
 		Si no se especifica se empieza desde el principio.
 		@return Entidad con el nombre pedido, NULL si no se encuentra.
 		*/
-		std::list<CEntity*> getEntitiesByType(const std::string &type);
+		CEntity *getEntityByType(const std::string &type, CEntity *start = 0);
 
 		/**
 		Devuelve la escena gráfica correspondiente a este mapa.
@@ -217,45 +217,29 @@ namespace Logic
 
 		void doFixedTick(unsigned int msecs);
 
+		struct EntityInfo {
+			CEntity* _entityPtr;
+			std::list<CEntity*>::const_iterator _tickIterator;
+			std::list<CEntity*>::const_iterator _fixedTickIterator;
+		};
+
+		//std::unordered_map<TEntityID, EntityInfo> _entityInfoTable;
+		std::map<TEntityID, EntityInfo> _entityInfoTable;
+
+		//std::list<CEntity*> _entityList;
+		std::list<CEntity*> _entitiesWithTick;
+		std::list<CEntity*> _entitiesWithFixedTick;
+
 		/**
 		Lista de entidades que han sido marcadas para ser borradas en
 		un tiempo dado.
 		*/
 		std::list< std::pair<CEntity*, unsigned int> > _entitiesWithTimeout;
 
-		struct EntityInfo {
-			CEntity* _entityPtr;
-			std::list<CEntity*>::const_iterator _processIterator;
-			std::list<CEntity*>::const_iterator _tickIterator;
-			std::list<CEntity*>::const_iterator _fixedTickIterator;
-		};
-
-		//std::unordered_map<TEntityID, EntityInfo> _entityInfoTable;
-
-		// Hash de punteros a informacion de entidades
-		std::unordered_map<TEntityID, EntityInfo*> _entityIdLookupTable;
-		std::unordered_map<std::string, EntityInfo*> _entityNameLookupTable;
-		std::unordered_multimap<std::string, EntityInfo*> _entityTypeLookupTable;
-		
-		// Listas de entidades a recorrer
-		std::list<CEntity*> _entityList;
-		std::list<CEntity*> _entitiesWithTick;
-		std::list<CEntity*> _entitiesWithFixedTick;
-
-		/**
-		Tipo tabla de entidades de mapa.
-		*/
-		//typedef std::map<TEntityID, CEntity*> TEntityMap;
-
-		/**
-		tabla con las entidades del mapa localizadas por su ID.
-		*/
-		//TEntityMap _entityMap;
-
 		/**
 		Lista de entidades que hay que borrar
 		*/
-		std::list<CEntity*> _deleteEntities;
+		std::list<CEntity*> _entitiesToBeDeleted;
 
 		/**
 		Nombre del mapa.
