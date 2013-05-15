@@ -305,6 +305,7 @@ namespace Logic {
 		*/
 		inline CEntity* getEntity() const { return _entity; }
 
+		inline std::string getType() const { return _type; }
 	
 	protected:
 
@@ -313,6 +314,7 @@ namespace Logic {
 		//                          MÉTODOS PROTEGIDOS
 		// =======================================================================
 
+		inline void setType(const std::string& componentName) { _type = componentName; }
 
 		/**
 		Se ejecuta la primera vez que la entidad se activa. Garantiza que todas las 
@@ -419,6 +421,9 @@ namespace Logic {
 
 		/** clase amiga que puede establecerse como poseedor del componente. */
 		friend class CEntity;
+
+		/** String que indica el nombre del componente. */
+		std::string _type;
 
 		/** true si el componente esta activado. */
 		bool _isActivated;

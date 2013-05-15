@@ -112,12 +112,12 @@ namespace Logic {
 		
 
 		// Inicializamos los componentes
-		TComponentList::const_iterator it = _componentList.begin();
+		auto it = _components.begin();
 
 		bool correct = true;
 
-		for(int i = 1; it != _componentList.end() && correct; ++it, ++i ){
-			correct = (*it)->spawn(this,map,entityInfo) && correct;
+		for(int i = 1; it != _components.end() && correct; ++it, ++i ){
+			correct = it->second.componentPtr->spawn(this,map,entityInfo) && correct;
 			if(!correct)
 				std::cout << "ERROR: La entidad no ha podido ser ensamblada porque el componente " << i << " se ha muerto en el spawn" << std::endl;
 		}
@@ -141,15 +141,15 @@ namespace Logic {
 		}
 
 		// Activamos los componentes
-		TComponentList::const_iterator it = _componentList.begin();
+		auto it = _components.begin();
 
 		// Solo si se activan todos los componentes correctamente nos
 		// consideraremos activados.
 		_activated = true;
 
-		for(; it != _componentList.end(); ++it){
-			(*it)->activate();
-			_activated = (*it)->isActivated() && _activated;
+		for(; it != _components.end(); ++it) {
+			it->second.componentPtr->activate();
+			_activated = it->second.componentPtr->isActivated() && _activated;
 		}
 
 		return _activated;
@@ -168,11 +168,9 @@ namespace Logic {
 			CServer::getSingletonPtr()->setPlayer(0);
 		}
 
-		TComponentList::const_iterator it = _componentList.begin();
-
 		// Desactivamos los componentes
-		for(; it != _componentList.end(); ++it)
-			(*it)->deactivate();
+		for(auto it = _components.begin(); it != _components.end(); ++it)
+			it->second.componentPtr->deactivate();
 
 		_activated = false;
 
@@ -180,10 +178,9 @@ namespace Logic {
 	//---------------------------------------------------------
 
 	void CEntity::deactivateAllComponentsExcept (std::set<std::string> exceptionList) {
-		TComponentMap::iterator it = _components.begin();
-		for(; it != _components.end(); ++it) {
+		for(auto it = _components.begin(); it != _components.end(); ++it) {
 			if( !exceptionList.count(it->first) ) {
-				it->second->deactivate();
+				it->second.componentPtr->deactivate();
 			}
 		}
 	}// deactivateAllComponentsExcept
@@ -191,18 +188,10 @@ namespace Logic {
 	//---------------------------------------------------------
 
 	void CEntity::start() {
-		IComponent* component;
-		TComponentList::const_iterator it = _componentList.begin();
-		for(; it != _componentList.end(); ++it) {
-			component = *it;
-			if( component->isActivated() ) {
-				component->start();
+		for(auto it = _components.begin(); it != _components.end(); ++it) {
+			if( it->second.componentPtr->isActivated() ) {
+				it->second.componentPtr->start();
 			}
-
-			// Registramos en todas las listas a todos los componentes
-			// ellos solos se desapuntaran en funcion de lo que quieran
-			_componentsWithTick.push_back(component);
-			_componentsWithFixedTick.push_back(component);
 		}
 	}
 
@@ -217,11 +206,23 @@ namespace Logic {
 		if(component->_wantsTick) {
 			_componentsWithTick.push_back(component);
 
+			// Anotamos el iterador que se le asigna
+			auto it = _components.find( component->getType() );
+			if(it != _components.end()) {
+				it->second.tickIterator = _componentsWithTick.rbegin();
+			}
+
 			// Reclamar ticks para la entidad si es necesario
 			if( _componentsWithTick.size() == 1 ) _map->wantsTick(this);
 		}
 		if(component->_wantsFixedTick) {
 			_componentsWithFixedTick.push_back(component);
+
+			// Anotamos el iterador que se le asigna
+			auto it = _components.find( component->getType() );
+			if(it != _components.end()) {
+				it->second.fixedTickIterator = _componentsWithFixedTick.rbegin();
+			}
 
 			// Reclamar fixed ticks para la entidad si es necesario
 			if( _componentsWithFixedTick.size() == 1 ) _map->wantsFixedTick(this);
@@ -232,9 +233,8 @@ namespace Logic {
 
 	void CEntity::processComponentMessages() {
 		IComponent* component;
-		std::list<IComponent*>::const_iterator it = _componentList.begin();
-		for(; it != _componentList.end(); ++it) {
-			component = *it;
+		for(auto it = _components.begin(); it != _components.end(); ++it) {
+			component = it->second.componentPtr;
 
 			// No hace falta comprobar si estamos activados o no u ociosos
 			// para procesar mensajes, ya que eso se tiene en cuenta en el
@@ -255,6 +255,8 @@ namespace Logic {
 
 			if( component->isActivated() ) {
 				if( !component->tick(msecs) ) {
+					auto tempIt = _components.find( component->getType() );
+					if(tempIt != _components.end()) tempIt->second.tickIterator = _componentsWithTick.rend();
 					it = _componentsWithTick.erase(it);
 					continue;
 				}
@@ -276,6 +278,8 @@ namespace Logic {
 
 			if( component->isActivated() ) {
 				if( !component->fixedTick(msecs) ) {
+					auto tempIt = _components.find( component->getType() );
+					if(tempIt != _components.end()) tempIt->second.fixedTickIterator = _componentsWithFixedTick.rend();
 					it = _componentsWithFixedTick.erase(it);
 					continue;
 				}
@@ -290,58 +294,66 @@ namespace Logic {
 	//---------------------------------------------------------
 
 	void CEntity::addComponent(IComponent* component, const std::string& id) {
-		_components[id] = component;
-		_componentList.push_back(component);
+		// Registramos en todas las listas a todos los componentes
+		// ellos solos se desapuntaran en funcion de lo que quieran
+		_componentsWithTick.push_back(component);
+		_componentsWithFixedTick.push_back(component);
 
+		// Anotamos los iteradores para realizar borrados rapidos
+		ComponentInfo info;
+		info.componentPtr = component;
+		info.tickIterator = _componentsWithTick.rbegin();
+		info.fixedTickIterator = _componentsWithFixedTick.rbegin();
+
+		_components[id] = info;
+
+		component->setType(id);
 		component->setEntity(this);
 	} // addComponent
 
 	//---------------------------------------------------------
 
 	bool CEntity::removeComponent(IComponent* component) {
-		TComponentMap::const_iterator itMap = _components.begin();
-		TComponentList::const_iterator itList = _componentList.begin();
-
-		bool mapErase = false;
-		for(; itMap != _components.end() && !mapErase; ++itMap) {
-			if(itMap->second == component) {
-				_components.erase(itMap);
-				mapErase = true;
+		ComponentInfo info;
+		
+		bool success = false;
+		for(auto it = _components.begin(); it != _components.end() && !success; ++it) {
+			info = it->second;
+			if(info.componentPtr == component) {
+				if( info.tickIterator != _componentsWithTick.rend() )
+					_componentsWithTick.erase( (++info.tickIterator).base() );
+				if( info.fixedTickIterator != _componentsWithFixedTick.rend() )
+					_componentsWithFixedTick.erase( (++info.fixedTickIterator).base() );
+				
+				_components.erase(it);
+				
+				success = true;
 			}
 		}
 
-		bool listErase = false;
-		for(; itList != _componentList.end() && !listErase; ++itList) {
-			if(*itList == component) {
-				_componentList.erase(itList);
-				listErase = true;
-			}
-		}
-
-		return mapErase && listErase;
+		return success;
 	} // removeComponent
 
 	//---------------------------------------------------------
 
 	void CEntity::destroyAllComponents() {
-		_components.clear();
-
-		TComponentList::const_iterator it = _componentList.begin();
-		for(; it != _componentList.end(); ++it) {
-			delete *it;
+		for(auto it = _components.begin(); it != _components.end(); ++it) {
+			delete it->second.componentPtr;
 		}
 
+		_components.clear();
+		_componentsWithTick.clear();
+		_componentsWithFixedTick.clear();
 	} // destroyAllComponents
 
 	//---------------------------------------------------------
 
 	bool CEntity::emitMessage(const std::shared_ptr<CMessage>& message, IComponent* emitter) {
-		TComponentList::const_iterator it = _componentList.begin();
 		// Para saber si alguien quiso el mensaje.
 		IComponent* component;
 		bool anyReceiver = false;
-		for(; it != _componentList.end(); ++it) {
-			component = *it;
+		for(auto it = _components.begin(); it != _components.end(); ++it) {
+			component = it->second.componentPtr;
 			// Si el componente es el propio emisor no se le envia el mensaje
 			// Ademas solo recibe mensajes si esta activado y no esta ocioso
 			if( emitter != component && component->isActivated() && !component->isBusy() )
@@ -349,7 +361,6 @@ namespace Logic {
 		}
 
 		return anyReceiver;
-
 	} // emitMessage
 
 	//---------------------------------------------------------
