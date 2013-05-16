@@ -92,7 +92,6 @@ namespace Logic {
 
 	void CNetConnector::process(const std::shared_ptr<CMessage>& message) {
 		CGameNetMsgManager::getSingletonPtr()->sendEntityMessage( message, _entity->getEntityID() );
-
 	} // process
 		
 	//---------------------------------------------------------------------------------

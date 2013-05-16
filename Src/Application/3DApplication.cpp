@@ -153,8 +153,6 @@ namespace Application {
 	//--------------------------------------------------------
 
 	void C3DApplication::tick(unsigned int msecs) {
-		unsigned int time=0;
-		
 		// TICK DE RED
 		Net::CManager::getSingletonPtr()->tick(msecs);
 

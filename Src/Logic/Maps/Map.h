@@ -14,6 +14,7 @@ Contiene la declaración de la clase CMap, Un mapa lógico.
 #include <map>
 #include <set>
 #include <list>
+#include <unordered_map>
 #include "EntityID.h"
 
 // Predeclaración de clases para ahorrar tiempo de compilación
@@ -202,32 +203,43 @@ namespace Logic
 
 		void setFixedTimeStep(unsigned int stepSize);
 
+		void wantsTick(CEntity* entity);
+
+		void wantsFixedTick(CEntity* entity);
+
 	private:
 
 		void checkTimeouts(unsigned int msecs);
 
+		void processComponentMessages();
+
 		void doTick(unsigned int msecs);
+
+		void doFixedTick(unsigned int msecs);
+
+		struct EntityInfo {
+			CEntity* _entityPtr;
+			std::list<CEntity*>::const_iterator _tickIterator;
+			std::list<CEntity*>::const_iterator _fixedTickIterator;
+		};
+
+		//std::unordered_map<TEntityID, EntityInfo> _entityInfoTable;
+		std::map<TEntityID, EntityInfo> _entityInfoTable;
+
+		//std::list<CEntity*> _entityList;
+		std::list<CEntity*> _entitiesWithTick;
+		std::list<CEntity*> _entitiesWithFixedTick;
 
 		/**
 		Lista de entidades que han sido marcadas para ser borradas en
 		un tiempo dado.
 		*/
-		std::list< std::pair<CEntity*, unsigned int> > _entitiesToBeDeleted;
-
-		/**
-		Tipo tabla de entidades de mapa.
-		*/
-		typedef std::map<TEntityID, CEntity*> TEntityMap;
-
-		/**
-		tabla con las entidades del mapa localizadas por su ID.
-		*/
-		TEntityMap _entityMap;
+		std::list< std::pair<CEntity*, unsigned int> > _entitiesWithTimeout;
 
 		/**
 		Lista de entidades que hay que borrar
 		*/
-		std::list<CEntity*> _deleteEntities;
+		std::list<CEntity*> _entitiesToBeDeleted;
 
 		/**
 		Nombre del mapa.
@@ -245,6 +257,15 @@ namespace Logic
 		Número de jugadores creados hasta el momento.
 		*/
 		unsigned int _numOfPlayers;
+
+		/**
+		Variable de clase que indica el número de milisegundos que se procesan en cada
+		iteración del tick fijo.
+		*/
+		unsigned int _fixedTimeStep;
+
+		/** Tiempo acumulado a tener en cuenta para el tick fijo. */
+		unsigned int _acumTime;
 
 	}; // class CMap
 

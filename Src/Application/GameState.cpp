@@ -97,18 +97,8 @@ namespace Application {
 
 	//--------------------------------------------------------
 
-	void CGameState::tick(unsigned int msecs) 
-	{
-		//Hacerlo así altera la velocidad de movimiento wtf?
-		/*unsigned int pieces=msecs/16;
-		for(int i=0;i<pieces;i++){
-			//Actualizamos la física del juego.
-			Physics::CServer::getSingletonPtr()->tick(16);
-			// Actualizamos la lógica de juego.
-			Logic::CServer::getSingletonPtr()->tick(16);
-		}*/
-		//std::cout << "msecs para fisica y logica: " << msecs << std::endl;
 
+	void CGameState::tick(unsigned int msecs) {
 		// Ejecutamos el tick de la lógica del juego
 		Logic::CServer::getSingletonPtr()->tick(msecs);
 		// Ejecutamos el tick de la física del juego.

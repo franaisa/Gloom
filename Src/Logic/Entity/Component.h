@@ -163,8 +163,12 @@ namespace Logic {
 		el comportamiento de los componentes derivados.
 
 		@param msecs Milisegundos transcurridos desde el último tick (variable).
+		@return true si desea seguir recibiendo ticks.
 		*/
-		inline void tick(unsigned int msecs) { onTick(msecs); }
+		inline bool tick(unsigned int msecs) {
+			onTick(msecs); 
+			return _wantsTick;
+		}
 
 		//__________________________________________________________________
 		
@@ -177,8 +181,12 @@ namespace Logic {
 
 		@param msecs Milisegundos transcurridos desde el último tick. Siempre
 		son constantes.
+		@return true si se desea seguir recibiendo ticks.
 		*/
-		inline void fixedTick(unsigned int msecs) { onFixedTick(msecs); }
+		inline bool fixedTick(unsigned int msecs) {
+			onFixedTick(msecs);
+			return _wantsFixedTick;
+		}
 		
 		//__________________________________________________________________
 
@@ -281,12 +289,23 @@ namespace Logic {
 		//__________________________________________________________________
 
 		/**
+		Indica si el componente esta en sueño profundo o no. Si lo esta, solo
+		se le puede despertar llamando explicitamente al wakeup.
+
+		@return true si el componente esta en sueño profundo.
+		*/
+		inline bool isInDeepSleep() const { return _deepSleep; }
+
+		//__________________________________________________________________
+
+		/**
 		Método que devuelve la entidad a la que pertenece el componente.
 
 		@return La entidad a la que pertenece el componente.
 		*/
 		inline CEntity* getEntity() const { return _entity; }
 
+		inline std::string getType() const { return _type; }
 	
 	protected:
 
@@ -295,6 +314,7 @@ namespace Logic {
 		//                          MÉTODOS PROTEGIDOS
 		// =======================================================================
 
+		inline void setType(const std::string& componentName) { _type = componentName; }
 
 		/**
 		Se ejecuta la primera vez que la entidad se activa. Garantiza que todas las 
@@ -402,6 +422,9 @@ namespace Logic {
 		/** clase amiga que puede establecerse como poseedor del componente. */
 		friend class CEntity;
 
+		/** String que indica el nombre del componente. */
+		std::string _type;
+
 		/** true si el componente esta activado. */
 		bool _isActivated;
 
@@ -411,26 +434,31 @@ namespace Logic {
 			<li>eAWAKE: El componete está despierto/disponible.</li>
 			<li>eBUSY: El componente está ocupado.</li>
 			<li>eSLEEPING: El componente está durmiendo.</li>
+			<li>eDEACTIVATED: El componente está desactivado.
 		</ul>
 		*/
 		ComponentState::Enum _state;
-
-		/** 
-		Enumerado que indica el tipo de tick que tiene el componente: 
-		<ul>
-			<li>eNONE: No tiene tick de ningún tipo.</li>
-			<li>eTICK: Tiene tick.</li>
-			<li>eFIXED_TICK: Tiene fixed tick.</li>
-			<li>eBOTH: Tiene tick y fixed tick.</li>
-		</ul>
-		*/
-		TickMode::Enum _tickMode;
 
 		/** 
 		true si el componente no se va a despertar al recibir 
 		mensajes cuando este dormido 
 		*/
 		bool _deepSleep;
+
+		/**
+		Mascara para saber si un componente tiene tick y/o fixed tick (
+		o ninguno).
+
+		00 -> el componente no tiene tick
+		01 -> el componente tiene tick
+		10 -> el componente tiene fixed tick
+		11 -> el componente tiene los dos ticks
+		*/
+		unsigned char _tickMask;
+
+		bool _wantsTick;
+
+		bool _wantsFixedTick;
 		
 	}; // class IComponent
 
