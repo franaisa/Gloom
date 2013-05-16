@@ -16,6 +16,7 @@ Contiene la declaración del servidor de física.
 
 #include "GeometryFactory.h"
 #include "MaterialManager.h"
+#include "RaycastHit.h"
 
 #include <PxFiltering.h>
 
@@ -30,7 +31,6 @@ namespace Logic {
 namespace Physics {
 	class CCollisionManager;
 	class CErrorManager;
-	class CRaycastHit;
 };
 
 namespace physx {
@@ -303,14 +303,15 @@ namespace Physics {
 
 		@param ray Rayo que queremos disparar.
 		@param maxDistance Longitud máxima del rayo.
-		@param hits Array de hits obtenido al lanzar el rayo. El propio método se encarga de
-		reservar memoria para este array por lo que es muy importante que no se reserve memoria
-		al pasar el puntero. Si la query golpea al menos a un elemento nbHits será mayor que 0
-		y hits tendrá memoria dinámica reservada. EL CLIENTE ES RESPONSABLE DE LIBERAR
-		LA MEMORIA RESERVADA EN hits POR ESTE MÉTODO.
-		@param nbHits Número de entidades golpeadas. Corresponde con el tamaño del array de hits.
+		@param hits Array de hits obtenido al lanzar el rayo. Si no se ha producido ningún hit
+		el vector devuelto estará vacio. IMPORTANTE: El vector no se limpia al entrar, así que
+		tened cuidado de no pasarle un vector que ya tenga datos.
+		@param sortResultingArray Por defecto el array de colisiones devuelto no está ordenado.
+		Si ponemos este parametro a true, se ordenan los resultados por distancia, es decir,
+		primero estaran los elementos más cercanos al origen del raycast que han golpeado con
+		el rayo.
 		*/
-		void raycastMultiple(const Ray& ray, float maxDistance, CRaycastHit* & hits, int& nbHits) const;
+		void raycastMultiple(const Ray& ray, float maxDistance, std::vector<CRaycastHit>& hits, bool sortResultingArray = false) const;
 
 		//________________________________________________________________________
 
@@ -324,15 +325,11 @@ namespace Physics {
 		@param geometry Geometría para la query de overlap. Mirar la documentación para ver cuales
 		están soportadas.
 		@param position Posición en la que queremos situar el centro de la geometría.
-		@param entitiesHit Vector de entidades que colisionan con la geometría dada. Este vector
-		NO DEBE SER INICIALIZADO!! ya que la propia función se encarga de inicializarlo y rellenarlo.
-		El cliente es el responsable de liberar la memoria reservada en el vector pasado. En caso
-		de no haber colisiones, el número de colisiones detectadas devuelto es 0 y por lo tanto
-		no se reserva memoria (no hay que liberar memoria - pete asegurado si se libera).
-		@param nbHits Número de entidades que colisionan contra la geometría dada, 0 en caso de
-		no haber contacto con ninguna entidad.
+		@param entitiesHit Array que contiene los punteros a las entidades golpeadas en el overlap. Si
+		no se ha golpeado a ninguna entidad en el overlap el tamaño del vector será 0. IMPORTANTE:
+		El vector que se pasa debe de no haber sido inicializado previamente.
 		*/
-		void overlapMultiple(const physx::PxGeometry& geometry, const Vector3& position, Logic::CEntity** & entitiesHit, int& nbHits);
+		void overlapMultiple(const physx::PxGeometry& geometry, const Vector3& position, std::vector<Logic::CEntity*>& entitiesHit);
 
 		//________________________________________________________________________
 
@@ -364,16 +361,12 @@ namespace Physics {
 		@param position Posición en la que queremos situar el centro de la geometría.
 		@param unitDir Dirección unitaria en la que queremos que se realice el barrido.
 		@param distance Distancia máxima del barrido.
-		@param hitSpots Array de puntos de colisión encontrados. Este vector NO DEBE SER
-		INICIALIZADO!! ya que la propia función se encarga de inicializarlo y rellenarlo.
-		De no haber colisiones, el número de colisiones devuelto es 0 y por lo tanto no 
-		se reserva memoria (no hay que liberar en ese caso - pete asegurado si se libera).
-		EL CLIENTE ES RESPONSABLE DE LIBERAR LA MEMORIA RESERVADA.
-		@param nbHits Número de entidades que colisionan contra la geometría dada, 0 en caso de
-		no haber contacto con ninguna entidad.
+		@param hitSpots Array que devuelve los puntos de colision encontrados. Si no se 
+		encuentras puntos de contacto el tamaño del vector resultante es 0. IMPORTANTE:
+		El vector que se pasa por parámetro debe estar vacio.
 		*/
 		void sweepMultiple(const physx::PxGeometry& geometry, const Vector3& position,
-						   const Vector3& unitDir, float distance, Vector3* & hitSpots, int& nbHits);
+						   const Vector3& unitDir, float distance, std::vector<Vector3>& hitSpots);
 
 		//________________________________________________________________________
 

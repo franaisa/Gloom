@@ -15,6 +15,7 @@ Contiene la declaración del componente que implementa el arma sniper.
 #define __Logic_ShootSniper_H
 
 #include "Logic/Entity/Components/ShootRaycast.h"
+#include "Physics/RaycastHit.h"
 
 namespace Logic {
 	
@@ -55,6 +56,38 @@ namespace Logic {
 		comprobar si habia colisiones.
 		*/
 		virtual void triggerHitMessages(std::pair<CEntity*, Ray> entityHit) { CShootRaycast::triggerHitMessages(entityHit); }
+		
+		/**
+		Redefinimos porque la sniper tendrá un comportamiento diferente.
+		*/
+		virtual void primaryShoot();
+
+		/**
+		Redefinimos porque la sniper tendrá un comportamiento diferente.
+		*/
+		virtual void secondaryShoot();
+
+
+		
+		// =======================================================================
+		//                          METODOS PROPIOS
+		// =======================================================================
+
+
+		/**
+		Método que se encarga de realizar el disparo primario del raycast por fisicas.
+		También aplicará el daño.
+
+		*/
+		void primaryFireWeapon();
+
+
+		/**
+		Método que se encarga de realizar el disparo secundario del raycast por fisicas.
+		También aplicará el daño.
+		*/
+		void secondaryFireWeapon();
+
 
 	}; // class CShootSniper
 

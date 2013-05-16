@@ -13,9 +13,6 @@
     <Filter Include="Entity">
       <UniqueIdentifier>{05994364-9d20-405c-8c14-2757dfa1104b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Entity\Source Files">
-      <UniqueIdentifier>{0e8edd8a-2878-4e33-9aa8-bcf3b46137d4}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Entity\Header Files">
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
@@ -104,6 +101,9 @@
     <Filter Include="Entity\Components\Gameplay\Source">
       <UniqueIdentifier>{4028113e-3235-4f07-b8e5-671a198a9ce5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Entity\Header Files\Source Files">
+      <UniqueIdentifier>{0e8edd8a-2878-4e33-9aa8-bcf3b46137d4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Src\Logic\Maps\ComponentFactory.cpp">
@@ -119,22 +119,22 @@
       <Filter>Maps\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Src\Logic\Entity\CommunicationPort.cpp">
-      <Filter>Entity\Source Files</Filter>
+      <Filter>Entity\Header Files\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Src\Logic\Entity\Component.cpp">
-      <Filter>Entity\Source Files</Filter>
+      <Filter>Entity\Header Files\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Src\Logic\Entity\Entity.cpp">
-      <Filter>Entity\Source Files</Filter>
+      <Filter>Entity\Header Files\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Src\Logic\Server.cpp">
       <Filter>Maps\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Src\Logic\Maps\IIdentifier.cpp">
-      <Filter>Entity\Source Files</Filter>
+      <Filter>Entity\Header Files\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Src\Logic\Maps\ComponentID.cpp">
-      <Filter>Entity\Source Files</Filter>
+      <Filter>Entity\Header Files\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Src\Logic\GameNetMsgManager.cpp">
       <Filter>Maps\Source Files</Filter>
@@ -182,7 +182,7 @@
       <Filter>Messages\Source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Src\Logic\Entity\MessageFactory.cpp">
-      <Filter>Entity\Source Files</Filter>
+      <Filter>Entity\Header Files\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Src\Logic\Messages\MessageRebound.cpp">
       <Filter>Messages\Source</Filter>

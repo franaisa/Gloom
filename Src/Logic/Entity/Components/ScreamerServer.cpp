@@ -264,14 +264,14 @@ namespace Logic {
 	void CScreamerServer::createExplotion() {
 		// EntitiesHit sera el buffer que contendra la lista de entidades que ha colisionado
 		// con el overlap
-		CEntity** entitiesHit = NULL;
-		int nbHits = 0;
+		std::vector<CEntity*> entitiesHit;
 
 		// Hacemos una query de overlap con la geometria de una esfera en la posicion 
 		// en la que se encuentra la granada con el radio que se indique de explosion
 		Physics::SphereGeometry explotionGeom = Physics::CGeometryFactory::getSingletonPtr()->createSphere(_screamerExplotionRadius);
-		Physics::CServer::getSingletonPtr()->overlapMultiple(explotionGeom, _entity->getPosition(), entitiesHit, nbHits);
+		Physics::CServer::getSingletonPtr()->overlapMultiple(explotionGeom, _entity->getPosition(), entitiesHit);
 
+		int nbHits = entitiesHit.size();
 		// Mandamos el mensaje de daño a cada una de las entidades que hayamos golpeado
 		// Además aplicamos un desplazamiento al jugador 
 		for(int i = 0; i < nbHits; ++i) {
@@ -298,9 +298,6 @@ namespace Logic {
 				entitiesHit[i]->emitMessage(forceMsg);*/
 			}
 		}
-
-		// Limpiamos el buffer si es necesario
-		if(nbHits > 0) delete [] entitiesHit;
 
 		Graphics::CParticle *particle = Graphics::CServer::getSingletonPtr()->
 			getActiveScene()->createParticle(_entity->getName(),"ExplosionParticle", _entity->getPosition());

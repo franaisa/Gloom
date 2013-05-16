@@ -20,7 +20,6 @@ Contiene la implementación del servidor de física.
 #include "Cloth.h"
 #include "MaterialManager.h"
 #include "GeometryFactory.h"
-#include "RaycastHit.h"
 
 #include <assert.h>
 #include <algorithm>
@@ -426,7 +425,7 @@ namespace Physics {
 		bool blockingHit;
 		PxI32 nHits = _scene->raycastMultiple(origin, unitDir, maxDistance, outputFlags, hits, 64, blockingHit); 
 
-		// Buscar un actot que pertenezca al grupo de colisión indicado
+		// Buscar un actor que pertenezca al grupo de colisión indicado
 		for (int i = 0; i < nHits; ++i) {
 			PxRigidActor* actor = &hits[i].shape->getActor();
 			if ( PxGetGroup(*actor) == group ) {
@@ -520,8 +519,14 @@ namespace Physics {
 	}
 
 	//________________________________________________________________________
+	
+	bool raycastComparator(const CRaycastHit& hit1, const CRaycastHit& hit2) { 
+		return hit1.distance < hit2.distance; 
+	}
 
-	void CServer::raycastMultiple(const Ray& ray, float maxDistance, CRaycastHit* & hits, int& nbHits) const {
+	//________________________________________________________________________
+
+	void CServer::raycastMultiple(const Ray& ray, float maxDistance, std::vector<CRaycastHit>& hits, bool sortResultingArray) const {
 		// Establecer parámettros del rayo
 		PxVec3 origin = Vector3ToPxVec3( ray.getOrigin() );      // origen     
 		PxVec3 unitDir = Vector3ToPxVec3( ray.getDirection() );  // dirección normalizada
@@ -537,7 +542,7 @@ namespace Physics {
 		PxRaycastHit* hitBuffer = new(std::nothrow) PxRaycastHit [bufferSize];
 		assert(hitBuffer != NULL && "Error: Fallo en la reserva de memoria");
 
-		nbHits = _scene->raycastMultiple(origin, unitDir, maxDistance, outputFlags, hitBuffer, bufferSize, blockingHit);
+		unsigned int nbHits = _scene->raycastMultiple(origin, unitDir, maxDistance, outputFlags, hitBuffer, bufferSize, blockingHit);
 		while(nbHits == -1) {
 			// Si el buffer se ha desbordado aumentamos su tamaño al doble
 			// y volvemos ha realizar la query
@@ -553,30 +558,36 @@ namespace Physics {
 
 		if(nbHits > 0) {
 			// Si hemos golpeado a otras entidades creamos un buffer
-			hits = new(std::nothrow) CRaycastHit [nbHits];
-			assert(hits != NULL && "Error en la reserva de memoria");
+			hits.reserve(nbHits);
 
 			// Rellenamos el buffer con un puntero a cada una de las entidades golpeadas
+			IPhysics* component;
+			CRaycastHit raycastHit;
 			for(int i = 0; i < nbHits; ++i) {
-				IPhysics* component = static_cast<IPhysics*>( hitBuffer[i].shape->getActor().userData );
+				component = static_cast<IPhysics*>( hitBuffer[i].shape->getActor().userData );
 
-				hits[i].entity = component->getEntity();
-				hits[i].distance = hitBuffer[i].distance;
-				hits[i].impact = PxVec3ToVector3(hitBuffer[i].impact);
-				hits[i].normal = PxVec3ToVector3(hitBuffer[i].normal);
+				raycastHit.entity = component->getEntity();
+				raycastHit.distance = hitBuffer[i].distance;
+				raycastHit.impact = PxVec3ToVector3(hitBuffer[i].impact);
+				raycastHit.normal = PxVec3ToVector3(hitBuffer[i].normal);
+
+				hits.push_back(raycastHit);
+
 			}
-		}
-		else {
-			hits = NULL;
 		}
 
 		delete [] hitBuffer;
+
+		if( !hits.empty() && sortResultingArray ) {
+			// Ordenamos el vector de resultados
+			std::sort(hits.begin(), hits.end(), raycastComparator);
+		}
 	}
 
 	//________________________________________________________________________
 
 	void CServer::sweepMultiple(const physx::PxGeometry& geometry, const Vector3& position,
-								const Vector3& unitDir, float distance, Vector3* & hitSpots, int& nbHits) {
+								const Vector3& unitDir, float distance, std::vector<Vector3>& hitSpots) {
 
 		// Booleano que indicara si hay elementos que bloquean el hit
 		bool blockingHit;
@@ -589,10 +600,12 @@ namespace Physics {
 		assert(hitBuffer != NULL && "Error en la reserva de memoria");
 
 		// Seteamos los flags de sweep
-		const PxSceneQueryFlags outputFlags = PxSceneQueryFlag::eDISTANCE | PxSceneQueryFlag::eIMPACT | 
-											  PxSceneQueryFlag::eNORMAL | PxSceneQueryFlag::eINITIAL_OVERLAP;
+		const PxSceneQueryFlags outputFlags = PxSceneQueryFlag::eDISTANCE			| 
+											  PxSceneQueryFlag::eIMPACT				| 
+											  PxSceneQueryFlag::eNORMAL				|
+											  PxSceneQueryFlag::eINITIAL_OVERLAP;
 
-		nbHits = _scene->sweepMultiple(geometry, pose, Vector3ToPxVec3(unitDir), 100, outputFlags, hitBuffer, bufferSize, blockingHit);
+		unsigned int nbHits = _scene->sweepMultiple(geometry, pose, Vector3ToPxVec3(unitDir), 100, outputFlags, hitBuffer, bufferSize, blockingHit);
 		while(nbHits == -1) {
 			// Si el buffer se ha desbordado aumentamos su tamaño al doble
 			// y volvemos ha realizar la query
@@ -608,16 +621,12 @@ namespace Physics {
 
 		if(nbHits > 0) {
 			// Si hemos golpeado a otras entidades creamos un buffer
-			hitSpots = new(std::nothrow) Vector3 [nbHits];
-			assert(hitSpots != NULL && "Error en la reserva de memoria");
+			hitSpots.reserve(nbHits);
 
 			// Rellenamos el buffer con un puntero a cada una de las entidades golpeadas
 			for(int i = 0; i < nbHits; ++i) {
-				hitSpots[i] = PxVec3ToVector3(hitBuffer[i].impact);
+				hitSpots.push_back( PxVec3ToVector3(hitBuffer[i].impact) );
 			}
-		}
-		else {
-			hitSpots = NULL;
 		}
 
 		delete [] hitBuffer;
@@ -648,7 +657,7 @@ namespace Physics {
 
 	//________________________________________________________________________
 
-	void CServer::overlapMultiple(const PxGeometry& geometry, const Vector3& position, Logic::CEntity** & entitiesHit, int& nbHits) {
+	void CServer::overlapMultiple(const PxGeometry& geometry, const Vector3& position, std::vector<Logic::CEntity*>& entitiesHit) {
 		// Comprobar que es una de las geometrias soportadas por la query de overlap
 
 		// La situamos en la posicion dada
@@ -664,7 +673,7 @@ namespace Physics {
 		// grande.
 		PxSceneQueryFilterFlags filter(PxSceneQueryFilterFlag::eDYNAMIC | PxSceneQueryFilterFlag::eSTATIC);
 		PxSceneQueryFilterData filterData(filter);
-		nbHits = _scene->overlapMultiple(geometry, pose, hitBuffer, bufferSize, filterData);
+		unsigned int nbHits = _scene->overlapMultiple(geometry, pose, hitBuffer, bufferSize, filterData);
 		while(nbHits == -1) {
 			// Si el buffer se ha desbordado aumentamos su tamaño al doble
 			// y volvemos ha realizar la query
@@ -680,17 +689,13 @@ namespace Physics {
 
 		if(nbHits > 0) {
 			// Si hemos golpeado a otras entidades creamos un buffer
-			entitiesHit = new(std::nothrow) Logic::CEntity* [nbHits];
-			assert(entitiesHit != NULL && "Error en la reserva de memoria");
+			entitiesHit.reserve(nbHits);
 
 			// Rellenamos el buffer con un puntero a cada una de las entidades golpeadas
 			for(int i = 0; i < nbHits; ++i) {
 				IPhysics *component = static_cast<IPhysics*>( hitBuffer[i]->getActor().userData );
-				entitiesHit[i] = component != NULL ? component->getEntity() : NULL;
+				entitiesHit.push_back( component != NULL ? component->getEntity() : NULL );
 			}
-		}
-		else {
-			entitiesHit = NULL;
 		}
 
 		delete [] hitBuffer;

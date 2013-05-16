@@ -136,9 +136,8 @@ namespace Logic {
 		//std::cout << "CREO LA EXPLOSION EN LA POSICION : " << _entity->getPosition() << std::endl;
 		// EntitiesHit sera el buffer que contendra la lista de entidades que ha colisionado
 		// con el overlap
-		CEntity** entitiesHit = NULL;
-		int nbHits = 0;
-
+		std::vector<CEntity*> entitiesHit;
+		
 		// Desactivamos el cohete para que no intervenga en la query
 		CPhysicDynamicEntity* comp;
 		if(comp = _entity->getComponent<CPhysicDynamicEntity>("CPhysicDynamicEntity")) {
@@ -149,8 +148,9 @@ namespace Logic {
 		// en la que se encuentra la granada con el radio que se indique de explosion
 		Physics::SphereGeometry explotionGeom = Physics::CGeometryFactory::getSingletonPtr()->createSphere(_explotionRadius);
 		Vector3 explotionPos = _entity->getPosition();
-		Physics::CServer::getSingletonPtr()->overlapMultiple(explotionGeom, explotionPos, entitiesHit, nbHits);
+		Physics::CServer::getSingletonPtr()->overlapMultiple(explotionGeom, explotionPos, entitiesHit);
 
+		unsigned int nbHits = entitiesHit.size();
 		// Mandamos el mensaje de daño a cada una de las entidades que hayamos golpeado
 		// Además aplicamos un desplazamiento al jugador 
 		for(int i = 0; i < nbHits; ++i) {
@@ -171,9 +171,10 @@ namespace Logic {
 				// de la query de overlap (para saber el punto de colision).
 				// No es ni lo mas exacto ni lo mas eficiente, pero soluciona la papeleta.
 				Ogre::Ray ray( explotionPos, rayDirection.normalisedCopy() );
-				int bufferSize;
-				Physics::CRaycastHit* hitBuffer;
-				Physics::CServer::getSingletonPtr()->raycastMultiple(ray, _explotionRadius, hitBuffer, bufferSize);
+				
+				std::vector<Physics::CRaycastHit> hitBuffer;
+				Physics::CServer::getSingletonPtr()->raycastMultiple(ray, _explotionRadius, hitBuffer);
+				int bufferSize = hitBuffer.size();
 
 				// Calculamos el daño en base a la distancia del golpe
 				float dmg = 0;
@@ -182,8 +183,6 @@ namespace Logic {
 						dmg = _explotionDamage * ( 1 - (hitBuffer[k].distance/_explotionRadius) );
 					}
 				}
-
-				if(bufferSize > 0) delete [] hitBuffer;
 
 				// Emitimos el mensaje de daño
 				std::shared_ptr<CMessageDamaged> dmgMsg = std::make_shared<CMessageDamaged>();
@@ -200,8 +199,6 @@ namespace Logic {
 				entitiesHit[i]->emitMessage(addForcePlayerMsg);
 			}
 		}
-
-		if(nbHits > 0) delete [] entitiesHit;
 
 		//Solo para singlePlayer, quitar al terminar
 		//Sonido de explosion

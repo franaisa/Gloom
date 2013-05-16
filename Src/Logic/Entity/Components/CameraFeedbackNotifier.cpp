@@ -45,10 +45,7 @@ namespace Logic {
 														 _landForce(0),
 														 _strafingDir(0),
 														 _landRecoverySpeed(0.007f),
-														 _currentLandOffset(0),
-														 _stepForce(0.00008f),
-														 _stepRecoveryAccel(0.000025f),
-														 _currentWalkingRoll(0) {
+														 _currentLandOffset(0) {
 
 
 		_walkAnim.currentHorizontalPos = Math::HALF_PI;
@@ -178,12 +175,16 @@ namespace Logic {
 			_walkAnim.currentStrafingDir = _strafingDir;
 			_strafingDir = direction;
 		}
+		else {
+			_strafingDir = 0;
+		}
 	}
 
 	//________________________________________________________________________
 
 	void CCameraFeedbackNotifier::offsetRecovery(unsigned int msecs) {
-		_cameraComponent->setOffset( _cameraComponent->getOffset() * Vector3(0.75f, 0.95f, 0.75f) );
+		// Queda mas suave sin correccion
+		//_cameraComponent->setOffset( _cameraComponent->getOffset() * Vector3(0.85f, 0.95f, 0.85f) );
 		if(_walkAnim.currentRoll != 0) {
 			_walkAnim.currentRoll *= 0.85f; // Coeficiente un poco más fuerte
 			_cameraComponent->rollCamera(_walkAnim.currentRoll);
@@ -209,7 +210,8 @@ namespace Logic {
 		}
 		else {
 			// Reducimos el offset horizontal
-			offset = offset * Vector3(0.95f, 1.0f, 0.95f);
+			// Queda mas suave sin correccion
+			//offset = offset * Vector3(0.95f, 1.0f, 0.95f);
 
 			// Si no estamos recuperando el offset por haber llegado al máximo
 			// incrementamos el roll

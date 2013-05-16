@@ -167,16 +167,7 @@ namespace Logic {
 		CameraWalkAnim _walkAnim;
 
 		bool _playerIsSideColliding;
-
 		int _strafingDir;
-
-		// Animacion de strafe
-		float _currentWalkingRoll;
-
-		// Animacion de andar
-		float _stepForce;
-		float _stepRecoveryAccel;
-		float _acumStepForce;
 		bool _playerIsWalking;
 
 		// Animacion de aterrizaje
