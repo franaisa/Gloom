@@ -524,6 +524,8 @@ namespace Physics {
 		return hit1.distance < hit2.distance; 
 	}
 
+	//________________________________________________________________________
+
 	void CServer::raycastMultiple(const Ray& ray, float maxDistance, std::vector<CRaycastHit>& hits, bool sortResultingArray) const {
 		// Establecer parámettros del rayo
 		PxVec3 origin = Vector3ToPxVec3( ray.getOrigin() );      // origen     
@@ -572,9 +574,6 @@ namespace Physics {
 				hits.push_back(raycastHit);
 			}
 		}
-		else {
-			hits.clear();
-		}
 
 		delete [] hitBuffer;
 
@@ -587,7 +586,7 @@ namespace Physics {
 	//________________________________________________________________________
 
 	void CServer::sweepMultiple(const physx::PxGeometry& geometry, const Vector3& position,
-								const Vector3& unitDir, float distance, Vector3* & hitSpots, int& nbHits) {
+								const Vector3& unitDir, float distance, std::vector<Vector3>& hitSpots) {
 
 		// Booleano que indicara si hay elementos que bloquean el hit
 		bool blockingHit;
@@ -600,10 +599,12 @@ namespace Physics {
 		assert(hitBuffer != NULL && "Error en la reserva de memoria");
 
 		// Seteamos los flags de sweep
-		const PxSceneQueryFlags outputFlags = PxSceneQueryFlag::eDISTANCE | PxSceneQueryFlag::eIMPACT | 
-											  PxSceneQueryFlag::eNORMAL | PxSceneQueryFlag::eINITIAL_OVERLAP;
+		const PxSceneQueryFlags outputFlags = PxSceneQueryFlag::eDISTANCE			| 
+											  PxSceneQueryFlag::eIMPACT				| 
+											  PxSceneQueryFlag::eNORMAL				|
+											  PxSceneQueryFlag::eINITIAL_OVERLAP;
 
-		nbHits = _scene->sweepMultiple(geometry, pose, Vector3ToPxVec3(unitDir), 100, outputFlags, hitBuffer, bufferSize, blockingHit);
+		unsigned int nbHits = _scene->sweepMultiple(geometry, pose, Vector3ToPxVec3(unitDir), 100, outputFlags, hitBuffer, bufferSize, blockingHit);
 		while(nbHits == -1) {
 			// Si el buffer se ha desbordado aumentamos su tamaño al doble
 			// y volvemos ha realizar la query
@@ -619,16 +620,12 @@ namespace Physics {
 
 		if(nbHits > 0) {
 			// Si hemos golpeado a otras entidades creamos un buffer
-			hitSpots = new(std::nothrow) Vector3 [nbHits];
-			assert(hitSpots != NULL && "Error en la reserva de memoria");
+			hitSpots.reserve(nbHits);
 
 			// Rellenamos el buffer con un puntero a cada una de las entidades golpeadas
 			for(int i = 0; i < nbHits; ++i) {
-				hitSpots[i] = PxVec3ToVector3(hitBuffer[i].impact);
+				hitSpots.push_back( PxVec3ToVector3(hitBuffer[i].impact) );
 			}
-		}
-		else {
-			hitSpots = NULL;
 		}
 
 		delete [] hitBuffer;
@@ -659,7 +656,7 @@ namespace Physics {
 
 	//________________________________________________________________________
 
-	void CServer::overlapMultiple(const PxGeometry& geometry, const Vector3& position, Logic::CEntity** & entitiesHit, int& nbHits) {
+	void CServer::overlapMultiple(const PxGeometry& geometry, const Vector3& position, std::vector<Logic::CEntity*>& entitiesHit) {
 		// Comprobar que es una de las geometrias soportadas por la query de overlap
 
 		// La situamos en la posicion dada
@@ -675,7 +672,7 @@ namespace Physics {
 		// grande.
 		PxSceneQueryFilterFlags filter(PxSceneQueryFilterFlag::eDYNAMIC | PxSceneQueryFilterFlag::eSTATIC);
 		PxSceneQueryFilterData filterData(filter);
-		nbHits = _scene->overlapMultiple(geometry, pose, hitBuffer, bufferSize, filterData);
+		unsigned int nbHits = _scene->overlapMultiple(geometry, pose, hitBuffer, bufferSize, filterData);
 		while(nbHits == -1) {
 			// Si el buffer se ha desbordado aumentamos su tamaño al doble
 			// y volvemos ha realizar la query
@@ -691,17 +688,13 @@ namespace Physics {
 
 		if(nbHits > 0) {
 			// Si hemos golpeado a otras entidades creamos un buffer
-			entitiesHit = new(std::nothrow) Logic::CEntity* [nbHits];
-			assert(entitiesHit != NULL && "Error en la reserva de memoria");
+			entitiesHit.reserve(nbHits);
 
 			// Rellenamos el buffer con un puntero a cada una de las entidades golpeadas
 			for(int i = 0; i < nbHits; ++i) {
 				IPhysics *component = static_cast<IPhysics*>( hitBuffer[i]->getActor().userData );
-				entitiesHit[i] = component != NULL ? component->getEntity() : NULL;
+				entitiesHit.push_back( component != NULL ? component->getEntity() : NULL );
 			}
-		}
-		else {
-			entitiesHit = NULL;
 		}
 
 		delete [] hitBuffer;
