@@ -469,7 +469,6 @@ namespace Logic
 				break;
 			}
 			case Message::HUD_WEAPON: {
-				std::cout << "llega mensaje hud weapon" << std::endl;
 				std::shared_ptr<CMessageHudWeapon> hudWeaponMsg = std::static_pointer_cast<CMessageHudWeapon>(message);
 				hudWeapon( hudWeaponMsg->getAmmo(), hudWeaponMsg->getWeapon() );
 				break;

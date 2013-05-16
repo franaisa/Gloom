@@ -425,7 +425,7 @@ namespace Physics {
 		bool blockingHit;
 		PxI32 nHits = _scene->raycastMultiple(origin, unitDir, maxDistance, outputFlags, hits, 64, blockingHit); 
 
-		// Buscar un actot que pertenezca al grupo de colisión indicado
+		// Buscar un actor que pertenezca al grupo de colisión indicado
 		for (int i = 0; i < nHits; ++i) {
 			PxRigidActor* actor = &hits[i].shape->getActor();
 			if ( PxGetGroup(*actor) == group ) {
@@ -575,11 +575,6 @@ namespace Physics {
 		}
 		else {
 			hits.clear();
-		}
-		//Espia para comprobar que se rellena bien
-		for(int z = 0; z < nbHits; ++z) {
-			std::cout << "Relleno: " << hits[z].entity->getName() << std::endl;
-			std::cout << "^Distance: " << hits[z].distance << std::endl;
 		}
 		delete [] hitBuffer;
 

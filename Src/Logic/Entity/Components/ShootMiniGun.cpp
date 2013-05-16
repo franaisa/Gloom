@@ -36,11 +36,11 @@ namespace Logic {
 	//__________________________________________________________________
 
 	void CShootMiniGun::onTick(unsigned int msecs) {
-		if(_cooldownTimer < _cooldown)
-			_cooldownTimer += msecs;
+		if(_primaryCooldownTimer < _primaryCooldown)
+			_primaryCooldownTimer += msecs;
 		else{
 			if(_pressThenShoot){
-				_canShoot=true;
+				_primaryCanShoot=true;
 				primaryShoot();
 			}
 		}

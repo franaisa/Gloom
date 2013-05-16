@@ -62,9 +62,9 @@ namespace Logic {
 
 	// Disparo, usa el patrón template
 	void CShootRaycast::primaryShoot() {
-		if(_canShoot && _currentAmmo > 0){
-			_canShoot = false;
-			_cooldownTimer = 0;
+		if(_primaryCanShoot && _currentAmmo > 0){
+			_primaryCanShoot = false;
+			_primaryCooldownTimer = 0;
 				
 			drawParticle("fire", "shootParticle");
 
@@ -81,8 +81,8 @@ namespace Logic {
 			emitSound(_audioShoot, "audioShoot");
 
 			//Mensaje de dispersion en mira
-			std::shared_ptr<CMessageHudDispersion> dispersionMsg = std::make_shared<CMessageHudDispersion>();
-			_entity->emitMessage(dispersionMsg);
+			/*std::shared_ptr<CMessageHudDispersion> dispersionMsg = std::make_shared<CMessageHudDispersion>();
+			_entity->emitMessage(dispersionMsg);*/
 		}
 		else if(_currentAmmo == 0) {
 			// Ejecutar sonidos y animaciones de falta de balas
@@ -116,9 +116,19 @@ namespace Logic {
 		//drawRaycast(ray);
 
 		// Rayo lanzado por el servidor de físicas de acuerdo a la distancia de potencia del arma
-		CEntity *entity = Physics::CServer::getSingletonPtr()->raycastClosestInverse(ray, _distance,_entity->getEntityID());
+		std::vector<Physics::CRaycastHit> hits;
+		Physics::CServer::getSingletonPtr()->raycastMultiple(ray, _distance,hits,true);
 
-		return std::pair<CEntity*, Ray>(entity, ray);
+		//Si hemos tocado algo que no somos nosotros mismo
+		std::pair<CEntity*, Ray> pair;
+		if(hits.size()>1){
+			pair.first=hits[1].entity;
+			pair.second=ray;
+		}
+		else
+			pair.first=NULL;
+		return pair;
+		
 	}// fireWeapon
 	
 	//__________________________________________________________________

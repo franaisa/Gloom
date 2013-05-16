@@ -52,9 +52,9 @@ namespace Logic {
 	// Implementa el patrón template, las clases derivadas solo deben
 	// preocuparse de implementar el método "fireWeapon".
 	void CShootProjectile::primaryShoot() {
-		if(_canShoot && _currentAmmo > 0 && _numberShots <= _currentAmmo){
-			_canShoot = false;
-			_cooldownTimer = 0;
+		if(_primaryCanShoot && _currentAmmo > 0 && _numberShots <= _currentAmmo){
+			_primaryCanShoot = false;
+			_primaryCooldownTimer = 0;
 				
 			drawParticle("fire", "shootParticle");
 
