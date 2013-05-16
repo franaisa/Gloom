@@ -119,13 +119,19 @@ namespace Logic {
 		std::vector<Physics::CRaycastHit> hits;
 		Physics::CServer::getSingletonPtr()->raycastMultiple(ray, _distance,hits,true);
 
-		//Si hemos tocado algo que no somos nosotros mismo
+		//Si hemos tocado algo que no somos nosotros mismos,ni spawnpoints
 		std::pair<CEntity*, Ray> pair;
-		if(hits.size()>1){
-			pair.first=hits[1].entity;
-			pair.second=ray;
+		bool touch=false;
+		for(int i=0;i<hits.size();++i){
+			if(hits[i].entity->getType().compare("SpawnPoint")!=0 && hits[i].entity->getEntityID()!=_entity->getEntityID()){
+				pair.first=hits[i].entity;
+				pair.second=ray;
+				touch=true;
+				break;
+			}
 		}
-		else
+		//Si no tocamos nada devolvemos la entidad con puntero nulo
+		if(!touch)
 			pair.first=NULL;
 		return pair;
 		
