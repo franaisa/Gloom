@@ -88,6 +88,7 @@ namespace Logic
 				damage->setDamage(_damage);
 				damage->setEnemy(_entity);
 				(*it)->emitMessage(damage);
+				std::cout << "enviando mensaje de daño a la entidad" << damage->getEnemy()->getEntityID() << std::endl;
 			}
 			_timestamp= 0;
 			return;

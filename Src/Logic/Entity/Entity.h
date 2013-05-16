@@ -402,14 +402,9 @@ namespace Logic {
 		@return Puntero al componente que buscamos.
 		*/
 		template<typename T>
-		T* getComponent(const std::string id) {
-			std::map<std::string, IComponent*>::iterator it;
-			it = _components.find(id);
-			if(it == _components.end()) {
-				return NULL;
-			}
-
-			return static_cast<T*>(it->second);
+		T* getComponent(const std::string& id) {
+			std::map<std::string, ComponentInfo>::iterator it = _components.find(id);
+			return it != _components.end() ? static_cast<T*>(it->second.componentPtr) : NULL;
 		}
 
 		//__________________________________________________________________
@@ -581,6 +576,12 @@ namespace Logic {
 		// =======================================================================
 
 
+		struct ComponentInfo {
+			IComponent* componentPtr;
+			std::list<IComponent*>::const_reverse_iterator tickIterator;
+			std::list<IComponent*>::const_reverse_iterator fixedTickIterator;
+		};
+
 		std::list<IComponent*> _componentsWithTick;
 		std::list<IComponent*> _componentsWithFixedTick;
 
@@ -588,24 +589,12 @@ namespace Logic {
 		Logic::TEntityID _entityID;
 		
 		// typedef
-		typedef std::map<std::string, IComponent*> TComponentMap;
+		typedef std::map<std::string, ComponentInfo> TComponentMap;
 
 		/**
-		Hash para indexar a los componentes que nos interesen.
-		OJO! Nunca usar esta estructura para recorrer secuencialmente
-		los componentes, para eso tenemos la lista de componentes (que
-		es mucho más eficiente en el recorrido secuencial).
 		*/
 		TComponentMap _components;
 
-		// typedef
-		typedef std::list<IComponent*> TComponentList;
-
-		/**
-		Lista de componentes usada para ejecutar los ticks. En el futuro
-		tendremos varias listas de prioridades.
-		*/
-		TComponentList _componentList;
 
 		/** Indica si la entidad está activada. */
 		bool _activated;

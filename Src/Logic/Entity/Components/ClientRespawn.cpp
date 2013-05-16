@@ -115,7 +115,9 @@ namespace Logic  {
 				Vector3 entityPos = _entity->getPosition();
 
 				std::shared_ptr<CMessagePlayerSpawn> cameraPlayerSpawnMsg = std::make_shared<CMessagePlayerSpawn>();
-				CServer::getSingletonPtr()->getMap()->getEntityByType("Camera")->emitMessage(cameraPlayerSpawnMsg);
+				CEntity* cam = CServer::getSingletonPtr()->getMap()->getEntityByName("Camera");
+				assert(cam != NULL && "Error: Esto no se puede hacer asi que sois unos lamers, ahora el servidor que hace?");
+				cam->emitMessage(cameraPlayerSpawnMsg);
 
 				std::shared_ptr<CMessageHudSpawn> messageHudSpawn = std::make_shared<CMessageHudSpawn>();
 				messageHudSpawn->setTime(0);
