@@ -135,7 +135,7 @@ namespace Logic {
 		(o NULL si no se ha colisionado con ninguna) y el rayo que se disparo para
 		comprobar si habia colisiones.
 		*/
-		virtual void triggerHitMessages(std::pair<CEntity*, Ray> entityHit) = 0;
+		virtual void triggerHitMessages(std::pair<CEntity*, Ray> entityHit);
 
 	protected:
 
@@ -176,7 +176,6 @@ namespace Logic {
 		
 		/** Ruta del sonido de disparo */
 		std::string _audioShoot;
-
 
 
 	};

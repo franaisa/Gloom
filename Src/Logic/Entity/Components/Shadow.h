@@ -91,6 +91,11 @@ namespace Logic {
 		/** Habilidad por definir. */
 		virtual void secondarySkill();
 
+		/**
+		Método que dada una entidad, comprueba si la puede cegar y la ciega
+		*/
+		void flashEntity(CEntity* entity);
+
 
 	protected:
 
@@ -123,6 +128,11 @@ namespace Logic {
 		Nombre del material original de la entidad
 		*/
 		std::string _materialName;
+
+		/**
+		Distancia máxima de cegado
+		*/
+		float _flashRadius;
 	}; // class CShadow
 
 	REG_FACTORY(CShadow);

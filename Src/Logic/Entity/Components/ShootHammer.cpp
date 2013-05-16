@@ -44,9 +44,7 @@ namespace Logic {
 		if(!CShootRaycast::spawn(entity,map,entityInfo)) return false;
 		
 		_currentAmmo = 1;
-		_damageReflect = entityInfo->getIntAttribute("weapon"+_nameWeapon+"DamageReflect");
-		_reboundForce = entityInfo->getFloatAttribute("weapon"+_nameWeapon+"ReboundForce");
-
+		
 		return true;
 	}
 
@@ -64,31 +62,16 @@ namespace Logic {
 		//si yo soy el weapon
 		_currentAmmo = 1;
 	} // resetAmmo
-	
+
 	//__________________________________________________________________
 
-	void CShootHammer::triggerHitMessages(std::pair<CEntity*, Ray> entityHit) {
-		if(entityHit.first->getType().compare("World")==0){
-			Vector3 reboundDirection= entityHit.second.getDirection()*-1;
-			std::shared_ptr<CMessageAddForcePlayer> forceRebound = std::make_shared<CMessageAddForcePlayer>();
-			forceRebound->setForce(reboundDirection*_reboundForce);
-			_entity->emitMessage(forceRebound);
+	void CShootHammer::secondaryShoot() {
 
-			std::shared_ptr<CMessageDamaged> damage = std::make_shared<CMessageDamaged>();
-			damage->setDamage(_damageReflect);
-			damage->setEnemy(_entity);
-			_entity->emitMessage(damage);
+		
+	} // secondaryShoot
 
-		}
-		// LLamar al componente que corresponda con el daño hecho (solamente si no fuera el mundo el del choque)
-		else{
-			std::shared_ptr<CMessageDamaged> m = std::make_shared<CMessageDamaged>();
-			m->setDamage(_damage);
-			m->setEnemy(_entity);
-			entityHit.first->emitMessage(m);
-		}
-	}// triggerHitMessages
 	//__________________________________________________________________
+
 
 } // namespace Logic
 

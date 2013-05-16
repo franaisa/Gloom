@@ -16,6 +16,8 @@ implementa las habilidades del personaje
 #include "Graphics.h"
 #include "Map/MapEntity.h"
 #include "Logic/Entity/Entity.h"
+#include "Physics/Server.h"
+
 
 #include "Logic/Messages/MessageChangeMaterial.h"
 #include "Logic/Messages/MessageChangeMaterialHudWeapon.h"
@@ -52,6 +54,9 @@ namespace Logic {
 		assert( entityInfo->hasAttribute("invisibilityDuration") && "no tienes invisibilityduration mendrugo" );
 		// Pasamos el tiempo a msecs
 		_invisibilityDuration = entityInfo->getFloatAttribute("invisibilityDuration") * 1000;
+
+		_flashRadius= 25;
+
 		return true;
 	} // spawn
 
@@ -127,8 +132,42 @@ namespace Logic {
 
 	void CShadow::secondarySkill() {
 		// Habilidad por definir
-		std::cout << "Secondary Skill - Shadow" << std::endl;
+		CEntity** entitiesHit = NULL;
+		int nbHits = 0;
+
+		//primer filtro
+		// Hacemos una query de overlap con la geometria de una esfera en la posicion 
+		// en la que se encuentra la granada con el radio que se indique de explosion
+		Physics::SphereGeometry explotionGeom = Physics::CGeometryFactory::getSingletonPtr()->createSphere(_flashRadius);
+		Physics::CServer::getSingletonPtr()->overlapMultiple(explotionGeom, _entity->getPosition(), entitiesHit, nbHits);
+
+		if(nbHits==0){
+			return;
+		}
+
+		// Mandamos el mensaje de daño a cada una de las entidades que hayamos golpeado
+		// Además aplicamos un desplazamiento al jugador 
+		for(int i = 0; i < nbHits; ++i) {
+			// una vez tenemos las entidades en el radio de ceguera, hacemos el segundo filtro
+			//que es coger solo a los players
+			if(entitiesHit[i] != NULL && 
+				(entitiesHit[i]->getType() == "Hound" || 
+					entitiesHit[i]->getType() == "Screamer" || 
+					entitiesHit[i]->getType() == "Shadow" || 
+					entitiesHit[i]->getType() == "Archangel") ) 
+			{
+				flashEntity(entitiesHit[i]);
+			}
+		}
+
+		delete entitiesHit;
 	}
+
+
+	void CShadow::flashEntity(CEntity* entity){
+
+	}
+
 
 } // namespace Logic
 

@@ -70,22 +70,18 @@ namespace Logic {
 		*/
 		virtual void decrementAmmo();
 
-		//__________________________________________________________________
-
 		/**
-		Método que se encarga de mandar los mensajes que corresopondan a la entidad
-		que se ha golpeado en caso de hacer hit.
-
-		@param entityHit Pareja que contiene el puntero a la entidad que se ha dado
-		(o NULL si no se ha colisionado con ninguna) y el rayo que se disparo para
-		comprobar si habia colisiones.
+		Los disparos secundarios si fieren bastante unos de otros, por ahora se ha hecho un metodo vacio,
+		para poder compilar por ahora, pero todos tendran que ser redefinidos.
 		*/
-		virtual void triggerHitMessages(std::pair<CEntity*, Ray> entityHit);
+		virtual void secondaryShoot();
 
 		/** Método estático que resetea la cantidad de munición del arma.
 		En el hammer, se establecera a una bala, para que pueda disparar y debido a que cuando dispara no baja tendra balas infinitas
 		*/
 		virtual void resetAmmo();
+
+		
 
 		float _reboundForce;
 
