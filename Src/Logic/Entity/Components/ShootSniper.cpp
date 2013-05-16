@@ -56,13 +56,16 @@ namespace Logic {
 	//-------------------------------------------------------
 
 	void CShootSniper::secondaryShoot(){
-		if(_secondaryCanShoot && _currentAmmo > 0){
+		int secondaryConsumeAmmo=2;
+		if(_secondaryCanShoot && _currentAmmo >= secondaryConsumeAmmo){
 			_secondaryCanShoot = false;
 			_secondaryCooldownTimer = 0;
 				
 			drawParticle("fire", "shootParticle");
 
-			decrementAmmo();
+			//Gasta varias balas(parametro a configurar por arquetipos)
+			for(int i=0;i<secondaryConsumeAmmo;++i)
+				decrementAmmo();
 
 			for(int i = 0; i < _numberShots; ++i) {
 				secondaryFireWeapon();				
@@ -146,7 +149,77 @@ namespace Logic {
 
 		//Cogemos lo primero tocado que no seamos nosotros mismos y vemos si a un rango X hay enemigos (no nosotros)
 		//Ojo en cooperativo tendremos que hacer distincion entre otros players aliados
-		hits[1].entity->getPosition();
+		CEntity* entityHit=NULL;
+		std::string type;
+		for(int i=0;i<hits.size();++i){
+			//Si tocamos mundo terminamos
+			if(hits[i].entity->getType().compare("World")==0)
+				break;
+			//Entidades validas (Player que no seamos nosotros mismos)
+			//OJO añadi remote player para probar en singlePlayer supongo que en MP no hay de este tipo de jugadores
+			type = hits[i].entity->getType();
+			if((type == "Screamer" || type == "Shadow" || type == "Hound" || type == "Archangel" ||
+				type == "LocalScreamer" || type == "LocalShadow" || type == "LocalHound" || type == "LocalArchangel" || type == "RemotePlayer") && hits[i].entity!=_entity){
+				entityHit=hits[i].entity;
+				break;
+			}
+		}
+		//Si tocamos una entidad valida aplicamos daño a dicha entidad (al final)
+		//Ademas lanzamos un overlap esferico con X radio(distancia máxima) desde el centro del jugador dado
+		//Si en dicho overlap tocamos a alguna entidad vemos si un rayo desde nosotros mismos llega a darle directamente (sin obstaculos)
+		//Nos quedaremos con la entidad que este a menor distancia para aplicar el daño
+		//Lo suyo seria que el overlap pueda ordenar por distancia las entidades que te devuelve para ir mirando por orden:
+		// primero si la entidad es valida para aplicarle daño, segundo el rayo para los obstaculos (el orden ya estaria bien)
+		if(entityHit!=NULL){
+			CEntity** entitiesHit = NULL;
+			int nbHits = 0;
+			Physics::SphereGeometry explotionGeom = Physics::CGeometryFactory::getSingletonPtr()->createSphere(100);//Radio(dist maxima expansion)
+			Vector3 explotionPos = entityHit->getPosition();
+			Physics::CServer::getSingletonPtr()->overlapMultiple(explotionGeom, explotionPos, entitiesHit, nbHits);
+
+			//Calculamos la entidad válida con menor distancia
+			CEntity* expandToEntity=NULL;
+			for(int i=0;i<nbHits;++i){
+				std::cout << "bucle general " << i << std::endl;
+				type = entitiesHit[i]->getType();
+				float distMinima=120;
+				//Si es válida (player que no sea el ya dañado, ni nosotros mismos) (nosotros mismos sin poner para comprobar que hay expansion de daño)
+				if((type == "Screamer" || type == "Shadow" || type == "Hound" || type == "Archangel" ||
+					type == "LocalScreamer" || type == "LocalShadow" || type == "LocalHound" || type == "LocalArchangel") && entitiesHit[i]!=entityHit){// && hits[i].entity->getEntityID()!=_entity->getEntityID() ){
+					//Si mejora la distancia
+					float distance=entitiesHit[i]->getPosition().distance(entityHit->getPosition());
+					if( distance < distMinima){
+						Vector3 direccion=entitiesHit[i]->getPosition()-entityHit->getPosition();
+						direccion.normalise();
+						Ray ray(entitiesHit[i]->getPosition()+Vector3(0,_heightShoot,0), direccion);
+						//Si hay una linea recta de un jugador a otro despejada
+						std::vector<Physics::CRaycastHit> hits;
+						Physics::CServer::getSingletonPtr()->raycastMultiple(ray, distance,hits,false);
+						for(int j=0;j<hits.size();++j){
+							std::cout << "bucle interno " << j << std::endl;
+							//Si no se trata del dado y el candidato a expandir es que hay algo mas por lo que no damos
+							if(hits[j].entity!= entityHit && hits[j].entity != entitiesHit[i] && hits[j].entity->getType().compare("SpawnPoint")!=0)
+								break;
+						}
+						expandToEntity=entitiesHit[i];
+					}//if(distance<distMinima)
+				}
+			}
+
+			//Aplicamos daño a la entidad dada y a la más próxima
+			std::shared_ptr<CMessageDamaged> m = std::make_shared<CMessageDamaged>();
+			m->setDamage(_damage);
+			m->setEnemy(_entity);
+			entityHit->emitMessage(m);
+			if(expandToEntity!=NULL){
+				m->setDamage(_damage);
+				m->setEnemy(_entity);
+				expandToEntity->emitMessage(m);
+			}
+
+
+		
+		}//if(entityHit!=NULL)
 
 	}//secondaryFireWeapon
 	//-------------------------------------------------------
