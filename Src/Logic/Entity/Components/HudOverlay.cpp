@@ -597,6 +597,7 @@ namespace Logic
 	//-------------------------------------------------------
 
 	void CHudOverlay::hudDispersion(){
+		/*
 		//Primera version chusquera para ver como queda el efecto en minigun
 		//Con un switch/case se podria tratar todas las armas
 		//Y en el tick comprobariamos los timers activos y se haria lo mismo pero llamando a la mira correspondiente
@@ -616,7 +617,9 @@ namespace Logic
 			_panelMiraMovible->setPosition( positionCrossFireX,positionCrossFireY);
 			_panelMiraMovible->setDimensions( _actualDimCrossX*0.01, _actualDimCrossY*0.01);
 			_activeTimerMinigunCrossFire=true;
+			
 		}
+		*/
 	}
 	//-------------------------------------------------------
 
