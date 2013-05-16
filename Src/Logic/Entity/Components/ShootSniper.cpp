@@ -109,13 +109,14 @@ namespace Logic {
 		Physics::CServer::getSingletonPtr()->raycastMultiple(ray, _distance,hits,true);
 		//Aplicamos daño si no somos nosotros mismos(se podria modificar la fisica para que no nos devuelva a nosotros)
 		//Y ademas no hemos tocado ya pared
-		std::shared_ptr<CMessageDamaged> m = std::make_shared<CMessageDamaged>();
+		
 		for(int i=0;i<hits.size();++i){
 			//Si tocamos el mundo no continuamos viendo hits
 			if(hits[i].entity->getType().compare("World")==0)
 				return;
 			//Sino mientras que no seamos nosotros mismos
 			if(hits[i].entity->getEntityID()!=_entity->getEntityID()){
+				std::shared_ptr<CMessageDamaged> m = std::make_shared<CMessageDamaged>();
 				m->setDamage(_damage);
 				m->setEnemy(_entity);
 				hits[i].entity->emitMessage(m);
