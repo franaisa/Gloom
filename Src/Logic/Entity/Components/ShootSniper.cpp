@@ -214,9 +214,10 @@ namespace Logic {
 			m->setEnemy(_entity);
 			entityHit->emitMessage(m);
 			if(expandToEntity!=NULL){
-				m->setDamage(_damage);
-				m->setEnemy(_entity);
-				expandToEntity->emitMessage(m);
+				std::shared_ptr<CMessageDamaged> m2 = std::make_shared<CMessageDamaged>();
+				m2->setDamage(_damage);
+				m2->setEnemy(_entity);
+				expandToEntity->emitMessage(m2);
 			}
 
 
