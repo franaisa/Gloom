@@ -91,6 +91,7 @@ namespace Application {
 		// eventos y nos activamos como clientes.
 		_netMgr->addObserver(this);
 		_netMgr->activateAsClient();
+		load—apa=false;
 	} // activate
 
 	//__________________________________________________________________
@@ -314,8 +315,9 @@ namespace Application {
 		//std::string* mapName = reinterpret_cast<std::string*>(arg);
 
 		CLobbyClientState * lobby = (CLobbyClientState*)arg;
-
+		lobby->load—apa=true;
 		if( lobby->loadMap(lobby->_mapName) ) {
+			
 			// Avisamos de que hemos terminado la carga.
 			Net::NetMessageType ackMsg = Net::MAP_LOADED;
 			lobby->_netMgr->broadcast( &ackMsg, sizeof(ackMsg) );
@@ -325,7 +327,7 @@ namespace Application {
 			lobby->_netMgr->deactivateNetwork();
 			lobby->_app->exitRequest();
 		}
-
+		
 		// Liberamos el dispatcher para las entidades por defecto
 		Logic::CEntityFactory::getSingletonPtr()->releaseDispatcher();
 		// Inicializamos el dispatcher de entidades lÛgicas en base a nuestro id de red y el
@@ -339,9 +341,11 @@ namespace Application {
 	void CLobbyClientState::tick(unsigned int msecs){
 		CApplicationState::tick(msecs);
 
-		//asking the thread for completion ... if not the main thread crashes
-		if (WaitForSingleObject (loadHandle, 0) == WAIT_OBJECT_0)
-			CloseHandle(loadHandle);
+		if(load—apa){
+			//asking the thread for completion ... if not the main thread crashes
+			if (WaitForSingleObject (loadHandle, INFINITE) == WAIT_OBJECT_0)
+				CloseHandle(loadHandle);
+		}
 	}
 
 
