@@ -209,7 +209,7 @@ namespace Logic {
 		//tick de GUI
 
 		// Eliminamos las entidades que se han marcado para ser eliminadas.
-		Logic::CEntityFactory::getSingletonPtr()->deleteDefferedEntities();
+		
 	} // tick
 
 	//---------------------------------------------------------

@@ -208,6 +208,7 @@ namespace Logic {
 					comp = CComponentFactory::getSingletonPtr()->create(*itc);
 				}
 				else {
+					std::cerr << *itc << std::endl;;
 					assert(!"Nombre erroneo de un componente, Mira a ver si están todos bien escritos en el fichero de blueprints");
 					delete ent;
 					return 0;
@@ -261,12 +262,11 @@ namespace Logic {
 		std::string entityType = entityInfo->getType();
 		CEntity* ret = assembleEntity(entityType);
 		
-		if(!ret) 
-			return NULL;
+		if(!ret) return NULL;
 
 		// Añadimos la nueva entidad en el mapa antes de inicializarla.
 		map->addEntity(ret);
-		
+
 		// Y lo inicializamos
 		if ( _dynamicCreation ? ret->dynamicSpawn(map, entityInfo) : ret->spawn(map, entityInfo) ) {
 			if(replicate) {

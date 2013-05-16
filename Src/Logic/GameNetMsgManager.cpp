@@ -314,6 +314,10 @@ namespace Logic {
 		if(destEntity != 0)
 			destEntity->emitMessage(messageReceived);
 
+		// El servidor ya no debe forwardear las teclas a los remotePlayers. Para eso estan las snapshots, los
+		// remotePlayers serán integramente interpolados.
+		// El input debe ser predicho de alguna forma. El servidor deberia devolver las teclas o los movimientos
+		// solo al player que las manda para que éste sepa si se está moviendo bien o no.
 		/*if(Net::CManager::getSingletonPtr()->imServer() && messageReceived->getMessageType()==Message::CONTROL){
 			Net::NetMessageType msgType = Net::ENTITY_MSG;// Escribimos el tipo de mensaje de red a enviar
 			Net::CBuffer serialMsg;

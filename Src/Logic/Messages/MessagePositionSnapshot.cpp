@@ -8,7 +8,7 @@ namespace Logic {
 
 	//__________________________________________________________________
 
-	CMessagePositionSnapshot::CMessagePositionSnapshot() : CMessage(Message::TRANSFORM_SNAPSHOT) {
+	CMessagePositionSnapshot::CMessagePositionSnapshot() : CMessage(Message::POSITION_SNAPSHOT) {
 		// Nada que hacer
 	}
 

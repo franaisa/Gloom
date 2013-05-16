@@ -21,9 +21,12 @@ Contiene la implementación de la clase CMap, Un mapa lógico.
 #include "Graphics/Server.h"
 #include "Graphics/Scene.h"
 
-#include <cassert>
+#include "Logic/Messages/MessageHudDebugData.h"
 
+#include <cassert>
 #include <fstream>
+
+using namespace std;
 
 // HACK. Debería leerse de algún fichero de configuración
 #define MAP_FILE_PATH "./media/maps/"
@@ -94,17 +97,18 @@ namespace Logic {
 	//--------------------------------------------------------
 
 	bool CMap::activate() {
+		_acumTime = 0;
+		_fixedTimeStep = 16;
 		Graphics::CServer::getSingletonPtr()->setScene(_scene);
 
-		TEntityMap::const_iterator it, end;
-		end = _entityMap.end();
-		it = _entityMap.begin();
+		auto it = _entityInfoTable.begin();
+		auto end = _entityInfoTable.end();
 
 		bool correct = true;
 
 		// Activamos todas las entidades registradas en el mapa.
-		for(; it != end; it++)
-			correct = (*it).second->activate() && correct;
+		for(; it != end; ++it)
+			correct = it->second._entityPtr->activate() && correct;
 
 		return correct;
 
@@ -113,14 +117,17 @@ namespace Logic {
 	//--------------------------------------------------------
 
 	void CMap::deactivate() {
-		TEntityMap::const_iterator it, end;
-		end = _entityMap.end();
-		it = _entityMap.begin();
+		auto it = _entityInfoTable.begin();
+		auto end = _entityInfoTable.end();
 
 		// Desactivamos todas las entidades activas registradas en el mapa.
-		for(; it != end; it++)
-			if((*it).second->isActivated())
-				(*it).second->deactivate();
+		CEntity* entity;
+		for(; it != end; ++it) {
+			entity = it->second._entityPtr;
+			if( entity->isActivated() ) {
+				entity->deactivate();
+			}
+		}
 
 		Graphics::CServer::getSingletonPtr()->setScene(0);
 
@@ -128,12 +135,31 @@ namespace Logic {
 
 	//---------------------------------------------------------
 
+	void CMap::wantsTick(CEntity* entity) {
+		_entitiesWithTick.push_front(entity);
+
+		auto it = _entityInfoTable.find( entity->getEntityID() );
+		it->second._tickIterator = _entitiesWithTick.begin();
+	}
+
+	//---------------------------------------------------------
+
+	void CMap::wantsFixedTick(CEntity* entity) {
+		_entitiesWithFixedTick.push_front(entity);
+
+		auto it = _entityInfoTable.find( entity->getEntityID() );
+		it->second._fixedTickIterator = _entitiesWithFixedTick.begin();
+	}
+
+	//---------------------------------------------------------
+
 	void CMap::start() {
 		// Ejecutamos el start de todas nuestras entidades
-		TEntityMap::const_iterator it = _entityMap.begin();
-		for(; it != _entityMap.end(); ++it ) {
-			// Ejecutamos el start de todas las entidades
-			it->second->start();
+		auto it = _entityInfoTable.begin();
+		auto end = _entityInfoTable.end();
+
+		for(; it != end; ++it) {
+			it->second._entityPtr->start();
 		}
 	}
 
@@ -143,12 +169,20 @@ namespace Logic {
 		// Comprobamos los timers de las entidades que tienen
 		// un tiempo de vida
 		checkTimeouts(msecs);
+
+		Logic::CEntityFactory::getSingletonPtr()->deleteDefferedEntities();
 		
+		// Es muuuuuy importante que primero se ejecute esta función
+		// si no se hace así, el sleep por ejemplo no funciona bien.
+		processComponentMessages();
+
 		// Ejecutamos el tick de las entidades
 		// Ejecutamos el tick de todas las entidades activadas del mapa
 		// La propia entidad se encarga de hacer el process, tick y fixed tick
 		// de sus componentes (dependiendo del estado)
 		doTick(msecs);
+
+		doFixedTick(msecs);	
 	} // tick
 
 	//--------------------------------------------------------
@@ -157,9 +191,9 @@ namespace Logic {
 		// Si hay entidades con cronometros de autodestruccion
 		// comprobamos el cronometro y si hay que destruirlas avisamos
 		// a la factoria para que se encargue de ello en diferido.
-		if( !_entitiesToBeDeleted.empty() ) {
-			std::list< std::pair<CEntity*, unsigned int> >::iterator it = _entitiesToBeDeleted.begin();
-			while( it != _entitiesToBeDeleted.end() ) {
+		if( !_entitiesWithTimeout.empty() ) {
+			std::list< std::pair<CEntity*, unsigned int> >::iterator it = _entitiesWithTimeout.begin();
+			while( it != _entitiesWithTimeout.end() ) {
 				// Dado que estamos tratando con un unsigned int, comprobamos si la resta saldria menor
 				// que 0, ya que si hacemos directamente la resta el numero pasa a ser el unsigned int 
 				// mas alto y por lo tanto seria un fail.
@@ -169,7 +203,7 @@ namespace Logic {
 					// Puesto por defecto a true pero deberia de ser apuntado cuando se llama 
 					// al createEntityWithTimeOut y recuperarse al llegar a este caso
 					CEntityFactory::getSingletonPtr()->deferredDeleteEntity(it->first, true);
-					it = _entitiesToBeDeleted.erase(it);
+					it = _entitiesWithTimeout.erase(it);
 				}
 				else {
 					++it;
@@ -180,131 +214,193 @@ namespace Logic {
 
 	//--------------------------------------------------------
 
-	void CMap::doTick(unsigned int msecs) {
+	void CMap::processComponentMessages() {
 		// Ejecutamos el tick de todas nuestras entidades
-		TEntityMap::const_iterator it = _entityMap.begin();
-		for(; it != _entityMap.end(); ++it) {
-			it->second->tick(msecs);
+		auto it = _entityInfoTable.begin();
+		auto end = _entityInfoTable.end();
+
+		for(; it != end; ++it) {
+			it->second._entityPtr->processComponentMessages();
+		}
+	}
+
+	//--------------------------------------------------------
+	
+	void CMap::doTick(unsigned int msecs) {
+		// Ejecutamos el tick de las entidades que lo quieren
+		CEntity* entity;
+		std::list<CEntity*>::iterator it = _entitiesWithTick.begin();
+		while(it != _entitiesWithTick.end()) {
+			entity = *it;
+
+			if( !entity->tick(msecs) ) {
+				auto otherIt = _entityInfoTable.find( entity->getEntityID() );
+				otherIt->second._tickIterator = _entitiesWithTick.end();
+				it = _entitiesWithTick.erase(it);
+				continue;
+			}
+
+			++it;
+		}
+	}
+
+	//--------------------------------------------------------
+	
+	void CMap::doFixedTick(unsigned int msecs) {
+		_acumTime += msecs;
+		unsigned int steps = _acumTime / _fixedTimeStep;
+		_acumTime = _acumTime % _fixedTimeStep; 
+
+		// Ejecutamos el fixed tick
+		for(int i = 0; i < steps; ++i) {
+			CEntity* entity;
+			std::list<CEntity*>::iterator it = _entitiesWithFixedTick.begin();
+			while( it != _entitiesWithFixedTick.end() ) {
+				entity = *it;
+
+				if( !entity->fixedTick(_fixedTimeStep) ) {
+					auto otherIt = _entityInfoTable.find( entity->getEntityID() );
+					otherIt->second._fixedTickIterator = _entitiesWithFixedTick.end();
+					it = _entitiesWithFixedTick.erase(it);
+					continue;
+				}
+
+				++it;
+			}
 		}
 	}
 
 	//--------------------------------------------------------
 
-	typedef std::pair<TEntityID,CEntity*> TEntityPair;
+	void CMap::addEntity(CEntity *entity) {
+		TEntityID entityId = entity->getEntityID();
+		// Añadimos la entidad si no existia
+		if( _entityInfoTable.find(entityId) == _entityInfoTable.end() ) {
+			// Insertamos las entidades en la listas que vamos a usar para recorrer
+			// y nos apuntamos el iterador (que nos hara falta mas tarde para los
+			// borrados).
+			_entitiesWithTick.push_front(entity);
+			std::list<CEntity*>::const_iterator tickIt = _entitiesWithTick.begin();
 
-	void CMap::addEntity(CEntity *entity)
-	{
-		if(_entityMap.count(entity->getEntityID()) == 0)
-		{
-			TEntityPair elem(entity->getEntityID(),entity);
-			_entityMap.insert(elem);
+			_entitiesWithFixedTick.push_front(entity);
+			std::list<CEntity*>::const_iterator fixedTickIt = _entitiesWithFixedTick.begin();
+
+			EntityInfo info;
+			info._entityPtr = entity;
+			info._tickIterator = tickIt;
+			info._fixedTickIterator = fixedTickIt;
+
+			_entityInfoTable.insert( pair<TEntityID, EntityInfo>(entityId, info) );
 		}
-
 	} // addEntity
 
 	//--------------------------------------------------------
 
-	void CMap::removeEntity(CEntity *entity)
-	{
-		if(_entityMap.count(entity->getEntityID()) != 0)
-		{
-			if(entity->isActivated())
-				entity->deactivate();
-			entity->_map = 0;
-			_entityMap.erase(entity->getEntityID());
-		}
+	void CMap::removeEntity(CEntity *entity) {
+		// Eliminamos la entidad si existe
+		auto it = _entityInfoTable.find( entity->getEntityID() );
+		if( it != _entityInfoTable.end() ) {
+			EntityInfo info = it->second;
 
+			if(info._entityPtr->isActivated())
+				info._entityPtr->deactivate();
+
+			info._entityPtr->_map = NULL;
+
+			// Borramos el elemento de cada lista en la que este
+			// presente
+			if( info._tickIterator != _entitiesWithTick.end() ) 
+				_entitiesWithTick.erase(info._tickIterator);
+			if( info._fixedTickIterator != _entitiesWithFixedTick.end() ) 
+				_entitiesWithFixedTick.erase(info._fixedTickIterator);
+
+			_entityInfoTable.erase(it);
+		}
 	} // removeEntity
 
 	//--------------------------------------------------------
 
-	void CMap::destroyAllEntities()
-	{
+	void CMap::destroyAllEntities() {
 		CEntityFactory* entityFactory = CEntityFactory::getSingletonPtr();
 
-		TEntityMap::const_iterator it, end;
-		it = _entityMap.begin();
-		end = _entityMap.end();
+		auto it = _entityInfoTable.begin();
+		auto end = _entityInfoTable.end();
 
-		// Eliminamos todas las entidades. La factoría se encarga de
-		// desactivarlas y sacarlas previamente del mapa.
-		while(it != end)
-		{
-			CEntity* entity = (*it).second;
-			it++;
-			entityFactory->deleteEntity(entity);
+		// Eliminamos todas las entidades.
+		EntityInfo info;
+		for(; it != end; ++it) {
+			info = it->second;
+
+			info._entityPtr->_map = NULL;
+
+			if( info._entityPtr->isActivated() ) {
+				info._entityPtr->deactivate();
+			}
+
+			delete info._entityPtr;
 		}
 
-		_entityMap.clear();
-
+		_entityInfoTable.clear();
 	} // removeEntity
 
 	//--------------------------------------------------------
 
-	CEntity* CMap::getEntityByID(TEntityID entityID)
-	{
-		if(_entityMap.count(entityID) == 0)
-			return 0;
-		return (*_entityMap.find(entityID)).second;
-
+	CEntity* CMap::getEntityByID(TEntityID entityID) {
+		auto it = _entityInfoTable.find(entityID);
+		return it != _entityInfoTable.end() ? it->second._entityPtr : NULL;
 	} // getEntityByID
 
 	//--------------------------------------------------------
 
-	CEntity* CMap::getEntityByName(const std::string &name, CEntity *start)
-	{
-		TEntityMap::const_iterator it, end;
-		end = _entityMap.end();
+	CEntity* CMap::getEntityByName(const std::string &name, CEntity *start) {
+		auto it = _entityInfoTable.begin();
+		auto end = _entityInfoTable.end();
 
 		// Si se definió entidad desde la que comenzar la búsqueda 
 		// cogemos su posición y empezamos desde la siguiente.
-		if (start)
-		{
-			it = _entityMap.find(start->getEntityID());
+		if (start) {
+			it = _entityInfoTable.find( start->getEntityID() );
 			// si la entidad no existe devolvemos NULL.
-			if(it == end)
-				return 0;
-			it++;
+			if(it == end) return NULL;
+			
+			++it;
 		}
 		else
-			it = _entityMap.begin();
+			it = _entityInfoTable.begin();
 
-		for(; it != end; it++)
-		{
+		for(; it != end; ++it) {
 			// si hay coincidencia de nombres devolvemos la entidad.
-			if (!(*it).second->getName().compare(name))
-				return (*it).second;
+			if (!it->second._entityPtr->getName().compare(name))
+				return it->second._entityPtr;
 		}
+		
 		// si no se encontró la entidad devolvemos NULL.
-		return 0;
+		return NULL;
 
 	} // getEntityByName
 
 	//--------------------------------------------------------
 
-	CEntity* CMap::getEntityByType(const std::string &type, CEntity *start)
-	{
-		TEntityMap::const_iterator it, end;
-		end = _entityMap.end();
+	CEntity* CMap::getEntityByType(const std::string &type, CEntity *start) {
+		auto it = _entityInfoTable.begin();
+		auto end = _entityInfoTable.end();
 
 		// Si se definió entidad desde la que comenzar la búsqueda 
 		// cogemos su posición y empezamos desde la siguiente.
-		if (start)
-		{
-			it = _entityMap.find(start->getEntityID());
+		if (start) {
+			it = _entityInfoTable.find( start->getEntityID() );
 			// si la entidad no existe devolvemos NULL.
-			if(it == end)
-				return 0;
-			it++;
+			if(it == end) return NULL;
+			
+			++it;
 		}
 		else
-			it = _entityMap.begin();
+			it = _entityInfoTable.begin();
 
-		for(; it != end; it++)
-		{
+		for(; it != end; ++it) {
 			// si hay coincidencia de nombres devolvemos la entidad.
-			if (!(*it).second->getType().compare(type))
-				return (*it).second;
+			if (!it->second._entityPtr->getType().compare(type))
+				return it->second._entityPtr;
 		}
 		// si no se encontró la entidad devolvemos NULL.
 		return 0;
@@ -314,9 +410,7 @@ namespace Logic {
 	//--------------------------------------------------------
 	//--------------------------------------------------------
 	
-	CEntity* CMap::createPlayer(const std::string &name, const std::string &type)
-	{
-
+	CEntity* CMap::createPlayer(const std::string &name, const std::string &type) {
 		//cogemos el player necesario
 		Map::CEntity *playerInfo = CEntityFactory::getSingletonPtr()->getInfo(type);
 
@@ -377,15 +471,15 @@ namespace Logic {
 
 
 	void CMap::deleteDeferredEntity(CEntity* entity){
-		_deleteEntities.push_back(entity);
+		_entitiesToBeDeleted.push_back(entity);
 	}
 
 	void CMap::entityTimeToLive(CEntity* entity, unsigned int msecs) {
-		_entitiesToBeDeleted.push_back( std::pair<CEntity*, unsigned int>(entity, msecs) );
+		_entitiesWithTimeout.push_back( std::pair<CEntity*, unsigned int>(entity, msecs) );
 	}
 
 	void CMap::setFixedTimeStep(unsigned int stepSize) {
-		CEntity::setFixedTimeStep(stepSize);
+		_fixedTimeStep = stepSize;
 	}
 
 } // namespace Logic

@@ -32,13 +32,16 @@ Contiene la implementación del estado de lobby del cliente.
 #include "Net/buffer.h"
 
 #include <iostream>
+#include <windows.h>
 
 using namespace std;
 
 namespace Application {
 
-	CLobbyClientState::CLobbyClientState(CBaseApplication *app) : CApplicationState(app),
-																  _netMgr(NULL) {
+	CLobbyClientState::CLobbyClientState(CBaseApplication *app) :	CApplicationState(app),
+																	_netMgr(NULL),
+																	loadHandle(0),
+																	loadÑapa(0){
 		// Nada que hacer
 	}
 
@@ -61,7 +64,9 @@ namespace Application {
 		_menu->bind("connect",Hikari::FlashDelegate(this, &CLobbyClientState::startReleased));
 		_menu->bind("back",Hikari::FlashDelegate(this, &CLobbyClientState::backReleased));
 		_menu->hide();
-		
+		_loadMenu = GUI::CServer::getSingletonPtr()->addLayoutToState(this,"loadMenu", Hikari::Position(Hikari::Center));
+		_loadMenu->load("LoadingMenu.swf");
+		_loadMenu->hide();
 		return true;
 	} // init
 
@@ -80,11 +85,13 @@ namespace Application {
 
 		// Mostramos el menu del cliente
 		_menu->show();
-
+		int menu = ((rand()*clock())%7)+1;
+		_loadMenu->callFunction("loadMenu",Hikari::Args(menu));
 		// Nos registramos como observadores de la red para ser notificados de
 		// eventos y nos activamos como clientes.
 		_netMgr->addObserver(this);
 		_netMgr->activateAsClient();
+		loadÑapa=false;
 	} // activate
 
 	//__________________________________________________________________
@@ -93,9 +100,10 @@ namespace Application {
 	void CLobbyClientState::deactivate() {
 		// Ocultamos el menú de cliente
 		_menu->hide();
-
+		_loadMenu->hide();
 		_netMgr->removeObserver(this);
 		CApplicationState::deactivate();
+		
 	} // deactivate
 
 	//__________________________________________________________________
@@ -149,14 +157,26 @@ namespace Application {
 			case Net::LOAD_MAP: {
 				// Obtenemos el nombre del mapa que está ejecutando el servidor
 				string mapName;
-				buffer.deserialize(mapName);
+				buffer.deserialize(_mapName);
 
 				// La carga de entidades del mapa debe hacerse con las ids del servidor
 				Logic::CEntityFactory::getSingletonPtr()->initDispatcher();
 
 				// Si la carga del mapa tiene éxito, notificamos al servidor y continuamos. En 
 				// caso contrario abortamos la ejecución.
-				if( loadMap(mapName) ) {
+				_loadMenu->show();
+
+				
+
+				
+				_menu->hide();
+
+				loadHandle = 0;
+
+				//creamos el thread que maneja la carga del mapa
+				loadHandle = CreateThread( NULL, 0, CLobbyClientState::loadMapThread, this, 0, NULL);
+
+				/*if( loadMap(mapName) ) {
 					// Avisamos de que hemos terminado la carga.
 					Net::NetMessageType ackMsg = Net::MAP_LOADED;
 					_netMgr->broadcast( &ackMsg, sizeof(ackMsg) );
@@ -165,15 +185,9 @@ namespace Application {
 					_netMgr->removeObserver(this);
 					_netMgr->deactivateNetwork();
 					_app->exitRequest();
-				}
-
-				// Liberamos el dispatcher para las entidades por defecto
-				Logic::CEntityFactory::getSingletonPtr()->releaseDispatcher();
-
-				// Inicializamos el dispatcher de entidades lógicas en base a nuestro id de red y el
-				// número de jugadores que hay en la partida
-				// @deprecated lo ideal es que el server mande el numero de players de la partida
-				Logic::CEntityFactory::getSingletonPtr()->initDispatcher( _netMgr->getID(), 12 );
+				}*/
+				
+				
 
 				break;
 			}
@@ -295,5 +309,45 @@ namespace Application {
 			_menu->callFunction( "enableButton", Hikari::Args() );
 		}
 	} // requestConnectionTo
+
+	DWORD WINAPI CLobbyClientState::loadMapThread(LPVOID arg){
+
+		//std::string* mapName = reinterpret_cast<std::string*>(arg);
+
+		CLobbyClientState * lobby = (CLobbyClientState*)arg;
+		lobby->loadÑapa=true;
+		if( lobby->loadMap(lobby->_mapName) ) {
+			
+			// Avisamos de que hemos terminado la carga.
+			Net::NetMessageType ackMsg = Net::MAP_LOADED;
+			lobby->_netMgr->broadcast( &ackMsg, sizeof(ackMsg) );
+		}
+		else {
+			lobby->_netMgr->removeObserver(lobby);
+			lobby->_netMgr->deactivateNetwork();
+			lobby->_app->exitRequest();
+		}
+		
+		// Liberamos el dispatcher para las entidades por defecto
+		Logic::CEntityFactory::getSingletonPtr()->releaseDispatcher();
+		// Inicializamos el dispatcher de entidades lógicas en base a nuestro id de red y el
+		// número de jugadores que hay en la partida
+		// @deprecated lo ideal es que el server mande el numero de players de la partida
+		Logic::CEntityFactory::getSingletonPtr()->initDispatcher( lobby->_netMgr->getID(), 12 );
+
+		return 0;
+	}
+
+	void CLobbyClientState::tick(unsigned int msecs){
+		CApplicationState::tick(msecs);
+
+		if(loadÑapa){
+			//asking the thread for completion ... if not the main thread crashes
+			if (WaitForSingleObject (loadHandle, INFINITE) == WAIT_OBJECT_0)
+				CloseHandle(loadHandle);
+		}
+	}
+
+
 
 } // namespace Application

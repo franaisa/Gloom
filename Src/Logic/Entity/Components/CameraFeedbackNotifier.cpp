@@ -45,10 +45,7 @@ namespace Logic {
 														 _landForce(0),
 														 _strafingDir(0),
 														 _landRecoverySpeed(0.007f),
-														 _currentLandOffset(0),
-														 _stepForce(0.00008f),
-														 _stepRecoveryAccel(0.000025f),
-														 _currentWalkingRoll(0) {
+														 _currentLandOffset(0) {
 
 
 		_walkAnim.currentHorizontalPos = Math::HALF_PI;
@@ -116,7 +113,7 @@ namespace Logic {
 	//________________________________________________________________________
 
 	void CCameraFeedbackNotifier::onStart() {
-		Logic::CEntity* cameraEntity = Logic::CServer::getSingletonPtr()->getMap()->getEntityByType("Camera");
+		Logic::CEntity* cameraEntity = Logic::CServer::getSingletonPtr()->getMap()->getEntityByName("Camera");
 		assert(cameraEntity != NULL && "Error: No existe una entidad camara");
 		_cameraComponent = cameraEntity->getComponent<CCamera>("CCamera");
 		assert(_cameraComponent != NULL && "Error: La entidad camara no tiene un componente de camara");
@@ -183,7 +180,8 @@ namespace Logic {
 	//________________________________________________________________________
 
 	void CCameraFeedbackNotifier::offsetRecovery(unsigned int msecs) {
-		_cameraComponent->setOffset( _cameraComponent->getOffset() * Vector3(0.75f, 0.95f, 0.75f) );
+		// Queda mas suave sin correccion
+		//_cameraComponent->setOffset( _cameraComponent->getOffset() * Vector3(0.85f, 0.95f, 0.85f) );
 		if(_walkAnim.currentRoll != 0) {
 			_walkAnim.currentRoll *= 0.85f; // Coeficiente un poco más fuerte
 			_cameraComponent->rollCamera(_walkAnim.currentRoll);
@@ -209,7 +207,8 @@ namespace Logic {
 		}
 		else {
 			// Reducimos el offset horizontal
-			offset = offset * Vector3(0.95f, 1.0f, 0.95f);
+			// Queda mas suave sin correccion
+			//offset = offset * Vector3(0.95f, 1.0f, 0.95f);
 
 			// Si no estamos recuperando el offset por haber llegado al máximo
 			// incrementamos el roll
@@ -276,7 +275,8 @@ namespace Logic {
 	void CCameraFeedbackNotifier::damaged(Vector3 vEnemyPosition) {
 		std::shared_ptr<Logic::CMessageCameraOffset> m3 = std::make_shared<Logic::CMessageCameraOffset>();
 		m3->setOffsetTimer(100.0f);//Timer								 
-		Logic::CEntity * camera = Logic::CServer::getSingletonPtr()->getMap()->getEntityByType("Camera");
+		Logic::CEntity * camera = Logic::CServer::getSingletonPtr()->getMap()->getEntityByName("Camera");
+		assert(camera != NULL && "Error: Esto no se puede hacer asi que sois unos lamers, ahora el servidor que hace?");
 		camera->emitMessage(m3);
 
 		_scene->setCompositorVisible(_effect, true);

@@ -171,9 +171,10 @@ namespace Logic {
 				// de la query de overlap (para saber el punto de colision).
 				// No es ni lo mas exacto ni lo mas eficiente, pero soluciona la papeleta.
 				Ogre::Ray ray( explotionPos, rayDirection.normalisedCopy() );
-				int bufferSize;
-				Physics::CRaycastHit* hitBuffer;
-				Physics::CServer::getSingletonPtr()->raycastMultiple(ray, _explotionRadius, hitBuffer, bufferSize);
+				
+				std::vector<Physics::CRaycastHit> hitBuffer;
+				Physics::CServer::getSingletonPtr()->raycastMultiple(ray, _explotionRadius, hitBuffer);
+				int bufferSize = hitBuffer.size();
 
 				// Calculamos el daño en base a la distancia del golpe
 				float dmg = 0;
@@ -182,8 +183,6 @@ namespace Logic {
 						dmg = _explotionDamage * ( 1 - (hitBuffer[k].distance/_explotionRadius) );
 					}
 				}
-
-				if(bufferSize > 0) delete [] hitBuffer;
 
 				// Emitimos el mensaje de daño
 				std::shared_ptr<CMessageDamaged> dmgMsg = std::make_shared<CMessageDamaged>();
