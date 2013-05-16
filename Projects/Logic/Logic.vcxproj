@@ -186,6 +186,7 @@
     <ClCompile Include="..\..\Src\Logic\Messages\MessageDamaged.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageDeactivate.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageDeactivateScreamerShield.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Messages\MessageFlash.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageHudAmmo.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageHudDebug.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageHudDebugData.cpp" />
@@ -333,6 +334,7 @@
     <ClInclude Include="..\..\Src\Logic\Messages\MessageDamaged.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageDeactivate.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageDeactivateScreamerShield.h" />
+    <ClInclude Include="..\..\Src\Logic\Messages\MessageFlash.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageHudAmmo.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageHudDebug.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageHudDebugData.h" />

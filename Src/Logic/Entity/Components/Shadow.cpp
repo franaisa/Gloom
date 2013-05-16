@@ -17,10 +17,11 @@ implementa las habilidades del personaje
 #include "Map/MapEntity.h"
 #include "Logic/Entity/Entity.h"
 #include "Physics/Server.h"
-
+#include "Physics/RaycastHit.h"
 
 #include "Logic/Messages/MessageChangeMaterial.h"
 #include "Logic/Messages/MessageChangeMaterialHudWeapon.h"
+#include "Logic/Messages/MessageFlash.h"
 
 #include <assert.h>
 
@@ -155,10 +156,10 @@ namespace Logic {
 					entitiesHit[i]->getType() == "Screamer" || 
 					entitiesHit[i]->getType() == "Shadow" || 
 					entitiesHit[i]->getType() == "Archangel") ) 
-			{
+			{//begin if
 				flashEntity(entitiesHit[i]);
-			}
-		}
+			}//end if
+		}//end for
 
 		delete entitiesHit;
 	}
@@ -166,6 +167,47 @@ namespace Logic {
 
 	void CShadow::flashEntity(CEntity* entity){
 
+		//primero trazamos un raycast para filtrar si hay algo entre la entidad y yo
+		Vector3 direction = entity->getPosition() - _entity->getPosition();
+		Ogre::Ray ray( entity->getPosition(), direction.normalisedCopy() );
+		int bufferSize;
+		Physics::CRaycastHit* hitBuffer;
+		Physics::CServer::getSingletonPtr()->raycastMultiple(ray, direction.length(), hitBuffer, bufferSize);
+
+		//ifs de eficiencia
+		if(bufferSize>1){
+			delete [] hitBuffer;
+			return;
+		}
+		if(bufferSize == 1 && hitBuffer[0].entity == entity){
+			delete [] hitBuffer;
+			return;
+		}
+		if(bufferSize == 1)
+			delete [] hitBuffer;
+
+		//Ahora comprobamos el angulo entre la visión directa y la orientación del player a cegar
+		float angle = direction.normalisedCopy().angleBetween(Math::getDirection(entity->getOrientation()).normalisedCopy).valueDegrees();
+
+		//si no lo esta mirando nada no lo cegamos
+		if(angle < 90 || angle > 270)
+			return;
+
+		angle-=90;
+		float flashFactor;
+
+		if(angle<=90){
+			//hacemos la inversa
+			flashFactor = 10 * (1 - 90/90*angle);
+		}else{
+			angle-=90;
+			flashFactor = 10 * (1 - 90/90*angle);
+		}
+
+		//mandamos un mensaje de flashazo
+		std::shared_ptr<CMessageFlash> flashMsg = std::make_shared<CMessageFlash>();
+		flashMsg->setFlashFactor(flashFactor);
+		entity->emitMessage(flashMsg);
 	}
 
 
