@@ -16,6 +16,7 @@ Contiene la declaración del servidor de física.
 
 #include "GeometryFactory.h"
 #include "MaterialManager.h"
+#include "RaycastHit.h"
 
 #include <PxFiltering.h>
 
@@ -30,7 +31,6 @@ namespace Logic {
 namespace Physics {
 	class CCollisionManager;
 	class CErrorManager;
-	class CRaycastHit;
 };
 
 namespace physx {
@@ -310,7 +310,7 @@ namespace Physics {
 		LA MEMORIA RESERVADA EN hits POR ESTE MÉTODO.
 		@param nbHits Número de entidades golpeadas. Corresponde con el tamaño del array de hits.
 		*/
-		void raycastMultiple(const Ray& ray, float maxDistance, CRaycastHit* & hits, int& nbHits) const;
+		void raycastMultiple(const Ray& ray, float maxDistance, std::vector<CRaycastHit>& hits, bool sortResultingArray = false) const;
 
 		//________________________________________________________________________
 
@@ -460,6 +460,10 @@ namespace Physics {
 
 		/** Destructor de la clase. */
 		virtual ~CServer();
+
+		//________________________________________________________________________
+
+		
 
 
 		// =======================================================================

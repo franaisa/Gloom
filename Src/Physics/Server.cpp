@@ -20,7 +20,6 @@ Contiene la implementación del servidor de física.
 #include "Cloth.h"
 #include "MaterialManager.h"
 #include "GeometryFactory.h"
-#include "RaycastHit.h"
 
 #include <assert.h>
 #include <algorithm>
@@ -520,8 +519,12 @@ namespace Physics {
 	}
 
 	//________________________________________________________________________
+	
+	bool raycastComparator(const CRaycastHit& hit1, const CRaycastHit& hit2) { 
+		return hit1.distance < hit2.distance; 
+	}
 
-	void CServer::raycastMultiple(const Ray& ray, float maxDistance, CRaycastHit* & hits, int& nbHits) const {
+	void CServer::raycastMultiple(const Ray& ray, float maxDistance, std::vector<CRaycastHit>& hits, bool sortResultingArray) const {
 		// Establecer parámettros del rayo
 		PxVec3 origin = Vector3ToPxVec3( ray.getOrigin() );      // origen     
 		PxVec3 unitDir = Vector3ToPxVec3( ray.getDirection() );  // dirección normalizada
@@ -537,7 +540,7 @@ namespace Physics {
 		PxRaycastHit* hitBuffer = new(std::nothrow) PxRaycastHit [bufferSize];
 		assert(hitBuffer != NULL && "Error: Fallo en la reserva de memoria");
 
-		nbHits = _scene->raycastMultiple(origin, unitDir, maxDistance, outputFlags, hitBuffer, bufferSize, blockingHit);
+		unsigned int nbHits = _scene->raycastMultiple(origin, unitDir, maxDistance, outputFlags, hitBuffer, bufferSize, blockingHit);
 		while(nbHits == -1) {
 			// Si el buffer se ha desbordado aumentamos su tamaño al doble
 			// y volvemos ha realizar la query
@@ -553,24 +556,32 @@ namespace Physics {
 
 		if(nbHits > 0) {
 			// Si hemos golpeado a otras entidades creamos un buffer
-			hits = new(std::nothrow) CRaycastHit [nbHits];
-			assert(hits != NULL && "Error en la reserva de memoria");
+			hits.reserve(nbHits);
 
 			// Rellenamos el buffer con un puntero a cada una de las entidades golpeadas
+			IPhysics* component;
+			CRaycastHit raycastHit;
 			for(int i = 0; i < nbHits; ++i) {
-				IPhysics* component = static_cast<IPhysics*>( hitBuffer[i].shape->getActor().userData );
+				component = static_cast<IPhysics*>( hitBuffer[i].shape->getActor().userData );
 
-				hits[i].entity = component->getEntity();
-				hits[i].distance = hitBuffer[i].distance;
-				hits[i].impact = PxVec3ToVector3(hitBuffer[i].impact);
-				hits[i].normal = PxVec3ToVector3(hitBuffer[i].normal);
+				raycastHit.entity = component->getEntity();
+				raycastHit.distance = hitBuffer[i].distance;
+				raycastHit.impact = PxVec3ToVector3(hitBuffer[i].impact);
+				raycastHit.normal = PxVec3ToVector3(hitBuffer[i].normal);
+
+				hits.push_back(raycastHit);
 			}
 		}
 		else {
-			hits = NULL;
+			hits.clear();
 		}
 
 		delete [] hitBuffer;
+
+		if( !hits.empty() && sortResultingArray ) {
+			// Ordenamos el vector de resultados
+			std::sort(hits.begin(), hits.end(), raycastComparator);
+		}
 	}
 
 	//________________________________________________________________________
