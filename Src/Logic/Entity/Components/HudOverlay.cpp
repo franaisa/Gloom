@@ -135,16 +135,14 @@ namespace Logic
          // Create an overlay
 		_overlayPlay = _server->createOverlay( "_overlayPlay", scene );		
          
-		// Create a panel de Mira-> MIS CORNEAS
+		// Creo panel de Mira
 		_panelMira = _server->createOverlay("Mira", scene, "Panel" );
-		_dimCrossX = entityInfo->getFloatAttribute("hudCrossX");
-		_dimCrossY = entityInfo->getFloatAttribute("hudCrossY");
-		_actualDimCrossX=_dimCrossX;
-		_actualDimCrossY=_dimCrossY;
-		float positionCrossFireX = 0.5f-((_dimCrossX/2)*0.01f) ;
-		float positionCrossFireY = 0.5f-((_dimCrossY/2)*0.01f) ;
+		float sizeCrossFireX = entityInfo->getFloatAttribute("hudCrossX");
+		float sizeCrossFireY = entityInfo->getFloatAttribute("hudCrossY");
+		float positionCrossFireX = 0.5f-((sizeCrossFireX/2)*0.01f) ;
+		float positionCrossFireY = 0.5f-((sizeCrossFireY/2)*0.01f) ;
         _panelMira->setPosition( positionCrossFireX,positionCrossFireY);
-		_panelMira->setDimensions( _dimCrossX*0.01, _dimCrossY*0.01);
+		_panelMira->setDimensions( sizeCrossFireX*0.01, sizeCrossFireY*0.01);
         _panelMira->setMaterial("hudMira3");
 
 		// overlay para controlar las teclas
@@ -162,7 +160,7 @@ namespace Logic
 		///////////////////////////////////Esto para la mira dinamica
 		_panelMiraMovible = _server->createOverlay("Mira dinamica", scene, "Panel" );
         _panelMiraMovible->setPosition( positionCrossFireX,positionCrossFireY);
-		_panelMiraMovible->setDimensions( _dimCrossX*0.01, _dimCrossY*0.01 );
+		_panelMiraMovible->setDimensions( sizeCrossFireX*0.01, sizeCrossFireY*0.01 );
         _panelMiraMovible->setMaterial("hudMira4");
 		_overlayPlay->add2D(_panelMiraMovible);
 
@@ -686,7 +684,7 @@ namespace Logic
 
 	void CHudOverlay::onTick(unsigned int msecs)
 	{
-
+		/*
 		//Control del tamaño de mirillas
 		//En un futuro lo mismo es mejor tener un componente HudFX que se encargue de unicamente llamar a este cuando su tick lo crea conveniente
 		
@@ -716,6 +714,8 @@ namespace Logic
 
 		//////////////////////////////////////////////////////////////////////////////////////
 		//////////////////////////////////////////////////////////////////////////////////////
+		*/
+
 
 		temporal += msecs;
 
