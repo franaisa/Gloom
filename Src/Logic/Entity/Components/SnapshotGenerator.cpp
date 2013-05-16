@@ -18,7 +18,9 @@ namespace Logic {
 	
 	//IMP_FACTORY(CSnapshotGenerator);
 
-	CSnapshotGenerator::CSnapshotGenerator() : _ticksPerSampleCounter(0), 
+	// Arranco en 1 para tomar la snapshot de la primera posicion, las demas
+	// ya van solas
+	CSnapshotGenerator::CSnapshotGenerator() : _ticksPerSampleCounter(1), 
 											   _samplesPerSnapshotCounter(0) {
 		// Nada que hacer
 	}
@@ -48,12 +50,14 @@ namespace Logic {
 	//__________________________________________________________________
 
 	void CSnapshotGenerator::onFixedTick(unsigned int msecs) {
-		if( ++_ticksPerSampleCounter == _ticksPerSample ) {
+		if(--_ticksPerSampleCounter == 0) {
 			takeSnapshot();
-			_ticksPerSampleCounter = 0;
+			_ticksPerSampleCounter = _ticksPerSample;
 			
-			if( ++_samplesPerSnapshotCounter = _samplesPerSnapshot) {
+			if(++_samplesPerSnapshotCounter == _samplesPerSnapshot) {
 				sendSnapshot();
+				_samplesPerSnapshotCounter = 0;
+				_ticksPerSampleCounter = 1; // Para que la primera y la ultima se manden
 			}
 		}
 	}

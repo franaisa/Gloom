@@ -173,10 +173,8 @@ namespace Logic {
 	//________________________________________________________________________
 
 	void CLife::onStart() {
-		// Lo dejo comentao que me molesta morir na mas entrar. No te preocupes
-		// que en su momento te lo pongo de vuelta Ruben!
-		/*std::shared_ptr<CMessagePlayerDead> playerDeadMsg = std::make_shared<CMessagePlayerDead>();
-		_entity->emitMessage(playerDeadMsg);*/
+		std::shared_ptr<CMessagePlayerDead> playerDeadMsg = std::make_shared<CMessagePlayerDead>();
+		_entity->emitMessage(playerDeadMsg);
 	}
 
 	//________________________________________________________________________
@@ -293,7 +291,8 @@ namespace Logic {
 		// En el caso de la red, hay que enviar un mensaje especial para el cliente
 		// Siempre y cuando no haya muerto un remotePlayer/enemigo (debug singlePlayer)
 		std::shared_ptr<CMessageCameraToEnemy> cteMsg = std::make_shared<CMessageCameraToEnemy>();
-		CEntity* camera=camera = CServer::getSingletonPtr()->getMap()->getEntityByType("Camera");
+		CEntity* camera=camera = CServer::getSingletonPtr()->getMap()->getEntityByName("Camera");
+		assert(camera != NULL && "Error: Esto no se puede hacer asi que sois unos lamers, ahora el servidor que hace?");
 		cteMsg->setEnemy(enemy);
 		//Solo si soy el jugador local envio mensaje de recolocación de camara (no quiero que enemigos muertos me seteen mi camara)
 		if(_entity->isPlayer()){

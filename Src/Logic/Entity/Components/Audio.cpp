@@ -75,12 +75,6 @@ namespace Logic
 	} // process
 	//----------------------------------------------------------
 
-	void CAudio::onTick(unsigned int msecs)
-	{
-
-	} // tick
-	//----------------------------------------------------------
-
 } // namespace Logic
 
 

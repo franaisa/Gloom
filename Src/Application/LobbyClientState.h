@@ -151,6 +151,8 @@ namespace Application {
 		*/
 		virtual bool mouseReleased(const Input::CMouseState &mouseState);
 
+		virtual void tick(unsigned int msecs);
+
 
 		virtual void dataPacketReceived(Net::CPaquete* packet);
 
@@ -158,12 +160,15 @@ namespace Application {
 
 		virtual void disconnectionPacketReceived(Net::CPaquete* packet) { /* Los clientes no reciben este tipo de mensajes */ }
 
+
+		static DWORD WINAPI loadMapThread(LPVOID lpParam);
+
 	private:
 
 		/**
 		layout de hikari que muestra el menu
 		*/
-		Hikari::FlashControl* _menu;
+		Hikari::FlashControl* _menu, *_loadMenu;
 
 		/**
 		Función que se quiere realizar cuando se pulse el botón start.
@@ -190,6 +195,12 @@ namespace Application {
 		bool loadMap(const std::string& mapName);
 
 		Net::CManager* _netMgr;
+
+		std::string _mapName;
+
+		HANDLE loadHandle;
+
+		bool loadÑapa;
 
 	}; // CMenuState
 
