@@ -175,6 +175,9 @@ namespace Logic {
 			_walkAnim.currentStrafingDir = _strafingDir;
 			_strafingDir = direction;
 		}
+		else {
+			_strafingDir = 0;
+		}
 	}
 
 	//________________________________________________________________________

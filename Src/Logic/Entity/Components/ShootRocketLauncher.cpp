@@ -100,13 +100,14 @@ namespace Logic {
 		//Si no tiene espacio tenemos que crear el cohete solo graficamente y automaticamente explotarlo
 		//Para ello creo que una nueva entidad(sin fisicas) con un componente ExplotionRocketServer/Client
 		//Para red el server tendria el tipo server que ademas aplica daño, y el cliente tendria solo lo gráfico
-		CEntity** entitiesHit = NULL;
-		int nbHits = 0;
+		std::vector<CEntity*> entitiesHit;
+		
 		// Hacemos una query de overlap con la geometria de una esfera en la posicion 
 		// en la que se encuentra el cohete con el radio que posea
 		Physics::SphereGeometry explotionGeom = Physics::CGeometryFactory::getSingletonPtr()->createSphere(_projectileRadius);
-		Physics::CServer::getSingletonPtr()->overlapMultiple(explotionGeom, separationPoint, entitiesHit, nbHits);
+		Physics::CServer::getSingletonPtr()->overlapMultiple(explotionGeom, separationPoint, entitiesHit);
 		//No valen estaticos como itemSpawn o SpawnPoint
+		int nbHits = entitiesHit.size();
 		int hitsValidos=0;
 		for(int i = 0; i < nbHits; ++i) {
 			// Si la entidad golpeada es valida ( no puedo decir todos los triggers porque a las sierras y pinchos les quiero dar, ¿o no?
@@ -118,7 +119,7 @@ namespace Logic {
 					hitsValidos++;
 			}
 		}
-		if(nbHits>0) delete [] entitiesHit;
+
 		//Tambien un rayo por si salieramos detrás de la pared (solo si el overlap no tiene queja)
 		//Desde la posicion de choque con la capsula hasta el punto donde saldría el cohete
 		bool noDistance=false;
