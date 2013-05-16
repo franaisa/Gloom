@@ -557,19 +557,23 @@ namespace Physics {
 			assert(hits != NULL && "Error en la reserva de memoria");
 
 			// Rellenamos el buffer con un puntero a cada una de las entidades golpeadas
-			for(int i = 0; i < nbHits; ++i) {
-				IPhysics* component = static_cast<IPhysics*>( hitBuffer[i].shape->getActor().userData );
-
-				hits[i].entity = component->getEntity();
-				hits[i].distance = hitBuffer[i].distance;
-				hits[i].impact = PxVec3ToVector3(hitBuffer[i].impact);
-				hits[i].normal = PxVec3ToVector3(hitBuffer[i].normal);
+			std::cout << "RaycastMultiple Hits " << nbHits << std::endl;
+			for(int z = 0; z < nbHits; ++z) {
+				IPhysics* component = static_cast<IPhysics*>( hitBuffer[z].shape->getActor().userData );
+				hits[z].entity = component->getEntity();
+				hits[z].distance = hitBuffer[z].distance;
+				hits[z].impact = PxVec3ToVector3(hitBuffer[z].impact);
+				hits[z].normal = PxVec3ToVector3(hitBuffer[z].normal);
 			}
 		}
 		else {
 			hits = NULL;
 		}
-
+		//Espia para comprobar que se rellena bien
+		for(int z = 0; z < nbHits; ++z) {
+			std::cout << "Relleno: " << hits[z].entity->getName() << std::endl;
+			std::cout << "^Distance: " << hits[z].distance << std::endl;
+		}
 		delete [] hitBuffer;
 	}
 
