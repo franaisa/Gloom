@@ -184,7 +184,7 @@ namespace Logic {
 
 	void CCameraFeedbackNotifier::offsetRecovery(unsigned int msecs) {
 		// Queda mas suave sin correccion
-		//_cameraComponent->setOffset( _cameraComponent->getOffset() * Vector3(0.85f, 0.95f, 0.85f) );
+		_cameraComponent->setOffset( _cameraComponent->getOffset() * Vector3(0.85f, 0.95f, 0.85f) );
 		if(_walkAnim.currentRoll != 0) {
 			_walkAnim.currentRoll *= 0.85f; // Coeficiente un poco más fuerte
 			_cameraComponent->rollCamera(_walkAnim.currentRoll);
@@ -211,7 +211,7 @@ namespace Logic {
 		else {
 			// Reducimos el offset horizontal
 			// Queda mas suave sin correccion
-			//offset = offset * Vector3(0.95f, 1.0f, 0.95f);
+			offset = offset * Vector3(0.95f, 1.0f, 0.95f);
 
 			// Si no estamos recuperando el offset por haber llegado al máximo
 			// incrementamos el roll
