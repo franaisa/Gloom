@@ -425,7 +425,7 @@ namespace Physics {
 		bool blockingHit;
 		PxI32 nHits = _scene->raycastMultiple(origin, unitDir, maxDistance, outputFlags, hits, 64, blockingHit); 
 
-		// Buscar un actot que pertenezca al grupo de colisión indicado
+		// Buscar un actor que pertenezca al grupo de colisión indicado
 		for (int i = 0; i < nHits; ++i) {
 			PxRigidActor* actor = &hits[i].shape->getActor();
 			if ( PxGetGroup(*actor) == group ) {
@@ -572,6 +572,7 @@ namespace Physics {
 				raycastHit.normal = PxVec3ToVector3(hitBuffer[i].normal);
 
 				hits.push_back(raycastHit);
+
 			}
 		}
 

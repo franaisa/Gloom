@@ -62,9 +62,9 @@ namespace Logic {
 
 	// Disparo, usa el patrón template
 	void CShootRaycast::primaryShoot() {
-		if(_canShoot && _currentAmmo > 0){
-			_canShoot = false;
-			_cooldownTimer = 0;
+		if(_primaryCanShoot && _currentAmmo > 0){
+			_primaryCanShoot = false;
+			_primaryCooldownTimer = 0;
 				
 			drawParticle("fire", "shootParticle");
 
@@ -81,8 +81,8 @@ namespace Logic {
 			emitSound(_audioShoot, "audioShoot");
 
 			//Mensaje de dispersion en mira
-			std::shared_ptr<CMessageHudDispersion> dispersionMsg = std::make_shared<CMessageHudDispersion>();
-			_entity->emitMessage(dispersionMsg);
+			/*std::shared_ptr<CMessageHudDispersion> dispersionMsg = std::make_shared<CMessageHudDispersion>();
+			_entity->emitMessage(dispersionMsg);*/
 		}
 		else if(_currentAmmo == 0) {
 			// Ejecutar sonidos y animaciones de falta de balas
@@ -116,9 +116,25 @@ namespace Logic {
 		//drawRaycast(ray);
 
 		// Rayo lanzado por el servidor de físicas de acuerdo a la distancia de potencia del arma
-		CEntity *entity = Physics::CServer::getSingletonPtr()->raycastClosestInverse(ray, _distance,_entity->getEntityID());
+		std::vector<Physics::CRaycastHit> hits;
+		Physics::CServer::getSingletonPtr()->raycastMultiple(ray, _distance,hits,true);
 
-		return std::pair<CEntity*, Ray>(entity, ray);
+		//Si hemos tocado algo que no somos nosotros mismos,ni spawnpoints
+		std::pair<CEntity*, Ray> pair;
+		bool touch=false;
+		for(int i=0;i<hits.size();++i){
+			if(hits[i].entity->getType().compare("SpawnPoint")!=0 && hits[i].entity->getEntityID()!=_entity->getEntityID()){
+				pair.first=hits[i].entity;
+				pair.second=ray;
+				touch=true;
+				break;
+			}
+		}
+		//Si no tocamos nada devolvemos la entidad con puntero nulo
+		if(!touch)
+			pair.first=NULL;
+		return pair;
+		
 	}// fireWeapon
 	
 	//__________________________________________________________________

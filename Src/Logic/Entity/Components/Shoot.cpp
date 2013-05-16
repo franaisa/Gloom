@@ -74,8 +74,10 @@ namespace Logic {
 		}
 		_defaultDamage=_damage;
 		_numberShots = entityInfo->getIntAttribute(weapon+"NumberShoots");
-		_cooldown = entityInfo->getFloatAttribute(weapon+"ColdDown") * 1000;
-		_defaultCooldown=_cooldown;
+		_primaryCooldown = entityInfo->getFloatAttribute(weapon+"PrimaryColdDown") * 1000;
+		_defaultPrimaryCooldown=_primaryCooldown;
+		_secondaryCooldown = entityInfo->getFloatAttribute(weapon+"SecondaryColdDown") * 1000;
+		_defaultSecondaryCooldown=_secondaryCooldown;
 		_maxAmmo = entityInfo->getIntAttribute(weapon+"MaxAmmo");
 		_id = entityInfo->getIntAttribute(weapon+"Id");
 		if(entityInfo->hasAttribute(weapon+"ParticlePosition")) {
@@ -114,10 +116,15 @@ namespace Logic {
 	//__________________________________________________________________
 
 	void CShoot::onTick(unsigned int msecs) {
-		if(_cooldownTimer < _cooldown)
-			_cooldownTimer += msecs;
+		if(_primaryCooldownTimer < _primaryCooldown)
+			_primaryCooldownTimer += msecs;
 		else
-			_canShoot = true;
+			_primaryCanShoot = true;
+
+		if(_secondaryCooldownTimer < _secondaryCooldown)
+			_secondaryCooldownTimer += msecs;
+		else
+			_secondaryCanShoot = true;
 
 	} // tick
 	//__________________________________________________________________
@@ -203,11 +210,13 @@ namespace Logic {
 		
 		//Si es 0 significa que hay que restaurar al que habia por defecto
 		if(percent==0){
-			_cooldown=_defaultCooldown;
+			_primaryCooldown=_defaultPrimaryCooldown;
+			_secondaryCooldown=_defaultSecondaryCooldown;
 		}
 		//Sino aplicamos el porcentaje pasado por parámetro
 		else{
-			_cooldown=_cooldown-(percent*_cooldown)/100;
+			_primaryCooldown=_primaryCooldown-(percent*_primaryCooldown)/100;
+			_secondaryCooldown=_secondaryCooldown-(percent*_secondaryCooldown)/100;
 		}
 	} // reduceCooldown
 	//__________________________________________________________________

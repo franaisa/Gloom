@@ -47,8 +47,10 @@ namespace Logic {
 		/** Constructor por defecto. */
 		CShoot() : IComponent(), 
 				   _capsuleRadius(3.0f),
-				   _cooldownTimer(0),
-				   _canShoot(true),
+				   _primaryCooldownTimer(0),
+				   _secondaryCooldownTimer(0),
+				   _primaryCanShoot(true),
+				   _secondaryCanShoot(true),
 				   _nameWeapon(0), 
 				   _currentAmmo(0),
 				   _particlePosition(Vector3::ZERO),
@@ -66,8 +68,10 @@ namespace Logic {
 		*/
 		CShoot(const std::string &shoot) : IComponent(),  
 										   _capsuleRadius(3.0f),
-										   _cooldownTimer(0),
-										   _canShoot(true),
+										   _primaryCooldownTimer(0),
+										   _secondaryCooldownTimer(0),
+										   _primaryCanShoot(true),
+										   _secondaryCanShoot(true),
 										   _nameWeapon(shoot), 
 										   _currentAmmo(0),
 										   _particlePosition(Vector3::ZERO),
@@ -276,19 +280,23 @@ namespace Logic {
 		int _currentAmmo;
 
 		/** Timer para el cooldown. */
-		float _cooldownTimer;
+		float _primaryCooldownTimer;
+		float _secondaryCooldownTimer;
 
 		/** Cooldown actual (modificable por powerups). */
-		float _cooldown;
+		float _primaryCooldown;
+		float _secondaryCooldown;
 
 		/** Cooldown por defecto del arma (tiempo entre disparo y disparo). */
-		int _defaultCooldown;
+		int _defaultPrimaryCooldown;
+		int _defaultSecondaryCooldown;
 
 		/**
 		Para comprobar que un arma esta disparando y no puede disparar 
 		"tan rapido como puedas arreglar el gatillo" (Marcus, Borderlands 2)
 		*/
-		bool _canShoot;
+		bool _primaryCanShoot;
+		bool _secondaryCanShoot;
 
 		/**
 		Vector donde se posionara la particula de emision de disparo
