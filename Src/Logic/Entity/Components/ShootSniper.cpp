@@ -171,12 +171,13 @@ namespace Logic {
 		//Lo suyo seria que el overlap pueda ordenar por distancia las entidades que te devuelve para ir mirando por orden:
 		// primero si la entidad es valida para aplicarle daño, segundo el rayo para los obstaculos (el orden ya estaria bien)
 		if(entityHit!=NULL){
-			CEntity** entitiesHit = NULL;
-			int nbHits = 0;
+			std::vector<CEntity*> entitiesHit;
+			
 			Physics::SphereGeometry explotionGeom = Physics::CGeometryFactory::getSingletonPtr()->createSphere(100);//Radio(dist maxima expansion)
 			Vector3 explotionPos = entityHit->getPosition();
-			Physics::CServer::getSingletonPtr()->overlapMultiple(explotionGeom, explotionPos, entitiesHit, nbHits);
-
+			Physics::CServer::getSingletonPtr()->overlapMultiple(explotionGeom, explotionPos, entitiesHit);
+			
+			int nbHits = entitiesHit.size();
 			//Calculamos la entidad válida con menor distancia
 			CEntity* expandToEntity=NULL;
 			for(int i=0;i<nbHits;++i){
