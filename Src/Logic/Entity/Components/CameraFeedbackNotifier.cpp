@@ -111,7 +111,7 @@ namespace Logic {
 			}*/
 			case Message::FLASH: {
 				std::shared_ptr<CMessageFlash> flashMsg = std::static_pointer_cast<CMessageFlash>(message);
-				flash(flashMsg->getFlashFactor());
+				_flashFactor = flashMsg->getFlashFactor();
 				break;
 			}
 
@@ -180,6 +180,14 @@ namespace Logic {
 		_scene->updateCompositorVariable(_motionblur, "blur", blur);
 
 		//ahora actualizamos el flashazo si procede
+		if(_flashFactor > 1.0){
+			_flashFactor*=0.75f;
+			_scene->updateCompositorVariable(_flashEffect,"flash",_flashFactor);
+			std::cout << "estoy flasheado" << std::endl;
+		}else if(_flashVisible){
+			_scene->setCompositorVisible(_flashEffect, false);
+			_flashVisible = false;
+		}
 	}
 
 	//________________________________________________________________________
@@ -380,13 +388,6 @@ namespace Logic {
 	}
 
 	//________________________________________________________________________
-
-	void CCameraFeedbackNotifier::flash(const float &flashFactor){
-		_flashFactor = flashFactor;
-
-		//ahora activamos el compositor
-
-	}
 
 } // namespace Logic
 

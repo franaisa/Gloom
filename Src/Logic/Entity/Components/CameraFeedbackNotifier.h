@@ -130,10 +130,6 @@ namespace Logic {
 
 		virtual void onFixedTick(unsigned int msecs);
 
-		/**
-		Se encarga de flashear a un enemigo
-		*/
-		void flash(const float &flashFactor);
 	private:
 
 
@@ -189,7 +185,7 @@ namespace Logic {
 		Logic::CAvatarController* _avatarc;
 
 		bool _effectIsActivated;
-		std::string _effect, _motionblur;
+		std::string _effect, _motionblur, _flashEffect;
 		std::string _strengthEffect;
 		Graphics::CScene *_scene;
 		int _timestamp;
@@ -203,7 +199,7 @@ namespace Logic {
 		Factor de flashazo
 		*/
 		float _flashFactor;
-
+		bool _flashVisible;
 
 	}; // class CCameraFeedbackNotifier
 

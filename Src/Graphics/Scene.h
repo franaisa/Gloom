@@ -176,11 +176,11 @@ namespace Graphics
 		@param name El nombre del compositor que queremos crear.
 
 		*/
-		void createCompositor(std::string &name);
+		void createCompositor(const std::string &name);
 
-		void setCompositorVisible(std::string &name, bool visible);
+		void setCompositorVisible(const std::string &name, bool visible);
 
-		void destroyCompositor(std::string &name);
+		void destroyCompositor(const std::string &name);
 
 		/**
 		Método que cambia una variable del compositor, se utiliza para cambiar el
@@ -190,7 +190,10 @@ namespace Graphics
 		@param variable La variable que queremos cambiar en el compositor.
 		@param value el valor que tiene la variable que estamos cambiando.
 		*/
-		void updateCompositorVariable(std::string name, std::string variable, float value);
+		void updateCompositorVariable(const std::string &name, const std::string &variable, const float &value);
+
+
+		bool getCompositorVisible(const std::string &name);
 
 		/**
 		Añade una entidad al scene node. Dicha entidad tendra que tener el material las entradas:
