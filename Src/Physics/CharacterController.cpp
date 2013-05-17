@@ -102,8 +102,9 @@ namespace Physics {
 		desc.interactionMode = PxCCTInteractionMode::eUSE_FILTER;
 		desc.groupsBitmask = (1 << group);
 
+		_filterMask = groupList.empty() ? 0 : ( groupList[0] == -1 ? 0xFFFF : (1 << groupList[0]) );
 		// Fijamos la mascara de colisiones para el movimiento
-		for(unsigned int i = 0; i < groupList.size(); ++i) {
+		for(unsigned int i = 1; i < groupList.size(); ++i) {
 			_filterMask |= ( 1 << groupList[i] );
 		}
 
@@ -147,6 +148,7 @@ namespace Physics {
 		// Fijamos la distancia minima a la que parar el algoritmo de movimiento a 0.01f.
 		// Pasamos el tiempo de frame transcurrido en micro segundos (como a physX le gusta).
 		// Dado que no tenemos objetos fisicos no manejados por physX, pasamos NULL como obstaculo.
+		//PxControllerFilters filters(_filterMask);
 		PxControllerFilters filters(_filterMask);
 		return _controller->move(disp, 0.01f, msecs * 0.001f, filters, NULL);
 	}
@@ -155,7 +157,7 @@ namespace Physics {
 
 	unsigned CCharacterController::move(const Vector3& movement, unsigned int customFilterMask, unsigned int msecs) {
 		PxVec3 disp = Vector3ToPxVec3(movement);
-		PxControllerFilters filters(customFilterMask);
+		PxControllerFilters filters(_filterMask);
 		return _controller->move(disp, 0.01f, msecs * 0.001f, filters, NULL);
 	}
 

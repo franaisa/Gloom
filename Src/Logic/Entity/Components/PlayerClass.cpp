@@ -27,7 +27,9 @@ namespace Logic {
 	//IMP_FACTORY(CPlayerClass);
 	
 	CPlayerClass::CPlayerClass(const std::string& playerClassName) : _primarySkillTimer(0),
-						_secondarySkillTimer(0), _doingPrimarySkill(false), _doingSecondarySkill(false) {
+																	 _secondarySkillTimer(0), 
+																	 _doingPrimarySkill(false), 
+																	 _doingSecondarySkill(false) {
 		
 		// No hay memoria dinamica que reservar
 	}
