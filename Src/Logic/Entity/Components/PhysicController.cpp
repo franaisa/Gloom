@@ -94,7 +94,7 @@ void  CPhysicController::setPhysicPosition (const Vector3 &position){
 }
 //________________________________________________________________________
 
-const Vector3& CPhysicController::getPhysicPosition (){
+const Vector3& CPhysicController::getPhysicPosition() {
 	return _controller.getPosition() ;
 }
 
@@ -199,5 +199,27 @@ unsigned CPhysicController::move(const Vector3& movement, unsigned int msecs) {
 	// información proporcionada por el motor de física	
 	_entity->setPosition( _controller.getPosition() );
 
+	// Devolvemos los flags de colision
 	return collisionFlags;
+}
+
+//________________________________________________________________________
+
+unsigned CPhysicController::move(const Vector3& movement, unsigned int customFilterMask, unsigned int msecs) {
+	// Intentamos mover el controller a la posición que se haya calculado
+	// desde avatarController aplicando un filtro de colisiones particular
+	unsigned collisionFlags = _controller.move(movement, customFilterMask, msecs);
+
+	// Actualizar la posición y orientación de la entidad lógica usando la 
+	// información proporcionada por el motor de física	
+	_entity->setPosition( _controller.getPosition() );
+
+	// Devolvemos los flags de colision
+	return collisionFlags;
+}
+
+//________________________________________________________________________
+
+unsigned int CPhysicController::getDefaultFilterMask() {
+	return _controller.getFilterMask();
 }

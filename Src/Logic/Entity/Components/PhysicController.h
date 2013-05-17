@@ -111,6 +111,23 @@ namespace Logic {
 		*/
 		unsigned move(const Vector3& movement, unsigned int msecs);
 
+		/**
+		Dado un vector de desplazamiento mueve la cápsula del player en esa dirección.
+		Si se produce alguna colisión durante el desplazamiento se levantan los flags
+		que correspondan en el entero devuelto.
+
+		@param movement Vector de desplazamiento.
+		@param customFilterMask Máscara que establece con que grupos queremos colisionar
+		durante la ejecución de éste move. Notar que este nuevo filtro ignora a el filtro
+		por defecto.
+		@param msecs Tiempo durante el que queremos que se produzca el movimiento.
+		@return Los flags de colisión que indican las colisiones que se han producido
+		durante el desplazamiento del controlador.
+		*/
+		unsigned move(const Vector3& movement, unsigned int customFilterMask, unsigned int msecs);
+
+		unsigned int getDefaultFilterMask();
+
 	private:
 
 
