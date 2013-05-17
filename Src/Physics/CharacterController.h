@@ -121,6 +121,22 @@ namespace Physics {
 		unsigned move(const Vector3 &movement, unsigned int msecs);
 
 		//__________________________________________________________________
+
+		/**
+		Mueve a la cápsula en la dirección que especifiquemos con un filtro especifico.
+		El filtro indicara contra que cosas queremos colisionar.
+
+		@param movement Vector que indica la dirección en la que nos queremos
+		mover.
+		@param customFilterMask Máscara que contiene los grupos de colision contra los
+		que queremos colisionar en este move.
+		@param msecs Cantidad de milisegundos que queremos que se produzca el
+		desplazamiento.
+		@return Flags de colisión del controller.
+		*/
+		unsigned move(const Vector3& movement, unsigned int customFilterMask, unsigned int msecs);
+
+		//__________________________________________________________________
 		
 		/**
 		Devuelve la posición del controlador.
@@ -138,6 +154,15 @@ namespace Physics {
 		@param position Posicion en la que queremos situar la cápsula.
 		*/
 		void setPosition(const Vector3 &position);
+
+		//__________________________________________________________________
+
+		/**
+		Devuelve la máscara utilizada para el filtrado de colisiones.
+
+		@return La máscara utilizada para el filtrado de colisiones.
+		*/
+		unsigned int getFilterMask() { return _filterMask; }
 
 		//__________________________________________________________________
 
@@ -172,8 +197,9 @@ namespace Physics {
 		/** Puntero al gestor de colisiones */
 		CCollisionManager* _collisionManager;
 
-		/** Filtros aplicados a este character controller */
-		physx::PxControllerFilters _filters;
+		/** Mascara de filtros asignados al controlador de capsula. */
+		physx::PxU32 _filterMask;
+
 	}; // class CCharacterController
 
 } // namespace Physics

@@ -20,6 +20,8 @@
 #include "Physics/CollisionManager.h"
 #include "Conversions.h"
 
+#include "Logic/Entity/Components/PhysicController.h"
+
 #include <PxPhysics.h>
 #include <PxScene.h>
 #include <PxShape.h>
@@ -89,11 +91,21 @@ namespace Physics {
 		// Crear descriptor del controller
 		PxCapsuleControllerDesc desc;
 		desc.position = PxExtendedVec3(pos.x, pos.y, pos.z);
-		desc.contactOffset=1.0f;
+		desc.contactOffset = 1.0f;
 		desc.height = height;
 		desc.radius = radius;
 		desc.material = _physxSDK->createMaterial(0.5f, 0.5f, 0.1f); // En realidad sera getDefaultMaterial en el futuro
 		desc.climbingMode = PxCapsuleClimbingMode::eEASY;
+		
+		// Indicamos que queremos asignar nuestro propio filtro de colisiones
+		// para el player
+		desc.interactionMode = PxCCTInteractionMode::eUSE_FILTER;
+		desc.groupsBitmask = (1 << group);
+
+		// Fijamos la mascara de colisiones para el movimiento
+		for(unsigned int i = 0; i < groupList.size(); ++i) {
+			_filterMask |= ( 1 << groupList[i] );
+		}
 
 		//desc.contactOffset=0.001f; //<-- Tamaño que recubre el volumen de la capsula, physx lo usa para no permitir que la capsula se introduzca en otros shapes
 		//desc.stepOffset <-- Tamaño de los escalones que el player puede subir
@@ -108,8 +120,7 @@ namespace Physics {
 		// Anotar el componente lógico asociado al actor dentro del controller (No es automático)
 		_controller->getActor()->userData = (void *) component;
 
-		// Establecer el grupo de colisión
-		PxSetGroup(*_controller->getActor(), group);
+		// Establecemos el filtro de colision para el resto de shapes que no son players
 		Physics::CServer::getSingletonPtr()->setupFiltering(_controller->getActor(), group, groupList);
 
 		//Orientacion del jugador (Por si algun dia hiciera falta
@@ -128,11 +139,24 @@ namespace Physics {
 		// de la gravedad, ya que physX no lo hace por nosotros.
 		PxVec3 disp = Vector3ToPxVec3(movement);
 
+		// Garantiza que los players no se solapen. Empuja las capsulas cuando se van a 
+		// solapar.
+		//_controllerManager->computeInteractions(msecs);
+
 		// Movemos el character controller y retornamos un entero con los flags de colision (PxControllerFlag)
 		// Fijamos la distancia minima a la que parar el algoritmo de movimiento a 0.01f.
 		// Pasamos el tiempo de frame transcurrido en micro segundos (como a physX le gusta).
 		// Dado que no tenemos objetos fisicos no manejados por physX, pasamos NULL como obstaculo.
-		return _controller->move(disp, 0.01f, msecs * 0.001f, _filters, NULL);
+		PxControllerFilters filters(_filterMask);
+		return _controller->move(disp, 0.01f, msecs * 0.001f, filters, NULL);
+	}
+
+	//________________________________________________________________________
+
+	unsigned CCharacterController::move(const Vector3& movement, unsigned int customFilterMask, unsigned int msecs) {
+		PxVec3 disp = Vector3ToPxVec3(movement);
+		PxControllerFilters filters(customFilterMask);
+		return _controller->move(disp, 0.01f, msecs * 0.001f, filters, NULL);
 	}
 
 	//________________________________________________________________________
@@ -173,7 +197,9 @@ namespace Physics {
 			// Esta shape entrara dentro de la simulacion de fisicas
 			actorShapes[i]->setFlag(PxShapeFlag::eSIMULATION_SHAPE , true);
 		}
-		_controller->setInteraction(PxCCTInteractionMode::eINCLUDE);
+		// Hace que el controlador colisione con los grupos asignados
+		_controller->setInteraction(PxCCTInteractionMode::eUSE_FILTER);
+
 		delete [] actorShapes;
 	}
 
@@ -192,7 +218,9 @@ namespace Physics {
 			// Esta shape no entrara dentro de la simulacion de fisicas
 			actorShapes[i]->setFlag(PxShapeFlag::eSIMULATION_SHAPE , false);
 		}
+		// Hace que el controlador no colisione con nada
 		_controller->setInteraction(PxCCTInteractionMode::eEXCLUDE);
+
 		delete [] actorShapes;
 	}
 
