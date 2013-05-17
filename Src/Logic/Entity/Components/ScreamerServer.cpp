@@ -197,6 +197,8 @@ namespace Logic {
 
 	void CScreamerServer::secondarySkill() {
 		// Habilidad por definir
+
+
 		std::cout << "Secondary Skill - Screamer" << std::endl;
 	}
 
