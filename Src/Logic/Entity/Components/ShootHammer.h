@@ -81,9 +81,11 @@ namespace Logic {
 		*/
 		virtual void resetAmmo();
 
-		
+		CEntity * fireSecondary();
 
 		float _reboundForce;
+
+		CEntity* _elementPulled;
 
 	}; // class CShootRaycast
 

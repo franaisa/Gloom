@@ -125,8 +125,6 @@ namespace Logic {
 		_entity->emitMessage(materialMsgHud);
 		*/
 
-
-
 	}
 
 	//__________________________________________________________________

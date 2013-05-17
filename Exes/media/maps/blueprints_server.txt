@@ -7,6 +7,7 @@ Spectator
 Enemy CPhysicDynamicEntity CLife
 Camera CCamera 
 ItemSpawn CGraphics CPhysicStaticEntity CFloatingMovement CSpawnItemManager CNetConnector
+ItemSpawnDynamic CGraphics CPhysicDynamicEntity CFloatingMovement CSpawnItemManager CNetConnector
 SpawnPoint CPhysicStaticEntity
 Jumper CGraphics CPhysicStaticEntity CJumper CNetConnector
 Grenade CGraphics CPhysicDynamicEntity CGrenadeController CNetConnector

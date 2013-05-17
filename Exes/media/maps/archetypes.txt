@@ -1384,6 +1384,21 @@ Map = {
 		physic_groupList = "1",
 	},
 	
+	dynamicitem = {
+		type = "ItemSpawnDynamic",
+		msgList= "6,14,15,16,17",
+		orbitalOffset = 0.04,
+		orbitalSpeed = 0.0035,
+		orbitalRotationSpeed = 0.0014,
+		physic_entity = "rigid",
+		physic_type = "kinematic",
+		physic_trigger = true,
+		physic_shape = "sphere",
+		physic_radius = 3,
+		physic_group = 2,
+		physic_groupList = "1",
+	},
+	
 	Enemigo1 = {
 		type = "RemotePlayer",
 		model = "marine.mesh",
