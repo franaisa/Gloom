@@ -117,6 +117,9 @@ namespace Logic {
 		/** Timer que controla la duración que lleva siendo inmune. */
 		float _inmunityTimer;
 
+		/** Variable boolena para comprobar si se esta haciendo la primary skill */
+		bool _doingPrimarySkill;
+
 		/**
 		Nombre del material original de la entidad
 		*/

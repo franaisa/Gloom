@@ -119,6 +119,9 @@ namespace Logic {
 		/** Timer que controla la duración de la invisibilidad. */
 		float _invisibilityTimer;
 
+		/** Variable boolena para comprobar si se esta haciendo la primary skill */
+		bool _doingPrimarySkill;
+
 		/**
 		Nombre del material original de la entidad
 		*/

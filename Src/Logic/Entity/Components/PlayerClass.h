@@ -246,12 +246,6 @@ namespace Logic {
 		/** Cronometro para el cooldown de la segunda skill. */
 		float _secondarySkillTimer;
 
-		/** Variable boolena para comprobar si se esta haciendo la primary skill */
-		bool _doingPrimarySkill;
-
-		/** Variable boolena para comprobar si se esta haciendo la secondary skill */
-		bool _doingSecondarySkill;
-
 		/** Altura a la que se encuentra el punto de disparo. */
 		// static??
 		float _heightShoot;

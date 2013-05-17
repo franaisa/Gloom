@@ -125,6 +125,9 @@ namespace Logic {
 
 		/** Porcentaje de reduccion de cooldown del berserker. */
 		float _berserkerCooldownPercent;
+		
+		/** Variable boolena para comprobar si se esta haciendo la primary skill */
+		bool _doingPrimarySkill;
 
 		/**
 		Nombre del material original de la entidad
