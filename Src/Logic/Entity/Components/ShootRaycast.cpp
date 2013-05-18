@@ -120,6 +120,9 @@ namespace Logic {
 		//drawRaycast(ray);
 
 		// Rayo lanzado por el servidor de físicas de acuerdo a la distancia de potencia del arma
+		/**
+		@deprecated
+		*/
 		CEntity *entity = Physics::CServer::getSingletonPtr()->raycastClosestInverse(ray, _distance,_entity->getEntityID());
 
 		return std::pair<CEntity*, Ray>(entity, ray);

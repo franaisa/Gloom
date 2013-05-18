@@ -134,12 +134,11 @@ namespace Logic {
 		Ray ray(origin, Math::getDirection(_entity->getOrientation()).normalisedCopy());
 
 		// Rayo lanzado por el servidor de físicas de acuerdo a la distancia de potencia del arma
-		Physics::CRaycastHit* hitBuffer;
+		Physics::CRaycastHit hit;
 		int nbHits = 0;
-		/*CEntity *entity = */Physics::CServer::getSingletonPtr()->raycastMultiple(ray, _distance,hitBuffer, nbHits);
-		CEntity *entity = 0;
-		if(!entity)
+		if(!Physics::CServer::getSingletonPtr()->raycastSingle(ray, _distance, hit))
 			return NULL;
+		CEntity *entity = hit.entity;
 
 		if(entity->getType()!="ItemSpawn")
 			return NULL;

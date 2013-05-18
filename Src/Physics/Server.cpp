@@ -411,40 +411,6 @@ namespace Physics {
 
 	//________________________________________________________________________
 
-	Logic::CEntity* CServer::raycastClosest(const Ray& ray, float maxDist, int group) const {
-		assert(_scene);
-
-		// Establecer parámettros del rayo
-		PxVec3 origin = Vector3ToPxVec3(ray.getOrigin());      // origen     
-		PxVec3 unitDir = Vector3ToPxVec3(ray.getDirection());  // dirección normalizada   
-		PxReal maxDistance = maxDist;                          // distancia máxima
-		PxRaycastHit hit;                 
-		const PxSceneQueryFlags outputFlags;				   // Info que queremos recuperar	
-
-		// Lanzar el rayo
-		PxRaycastHit hits[64];
-		bool blockingHit;
-		PxI32 nHits = _scene->raycastMultiple(origin, unitDir, maxDistance, outputFlags, hits, 64, blockingHit); 
-
-		// Buscar un actot que pertenezca al grupo de colisión indicado
-		for (int i = 0; i < nHits; ++i) {
-			PxRigidActor* actor = &hits[i].shape->getActor();
-			if ( PxGetGroup(*actor) == group ) {
-				IPhysics* component = static_cast<IPhysics*>(actor->userData);
-				if (component) {
-					return component->getEntity();
-				}
-			}
-		}
-
-		return NULL;
-
-		// Nota: seguro que se puede hacer de manera mucho más eficiente usando los filtros
-		// de PhysX.
-	}
-
-	//________________________________________________________________________
-
 	Logic::CEntity* CServer::raycastClosestInverse(const Ray& ray, float maxDist, unsigned int id) const {
 		assert(_scene);
 
@@ -538,7 +504,7 @@ namespace Physics {
 
 	//________________________________________________________________________
 
-	void CServer::raycastSingle(const Ray& ray, float maxDistance, CRaycastHit& hit) const {
+	bool CServer::raycastSingle(const Ray& ray, float maxDistance, CRaycastHit& hit) const {
 		// Establecer parámettros del rayo
 		PxVec3 origin = Vector3ToPxVec3( ray.getOrigin() );      // origen     
 		PxVec3 unitDir = Vector3ToPxVec3( ray.getDirection() );  // dirección normalizada
@@ -548,13 +514,15 @@ namespace Physics {
 
 		// Punto de golpeo del raycast
 		PxRaycastHit hitSpot;
-		_scene->raycastSingle(origin, unitDir, maxDistance, outputFlags, hitSpot);
+		bool validEntity = _scene->raycastSingle(origin, unitDir, maxDistance, outputFlags, hitSpot);
 
 		// Introducimos la información devuelta en la estructura que vamos a devolver
 		hit.entity		= static_cast<IPhysics*>( hitSpot.shape->getActor().userData )->getEntity();
 		hit.distance	= hitSpot.distance;
 		hit.impact		= PxVec3ToVector3( hitSpot.impact );
 		hit.normal		= PxVec3ToVector3( hitSpot.normal );
+
+		return validEntity;
 	}
 
 	//________________________________________________________________________
