@@ -178,12 +178,19 @@ namespace Logic {
 
 		// Creamos una entidad ScreamerShield
 		// Obtenemos la informacion asociada al arquetipo del escudo del screamer
-		Map::CEntity* screamerShieldInfo = CEntityFactory::getSingletonPtr()->getInfo("ScreamerShield");
+		Matrix4 playerTransform = _entity->getTransform();
+		Vector3 shootPosition = playerTransform.getTrans() + ( Math::getDirection( _entity->getOrientation() ) * _capsuleRadius );
+		shootPosition.y += _heightShoot;
 
 		// Creamos la entidad y la activamos
-		_screamerShield = CEntityFactory::getSingletonPtr()->createEntity( screamerShieldInfo, Logic::CServer::getSingletonPtr()->getMap() );
-		assert(_screamerShield != NULL);
-
+		_screamerShield = CEntityFactory::getSingletonPtr()->createEntityWithPositionAndOrientation( 
+			CEntityFactory::getSingletonPtr()->getInfo("ScreamerShield"),
+			Logic::CServer::getSingletonPtr()->getMap(),
+			shootPosition,
+			Math::getYaw(playerTransform),
+			Math::getPitch(playerTransform)
+		);
+		
 		// Fijamos a nuestra entidad como dueña de la entidad creada en el componente
 		// que recibe las notificaciones de daño.
 		CScreamerShieldDamageNotifier* shieldDmgNotifier = _screamerShield->getComponent<CScreamerShieldDamageNotifier>("CScreamerShieldDamageNotifier");

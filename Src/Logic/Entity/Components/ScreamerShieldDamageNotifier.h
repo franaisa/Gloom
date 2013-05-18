@@ -18,6 +18,10 @@ del Screamer.
 #include "Logic/Entity/Component.h"
 
 namespace Logic {
+	class CPhysicDynamicEntity;
+}
+
+namespace Logic {
 	
 	/**
 	
@@ -127,6 +131,8 @@ namespace Logic {
 
 	protected:
 
+		virtual void onStart();
+
 		virtual void onTick(unsigned int msecs);
 
 	private:
@@ -145,6 +151,8 @@ namespace Logic {
 
 		/** Entidad dueña de esta entidad. */
 		CEntity* _owner;
+
+		CPhysicDynamicEntity* _physicComponent;
 
 	}; // class CScreamerShieldDamageNotifier
 
