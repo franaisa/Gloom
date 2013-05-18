@@ -20,6 +20,8 @@ de disparo de la cabra.
 
 #include "Logic/Entity/Components/ShootProjectile.h"
 
+#include <set>
+
 namespace Logic {
 
 	/**
@@ -37,7 +39,7 @@ namespace Logic {
 	public:
 
 		/** Constructor por defecto. */
-		CIronHellGoat() : CShootProjectile("ironHellGoat") { }
+		CIronHellGoat();
 
 		//__________________________________________________________________
 
@@ -49,7 +51,13 @@ namespace Logic {
 
 		//__________________________________________________________________
 
+		// El propio shoot deberia encargarse de llamar a lo que toque teniendo
+		// en cuenta la municion y las demas historias
 		virtual void primaryShoot();
+
+		//__________________________________________________________________
+
+		virtual void stopPrimaryShoot();
 
 		//__________________________________________________________________
 
@@ -57,11 +65,27 @@ namespace Logic {
 
 		//__________________________________________________________________
 
+		virtual void stopSecondaryShoot();
+
+		//__________________________________________________________________
+
 		virtual void fireWeapon() { /* Esto esta deprecado */ }
+
+		//__________________________________________________________________
+
+		void forgetFireBall(CEntity* fireBall);
+
+	protected:
+
+		virtual void onTick(unsigned int msecs);
 
 	private:
 
+		bool _primaryFireIsActive;
 
+		bool _secondaryFireIsActive;
+
+		std::set<CEntity*> _controllableFireBalls;
 	};
 
 	REG_FACTORY(CIronHellGoat);
