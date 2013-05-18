@@ -6,23 +6,6 @@ Map = {
 		physic_file = "media/models/ola.RepX",
 	},
 	
-	Hacksaw = {
-		type = "Hacksaw",
-		position = {120.0,8.0,-16.0},
-		positionInitial = {120.0,8.0,-16.0},
-		positionFinal = {86.0,8.0,-16.0},
-		velocity = 0.04,
-		model = "sierra.mesh",
-		physic_entity = "rigid",
-		physic_trigger = true,
-		physic_type = "kinematic",
-		physic_shape = "box",
-		physic_dimensions = { 1, 1, 1 },
-		physic_mass = 1,
-		physic_group = 8,
-		physic_groupList = "1",
-	},
-	
 	Jumper1 = {
 		type = "Jumper",
 		position = {-199.0, 0.0, 112.0},

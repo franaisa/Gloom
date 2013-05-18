@@ -20,7 +20,6 @@ Elevator CGraphics CPhysicDynamicEntity CElevator
 ElevatorTrigger CPhysicDynamicEntity CElevatorTrigger
 SpikeTrap CGraphics CPhysicStaticEntity CSpikeTrap CAudio
 Spike CGraphics CPhysicDynamicEntity CSpike
-Hacksaw CGraphics CPhysicDynamicEntity CHacksaw
 PointLight CLight CGraphics
 SpotLight CLight CGraphics
 DirectionalLight CLight CGraphics
