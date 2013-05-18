@@ -24,4 +24,5 @@ Hacksaw CGraphics CPhysicDynamicEntity CHacksaw
 PointLight CLight CGraphics
 SpotLight CLight CGraphics
 DirectionalLight CLight CGraphics
+ShotGunProjectile CPhysicDynamicEntity CGraphics
 ScreamerShield CGraphics CPhysicDynamicEntity CScreamerShieldDamageNotifier
