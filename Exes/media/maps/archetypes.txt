@@ -128,6 +128,8 @@ Map = {
 			weaponshotGunSecondaryColdDown = 1.5,
 			weaponshotGunMaxAmmo = 48,
 			weaponshotGunId = 2,
+			weaponshotGunShootForce = 5,
+			weaponshotGunProjectileRadius = 0.5,
 			weaponshotGunParticlePosition = {6, 5, 6},
 			weaponshotGunAudio = "media/audio/shotGun.wav",
 			
@@ -295,6 +297,8 @@ Map = {
 			weaponshotGunSecondaryColdDown = 1.5,
 			weaponshotGunMaxAmmo = 48,
 			weaponshotGunId = 2,
+			weaponshotGunShootForce = 5,
+			weaponshotGunProjectileRadius = 0.5,
 			weaponshotGunParticlePosition = {6, 5, 6},
 			weaponshotGunAudio = "media/audio/shotGun.wav",
 			
@@ -462,6 +466,8 @@ Map = {
 			weaponshotGunSecondaryColdDown = 1.5,
 			weaponshotGunMaxAmmo = 48,
 			weaponshotGunId = 2,
+			weaponshotGunShootForce = 5,
+			weaponshotGunProjectileRadius = 0.5,
 			weaponshotGunParticlePosition = {6, 5, 6},
 			weaponshotGunAudio = "media/audio/shotGun.wav",
 			
@@ -631,6 +637,8 @@ Map = {
 			weaponshotGunSecondaryColdDown = 1.5,
 			weaponshotGunMaxAmmo = 48,
 			weaponshotGunId = 2,
+			weaponshotGunShootForce = 5,
+			weaponshotGunProjectileRadius = 0.5,
 			weaponshotGunParticlePosition = {6, 5, 6},
 			weaponshotGunAudio = "media/audio/shotGun.wav",
 			
@@ -802,6 +810,8 @@ Map = {
 			weaponshotGunSecondaryColdDown = 1.5,
 			weaponshotGunMaxAmmo = 48,
 			weaponshotGunId = 2,
+			weaponshotGunShootForce = 5,
+			weaponshotGunProjectileRadius = 0.5,
 			weaponshotGunParticlePosition = {6, 5, 6},
 			weaponshotGunAudio = "media/audio/shotGun.wav",
 			
@@ -972,6 +982,8 @@ Map = {
 			weaponshotGunSecondaryColdDown = 1.5,
 			weaponshotGunMaxAmmo = 48,
 			weaponshotGunId = 2,
+			weaponshotGunShootForce = 5,
+			weaponshotGunProjectileRadius = 0.5,
 			weaponshotGunParticlePosition = {6, 5, 6},
 			weaponshotGunAudio = "media/audio/shotGun.wav",
 			
@@ -1142,6 +1154,8 @@ Map = {
 			weaponshotGunSecondaryColdDown = 1.5,
 			weaponshotGunMaxAmmo = 48,
 			weaponshotGunId = 2,
+			weaponshotGunShootForce = 5,
+			weaponshotGunProjectileRadius = 0.5,
 			weaponshotGunParticlePosition = {6, 5, 6},
 			weaponshotGunAudio = "media/audio/shotGun.wav",
 			
@@ -1331,6 +1345,8 @@ Map = {
 			weaponshotGunSecondaryColdDown = 1.5,
 			weaponshotGunMaxAmmo = 48,
 			weaponshotGunId = 2,
+			weaponshotGunShootForce = 5,
+			weaponshotGunProjectileRadius = 0.5,
 			weaponshotGunParticlePosition = {6, 5, 6},
 			weaponshotGunAudio = "media/audio/shotGun.wav",
 			
@@ -1509,6 +1525,8 @@ Map = {
 			weaponshotGunSecondaryColdDown = 1.5,
 			weaponshotGunMaxAmmo = 48,
 			weaponshotGunId = 2,
+			weaponshotGunShootForce = 5,
+			weaponshotGunProjectileRadius = 0.5,
 			weaponshotGunParticlePosition = {6, 5, 6},
 			weaponshotGunAudio = "media/audio/shotGun.wav",
 			
@@ -1712,6 +1730,19 @@ Map = {
 		physic_radius = 1.5,
 		physic_mass = 10,
 		physic_group = 5,
+		physic_groupList = "3, 10", 
+	},
+	
+	ShotGunProjectile = {
+		type = "ShotGunProjectile",
+		model = "esfera.mesh",
+		physic_entity = "rigid",
+		physic_trigger = false,
+		physic_type = "kinematic",
+		physic_shape = "sphere",
+		physic_radius = 0.5,
+		physic_mass = 1,
+		physic_group = 6,
 		physic_groupList = "3, 10", 
 	},
 	

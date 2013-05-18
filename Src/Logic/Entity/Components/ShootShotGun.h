@@ -14,7 +14,7 @@ Contiene la declaración del componente que implementa la escopeta.
 #ifndef __Logic_ShootShotGun_H
 #define __Logic_ShootShotGun_H
 
-#include "Logic/Entity/Components/ShootRaycast.h"
+#include "Logic/Entity/Components/ShootProjectile.h"
 
 namespace Logic {
 
@@ -30,12 +30,12 @@ namespace Logic {
 	@date Febrero, 2013
 	*/
 
-	class CShootShotGun : public CShootRaycast {
+	class CShootShotGun : public CShootProjectile {
 		DEC_FACTORY(CShootShotGun);
 	public:
 
 		/** Constructor por defecto. */
-		CShootShotGun() : CShootRaycast("shotGun") { }
+		CShootShotGun() : CShootProjectile("shotGun") { }
 
 		virtual ~CShootShotGun();
 
@@ -51,7 +51,10 @@ namespace Logic {
 		(o NULL si no se ha colisionado con ninguna) y el rayo que se disparo para
 		comprobar si habia colisiones.
 		*/
-		virtual void triggerHitMessages(std::pair<CEntity*, Ray> entityHit) { CShootRaycast::triggerHitMessages(entityHit); }
+		//virtual bool spawn(CEntity* entity, CMap *map, const Map::CEntity *entityInfo);
+
+		/** Al ejecutarse dispara un cohete. */
+		virtual void fireWeapon();
 
 	};
 
