@@ -121,7 +121,7 @@ namespace Logic {
 		     que mueva la entidad de acuerdo al último mensaje KINEMATIC_MOVE recibido. </li>
 		</ul>
 		*/
-		virtual void onTick(unsigned int msecs);
+		virtual void onFixedTick(unsigned int msecs);
 
 	private:
 
