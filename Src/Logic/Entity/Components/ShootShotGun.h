@@ -7,17 +7,19 @@
 
 Contiene la declaración del componente que implementa la escopeta.
  
-@author Antonio Jesus Narváez Corrales
-@date Febrero, 2013
+@author Antonio Jesus Narváez 
+@date mayo, 2013
 */
 
 #ifndef __Logic_ShootShotGun_H
 #define __Logic_ShootShotGun_H
 
 #include "Logic/Entity/Components/ShootProjectile.h"
+#include <vector>
 
 namespace Logic {
 
+	class CPhysicDynamicEntity;
 	/**
 	@ingroup logicGroup
 
@@ -35,27 +37,33 @@ namespace Logic {
 	public:
 
 		/** Constructor por defecto. */
-		CShootShotGun() : CShootProjectile("shotGun") { }
+		CShootShotGun() : CShootProjectile("shotGun"), _dispersionAngle(0) {
+			
+		}
 
 		virtual ~CShootShotGun();
 
 		//__________________________________________________________________
 
-		/**
-		Método que se encarga de mandar los mensajes que corresopondan a la entidad
-		que se ha golpeado en caso de hacer hit.
+		virtual bool spawn(CEntity* entity, CMap *map, const Map::CEntity *entityInfo);
 
-		Sencillamente reutiliza la implementación por defecto de CShootRaycast.
+		virtual void primaryShoot();
+		
+		virtual void secondaryShoot();
 
-		@param entityHit Pareja que contiene el puntero a la entidad que se ha dado
-		(o NULL si no se ha colisionado con ninguna) y el rayo que se disparo para
-		comprobar si habia colisiones.
-		*/
-		//virtual bool spawn(CEntity* entity, CMap *map, const Map::CEntity *entityInfo);
-
-		/** Al ejecutarse dispara un cohete. */
 		virtual void fireWeapon();
 
+		virtual void onTick(unsigned int msecs);
+
+
+	private:
+
+		Vector3 _projectileDirection;
+
+		Vector3 _shootDirection;
+		float _dispersionAngle;
+
+		std::vector<CPhysicDynamicEntity*> _projectiles;
 	};
 
 	REG_FACTORY(CShootShotGun);
