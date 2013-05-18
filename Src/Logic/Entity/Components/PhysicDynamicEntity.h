@@ -106,6 +106,8 @@ namespace Logic {
 		void deactivateSimulation();
 
 		void activateSimulation();
+		
+		void move(const Vector3& disp);
 
 	protected:
 

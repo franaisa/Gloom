@@ -23,4 +23,4 @@ Spike CGraphics CPhysicDynamicEntity CSpike
 PointLight CLight CGraphics
 SpotLight CLight CGraphics
 DirectionalLight CLight CGraphics
-ScreamerShield CScreamerShieldDamageNotifier  CPhysicDynamicEntity CGraphics
+ScreamerShield CScreamerShieldDamageNotifier CPhysicDynamicEntity CGraphics

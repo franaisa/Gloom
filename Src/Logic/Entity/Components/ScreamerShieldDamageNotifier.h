@@ -133,7 +133,7 @@ namespace Logic {
 
 		virtual void onStart();
 
-		virtual void fixedTick(unsigned int msecs);
+		virtual void onFixedTick(unsigned int msecs);
 
 	private:
 
