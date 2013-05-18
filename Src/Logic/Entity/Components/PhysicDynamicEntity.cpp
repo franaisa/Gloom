@@ -128,7 +128,6 @@ void CPhysicDynamicEntity::onTick(unsigned int msecs) {
 	// Si el objeto físico es kinematico intentamos moverlo de acuerdo 
 	// a los mensajes KINEMATIC_MOVE recibidos 
 	if ( _physicEntity.isKinematic() ) {
-		printf("posicion logica: %f %f %f",  );
 		_physicEntity.move(_movement);
 		_movement = Vector3::ZERO;
 	}
