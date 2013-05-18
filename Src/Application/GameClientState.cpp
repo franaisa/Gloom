@@ -30,6 +30,7 @@ Contiene la implementación del estado de juego.
 #include "Logic/Maps/EntityFactory.h"
 #include "Logic/Maps/Map.h"
 #include "Logic/Maps/EntityID.h"
+#include "Logic/Maps/Scoreboard.h"
 #include "Logic/Entity/Components/Camera.h"
 
 #include "Hikari.h"
@@ -82,6 +83,8 @@ namespace Application {
 		ackBuffer.write(&id, sizeof(id));
 		
 		_netMgr->broadcast(ackBuffer.getbuffer(), ackBuffer.getSize());
+
+		Logic::CScoreboard::getSingletonPtr()->loadScoreboardDM();
 	} // activate
 
 	//______________________________________________________________________________
@@ -95,6 +98,8 @@ namespace Application {
 		Input::CInputManager::getSingletonPtr()->removeKeyListener(this);
 
 		CGameState::deactivate();
+
+		Logic::CScoreboard::getSingletonPtr()->unLoadScoreboard();
 	} // deactivate
 
 	//______________________________________________________________________________
@@ -126,6 +131,15 @@ namespace Application {
 				// Llamo al metodo de creacion del jugador
 				Logic::CEntity * player = Logic::CServer::getSingletonPtr()->getMap()->createPlayer(name, playerClass, entityID);
 
+				//Lo cargamos en el gestor de players, pero aqui tenemos que ver si el player ya existía antes, 
+				//para en vez de re-cargarlo simplemente cambiarle la clase
+				std::string playerName = player->getName();
+
+				if(!Logic::CScoreboard::getSingletonPtr()->getPlayer(playerName))
+					Logic::CScoreboard::getSingletonPtr()->addLocalPlayer(playerName, player, playerClass);
+				else
+					Logic::CScoreboard::getSingletonPtr()->changePlayerEntity(playerName, player, playerClass);
+
 				// No es necesario enviar confirmacion
 				player->activate();
 				player->start();
@@ -144,6 +158,16 @@ namespace Application {
 				// como el jugador controlado por las teclas).
 				Logic::CEntity* player = Logic::CServer::getSingletonPtr()->getMap()->createLocalPlayer(name, playerClass, entityID);
 
+				//Lo cargamos en el gestor de players, pero aqui tenemos que ver si el player ya existía antes, 
+				//para en vez de re-cargarlo simplemente cambiarle la clase
+				std::string playerName = player->getName();
+
+				if(!Logic::CScoreboard::getSingletonPtr()->getPlayer(playerName))
+					Logic::CScoreboard::getSingletonPtr()->addLocalPlayer(playerName, player, playerClass);
+				else
+					Logic::CScoreboard::getSingletonPtr()->changePlayerEntity(playerName, player, playerClass);
+
+				//activamos la entidad
 				player->activate();
 				player->start();
 

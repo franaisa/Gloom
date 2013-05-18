@@ -1,0 +1,264 @@
+#include "Scoreboard.h"
+#include "GUIManager.h"
+#include <cassert>
+#include <vector>
+#include "Hikari.h"
+#include "Logic/Server.h"
+#include "Logic/Maps/Map.h"
+
+#include "Graphics/Scene.h"
+
+namespace Logic{
+	CScoreboard* CScoreboard::_instance = 0;
+
+	CScoreboard::CScoreboard(){
+		assert(!_instance && "Segunda inicialización de Logic::CGUIKillersMessage no permitida!");
+
+		_instance = this;
+		_guiManager = CGUIManager::getSingletonPtr();
+	}
+
+	CScoreboard::~CScoreboard(){
+		_instance = 0;
+		
+	}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	void CScoreboard::Init(){
+		assert(!_instance && "Segunda inicialización de Logic::CScoreboard no permitida!");
+
+		new CScoreboard();
+
+	}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	void CScoreboard::Release()
+	{
+		if(_instance)
+		{
+			delete _instance;
+		}
+	} // 
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	void CScoreboard::addPlayer(const std::string &name, CEntity * playerEntity, const std::string &playerClass){
+		//primero lo insertamos en nuestra estructura de datos
+		PlayerInfo player(name, playerEntity, playerClass);
+		TPlayerInfo newPlayer(name, player);
+		_players.insert(newPlayer);
+
+		//ahora llamamos a la GUI para que cree nuestro nuevo player
+		_scoreboard->callFunction("addPlayer",Hikari::Args(name)(playerClass));
+	}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	void CScoreboard::addLocalPlayer(const std::string &name, CEntity * playerEntity, const std::string &playerClass){
+		//primero lo insertamos en nuestra estructura de datos
+		PlayerInfo player(name, playerEntity, playerClass);
+		TPlayerInfo newPlayer(name, player);
+		_players.insert(newPlayer);
+
+		//ahora llamamos a la GUI para que cree nuestro nuevo player
+		_scoreboard->callFunction("addLocalPlayer",Hikari::Args(name)(playerClass));
+	}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	void CScoreboard::changePlayerEntity(const std::string &name, CEntity * newPlayerEntity, const std::string &newClass){
+		auto player = _players.find(name);
+
+		if(player==_players.end())
+			return;
+		player->second.entityPlayer = newPlayerEntity;
+		player->second.playerClass = newClass;
+
+		//ahora avisamos a la GUI de que ha habido un cambio
+	}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
+	
+	void CScoreboard::deletePlayer(const std::string &name){
+		auto player = _players.find(name);
+
+		if(player!=_players.end())
+			_players.erase(player);
+
+		//ahora avisamos a la GUI de que ha habido un cambio
+		_scoreboard->callFunction("deletePlayer",Hikari::Args(name));
+	}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
+	
+	void CScoreboard::addKill(const std::string &name){
+		auto player = _players.find(name);
+
+		if(player==_players.end())
+			return;
+		player->second.kills++;
+
+		//ahora avisamos a la GUI de que ha habido un cambio
+		_scoreboard->callFunction("addKills",Hikari::Args((int)player->second.kills));
+	}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
+	
+	void CScoreboard::addDeath(const std::string &name){
+		auto player = _players.find(name);
+
+		if(player==_players.end())
+			return;
+		player->second.deaths++;
+
+		//ahora avisamos a la GUI de que ha habido un cambio
+		_scoreboard->callFunction("addDeaths",Hikari::Args((int)player->second.deaths));
+	}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
+	
+	void CScoreboard::changeName(const std::string &oldName, const std::string &newName){
+		auto player = _players.find(oldName);
+
+		if(player==_players.end())
+			return;
+		PlayerInfo newPlayerInfo = player->second;
+		newPlayerInfo.name = newName;
+		_players.erase(player);
+		TPlayerInfo playerUpdated(newName, newPlayerInfo);
+
+		_players.insert(playerUpdated);
+
+		//ahora avisamos a la GUI de que ha habido un cambio
+	}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
+	
+	void CScoreboard::changePing(const std::string &name, unsigned int &ping){
+		auto player = _players.find(name);
+
+		if(player==_players.end())
+			return;
+		player->second.ping = ping;
+
+		//ahora avisamos a la GUI de que ha habido un cambio
+	}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
+	
+	void CScoreboard::changeSpree(const std::string &name, unsigned int &newSpree){
+		auto player = _players.find(name);
+
+		if(player==_players.end())
+			return;
+		player->second.bestSpree = newSpree;
+
+		//ahora avisamos a la GUI de que ha habido un cambio
+	}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
+	
+	unsigned int CScoreboard::getSpree(const std::string &name){
+		auto player = _players.find(name);
+
+		if(player==_players.end())
+			return 0;
+		return player->second.bestSpree;
+	}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	bool CScoreboard::keyPressed(Input::TKey key){
+		if (key.keyId == Input::Key::TAB){
+			_scoreboard->show();
+		}
+		return true;
+	}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	bool CScoreboard::keyReleased(Input::TKey key){
+		if (key.keyId == Input::Key::TAB){
+			_scoreboard->hide();
+		}
+
+		return true;
+	}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	void CScoreboard::clearPlayers(){
+		_players.clear();
+	}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	void CScoreboard::activate(){
+		Input::CInputManager::getSingletonPtr()->addKeyListener(this);
+	}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	void CScoreboard::deactivate(){
+		Input::CInputManager::getSingletonPtr()->removeKeyListener(this);
+		_players.clear();
+	}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	CEntity* CScoreboard::getPlayer(const std::string &name){
+		auto player = _players.find(name);
+
+		if(player != _players.end())
+			return player->second.entityPlayer;
+		return NULL;
+	}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	void CScoreboard::loadScoreboardDM(){
+		_guiManager->addGUI("scoreboard", Hikari::Position(Hikari::Center), 0.7);
+		_guiManager->load("scoreboard", "ScoreDM.swf");
+		_guiManager->showGUI("scoreboard");
+		_guiManager->setTransparent("scoreboard",true);
+		_scoreboard = _guiManager->getGUIControl("scoreboard");
+		_scoreboard->hide();
+	}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	void CScoreboard::loadScoreboardTDM(){
+		_guiManager->addGUI("scoreboard", Hikari::Position(Hikari::Center), 0.7);
+		_guiManager->load("scoreboard", "ScoreTDM.swf");
+		_guiManager->showGUI("scoreboard");
+		_guiManager->setTransparent("scoreboard",true);
+		_scoreboard = _guiManager->getGUIControl("scoreboard");
+		_scoreboard->hide();
+	}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	void CScoreboard::unLoadScoreboard(){
+		_guiManager->deleteGUI("scoreboard");
+	}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	std::vector<CScoreboard::PlayerInfo> CScoreboard::getAllPlayers(){
+		std::vector<CScoreboard::PlayerInfo> players;
+
+		auto it = _players.begin();
+		auto end = _players.end();
+
+		for(;it!=end;++it){
+			players.push_back(it->second);
+		}
+		return players;
+	}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+}

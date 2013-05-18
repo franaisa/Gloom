@@ -69,21 +69,10 @@ namespace Logic  {
 			if(!entity)
 				break;
 
-			std::string type = entity->getType();
-			
-			if(type == "Screamer" || type == "Shadow" || type == "Hound" || type == "Archangel" ||
-				type == "LocalScreamer" || type == "LocalShadow" || type == "LocalHound" || type == "LocalArchangel"){
-				Logic::GUIKillersMessage::getSingletonPtr()->addKiller(
-					entity->getName(),
-					_entity->getName());
-			}
-			
-			//sino ha sido un player es que se ha suicidado el retard
-			else{
-				Logic::GUIKillersMessage::getSingletonPtr()->suicide(_entity->getName());
-			}
-			
-				break;
+
+			updateGUI(entity);
+
+			break;
 			}
 			case Message::PLAYER_SPAWN: {
 				// El servidor nos notifica de que debemos respawnear. Activamos
@@ -127,6 +116,25 @@ namespace Logic  {
 			}
 		}
 	} // process
+
+	void CClientRespawn::updateGUI(CEntity* killer){
+		//updateamos el mensaje de pepito mato a juanito
+		std::string type = killer->getType();
+			
+		if(type == "Screamer" || type == "Shadow" || type == "Hound" || type == "Archangel" ||
+			type == "LocalScreamer" || type == "LocalShadow" || type == "LocalHound" || type == "LocalArchangel"){
+			Logic::GUIKillersMessage::getSingletonPtr()->addKiller(
+				killer->getName(),
+				_entity->getName());
+		}
+		//sino ha sido un player es que se ha suicidado el retard
+		else{
+			Logic::GUIKillersMessage::getSingletonPtr()->suicide(_entity->getName());
+		}
+
+		//ahora actualizamos la estructura del scoreboard
+	}
+
 
 } // namespace Logic
 

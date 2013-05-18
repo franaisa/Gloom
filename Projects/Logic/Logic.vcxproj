@@ -159,6 +159,7 @@
     <ClCompile Include="..\..\Src\Logic\Entity\Components\AvatarController.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\Camera.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\Graphics.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Maps\Scoreboard.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\Message.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageActivate.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageActivateScreamerShield.cpp" />
@@ -308,6 +309,7 @@
     <ClInclude Include="..\..\Src\Logic\Entity\Components\Camera.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\Graphics.h" />
     <ClInclude Include="..\..\Src\Logic\Documentation.h" />
+    <ClInclude Include="..\..\Src\Logic\Maps\Scoreboard.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageActivateScreamerShield.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageCameraRoll.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageChangeMaterialHudWeapon.h" />

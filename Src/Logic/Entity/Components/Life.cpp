@@ -239,6 +239,9 @@ namespace Logic {
 	//________________________________________________________________________
 
 	bool CLife::updateLife(int damage) {
+		//si ya estaba muerto no quiero volver a hacer toda la parafernalia
+		if (_currentLife < 1 ) return false;
+		
 		// Si hay una reduccion de daño activa, reducimos el daño aplicado
 		damage -= damage * _reducedDamageAbsorption;
 
@@ -266,16 +269,12 @@ namespace Logic {
 			_currentLife -= damage;
 		}
 
-		if(_currentLife < 0)
-			_currentLife = 0;
-
 		// Actualizamos los puntos de salud mostrados en el HUD
 		std::shared_ptr<CMessageHudLife> hudLifeMsg = std::make_shared<CMessageHudLife>();
 		hudLifeMsg->setLife(_currentLife);
 		_entity->emitMessage(hudLifeMsg);
 
-
-		return _currentLife == 0;
+		return _currentLife < 1;
 	}
 
 	//________________________________________________________________________

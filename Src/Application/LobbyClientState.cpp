@@ -20,6 +20,7 @@ Contiene la implementación del estado de lobby del cliente.
 #include "Logic/Entity/Entity.h"
 #include "Logic/Maps/EntityFactory.h"
 #include "Logic/Maps/Map.h"
+#include "Logic/Maps/Scoreboard.h"
 
 #include "Hikari.h"
 #include "GUI/Server.h"
@@ -208,6 +209,8 @@ namespace Application {
 					// Llamo al metodo de creacion del jugador
 					player = Logic::CServer::getSingletonPtr()->getMap()->
 							 createPlayer(name, playerClass, entityID);
+
+					Logic::CScoreboard::getSingletonPtr()->addPlayer(player->getName(), player, playerClass);
 				}
 				
 				// Confirmamos de que se han cargado todos los players con exito
