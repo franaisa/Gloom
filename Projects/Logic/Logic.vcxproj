@@ -169,7 +169,8 @@
     <ClCompile Include="..\..\Src\Logic\Messages\MessageAddShield.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageAddWeapon.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageAudio.cpp" />
-    <ClCompile Include="..\..\Src\Logic\Messages\MessageBerserker.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Messages\MessageDamageAmplifier.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Messages\MessageReducedCooldown.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageCameraOffset.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageCameraRoll.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageCameraToEnemy.cpp" />
@@ -321,7 +322,7 @@
     <ClInclude Include="..\..\Src\Logic\Messages\MessageAddShield.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageAddWeapon.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageAudio.h" />
-    <ClInclude Include="..\..\Src\Logic\Messages\MessageBerserker.h" />
+    <ClInclude Include="..\..\Src\Logic\Messages\MessageDamageAmplifier.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageCameraToEnemy.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageCealing.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageChangeMaterial.h" />
@@ -349,6 +350,7 @@
     <ClInclude Include="..\..\Src\Logic\Messages\MessagePlayerDead.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessagePositionSnapshot.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageRebound.h" />
+    <ClInclude Include="..\..\Src\Logic\Messages\MessageReducedCooldown.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageSetAnimation.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageSetRelatedEntity.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageSetPhysicPosition.h" />

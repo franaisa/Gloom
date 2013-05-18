@@ -30,7 +30,6 @@ Contiene la implementación del componente que gestiona las armas y que administr
 #include "Logic/Messages/MessageAddWeapon.h"
 #include "Logic/Messages/MessageHudAmmo.h"
 #include "Logic/Messages/MessageHudWeapon.h"
-#include "Logic/Messages/MessageBerserker.h"
 #include "Logic/Messages/MessageCreateParticle.h"
 #include "Logic/Messages/MessageAudio.h"
 

@@ -16,7 +16,8 @@ implementa las habilidades del personaje
 #include "Map/MapEntity.h"
 #include "Logic/Entity/Entity.h"
 
-#include "Logic/Messages/MessageBerserker.h"
+#include "Logic/Messages/MessageDamageAmplifier.h"
+#include "Logic/Messages/MessageReducedCooldown.h"
 #include "Logic/Messages/MessageChangeMaterial.h"
 
 namespace Logic {
@@ -68,10 +69,12 @@ namespace Logic {
 			}else{
 				// Volvemos a los valores de daño y cd's originales
 				//Ponemos los valores de daño y cd's del berserker (mensaje con porcentajes de incremento y reduccion respecto al original)
- 				std::shared_ptr<CMessageBerserker> berserkerMsg = std::make_shared<CMessageBerserker>();
-				berserkerMsg->setPercentCooldown(0);
-				berserkerMsg->setPercentDamage(0);
-				_entity->emitMessage(berserkerMsg);
+ 				std::shared_ptr<CMessageDamageAmplifier> damageAmplifierMsg = std::make_shared<CMessageDamageAmplifier>();
+				std::shared_ptr<CMessageReducedCooldown> reducedCdMsg = std::make_shared<CMessageReducedCooldown>();
+				reducedCdMsg->setPercentCooldown(0);
+				damageAmplifierMsg->setPercentDamage(0);
+				_entity->emitMessage(damageAmplifierMsg);
+				_entity->emitMessage(reducedCdMsg);
 	
 				//le seteamos el material al material por defecto
 				std::shared_ptr<CMessageChangeMaterial> materialMsg = std::make_shared<CMessageChangeMaterial>();
@@ -105,10 +108,12 @@ namespace Logic {
 		_berserkerTimer= _berserkerDuration;
 
 		//Ponemos los valores de daño y cd's del berserker (mensaje con porcentajes de incremento y reduccion respecto al original)
-		std::shared_ptr<CMessageBerserker> berserkerMsg = std::make_shared<CMessageBerserker>();
-		berserkerMsg->setPercentCooldown(_berserkerCooldownPercent);
-		berserkerMsg->setPercentDamage(_berserkerDamagePercent);
-		_entity->emitMessage(berserkerMsg);
+		std::shared_ptr<CMessageDamageAmplifier> damageAmplifierMsg = std::make_shared<CMessageDamageAmplifier>();
+		std::shared_ptr<CMessageReducedCooldown> reducedCdMsg = std::make_shared<CMessageReducedCooldown>();
+		reducedCdMsg->setPercentCooldown(_berserkerCooldownPercent);
+		damageAmplifierMsg->setPercentDamage(_berserkerDamagePercent);
+		_entity->emitMessage(damageAmplifierMsg);
+		_entity->emitMessage(reducedCdMsg);
 
 		//le cambiamos el material para que empiece a brillar
 		std::shared_ptr<CMessageChangeMaterial> materialMsg = std::make_shared<CMessageChangeMaterial>();
