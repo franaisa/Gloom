@@ -28,7 +28,7 @@ namespace Logic {
 
 	//__________________________________________________________________
 
-	CTransformInterpolator::CTransformInterpolator() : _lostTicks(0) {
+	CTransformInterpolator::CTransformInterpolator() {
 		// Nada que hacer
 	}
 
@@ -92,35 +92,6 @@ namespace Logic {
 			case Message::TRANSFORM_SNAPSHOT: {
 				vector<Matrix4> buffer = static_pointer_cast<CMessageTransformSnapshot>(message)->getBuffer();
 
-				// Si hemos perdido ticks tenemos que descartar posiciones del buffer
-				/*if(_lostTicks > 0) {
-					// Si los ticks que hemos perdido son más de los que tenemos al interpolar
-					// el buffer, descartamos el buffer entero y extrapolamos o nos quedamos
-					// quietos si ha pasado mucho tiempo
-					unsigned int interpolatedBufferSize = _samplesPerSnapshot + (_samplesPerSnapshot - 1) * (_ticksPerSample - 1);
-					if(_lostTicks >= interpolatedBufferSize) {
-						// Los ticks que hemos recuperado equivalen al tamaño del buffer
-						_lostTicks -= interpolatedBufferSize;
-					}
-					else {
-						// Calculamos lo que queda del buffer
-						interpolateSnapshot(buffer);
-
-						// @deprecated, lo suyo es interpolar a partir
-						// del tick que sabes que te corresponde y no esta
-						// chapucilla
-						for(int i = 0; i < _lostTicks; ++i) {
-							_buffer.pop_front();
-						}
-
-						_lostTicks = 0;
-						_extrapolatedTicks = 0;
-					}
-				}
-				else {
-					interpolateSnapshot(buffer);
-				}*/
-
 				interpolateSnapshot(buffer);
 
 				break;
@@ -132,30 +103,17 @@ namespace Logic {
 
 	void CTransformInterpolator::onStart() {
 		_controller = _entity->getComponent<CPhysicController>("CPhysicController");
-		assert(_controller != NULL && "Error: Como crees que voy a interpolar si no tengo physicController? meh!");
 	}
 
 	//__________________________________________________________________
 
 	void CTransformInterpolator::onFixedTick(unsigned int msecs) {
 		if( !_buffer.empty() ) {
-			//_extrapolatedMovement = _buffer.front().getTrans() - _entity->getPosition();
-
-			_controller->setPhysicPosition( _buffer.front().getTrans() );
+			// Podria tratarse de algun elemento que no sea un jugador, en general solo tendran
+			// entidad grafica, así que basta con setear la entidad gráfica.
+			if(_controller != NULL) _controller->setPhysicPosition( _buffer.front().getTrans() );
 			_entity->setTransform( _buffer.front() );
 			_buffer.pop_front();
-		}
-		// Estamos perdiendo ticks por algun motivo
-		// hay que extrapolar y descartar del buffer
-		// que recibamos las que hemos perdido
-		else {
-			// Si hemos extrapolado durante mas del tiempo permitido nos quedamos quietos
-			/*if(_extrapolatedTicks <= 5) {
-				//_controller->setPhysicPosition(_entity->getPosition() + _extrapolatedMovement);
-				++ _extrapolatedTicks;
-			}
-
-			++_lostTicks;*/
 		}
 	}
 

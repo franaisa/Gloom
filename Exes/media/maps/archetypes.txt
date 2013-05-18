@@ -1705,6 +1705,7 @@ Map = {
 	ScreamerShield = {
 		type = "ScreamerShield",
 		model = "shieldCone.mesh",
+		msgList= "55,56",
 		physic_entity = "rigid",
 		physic_trigger = false,
 		physic_type = "kinematic",
@@ -1713,6 +1714,8 @@ Map = {
 		physic_mass = 10,
 		physic_group = 5,
 		physic_groupList = "3, 10", 
+		ticksPerSample = 2,
+		samplesPerSnapshot = 3,
 	},
 	
 	Jumper1 = {
