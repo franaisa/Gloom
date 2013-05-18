@@ -72,8 +72,8 @@ Map = {
 		audioSpawn = "media/audio/spawn.wav",
 		audioNoAmmo = "media/audio/noammo.wav",
 		
-		primarySkillCooldown = 0,
-		secondarySkillCooldown = 2,
+		primarySkillCooldown = 25,
+		secondarySkillCooldown = 25,
 		screamerShieldThreshold = 100,
 		screamerShieldDamageTimeStep = 2,
 		screamerShieldDamageOverTime = 1,
@@ -240,8 +240,8 @@ Map = {
 		audioSpawn = "media/audio/spawn.wav",
 		audioNoAmmo = "media/audio/noammo.wav",
 		
-		primarySkillCooldown = 0.25,
-		secondarySkillCooldown = 3,
+		primarySkillCooldown = 25,
+		secondarySkillCooldown = 25,
 		invisibilityDuration = 5,
 		
 			weaponhammerName = "hammer",
@@ -402,8 +402,8 @@ Map = {
 		audioSpawn = "media/audio/spawn.wav",
 		audioNoAmmo = "media/audio/noammo.wav",
 		
-		primarySkillCooldown = 0.5,
-		secondarySkillCooldown = 0.5,
+		primarySkillCooldown = 25,
+		secondarySkillCooldown = 25,
 		inmunityDuration = 5,
 		
 			weaponhammerName = "hammer",
@@ -564,8 +564,8 @@ Map = {
 		audioSpawn = "media/audio/spawn.wav",
 		audioNoAmmo = "media/audio/noammo.wav",
 		
-		primarySkillCooldown = 1,
-		secondarySkillCooldown = 1,
+		primarySkillCooldown = 25,
+		secondarySkillCooldown = 25,
 		berserkerDuration=15,
 		berserkerDamagePercent=50,
 		berserkerCooldownPercent=50,
@@ -726,8 +726,8 @@ Map = {
 		audioSpawn = "media/audio/spawn.wav",
 		audioNoAmmo = "media/audio/noammo.wav",
 		
-		primarySkillCooldown = 0,
-		secondarySkillCooldown = 2,
+		primarySkillCooldown = 25,
+		secondarySkillCooldown = 25,
 		screamerShieldThreshold = 100,
 		screamerShieldDamageTimeStep = 2,
 		screamerShieldDamageOverTime = 1,
@@ -897,8 +897,8 @@ Map = {
 		audioSpawn = "media/audio/spawn.wav",
 		audioNoAmmo = "media/audio/noammo.wav",
 		
-		primarySkillCooldown = 15,
-		secondarySkillCooldown = 3,
+		primarySkillCooldown = 25,
+		secondarySkillCooldown = 25,
 		invisibilityDuration = 5,
 
 			weaponhammerName = "hammer",
@@ -1062,8 +1062,8 @@ Map = {
 		audioSpawn = "media/audio/spawn.wav",
 		audioNoAmmo = "media/audio/noammo.wav",
 		
-		primarySkillCooldown = 4.0,
-		secondarySkillCooldown = 0.5,
+		primarySkillCooldown = 25,
+		secondarySkillCooldown = 25,
 		inmunityDuration = 5,
 
 			weaponhammerName = "hammer",
@@ -1244,8 +1244,8 @@ Map = {
 		audioSpawn = "media/audio/spawn.wav",
 		audioNoAmmo = "media/audio/noammo.wav",
 
-		primarySkillCooldown = 1,
-		secondarySkillCooldown = 1,
+		primarySkillCooldown = 25,
+		secondarySkillCooldown = 25,
 		berserkerDuration=15,
 		berserkerDamagePercent=50,
 		berserkerCooldownPercent=50,
@@ -1387,9 +1387,7 @@ Map = {
 	dynamicitem = {
 		type = "ItemSpawnDynamic",
 		msgList= "6,14,15,16,17",
-		orbitalOffset = 0.04,
-		orbitalSpeed = 0.0035,
-		orbitalRotationSpeed = 0.0014,
+		acceleration = 0.5,
 		physic_entity = "rigid",
 		physic_type = "kinematic",
 		physic_trigger = true,

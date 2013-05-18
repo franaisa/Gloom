@@ -94,6 +94,10 @@ namespace Logic {
 
 		int getWeaponType(){return _weaponType;}
 
+		int getReward(){return _reward;}
+
+		void beginRespawn(){_isRespawning = true;}
+
 	protected:
 
 		/**

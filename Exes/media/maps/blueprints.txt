@@ -6,7 +6,8 @@ LocalScreamer  CScreamer CLocalScreamer  CShootRocketLauncher  CShootMiniGun CSh
 RemotePlayer CLife CSpawnPlayer CAudio CParticle CAvatarController CPhysicController CAnimatedGraphics
 Spectator CSpectatorController CPhysicController
 Camera CCamera
-ItemSpawn CGraphics CPhysicStaticEntity CFloatingMovement CSpawnItemManager 
+ItemSpawn  CPhysicStaticEntity CFloatingMovement CSpawnItemManager CGraphics
+ItemSpawnDynamic CPhysicDynamicEntity CPullingMovement CGraphics
 SpawnPoint CPhysicStaticEntity
 Jumper CGraphics CPhysicStaticEntity CJumper CAudio CParticle
 Grenade CGraphics CPhysicDynamicEntity CGrenadeController CParticle CAudio

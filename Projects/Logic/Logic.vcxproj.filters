@@ -532,6 +532,9 @@
     <ClCompile Include="..\..\Src\Logic\Messages\MessageFlash.cpp">
       <Filter>Messages\Source</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\PullingMovement.cpp">
+      <Filter>Entity\Components\Gameplay\Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Src\Logic\Maps\ComponentFactory.h">
@@ -980,6 +983,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Messages\MessageFlash.h">
       <Filter>Messages\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\PullingMovement.h">
+      <Filter>Entity\Components\Gameplay\Header</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

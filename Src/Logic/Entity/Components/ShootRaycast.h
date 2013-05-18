@@ -137,6 +137,12 @@ namespace Logic {
 		*/
 		virtual void triggerHitMessages(std::pair<CEntity*, Ray> entityHit);
 
+		/**
+		Este es el método que todas las armas deben redefinir si quieren una accion cuando se suelta el boton de disparo secundario.
+		Si no se redefine, no hara nada.
+		*/
+		virtual void stopSecondaryShoot();
+
 	protected:
 
 

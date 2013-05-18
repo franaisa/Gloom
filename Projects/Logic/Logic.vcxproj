@@ -107,6 +107,7 @@
     <ClCompile Include="..\..\Src\Logic\Entity\Components\PhysicDynamicEntity.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\PhysicStaticEntity.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\PlayerSnapshot.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\PullingMovement.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\TransformSnapshot.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\PositionInterpolator.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\RocketController.cpp" />
@@ -251,6 +252,7 @@
     <ClInclude Include="..\..\Src\Logic\Entity\Components\PhysicController.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\PhysicStaticEntity.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\PlayerSnapshot.h" />
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\PullingMovement.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\TransformSnapshot.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\PositionInterpolator.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\RocketController.h" />

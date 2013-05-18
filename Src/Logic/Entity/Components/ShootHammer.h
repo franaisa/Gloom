@@ -36,7 +36,7 @@ namespace Logic {
 	public:
 
 		/** Constructor por defecto. */
-		CShootHammer() : CShootRaycast("hammer") { }
+		CShootHammer() : CShootRaycast("hammer"), _elementPulling(0), _elementPulled(0) { }
 
 		//__________________________________________________________________
 
@@ -62,6 +62,8 @@ namespace Logic {
 		*/
 		virtual bool spawn(CEntity* entity, CMap *map, const Map::CEntity *entityInfo);
 
+		void resetEntityPulling();
+
 	protected:
 
 		/**
@@ -76,6 +78,12 @@ namespace Logic {
 		*/
 		virtual void secondaryShoot();
 
+		/**
+		Este es el método que todas las armas deben redefinir si quieren una accion cuando se suelta el boton de disparo secundario.
+		Si no se redefine, no hara nada.
+		*/
+		virtual void stopSecondaryShoot();
+
 		/** Método estático que resetea la cantidad de munición del arma.
 		En el hammer, se establecera a una bala, para que pueda disparar y debido a que cuando dispara no baja tendra balas infinitas
 		*/
@@ -85,7 +93,7 @@ namespace Logic {
 
 		float _reboundForce;
 
-		CEntity* _elementPulled;
+		CEntity* _elementPulled, *_elementPulling;
 
 	}; // class CShootRaycast
 
