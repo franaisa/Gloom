@@ -56,7 +56,7 @@ namespace Logic {
 		// Pasamos el tiempo a msecs
 		_invisibilityDuration = entityInfo->getFloatAttribute("invisibilityDuration") * 1000;
 
-		_flashRadius= 25;
+		_flashRadius= 150;
 
 		return true;
 	} // spawn
@@ -119,12 +119,6 @@ namespace Logic {
 
 		_doingPrimarySkill = true;
 
-		/*
-		std::shared_ptr<CMessageChangeMaterialHudWeapon> materialMsgHud = std::make_shared<CMessageChangeMaterialHudWeapon>();
-		materialMsgHud->setMaterialName("shadowInvisibility");
-		_entity->emitMessage(materialMsgHud);
-		*/
-
 	}
 
 	//__________________________________________________________________
@@ -149,6 +143,8 @@ namespace Logic {
 		for(int i = 0; i < nbHits; ++i) {
 			// una vez tenemos las entidades en el radio de ceguera, hacemos el segundo filtro
 			//que es coger solo a los players
+			CEntity * aux = entitiesHit[i];
+
 			if(entitiesHit[i] != NULL && 
 				(entitiesHit[i]->getType() == "Hound" || 
 					entitiesHit[i]->getType() == "Screamer" || 
@@ -165,24 +161,27 @@ namespace Logic {
 
 	void CShadow::flashEntity(CEntity* entity){
 
+		if(entity == _entity)
+			return;
+
 		//primero trazamos un raycast para filtrar si hay algo entre la entidad y yo
 		Vector3 direction = entity->getPosition() - _entity->getPosition();
-		Ogre::Ray ray( entity->getPosition(), direction.normalisedCopy() );
+		Ogre::Ray ray( _entity->getPosition()+Vector3(0,8,0), direction.normalisedCopy() );
 		int bufferSize;
 		Physics::CRaycastHit* hitBuffer;
 		Physics::CServer::getSingletonPtr()->raycastMultiple(ray, direction.length(), hitBuffer, bufferSize);
 
 		//ifs de eficiencia
-		if(bufferSize>1){
+		if(bufferSize!=2){
 			delete [] hitBuffer;
 			return;
 		}
-		if(bufferSize == 1 && hitBuffer[0].entity == entity){
+		/*if(bufferSize == 1 && hitBuffer[0].entity == entity){
 			delete [] hitBuffer;
 			return;
 		}
 		if(bufferSize == 1)
-			delete [] hitBuffer;
+			delete [] hitBuffer;*/
 
 		//Ahora comprobamos el angulo entre la visión directa y la orientación del player a cegar
 		float angle = direction.normalisedCopy().angleBetween(Math::getDirection(entity->getOrientation()).normalisedCopy()).valueDegrees();
@@ -196,7 +195,7 @@ namespace Logic {
 
 		if(angle<=90){
 			//hacemos la inversa
-			flashFactor = 10 * (1 - 90/90*angle);
+			flashFactor = 10 * (1 - (90/(90*angle)));
 		}else{
 			angle-=90;
 			flashFactor = 10 * (1 - 90/90*angle);
