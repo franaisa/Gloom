@@ -141,9 +141,20 @@ namespace Logic {
 		//                          MÉTODOS PRIVADOS
 		// =======================================================================
 
-
+		/**
+		Llamado cuando el escudo del Screamer provoca la explosión del personaje.
+		Destruye el escudo y mata a todas las entidades que estén en un radio concreto.
+		*/
 		void blowUp();
 
+		//__________________________________________________________________
+
+		/**
+		Se encarga de actualizar el estado del escudo en función de si está activo
+		o no.
+
+		@param msecs Milisegundos transcurridos desde el último frame.
+		*/
 		void checkSecondarySkill(unsigned int msecs);
 
 		//__________________________________________________________________

@@ -222,7 +222,6 @@ namespace Logic {
 	void CScreamer::stopSecondarySkill() {
 		_secondarySkillIsActive = false;
 
-		//assert(_screamerShield != NULL && "Error: No se ha creado el escudo");
 		if(_screamerShield != NULL) {
 			// Destruimos la entidad e indicamos a los clientes que tambien la destruyan
 			CEntityFactory::getSingletonPtr()->deferredDeleteEntity(_screamerShield, true);
