@@ -78,13 +78,14 @@ namespace Logic {
 
 	//________________________________________________________________________
 
-	void CScreamerShieldDamageNotifier::onTick(unsigned int msecs) {
+	void CScreamerShieldDamageNotifier::onFixedTick(unsigned int msecs) {
 		// Aunque este no es el sitio mas idoneo para hacer esto, lo
 		// voy a hacer aqui por facilidad
-		Matrix4 playerTransform = _owner->getTransform();
-		std::cout << "physicPosition = " << playerTransform.getTrans() << std::endl;
+		
+		//Matrix4 playerTransform = _owner->getTransform();
+		//std::cout << "ScreamerShield " << std::endl;
 		//_physicComponent->setTransform( playerTransform, true);
-		_physicComponent->setPosition( playerTransform.getTrans(), true );
+		//_physicComponent->setTransform( playerTransform, false );
 		//_entity->setTransform( playerTransform );
 	}
 

@@ -230,7 +230,7 @@ void CPhysicDynamicEntity::createRigid(const Map::CEntity *entityInfo, int group
 		
 		Physics::SphereGeometry sphere = _geometryFactory->createSphere(physicRadius);
 		Physics::Material* defaultMaterial = _materialManager->getMaterial(eDEFAULT);
-		float density = mass / (4.0/3.0 * Math::PI * physicRadius * physicRadius * physicRadius);
+		float density = mass / (4.0f/3.0f * Math::PI * physicRadius * physicRadius * physicRadius);
 
 		_physicEntity.load(transform, sphere, *defaultMaterial, density, isKinematic, isTrigger, _noGravity, group, groupList, this);
 	}
@@ -287,6 +287,10 @@ void CPhysicDynamicEntity::onContact (IPhysics *otherComponent,bool enter) {
 	//std::cout << _entity->getName() << " le llega el contacto con " << ((IPhysics*)(hit.controller->getUserData()))->getEntity()->getName() << std::endl;
 
 }*/
+
+void CPhysicDynamicEntity::move(const Vector3& disp) {
+	_physicEntity.move(disp);
+}
 
 //---------------------------------------------------------
 
