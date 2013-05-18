@@ -32,7 +32,8 @@ Contiene la implementación del componente que gestiona las armas y que administr
 #include "Logic/Messages/MessageHudWeapon.h"
 #include "Logic/Messages/MessageHudAmmo.h"
 
-#include "Logic/Messages/MessageBerserker.h"
+#include "Logic/Messages/MessageDamageAmplifier.h"
+#include "Logic/Messages/MessageReducedCooldown.h"
 
 
 namespace Logic 
@@ -125,7 +126,8 @@ namespace Logic
 		return msgType == Message::CHANGE_WEAPON 
 			|| msgType == Message::ADD_AMMO
 			|| msgType == Message::ADD_WEAPON
-			|| msgType == Message::BERSERKER;
+			|| msgType == Message::REDUCED_COOLDOWN
+			|| msgType == Message::DAMAGE_AMPLIFIER;
 	} // accept
 	
 	//---------------------------------------------------------
@@ -160,10 +162,14 @@ namespace Logic
 				addWeapon( addWeaponMsg->getAddAmmo(), addWeaponMsg->getAddWeapon() );
 				break;
 			}
-			case Message::BERSERKER: {
-				std::shared_ptr<CMessageBerserker> berserkerMsg = std::static_pointer_cast<CMessageBerserker>(message);
-				amplifyDamage( berserkerMsg->getPercentDamage() );
-				reduceCooldowns( berserkerMsg->getPercentCooldown() );
+			case Message::REDUCED_COOLDOWN: {
+				std::shared_ptr<CMessageReducedCooldown> reducedCdMsg = std::static_pointer_cast<CMessageReducedCooldown>(message);
+				reduceCooldowns( reducedCdMsg->getPercentCooldown() );
+				break;
+			}
+			case Message::DAMAGE_AMPLIFIER: {
+				std::shared_ptr<CMessageDamageAmplifier> damageAmplifierMsg = std::static_pointer_cast<CMessageDamageAmplifier>(message);
+				amplifyDamage( damageAmplifierMsg->getPercentDamage() );
 				break;
 			}
 		}

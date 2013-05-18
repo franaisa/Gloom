@@ -280,9 +280,6 @@
     <ClCompile Include="..\..\Src\Logic\Messages\MessageSetReducedDamage.cpp">
       <Filter>Messages\Source</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Src\Logic\Messages\MessageBerserker.cpp">
-      <Filter>Messages\Source</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Src\Logic\Messages\MessageHudDebug.cpp">
       <Filter>Messages\Source</Filter>
     </ClCompile>
@@ -532,6 +529,12 @@
     <ClCompile Include="..\..\Src\Logic\Entity\Components\Screamer.cpp">
       <Filter>Entity\Components\Skills\Source</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Messages\MessageReducedCooldown.cpp">
+      <Filter>Messages\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Messages\MessageDamageAmplifier.cpp">
+      <Filter>Messages\Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Src\Logic\Maps\ComponentFactory.h">
@@ -715,9 +718,6 @@
       <Filter>Messages\Header</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Messages\MessageSetReducedDamage.h">
-      <Filter>Messages\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Logic\Messages\MessageBerserker.h">
       <Filter>Messages\Header</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Messages\MessageHudDebug.h">
@@ -980,6 +980,12 @@
     </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Entity\Components\Screamer.h">
       <Filter>Entity\Components\Skills\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Messages\MessageDamageAmplifier.h">
+      <Filter>Messages\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Messages\MessageReducedCooldown.h">
+      <Filter>Messages\Header</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
