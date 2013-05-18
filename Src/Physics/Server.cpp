@@ -575,6 +575,39 @@ namespace Physics {
 
 	//________________________________________________________________________
 
+	void CServer::raycastSingle(const Ray& ray, float maxDistance, CRaycastHit& hit) const {
+		// Establecer parámettros del rayo
+		PxVec3 origin = Vector3ToPxVec3( ray.getOrigin() );      // origen     
+		PxVec3 unitDir = Vector3ToPxVec3( ray.getDirection() );  // dirección normalizada
+
+		// Seteamos los flags que indican que información queremos extraer
+		const PxSceneQueryFlags outputFlags = PxSceneQueryFlag::eDISTANCE | PxSceneQueryFlag::eIMPACT | PxSceneQueryFlag::eNORMAL;
+
+		// Punto de golpeo del raycast
+		PxRaycastHit hitSpot;
+		_scene->raycastSingle(origin, unitDir, maxDistance, outputFlags, hitSpot);
+
+		// Introducimos la información devuelta en la estructura que vamos a devolver
+		hit.entity		= static_cast<IPhysics*>( hitSpot.shape->getActor().userData )->getEntity();
+		hit.distance	= hitSpot.distance;
+		hit.impact		= PxVec3ToVector3( hitSpot.impact );
+		hit.normal		= PxVec3ToVector3( hitSpot.normal );
+	}
+
+	//________________________________________________________________________
+
+	bool CServer::raycastAny(const Ray& ray, float maxDistance) const {
+		// Establecer parámettros del rayo
+		PxVec3 origin = Vector3ToPxVec3( ray.getOrigin() );      // origen     
+		PxVec3 unitDir = Vector3ToPxVec3( ray.getDirection() );  // dirección normalizada
+		// Variable de query usada por physx
+		PxSceneQueryHit hit;
+
+		return _scene->raycastAny(origin, unitDir, maxDistance, hit);
+	}
+
+	//________________________________________________________________________
+
 	void CServer::sweepMultiple(const physx::PxGeometry& geometry, const Vector3& position,
 								const Vector3& unitDir, float distance, Vector3* & hitSpots, int& nbHits) {
 

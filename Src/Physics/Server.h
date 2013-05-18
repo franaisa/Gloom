@@ -312,6 +312,12 @@ namespace Physics {
 		*/
 		void raycastMultiple(const Ray& ray, float maxDistance, CRaycastHit* & hits, int& nbHits) const;
 
+		// Se puede añadir un filtro al final. Ya lo miraremos. Lo mismo con el multiple.
+		void raycastSingle(const Ray& ray, float maxDistance, CRaycastHit& hit) const;
+
+		// Igual que en los otros raycast podemos aplicar un filtro. Aun no esta implementado.
+		bool raycastAny(const Ray& ray, float maxDistance) const;
+
 		//________________________________________________________________________
 
 		/**
