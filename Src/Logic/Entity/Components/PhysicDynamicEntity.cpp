@@ -70,8 +70,7 @@ bool CPhysicDynamicEntity::spawn(Logic::CEntity *entity, CMap *map, const Map::C
 bool CPhysicDynamicEntity::accept(const std::shared_ptr<CMessage>& message) {
 	Logic::TMessageType msgType = message->getMessageType();
 
-	return msgType == Message::KINEMATIC_MOVE		||
-		   msgType == Message::ACTIVATE				||
+	return msgType == Message::ACTIVATE				||
 		   msgType == Message::DEACTIVATE			||
 		   msgType == Message::SET_PHYSIC_POSITION	||
 		   msgType == Message::ADD_FORCE_PHYSICS	||
@@ -82,12 +81,6 @@ bool CPhysicDynamicEntity::accept(const std::shared_ptr<CMessage>& message) {
 
 void CPhysicDynamicEntity::process(const std::shared_ptr<CMessage>& message) {
 	switch( message->getMessageType() ) {
-		case Message::KINEMATIC_MOVE: {
-			// Acumulamos el vector de desplazamiento para usarlo posteriormente en 
-			// el método tick.
-			_movement += std::static_pointer_cast<CMessageKinematicMove>(message)->getMovement();
-			break;
-		}
 		case Message::ACTIVATE: {
 			activateSimulation();
 			break;
@@ -120,17 +113,10 @@ void CPhysicDynamicEntity::process(const std::shared_ptr<CMessage>& message) {
 
 //---------------------------------------------------------
 
-void CPhysicDynamicEntity::onTick(unsigned int msecs) {
+void CPhysicDynamicEntity::onFixedTick(unsigned int msecs) {
 	// Actualizar la posición y la orientación de la entidad lógica usando la 
 	// información proporcionada por el motor de física	
 	_entity->setTransform( _physicEntity.getTransform() );
-
-	// Si el objeto físico es kinematico intentamos moverlo de acuerdo 
-	// a los mensajes KINEMATIC_MOVE recibidos 
-	if ( _physicEntity.isKinematic() ) {
-		_physicEntity.move(_movement);
-		_movement = Vector3::ZERO;
-	}
 }
 
 //---------------------------------------------------------

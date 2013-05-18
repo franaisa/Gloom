@@ -129,11 +129,16 @@ namespace Logic {
 		*/
 		void setOwner(Logic::CEntity* owner);
 
+		void setOffset(float capsuleRadius, float heightShoot) {
+			_capsuleRadius = capsuleRadius;
+			_heightShoot = heightShoot;
+		}
+
 	protected:
 
 		virtual void onStart();
 
-		virtual void onFixedTick(unsigned int msecs);
+		virtual void onTick(unsigned int msecs);
 
 	private:
 
@@ -148,6 +153,10 @@ namespace Logic {
 		reduce) y 1 (no recibimos daños).
 		*/
 		float _reducedDamageAbsorption;
+
+		float _capsuleRadius;
+
+		float _heightShoot;
 
 		/** Entidad dueña de esta entidad. */
 		CEntity* _owner;

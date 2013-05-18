@@ -21,6 +21,7 @@ implementa las habilidades del personaje
 
 // Logica
 #include "Logic/Maps/EntityFactory.h"
+#include "Logic/Maps/Map.h"
 #include "Logic/Entity/Entity.h"
 #include "Logic/Server.h"
 #include "Logic/Messages/MessageSetPhysicPosition.h"
@@ -196,6 +197,7 @@ namespace Logic {
 		CScreamerShieldDamageNotifier* shieldDmgNotifier = _screamerShield->getComponent<CScreamerShieldDamageNotifier>("CScreamerShieldDamageNotifier");
 		assert(shieldDmgNotifier && "Error: La entidad ScreamerShield no tiene ningun componente llamado CScreamerShieldDamageNotifier");
 		shieldDmgNotifier->setOwner(_entity);
+		shieldDmgNotifier->setOffset(_capsuleRadius, _heightShoot);
 
 		// Activamos la entidad creada
 		_screamerShield->activate();
