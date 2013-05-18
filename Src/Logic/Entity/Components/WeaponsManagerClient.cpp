@@ -62,7 +62,6 @@ namespace Logic
 		_weaponry[WeaponType::eSNIPER].second = NULL;
 		_weaponry[WeaponType::eSHOTGUN].second = NULL;
 		_weaponry[WeaponType::eMINIGUN].second = NULL;
-		_weaponry[WeaponType::eROCKET_LAUNCHER].second = _entity->getComponent<CShootRocketLauncher>("CShootRocketLauncher");
 
 		return true;
 

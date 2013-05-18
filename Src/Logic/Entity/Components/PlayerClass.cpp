@@ -16,7 +16,6 @@ clase.
 #include "Hound.h"
 #include "Archangel.h"
 #include "Shadow.h"
-#include "ScreamerServer.h"
 #include "Logic/Entity/Entity.h"
 #include "Map/MapEntity.h"
 
@@ -27,7 +26,7 @@ namespace Logic {
 	//IMP_FACTORY(CPlayerClass);
 	
 	CPlayerClass::CPlayerClass(const std::string& playerClassName) : _primarySkillTimer(0),
-																	_secondarySkillTimer(0) {
+																	 _secondarySkillTimer(0) {
 		
 		// No hay memoria dinamica que reservar
 	}

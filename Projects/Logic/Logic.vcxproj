@@ -82,6 +82,7 @@
     <ClCompile Include="..\..\Src\Logic\Entity\Components\CameraFeedbackNotifier.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\ClientRespawn.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\DamageTrigger.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\IronHellGoat.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\PositionSnapshot.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\Elevator.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\ElevatorTrigger.cpp" />
@@ -111,8 +112,6 @@
     <ClCompile Include="..\..\Src\Logic\Entity\Components\PositionInterpolator.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\RocketController.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\RocketControllerClient.cpp" />
-    <ClCompile Include="..\..\Src\Logic\Entity\Components\ScreamerClient.cpp" />
-    <ClCompile Include="..\..\Src\Logic\Entity\Components\ScreamerServer.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\ScreamerShieldDamageNotifier.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\Shoot.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\ShootHammer.cpp" />
@@ -222,6 +221,7 @@
     <ClInclude Include="..\..\Src\Logic\Entity\Components\Audio.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\CameraFeedbackNotifier.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\ClientRespawn.h" />
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\IronHellGoat.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\PositionSnapshot.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\Elevator.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\ElevatorTrigger.h" />
@@ -254,8 +254,6 @@
     <ClInclude Include="..\..\Src\Logic\Entity\Components\PositionInterpolator.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\RocketController.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\RocketControllerClient.h" />
-    <ClInclude Include="..\..\Src\Logic\Entity\Components\ScreamerClient.h" />
-    <ClInclude Include="..\..\Src\Logic\Entity\Components\ScreamerServer.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\ScreamerShieldDamageNotifier.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\Shoot.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\ShootHammer.h" />

@@ -17,12 +17,13 @@ Contiene la implementación del componente que gestiona las armas y que administr
 #include "Graphics/Scene.h"
 #include "Logic/Entity/Components/ArrayGraphics.h"
 
-#include "Logic/Entity/Components/Shoot.h"
-#include "Logic/Entity/Components/ShootShotGun.h"
-#include "Logic/Entity/Components/ShootSniper.h"
-#include "Logic/Entity/Components/ShootMiniGun.h"
-#include "Logic/Entity/Components/ShootHammer.h"
-#include "Logic/Entity/Components/ShootRocketLauncher.h"
+#include "Shoot.h"
+#include "ShootShotGun.h"
+#include "ShootSniper.h"
+#include "ShootMiniGun.h"
+#include "ShootHammer.h"
+#include "ShootRocketLauncher.h"
+#include "IronHellGoat.h"
 
 #include "Logic/Messages/MessageChangeWeapon.h"
 #include "Logic/Messages/MessageChangeWeaponGraphics.h"
@@ -42,8 +43,7 @@ namespace Logic
 
 	//---------------------------------------------------------
 	
-	CWeaponsManager::CWeaponsManager() : _currentWeapon(0), 
-										 _numWeapons(6) {
+	CWeaponsManager::CWeaponsManager() : _currentWeapon(0) {
 		
 	}
 
@@ -62,7 +62,7 @@ namespace Logic
 		_weaponry[WeaponType::eSNIPER].second = _entity->getComponent<CShootSniper>("CShootSniper");
 		_weaponry[WeaponType::eSHOTGUN].second = _entity->getComponent<CShootShotGun>("CShootShotGun");
 		_weaponry[WeaponType::eMINIGUN].second = _entity->getComponent<CShootMiniGun>("CShootMiniGun");
-		_weaponry[WeaponType::eROCKET_LAUNCHER].second = _entity->getComponent<CShootRocketLauncher>("CShootRocketLauncher");
+		_weaponry[WeaponType::eIRON_HELL_GOAT].second = _entity->getComponent<CIronHellGoat>("CIronHellGoat");
 
 		/*
 		// Por defecto la primera arma está activada y equipada (es el arma 0).
@@ -181,7 +181,7 @@ namespace Logic
 	void CWeaponsManager::changeWeapon(unsigned char newWeapon){
 		
 		//printf("\n%d\t%d",_currentWeapon, newWeapon);
-		if(newWeapon >= _numWeapons){
+		if(newWeapon >= WeaponType::eSIZE){
 			return;
 		}
 		if(_weaponry[newWeapon].first && (newWeapon != _currentWeapon))
