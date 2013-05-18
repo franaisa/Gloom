@@ -84,13 +84,6 @@ namespace Logic {
 		Vector3 shootPosition = _owner->getPosition() + ( Math::getDirection( _owner->getOrientation() ) * _capsuleRadius );
 		shootPosition.y += _heightShoot;
 		
-<<<<<<< HEAD
-		Matrix4 playerTransform = _owner->getTransform();
-		//std::cout << "ScreamerShield " << std::endl;
-		_physicComponent->setTransform( playerTransform, true);
-		//_physicComponent->setTransform( playerTransform, false );
-		//_entity->setTransform( playerTransform );
-=======
 		// Sacamos la orientacion de la entidad para setearsela al escudo
 		Matrix4 shootTransform;
 		shootTransform.setTrans(shootPosition);
@@ -98,7 +91,6 @@ namespace Logic {
 		
 		// Seteamos la posicion fisica del escudo
 		_physicComponent->setTransform( shootTransform, false );
->>>>>>> 90363f1039a706fa5137da13f7df7f3dfc42d59f
 	}
 
 	//________________________________________________________________________

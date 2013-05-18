@@ -50,7 +50,7 @@ namespace Logic {
 	//__________________________________________________________________
 
 	CScreamer::CScreamer() : CPlayerClass("screamer"),
-							 _primarySkillIsActive(false),
+							 _secondarySkillIsActive(false),
 							 _screamerShieldDamageTimer(0),
 							 _screamerShieldRecoveryTimer(0),
 							 _screamerShield(NULL) {
@@ -98,8 +98,14 @@ namespace Logic {
 	void CScreamer::onTick(unsigned int msecs) {
 		CPlayerClass::onTick(msecs);
 
+		checkSecondarySkill(msecs);
+	}
+
+	//________________________________________________________________________
+
+	void CScreamer::checkSecondarySkill(unsigned int msecs) {
 		// Si la habilidad primaria está siendo usada
-		if(_primarySkillIsActive) {
+		if(_secondarySkillIsActive) {
 			// Comprobamos si tenemos que explotar, ya que podrían habernos
 			// disparado al escudo
 			if(_currentScreamerShield < 0) {
@@ -167,15 +173,15 @@ namespace Logic {
 		materialMsg->setMaterialName(_materialName);
 		_entity->emitMessage(materialMsg);
 
-		_primarySkillIsActive = false;
+		_secondarySkillIsActive = false;
 		_currentScreamerShield = _screamerShieldThreshold;
 		_screamerShieldDamageTimer = _screamerShieldRecoveryTimer = 0;
 	}
 
 	//__________________________________________________________________
 
-	void CScreamer::primarySkill() {
-		_primarySkillIsActive = true;
+	void CScreamer::secondarySkill() {
+		_secondarySkillIsActive = true;
 
 		// Creamos una entidad ScreamerShield
 		// Obtenemos la informacion asociada al arquetipo del escudo del screamer
@@ -206,15 +212,15 @@ namespace Logic {
 
 	//__________________________________________________________________
 
-	void CScreamer::secondarySkill() {
+	void CScreamer::primarySkill() {
 		// Habilidad por definir
-		std::cout << "Secondary Skill - Screamer" << std::endl;
+		std::cout << "Primary Skill - Screamer" << std::endl;
 	}
 
 	//__________________________________________________________________
 
-	void CScreamer::stopPrimarySkill() {
-		_primarySkillIsActive = false;
+	void CScreamer::stopSecondarySkill() {
+		_secondarySkillIsActive = false;
 
 		//assert(_screamerShield != NULL && "Error: No se ha creado el escudo");
 		if(_screamerShield != NULL) {

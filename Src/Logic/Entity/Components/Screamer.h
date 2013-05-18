@@ -92,27 +92,27 @@ namespace Logic {
 		// =======================================================================
 
 
-		/** 
-		Absorbe todos los proyectiles que le llegan de frente. Esta habilidad tiene
-		un límite, si se sobrepasa explotas.
-		*/
+		/** Habilidad por definir. */
 		virtual void primarySkill();
 
 		//__________________________________________________________________
 
-		/** Habilidad por definir. */
+		/** 
+		Absorbe todos los proyectiles que le llegan de frente. Esta habilidad tiene
+		un límite, si se sobrepasa explotas.
+		*/
 		virtual void secondarySkill();
 
 		//__________________________________________________________________
 
 		/**
 		Se dispara cuando el jugador deja de pulsar la tecla de uso de la habilidad
-		primaria.
+		secundaria.
 
-		Provoca que deje de usarse la habilidad primaria y comience la recuperacion
+		Provoca que deje de usarse la habilidad secundaria y comience la recuperacion
 		de las defensas del Screamer.
 		*/
-		virtual void stopPrimarySkill();
+		virtual void stopSecondarySkill();
 
 		//__________________________________________________________________
 
@@ -144,6 +144,8 @@ namespace Logic {
 
 		void blowUp();
 
+		void checkSecondarySkill(unsigned int msecs);
+
 		//__________________________________________________________________
 
 		/**
@@ -157,8 +159,8 @@ namespace Logic {
 		// =======================================================================
 
 
-		/** true si la habilidad primaria está siendo usada. */
-		bool _primarySkillIsActive;
+		/** true si la habilidad secundaria está siendo usada. */
+		bool _secondarySkillIsActive;
 
 		/** Puntos de escudo actuales de la habilidad primaria. */
 		float _currentScreamerShield;
