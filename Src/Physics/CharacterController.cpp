@@ -148,7 +148,6 @@ namespace Physics {
 		// Fijamos la distancia minima a la que parar el algoritmo de movimiento a 0.01f.
 		// Pasamos el tiempo de frame transcurrido en micro segundos (como a physX le gusta).
 		// Dado que no tenemos objetos fisicos no manejados por physX, pasamos NULL como obstaculo.
-		//PxControllerFilters filters(_filterMask);
 		PxControllerFilters filters(_filterMask);
 		return _controller->move(disp, 0.01f, msecs * 0.001f, filters, NULL);
 	}

@@ -125,6 +125,9 @@ namespace Logic {
 		*/
 		void setOwner(Logic::CEntity* owner);
 
+	protected:
+
+		virtual void onTick(unsigned int msecs);
 
 	private:
 

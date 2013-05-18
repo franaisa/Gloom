@@ -13,7 +13,7 @@ del Screamer.
 */
 
 #include "ScreamerShieldDamageNotifier.h"
-#include "ScreamerServer.h"
+#include "Screamer.h"
 #include "Logic/Server.h"
 #include "Logic/Entity/Entity.h"
 #include "Logic/Maps/Map.h"
@@ -68,6 +68,12 @@ namespace Logic {
 		}
 	} // process
 
+	void CScreamerShieldDamageNotifier::onTick(unsigned int msecs) {
+		// Aunque este no es el sitio mas idoneo para hacer esto, lo
+		// voy a hacer aqui por facilidad
+		_entity->setTransform( _owner->getTransform() );
+	}
+
 	//________________________________________________________________________
 
 	void CScreamerShieldDamageNotifier::onActivate() {
@@ -86,7 +92,7 @@ namespace Logic {
 		// Para no consumir dos ticks, no vamos a reenviar el mensaje de daño
 		// al componente CScreamer, sino que sencillamente vamos a llamar al
 		// método que corresponda del propio componente.
-		CScreamerServer* screamerComponent = _owner->getComponent<CScreamerServer>("CScreamerServer");
+		CScreamer* screamerComponent = _owner->getComponent<CScreamer>("CScreamer");
 		assert(screamerComponent && "Error: La entidad del jugador no tiene ningun componente llamado CScreamer");
 		screamerComponent->absorbDamage(damage);
 	}// damaged
