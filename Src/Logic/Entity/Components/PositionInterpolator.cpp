@@ -44,9 +44,12 @@ namespace Logic {
 		if( !IComponent::spawn(entity, map, entityInfo) ) return false;
 
 		assert( entityInfo->hasAttribute("ticksPerSample") );
+		assert( entityInfo->hasAttribute("samplesPerSnapshot") );
 
 		// Cada cuantos fixed ticks tomamos una muestra
 		_ticksPerSample = entityInfo->getIntAttribute("ticksPerSample");
+		// Cada cuantas muestras tomamos una snapshot
+		_samplesPerSnapshot = entityInfo->getIntAttribute("samplesPerSnapshot");
 
 		return true;
 	}
@@ -97,14 +100,17 @@ namespace Logic {
 
 	void CPositionInterpolator::onStart() {
 		_controller = _entity->getComponent<CPhysicController>("CPhysicController");
-		assert(_controller != NULL && "Error: Como crees que voy a interpolar si no tengo physicController? meh!");
+		//assert(_controller != NULL && "Error: Como crees que voy a interpolar si no tengo physicController? meh!");
 	}
 
 	//__________________________________________________________________
 
 	void CPositionInterpolator::onFixedTick(unsigned int msecs) {
 		if( !_buffer.empty() ) {
-			_controller->setPhysicPosition(_buffer.front());
+			// Podria tratarse de algun elemento que no sea un jugador, en general solo tendran
+			// entidad grafica, así que basta con setear la entidad gráfica.
+			if(_controller != NULL) _controller->setPhysicPosition( _buffer.front() );
+			_entity->setPosition( _buffer.front() );
 			_buffer.pop_front();
 		}
 		// Estamos perdiendo ticks por algun motivo

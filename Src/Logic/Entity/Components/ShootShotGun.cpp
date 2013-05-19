@@ -69,8 +69,11 @@ namespace Logic {
 				
 			drawParticle("fire", "shootParticle");
 
+			float shoots = _numberShots;
+			if(_currentAmmo < _numberShots)
+				shoots = _currentAmmo;
 			
-			for(int i = 0; i < _numberShots; ++i){
+			for(int i = 0; i < shoots ; ++i){
 				fireWeapon();
 				decrementAmmo();
 			}
@@ -115,7 +118,7 @@ namespace Logic {
 		projectileEntity->activate();
 		projectileEntity->start();
 
-		projectileEntity->getComponent<CMagneticBullet>("CMagneticBullet")->setProperties(this, _projectileShootForce, dispersionDirection, _heightShoot);
+		projectileEntity->getComponent<CMagneticBullet>("CMagneticBullet")->setProperties(this, _projectileShootForce, dispersionDirection, _heightShoot, _damage);
 		_projectiles.insert(projectileEntity);
 			
 	} // fireWeapon
