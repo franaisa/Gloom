@@ -14,6 +14,12 @@ Contiene la declaración del componente que controla la vida de una entidad.
 
 #include "Logic/Entity/Component.h"
 
+
+namespace Logic {
+	class CShootShotGun;
+
+}
+
 //declaración de la clase
 namespace Logic 
 {
@@ -29,7 +35,6 @@ namespace Logic
 	{
 		DEC_FACTORY(CMagneticBullet);
 	public:
-
 		/**
 		Constructor por defecto; en la clase base no hace nada.
 		*/
@@ -52,7 +57,7 @@ namespace Logic
 		*/
 		virtual void process(const std::shared_ptr<CMessage>& message);
 
-		void setOwner(IComponent *owner);
+		void setOwner(CShootShotGun *owner);
 
 		void impact(CEntity *impactEntity);
 	protected:
@@ -64,7 +69,7 @@ namespace Logic
 		@param msecs Milisegundos transcurridos desde el último tick.
 		*/
 		//virtual void onTick(unsigned int msecs);
-		IComponent *_owner;
+		CShootShotGun *_owner;
 
 	}; // class CMagneticBullet
 

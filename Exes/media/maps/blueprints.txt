@@ -27,5 +27,3 @@ DirectionalLight CLight CGraphics
 ScreamerShield CGraphics CPhysicDynamicEntity CScreamerShieldDamageNotifier
 MagneticBullet CMagneticBullet CPhysicDynamicEntity CGraphics
 FireBall CFireBallController CPhysicDynamicEntity CGraphics
-
-

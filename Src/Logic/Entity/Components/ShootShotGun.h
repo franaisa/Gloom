@@ -55,6 +55,8 @@ namespace Logic {
 
 		void magnetizeBullet();
 
+		void impactProjectile(CEntity *projectile);
+
 		virtual void onFixedTick(unsigned int msecs);
 
 

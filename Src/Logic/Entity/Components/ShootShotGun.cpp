@@ -69,8 +69,8 @@ namespace Logic {
 				
 			drawParticle("fire", "shootParticle");
 
+			
 			for(int i = 0; i < _numberShots; ++i){
-				printf("\nDisparo");
 				fireWeapon();
 			}
 
@@ -127,12 +127,18 @@ namespace Logic {
 			Logic::CServer::getSingletonPtr()->getMap(),
 			position
 			));
+		projectileEntity->activate();
+		projectileEntity->start();
 		temp.projectile = projectileEntity->getComponent<CPhysicDynamicEntity>("CPhysicDynamicEntity");
-		projectileEntity->getComponent<CMagneticBullet>("MagneticBullet")->setOwner(this);
+		projectileEntity->getComponent<CMagneticBullet>("CMagneticBullet")->setOwner(this);
 		_projectiles.push_back(temp);
 			
 	} // fireWeapon
 	//_________________________________________________
+
+	void CShootShotGun::impactProjectile(CEntity *projectile){
+		CEntityFactory::deferredDeleteEntity(projectile, true);
+	}
 
 	void CShootShotGun::onFixedTick(unsigned int msecs){
 	
