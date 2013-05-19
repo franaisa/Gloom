@@ -107,7 +107,7 @@ namespace Logic {
 		// @todo Setear una nueva direccion calculada en base a la direccion donde
 		// apunta el puntero
 
-
+		void alterDirection(const Vector3& direction);
 
 	protected:
 

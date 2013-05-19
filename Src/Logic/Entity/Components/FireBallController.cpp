@@ -85,6 +85,12 @@ namespace Logic {
 
 	//________________________________________________________________________
 
+	void CFireBallController::alterDirection(const Vector3& direction) {
+		this->_direction = direction; 
+	}
+
+	//________________________________________________________________________
+
 	void CFireBallController::onFixedTick(unsigned int msecs) {
 		// Muevo a la bola de fuego
 		_physicComponent->move( _direction * _speed * msecs );

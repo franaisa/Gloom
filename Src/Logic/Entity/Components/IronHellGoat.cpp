@@ -80,6 +80,9 @@ namespace Logic {
 			// llevan y la dirección en la que apunto con el ratón
 
 			// Comprobar el buffer de bolas vivas
+			for(auto it = _controllableFireBalls.begin(); it != _controllableFireBalls.end(); ++it) {
+				(*it)->alterDirection( Math::getDirection( _entity->getOrientation() ) );
+			}
 		}
 		else {
 			// Si no quedan bolas vivas poner a dormir
