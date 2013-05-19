@@ -137,7 +137,7 @@ namespace Logic {
 	//_________________________________________________
 
 	void CShootShotGun::impactProjectile(CEntity *projectile){
-		CEntityFactory::deferredDeleteEntity(projectile, true);
+		//CEntityFactory::deferredDeleteEntity(projectile, true);
 	}
 
 	void CShootShotGun::onFixedTick(unsigned int msecs){
