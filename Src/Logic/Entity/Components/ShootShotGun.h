@@ -53,11 +53,14 @@ namespace Logic {
 
 		virtual void fireWeapon();
 
+
+
 		void magnetizeBullet();
 
 		/**
 		Metodo llamado por el proyectil para que este sea borrado como entidad y que lo borre de la lista de 
 		proyectiles.
+		@param projectile, puntero al proyectil que debera ser destruido
 		*/
 		void destroyProjectile(CEntity *projectile);
 
