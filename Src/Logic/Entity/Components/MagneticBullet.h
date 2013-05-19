@@ -1,7 +1,7 @@
 /**
 @file MagneticBullet.h
 
-Contiene la declaración del componente que controla la vida de una entidad.
+Contiene la declaración del componente que controla las balas de las shotGun .
 
 @see Logic::CMagneticBullet
 @see Logic::IComponent
@@ -24,7 +24,7 @@ namespace Logic {
 namespace Logic 
 {
 /**
-	Este componente controla la luz que tiene un objeto. 
+	Este componente controla las balas de la shotgun. 
 	
     @ingroup logicGroup
 
@@ -53,12 +53,23 @@ namespace Logic
 		virtual bool accept(const std::shared_ptr<CMessage>& message);
 
 		/**
-		
+		procesa los mensajes que son aceptados
 		*/
 		virtual void process(const std::shared_ptr<CMessage>& message);
 
+		/**
+		establece quien es el dueño de esta clase
+		@param owner, dueño de esta clase
+		*/
 		void setOwner(CShootShotGun *owner);
 
+		/**
+		Establece las propiedades para que cada bala funcione bien.
+		@param owner, dueño de la clase
+		@param speed, velocidad de movimiento del proyectil
+		@param projectileDirection, direccion por la que ira el proyectil
+		@param heightShoot, altura del disparo del jugador
+		*/
 		void setProperties(CShootShotGun *owner, float speed, Vector3 projectileDirection, int heightShoot){ 
 			_owner = owner; 
 			_speed = speed; 
@@ -67,10 +78,26 @@ namespace Logic
 		
 		};
 
+		/**
+		Establece la velocidad de la bala
+		@param speed, velocidad de desplazamiento
+		*/
 		void setSpeed(float speed){ _speed = speed;};
 		
+		/**
+		Establece direccion del proyectil
+		@param projectileDirection, direccion en la que ira el proyectil
+		*/
 		void setProjectileDirection(Vector3 projectileDirection);
-
+		
+		/**
+		meotdo que se invoca cuando recive la colision con alguna entidad.
+		Si es el world la bala sera destruida y si es el player se pueden diferenciar dos casos:
+		<ol>
+			<li>Que este recien disparado y por lo tanto ignara el contacto</li>
+			<li>O que se haya pulsado el disparo secundario y la municion este volviendo asi que se añadira a la municion actual</li>
+		</ol>
+		*/
 		void impact(CEntity *impactEntity);
 	protected:
 
@@ -80,18 +107,38 @@ namespace Logic
 
 		@param msecs Milisegundos transcurridos desde el último tick.
 		*/
+
+
 		virtual void onFixedTick(unsigned int msecs);
 
+		/**
+		Puntero al componente fisico de la bala, se tiene por optimizacion
+		*/
 		CPhysicDynamicEntity *_physicComponent;
 
+		/**
+		Velocidad de desplazamiento de la bala
+		*/
 		float _speed;
 
+		/**
+		Direccion en la que se movera la bala
+		*/
 		Vector3 _projectileDirection;
 
+		/**
+		Puntero al dueño de la bala
+		*/
 		CShootShotGun *_owner;
 
+		/**
+		Variable booleana que indica si se ha activado el boton derecho
+		*/
 		bool _returning;
 
+		/**
+		Altura del disparo
+		*/
 		int _heightShoot;
 
 	}; // class CMagneticBullet

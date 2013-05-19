@@ -102,11 +102,6 @@ namespace Logic
 		if(_returning){
 			//_projectileDirection = Math::getDirection(_owner->getEntity()->getOrientation());
 			
-			/*
-			Vector3 aux = _owner->getEntity()->getPosition();
-			aux += (Vector3(0,_heightShoot,0));
-			Vector3 aux2 = _entity->getPosition();
-			*/
 			_projectileDirection = (_owner->getEntity()->getPosition()+(Vector3(0,_heightShoot,0)) - _entity->getPosition());
 			_projectileDirection.normalise();
 		}
