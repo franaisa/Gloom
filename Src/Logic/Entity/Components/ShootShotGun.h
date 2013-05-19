@@ -60,12 +60,13 @@ namespace Logic {
 
 	private:
 
-		Vector3 _projectileDirection;
-
-		Vector3 _shootDirection;
+		struct TProjectile{
+			Vector3 _projectileDirection;
+			CPhysicDynamicEntity* projectile;
+		};
 		float _dispersionAngle;
 
-		std::vector<CPhysicDynamicEntity*> _projectiles;
+		std::vector<TProjectile> _projectiles;
 	};
 
 	REG_FACTORY(CShootShotGun);

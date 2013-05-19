@@ -259,6 +259,7 @@ namespace Logic {
 		// de rozamiento
 		float coef = (_displacementDir == Vector3::ZERO) ? 0.8f : _maxVelocity/(_maxVelocity+(0.5*_acceleration*msecs));
 		
+		/*
 		if(_displacementDir != Vector3::ZERO){
 		    std::shared_ptr<CMessageHudDebugData> m = std::make_shared<CMessageHudDebugData>();
 		    m->setKey("incremento");
@@ -266,7 +267,7 @@ namespace Logic {
 		    _entity->emitMessage(m);
 		
 		}
-
+		*/
 		// Aumentamos el desplazamiento en la dirección dada en función de la aceleración
 		// y el tiempo transcurrido -> s = u · t + 1/2 · a · t^2
 

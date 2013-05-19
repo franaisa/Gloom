@@ -25,4 +25,4 @@ PointLight CLight CGraphics
 SpotLight CLight CGraphics
 DirectionalLight CLight CGraphics
 ScreamerShield CGraphics CPhysicDynamicEntity CScreamerShieldDamageNotifier
-ShotGunProjectile CPhysicDynamicEntity CGraphics
+MagneticBullet CMagneticBullet CPhysicDynamicEntity CGraphics

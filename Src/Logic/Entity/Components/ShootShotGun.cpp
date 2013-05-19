@@ -12,7 +12,9 @@ Contiene la implementación del componente que representa a la escopeta.
 
 #include "ShootShotGun.h"
 
+
 // Logica
+#include "MagneticBullet.h"
 #include "Logic/Maps/EntityFactory.h"
 #include "Logic/Maps/Map.h"
 #include "Logic/Entity/Entity.h"
@@ -109,39 +111,25 @@ namespace Logic {
 	void CShootShotGun::fireWeapon(){
 		
 		Vector3 direction = Math::getDirection(_entity->getOrientation());
-		Vector3 dispersionDirection = direction.randomDeviant(Ogre::Radian(_dispersionAngle));
+		Ogre::Radian angle = Ogre::Radian( (  (((float)(rand() % 100))*0.01f) * (_dispersionAngle)) *0.01f);
+		Vector3 dispersionDirection = direction.randomDeviant(angle);
 		dispersionDirection.normalise();
+
 		Vector3 position = _entity->getPosition();
 		position.y += _heightShoot;
 
-		//*
-		Quaternion aux = Quaternion(&dispersionDirection);
-		
-		_projectiles.push_back(CEntityFactory::getSingletonPtr()->createEntityWithPositionAndOrientation( 
-			CEntityFactory::getSingletonPtr()->getInfo("ShotGunProjectile"),
-			Logic::CServer::getSingletonPtr()->getMap(),
-			position,
-			aux.getYaw().valueRadians(),
-			aux.getPitch().valueRadians()
-			)->getComponent<CPhysicDynamicEntity>("CPhysicDynamicEntity"));
+		TProjectile temp;
 
-		/*/
-		float x = dispersionDirection.x;
-		float y = dispersionDirection.y;
-		float z = dispersionDirection.z;
-		
-		float yaw = -std::atan2(x, -z);
-		float pitch = std::atan2(y, std::sqrt(x*x + z*z);
-		
-		_projectiles.push_back(CEntityFactory::getSingletonPtr()->createEntityWithPositionAndOrientation( 
-			CEntityFactory::getSingletonPtr()->getInfo("ShotGunProjectile"),
+		temp._projectileDirection = dispersionDirection;
+
+		CEntity *projectileEntity= (CEntityFactory::getSingletonPtr()->createEntityWithPosition( 
+			CEntityFactory::getSingletonPtr()->getInfo("MagneticBullet"),
 			Logic::CServer::getSingletonPtr()->getMap(),
-			position,
-			yaw,
-			pitch
-			)->getComponent<CPhysicDynamicEntity>("CPhysicDynamicEntity"));
-		/* */	
-			
+			position
+			));
+		temp.projectile = projectileEntity->getComponent<CPhysicDynamicEntity>("CPhysicDynamicEntity");
+		projectileEntity->getComponent<CMagneticBullet>("MagneticBullet")->setOwner(this);
+		_projectiles.push_back(temp);
 			
 	} // fireWeapon
 	//_________________________________________________
@@ -149,18 +137,7 @@ namespace Logic {
 	void CShootShotGun::onFixedTick(unsigned int msecs){
 	
 		for(auto it = _projectiles.begin(); it != _projectiles.end(); ++it){
-
-			auto m = std::make_shared<CMessageHudDebugData>();
-			m->setKey((*it)->getEntity()->getName());
-			m->setValue((*it)->getEntity()->getPosition());
-			_entity->emitMessage(m);
-
-			_projectileDirection = Math::getDirection((*it)->getEntity()->getOrientation()) * _projectileShootForce;
-			/*
-			(*it)->move(_projectileDirection);
-			/*/
-			(*it)->getEntity()->setPosition((*it)->getEntity()->getPosition() + _projectileDirection);
-			/* */
+			(*it).projectile->move((*it)._projectileDirection * _projectileShootForce);
 		}
 	}
 
