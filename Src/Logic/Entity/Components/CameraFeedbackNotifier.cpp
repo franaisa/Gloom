@@ -297,27 +297,22 @@ namespace Logic {
 
 	//________________________________________________________________________
 
-	/** Cuadrantes:  
-	      +z 90º				
-	  	 2  |  1			Los ángulos se miden en sentido contrario al sentido del reloj.
-  180º -z___|___ +x 0º
-			|
-		 3  |  4
-		  -z 270º
-	*/
+
 	//SIN ACABAR
 	void CCameraFeedbackNotifier::calculateEnemyPosition(Vector3 vPosEnemy) { 
 		//Obtengo la posición del enemigo
 		Ogre::Vector3 vEnemyPos = vPosEnemy;
 		//Obtengo mi posición (entidad a la que han dañado)
 		Ogre::Vector3 vMyPos = this->_entity->getPosition();
+
+		/*
+		short sCuadrante; 	
 		
 		//Angulo en radianes
 		float fAngulo; 
 		if (vEnemyPos != vMyPos)
 		{
 			//Obtengo desde qué cuadrante me ha disparado
-			short sCuadrante; 
 			if ((vEnemyPos.x >= vMyPos.x) && (vEnemyPos.z >= vMyPos.z))
 				sCuadrante = 1;
 			else if ((vEnemyPos.x > vMyPos.x) && (vEnemyPos.z < vMyPos.z))
@@ -341,8 +336,8 @@ namespace Logic {
 				/*
 				case 1:
 					//Ya hecho antes del switch
-				break;
-				*/
+				break;//*
+				
 				case 2:
 					fAngulo += Math::HALF_PI;
 				break;
@@ -360,11 +355,33 @@ namespace Logic {
 			fAngulo = 0.0f;
 
 		//Trabajar con el fAngulo para poner la flecha en el hud, o darle efecto al compositor
-		std::cout << "Angulo (en radianes) con el que ha impactado: " << fAngulo << std::endl;
+		//std::cout << "Angulo (en radianes) con el que ha impactado: " << fAngulo << std::endl;
+
+		//std::shared_ptr<Logic::CMessageImpact> impact = std::make_shared<Logic::CMessageImpact>();
+		//impact->setDirectionImpact(fAngulo);//Timer								 
+		//_entity->emitMessage(impact);
+		*/
+
+		Vector3 vMyDirVision = Math::getDirection(_entity->getTransform());
+		vMyDirVision = Vector3(vMyDirVision.x,0,vMyDirVision.z);
+		Vector3 vEnemyDirVision = vPosEnemy - vMyPos;
+		vEnemyDirVision = Vector3(vEnemyDirVision.x, 0, vEnemyDirVision.z);
+		Ogre::Radian rad = vMyDirVision.angleBetween(vEnemyDirVision);
+		float fRadianes = (float)rad.valueRadians();
+
+		Matrix4 mat = _entity->getTransform().inverse();
+		Vector3 vec = mat * vPosEnemy; //este verctor es la posicion del enemigo respecto a mi
+		if (vec.x > 0) 
+		{
+			//El enemigo está a la derecha, así que tengo que multiplicar
+			//por -1 para que se oriente bien la flecha de daño
+			fRadianes *= -1.0f;
+		}
 
 		std::shared_ptr<Logic::CMessageImpact> impact = std::make_shared<Logic::CMessageImpact>();
-		impact->setDirectionImpact(fAngulo);//Timer								 
+		impact->setDirectionImpact(fRadianes);							 
 		_entity->emitMessage(impact);
+
 	}
 
 	//________________________________________________________________________
