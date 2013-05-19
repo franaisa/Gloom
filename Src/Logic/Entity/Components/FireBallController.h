@@ -116,9 +116,13 @@ namespace Logic {
 
 	private:
 
+		void createExplotion();
+
 		CIronHellGoat* _owner;
 
 		CPhysicDynamicEntity* _physicComponent;
+
+		Vector3 _direction;
 
 		float _speed;
 

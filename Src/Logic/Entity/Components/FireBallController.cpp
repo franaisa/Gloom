@@ -13,6 +13,8 @@
 
 #include "Logic/Maps/EntityFactory.h"
 
+#include "Logic/Messages/MessageContactEnter.h"
+
 using namespace std;
 
 namespace Logic {
@@ -52,10 +54,12 @@ namespace Logic {
 		assert( entityInfo->hasAttribute("speed") );
 		assert( entityInfo->hasAttribute("damage") );
 		assert( entityInfo->hasAttribute("explotionRadius") );
+		assert( entityInfo->hasAttribute("direction") );
 
 		_speed = entityInfo->getFloatAttribute("speed");
 		_damage = entityInfo->getFloatAttribute("damage");
 		_explotionRadius = entityInfo->getFloatAttribute("explotionRadius");
+		_direction = entityInfo->getVector3Attribute("direction");
 
 		return true;
 	}
@@ -63,25 +67,41 @@ namespace Logic {
 	//________________________________________________________________________
 
 	bool CFireBallController::accept(const shared_ptr<CMessage>& message) {
-		return false;
+		return message->getMessageType() == Message::CONTACT_ENTER;
 	}
 
 	//________________________________________________________________________
 
 	void CFireBallController::process(const shared_ptr<CMessage>& message) {
-
+		switch( message->getMessageType() ) {
+			case Message::CONTACT_ENTER: {
+				createExplotion();
+			}
+		}
 	}
 
 	//________________________________________________________________________
 
 	void CFireBallController::onFixedTick(unsigned int msecs) {
 		// Muevo a la bola
+		
+		// @todo llamar al move del kinematico con la velocidad * direccion * tiempo
+		_physicComponent->move( _direction * _speed * msecs );
 	}
 	
 	//________________________________________________________________________
 
 	void CFireBallController::setOwner(CIronHellGoat* owner) {
 		this->_owner = owner;
+	}
+
+	//________________________________________________________________________
+
+	void CFireBallController::createExplotion() {
+		// Generar un overlap y mandar los mensajes de daño a las entidades
+		// con las que se impacte
+
+		// Destruir en diferido esta entidad
 	}
 
 } // namespace Logic

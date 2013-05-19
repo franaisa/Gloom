@@ -71,7 +71,7 @@ namespace Logic {
 			// Si la bola no tiene el tamaño máximo, aumentarla conforme
 			// al factor de crecimiento establecido y reducir su velocidad
 			_fireBallRadius += 0.001f * msecs;
-			_fireBallSpeed += 0.1f * msecs;
+			_fireBallSpeed = 0.001f * msecs;
 			_fireBallExplotionRadius += _fireBallRadius * 5.0f;
 			_fireBallDamage += 0.001f * msecs;
 		}
@@ -102,32 +102,42 @@ namespace Logic {
 
 		// Obtenemos la información estandard asociada a la bola de fuego
 		Map::CEntity* entityInfo = CEntityFactory::getSingletonPtr()->getInfo("FireBall");
+		
 		// Modificamos sus parámetros en base a los valores calculados
 		entityInfo->setAttribute( "physic_radius", toString(_fireBallRadius) );
 		entityInfo->setAttribute( "scale", toString( Vector3(1.0f, 1.0f, 1.0f) * _fireBallRadius ) );
 		entityInfo->setAttribute( "speed", toString(_fireBallSpeed) );
 		entityInfo->setAttribute( "explotionRadius", toString(_fireBallExplotionRadius) );
 		entityInfo->setAttribute( "damage", toString(_fireBallDamage) );
-		// Creamos la bola de fuego con los parámetros customizados
-		// @todo Crear la bola en el punto de mira a la distancia de la capsula + su radio
+		entityInfo->setAttribute( "direction", toString( Math::getDirection( _entity->getTransform() ) ));
+
+		// Creamos la bola de fuego con los parámetros customizados a partir
+		// del radio de la cápsula + el radio de la bola + un pequeño offset
+		Matrix4 playerTransform = _entity->getTransform();
+		Vector3 shootPosition = playerTransform.getTrans() + ( Math::getDirection( _entity->getOrientation() ) * (_capsuleRadius + _fireBallRadius + 1.0f) );
+		shootPosition.y += _heightShoot - _fireBallRadius;
+
+		// Creamos la entidad
 		CEntity* fireBall = CEntityFactory::getSingletonPtr()->createEntityWithPositionAndOrientation(
 																	entityInfo, 
 																	CServer::getSingletonPtr()->getMap(),
-																	_entity->getPosition(),
-																	_entity->getYaw(),
-																	_entity->getPitch()
+																	shootPosition,
+																	Math::getYaw(playerTransform),
+																	Math::getPitch(playerTransform)
 																);
 
 		// Le indicamos al controlador de la bola que este componente es el poseedor
 		// para que se invoque al metodo correspondiente cuando las bolas mueran
 		CFireBallController* fbController = fireBall->getComponent<CFireBallController>("CFireBallController");
 		fbController->setOwner(this);
+		
 		// Arrancamos la entidad
-		fbController->activate();
-		fbController->start();
+		fireBall->activate();
+		fireBall->start();
 
 		// Me apunto la entidad devuelta por la factoria
 		_controllableFireBalls.insert(fbController);
+		
 		// Reseteo los valores de creación
 		_fireBallRadius = _fireBallSpeed = _fireBallExplotionRadius = _fireBallDamage = 0.0f;
 	}

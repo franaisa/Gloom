@@ -254,7 +254,7 @@ namespace Logic {
 			// Si la entidad golpeada es valida y es un player
 			if( entitiesHit[i] != NULL && entitiesHit[i]->isPlayer() ) {
 				// Emitimos el mensaje de instakill
-				// @deprecated Calcular bien el daño
+				// @todo mandar un mensaje de instakill en vez de un mensaje de daño
 				std::shared_ptr<CMessageDamaged> dmgMsg = std::make_shared<CMessageDamaged>();
 				dmgMsg->setDamage(_screamerExplotionDamage);
 				dmgMsg->setEnemy(_entity);
