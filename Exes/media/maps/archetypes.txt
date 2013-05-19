@@ -804,7 +804,7 @@ Map = {
 			weaponshotGunOffset = {3.0,-4.5,-7.0},
 			weaponshotGunDamage = 9.0,
 			weaponshotGunDispersion = 20,
-			weaponshotGunNumberShoots = 8,
+			weaponshotGunNumberShoots = 1,
 			weaponshotGunDistance = 600.0,
 			weaponshotGunPrimaryColdDown = 1.5,
 			weaponshotGunSecondaryColdDown = 1.5,
@@ -1740,10 +1740,11 @@ Map = {
 		physic_trigger = false,
 		physic_type = "kinematic",
 		physic_shape = "sphere",
-		physic_radius = 0.5,
+		physic_radius = 5,
 		physic_mass = 1,
 		physic_group = 6,
-		physic_groupList = "3, 10", 
+		physic_groupList = "0", 
+		scale = {5,5,5},
 	},
 	
 	Jumper1 = {

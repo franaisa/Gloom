@@ -53,7 +53,9 @@ namespace Logic {
 
 		virtual void fireWeapon();
 
-		virtual void onTick(unsigned int msecs);
+		void magnetizeBullet();
+
+		virtual void onFixedTick(unsigned int msecs);
 
 
 	private:

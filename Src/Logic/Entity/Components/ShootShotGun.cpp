@@ -19,6 +19,9 @@ Contiene la implementación del componente que representa a la escopeta.
 #include "Logic/Server.h"
 #include "PhysicDynamicEntity.h"
 
+//Debug
+#include "Logic/Messages/MessageHudDebugData.h"
+
 namespace Logic {
 	IMP_FACTORY(CShootShotGun);
 
@@ -29,11 +32,28 @@ namespace Logic {
 	//________________________________________________
 
 	bool CShootShotGun::spawn(CEntity* entity, CMap *map, const Map::CEntity *entityInfo){
-		if(!CShootProjectile::spawn(entity, map, entityInfo))
+		if(!CShoot::spawn(entity, map, entityInfo))
 			return false;
 
-		if(entityInfo->hasAttribute("shotGundispersion")){
-			float _dispersionAngle  = entityInfo->getFloatAttribute("shotGundispersion");
+		// Leer los parametros que toquen para los proyectiles
+		std::stringstream aux;
+		aux << "weapon" << _nameWeapon;	////!!!! Aqui debes de poner el nombre del arma que leera en el map.txt
+		std::string weapon = aux.str();
+
+		if(entityInfo->hasAttribute(weapon+"ShootForce"))
+			_projectileShootForce = entityInfo->getFloatAttribute(weapon + "ShootForce");
+
+		if(entityInfo->hasAttribute(weapon+"ProjectileRadius"))
+			_projectileRadius = entityInfo->getFloatAttribute(weapon + "ProjectileRadius");
+
+		if(entityInfo->hasAttribute("audioNoAmmo"))
+			_noAmmo = entityInfo->getStringAttribute("audioNoAmmo");
+
+		if(entityInfo->hasAttribute(weapon+"Audio"))
+			_audioShoot = entityInfo->getStringAttribute(weapon+"Audio");
+
+		if(entityInfo->hasAttribute(weapon+"Dispersion")){
+			_dispersionAngle  = entityInfo->getFloatAttribute(weapon+"Dispersion");
 		}
 
 		return true;
@@ -47,9 +67,10 @@ namespace Logic {
 				
 			drawParticle("fire", "shootParticle");
 
-			for(int i = 0; i < _numberShots; ++i)
+			for(int i = 0; i < _numberShots; ++i){
 				printf("\nDisparo");
-				//fireWeapon();
+				fireWeapon();
+			}
 
 			decrementAmmo();
 
@@ -70,11 +91,10 @@ namespace Logic {
 				
 			drawParticle("fire", "shootParticle");
 
-			for(int i = 0; i < _numberShots; ++i)
+			for(int i = 0; i < _numberShots; ++i){
 				printf("\nDisparo secundario");
 				//fireWeapon();
-
-			decrementAmmo();
+			}
 
 			//Sonido de disparo
 			emitSound(_audioShoot, "audioShot");
@@ -89,11 +109,10 @@ namespace Logic {
 	void CShootShotGun::fireWeapon(){
 		
 		Vector3 direction = Math::getDirection(_entity->getOrientation());
-		direction.y = _heightShoot;
 		Vector3 dispersionDirection = direction.randomDeviant(Ogre::Radian(_dispersionAngle));
 		dispersionDirection.normalise();
 		Vector3 position = _entity->getPosition();
-		position.y = _heightShoot;
+		position.y += _heightShoot;
 
 		//*
 		Quaternion aux = Quaternion(&dispersionDirection);
@@ -127,15 +146,22 @@ namespace Logic {
 	} // fireWeapon
 	//_________________________________________________
 
-	void CShootShotGun::onTick(unsigned int msecs){
-		CShoot::onTick(msecs);
-		
-		/*
-		for(int i = 0; i < _numberShots; ++i){
-			_projectileDirection = Math::getDirection(_projectiles[i]->getEntity()->getOrientation()) * _projectileShootForce;
-			_projectiles[i]->move(_projectileDirection);
+	void CShootShotGun::onFixedTick(unsigned int msecs){
+	
+		for(auto it = _projectiles.begin(); it != _projectiles.end(); ++it){
+
+			auto m = std::make_shared<CMessageHudDebugData>();
+			m->setKey((*it)->getEntity()->getName());
+			m->setValue((*it)->getEntity()->getPosition());
+			_entity->emitMessage(m);
+
+			_projectileDirection = Math::getDirection((*it)->getEntity()->getOrientation()) * _projectileShootForce;
+			/*
+			(*it)->move(_projectileDirection);
+			/*/
+			(*it)->getEntity()->setPosition((*it)->getEntity()->getPosition() + _projectileDirection);
+			/* */
 		}
-		*/
 	}
 
 } // namespace Logic
