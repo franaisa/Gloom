@@ -23,6 +23,10 @@ de disparo de la cabra.
 #include <set>
 
 namespace Logic {
+	class CFireBallController;
+}
+
+namespace Logic {
 
 	/**
     @ingroup logicGroup
@@ -73,11 +77,24 @@ namespace Logic {
 
 		//__________________________________________________________________
 
-		void forgetFireBall(CEntity* fireBall);
+		void removeFireBall(CFireBallController* fireBall);
+
+		virtual void resetAmmo();
 
 	protected:
 
+		virtual void onActivate();
+
+		virtual void onAvailable();
+
 		virtual void onTick(unsigned int msecs);
+
+		template <typename T>
+		std::string toString(T data) {
+			std::stringstream ss (std::stringstream::in | std::stringstream::out);
+			ss << data;
+			return ss.str();
+		}
 
 	private:
 
@@ -85,7 +102,12 @@ namespace Logic {
 
 		bool _secondaryFireIsActive;
 
-		std::set<CEntity*> _controllableFireBalls;
+		std::set<CFireBallController*> _controllableFireBalls;
+
+		float _fireBallRadius;
+		float _fireBallSpeed;
+		float _fireBallExplotionRadius;
+		float _fireBallDamage;
 	};
 
 	REG_FACTORY(CIronHellGoat);

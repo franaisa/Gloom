@@ -1604,6 +1604,18 @@ Map = {
 		msgList = "25",
 	},
 	
+	FireBall = {
+		type = "FireBall",
+		model = "mine.mesh",
+		physic_entity = "rigid",
+		physic_trigger = false,
+		physic_type = "kinematic",
+		physic_shape = "sphere",
+		physic_mass = 10,
+		physic_group = 3,
+		physic_groupList = "-1",
+	},
+	
 	Grenade = {
 		type = "Grenade",
 		model = "mine.mesh",

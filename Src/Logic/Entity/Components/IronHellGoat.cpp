@@ -12,9 +12,11 @@ de disparo de la cabra.
 */
 
 #include "IronHellGoat.h"
+#include "FireBallController.h"
 
 #include "Logic/Maps/EntityFactory.h"
 #include "Logic/Maps/Map.h"
+#include "Logic/Server.h"
 
 namespace Logic {
 	
@@ -31,7 +33,11 @@ namespace Logic {
 	//__________________________________________________________________
 
 	CIronHellGoat::~CIronHellGoat() {
-
+		if( !_controllableFireBalls.empty() ) {
+			for(auto it = _controllableFireBalls.begin(); it != _controllableFireBalls.end(); ++it) {
+				(*it)->setOwner(NULL);
+			}
+		}
 	}
 
 	//__________________________________________________________________
@@ -44,6 +50,18 @@ namespace Logic {
 
 	//__________________________________________________________________
 
+	void CIronHellGoat::onActivate() {
+		_fireBallRadius = _fireBallSpeed = _fireBallExplotionRadius = _fireBallDamage = 0.0f;
+	}
+
+	//__________________________________________________________________
+
+	void CIronHellGoat::onAvailable() {
+		_fireBallRadius = _fireBallSpeed = _fireBallExplotionRadius = _fireBallDamage = 0.0f;
+	}
+
+	//__________________________________________________________________
+
 	void CIronHellGoat::onTick(unsigned int msecs) {
 		// CShoot::onTick(msecs);
 
@@ -52,7 +70,10 @@ namespace Logic {
 		if(_primaryFireIsActive) {
 			// Si la bola no tiene el tamaño máximo, aumentarla conforme
 			// al factor de crecimiento establecido y reducir su velocidad
-
+			_fireBallRadius += 0.001f * msecs;
+			_fireBallSpeed += 0.1f * msecs;
+			_fireBallExplotionRadius += _fireBallRadius * 5.0f;
+			_fireBallDamage += 0.001f * msecs;
 		}
 		else if(_secondaryFireIsActive) {
 			// Si hay bolas vivas, mover las en función de la velocidad que
@@ -79,15 +100,29 @@ namespace Logic {
 	void CIronHellGoat::stopPrimaryShoot() {
 		_primaryFireIsActive = false;
 
-		// Crear la bola de fuego con los parámetros establecidos
-		// Para eso obtengo la plantilla del mapa y la modifico. Luego
-		// le pido a la factoria que me cree una entidad con esa plantilla.
-		// Seteamos un owner a la bola para que luego nos pueda llamar
-		// al destruirse para que la desapuntemos.
+		// Obtenemos la información estandard asociada a la bola de fuego
+		Map::CEntity* entityInfo = CEntityFactory::getSingletonPtr()->getInfo("FireBall");
+		// Modificamos sus parámetros en base a los valores calculados
+		entityInfo->setAttribute( "physic_radius", toString(_fireBallRadius) );
+		entityInfo->setAttribute( "speed", toString(_fireBallSpeed) );
+		entityInfo->setAttribute( "explotionRadius", toString(_fireBallExplotionRadius) );
+		entityInfo->setAttribute( "damage", toString(_fireBallDamage) );
+		// Creamos la bola de fuego con los parámetros customizados
+		CEntity* fireBall = CEntityFactory::getSingletonPtr()->createEntity(
+								entityInfo, CServer::getSingletonPtr()->getMap() );
+
+		// Le indicamos al controlador de la bola que este componente es el poseedor
+		// para que se invoque al metodo correspondiente cuando las bolas mueran
+		CFireBallController* fbController = fireBall->getComponent<CFireBallController>("CFireBallController");
+		fbController->setOwner(this);
+		// Arrancamos la entidad
+		fbController->activate();
+		fbController->start();
 
 		// Me apunto la entidad devuelta por la factoria
-
+		_controllableFireBalls.insert(fbController);
 		// Reseteo los valores de creación
+		_fireBallRadius = _fireBallSpeed = _fireBallExplotionRadius = _fireBallDamage = 0.0f;
 	}
 
 	//__________________________________________________________________
@@ -105,9 +140,23 @@ namespace Logic {
 
 	//__________________________________________________________________
 
-	void CIronHellGoat::forgetFireBall(Logic::CEntity* fireBall) {
-		// Borrar esta bola de la lista de bolas que podemos
-		// controlar.
+	void CIronHellGoat::removeFireBall(CFireBallController* fireBall) {
+		// Borrar esta bola de la lista de bolas que podemos controlar.
+		_controllableFireBalls.erase(fireBall);
+	}
+
+	//__________________________________________________________________
+
+	void CIronHellGoat::resetAmmo() {
+		// Ponemos la munición a 0
+		CShootProjectile::resetAmmo();
+		// Limpiamos la lista de bolas controlables
+		if( !_controllableFireBalls.empty() ) {
+			for(auto it = _controllableFireBalls.begin(); it != _controllableFireBalls.end(); ++it) {
+				(*it)->setOwner(NULL);
+			}
+			_controllableFireBalls.clear();
+		}
 	}
 
 }//namespace Logic
