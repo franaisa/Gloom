@@ -53,10 +53,6 @@ namespace Logic {
 
 		virtual void fireWeapon();
 
-
-
-		void magnetizeBullet();
-
 		/**
 		Metodo llamado por el proyectil para que este sea borrado como entidad y que lo borre de la lista de 
 		proyectiles.
@@ -69,6 +65,9 @@ namespace Logic {
 
 	private:
 
+		/**
+		variable que lee del mapa la dispersion del arma
+		*/
 		float _dispersionAngle;
 
 		/**

@@ -70,12 +70,12 @@ namespace Logic
 		@param projectileDirection, direccion por la que ira el proyectil
 		@param heightShoot, altura del disparo del jugador
 		*/
-		void setProperties(CShootShotGun *owner, float speed, Vector3 projectileDirection, int heightShoot){ 
+		void setProperties(CShootShotGun *owner, float speed, Vector3 projectileDirection, int heightShoot, float damage){ 
 			_owner = owner; 
 			_speed = speed; 
 			_projectileDirection = projectileDirection;
 			_heightShoot = heightShoot;
-		
+			_damage = damage;
 		};
 
 		/**
@@ -141,6 +141,10 @@ namespace Logic
 		*/
 		int _heightShoot;
 
+		/**
+		Daño que hara el proyectil
+		*/
+		float _damage;
 	}; // class CMagneticBullet
 
 	REG_FACTORY(CMagneticBullet);

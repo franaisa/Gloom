@@ -19,6 +19,8 @@ Contiene la implementación del componente que controla la vida de una entidad.
 #include "Application/BaseApplication.h"
 
 // Fisica
+
+#include "Logic/Messages/MessageDamaged.h"
 #include "Logic/Messages/MessageTouched.h"
 #include "PhysicDynamicEntity.h"
 
@@ -75,15 +77,22 @@ namespace Logic
 
 	void CMagneticBullet::impact(CEntity *impactEntity)
 	{
-		printf("\nSoy %d Y Impacto con %s", _entity->getName().c_str(), impactEntity->getName().c_str());
+		//printf("\nSoy %d Y Impacto con %s", _entity->getName().c_str(), impactEntity->getName().c_str());
 
 		if(impactEntity->getType() == "World"){
 			_owner->destroyProjectile(_entity);
 		}else{
-			if(_returning && impactEntity->getType() == _owner->getEntity()->getType()){
-				// no me gusta poner que el arma es el dos, pero bueno
-				_owner->addAmmo(2,1,true);
-				_owner->destroyProjectile(_entity);
+			if(impactEntity->getName() == _owner->getEntity()->getName()){
+				if(_returning){
+					// no me gusta poner que el arma es el dos, pero bueno
+					_owner->addAmmo(2,1,true);
+					_owner->destroyProjectile(_entity);
+				}
+			}else{
+				std::shared_ptr<CMessageDamaged> m = std::make_shared<CMessageDamaged>();
+				m->setDamage(_damage);
+				m->setEnemy(_owner->getEntity());
+				impactEntity->emitMessage(m);
 			}
 		}
 	} // impact
@@ -100,10 +109,12 @@ namespace Logic
 	void CMagneticBullet::onFixedTick(unsigned int msecs)
 	{
 		if(_returning){
-			//_projectileDirection = Math::getDirection(_owner->getEntity()->getOrientation());
-			
+			/*
+			_projectileDirection = Math::getDirection(_owner->getEntity()->getOrientation());
+			/*/
 			_projectileDirection = (_owner->getEntity()->getPosition()+(Vector3(0,_heightShoot,0)) - _entity->getPosition());
 			_projectileDirection.normalise();
+			/* */
 		}
 		_physicComponent->move(_projectileDirection * _speed);
 	} // tick

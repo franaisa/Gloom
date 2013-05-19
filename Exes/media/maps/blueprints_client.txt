@@ -26,3 +26,4 @@ Spike CGraphics CSpike
 Hacksaw CGraphics CHacksaw
 ScreamerShield CGraphics CTransformInterpolator
 FireBall CFireBallController CPhysicDynamicEntity CGraphics
+MagneticBullet CGraphics CPositionInterpolator
