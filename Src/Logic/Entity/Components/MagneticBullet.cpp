@@ -100,10 +100,12 @@ namespace Logic
 	void CMagneticBullet::onFixedTick(unsigned int msecs)
 	{
 		if(_returning){
-			//_projectileDirection = Math::getDirection(_owner->getEntity()->getOrientation());
-			
+			/*
+			_projectileDirection = Math::getDirection(_owner->getEntity()->getOrientation());
+			/*/
 			_projectileDirection = (_owner->getEntity()->getPosition()+(Vector3(0,_heightShoot,0)) - _entity->getPosition());
 			_projectileDirection.normalise();
+			/* */
 		}
 		_physicComponent->move(_projectileDirection * _speed);
 	} // tick
