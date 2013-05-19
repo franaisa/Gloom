@@ -104,6 +104,11 @@ namespace Logic {
 		*/
 		void setOwner(CIronHellGoat* _owner);
 
+		// @todo Setear una nueva direccion calculada en base a la direccion donde
+		// apunta el puntero
+
+
+
 	protected:
 
 		virtual void onStart();
@@ -117,6 +122,8 @@ namespace Logic {
 	private:
 
 		void createExplotion();
+
+		void estimateDamage(CEntity* entityHit, const Vector3& explotionPos);
 
 		CIronHellGoat* _owner;
 
