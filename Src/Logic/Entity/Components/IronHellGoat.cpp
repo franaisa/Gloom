@@ -104,12 +104,19 @@ namespace Logic {
 		Map::CEntity* entityInfo = CEntityFactory::getSingletonPtr()->getInfo("FireBall");
 		// Modificamos sus parámetros en base a los valores calculados
 		entityInfo->setAttribute( "physic_radius", toString(_fireBallRadius) );
+		entityInfo->setAttribute( "scale", toString( Vector3(1.0f, 1.0f, 1.0f) * _fireBallRadius ) );
 		entityInfo->setAttribute( "speed", toString(_fireBallSpeed) );
 		entityInfo->setAttribute( "explotionRadius", toString(_fireBallExplotionRadius) );
 		entityInfo->setAttribute( "damage", toString(_fireBallDamage) );
 		// Creamos la bola de fuego con los parámetros customizados
-		CEntity* fireBall = CEntityFactory::getSingletonPtr()->createEntity(
-								entityInfo, CServer::getSingletonPtr()->getMap() );
+		// @todo Crear la bola en el punto de mira a la distancia de la capsula + su radio
+		CEntity* fireBall = CEntityFactory::getSingletonPtr()->createEntityWithPositionAndOrientation(
+																	entityInfo, 
+																	CServer::getSingletonPtr()->getMap(),
+																	_entity->getPosition(),
+																	_entity->getYaw(),
+																	_entity->getPitch()
+																);
 
 		// Le indicamos al controlador de la bola que este componente es el poseedor
 		// para que se invoque al metodo correspondiente cuando las bolas mueran
