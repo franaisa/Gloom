@@ -92,12 +92,6 @@ namespace Logic
 		*/
 		int _currentWeapon;
 
-
-		/**
-		numero de armas que tengo
-		*/
-		const unsigned int _numWeapons;
-
 		std::vector< std::pair<bool, CShoot*> > _weaponry;
 
 	}; // class CShoot

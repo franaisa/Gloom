@@ -129,6 +129,8 @@ namespace Logic {
 		*/
 		void setOwner(Logic::CEntity* owner);
 
+		//__________________________________________________________________
+
 		void setOffset(float capsuleRadius, float heightShoot) {
 			_capsuleRadius = capsuleRadius;
 			_heightShoot = heightShoot;

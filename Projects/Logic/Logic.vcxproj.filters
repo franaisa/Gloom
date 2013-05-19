@@ -101,7 +101,7 @@
     <Filter Include="Entity\Components\Gameplay\Source">
       <UniqueIdentifier>{4028113e-3235-4f07-b8e5-671a198a9ce5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Entity\Header Files\Source Files">
+    <Filter Include="Entity\Source Files">
       <UniqueIdentifier>{0e8edd8a-2878-4e33-9aa8-bcf3b46137d4}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -119,22 +119,22 @@
       <Filter>Maps\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Src\Logic\Entity\CommunicationPort.cpp">
-      <Filter>Entity\Header Files\Source Files</Filter>
+      <Filter>Entity\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Src\Logic\Entity\Component.cpp">
-      <Filter>Entity\Header Files\Source Files</Filter>
+      <Filter>Entity\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Src\Logic\Entity\Entity.cpp">
-      <Filter>Entity\Header Files\Source Files</Filter>
+      <Filter>Entity\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Src\Logic\Server.cpp">
       <Filter>Maps\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Src\Logic\Maps\IIdentifier.cpp">
-      <Filter>Entity\Header Files\Source Files</Filter>
+      <Filter>Entity\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Src\Logic\Maps\ComponentID.cpp">
-      <Filter>Entity\Header Files\Source Files</Filter>
+      <Filter>Entity\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Src\Logic\GameNetMsgManager.cpp">
       <Filter>Maps\Source Files</Filter>
@@ -182,7 +182,7 @@
       <Filter>Messages\Source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Src\Logic\Entity\MessageFactory.cpp">
-      <Filter>Entity\Header Files\Source Files</Filter>
+      <Filter>Entity\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Src\Logic\Messages\MessageRebound.cpp">
       <Filter>Messages\Source</Filter>
@@ -421,12 +421,6 @@
     <ClCompile Include="..\..\Src\Logic\Entity\Components\ScreamerShieldDamageNotifier.cpp">
       <Filter>Entity\Components\Skills\Source</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Src\Logic\Entity\Components\ScreamerServer.cpp">
-      <Filter>Entity\Components\Skills\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Logic\Entity\Components\ScreamerClient.cpp">
-      <Filter>Entity\Components\Skills\Source</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Src\Logic\Entity\Components\PlayerClass.cpp">
       <Filter>Entity\Components\Skills\Source</Filter>
     </ClCompile>
@@ -502,13 +496,7 @@
     <ClCompile Include="..\..\Src\Logic\Messages\MessagePositionSnapshot.cpp">
       <Filter>Messages\Source</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Src\Logic\Entity\Components\PlayerSnapshot.cpp">
-      <Filter>Entity\Components\Network\Source</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Src\Logic\Entity\Components\SnapshotGenerator.cpp">
-      <Filter>Entity\Components\Network\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Logic\Entity\Components\SnapshotInterpolator.cpp">
       <Filter>Entity\Components\Network\Source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Src\Logic\Messages\MessageHudDispersion.cpp">
@@ -536,6 +524,12 @@
       <Filter>Messages\Source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Src\Logic\Entity\Components\MagneticBullet.cpp">
+		<Filter>Entity\Components\Weapons\Source</Filter>
+	</ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\IronHellGoat.cpp">
+      <Filter>Entity\Components\Weapons\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\FireBallController.cpp">
       <Filter>Entity\Components\Weapons\Source</Filter>
     </ClCompile>
   </ItemGroup>
@@ -780,12 +774,6 @@
     <ClInclude Include="..\..\Src\Logic\Entity\Components\ScreamerShieldDamageNotifier.h">
       <Filter>Entity\Components\Skills\Header</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Src\Logic\Entity\Components\ScreamerServer.h">
-      <Filter>Entity\Components\Skills\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Logic\Entity\Components\ScreamerClient.h">
-      <Filter>Entity\Components\Skills\Header</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Entity\Components\PlayerClass.h">
       <Filter>Entity\Components\Skills\Header</Filter>
     </ClInclude>
@@ -948,13 +936,7 @@
     <ClInclude Include="..\..\Src\Logic\Messages\MessageTransformSnapshot.h">
       <Filter>Messages\Header</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Src\Logic\Entity\Components\PlayerSnapshot.h">
-      <Filter>Entity\Components\Network\Header</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Entity\Components\SnapshotGenerator.h">
-      <Filter>Entity\Components\Network\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Logic\Entity\Components\SnapshotInterpolator.h">
       <Filter>Entity\Components\Network\Header</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Messages\MessageHudDispersion.h">
@@ -991,6 +973,12 @@
       <Filter>Messages\Header</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Entity\Components\MagneticBullet.h">
+      <Filter>Entity\Components\Weapons\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\IronHellGoat.h">
+      <Filter>Entity\Components\Weapons\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\FireBallController.h">
       <Filter>Entity\Components\Weapons\Header</Filter>
     </ClInclude>
   </ItemGroup>

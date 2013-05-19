@@ -1,33 +1,37 @@
 /**
-@file SnapshotInterpolator.h
+@file FireBallController.h
 
+Contiene la declaración de la cabecera del componente
+que controla las acciones de la bola de fuego.
 
-@see Logic::CSnapshotInterpolator
+@see Logic::CFireBallController
 @see Logic::IComponent
 
 @author Francisco Aisa García
 @date Mayo, 2013
 */
 
-#ifndef __Logic_SnapshotInterpolator_H
-#define __Logic_SnapshotInterpolator_H
+#ifndef __Logic_FireBallController_H
+#define __Logic_FireBallController_H
 
 #include "Logic/Entity/Component.h"
 
-#include <deque>
+namespace Logic {
+	class CIronHellGoat;
+	class CPhysicDynamicEntity;
+}
 
 namespace Logic {
 	
 	/**
-	
     @ingroup logicGroup
 
 	@author Francisco Aisa García
 	@date Mayo, 2013
 	*/
 	
-	class CSnapshotInterpolator : public IComponent {
-		DEC_FACTORY(CSnapshotInterpolator);
+	class CFireBallController : public IComponent {
+		DEC_FACTORY(CFireBallController);
 	public:
 
 
@@ -37,13 +41,9 @@ namespace Logic {
 
 
 		/** Constructor por defecto. */
-		CSnapshotInterpolator();
+		CFireBallController();
 
-		//__________________________________________________________________
-
-		/** Destructor. */
-		virtual ~CSnapshotInterpolator();
-
+		virtual ~CFireBallController();
 
 		// =======================================================================
 		//                    METODOS HEREDADOS DE ICOMPONENT
@@ -51,10 +51,14 @@ namespace Logic {
 
 
 		/**
+		Inicialización del componente utilizando la información extraída de
+		la entidad leída del mapa (Maps::CEntity). Toma del mapa el atributo
+		speed que indica a la velocidad a la que se moverá el jugador.
+
 		Inicialización del componente a partir de la información extraida de la entidad
 		leida del mapa:
 		<ul>
-			<li><strong>interpolationTimestep:</strong> Tiempo de interpolación. </li>
+			<li><strong>: </strong>.</li>
 		</ul>
 
 		@param entity Entidad a la que pertenece el componente.
@@ -64,7 +68,7 @@ namespace Logic {
 		*/
 		virtual bool spawn(CEntity* entity, CMap *map, const Map::CEntity *entityInfo);
 
-		//__________________________________________________________________
+		//________________________________________________________________________
 
 		/** 
 		Este componente acepta los siguientes mensajes:
@@ -78,7 +82,7 @@ namespace Logic {
 		*/
 		virtual bool accept(const std::shared_ptr<CMessage>& message);
 
-		//__________________________________________________________________
+		//________________________________________________________________________
 
 		/**
 		Método virtual que procesa un mensaje.
@@ -87,47 +91,45 @@ namespace Logic {
 		*/
 		virtual void process(const std::shared_ptr<CMessage>& message);
 
-		
+
 		// =======================================================================
 		//                            METODOS PROPIOS
 		// =======================================================================
 
 
+		/**
+		Setea el puntero a la entidad que ha disparado la granada
+
+		@param CEntity Puntero a la entidad que disparo la granada.
+		*/
+		void setOwner(CIronHellGoat* _owner);
+
 	protected:
 
-
-		// =======================================================================
-		//                    METODOS HEREDADOS DE ICOMPONENT
-		// =======================================================================
-
+		virtual void onStart();
 
 		/**
-		Método llamado en cada frame. En este componente se encarga
-		de reducir la vida del individuo paulatinamente en base a los
-		parámetros fijados desde fichero.
 
 		@param msecs Milisegundos transcurridos desde el último tick.
 		*/
-		virtual void onTick(unsigned int msecs);
-
+		virtual void onFixedTick(unsigned int msecs);
 
 	private:
 
+		CIronHellGoat* _owner;
 
-		// =======================================================================
-		//                          MIEMBROS PRIVADOS
-		// =======================================================================
-		
-		float _interpolationTimestep;
+		CPhysicDynamicEntity* _physicComponent;
 
-		float _interpolationTimer;
+		float _speed;
 
-		//std::deque<Matrix4> _buffer;
+		float _damage;
 
-	}; // class CSnapshotInterpolator
+		float _explotionRadius;
 
-	REG_FACTORY(CSnapshotInterpolator);
+	}; // class CFireBallController
+
+	REG_FACTORY(CFireBallController);
 
 } // namespace Logic
 
-#endif // __Logic_SnapshotInterpolator_H
+#endif

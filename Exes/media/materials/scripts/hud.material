@@ -468,7 +468,7 @@ material grenadeLauncher_NO_WEAPON
 }
 
 
-material rocketLauncher_ACTIVE
+material ironHellGoat_ACTIVE
 {
 	technique
 	{
@@ -488,7 +488,7 @@ material rocketLauncher_ACTIVE
 		}
 	}
 }
-material rocketLauncher_NO_AMMO
+material ironHellGoat_NO_AMMO
 {
 	technique
 	{
@@ -508,7 +508,7 @@ material rocketLauncher_NO_AMMO
 		}
 	}
 }
-material rocketLauncher_NO_WEAPON
+material ironHellGoat_NO_WEAPON
 {
 	technique
 	{

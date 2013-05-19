@@ -11,7 +11,7 @@ namespace Logic {
 			eSNIPER,
 			eSHOTGUN,
 			eMINIGUN,
-			eROCKET_LAUNCHER,
+			eIRON_HELL_GOAT,
 			eSIZE
 		};
 
@@ -25,8 +25,8 @@ namespace Logic {
 					return "shotGun";
 				case eMINIGUN:
 					return "miniGun";
-				case eROCKET_LAUNCHER:
-					return "rocketLauncher";
+				case eIRON_HELL_GOAT:
+					return "ironHellGoat";
 			}
 		}
 	};
