@@ -298,79 +298,28 @@ namespace Logic {
 	//________________________________________________________________________
 
 
-	//SIN ACABAR
 	void CCameraFeedbackNotifier::calculateEnemyPosition(Vector3 vPosEnemy) { 
 		//Obtengo la posición del enemigo
 		Ogre::Vector3 vEnemyPos = vPosEnemy;
 		//Obtengo mi posición (entidad a la que han dañado)
 		Ogre::Vector3 vMyPos = this->_entity->getPosition();
 
-		/*
-		short sCuadrante; 	
-		
-		//Angulo en radianes
-		float fAngulo; 
-		if (vEnemyPos != vMyPos)
-		{
-			//Obtengo desde qué cuadrante me ha disparado
-			if ((vEnemyPos.x >= vMyPos.x) && (vEnemyPos.z >= vMyPos.z))
-				sCuadrante = 1;
-			else if ((vEnemyPos.x > vMyPos.x) && (vEnemyPos.z < vMyPos.z))
-				sCuadrante = 4;
-			else if ((vEnemyPos.x < vMyPos.x) && (vEnemyPos.z > vMyPos.z))
-				sCuadrante = 2;
-			else if ((vEnemyPos.x < vMyPos.x) && (vEnemyPos.z < vMyPos.z))
-				sCuadrante = 3;
-
-			//En función del cuadrante, hallo el ángulo de disparo
-			float fCateto, fHipotenusa;
-
-			fHipotenusa = (vEnemyPos - vMyPos).length();
-			fCateto = vEnemyPos.z - vMyPos.z;
-			fHipotenusa = (vEnemyPos - vMyPos).length(); //En radianes
-			fAngulo = asin(fCateto / fHipotenusa);
-
-			//switch de cuadrante para poner el signo del cateto y para sumar ángulos en función del cuadrante
-			switch (sCuadrante)
-			{
-				/*
-				case 1:
-					//Ya hecho antes del switch
-				break;//*
-				
-				case 2:
-					fAngulo += Math::HALF_PI;
-				break;
-				case 3:
-					fAngulo = asin(-fCateto / fHipotenusa);
-					fAngulo += Math::PI;				
-				break;
-				case 4:
-					fAngulo = asin(-fCateto / fHipotenusa);
-					fAngulo += (Math::PI + Math::HALF_PI);
-				break;
-			}
-		}
-		else
-			fAngulo = 0.0f;
-
-		//Trabajar con el fAngulo para poner la flecha en el hud, o darle efecto al compositor
-		//std::cout << "Angulo (en radianes) con el que ha impactado: " << fAngulo << std::endl;
-
-		//std::shared_ptr<Logic::CMessageImpact> impact = std::make_shared<Logic::CMessageImpact>();
-		//impact->setDirectionImpact(fAngulo);//Timer								 
-		//_entity->emitMessage(impact);
-		*/
-
+		//Obtengo el vector en el que estoy mirando, y me quedo sólo en el plano horizontal (quitando la altura)
 		Vector3 vMyDirVision = Math::getDirection(_entity->getTransform());
 		vMyDirVision = Vector3(vMyDirVision.x,0,vMyDirVision.z);
+		//Obtengo el vector desde el enemigo a mi posición; y me quedo sólo con el plano horizontal (quitando la altura)
 		Vector3 vEnemyDirVision = vPosEnemy - vMyPos;
 		vEnemyDirVision = Vector3(vEnemyDirVision.x, 0, vEnemyDirVision.z);
+
+		//Ángulo entre ambos vectores
 		Ogre::Radian rad = vMyDirVision.angleBetween(vEnemyDirVision);
+		//Convierto los radianes a float porque en el mensaje mando float
 		float fRadianes = (float)rad.valueRadians();
 
+		//Cambio de sistema de coordenadas para tener la posición del enemigo respecto 
+		//al jugador. Antonio el crack matemático! ^^
 		Matrix4 mat = _entity->getTransform().inverse();
-		Vector3 vec = mat * vPosEnemy; //este verctor es la posicion del enemigo respecto a mi
+		Vector3 vec = mat * vPosEnemy; //este vector es la posicion del enemigo respecto a mi
 		if (vec.x > 0) 
 		{
 			//El enemigo está a la derecha, así que tengo que multiplicar
@@ -378,10 +327,10 @@ namespace Logic {
 			fRadianes *= -1.0f;
 		}
 
+		//Mando el mensaje
 		std::shared_ptr<Logic::CMessageImpact> impact = std::make_shared<Logic::CMessageImpact>();
 		impact->setDirectionImpact(fRadianes);							 
 		_entity->emitMessage(impact);
-
 	}
 
 	//________________________________________________________________________

@@ -16,6 +16,7 @@ Contiene la implementación del componente que gestiona las armas y que administr
 #include "Physics/RaycastHit.h"
 
 #include "Logic/Messages/MessageDamaged.h"
+#include "Logic/Messages/MessageCreateParticle.h"
 
 
 
@@ -32,8 +33,6 @@ namespace Logic {
 		if(_primaryCanShoot && _currentAmmo > 0){
 			_primaryCanShoot = false;
 			_primaryCooldownTimer = 0;
-				
-			drawParticle("fire", "shootParticle");
 
 			decrementAmmo();
 
@@ -60,8 +59,6 @@ namespace Logic {
 		if(_secondaryCanShoot && _currentAmmo >= secondaryConsumeAmmo){
 			_secondaryCanShoot = false;
 			_secondaryCooldownTimer = 0;
-				
-			drawParticle("fire", "shootParticle");
 
 			//Gasta varias balas(parametro a configurar por arquetipos)
 			for(int i=0;i<secondaryConsumeAmmo;++i)
@@ -111,9 +108,23 @@ namespace Logic {
 		//Y ademas no hemos tocado ya pared
 		
 		for(int i=0;i<hits.size();++i){
-			//Si tocamos el mundo no continuamos viendo hits
-			if(hits[i].entity->getType().compare("World")==0)
+			//Si tocamos el mundo no continuamos viendo hits y llamamos al pintado del rayo
+			if(hits[i].entity->getType().compare("World")==0){
+				int partesde2=hits[i].distance/1.5;
+				for(int j=1;j<=partesde2;++j){
+					Vector3 directionWithForce = Math::getDirection(_entity->getOrientation());
+					directionWithForce.normalise();
+					//Hay que bajar su altura para que se cree mas o menos en el centro
+					Vector3 positionParticle = (_entity->getPosition()+ Vector3(0,_heightShoot,0)) + ((directionWithForce)*j*1.5);
+
+					std::shared_ptr<CMessageCreateParticle> particle = std::make_shared<CMessageCreateParticle>();
+					particle->setParticle("sniper");
+					particle->setPosition(positionParticle);
+					particle->setDirectionWithForce(directionWithForce);
+					_entity->emitMessage(particle);
+				}
 				return;
+			}
 			//Sino mientras que no seamos nosotros mismos
 			if(hits[i].entity->getEntityID()!=_entity->getEntityID()){
 				std::shared_ptr<CMessageDamaged> m = std::make_shared<CMessageDamaged>();
