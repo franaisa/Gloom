@@ -82,6 +82,7 @@
     <ClCompile Include="..\..\Src\Logic\Entity\Components\CameraFeedbackNotifier.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\ClientRespawn.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\DamageTrigger.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\MagneticBullet.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\FireBallController.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\IronHellGoat.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\PositionSnapshot.cpp" />
@@ -222,6 +223,7 @@
     <ClInclude Include="..\..\Src\Logic\Entity\Components\Audio.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\CameraFeedbackNotifier.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\ClientRespawn.h" />
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\MagneticBullet.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\FireBallController.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\IronHellGoat.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\PositionSnapshot.h" />

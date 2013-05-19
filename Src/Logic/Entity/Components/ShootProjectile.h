@@ -106,6 +106,7 @@ namespace Logic {
 		//                          MIEMBROS PROPIOS
 		// =======================================================================
 
+		float _projectileShootForce;
 
 		float _projectileRadius;
 

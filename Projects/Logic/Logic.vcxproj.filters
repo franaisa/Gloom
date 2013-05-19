@@ -523,6 +523,9 @@
     <ClCompile Include="..\..\Src\Logic\Messages\MessageDamageAmplifier.cpp">
       <Filter>Messages\Source</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\MagneticBullet.cpp">
+		<Filter>Entity\Components\Weapons\Source</Filter>
+	</ClCompile>
     <ClCompile Include="..\..\Src\Logic\Entity\Components\IronHellGoat.cpp">
       <Filter>Entity\Components\Weapons\Source</Filter>
     </ClCompile>
@@ -968,6 +971,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Messages\MessageReducedCooldown.h">
       <Filter>Messages\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\MagneticBullet.h">
+      <Filter>Entity\Components\Weapons\Header</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Entity\Components\IronHellGoat.h">
       <Filter>Entity\Components\Weapons\Header</Filter>
