@@ -1757,7 +1757,7 @@ Map = {
 		physic_shape = "sphere",
 		physic_radius = 0.5,
 		physic_group = 3,
-		physic_groupList = "0", 
+		physic_groupList = "0,1", 
 		physic_mass = 10,
 		scale = {5,5,5},
 	},

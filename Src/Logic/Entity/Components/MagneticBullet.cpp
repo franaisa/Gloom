@@ -20,6 +20,7 @@ Contiene la implementación del componente que controla la vida de una entidad.
 
 // Fisica
 #include "Logic/Messages/MessageTouched.h"
+#include "PhysicDynamicEntity.h"
 
 
 
@@ -35,17 +36,13 @@ namespace Logic
 		if(!IComponent::spawn(entity,map,entityInfo))
 			return false;
 
-		/*
-		if(entityInfo->hasAttribute("colour")){
-			Vector3 colour = entityInfo->getVector3Attribute("colour");
-			_light->setColour(colour.x, colour.y, colour.z);
-		}
-		*/
+		_physicComponent = _entity->getComponent<CPhysicDynamicEntity>("CPhysicDynamicEntity"); 
+
+		
 
 		return true;
 
 	} // spawn
-	
 	//---------------------------------------------------------
 
 	bool CMagneticBullet::accept(const std::shared_ptr<CMessage>& message)
@@ -54,7 +51,6 @@ namespace Logic
 		//return message->getMessageType() == Message::DAMAGED;
 		
 	} // accept
-	
 	//---------------------------------------------------------
 
 	void CMagneticBullet::process(const std::shared_ptr<CMessage>& message)
@@ -79,18 +75,45 @@ namespace Logic
 
 	void CMagneticBullet::impact(CEntity *impactEntity)
 	{
-		printf("Impacto con: %s", impactEntity->getName().c_str());
+		printf("\nSoy %d Y Impacto con %s", _entity->getName().c_str(), impactEntity->getName().c_str());
+
+		if(impactEntity->getType() == "World"){
+			_owner->destroyProjectile(_entity);
+		}else{
+			if(_returning && impactEntity->getType() == _owner->getEntity()->getType()){
+				// no me gusta poner que el arma es el dos, pero bueno
+				_owner->addAmmo(2,1,true);
+				_owner->destroyProjectile(_entity);
+			}
+		}
 	} // impact
 	//----------------------------------------------------------
 
+	void CMagneticBullet::setProjectileDirection(Vector3 projectileDirection){
+		_projectileDirection = projectileDirection;
+		_returning = true;
+	} // setProjectileDirection
+	//----------------------------------------------------------
 
-/*
-	void CMagneticBullet::onTick(unsigned int msecs)
+
+
+	void CMagneticBullet::onFixedTick(unsigned int msecs)
 	{
-		
+		if(_returning){
+			//_projectileDirection = Math::getDirection(_owner->getEntity()->getOrientation());
+			
+			/*
+			Vector3 aux = _owner->getEntity()->getPosition();
+			aux += (Vector3(0,_heightShoot,0));
+			Vector3 aux2 = _entity->getPosition();
+			*/
+			_projectileDirection = (_owner->getEntity()->getPosition()+(Vector3(0,_heightShoot,0)) - _entity->getPosition());
+			_projectileDirection.normalise();
+		}
+		_physicComponent->move(_projectileDirection * _speed);
 	} // tick
 	//----------------------------------------------------------
-*/
+
 
 
 } // namespace Logic

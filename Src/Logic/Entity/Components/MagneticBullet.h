@@ -17,7 +17,7 @@ Contiene la declaración del componente que controla la vida de una entidad.
 
 namespace Logic {
 	class CShootShotGun;
-
+	class CPhysicDynamicEntity;
 }
 
 //declaración de la clase
@@ -38,7 +38,7 @@ namespace Logic
 		/**
 		Constructor por defecto; en la clase base no hace nada.
 		*/
-		CMagneticBullet() : IComponent() {}
+		CMagneticBullet() : _speed(0), _returning(false), _heightShoot(0), IComponent() {}
 
 		
 		/**
@@ -59,6 +59,18 @@ namespace Logic
 
 		void setOwner(CShootShotGun *owner);
 
+		void setProperties(CShootShotGun *owner, float speed, Vector3 projectileDirection, int heightShoot){ 
+			_owner = owner; 
+			_speed = speed; 
+			_projectileDirection = projectileDirection;
+			_heightShoot = heightShoot;
+		
+		};
+
+		void setSpeed(float speed){ _speed = speed;};
+		
+		void setProjectileDirection(Vector3 projectileDirection);
+
 		void impact(CEntity *impactEntity);
 	protected:
 
@@ -68,8 +80,19 @@ namespace Logic
 
 		@param msecs Milisegundos transcurridos desde el último tick.
 		*/
-		//virtual void onTick(unsigned int msecs);
+		virtual void onFixedTick(unsigned int msecs);
+
+		CPhysicDynamicEntity *_physicComponent;
+
+		float _speed;
+
+		Vector3 _projectileDirection;
+
 		CShootShotGun *_owner;
+
+		bool _returning;
+
+		int _heightShoot;
 
 	}; // class CMagneticBullet
 

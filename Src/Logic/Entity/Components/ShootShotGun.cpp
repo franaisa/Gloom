@@ -72,9 +72,8 @@ namespace Logic {
 			
 			for(int i = 0; i < _numberShots; ++i){
 				fireWeapon();
+				decrementAmmo();
 			}
-
-			decrementAmmo();
 
 			//Sonido de disparo
 			emitSound(_audioShoot, "audioShot");
@@ -87,23 +86,11 @@ namespace Logic {
 	//__________________________________________________________________
 
 	void CShootShotGun::secondaryShoot() {
-		if(_primaryCanShoot && _currentAmmo > 0 && _numberShots <= _currentAmmo){
-			_primaryCanShoot = false;
-			_primaryCooldownTimer = 0;
-				
-			drawParticle("fire", "shootParticle");
-
-			for(int i = 0; i < _numberShots; ++i){
-				printf("\nDisparo secundario");
-				//fireWeapon();
-			}
-
-			//Sonido de disparo
-			emitSound(_audioShoot, "audioShot");
-		}
-		else if(_currentAmmo == 0) {
-			// Ejecutar sonidos y animaciones de falta de balas
-			emitSound(_noAmmo, "noAmmo", true);
+		// yo le digo que deben de volver, y a partir de ahi, ellas solas encuentran el camino :D
+		if(!_projectiles.empty()){
+			for(auto it = _projectiles.begin(); it != _projectiles.end(); ++it){
+				(*it)->getComponent<CMagneticBullet>("CMagneticBullet")->setProjectileDirection(_entity->getPosition() + Vector3(0,_heightShoot, 0));
+			} 
 		}
 	} // secondaryShoot
 	//__________________________________________________________________
@@ -118,9 +105,7 @@ namespace Logic {
 		Vector3 position = _entity->getPosition();
 		position.y += _heightShoot;
 
-		TProjectile temp;
-
-		temp._projectileDirection = dispersionDirection;
+		//position += direction * (_capsuleRadius + _projectileRadius + 0.5 );
 
 		CEntity *projectileEntity= (CEntityFactory::getSingletonPtr()->createEntityWithPosition( 
 			CEntityFactory::getSingletonPtr()->getInfo("MagneticBullet"),
@@ -129,23 +114,24 @@ namespace Logic {
 			));
 		projectileEntity->activate();
 		projectileEntity->start();
-		temp.projectile = projectileEntity->getComponent<CPhysicDynamicEntity>("CPhysicDynamicEntity");
-		projectileEntity->getComponent<CMagneticBullet>("CMagneticBullet")->setOwner(this);
-		_projectiles.push_back(temp);
+
+		projectileEntity->getComponent<CMagneticBullet>("CMagneticBullet")->setProperties(this, _projectileShootForce, dispersionDirection, _heightShoot);
+		_projectiles.insert(projectileEntity);
 			
 	} // fireWeapon
 	//_________________________________________________
 
-	void CShootShotGun::impactProjectile(CEntity *projectile){
-		//CEntityFactory::deferredDeleteEntity(projectile, true);
-	}
+	void CShootShotGun::destroyProjectile(CEntity *projectile){
 
-	void CShootShotGun::onFixedTick(unsigned int msecs){
+		CEntityFactory::getSingletonPtr()->deferredDeleteEntity(projectile,true);
+		_projectiles.erase(projectile);
+	} // destroyProjectile
+	//_________________________________________________
 	
-		for(auto it = _projectiles.begin(); it != _projectiles.end(); ++it){
-			(*it).projectile->move((*it)._projectileDirection * _projectileShootForce);
-		}
+	/*
+	void CShootShotGun::onFixedTick(unsigned int msecs){
 	}
 
+	*/
 } // namespace Logic
 

@@ -55,20 +55,23 @@ namespace Logic {
 
 		void magnetizeBullet();
 
-		void impactProjectile(CEntity *projectile);
+		/**
+		Metodo llamado por el proyectil para que este sea borrado como entidad y que lo borre de la lista de 
+		proyectiles.
+		*/
+		void destroyProjectile(CEntity *projectile);
 
-		virtual void onFixedTick(unsigned int msecs);
+		//virtual void onFixedTick(unsigned int msecs);
 
 
 	private:
 
-		struct TProjectile{
-			Vector3 _projectileDirection;
-			CPhysicDynamicEntity* projectile;
-		};
 		float _dispersionAngle;
 
-		std::vector<TProjectile> _projectiles;
+		/**
+		Lista con los punteros a los projectiles.
+		*/
+		std::set<CEntity*> _projectiles;
 	};
 
 	REG_FACTORY(CShootShotGun);
