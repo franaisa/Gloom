@@ -142,7 +142,7 @@ namespace Physics {
 
 		// Garantiza que los players no se solapen. Empuja las capsulas cuando se van a 
 		// solapar.
-		//_controllerManager->computeInteractions(msecs);
+		_controllerManager->computeInteractions(msecs);
 
 		// Movemos el character controller y retornamos un entero con los flags de colision (PxControllerFlag)
 		// Fijamos la distancia minima a la que parar el algoritmo de movimiento a 0.01f.

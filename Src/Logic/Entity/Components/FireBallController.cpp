@@ -79,6 +79,7 @@ namespace Logic {
 		switch( message->getMessageType() ) {
 			case Message::CONTACT_ENTER: {
 				createExplotion();
+				cout << "Exploto" << endl;
 			}
 		}
 	}

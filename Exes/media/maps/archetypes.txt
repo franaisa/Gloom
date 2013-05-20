@@ -1381,6 +1381,18 @@ Map = {
 			weaponironHellGoatParticlePosition = {6, 5, 6},
 			weaponironHellGoatAudio = "media/audio/rocketLauncher.wav",
 			
+			weaponironHellGoatMaximumLoadingTime = 2,
+			
+			weaponironHellGoatDefaultFireBallRadius = 2.0,
+			weaponironHellGoatDefaultFireBallSpeed = 0.15,
+			weaponironHellGoatDefaultFireBallExplotionRadius = 30.0,
+			weaponironHellGoatDefaultFireBallDamage = 50.0,
+			
+			weaponironHellGoatMaxFireBallRadius = 5.0,
+			weaponironHellGoatMaxFireBallSpeed = 0.035,
+			weaponironHellGoatMaxFireBallExplotionRadius = 30.0,
+			weaponironHellGoatMaxFireBallDamage = 100.0,
+			
 		hudCrossX = 4,
 		hudCrossY = 5,
 		hudScreenWidth = 26,
@@ -1606,7 +1618,8 @@ Map = {
 	
 	FireBall = {
 		type = "FireBall",
-		model = "mine.mesh",
+		model = "marine.mesh",
+		msgList= "55,56",
 		physic_entity = "rigid",
 		physic_trigger = false,
 		physic_type = "kinematic",
@@ -1614,6 +1627,8 @@ Map = {
 		physic_mass = 10,
 		physic_group = 3,
 		physic_groupList = "-1",
+		ticksPerSample = 3,
+		samplesPerSnapshot = 2,
 	},
 	
 	Grenade = {

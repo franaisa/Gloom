@@ -23,5 +23,5 @@ DirectionalLight CLight
 PointLight CLight 
 ContenedorLava  CPhysicStaticEntity
 ScreamerShield CScreamerShieldDamageNotifier CPhysicDynamicEntity  CTransformSnapshot CNetConnector
-FireBall CFireBallController CPhysicDynamicEntity CGraphics
+FireBall CFireBallController CPhysicDynamicEntity CGraphics CPositionSnapshot CNetConnector
 MagneticBullet CMagneticBullet CPhysicDynamicEntity CPositionSnapshot CNetConnector
