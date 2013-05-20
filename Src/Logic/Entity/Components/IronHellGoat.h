@@ -110,7 +110,7 @@ namespace Logic {
 
 	private:
 
-		void resetPresets();
+		std::set<CFireBallController*> _controllableFireBalls;
 
 		bool _primaryFireIsActive;
 		bool _secondaryFireIsActive;
@@ -118,17 +118,15 @@ namespace Logic {
 		unsigned int _elapsedTime;
 		unsigned int _maxLoadingTime;
 
-		std::set<CFireBallController*> _controllableFireBalls;
-
 		float _defaultFireBallRadius;
 		float _defaultFireBallSpeed;
 		float _defaultFireBallExplotionRadius;
 		float _defaultFireBallDamage;
 
-		float _fireBallRadiusGrowthFactor;
-		float _fireBallSpeedGrowthFactor;
-		float _fireBallExplotionRadiusGrowthFactor;
-		float _fireBallDamageGrowthFactor;
+		float _fireBallRadiusTemporalIncrement;
+		float _fireBallSpeedTemporalIncrement;
+		float _fireBallExplotionRadiusTemporalIncrement;
+		float _fireBallDamageTemporalIncrement;
 	};
 
 	REG_FACTORY(CIronHellGoat);
