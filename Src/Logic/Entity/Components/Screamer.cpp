@@ -24,13 +24,11 @@ implementa las habilidades del personaje
 #include "Logic/Maps/Map.h"
 #include "Logic/Entity/Entity.h"
 #include "Logic/Server.h"
-#include "Logic/Messages/MessageSetPhysicPosition.h"
-#include "Logic/Messages/MessageAddForcePlayer.h"
+
+// Mensajes
 #include "Logic/Messages/MessageDamaged.h"
 #include "Logic/Messages/MessageChangeMaterial.h"
-#include "Logic/Messages/MessageActivateScreamerShield.h"
-#include "Logic/Messages/MessageDeactivateScreamerShield.h"
-#include "Logic/Messages/MessageSetRelatedEntity.h"
+#include "Logic/Messages/MessageCreateParticle.h"
 
 // Física
 #include "Physics/Server.h"
@@ -42,6 +40,8 @@ implementa las habilidades del personaje
 #include "Graphics/Scene.h"
 
 #include "Graphics/Camera.h"
+
+using namespace std;
 
 namespace Logic {
 
@@ -214,7 +214,7 @@ namespace Logic {
 
 	void CScreamer::primarySkill() {
 		// Habilidad por definir
-		std::cout << "Primary Skill - Screamer" << std::endl;
+		cout << "Primary Skill - Screamer" << endl;
 	}
 
 	//__________________________________________________________________
@@ -240,12 +240,13 @@ namespace Logic {
 	void CScreamer::createExplotion() {
 		// EntitiesHit sera el buffer que contendra la lista de entidades que ha colisionado
 		// con el overlap
-		std::vector<CEntity*> entitiesHit;
+		vector<CEntity*> entitiesHit;
 
 		// Hacemos una query de overlap con la geometria de una esfera en la posicion 
 		// en la que se encuentra la granada con el radio que se indique de explosion
 		Physics::SphereGeometry explotionGeom = Physics::CGeometryFactory::getSingletonPtr()->createSphere(_screamerExplotionRadius);
-		Physics::CServer::getSingletonPtr()->overlapMultiple(explotionGeom, _entity->getPosition(), entitiesHit);
+		Vector3 explotionPos = _entity->getPosition();
+		Physics::CServer::getSingletonPtr()->overlapMultiple(explotionGeom, explotionPos, entitiesHit);
 
 		int nbHits = entitiesHit.size();
 		// Mandamos el mensaje de daño a cada una de las entidades que hayamos golpeado
@@ -255,15 +256,19 @@ namespace Logic {
 			if( entitiesHit[i] != NULL && entitiesHit[i]->isPlayer() ) {
 				// Emitimos el mensaje de instakill
 				// @todo mandar un mensaje de instakill en vez de un mensaje de daño
-				std::shared_ptr<CMessageDamaged> dmgMsg = std::make_shared<CMessageDamaged>();
+				shared_ptr<CMessageDamaged> dmgMsg = make_shared<CMessageDamaged>();
 				dmgMsg->setDamage(_screamerExplotionDamage);
 				dmgMsg->setEnemy(_entity);
 				entitiesHit[i]->emitMessage(dmgMsg);
 			}
 		}
 
-		Graphics::CParticle *particle = Graphics::CServer::getSingletonPtr()->
-			getActiveScene()->createParticle(_entity->getName(),"ExplosionParticle", _entity->getPosition());
+
+
+		shared_ptr<CMessageCreateParticle> particleMsg = make_shared<CMessageCreateParticle>();
+        particleMsg->setParticle("explotionParticles");
+        particleMsg->setPosition(explotionPos);
+        _entity->emitMessage(particleMsg);
 	}
 
 } // namespace Logic
