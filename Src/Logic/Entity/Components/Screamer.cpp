@@ -219,7 +219,7 @@ namespace Logic {
 				}else{
 					if(_rebound <= _maxNumberRebounds){
 						++_rebound;
-						_directionShoot = _directionShoot.reflect((*it).normal);
+						_directionShoot = _directionShoot.reflect(-(*it).normal);
 						primarySkill();
 					}else{
 						_rebound = 0;
