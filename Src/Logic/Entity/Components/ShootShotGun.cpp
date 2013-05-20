@@ -63,7 +63,7 @@ namespace Logic {
 	//________________________________________________
 	
 	void CShootShotGun::primaryShoot() {
-		if(_primaryCanShoot && _currentAmmo > 0 && _numberShots <= _currentAmmo){
+		if(_primaryCanShoot && _currentAmmo > 0){
 			_primaryCanShoot = false;
 			_primaryCooldownTimer = 0;
 				

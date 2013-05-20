@@ -159,7 +159,7 @@ namespace Logic {
 
 		// Obtenemos la información estandard asociada a la bola de fuego
 		Map::CEntity* entityInfo = CEntityFactory::getSingletonPtr()->getInfo("FireBall");
-		
+
 		// Calculamos los valores customizados para la creacion de la bola de fuego
 		// en funcion del tiempo que hemos mantenido pulsado el disparo primario
 		float fireBallRadius = _defaultFireBallRadius + (_fireBallRadiusGrowthFactor * _elapsedTime);

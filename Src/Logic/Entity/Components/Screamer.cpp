@@ -29,6 +29,7 @@ implementa las habilidades del personaje
 #include "Logic/Messages/MessageDamaged.h"
 #include "Logic/Messages/MessageChangeMaterial.h"
 #include "Logic/Messages/MessageCreateParticle.h"
+#include "AvatarController.h"
 
 // Física
 #include "Physics/Server.h"
@@ -81,6 +82,8 @@ namespace Logic {
 		assert( entityInfo->hasAttribute("screamerShieldRecoveryOverTime") );
 		assert( entityInfo->hasAttribute("screamerExplotionDamage") );
 		assert( entityInfo->hasAttribute("screamerExplotionRadius") );
+		assert( entityInfo->hasAttribute("screamerScreamForce") );
+		
 
 		// Asignamos los atributos correspondientes.
 		_currentScreamerShield = _screamerShieldThreshold = entityInfo->getFloatAttribute("screamerShieldThreshold");
@@ -90,18 +93,17 @@ namespace Logic {
 		_screamerShieldRecoveryOverTime = entityInfo->getFloatAttribute("screamerShieldRecoveryOverTime");
 		_screamerExplotionDamage = entityInfo->getFloatAttribute("screamerExplotionDamage");
 		_screamerExplotionRadius = entityInfo->getFloatAttribute("screamerExplotionRadius");
+
+		_screamerScreamForce = entityInfo->getFloatAttribute("screamerScreamForce");
+		_screamerReboundForce= entityInfo->getFloatAttribute("screamerReboundForce");
+		
+		_rebound = 0;
+		_maxNumberRebounds = 1;
+
 		return true;
 	} // spawn
 
 	//__________________________________________________________________
-
-	void CScreamer::onTick(unsigned int msecs) {
-		CPlayerClass::onTick(msecs);
-
-		checkSecondarySkill(msecs);
-	}
-
-	//________________________________________________________________________
 
 	void CScreamer::checkSecondarySkill(unsigned int msecs) {
 		// Si la habilidad primaria está siendo usada
@@ -177,8 +179,56 @@ namespace Logic {
 		_currentScreamerShield = _screamerShieldThreshold;
 		_screamerShieldDamageTimer = _screamerShieldRecoveryTimer = 0;
 	}
-
 	//__________________________________________________________________
+
+	void CScreamer::primarySkill() {
+		// Habilidad por definir
+		
+		// 3.5 mirao a ojo a traves del visual debbuger 
+		Physics::SphereGeometry sphere  = Physics::CGeometryFactory::getSingletonPtr()->createSphere(3.5);
+
+		// Si no he hecho ningun rebote, he de coger la del player, si estoy en algun rebote, el rebote se encarga de decirme en q posicion.
+		if(_rebound == 0)
+			_directionShoot = Math::getDirection(_entity->getOrientation());
+
+		std::vector<Physics::CSweepHit> hitSpots;
+
+		Physics::CServer::getSingletonPtr()->sweepMultiple(sphere, (_entity->getPosition() + Vector3(0,_heightShoot,0)),_directionShoot,999,hitSpots);
+
+		hitConsequences(hitSpots);		
+
+		//std::cout << std::endl << "Primary Skill - Screamer" << std::endl;
+	} // primarySkill
+	//__________________________________________________________________
+
+	void CScreamer::stopPrimarySkill() {
+		_rebound = 0;
+	}
+
+	void CScreamer::hitConsequences(std::vector<Physics::CSweepHit> &hits){
+		
+		for(auto it = hits.begin(); it < hits.end(); ++it){
+
+			std::string typeEntity = (*it).entity->getType().c_str();
+			printf("\nImpacto con: %s a distancia: %f \n\tEn punto: %f %f %f \n", (*it).entity->getName().c_str(), (*it).distance,  (*it).impact.x, (*it).impact.y, (*it).impact.z);
+			if(typeEntity == "World" )
+			{
+				if ((*it).distance < 10){
+					printf("\n effecto martillo");
+					_entity->getComponent<CAvatarController>("CAvatarController")->addForce(-_directionShoot * _screamerReboundForce);
+				}else{
+					if(_rebound <= _maxNumberRebounds){
+						_directionShoot = _directionShoot.reflect((*it).normal);
+						primarySkill();
+					}
+				}
+			}
+			if(typeEntity == "Screamer" || typeEntity == "Hound" || typeEntity == "Archangel" || typeEntity == "Shadow" || typeEntity == "RemotePlayer"){
+				printf("\n he dao a un player");
+				(*it).entity->getComponent<CAvatarController>("CAvatarController")->addForce(-(*it).normal * _screamerScreamForce);
+			}
+		}
+	}
 
 	void CScreamer::secondarySkill() {
 		_secondarySkillIsActive = true;
@@ -208,15 +258,7 @@ namespace Logic {
 		// Activamos la entidad creada
 		_screamerShield->activate();
 		_screamerShield->start();
-	}
-
-	//__________________________________________________________________
-
-	void CScreamer::primarySkill() {
-		// Habilidad por definir
-		cout << "Primary Skill - Screamer" << endl;
-	}
-
+	} // secondarySkill
 	//__________________________________________________________________
 
 	void CScreamer::stopSecondarySkill() {
@@ -227,14 +269,12 @@ namespace Logic {
 			CEntityFactory::getSingletonPtr()->deferredDeleteEntity(_screamerShield, true);
 			_screamerShield = NULL;
 		}
-	}
-
+	} // stopSecondarySkill
 	//__________________________________________________________________
 
 	void CScreamer::absorbDamage(float damage) {
 		_currentScreamerShield -= damage;
-	}
-
+	} // absorbDamage
 	//__________________________________________________________________
 
 	void CScreamer::createExplotion() {
@@ -263,13 +303,19 @@ namespace Logic {
 			}
 		}
 
-
-
 		shared_ptr<CMessageCreateParticle> particleMsg = make_shared<CMessageCreateParticle>();
         particleMsg->setParticle("explotionParticles");
         particleMsg->setPosition(explotionPos);
         _entity->emitMessage(particleMsg);
-	}
+	} // createExplotion
+	//________________________________________________________________________
+
+	void CScreamer::onTick(unsigned int msecs) {
+		CPlayerClass::onTick(msecs);
+
+		checkSecondarySkill(msecs);
+	} // onTick
+	//________________________________________________________________________
 
 } // namespace Logic
 

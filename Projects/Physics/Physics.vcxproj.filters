@@ -109,5 +109,8 @@
     <ClInclude Include="..\..\Src\Physics\RaycastHit.h">
       <Filter>Utils\Header</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Src\Physics\SweepHit.h">
+      <Filter>Utils\Header</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
