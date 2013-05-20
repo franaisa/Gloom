@@ -16,6 +16,7 @@ namespace Logic{
 
 		_instance = this;
 		_guiManager = CGUIManager::getSingletonPtr();
+		_scoreboard = 0;
 	}
 
 	CScoreboard::~CScoreboard(){
@@ -77,6 +78,7 @@ namespace Logic{
 		player->second.playerClass = newClass;
 
 		//ahora avisamos a la GUI de que ha habido un cambio
+		_scoreboard->callFunction("changeClass",Hikari::Args(name)(newClass));
 	}
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -101,7 +103,7 @@ namespace Logic{
 		player->second.kills++;
 
 		//ahora avisamos a la GUI de que ha habido un cambio
-		_scoreboard->callFunction("addKills",Hikari::Args((int)player->second.kills));
+		_scoreboard->callFunction("addKill",Hikari::Args(name)((int)player->second.kills));
 	}
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -114,7 +116,7 @@ namespace Logic{
 		player->second.deaths++;
 
 		//ahora avisamos a la GUI de que ha habido un cambio
-		_scoreboard->callFunction("addDeaths",Hikari::Args((int)player->second.deaths));
+		_scoreboard->callFunction("addDeath",Hikari::Args(name)((int)player->second.deaths));
 	}
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -132,6 +134,7 @@ namespace Logic{
 		_players.insert(playerUpdated);
 
 		//ahora avisamos a la GUI de que ha habido un cambio
+		_scoreboard->callFunction("changeNick",Hikari::Args(oldName)(newName));
 	}
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -156,6 +159,7 @@ namespace Logic{
 		player->second.bestSpree = newSpree;
 
 		//ahora avisamos a la GUI de que ha habido un cambio
+		_scoreboard->callFunction("addSpree",Hikari::Args(name)((int)newSpree));
 	}
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -171,6 +175,11 @@ namespace Logic{
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	bool CScoreboard::keyPressed(Input::TKey key){
+		if(!_scoreboard){
+			return true;
+		}
+
+
 		if (key.keyId == Input::Key::TAB){
 			_scoreboard->show();
 		}
@@ -180,6 +189,9 @@ namespace Logic{
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	bool CScoreboard::keyReleased(Input::TKey key){
+		if(!_scoreboard){
+			return true;
+		}
 		if (key.keyId == Input::Key::TAB){
 			_scoreboard->hide();
 		}

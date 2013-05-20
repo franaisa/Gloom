@@ -404,6 +404,22 @@ namespace Logic {
 		delete entity;
 
 	} // deleteEntity
+
+	//________________________________________________________________________
+
+	void CEntityFactory::deleteEntity(Logic::CEntity *entity, bool toClients) {
+		assert(entity);
+		// Si la entidad estaba activada se desactiva al sacarla
+		// del mapa.
+		entity->getMap()->removeEntity(entity);
+
+		//Comprobamos si debe enviarse a los clientes, porque hay casos en los que no deberia
+		if( Net::CManager::getSingletonPtr()->imServer() && toClients )
+			Logic::CGameNetMsgManager::getSingletonPtr()->sendDestroyEntity( entity->getEntityID() );
+
+		delete entity;
+
+	} // deleteEntity
 	
 	//________________________________________________________________________
 

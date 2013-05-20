@@ -1,3 +1,6 @@
+#ifndef __Logic_Scoreboard_H
+#define __Logic_Scoreboard_H
+
 #include "Input/InputManager.h"
 
 namespace Logic{
@@ -277,3 +280,5 @@ la clase del jugador, las muertes, los frags, los mejores spree, etc.
 	};
 
 }
+
+#endif

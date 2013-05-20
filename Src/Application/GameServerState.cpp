@@ -288,7 +288,7 @@ namespace Application {
 				if(playerId.second) { // Si el id devuelto es valido
 					Logic::CEntity* deletePlayer = _map->getEntityByID( playerId.first );
 					if(deletePlayer) {
-						Logic::CEntityFactory::getSingletonPtr()->deferredDeleteEntity(deletePlayer, true);
+						Logic::CEntityFactory::getSingletonPtr()->deleteEntity(deletePlayer, true);
 					}
 				}
 

@@ -49,7 +49,7 @@ namespace Application {
 		_seleccion->bind("selected",Hikari::FlashDelegate(this, &CGameClientState::classSelected));
 		_seleccion->hide();
 		_seleccion->setTransparent(true, true);
-		
+		_menuVisile = false;
 		_netMgr = Net::CManager::getSingletonPtr();
 
 		return true;
@@ -62,7 +62,7 @@ namespace Application {
 		
 		// Mostramos el menú de selección de personaje
 		_seleccion->show();
-
+		_menuVisile = true;
 		// Registramos a este estado como observador de red para que sea notificado
 		_netMgr->addObserver(this);
 
@@ -234,6 +234,7 @@ namespace Application {
 				Input::CServer::getSingletonPtr()->getPlayerController()->deactivate();
 				//mostramos la gui
 				_seleccion->show();
+				_menuVisile = true;
 				break;
 			}
 			default: {
@@ -273,15 +274,22 @@ namespace Application {
 	//______________________________________________________________________________
 
 	Hikari::FlashValue CGameClientState::classSelected(Hikari::FlashControl* caller, const Hikari::Arguments& args) {
+		
+		if(!_menuVisile)
+			return FLASH_VOID;
+		
 		int selectedClass = args.at(0).getNumber();
 		Net::NetMessageType msgType = Net::CLASS_SELECTED;
 		Net::CBuffer msg ( sizeof(msgType) + sizeof(selectedClass) );
 
-		switch(selectedClass) {
+
+
+ 		switch(selectedClass) {
 			case 0:
 				if(Input::CServer::getSingletonPtr()->getPlayerController()->getControllerAvatar()) {
 					Input::CServer::getSingletonPtr()->getPlayerController()->activate();
 					_seleccion->hide();
+					_menuVisile = false;
 				} else {
 
 				}
@@ -293,6 +301,7 @@ namespace Application {
 			case 4:
 
 				_seleccion->hide();
+				_menuVisile = false;
 				//enviamos la clase elegida
 				msg.serialize(msgType);
 				msg.serialize(selectedClass);
@@ -306,7 +315,7 @@ namespace Application {
 				break;
 			case 5: {
 				_seleccion->hide();
-				
+				_menuVisile = false;
 				//random de la clase y lo enviamos por red
 				/*int randomclass = ((rand()*clock())%4)+1;
 				msg.serialize(msgType);

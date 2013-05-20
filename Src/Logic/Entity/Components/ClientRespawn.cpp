@@ -11,6 +11,7 @@
 #include "PhysicController.h"
 #include "Logic/Server.h"
 #include "Logic/Maps/Map.h"
+#include "Logic/Maps/Scoreboard.h"
 #include "Map/MapEntity.h"
 #include "Basesubsystems/Math.h"
 #include "Interpolation.h"
@@ -126,13 +127,15 @@ namespace Logic  {
 			Logic::GUIKillersMessage::getSingletonPtr()->addKiller(
 				killer->getName(),
 				_entity->getName());
+
+			Logic::CScoreboard::getSingletonPtr()->addKill(killer->getName());
+			Logic::CScoreboard::getSingletonPtr()->addDeath(_entity->getName());
 		}
 		//sino ha sido un player es que se ha suicidado el retard
 		else{
 			Logic::GUIKillersMessage::getSingletonPtr()->suicide(_entity->getName());
+			Logic::CScoreboard::getSingletonPtr()->addDeath(_entity->getName());
 		}
-
-		//ahora actualizamos la estructura del scoreboard
 	}
 
 

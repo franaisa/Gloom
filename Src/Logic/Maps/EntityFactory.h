@@ -200,6 +200,8 @@ namespace Logic {
 		*/
 		void deleteEntity(CEntity *entity);
 
+		void deleteEntity(CEntity *entity, bool toClients);
+
 		//________________________________________________________________________
 
 		/**
