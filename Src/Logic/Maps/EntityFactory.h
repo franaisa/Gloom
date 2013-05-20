@@ -280,6 +280,41 @@ namespace Logic {
 		//________________________________________________________________________
 
 		/**
+		Transforma un numero en string
+
+		@param data Numero a formatear.
+		@return El string resultante de formatear el numero.
+		*/
+		template <typename T>
+		std::string formatToMapString(const T& data) const {
+			std::stringstream ss (std::stringstream::in | std::stringstream::out);
+			ss << data;
+			return ss.str();
+		}
+
+		//________________________________________________________________________
+
+		/**
+		Transforma un vector3 en string con el formato en que el mapa los lee.
+
+		@param data Vector a formatear.
+		@return El vector formateado como un string.
+		*/
+		std::string formatToMapString(const Vector3& data) const {
+			std::stringstream ss (std::stringstream::in | std::stringstream::out);
+
+			ss << data.x;
+			ss << " ";
+			ss << data.y;
+			ss << " ";
+			ss << data.z;
+
+			return ss.str();
+		}
+
+		//________________________________________________________________________
+
+		/**
 		Estructura que define una entidad blueprint.
 		*/
 		typedef struct {
