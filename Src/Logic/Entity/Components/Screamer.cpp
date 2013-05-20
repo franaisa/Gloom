@@ -95,14 +95,6 @@ namespace Logic {
 
 	//__________________________________________________________________
 
-	void CScreamer::onTick(unsigned int msecs) {
-		CPlayerClass::onTick(msecs);
-
-		checkSecondarySkill(msecs);
-	}
-
-	//________________________________________________________________________
-
 	void CScreamer::checkSecondarySkill(unsigned int msecs) {
 		// Si la habilidad primaria está siendo usada
 		if(_secondarySkillIsActive) {
@@ -208,15 +200,13 @@ namespace Logic {
 		// Activamos la entidad creada
 		_screamerShield->activate();
 		_screamerShield->start();
-	}
-
+	} // secondarySkill
 	//__________________________________________________________________
 
 	void CScreamer::primarySkill() {
 		// Habilidad por definir
 		std::cout << "Primary Skill - Screamer" << std::endl;
-	}
-
+	} // primarySkill
 	//__________________________________________________________________
 
 	void CScreamer::stopSecondarySkill() {
@@ -227,14 +217,12 @@ namespace Logic {
 			CEntityFactory::getSingletonPtr()->deferredDeleteEntity(_screamerShield, true);
 			_screamerShield = NULL;
 		}
-	}
-
+	} // stopSecondarySkill
 	//__________________________________________________________________
 
 	void CScreamer::absorbDamage(float damage) {
 		_currentScreamerShield -= damage;
-	}
-
+	} // absorbDamage
 	//__________________________________________________________________
 
 	void CScreamer::createExplotion() {
@@ -264,7 +252,15 @@ namespace Logic {
 
 		Graphics::CParticle *particle = Graphics::CServer::getSingletonPtr()->
 			getActiveScene()->createParticle(_entity->getName(),"ExplosionParticle", _entity->getPosition());
-	}
+	} // createExplotion
+	//________________________________________________________________________
+
+	void CScreamer::onTick(unsigned int msecs) {
+		CPlayerClass::onTick(msecs);
+
+		checkSecondarySkill(msecs);
+	} // onTick
+	//________________________________________________________________________
 
 } // namespace Logic
 
