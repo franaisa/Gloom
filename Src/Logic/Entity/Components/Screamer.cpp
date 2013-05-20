@@ -202,7 +202,7 @@ namespace Logic {
 	//__________________________________________________________________
 
 	void CScreamer::stopPrimarySkill() {
-		_rebound = 0;
+		
 	}
 
 	void CScreamer::hitConsequences(std::vector<Physics::CSweepHit> &hits){
@@ -218,8 +218,11 @@ namespace Logic {
 					_entity->getComponent<CAvatarController>("CAvatarController")->addForce(-_directionShoot * _screamerReboundForce);
 				}else{
 					if(_rebound <= _maxNumberRebounds){
+						++_rebound;
 						_directionShoot = _directionShoot.reflect((*it).normal);
 						primarySkill();
+					}else{
+						_rebound = 0;
 					}
 				}
 			}
