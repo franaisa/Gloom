@@ -587,7 +587,7 @@ namespace Physics {
 	//________________________________________________________________________
 
 	void CServer::sweepMultiple(const physx::PxGeometry& geometry, const Vector3& position,
-								const Vector3& unitDir, float distance, std::vector<Vector3>& hitSpots) {
+								const Vector3& unitDir, float distance, std::vector<CSweepHit>& hitSpots) {
 
 		// Booleano que indicara si hay elementos que bloquean el hit
 		bool blockingHit;
@@ -605,7 +605,7 @@ namespace Physics {
 											  PxSceneQueryFlag::eNORMAL				|
 											  PxSceneQueryFlag::eINITIAL_OVERLAP;
 
-		unsigned int nbHits = _scene->sweepMultiple(geometry, pose, Vector3ToPxVec3(unitDir), 100, outputFlags, hitBuffer, bufferSize, blockingHit);
+		unsigned int nbHits = _scene->sweepMultiple(geometry, pose, Vector3ToPxVec3(unitDir), distance, outputFlags, hitBuffer, bufferSize, blockingHit);
 		while(nbHits == -1) {
 			// Si el buffer se ha desbordado aumentamos su tamaño al doble
 			// y volvemos ha realizar la query
@@ -623,9 +623,18 @@ namespace Physics {
 			// Si hemos golpeado a otras entidades creamos un buffer
 			hitSpots.reserve(nbHits);
 
+			IPhysics* component;
+			CSweepHit sweepHit;
 			// Rellenamos el buffer con un puntero a cada una de las entidades golpeadas
 			for(int i = 0; i < nbHits; ++i) {
-				hitSpots.push_back( PxVec3ToVector3(hitBuffer[i].impact) );
+				component = static_cast<IPhysics*>( hitBuffer[i].shape->getActor().userData );
+
+				sweepHit.distance = hitBuffer[i].distance;
+				sweepHit.impact = PxVec3ToVector3(hitBuffer[i].impact);
+				sweepHit.normal = PxVec3ToVector3(hitBuffer[i].normal);
+				sweepHit.entity = component->getEntity();
+				
+				hitSpots.push_back(sweepHit);
 			}
 		}
 

@@ -17,6 +17,7 @@ Contiene la declaración del servidor de física.
 #include "GeometryFactory.h"
 #include "MaterialManager.h"
 #include "RaycastHit.h"
+#include "SweepHit.h"
 
 #include <PxFiltering.h>
 
@@ -366,7 +367,7 @@ namespace Physics {
 		El vector que se pasa por parámetro debe estar vacio.
 		*/
 		void sweepMultiple(const physx::PxGeometry& geometry, const Vector3& position,
-						   const Vector3& unitDir, float distance, std::vector<Vector3>& hitSpots);
+						   const Vector3& unitDir, float distance, std::vector<CSweepHit>& hitSpots);
 
 		//________________________________________________________________________
 

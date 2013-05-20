@@ -38,7 +38,8 @@ namespace Logic {
 	public:
 
 		/** Constructor por defecto. */
-		CShootMiniGun() : CShootRaycast("miniGun"), _pressThenShoot(false) {}
+		CShootMiniGun() : CShootRaycast("miniGun"), _pressThenShoot(false), _contador(0), _acumulando(false),
+													_iRafagas(0) {}
 
 		//__________________________________________________________________
 
@@ -80,6 +81,23 @@ namespace Logic {
 		Namespace para los tipos de mensajes de control posibles.
 		*/
 		bool _pressThenShoot;
+
+		/**
+			Contador para ir acumulando el tiempo/ticks que se tiene el botón derecho apretado
+		*/
+		int		_contador;
+
+		/**
+			Variable booleana que indica si se está acumulando tiempo/ticksporque
+			se tiene el botón derecho pulsado
+		*/
+		bool	_acumulando;
+
+		/**
+			Numero de rafagas que se tienen acumuladas.
+			Una rafaga = 10 unidades de contador.
+		*/
+		int		_iRafagas;
 
 
 	}; // class CShootMiniGun

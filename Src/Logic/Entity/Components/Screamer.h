@@ -19,11 +19,15 @@ implementa las habilidades del personaje
 #include "BaseSubsystems/Math.h"
 #include "PlayerClass.h"
 
+namespace Physics{
+	class CSweepHit;
+}
+
 namespace Logic {
 
 	// Predeclaración de clases.
 	class CEntity;
-
+	
 	/**
 	Clase que implementa las habilidades propias
 	del personaje "Screamer".
@@ -33,6 +37,7 @@ namespace Logic {
 	@author Francisco Aisa García
 	@date Febrero, 2013
 	*/
+
 
 	class CScreamer : public CPlayerClass {
 		DEC_FACTORY(CScreamer);
@@ -94,6 +99,15 @@ namespace Logic {
 
 		/** Habilidad por definir. */
 		virtual void primarySkill();
+
+		//__________________________________________________________________
+
+		/**
+		Se dispara cuando el jugador deja de pulsar la tecla de uso de la habilidad
+		primaria.
+
+		*/
+		virtual void stopPrimarySkill();
 
 		//__________________________________________________________________
 
@@ -164,6 +178,17 @@ namespace Logic {
 		*/
 		void createExplotion();
 
+		/**
+		Metodo que hace que resuleve el contacto con el chillido.
+		Este metodo se encarga de comprobar con que ha impactado, si lo ha hecho con el world y la distancia es poca, lo hace robotar.
+		Si en cambio la distancia es grande hace la reflexion del disparo en el world y vuelta a empezar (tan solo un rebote).
+		Y ya por ultimo si impacta en un jugador, lo hace rebotar en la direccon opuesta a la normal de impacto.
+
+		@param hits, todos los impactos del sweepMultiple
+		@param directionShoot, direccion hacia la que mira el emisor del sweep. Lo pongo por no tener q calcularlo otra vez.
+		@param reboun, indica si ya rebotado en la pare o no, por defecto a false
+		*/
+		void hitConsequences(std::vector<Physics::CSweepHit> &hits);
 
 		// =======================================================================
 		//                          MIEMBROS PRIVADOS
@@ -202,6 +227,21 @@ namespace Logic {
 
 		/** Radio de la explosión si el Screamer explota. */
 		float _screamerExplotionRadius;
+
+		/** Fuerza de empuje del chillido. */
+		float _screamerScreamForce;
+
+		/** Fuerza de rebote del chillido. */
+		float _screamerReboundForce;
+
+		/** Varibable para controlar los rebotes que lleva */
+		unsigned int _rebound;
+
+		/** Variable para controlar el numero maximo de rebotes */
+		unsigned int _maxNumberRebounds;
+
+		/** Variable para poder controlar la direccion de disparo en los rebotes */
+		Vector3 _directionShoot;
 
 		/** Puntero a la entidad que representa al escudo generado por la habilidad primaria. */
 		Logic::CEntity* _screamerShield;

@@ -105,7 +105,7 @@ namespace Logic {
 
 		// Obtenemos la información estandard asociada a la bola de fuego
 		Map::CEntity* entityInfo = CEntityFactory::getSingletonPtr()->getInfo("FireBall");
-		
+
 		// Modificamos sus parámetros en base a los valores calculados
 		entityInfo->setAttribute( "physic_radius", toString(_fireBallRadius) );
 		entityInfo->setAttribute( "scale", toString( Vector3(1.0f, 1.0f, 1.0f) * _fireBallRadius ) );

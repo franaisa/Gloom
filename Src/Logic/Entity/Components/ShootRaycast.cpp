@@ -113,7 +113,7 @@ namespace Logic {
 		Ray ray(origin, dispersionDirection);
 			
 		// Dibujamos el rayo en ogre para poder depurar
-		//drawRaycast(ray);
+		drawRaycast(ray);
 
 		// Rayo lanzado por el servidor de físicas de acuerdo a la distancia de potencia del arma
 		std::vector<Physics::CRaycastHit> hits;
