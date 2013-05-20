@@ -87,7 +87,8 @@ namespace Logic {
 	//________________________________________________________________________
 
 	void CFireBallController::alterDirection(const Vector3& direction) {
-		this->_direction = direction; 
+		this->_direction += direction;
+		this->_direction.normalise();
 	}
 
 	//________________________________________________________________________

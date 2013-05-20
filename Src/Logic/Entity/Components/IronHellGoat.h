@@ -117,12 +117,16 @@ namespace Logic {
 
 		unsigned int _elapsedTime;
 		unsigned int _maxLoadingTime;
+		unsigned int _ammoSpentTimeStep;
+		unsigned int _ammoSpentTimer;
+		unsigned int _currentSpentAmmo;
 
 		float _defaultFireBallRadius;
 		float _defaultFireBallSpeed;
 		float _defaultFireBallExplotionRadius;
 		float _defaultFireBallDamage;
 
+		unsigned int _maxAmmoPerShot;
 		float _fireBallRadiusTemporalIncrement;
 		float _fireBallSpeedTemporalIncrement;
 		float _fireBallExplotionRadiusTemporalIncrement;

@@ -79,8 +79,7 @@ namespace Logic {
 			_name = entityInfo->getStringAttribute("name");
 		}
 
-		if(entityInfo->hasAttribute("position"))
-		{
+		if(entityInfo->hasAttribute("position")) {
 			Vector3 position = entityInfo->getVector3Attribute("position");
 			_transform.setTrans(position);
 		}

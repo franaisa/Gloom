@@ -287,15 +287,7 @@ namespace Logic {
 	Logic::CEntity* CEntityFactory::createEntityWithPosition(Map::CEntity *entityInfo, CMap *map, const Vector3& position, bool replicate) {
 		// Pasamos el vector3 a string y se lo seteamos al entityInfo para mas tarde
 		// llamar al createEntity
-		std::stringstream ss (std::stringstream::in | std::stringstream::out);
-
-		ss << position.x;
-		ss << " ";
-		ss << position.y;
-		ss << " ";
-		ss << position.z;
-
-		entityInfo->setAttribute( "position", ss.str() );
+		entityInfo->setAttribute( "position", formatToMapString(position) );
 
 		return createEntity(entityInfo, map, replicate);
 	} // createEntity
@@ -313,17 +305,8 @@ namespace Logic {
 															   const std::string& name, const Vector3& position, bool replicate) {
 		// Seteamos el nombre
 		entityInfo->setAttribute("name", name);
-		
 		// Seteamos la posicion de la entidad
-		std::stringstream ss (std::stringstream::in | std::stringstream::out);
-
-		ss << position.x;
-		ss << " ";
-		ss << position.y;
-		ss << " ";
-		ss << position.z;
-
-		entityInfo->setAttribute( "position", ss.str() );
+		entityInfo->setAttribute( "position", formatToMapString(position) );
 
 		// Creamos la entidad con la nueva información dada
 		return createEntity(entityInfo, map, replicate);
@@ -335,24 +318,10 @@ namespace Logic {
 										float yaw, float pitch, bool replicate){
 		// Pasamos el vector3 a string y se lo seteamos al entityInfo para mas tarde
 		// llamar al createEntity
-		std::stringstream ss (std::stringstream::in | std::stringstream::out);
-
-		ss << position.x;
-		ss << " ";
-		ss << position.y;
-		ss << " ";
-		ss << position.z;
-
-		entityInfo->setAttribute( "position", ss.str() );
-
-		//Yaw y Pitch
-		std::stringstream sy (std::stringstream::in | std::stringstream::out);
-		std::stringstream sp (std::stringstream::in | std::stringstream::out);
-		sy << yaw;
-		sp << pitch;
-
-		entityInfo->setAttribute( "yaw", sy.str());
-		entityInfo->setAttribute( "pitch", sp.str());
+		entityInfo->setAttribute( "position", formatToMapString(position) );
+		// Yaw y Pitch
+		entityInfo->setAttribute( "yaw",  formatToMapString(yaw));
+		entityInfo->setAttribute( "pitch", formatToMapString(pitch));
 
 		return createEntity(entityInfo, map, replicate);
 	}
