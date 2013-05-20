@@ -166,6 +166,19 @@ Map = {
 			weaponironHellGoatParticlePosition = {6, 5, 6},
 			weaponironHellGoatAudio = "media/audio/rocketLauncher.wav",
 			
+			weaponironHellGoatMaximumLoadingTime = 2,
+			
+			weaponironHellGoatMaxAmmoPerShot = 5,
+			weaponironHellGoatDefaultFireBallRadius = 2.0,
+			weaponironHellGoatDefaultFireBallSpeed = 0.15,
+			weaponironHellGoatDefaultFireBallExplotionRadius = 30.0,
+			weaponironHellGoatDefaultFireBallDamage = 50.0,
+			
+			weaponironHellGoatMaxFireBallRadius = 5.0,
+			weaponironHellGoatMaxFireBallSpeed = 0.035,
+			weaponironHellGoatMaxFireBallExplotionRadius = 30.0,
+			weaponironHellGoatMaxFireBallDamage = 100.0,
+			
 		hudCrossX = 4,
 		hudCrossY = 5,
 		hudScreenWidth = 26,
@@ -335,6 +348,19 @@ Map = {
 			weaponironHellGoatParticlePosition = {6, 5, 6},
 			weaponironHellGoatAudio = "media/audio/rocketLauncher.wav",
 			
+			weaponironHellGoatMaximumLoadingTime = 2,
+			
+			weaponironHellGoatMaxAmmoPerShot = 5,
+			weaponironHellGoatDefaultFireBallRadius = 2.0,
+			weaponironHellGoatDefaultFireBallSpeed = 0.15,
+			weaponironHellGoatDefaultFireBallExplotionRadius = 30.0,
+			weaponironHellGoatDefaultFireBallDamage = 50.0,
+			
+			weaponironHellGoatMaxFireBallRadius = 5.0,
+			weaponironHellGoatMaxFireBallSpeed = 0.035,
+			weaponironHellGoatMaxFireBallExplotionRadius = 30.0,
+			weaponironHellGoatMaxFireBallDamage = 100.0,
+			
 		hudCrossX = 4,
 		hudCrossY = 5,
 		hudScreenWidth = 26,
@@ -503,6 +529,19 @@ Map = {
 			weaponironHellGoatProjectileRadius = 2,
 			weaponironHellGoatParticlePosition = {6, 5, 6},
 			weaponironHellGoatAudio = "media/audio/rocketLauncher.wav",
+			
+			weaponironHellGoatMaximumLoadingTime = 2,
+			
+			weaponironHellGoatMaxAmmoPerShot = 5,
+			weaponironHellGoatDefaultFireBallRadius = 2.0,
+			weaponironHellGoatDefaultFireBallSpeed = 0.15,
+			weaponironHellGoatDefaultFireBallExplotionRadius = 30.0,
+			weaponironHellGoatDefaultFireBallDamage = 50.0,
+			
+			weaponironHellGoatMaxFireBallRadius = 5.0,
+			weaponironHellGoatMaxFireBallSpeed = 0.035,
+			weaponironHellGoatMaxFireBallExplotionRadius = 30.0,
+			weaponironHellGoatMaxFireBallDamage = 100.0,
 			
 		hudCrossX = 4,
 		hudCrossY = 5,
@@ -674,6 +713,19 @@ Map = {
 			weaponironHellGoatProjectileRadius = 2,
 			weaponironHellGoatParticlePosition = {6, 5, 6},
 			weaponironHellGoatAudio = "media/audio/rocketLauncher.wav",
+			
+			weaponironHellGoatMaximumLoadingTime = 2,
+			
+			weaponironHellGoatMaxAmmoPerShot = 5,
+			weaponironHellGoatDefaultFireBallRadius = 2.0,
+			weaponironHellGoatDefaultFireBallSpeed = 0.15,
+			weaponironHellGoatDefaultFireBallExplotionRadius = 30.0,
+			weaponironHellGoatDefaultFireBallDamage = 50.0,
+			
+			weaponironHellGoatMaxFireBallRadius = 5.0,
+			weaponironHellGoatMaxFireBallSpeed = 0.035,
+			weaponironHellGoatMaxFireBallExplotionRadius = 30.0,
+			weaponironHellGoatMaxFireBallDamage = 100.0,
 			
 		hudCrossX = 4,
 		hudCrossY = 5,
@@ -850,6 +902,19 @@ Map = {
 			weaponironHellGoatParticlePosition = {6, 5, 6},
 			weaponironHellGoatAudio = "media/audio/rocketLauncher.wav",
 			
+			weaponironHellGoatMaximumLoadingTime = 2,
+			
+			weaponironHellGoatMaxAmmoPerShot = 5,
+			weaponironHellGoatDefaultFireBallRadius = 2.0,
+			weaponironHellGoatDefaultFireBallSpeed = 0.15,
+			weaponironHellGoatDefaultFireBallExplotionRadius = 30.0,
+			weaponironHellGoatDefaultFireBallDamage = 50.0,
+			
+			weaponironHellGoatMaxFireBallRadius = 5.0,
+			weaponironHellGoatMaxFireBallSpeed = 0.035,
+			weaponironHellGoatMaxFireBallExplotionRadius = 30.0,
+			weaponironHellGoatMaxFireBallDamage = 100.0,
+			
 		hudCrossX = 4,
 		hudCrossY = 5,
 		hudScreenWidth = 26,
@@ -1022,6 +1087,19 @@ Map = {
 			weaponironHellGoatParticlePosition = {6, 5, 6},
 			weaponironHellGoatAudio = "media/audio/rocketLauncher.wav",
 			
+			weaponironHellGoatMaximumLoadingTime = 2,
+			
+			weaponironHellGoatMaxAmmoPerShot = 5,
+			weaponironHellGoatDefaultFireBallRadius = 2.0,
+			weaponironHellGoatDefaultFireBallSpeed = 0.15,
+			weaponironHellGoatDefaultFireBallExplotionRadius = 30.0,
+			weaponironHellGoatDefaultFireBallDamage = 50.0,
+			
+			weaponironHellGoatMaxFireBallRadius = 5.0,
+			weaponironHellGoatMaxFireBallSpeed = 0.035,
+			weaponironHellGoatMaxFireBallExplotionRadius = 30.0,
+			weaponironHellGoatMaxFireBallDamage = 100.0,
+			
 		hudCrossX = 4,
 		hudCrossY = 5,
 		hudScreenWidth = 26,
@@ -1193,6 +1271,19 @@ Map = {
 			weaponironHellGoatProjectileRadius = 2,
 			weaponironHellGoatParticlePosition = {6, 5, 6},
 			weaponironHellGoatAudio = "media/audio/rocketLauncher.wav",
+			
+			weaponironHellGoatMaximumLoadingTime = 2,
+			
+			weaponironHellGoatMaxAmmoPerShot = 5,
+			weaponironHellGoatDefaultFireBallRadius = 2.0,
+			weaponironHellGoatDefaultFireBallSpeed = 0.15,
+			weaponironHellGoatDefaultFireBallExplotionRadius = 30.0,
+			weaponironHellGoatDefaultFireBallDamage = 50.0,
+			
+			weaponironHellGoatMaxFireBallRadius = 5.0,
+			weaponironHellGoatMaxFireBallSpeed = 0.035,
+			weaponironHellGoatMaxFireBallExplotionRadius = 30.0,
+			weaponironHellGoatMaxFireBallDamage = 100.0,
 			
 		hudCrossX = 4,
 		hudCrossY = 5,
@@ -1387,6 +1478,7 @@ Map = {
 			
 			weaponironHellGoatMaximumLoadingTime = 2,
 			
+			weaponironHellGoatMaxAmmoPerShot = 5,
 			weaponironHellGoatDefaultFireBallRadius = 2.0,
 			weaponironHellGoatDefaultFireBallSpeed = 0.15,
 			weaponironHellGoatDefaultFireBallExplotionRadius = 30.0,
@@ -1568,14 +1660,27 @@ Map = {
 			weaponironHellGoatPitch = -0.2,
 			weaponironHellGoatOffset = {3.0,-4.5,-10.0},
 			weaponironHellGoatNumberShoots = 1,
-			weaponironHellGoatPrimaryColdDown = 1.5,
+			weaponironHellGoatPrimaryColdDown = 0.8,
 			weaponironHellGoatSecondaryColdDown = 0,
-			weaponironHellGoatMaxAmmo = 30,
+			weaponironHellGoatMaxAmmo = 45,
 			weaponironHellGoatId = 4,
 			weaponironHellGoatShootForce = 10000,
 			weaponironHellGoatProjectileRadius = 2,
 			weaponironHellGoatParticlePosition = {6, 5, 6},
 			weaponironHellGoatAudio = "media/audio/rocketLauncher.wav",
+			
+			weaponironHellGoatMaximumLoadingTime = 2,
+
+			weaponironHellGoatDefaultFireBallRadius = 2.0,
+			weaponironHellGoatDefaultFireBallSpeed = 0.15,
+			weaponironHellGoatDefaultFireBallExplotionRadius = 30.0,
+			weaponironHellGoatDefaultFireBallDamage = 50.0,
+			
+			weaponironHellGoatMaxAmmoPerShot = 5,
+			weaponironHellGoatMaxFireBallRadius = 5.0,
+			weaponironHellGoatMaxFireBallSpeed = 0.035,
+			weaponironHellGoatMaxFireBallExplotionRadius = 30.0,
+			weaponironHellGoatMaxFireBallDamage = 100.0,
 			
 		hudCrossX = 4,
 		hudCrossY = 5,
@@ -1622,7 +1727,7 @@ Map = {
 	
 	FireBall = {
 		type = "FireBall",
-		model = "marine.mesh",
+		model = "mine.mesh",
 		msgList= "55,56",
 		physic_entity = "rigid",
 		physic_trigger = false,

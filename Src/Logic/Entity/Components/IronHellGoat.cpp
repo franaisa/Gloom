@@ -18,6 +18,8 @@ de disparo de la cabra.
 #include "Logic/Maps/Map.h"
 #include "Logic/Server.h"
 
+using namespace std;
+
 namespace Logic {
 	
 	IMP_FACTORY(CIronHellGoat);
@@ -27,7 +29,9 @@ namespace Logic {
 	CIronHellGoat::CIronHellGoat() : CShootProjectile("ironHellGoat"),
 									 _primaryFireIsActive(false),
 									 _secondaryFireIsActive(false),
-									 _elapsedTime(0) {
+									 _elapsedTime(0),
+									 _ammoSpentTimer(0),
+									 _currentSpentAmmo(0) {
 		// Nada que hacer
 	}
 
@@ -52,11 +56,12 @@ namespace Logic {
 		std::string weaponName = aux.str();
 
 		// Nos aseguramos de tener todos los atributos que necesitamos
-		/*assert( entityInfo->hasAttribute(weaponName + "MaximumLoadingTime") );
+		assert( entityInfo->hasAttribute(weaponName + "MaximumLoadingTime") );
 		assert( entityInfo->hasAttribute(weaponName + "DefaultFireBallRadius") );
 		assert( entityInfo->hasAttribute(weaponName + "DefaultFireBallSpeed" ) );
 		assert( entityInfo->hasAttribute(weaponName + "DefaultFireBallExplotionRadius") );
 		assert( entityInfo->hasAttribute(weaponName + "DefaultFireBallDamage") );
+		assert( entityInfo->hasAttribute(weaponName + "MaxAmmoPerShot") );
 		assert( entityInfo->hasAttribute(weaponName + "MaxFireBallRadius") );
 		assert( entityInfo->hasAttribute(weaponName + "MaxFireBallSpeed") );
 		assert( entityInfo->hasAttribute(weaponName + "MaxFireBallExplotionRadius") );
@@ -65,6 +70,10 @@ namespace Logic {
 		// Tiempo de carga del arma
 		_maxLoadingTime = entityInfo->getIntAttribute(weaponName + "MaximumLoadingTime") * 1000.0f;
 
+		// Ratio al que gastamos municion
+		_maxAmmoPerShot = entityInfo->getIntAttribute(weaponName + "MaxAmmoPerShot");
+		_ammoSpentTimeStep = (float)_maxLoadingTime / (float)(_maxAmmoPerShot);
+		
 		// Valores de creación de la bola de fuego por defecto
 		_defaultFireBallRadius = entityInfo->getFloatAttribute(weaponName + "DefaultFireBallRadius");
 		_defaultFireBallSpeed = entityInfo->getFloatAttribute(weaponName + "DefaultFireBallSpeed");
@@ -75,29 +84,13 @@ namespace Logic {
 		float maxFireBallRadius = entityInfo->getFloatAttribute(weaponName + "MaxFireBallRadius");
 		float maxFireBallSpeed = entityInfo->getFloatAttribute(weaponName + "MaxFireBallSpeed");
 		float maxFireBallExplotionRadius = entityInfo->getFloatAttribute(weaponName + "MaxFireBallExplotionRadius");
-		float maxFireBallDamage = entityInfo->getFloatAttribute(weaponName + "MaxFireBallDamage");*/
+		float maxFireBallDamage = entityInfo->getFloatAttribute(weaponName + "MaxFireBallDamage");
 
-		// Tiempo máximo de carga de la bola
-		_maxLoadingTime = 2.0f * 1000.0f;
-
-		// Valores por defecto
-		_defaultFireBallRadius = 2.0f;
-		_defaultFireBallSpeed = 0.15f;
-		_defaultFireBallExplotionRadius = 30.0f;
-		_defaultFireBallDamage = 50.0f;
-
-		// Valores máximos
-		float maxFireBallRadius = 5.0f;
-		float maxFireBallSpeed = 0.035f;
-		float maxFireBallExplotionRadius = 30.0f;
-		float maxFireBallDamage = 100.0f;
-
-		// Calculamos los factores de crecimiento en funcion del tiempo
-		// maximo de carga
-		_fireBallRadiusGrowthFactor = (maxFireBallRadius - _defaultFireBallRadius) / _maxLoadingTime;
-		_fireBallSpeedGrowthFactor = (maxFireBallSpeed - _defaultFireBallSpeed) / _maxLoadingTime;
-		_fireBallExplotionRadiusGrowthFactor = (maxFireBallExplotionRadius - _defaultFireBallExplotionRadius) / _maxLoadingTime;
-		_fireBallDamageGrowthFactor = (maxFireBallDamage - _defaultFireBallDamage) / _maxLoadingTime;
+		// Calculamos los factores de crecimiento en funcion del tiempo maximo de carga
+		_fireBallRadiusTemporalIncrement = (maxFireBallRadius - _defaultFireBallRadius) / _maxLoadingTime;
+		_fireBallSpeedTemporalIncrement = (maxFireBallSpeed - _defaultFireBallSpeed) / _maxLoadingTime;
+		_fireBallExplotionRadiusTemporalIncrement = (maxFireBallExplotionRadius - _defaultFireBallExplotionRadius) / _maxLoadingTime;
+		_fireBallDamageTemporalIncrement = (maxFireBallDamage - _defaultFireBallDamage) / _maxLoadingTime;
 
 		return true;
 	}
@@ -105,29 +98,38 @@ namespace Logic {
 	//__________________________________________________________________
 
 	void CIronHellGoat::onActivate() {
-		_elapsedTime = 0;
+		_currentSpentAmmo = _ammoSpentTimer = _elapsedTime = 0;
 	}
 
 	//__________________________________________________________________
 
 	void CIronHellGoat::onAvailable() {
-		_elapsedTime = 0;
+		_currentSpentAmmo = _ammoSpentTimer = _elapsedTime = 0;
 	}
 
 	//__________________________________________________________________
 
 	void CIronHellGoat::onTick(unsigned int msecs) {
-		// CShoot::onTick(msecs);
+		CShoot::onTick(msecs);
 
 		// Si el jugador esta dejando pulsado el disparo primario, aumentamos
 		// el tamaño de la bola y reducimos la velocidad hasta un limite
 		if(_primaryFireIsActive) {
-			// Contamos el tiempo que hemos mantenido pulsado el raton
-			if(_elapsedTime < _maxLoadingTime) {
-				_elapsedTime += msecs;
+			if(_currentAmmo > 0 && _currentSpentAmmo < _maxAmmoPerShot) {
+				if(_elapsedTime < _maxLoadingTime) {
+					// Contamos el tiempo que hemos mantenido pulsado el raton
+					_elapsedTime += msecs;
+					// Actualizamos el timer que se encarga de reducir la municion
+					_ammoSpentTimer += msecs;
+					if(_ammoSpentTimer >= _ammoSpentTimeStep) {
+						decrementAmmo();
+						++_currentSpentAmmo;
+						_ammoSpentTimer = 0;
+					}
 
-				if(_elapsedTime >= _maxLoadingTime) {
-					_elapsedTime = _maxLoadingTime;
+					if(_elapsedTime >= _maxLoadingTime) {
+						_elapsedTime = _maxLoadingTime;
+					}
 				}
 			}
 		}
@@ -139,22 +141,31 @@ namespace Logic {
 			}
 		}
 		else {
-			// Si no quedan bolas vivas poner a dormir
+			// Si no nos quedan bolas vivas ponemos el componente a dormir
+			// @todo Hay que cambiar el accept para que no acepte mensajes de control en general
+			//putToSleep();
 		}
 	}
 
 	//__________________________________________________________________
 
 	void CIronHellGoat::primaryShoot() {
-		std::cout << "Primario" << std::endl;
 		// Si tenemos suficiente munición
+		if(_primaryCanShoot && _currentAmmo > 0) {
 			_primaryFireIsActive = true;
-		// Si no tenemos suficiente munición ponemos el sonido de sin balas
+			decrementAmmo();
+			++_currentSpentAmmo;
+		}
+		else if(_currentAmmo == 0) {
+			// Si no tenemos suficiente munición ponemos el sonido de sin balas
+		}
 	}
 
 	//__________________________________________________________________
 
 	void CIronHellGoat::stopPrimaryShoot() {
+		if(!_primaryFireIsActive) return;
+		
 		_primaryFireIsActive = false;
 
 		// Obtenemos la información estandard asociada a la bola de fuego
@@ -162,14 +173,14 @@ namespace Logic {
 
 		// Calculamos los valores customizados para la creacion de la bola de fuego
 		// en funcion del tiempo que hemos mantenido pulsado el disparo primario
-		float fireBallRadius = _defaultFireBallRadius + (_fireBallRadiusGrowthFactor * _elapsedTime);
-		float fireBallSpeed = _defaultFireBallSpeed + (_fireBallSpeedGrowthFactor * _elapsedTime);
-		float fireBallExplotionRadius = _defaultFireBallExplotionRadius + (_fireBallExplotionRadiusGrowthFactor * _elapsedTime);
-		float fireBallDamage = _defaultFireBallDamage + (_fireBallDamageGrowthFactor * _elapsedTime);
+		float fireBallRadius = _defaultFireBallRadius + (_fireBallRadiusTemporalIncrement * _elapsedTime);
+		float fireBallSpeed = _defaultFireBallSpeed + (_fireBallSpeedTemporalIncrement * _elapsedTime);
+		float fireBallExplotionRadius = _defaultFireBallExplotionRadius + (_fireBallExplotionRadiusTemporalIncrement * _elapsedTime);
+		float fireBallDamage = _defaultFireBallDamage + (_fireBallDamageTemporalIncrement * _elapsedTime);
 
 		// Modificamos sus parámetros en base a los valores calculados
 		entityInfo->setAttribute( "physic_radius", toString(fireBallRadius) );
-		//entityInfo->setAttribute( "scale", toString( Vector3(1.0f, 1.0f, 1.0f) * fireBallRadius ) );
+		entityInfo->setAttribute( "scale", toString( Vector3(1.0f, 1.0f, 1.0f) * (fireBallRadius / _defaultFireBallRadius) ) );
 		entityInfo->setAttribute( "speed", toString(fireBallSpeed) );
 		entityInfo->setAttribute( "explotionRadius", toString(fireBallExplotionRadius) );
 		entityInfo->setAttribute( "damage", toString(fireBallDamage) );
@@ -182,14 +193,18 @@ namespace Logic {
 		shootPosition.y += _heightShoot - fireBallRadius;
 
 		// Creamos la entidad
-		/*CEntity* fireBall = CEntityFactory::getSingletonPtr()->createEntity( entityInfo, CServer::getSingletonPtr()->getMap() );*/
-		CEntity* fireBall = CEntityFactory::getSingletonPtr()->createEntityWithPositionAndOrientation(
-																	entityInfo, 
-																	CServer::getSingletonPtr()->getMap(),
-																	shootPosition,
-																	Math::getYaw(playerTransform),
-																	Math::getPitch(playerTransform)
-																);
+		/*CEntity* fireBall = CEntityFactory::getSingletonPtr()->createEntityWithPositionAndOrientation(
+								entityInfo, 
+								CServer::getSingletonPtr()->getMap(),
+								shootPosition,
+								Math::getYaw(playerTransform),
+								Math::getPitch(playerTransform)
+							);*/
+		CEntity* fireBall = CEntityFactory::getSingletonPtr()->createEntityWithPosition(
+								entityInfo, 
+								CServer::getSingletonPtr()->getMap(),
+								shootPosition
+							);
 
 		// Le indicamos al controlador de la bola que este componente es el poseedor
 		// para que se invoque al metodo correspondiente cuando las bolas mueran
@@ -204,13 +219,16 @@ namespace Logic {
 		_controllableFireBalls.insert(fbController);
 		
 		// Reseteamos el reloj
-		_elapsedTime = 0;
+		_currentSpentAmmo = _ammoSpentTimer = _elapsedTime = 0;
+
+		// Seteamos el timer del cooldown a 0, para que empiece la cuenta aqui
+		_primaryCooldownTimer = 0;
+		_primaryCanShoot = false;
 	}
 
 	//__________________________________________________________________
 
 	void CIronHellGoat::secondaryShoot() {
-		std::cout << "Secundario" << std::endl;
 		_secondaryFireIsActive = true;
 	}
 
