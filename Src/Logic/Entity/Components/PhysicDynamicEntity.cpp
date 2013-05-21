@@ -17,6 +17,7 @@
 
 #include "Logic/Messages/MessageKinematicMove.h"
 #include "Logic/Messages/MessageTouched.h"
+#include "Logic/Messages/MessageActivate.h"
 #include "Logic/Messages/MessageUntouched.h"
 #include "Logic/Messages/MessageSetPhysicPosition.h"
 #include "Logic/Messages/MessageTransform.h"
@@ -72,7 +73,6 @@ bool CPhysicDynamicEntity::accept(const std::shared_ptr<CMessage>& message) {
 
 	return msgType == Message::KINEMATIC_MOVE		||
 		   msgType == Message::ACTIVATE				||
-		   msgType == Message::DEACTIVATE			||
 		   msgType == Message::SET_PHYSIC_POSITION	||
 		   msgType == Message::ADD_FORCE_PHYSICS	||
 		   msgType == Message::SET_TRANSFORM;
@@ -89,11 +89,11 @@ void CPhysicDynamicEntity::process(const std::shared_ptr<CMessage>& message) {
 			break;
 		}
 		case Message::ACTIVATE: {
-			activateSimulation();
-			break;
-		}
-		case Message::DEACTIVATE: {
-			deactivateSimulation();
+			bool activate = std::static_pointer_cast<CMessageActivate>(message)->getActivated();
+			if(activate)
+				activateSimulation();
+			else
+				deactivateSimulation();
 			break;
 		}
 		case Message::SET_PHYSIC_POSITION: {

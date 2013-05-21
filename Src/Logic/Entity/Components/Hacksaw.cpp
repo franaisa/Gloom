@@ -19,7 +19,6 @@ Contiene la implementación del componente que controla el movimiento de un ascen
 #include "Logic/Server.h"
 
 #include "Logic/Messages/MessageActivate.h"
-#include "Logic/Messages/MessageDeactivate.h"
 #include "Logic/Messages/MessageDamaged.h"
 #include "Logic/Messages/MessageTouched.h"
 #include "Logic/Messages/MessageKinematicMove.h"

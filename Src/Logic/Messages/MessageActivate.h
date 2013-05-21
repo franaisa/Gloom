@@ -14,6 +14,11 @@ namespace Logic {
 		virtual Net::CBuffer* serialize();
 		virtual void deserialize(Net::CBuffer& buffer);
 
+		void setActivated(bool activate){_activate = activate;}
+		bool getActivated(){return _activate;}
+
+	private:
+		bool _activate;
 	};
 	REG_FACTORYMESSAGE(CMessageActivate);
 };

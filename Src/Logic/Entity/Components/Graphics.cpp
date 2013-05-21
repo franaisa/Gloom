@@ -24,6 +24,7 @@ gráfica de la entidad.
 
 #include "Logic/Messages/MessageTransform.h"
 #include "Logic/Messages/MessageSleep.h"
+#include "Logic/Messages/MessageActivate.h"
 #include "Logic/Messages/MessageWakeUp.h"
 #include "Logic/Messages/MessageChangeMaterial.h"
 
@@ -127,7 +128,6 @@ namespace Logic
 
 		return //msgType == Message::SET_TRANSFORM    ||
 			   msgType == Message::ACTIVATE			|| 
-			   msgType == Message::DEACTIVATE		||
 			   msgType == Message::CHANGE_MATERIAL;
 	} // accept
 	
@@ -141,11 +141,7 @@ namespace Logic
 				break;
 			}
 			case Message::ACTIVATE: {
-				setVisible(true);
-				break;
-			}
-			case Message::DEACTIVATE: {
-				setVisible(false);
+				setVisible(std::static_pointer_cast<CMessageActivate>(message)->getActivated());
 				break;
 			}
 			case Message::CHANGE_MATERIAL: {

@@ -187,7 +187,6 @@
     <ClCompile Include="..\..\Src\Logic\Messages\MessageControl.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageCreateParticle.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageDamaged.cpp" />
-    <ClCompile Include="..\..\Src\Logic\Messages\MessageDeactivate.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageDeactivateScreamerShield.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageFlash.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageHudAmmo.cpp" />
@@ -203,7 +202,6 @@
     <ClCompile Include="..\..\Src\Logic\Messages\MessageMouse.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessagePlayerDead.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessagePositionSnapshot.cpp" />
-    <ClCompile Include="..\..\Src\Logic\Messages\MessageRebound.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageSetAnimation.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageSetRelatedEntity.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageSetPhysicPosition.cpp" />
@@ -338,7 +336,6 @@
     <ClInclude Include="..\..\Src\Logic\Messages\MessageContactExit.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageControl.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageDamaged.h" />
-    <ClInclude Include="..\..\Src\Logic\Messages\MessageDeactivate.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageDeactivateScreamerShield.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageFlash.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageHudAmmo.h" />
@@ -354,7 +351,6 @@
     <ClInclude Include="..\..\Src\Logic\Messages\MessageMouse.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessagePlayerDead.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessagePositionSnapshot.h" />
-    <ClInclude Include="..\..\Src\Logic\Messages\MessageRebound.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageSetAnimation.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageSetRelatedEntity.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageSetPhysicPosition.h" />

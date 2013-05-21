@@ -21,7 +21,6 @@ Contiene la implementación del componente que controla el movimiento de los pinc
 #include "Logic/Messages/MessageTouched.h"
 #include "Logic/Messages/MessageAddForcePhysics.h"
 #include "Logic/Messages/MessageActivate.h"
-#include "Logic/Messages/MessageDeactivate.h"
 
 
 namespace Logic 
@@ -73,7 +72,8 @@ namespace Logic
 
 	void CSpikeTrap::onStart(){
 		//Desactivamos los pinchos para que solo salgan al darle a la trampa
-		std::shared_ptr<CMessageDeactivate> deactivateMsg = std::make_shared<CMessageDeactivate>();
+		std::shared_ptr<CMessageActivate> deactivateMsg = std::make_shared<CMessageActivate>();
+		deactivateMsg->setActivated(false);
 		for(int i=0; i<_numSpikes; i++){
 			_spikes[i]->emitMessage(deactivateMsg);
 		}
@@ -100,6 +100,7 @@ namespace Logic
 					//Activacion y fuerza
 					std::shared_ptr<CMessageActivate> activateMsg = std::make_shared<CMessageActivate>();
 					for(int i=0; i<_numSpikes; i++){
+						activateMsg->setActivated(true);
 						_spikes[i]->emitMessage(activateMsg);
 						_spikes[i]->emitMessage(forceMsg);
 					}

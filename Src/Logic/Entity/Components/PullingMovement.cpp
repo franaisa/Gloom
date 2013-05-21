@@ -23,7 +23,6 @@
 #include "Logic/Messages/MessageAddAmmo.h"
 #include "Logic/Messages/MessageAddWeapon.h"
 #include "Logic/Messages/MessageActivate.h"
-#include "Logic/Messages/MessageDeactivate.h"
 
 #include "Net/Manager.h"
 
@@ -115,7 +114,8 @@ namespace Logic {
 	void CPullingMovement::itemGrabbed(CEntity* actor) {
 
 		// Desactivamos la entidad grafica y fisica.
-		std::shared_ptr<CMessageDeactivate> deactivateMsg = std::make_shared<CMessageDeactivate>();
+		std::shared_ptr<CMessageActivate> deactivateMsg = std::make_shared<CMessageActivate>();
+		deactivateMsg->setActivated(false);
 		_entity->emitMessage(deactivateMsg);
 		
 		// Si se trata del servidor o del single player
