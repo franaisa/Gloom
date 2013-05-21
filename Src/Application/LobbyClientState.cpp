@@ -21,6 +21,7 @@ Contiene la implementación del estado de lobby del cliente.
 #include "Logic/Maps/EntityFactory.h"
 #include "Logic/Maps/Map.h"
 #include "Logic/Maps/Scoreboard.h"
+#include "Logic/Maps/WorldState.h"
 
 #include "Hikari.h"
 #include "GUI/Server.h"
@@ -166,9 +167,6 @@ namespace Application {
 				// Si la carga del mapa tiene éxito, notificamos al servidor y continuamos. En 
 				// caso contrario abortamos la ejecución.
 				_loadMenu->show();
-
-				
-
 				
 				_menu->hide();
 
@@ -176,6 +174,9 @@ namespace Application {
 
 				//creamos el thread que maneja la carga del mapa
 				loadHandle = CreateThread( NULL, 0, CLobbyClientState::loadMapThread, this, 0, NULL);
+
+				if (WaitForSingleObject (loadHandle, INFINITE) == WAIT_OBJECT_0)
+				CloseHandle(loadHandle);
 
 				/*if( loadMap(mapName) ) {
 					// Avisamos de que hemos terminado la carga.
@@ -188,39 +189,12 @@ namespace Application {
 					_app->exitRequest();
 				}*/
 				
-				
-
-				break;
-			}
-			case Net::LOAD_PLAYERS: {
-				// Cargamos los players que ya estaban en la partida
-				int nbPlayers;
-				Logic::TEntityID entityID;
-				Logic::CEntity* player;
-				string playerClass, name;
-
-				// Obtenemos el número de jugadores conectados
-				buffer.read(&nbPlayers, sizeof(nbPlayers));
-				for(int i = 0; i < nbPlayers; ++i) {
-					buffer.read(&entityID, sizeof(entityID));
-					buffer.deserialize(name);
-					buffer.deserialize(playerClass);
-
-					// Llamo al metodo de creacion del jugador
-					player = Logic::CServer::getSingletonPtr()->getMap()->
-							 createPlayer(name, playerClass, entityID);
-
-					Logic::CScoreboard::getSingletonPtr()->addPlayer(player->getName(), player, playerClass);
-				}
-				
-				// Confirmamos de que se han cargado todos los players con exito
-				Net::NetMessageType ackMsg = Net::PLAYERS_LOADED;
-				_netMgr->broadcast( &ackMsg, sizeof(ackMsg) );
-				
 				break;
 			}
 			case Net::LOAD_WORLD_STATE: {
 				// Deserializar el estado del mundo
+				Logic::CWorldState::getSingletonPtr()->deserialize(buffer);
+
 				Net::NetMessageType ackMsg = Net::NetMessageType::WORLD_STATE_LOADED;
 				_netMgr->broadcast( &ackMsg, sizeof(ackMsg) );
 				break;
@@ -344,11 +318,11 @@ namespace Application {
 	void CLobbyClientState::tick(unsigned int msecs){
 		CApplicationState::tick(msecs);
 
-		if(loadÑapa){
+		/*if(loadÑapa){
 			//asking the thread for completion ... if not the main thread crashes
 			if (WaitForSingleObject (loadHandle, INFINITE) == WAIT_OBJECT_0)
 				CloseHandle(loadHandle);
-		}
+		}*/
 	}
 
 

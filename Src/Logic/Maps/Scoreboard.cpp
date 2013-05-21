@@ -56,7 +56,8 @@ namespace Logic{
 		_players.insert(newPlayer);
 
 		//ahora llamamos a la GUI para que cree nuestro nuevo player
-		_scoreboard->callFunction("addPlayer",Hikari::Args(name)(playerClass));
+		if(_scoreboard)
+			_scoreboard->callFunction("addPlayer",Hikari::Args(name)(playerClass));
 	}
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -72,7 +73,8 @@ namespace Logic{
 		_players.insert(newPlayer);
 
 		//ahora llamamos a la GUI para que cree nuestro nuevo player
-		_scoreboard->callFunction("addLocalPlayer",Hikari::Args(name)(playerClass));
+		if(_scoreboard)
+			_scoreboard->callFunction("addLocalPlayer",Hikari::Args(name)(playerClass));
 	}
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -155,6 +157,7 @@ namespace Logic{
 		player->second.ping = ping;
 
 		//ahora avisamos a la GUI de que ha habido un cambio
+		_scoreboard->callFunction("changeNick",Hikari::Args(name)((int) ping));
 	}
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -245,6 +248,18 @@ namespace Logic{
 		_guiManager->setTransparent("scoreboard",true);
 		_scoreboard = _guiManager->getGUIControl("scoreboard");
 		_scoreboard->hide();
+
+		//ahora cargamos los jugadores que habia en la partida
+		auto it = _players.begin();
+		auto end = _players.end();
+
+		for(;it!=end;++it){
+			_scoreboard->callFunction("addPlayer",Hikari::Args(it->second.name)(it->second.playerClass));
+			_scoreboard->callFunction("addKill",Hikari::Args(it->second.name)((int)it->second.kills));
+			_scoreboard->callFunction("addDeath",Hikari::Args(it->second.name)((int)it->second.deaths));
+			_scoreboard->callFunction("changePing",Hikari::Args(it->second.name)((int)it->second.ping));
+			_scoreboard->callFunction("addSpree",Hikari::Args(it->second.name)((int)it->second.bestSpree));
+		}
 	}
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -256,6 +271,18 @@ namespace Logic{
 		_guiManager->setTransparent("scoreboard",true);
 		_scoreboard = _guiManager->getGUIControl("scoreboard");
 		_scoreboard->hide();
+
+		//ahora cargamos los jugadores que habia en la partida
+		auto it = _players.begin();
+		auto end = _players.end();
+
+		for(;it!=end;++it){
+			_scoreboard->callFunction("addPlayer",Hikari::Args(it->second.name)(it->second.playerClass));
+			_scoreboard->callFunction("addKill",Hikari::Args(it->second.name)((int)it->second.kills));
+			_scoreboard->callFunction("addDeath",Hikari::Args(it->second.name)((int)it->second.deaths));
+			_scoreboard->callFunction("changePing",Hikari::Args(it->second.name)((int)it->second.ping));
+			_scoreboard->callFunction("addSpree",Hikari::Args(it->second.name)((int)it->second.bestSpree));
+		}
 	}
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////

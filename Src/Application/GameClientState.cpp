@@ -32,6 +32,7 @@ Contiene la implementación del estado de juego.
 #include "Logic/Maps/EntityID.h"
 #include "Logic/Maps/Scoreboard.h"
 #include "Logic/Entity/Components/Camera.h"
+#include "Logic/Maps/WorldState.h"
 
 #include "Hikari.h"
 #include "FlashValue.h"
@@ -117,9 +118,12 @@ namespace Application {
 
 		// Dependiendo del tipo de mensaje
 		switch (msg) {
-			case Net::LOAD_PLAYERS: {
+			case Net::LOAD_WORLD_STATE: {
+
+				Logic::CWorldState::getSingletonPtr()->deserialize(buffer);
+
 				// Cargamos la informacion del player que nos han enviado
-				Logic::TEntityID entityID;
+				/*Logic::TEntityID entityID;
 				std::string playerClass, name;
 				int nbPlayers;
 
@@ -142,7 +146,7 @@ namespace Application {
 
 				// No es necesario enviar confirmacion
 				player->activate();
-				player->start();
+				player->start();*/
 
 				break;
 			}

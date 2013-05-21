@@ -27,6 +27,7 @@ Contiene la implementación del estado de juego.
 #include "Logic/Server.h"
 #include "Logic/Maps/EntityFactory.h"
 #include "Logic/Maps/Map.h"
+#include "Logic/Maps/WorldState.h"
 #include "Logic/Maps/EntityID.h"
 #include "Input/PlayerController.h"
 #include "Input/Server.h"
@@ -93,40 +94,17 @@ namespace Application {
 
 	void CGameServerState::sendConnectedPlayersInfo(Net::NetID playerNetId) {
 		// Variables locales
-		Net::NetMessageType loadPlayersMsg = Net::LOAD_PLAYERS;
-		Logic::TEntityID entityId;
-		std::string name, playerClass;
-		int nbPlayersSpawned = _playersMgr->getNumberOfPlayersSpawned();
-				
-		// Mandamos la información asociada a los players que ya están 
-		// conectados al player que desea conectarse
-		Logic::CPlayerInfo tempPlayerInfo;
-		Net::CBuffer playersInfoBuffer;
-		// Escribimos la cabecera
-		playersInfoBuffer.write(&loadPlayersMsg, sizeof(loadPlayersMsg));
-		// Escribimos el numero de players que hay online
-		playersInfoBuffer.write(&nbPlayersSpawned, sizeof(nbPlayersSpawned));
+		Net::NetMessageType loadPlayersMsg = Net::LOAD_WORLD_STATE;
+		
+		Net::CBuffer worldBuffer = Logic::CWorldState::getSingletonPtr()->serialize();
 
-		Logic::CGameNetPlayersManager::iterator it = _playersMgr->begin();
-		for(; it != _playersMgr->end(); ++it) {
-			tempPlayerInfo = *it; // Informacion asociada al player
-					
-			// Solo mandamos la informacion de aquellos players que ya estan dentro
-			// de la partida
-			if( tempPlayerInfo.isSpawned() ) {
-				entityId = tempPlayerInfo.getEntityId().first;	// id logico
-				name = tempPlayerInfo.getName();				// nickname
-				playerClass = tempPlayerInfo.getPlayerClass();	// playerclass
+		Net::CBuffer sendWorldState;
 
-				// Escribimos los datos asociados a este player
-				playersInfoBuffer.write( &entityId, sizeof(entityId) );
-				playersInfoBuffer.serialize(name, false);
-				playersInfoBuffer.serialize(playerClass, false);
-			}
-		}
+		sendWorldState.write(&loadPlayersMsg,sizeof(loadPlayersMsg));
+		sendWorldState.write(worldBuffer.getbuffer(), worldBuffer.getSize());
 				
 		// Enviamos los datos asociados a los players online al nuevo player
-		_netMgr->sendTo(playerNetId, playersInfoBuffer.getbuffer(), playersInfoBuffer.getSize());
+		_netMgr->sendTo(playerNetId, sendWorldState.getbuffer(), sendWorldState.getSize());
 	}
 
 	//______________________________________________________________________________

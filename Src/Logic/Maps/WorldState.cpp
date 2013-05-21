@@ -1,5 +1,8 @@
 #include "WorldState.h"
 #include "Logic/Server.h"
+#include "Logic/Maps/Map.h"
+#include "Logic/Maps/EntityFactory.h"
+#include "Logic/Maps/Scoreboard.h"
 #include "Logic/Entity/Entity.h"
 
 #include <cassert>
@@ -112,12 +115,87 @@ namespace Logic {
 	Net::CBuffer CWorldState::serialize(){
 		Net::CBuffer worldState;
 
+		//first of all, serialize the length of the struct
+		unsigned int tableSize = _entities.size();
+		worldState.serialize(tableSize);
+		auto entities = _entities.begin();
+		auto end = _entities.end();
+
+		//serialize all entities
+		for(;entities!=end;++entities){
+			worldState.serialize(entities->second.id);
+			worldState.serialize(entities->second.entity->getType(), false);
+			worldState.serialize(entities->second.entity->getName(), false);
+			if(entities->second.messages.empty()){
+				worldState.serialize(0);
+				continue;
+			}
+
+			//serialize entity messages
+			worldState.serialize(entities->second.messages.size());
+			auto messages = entities->second.messages.begin();
+			auto mEnd = entities->second.messages.end();
+			for(;messages!=mEnd;++messages){
+				Net::CBuffer* bufferAux = messages->second->serialize();
+				worldState.write(bufferAux->getbuffer(), bufferAux->getSize());
+			}
+		}
+
 		return worldState;
 	}
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	void CWorldState::deserialize(Net::CBuffer &worldState){
+
+		//first of all, deserialize the length of the struct
+		unsigned int tableSize;
+
+		worldState.deserialize(tableSize);
+
+		//serialize all entities
+		for(int i = 0; i < tableSize ; ++i){
+			TEntityID id;
+			worldState.deserialize(id);
+			std::string entityType, entityName;
+			worldState.deserialize(entityType);
+			worldState.deserialize(entityName);
+			//get the Entity we are updating
+			CEntity* entity = Logic::CServer::getSingletonPtr()->getMap()->getEntityByID(id);
+
+			if(!entity){
+				Map::CEntity* info = Logic::CEntityFactory::getSingletonPtr()->getInfo(entityType);
+				info->setName(entityName);
+				entity = Logic::CEntityFactory::getSingletonPtr()->createEntityById(info,Logic::CServer::getSingletonPtr()->getMap(), id);
+			}
+
+			unsigned int messageSize;
+
+			worldState.deserialize(messageSize);
+
+			//deserialize entity messages
+			for(int j = 0; j < messageSize ; ++j){
+				int typeMessage;
+				//read message type
+				worldState.read(&typeMessage, sizeof(int));
+
+				//deserialize message
+				std::shared_ptr<CMessage> messageReceived( Logic::CMessageFactory::getSingletonPtr()->create(typeMessage) );
+				messageReceived->deserialize(worldState);
+
+				//send message to entity
+				entity->emitMessage(messageReceived);
+			}
+
+			//if the entity is a player, we must add it to the scoreboard
+			if(entityType == "Hound" || entityType == "Archangel" || entityType == "Shadow" || entityType == "Screamer"){
+				if(!Logic::CScoreboard::getSingletonPtr()->getPlayer(entityName))
+					Logic::CScoreboard::getSingletonPtr()->addPlayer(entityName, entity, entityType);
+				else
+					Logic::CScoreboard::getSingletonPtr()->changePlayerEntity(entityName, entity, entityType);
+			}
+		}
+
 	}
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
