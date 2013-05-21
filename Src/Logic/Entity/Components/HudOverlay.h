@@ -73,6 +73,8 @@ namespace Logic
 			_overlayLocationImpact = NULL;
 
 			_overlayPanelLocationImpact = NULL;
+
+			_dispersionTime = 0;
 		}
 		
 
@@ -258,6 +260,11 @@ namespace Logic
 		unsigned int _timerMinigunCrossFire;
 		bool _activeTimerMinigunCrossFire;
 		*/
+
+		int		_dispersionTime;
+
+		float	_dispersionWidth;
+		float	_dispersionHeight;
 
 
 		float temporal;

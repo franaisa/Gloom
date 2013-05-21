@@ -20,9 +20,14 @@ namespace Logic {
 		float	getWidth		()					{ return _fWidth;}
 		void		setWidth		(float fValue)		{ _fWidth = fValue; }
 
+		int		getTime			()					{ return _iTime;}
+		void		setTime 		(int iValue)		{ _iTime = iValue; }
+
 	private:
 		float	_fHeight;
 		float	_fWidth;
+
+		int		_iTime;
 
 	};
 	REG_FACTORYMESSAGE(CMessageHudDispersion);

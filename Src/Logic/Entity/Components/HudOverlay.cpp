@@ -475,12 +475,6 @@ namespace Logic
 				hudWeapon( hudWeaponMsg->getAmmo(), hudWeaponMsg->getWeapon() );
 				break;
 			}
- 			case Message::HUD_DISPERSION: {
-				//hudDispersion();
-				std::shared_ptr<CMessageHudDispersion> hudDisp = std::static_pointer_cast<CMessageHudDispersion>(message);
-				hudSizeCrossfire(hudDisp->getHeight(), hudDisp->getWidth());
-				break;
-			}
 			case Message::HUD_SPAWN: {
 				std::shared_ptr<CMessageHudSpawn> hudSpawnMsg = std::static_pointer_cast<CMessageHudSpawn>(message);
 				_spawnTime = hudSpawnMsg->getTime();
@@ -511,10 +505,110 @@ namespace Logic
 				hudDirectionImpact( impMes->getDirectionImpact() );
 				break;
 			}
+			case Message::HUD_DISPERSION: {
+				std::shared_ptr<CMessageHudDispersion> hudDisp = std::static_pointer_cast<CMessageHudDispersion>(message);
+				_dispersionTime = hudDisp->getTime();
+				_dispersionWidth = hudDisp->getHeight();
+				_dispersionHeight = hudDisp->getWidth();
+
+				//Si es 0, es para resetear a la posición inicial
+				if (_dispersionTime == 0)
+					hudSizeCrossfire(_dispersionHeight, _dispersionWidth);
+				//hudDispersion();
+				//hudSizeCrossfire(hudDisp->getHeight(), hudDisp->getWidth());
+				break;
+			}
 		}
 
 	} // process
 	//-------------------------------------------------------
+
+	void CHudOverlay::onTick(unsigned int msecs)
+	{
+		/*
+		//Control del tamaño de mirillas
+		//En un futuro lo mismo es mejor tener un componente HudFX que se encargue de unicamente llamar a este cuando su tick lo crea conveniente
+		
+		if(_activeTimerMinigunCrossFire)
+			_timerMinigunCrossFire+=msecs;
+		//Si pasan X milisegundos significa que fue activado y tenemos que dejarla en su estado original
+		if(_timerMinigunCrossFire>100){
+			_actualDimCrossX=_actualDimCrossX+0.15;
+			_actualDimCrossY=_actualDimCrossY+0.15;
+			//Si nos pasamos de incrementar lo dejamos a su valor por defecto
+			if(_actualDimCrossX>4){
+				_actualDimCrossX=4;
+				_actualDimCrossY=5;
+			}
+			float positionCrossFireX = 0.5f-((_actualDimCrossX/2)*0.01f) ;
+			float positionCrossFireY = 0.5f-((_actualDimCrossY/2)*0.01f) ;
+			_panelMiraMovible->setPosition( positionCrossFireX,positionCrossFireY);
+			_panelMiraMovible->setDimensions( _actualDimCrossX*0.01, _actualDimCrossY*0.01);
+			//Ponemos a 0 el timer para no restaurar continuamente solo cada X milisegundos
+			_timerMinigunCrossFire=0;
+			//Si restauramos por completo el tamaño original
+			if(_actualDimCrossX==_dimCrossX){
+				_activeTimerMinigunCrossFire=false;
+				_timerMinigunCrossFire=0;
+			}
+		}
+
+		//////////////////////////////////////////////////////////////////////////////////////
+		//////////////////////////////////////////////////////////////////////////////////////
+		*/
+
+		temporal += msecs;
+
+		if(_overlayLocationImpact->isVisible()){
+			//dura 20 ticks
+			++_contadorLocalizadorImpacto;
+			if(_contadorLocalizadorImpacto >= 20){
+				_overlayLocationImpact->setVisible(false);
+			}
+		}
+
+		if(_overlayDie->isVisible()){
+			_acumSpawn += msecs;
+			if(_acumSpawn>1000){
+				hudSpawn((--_spawnTime));
+				_acumSpawn = 0;
+				/////////////////////////////////////////////////////////////////////////////////////
+				////////	Borrar en un futuro, espero que el server no llegue a -5		/////////
+				/////////////////////////////////////////////////////////////////////////////////////
+				if(_spawnTime<-5)
+					hudRespawn();
+			}
+		}
+		if(_overlayDebug->isVisible())
+		{
+			_sDebug.str("");
+			_sDebug.clear();
+			_acumDebug+=msecs;
+			// han pasado el tiempo para actualizar el fps
+			if(_acumDebug>200){		
+				std::stringstream aux;
+				aux << 1000.0f/(float)msecs;
+				hudDebugData("FPS", aux.str());
+				_acumDebug=0;
+			}
+			for (std::map<std::string,std::string>::iterator it=_textDebug.begin(); it!=_textDebug.end(); ++it){
+				_sDebug << it->first << " => " << it->second << '\n';
+			}
+			std::shared_ptr<CMessageHudDebugData> m = std::make_shared<CMessageHudDebugData>();
+			m->setKey("Posicion");
+			m->setValue(_entity->getPosition());
+			_entity->emitMessage(m);
+		}
+		_textAreaDebug->setText(_sDebug.str());
+
+		//Dispersión
+		if (_dispersionTime > 0)
+		{
+			_dispersionTime -= msecs;
+			//std::cout << "Queda dispersion" << _dispersionTime << std::endl;
+			hudDispersion();
+		}
+	}
 
 	void CHudOverlay::hudLife(int health){
 		_panelElementsText[HEALTH]= health;
@@ -586,13 +680,10 @@ namespace Logic
 			}
 			if((WeaponType::Enum)_actualWeapon == WeaponType::eMINIGUN){
 				// puesto a hieero por ahora :D
-				hudSizeCrossfire(10,11);
+				//hudSizeCrossfire(10,11); //quito el hierro
 			}else{
 				hudSizeCrossfire(_sizeCrossFireX,_sizeCrossFireY);
-			}
-
-
-			
+			}			
 		}
 		hudAmmo(ammo, weapon);
 	}
@@ -604,34 +695,6 @@ namespace Logic
 		_textAreaDie->setText(sSpawn.str());
 	}
 	//-------------------------------------------------------
-
-	void CHudOverlay::hudDispersion(){
-		/*
-		//Primera version chusquera para ver como queda el efecto en minigun
-		//Con un switch/case se podria tratar todas las armas
-		//Y en el tick comprobariamos los timers activos y se haria lo mismo pero llamando a la mira correspondiente
-		if(_actualWeapon==WeaponType::eMINIGUN){
-			//Esta funcion podria recibir del mensaje cuanto impulso de apertura/cierre va a tener"
-			//El tick se encargará de poner la mirilla a su tamaño original si es que ha sido modificada
-			//Aplicamos dispersion por el momento solo tratamos la minigun(impulso de cierre)
-			_actualDimCrossX=_actualDimCrossX-0.3;// el numerito es el impulso de cierre/apertura
-			_actualDimCrossY=_actualDimCrossY-0.3;
-			//Ojo que los valores estan puestos a mano ya que la X y la Y tienen diferentes dimensiones actualmente
-			if(_actualDimCrossX<2){
-				_actualDimCrossX=2;
-				_actualDimCrossY=3;
-			}
-			float positionCrossFireX = 0.5f-((_actualDimCrossX/2)*0.01f) ;
-			float positionCrossFireY = 0.5f-((_actualDimCrossY/2)*0.01f) ;
-			_panelMiraMovible->setPosition( positionCrossFireX,positionCrossFireY);
-			_panelMiraMovible->setDimensions( _actualDimCrossX*0.01, _actualDimCrossY*0.01);
-			_activeTimerMinigunCrossFire=true;			
-		}
-		*/
-		
-	}
-	//-------------------------------------------------------
-
 
 	void CHudOverlay::hudDeath(){
 		if(_overlayPlay->isVisible()){
@@ -692,87 +755,7 @@ namespace Logic
 			}
 		}
 	}
-	//-------------------------------------------------------
-
-	void CHudOverlay::onTick(unsigned int msecs)
-	{
-		/*
-		//Control del tamaño de mirillas
-		//En un futuro lo mismo es mejor tener un componente HudFX que se encargue de unicamente llamar a este cuando su tick lo crea conveniente
-		
-		if(_activeTimerMinigunCrossFire)
-			_timerMinigunCrossFire+=msecs;
-		//Si pasan X milisegundos significa que fue activado y tenemos que dejarla en su estado original
-		if(_timerMinigunCrossFire>100){
-			_actualDimCrossX=_actualDimCrossX+0.15;
-			_actualDimCrossY=_actualDimCrossY+0.15;
-			//Si nos pasamos de incrementar lo dejamos a su valor por defecto
-			if(_actualDimCrossX>4){
-				_actualDimCrossX=4;
-				_actualDimCrossY=5;
-			}
-			float positionCrossFireX = 0.5f-((_actualDimCrossX/2)*0.01f) ;
-			float positionCrossFireY = 0.5f-((_actualDimCrossY/2)*0.01f) ;
-			_panelMiraMovible->setPosition( positionCrossFireX,positionCrossFireY);
-			_panelMiraMovible->setDimensions( _actualDimCrossX*0.01, _actualDimCrossY*0.01);
-			//Ponemos a 0 el timer para no restaurar continuamente solo cada X milisegundos
-			_timerMinigunCrossFire=0;
-			//Si restauramos por completo el tamaño original
-			if(_actualDimCrossX==_dimCrossX){
-				_activeTimerMinigunCrossFire=false;
-				_timerMinigunCrossFire=0;
-			}
-		}
-
-		//////////////////////////////////////////////////////////////////////////////////////
-		//////////////////////////////////////////////////////////////////////////////////////
-		*/
-
-
-		temporal += msecs;
-
-		if(_overlayLocationImpact->isVisible()){
-			//dura 20 ticks
-			++_contadorLocalizadorImpacto;
-			if(_contadorLocalizadorImpacto >= 20){
-				_overlayLocationImpact->setVisible(false);
-			}
-		}
-
-		if(_overlayDie->isVisible()){
-			_acumSpawn += msecs;
-			if(_acumSpawn>1000){
-				hudSpawn((--_spawnTime));
-				_acumSpawn = 0;
-				/////////////////////////////////////////////////////////////////////////////////////
-				////////	Borrar en un futuro, espero que el server no llegue a -5		/////////
-				/////////////////////////////////////////////////////////////////////////////////////
-				if(_spawnTime<-5)
-					hudRespawn();
-			}
-		}
-		if(_overlayDebug->isVisible())
-		{
-			_sDebug.str("");
-			_sDebug.clear();
-			_acumDebug+=msecs;
-			// han pasado el tiempo para actualizar el fps
-			if(_acumDebug>200){		
-				std::stringstream aux;
-				aux << 1000.0f/(float)msecs;
-				hudDebugData("FPS", aux.str());
-				_acumDebug=0;
-			}
-			for (std::map<std::string,std::string>::iterator it=_textDebug.begin(); it!=_textDebug.end(); ++it){
-				_sDebug << it->first << " => " << it->second << '\n';
-			}
-			std::shared_ptr<CMessageHudDebugData> m = std::make_shared<CMessageHudDebugData>();
-			m->setKey("Posicion");
-			m->setValue(_entity->getPosition());
-			_entity->emitMessage(m);
-		}
-		_textAreaDebug->setText(_sDebug.str());
-	}
+	
 	//-------------------------------------------------------
 
 	void CHudOverlay::hudDirectionImpact(float radianAngle){
@@ -781,15 +764,56 @@ namespace Logic
 		_contadorLocalizadorImpacto = 0;
 	}
 	//-------------------------------------------------------
+	
+	void CHudOverlay::hudDispersion(){
+		/*
+		//Primera version chusquera para ver como queda el efecto en minigun
+		//Con un switch/case se podria tratar todas las armas
+		//Y en el tick comprobariamos los timers activos y se haria lo mismo pero llamando a la mira correspondiente
+		if(_actualWeapon==WeaponType::eMINIGUN){
+			//Esta funcion podria recibir del mensaje cuanto impulso de apertura/cierre va a tener"
+			//El tick se encargará de poner la mirilla a su tamaño original si es que ha sido modificada
+			//Aplicamos dispersion por el momento solo tratamos la minigun(impulso de cierre)
+			_actualDimCrossX=_actualDimCrossX-0.3;// el numerito es el impulso de cierre/apertura
+			_actualDimCrossY=_actualDimCrossY-0.3;
+			//Ojo que los valores estan puestos a mano ya que la X y la Y tienen diferentes dimensiones actualmente
+			if(_actualDimCrossX<2){
+				_actualDimCrossX=2;
+				_actualDimCrossY=3;
+			}
+			float positionCrossFireX = 0.5f-((_actualDimCrossX/2)*0.01f) ;
+			float positionCrossFireY = 0.5f-((_actualDimCrossY/2)*0.01f) ;
+			_panelMiraMovible->setPosition( positionCrossFireX,positionCrossFireY);
+			_panelMiraMovible->setDimensions( _actualDimCrossX*0.01, _actualDimCrossY*0.01);
+			_activeTimerMinigunCrossFire=true;			
+		}
+		*/
+
+		//Compruebo que no reste más de unos mínimos
+		if (_dispersionHeight > 3.5f)
+			_dispersionHeight -= 0.3f;
+		if (_dispersionHeight > 3.5f)
+			_dispersionWidth -= 0.3f;
+
+		hudSizeCrossfire(_dispersionHeight, _dispersionWidth);				
+	}
+	//-------------------------------------------------------
 
 	void CHudOverlay::hudSizeCrossfire(float width, float height){
 		/*
 		width*=0.001;
-		height*=0.001;
-		
+		height*=0.001;		
 		_panelMiraMovible->setPosition(_panelMiraMovible->getPositionX() - width*0.5, _panelMiraMovible->getPositionY() - height*0.5);
 		_panelMiraMovible->setDimensions(_panelMiraMovible->getWidth() + width,_panelMiraMovible->getHeight() + height);
 		*/
+
+		if ((width < .0f) && (height < .0f))
+		{
+			//Si ancho y alto = -1; los reseteo a su valor inicial,
+			//porque significa que hemos soltado el botón derecho y mandé estos valores.
+			width = _sizeCrossFireX;
+			height = _sizeCrossFireY;
+		}
 		_panelMiraMovible->setPosition(0.5f-((width/2)*0.01f), 0.5f-((height/2)*0.01f));
 		_panelMiraMovible->setDimensions(width*0.01,height*0.01);  
 	}
