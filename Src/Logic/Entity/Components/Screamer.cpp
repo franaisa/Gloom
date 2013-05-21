@@ -217,20 +217,20 @@ namespace Logic {
 					//printf("\n effecto martillo");
 					_entity->getComponent<CAvatarController>("CAvatarController")->addForce(-_directionShoot * _screamerReboundForce);
 				}else{
-					/*
 					if(_rebound <= _maxNumberRebounds){
 						++_rebound;
-						_directionShoot = _directionShoot.reflect(-(*it).normal);
+						_directionShoot = (-(*it).normal);
+						printf("Rebotando hacia: %f %f %f", _directionShoot.x, _directionShoot.y, _directionShoot.z);
 						primarySkill();
 					}else{
 						_rebound = 0;
 					}
-					*/
+					
 				}
 			}
 			if(typeEntity == "Screamer" || typeEntity == "Hound" || typeEntity == "Archangel" || typeEntity == "Shadow" || typeEntity == "RemotePlayer"){
 				Vector3 direct = -(_directionShoot.reflect(-(*it).normal));
-				printf("\nDirection: %f %f %f", direct.x, direct.y, direct.z);
+				//printf("\nDirection: %f %f %f", direct.x, direct.y, direct.z);
 				(*it).entity->getComponent<CAvatarController>("CAvatarController")->addForce( -((*it).normal) * _screamerScreamForce);
 				//(*it).entity->getComponent<CAvatarController>("CAvatarController")->addForce(-(_directionShoot.reflect(-(*it).normal)) * _screamerScreamForce);
 			}
