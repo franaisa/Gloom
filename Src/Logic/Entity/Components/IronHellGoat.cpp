@@ -104,6 +104,7 @@ namespace Logic {
 	//__________________________________________________________________
 
 	void CIronHellGoat::onAvailable() {
+		CShoot::onAvailable();
 		_currentSpentAmmo = _ammoSpentTimer = _elapsedTime = 0;
 	}
 

@@ -202,7 +202,7 @@ namespace Logic {
 	//__________________________________________________________________
 
 	void CScreamer::stopPrimarySkill() {
-		_rebound = 0;
+		
 	}
 
 	void CScreamer::hitConsequences(std::vector<Physics::CSweepHit> &hits){
@@ -210,22 +210,29 @@ namespace Logic {
 		for(auto it = hits.begin(); it < hits.end(); ++it){
 
 			std::string typeEntity = (*it).entity->getType().c_str();
-			printf("\nImpacto con: %s a distancia: %f \n\tEn punto: %f %f %f \n", (*it).entity->getName().c_str(), (*it).distance,  (*it).impact.x, (*it).impact.y, (*it).impact.z);
+			//printf("\nImpacto con: %s a distancia: %f \n\tEn punto: %f %f %f \n", (*it).entity->getName().c_str(), (*it).distance,  (*it).impact.x, (*it).impact.y, (*it).impact.z);
 			if(typeEntity == "World" )
 			{
 				if ((*it).distance < 10){
-					printf("\n effecto martillo");
+					//printf("\n effecto martillo");
 					_entity->getComponent<CAvatarController>("CAvatarController")->addForce(-_directionShoot * _screamerReboundForce);
 				}else{
+					/*
 					if(_rebound <= _maxNumberRebounds){
-						_directionShoot = _directionShoot.reflect((*it).normal);
+						++_rebound;
+						_directionShoot = _directionShoot.reflect(-(*it).normal);
 						primarySkill();
+					}else{
+						_rebound = 0;
 					}
+					*/
 				}
 			}
 			if(typeEntity == "Screamer" || typeEntity == "Hound" || typeEntity == "Archangel" || typeEntity == "Shadow" || typeEntity == "RemotePlayer"){
-				printf("\n he dao a un player");
-				(*it).entity->getComponent<CAvatarController>("CAvatarController")->addForce(-(*it).normal * _screamerScreamForce);
+				Vector3 direct = -(_directionShoot.reflect(-(*it).normal));
+				printf("\nDirection: %f %f %f", direct.x, direct.y, direct.z);
+				(*it).entity->getComponent<CAvatarController>("CAvatarController")->addForce( -((*it).normal) * _screamerScreamForce);
+				//(*it).entity->getComponent<CAvatarController>("CAvatarController")->addForce(-(_directionShoot.reflect(-(*it).normal)) * _screamerScreamForce);
 			}
 		}
 	}
