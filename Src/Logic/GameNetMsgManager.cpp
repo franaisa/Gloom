@@ -193,54 +193,9 @@ namespace Logic {
 		Map::CEntity * info = Logic::CEntityFactory::getSingletonPtr()->getInfo(type);
 		info->setName(name);
 
-		//Posicion
-		std::stringstream sp (std::stringstream::in | std::stringstream::out);
-
-		/*if(type.compare("Rocket")==0){
-			CEntity* player=Input::CServer::getSingletonPtr()->getPlayerController()->getControllerAvatar();
-
-			CInterpolation* comp = player->getComponent<CInterpolation>("CInterpolation");
-			
-			float _actualPing = comp->getPing();
-			std::cout << "El cohete se crea y el ping es de : " << _actualPing << std::endl;
-			float avanceCadaMsec=0.16;//era 0.1414 pero no quiero comermelo
-			float adelantar=avanceCadaMsec*_actualPing;
-
-			Vector3 direccion=Math::getDirection(transform);
-			direccion.normalise();
-			Vector3 direccionNormalizada=direccion*-1;
-			Vector3 newPosition(transform.getTrans()+direccionNormalizada*adelantar);
-			//std::cout << "El cohete nos vino con creacion en : " << transform.getTrans() << std::endl;
-			//std::cout << "Lo movi al punto : " << newPosition<< std::endl;
-			sp << newPosition.x;
-			sp << " ";
-			sp << newPosition.y;
-			sp << " ";
-			sp << newPosition.z;
-		}
-		else{*/
-			sp << transform.getTrans().x;
-			sp << " ";
-			sp << transform.getTrans().y;
-			sp << " ";
-			sp << transform.getTrans().z;
-		//}
-
-		info->setAttribute( "position", sp.str() );
-		//Pitch
-		std::stringstream spitch (std::stringstream::in | std::stringstream::out);
-		spitch << Math::fromRadiansToDegrees(Math::getPitch(transform));
-		info->setAttribute( "pitch", spitch.str() );
-		//Yaw
-		std::stringstream syaw (std::stringstream::in | std::stringstream::out);
-		syaw << Math::fromRadiansToDegrees(Math::getYaw(transform));
-		info->setAttribute( "yaw", syaw.str() );
-
-
-		CEntity * newEntity = Logic::CEntityFactory::getSingletonPtr()->createEntityById(info, CServer::getSingletonPtr()->getMap(), destID);
+		CEntity * newEntity = Logic::CEntityFactory::getSingletonPtr()->createEntityById(info, CServer::getSingletonPtr()->getMap(), destID, transform);
 		newEntity->activate();
 		newEntity->start();
-		//Aunque esta bastante arreglado para la puta mierda que habia antes se podria retocar con el roll o hacer que la creacion pille transforms y no tengas que hacer 2000 conversiones
 	}
 
 

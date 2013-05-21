@@ -258,99 +258,70 @@ namespace Logic {
 	
 	//________________________________________________________________________
 
-	Logic::CEntity *CEntityFactory::createEntity(Map::CEntity *entityInfo, Logic::CMap *map, bool replicate) {
-		std::string entityType = entityInfo->getType();
-		CEntity* ret = assembleEntity(entityType);
-		
-		if(!ret) return NULL;
+	Logic::CEntity* CEntityFactory::initEntity(Logic::CEntity* entity, Map::CEntity* entityInfo, CMap *map, bool replicate) {
+		if(!entity) return NULL;
 
-		// Añadimos la nueva entidad en el mapa antes de inicializarla.
-		map->addEntity(ret);
+		if ( _dynamicCreation ? entity->dynamicSpawn(map, entityInfo) : entity->spawn(map, entityInfo) ) {
+			// Añadimos la nueva entidad en el mapa antes de inicializarla.
+			map->addEntity(entity);
 
-		// Y lo inicializamos
-		if ( _dynamicCreation ? ret->dynamicSpawn(map, entityInfo) : ret->spawn(map, entityInfo) ) {
 			if(replicate) {
-				Logic::CGameNetMsgManager::getSingletonPtr()->sendCreateEntity( ret->getEntityID() );
+				Logic::CGameNetMsgManager::getSingletonPtr()->sendCreateEntity( entity->getEntityID() );
 			}
 
-			return ret;
+			return entity;
 		} 
 		else {
-			map->removeEntity(ret);
-			delete ret;
+			delete entity;
 			return NULL;
 		}
+	}
+
+	//________________________________________________________________________
+
+	Logic::CEntity* CEntityFactory::initEntity(Logic::CEntity* entity, Map::CEntity* entityInfo, Logic::CMap *map, const Matrix4& transform, bool replicate) {
+		if(!entity) return NULL;
+
+		// Seteamos la posición de la entidad a ser creada
+		entity->setTransform(transform);
+		if( _dynamicCreation ? entity->dynamicSpawn(map, entityInfo) : entity->spawn(map, entityInfo) ) {
+			// Si la entidad ha sido inicializada con éxito la añadimos al mapa.
+			map->addEntity(entity);
+
+			if(replicate) {
+				Logic::CGameNetMsgManager::getSingletonPtr()->sendCreateEntity( entity->getEntityID() );
+			}
+
+			return entity;
+		} 
+		else {
+			delete entity;
+			return NULL;
+		}
+	}
+
+	//________________________________________________________________________
+
+	Logic::CEntity *CEntityFactory::createEntity(Map::CEntity *entityInfo, Logic::CMap *map, bool replicate) {
+		return initEntity(assembleEntity( entityInfo->getType() ), entityInfo, map, replicate);
 	} // createEntity
 
 	//________________________________________________________________________
 
-	Logic::CEntity* CEntityFactory::createEntityWithPosition(Map::CEntity *entityInfo, CMap *map, const Vector3& position, bool replicate) {
-		// Pasamos el vector3 a string y se lo seteamos al entityInfo para mas tarde
-		// llamar al createEntity
-		entityInfo->setAttribute( "position", formatToMapString(position) );
-
-		return createEntity(entityInfo, map, replicate);
+	Logic::CEntity *CEntityFactory::createEntity(Map::CEntity *entityInfo, Logic::CMap *map, const Matrix4& transform, bool replicate) {
+		return initEntity(assembleEntity( entityInfo->getType() ), entityInfo, map, transform, replicate);
 	} // createEntity
-
-	//________________________________________________________________________
-
-	Logic::CEntity* CEntityFactory::createEntityWithName(Map::CEntity* entityInfo, CMap *map, const std::string& name, bool replicate) {
-		entityInfo->setAttribute("name", name);
-		return createEntity(entityInfo, map, replicate);
-	}
-
-	//________________________________________________________________________
-
-	Logic::CEntity* CEntityFactory::createEntityWithNameAndPos(Map::CEntity* entityInfo, CMap* map, 
-															   const std::string& name, const Vector3& position, bool replicate) {
-		// Seteamos el nombre
-		entityInfo->setAttribute("name", name);
-		// Seteamos la posicion de la entidad
-		entityInfo->setAttribute( "position", formatToMapString(position) );
-
-		// Creamos la entidad con la nueva información dada
-		return createEntity(entityInfo, map, replicate);
-	}
-
-	//________________________________________________________________________
-
-	Logic::CEntity* CEntityFactory::createEntityWithPositionAndOrientation(Map::CEntity *entityInfo, CMap *map, const Vector3& position, 
-										float yaw, float pitch, bool replicate){
-		// Pasamos el vector3 a string y se lo seteamos al entityInfo para mas tarde
-		// llamar al createEntity
-		entityInfo->setAttribute( "position", formatToMapString(position) );
-		// Yaw y Pitch
-		entityInfo->setAttribute( "yaw",  formatToMapString(yaw));
-		entityInfo->setAttribute( "pitch", formatToMapString(pitch));
-
-		return createEntity(entityInfo, map, replicate);
-	}
 
 	//________________________________________________________________________
 
 	Logic::CEntity *CEntityFactory::createEntityById(Map::CEntity *entityInfo, Logic::CMap *map, TEntityID id, bool replicate) {
-		std::string entityType = entityInfo->getType();
-		CEntity *ret = assembleEntity(entityType, id);
-		
-		if (!ret){
-			std::cout << "ERROR: La entidad no ha podido ser ensamblada porque assemble entity ha fallado" << std::endl;
-			return NULL;
-		}
-		// Añadimos la nueva entidad en el mapa antes de inicializarla.
-		map->addEntity(ret);
-		// Y lo inicializamos
-		if( ret->spawn(map, entityInfo) ) {
-			if(replicate) {
-				Logic::CGameNetMsgManager::getSingletonPtr()->sendCreateEntity( ret->getEntityID() );
-			}
+		return initEntity(assembleEntity(entityInfo->getType(), id), entityInfo, map, replicate);
+	} // createEntity
 
-			return ret;
-		} 
-		else {
-			map->removeEntity(ret);
-			delete ret;
-			return NULL;
-		}
+	//________________________________________________________________________
+
+	Logic::CEntity *CEntityFactory::createEntityById(Map::CEntity *entityInfo, Logic::CMap *map, TEntityID id, const Matrix4& transform, bool replicate) {
+		return initEntity(assembleEntity( entityInfo->getType(), id ), entityInfo, map, transform, replicate);
 	} // createEntity
 
 	//________________________________________________________________________
@@ -358,7 +329,7 @@ namespace Logic {
 	//Al metodo le falta un control de si quieres que el server envie o no a los clientes el borrado
 	Logic::CEntity* CEntityFactory::createEntityWithTimeOut(Map::CEntity *entityInfo, CMap *map, unsigned int msecs, bool replicate) {
 		CEntity* createdEntity = createEntity(entityInfo, map, replicate);
-		deferredDeleteEntity(createdEntity , msecs);
+		deferredDeleteEntity(createdEntity, msecs);
 		return createdEntity;
 	}
 	

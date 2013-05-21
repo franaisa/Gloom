@@ -141,6 +141,10 @@ namespace Logic {
 
 		//________________________________________________________________________
 
+		CEntity* createEntity(Map::CEntity *entityInfo, Logic::CMap *map, const Matrix4& transform, bool replicate = true);
+
+		//________________________________________________________________________
+
 		/**
 		Crea una nueva entidad de juego en un mapa determinado a partir de
 		su descripción en base a los componentes que necesita debido
@@ -159,23 +163,11 @@ namespace Logic {
 		@note Las entidades aquí creadas pueden eliminarse al final del 
 		juego o bien utilizando deferredDeleteEntity.
 		*/
-		CEntity *createEntityById(Map::CEntity *entityInfo, CMap *map, TEntityID id, bool replicate = false);
-
-		//________________________________________________________________________
-		
-		CEntity *createEntityWithPosition(Map::CEntity *entityInfo, CMap *map, const Vector3& position, bool replicate = true);
-
-		//________________________________________________________________________
-		
-		CEntity *createEntityWithPositionAndOrientation(Map::CEntity *entityInfo, CMap *map, const Vector3& position, float yaw, float pitch, bool replicate = true);
+		CEntity* createEntityById(Map::CEntity *entityInfo, CMap *map, TEntityID id, bool replicate = false);
 
 		//________________________________________________________________________
 
-		CEntity* createEntityWithName(Map::CEntity* entityInfo, CMap *map, const std::string& name, bool replicate = true);
-
-		//________________________________________________________________________
-
-		CEntity* createEntityWithNameAndPos(Map::CEntity* entityInfo, CMap *map, const std::string& name, const Vector3& position, bool replicate = true);
+		CEntity* createEntityById(Map::CEntity *entityInfo, CMap *map, TEntityID id, const Matrix4& transform, bool replicate = false);
 
 		//________________________________________________________________________
 
@@ -331,6 +323,12 @@ namespace Logic {
 		} TBluePrint;
 
 	protected:
+
+		CEntity* initEntity(Logic::CEntity* entity, Map::CEntity* entityInfo, CMap *map, bool replicate);
+
+		//________________________________________________________________________
+
+		CEntity* initEntity(Logic::CEntity* entity, Map::CEntity* entityInfo, Logic::CMap *map, const Matrix4& transform, bool replicate);
 
 		/**
 		Única instancia de la clase.
