@@ -83,6 +83,7 @@ Map = {
 		screamerExplotionRadius = 50,
 		screamerReboundForce = 2,
 		screamerScreamForce = 2.5,
+		screamerScreamMaxDistance = 100,
 		
 			weaponhammerName = "hammer",
 			weaponhammerModel = "hammer.mesh",
@@ -819,6 +820,7 @@ Map = {
 		screamerExplotionRadius = 15,
 		screamerReboundForce = 2,
 		screamerScreamForce = 2.5,
+		screamerScreamMaxDistance = 100,
 
 			weaponhammerName = "hammer",
 			weaponhammerModel = "hammer.mesh",
