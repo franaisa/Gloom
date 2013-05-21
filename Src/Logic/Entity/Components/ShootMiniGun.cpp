@@ -33,6 +33,10 @@ namespace Logic {
 					_pressThenShoot=false;
 					_bLeftClicked = false;
 					_iContadorLeftClicked = 0;
+					auto m = std::make_shared<CMessageHudDispersion>();
+					m->setHeight(10.0f);
+					m->setWidth(11.0f);
+					_entity->emitMessage(m);
 				}
 				else if(type==Control::RIGHT_CLICK) {
 					_acumulando = true;
@@ -63,19 +67,19 @@ namespace Logic {
 			{
 				_dispersion = _dispersionOriginal + 10.0f;
 				m->setHeight(10.0f);
-				m->setWidth(10.0f);
+				m->setWidth(11.0f);
 			}
 			else if (_iContadorLeftClicked < 20)
 			{
 				_dispersion = _dispersionOriginal + 5.0f;
-				m->setHeight(100.0f);
-				m->setWidth(50.0f);
+				m->setHeight(6.0f);
+				m->setWidth(7.0f);
 			}
 			else
 			{
 				_dispersion = _dispersionOriginal;
-				m->setHeight(150.0f);
-				m->setWidth(200.0f);
+				m->setHeight(3.0f);
+				m->setWidth(4.0f);
 			}
 
 			_entity->emitMessage(m);

@@ -138,12 +138,12 @@ namespace Logic
          
 		// Creo panel de Mira
 		_panelMira = _server->createOverlay("Mira", scene, "Panel" );
-		float sizeCrossFireX = entityInfo->getFloatAttribute("hudCrossX");
-		float sizeCrossFireY = entityInfo->getFloatAttribute("hudCrossY");
-		float positionCrossFireX = 0.5f-((sizeCrossFireX/2)*0.01f) ;
-		float positionCrossFireY = 0.5f-((sizeCrossFireY/2)*0.01f) ;
+		_sizeCrossFireX = entityInfo->getFloatAttribute("hudCrossX");
+		_sizeCrossFireY = entityInfo->getFloatAttribute("hudCrossY");
+		float positionCrossFireX = 0.5f-((_sizeCrossFireX/2)*0.01f) ;
+		float positionCrossFireY = 0.5f-((_sizeCrossFireY/2)*0.01f) ;
         _panelMira->setPosition( positionCrossFireX,positionCrossFireY);
-		_panelMira->setDimensions( sizeCrossFireX*0.01, sizeCrossFireY*0.01);
+		_panelMira->setDimensions( _sizeCrossFireX*0.01, _sizeCrossFireY*0.01);
         _panelMira->setMaterial("hudMira3");
 
 		// overlay para controlar las teclas
@@ -161,7 +161,7 @@ namespace Logic
 		///////////////////////////////////Esto para la mira dinamica
 		_panelMiraMovible = _server->createOverlay("Mira dinamica", scene, "Panel" );
         _panelMiraMovible->setPosition( positionCrossFireX,positionCrossFireY);
-		_panelMiraMovible->setDimensions( sizeCrossFireX*0.01, sizeCrossFireY*0.01 );
+		_panelMiraMovible->setDimensions( _sizeCrossFireX*0.01, _sizeCrossFireY*0.01 );
         _panelMiraMovible->setMaterial("hudMira4");
 		_overlayPlay->add2D(_panelMiraMovible);
 
@@ -584,6 +584,12 @@ namespace Logic
 			}else{
 				_panelElements[AMMO]->setVisible(true);
 			}
+			if((WeaponType::Enum)_actualWeapon == WeaponType::eMINIGUN){
+				// puesto a hieero por ahora :D
+				hudSizeCrossfire(10,11);
+			}else{
+				hudSizeCrossfire(_sizeCrossFireX,_sizeCrossFireY);
+			}
 
 
 			
@@ -777,8 +783,15 @@ namespace Logic
 	//-------------------------------------------------------
 
 	void CHudOverlay::hudSizeCrossfire(float width, float height){
+		/*
+		width*=0.001;
+		height*=0.001;
+		
 		_panelMiraMovible->setPosition(_panelMiraMovible->getPositionX() - width*0.5, _panelMiraMovible->getPositionY() - height*0.5);
-		_panelMiraMovible->setDimensions(_panelMiraMovible->getWidth() + width,_panelMiraMovible->getHeight() + height);  
+		_panelMiraMovible->setDimensions(_panelMiraMovible->getWidth() + width,_panelMiraMovible->getHeight() + height);
+		*/
+		_panelMiraMovible->setPosition(0.5f-((width/2)*0.01f), 0.5f-((height/2)*0.01f));
+		_panelMiraMovible->setDimensions(width*0.01,height*0.01);  
 	}
 	//-------------------------------------------------------
 
