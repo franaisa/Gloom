@@ -2,6 +2,7 @@
 #define __Logic_Scoreboard_H
 
 #include "Input/InputManager.h"
+#include "Net/Buffer.h"
 
 namespace Logic{
 	class CGUIManager;
@@ -11,7 +12,6 @@ namespace Logic{
 namespace Hikari{
 	class FlashControl;
 }
-
 
 namespace Logic{
 /**
@@ -227,6 +227,8 @@ la clase del jugador, las muertes, los frags, los mejores spree, etc.
 		*/
 		std::vector<PlayerInfo> getAllPlayers();
 
+		Net::CBuffer serialize();
+		void deserialize(Net::CBuffer &players);
 		// =======================================================================
 		//                 METODOS HEREDADOS DE CKEYBOARDLISTENER
 		// =======================================================================

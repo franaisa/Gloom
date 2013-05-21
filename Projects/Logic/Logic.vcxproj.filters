@@ -538,6 +538,9 @@
     <ClCompile Include="..\..\Src\Logic\Maps\Scoreboard.cpp">
       <Filter>Maps\Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Maps\WorldState.cpp">
+      <Filter>Maps\Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Src\Logic\Maps\ComponentFactory.h">
@@ -991,6 +994,9 @@
       <Filter>Entity\Components\Gameplay\Header</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Maps\Scoreboard.h">
+      <Filter>Maps\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Maps\WorldState.h">
       <Filter>Maps\Header Files</Filter>
     </ClInclude>
   </ItemGroup>

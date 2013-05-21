@@ -46,6 +46,10 @@ namespace Logic{
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	void CScoreboard::addPlayer(const std::string &name, CEntity * playerEntity, const std::string &playerClass){
+		//por si acaso, vamos a comprobar que no lo habiamos añadido
+		if(_players.find(name)!=_players.end())
+			return;
+		
 		//primero lo insertamos en nuestra estructura de datos
 		PlayerInfo player(name, playerEntity, playerClass);
 		TPlayerInfo newPlayer(name, player);
@@ -58,6 +62,10 @@ namespace Logic{
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	void CScoreboard::addLocalPlayer(const std::string &name, CEntity * playerEntity, const std::string &playerClass){
+		//por si acaso, vamos a comprobar que no lo habiamos añadido
+		if(_players.find(name)!=_players.end())
+			return;
+
 		//primero lo insertamos en nuestra estructura de datos
 		PlayerInfo player(name, playerEntity, playerClass);
 		TPlayerInfo newPlayer(name, player);
@@ -271,6 +279,53 @@ namespace Logic{
 	}
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	Net::CBuffer CScoreboard::serialize(){
+
+		Net::CBuffer players;
+
+		auto it = _players.begin();
+		auto end = _players.end();
+
+		players.serialize(_players.size());
+
+		for(;it!=end;++it){
+			players.serialize(it->second.name, false);
+			players.serialize(it->second.playerClass, false);
+			players.serialize(it->second.kills);
+			players.serialize(it->second.deaths);
+			players.serialize(it->second.bestSpree);
+			players.serialize(it->second.team);
+			players.serialize(it->second.ping);
+		}
+		return players;
+
+	}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	void CScoreboard::deserialize(Net::CBuffer &players){
+		unsigned int size;
+
+		players.deserialize(size);
+
+		for(int i=0;i<size;++i){
+			std::string name, playerClass;
+			players.deserialize(name);
+
+			auto player = _players.find(name);
+
+			players.deserialize(player->second.playerClass);
+			players.deserialize(player->second.kills);
+			players.deserialize(player->second.deaths);
+			players.deserialize(player->second.bestSpree);
+			players.deserialize(player->second.team);
+			players.deserialize(player->second.ping);
+		}
+	}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 
 
 }

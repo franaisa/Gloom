@@ -17,6 +17,7 @@ del juego.
 #include "ComponentFactory.h"
 #include "Logic/Entity/Entity.h"
 #include "Logic/Maps/Map.h"
+#include "Logic/Maps/WorldState.h"
 #include "Logic/Server.h"
 #include "Logic/GameNetMsgManager.h"
 #include "Net/Manager.h"
@@ -265,10 +266,12 @@ namespace Logic {
 		if(!ret) return NULL;
 
 		// Añadimos la nueva entidad en el mapa antes de inicializarla.
-		map->addEntity(ret);
 
 		// Y lo inicializamos
 		if ( _dynamicCreation ? ret->dynamicSpawn(map, entityInfo) : ret->spawn(map, entityInfo) ) {
+			map->addEntity(ret);
+			if(_dynamicCreation)
+				CWorldState::getSingletonPtr()->addEntity(ret);
 			if(replicate) {
 				Logic::CGameNetMsgManager::getSingletonPtr()->sendCreateEntity( ret->getEntityID() );
 			}
@@ -276,7 +279,6 @@ namespace Logic {
 			return ret;
 		} 
 		else {
-			map->removeEntity(ret);
 			delete ret;
 			return NULL;
 		}
@@ -367,10 +369,12 @@ namespace Logic {
 			std::cout << "ERROR: La entidad no ha podido ser ensamblada porque assemble entity ha fallado" << std::endl;
 			return NULL;
 		}
-		// Añadimos la nueva entidad en el mapa antes de inicializarla.
-		map->addEntity(ret);
+
 		// Y lo inicializamos
 		if( ret->spawn(map, entityInfo) ) {
+			map->addEntity(ret);
+			if(_dynamicCreation)
+				CWorldState::getSingletonPtr()->addEntity(ret);
 			if(replicate) {
 				Logic::CGameNetMsgManager::getSingletonPtr()->sendCreateEntity( ret->getEntityID() );
 			}
@@ -378,7 +382,6 @@ namespace Logic {
 			return ret;
 		} 
 		else {
-			map->removeEntity(ret);
 			delete ret;
 			return NULL;
 		}
@@ -392,18 +395,6 @@ namespace Logic {
 		deferredDeleteEntity(createdEntity , msecs);
 		return createdEntity;
 	}
-	
-	//________________________________________________________________________
-
-	void CEntityFactory::deleteEntity(Logic::CEntity *entity) {
-		assert(entity);
-		// Si la entidad estaba activada se desactiva al sacarla
-		// del mapa.
-		entity->getMap()->removeEntity(entity);
-
-		delete entity;
-
-	} // deleteEntity
 
 	//________________________________________________________________________
 
@@ -412,7 +403,7 @@ namespace Logic {
 		// Si la entidad estaba activada se desactiva al sacarla
 		// del mapa.
 		entity->getMap()->removeEntity(entity);
-
+		CWorldState::getSingletonPtr()->deleteEntity(entity);
 		//Comprobamos si debe enviarse a los clientes, porque hay casos en los que no deberia
 		if( Net::CManager::getSingletonPtr()->imServer() && toClients )
 			Logic::CGameNetMsgManager::getSingletonPtr()->sendDestroyEntity( entity->getEntityID() );

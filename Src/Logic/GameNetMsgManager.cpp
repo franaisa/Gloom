@@ -284,11 +284,6 @@ namespace Logic {
 		
 	void CGameNetMsgManager::processEntityMessage(Net::CPaquete* packet)
 	{
-		// TODO Método que debe de ser invocado desde el método que
-		// recibe todos los paquetes de red cuando el tipo de mensaje
-		// de red es Net::ENTITY_MSG. Se debe sacar el ID de la entidad,
-		// recuperarla, deserializar el mensaje y enviárselo
-		
 		// Creamos un buffer con los datos para leer de manera más cómoda
 		Net::CBuffer serialMsg;
 			serialMsg.write(packet->getData(),packet->getDataLength());
