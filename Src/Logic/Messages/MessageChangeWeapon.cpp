@@ -20,14 +20,12 @@ namespace Logic {
 		return _weapon;
 	}//
 	//----------------------------------------------------------
-	Net::CBuffer* CMessageChangeWeapon::serialize() {
-		assert(_tempBuffer == NULL);
-
-		_tempBuffer = new Net::CBuffer(sizeof(int) + sizeof(_weapon));
-		_tempBuffer->serialize(std::string("CMessageChangeWeapon"),true);
-		_tempBuffer->serialize(_weapon);
+	Net::CBuffer CMessageChangeWeapon::serialize() {
+		Net::CBuffer buffer(sizeof(int) + sizeof(_weapon));
+		buffer.serialize(std::string("CMessageChangeWeapon"),true);
+		buffer.serialize(_weapon);
 		
-		return _tempBuffer;
+		return buffer;
 	}//
 	//----------------------------------------------------------
 

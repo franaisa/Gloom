@@ -27,15 +27,12 @@ namespace Net {
 	typedef unsigned char byte;
 };
 
-namespace Logic
-{
+namespace Logic {
 	/**
 	Namespace para los tipos de mensajes posibles.
 	*/
-	namespace Message
-	{
-		enum TMessageType
-		{
+	namespace Message {
+		enum TMessageType {
 			UNASSIGNED					= 0xFFFFFFFF,
 			SET_TRANSFORM				= 0x00000000,
 			SET_ANIMATION				= 0x00000001,
@@ -176,23 +173,27 @@ namespace Logic
 		virtual ~CMessage();
 
 		/**
-		* Método virtual puro que serializa los datos internos de cada mensaje.
-		* El puntero de escritura/lectura NO SE RESETEA en ningún caso. Si el
-		* cliente quiere realizar lecturas debe realizar un reset sobre el buffer
-		* devuelto.
-		* OJO!!! La memoria reservada para el buffer devuelto se libera en el propio
-		* mensaje. El cliente NUNCA debe intentar efectuar un delete sobre el buffer
-		* devuelto (de lo contrario se lia muy parda).
-		*/
-		virtual Net::CBuffer* serialize() = 0;
+		Método virtual puro que debe ser implementado por los mensajes hijos para
+		que se serialicen correctamente al ser enviados por la red. Si los mensajes
+		heredan de una jerarquía indirecta deben llamar a los serializes de los padres.
 
+		Nota: El buffer devuelto implementa copy-on-write así que no os preocupeis por
+		hacer más de un return.
+
+		@return Un buffer con los datos del mensaje serializados.
+		*/
+		virtual Net::CBuffer serialize() = 0;
+
+		/**
+		Método virtual puro que debe ser implementado por los mensajes hijos para
+		que se deserialicen correctamente al ser enviados por la red. Al igual que
+		el serialize, si el mensaje hereda de una amplia jerarquía deberá llamar 
+		a los deserializes de los padres para deserializar toda la información correctamente.
+		*/
 		virtual void deserialize(Net::CBuffer& buffer) = 0;
 
 	protected:
 		TMessageType _type;
-		unsigned char _smartP;
-		/* Se utiliza para serializar mensajes */
-		Net::CBuffer* _tempBuffer;
 	};
 
 	/////////////////////////////////////////////////////////////

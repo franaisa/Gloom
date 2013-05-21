@@ -21,14 +21,12 @@ namespace Logic {
 	}//
 	//----------------------------------------------------------
 		
-	Net::CBuffer* CMessageAddShield::serialize() {
-		assert(_tempBuffer == NULL);
-
-		_tempBuffer = new Net::CBuffer(sizeof(int) + sizeof(_shield));
-		_tempBuffer->serialize(std::string("CMessageAddShield"),true);
-		_tempBuffer->serialize(_shield);
+	Net::CBuffer CMessageAddShield::serialize() {
+		Net::CBuffer buffer(sizeof(int) + sizeof(_shield));
+		buffer.serialize(std::string("CMessageAddShield"),true);
+		buffer.serialize(_shield);
 		
-		return _tempBuffer;
+		return buffer;
 	}//
 	//----------------------------------------------------------
 

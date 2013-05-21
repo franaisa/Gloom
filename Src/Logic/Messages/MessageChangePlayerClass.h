@@ -14,7 +14,7 @@ namespace Logic {
 		void setPlayerClass(unsigned int classType);
 		unsigned int getPlayerClass();
 
-		virtual Net::CBuffer* serialize();
+		virtual Net::CBuffer serialize();
 		virtual void deserialize(Net::CBuffer& buffer);
 		
 	private:

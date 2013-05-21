@@ -136,8 +136,8 @@ namespace Logic {
 			auto messages = entities->second.messages.begin();
 			auto mEnd = entities->second.messages.end();
 			for(;messages!=mEnd;++messages){
-				Net::CBuffer* bufferAux = messages->second->serialize();
-				worldState.write(bufferAux->getbuffer(), bufferAux->getSize());
+				Net::CBuffer bufferAux = messages->second->serialize(); // @deprecated (creo que esto no lo puedes hacer asi)
+				worldState.write(bufferAux.getbuffer(), bufferAux.getSize());
 			}
 		}
 

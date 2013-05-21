@@ -23,14 +23,12 @@ namespace Logic {
 	}//
 	//----------------------------------------------------------
 
-	Net::CBuffer* CMessageCollisionDown::serialize() {
-		assert(_tempBuffer == NULL);
-
-		_tempBuffer = new Net::CBuffer(sizeof(int) + sizeof(_collision));
-		_tempBuffer->serialize(std::string("CMessageCollisionDown"),true);
-		_tempBuffer->serialize(_collision);
+	Net::CBuffer CMessageCollisionDown::serialize() {
+		Net::CBuffer buffer(sizeof(int) + sizeof(_collision));
+		buffer.serialize(std::string("CMessageCollisionDown"),true);
+		buffer.serialize(_collision);
 		
-		return _tempBuffer;
+		return buffer;
 	}//
 	//----------------------------------------------------------
 

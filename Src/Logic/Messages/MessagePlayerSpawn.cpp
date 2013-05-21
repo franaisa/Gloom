@@ -26,14 +26,12 @@ namespace Logic {
 	
 	//________________________________________________________________________
 
-	Net::CBuffer* CMessagePlayerSpawn::serialize() {
-		assert(_tempBuffer == NULL);
-
-		_tempBuffer = new Net::CBuffer(sizeof(int) + sizeof(float) * 5);
-		_tempBuffer->serialize(std::string("CMessagePlayerSpawn"), true);
-		_tempBuffer->serialize(_spawnTransform);
+	Net::CBuffer CMessagePlayerSpawn::serialize() {
+		Net::CBuffer buffer(sizeof(int) + sizeof(float) * 5);
+		buffer.serialize(std::string("CMessagePlayerSpawn"), true);
+		buffer.serialize(_spawnTransform);
 		
-		return _tempBuffer;
+		return buffer;
 	}
 	
 	//________________________________________________________________________

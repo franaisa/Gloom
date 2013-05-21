@@ -24,14 +24,12 @@ namespace Logic {
 
 	//----------------------------------------------------------
 
-	Net::CBuffer* CMessageStopAnimation::serialize() {
-		assert(_tempBuffer == NULL);
-
-		_tempBuffer = new Net::CBuffer((sizeof(int) * 2) + sizeof(bool));
-		_tempBuffer->serialize(std::string("CMessageStopAnimation"),true);
-		_tempBuffer->serialize(_string, false);
+	Net::CBuffer CMessageStopAnimation::serialize() {
+		Net::CBuffer buffer((sizeof(int) * 2) + sizeof(bool));
+		buffer.serialize(std::string("CMessageStopAnimation"),true);
+		buffer.serialize(_string, false);
 		
-		return _tempBuffer;
+		return buffer;
 	}//
 	//----------------------------------------------------------
 

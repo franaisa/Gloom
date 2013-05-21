@@ -13,9 +13,9 @@ namespace Logic {
 		void setDamage(float damage);
 		CEntity* getEnemy();
 		void setEnemy(CEntity* entity);
-		~CMessageDamaged(){};
+		virtual ~CMessageDamaged(){};
 		
-		virtual Net::CBuffer* serialize();
+		virtual Net::CBuffer serialize();
 		virtual void deserialize(Net::CBuffer& buffer);
 	private:
 		float _damage;

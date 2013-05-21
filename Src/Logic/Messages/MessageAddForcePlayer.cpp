@@ -21,14 +21,12 @@ namespace Logic {
 	}//
 	//----------------------------------------------------------
 
-	Net::CBuffer* CMessageAddForcePlayer::serialize() {
-		assert(_tempBuffer == NULL);
-		//
-		_tempBuffer = new Net::CBuffer(sizeof(int) + sizeof(float));
-		_tempBuffer->serialize(std::string("CMessageAddForcePlayer"), true);
-		_tempBuffer->serialize(_force);
+	Net::CBuffer CMessageAddForcePlayer::serialize() {
+		Net::CBuffer buffer(sizeof(int) + sizeof(float));
+		buffer.serialize(std::string("CMessageAddForcePlayer"), true);
+		buffer.serialize(_force);
 
-		return _tempBuffer;
+		return buffer;
 	}//
 	//----------------------------------------------------------
 

@@ -20,16 +20,16 @@ namespace Logic {
 	}//
 	//----------------------------------------------------------
 
-	Net::CBuffer* CMessageMouse::serialize() {
-		assert(_tempBuffer == NULL);
-
-		_tempBuffer = new Net::CBuffer(sizeof(int) + sizeof(float) * 2);
-		_tempBuffer->serialize(std::string("CMessageMouse"),true);
-		_tempBuffer->serialize(_seq);
-		_tempBuffer->serialize(_mouse[0]);
-		_tempBuffer->serialize(_mouse[1]);
+	// Esta mal hecho, tendria que llamar al serialize del padre
+	// para que hacer lo mismo dos veces?
+	Net::CBuffer CMessageMouse::serialize() {
+		Net::CBuffer buffer(sizeof(int) + sizeof(float) * 2);
+		buffer.serialize(std::string("CMessageMouse"),true);
+		buffer.serialize(_seq);
+		buffer.serialize(_mouse[0]);
+		buffer.serialize(_mouse[1]);
 		
-		return _tempBuffer;
+		return buffer;
 	}//
 	//----------------------------------------------------------
 

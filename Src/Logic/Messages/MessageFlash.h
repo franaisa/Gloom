@@ -11,7 +11,7 @@ namespace Logic {
 		CMessageFlash();
 		~CMessageFlash(){};
 		
-		virtual Net::CBuffer* serialize();
+		virtual Net::CBuffer serialize();
 		virtual void deserialize(Net::CBuffer& buffer);
 
 		void setFlashFactor(const float &flashFactor);

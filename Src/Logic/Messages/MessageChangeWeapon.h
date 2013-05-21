@@ -9,7 +9,7 @@ namespace Logic {
 	DEC_FACTORYMESSAGE(CMessageChangeWeapon);
 	public:
 		CMessageChangeWeapon();
-		~CMessageChangeWeapon() { };
+		virtual ~CMessageChangeWeapon() { };
 
 		int		getWeapon		();
 		
@@ -21,7 +21,7 @@ namespace Logic {
 		void	setWeapon		(int weapon); 
 
 
-		virtual Net::CBuffer* serialize();
+		virtual Net::CBuffer serialize();
 		virtual void deserialize(Net::CBuffer& buffer);
 	private:
 		int _weapon;

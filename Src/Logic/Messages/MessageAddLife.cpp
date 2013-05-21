@@ -21,14 +21,12 @@ namespace Logic {
 	}//
 	//----------------------------------------------------------
 		
-	Net::CBuffer* CMessageAddLife::serialize() {
-		assert(_tempBuffer == NULL);
-
-		_tempBuffer = new Net::CBuffer(sizeof(int) + sizeof(_life));
-		_tempBuffer->serialize(std::string("CMessageAddLife"),true);
-		_tempBuffer->serialize(_life);
+	Net::CBuffer CMessageAddLife::serialize() {
+		Net::CBuffer buffer(sizeof(int) + sizeof(_life));
+		buffer.serialize(std::string("CMessageAddLife"),true);
+		buffer.serialize(_life);
 		
-		return _tempBuffer;
+		return buffer;
 	}//
 	//----------------------------------------------------------
 

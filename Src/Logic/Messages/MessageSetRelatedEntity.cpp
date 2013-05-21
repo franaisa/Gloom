@@ -31,16 +31,14 @@ namespace Logic {
 	}//
 	//----------------------------------------------------------
 	
-	Net::CBuffer* CMessageSetRelatedEntity::serialize() {
-		assert(_tempBuffer == NULL);
-
+	Net::CBuffer CMessageSetRelatedEntity::serialize() {
 		Logic::TEntityID id = _entity->getEntityID();
 
-		_tempBuffer = new Net::CBuffer( sizeof(int) + sizeof(id) );
-		_tempBuffer->serialize(std::string("CMessageSetRelatedEntity"), true);
-		_tempBuffer->serialize(id);
+		Net::CBuffer buffer( sizeof(int) + sizeof(id) );
+		buffer.serialize(std::string("CMessageSetRelatedEntity"), true);
+		buffer.serialize(id);
 		
-		return _tempBuffer;
+		return buffer;
 	}//
 	//----------------------------------------------------------
 

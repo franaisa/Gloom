@@ -61,17 +61,15 @@ namespace Logic {
 	//----------------------------------------------------------
 
 
-	Net::CBuffer* CMessageAudio::serialize() {
-		assert(_tempBuffer == NULL);
-		//
-		_tempBuffer = new Net::CBuffer((sizeof(int)*3) + (sizeof(float) * 3) + sizeof(bool));
-		_tempBuffer->serialize(std::string("CMessageAudio"), true);
-		_tempBuffer->serialize(_ruta, false);
-		_tempBuffer->serialize(_id, false);
-		_tempBuffer->serialize(_position);
-		_tempBuffer->serialize(_notIfPlay);
+	Net::CBuffer CMessageAudio::serialize() {
+		Net::CBuffer buffer((sizeof(int)*3) + (sizeof(float) * 3) + sizeof(bool));
+		buffer.serialize(std::string("CMessageAudio"), true);
+		buffer.serialize(_ruta, false);
+		buffer.serialize(_id, false);
+		buffer.serialize(_position);
+		buffer.serialize(_notIfPlay);
 
-		return _tempBuffer;
+		return buffer;
 	}//
 	//----------------------------------------------------------
 

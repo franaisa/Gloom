@@ -19,13 +19,11 @@ namespace Logic {
 
 	//----------------------------------------------------------
 
-	Net::CBuffer* CMessageFlash::serialize() {
-		assert(_tempBuffer == NULL);
-
-		_tempBuffer = new Net::CBuffer(sizeof(int));
-		_tempBuffer->serialize(std::string("CMessageFlash"), true);
-		_tempBuffer->serialize(_flashFactor);
-		return _tempBuffer;
+	Net::CBuffer CMessageFlash::serialize() {
+		Net::CBuffer buffer(sizeof(int));
+		buffer.serialize(std::string("CMessageFlash"), true);
+		buffer.serialize(_flashFactor);
+		return buffer;
 	}//
 	//----------------------------------------------------------
 

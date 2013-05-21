@@ -35,16 +35,13 @@ namespace Logic {
 
 	//----------------------------------------------------------
 
-	Net::CBuffer* CMessageControl::serialize() {
-		assert(_tempBuffer == NULL);
-
-		_tempBuffer = new Net::CBuffer(sizeof(int) + sizeof(_controlType));
-		_tempBuffer->serialize(std::string("CMessageControl"),true);
-		_tempBuffer->serialize(_seq);
-		_tempBuffer->serialize(_controlType);
+	Net::CBuffer CMessageControl::serialize() {
+		Net::CBuffer buffer(sizeof(int) + sizeof(_controlType));
+		buffer.serialize(std::string("CMessageControl"),true);
+		buffer.serialize(_seq);
+		buffer.serialize(_controlType);
 		
-		
-		return _tempBuffer;
+		return buffer;
 	}//
 	//----------------------------------------------------------
 

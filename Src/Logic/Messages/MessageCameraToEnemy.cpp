@@ -27,14 +27,13 @@ namespace Logic {
 	}//
 	//----------------------------------------------------------
 	
-	Net::CBuffer* CMessageCameraToEnemy::serialize() {
-		assert(_tempBuffer == NULL);
-
-		_tempBuffer = new Net::CBuffer(sizeof(int) + sizeof(Logic::TEntityID));
-		_tempBuffer->serialize(std::string("CMessageCameraToEnemy"),true);
-		_tempBuffer->serialize(_entity->getEntityID());
+	Net::CBuffer CMessageCameraToEnemy::serialize() {
 		
-		return _tempBuffer;
+		Net::CBuffer buffer(sizeof(int) + sizeof(Logic::TEntityID));
+		buffer.serialize(std::string("CMessageCameraToEnemy"),true);
+		buffer.serialize(_entity->getEntityID());
+		
+		return buffer;
 	}//
 	//----------------------------------------------------------
 

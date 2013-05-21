@@ -32,19 +32,17 @@ namespace Logic {
 
 	//__________________________________________________________________
 		
-	Net::CBuffer* CMessagePositionSnapshot::serialize() {
-		assert(_tempBuffer == NULL);
-
+	Net::CBuffer CMessagePositionSnapshot::serialize() {
 		// Tamaño igual = cabecera(int) + tambuffer(int) + num matrices (5 floats * tamBuffer)
 		int bufferSize = _positionBuffer.size();
-		_tempBuffer = new Net::CBuffer( (2 * sizeof(int)) + (bufferSize * 3 * sizeof(float)) );
-		_tempBuffer->serialize(std::string("CMessagePositionSnapshot"), true);
-		_tempBuffer->serialize(bufferSize);
+		Net::CBuffer buffer( (2 * sizeof(int)) + (bufferSize * 3 * sizeof(float)) );
+		buffer.serialize(std::string("CMessagePositionSnapshot"), true);
+		buffer.serialize(bufferSize);
 		for(int i = 0; i < bufferSize; ++i) {
-			_tempBuffer->serialize(_positionBuffer[i]);
+			buffer.serialize(_positionBuffer[i]);
 		}
 		
-		return _tempBuffer;
+		return buffer;
 	}
 
 	//__________________________________________________________________

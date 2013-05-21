@@ -11,9 +11,9 @@ namespace Logic {
 		CMessageStopAnimation();
 		std::string getString();
 		void setString(std::string);
-		~CMessageStopAnimation(){};
+		virtual ~CMessageStopAnimation(){};
 
-		virtual Net::CBuffer* serialize();
+		virtual Net::CBuffer serialize();
 		virtual void deserialize(Net::CBuffer& buffer);
 	private:
 		std::string _string;

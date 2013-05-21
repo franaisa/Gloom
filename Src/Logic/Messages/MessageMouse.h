@@ -11,9 +11,9 @@ namespace Logic {
 		CMessageMouse();
 		void setMouse(float mouse[]);
 		float* getMouse();
-		~CMessageMouse(){};
+		virtual ~CMessageMouse(){};
 
-		virtual Net::CBuffer* serialize();
+		virtual Net::CBuffer serialize();
 		virtual void deserialize(Net::CBuffer& buffer);
 	private:
 		float _mouse[2];
