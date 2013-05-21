@@ -81,7 +81,6 @@ namespace Net {
 		ASSIGNED_ID,
 
 		CREATE_ENTITY,
-		CREATE_CUSTOM_ENTITY,
 		DESTROY_ENTITY
 	};
 
