@@ -81,8 +81,8 @@ Map = {
 		screamerShieldRecoveryOverTime = 2,
 		screamerExplotionDamage = 200,
 		screamerExplotionRadius = 50,
-		screamerReboundForce = 1,
-		screamerScreamForce = 1,
+		screamerReboundForce = 2,
+		screamerScreamForce = 2.5,
 		
 			weaponhammerName = "hammer",
 			weaponhammerModel = "hammer.mesh",
@@ -817,8 +817,8 @@ Map = {
 		screamerShieldRecoveryOverTime = 2,
 		screamerExplotionDamage = 200,
 		screamerExplotionRadius = 15,
-		screamerReboundForce = 1,
-		screamerScreamForce = 1,
+		screamerReboundForce = 2,
+		screamerScreamForce = 2.5,
 
 			weaponhammerName = "hammer",
 			weaponhammerModel = "hammer.mesh",
