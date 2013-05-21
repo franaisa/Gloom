@@ -170,6 +170,8 @@ namespace Map
 		*/
 		CEntity *clone(){return new CEntity(*this);}
 
+		void merge(CEntity* entityInfo) { _attributes.insert(entityInfo->_attributes.begin(), entityInfo->_attributes.end()); }
+
 	protected:
 
 		/**

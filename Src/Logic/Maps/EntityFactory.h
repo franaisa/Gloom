@@ -143,6 +143,10 @@ namespace Logic {
 
 		CEntity* createEntity(Map::CEntity *entityInfo, Logic::CMap *map, const Matrix4& transform, bool replicate = true);
 
+		CEntity* createCustomEntity(Map::CEntity* customEntityInfo, Map::CEntity* entityInfo, Logic::CMap* map, bool replicate = true);
+
+		CEntity* createCustomEntity(Map::CEntity* customEntityInfo, Map::CEntity* entityInfo, Logic::CMap* map, const Matrix4& transform, bool replicate = true);
+
 		//________________________________________________________________________
 
 		/**
@@ -324,11 +328,11 @@ namespace Logic {
 
 	protected:
 
-		CEntity* initEntity(Logic::CEntity* entity, Map::CEntity* entityInfo, CMap *map, bool replicate);
+		CEntity* initEntity(Logic::CEntity* entity, Map::CEntity* customEntityInfo, Map::CEntity* entityInfo, CMap *map, bool replicate);
 
 		//________________________________________________________________________
 
-		CEntity* initEntity(Logic::CEntity* entity, Map::CEntity* entityInfo, Logic::CMap *map, const Matrix4& transform, bool replicate);
+		CEntity* initEntity(Logic::CEntity* entity, Map::CEntity* customEntityInfo, Map::CEntity* entityInfo, Logic::CMap *map, const Matrix4& transform, bool replicate);
 
 		/**
 		Única instancia de la clase.

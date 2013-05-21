@@ -22,6 +22,10 @@ Contiene la declaración del gestor de los mensajes de red durante la partida.
 #include "Logic/Messages/Message.h"
 #include "Logic/Maps/EntityID.h"
 
+namespace Map {
+	class CEntity;
+}
+
 namespace Logic 
 {
 	/**
@@ -113,7 +117,7 @@ namespace Logic
 		
 		@param dest ID de la entidad que se va a crear
 		*/
-		void sendCreateEntity(TEntityID dest);
+		void sendCreateEntity(TEntityID dest, Map::CEntity* entityInfo = NULL);
 
 		/**
 		Método que serializa un mensaje lógico y lo envía por el tubo al otro
