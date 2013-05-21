@@ -29,6 +29,8 @@ implementa las habilidades del personaje
 #include "Logic/Messages/MessageDamaged.h"
 #include "Logic/Messages/MessageChangeMaterial.h"
 #include "Logic/Messages/MessageCreateParticle.h"
+#include "Logic/Messages/MessageAddForcePlayer.h"
+
 #include "AvatarController.h"
 
 // Física
@@ -215,8 +217,11 @@ namespace Logic {
 			{
 				if ((*it).distance < 10){
 					//printf("\n effecto martillo");
-					_entity->getComponent<CAvatarController>("CAvatarController")->addForce(-_directionShoot * _screamerReboundForce);
+					auto m = std::make_shared<CMessageAddForcePlayer>();
+					m->setForce(-_directionShoot * _screamerReboundForce);
+					_entity->emitMessage(m);
 				}else{
+					/*
 					if(_rebound <= _maxNumberRebounds){
 						++_rebound;
 						_directionShoot = (-(*it).normal);
@@ -225,14 +230,17 @@ namespace Logic {
 					}else{
 						_rebound = 0;
 					}
+					*/
 					
 				}
 			}
 			if(typeEntity == "Screamer" || typeEntity == "Hound" || typeEntity == "Archangel" || typeEntity == "Shadow" || typeEntity == "RemotePlayer"){
 				Vector3 direct = -(_directionShoot.reflect(-(*it).normal));
 				//printf("\nDirection: %f %f %f", direct.x, direct.y, direct.z);
-				(*it).entity->getComponent<CAvatarController>("CAvatarController")->addForce( -((*it).normal) * _screamerScreamForce);
-				//(*it).entity->getComponent<CAvatarController>("CAvatarController")->addForce(-(_directionShoot.reflect(-(*it).normal)) * _screamerScreamForce);
+				auto m = std::make_shared<CMessageAddForcePlayer>();
+				//m->setForce(-((*it).normal) * _screamerScreamForce);
+				m->setForce(_directionShoot * _screamerScreamForce);
+				(*it).entity->emitMessage(m);
 			}
 		}
 	}

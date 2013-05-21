@@ -640,7 +640,6 @@ namespace Physics {
 
 		delete [] hitBuffer;
 	}
-
 	//________________________________________________________________________
 
 	bool CServer::sweepSingle(const physx::PxGeometry& sweepGeometry, const Vector3& position, 
