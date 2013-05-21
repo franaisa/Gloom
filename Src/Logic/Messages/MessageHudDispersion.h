@@ -14,6 +14,16 @@ namespace Logic {
 		virtual Net::CBuffer* serialize();
 		virtual void deserialize(Net::CBuffer& buffer);
 
+		float	getHeight		()					{ return _fHeight;}
+		void		setHeight		(float fValue)		{ _fHeight = fValue; }
+
+		float	getWidth		()					{ return _fWidth;}
+		void		setWidth		(float fValue)		{ _fWidth = fValue; }
+
+	private:
+		float	_fHeight;
+		float	_fWidth;
+
 	};
 	REG_FACTORYMESSAGE(CMessageHudDispersion);
 };

@@ -39,7 +39,7 @@ namespace Logic {
 
 		/** Constructor por defecto. */
 		CShootMiniGun() : CShootRaycast("miniGun"), _pressThenShoot(false), _contador(0), _acumulando(false),
-													_iRafagas(0) {}
+													_iRafagas(0), _bLeftClicked(false), _iContadorLeftClicked(0) {}
 
 		//__________________________________________________________________
 
@@ -98,6 +98,10 @@ namespace Logic {
 			Una rafaga = 10 unidades de contador.
 		*/
 		int		_iRafagas;
+
+		bool	_bLeftClicked;
+
+		int		_iContadorLeftClicked;
 
 
 	}; // class CShootMiniGun

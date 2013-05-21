@@ -248,6 +248,7 @@ namespace Logic
 		int _contadorLocalizadorImpacto;
 
 
+		
 		/*
 		float _dimCrossX;
 		float _dimCrossY;

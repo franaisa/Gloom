@@ -10,6 +10,7 @@ Contiene la implementación del componente que gestiona las armas y que administr
 #include "ShootMiniGun.h"
 
 #include "Logic/Messages/MessageControl.h"
+#include "Logic/Messages/MessageHudDispersion.h"
 
 namespace Logic {
 	IMP_FACTORY(CShootMiniGun);
@@ -26,9 +27,12 @@ namespace Logic {
 				
 				if(type==Control::LEFT_CLICK) {
 					_pressThenShoot=true;
+					_bLeftClicked = true;
 				}
 				else if(type==Control::UNLEFT_CLICK) {
 					_pressThenShoot=false;
+					_bLeftClicked = false;
+					_iContadorLeftClicked = 0;
 				}
 				else if(type==Control::RIGHT_CLICK) {
 					_acumulando = true;
@@ -47,6 +51,37 @@ namespace Logic {
 	//__________________________________________________________________
 
 	void CShootMiniGun::onTick(unsigned int msecs) {
+
+		if (_bLeftClicked)
+		{
+			_iContadorLeftClicked++;
+			
+			//Modificar la dispersión
+			std::cout << _iContadorLeftClicked << std::endl;
+			std::shared_ptr<CMessageHudDispersion> m = std::make_shared<CMessageHudDispersion>();
+			if (_iContadorLeftClicked < 10)
+			{
+				_dispersion = _dispersionOriginal + 10.0f;
+				m->setHeight(10.0f);
+				m->setWidth(10.0f);
+			}
+			else if (_iContadorLeftClicked < 20)
+			{
+				_dispersion = _dispersionOriginal + 5.0f;
+				m->setHeight(100.0f);
+				m->setWidth(50.0f);
+			}
+			else
+			{
+				_dispersion = _dispersionOriginal;
+				m->setHeight(150.0f);
+				m->setWidth(200.0f);
+			}
+
+			_entity->emitMessage(m);
+		}
+
+
 		if(_primaryCooldownTimer < _primaryCooldown)
 		{
 			_primaryCooldownTimer += msecs;
@@ -55,9 +90,13 @@ namespace Logic {
 		{
 			if(_pressThenShoot){
 				_primaryCanShoot=true;
+				
+				std::cout << "Dispersion = " << _dispersion << std::endl;
 				primaryShoot();
 			}
 		}
+
+
 
 		//Comprobamos la funcionalidad del botón derecho
 		if (_acumulando)
