@@ -30,12 +30,15 @@ implementa las habilidades del personaje
 #include "Logic/Messages/MessageChangeMaterial.h"
 #include "Logic/Messages/MessageCreateParticle.h"
 #include "Logic/Messages/MessageAddForcePlayer.h"
+#include "Logic/Messages/MessageSetAnimation.h"
+
 
 #include "AvatarController.h"
 
 // Física
 #include "Physics/Server.h"
 #include "Physics/GeometryFactory.h"
+
 
 // Gráficos
 #include "Graphics/Server.h"
@@ -98,7 +101,8 @@ namespace Logic {
 
 		_screamerScreamForce = entityInfo->getFloatAttribute("screamerScreamForce");
 		_screamerReboundForce= entityInfo->getFloatAttribute("screamerReboundForce");
-		
+		_screamerScreamMaxDistance= entityInfo->getFloatAttribute("screamerScreamMaxDistance");
+			
 		_rebound = 0;
 		_maxNumberRebounds = 1;
 
@@ -195,9 +199,22 @@ namespace Logic {
 
 		std::vector<Physics::CSweepHit> hitSpots;
 
-		Physics::CServer::getSingletonPtr()->sweepMultiple(sphere, (_entity->getPosition() + Vector3(0,_heightShoot,0)),_directionShoot,999,hitSpots);
+		Physics::CServer::getSingletonPtr()->sweepMultiple(sphere, (_entity->getPosition() + Vector3(0,_heightShoot,0)),_directionShoot,_screamerScreamMaxDistance,hitSpots, true);
+		
+		
 
-		hitConsequences(hitSpots);		
+		// Por ahora puede que no funcione bien por que single choca con triggers y tal.
+		// si el raycast choca con el mundo, en la distancia se lo paso al metodo de abajo. Pongo una distancia enorme para que 
+		
+		/*
+		Ray ray((_entity->getPosition() + Vector3(0,_heightShoot,0)), _directionShoot);
+		CRaycastHit hitWorld;
+		Physics::CServer::getSingletonPtr()->raycastSingle(ray,_screamerScreamMaxDistance,hitWorld);
+		hitConsequences(hitSpots, hitWorld );
+		*/
+		
+		//
+		hitConsequences(hitSpots);
 
 		//std::cout << std::endl << "Primary Skill - Screamer" << std::endl;
 	} // primarySkill
@@ -207,42 +224,45 @@ namespace Logic {
 		
 	}
 
+	//void CScreamer::hitConsequences(std::vector<Physics::CSweepHit> &hits, CRaycastHit *hitWorld){
 	void CScreamer::hitConsequences(std::vector<Physics::CSweepHit> &hits){
 		
+		//for(auto it = hits.begin(); it < hits.end() && (*it).distance < hitWorld.distance; ++it){
 		for(auto it = hits.begin(); it < hits.end(); ++it){
 
-			std::string typeEntity = (*it).entity->getType().c_str();
-			//printf("\nImpacto con: %s a distancia: %f \n\tEn punto: %f %f %f \n", (*it).entity->getName().c_str(), (*it).distance,  (*it).impact.x, (*it).impact.y, (*it).impact.z);
+			std::string typeEntity = (*it).entity->getType();
+			
 			if(typeEntity == "World" )
 			{
 				if ((*it).distance < 10){
-					//printf("\n effecto martillo");
 					auto m = std::make_shared<CMessageAddForcePlayer>();
-					m->setForce(-_directionShoot * _screamerReboundForce);
+					m->setForce(-_directionShoot * (_screamerReboundForce*(1.0f- (*it).distance/_screamerScreamMaxDistance)));
 					_entity->emitMessage(m);
-				}else{
-					/*
-					if(_rebound <= _maxNumberRebounds){
-						++_rebound;
-						_directionShoot = (-(*it).normal);
-						printf("Rebotando hacia: %f %f %f", _directionShoot.x, _directionShoot.y, _directionShoot.z);
-						primarySkill();
-					}else{
-						_rebound = 0;
-					}
-					*/
-					
 				}
 			}
 			if(typeEntity == "Screamer" || typeEntity == "Hound" || typeEntity == "Archangel" || typeEntity == "Shadow" || typeEntity == "RemotePlayer"){
 				Vector3 direct = -(_directionShoot.reflect(-(*it).normal));
-				//printf("\nDirection: %f %f %f", direct.x, direct.y, direct.z);
 				auto m = std::make_shared<CMessageAddForcePlayer>();
-				//m->setForce(-((*it).normal) * _screamerScreamForce);
-				m->setForce(_directionShoot * _screamerScreamForce);
+				m->setForce(_directionShoot * (_screamerScreamForce*(1.0f- (*it).distance/_screamerScreamMaxDistance)));
 				(*it).entity->emitMessage(m);
+
+				auto m2 = std::make_shared<CMessageSetAnimation>();
+				m2->setString("Damage");
+				m2->setBool(false);
+				(*it).entity->emitMessage(m2);
 			}
 		}
+		/*
+		if(it < hits.end()){
+			if(_rebound <= _maxNumberRebounds){
+				++_rebound;
+				_directionShoot = _directionShoot.reflect(hitWorld.normal));
+				primarySkill();
+			}else{
+				_rebound = 0;
+			}
+		}		
+		*/				
 	}
 
 	void CScreamer::secondarySkill() {

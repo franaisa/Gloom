@@ -19,6 +19,7 @@ implementa las habilidades del personaje
 #include "BaseSubsystems/Math.h"
 #include "PlayerClass.h"
 #include "Physics/SweepHit.h"
+#include "Physics/RaycastHit.h"
 
 namespace Logic {
 
@@ -182,10 +183,10 @@ namespace Logic {
 		Y ya por ultimo si impacta en un jugador, lo hace rebotar en la direccon opuesta a la normal de impacto.
 
 		@param hits, todos los impactos del sweepMultiple
-		@param directionShoot, direccion hacia la que mira el emisor del sweep. Lo pongo por no tener q calcularlo otra vez.
-		@param reboun, indica si ya rebotado en la pare o no, por defecto a false
+		@param worldDistance, distancia donde se debera de hacer un rebote con el mundo. Si el valor es 0 esq no hay rebote.
 		*/
 		void hitConsequences(std::vector<Physics::CSweepHit> &hits);
+		//void hitConsequences(std::vector<Physics::CSweepHit> &hits, CRaycastHit *hitWorld);
 
 		// =======================================================================
 		//                          MIEMBROS PRIVADOS
@@ -230,6 +231,9 @@ namespace Logic {
 
 		/** Fuerza de rebote del chillido. */
 		float _screamerReboundForce;
+
+		/** Maxima distancia de efecto del grito*/
+		float _screamerScreamMaxDistance;
 
 		/** Varibable para controlar los rebotes que lleva */
 		unsigned int _rebound;

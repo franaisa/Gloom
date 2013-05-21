@@ -586,8 +586,14 @@ namespace Physics {
 
 	//________________________________________________________________________
 
+	bool sweepComparator(const CSweepHit& hit1, const CSweepHit& hit2) { 
+		return hit1.distance < hit2.distance; 
+	}
+	//________________________________________________________________________
+
+
 	void CServer::sweepMultiple(const physx::PxGeometry& geometry, const Vector3& position,
-								const Vector3& unitDir, float distance, std::vector<CSweepHit>& hitSpots) {
+								const Vector3& unitDir, float distance, std::vector<CSweepHit>& hitSpots, bool sortResultingArray) {
 
 		// Booleano que indicara si hay elementos que bloquean el hit
 		bool blockingHit;
@@ -636,11 +642,21 @@ namespace Physics {
 				
 				hitSpots.push_back(sweepHit);
 			}
+
+
 		}
 
 		delete [] hitBuffer;
+
+		if( !hitSpots.empty() && sortResultingArray ) {
+			// Ordenamos el vector de resultados
+			std::sort(hitSpots.begin(), hitSpots.end(), sweepComparator);
+		}
 	}
 	//________________________________________________________________________
+
+	
+
 
 	bool CServer::sweepSingle(const physx::PxGeometry& sweepGeometry, const Vector3& position, 
 						      const Vector3& unitDir, float distance, Vector3& hitSpot) {
@@ -662,7 +678,6 @@ namespace Physics {
 		return status;
 
 	}
-
 	//________________________________________________________________________
 
 	void CServer::overlapMultiple(const PxGeometry& geometry, const Vector3& position, std::vector<Logic::CEntity*>& entitiesHit) {

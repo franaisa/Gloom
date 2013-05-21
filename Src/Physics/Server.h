@@ -367,7 +367,7 @@ namespace Physics {
 		El vector que se pasa por parámetro debe estar vacio.
 		*/
 		void sweepMultiple(const physx::PxGeometry& geometry, const Vector3& position,
-						   const Vector3& unitDir, float distance, std::vector<CSweepHit>& hitSpots);
+						   const Vector3& unitDir, float distance, std::vector<CSweepHit>& hitSpots, bool sortResultingArray = false);
 
 		//________________________________________________________________________
 
