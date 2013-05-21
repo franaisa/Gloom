@@ -189,22 +189,16 @@ namespace Logic {
 
 		// Creamos la bola de fuego con los parámetros customizados a partir
 		// del radio de la cápsula + el radio de la bola + un pequeño offset
-		Matrix4 playerTransform = _entity->getTransform();
-		Vector3 shootPosition = playerTransform.getTrans() + ( Math::getDirection( _entity->getOrientation() ) * (_capsuleRadius + fireBallRadius + 0.5f) );
+		Matrix4 shootTransform = _entity->getTransform();
+		Vector3 shootPosition = shootTransform.getTrans() + ( Math::getDirection( _entity->getOrientation() ) * (_capsuleRadius + fireBallRadius + 0.5f) );
 		shootPosition.y += _heightShoot - fireBallRadius;
+		shootTransform.setTrans(shootPosition);
 
 		// Creamos la entidad
-		/*CEntity* fireBall = CEntityFactory::getSingletonPtr()->createEntityWithPositionAndOrientation(
+		CEntity* fireBall = CEntityFactory::getSingletonPtr()->createEntity(
 								entityInfo, 
 								CServer::getSingletonPtr()->getMap(),
-								shootPosition,
-								Math::getYaw(playerTransform),
-								Math::getPitch(playerTransform)
-							);*/
-		CEntity* fireBall = CEntityFactory::getSingletonPtr()->createEntityWithPosition(
-								entityInfo, 
-								CServer::getSingletonPtr()->getMap(),
-								shootPosition
+								shootTransform
 							);
 
 		// Le indicamos al controlador de la bola que este componente es el poseedor

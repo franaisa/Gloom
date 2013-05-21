@@ -137,8 +137,12 @@ namespace Logic {
 			Map::CEntity *entityInfoRocketExplotion = CEntityFactory::getSingletonPtr()->getInfo("RocketExplotion");
 			float yaw=Math::fromRadiansToDegrees(_entity->getYaw())+180; //+180 porque esta del reves el modelo cohete	
 			float pitch=360-Math::fromRadiansToDegrees(_entity->getPitch());
-			CEntity* rocketExplotion = CEntityFactory::getSingletonPtr()->createEntityWithPositionAndOrientation(
-				entityInfoRocketExplotion, Logic::CServer::getSingletonPtr()->getMap(), separationPoint, yaw, pitch);
+			Matrix4 transform = Matrix4::IDENTITY;
+			transform.setTrans(separationPoint);
+			Math::setYaw(yaw, transform);
+			Math::setPitch(pitch, transform);
+			CEntity* rocketExplotion = CEntityFactory::getSingletonPtr()->createEntity(
+				entityInfoRocketExplotion, Logic::CServer::getSingletonPtr()->getMap(), transform);
 			assert(rocketExplotion != NULL);
 			rocketExplotion->activate();
 			rocketExplotion->start();
@@ -163,8 +167,12 @@ namespace Logic {
 		Map::CEntity *entityInfoRocket = CEntityFactory::getSingletonPtr()->getInfo("Rocket");
 		float yaw=Math::fromRadiansToDegrees(_entity->getYaw())+180; //+180 porque esta del reves el modelo cohete	
 		float pitch=360-Math::fromRadiansToDegrees(_entity->getPitch());
-		CEntity* rocket = CEntityFactory::getSingletonPtr()->createEntityWithPositionAndOrientation(
-			entityInfoRocket, Logic::CServer::getSingletonPtr()->getMap(), separationPoint, yaw, pitch, false);
+		Matrix4 transform = Matrix4::IDENTITY;
+		transform.setTrans(separationPoint);
+		Math::setYaw(yaw, transform);
+		Math::setPitch(pitch, transform);
+		CEntity* rocket = CEntityFactory::getSingletonPtr()->createEntity(
+			entityInfoRocket, Logic::CServer::getSingletonPtr()->getMap(), transform, false);
 		assert(rocket != NULL);
 		rocket->activate();
 		rocket->start();

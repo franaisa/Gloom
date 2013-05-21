@@ -242,17 +242,16 @@ namespace Logic {
 
 		// Creamos una entidad ScreamerShield
 		// Obtenemos la informacion asociada al arquetipo del escudo del screamer
-		Matrix4 playerTransform = _entity->getTransform();
-		Vector3 shootPosition = playerTransform.getTrans() + ( Math::getDirection( _entity->getOrientation() ) * _capsuleRadius );
+		Matrix4 shootTransform = _entity->getTransform();
+		Vector3 shootPosition = shootTransform.getTrans() + ( Math::getDirection( _entity->getOrientation() ) * _capsuleRadius );
 		shootPosition.y += _heightShoot;
+		shootTransform.setTrans(shootPosition);
 
 		// Creamos la entidad y la activamos
-		_screamerShield = CEntityFactory::getSingletonPtr()->createEntityWithPositionAndOrientation( 
+		_screamerShield = CEntityFactory::getSingletonPtr()->createEntity( 
 			CEntityFactory::getSingletonPtr()->getInfo("ScreamerShield"),
 			Logic::CServer::getSingletonPtr()->getMap(),
-			shootPosition,
-			Math::getYaw(playerTransform),
-			Math::getPitch(playerTransform)
+			shootTransform
 		);
 		
 		// Fijamos a nuestra entidad como dueña de la entidad creada en el componente
