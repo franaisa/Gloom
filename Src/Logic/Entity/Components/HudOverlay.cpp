@@ -47,6 +47,7 @@ Contiene todo lo que respecta al hud del jugador
 #include "Logic/Messages/MessageChangeMaterialHudWeapon.h"
 #include "Logic/Messages/MessageChangeWeaponGraphics.h"
 #include "Logic/Server.h"
+#include "Logic/Messages/MessageHudDispersion.h"
 
 #include "Logic/Messages/MessageHudDebug.h"
 #include "Logic/Messages/MessageHudDebugData.h"
@@ -446,7 +447,8 @@ namespace Logic
 				msgType == Message::HUD_DEBUG		|| 
 				msgType == Message::HUD_DEBUG_DATA	||
 				msgType == Message::CHANGE_MATERIAL_HUD_WEAPON ||
-				msgType == Message::IMPACT;
+				msgType == Message::IMPACT			||
+				msgType == Message::HUD_DISPERSION	;
 
 	} // accept
 	//---------------------------------------------------------
@@ -474,7 +476,9 @@ namespace Logic
 				break;
 			}
  			case Message::HUD_DISPERSION: {
-				hudDispersion();
+				//hudDispersion();
+				std::shared_ptr<CMessageHudDispersion> hudDisp = std::static_pointer_cast<CMessageHudDispersion>(message);
+				hudSizeCrossfire(hudDisp->getHeight(), hudDisp->getWidth());
 				break;
 			}
 			case Message::HUD_SPAWN: {
@@ -615,10 +619,10 @@ namespace Logic
 			float positionCrossFireY = 0.5f-((_actualDimCrossY/2)*0.01f) ;
 			_panelMiraMovible->setPosition( positionCrossFireX,positionCrossFireY);
 			_panelMiraMovible->setDimensions( _actualDimCrossX*0.01, _actualDimCrossY*0.01);
-			_activeTimerMinigunCrossFire=true;
-			
+			_activeTimerMinigunCrossFire=true;			
 		}
 		*/
+		
 	}
 	//-------------------------------------------------------
 

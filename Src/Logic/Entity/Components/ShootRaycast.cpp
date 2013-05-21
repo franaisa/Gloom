@@ -46,7 +46,10 @@ namespace Logic {
 		aux << "weapon" << _nameWeapon;	////!!!! Aqui debes de poner el nombre del arma que leera en el map.txt
 		std::string weapon = aux.str();
 
+		//Dispersión
 		_dispersion = entityInfo->getFloatAttribute(weapon+"Dispersion");
+		_dispersionOriginal = _dispersion;
+
 		_distance = entityInfo->getFloatAttribute(weapon+"Distance");
 
 		if(entityInfo->hasAttribute("audioNoAmmo"))
@@ -105,6 +108,8 @@ namespace Logic {
 		//Esto hace un random total, lo que significa, por ejemplo, que puede que todas las balas vayan hacia la derecha 
 		Vector3 dispersionDirection = direction.randomDeviant(angle);
 		dispersionDirection.normalise();
+
+		std::cout << "Angulo: " << angle << std::endl;
 
 		//El origen debe ser mínimo la capsula (si chocamos el disparo en la capsula al mirar en diferentes direcciones ya esta tratado en la funcion de colision)
 		//Posicion de la entidad + altura de disparo(coincidente con la altura de la camara)
