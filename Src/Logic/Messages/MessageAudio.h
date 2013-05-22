@@ -19,9 +19,9 @@ namespace Logic {
 		void setNotIfPlay(bool notIfPlay);
 		bool getIsPlayer();
 		void setIsPlayer(bool isPlayer);
-		~CMessageAudio(){};
+		virtual ~CMessageAudio(){};
 		
-		virtual Net::CBuffer* serialize();
+		virtual Net::CBuffer serialize();
 		virtual void deserialize(Net::CBuffer& buffer);
 
 	protected:

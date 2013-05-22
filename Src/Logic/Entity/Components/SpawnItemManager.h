@@ -92,6 +92,12 @@ namespace Logic {
 		*/
 		virtual void process(const std::shared_ptr<CMessage>& message);
 
+		int getWeaponType(){return _weaponType;}
+
+		int getReward(){return _reward;}
+
+		void beginRespawn(){_isRespawning = true;}
+
 	protected:
 
 		/**

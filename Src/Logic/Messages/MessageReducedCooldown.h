@@ -13,7 +13,7 @@ namespace Logic {
 		void setPercentCooldown(int percentCooldown);
 		~CMessageReducedCooldown(){};
 		
-		virtual Net::CBuffer* serialize();
+		virtual Net::CBuffer serialize();
 		virtual void deserialize(Net::CBuffer& buffer);
 	private:
 		 int _percentCooldown;

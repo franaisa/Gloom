@@ -9,13 +9,14 @@ namespace Logic {
 	DEC_FACTORYMESSAGE(CMessageAddAmmo);
 	public:
 		CMessageAddAmmo();
+		virtual ~CMessageAddAmmo() {}
+
 		int getAddAmmo();
 		int getAddWeapon();
 		void setAddAmmo( int ammo);
 		void setAddWeapon( int weapon);
-		~CMessageAddAmmo(){};
 		
-		virtual Net::CBuffer* serialize();
+		virtual Net::CBuffer serialize();
 		virtual void deserialize(Net::CBuffer& buffer);
 	private:
 		 int _weapon;

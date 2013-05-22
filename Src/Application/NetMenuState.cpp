@@ -18,11 +18,6 @@ Contiene la implementación del estado de menú.
 
 #include "GUI/Server.h"
 
-#include <CEGUISystem.h>
-#include <CEGUIWindowManager.h>
-#include <CEGUIWindow.h>
-#include <elements/CEGUIPushButton.h>
-
 namespace Application {
 
 	CNetMenuState::~CNetMenuState() 

@@ -15,14 +15,13 @@ namespace Logic {
 	CMessageActivateScreamerShield::~CMessageActivateScreamerShield() {
 		// Nada que borrar
 	}
+	//----------------------------------------------------------
 
-	Net::CBuffer* CMessageActivateScreamerShield::serialize() {
-		assert(_tempBuffer == NULL);
-
-		_tempBuffer = new Net::CBuffer(sizeof(int));
-		_tempBuffer->serialize( std::string("CMessageActivateScreamerShield"), true );
+	Net::CBuffer CMessageActivateScreamerShield::serialize() {
+		Net::CBuffer buffer( sizeof(int) );
+		buffer.serialize( std::string("CMessageActivateScreamerShield"), true );
 		
-		return _tempBuffer;
+		return buffer;
 	}//
 	//----------------------------------------------------------
 

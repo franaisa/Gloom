@@ -24,14 +24,12 @@ namespace Logic {
 	}//
 	//----------------------------------------------------------
 
-	Net::CBuffer* CMessageTouched::serialize() {
-		assert(_tempBuffer == NULL);
-
-		_tempBuffer = new Net::CBuffer(sizeof(int) + sizeof(_entity->getEntityID()));
-		_tempBuffer->serialize(std::string("CMessageTouched"),true);
-		_tempBuffer->serialize(_entity->getEntityID());
+	Net::CBuffer CMessageTouched::serialize() {
+		Net::CBuffer buffer(sizeof(int) + sizeof(_entity->getEntityID()));
+		buffer.serialize(std::string("CMessageTouched"),true);
+		buffer.serialize(_entity->getEntityID());
 		
-		return _tempBuffer;
+		return buffer;
 	}//
 	//----------------------------------------------------------
 

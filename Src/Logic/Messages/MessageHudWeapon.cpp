@@ -31,15 +31,13 @@ namespace Logic {
 	}//
 	//----------------------------------------------------------
 		
-	Net::CBuffer* CMessageHudWeapon::serialize() {
-		assert(_tempBuffer == NULL);
-
-		_tempBuffer = new Net::CBuffer(sizeof(int) + sizeof(_ammo) + sizeof(_weapon));
-		_tempBuffer->serialize(std::string("CMessageHudWeapon"),true);
-		_tempBuffer->serialize(_ammo);
-		_tempBuffer->serialize(_weapon);
+	Net::CBuffer CMessageHudWeapon::serialize() {
+		Net::CBuffer buffer(sizeof(int) + sizeof(_ammo) + sizeof(_weapon));
+		buffer.serialize(std::string("CMessageHudWeapon"),true);
+		buffer.serialize(_ammo);
+		buffer.serialize(_weapon);
 		
-		return _tempBuffer;
+		return buffer;
 	}//
 	//----------------------------------------------------------
 

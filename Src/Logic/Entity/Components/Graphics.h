@@ -106,6 +106,8 @@ namespace Logic
 
 		virtual void onTick(unsigned int msecs);
 
+		std::string getMeshName(){return _model;}
+
 	protected:
 
 		/**

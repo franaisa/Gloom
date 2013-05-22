@@ -24,6 +24,7 @@ del Screamer.
 
 // Mensajes
 #include "Logic/Messages/MessageDamaged.h"
+#include "Logic/Messages/MessageFlash.h"
 #include "Logic/Messages/MessageSetReducedDamage.h"
 #include "Logic/Messages/MessageCameraOffset.h"
 #include "Logic/Messages/MessageControl.h"
@@ -89,7 +90,8 @@ namespace Logic {
 		Logic::TMessageType msgType = message->getMessageType();
 
 		return msgType == Message::DAMAGED				|| 
-			   msgType == Message::SET_REDUCED_DAMAGE;
+			   //msgType == Message::SET_REDUCED_DAMAGE	||
+			   msgType == Message::FLASH;
 	} // accept
 	
 	//________________________________________________________________________
@@ -107,6 +109,13 @@ namespace Logic {
 				damaged();
 				break;
 			}*/
+			case Message::FLASH: {
+				std::shared_ptr<CMessageFlash> flashMsg = std::static_pointer_cast<CMessageFlash>(message);
+				_flashFactor = flashMsg->getFlashFactor();
+				break;
+			}
+
+
 		}
 	} // process
 
@@ -124,6 +133,7 @@ namespace Logic {
 		_scene = _entity->getMap()->getScene();
 		_effect = "damageCompositor";
 		_motionblur = "Motion Blur";
+		//_flashEffect = "flashBang";
 		_strengthEffect = "strength";
 		_effectIsActivated = false;
 		_scene->createCompositor(_effect);
@@ -136,7 +146,10 @@ namespace Logic {
 		// Por ahora esta a hierro, lo suyo es ponerlo por el mapa
 		_scene->updateCompositorVariable(_motionblur, "blur", 0.75);
 		
-		
+		/*_scene->createCompositor(_flashEffect);
+		_scene->setCompositorVisible(_flashEffect, false);
+		// Por ahora esta a hierro, lo suyo es ponerlo por el mapa
+		_scene->updateCompositorVariable(_flashEffect, "flash", 1.0);*/
 	}
 
 	//________________________________________________________________________
@@ -165,6 +178,16 @@ namespace Logic {
 			blur=0.5f;
 
 		_scene->updateCompositorVariable(_motionblur, "blur", blur);
+
+		//ahora actualizamos el flashazo si procede
+		if(_flashFactor > 1.0){
+			_flashFactor*=0.75f;
+			_scene->updateCompositorVariable(_flashEffect,"flash",_flashFactor);
+			std::cout << "estoy flasheado" << std::endl;
+		}else if(_flashVisible){
+			_scene->setCompositorVisible(_flashEffect, false);
+			_flashVisible = false;
+		}
 	}
 
 	//________________________________________________________________________

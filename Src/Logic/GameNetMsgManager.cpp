@@ -227,13 +227,13 @@ namespace Logic {
 		
 	void CGameNetMsgManager::sendEntityMessage(const std::shared_ptr<CMessage>& txMsg, TEntityID destID) {
 
-		Net::CBuffer* bufferAux = txMsg->serialize();
+		Net::CBuffer bufferAux = txMsg->serialize();
 
 		Net::NetMessageType msgType = Net::ENTITY_MSG;// Escribimos el tipo de mensaje de red a enviar
 		Net::CBuffer serialMsg;
 			serialMsg.write(&msgType, sizeof(msgType));
 			serialMsg.write(&destID, sizeof(destID)); // Escribimos el id de la entidad destino
-			serialMsg.write(bufferAux->getbuffer(), bufferAux->getSize()); //Guardamos el mensaje en el buffer
+			serialMsg.write(bufferAux.getbuffer(), bufferAux.getSize()); //Guardamos el mensaje en el buffer
 			
 		Net::CManager::getSingletonPtr()->broadcast(serialMsg.getbuffer(), serialMsg.getSize());
 		//std::cout << "Enviado mensaje tipo " << txMsg->getMessageType() << " para la entidad " << destID << " de tamaño " << serialMsg.getSize() << std::endl;
@@ -245,13 +245,13 @@ namespace Logic {
 	void CGameNetMsgManager::sendMessageToOne(const std::shared_ptr<CMessage>& txMsg, TEntityID destID, TEntityID player)
 	{
 
-		Net::CBuffer* bufferAux = txMsg->serialize();
+		Net::CBuffer bufferAux = txMsg->serialize();
 
 		Net::NetMessageType msgType = Net::ENTITY_MSG;// Escribimos el tipo de mensaje de red a enviar
 		Net::CBuffer serialMsg;
 			serialMsg.write(&msgType, sizeof(msgType));
 			serialMsg.write(&destID, sizeof(destID)); // Escribimos el id de la entidad destino
-			serialMsg.write(bufferAux->getbuffer(), bufferAux->getSize()); //Guardamos el mensaje en el buffer
+			serialMsg.write(bufferAux.getbuffer(), bufferAux.getSize()); //Guardamos el mensaje en el buffer
 			
 		Net::NetID idMsg = Logic::CGameNetPlayersManager::getSingletonPtr()->getPlayerByEntityId(player).getNetId();
 
@@ -262,11 +262,6 @@ namespace Logic {
 		
 	void CGameNetMsgManager::processEntityMessage(Net::CPaquete* packet)
 	{
-		// TODO Método que debe de ser invocado desde el método que
-		// recibe todos los paquetes de red cuando el tipo de mensaje
-		// de red es Net::ENTITY_MSG. Se debe sacar el ID de la entidad,
-		// recuperarla, deserializar el mensaje y enviárselo
-		
 		// Creamos un buffer con los datos para leer de manera más cómoda
 		Net::CBuffer serialMsg;
 			serialMsg.write(packet->getData(),packet->getDataLength());

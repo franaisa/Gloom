@@ -97,6 +97,10 @@ namespace Logic {
 	void CShootRaycast::secondaryShoot() {
 
 	} // secondaryShoot
+
+	void CShootRaycast::stopSecondaryShoot() {
+
+	} // secondaryShoot
 	//__________________________________________________________________
 
 	// Dispara rayos mediante raycast dependiendo de los parametros del arquetipo del arma

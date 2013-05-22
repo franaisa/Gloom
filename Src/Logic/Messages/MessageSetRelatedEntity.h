@@ -14,7 +14,7 @@ namespace Logic {
 		CEntity* getRelatedEntity();
 		void setRelatedEntity(CEntity* entity);
 		
-		virtual Net::CBuffer* serialize();
+		virtual Net::CBuffer serialize();
 		virtual void deserialize(Net::CBuffer& buffer);
 
 	private:

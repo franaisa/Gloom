@@ -16,7 +16,7 @@ namespace Logic {
 		void setMaterialName(const std::string& materialName);
 		std::string getMaterialName();
 
-		virtual Net::CBuffer* serialize();
+		virtual Net::CBuffer serialize();
 		virtual void deserialize(Net::CBuffer& buffer);
 		
 	private:

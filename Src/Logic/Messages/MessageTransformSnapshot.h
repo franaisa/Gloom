@@ -14,7 +14,7 @@ namespace Logic {
 		void setBuffer(const std::vector<Matrix4> buffer);
 		std::vector<Matrix4> getBuffer();
 		
-		virtual Net::CBuffer* serialize();
+		virtual Net::CBuffer serialize();
 		virtual void deserialize(Net::CBuffer& buffer);
 	private:
 		 std::vector<Matrix4> _transformBuffer;

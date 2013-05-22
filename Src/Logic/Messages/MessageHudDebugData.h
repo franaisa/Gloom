@@ -9,7 +9,7 @@ namespace Logic {
 	DEC_FACTORYMESSAGE(CMessageHudDebugData);
 	public:
 		CMessageHudDebugData();
-		~CMessageHudDebugData(){};
+		virtual ~CMessageHudDebugData(){};
 
 		void setKey(std::string key);
 		void setValue(std::string value);
@@ -20,7 +20,7 @@ namespace Logic {
 		std::string getKey();
 		std::string getValue();
 		
-		virtual Net::CBuffer* serialize();
+		virtual Net::CBuffer serialize();
 		virtual void deserialize(Net::CBuffer& buffer);
 	private:
 

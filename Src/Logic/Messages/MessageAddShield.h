@@ -11,9 +11,9 @@ namespace Logic {
 		CMessageAddShield();
 		int getAddShield();
 		void setAddShield( int shield);
-		~CMessageAddShield(){};
+		virtual ~CMessageAddShield(){};
 		
-		virtual Net::CBuffer* serialize();
+		virtual Net::CBuffer serialize();
 		virtual void deserialize(Net::CBuffer& buffer);
 	private:
 		 int _shield;

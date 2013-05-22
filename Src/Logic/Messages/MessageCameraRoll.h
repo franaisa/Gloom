@@ -16,7 +16,7 @@ namespace Logic {
 		float getRollDegrees			()					{ return _fRollDegrees; }
 			void setRollDegrees			(float fDegrees);
 		
-		virtual Net::CBuffer* serialize();
+		virtual Net::CBuffer serialize();
 		virtual void deserialize(Net::CBuffer& buffer);
 
 	private:

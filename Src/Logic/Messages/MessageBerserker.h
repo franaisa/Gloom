@@ -13,9 +13,9 @@ namespace Logic {
 		void setPercentDamage(int percentDamage);
 		int getPercentCooldown();
 		void setPercentCooldown(int percentCooldown);
-		~CMessageBerserker(){};
+		virtual ~CMessageBerserker(){};
 		
-		virtual Net::CBuffer* serialize();
+		virtual Net::CBuffer serialize();
 		virtual void deserialize(Net::CBuffer& buffer);
 	private:
 		 int _percentDamage;

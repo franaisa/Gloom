@@ -16,7 +16,7 @@ namespace Logic {
 		float getDirectionImpact		() { return _fAngleImpactDirection; }
 		void	setDirectionImpact		(float fAngle);
 		
-		virtual Net::CBuffer* serialize();
+		virtual Net::CBuffer serialize();
 		virtual void deserialize(Net::CBuffer& buffer);
 
 	private:

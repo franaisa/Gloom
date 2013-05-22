@@ -27,16 +27,14 @@ namespace Logic {
 	
 	//__________________________________________________________________
 
-	Net::CBuffer* CMessageChangePlayerClass::serialize() {
-		assert(_tempBuffer == NULL);
-
+	Net::CBuffer CMessageChangePlayerClass::serialize() {
 		// Tamaño de la cabecera (int) + el tipo de la clase (unsigned int)
-		_tempBuffer = new Net::CBuffer( sizeof(int) + sizeof(_classType) );
-		_tempBuffer->serialize(std::string("CMessageChangePlayerClass"), true);
+		Net::CBuffer buffer( sizeof(int) + sizeof(_classType) );
+		buffer.serialize(std::string("CMessageChangePlayerClass"), true);
 		// Usamos directamente write para evitar problemas con unsigned int
-		_tempBuffer->write(&_classType, sizeof(_classType));
+		buffer.write(&_classType, sizeof(_classType));
 
-		return _tempBuffer;
+		return buffer;
 	}
 	
 	//__________________________________________________________________

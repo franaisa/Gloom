@@ -36,7 +36,7 @@ namespace Logic {
 	public:
 
 		/** Constructor por defecto. */
-		CShootHammer() : CShootRaycast("hammer") { }
+		CShootHammer() : CShootRaycast("hammer"), _elementPulling(0), _elementPulled(0) { }
 
 		//__________________________________________________________________
 
@@ -62,6 +62,8 @@ namespace Logic {
 		*/
 		virtual bool spawn(CEntity* entity, CMap *map, const Map::CEntity *entityInfo);
 
+		void resetEntityPulling();
+
 	protected:
 
 		/**
@@ -70,24 +72,28 @@ namespace Logic {
 		*/
 		virtual void decrementAmmo();
 
-		//__________________________________________________________________
+		/**
+		Los disparos secundarios si fieren bastante unos de otros, por ahora se ha hecho un metodo vacio,
+		para poder compilar por ahora, pero todos tendran que ser redefinidos.
+		*/
+		virtual void secondaryShoot();
 
 		/**
-		Método que se encarga de mandar los mensajes que corresopondan a la entidad
-		que se ha golpeado en caso de hacer hit.
-
-		@param entityHit Pareja que contiene el puntero a la entidad que se ha dado
-		(o NULL si no se ha colisionado con ninguna) y el rayo que se disparo para
-		comprobar si habia colisiones.
+		Este es el método que todas las armas deben redefinir si quieren una accion cuando se suelta el boton de disparo secundario.
+		Si no se redefine, no hara nada.
 		*/
-		virtual void triggerHitMessages(std::pair<CEntity*, Ray> entityHit);
+		virtual void stopSecondaryShoot();
 
 		/** Método estático que resetea la cantidad de munición del arma.
 		En el hammer, se establecera a una bala, para que pueda disparar y debido a que cuando dispara no baja tendra balas infinitas
 		*/
 		virtual void resetAmmo();
 
+		CEntity * fireSecondary();
+
 		float _reboundForce;
+
+		CEntity* _elementPulled, *_elementPulling;
 
 	}; // class CShootRaycast
 

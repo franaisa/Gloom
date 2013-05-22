@@ -19,7 +19,6 @@ Contiene la implementación del componente que controla los contactos con el pinc
 #include "Logic/Server.h"
 
 #include "Logic/Messages/MessageActivate.h"
-#include "Logic/Messages/MessageDeactivate.h"
 #include "Logic/Messages/MessageDamaged.h"
 #include "Logic/Messages/MessageTouched.h"
 #include "Logic/Messages/MessageTransform.h"
@@ -62,7 +61,8 @@ namespace Logic
 				//Desactivamos la fuerza que lleva el pincho
 				_entity->getComponent<CPhysicDynamicEntity>("CPhysicDynamicEntity")->clearForce(Physics::ForceMode::eFORCE);
 				//Desactivamos grafica y fisicamente
-				std::shared_ptr<CMessageDeactivate> deactivateMsg = std::make_shared<CMessageDeactivate>();
+				std::shared_ptr<CMessageActivate> deactivateMsg = std::make_shared<CMessageActivate>();
+				deactivateMsg->setActivated(false);
 				_entity->emitMessage(deactivateMsg);
 				//Recolocamos la entidad fisicamente en su inicio para cuando se active nuevamente la trampa
 				std::shared_ptr<CMessageTransform> setTransformMsg = std::make_shared<CMessageTransform>();

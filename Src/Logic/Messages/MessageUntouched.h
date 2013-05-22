@@ -11,9 +11,9 @@ namespace Logic {
 		CMessageUntouched();
 		CEntity* getEntity();
 		void setEntity(CEntity *c);
-		~CMessageUntouched(){};
+		virtual ~CMessageUntouched(){};
 		
-		virtual Net::CBuffer* serialize();
+		virtual Net::CBuffer serialize();
 		virtual void deserialize(Net::CBuffer& buffer);
 	private:
 		CEntity *_entity;

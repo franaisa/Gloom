@@ -135,7 +135,13 @@ namespace Logic {
 		(o NULL si no se ha colisionado con ninguna) y el rayo que se disparo para
 		comprobar si habia colisiones.
 		*/
-		virtual void triggerHitMessages(std::pair<CEntity*, Ray> entityHit) = 0;
+		virtual void triggerHitMessages(std::pair<CEntity*, Ray> entityHit);
+
+		/**
+		Este es el método que todas las armas deben redefinir si quieren una accion cuando se suelta el boton de disparo secundario.
+		Si no se redefine, no hara nada.
+		*/
+		virtual void stopSecondaryShoot();
 
 	protected:
 
@@ -179,7 +185,6 @@ namespace Logic {
 		
 		/** Ruta del sonido de disparo */
 		std::string _audioShoot;
-
 
 
 	};
