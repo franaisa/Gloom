@@ -13,9 +13,9 @@ namespace Logic {
 		void setTransform(Matrix4 transform);
 		void setMakeConversion(bool convertCoordsToLogicWorld);
 		bool getMakeConversion();
-		~CMessageTransform(){};
+		virtual ~CMessageTransform(){};
 		
-		virtual Net::CBuffer* serialize();
+		virtual Net::CBuffer serialize();
 		virtual void deserialize(Net::CBuffer& buffer);
 
 	private:

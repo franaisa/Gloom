@@ -1,3 +1,16 @@
+//---------------------------------------------------------------------------
+// WorldState.cpp
+//---------------------------------------------------------------------------
+
+/**
+@file WorldState.cpp
+
+Contiene la implementación del estado del mundo.
+
+@author Rubén Mulero Guerrero
+@date May, 2013
+*/
+
 #include "WorldState.h"
 #include "Logic/Server.h"
 #include "Logic/Maps/Map.h"
@@ -136,10 +149,8 @@ namespace Logic {
 			auto messages = entities->second.messages.begin();
 			auto mEnd = entities->second.messages.end();
 			for(;messages!=mEnd;++messages){
-				//i need a copy from the original msg
-				std::shared_ptr<CMessage> mbuffer = std::make_shared<CMessage>(messages->second);
-				Net::CBuffer* bufferAux = mbuffer->serialize();
-				worldState.write(bufferAux->getbuffer(), bufferAux->getSize());
+				Net::CBuffer bufferAux = messages->second->serialize(); // @deprecated (creo que esto no lo puedes hacer asi)
+				worldState.write(bufferAux.getbuffer(), bufferAux.getSize());
 			}
 		}
 
@@ -175,6 +186,7 @@ namespace Logic {
 
 			worldState.deserialize(messageSize);
 
+			addEntity(entity);
 			//deserialize entity messages
 			for(int j = 0; j < messageSize ; ++j){
 				int typeMessage;
@@ -186,7 +198,7 @@ namespace Logic {
 				messageReceived->deserialize(worldState);
 
 				//send message to entity
-				entity->emitMessage(messageReceived);
+				addChange(entity, messageReceived);
 			}
 
 			//if the entity is a player, we must add it to the scoreboard
@@ -205,6 +217,30 @@ namespace Logic {
 	void CWorldState::clearEntities(){
 		_entities.clear();
 	}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	void CWorldState::updateEntities(){
+		auto entities = _entities.begin();
+		auto end = _entities.end();
+
+		//serialize all entities
+		for(;entities!=end;++entities){
+			if(entities->second.messages.empty()){
+				continue;
+			}
+
+			//serialize entity messages
+			auto messages = entities->second.messages.begin();
+			auto mEnd = entities->second.messages.end();
+			for(;messages!=mEnd;++messages){
+				entities->second.entity->emitMessage(messages->second);
+			}
+		}
+	}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 
 }//namespace Logic
 

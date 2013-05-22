@@ -9,9 +9,9 @@ namespace Logic {
 	DEC_FACTORYMESSAGE(CMessageSleep);
 	public:
 		CMessageSleep();
-		~CMessageSleep(){};
+		virtual ~CMessageSleep(){};
 		
-		virtual Net::CBuffer* serialize();
+		virtual Net::CBuffer serialize();
 		virtual void deserialize(Net::CBuffer& buffer);
 
 	};

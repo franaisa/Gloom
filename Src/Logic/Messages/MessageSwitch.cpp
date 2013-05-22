@@ -23,14 +23,12 @@ namespace Logic {
 	}//
 	//----------------------------------------------------------
 	
-	Net::CBuffer* CMessageSwitch::serialize() {
-		assert(_tempBuffer == NULL);
-
-		_tempBuffer = new Net::CBuffer(sizeof(int) + sizeof(unsigned char));
-		_tempBuffer->serialize(std::string("CMessageSwitch"),true);
-		_tempBuffer->serialize(_change);
+	Net::CBuffer CMessageSwitch::serialize() {
+		Net::CBuffer buffer(sizeof(int) + sizeof(unsigned char));
+		buffer.serialize(std::string("CMessageSwitch"),true);
+		buffer.serialize(_change);
 		
-		return _tempBuffer;
+		return buffer;
 	}//
 	//----------------------------------------------------------
 

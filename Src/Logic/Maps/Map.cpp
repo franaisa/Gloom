@@ -20,6 +20,7 @@ Contiene la implementación de la clase CMap, Un mapa lógico.
 #include "Net/Manager.h"
 #include "Graphics/Server.h"
 #include "Graphics/Scene.h"
+#include "Logic/Maps/WorldState.h"
 
 #include "Logic/Messages/MessageHudDebugData.h"
 
@@ -109,6 +110,8 @@ namespace Logic {
 		// Activamos todas las entidades registradas en el mapa.
 		for(; it != end; ++it)
 			correct = it->second._entityPtr->activate() && correct;
+
+		Logic::CWorldState::getSingletonPtr()->updateEntities();
 
 		return correct;
 

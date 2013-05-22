@@ -1,3 +1,16 @@
+//---------------------------------------------------------------------------
+// WorldState.h
+//---------------------------------------------------------------------------
+
+/**
+@file WorldState.h
+
+Contiene la implementación del estado del mundo.
+
+@author Rubén Mulero Guerrero
+@date May, 2013
+*/
+
 #include "Logic/Maps/EntityID.h"
 #include "Net/Buffer.h"
 
@@ -101,6 +114,13 @@ comunicarse con esta clase para introducir el cambio que se ha producido.
 		mundo.
 		*/
 		void deserialize(Net::CBuffer &worldState);
+
+		/**
+		Método que coge toda la información del worldstate y la propaga por las 
+		entidades para que se actualicen.
+		OJO! este método solamente debe ser llamado en la activación del mapa!!!!!!
+		*/
+		void updateEntities();
 
 		// =======================================================================
 		//                          METODOS PROTEGIDOS

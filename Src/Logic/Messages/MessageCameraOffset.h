@@ -16,7 +16,7 @@ namespace Logic {
 		float getOffsetTimer() { return _fOffsetTimer; }
 		void setOffsetTimer(float fOffsetTimer);
 		
-		virtual Net::CBuffer* serialize();
+		virtual Net::CBuffer serialize();
 		virtual void deserialize(Net::CBuffer& buffer);
 
 	private:

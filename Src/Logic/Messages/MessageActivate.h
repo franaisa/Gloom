@@ -9,9 +9,9 @@ namespace Logic {
 	DEC_FACTORYMESSAGE(CMessageActivate);
 	public:
 		CMessageActivate();
-		~CMessageActivate(){};
+		virtual ~CMessageActivate(){};
 		
-		virtual Net::CBuffer* serialize();
+		virtual Net::CBuffer serialize();
 		virtual void deserialize(Net::CBuffer& buffer);
 
 		void setActivated(bool activate){_activate = activate;}

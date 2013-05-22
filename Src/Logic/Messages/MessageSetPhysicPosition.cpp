@@ -33,15 +33,13 @@ namespace Logic {
 	}//
 	//----------------------------------------------------------
 
-	Net::CBuffer* CMessageSetPhysicPosition::serialize() {
-		assert(_tempBuffer == NULL);
-
-		_tempBuffer = new Net::CBuffer(sizeof(int) + sizeof(_position.x) * 3);
-		_tempBuffer->serialize(std::string("CMessageSetPhysicPosition"), true);
-		_tempBuffer->serialize(_position);
-		_tempBuffer->serialize(_convertCoordsToLogicWorld);
+	Net::CBuffer CMessageSetPhysicPosition::serialize() {
+		Net::CBuffer buffer(sizeof(int) + sizeof(_position.x) * 3);
+		buffer.serialize(std::string("CMessageSetPhysicPosition"), true);
+		buffer.serialize(_position);
+		buffer.serialize(_convertCoordsToLogicWorld);
 		
-		return _tempBuffer;
+		return buffer;
 	}//
 	//----------------------------------------------------------
 

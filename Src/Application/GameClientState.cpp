@@ -122,8 +122,13 @@ namespace Application {
 
 				Logic::CWorldState::getSingletonPtr()->deserialize(buffer);
 
+				break;
+			}
+
+			case Net::LOAD_PLAYERS: {
+
 				// Cargamos la informacion del player que nos han enviado
-				/*Logic::TEntityID entityID;
+				Logic::TEntityID entityID;
 				std::string playerClass, name;
 				int nbPlayers;
 
@@ -140,16 +145,17 @@ namespace Application {
 				std::string playerName = player->getName();
 
 				if(!Logic::CScoreboard::getSingletonPtr()->getPlayer(playerName))
-					Logic::CScoreboard::getSingletonPtr()->addLocalPlayer(playerName, player, playerClass);
+					Logic::CScoreboard::getSingletonPtr()->addPlayer(playerName, player, playerClass);
 				else
 					Logic::CScoreboard::getSingletonPtr()->changePlayerEntity(playerName, player, playerClass);
 
 				// No es necesario enviar confirmacion
 				player->activate();
-				player->start();*/
+				player->start();
 
 				break;
 			}
+
 			case Net::LOAD_LOCAL_PLAYER: {
 				// Deserializamos la información de nuestro player
 				Logic::TEntityID entityID;

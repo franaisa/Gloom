@@ -13,7 +13,7 @@ namespace Logic {
 		void setTime( int time);
 		~CMessageHudSpawn(){};
 		
-		virtual Net::CBuffer* serialize();
+		virtual Net::CBuffer serialize();
 		virtual void deserialize(Net::CBuffer& buffer);
 	private:
 		 int _time;

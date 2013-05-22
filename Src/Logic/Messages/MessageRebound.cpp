@@ -20,14 +20,12 @@ namespace Logic {
 	}//
 	//----------------------------------------------------------
 
-	Net::CBuffer* CMessageRebound::serialize() {
-		assert(_tempBuffer == NULL);
-
-		_tempBuffer = new Net::CBuffer(sizeof(int) + sizeof(float) * 3);
-		_tempBuffer->serialize(std::string("CMessageRebound"),true);
-		_tempBuffer->serialize(_dir);
+	Net::CBuffer CMessageRebound::serialize() {
+		Net::CBuffer buffer(sizeof(int) + sizeof(float) * 3);
+		buffer.serialize(std::string("CMessageRebound"),true);
+		buffer.serialize(_dir);
 		
-		return _tempBuffer;
+		return buffer;
 	}//
 	//----------------------------------------------------------
 

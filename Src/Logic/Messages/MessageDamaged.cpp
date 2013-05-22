@@ -36,17 +36,15 @@ namespace Logic {
 	}//
 	//----------------------------------------------------------
 	
-	Net::CBuffer* CMessageDamaged::serialize() {
-		assert(_tempBuffer == NULL);
-
+	Net::CBuffer CMessageDamaged::serialize() {
 		Logic::TEntityID id = _entity->getEntityID();
 
-		_tempBuffer = new Net::CBuffer(sizeof(int) + sizeof(_damage) + sizeof(id));
-		_tempBuffer->serialize(std::string("CMessageDamaged"), true);
-		_tempBuffer->serialize(_damage);
-		_tempBuffer->serialize(id);
+		Net::CBuffer buffer(sizeof(int) + sizeof(_damage) + sizeof(id));
+		buffer.serialize(std::string("CMessageDamaged"), true);
+		buffer.serialize(_damage);
+		buffer.serialize(id);
 		
-		return _tempBuffer;
+		return buffer;
 	}//
 	//----------------------------------------------------------
 

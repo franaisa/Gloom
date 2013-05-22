@@ -9,11 +9,12 @@ namespace Logic {
 	DEC_FACTORYMESSAGE(CMessageAddLife);
 	public:
 		CMessageAddLife();
+		virtual ~CMessageAddLife(){};
+
 		int getAddLife();
 		void setAddLife( int life);
-		~CMessageAddLife(){};
 		
-		virtual Net::CBuffer* serialize();
+		virtual Net::CBuffer serialize();
 		virtual void deserialize(Net::CBuffer& buffer);
 	private:
 		 int _life;
