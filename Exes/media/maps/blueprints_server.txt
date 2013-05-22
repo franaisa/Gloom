@@ -6,7 +6,8 @@ Hound CAvatarController CPhysicController CIronHellGoat CHound CShootMiniGun CSh
 Spectator
 Enemy CPhysicDynamicEntity CLife
 Camera CCamera 
-ItemSpawn  CPhysicStaticEntity CFloatingMovement CSpawnItemManager CNetConnector
+ItemSpawn CGraphics CPhysicStaticEntity CFloatingMovement CSpawnItemManager CNetConnector
+ItemSpawnDynamic CGraphics CPhysicDynamicEntity CFloatingMovement CSpawnItemManager CNetConnector
 SpawnPoint CPhysicStaticEntity
 Jumper  CPhysicStaticEntity CJumper CNetConnector
 Grenade  CPhysicDynamicEntity CGrenadeController CNetConnector

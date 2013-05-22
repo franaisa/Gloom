@@ -10,9 +10,9 @@ namespace Logic {
 	DEC_FACTORYMESSAGE(CMessageAddForcePhysics);
 	public:
 		CMessageAddForcePhysics();
+		virtual ~CMessageAddForcePhysics(){};
 
 		void setForce(const Vector3& force, Physics::ForceMode mode);
-
 
 		Physics::ForceMode getForceMode();
 		Vector3 getForceVector();
@@ -20,9 +20,7 @@ namespace Logic {
 		void setGravity(bool gravity);
 		bool getGravity();
 		
-		~CMessageAddForcePhysics(){};
-		
-		virtual Net::CBuffer* serialize();
+		virtual Net::CBuffer serialize();
 		virtual void deserialize(Net::CBuffer& buffer);
 
 	protected:

@@ -22,6 +22,7 @@ gráfica de una entidad estática.
 #include "Logic/Messages/MessageChangeWeaponGraphics.h"
 #include "Logic/Messages/MessageTransform.h"
 #include "Logic/Messages/MessageChangeMaterial.h"
+#include "Logic/Messages/MessageActivate.h"
 #include "WeaponType.h"
 
 #include "Graphics/Scene.h"
@@ -129,11 +130,7 @@ namespace Logic
 				break;
 			}
 			case Message::ACTIVATE: {
-				setVisible(true);
-				break;
-			}
-			case Message::DEACTIVATE: {
-				setVisible(false);
+				setVisible(std::static_pointer_cast<CMessageActivate>(message)->getActivated());
 				break;
 			}
 			case Message::CHANGE_MATERIAL: {

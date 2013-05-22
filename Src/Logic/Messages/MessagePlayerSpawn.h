@@ -13,9 +13,9 @@ namespace Logic {
 		Matrix4 getSpawnTransform();
 		void setSpawnTransform(const Matrix4& transform);
 
-		~CMessagePlayerSpawn(){};
+		virtual ~CMessagePlayerSpawn(){};
 
-		virtual Net::CBuffer* serialize();
+		virtual Net::CBuffer serialize();
 		virtual void deserialize(Net::CBuffer& buffer);
 		
 	private:

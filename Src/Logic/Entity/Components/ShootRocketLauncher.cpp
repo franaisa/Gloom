@@ -61,7 +61,7 @@ namespace Logic {
 	//__________________________________________________________________
 
 	void CShootRocketLauncher::fireWeapon() {
-		if(!Net::CManager::getSingletonPtr()->imServer()) 
+		/*if(!Net::CManager::getSingletonPtr()->imServer()) 
 			std::cout << "Disparo desde el cliente " << std::endl;
 		//Paso1
 		//Lo primero es ver el punto exacto en el que saldría el centro del cohete de la capsula
@@ -77,16 +77,16 @@ namespace Logic {
 		Ray ray(outPosition, inverseDirection);
 		// Dibujamos el rayo en ogre para poder depurar
 		//drawRaycast(ray);
-		Vector3 capsulleCollisionPoint=Physics::CServer::getSingletonPtr()->raycastClosestSpecificPoint(ray, 30, _entity->getEntityID());
+		//Vector3 capsulleCollisionPoint=Physics::CServer::getSingletonPtr()->raycastClosestSpecificPoint(ray, 30, _entity->getEntityID());
 		/*if( capsulleCollisionPoint!=Vector3(-5,-5,-5) ){
 			std::cout << "El punto de choque con la capsula es: "<< capsulleCollisionPoint  <<std::endl;
 		}
 		else
-			std::cout << "Algo hay mal" << std::endl;*/
+			std::cout << "Algo hay mal" << std::endl;
 
 		//Paso2
 		//Separamos el cohete de la capsula en la direccion en la que se apuntaba con el radio(o más por interpolamierder)
-		Vector3 separationPoint=capsulleCollisionPoint+directionNormalise*(_projectileRadius+3.3);//radio del cohete y algo mas por posibles errores decimales/inet/correr hacia delante.
+		//Vector3 separationPoint=capsulleCollisionPoint+directionNormalise*(_projectileRadius+3.3);//radio del cohete y algo mas por posibles errores decimales/inet/correr hacia delante.
 		// r+1.5 no te das al saltar, con 1 falla a veces, se podria probar a reducir algo . Si le añades inet el servidor bien (evidentemente) y el cliente falla forever
 		// r+6 no le da al cliente, lo mismo el primero por no tener precarga, esto no es escalable, cuanto mas ping mas te comes
 		// Con el nuevo estilo de cohete r+2.5 ha fallado en el cliente al delante/salto ( y con 3 una vez ), lo mismo por la interpolacion, poner a 3 y reducir en la nueva version si es conveniente
@@ -189,7 +189,7 @@ namespace Logic {
 		forceMsg->setForce(directionNormalise* _shootForce, Physics::ForceMode::eFORCE );
 		forceMsg->setGravity(false);
 		rocket->emitMessage(forceMsg);
-
+		*/
 	}
 
 	// Dibujado de raycast para depurar

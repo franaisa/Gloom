@@ -32,14 +32,13 @@ namespace Logic {
 	}//
 	//----------------------------------------------------------
 
-	Net::CBuffer* CMessageTransform::serialize() {
-		assert(_tempBuffer == NULL);
-		_tempBuffer = new Net::CBuffer(sizeof(int)+( sizeof(float) * 5)+sizeof(bool));
-		_tempBuffer->serialize(std::string("CMessageTransform"),true);
-		_tempBuffer->serialize(_transform);
-		_tempBuffer->serialize(_convertCoordsToLogicWorld);
+	Net::CBuffer CMessageTransform::serialize() {
+		Net::CBuffer buffer(sizeof(int)+( sizeof(float) * 5)+sizeof(bool));
+		buffer.serialize(std::string("CMessageTransform"),true);
+		buffer.serialize(_transform);
+		buffer.serialize(_convertCoordsToLogicWorld);
 		
-		return _tempBuffer;
+		return buffer;
 	}//
 	//----------------------------------------------------------
 

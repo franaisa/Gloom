@@ -11,7 +11,7 @@ namespace Logic {
 		CMessageActivateScreamerShield();
 		virtual ~CMessageActivateScreamerShield();
 		
-		virtual Net::CBuffer* serialize();
+		virtual Net::CBuffer serialize();
 		virtual void deserialize(Net::CBuffer& buffer);
 
 	};

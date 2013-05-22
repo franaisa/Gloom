@@ -15,6 +15,7 @@
 #include "Physics/GeometryFactory.h"
 #include "Physics/MaterialManager.h"
 
+#include "Logic/Messages/MessageActivate.h"
 #include "Logic/Messages/MessageKinematicMove.h"
 #include "Logic/Messages/MessageTouched.h"
 #include "Logic/Messages/MessageUntouched.h"
@@ -69,21 +70,21 @@ bool CPhysicStaticEntity::spawn(Logic::CEntity *entity, CMap *map, const Map::CE
 bool CPhysicStaticEntity::accept(const std::shared_ptr<CMessage>& message) {
 	Logic::TMessageType msgType = message->getMessageType();
 
-	return msgType == Message::ACTIVATE ||
-		   msgType == Message::DEACTIVATE;
+	return msgType == Message::ACTIVATE;
 }
 
 //---------------------------------------------------------
 
 void CPhysicStaticEntity::process(const std::shared_ptr<CMessage>& message) {
 	switch( message->getMessageType() ) {
-		case Message::ACTIVATE:
-			activateSimulation();
+		case Message::ACTIVATE: {
+			bool activate = std::static_pointer_cast<CMessageActivate>(message)->getActivated();
+			if(activate)
+				activateSimulation();
+			else
+				deactivateSimulation();
 			break;
-
-		case Message::DEACTIVATE:
-			deactivateSimulation();
-			break;
+		}
 	}
 }
 

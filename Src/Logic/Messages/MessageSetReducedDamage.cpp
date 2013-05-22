@@ -32,15 +32,13 @@ namespace Logic {
 
 	//__________________________________________________________________
 		
-	Net::CBuffer* CMessageSetReducedDamage::serialize() {
-		assert(_tempBuffer == NULL);
-
+	Net::CBuffer CMessageSetReducedDamage::serialize() {
 		// Tamaño de la cabecera (int) + porcentaje de reducción (float)
-		_tempBuffer = new Net::CBuffer( sizeof(int) + sizeof(float) );
-		_tempBuffer->serialize( std::string("CMessageSetReducedDamage"), true );
-		_tempBuffer->serialize(_reducedDamage);
+		Net::CBuffer buffer( sizeof(int) + sizeof(float) );
+		buffer.serialize( std::string("CMessageSetReducedDamage"), true );
+		buffer.serialize(_reducedDamage);
 		
-		return _tempBuffer;
+		return buffer;
 	}
 	
 	//__________________________________________________________________

@@ -11,9 +11,9 @@ namespace Logic {
 		CMessageHudLife();
 		int getLife();
 		void setLife( int life);
-		~CMessageHudLife(){};
+		virtual ~CMessageHudLife(){};
 		
-		virtual Net::CBuffer* serialize();
+		virtual Net::CBuffer serialize();
 		virtual void deserialize(Net::CBuffer& buffer);
 	private:
 		 int _life;

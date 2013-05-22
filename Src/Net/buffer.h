@@ -48,7 +48,7 @@ namespace Net {
 		@param initsize Tamaño inicial del buffer.
 		@param delta Indica cuanto crecerá el buffer cada vez que se necesite ampliarlo.
 		*/
-		CBuffer(size_t initsize = 500, size_t delta = 100);
+		CBuffer(size_t initsize = 100, size_t delta = 100);
 
 		//________________________________________________________________________
 

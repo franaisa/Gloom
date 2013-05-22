@@ -33,14 +33,12 @@ namespace Logic {
 	}//
 	//----------------------------------------------------------
 
-	Net::CBuffer* CMessageSetAnimation::serialize() {
-		assert(_tempBuffer == NULL);
-
-		_tempBuffer = new Net::CBuffer((sizeof(int) * 2) + sizeof(bool) + sizeof(unsigned int));
-		_tempBuffer->serialize(std::string("CMessageSetAnimation"),true);
-		_tempBuffer->serialize(_bool);
-		_tempBuffer->serialize(_string, false);
-		return _tempBuffer;
+	Net::CBuffer CMessageSetAnimation::serialize() {
+		Net::CBuffer buffer((sizeof(int) * 2) + sizeof(bool) + sizeof(unsigned int));
+		buffer.serialize(std::string("CMessageSetAnimation"),true);
+		buffer.serialize(_bool);
+		buffer.serialize(_string, false);
+		return buffer;
 	}//
 	//----------------------------------------------------------
 

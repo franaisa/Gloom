@@ -9,9 +9,9 @@ namespace Logic {
 	DEC_FACTORYMESSAGE(CMessageHudDispersion);
 	public:
 		CMessageHudDispersion();
-		~CMessageHudDispersion(){};
+		virtual ~CMessageHudDispersion(){};
 		
-		virtual Net::CBuffer* serialize();
+		virtual Net::CBuffer serialize();
 		virtual void deserialize(Net::CBuffer& buffer);
 
 		float	getHeight		()					{ return _fHeight;}

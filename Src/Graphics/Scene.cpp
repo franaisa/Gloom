@@ -38,6 +38,7 @@ de una escena.
 #include <OgreParticleSystem.h>
 #include <OgreCompositionTargetPass.h>
 #include <OgreCompositionPass.h>
+#include <OgreCompositorChain.h>
 
 
 #include <OgreCompositorManager.h>
@@ -266,7 +267,7 @@ namespace Graphics
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	void CScene::createCompositor(std::string &name){
+	void CScene::createCompositor(const std::string &name){
 
 		if(_compositorList.find(name)!=_compositorList.end())
 			return;
@@ -281,13 +282,13 @@ namespace Graphics
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	void CScene::setCompositorVisible(std::string &name, bool visible){
+	void CScene::setCompositorVisible(const std::string &name, bool visible){
 		_compositorManager->setCompositorEnabled(_camera->getOgreCamera()->getViewport(), name, visible);
 	}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	void CScene::destroyCompositor(std::string &name){
+	void CScene::destroyCompositor(const std::string &name){
 		_compositorManager->removeCompositor(_camera->getOgreCamera()->getViewport(), name);
 		//remove from our compositorList and delete listener
 		CCompositorListener* listenerToDelete = _compositorList[name];
@@ -297,7 +298,7 @@ namespace Graphics
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	void CScene::updateCompositorVariable(std::string name, std::string variable, float value){
+	void CScene::updateCompositorVariable(const std::string &name, const std::string &variable, const float &value){
 
 		//if not created, we do nothing
 		if(_compositorList.find(name)==_compositorList.end())
@@ -305,6 +306,10 @@ namespace Graphics
 
 		_compositorList[name]->inputCompositor(variable, value);
 
+	}
+
+	bool CScene::getCompositorVisible(const std::string &name){
+		return _compositorManager->getCompositorChain(_camera->getOgreCamera()->getViewport())->getCompositor(name)->getEnabled();
 	}
 
 } // namespace Graphics

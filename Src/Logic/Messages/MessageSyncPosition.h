@@ -13,9 +13,9 @@ namespace Logic {
 		unsigned int getSeq();
 		void setPosition(const Vector3& position);
 		void setSeq(const unsigned int seq);
-		~CMessageSyncPosition(){};
+		virtual ~CMessageSyncPosition(){};
 
-		virtual Net::CBuffer* serialize();
+		virtual Net::CBuffer serialize();
 		virtual void deserialize(Net::CBuffer& buffer);
 		
 	private:

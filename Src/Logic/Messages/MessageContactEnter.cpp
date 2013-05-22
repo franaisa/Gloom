@@ -24,14 +24,12 @@ namespace Logic {
 	}//
 	//----------------------------------------------------------
 
-	Net::CBuffer* CMessageContactEnter::serialize() {
-		assert(_tempBuffer == NULL);
-
-		_tempBuffer = new Net::CBuffer(sizeof(int)*2);
-		_tempBuffer->serialize(std::string("CMessageContactEnter"),true);
-		_tempBuffer->serialize(_entity);
+	Net::CBuffer CMessageContactEnter::serialize() {
+		Net::CBuffer buffer(sizeof(int)*2);
+		buffer.serialize(std::string("CMessageContactEnter"),true);
+		buffer.serialize(_entity);
 		
-		return _tempBuffer;
+		return buffer;
 	}//
 	//----------------------------------------------------------
 

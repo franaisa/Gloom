@@ -11,9 +11,9 @@ namespace Logic {
 		CMessageRebound();
 		Vector3 getDir();
 		void setDir(Vector3 dir);
-		~CMessageRebound(){};
+		virtual ~CMessageRebound(){};
 		
-		virtual Net::CBuffer* serialize();
+		virtual Net::CBuffer serialize();
 		virtual void deserialize(Net::CBuffer& buffer);
 
 	private:

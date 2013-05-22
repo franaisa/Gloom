@@ -21,14 +21,13 @@ namespace Logic {
 	}//
 	//----------------------------------------------------------
 		
-	Net::CBuffer* CMessageReducedCooldown::serialize() {
-		assert(_tempBuffer == NULL);
+	Net::CBuffer CMessageReducedCooldown::serialize() {
 
-		_tempBuffer = new Net::CBuffer(2*sizeof(int));
-		_tempBuffer->serialize(std::string("CMessageReducedCooldown"),true);
-		_tempBuffer->serialize(_percentCooldown);
+		Net::CBuffer buffer(2*sizeof(int));
+		buffer.serialize(std::string("CMessageReducedCooldown"),true);
+		buffer.serialize(_percentCooldown);
 
-		return _tempBuffer;
+		return buffer;
 	}//
 	//----------------------------------------------------------
 

@@ -190,7 +190,8 @@ namespace Logic {
 
 		@param entidad Entidad de juego que se borrará.
 		*/
-		void deleteEntity(CEntity *entity);
+
+		void deleteEntity(CEntity *entity, bool toClients = false);
 
 		//________________________________________________________________________
 

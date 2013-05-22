@@ -184,9 +184,6 @@
     <ClCompile Include="..\..\Src\Logic\Entity\MessageFactory.cpp">
       <Filter>Entity\Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Src\Logic\Messages\MessageRebound.cpp">
-      <Filter>Messages\Source</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Src\Logic\Messages\MessageHudLife.cpp">
       <Filter>Messages\Source</Filter>
     </ClCompile>
@@ -230,9 +227,6 @@
       <Filter>Messages\Source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Src\Logic\Messages\MessageActivate.cpp">
-      <Filter>Messages\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Logic\Messages\MessageDeactivate.cpp">
       <Filter>Messages\Source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Src\Logic\Messages\MessageCealing.cpp">
@@ -524,13 +518,25 @@
       <Filter>Messages\Source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Src\Logic\Entity\Components\MagneticBullet.cpp">
-		<Filter>Entity\Components\Weapons\Source</Filter>
-	</ClCompile>
+      <Filter>Entity\Components\Weapons\Source</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Src\Logic\Entity\Components\IronHellGoat.cpp">
       <Filter>Entity\Components\Weapons\Source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Src\Logic\Entity\Components\FireBallController.cpp">
       <Filter>Entity\Components\Weapons\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Messages\MessageFlash.cpp">
+      <Filter>Messages\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\PullingMovement.cpp">
+      <Filter>Entity\Components\Gameplay\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Maps\Scoreboard.cpp">
+      <Filter>Maps\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Maps\WorldState.cpp">
+      <Filter>Maps\Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -615,9 +621,6 @@
     <ClInclude Include="..\..\Src\Logic\Messages\MessageUntouched.h">
       <Filter>Messages\Header</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Src\Logic\Messages\MessageRebound.h">
-      <Filter>Messages\Header</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Messages\MessageDamaged.h">
       <Filter>Messages\Header</Filter>
     </ClInclude>
@@ -667,9 +670,6 @@
       <Filter>Messages\Header</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Messages\MessageActivate.h">
-      <Filter>Messages\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Logic\Messages\MessageDeactivate.h">
       <Filter>Messages\Header</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Messages\MessageCealing.h">
@@ -980,6 +980,24 @@
     </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Entity\Components\FireBallController.h">
       <Filter>Entity\Components\Weapons\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Messages\MessageFlash.h">
+      <Filter>Messages\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\PullingMovement.h">
+      <Filter>Entity\Components\Gameplay\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Maps\Scoreboard.h">
+      <Filter>Maps\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Maps\WorldState.h">
+      <Filter>Maps\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\PlayerSnapshot.h">
+      <Filter>Entity\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Messages\MessageRebound.h">
+      <Filter>Entity\Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

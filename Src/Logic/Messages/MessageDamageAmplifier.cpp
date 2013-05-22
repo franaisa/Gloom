@@ -21,14 +21,13 @@ namespace Logic {
 	}//
 	//----------------------------------------------------------
 		
-	Net::CBuffer* CMessageDamageAmplifier::serialize() {
-		assert(_tempBuffer == NULL);
+	Net::CBuffer CMessageDamageAmplifier::serialize() {
 
-		_tempBuffer = new Net::CBuffer(2*sizeof(int));
-		_tempBuffer->serialize(std::string("CMessageDamageAmplifier"),true);
-		_tempBuffer->serialize(_percentDamage);
+		Net::CBuffer buffer(2*sizeof(int));
+		buffer.serialize(std::string("CMessageDamageAmplifier"),true);
+		buffer.serialize(_percentDamage);
 
-		return _tempBuffer;
+		return buffer;
 	}//
 	//----------------------------------------------------------
 

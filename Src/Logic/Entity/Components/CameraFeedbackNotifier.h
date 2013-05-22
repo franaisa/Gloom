@@ -118,7 +118,6 @@ namespace Logic {
 
 		void landEffect(unsigned int msecs);
 
-
 		/*
 		Método que calcula desde donde nos han dañado, para indicarlo como feedback en el 
 		circulito de la mirilla en función de dicha posición
@@ -186,7 +185,7 @@ namespace Logic {
 		Logic::CAvatarController* _avatarc;
 
 		bool _effectIsActivated;
-		std::string _effect, _motionblur;
+		std::string _effect, _motionblur, _flashEffect;
 		std::string _strengthEffect;
 		Graphics::CScene *_scene;
 		int _timestamp;
@@ -196,8 +195,13 @@ namespace Logic {
 		*/
 		Vector3 _vPosEnemy;
 
+		/**
+		Factor de flashazo
+		*/
+		float _flashFactor;
+		bool _flashVisible;
 
-	}; // class CScreamerShieldDamageNotifier
+	}; // class CCameraFeedbackNotifier
 
 	REG_FACTORY(CCameraFeedbackNotifier);
 

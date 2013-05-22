@@ -9,9 +9,9 @@ namespace Logic {
 	DEC_FACTORYMESSAGE(CMessageHudDebug);
 	public:
 		CMessageHudDebug();
-		~CMessageHudDebug(){};
+		virtual ~CMessageHudDebug(){};
 		
-		virtual Net::CBuffer* serialize();
+		virtual Net::CBuffer serialize();
 		virtual void deserialize(Net::CBuffer& buffer);
 	private:
 	};
