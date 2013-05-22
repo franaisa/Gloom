@@ -35,6 +35,8 @@
 #include <OgreMaterialManager.h>
 #include <OgreManualObject.h>
 
+#include "Map/MapEntity.h"
+
 namespace Logic {
 	
 	IMP_FACTORY(CRocketController);

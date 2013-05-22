@@ -32,6 +32,7 @@ implementa las habilidades del personaje
 #include "Logic/Messages/MessageAddForcePlayer.h"
 #include "Logic/Messages/MessageSetAnimation.h"
 
+#include "Map/MapEntity.h"
 
 #include "AvatarController.h"
 
