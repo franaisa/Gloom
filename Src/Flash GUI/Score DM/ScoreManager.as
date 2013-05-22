@@ -42,6 +42,8 @@ package
 			newscore.y = 183 + scores.length * 33;
 			
 			scores.push(newscore);
+			
+			sortArray();
 		}
 		
 		/**
@@ -53,11 +55,14 @@ package
 			var newscore: PlayerScore = new PlayerScore(nick, playerClass);
 			newscore.name = nick;
 			addChild(newscore);
-			
+			trace(newscore.kills);
 			newscore.x = 125;
 			newscore.y = 183 + scores.length * 33;
 			
+			newscore.gotoAndPlay("local");
+			
 			scores.push(newscore);
+			sortArray();
 		}
 		
 		/**
@@ -93,8 +98,10 @@ package
 			var i: int;
 			i = 0;
 			for each (var score:PlayerScore in scores) {
-				score.x = 125;
-				score.y = 183 + i * 33;
+				var actualScore:PlayerScore = getChildByName(score.name) as PlayerScore;
+				
+				actualScore.x = 125;
+				actualScore.y = 183 + i * 33;
 				++i;
 			}
 			
@@ -108,10 +115,11 @@ package
 		 * 			and 0 if they are equal.
 		 */
 		function killSort(o1:PlayerScore, o2:PlayerScore):Number {
+			
 			if (o1.kills > o2.kills) {
-				return 1;
-			}else if (o1.kills < o2.kills) {
 				return -1;
+			}else if (o1.kills < o2.kills) {
+				return 1;
 			}else {
 				return 0;
 			}
@@ -125,7 +133,12 @@ package
 		function addKill(nick:String, kills:int):void {
 			var actualScore:PlayerScore = getChildByName(nick) as PlayerScore;
 			actualScore.kills = kills;
-			sortScores();
+			
+			var idx: int = scores.indexOf(actualScore);
+				
+			trace(scores[idx].kills);
+			
+			sortArray();
 		}
 		
 		/**Method who changes the nick of a concrete player
