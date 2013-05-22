@@ -16,6 +16,7 @@ del fichero del mapa.
 #include "BaseSubsystems/Math.h"
 #include <string>
 #include <map>
+#include "Net/buffer.h"
 
 namespace Map 
 {
@@ -168,9 +169,11 @@ namespace Map
 		/**
 		Clona una entidad.
 		*/
-		CEntity *clone(){return new CEntity(*this);}
+		CEntity *clone() { return new CEntity(*this); }
 
 	protected:
+
+		friend class Net::CBuffer;
 
 		/**
 		Tipo lista de CEntity donde guardaremos los pendientes de borrar.

@@ -16,12 +16,13 @@ del juego.
 #ifndef __Logic_EntityFactory_H
 #define __Logic_EntityFactory_H
 
+#include "Basesubsystems/Math.h"
+
 #include <map>
 #include <string>
 #include <list>
 
 #include "EntityID.h"
-#include "Map/MapEntity.h"
 #include "EntityIdDispatcher.h"
 
 // Predeclaración de clases para ahorrar tiempo de compilación
@@ -144,6 +145,8 @@ namespace Logic {
 		CEntity* createEntity(Map::CEntity *entityInfo, Logic::CMap *map, const Matrix4& transform, bool replicate = true);
 
 		//________________________________________________________________________
+
+		CEntity* createCustomClientEntity(Map::CEntity *entityInfo, Map::CEntity* customClientInfo, Logic::CMap *map, const Matrix4& transform);
 
 		/**
 		Crea una nueva entidad de juego en un mapa determinado a partir de
@@ -324,11 +327,11 @@ namespace Logic {
 
 	protected:
 
-		CEntity* initEntity(Logic::CEntity* entity, Map::CEntity* entityInfo, CMap *map, bool replicate);
+		Logic::CEntity* initEntity(Logic::CEntity* entity, Map::CEntity* entityInfo, CMap *map, bool replicate, Map::CEntity* customInfoForClient = NULL);
 
 		//________________________________________________________________________
 
-		CEntity* initEntity(Logic::CEntity* entity, Map::CEntity* entityInfo, Logic::CMap *map, const Matrix4& transform, bool replicate);
+		Logic::CEntity* initEntity(Logic::CEntity* entity, Map::CEntity* entityInfo, Logic::CMap *map, const Matrix4& transform, bool replicate, Map::CEntity* customInfoForClient = NULL);
 
 		/**
 		Única instancia de la clase.

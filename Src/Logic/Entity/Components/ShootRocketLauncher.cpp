@@ -36,6 +36,8 @@ de disparo del lanzacohetes.
 #include "Graphics/Server.h"
 #include "Graphics/Scene.h"
 
+#include "Map/MapEntity.h"
+
 namespace Logic {
 	IMP_FACTORY(CShootRocketLauncher);
 

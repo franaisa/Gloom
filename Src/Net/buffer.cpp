@@ -14,6 +14,7 @@
 
 #include "buffer.h"
 #include "memory.h"
+#include "Map/MapEntity.h"
 
 #define DEBUG_BUFFER 1
 
@@ -237,8 +238,6 @@ namespace Net {
 		data.assign(aux, size);
 	}
 
-	
-
 	//__________________________________________________________________
 
 	void CBuffer::serialize(unsigned int data) {
@@ -325,6 +324,36 @@ namespace Net {
 		
 		Math::setPitchYaw(pitch,yaw, data);
 		data.setTrans(transform);
+	}
+
+	//__________________________________________________________________
+
+	void CBuffer::serialize(const Map::CEntity* entityInfo) {
+		auto it = entityInfo->_attributes.begin();
+		auto end = entityInfo->_attributes.end();
+
+		// Serializamos el número de atributos que hay
+		unsigned int attributesListSize = entityInfo->_attributes.size();
+		write(&attributesListSize, sizeof(attributesListSize));
+		for(; it != end; ++it) {
+			serialize(std::string(it->first), false);
+			serialize(std::string(it->second), false);
+		}
+	}
+
+	//__________________________________________________________________
+
+	void CBuffer::deserialize(Map::CEntity* entityInfo) {
+		unsigned int attributesListSize;
+		read(&attributesListSize, sizeof(attributesListSize));
+
+		std::string key, value;
+		for(int i = 0; i < attributesListSize; ++i) {
+			deserialize(key);
+			deserialize(value);
+
+			entityInfo->_attributes[key] = value;
+		}
 	}
 
 } // namespace Net

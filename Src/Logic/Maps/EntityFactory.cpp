@@ -258,7 +258,7 @@ namespace Logic {
 	
 	//________________________________________________________________________
 
-	Logic::CEntity* CEntityFactory::initEntity(Logic::CEntity* entity, Map::CEntity* entityInfo, CMap *map, bool replicate) {
+	Logic::CEntity* CEntityFactory::initEntity(Logic::CEntity* entity, Map::CEntity* entityInfo, CMap *map, bool replicate, Map::CEntity* customInfoForClient) {
 		if(!entity) return NULL;
 
 		if ( _dynamicCreation ? entity->dynamicSpawn(map, entityInfo) : entity->spawn(map, entityInfo) ) {
@@ -266,7 +266,7 @@ namespace Logic {
 			map->addEntity(entity);
 
 			if(replicate) {
-				Logic::CGameNetMsgManager::getSingletonPtr()->sendCreateEntity( entity->getEntityID() );
+				Logic::CGameNetMsgManager::getSingletonPtr()->sendCreateEntity( entity->getEntityID(), customInfoForClient );
 			}
 
 			return entity;
@@ -279,7 +279,7 @@ namespace Logic {
 
 	//________________________________________________________________________
 
-	Logic::CEntity* CEntityFactory::initEntity(Logic::CEntity* entity, Map::CEntity* entityInfo, Logic::CMap *map, const Matrix4& transform, bool replicate) {
+	Logic::CEntity* CEntityFactory::initEntity(Logic::CEntity* entity, Map::CEntity* entityInfo, Logic::CMap *map, const Matrix4& transform, bool replicate, Map::CEntity* customInfoForClient) {
 		if(!entity) return NULL;
 
 		// Seteamos la posición de la entidad a ser creada
@@ -289,7 +289,7 @@ namespace Logic {
 			map->addEntity(entity);
 
 			if(replicate) {
-				Logic::CGameNetMsgManager::getSingletonPtr()->sendCreateEntity( entity->getEntityID() );
+				Logic::CGameNetMsgManager::getSingletonPtr()->sendCreateEntity( entity->getEntityID(), customInfoForClient );
 			}
 
 			return entity;
@@ -323,6 +323,12 @@ namespace Logic {
 	Logic::CEntity *CEntityFactory::createEntityById(Map::CEntity *entityInfo, Logic::CMap *map, TEntityID id, const Matrix4& transform, bool replicate) {
 		return initEntity(assembleEntity( entityInfo->getType(), id ), entityInfo, map, transform, replicate);
 	} // createEntity
+
+	//________________________________________________________________________
+
+	CEntity* CEntityFactory::createCustomClientEntity(Map::CEntity *entityInfo, Map::CEntity* customClientInfo, Logic::CMap *map, const Matrix4& transform) {
+		return initEntity( assembleEntity( entityInfo->getType() ), entityInfo, map, transform, true, customClientInfo);
+	}
 
 	//________________________________________________________________________
 
@@ -380,7 +386,9 @@ namespace Logic {
 
 	//________________________________________________________________________
 
-	Map::CEntity * CEntityFactory::getInfo(std::string type) {
+	// @deprecated Deberia devolver un puntero constante para asegurarnos de que
+	// nadie nos va a hacer la jugada fuera
+	Map::CEntity* CEntityFactory::getInfo(std::string type) {
 		std::map<std::string,Map::CEntity *>::const_iterator it = _archetypes.find(type);
 
 		if( it!=_archetypes.end() ){
