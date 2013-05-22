@@ -1,0 +1,17 @@
+material JumperSpecial
+{
+	technique
+	{
+		pass
+		{
+			lighting off
+			depth_write off
+			scene_blend add
+
+			texture_unit
+			{
+				texture Special.001.png
+			}
+		}
+	}
+}
