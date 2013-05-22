@@ -15,6 +15,7 @@ implementa las habilidades del personaje
 #include "Hound.h"
 #include "Map/MapEntity.h"
 #include "Logic/Entity/Entity.h"
+#include "Logic/Maps/WorldState.h"
 
 #include "Logic/Messages/MessageBerserker.h"
 #include "Logic/Messages/MessageChangeMaterial.h"
@@ -77,6 +78,7 @@ namespace Logic {
 				std::shared_ptr<CMessageChangeMaterial> materialMsg = std::make_shared<CMessageChangeMaterial>();
 				materialMsg->setMaterialName("original");
 				_entity->emitMessage(materialMsg);
+				Logic::CWorldState::getSingletonPtr()->addChange(_entity,materialMsg);
 				_berserkerTimer = _berserkerDuration;
 				_doingPrimarySkill = false;
 			}
@@ -87,12 +89,6 @@ namespace Logic {
 
 	void CHound::onActivate() {
 		CPlayerClass::onActivate();
-
-		// Ñapa temporal para el ideame
-		// Cambiamos el color del marine en funcion de la clase con un changeMaterial
-		std::shared_ptr<CMessageChangeMaterial> materialMsg = std::make_shared<CMessageChangeMaterial>();
-		materialMsg->setMaterialName(_materialName);
-		_entity->emitMessage(materialMsg);
 
 		_berserkerTimer = _berserkerDuration;
 	}
@@ -114,7 +110,7 @@ namespace Logic {
 		std::shared_ptr<CMessageChangeMaterial> materialMsg = std::make_shared<CMessageChangeMaterial>();
 		materialMsg->setMaterialName("berserk");
 		_entity->emitMessage(materialMsg);
-
+		Logic::CWorldState::getSingletonPtr()->addChange(_entity,materialMsg);
 		_doingPrimarySkill = true;
 	}
 

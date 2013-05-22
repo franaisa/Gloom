@@ -98,17 +98,6 @@ namespace Logic {
 
 	//__________________________________________________________________
 
-	void CShadow::onStart() {
-
-		std::shared_ptr<CMessageChangeMaterial> materialMsg = std::make_shared<CMessageChangeMaterial>();
-		materialMsg->setMaterialName("original");
-		_entity->emitMessage(materialMsg);
-		Logic::CWorldState::getSingletonPtr()->addChange(_entity,materialMsg);
-		_invisibilityTimer = _invisibilityDuration;
-	}
-
-	//__________________________________________________________________
-
 	void CShadow::primarySkill() {
 
 		// Arrancamos el cronometro

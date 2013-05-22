@@ -111,8 +111,6 @@ namespace Logic {
 		for(; it != end; ++it)
 			correct = it->second._entityPtr->activate() && correct;
 
-		Logic::CWorldState::getSingletonPtr()->updateEntities();
-
 		return correct;
 
 	} // getEntity
@@ -164,6 +162,7 @@ namespace Logic {
 		for(; it != end; ++it) {
 			it->second._entityPtr->start();
 		}
+		Logic::CWorldState::getSingletonPtr()->updateEntities();
 	}
 
 	//---------------------------------------------------------

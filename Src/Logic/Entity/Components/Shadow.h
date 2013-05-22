@@ -99,8 +99,6 @@ namespace Logic {
 
 	protected:
 
-		virtual void onStart();
-
 		//__________________________________________________________________
 
 		/**
