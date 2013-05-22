@@ -71,14 +71,10 @@
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\Src\GUI\GUIDescriptor.cpp" />
-    <ClCompile Include="..\..\Src\GUI\GUIEventArgs.cpp" />
     <ClCompile Include="..\..\Src\GUI\Server.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Src\GUI\Documentation.h" />
-    <ClInclude Include="..\..\Src\GUI\GUIDescriptor.h" />
-    <ClInclude Include="..\..\Src\GUI\GUIEventArgs.h" />
     <ClInclude Include="..\..\Src\GUI\Server.h" />
   </ItemGroup>
   <ItemGroup>

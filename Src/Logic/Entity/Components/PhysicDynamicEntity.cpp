@@ -17,6 +17,7 @@
 
 #include "Logic/Messages/MessageKinematicMove.h"
 #include "Logic/Messages/MessageTouched.h"
+#include "Logic/Messages/MessageActivate.h"
 #include "Logic/Messages/MessageUntouched.h"
 #include "Logic/Messages/MessageSetPhysicPosition.h"
 #include "Logic/Messages/MessageTransform.h"
@@ -70,11 +71,11 @@ bool CPhysicDynamicEntity::spawn(Logic::CEntity *entity, CMap *map, const Map::C
 bool CPhysicDynamicEntity::accept(const std::shared_ptr<CMessage>& message) {
 	Logic::TMessageType msgType = message->getMessageType();
 
-	return msgType == Message::ACTIVATE				||
-		   msgType == Message::DEACTIVATE			||
-		   msgType == Message::SET_PHYSIC_POSITION	||
-		   msgType == Message::ADD_FORCE_PHYSICS	||
-		   msgType == Message::SET_TRANSFORM;
+	return	msgType == Message::ACTIVATE				||
+			msgType == Message::KINEMATIC_MOVE			||
+			msgType == Message::SET_PHYSIC_POSITION		||
+			msgType == Message::ADD_FORCE_PHYSICS		||
+			msgType == Message::SET_TRANSFORM;
 }
 
 //---------------------------------------------------------
@@ -82,11 +83,11 @@ bool CPhysicDynamicEntity::accept(const std::shared_ptr<CMessage>& message) {
 void CPhysicDynamicEntity::process(const std::shared_ptr<CMessage>& message) {
 	switch( message->getMessageType() ) {
 		case Message::ACTIVATE: {
-			activateSimulation();
-			break;
-		}
-		case Message::DEACTIVATE: {
-			deactivateSimulation();
+			bool activate = std::static_pointer_cast<CMessageActivate>(message)->getActivated();
+			if(activate)
+				activateSimulation();
+			else
+				deactivateSimulation();
 			break;
 		}
 		case Message::SET_PHYSIC_POSITION: {

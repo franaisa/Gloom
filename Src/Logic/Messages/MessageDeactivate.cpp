@@ -11,13 +11,11 @@ namespace Logic {
 	} //
 	//----------------------------------------------------------
 
-	Net::CBuffer* CMessageDeactivate::serialize() {
-		assert(_tempBuffer == NULL);
-
-		_tempBuffer = new Net::CBuffer(sizeof(int));
-		_tempBuffer->serialize(std::string("CMessageDeactivate"), true);
+	Net::CBuffer CMessageDeactivate::serialize() {
+		Net::CBuffer buffer(sizeof(int));
+		buffer.serialize(std::string("CMessageDeactivate"), true);
 		
-		return _tempBuffer;
+		return buffer;
 	}//
 	//----------------------------------------------------------
 

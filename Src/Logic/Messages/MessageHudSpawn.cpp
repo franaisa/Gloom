@@ -21,14 +21,12 @@ namespace Logic {
 	}//
 	//----------------------------------------------------------
 		
-	Net::CBuffer* CMessageHudSpawn::serialize() {
-		assert(_tempBuffer == NULL);
-
-		_tempBuffer = new Net::CBuffer(sizeof(int) + sizeof(_time));
-		_tempBuffer->serialize(std::string("CMessageHudSpawn"),true);
-		_tempBuffer->serialize(_time);
+	Net::CBuffer CMessageHudSpawn::serialize() {
+		Net::CBuffer buffer(sizeof(int) + sizeof(_time));
+		buffer.serialize(std::string("CMessageHudSpawn"),true);
+		buffer.serialize(_time);
 		
-		return _tempBuffer;
+		return buffer;
 	}//
 	//----------------------------------------------------------
 

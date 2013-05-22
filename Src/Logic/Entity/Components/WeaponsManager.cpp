@@ -16,6 +16,7 @@ Contiene la implementación del componente que gestiona las armas y que administr
 #include "Graphics/Server.h"
 #include "Graphics/Scene.h"
 #include "Logic/Entity/Components/ArrayGraphics.h"
+#include "Logic/Maps/WorldState.h"
 
 #include "Shoot.h"
 #include "ShootShotGun.h"
@@ -204,6 +205,7 @@ namespace Logic
 			std::shared_ptr<CMessageChangeWeaponGraphics> chgWpnGraphicsMsg = std::make_shared<CMessageChangeWeaponGraphics>();
 			chgWpnGraphicsMsg->setWeapon(_currentWeapon);
 			_entity->emitMessage(chgWpnGraphicsMsg);
+			Logic::CWorldState::getSingletonPtr()->addChange(_entity,chgWpnGraphicsMsg);
 		}
 		
 	}

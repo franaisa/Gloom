@@ -17,6 +17,7 @@ del juego.
 #include "ComponentFactory.h"
 #include "Logic/Entity/Entity.h"
 #include "Logic/Maps/Map.h"
+#include "Logic/Maps/WorldState.h"
 #include "Logic/Server.h"
 #include "Logic/GameNetMsgManager.h"
 #include "Net/Manager.h"
@@ -264,7 +265,8 @@ namespace Logic {
 		if ( _dynamicCreation ? entity->dynamicSpawn(map, entityInfo) : entity->spawn(map, entityInfo) ) {
 			// Añadimos la nueva entidad en el mapa antes de inicializarla.
 			map->addEntity(entity);
-
+			if(_dynamicCreation)
+				CWorldState::getSingletonPtr()->addEntity(entity);
 			if(replicate) {
 				Logic::CGameNetMsgManager::getSingletonPtr()->sendCreateEntity( entity->getEntityID() );
 			}
@@ -332,14 +334,18 @@ namespace Logic {
 		deferredDeleteEntity(createdEntity, msecs);
 		return createdEntity;
 	}
-	
+
 	//________________________________________________________________________
 
-	void CEntityFactory::deleteEntity(Logic::CEntity *entity) {
+	void CEntityFactory::deleteEntity(Logic::CEntity *entity, bool toClients) {
 		assert(entity);
 		// Si la entidad estaba activada se desactiva al sacarla
 		// del mapa.
 		entity->getMap()->removeEntity(entity);
+		CWorldState::getSingletonPtr()->deleteEntity(entity);
+		//Comprobamos si debe enviarse a los clientes, porque hay casos en los que no deberia
+		if( Net::CManager::getSingletonPtr()->imServer() && toClients )
+			Logic::CGameNetMsgManager::getSingletonPtr()->sendDestroyEntity( entity->getEntityID() );
 
 		delete entity;
 

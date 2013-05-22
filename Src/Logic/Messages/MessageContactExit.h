@@ -13,7 +13,7 @@ namespace Logic {
 		void setEntity(Logic::TEntityID c);
 		~CMessageContactExit(){};
 		
-		virtual Net::CBuffer* serialize();
+		virtual Net::CBuffer serialize();
 		virtual void deserialize(Net::CBuffer& buffer);
 	private:
 		Logic::TEntityID _entity;

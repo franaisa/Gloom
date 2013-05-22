@@ -31,15 +31,13 @@ namespace Logic {
 	}//
 	//----------------------------------------------------------
 		
-	Net::CBuffer* CMessageBerserker::serialize() {
-		assert(_tempBuffer == NULL);
+	Net::CBuffer CMessageBerserker::serialize() {
+		Net::CBuffer buffer(3*sizeof(int));
+		buffer.serialize(std::string("CMessageBerserker"),true);
+		buffer.serialize(_percentDamage);
+		buffer.serialize(_percentCooldown);
 
-		_tempBuffer = new Net::CBuffer(3*sizeof(int));
-		_tempBuffer->serialize(std::string("CMessageBerserker"),true);
-		_tempBuffer->serialize(_percentDamage);
-		_tempBuffer->serialize(_percentCooldown);
-
-		return _tempBuffer;
+		return buffer;
 	}//
 	//----------------------------------------------------------
 

@@ -30,7 +30,9 @@ Contiene la implementación del estado de juego.
 #include "Logic/Maps/EntityFactory.h"
 #include "Logic/Maps/Map.h"
 #include "Logic/Maps/EntityID.h"
+#include "Logic/Maps/Scoreboard.h"
 #include "Logic/Entity/Components/Camera.h"
+#include "Logic/Maps/WorldState.h"
 
 #include "Hikari.h"
 #include "FlashValue.h"
@@ -48,7 +50,7 @@ namespace Application {
 		_seleccion->bind("selected",Hikari::FlashDelegate(this, &CGameClientState::classSelected));
 		_seleccion->hide();
 		_seleccion->setTransparent(true, true);
-		
+		_menuVisile = false;
 		_netMgr = Net::CManager::getSingletonPtr();
 
 		return true;
@@ -61,7 +63,7 @@ namespace Application {
 		
 		// Mostramos el menú de selección de personaje
 		_seleccion->show();
-
+		_menuVisile = true;
 		// Registramos a este estado como observador de red para que sea notificado
 		_netMgr->addObserver(this);
 
@@ -82,6 +84,8 @@ namespace Application {
 		ackBuffer.write(&id, sizeof(id));
 		
 		_netMgr->broadcast(ackBuffer.getbuffer(), ackBuffer.getSize());
+
+		Logic::CScoreboard::getSingletonPtr()->loadScoreboardDM();
 	} // activate
 
 	//______________________________________________________________________________
@@ -95,6 +99,8 @@ namespace Application {
 		Input::CInputManager::getSingletonPtr()->removeKeyListener(this);
 
 		CGameState::deactivate();
+
+		Logic::CScoreboard::getSingletonPtr()->unLoadScoreboard();
 	} // deactivate
 
 	//______________________________________________________________________________
@@ -112,7 +118,15 @@ namespace Application {
 
 		// Dependiendo del tipo de mensaje
 		switch (msg) {
+			case Net::LOAD_WORLD_STATE: {
+
+				Logic::CWorldState::getSingletonPtr()->deserialize(buffer);
+
+				break;
+			}
+
 			case Net::LOAD_PLAYERS: {
+
 				// Cargamos la informacion del player que nos han enviado
 				Logic::TEntityID entityID;
 				std::string playerClass, name;
@@ -126,12 +140,22 @@ namespace Application {
 				// Llamo al metodo de creacion del jugador
 				Logic::CEntity * player = Logic::CServer::getSingletonPtr()->getMap()->createPlayer(name, playerClass, entityID);
 
+				//Lo cargamos en el gestor de players, pero aqui tenemos que ver si el player ya existía antes, 
+				//para en vez de re-cargarlo simplemente cambiarle la clase
+				std::string playerName = player->getName();
+
+				if(!Logic::CScoreboard::getSingletonPtr()->getPlayer(playerName))
+					Logic::CScoreboard::getSingletonPtr()->addPlayer(playerName, player, playerClass);
+				else
+					Logic::CScoreboard::getSingletonPtr()->changePlayerEntity(playerName, player, playerClass);
+
 				// No es necesario enviar confirmacion
 				player->activate();
 				player->start();
 
 				break;
 			}
+
 			case Net::LOAD_LOCAL_PLAYER: {
 				// Deserializamos la información de nuestro player
 				Logic::TEntityID entityID;
@@ -144,6 +168,16 @@ namespace Application {
 				// como el jugador controlado por las teclas).
 				Logic::CEntity* player = Logic::CServer::getSingletonPtr()->getMap()->createLocalPlayer(name, playerClass, entityID);
 
+				//Lo cargamos en el gestor de players, pero aqui tenemos que ver si el player ya existía antes, 
+				//para en vez de re-cargarlo simplemente cambiarle la clase
+				std::string playerName = player->getName();
+
+				if(!Logic::CScoreboard::getSingletonPtr()->getPlayer(playerName))
+					Logic::CScoreboard::getSingletonPtr()->addLocalPlayer(playerName, player, playerClass);
+				else
+					Logic::CScoreboard::getSingletonPtr()->changePlayerEntity(playerName, player, playerClass);
+
+				//activamos la entidad
 				player->activate();
 				player->start();
 
@@ -210,6 +244,7 @@ namespace Application {
 				Input::CServer::getSingletonPtr()->getPlayerController()->deactivate();
 				//mostramos la gui
 				_seleccion->show();
+				_menuVisile = true;
 				break;
 			}
 			default: {
@@ -249,15 +284,22 @@ namespace Application {
 	//______________________________________________________________________________
 
 	Hikari::FlashValue CGameClientState::classSelected(Hikari::FlashControl* caller, const Hikari::Arguments& args) {
+		
+		if(!_menuVisile)
+			return FLASH_VOID;
+		
 		int selectedClass = args.at(0).getNumber();
 		Net::NetMessageType msgType = Net::CLASS_SELECTED;
 		Net::CBuffer msg ( sizeof(msgType) + sizeof(selectedClass) );
 
-		switch(selectedClass) {
+
+
+ 		switch(selectedClass) {
 			case 0:
 				if(Input::CServer::getSingletonPtr()->getPlayerController()->getControllerAvatar()) {
 					Input::CServer::getSingletonPtr()->getPlayerController()->activate();
 					_seleccion->hide();
+					_menuVisile = false;
 				} else {
 
 				}
@@ -269,6 +311,7 @@ namespace Application {
 			case 4:
 
 				_seleccion->hide();
+				_menuVisile = false;
 				//enviamos la clase elegida
 				msg.serialize(msgType);
 				msg.serialize(selectedClass);
@@ -282,7 +325,7 @@ namespace Application {
 				break;
 			case 5: {
 				_seleccion->hide();
-				
+				_menuVisile = false;
 				//random de la clase y lo enviamos por red
 				/*int randomclass = ((rand()*clock())%4)+1;
 				msg.serialize(msgType);

@@ -12,14 +12,12 @@ namespace Logic {
 	}//
 	//----------------------------------------------------------
 		
-	Net::CBuffer* CMessagePlayerDead::serialize() {
-		assert(_tempBuffer == NULL);
+	Net::CBuffer CMessagePlayerDead::serialize() {
+		Net::CBuffer buffer(sizeof(int)*2);
+		buffer.serialize(std::string("CMessagePlayerDead"),true);
+		buffer.serialize(_killer);
 
-		_tempBuffer = new Net::CBuffer(sizeof(int)*2);
-		_tempBuffer->serialize(std::string("CMessagePlayerDead"),true);
-		_tempBuffer->serialize(_killer);
-
-		return _tempBuffer;
+		return buffer;
 	}//
 	//----------------------------------------------------------
 

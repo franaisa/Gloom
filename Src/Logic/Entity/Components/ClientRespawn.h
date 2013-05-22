@@ -65,6 +65,14 @@ namespace Logic  {
 		*/
 		virtual void process(const std::shared_ptr<CMessage>& message);
 
+	protected:
+
+		/**
+		Método que recibe eventos de muerte y actualiza la GUI para que muestre
+		los eventos actualizados
+		*/
+		void updateGUI(CEntity* killer);
+
 	}; // class CClientRespawn
 
 	REG_FACTORY(CClientRespawn);

@@ -15,9 +15,9 @@ namespace Logic {
 		void setMakeConversion(bool convertCoordsToLogicWorld);
 		bool getMakeConversion();
 
-		~CMessageSetPhysicPosition(){};
+		virtual ~CMessageSetPhysicPosition(){};
 
-		virtual Net::CBuffer* serialize();
+		virtual Net::CBuffer serialize();
 		virtual void deserialize(Net::CBuffer& buffer);
 		
 	private:

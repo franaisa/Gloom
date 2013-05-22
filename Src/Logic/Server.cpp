@@ -17,6 +17,7 @@ la gestión de la lógica del juego.
 #include "Logic/GameNetPlayersManager.h"
 #include "Logic/Maps/EntityFactory.h"
 #include "Logic/Maps/GUIManager.h"
+#include "Logic/Maps/WorldState.h"
 
 #include "Map/MapParser.h"
 
@@ -115,6 +116,9 @@ namespace Logic {
 			return false;
 		_guiManager = Logic::CGUIManager::getSingletonPtr(); 
 
+		if(!Logic::CWorldState::Init())
+			return false;
+
 		return true;
 
 	} // open
@@ -134,6 +138,8 @@ namespace Logic {
 		Logic::CGameSpawnManager::Release();
 
 		Logic::CGUIManager::Release();
+
+		Logic::CWorldState::Release();
 
 	} // close
 

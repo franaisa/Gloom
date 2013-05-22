@@ -13,7 +13,7 @@ namespace Logic {
 		void setPercentDamage(int percentDamage);
 		~CMessageDamageAmplifier(){};
 		
-		virtual Net::CBuffer* serialize();
+		virtual Net::CBuffer serialize();
 		virtual void deserialize(Net::CBuffer& buffer);
 	private:
 		 int _percentDamage;

@@ -13,9 +13,9 @@ namespace Logic {
 		void setAmmo( int ammo);
 		int getWeapon();
 		void setWeapon( int weapon);
-		~CMessageHudAmmo(){};
+		virtual ~CMessageHudAmmo(){};
 		
-		virtual Net::CBuffer* serialize();
+		virtual Net::CBuffer serialize();
 		virtual void deserialize(Net::CBuffer& buffer);
 	private:
 		 int _ammo;

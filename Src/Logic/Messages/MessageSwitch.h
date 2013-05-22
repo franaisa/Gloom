@@ -11,9 +11,9 @@ namespace Logic {
 		CMessageSwitch();
 		unsigned char getChange();
 		void setChange(unsigned char change);
-		~CMessageSwitch(){};
+		virtual ~CMessageSwitch(){};
 		
-		virtual Net::CBuffer* serialize();
+		virtual Net::CBuffer serialize();
 		virtual void deserialize(Net::CBuffer& buffer);
 	private:
 		unsigned char _change;

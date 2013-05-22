@@ -18,6 +18,8 @@ clase.
 #include "Shadow.h"
 #include "Logic/Entity/Entity.h"
 #include "Map/MapEntity.h"
+#include "Logic/Messages/MessageChangeMaterial.h"
+#include "Logic/Maps/WorldState.h"
 
 #include "Logic/Messages/MessageChangePlayerClass.h"
 #include "Logic/Messages/MessageControl.h"
@@ -70,6 +72,16 @@ namespace Logic {
 		
 		return msgType == Message::CONTROL;
 	} // accept
+
+	//__________________________________________________________________
+
+	void CPlayerClass::onStart() {
+
+		std::shared_ptr<CMessageChangeMaterial> materialMsg = std::make_shared<CMessageChangeMaterial>();
+		materialMsg->setMaterialName("original");
+		_entity->emitMessage(materialMsg);
+		Logic::CWorldState::getSingletonPtr()->addChange(_entity,materialMsg);
+	}
 	
 	//__________________________________________________________________
 
