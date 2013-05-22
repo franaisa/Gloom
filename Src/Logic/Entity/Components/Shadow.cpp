@@ -15,6 +15,7 @@ implementa las habilidades del personaje
 #include "Shadow.h"
 #include "Graphics.h"
 #include "Map/MapEntity.h"
+#include "Logic/Maps/WorldState.h"
 #include "Logic/Entity/Entity.h"
 #include "Physics/Server.h"
 #include "Physics/RaycastHit.h"
@@ -77,6 +78,7 @@ namespace Logic {
 				std::shared_ptr<CMessageChangeMaterial> materialMsg = std::make_shared<CMessageChangeMaterial>();
 				materialMsg->setMaterialName("original");
 				_entity->emitMessage(materialMsg);
+				Logic::CWorldState::getSingletonPtr()->addChange(_entity,materialMsg);
 				/*
 				std::shared_ptr<CMessageChangeMaterialHudWeapon> materialMsgHud = std::make_shared<CMessageChangeMaterialHudWeapon>();
 				materialMsgHud->setMaterialName("original");
@@ -101,7 +103,7 @@ namespace Logic {
 		std::shared_ptr<CMessageChangeMaterial> materialMsg = std::make_shared<CMessageChangeMaterial>();
 		materialMsg->setMaterialName("original");
 		_entity->emitMessage(materialMsg);
-
+		Logic::CWorldState::getSingletonPtr()->addChange(_entity,materialMsg);
 		_invisibilityTimer = _invisibilityDuration;
 	}
 
@@ -116,7 +118,7 @@ namespace Logic {
 		std::shared_ptr<CMessageChangeMaterial> materialMsg = std::make_shared<CMessageChangeMaterial>();
 		materialMsg->setMaterialName("shadowInvisibility");
 		_entity->emitMessage(materialMsg);
-
+		Logic::CWorldState::getSingletonPtr()->addChange(_entity,materialMsg);
 		_doingPrimarySkill = true;
 
 	}

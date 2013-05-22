@@ -136,7 +136,9 @@ namespace Logic {
 			auto messages = entities->second.messages.begin();
 			auto mEnd = entities->second.messages.end();
 			for(;messages!=mEnd;++messages){
-				Net::CBuffer* bufferAux = messages->second->serialize();
+				//i need a copy from the original msg
+				std::shared_ptr<CMessage> mbuffer = std::make_shared<CMessage>(messages->second);
+				Net::CBuffer* bufferAux = mbuffer->serialize();
 				worldState.write(bufferAux->getbuffer(), bufferAux->getSize());
 			}
 		}

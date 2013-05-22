@@ -11,6 +11,7 @@
 
 #include "Logic/Entity/Entity.h"
 #include "Logic/Maps/Map.h"
+#include "Logic/Maps/WorldState.h"
 #include "Map/MapEntity.h"
 #include "Logic/Entity/Components/Graphics.h"
 
@@ -20,6 +21,7 @@
 #include "Logic/Messages/MessageAddAmmo.h"
 #include "Logic/Messages/MessageAddWeapon.h"
 #include "Logic/Messages/MessageActivate.h"
+
 
 #include "Net/Manager.h"
 
@@ -42,6 +44,7 @@ namespace Logic {
 				// Activar entidad grafica y fisica
 				std::shared_ptr<CMessageActivate> activateMsg = std::make_shared<CMessageActivate>();
 				activateMsg->setActivated(true);
+				Logic::CWorldState::getSingletonPtr()->addChange(_entity,activateMsg);
 				_entity->emitMessage(activateMsg);
 			}
 		}
@@ -110,7 +113,7 @@ namespace Logic {
 		std::shared_ptr<CMessageActivate> deactivateMsg = std::make_shared<CMessageActivate>();
 		deactivateMsg->setActivated(false);
 		_entity->emitMessage(deactivateMsg);
-		
+		Logic::CWorldState::getSingletonPtr()->addChange(_entity,deactivateMsg);
 		// Si se trata del servidor o del single player
 		if(Net::CManager::getSingletonPtr()->imServer() || (!Net::CManager::getSingletonPtr()->imServer() && !Net::CManager::getSingletonPtr()->imClient())){
 			// Mandar el mensaje que corresponda a la entidad actuadora

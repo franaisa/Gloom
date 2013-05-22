@@ -16,13 +16,14 @@ namespace Logic {
 
 		_tempBuffer = new Net::CBuffer(sizeof(int));
 		_tempBuffer->serialize(std::string("CMessageActivate"), true);
+		_tempBuffer->serialize(_activate);
 		
 		return _tempBuffer;
 	}//
 	//----------------------------------------------------------
 
 	void CMessageActivate::deserialize(Net::CBuffer& buffer) {
-		//Nada
+		buffer.deserialize(_activate);
 	}
 
 };
