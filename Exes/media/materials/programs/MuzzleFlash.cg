@@ -1,0 +1,20 @@
+sampler RT : register(s0);
+
+float flashLevel;
+
+float4 flash_ps (float2 texCoord  : TEXCOORD0
+				) : COLOR
+{
+
+   // get the color of the pixel
+   float4 base = tex2D(RT, texCoord);
+   
+   float flash = flashLevel;
+   
+	if(flash>1.0){
+		flash=1;
+	}
+   
+   return saturate(base*flash);
+}
+

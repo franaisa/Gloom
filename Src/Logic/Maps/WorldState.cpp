@@ -14,6 +14,7 @@ Contiene la implementación del estado del mundo.
 #include "WorldState.h"
 #include "Logic/Server.h"
 #include "Logic/Maps/Map.h"
+#include "Map/MapEntity.h"
 #include "Logic/Maps/EntityFactory.h"
 #include "Logic/Maps/Scoreboard.h"
 #include "Logic/Entity/Entity.h"

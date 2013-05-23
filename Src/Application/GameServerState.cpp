@@ -317,6 +317,15 @@ namespace Application {
 		if(logicIdPair.second) {
 			Logic::CEntity* entityToBeDeleted = _map->getEntityByID(logicIdPair.first);
 			Logic::CEntityFactory::getSingletonPtr()->deferredDeleteEntity(entityToBeDeleted,true);
+
+			//debemos enviar un mensaje de player disconnected
+			Net::NetMessageType ackMsg = Net::PLAYER_DISCONNECTED;
+			Net::CBuffer disconnectMsg;
+			disconnectMsg.write(&ackMsg, sizeof(ackMsg));
+			disconnectMsg.serialize(entityToBeDeleted->getName(),false);
+
+			_netMgr->broadcast(disconnectMsg.getbuffer(), disconnectMsg.getSize());
+
 		}
 		
 		// Eliminamos el jugador que se desconecta del manager de jugadores
