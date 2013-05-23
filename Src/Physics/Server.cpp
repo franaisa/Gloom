@@ -685,8 +685,6 @@ namespace Physics {
 				
 				hitSpots.push_back(sweepHit);
 			}
-
-
 		}
 
 		delete [] hitBuffer;
@@ -696,14 +694,14 @@ namespace Physics {
 			std::sort(hitSpots.begin(), hitSpots.end(), sweepComparator);
 		}
 	}
+
 	//________________________________________________________________________
 
 	bool CServer::sweepSingle(const physx::PxGeometry& sweepGeometry, const Vector3& position, 
 						      const Vector3& unitDir, float distance, Vector3& hitSpot, unsigned int filterMask) {
 
 		// Seteamos los flags de sweep
-		const PxSceneQueryFlags outputFlags = PxSceneQueryFlag::eDISTANCE | PxSceneQueryFlag::eIMPACT | 
-											  PxSceneQueryFlag::eNORMAL | PxSceneQueryFlag::eINITIAL_OVERLAP;
+		const PxSceneQueryFlags outputFlags = PxSceneQueryFlag::eDISTANCE | PxSceneQueryFlag::eIMPACT | PxSceneQueryFlag::eNORMAL;
 
 		// Situamos la geometria de sweep en la posicion dada
 		PxTransform pose( Vector3ToPxVec3(position) );
@@ -723,6 +721,29 @@ namespace Physics {
 		hitSpot = status ? PxVec3ToVector3(hit.impact) : Vector3::ZERO;
 		return status;
 
+	}
+
+	//________________________________________________________________________
+
+	bool CServer::sweepAny(const physx::PxGeometry& sweepGeometry, const Vector3& position, 
+						   const Vector3& unitDir, float distance, unsigned int filterMask) {
+
+		// Seteamos los flags de sweep
+		const PxSceneQueryFlags outputFlags = PxSceneQueryFlag::eDISTANCE | PxSceneQueryFlag::eIMPACT | PxSceneQueryFlag::eNORMAL;
+
+		// Situamos la geometria de sweep en la posicion dada
+		PxTransform pose( Vector3ToPxVec3(position) );
+		// Contendra el hit obtenido
+		PxSweepHit hit;
+
+		if(filterMask == 0) {
+			return _scene->sweepAny(sweepGeometry, pose, Vector3ToPxVec3(unitDir), distance, outputFlags, hit);
+		}
+		else {
+			PxSceneQueryFilterData filters;
+			filters.data.word0 = filterMask;
+			return _scene->sweepAny(sweepGeometry, pose, Vector3ToPxVec3(unitDir), distance, outputFlags, hit, filters);
+		}
 	}
 
 	//________________________________________________________________________
