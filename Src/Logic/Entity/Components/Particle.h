@@ -15,6 +15,9 @@ Componente que contiene la declaracion de las particulas.
 #include "Graphics/Particle.h"
 #include "Logic/Entity/Component.h"
 
+namespace Graphics{
+	class CScene;
+}
 //declaración de la clase
 namespace Logic 
 {
@@ -80,6 +83,7 @@ namespace Logic
 		Vector3 _particleOffset;
 		Vector3 _particleEmitterDirection;
 
+		Graphics::CScene *_scene;
 	}; // class CParticle
 
 	REG_FACTORY(CParticle);

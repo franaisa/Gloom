@@ -59,6 +59,8 @@ namespace Logic
 
 			if( entityInfo->hasAttribute("particleEmitterDirection") )
 				_particle->setDirection( _particleEmitterDirection * _entity->getOrientation() );
+
+			_scene = map->getScene();
 		}
 		return true;
 
@@ -93,8 +95,7 @@ namespace Logic
 			case Message::CREATE_PARTICLE: {
 				std::shared_ptr<CMessageCreateParticle> createParticleMsg = std::static_pointer_cast<CMessageCreateParticle>(message);
 
-				Graphics::CParticle *particle = Graphics::CServer::getSingletonPtr()->getActiveScene()->createParticle(
-					createParticleMsg->getParticle(), createParticleMsg->getPosition(), createParticleMsg->getDirectionWithForce());
+				_scene->createParticle(createParticleMsg->getParticle(), createParticleMsg->getPosition(),createParticleMsg->getDirectionWithForce());
 				
 				break;
 			}

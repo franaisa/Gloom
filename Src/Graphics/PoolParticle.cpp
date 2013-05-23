@@ -31,19 +31,17 @@ namespace Graphics
 		
 
 	} // CPoolParticle
-
 	//--------------------------------------------------------
 
 	CPoolParticle::~CPoolParticle() 
 	{
 		// borro todas las particulas almacenadas
-		for(auto it = _particles.begin(); it != _particles.end(); ++it){
+		for(auto it = _particlesMap.begin(); it != _particlesMap.end(); ++it){
 			for(auto it2 = (*it).second.particles.begin(); it2 < (*it).second.particles.end(); ++it2){
 				delete (*it2);
 			}
 		}
 	} // ~CPoolParticle
-
 	//--------------------------------------------------------
 
 	void CPoolParticle::activate()
@@ -80,22 +78,47 @@ namespace Graphics
 		printf("\nCargada particula: %s, %d veces", nameParticleSystem.c_str(), amount);
 
 		TParticles aux;
-		aux.index = amount;
+		aux.index = 0;
+		aux.maxIndex = amount;
 		std::vector<CParticle*> vectorParticle;
 		for(unsigned int i = 0; i < amount; ++i){
-			vectorParticle.push_back(new CParticle(nameParticleSystem));
+			CParticle *particle = new CParticle(nameParticleSystem);
+			particle->deactivate();
+			vectorParticle.push_back(particle);
 		}
 		aux.particles=vectorParticle;
 
 		vectorParticle[0]->loadResources();
 
-		_particles.insert(std::pair<std::string, TParticles>(nameParticleSystem,aux));
-	}
+		_particlesMap.insert(std::pair<std::string, TParticles>(nameParticleSystem,aux));
+
+	} // loadParticleSystem
+	//--------------------------------------------------------
+
+	CParticle* CPoolParticle::getParticle(const std::string &nameParticle){
+	
+		auto particleData = _particlesMap.find(nameParticle);
+		if(particleData == _particlesMap.end())
+			return 0;
+
+		unsigned int index = particleData->second.index;
+		particleData->second.index = (index+1)%(particleData->second.maxIndex);
+		CParticle * result = particleData->second.particles[index];
+
+		// Si la particula del indice esta emitiendo, significa que he dado la vuelta al vector y he llegado hasta una particula 
+		// q esta emitiendo, por lo que no puedo devolver ninguna
+		if(result->isEmitting())
+			return 0;
+		
+		return result;
+
+	} // getParticle
+	//--------------------------------------------------------
+
 	void CPoolParticle::tick(float secs)
 	{	
 		
 	} // tick
-
 	//--------------------------------------------------------
 
 } // namespace Graphics

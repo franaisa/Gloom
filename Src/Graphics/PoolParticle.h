@@ -55,6 +55,12 @@ namespace Graphics
 		void activate();
 
 		/**
+		metodo invocado desde la escena para dar las particulas a quien se la pida  la escena.
+
+		@param nameParticle, nombre de la particula
+		*/
+		CParticle* getParticle(const std::string &nameParticle);
+		/**
 		Actualiza el estado de la escena cada ciclo. Llama a su vez a 
 		todas las entidades.
 		
@@ -67,15 +73,22 @@ namespace Graphics
 		/////////////////////////////////////////////////////////////////////////////////////////
 	protected:
 
+		/**
+		Metodo que dado el nombre completo (NOMBREPARTICULA_VECESQUESECARGA.particle) de la particula le extrae el indice puesto en el nombre, y lo añade a
+		la estructura de datos
+
+		@param completeNameParticleSystem, nombre completo de la particula
+		*/
 		void loadParticleSystem(const std::string &completeNameParticleSystem);
 
 		struct TParticles{
 			unsigned int index;
+			unsigned int maxIndex;
 			std::vector<CParticle*> particles;
 			TParticles(): index(0){};
 		};
 
-		std::map<std::string, TParticles> _particles;		
+		std::map<std::string, TParticles> _particlesMap;		
 
 	}; // class CPoolParticle
 

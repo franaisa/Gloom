@@ -248,13 +248,15 @@ namespace Graphics
 
 	CParticle * CScene::createParticle(const std::string &particleName, const Vector3 &position, const Vector3 &directionWithForce){
 
-		CParticle *particle = new CParticle(particleName);
+		CParticle *particle  = _poolParticle->getParticle(particleName);
+		//CParticle *particle = new CParticle(particleName);
+		if(!particle)
+			return 0;
 
 		particle->setPosition(position);
-
 		
 		if(!directionWithForce.isZeroLength())
-			//particle->setDirection(directionWithForce);
+			particle->setDirection(directionWithForce);
 
 		return particle;
 

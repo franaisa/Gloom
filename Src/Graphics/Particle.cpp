@@ -83,36 +83,8 @@ namespace Graphics
 
 		++counter;
 	} // CParticle
-
 	//--------------------------------------------------------
 
-	void CParticle::setPosition(const Vector3 &position){
-		_sceneNode->setPosition(position);
-	} // setPosition
-
-	//--------------------------------------------------------
-
-	Vector3 CParticle::getPosition(){
-		return _sceneNode->getPosition();
-	}
-
-	//--------------------------------------------------------
-	
-	void CParticle::setDirection(const Vector3 &directionWithForce){
-		
-		_particleSystem->getEmitter(0)->setDirection(directionWithForce*10);
-				
-	}
-	//--------------------------------------------------------
-	
-	void CParticle::loadResources()
-	{
-		
-	} // loadResources
-	
-
-	//--------------------------------------------------------
-	
 	CParticle::~CParticle(){
 	
 		Graphics::CServer::getSingletonPtr()->getActiveScene()->getSceneMgr()->destroyParticleSystem(_particleSystem);
@@ -121,6 +93,56 @@ namespace Graphics
 		_particleSystem = NULL;
 		//_sceneNode = NULL;
 		
-	}
+	} // ~CParticle
+	//--------------------------------------------------------
+
+	void CParticle::setPosition(const Vector3 &position){
+		_sceneNode->setPosition(position);
+
+	} // setPosition
+	//--------------------------------------------------------
+
+	Vector3 CParticle::getPosition(){
+		return _sceneNode->getPosition();
+	} // getPosition
+	//--------------------------------------------------------
+	
+	void CParticle::setDirection(const Vector3 &directionWithForce){
+		
+		_particleSystem->getEmitter(0)->setDirection(directionWithForce*10);
+				
+	} // setDirection
+	//--------------------------------------------------------
+	
+	void CParticle::activate()
+	{
+		_particleSystem->setEmitting(false);
+
+	} // activate
+	//--------------------------------------------------------
+
+	void CParticle::deactivate()
+	{
+		_particleSystem->setEmitting(false);
+
+	} // deactivate
+	//--------------------------------------------------------
+
+	void CParticle::loadResources()
+	{
+		activate();
+		this->setPosition(Vector3(0,-5000,0));
+		deactivate();
+
+	} // loadResources
+	//--------------------------------------------------------
+
+	bool CParticle::isEmitting(){
+		return _particleSystem->getEmitting();
+
+	} // isEmitting
+	//--------------------------------------------------------
+	
+	
 
 } // namespace Graphics
