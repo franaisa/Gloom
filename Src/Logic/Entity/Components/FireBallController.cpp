@@ -81,7 +81,6 @@ namespace Logic {
 		switch( message->getMessageType() ) {
 			case Message::CONTACT_ENTER: {
 				createExplotion();
-				cout << "Exploto" << endl;
 			}
 		}
 	}
@@ -114,13 +113,13 @@ namespace Logic {
 		vector<CEntity*> entitiesHit;
 		Physics::SphereGeometry explotionGeom = Physics::CGeometryFactory::getSingletonPtr()->createSphere(_explotionRadius);
 		Vector3 explotionPos = _entity->getPosition();
-		Physics::CServer::getSingletonPtr()->overlapMultiple(explotionGeom, explotionPos, entitiesHit);
+		// @deprecated hay que tener en cuenta el grupo del screamer shield, cuando esten
+		// bien puestos los grupos lo meto
+		Physics::CServer::getSingletonPtr()->overlapMultiple(explotionGeom, explotionPos, entitiesHit, Physics::CollisionGroup::ePLAYER);
 
 		for(int i = 0; i < entitiesHit.size(); ++i) {
-			if( entitiesHit[i] != NULL && entitiesHit[i]->isPlayer() ) {
-				// Mandamos el mensaje de daño
-				estimateDamage(entitiesHit[i], explotionPos);
-			}
+			// Mandamos el mensaje de daño
+			estimateDamage(entitiesHit[i], explotionPos);
 		}
 
 		// Destruir en diferido esta entidad
