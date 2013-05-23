@@ -46,7 +46,8 @@ namespace Logic {
 														 _landForce(0),
 														 _strafingDir(0),
 														 _landRecoverySpeed(0.007f),
-														 _currentLandOffset(0) {
+														 _currentLandOffset(0),
+														_flashVisible(true){
 
 
 		_walkAnim.currentHorizontalPos = Math::HALF_PI;
@@ -112,6 +113,8 @@ namespace Logic {
 			case Message::FLASH: {
 				std::shared_ptr<CMessageFlash> flashMsg = std::static_pointer_cast<CMessageFlash>(message);
 				_flashFactor = flashMsg->getFlashFactor();
+				_flashVisible = true;
+				_scene->setCompositorVisible(_flashEffect, true);
 				break;
 			}
 
@@ -133,7 +136,7 @@ namespace Logic {
 		_scene = _entity->getMap()->getScene();
 		_effect = "damageCompositor";
 		_motionblur = "Motion Blur";
-		//_flashEffect = "flashBang";
+		_flashEffect = "Muzzle Flash";
 		_strengthEffect = "strength";
 		_effectIsActivated = false;
 		_scene->createCompositor(_effect);
@@ -146,10 +149,10 @@ namespace Logic {
 		// Por ahora esta a hierro, lo suyo es ponerlo por el mapa
 		_scene->updateCompositorVariable(_motionblur, "blur", 0.75);
 		
-		/*_scene->createCompositor(_flashEffect);
+		_scene->createCompositor(_flashEffect);
 		_scene->setCompositorVisible(_flashEffect, false);
 		// Por ahora esta a hierro, lo suyo es ponerlo por el mapa
-		_scene->updateCompositorVariable(_flashEffect, "flash", 1.0);*/
+		_scene->updateCompositorVariable(_flashEffect, "flashLevel", 1.0);
 	}
 
 	//________________________________________________________________________
@@ -181,8 +184,8 @@ namespace Logic {
 
 		//ahora actualizamos el flashazo si procede
 		if(_flashFactor > 1.0){
-			_flashFactor*=0.75f;
-			_scene->updateCompositorVariable(_flashEffect,"flash",_flashFactor);
+			_flashFactor-=0.5f;
+			_scene->updateCompositorVariable(_flashEffect,"flashLevel",1/_flashFactor);
 			std::cout << "estoy flasheado" << std::endl;
 		}else if(_flashVisible){
 			_scene->setCompositorVisible(_flashEffect, false);

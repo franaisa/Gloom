@@ -18,7 +18,7 @@ material MuzzleFlash
 
 			fragment_program_ref flash
 			{
-				param_named flashLevel float 8
+				param_named flashLevel float 1.0
 			}
 
 			texture_unit RT
