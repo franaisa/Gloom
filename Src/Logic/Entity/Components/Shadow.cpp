@@ -158,36 +158,31 @@ namespace Logic {
 		Ogre::Ray ray( _entity->getPosition()+Vector3(0,8,0), direction.normalisedCopy() );
 		
 		std::vector<Physics::CRaycastHit> hitBuffer;
-		Physics::CServer::getSingletonPtr()->raycastMultiple(ray, direction.length(), hitBuffer, 0, false);
+
+		Physics::CServer::getSingletonPtr()->raycastMultiple(ray, direction.length(), hitBuffer);
 		int bufferSize = hitBuffer.size();
+
 		//ifs de eficiencia
-		if(bufferSize!=2){
+		if(hitBuffer.size()!=2){
 			return;
 		}
-		/*if(bufferSize == 1 && hitBuffer[0].entity == entity){
-			delete [] hitBuffer;
-			return;
-		}
-		if(bufferSize == 1)
-			delete [] hitBuffer;*/
 
 		//Ahora comprobamos el angulo entre la visión directa y la orientación del player a cegar
 		float angle = direction.normalisedCopy().angleBetween(Math::getDirection(entity->getOrientation()).normalisedCopy()).valueDegrees();
 
 		//si no lo esta mirando nada no lo cegamos
-		if(angle < 90 || angle > 270)
+		if(angle < 90)
 			return;
 
+		std::cout << "angulo " << angle << std::endl;
+
 		angle-=90;
+
 		float flashFactor;
 
-		if(angle<=90){
-			//hacemos la inversa
-			flashFactor = 100 * (1 - (90/(90*angle)));
-		}else{
-			angle-=90;
-			flashFactor = 1000 * (1 - 90/90*angle);
-		}
+		flashFactor = 15 * (angle/10);
+
+
 
 		//mandamos un mensaje de flashazo
 		std::shared_ptr<CMessageFlash> flashMsg = std::make_shared<CMessageFlash>();
