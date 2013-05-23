@@ -20,6 +20,7 @@ Contiene la implementación del componente que representa a la escopeta.
 #include "Logic/Entity/Entity.h"
 #include "Logic/Server.h"
 #include "PhysicDynamicEntity.h"
+#include "Map/MapEntity.h"
 
 //Debug
 #include "Logic/Messages/MessageHudDebugData.h"

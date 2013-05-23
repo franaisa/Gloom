@@ -113,7 +113,7 @@ package
 		}
 		
 		public function get kills():int {
-			return _kills.text as int;
+			return int(_kills.text);
 		}
 	}
 

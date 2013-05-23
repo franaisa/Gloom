@@ -242,7 +242,7 @@ namespace Logic{
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	void CScoreboard::loadScoreboardDM(){
-		_guiManager->addGUI("scoreboard", Hikari::Position(Hikari::Center), 0.7);
+		_guiManager->addGUI("scoreboard", Hikari::Position(Hikari::Center), 0.85f);
 		_guiManager->load("scoreboard", "ScoreDM.swf");
 		_guiManager->showGUI("scoreboard");
 		_guiManager->setTransparent("scoreboard",true);
@@ -265,7 +265,7 @@ namespace Logic{
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	void CScoreboard::loadScoreboardTDM(){
-		_guiManager->addGUI("scoreboard", Hikari::Position(Hikari::Center), 0.7);
+		_guiManager->addGUI("scoreboard", Hikari::Position(Hikari::Center), 0.85f);
 		_guiManager->load("scoreboard", "ScoreTDM.swf");
 		_guiManager->showGUI("scoreboard");
 		_guiManager->setTransparent("scoreboard",true);

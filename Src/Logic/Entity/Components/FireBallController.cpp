@@ -18,6 +18,8 @@
 #include "Logic/Messages/MessageContactEnter.h"
 #include "Logic/Messages/MessageDamaged.h"
 
+#include "Map/MapEntity.h"
+
 using namespace std;
 
 namespace Logic {

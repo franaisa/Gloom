@@ -230,6 +230,12 @@ namespace Application {
 
 				break;
 			}
+			case Net::PLAYER_DISCONNECTED: {
+				std::string name;
+				buffer.deserialize(name);
+
+				Logic::CScoreboard::getSingletonPtr()->deletePlayer(name);
+			}
 		}
 	}
 
