@@ -18,6 +18,8 @@ Contiene la implementación del estado del mundo.
 #include "Logic/Maps/Scoreboard.h"
 #include "Logic/Entity/Entity.h"
 
+#include "Map/MapEntity.h"
+
 #include <cassert>
 
 namespace Logic {
