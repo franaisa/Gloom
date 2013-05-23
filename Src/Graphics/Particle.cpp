@@ -1,12 +1,6 @@
 //David Llanso Tutoria
 /*
 
-//Constructor
-CParticle(name){
-
-	_bbset = CServer::getSingletonPtr()->getActiveScene()->createParticle(name);
-}
-
 // Destructor 
 
 */
@@ -24,7 +18,7 @@ Contiene la implementación de la clase que maneja el Particle.
 
 @see Graphics::CParticle
 
-@author Pablo Terrado
+@author Pablo Terrado (Proyecto: El rayo de Zeus)
 @modifedBy Antonio Jesus Narvaez
 @date Enero, 2013
 */
@@ -49,7 +43,7 @@ Contiene la implementación de la clase que maneja el Particle.
 namespace Graphics 
 {
 	//Constructor de la clase CParticle
-	CParticle::CParticle(const std::string &unicName, const std::string &particleName, bool isOverlay)
+	CParticle::CParticle(const std::string &particleName, bool isOverlay)
 	{
 		static int counter = 0;
 	
@@ -58,8 +52,8 @@ namespace Graphics
 		//scene->createSceneNode(nameSceneNode);
 		char num[5];
 		sprintf(num, "%d", counter);
-		std::string nameSceneNode = "SceneNode_"+_nameParticle + num;
-		_nameParticle = unicName + num;	
+		std::string nameSceneNode = "SceneNode_"+particleName + num;
+		_nameParticle = particleName + num;	
 		/*
 		if(scene->getSceneMgr()->hasParticleSystem(_nameParticle)){
 			_particleSystem = scene->getSceneMgr()->getParticleSystem(_nameParticle);
@@ -83,56 +77,8 @@ namespace Graphics
 
 		++counter;
 	} // CParticle
-
 	//--------------------------------------------------------
 
-	void CParticle::setPosition(const Vector3 &position){
-		_sceneNode->setPosition(position);
-	} // setPosition
-
-	//--------------------------------------------------------
-
-	Vector3 CParticle::getPosition(){
-		return _sceneNode->getPosition();
-	}
-
-	//--------------------------------------------------------
-	
-	void CParticle::setDirection(const Vector3 &directionWithForce){
-		
-		_particleSystem->getEmitter(0)->setDirection(directionWithForce*10);
-		
-		/*
-		Ogre::ParticleAffector *aff = _particleSystem->getAffector(0);
-		//Ogre::ParticleAffector *aff = _particleSystem->addAffector("LinearForce");
-		
-		
-		std::string &aux= Ogre::StringConverter::toString(direction);
-		
-		
-		Ogre::String key = Ogre::StringInterface::getParameter("force_vector");
-		aff->setParameter(key,aux);
-		*/
-
-		/*
-		Ogre::String &key2 = Ogre::StringConverter::toString(Ogre::ParameterType::PT_STRING);
-		Ogre::String &key3 = Ogre::StringConverter::toString();
-		aff->setParameter("PT_STRING","FA_ADD");
-		*/
-		
-	}
-	//--------------------------------------------------------
-	/*
-	void CParticle::deactivateParticle(const std::string &name) 
-	{
-		Graphics::CScene* _scen = Graphics::CServer::getSingletonPtr()->getActiveScene();
-		//_scen->deleteParticle(name);
-
-	} // deactivateParticle
-	*/
-
-	//--------------------------------------------------------
-	
 	CParticle::~CParticle(){
 	
 		Graphics::CServer::getSingletonPtr()->getActiveScene()->getSceneMgr()->destroyParticleSystem(_particleSystem);
@@ -141,6 +87,67 @@ namespace Graphics
 		_particleSystem = NULL;
 		//_sceneNode = NULL;
 		
-	}
+	} // ~CParticle
+	//--------------------------------------------------------
+
+	void CParticle::setPosition(const Vector3 &position){
+		_sceneNode->setPosition(position);
+
+	} // setPosition
+	//--------------------------------------------------------
+
+	Vector3 CParticle::getPosition(){
+		return _sceneNode->getPosition();
+	} // getPosition
+	//--------------------------------------------------------
+	
+	void CParticle::setDirection(const Vector3 &directionWithForce){
+		
+		_particleSystem->getEmitter(0)->setDirection(directionWithForce*10);
+				
+	} // setDirection
+	//--------------------------------------------------------
+	
+	void CParticle::activate()
+	{
+		_particleSystem->setEmitting(true);
+		for(int i = 0 ; i < _particleSystem->getNumEmitters(); ++i){
+			/*
+			_particleSystem->getEmitter(i)->resetDimensions();
+			
+			_particleSystem->getEmitter(i)->setEmitted(false);
+			_particleSystem->getEmitter(i)->setEmitted(true);
+			*/			
+		}
+
+	} // activate
+	//--------------------------------------------------------
+
+	void CParticle::deactivate()
+	{
+		_particleSystem->setEmitting(false);
+		_particleSystem->clear();
+
+	} // deactivate
+	//--------------------------------------------------------
+
+	void CParticle::loadResources()
+	{
+		activate();
+		this->setPosition(Vector3(0,-5000,0));
+		deactivate();
+
+	} // loadResources
+	//--------------------------------------------------------
+
+	bool CParticle::isEmitting(){
+		//return _particleSystem->getEmitting();
+		printf("\numParticles: %d",_particleSystem->getNumParticles());
+		return (_particleSystem->getNumParticles() > 0);
+
+	} // isEmitting
+	//--------------------------------------------------------
+	
+	
 
 } // namespace Graphics

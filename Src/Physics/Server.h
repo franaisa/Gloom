@@ -430,7 +430,8 @@ namespace Physics {
 
 		/**
 		Dada una geometría, realiza una query de sweep y devuelve true si la geometría dada
-		colisiona contra un actor (dinámico o estático).
+		colisiona contra un actor (dinámico o estático). Además devuelve información sobre
+		la colisión.
 
 		Es mucho más eficiente que sweepMultiple. Usar cuando solo estemos interesados
 		en un hit.
@@ -448,6 +449,26 @@ namespace Physics {
 		*/
 		bool sweepSingle(const physx::PxGeometry& sweepGeometry, const Vector3& position, 
 						 const Vector3& unitDir, float distance, Vector3& hitSpot, unsigned int filterMask = 0);
+
+		//________________________________________________________________________
+
+		/**
+		Dada una geometría, realiza una query de sweep y devuelve true si la geometría dada
+		colisiona contra un actor (dinámico o estático).
+
+		Es la query de sweep más eficiente.
+
+		@param geometry Geometría para la query de sweep. Mirar la documentación para ver que geometrías
+		están soportadas.
+		@param position Posición donde queremos colocar el centro de la geometría dada.
+		@param unitDir Dirección unitaria en la que queremos que se realice el barrido.
+		@param distance Distancia máxima del barrido.
+		@param filterMask Máscara que indica contra que grupos de colisión queremos que choque
+		la query de sweep.
+		@return true Si el barrido ha impactado contra algo.
+		*/
+		bool sweepAny(const physx::PxGeometry& sweepGeometry, const Vector3& position, 
+					  const Vector3& unitDir, float distance, unsigned int filterMask = 0);
 
 
 		// =======================================================================

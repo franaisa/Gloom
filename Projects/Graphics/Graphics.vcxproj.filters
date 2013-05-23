@@ -56,6 +56,9 @@
     <ClCompile Include="..\..\Src\Graphics\CompositorListener.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Src\Graphics\PoolParticle.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Src\Graphics\AnimatedEntity.h">
@@ -112,5 +115,8 @@
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Graphics.rc" />
+    <ClInclude Include="..\..\Src\Graphics\PoolParticle.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
