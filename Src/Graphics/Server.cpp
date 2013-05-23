@@ -230,11 +230,6 @@ namespace Graphics
 
 		
 	//--------------------------------------------------------
-
-	void CServer::removeOverlay(const std::string& name){
-		_overlayManager->destroy(name);
-	} //removeOverlayElement
-	//--------------------------------------------------------
 	
 	COverlay* CServer::getOverlay(const std::string& name){
 		if(_overlayManager->hasOverlayElement(name)){

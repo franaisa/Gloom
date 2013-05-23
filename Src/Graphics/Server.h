@@ -199,13 +199,6 @@ namespace Graphics
 		COverlay* createOverlay(const std::string& name, CScene* scene, const std::string& type = "");
 
 		/**
-		Destruye un Overlay.
-
-		@param name Nombre del Overlay.
-		*/
-		void removeOverlay(const std::string& name);
-
-		/**
 		Devuelve un overlay dado un nombre
 
 		@param name Nombre del Overlay.

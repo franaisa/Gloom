@@ -43,7 +43,9 @@ de una escena.
 
 #include <OgreCompositorManager.h>
 #include <OgreMaterialManager.h>
+
 #include "CompositorListener.h"
+#include "PoolParticle.h"
 
 
 namespace Graphics 
@@ -57,6 +59,7 @@ namespace Graphics
 		_name = name;
 
 		_compositorManager = Ogre::CompositorManager::getSingletonPtr();
+		_poolParticle = new CPoolParticle();
 
 	} // CScene
 
@@ -132,24 +135,15 @@ namespace Graphics
 		_sceneMgr->setAmbientLight(Ogre::ColourValue(0.3f,0.3f,0.3f));
 		/* */
 		
-		_compositorManager->addCompositor(_camera->getOgreCamera()->getViewport(), "Glow");
-		_compositorManager->setCompositorEnabled(_camera->getOgreCamera()->getViewport(), "Glow", true);
+		if(_name != "dummy_scene"){
+			_compositorManager->addCompositor(_camera->getOgreCamera()->getViewport(), "Glow");
+			_compositorManager->setCompositorEnabled(_camera->getOgreCamera()->getViewport(), "Glow", true);
 
-		/*_compositorManager->addCompositor(_camera->getOgreCamera()->getViewport(), "Motion Blur");
-		_compositorManager->setCompositorEnabled(_camera->getOgreCamera()->getViewport(), "Motion Blur", true);*/
+			_glowMaterialListener = new GlowMaterialListener();
+			Ogre::MaterialManager::getSingletonPtr()->addListener(_glowMaterialListener);
 
-		/*_compositorManager->addCompositor(_camera->getOgreCamera()->getViewport(), "Old TV");
-		_compositorManager->setCompositorEnabled(_camera->getOgreCamera()->getViewport(), "Old TV", true);
-
-		_compositorManager->addCompositor(_camera->getOgreCamera()->getViewport(), "Old Movie");
-		_compositorManager->setCompositorEnabled(_camera->getOgreCamera()->getViewport(), "Old Movie", true);
-		_compositorManager->addCompositor(_camera->getOgreCamera()->getViewport(), "berserkCompositor");
-		_compositorManager->setCompositorEnabled(_camera->getOgreCamera()->getViewport(), "berserkCompositor", true);
-		*/
-		_glowMaterialListener = new GlowMaterialListener();
-		Ogre::MaterialManager::getSingletonPtr()->addListener(_glowMaterialListener);
-
-
+			_poolParticle->activate();
+		}
 	} // activate
 
 	//--------------------------------------------------------
@@ -179,6 +173,7 @@ namespace Graphics
 		TEntityList::const_iterator end = _dynamicEntities.end();
 		for(; it != end; it++)
 			(*it)->tick(secs);
+		_poolParticle->tick(secs);
 		
 	} // tick
 
@@ -243,23 +238,25 @@ namespace Graphics
 	}
 */
 
-	CParticle * CScene::createParticle(const std::string &unicName, const std::string &particleName, const Vector3 &position){
+	CParticle * CScene::createParticle(const std::string &particleName, const Vector3 &position){
 	
-		return createParticle(unicName,particleName, position,Vector3::ZERO);
+		return createParticle(particleName, position,Vector3::ZERO);
 	
 	}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	CParticle * CScene::createParticle(const std::string &unicName, const std::string &particleName, const Vector3 &position, const Vector3 &directionWithForce){
+	CParticle * CScene::createParticle(const std::string &particleName, const Vector3 &position, const Vector3 &directionWithForce){
 
-		CParticle *particle = new CParticle(unicName, particleName);
+		CParticle *particle  = _poolParticle->getParticle(particleName);
+		//CParticle *particle = new CParticle(particleName);
+		if(!particle)
+			return 0;
 
 		particle->setPosition(position);
-
 		
 		if(!directionWithForce.isZeroLength())
-			//particle->setDirection(directionWithForce);
+			particle->setDirection(directionWithForce);
 
 		return particle;
 

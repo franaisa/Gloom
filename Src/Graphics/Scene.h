@@ -42,6 +42,7 @@ namespace Graphics
 	class CParticle;
 	class CompositorManager;
 	class CCompositorListener;
+	class CPoolParticle;
 }
 
 namespace Graphics 
@@ -216,8 +217,8 @@ namespace Graphics
 		/**
 		crea una particula, impor
 		*/
-		CParticle *createParticle(const std::string &unicName, const std::string &particleName, const Vector3 &position);
-		CParticle *createParticle(const std::string &unicName, const std::string &particleName, const Vector3 &position, const Vector3 &directionWithForce);
+		CParticle *createParticle(const std::string &particleName, const Vector3 &position);
+		CParticle *createParticle(const std::string &particleName, const Vector3 &position, const Vector3 &directionWithForce);
 
 		void changeAmbientLight(Vector3 Light);
 
@@ -436,6 +437,10 @@ namespace Graphics
 		*/
 		Ogre::CompositorManager* _compositorManager;
 
+		/**
+		Pool de particulas
+		*/
+		CPoolParticle *_poolParticle;
 	}; // class CScene
 
 } // namespace Graphics

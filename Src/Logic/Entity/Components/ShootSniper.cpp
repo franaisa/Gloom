@@ -14,10 +14,12 @@ Contiene la implementación del componente que gestiona las armas y que administr
 
 #include "Physics/Server.h"
 #include "Physics/RaycastHit.h"
+#include "Logic/Server.h"
+#include "Logic/Maps/Map.h"
+#include "Logic/Entity/Components/Graphics.h"
 
 #include "Logic/Messages/MessageDamaged.h"
 #include "Logic/Messages/MessageCreateParticle.h"
-
 
 
 namespace Logic {
@@ -110,19 +112,20 @@ namespace Logic {
 		for(int i=0;i<hits.size();++i){
 			//Si tocamos el mundo no continuamos viendo hits y llamamos al pintado del rayo
 			if(hits[i].entity->getType().compare("World")==0){
-				int partesde2=hits[i].distance/1.5;
-				for(int j=1;j<=partesde2;++j){
-					Vector3 directionWithForce = Math::getDirection(_entity->getOrientation());
-					directionWithForce.normalise();
-					//Hay que bajar su altura para que se cree mas o menos en el centro
-					Vector3 positionParticle = (_entity->getPosition()+ Vector3(0,_heightShoot,0)) + ((directionWithForce)*j*1.5);
-
-					std::shared_ptr<CMessageCreateParticle> particle = std::make_shared<CMessageCreateParticle>();
-					particle->setParticle("sniper");
-					particle->setPosition(positionParticle);
-					particle->setDirectionWithForce(directionWithForce);
-					_entity->emitMessage(particle);
-				}
+				float distanceWorld=hits[i].distance;
+				//Atendiendo a la distancia y sabiendo que el gráfico de la entidad mide X metros
+				//La escala que debera tener es
+				float expansion=distanceWorld/10;
+				Vector3 newScale(expansion,1,1);
+				//La posicion por tanto sera	
+				Vector3 newPosition=_entity->getPosition()+Vector3(0.0f,_heightShoot,0.0f) + ( Math::getDirection( _entity->getOrientation() ) 
+					* (_capsuleRadius + 0.2f +10.0f));//10.0f es el changeScale, no sale bien pk el mesh no tiene la z con 1Unidad
+				//Cogemos un laser y lo seteamos (pull de laseres?)
+				CEntity *laser=Logic::CServer::getSingletonPtr()->getMap()->getEntityByName("LaserBeam1");
+				laser->setPosition(newPosition);
+				laser->setOrientation(_entity->getOrientation());
+				CGraphics *cGraphics=laser->getComponent<CGraphics>("CGraphics");
+				cGraphics->changeScale(Vector3(0.2,0.2,10));//Alargamos el cilindro
 				return;
 			}
 			//Sino mientras que no seamos nosotros mismos
@@ -230,7 +233,6 @@ namespace Logic {
 				m2->setEnemy(_entity);
 				expandToEntity->emitMessage(m2);
 			}
-
 
 		
 		}//if(entityHit!=NULL)

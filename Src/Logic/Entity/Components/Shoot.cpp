@@ -82,6 +82,7 @@ namespace Logic {
 		if(entityInfo->hasAttribute(weapon+"ParticlePosition")) {
 			_particlePosition = entityInfo->getVector3Attribute(weapon+"ParticlePosition");
 		}
+
 		return true;
 	} // spawn
 	//__________________________________________________________________
@@ -168,14 +169,11 @@ namespace Logic {
 	
 		Vector3 directionWithForce = Math::getDirection(_entity->getOrientation());
 		Vector3 positionParticle = (_entity->getPosition()+ Vector3(0,_heightShoot,0)) + ((directionWithForce) * _particlePosition);
-		Graphics::CScene* _scen = Graphics::CServer::getSingletonPtr()->getActiveScene();
 		
-		directionWithForce *= 10;
-
 		std::shared_ptr<CMessageCreateParticle> particle = std::make_shared<CMessageCreateParticle>();
 		particle->setParticle(particula);
 		particle->setPosition(positionParticle);
-		particle->setDirectionWithForce(directionWithForce);
+		//particle->setDirectionWithForce(directionWithForce);
 		_entity->emitMessage(particle);
 
 	} // drawParticle
