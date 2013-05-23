@@ -109,13 +109,7 @@
     <ClInclude Include="..\..\Src\Graphics\CompositorListener.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="resource.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="Graphics.rc" />
-    <ClInclude Include="..\..\Src\Graphics\PoolParticle.h">
+	<ClInclude Include="..\..\Src\Graphics\PoolParticle.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

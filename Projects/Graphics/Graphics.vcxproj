@@ -112,16 +112,12 @@
     <ClInclude Include="..\..\Src\Graphics\Scene.h" />
     <ClInclude Include="..\..\Src\Graphics\Server.h" />
     <ClInclude Include="..\..\Src\Graphics\StaticEntity.h" />
-    <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BaseSubsystems\BaseSubsystems.vcxproj">
       <Project>{9c5c21d7-f23c-409d-a332-7be5a325fd7a}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="Graphics.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
