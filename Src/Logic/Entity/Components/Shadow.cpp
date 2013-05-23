@@ -156,10 +156,10 @@ namespace Logic {
 		//primero trazamos un raycast para filtrar si hay algo entre la entidad y yo
 		Vector3 direction = entity->getPosition() - _entity->getPosition();
 		Ogre::Ray ray( _entity->getPosition()+Vector3(0,8,0), direction.normalisedCopy() );
-		int bufferSize;
+		
 		std::vector<Physics::CRaycastHit> hitBuffer;
-		Physics::CServer::getSingletonPtr()->raycastMultiple(ray, direction.length(), hitBuffer, bufferSize);
-
+		Physics::CServer::getSingletonPtr()->raycastMultiple(ray, direction.length(), hitBuffer);
+		int bufferSize = hitBuffer.size();
 		//ifs de eficiencia
 		if(bufferSize!=2){
 			return;
@@ -183,10 +183,10 @@ namespace Logic {
 
 		if(angle<=90){
 			//hacemos la inversa
-			flashFactor = 10 * (1 - (90/(90*angle)));
+			flashFactor = 100 * (1 - (90/(90*angle)));
 		}else{
 			angle-=90;
-			flashFactor = 10 * (1 - 90/90*angle);
+			flashFactor = 1000 * (1 - 90/90*angle);
 		}
 
 		//mandamos un mensaje de flashazo
