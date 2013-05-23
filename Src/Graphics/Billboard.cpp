@@ -45,7 +45,7 @@ namespace Graphics {
 
 	CBillboard::~CBillboard() {
 		assert(!_scene && "¡¡Para destruir una entidad esta no puede pertenecer a una escena!!");
-
+		
 		// Supuestamente no tenemos que eliminar nada ya que lo único que tenemos son
 		// los punteros a los billboards que en teoria Ogre se encarga de eliminar
 		// en su debido momento. Por lo tanto lo único que hacemos es setear nuestros

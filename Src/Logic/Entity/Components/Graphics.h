@@ -108,6 +108,13 @@ namespace Logic
 
 		std::string getMeshName(){return _model;}
 
+		/**
+		Método que se encarga de cambiar la escala de la entidad gráfica.
+
+		@param newScale escala nueva.
+		*/
+		void changeScale(Vector3 newScale);
+
 	protected:
 
 		/**

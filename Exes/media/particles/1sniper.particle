@@ -1,9 +1,9 @@
 particle_system sniper
 {
 	material Plasma1
-	particle_width 1.0
-	particle_height 1.0
-	quota 500
+	particle_width 0.4
+	particle_height 0.4
+	quota 6000
 	cull_each false
 	sorted false
 	local_space false
@@ -15,14 +15,17 @@ particle_system sniper
 	point_rendering false
 	accurate_facing false
 
-	emitter Point
+	emitter Box
 	{
 		position 0.0 0.0 0.0
 		direction 1.0 0.0 0.0
+		width 1
+		height 1
+		depth 40
 		angle 0
-		emission_rate 500
-		velocity_min 4
-		velocity_max 4
+		emission_rate 1000
+		velocity_min 200
+		velocity_max 200
 		time_to_live_min 1.0
 		time_to_live_max 1.0
 		duration_min 0.2
@@ -33,9 +36,26 @@ particle_system sniper
 		colour_range_end 1 1 1 1
 	}
 	
-	affector Scaler
+	affector ColourFader
 	{
-		rate 1
+		alpha -0.02
 	}
 	
+	affector DeflectorPlane
+	{
+		plane_point 0 0 0
+		plane_normal 0 1 0
+		bounce 75.0
+	}
+	affector LinearForce
+	{
+		force_vector 0 0 0
+	}
+  	affector Rotator
+   	{
+        	rotation_range_start  		0
+        	rotation_range_end   	 	360
+        	rotation_speed_range_start  	-15
+        	rotation_speed_range_end    	15
+   	}
 }

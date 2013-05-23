@@ -173,11 +173,21 @@ namespace Logic
 
 	void CGraphics::onActivate() {
 		_graphicsEntity->setTransform(_entity->getTransform());
-	}
+	}//---------------------------------------------------------
+	//onActivate
+
 
 	void CGraphics::onTick(unsigned int msecs){
 		_graphicsEntity->setTransform(_entity->getTransform());
-	}
+	}//---------------------------------------------------------
+	//onTick
+
+
+	void CGraphics::changeScale(Vector3 newScale){
+		_graphicsEntity->setScale(newScale);
+	}//---------------------------------------------------------
+	//changeScale
+
 
 } // namespace Logic
 
