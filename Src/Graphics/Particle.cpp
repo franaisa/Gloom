@@ -1,12 +1,6 @@
 //David Llanso Tutoria
 /*
 
-//Constructor
-CParticle(name){
-
-	_bbset = CServer::getSingletonPtr()->getActiveScene()->createParticle(name);
-}
-
 // Destructor 
 
 */
@@ -24,7 +18,7 @@ Contiene la implementación de la clase que maneja el Particle.
 
 @see Graphics::CParticle
 
-@author Pablo Terrado
+@author Pablo Terrado (Proyecto: El rayo de Zeus)
 @modifedBy Antonio Jesus Narvaez
 @date Enero, 2013
 */
@@ -116,7 +110,15 @@ namespace Graphics
 	
 	void CParticle::activate()
 	{
-		_particleSystem->setEmitting(false);
+		_particleSystem->setEmitting(true);
+		for(int i = 0 ; i < _particleSystem->getNumEmitters(); ++i){
+			/*
+			_particleSystem->getEmitter(i)->resetDimensions();
+			
+			_particleSystem->getEmitter(i)->setEmitted(false);
+			_particleSystem->getEmitter(i)->setEmitted(true);
+			*/			
+		}
 
 	} // activate
 	//--------------------------------------------------------
@@ -124,6 +126,7 @@ namespace Graphics
 	void CParticle::deactivate()
 	{
 		_particleSystem->setEmitting(false);
+		_particleSystem->clear();
 
 	} // deactivate
 	//--------------------------------------------------------
@@ -138,7 +141,9 @@ namespace Graphics
 	//--------------------------------------------------------
 
 	bool CParticle::isEmitting(){
-		return _particleSystem->getEmitting();
+		//return _particleSystem->getEmitting();
+		printf("\numParticles: %d",_particleSystem->getNumParticles());
+		return (_particleSystem->getNumParticles() > 0);
 
 	} // isEmitting
 	//--------------------------------------------------------

@@ -59,22 +59,23 @@ namespace Logic
 
 			if( entityInfo->hasAttribute("particleEmitterDirection") )
 				_particle->setDirection( _particleEmitterDirection * _entity->getOrientation() );
-
-			_scene = map->getScene();
 		}
 		return true;
 
 	} // spawn
-	
 	//---------------------------------------------------------
 
-
+	
+	void CParticle::onStart() {
+		_scene = Graphics::CServer::getSingletonPtr()->getActiveScene();
+		if(!_particleName.empty()){
+			_particle = _scene->createParticle(_particleName, _entity->getPosition() + ( _particleOffset * _entity->getOrientation() ) );
+		}
+	} // onStart
+	//---------------------------------------------------------
 	
 	void CParticle::onActivate() {
-		if(!_particleName.empty()){
-			_particle = new Graphics::CParticle(_particleName );
-			_particle->setPosition( _entity->getPosition() + ( _particleOffset * _entity->getOrientation() ) );
-		}
+		
 
 	} // activate
 	//---------------------------------------------------------
@@ -95,6 +96,7 @@ namespace Logic
 			case Message::CREATE_PARTICLE: {
 				std::shared_ptr<CMessageCreateParticle> createParticleMsg = std::static_pointer_cast<CMessageCreateParticle>(message);
 
+				// esta llamada puede devolver 0 en el caso de que no se pueda crear la particula
 				_scene->createParticle(createParticleMsg->getParticle(), createParticleMsg->getPosition(),createParticleMsg->getDirectionWithForce());
 				
 				break;

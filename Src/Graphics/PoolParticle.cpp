@@ -102,14 +102,16 @@ namespace Graphics
 			return 0;
 
 		unsigned int index = particleData->second.index;
-		particleData->second.index = (index+1)%(particleData->second.maxIndex);
 		CParticle * result = particleData->second.particles[index];
-
 		// Si la particula del indice esta emitiendo, significa que he dado la vuelta al vector y he llegado hasta una particula 
 		// q esta emitiendo, por lo que no puedo devolver ninguna
 		if(result->isEmitting())
 			return 0;
-		
+
+		particleData->second.index = (index+1)%(particleData->second.maxIndex);
+
+		result->deactivate();
+		result->activate();
 		return result;
 
 	} // getParticle
