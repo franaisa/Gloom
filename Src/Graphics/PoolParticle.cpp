@@ -71,7 +71,7 @@ namespace Graphics
 		if(completeNameParticleSystem == "." || completeNameParticleSystem == ".." ||  completeNameParticleSystem ==  "LEEME.txt")
 			return;
 		int position = completeNameParticleSystem.find(".particle");
-		if(position == std::string.npos)
+		if(position == std::string::npos)
 			return;
 		std::string nameParticleSystemAndAmount = completeNameParticleSystem.substr(0, position);
 		int positionUnderscore = nameParticleSystemAndAmount.length()-1;

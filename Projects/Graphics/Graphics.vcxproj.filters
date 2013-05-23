@@ -109,7 +109,7 @@
     <ClInclude Include="..\..\Src\Graphics\CompositorListener.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-	<ClInclude Include="..\..\Src\Graphics\PoolParticle.h">
+    <ClInclude Include="..\..\Src\Graphics\PoolParticle.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
