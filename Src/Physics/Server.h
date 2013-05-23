@@ -68,6 +68,17 @@ namespace physx {
 
 namespace Physics {
 
+	struct CollisionGroup {
+		enum Enum {
+			eWORLD					= (1 << 0),
+			ePLAYER					= (1 << 1),
+			eITEMS					= (1 << 2),
+			eSHOTGUN_PROJECTILES	= (1 << 3),
+			eFIREBALL				= (1 << 3),
+			eSPAWN_POINTS			= (1 << 4)
+		};
+	};
+
 	/**
 	Esta función es la que realmente se encarga que ocurra la magia de las notificaciones.
 	Solo seran notificados de colisiones y triggers aquellos actores cuyos grupos de colisión
@@ -311,14 +322,47 @@ namespace Physics {
 		Si ponemos este parametro a true, se ordenan los resultados por distancia, es decir,
 		primero estaran los elementos más cercanos al origen del raycast que han golpeado con
 		el rayo.
+		@param filterMask Máscara que indica contra que grupos de colisión queremos que choque
+		el raycast. En la cabecera del Server (este mismo documento) se especifican los enumerados
+		que corresponden a cada grupo de colisión. Se entiende que en el mapa deben usarse 
+		estos grupos con la misma numeración (si no, no funciona nada). Si por ejemplo
+		quisieramos que el raycast chocase con el mundo y los players tendríamos que indicar
+		lo siguiente como máscara: filterMask = CollisionGroup::eWORLD | CollisionGroup::ePLAYER.
+		Por defecto la máscara es 0. He utilizado ese valor para indicarle al raycast
+		que ejecute el comportamiento por defecto (sin filtros).
 		*/
-		void raycastMultiple(const Ray& ray, float maxDistance, std::vector<CRaycastHit>& hits, bool sortResultingArray = false) const;
+		void raycastMultiple(const Ray& ray, float maxDistance, std::vector<CRaycastHit>& hits, bool sortResultingArray = false,
+							 unsigned int filterMask = 0) const;
 
-		// Se puede añadir un filtro al final. Ya lo miraremos. Lo mismo con el multiple.
-		bool raycastSingle(const Ray& ray, float maxDistance, CRaycastHit& hit) const;
+		//________________________________________________________________________
 
-		// Igual que en los otros raycast podemos aplicar un filtro. Aun no esta implementado.
-		bool raycastAny(const Ray& ray, float maxDistance) const;
+		/**
+		Lanza un rayo y devuelve la primera entidad contra la que golpea. En caso de no
+		golpear contra ninguna entidad devuelve false.
+
+		@param ray Rayo que queremos disparar.
+		@param maxDistance Longitud máxima del rayo.
+		@param hit Estructura que devuelve el punto de colisión, la distancia y la normal
+		del golpeo.
+		@param filterMask Máscara que indica contra que grupos de colisión queremos que choque
+		el raycast.
+		@return true si se ha golpeado a una entidad.
+		*/
+		bool raycastSingle(const Ray& ray, float maxDistance, CRaycastHit& hit, unsigned int filterMask = 0) const;
+
+		//________________________________________________________________________
+
+		/**
+		Lanza un rayo y devuelve true si se ha golpeado algo. Es el más barato de todas las
+		queries de raycast. Si solo nos interesa saber si golpeamos algo usad esta query.
+
+		@param ray Rayo que queremos disparar
+		@param maxDistance Longitud máxima del rayo.
+		@param filterMask Máscara que indica contra que grupos de colisión queremos que choque
+		el raycast.
+		@return true si se ha golpeado algo, false en caso contrario.
+		*/
+		bool raycastAny(const Ray& ray, float maxDistance, unsigned int filterMask = 0) const;
 
 		//________________________________________________________________________
 

@@ -158,7 +158,7 @@ namespace Logic {
 		Ogre::Ray ray( _entity->getPosition()+Vector3(0,8,0), direction.normalisedCopy() );
 		
 		std::vector<Physics::CRaycastHit> hitBuffer;
-		Physics::CServer::getSingletonPtr()->raycastMultiple(ray, direction.length(), hitBuffer);
+		Physics::CServer::getSingletonPtr()->raycastMultiple(ray, direction.length(), hitBuffer, 0, false);
 		int bufferSize = hitBuffer.size();
 		//ifs de eficiencia
 		if(bufferSize!=2){

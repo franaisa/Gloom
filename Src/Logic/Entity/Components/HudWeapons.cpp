@@ -191,7 +191,7 @@ namespace Logic
 		weaponPosition.y += sin(_currentHeight) * 0.00045f;
 		/*_graphicsEntities[_currentWeapon].graphicsEntity->setPosition(weaponPosition);*/
 
-		Matrix4 transform = _graphicsEntities[_currentWeapon].graphicsEntity->getTransform();
+		/*Matrix4 transform = _graphicsEntities[_currentWeapon].graphicsEntity->getTransform();
 		Math::yaw(Math::HALF_PI, transform);
 		Vector3 horizontal = Math::getDirection(transform);
 
@@ -202,7 +202,7 @@ namespace Logic
 		horizontal *= sin(_runAnim.currentHorizontalPos) * _runAnim.horizontalOffset;
 		weaponPosition += horizontal;
 		weaponPosition.y += abs( sin(_runAnim.currentHorizontalPos) * _runAnim.horizontalOffset );
-		_graphicsEntities[_currentWeapon].graphicsEntity->setPosition(weaponPosition);
+		_graphicsEntities[_currentWeapon].graphicsEntity->setPosition(weaponPosition);*/
 	}
 	//---------------------------------------------------------
 

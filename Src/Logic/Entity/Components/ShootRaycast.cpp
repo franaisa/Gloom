@@ -126,7 +126,7 @@ namespace Logic {
 
 		// Rayo lanzado por el servidor de físicas de acuerdo a la distancia de potencia del arma
 		std::vector<Physics::CRaycastHit> hits;
-		Physics::CServer::getSingletonPtr()->raycastMultiple(ray, _distance,hits,true);
+		Physics::CServer::getSingletonPtr()->raycastMultiple(ray, _distance,hits, true);
 
 		//Si hemos tocado algo que no somos nosotros mismos,ni spawnpoints
 		std::pair<CEntity*, Ray> pair;

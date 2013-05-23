@@ -371,6 +371,7 @@ namespace Physics {
 		// Asignamos el filtro a todos los shapes de nuestro actor
 		for(PxU32 i = 0; i < numShapes; ++i) {
 			shapes[i]->setSimulationFilterData(filterData);
+			shapes[i]->setQueryFilterData(filterData);
 		}
 
 		delete [] shapes;
@@ -493,10 +494,11 @@ namespace Physics {
 
 	//________________________________________________________________________
 
-	void CServer::raycastMultiple(const Ray& ray, float maxDistance, std::vector<CRaycastHit>& hits, bool sortResultingArray) const {
+	void CServer::raycastMultiple(const Ray& ray, float maxDistance, std::vector<CRaycastHit>& hits, bool sortResultingArray,
+								  unsigned int filterMask) const {
 
 		// Establecer parámettros del rayo
-		PxVec3 origin = Vector3ToPxVec3( ray.getOrigin() );      // origen     
+		PxVec3 origin = Vector3ToPxVec3( ray.getOrigin() );      // origen
 		PxVec3 unitDir = Vector3ToPxVec3( ray.getDirection() );  // dirección normalizada
 
 		// Seteamos los flags que indican que información queremos extraer
@@ -510,7 +512,18 @@ namespace Physics {
 		PxRaycastHit* hitBuffer = new(std::nothrow) PxRaycastHit [bufferSize];
 		assert(hitBuffer != NULL && "Error: Fallo en la reserva de memoria");
 
-		unsigned int nbHits = _scene->raycastMultiple(origin, unitDir, maxDistance, outputFlags, hitBuffer, bufferSize, blockingHit);
+		unsigned int nbHits;
+		// Si nos pasan como máscara la 0, hacemos una query normal. En caso contrario
+		// hacemos la query usando el filtro que nos dan.
+		if(filterMask == 0) {
+			nbHits = _scene->raycastMultiple(origin, unitDir, maxDistance, outputFlags, hitBuffer, bufferSize, blockingHit);
+		}
+		else {
+			PxSceneQueryFilterData filters;
+			filters.data.word0 = filterMask;
+			nbHits = _scene->raycastMultiple(origin, unitDir, maxDistance, outputFlags, hitBuffer, bufferSize, blockingHit, filters);
+		}
+
 		while(nbHits == -1) {
 			// Si el buffer se ha desbordado aumentamos su tamaño al doble
 			// y volvemos ha realizar la query
@@ -540,7 +553,6 @@ namespace Physics {
 				raycastHit.normal = PxVec3ToVector3(hitBuffer[i].normal);
 
 				hits.push_back(raycastHit);
-
 			}
 		}
 
@@ -559,7 +571,7 @@ namespace Physics {
 	}
 	//________________________________________________________________________
 
-	bool CServer::raycastSingle(const Ray& ray, float maxDistance, CRaycastHit& hit) const {
+	bool CServer::raycastSingle(const Ray& ray, float maxDistance, CRaycastHit& hit, unsigned int filterMask) const {
 		// Establecer parámettros del rayo
 		PxVec3 origin = Vector3ToPxVec3( ray.getOrigin() );      // origen     
 		PxVec3 unitDir = Vector3ToPxVec3( ray.getDirection() );  // dirección normalizada
@@ -569,7 +581,18 @@ namespace Physics {
 
 		// Punto de golpeo del raycast
 		PxRaycastHit hitSpot;
-		bool validEntity = _scene->raycastSingle(origin, unitDir, maxDistance, outputFlags, hitSpot);
+		bool validEntity;
+
+		// Si nos pasan como máscara la 0, hacemos una query normal. En caso contrario
+		// hacemos la query usando el filtro que nos dan.
+		if(filterMask == 0) {
+			validEntity = _scene->raycastSingle(origin, unitDir, maxDistance, outputFlags, hitSpot);
+		}
+		else {
+			PxSceneQueryFilterData filters;
+			filters.data.word0 = filterMask;
+			validEntity = _scene->raycastSingle(origin, unitDir, maxDistance, outputFlags, hitSpot, filters);
+		}
 
 		// Introducimos la información devuelta en la estructura que vamos a devolver
 		hit.entity		= static_cast<IPhysics*>( hitSpot.shape->getActor().userData )->getEntity();
@@ -582,14 +605,21 @@ namespace Physics {
 
 	//________________________________________________________________________
 
-	bool CServer::raycastAny(const Ray& ray, float maxDistance) const {
+	bool CServer::raycastAny(const Ray& ray, float maxDistance, unsigned int filterMask) const {
 		// Establecer parámettros del rayo
 		PxVec3 origin = Vector3ToPxVec3( ray.getOrigin() );      // origen     
 		PxVec3 unitDir = Vector3ToPxVec3( ray.getDirection() );  // dirección normalizada
 		// Variable de query usada por physx
 		PxSceneQueryHit hit;
 
-		return _scene->raycastAny(origin, unitDir, maxDistance, hit);
+		if(filterMask == 0) {
+			return _scene->raycastAny(origin, unitDir, maxDistance, hit);
+		}
+		else {
+			PxSceneQueryFilterData filters;
+			filters.data.word0 = filterMask;
+			return _scene->raycastAny(origin, unitDir, maxDistance, hit, filters);
+		}
 	}
 
 	//________________________________________________________________________
