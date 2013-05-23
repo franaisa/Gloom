@@ -68,6 +68,17 @@ namespace physx {
 
 namespace Physics {
 
+	struct CollisionGroup {
+		enum Enum {
+			eWORLD					= (1 << 0),
+			ePLAYER					= (1 << 1),
+			eITEMS					= (1 << 2),
+			eSHOTGUN_PROJECTILES	= (1 << 3),
+			eFIREBALL				= (1 << 3),
+			eSPAWN_POINTS			= (1 << 4)
+		};
+	};
+
 	/**
 	Esta función es la que realmente se encarga que ocurra la magia de las notificaciones.
 	Solo seran notificados de colisiones y triggers aquellos actores cuyos grupos de colisión
@@ -311,14 +322,47 @@ namespace Physics {
 		Si ponemos este parametro a true, se ordenan los resultados por distancia, es decir,
 		primero estaran los elementos más cercanos al origen del raycast que han golpeado con
 		el rayo.
+		@param filterMask Máscara que indica contra que grupos de colisión queremos que choque
+		el raycast. En la cabecera del Server (este mismo documento) se especifican los enumerados
+		que corresponden a cada grupo de colisión. Se entiende que en el mapa deben usarse 
+		estos grupos con la misma numeración (si no, no funciona nada). Si por ejemplo
+		quisieramos que el raycast chocase con el mundo y los players tendríamos que indicar
+		lo siguiente como máscara: filterMask = CollisionGroup::eWORLD | CollisionGroup::ePLAYER.
+		Por defecto la máscara es 0. He utilizado ese valor para indicarle al raycast
+		que ejecute el comportamiento por defecto (sin filtros).
 		*/
-		void raycastMultiple(const Ray& ray, float maxDistance, std::vector<CRaycastHit>& hits, bool sortResultingArray = false) const;
+		void raycastMultiple(const Ray& ray, float maxDistance, std::vector<CRaycastHit>& hits, bool sortResultingArray = false,
+							 unsigned int filterMask = 0) const;
 
-		// Se puede añadir un filtro al final. Ya lo miraremos. Lo mismo con el multiple.
-		bool raycastSingle(const Ray& ray, float maxDistance, CRaycastHit& hit) const;
+		//________________________________________________________________________
 
-		// Igual que en los otros raycast podemos aplicar un filtro. Aun no esta implementado.
-		bool raycastAny(const Ray& ray, float maxDistance) const;
+		/**
+		Lanza un rayo y devuelve la primera entidad contra la que golpea. En caso de no
+		golpear contra ninguna entidad devuelve false.
+
+		@param ray Rayo que queremos disparar.
+		@param maxDistance Longitud máxima del rayo.
+		@param hit Estructura que devuelve el punto de colisión, la distancia y la normal
+		del golpeo.
+		@param filterMask Máscara que indica contra que grupos de colisión queremos que choque
+		el raycast.
+		@return true si se ha golpeado a una entidad.
+		*/
+		bool raycastSingle(const Ray& ray, float maxDistance, CRaycastHit& hit, unsigned int filterMask = 0) const;
+
+		//________________________________________________________________________
+
+		/**
+		Lanza un rayo y devuelve true si se ha golpeado algo. Es el más barato de todas las
+		queries de raycast. Si solo nos interesa saber si golpeamos algo usad esta query.
+
+		@param ray Rayo que queremos disparar
+		@param maxDistance Longitud máxima del rayo.
+		@param filterMask Máscara que indica contra que grupos de colisión queremos que choque
+		el raycast.
+		@return true si se ha golpeado algo, false en caso contrario.
+		*/
+		bool raycastAny(const Ray& ray, float maxDistance, unsigned int filterMask = 0) const;
 
 		//________________________________________________________________________
 
@@ -335,8 +379,10 @@ namespace Physics {
 		@param entitiesHit Array que contiene los punteros a las entidades golpeadas en el overlap. Si
 		no se ha golpeado a ninguna entidad en el overlap el tamaño del vector será 0. IMPORTANTE:
 		El vector que se pasa debe de no haber sido inicializado previamente.
+		@param filterMask Máscara que indica contra que grupos de colisión queremos que choque
+		el overlap.
 		*/
-		void overlapMultiple(const physx::PxGeometry& geometry, const Vector3& position, std::vector<Logic::CEntity*>& entitiesHit);
+		void overlapMultiple(const physx::PxGeometry& geometry, const Vector3& position, std::vector<Logic::CEntity*>& entitiesHit, unsigned int filterMask = 0);
 
 		//________________________________________________________________________
 
@@ -350,9 +396,11 @@ namespace Physics {
 		@param geometry Geometría para la query de overlap. Mirar la documentación para ver que geometrías
 		están soportadas.
 		@param position Posición donde queremos colocar el centro de la geometría dada.
+		@param filterMask Máscara que indica contra que grupos de colisión queremos que choque
+		el overlap.
 		@return True si existe colisión con algún actor, falso en caso contrario.
 		*/
-		bool overlapAny(const physx::PxGeometry& geometry, const Vector3& position);
+		bool overlapAny(const physx::PxGeometry& geometry, const Vector3& position, unsigned int filterMask = 0);
 
 
 		//________________________________________________________________________
@@ -371,15 +419,19 @@ namespace Physics {
 		@param hitSpots Array que devuelve los puntos de colision encontrados. Si no se 
 		encuentras puntos de contacto el tamaño del vector resultante es 0. IMPORTANTE:
 		El vector que se pasa por parámetro debe estar vacio.
+		@param filterMask Máscara que indica contra que grupos de colisión queremos que choque
+		la query de sweep.
 		*/
 		void sweepMultiple(const physx::PxGeometry& geometry, const Vector3& position,
-						   const Vector3& unitDir, float distance, std::vector<CSweepHit>& hitSpots, bool sortResultingArray = false);
+						   const Vector3& unitDir, float distance, std::vector<CSweepHit>& hitSpots, 
+						   bool sortResultingArray = false, unsigned int filterMask = 0);
 
 		//________________________________________________________________________
 
 		/**
 		Dada una geometría, realiza una query de sweep y devuelve true si la geometría dada
-		colisiona contra un actor (dinámico o estático).
+		colisiona contra un actor (dinámico o estático). Además devuelve información sobre
+		la colisión.
 
 		Es mucho más eficiente que sweepMultiple. Usar cuando solo estemos interesados
 		en un hit.
@@ -391,10 +443,32 @@ namespace Physics {
 		@param distance Distancia máxima del barrido.
 		@param hitSpot Si ha habido colisión en el barrido, se guarda en esta variable
 		el punto de colisión.
+		@param filterMask Máscara que indica contra que grupos de colisión queremos que choque
+		la query de sweep.
 		@return True si existe colisión con algún actor, falso en caso contrario.
 		*/
 		bool sweepSingle(const physx::PxGeometry& sweepGeometry, const Vector3& position, 
-						 const Vector3& unitDir, float distance, Vector3& hitSpot);
+						 const Vector3& unitDir, float distance, Vector3& hitSpot, unsigned int filterMask = 0);
+
+		//________________________________________________________________________
+
+		/**
+		Dada una geometría, realiza una query de sweep y devuelve true si la geometría dada
+		colisiona contra un actor (dinámico o estático).
+
+		Es la query de sweep más eficiente.
+
+		@param geometry Geometría para la query de sweep. Mirar la documentación para ver que geometrías
+		están soportadas.
+		@param position Posición donde queremos colocar el centro de la geometría dada.
+		@param unitDir Dirección unitaria en la que queremos que se realice el barrido.
+		@param distance Distancia máxima del barrido.
+		@param filterMask Máscara que indica contra que grupos de colisión queremos que choque
+		la query de sweep.
+		@return true Si el barrido ha impactado contra algo.
+		*/
+		bool sweepAny(const physx::PxGeometry& sweepGeometry, const Vector3& position, 
+					  const Vector3& unitDir, float distance, unsigned int filterMask = 0);
 
 
 		// =======================================================================

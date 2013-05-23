@@ -28,6 +28,7 @@ gráfica de la entidad.
 
 #include "Logic/Messages/MessageTransform.h"
 #include "Logic/Messages/MessageChangeWeaponGraphics.h"
+#include "Logic/Messages/MessageHudDebugData.h"
 
 #include "OgreEntity.h"
 #include "OgreSceneNode.h"
@@ -44,6 +45,10 @@ namespace Logic
 								 _graphicsEntities(0), 
 								 _currentHeight(0),
 								 _verticalSpeed(0.0035f) {
+
+		_runAnim.currentHorizontalPos = 0.0f;
+		_runAnim.horizontalOffset = 0.02f;
+		_runAnim.horizontalSpeed = 0.01f;
 
 	}
 
@@ -180,11 +185,24 @@ namespace Logic
 	void CHudWeapons::movement(unsigned int msecs) {
 		Vector3 weaponPosition = _graphicsEntities[_currentWeapon].graphicsEntity->getTransform().getTrans();
 
-		_currentHeight += _verticalSpeed * msecs;
+		/*_currentHeight += _verticalSpeed * msecs;
 		if(_currentHeight > 2 * Math::PI) _currentHeight = 0;
 
 		weaponPosition.y += sin(_currentHeight) * 0.00045f;
-		_graphicsEntities[_currentWeapon].graphicsEntity->setPosition(weaponPosition);
+		/*_graphicsEntities[_currentWeapon].graphicsEntity->setPosition(weaponPosition);*/
+
+		/*Matrix4 transform = _graphicsEntities[_currentWeapon].graphicsEntity->getTransform();
+		Math::yaw(Math::HALF_PI, transform);
+		Vector3 horizontal = Math::getDirection(transform);
+
+		_runAnim.currentHorizontalPos += _runAnim.horizontalSpeed * msecs;
+		if(_runAnim.currentHorizontalPos > ((2 * Math::PI) + Math::HALF_PI)) _runAnim.currentHorizontalPos = Math::HALF_PI;
+
+		// Multiplicamos el vector horizontal normalizado por el desplazamiento y lo sumamos al offset
+		horizontal *= sin(_runAnim.currentHorizontalPos) * _runAnim.horizontalOffset;
+		weaponPosition += horizontal;
+		weaponPosition.y += abs( sin(_runAnim.currentHorizontalPos) * _runAnim.horizontalOffset );
+		_graphicsEntities[_currentWeapon].graphicsEntity->setPosition(weaponPosition);*/
 	}
 	//---------------------------------------------------------
 
