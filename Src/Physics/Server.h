@@ -379,8 +379,10 @@ namespace Physics {
 		@param entitiesHit Array que contiene los punteros a las entidades golpeadas en el overlap. Si
 		no se ha golpeado a ninguna entidad en el overlap el tamaño del vector será 0. IMPORTANTE:
 		El vector que se pasa debe de no haber sido inicializado previamente.
+		@param filterMask Máscara que indica contra que grupos de colisión queremos que choque
+		el overlap.
 		*/
-		void overlapMultiple(const physx::PxGeometry& geometry, const Vector3& position, std::vector<Logic::CEntity*>& entitiesHit);
+		void overlapMultiple(const physx::PxGeometry& geometry, const Vector3& position, std::vector<Logic::CEntity*>& entitiesHit, unsigned int filterMask = 0);
 
 		//________________________________________________________________________
 
@@ -394,9 +396,11 @@ namespace Physics {
 		@param geometry Geometría para la query de overlap. Mirar la documentación para ver que geometrías
 		están soportadas.
 		@param position Posición donde queremos colocar el centro de la geometría dada.
+		@param filterMask Máscara que indica contra que grupos de colisión queremos que choque
+		el overlap.
 		@return True si existe colisión con algún actor, falso en caso contrario.
 		*/
-		bool overlapAny(const physx::PxGeometry& geometry, const Vector3& position);
+		bool overlapAny(const physx::PxGeometry& geometry, const Vector3& position, unsigned int filterMask = 0);
 
 
 		//________________________________________________________________________
@@ -415,9 +419,12 @@ namespace Physics {
 		@param hitSpots Array que devuelve los puntos de colision encontrados. Si no se 
 		encuentras puntos de contacto el tamaño del vector resultante es 0. IMPORTANTE:
 		El vector que se pasa por parámetro debe estar vacio.
+		@param filterMask Máscara que indica contra que grupos de colisión queremos que choque
+		la query de sweep.
 		*/
 		void sweepMultiple(const physx::PxGeometry& geometry, const Vector3& position,
-						   const Vector3& unitDir, float distance, std::vector<CSweepHit>& hitSpots, bool sortResultingArray = false);
+						   const Vector3& unitDir, float distance, std::vector<CSweepHit>& hitSpots, 
+						   bool sortResultingArray = false, unsigned int filterMask = 0);
 
 		//________________________________________________________________________
 
@@ -435,10 +442,12 @@ namespace Physics {
 		@param distance Distancia máxima del barrido.
 		@param hitSpot Si ha habido colisión en el barrido, se guarda en esta variable
 		el punto de colisión.
+		@param filterMask Máscara que indica contra que grupos de colisión queremos que choque
+		la query de sweep.
 		@return True si existe colisión con algún actor, falso en caso contrario.
 		*/
 		bool sweepSingle(const physx::PxGeometry& sweepGeometry, const Vector3& position, 
-						 const Vector3& unitDir, float distance, Vector3& hitSpot);
+						 const Vector3& unitDir, float distance, Vector3& hitSpot, unsigned int filterMask = 0);
 
 
 		// =======================================================================

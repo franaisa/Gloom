@@ -625,7 +625,8 @@ namespace Physics {
 	//________________________________________________________________________
 
 	void CServer::sweepMultiple(const physx::PxGeometry& geometry, const Vector3& position,
-								const Vector3& unitDir, float distance, std::vector<CSweepHit>& hitSpots, bool sortResultingArray) {
+								const Vector3& unitDir, float distance, std::vector<CSweepHit>& hitSpots, 
+								bool sortResultingArray, unsigned int filterMask) {
 
 		// Booleano que indicara si hay elementos que bloquean el hit
 		bool blockingHit;
@@ -640,10 +641,20 @@ namespace Physics {
 		// Seteamos los flags de sweep
 		const PxSceneQueryFlags outputFlags = PxSceneQueryFlag::eDISTANCE			| 
 											  PxSceneQueryFlag::eIMPACT				| 
-											  PxSceneQueryFlag::eNORMAL				|
-											  PxSceneQueryFlag::eINITIAL_OVERLAP;
+											  PxSceneQueryFlag::eNORMAL;
 
-		unsigned int nbHits = _scene->sweepMultiple(geometry, pose, Vector3ToPxVec3(unitDir), distance, outputFlags, hitBuffer, bufferSize, blockingHit);
+		unsigned int nbHits;
+		// Si nos pasan como máscara la 0, hacemos una query normal. En caso contrario
+		// hacemos la query usando el filtro que nos dan.
+		if(filterMask == 0) {
+			nbHits = _scene->sweepMultiple(geometry, pose, Vector3ToPxVec3(unitDir), distance, outputFlags, hitBuffer, bufferSize, blockingHit);
+		}
+		else {
+			PxSceneQueryFilterData filters;
+			filters.data.word0 = filterMask;
+			nbHits = _scene->sweepMultiple(geometry, pose, Vector3ToPxVec3(unitDir), distance, outputFlags, hitBuffer, bufferSize, blockingHit, filters);
+		}
+
 		while(nbHits == -1) {
 			// Si el buffer se ha desbordado aumentamos su tamaño al doble
 			// y volvemos ha realizar la query
@@ -687,11 +698,8 @@ namespace Physics {
 	}
 	//________________________________________________________________________
 
-	
-
-
 	bool CServer::sweepSingle(const physx::PxGeometry& sweepGeometry, const Vector3& position, 
-						      const Vector3& unitDir, float distance, Vector3& hitSpot) {
+						      const Vector3& unitDir, float distance, Vector3& hitSpot, unsigned int filterMask) {
 
 		// Seteamos los flags de sweep
 		const PxSceneQueryFlags outputFlags = PxSceneQueryFlag::eDISTANCE | PxSceneQueryFlag::eIMPACT | 
@@ -702,17 +710,24 @@ namespace Physics {
 		// Contendra el hit obtenido
 		PxSweepHit hit;
 
-		// Hacer un barrido contra objetos estaticos y dinamicos. 
-		// El resultado de esta llamada es un booleano que devuelve true si se ha golpeado algo y false de lo contrario.
-		bool status = _scene->sweepSingle(sweepGeometry, pose, Vector3ToPxVec3(unitDir), distance, outputFlags, hit);
+		bool status;
+		if(filterMask == 0) {
+			status = _scene->sweepSingle(sweepGeometry, pose, Vector3ToPxVec3(unitDir), distance, outputFlags, hit);
+		}
+		else {
+			PxSceneQueryFilterData filters;
+			filters.data.word0 = filterMask;
+			status = _scene->sweepSingle(sweepGeometry, pose, Vector3ToPxVec3(unitDir), distance, outputFlags, hit, filters);
+		}
 
 		hitSpot = status ? PxVec3ToVector3(hit.impact) : Vector3::ZERO;
 		return status;
 
 	}
+
 	//________________________________________________________________________
 
-	void CServer::overlapMultiple(const PxGeometry& geometry, const Vector3& position, std::vector<Logic::CEntity*>& entitiesHit) {
+	void CServer::overlapMultiple(const PxGeometry& geometry, const Vector3& position, std::vector<Logic::CEntity*>& entitiesHit, unsigned int filterMask) {
 		// Comprobar que es una de las geometrias soportadas por la query de overlap
 
 		// La situamos en la posicion dada
@@ -726,8 +741,14 @@ namespace Physics {
 		// Calculamos el overlap contra objetos dinamicos y contra estaticos.
 		// El valor de retorno es el numero de hits del buffer o -1 si el buffer no es lo suficientemente
 		// grande.
-		PxSceneQueryFilterFlags filter(PxSceneQueryFilterFlag::eDYNAMIC | PxSceneQueryFilterFlag::eSTATIC);
-		PxSceneQueryFilterData filterData(filter);
+		PxSceneQueryFilterData filterData( PxSceneQueryFilterFlags(PxSceneQueryFilterFlag::eDYNAMIC | PxSceneQueryFilterFlag::eSTATIC) );
+
+		// Si nos pasan como máscara la 0, hacemos una query normal. En caso contrario
+		// hacemos la query usando el filtro que nos dan.
+		if(filterMask != 0) {
+			filterData.data.word0 = filterMask;
+		}
+
 		unsigned int nbHits = _scene->overlapMultiple(geometry, pose, hitBuffer, bufferSize, filterData);
 		while(nbHits == -1) {
 			// Si el buffer se ha desbordado aumentamos su tamaño al doble
@@ -758,9 +779,17 @@ namespace Physics {
 
 	//________________________________________________________________________
 
-	bool CServer::overlapAny(const PxGeometry& geometry, const Vector3& position) {
+	bool CServer::overlapAny(const PxGeometry& geometry, const Vector3& position, unsigned int filterMask) {
 		PxShape* hit;
-		return _scene->overlapAny(geometry, PxTransform ( Vector3ToPxVec3(position) ), hit);
+
+		if(filterMask == 0) {
+			return _scene->overlapAny(geometry, PxTransform ( Vector3ToPxVec3(position) ), hit);
+		}
+		else {
+			PxSceneQueryFilterData filters;
+			filters.data.word0 = filterMask;
+			return _scene->overlapAny(geometry, PxTransform ( Vector3ToPxVec3(position) ), hit, filters);
+		}
 	}
 
 } // namespace Physics
