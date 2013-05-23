@@ -51,7 +51,7 @@ namespace Graphics
 
 		@param name Nombre del Particle.
 		*/
-		CParticle(const std::string &unicName, const std::string &particleName, bool isOverlay = false);
+		CParticle(const std::string &particleName, bool isOverlay = false);
 
 		/**
 		Destructor de la partícula.
@@ -71,7 +71,10 @@ namespace Graphics
 		*/
 		Vector3 getPosition();
 
-
+		/**
+		Fuerza la carga de los recursos de la particula
+		*/
+		void loadResources();
 
 		/**
 		Setea la direccion del emisor que se le introduce a la particula, lleva la magnitud ya multiplicada por la direccion
@@ -89,6 +92,7 @@ namespace Graphics
 
 		Ogre::SceneNode * getSceneNode(){ return _sceneNode;}
 
+		
 
 	protected:
 		/** 

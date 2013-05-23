@@ -70,7 +70,7 @@ namespace Logic
 	
 	void CParticle::onActivate() {
 		if(!_particleName.empty()){
-			_particle = new Graphics::CParticle( _entity->getName(), _particleName );
+			_particle = new Graphics::CParticle(_particleName );
 			_particle->setPosition( _entity->getPosition() + ( _particleOffset * _entity->getOrientation() ) );
 		}
 
@@ -94,7 +94,7 @@ namespace Logic
 				std::shared_ptr<CMessageCreateParticle> createParticleMsg = std::static_pointer_cast<CMessageCreateParticle>(message);
 
 				Graphics::CParticle *particle = Graphics::CServer::getSingletonPtr()->getActiveScene()->createParticle(
-					_entity->getName(),createParticleMsg->getParticle(), createParticleMsg->getPosition(), createParticleMsg->getDirectionWithForce());
+					createParticleMsg->getParticle(), createParticleMsg->getPosition(), createParticleMsg->getDirectionWithForce());
 				
 				break;
 			}

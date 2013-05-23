@@ -49,7 +49,7 @@ Contiene la implementación de la clase que maneja el Particle.
 namespace Graphics 
 {
 	//Constructor de la clase CParticle
-	CParticle::CParticle(const std::string &unicName, const std::string &particleName, bool isOverlay)
+	CParticle::CParticle(const std::string &particleName, bool isOverlay)
 	{
 		static int counter = 0;
 	
@@ -58,8 +58,8 @@ namespace Graphics
 		//scene->createSceneNode(nameSceneNode);
 		char num[5];
 		sprintf(num, "%d", counter);
-		std::string nameSceneNode = "SceneNode_"+_nameParticle + num;
-		_nameParticle = unicName + num;	
+		std::string nameSceneNode = "SceneNode_"+particleName + num;
+		_nameParticle = particleName + num;	
 		/*
 		if(scene->getSceneMgr()->hasParticleSystem(_nameParticle)){
 			_particleSystem = scene->getSceneMgr()->getParticleSystem(_nameParticle);
@@ -101,35 +101,15 @@ namespace Graphics
 	void CParticle::setDirection(const Vector3 &directionWithForce){
 		
 		_particleSystem->getEmitter(0)->setDirection(directionWithForce*10);
-		
-		/*
-		Ogre::ParticleAffector *aff = _particleSystem->getAffector(0);
-		//Ogre::ParticleAffector *aff = _particleSystem->addAffector("LinearForce");
-		
-		
-		std::string &aux= Ogre::StringConverter::toString(direction);
-		
-		
-		Ogre::String key = Ogre::StringInterface::getParameter("force_vector");
-		aff->setParameter(key,aux);
-		*/
-
-		/*
-		Ogre::String &key2 = Ogre::StringConverter::toString(Ogre::ParameterType::PT_STRING);
-		Ogre::String &key3 = Ogre::StringConverter::toString();
-		aff->setParameter("PT_STRING","FA_ADD");
-		*/
-		
+				
 	}
 	//--------------------------------------------------------
-	/*
-	void CParticle::deactivateParticle(const std::string &name) 
+	
+	void CParticle::loadResources()
 	{
-		Graphics::CScene* _scen = Graphics::CServer::getSingletonPtr()->getActiveScene();
-		//_scen->deleteParticle(name);
-
-	} // deactivateParticle
-	*/
+		
+	} // loadResources
+	
 
 	//--------------------------------------------------------
 	

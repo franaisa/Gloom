@@ -39,12 +39,6 @@ namespace Graphics
 	{
 	public:
 
-
-
-		/////////////////////////////////////////////////////////////////////////////////////////
-		/////////////////////////////////////////////////////////////////////////////////////////
-	protected:
-
 		/**
 		Constructor de la clase.
 		*/
@@ -53,20 +47,13 @@ namespace Graphics
 		/**
 		Destructor de la aplicación.
 		*/
-		virtual ~CPoolParticle();
+		~CPoolParticle();
 
 		/**
-		Despierta la escena y crea un viewport que ocupa toda la
-		pantalla.
+		Activa el poolParticle para que lea las particulas y las ponga en su mapa.
 		*/
 		void activate();
 
-		/**
-		Duerme la escena y destruye su viewport para que no se siga 
-		reenderizando.
-		*/
-		void deactivate();
-		
 		/**
 		Actualiza el estado de la escena cada ciclo. Llama a su vez a 
 		todas las entidades.
@@ -76,6 +63,11 @@ namespace Graphics
 		*/
 		void tick(float secs);
 
+		/////////////////////////////////////////////////////////////////////////////////////////
+		/////////////////////////////////////////////////////////////////////////////////////////
+	protected:
+
+		void loadParticleSystem(const std::string &completeNameParticleSystem);
 
 		struct TParticles{
 			unsigned int index;
