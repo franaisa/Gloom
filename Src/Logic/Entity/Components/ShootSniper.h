@@ -45,17 +45,6 @@ namespace Logic {
 
 		//__________________________________________________________________
 
-		/**
-		Método que se encarga de mandar los mensajes que correspondan a la entidad
-		que se ha golpeado en caso de hacer hit.
-
-		Sencillamente reutiliza la implementación por defecto de CShootRaycast.
-
-		@param entityHit Pareja que contiene el puntero a la entidad que se ha dado
-		(o NULL si no se ha colisionado con ninguna) y el rayo que se disparo para
-		comprobar si habia colisiones.
-		*/
-		virtual void triggerHitMessages(std::pair<CEntity*, Ray> entityHit) { CShootRaycast::triggerHitMessages(entityHit); }
 		
 		/**
 		Redefinimos porque la sniper tendrá un comportamiento diferente.
@@ -67,7 +56,23 @@ namespace Logic {
 		*/
 		virtual void secondaryShoot();
 
+		// =======================================================================
+		//                    METODOS HEREDADOS DE ICOMPONENT
+		// =======================================================================
 
+
+		/**
+		Inicialización del componente utilizando la información extraída de
+		la entidad leída del mapa (Maps::CEntity). Toma del mapa el atributo
+		speed que indica a la velocidad a la que se moverá el jugador.
+
+		
+		@param entity Entidad a la que pertenece el componente.
+		@param map Mapa Lógico en el que se registrará el objeto.
+		@param entityInfo Información de construcción del objeto leído del fichero de disco.
+		@return Cierto si la inicialización ha sido satisfactoria.
+		*/
+		virtual bool spawn(CEntity* entity, CMap *map, const Map::CEntity *entityInfo);
 		
 		// =======================================================================
 		//                          METODOS PROPIOS
@@ -88,6 +93,26 @@ namespace Logic {
 		*/
 		void secondaryFireWeapon();
 
+
+		/**
+		Método que se encarga de intentar aplicar daño por expansión al utilizar el disparo secundario de la sniper.
+
+		@param entityHit Entidad a partir de la cual queremos expandir el daño.
+		@return Devuelve la entidad a la que hay que aplicar daño de expansión.
+		*/
+		CEntity* findEnemyToExpand(CEntity* entityHit);
+
+	private:
+
+		/**
+		Distancia máxima de expansión para el disparo secundario de la sniper.
+		*/
+		float _maxExpansiveDistance;
+
+		/**
+		Numero de balas que consume el disparo secundario.
+		*/
+		int _secondaryConsumeAmmo;
 
 	}; // class CShootSniper
 

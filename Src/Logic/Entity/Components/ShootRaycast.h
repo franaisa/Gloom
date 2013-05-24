@@ -118,24 +118,22 @@ namespace Logic {
 		armas pueden seguir el mismo patrón de disparo.
 
 		@return Un puntero a la entidad con la que se ha colisionado (o NULL si no
-		ha habido colisión) y el rayo que se lanzó para comprobar dicha colisión.
+		ha habido colisión).
 		*/
-		virtual std::pair<CEntity*, Ray> fireWeapon();
+		virtual CEntity* fireWeapon();
 
 		//__________________________________________________________________
 
 		/**
-		Método que se encarga de mandar los mensajes que corresopondan a la entidad
+		Método que se encarga de mandar los mensajes que correspondan a la entidad
 		que se ha golpeado en caso de hacer hit.
 
 		A pesar de que se trata de un método virtual puro, esta clase ofrece una
 		implementación por defecto que será útil para la mayoría de las subclases. 
 
-		@param entityHit Pareja que contiene el puntero a la entidad que se ha dado
-		(o NULL si no se ha colisionado con ninguna) y el rayo que se disparo para
-		comprobar si habia colisiones.
+		@param entityHit puntero a la entidad que se ha dado (o NULL si no se ha colisionado con ninguna).
 		*/
-		virtual void triggerHitMessages(std::pair<CEntity*, Ray> entityHit);
+		virtual void triggerHitMessages(CEntity* entityHit);
 
 		/**
 		Este es el método que todas las armas deben redefinir si quieren una accion cuando se suelta el boton de disparo secundario.

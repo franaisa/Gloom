@@ -51,18 +51,6 @@ namespace Logic {
 		//__________________________________________________________________
 
 		/**
-		Método que se encarga de mandar los mensajes que correspondan a la entidad
-		que se ha golpeado en caso de hacer hit.
-
-		Sencillamente reutiliza la implementación por defecto de CShootRaycast.
-
-		@param entityHit Pareja que contiene el puntero a la entidad que se ha dado
-		(o NULL si no se ha colisionado con ninguna) y el rayo que se disparo para
-		comprobar si habia colisiones.
-		*/
-		virtual void triggerHitMessages(std::pair<CEntity*, Ray> entityHit) { CShootRaycast::triggerHitMessages(entityHit); }
-
-		/**
 		Método virtual que procesa un mensaje.
 
 		@param message Mensaje a procesar.
