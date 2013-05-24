@@ -443,6 +443,9 @@ namespace BaseSubsystems
 		}
 		catch(Ogre::Exception e)
 		{
+			std::stringstream aux;
+			aux << "\Ha petado ogre, te recomiendo q pongas un breakpoint y te enteres por que.\n Aqui tienes la descripcion del error: " << e.getDescription();
+			assert(aux);
 			return false;
 		}
 
