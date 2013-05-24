@@ -196,8 +196,10 @@ namespace BaseSubsystems
 				return false;
 			}
 			// Si tras actualizar la configuración sigue sin poderse desistimos.
+			
 			if(!initOgreResources())
 				return false;
+				
 		}
 		return true;
 

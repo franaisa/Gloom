@@ -1,4 +1,4 @@
-particle_system sniper
+particle_system 1sniper
 {
 	material Plasma1
 	particle_width 0.4
