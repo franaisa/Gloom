@@ -94,10 +94,10 @@ namespace Logic {
 		shared_ptr<CMessagePlayerSnapshot> snapshotMsg = static_pointer_cast<CMessagePlayerSnapshot>(message);
 		vector<Matrix4> transformBuffer = snapshotMsg->getTransformBuffer();
 
+		interpolateSnapshot(transformBuffer);
+
 		vector<AnimInfo> tempAnimBuffer = snapshotMsg->getAnimationBuffer();
 		_animationBuffer.insert( _animationBuffer.end(), tempAnimBuffer.begin(), tempAnimBuffer.end() );
-
-		interpolateSnapshot(transformBuffer);
 	}
 
 	//__________________________________________________________________
@@ -111,10 +111,10 @@ namespace Logic {
 
 	void CPlayerInterpolator::onFixedTick(unsigned int msecs) {
 		if( !_transformBuffer.empty() ) {
-			// Podria tratarse de algun elemento que no sea un jugador, en general solo tendran
-			// entidad grafica, así que basta con setear la entidad gráfica.
-			//_controller->setPhysicPosition( _transformBuffer.front().getTrans() );
-			//_entity->setTransform( _transformBuffer.front() );
+			// Posicionamos el grafico y el controlador fisico donde nos indique
+			// el buffer de posiciones interpolado
+			_controller->setPhysicPosition( _transformBuffer.front().getTrans() );
+			_entity->setTransform( _transformBuffer.front() );
 			_transformBuffer.pop_front();
 
 			if( !_animationBuffer.empty() ) {
@@ -129,7 +129,7 @@ namespace Logic {
 						shared_ptr<CMessageStopAnimation> stopAnimMsg = make_shared<CMessageStopAnimation>();
 						stopAnimMsg->setString(info.animName);
 
-						//_entity->emitMessage(stopAnimMsg);
+						_entity->emitMessage(stopAnimMsg);
 					}
 					else {
 						// Mandar set animation
@@ -137,7 +137,7 @@ namespace Logic {
 						setAnimMsg->setString(info.animName);
 						setAnimMsg->setBool(info.loop);
 
-						//_entity->emitMessage(setAnimMsg);
+						_entity->emitMessage(setAnimMsg);
 					}
 				}
 			}
