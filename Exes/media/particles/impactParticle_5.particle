@@ -1,4 +1,4 @@
-particle_system impactParticle
+particle_system ImpactParticle
 {
 	material Particles/Sun.000
 	particle_width 1.0
