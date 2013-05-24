@@ -17,10 +17,6 @@
 #include <deque>
 
 namespace Logic {
-	class CPhysicController;
-}
-
-namespace Logic {
 	
 	/**
 	
@@ -104,8 +100,6 @@ namespace Logic {
 		//                    METODOS HEREDADOS DE ICOMPONENT
 		// =======================================================================
 
-		virtual void onStart();
-
 
 		/**
 		Método llamado en cada frame. En este componente se encarga
@@ -130,7 +124,6 @@ namespace Logic {
 		unsigned int _samplesPerSnapshot;
 
 		std::deque<Matrix4> _buffer;
-		CPhysicController* _controller;
 
 	}; // class CTransformInterpolator
 
