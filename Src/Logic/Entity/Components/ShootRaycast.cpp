@@ -74,9 +74,9 @@ namespace Logic {
 			decrementAmmo();
 
 			for(int i = 0; i < _numberShots; ++i) {
-				std::pair<CEntity*, Ray> entityHit = fireWeapon();
+				CEntity* entityHit = fireWeapon();
 				
-				if(entityHit.first != NULL) {
+				if(entityHit != NULL) {
 					triggerHitMessages(entityHit);
 				}
 			}
@@ -104,7 +104,7 @@ namespace Logic {
 	//__________________________________________________________________
 
 	// Dispara rayos mediante raycast dependiendo de los parametros del arquetipo del arma
-	std::pair<CEntity*, Ray> CShootRaycast::fireWeapon() {
+	CEntity* CShootRaycast::fireWeapon() {
 		//Direccion
 		Vector3 direction = Math::getDirection(_entity->getOrientation()); 
 		//Me dispongo a calcular la desviacion del arma, en el map.txt se pondra en grados de dispersion (0 => sin dispersion)
@@ -126,34 +126,25 @@ namespace Logic {
 
 		// Rayo lanzado por el servidor de físicas de acuerdo a la distancia de potencia del arma
 		std::vector<Physics::CRaycastHit> hits;
-		Physics::CServer::getSingletonPtr()->raycastMultiple(ray, _distance,hits, true);
+		Physics::CServer::getSingletonPtr()->raycastMultiple(ray, _distance,hits, true,Physics::CollisionGroup::ePLAYER);
 
-		//Si hemos tocado algo que no somos nosotros mismos,ni spawnpoints
-		std::pair<CEntity*, Ray> pair;
-		bool touch=false;
-		for(int i=0;i<hits.size();++i){
-			if(hits[i].entity->getType().compare("SpawnPoint")!=0 && hits[i].entity->getEntityID()!=_entity->getEntityID()){
-				pair.first=hits[i].entity;
-				pair.second=ray;
-				touch=true;
-				break;
-			}
-		}
-		//Si no tocamos nada devolvemos la entidad con puntero nulo
-		if(!touch)
-			pair.first=NULL;
-		return pair;
+		//Devolvemos lo primero tocado que no seamos nosotros mismos
+		CEntity* touched=NULL;
+		for(int i=0;i<hits.size();++i)
+			if(hits[i].entity!=_entity)
+				touched=hits[i].entity;
+		return touched;
 		
 	}// fireWeapon
 	
 	//__________________________________________________________________
 
 	// Implementación por defecto de triggerHitMessages
-	void CShootRaycast::triggerHitMessages(std::pair<CEntity*, Ray> entityHit) {
+	void CShootRaycast::triggerHitMessages(CEntity* entityHit) {
 		std::shared_ptr<CMessageDamaged> m = std::make_shared<CMessageDamaged>();
 		m->setDamage(_damage);
 		m->setEnemy(_entity);
-		entityHit.first->emitMessage(m);
+		entityHit->emitMessage(m);
 
 	}// triggerHitMessages
 
