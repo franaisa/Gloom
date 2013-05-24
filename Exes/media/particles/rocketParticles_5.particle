@@ -1,7 +1,7 @@
 // Example particle systems
 
 // smoke
-particle_system RocketParticles
+particle_system rocketParticles
 {
  	material SmokeMaterial
 	particle_width 1
