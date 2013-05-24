@@ -70,8 +70,10 @@ namespace Graphics
 	void CPoolParticle::loadParticleSystem(const std::string &completeNameParticleSystem){
 		if(completeNameParticleSystem == "." || completeNameParticleSystem == ".." ||  completeNameParticleSystem ==  "LEEME.txt")
 			return;
-
-		std::string nameParticleSystemAndAmount = completeNameParticleSystem.substr(0, completeNameParticleSystem.find(".particle"));
+		int position = completeNameParticleSystem.find(".particle");
+		if(position == std::string::npos)
+			return;
+		std::string nameParticleSystemAndAmount = completeNameParticleSystem.substr(0, position);
 		int positionUnderscore = nameParticleSystemAndAmount.length()-1;
 		int amount = std::atoi(nameParticleSystemAndAmount.substr(positionUnderscore).c_str());
 		std::string nameParticleSystem = nameParticleSystemAndAmount.substr(0,positionUnderscore-1);

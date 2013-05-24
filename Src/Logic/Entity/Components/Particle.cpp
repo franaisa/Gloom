@@ -58,7 +58,7 @@ namespace Logic
 			_particleName = entityInfo->getStringAttribute("particleName");
 
 			if( entityInfo->hasAttribute("particleEmitterDirection") )
-				_particle->setDirection( _particleEmitterDirection * _entity->getOrientation() );
+				_particleEmitterDirection = entityInfo->getVector3Attribute("particleEmitterDirection");
 		}
 		return true;
 
