@@ -1,18 +1,19 @@
 /**
-@file TransformInterpolator.h
+@file PlayerInterpolator.h
 
 
-@see Logic::CTransformInterpolator
+@see Logic::CPlayerInterpolator
 @see Logic::IComponent
 
 @author Francisco Aisa García
 @date Mayo, 2013
 */
 
-#ifndef __Logic_TransformInterpolator_H
-#define __Logic_TransformInterpolator_H
+#ifndef __Logic_PlayerInterpolator_H
+#define __Logic_PlayerInterpolator_H
 
 #include "Logic/Entity/Component.h"
+#include "Logic/Messages/MessagePlayerSnapshot.h"
 
 #include <deque>
 
@@ -30,8 +31,8 @@ namespace Logic {
 	@date Mayo, 2013
 	*/
 	
-	class CTransformInterpolator : public IComponent {
-		DEC_FACTORY(CTransformInterpolator);
+	class CPlayerInterpolator : public IComponent {
+		DEC_FACTORY(CPlayerInterpolator);
 	public:
 
 
@@ -41,12 +42,12 @@ namespace Logic {
 
 
 		/** Constructor por defecto. */
-		CTransformInterpolator();
+		CPlayerInterpolator();
 
 		//__________________________________________________________________
 
 		/** Destructor. */
-		virtual ~CTransformInterpolator();
+		virtual ~CPlayerInterpolator();
 
 
 		// =======================================================================
@@ -125,16 +126,20 @@ namespace Logic {
 		// =======================================================================
 		//                          MIEMBROS PRIVADOS
 		// =======================================================================
-
+		
 		unsigned int _ticksPerSample;
 		unsigned int _samplesPerSnapshot;
+		
+		unsigned int _ticksPerBuffer;
+		unsigned int _tickCounter;
 
-		std::deque<Matrix4> _buffer;
+		std::deque<Matrix4> _transformBuffer;
+		std::deque<AnimInfo> _animationBuffer;
 		CPhysicController* _controller;
 
-	}; // class CTransformInterpolator
+	}; // class CPlayerInterpolator
 
-	REG_FACTORY(CTransformInterpolator);
+	REG_FACTORY(CPlayerInterpolator);
 
 } // namespace Logic
 

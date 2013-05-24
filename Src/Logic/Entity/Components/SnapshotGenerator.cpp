@@ -6,7 +6,7 @@
 @see Logic::IComponent
 
 @author Francisco Aisa García
-@date Marzo, 2013
+@date Mayo, 2013
 */
 
 #include "SnapshotGenerator.h"

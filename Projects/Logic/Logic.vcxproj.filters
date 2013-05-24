@@ -538,6 +538,15 @@
     <ClCompile Include="..\..\Src\Logic\Maps\WorldState.cpp">
       <Filter>Maps\Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Messages\MessagePlayerSnapshot.cpp">
+      <Filter>Messages\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\PlayerSnapshot.cpp">
+      <Filter>Entity\Components\Network\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\PlayerInterpolator.cpp">
+      <Filter>Entity\Components\Network\Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Src\Logic\Maps\ComponentFactory.h">
@@ -993,11 +1002,17 @@
     <ClInclude Include="..\..\Src\Logic\Maps\WorldState.h">
       <Filter>Maps\Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Src\Logic\Entity\Components\PlayerSnapshot.h">
-      <Filter>Entity\Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Messages\MessageRebound.h">
       <Filter>Entity\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Messages\MessagePlayerSnapshot.h">
+      <Filter>Messages\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\PlayerSnapshot.h">
+      <Filter>Entity\Components\Network\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\PlayerInterpolator.h">
+      <Filter>Entity\Components\Network\Header</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
