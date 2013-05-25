@@ -43,8 +43,7 @@ namespace Logic {
 	//---------------------------------------------------------
 
 	CHudWeapons::CHudWeapons() : _currentWeapon(0), 
-								 _graphicsEntities(0),
-								 _offset(Vector3::ZERO) {
+								 _graphicsEntities(0) {
 
 		_runAnim.currentHorizontalPos = Math::HALF_PI;
 		_runAnim.horizontalSpeed = 0.0075f;
@@ -53,6 +52,8 @@ namespace Logic {
 		_runAnim.currentVerticalPos = Math::HALF_PI;
 		_runAnim.verticalSpeed = 2 * _runAnim.horizontalSpeed;
 		_runAnim.verticalOffset = 0.06f;
+
+		_playerIsWalking = false;
 	}
 
 	//---------------------------------------------------------
@@ -189,29 +190,42 @@ namespace Logic {
 	//---------------------------------------------------------
 
 	void CHudWeapons::onFixedTick(unsigned int msecs) {
-		movement(msecs);
+		if(_playerIsWalking)
+			movement(msecs);
 	}
+
 	//---------------------------------------------------------
+
+	void CHudWeapons::playerIsWalking(bool walking, int direction) { 
+		_playerIsWalking = walking;
+		if(_playerIsWalking) {
+			//_walkAnim.currentStrafingDir = _strafingDir;
+			//_strafingDir = direction;
+		}
+		else {
+			//_strafingDir = 0;
+		}
+	}
+
 	void CHudWeapons::movement(unsigned int msecs) {
 		// Obtenemos la posicion del arma
 		Matrix4 weaponTransform = _graphicsEntities[_currentWeapon].graphicsEntity->getTransform();
 		Math::yaw(Math::HALF_PI, weaponTransform);
-		Vector3 horizontal = Math::getDirection(weaponTransform);
+		Vector3 offset = Math::getDirection(weaponTransform);
 
 		_runAnim.currentHorizontalPos += _runAnim.horizontalSpeed * msecs;
 		if(_runAnim.currentHorizontalPos > ((2 * Math::PI) + Math::HALF_PI)) _runAnim.currentHorizontalPos = Math::HALF_PI;
 
 		// Multiplicamos el vector horizontal normalizado por el desplazamiento y lo sumamos al offset
 		float horizontalFactor = sin(_runAnim.currentHorizontalPos) * _runAnim.horizontalOffset;
-		horizontal *= horizontalFactor * Vector3(1.0f, 0.0f, 1.0f);
-		_offset = horizontal;
+		offset *= horizontalFactor * Vector3(1.0f, 0.0f, 1.0f);
 
 		_runAnim.currentVerticalPos += _runAnim.verticalSpeed * msecs;
 		if(_runAnim.currentVerticalPos > ((2 * Math::PI) + Math::HALF_PI)) _runAnim.currentVerticalPos = Math::HALF_PI; 
 
-		_offset.y = sin(_runAnim.currentVerticalPos) * _runAnim.verticalOffset;
+		offset.y = sin(_runAnim.currentVerticalPos) * _runAnim.verticalOffset;
 
-		_graphicsEntities[_currentWeapon].graphicsEntity->setPosition(_graphicsEntities[_currentWeapon].defaultPos + _offset);
+		_graphicsEntities[_currentWeapon].graphicsEntity->setPosition(_graphicsEntities[_currentWeapon].defaultPos + offset);
 	}
 	//---------------------------------------------------------
 

@@ -117,6 +117,8 @@ namespace Logic {
 		*/
 		void movement(unsigned int msecs);
 
+		void playerIsWalking(bool walking, int direction = 0);
+
 	protected:
 
 		virtual void onStart();
@@ -134,6 +136,8 @@ namespace Logic {
 		arma actual equipada
 		*/
 		int _currentWeapon;
+
+		bool _playerIsWalking;
 		
 		/**
 		Estructura donde se guardara el offset y las modificaciones en el arma
@@ -171,8 +175,6 @@ namespace Logic {
 		};
 		
 		RunAnim _runAnim;
-
-		Vector3 _offset;
 
 		//////////////////////Gestion de armas
 		Graphics::COverlay *_overlayWeapon3D[WeaponType::eSIZE];

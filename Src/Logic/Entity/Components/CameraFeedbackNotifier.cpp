@@ -196,6 +196,8 @@ namespace Logic {
 	//________________________________________________________________________
 
 	void CCameraFeedbackNotifier::playerIsWalking(bool walking, int direction) { 
+		_hudWeaponComponent->playerIsWalking(walking, direction);
+		
 		_playerIsWalking = walking;
 		if(_playerIsWalking) {
 			_walkAnim.currentStrafingDir = _strafingDir;
