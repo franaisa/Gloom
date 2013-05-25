@@ -36,9 +36,10 @@ namespace Logic {
 					
 					//Envío el mensaje con valores para que resetee la mirilla
 					auto m = std::make_shared<CMessageHudDispersion>();
-					m->setHeight(-1.0f); 
-					m->setWidth(-1.0f);
+					//m->setHeight(-1.0f); 
+					//m->setWidth(-1.0f);
 					m->setTime(0);
+					m->setReset(true);
 					_entity->emitMessage(m);
 
 					_bMensajeDispMandado = false;
@@ -58,8 +59,12 @@ namespace Logic {
 	} // process
 	//__________________________________________________________________
 
-	void CShootMiniGun::onTick(unsigned int msecs) {
-
+	void CShootMiniGun::onTick(unsigned int msecs) 
+	{
+	}	
+	//__________________________________________________________________
+		void CShootMiniGun::onFixedTick(unsigned int msecs) {
+			//std::cout << "fixed" << std::endl;
 		if (_bLeftClicked)
 		{
 			_iContadorLeftClicked++;
@@ -71,9 +76,10 @@ namespace Logic {
 
 				//Enviamos el mensaje para que empiece a modificar la mirilla con la dispersión
 				std::shared_ptr<CMessageHudDispersion> m = std::make_shared<CMessageHudDispersion>();
-				m->setHeight(10.0f);
-				m->setWidth(10.0f);
+				m->setHeight(8.0f);
+				m->setWidth(9.0f);
 				m->setTime(2500);//Tiempo máximo que bajará el tamaño de la mirilla
+				m->setReset(false);
 				_entity->emitMessage(m);
 				_bMensajeDispMandado = true;
 
@@ -85,8 +91,7 @@ namespace Logic {
 				pero hay que tenerlo en cuenta (también se tiene que tener en cuenta para cuando se ponga la animación
 				de vibración de la minigun).
 				*/
-			}
-			
+			}			
 			else if (_iContadorLeftClicked < 20)
 			{
 				_dispersion = _dispersionOriginal + 5.0f;
@@ -121,15 +126,17 @@ namespace Logic {
 			//No tenemos pulsado el derecho, así que comprobamos si tenemos rafagas que lanzar
 			if (_iRafagas > 0)
 			{
-				std::cout << "disparo" << std::endl;
-				_primaryCanShoot = true; //Ponemos este flag para 'trucar' el disparo y que se salte el cooldown
-				primaryShoot();
 				//TODO: Lanzar aquí el secondShoot con el swift del Screamer
-				--_iRafagas; //disminuimos el número de ráfagas
+				secondaryShoot();
+				_iRafagas = 0;
+
+				//std::cout << "disparo" << std::endl;
+				//_primaryCanShoot = true; //Ponemos este flag para 'trucar' el disparo y que se salte el cooldown
+				//primaryShoot();
+				//--_iRafagas; //disminuimos el número de ráfagas
 			}
 		}
-	}	
-	//__________________________________________________________________
+		}
 
 
 } // namespace Logic
