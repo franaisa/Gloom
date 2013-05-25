@@ -205,6 +205,14 @@ namespace Logic {
 
 		//__________________________________________________________________
 
+		/**
+		Método que decrementa la cantidad de munición que tenemos con el 
+		valor dado por parámetro. Sobre carga del método anterior
+		*/
+		virtual void decrementAmmo(int iAmmo);
+
+		//__________________________________________________________________
+
 		/** Método estático que resetea la cantidad de munición del arma. */
 		virtual void resetAmmo();
 

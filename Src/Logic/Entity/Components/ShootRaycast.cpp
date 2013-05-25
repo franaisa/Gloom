@@ -97,6 +97,47 @@ namespace Logic {
 	void CShootRaycast::secondaryShoot() {
 
 	} // secondaryShoot
+	//__________________________________________________________________
+
+	void CShootRaycast::secondaryShoot(int iRafagas) {
+
+		decrementAmmo(iRafagas);
+
+		//Creación de sweephit para 
+		Physics::SphereGeometry sphere  = Physics::CGeometryFactory::getSingletonPtr()->createSphere(3.5);
+		std::vector<Physics::CSweepHit> hits;
+		//Physics::CServer::getSingletonPtr()->sweepMultiple(sphere, (_entity->getPosition() + Vector3(0,_heightShoot,0)),_directionShoot,_screamerScreamMaxDistance,hitSpots, true);
+		Vector3 vDirectionShoot = Math::getDirection(_entity->getOrientation());
+		Physics::CServer::getSingletonPtr()->sweepMultiple(sphere, (_entity->getPosition() + Vector3(0,_heightShoot,0)),vDirectionShoot, _distance,hits, false, Physics::CollisionGroup::ePLAYER );	
+
+		for(auto it = hits.begin(); it < hits.end(); ++it){
+			std::string typeEntity = (*it).entity->getType();
+			if((*it).entity->getName() != _entity->getName())
+			{
+				int danyoTotal = _damage * iRafagas;
+				std::cout << "Le he dado!!! Danyo = " << danyoTotal << std::endl;
+
+				std::shared_ptr<CMessageDamaged> m = std::make_shared<CMessageDamaged>();
+				m->setDamage(danyoTotal);
+				m->setEnemy(_entity);
+				(*it).entity->emitMessage(m);
+
+				//Le he dado
+				/*
+				Vector3 direct = -(_directionShoot.reflect(-(*it).normal));
+				auto m = std::make_shared<CMessageAddForcePlayer>();
+				m->setForce(_directionShoot * (_screamerScreamForce*(1.0f- (*it).distance/_screamerScreamMaxDistance)));
+				(*it).entity->emitMessage(m);
+
+				auto m2 = std::make_shared<CMessageSetAnimation>();
+				m2->setString("Damage");
+				m2->setBool(false);
+				(*it).entity->emitMessage(m2);*/
+			}
+		}
+	} // secondaryShoot
+	//__________________________________________________________________
+
 
 	void CShootRaycast::stopSecondaryShoot() {
 
@@ -176,6 +217,8 @@ namespace Logic {
 		myManualObject->end(); 
 		myManualObjectNode->attachObject(myManualObject);
 	}// drawRaycast
+
+	//__________________________________________________________________
 
 } // namespace Logic
 

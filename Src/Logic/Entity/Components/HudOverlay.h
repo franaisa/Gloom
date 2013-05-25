@@ -75,6 +75,7 @@ namespace Logic
 			_overlayPanelLocationImpact = NULL;
 
 			_dispersionTime = 0;
+			_resetMirilla = false;
 		}
 		
 
@@ -265,6 +266,8 @@ namespace Logic
 
 		float	_dispersionWidth;
 		float	_dispersionHeight;
+
+		bool	_resetMirilla;
 
 
 		float temporal;

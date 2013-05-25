@@ -66,6 +66,8 @@ namespace Logic {
 		*/
 		virtual void onTick(unsigned int msecs);
 
+		virtual void onFixedTick(unsigned int msecs);
+
 	private:
 
 		/**
@@ -90,10 +92,19 @@ namespace Logic {
 		*/
 		int		_iRafagas;
 
+		/**
+			Variable booleana que controla si tenemos el click izquierdo pulsado
+		*/
 		bool	_bLeftClicked;
 
+		/**
+			Variable para contar cuántas veces se ha pulsado el click izquierdo
+		*/
 		int		_iContadorLeftClicked;
 
+		/**
+			Variable booleana para controlar si se ha mandado ya el mensaje de dispersión
+		*/
 		bool	_bMensajeDispMandado;
 
 

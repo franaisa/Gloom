@@ -23,11 +23,15 @@ namespace Logic {
 		int		getTime			()					{ return _iTime;}
 		void		setTime 		(int iValue)		{ _iTime = iValue; }
 
+		int		getReset		()					{ return _bReset;}
+		void		setReset 		(bool bValue)		{ _bReset = bValue; }
+
 	private:
 		float	_fHeight;
 		float	_fWidth;
 
 		int		_iTime;
+		bool	_bReset;
 
 	};
 	REG_FACTORYMESSAGE(CMessageHudDispersion);

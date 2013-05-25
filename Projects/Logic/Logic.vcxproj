@@ -172,6 +172,7 @@
     <ClCompile Include="..\..\Src\Logic\Messages\MessageAddShield.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageAddWeapon.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageAudio.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Messages\MessageChangeGravity.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageDamageAmplifier.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessagePlayerSnapshot.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageReducedCooldown.cpp" />
@@ -316,6 +317,7 @@
     <ClInclude Include="..\..\Src\Logic\Maps\WorldState.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageActivateScreamerShield.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageCameraRoll.h" />
+    <ClInclude Include="..\..\Src\Logic\Messages\MessageChangeGravity.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageChangeMaterialHudWeapon.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageCameraOffset.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageCreateParticle.h" />
