@@ -506,7 +506,7 @@ namespace Logic
 				break;
 			}
 			case Message::HUD_DISPERSION: {
-				//std::cout << "Recibido#####################################" << std::endl;
+				std::cout << "Recibido#####################################" << std::endl;
 				std::shared_ptr<CMessageHudDispersion> hudDisp = std::static_pointer_cast<CMessageHudDispersion>(message);
 				_dispersionTime = hudDisp->getTime();
 				_resetMirilla = hudDisp->getReset();
