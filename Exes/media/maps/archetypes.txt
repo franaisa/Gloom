@@ -72,8 +72,8 @@ Map = {
 		audioSpawn = "media/audio/spawn.wav",
 		audioNoAmmo = "media/audio/noammo.wav",
 		
-		primarySkillCooldown = 25,
-		secondarySkillCooldown = 25,
+		primarySkillCooldown = 2,
+		secondarySkillCooldown = 2,
 		screamerShieldThreshold = 100,
 		screamerShieldDamageTimeStep = 2,
 		screamerShieldDamageOverTime = 1,
@@ -81,9 +81,12 @@ Map = {
 		screamerShieldRecoveryOverTime = 2,
 		screamerExplotionDamage = 200,
 		screamerExplotionRadius = 50,
+		
+		screamerMaxRebounds = 1,
+		screamerReboundDistance = 20,
 		screamerReboundForce = 2,
 		screamerScreamForce = 2.5,
-		screamerScreamMaxDistance = 100,
+		screamerScreamMaxDistance = 300,
 		
 			weaponhammerName = "hammer",
 			weaponhammerModel = "hammer.mesh",
@@ -817,8 +820,8 @@ Map = {
 		audioSpawn = "media/audio/spawn.wav",
 		audioNoAmmo = "media/audio/noammo.wav",
 		
-		primarySkillCooldown = 25,
-		secondarySkillCooldown = 25,
+		primarySkillCooldown = 2,
+		secondarySkillCooldown = 2,
 		screamerShieldThreshold = 100,
 		screamerShieldDamageTimeStep = 2,
 		screamerShieldDamageOverTime = 1,
@@ -826,9 +829,12 @@ Map = {
 		screamerShieldRecoveryOverTime = 2,
 		screamerExplotionDamage = 200,
 		screamerExplotionRadius = 15,
+		
+		screamerMaxRebounds = 1,
+		screamerReboundDistance = 20,
 		screamerReboundForce = 2,
 		screamerScreamForce = 2.5,
-		screamerScreamMaxDistance = 100,
+		screamerScreamMaxDistance = 130,
 
 			weaponhammerName = "hammer",
 			weaponhammerModel = "hammer.mesh",

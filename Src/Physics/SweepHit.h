@@ -39,6 +39,7 @@ namespace Physics {
 		/** Normal de impacto del sweep. */
 		Vector3 normal;
 		
+		CSweepHit(): entity(0), distance(-1), impact( Vector3::ZERO ), normal( Vector3::ZERO ) {};
 	}; 
 
 } // namespace Physics

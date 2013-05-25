@@ -38,6 +38,8 @@ namespace Physics {
 		Vector3 impact;
 		/** Normal de impacto del raycast. */
 		Vector3 normal;
+
+		CRaycastHit(): entity(0), distance(-1), impact( Vector3::ZERO ), normal( Vector3::ZERO ) {};
 	}; 
 
 } // namespace Physics
