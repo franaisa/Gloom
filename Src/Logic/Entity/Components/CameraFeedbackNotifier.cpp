@@ -45,7 +45,7 @@ namespace Logic {
 														 _strafingDir(0),
 														 _landRecoverySpeed(0.007f),
 														 _currentLandOffset(0),
-														_flashVisible(true){
+														 _flashVisible(true){
 
 
 		_walkAnim.currentHorizontalPos = Math::HALF_PI;
@@ -158,7 +158,7 @@ namespace Logic {
 	//________________________________________________________________________
 
 	void CCameraFeedbackNotifier::onFixedTick(unsigned int msecs) {
-		if(_playerIsLanding) 
+		if(_playerIsLanding)
 			landEffect(msecs);
 		else if(_playerIsWalking && !_playerIsSideColliding)
 			walkEffect(msecs);
@@ -277,6 +277,8 @@ namespace Logic {
 		if(hitForce < -0.3f) {
 			_playerIsLanding = true;
 			_landForce = hitForce * 0.6;
+
+			_hudWeaponComponent->playerIsLanding(hitForce, Math::PI / _landRecoverySpeed);
 		}
 	}
 

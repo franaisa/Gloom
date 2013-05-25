@@ -115,10 +115,16 @@ namespace Logic {
 		Metodo que controla el movimiento del arma,
 		el comentario te lo dejo a ti fran :D
 		*/
-		void movement(unsigned int msecs);
+		void walkAnim(unsigned int msecs);
+
+		void landAnim(unsigned int msecs);
 
 		void playerIsWalking(bool walking, int direction = 0);
 
+		void offsetRecovery(unsigned int msecs);
+
+		void playerIsLanding(float hitForce, float estimatedLandingTime);
+	
 	protected:
 
 		virtual void onStart();
@@ -138,6 +144,7 @@ namespace Logic {
 		int _currentWeapon;
 
 		bool _playerIsWalking;
+		bool _playerIsLanding;
 		
 		/**
 		Estructura donde se guardara el offset y las modificaciones en el arma
@@ -174,7 +181,14 @@ namespace Logic {
 			float verticalOffset;
 		};
 		
+		float _landForce;
+		float _currentLandOffset;
+		float _landSpeed;
+		float _landRecoverySpeed;
+
 		RunAnim _runAnim;
+
+		Vector3 _offset;
 
 		//////////////////////Gestion de armas
 		Graphics::COverlay *_overlayWeapon3D[WeaponType::eSIZE];

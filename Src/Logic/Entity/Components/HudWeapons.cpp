@@ -43,7 +43,14 @@ namespace Logic {
 	//---------------------------------------------------------
 
 	CHudWeapons::CHudWeapons() : _currentWeapon(0), 
-								 _graphicsEntities(0) {
+								 _graphicsEntities(0),
+								 _playerIsWalking(false),
+								 _playerIsLanding(false),
+								 _landForce(0.0f),
+								 _currentLandOffset(0.0f),
+								 _landSpeed(-0.005f),
+								 _landRecoverySpeed(0.01f),
+								 _offset(Vector3::ZERO) {
 
 		_runAnim.currentHorizontalPos = Math::HALF_PI;
 		_runAnim.horizontalSpeed = 0.0075f;
@@ -187,11 +194,38 @@ namespace Logic {
 		_overlayWeapon3D[newWeapon]->setVisible(true);
 		_currentWeapon = newWeapon;
 	}
+
 	//---------------------------------------------------------
 
 	void CHudWeapons::onFixedTick(unsigned int msecs) {
-		if(_playerIsWalking)
-			movement(msecs);
+		if(_playerIsLanding)
+			landAnim(msecs);
+		else if(_playerIsWalking)
+			walkAnim(msecs);
+		else
+			offsetRecovery(msecs);
+	}
+
+	//---------------------------------------------------------
+
+	void CHudWeapons::landAnim(unsigned int msecs) {
+		_currentLandOffset += _landRecoverySpeed * msecs;
+		_offset.y = sin(_currentLandOffset) * _landForce;
+		if(_offset.y >= 0.0f) {
+			_offset.y = _currentLandOffset = _landForce = 0;
+			_playerIsLanding = false;
+		}
+		
+		_graphicsEntities[_currentWeapon].graphicsEntity->setPosition(_graphicsEntities[_currentWeapon].defaultPos + _offset);
+	}
+
+	//---------------------------------------------------------
+
+	void CHudWeapons::offsetRecovery(unsigned int msecs) {
+		_offset *= Vector3(0.85f, 0.85f, 0.85f);
+		_runAnim.currentHorizontalPos *= 0.85f;
+		_runAnim.currentVerticalPos *= 2 * 0.85f;
+		_graphicsEntities[_currentWeapon].graphicsEntity->setPosition(_graphicsEntities[_currentWeapon].defaultPos + _offset);
 	}
 
 	//---------------------------------------------------------
@@ -207,25 +241,35 @@ namespace Logic {
 		}
 	}
 
-	void CHudWeapons::movement(unsigned int msecs) {
+	//---------------------------------------------------------
+
+	void CHudWeapons::playerIsLanding(float hitForce, float estimatedLandingTime) {
+		_playerIsLanding = true;
+		_landForce = hitForce * 0.2f;
+		_landRecoverySpeed = Math::PI / estimatedLandingTime;
+	}
+
+	//---------------------------------------------------------
+
+	void CHudWeapons::walkAnim(unsigned int msecs) {
 		// Obtenemos la posicion del arma
 		Matrix4 weaponTransform = _graphicsEntities[_currentWeapon].graphicsEntity->getTransform();
 		Math::yaw(Math::HALF_PI, weaponTransform);
-		Vector3 offset = Math::getDirection(weaponTransform);
+		_offset = Math::getDirection(weaponTransform);
 
 		_runAnim.currentHorizontalPos += _runAnim.horizontalSpeed * msecs;
 		if(_runAnim.currentHorizontalPos > ((2 * Math::PI) + Math::HALF_PI)) _runAnim.currentHorizontalPos = Math::HALF_PI;
 
 		// Multiplicamos el vector horizontal normalizado por el desplazamiento y lo sumamos al offset
 		float horizontalFactor = sin(_runAnim.currentHorizontalPos) * _runAnim.horizontalOffset;
-		offset *= horizontalFactor * Vector3(1.0f, 0.0f, 1.0f);
+		_offset *= horizontalFactor * Vector3(1.0f, 0.0f, 1.0f);
 
 		_runAnim.currentVerticalPos += _runAnim.verticalSpeed * msecs;
 		if(_runAnim.currentVerticalPos > ((2 * Math::PI) + Math::HALF_PI)) _runAnim.currentVerticalPos = Math::HALF_PI; 
 
-		offset.y = sin(_runAnim.currentVerticalPos) * _runAnim.verticalOffset;
+		_offset.y = sin(_runAnim.currentVerticalPos) * _runAnim.verticalOffset;
 
-		_graphicsEntities[_currentWeapon].graphicsEntity->setPosition(_graphicsEntities[_currentWeapon].defaultPos + offset);
+		_graphicsEntities[_currentWeapon].graphicsEntity->setPosition(_graphicsEntities[_currentWeapon].defaultPos + _offset);
 	}
 	//---------------------------------------------------------
 
