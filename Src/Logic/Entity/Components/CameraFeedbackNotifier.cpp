@@ -16,6 +16,7 @@ del Screamer.
 #include "CameraFeedbackNotifier.h"
 #include "Camera.h"
 #include "AvatarController.h"
+#include "HudWeapons.h"
 #include "Logic/Server.h"
 #include "Logic/Entity/Entity.h"
 #include "Logic/Maps/Map.h"
@@ -30,9 +31,6 @@ del Screamer.
 #include "Logic/Messages/MessageControl.h"
 #include "Logic/Messages/MessageImpact.h"
 #include "Logic/Messages/MessageHudDebugData.h"
-
-
-
 
 namespace Logic {
 	
@@ -125,10 +123,12 @@ namespace Logic {
 	//________________________________________________________________________
 
 	void CCameraFeedbackNotifier::onStart() {
-		Logic::CEntity* cameraEntity = Logic::CServer::getSingletonPtr()->getMap()->getEntityByName("Camera");
+		CEntity* cameraEntity = Logic::CServer::getSingletonPtr()->getMap()->getEntityByName("Camera");
 		assert(cameraEntity != NULL && "Error: No existe una entidad camara");
 		_cameraComponent = cameraEntity->getComponent<CCamera>("CCamera");
 		assert(_cameraComponent != NULL && "Error: La entidad camara no tiene un componente de camara");
+		_hudWeaponComponent = _entity->getComponent<CHudWeapons>("CHudWeapons");
+		assert(_hudWeaponComponent != NULL && "Error: No existe el componente de arma en el hud");
 		
 		_avatarc = _entity->getComponent<CAvatarController>("CAvatarController");
 		assert(_avatarc != NULL && "Error: no tenemos avatar controller lol");

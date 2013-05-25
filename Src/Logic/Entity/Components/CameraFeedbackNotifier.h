@@ -24,6 +24,7 @@ namespace Graphics {
 
 namespace Logic {
 	class CCamera;
+	class CHudWeapons;
 	class CAvatarController;
 }
 
@@ -142,6 +143,8 @@ namespace Logic {
 		CEntity* _owner;
 
 		CCamera* _cameraComponent;
+
+		CHudWeapons* _hudWeaponComponent;
 
 		//______________________
 

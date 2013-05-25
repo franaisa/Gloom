@@ -35,8 +35,9 @@ gráfica de la entidad.
 #include <OgreOverlayManager.h>
 #include <OgreSceneManager.h>
 
-namespace Logic 
-{
+using namespace std;
+
+namespace Logic {
 	IMP_FACTORY(CHudWeapons);
 	
 	//---------------------------------------------------------
@@ -48,8 +49,14 @@ namespace Logic
 
 		_runAnim.currentHorizontalPos = 0.0f;
 		_runAnim.horizontalOffset = 0.02f;
-		_runAnim.horizontalSpeed = 0.01f;
+		_runAnim.hipSpeed = 0.000115f;
+		_runAnim.stepForce = 0.000315f;
+		_runAnim.stepRecovery = 0.94f;
+		_runAnim.recoveringStep = false;
 
+		_runAnim.currentForwardPos = 0.0f;
+		_runAnim.forwardOffset = 0.001f;
+		_runAnim.forwardSpeed = 0.0005f;
 	}
 
 	//---------------------------------------------------------
@@ -183,26 +190,44 @@ namespace Logic
 	}
 	//---------------------------------------------------------
 	void CHudWeapons::movement(unsigned int msecs) {
+		// Obtenemos la posicion del arma
 		Vector3 weaponPosition = _graphicsEntities[_currentWeapon].graphicsEntity->getTransform().getTrans();
 
-		/*_currentHeight += _verticalSpeed * msecs;
-		if(_currentHeight > 2 * Math::PI) _currentHeight = 0;
+		// Calculamos el offset frontal
+		_runAnim.currentForwardPos += _runAnim.forwardSpeed * msecs;
+		if(_runAnim.currentForwardPos > 2 * Math::PI) _runAnim.currentForwardPos = 0;
 
-		weaponPosition.y += sin(_currentHeight) * 0.00045f;
-		/*_graphicsEntities[_currentWeapon].graphicsEntity->setPosition(weaponPosition);*/
+		Vector3 weaponDir = Math::getDirection( _graphicsEntities[_currentWeapon].graphicsEntity->getTransform() );
+		weaponDir *= sin(_runAnim.currentForwardPos) * _runAnim.forwardOffset;
 
-		/*Matrix4 transform = _graphicsEntities[_currentWeapon].graphicsEntity->getTransform();
+		// Calculamos el offset horizontal
+		Matrix4 transform = _graphicsEntities[_currentWeapon].graphicsEntity->getTransform();
 		Math::yaw(Math::HALF_PI, transform);
 		Vector3 horizontal = Math::getDirection(transform);
 
-		_runAnim.currentHorizontalPos += _runAnim.horizontalSpeed * msecs;
-		if(_runAnim.currentHorizontalPos > ((2 * Math::PI) + Math::HALF_PI)) _runAnim.currentHorizontalPos = Math::HALF_PI;
+		if(_runAnim.recoveringStep) {
+			_runAnim.currentHorizontalPos *= _runAnim.stepRecovery;
 
-		// Multiplicamos el vector horizontal normalizado por el desplazamiento y lo sumamos al offset
-		horizontal *= sin(_runAnim.currentHorizontalPos) * _runAnim.horizontalOffset;
-		weaponPosition += horizontal;
-		weaponPosition.y += abs( sin(_runAnim.currentHorizontalPos) * _runAnim.horizontalOffset );
-		_graphicsEntities[_currentWeapon].graphicsEntity->setPosition(weaponPosition);*/
+			if(abs(_runAnim.currentHorizontalPos) < abs(_runAnim.horizontalOffset)) {
+				_runAnim.hipSpeed *= -1;
+				_runAnim.horizontalOffset *= -1;
+				_runAnim.stepForce *= -1;
+				_runAnim.recoveringStep = false;
+			}
+		}
+		else {
+			_runAnim.currentHorizontalPos += _runAnim.hipSpeed * msecs;
+			
+			if(abs(_runAnim.currentHorizontalPos) > abs(_runAnim.horizontalOffset)) {
+				_runAnim.currentHorizontalPos += _runAnim.stepForce * msecs;
+				_runAnim.recoveringStep = true;
+			}
+		}
+
+		horizontal *= _runAnim.currentHorizontalPos * Vector3(1.0f, 0.0f, 1.0f);
+		weaponPosition += horizontal + weaponDir;
+
+		_graphicsEntities[_currentWeapon].graphicsEntity->setPosition(weaponPosition);
 	}
 	//---------------------------------------------------------
 

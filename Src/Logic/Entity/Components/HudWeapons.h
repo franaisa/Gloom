@@ -160,9 +160,19 @@ namespace Logic {
 		float _verticalSpeed;
 
 		struct RunAnim {
+			// Horizontal movement
 			float currentHorizontalPos;
-			float horizontalSpeed;
 			float horizontalOffset;
+
+			float hipSpeed;
+			float stepForce;
+			float stepRecovery;
+			bool recoveringStep;
+
+			// Forward movement
+			float currentForwardPos;
+			float forwardOffset;
+			float forwardSpeed;
 		};
 		
 		RunAnim _runAnim;
