@@ -48,10 +48,10 @@ namespace Logic {
 								 _verticalSpeed(0.0035f) {
 
 		_runAnim.currentHorizontalPos = 0.0f;
-		_runAnim.horizontalOffset = 0.02f;
-		_runAnim.hipSpeed = 0.000115f;
-		_runAnim.stepForce = 0.000315f;
-		_runAnim.stepRecovery = 0.94f;
+		_runAnim.horizontalOffset = 0.015f;
+		_runAnim.hipSpeed = 0.0001f;
+		_runAnim.stepForce = 0.001f;
+		_runAnim.stepRecovery = 0.8f;
 		_runAnim.recoveringStep = false;
 
 		_runAnim.currentForwardPos = 0.0f;
