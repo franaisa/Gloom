@@ -18,6 +18,10 @@ Implementa un buffer dinámico que los objetos utilizan para serializarse o deser
 #include "BaseSubsystems\Math.h"
 #include "Logic/PlayerInfo.h"
 
+namespace Map {
+	class CEntity;
+}
+
 namespace Net {
 
 	typedef unsigned char byte;
@@ -48,7 +52,7 @@ namespace Net {
 		@param initsize Tamaño inicial del buffer.
 		@param delta Indica cuanto crecerá el buffer cada vez que se necesite ampliarlo.
 		*/
-		CBuffer(size_t initsize = 500, size_t delta = 100);
+		CBuffer(size_t initsize = 100, size_t delta = 100);
 
 		//________________________________________________________________________
 
@@ -312,6 +316,31 @@ namespace Net {
 		@param data Datos a deserializar.
 		*/
 		void deserialize(Matrix4& data);
+
+		//________________________________________________________________________
+
+		/**
+		Lee una entidad del mapa (en formato string para la factoria) y la serializa
+		en el buffer.
+
+		IMPORTANTE: entityInfo no puede ser null, de lo contrario explota!!
+
+		@param entityInfo Información sobre la entidad que queremos serializar.
+		*/
+		void serialize(const Map::CEntity* entityInfo);
+
+		//________________________________________________________________________
+
+		/**
+		Deserializa la información de entidad contenida en el buffer en el parámetro
+		dado.
+
+		IMPORTANTE: Se asume que el cliente reserva la memoria del puntero, de lo
+		contrario explota.
+
+		@param entityInfo Información sobre la entidad.
+		*/
+		void deserialize(Map::CEntity* entityInfo);
 
 
 	private:

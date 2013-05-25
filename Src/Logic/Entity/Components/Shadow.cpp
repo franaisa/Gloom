@@ -15,10 +15,14 @@ implementa las habilidades del personaje
 #include "Shadow.h"
 #include "Graphics.h"
 #include "Map/MapEntity.h"
+#include "Logic/Maps/WorldState.h"
 #include "Logic/Entity/Entity.h"
+#include "Physics/Server.h"
+#include "Physics/RaycastHit.h"
 
 #include "Logic/Messages/MessageChangeMaterial.h"
 #include "Logic/Messages/MessageChangeMaterialHudWeapon.h"
+#include "Logic/Messages/MessageFlash.h"
 
 #include <assert.h>
 
@@ -52,6 +56,9 @@ namespace Logic {
 		assert( entityInfo->hasAttribute("invisibilityDuration") && "no tienes invisibilityduration mendrugo" );
 		// Pasamos el tiempo a msecs
 		_invisibilityDuration = entityInfo->getFloatAttribute("invisibilityDuration") * 1000;
+
+		_flashRadius= 150;
+
 		return true;
 	} // spawn
 
@@ -71,6 +78,7 @@ namespace Logic {
 				std::shared_ptr<CMessageChangeMaterial> materialMsg = std::make_shared<CMessageChangeMaterial>();
 				materialMsg->setMaterialName("original");
 				_entity->emitMessage(materialMsg);
+				Logic::CWorldState::getSingletonPtr()->addChange(_entity,materialMsg);
 				/*
 				std::shared_ptr<CMessageChangeMaterialHudWeapon> materialMsgHud = std::make_shared<CMessageChangeMaterialHudWeapon>();
 				materialMsgHud->setMaterialName("original");
@@ -90,17 +98,6 @@ namespace Logic {
 
 	//__________________________________________________________________
 
-	void CShadow::onStart() {
-
-		std::shared_ptr<CMessageChangeMaterial> materialMsg = std::make_shared<CMessageChangeMaterial>();
-		materialMsg->setMaterialName("original");
-		_entity->emitMessage(materialMsg);
-
-		_invisibilityTimer = _invisibilityDuration;
-	}
-
-	//__________________________________________________________________
-
 	void CShadow::primarySkill() {
 
 		// Arrancamos el cronometro
@@ -110,16 +107,8 @@ namespace Logic {
 		std::shared_ptr<CMessageChangeMaterial> materialMsg = std::make_shared<CMessageChangeMaterial>();
 		materialMsg->setMaterialName("shadowInvisibility");
 		_entity->emitMessage(materialMsg);
-
+		Logic::CWorldState::getSingletonPtr()->addChange(_entity,materialMsg);
 		_doingPrimarySkill = true;
-
-		/*
-		std::shared_ptr<CMessageChangeMaterialHudWeapon> materialMsgHud = std::make_shared<CMessageChangeMaterialHudWeapon>();
-		materialMsgHud->setMaterialName("shadowInvisibility");
-		_entity->emitMessage(materialMsgHud);
-		*/
-
-
 
 	}
 
@@ -127,8 +116,80 @@ namespace Logic {
 
 	void CShadow::secondarySkill() {
 		// Habilidad por definir
-		std::cout << "Secondary Skill - Shadow" << std::endl;
+		std::vector<CEntity*> entitiesHit;
+		
+
+		//primer filtro
+		// Hacemos una query de overlap con la geometria de una esfera en la posicion 
+		// en la que se encuentra la granada con el radio que se indique de explosion
+		Physics::SphereGeometry explotionGeom = Physics::CGeometryFactory::getSingletonPtr()->createSphere(_flashRadius);
+		Physics::CServer::getSingletonPtr()->overlapMultiple(explotionGeom, _entity->getPosition(), entitiesHit);
+		int nbHits = entitiesHit.size();
+		if(nbHits==0){
+			return;
+		}
+
+		// Mandamos el mensaje de daño a cada una de las entidades que hayamos golpeado
+		// Además aplicamos un desplazamiento al jugador 
+		for(int i = 0; i < nbHits; ++i) {
+			// una vez tenemos las entidades en el radio de ceguera, hacemos el segundo filtro
+			//que es coger solo a los players
+			CEntity * aux = entitiesHit[i];
+
+			if(entitiesHit[i] != NULL && 
+				(entitiesHit[i]->getType() == "Hound" || 
+					entitiesHit[i]->getType() == "Screamer" || 
+					entitiesHit[i]->getType() == "Shadow" || 
+					entitiesHit[i]->getType() == "Archangel") ) 
+			{//begin if
+				flashEntity(entitiesHit[i]);
+			}//end if
+		}//end for
 	}
+
+
+	void CShadow::flashEntity(CEntity* entity){
+
+		if(entity == _entity)
+			return;
+
+		//primero trazamos un raycast para filtrar si hay algo entre la entidad y yo
+		Vector3 direction = entity->getPosition() - _entity->getPosition();
+		Ogre::Ray ray( _entity->getPosition()+Vector3(0,8,0), direction.normalisedCopy() );
+		
+		std::vector<Physics::CRaycastHit> hitBuffer;
+
+		Physics::CServer::getSingletonPtr()->raycastMultiple(ray, direction.length(), hitBuffer);
+		int bufferSize = hitBuffer.size();
+
+		//ifs de eficiencia
+		if(hitBuffer.size()!=2){
+			return;
+		}
+
+		//Ahora comprobamos el angulo entre la visión directa y la orientación del player a cegar
+		float angle = direction.normalisedCopy().angleBetween(Math::getDirection(entity->getOrientation()).normalisedCopy()).valueDegrees();
+
+		//si no lo esta mirando nada no lo cegamos
+		if(angle < 90)
+			return;
+
+		std::cout << "angulo " << angle << std::endl;
+
+		angle-=90;
+
+		float flashFactor;
+
+		flashFactor = 15 * (angle/10);
+
+
+
+		//mandamos un mensaje de flashazo
+		std::shared_ptr<CMessageFlash> flashMsg = std::make_shared<CMessageFlash>();
+		flashMsg->setFlashFactor(flashFactor);
+		entity->emitMessage(flashMsg);
+	}
+
 
 } // namespace Logic
 

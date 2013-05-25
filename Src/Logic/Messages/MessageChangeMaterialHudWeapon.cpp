@@ -27,16 +27,14 @@ namespace Logic {
 	
 	//__________________________________________________________________
 
-	Net::CBuffer* CMessageChangeMaterialHudWeapon::serialize() {
-		assert(_tempBuffer == NULL);
-
+	Net::CBuffer CMessageChangeMaterialHudWeapon::serialize() {
 		// Tamaño de la cabecera (int) + nombre del material (string)
-		_tempBuffer = new Net::CBuffer( sizeof(int) + (sizeof(char) * _materialName.size()) );
-		_tempBuffer->serialize(std::string("CMessageChangeMaterialHudWeapon"), true);
+		Net::CBuffer buffer( sizeof(int) + (sizeof(char) * _materialName.size()) );
+		buffer.serialize(std::string("CMessageChangeMaterialHudWeapon"), true);
 		// Serializamos el string sin hacerle el crc
-		_tempBuffer->serialize(_materialName, false);
+		buffer.serialize(_materialName, false);
 
-		return _tempBuffer;
+		return buffer;
 	}
 	
 	//__________________________________________________________________

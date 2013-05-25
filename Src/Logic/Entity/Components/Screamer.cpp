@@ -32,12 +32,16 @@ implementa las habilidades del personaje
 #include "Logic/Messages/MessageAddForcePlayer.h"
 #include "Logic/Messages/MessageSetAnimation.h"
 
+#include "Map/MapEntity.h"
 
 #include "AvatarController.h"
 
 // Física
 #include "Physics/Server.h"
 #include "Physics/GeometryFactory.h"
+
+#include "Physics/SweepHit.h"
+#include "Physics/RaycastHit.h"
 
 
 // Gráficos
@@ -102,9 +106,9 @@ namespace Logic {
 		_screamerScreamForce = entityInfo->getFloatAttribute("screamerScreamForce");
 		_screamerReboundForce= entityInfo->getFloatAttribute("screamerReboundForce");
 		_screamerScreamMaxDistance= entityInfo->getFloatAttribute("screamerScreamMaxDistance");
-			
+		_screamerReboundDistance = entityInfo->getFloatAttribute("screamerReboundDistance");
+		_screamerMaxRebounds = entityInfo->getIntAttribute("screamerMaxRebounds");
 		_rebound = 0;
-		_maxNumberRebounds = 1;
 
 		return true;
 	} // spawn
@@ -188,59 +192,79 @@ namespace Logic {
 	//__________________________________________________________________
 
 	void CScreamer::primarySkill() {
-		// Habilidad por definir
 		
+		// Si no he hecho ningun rebote, he de coger la del player, si estoy en algun rebote, el rebote se encarga de decirme en q posicion.
+		if(_rebound == 0){
+			_directionShoot = Math::getDirection(_entity->getOrientation());
+			_distanceShoot = _screamerScreamMaxDistance;
+			_positionShoot = _entity->getPosition() + Vector3(0,_heightShoot,0);
+		}
+	
+		bool goToReflect = (_rebound < _screamerMaxRebounds);
+		// Si he llegao al maximo de rebotes permitidos, actualizo 
+		if(_rebound == _screamerMaxRebounds) _rebound = 0;
+		float distance = _distanceShoot;
+
+		Physics::CRaycastHit hitWorld;
+		
+		if(goToReflect){
+			Ray ray( _positionShoot , _directionShoot);
+			if(Physics::CServer::getSingletonPtr()->raycastSingle(ray,_screamerScreamMaxDistance,hitWorld,Physics::CollisionGroup::eWORLD))
+				// A veces da como que si impacta pero en realidad no lo hace. Para esos casos, la distancia es -1
+				if(hitWorld.distance > 0)
+					distance =std::min(hitWorld.distance, _distanceShoot);		
+		}
+		
+
 		// 3.5 mirao a ojo a traves del visual debbuger 
 		Physics::SphereGeometry sphere  = Physics::CGeometryFactory::getSingletonPtr()->createSphere(3.5);
-
-		// Si no he hecho ningun rebote, he de coger la del player, si estoy en algun rebote, el rebote se encarga de decirme en q posicion.
-		if(_rebound == 0)
-			_directionShoot = Math::getDirection(_entity->getOrientation());
-
 		std::vector<Physics::CSweepHit> hitSpots;
-
-		Physics::CServer::getSingletonPtr()->sweepMultiple(sphere, (_entity->getPosition() + Vector3(0,_heightShoot,0)),_directionShoot,_screamerScreamMaxDistance,hitSpots, true);
+		Physics::CServer::getSingletonPtr()->sweepMultiple(sphere, _positionShoot,_directionShoot,distance,hitSpots, false, Physics::CollisionGroup::ePLAYER );
+		
+		sweepHitConsequences(hitSpots);
+		// Ocurre igual q arriba, si la distancia es menor q 0 esq no ha habido colision con el mundo
+		if(goToReflect && hitWorld.distance > 0)
+			raycastHitConsequences(hitWorld);
 		
 		
-
-		// Por ahora puede que no funcione bien por que single choca con triggers y tal.
-		// si el raycast choca con el mundo, en la distancia se lo paso al metodo de abajo. Pongo una distancia enorme para que 
-		
-		/*
-		Ray ray((_entity->getPosition() + Vector3(0,_heightShoot,0)), _directionShoot);
-		CRaycastHit hitWorld;
-		Physics::CServer::getSingletonPtr()->raycastSingle(ray,_screamerScreamMaxDistance,hitWorld);
-		hitConsequences(hitSpots, hitWorld );
-		*/
-		
-		//
-		hitConsequences(hitSpots);
+			
 
 		//std::cout << std::endl << "Primary Skill - Screamer" << std::endl;
 	} // primarySkill
 	//__________________________________________________________________
 
-	void CScreamer::stopPrimarySkill() {
-		
-	}
+	void CScreamer::stopPrimarySkill(){
+	
+	} // stopPrimarySkill
+	//__________________________________________________________________
 
-	//void CScreamer::hitConsequences(std::vector<Physics::CSweepHit> &hits, CRaycastHit *hitWorld){
-	void CScreamer::hitConsequences(std::vector<Physics::CSweepHit> &hits){
-		
-		//for(auto it = hits.begin(); it < hits.end() && (*it).distance < hitWorld.distance; ++it){
-		for(auto it = hits.begin(); it < hits.end(); ++it){
-
-			std::string typeEntity = (*it).entity->getType();
-			
-			if(typeEntity == "World" )
-			{
-				if ((*it).distance < 10){
-					auto m = std::make_shared<CMessageAddForcePlayer>();
-					m->setForce(-_directionShoot * (_screamerReboundForce*(1.0f- (*it).distance/_screamerScreamMaxDistance)));
-					_entity->emitMessage(m);
-				}
+	void CScreamer::raycastHitConsequences(const Physics::CRaycastHit &hitWorld){
+		if(hitWorld.distance < _screamerReboundDistance){
+			auto m = std::make_shared<CMessageAddForcePlayer>();
+			m->setForce(-_directionShoot * (_screamerReboundForce*( 1.0f - hitWorld.distance/_screamerScreamMaxDistance)));
+			_entity->emitMessage(m);
+			_rebound = 0;
+		}else{
+			if(_rebound < _screamerMaxRebounds){
+				++_rebound;
+				_positionShoot = hitWorld.impact;
+				// los dos reflejos que quedan bien son
+				// _directionShoot.reflect(hitWorld.normal)
+				// (_directionShoot + hitWorld.normal).normalisedCopy()
+				_directionShoot = _directionShoot.reflect(hitWorld.normal);
+				_distanceShoot -= hitWorld.distance;
+				primarySkill();
+			}else{
+				_rebound = 0;
 			}
-			if(typeEntity == "Screamer" || typeEntity == "Hound" || typeEntity == "Archangel" || typeEntity == "Shadow" || typeEntity == "RemotePlayer"){
+		}
+	} // raycastHitConsequences
+	//__________________________________________________________________
+	
+	void CScreamer::sweepHitConsequences(const std::vector<Physics::CSweepHit> &hits){
+		
+		for(auto it = hits.begin(); it < hits.end(); ++it){
+			if((*it).entity->getName() != _entity->getName()){
 				Vector3 direct = -(_directionShoot.reflect(-(*it).normal));
 				auto m = std::make_shared<CMessageAddForcePlayer>();
 				m->setForce(_directionShoot * (_screamerScreamForce*(1.0f- (*it).distance/_screamerScreamMaxDistance)));
@@ -251,19 +275,9 @@ namespace Logic {
 				m2->setBool(false);
 				(*it).entity->emitMessage(m2);
 			}
-		}
-		/*
-		if(it < hits.end()){
-			if(_rebound <= _maxNumberRebounds){
-				++_rebound;
-				_directionShoot = _directionShoot.reflect(hitWorld.normal));
-				primarySkill();
-			}else{
-				_rebound = 0;
-			}
-		}		
-		*/				
-	}
+		}				
+	} // sweepHitConsequences
+	//__________________________________________________________________
 
 	void CScreamer::secondarySkill() {
 		_secondarySkillIsActive = true;

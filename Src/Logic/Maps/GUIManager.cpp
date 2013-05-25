@@ -4,6 +4,7 @@
 #include "GUI/Server.h"
 #include "BaseSubsystems\Server.h"
 #include "GUIKillersMessage.h"
+#include "Scoreboard.h"
 
 #include <cassert>
 
@@ -51,12 +52,7 @@ namespace Logic {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	bool CGUIManager::open(){
-
-		//Hikari::FlashControl* menuSeleccion = GUI::CServer::getSingletonPtr()->addLayout("menuseleccion", Hikari::Position(Hikari::Center), 0.8f);
-		
-		//menuSeleccion->hide();
-
-		//addGUI(menuSeleccion,"menuseleccion");
+		Logic::CScoreboard::Init();
 		return true;
 	}
 
@@ -66,6 +62,7 @@ namespace Logic {
 		for(TGUI::const_iterator it = _loadedGUIs.begin(); it!= _loadedGUIs.end(); ++it){
 			GUI::CServer::getSingletonPtr()->destroyLayout(it->second);
 		}
+		Logic::CScoreboard::Release();
 	}
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -80,6 +77,8 @@ namespace Logic {
 
 	void CGUIManager::activate(){
 		Logic::GUIKillersMessage::Init();
+		Logic::CScoreboard::getSingletonPtr()->activate();
+		
 	}
 
 	void CGUIManager::deactivate(){
@@ -92,6 +91,7 @@ namespace Logic {
 
 		_loadedGUIs.clear();
 		Logic::GUIKillersMessage::Release();
+		Logic::CScoreboard::getSingletonPtr()->deactivate();
 	} 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////

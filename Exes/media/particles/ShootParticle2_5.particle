@@ -1,4 +1,4 @@
-particle_system shootParticle2
+particle_system ShootParticle2
 {
 	quota				1
 	material 			Particles/Sun.000

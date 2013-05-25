@@ -1,0 +1,5 @@
+Es imprescindible que el nombre de la particula se corresponda con la del fichero, salvo que el nombre debera de tener en el nombre un NOMBRE_NUMERO.
+Este numero indicara cuantas particulas de este tipo se deberan de precargar en el pool de particulas
+
+
+Gracias.

@@ -18,6 +18,7 @@ implementa las habilidades del personaje
 #include "PhysicDynamicEntity.h"
 #include "Graphics.h"
 #include "Life.h"
+#include "Logic/Maps/WorldState.h"
 
 // Logica
 #include "Logic/Maps/EntityFactory.h"
@@ -142,12 +143,6 @@ namespace Logic {
 
 	void CScreamerServer::onActivate() {
 		CPlayerClass::onActivate();
-
-		// Ñapa temporal para el ideame
-		// Cambiamos el color del marine en funcion de la clase con un changeMaterial
-		std::shared_ptr<CMessageChangeMaterial> materialMsg = std::make_shared<CMessageChangeMaterial>();
-		materialMsg->setMaterialName(_materialName);
-		_entity->emitMessage(materialMsg);
 
 		_primarySkillIsActive = false;
 		_currentScreamerShield = _screamerShieldThreshold;

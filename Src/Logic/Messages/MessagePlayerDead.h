@@ -9,9 +9,9 @@ namespace Logic {
 	DEC_FACTORYMESSAGE(CMessagePlayerDead);
 	public:
 		CMessagePlayerDead();
-		~CMessagePlayerDead(){};
+		virtual ~CMessagePlayerDead(){};
 		
-		virtual Net::CBuffer* serialize();
+		virtual Net::CBuffer serialize();
 		virtual void deserialize(Net::CBuffer& buffer);
 
 		void setKiller(Logic::TEntityID killer){_killer = killer;}

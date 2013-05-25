@@ -28,14 +28,16 @@ gráfica de la entidad.
 
 #include "Logic/Messages/MessageTransform.h"
 #include "Logic/Messages/MessageChangeWeaponGraphics.h"
+#include "Logic/Messages/MessageHudDebugData.h"
 
 #include "OgreEntity.h"
 #include "OgreSceneNode.h"
 #include <OgreOverlayManager.h>
 #include <OgreSceneManager.h>
 
-namespace Logic 
-{
+using namespace std;
+
+namespace Logic {
 	IMP_FACTORY(CHudWeapons);
 	
 	//---------------------------------------------------------
@@ -45,6 +47,16 @@ namespace Logic
 								 _currentHeight(0),
 								 _verticalSpeed(0.0035f) {
 
+		_runAnim.currentHorizontalPos = 0.0f;
+		_runAnim.horizontalOffset = 0.015f;
+		_runAnim.hipSpeed = 0.0001f;
+		_runAnim.stepForce = 0.001f;
+		_runAnim.stepRecovery = 0.8f;
+		_runAnim.recoveringStep = false;
+
+		_runAnim.currentForwardPos = 0.0f;
+		_runAnim.forwardOffset = 0.001f;
+		_runAnim.forwardSpeed = 0.0005f;
 	}
 
 	//---------------------------------------------------------
@@ -178,12 +190,43 @@ namespace Logic
 	}
 	//---------------------------------------------------------
 	void CHudWeapons::movement(unsigned int msecs) {
+		// Obtenemos la posicion del arma
 		Vector3 weaponPosition = _graphicsEntities[_currentWeapon].graphicsEntity->getTransform().getTrans();
 
-		_currentHeight += _verticalSpeed * msecs;
-		if(_currentHeight > 2 * Math::PI) _currentHeight = 0;
+		// Calculamos el offset frontal
+		_runAnim.currentForwardPos += _runAnim.forwardSpeed * msecs;
+		if(_runAnim.currentForwardPos > 2 * Math::PI) _runAnim.currentForwardPos = 0;
 
-		weaponPosition.y += sin(_currentHeight) * 0.00045f;
+		Vector3 weaponDir = Math::getDirection( _graphicsEntities[_currentWeapon].graphicsEntity->getTransform() );
+		weaponDir *= sin(_runAnim.currentForwardPos) * _runAnim.forwardOffset;
+
+		// Calculamos el offset horizontal
+		Matrix4 transform = _graphicsEntities[_currentWeapon].graphicsEntity->getTransform();
+		Math::yaw(Math::HALF_PI, transform);
+		Vector3 horizontal = Math::getDirection(transform);
+
+		if(_runAnim.recoveringStep) {
+			_runAnim.currentHorizontalPos *= _runAnim.stepRecovery;
+
+			if(abs(_runAnim.currentHorizontalPos) < abs(_runAnim.horizontalOffset)) {
+				_runAnim.hipSpeed *= -1;
+				_runAnim.horizontalOffset *= -1;
+				_runAnim.stepForce *= -1;
+				_runAnim.recoveringStep = false;
+			}
+		}
+		else {
+			_runAnim.currentHorizontalPos += _runAnim.hipSpeed * msecs;
+			
+			if(abs(_runAnim.currentHorizontalPos) > abs(_runAnim.horizontalOffset)) {
+				_runAnim.currentHorizontalPos += _runAnim.stepForce * msecs;
+				_runAnim.recoveringStep = true;
+			}
+		}
+
+		horizontal *= _runAnim.currentHorizontalPos * Vector3(1.0f, 0.0f, 1.0f);
+		weaponPosition += horizontal + weaponDir;
+
 		_graphicsEntities[_currentWeapon].graphicsEntity->setPosition(weaponPosition);
 	}
 	//---------------------------------------------------------

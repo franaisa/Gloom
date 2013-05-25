@@ -93,11 +93,8 @@ namespace Logic {
 		virtual void onFixedTick(unsigned int msecs);
 
 
-	private:
-
-
 		// =======================================================================
-		//                          MIEMBROS PRIVADOS
+		//                          MIEMBROS PROTEGIDOS
 		// =======================================================================
 		
 		unsigned int _ticksPerSample;

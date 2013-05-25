@@ -11,13 +11,11 @@ namespace Logic {
 	}//
 	//----------------------------------------------------------
 		
-	Net::CBuffer* CMessageHudDebug::serialize() {
-		assert(_tempBuffer == NULL);
-
-		_tempBuffer = new Net::CBuffer(sizeof(int));
-		_tempBuffer->serialize(std::string("CMessageHudDebug"),true);
+	Net::CBuffer CMessageHudDebug::serialize() {
+		Net::CBuffer buffer(sizeof(int));
+		buffer.serialize(std::string("CMessageHudDebug"),true);
 		
-		return _tempBuffer;
+		return buffer;
 	}//
 	//----------------------------------------------------------
 

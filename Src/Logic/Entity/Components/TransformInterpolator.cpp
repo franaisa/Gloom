@@ -10,7 +10,6 @@
 */
 
 #include "TransformInterpolator.h"
-#include "PhysicController.h"
 
 // Map
 #include "Logic/Maps/Map.h"
@@ -101,22 +100,14 @@ namespace Logic {
 
 	//__________________________________________________________________
 
-	void CTransformInterpolator::onStart() {
-		_controller = _entity->getComponent<CPhysicController>("CPhysicController");
-	}
-
-	//__________________________________________________________________
-
 	void CTransformInterpolator::onFixedTick(unsigned int msecs) {
 		if( !_buffer.empty() ) {
-			// Podria tratarse de algun elemento que no sea un jugador, en general solo tendran
-			// entidad grafica, así que basta con setear la entidad gráfica.
-			if(_controller != NULL) _controller->setPhysicPosition( _buffer.front().getTrans() );
+			// Ojo! Asumimos que no existe entidad física. La interpolación de entidades
+			// en el cliente no debería tener componente físico. Si lo tiene, tenemos que
+			// mover primero al componente físico para que esto funcione.
 			_entity->setTransform( _buffer.front() );
 			_buffer.pop_front();
 		}
 	}
 
 } // namespace Logic
-
-

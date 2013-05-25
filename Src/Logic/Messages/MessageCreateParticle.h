@@ -18,7 +18,7 @@ namespace Logic {
 		void setDirectionWithForce(const Vector3 &dirWithForce);
 		~CMessageCreateParticle(){};
 		
-		virtual Net::CBuffer* serialize();
+		virtual Net::CBuffer serialize();
 		virtual void deserialize(Net::CBuffer& buffer);
 	private:
 		 std::string _name;

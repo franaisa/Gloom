@@ -14,7 +14,7 @@ namespace Logic {
 		void setBuffer(const std::vector<Vector3> buffer);
 		std::vector<Vector3> getBuffer();
 		
-		virtual Net::CBuffer* serialize();
+		virtual Net::CBuffer serialize();
 		virtual void deserialize(Net::CBuffer& buffer);
 	private:
 		 std::vector<Vector3> _positionBuffer;

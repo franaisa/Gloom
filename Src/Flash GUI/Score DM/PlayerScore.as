@@ -25,9 +25,11 @@ package
 		private var _icon:ClassIcon;
 		
 		/**
-		 * constructor
+		 * Builds a new Score
+		 * @param	nickname The nick of the player we are creating the score
+		 * @param	playerClass The class the player has.
 		 */
-		public function PlayerScore( nickname:String ) 
+		public function PlayerScore( nickname:String, playerClass: String ) 
 		{
 			
 			//catch de child textfields and instantiate it into my vars
@@ -70,6 +72,16 @@ package
 			_kills.text 	= "0";
 			_deaths.text 	= "0";
 			_spree.text 	= "0";
+			
+			classIcon.gotoAndPlay(playerClass);
+		}
+		
+		/**
+		 * Method who loads the icon of the player class
+		 * @param	newClass hte class we are loading
+		 */
+		public function changeClass(newClass: String) {
+			classIcon.gotoAndPlay(newClass);
 		}
 		
 	//////////////////////////////////////////////////////////////////////////////////////////////
@@ -81,19 +93,19 @@ package
 		}
 		
 		public function set kills(kills:int) {
-			_kills.text = kills as String;
+			_kills.text = kills.toString();
 		}
 		
 		public function set deaths(deaths:int) {
-			_deaths.text = deaths as String;
+			_deaths.text = deaths.toString();
 		}
 		
 		public function set spree(spree:int) {
-			_spree.text = spree as String;
+			_spree.text = spree.toString();
 		}
 		
 		public function set ping(ping:int) {
-			_ping.text = ping as String;
+			_ping.text = ping.toString();
 		}
 		
 		public function set icon(race:int) {
@@ -101,7 +113,7 @@ package
 		}
 		
 		public function get kills():int {
-			return _kills.text as int;
+			return int(_kills.text);
 		}
 	}
 

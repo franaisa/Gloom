@@ -17,6 +17,7 @@ de disparo de la cabra.
 #include "Logic/Maps/EntityFactory.h"
 #include "Logic/Maps/Map.h"
 #include "Logic/Server.h"
+#include "Map/MapEntity.h"
 
 using namespace std;
 
@@ -170,7 +171,7 @@ namespace Logic {
 		_primaryFireIsActive = false;
 
 		// Obtenemos la información estandard asociada a la bola de fuego
-		Map::CEntity* entityInfo = CEntityFactory::getSingletonPtr()->getInfo("FireBall");
+		Map::CEntity* entityInfo = CEntityFactory::getSingletonPtr()->getInfo("FireBall")->clone();
 
 		// Calculamos los valores customizados para la creacion de la bola de fuego
 		// en funcion del tiempo que hemos mantenido pulsado el disparo primario
@@ -187,6 +188,11 @@ namespace Logic {
 		entityInfo->setAttribute( "damage", toString(fireBallDamage) );
 		entityInfo->setAttribute( "direction", toString( Math::getDirection( _entity->getTransform() ) ));
 
+		// El único atributo que nos interesa pasar al cliente es la escala para que la bola
+		// aparezca gráficamente más grande o más pequeña
+		Map::CEntity* clientEntityInfo = new Map::CEntity( entityInfo->getName() );
+		clientEntityInfo->setAttribute( "scale", toString( Vector3(1.0f, 1.0f, 1.0f) * (fireBallRadius / _defaultFireBallRadius) ) );
+
 		// Creamos la bola de fuego con los parámetros customizados a partir
 		// del radio de la cápsula + el radio de la bola + un pequeño offset
 		Matrix4 shootTransform = _entity->getTransform();
@@ -195,11 +201,17 @@ namespace Logic {
 		shootTransform.setTrans(shootPosition);
 
 		// Creamos la entidad
-		CEntity* fireBall = CEntityFactory::getSingletonPtr()->createEntity(
-								entityInfo, 
+		CEntity* fireBall = CEntityFactory::getSingletonPtr()->createCustomClientEntity(
+								entityInfo,
+								clientEntityInfo,
 								CServer::getSingletonPtr()->getMap(),
 								shootTransform
 							);
+
+		// Eliminamos la copia de la información que hemos creado
+		delete entityInfo;
+		// Eliminamos la información adicional para el cliente
+		delete clientEntityInfo;
 
 		// Le indicamos al controlador de la bola que este componente es el poseedor
 		// para que se invoque al metodo correspondiente cuando las bolas mueran

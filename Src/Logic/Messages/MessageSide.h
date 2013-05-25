@@ -9,9 +9,9 @@ namespace Logic {
 	DEC_FACTORYMESSAGE(CMessageSide);
 	public:
 		CMessageSide();
-		~CMessageSide(){};
+		virtual ~CMessageSide(){};
 		
-		virtual Net::CBuffer* serialize();
+		virtual Net::CBuffer serialize();
 		virtual void deserialize(Net::CBuffer& buffer);
 
 	};

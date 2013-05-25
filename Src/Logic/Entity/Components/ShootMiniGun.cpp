@@ -36,13 +36,12 @@ namespace Logic {
 					
 					//Envío el mensaje con valores para que resetee la mirilla
 					auto m = std::make_shared<CMessageHudDispersion>();
-					//m->setHeight(-1.0f); 
-					//m->setWidth(-1.0f);
 					m->setTime(0);
 					m->setReset(true);
 					_entity->emitMessage(m);
 
 					_bMensajeDispMandado = false;
+					std::cout << "cambio mensajo dispmandado " << _bMensajeDispMandado << std::endl;
 				}
 				else if(type==Control::RIGHT_CLICK) {
 					_acumulando = true;
@@ -63,17 +62,21 @@ namespace Logic {
 	{
 	}	
 	//__________________________________________________________________
-		void CShootMiniGun::onFixedTick(unsigned int msecs) {
-			//std::cout << "fixed" << std::endl;
+
+	void CShootMiniGun::onFixedTick(unsigned int msecs) 
+	{
+		//std::cout << "fixed" << std::endl;
 		if (_bLeftClicked)
 		{
 			_iContadorLeftClicked++;
+
+			std::cout << "Fixed = " << _iContadorLeftClicked << " y envio = " << _bMensajeDispMandado << std::endl;
 			
 			//Modificar la dispersión
 			if ((_iContadorLeftClicked < 10) && (!_bMensajeDispMandado))
 			{
 				_dispersion = _dispersionOriginal + 15.0f;
-
+				std::cout << "Envio mensaje-------------------------------------------" << std::endl;
 				//Enviamos el mensaje para que empiece a modificar la mirilla con la dispersión
 				std::shared_ptr<CMessageHudDispersion> m = std::make_shared<CMessageHudDispersion>();
 				m->setHeight(8.0f);
@@ -127,7 +130,7 @@ namespace Logic {
 			if (_iRafagas > 0)
 			{
 				//TODO: Lanzar aquí el secondShoot con el swift del Screamer
-				secondaryShoot();
+				secondaryShoot(_iRafagas);
 				_iRafagas = 0;
 
 				//std::cout << "disparo" << std::endl;
@@ -136,8 +139,7 @@ namespace Logic {
 				//--_iRafagas; //disminuimos el número de ráfagas
 			}
 		}
-		}
-
+	}
 
 } // namespace Logic
 

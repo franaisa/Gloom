@@ -18,6 +18,7 @@ implementa las habilidades del personaje
 
 #include "BaseSubsystems/Math.h"
 #include "PlayerClass.h"
+
 #include "Physics/SweepHit.h"
 #include "Physics/RaycastHit.h"
 
@@ -176,6 +177,8 @@ namespace Logic {
 		*/
 		void createExplotion();
 
+
+		void raycastHitConsequences(const Physics::CRaycastHit &hitWorld);
 		/**
 		Metodo que hace que resuleve el contacto con el chillido.
 		Este metodo se encarga de comprobar con que ha impactado, si lo ha hecho con el world y la distancia es poca, lo hace robotar.
@@ -185,8 +188,7 @@ namespace Logic {
 		@param hits, todos los impactos del sweepMultiple
 		@param worldDistance, distancia donde se debera de hacer un rebote con el mundo. Si el valor es 0 esq no hay rebote.
 		*/
-		void hitConsequences(std::vector<Physics::CSweepHit> &hits);
-		//void hitConsequences(std::vector<Physics::CSweepHit> &hits, CRaycastHit *hitWorld);
+		void sweepHitConsequences(const std::vector<Physics::CSweepHit> &hits);
 
 		// =======================================================================
 		//                          MIEMBROS PRIVADOS
@@ -226,6 +228,11 @@ namespace Logic {
 		/** Radio de la explosión si el Screamer explota. */
 		float _screamerExplotionRadius;
 
+		/** Numero maximo de rebotes del grito permitidos*/
+		int _screamerMaxRebounds;
+		/** Distancia en la cual si da con el mundo se hace el rebote */
+		float _screamerReboundDistance;
+
 		/** Fuerza de empuje del chillido. */
 		float _screamerScreamForce;
 
@@ -238,12 +245,14 @@ namespace Logic {
 		/** Varibable para controlar los rebotes que lleva */
 		unsigned int _rebound;
 
-		/** Variable para controlar el numero maximo de rebotes */
-		unsigned int _maxNumberRebounds;
+		/** Variable que controla la posicion de los rebotes*/
+		Vector3 _positionShoot;
 
 		/** Variable para poder controlar la direccion de disparo en los rebotes */
 		Vector3 _directionShoot;
 
+		/** Variable que controla la distancia del grito en los rebotes */
+		float _distanceShoot;
 		/** Puntero a la entidad que representa al escudo generado por la habilidad primaria. */
 		Logic::CEntity* _screamerShield;
 

@@ -506,6 +506,7 @@ namespace Logic
 				break;
 			}
 			case Message::HUD_DISPERSION: {
+				//std::cout << "Recibido#####################################" << std::endl;
 				std::shared_ptr<CMessageHudDispersion> hudDisp = std::static_pointer_cast<CMessageHudDispersion>(message);
 				_dispersionTime = hudDisp->getTime();
 				_resetMirilla = hudDisp->getReset();
@@ -799,47 +800,37 @@ namespace Logic
 		if (!_resetMirilla)
 		{
 			//Estamos disparando normal, no reseteando la mirilla
+			//Comprobación del límite de pequeña que pueda ser
 			if ((_dispersionHeight > 3.0f) && (_dispersionWidth > 4.0f))
 			{
 				_dispersionHeight -= 0.3f;
 				_dispersionWidth -= 0.3f;			
 			}
-			/*
-			if (_dispersionHeight > 3.1f)
-				_dispersionHeight -= 0.3f;
-			if (_dispersionWidth > 4.1f)
-				_dispersionWidth -= 0.3f;
-				*/
 		}
 		else
 		{
 			//Reseteamos mirilla
 			//Es más pequeña, tengo que aumentarle
-			//if ((_dispersionHeight < _sizeCrossFireY) && (_dispersionWidth < _sizeCrossFireX))
 			if ((_dispersionHeight < 8.0f) && (_dispersionWidth < 9.0f))
 			{
 				//Aumento
 				_dispersionHeight += 0.3f;
 				_dispersionWidth += 0.3f;
 				//Compruebo si con este aumento ya es más grande, para parar el reseteo de mirilla
-				//if ((_dispersionHeight > _sizeCrossFireY) && (_dispersionWidth > _sizeCrossFireX))
 				if ((_dispersionHeight >  8.0f) && (_dispersionWidth > 9.0f))				
 				{
 					_resetMirilla = false;
 					_dispersionTime = 0; //por si aca
 				}
 			}
-			//else if ((_dispersionHeight > _sizeCrossFireY) && (_dispersionWidth > _sizeCrossFireX))
 			else if ((_dispersionHeight > 8.0f) && (_dispersionWidth > 9.0f))			
 			{
 				//Aumento
 				_dispersionHeight -= 0.4f;
 				_dispersionWidth -= 0.4f;
 				//Compruebo si con este aumento ya es más grande, para parar el reseteo de mirilla
-				//if ((_dispersionHeight < _sizeCrossFireY) && (_dispersionWidth < _sizeCrossFireX))
 				if ((_dispersionHeight < 8.0f) && (_dispersionWidth < 9.0f))
 				{
-					std::cout << "he llegado al climax: H=" << _dispersionHeight << " & W" << _dispersionWidth << std::endl;
 					_resetMirilla = false;
 					_dispersionTime = 0; //porsiaca
 				}
@@ -853,7 +844,7 @@ namespace Logic
 
 		}
 
-		std::cout << "DispersionHeight: " <<  _dispersionHeight << std::endl;
+		//std::cout << "DispersionHeight: " <<  _dispersionHeight << std::endl;
 		hudSizeCrossfire(_dispersionHeight, _dispersionWidth);				
 	}
 	//-------------------------------------------------------

@@ -13,7 +13,7 @@ namespace Logic {
 		Vector3 getForce();
 		~CMessageAddForcePlayer(){};
 		
-		virtual Net::CBuffer* serialize();
+		virtual Net::CBuffer serialize();
 		virtual void deserialize(Net::CBuffer& buffer);
 
 	protected:

@@ -15,7 +15,7 @@ namespace Logic {
 		CEntity* getEnemy();
 		void setEnemy(CEntity* entity);
 		
-		virtual Net::CBuffer* serialize();
+		virtual Net::CBuffer serialize();
 		virtual void deserialize(Net::CBuffer& buffer);
 	private:
 		CEntity* _entity;

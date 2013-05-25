@@ -17,17 +17,16 @@ gráfica del jugador, es decir, todas las armas que este portara.
 #include "WeaponType.h"
 
 // Predeclaración de clases para ahorrar tiempo de compilación
-namespace Graphics 
-{
+namespace Graphics {
 	class CEntity;
 	class CScene;
 	class COverlay;
 }
 
 //declaración de la clase
-namespace Logic
-{
-/**
+namespace Logic {
+
+	/**
 	Componente que se encarga de la representación gráfica de una entidad.
 	En concreto se encarga de las entidades con representaciones gráficas
 	no animadas. Para otros tipos de representaciones hay otros componentes
@@ -40,7 +39,8 @@ namespace Logic
 
 	@author David Llansó García
 	@date Agosto, 2010
-*/
+	*/
+
 	class CHudWeapons : public IComponent {
 		DEC_FACTORY(CHudWeapons);
 	public:
@@ -158,7 +158,25 @@ namespace Logic
 
 		float _currentHeight;
 		float _verticalSpeed;
+
+		struct RunAnim {
+			// Horizontal movement
+			float currentHorizontalPos;
+			float horizontalOffset;
+
+			float hipSpeed;
+			float stepForce;
+			float stepRecovery;
+			bool recoveringStep;
+
+			// Forward movement
+			float currentForwardPos;
+			float forwardOffset;
+			float forwardSpeed;
+		};
 		
+		RunAnim _runAnim;
+
 		//////////////////////Gestion de armas
 		Graphics::COverlay *_overlayWeapon3D[5];
 	}; // class CGraphics

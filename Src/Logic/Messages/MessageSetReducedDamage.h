@@ -9,12 +9,12 @@ namespace Logic {
 	DEC_FACTORYMESSAGE(CMessageSetReducedDamage);
 	public:
 		CMessageSetReducedDamage();
-		~CMessageSetReducedDamage();
+		virtual ~CMessageSetReducedDamage();
 
 		float getReducedDamage();
 		void setReducedDamage(float percentage);
 		
-		virtual Net::CBuffer* serialize();
+		virtual Net::CBuffer serialize();
 		virtual void deserialize(Net::CBuffer& buffer);
 	private:
 		 float _reducedDamage;

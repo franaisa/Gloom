@@ -82,6 +82,7 @@ namespace Logic {
 		if(entityInfo->hasAttribute(weapon+"ParticlePosition")) {
 			_particlePosition = entityInfo->getVector3Attribute(weapon+"ParticlePosition");
 		}
+
 		return true;
 	} // spawn
 	//__________________________________________________________________
@@ -157,6 +158,20 @@ namespace Logic {
 	}// decrementAmmo
 	//__________________________________________________________________
 
+	void CShoot::decrementAmmo(int iAmmo) {
+		_currentAmmo -= iAmmo;
+
+		// Notificamos al hud para que cambie la cantidad de municion
+		// que tenemos
+		std::shared_ptr<CMessageHudAmmo> message = std::make_shared<CMessageHudAmmo>();
+		message->setAmmo(_currentAmmo);
+
+		//Cambio sobre uno, hay q cambiarlo ;-)
+		message->setWeapon(_id);
+		_entity->emitMessage(message);
+	}// decrementAmmo
+	//__________________________________________________________________
+
 	void CShoot::resetAmmo() {
 		//si yo soy el weapon
 		_currentAmmo = 0;
@@ -168,14 +183,11 @@ namespace Logic {
 	
 		Vector3 directionWithForce = Math::getDirection(_entity->getOrientation());
 		Vector3 positionParticle = (_entity->getPosition()+ Vector3(0,_heightShoot,0)) + ((directionWithForce) * _particlePosition);
-		Graphics::CScene* _scen = Graphics::CServer::getSingletonPtr()->getActiveScene();
 		
-		directionWithForce *= 10;
-
 		std::shared_ptr<CMessageCreateParticle> particle = std::make_shared<CMessageCreateParticle>();
 		particle->setParticle(particula);
 		particle->setPosition(positionParticle);
-		particle->setDirectionWithForce(directionWithForce);
+		//particle->setDirectionWithForce(directionWithForce);
 		_entity->emitMessage(particle);
 
 	} // drawParticle

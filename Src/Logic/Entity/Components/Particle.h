@@ -15,6 +15,9 @@ Componente que contiene la declaracion de las particulas.
 #include "Graphics/Particle.h"
 #include "Logic/Entity/Component.h"
 
+namespace Graphics{
+	class CScene;
+}
 //declaración de la clase
 namespace Logic 
 {
@@ -50,6 +53,10 @@ namespace Logic
 		virtual void onActivate();
 
 		/**
+		Metodo que se llama en el 1º tick
+		*/
+		virtual void onStart();
+		/**
 		mensajes aceptados por el componente
 		*/
 		virtual bool accept(const std::shared_ptr<CMessage>& message);
@@ -80,6 +87,7 @@ namespace Logic
 		Vector3 _particleOffset;
 		Vector3 _particleEmitterDirection;
 
+		Graphics::CScene *_scene;
 	}; // class CParticle
 
 	REG_FACTORY(CParticle);

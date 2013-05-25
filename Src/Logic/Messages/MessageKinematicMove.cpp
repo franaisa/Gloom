@@ -22,14 +22,12 @@ namespace Logic {
 		return _movement;
 	}//
 	//----------------------------------------------------------
-	Net::CBuffer* CMessageKinematicMove::serialize() {
-		assert(_tempBuffer == NULL);
-
-		_tempBuffer = new Net::CBuffer(sizeof(int) + sizeof(_movement.x) * 3);
-		_tempBuffer->serialize(std::string("CMessageKinematicMove"),true);
-		_tempBuffer->serialize(_movement);
+	Net::CBuffer CMessageKinematicMove::serialize() {
+		Net::CBuffer buffer(sizeof(int) + sizeof(_movement.x) * 3);
+		buffer.serialize(std::string("CMessageKinematicMove"),true);
+		buffer.serialize(_movement);
 		
-		return _tempBuffer;
+		return buffer;
 	}//
 	//----------------------------------------------------------
 

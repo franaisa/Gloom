@@ -16,6 +16,7 @@ del Screamer.
 #include "CameraFeedbackNotifier.h"
 #include "Camera.h"
 #include "AvatarController.h"
+#include "HudWeapons.h"
 #include "Logic/Server.h"
 #include "Logic/Entity/Entity.h"
 #include "Logic/Maps/Map.h"
@@ -24,14 +25,12 @@ del Screamer.
 
 // Mensajes
 #include "Logic/Messages/MessageDamaged.h"
+#include "Logic/Messages/MessageFlash.h"
 #include "Logic/Messages/MessageSetReducedDamage.h"
 #include "Logic/Messages/MessageCameraOffset.h"
 #include "Logic/Messages/MessageControl.h"
 #include "Logic/Messages/MessageImpact.h"
 #include "Logic/Messages/MessageHudDebugData.h"
-
-
-
 
 namespace Logic {
 	
@@ -45,7 +44,8 @@ namespace Logic {
 														 _landForce(0),
 														 _strafingDir(0),
 														 _landRecoverySpeed(0.007f),
-														 _currentLandOffset(0) {
+														 _currentLandOffset(0),
+														_flashVisible(true){
 
 
 		_walkAnim.currentHorizontalPos = Math::HALF_PI;
@@ -89,7 +89,8 @@ namespace Logic {
 		Logic::TMessageType msgType = message->getMessageType();
 
 		return msgType == Message::DAMAGED				|| 
-			   msgType == Message::SET_REDUCED_DAMAGE;
+			   //msgType == Message::SET_REDUCED_DAMAGE	||
+			   msgType == Message::FLASH;
 	} // accept
 	
 	//________________________________________________________________________
@@ -107,16 +108,27 @@ namespace Logic {
 				damaged();
 				break;
 			}*/
+			case Message::FLASH: {
+				std::shared_ptr<CMessageFlash> flashMsg = std::static_pointer_cast<CMessageFlash>(message);
+				_flashFactor = flashMsg->getFlashFactor();
+				_flashVisible = true;
+				_scene->setCompositorVisible(_flashEffect, true);
+				break;
+			}
+
+
 		}
 	} // process
 
 	//________________________________________________________________________
 
 	void CCameraFeedbackNotifier::onStart() {
-		Logic::CEntity* cameraEntity = Logic::CServer::getSingletonPtr()->getMap()->getEntityByName("Camera");
+		CEntity* cameraEntity = Logic::CServer::getSingletonPtr()->getMap()->getEntityByName("Camera");
 		assert(cameraEntity != NULL && "Error: No existe una entidad camara");
 		_cameraComponent = cameraEntity->getComponent<CCamera>("CCamera");
 		assert(_cameraComponent != NULL && "Error: La entidad camara no tiene un componente de camara");
+		_hudWeaponComponent = _entity->getComponent<CHudWeapons>("CHudWeapons");
+		assert(_hudWeaponComponent != NULL && "Error: No existe el componente de arma en el hud");
 		
 		_avatarc = _entity->getComponent<CAvatarController>("CAvatarController");
 		assert(_avatarc != NULL && "Error: no tenemos avatar controller lol");
@@ -124,6 +136,7 @@ namespace Logic {
 		_scene = _entity->getMap()->getScene();
 		_effect = "damageCompositor";
 		_motionblur = "Motion Blur";
+		_flashEffect = "Muzzle Flash";
 		_strengthEffect = "strength";
 		_effectIsActivated = false;
 		_scene->createCompositor(_effect);
@@ -136,7 +149,10 @@ namespace Logic {
 		// Por ahora esta a hierro, lo suyo es ponerlo por el mapa
 		_scene->updateCompositorVariable(_motionblur, "blur", 0.75);
 		
-		
+		_scene->createCompositor(_flashEffect);
+		_scene->setCompositorVisible(_flashEffect, false);
+		// Por ahora esta a hierro, lo suyo es ponerlo por el mapa
+		_scene->updateCompositorVariable(_flashEffect, "flashLevel", 1.0);
 	}
 
 	//________________________________________________________________________
@@ -165,6 +181,16 @@ namespace Logic {
 			blur=0.5f;
 
 		_scene->updateCompositorVariable(_motionblur, "blur", blur);
+
+		//ahora actualizamos el flashazo si procede
+		if(_flashFactor > 1.0){
+			_flashFactor-=0.5f;
+			_scene->updateCompositorVariable(_flashEffect,"flashLevel",1/_flashFactor);
+			std::cout << "estoy flasheado" << std::endl;
+		}else if(_flashVisible){
+			_scene->setCompositorVisible(_flashEffect, false);
+			_flashVisible = false;
+		}
 	}
 
 	//________________________________________________________________________

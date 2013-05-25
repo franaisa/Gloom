@@ -199,6 +199,9 @@ namespace Application {
 		Hikari::FlashControl* _seleccion;
 
 		Net::CManager* _netMgr;
+
+		//ñapa porque flash hace lo que le sale de los huevos
+		bool _menuVisile;
 	}; // CMultiplayerTeamDeathmatchClientState
 
 } // namespace Application

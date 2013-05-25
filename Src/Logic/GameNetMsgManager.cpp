@@ -29,6 +29,7 @@ Contiene la implementación del gestor de los mensajes de red durante la partida.
 #include "Input/Server.h"
 #include "Input/PlayerController.h"
 #include "Logic/Entity/Components/Interpolation.h"
+#include "Map/MapEntity.h"
 
 #include "Logic/GameNetPlayersManager.h"
 #include "Logic/PlayerInfo.h"
@@ -144,10 +145,10 @@ namespace Logic {
 
 	//---------------------------------------------------------
 		
-	void CGameNetMsgManager::sendCreateEntity(TEntityID destID){
+	void CGameNetMsgManager::sendCreateEntity(TEntityID destID, Map::CEntity* customInfoForClient) {
 		//cogemos la entidad que hemos creado para enviar la información por la red
 		CEntity* destEntity = CServer::getSingletonPtr()->getMap()->getEntityByID(destID);
-		Net::NetMessageType msgType = Net::CREATE_ENTITY;// Escribimos el tipo de mensaje de red a enviar
+		Net::NetMessageType msgType = customInfoForClient == NULL ? Net::CREATE_ENTITY : Net::CREATE_CUSTOM_ENTITY;// Escribimos el tipo de mensaje de red a enviar
 		Net::CBuffer serialMsg;
 		//serializamos toda la información que se necesita para la creación de la entidad
 		serialMsg.write(&msgType, sizeof(msgType));
@@ -155,6 +156,11 @@ namespace Logic {
 		serialMsg.serialize(destEntity->getType(), false);
 		serialMsg.serialize(destEntity->getName(), false);
 		serialMsg.serialize(destEntity->getTransform());
+
+		if(customInfoForClient != NULL) {
+			// Serializamos la información de la entidad
+			serialMsg.serialize(customInfoForClient);
+		}
 
 		//enviamos el mensaje
 		Net::CManager::getSingletonPtr()->broadcast(serialMsg.getbuffer(), serialMsg.getSize());
@@ -193,7 +199,25 @@ namespace Logic {
 		Map::CEntity * info = Logic::CEntityFactory::getSingletonPtr()->getInfo(type);
 		info->setName(name);
 
-		CEntity * newEntity = Logic::CEntityFactory::getSingletonPtr()->createEntityById(info, CServer::getSingletonPtr()->getMap(), destID, transform);
+		if(msgType == Net::CREATE_CUSTOM_ENTITY) {
+			// Deserializamos la información de los atributos customizados
+			// para el cliente
+			unsigned int nbCustomAttributes;
+			serialMsg.deserialize(nbCustomAttributes);
+
+			std::string attributeName, value;
+			for(int i = 0; i < nbCustomAttributes; ++i) {
+				serialMsg.deserialize(attributeName);
+				serialMsg.deserialize(value);
+
+				info->setAttribute(attributeName, value);
+			}
+		}
+
+		// Creamos la entidad
+		CEntity* newEntity = Logic::CEntityFactory::getSingletonPtr()->createEntityById(info, CServer::getSingletonPtr()->getMap(), destID, transform);
+
+		// La inicializamos
 		newEntity->activate();
 		newEntity->start();
 	}
@@ -201,16 +225,15 @@ namespace Logic {
 
 	//---------------------------------------------------------
 		
-	void CGameNetMsgManager::sendEntityMessage(const std::shared_ptr<CMessage>& txMsg, TEntityID destID)
-	{
+	void CGameNetMsgManager::sendEntityMessage(const std::shared_ptr<CMessage>& txMsg, TEntityID destID) {
 
-		Net::CBuffer* bufferAux = txMsg->serialize();
+		Net::CBuffer bufferAux = txMsg->serialize();
 
 		Net::NetMessageType msgType = Net::ENTITY_MSG;// Escribimos el tipo de mensaje de red a enviar
 		Net::CBuffer serialMsg;
 			serialMsg.write(&msgType, sizeof(msgType));
 			serialMsg.write(&destID, sizeof(destID)); // Escribimos el id de la entidad destino
-			serialMsg.write(bufferAux->getbuffer(), bufferAux->getSize()); //Guardamos el mensaje en el buffer
+			serialMsg.write(bufferAux.getbuffer(), bufferAux.getSize()); //Guardamos el mensaje en el buffer
 			
 		Net::CManager::getSingletonPtr()->broadcast(serialMsg.getbuffer(), serialMsg.getSize());
 		//std::cout << "Enviado mensaje tipo " << txMsg->getMessageType() << " para la entidad " << destID << " de tamaño " << serialMsg.getSize() << std::endl;
@@ -222,13 +245,13 @@ namespace Logic {
 	void CGameNetMsgManager::sendMessageToOne(const std::shared_ptr<CMessage>& txMsg, TEntityID destID, TEntityID player)
 	{
 
-		Net::CBuffer* bufferAux = txMsg->serialize();
+		Net::CBuffer bufferAux = txMsg->serialize();
 
 		Net::NetMessageType msgType = Net::ENTITY_MSG;// Escribimos el tipo de mensaje de red a enviar
 		Net::CBuffer serialMsg;
 			serialMsg.write(&msgType, sizeof(msgType));
 			serialMsg.write(&destID, sizeof(destID)); // Escribimos el id de la entidad destino
-			serialMsg.write(bufferAux->getbuffer(), bufferAux->getSize()); //Guardamos el mensaje en el buffer
+			serialMsg.write(bufferAux.getbuffer(), bufferAux.getSize()); //Guardamos el mensaje en el buffer
 			
 		Net::NetID idMsg = Logic::CGameNetPlayersManager::getSingletonPtr()->getPlayerByEntityId(player).getNetId();
 
@@ -239,11 +262,6 @@ namespace Logic {
 		
 	void CGameNetMsgManager::processEntityMessage(Net::CPaquete* packet)
 	{
-		// TODO Método que debe de ser invocado desde el método que
-		// recibe todos los paquetes de red cuando el tipo de mensaje
-		// de red es Net::ENTITY_MSG. Se debe sacar el ID de la entidad,
-		// recuperarla, deserializar el mensaje y enviárselo
-		
 		// Creamos un buffer con los datos para leer de manera más cómoda
 		Net::CBuffer serialMsg;
 			serialMsg.write(packet->getData(),packet->getDataLength());
@@ -309,6 +327,7 @@ namespace Logic {
 			processEntityMessage(packet);
 			break;	
 
+		case Net::CREATE_CUSTOM_ENTITY:
 		case Net::CREATE_ENTITY:	
 			processCreateEntity(packet);
 			break;	

@@ -17,6 +17,7 @@ implementa las habilidades del personaje
 #include "Graphics.h"
 #include "Map/MapEntity.h"
 #include "Logic/Entity/Entity.h"
+#include "Logic/Maps/WorldState.h"
 
 #include "Logic/Messages/MessageSetReducedDamage.h"
 #include "Logic/Messages/MessageChangeMaterial.h"
@@ -82,6 +83,7 @@ namespace Logic {
 				std::shared_ptr<CMessageChangeMaterial> materialMsg = std::make_shared<CMessageChangeMaterial>();
 				materialMsg->setMaterialName("original");
 				_entity->emitMessage(materialMsg);
+				Logic::CWorldState::getSingletonPtr()->addChange(_entity,materialMsg);
 				_doingPrimarySkill = false;
 			}
 		}
@@ -92,11 +94,6 @@ namespace Logic {
 	void CArchangel::onActivate() {
 		CPlayerClass::onActivate();
 
-		// Ñapa temporal para el ideame
-		// Cambiamos el color del marine en funcion de la clase con un changeMaterial
-		std::shared_ptr<CMessageChangeMaterial> materialMsg = std::make_shared<CMessageChangeMaterial>();
-		materialMsg->setMaterialName(_materialName);
-		_entity->emitMessage(materialMsg);
 		_inmunityTimer = _inmunityDuration;
 	}
 
@@ -116,6 +113,7 @@ namespace Logic {
 		std::shared_ptr<CMessageChangeMaterial> materialMsg = std::make_shared<CMessageChangeMaterial>();
 		materialMsg->setMaterialName("ArchangelDiamond3"); // En el futuro debe ser el material del archangel
 		_entity->emitMessage(materialMsg);
+		Logic::CWorldState::getSingletonPtr()->addChange(_entity,materialMsg);
 
 		_doingPrimarySkill = true;
 	}

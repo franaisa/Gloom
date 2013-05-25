@@ -17,6 +17,7 @@ del juego.
 #include "ComponentFactory.h"
 #include "Logic/Entity/Entity.h"
 #include "Logic/Maps/Map.h"
+#include "Logic/Maps/WorldState.h"
 #include "Logic/Server.h"
 #include "Logic/GameNetMsgManager.h"
 #include "Net/Manager.h"
@@ -258,15 +259,16 @@ namespace Logic {
 	
 	//________________________________________________________________________
 
-	Logic::CEntity* CEntityFactory::initEntity(Logic::CEntity* entity, Map::CEntity* entityInfo, CMap *map, bool replicate) {
+	Logic::CEntity* CEntityFactory::initEntity(Logic::CEntity* entity, Map::CEntity* entityInfo, CMap *map, bool replicate, Map::CEntity* customInfoForClient) {
 		if(!entity) return NULL;
 
 		if ( _dynamicCreation ? entity->dynamicSpawn(map, entityInfo) : entity->spawn(map, entityInfo) ) {
 			// Añadimos la nueva entidad en el mapa antes de inicializarla.
 			map->addEntity(entity);
-
+			if(_dynamicCreation)
+				CWorldState::getSingletonPtr()->addEntity(entity);
 			if(replicate) {
-				Logic::CGameNetMsgManager::getSingletonPtr()->sendCreateEntity( entity->getEntityID() );
+				Logic::CGameNetMsgManager::getSingletonPtr()->sendCreateEntity( entity->getEntityID(), customInfoForClient );
 			}
 
 			return entity;
@@ -279,7 +281,7 @@ namespace Logic {
 
 	//________________________________________________________________________
 
-	Logic::CEntity* CEntityFactory::initEntity(Logic::CEntity* entity, Map::CEntity* entityInfo, Logic::CMap *map, const Matrix4& transform, bool replicate) {
+	Logic::CEntity* CEntityFactory::initEntity(Logic::CEntity* entity, Map::CEntity* entityInfo, Logic::CMap *map, const Matrix4& transform, bool replicate, Map::CEntity* customInfoForClient) {
 		if(!entity) return NULL;
 
 		// Seteamos la posición de la entidad a ser creada
@@ -289,7 +291,7 @@ namespace Logic {
 			map->addEntity(entity);
 
 			if(replicate) {
-				Logic::CGameNetMsgManager::getSingletonPtr()->sendCreateEntity( entity->getEntityID() );
+				Logic::CGameNetMsgManager::getSingletonPtr()->sendCreateEntity( entity->getEntityID(), customInfoForClient );
 			}
 
 			return entity;
@@ -326,20 +328,30 @@ namespace Logic {
 
 	//________________________________________________________________________
 
+	CEntity* CEntityFactory::createCustomClientEntity(Map::CEntity *entityInfo, Map::CEntity* customClientInfo, Logic::CMap *map, const Matrix4& transform) {
+		return initEntity( assembleEntity( entityInfo->getType() ), entityInfo, map, transform, true, customClientInfo);
+	}
+
+	//________________________________________________________________________
+
 	//Al metodo le falta un control de si quieres que el server envie o no a los clientes el borrado
 	Logic::CEntity* CEntityFactory::createEntityWithTimeOut(Map::CEntity *entityInfo, CMap *map, unsigned int msecs, bool replicate) {
 		CEntity* createdEntity = createEntity(entityInfo, map, replicate);
 		deferredDeleteEntity(createdEntity, msecs);
 		return createdEntity;
 	}
-	
+
 	//________________________________________________________________________
 
-	void CEntityFactory::deleteEntity(Logic::CEntity *entity) {
+	void CEntityFactory::deleteEntity(Logic::CEntity *entity, bool toClients) {
 		assert(entity);
 		// Si la entidad estaba activada se desactiva al sacarla
 		// del mapa.
 		entity->getMap()->removeEntity(entity);
+		CWorldState::getSingletonPtr()->deleteEntity(entity);
+		//Comprobamos si debe enviarse a los clientes, porque hay casos en los que no deberia
+		if( Net::CManager::getSingletonPtr()->imServer() && toClients )
+			Logic::CGameNetMsgManager::getSingletonPtr()->sendDestroyEntity( entity->getEntityID() );
 
 		delete entity;
 
@@ -380,7 +392,9 @@ namespace Logic {
 
 	//________________________________________________________________________
 
-	Map::CEntity * CEntityFactory::getInfo(std::string type) {
+	// @deprecated Deberia devolver un puntero constante para asegurarnos de que
+	// nadie nos va a hacer la jugada fuera
+	Map::CEntity* CEntityFactory::getInfo(std::string type) {
 		std::map<std::string,Map::CEntity *>::const_iterator it = _archetypes.find(type);
 
 		if( it!=_archetypes.end() ){

@@ -7,13 +7,11 @@ la gestión de la interfaz con el usuario (entrada de periféricos, CEGui...).
 @see GUI::CServer
 
 @author David Llansó
-@date Agosto, 2010
+@author Rubén Mulero
+@date August, 2010
 */
 
 #include "Server.h"
-#include "GUIEventArgs.h"
-
-#include "GUIDescriptor.h"
 #include "BaseSubsystems/Server.h"
 
 #include <cassert>
@@ -103,18 +101,6 @@ namespace GUI {
 
 	//________________________________________________________________________
 
-	void CServer::addLayoutToState(Application::CApplicationState* state, 
-		const std::string& layoutName) {
-		
-		// Find the table associated with "state" where all the information 
-		// about the different layout is stored. Then find the table with that 
-		// layoutName and create its descriptor (which takes care of window 
-		// initialization etc)
-		(_layoutTable[state])[layoutName] = new GUIDescriptor(layoutName);
-	} // addLayoutToState
-
-	//________________________________________________________________________
-
 	Hikari::FlashControl* CServer::addLayout(const std::string& layoutName, Hikari::Position pos, unsigned int width, unsigned int height) {
 
 			return BaseSubsystems::CServer::getSingletonPtr()->getHikari()->
@@ -176,55 +162,12 @@ namespace GUI {
 
 	bool CServer::activateGUI(Application::CApplicationState* state, 
 		const std::string& layoutName) {
-		
-		// Find the layouts table associated to "state"
-		StateLayoutTable::const_iterator it = _layoutTable.find(state);
 
-		// If there is such a state in our table
-		if(it != _layoutTable.end()) {
-			// Find the layout given in "layoutName"
-			std::map<std::string, GUIDescriptor*>::const_iterator it2 = 
-				it->second.find(layoutName);
-
-			// If there is such a layout name
-			if(it2 != it->second.end()) {
-				// Activate the window and update "_currentWindow" pointer
-				
-				//_currentWindow = it2->second->activate();
-				return true;
-			}
-
-		}
-
-		return false;
+		return true;
 	} // activateGUI
-
-
 
 	void CServer::tick(){
 		_manager->update();
-	}
-
-	//________________________________________________________________________
-
-	void CServer::activateMouseCursor() {
-		// Show mouse cursor
-	} // activateMouseCursor
-
-	//________________________________________________________________________
-
-	void CServer::deactivateGUI() {
-	} // deactivateGUI
-
-	//________________________________________________________________________
-
-	void CServer::deactivateMouseCursor() {
-		// Desactivamos la ventana GUI con el menú y el ratón.
-	} // deactivateMouseCursor
-
-	//________________________________________________________________________
-
-	void CServer::setText(const std::string& msg) {
 	}
 
 } // namespace GUI

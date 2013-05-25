@@ -31,16 +31,15 @@ namespace Logic {
 	}//
 
 	//----------------------------------------------------------
-	Net::CBuffer* CMessageSyncPosition::serialize() {
-		assert(_tempBuffer == NULL);
-
+	Net::CBuffer CMessageSyncPosition::serialize() {
 		// El tamaño de 3 floats para el Vector3 de direccion y 
 		// 2 floats para la orientacion (yaw y pitch)
-		_tempBuffer = new Net::CBuffer( sizeof(int) + (sizeof(float) * 5) );
-		_tempBuffer->serialize(std::string("CMessageSyncPosition"), true);
-		_tempBuffer->serialize(_position);
-		_tempBuffer->serialize(_seq);
-		return _tempBuffer;
+		Net::CBuffer buffer( sizeof(int) + (sizeof(float) * 5) );
+		buffer.serialize(std::string("CMessageSyncPosition"), true);
+		buffer.serialize(_position);
+		buffer.serialize(_seq);
+		
+		return buffer;
 	}//
 	//----------------------------------------------------------
 

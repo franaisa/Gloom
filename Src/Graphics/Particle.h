@@ -51,7 +51,7 @@ namespace Graphics
 
 		@param name Nombre del Particle.
 		*/
-		CParticle(const std::string &unicName, const std::string &particleName, bool isOverlay = false);
+		CParticle(const std::string &particleName, bool isOverlay = false);
 
 		/**
 		Destructor de la partícula.
@@ -71,7 +71,27 @@ namespace Graphics
 		*/
 		Vector3 getPosition();
 
+		/**
+		Pone a la particula en modo activa
+		*/
+		void activate();
 
+		/**
+		Pone a la particula en modo pausa
+		*/
+		void deactivate();
+
+		/**
+		Fuerza la carga de los recursos de la particula
+		*/
+		void loadResources();
+		
+		/**
+		Indica si la particula esta emitiendo
+		
+		@return bool, true si la particula esta emitiendo, falso si no
+		*/
+		bool isEmitting();
 
 		/**
 		Setea la direccion del emisor que se le introduce a la particula, lleva la magnitud ya multiplicada por la direccion
@@ -89,6 +109,7 @@ namespace Graphics
 
 		Ogre::SceneNode * getSceneNode(){ return _sceneNode;}
 
+		
 
 	protected:
 		/** 
