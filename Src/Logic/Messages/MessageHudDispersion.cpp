@@ -12,7 +12,7 @@ namespace Logic {
 	//----------------------------------------------------------
 
 	Net::CBuffer CMessageHudDispersion::serialize() {
-		Net::CBuffer buffer(sizeof(int));
+		Net::CBuffer buffer(sizeof(int) + sizeof(_fHeight) + sizeof(_fHeight) + sizeof(_iTime) + sizeof(_bReset));
 		buffer.serialize(std::string("CMessageHudDispersion"), true);
 		buffer.serialize(_fWidth);
 		buffer.serialize(_fHeight);
