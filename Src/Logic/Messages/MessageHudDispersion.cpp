@@ -12,15 +12,22 @@ namespace Logic {
 	//----------------------------------------------------------
 
 	Net::CBuffer CMessageHudDispersion::serialize() {
-		Net::CBuffer buffer(sizeof(int));
+		Net::CBuffer buffer(sizeof(int) + sizeof(_fHeight) + sizeof(_fWidth) + sizeof(_iTime) + sizeof(_bReset));
 		buffer.serialize(std::string("CMessageHudDispersion"), true);
-		
+		buffer.serialize(_fWidth);
+		buffer.serialize(_fHeight);
+		buffer.serialize(_iTime);
+		buffer.serialize(_bReset);
+
 		return buffer;
 	}//
 	//----------------------------------------------------------
 
-	void CMessageHudDispersion::deserialize(Net::CBuffer& buffer) {
-		//Nada
+	void CMessageHudDispersion::deserialize(Net::CBuffer& buffer) {	
+		buffer.deserialize(_fWidth);
+		buffer.deserialize(_fHeight);
+		buffer.deserialize(_iTime);
+		buffer.deserialize(_bReset);
 	}
 
 };
