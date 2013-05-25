@@ -202,8 +202,6 @@ namespace Logic {
 			landAnim(msecs);
 		else if(_playerIsWalking)
 			walkAnim(msecs);
-		else
-			offsetRecovery(msecs);
 	}
 
 	//---------------------------------------------------------
