@@ -595,10 +595,12 @@ namespace Physics {
 		}
 
 		// Introducimos la información devuelta en la estructura que vamos a devolver
-		hit.entity		= static_cast<IPhysics*>( hitSpot.shape->getActor().userData )->getEntity();
-		hit.distance	= hitSpot.distance;
-		hit.impact		= PxVec3ToVector3( hitSpot.impact );
-		hit.normal		= PxVec3ToVector3( hitSpot.normal );
+		if(validEntity){
+			hit.entity		= static_cast<IPhysics*>( hitSpot.shape->getActor().userData )->getEntity();
+			hit.distance	= hitSpot.distance;
+			hit.impact		= PxVec3ToVector3( hitSpot.impact );
+			hit.normal		= PxVec3ToVector3( hitSpot.normal );
+		}
 
 		return validEntity;
 	}
