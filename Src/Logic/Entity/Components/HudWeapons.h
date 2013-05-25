@@ -119,6 +119,8 @@ namespace Logic {
 
 	protected:
 
+		virtual void onStart();
+
 		/**
 		Método llamado en cada frame que actualiza el estado del componente.
 		<p>
@@ -139,6 +141,7 @@ namespace Logic {
 		struct TGraphicsWeapon{
 			Graphics::CEntity *graphicsEntity;
 			Vector3 offset;
+			Vector3 defaultPos;
 			float yaw;
 			float pitch;
 			float roll;
@@ -156,29 +159,23 @@ namespace Logic {
 		//Graphics::SceneNode* _scene;
 		Graphics::CScene* _scene;
 
-		float _currentHeight;
-		float _verticalSpeed;
-
 		struct RunAnim {
 			// Horizontal movement
 			float currentHorizontalPos;
+			float horizontalSpeed;
 			float horizontalOffset;
 
-			float hipSpeed;
-			float stepForce;
-			float stepRecovery;
-			bool recoveringStep;
-
-			// Forward movement
-			float currentForwardPos;
-			float forwardOffset;
-			float forwardSpeed;
+			float currentVerticalPos;
+			float verticalSpeed;
+			float verticalOffset;
 		};
 		
 		RunAnim _runAnim;
 
+		Vector3 _offset;
+
 		//////////////////////Gestion de armas
-		Graphics::COverlay *_overlayWeapon3D[5];
+		Graphics::COverlay *_overlayWeapon3D[WeaponType::eSIZE];
 	}; // class CGraphics
 
 	REG_FACTORY(CHudWeapons);
