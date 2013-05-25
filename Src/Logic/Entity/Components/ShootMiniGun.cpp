@@ -70,13 +70,13 @@ namespace Logic {
 		{
 			_iContadorLeftClicked++;
 
-			std::cout << "Fixed = " << _iContadorLeftClicked << " y envio = " << _bMensajeDispMandado << std::endl;
+			//std::cout << "Fixed = " << _iContadorLeftClicked << " y envio = " << _bMensajeDispMandado << std::endl;
 			
 			//Modificar la dispersión
 			if ((_iContadorLeftClicked < 10) && (!_bMensajeDispMandado))
 			{
 				_dispersion = _dispersionOriginal + 15.0f;
-				std::cout << "Envio mensaje-------------------------------------------" << std::endl;
+				//std::cout << "Envio mensaje-------------------------------------------" << std::endl;
 				//Enviamos el mensaje para que empiece a modificar la mirilla con la dispersión
 				std::shared_ptr<CMessageHudDispersion> m = std::make_shared<CMessageHudDispersion>();
 				m->setHeight(8.0f);
@@ -85,7 +85,7 @@ namespace Logic {
 				m->setReset(false);
 				_entity->emitMessage(m);
 				_bMensajeDispMandado = true;
-
+				printf("\nReduciendo mira");
 				/**
 				NOTA: De momento tiene el bug de que si disparas cuando no tienes munición, sigue haciendo la dispersión.
 				La movida es que se sabe si tienes munición o no en el método primaryShoot, de su padre ShootRaycast.
