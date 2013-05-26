@@ -115,10 +115,18 @@ namespace Logic {
 		Metodo que controla el movimiento del arma,
 		el comentario te lo dejo a ti fran :D
 		*/
-		void movement(unsigned int msecs);
+		void walkAnim(unsigned int msecs);
+
+		void landAnim(unsigned int msecs);
+
+		void idleAnim(unsigned int msecs);
 
 		void playerIsWalking(bool walking, int direction = 0);
 
+		void offsetRecovery(unsigned int msecs);
+
+		void playerIsLanding(float hitForce, float estimatedLandingTime);
+	
 	protected:
 
 		virtual void onStart();
@@ -138,17 +146,19 @@ namespace Logic {
 		int _currentWeapon;
 
 		bool _playerIsWalking;
+		bool _playerIsLanding;
 		
 		/**
 		Estructura donde se guardara el offset y las modificaciones en el arma
 		*/
 		struct TGraphicsWeapon{
 			Graphics::CEntity *graphicsEntity;
+
 			Vector3 offset;
 			Vector3 defaultPos;
-			float yaw;
-			float pitch;
-			float roll;
+			float defaultYaw;
+			float defaultPitch;
+			float defaultRoll;
 		};
 
 		/**
@@ -172,9 +182,46 @@ namespace Logic {
 			float currentVerticalPos;
 			float verticalSpeed;
 			float verticalOffset;
+
+			int currentStrafingDir;
+			int oldStrafingDir;
+
+			Vector3 offset;
 		};
 		
+		struct LandAnim {
+			float force;
+			float currentOffset;
+			float recoverySpeed;
+
+			Vector3 offset;
+		};
+
+		struct FallAnim {
+			Vector3 offset;
+		};
+
+		struct IdleAnim {
+			float currentVerticalPos;
+			float verticalSpeed;
+			float verticalOffset;
+
+			Vector3 offset;
+		};
+
+		struct ShootAnim {
+			Vector3 offset;
+		};
+
+		struct ChangeWeaponAnim {
+			Vector3 offset;
+		};
+
 		RunAnim _runAnim;
+		LandAnim _landAnim;
+		IdleAnim _idleAnim;
+
+		//Vector3 _offset;
 
 		//////////////////////Gestion de armas
 		Graphics::COverlay *_overlayWeapon3D[WeaponType::eSIZE];
