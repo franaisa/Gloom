@@ -133,6 +133,7 @@ namespace Logic {
 
 	private:
 
+		void emitSound(const std::string &ruta, const std::string &sound, bool notIfPlay = false);
 
 		// =======================================================================
 		//                          MIEMBROS PRIVADOS
@@ -164,6 +165,8 @@ namespace Logic {
 
 			int currentStrafingDir;
 			bool recoveringRoll;
+
+			bool readyToStep;
 		};
 
 		CameraWalkAnim _walkAnim;

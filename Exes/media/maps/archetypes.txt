@@ -68,7 +68,7 @@ Map = {
 		audioJump = "media/audio/jump.wav",
 		audioSideJump = "media/audio/sideJump.wav",
 		audioPain = "media/audio/pain.wav",
-		audioDeath = "media/audio/death.wav",
+		audioDeath = "media/audio/splatdeath_03.wav",
 		audioSpawn = "media/audio/spawn.wav",
 		audioNoAmmo = "media/audio/noammo.wav",
 		
@@ -264,7 +264,7 @@ Map = {
 		audioJump = "media/audio/jump.wav",
 		audioSideJump = "media/audio/sideJump.wav",
 		audioPain = "media/audio/pain.wav",
-		audioDeath = "media/audio/death.wav",
+		audioDeath = "media/audio/splatdeath_03.wav",
 		audioSpawn = "media/audio/spawn.wav",
 		audioNoAmmo = "media/audio/noammo.wav",
 		
@@ -448,7 +448,7 @@ Map = {
 		audioJump = "media/audio/jump.wav",
 		audioSideJump = "media/audio/sideJump.wav",
 		audioPain = "media/audio/pain.wav",
-		audioDeath = "media/audio/death.wav",
+		audioDeath = "media/audio/splatdeath_03.wav",
 		audioSpawn = "media/audio/spawn.wav",
 		audioNoAmmo = "media/audio/noammo.wav",
 		
@@ -632,7 +632,7 @@ Map = {
 		audioJump = "media/audio/jump.wav",
 		audioSideJump = "media/audio/sideJump.wav",
 		audioPain = "media/audio/pain.wav",
-		audioDeath = "media/audio/death.wav",
+		audioDeath = "media/audio/splatdeath_03.wav",
 		audioSpawn = "media/audio/spawn.wav",
 		audioNoAmmo = "media/audio/noammo.wav",
 		
@@ -816,7 +816,7 @@ Map = {
 		audioJump = "media/audio/jump.wav",
 		audioSideJump = "media/audio/sideJump.wav",
 		audioPain = "media/audio/pain.wav",
-		audioDeath = "media/audio/death.wav",
+		audioDeath = "media/audio/splatdeath_03.wav",
 		audioSpawn = "media/audio/spawn.wav",
 		audioNoAmmo = "media/audio/noammo.wav",
 		
@@ -1015,7 +1015,7 @@ Map = {
 		audioJump = "media/audio/jump.wav",
 		audioSideJump = "media/audio/sideJump.wav",
 		audioPain = "media/audio/pain.wav",
-		audioDeath = "media/audio/death.wav",
+		audioDeath = "media/audio/splatdeath_03.wav",
 		audioSpawn = "media/audio/spawn.wav",
 		audioNoAmmo = "media/audio/noammo.wav",
 		
@@ -1202,7 +1202,7 @@ Map = {
 		audioJump = "media/audio/jump.wav",
 		audioSideJump = "media/audio/sideJump.wav",
 		audioPain = "media/audio/pain.wav",
-		audioDeath = "media/audio/death.wav",
+		audioDeath = "media/audio/splatdeath_03.wav",
 		audioSpawn = "media/audio/spawn.wav",
 		audioNoAmmo = "media/audio/noammo.wav",
 		
@@ -1406,7 +1406,7 @@ Map = {
 		audioJump = "media/audio/jump.wav",
 		audioSideJump = "media/audio/sideJump.wav",
 		audioPain = "media/audio/pain.wav",
-		audioDeath = "media/audio/death.wav",
+		audioDeath = "media/audio/splatdeath_03.wav",
 		audioSpawn = "media/audio/spawn.wav",
 		audioNoAmmo = "media/audio/noammo.wav",
 
@@ -1620,7 +1620,7 @@ Map = {
 		audioJump = "media/audio/jump.wav",
 		audioSideJump = "media/audio/sideJump.wav",
 		audioPain = "media/audio/pain.wav",
-		audioDeath = "media/audio/death.wav",
+		audioDeath = "media/audio/splatdeath_03.wav",
 		audioSpawn = "media/audio/spawn.wav",
 		audioNoAmmo = "media/audio/noammo.wav",
 		
