@@ -216,11 +216,8 @@ namespace Logic {
 		//__________________________________________________________________
 
 		struct ShootAnim {
-			float currentForwardPos;
 			float shootForce;
-			float forwardRecoveryCoef;
-
-			bool recovering;
+			float shootRecoveryCoef;
 
 			Vector3 offset;
 		};

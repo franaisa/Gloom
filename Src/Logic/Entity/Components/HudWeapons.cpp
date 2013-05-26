@@ -74,11 +74,9 @@ namespace Logic {
 		_idleAnim.offset = Vector3::ZERO;
 
 		// Valores de configuración de la animación de disparo
-		_shootAnim.currentForwardPos = 0.0f;
 		_shootAnim.shootForce = 1.0f;
-		_shootAnim.forwardRecoveryCoef = 0.96f;
+		_shootAnim.shootRecoveryCoef = 0.96f;
 		_shootAnim.offset = Vector3::ZERO;
-		_shootAnim.recovering = false;
 	}
 
 	//---------------------------------------------------------
@@ -234,17 +232,16 @@ namespace Logic {
 																	   _runAnim.offset + 
 																	   _landAnim.offset +
 																	   _idleAnim.offset +
-																	   _shootAnim.offset);
-
-		_shootAnim.offset *= 0.96f;
+																	   _shootAnim.offset );
+		_shootAnim.offset *= _shootAnim.shootRecoveryCoef;
 	}
 
 	//---------------------------------------------------------
 
 	void CHudWeapons::shootAnim() {
-		Vector3 weaponDir = Math::getDirection( _graphicsEntities[_currentWeapon].graphicsEntity->getTransform() );
+		Matrix4 weaponTransform = _graphicsEntities[_currentWeapon].graphicsEntity->getTransform();
+		Vector3 weaponDir = Math::getDirection( weaponTransform );
 		_shootAnim.offset = weaponDir * _shootAnim.shootForce * Vector3(1.0f, 0.0f, 1.0f);
-		//_shootAnim.offset.y = _shootAnim.shootForce * 0.6;
 	}
 
 	//---------------------------------------------------------
