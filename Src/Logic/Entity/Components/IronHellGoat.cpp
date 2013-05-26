@@ -67,6 +67,7 @@ namespace Logic {
 		assert( entityInfo->hasAttribute(weaponName + "MaxFireBallSpeed") );
 		assert( entityInfo->hasAttribute(weaponName + "MaxFireBallExplotionRadius") );
 		assert( entityInfo->hasAttribute(weaponName + "MaxFireBallDamage") );
+		assert( entityInfo->hasAttribute(weaponName + "Audio") );
 
 		// Tiempo de carga del arma
 		_maxLoadingTime = entityInfo->getIntAttribute(weaponName + "MaximumLoadingTime") * 1000.0f;
@@ -92,6 +93,9 @@ namespace Logic {
 		_fireBallSpeedTemporalIncrement = (maxFireBallSpeed - _defaultFireBallSpeed) / _maxLoadingTime;
 		_fireBallExplotionRadiusTemporalIncrement = (maxFireBallExplotionRadius - _defaultFireBallExplotionRadius) / _maxLoadingTime;
 		_fireBallDamageTemporalIncrement = (maxFireBallDamage - _defaultFireBallDamage) / _maxLoadingTime;
+
+		// Obtenemos los sonidos que produce el arma
+		_shootAudio = entityInfo->getStringAttribute(weaponName + "Audio");
 
 		return true;
 	}
@@ -221,6 +225,9 @@ namespace Logic {
 		// Arrancamos la entidad
 		fireBall->activate();
 		fireBall->start();
+
+		// Emitimos el sonido de lanzar la bola de fuego
+		emitSound(_shootAudio, "fireBallShot");
 
 		// Me apunto la entidad devuelta por la factoria
 		_controllableFireBalls.insert(fbController);

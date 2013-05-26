@@ -165,8 +165,6 @@ namespace Logic {
 
 			int currentStrafingDir;
 			bool recoveringRoll;
-
-			bool readyToStep;
 		};
 
 		CameraWalkAnim _walkAnim;
