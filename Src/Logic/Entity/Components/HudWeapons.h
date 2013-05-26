@@ -121,6 +121,8 @@ namespace Logic {
 
 		void idleAnim(unsigned int msecs);
 
+		void shootAnim();
+
 		void playerIsWalking(bool walking, int direction = 0);
 
 		void offsetRecovery(unsigned int msecs);
@@ -173,6 +175,8 @@ namespace Logic {
 		//Graphics::SceneNode* _scene;
 		Graphics::CScene* _scene;
 
+		//__________________________________________________________________
+
 		struct RunAnim {
 			// Horizontal movement
 			float currentHorizontalPos;
@@ -189,6 +193,8 @@ namespace Logic {
 			Vector3 offset;
 		};
 		
+		//__________________________________________________________________
+
 		struct LandAnim {
 			float force;
 			float currentOffset;
@@ -197,9 +203,7 @@ namespace Logic {
 			Vector3 offset;
 		};
 
-		struct FallAnim {
-			Vector3 offset;
-		};
+		//__________________________________________________________________
 
 		struct IdleAnim {
 			float currentVerticalPos;
@@ -209,17 +213,33 @@ namespace Logic {
 			Vector3 offset;
 		};
 
+		//__________________________________________________________________
+
 		struct ShootAnim {
+			float shootForce;
+			float shootRecoveryCoef;
+
 			Vector3 offset;
 		};
+
+		//__________________________________________________________________
+
+		struct FallAnim {
+			Vector3 offset;
+		};
+
+		//__________________________________________________________________
 
 		struct ChangeWeaponAnim {
 			Vector3 offset;
 		};
 
+		//__________________________________________________________________
+
 		RunAnim _runAnim;
 		LandAnim _landAnim;
 		IdleAnim _idleAnim;
+		ShootAnim _shootAnim;
 
 		//Vector3 _offset;
 

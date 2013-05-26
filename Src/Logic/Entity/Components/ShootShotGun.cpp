@@ -21,6 +21,7 @@ Contiene la implementación del componente que representa a la escopeta.
 #include "Logic/Server.h"
 #include "PhysicDynamicEntity.h"
 #include "Map/MapEntity.h"
+#include "HudWeapons.h"
 
 //Debug
 #include "Logic/Messages/MessageHudDebugData.h"
@@ -81,6 +82,9 @@ namespace Logic {
 
 			//Sonido de disparo
 			emitSound(_audioShoot, "audioShot");
+			CHudWeapons* hudWeapon = _entity->getComponent<CHudWeapons>("CHudWeapons");
+			if(hudWeapon != NULL)
+				hudWeapon->shootAnim();
 		}
 		else if(_currentAmmo == 0) {
 			// Ejecutar sonidos y animaciones de falta de balas
