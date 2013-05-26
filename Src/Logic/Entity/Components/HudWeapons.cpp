@@ -72,6 +72,13 @@ namespace Logic {
 		_idleAnim.verticalOffset = 0.04f;
 
 		_idleAnim.offset = Vector3::ZERO;
+
+		// Valores de configuración de la animación de disparo
+		_shootAnim.currentForwardPos = 0.0f;
+		_shootAnim.shootForce = 1.0f;
+		_shootAnim.forwardRecoveryCoef = 0.96f;
+		_shootAnim.offset = Vector3::ZERO;
+		_shootAnim.recovering = false;
 	}
 
 	//---------------------------------------------------------
@@ -179,12 +186,7 @@ namespace Logic {
 	void CHudWeapons::onStart() {
 		Matrix4 weaponTransform;
 		for(int i = 0; i < WeaponType::eSIZE; ++i) {
-			weaponTransform = _graphicsEntities[i].graphicsEntity->getTransform();
-			
-			_graphicsEntities[i].defaultPos = weaponTransform.getTrans();
-			_graphicsEntities[i].defaultYaw = Math::getYaw(weaponTransform);
-			_graphicsEntities[i].defaultPitch = Math::getPitch(weaponTransform);
-			_graphicsEntities[i].defaultRoll = Math::getRoll(weaponTransform);
+			_graphicsEntities[i].defaultPos = _graphicsEntities[i].graphicsEntity->getTransform().getTrans();
 		}
 	}
 	
@@ -231,7 +233,18 @@ namespace Logic {
 		_graphicsEntities[_currentWeapon].graphicsEntity->setPosition( _graphicsEntities[_currentWeapon].defaultPos + 
 																	   _runAnim.offset + 
 																	   _landAnim.offset +
-																	   _idleAnim.offset);
+																	   _idleAnim.offset +
+																	   _shootAnim.offset);
+
+		_shootAnim.offset *= 0.96f;
+	}
+
+	//---------------------------------------------------------
+
+	void CHudWeapons::shootAnim() {
+		Vector3 weaponDir = Math::getDirection( _graphicsEntities[_currentWeapon].graphicsEntity->getTransform() );
+		_shootAnim.offset = weaponDir * _shootAnim.shootForce * Vector3(1.0f, 0.0f, 1.0f);
+		//_shootAnim.offset.y = _shootAnim.shootForce * 0.6;
 	}
 
 	//---------------------------------------------------------
