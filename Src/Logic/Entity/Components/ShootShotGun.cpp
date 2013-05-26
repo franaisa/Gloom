@@ -69,7 +69,7 @@ namespace Logic {
 			_primaryCanShoot = false;
 			_primaryCooldownTimer = 0;
 				
-			drawParticle("fire", "shootParticle");
+			drawParticle("shootParticle");
 
 			float shoots = _numberShots;
 			if(_currentAmmo < _numberShots)

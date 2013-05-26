@@ -20,6 +20,7 @@ Contiene la implementación del componente que gestiona las armas y que administr
 #include "Logic/Entity/Components/Shoot.h"
 #include "Logic/Messages/MessageAudio.h"
 #include "Logic/Messages/MessageHudDispersion.h"
+#include "Logic/Messages/MessageCreateParticle.h"
 
 #include "Logic/Messages/MessageControl.h"
 #include "Logic/Messages/MessageDamaged.h"
@@ -76,7 +77,7 @@ namespace Logic {
 			_primaryCanShoot = false;
 			_primaryCooldownTimer = 0;
 				
-			drawParticle("fire", "shootParticle");
+			drawParticle("shootParticle");
 
 			decrementAmmo();
 
@@ -179,8 +180,15 @@ namespace Logic {
 		{
 			Vector3 pos = hits2.impact;
 			std::cout << "-------He dado " << pos << std::endl;
-			
 			decals(hits2.entity, hits2.impact);
+
+			// Añado aqui las particulas de dado en la pared.
+			auto m = std::make_shared<CMessageCreateParticle>();
+			m->setPosition(hits2.impact);
+			m->setParticle("impactParticle");
+			m->setDirectionWithForce(hits2.normal);
+			hits2.entity->emitMessage(m);
+
 		}
 
 		// Rayo lanzado por el servidor de físicas de acuerdo a la distancia de potencia del arma

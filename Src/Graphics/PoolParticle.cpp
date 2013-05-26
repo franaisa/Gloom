@@ -74,7 +74,7 @@ namespace Graphics
 		if(position == std::string::npos)
 			return;
 		std::string nameParticleSystemAndAmount = completeNameParticleSystem.substr(0, position);
-		int positionUnderscore = nameParticleSystemAndAmount.length()-1;
+		int positionUnderscore = nameParticleSystemAndAmount.length()-2;
 		int amount = std::atoi(nameParticleSystemAndAmount.substr(positionUnderscore).c_str());
 		std::string nameParticleSystem = nameParticleSystemAndAmount.substr(0,positionUnderscore-1);
 		printf("\nCargada particula: %s, %d veces", nameParticleSystem.c_str(), amount);

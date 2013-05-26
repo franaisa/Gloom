@@ -179,7 +179,7 @@ namespace Logic {
 	//__________________________________________________________________
 
 
-	void CShoot::drawParticle(const std::string &nombreParticula, const std::string &particula){
+	void CShoot::drawParticle(const std::string &particula){
 	
 		Vector3 directionWithForce = Math::getDirection(_entity->getOrientation());
 		Vector3 positionParticle = (_entity->getPosition()+ Vector3(0,_heightShoot,0)) + ((directionWithForce) * _particlePosition);
