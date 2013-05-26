@@ -12,6 +12,8 @@ Contiene la implementación del componente que gestiona las armas y que administr
 #include "Logic/Messages/MessageControl.h"
 #include "Logic/Messages/MessageHudDispersion.h"
 
+
+
 namespace Logic {
 	IMP_FACTORY(CShootMiniGun);
 	
@@ -76,7 +78,6 @@ namespace Logic {
 			if ((_iContadorLeftClicked < 10) && (!_bMensajeDispMandado))
 			{
 				_dispersion = _dispersionOriginal + 15.0f;
-				//std::cout << "Envio mensaje-------------------------------------------" << std::endl;
 				//Enviamos el mensaje para que empiece a modificar la mirilla con la dispersión
 				std::shared_ptr<CMessageHudDispersion> m = std::make_shared<CMessageHudDispersion>();
 				m->setHeight(8.0f);
@@ -129,14 +130,15 @@ namespace Logic {
 			//No tenemos pulsado el derecho, así que comprobamos si tenemos rafagas que lanzar
 			if (_iRafagas > 0)
 			{
-				//TODO: Lanzar aquí el secondShoot con el swift del Screamer
+				//Controlo que no se tengan más ráfagas del máximo (en su caso lo seteo a este valor)
+				if (_iRafagas > _iMaxRafagas)
+				{
+					_iRafagas = _iMaxRafagas;
+				}
+
 				secondaryShoot(_iRafagas);
 				_iRafagas = 0;
 
-				//std::cout << "disparo" << std::endl;
-				//_primaryCanShoot = true; //Ponemos este flag para 'trucar' el disparo y que se salte el cooldown
-				//primaryShoot();
-				//--_iRafagas; //disminuimos el número de ráfagas
 			}
 		}
 	}

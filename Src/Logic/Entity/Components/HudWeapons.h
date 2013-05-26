@@ -224,12 +224,6 @@ namespace Logic {
 
 		//__________________________________________________________________
 
-		struct FallAnim {
-			Vector3 offset;
-		};
-
-		//__________________________________________________________________
-
 		struct ChangeWeaponAnim {
 			Vector3 offset;
 		};

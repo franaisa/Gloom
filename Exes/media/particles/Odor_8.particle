@@ -3,7 +3,7 @@ particle_system Odor
 	material SmokeMaterial
 	particle_width 1.0
 	particle_height 1.0
-	quota 22
+	quota 50
 	cull_each false
 	sorted false
 	local_space false
@@ -21,8 +21,8 @@ particle_system Odor
 		direction 0.0 1.0 0.0
 		angle 0
 		emission_rate 2
-		velocity_min 1
-		velocity_max 1
+		velocity_min 0.2
+		velocity_max 0.2
 		time_to_live_min 5
 		time_to_live_max 5
 		duration_min 0

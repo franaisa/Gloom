@@ -31,6 +31,7 @@ del Screamer.
 #include "Logic/Messages/MessageControl.h"
 #include "Logic/Messages/MessageImpact.h"
 #include "Logic/Messages/MessageHudDebugData.h"
+#include "Logic/Messages/MessageAudio.h"
 
 namespace Logic {
 	
@@ -265,9 +266,12 @@ namespace Logic {
 		_cameraComponent->rollCamera(_walkAnim.currentRoll);
 
 		_walkAnim.currentVerticalPos += _walkAnim.verticalSpeed * msecs;
-		if(_walkAnim.currentVerticalPos > ((2 * Math::PI) + Math::HALF_PI)) _walkAnim.currentVerticalPos = Math::HALF_PI; 
+		if(_walkAnim.currentVerticalPos > ((2 * Math::PI) + Math::HALF_PI)) {
+			_walkAnim.currentVerticalPos = Math::HALF_PI;
+		}
 
 		offset.y += sin(_walkAnim.currentVerticalPos) * _walkAnim.verticalOffset;
+
 		_cameraComponent->setOffset(offset);
 	}
 
@@ -279,7 +283,23 @@ namespace Logic {
 			_landForce = hitForce * 0.6;
 
 			_hudWeaponComponent->playerIsLanding(hitForce, Math::PI / _landRecoverySpeed);
+
+			// Esto es temporal hasta que el sonido este bien hecho ---------------------
+			if(hitForce < -2.0f)
+				emitSound("media/audio/girl_grunt.wav", "grunt");
 		}
+	}
+
+	//________________________________________________________________________
+
+	void CCameraFeedbackNotifier::emitSound(const std::string &ruta, const std::string &sound, bool notIfPlay) {
+		std::shared_ptr<CMessageAudio> audioMsg = std::make_shared<CMessageAudio>();
+			audioMsg->setRuta(ruta);
+			audioMsg->setId(sound);
+			audioMsg->setPosition( _entity->getPosition() );
+			audioMsg->setNotIfPlay(notIfPlay);
+			audioMsg->setIsPlayer(_entity->isPlayer());
+			_entity->emitMessage(audioMsg);
 	}
 
 	//________________________________________________________________________

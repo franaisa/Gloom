@@ -14,7 +14,7 @@ namespace Logic {
 	Net::CBuffer CMessageParticleVisibility::serialize() {
 		Net::CBuffer buffer(sizeof(int) + sizeof(int) + sizeof(_visibility) );
 		buffer.serialize(std::string("CMessageParticleVisibility"), true);
-		buffer.serialize(std::string(_nameParticle), true);
+		buffer.serialize(std::string(_nameParticle), false);
 		buffer.serialize(_visibility);
 
 		return buffer;

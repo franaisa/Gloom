@@ -68,7 +68,7 @@ Map = {
 		audioJump = "media/audio/jump.wav",
 		audioSideJump = "media/audio/sideJump.wav",
 		audioPain = "media/audio/pain.wav",
-		audioDeath = "media/audio/death.wav",
+		audioDeath = "media/audio/splatdeath_03.wav",
 		audioSpawn = "media/audio/spawn.wav",
 		audioNoAmmo = "media/audio/noammo.wav",
 		
@@ -170,7 +170,7 @@ Map = {
 			weaponironHellGoatShootForce = 10000,
 			weaponironHellGoatProjectileRadius = 2,
 			weaponironHellGoatParticlePosition = {6, 5, 6},
-			weaponironHellGoatAudio = "media/audio/rocketLauncher.wav",
+			weaponironHellGoatAudio = "media/audio/shootFireball3.wav",
 			
 			weaponironHellGoatMaximumLoadingTime = 2,
 			
@@ -266,7 +266,7 @@ Map = {
 		audioJump = "media/audio/jump.wav",
 		audioSideJump = "media/audio/sideJump.wav",
 		audioPain = "media/audio/pain.wav",
-		audioDeath = "media/audio/death.wav",
+		audioDeath = "media/audio/splatdeath_03.wav",
 		audioSpawn = "media/audio/spawn.wav",
 		audioNoAmmo = "media/audio/noammo.wav",
 		
@@ -356,7 +356,7 @@ Map = {
 			weaponironHellGoatShootForce = 10000,
 			weaponironHellGoatProjectileRadius = 2,
 			weaponironHellGoatParticlePosition = {6, 5, 6},
-			weaponironHellGoatAudio = "media/audio/rocketLauncher.wav",
+			weaponironHellGoatAudio = "media/audio/shootFireball3.wav",
 			
 			weaponironHellGoatMaximumLoadingTime = 2,
 			
@@ -453,7 +453,7 @@ Map = {
 		audioJump = "media/audio/jump.wav",
 		audioSideJump = "media/audio/sideJump.wav",
 		audioPain = "media/audio/pain.wav",
-		audioDeath = "media/audio/death.wav",
+		audioDeath = "media/audio/splatdeath_03.wav",
 		audioSpawn = "media/audio/spawn.wav",
 		audioNoAmmo = "media/audio/noammo.wav",
 		
@@ -543,7 +543,7 @@ Map = {
 			weaponironHellGoatShootForce = 10000,
 			weaponironHellGoatProjectileRadius = 2,
 			weaponironHellGoatParticlePosition = {6, 5, 6},
-			weaponironHellGoatAudio = "media/audio/rocketLauncher.wav",
+			weaponironHellGoatAudio = "media/audio/shootFireball3.wav",
 			
 			weaponironHellGoatMaximumLoadingTime = 2,
 			
@@ -639,7 +639,7 @@ Map = {
 		audioJump = "media/audio/jump.wav",
 		audioSideJump = "media/audio/sideJump.wav",
 		audioPain = "media/audio/pain.wav",
-		audioDeath = "media/audio/death.wav",
+		audioDeath = "media/audio/splatdeath_03.wav",
 		audioSpawn = "media/audio/spawn.wav",
 		audioNoAmmo = "media/audio/noammo.wav",
 		
@@ -729,7 +729,7 @@ Map = {
 			weaponironHellGoatShootForce = 10000,
 			weaponironHellGoatProjectileRadius = 2,
 			weaponironHellGoatParticlePosition = {6, 5, 6},
-			weaponironHellGoatAudio = "media/audio/rocketLauncher.wav",
+			weaponironHellGoatAudio = "media/audio/shootFireball3.wav",
 			
 			weaponironHellGoatMaximumLoadingTime = 2,
 			
@@ -788,7 +788,7 @@ Map = {
 	LocalScreamer = {
 		type = "LocalScreamer",
 		position = {-182.0, 15.0, 47.0},
-		msgList= "10, 42, 57,61",
+		msgList= "10, 42",
 		timeSpawn = 4,
 		defaultLife = 120,
 		maxShield = 100,
@@ -823,7 +823,7 @@ Map = {
 		audioJump = "media/audio/jump.wav",
 		audioSideJump = "media/audio/sideJump.wav",
 		audioPain = "media/audio/pain.wav",
-		audioDeath = "media/audio/death.wav",
+		audioDeath = "media/audio/splatdeath_03.wav",
 		audioSpawn = "media/audio/spawn.wav",
 		audioNoAmmo = "media/audio/noammo.wav",
 		
@@ -925,7 +925,7 @@ Map = {
 			weaponironHellGoatShootForce = 10000,
 			weaponironHellGoatProjectileRadius = 2,
 			weaponironHellGoatParticlePosition = {6, 5, 6},
-			weaponironHellGoatAudio = "media/audio/rocketLauncher.wav",
+			weaponironHellGoatAudio = "media/audio/shootFireball3.wav",
 			
 			weaponironHellGoatMaximumLoadingTime = 2,
 			
@@ -987,7 +987,7 @@ Map = {
 	LocalShadow = {
 		type = "LocalShadow",
 		position = {-182.0, 15.0, 47.0},
-		msgList= "10, 42, 57,61",
+		msgList= "10, 42",
 		timeSpawn = 4,
 		defaultLife = 120,
 		maxShield = 100,
@@ -1022,7 +1022,7 @@ Map = {
 		audioJump = "media/audio/jump.wav",
 		audioSideJump = "media/audio/sideJump.wav",
 		audioPain = "media/audio/pain.wav",
-		audioDeath = "media/audio/death.wav",
+		audioDeath = "media/audio/splatdeath_03.wav",
 		audioSpawn = "media/audio/spawn.wav",
 		audioNoAmmo = "media/audio/noammo.wav",
 		
@@ -1112,7 +1112,7 @@ Map = {
 			weaponironHellGoatShootForce = 10000,
 			weaponironHellGoatProjectileRadius = 2,
 			weaponironHellGoatParticlePosition = {6, 5, 6},
-			weaponironHellGoatAudio = "media/audio/rocketLauncher.wav",
+			weaponironHellGoatAudio = "media/audio/shootFireball3.wav",
 			
 			weaponironHellGoatMaximumLoadingTime = 2,
 			
@@ -1174,7 +1174,7 @@ Map = {
 	LocalArchangel = {
 		type = "LocalArchangel",
 		position = {-182.0, 15.0, 47.0},
-		msgList= "10, 42, 57,61",
+		msgList= "10, 42",
 		timeSpawn = 4,
 		defaultLife = 120,
 		maxShield = 100,
@@ -1209,7 +1209,7 @@ Map = {
 		audioJump = "media/audio/jump.wav",
 		audioSideJump = "media/audio/sideJump.wav",
 		audioPain = "media/audio/pain.wav",
-		audioDeath = "media/audio/death.wav",
+		audioDeath = "media/audio/splatdeath_03.wav",
 		audioSpawn = "media/audio/spawn.wav",
 		audioNoAmmo = "media/audio/noammo.wav",
 		
@@ -1299,7 +1299,7 @@ Map = {
 			weaponironHellGoatShootForce = 10000,
 			weaponironHellGoatProjectileRadius = 2,
 			weaponironHellGoatParticlePosition = {6, 5, 6},
-			weaponironHellGoatAudio = "media/audio/rocketLauncher.wav",
+			weaponironHellGoatAudio = "media/audio/shootFireball3.wav",
 			
 			weaponironHellGoatMaximumLoadingTime = 2,
 			
@@ -1363,7 +1363,7 @@ Map = {
 	LocalHound = {
 		type = "LocalHound",
 		position = {-182.0, 15.0, 47.0},
-		msgList= "10, 42, 57,61",
+		msgList= "10, 42",
 		timeSpawn = 4,
 		defaultLife = 120,
 		maxShield = 100,
@@ -1399,7 +1399,7 @@ Map = {
 		audioJump = "media/audio/jump.wav",
 		audioSideJump = "media/audio/sideJump.wav",
 		audioPain = "media/audio/pain.wav",
-		audioDeath = "media/audio/death.wav",
+		audioDeath = "media/audio/splatdeath_03.wav",
 		audioSpawn = "media/audio/spawn.wav",
 		audioNoAmmo = "media/audio/noammo.wav",
 
@@ -1491,7 +1491,7 @@ Map = {
 			weaponironHellGoatShootForce = 10000,
 			weaponironHellGoatProjectileRadius = 2,
 			weaponironHellGoatParticlePosition = {6, 5, 6},
-			weaponironHellGoatAudio = "media/audio/rocketLauncher.wav",
+			weaponironHellGoatAudio = "media/audio/shootFireball3.wav",
 			
 			weaponironHellGoatMaximumLoadingTime = 2,
 			
@@ -1627,7 +1627,7 @@ Map = {
 		audioJump = "media/audio/jump.wav",
 		audioSideJump = "media/audio/sideJump.wav",
 		audioPain = "media/audio/pain.wav",
-		audioDeath = "media/audio/death.wav",
+		audioDeath = "media/audio/splatdeath_03.wav",
 		audioSpawn = "media/audio/spawn.wav",
 		audioNoAmmo = "media/audio/noammo.wav",
 		
@@ -1713,7 +1713,7 @@ Map = {
 			weaponironHellGoatShootForce = 10000,
 			weaponironHellGoatProjectileRadius = 2,
 			weaponironHellGoatParticlePosition = {6, 5, 6},
-			weaponironHellGoatAudio = "media/audio/rocketLauncher.wav",
+			weaponironHellGoatAudio = "media/audio/shootFireball3.wav",
 			
 			weaponironHellGoatMaximumLoadingTime = 2,
 
