@@ -30,6 +30,13 @@ Contiene la implementación del componente que gestiona las armas y que administr
 #include <OgreMaterialManager.h>
 #include <OgreManualObject.h>
 
+#include "Graphics/OgreDecal.h"
+
+#include "Logic/Entity/Component.h"
+
+#include "Graphics/Entity.h"
+#include "Graphics.h"
+
 namespace Logic {
 	//IMP_FACTORY(CShootRaycast);
 
@@ -75,7 +82,7 @@ namespace Logic {
 
 			for(int i = 0; i < _numberShots; ++i) {
 				CEntity* entityHit = fireWeapon();
-				
+
 				if(entityHit != NULL) {
 					triggerHitMessages(entityHit);
 				}
@@ -165,9 +172,21 @@ namespace Logic {
 		// Dibujamos el rayo en ogre para poder depurar
 		drawRaycast(ray);
 
+		//Comprobación de si da al mundo
+		Physics::CRaycastHit hits2;
+		bool disp = Physics::CServer::getSingletonPtr()->raycastSingle(ray, _distance,hits2, Physics::CollisionGroup::eWORLD);
+		if (disp)
+		{
+			Vector3 pos = hits2.impact;
+			std::cout << "-------He dado " << pos << std::endl;
+			
+			decals(hits2.entity, hits2.impact);
+		}
+
 		// Rayo lanzado por el servidor de físicas de acuerdo a la distancia de potencia del arma
 		std::vector<Physics::CRaycastHit> hits;
 		Physics::CServer::getSingletonPtr()->raycastMultiple(ray, _distance,hits, true,Physics::CollisionGroup::ePLAYER);
+
 
 		//Devolvemos lo primero tocado que no seamos nosotros mismos
 		CEntity* touched=NULL;
@@ -219,6 +238,43 @@ namespace Logic {
 	}// drawRaycast
 
 	//__________________________________________________________________
+
+	void CShootRaycast::decals(Logic::CEntity* pEntity, Vector3 vPos)
+	{
+		OgreDecal::OgreMesh worldMesh;
+ 
+		/// This method will extract all of the triangles from the mesh to be used later. Only should be called once.
+		/// If you scale your mesh at all, pass it in here.
+
+
+		CGraphics* cGraph;
+		cGraph = pEntity->getComponent<CGraphics>("CGraphics");
+		if (cGraph)
+		{
+			worldMesh.initialize( cGraph->getOgreMesh()->getMesh(), Vector3(1,1,1));
+ 
+			/// Get the DecalGenerator singleton and initialize it
+			OgreDecal::DecalGenerator& generator = OgreDecal::DecalGenerator::getSingleton();
+			//generator.initialize( sceneMgr );
+			generator.initialize(cGraph->getSceneManager());
+ 
+			/// Set Decal parameters:
+			Ogre::Vector3 pos = vPos; /// Send a ray into the mesh
+			float width = 1.0f;
+			float height = 1.0f;
+			std::string textureName = "gunshotwall"; /// Make sure your texture has a depth_bias greater than 1 to avoid z-fighting
+
+			/// We have everything ready to go. Now it's time to actually generate the decal:
+			OgreDecal::Decal decal = generator.createDecal( &worldMesh, pos, width, height, textureName );
+ 
+			/// Render the decal object. Always verify the returned object - it will be NULL if no decal could be created.
+			if (decal.object)
+			{
+				//sceneMgr->getRootSceneNode()->createChildSceneNode()->attachObject( decal.object );
+				cGraph->getSceneManager()->getRootSceneNode()->createChildSceneNode()->attachObject( decal.object );
+			}
+		}
+	}
 
 } // namespace Logic
 

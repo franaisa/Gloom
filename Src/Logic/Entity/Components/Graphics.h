@@ -14,6 +14,11 @@ gráfica de la entidad.
 #define __Logic_Graphics_H
 
 #include "Logic/Entity/Component.h"
+#include "Graphics/Entity.h"
+
+#include "Graphics/Scene.h"
+
+#include "OgreSceneManager.h"
 
 // Predeclaración de clases para ahorrar tiempo de compilación
 namespace Graphics 
@@ -21,6 +26,8 @@ namespace Graphics
 	class CEntity;
 	class CGlowingEntity;
 	class CScene;
+
+	class SceneManager;
 }
 
 //declaración de la clase
@@ -115,6 +122,12 @@ namespace Logic
 		*/
 		void changeScale(Vector3 newScale);
 
+
+		Ogre::Entity*		getOgreMesh			()		{return _graphicsEntity->getEntity(); }
+
+		Ogre::SceneManager*		getSceneManager		()		{return _graphicsEntity->getScene()->getSceneMgr(); }
+
+
 	protected:
 
 		/**
@@ -148,6 +161,8 @@ namespace Logic
 		las entidades. La guardamos para la destrucción de la entidad gráfica.
 		*/
 		Graphics::CScene* _scene;
+
+
 
 	}; // class CGraphics
 

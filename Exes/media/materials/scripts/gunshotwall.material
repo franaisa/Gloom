@@ -1,4 +1,4 @@
-material aranna/blinn5
+material gunshotwall
 {
 	technique
 	{
@@ -17,7 +17,7 @@ material aranna/blinn5
 
 			texture_unit
 			{
-				texture aranna3.jpg
+				texture gunshotwall.png
 				tex_coord_set 0
 				colour_op modulate
 				scale 1 1
