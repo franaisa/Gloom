@@ -119,6 +119,17 @@ namespace Graphics
 	} // getParticle
 	//--------------------------------------------------------
 
+	void CPoolParticle::setVisible(const std::string &nameParticle, bool visible){
+		auto particleData = _particlesMap.find(nameParticle)->second.particles;
+		for(auto it = particleData.begin(); it < particleData.end(); ++it){
+			if((*it)->isEmitting()){
+				(*it)->setVisible(visible);
+			}
+		}
+		
+	} // setVisible
+	//--------------------------------------------------------
+
 	void CPoolParticle::tick(float secs)
 	{	
 		

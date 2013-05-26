@@ -220,6 +220,11 @@ namespace Graphics
 		CParticle *createParticle(const std::string &particleName, const Vector3 &position);
 		CParticle *createParticle(const std::string &particleName, const Vector3 &position, const Vector3 &directionWithForce);
 
+		/**
+		Setea a un grupo de particulas y las pone invisible
+		*/
+		void changeVisibilityParticle(const std::string nameParticle, bool visibility);
+
 		void changeAmbientLight(Vector3 Light);
 
 

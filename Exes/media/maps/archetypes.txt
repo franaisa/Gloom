@@ -30,7 +30,7 @@ Map = {
 	Screamer = {
 		type = "Screamer",
 		position = {0.0, 50.0, 0.0},
-		msgList= "6,9,11,13,14,15,16,17,20,21,22,23,24,25,26,32,38,41,43,48,49,50,55,56,57,59",
+		msgList= "6,9,11,13,14,15,16,17,20,21,22,23,24,25,26,32,38,41,43,48,49,50,55,56,57,59,61",
 		model = "marine.mesh",
 		materialName="marine_verde",
 		syncPosTimeStamp = 0.5,
@@ -221,12 +221,14 @@ Map = {
 		hudPanelAMMOTextPositionXRelative = -1.5,
 		hudPanelAMMOTextPositionYRelative = 0,
 
+		particleName = "Odor",
+		particleVisible = false,
 	},
 	
 	Shadow = {
 		type = "Shadow",
 		position = {0.0, 50.0, 0.0},
-		msgList= "4,6,9,11,13,14,15,16,17,20,21,22,23,24,25,26,32,38,41,43,48,49,50,55,56,57,59",
+		msgList= "4,6,9,11,13,14,15,16,17,20,21,22,23,24,25,26,32,38,41,43,48,49,50,55,56,57,59,61",
 		model = "marine.mesh",
 		materialName="marine_azul",
 		syncPosTimeStamp = 0.1,
@@ -405,12 +407,15 @@ Map = {
 		hudPanelAMMOTextPositionXRelative = -1.5,
 		hudPanelAMMOTextPositionYRelative = 0,
 
+		particleName = "Odor",
+		particleVisible = false,
+		
 	},
 	
 	Archangel = {
 		type = "Archangel",
 		position = {0.0, 50.0, 0.0},
-		msgList= "6,9,11,13,14,15,16,17,20,21,22,23,24,25,26,32,38,41,43,48,49,50,55,56,57,59",
+		msgList= "6,9,11,13,14,15,16,17,20,21,22,23,24,25,26,32,38,41,43,48,49,50,55,56,57,59,61",
 		model = "marine.mesh",
 		materialName="marine_amarillo",
 		syncPosTimeStamp = 0.1,
@@ -589,12 +594,14 @@ Map = {
 		hudPanelAMMOTextPositionXRelative = -1.5,
 		hudPanelAMMOTextPositionYRelative = 0,
 
+		particleName = "Odor",
+		particleVisible = false,		
 	},
 	
 	Hound = {
 		type = "Hound",
 		position = {0.0, 50.0, 0.0},
-		msgList= "6,9,11,13,14,15,16,17,20,21,22,23,24,25,26,32,38,41,43,48,49,50,55,56,57,59",
+		msgList= "6,9,11,13,14,15,16,17,20,21,22,23,24,25,26,32,38,41,43,48,49,50,55,56,57,59,61",
 		model = "marine.mesh",
 		materialName="marine_rojo",
 		syncPosTimeStamp = 0.1,
@@ -637,10 +644,8 @@ Map = {
 		audioNoAmmo = "media/audio/noammo.wav",
 		
 		primarySkillCooldown = 25,
-		secondarySkillCooldown = 25,
-		berserkerDuration=15,
-		berserkerDamagePercent=50,
-		berserkerCooldownPercent=50,
+		secondarySkillCooldown = 20,
+		berserkerDuration=20,
 		
 			weaponhammerName = "hammer",
 			weaponhammerModel = "hammer.mesh",
@@ -775,13 +780,15 @@ Map = {
 		hudPanelAMMOTextPositionXRelative = -1.5,
 		hudPanelAMMOTextPositionYRelative = 0,
 
+		particleName = "Odor",
+		particleVisible = false,
 	},
 	
 	
 	LocalScreamer = {
 		type = "LocalScreamer",
 		position = {-182.0, 15.0, 47.0},
-		msgList= "10, 42, 57",
+		msgList= "10, 42, 57,61",
 		timeSpawn = 4,
 		defaultLife = 120,
 		maxShield = 100,
@@ -980,7 +987,7 @@ Map = {
 	LocalShadow = {
 		type = "LocalShadow",
 		position = {-182.0, 15.0, 47.0},
-		msgList= "10, 42, 57",
+		msgList= "10, 42, 57,61",
 		timeSpawn = 4,
 		defaultLife = 120,
 		maxShield = 100,
@@ -1167,7 +1174,7 @@ Map = {
 	LocalArchangel = {
 		type = "LocalArchangel",
 		position = {-182.0, 15.0, 47.0},
-		msgList= "10, 42, 57",
+		msgList= "10, 42, 57,61",
 		timeSpawn = 4,
 		defaultLife = 120,
 		maxShield = 100,
@@ -1351,26 +1358,12 @@ Map = {
 		
 	},
 	
-	Spectator = {
-		type = "Spectator",
-	},
 	
-	LocalSpectator = {
-		type = "LocalSpectator",
-		position = {0, 8, 0},
-		acceleration = 0.00075,
-		maxVelocity = 1.1,
-		physic_shape = "capsule",
-		physic_radius = 3,
-		physic_height = 6,
-		physic_group = 30,
-		physic_groupList = "0",
-	},
 	
 	LocalHound = {
 		type = "LocalHound",
 		position = {-182.0, 15.0, 47.0},
-		msgList= "10, 42, 57",
+		msgList= "10, 42, 57,61",
 		timeSpawn = 4,
 		defaultLife = 120,
 		maxShield = 100,
@@ -1556,7 +1549,21 @@ Map = {
 		hudPanelDebugFontSize = 22,
 		
 	},
+	Spectator = {
+		type = "Spectator",
+	},
 	
+	LocalSpectator = {
+		type = "LocalSpectator",
+		position = {0, 8, 0},
+		acceleration = 0.00075,
+		maxVelocity = 1.1,
+		physic_shape = "capsule",
+		physic_radius = 3,
+		physic_height = 6,
+		physic_group = 30,
+		physic_groupList = "0",
+	},
 	item = {
 		type = "ItemSpawn",
 		msgList= "6,14,15,16,17",

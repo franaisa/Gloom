@@ -547,6 +547,9 @@
     <ClCompile Include="..\..\Src\Logic\Messages\MessageChangeGravity.cpp">
       <Filter>Messages\Source</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Messages\MessageParticleVisibility.cpp">
+      <Filter>Messages\Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Src\Logic\Maps\ComponentFactory.h">
@@ -1012,6 +1015,9 @@
       <Filter>Entity\Components\Network\Header</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Messages\MessageChangeGravity.h">
+      <Filter>Messages\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Messages\MessageParticleVisibility.h">
       <Filter>Messages\Header</Filter>
     </ClInclude>
   </ItemGroup>

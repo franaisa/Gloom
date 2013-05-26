@@ -135,7 +135,7 @@ Map = {
 	},
 
 	Enemigo1 = {
-		type = "RemotePlayer",
+		type = "Screamer",
 		position = {0, 0.2, -20},
 		yaw = 90,
 		defaultLife = 120,
@@ -167,7 +167,7 @@ Map = {
 	},
 	
 	David = {
-		type = "LocalScreamer",
+		type = "LocalHound",
 		isPlayer = true,
 	},
 	
