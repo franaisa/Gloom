@@ -41,6 +41,7 @@ namespace Logic {
 		CShootMiniGun() : CShootRaycast("miniGun"), _pressThenShoot(false), _contador(0), _acumulando(false),
 													_iRafagas(0), _bLeftClicked(false), _iContadorLeftClicked(0) 
 		{
+			_iMaxRafagas = 20;
 			_bMensajeDispMandado = false;
 		}
 
@@ -106,6 +107,11 @@ namespace Logic {
 			Variable booleana para controlar si se ha mandado ya el mensaje de dispersión
 		*/
 		bool	_bMensajeDispMandado;
+
+		/**
+			Número máximo de ráfagas (balas) que se pueden disparar
+		*/
+		int		_iMaxRafagas;
 
 
 	}; // class CShootMiniGun
