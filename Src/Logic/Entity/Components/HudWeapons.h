@@ -119,6 +119,8 @@ namespace Logic {
 
 		void landAnim(unsigned int msecs);
 
+		void idleAnim(unsigned int msecs);
+
 		void playerIsWalking(bool walking, int direction = 0);
 
 		void offsetRecovery(unsigned int msecs);
@@ -151,11 +153,12 @@ namespace Logic {
 		*/
 		struct TGraphicsWeapon{
 			Graphics::CEntity *graphicsEntity;
+
 			Vector3 offset;
 			Vector3 defaultPos;
-			float yaw;
-			float pitch;
-			float roll;
+			float defaultYaw;
+			float defaultPitch;
+			float defaultRoll;
 		};
 
 		/**
@@ -179,16 +182,46 @@ namespace Logic {
 			float currentVerticalPos;
 			float verticalSpeed;
 			float verticalOffset;
+
+			int currentStrafingDir;
+			int oldStrafingDir;
+
+			Vector3 offset;
 		};
 		
-		float _landForce;
-		float _currentLandOffset;
-		float _landSpeed;
-		float _landRecoverySpeed;
+		struct LandAnim {
+			float force;
+			float currentOffset;
+			float recoverySpeed;
+
+			Vector3 offset;
+		};
+
+		struct FallAnim {
+			Vector3 offset;
+		};
+
+		struct IdleAnim {
+			float currentVerticalPos;
+			float verticalSpeed;
+			float verticalOffset;
+
+			Vector3 offset;
+		};
+
+		struct ShootAnim {
+			Vector3 offset;
+		};
+
+		struct ChangeWeaponAnim {
+			Vector3 offset;
+		};
 
 		RunAnim _runAnim;
+		LandAnim _landAnim;
+		IdleAnim _idleAnim;
 
-		Vector3 _offset;
+		//Vector3 _offset;
 
 		//////////////////////Gestion de armas
 		Graphics::COverlay *_overlayWeapon3D[WeaponType::eSIZE];
