@@ -1785,7 +1785,7 @@ Map = {
 	
 	FireBall = {
 		type = "FireBall",
-		model = "mine.mesh",
+		model = "FireBall.mesh",
 		msgList= "55,56",
 		physic_entity = "rigid",
 		physic_trigger = false,
