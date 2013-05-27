@@ -515,7 +515,7 @@ namespace Logic
 					_dispersionWidth = hudDisp->getHeight();
 					_dispersionHeight = hudDisp->getWidth();
 				}
-				printf("\n %f , %f", _dispersionWidth, _dispersionHeight);
+				//printf("\n %f , %f", _dispersionWidth, _dispersionHeight);
 				//Si es 0, es para resetear a la posición inicial
 				/*
 				if (_dispersionTime == 0)
