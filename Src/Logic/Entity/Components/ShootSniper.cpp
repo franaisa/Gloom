@@ -18,6 +18,7 @@ Contiene la implementación del componente que gestiona las armas y que administr
 #include "Logic/Maps/Map.h"
 #include "Logic/Entity/Components/Graphics.h"
 #include "Map/MapEntity.h"
+#include "HudWeapons.h"
 
 #include "Logic/Messages/MessageDamaged.h"
 #include "Logic/Messages/MessageCreateParticle.h"
@@ -61,6 +62,12 @@ namespace Logic {
 			for(int i = 0; i < _numberShots; ++i) {
 				primaryFireWeapon();				
 			}
+
+			// @deprecated Temporal hasta que este bien implementado
+			CHudWeapons* hudWeapon = _entity->getComponent<CHudWeapons>("CHudWeapons");
+			if(hudWeapon != NULL)
+				hudWeapon->shootAnim(-1.5f);
+
 			//Sonido de disparo
 			emitSound(_audioShoot, "audioShoot");
 

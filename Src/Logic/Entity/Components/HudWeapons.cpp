@@ -96,7 +96,7 @@ namespace Logic {
 		_unstableLoadAnim.offset = Vector3::ZERO;
 
 		// Valores de configuracion de la animacion de disparo rapido
-		_rapidShootAnim.shakeOffset = 0.1f;
+		_rapidShootAnim.shakeOffset = 0.08f;
 		_rapidShootAnim.recoveryCoef = 0.96f;
 
 		_rapidShootAnim.currentVerticalPos = 0.0f;
