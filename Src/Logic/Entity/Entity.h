@@ -246,7 +246,7 @@ namespace Logic {
 		@return Orientación en el entorno.
 		*/
 		Matrix3 getOrientation() const;
-
+		Ogre::Quaternion getQuatOrientation() const;
 		//__________________________________________________________________
 
 		/**
@@ -302,7 +302,7 @@ namespace Logic {
 
 		@param pos Nueva orientación.
 		*/
-		void setOrientation(const Matrix3& orientation);
+		void setOrientation(const Ogre::Quaternion& orientation);
 
 		//__________________________________________________________________
 
@@ -612,6 +612,10 @@ namespace Logic {
 		Matriz de transformación de la entidad. Contiene posición y orientación.
 		*/
 		Matrix4 _transform;
+
+		Vector3 _position;
+		Ogre::Quaternion _orientation;
+
 
 		/**
 		Atributo que indica si la entidad es el jugador; por defecto

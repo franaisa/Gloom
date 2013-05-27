@@ -35,6 +35,8 @@ de la entidad.
 #include "Logic/Messages/MessageHudDebugData.h"
 #include "Logic/Messages/MessageChangeGravity.h"
 
+#include "Graphics/Scene.h"
+#include "Graphics/Camera.h"
 
 #include <math.h>
 
@@ -150,7 +152,16 @@ namespace Logic {
 	//________________________________________________________________________
 
 	void CAvatarController::mouse(float XYturn[]) {
-		_entity->setYawPitch(XYturn[0],XYturn[1]);
+		//_entity->setYawPitch(XYturn[0],XYturn[1]);
+		
+		//Ñapeado deberia de estar en el componente camera.cpp , aunque ojo son dependientes lo mismo aqui no esta mal
+		//Hay que pensar sobre ello
+		//Si la camara se ejecuta despues de esto vamos retardeds
+		Graphics::CCamera *camera=_entity->getMap()->getScene()->getCamera();
+		camera->moveCamera(Ogre::Radian(XYturn[0]),Ogre::Radian(XYturn[1]));
+
+		_entity->setOrientation(camera->getRealOrientation());
+		
 	} // turn
 
 	//________________________________________________________________________

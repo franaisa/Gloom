@@ -132,6 +132,24 @@ namespace Graphics
 		*/
 		Graphics::CEntity* CCamera::addEntityChild(const std::string &nameEntity, const std::string &nameMesh, Vector3 position = Vector3::ZERO);
 
+
+		/**
+		Mueve la camara de acuerdo al movimiento del raton que nos lo pasan por parametro.
+
+		@param mRotX Rotacion en radianes del eje X.
+		@param mRotY Rotacion en radianes del eje Y.
+		*/
+		void moveCamera(Ogre::Radian mRotX, Ogre::Radian mRotY);
+
+
+		
+		/**
+		Establece la orientacion de la camara utilizando el quaternion pasado como parámetro.
+
+		@param orientation Orientacion puesta en quaternion para setear.
+		*/
+		void setOrientation(Ogre::Quaternion orientation);
+
 	protected:
 		
 		/**
@@ -148,14 +166,12 @@ namespace Graphics
 		Ogre::Camera *getCamera() {return _camera;}
 
 		/**
-		Nodo que contiene la cámara.
+		Nodos que contienen la cámara.
 		*/
 		Ogre::SceneNode *_cameraNode;
-
-		/**
-		Nodo que representa el punto a donde debe mirar la cámara.
-		*/
-		Ogre::SceneNode *_targetNode;
+		Ogre::SceneNode *_cameraYawNode;
+		Ogre::SceneNode *_cameraPitchNode;
+		Ogre::SceneNode *_cameraRollNode;
 		
 		/**
 		La cámara de Ogre.

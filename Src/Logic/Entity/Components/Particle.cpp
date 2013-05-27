@@ -69,7 +69,7 @@ namespace Logic
 	void CParticle::onStart() {
 		_scene = Graphics::CServer::getSingletonPtr()->getActiveScene();
 		if(!_particleName.empty()){
-			_particle = _scene->createParticle(_particleName, _entity->getPosition() + ( _particleOffset * _entity->getOrientation() ) );
+			_particle = _scene->createParticle(_particleName, _entity->getPosition() + ( _particleOffset *  _entity->getOrientation()) );
 		}
 	} // onStart
 	//---------------------------------------------------------

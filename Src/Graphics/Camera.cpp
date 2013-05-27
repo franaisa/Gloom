@@ -26,6 +26,8 @@ Contiene la implementación de la clase que maneja la cámara.
 #include <OgreSceneNode.h>
 #include <OgreSceneManager.h>
 
+
+
 namespace Graphics 
 {
 	CCamera::CCamera(const std::string &name, CScene *scene)
@@ -33,30 +35,26 @@ namespace Graphics
 	{
 		_name = name;
 		_scene = scene;
-
-		// Creamos la estructura de nodos de la cámara. Los nodos cuelgan
-		// de la raiz, son globales.
-		_cameraNode = _scene->getSceneMgr()->getRootSceneNode()->
-					createChildSceneNode(name + "_camera_node");
-		_targetNode = scene->getSceneMgr()->getRootSceneNode()->
-					createChildSceneNode(name + "_target_node");
-
-		// Hacemos que el nodo de la cámara siempre esté mirando al nodo
-		// objetivo.
-		_cameraNode->setAutoTracking(true, _targetNode);
-		// Fijamos el viraje de la cámara para se mantenga paralelo al
-		// suelo.
-		_cameraNode->setFixedYawAxis(true);
-
+		
+		// Create the camera's top node (which will only handle position).
+		_cameraNode = scene->getSceneMgr()->getRootSceneNode()->createChildSceneNode();
+ 
+		// Create the camera's yaw node as a child of camera's top node.
+		_cameraYawNode = _cameraNode->createChildSceneNode();
+ 
+		// Create the camera's pitch node as a child of camera's yaw node.
+		_cameraPitchNode = _cameraYawNode->createChildSceneNode();
+ 
+		// Create the camera's roll node as a child of camera's pitch node
+		// and attach the camera to it.
+		_cameraRollNode = _cameraPitchNode->createChildSceneNode();
 		_camera = scene->getSceneMgr()->createCamera(name + "_camera");
-		//HACK: Valores cableados de las distancias para reenderizar. 
-		// Deberían poder configurarse.
 		_camera->setNearClipDistance(2);
 		_camera->setFarClipDistance(500);
-
 		_camera->setFOVy(Ogre::Radian(70));
-		// Finalmente adjuntamos la cámara a su nodo.
-		_cameraNode->attachObject (_camera);
+		_cameraRollNode->attachObject(this->_camera);
+
+
 
 	} // CCamera
 
@@ -66,9 +64,14 @@ namespace Graphics
 	{
 		// desacoplamos la cámara de su nodo
 		_cameraNode->detachAllObjects();
+		_cameraYawNode->detachAllObjects();
+		_cameraPitchNode->detachAllObjects();
+		_cameraRollNode->detachAllObjects();
 		_scene->getSceneMgr()->destroyCamera(_camera);
+		_scene->getSceneMgr()->destroySceneNode(_cameraRollNode);
+		_scene->getSceneMgr()->destroySceneNode(_cameraPitchNode);
+		_scene->getSceneMgr()->destroySceneNode(_cameraYawNode);
 		_scene->getSceneMgr()->destroySceneNode(_cameraNode);
-		_scene->getSceneMgr()->destroySceneNode(_targetNode);
 
 	} // ~CCamera
 
@@ -77,13 +80,6 @@ namespace Graphics
 	const Vector3 &CCamera::getCameraPosition() 
 	{
 		return _cameraNode->getPosition();
-	}
-
-	//--------------------------------------------------------
-
-	const Vector3 &CCamera::getTargetCameraPosition() 
-	{
-		return _targetNode->getPosition();
 	}
 
 	//--------------------------------------------------------
@@ -102,12 +98,6 @@ namespace Graphics
 
 	//--------------------------------------------------------
 
-	void CCamera::setTargetCameraPosition(const Vector3 &newPosition)
-	{
-		_targetNode->setPosition(newPosition);
-	}
-	//--------------------------------------------------------
-
 	void CCamera::setCameraDirection(const Vector3& direction) {
 		_camera->setDirection(direction);
 	}
@@ -121,6 +111,11 @@ namespace Graphics
 
 	Ogre::Quaternion CCamera::getRealOrientation(){
 		return _camera->getRealOrientation();
+	}
+	//--------------------------------------------------------
+
+	void CCamera::setOrientation(Ogre::Quaternion orientation){
+		_camera->setOrientation(orientation);
 	}
 	//--------------------------------------------------------
 
@@ -139,9 +134,53 @@ namespace Graphics
 		Ogre::Entity *entity;
 		entity = _scene->getSceneMgr()->createEntity(nameEntity, nameMesh);
 
-
-
 		return 0;
+	}
+
+	//--------------------------------------------------------
+
+	void CCamera::moveCamera(Ogre::Radian mRotX, Ogre::Radian mRotY){
+		 Ogre::Real pitchAngle;
+		 Ogre::Real pitchAngleSign;
+ 
+		 // Yaws the camera according to the mouse relative movement.
+		 _cameraYawNode->yaw(mRotX);
+ 
+		 // Pitches the camera according to the mouse relative movement.
+		 _cameraPitchNode->pitch(mRotY);
+		/*
+		 // Translates the camera according to the translate vector which is
+		 // controlled by the keyboard arrows.
+		 //
+		 // NOTE: We multiply the mTranslateVector by the cameraPitchNode's
+		 // orientation quaternion and the cameraYawNode's orientation
+		 // quaternion to translate the camera accoding to the camera's
+		 // orientation around the Y-axis and the X-axis.
+		 this->cameraNode->translate(this->cameraYawNode->getOrientation() *
+									 this->cameraPitchNode->getOrientation() *
+									 this->mTranslateVector,
+									 Ogre::SceneNode::TS_LOCAL);*/
+ 
+		 // Angle of rotation around the X-axis.
+		 pitchAngle = (2 * Ogre::Degree(Ogre::Math::ACos(_cameraPitchNode->getOrientation().w)).valueDegrees());
+ 
+		 // Just to determine the sign of the angle we pick up above, the
+		 // value itself does not interest us.
+		 pitchAngleSign = _cameraPitchNode->getOrientation().x;
+ 
+		 // Limit the pitch between -90 degress and +90 degrees, Quake3-style.
+		 if (pitchAngle > 90.0f)
+		 {
+			 if (pitchAngleSign > 0)
+				 // Set orientation to 90 degrees on X-axis.
+				 _cameraPitchNode->setOrientation(Ogre::Quaternion(Ogre::Math::Sqrt(0.5f),
+																		Ogre::Math::Sqrt(0.5f), 0, 0));
+			 else if (pitchAngleSign < 0)
+				 // Sets orientation to -90 degrees on X-axis.
+				 _cameraPitchNode->setOrientation(Ogre::Quaternion(Ogre::Math::Sqrt(0.5f),
+																		-Ogre::Math::Sqrt(0.5f), 0, 0));
+		 }
+		 
 	}
 
 } // namespace Graphics

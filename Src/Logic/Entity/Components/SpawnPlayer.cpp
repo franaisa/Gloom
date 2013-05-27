@@ -27,6 +27,8 @@ Contiene la implementación del componente que gestiona el spawn del jugador.
 #include "Logic/Messages/MessageAudio.h"
 #include "Logic/Messages/MessageCreateParticle.h"
 
+
+
 namespace Logic 
 {
 	IMP_FACTORY(CSpawnPlayer);
@@ -101,7 +103,7 @@ namespace Logic
 
 				//Establecemos la orientación adecuada segun la devolución del manager de spawn
 				_entity->setOrientation(spawn->getOrientation());
-
+				
 				// Si eres el server mandar un mensaje de spawn
 				std::shared_ptr<CMessagePlayerSpawn> spawnMsg = std::make_shared<CMessagePlayerSpawn>();
 				spawnMsg->setSpawnTransform( _entity->getTransform() );

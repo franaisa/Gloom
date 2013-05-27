@@ -72,7 +72,7 @@ namespace Logic
 		_target = CServer::getSingletonPtr()->getPlayer();
 
 		if(!_target){
-			_graphicsCamera->setTargetCameraPosition(_targetV);
+			//_graphicsCamera->setTargetCameraPosition(_targetV);
 			_target = NULL;
 			//deactivate();
 		}
@@ -215,26 +215,25 @@ namespace Logic
 				_graphicsCamera->rollCamera(_fRoll);
 				_fRoll = 0.0f; //Inicializamos el roll para que en el siguiente tick no entre
 			}*/
-
 			_graphicsCamera->setCameraPosition(position);
 			
 			if(!_dead){
 				// Y la posición hacia donde mira la cámara.
 				Vector3 direction = Math::getDirection(_target->getOrientation());
-				_graphicsCamera->setTargetCameraPosition(position + direction);
+				//_graphicsCamera->setTargetCameraPosition(position + direction);
 			}
 			//Si estamos muertos miramos al enemigo, diferenciamos entre nosotros mismos o el rival
 			else if(_enemy){
 				 if(_enemy->getType().compare("LocalPlayer")!=0)
-				    _graphicsCamera->setTargetCameraPosition(_enemy->getPosition());
+				    ;//_graphicsCamera->setTargetCameraPosition(_enemy->getPosition());
 				 else{	
 					 _graphicsCamera->setCameraPosition(_enemy->getPosition()+Vector3(0,50,0));
-					 _graphicsCamera->setTargetCameraPosition(_enemy->getPosition());
+					 //_graphicsCamera->setTargetCameraPosition(_enemy->getPosition());
 				 }
 			}
 
 		}else{
-			_graphicsCamera->setTargetCameraPosition(_targetV);
+			;//_graphicsCamera->setTargetCameraPosition(_targetV);
 		}
 	} // tick
 

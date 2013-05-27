@@ -18,7 +18,6 @@ namespace Logic{
 		//creating the effect and hiding
 		_scene = _entity->getMap()->getScene();
 		
-
 		return true;
 	} // spawn
 

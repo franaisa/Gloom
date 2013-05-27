@@ -37,6 +37,8 @@ namespace Logic {
 										   _type(""), 
 										   _name(""), 
 										   _transform(Matrix4::IDENTITY),
+										   _position(0,0,0),
+										   _orientation(1,0,0,0),//identidad
 										   _isPlayer(false), 
 										   _activated(false) {
 
@@ -373,18 +375,25 @@ namespace Logic {
 
 	//---------------------------------------------------------
 
-	void CEntity::setOrientation(const Matrix3& orientation) {
-		_transform = orientation;
+	void CEntity::setOrientation(const Ogre::Quaternion& orientation) {
+		_orientation = orientation;
+		Matrix3 rot;
+		orientation.ToRotationMatrix(rot);
+		_transform = rot;
 	} // setOrientation
 
 	//---------------------------------------------------------
 
 	Matrix3 CEntity::getOrientation() const {
-		Matrix3 orientation;
-		_transform.extract3x3Matrix(orientation);
-		return orientation;
+		Matrix3 rot;
+		_orientation.ToRotationMatrix(rot);
+		return rot;
 	} // getOrientation
+	//---------------------------------------------------------
 
+	Ogre::Quaternion CEntity::getQuatOrientation() const {
+		return _orientation;
+	} // getOrientation
 	//---------------------------------------------------------
 
 	void CEntity::setYaw(float yaw) {
