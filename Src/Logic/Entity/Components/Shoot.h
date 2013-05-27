@@ -242,6 +242,10 @@ namespace Logic {
 		*/
 		void reduceCooldown(int percent);
 
+		/**
+		funcion que pinta decals.
+		*/
+		void decals(Logic::CEntity* pEntity, Vector3 vPos);
 	protected:
 
 		/**

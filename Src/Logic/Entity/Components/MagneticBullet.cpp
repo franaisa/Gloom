@@ -78,21 +78,31 @@ namespace Logic
 	void CMagneticBullet::impact(CEntity *impactEntity)
 	{
 		//printf("\nSoy %d Y Impacto con %s", _entity->getName().c_str(), impactEntity->getName().c_str());
-
 		if(impactEntity->getType() == "World"){
-			_owner->destroyProjectile(_entity);
+			// Por ahora le paso x quien me he meurto, en un futuro deberian estar los decals en mas facil acceso, como en graphics y ya ta :D
+			_owner->destroyProjectile(_entity, impactEntity);
 		}else{
 			if(impactEntity->getName() == _owner->getEntity()->getName()){
 				if(_returning){
 					// no me gusta poner que el arma es el dos, pero bueno
 					_owner->addAmmo(2,1,true);
-					_owner->destroyProjectile(_entity);
+					_owner->destroyProjectile(_entity, impactEntity);
 				}
 			}else{
-				std::shared_ptr<CMessageDamaged> m = std::make_shared<CMessageDamaged>();
-				m->setDamage(_damage);
-				m->setEnemy(_owner->getEntity());
-				impactEntity->emitMessage(m);
+				if(impactEntity->getType() == "FireBall")
+				{
+					_burned = true;
+					// lo suyo seria cambiar el efecto y ponerle algo guapo para que se vea q esta incendia
+				}else{
+					std::shared_ptr<CMessageDamaged> m = std::make_shared<CMessageDamaged>();
+					m->setDamage(_damage);
+					m->setEnemy(_owner->getEntity());
+					impactEntity->emitMessage(m);
+
+					if(_burned){
+						//Envio el mensaje que daño de fuego tb.
+					}
+				}
 			}
 		}
 	} // impact
