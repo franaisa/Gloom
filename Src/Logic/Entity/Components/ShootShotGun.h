@@ -58,7 +58,7 @@ namespace Logic {
 		proyectiles.
 		@param projectile, puntero al proyectil que debera ser destruido
 		*/
-		void destroyProjectile(CEntity *projectile);
+		void destroyProjectile(CEntity *projectile, CEntity *killedBy);
 
 		//virtual void onFixedTick(unsigned int msecs);
 
@@ -69,6 +69,11 @@ namespace Logic {
 		variable que lee del mapa la dispersion del arma
 		*/
 		float _dispersionAngle;
+
+		/**
+		variable que contiene el daño cuando la municon esta incendiada
+		*/
+		float _damageBurned;
 
 		/**
 		Lista con los punteros a los projectiles.

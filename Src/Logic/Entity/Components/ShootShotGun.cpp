@@ -25,6 +25,8 @@ Contiene la implementación del componente que representa a la escopeta.
 
 //Debug
 #include "Logic/Messages/MessageHudDebugData.h"
+#include "Logic/Messages/MessageCreateParticle.h"
+
 
 namespace Logic {
 	IMP_FACTORY(CShootShotGun);
@@ -58,6 +60,11 @@ namespace Logic {
 
 		if(entityInfo->hasAttribute(weapon+"Dispersion")){
 			_dispersionAngle  = entityInfo->getFloatAttribute(weapon+"Dispersion");
+		}
+
+		if(entityInfo->hasAttribute(weapon+"DamageBurned")){
+			_damageBurned = entityInfo->getFloatAttribute(weapon+"DamageBurned");
+			
 		}
 
 		return true;
@@ -125,13 +132,25 @@ namespace Logic {
 		projectileEntity->activate();
 		projectileEntity->start();
 
-		projectileEntity->getComponent<CMagneticBullet>("CMagneticBullet")->setProperties(this, _projectileShootForce, dispersionDirection, _heightShoot, _damage);
+		projectileEntity->getComponent<CMagneticBullet>("CMagneticBullet")->setProperties(this, _projectileShootForce, dispersionDirection, _heightShoot, _damage, _damageBurned);
 		_projectiles.insert(projectileEntity);
 			
 	} // fireWeapon
 	//_________________________________________________
 
-	void CShootShotGun::destroyProjectile(CEntity *projectile){
+	void CShootShotGun::destroyProjectile(CEntity *projectile, CEntity *killedBy){
+
+		if(killedBy->getType() == "World"){
+			decals(killedBy, projectile->getPosition());
+
+			// Añado aqui las particulas de dado en la pared.
+			auto m = std::make_shared<CMessageCreateParticle>();
+			m->setPosition(projectile->getPosition());
+			m->setParticle("impactParticle");
+			// esto no es correcto en realidad, pero hasata que los decals esten en el otro lao, lo dejo asi.
+			m->setDirectionWithForce(-Math::getDirection(projectile->getOrientation()));
+			killedBy->emitMessage(m);
+		}
 
 		CEntityFactory::getSingletonPtr()->deferredDeleteEntity(projectile,true);
 		_projectiles.erase(projectile);
