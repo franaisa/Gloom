@@ -316,7 +316,7 @@ namespace Logic {
 		_unstableLoadAnim.offset *= Math::unifRand(0.0f, _unstableLoadAnim.currentNoise) * Vector3(1.0f, 0.0f, 1.0f);
 
 		if(_unstableLoadAnim.currentNoise != _unstableLoadAnim.maxNoiseSpeed) {
-			_unstableLoadAnim.currentNoise += _unstableLoadAnim.noiseInc * msecs;
+			_unstableLoadAnim.currentNoise += _unstableLoadAnim.noiseInc;
 			
 			if(_unstableLoadAnim.currentNoise > _unstableLoadAnim.maxNoiseSpeed) {
 				_unstableLoadAnim.currentNoise = _unstableLoadAnim.maxNoiseSpeed;
@@ -330,7 +330,7 @@ namespace Logic {
 		_unstableLoadAnim.offset.y = sin(_unstableLoadAnim.currentVerticalPos) * _unstableLoadAnim.verticalOffset;
 		
 		if(_unstableLoadAnim.currentVerticalSpeed != _unstableLoadAnim.maxVerticalSpeed) {
-			_unstableLoadAnim.currentVerticalSpeed += _unstableLoadAnim.speedInc * msecs;
+			_unstableLoadAnim.currentVerticalSpeed += _unstableLoadAnim.speedInc;
 			
 			if(_unstableLoadAnim.currentVerticalSpeed > _unstableLoadAnim.maxVerticalSpeed) {
 				_unstableLoadAnim.currentVerticalSpeed = _unstableLoadAnim.maxVerticalSpeed;
