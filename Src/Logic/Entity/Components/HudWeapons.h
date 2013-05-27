@@ -123,6 +123,10 @@ namespace Logic {
 
 		void shootAnim(float force);
 
+		void rapidShootAnim(unsigned int msecs);
+
+		void continouosShooting(bool state);
+
 		void playerIsWalking(bool walking, int direction = 0);
 
 		void offsetRecovery(unsigned int msecs);
@@ -154,7 +158,8 @@ namespace Logic {
 		bool _playerIsWalking;
 		bool _playerIsLanding;
 		bool _loadingWeapon;
-		
+		bool _continouslyShooting;
+
 		/**
 		Estructura donde se guardara el offset y las modificaciones en el arma
 		*/
@@ -227,6 +232,8 @@ namespace Logic {
 			Vector3 offset;
 		};
 
+		//__________________________________________________________________
+
 		struct UnstableLoadAnim {
 			float currentVerticalPos;
 			float currentVerticalSpeed;
@@ -246,6 +253,19 @@ namespace Logic {
 
 		//__________________________________________________________________
 
+		struct RapidShootAnim {
+			float shakeOffset;
+			float recoveryCoef;
+
+			float currentVerticalPos;
+			float verticalSpeed;
+			float verticalOffset;
+
+			Vector3 offset;
+		};
+
+		//__________________________________________________________________
+
 		struct ChangeWeaponAnim {
 			Vector3 offset;
 		};
@@ -257,6 +277,7 @@ namespace Logic {
 		IdleAnim _idleAnim;
 		ShootAnim _shootAnim;
 		UnstableLoadAnim _unstableLoadAnim;
+		RapidShootAnim _rapidShootAnim;
 
 		//////////////////////Gestion de armas
 		Graphics::COverlay *_overlayWeapon3D[WeaponType::eSIZE];

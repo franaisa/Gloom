@@ -60,12 +60,6 @@ namespace Logic {
 
 	protected:
 
-		/**
-		Método llamado en cada frame que actualiza la posicion flotante del item.
-
-		@param msecs Milisegundos transcurridos desde el último tick.
-		*/
-		virtual void onTick(unsigned int msecs);
 
 		virtual void onFixedTick(unsigned int msecs);
 

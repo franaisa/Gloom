@@ -49,7 +49,8 @@ namespace Logic {
 								 _graphicsEntities(0),
 								 _playerIsWalking(false),
 								 _playerIsLanding(false),
-								 _loadingWeapon(false) {
+								 _loadingWeapon(false),
+								 _continouslyShooting(false) {
 
 		// Valores de configuracion de la animacion de correr
 		_runAnim.currentHorizontalPos = Math::HALF_PI;
@@ -93,6 +94,16 @@ namespace Logic {
 		_unstableLoadAnim.maxNoiseSpeed = 0.1f;
 
 		_unstableLoadAnim.offset = Vector3::ZERO;
+
+		// Valores de configuracion de la animacion de disparo rapido
+		_rapidShootAnim.shakeOffset = 0.1f;
+		_rapidShootAnim.recoveryCoef = 0.96f;
+
+		_rapidShootAnim.currentVerticalPos = 0.0f;
+		_rapidShootAnim.verticalOffset = 0.05f;
+		_rapidShootAnim.verticalSpeed = 0.025f;
+
+		_rapidShootAnim.offset = Vector3::ZERO;
 	}
 
 	//---------------------------------------------------------
@@ -267,12 +278,21 @@ namespace Logic {
 			_unstableLoadAnim.offset *= 0.95f;
 		}
 
+		if(_continouslyShooting) {
+			rapidShootAnim(msecs);
+		}
+		else {
+			_rapidShootAnim.offset *= _rapidShootAnim.recoveryCoef;
+			_rapidShootAnim.currentVerticalPos *= _rapidShootAnim.recoveryCoef;
+		}
+
 		_graphicsEntities[_currentWeapon].graphicsEntity->setPosition( _graphicsEntities[_currentWeapon].defaultPos + 
 																	   _runAnim.offset + 
 																	   _landAnim.offset +
 																	   _idleAnim.offset +
 																	   _shootAnim.offset +
-																	   _unstableLoadAnim.offset );
+																	   _unstableLoadAnim.offset +
+																	   _rapidShootAnim.offset );
 		_shootAnim.offset *= _shootAnim.shootRecoveryCoef;
 	}
 
@@ -324,6 +344,27 @@ namespace Logic {
 		Matrix4 weaponTransform = _graphicsEntities[_currentWeapon].graphicsEntity->getTransform();
 		Vector3 weaponDir = Math::getDirection( weaponTransform );
 		_shootAnim.offset = weaponDir * force * Vector3(1.0f, 0.0f, 1.0f);
+	}
+
+	//---------------------------------------------------------
+
+	void CHudWeapons::continouosShooting(bool state) {
+		_continouslyShooting = state;
+	}
+
+	//---------------------------------------------------------
+
+	void CHudWeapons::rapidShootAnim(unsigned int msecs) {
+		Matrix4 weaponTransform = _graphicsEntities[_currentWeapon].graphicsEntity->getTransform();
+		Vector3 weaponDir = Math::getDirection(weaponTransform);
+
+		_rapidShootAnim.offset = weaponDir * _rapidShootAnim.shakeOffset * Vector3(1.0f, 0.0f, 1.0f);
+		_rapidShootAnim.shakeOffset *= -1.0f;
+
+		_rapidShootAnim.currentVerticalPos += _rapidShootAnim.verticalSpeed * msecs;
+		if(_rapidShootAnim.currentVerticalPos > 2 * Math::PI) _rapidShootAnim.currentVerticalPos = 0;
+
+		_rapidShootAnim.offset.y = sin(_rapidShootAnim.currentVerticalPos) * _rapidShootAnim.verticalOffset;
 	}
 
 	//---------------------------------------------------------
