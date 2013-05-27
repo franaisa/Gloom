@@ -1897,7 +1897,7 @@ Map = {
 	
 	ScreamerShield = {
 		type = "ScreamerShield",
-		model = "shieldCone.mesh",
+		model = "lifeDome.mesh",
 		msgList= "55,56",
 		physic_entity = "rigid",
 		physic_trigger = false,
@@ -1914,6 +1914,23 @@ Map = {
 	MagneticBullet = {
 		type = "MagneticBullet",
 		model = "esfera.mesh",
+		msgList= "55,56",
+		physic_entity = "rigid",
+		physic_trigger = true,
+		physic_type = "kinematic",
+		physic_shape = "sphere",
+		physic_radius = 0.5,
+		physic_group = 3,
+		physic_groupList = "0,1", 
+		physic_mass = 10,
+		ticksPerSample = 1,
+		samplesPerSnapshot = 2,		
+		scale = {5,5,5},
+	},
+	
+	LifeDome = {
+		type = "LifeDome",
+		model = "lifeDome.mesh",
 		msgList= "55,56",
 		physic_entity = "rigid",
 		physic_trigger = true,
