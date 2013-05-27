@@ -8,6 +8,12 @@ material aranna/blinn5
 			diffuse 1 1 1 1
 			specular 0 0 0 3.33333
 			emissive 0 0 0
+			
+			depth_check on
+			depth_write off
+			depth_func less_equal
+			scene_blend src_alpha one_minus_src_alpha
+			depth_bias 100
 
 			texture_unit
 			{
@@ -17,6 +23,7 @@ material aranna/blinn5
 				scale 1 1
 				scroll 0 0
 				rotate 0
+				
 			}
 		}
 	}

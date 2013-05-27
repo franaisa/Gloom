@@ -13,6 +13,7 @@ de disparo de la cabra.
 
 #include "IronHellGoat.h"
 #include "FireBallController.h"
+#include "HudWeapons.h"
 
 #include "Logic/Maps/EntityFactory.h"
 #include "Logic/Maps/Map.h"
@@ -67,6 +68,7 @@ namespace Logic {
 		assert( entityInfo->hasAttribute(weaponName + "MaxFireBallSpeed") );
 		assert( entityInfo->hasAttribute(weaponName + "MaxFireBallExplotionRadius") );
 		assert( entityInfo->hasAttribute(weaponName + "MaxFireBallDamage") );
+		assert( entityInfo->hasAttribute(weaponName + "Audio") );
 
 		// Tiempo de carga del arma
 		_maxLoadingTime = entityInfo->getIntAttribute(weaponName + "MaximumLoadingTime") * 1000.0f;
@@ -92,6 +94,9 @@ namespace Logic {
 		_fireBallSpeedTemporalIncrement = (maxFireBallSpeed - _defaultFireBallSpeed) / _maxLoadingTime;
 		_fireBallExplotionRadiusTemporalIncrement = (maxFireBallExplotionRadius - _defaultFireBallExplotionRadius) / _maxLoadingTime;
 		_fireBallDamageTemporalIncrement = (maxFireBallDamage - _defaultFireBallDamage) / _maxLoadingTime;
+
+		// Obtenemos los sonidos que produce el arma
+		_shootAudio = entityInfo->getStringAttribute(weaponName + "Audio");
 
 		return true;
 	}
@@ -157,6 +162,11 @@ namespace Logic {
 			_primaryFireIsActive = true;
 			decrementAmmo();
 			++_currentSpentAmmo;
+
+			// @deprecated Temporal hasta que este bien implementado
+			CHudWeapons* hudWeapon = _entity->getComponent<CHudWeapons>("CHudWeapons");
+			if(hudWeapon != NULL)
+				hudWeapon->loadingWeapon(true);
 		}
 		else if(_currentAmmo == 0) {
 			// Si no tenemos suficiente munición ponemos el sonido de sin balas
@@ -222,6 +232,9 @@ namespace Logic {
 		fireBall->activate();
 		fireBall->start();
 
+		// Emitimos el sonido de lanzar la bola de fuego
+		emitSound(_shootAudio, "fireBallShot");
+
 		// Me apunto la entidad devuelta por la factoria
 		_controllableFireBalls.insert(fbController);
 		
@@ -231,6 +244,13 @@ namespace Logic {
 		// Seteamos el timer del cooldown a 0, para que empiece la cuenta aqui
 		_primaryCooldownTimer = 0;
 		_primaryCanShoot = false;
+
+		// @deprecated Temporal hasta que este bien implementado
+		CHudWeapons* hudWeapon = _entity->getComponent<CHudWeapons>("CHudWeapons");
+		if(hudWeapon != NULL) {
+			hudWeapon->loadingWeapon(false);
+			hudWeapon->shootAnim(-1.35f);
+		}
 	}
 
 	//__________________________________________________________________

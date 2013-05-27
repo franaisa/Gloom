@@ -8,9 +8,12 @@ Contiene la implementación del componente que gestiona las armas y que administr
 */
 
 #include "ShootMiniGun.h"
+#include "HudWeapons.h"
 
 #include "Logic/Messages/MessageControl.h"
 #include "Logic/Messages/MessageHudDispersion.h"
+
+
 
 namespace Logic {
 	IMP_FACTORY(CShootMiniGun);
@@ -56,27 +59,27 @@ namespace Logic {
 			}
 		}
 	} // process
-	//__________________________________________________________________
 
-	void CShootMiniGun::onTick(unsigned int msecs) 
-	{
-	}	
 	//__________________________________________________________________
 
 	void CShootMiniGun::onFixedTick(unsigned int msecs) 
 	{
+		// @deprecated Temporal hasta que este bien implementado
+		CHudWeapons* hudWeapon = _entity->getComponent<CHudWeapons>("CHudWeapons");
+		if(hudWeapon != NULL)
+			hudWeapon->continouosShooting(_bLeftClicked);
+
 		//std::cout << "fixed" << std::endl;
 		if (_bLeftClicked)
 		{
 			_iContadorLeftClicked++;
 
-			std::cout << "Fixed = " << _iContadorLeftClicked << " y envio = " << _bMensajeDispMandado << std::endl;
+			//std::cout << "Fixed = " << _iContadorLeftClicked << " y envio = " << _bMensajeDispMandado << std::endl;
 			
 			//Modificar la dispersión
 			if ((_iContadorLeftClicked < 10) && (!_bMensajeDispMandado))
 			{
 				_dispersion = _dispersionOriginal + 15.0f;
-				std::cout << "Envio mensaje-------------------------------------------" << std::endl;
 				//Enviamos el mensaje para que empiece a modificar la mirilla con la dispersión
 				std::shared_ptr<CMessageHudDispersion> m = std::make_shared<CMessageHudDispersion>();
 				m->setHeight(8.0f);
@@ -85,7 +88,7 @@ namespace Logic {
 				m->setReset(false);
 				_entity->emitMessage(m);
 				_bMensajeDispMandado = true;
-
+				printf("\nReduciendo mira");
 				/**
 				NOTA: De momento tiene el bug de que si disparas cuando no tienes munición, sigue haciendo la dispersión.
 				La movida es que se sabe si tienes munición o no en el método primaryShoot, de su padre ShootRaycast.
@@ -129,14 +132,15 @@ namespace Logic {
 			//No tenemos pulsado el derecho, así que comprobamos si tenemos rafagas que lanzar
 			if (_iRafagas > 0)
 			{
-				//TODO: Lanzar aquí el secondShoot con el swift del Screamer
+				//Controlo que no se tengan más ráfagas del máximo (en su caso lo seteo a este valor)
+				if (_iRafagas > _iMaxRafagas)
+				{
+					_iRafagas = _iMaxRafagas;
+				}
+
 				secondaryShoot(_iRafagas);
 				_iRafagas = 0;
 
-				//std::cout << "disparo" << std::endl;
-				//_primaryCanShoot = true; //Ponemos este flag para 'trucar' el disparo y que se salte el cooldown
-				//primaryShoot();
-				//--_iRafagas; //disminuimos el número de ráfagas
 			}
 		}
 	}

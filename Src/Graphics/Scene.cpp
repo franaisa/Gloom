@@ -260,8 +260,14 @@ namespace Graphics
 
 		return particle;
 
-	}
+	} // createParticle
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	void CScene::changeVisibilityParticle(const std::string nameParticle, bool visibility){
+		_poolParticle->setVisible(nameParticle, visibility);
+
+	} // changeVisibilityParticle
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	void CScene::createCompositor(const std::string &name){

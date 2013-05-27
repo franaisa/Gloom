@@ -20,6 +20,7 @@ Contiene la implementación del componente que gestiona las armas y que administr
 #include "Logic/Entity/Components/Shoot.h"
 #include "Logic/Messages/MessageAudio.h"
 #include "Logic/Messages/MessageHudDispersion.h"
+#include "Logic/Messages/MessageCreateParticle.h"
 
 #include "Logic/Messages/MessageControl.h"
 #include "Logic/Messages/MessageDamaged.h"
@@ -29,6 +30,13 @@ Contiene la implementación del componente que gestiona las armas y que administr
 #include <OgreSceneManager.h>
 #include <OgreMaterialManager.h>
 #include <OgreManualObject.h>
+
+#include "Graphics/OgreDecal.h"
+
+#include "Logic/Entity/Component.h"
+
+#include "Graphics/Entity.h"
+#include "Graphics.h"
 
 namespace Logic {
 	//IMP_FACTORY(CShootRaycast);
@@ -69,13 +77,13 @@ namespace Logic {
 			_primaryCanShoot = false;
 			_primaryCooldownTimer = 0;
 				
-			drawParticle("fire", "shootParticle");
+			drawParticle("shootParticle");
 
 			decrementAmmo();
 
 			for(int i = 0; i < _numberShots; ++i) {
 				CEntity* entityHit = fireWeapon();
-				
+
 				if(entityHit != NULL) {
 					triggerHitMessages(entityHit);
 				}
@@ -165,9 +173,28 @@ namespace Logic {
 		// Dibujamos el rayo en ogre para poder depurar
 		drawRaycast(ray);
 
+		//Comprobación de si da al mundo
+		Physics::CRaycastHit hits2;
+		bool disp = Physics::CServer::getSingletonPtr()->raycastSingle(ray, _distance,hits2, Physics::CollisionGroup::eWORLD);
+		if (disp)
+		{
+			Vector3 pos = hits2.impact;
+			std::cout << "-------He dado " << pos << std::endl;
+			decals(hits2.entity, hits2.impact);
+
+			// Añado aqui las particulas de dado en la pared.
+			auto m = std::make_shared<CMessageCreateParticle>();
+			m->setPosition(hits2.impact);
+			m->setParticle("impactParticle");
+			m->setDirectionWithForce(hits2.normal);
+			hits2.entity->emitMessage(m);
+
+		}
+
 		// Rayo lanzado por el servidor de físicas de acuerdo a la distancia de potencia del arma
 		std::vector<Physics::CRaycastHit> hits;
 		Physics::CServer::getSingletonPtr()->raycastMultiple(ray, _distance,hits, true,Physics::CollisionGroup::ePLAYER);
+
 
 		//Devolvemos lo primero tocado que no seamos nosotros mismos
 		CEntity* touched=NULL;
@@ -219,6 +246,7 @@ namespace Logic {
 	}// drawRaycast
 
 	//__________________________________________________________________
+
 
 } // namespace Logic
 

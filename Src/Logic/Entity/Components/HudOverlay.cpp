@@ -506,16 +506,16 @@ namespace Logic
 				break;
 			}
 			case Message::HUD_DISPERSION: {
-				std::cout << "Recibido#####################################" << std::endl;
 				std::shared_ptr<CMessageHudDispersion> hudDisp = std::static_pointer_cast<CMessageHudDispersion>(message);
 				_dispersionTime = hudDisp->getTime();
 				_resetMirilla = hudDisp->getReset();
+
 				if (!_resetMirilla)
 				{
 					_dispersionWidth = hudDisp->getHeight();
 					_dispersionHeight = hudDisp->getWidth();
 				}
-
+				//printf("\n %f , %f", _dispersionWidth, _dispersionHeight);
 				//Si es 0, es para resetear a la posición inicial
 				/*
 				if (_dispersionTime == 0)
@@ -532,37 +532,6 @@ namespace Logic
 
 	void CHudOverlay::onTick(unsigned int msecs)
 	{
-		/*
-		//Control del tamaño de mirillas
-		//En un futuro lo mismo es mejor tener un componente HudFX que se encargue de unicamente llamar a este cuando su tick lo crea conveniente
-		
-		if(_activeTimerMinigunCrossFire)
-			_timerMinigunCrossFire+=msecs;
-		//Si pasan X milisegundos significa que fue activado y tenemos que dejarla en su estado original
-		if(_timerMinigunCrossFire>100){
-			_actualDimCrossX=_actualDimCrossX+0.15;
-			_actualDimCrossY=_actualDimCrossY+0.15;
-			//Si nos pasamos de incrementar lo dejamos a su valor por defecto
-			if(_actualDimCrossX>4){
-				_actualDimCrossX=4;
-				_actualDimCrossY=5;
-			}
-			float positionCrossFireX = 0.5f-((_actualDimCrossX/2)*0.01f) ;
-			float positionCrossFireY = 0.5f-((_actualDimCrossY/2)*0.01f) ;
-			_panelMiraMovible->setPosition( positionCrossFireX,positionCrossFireY);
-			_panelMiraMovible->setDimensions( _actualDimCrossX*0.01, _actualDimCrossY*0.01);
-			//Ponemos a 0 el timer para no restaurar continuamente solo cada X milisegundos
-			_timerMinigunCrossFire=0;
-			//Si restauramos por completo el tamaño original
-			if(_actualDimCrossX==_dimCrossX){
-				_activeTimerMinigunCrossFire=false;
-				_timerMinigunCrossFire=0;
-			}
-		}
-
-		//////////////////////////////////////////////////////////////////////////////////////
-		//////////////////////////////////////////////////////////////////////////////////////
-		*/
 
 		temporal += msecs;
 
@@ -772,29 +741,6 @@ namespace Logic
 	//-------------------------------------------------------
 	
 	void CHudOverlay::hudDispersion(){
-		/*
-		//Primera version chusquera para ver como queda el efecto en minigun
-		//Con un switch/case se podria tratar todas las armas
-		//Y en el tick comprobariamos los timers activos y se haria lo mismo pero llamando a la mira correspondiente
-		if(_actualWeapon==WeaponType::eMINIGUN){
-			//Esta funcion podria recibir del mensaje cuanto impulso de apertura/cierre va a tener"
-			//El tick se encargará de poner la mirilla a su tamaño original si es que ha sido modificada
-			//Aplicamos dispersion por el momento solo tratamos la minigun(impulso de cierre)
-			_actualDimCrossX=_actualDimCrossX-0.3;// el numerito es el impulso de cierre/apertura
-			_actualDimCrossY=_actualDimCrossY-0.3;
-			//Ojo que los valores estan puestos a mano ya que la X y la Y tienen diferentes dimensiones actualmente
-			if(_actualDimCrossX<2){
-				_actualDimCrossX=2;
-				_actualDimCrossY=3;
-			}
-			float positionCrossFireX = 0.5f-((_actualDimCrossX/2)*0.01f) ;
-			float positionCrossFireY = 0.5f-((_actualDimCrossY/2)*0.01f) ;
-			_panelMiraMovible->setPosition( positionCrossFireX,positionCrossFireY);
-			_panelMiraMovible->setDimensions( _actualDimCrossX*0.01, _actualDimCrossY*0.01);
-			_activeTimerMinigunCrossFire=true;			
-		}
-		*/
-
 		//Compruebo que no reste más de unos mínimos
 
 		if (!_resetMirilla)
@@ -844,6 +790,7 @@ namespace Logic
 
 		}
 
+		
 		//std::cout << "DispersionHeight: " <<  _dispersionHeight << std::endl;
 		hudSizeCrossfire(_dispersionHeight, _dispersionWidth);				
 	}

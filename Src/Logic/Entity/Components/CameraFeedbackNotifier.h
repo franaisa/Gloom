@@ -133,6 +133,7 @@ namespace Logic {
 
 	private:
 
+		void emitSound(const std::string &ruta, const std::string &sound, bool notIfPlay = false);
 
 		// =======================================================================
 		//                          MIEMBROS PRIVADOS

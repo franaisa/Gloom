@@ -110,6 +110,8 @@ namespace Logic {
 
 	private:
 
+		std::string _shootAudio;
+
 		std::set<CFireBallController*> _controllableFireBalls;
 
 		bool _primaryFireIsActive;

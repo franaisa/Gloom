@@ -38,7 +38,7 @@ namespace Logic
 		/**
 		Constructor por defecto; en la clase base no hace nada.
 		*/
-		CMagneticBullet() : _speed(0), _returning(false), _heightShoot(0), IComponent() {}
+		CMagneticBullet() : _speed(0), _returning(false), _heightShoot(0), _damageBurned(0),_burned(false), IComponent() {}
 
 		
 		/**
@@ -70,12 +70,13 @@ namespace Logic
 		@param projectileDirection, direccion por la que ira el proyectil
 		@param heightShoot, altura del disparo del jugador
 		*/
-		void setProperties(CShootShotGun *owner, float speed, Vector3 projectileDirection, int heightShoot, float damage){ 
+		void setProperties(CShootShotGun *owner, float speed, Vector3 projectileDirection, int heightShoot, float damage, float damageBurned){ 
 			_owner = owner; 
 			_speed = speed; 
 			_projectileDirection = projectileDirection;
 			_heightShoot = heightShoot;
 			_damage = damage;
+			_damageBurned = damageBurned;
 		};
 
 		/**
@@ -145,6 +146,17 @@ namespace Logic
 		Daño que hara el proyectil
 		*/
 		float _damage;
+
+		/**
+		Daño adicional del projectil cuando esta incendiado
+		*/
+		float _damageBurned;
+
+		/**
+		Variable de control para saber si el proyectil esta quemado o no
+		*/
+		bool _burned;
+
 	}; // class CMagneticBullet
 
 	REG_FACTORY(CMagneticBullet);

@@ -107,6 +107,12 @@ namespace Graphics
 				
 	} // setDirection
 	//--------------------------------------------------------
+
+	void CParticle::setVisible(bool visible){
+		_particleSystem->setVisible(visible);
+
+	} // setVisible
+	//--------------------------------------------------------
 	
 	void CParticle::activate()
 	{
@@ -142,7 +148,7 @@ namespace Graphics
 
 	bool CParticle::isEmitting(){
 		//return _particleSystem->getEmitting();
-		printf("\numParticles: %d",_particleSystem->getNumParticles());
+		//printf("\numParticles: %d",_particleSystem->getNumParticles());
 		return (_particleSystem->getNumParticles() > 0);
 
 	} // isEmitting

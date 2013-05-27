@@ -119,12 +119,24 @@ namespace Logic {
 
 		void landAnim(unsigned int msecs);
 
+		void idleAnim(unsigned int msecs);
+
+		void shootAnim(float force);
+
+		void rapidShootAnim(unsigned int msecs);
+
+		void continouosShooting(bool state);
+
 		void playerIsWalking(bool walking, int direction = 0);
 
 		void offsetRecovery(unsigned int msecs);
 
 		void playerIsLanding(float hitForce, float estimatedLandingTime);
 	
+		void loadWeaponAnim(unsigned int msecs);
+
+		void loadingWeapon(bool state);
+
 	protected:
 
 		virtual void onStart();
@@ -145,17 +157,20 @@ namespace Logic {
 
 		bool _playerIsWalking;
 		bool _playerIsLanding;
-		
+		bool _loadingWeapon;
+		bool _continouslyShooting;
+
 		/**
 		Estructura donde se guardara el offset y las modificaciones en el arma
 		*/
 		struct TGraphicsWeapon{
 			Graphics::CEntity *graphicsEntity;
+
 			Vector3 offset;
 			Vector3 defaultPos;
-			float yaw;
-			float pitch;
-			float roll;
+			float defaultYaw;
+			float defaultPitch;
+			float defaultRoll;
 		};
 
 		/**
@@ -170,6 +185,8 @@ namespace Logic {
 		//Graphics::SceneNode* _scene;
 		Graphics::CScene* _scene;
 
+		//__________________________________________________________________
+
 		struct RunAnim {
 			// Horizontal movement
 			float currentHorizontalPos;
@@ -179,16 +196,88 @@ namespace Logic {
 			float currentVerticalPos;
 			float verticalSpeed;
 			float verticalOffset;
+
+			int currentStrafingDir;
+			int oldStrafingDir;
+
+			Vector3 offset;
 		};
 		
-		float _landForce;
-		float _currentLandOffset;
-		float _landSpeed;
-		float _landRecoverySpeed;
+		//__________________________________________________________________
+
+		struct LandAnim {
+			float force;
+			float currentOffset;
+			float recoverySpeed;
+
+			Vector3 offset;
+		};
+
+		//__________________________________________________________________
+
+		struct IdleAnim {
+			float currentVerticalPos;
+			float verticalSpeed;
+			float verticalOffset;
+
+			Vector3 offset;
+		};
+
+		//__________________________________________________________________
+
+		struct ShootAnim {
+			float shootForce;
+			float shootRecoveryCoef;
+
+			Vector3 offset;
+		};
+
+		//__________________________________________________________________
+
+		struct UnstableLoadAnim {
+			float currentVerticalPos;
+			float currentVerticalSpeed;
+			float verticalOffset;
+
+			float initVerticalSpeed;
+			float maxVerticalSpeed;
+			float speedInc;
+
+			float currentNoise;
+			float initNoiseSpeed;
+			float maxNoiseSpeed;
+			float noiseInc;
+
+			Vector3 offset;
+		};
+
+		//__________________________________________________________________
+
+		struct RapidShootAnim {
+			float shakeOffset;
+			float recoveryCoef;
+
+			float currentVerticalPos;
+			float verticalSpeed;
+			float verticalOffset;
+
+			Vector3 offset;
+		};
+
+		//__________________________________________________________________
+
+		struct ChangeWeaponAnim {
+			Vector3 offset;
+		};
+
+		//__________________________________________________________________
 
 		RunAnim _runAnim;
-
-		Vector3 _offset;
+		LandAnim _landAnim;
+		IdleAnim _idleAnim;
+		ShootAnim _shootAnim;
+		UnstableLoadAnim _unstableLoadAnim;
+		RapidShootAnim _rapidShootAnim;
 
 		//////////////////////Gestion de armas
 		Graphics::COverlay *_overlayWeapon3D[WeaponType::eSIZE];
