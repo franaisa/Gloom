@@ -16,7 +16,7 @@
 #include "Logic/Messages/MessageControl.h"
 #include "Logic/Messages/MessageSyncPosition.h"
 #include "Logic/Entity/Components/AvatarController.h"
-
+#include "Logic/Entity/Components/PhysicController.h"
 #include "Logic/GameNetMsgManager.h"
 
 namespace Logic 
@@ -37,7 +37,7 @@ namespace Logic
 		switch(message->getMessageType())
 		{
 		case Message::SYNC_POSITION:
-				sendACKMessage(std::static_pointer_cast<CMessageSyncPosition>(message)->getSeq());
+				updateClientPosition(std::static_pointer_cast<CMessageSyncPosition>(message));
 			break;
 		case Message::CONTROL:
 				sendACKMessage(std::static_pointer_cast<CMessageControl>(message)->getSeqNumber());
@@ -57,6 +57,7 @@ namespace Logic
 			// Convertimos a msecs
 			_syncPosTimeStamp = entityInfo->getFloatAttribute("syncPosTimeStamp") * 1000;
 		}
+		_physicController = _entity->getComponent<CPhysicController>("CPhysicController");
 
 		return true;
 	} // spawn
@@ -65,14 +66,22 @@ namespace Logic
 	void CUpdateClientPosition::sendACKMessage(unsigned int sequenceNumber){
 		std::shared_ptr<CMessageSyncPosition> ack = std::make_shared<CMessageSyncPosition>();
 		Vector3 position = _entity->getPosition();
-		ack->setPosition( position );
-		ack->setSeq(sequenceNumber);
+//		ack->setPosition( position );
+//		ack->setSeq(sequenceNumber);
 
 		//std::cout << "mensaje " << sequenceNumber << " resultado " << _entity->getComponent<CAvatarController>("CAvatarController")->getVelocity() << std::endl;
 
 		CGameNetMsgManager::getSingletonPtr()->sendMessageToOne(ack, _entity->getEntityID(), _entity->getEntityID());
 	}
 
+
+	void CUpdateClientPosition::updateClientPosition(const std::shared_ptr<CMessageSyncPosition> &message){
+		Matrix4 clientTransform = message->getTransform();
+		_physicController->setPhysicPosition(clientTransform.getTrans());
+		Matrix3 orientation;
+		clientTransform.extract3x3Matrix(orientation);
+		_entity->setOrientation(orientation);
+	}
 
 } // namespace Logic
 

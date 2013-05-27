@@ -15,6 +15,10 @@ desde el servidor al cliente la posicion que existe en el servidor.
 
 namespace Logic  {
 
+	//forward declarations
+	class CMessageSyncPosition;
+	class CPhysicController;
+
 	/**
     @ingroup logicGroup
 
@@ -86,6 +90,8 @@ namespace Logic  {
 
 		void sendACKMessage(unsigned int sequenceNumber);
 
+		void updateClientPosition(const std::shared_ptr<CMessageSyncPosition> &message);
+
 	private:
 
 
@@ -99,6 +105,9 @@ namespace Logic  {
 
 		/** Limite de tiempo para mandar el mensaje de sincronizacion. */
 		float _syncPosTimeStamp;
+
+
+		CPhysicController *_physicController;
 	}; // class CUpdateClientPosition
 
 	REG_FACTORY(CUpdateClientPosition);

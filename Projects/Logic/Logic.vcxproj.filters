@@ -544,6 +544,9 @@
     <ClCompile Include="..\..\Src\Logic\Entity\Components\PlayerInterpolator.cpp">
       <Filter>Entity\Components\Network\Source</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\MovementSanpshot.cpp">
+      <Filter>Entity\Components\Network\Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Src\Logic\Maps\ComponentFactory.h">
@@ -1006,6 +1009,9 @@
       <Filter>Entity\Components\Network\Header</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Entity\Components\PlayerInterpolator.h">
+      <Filter>Entity\Components\Network\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\MovementSnapshot.h">
       <Filter>Entity\Components\Network\Header</Filter>
     </ClInclude>
   </ItemGroup>

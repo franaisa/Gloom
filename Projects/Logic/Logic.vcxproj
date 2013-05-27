@@ -85,6 +85,7 @@
     <ClCompile Include="..\..\Src\Logic\Entity\Components\MagneticBullet.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\FireBallController.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\IronHellGoat.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\MovementSanpshot.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\PlayerInterpolator.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\PlayerSnapshot.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\PositionSnapshot.cpp" />
@@ -230,6 +231,7 @@
     <ClInclude Include="..\..\Src\Logic\Entity\Components\MagneticBullet.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\FireBallController.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\IronHellGoat.h" />
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\MovementSnapshot.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\PlayerInterpolator.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\PlayerSnapshot.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\PositionSnapshot.h" />
