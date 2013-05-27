@@ -183,4 +183,10 @@ namespace Graphics
 		 
 	}
 
+	//--------------------------------------------------------
+
+	void CCamera::setYaw(Ogre::Quaternion yaw){
+		_cameraYawNode->setOrientation(yaw);
+	}
+
 } // namespace Graphics

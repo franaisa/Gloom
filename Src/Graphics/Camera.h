@@ -150,6 +150,9 @@ namespace Graphics
 		*/
 		void setOrientation(Ogre::Quaternion orientation);
 
+		void setYaw(Ogre::Quaternion yaw);
+
+
 	protected:
 		
 		/**
