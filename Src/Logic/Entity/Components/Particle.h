@@ -14,6 +14,7 @@ Componente que contiene la declaracion de las particulas.
 
 #include "Graphics/Particle.h"
 #include "Logic/Entity/Component.h"
+#include "BaseSubsystems/Math.h"
 
 namespace Graphics{
 	class CScene;
@@ -78,14 +79,18 @@ namespace Logic
 		*/
 		virtual void onTick(unsigned int msecs);
 
+		struct TParticle{
+			std::string _particleName;
+			Vector3 _particleOffset;
+			Vector3 _particleEmitterDirection;
+			bool _particleVisible;
+			Graphics::CParticle *_particle;
+			TParticle (): _particleName(""), _particleOffset(Vector3::ZERO), _particleEmitterDirection(Vector3::ZERO), _particleVisible(true), _particle(0){};
+		};
 		/**
 		Puntero al objeto particula
 		*/
-		Graphics::CParticle *_particle;
-
-		std::string _particleName;
-		Vector3 _particleOffset;
-		Vector3 _particleEmitterDirection;
+		std::vector<TParticle> _particles;
 
 		Graphics::CScene *_scene;
 	}; // class CParticle

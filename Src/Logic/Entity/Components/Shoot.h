@@ -222,7 +222,7 @@ namespace Logic {
 		@param nombreParticula, nombre para poder identificar esta particula en concreto
 		@param Particula, nombre del template de particula definido en el archivo .particle
 		*/
-		void drawParticle(const std::string &nombreParticula, const std::string &Particula);
+		void drawParticle(const std::string &Particula);
 
 		//__________________________________________________________________
 
@@ -242,6 +242,10 @@ namespace Logic {
 		*/
 		void reduceCooldown(int percent);
 
+		/**
+		funcion que pinta decals.
+		*/
+		void decals(Logic::CEntity* pEntity, Vector3 vPos);
 	protected:
 
 		/**

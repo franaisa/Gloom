@@ -8,6 +8,7 @@ Contiene la implementación del componente que gestiona las armas y que administr
 */
 
 #include "ShootMiniGun.h"
+#include "HudWeapons.h"
 
 #include "Logic/Messages/MessageControl.h"
 #include "Logic/Messages/MessageHudDispersion.h"
@@ -58,15 +59,16 @@ namespace Logic {
 			}
 		}
 	} // process
-	//__________________________________________________________________
 
-	void CShootMiniGun::onTick(unsigned int msecs) 
-	{
-	}	
 	//__________________________________________________________________
 
 	void CShootMiniGun::onFixedTick(unsigned int msecs) 
 	{
+		// @deprecated Temporal hasta que este bien implementado
+		CHudWeapons* hudWeapon = _entity->getComponent<CHudWeapons>("CHudWeapons");
+		if(hudWeapon != NULL)
+			hudWeapon->continouosShooting(_bLeftClicked);
+
 		//std::cout << "fixed" << std::endl;
 		if (_bLeftClicked)
 		{
@@ -86,7 +88,7 @@ namespace Logic {
 				m->setReset(false);
 				_entity->emitMessage(m);
 				_bMensajeDispMandado = true;
-
+				printf("\nReduciendo mira");
 				/**
 				NOTA: De momento tiene el bug de que si disparas cuando no tienes munición, sigue haciendo la dispersión.
 				La movida es que se sabe si tienes munición o no en el método primaryShoot, de su padre ShootRaycast.

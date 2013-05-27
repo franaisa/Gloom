@@ -553,9 +553,15 @@
     <ClCompile Include="..\..\Src\Logic\Entity\Components\PlayerInterpolator.cpp">
       <Filter>Entity\Components\Network\Source</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\MovementSanpshot.cpp">
+      <Filter>Entity\Components\Network\Source</Filter>
+	</ClCompile>
     <ClCompile Include="..\..\Src\Logic\Messages\MessageChangeGravity.cpp">
       <Filter>Messages\Source</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Messages\MessageParticleVisibility.cpp">
+      <Filter>Messages\Source</Filter>
+	</ClCompile>
     <ClCompile Include="..\..\Src\Graphics\DecalUtility.cpp">
       <Filter>Entity\Components\Graphics\Decal\Source</Filter>
     </ClCompile>
@@ -1029,9 +1035,15 @@
     <ClInclude Include="..\..\Src\Logic\Entity\Components\PlayerInterpolator.h">
       <Filter>Entity\Components\Network\Header</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\MovementSnapshot.h">
+      <Filter>Entity\Components\Network\Header</Filter>
+	</ClInclude>
     <ClInclude Include="..\..\Src\Logic\Messages\MessageChangeGravity.h">
       <Filter>Messages\Header</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Messages\MessageParticleVisibility.h">
+      <Filter>Messages\Header</Filter>
+	</ClInclude>
     <ClInclude Include="..\..\Src\Graphics\DecalUtility.h">
       <Filter>Entity\Components\Graphics\Decal\Header</Filter>
     </ClInclude>

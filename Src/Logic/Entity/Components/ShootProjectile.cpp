@@ -60,7 +60,7 @@ namespace Logic {
 			_primaryCanShoot = false;
 			_primaryCooldownTimer = 0;
 				
-			drawParticle("fire", "shootParticle");
+			drawParticle("shootParticle");
 
 			for(int i = 0; i < _numberShots; ++i)
 				fireWeapon();

@@ -72,6 +72,12 @@ namespace Graphics
 		Vector3 getPosition();
 
 		/**
+		Pone la particula a visible o invisible
+		param visible, visibilidad de la particula
+		*/
+		void setVisible(bool visible);
+
+		/**
 		Pone a la particula en modo activa
 		*/
 		void activate();

@@ -62,7 +62,6 @@ namespace Logic {
 		_walkAnim.rollOffset = 0.012f;
 		_walkAnim.rollCoef = 0.95f;
 		_walkAnim.recoveringRoll = false;
-		_walkAnim.readyToStep = true;
 		_walkAnim.currentStrafingDir = 0;
 	}
 
@@ -268,19 +267,10 @@ namespace Logic {
 
 		_walkAnim.currentVerticalPos += _walkAnim.verticalSpeed * msecs;
 		if(_walkAnim.currentVerticalPos > ((2 * Math::PI) + Math::HALF_PI)) {
-			_walkAnim.currentVerticalPos = Math::HALF_PI; 
-			_walkAnim.readyToStep = true;
+			_walkAnim.currentVerticalPos = Math::HALF_PI;
 		}
 
 		offset.y += sin(_walkAnim.currentVerticalPos) * _walkAnim.verticalOffset;
-
-		// Para emitir pasos conforme la cámara baja, pero no pega con el ritmo al que el personaje
-		// se mueve.
-		// En cualquier caso esto esta deprecado por estar cableado
-		if(_walkAnim.readyToStep && _walkAnim.currentVerticalPos > (3 * Math::PI) / 2) {
-			_walkAnim.readyToStep = false;
-			//emitSound("media/audio/footStep.wav", "body");
-		}
 
 		_cameraComponent->setOffset(offset);
 	}
@@ -295,8 +285,6 @@ namespace Logic {
 			_hudWeaponComponent->playerIsLanding(hitForce, Math::PI / _landRecoverySpeed);
 
 			// Esto es temporal hasta que el sonido este bien hecho ---------------------
-			emitSound("media/audio/fall.wav", "WTF");
-			
 			if(hitForce < -2.0f)
 				emitSound("media/audio/girl_grunt.wav", "grunt");
 		}

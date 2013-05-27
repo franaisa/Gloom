@@ -25,6 +25,8 @@ Contiene la implementación del componente que representa a la escopeta.
 
 //Debug
 #include "Logic/Messages/MessageHudDebugData.h"
+#include "Logic/Messages/MessageCreateParticle.h"
+
 
 namespace Logic {
 	IMP_FACTORY(CShootShotGun);
@@ -60,6 +62,11 @@ namespace Logic {
 			_dispersionAngle  = entityInfo->getFloatAttribute(weapon+"Dispersion");
 		}
 
+		if(entityInfo->hasAttribute(weapon+"DamageBurned")){
+			_damageBurned = entityInfo->getFloatAttribute(weapon+"DamageBurned");
+			
+		}
+
 		return true;
 	}// spawn
 	//________________________________________________
@@ -69,7 +76,7 @@ namespace Logic {
 			_primaryCanShoot = false;
 			_primaryCooldownTimer = 0;
 				
-			drawParticle("fire", "shootParticle");
+			drawParticle("shootParticle");
 
 			float shoots = _numberShots;
 			if(_currentAmmo < _numberShots)
@@ -82,9 +89,10 @@ namespace Logic {
 
 			//Sonido de disparo
 			emitSound(_audioShoot, "audioShot");
+			// @deprecated Temporal hasta que este bien implementado
 			CHudWeapons* hudWeapon = _entity->getComponent<CHudWeapons>("CHudWeapons");
 			if(hudWeapon != NULL)
-				hudWeapon->shootAnim();
+				hudWeapon->shootAnim(1.0f);
 		}
 		else if(_currentAmmo == 0) {
 			// Ejecutar sonidos y animaciones de falta de balas
@@ -125,13 +133,25 @@ namespace Logic {
 		projectileEntity->activate();
 		projectileEntity->start();
 
-		projectileEntity->getComponent<CMagneticBullet>("CMagneticBullet")->setProperties(this, _projectileShootForce, dispersionDirection, _heightShoot, _damage);
+		projectileEntity->getComponent<CMagneticBullet>("CMagneticBullet")->setProperties(this, _projectileShootForce, dispersionDirection, _heightShoot, _damage, _damageBurned);
 		_projectiles.insert(projectileEntity);
 			
 	} // fireWeapon
 	//_________________________________________________
 
-	void CShootShotGun::destroyProjectile(CEntity *projectile){
+	void CShootShotGun::destroyProjectile(CEntity *projectile, CEntity *killedBy){
+
+		if(killedBy->getType() == "World"){
+			decals(killedBy, projectile->getPosition());
+
+			// Añado aqui las particulas de dado en la pared.
+			auto m = std::make_shared<CMessageCreateParticle>();
+			m->setPosition(projectile->getPosition());
+			m->setParticle("impactParticle");
+			// esto no es correcto en realidad, pero hasata que los decals esten en el otro lao, lo dejo asi.
+			m->setDirectionWithForce(-Math::getDirection(projectile->getOrientation()));
+			killedBy->emitMessage(m);
+		}
 
 		CEntityFactory::getSingletonPtr()->deferredDeleteEntity(projectile,true);
 		_projectiles.erase(projectile);

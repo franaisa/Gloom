@@ -20,6 +20,7 @@ Contiene la implementación del componente que gestiona las armas y que administr
 #include "Logic/Entity/Components/Shoot.h"
 #include "Logic/Messages/MessageAudio.h"
 #include "Logic/Messages/MessageHudDispersion.h"
+#include "Logic/Messages/MessageCreateParticle.h"
 
 #include "Logic/Messages/MessageControl.h"
 #include "Logic/Messages/MessageDamaged.h"
@@ -76,7 +77,7 @@ namespace Logic {
 			_primaryCanShoot = false;
 			_primaryCooldownTimer = 0;
 				
-			drawParticle("fire", "shootParticle");
+			drawParticle("shootParticle");
 
 			decrementAmmo();
 
@@ -179,8 +180,15 @@ namespace Logic {
 		{
 			Vector3 pos = hits2.impact;
 			std::cout << "-------He dado " << pos << std::endl;
-			
 			decals(hits2.entity, hits2.impact);
+
+			// Añado aqui las particulas de dado en la pared.
+			auto m = std::make_shared<CMessageCreateParticle>();
+			m->setPosition(hits2.impact);
+			m->setParticle("impactParticle");
+			m->setDirectionWithForce(hits2.normal);
+			hits2.entity->emitMessage(m);
+
 		}
 
 		// Rayo lanzado por el servidor de físicas de acuerdo a la distancia de potencia del arma
@@ -239,42 +247,6 @@ namespace Logic {
 
 	//__________________________________________________________________
 
-	void CShootRaycast::decals(Logic::CEntity* pEntity, Vector3 vPos)
-	{
-		OgreDecal::OgreMesh worldMesh;
- 
-		/// This method will extract all of the triangles from the mesh to be used later. Only should be called once.
-		/// If you scale your mesh at all, pass it in here.
-
-
-		CGraphics* cGraph;
-		cGraph = pEntity->getComponent<CGraphics>("CGraphics");
-		if (cGraph)
-		{
-			worldMesh.initialize( cGraph->getOgreMesh()->getMesh(), Vector3(1,1,1));
- 
-			/// Get the DecalGenerator singleton and initialize it
-			OgreDecal::DecalGenerator& generator = OgreDecal::DecalGenerator::getSingleton();
-			//generator.initialize( sceneMgr );
-			generator.initialize(cGraph->getSceneManager());
- 
-			/// Set Decal parameters:
-			Ogre::Vector3 pos = vPos; /// Send a ray into the mesh
-			float width = 1.0f;
-			float height = 1.0f;
-			std::string textureName = "gunshotwall"; /// Make sure your texture has a depth_bias greater than 1 to avoid z-fighting
-
-			/// We have everything ready to go. Now it's time to actually generate the decal:
-			OgreDecal::Decal decal = generator.createDecal( &worldMesh, pos, width, height, textureName );
- 
-			/// Render the decal object. Always verify the returned object - it will be NULL if no decal could be created.
-			if (decal.object)
-			{
-				//sceneMgr->getRootSceneNode()->createChildSceneNode()->attachObject( decal.object );
-				cGraph->getSceneManager()->getRootSceneNode()->createChildSceneNode()->attachObject( decal.object );
-			}
-		}
-	}
 
 } // namespace Logic
 

@@ -88,6 +88,7 @@
     <ClCompile Include="..\..\Src\Logic\Entity\Components\MagneticBullet.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\FireBallController.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\IronHellGoat.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\MovementSanpshot.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\PlayerInterpolator.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\PlayerSnapshot.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\PositionSnapshot.cpp" />
@@ -177,6 +178,7 @@
     <ClCompile Include="..\..\Src\Logic\Messages\MessageAudio.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageChangeGravity.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageDamageAmplifier.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Messages\MessageParticleVisibility.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessagePlayerSnapshot.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageReducedCooldown.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageCameraOffset.cpp" />
@@ -237,6 +239,7 @@
     <ClInclude Include="..\..\Src\Logic\Entity\Components\MagneticBullet.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\FireBallController.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\IronHellGoat.h" />
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\MovementSnapshot.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\PlayerInterpolator.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\PlayerSnapshot.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\PositionSnapshot.h" />
@@ -361,6 +364,7 @@
     <ClInclude Include="..\..\Src\Logic\Messages\MessageImpact.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageKinematicMove.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageMouse.h" />
+    <ClInclude Include="..\..\Src\Logic\Messages\MessageParticleVisibility.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessagePlayerDead.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessagePlayerSnapshot.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessagePositionSnapshot.h" />

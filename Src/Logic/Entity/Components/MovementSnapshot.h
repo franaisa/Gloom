@@ -1,34 +1,34 @@
 /**
-@file UpdateClientPosition.h
+@file Interpolation.h
 
-Contiene la declaración del componente que envia con cierta frecuencia
-desde el servidor al cliente la posicion que existe en el servidor.
+Contiene la declaración del componente que realiza la interpolacion
+del movimiento cuando el servidor nos informa de la posicion que deberiamos
+tener.
 
 @author Francisco Aisa García
-@date Octubre, 2010
+@author Ruben Mulero Guerrero
+@date Febrero, 2013
 */
 
-#ifndef __Logic_UpdateClientPosition_H
-#define __Logic_UpdateClientPosition_H
+#ifndef __Logic_Interpolation_H
+#define __Logic_Interpolation_H
 
 #include "Logic/Entity/Component.h"
 
 namespace Logic  {
 
-	//forward declarations
-	class CMessageSyncPosition;
-	class CPhysicController;
-
 	/**
     @ingroup logicGroup
 
+	Clase encargada de recolocar al jugador en caso de no estar sincronizados
+	con el servidor.
+
 	@author Francisco Aisa García
-	@author Rubén Mulero Guerrero
 	@date Febrero, 2013
 	*/
 
-	class CUpdateClientPosition : public IComponent {
-		DEC_FACTORY(CUpdateClientPosition);
+	class CMovementSnapshot : public IComponent {
+		DEC_FACTORY(CMovementSnapshot);
 	public:
 
 
@@ -37,8 +37,8 @@ namespace Logic  {
 		// =======================================================================
 
 
-		/** Constructor por defecto. Inicializa el timer a 0. */
-		CUpdateClientPosition() : IComponent(), _timer(0) {}
+		/** Constructor por defecto */
+		CMovementSnapshot() : IComponent() {}
 
 
 		// =======================================================================
@@ -52,10 +52,7 @@ namespace Logic  {
 		speed que indica a la velocidad a la que se moverá el jugador.
 
 		Inicialización del componente a partir de la información extraida de la entidad
-		leida del mapa:
-		<ul>
-			<li><strong>syncPosTimeStamp:</strong> Tiempo de recolocacion del player </li>
-		</ul>
+		leida del mapa. Actualmente este componente no lee nada para inicializarse.
 
 		@param entity Entidad a la que pertenece el componente.
 		@param map Mapa Lógico en el que se registrará el objeto.
@@ -86,32 +83,16 @@ namespace Logic  {
 		*/
 		virtual void process(const std::shared_ptr<CMessage>& message);
 
+		//________________________________________________________________________
+
 	protected:
 
-		void sendACKMessage(unsigned int sequenceNumber);
+		/** Tick de reloj del componente. */
+		virtual void onFixedTick(unsigned int msecs);
+	}; // class CMovementSnapshot
 
-		void updateClientPosition(const std::shared_ptr<CMessageSyncPosition> &message);
-
-	private:
-
-
-		// =======================================================================
-		//                            MIEMBROS PRIVADOS
-		// =======================================================================
-
-
-		/** Timer para controlar cada cuanto se manda el mensaje de sincronizacion de la posicion del cliente. */
-		float _timer;
-
-		/** Limite de tiempo para mandar el mensaje de sincronizacion. */
-		float _syncPosTimeStamp;
-
-
-		CPhysicController *_physicController;
-	}; // class CUpdateClientPosition
-
-	REG_FACTORY(CUpdateClientPosition);
+	REG_FACTORY(CMovementSnapshot);
 
 } // namespace Logic
 
-#endif
+#endif // __Logic_Life_H

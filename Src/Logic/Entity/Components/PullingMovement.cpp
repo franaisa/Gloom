@@ -54,8 +54,7 @@ namespace Logic {
 
 		Vector3 newPos = _entity->getPosition()+displacement;
 
-		_entity->setPosition(newPos);
-		_physicComponent->setPosition(newPos, true);
+		_physicComponent->move(displacement);
 	} // tick
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
