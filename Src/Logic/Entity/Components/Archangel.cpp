@@ -22,6 +22,9 @@ implementa las habilidades del personaje
 #include "Logic/Messages/MessageSetReducedDamage.h"
 #include "Logic/Messages/MessageChangeMaterial.h"
 
+#include "Logic/Maps/EntityFactory.h"
+#include "Logic/Server.h"
+
 #include <assert.h>
 
 namespace Logic {
@@ -121,6 +124,18 @@ namespace Logic {
 	//__________________________________________________________________
 
 	void CArchangel::secondarySkill() {
+		Vector3 position = _entity->getPosition();
+		position.y += _heightShoot;
+
+		Matrix4 transform = Matrix4::IDENTITY;
+		transform.setTrans(position);
+
+		CEntity *projectileEntity= CEntityFactory::getSingletonPtr()->createEntity(
+			//CEntityFactory::getSingletonPtr()->getInfo("MagneticBullet"),
+			CEntityFactory::getSingletonPtr()->getInfo("LifeDome"),			
+			Logic::CServer::getSingletonPtr()->getMap(),
+			transform
+		);
 	}
 
 	//__________________________________________________________________

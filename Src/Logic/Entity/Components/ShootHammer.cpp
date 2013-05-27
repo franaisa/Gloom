@@ -139,7 +139,7 @@ namespace Logic {
 		// Rayo lanzado por el servidor de físicas de acuerdo a la distancia de potencia del arma
 		Physics::CRaycastHit hit;
 		int nbHits = 0;
-		drawRaycast(ray);
+		//drawRaycast(ray);
 		
 		bool valid = Physics::CServer::getSingletonPtr()->raycastSingle(ray, _distance, hit,Physics::CollisionGroup::eITEMS);
 		
