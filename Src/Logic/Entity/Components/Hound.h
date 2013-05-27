@@ -96,6 +96,8 @@ namespace Logic {
 		/** Habilidad por definir. */
 		virtual void secondarySkill();
 
+		/** Metodo a invocar cuando haya pasado el tiempo de la secondary skill*/
+		void endTimeSecondarySkill();
 
 	protected:
 
@@ -119,15 +121,12 @@ namespace Logic {
 
 		/** Timer que controla la duración del berserker. */
 		float _berserkerTimer;
-
-		/** Porcentaje de incremento de daño del berserker. */
-		float _berserkerDamagePercent;
-
-		/** Porcentaje de reduccion de cooldown del berserker. */
-		float _berserkerCooldownPercent;
 		
 		/** Variable boolena para comprobar si se esta haciendo la primary skill */
 		bool _doingPrimarySkill;
+
+		/** Variable boolena para comprobar si se esta haciendo la primary skill */
+		bool _doingSecondarySkill;
 
 		/**
 		Nombre del material original de la entidad

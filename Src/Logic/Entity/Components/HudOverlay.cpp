@@ -508,12 +508,19 @@ namespace Logic
 			case Message::HUD_DISPERSION: {
 				std::shared_ptr<CMessageHudDispersion> hudDisp = std::static_pointer_cast<CMessageHudDispersion>(message);
 				_dispersionTime = hudDisp->getTime();
-				_dispersionWidth = hudDisp->getHeight();
-				_dispersionHeight = hudDisp->getWidth();
+				_resetMirilla = hudDisp->getReset();
 
+				if (!_resetMirilla)
+				{
+					_dispersionWidth = hudDisp->getHeight();
+					_dispersionHeight = hudDisp->getWidth();
+				}
+				//printf("\n %f , %f", _dispersionWidth, _dispersionHeight);
 				//Si es 0, es para resetear a la posición inicial
+				/*
 				if (_dispersionTime == 0)
 					hudSizeCrossfire(_dispersionHeight, _dispersionWidth);
+				*/
 				//hudDispersion();
 				//hudSizeCrossfire(hudDisp->getHeight(), hudDisp->getWidth());
 				break;
@@ -525,6 +532,7 @@ namespace Logic
 
 	void CHudOverlay::onTick(unsigned int msecs)
 	{
+
 		temporal += msecs;
 
 		if(_overlayLocationImpact->isVisible()){
@@ -570,10 +578,9 @@ namespace Logic
 		_textAreaDebug->setText(_sDebug.str());
 
 		//Dispersión
-		if (_dispersionTime > 0)
+		if ((_dispersionTime > 0) || (_resetMirilla))
 		{
 			_dispersionTime -= msecs;
-			//std::cout << "Queda dispersion" << _dispersionTime << std::endl;
 			hudDispersion();
 		}
 	}
@@ -647,8 +654,8 @@ namespace Logic
 				_panelElements[AMMO]->setVisible(true);
 			}
 			if((WeaponType::Enum)_actualWeapon == WeaponType::eMINIGUN){
-				// puesto a hieero por ahora :D
-				//hudSizeCrossfire(10,11); //quito el hierro
+				// puesto a hierro por ahora :D
+				hudSizeCrossfire(9,8); //HERRERIA
 			}else{
 				hudSizeCrossfire(_sizeCrossFireX,_sizeCrossFireY);
 			}			
@@ -735,11 +742,56 @@ namespace Logic
 	
 	void CHudOverlay::hudDispersion(){
 		//Compruebo que no reste más de unos mínimos
-		if (_dispersionHeight > 3.5f)
-			_dispersionHeight -= 0.3f;
-		if (_dispersionHeight > 3.5f)
-			_dispersionWidth -= 0.3f;
 
+		if (!_resetMirilla)
+		{
+			//Estamos disparando normal, no reseteando la mirilla
+			//Comprobación del límite de pequeña que pueda ser
+			if ((_dispersionHeight > 3.0f) && (_dispersionWidth > 4.0f))
+			{
+				_dispersionHeight -= 0.3f;
+				_dispersionWidth -= 0.3f;			
+			}
+		}
+		else
+		{
+			//Reseteamos mirilla
+			//Es más pequeña, tengo que aumentarle
+			if ((_dispersionHeight < 8.0f) && (_dispersionWidth < 9.0f))
+			{
+				//Aumento
+				_dispersionHeight += 0.3f;
+				_dispersionWidth += 0.3f;
+				//Compruebo si con este aumento ya es más grande, para parar el reseteo de mirilla
+				if ((_dispersionHeight >  8.0f) && (_dispersionWidth > 9.0f))				
+				{
+					_resetMirilla = false;
+					_dispersionTime = 0; //por si aca
+				}
+			}
+			else if ((_dispersionHeight > 8.0f) && (_dispersionWidth > 9.0f))			
+			{
+				//Aumento
+				_dispersionHeight -= 0.4f;
+				_dispersionWidth -= 0.4f;
+				//Compruebo si con este aumento ya es más grande, para parar el reseteo de mirilla
+				if ((_dispersionHeight < 8.0f) && (_dispersionWidth < 9.0f))
+				{
+					_resetMirilla = false;
+					_dispersionTime = 0; //porsiaca
+				}
+			}
+			else
+			{
+				//reset porque es igual
+				_resetMirilla = false;
+				_dispersionTime = 0; //porsiaca
+			}
+
+		}
+
+		
+		//std::cout << "DispersionHeight: " <<  _dispersionHeight << std::endl;
 		hudSizeCrossfire(_dispersionHeight, _dispersionWidth);				
 	}
 	//-------------------------------------------------------
@@ -751,7 +803,6 @@ namespace Logic
 		_panelMiraMovible->setPosition(_panelMiraMovible->getPositionX() - width*0.5, _panelMiraMovible->getPositionY() - height*0.5);
 		_panelMiraMovible->setDimensions(_panelMiraMovible->getWidth() + width,_panelMiraMovible->getHeight() + height);
 		*/
-
 		if ((width < .0f) && (height < .0f))
 		{
 			//Si ancho y alto = -1; los reseteo a su valor inicial,

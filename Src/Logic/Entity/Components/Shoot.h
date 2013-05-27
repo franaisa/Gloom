@@ -205,6 +205,14 @@ namespace Logic {
 
 		//__________________________________________________________________
 
+		/**
+		Método que decrementa la cantidad de munición que tenemos con el 
+		valor dado por parámetro. Sobre carga del método anterior
+		*/
+		virtual void decrementAmmo(int iAmmo);
+
+		//__________________________________________________________________
+
 		/** Método estático que resetea la cantidad de munición del arma. */
 		virtual void resetAmmo();
 
@@ -214,7 +222,7 @@ namespace Logic {
 		@param nombreParticula, nombre para poder identificar esta particula en concreto
 		@param Particula, nombre del template de particula definido en el archivo .particle
 		*/
-		void drawParticle(const std::string &nombreParticula, const std::string &Particula);
+		void drawParticle(const std::string &Particula);
 
 		//__________________________________________________________________
 
@@ -234,6 +242,10 @@ namespace Logic {
 		*/
 		void reduceCooldown(int percent);
 
+		/**
+		funcion que pinta decals.
+		*/
+		void decals(Logic::CEntity* pEntity, Vector3 vPos);
 	protected:
 
 		/**

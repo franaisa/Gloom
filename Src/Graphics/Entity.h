@@ -196,6 +196,8 @@ namespace Graphics
 								const Ogre::Quaternion &orient = Ogre::Quaternion::IDENTITY,
 								const Ogre::Vector3 &scale = Ogre::Vector3::UNIT_SCALE);
 
+		CScene*			getScene			() { return _scene; }
+
 	protected:
 
 		// CScene es la única que puede añadir o eliminar entidades de una 

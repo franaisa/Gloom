@@ -440,7 +440,54 @@ namespace Math
 
 	} // CRC
 
+	// Funciones para obtener números randomizados
 
+	/**
+	Resetea el generador de números aleatorios con el reloj del sistema.
+	Llamar al comienzo del programa para inicializar el generador.
+	*/
+	static void seed() {
+		srand( time(0) );
+	}
+
+	/**
+	Generar uniformemente un número aleatorio en
+	el intervalo R[0,1].
+
+	@return Un número aleatorio uniformemente distribuido
+	en el intervalo R[0,1].
+	*/
+	static double unifRand() {
+		return rand() / double(RAND_MAX);
+	}
+
+	/**
+	Generar un número aleatorio en el intervalo
+	de los reales dado.
+
+	@param a Cota inferior.
+	@param b Cota superior.
+	@return Un número aleatorio uniformemente
+	distribuido en el intervalo R[a,b].
+	*/
+	static double unifRand(double a, double b) {
+		return (b - a) * unifRand() + a;
+	}
+
+	/**
+	Generar un entero aleatorio entre 1 y un valor dado.
+
+	@param n Cota superior.
+	@return Un número aleatorio uniformemente distribuido
+	en el intervalo Z[1, n].
+	*/
+	static long unifRand(long n) {
+		if (n < 0) n = -n;
+		if (n == 0) return 0;
+
+		long guard = (long) (unifRand() * n) + 1;
+		return (guard > n) ? n : guard;
+	}
 
 } // namespace Math
 

@@ -24,6 +24,7 @@ namespace Graphics {
 
 namespace Logic {
 	class CCamera;
+	class CHudWeapons;
 	class CAvatarController;
 }
 
@@ -132,6 +133,7 @@ namespace Logic {
 
 	private:
 
+		void emitSound(const std::string &ruta, const std::string &sound, bool notIfPlay = false);
 
 		// =======================================================================
 		//                          MIEMBROS PRIVADOS
@@ -142,6 +144,8 @@ namespace Logic {
 		CEntity* _owner;
 
 		CCamera* _cameraComponent;
+
+		CHudWeapons* _hudWeaponComponent;
 
 		//______________________
 

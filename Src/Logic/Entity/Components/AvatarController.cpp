@@ -33,6 +33,8 @@ de la entidad.
 #include "Logic/Messages/MessageSetAnimation.h"
 #include "Logic/Messages/MessageStopAnimation.h"
 #include "Logic/Messages/MessageHudDebugData.h"
+#include "Logic/Messages/MessageChangeGravity.h"
+
 
 #include <math.h>
 
@@ -137,6 +139,9 @@ namespace Logic {
 				std::shared_ptr<CMessageAddForcePlayer> addForceMsg = std::static_pointer_cast<CMessageAddForcePlayer>(message);
 				addForce( addForceMsg->getForce() );
 				break;
+			}
+			case Message::CHANGE_GRAVITY:{
+				_gravity = std::static_pointer_cast<CMessageChangeGravity>(message)->getGravity();
 			}
 		}
 

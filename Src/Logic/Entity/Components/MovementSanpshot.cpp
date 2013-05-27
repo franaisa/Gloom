@@ -37,6 +37,34 @@ namespace Logic  {
 			return false;
 		return true;
 	} // spawn
+
+	////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	bool CMovementSnapshot::accept(const std::shared_ptr<CMessage>& message) {
+		return message->getMessageType() == Message::CONTROL;
+	} // accept
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	void CMovementSnapshot::process(const std::shared_ptr<CMessage>& message) {
+		switch(message->getMessageType())
+		{
+		case Message::CONTROL:
+			{
+				std::shared_ptr<CMessageControl> controlMsg = std::static_pointer_cast<CMessageControl>(message);
+				Control::ControlType type = controlMsg->getType();
+				if(type == Control::LEFT_CLICK || type == Control::RIGHT_CLICK || type == Control::STOP_PRIMARY_SKILL || 
+					type == Control::STOP_SECONDARY_SKILL || type == Control::USE_PRIMARY_SKILL ||
+					type == Control::USE_SECONDARY_SKILL || type == Control::UNRIGHT_CLICK || type == Control::UNLEFT_CLICK ){
+
+					CGameNetMsgManager::getSingletonPtr()->sendEntityMessage(message, _entity->getEntityID());
+				}
+
+			break;
+			}
+		}
+
+	} // proces
 	
 	//________________________________________________________________________
 

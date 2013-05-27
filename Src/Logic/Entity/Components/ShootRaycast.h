@@ -104,6 +104,11 @@ namespace Logic {
 		*/
 		virtual void secondaryShoot();
 
+		/**
+			Sobrecarga de método con el paso de la ráfaga para calcular el valor del daño
+		*/
+		virtual void secondaryShoot(int iRafagas);
+
 		
 		// =======================================================================
 		//                          METODOS PROPIOS
@@ -133,13 +138,22 @@ namespace Logic {
 
 		@param entityHit puntero a la entidad que se ha dado (o NULL si no se ha colisionado con ninguna).
 		*/
+
+		//virtual void triggerHitMessages(std::pair<CEntity*, Ray> entityHit);
+
+
 		virtual void triggerHitMessages(CEntity* entityHit);
+
 
 		/**
 		Este es el método que todas las armas deben redefinir si quieren una accion cuando se suelta el boton de disparo secundario.
 		Si no se redefine, no hara nada.
 		*/
-		virtual void stopSecondaryShoot();
+	    virtual void stopSecondaryShoot();
+
+
+		
+
 
 	protected:
 

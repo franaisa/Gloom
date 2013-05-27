@@ -67,6 +67,16 @@ namespace Graphics
 		@param secs Número de segundos transcurridos desde la última 
 		llamada.
 		*/
+
+		/**
+		Establece la vision de un tipo de particula o de una particula concreta
+
+		@param nameParticle, nombre de la particula que se quiere cambiar su visibilidad.
+		@param visible, indica si se pone visible o invisible las particulas
+		*/
+		void CPoolParticle::setVisible(const std::string &nameParticle, bool visible);
+
+
 		void tick(float secs);
 
 		/////////////////////////////////////////////////////////////////////////////////////////

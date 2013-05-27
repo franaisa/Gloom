@@ -16,6 +16,7 @@ del Screamer.
 #include "CameraFeedbackNotifier.h"
 #include "Camera.h"
 #include "AvatarController.h"
+#include "HudWeapons.h"
 #include "Logic/Server.h"
 #include "Logic/Entity/Entity.h"
 #include "Logic/Maps/Map.h"
@@ -30,9 +31,7 @@ del Screamer.
 #include "Logic/Messages/MessageControl.h"
 #include "Logic/Messages/MessageImpact.h"
 #include "Logic/Messages/MessageHudDebugData.h"
-
-
-
+#include "Logic/Messages/MessageAudio.h"
 
 namespace Logic {
 	
@@ -47,7 +46,7 @@ namespace Logic {
 														 _strafingDir(0),
 														 _landRecoverySpeed(0.007f),
 														 _currentLandOffset(0),
-														_flashVisible(true){
+														 _flashVisible(true){
 
 
 		_walkAnim.currentHorizontalPos = Math::HALF_PI;
@@ -125,10 +124,12 @@ namespace Logic {
 	//________________________________________________________________________
 
 	void CCameraFeedbackNotifier::onStart() {
-		Logic::CEntity* cameraEntity = Logic::CServer::getSingletonPtr()->getMap()->getEntityByName("Camera");
+		CEntity* cameraEntity = Logic::CServer::getSingletonPtr()->getMap()->getEntityByName("Camera");
 		assert(cameraEntity != NULL && "Error: No existe una entidad camara");
 		_cameraComponent = cameraEntity->getComponent<CCamera>("CCamera");
 		assert(_cameraComponent != NULL && "Error: La entidad camara no tiene un componente de camara");
+		_hudWeaponComponent = _entity->getComponent<CHudWeapons>("CHudWeapons");
+		assert(_hudWeaponComponent != NULL && "Error: No existe el componente de arma en el hud");
 		
 		_avatarc = _entity->getComponent<CAvatarController>("CAvatarController");
 		assert(_avatarc != NULL && "Error: no tenemos avatar controller lol");
@@ -158,7 +159,7 @@ namespace Logic {
 	//________________________________________________________________________
 
 	void CCameraFeedbackNotifier::onFixedTick(unsigned int msecs) {
-		if(_playerIsLanding) 
+		if(_playerIsLanding)
 			landEffect(msecs);
 		else if(_playerIsWalking && !_playerIsSideColliding)
 			walkEffect(msecs);
@@ -196,6 +197,8 @@ namespace Logic {
 	//________________________________________________________________________
 
 	void CCameraFeedbackNotifier::playerIsWalking(bool walking, int direction) { 
+		_hudWeaponComponent->playerIsWalking(walking, direction);
+		
 		_playerIsWalking = walking;
 		if(_playerIsWalking) {
 			_walkAnim.currentStrafingDir = _strafingDir;
@@ -263,9 +266,12 @@ namespace Logic {
 		_cameraComponent->rollCamera(_walkAnim.currentRoll);
 
 		_walkAnim.currentVerticalPos += _walkAnim.verticalSpeed * msecs;
-		if(_walkAnim.currentVerticalPos > ((2 * Math::PI) + Math::HALF_PI)) _walkAnim.currentVerticalPos = Math::HALF_PI; 
+		if(_walkAnim.currentVerticalPos > ((2 * Math::PI) + Math::HALF_PI)) {
+			_walkAnim.currentVerticalPos = Math::HALF_PI;
+		}
 
 		offset.y += sin(_walkAnim.currentVerticalPos) * _walkAnim.verticalOffset;
+
 		_cameraComponent->setOffset(offset);
 	}
 
@@ -275,7 +281,25 @@ namespace Logic {
 		if(hitForce < -0.3f) {
 			_playerIsLanding = true;
 			_landForce = hitForce * 0.6;
+
+			_hudWeaponComponent->playerIsLanding(hitForce, Math::PI / _landRecoverySpeed);
+
+			// Esto es temporal hasta que el sonido este bien hecho ---------------------
+			if(hitForce < -2.0f)
+				emitSound("media/audio/girl_grunt.wav", "grunt");
 		}
+	}
+
+	//________________________________________________________________________
+
+	void CCameraFeedbackNotifier::emitSound(const std::string &ruta, const std::string &sound, bool notIfPlay) {
+		std::shared_ptr<CMessageAudio> audioMsg = std::make_shared<CMessageAudio>();
+			audioMsg->setRuta(ruta);
+			audioMsg->setId(sound);
+			audioMsg->setPosition( _entity->getPosition() );
+			audioMsg->setNotIfPlay(notIfPlay);
+			audioMsg->setIsPlayer(_entity->isPlayer());
+			_entity->emitMessage(audioMsg);
 	}
 
 	//________________________________________________________________________

@@ -1,9 +1,9 @@
-particle_system Bubbles
+particle_system Odor
 {
 	material SmokeMaterial
-	particle_width 10.0
-	particle_height 10.0
-	quota 11
+	particle_width 1.0
+	particle_height 1.0
+	quota 50
 	cull_each false
 	sorted false
 	local_space false
@@ -20,9 +20,9 @@ particle_system Bubbles
 		position 0.0 0.0 0.0
 		direction 0.0 1.0 0.0
 		angle 0
-		emission_rate 1
-		velocity_min 1
-		velocity_max 1
+		emission_rate 2
+		velocity_min 0.2
+		velocity_max 0.2
 		time_to_live_min 5
 		time_to_live_max 5
 		duration_min 0
@@ -39,31 +39,29 @@ particle_system Bubbles
 		colour0 0 0.666667 0 1
 		time1 0.2
 		colour1 0.431373 1 0 1
-		time2 0.4
-		colour2 0.768627 1 0 1
-		time3 0.6
-		colour3 0.952941 1 0.00392157 1
-		time4 0.8
-		colour4 1 0.635294 0.00392157 1
-		time5 1
-		colour5 1 0.164706 0 1
+		time2 0.5
+		colour2 0.952941 1 0.00392157 1
+		time3 0.8
+		colour3 1 0.164706 0 1
+		time4 1
+		colour4 1 0.164706 0 0
 	}
 
 	affector Scaler
 	{
-		rate 38.82
+		rate 1.0
 	}
 
 	affector LinearForce
 	{
-		force_vector 0.0 100.0 0.0
+		force_vector 0.0 1.0 0.0
 		force_application add
 	}
 
 	affector Rotator
 	{
-		rotation_speed_range_start 100
-		rotation_speed_range_end 200
+		rotation_speed_range_start 0
+		rotation_speed_range_end 300
 		rotation_range_start 0
 		rotation_range_end 0
 	}

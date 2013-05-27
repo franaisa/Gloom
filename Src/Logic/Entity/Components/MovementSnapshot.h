@@ -61,6 +61,28 @@ namespace Logic  {
 		*/
 		virtual bool spawn(CEntity* entity, CMap *map, const Map::CEntity *entityInfo);
 
+		/** 
+		Este componente acepta los siguientes mensajes:
+
+		<ul>
+			<li>SYNC_POSITION</li>
+			<li>CONTROL</li>
+		</ul>
+		
+		@param message Mensaje a chequear.
+		@return true si el mensaje es aceptado.
+		*/
+		virtual bool accept(const std::shared_ptr<CMessage>& message);
+
+		//________________________________________________________________________
+
+		/**
+		Método virtual que procesa un mensaje.
+
+		@param message Mensaje a procesar.
+		*/
+		virtual void process(const std::shared_ptr<CMessage>& message);
+
 		//________________________________________________________________________
 
 	protected:
