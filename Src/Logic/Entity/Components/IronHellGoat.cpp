@@ -13,6 +13,7 @@ de disparo de la cabra.
 
 #include "IronHellGoat.h"
 #include "FireBallController.h"
+#include "HudWeapons.h"
 
 #include "Logic/Maps/EntityFactory.h"
 #include "Logic/Maps/Map.h"
@@ -161,6 +162,11 @@ namespace Logic {
 			_primaryFireIsActive = true;
 			decrementAmmo();
 			++_currentSpentAmmo;
+
+			// @deprecated Temporal hasta que este bien implementado
+			CHudWeapons* hudWeapon = _entity->getComponent<CHudWeapons>("CHudWeapons");
+			if(hudWeapon != NULL)
+				hudWeapon->loadingWeapon(true);
 		}
 		else if(_currentAmmo == 0) {
 			// Si no tenemos suficiente munición ponemos el sonido de sin balas
@@ -238,6 +244,13 @@ namespace Logic {
 		// Seteamos el timer del cooldown a 0, para que empiece la cuenta aqui
 		_primaryCooldownTimer = 0;
 		_primaryCanShoot = false;
+
+		// @deprecated Temporal hasta que este bien implementado
+		CHudWeapons* hudWeapon = _entity->getComponent<CHudWeapons>("CHudWeapons");
+		if(hudWeapon != NULL) {
+			hudWeapon->loadingWeapon(false);
+			hudWeapon->shootAnim(-1.35f);
+		}
 	}
 
 	//__________________________________________________________________

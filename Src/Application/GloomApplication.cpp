@@ -29,6 +29,7 @@ basadas en Ogre. Esta clase maneja la ejecución de todo el juego.
 #include "SelectScenario.h"
 #include "SinglePlayerState.h"
 
+#include "BaseSubsystems/Math.h"
 
 namespace Application {
 
@@ -46,8 +47,9 @@ namespace Application {
 
 	//--------------------------------------------------------
 
-	bool CGloomApplication::init() 
-	{
+	bool CGloomApplication::init() {
+		Math::seed();
+
 		// Inicializamos la clase de la que heredamos.
 		if (!C3DApplication::init())
 			return false;

@@ -82,9 +82,10 @@ namespace Logic {
 
 			//Sonido de disparo
 			emitSound(_audioShoot, "audioShot");
+			// @deprecated Temporal hasta que este bien implementado
 			CHudWeapons* hudWeapon = _entity->getComponent<CHudWeapons>("CHudWeapons");
 			if(hudWeapon != NULL)
-				hudWeapon->shootAnim();
+				hudWeapon->shootAnim(1.0f);
 		}
 		else if(_currentAmmo == 0) {
 			// Ejecutar sonidos y animaciones de falta de balas
