@@ -120,6 +120,24 @@ namespace Math
 	*/
 	static float fromRadiansToDegrees(float radians) {return radians*_rad2Deg;}
 	
+
+	/**
+	Transforma orientacion en grados en orientacion en quaternion.
+
+	@param degrees Ángulo en grados.
+	@param axe Vector que indica sobre que eje rotamos.
+	@return Ángulo en quaternion.
+	*/
+	static Quaternion fromDegreesToQuaternion(float degrees,const Vector3 &axe){
+		float w=cos(degrees/2.0f);
+		float x=sin(degrees/2.0f) * axe.x;
+		float y=sin(degrees/2.0f)* axe.y;
+		float z=sin(degrees/2.0f) * axe.z;
+		return Quaternion(w, x, y, z);	
+	}
+
+
+
 	/**
 	Crea un vector unitario de dirección a partir de un angulo de
 	orientación en radianes.

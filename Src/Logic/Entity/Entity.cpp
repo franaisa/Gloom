@@ -107,6 +107,9 @@ namespace Logic {
 		else if(entityInfo->hasAttribute("yaw")) {
 			float yaw = Math::fromDegreesToRadians(entityInfo->getFloatAttribute("yaw"));
 			Math::yaw(yaw,_transform);
+			_yawOrientation=Math::fromDegreesToQuaternion(entityInfo->getFloatAttribute("yaw"),Vector3(0,1,0));
+			//Creo que lo siguiente hace falta al menos por el momento(al igual que la ultima linea de rotationXY)
+			setOrientation(getQuatOrientation());
 		}
 
 		if(entityInfo->hasAttribute("isPlayer"))
