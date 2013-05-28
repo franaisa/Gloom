@@ -20,6 +20,9 @@ implementa las habilidades del personaje
 #include "PlayerClass.h"
 
 namespace Logic {
+	//forward declarations 
+	class CPhysicController;
+	class CAvatarController;
 
 	/**
 	Clase que implementa las habilidades propias
@@ -34,7 +37,7 @@ namespace Logic {
 	class CHound : public CPlayerClass {
 		DEC_FACTORY(CHound);
 	public:
-
+		
 
 		// =======================================================================
 		//                      CONSTRUCTORES Y DESTRUCTOR
@@ -96,6 +99,18 @@ namespace Logic {
 		/** Habilidad por definir. */
 		virtual void secondarySkill();
 
+		/**
+		Se dispara cuando se deja de pulsar la tecla que dispara la habilidad primaria.
+		Notar que este método no se ha hecho virtual puro (abstracto) porque muchas
+		de las habilidades no necesitarán tenerlo en cuenta. No obstante, dado que
+		el mensaje que se recibe para informarnos de esta acción es un mensaje de
+		control, he decidido tenerlo en cuenta en la clase padre.
+
+		Para que el uso de este método tenga sentido lo normal es que el cooldown
+		de la habilidad sea 0.
+		*/
+		virtual void stopPrimarySkill();
+
 		/** Metodo a invocar cuando haya pasado el tiempo de la secondary skill*/
 		void endTimeSecondarySkill();
 
@@ -106,6 +121,8 @@ namespace Logic {
 
 		@param msecs Milisegundos transcurridos desde el último tick.
 		*/
+		virtual void onFixedTick(unsigned int msecs);
+
 		virtual void onTick(unsigned int msecs);
 
 	private:
@@ -128,10 +145,24 @@ namespace Logic {
 		/** Variable boolena para comprobar si se esta haciendo la primary skill */
 		bool _doingSecondarySkill;
 
+		float _maxDefaultVelocity;
+
+		float _bitetVelocity;
+
+		int _biteTimer;
+
+		float _biteDuration;
+
+		float _biteMaxVelocity;
+
+		bool charge;
 		/**
 		Nombre del material original de la entidad
 		*/
 		std::string _materialName;
+
+		CPhysicController* _physicController;
+		CAvatarController* _avatarController;
 
 	}; // class CHound
 

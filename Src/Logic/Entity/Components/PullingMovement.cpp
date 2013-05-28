@@ -109,11 +109,6 @@ namespace Logic {
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
 	void CPullingMovement::itemGrabbed(CEntity* actor) {
-
-		// Desactivamos la entidad grafica y fisica.
-		std::shared_ptr<CMessageActivate> deactivateMsg = std::make_shared<CMessageActivate>();
-		deactivateMsg->setActivated(false);
-		_entity->emitMessage(deactivateMsg);
 		
 		// Si se trata del servidor o del single player
 		if(Net::CManager::getSingletonPtr()->imServer() || (!Net::CManager::getSingletonPtr()->imServer() && !Net::CManager::getSingletonPtr()->imClient())){

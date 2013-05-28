@@ -1415,6 +1415,9 @@ Map = {
 		berserkerDuration=15,
 		berserkerDamagePercent=50,
 		berserkerCooldownPercent=50,
+		biteMaxVelocity=0.2;
+		biteVelocity=0.10;
+		biteDuration=0.5;
 
 			weaponhammerName = "hammer",
 			weaponhammerModel = "hammer.mesh",
