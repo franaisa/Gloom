@@ -29,6 +29,7 @@ namespace Logic {
 	*/
 
 	class CPhysicDynamicEntity;
+	class CShootHammer;
 	
 	class CPullingMovement : public IComponent {
 		DEC_FACTORY(CPullingMovement);
@@ -100,7 +101,7 @@ namespace Logic {
 		/**
 		Método que establece el player al que este item va a seguir
 		*/
-		void setPlayer(CEntity * player){_player = player;}
+		void setPlayer(CEntity * player);
 
 	protected:
 
@@ -154,6 +155,8 @@ namespace Logic {
 		balas, vida, armadura...
 		*/
 		int _reward;
+
+		float _height;
 
 	}; // class CPullingMovement
 

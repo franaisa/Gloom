@@ -96,7 +96,11 @@ namespace Logic {
 
 		int getReward(){return _reward;}
 
+		std::string getId(){return _id;}
+
 		void beginRespawn(){_isRespawning = true;}
+
+		std::string getModel(){return _model;}
 
 	protected:
 
@@ -152,6 +156,8 @@ namespace Logic {
 
 		/** true si este item esta en fase de respawn. */
 		bool _isRespawning;
+
+		std::string _model;
 
 	}; // class CSpawnItemManager
 

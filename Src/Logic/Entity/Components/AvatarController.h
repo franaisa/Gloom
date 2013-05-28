@@ -186,6 +186,8 @@ namespace Logic {
 
 		Vector3 getVelocity(){ return _momentum; }
 
+		void setMaxVelocity(float velocity){_maxVelocity = velocity;}
+
 	protected:
 
 
