@@ -32,6 +32,7 @@ Contiene la implementación del componente que representa al hammer.
 #include "Logic/Messages/MessageActivate.h"
 #include "Logic/Messages/MessageDamaged.h"
 #include "Logic/Messages/MessageAddForcePlayer.h"
+#include "Logic/GameNetMsgManager.h"
 
 #include "Graphics/Camera.h"
 
@@ -84,7 +85,7 @@ namespace Logic {
 		
 		//cogemos la entidad estatica y la desactivamos
 		_elementPulled->deactivate();
-
+		CGameNetMsgManager::getSingletonPtr()->sendDeactivateEntity(_elementPulled->getEntityID());
 		//nos creamos una nueva entidad como la que hemos cogido pero dinamica,
 		//para ello cogemos la informacion basica de la entidad dinamica y la
 		//rellenamos con la información de la entidad que estamos creando
@@ -165,10 +166,12 @@ namespace Logic {
 			return;
 		CEntityFactory::getSingletonPtr()->deferredDeleteEntity(_elementPulling, true);
 		_elementPulled->activate();
+		CGameNetMsgManager::getSingletonPtr()->sendActivateEntity(_elementPulled->getEntityID());
 	}
 
 	void CShootHammer::resetEntityPulling(){
 		_elementPulled->activate();
+		CGameNetMsgManager::getSingletonPtr()->sendActivateEntity(_elementPulled->getEntityID());
 		_elementPulled->getComponent<CSpawnItemManager>("CSpawnItemManager")->beginRespawn();
 		std::shared_ptr<CMessageActivate> deactivateMsg = std::make_shared<CMessageActivate>();
 		deactivateMsg->setActivated(false);

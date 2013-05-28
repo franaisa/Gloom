@@ -1577,7 +1577,7 @@ Map = {
 	},
 	item = {
 		type = "ItemSpawn",
-		msgList= "6,14,15,16,17",
+		msgList= "6,14,15,16,17, 29",
 		orbitalOffset = 0.065,
 		orbitalSpeed = 0.0060,
 		orbitalRotationSpeed = 0.0025,
@@ -1592,7 +1592,7 @@ Map = {
 	
 	dynamicitem = {
 		type = "ItemSpawnDynamic",
-		msgList= "6,14,15,16,17",
+		msgList= "6,14,15,16,17,55,56",
 		acceleration = 0.005,
 		physic_entity = "rigid",
 		physic_trigger = true,
