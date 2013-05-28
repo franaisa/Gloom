@@ -266,7 +266,7 @@ namespace Logic {
 
 		@return Viraje en el entorno.
 		*/
-		float getYaw() const { return Math::getYaw(_transform); }
+		float getYawd() const { return Math::getYaw(_transform); }
 
 		//__________________________________________________________________________
 
@@ -279,7 +279,7 @@ namespace Logic {
 
 		@return Subviraje en el entorno.
 		*/
-		float getPitch() const { return Math::getPitch(_transform); }
+		float getPitchd() const { return Math::getPitch(_transform); }
 
 		//__________________________________________________________________
 
@@ -312,6 +312,33 @@ namespace Logic {
 
 		//__________________________________________________________________
 
+		
+		/**
+		Devuelve el Yaw de la entidad.
+
+		@return _yawOrientation Quaternion del yaw.
+		*/
+		Quaternion getYaw(){return _yawOrientation;};
+
+		//__________________________________________________________________
+
+		/**
+		Devuelve el Pitch de la entidad.
+
+		@return _pitchOrientation Quaternion del pitch.
+		*/
+		Quaternion getPitch(){return _pitchOrientation;};
+
+		//__________________________________________________________________
+
+		/**
+		Devuelve el Roll de la entidad.
+
+		@return _rollOrientation Quaternion del roll.
+		*/
+		Quaternion getRoll(){return _rollOrientation;};
+
+		//__________________________________________________________________
 		/**
 		Establece el Yaw de la entidad.
 
@@ -341,15 +368,6 @@ namespace Logic {
 		void setRoll(const Quaternion &roll, bool reset);
 
 		//__________________________________________________________________
-
-		/**
-		Establece el yaw y el pitch de la entidad, rotando la entidad tanto en
-		pitch como en yaw los grados pasados como parámetro y limitando el pitch a +90/-90 grados.
-
-		@param yaw Grado de inclinación para el yaw.
-		@param pitch Grado de inclinación para el pitch.
-		*/
-		void CEntity::setYawPitchMouse(float yaw, float pitch);
 
 
 		/**

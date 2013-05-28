@@ -434,73 +434,26 @@ namespace Logic {
 	} // setRoll
 	//---------------------------------------------------------
 
-	void CEntity::setYawPitchMouse(float yaw, float pitch) {
-
-		 Ogre::Real pitchAngle;
-		 Ogre::Real pitchAngleSign;
- 
-		 //Rotamos el Yaw de la entidad de acuerdo a los grados en radianes pasados como parámetro.
-		 rotate(Orientation::eYAW,Ogre::Radian(yaw));
- 
-		 //Rotamos el Pitch de la entidad de acuerdo a los grados en radianes pasados como parámetro.
-		 rotate(Orientation::ePITCH,Ogre::Radian(pitch));
-		
-		 // Ángulo de rotación sobre el eje X.
-		 pitchAngle = (2 * Ogre::Degree(Ogre::Math::ACos(_pitchOrientation.w)).valueDegrees());
- 
-		 // Para saber el sentido.
-		 pitchAngleSign = _pitchOrientation.x;
- 
-		 // Limitamos el angulo de -90 a +90 como en el Quake3.
-		 if (pitchAngle > 90.0f)
-		 {
-			 if (pitchAngleSign > 0)
-				 //Fijando a +90.
-				 _pitchOrientation=Ogre::Quaternion(Ogre::Math::Sqrt(0.5f),Ogre::Math::Sqrt(0.5f), 0, 0);
-			 else if (pitchAngleSign < 0)
-				 //Fijando a -90.
-				 _pitchOrientation=Ogre::Quaternion(Ogre::Math::Sqrt(0.5f),	-Ogre::Math::Sqrt(0.5f), 0, 0);
-		 }
-		 
-		 //Actualizamos la orientacion
-		setOrientation(_yawOrientation*_pitchOrientation*_rollOrientation);
-	}
-
 	void CEntity::rotate(int orientation, Ogre::Radian rotation){
 		switch(orientation){
 			case Orientation::eYAW:{
-				Quaternion q(Ogre::Radian(rotation), Vector3::UNIT_Y); 
+				Quaternion q(rotation, Vector3::UNIT_Y); 
 				_yawOrientation=_yawOrientation*q;
 				break;
 			}
 			case Orientation::ePITCH:{
-				Quaternion q(Ogre::Radian(rotation), Vector3::UNIT_X); 
+				Quaternion q(rotation, Vector3::UNIT_X); 
 				_pitchOrientation=_pitchOrientation*q;
 				break;
 			}
 			case Orientation::eROLL:{
-				//No la he probado
-				Quaternion q(Ogre::Radian(rotation), Vector3::UNIT_Z); 
+				//No ha sido probado aunque deberia ir
+				Quaternion q(rotation, Vector3::UNIT_Z); 
 				_rollOrientation=_rollOrientation*q;
 				break;
 			}
 		}
 	
 	}
-
-	/*float Quaternion::getPitchQuat()
-	{
-	  return atan2(2*(y*z + w*x), w*w - x*x - y*y + z*z);
-	}
-
-	float Quaternion::getYawQuat()
-	{
-	  return asin(-2*(x*z - w*y));
-	}
-
-	float Quaternion::getRollQuat()
-	{
-	  return atan2(2*(x*y + w*z), w*w + x*x - y*y - z*z);
-	}*/
 
 } // namespace Logic

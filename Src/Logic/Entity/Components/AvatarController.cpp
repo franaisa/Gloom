@@ -131,7 +131,7 @@ namespace Logic {
 				// Comando de raton
 				else if(commandType == Control::MOUSE) {
 					std::shared_ptr<CMessageMouse> mouseMsg = std::static_pointer_cast<CMessageMouse>(message);
-					mouse( mouseMsg->getMouse() );
+					rotationXY( mouseMsg->getMouse() );
 				}
 
 				break;
@@ -151,10 +151,38 @@ namespace Logic {
 
 	//________________________________________________________________________
 
-	void CAvatarController::mouse(float XYturn[]) {
-		_entity->setYawPitchMouse(XYturn[0],XYturn[1]);		
-	} // turn
-
+	void CAvatarController::rotationXY(float XYturn[]) {
+		//Aplicamos las rotaciones pertinentes
+		 Ogre::Real pitchAngle;
+		 Ogre::Real pitchAngleSign;
+ 
+		 //Rotamos el Yaw de la entidad de acuerdo a los grados en radianes pasados como parámetro.
+		 _entity->rotate(Orientation::eYAW,Ogre::Radian(XYturn[0]));
+ 
+		 //Rotamos el Pitch de la entidad de acuerdo a los grados en radianes pasados como parámetro.
+		 _entity->rotate(Orientation::ePITCH,Ogre::Radian(XYturn[1]));
+		
+		 // Ángulo de rotación sobre el eje X.
+		 pitchAngle = (2 * Ogre::Degree(Ogre::Math::ACos(_entity->getPitch().w)).valueDegrees());
+ 
+		 // Para saber el sentido.
+		 pitchAngleSign = _entity->getPitch().x;
+ 
+		 // Limitamos el angulo de -90 a +90 como en el Quake3.
+		 if (pitchAngle > 90.0f)
+		 {
+			 if (pitchAngleSign > 0)
+				 //Fijando a +90.
+				 _entity->setPitch(Ogre::Quaternion(Ogre::Math::Sqrt(0.5f),Ogre::Math::Sqrt(0.5f), 0, 0),false);
+			 else if (pitchAngleSign < 0)
+				 //Fijando a -90.
+				 _entity->setPitch(Ogre::Quaternion(Ogre::Math::Sqrt(0.5f),	-Ogre::Math::Sqrt(0.5f), 0, 0),false);
+		 }
+		 
+		 //Actualizamos la orientacion(en un futuro no estara, esta por el transform que no se ha quitado)
+		 _entity->setOrientation(_entity->getQuatOrientation());
+	
+	}//rotationXY
 	//________________________________________________________________________
 
 	void CAvatarController::onStart() {

@@ -122,12 +122,12 @@ namespace Logic {
 
 
 		/**
-		Dado un giro en X y otro en Y provoca que la entidad (y la camara
-		giren).
+		Dado una rotacion en radianes del eje X e Y rota la entidad,
+		limitando el pitch a +90/-90 grados.
 
 		@param XYturn array con los valores de giro del raton.
 		*/
-		void mouse(float XYturn[]);
+		void rotationXY(float XYturn[]);
 
 		//________________________________________________________________________
 

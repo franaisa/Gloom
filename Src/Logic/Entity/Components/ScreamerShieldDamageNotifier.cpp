@@ -87,7 +87,7 @@ namespace Logic {
 		// Sacamos la orientacion de la entidad para setearsela al escudo
 		Matrix4 shootTransform;
 		shootTransform.setTrans(shootPosition);
-		Math::setPitchYaw( _owner->getPitch(), _owner->getYaw(), shootTransform);
+		Math::setPitchYaw( _owner->getPitchd(), _owner->getYawd(), shootTransform);
 		
 		// Seteamos la posicion fisica del escudo
 		_physicComponent->setTransform( shootTransform, false );

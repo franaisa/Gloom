@@ -489,6 +489,22 @@ namespace Math
 		return (guard > n) ? n : guard;
 	}
 
+	//Por si hicieran falta
+	/*float Quaternion::getPitchQuat()
+	{
+	  return atan2(2*(y*z + w*x), w*w - x*x - y*y + z*z);
+	}
+
+	float Quaternion::getYawQuat()
+	{
+	  return asin(-2*(x*z - w*y));
+	}
+
+	float Quaternion::getRollQuat()
+	{
+	  return atan2(2*(x*y + w*z), w*w + x*x - y*y - z*z);
+	}*/
+
 } // namespace Math
 
 #endif // __BaseSubsystems_Math_H
