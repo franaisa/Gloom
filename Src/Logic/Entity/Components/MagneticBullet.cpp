@@ -17,6 +17,7 @@ Contiene la implementación del componente que controla la vida de una entidad.
 #include "Logic/Maps/Map.h"
 #include "Map/MapEntity.h"
 #include "Application/BaseApplication.h"
+#include "Logic/Maps/EntityFactory.h"
 
 // Fisica
 
@@ -80,7 +81,10 @@ namespace Logic
 		//printf("\nSoy %d Y Impacto con %s", _entity->getName().c_str(), impactEntity->getName().c_str());
 		if(impactEntity->getType() == "World"){
 			// Por ahora le paso x quien me he meurto, en un futuro deberian estar los decals en mas facil acceso, como en graphics y ya ta :D
-			_owner->destroyProjectile(_entity, impactEntity);
+			if(_owner)
+				_owner->destroyProjectile(_entity, impactEntity);
+			else
+				CEntityFactory::getSingletonPtr()->deferredDeleteEntity(_entity, true);
 		}else{
 			if(impactEntity->getName() == _owner->getEntity()->getName()){
 				if(_returning){
@@ -96,7 +100,8 @@ namespace Logic
 				}else{
 					std::shared_ptr<CMessageDamaged> m = std::make_shared<CMessageDamaged>();
 					m->setDamage(_damage);
-					m->setEnemy(_owner->getEntity());
+					if(_owner)
+						m->setEnemy(_owner->getEntity());
 					impactEntity->emitMessage(m);
 
 					if(_burned){

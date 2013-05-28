@@ -92,7 +92,7 @@ namespace Logic {
 			// @deprecated Temporal hasta que este bien implementado
 			CHudWeapons* hudWeapon = _entity->getComponent<CHudWeapons>("CHudWeapons");
 			if(hudWeapon != NULL)
-				hudWeapon->shootAnim(1.0f);
+				hudWeapon->shootAnim(-1.0f);
 		}
 		else if(_currentAmmo == 0) {
 			// Ejecutar sonidos y animaciones de falta de balas
@@ -157,6 +157,7 @@ namespace Logic {
 		_projectiles.erase(projectile);
 	} // destroyProjectile
 	//_________________________________________________
+	
 	
 	/*
 	void CShootShotGun::onFixedTick(unsigned int msecs){

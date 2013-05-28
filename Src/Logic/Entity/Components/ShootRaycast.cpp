@@ -171,7 +171,7 @@ namespace Logic {
 		Ray ray(origin, dispersionDirection);
 			
 		// Dibujamos el rayo en ogre para poder depurar
-		drawRaycast(ray);
+		//drawRaycast(ray);
 
 		//Comprobación de si da al mundo
 		Physics::CRaycastHit hits2;

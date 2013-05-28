@@ -79,14 +79,17 @@
   <ItemGroup>
     <ClCompile Include="..\..\Src\Graphics\DecalUtility.cpp" />
     <ClCompile Include="..\..\Src\Graphics\OgreDecal.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\AltShoot.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\ArrayGraphics.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\Audio.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\CameraFeedbackNotifier.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\ClientRespawn.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\DamageTrigger.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\LifeDome.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\MagneticBullet.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\FireBallController.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\IronHellGoat.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\MovementSanpshot.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\PlayerInterpolator.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\PlayerSnapshot.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\PositionSnapshot.cpp" />
@@ -230,12 +233,15 @@
   <ItemGroup>
     <ClInclude Include="..\..\Src\Graphics\DecalUtility.h" />
     <ClInclude Include="..\..\Src\Graphics\OgreDecal.h" />
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\AltShoot.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\Audio.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\CameraFeedbackNotifier.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\ClientRespawn.h" />
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\LifeDome.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\MagneticBullet.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\FireBallController.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\IronHellGoat.h" />
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\MovementSnapshot.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\PlayerInterpolator.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\PlayerSnapshot.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\PositionSnapshot.h" />

@@ -123,6 +123,8 @@ namespace Logic {
 
 		void shootAnim(float force);
 
+		void fallAnim(unsigned int msecs);
+
 		void rapidShootAnim(unsigned int msecs);
 
 		void continouosShooting(bool state);
@@ -132,6 +134,8 @@ namespace Logic {
 		void offsetRecovery(unsigned int msecs);
 
 		void playerIsLanding(float hitForce, float estimatedLandingTime);
+
+		void playerIsFalling(bool falling, int direction = 0);
 	
 		void loadWeaponAnim(unsigned int msecs);
 
@@ -150,6 +154,8 @@ namespace Logic {
 		*/
 		virtual void onFixedTick(unsigned int msecs);
 
+		float sineStep(unsigned int msecs, float& currentSinePosition, float offset, float speed, float loBound = 0.0f, float hiBound = 2 * Math::PI);
+
 		/**
 		arma actual equipada
 		*/
@@ -159,6 +165,7 @@ namespace Logic {
 		bool _playerIsLanding;
 		bool _loadingWeapon;
 		bool _continouslyShooting;
+		bool _playerIsFalling;
 
 		/**
 		Estructura donde se guardara el offset y las modificaciones en el arma
@@ -184,6 +191,17 @@ namespace Logic {
 		*/
 		//Graphics::SceneNode* _scene;
 		Graphics::CScene* _scene;
+
+		//__________________________________________________________________
+
+		struct FallAnim {
+			float currentHorizontalPos;
+			float horizontalSpeed;
+			float horizontalOffset;
+			int movementDir;
+
+			Vector3 offset;
+		};
 
 		//__________________________________________________________________
 
@@ -278,6 +296,7 @@ namespace Logic {
 		ShootAnim _shootAnim;
 		UnstableLoadAnim _unstableLoadAnim;
 		RapidShootAnim _rapidShootAnim;
+		FallAnim _fallAnim;
 
 		//////////////////////Gestion de armas
 		Graphics::COverlay *_overlayWeapon3D[WeaponType::eSIZE];

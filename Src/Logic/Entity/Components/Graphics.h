@@ -130,6 +130,8 @@ namespace Logic
 
 	protected:
 
+		virtual void onDeactivate();
+
 		/**
 		Método virtual que construye la entidad gráfica de la entidad. Otros
 		componentes pueden sobreescribirlo para inicializar otro tipo de

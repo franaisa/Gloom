@@ -105,8 +105,8 @@ namespace Logic {
 
 		//creamos la entidad con la información obtenida
 		CEntity * dynamicItem = CEntityFactory::getSingletonPtr()->createEntity(info,
-																				Logic::CServer::getSingletonPtr()->getMap(), 
-																				true);
+																				Logic::CServer::getSingletonPtr()->getMap(),
+																				_elementPulled->getTransform());
 
 		if(!dynamicItem){
 			std::cout << "ALGO HA IDO MAL Y NO SE HA CREADO LA ENTIDAD" << std::endl;
@@ -120,6 +120,9 @@ namespace Logic {
 
 		//le metemos donde estamos para que nos siga
 		_elementPulling->getComponent<CPullingMovement>("CPullingMovement")->setPlayer(_entity);
+
+		_elementPulling->activate();
+		_elementPulling->start();
 
 		delete info;
 	} // secondaryShoot
@@ -136,7 +139,11 @@ namespace Logic {
 		// Rayo lanzado por el servidor de físicas de acuerdo a la distancia de potencia del arma
 		Physics::CRaycastHit hit;
 		int nbHits = 0;
-		if(!Physics::CServer::getSingletonPtr()->raycastSingle(ray, _distance, hit))
+		//drawRaycast(ray);
+		
+		bool valid = Physics::CServer::getSingletonPtr()->raycastSingle(ray, _distance, hit,Physics::CollisionGroup::eITEMS);
+		
+		if(!valid)
 			return NULL;
 		CEntity *entity = hit.entity;
 

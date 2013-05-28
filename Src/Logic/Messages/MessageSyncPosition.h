@@ -9,18 +9,15 @@ namespace Logic {
 	DEC_FACTORYMESSAGE(CMessageSyncPosition);
 	public:
 		CMessageSyncPosition();
-		Vector3 getPosition();
-		unsigned int getSeq();
-		void setPosition(const Vector3& position);
-		void setSeq(const unsigned int seq);
+		Matrix4 getTransform();
+		void setTransform(const Matrix4& position);
 		virtual ~CMessageSyncPosition(){};
 
 		virtual Net::CBuffer serialize();
 		virtual void deserialize(Net::CBuffer& buffer);
 		
 	private:
-		Vector3 _position;
-		unsigned int _seq;
+		Matrix4 _position;
 	};
 	REG_FACTORYMESSAGE(CMessageSyncPosition);
 };

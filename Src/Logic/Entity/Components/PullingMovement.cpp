@@ -47,15 +47,12 @@ namespace Logic {
 		Vector3 displacement = displacementDir * _acceleration * msecs;
 		float newVelocity = displacement.length();
 		_momentum += newVelocity;
-		displacement*=_momentum/newVelocity;
+		//displacement*=_momentum/newVelocity;
 
 		//X = Xo * V * t
 		displacement*=msecs;
 
-		Vector3 newPos = _entity->getPosition()+displacement;
-
-		_entity->setPosition(newPos);
-		_physicComponent->setPosition(newPos, true);
+		_physicComponent->move(displacement);
 	} // tick
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -87,7 +84,7 @@ namespace Logic {
 		if(entityInfo->hasAttribute("reward")) {
 			_reward = entityInfo->getIntAttribute("reward");
 		}
-
+		_physicComponent = _entity->getComponent<CPhysicDynamicEntity>("CPhysicDynamicEntity");
 		return true;
 	} // spawn
 

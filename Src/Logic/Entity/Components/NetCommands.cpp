@@ -124,7 +124,7 @@ namespace Logic
 		if(_msgBuffer.empty())
 			return;
 		
-		unsigned int seq = message->getSeq();
+/*		unsigned int seq = message->getSeq();
 
 		std::deque<TSyncMessage>::iterator it = _msgBuffer.begin();
 		std::deque<TSyncMessage>::iterator end = _msgBuffer.end();
@@ -143,7 +143,7 @@ namespace Logic
 		}
 
 		//calculateInterpolation(lastSeq.second, message->getPosition());
-
+*/
 	}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
