@@ -1603,6 +1603,8 @@ Map = {
 		physic_mass = 10,
 		physic_group = 2,
 		physic_groupList = "1",
+		ticksPerSample = 1,
+		samplesPerSnapshot = 2,		
 	},
 	
 	Enemigo1 = {

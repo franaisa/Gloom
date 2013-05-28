@@ -174,8 +174,6 @@ namespace Logic {
 
 		// Seteamos el efecto de camara
 		setCameraEffect();
-
-		std::cout << "e" << std::endl;
 		
 		// Tratamos de mover el controlador fisico con el desplazamiento estimado.
 		// En caso de colision, el controlador fisico nos informa.

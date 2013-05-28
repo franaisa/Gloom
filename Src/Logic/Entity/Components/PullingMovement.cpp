@@ -32,7 +32,7 @@ namespace Logic {
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
-	CPullingMovement::CPullingMovement(): _player(0) {
+	CPullingMovement::CPullingMovement(): _player(0), _height(0) {
 		// Nada que hacer
 	}
 
@@ -41,7 +41,7 @@ namespace Logic {
 	void CPullingMovement::onFixedTick(unsigned int msecs) {
 		
 		//item direction
-		Vector3 displacementDir = (_player->getPosition() - _entity->getPosition()).normalisedCopy();
+		Vector3 displacementDir = ( ( _player->getPosition() + Vector3(0,_height,0) ) - _entity->getPosition()).normalisedCopy();
 		
 		//V = Vo * a * t
 		Vector3 displacement = displacementDir * _acceleration * msecs;
@@ -85,12 +85,19 @@ namespace Logic {
 			_reward = entityInfo->getIntAttribute("reward");
 		}
 		_physicComponent = _entity->getComponent<CPhysicDynamicEntity>("CPhysicDynamicEntity");
+		
 		return true;
 	} // spawn
 
 	bool CPullingMovement::accept(const std::shared_ptr<CMessage>& message) {
 		return message->getMessageType() == Message::TOUCHED;
 	} // accept
+
+	void CPullingMovement::setPlayer(CEntity * player){
+		_player = player;
+		_height = _player->getComponent<CShootHammer>("CShootHammer")->getHeight()*0.5;
+	}
+
 	
 //////////////////////////////////////////////////////////////////////////////////////////////////
 

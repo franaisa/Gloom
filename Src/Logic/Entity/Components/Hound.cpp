@@ -119,7 +119,7 @@ namespace Logic {
 		}
 
 		if(_doingPrimarySkill){
-			if(_biteTimer > _biteDuration*0.75) {
+			if(_biteTimer > _biteDuration*0.5) {
 				_biteTimer -= msecs;
 				
 			}else if(_biteTimer > 0) {
@@ -139,7 +139,7 @@ namespace Logic {
 		if(charge && _doingPrimarySkill){
 			Vector3 direction = Math::getDirection(_entity->getOrientation()).normalisedCopy();
 				direction *= msecs * _biteMaxVelocity;
-				_physicController->move(direction, msecs, Physics::CollisionGroup::eWORLD);
+				_physicController->move(direction, Physics::CollisionGroup::eWORLD, msecs);
 		}
 	}
 

@@ -10,6 +10,7 @@ Hound CPhysicController CClientRespawn CAudio CParticle CAnimatedGraphics CPlaye
 Archangel CPhysicController CClientRespawn CAudio CParticle CAnimatedGraphics CPlayerInterpolator
 LocalSpectator CSpectatorController CPhysicController
 ItemSpawn CFloatingMovement CSpawnItemManager CGraphics
+ItemSpawnDynamic CPositionInterpolator CGraphics
 Jumper CGraphics CAudio CParticle
 Grenade CPhysicDynamicEntity CGrenadeControllerClient CParticle CGraphics CAudio
 GrenadeExplotion CGrenadeControllerClient CParticle CGraphics CAudio
