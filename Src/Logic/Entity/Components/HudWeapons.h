@@ -154,6 +154,8 @@ namespace Logic {
 		*/
 		virtual void onFixedTick(unsigned int msecs);
 
+		float sineStep(unsigned int msecs, float& currentSinePosition, float offset, float speed, float loBound = 0.0f, float hiBound = 2 * Math::PI);
+
 		/**
 		arma actual equipada
 		*/

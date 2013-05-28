@@ -353,10 +353,7 @@ namespace Logic {
 		}
 		
 		// Calculamos la velocidad de movimiento vertical
-		_unstableLoadAnim.currentVerticalPos += _unstableLoadAnim.currentVerticalSpeed * msecs;
-		if(_unstableLoadAnim.currentVerticalPos > 2 * Math::PI) _unstableLoadAnim.currentVerticalPos = 0;
-
-		_unstableLoadAnim.offset.y = sin(_unstableLoadAnim.currentVerticalPos) * _unstableLoadAnim.verticalOffset;
+		_unstableLoadAnim.offset.y = sineStep(msecs, _unstableLoadAnim.currentVerticalPos, _unstableLoadAnim.verticalOffset, _unstableLoadAnim.currentVerticalSpeed);
 		
 		if(_unstableLoadAnim.currentVerticalSpeed != _unstableLoadAnim.maxVerticalSpeed) {
 			_unstableLoadAnim.currentVerticalSpeed += _unstableLoadAnim.speedInc;
@@ -390,19 +387,22 @@ namespace Logic {
 		_rapidShootAnim.offset = weaponDir * _rapidShootAnim.shakeOffset * Vector3(1.0f, 0.0f, 1.0f);
 		_rapidShootAnim.shakeOffset *= -1.0f;
 
-		_rapidShootAnim.currentVerticalPos += _rapidShootAnim.verticalSpeed * msecs;
-		if(_rapidShootAnim.currentVerticalPos > 2 * Math::PI) _rapidShootAnim.currentVerticalPos = 0;
+		_rapidShootAnim.offset.y = sineStep(msecs, _rapidShootAnim.currentVerticalPos, _rapidShootAnim.verticalOffset, _rapidShootAnim.verticalSpeed);
+	}
 
-		_rapidShootAnim.offset.y = sin(_rapidShootAnim.currentVerticalPos) * _rapidShootAnim.verticalOffset;
+	//---------------------------------------------------------
+
+	float CHudWeapons::sineStep(unsigned int msecs, float& currentSinePosition, float offset, float speed, float loBound, float hiBound) {
+		currentSinePosition += speed * msecs;
+		if(currentSinePosition > hiBound) currentSinePosition = loBound;
+
+		return sin(currentSinePosition) * offset;
 	}
 
 	//---------------------------------------------------------
 
 	void CHudWeapons::idleAnim(unsigned int msecs) {
-		_idleAnim.currentVerticalPos += _idleAnim.verticalSpeed * msecs;
-		if(_idleAnim.currentVerticalPos > 2 * Math::PI) _idleAnim.currentVerticalPos = 0;
-
-		_idleAnim.offset.y = sin(_idleAnim.currentVerticalPos) * _idleAnim.verticalOffset;
+		_idleAnim.offset.y = sineStep(msecs, _idleAnim.currentVerticalPos, _idleAnim.verticalOffset, _idleAnim.verticalSpeed);
 	}
 
 	//---------------------------------------------------------
@@ -461,17 +461,10 @@ namespace Logic {
 		Math::yaw(Math::HALF_PI, weaponTransform);
 		_runAnim.offset = Math::getDirection(weaponTransform);
 
-		_runAnim.currentHorizontalPos += _runAnim.horizontalSpeed * msecs;
-		if(_runAnim.currentHorizontalPos > ((2 * Math::PI) + Math::HALF_PI)) _runAnim.currentHorizontalPos = Math::HALF_PI;
-
-		// Multiplicamos el vector horizontal normalizado por el desplazamiento y lo sumamos al offset
-		_runAnim.offset *= sin(_runAnim.currentHorizontalPos) * _runAnim.horizontalOffset * Vector3(1.0f, 0.0f, 1.0f);
+		_runAnim.offset *= sineStep(msecs, _runAnim.currentHorizontalPos, _runAnim.horizontalOffset, _runAnim.horizontalSpeed, Math::HALF_PI, (2 * Math::PI) + Math::HALF_PI)
+							  * Vector3(1.0f, 0.0f, 1.0f);
 		
-		// Solo si estamos andando recto
-		_runAnim.currentVerticalPos += _runAnim.verticalSpeed * msecs;
-		if(_runAnim.currentVerticalPos > ((2 * Math::PI) + Math::HALF_PI)) _runAnim.currentVerticalPos = Math::HALF_PI;
-		
-		_runAnim.offset.y = sin(_runAnim.currentVerticalPos) * _runAnim.verticalOffset;
+		_runAnim.offset.y = sineStep(msecs, _runAnim.currentVerticalPos, _runAnim.verticalOffset, _runAnim.verticalSpeed, Math::HALF_PI, (2 * Math::PI) + Math::HALF_PI);
 	}
 
 } // namespace Logic
