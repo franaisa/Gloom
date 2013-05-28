@@ -193,5 +193,10 @@ namespace Logic
 		setVisible(false);
 	}
 
+
+	void CGraphics::setPosition(Vector3 vPos){
+		_graphicsEntity->setPosition(vPos);
+	}
+
 } // namespace Logic
 

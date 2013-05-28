@@ -96,12 +96,9 @@ namespace Logic
 				_scale += 0.005f;
 			}
 			cGraph->changeScale(_scale);
-			Vector3 a(5,5,5);
-			cGraph->setPosition(a);
+			std::cout << "posicion " << _entity->getPosition() << std::endl;
+			cGraph->setPosition(_entity->getPosition());
 		}
-		Vector3 pos = _entity->getPosition();
-		pos += Vector3(_scale*100,0,0);
-		_entity->setPosition(pos);
 	}
 
 	//________________________________________________________________________
