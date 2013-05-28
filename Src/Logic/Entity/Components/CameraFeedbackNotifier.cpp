@@ -310,6 +310,12 @@ namespace Logic {
 
 	//________________________________________________________________________
 
+	void CCameraFeedbackNotifier::playerIsFalling(bool falling, int direction) {
+		_hudWeaponComponent->playerIsFalling(falling, direction);
+	}
+
+	//________________________________________________________________________
+
 	void CCameraFeedbackNotifier::landEffect(unsigned int msecs) {
 		_currentLandOffset += _landRecoverySpeed * msecs;
 		float vOffset = sin(_currentLandOffset) * _landForce;

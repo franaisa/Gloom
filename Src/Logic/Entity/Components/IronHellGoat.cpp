@@ -249,7 +249,7 @@ namespace Logic {
 		CHudWeapons* hudWeapon = _entity->getComponent<CHudWeapons>("CHudWeapons");
 		if(hudWeapon != NULL) {
 			hudWeapon->loadingWeapon(false);
-			hudWeapon->shootAnim(-1.35f);
+			hudWeapon->shootAnim(-1.85f);
 		}
 	}
 
