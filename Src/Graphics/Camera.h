@@ -69,15 +69,10 @@ namespace Graphics
 		*/
 		const Vector3 &getCameraPosition();
 		
-		/**
-		Devuelve la posición a la que apunta la cámara.
-
-		@return Referencia a la posición del nodo _targetCamera.
-		*/
-		const Vector3 &getTargetCameraPosition();
 
 		/**
 		Devuelve la orientación de la cámara.
+		Ojo: no se trata de la orientacion real compuesta por los otros nodos.
 
 		@return Referencia al quaternion del nodo que contiene la cámara de Ogre.
 		*/
@@ -89,12 +84,6 @@ namespace Graphics
 		de Ogre.
 		*/
 		void setCameraPosition(const Vector3 &newPosition);
-
-		/**
-		Cambia la posición de la posición a la que apunta la cámara.
-		@param newPosition Nueva posición para el _targetNode.
-		*/
-		void setTargetCameraPosition(const Vector3 &newPosition);
 
 		/**
 			get & set de CameraDirection
@@ -142,16 +131,34 @@ namespace Graphics
 		void moveCamera(Ogre::Radian mRotX, Ogre::Radian mRotY);
 
 
-		
 		/**
 		Establece la orientacion de la camara utilizando el quaternion pasado como parámetro.
+		OJO: Deberia de establecerse individualmente por nodos, hacerlo asi puede producir resultados inesperados.
 
 		@param orientation Orientacion puesta en quaternion para setear.
 		*/
 		void setOrientation(Ogre::Quaternion orientation);
 
+		/**
+		Establece el yaw de la camara utilizando el quaternion pasado como parámetro.
+
+		@param yaw Yaw puesto en quaternion para setear.
+		*/
 		void setYaw(Ogre::Quaternion yaw);
 
+		/**
+		Establece el pitch de la camara utilizando el quaternion pasado como parámetro.
+
+		@param pitch Pitch puesto en quaternion para setear.
+		*/
+		void setPitch(Ogre::Quaternion pitch);
+
+		/**
+		Establece el roll de la camara utilizando el quaternion pasado como parámetro.
+
+		@param roll Roll puesto en quaternion para setear.
+		*/
+		void setRoll(Ogre::Quaternion roll);
 
 	protected:
 		

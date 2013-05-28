@@ -59,7 +59,7 @@ namespace Logic {
 				return NULL;
 		}
 
-		_glowingGraphicsEntity->setTransform( _entity->getTransform() );
+		_glowingGraphicsEntity->setTransform( _entity->getPosition(),_entity->getQuatOrientation());
 		
 		return _glowingGraphicsEntity;
 

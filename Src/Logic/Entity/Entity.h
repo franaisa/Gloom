@@ -67,6 +67,14 @@ namespace Logic {
 	};
 
 
+	struct Orientation {
+		enum Enum {
+			eYAW		= 0,
+			ePITCH		= 1,
+			eROLL		= 2  
+		};
+	};
+
 	/**
 	Clase que representa una entidad en el entorno virtual. Las entidades
 	son meros contenedores de componentes, y su funcionamiento depende
@@ -571,6 +579,8 @@ namespace Logic {
 		bool dynamicSpawn(CMap* map, Map::CEntity* entityInfo);
 
 
+		void rotate(int orientation, float rotation);
+
 		// =======================================================================
 		//                         MIEMBROS PROTEGIDOS
 		// =======================================================================
@@ -615,6 +625,10 @@ namespace Logic {
 
 		Vector3 _position;
 		Ogre::Quaternion _orientation;
+		Ogre::Quaternion _yawOrientation;
+		Ogre::Quaternion _pitchOrientation;
+		Ogre::Quaternion _rollOrientation;
+
 
 
 		/**

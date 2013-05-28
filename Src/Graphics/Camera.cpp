@@ -36,25 +36,12 @@ namespace Graphics
 		_name = name;
 		_scene = scene;
 		
-		// Create the camera's top node (which will only handle position).
 		_cameraNode = scene->getSceneMgr()->getRootSceneNode()->createChildSceneNode();
- 
-		// Create the camera's yaw node as a child of camera's top node.
-		_cameraYawNode = _cameraNode->createChildSceneNode();
- 
-		// Create the camera's pitch node as a child of camera's yaw node.
-		_cameraPitchNode = _cameraYawNode->createChildSceneNode();
- 
-		// Create the camera's roll node as a child of camera's pitch node
-		// and attach the camera to it.
-		_cameraRollNode = _cameraPitchNode->createChildSceneNode();
 		_camera = scene->getSceneMgr()->createCamera(name + "_camera");
 		_camera->setNearClipDistance(2);
 		_camera->setFarClipDistance(500);
 		_camera->setFOVy(Ogre::Radian(70));
-		_cameraRollNode->attachObject(this->_camera);
-
-
+		_cameraNode->attachObject(this->_camera);
 
 	} // CCamera
 
@@ -64,13 +51,7 @@ namespace Graphics
 	{
 		// desacoplamos la cámara de su nodo
 		_cameraNode->detachAllObjects();
-		_cameraYawNode->detachAllObjects();
-		_cameraPitchNode->detachAllObjects();
-		_cameraRollNode->detachAllObjects();
 		_scene->getSceneMgr()->destroyCamera(_camera);
-		_scene->getSceneMgr()->destroySceneNode(_cameraRollNode);
-		_scene->getSceneMgr()->destroySceneNode(_cameraPitchNode);
-		_scene->getSceneMgr()->destroySceneNode(_cameraYawNode);
 		_scene->getSceneMgr()->destroySceneNode(_cameraNode);
 
 	} // ~CCamera
@@ -188,5 +169,18 @@ namespace Graphics
 	void CCamera::setYaw(Ogre::Quaternion yaw){
 		_cameraYawNode->setOrientation(yaw);
 	}
+
+	//--------------------------------------------------------
+
+	void CCamera::setPitch(Ogre::Quaternion pitch){
+		_cameraPitchNode->setOrientation(pitch);
+	}
+
+	//--------------------------------------------------------
+
+	void CCamera::setRoll(Ogre::Quaternion roll){
+		_cameraRollNode->setOrientation(roll);
+	}
+
 
 } // namespace Graphics

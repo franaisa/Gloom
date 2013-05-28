@@ -103,8 +103,6 @@ namespace Logic
 				_entity->activate();
 
 				//Establecemos la orientación adecuada segun la devolución del manager de spawn
-				Graphics::CCamera *cam=_entity->getMap()->getScene()->getCamera();
-				cam->setYaw(Ogre::Quaternion(0,0,1,0));//180 grados
 				_entity->setOrientation(Ogre::Quaternion(0,0,1,0));
 				
 				// Si eres el server mandar un mensaje de spawn

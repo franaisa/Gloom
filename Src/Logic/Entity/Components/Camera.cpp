@@ -215,8 +215,9 @@ namespace Logic
 				_graphicsCamera->rollCamera(_fRoll);
 				_fRoll = 0.0f; //Inicializamos el roll para que en el siguiente tick no entre
 			}*/
+			//Actualizamos la posición de la camara y de su orientacion
 			_graphicsCamera->setCameraPosition(position);
-			
+			_graphicsCamera->setOrientation(_target->getQuatOrientation());
 			if(!_dead){
 				// Y la posición hacia donde mira la cámara.
 				Vector3 direction = Math::getDirection(_target->getOrientation());

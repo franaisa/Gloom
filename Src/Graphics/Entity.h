@@ -88,7 +88,7 @@ namespace Graphics
 		@param transform Referencia a la matriz de transformación con la 
 		que debe posicionarse y orientarse la entidad.
 		*/
-		void setTransform(const Matrix4 &transform);
+		void setTransform(const Vector3 &position, const Ogre::Quaternion &orientation);
 
 		/**
 		Cambia la posición de la entidad.
@@ -246,6 +246,10 @@ namespace Graphics
 		Nodo que contiene la entidad de Ogre.
 		*/
 		Ogre::SceneNode *_entityNode;
+		Ogre::SceneNode *_entityYawNode;
+		Ogre::SceneNode *_entityPitchNode;
+		Ogre::SceneNode *_entityRollNode;
+
 
 		/**
 		Entidad de Ogre.

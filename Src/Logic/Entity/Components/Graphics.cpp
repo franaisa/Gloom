@@ -109,7 +109,7 @@ namespace Logic
 		}
 
 		
-		_graphicsEntity->setTransform(_entity->getTransform());
+		_graphicsEntity->setTransform(_entity->getPosition(),_entity->getQuatOrientation());
 		
 		return _graphicsEntity;
 
@@ -117,8 +117,8 @@ namespace Logic
 
 	//---------------------------------------------------------
 	
-	void CGraphics::setTransform(const Matrix4& transform) {
-		_graphicsEntity->setTransform(transform);
+	void CGraphics::setTransform(const Vector3 &position, const Ogre::Quaternion &orientation) {
+		_graphicsEntity->setTransform(_entity->getPosition(),orientation);
 	}
 
 	//---------------------------------------------------------
@@ -137,7 +137,7 @@ namespace Logic
 		switch( message->getMessageType() ) {
 			case Message::SET_TRANSFORM: {
 				std::shared_ptr<CMessageTransform> transformMsg = std::static_pointer_cast<CMessageTransform>(message);
-				_graphicsEntity->setTransform( transformMsg->getTransform() );
+				_graphicsEntity->setTransform( transformMsg->getTransform().getTrans(), transformMsg->getTransform().extractQuaternion() );
 				break;
 			}
 			case Message::ACTIVATE: {
@@ -172,13 +172,13 @@ namespace Logic
 	//---------------------------------------------------------
 
 	void CGraphics::onActivate() {
-		_graphicsEntity->setTransform(_entity->getTransform());
+		_graphicsEntity->setTransform(_entity->getPosition(),_entity->getQuatOrientation());
 	}//---------------------------------------------------------
 	//onActivate
 
 
 	void CGraphics::onTick(unsigned int msecs){
-		_graphicsEntity->setTransform(_entity->getTransform());
+		_graphicsEntity->setTransform(_entity->getPosition(),_entity->getQuatOrientation());
 	}//---------------------------------------------------------
 	//onTick
 

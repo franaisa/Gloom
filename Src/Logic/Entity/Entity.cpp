@@ -38,10 +38,13 @@ namespace Logic {
 										   _name(""), 
 										   _transform(Matrix4::IDENTITY),
 										   _position(0,0,0),
-										   _orientation(1,0,0,0),//identidad
+										   _orientation(1,0,0,0),
+										   _yawOrientation(1,0,0,0),
+										   _pitchOrientation(1,0,0,0),
+										   _rollOrientation(1,0,0,0),//identidad
 										   _isPlayer(false), 
 										   _activated(false) {
-
+ 
 
 	} // CEntity
 	
@@ -392,7 +395,8 @@ namespace Logic {
 	//---------------------------------------------------------
 
 	Ogre::Quaternion CEntity::getQuatOrientation() const {
-		return _orientation;
+		//Hay que formarla de acuerdo a los nodos
+		return _yawOrientation*_pitchOrientation*_rollOrientation;
 	} // getOrientation
 	//---------------------------------------------------------
 
@@ -425,7 +429,86 @@ namespace Logic {
 	}
 
 	void CEntity::setYawPitch(float yaw, float pitch) {
-		Math::pitchYaw(pitch, yaw, _transform);
+		//Math::pitchYaw(pitch, yaw, _transform);
+
+		 Ogre::Real pitchAngle;
+		 Ogre::Real pitchAngleSign;
+ 
+		 // Yaws the camera according to the mouse relative movement.
+		 rotate(Orientation::eYAW,yaw);
+ 
+		 // Pitches the camera according to the mouse relative movement.
+		 rotate(Orientation::ePITCH,pitch);
+		/*
+		 // Translates the camera according to the translate vector which is
+		 // controlled by the keyboard arrows.
+		 //
+		 // NOTE: We multiply the mTranslateVector by the cameraPitchNode's
+		 // orientation quaternion and the cameraYawNode's orientation
+		 // quaternion to translate the camera accoding to the camera's
+		 // orientation around the Y-axis and the X-axis.
+		 this->cameraNode->translate(this->cameraYawNode->getOrientation() *
+									 this->cameraPitchNode->getOrientation() *
+									 this->mTranslateVector,
+									 Ogre::SceneNode::TS_LOCAL);*/
+ 
+		 // Angle of rotation around the X-axis.
+		 pitchAngle = (2 * Ogre::Degree(Ogre::Math::ACos(_pitchOrientation.w)).valueDegrees());
+ 
+		 // Just to determine the sign of the angle we pick up above, the
+		 // value itself does not interest us.
+		 pitchAngleSign = _pitchOrientation.x;
+ 
+		 // Limit the pitch between -90 degress and +90 degrees, Quake3-style.
+		 if (pitchAngle > 90.0f)
+		 {
+			 if (pitchAngleSign > 0)
+				 // Set orientation to 90 degrees on X-axis.
+				 _pitchOrientation=Ogre::Quaternion(Ogre::Math::Sqrt(0.5f),Ogre::Math::Sqrt(0.5f), 0, 0);
+			 else if (pitchAngleSign < 0)
+				 // Sets orientation to -90 degrees on X-axis.
+				 _pitchOrientation=Ogre::Quaternion(Ogre::Math::Sqrt(0.5f),	-Ogre::Math::Sqrt(0.5f), 0, 0);
+		 }
+		 
+		 //Actualizamos la orientacion
+		setOrientation(_yawOrientation*_pitchOrientation*_rollOrientation);
 	}
+
+	void CEntity::rotate(int orientation, float rotation){
+		switch(orientation){
+			case Orientation::eYAW:{
+				Quaternion q(Ogre::Degree(rotation*50), Vector3::UNIT_Y); //Multiplico por 50 porque sino el raton no se mueve casi
+				_yawOrientation=_yawOrientation*q; //con la camara se llamaba al node->yaw(radianes) y no hacia falta el 50 pero tampoco se hacia esta linea
+				break;
+			}
+			case Orientation::ePITCH:{
+				Quaternion q(Ogre::Degree(rotation*50), Vector3::UNIT_X); 
+				_pitchOrientation=_pitchOrientation*q;
+				break;
+			}
+			case Orientation::eROLL:{
+				//No la he probado
+				Quaternion q(Ogre::Degree(rotation*50), Vector3::UNIT_Z); 
+				_rollOrientation=_rollOrientation*q;
+				break;
+			}
+		}
+	
+	}
+
+	/*float Quaternion::getPitchQuat()
+	{
+	  return atan2(2*(y*z + w*x), w*w - x*x - y*y + z*z);
+	}
+
+	float Quaternion::getYawQuat()
+	{
+	  return asin(-2*(x*z - w*y));
+	}
+
+	float Quaternion::getRollQuat()
+	{
+	  return atan2(2*(x*y + w*z), w*w + x*x - y*y - z*z);
+	}*/
 
 } // namespace Logic

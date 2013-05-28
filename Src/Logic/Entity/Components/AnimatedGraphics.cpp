@@ -44,7 +44,7 @@ namespace Logic
 		if(!_scene->addEntity(_animatedGraphicsEntity))
 			return 0;
 		
-		_animatedGraphicsEntity->setTransform(_entity->getTransform());
+		_animatedGraphicsEntity->setTransform(_entity->getPosition(),_entity->getQuatOrientation());
 		
 		if(entityInfo->hasAttribute("defaultAnimation"))
 		{
@@ -124,9 +124,9 @@ namespace Logic
 		switch( message->getMessageType() ) {
 			case Message::SET_TRANSFORM: {
 				Matrix4 transform = std::static_pointer_cast<CMessageTransform>(message)->getTransform();
-				Math::setYaw(Math::getYaw(transform), transform);
+				Math::setYaw(Math::getYaw(transform), transform);//? hacer get para luego set wtf
 
-				_graphicsEntity->setTransform( transform );
+				_graphicsEntity->setTransform( transform.getTrans(),transform.extractQuaternion() );
 				break;
 			}
 			case Message::ACTIVATE: {

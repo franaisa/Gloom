@@ -111,7 +111,7 @@ namespace Graphics
 		}
 		_entityNode = _scene->getSceneMgr()->getRootSceneNode()->createChildSceneNode(_name + "_node");
 		_entityNode->attachObject(_entity);
-
+		
 		//_text = new CObjectTextDisplay(_entity, _scene->getCamera()->getOgreCamera());
 		//_text->enable(false);
 		//_text->setText("Gazpacho");
@@ -153,13 +153,13 @@ namespace Graphics
 	
 	//--------------------------------------------------------
 		
-	void CEntity::setTransform(const Matrix4 &transform)
+	void CEntity::setTransform(const Vector3 &position, const Ogre::Quaternion &orientation)
 	{
 		assert(_entityNode && "La entidad no ha sido cargada");
 		if(_entityNode)
 		{
-			_entityNode->setPosition(transform.getTrans());
-			_entityNode->setOrientation(transform.extractQuaternion());
+			_entityNode->setPosition(position);
+			_entityNode->setOrientation(orientation);
 		}
 
 	} // setTransform
