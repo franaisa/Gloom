@@ -734,11 +734,6 @@ namespace Input
 		*/
 		std::list<CMouseListener*> _mouseListeners;
 
-
-		/**
-		temporal
-		*/
-		int _acum;
 	}; // class InputManager
 
 } // namespace Input

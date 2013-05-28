@@ -39,8 +39,7 @@ namespace Input{
 	CInputManager::CInputManager() :
 		_mouse(0),
 		_keyboard(0),
-		_inputSystem(0),
-		_acum(0)
+		_inputSystem(0)
 	{
 		assert(!_instance && "¡Segunda inicialización de GUI::CInputManager no permitida!");
 		_instance = this;
@@ -128,17 +127,12 @@ namespace Input{
 
 	void CInputManager::tick(unsigned int msecs) 
 	{
-		_acum += msecs;
-		// Se necesita capturar todos los dispositivos.
-		if(_acum >= 5){
-			if(_mouse) {
-				_mouse->capture();
-			}
+		if(_mouse) {
+			_mouse->capture();
+		}
 	
-			if(_keyboard) {
-				_keyboard->capture();
-			}
-			_acum=0;
+		if(_keyboard) {
+			_keyboard->capture();
 		}
 
 	} // capture
