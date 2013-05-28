@@ -9,8 +9,8 @@ Contiene la declaración de la clase que maneja la cámara.
 
 @see Graphics::CCamera
 
-@author David Llansó
-@date Julio, 2010
+@author Jose Antonio García Yáñez
+@date Mayo, 2013
 */
 
 #ifndef __Graphics_Camera_H
@@ -34,15 +34,13 @@ namespace Graphics
 namespace Graphics 
 {
 	/**
-	Clase de la cámara extendida basada en Ogre. Para simplificar su uso
-	La cámara extendida consta de dos nodos, uno es el propio de la 
-	cámara, que contiene la cámara real de Ogre y otro es el nodo 
-	objetivo, que representa la posición a la que la cámara debe mirar.
+	Clase de la cámara extendida basada en Ogre.
+	La cámara está compuesta por un único nodo.
 	
 	@ingroup graphicsGroup
 
-	@author David Llansó
-	@date Julio, 2010
+	@author Jose Antonio García Yáñez
+	@date Mayo, 2013
 	*/
 	class CCamera 
 	{
@@ -72,18 +70,20 @@ namespace Graphics
 
 		/**
 		Devuelve la orientación de la cámara.
-		Ojo: no se trata de la orientacion real compuesta por los otros nodos.
 
 		@return Referencia al quaternion del nodo que contiene la cámara de Ogre.
 		*/
 		const Quaternion &getCameraOrientation();
 
+
 		/**
 		Cambia la posición de la cámara.
+
 		@param newPosition Nueva posición para el nodo que contiene la cámara 
 		de Ogre.
 		*/
 		void setCameraPosition(const Vector3 &newPosition);
+
 
 		/**
 			get & set de CameraDirection
@@ -91,10 +91,12 @@ namespace Graphics
 		void				setCameraDirection				(const Vector3& direction);
 		Ogre::Vector3				getCameraDirection			();
 
+
 		/**
-			Devuelve el quaternion en el mundo real de la cámara
+		Devuelve el quaternion en el mundo real de la cámara.
 		*/
 		Ogre::Quaternion	getRealOrientation				();
+
 
 		/**
 		Roll de camera. Gira la camara en el sentido contrario
@@ -108,7 +110,14 @@ namespace Graphics
 		*/
 		void rollCamera(float fRadian);
 
+
+		/**
+		Devuelve un puntero a la camara creada por Ogre.
+
+		@return Puntero a la camara creada por Ogre.
+		*/
 		Ogre::Camera* getOgreCamera() { return _camera; }	
+
 
 		/**
 		Metodo que crea una entidad grafica asociada a la camara, de tal modo que la posicion sera relativa a la camara.
@@ -123,42 +132,12 @@ namespace Graphics
 
 
 		/**
-		Mueve la camara de acuerdo al movimiento del raton que nos lo pasan por parametro.
-
-		@param mRotX Rotacion en radianes del eje X.
-		@param mRotY Rotacion en radianes del eje Y.
-		*/
-		void moveCamera(Ogre::Radian mRotX, Ogre::Radian mRotY);
-
-
-		/**
 		Establece la orientacion de la camara utilizando el quaternion pasado como parámetro.
-		OJO: Deberia de establecerse individualmente por nodos, hacerlo asi puede producir resultados inesperados.
 
 		@param orientation Orientacion puesta en quaternion para setear.
 		*/
 		void setOrientation(Ogre::Quaternion orientation);
 
-		/**
-		Establece el yaw de la camara utilizando el quaternion pasado como parámetro.
-
-		@param yaw Yaw puesto en quaternion para setear.
-		*/
-		void setYaw(Ogre::Quaternion yaw);
-
-		/**
-		Establece el pitch de la camara utilizando el quaternion pasado como parámetro.
-
-		@param pitch Pitch puesto en quaternion para setear.
-		*/
-		void setPitch(Ogre::Quaternion pitch);
-
-		/**
-		Establece el roll de la camara utilizando el quaternion pasado como parámetro.
-
-		@param roll Roll puesto en quaternion para setear.
-		*/
-		void setRoll(Ogre::Quaternion roll);
 
 	protected:
 		
@@ -179,9 +158,6 @@ namespace Graphics
 		Nodos que contienen la cámara.
 		*/
 		Ogre::SceneNode *_cameraNode;
-		Ogre::SceneNode *_cameraYawNode;
-		Ogre::SceneNode *_cameraPitchNode;
-		Ogre::SceneNode *_cameraRollNode;
 		
 		/**
 		La cámara de Ogre.

@@ -429,44 +429,30 @@ namespace Logic {
 	}
 
 	void CEntity::setYawPitch(float yaw, float pitch) {
-		//Math::pitchYaw(pitch, yaw, _transform);
 
 		 Ogre::Real pitchAngle;
 		 Ogre::Real pitchAngleSign;
  
-		 // Yaws the camera according to the mouse relative movement.
+		 //Rotamos el Yaw de la entidad de acuerdo a los grados en radianes pasados como parámetro.
 		 rotate(Orientation::eYAW,yaw);
  
-		 // Pitches the camera according to the mouse relative movement.
+		 //Rotamos el Pitch de la entidad de acuerdo a los grados en radianes pasados como parámetro.
 		 rotate(Orientation::ePITCH,pitch);
-		/*
-		 // Translates the camera according to the translate vector which is
-		 // controlled by the keyboard arrows.
-		 //
-		 // NOTE: We multiply the mTranslateVector by the cameraPitchNode's
-		 // orientation quaternion and the cameraYawNode's orientation
-		 // quaternion to translate the camera accoding to the camera's
-		 // orientation around the Y-axis and the X-axis.
-		 this->cameraNode->translate(this->cameraYawNode->getOrientation() *
-									 this->cameraPitchNode->getOrientation() *
-									 this->mTranslateVector,
-									 Ogre::SceneNode::TS_LOCAL);*/
- 
-		 // Angle of rotation around the X-axis.
+		
+		 // Ángulo de rotación sobre el eje X.
 		 pitchAngle = (2 * Ogre::Degree(Ogre::Math::ACos(_pitchOrientation.w)).valueDegrees());
  
-		 // Just to determine the sign of the angle we pick up above, the
-		 // value itself does not interest us.
+		 // Para saber el sentido.
 		 pitchAngleSign = _pitchOrientation.x;
  
-		 // Limit the pitch between -90 degress and +90 degrees, Quake3-style.
+		 // Limitamos el angulo de -90 a +90 como en el Quake3.
 		 if (pitchAngle > 90.0f)
 		 {
 			 if (pitchAngleSign > 0)
-				 // Set orientation to 90 degrees on X-axis.
+				 //Fijando a +90.
 				 _pitchOrientation=Ogre::Quaternion(Ogre::Math::Sqrt(0.5f),Ogre::Math::Sqrt(0.5f), 0, 0);
 			 else if (pitchAngleSign < 0)
-				 // Sets orientation to -90 degrees on X-axis.
+				 //Fijando a -90.
 				 _pitchOrientation=Ogre::Quaternion(Ogre::Math::Sqrt(0.5f),	-Ogre::Math::Sqrt(0.5f), 0, 0);
 		 }
 		 

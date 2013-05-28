@@ -9,8 +9,8 @@ Contiene la implementación de la clase que maneja la cámara.
 
 @see Graphics::CCamera
 
-@author David Llansó
-@date Julio, 2010
+@author Jose Antonio García Yáñez
+@date Mayo, 2013
 */
 
 #include "Camera.h"
@@ -35,12 +35,15 @@ namespace Graphics
 	{
 		_name = name;
 		_scene = scene;
-		
+		//Creacion del nodo que contiene a la camara
 		_cameraNode = scene->getSceneMgr()->getRootSceneNode()->createChildSceneNode();
+		//Creación de la camara
 		_camera = scene->getSceneMgr()->createCamera(name + "_camera");
+		//Seteo de atributos de la camara
 		_camera->setNearClipDistance(2);
 		_camera->setFarClipDistance(500);
 		_camera->setFOVy(Ogre::Radian(70));
+		//Atachamos la camara al nodo
 		_cameraNode->attachObject(this->_camera);
 
 	} // CCamera
@@ -117,70 +120,8 @@ namespace Graphics
 
 		return 0;
 	}
-
+	
 	//--------------------------------------------------------
-
-	void CCamera::moveCamera(Ogre::Radian mRotX, Ogre::Radian mRotY){
-		 Ogre::Real pitchAngle;
-		 Ogre::Real pitchAngleSign;
- 
-		 // Yaws the camera according to the mouse relative movement.
-		 _cameraYawNode->yaw(mRotX);
- 
-		 // Pitches the camera according to the mouse relative movement.
-		 _cameraPitchNode->pitch(mRotY);
-		/*
-		 // Translates the camera according to the translate vector which is
-		 // controlled by the keyboard arrows.
-		 //
-		 // NOTE: We multiply the mTranslateVector by the cameraPitchNode's
-		 // orientation quaternion and the cameraYawNode's orientation
-		 // quaternion to translate the camera accoding to the camera's
-		 // orientation around the Y-axis and the X-axis.
-		 this->cameraNode->translate(this->cameraYawNode->getOrientation() *
-									 this->cameraPitchNode->getOrientation() *
-									 this->mTranslateVector,
-									 Ogre::SceneNode::TS_LOCAL);*/
- 
-		 // Angle of rotation around the X-axis.
-		 pitchAngle = (2 * Ogre::Degree(Ogre::Math::ACos(_cameraPitchNode->getOrientation().w)).valueDegrees());
- 
-		 // Just to determine the sign of the angle we pick up above, the
-		 // value itself does not interest us.
-		 pitchAngleSign = _cameraPitchNode->getOrientation().x;
- 
-		 // Limit the pitch between -90 degress and +90 degrees, Quake3-style.
-		 if (pitchAngle > 90.0f)
-		 {
-			 if (pitchAngleSign > 0)
-				 // Set orientation to 90 degrees on X-axis.
-				 _cameraPitchNode->setOrientation(Ogre::Quaternion(Ogre::Math::Sqrt(0.5f),
-																		Ogre::Math::Sqrt(0.5f), 0, 0));
-			 else if (pitchAngleSign < 0)
-				 // Sets orientation to -90 degrees on X-axis.
-				 _cameraPitchNode->setOrientation(Ogre::Quaternion(Ogre::Math::Sqrt(0.5f),
-																		-Ogre::Math::Sqrt(0.5f), 0, 0));
-		 }
-		 
-	}
-
-	//--------------------------------------------------------
-
-	void CCamera::setYaw(Ogre::Quaternion yaw){
-		_cameraYawNode->setOrientation(yaw);
-	}
-
-	//--------------------------------------------------------
-
-	void CCamera::setPitch(Ogre::Quaternion pitch){
-		_cameraPitchNode->setOrientation(pitch);
-	}
-
-	//--------------------------------------------------------
-
-	void CCamera::setRoll(Ogre::Quaternion roll){
-		_cameraRollNode->setOrientation(roll);
-	}
 
 
 } // namespace Graphics
