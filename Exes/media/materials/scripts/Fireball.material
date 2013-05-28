@@ -1,16 +1,13 @@
-material Fireball
+material FireBall
 {
 	technique
 	{
 		pass
 		{
-			lighting off
-			depth_write off
-			scene_blend add
-
 			texture_unit
 			{
-				texture Fireball.png
+				texture Plasma02.jpg
+				scroll_anim 0 -5
 			}
 		}
 	}
