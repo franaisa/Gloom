@@ -74,6 +74,7 @@ Map = {
 		
 		primarySkillCooldown = 2,
 		secondarySkillCooldown = 2,
+		
 		screamerShieldThreshold = 100,
 		screamerShieldDamageTimeStep = 2,
 		screamerShieldDamageOverTime = 1,
@@ -460,8 +461,10 @@ Map = {
 		audioNoAmmo = "media/audio/noammo.wav",
 		
 		primarySkillCooldown = 25,
-		secondarySkillCooldown = 25,
+		secondarySkillCooldown = 10,
+		
 		inmunityDuration = 5,
+		lifeDome = 10,
 		
 			weaponhammerName = "hammer",
 			weaponhammerModel = "hammer.mesh",
@@ -833,6 +836,7 @@ Map = {
 		
 		primarySkillCooldown = 2,
 		secondarySkillCooldown = 2,
+		
 		screamerShieldThreshold = 100,
 		screamerShieldDamageTimeStep = 2,
 		screamerShieldDamageOverTime = 1,
@@ -1221,7 +1225,9 @@ Map = {
 		
 		primarySkillCooldown = 25,
 		secondarySkillCooldown = 25,
+		
 		inmunityDuration = 5,
+		lifeDome = 10,
 
 			weaponhammerName = "hammer",
 			weaponhammerModel = "hammer.mesh",

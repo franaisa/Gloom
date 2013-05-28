@@ -25,6 +25,8 @@ implementa las habilidades del personaje
 #include "Logic/Maps/EntityFactory.h"
 #include "Logic/Server.h"
 
+#include "LifeDome.h"
+
 #include <assert.h>
 
 namespace Logic {
@@ -35,6 +37,8 @@ namespace Logic {
 
 	CArchangel::CArchangel() : CPlayerClass("archangel") {
 		// Nada que hacer
+		_doingPrimarySkill = false;
+		_doingSecondarySkill = false;
 	}
 
 	//__________________________________________________________________
@@ -59,6 +63,8 @@ namespace Logic {
 		assert( entityInfo->hasAttribute("inmunityDuration") );
 		// Pasamos el tiempo a msecs
 		_inmunityDuration = entityInfo->getFloatAttribute("inmunityDuration") * 1000;
+
+		_lifeDomeDuration = entityInfo->getFloatAttribute("lifeDome") * 1000;
 		
 		return true; //Para quitar el warning?
 	} // spawn
@@ -78,8 +84,7 @@ namespace Logic {
 				// Seteamos la reducción de daño a 0 de manera que recibimos los daños normales
  				std::shared_ptr<CMessageSetReducedDamage> pReducedDmgMsg = std::make_shared<CMessageSetReducedDamage>();
 				pReducedDmgMsg->setReducedDamage(0);
-				_entity->emitMessage(pReducedDmgMsg);
-					
+				_entity->emitMessage(pReducedDmgMsg);					
 	
 				// Desactivamos el shader de inmunidad
 				// Desactivamos el shader de invisibilidad
@@ -88,6 +93,19 @@ namespace Logic {
 				_entity->emitMessage(materialMsg);
 				Logic::CWorldState::getSingletonPtr()->addChange(_entity,materialMsg);
 				_doingPrimarySkill = false;
+			}
+		}
+
+		if (_doingSecondarySkill)
+		{
+			if (_lifeDomeTimer > 0)
+			{
+				_lifeDomeTimer -=msecs;
+			}
+			else
+			{
+				destroyLifeDome();
+				_doingSecondarySkill = false;
 			}
 		}
 	}
@@ -124,25 +142,34 @@ namespace Logic {
 	//__________________________________________________________________
 
 	void CArchangel::secondarySkill() {
+
+		_lifeDomeTimer = _lifeDomeDuration;
+
 		Vector3 position = _entity->getPosition();
 		position.y += _heightShoot;
 
 		Matrix4 transform = Matrix4::IDENTITY;
 		transform.setTrans(position);
 
-		CEntity *lifeDome = CEntityFactory::getSingletonPtr()->createEntity(
+		_lifeDome = CEntityFactory::getSingletonPtr()->createEntity(
 			//CEntityFactory::getSingletonPtr()->getInfo("MagneticBullet"),
 			CEntityFactory::getSingletonPtr()->getInfo("LifeDome"),			
 			Logic::CServer::getSingletonPtr()->getMap(),
 			transform
 		);
 
-		lifeDome->activate();
-		lifeDome->start();
+		_lifeDome->activate();
+		_lifeDome->start();
+		_lifeDome->getComponent<CLifeDome>("CLifeDome")->setOwner(this);
+
+		_doingSecondarySkill = true;
 	}
 
 	//__________________________________________________________________
 
+	void CArchangel::destroyLifeDome() {
+		CEntityFactory::getSingletonPtr()->deferredDeleteEntity(_lifeDome,true);
+	}
 
 } // namespace Logic
 
