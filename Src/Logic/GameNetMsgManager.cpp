@@ -286,22 +286,6 @@ namespace Logic {
 		CEntity* destEntity = Logic::CServer::getSingletonPtr()->getMap()->getEntityByID(destID);
 		if(destEntity != 0)
 			destEntity->emitMessage(messageReceived);
-
-		// El servidor ya no debe forwardear las teclas a los remotePlayers. Para eso estan las snapshots, los
-		// remotePlayers serán integramente interpolados.
-		// El input debe ser predicho de alguna forma. El servidor deberia devolver las teclas o los movimientos
-		// solo al player que las manda para que éste sepa si se está moviendo bien o no.
-		/*if(Net::CManager::getSingletonPtr()->imServer() && messageReceived->getMessageType()==Message::CONTROL){
-			Net::NetMessageType msgType = Net::ENTITY_MSG;// Escribimos el tipo de mensaje de red a enviar
-			Net::CBuffer serialMsg;
-			Net::CBuffer *buffer = messageReceived->serialize();
-			serialMsg.write(&msgType, sizeof(msgType));
-			serialMsg.write(&destID, sizeof(destID)); // Escribimos el id de la entidad destino
-			serialMsg.write(buffer->getbuffer(), buffer->getSize());
-			Net::CManager::getSingletonPtr()->broadcastIgnoring(packet->getConexion()->getId(), serialMsg.getbuffer(), serialMsg.getSize());
-		}*/
-
-		//LOG("RX ENTITY_MSG " << rxMsg._type << " from EntityID " << destID);
 	} // processEntityMessage
 
 
@@ -334,7 +318,7 @@ namespace Logic {
 
 		case Net::END_GAME:	
 
-			TEntityID entityID; 
+			/*TEntityID entityID; 
 				rxSerialMsg.read(&entityID, sizeof(entityID) );  //	Packet: "NetMessageType | extraData(NetID)"	
 			
 			CEntity* player = Logic::CServer::getSingletonPtr()->getMap()->getEntityByID(entityID);
@@ -343,11 +327,93 @@ namespace Logic {
 				else											// Si no, eliminamos ese player del mapa
 					player->deactivate();
 				//CEntityFactory::getSingletonPtr()->deferredDeleteEntity(entity);
-
+*/
+			break;
+		case Net::ACTIVATE_ENTITY:
+			activateEntity(packet);
+			break;
+		case Net::DEACTIVATE_ENTITY:	
+			deactivateEntity(packet);
 			break;
 		}
 		
 	} // dataPacketReceived
+
+	//--------------------------------------------------------
+
+	void CGameNetMsgManager::activateEntity(Net::CPaquete* packet){
+		Net::CBuffer serialMsg;
+			serialMsg.write(packet->getData(),packet->getDataLength());
+			serialMsg.reset(); // Reiniciamos el puntero de lectura a la posición 0
+
+		//deserializamos toda la información que se necesita para la creación de la entidad
+		Net::NetMessageType msgType;
+			serialMsg.read(&msgType,sizeof(msgType));
+		
+		//cargamos todos los datos que se nos envían por mensaje
+		TEntityID destID; 
+			serialMsg.read(&destID, sizeof(destID));
+
+		//le decimos al mapa que elimine la entidad si no fue ya eliminada
+		CEntity * entity = CServer::getSingletonPtr()->getMap()->getEntityByID(destID);
+		//Comprobamos por si acaso para hacerlo bien
+		if(entity!=NULL)
+			entity->activate();
+	}
+
+	//--------------------------------------------------------
+
+	void CGameNetMsgManager::deactivateEntity(Net::CPaquete* packet){
+		Net::CBuffer serialMsg;
+			serialMsg.write(packet->getData(),packet->getDataLength());
+			serialMsg.reset(); // Reiniciamos el puntero de lectura a la posición 0
+
+		//deserializamos toda la información que se necesita para la creación de la entidad
+		Net::NetMessageType msgType;
+			serialMsg.read(&msgType,sizeof(msgType));
+		
+		//cargamos todos los datos que se nos envían por mensaje
+		TEntityID destID; 
+			serialMsg.read(&destID, sizeof(destID));
+
+		//le decimos al mapa que elimine la entidad si no fue ya eliminada
+		CEntity * entity = CServer::getSingletonPtr()->getMap()->getEntityByID(destID);
+		//Comprobamos por si acaso para hacerlo bien
+		if(entity!=NULL)
+			entity->deactivate();
+	}
+
+	//--------------------------------------------------------
+
+	void CGameNetMsgManager::sendActivateEntity(TEntityID destID){
+		//cogemos la entidad que hemos creado para enviar la información por la red
+		CEntity * destEntity = CServer::getSingletonPtr()->getMap()->getEntityByID(destID);
+
+		Net::NetMessageType msgType = Net::ACTIVATE_ENTITY;// Escribimos el tipo de mensaje de red a enviar
+		Net::CBuffer serialMsg;
+		//serializamos toda la información que se necesita para la creación de la entidad
+		serialMsg.write(&msgType, sizeof(msgType));
+		serialMsg.serialize(destID);
+
+		//enviamos el mensaje
+		Net::CManager::getSingletonPtr()->broadcast(serialMsg.getbuffer(), serialMsg.getSize());
+	}
+
+	//--------------------------------------------------------
+
+	void CGameNetMsgManager::sendDeactivateEntity(TEntityID destID){
+		//cogemos la entidad que hemos creado para enviar la información por la red
+		CEntity * destEntity = CServer::getSingletonPtr()->getMap()->getEntityByID(destID);
+
+		Net::NetMessageType msgType = Net::DEACTIVATE_ENTITY;// Escribimos el tipo de mensaje de red a enviar
+		Net::CBuffer serialMsg;
+		//serializamos toda la información que se necesita para la creación de la entidad
+		serialMsg.write(&msgType, sizeof(msgType));
+		serialMsg.serialize(destID);
+
+		//enviamos el mensaje
+		Net::CManager::getSingletonPtr()->broadcast(serialMsg.getbuffer(), serialMsg.getSize());
+	}
 
 	//--------------------------------------------------------
 

@@ -72,7 +72,6 @@ namespace Logic {
 		//_berserkerCooldownPercent = entityInfo->getFloatAttribute("berserkerCooldownPercent");
 
 		_physicController = _entity->getComponent<CPhysicController>("CPhysicController");
-		_avatarController = _entity->getComponent<CAvatarController>("CAvatarController");
 
 		return true;
 	} // spawn
@@ -130,7 +129,6 @@ namespace Logic {
 				stopPrimarySkill();
 				charge = false;
 				_doingPrimarySkill = false;
-				_avatarController->activate();
 			}
 		}
 	}
@@ -157,13 +155,11 @@ namespace Logic {
 
 	void CHound::primarySkill() {
 
-		_doingPrimarySkill = true;
+		//desactivo el rigid normal y lo cambio por un trigger
 
-		//lo primero de todo cambiamos los valores del avatarController para que nos mueva mucho mas lento
-		//_avatarController->setMaxVelocity(_bitetVelocity);
-		_avatarController->deactivate();
 
-		_biteTimer = _biteDuration;
+
+
 		/*
 		//Arrancamos el cronometro
 		_berserkerTimer= _berserkerDuration;
