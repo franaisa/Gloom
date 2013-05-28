@@ -10,6 +10,7 @@ implementa las habilidades del personaje
 "Hound".
 
 @author Jose Antonio García Yáñez.
+@author Rubén Mulero Guerrero.
 @date Marzo, 2013
 */
 

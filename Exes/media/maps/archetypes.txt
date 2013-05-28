@@ -649,6 +649,9 @@ Map = {
 		primarySkillCooldown = 25,
 		secondarySkillCooldown = 20,
 		berserkerDuration=20,
+		biteMaxVelocity=0.2;
+		biteVelocity=0.10;
+		biteDuration=0.5;
 		
 			weaponhammerName = "hammer",
 			weaponhammerModel = "hammer.mesh",
