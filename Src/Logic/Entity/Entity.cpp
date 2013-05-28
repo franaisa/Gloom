@@ -477,8 +477,8 @@ namespace Logic {
 	void CEntity::rotate(int orientation, float rotation){
 		switch(orientation){
 			case Orientation::eYAW:{
-				Quaternion q(Ogre::Degree(rotation*50), Vector3::UNIT_Y); //Multiplico por 50 porque sino el raton no se mueve casi
-				_yawOrientation=_yawOrientation*q; //con la camara se llamaba al node->yaw(radianes) y no hacia falta el 50 pero tampoco se hacia esta linea
+				Quaternion q(Ogre::Radian(rotation), Vector3::UNIT_Y); 
+				_yawOrientation=_yawOrientation*q;
 				break;
 			}
 			case Orientation::ePITCH:{
