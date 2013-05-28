@@ -112,6 +112,23 @@ namespace Logic {
 		void processDestroyEntity(Net::CPaquete* packet);
 
 		/**
+		Método que procesa un paquete de activacion de entidad
+		*/
+		void activateEntity(Net::CPaquete* packet);
+
+		/**
+		Método que procesa un paquete de desactivacion de entidad
+		*/
+		void deactivateEntity(Net::CPaquete* packet);
+		/**
+		Método que envia un paquete de activacion de entidad
+		*/
+		void sendActivateEntity(TEntityID dest);
+		/**
+		Método que envia un paquete de desactivacion de entidad
+		*/
+		void sendDeactivateEntity(TEntityID dest);
+		/**
 		Método que envía por la red un mensaje de creación de entidad
 		
 		@param dest ID de la entidad que se va a crear

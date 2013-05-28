@@ -12,18 +12,23 @@ Contiene la implementación del componente que controla la vida de una entidad.
 
 #include "LifeDome.h"
 
+#include "PhysicDynamicEntity.h"
+
+#include "Graphics/Entity.h"
+#include "Graphics.h"
+
 namespace Logic 
 {
 	IMP_FACTORY(CLifeDome);
 		
 	//________________________________________________________________________
 
-	CLifeDome::CLifeDome() 
+	/*CLifeDome::CLifeDome() 
 	{
 					 //_owner(NULL) {
 
 		// Nada que hacer
-	}
+	}*/
 
 	//________________________________________________________________________
 
@@ -38,7 +43,8 @@ namespace Logic
 		if(!IComponent::spawn(entity,map,entityInfo))
 			return false;
 
-		//_physicComponent = _entity->getComponent<CPhysicDynamicEntity>("CPhysicDynamicEntity"); 		
+		_physicComponent = _entity->getComponent<CPhysicDynamicEntity>("CPhysicDynamicEntity"); 	
+
 
 		return true;
 
@@ -75,8 +81,24 @@ namespace Logic
 		
 	}
 
-	void CLifeDome::onTick(unsigned int msecs) {
+	/*void CLifeDome::onTick(unsigned int msecs) {
+		std::cout << "Ola ke ase " << std::endl;
+	}*/
 
+	void CLifeDome::onFixedTick(unsigned int msecs) {
+	
+		CGraphics* cGraph;
+		cGraph = _entity->getComponent<CGraphics>("CGraphics");
+		if (cGraph)
+		{
+			if (_scale < 10.0f)
+			{
+				_scale += 0.005f;
+			}
+			cGraph->changeScale(_scale);
+			std::cout << "posicion " << _entity->getPosition() << std::endl;
+			cGraph->setPosition(_entity->getPosition());
+		}
 	}
 
 	//________________________________________________________________________

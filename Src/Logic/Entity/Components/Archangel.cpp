@@ -130,12 +130,15 @@ namespace Logic {
 		Matrix4 transform = Matrix4::IDENTITY;
 		transform.setTrans(position);
 
-		CEntity *projectileEntity= CEntityFactory::getSingletonPtr()->createEntity(
+		CEntity *lifeDome = CEntityFactory::getSingletonPtr()->createEntity(
 			//CEntityFactory::getSingletonPtr()->getInfo("MagneticBullet"),
 			CEntityFactory::getSingletonPtr()->getInfo("LifeDome"),			
 			Logic::CServer::getSingletonPtr()->getMap(),
 			transform
 		);
+
+		lifeDome->activate();
+		lifeDome->start();
 	}
 
 	//__________________________________________________________________

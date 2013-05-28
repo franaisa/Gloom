@@ -184,13 +184,18 @@ namespace Logic
 	//onTick
 
 
-	void CGraphics::changeScale(Vector3 newScale){
-		_graphicsEntity->setScale(newScale);
+	void CGraphics::changeScale(float newScale){
+		_graphicsEntity->setScale(newScale);		
 	}//---------------------------------------------------------
 	//changeScale
 
 	void CGraphics::onDeactivate() {
 		setVisible(false);
+	}
+
+
+	void CGraphics::setPosition(Vector3 vPos){
+		_graphicsEntity->setPosition(vPos);
 	}
 
 } // namespace Logic
