@@ -117,6 +117,8 @@ namespace Logic {
 
 		void playerIsSideColliding(bool colliding, float force);
 
+		void playerIsFalling(bool falling, int direction = 0);
+
 		void landEffect(unsigned int msecs);
 
 		/*

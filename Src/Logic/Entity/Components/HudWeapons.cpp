@@ -50,7 +50,8 @@ namespace Logic {
 								 _playerIsWalking(false),
 								 _playerIsLanding(false),
 								 _loadingWeapon(false),
-								 _continouslyShooting(false) {
+								 _continouslyShooting(false),
+								 _playerIsFalling(false) {
 
 		// Valores de configuracion de la animacion de correr
 		_runAnim.currentHorizontalPos = Math::HALF_PI;
@@ -104,6 +105,14 @@ namespace Logic {
 		_rapidShootAnim.verticalSpeed = 0.025f;
 
 		_rapidShootAnim.offset = Vector3::ZERO;
+
+		// Valores de configuración de la animación de salto
+		_fallAnim.currentHorizontalPos = 0.0f;
+		_fallAnim.horizontalSpeed = 0.0002f;
+		_fallAnim.horizontalOffset = 0.2f;
+		_fallAnim.movementDir = 0;
+		
+		_fallAnim.offset = Vector3::ZERO;
 	}
 
 	//---------------------------------------------------------
@@ -266,8 +275,9 @@ namespace Logic {
 			landAnim(msecs);
 		else if(_playerIsWalking)
 			walkAnim(msecs);
-		//else if(_playerIsFalling)
-		//	fallingAnim(msecs);
+		else if(_playerIsFalling) {
+			fallAnim(msecs);
+		}
 		else
 			idleAnim(msecs);
 
@@ -292,8 +302,27 @@ namespace Logic {
 																	   _idleAnim.offset +
 																	   _shootAnim.offset +
 																	   _unstableLoadAnim.offset +
-																	   _rapidShootAnim.offset );
+																	   _rapidShootAnim.offset +
+																	   _fallAnim.offset );
 		_shootAnim.offset *= _shootAnim.shootRecoveryCoef;
+
+		if(!_playerIsFalling)
+			_fallAnim.offset *= 0.96f;
+	}
+
+	//---------------------------------------------------------
+
+	void CHudWeapons::fallAnim(unsigned int msecs) {
+		Matrix4 weaponTransform = _graphicsEntities[_currentWeapon].graphicsEntity->getTransform();
+		Math::yaw(Math::HALF_PI, weaponTransform);
+		Vector3 horizontal = Math::getDirection(weaponTransform);
+		Vector3 maxOffset = _fallAnim.horizontalOffset * _fallAnim.movementDir * horizontal;
+
+		horizontal *= _fallAnim.movementDir * _fallAnim.horizontalSpeed * msecs * Vector3(1.0f, 0.0f, 1.0f);
+		_fallAnim.offset += horizontal;
+		if(_fallAnim.offset.length() > _fallAnim.horizontalOffset) {
+			_fallAnim.offset = maxOffset;
+		}
 	}
 
 	//---------------------------------------------------------
@@ -416,6 +445,12 @@ namespace Logic {
 		_playerIsLanding = true;
 		_landAnim.force = hitForce * 0.2f;
 		_landAnim.recoverySpeed = Math::PI / estimatedLandingTime;
+	}
+
+	//---------------------------------------------------------
+
+	void CHudWeapons::playerIsFalling(bool falling, int direction) {
+		_fallAnim.movementDir = (_playerIsFalling = falling) ? direction : 0;
 	}
 
 	//---------------------------------------------------------
