@@ -1920,7 +1920,7 @@ Map = {
 	
 	ScreamerShield = {
 		type = "ScreamerShield",
-		model = "lifeDome.mesh",
+		model = "shieldCone.mesh",
 		msgList= "55,56",
 		physic_entity = "rigid",
 		physic_trigger = false,

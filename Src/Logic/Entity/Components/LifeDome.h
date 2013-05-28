@@ -15,6 +15,11 @@ Contiene la declaración del componente que controla la cúpula de la segunda habi
 
 #include "Logic/Entity/Component.h"
 
+namespace Logic {
+	class CShootShotGun;
+	class CPhysicDynamicEntity;
+}
+
 //declaración de la clase
 namespace Logic 
 {
@@ -33,7 +38,7 @@ namespace Logic
 		/**
 		Constructor por defecto; en la clase base no hace nada.
 		*/
-							CLifeDome			();
+		CLifeDome() : _scale(1.0f), IComponent() {}
 
 		/** Destructor. */
 		virtual				~CLifeDome			();
@@ -85,7 +90,16 @@ namespace Logic
 
 		virtual void onStart();
 
-		virtual void onTick(unsigned int msecs);
+
+		virtual void onFixedTick(unsigned int msecs);
+
+		//virtual void onTick(unsigned int msecs);
+
+
+		/*
+		Puntero al componente fisico de la bala, se tiene por optimizacion
+		*/
+		CPhysicDynamicEntity *_physicComponent;
 
 	private:
 
@@ -95,7 +109,10 @@ namespace Logic
 		// =======================================================================
 
 
+
 		float _capsuleRadius;
+
+		float	_scale;
 
 	};//class CLifeDome
 

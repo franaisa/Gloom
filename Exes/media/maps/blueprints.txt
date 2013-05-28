@@ -33,4 +33,4 @@ ScreamerShield CGraphics CPhysicDynamicEntity CScreamerShieldDamageNotifier
 MagneticBullet CMagneticBullet CPhysicDynamicEntity CGraphics
 FireBall CFireBallController CPhysicDynamicEntity CGraphics
 LaserBeam CGraphics
-LifeDome CLifeDome
+LifeDome CLifeDome CPhysicDynamicEntity CGraphics

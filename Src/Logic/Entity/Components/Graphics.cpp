@@ -184,8 +184,8 @@ namespace Logic
 	//onTick
 
 
-	void CGraphics::changeScale(Vector3 newScale){
-		_graphicsEntity->setScale(newScale);
+	void CGraphics::changeScale(float newScale){
+		_graphicsEntity->setScale(newScale);		
 	}//---------------------------------------------------------
 	//changeScale
 
