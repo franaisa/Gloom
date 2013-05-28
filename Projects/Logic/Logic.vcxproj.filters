@@ -571,7 +571,7 @@
     <ClCompile Include="..\..\Src\Logic\Entity\Components\LifeDome.cpp">
       <Filter>Entity\Components\Skills\Source</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Src\Logic\Entity\Components\AltShoot.cpp">
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\Weapon.cpp">
       <Filter>Entity\Components\Weapons\Source</Filter>
     </ClCompile>
   </ItemGroup>
@@ -1056,7 +1056,7 @@
     <ClInclude Include="..\..\Src\Logic\Entity\Components\LifeDome.h">
       <Filter>Entity\Components\Skills\Header</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Src\Logic\Entity\Components\AltShoot.h">
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\Weapon.h">
       <Filter>Entity\Components\Weapons\Header</Filter>
     </ClInclude>
   </ItemGroup>
