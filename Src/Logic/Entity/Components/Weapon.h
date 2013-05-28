@@ -1,19 +1,20 @@
 //---------------------------------------------------------------------------
-// AltShoot.h
+// Weapon.h
 //---------------------------------------------------------------------------
 
 /**
-@file AltShoot.h
+@file Weapon.h
 
 @author Antonio Jesus Narváez Corrales
 @author Francisco Aisa García
 @date Febrero, 2013
 */
 
-#ifndef __Logic_AltShoot_H
-#define __Logic_AltShoot_H
+#ifndef __Logic_Weapon_H
+#define __Logic_Weapon_H
 
 #include "Logic/Entity/Component.h"
+#include "WeaponType.h"
 
 #include <string>
 
@@ -22,18 +23,20 @@ namespace Logic {
 	/**
 	@ingroup logicGroup
 
+	IMPORTANTE: Decrementar la munición y emitir los sonidos
+	de disparo es responsabilidad del cliente.
 
 	@author Antonio Jesus Narváez Corrales
 	@author Francisco Aisa García
 	@date Febrero, 2013
 	*/
 
-	class CAltShoot : public IComponent {
+	class IWeapon : public IComponent {
 	public:
 
-		CAltShoot(const std::string& weaponName);
+		IWeapon(const std::string& weaponName);
 
-		virtual ~CAltShoot();
+		virtual ~IWeapon();
 
 		//__________________________________________________________________
 
@@ -54,76 +57,75 @@ namespace Logic {
 
 		virtual void stopSecondaryFire() { /* Por defecto nada */ }
 
+		void addAmmo(int weapon, int ammo, bool iAmCatch);
+
+		inline void resetAmmo();
+
+		// Pinta un decal dada una entidad y una posicion
+		void drawDecal(Logic::CEntity* pEntity, Vector3 vPos);
+
 	protected:
 
 		virtual void onTick(unsigned int msecs);
 
 		virtual void onAvailable();
 
+		void emitSound(const std::string &ruta, const std::string &sound, bool notIfPlay = false);
+
+		void decrementAmmo(unsigned int ammoSpent = 1);
+
 	private:
 
-		bool canUsePrimaryFire();
+		inline bool canUsePrimaryFire();
 
-		bool canUseSecondaryFire();
-		
+		inline bool canUseSecondaryFire();
+
+		inline void readMustAttributes(const Map::CEntity* entityInfo);
+
+		inline void readOptionalAttributes(const Map::CEntity* entityInfo);
+
+		//__________________________________________________________________
+
 		// Municion 
 
 		/** Cuanta munición puede llevar este arma como máximo. */
 		unsigned int _maxAmmo;
-		
 		/** Cuanta munición tenemos actualmente en este arma. */
 		unsigned int _currentAmmo;
 		
-		/** Cuantas balas se gastan por disparo primario. */
-		unsigned int _defaultAmmoSpentPerPrimaryShot;
-		
-		/** 
-		Cuantas balas se gastan como máximo al cargar hasta el límite el disparo
-		primario. Solo válido para armas toggle.
-		*/
-		unsigned int _maxAmmoSpentPerPrimaryShot;
+		unsigned int _primaryFireDamage;
+		unsigned int _secondaryFireDamage;
 
-		/** Tiempo de carga máximo para el disparo primario. */
-		float _primaryFireMaxLoadTime;
+		float _capsuleRadius;
+		float _shootHeight;
 		
+		/** Cuantas balas se gastan por disparo primario. */
+		unsigned int _ammoSpentPerPrimaryShot;
 		/** Cuantos disparos se hacen al activar el disparo primario. */
 		unsigned int _shotsPerPrimaryFire;
 
 		/** Cuantas balas se gastan por disparo secundario. */
-		unsigned int _defaultAmmoSpentPerSecondaryShot;
-
-		/** 
-		Cuantas balas se gastan como máximo al cargar hasta el límite el disparo
-		secundario. Solo válido para armas toggle.
-		*/
-		unsigned int _maxAmmoSpentPerSecondaryShot;
-
-		/** Tiempo de carga máximo para el disparo secundario. */
-		float _secondaryFireMaxLoadTime;
-
+		unsigned int _ammoSpentPerSecondaryShot;
 		/** Cuantas balas se gastan por disparo secundario. */
 		unsigned int _shotsPerSecondaryFire;
 
 
 		// Cooldowns
 
-		/** Cooldown del disparo primario. */
-		float _primaryFireCooldown;
-
-		/** Cooldown del disparo secundario */
-		float _secondaryFireCooldown;
+		unsigned int _primaryFireCooldown;
+		int _primaryFireTimer;
 
 
-		// Para saber si los disparos son toggle o no
+		unsigned int _secondaryFireCooldown;
+		int _secondaryFireTimer;
 
-		bool _primaryFireIsToggle;
+		WeaponType::Enum _weaponID;
 
-		bool _secondaryFireIsToggle;
-
+		// Nombre del arma
 		std::string _weaponName;
 
-	}; // class CAltShoot
+	}; // class IWeapon
 
 } // namespace Logic
 
-#endif // __Logic_AltShoot_H
+#endif // __Logic_Weapon_H
