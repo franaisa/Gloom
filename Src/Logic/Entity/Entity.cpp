@@ -440,10 +440,10 @@ namespace Logic {
 		 Ogre::Real pitchAngleSign;
  
 		 //Rotamos el Yaw de la entidad de acuerdo a los grados en radianes pasados como parámetro.
-		 rotate(Orientation::eYAW,yaw);
+		 rotate(Orientation::eYAW,Ogre::Radian(yaw));
  
 		 //Rotamos el Pitch de la entidad de acuerdo a los grados en radianes pasados como parámetro.
-		 rotate(Orientation::ePITCH,pitch);
+		 rotate(Orientation::ePITCH,Ogre::Radian(pitch));
 		
 		 // Ángulo de rotación sobre el eje X.
 		 pitchAngle = (2 * Ogre::Degree(Ogre::Math::ACos(_pitchOrientation.w)).valueDegrees());
@@ -466,7 +466,7 @@ namespace Logic {
 		setOrientation(_yawOrientation*_pitchOrientation*_rollOrientation);
 	}
 
-	void CEntity::rotate(int orientation, float rotation){
+	void CEntity::rotate(int orientation, Ogre::Radian rotation){
 		switch(orientation){
 			case Orientation::eYAW:{
 				Quaternion q(Ogre::Radian(rotation), Vector3::UNIT_Y); 

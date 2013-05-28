@@ -53,7 +53,7 @@ namespace Logic {
 		// Calculamos la nueva posicion de la vertical del item
 		_entity->setPosition( estimateItemFloatingPos(_entity->getPosition(), msecs) );
 		// Calculamos la nueva orientacion del item
-		_entity->rotate(Orientation::eYAW,estimateItemRotation(msecs));
+		_entity->rotate(Orientation::eYAW,Ogre::Radian(estimateItemRotation(msecs)));
 		
 	} // tick
 
