@@ -87,6 +87,7 @@ namespace Logic {
 		if(entityInfo->hasAttribute("position")) {
 			Vector3 position = entityInfo->getVector3Attribute("position");
 			_transform.setTrans(position);
+			_position=position;
 		}
 
 		// Si se establecen los 2 hay que hacerlo a la vez
@@ -368,11 +369,13 @@ namespace Logic {
 
 	void CEntity::setTransform(const Matrix4& transform) {
 		_transform = transform;
+		_position=transform.getTrans();
 	} // setTransform
 
 	//---------------------------------------------------------
 
 	void CEntity::setPosition(const Vector3 &position) {
+		_position=position;
 		_transform.setTrans(position);
 	} // setPosition
 
@@ -400,35 +403,38 @@ namespace Logic {
 	} // getOrientation
 	//---------------------------------------------------------
 
-	void CEntity::setYaw(float yaw) {
-		Math::setYaw(yaw,_transform);
-	} // setYaw
-
-	//---------------------------------------------------------
-
-	void CEntity::yaw(float yaw) {
-		Math::yaw(yaw,_transform);
-	} // yaw
-
-	//---------------------------------------------------------
-
-	void CEntity::setPitch(float pitch) {
-		Math::setPitch(pitch,_transform);
-	} // setPitch
-
-	//---------------------------------------------------------
-
-	void CEntity::pitch(float pitch) {
-		Math::pitch(pitch,_transform);
-	} // pitch
-
-	//---------------------------------------------------------
-
-	void CEntity::roll(float roll) {
-		Math::roll(roll, _transform);
+	void CEntity::setYaw(const Quaternion &yaw, bool reset){
+		 _yawOrientation=yaw;
+		if(reset){
+			_rollOrientation=Quaternion(1,0,0,0);
+			_pitchOrientation=Quaternion(1,0,0,0);
+		 }
+		setOrientation(getQuatOrientation());
 	}
+	// setYaw
+	//---------------------------------------------------------
 
-	void CEntity::setYawPitch(float yaw, float pitch) {
+	void CEntity::setPitch(const Quaternion &pitch, bool reset) {
+		_pitchOrientation=pitch;
+		if(reset){
+			_rollOrientation=Quaternion(1,0,0,0);
+			_yawOrientation=Quaternion(1,0,0,0);
+		 }
+		setOrientation(getQuatOrientation());
+	} // setPitch
+	//---------------------------------------------------------
+
+	void CEntity::setRoll(const Quaternion &roll, bool reset) {
+		_rollOrientation=roll;
+		if(reset){
+			_pitchOrientation=Quaternion(1,0,0,0);
+			_yawOrientation=Quaternion(1,0,0,0);
+		 }
+		setOrientation(getQuatOrientation());
+	} // setRoll
+	//---------------------------------------------------------
+
+	void CEntity::setYawPitchMouse(float yaw, float pitch) {
 
 		 Ogre::Real pitchAngle;
 		 Ogre::Real pitchAngleSign;

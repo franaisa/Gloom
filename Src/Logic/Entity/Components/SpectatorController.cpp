@@ -96,8 +96,7 @@ namespace Logic {
 	//________________________________________________________________________
 
 	void CSpectatorController::mouse(float XYturn[]) {
-		_entity->yaw(XYturn[0]);
-		_entity->pitch(XYturn[1]);
+		_entity->setYawPitchMouse(XYturn[0],XYturn[1]);
 	} // turn
 
 	//________________________________________________________________________

@@ -103,7 +103,7 @@ namespace Logic
 				_entity->activate();
 
 				//Establecemos la orientación adecuada segun la devolución del manager de spawn
-				_entity->setOrientation(Ogre::Quaternion(0,0,1,0));
+				_entity->setYaw(Ogre::Quaternion(0,0,1,0),true);
 				
 				// Si eres el server mandar un mensaje de spawn
 				std::shared_ptr<CMessagePlayerSpawn> spawnMsg = std::make_shared<CMessagePlayerSpawn>();

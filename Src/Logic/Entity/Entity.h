@@ -240,7 +240,7 @@ namespace Logic {
 
 		@return Posición de la entidad en el entorno.
 		*/
-		Vector3 getPosition() const { return _transform.getTrans(); }
+		Vector3 getPosition() const { return _position; }
 
 		//__________________________________________________________________
 
@@ -294,8 +294,7 @@ namespace Logic {
 		//__________________________________________________________________
 
 		/**
-		Establece la posición de la entidad. Avisa a los componentes
-		del cambio.
+		Establece la posición de la entidad.
 
 		@param position Nueva posición.
 		*/
@@ -305,8 +304,7 @@ namespace Logic {
 
 		
 		/**
-		Establece la orientación de la entidad. Avisa a los componentes
-		del cambio.
+		Establece la orientación de la entidad.
 
 		@param pos Nueva orientación.
 		*/
@@ -315,61 +313,52 @@ namespace Logic {
 		//__________________________________________________________________
 
 		/**
-		Establece el viraje de la entidad. Avisa a los componentes
-		del cambio.
+		Establece el Yaw de la entidad.
 
-		@param yaw Nuevo viraje.
+		@param yaw Orientacion nueva para el yaw.
+		@param reset Boolean para resetear las otras rotaciones.
 		*/
-		void setYaw(float yaw);
+		void setYaw(const Quaternion &yaw, bool reset);
 
 		//__________________________________________________________________
 
 		/**
-		Vira la entidad. Avisa a los componentes del cambio.
+		Establece el Pitch de la entidad.
 
-		@param yaw Viraje a aplicar.
+		@param pitch Orientacion nueva para el pitch.
+		@param reset Boolean para resetear las otras rotaciones.
 		*/
-		void yaw(float yaw);
+		void setPitch(const Quaternion &pitch, bool reset);
 
 		//__________________________________________________________________
 
 		/**
-		Establece el subviraje de la entidad. Avisa a los componentes
-		del cambio.
+		Establece el Roll de la entidad.
 
-		@param yaw Nuevo viraje.
+		@param roll Orientacion nueva para el roll.
+		@param reset Boolean para resetear las otras rotaciones.
 		*/
-		void setPitch(float pitch);
+		void setRoll(const Quaternion &roll, bool reset);
 
 		//__________________________________________________________________
 
 		/**
-		Gira verticalmente la entidad. Avisa a los componentes del cambio.
-
-		@param pitch subviraje a aplicar.
-		*/
-		void pitch(float pitch);
-
-		//__________________________________________________________________
-
-		/**
-		Establece el roll de la entidad. Avisa a los componentes del cambio.
-
-		@param roll Grado de inclinación para el roll.
-		*/
-		void roll(float roll);
-
-
-		//__________________________________________________________________
-
-		/**
-		Establece el yaw y el pitch de la entidad. Avisa a los componentes del cambio.
+		Establece el yaw y el pitch de la entidad, rotando la entidad tanto en
+		pitch como en yaw los grados pasados como parámetro y limitando el pitch a +90/-90 grados.
 
 		@param yaw Grado de inclinación para el yaw.
 		@param pitch Grado de inclinación para el pitch.
 		*/
-		void CEntity::setYawPitch(float yaw, float pitch);
+		void CEntity::setYawPitchMouse(float yaw, float pitch);
 
+
+		/**
+		Metodo que permite elegir que eje rotar y cuantos grados hacerlo, la rotacion debe de estar en radianes.
+
+		@param orientation Eje que rotaremos.
+		@param rotation Grados en radianes que rotaremos.
+		*/
+		void rotate(int orientation, float rotation);
 
 		// =======================================================================
 		//                         MÉTODOS DE CONSULTA
@@ -577,9 +566,7 @@ namespace Logic {
 		@return Cierto si la inicialización ha sido satisfactoria.
 		*/
 		bool dynamicSpawn(CMap* map, Map::CEntity* entityInfo);
-
-
-		void rotate(int orientation, float rotation);
+		
 
 		// =======================================================================
 		//                         MIEMBROS PROTEGIDOS
