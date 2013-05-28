@@ -81,6 +81,9 @@ namespace Logic {
 			_respawnTime *= 1000; // Convertimos en milisegundos
 		}
 
+		if(entityInfo->hasAttribute("model"))
+			_model = entityInfo->getStringAttribute("model");
+
 		return true;
 
 	} // spawn

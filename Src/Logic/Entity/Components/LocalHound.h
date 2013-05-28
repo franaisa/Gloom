@@ -13,6 +13,7 @@ cámara de la entidad archangel.
 #define __Logic_LocalHound_H
 
 #include "Logic/Entity/Component.h"
+#include "Logic/Entity/Components/PlayerClass.h"
 
 // Predeclaración de clases para ahorrar tiempo de compilación
 namespace Graphics 
@@ -23,6 +24,10 @@ namespace Graphics
 //declaración de la clase
 namespace Logic 
 {
+	//forward declarations 
+	class CPhysicController;
+	class CAvatarController;
+
 	/**
 	Componente que se encarga del manejo gráfico del shadow a nivel de jugador
 	local, cambiando y creando los compositors adecuados para que la cámara
@@ -35,7 +40,7 @@ namespace Logic
 
 	*/
 
-	class CLocalHound: public IComponent
+	class CLocalHound: public CPlayerClass
 	{
 		DEC_FACTORY(CLocalHound);
 
@@ -44,7 +49,7 @@ namespace Logic
 		Constructor por defecto; inicializa los atributos a su valor por 
 		defecto.
 		*/
-		CLocalHound(): _scene(0) {}
+		CLocalHound(): _scene(0),CPlayerClass("hound") {}
 
 		/**
 		Destructor (virtual); Quita de la escena y destruye la entidad gráfica.
@@ -92,6 +97,16 @@ namespace Logic
 		@param message Mensaje a procesar.
 		*/
 		virtual void process(const std::shared_ptr<CMessage>& message);
+
+		// =======================================================================
+		//                  METODOS HEREDADOS DE CPlayerClass
+		// =======================================================================
+
+
+		/** Beserker, el personaje dispara más rápido y hace más daño. */
+		virtual void primarySkill();
+
+		virtual void secondarySkill(){}
 	protected:
 
 		/**
@@ -107,6 +122,8 @@ namespace Logic
 		*/
 		virtual void onTick(unsigned int msecs);
 
+		virtual void onFixedTick(unsigned int msecs);
+
 	private:
 
 		Graphics::CScene* _scene;
@@ -116,6 +133,24 @@ namespace Logic
 
 		int _timestamp;
 		float _offsetTimeSin;
+
+		/** Variable boolena para comprobar si se esta haciendo la primary skill */
+		bool _doingPrimarySkill;
+
+		float _maxDefaultVelocity;
+
+		float _bitetVelocity;
+
+		int _biteTimer;
+
+		float _biteDuration;
+
+		float _biteMaxVelocity;
+
+		bool charge;
+
+		CPhysicController* _physicController;
+		CAvatarController* _avatarController;
 		
 	};//class CLocalHound
 	REG_FACTORY(CLocalHound);

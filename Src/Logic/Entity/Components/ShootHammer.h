@@ -64,6 +64,8 @@ namespace Logic {
 
 		void resetEntityPulling();
 
+		float getHeight(){return _heightShoot;}
+
 	protected:
 
 		/**

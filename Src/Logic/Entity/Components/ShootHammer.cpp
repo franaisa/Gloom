@@ -29,8 +29,10 @@ Contiene la implementación del componente que representa al hammer.
 #include "Logic/Entity/Components/PhysicStaticEntity.h"
 
 #include "Logic/Messages/MessageControl.h"
+#include "Logic/Messages/MessageActivate.h"
 #include "Logic/Messages/MessageDamaged.h"
 #include "Logic/Messages/MessageAddForcePlayer.h"
+#include "Logic/GameNetMsgManager.h"
 
 #include "Graphics/Camera.h"
 
@@ -51,7 +53,7 @@ namespace Logic {
 		if(!CShootRaycast::spawn(entity,map,entityInfo)) return false;
 		
 		_currentAmmo = 1;
-		_distance = 10000;
+		_distance = 100;
 		return true;
 	}
 
@@ -83,7 +85,7 @@ namespace Logic {
 		
 		//cogemos la entidad estatica y la desactivamos
 		_elementPulled->deactivate();
-
+		CGameNetMsgManager::getSingletonPtr()->sendDeactivateEntity(_elementPulled->getEntityID());
 		//nos creamos una nueva entidad como la que hemos cogido pero dinamica,
 		//para ello cogemos la informacion basica de la entidad dinamica y la
 		//rellenamos con la información de la entidad que estamos creando
@@ -99,12 +101,17 @@ namespace Logic {
 		rewardaux <<  _elementPulled->getComponent<CSpawnItemManager>("CSpawnItemManager")->getReward();
 		reward = rewardaux.str();
 
-		info->setAttribute("model",_elementPulled->getComponent<CGraphics>("CGraphics")->getMeshName());
-		info->setAttribute("id", weapon);
+		//info->setAttribute("model",_elementPulled->getComponent<CGraphics>("CGraphics")->getMeshName());
+		info->setAttribute("weaponType", weapon);
 		info->setAttribute("reward", reward);
+		info->setAttribute("id", _elementPulled->getComponent<CSpawnItemManager>("CSpawnItemManager")->getId());
+		
+		Map::CEntity* clientEntityInfo = new Map::CEntity( info->getName() );
+		clientEntityInfo->setAttribute("model",_elementPulled->getComponent<CSpawnItemManager>("CSpawnItemManager")->getModel());
 
 		//creamos la entidad con la información obtenida
-		CEntity * dynamicItem = CEntityFactory::getSingletonPtr()->createEntity(info,
+		CEntity * dynamicItem = CEntityFactory::getSingletonPtr()->createCustomClientEntity(info,
+																				clientEntityInfo,
 																				Logic::CServer::getSingletonPtr()->getMap(),
 																				_elementPulled->getTransform());
 
@@ -159,9 +166,17 @@ namespace Logic {
 			return;
 		CEntityFactory::getSingletonPtr()->deferredDeleteEntity(_elementPulling, true);
 		_elementPulled->activate();
+		CGameNetMsgManager::getSingletonPtr()->sendActivateEntity(_elementPulled->getEntityID());
 	}
 
 	void CShootHammer::resetEntityPulling(){
+		_elementPulled->activate();
+		CGameNetMsgManager::getSingletonPtr()->sendActivateEntity(_elementPulled->getEntityID());
+		_elementPulled->getComponent<CSpawnItemManager>("CSpawnItemManager")->beginRespawn();
+		std::shared_ptr<CMessageActivate> deactivateMsg = std::make_shared<CMessageActivate>();
+		deactivateMsg->setActivated(false);
+		_elementPulled->emitMessage(deactivateMsg);
+
 		_elementPulling = NULL;
 
 		//vamos a decirle al spawnitem original que le han cogido, diciendole

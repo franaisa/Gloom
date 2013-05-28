@@ -91,7 +91,7 @@ namespace Physics {
 		// Crear descriptor del controller
 		PxCapsuleControllerDesc desc;
 		desc.position = PxExtendedVec3(pos.x, pos.y, pos.z);
-		desc.contactOffset = 1.0f;
+		desc.contactOffset = 0.5f;
 		desc.height = height;
 		desc.radius = radius;
 		desc.material = _physxSDK->createMaterial(0.5f, 0.5f, 0.1f); // En realidad sera getDefaultMaterial en el futuro
@@ -142,7 +142,7 @@ namespace Physics {
 
 		// Garantiza que los players no se solapen. Empuja las capsulas cuando se van a 
 		// solapar.
-		//_controllerManager->computeInteractions(msecs);
+		_controllerManager->computeInteractions(msecs);
 
 		// Movemos el character controller y retornamos un entero con los flags de colision (PxControllerFlag)
 		// Fijamos la distancia minima a la que parar el algoritmo de movimiento a 0.01f.
@@ -156,7 +156,7 @@ namespace Physics {
 
 	unsigned CCharacterController::move(const Vector3& movement, unsigned int customFilterMask, unsigned int msecs) {
 		PxVec3 disp = Vector3ToPxVec3(movement);
-		PxControllerFilters filters(_filterMask);
+		PxControllerFilters filters(customFilterMask);
 		return _controller->move(disp, 0.01f, msecs * 0.001f, filters, NULL);
 	}
 
