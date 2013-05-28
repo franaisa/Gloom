@@ -196,6 +196,8 @@ namespace Logic {
 			// Parar efecto de andar
 			_cameraFX->playerIsWalking(false);
 		}
+
+		_cameraFX->playerIsFalling(!_touchingGround, _displacementDir.x);
 	}
 
 	//________________________________________________________________________
