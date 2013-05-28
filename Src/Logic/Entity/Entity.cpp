@@ -482,13 +482,13 @@ namespace Logic {
 				break;
 			}
 			case Orientation::ePITCH:{
-				Quaternion q(Ogre::Degree(rotation*50), Vector3::UNIT_X); 
+				Quaternion q(Ogre::Radian(rotation), Vector3::UNIT_X); 
 				_pitchOrientation=_pitchOrientation*q;
 				break;
 			}
 			case Orientation::eROLL:{
 				//No la he probado
-				Quaternion q(Ogre::Degree(rotation*50), Vector3::UNIT_Z); 
+				Quaternion q(Ogre::Radian(rotation), Vector3::UNIT_Z); 
 				_rollOrientation=_rollOrientation*q;
 				break;
 			}
