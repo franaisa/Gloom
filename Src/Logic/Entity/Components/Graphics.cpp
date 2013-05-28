@@ -172,6 +172,7 @@ namespace Logic
 	//---------------------------------------------------------
 
 	void CGraphics::onActivate() {
+		setVisible(true);
 		_graphicsEntity->setTransform(_entity->getTransform());
 	}//---------------------------------------------------------
 	//onActivate
@@ -188,6 +189,9 @@ namespace Logic
 	}//---------------------------------------------------------
 	//changeScale
 
+	void CGraphics::onDeactivate() {
+		setVisible(false);
+	}
 
 } // namespace Logic
 

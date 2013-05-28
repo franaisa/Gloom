@@ -125,7 +125,7 @@ Map = {
 			
 			weaponshotGunName = "shotGun",
 			weaponshotGunModel = "shotGun.mesh",
-			weaponshotGunModelYaw = 3.16,
+			weaponshotGunModelYaw = 0.02,
 			weaponshotGunModelPitch = -0.03,
 			weaponshotGunOffset = {3.0,-4.5,-7.0},
 			weaponshotGunDamage = 9.0,
@@ -312,7 +312,7 @@ Map = {
 			
 			weaponshotGunName = "shotGun",
 			weaponshotGunModel = "shotGun.mesh",
-			weaponshotGunModelYaw = 3.16,
+			weaponshotGunModelYaw = 0.02,
 			weaponshotGunModelPitch = -0.03,
 			weaponshotGunOffset = {3.0,-4.5,-7.0},
 			weaponshotGunDamage = 9.0,
@@ -500,7 +500,7 @@ Map = {
 			
 			weaponshotGunName = "shotGun",
 			weaponshotGunModel = "shotGun.mesh",
-			weaponshotGunModelYaw = 3.16,
+			weaponshotGunModelYaw = 0.02,
 			weaponshotGunModelPitch = -0.03,
 			weaponshotGunOffset = {3.0,-4.5,-7.0},
 			weaponshotGunDamage = 9.0,
@@ -687,7 +687,7 @@ Map = {
 			
 			weaponshotGunName = "shotGun",
 			weaponshotGunModel = "shotGun.mesh",
-			weaponshotGunModelYaw = 3.16,
+			weaponshotGunModelYaw = 0.02,
 			weaponshotGunModelPitch = -0.03,
 			weaponshotGunOffset = {3.0,-4.5,-7.0},
 			weaponshotGunDamage = 9.0,
@@ -884,7 +884,7 @@ Map = {
 			
 			weaponshotGunName = "shotGun",
 			weaponshotGunModel = "shotGun.mesh",
-			weaponshotGunModelYaw = 3.16,
+			weaponshotGunModelYaw = 0.02,
 			weaponshotGunModelPitch = -0.03,
 			weaponshotGunOffset = {3.0,-4.5,-7.0},
 			weaponshotGunDamage = 9.0,
@@ -1072,7 +1072,7 @@ Map = {
 			
 			weaponshotGunName = "shotGun",
 			weaponshotGunModel = "shotGun.mesh",
-			weaponshotGunModelYaw = 3.16,
+			weaponshotGunModelYaw = 0.02,
 			weaponshotGunModelPitch = -0.03,
 			weaponshotGunOffset = {3.0,-4.5,-7.0},
 			weaponshotGunDamage = 9.0,
@@ -1260,7 +1260,7 @@ Map = {
 			
 			weaponshotGunName = "shotGun",
 			weaponshotGunModel = "shotGun.mesh",
-			weaponshotGunModelYaw = 3.16,
+			weaponshotGunModelYaw = 0.02,
 			weaponshotGunModelPitch = -0.03,
 			weaponshotGunOffset = {3.0,-4.5,-7.0},
 			weaponshotGunDamage = 9.0,
@@ -1456,7 +1456,7 @@ Map = {
 			
 			weaponshotGunName = "shotGun",
 			weaponshotGunModel = "shotGun.mesh",
-			weaponshotGunModelYaw = 3.16,
+			weaponshotGunModelYaw = 0.02,
 			weaponshotGunModelPitch = -0.03,
 			weaponshotGunOffset = {3.0,-4.5,-7.0},
 			weaponshotGunDamage = 9.0,
@@ -1598,7 +1598,7 @@ Map = {
 		physic_trigger = true,
 		physic_type = "kinematic",
 		physic_shape = "sphere",
-		physic_radius = 0.5,
+		physic_radius = 3,
 		physic_group = 6,
 		physic_mass = 10,
 		physic_group = 2,
@@ -1681,7 +1681,7 @@ Map = {
 			
 			weaponshotGunName = "shotGun",
 			weaponshotGunModel = "shotGun.mesh",
-			weaponshotGunModelYaw = 3.16,
+			weaponshotGunModelYaw = 0.02,
 			weaponshotGunModelPitch = -0.03,
 			weaponshotGunOffset = {3.0,-4.5,-7.0},
 			weaponshotGunDamage = 9.0,
@@ -1787,7 +1787,7 @@ Map = {
 	
 	FireBall = {
 		type = "FireBall",
-		model = "mine.mesh",
+		model = "FireBall.mesh",
 		msgList= "55,56",
 		physic_entity = "rigid",
 		physic_trigger = false,

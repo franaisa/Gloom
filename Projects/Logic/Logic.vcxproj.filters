@@ -555,13 +555,13 @@
     </ClCompile>
     <ClCompile Include="..\..\Src\Logic\Entity\Components\MovementSanpshot.cpp">
       <Filter>Entity\Components\Network\Source</Filter>
-	</ClCompile>
+    </ClCompile>
     <ClCompile Include="..\..\Src\Logic\Messages\MessageChangeGravity.cpp">
       <Filter>Messages\Source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Src\Logic\Messages\MessageParticleVisibility.cpp">
       <Filter>Messages\Source</Filter>
-	</ClCompile>
+    </ClCompile>
     <ClCompile Include="..\..\Src\Graphics\DecalUtility.cpp">
       <Filter>Entity\Components\Graphics\Decal\Source</Filter>
     </ClCompile>
@@ -570,6 +570,9 @@
     </ClCompile>
     <ClCompile Include="..\..\Src\Logic\Entity\Components\LifeDome.cpp">
       <Filter>Entity\Components\Skills\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\AltShoot.cpp">
+      <Filter>Entity\Components\Weapons\Source</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1037,13 +1040,13 @@
     </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Entity\Components\MovementSnapshot.h">
       <Filter>Entity\Components\Network\Header</Filter>
-	</ClInclude>
+    </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Messages\MessageChangeGravity.h">
       <Filter>Messages\Header</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Messages\MessageParticleVisibility.h">
       <Filter>Messages\Header</Filter>
-	</ClInclude>
+    </ClInclude>
     <ClInclude Include="..\..\Src\Graphics\DecalUtility.h">
       <Filter>Entity\Components\Graphics\Decal\Header</Filter>
     </ClInclude>
@@ -1052,6 +1055,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Entity\Components\LifeDome.h">
       <Filter>Entity\Components\Skills\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\AltShoot.h">
+      <Filter>Entity\Components\Weapons\Header</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
