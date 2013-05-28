@@ -68,15 +68,26 @@ namespace Logic {
 	//__________________________________________________________________
 
 	bool CPlayerClass::accept(const std::shared_ptr<CMessage>& message) {
-		Logic::TMessageType msgType = message->getMessageType();
-		
-		return msgType == Message::CONTROL;
+		// Solo nos interesan los mensajes de skills.
+		// Es importante que hagamos esto porque si no, el putToSleep
+		// puede convertirse en nocivo.
+		if(message->getMessageType() == Message::CONTROL) {
+			std::shared_ptr<CMessageControl> controlMsg = std::static_pointer_cast<CMessageControl>(message);
+			
+			ControlType type = controlMsg->getType();
+			
+			return type == Control::USE_PRIMARY_SKILL		||
+				   type == Control::USE_SECONDARY_SKILL		||
+				   type == Control::STOP_PRIMARY_SKILL		||
+				   type == Control::STOP_SECONDARY_SKILL;
+		}
+
+		return false;
 	} // accept
 
 	//__________________________________________________________________
 
 	void CPlayerClass::onStart() {
-
 		std::shared_ptr<CMessageChangeMaterial> materialMsg = std::make_shared<CMessageChangeMaterial>();
 		materialMsg->setMaterialName("original");
 		_entity->emitMessage(materialMsg);
