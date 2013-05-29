@@ -56,9 +56,9 @@ namespace Logic {
 
 		virtual void secondaryFire();
 
-		virtual void stopPrimaryFire(unsigned int elapsedTime);
+		virtual void stopPrimaryFire();
 
-		virtual void stopSecondaryFire(unsigned int elapsedTime);
+		virtual void stopSecondaryFire();
 
 	protected:
 

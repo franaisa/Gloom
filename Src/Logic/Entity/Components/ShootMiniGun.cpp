@@ -108,7 +108,7 @@ namespace Logic {
 			hudWeapon->continouosShooting(_bLeftClicked);*/
 
 		//std::cout << "fixed" << std::endl;
-		if (_primaryFireIsActive) 
+		if (_bLeftClicked) 
 		{
 			++_iContadorLeftClicked;
 			
@@ -143,16 +143,21 @@ namespace Logic {
 				_dispersion = _dispersionOriginal;
 			}
 
-			shoot();
+
 		}
 
 		if(_primaryFireTimer < _primaryFireCooldown) {
 			_primaryFireTimer += msecs;
 		}
-		else {
-			if(_pressThenShoot) {
+		else 
+		{
+			/*if(_pressThenShoot) {
 				//_primaryCanShoot=true;				
 				//primaryFire();
+			}*/
+			if (_bLeftClicked)
+			{
+				shoot();
 			}
 		}
 
@@ -190,12 +195,14 @@ namespace Logic {
 		_iRafagas = _contador / 10;
 		_acumulando = false;
 		_contador = 0;
+
+
 	}
 
 	//__________________________________________________________________
 
 
-	void CShootMiniGun::stopPrimaryFire(unsigned int elapsedTime) 
+	void CShootMiniGun::stopPrimaryFire() 
 	{
 		_pressThenShoot=false;
 		_bLeftClicked = false;
@@ -208,12 +215,14 @@ namespace Logic {
 		_entity->emitMessage(m);
 
 		_bMensajeDispMandado = false;
+
+		_bLeftClicked = false;
 	}
 	//__________________________________________________________________
 
 
 
-	void CShootMiniGun::stopSecondaryFire(unsigned int elapsedTime) 
+	void CShootMiniGun::stopSecondaryFire() 
 	{
 	
 	}
@@ -248,6 +257,8 @@ namespace Logic {
 			
 		// Dibujamos el rayo en ogre para poder depurar
 		//drawRaycast(ray);
+
+		decrementAmmo();
 
 		//Comprobación de si da al mundo
 		Physics::CRaycastHit hits2;
@@ -293,7 +304,7 @@ namespace Logic {
 
 	void CShootMiniGun::secondaryShoot(int iRafagas) 
 	{
-		//decrementAmmo(iRafagas);
+		decrementAmmo(iRafagas);
 
 		//Creación de sweephit para 
 		Physics::SphereGeometry sphere  = Physics::CGeometryFactory::getSingletonPtr()->createSphere(3.5);
