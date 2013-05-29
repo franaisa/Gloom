@@ -39,6 +39,7 @@ namespace Logic {
 
 	class CIronHellGoat : public IWeapon {
 		DEC_FACTORY(CIronHellGoat);
+
 	public:
 
 		/** Constructor por defecto. */
@@ -64,7 +65,11 @@ namespace Logic {
 
 		//__________________________________________________________________
 
-		virtual void secondaryFire() { /* No necesito hacer nada aunque redefino */ }
+		virtual void secondaryFire();
+
+		//__________________________________________________________________
+
+		virtual void stopSecondaryFire();
 
 		//__________________________________________________________________
 
@@ -130,4 +135,4 @@ namespace Logic {
 
 } // namespace Logic
 
-#endif // __Logic_Shoot_H
+#endif // __Logic_IronHellGoat_H
