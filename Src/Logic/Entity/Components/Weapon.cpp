@@ -46,6 +46,8 @@ namespace Logic {
 												 _elapsedTimeSinceSecondaryFire(0),
 												 _primaryFireIsActive(false),
 												 _secondaryFireIsActive(false),
+												 _primaryFireIsToggle(false),
+												 _secondaryFireIsToggle(false),
 												 _primaryFireCooldown(0),
 												 _secondaryFireCooldown(0),
 												 _primaryFireDamage(0),
@@ -110,7 +112,10 @@ namespace Logic {
 
 						for(int i = 0; i < _shotsPerPrimaryFire; ++i)
 							primaryFire();
-						
+
+						if(!_primaryFireIsToggle)
+							decrementAmmo(_ammoSpentPerPrimaryShot * _shotsPerPrimaryFire);
+
 						_primaryFireTimer = _primaryFireCooldown;
 					}
 					else if(_currentAmmo == 0) {
@@ -124,6 +129,9 @@ namespace Logic {
 
 						for(int i = 0; i < _shotsPerSecondaryFire; ++i)
 							secondaryFire();
+							
+						if(!_secondaryFireIsToggle)
+							decrementAmmo(_ammoSpentPerSecondaryShot * _shotsPerSecondaryFire);
 
 						_secondaryFireTimer = _secondaryFireCooldown;
 					}
