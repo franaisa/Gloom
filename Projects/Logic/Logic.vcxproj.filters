@@ -406,9 +406,6 @@
     <ClCompile Include="..\..\Src\Logic\Entity\Components\ShootRaycast.cpp">
       <Filter>Entity\Components\Weapons\Source</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Src\Logic\Entity\Components\ShootRocketLauncher.cpp">
-      <Filter>Entity\Components\Weapons\Source</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Src\Logic\Entity\Components\ShootShotGun.cpp">
       <Filter>Entity\Components\Weapons\Source</Filter>
     </ClCompile>
@@ -770,9 +767,6 @@
     </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Messages\MessageActivateScreamerShield.h">
       <Filter>Messages\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Logic\Entity\Components\ShootRocketLauncher.h">
-      <Filter>Entity\Components\Weapons\Header</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Entity\Components\ShootRaycast.h">
       <Filter>Entity\Components\Weapons\Header</Filter>

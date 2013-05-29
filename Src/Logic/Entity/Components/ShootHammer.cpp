@@ -50,31 +50,45 @@ namespace Logic {
 	//__________________________________________________________________
 	
 	bool CShootHammer::spawn(CEntity* entity, CMap *map, const Map::CEntity *entityInfo) {
-		if(!CShootRaycast::spawn(entity,map,entityInfo)) return false;
-		
-		_currentAmmo = 1;
-		_distance = 100;
+		if(!IWeapon::spawn(entity,map,entityInfo)) return false;
+
+		if( entityInfo->hasAttribute(_weaponName + "ShotsDistanceSecondaryFire") )
+			_shotsDistanceSecondaryFire = entityInfo->getFloatAttribute(_weaponName + "ShotsDistanceSecondaryFire");
+
 		return true;
 	}
 
-	//__________________________________________________________________
-
-
-	void CShootHammer::decrementAmmo() {
-		// Redefinimos el metodo para que no se haga nada ya que el hammer
-		// realmente no tiene municion
-	}// decrementAmmo
-	
 	//__________________________________________________________________
 
 	void CShootHammer::resetAmmo() {
 		//si yo soy el weapon
 		_currentAmmo = 1;
 	} // resetAmmo
-
 	//__________________________________________________________________
 
-	void CShootHammer::secondaryShoot() {
+
+	void CShootHammer::primaryFire() {
+	
+		Vector3 direction = Math::getDirection(_entity->getOrientation()); 
+
+		Vector3 origin = _entity->getPosition()+Vector3(0.0f,_heightShoot,0.0f);
+
+		Ray ray(origin, direction);
+			
+		Physics::CRaycastHit hits;
+		// Quizas seria mas correcto comprobar tb el world para que no se pueda dar a traves de las paredes.
+		if(Physics::CServer::getSingletonPtr()->raycastSingle(ray, _shotsDistance, hits,Physics::CollisionGroup::ePLAYER)){
+			std::shared_ptr<CMessageDamaged> m = std::make_shared<CMessageDamaged>();
+			m->setDamage(_primaryFireDamage);
+			m->setEnemy(_entity);
+			hits.entity->emitMessage(m);
+		}
+
+
+	} // primaryFire
+	//__________________________________________________________________
+
+	void CShootHammer::secondaryFire() {
 
 		//primero preguntamos si podemos atraer algun arma
 		_elementPulled = fireSecondary();
@@ -148,7 +162,7 @@ namespace Logic {
 		int nbHits = 0;
 		//drawRaycast(ray);
 		
-		bool valid = Physics::CServer::getSingletonPtr()->raycastSingle(ray, _distance, hit,Physics::CollisionGroup::eITEMS);
+		bool valid = Physics::CServer::getSingletonPtr()->raycastSingle(ray, _shotsDistanceSecondaryFire, hit,Physics::CollisionGroup::eITEMS);
 		
 		if(!valid)
 			return NULL;
@@ -160,7 +174,7 @@ namespace Logic {
 		return entity;
 	}
 
-	void CShootHammer::stopSecondaryShoot(){
+	void CShootHammer::stopSecondaryFire(unsigned int elapsedTime){
 		//si cuando hice click no cogi nada no puedo hacer nada aqui
 		if(!_elementPulling)
 			return;

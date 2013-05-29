@@ -23,7 +23,6 @@ Contiene la implementación del componente que gestiona las armas y que administr
 #include "ShootSniper.h"
 #include "ShootMiniGun.h"
 #include "ShootHammer.h"
-#include "ShootRocketLauncher.h"
 #include "IronHellGoat.h"
 
 #include "Logic/Messages/MessageChangeWeapon.h"

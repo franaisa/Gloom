@@ -194,7 +194,7 @@ namespace Logic {
 		// del radio de la cápsula + el radio de la bola + un pequeño offset
 		Matrix4 shootTransform = _entity->getTransform();
 		Vector3 shootPosition = shootTransform.getTrans() + ( Math::getDirection( _entity->getOrientation() ) * (_capsuleRadius + fireBallRadius + 0.5f) );
-		shootPosition.y += _shootHeight - fireBallRadius;
+		shootPosition.y += _heightShoot - fireBallRadius;
 		shootTransform.setTrans(shootPosition);
 
 		// Creamos la entidad
