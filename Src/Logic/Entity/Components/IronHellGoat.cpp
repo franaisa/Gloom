@@ -51,12 +51,11 @@ namespace Logic {
 		if( !IWeapon::spawn(entity, map, entityInfo) ) return false;
 
 		// Nos aseguramos de tener todos los atributos que necesitamos
-		assert( entityInfo->hasAttribute(_weaponName + "MaximumLoadingTime") );
 		assert( entityInfo->hasAttribute(_weaponName + "DefaultFireBallRadius") );
 		assert( entityInfo->hasAttribute(_weaponName + "DefaultFireBallSpeed" ) );
 		assert( entityInfo->hasAttribute(_weaponName + "DefaultFireBallExplotionRadius") );
 		assert( entityInfo->hasAttribute(_weaponName + "DefaultFireBallDamage") );
-		assert( entityInfo->hasAttribute(_weaponName + "MaxAmmoPerShot") );
+		assert( entityInfo->hasAttribute(_weaponName + "MaxAmmoSpentPerPrimaryShot") );
 		assert( entityInfo->hasAttribute(_weaponName + "MaxFireBallRadius") );
 		assert( entityInfo->hasAttribute(_weaponName + "MaxFireBallSpeed") );
 		assert( entityInfo->hasAttribute(_weaponName + "MaxFireBallExplotionRadius") );
@@ -64,10 +63,10 @@ namespace Logic {
 		assert( entityInfo->hasAttribute(_weaponName + "Audio") );
 
 		// Tiempo de carga del arma
-		_maxLoadingTime = entityInfo->getIntAttribute(_weaponName + "MaximumLoadingTime") * 1000.0f;
+		_maxLoadingTime = entityInfo->getIntAttribute(_weaponName + "PrimaryFireLoadTime") * 1000.0f;
 
 		// Ratio al que gastamos municion
-		_maxAmmoPerShot = entityInfo->getIntAttribute(_weaponName + "MaxAmmoPerShot");
+		_maxAmmoPerShot = entityInfo->getIntAttribute(_weaponName + "MaxAmmoSpentPerPrimaryShot");
 		_ammoSpentTimeStep = (float)_maxLoadingTime / (float)(_maxAmmoPerShot);
 		
 		// Valores de creación de la bola de fuego por defecto
