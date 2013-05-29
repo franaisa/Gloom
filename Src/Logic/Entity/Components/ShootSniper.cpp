@@ -34,104 +34,33 @@ namespace Logic {
 	//-------------------------------------------------------
 
 	bool CShootSniper::spawn(CEntity* entity, CMap *map, const Map::CEntity *entityInfo) {
-		if(!CShootRaycast::spawn(entity,map,entityInfo)) return false;
+		if(!IWeapon::spawn(entity,map,entityInfo)) return false;
 
-		std::stringstream aux;
-		aux << "weapon" << _nameWeapon;	////!!!! Aqui debes de poner el nombre del arma que leera en el map.txt
-		std::string weapon = aux.str();
+		if(entityInfo->hasAttribute(_weaponName+"MaxExpansiveDistance"))
+			_maxExpansiveDistance = entityInfo->getFloatAttribute(_weaponName+"MaxExpansiveDistance");
 
-		if(entityInfo->hasAttribute(weapon+"MaxExpansiveDistance"))
-			_maxExpansiveDistance = entityInfo->getFloatAttribute(weapon+"MaxExpansiveDistance");
-
-		if(entityInfo->hasAttribute(weapon+"SecondaryConsumeAmmo"))
-			_secondaryConsumeAmmo = entityInfo->getIntAttribute(weapon+"SecondaryConsumeAmmo");
+		if(entityInfo->hasAttribute(_weaponName+"AmmoSpentPerSecondaryShot"))
+			_secondaryConsumeAmmo = entityInfo->getIntAttribute(_weaponName+"AmmoSpentPerSecondaryShot");
 		
 		return true;
-	}
-
+	} // spawn
 	//__________________________________________________________________
 
-
-	void CShootSniper::primaryShoot(){
-		if(_primaryCanShoot && _currentAmmo > 0){
-			_primaryCanShoot = false;
-			_primaryCooldownTimer = 0;
-
-			decrementAmmo();
-
-			for(int i = 0; i < _numberShots; ++i) {
-				primaryFireWeapon();				
-			}
-
-			// @deprecated Temporal hasta que este bien implementado
-			CHudWeapons* hudWeapon = _entity->getComponent<CHudWeapons>("CHudWeapons");
-			if(hudWeapon != NULL)
-				hudWeapon->shootAnim(-1.5f);
-
-			//Sonido de disparo
-			emitSound(_audioShoot, "audioShoot");
-
-			//Mensaje de dispersion en mira
-			/*std::shared_ptr<CMessageHudDispersion> dispersionMsg = std::make_shared<CMessageHudDispersion>();
-			_entity->emitMessage(dispersionMsg);*/
-		}
-		else if(_currentAmmo == 0) {
-			// Ejecutar sonidos y animaciones de falta de balas
-			emitSound(_noAmmo, "noAmmo", true);
-		}
-
-	}//primaryShoot
-	//-------------------------------------------------------
-
-	void CShootSniper::secondaryShoot(){
-		
-		if(_secondaryCanShoot && _currentAmmo >= _secondaryConsumeAmmo){
-			_secondaryCanShoot = false;
-			_secondaryCooldownTimer = 0;
-
-			//Gasta varias balas(parametro a configurar por arquetipos)
-			for(int i=0;i<_secondaryConsumeAmmo;++i)
-				decrementAmmo();
-
-			for(int i = 0; i < _numberShots; ++i) {
-				secondaryFireWeapon();				
-			}
-			//Sonido de disparo
-			emitSound(_audioShoot, "audioShoot");
-
-			//Mensaje de dispersion en mira
-			/*std::shared_ptr<CMessageHudDispersion> dispersionMsg = std::make_shared<CMessageHudDispersion>();
-			_entity->emitMessage(dispersionMsg);*/
-		}
-		else if(_currentAmmo == 0) {
-			// Ejecutar sonidos y animaciones de falta de balas
-			emitSound(_noAmmo, "noAmmo", true);
-		}
-
-
-	}//secondaryShoot
-	//-------------------------------------------------------
-
-	void CShootSniper::primaryFireWeapon(){
+	void CShootSniper::primaryFire(){
 		//Direccion
 		Vector3 direction = Math::getDirection(_entity->getOrientation()); 
-		//Me dispongo a calcular la desviacion del arma, en el map.txt se pondra en grados de dispersion (0 => sin dispersion)
-		Ogre::Radian angle = Ogre::Radian( (  (((float)((rand()*clock()) % 100))/100.0f) * (_dispersion)) /100);
-		//Esto hace un random total, lo que significa, por ejemplo, que puede que todas las balas vayan hacia la derecha 
-		Vector3 dispersionDirection = direction.randomDeviant(angle);
-		dispersionDirection.normalise();
 
 		//Posicion de la entidad + altura de disparo(coincidente con la altura de la camara)
 		Vector3 origin = _entity->getPosition()+Vector3(0.0f,_heightShoot,0.0f);
 		// Creamos el ray desde el origen en la direccion del raton (desvio ya aplicado)
-		Ray ray(origin, dispersionDirection);
+		Ray ray(origin, direction);
 			
 		// Dibujamos el rayo en ogre para poder depurar
 		//drawRaycast(ray);
 
 		// Rayo lanzado por el servidor de físicas de acuerdo a la distancia de potencia del arma
 		std::vector<Physics::CRaycastHit> hits;
-		Physics::CServer::getSingletonPtr()->raycastMultiple(ray, _distance,hits,true,Physics::CollisionGroup::ePLAYER | Physics::CollisionGroup::eWORLD);
+		Physics::CServer::getSingletonPtr()->raycastMultiple(ray, _shotsDistance, hits,true,Physics::CollisionGroup::ePLAYER | Physics::CollisionGroup::eWORLD);
 
 		//Aplicamos daño si no somos nosotros mismos(se podria modificar la fisica para que no nos devuelva a nosotros)
 		//Y ademas no hemos tocado ya pared
@@ -157,33 +86,27 @@ namespace Logic {
 			}
 			//Sino mientras que no seamos nosotros mismos
 			if(hits[i].entity->getEntityID()!=_entity->getEntityID()){
-				triggerHitMessages(hits[i].entity);
+				triggerHitMessages(hits[i].entity, _primaryFireDamage);
 			}
 		}
 
 	}//primaryFireWeapon
 	//-------------------------------------------------------
 
-	void CShootSniper::secondaryFireWeapon(){
+	void CShootSniper::secondaryFire(){
 		//Direccion
 		Vector3 direction = Math::getDirection(_entity->getOrientation()); 
-		//Me dispongo a calcular la desviacion del arma, en el map.txt se pondra en grados de dispersion (0 => sin dispersion)
-		Ogre::Radian angle = Ogre::Radian( (  (((float)(rand() % 100))/100.0f) * (_dispersion)) /100);
-		//Esto hace un random total, lo que significa, por ejemplo, que puede que todas las balas vayan hacia la derecha 
-		Vector3 dispersionDirection = direction.randomDeviant(angle);
-		dispersionDirection.normalise();
-
 		//Posicion de la entidad + altura de disparo(coincidente con la altura de la camara)
 		Vector3 origin = _entity->getPosition()+Vector3(0.0f,_heightShoot,0.0f);
 		// Creamos el ray desde el origen en la direccion del raton (desvio ya aplicado)
-		Ray ray(origin, dispersionDirection);
+		Ray ray(origin, direction);
 			
 		// Dibujamos el rayo en ogre para poder depurar
 		//drawRaycast(ray);
 
 		// Rayo lanzado por el servidor de físicas de acuerdo a la distancia de potencia del arma
 		std::vector<Physics::CRaycastHit> hits;
-		Physics::CServer::getSingletonPtr()->raycastMultiple(ray, _distance,hits,true,Physics::CollisionGroup::ePLAYER | Physics::CollisionGroup::eWORLD);
+		Physics::CServer::getSingletonPtr()->raycastMultiple(ray, _shotsDistance, hits,true,Physics::CollisionGroup::ePLAYER | Physics::CollisionGroup::eWORLD);
 
 		//Cogemos lo primero tocado que no seamos nosotros mismos y vemos si a un rango X hay enemigos (no nosotros)
 		//Ojo en cooperativo tendremos que hacer distincion entre otros players aliados
@@ -206,9 +129,9 @@ namespace Logic {
 		if(entityHit!=NULL){
 			enemyToExpand=findEnemyToExpand(entityHit);
 			//Aplicamos daño a la entidad dada y a la más próxima (si la hay)
-			triggerHitMessages(entityHit);
+			triggerHitMessages(entityHit, _primaryFireDamage);
 			if(enemyToExpand!=NULL){
-				triggerHitMessages(enemyToExpand);
+				triggerHitMessages(enemyToExpand, _secondaryFireDamage);
 			}
 		}//if(entityHit!=NULL)
 
@@ -255,6 +178,15 @@ namespace Logic {
 	}//findEnemyToExpand
 	//-------------------------------------------------------
 
+	// Implementación por defecto de triggerHitMessages
+	void CShootSniper::triggerHitMessages(CEntity* entityHit, float damageFire) {
+		std::shared_ptr<CMessageDamaged> m = std::make_shared<CMessageDamaged>();
+		m->setDamage(damageFire);
+		m->setEnemy(_entity);
+		entityHit->emitMessage(m);
+
+	}// triggerHitMessager
+	//__________________________________________________________________
 
 } // namespace Logic
 

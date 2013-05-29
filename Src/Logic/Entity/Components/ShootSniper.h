@@ -43,19 +43,6 @@ namespace Logic {
 
 		virtual ~CShootSniper();
 
-		//__________________________________________________________________
-
-		
-		/**
-		Redefinimos porque la sniper tendrá un comportamiento diferente.
-		*/
-		virtual void primaryShoot();
-
-		/**
-		Redefinimos porque la sniper tendrá un comportamiento diferente.
-		*/
-		virtual void secondaryShoot();
-
 		// =======================================================================
 		//                    METODOS HEREDADOS DE ICOMPONENT
 		// =======================================================================
@@ -84,14 +71,14 @@ namespace Logic {
 		También aplicará el daño.
 
 		*/
-		void primaryFireWeapon();
+		virtual void primaryFire();
 
 
 		/**
 		Método que se encarga de realizar el disparo secundario del raycast por fisicas.
 		También aplicará el daño.
 		*/
-		void secondaryFireWeapon();
+		virtual void secondaryFire();
 
 
 		/**
@@ -101,6 +88,17 @@ namespace Logic {
 		@return Devuelve la entidad a la que hay que aplicar daño de expansión.
 		*/
 		CEntity* findEnemyToExpand(CEntity* entityHit);
+
+		/**
+		Método que se encarga de mandar los mensajes que correspondan a la entidad
+		que se ha golpeado en caso de hacer hit.
+
+		A pesar de que se trata de un método virtual puro, esta clase ofrece una
+		implementación por defecto que será útil para la mayoría de las subclases. 
+
+		@param entityHit puntero a la entidad que se ha dado (o NULL si no se ha colisionado con ninguna).
+		*/
+		void triggerHitMessages(CEntity* entityHit, float damageFire);
 
 	private:
 
