@@ -279,6 +279,7 @@ namespace Logic {
 			loadWeaponAnim(msecs);
 		else {
 			_unstableLoadAnim.currentVerticalPos *= 0.95f;
+			_unstableLoadAnim.currentNoise *= 0.95f;
 			_unstableLoadAnim.offset *= 0.95f;
 		}
 

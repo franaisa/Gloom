@@ -5,7 +5,7 @@ Contiene la implementacion del componente
 de disparo de la cabra.
 
 @see Logic::CIronHellGoat
-@see Logic::IWeapon
+@see Logic::CShootProjectile
 
 @author Francisco Aisa García
 @date Mayo, 2013
@@ -23,12 +23,14 @@ de disparo de la cabra.
 using namespace std;
 
 namespace Logic {
-	
+
 	IMP_FACTORY(CIronHellGoat);
 
 	//__________________________________________________________________
 
 	CIronHellGoat::CIronHellGoat() : IWeapon("ironHellGoat"),
+									 _primaryFireIsActive(false),
+									 _secondaryFireIsActive(false),
 									 _elapsedTime(0),
 									 _ammoSpentTimer(0),
 									 _currentSpentAmmo(0) {
@@ -51,11 +53,12 @@ namespace Logic {
 		if( !IWeapon::spawn(entity, map, entityInfo) ) return false;
 
 		// Nos aseguramos de tener todos los atributos que necesitamos
+		assert( entityInfo->hasAttribute(_weaponName + "MaximumLoadingTime") );
 		assert( entityInfo->hasAttribute(_weaponName + "DefaultFireBallRadius") );
 		assert( entityInfo->hasAttribute(_weaponName + "DefaultFireBallSpeed" ) );
 		assert( entityInfo->hasAttribute(_weaponName + "DefaultFireBallExplotionRadius") );
 		assert( entityInfo->hasAttribute(_weaponName + "DefaultFireBallDamage") );
-		assert( entityInfo->hasAttribute(_weaponName + "MaxAmmoSpentPerPrimaryShot") );
+		assert( entityInfo->hasAttribute(_weaponName + "MaxAmmoPerShot") );
 		assert( entityInfo->hasAttribute(_weaponName + "MaxFireBallRadius") );
 		assert( entityInfo->hasAttribute(_weaponName + "MaxFireBallSpeed") );
 		assert( entityInfo->hasAttribute(_weaponName + "MaxFireBallExplotionRadius") );
@@ -63,12 +66,12 @@ namespace Logic {
 		assert( entityInfo->hasAttribute(_weaponName + "Audio") );
 
 		// Tiempo de carga del arma
-		_maxLoadingTime = entityInfo->getIntAttribute(_weaponName + "PrimaryFireLoadTime") * 1000.0f;
+		_maxLoadingTime = entityInfo->getIntAttribute(_weaponName + "MaximumLoadingTime") * 1000.0f;
 
 		// Ratio al que gastamos municion
-		_maxAmmoPerShot = entityInfo->getIntAttribute(_weaponName + "MaxAmmoSpentPerPrimaryShot");
+		_maxAmmoPerShot = entityInfo->getIntAttribute(_weaponName + "MaxAmmoPerShot");
 		_ammoSpentTimeStep = (float)_maxLoadingTime / (float)(_maxAmmoPerShot);
-		
+
 		// Valores de creación de la bola de fuego por defecto
 		_defaultFireBallRadius = entityInfo->getFloatAttribute(_weaponName + "DefaultFireBallRadius");
 		_defaultFireBallSpeed = entityInfo->getFloatAttribute(_weaponName + "DefaultFireBallSpeed");
@@ -149,6 +152,7 @@ namespace Logic {
 	//__________________________________________________________________
 
 	void CIronHellGoat::primaryFire() {
+		_primaryFireIsActive = true;
 		decrementAmmo();
 		++_currentSpentAmmo;
 
@@ -156,12 +160,13 @@ namespace Logic {
 		CHudWeapons* hudWeapon = _entity->getComponent<CHudWeapons>("CHudWeapons");
 		if(hudWeapon != NULL)
 			hudWeapon->loadingWeapon(true);
-
 	}
 
 	//__________________________________________________________________
 
 	void CIronHellGoat::stopPrimaryFire() {
+		if(!_primaryFireIsActive) return;
+
 		_primaryFireIsActive = false;
 
 		// Obtenemos la información estandard asociada a la bola de fuego
@@ -211,7 +216,7 @@ namespace Logic {
 		// para que se invoque al metodo correspondiente cuando las bolas mueran
 		CFireBallController* fbController = fireBall->getComponent<CFireBallController>("CFireBallController");
 		fbController->setOwner(this);
-		
+
 		// Arrancamos la entidad
 		fireBall->activate();
 		fireBall->start();
@@ -221,7 +226,7 @@ namespace Logic {
 
 		// Me apunto la entidad devuelta por la factoria
 		_controllableFireBalls.insert(fbController);
-		
+
 		// Reseteamos el reloj
 		_currentSpentAmmo = _ammoSpentTimer = _elapsedTime = 0;
 
@@ -231,6 +236,18 @@ namespace Logic {
 			hudWeapon->loadingWeapon(false);
 			hudWeapon->shootAnim(-1.85f);
 		}
+	}
+
+	//__________________________________________________________________
+
+	void CIronHellGoat::secondaryFire() {
+		_secondaryFireIsActive = true;
+	}
+
+	//__________________________________________________________________
+
+	void CIronHellGoat::stopSecondaryFire() {
+		_secondaryFireIsActive = false;
 	}
 
 	//__________________________________________________________________
