@@ -146,6 +146,8 @@ namespace Logic {
 		bool _primaryFireIsToggle;
 		bool _secondaryFireIsToggle;
 
+		// Si el arma es toggle y su tiempo de carga es 0 entonces
+		// la municion baja por los intervalos dictados por el cooldown
 		unsigned int _primaryFireLoadTime;
 		unsigned int _secondaryFireLoadTime;
 

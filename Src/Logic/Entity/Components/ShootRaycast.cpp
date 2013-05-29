@@ -193,8 +193,7 @@ namespace Logic {
 
 		// Rayo lanzado por el servidor de físicas de acuerdo a la distancia de potencia del arma
 		std::vector<Physics::CRaycastHit> hits;
-		Physics::CServer::getSingletonPtr()->raycastMultiple(ray, _distance,hits, true,Physics::CollisionGroup::ePLAYER);
-
+		Physics::CServer::getSingletonPtr()->raycastMultiple(ray, _distance,hits, true, Physics::CollisionGroup::ePLAYER);
 
 		//Devolvemos lo primero tocado que no seamos nosotros mismos
 		CEntity* touched=NULL;
