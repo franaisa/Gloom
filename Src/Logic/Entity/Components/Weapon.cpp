@@ -308,9 +308,9 @@ namespace Logic {
 	void IWeapon::readOptionalAttributes(const Map::CEntity* entityInfo) {
 		// Cooldown, por defecto es 0
 		if( entityInfo->hasAttribute(_weaponName + "PrimaryFireCooldown") )
-			_defaultPrimaryFireCooldown =  _primaryFireCooldown = entityInfo->getIntAttribute(_weaponName + "PrimaryFireCooldown");
+			_defaultPrimaryFireCooldown =  _primaryFireCooldown = entityInfo->getFloatAttribute(_weaponName + "PrimaryFireCooldown")  * 1000;
 		if( entityInfo->hasAttribute(_weaponName + "SecondaryFireCooldown") )
-			_defaultSecondaryFireCooldown = _secondaryFireCooldown = entityInfo->getIntAttribute(_weaponName + "SecondaryFireCooldown");
+			_defaultSecondaryFireCooldown = _secondaryFireCooldown = entityInfo->getFloatAttribute(_weaponName + "SecondaryFireCooldown") * 1000;
 		
 		// Daño. No todos los modos de disparo tienen porque hacer daño. Por defecto es 0.
 		if( entityInfo->hasAttribute(_weaponName + "PrimaryFireDamage") )

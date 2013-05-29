@@ -73,6 +73,8 @@ namespace Logic {
 
 	void CShootShotGun::primaryFire(){
 		
+		decrementAmmo();
+
 		Vector3 direction = Math::getDirection(_entity->getOrientation());
 		Ogre::Radian angle = Ogre::Radian( (  (((float)(rand() % 100))*0.01f) * (_dispersionAngle)) *0.01f);
 		Vector3 dispersionDirection = direction.randomDeviant(angle);
