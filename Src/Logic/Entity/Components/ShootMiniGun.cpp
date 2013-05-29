@@ -57,8 +57,10 @@ namespace Logic {
 	}
 
 	//__________________________________________________________________
-
-	void CShootMiniGun::process(const std::shared_ptr<CMessage>& message) {
+	/*
+	void CShootMiniGun::process(const std::shared_ptr<CMessage>& message) 
+	{
+		/*
 		ControlType type = std::static_pointer_cast<CMessageControl>(message)->getType();
 
 		switch( message->getMessageType() ) {
@@ -93,8 +95,8 @@ namespace Logic {
 				
 				break;
 			}
-		}
-	} // process
+		}*/
+	//} // process
 
 	//__________________________________________________________________
 
@@ -140,6 +142,8 @@ namespace Logic {
 			else {
 				_dispersion = _dispersionOriginal;
 			}
+
+			shoot();
 		}
 
 		if(_primaryFireTimer < _primaryFireCooldown) {
@@ -148,7 +152,7 @@ namespace Logic {
 		else {
 			if(_pressThenShoot) {
 				//_primaryCanShoot=true;				
-				primaryFire();
+				//primaryFire();
 			}
 		}
 
@@ -183,7 +187,9 @@ namespace Logic {
 	
 	void CShootMiniGun::secondaryFire()
 	{
-		
+		_iRafagas = _contador / 10;
+		_acumulando = false;
+		_contador = 0;
 	}
 
 	//__________________________________________________________________
@@ -217,6 +223,7 @@ namespace Logic {
 	{
 		CEntity* entityHit = fireWeapon();
 		if(entityHit != NULL) {
+			std::cout << "dado" << std::endl;
 			triggerHitMessages(entityHit);
 		}
 	}
@@ -249,7 +256,6 @@ namespace Logic {
 		{
 			Vector3 pos = hits2.impact;
 			drawDecal(hits2.entity, hits2.impact);
-
 			
 			// Añado aqui las particulas de dado en la pared.
 			auto m = std::make_shared<CMessageCreateParticle>();
