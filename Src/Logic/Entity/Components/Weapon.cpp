@@ -312,13 +312,13 @@ namespace Logic {
 		assert( entityInfo->hasAttribute(_weaponName + "MaxAmmo") );
 		assert( entityInfo->hasAttribute(_weaponName + "ID") );
 		assert( entityInfo->hasAttribute("physic_radius") );
-		assert( entityInfo->hasAttribute("shootHeight") );
+		assert( entityInfo->hasAttribute("heightShoot") );
 
 		// Leemos los atributos obligatorios de arma
 		_weaponID = (WeaponType::Enum)entityInfo->getIntAttribute(_weaponName + "ID");
 		_maxAmmo = entityInfo->getIntAttribute(_weaponName + "MaxAmmo");
 		_capsuleRadius = entityInfo->getFloatAttribute("physic_radius");
-		_shootHeight = entityInfo->getFloatAttribute("shootHeight");
+		_shootHeight = entityInfo->getFloatAttribute("heightShoot");
 	}
 	
 	//__________________________________________________________________
@@ -347,6 +347,9 @@ namespace Logic {
 			_shotsPerPrimaryFire = entityInfo->getIntAttribute(_weaponName + "ShotsPerPrimaryFire");
 		if( entityInfo->hasAttribute(_weaponName + "ShotsPerSecondaryFire") )
 			_shotsPerSecondaryFire = entityInfo->getIntAttribute(_weaponName + "ShotsPerSecondaryFire");
+
+		if( entityInfo->hasAttribute(_weaponName + "ShotsDistance") )
+			_shotsDistance = entityInfo->getFloatAttribute(_weaponName + "ShotsDistance");
 	}
 
 	//__________________________________________________________________

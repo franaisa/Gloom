@@ -120,7 +120,7 @@ namespace Logic {
 		/** Cuantas balas se gastan por disparo secundario. */
 		unsigned int _shotsPerSecondaryFire;
 
-
+		float _shotsDistance;
 		// Cooldowns
 		unsigned int _defaultPrimaryFireCooldown;
 		unsigned int _primaryFireCooldown;
