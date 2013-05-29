@@ -78,7 +78,7 @@ namespace Logic {
 		// Pinta un decal dada una entidad y una posicion
 		void drawDecal(Logic::CEntity* pEntity, Vector3 vPos);
 
-	private:
+
 
 		inline bool canUsePrimaryFire();
 
@@ -108,7 +108,7 @@ namespace Logic {
 		unsigned int _secondaryFireDamage;
 
 		float _capsuleRadius;
-		float _shootHeight;
+		float _heightShoot;
 		
 		/** Cuantas balas se gastan por disparo primario. */
 		unsigned int _ammoSpentPerPrimaryShot;

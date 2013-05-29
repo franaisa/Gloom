@@ -103,7 +103,7 @@ namespace Logic {
 			case Message::CONTROL: {
 				ControlType type = std::static_pointer_cast<CMessageControl>(message)->getType();
 
-				if(type == Control::RIGHT_CLICK) {
+				if(type == Control::LEFT_CLICK) {
 					if( canUsePrimaryFire() ) {
 						_primaryFireIsActive = true;
 						_elapsedTimeSincePrimaryFire = 0;
@@ -117,7 +117,7 @@ namespace Logic {
 						//emitSound(_noAmmo, "noAmmo", true);
 					}
 				}
-				else if(type == Control::LEFT_CLICK) {
+				else if(type == Control::RIGHT_CLICK) {
 					if( canUseSecondaryFire() ) {
 						_secondaryFireIsActive = true;
 						_elapsedTimeSinceSecondaryFire = 0;
@@ -318,7 +318,7 @@ namespace Logic {
 		_weaponID = (WeaponType::Enum)entityInfo->getIntAttribute(_weaponName + "ID");
 		_maxAmmo = entityInfo->getIntAttribute(_weaponName + "MaxAmmo");
 		_capsuleRadius = entityInfo->getFloatAttribute("physic_radius");
-		_shootHeight = entityInfo->getFloatAttribute("heightShoot");
+		_heightShoot = entityInfo->getFloatAttribute("heightShoot");
 	}
 	
 	//__________________________________________________________________
