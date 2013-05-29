@@ -70,6 +70,8 @@ namespace Input{
 			return false;
 		}
 
+		
+
 		return true;
 
 	} // Init
@@ -123,13 +125,12 @@ namespace Input{
 
 	//--------------------------------------------------------
 
-	void CInputManager::tick() 
+	void CInputManager::tick(unsigned int msecs) 
 	{
-		// Se necesita capturar todos los dispositivos.
 		if(_mouse) {
 			_mouse->capture();
 		}
-
+	
 		if(_keyboard) {
 			_keyboard->capture();
 		}

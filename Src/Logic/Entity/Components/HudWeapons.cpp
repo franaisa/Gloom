@@ -32,12 +32,6 @@ gráfica de la entidad.
 #include "Logic/Messages/MessageChangeWeaponGraphics.h"
 #include "Logic/Messages/MessageHudDebugData.h"
 
-// Ogre <- Esto esta deprecado, la logico no deberia saber nada de ogre
-#include "OgreEntity.h"
-#include "OgreSceneNode.h"
-#include <OgreOverlayManager.h>
-#include <OgreSceneManager.h>
-
 using namespace std;
 
 namespace Logic {

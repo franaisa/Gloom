@@ -95,7 +95,21 @@ namespace Logic {
 	//__________________________________________________________________
 
 	bool CShoot::accept(const std::shared_ptr<CMessage>& message) {
-		return message->getMessageType() == Message::CONTROL;
+		// Solo nos interesan los mensajes de disparo.
+		// Es importante que hagamos esto porque si no, el putToSleep
+		// puede convertirse en nocivo.
+		if(message->getMessageType() == Message::CONTROL) {
+			std::shared_ptr<CMessageControl> controlMsg = std::static_pointer_cast<CMessageControl>(message);
+			
+			ControlType type = controlMsg->getType();
+			
+			return type == Control::RIGHT_CLICK		||
+				   type == Control::LEFT_CLICK		||
+				   type == Control::UNLEFT_CLICK	||
+				   type == Control::UNRIGHT_CLICK;
+		}
+
+		return false;
 	} // accept
 	//__________________________________________________________________
 

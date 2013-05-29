@@ -551,7 +551,7 @@ namespace Input
 		Comprueba si ha habido eventos en los dispositivos de entrada.
 		Debe llamarse en cada vuelta de la aplicación.
 		*/
-		void tick();
+		void tick(unsigned int msecs);
 
 		/** 
 		Añade un oyente del teclado.
