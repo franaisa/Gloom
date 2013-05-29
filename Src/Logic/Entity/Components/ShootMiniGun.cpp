@@ -4,23 +4,49 @@
 Contiene la implementación del componente que gestiona las armas y que administra el disparo.
  
 @see Logic::CShootMiniGun
-@see Logic::CShootRaycast
+@see Logic::IWeapon
 */
 
 #include "ShootMiniGun.h"
 #include "HudWeapons.h"
 
+// Mapa
+#include "Map/MapEntity.h"
+
 #include "Logic/Messages/MessageControl.h"
 #include "Logic/Messages/MessageHudDispersion.h"
-
-
 
 namespace Logic {
 	IMP_FACTORY(CShootMiniGun);
 	
+	//__________________________________________________________________
+
 	CShootMiniGun::~CShootMiniGun() {
 		// Nada que hacer
 	}
+
+	//__________________________________________________________________
+
+	bool CShootMiniGun::spawn(CEntity* entity, CMap* map, const Map::CEntity* entityInfo) {
+		if( !IWeapon::spawn(entity, map, entityInfo) ) return false;
+
+		// Nos aseguramos de tener los atributos obligatorios
+		assert( entityInfo->hasAttribute(_weaponName + "Dispersion") );
+		assert( entityInfo->hasAttribute(_weaponName + "Distance") );
+
+		// Dispersión del arma
+		_dispersionOriginal = _dispersion = entityInfo->getFloatAttribute(_weaponName + "Dispersion");
+		// Distancia máxima de disparo
+		_distance = entityInfo->getFloatAttribute(_weaponName + "Distance");
+
+		// Atributos opcionales de audio
+		if( entityInfo->hasAttribute(_weaponName + "Audio") )
+			_audioShoot = entityInfo->getStringAttribute(_weaponName + "Audio");
+
+		return true;
+	}
+
+	//__________________________________________________________________
 
 	void CShootMiniGun::process(const std::shared_ptr<CMessage>& message) {
 		ControlType type = std::static_pointer_cast<CMessageControl>(message)->getType();
@@ -62,23 +88,20 @@ namespace Logic {
 
 	//__________________________________________________________________
 
-	void CShootMiniGun::onFixedTick(unsigned int msecs) 
-	{
+	void CShootMiniGun::onFixedTick(unsigned int msecs) {
 		// @deprecated Temporal hasta que este bien implementado
 		CHudWeapons* hudWeapon = _entity->getComponent<CHudWeapons>("CHudWeapons");
 		if(hudWeapon != NULL)
 			hudWeapon->continouosShooting(_bLeftClicked);
 
 		//std::cout << "fixed" << std::endl;
-		if (_bLeftClicked)
-		{
-			_iContadorLeftClicked++;
+		if (_bLeftClicked) {
+			++_iContadorLeftClicked;
 
 			//std::cout << "Fixed = " << _iContadorLeftClicked << " y envio = " << _bMensajeDispMandado << std::endl;
 			
 			//Modificar la dispersión
-			if ((_iContadorLeftClicked < 10) && (!_bMensajeDispMandado))
-			{
+			if ((_iContadorLeftClicked < 10) && (!_bMensajeDispMandado)) {
 				_dispersion = _dispersionOriginal + 15.0f;
 				//Enviamos el mensaje para que empiece a modificar la mirilla con la dispersión
 				std::shared_ptr<CMessageHudDispersion> m = std::make_shared<CMessageHudDispersion>();
@@ -98,43 +121,35 @@ namespace Logic {
 				de vibración de la minigun).
 				*/
 			}			
-			else if (_iContadorLeftClicked < 20)
-			{
+			else if (_iContadorLeftClicked < 20) {
 				_dispersion = _dispersionOriginal + 5.0f;
 			}
-			else
-			{
+			else {
 				_dispersion = _dispersionOriginal;
 			}
 		}
 
 
-		if(_primaryCooldownTimer < _primaryCooldown)
-		{
+		if(_primaryCooldownTimer < _primaryCooldown) {
 			_primaryCooldownTimer += msecs;
 		}
-		else
-		{
-			if(_pressThenShoot){
+		else {
+			if(_pressThenShoot) {
 				_primaryCanShoot=true;				
 				primaryShoot();
 			}
 		}
 
 		//Comprobamos la funcionalidad del botón derecho
-		if (_acumulando)
-		{
+		if (_acumulando) {
 			//Si tenemos el botón derecho pulsado, seguimos aumentando el contador
 			_contador++;
 		}
-		else
-		{
+		else {
 			//No tenemos pulsado el derecho, así que comprobamos si tenemos rafagas que lanzar
-			if (_iRafagas > 0)
-			{
+			if (_iRafagas > 0) {
 				//Controlo que no se tengan más ráfagas del máximo (en su caso lo seteo a este valor)
-				if (_iRafagas > _iMaxRafagas)
-				{
+				if (_iRafagas > _iMaxRafagas) {
 					_iRafagas = _iMaxRafagas;
 				}
 
