@@ -53,9 +53,9 @@ namespace Logic {
 		// @abstract
 		virtual void secondaryFire() = 0;
 
-		virtual void stopPrimaryFire(unsigned int elapsedTime) { /* Por defecto nada */ }
+		virtual void stopPrimaryFire() { /* Por defecto nada */ }
 
-		virtual void stopSecondaryFire(unsigned int elapsedTime) { /* Por defecto nada */ }
+		virtual void stopSecondaryFire() { /* Por defecto nada */ }
 
 		void addAmmo(int weapon, int ammo, bool iAmCatch);
 
@@ -89,8 +89,6 @@ namespace Logic {
 		inline void readMustAttributes(const Map::CEntity* entityInfo);
 
 		inline void readOptionalAttributes(const Map::CEntity* entityInfo);
-
-		inline void readToggleAttributes(const Map::CEntity* entityInfo);
 
 		//__________________________________________________________________
 
@@ -134,25 +132,6 @@ namespace Logic {
 
 		// Nombre del arma
 		std::string _weaponName;
-
-
-		// Para cosas toggle
-		unsigned int _elapsedTimeSincePrimaryFire; // timer
-		unsigned int _elapsedTimeSinceSecondaryFire; // timer
-
-		bool _primaryFireIsActive;
-		bool _secondaryFireIsActive;
-
-		bool _primaryFireIsToggle;
-		bool _secondaryFireIsToggle;
-
-		// Si el arma es toggle y su tiempo de carga es 0 entonces
-		// la municion baja por los intervalos dictados por el cooldown
-		unsigned int _primaryFireLoadTime;
-		unsigned int _secondaryFireLoadTime;
-
-		unsigned int _maxAmmoSpentPerPrimaryShot;
-		unsigned int _maxAmmoSpentPerSecondaryShot;
 	}; // class IWeapon
 
 } // namespace Logic

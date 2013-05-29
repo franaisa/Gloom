@@ -42,12 +42,6 @@ namespace Logic {
 												 _shotsPerPrimaryFire(1),
 												 _ammoSpentPerSecondaryShot(0), 
 												 _shotsPerSecondaryFire(1),
-											     _elapsedTimeSincePrimaryFire(0),
-												 _elapsedTimeSinceSecondaryFire(0),
-												 _primaryFireIsActive(false),
-												 _secondaryFireIsActive(false),
-												 _primaryFireIsToggle(false),
-												 _secondaryFireIsToggle(false),
 												 _primaryFireCooldown(0),
 												 _secondaryFireCooldown(0),
 												 _primaryFireDamage(0),
@@ -73,7 +67,6 @@ namespace Logic {
 
 		readMustAttributes(entityInfo);
 		readOptionalAttributes(entityInfo);
-		readToggleAttributes(entityInfo);
 
 		return true;
 	}
@@ -107,14 +100,8 @@ namespace Logic {
 
 				if(type == Control::LEFT_CLICK) {
 					if( canUsePrimaryFire() ) {
-						_primaryFireIsActive = true;
-						_elapsedTimeSincePrimaryFire = 0;
-
 						for(int i = 0; i < _shotsPerPrimaryFire; ++i)
 							primaryFire();
-
-						if(!_primaryFireIsToggle)
-							decrementAmmo(_ammoSpentPerPrimaryShot * _shotsPerPrimaryFire);
 
 						_primaryFireTimer = _primaryFireCooldown;
 					}
@@ -124,14 +111,8 @@ namespace Logic {
 				}
 				else if(type == Control::RIGHT_CLICK) {
 					if( canUseSecondaryFire() ) {
-						_secondaryFireIsActive = true;
-						_elapsedTimeSinceSecondaryFire = 0;
-
 						for(int i = 0; i < _shotsPerSecondaryFire; ++i)
 							secondaryFire();
-							
-						if(!_secondaryFireIsToggle)
-							decrementAmmo(_ammoSpentPerSecondaryShot * _shotsPerSecondaryFire);
 
 						_secondaryFireTimer = _secondaryFireCooldown;
 					}
@@ -140,12 +121,10 @@ namespace Logic {
 					}
 				}
 				else if(type == Control::UNLEFT_CLICK) {
-					_primaryFireIsActive = false;
-					stopPrimaryFire(_elapsedTimeSincePrimaryFire);
+					stopPrimaryFire();
 				}
 				else if(type == Control::UNRIGHT_CLICK) {
-					_primaryFireIsActive = false;
-					stopSecondaryFire(_elapsedTimeSinceSecondaryFire);
+					stopSecondaryFire();
 				}
 
 				break;
@@ -170,11 +149,6 @@ namespace Logic {
 			if(_secondaryFireTimer < 0)
 				_secondaryFireTimer = 0;
 		}
-
-		if(_primaryFireIsActive)
-			_elapsedTimeSincePrimaryFire += msecs;
-		if(_secondaryFireIsActive)
-			_elapsedTimeSinceSecondaryFire += msecs;
 	}
 
 	//__________________________________________________________________
@@ -358,38 +332,6 @@ namespace Logic {
 
 		if( entityInfo->hasAttribute(_weaponName + "ShotsDistance") )
 			_shotsDistance = entityInfo->getFloatAttribute(_weaponName + "ShotsDistance");
-	}
-
-	//__________________________________________________________________
-
-	void IWeapon::readToggleAttributes(const Map::CEntity* entityInfo) {
-		if( entityInfo->hasAttribute(_weaponName + "PrimaryFireIsToggle") ) {
-			if( _primaryFireIsToggle = entityInfo->getBoolAttribute(_weaponName + "PrimaryFireIsToggle") ) {
-				// Nos aseguramos de que existen los atributos toggle que necesitamos
-				assert( entityInfo->hasAttribute(_weaponName + "PrimaryFireLoadTime") );
-				assert( entityInfo->hasAttribute(_weaponName + "MaxAmmoSpentPerPrimaryShot") );
-
-				_primaryFireLoadTime = entityInfo->getIntAttribute(_weaponName + "PrimaryFireLoadTime");
-				_maxAmmoSpentPerPrimaryShot = entityInfo->getIntAttribute(_weaponName + "MaxAmmoSpentPerPrimaryShot");
-
-				// Calculamos los atributos necesarios para la actualizacion de la municion
-				// en modo toggle
-			}
-		}
-
-		if( entityInfo->hasAttribute(_weaponName + "SecondaryFireIsToggle") ) {
-			if( _secondaryFireIsToggle = entityInfo->getBoolAttribute(_weaponName + "SecondaryFireIsToggle") ) {
-				// Nos aseguramos de que existen los atributos toggle que necesitamos
-				assert( entityInfo->hasAttribute(_weaponName + "SecondaryFireLoadTime") );
-				assert( entityInfo->hasAttribute(_weaponName + "MaxAmmoSpentPerSecondaryShot") );
-
-				_secondaryFireLoadTime = entityInfo->getIntAttribute(_weaponName + "SecondaryFireLoadTime");
-				_maxAmmoSpentPerSecondaryShot = entityInfo->getIntAttribute(_weaponName + "MaxAmmoSpentPerSecondaryShot");
-
-				// Calculamos los atributos necesarios para la actualizacion de la municion
-				// en modo toggle
-			}
-		}
 	}
 
 } // namespace Logic

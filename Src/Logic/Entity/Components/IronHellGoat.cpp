@@ -161,9 +161,7 @@ namespace Logic {
 
 	//__________________________________________________________________
 
-	void CIronHellGoat::stopPrimaryFire(unsigned int elapsedTime) {
-		if(!_primaryFireIsActive) return;
-		
+	void CIronHellGoat::stopPrimaryFire() {
 		_primaryFireIsActive = false;
 
 		// Obtenemos la información estandard asociada a la bola de fuego
