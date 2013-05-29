@@ -174,7 +174,7 @@ namespace Graphics
 
 	//--------------------------------------------------------
 
-	void CEntity::setOrientation(const Matrix3 &orientation)
+	void CEntity::setOrientation(const Quaternion &orientation)
 	{
 		assert(_entityNode && "La entidad no ha sido cargada");
 		if(_entityNode)
