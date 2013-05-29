@@ -39,7 +39,6 @@ namespace Logic {
 
 	class CIronHellGoat : public IWeapon {
 		DEC_FACTORY(CIronHellGoat);
-
 	public:
 
 		/** Constructor por defecto. */
@@ -57,23 +56,15 @@ namespace Logic {
 
 		// El propio shoot deberia encargarse de llamar a lo que toque teniendo
 		// en cuenta la municion y las demas historias
-		virtual void primaryShoot();
+		virtual void primaryFire();
 
 		//__________________________________________________________________
 
-		virtual void stopPrimaryShoot();
+		virtual void stopPrimaryFire(unsigned int elapsedTime);
 
 		//__________________________________________________________________
 
-		virtual void secondaryShoot();
-
-		//__________________________________________________________________
-
-		virtual void stopSecondaryShoot();
-
-		//__________________________________________________________________
-
-		virtual void fireWeapon() { /* Esto esta deprecado */ }
+		virtual void secondaryFire() { /* No necesito hacer nada aunque redefino */ }
 
 		//__________________________________________________________________
 
@@ -113,9 +104,6 @@ namespace Logic {
 		std::string _shootAudio;
 
 		std::set<CFireBallController*> _controllableFireBalls;
-
-		bool _primaryFireIsActive;
-		bool _secondaryFireIsActive;
 
 		unsigned int _elapsedTime;
 		unsigned int _maxLoadingTime;

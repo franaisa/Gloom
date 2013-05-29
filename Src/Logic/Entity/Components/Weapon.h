@@ -59,7 +59,7 @@ namespace Logic {
 
 		void addAmmo(int weapon, int ammo, bool iAmCatch);
 
-		inline void resetAmmo();
+		virtual void resetAmmo();
 
 		void amplifyDamage(unsigned int percentage);
 
@@ -78,7 +78,7 @@ namespace Logic {
 		// Pinta un decal dada una entidad y una posicion
 		void drawDecal(Logic::CEntity* pEntity, Vector3 vPos);
 
-	private:
+
 
 		inline bool canUsePrimaryFire();
 
