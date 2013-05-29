@@ -409,7 +409,7 @@ namespace Logic {
 
 	Ogre::Quaternion CEntity::getQuatOrientation() const {
 		//Hay que formarla de acuerdo a los nodos
-		return _yawOrientation*_pitchOrientation*_rollOrientation;
+		return _orientation;
 	} // getOrientation
 	//---------------------------------------------------------
 
@@ -419,7 +419,8 @@ namespace Logic {
 			_rollOrientation=Quaternion(1,0,0,0);
 			_pitchOrientation=Quaternion(1,0,0,0);
 		 }
-		setOrientation(getQuatOrientation());
+		//Actualizamos la orientacion final
+		_orientation=_yawOrientation*_pitchOrientation*_rollOrientation;
 	}
 	// setYaw
 	//---------------------------------------------------------
@@ -430,7 +431,8 @@ namespace Logic {
 			_rollOrientation=Quaternion(1,0,0,0);
 			_yawOrientation=Quaternion(1,0,0,0);
 		 }
-		setOrientation(getQuatOrientation());
+		//Actualizamos la orientacion final
+		_orientation=_yawOrientation*_pitchOrientation*_rollOrientation;
 	} // setPitch
 	//---------------------------------------------------------
 
@@ -440,7 +442,8 @@ namespace Logic {
 			_pitchOrientation=Quaternion(1,0,0,0);
 			_yawOrientation=Quaternion(1,0,0,0);
 		 }
-		setOrientation(getQuatOrientation());
+		//Actualizamos la orientacion final
+		_orientation=_yawOrientation*_pitchOrientation*_rollOrientation;
 	} // setRoll
 	//---------------------------------------------------------
 
@@ -463,7 +466,8 @@ namespace Logic {
 				break;
 			}
 		}
-	
+		//Actualizamos la orientacion final
+		_orientation=_yawOrientation*_pitchOrientation*_rollOrientation;
 	}
 
 } // namespace Logic
