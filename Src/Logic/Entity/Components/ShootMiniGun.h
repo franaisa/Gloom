@@ -39,8 +39,7 @@ namespace Logic {
 
 		/** Constructor por defecto. */
 		CShootMiniGun() : IWeapon("miniGun"), _pressThenShoot(false), _contador(0), _acumulando(false),
-													_iRafagas(0), _bLeftClicked(false), _iContadorLeftClicked(0) 
-		{
+						  _iRafagas(0), _bLeftClicked(false), _iContadorLeftClicked(0) {
 			_iMaxRafagas = 20;
 			_bMensajeDispMandado = false;
 		}
@@ -51,12 +50,14 @@ namespace Logic {
 
 		//__________________________________________________________________
 
-		/**
-		Método virtual que procesa un mensaje.
+		virtual bool spawn(CEntity* entity, CMap* map, const Map::CEntity* entityInfo);
 
-		@param message Mensaje a procesar.
-		*/
+		// @deprecated No es necesario reimplementar esto
 		virtual void process(const std::shared_ptr<CMessage>& message);
+
+		virtual void primaryFire();
+
+		virtual void secondaryFire();
 
 	protected:
 
