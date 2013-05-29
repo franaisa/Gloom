@@ -59,10 +59,22 @@ namespace Logic {
 
 		virtual void secondaryFire();
 
+		virtual void stopPrimaryFire(unsigned int elapsedTime);
+
+		virtual void stopSecondaryFire(unsigned int elapsedTime);
+
 	protected:
 
-
 		virtual void onFixedTick(unsigned int msecs);
+
+		//Método que efectua el disparo
+		void		 shoot				();
+
+		CEntity*	 fireWeapon			();
+
+		void		 triggerHitMessages	(CEntity* entityHit);
+
+		void		 secondaryShoot		(int iRafagas);
 
 	private:
 
@@ -108,6 +120,14 @@ namespace Logic {
 		*/
 		int		_iMaxRafagas;
 
+		/** Dispersión del arma. */
+		float _dispersion;
+
+		/** Dispersión original del arma. Variable auxiliar para guardar la referencia leída del mapa.*/
+		float _dispersionOriginal;
+
+		/** Distancia de alcance del arma. */
+		float _distance;
 
 	}; // class CShootMiniGun
 
