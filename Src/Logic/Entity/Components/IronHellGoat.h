@@ -60,7 +60,7 @@ namespace Logic {
 
 		//__________________________________________________________________
 
-		virtual void stopPrimaryFire(unsigned int elapsedTime);
+		virtual void stopPrimaryFire();
 
 		//__________________________________________________________________
 
@@ -104,6 +104,9 @@ namespace Logic {
 		std::string _shootAudio;
 
 		std::set<CFireBallController*> _controllableFireBalls;
+
+		bool _primaryFireIsActive;
+		bool _secondaryFireIsActive;
 
 		unsigned int _elapsedTime;
 		unsigned int _maxLoadingTime;
