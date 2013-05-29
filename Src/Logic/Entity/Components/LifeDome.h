@@ -16,7 +16,7 @@ Contiene la declaración del componente que controla la cúpula de la segunda habi
 #include "Logic/Entity/Component.h"
 
 namespace Logic {
-	class CShootShotGun;
+	class CArchangel;
 	class CPhysicDynamicEntity;
 }
 
@@ -86,15 +86,18 @@ namespace Logic
 		virtual void onActivate();
 
 
+		void				setOwner			(Logic::CArchangel *owner);
+
+
+
 	protected:
 
 		virtual void onStart();
 
-
 		virtual void onFixedTick(unsigned int msecs);
 
-		//virtual void onTick(unsigned int msecs);
-
+		//Función de cuando se tocan el lifeDome
+		void			lifeDomeTouched		();
 
 		/*
 		Puntero al componente fisico de la bala, se tiene por optimizacion
@@ -108,11 +111,12 @@ namespace Logic
 		//                          MIEMBROS PRIVADOS
 		// =======================================================================
 
+		CArchangel*		_owner;		
+
+		float			_capsuleRadius;
 
 
-		float _capsuleRadius;
-
-		float	_scale;
+		float			_scale;
 
 	};//class CLifeDome
 

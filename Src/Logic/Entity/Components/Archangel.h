@@ -93,6 +93,10 @@ namespace Logic {
 		/** El personaje cura a los aliados que tiene en un radio. */
 		virtual void secondarySkill();
 
+		
+		void	destroyLifeDome();
+
+
 	protected:
 
 		/**
@@ -124,6 +128,19 @@ namespace Logic {
 		Nombre del material original de la entidad
 		*/
 		std::string _materialName;
+
+		/** Tiempo que dura llevando la cúpula de vida */
+		float _lifeDomeDuration;
+
+		/** Timer que controla la cúpula de vida. */
+		float _lifeDomeTimer;
+
+		/** Variable boolena para comprobar si se esta haciendo la primary skill */
+		bool _doingSecondarySkill;
+
+
+		/** Cúpula de vida */
+		CEntity*	_lifeDome;
 
 	}; // class CArchangel
 
