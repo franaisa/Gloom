@@ -75,6 +75,8 @@ namespace Logic {
 
 	private:
 
+		bool _primaryFireIsActive;
+
 		/**
 		Namespace para los tipos de mensajes de control posibles.
 		*/
