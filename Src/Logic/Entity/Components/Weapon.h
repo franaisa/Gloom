@@ -59,7 +59,7 @@ namespace Logic {
 
 		void addAmmo(int weapon, int ammo, bool iAmCatch);
 
-		inline void resetAmmo();
+		virtual void resetAmmo();
 
 		void amplifyDamage(unsigned int percentage);
 
