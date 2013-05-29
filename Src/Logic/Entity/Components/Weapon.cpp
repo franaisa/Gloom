@@ -49,7 +49,11 @@ namespace Logic {
 												 _primaryFireCooldown(0),
 												 _secondaryFireCooldown(0),
 												 _primaryFireDamage(0),
-												 _secondaryFireDamage(0) {
+												 _secondaryFireDamage(0),
+												 _defaultPrimaryFireDamage(0),
+												 _defaultSecondaryFireDamage(0),
+												 _defaultPrimaryFireCooldown(0), 
+												 _defaultSecondaryFireCooldown(0) {
 
 		// Nada que inicializar
 	}
@@ -238,6 +242,36 @@ namespace Logic {
 
 	//__________________________________________________________________
 
+	void IWeapon::amplifyDamage(unsigned int percentage) {
+		// Si es 0 significa que hay que restaurar al que habia por defecto
+		if(percentage == 0) {
+			_primaryFireDamage = _defaultPrimaryFireDamage;
+			_secondaryFireDamage = _defaultSecondaryFireDamage;
+		}
+		// Sino aplicamos el porcentaje pasado por parámetro
+		else {
+			_primaryFireDamage += percentage * _primaryFireDamage * 0.01f;
+			_secondaryFireDamage += percentage * _secondaryFireDamage * 0.01f;
+		}
+	}
+
+	//__________________________________________________________________
+
+	void IWeapon::reduceCooldown(unsigned int percentage) {
+		// Si es 0 significa que hay que restaurar al que habia por defecto
+		if(percentage == 0) {
+			_primaryFireCooldown = _defaultPrimaryFireCooldown;
+			_secondaryFireCooldown = _defaultSecondaryFireCooldown;
+		}
+		// Sino aplicamos el porcentaje pasado por parámetro
+		else {
+			_primaryFireCooldown -= percentage * _primaryFireCooldown * 0.01f;
+			_secondaryFireCooldown -= percentage * _secondaryFireCooldown * 0.01f;
+		}
+	}
+
+	//__________________________________________________________________
+
 	void IWeapon::drawDecal(Logic::CEntity* pEntity, Vector3 vPos) {
 		OgreDecal::OgreMesh worldMesh;
  
@@ -292,15 +326,15 @@ namespace Logic {
 	void IWeapon::readOptionalAttributes(const Map::CEntity* entityInfo) {
 		// Cooldown, por defecto es 0
 		if( entityInfo->hasAttribute(_weaponName + "PrimaryFireCooldown") )
-			_primaryFireCooldown = entityInfo->getIntAttribute(_weaponName + "PrimaryFireCooldown");
+			_defaultPrimaryFireCooldown =  _primaryFireCooldown = entityInfo->getIntAttribute(_weaponName + "PrimaryFireCooldown");
 		if( entityInfo->hasAttribute(_weaponName + "SecondaryFireCooldown") )
-			_secondaryFireCooldown = entityInfo->getIntAttribute(_weaponName + "SecondaryFireCooldown");
+			_defaultSecondaryFireCooldown = _secondaryFireCooldown = entityInfo->getIntAttribute(_weaponName + "SecondaryFireCooldown");
 		
 		// Daño. No todos los modos de disparo tienen porque hacer daño. Por defecto es 0.
 		if( entityInfo->hasAttribute(_weaponName + "PrimaryFireDamage") )
-			_primaryFireDamage = entityInfo->getIntAttribute(_weaponName + "PrimaryFireDamage");
+			_defaultPrimaryFireDamage = _primaryFireDamage = entityInfo->getIntAttribute(_weaponName + "PrimaryFireDamage");
 		if( entityInfo->hasAttribute(_weaponName + "SecondaryFireDamage") )
-			_secondaryFireDamage = entityInfo->getIntAttribute(_weaponName + "SecondaryFireDamage");
+			_defaultSecondaryFireDamage = _secondaryFireDamage = entityInfo->getIntAttribute(_weaponName + "SecondaryFireDamage");
 
 		// Munición por disparo
 		if( entityInfo->hasAttribute(_weaponName + "AmmoSpentPerPrimaryShot") )

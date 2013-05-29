@@ -8,7 +8,7 @@
 
 // Predeclaración de clases para ahorrar tiempo de compilación
 namespace Logic {
-	class CShoot;
+	class IWeapon;
 }
 
 //declaración de la clase
@@ -28,11 +28,8 @@ namespace Logic
 		/**
 		Constructor por defecto; en la clase base no hace nada.
 		*/
-
 		CWeaponsManager();
 		
-
-	
 		/**
 		Inicialización del componente usando la descripción de la entidad que hay en 
 		el fichero de mapa.
@@ -92,7 +89,7 @@ namespace Logic
 		*/
 		int _currentWeapon;
 
-		std::vector< std::pair<bool, CShoot*> > _weaponry;
+		std::vector< std::pair<bool, IWeapon*> > _weaponry;
 
 	}; // class CShoot
 

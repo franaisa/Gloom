@@ -14,7 +14,7 @@ Contiene la declaración del componente que implementa el arma sniper.
 #ifndef __Logic_ShootSniper_H
 #define __Logic_ShootSniper_H
 
-#include "Logic/Entity/Components/ShootRaycast.h"
+#include "Logic/Entity/Components/Weapon.h"
 #include "Physics/RaycastHit.h"
 
 namespace Logic {
@@ -33,13 +33,13 @@ namespace Logic {
 	que la sniper tenga su propio componente y la minigun funcione como tal.
 	*/
 
-	class CShootSniper : public CShootRaycast {
+	class CShootSniper : public IWeapon {
 		DEC_FACTORY(CShootSniper);
 
 	public:
 
 		/** Constructor por defecto. */
-		CShootSniper() : CShootRaycast("sniper") {}
+		CShootSniper() : IWeapon("sniper") {}
 
 		virtual ~CShootSniper();
 

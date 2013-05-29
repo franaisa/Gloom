@@ -14,7 +14,7 @@ Contiene la declaración del componente que implementa la escopeta.
 #ifndef __Logic_ShootShotGun_H
 #define __Logic_ShootShotGun_H
 
-#include "Logic/Entity/Components/ShootProjectile.h"
+#include "Logic/Entity/Components/Weapon.h"
 #include <vector>
 
 namespace Logic {
@@ -32,12 +32,12 @@ namespace Logic {
 	@date Febrero, 2013
 	*/
 
-	class CShootShotGun : public CShootProjectile {
+	class CShootShotGun : public IWeapon {
 		DEC_FACTORY(CShootShotGun);
 	public:
 
 		/** Constructor por defecto. */
-		CShootShotGun() : CShootProjectile("shotGun"), _dispersionAngle(0) {
+		CShootShotGun() : IWeapon("shotGun"), _dispersionAngle(0) {
 			
 		}
 

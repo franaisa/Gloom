@@ -61,8 +61,9 @@ namespace Logic {
 
 		inline void resetAmmo();
 
-		// Pinta un decal dada una entidad y una posicion
-		void drawDecal(Logic::CEntity* pEntity, Vector3 vPos);
+		void amplifyDamage(unsigned int percentage);
+
+		void reduceCooldown(unsigned int percentage);
 
 	protected:
 
@@ -73,6 +74,9 @@ namespace Logic {
 		void emitSound(const std::string &ruta, const std::string &sound, bool notIfPlay = false);
 
 		void decrementAmmo(unsigned int ammoSpent = 1);
+
+		// Pinta un decal dada una entidad y una posicion
+		void drawDecal(Logic::CEntity* pEntity, Vector3 vPos);
 
 	private:
 
@@ -97,6 +101,9 @@ namespace Logic {
 		/** Cuanta munición tenemos actualmente en este arma. */
 		unsigned int _currentAmmo;
 		
+		unsigned int _defaultPrimaryFireDamage;
+		unsigned int _defaultSecondaryFireDamage;
+
 		unsigned int _primaryFireDamage;
 		unsigned int _secondaryFireDamage;
 
@@ -115,9 +122,11 @@ namespace Logic {
 
 
 		// Cooldowns
+		unsigned int _defaultPrimaryFireCooldown;
 		unsigned int _primaryFireCooldown;
 		int _primaryFireTimer;
 
+		unsigned int _defaultSecondaryFireCooldown;
 		unsigned int _secondaryFireCooldown;
 		int _secondaryFireTimer;
 

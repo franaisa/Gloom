@@ -14,7 +14,7 @@ Contiene la declaración del componente que implementa el hammer.
 #ifndef __Logic_ShootHammer_H
 #define __Logic_ShootHammer_H
 
-#include "Logic/Entity/Components/ShootRaycast.h"
+#include "Logic/Entity/Components/Weapon.h"
 
 namespace Logic {
 	
@@ -30,13 +30,13 @@ namespace Logic {
 	@date Febrero, 2013
 	*/
 
-	class CShootHammer : public CShootRaycast {
+	class CShootHammer : public IWeapon {
 		DEC_FACTORY(CShootHammer);
 
 	public:
 
 		/** Constructor por defecto. */
-		CShootHammer() : CShootRaycast("hammer"), _elementPulling(0), _elementPulled(0) { }
+		CShootHammer() : IWeapon("hammer"), _elementPulling(0), _elementPulled(0) { }
 
 		//__________________________________________________________________
 

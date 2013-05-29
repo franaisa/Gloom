@@ -9,7 +9,7 @@ Contiene la declaración de la cabecera del componente
 de disparo de la cabra.
 
 @see Logic::CIronHellGoat
-@see Logic::CShootProjectile
+@see Logic::IWeapon
 
 @author Francisco Aisa García
 @date Mayo, 2013
@@ -18,7 +18,7 @@ de disparo de la cabra.
 #ifndef __Logic_IronHellGoat_H
 #define __Logic_IronHellGoat_H
 
-#include "Logic/Entity/Components/ShootProjectile.h"
+#include "Logic/Entity/Components/Weapon.h"
 
 #include <set>
 
@@ -37,7 +37,7 @@ namespace Logic {
 	@date Mayo, 2013
 	*/
 
-	class CIronHellGoat : public CShootProjectile {
+	class CIronHellGoat : public IWeapon {
 		DEC_FACTORY(CIronHellGoat);
 
 	public:

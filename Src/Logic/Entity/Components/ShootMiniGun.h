@@ -14,7 +14,7 @@ Contiene la declaración del componente que implementa el arma minigun.
 #ifndef __Logic_ShootMiniGun_H
 #define __Logic_ShootMiniGun_H
 
-#include "Logic/Entity/Components/ShootRaycast.h"
+#include "Logic/Entity/Components/Weapon.h"
 
 namespace Logic {
 	
@@ -32,13 +32,13 @@ namespace Logic {
 	que la sniper tenga su propio componente y la minigun funcione como tal.
 	*/
 
-	class CShootMiniGun : public CShootRaycast {
+	class CShootMiniGun : public IWeapon {
 		DEC_FACTORY(CShootMiniGun);
 
 	public:
 
 		/** Constructor por defecto. */
-		CShootMiniGun() : CShootRaycast("miniGun"), _pressThenShoot(false), _contador(0), _acumulando(false),
+		CShootMiniGun() : IWeapon("miniGun"), _pressThenShoot(false), _contador(0), _acumulando(false),
 													_iRafagas(0), _bLeftClicked(false), _iContadorLeftClicked(0) 
 		{
 			_iMaxRafagas = 20;
