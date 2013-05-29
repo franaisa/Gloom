@@ -153,6 +153,8 @@ Map = {
 			weaponminiGunID = 3,
 			weaponminiGunParticlePosition = {6, 5, 6},
 			weaponminiGunAudio = "media/audio/miniGun.wav",
+			weaponminiGunDispersion = 2,
+			weaponminiGunDistance = 600,
 			
 			weaponironHellGoatName = "ironHellGoat",
 			weaponironHellGoatModel = "rocketLauncher.mesh",
@@ -335,6 +337,8 @@ Map = {
 			weaponminiGunID = 3,
 			weaponminiGunParticlePosition = {6, 5, 6},
 			weaponminiGunAudio = "media/audio/miniGun.wav",
+			weaponminiGunDispersion = 2,
+			weaponminiGunDistance = 600,
 			
 			weaponironHellGoatName = "ironHellGoat",
 			weaponironHellGoatModel = "rocketLauncher.mesh",
@@ -517,6 +521,8 @@ Map = {
 			weaponminiGunID = 3,
 			weaponminiGunParticlePosition = {6, 5, 6},
 			weaponminiGunAudio = "media/audio/miniGun.wav",
+			weaponminiGunDispersion = 2,
+			weaponminiGunDistance = 600,
 			
 			weaponironHellGoatName = "ironHellGoat",
 			weaponironHellGoatModel = "rocketLauncher.mesh",
@@ -696,6 +702,8 @@ Map = {
 			weaponminiGunID = 3,
 			weaponminiGunParticlePosition = {6, 5, 6},
 			weaponminiGunAudio = "media/audio/miniGun.wav",
+			weaponminiGunDispersion = 2,
+			weaponminiGunDistance = 600,
 			
 			weaponironHellGoatName = "ironHellGoat",
 			weaponironHellGoatModel = "rocketLauncher.mesh",
@@ -886,6 +894,8 @@ Map = {
 			weaponminiGunID = 3,
 			weaponminiGunParticlePosition = {6, 5, 6},
 			weaponminiGunAudio = "media/audio/miniGun.wav",
+			weaponminiGunDispersion = 2,
+			weaponminiGunDistance = 600,
 			
 			weaponironHellGoatName = "ironHellGoat",
 			weaponironHellGoatModel = "rocketLauncher.mesh",
@@ -1066,6 +1076,8 @@ Map = {
 			weaponminiGunID = 3,
 			weaponminiGunParticlePosition = {6, 5, 6},
 			weaponminiGunAudio = "media/audio/miniGun.wav",
+			weaponminiGunDispersion = 2,
+			weaponminiGunDistance = 600,
 			
 			weaponironHellGoatName = "ironHellGoat",
 			weaponironHellGoatModel = "rocketLauncher.mesh",
@@ -1248,6 +1260,8 @@ Map = {
 			weaponminiGunID = 3,
 			weaponminiGunParticlePosition = {6, 5, 6},
 			weaponminiGunAudio = "media/audio/miniGun.wav",
+			weaponminiGunDispersion = 2,
+			weaponminiGunDistance = 600,
 			
 			weaponironHellGoatName = "ironHellGoat",
 			weaponironHellGoatModel = "rocketLauncher.mesh",
@@ -1436,6 +1450,8 @@ Map = {
 			weaponminiGunID = 3,
 			weaponminiGunParticlePosition = {6, 5, 6},
 			weaponminiGunAudio = "media/audio/miniGun.wav",
+			weaponminiGunDispersion = 2,
+			weaponminiGunDistance = 600,
 			
 			weaponironHellGoatName = "ironHellGoat",
 			weaponironHellGoatModel = "rocketLauncher.mesh",
@@ -1655,6 +1671,8 @@ Map = {
 			weaponminiGunID = 3,
 			weaponminiGunParticlePosition = {6, 5, 6},
 			weaponminiGunAudio = "media/audio/miniGun.wav",
+			weaponminiGunDispersion = 2,
+			weaponminiGunDistance = 600,
 			
 			weaponironHellGoatName = "ironHellGoat",
 			weaponironHellGoatModel = "rocketLauncher.mesh",
