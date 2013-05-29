@@ -57,8 +57,10 @@ namespace Logic {
 	}
 
 	//__________________________________________________________________
-
-	void CShootMiniGun::process(const std::shared_ptr<CMessage>& message) {
+	/*
+	void CShootMiniGun::process(const std::shared_ptr<CMessage>& message) 
+	{
+		/*
 		ControlType type = std::static_pointer_cast<CMessageControl>(message)->getType();
 
 		switch( message->getMessageType() ) {
@@ -93,8 +95,8 @@ namespace Logic {
 				
 				break;
 			}
-		}
-	} // process
+		}*/
+	//} // process
 
 	//__________________________________________________________________
 
@@ -106,7 +108,7 @@ namespace Logic {
 			hudWeapon->continouosShooting(_bLeftClicked);*/
 
 		//std::cout << "fixed" << std::endl;
-		if (_primaryFireIsActive) 
+		if (_bLeftClicked) 
 		{
 			++_iContadorLeftClicked;
 			
@@ -140,15 +142,22 @@ namespace Logic {
 			else {
 				_dispersion = _dispersionOriginal;
 			}
+
+
 		}
 
 		if(_primaryFireTimer < _primaryFireCooldown) {
 			_primaryFireTimer += msecs;
 		}
-		else {
-			if(_pressThenShoot) {
+		else 
+		{
+			/*if(_pressThenShoot) {
 				//_primaryCanShoot=true;				
-				primaryFire();
+				//primaryFire();
+			}*/
+			if (_bLeftClicked)
+			{
+				shoot();
 			}
 		}
 
@@ -183,13 +192,17 @@ namespace Logic {
 	
 	void CShootMiniGun::secondaryFire()
 	{
-		
+		_iRafagas = _contador / 10;
+		_acumulando = false;
+		_contador = 0;
+
+
 	}
 
 	//__________________________________________________________________
 
 
-	void CShootMiniGun::stopPrimaryFire(unsigned int elapsedTime) 
+	void CShootMiniGun::stopPrimaryFire() 
 	{
 		_pressThenShoot=false;
 		_bLeftClicked = false;
@@ -202,12 +215,14 @@ namespace Logic {
 		_entity->emitMessage(m);
 
 		_bMensajeDispMandado = false;
+
+		_bLeftClicked = false;
 	}
 	//__________________________________________________________________
 
 
 
-	void CShootMiniGun::stopSecondaryFire(unsigned int elapsedTime) 
+	void CShootMiniGun::stopSecondaryFire() 
 	{
 	
 	}
@@ -217,6 +232,7 @@ namespace Logic {
 	{
 		CEntity* entityHit = fireWeapon();
 		if(entityHit != NULL) {
+			std::cout << "dado" << std::endl;
 			triggerHitMessages(entityHit);
 		}
 	}
@@ -242,6 +258,8 @@ namespace Logic {
 		// Dibujamos el rayo en ogre para poder depurar
 		//drawRaycast(ray);
 
+		decrementAmmo();
+
 		//Comprobación de si da al mundo
 		Physics::CRaycastHit hits2;
 		bool disp = Physics::CServer::getSingletonPtr()->raycastSingle(ray, _distance,hits2, Physics::CollisionGroup::eWORLD);
@@ -249,7 +267,6 @@ namespace Logic {
 		{
 			Vector3 pos = hits2.impact;
 			drawDecal(hits2.entity, hits2.impact);
-
 			
 			// Añado aqui las particulas de dado en la pared.
 			auto m = std::make_shared<CMessageCreateParticle>();
@@ -287,7 +304,7 @@ namespace Logic {
 
 	void CShootMiniGun::secondaryShoot(int iRafagas) 
 	{
-		//decrementAmmo(iRafagas);
+		decrementAmmo(iRafagas);
 
 		//Creación de sweephit para 
 		Physics::SphereGeometry sphere  = Physics::CGeometryFactory::getSingletonPtr()->createSphere(3.5);

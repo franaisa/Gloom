@@ -52,16 +52,13 @@ namespace Logic {
 
 		virtual bool spawn(CEntity* entity, CMap* map, const Map::CEntity* entityInfo);
 
-		// @deprecated No es necesario reimplementar esto
-		virtual void process(const std::shared_ptr<CMessage>& message);
-
 		virtual void primaryFire();
 
 		virtual void secondaryFire();
 
-		virtual void stopPrimaryFire(unsigned int elapsedTime);
+		virtual void stopPrimaryFire();
 
-		virtual void stopSecondaryFire(unsigned int elapsedTime);
+		virtual void stopSecondaryFire();
 
 	protected:
 
