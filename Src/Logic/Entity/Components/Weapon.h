@@ -24,7 +24,8 @@ namespace Logic {
 	@ingroup logicGroup
 
 	IMPORTANTE: Decrementar la munición y emitir los sonidos
-	de disparo es responsabilidad del cliente.
+	de disparo es responsabilidad del cliente. Las animaciones
+	de las armas tambien son responsabilidad del cliente.
 
 	@author Antonio Jesus Narváez Corrales
 	@author Francisco Aisa García
