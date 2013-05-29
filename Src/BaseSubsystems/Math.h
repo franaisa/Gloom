@@ -123,19 +123,18 @@ namespace Math
 
 	/**
 	Transforma orientacion en grados en orientacion en quaternion.
+	Nota: Las funciones trigonometricas tienen pequeñisimas desviaciones en decimales por ejemplo al hacer el cos de 90 grados.
+	Si esa infima desviación influyera, deberia de tratarse con casos especiales todos aquellos valores que sean naturales.
 
 	@param degrees Ángulo en grados.
 	@param axe Vector que indica sobre que eje rotamos.
 	@return Ángulo en quaternion.
 	*/
 	static Quaternion fromDegreesToQuaternion(float degrees,const Vector3 &axe){
-		float w=cos(degrees/2.0f);
-		float x=sin(degrees/2.0f) * axe.x;
-		float y=sin(degrees/2.0f)* axe.y;
-		float z=sin(degrees/2.0f) * axe.z;
-		return Quaternion(w, x, y, z);	
+		//Hacemos una conversion inicial de grados a radianes ya que las funciones trigonometricas trabajan con radianes
+		float rad= degrees*Math::PI/180;
+		return Quaternion(cos(rad/2.0f), sin(rad/2.0f) * axe.x, sin(rad/2.0f)* axe.y, sin(rad/2.0f) * axe.z);
 	}
-
 
 
 	/**

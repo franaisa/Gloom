@@ -90,6 +90,8 @@ namespace Logic {
 			_position=position;
 		}
 
+		//Ahora con quaternion esto no haria falta y se dejarian los casos por separdos, tanto pitch como yaw y luego roll
+		//El orden no importa, ya no hay movidas de uno antes que otro, se deja asi porque todavia se utilizan transforms
 		// Si se establecen los 2 hay que hacerlo a la vez
 		if(entityInfo->hasAttribute("pitch") && entityInfo->hasAttribute("yaw")) {
 			float pitch = Math::fromDegreesToRadians(entityInfo->getFloatAttribute("pitch"));
@@ -101,12 +103,17 @@ namespace Logic {
 		else if(entityInfo->hasAttribute("pitch")) { 
 			float pitch = Math::fromDegreesToRadians(entityInfo->getFloatAttribute("pitch"));
 			Math::pitch(pitch,_transform);
+
+			_pitchOrientation=Math::fromDegreesToQuaternion(entityInfo->getFloatAttribute("pitch"),Vector3(1,0,0));
+			//Creo que lo siguiente hace falta al menos por el momento(al igual que la ultima linea de rotationXY)
+			setOrientation(getQuatOrientation());
 		}
 
 		// Por comodidad en el mapa escribimos los ángulos en grados.
 		else if(entityInfo->hasAttribute("yaw")) {
 			float yaw = Math::fromDegreesToRadians(entityInfo->getFloatAttribute("yaw"));
 			Math::yaw(yaw,_transform);
+
 			_yawOrientation=Math::fromDegreesToQuaternion(entityInfo->getFloatAttribute("yaw"),Vector3(0,1,0));
 			//Creo que lo siguiente hace falta al menos por el momento(al igual que la ultima linea de rotationXY)
 			setOrientation(getQuatOrientation());
