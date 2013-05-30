@@ -71,12 +71,42 @@ namespace Physics {
 	struct CollisionGroup {
 		enum Enum {
 			eWORLD					= (1 << 0),
-			ePLAYER					= (1 << 1),
-			eITEMS					= (1 << 2),
-			eSHOTGUN_PROJECTILES	= (1 << 3),
-			eFIREBALL				= (1 << 3),
-			eSPAWN_POINTS			= (1 << 4)
+			// En single player este es el grupo de colision del
+			// personaje
+			ePLAYER					= (1 << 1), 
+			// En multiplayer cada jugador tiene asignado un grupo
+			// de colision particular
+			ePLAYER1				= (1 << 1),
+			ePLAYER2				= (1 << 2),
+			ePLAYER3				= (1 << 3),
+			ePLAYER4				= (1 << 4),
+			ePLAYER5				= (1 << 5),
+			ePLAYER6				= (1 << 6),
+			ePLAYER7				= (1 << 7),
+			ePLAYER8				= (1 << 8),
+			eSPECTATOR				= (1 << 9),
+			// En single player este es el grupo de colision
+			// de los enemigos
+			eENEMY					= (1 << 10),
+			eTRIGGER				= (1 << 11),
+			eITEM					= (1 << 12),
+			eTRAP					= (1 << 13),
+			ePROJECTILE				= (1 << 14),
+			eMAGNETIC_PROJECTILE	= (1 << 15),
+			eFIREBALL				= (1 << 16),
+			eSCREAMER_SHIELD		= (1 << 17)
 		};
+
+		unsigned int getPlayersMask() {
+			return ePLAYER1 |
+				   ePLAYER2 |
+				   ePLAYER3 |
+				   ePLAYER4 |
+				   ePLAYER5 |
+				   ePLAYER6 |
+				   ePLAYER7 |
+				   ePLAYER8;
+		}
 	};
 
 	/**

@@ -170,7 +170,7 @@ namespace Logic {
 		int nbHits = 0;
 		//drawRaycast(ray);
 		
-		bool valid = Physics::CServer::getSingletonPtr()->raycastSingle(ray, _shotsDistanceSecondaryFire, hit,Physics::CollisionGroup::eITEMS);
+		bool valid = Physics::CServer::getSingletonPtr()->raycastSingle(ray, _shotsDistanceSecondaryFire, hit,Physics::CollisionGroup::eITEM);
 		
 		if(!valid)
 			return NULL;

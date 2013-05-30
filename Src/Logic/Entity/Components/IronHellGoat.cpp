@@ -20,6 +20,8 @@ de disparo de la cabra.
 #include "Logic/Server.h"
 #include "Map/MapEntity.h"
 
+#include "Net/Manager.h"
+
 using namespace std;
 
 namespace Logic {
@@ -188,63 +190,14 @@ namespace Logic {
 
 		_primaryFireIsActive = false;
 
-		// Obtenemos la información estandard asociada a la bola de fuego
-		Map::CEntity* entityInfo = CEntityFactory::getSingletonPtr()->getInfo("FireBall")->clone();
-
-		// Calculamos los valores customizados para la creacion de la bola de fuego
-		// en funcion del tiempo que hemos mantenido pulsado el disparo primario
-		float fireBallRadius = _defaultFireBallRadius + (_fireBallRadiusTemporalIncrement * _elapsedTime);
-		float fireBallSpeed = _defaultFireBallSpeed + (_fireBallSpeedTemporalIncrement * _elapsedTime);
-		float fireBallExplotionRadius = _defaultFireBallExplotionRadius + (_fireBallExplotionRadiusTemporalIncrement * _elapsedTime);
-		float fireBallDamage = _currentDefaultFireBallDamage + (((_currentMaxFireBallDamage - _currentDefaultFireBallDamage) / _maxLoadingTime) * _elapsedTime);
-
-		// Modificamos sus parámetros en base a los valores calculados
-		entityInfo->setAttribute( "physic_radius", toString(fireBallRadius) );
-		entityInfo->setAttribute( "scale", toString( Vector3(1.0f, 1.0f, 1.0f) * (fireBallRadius / _defaultFireBallRadius) ) );
-		entityInfo->setAttribute( "speed", toString(fireBallSpeed) );
-		entityInfo->setAttribute( "explotionRadius", toString(fireBallExplotionRadius) );
-		entityInfo->setAttribute( "damage", toString(fireBallDamage) );
-		entityInfo->setAttribute( "direction", toString( Math::getDirection( _entity->getTransform() ) ));
-
-		// El único atributo que nos interesa pasar al cliente es la escala para que la bola
-		// aparezca gráficamente más grande o más pequeña
-		Map::CEntity* clientEntityInfo = new Map::CEntity( entityInfo->getName() );
-		clientEntityInfo->setAttribute( "scale", toString( Vector3(1.0f, 1.0f, 1.0f) * (fireBallRadius / _defaultFireBallRadius) ) );
-
-		// Creamos la bola de fuego con los parámetros customizados a partir
-		// del radio de la cápsula + el radio de la bola + un pequeño offset
-		Matrix4 shootTransform = _entity->getTransform();
-		Vector3 shootPosition = shootTransform.getTrans() + ( Math::getDirection( _entity->getOrientation() ) * (_capsuleRadius + fireBallRadius + 0.5f) );
-		shootPosition.y += _heightShoot - fireBallRadius;
-		shootTransform.setTrans(shootPosition);
-
-		// Creamos la entidad
-		CEntity* fireBall = CEntityFactory::getSingletonPtr()->createCustomClientEntity(
-								entityInfo,
-								clientEntityInfo,
-								CServer::getSingletonPtr()->getMap(),
-								shootTransform
-							);
-
-		// Eliminamos la copia de la información que hemos creado
-		delete entityInfo;
-		// Eliminamos la información adicional para el cliente
-		delete clientEntityInfo;
-
-		// Le indicamos al controlador de la bola que este componente es el poseedor
-		// para que se invoque al metodo correspondiente cuando las bolas mueran
-		CFireBallController* fbController = fireBall->getComponent<CFireBallController>("CFireBallController");
-		fbController->setOwner(this);
-
-		// Arrancamos la entidad
-		fireBall->activate();
-		fireBall->start();
+		// Si estamos en single player o somos el servidor tenemos permiso para
+		// crear la bola de fuego
+		Net::CManager* netMgr = Net::CManager::getSingletonPtr();
+		if( netMgr->imServer() || (!netMgr->imServer() && !netMgr->imClient()) )
+			createFireBall();
 
 		// Emitimos el sonido de lanzar la bola de fuego
 		emitSound(_shootAudio, "fireBallShot");
-
-		// Me apunto la entidad devuelta por la factoria
-		_controllableFireBalls.insert(fbController);
 
 		// Reseteamos el reloj
 		_currentSpentAmmo = _ammoSpentTimer = _elapsedTime = 0;
@@ -311,6 +264,65 @@ namespace Logic {
 		// Si es 0 significa que hay que restaurar al que habia por defecto,
 		// sino decrementamos conforme al porcentaje dado.
 		_primaryFireCooldown = percentage == 0 ? _defaultPrimaryFireCooldown : (_defaultPrimaryFireCooldown - (percentage * _primaryFireCooldown * 0.01f));
+	}
+
+	//__________________________________________________________________
+
+	void CIronHellGoat::createFireBall() {
+		// Obtenemos la información estandard asociada a la bola de fuego
+		Map::CEntity* entityInfo = CEntityFactory::getSingletonPtr()->getInfo("FireBall")->clone();
+
+		// Calculamos los valores customizados para la creacion de la bola de fuego
+		// en funcion del tiempo que hemos mantenido pulsado el disparo primario
+		float fireBallRadius = _defaultFireBallRadius + (_fireBallRadiusTemporalIncrement * _elapsedTime);
+		float fireBallSpeed = _defaultFireBallSpeed + (_fireBallSpeedTemporalIncrement * _elapsedTime);
+		float fireBallExplotionRadius = _defaultFireBallExplotionRadius + (_fireBallExplotionRadiusTemporalIncrement * _elapsedTime);
+		float fireBallDamage = _currentDefaultFireBallDamage + (((_currentMaxFireBallDamage - _currentDefaultFireBallDamage) / _maxLoadingTime) * _elapsedTime);
+
+		// Modificamos sus parámetros en base a los valores calculados
+		entityInfo->setAttribute( "physic_radius", toString(fireBallRadius) );
+		entityInfo->setAttribute( "scale", toString( Vector3(1.0f, 1.0f, 1.0f) * (fireBallRadius / _defaultFireBallRadius) ) );
+		entityInfo->setAttribute( "speed", toString(fireBallSpeed) );
+		entityInfo->setAttribute( "explotionRadius", toString(fireBallExplotionRadius) );
+		entityInfo->setAttribute( "damage", toString(fireBallDamage) );
+		entityInfo->setAttribute( "direction", toString( Math::getDirection( _entity->getTransform() ) ));
+
+		// El único atributo que nos interesa pasar al cliente es la escala para que la bola
+		// aparezca gráficamente más grande o más pequeña
+		Map::CEntity* clientEntityInfo = new Map::CEntity( entityInfo->getName() );
+		clientEntityInfo->setAttribute( "scale", toString( Vector3(1.0f, 1.0f, 1.0f) * (fireBallRadius / _defaultFireBallRadius) ) );
+
+		// Creamos la bola de fuego con los parámetros customizados a partir
+		// del radio de la cápsula + el radio de la bola + un pequeño offset
+		Matrix4 shootTransform = _entity->getTransform();
+		Vector3 shootPosition = shootTransform.getTrans() + ( Math::getDirection( _entity->getOrientation() ) * (_capsuleRadius + fireBallRadius + 0.5f) );
+		shootPosition.y += _heightShoot - fireBallRadius;
+		shootTransform.setTrans(shootPosition);
+
+		// Creamos la entidad
+		CEntity* fireBall = CEntityFactory::getSingletonPtr()->createCustomClientEntity(
+								entityInfo,
+								clientEntityInfo,
+								CServer::getSingletonPtr()->getMap(),
+								shootTransform
+							);
+
+		// Eliminamos la copia de la información que hemos creado
+		delete entityInfo;
+		// Eliminamos la información adicional para el cliente
+		delete clientEntityInfo;
+
+		// Le indicamos al controlador de la bola que este componente es el poseedor
+		// para que se invoque al metodo correspondiente cuando las bolas mueran
+		CFireBallController* fbController = fireBall->getComponent<CFireBallController>("CFireBallController");
+		fbController->setOwner(this);
+
+		// Arrancamos la entidad
+		fireBall->activate();
+		fireBall->start();
+
+		// Me apunto la entidad devuelta por la factoria
+		_controllableFireBalls.insert(fbController);
 	}
 
 }//namespace Logic

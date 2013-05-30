@@ -114,6 +114,8 @@ namespace Logic {
 
 	private:
 
+		void createFireBall();
+
 		std::string _shootAudio;
 
 		std::set<CFireBallController*> _controllableFireBalls;
