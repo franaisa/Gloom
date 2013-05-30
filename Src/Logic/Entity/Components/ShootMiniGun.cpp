@@ -76,48 +76,6 @@ namespace Logic {
 	}
 
 	//__________________________________________________________________
-	/*
-	void CShootMiniGun::process(const std::shared_ptr<CMessage>& message) 
-	{
-		/*
-		ControlType type = std::static_pointer_cast<CMessageControl>(message)->getType();
-
-		switch( message->getMessageType() ) {
-			case Message::CONTROL: {
-				
-				if(type==Control::LEFT_CLICK) {
-					_pressThenShoot=true;
-					_bLeftClicked = true;
-				}
-				else if(type==Control::UNLEFT_CLICK) {
-					_pressThenShoot=false;
-					_bLeftClicked = false;
-					_iContadorLeftClicked = 0;
-					
-					//Envío el mensaje con valores para que resetee la mirilla
-					auto m = std::make_shared<CMessageHudDispersion>();
-					m->setTime(0);
-					m->setReset(true);
-					_entity->emitMessage(m);
-
-					_bMensajeDispMandado = false;
-					std::cout << "cambio mensajo dispmandado " << _bMensajeDispMandado << std::endl;
-				}
-				else if(type==Control::RIGHT_CLICK) {
-					_acumulando = true;
-				}
-				else if(type==Control::UNRIGHT_CLICK) {
-					_iRafagas = _contador / 10;
-					_acumulando = false;
-					_contador = 0;
-				}
-				
-				break;
-			}
-		}*/
-	//} // process
-
-	//__________________________________________________________________
 
 	void CShootMiniGun::onFixedTick(unsigned int msecs) 
 	{

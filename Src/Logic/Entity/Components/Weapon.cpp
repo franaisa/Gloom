@@ -1,13 +1,15 @@
 /**
 @file Weapon.cpp
 
+Contiene la implementación de la interfaz común
+a todas las armas.
 
 @see Logic::IWeapon
 @see Logic::IComponent
 
 @author Antonio Jesus Narváez Corrales
 @author Francisco Aisa García
-@date Febrero, 2013
+@date Mayo, 2013
 */
 
 #include "Weapon.h"
@@ -206,7 +208,6 @@ namespace Logic {
 			}
 		}
 	} // decals
-	
 
 } // namespace Logic
 
