@@ -39,7 +39,7 @@ namespace Logic {
 	public:
 
 		/** Constructor por defecto. */
-		CShootSniper() : IWeapon("sniper") {}
+		CShootSniper() : IWeapon("sniper"), _primaryFireTimer(0), _secondaryFireTimer(0) {}
 
 		virtual ~CShootSniper();
 
@@ -100,7 +100,18 @@ namespace Logic {
 		*/
 		void triggerHitMessages(CEntity* entityHit, float damageFire);
 
+		virtual void amplifyDamage(unsigned int percentage);
+
+		virtual void reduceCooldown(unsigned int percentage);
+
+		
+		virtual bool canUsePrimaryFire();
+
+		virtual bool canUseSecondaryFire();
+
 	private:
+
+		void onTick(unsigned int msecs);
 
 		/**
 		Distancia máxima de expansión para el disparo secundario de la sniper.
@@ -111,6 +122,26 @@ namespace Logic {
 		Numero de balas que consume el disparo secundario.
 		*/
 		int _secondaryConsumeAmmo;
+		
+		/**
+		Distancia
+		*/
+		int _shotsDistance;
+
+		int  _defaultPrimaryFireCooldown;
+		int _primaryFireCooldown;
+
+		float _defaultPrimaryFireDamage;
+		float _primaryFireDamage;
+
+		int _defaultSecondaryFireCooldown;
+		int _secondaryFireCooldown;
+
+		float _defaultSecondaryFireDamage;
+		float _secondaryFireDamage;
+
+		int _primaryFireTimer;
+		int _secondaryFireTimer;
 
 	}; // class CShootSniper
 

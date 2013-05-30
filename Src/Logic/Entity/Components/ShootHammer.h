@@ -100,6 +100,10 @@ namespace Logic {
 		/* Indica la distancia de atraccion de objetos */
 		float _shotsDistanceSecondaryFire;
 
+		int _shotsDistance;
+
+		float _defaultPrimaryFireDamage;
+		float _primaryFireDamage;
 	}; // class CShootRaycast
 
 	REG_FACTORY(CShootHammer);

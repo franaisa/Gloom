@@ -42,6 +42,17 @@ namespace Logic {
 		if(entityInfo->hasAttribute(_weaponName+"AmmoSpentPerSecondaryShot"))
 			_secondaryConsumeAmmo = entityInfo->getIntAttribute(_weaponName+"AmmoSpentPerSecondaryShot");
 		
+		if( entityInfo->hasAttribute(_weaponName + "ShotsDistance") )
+			_shotsDistance = entityInfo->getFloatAttribute(_weaponName + "ShotsDistance");
+
+		_defaultPrimaryFireCooldown = _primaryFireCooldown = entityInfo->getFloatAttribute(_weaponName+"PrimaryFireCooldown") * 1000;
+
+		_defaultPrimaryFireDamage = _primaryFireDamage = entityInfo->getFloatAttribute(_weaponName + "PrimaryFireDamage");
+
+		_defaultSecondaryFireCooldown = _secondaryFireCooldown = entityInfo->getFloatAttribute(_weaponName+"SecondaryFireCooldown") * 1000;
+
+		_defaultSecondaryFireDamage = _secondaryFireDamage = entityInfo->getFloatAttribute(_weaponName + "SecondaryFireDamage");
+
 		return true;
 	} // spawn
 	//__________________________________________________________________
@@ -186,6 +197,64 @@ namespace Logic {
 		entityHit->emitMessage(m);
 
 	}// triggerHitMessager
+	//__________________________________________________________________
+
+	void CShootSniper::amplifyDamage(unsigned int percentage) {
+		// Si es 0 significa que hay que restaurar al que habia por defecto
+		if(percentage == 0) {
+			_primaryFireDamage = _defaultPrimaryFireDamage;
+			_secondaryFireDamage = _defaultSecondaryFireDamage;
+		}
+		// Sino aplicamos el porcentaje pasado por parámetro
+		else {
+			_primaryFireDamage += percentage * _primaryFireDamage * 0.01f;
+			_secondaryFireDamage += percentage * _secondaryFireDamage * 0.01f;
+		}
+	} // amplifyDamage
+	//__________________________________________________________________
+
+	void CShootSniper::reduceCooldown(unsigned int percentage) {
+		// Si es 0 significa que hay que restaurar al que habia por defecto
+		if(percentage == 0) {
+			_primaryFireCooldown = _defaultPrimaryFireCooldown;
+			_secondaryFireCooldown = _defaultSecondaryFireCooldown;
+		}
+		// Sino aplicamos el porcentaje pasado por parámetro
+		else {
+			_primaryFireCooldown -= percentage * _primaryFireCooldown * 0.01f;
+			_secondaryFireCooldown -= percentage * _secondaryFireCooldown * 0.01f;
+		}
+	} // reduceCooldown
+	//__________________________________________________________________
+
+	bool CShootSniper::canUsePrimaryFire() {
+		return (_primaryFireTimer == 0) &&  (_currentAmmo > 0 );
+		return true;
+	} // canUsePrimaryFire
+	//__________________________________________________________________
+
+	bool CShootSniper::canUseSecondaryFire() {
+		return (_secondaryFireTimer == 0) && (_currentAmmo >= _secondaryConsumeAmmo);
+		return true;
+	} // canUseSecondaryFire
+	//__________________________________________________________________
+
+	void CShootSniper::onTick(unsigned int msecs) {
+		// Controlamos el cooldown del disparo primario y secundario
+		if(_primaryFireTimer > 0) {
+			_primaryFireTimer -= msecs;
+			
+			if(_primaryFireTimer < 0)
+				_primaryFireTimer = 0;
+		}
+
+		if(_secondaryFireTimer > 0) {
+			_secondaryFireTimer -= msecs;
+
+			if(_secondaryFireTimer < 0)
+				_secondaryFireTimer = 0;
+		}
+	} // onTick
 	//__________________________________________________________________
 
 } // namespace Logic

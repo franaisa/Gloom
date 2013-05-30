@@ -46,6 +46,8 @@ namespace Logic {
 		virtual bool spawn(CEntity* entity, CMap *map, const Map::CEntity *entityInfo);
 
 		virtual void primaryFire();
+
+		virtual void stopPrimaryFire();
 		
 		virtual void secondaryFire();
 
@@ -60,6 +62,8 @@ namespace Logic {
 		*/
 		void destroyProjectile(CEntity *projectile, CEntity *killedBy);
 
+		
+
 	protected:
 
 		virtual void onTick(unsigned int msecs);
@@ -72,6 +76,9 @@ namespace Logic {
 		unsigned int _defaultPrimaryFireCooldown;
 		unsigned int _primaryFireCooldown;
 		int _primaryFireCooldownTimer;
+
+		float _defaultPrimaryFireDamage;
+		float _primaryFireDamage;
 
 		unsigned int _numberOfShots;
 

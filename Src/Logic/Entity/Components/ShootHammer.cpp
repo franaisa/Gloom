@@ -55,6 +55,10 @@ namespace Logic {
 		if( entityInfo->hasAttribute(_weaponName + "ShotsDistanceSecondaryFire") )
 			_shotsDistanceSecondaryFire = entityInfo->getFloatAttribute(_weaponName + "ShotsDistanceSecondaryFire");
 
+		_shotsDistance = entityInfo->getFloatAttribute(_weaponName + "ShotsDistance");
+
+		_defaultPrimaryFireDamage = _primaryFireDamage = entityInfo->getFloatAttribute(_weaponName + "PrimaryFireDamage");
+
 		return true;
 	}
 

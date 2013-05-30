@@ -54,6 +54,7 @@ namespace Logic {
 		assert( entityInfo->hasAttribute(_weaponName+"DamageBurned") );
 		assert( entityInfo->hasAttribute(_weaponName+"PrimaryFireCooldown") );
 		assert( entityInfo->hasAttribute(_weaponName+"NumberOfShots") );
+		assert( entityInfo->hasAttribute(_weaponName + "PrimaryFireDamage") );
 
 		// Leemos los atributos
 		_projectileShootForce = entityInfo->getFloatAttribute(_weaponName + "ShootForce");
@@ -62,6 +63,8 @@ namespace Logic {
 		_damageBurned = entityInfo->getFloatAttribute(_weaponName+"DamageBurned");
 		_defaultPrimaryFireCooldown = _primaryFireCooldown = entityInfo->getFloatAttribute(_weaponName+"PrimaryFireCooldown") * 1000;
 		_numberOfShots = entityInfo->getIntAttribute(_weaponName+"NumberOfShots");
+
+		_defaultPrimaryFireDamage = _primaryFireDamage = entityInfo->getFloatAttribute(_weaponName + "PrimaryFireDamage");
 
 		return true;
 	}// spawn
@@ -143,6 +146,13 @@ namespace Logic {
 	void CShootShotGun::amplifyDamage(unsigned int percentage) {
 		// @todo
 		// TIENE QUE AFECTAR A LAS BALAS!!!!!!!!!!!!
+		if(percentage == 0) {
+			_primaryFireDamage = _defaultPrimaryFireDamage;
+		}
+		// Sino aplicamos el porcentaje pasado por parámetro
+		else {
+			_primaryFireDamage += percentage * _primaryFireDamage * 0.01f;
+		}
 	}
 	//_________________________________________________
 
@@ -163,6 +173,11 @@ namespace Logic {
 		return true;
 	}
 	//_________________________________________________
+
+	void CShootShotGun::stopPrimaryFire(){
+	
+	}
+
 
 } // namespace Logic
 
