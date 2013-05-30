@@ -229,13 +229,11 @@ namespace Logic {
 
 	bool CShootSniper::canUsePrimaryFire() {
 		return (_primaryFireTimer == 0) &&  (_currentAmmo > 0 );
-		return true;
 	} // canUsePrimaryFire
 	//__________________________________________________________________
 
 	bool CShootSniper::canUseSecondaryFire() {
 		return (_secondaryFireTimer == 0) && (_currentAmmo >= _secondaryConsumeAmmo);
-		return true;
 	} // canUseSecondaryFire
 	//__________________________________________________________________
 

@@ -59,6 +59,9 @@ namespace Logic {
 
 		_defaultPrimaryFireDamage = _primaryFireDamage = entityInfo->getFloatAttribute(_weaponName + "PrimaryFireDamage");
 
+		_defaultPrimaryFireCooldown = _primaryFireCooldown = entityInfo->getFloatAttribute(_weaponName+"PrimaryFireCooldown") * 1000;
+
+
 		return true;
 	}
 
@@ -206,5 +209,49 @@ namespace Logic {
 		_elementPulled=NULL;
 	}
 
+		void CShootHammer::amplifyDamage(unsigned int percentage) {
+		// Si es 0 significa que hay que restaurar al que habia por defecto
+		if(percentage == 0) {
+			_primaryFireDamage = _defaultPrimaryFireDamage;
+		}
+		// Sino aplicamos el porcentaje pasado por parámetro
+		else {
+			_primaryFireDamage += percentage * _primaryFireDamage * 0.01f;
+		}
+	} // amplifyDamage
+	//__________________________________________________________________
+
+	void CShootHammer::reduceCooldown(unsigned int percentage) {
+		// Si es 0 significa que hay que restaurar al que habia por defecto
+		if(percentage == 0) {
+			_primaryFireCooldown = _defaultPrimaryFireCooldown;
+		}
+		// Sino aplicamos el porcentaje pasado por parámetro
+		else {
+			_primaryFireCooldown -= percentage * _primaryFireCooldown * 0.01f;
+		}
+	} // reduceCooldown
+	//__________________________________________________________________
+
+	bool CShootHammer::canUsePrimaryFire() {
+		return (_primaryFireTimer == 0) &&  (_currentAmmo > 0 );
+	} // canUsePrimaryFire
+	//__________________________________________________________________
+
+	bool CShootHammer::canUseSecondaryFire() {
+		return true;
+	} // canUseSecondaryFire
+	//__________________________________________________________________
+
+	void CShootHammer::onTick(unsigned int msecs) {
+		// Controlamos el cooldown del disparo primario y secundario
+		if(_primaryFireTimer > 0) {
+			_primaryFireTimer -= msecs;
+			
+			if(_primaryFireTimer < 0)
+				_primaryFireTimer = 0;
+		}
+	} // onTick
+	//__________________________________________________________________
 } // namespace Logic
 

@@ -66,8 +66,19 @@ namespace Logic {
 
 		float getHeight(){return _heightShoot;}
 
-	protected:
+		
+		virtual void amplifyDamage(unsigned int percentage);
 
+		virtual void reduceCooldown(unsigned int percentage);
+
+		
+		virtual bool canUsePrimaryFire();
+
+		virtual bool canUseSecondaryFire();
+
+	private:
+
+		void onTick(unsigned int msecs);
 		/**
 		Los disparos secundarios si fieren bastante unos de otros, por ahora se ha hecho un metodo vacio,
 		para poder compilar por ahora, pero todos tendran que ser redefinidos.
@@ -104,6 +115,12 @@ namespace Logic {
 
 		float _defaultPrimaryFireDamage;
 		float _primaryFireDamage;
+
+		int  _defaultPrimaryFireCooldown;
+		int _primaryFireCooldown;
+
+		int _primaryFireTimer;
+
 	}; // class CShootRaycast
 
 	REG_FACTORY(CShootHammer);
