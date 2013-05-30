@@ -287,59 +287,6 @@ namespace Physics {
 
 
 		/**
-		Lanza un rayo y devuelve la primera entidad lógica contra la que interseca. Si el rayo
-		no choca contra ninguna entidad devuelve NULL.
-		 
-		@param ray Rayo lanzado.
-		@param maxDist distancia máxima de la primera intersección.
-		@return Primera entidad lógica alcanzada o NULL.
-		*/
-		Logic::CEntity* raycastClosest (const Ray& ray, float maxDist) const;
-
-		//________________________________________________________________________
-
-		/**
-		Lanza un rayo y devuelve la primera entidad lógica contra la que interseca que pertenezca 
-		al grupo de colisión indicado. Si el rayo no choca contra ninguna entidad de ese grupo
-		devuelve NULL.
-		 
-		@param ray Rayo lanzado.
-		@param maxDist distancia máxima de la primera intersección.
-		@param group Grupo de colisión de la entidad buscada.
-		@return Primera entidad lógica alcanzada de ese grupo o NULL.
-		*/
-		Logic::CEntity* raycastClosest (const Ray& ray, float maxDist, int group) const;
-
-		//________________________________________________________________________
-
-		/**
-		Lanza un rayo y devuelve la primera entidad lógica contra la que interseca que NO es la indicada en el ID.
-		Si el rayo no choca contra ninguna entidad devuelve NULL.
-		 
-		@param ray Rayo lanzado.
-		@param maxDist distancia máxima de la primera intersección.
-		@param id Id con la que no puede chocar.
-		@return Primera entidad lógica alcanzada o NULL.
-		*/
-		Logic::CEntity* raycastClosestInverse (const Ray& ray, float maxDist, unsigned int id) const;
-
-		//________________________________________________________________________
-
-
-		/**
-		Lanza un rayo y devuelve el punto de choque de la entidad contra la que queremos que choque indicada en el ID.
-		Si el rayo no choca contra ninguna entidad devuelve el vector3 (-5,-5,-5).
-		 
-		@param ray Rayo lanzado.
-		@param maxDist distancia máxima de la primera intersección.
-		@param id Id del que nos interesa el choque.
-		@return Punto de impacto en la entidad que queremos o (-5,-5,-5).
-		*/
-		Vector3 raycastClosestSpecificPoint (const Ray& ray, float maxDist, unsigned int id) const;
-
-		//________________________________________________________________________
-
-		/**
 		Lanza un rayo y devuelve información sobre las entidades golpeadas. En caso de no golpear
 		a ninguna entidad nbHits es igual a 0.
 
@@ -412,7 +359,7 @@ namespace Physics {
 		@param filterMask Máscara que indica contra que grupos de colisión queremos que choque
 		el overlap.
 		*/
-		void overlapMultiple(const physx::PxGeometry& geometry, const Vector3& position, std::vector<Logic::CEntity*>& entitiesHit, unsigned int filterMask = 0);
+		void overlapMultiple(const physx::PxGeometry& geometry, const Vector3& position, std::vector<Logic::CEntity*>& entitiesHit, unsigned int filterMask = 0) const;
 
 		//________________________________________________________________________
 
@@ -430,7 +377,7 @@ namespace Physics {
 		el overlap.
 		@return True si existe colisión con algún actor, falso en caso contrario.
 		*/
-		bool overlapAny(const physx::PxGeometry& geometry, const Vector3& position, unsigned int filterMask = 0);
+		bool overlapAny(const physx::PxGeometry& geometry, const Vector3& position, unsigned int filterMask = 0) const;
 
 
 		//________________________________________________________________________
@@ -454,7 +401,7 @@ namespace Physics {
 		*/
 		void sweepMultiple(const physx::PxGeometry& geometry, const Vector3& position,
 						   const Vector3& unitDir, float distance, std::vector<CSweepHit>& hitSpots, 
-						   bool sortResultingArray = false, unsigned int filterMask = 0);
+						   bool sortResultingArray = false, unsigned int filterMask = 0) const;
 
 		//________________________________________________________________________
 
@@ -478,7 +425,7 @@ namespace Physics {
 		@return True si existe colisión con algún actor, falso en caso contrario.
 		*/
 		bool sweepSingle(const physx::PxGeometry& sweepGeometry, const Vector3& position, 
-						 const Vector3& unitDir, float distance, Vector3& hitSpot, unsigned int filterMask = 0);
+						 const Vector3& unitDir, float distance, Vector3& hitSpot, unsigned int filterMask = 0) const;
 
 		//________________________________________________________________________
 
@@ -498,7 +445,7 @@ namespace Physics {
 		@return true Si el barrido ha impactado contra algo.
 		*/
 		bool sweepAny(const physx::PxGeometry& sweepGeometry, const Vector3& position, 
-					  const Vector3& unitDir, float distance, unsigned int filterMask = 0);
+					  const Vector3& unitDir, float distance, unsigned int filterMask = 0) const;
 
 
 		// =======================================================================
