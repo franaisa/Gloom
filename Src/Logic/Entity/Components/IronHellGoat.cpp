@@ -33,7 +33,8 @@ namespace Logic {
 									 _secondaryFireIsActive(false),
 									 _elapsedTime(0),
 									 _ammoSpentTimer(0),
-									 _currentSpentAmmo(0) {
+									 _currentSpentAmmo(0),
+									 _primaryFireCooldownTimer(0) {
 		// Nada que hacer
 	}
 
@@ -115,8 +116,6 @@ namespace Logic {
 	//__________________________________________________________________
 
 	void CIronHellGoat::onTick(unsigned int msecs) {
-		IWeapon::onTick(msecs);
-
 		// Si el jugador esta dejando pulsado el disparo primario, aumentamos
 		// el tamaño de la bola y reducimos la velocidad hasta un limite
 		if(_primaryFireIsActive) {
@@ -171,6 +170,8 @@ namespace Logic {
 
 	void CIronHellGoat::primaryFire() {
 		_primaryFireIsActive = true;
+		_primaryFireCooldownTimer = _primaryFireCooldown;
+
 		decrementAmmo();
 		++_currentSpentAmmo;
 
@@ -247,9 +248,6 @@ namespace Logic {
 
 		// Reseteamos el reloj
 		_currentSpentAmmo = _ammoSpentTimer = _elapsedTime = 0;
-
-		// Seteamos el timer del cooldown a 0, para que empiece la cuenta aqui
-		_primaryFireCooldownTimer = _primaryFireCooldown;
 
 		// @deprecated Temporal hasta que este bien implementado
 		CHudWeapons* hudWeapon = _entity->getComponent<CHudWeapons>("CHudWeapons");

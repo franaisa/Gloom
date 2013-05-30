@@ -122,9 +122,9 @@ namespace Logic {
 	void CShootMiniGun::onFixedTick(unsigned int msecs) 
 	{
 		// @deprecated Temporal hasta que este bien implementado
-		/*CHudWeapons* hudWeapon = _entity->getComponent<CHudWeapons>("CHudWeapons");
+		CHudWeapons* hudWeapon = _entity->getComponent<CHudWeapons>("CHudWeapons");
 		if(hudWeapon != NULL)
-			hudWeapon->continouosShooting(_bLeftClicked);*/
+			hudWeapon->continouosShooting(_bLeftClicked);
 
 		//std::cout << "fixed" << std::endl;
 		if (_bLeftClicked) 

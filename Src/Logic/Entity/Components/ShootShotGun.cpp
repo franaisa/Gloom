@@ -94,6 +94,12 @@ namespace Logic {
 	void CShootShotGun::primaryFire() {
 		_primaryFireCooldownTimer = _primaryFireCooldown;
 
+		// Animacion de disparo
+		// @deprecated Temporal hasta que este bien implementado
+		CHudWeapons* hudWeapon = _entity->getComponent<CHudWeapons>("CHudWeapons");
+		if(hudWeapon != NULL)
+			hudWeapon->shootAnim(-1.0f);
+
 		int shots = _numberOfShots <= _currentAmmo ? _numberOfShots : _currentAmmo;
 		for(int i = 0; i < shots; ++i) {
 			Vector3 direction = Math::getDirection(_entity->getOrientation());
@@ -163,7 +169,7 @@ namespace Logic {
 
 	bool CShootShotGun::canUsePrimaryFire() {
 		// Si tienes municion y el cooldown ha bajado
-		return _primaryFireCooldownTimer == 0 && _numberOfShots <= _currentAmmo;
+		return _primaryFireCooldownTimer == 0 && _currentAmmo > 0;
 	}
 	//_________________________________________________
 
