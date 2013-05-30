@@ -123,16 +123,19 @@ namespace Logic {
 		// Cooldowns
 		unsigned int _defaultPrimaryFireCooldown;
 		unsigned int _primaryFireCooldown;
-		int _primaryFireTimer;
+		
 
 		unsigned int _defaultSecondaryFireCooldown;
 		unsigned int _secondaryFireCooldown;
-		int _secondaryFireTimer;
+		
 
 		WeaponType::Enum _weaponID;
 
 		// Nombre del arma
 		std::string _weaponName;
+
+		int _primaryFireTimer;
+		int _secondaryFireTimer;
 	}; // class IWeapon
 
 } // namespace Logic

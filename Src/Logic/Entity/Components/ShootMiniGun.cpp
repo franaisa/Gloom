@@ -146,6 +146,14 @@ namespace Logic {
 
 		}
 
+		// AQUI ESTA EL PROBLEMA, EL TIMER DEBERIA SER CONTROLADO
+		// SOLO POR LA CLASE PADRE.
+		// LO IDEAL ES QUE LAS CLASES HIJAS DEFINAN CUANDO SE PUEDE
+		// USAR EL ARMA.
+		// Podemos usar una implementacion por defecto pero imponer
+		// metodos abstractos para el canUse, amplify y reduce. De
+		// esta manera las nimiedades de cada arma quedan reservadas
+		// a las armas en concreto aunque se impone una interfaz comun 
 		if(_primaryFireTimer < _primaryFireCooldown) {
 			_primaryFireTimer += msecs;
 		}
