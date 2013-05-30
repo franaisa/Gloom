@@ -36,7 +36,7 @@ namespace Logic {
 	public:
 
 		/** Constructor por defecto. */
-		CShootHammer() : IWeapon("hammer"), _elementPulling(0), _elementPulled(0), _shotsDistanceSecondaryFire(0) { }
+		CShootHammer() : IWeapon("hammer"), _elementPulling(0), _elementPulled(0), _shotsDistanceSecondaryFire(0), _primaryFireTimer(0) { }
 
 		//__________________________________________________________________
 

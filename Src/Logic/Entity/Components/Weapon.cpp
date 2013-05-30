@@ -51,8 +51,17 @@ namespace Logic {
 	bool IWeapon::spawn(CEntity *entity, CMap *map, const Map::CEntity *entityInfo) {
 		if( !IComponent::spawn(entity,map,entityInfo) ) return false;
 
-		readMustAttributes(entityInfo);
-		readOptionalAttributes(entityInfo);
+		// Comprobamos que los atributos obligatorios existen
+		assert( entityInfo->hasAttribute(_weaponName + "MaxAmmo") );
+		assert( entityInfo->hasAttribute(_weaponName + "ID") );
+		assert( entityInfo->hasAttribute("physic_radius") );
+		assert( entityInfo->hasAttribute("heightShoot") );
+
+		// Leemos los atributos obligatorios de arma
+		_weaponID = (WeaponType::Enum)entityInfo->getIntAttribute(_weaponName + "ID");
+		_maxAmmo = entityInfo->getIntAttribute(_weaponName + "MaxAmmo");
+		_capsuleRadius = entityInfo->getFloatAttribute("physic_radius");
+		_heightShoot = entityInfo->getFloatAttribute("heightShoot");
 
 		return true;
 	}
@@ -85,18 +94,12 @@ namespace Logic {
 				ControlType type = std::static_pointer_cast<CMessageControl>(message)->getType();
 
 				if(type == Control::LEFT_CLICK) {
-					if( canUsePrimaryFire() ) {
+					if( canUsePrimaryFire() )
 						primaryFire();
-
-						//_primaryFireTimer = _primaryFireCooldown;
-					}
 				}
 				else if(type == Control::RIGHT_CLICK) {
-					if( canUseSecondaryFire() ) {
+					if( canUseSecondaryFire() )
 						secondaryFire();
-
-						//_secondaryFireTimer = _secondaryFireCooldown;
-					}
 				}
 				else if(type == Control::UNLEFT_CLICK) {
 					stopPrimaryFire();
@@ -109,25 +112,6 @@ namespace Logic {
 			}
 		}
 	}
-
-	//__________________________________________________________________
-
-	//void IWeapon::onTick(unsigned int msecs) {
-		// Controlamos el cooldown del disparo primario y secundario
-		/*if(_primaryFireTimer > 0) {
-			_primaryFireTimer -= msecs;
-			
-			if(_primaryFireTimer < 0)
-				_primaryFireTimer = 0;
-		}
-
-		if(_secondaryFireTimer > 0) {
-			_secondaryFireTimer -= msecs;
-
-			if(_secondaryFireTimer < 0)
-				_secondaryFireTimer = 0;
-		}*/
-	//}
 
 	//__________________________________________________________________
 
@@ -184,52 +168,8 @@ namespace Logic {
 
 	//__________________________________________________________________
 
-	bool IWeapon::canUsePrimaryFire() {
-		//return _primaryFireTimer == 0 && ( (_ammoSpentPerPrimaryShot * _shotsPerPrimaryFire) <= _currentAmmo);
-		return true;
-	}
-
-	//__________________________________________________________________
-
-	bool IWeapon::canUseSecondaryFire() {
-		//return _secondaryFireTimer == 0 && ( (_ammoSpentPerSecondaryShot * _shotsPerSecondaryFire) <= _currentAmmo);
-		return true;
-	}
-
-	//__________________________________________________________________
-
 	void IWeapon::resetAmmo() {
 		_currentAmmo = 0;
-	}
-
-	//__________________________________________________________________
-
-	void IWeapon::amplifyDamage(unsigned int percentage) {
-		// Si es 0 significa que hay que restaurar al que habia por defecto
-		/*if(percentage == 0) {
-			_primaryFireDamage = _defaultPrimaryFireDamage;
-			_secondaryFireDamage = _defaultSecondaryFireDamage;
-		}
-		// Sino aplicamos el porcentaje pasado por parámetro
-		else {
-			_primaryFireDamage += percentage * _primaryFireDamage * 0.01f;
-			_secondaryFireDamage += percentage * _secondaryFireDamage * 0.01f;
-		}*/
-	}
-
-	//__________________________________________________________________
-
-	void IWeapon::reduceCooldown(unsigned int percentage) {
-		// Si es 0 significa que hay que restaurar al que habia por defecto
-		/*if(percentage == 0) {
-			_primaryFireCooldown = _defaultPrimaryFireCooldown;
-			_secondaryFireCooldown = _defaultSecondaryFireCooldown;
-		}
-		// Sino aplicamos el porcentaje pasado por parámetro
-		else {
-			_primaryFireCooldown -= percentage * _primaryFireCooldown * 0.01f;
-			_secondaryFireCooldown -= percentage * _secondaryFireCooldown * 0.01f;
-		}*/
 	}
 
 	//__________________________________________________________________
@@ -266,53 +206,7 @@ namespace Logic {
 			}
 		}
 	} // decals
-
-	//__________________________________________________________________
-
-	void IWeapon::readMustAttributes(const Map::CEntity* entityInfo) {
-		// Comprobamos que los atributos obligatorios existen
-		assert( entityInfo->hasAttribute(_weaponName + "MaxAmmo") );
-		assert( entityInfo->hasAttribute(_weaponName + "ID") );
-		assert( entityInfo->hasAttribute("physic_radius") );
-		assert( entityInfo->hasAttribute("heightShoot") );
-
-		// Leemos los atributos obligatorios de arma
-		_weaponID = (WeaponType::Enum)entityInfo->getIntAttribute(_weaponName + "ID");
-		_maxAmmo = entityInfo->getIntAttribute(_weaponName + "MaxAmmo");
-		_capsuleRadius = entityInfo->getFloatAttribute("physic_radius");
-		_heightShoot = entityInfo->getFloatAttribute("heightShoot");
-	}
 	
-	//__________________________________________________________________
-
-	void IWeapon::readOptionalAttributes(const Map::CEntity* entityInfo) {
-		// Cooldown, por defecto es 0
-		/*if( entityInfo->hasAttribute(_weaponName + "PrimaryFireCooldown") )
-			_defaultPrimaryFireCooldown =  _primaryFireCooldown = entityInfo->getFloatAttribute(_weaponName + "PrimaryFireCooldown")  * 1000;
-		if( entityInfo->hasAttribute(_weaponName + "SecondaryFireCooldown") )
-			_defaultSecondaryFireCooldown = _secondaryFireCooldown = entityInfo->getFloatAttribute(_weaponName + "SecondaryFireCooldown") * 1000;*/
-		
-		// Daño. No todos los modos de disparo tienen porque hacer daño. Por defecto es 0.
-		/*if( entityInfo->hasAttribute(_weaponName + "PrimaryFireDamage") )
-			_defaultPrimaryFireDamage = _primaryFireDamage = entityInfo->getIntAttribute(_weaponName + "PrimaryFireDamage");
-		if( entityInfo->hasAttribute(_weaponName + "SecondaryFireDamage") )
-			_defaultSecondaryFireDamage = _secondaryFireDamage = entityInfo->getIntAttribute(_weaponName + "SecondaryFireDamage");*/
-
-		// Munición por disparo
-		/*if( entityInfo->hasAttribute(_weaponName + "AmmoSpentPerPrimaryShot") )
-			_ammoSpentPerPrimaryShot = entityInfo->getIntAttribute(_weaponName + "AmmoSpentPerPrimaryShot");
-		if( entityInfo->hasAttribute(_weaponName + "AmmoSpentPerSecondaryShot") )
-			_ammoSpentPerSecondaryShot = entityInfo->getIntAttribute(_weaponName + "AmmoSpentPerSecondaryShot");*/
-
-		// Disparos por click
-		/*if( entityInfo->hasAttribute(_weaponName + "ShotsPerPrimaryFire") )
-			_shotsPerPrimaryFire = entityInfo->getIntAttribute(_weaponName + "ShotsPerPrimaryFire");
-		if( entityInfo->hasAttribute(_weaponName + "ShotsPerSecondaryFire") )
-			_shotsPerSecondaryFire = entityInfo->getIntAttribute(_weaponName + "ShotsPerSecondaryFire");*/
-
-		/*if( entityInfo->hasAttribute(_weaponName + "ShotsDistance") )
-			_shotsDistance = entityInfo->getFloatAttribute(_weaponName + "ShotsDistance");*/
-	}
 
 } // namespace Logic
 

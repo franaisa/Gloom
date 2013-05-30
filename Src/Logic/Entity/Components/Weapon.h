@@ -85,14 +85,6 @@ namespace Logic {
 
 		virtual bool canUseSecondaryFire() = 0;
 
-		//__________________________________________________________________
-
-		inline void readMustAttributes(const Map::CEntity* entityInfo);
-
-		inline void readOptionalAttributes(const Map::CEntity* entityInfo);
-
-		//__________________________________________________________________
-
 
 		/** Cuanta munición puede llevar este arma como máximo. */
 		unsigned int _maxAmmo;

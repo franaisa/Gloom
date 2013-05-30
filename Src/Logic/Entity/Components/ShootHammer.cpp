@@ -75,6 +75,7 @@ namespace Logic {
 
 
 	void CShootHammer::primaryFire() {
+		_primaryFireTimer = _primaryFireCooldown;
 	
 		Vector3 direction = Math::getDirection(_entity->getOrientation()); 
 
@@ -234,7 +235,7 @@ namespace Logic {
 	//__________________________________________________________________
 
 	bool CShootHammer::canUsePrimaryFire() {
-		return (_primaryFireTimer == 0) &&  (_currentAmmo > 0 );
+		return _primaryFireTimer == 0;
 	} // canUsePrimaryFire
 	//__________________________________________________________________
 
