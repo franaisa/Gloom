@@ -22,7 +22,6 @@ Contiene la implementación del componente que representa al hammer.
 #include "Logic/Entity/Components/ArrayGraphics.h"
 #include "Logic/Entity/Components/Life.h"
 #include "Logic/Entity/Components/PullingMovement.h"
-#include "Logic/Entity/Components/Shoot.h"
 #include "Logic/Entity/Components/SpawnItemManager.h"
 #include "Logic/Entity/Components/Graphics.h"
 #include "Logic/Entity/Components/PhysicDynamicEntity.h"

@@ -373,9 +373,6 @@
     <ClCompile Include="..\..\Src\Logic\Entity\Components\Spike.cpp">
       <Filter>Entity\Components\Gameplay\Source</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Src\Logic\Entity\Components\SwitchPosition.cpp">
-      <Filter>Entity\Components\Gameplay\Source</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Src\Logic\Entity\Components\PhysicController.cpp">
       <Filter>Entity\Components\Physics\Source</Filter>
     </ClCompile>
@@ -384,9 +381,6 @@
     </ClCompile>
     <ClCompile Include="..\..\Src\Logic\Entity\Components\PhysicStaticEntity.cpp">
       <Filter>Entity\Components\Physics\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Logic\Entity\Components\Shoot.cpp">
-      <Filter>Entity\Components\Weapons\Source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Src\Logic\Entity\Components\ShootSniper.cpp">
       <Filter>Entity\Components\Weapons\Source</Filter>
@@ -397,19 +391,7 @@
     <ClCompile Include="..\..\Src\Logic\Entity\Components\ShootMiniGun.cpp">
       <Filter>Entity\Components\Weapons\Source</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Src\Logic\Entity\Components\ShootProjectile.cpp">
-      <Filter>Entity\Components\Weapons\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Logic\Entity\Components\ShootRaycast.cpp">
-      <Filter>Entity\Components\Weapons\Source</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Src\Logic\Entity\Components\ShootShotGun.cpp">
-      <Filter>Entity\Components\Weapons\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Logic\Entity\Components\RocketController.cpp">
-      <Filter>Entity\Components\Weapons\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Logic\Entity\Components\GrenadeController.cpp">
       <Filter>Entity\Components\Weapons\Source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Src\Logic\Entity\Components\Shadow.cpp">
@@ -441,12 +423,6 @@
     </ClCompile>
     <ClCompile Include="..\..\Src\Logic\Messages\MessageCameraOffset.cpp">
       <Filter>Messages\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Logic\Entity\Components\RocketControllerClient.cpp">
-      <Filter>Entity\Components\Weapons\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Logic\Entity\Components\GrenadeControllerClient.cpp">
-      <Filter>Entity\Components\Weapons\Source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Src\Logic\Entity\Components\SpectatorController.cpp">
       <Filter>Entity\Components\Gameplay\Source</Filter>
@@ -765,19 +741,10 @@
     <ClInclude Include="..\..\Src\Logic\Messages\MessageActivateScreamerShield.h">
       <Filter>Messages\Header</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Src\Logic\Entity\Components\ShootRaycast.h">
-      <Filter>Entity\Components\Weapons\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Logic\Entity\Components\ShootProjectile.h">
-      <Filter>Entity\Components\Weapons\Header</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Entity\Components\ShootMiniGun.h">
       <Filter>Entity\Components\Weapons\Header</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Entity\Components\ShootHammer.h">
-      <Filter>Entity\Components\Weapons\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Logic\Entity\Components\Shoot.h">
       <Filter>Entity\Components\Weapons\Header</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Entity\Components\ShootShotGun.h">
@@ -787,12 +754,6 @@
       <Filter>Entity\Components\Weapons\Header</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Entity\Components\WeaponsManager.h">
-      <Filter>Entity\Components\Weapons\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Logic\Entity\Components\RocketController.h">
-      <Filter>Entity\Components\Weapons\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Logic\Entity\Components\GrenadeController.h">
       <Filter>Entity\Components\Weapons\Header</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Entity\Components\Shadow.h">
@@ -855,9 +816,6 @@
     <ClInclude Include="..\..\Src\Logic\Entity\Components\HudOverlay.h">
       <Filter>Entity\Components\Graphics\Header</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Src\Logic\Entity\Components\SwitchPosition.h">
-      <Filter>Entity\Components\Gameplay\Header</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Entity\Components\AvatarController.h">
       <Filter>Entity\Components\Gameplay\Header</Filter>
     </ClInclude>
@@ -908,12 +866,6 @@
     </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Messages\MessageCameraOffset.h">
       <Filter>Messages\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Logic\Entity\Components\RocketControllerClient.h">
-      <Filter>Entity\Components\Weapons\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Logic\Entity\Components\GrenadeControllerClient.h">
-      <Filter>Entity\Components\Weapons\Header</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Entity\Components\SpectatorController.h">
       <Filter>Entity\Components\Gameplay\Header</Filter>

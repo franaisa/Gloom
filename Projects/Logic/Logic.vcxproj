@@ -96,8 +96,6 @@
     <ClCompile Include="..\..\Src\Logic\Entity\Components\Elevator.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\ElevatorTrigger.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\FloatingMovement.cpp" />
-    <ClCompile Include="..\..\Src\Logic\Entity\Components\GrenadeController.cpp" />
-    <ClCompile Include="..\..\Src\Logic\Entity\Components\GrenadeControllerClient.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\Hacksaw.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\HudOverlay.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\HudWeapons.cpp" />
@@ -119,14 +117,9 @@
     <ClCompile Include="..\..\Src\Logic\Entity\Components\PullingMovement.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\TransformSnapshot.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\PositionInterpolator.cpp" />
-    <ClCompile Include="..\..\Src\Logic\Entity\Components\RocketController.cpp" />
-    <ClCompile Include="..\..\Src\Logic\Entity\Components\RocketControllerClient.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\ScreamerShieldDamageNotifier.cpp" />
-    <ClCompile Include="..\..\Src\Logic\Entity\Components\Shoot.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\ShootHammer.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\ShootMiniGun.cpp" />
-    <ClCompile Include="..\..\Src\Logic\Entity\Components\ShootProjectile.cpp" />
-    <ClCompile Include="..\..\Src\Logic\Entity\Components\ShootRaycast.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\ShootShotGun.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\ShootSniper.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\PlayerClass.cpp" />
@@ -142,7 +135,6 @@
     <ClCompile Include="..\..\Src\Logic\Entity\Components\TransformInterpolator.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\UpdateClientPosition.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\WeaponsManager.cpp" />
-    <ClCompile Include="..\..\Src\Logic\Entity\Components\SwitchPosition.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\MessageFactory.cpp" />
     <ClCompile Include="..\..\Src\Logic\GameNetMsgManager.cpp" />
     <ClCompile Include="..\..\Src\Logic\GameNetPlayersManager.cpp" />
@@ -246,8 +238,6 @@
     <ClInclude Include="..\..\Src\Logic\Entity\Components\Elevator.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\ElevatorTrigger.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\FloatingMovement.h" />
-    <ClInclude Include="..\..\Src\Logic\Entity\Components\GrenadeController.h" />
-    <ClInclude Include="..\..\Src\Logic\Entity\Components\GrenadeControllerClient.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\Hacksaw.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\HudOverlay.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\HudWeapons.h" />
@@ -272,14 +262,9 @@
     <ClInclude Include="..\..\Src\Logic\Entity\Components\PullingMovement.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\TransformSnapshot.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\PositionInterpolator.h" />
-    <ClInclude Include="..\..\Src\Logic\Entity\Components\RocketController.h" />
-    <ClInclude Include="..\..\Src\Logic\Entity\Components\RocketControllerClient.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\ScreamerShieldDamageNotifier.h" />
-    <ClInclude Include="..\..\Src\Logic\Entity\Components\Shoot.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\ShootHammer.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\ShootMiniGun.h" />
-    <ClInclude Include="..\..\Src\Logic\Entity\Components\ShootProjectile.h" />
-    <ClInclude Include="..\..\Src\Logic\Entity\Components\ShootRaycast.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\ShootShotGun.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\ShootSniper.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\PlayerClass.h" />
@@ -295,7 +280,6 @@
     <ClInclude Include="..\..\Src\Logic\Entity\Components\TransformInterpolator.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\UpdateClientPosition.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\WeaponsManager.h" />
-    <ClInclude Include="..\..\Src\Logic\Entity\Components\SwitchPosition.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\WeaponType.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\MessageFactory.h" />
     <ClInclude Include="..\..\Src\Logic\GameNetMsgManager.h" />
