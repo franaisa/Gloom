@@ -9,7 +9,7 @@ Contiene la declaración de la cabecera del componente
 de disparo de la cabra.
 
 @see Logic::CIronHellGoat
-@see Logic::IWeapon
+@see Logic::CShootProjectile
 
 @author Francisco Aisa García
 @date Mayo, 2013
@@ -77,6 +77,10 @@ namespace Logic {
 
 		virtual void resetAmmo();
 
+		virtual void amplifyDamage(unsigned int percentage);
+
+		virtual void reduceCooldown(unsigned int percentage);
+
 	protected:
 
 		virtual void onActivate();
@@ -84,6 +88,10 @@ namespace Logic {
 		virtual void onAvailable();
 
 		virtual void onTick(unsigned int msecs);
+
+		virtual bool canUsePrimaryFire();
+
+		virtual bool canUseSecondaryFire();
 
 		template <typename T>
 		std::string toString(const T& data) const {
@@ -110,6 +118,10 @@ namespace Logic {
 
 		std::set<CFireBallController*> _controllableFireBalls;
 
+		unsigned int _primaryFireCooldown;
+		unsigned int _defaultPrimaryFireCooldown;
+		int _primaryFireCooldownTimer;
+
 		bool _primaryFireIsActive;
 		bool _secondaryFireIsActive;
 
@@ -124,15 +136,19 @@ namespace Logic {
 		float _defaultFireBallExplotionRadius;
 		float _defaultFireBallDamage;
 
+		float _currentDefaultFireBallDamage;
+		float _currentMaxFireBallDamage;
+		
 		unsigned int _maxAmmoPerShot;
+		float _maxFireBallDamage;
+
 		float _fireBallRadiusTemporalIncrement;
 		float _fireBallSpeedTemporalIncrement;
 		float _fireBallExplotionRadiusTemporalIncrement;
-		float _fireBallDamageTemporalIncrement;
 	};
 
 	REG_FACTORY(CIronHellGoat);
 
 } // namespace Logic
 
-#endif // __Logic_IronHellGoat_H
+#endif // __Logic_Shoot_H

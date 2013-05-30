@@ -53,6 +53,7 @@ namespace Logic {
 		if( !IWeapon::spawn(entity, map, entityInfo) ) return false;
 
 		// Nos aseguramos de tener todos los atributos que necesitamos
+		assert( entityInfo->hasAttribute(_weaponName + "PrimaryFireCooldown") );
 		assert( entityInfo->hasAttribute(_weaponName + "MaximumLoadingTime") );
 		assert( entityInfo->hasAttribute(_weaponName + "DefaultFireBallRadius") );
 		assert( entityInfo->hasAttribute(_weaponName + "DefaultFireBallSpeed" ) );
@@ -65,8 +66,11 @@ namespace Logic {
 		assert( entityInfo->hasAttribute(_weaponName + "MaxFireBallDamage") );
 		assert( entityInfo->hasAttribute(_weaponName + "Audio") );
 
+		// Cooldown del disparo principal
+		_defaultPrimaryFireCooldown = _primaryFireCooldown = entityInfo->getFloatAttribute(_weaponName + "PrimaryFireCooldown") * 1000;
+
 		// Tiempo de carga del arma
-		_maxLoadingTime = entityInfo->getIntAttribute(_weaponName + "MaximumLoadingTime") * 1000.0f;
+		_maxLoadingTime = entityInfo->getFloatAttribute(_weaponName + "MaximumLoadingTime") * 1000;
 
 		// Ratio al que gastamos municion
 		_maxAmmoPerShot = entityInfo->getIntAttribute(_weaponName + "MaxAmmoPerShot");
@@ -76,19 +80,18 @@ namespace Logic {
 		_defaultFireBallRadius = entityInfo->getFloatAttribute(_weaponName + "DefaultFireBallRadius");
 		_defaultFireBallSpeed = entityInfo->getFloatAttribute(_weaponName + "DefaultFireBallSpeed");
 		_defaultFireBallExplotionRadius = entityInfo->getFloatAttribute(_weaponName + "DefaultFireBallExplotionRadius");
-		_defaultFireBallDamage = entityInfo->getFloatAttribute(_weaponName + "DefaultFireBallDamage");
+		_currentDefaultFireBallDamage = _defaultFireBallDamage = entityInfo->getFloatAttribute(_weaponName + "DefaultFireBallDamage");
 
 		// Valores de creación máximos de la bola de fuego
 		float maxFireBallRadius = entityInfo->getFloatAttribute(_weaponName + "MaxFireBallRadius");
 		float maxFireBallSpeed = entityInfo->getFloatAttribute(_weaponName + "MaxFireBallSpeed");
 		float maxFireBallExplotionRadius = entityInfo->getFloatAttribute(_weaponName + "MaxFireBallExplotionRadius");
-		float maxFireBallDamage = entityInfo->getFloatAttribute(_weaponName + "MaxFireBallDamage");
+		_currentMaxFireBallDamage = _maxFireBallDamage = entityInfo->getFloatAttribute(_weaponName + "MaxFireBallDamage");
 
 		// Calculamos los factores de crecimiento en funcion del tiempo maximo de carga
 		_fireBallRadiusTemporalIncrement = (maxFireBallRadius - _defaultFireBallRadius) / _maxLoadingTime;
 		_fireBallSpeedTemporalIncrement = (maxFireBallSpeed - _defaultFireBallSpeed) / _maxLoadingTime;
 		_fireBallExplotionRadiusTemporalIncrement = (maxFireBallExplotionRadius - _defaultFireBallExplotionRadius) / _maxLoadingTime;
-		_fireBallDamageTemporalIncrement = (maxFireBallDamage - _defaultFireBallDamage) / _maxLoadingTime;
 
 		// Obtenemos los sonidos que produce el arma
 		_shootAudio = entityInfo->getStringAttribute(_weaponName + "Audio");
@@ -142,11 +145,26 @@ namespace Logic {
 				(*it)->alterDirection( Math::getDirection( _entity->getOrientation() ) );
 			}
 		}
-		else {
-			// Si no nos quedan bolas vivas ponemos el componente a dormir
-			// @todo Hay que cambiar el accept para que no acepte mensajes de control en general
-			//putToSleep();
+		
+		// Controlamos el cooldown
+		if(_primaryFireCooldownTimer > 0) {
+			_primaryFireCooldownTimer -= msecs;
+			
+			if(_primaryFireCooldownTimer < 0)
+				_primaryFireCooldownTimer = 0;
 		}
+	}
+
+	//__________________________________________________________________
+
+	bool CIronHellGoat::canUsePrimaryFire() {
+		return _primaryFireCooldownTimer == 0 && _currentAmmo > 0;
+	}
+
+	//__________________________________________________________________
+
+	bool CIronHellGoat::canUseSecondaryFire() {
+		return !_controllableFireBalls.empty();
 	}
 
 	//__________________________________________________________________
@@ -177,7 +195,7 @@ namespace Logic {
 		float fireBallRadius = _defaultFireBallRadius + (_fireBallRadiusTemporalIncrement * _elapsedTime);
 		float fireBallSpeed = _defaultFireBallSpeed + (_fireBallSpeedTemporalIncrement * _elapsedTime);
 		float fireBallExplotionRadius = _defaultFireBallExplotionRadius + (_fireBallExplotionRadiusTemporalIncrement * _elapsedTime);
-		float fireBallDamage = _defaultFireBallDamage + (_fireBallDamageTemporalIncrement * _elapsedTime);
+		float fireBallDamage = _currentDefaultFireBallDamage + (((_currentMaxFireBallDamage - _currentDefaultFireBallDamage) / _maxLoadingTime) * _elapsedTime);
 
 		// Modificamos sus parámetros en base a los valores calculados
 		entityInfo->setAttribute( "physic_radius", toString(fireBallRadius) );
@@ -230,6 +248,9 @@ namespace Logic {
 		// Reseteamos el reloj
 		_currentSpentAmmo = _ammoSpentTimer = _elapsedTime = 0;
 
+		// Seteamos el timer del cooldown a 0, para que empiece la cuenta aqui
+		_primaryFireCooldownTimer = _primaryFireCooldown;
+
 		// @deprecated Temporal hasta que este bien implementado
 		CHudWeapons* hudWeapon = _entity->getComponent<CHudWeapons>("CHudWeapons");
 		if(hudWeapon != NULL) {
@@ -269,6 +290,29 @@ namespace Logic {
 			}
 			_controllableFireBalls.clear();
 		}
+	}
+
+	//__________________________________________________________________
+
+	void CIronHellGoat::amplifyDamage(unsigned int percentage) {
+		// Si es 0 significa que hay que restaurar al que habia por defecto
+		if(percentage == 0) {
+			_currentDefaultFireBallDamage = _defaultFireBallDamage;
+			_currentMaxFireBallDamage = _maxFireBallDamage;
+		}
+		// Sino aplicamos el porcentaje pasado por parámetro
+		else {
+			_currentDefaultFireBallDamage += percentage * _currentDefaultFireBallDamage * 0.01f;
+			_currentMaxFireBallDamage += percentage * _currentMaxFireBallDamage * 0.01f;
+		}
+	}
+
+	//__________________________________________________________________
+
+	void CIronHellGoat::reduceCooldown(unsigned int percentage) {
+		// Si es 0 significa que hay que restaurar al que habia por defecto,
+		// sino decrementamos conforme al porcentaje dado.
+		_primaryFireCooldown = percentage == 0 ? _defaultPrimaryFireCooldown : (_defaultPrimaryFireCooldown - (percentage * _primaryFireCooldown * 0.01f));
 	}
 
 }//namespace Logic

@@ -77,8 +77,12 @@ namespace Logic {
 		unsigned int _primaryFireCooldown;
 		int _primaryFireCooldownTimer;
 
+<<<<<<< HEAD
 		float _defaultPrimaryFireDamage;
 		float _primaryFireDamage;
+=======
+		unsigned int _primaryFireDamage;
+>>>>>>> c44840f020e3317522fc66ad43a2dfb7e2226756
 
 		unsigned int _numberOfShots;
 

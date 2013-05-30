@@ -24,6 +24,20 @@ Contiene la implementación del componente que gestiona las armas y que administr
 namespace Logic {
 	IMP_FACTORY(CShootMiniGun);
 	
+	CShootMiniGun::CShootMiniGun() : IWeapon("miniGun"), 
+									 _pressThenShoot(false), 
+									 _contador(0), 
+									 _acumulando(false),
+									 _iRafagas(0), 
+									 _bLeftClicked(false), 
+									 _iContadorLeftClicked(0),
+									 _primaryFireCooldownTimer(0),
+									 _iMaxRafagas(20),
+									 _bMensajeDispMandado(false) {
+			
+			// Nada que inicializar
+		}
+
 	//__________________________________________________________________
 
 	CShootMiniGun::~CShootMiniGun() {
@@ -36,8 +50,13 @@ namespace Logic {
 		if( !IWeapon::spawn(entity, map, entityInfo) ) return false;
 
 		// Nos aseguramos de tener los atributos obligatorios
+		assert( entityInfo->hasAttribute(_weaponName + "PrimaryFireCooldown") );
+		assert( entityInfo->hasAttribute(_weaponName + "PrimaryFireDamage") );
 		assert( entityInfo->hasAttribute(_weaponName + "Dispersion") );
 		assert( entityInfo->hasAttribute(_weaponName + "Distance") );
+
+		_defaultPrimaryFireCooldown = _primaryFireCooldown = entityInfo->getFloatAttribute(_weaponName + "PrimaryFireCooldown") * 1000;
+		_defaultDamage = _damage = entityInfo->getIntAttribute(_weaponName + "PrimaryFireDamage");
 
 		// Dispersión del arma
 		//_dispersionOriginal = _dispersion = entityInfo->getFloatAttribute(_weaponName + "Dispersion");
@@ -142,8 +161,6 @@ namespace Logic {
 			else {
 				_dispersion = _dispersionOriginal;
 			}
-
-
 		}
 
 		// AQUI ESTA EL PROBLEMA, EL TIMER DEBERIA SER CONTROLADO
@@ -154,8 +171,9 @@ namespace Logic {
 		// metodos abstractos para el canUse, amplify y reduce. De
 		// esta manera las nimiedades de cada arma quedan reservadas
 		// a las armas en concreto aunque se impone una interfaz comun 
-		if(_primaryFireTimer < _primaryFireCooldown) {
-			_primaryFireTimer += msecs;
+		if(_primaryFireCooldownTimer < _primaryFireCooldown) 
+		{
+			_primaryFireCooldownTimer += msecs;
 		}
 		else 
 		{
@@ -163,22 +181,27 @@ namespace Logic {
 				//_primaryCanShoot=true;				
 				//primaryFire();
 			}*/
-			if (_bLeftClicked)
+			_primaryFireCooldownTimer = 0;
+			if (_bLeftClicked && _currentAmmo > 0)
 			{
 				shoot();
 			}
 		}
 
 		//Comprobamos la funcionalidad del botón derecho
-		if (_acumulando) {
+		if (_acumulando) 
+		{
 			//Si tenemos el botón derecho pulsado, seguimos aumentando el contador
 			_contador++;
 		}
-		else {
+		else 
+		{
 			//No tenemos pulsado el derecho, así que comprobamos si tenemos rafagas que lanzar
-			if (_iRafagas > 0) {
+			if (_iRafagas > 0) 
+			{
 				//Controlo que no se tengan más ráfagas del máximo (en su caso lo seteo a este valor)
-				if (_iRafagas > _iMaxRafagas) {
+				if (_iRafagas > _iMaxRafagas) 
+				{
 					_iRafagas = _iMaxRafagas;
 				}
 
@@ -186,6 +209,20 @@ namespace Logic {
 				_iRafagas = 0;
 			}
 		}
+	}
+
+	//__________________________________________________________________
+
+	bool CShootMiniGun::canUsePrimaryFire() 
+	{
+		return _currentAmmo > 0;
+	}
+	
+	//__________________________________________________________________
+
+	bool CShootMiniGun::canUseSecondaryFire() 
+	{
+		return !_bLeftClicked;
 	}
 
 	//__________________________________________________________________
@@ -203,8 +240,6 @@ namespace Logic {
 		_iRafagas = _contador / 10;
 		_acumulando = false;
 		_contador = 0;
-
-
 	}
 
 	//__________________________________________________________________
@@ -228,7 +263,20 @@ namespace Logic {
 	}
 	//__________________________________________________________________
 
+	void CShootMiniGun::amplifyDamage(unsigned int percentage) 
+	{
+		_damage = (percentage == 0) ? _defaultDamage : (_defaultDamage + (percentage * _damage * 0.01f));
+	}
+	//_________________________________________________
 
+	void CShootMiniGun::reduceCooldown(unsigned int percentage) 
+	{
+		// Si es 0 significa que hay que restaurar al que habia por defecto,
+		// sino decrementamos conforme al porcentaje dado.
+		_primaryFireCooldown = percentage == 0 ? _defaultPrimaryFireCooldown : (_defaultPrimaryFireCooldown - (percentage * _primaryFireCooldown * 0.01f));
+	}
+
+	//__________________________________________________________________
 
 	void CShootMiniGun::stopSecondaryFire() 
 	{
@@ -239,14 +287,16 @@ namespace Logic {
 	void CShootMiniGun::shoot()
 	{
 		CEntity* entityHit = fireWeapon();
-		if(entityHit != NULL) {
+		if(entityHit != NULL) 
+		{
 			std::cout << "dado" << std::endl;
 			triggerHitMessages(entityHit);
 		}
 	}
 	//__________________________________________________________________
 
-	CEntity* CShootMiniGun::fireWeapon() {
+	CEntity* CShootMiniGun::fireWeapon() 
+	{
 		//Direccion
 		Vector3 direction = Math::getDirection(_entity->getOrientation()); 
 		//Me dispongo a calcular la desviacion del arma, en el map.txt se pondra en grados de dispersion (0 => sin dispersion)
@@ -302,7 +352,7 @@ namespace Logic {
 	void CShootMiniGun::triggerHitMessages(CEntity* entityHit) 
 	{
 		std::shared_ptr<CMessageDamaged> m = std::make_shared<CMessageDamaged>();
-		m->setDamage(_primaryFireDamage);
+		m->setDamage(_damage);
 		m->setEnemy(_entity);
 		entityHit->emitMessage(m);
 	}// triggerHitMessages
@@ -325,7 +375,7 @@ namespace Logic {
 			std::string typeEntity = (*it).entity->getType();
 			if((*it).entity->getName() != _entity->getName())
 			{
-				int danyoTotal = _primaryFireDamage * iRafagas;
+				int danyoTotal = _damage * iRafagas;
 				std::cout << "Le he dado!!! Danyo = " << danyoTotal << std::endl;
 
 				std::shared_ptr<CMessageDamaged> m = std::make_shared<CMessageDamaged>();
