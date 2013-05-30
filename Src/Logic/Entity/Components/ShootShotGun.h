@@ -73,6 +73,8 @@ namespace Logic {
 		unsigned int _primaryFireCooldown;
 		int _primaryFireCooldownTimer;
 
+		unsigned int _primaryFireDamage;
+
 		unsigned int _numberOfShots;
 
 		/**

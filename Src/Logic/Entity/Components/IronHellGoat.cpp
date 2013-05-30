@@ -312,7 +312,7 @@ namespace Logic {
 	void CIronHellGoat::reduceCooldown(unsigned int percentage) {
 		// Si es 0 significa que hay que restaurar al que habia por defecto,
 		// sino decrementamos conforme al porcentaje dado.
-		_primaryFireCooldown = percentage == 0 ? _defaultPrimaryFireCooldown : (percentage * _primaryFireCooldown * 0.01f);
+		_primaryFireCooldown = percentage == 0 ? _defaultPrimaryFireCooldown : (_defaultPrimaryFireCooldown - (percentage * _primaryFireCooldown * 0.01f));
 	}
 
 }//namespace Logic

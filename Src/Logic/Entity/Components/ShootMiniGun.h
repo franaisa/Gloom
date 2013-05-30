@@ -38,11 +38,7 @@ namespace Logic {
 	public:
 
 		/** Constructor por defecto. */
-		CShootMiniGun() : IWeapon("miniGun"), _pressThenShoot(false), _contador(0), _acumulando(false),
-						  _iRafagas(0), _bLeftClicked(false), _iContadorLeftClicked(0) {
-			_iMaxRafagas = 20;
-			_bMensajeDispMandado = false;
-		}
+		CShootMiniGun();
 
 		//__________________________________________________________________
 
@@ -60,9 +56,16 @@ namespace Logic {
 
 		virtual void stopSecondaryFire();
 
+		virtual void amplifyDamage(unsigned int percentage);
+
+		virtual void reduceCooldown(unsigned int percentage);
+
 	protected:
 
 		virtual void onFixedTick(unsigned int msecs);
+
+		virtual bool canUsePrimaryFire();
+		virtual bool canUseSecondaryFire();
 
 		//Método que efectua el disparo
 		void		 shoot				();
@@ -74,6 +77,13 @@ namespace Logic {
 		void		 secondaryShoot		(int iRafagas);
 
 	private:
+
+		unsigned int _defaultPrimaryFireCooldown;
+		unsigned int _primaryFireCooldown;
+		int _primaryFireCooldownTimer;
+
+		unsigned int _defaultDamage;
+		unsigned int _damage;
 
 		/**
 		Namespace para los tipos de mensajes de control posibles.
