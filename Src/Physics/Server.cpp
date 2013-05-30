@@ -339,9 +339,6 @@ namespace Physics {
 	//________________________________________________________________________
 
 	void CServer::setupFiltering(PxRigidActor* actor, int group, const std::vector<int>& groupList) {
-		if(group == 16)
-			std::cout << "jelou" << std::endl;
-
 		// El grupo de colision equivale al numero de desplazamientos que podemos realizar,
 		// que en nuestro caso son 32 debido a que tenemos un entero de 32 bits.
 		PxU32 filterGroup = (1 << group);
