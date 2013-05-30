@@ -339,6 +339,9 @@ namespace Physics {
 	//________________________________________________________________________
 
 	void CServer::setupFiltering(PxRigidActor* actor, int group, const std::vector<int>& groupList) {
+		if(group == 16)
+			std::cout << "jelou" << std::endl;
+
 		// El grupo de colision equivale al numero de desplazamientos que podemos realizar,
 		// que en nuestro caso son 32 debido a que tenemos un entero de 32 bits.
 		PxU32 filterGroup = (1 << group);
@@ -348,7 +351,7 @@ namespace Physics {
 		// queremos ser notificados con cualquier cosa (el caso del player); si el primer
 		// elemento no es -1, asignamos ese valor a la mascara y la incrementamos en el 
 		// siguiente paso.
-		PxU32 filterMask = groupList.empty() ? 0 : ( groupList[0] == -1 ? 0xFFFF : (1 << groupList[0]) );
+		PxU32 filterMask = groupList.empty() ? 0 : ( groupList[0] == -1 ? 0xFFFFFFFF : (1 << groupList[0]) );
 	
 		// Calculamos la mascara de colision, es decir, la mascara que define con que grupos
 		// de colision debemos activarnos.
