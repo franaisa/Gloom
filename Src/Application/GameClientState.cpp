@@ -62,7 +62,7 @@ namespace Application {
 		CGameState::activate();
 		
 		// Mostramos el menú de selección de personaje
-		_seleccion->show();
+		
 		_menuVisile = true;
 		// Registramos a este estado como observador de red para que sea notificado
 		_netMgr->addObserver(this);
@@ -86,6 +86,8 @@ namespace Application {
 		_netMgr->broadcast(ackBuffer.getbuffer(), ackBuffer.getSize());
 
 		Logic::CScoreboard::getSingletonPtr()->loadScoreboardDM();
+		_seleccion->show();
+		_seleccion->focus();
 	} // activate
 
 	//______________________________________________________________________________
