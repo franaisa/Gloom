@@ -22,7 +22,6 @@ Contiene la implementación del componente que representa al hammer.
 #include "Logic/Entity/Components/ArrayGraphics.h"
 #include "Logic/Entity/Components/Life.h"
 #include "Logic/Entity/Components/PullingMovement.h"
-#include "Logic/Entity/Components/Shoot.h"
 #include "Logic/Entity/Components/SpawnItemManager.h"
 #include "Logic/Entity/Components/Graphics.h"
 #include "Logic/Entity/Components/PhysicDynamicEntity.h"
@@ -75,6 +74,7 @@ namespace Logic {
 
 
 	void CShootHammer::primaryFire() {
+		_primaryFireTimer = _primaryFireCooldown;
 	
 		Vector3 direction = Math::getDirection(_entity->getOrientation()); 
 
@@ -82,16 +82,20 @@ namespace Logic {
 
 		Ray ray(origin, direction);
 			
-		Physics::CRaycastHit hits;
+		std::vector <Physics::CRaycastHit> hits;
 		// Quizas seria mas correcto comprobar tb el world para que no se pueda dar a traves de las paredes.
-		if(Physics::CServer::getSingletonPtr()->raycastSingle(ray, _shotsDistance, hits,Physics::CollisionGroup::ePLAYER)){
-			std::shared_ptr<CMessageDamaged> m = std::make_shared<CMessageDamaged>();
-			m->setDamage(_primaryFireDamage);
-			m->setEnemy(_entity);
-			hits.entity->emitMessage(m);
+		Physics::CServer::getSingletonPtr()->raycastMultiple(ray, _shotsDistance, hits,true, Physics::CollisionGroup::ePLAYER);
+		for (auto it = hits.begin(); it < hits.end(); ++it){
+			if((*it).entity->getEntityID() != _entity->getEntityID()){
+				std::shared_ptr<CMessageDamaged> m = std::make_shared<CMessageDamaged>();
+				m->setDamage(_primaryFireDamage);
+				m->setEnemy(_entity);
+				(*it).entity->emitMessage(m);
+				// esto es para que salga una vez que ya le ha dao a alguien que no eres tu mismo.
+				return;
+			}
 		}
-
-
+	
 	} // primaryFire
 	//__________________________________________________________________
 
@@ -169,7 +173,7 @@ namespace Logic {
 		int nbHits = 0;
 		//drawRaycast(ray);
 		
-		bool valid = Physics::CServer::getSingletonPtr()->raycastSingle(ray, _shotsDistanceSecondaryFire, hit,Physics::CollisionGroup::eITEMS);
+		bool valid = Physics::CServer::getSingletonPtr()->raycastSingle(ray, _shotsDistanceSecondaryFire, hit,Physics::CollisionGroup::eITEM);
 		
 		if(!valid)
 			return NULL;
@@ -234,7 +238,7 @@ namespace Logic {
 	//__________________________________________________________________
 
 	bool CShootHammer::canUsePrimaryFire() {
-		return (_primaryFireTimer == 0) &&  (_currentAmmo > 0 );
+		return _primaryFireTimer == 0;
 	} // canUsePrimaryFire
 	//__________________________________________________________________
 

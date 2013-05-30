@@ -31,7 +31,6 @@ Contiene la implementación de la clase que representa una entidad gráfica.
 
 #include <Graphics/Server.h>
 #include <Graphics/Camera.h>
-#include <Graphics/ObjectTextDisplay.h>
 
 namespace Graphics 
 {
@@ -112,14 +111,11 @@ namespace Graphics
 		_entityNode = _scene->getSceneMgr()->getRootSceneNode()->createChildSceneNode(_name + "_node");
 		_entityNode->attachObject(_entity);
 
-		//_text = new CObjectTextDisplay(_entity, _scene->getCamera()->getOgreCamera());
-		//_text->enable(false);
-		//_text->setText("Gazpacho");
-		size_t vertexCount, indexCount;
+		/*size_t vertexCount, indexCount;
 		Ogre::Vector3* vertexBuffer;
 		unsigned* indexBuffer;
 
-		getMeshInformation(_entity->getMesh(), vertexCount, vertexBuffer, indexCount, indexBuffer);
+		getMeshInformation(_entity->getMesh(), vertexCount, vertexBuffer, indexCount, indexBuffer);*/
 			
 		return _loaded = true;
 

@@ -102,7 +102,7 @@ namespace Physics {
 		desc.interactionMode = PxCCTInteractionMode::eUSE_FILTER;
 		desc.groupsBitmask = (1 << group);
 
-		_filterMask = groupList.empty() ? 0 : ( groupList[0] == -1 ? 0xFFFF : (1 << groupList[0]) );
+		_filterMask = groupList.empty() ? 0 : ( groupList[0] == -1 ? 0xFFFFFFFF : (1 << groupList[0]) );
 		// Fijamos la mascara de colisiones para el movimiento
 		for(unsigned int i = 1; i < groupList.size(); ++i) {
 			_filterMask |= ( 1 << groupList[i] );

@@ -120,6 +120,7 @@ namespace Logic {
 
 				delete _overlayWeapon3D[i];
 			}
+
 			delete _graphicsEntities;
 		}
 
@@ -129,7 +130,7 @@ namespace Logic {
 	
 	void CHudWeapons::onActivate() {
 		//Cuando activamos el componente solo tendremos visible el arma 0( arma melee)
-		_currentWeapon = 0;
+		_currentWeapon = WeaponType::eHAMMER;
 		_graphicsEntities[_currentWeapon].graphicsEntity->setVisible(true);
 	} // activate
 

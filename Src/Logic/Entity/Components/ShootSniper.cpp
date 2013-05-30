@@ -58,6 +58,11 @@ namespace Logic {
 	//__________________________________________________________________
 
 	void CShootSniper::primaryFire(){
+		// @deprecated Temporal hasta que este bien implementado
+		CHudWeapons* hudWeapon = _entity->getComponent<CHudWeapons>("CHudWeapons");
+		if(hudWeapon != NULL)
+			hudWeapon->shootAnim(-1.5f);
+
 		//Direccion
 		Vector3 direction = Math::getDirection(_entity->getOrientation()); 
 
@@ -72,6 +77,8 @@ namespace Logic {
 		// Rayo lanzado por el servidor de físicas de acuerdo a la distancia de potencia del arma
 		std::vector<Physics::CRaycastHit> hits;
 		Physics::CServer::getSingletonPtr()->raycastMultiple(ray, _shotsDistance, hits,true,Physics::CollisionGroup::ePLAYER | Physics::CollisionGroup::eWORLD);
+
+		decrementAmmo();
 
 		//Aplicamos daño si no somos nosotros mismos(se podria modificar la fisica para que no nos devuelva a nosotros)
 		//Y ademas no hemos tocado ya pared
@@ -100,11 +107,15 @@ namespace Logic {
 				triggerHitMessages(hits[i].entity, _primaryFireDamage);
 			}
 		}
-
 	}//primaryFireWeapon
 	//-------------------------------------------------------
 
 	void CShootSniper::secondaryFire(){
+		// @deprecated Temporal hasta que este bien implementado
+		CHudWeapons* hudWeapon = _entity->getComponent<CHudWeapons>("CHudWeapons");
+		if(hudWeapon != NULL)
+			hudWeapon->shootAnim(-1.5f);
+
 		//Direccion
 		Vector3 direction = Math::getDirection(_entity->getOrientation()); 
 		//Posicion de la entidad + altura de disparo(coincidente con la altura de la camara)
@@ -146,6 +157,7 @@ namespace Logic {
 			}
 		}//if(entityHit!=NULL)
 
+		decrementAmmo(_secondaryConsumeAmmo);
 	}//secondaryFireWeapon
 	//-------------------------------------------------------
 
@@ -228,12 +240,12 @@ namespace Logic {
 	//__________________________________________________________________
 
 	bool CShootSniper::canUsePrimaryFire() {
-		return (_primaryFireTimer == 0) &&  (_currentAmmo > 0 );
+		return _primaryFireTimer == 0 && _currentAmmo > 0;
 	} // canUsePrimaryFire
 	//__________________________________________________________________
 
 	bool CShootSniper::canUseSecondaryFire() {
-		return (_secondaryFireTimer == 0) && (_currentAmmo >= _secondaryConsumeAmmo);
+		return _secondaryFireTimer == 0 && _currentAmmo >= _secondaryConsumeAmmo;
 	} // canUseSecondaryFire
 	//__________________________________________________________________
 

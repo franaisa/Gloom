@@ -56,6 +56,7 @@ namespace Logic {
 		assert( entityInfo->hasAttribute(_weaponName+"NumberOfShots") );
 
 		assert( entityInfo->hasAttribute(_weaponName + "PrimaryFireDamage") );
+		assert( entityInfo->hasAttribute(_weaponName + "PrimaryFireDamage") );
 
 		// Leemos los atributos
 		_projectileShootForce = entityInfo->getFloatAttribute(_weaponName + "ShootForce");
@@ -64,8 +65,6 @@ namespace Logic {
 		_damageBurned = entityInfo->getFloatAttribute(_weaponName+"DamageBurned");
 		_defaultPrimaryFireCooldown = _primaryFireCooldown = entityInfo->getFloatAttribute(_weaponName+"PrimaryFireCooldown") * 1000;
 		_numberOfShots = entityInfo->getIntAttribute(_weaponName+"NumberOfShots");
-		_primaryFireDamage = entityInfo->getIntAttribute(_weaponName+"PrimaryFireDamage");
-
 		_defaultPrimaryFireDamage = _primaryFireDamage = entityInfo->getFloatAttribute(_weaponName + "PrimaryFireDamage");
 
 		return true;
@@ -95,6 +94,12 @@ namespace Logic {
 
 	void CShootShotGun::primaryFire() {
 		_primaryFireCooldownTimer = _primaryFireCooldown;
+
+		// Animacion de disparo
+		// @deprecated Temporal hasta que este bien implementado
+		CHudWeapons* hudWeapon = _entity->getComponent<CHudWeapons>("CHudWeapons");
+		if(hudWeapon != NULL)
+			hudWeapon->shootAnim(-1.0f);
 
 		int shots = _numberOfShots <= _currentAmmo ? _numberOfShots : _currentAmmo;
 		for(int i = 0; i < shots; ++i) {
@@ -146,8 +151,6 @@ namespace Logic {
 	//_________________________________________________
 	
 	void CShootShotGun::amplifyDamage(unsigned int percentage) {
-		// @todo
-		// TIENE QUE AFECTAR A LAS BALAS!!!!!!!!!!!!
 		if(percentage == 0) {
 			_primaryFireDamage = _defaultPrimaryFireDamage;
 		}
@@ -167,7 +170,7 @@ namespace Logic {
 
 	bool CShootShotGun::canUsePrimaryFire() {
 		// Si tienes municion y el cooldown ha bajado
-		return _primaryFireCooldownTimer == 0 && _numberOfShots <= _currentAmmo;
+		return _primaryFireCooldownTimer == 0 && _currentAmmo > 0;
 	}
 	//_________________________________________________
 
