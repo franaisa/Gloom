@@ -152,6 +152,7 @@ namespace Logic {
 
 		if(_map = CMap::createMapFromFile(filename))
 		{
+			std::cout << "loadlevel terminado" << std::endl;
 			return true;
 		}
 

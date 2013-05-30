@@ -149,7 +149,7 @@ namespace Logic {
 				_bluePrints.insert(elem);
 			}
 		}
-
+		std::cout << "bluelprints terminado" << std::endl;
 		return true;
 	} // loadBluePrints
 
@@ -182,6 +182,7 @@ namespace Logic {
 		}
 
 		Map::CMapParser::getSingletonPtr()->releaseEntityList();
+		std::cout << "archetypes terminado" << std::endl;
 		return true;
 	} // loadArchetypes
 	
