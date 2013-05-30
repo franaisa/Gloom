@@ -38,70 +38,30 @@ namespace Logic {
 	//________________________________________________
 
 	bool CShootShotGun::spawn(CEntity* entity, CMap *map, const Map::CEntity *entityInfo){
-		if(!CShoot::spawn(entity, map, entityInfo))
+		if(!IWeapon::spawn(entity, map, entityInfo))
 			return false;
 
 		// Leer los parametros que toquen para los proyectiles
-		std::stringstream aux;
-		aux << "weapon" << _nameWeapon;	////!!!! Aqui debes de poner el nombre del arma que leera en el map.txt
-		std::string weapon = aux.str();
+		if(entityInfo->hasAttribute(_weaponName+"ShootForce"))
+			_projectileShootForce = entityInfo->getFloatAttribute(_weaponName + "ShootForce");
 
-		if(entityInfo->hasAttribute(weapon+"ShootForce"))
-			_projectileShootForce = entityInfo->getFloatAttribute(weapon + "ShootForce");
+		if(entityInfo->hasAttribute(_weaponName+"ProjectileRadius"))
+			_projectileRadius = entityInfo->getFloatAttribute(_weaponName + "ProjectileRadius");
 
-		if(entityInfo->hasAttribute(weapon+"ProjectileRadius"))
-			_projectileRadius = entityInfo->getFloatAttribute(weapon + "ProjectileRadius");
-
-		if(entityInfo->hasAttribute("audioNoAmmo"))
-			_noAmmo = entityInfo->getStringAttribute("audioNoAmmo");
-
-		if(entityInfo->hasAttribute(weapon+"Audio"))
-			_audioShoot = entityInfo->getStringAttribute(weapon+"Audio");
-
-		if(entityInfo->hasAttribute(weapon+"Dispersion")){
-			_dispersionAngle  = entityInfo->getFloatAttribute(weapon+"Dispersion");
+		if(entityInfo->hasAttribute(_weaponName+"PrimaryFireDispersion")){
+			_dispersionAngle  = entityInfo->getFloatAttribute(_weaponName+"PrimaryFireDispersion");
 		}
 
-		if(entityInfo->hasAttribute(weapon+"DamageBurned")){
-			_damageBurned = entityInfo->getFloatAttribute(weapon+"DamageBurned");
+		if(entityInfo->hasAttribute(_weaponName+"DamageBurned")){
+			_damageBurned = entityInfo->getFloatAttribute(_weaponName+"DamageBurned");
 			
 		}
 
 		return true;
 	}// spawn
 	//________________________________________________
-	
-	void CShootShotGun::primaryShoot() {
-		if(_primaryCanShoot && _currentAmmo > 0) {
-			_primaryCanShoot = false;
-			_primaryCooldownTimer = 0;
-				
-			drawParticle("shootParticle");
 
-			float shoots = _numberShots;
-			if(_currentAmmo < _numberShots)
-				shoots = _currentAmmo;
-			
-			for(int i = 0; i < shoots ; ++i){
-				fireWeapon();
-				decrementAmmo();
-			}
-
-			//Sonido de disparo
-			emitSound(_audioShoot, "audioShot");
-			// @deprecated Temporal hasta que este bien implementado
-			CHudWeapons* hudWeapon = _entity->getComponent<CHudWeapons>("CHudWeapons");
-			if(hudWeapon != NULL)
-				hudWeapon->shootAnim(-1.0f);
-		}
-		else if(_currentAmmo == 0) {
-			// Ejecutar sonidos y animaciones de falta de balas
-			emitSound(_noAmmo, "noAmmo", true);
-		}
-	} // primaryShoot
-	//__________________________________________________________________
-
-	void CShootShotGun::secondaryShoot() {
+	void CShootShotGun::secondaryFire() {
 		// yo le digo que deben de volver, y a partir de ahi, ellas solas encuentran el camino :D
 		if(!_projectiles.empty()){
 			for(auto it = _projectiles.begin(); it != _projectiles.end(); ++it){
@@ -111,8 +71,10 @@ namespace Logic {
 	} // secondaryShoot
 	//__________________________________________________________________
 
-	void CShootShotGun::fireWeapon(){
+	void CShootShotGun::primaryFire(){
 		
+		decrementAmmo();
+
 		Vector3 direction = Math::getDirection(_entity->getOrientation());
 		Ogre::Radian angle = Ogre::Radian( (  (((float)(rand() % 100))*0.01f) * (_dispersionAngle)) *0.01f);
 		Vector3 dispersionDirection = direction.randomDeviant(angle);
@@ -133,7 +95,7 @@ namespace Logic {
 		projectileEntity->activate();
 		projectileEntity->start();
 
-		projectileEntity->getComponent<CMagneticBullet>("CMagneticBullet")->setProperties(this, _projectileShootForce, dispersionDirection, _heightShoot, _damage, _damageBurned);
+		projectileEntity->getComponent<CMagneticBullet>("CMagneticBullet")->setProperties(this, _projectileShootForce, dispersionDirection, _heightShoot, _primaryFireDamage, _damageBurned);
 		_projectiles.insert(projectileEntity);
 			
 	} // fireWeapon
@@ -142,7 +104,7 @@ namespace Logic {
 	void CShootShotGun::destroyProjectile(CEntity *projectile, CEntity *killedBy){
 
 		if(killedBy->getType() == "World"){
-			decals(killedBy, projectile->getPosition());
+			drawDecal(killedBy, projectile->getPosition());
 
 			// Añado aqui las particulas de dado en la pared.
 			auto m = std::make_shared<CMessageCreateParticle>();

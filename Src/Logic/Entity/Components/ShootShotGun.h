@@ -14,7 +14,7 @@ Contiene la declaración del componente que implementa la escopeta.
 #ifndef __Logic_ShootShotGun_H
 #define __Logic_ShootShotGun_H
 
-#include "Logic/Entity/Components/ShootProjectile.h"
+#include "Logic/Entity/Components/Weapon.h"
 #include <vector>
 
 namespace Logic {
@@ -32,12 +32,12 @@ namespace Logic {
 	@date Febrero, 2013
 	*/
 
-	class CShootShotGun : public CShootProjectile {
+	class CShootShotGun : public IWeapon {
 		DEC_FACTORY(CShootShotGun);
 	public:
 
 		/** Constructor por defecto. */
-		CShootShotGun() : CShootProjectile("shotGun"), _dispersionAngle(0) {
+		CShootShotGun() : IWeapon("shotGun"), _dispersionAngle(0) {
 			
 		}
 
@@ -47,11 +47,9 @@ namespace Logic {
 
 		virtual bool spawn(CEntity* entity, CMap *map, const Map::CEntity *entityInfo);
 
-		virtual void primaryShoot();
+		virtual void primaryFire();
 		
-		virtual void secondaryShoot();
-
-		virtual void fireWeapon();
+		virtual void secondaryFire();
 
 		/**
 		Metodo llamado por el proyectil para que este sea borrado como entidad y que lo borre de la lista de 
@@ -74,6 +72,16 @@ namespace Logic {
 		variable que contiene el daño cuando la municon esta incendiada
 		*/
 		float _damageBurned;
+
+		/**
+		Fuerza de los proyectiles, equivale a la velocidad de estos
+		*/
+		float _projectileShootForce;
+
+		/**
+		radio de los proyectiles, equivale al tamaño de estos
+		*/
+		float _projectileRadius;
 
 		/**
 		Lista con los punteros a los projectiles.

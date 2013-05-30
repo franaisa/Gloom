@@ -128,7 +128,6 @@
     <ClCompile Include="..\..\Src\Logic\Entity\Components\ShootMiniGun.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\ShootProjectile.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\ShootRaycast.cpp" />
-    <ClCompile Include="..\..\Src\Logic\Entity\Components\ShootRocketLauncher.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\ShootShotGun.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\ShootSniper.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\PlayerClass.cpp" />
@@ -283,7 +282,6 @@
     <ClInclude Include="..\..\Src\Logic\Entity\Components\ShootMiniGun.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\ShootProjectile.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\ShootRaycast.h" />
-    <ClInclude Include="..\..\Src\Logic\Entity\Components\ShootRocketLauncher.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\ShootShotGun.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\ShootSniper.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\PlayerClass.h" />

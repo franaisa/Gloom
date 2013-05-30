@@ -20,7 +20,7 @@ de disparo del lanzacohetes.
 #ifndef __Logic_ShootRocketLauncher_H
 #define __Logic_ShootRocketLauncher_H
 
-#include "Logic/Entity/Components/ShootProjectile.h"
+#include "Logic/Entity/Components/Weapon.h"
 
 namespace Logic {
 
@@ -33,13 +33,13 @@ namespace Logic {
 	@date Febrero, 2013
 	*/
 
-	class CShootRocketLauncher : public CShootProjectile {
+	class CShootRocketLauncher : public IWeapon {
 		DEC_FACTORY(CShootRocketLauncher);
 
 	public:
 
 		/** Constructor por defecto. */
-		CShootRocketLauncher() : CShootProjectile("rocketLauncher") { }
+		CShootRocketLauncher() : IWeapon("rocketLauncher") { }
 
 		virtual ~CShootRocketLauncher();
 

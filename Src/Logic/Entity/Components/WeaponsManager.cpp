@@ -18,12 +18,11 @@ Contiene la implementación del componente que gestiona las armas y que administr
 #include "Logic/Entity/Components/ArrayGraphics.h"
 #include "Logic/Maps/WorldState.h"
 
-#include "Shoot.h"
+#include "Weapon.h"
 #include "ShootShotGun.h"
 #include "ShootSniper.h"
 #include "ShootMiniGun.h"
 #include "ShootHammer.h"
-#include "ShootRocketLauncher.h"
 #include "IronHellGoat.h"
 
 #include "Logic/Messages/MessageChangeWeapon.h"
@@ -215,7 +214,7 @@ namespace Logic
 	void CWeaponsManager::amplifyDamage(int percentage) {
 		// Amplificamos el daño de todas las armas en base al porcentaje dado
 		for(unsigned int i = 0; i < _weaponry.size(); ++i) {
-			_weaponry[i].second->incrementDamage(percentage);
+			_weaponry[i].second->amplifyDamage(percentage);
 		}
 	}
 
