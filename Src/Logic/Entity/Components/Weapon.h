@@ -62,13 +62,12 @@ namespace Logic {
 
 		virtual void resetAmmo();
 
+		// @abstract
 		virtual void amplifyDamage(unsigned int percentage) = 0;
-
+		// @abstract
 		virtual void reduceCooldown(unsigned int percentage) = 0;
 
 	protected:
-
-		//virtual void onTick(unsigned int msecs);
 
 		virtual void onAvailable();
 
@@ -80,9 +79,9 @@ namespace Logic {
 		void drawDecal(Logic::CEntity* pEntity, Vector3 vPos);
 
 
-
+		// @abstract
 		virtual bool canUsePrimaryFire() = 0;
-
+		// @abstract
 		virtual bool canUseSecondaryFire() = 0;
 
 
