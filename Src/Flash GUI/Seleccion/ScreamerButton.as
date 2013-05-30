@@ -27,7 +27,7 @@ package
 			this.addEventListener(MouseEvent.CLICK, onMouseClick);
 			this.gotoAndPlay("rollover");
 			var selector: ImageSelector = manager.getChildByName("selector") as ImageSelector;
-			selector.gotoAndPlay("shadow");
+			selector.gotoAndPlay("screamer");
 		}
 		
 		private function onMouseOut(e:MouseEvent):void {
@@ -40,7 +40,6 @@ package
 		}
 		
 		private function onMouseClick(e:MouseEvent):void {
-			this.removeEventListener(MouseEvent.CLICK, onMouseOver);
 			ExternalInterface.call("selected", 1);
 		}
 		

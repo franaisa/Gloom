@@ -9,6 +9,7 @@ implementa las habilidades del personaje
 @see Logic::IComponent
 
 @author Jose Antonio García Yáñez.
+@author Rubén Mulero Guerrero.
 @date Marzo, 2013
 */
 

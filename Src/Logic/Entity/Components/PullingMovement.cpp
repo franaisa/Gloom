@@ -4,6 +4,7 @@
 @see Logic::IComponent
 
 @author Francisco Aisa García
+@author Rubén Mulero Guerrero.
 @date Febrero, 2013
 */
 
