@@ -31,9 +31,15 @@ Contiene la implementación del componente que representa a la escopeta.
 namespace Logic {
 	IMP_FACTORY(CShootShotGun);
 
+	CShootShotGun::CShootShotGun() : IWeapon("shotGun"), 
+		                             _dispersionAngle(0),
+									 _primaryFireCooldownTimer(0) {
+
+	}
+	//________________________________________________
+
 	CShootShotGun::~CShootShotGun() {
 		// Nada que hacer
-
 	}// CShootShotGun
 	//________________________________________________
 
@@ -41,21 +47,21 @@ namespace Logic {
 		if(!IWeapon::spawn(entity, map, entityInfo))
 			return false;
 
-		// Leer los parametros que toquen para los proyectiles
-		if(entityInfo->hasAttribute(_weaponName+"ShootForce"))
-			_projectileShootForce = entityInfo->getFloatAttribute(_weaponName + "ShootForce");
+		// Nos aseguramos de tener todos los parametros que necesitamos
+		assert( entityInfo->hasAttribute(_weaponName+"ShootForce") );
+		assert( entityInfo->hasAttribute(_weaponName+"ProjectileRadius") );
+		assert( entityInfo->hasAttribute(_weaponName+"PrimaryFireDispersion") );
+		assert( entityInfo->hasAttribute(_weaponName+"DamageBurned") );
+		assert( entityInfo->hasAttribute(_weaponName+"PrimaryFireCooldown") );
+		assert( entityInfo->hasAttribute(_weaponName+"NumberOfShots") );
 
-		if(entityInfo->hasAttribute(_weaponName+"ProjectileRadius"))
-			_projectileRadius = entityInfo->getFloatAttribute(_weaponName + "ProjectileRadius");
-
-		if(entityInfo->hasAttribute(_weaponName+"PrimaryFireDispersion")){
-			_dispersionAngle  = entityInfo->getFloatAttribute(_weaponName+"PrimaryFireDispersion");
-		}
-
-		if(entityInfo->hasAttribute(_weaponName+"DamageBurned")){
-			_damageBurned = entityInfo->getFloatAttribute(_weaponName+"DamageBurned");
-			
-		}
+		// Leemos los atributos
+		_projectileShootForce = entityInfo->getFloatAttribute(_weaponName + "ShootForce");
+		_projectileRadius = entityInfo->getFloatAttribute(_weaponName + "ProjectileRadius");
+		_dispersionAngle  = entityInfo->getFloatAttribute(_weaponName+"PrimaryFireDispersion");
+		_damageBurned = entityInfo->getFloatAttribute(_weaponName+"DamageBurned");
+		_defaultPrimaryFireCooldown = _primaryFireCooldown = entityInfo->getFloatAttribute(_weaponName+"PrimaryFireCooldown") * 1000;
+		_numberOfShots = entityInfo->getIntAttribute(_weaponName+"NumberOfShots");
 
 		return true;
 	}// spawn
@@ -71,38 +77,52 @@ namespace Logic {
 	} // secondaryShoot
 	//__________________________________________________________________
 
-	void CShootShotGun::primaryFire(){
-		
-		decrementAmmo();
+	void CShootShotGun::onTick(unsigned int msecs) {
+		// Controlamos el cooldown del disparo primario y secundario
+		if(_primaryFireCooldownTimer > 0) {
+			_primaryFireCooldownTimer -= msecs;
+			
+			if(_primaryFireCooldownTimer < 0)
+				_primaryFireCooldownTimer = 0;
+		}
+	}
+	//__________________________________________________________________
 
-		Vector3 direction = Math::getDirection(_entity->getOrientation());
-		Ogre::Radian angle = Ogre::Radian( (  (((float)(rand() % 100))*0.01f) * (_dispersionAngle)) *0.01f);
-		Vector3 dispersionDirection = direction.randomDeviant(angle);
-		dispersionDirection.normalise();
+	void CShootShotGun::primaryFire() {
+		_primaryFireCooldownTimer = _primaryFireCooldown;
 
-		Vector3 position = _entity->getPosition();
-		position.y += _heightShoot;
+		int shots = _numberOfShots <= _currentAmmo ? _numberOfShots : _currentAmmo;
+		for(int i = 0; i < shots; ++i) {
+			Vector3 direction = Math::getDirection(_entity->getOrientation());
+			Ogre::Radian angle = Ogre::Radian( (  (((float)(rand() % 100))*0.01f) * (_dispersionAngle)) *0.01f);
+			Vector3 dispersionDirection = direction.randomDeviant(angle);
+			dispersionDirection.normalise();
 
-		//position += direction * (_capsuleRadius + _projectileRadius + 0.5 );
-		Matrix4 transform = Matrix4::IDENTITY;
-		transform.setTrans(position);
+			Vector3 position = _entity->getPosition();
+			position.y += _heightShoot;
 
-		CEntity *projectileEntity= CEntityFactory::getSingletonPtr()->createEntity( 
-			CEntityFactory::getSingletonPtr()->getInfo("MagneticBullet"),
-			Logic::CServer::getSingletonPtr()->getMap(),
-			transform
-		);
-		projectileEntity->activate();
-		projectileEntity->start();
+			//position += direction * (_capsuleRadius + _projectileRadius + 0.5 );
+			Matrix4 transform = Matrix4::IDENTITY;
+			transform.setTrans(position);
 
-		projectileEntity->getComponent<CMagneticBullet>("CMagneticBullet")->setProperties(this, _projectileShootForce, dispersionDirection, _heightShoot, _primaryFireDamage, _damageBurned);
-		_projectiles.insert(projectileEntity);
+			CEntity *projectileEntity= CEntityFactory::getSingletonPtr()->createEntity( 
+				CEntityFactory::getSingletonPtr()->getInfo("MagneticBullet"),
+				Logic::CServer::getSingletonPtr()->getMap(),
+				transform
+			);
+			projectileEntity->activate();
+			projectileEntity->start();
+
+			projectileEntity->getComponent<CMagneticBullet>("CMagneticBullet")->setProperties(this, _projectileShootForce, dispersionDirection, _heightShoot, _primaryFireDamage, _damageBurned);
+			_projectiles.insert(projectileEntity);
+		}
+
+		decrementAmmo(shots);
 			
 	} // fireWeapon
 	//_________________________________________________
 
 	void CShootShotGun::destroyProjectile(CEntity *projectile, CEntity *killedBy){
-
 		if(killedBy->getType() == "World"){
 			drawDecal(killedBy, projectile->getPosition());
 
@@ -120,11 +140,29 @@ namespace Logic {
 	} // destroyProjectile
 	//_________________________________________________
 	
-	
-	/*
-	void CShootShotGun::onFixedTick(unsigned int msecs){
+	void CShootShotGun::amplifyDamage(unsigned int percentage) {
+		// @todo
+		// TIENE QUE AFECTAR A LAS BALAS!!!!!!!!!!!!
 	}
+	//_________________________________________________
 
-	*/
+	void CShootShotGun::reduceCooldown(unsigned int percentage) {
+		// Si es 0 significa que hay que restaurar al que habia por defecto,
+		// sino decrementamos conforme al porcentaje dado.
+		_primaryFireCooldown = percentage == 0 ? _defaultPrimaryFireCooldown : (percentage * _primaryFireCooldown * 0.01f);
+	}
+	//_________________________________________________
+
+	bool CShootShotGun::canUsePrimaryFire() {
+		// Si tienes municion y el cooldown ha bajado
+		return _primaryFireCooldownTimer == 0 && _numberOfShots <= _currentAmmo;
+	}
+	//_________________________________________________
+
+	bool CShootShotGun::canUseSecondaryFire() {
+		return true;
+	}
+	//_________________________________________________
+
 } // namespace Logic
 

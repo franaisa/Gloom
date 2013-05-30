@@ -37,9 +37,7 @@ namespace Logic {
 	public:
 
 		/** Constructor por defecto. */
-		CShootShotGun() : IWeapon("shotGun"), _dispersionAngle(0) {
-			
-		}
+		CShootShotGun();
 
 		virtual ~CShootShotGun();
 
@@ -51,6 +49,10 @@ namespace Logic {
 		
 		virtual void secondaryFire();
 
+		virtual void amplifyDamage(unsigned int percentage);
+
+		virtual void reduceCooldown(unsigned int percentage);
+
 		/**
 		Metodo llamado por el proyectil para que este sea borrado como entidad y que lo borre de la lista de 
 		proyectiles.
@@ -58,10 +60,20 @@ namespace Logic {
 		*/
 		void destroyProjectile(CEntity *projectile, CEntity *killedBy);
 
-		//virtual void onFixedTick(unsigned int msecs);
+	protected:
 
+		virtual void onTick(unsigned int msecs);
+
+		virtual bool canUsePrimaryFire();
+		virtual bool canUseSecondaryFire();
 
 	private:
+
+		unsigned int _defaultPrimaryFireCooldown;
+		unsigned int _primaryFireCooldown;
+		int _primaryFireCooldownTimer;
+
+		unsigned int _numberOfShots;
 
 		/**
 		variable que lee del mapa la dispersion del arma

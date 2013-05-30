@@ -35,21 +35,7 @@ using namespace std;
 namespace Logic {
 	
 	IWeapon::IWeapon(const string& weaponName) : _weaponName("weapon" + weaponName),
-												 _currentAmmo(0),
-												 _primaryFireTimer(0),
-												 _secondaryFireTimer(0),
-												 _ammoSpentPerPrimaryShot(0),
-												 _shotsPerPrimaryFire(1),
-												 _ammoSpentPerSecondaryShot(0), 
-												 _shotsPerSecondaryFire(1),
-												 _primaryFireCooldown(0),
-												 _secondaryFireCooldown(0),
-												 _primaryFireDamage(0),
-												 _secondaryFireDamage(0),
-												 _defaultPrimaryFireDamage(0),
-												 _defaultSecondaryFireDamage(0),
-												 _defaultPrimaryFireCooldown(0), 
-												 _defaultSecondaryFireCooldown(0) {
+												 _currentAmmo(0) {
 
 		// Nada que inicializar
 	}
@@ -100,24 +86,16 @@ namespace Logic {
 
 				if(type == Control::LEFT_CLICK) {
 					if( canUsePrimaryFire() ) {
-						for(int i = 0; i < _shotsPerPrimaryFire; ++i)
-							primaryFire();
+						primaryFire();
 
-						_primaryFireTimer = _primaryFireCooldown;
-					}
-					else if(_currentAmmo == 0) {
-						//emitSound(_noAmmo, "noAmmo", true);
+						//_primaryFireTimer = _primaryFireCooldown;
 					}
 				}
 				else if(type == Control::RIGHT_CLICK) {
 					if( canUseSecondaryFire() ) {
-						for(int i = 0; i < _shotsPerSecondaryFire; ++i)
-							secondaryFire();
+						secondaryFire();
 
-						_secondaryFireTimer = _secondaryFireCooldown;
-					}
-					else if(_currentAmmo == 0) {
-						//emitSound(_noAmmo, "noAmmo", true);
+						//_secondaryFireTimer = _secondaryFireCooldown;
 					}
 				}
 				else if(type == Control::UNLEFT_CLICK) {
@@ -134,9 +112,9 @@ namespace Logic {
 
 	//__________________________________________________________________
 
-	void IWeapon::onTick(unsigned int msecs) {
+	//void IWeapon::onTick(unsigned int msecs) {
 		// Controlamos el cooldown del disparo primario y secundario
-		if(_primaryFireTimer > 0) {
+		/*if(_primaryFireTimer > 0) {
 			_primaryFireTimer -= msecs;
 			
 			if(_primaryFireTimer < 0)
@@ -148,8 +126,8 @@ namespace Logic {
 
 			if(_secondaryFireTimer < 0)
 				_secondaryFireTimer = 0;
-		}
-	}
+		}*/
+	//}
 
 	//__________________________________________________________________
 
@@ -207,13 +185,15 @@ namespace Logic {
 	//__________________________________________________________________
 
 	bool IWeapon::canUsePrimaryFire() {
-		return _primaryFireTimer == 0 && ( (_ammoSpentPerPrimaryShot * _shotsPerPrimaryFire) <= _currentAmmo);
+		//return _primaryFireTimer == 0 && ( (_ammoSpentPerPrimaryShot * _shotsPerPrimaryFire) <= _currentAmmo);
+		return true;
 	}
 
 	//__________________________________________________________________
 
 	bool IWeapon::canUseSecondaryFire() {
-		return _secondaryFireTimer == 0 && ( (_ammoSpentPerSecondaryShot * _shotsPerSecondaryFire) <= _currentAmmo);
+		//return _secondaryFireTimer == 0 && ( (_ammoSpentPerSecondaryShot * _shotsPerSecondaryFire) <= _currentAmmo);
+		return true;
 	}
 
 	//__________________________________________________________________
@@ -226,7 +206,7 @@ namespace Logic {
 
 	void IWeapon::amplifyDamage(unsigned int percentage) {
 		// Si es 0 significa que hay que restaurar al que habia por defecto
-		if(percentage == 0) {
+		/*if(percentage == 0) {
 			_primaryFireDamage = _defaultPrimaryFireDamage;
 			_secondaryFireDamage = _defaultSecondaryFireDamage;
 		}
@@ -234,14 +214,14 @@ namespace Logic {
 		else {
 			_primaryFireDamage += percentage * _primaryFireDamage * 0.01f;
 			_secondaryFireDamage += percentage * _secondaryFireDamage * 0.01f;
-		}
+		}*/
 	}
 
 	//__________________________________________________________________
 
 	void IWeapon::reduceCooldown(unsigned int percentage) {
 		// Si es 0 significa que hay que restaurar al que habia por defecto
-		if(percentage == 0) {
+		/*if(percentage == 0) {
 			_primaryFireCooldown = _defaultPrimaryFireCooldown;
 			_secondaryFireCooldown = _defaultSecondaryFireCooldown;
 		}
@@ -249,7 +229,7 @@ namespace Logic {
 		else {
 			_primaryFireCooldown -= percentage * _primaryFireCooldown * 0.01f;
 			_secondaryFireCooldown -= percentage * _secondaryFireCooldown * 0.01f;
-		}
+		}*/
 	}
 
 	//__________________________________________________________________
@@ -307,31 +287,31 @@ namespace Logic {
 
 	void IWeapon::readOptionalAttributes(const Map::CEntity* entityInfo) {
 		// Cooldown, por defecto es 0
-		if( entityInfo->hasAttribute(_weaponName + "PrimaryFireCooldown") )
+		/*if( entityInfo->hasAttribute(_weaponName + "PrimaryFireCooldown") )
 			_defaultPrimaryFireCooldown =  _primaryFireCooldown = entityInfo->getFloatAttribute(_weaponName + "PrimaryFireCooldown")  * 1000;
 		if( entityInfo->hasAttribute(_weaponName + "SecondaryFireCooldown") )
-			_defaultSecondaryFireCooldown = _secondaryFireCooldown = entityInfo->getFloatAttribute(_weaponName + "SecondaryFireCooldown") * 1000;
+			_defaultSecondaryFireCooldown = _secondaryFireCooldown = entityInfo->getFloatAttribute(_weaponName + "SecondaryFireCooldown") * 1000;*/
 		
 		// Daño. No todos los modos de disparo tienen porque hacer daño. Por defecto es 0.
-		if( entityInfo->hasAttribute(_weaponName + "PrimaryFireDamage") )
+		/*if( entityInfo->hasAttribute(_weaponName + "PrimaryFireDamage") )
 			_defaultPrimaryFireDamage = _primaryFireDamage = entityInfo->getIntAttribute(_weaponName + "PrimaryFireDamage");
 		if( entityInfo->hasAttribute(_weaponName + "SecondaryFireDamage") )
-			_defaultSecondaryFireDamage = _secondaryFireDamage = entityInfo->getIntAttribute(_weaponName + "SecondaryFireDamage");
+			_defaultSecondaryFireDamage = _secondaryFireDamage = entityInfo->getIntAttribute(_weaponName + "SecondaryFireDamage");*/
 
 		// Munición por disparo
-		if( entityInfo->hasAttribute(_weaponName + "AmmoSpentPerPrimaryShot") )
+		/*if( entityInfo->hasAttribute(_weaponName + "AmmoSpentPerPrimaryShot") )
 			_ammoSpentPerPrimaryShot = entityInfo->getIntAttribute(_weaponName + "AmmoSpentPerPrimaryShot");
 		if( entityInfo->hasAttribute(_weaponName + "AmmoSpentPerSecondaryShot") )
-			_ammoSpentPerSecondaryShot = entityInfo->getIntAttribute(_weaponName + "AmmoSpentPerSecondaryShot");
+			_ammoSpentPerSecondaryShot = entityInfo->getIntAttribute(_weaponName + "AmmoSpentPerSecondaryShot");*/
 
 		// Disparos por click
-		if( entityInfo->hasAttribute(_weaponName + "ShotsPerPrimaryFire") )
+		/*if( entityInfo->hasAttribute(_weaponName + "ShotsPerPrimaryFire") )
 			_shotsPerPrimaryFire = entityInfo->getIntAttribute(_weaponName + "ShotsPerPrimaryFire");
 		if( entityInfo->hasAttribute(_weaponName + "ShotsPerSecondaryFire") )
-			_shotsPerSecondaryFire = entityInfo->getIntAttribute(_weaponName + "ShotsPerSecondaryFire");
+			_shotsPerSecondaryFire = entityInfo->getIntAttribute(_weaponName + "ShotsPerSecondaryFire");*/
 
-		if( entityInfo->hasAttribute(_weaponName + "ShotsDistance") )
-			_shotsDistance = entityInfo->getFloatAttribute(_weaponName + "ShotsDistance");
+		/*if( entityInfo->hasAttribute(_weaponName + "ShotsDistance") )
+			_shotsDistance = entityInfo->getFloatAttribute(_weaponName + "ShotsDistance");*/
 	}
 
 } // namespace Logic
