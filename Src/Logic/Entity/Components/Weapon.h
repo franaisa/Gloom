@@ -93,49 +93,20 @@ namespace Logic {
 
 		//__________________________________________________________________
 
-		// Municion 
 
 		/** Cuanta munición puede llevar este arma como máximo. */
 		unsigned int _maxAmmo;
 		/** Cuanta munición tenemos actualmente en este arma. */
 		unsigned int _currentAmmo;
 		
-		/*unsigned int _defaultPrimaryFireDamage;
-		unsigned int _defaultSecondaryFireDamage;
-
-		unsigned int _primaryFireDamage;
-		unsigned int _secondaryFireDamage;*/
-
 		float _capsuleRadius;
 		float _heightShoot;
 		
-		/** Cuantas balas se gastan por disparo primario. */
-		//unsigned int _ammoSpentPerPrimaryShot;
-		/** Cuantos disparos se hacen al activar el disparo primario. */
-		//unsigned int _shotsPerPrimaryFire;
-
-		/** Cuantas balas se gastan por disparo secundario. */
-		//unsigned int _ammoSpentPerSecondaryShot;
-		/** Cuantas balas se gastan por disparo secundario. */
-		//unsigned int _shotsPerSecondaryFire;
-
-		/*float _shotsDistance;
-		// Cooldowns
-		unsigned int _defaultPrimaryFireCooldown;
-		unsigned int _primaryFireCooldown;
-		
-
-		unsigned int _defaultSecondaryFireCooldown;
-		unsigned int _secondaryFireCooldown;*/
-		
-
 		WeaponType::Enum _weaponID;
 
 		// Nombre del arma
 		std::string _weaponName;
 
-		/*int _primaryFireTimer;
-		int _secondaryFireTimer;*/
 	}; // class IWeapon
 
 } // namespace Logic
