@@ -82,16 +82,20 @@ namespace Logic {
 
 		Ray ray(origin, direction);
 			
-		Physics::CRaycastHit hits;
+		std::vector <Physics::CRaycastHit> hits;
 		// Quizas seria mas correcto comprobar tb el world para que no se pueda dar a traves de las paredes.
-		if(Physics::CServer::getSingletonPtr()->raycastSingle(ray, _shotsDistance, hits,Physics::CollisionGroup::ePLAYER)){
-			std::shared_ptr<CMessageDamaged> m = std::make_shared<CMessageDamaged>();
-			m->setDamage(_primaryFireDamage);
-			m->setEnemy(_entity);
-			hits.entity->emitMessage(m);
+		Physics::CServer::getSingletonPtr()->raycastMultiple(ray, _shotsDistance, hits,true, Physics::CollisionGroup::ePLAYER);
+		for (auto it = hits.begin(); it < hits.end(); ++it){
+			if((*it).entity->getEntityID() != _entity->getEntityID()){
+				std::shared_ptr<CMessageDamaged> m = std::make_shared<CMessageDamaged>();
+				m->setDamage(_primaryFireDamage);
+				m->setEnemy(_entity);
+				(*it).entity->emitMessage(m);
+				// esto es para que salga una vez que ya le ha dao a alguien que no eres tu mismo.
+				return;
+			}
 		}
-
-
+	
 	} // primaryFire
 	//__________________________________________________________________
 

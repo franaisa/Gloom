@@ -54,8 +54,9 @@ namespace Logic {
 		assert( entityInfo->hasAttribute(_weaponName+"DamageBurned") );
 		assert( entityInfo->hasAttribute(_weaponName+"PrimaryFireCooldown") );
 		assert( entityInfo->hasAttribute(_weaponName+"NumberOfShots") );
-		assert( entityInfo->hasAttribute(_weaponName + "PrimaryFireDamage") );
 
+		assert( entityInfo->hasAttribute(_weaponName + "PrimaryFireDamage") );
+		assert( entityInfo->hasAttribute(_weaponName + "PrimaryFireDamage") );
 
 		// Leemos los atributos
 		_projectileShootForce = entityInfo->getFloatAttribute(_weaponName + "ShootForce");
