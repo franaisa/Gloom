@@ -316,6 +316,7 @@ namespace Application {
 		//asking the thread for completion ... if not the main thread crashes
 		if (WaitForSingleObject (loadHandle, 0) == WAIT_OBJECT_0){
 			CloseHandle(loadHandle);
+			printf("\n a ver");
 			// Avisamos de que hemos terminado la carga.
 			Logic::CServer::getSingletonPtr()->loadLevel(_mapName + "_client.txt");
 			Net::NetMessageType ackMsg = Net::MAP_LOADED;
