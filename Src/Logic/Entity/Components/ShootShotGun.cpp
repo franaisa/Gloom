@@ -176,11 +176,6 @@ namespace Logic {
 	bool CShootShotGun::canUseSecondaryFire() {
 		return true;
 	}
-	//_________________________________________________
-
-	void CShootShotGun::stopPrimaryFire(){
-	
-	}
 
 
 } // namespace Logic

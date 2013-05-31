@@ -46,8 +46,6 @@ namespace Logic {
 		virtual bool spawn(CEntity* entity, CMap *map, const Map::CEntity *entityInfo);
 
 		virtual void primaryFire();
-
-		virtual void stopPrimaryFire();
 		
 		virtual void secondaryFire();
 
@@ -61,8 +59,6 @@ namespace Logic {
 		@param projectile, puntero al proyectil que debera ser destruido
 		*/
 		void destroyProjectile(CEntity *projectile, CEntity *killedBy);
-
-		
 
 	protected:
 
