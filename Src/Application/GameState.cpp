@@ -103,7 +103,6 @@ namespace Application {
 		Logic::CServer::getSingletonPtr()->tick(msecs);
 		// Ejecutamos el tick de la física del juego.
 		Physics::CServer::getSingletonPtr()->tick(msecs);
-
 	} // tick
 
 	//--------------------------------------------------------
