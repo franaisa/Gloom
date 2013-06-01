@@ -128,6 +128,9 @@ namespace Map {
     struct token
     {
       /* Tokens.  */
+
+#undef TRUE
+#undef FALSE
    enum yytokentype {
      END = 0,
      EQUAL = 258,

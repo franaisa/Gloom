@@ -141,6 +141,9 @@ build.xml
 # Bring resources.cfg
 !/Exes/resources.cfg
 
+# HHFX particles
+!/Exes/media/packs/SampleParticlesOgre/
+
 # Profile files
 *.psess
 *.vsp
