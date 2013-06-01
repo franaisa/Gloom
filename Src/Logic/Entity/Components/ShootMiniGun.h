@@ -14,7 +14,7 @@ Contiene la declaración del componente que implementa el arma minigun.
 #ifndef __Logic_ShootMiniGun_H
 #define __Logic_ShootMiniGun_H
 
-#include "Logic/Entity/Components/ShootRaycast.h"
+#include "Logic/Entity/Components/Weapon.h"
 
 namespace Logic {
 	
@@ -32,18 +32,13 @@ namespace Logic {
 	que la sniper tenga su propio componente y la minigun funcione como tal.
 	*/
 
-	class CShootMiniGun : public CShootRaycast {
+	class CShootMiniGun : public IWeapon {
 		DEC_FACTORY(CShootMiniGun);
 
 	public:
 
 		/** Constructor por defecto. */
-		CShootMiniGun() : CShootRaycast("miniGun"), _pressThenShoot(false), _contador(0), _acumulando(false),
-													_iRafagas(0), _bLeftClicked(false), _iContadorLeftClicked(0) 
-		{
-			_iMaxRafagas = 20;
-			_bMensajeDispMandado = false;
-		}
+		CShootMiniGun();
 
 		//__________________________________________________________________
 
@@ -51,19 +46,44 @@ namespace Logic {
 
 		//__________________________________________________________________
 
-		/**
-		Método virtual que procesa un mensaje.
+		virtual bool spawn(CEntity* entity, CMap* map, const Map::CEntity* entityInfo);
 
-		@param message Mensaje a procesar.
-		*/
-		virtual void process(const std::shared_ptr<CMessage>& message);
+		virtual void primaryFire();
+
+		virtual void secondaryFire();
+
+		virtual void stopPrimaryFire();
+
+		virtual void stopSecondaryFire();
+
+		virtual void amplifyDamage(unsigned int percentage);
+
+		virtual void reduceCooldown(unsigned int percentage);
 
 	protected:
 
-
 		virtual void onFixedTick(unsigned int msecs);
 
+		virtual bool canUsePrimaryFire();
+		virtual bool canUseSecondaryFire();
+
+		//Método que efectua el disparo
+		void		 shoot				();
+
+		CEntity*	 fireWeapon			();
+
+		void		 triggerHitMessages	(CEntity* entityHit);
+
+		void		 secondaryShoot		(int iRafagas);
+
 	private:
+
+		unsigned int _defaultPrimaryFireCooldown;
+		unsigned int _primaryFireCooldown;
+		int _primaryFireCooldownTimer;
+
+		unsigned int _defaultDamage;
+		unsigned int _damage;
 
 		/**
 		Namespace para los tipos de mensajes de control posibles.
@@ -107,6 +127,14 @@ namespace Logic {
 		*/
 		int		_iMaxRafagas;
 
+		/** Dispersión del arma. */
+		float _dispersion;
+
+		/** Dispersión original del arma. Variable auxiliar para guardar la referencia leída del mapa.*/
+		float _dispersionOriginal;
+
+		/** Distancia de alcance del arma. */
+		float _distance;
 
 	}; // class CShootMiniGun
 

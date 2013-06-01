@@ -57,7 +57,7 @@ namespace Graphics
 		_sceneMgr = _root->createSceneManager(Ogre::ST_INTERIOR, name);
 		_camera = new CCamera(name,this);
 		_name = name;
-
+		_sceneMgr->getRootSceneNode()->setVisible(false);
 		_compositorManager = Ogre::CompositorManager::getSingletonPtr();
 		_poolParticle = new CPoolParticle();
 
@@ -144,6 +144,7 @@ namespace Graphics
 
 			_poolParticle->activate();
 		}
+		_sceneMgr->getRootSceneNode()->setVisible(true);
 	} // activate
 
 	//--------------------------------------------------------

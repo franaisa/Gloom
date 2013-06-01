@@ -120,10 +120,13 @@ namespace Logic
 
 		@param newScale escala nueva.
 		*/
-		void changeScale(Vector3 newScale);
+		void changeScale(float newScale);
 
 
-		Ogre::Entity*		getOgreMesh			()		{return _graphicsEntity->getEntity(); }
+		void					setPosition			(Vector3 vPos);
+
+
+		Ogre::Entity*			getOgreMesh			()		{return _graphicsEntity->getEntity(); }
 
 		Ogre::SceneManager*		getSceneManager		()		{return _graphicsEntity->getScene()->getSceneMgr(); }
 

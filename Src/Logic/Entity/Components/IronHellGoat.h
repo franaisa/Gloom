@@ -18,7 +18,7 @@ de disparo de la cabra.
 #ifndef __Logic_IronHellGoat_H
 #define __Logic_IronHellGoat_H
 
-#include "Logic/Entity/Components/ShootProjectile.h"
+#include "Logic/Entity/Components/Weapon.h"
 
 #include <set>
 
@@ -37,7 +37,7 @@ namespace Logic {
 	@date Mayo, 2013
 	*/
 
-	class CIronHellGoat : public CShootProjectile {
+	class CIronHellGoat : public IWeapon {
 		DEC_FACTORY(CIronHellGoat);
 
 	public:
@@ -57,29 +57,29 @@ namespace Logic {
 
 		// El propio shoot deberia encargarse de llamar a lo que toque teniendo
 		// en cuenta la municion y las demas historias
-		virtual void primaryShoot();
+		virtual void primaryFire();
 
 		//__________________________________________________________________
 
-		virtual void stopPrimaryShoot();
+		virtual void stopPrimaryFire();
 
 		//__________________________________________________________________
 
-		virtual void secondaryShoot();
+		virtual void secondaryFire();
 
 		//__________________________________________________________________
 
-		virtual void stopSecondaryShoot();
-
-		//__________________________________________________________________
-
-		virtual void fireWeapon() { /* Esto esta deprecado */ }
+		virtual void stopSecondaryFire();
 
 		//__________________________________________________________________
 
 		void removeFireBall(CFireBallController* fireBall);
 
 		virtual void resetAmmo();
+
+		virtual void amplifyDamage(unsigned int percentage);
+
+		virtual void reduceCooldown(unsigned int percentage);
 
 	protected:
 
@@ -88,6 +88,10 @@ namespace Logic {
 		virtual void onAvailable();
 
 		virtual void onTick(unsigned int msecs);
+
+		virtual bool canUsePrimaryFire();
+
+		virtual bool canUseSecondaryFire();
 
 		template <typename T>
 		std::string toString(const T& data) const {
@@ -110,9 +114,15 @@ namespace Logic {
 
 	private:
 
+		void createFireBall();
+
 		std::string _shootAudio;
 
 		std::set<CFireBallController*> _controllableFireBalls;
+
+		unsigned int _primaryFireCooldown;
+		unsigned int _defaultPrimaryFireCooldown;
+		int _primaryFireCooldownTimer;
 
 		bool _primaryFireIsActive;
 		bool _secondaryFireIsActive;
@@ -128,11 +138,15 @@ namespace Logic {
 		float _defaultFireBallExplotionRadius;
 		float _defaultFireBallDamage;
 
+		float _currentDefaultFireBallDamage;
+		float _currentMaxFireBallDamage;
+		
 		unsigned int _maxAmmoPerShot;
+		float _maxFireBallDamage;
+
 		float _fireBallRadiusTemporalIncrement;
 		float _fireBallSpeedTemporalIncrement;
 		float _fireBallExplotionRadiusTemporalIncrement;
-		float _fireBallDamageTemporalIncrement;
 	};
 
 	REG_FACTORY(CIronHellGoat);

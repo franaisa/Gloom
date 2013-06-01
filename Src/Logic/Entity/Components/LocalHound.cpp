@@ -4,6 +4,9 @@
 #include "Logic/Entity/Entity.h"
 #include "Logic/Maps/Map.h"
 #include "Map/MapEntity.h"
+#include "AvatarController.h"
+#include "PhysicController.h"
+#include "Physics/Server.h"
 
 #include "Logic/Messages/MessageChangeMaterial.h"
 
@@ -17,6 +20,23 @@ namespace Logic{
 
 		//creating the effect and hiding
 		_scene = _entity->getMap()->getScene();
+
+		assert( entityInfo->hasAttribute("maxVelocity") && "Error: No se ha definido el atributo maxVelocity en el mapa" );
+		_maxDefaultVelocity = entityInfo->getFloatAttribute("maxVelocity");
+
+		assert( entityInfo->hasAttribute("biteMaxVelocity") && "Error: No se ha definido el atributo biteMaxVelocity en el mapa" );
+		_biteMaxVelocity = entityInfo->getFloatAttribute("biteMaxVelocity");
+
+		assert( entityInfo->hasAttribute("biteVelocity") && "Error: No se ha definido el atributo biteVelocity en el mapa" );
+		_bitetVelocity = entityInfo->getFloatAttribute("biteVelocity");
+
+		assert( entityInfo->hasAttribute("biteDuration") && "Error: No se ha definido el atributo biteDuration en el mapa" );
+		_biteDuration = entityInfo->getFloatAttribute("biteDuration") * 1000;
+		//_berserkerDamagePercent = entityInfo->getFloatAttribute("berserkerDamagePercent");
+		//_berserkerCooldownPercent = entityInfo->getFloatAttribute("berserkerCooldownPercent");
+
+		_physicController = _entity->getComponent<CPhysicController>("CPhysicController");
+		_avatarController = _entity->getComponent<CAvatarController>("CAvatarController");
 		
 		return true;
 	} // spawn
@@ -86,8 +106,46 @@ namespace Logic{
 /* */
 			//this->putToSleep();
 		}
+
+
+		if(_doingPrimarySkill){
+			if(_biteTimer > _biteDuration*0.5) {
+				_biteTimer -= msecs;
+				
+			}else if(_biteTimer > 0) {
+				_biteTimer -= msecs;
+
+				charge = true;
+			}else{
+				stopPrimarySkill();
+				charge = false;
+				_doingPrimarySkill = false;
+				_avatarController->activate();
+			}
+		}
 		
 	} // tick
 	//----------------------------------------------------------
+
+	void CLocalHound::onFixedTick(unsigned int msecs) {
+		if(charge && _doingPrimarySkill){
+			Vector3 direction = Math::getDirection(_entity->getOrientation()).normalisedCopy();
+				direction *= msecs * _biteMaxVelocity;
+				_physicController->move(direction, Physics::CollisionGroup::eWORLD, msecs);
+		}
+	}
+
+	//----------------------------------------------------------
+
+	void CLocalHound::primarySkill() {
+
+		_doingPrimarySkill = true;
+
+		//lo primero de todo cambiamos los valores del avatarController para que nos mueva mucho mas lento
+		//_avatarController->setMaxVelocity(_bitetVelocity);
+		_avatarController->deactivate();
+
+		_biteTimer = _biteDuration;
+	}
 
 }

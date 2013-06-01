@@ -157,7 +157,7 @@ namespace Application {
 		Net::CManager::getSingletonPtr()->tick(msecs);
 
 		// TICK DE INPUT
-		Input::CInputManager::getSingletonPtr()->tick();
+		Input::CInputManager::getSingletonPtr()->tick(msecs);
 		
 		// TICK DE LOGICA-FISICA
 		CBaseApplication::tick(msecs);

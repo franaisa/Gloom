@@ -32,12 +32,6 @@ gráfica de la entidad.
 #include "Logic/Messages/MessageChangeWeaponGraphics.h"
 #include "Logic/Messages/MessageHudDebugData.h"
 
-// Ogre <- Esto esta deprecado, la logico no deberia saber nada de ogre
-#include "OgreEntity.h"
-#include "OgreSceneNode.h"
-#include <OgreOverlayManager.h>
-#include <OgreSceneManager.h>
-
 using namespace std;
 
 namespace Logic {
@@ -126,6 +120,7 @@ namespace Logic {
 
 				delete _overlayWeapon3D[i];
 			}
+
 			delete _graphicsEntities;
 		}
 
@@ -135,7 +130,7 @@ namespace Logic {
 	
 	void CHudWeapons::onActivate() {
 		//Cuando activamos el componente solo tendremos visible el arma 0( arma melee)
-		_currentWeapon = 0;
+		_currentWeapon = WeaponType::eHAMMER;
 		_graphicsEntities[_currentWeapon].graphicsEntity->setVisible(true);
 	} // activate
 
@@ -215,12 +210,12 @@ namespace Logic {
 		// el ruido de carga
 		// Primero obtenemos el tiempo máximo de carga del Iron Hell Goat
 		Map::CEntity* info = CEntityFactory::getSingletonPtr()->getInfo("Screamer");
-		assert( info->hasAttribute("weaponironHellGoatMaximumLoadingTime") );
+		assert( info->hasAttribute("weaponironHellGoatPrimaryFireLoadTime") );
 
 		// Una vez conocido el tiempo de carga, como sabemos que vamos a utilizar fixed ticks
 		// de 16 msecs, calculamos cuantos ticks van a pasar (aproximadamente) hasta que se
 		// tiene el arma cargada.
-		unsigned int nbTicks = (info->getIntAttribute("weaponironHellGoatMaximumLoadingTime") * 1000) / 16;
+		unsigned int nbTicks = (info->getIntAttribute("weaponironHellGoatPrimaryFireLoadTime") * 1000) / 16;
 
 		// Calculamos el incremento de la velocidad distribuyendola uniformemente entre los
 		// ticks de carga
@@ -285,6 +280,7 @@ namespace Logic {
 			loadWeaponAnim(msecs);
 		else {
 			_unstableLoadAnim.currentVerticalPos *= 0.95f;
+			_unstableLoadAnim.currentNoise *= 0.95f;
 			_unstableLoadAnim.offset *= 0.95f;
 		}
 

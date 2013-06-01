@@ -27,8 +27,8 @@ namespace Logic {
 	//________________________________________________________________________
 
 	CSpectatorController::CSpectatorController() : _frictionCoef(0.95f),
-												   _acceleration(0.018f), 
-												   _maxVelocity(2.0f) {
+												   _acceleration(0.0006f), 
+												   _maxVelocity(1.2f) {
 
 		// Inicializamos el array que contiene los vectores
 		// de cada tecla de movimiento
@@ -123,17 +123,17 @@ namespace Logic {
 
 	//________________________________________________________________________
 
-	Vector3 CSpectatorController::estimateMotionDirection() const {
+	Vector3 CSpectatorController::estimateMotionDirection(const Vector3& displ) const {
 		// Si nuestro movimiento es nulo no hacemos nada
-		if(_displacementDir * Vector3(1, 0, 1) == Vector3::ZERO) return Vector3::ZERO;
+		if(displ * Vector3(1, 0, 1) == Vector3::ZERO) return Vector3::ZERO;
 
 		// Mediante trigonometria basica sacamos el angulo que forma el desplazamiento
 		// que queremos llevar a cabo
-		float displacementYaw = asin(_displacementDir.normalisedCopy().x);
+		float displacementYaw = asin(displ.normalisedCopy().x);
 		// Obtenemos una copia de la matriz de transformación del personaje
 		Matrix4 characterTransform = _entity->getTransform();
 		// Si estamos andando hacia atras, invertimos el giro
-		if(_displacementDir.z < 0) displacementYaw *= -1;
+		if(displ.z < 0) displacementYaw *= -1;
 
 		// Rotamos la matriz de transformacion tantos grados como diga el vector 
 		// desplazamiento calculado de pulsar las teclas
@@ -142,7 +142,7 @@ namespace Logic {
 		Vector3 motionDirection = Math::getDirection(characterTransform);
 		// Invertimos el vector resultante si nos estamos desplazando hacia atras
 		// porque el yaw se calcula de forma contraria al andar hacia atras
-		if(_displacementDir.z < 0) motionDirection *= -1;
+		if(displ.z < 0) motionDirection *= -1;
 
 		// Devolvemos la dirección del movimiento estimado
 		return motionDirection;
@@ -157,18 +157,19 @@ namespace Logic {
 		_momentum *= _frictionCoef;
 
 		// s = u · t + 1/2 a · t^2 <- Formula del desplazamiento
+		Vector3 horizontal = Vector3(1.0f, 0.0f, 1.0f);
 		if(_displacementDir.z == 0) {
-			_momentum += Vector3(1, 0, 1) * estimateMotionDirection() * _acceleration * msecs * msecs * 0.5f;
+			_momentum += horizontal * estimateMotionDirection( horizontal * _displacementDir ) * _acceleration * msecs * msecs * 0.5f;
 
 			if(_displacementDir.y != 0)
 				_momentum += Vector3(0, 1, 0) * _displacementDir * _acceleration * msecs * msecs * 0.5f;
 		}
 		else {
 			if(_displacementDir.y == 0) {
-				_momentum += estimateMotionDirection() * _acceleration * msecs * msecs * 0.5f;
+				_momentum += estimateMotionDirection(_displacementDir) * _acceleration * msecs * msecs * 0.5f;
 			}
 			else {
-				_momentum += Vector3(1, 0, 1) * estimateMotionDirection() * _acceleration * msecs * msecs * 0.5f;
+				_momentum += horizontal * estimateMotionDirection( horizontal * _displacementDir ) * _acceleration * msecs * msecs * 0.5f;
 				_momentum += Vector3(0, 1, 0) * _displacementDir * _acceleration * msecs * msecs * 0.5f;
 			}
 		}
@@ -198,22 +199,18 @@ namespace Logic {
 	//________________________________________________________________________
 
 	void CSpectatorController::initMovementCommands() {
-		_movementCommands[Control::WALK]				= Vector3(0,0,1);
-		_movementCommands[Control::WALKBACK]			= Vector3(0,0,-1);
-		_movementCommands[Control::STRAFE_LEFT]			= Vector3(1,0,0);
-		_movementCommands[Control::STRAFE_RIGHT]		= Vector3(-1,0,0);
-		_movementCommands[Control::STOP_WALK]			= Vector3(0,0,-1);
-		_movementCommands[Control::STOP_WALKBACK]		= Vector3(0,0,1);
-		_movementCommands[Control::STOP_STRAFE_LEFT]	= Vector3(-1,0,0);
-		_movementCommands[Control::STOP_STRAFE_RIGHT]	= Vector3(1,0,0);
+		_movementCommands[Control::WALK]				= Vector3(0, 0, 1);
+		_movementCommands[Control::WALKBACK]			= Vector3(0, 0, -1);
+		_movementCommands[Control::STRAFE_LEFT]			= Vector3(1, 0, 0);
+		_movementCommands[Control::STRAFE_RIGHT]		= Vector3(-1, 0, 0);
+		_movementCommands[Control::STOP_WALK]			= Vector3(0, 0, -1);
+		_movementCommands[Control::STOP_WALKBACK]		= Vector3(0, 0, 1);
+		_movementCommands[Control::STOP_STRAFE_LEFT]	= Vector3(-1, 0, 0);
+		_movementCommands[Control::STOP_STRAFE_RIGHT]	= Vector3(1, 0, 0);
 		_movementCommands[Control::CROUCH]				= Vector3(0, -1, 0);
 		_movementCommands[Control::STOP_CROUCH]			= Vector3(0, 1, 0);
 		_movementCommands[Control::JUMP]				= Vector3(0, 1, 0);
 		_movementCommands[Control::STOP_JUMP]			= Vector3(0, -1, 0);
-		_movementCommands[Control::SIDEJUMP_LEFT]		= Vector3(1, 0, 0);
-		_movementCommands[Control::SIDEJUMP_RIGHT]		= Vector3(-1, 0, 0);
-		_movementCommands[Control::DODGE_BACKWARDS]		= Vector3(0, 0, -1);
-		_movementCommands[Control::DODGE_FORWARD]		= Vector3(0, 0, 1);
 	}
 
 } // namespace Logic

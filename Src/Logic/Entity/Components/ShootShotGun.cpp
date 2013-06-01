@@ -31,77 +31,47 @@ Contiene la implementación del componente que representa a la escopeta.
 namespace Logic {
 	IMP_FACTORY(CShootShotGun);
 
+	CShootShotGun::CShootShotGun() : IWeapon("shotGun"), 
+		                             _dispersionAngle(0),
+									 _primaryFireCooldownTimer(0) {
+
+	}
+	//________________________________________________
+
 	CShootShotGun::~CShootShotGun() {
 		// Nada que hacer
-
 	}// CShootShotGun
 	//________________________________________________
 
 	bool CShootShotGun::spawn(CEntity* entity, CMap *map, const Map::CEntity *entityInfo){
-		if(!CShoot::spawn(entity, map, entityInfo))
+		if(!IWeapon::spawn(entity, map, entityInfo))
 			return false;
 
-		// Leer los parametros que toquen para los proyectiles
-		std::stringstream aux;
-		aux << "weapon" << _nameWeapon;	////!!!! Aqui debes de poner el nombre del arma que leera en el map.txt
-		std::string weapon = aux.str();
+		// Nos aseguramos de tener todos los parametros que necesitamos
+		assert( entityInfo->hasAttribute(_weaponName+"ShootForce") );
+		assert( entityInfo->hasAttribute(_weaponName+"ProjectileRadius") );
+		assert( entityInfo->hasAttribute(_weaponName+"PrimaryFireDispersion") );
+		assert( entityInfo->hasAttribute(_weaponName+"DamageBurned") );
+		assert( entityInfo->hasAttribute(_weaponName+"PrimaryFireCooldown") );
+		assert( entityInfo->hasAttribute(_weaponName+"NumberOfShots") );
 
-		if(entityInfo->hasAttribute(weapon+"ShootForce"))
-			_projectileShootForce = entityInfo->getFloatAttribute(weapon + "ShootForce");
+		assert( entityInfo->hasAttribute(_weaponName + "PrimaryFireDamage") );
+		assert( entityInfo->hasAttribute(_weaponName + "PrimaryFireDamage") );
 
-		if(entityInfo->hasAttribute(weapon+"ProjectileRadius"))
-			_projectileRadius = entityInfo->getFloatAttribute(weapon + "ProjectileRadius");
-
-		if(entityInfo->hasAttribute("audioNoAmmo"))
-			_noAmmo = entityInfo->getStringAttribute("audioNoAmmo");
-
-		if(entityInfo->hasAttribute(weapon+"Audio"))
-			_audioShoot = entityInfo->getStringAttribute(weapon+"Audio");
-
-		if(entityInfo->hasAttribute(weapon+"Dispersion")){
-			_dispersionAngle  = entityInfo->getFloatAttribute(weapon+"Dispersion");
-		}
-
-		if(entityInfo->hasAttribute(weapon+"DamageBurned")){
-			_damageBurned = entityInfo->getFloatAttribute(weapon+"DamageBurned");
-			
-		}
+		// Leemos los atributos
+		_projectileShootForce = entityInfo->getFloatAttribute(_weaponName + "ShootForce");
+		_projectileRadius = entityInfo->getFloatAttribute(_weaponName + "ProjectileRadius");
+		_dispersionAngle  = entityInfo->getFloatAttribute(_weaponName+"PrimaryFireDispersion");
+		_damageBurned = entityInfo->getFloatAttribute(_weaponName+"DamageBurned");
+		_defaultPrimaryFireCooldown = _primaryFireCooldown = entityInfo->getFloatAttribute(_weaponName+"PrimaryFireCooldown") * 1000;
+		_numberOfShots = entityInfo->getIntAttribute(_weaponName+"NumberOfShots");
+		_defaultPrimaryFireDamage = _primaryFireDamage = entityInfo->getFloatAttribute(_weaponName + "PrimaryFireDamage");
 
 		return true;
 	}// spawn
 	//________________________________________________
-	
-	void CShootShotGun::primaryShoot() {
-		if(_primaryCanShoot && _currentAmmo > 0) {
-			_primaryCanShoot = false;
-			_primaryCooldownTimer = 0;
-				
-			drawParticle("shootParticle");
 
-			float shoots = _numberShots;
-			if(_currentAmmo < _numberShots)
-				shoots = _currentAmmo;
-			
-			for(int i = 0; i < shoots ; ++i){
-				fireWeapon();
-				decrementAmmo();
-			}
-
-			//Sonido de disparo
-			emitSound(_audioShoot, "audioShot");
-			// @deprecated Temporal hasta que este bien implementado
-			CHudWeapons* hudWeapon = _entity->getComponent<CHudWeapons>("CHudWeapons");
-			if(hudWeapon != NULL)
-				hudWeapon->shootAnim(-1.0f);
-		}
-		else if(_currentAmmo == 0) {
-			// Ejecutar sonidos y animaciones de falta de balas
-			emitSound(_noAmmo, "noAmmo", true);
-		}
-	} // primaryShoot
-	//__________________________________________________________________
-
-	void CShootShotGun::secondaryShoot() {
+	void CShootShotGun::secondaryFire() {
 		// yo le digo que deben de volver, y a partir de ahi, ellas solas encuentran el camino :D
 		if(!_projectiles.empty()){
 			for(auto it = _projectiles.begin(); it != _projectiles.end(); ++it){
@@ -111,38 +81,60 @@ namespace Logic {
 	} // secondaryShoot
 	//__________________________________________________________________
 
-	void CShootShotGun::fireWeapon(){
-		
-		Vector3 direction = Math::getDirection(_entity->getOrientation());
-		Ogre::Radian angle = Ogre::Radian( (  (((float)(rand() % 100))*0.01f) * (_dispersionAngle)) *0.01f);
-		Vector3 dispersionDirection = direction.randomDeviant(angle);
-		dispersionDirection.normalise();
+	void CShootShotGun::onTick(unsigned int msecs) {
+		// Controlamos el cooldown del disparo primario y secundario
+		if(_primaryFireCooldownTimer > 0) {
+			_primaryFireCooldownTimer -= msecs;
+			
+			if(_primaryFireCooldownTimer < 0)
+				_primaryFireCooldownTimer = 0;
+		}
+	}
+	//__________________________________________________________________
 
-		Vector3 position = _entity->getPosition();
-		position.y += _heightShoot;
+	void CShootShotGun::primaryFire() {
+		_primaryFireCooldownTimer = _primaryFireCooldown;
 
-		//position += direction * (_capsuleRadius + _projectileRadius + 0.5 );
-		Matrix4 transform = Matrix4::IDENTITY;
-		transform.setTrans(position);
+		// Animacion de disparo
+		// @deprecated Temporal hasta que este bien implementado
+		CHudWeapons* hudWeapon = _entity->getComponent<CHudWeapons>("CHudWeapons");
+		if(hudWeapon != NULL)
+			hudWeapon->shootAnim(-1.0f);
 
-		CEntity *projectileEntity= CEntityFactory::getSingletonPtr()->createEntity( 
-			CEntityFactory::getSingletonPtr()->getInfo("MagneticBullet"),
-			Logic::CServer::getSingletonPtr()->getMap(),
-			transform
-		);
-		projectileEntity->activate();
-		projectileEntity->start();
+		int shots = _numberOfShots <= _currentAmmo ? _numberOfShots : _currentAmmo;
+		for(int i = 0; i < shots; ++i) {
+			Vector3 direction = Math::getDirection(_entity->getOrientation());
+			Ogre::Radian angle = Ogre::Radian( (  (((float)(rand() % 100))*0.01f) * (_dispersionAngle)) *0.01f);
+			Vector3 dispersionDirection = direction.randomDeviant(angle);
+			dispersionDirection.normalise();
 
-		projectileEntity->getComponent<CMagneticBullet>("CMagneticBullet")->setProperties(this, _projectileShootForce, dispersionDirection, _heightShoot, _damage, _damageBurned);
-		_projectiles.insert(projectileEntity);
+			Vector3 position = _entity->getPosition();
+			position.y += _heightShoot;
+
+			//position += direction * (_capsuleRadius + _projectileRadius + 0.5 );
+			Matrix4 transform = Matrix4::IDENTITY;
+			transform.setTrans(position);
+
+			CEntity *projectileEntity= CEntityFactory::getSingletonPtr()->createEntity( 
+				CEntityFactory::getSingletonPtr()->getInfo("MagneticBullet"),
+				Logic::CServer::getSingletonPtr()->getMap(),
+				transform
+			);
+			projectileEntity->activate();
+			projectileEntity->start();
+
+			projectileEntity->getComponent<CMagneticBullet>("CMagneticBullet")->setProperties(this, _projectileShootForce, dispersionDirection, _heightShoot, _primaryFireDamage, _damageBurned);
+			_projectiles.insert(projectileEntity);
+		}
+
+		decrementAmmo(shots);
 			
 	} // fireWeapon
 	//_________________________________________________
 
 	void CShootShotGun::destroyProjectile(CEntity *projectile, CEntity *killedBy){
-
 		if(killedBy->getType() == "World"){
-			decals(killedBy, projectile->getPosition());
+			drawDecal(killedBy, projectile->getPosition());
 
 			// Añado aqui las particulas de dado en la pared.
 			auto m = std::make_shared<CMessageCreateParticle>();
@@ -158,11 +150,34 @@ namespace Logic {
 	} // destroyProjectile
 	//_________________________________________________
 	
-	
-	/*
-	void CShootShotGun::onFixedTick(unsigned int msecs){
+	void CShootShotGun::amplifyDamage(unsigned int percentage) {
+		if(percentage == 0) {
+			_primaryFireDamage = _defaultPrimaryFireDamage;
+		}
+		// Sino aplicamos el porcentaje pasado por parámetro
+		else {
+			_primaryFireDamage += percentage * _primaryFireDamage * 0.01f;
+		}
+	}
+	//_________________________________________________
+
+	void CShootShotGun::reduceCooldown(unsigned int percentage) {
+		// Si es 0 significa que hay que restaurar al que habia por defecto,
+		// sino decrementamos conforme al porcentaje dado.
+		_primaryFireCooldown = percentage == 0 ? _defaultPrimaryFireCooldown : (_defaultPrimaryFireCooldown  - (percentage * _primaryFireCooldown * 0.01f));
+	}
+	//_________________________________________________
+
+	bool CShootShotGun::canUsePrimaryFire() {
+		// Si tienes municion y el cooldown ha bajado
+		return _primaryFireCooldownTimer == 0 && _currentAmmo > 0;
+	}
+	//_________________________________________________
+
+	bool CShootShotGun::canUseSecondaryFire() {
+		return true;
 	}
 
-	*/
+
 } // namespace Logic
 

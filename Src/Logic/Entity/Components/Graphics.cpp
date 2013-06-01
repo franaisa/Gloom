@@ -19,7 +19,6 @@ gráfica de la entidad.
 
 #include "Graphics/Scene.h"
 #include "Graphics/Entity.h"
-#include "Graphics/GlowingEntity.h"
 #include "Graphics/StaticEntity.h"
 
 #include "Logic/Messages/MessageTransform.h"
@@ -184,13 +183,18 @@ namespace Logic
 	//onTick
 
 
-	void CGraphics::changeScale(Vector3 newScale){
-		_graphicsEntity->setScale(newScale);
+	void CGraphics::changeScale(float newScale){
+		_graphicsEntity->setScale(newScale);		
 	}//---------------------------------------------------------
 	//changeScale
 
 	void CGraphics::onDeactivate() {
 		setVisible(false);
+	}
+
+
+	void CGraphics::setPosition(Vector3 vPos){
+		_graphicsEntity->setPosition(vPos);
 	}
 
 } // namespace Logic

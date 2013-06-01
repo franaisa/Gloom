@@ -175,8 +175,8 @@ namespace Application {
 				//creamos el thread que maneja la carga del mapa
 				loadHandle = CreateThread( NULL, 0, CLobbyClientState::loadMapThread, this, 0, NULL);
 
-				if (WaitForSingleObject (loadHandle, INFINITE) == WAIT_OBJECT_0)
-				CloseHandle(loadHandle);
+				//if (WaitForSingleObject (loadHandle, INFINITE) == WAIT_OBJECT_0)
+				//CloseHandle(loadHandle);
 
 				/*if( loadMap(mapName) ) {
 					// Avisamos de que hemos terminado la carga.
@@ -288,41 +288,46 @@ namespace Application {
 	} // requestConnectionTo
 
 	DWORD WINAPI CLobbyClientState::loadMapThread(LPVOID arg){
-
+		/*ExitThread(0);
 		//std::string* mapName = reinterpret_cast<std::string*>(arg);
 
 		CLobbyClientState * lobby = (CLobbyClientState*)arg;
-		lobby->loadÑapa=true;
 		if( lobby->loadMap(lobby->_mapName) ) {
-			
-			// Avisamos de que hemos terminado la carga.
-			Net::NetMessageType ackMsg = Net::MAP_LOADED;
-			lobby->_netMgr->broadcast( &ackMsg, sizeof(ackMsg) );
+			std::cout << "exit thread" << std::endl;
 		}
 		else {
 			lobby->_netMgr->removeObserver(lobby);
 			lobby->_netMgr->deactivateNetwork();
 			lobby->_app->exitRequest();
-		}
-		
-		// Liberamos el dispatcher para las entidades por defecto
-		Logic::CEntityFactory::getSingletonPtr()->releaseDispatcher();
-		// Inicializamos el dispatcher de entidades lógicas en base a nuestro id de red y el
-		// número de jugadores que hay en la partida
-		// @deprecated lo ideal es que el server mande el numero de players de la partida
-		Logic::CEntityFactory::getSingletonPtr()->initDispatcher( lobby->_netMgr->getID(), 12 );
+		}*/
+		CLobbyClientState * lobby = (CLobbyClientState*)arg;
+		return Logic::CEntityFactory::getSingletonPtr()->loadBluePrints("blueprints_client.txt")&&
+			   Logic::CEntityFactory::getSingletonPtr()->loadArchetypes("archetypes.txt");
+		/*return Logic::CEntityFactory::getSingletonPtr()->loadBluePrints("blueprints_client.txt")	&&
+			   Logic::CEntityFactory::getSingletonPtr()->loadArchetypes("archetypes.txt")			&&
+			   Logic::CServer::getSingletonPtr()->loadLevel(mapName + "_client.txt");*/
 
-		return 0;
+
+		return 1;
 	}
 
 	void CLobbyClientState::tick(unsigned int msecs){
 		CApplicationState::tick(msecs);
+		//asking the thread for completion ... if not the main thread crashes
+		if (WaitForSingleObject (loadHandle, 0) == WAIT_OBJECT_0){
+			CloseHandle(loadHandle);
+			// Avisamos de que hemos terminado la carga.
+			Logic::CServer::getSingletonPtr()->loadLevel(_mapName + "_client.txt");
+			Net::NetMessageType ackMsg = Net::MAP_LOADED;
+			_netMgr->broadcast( &ackMsg, sizeof(ackMsg) );
 
-		/*if(loadÑapa){
-			//asking the thread for completion ... if not the main thread crashes
-			if (WaitForSingleObject (loadHandle, INFINITE) == WAIT_OBJECT_0)
-				CloseHandle(loadHandle);
-		}*/
+			// Liberamos el dispatcher para las entidades por defecto
+			Logic::CEntityFactory::getSingletonPtr()->releaseDispatcher();
+			// Inicializamos el dispatcher de entidades lógicas en base a nuestro id de red y el
+			// número de jugadores que hay en la partida
+			// @deprecated lo ideal es que el server mande el numero de players de la partida
+			Logic::CEntityFactory::getSingletonPtr()->initDispatcher( _netMgr->getID(), 12 );
+		}
 	}
 
 

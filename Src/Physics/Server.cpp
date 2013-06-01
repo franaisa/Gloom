@@ -348,7 +348,7 @@ namespace Physics {
 		// queremos ser notificados con cualquier cosa (el caso del player); si el primer
 		// elemento no es -1, asignamos ese valor a la mascara y la incrementamos en el 
 		// siguiente paso.
-		PxU32 filterMask = groupList.empty() ? 0 : ( groupList[0] == -1 ? 0xFFFF : (1 << groupList[0]) );
+		PxU32 filterMask = groupList.empty() ? 0 : ( groupList[0] == -1 ? 0xFFFFFFFF : (1 << groupList[0]) );
 	
 		// Calculamos la mascara de colision, es decir, la mascara que define con que grupos
 		// de colision debemos activarnos.
@@ -375,115 +375,6 @@ namespace Physics {
 		}
 
 		delete [] shapes;
-	}
-
-	//________________________________________________________________________
-
-	Logic::CEntity* CServer::raycastClosest (const Ray& ray, float maxDist) const {
-		assert(_scene);
-
-		// Establecer parámettros del rayo
-		PxVec3 origin = Vector3ToPxVec3( ray.getOrigin() );		// origen     
-		PxVec3 unitDir = Vector3ToPxVec3( ray.getDirection() ); // dirección normalizada   
-		PxReal maxDistance = maxDist;							// distancia máxima
-		PxRaycastHit hit;                 
-
-		// Información que queremos recuperar de la posible colisión
-		//const PxSceneQueryFlags outputFlags = PxSceneQueryFlag::eDISTANCE | PxSceneQueryFlag::eIMPACT | PxSceneQueryFlag::eNORMAL;
-		const PxSceneQueryFlags outputFlags;
-
-		// Lanzar el rayo
-		bool intersection = _scene->raycastSingle(origin, unitDir, maxDistance, outputFlags, hit);
-	
-		// IMPORTANTE: aunque se haya llamado al método move de los controllers y al consultar su posición
-		// esta aparezca actualizada, sus actores asociados no se habrán desplazado aún. La consecuencia
-		// es que se pueden recuperar colisiones inesperadas.
-
-		if (intersection) {
-			// Devolver entidad lógica asociada a la entidad física impactada
-			IPhysics* component = static_cast<IPhysics*>( hit.shape->getActor().userData );
-			return component->getEntity();
-		} 
-		else {
-			return NULL;
-		}
-	}
-
-	//________________________________________________________________________
-
-
-	Logic::CEntity* CServer::raycastClosestInverse(const Ray& ray, float maxDist, unsigned int id) const {
-		assert(_scene);
-
-		// Establecer parámettros del rayo
-		PxVec3 origin = Vector3ToPxVec3(ray.getOrigin());      // origen     
-		PxVec3 unitDir = Vector3ToPxVec3(ray.getDirection());  // dirección normalizada   
-		PxReal maxDistance = maxDist;                          // distancia máxima
-		PxRaycastHit hit;                 
-		const PxSceneQueryFlags outputFlags;				   // Info que queremos recuperar	
-
-		// Lanzar el rayo
-		PxRaycastHit hits[60];
-		bool blockingHit;
-
-		PxI32 nHits = _scene->raycastMultiple(origin, unitDir, maxDistance, outputFlags, hits, 60, blockingHit); 
-	
-		// Buscar un actor que no pertenezca al grupo de colisión indicado
-		for (int i = nHits - 1; i >= 0; --i) {
-			PxRigidActor* actor = &hits[i].shape->getActor();
-			PxShapeFlags* flags = &hits[i].shape->getFlags();
-			IPhysics *component = static_cast<IPhysics*>(actor->userData);
-
-			if(component != NULL) {
-				Logic::CEntity* entityHit = component->getEntity();
-				//std::cout << "Nombre de lo tocado: " << entityHit->getName() << std::endl;
-				if(entityHit->getEntityID() != id/* && !(*flags & PxShapeFlag::eTRIGGER_SHAPE)*/) {
-					return entityHit;
-				}
-			}
-		}
-
-		return NULL;
-
-		// Nota: seguro que se puede hacer de manera mucho más eficiente usando los filtros
-		// de PhysX.
-	}
-
-	//________________________________________________________________________
-
-	Vector3 CServer::raycastClosestSpecificPoint(const Ray& ray, float maxDist, unsigned int id) const {
-		assert(_scene);
-		// Establecer parámetros del rayo
-		PxVec3 origin = Vector3ToPxVec3(ray.getOrigin());      // origen     
-		PxVec3 unitDir = Vector3ToPxVec3(ray.getDirection());  // dirección normalizada   
-		PxReal maxDistance = maxDist;                          // distancia máxima
-		PxRaycastHit hit;                 
-		const PxSceneQueryFlags outputFlags;				   // Info que queremos recuperar	
-
-		// Lanzar el rayo
-		PxRaycastHit hits[60];
-		bool blockingHit;
-
-		PxI32 nHits = _scene->raycastMultiple(origin, unitDir, maxDistance, outputFlags, hits, 60, blockingHit); 
-	
-		// Buscar un actor que pertenezca al grupo de colisión indicado
-		for (int i = nHits - 1; i >= 0; --i) {
-			PxRigidActor* actor = &hits[i].shape->getActor();
-			PxShapeFlags* flags = &hits[i].shape->getFlags();
-			IPhysics *component = static_cast<IPhysics*>(actor->userData);
-	
-			if(component != NULL) {
-				Logic::CEntity* entityHit = component->getEntity();
-				if(entityHit->getEntityID() == id && !(*flags & PxShapeFlag::eTRIGGER_SHAPE)) {
-					return PxVec3ToVector3(hits[i].impact);
-				}
-			}
-		}
-
-		return Vector3(-5,-5,-5);
-
-		// Nota: seguro que se puede hacer de manera mucho más eficiente usando los filtros
-		// de PhysX.
 	}
 
 	//________________________________________________________________________
@@ -628,7 +519,7 @@ namespace Physics {
 
 	void CServer::sweepMultiple(const physx::PxGeometry& geometry, const Vector3& position,
 								const Vector3& unitDir, float distance, std::vector<CSweepHit>& hitSpots, 
-								bool sortResultingArray, unsigned int filterMask) {
+								bool sortResultingArray, unsigned int filterMask) const {
 
 		// Booleano que indicara si hay elementos que bloquean el hit
 		bool blockingHit;
@@ -700,7 +591,7 @@ namespace Physics {
 	//________________________________________________________________________
 
 	bool CServer::sweepSingle(const physx::PxGeometry& sweepGeometry, const Vector3& position, 
-						      const Vector3& unitDir, float distance, Vector3& hitSpot, unsigned int filterMask) {
+						      const Vector3& unitDir, float distance, Vector3& hitSpot, unsigned int filterMask) const {
 
 		// Seteamos los flags de sweep
 		const PxSceneQueryFlags outputFlags = PxSceneQueryFlag::eDISTANCE | PxSceneQueryFlag::eIMPACT | PxSceneQueryFlag::eNORMAL;
@@ -728,7 +619,7 @@ namespace Physics {
 	//________________________________________________________________________
 
 	bool CServer::sweepAny(const physx::PxGeometry& sweepGeometry, const Vector3& position, 
-						   const Vector3& unitDir, float distance, unsigned int filterMask) {
+						   const Vector3& unitDir, float distance, unsigned int filterMask) const {
 
 		// Seteamos los flags de sweep
 		const PxSceneQueryFlags outputFlags = PxSceneQueryFlag::eDISTANCE | PxSceneQueryFlag::eIMPACT | PxSceneQueryFlag::eNORMAL;
@@ -750,7 +641,7 @@ namespace Physics {
 
 	//________________________________________________________________________
 
-	void CServer::overlapMultiple(const PxGeometry& geometry, const Vector3& position, std::vector<Logic::CEntity*>& entitiesHit, unsigned int filterMask) {
+	void CServer::overlapMultiple(const PxGeometry& geometry, const Vector3& position, std::vector<Logic::CEntity*>& entitiesHit, unsigned int filterMask) const {
 		// Comprobar que es una de las geometrias soportadas por la query de overlap
 
 		// La situamos en la posicion dada
@@ -802,7 +693,7 @@ namespace Physics {
 
 	//________________________________________________________________________
 
-	bool CServer::overlapAny(const PxGeometry& geometry, const Vector3& position, unsigned int filterMask) {
+	bool CServer::overlapAny(const PxGeometry& geometry, const Vector3& position, unsigned int filterMask) const {
 		PxShape* hit;
 
 		if(filterMask == 0) {

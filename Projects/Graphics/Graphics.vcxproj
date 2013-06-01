@@ -78,15 +78,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Src\Graphics\AnimatedEntity.cpp" />
-    <ClCompile Include="..\..\Src\Graphics\Billboard.cpp" />
     <ClCompile Include="..\..\Src\Graphics\Camera.cpp" />
     <ClCompile Include="..\..\Src\Graphics\CompositorListener.cpp" />
     <ClCompile Include="..\..\Src\Graphics\Entity.cpp" />
-    <ClCompile Include="..\..\Src\Graphics\GlowingEntity.cpp" />
     <ClCompile Include="..\..\Src\Graphics\Light.cpp" />
-    <ClCompile Include="..\..\Src\Graphics\MovableText.cpp" />
-    <ClCompile Include="..\..\Src\Graphics\MutableEntity.cpp" />
-    <ClCompile Include="..\..\Src\Graphics\ObjectTextDisplay.cpp" />
     <ClCompile Include="..\..\Src\Graphics\Overlay.cpp" />
     <ClCompile Include="..\..\Src\Graphics\Particle.cpp" />
     <ClCompile Include="..\..\Src\Graphics\PoolParticle.cpp" />
@@ -96,16 +91,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Src\Graphics\AnimatedEntity.h" />
-    <ClInclude Include="..\..\Src\Graphics\Billboard.h" />
     <ClInclude Include="..\..\Src\Graphics\Camera.h" />
     <ClInclude Include="..\..\Src\Graphics\CompositorListener.h" />
     <ClInclude Include="..\..\Src\Graphics\Documentation.h" />
     <ClInclude Include="..\..\Src\Graphics\Entity.h" />
-    <ClInclude Include="..\..\Src\Graphics\GlowingEntity.h" />
     <ClInclude Include="..\..\Src\Graphics\Light.h" />
-    <ClInclude Include="..\..\Src\Graphics\MovableText.h" />
-    <ClInclude Include="..\..\Src\Graphics\MutableEntity.h" />
-    <ClInclude Include="..\..\Src\Graphics\ObjectTextDisplay.h" />
     <ClInclude Include="..\..\Src\Graphics\Overlay.h" />
     <ClInclude Include="..\..\Src\Graphics\Particle.h" />
     <ClInclude Include="..\..\Src\Graphics\PoolParticle.h" />

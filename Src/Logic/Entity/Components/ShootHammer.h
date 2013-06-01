@@ -14,7 +14,7 @@ Contiene la declaración del componente que implementa el hammer.
 #ifndef __Logic_ShootHammer_H
 #define __Logic_ShootHammer_H
 
-#include "Logic/Entity/Components/ShootRaycast.h"
+#include "Logic/Entity/Components/Weapon.h"
 
 namespace Logic {
 	
@@ -30,13 +30,13 @@ namespace Logic {
 	@date Febrero, 2013
 	*/
 
-	class CShootHammer : public CShootRaycast {
+	class CShootHammer : public IWeapon {
 		DEC_FACTORY(CShootHammer);
 
 	public:
 
 		/** Constructor por defecto. */
-		CShootHammer() : CShootRaycast("hammer"), _elementPulling(0), _elementPulled(0) { }
+		CShootHammer() : IWeapon("hammer"), _elementPulling(0), _elementPulled(0), _shotsDistanceSecondaryFire(0), _primaryFireTimer(0) { }
 
 		//__________________________________________________________________
 
@@ -64,25 +64,38 @@ namespace Logic {
 
 		void resetEntityPulling();
 
-	protected:
+		float getHeight(){return _heightShoot;}
 
+		
+		virtual void amplifyDamage(unsigned int percentage);
+
+		virtual void reduceCooldown(unsigned int percentage);
+
+		
+		virtual bool canUsePrimaryFire();
+
+		virtual bool canUseSecondaryFire();
+
+	private:
+
+		void onTick(unsigned int msecs);
 		/**
-		Redefine el método de decremento de munición, que en este caso se deja vacio, 
-		ya que el hammer no tiene munición.
+		Los disparos secundarios si fieren bastante unos de otros, por ahora se ha hecho un metodo vacio,
+		para poder compilar por ahora, pero todos tendran que ser redefinidos.
 		*/
-		virtual void decrementAmmo();
+		virtual void primaryFire();
 
 		/**
 		Los disparos secundarios si fieren bastante unos de otros, por ahora se ha hecho un metodo vacio,
 		para poder compilar por ahora, pero todos tendran que ser redefinidos.
 		*/
-		virtual void secondaryShoot();
-
+		virtual void secondaryFire();
+		
 		/**
 		Este es el método que todas las armas deben redefinir si quieren una accion cuando se suelta el boton de disparo secundario.
 		Si no se redefine, no hara nada.
 		*/
-		virtual void stopSecondaryShoot();
+		virtual void stopSecondaryFire(unsigned int elapsedTime);
 
 		/** Método estático que resetea la cantidad de munición del arma.
 		En el hammer, se establecera a una bala, para que pueda disparar y debido a que cuando dispara no baja tendra balas infinitas
@@ -94,6 +107,19 @@ namespace Logic {
 		float _reboundForce;
 
 		CEntity* _elementPulled, *_elementPulling;
+
+		/* Indica la distancia de atraccion de objetos */
+		float _shotsDistanceSecondaryFire;
+
+		int _shotsDistance;
+
+		float _defaultPrimaryFireDamage;
+		float _primaryFireDamage;
+
+		int  _defaultPrimaryFireCooldown;
+		int _primaryFireCooldown;
+
+		int _primaryFireTimer;
 
 	}; // class CShootRaycast
 

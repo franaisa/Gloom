@@ -174,10 +174,10 @@ namespace Logic {
 		devuelve la dirección en la que el player debería mirar una vez aplicada
 		la rotación.
 
-		@param direction Dirección relativa en la que queremos que el player se
+		@param displ Dirección relativa en la que queremos que el player se
 		desplace.
 		*/
-		Vector3 estimateMotionDirection() const;
+		Vector3 estimateMotionDirection(const Vector3& displ) const;
 
 		//________________________________________________________________________
 
