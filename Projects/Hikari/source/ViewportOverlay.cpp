@@ -48,12 +48,12 @@ ViewportOverlay::~ViewportOverlay()
 {
 	viewport->getTarget()->removeListener(this);
 
-	if(overlay)
-	{
+	//if(overlay)
+	//{
 		overlay->remove2D(panel);
 		OverlayManager::getSingletonPtr()->destroyOverlayElement(panel);
 		OverlayManager::getSingletonPtr()->destroy(overlay);
-	}
+	//}
 }
 
 void ViewportOverlay::move(int deltaX, int deltaY)

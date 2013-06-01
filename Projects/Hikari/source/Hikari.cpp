@@ -114,22 +114,29 @@ FlashControl* HikariManager::createFlashMaterial(const Ogre::String& name, int w
 
 void HikariManager::destroyFlashControl(FlashControl* controlToDestroy)
 {
-	if(controlToDestroy)
+	if(controlToDestroy){
+		auto it = controls.find(controlToDestroy->getName());
 		controlToDestroy->okayToDelete = true;
+		controls.erase(it);
+		delete controlToDestroy;
+	}
 }
 
 void HikariManager::destroyFlashControl(const Ogre::String& controlName)
 {
 	FlashControl* control = getFlashControl(controlName);
 	if(control)
-		control->okayToDelete = true;
+		destroyFlashControl(control);
 }
 
 void HikariManager::destroyAllControls()
 {
-	for(ControlMap::iterator iter = controls.begin(); iter != controls.end(); iter++)
+	for(ControlMap::iterator iter = controls.begin(); iter != controls.end(); iter++){
 		iter->second->okayToDelete = true;
-
+		
+		delete iter->second;
+	}
+	controls.clear();
 	focusedControl = 0;
 }
 
