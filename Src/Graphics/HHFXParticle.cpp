@@ -57,7 +57,6 @@ namespace Graphics
 	void HHFXParticle::setDirection(const Vector3 &directionWithForce){
 		
 		_particleNode->setDirection(directionWithForce*10);
-				
 	} // setDirection
 	//--------------------------------------------------------
 
@@ -98,6 +97,9 @@ namespace Graphics
 	} // isEmitting
 	//--------------------------------------------------------
 	
-	
+	void HHFXParticle::setOrientation(const Matrix3 &orientation)
+	{
+		_particleNode->setOrientation(orientation);
+	} // setOrientatio
 
 } // namespace Graphics

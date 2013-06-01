@@ -118,7 +118,13 @@ namespace Graphics
 
 		Ogre::SceneNode * getSceneNode(){ return _particleNode;}
 
-		
+		/**
+		Cambia la orientación de la entidad.
+
+		@param orientation Referencia a la matriz de rotación con la que debe 
+		orientarse la entidad.
+		*/
+		void setOrientation(const Matrix3 &orientation);
 
 	protected:
 		/** 
