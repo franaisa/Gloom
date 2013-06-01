@@ -140,6 +140,9 @@ build.xml
 
 # Bring resources.cfg
 !/Exes/resources.cfg
+!/Exes/resources_d.cfg
+!/Exes/plugins.cfg
+!/Exes/plugins_d.cfg
 
 # HHFX particles
 !/Exes/media/packs/SampleParticlesOgre/
