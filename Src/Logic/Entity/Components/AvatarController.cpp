@@ -278,11 +278,12 @@ namespace Logic {
 		// desplazamiento calculado de pulsar las teclas
 		Math::yaw(displacementYaw, characterTransform);
 		// Obtenemos el vector unitario de orientación de la matriz de transformación
-		Vector3 motionDirection = Math::getDirection(characterTransform);
+		Vector3 motionDirection = Math::getDirection(Math::getYaw(characterTransform));
 		// Invertimos el vector resultante si nos estamos desplazando hacia atras
 		// porque el yaw se calcula de forma contraria al andar hacia atras
 		if(direction.z < 0) motionDirection *= -1;
 
+		std::cout << "motionDirection: " << motionDirection << std::endl;
 		// Devolvemos la dirección del movimiento estimado
 		return motionDirection;
 	}
@@ -311,9 +312,13 @@ namespace Logic {
 		///////////////////////////////////////////////////////////////
 		if(_displacementDir != Vector3::ZERO){
 			++ticks;
+			auxmsecs+=msecs;
 		}else{
-			if(ticks>0)
+			if(ticks>0){
 				std::cout << "el avatar controller se ha ejecutado " << ticks << " ticks" << std::endl;
+				std::cout << "Ha tardado " << auxmsecs << " msecs" << std::endl;
+			}
+			auxmsecs=0;
 			ticks=0;
 		}
 		///////////////////////////////////////////////////////////////

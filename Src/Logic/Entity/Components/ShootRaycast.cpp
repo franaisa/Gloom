@@ -155,7 +155,7 @@ namespace Logic {
 	// Dispara rayos mediante raycast dependiendo de los parametros del arquetipo del arma
 	CEntity* CShootRaycast::fireWeapon() {
 		//Direccion
-		Vector3 direction = _entity->getQuatOrientation()*-Vector3::UNIT_Z; //La malla mira al z pero esta del reves, gracias GALEON
+		Vector3 direction = _entity->getQuatOrientation()*-Vector3::UNIT_Z; //Ojo con las mallas y su orientacion ( o lo mismo es rollo 3quaternion)
 		//Me dispongo a calcular la desviacion del arma, en el map.txt se pondra en grados de dispersion (0 => sin dispersion)
 		Ogre::Radian angle = Ogre::Radian( (  (((float)(rand() % 100))/100.0f) * (_dispersion)) /100);
 		//Esto hace un random total, lo que significa, por ejemplo, que puede que todas las balas vayan hacia la derecha 
