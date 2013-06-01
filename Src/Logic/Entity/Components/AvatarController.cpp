@@ -270,15 +270,20 @@ namespace Logic {
 		// que queremos llevar a cabo
 		float displacementYaw = asin(direction.normalisedCopy().x);
 		// Obtenemos una copia de la matriz de transformación del personaje
-		Matrix4 characterTransform = _entity->getTransform();
+		Quaternion characterQuat = _entity->getQuatOrientation();
 		// Si estamos andando hacia atras, invertimos el giro
 		if(direction.z < 0) displacementYaw *= -1;
 
 		// Rotamos la matriz de transformacion tantos grados como diga el vector 
 		// desplazamiento calculado de pulsar las teclas
-		Math::yaw(displacementYaw, characterTransform);
-		// Obtenemos el vector unitario de orientación de la matriz de transformación
-		Vector3 motionDirection = Math::getDirection(Math::getYaw(characterTransform));
+		Quaternion q(Ogre::Radian(displacementYaw), Vector3::UNIT_Y); 
+		characterQuat=characterQuat*q;
+		//Math::yaw(displacementYaw, characterTransform);
+		//Obtenemos la direccion
+		Vector3 directionQuat = characterQuat * Vector3::NEGATIVE_UNIT_Z;
+		//Formamos el vector normalizado de la direccion
+		Vector3 motionDirection(directionQuat.x,0,directionQuat.z);
+		motionDirection.normalise();
 		// Invertimos el vector resultante si nos estamos desplazando hacia atras
 		// porque el yaw se calcula de forma contraria al andar hacia atras
 		if(direction.z < 0) motionDirection *= -1;
