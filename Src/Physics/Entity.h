@@ -98,6 +98,16 @@ namespace Physics {
 
 		//________________________________________________________________________
 
+		/** Devuelve la posición de la entidad fisica*/
+		Vector3 getPosition() const;
+
+		//________________________________________________________________________
+
+		/** Devuelve la rotación de la entidad física. */
+		Quaternion getOrientation() const;
+
+		//________________________________________________________________________
+
 		/** Activa la simulación física. */
 		void activateSimulation();
 

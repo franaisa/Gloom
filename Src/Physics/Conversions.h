@@ -32,13 +32,25 @@ namespace Physics {
 	//________________________________________________________________________
 
 	/**
-	Transforma un vector de PshysX al equivalente lógico.
+	Transforma un vector de PhysX al equivalente lógico.
 
 	@param v Vector de physX que queremos transformar.
 	@return El vector lógico equivalente.
 	*/
 	inline Vector3 PxVec3ToVector3(const physx::PxVec3 &v) {
 		return Vector3(v.x, v.y, v.z);
+	}
+
+	//________________________________________________________________________
+
+	/**
+	Transforma un quaternion de Physx al equivalente lógico.
+
+	@param q Quaternion de physx que queremos transformar.
+	@return Quaternion lógico equivalente.
+	*/
+	inline Quaternion PxQuatToQuaternion(const physx::PxQuat &q) {
+		return Quaternion(q.w, q.x, q.y, q.z);
 	}
 
 	//________________________________________________________________________

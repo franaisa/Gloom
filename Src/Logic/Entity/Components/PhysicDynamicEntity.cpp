@@ -117,7 +117,8 @@ void CPhysicDynamicEntity::process(const std::shared_ptr<CMessage>& message) {
 void CPhysicDynamicEntity::onFixedTick(unsigned int msecs) {
 	// Actualizar la posición y la orientación de la entidad lógica usando la 
 	// información proporcionada por el motor de física	
-	_entity->setTransform( _physicEntity.getTransform() );
+	_entity->setPosition( _physicEntity.getPosition() );
+	_entity->setOrientation( _physicEntity.getOrientation() );
 }
 
 //---------------------------------------------------------
@@ -169,8 +170,9 @@ void CPhysicDynamicEntity::createPhysicEntity(const Map::CEntity *entityInfo) {
 //---------------------------------------------------------
 
 void CPhysicDynamicEntity::createRigid(const Map::CEntity *entityInfo, int group, const std::vector<int>& groupList) {
-	// Leer la posición de la entidad
-	const Matrix4 transform = _entity->getTransform();
+	//Creamos el transform de la entidad
+	Matrix4 transform;
+	transform.makeTransform(_entity->getPosition(),Vector3(1,1,1),_entity->getQuatOrientation());
 	
 	// Leer el tipo de entidad: estáticos, dinámico o cinemático
 	assert(entityInfo->hasAttribute("physic_type"));

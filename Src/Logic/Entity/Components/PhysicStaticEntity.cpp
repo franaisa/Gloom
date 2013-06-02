@@ -158,8 +158,9 @@ void CPhysicStaticEntity::createPlane(const Map::CEntity *entityInfo, int group,
 //---------------------------------------------------------
 
 void CPhysicStaticEntity::createRigid(const Map::CEntity *entityInfo, int group, const std::vector<int>& groupList) {
-	// Leer la posición de la entidad
-	const Matrix4 transform = _entity->getTransform();
+	// Creamos el transform de la entidad
+	Matrix4 transform;
+	transform.makeTransform(_entity->getPosition(),Vector3(1,1,1),_entity->getQuatOrientation());
 	
 	// Leer el tipo de entidad: estáticos, dinámico o cinemático
 	assert(entityInfo->hasAttribute("physic_type"));
