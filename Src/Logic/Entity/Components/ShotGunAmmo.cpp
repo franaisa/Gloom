@@ -28,7 +28,7 @@ namespace Logic {
 
 	//__________________________________________________________________
 
-	CIronHellGoatAmmo::CIronHellGoatAmmo() : IAmmo("ironHellGoat"),
+	CIronHellGoatAmmo::CIronHellGoatAmmo() : IAmmo("shotGun"),
 											_primaryFireIsActive(false),
 											_elapsedTime(0),
 											_ammoSpentTimer(0),

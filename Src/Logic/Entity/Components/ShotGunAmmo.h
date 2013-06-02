@@ -1,19 +1,19 @@
 //---------------------------------------------------------------------------
-// IronHellGoat.h
+// ShotGun.h
 //---------------------------------------------------------------------------
 
 /**
-@file IronHellGoat.h
+@file ShotGun.h
 
-@see Logic::CIronHellGoat
+@see Logic::CShotGun
 @see Logic::IAmmo
 
 @author Francisco Aisa García
 @date Mayo, 2013
 */
 
-#ifndef __Logic_IronHellGoatAmmo_H
-#define __Logic_IronHellGoatAmmo_H
+#ifndef __Logic_ShotGunAmmo_H
+#define __Logic_ShotGunAmmo_H
 
 #include "Logic/Entity/Components/Ammo.h"
 
@@ -26,16 +26,16 @@ namespace Logic {
 	@date Mayo, 2013
 	*/
 
-	class CIronHellGoatAmmo : public IAmmo {
-		DEC_FACTORY(CIronHellGoatAmmo);
+	class CShotGunAmmo : public IAmmo {
+		DEC_FACTORY(CShotGunAmmo);
 	public:
 
 		/** Constructor por defecto. */
-		CIronHellGoatAmmo();
+		CShotGunAmmo();
 
 		//__________________________________________________________________
 
-		virtual ~CIronHellGoatAmmo();
+		virtual ~CShotGunAmmo();
 
 		//__________________________________________________________________
 
@@ -111,8 +111,8 @@ namespace Logic {
 		unsigned int _maxAmmoPerShot;
 	};
 
-	REG_FACTORY(CIronHellGoatAmmo);
+	REG_FACTORY(CShotGunAmmo);
 
 } // namespace Logic
 
-#endif // __Logic_IronHellGoatAmmo_H
+#endif // __Logic_ShotGunAmmo_H

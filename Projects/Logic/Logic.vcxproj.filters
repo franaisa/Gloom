@@ -573,8 +573,20 @@
     </ClCompile>
     <ClCompile Include="..\..\Src\Logic\Messages\MessageSecondaryShoot.cpp">
       <Filter>Messages\Source</Filter>
-    </ClCompile>	  
+    </ClCompile>
     <ClCompile Include="..\..\Src\Logic\Entity\Components\IronHellGoatAmmo.cpp">
+      <Filter>Entity\Components\Weapons\Ammunition\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\MiniGunAmmo.cpp">
+      <Filter>Entity\Components\Weapons\Ammunition\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\ShotGunAmmo.cpp">
+      <Filter>Entity\Components\Weapons\Ammunition\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\SoulReaperAmmo.cpp">
+      <Filter>Entity\Components\Weapons\Ammunition\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\SniperAmmo.cpp">
       <Filter>Entity\Components\Weapons\Ammunition\Source</Filter>
     </ClCompile>
   </ItemGroup>
@@ -1042,6 +1054,18 @@
       <Filter>Messages\Header</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Entity\Components\IronHellGoatAmmo.h">
+      <Filter>Entity\Components\Weapons\Ammunition\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\MiniGunAmmo.h">
+      <Filter>Entity\Components\Weapons\Ammunition\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\ShotGunAmmo.h">
+      <Filter>Entity\Components\Weapons\Ammunition\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\SniperAmmo.h">
+      <Filter>Entity\Components\Weapons\Ammunition\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\SoulReaperAmmo.h">
       <Filter>Entity\Components\Weapons\Ammunition\Header</Filter>
     </ClInclude>
   </ItemGroup>

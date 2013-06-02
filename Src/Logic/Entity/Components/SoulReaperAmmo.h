@@ -1,19 +1,19 @@
 //---------------------------------------------------------------------------
-// IronHellGoat.h
+// SoulReaper.h
 //---------------------------------------------------------------------------
 
 /**
-@file IronHellGoat.h
+@file SoulReaper.h
 
-@see Logic::CIronHellGoat
+@see Logic::CSoulReaper
 @see Logic::IAmmo
 
 @author Francisco Aisa García
 @date Mayo, 2013
 */
 
-#ifndef __Logic_IronHellGoatAmmo_H
-#define __Logic_IronHellGoatAmmo_H
+#ifndef __Logic_SoulReaperAmmo_H
+#define __Logic_SoulReaperAmmo_H
 
 #include "Logic/Entity/Components/Ammo.h"
 
@@ -26,16 +26,16 @@ namespace Logic {
 	@date Mayo, 2013
 	*/
 
-	class CIronHellGoatAmmo : public IAmmo {
-		DEC_FACTORY(CIronHellGoatAmmo);
+	class CSoulReaperAmmo : public IAmmo {
+		DEC_FACTORY(CSoulReaperAmmo);
 	public:
 
 		/** Constructor por defecto. */
-		CIronHellGoatAmmo();
+		CSoulReaperAmmo();
 
 		//__________________________________________________________________
 
-		virtual ~CIronHellGoatAmmo();
+		virtual ~CSoulReaperAmmo();
 
 		//__________________________________________________________________
 
@@ -111,8 +111,8 @@ namespace Logic {
 		unsigned int _maxAmmoPerShot;
 	};
 
-	REG_FACTORY(CIronHellGoatAmmo);
+	REG_FACTORY(CSoulReaperAmmo);
 
 } // namespace Logic
 
-#endif // __Logic_IronHellGoatAmmo_H
+#endif // __Logic_SoulReaperAmmo_H

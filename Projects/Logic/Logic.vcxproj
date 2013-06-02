@@ -81,6 +81,10 @@
     <ClCompile Include="..\..\Src\Graphics\OgreDecal.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\Ammo.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\IronHellGoatAmmo.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\MiniGunAmmo.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\ShotGunAmmo.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\SniperAmmo.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\SoulReaperAmmo.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\Weapon.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\ArrayGraphics.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\Audio.cpp" />
@@ -229,6 +233,10 @@
     <ClInclude Include="..\..\Src\Graphics\OgreDecal.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\Ammo.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\IronHellGoatAmmo.h" />
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\MiniGunAmmo.h" />
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\ShotGunAmmo.h" />
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\SniperAmmo.h" />
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\SoulReaperAmmo.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\Weapon.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\Audio.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\CameraFeedbackNotifier.h" />
