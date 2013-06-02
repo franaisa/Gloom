@@ -73,25 +73,6 @@ namespace Logic {
 
 		virtual bool canUseSecondaryFire();
 
-		template <typename T>
-		std::string toString(const T& data) const {
-			std::stringstream ss (std::stringstream::in | std::stringstream::out);
-			ss << data;
-			return ss.str();
-		}
-
-		std::string toString(const Vector3& data) const {
-			std::stringstream ss (std::stringstream::in | std::stringstream::out);
-
-			ss << data.x;
-			ss << " ";
-			ss << data.y;
-			ss << " ";
-			ss << data.z;
-
-			return ss.str();
-		}
-
 	private:
 
 		std::string _shootAudio;

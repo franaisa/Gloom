@@ -10,6 +10,7 @@
 */
 
 #include "WeaponFeedback.h"
+#include "HudWeapons.h"
 #include "Graphics.h"
 
 // Mapa

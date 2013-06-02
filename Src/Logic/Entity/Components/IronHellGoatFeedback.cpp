@@ -12,6 +12,7 @@ de disparo de la cabra.
 */
 
 #include "IronHellGoatFeedback.h"
+#include "HudWeapons.h"
 
 #include "Logic/Maps/EntityFactory.h"
 #include "Logic/Maps/Map.h"
@@ -48,12 +49,15 @@ namespace Logic {
 
 	void CIronHellGoatFeedback::primaryFire() {
 		// Poner la animacion de carga inestable del arma
+		_hudWeapon->loadingWeapon(true);
 	}
 
 	//__________________________________________________________________
 
 	void CIronHellGoatFeedback::stopPrimaryFire() {
 		// Parar la animacion de carga
+		_hudWeapon->loadingWeapon(false);
+		_hudWeapon->shootAnim(-1.85f);
 	}
 
 	//__________________________________________________________________
