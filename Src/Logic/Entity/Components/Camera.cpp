@@ -200,7 +200,8 @@ namespace Logic
 				_fOffsetTimer -= msecs;
 
 				//"Vibración" de la cámara
-				Matrix4 transf = _entity->getTransform();
+				Matrix4 transf;
+				transf.makeTransform(_entity->getPosition(),Vector3(1,1,1),_entity->getQuatOrientation());
  				Math::yaw(Math::HALF_PI, transf);
 				_entity->setTransform(transf);
 				

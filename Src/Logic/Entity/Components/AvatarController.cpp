@@ -288,7 +288,6 @@ namespace Logic {
 		// porque el yaw se calcula de forma contraria al andar hacia atras
 		if(direction.z < 0) motionDirection *= -1;
 
-		std::cout << "motionDirection: " << motionDirection << std::endl;
 		// Devolvemos la dirección del movimiento estimado
 		return motionDirection;
 	}

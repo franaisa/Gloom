@@ -124,7 +124,7 @@ namespace Logic
 		switch( message->getMessageType() ) {
 			case Message::SET_TRANSFORM: {
 				Matrix4 transform = std::static_pointer_cast<CMessageTransform>(message)->getTransform();
-				Math::setYaw(Math::getYaw(transform), transform);//? hacer get para luego set wtf
+				//Math::setYaw(Math::getYaw(transform), transform);//? hacer get para luego set wtf
 
 				_graphicsEntity->setTransform( transform.getTrans(),transform.extractQuaternion() );
 				break;

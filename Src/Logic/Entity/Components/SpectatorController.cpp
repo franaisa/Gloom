@@ -112,17 +112,17 @@ namespace Logic {
 		 // Para saber el sentido.
 		 pitchAngleSign = _entity->getPitch().x;
  
-		 // Limitamos el angulo de -90 a +90 como en el Quake3.
-		 if (pitchAngle > 90.0f)
+		 // Limitamos el angulo un poco menos de +90/-90 para evitar perder la direccion (Tomando como referencia a Quake3)
+		 if (pitchAngle > 88.0f)
 		 {
 			 if (pitchAngleSign > 0)
-				 //Fijando a +90.
-				 _entity->setPitch(Ogre::Quaternion(Ogre::Math::Sqrt(0.5f),Ogre::Math::Sqrt(0.5f), 0, 0),false);
+				 //Fijando a +88. Formo el quaternion previamente calculado, ahorrando procesamiento
+				 _entity->setPitch(Ogre::Quaternion(0.71934,0.694658, 0, 0),false);
 			 else if (pitchAngleSign < 0)
-				 //Fijando a -90.
-				 _entity->setPitch(Ogre::Quaternion(Ogre::Math::Sqrt(0.5f),	-Ogre::Math::Sqrt(0.5f), 0, 0),false);
+				 //Fijando a -88. Formo el quaternion previamente calculado, ahorrando procesamiento
+				 _entity->setPitch(Ogre::Quaternion(0.71934,-0.694658, 0, 0),false);
 		 }
-		 
+		
 		 //Actualizamos la orientacion(en un futuro no estara, esta por el transform que no se ha quitado)
 		 _entity->setOrientation(_entity->getQuatOrientation());
 	
@@ -153,8 +153,12 @@ namespace Logic {
 	//________________________________________________________________________
 
 	Vector3 CSpectatorController::estimateMotionDirection() const {
+
+		//LO COMENTO PORQUE SE TOCARON COSAS EN LA RAMA MASTER PARA QUE FUERA BIEN Y NO QUIERO LIARLA
+		// ASI AL ESTAR COMENTADO NO ME DARA HISTORIAS CON EL GETTRANSFORM
+
 		// Si nuestro movimiento es nulo no hacemos nada
-		if(_displacementDir * Vector3(1, 0, 1) == Vector3::ZERO) return Vector3::ZERO;
+		/*if(_displacementDir * Vector3(1, 0, 1) == Vector3::ZERO) return Vector3::ZERO;
 
 		// Mediante trigonometria basica sacamos el angulo que forma el desplazamiento
 		// que queremos llevar a cabo
@@ -174,7 +178,7 @@ namespace Logic {
 		if(_displacementDir.z < 0) motionDirection *= -1;
 
 		// Devolvemos la dirección del movimiento estimado
-		return motionDirection;
+		return motionDirection;*/
 	}
 
 	//________________________________________________________________________
