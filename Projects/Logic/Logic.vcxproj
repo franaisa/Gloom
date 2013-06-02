@@ -79,6 +79,7 @@
   <ItemGroup>
     <ClCompile Include="..\..\Src\Graphics\DecalUtility.cpp" />
     <ClCompile Include="..\..\Src\Graphics\OgreDecal.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\Ammo.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\Weapon.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\ArrayGraphics.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\Audio.cpp" />
@@ -223,6 +224,7 @@
   <ItemGroup>
     <ClInclude Include="..\..\Src\Graphics\DecalUtility.h" />
     <ClInclude Include="..\..\Src\Graphics\OgreDecal.h" />
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\Ammo.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\Weapon.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\Audio.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\CameraFeedbackNotifier.h" />
