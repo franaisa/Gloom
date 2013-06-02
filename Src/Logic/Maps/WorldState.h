@@ -12,13 +12,14 @@ Contiene la implementación del estado del mundo.
 */
 
 #include "Logic/Maps/EntityID.h"
+#include "Logic/Messages/Message.h"
 #include "Net/Buffer.h"
 
 #include <map>
+#include <vector>
 
 namespace Logic{
 	//forward declarations
-	class CMessage;
 	class CEntity;
 
 /**
@@ -40,6 +41,18 @@ comunicarse con esta clase para introducir el cambio que se ha producido.
 */
 	class CWorldState{
 	public:
+
+		/**
+		Para registrar observadores que quieran subscribirse a un determinado
+		tipo de eventos. Generalmente será el caso de los modos de juego.
+
+		Previamente los modos de juego (u otras entidades interesadas) deberán
+		registrarse especificando la máscara de mensajes que les interesa.
+		*/
+		class IObserver {
+		public:
+			virtual void gameEventOcurred(std::shared_ptr<Logic::CMessage> msg) = 0;
+		};
 
 		/**
 		Estructura donde guardamos la información de una entidad relevante
@@ -90,6 +103,10 @@ comunicarse con esta clase para introducir el cambio que se ha producido.
 		void addChange(CEntity* entity, std::shared_ptr<CMessage> message);
 
 		void clearEntities();
+
+		void addObserver(IObserver* listener, const std::vector<TMessageType>& eventsMask);
+
+		void removeObserver(IObserver* listener);
 
 		/**
 		Método que serializa la información contenida en el estado del mundo y la deja
@@ -159,6 +176,14 @@ comunicarse con esta clase para introducir el cambio que se ha producido.
 		Tabla hash donde almacenamos que players han sido creados/modificados
 		*/
 		std::map<TEntityID,EntityInfo> _entities;
+
+		/**
+		@deprecated
+
+		En el futuro sera un vector de observadores-máscara. Por el momento como
+		las máscaras de mensajes no están implementadas, se queda así.
+		*/
+		std::vector< std::pair<IObserver*, std::vector<TMessageType> > > _observers;
 
 		/**
 		Comfort typedefs

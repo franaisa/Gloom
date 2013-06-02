@@ -41,12 +41,16 @@ namespace Application {
 
 	void CDMServer::activate() {
 		CGameServerState::activate();
+
+		//_worldState->addObserver(this, eventsMask);
 	} // activate
 
 	//______________________________________________________________________________
 
 	void CDMServer::deactivate() {
 		CGameServerState::deactivate();
+
+		//_worldState->removeObserver(this);
 	} // deactivate
 
 	//______________________________________________________________________________

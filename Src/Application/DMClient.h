@@ -16,6 +16,7 @@
 #define __Application_DMClient_H
 
 #include "GameClientState.h"
+#include "Logic/Maps/WorldState.h"
 
 namespace Application {
 	

@@ -23,6 +23,8 @@ Contiene la implementación del estado del mundo.
 
 #include <cassert>
 
+using namespace std;
+
 namespace Logic {
 
 	CWorldState* CWorldState::_instance = 0;
@@ -68,6 +70,25 @@ namespace Logic {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	void CWorldState::close(){
+	}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	void CWorldState::addObserver(IObserver* listener, const vector<TMessageType>& eventsMask) {
+		_observers.push_back( pair<IObserver*, vector<TMessageType> >(listener, eventsMask) );
+	}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	void CWorldState::removeObserver(IObserver* listener) {
+		// Debido a que normalmente tendremos un observador registrado
+		// nos podemos permitir el lujo de hacer borrados secuenciales
+		for(auto it = _observers.begin(); it != _observers.end(); ++it) {
+			if(it->first == listener) {
+				_observers.erase(it);
+				break;
+			}
+		}
 	}
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -124,6 +145,20 @@ namespace Logic {
 
 		TInfo newMessage(type,message);
 		entityFound->second.messages.insert(newMessage);
+
+		bool notified;
+		for(int i = 0; i < _observers.size(); ++i) {
+			// @deprecated
+			// En el futuro esto sera una sola comprobacion de máscara
+			// ahora mismo lo hago un poco a lo bestia
+			notified = false;
+			for(int k = 0; k < _observers[i].second.size() && !notified; ++k) {
+				if(_observers[i].second[k] == type) {
+					_observers[i].first->gameEventOcurred(message);
+					notified = true;
+				}
+			}
+		}
 	}
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////

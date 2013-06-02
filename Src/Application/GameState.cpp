@@ -75,6 +75,8 @@ namespace Application {
 
 		//paramos el sonido de menu
 		Audio::CServer::getSingletonPtr()->stopSound("theme");
+
+		_worldState = Logic::CWorldState::getSingletonPtr();
 	} // activate
 
 	//--------------------------------------------------------
@@ -93,6 +95,8 @@ namespace Application {
 		CApplicationState::deactivate();
 
 		Logic::CEntityFactory::getSingletonPtr()->dynamicCreation(false);
+
+		_worldState = NULL;
 	} // deactivate
 
 	//--------------------------------------------------------
