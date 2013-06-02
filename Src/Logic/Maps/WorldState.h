@@ -11,6 +11,9 @@ Contiene la implementación del estado del mundo.
 @date May, 2013
 */
 
+#ifndef __Logic_WorldState_H
+#define __Logic_WorldState_H
+
 #include "Logic/Maps/EntityID.h"
 #include "Logic/Messages/Message.h"
 #include "Net/Buffer.h"
@@ -192,4 +195,6 @@ comunicarse con esta clase para introducir el cambio que se ha producido.
 		typedef std::pair<unsigned int, std::shared_ptr<CMessage>> TInfo;
 	};
 
-}
+} // namespace Logic
+
+#endif // __Logic_WorldState_H
