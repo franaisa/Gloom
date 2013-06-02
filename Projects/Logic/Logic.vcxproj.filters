@@ -568,26 +568,14 @@
     <ClCompile Include="..\..\Src\Logic\Entity\Components\Ammo.cpp">
       <Filter>Entity\Components\Weapons\Ammunition\Source</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Src\Logic\Messages\MessagePrimaryShoot.cpp">
-      <Filter>Messages\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Logic\Messages\MessageSecondaryShoot.cpp">
-      <Filter>Messages\Source</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Src\Logic\Entity\Components\IronHellGoatAmmo.cpp">
       <Filter>Entity\Components\Weapons\Ammunition\Source</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Src\Logic\Entity\Components\MiniGunAmmo.cpp">
-      <Filter>Entity\Components\Weapons\Ammunition\Source</Filter>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\IronHellGoatFeedback.cpp">
+      <Filter>Entity\Components\Weapons\Feedback\Source</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Src\Logic\Entity\Components\ShotGunAmmo.cpp">
-      <Filter>Entity\Components\Weapons\Ammunition\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Logic\Entity\Components\SoulReaperAmmo.cpp">
-      <Filter>Entity\Components\Weapons\Ammunition\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Logic\Entity\Components\SniperAmmo.cpp">
-      <Filter>Entity\Components\Weapons\Ammunition\Source</Filter>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\WeaponFeedback.cpp">
+      <Filter>Entity\Components\Weapons\Feedback\Source</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1047,26 +1035,14 @@
     <ClInclude Include="..\..\Src\Logic\Entity\Components\Ammo.h">
       <Filter>Entity\Components\Weapons\Ammunition\Header</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Src\Logic\Messages\MessageSecondaryShoot.h">
-      <Filter>Messages\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Logic\Messages\MessagePrimaryShoot.h">
-      <Filter>Messages\Header</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Entity\Components\IronHellGoatAmmo.h">
       <Filter>Entity\Components\Weapons\Ammunition\Header</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Src\Logic\Entity\Components\MiniGunAmmo.h">
-      <Filter>Entity\Components\Weapons\Ammunition\Header</Filter>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\IronHellGoatFeedback.h">
+      <Filter>Entity\Components\Weapons\Feedback\Header</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Src\Logic\Entity\Components\ShotGunAmmo.h">
-      <Filter>Entity\Components\Weapons\Ammunition\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Logic\Entity\Components\SniperAmmo.h">
-      <Filter>Entity\Components\Weapons\Ammunition\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Logic\Entity\Components\SoulReaperAmmo.h">
-      <Filter>Entity\Components\Weapons\Ammunition\Header</Filter>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\WeaponFeedback.h">
+      <Filter>Entity\Components\Weapons\Feedback\Header</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
