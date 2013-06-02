@@ -269,7 +269,7 @@ namespace Logic {
 		cGraph = pEntity->getComponent<CGraphics>("CGraphics");
 		if (cGraph)
 		{
-			worldMesh.initialize( cGraph->getOgreMesh()->getMesh(), Vector3(1,1,1));
+			worldMesh.initialize( cGraph->getOgreMesh()->getMesh(), Vector3::UNIT_SCALE);
  
 			/// Get the DecalGenerator singleton and initialize it
 			OgreDecal::DecalGenerator& generator = OgreDecal::DecalGenerator::getSingleton();

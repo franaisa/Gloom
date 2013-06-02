@@ -34,7 +34,7 @@ namespace Logic
 		if(!IComponent::spawn(entity,map,entityInfo))
 			return false;
 		
-		_initialPosition.makeTransform(_entity->getPosition(),Vector3(1,1,1),_entity->getQuatOrientation());
+		_initialPosition.makeTransform(_entity->getPosition(),Vector3::UNIT_SCALE,_entity->getQuatOrientation());
 
 		return true;
 

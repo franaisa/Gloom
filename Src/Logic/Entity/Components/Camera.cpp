@@ -201,7 +201,7 @@ namespace Logic
 
 				//"Vibración" de la cámara
 				Matrix4 transf;
-				transf.makeTransform(_entity->getPosition(),Vector3(1,1,1),_entity->getQuatOrientation());
+				transf.makeTransform(_entity->getPosition(),Vector3::UNIT_SCALE,_entity->getQuatOrientation());
  				Math::yaw(Math::HALF_PI, transf);
 				_entity->setTransform(transf);
 				

@@ -225,8 +225,11 @@ namespace Logic {
 	void CCameraFeedbackNotifier::walkEffect(unsigned int msecs) {
 		Vector3 offset = _cameraComponent->getOffset();
 
+		//OJO HAY QUE REVISAR ESTO
+		//DICE QUE OBTIENE HORIZONTAL SOLO CUANDO TMB DEVUELVE ALTURA
 		if(_strafingDir == 0) {
-			Matrix4 transform = _entity->getTransform();
+			Matrix4 transform;
+			transform.makeTransform(_entity->getPosition(),Vector3::UNIT_SCALE,_entity->getQuatOrientation());
 			Math::yaw(Math::HALF_PI, transform);
 			Vector3 horizontal = Math::getDirection(transform);
 
@@ -355,7 +358,7 @@ namespace Logic {
 		Ogre::Vector3 vMyPos = this->_entity->getPosition();
 
 		//Obtengo el vector en el que estoy mirando, y me quedo sólo en el plano horizontal (quitando la altura)
-		Vector3 vMyDirVision = Math::getDirection(_entity->getTransform());
+		Vector3 vMyDirVision = _entity->getQuatOrientation()*Vector3::NEGATIVE_UNIT_Z;
 		vMyDirVision = Vector3(vMyDirVision.x,0,vMyDirVision.z);
 		//Obtengo el vector desde el enemigo a mi posición; y me quedo sólo con el plano horizontal (quitando la altura)
 		Vector3 vEnemyDirVision = vPosEnemy - vMyPos;

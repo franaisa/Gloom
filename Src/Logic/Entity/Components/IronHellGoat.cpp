@@ -208,7 +208,7 @@ namespace Logic {
 		Vector3 shootPosition = _entity->getPosition() + (( _entity->getQuatOrientation()*Vector3::NEGATIVE_UNIT_Z ) * (_capsuleRadius + fireBallRadius + 0.5f) );
 		shootPosition.y += _heightShoot - fireBallRadius;
 		Matrix4 shootTransform;
-		shootTransform.makeTransform(shootPosition,Vector3(1,1,1),_entity->getQuatOrientation());
+		shootTransform.makeTransform(shootPosition,Vector3::UNIT_SCALE,_entity->getQuatOrientation());
 		// Creamos la entidad
 		CEntity* fireBall = CEntityFactory::getSingletonPtr()->createCustomClientEntity(
 								entityInfo,
