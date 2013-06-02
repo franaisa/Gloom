@@ -568,6 +568,12 @@
     <ClCompile Include="..\..\Src\Logic\Entity\Components\Ammo.cpp">
       <Filter>Entity\Components\Weapons\Ammunition\Source</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Messages\MessagePrimaryShoot.cpp">
+      <Filter>Messages\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Messages\MessageSecondaryShoot.cpp">
+      <Filter>Messages\Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Src\Logic\Maps\ComponentFactory.h">
@@ -1025,6 +1031,12 @@
     </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Entity\Components\Ammo.h">
       <Filter>Entity\Components\Weapons\Ammunition\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Messages\MessageSecondaryShoot.h">
+      <Filter>Messages\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Messages\MessagePrimaryShoot.h">
+      <Filter>Messages\Header</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

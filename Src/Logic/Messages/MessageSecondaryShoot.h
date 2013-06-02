@@ -1,26 +1,26 @@
-#ifndef __Logic_MessageActivate_H
-#define __Logic_MessageActivate_H
+#ifndef __Logic_MessageSecondaryShoot_H
+#define __Logic_MessageSecondaryShoot_H
 
 #include "Message.h"
 
 namespace Logic {
 
-	class CMessageActivate : public CMessage{
-	DEC_FACTORYMESSAGE(CMessageActivate);
+	class CMessageSecondaryShoot : public CMessage{
+	DEC_FACTORYMESSAGE(CMessageSecondaryShoot);
 	public:
-		CMessageActivate();
-		virtual ~CMessageActivate(){};
+		CMessageSecondaryShoot(bool shoot);
+		virtual ~CMessageSecondaryShoot(){};
 		
 		virtual Net::CBuffer serialize();
 		virtual void deserialize(Net::CBuffer& buffer);
 
-		void setActivated(bool activate){_activate = activate;}
-		bool getActivated(){return _activate;}
+		void setShoot(bool shoot){_shoot = shoot;}
+		bool getShoot(){return _shoot;}
 
 	private:
-		bool _activate;
+		bool _shoot;
 	};
-	REG_FACTORYMESSAGE(CMessageActivate);
+	REG_FACTORYMESSAGE(CMessageSecondaryShoot);
 };
 
 #endif

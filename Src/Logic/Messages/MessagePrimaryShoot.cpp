@@ -1,27 +1,27 @@
-#include "MessageActivate.h"
+#include "MessagePrimaryShoot.h"
 
 #include <string>
 
 namespace Logic {
 
-	IMP_FACTORYMESSAGE(CMessageActivate);
+	IMP_FACTORYMESSAGE(CMessagePrimaryShoot);
 
-	CMessageActivate::CMessageActivate() : CMessage(Message::ACTIVATE) {
+	CMessagePrimaryShoot::CMessagePrimaryShoot(bool shoot) : _shoot(shoot), CMessage(Message::PRIMARY_SHOOT) {
 		// Nada que hacer
 	} //
 	//----------------------------------------------------------
 
-	Net::CBuffer CMessageActivate::serialize() {
+	Net::CBuffer CMessagePrimaryShoot::serialize() {
 		Net::CBuffer buffer( sizeof(int) );
-		buffer.serialize( std::string("CMessageActivate"), true );
-		buffer.serialize(_activate);
+		buffer.serialize( std::string("CMessagePrimaryShoot"), true );
+		buffer.serialize(_shoot);
 		
 		return buffer;
 	}//
 	//----------------------------------------------------------
 
-	void CMessageActivate::deserialize(Net::CBuffer& buffer) {
-		buffer.deserialize(_activate);
+	void CMessagePrimaryShoot::deserialize(Net::CBuffer& buffer) {
+		buffer.deserialize(_shoot);
 	}
 
 };
