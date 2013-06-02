@@ -104,7 +104,7 @@ namespace Logic {
 		Método virtual puro que debe ser implementado por las clases derivadas para
 		especificar que ocurre al usar el disparo primario.
 		*/
-		inline void primaryFire();;
+		virtual void primaryFire();
 
 		//__________________________________________________________________
 		
@@ -112,7 +112,7 @@ namespace Logic {
 		Método virtual puro que debe ser implementado por las clases derivadas para
 		especificar que ocurre al usar el disparo secundario.
 		*/
-		inline void secondaryFire();
+		virtual void secondaryFire();
 
 		//__________________________________________________________________
 
@@ -120,7 +120,7 @@ namespace Logic {
 		Este método es invocado cuando se deja de pulsar el botón de disparo
 		primario.
 		*/
-		inline void stopPrimaryFire();
+		virtual void stopPrimaryFire();
 
 		//__________________________________________________________________
 
@@ -128,7 +128,7 @@ namespace Logic {
 		Este método es invocado cuando se deja de pulsar el botón de disparo
 		secundario.
 		*/
-		inline void stopSecondaryFire();
+		virtual void stopSecondaryFire();
 
 		//__________________________________________________________________
 
@@ -146,20 +146,7 @@ namespace Logic {
 		/**
 		Resetea la munición.
 		*/
-		virtual void resetAmmo();
-
-		//__________________________________________________________________
-
-		/**
-		Método virtual puro invocado cuando se amplifica el daño del arma.
-		El cliente es responsable de incrementar el daño de su arma en 
-		el porcentaje dado por parámetro.
-
-		@param percentage Tanto por ciento del 1 al 100 en el que se incrementa
-		el daño del arma. Si su valor es 0, significa que debemos resetear el
-		daño del arma a su valor normal.
-		*/
-		virtual void amplifyDamage(unsigned int percentage) = 0;
+		inline void resetAmmo();
 
 		//__________________________________________________________________
 
@@ -247,6 +234,10 @@ namespace Logic {
 		//                          MIEMBROS PROTEGIDOS
 		// =======================================================================
 
+
+		bool _primaryFireIsActive;
+
+		bool _secondaryFireIsActive;
 
 		/** Cuanta munición puede llevar este arma como máximo. */
 		unsigned int _maxAmmo;

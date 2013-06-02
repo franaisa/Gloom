@@ -34,7 +34,9 @@ using namespace std;
 namespace Logic {
 	
 	IAmmo::IAmmo(const string& weaponName) : _weaponName("weapon" + weaponName),
-											 _currentAmmo(0) {
+											 _currentAmmo(0),
+											 _primaryFireIsActive(false),
+											 _secondaryFireIsActive(false) {
 
 		// Nada que inicializar
 	}
@@ -115,24 +117,28 @@ namespace Logic {
 	//__________________________________________________________________
 
 	void IAmmo::primaryFire() {
+		_primaryFireIsActive = true;
 		// Mandar el mensaje primaryFire(true)
 	}
 
 	//__________________________________________________________________
 
 	void IAmmo::secondaryFire() {
+		_secondaryFireIsActive = true;
 		// Mandar el mensaje seondaryFire(true)
 	}
 
 	//__________________________________________________________________
 
 	void IAmmo::stopPrimaryFire() {
+		_primaryFireIsActive = true;
 		// Mandar el mensaje primaryFire(false)
 	}
 
 	//__________________________________________________________________
 
 	void IAmmo::stopSecondaryFire() {
+		_secondaryFireIsActive = false;
 		// Mandar el mensaje secondaryFire(false)
 	}
 

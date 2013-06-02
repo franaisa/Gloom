@@ -568,6 +568,9 @@
     <ClCompile Include="..\..\Src\Logic\Entity\Components\Ammo.cpp">
       <Filter>Entity\Components\Weapons\Ammunition\Source</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\IronHellGoatAmmo.cpp">
+      <Filter>Entity\Components\Weapons\Ammunition\Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Src\Logic\Maps\ComponentFactory.h">
@@ -1024,6 +1027,9 @@
       <Filter>Entity\Components\Weapons</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Entity\Components\Ammo.h">
+      <Filter>Entity\Components\Weapons\Ammunition\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\IronHellGoatAmmo.h">
       <Filter>Entity\Components\Weapons\Ammunition\Header</Filter>
     </ClInclude>
   </ItemGroup>
