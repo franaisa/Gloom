@@ -40,7 +40,9 @@ namespace Application {
 
 		@param app Aplicacion que se encarga de manejar los estados.
 		*/
-		CDMServer(CBaseApplication* app) : CGameServerState(app) { /* Nada que hacer */ }
+		CDMServer(CBaseApplication* app);
+
+		void setGameConfig(const std::pair<unsigned int, unsigned int>& timeLimit, unsigned int fragLimit, bool voteKick = false);
 
 
 		// =======================================================================
@@ -133,6 +135,12 @@ namespace Application {
 		*/
 		virtual bool mouseReleased(const Input::CMouseState &mouseState);
 
+	private:
+
+		unsigned int _time;
+		unsigned int _frags;
+		unsigned int _fragLimit;
+		bool _voteKick;
 
 	}; // CDMServer
 

@@ -14,7 +14,30 @@
 
 #include "DMServer.h"
 
+using namespace std;
+
 namespace Application {
+
+	CDMServer::CDMServer(CBaseApplication* app) : CGameServerState(app),
+												  _fragLimit(30),
+												  _frags(0),
+												  _time(900000),
+												  _voteKick(false) { 
+		// Nada que hacer
+	}
+
+	//______________________________________________________________________________
+
+	void CDMServer::setGameConfig(const pair<unsigned int, unsigned int>& timeLimit, unsigned int fragLimit, bool voteKick) {
+		// Establecemos el tiempo de partida
+		this->_time = (timeLimit.first * 60000) + (timeLimit.second * 1000);
+		// Establecemos el limite de frags
+		this->_fragLimit = fragLimit;
+		// Activamos el votekick
+		this->_voteKick = voteKick;
+	}
+
+	//______________________________________________________________________________
 
 	void CDMServer::activate() {
 		CGameServerState::activate();
