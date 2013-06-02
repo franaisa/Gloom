@@ -114,12 +114,14 @@ namespace Logic
 	
 	void CParticle::onStart() {
 		_scene = Graphics::CServer::getSingletonPtr()->getActiveScene();
+
 		if(!_particles.empty()){
 			for(auto it = _particles.begin(); it < _particles.end(); ++it){
 				(*it)._particle = _scene->createParticle((*it)._particleName, _entity->getPosition() + ( (*it)._particleOffset * _entity->getOrientation() ), (*it)._particleEmitterDirection );
 				// tengo q hacer esto para la habilidad del hound
 				(*it)._particle->setVisible((*it)._particleVisible);
 			}
+
 		}
 	} // onStart
 	//---------------------------------------------------------

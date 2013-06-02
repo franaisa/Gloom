@@ -75,6 +75,8 @@ namespace Application {
 
 		//paramos el sonido de menu
 		Audio::CServer::getSingletonPtr()->stopSound("theme");
+
+		_worldState = Logic::CWorldState::getSingletonPtr();
 	} // activate
 
 	//--------------------------------------------------------
@@ -93,6 +95,8 @@ namespace Application {
 		CApplicationState::deactivate();
 
 		Logic::CEntityFactory::getSingletonPtr()->dynamicCreation(false);
+
+		_worldState = NULL;
 	} // deactivate
 
 	//--------------------------------------------------------
@@ -103,7 +107,6 @@ namespace Application {
 		Logic::CServer::getSingletonPtr()->tick(msecs);
 		// Ejecutamos el tick de la física del juego.
 		Physics::CServer::getSingletonPtr()->tick(msecs);
-
 	} // tick
 
 	//--------------------------------------------------------
