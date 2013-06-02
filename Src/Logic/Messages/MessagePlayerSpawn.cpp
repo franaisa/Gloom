@@ -14,22 +14,35 @@ namespace Logic {
 	
 	//________________________________________________________________________
 
-	void CMessagePlayerSpawn::setSpawnTransform(const Matrix4& transform) {
-		_spawnTransform = transform;
+	void CMessagePlayerSpawn::setSpawnPosition(const Vector3& position) {
+		_position = position;
 	}
 	
 	//________________________________________________________________________
 
-	Matrix4 CMessagePlayerSpawn::getSpawnTransform(){
-		return _spawnTransform;
+	Vector3 CMessagePlayerSpawn::getSpawnPosition(){
+		return _position;
+	}
+	
+	//________________________________________________________________________
+
+	void CMessagePlayerSpawn::setSpawnOrientation(const Quaternion& orientation) {
+		_orientation = orientation;
+	}
+	
+	//________________________________________________________________________
+
+	Quaternion CMessagePlayerSpawn::getSpawnOrientation(){
+		return _orientation;
 	}
 	
 	//________________________________________________________________________
 
 	Net::CBuffer CMessagePlayerSpawn::serialize() {
-		Net::CBuffer buffer(sizeof(int) + sizeof(float) * 5);
+		Net::CBuffer buffer(sizeof(int) + sizeof(float) * 6);
 		buffer.serialize(std::string("CMessagePlayerSpawn"), true);
-		buffer.serialize(_spawnTransform);
+		buffer.serialize(_position);
+		buffer.serialize(_orientation);
 		
 		return buffer;
 	}
@@ -37,6 +50,7 @@ namespace Logic {
 	//________________________________________________________________________
 
 	void CMessagePlayerSpawn::deserialize(Net::CBuffer& buffer) {
-		buffer.deserialize(_spawnTransform);
+		buffer.serialize(_position);
+		buffer.serialize(_orientation);
 	}
 };

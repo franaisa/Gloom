@@ -221,8 +221,6 @@ namespace Physics {
 
 	void CDynamicEntity::setTransform(const Vector3 &position, const Quaternion &orientation, bool makeConversionToLogicWorld) {
 		if(makeConversionToLogicWorld) {
-			//Matrix4 convertedTransform = transform;
-			//convertedTransform.setTrans( convertPhysxCoordsToLogicCoords( transform.getTrans() ) );
 			_actor->setGlobalPose( PxTransform(Vector3ToPxVec3( convertPhysxCoordsToLogicCoords(position)),QuaternionToPxQuat(orientation)));
 		}
 		else {

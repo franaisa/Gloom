@@ -137,7 +137,7 @@ namespace Logic
 		switch( message->getMessageType() ) {
 			case Message::SET_TRANSFORM: {
 				std::shared_ptr<CMessageTransform> transformMsg = std::static_pointer_cast<CMessageTransform>(message);
-				_graphicsEntity->setTransform( transformMsg->getTransform().getTrans(), transformMsg->getTransform().extractQuaternion() );
+				_graphicsEntity->setTransform( transformMsg->getPosition(), transformMsg->getOrientation() );
 				break;
 			}
 			case Message::ACTIVATE: {

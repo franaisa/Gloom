@@ -82,7 +82,8 @@ namespace Logic  {
 
 				std::shared_ptr<CMessagePlayerSpawn> playerSpawnMsg = std::static_pointer_cast<CMessagePlayerSpawn>(message);
 
-				Matrix4 spawnTransform = playerSpawnMsg->getSpawnTransform();
+				Matrix4 spawnTransform;
+				spawnTransform.makeTransform(playerSpawnMsg->getSpawnPosition(),Vector3::UNIT_SCALE,playerSpawnMsg->getSpawnOrientation());
 
 				// En caso de estar simulando fisica en el cliente, reactivamos las colisiones
 				// y reposicionamos la capsula donde nos diga el servidor.

@@ -97,7 +97,7 @@ void CPhysicDynamicEntity::process(const std::shared_ptr<CMessage>& message) {
 		}
 		case Message::SET_TRANSFORM: {
 			std::shared_ptr<CMessageTransform> transMsg = std::static_pointer_cast<CMessageTransform>(message);
-			setTransform(transMsg->getTransform().getTrans(),transMsg->getTransform().extractQuaternion(),transMsg->getMakeConversion());
+			setTransform(transMsg->getPosition(),transMsg->getOrientation(),transMsg->getMakeConversion());
 			break;
 		}
 		case Message::ADD_FORCE_PHYSICS: {

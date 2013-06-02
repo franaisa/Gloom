@@ -215,6 +215,31 @@ namespace Net {
 
 	//__________________________________________________________________
 
+	void CBuffer::serialize(const Quaternion& data) {	
+		serialize(data.getYaw().valueAngleUnits());
+		serialize(data.getPitch().valueAngleUnits());
+		serialize(data.getRoll().valueAngleUnits());
+	}
+
+	//__________________________________________________________________
+
+	void CBuffer::deserialize(Quaternion& data) {
+		float yaw, pitch,roll;
+
+		// Obtenemos Yaw, Pitch y Roll
+		read(&yaw, sizeof(yaw));
+		read(&pitch, sizeof(pitch));
+		read(&roll, sizeof(roll));
+		
+		Quaternion y(Ogre::Radian(Math::fromDegreesToRadians(yaw)),Vector3::UNIT_Y);
+		Quaternion p(Ogre::Radian(Math::fromDegreesToRadians(pitch)),Vector3::UNIT_X);
+		Quaternion r(Ogre::Radian(Math::fromDegreesToRadians(roll)),Vector3::UNIT_Z);
+
+		data=yaw*pitch*roll;
+	}
+
+	//__________________________________________________________________
+
 	void CBuffer::serialize(const std::string& data, bool crc) {
 		if(crc){
 			int crc = Math::CRC(data);
@@ -310,20 +335,20 @@ namespace Net {
 	//__________________________________________________________________
 
 	void CBuffer::deserialize(Matrix4& data) {
-		Vector3 transform;
+		Vector3 position;
 		float yaw, pitch;
 
 		// Obtenemos los datos del vector
-		read(&transform.x, sizeof(transform.x));
-		read(&transform.y, sizeof(transform.y));
-		read(&transform.z, sizeof(transform.z));
+		read(&position.x, sizeof(position.x));
+		read(&position.y, sizeof(position.y));
+		read(&position.z, sizeof(position.z));
 
 		// Obtenemos el Yaw y el Pitch
 		read(&yaw, sizeof(yaw));
 		read(&pitch, sizeof(pitch));
 		
 		Math::setPitchYaw(pitch,yaw, data);
-		data.setTrans(transform);
+		data.setTrans(position);
 	}
 
 	//__________________________________________________________________

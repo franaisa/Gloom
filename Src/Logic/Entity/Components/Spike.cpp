@@ -66,7 +66,8 @@ namespace Logic
 				_entity->emitMessage(deactivateMsg);
 				//Recolocamos la entidad fisicamente en su inicio para cuando se active nuevamente la trampa
 				std::shared_ptr<CMessageTransform> setTransformMsg = std::make_shared<CMessageTransform>();
-				setTransformMsg->setTransform(_initialPosition);
+				setTransformMsg->setPosition(_initialPosition.getTrans());
+				setTransformMsg->setOrientation(_initialPosition.extractQuaternion());
 				setTransformMsg->setMakeConversion(true);
 				_entity->emitMessage(setTransformMsg);
 				break;
