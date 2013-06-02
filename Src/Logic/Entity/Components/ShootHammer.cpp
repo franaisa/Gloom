@@ -131,7 +131,7 @@ namespace Logic {
 		//Posicion de la entidad + altura de disparo(coincidente con la altura de la camara)
 		Vector3 origin = _entity->getPosition()+Vector3(0.0f,_heightShoot,0.0f);
 		// Creamos el ray desde el origen en la direccion del raton (desvio ya aplicado)
-		Ray ray(origin, (_entity->getQuatOrientation()*-Vector3::UNIT_Z).normalisedCopy());
+		Ray ray(origin, (_entity->getQuatOrientation()*Vector3::NEGATIVE_UNIT_Z).normalisedCopy());
 
 		// Rayo lanzado por el servidor de físicas de acuerdo a la distancia de potencia del arma
 		Physics::CRaycastHit hit;

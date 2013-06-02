@@ -373,7 +373,7 @@ namespace Logic {
 		/**
 		Metodo que permite elegir que eje rotar y cuantos grados hacerlo (en radianes).
 
-		@param orientation Eje que rotaremos.
+		@param orientation Eje en el cual queremos rotar.
 		@param rotation Grados en radianes que rotaremos.
 		*/
 		void rotate(int orientation, Ogre::Radian rotation);

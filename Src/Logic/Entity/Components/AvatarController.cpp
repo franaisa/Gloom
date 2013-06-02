@@ -274,11 +274,8 @@ namespace Logic {
 		// Si estamos andando hacia atras, invertimos el giro
 		if(direction.z < 0) displacementYaw *= -1;
 
-		// Rotamos la matriz de transformacion tantos grados como diga el vector 
-		// desplazamiento calculado de pulsar las teclas
-		Quaternion q(Ogre::Radian(displacementYaw), Vector3::UNIT_Y); 
-		characterQuat=characterQuat*q;
-		//Math::yaw(displacementYaw, characterTransform);
+		// Rotamos tantos grados como diga el vector desplazamiento calculado de pulsar las teclas
+		Math::rotate(Vector3::UNIT_Y,Ogre::Radian(displacementYaw),characterQuat);
 		//Obtenemos la direccion
 		Vector3 directionQuat = characterQuat * Vector3::NEGATIVE_UNIT_Z;
 		//Formamos el vector normalizado de la direccion

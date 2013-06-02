@@ -114,7 +114,7 @@ namespace Logic {
 
 	void CShootSniper::primaryFireWeapon(){
 		//Direccion
-		Vector3 direction = _entity->getQuatOrientation()*-Vector3::UNIT_Z;
+		Vector3 direction = _entity->getQuatOrientation()*Vector3::NEGATIVE_UNIT_Z;
 		//Me dispongo a calcular la desviacion del arma, en el map.txt se pondra en grados de dispersion (0 => sin dispersion)
 		Ogre::Radian angle = Ogre::Radian( (  (((float)((rand()*clock()) % 100))/100.0f) * (_dispersion)) /100);
 		//Esto hace un random total, lo que significa, por ejemplo, que puede que todas las balas vayan hacia la derecha 
@@ -166,7 +166,7 @@ namespace Logic {
 
 	void CShootSniper::secondaryFireWeapon(){
 		//Direccion
-		Vector3 direction = _entity->getQuatOrientation()*-Vector3::UNIT_Z;
+		Vector3 direction = _entity->getQuatOrientation()*Vector3::NEGATIVE_UNIT_Z;
 		//Me dispongo a calcular la desviacion del arma, en el map.txt se pondra en grados de dispersion (0 => sin dispersion)
 		Ogre::Radian angle = Ogre::Radian( (  (((float)(rand() % 100))/100.0f) * (_dispersion)) /100);
 		//Esto hace un random total, lo que significa, por ejemplo, que puede que todas las balas vayan hacia la derecha 

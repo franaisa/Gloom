@@ -136,6 +136,20 @@ namespace Math
 		return Quaternion(cos(rad/2.0f), sin(rad/2.0f) * axe.x, sin(rad/2.0f)* axe.y, sin(rad/2.0f) * axe.z);
 	}
 
+	
+	/**
+	Rota el quaternion pasado por parámetro con los radianes especificados tambien por parámetro sobre el eje especificado.
+	Por ejemplo si queremos rotar el yaw, pasariamos el axe(0,1,0) con rotation(radianes) y el quaternion a rotar.
+
+	@param axe Eje sobre el que rotaremos.
+	@param rotation Radianes que rotaremos.
+	@param quaternion Quaternion que será rotado.
+	*/
+	static inline void rotate(const Vector3 &axe, Ogre::Radian rotation, Quaternion &quaternion ){
+		Quaternion q(rotation,axe);
+		quaternion=quaternion*q;
+	}
+
 
 	/**
 	Crea un vector unitario de dirección a partir de un angulo de
