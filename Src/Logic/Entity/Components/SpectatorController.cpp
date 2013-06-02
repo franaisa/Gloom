@@ -158,7 +158,7 @@ namespace Logic {
 		// ASI AL ESTAR COMENTADO NO ME DARA HISTORIAS CON EL GETTRANSFORM
 
 		// Si nuestro movimiento es nulo no hacemos nada
-		/*if(_displacementDir * Vector3(1, 0, 1) == Vector3::ZERO) return Vector3::ZERO;
+		if(_displacementDir * Vector3(1, 0, 1) == Vector3::ZERO) return Vector3::ZERO;
 
 		// Mediante trigonometria basica sacamos el angulo que forma el desplazamiento
 		// que queremos llevar a cabo
@@ -178,7 +178,7 @@ namespace Logic {
 		if(_displacementDir.z < 0) motionDirection *= -1;
 
 		// Devolvemos la dirección del movimiento estimado
-		return motionDirection;*/
+		return motionDirection;
 	}
 
 	//________________________________________________________________________
