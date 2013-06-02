@@ -99,12 +99,28 @@ namespace Graphics
 		void setPosition(const Vector3& position);
 
 		/**
+		Devuelve la posicion actual del nodo que contiene la entidad.
+
+		@return Posicion actual de la entidad.
+		*/
+		const Vector3& getPosition();
+
+		/**
 		Cambia la orientación de la entidad.
 
 		@param orientation Referencia al quaternion de rotación con el que debe 
 		orientarse la entidad.
 		*/
 		void setOrientation(const Quaternion &orientation);
+
+
+		/**
+		Devuelve la orientacion actual del nodo que contiene la entidad.
+
+		@return Orientacion actual de la entidad.
+		*/
+		const Quaternion& getOrientation();
+
 
 		/**
 		 Establece la propiedad visible de la entidad. Si

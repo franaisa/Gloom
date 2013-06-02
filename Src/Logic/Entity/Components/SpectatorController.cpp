@@ -154,9 +154,6 @@ namespace Logic {
 
 	Vector3 CSpectatorController::estimateMotionDirection() const {
 
-		//LO COMENTO PORQUE SE TOCARON COSAS EN LA RAMA MASTER PARA QUE FUERA BIEN Y NO QUIERO LIARLA
-		// ASI AL ESTAR COMENTADO NO ME DARA HISTORIAS CON EL GETTRANSFORM
-
 		// Si nuestro movimiento es nulo no hacemos nada
 		if(_displacementDir * Vector3(1, 0, 1) == Vector3::ZERO) return Vector3::ZERO;
 
@@ -164,7 +161,8 @@ namespace Logic {
 		// que queremos llevar a cabo
 		float displacementYaw = asin(_displacementDir.normalisedCopy().x);
 		// Obtenemos una copia de la matriz de transformación del personaje
-		Matrix4 characterTransform = _entity->getTransform();
+		Matrix4 characterTransform;
+		characterTransform.makeTransform(_entity->getPosition(),Vector3::UNIT_SCALE,_entity->getQuatOrientation());
 		// Si estamos andando hacia atras, invertimos el giro
 		if(_displacementDir.z < 0) displacementYaw *= -1;
 

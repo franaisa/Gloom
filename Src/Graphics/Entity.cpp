@@ -214,6 +214,26 @@ namespace Graphics
 	} // setPosition
 	
 	//--------------------------------------------------------
+
+	const Vector3& CEntity::getPosition()
+	{
+		assert(_entityNode && "La entidad no ha sido cargada");
+		if(_entityNode)
+			return _entityNode->getPosition();
+
+	} // getPosition
+	
+	//--------------------------------------------------------
+
+	const Quaternion& CEntity::getOrientation()
+	{
+		assert(_entityNode && "La entidad no ha sido cargada");
+		if(_entityNode)
+			return _entityNode->getOrientation();
+
+	} // getOrientation
+	
+	//--------------------------------------------------------
 		
 	void CEntity::setScale(const Vector3 &scale)
 	{

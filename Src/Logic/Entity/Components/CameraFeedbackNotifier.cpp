@@ -371,7 +371,9 @@ namespace Logic {
 
 		//Cambio de sistema de coordenadas para tener la posición del enemigo respecto 
 		//al jugador. Antonio el crack matemático! ^^
-		Matrix4 mat = _entity->getTransform().inverse();
+		Matrix4 mat;
+		mat.makeTransform(_entity->getPosition(),Vector3::UNIT_SCALE,_entity->getQuatOrientation());
+		mat.inverse();
 		Vector3 vec = mat * vPosEnemy; //este vector es la posicion del enemigo respecto a mi
 		if (vec.x > 0) 
 		{

@@ -155,7 +155,8 @@ namespace Logic {
 		serialMsg.serialize(destID);
 		serialMsg.serialize(destEntity->getType(), false);
 		serialMsg.serialize(destEntity->getName(), false);
-		serialMsg.serialize(destEntity->getTransform());
+		serialMsg.serialize(destEntity->getPosition());
+		serialMsg.serialize(destEntity->getQuatOrientation());
 
 		if(customInfoForClient != NULL) {
 			// Serializamos la información de la entidad
@@ -192,8 +193,11 @@ namespace Logic {
 		std::string name;
 		serialMsg.deserialize(name);
 
-		Matrix4 transform;
-		serialMsg.deserialize(transform);
+		Vector3 position;
+		serialMsg.deserialize(position);
+
+		Quaternion orientation;
+		serialMsg.deserialize(orientation);
 
 		//creamos la entidad con nombre..
 		Map::CEntity * info = Logic::CEntityFactory::getSingletonPtr()->getInfo(type);
@@ -215,6 +219,8 @@ namespace Logic {
 		}
 
 		// Creamos la entidad
+		Matrix4 transform;
+		transform.makeTransform(position,Vector3::UNIT_SCALE,orientation);
 		CEntity* newEntity = Logic::CEntityFactory::getSingletonPtr()->createEntityById(info, CServer::getSingletonPtr()->getMap(), destID, transform);
 
 		// La inicializamos

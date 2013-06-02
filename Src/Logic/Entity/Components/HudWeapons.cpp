@@ -227,7 +227,7 @@ namespace Logic {
 	void CHudWeapons::onStart() {
 		Matrix4 weaponTransform;
 		for(int i = 0; i < WeaponType::eSIZE; ++i) {
-			_graphicsEntities[i].defaultPos = _graphicsEntities[i].graphicsEntity->getTransform().getTrans();
+			_graphicsEntities[i].defaultPos = _graphicsEntities[i].graphicsEntity->getPosition();
 		}
 	}
 	
