@@ -115,7 +115,7 @@ namespace Logic {
 		Physics::SphereGeometry sphere  = Physics::CGeometryFactory::getSingletonPtr()->createSphere(3.5);
 		std::vector<Physics::CSweepHit> hits;
 		//Physics::CServer::getSingletonPtr()->sweepMultiple(sphere, (_entity->getPosition() + Vector3(0,_heightShoot,0)),_directionShoot,_screamerScreamMaxDistance,hitSpots, true);
-		Vector3 vDirectionShoot = Math::getDirection(_entity->getOrientation());
+		Vector3 vDirectionShoot = _entity->getQuatOrientation()*-Vector3::UNIT_Z;
 		Physics::CServer::getSingletonPtr()->sweepMultiple(sphere, (_entity->getPosition() + Vector3(0,_heightShoot,0)),vDirectionShoot, _distance,hits, false, Physics::CollisionGroup::ePLAYER );	
 
 		for(auto it = hits.begin(); it < hits.end(); ++it){

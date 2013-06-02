@@ -144,7 +144,7 @@ namespace Logic {
 			// Si hay bolas vivas, mover las en función de la velocidad que
 			// llevan y la dirección en la que apunto con el ratón
 			for(auto it = _controllableFireBalls.begin(); it != _controllableFireBalls.end(); ++it) {
-				(*it)->alterDirection( Math::getDirection( _entity->getOrientation() ) );
+				(*it)->alterDirection( _entity->getQuatOrientation()*-Vector3::UNIT_Z );
 			}
 		}
 		else {
@@ -196,7 +196,7 @@ namespace Logic {
 		entityInfo->setAttribute( "speed", toString(fireBallSpeed) );
 		entityInfo->setAttribute( "explotionRadius", toString(fireBallExplotionRadius) );
 		entityInfo->setAttribute( "damage", toString(fireBallDamage) );
-		entityInfo->setAttribute( "direction", toString( Math::getDirection( _entity->getTransform() ) ));
+		entityInfo->setAttribute( "direction", toString( _entity->getQuatOrientation()*-Vector3::UNIT_Z ));
 
 		// El único atributo que nos interesa pasar al cliente es la escala para que la bola
 		// aparezca gráficamente más grande o más pequeña
@@ -205,11 +205,10 @@ namespace Logic {
 
 		// Creamos la bola de fuego con los parámetros customizados a partir
 		// del radio de la cápsula + el radio de la bola + un pequeño offset
-		Matrix4 shootTransform = _entity->getTransform();
-		Vector3 shootPosition = shootTransform.getTrans() + ( Math::getDirection( _entity->getOrientation() ) * (_capsuleRadius + fireBallRadius + 0.5f) );
+		Vector3 shootPosition = _entity->getPosition() + (( _entity->getQuatOrientation()*-Vector3::UNIT_Z ) * (_capsuleRadius + fireBallRadius + 0.5f) );
 		shootPosition.y += _heightShoot - fireBallRadius;
-		shootTransform.setTrans(shootPosition);
-
+		Matrix4 shootTransform;
+		shootTransform.makeTransform(shootPosition,Vector3(1,1,1),_entity->getQuatOrientation());
 		// Creamos la entidad
 		CEntity* fireBall = CEntityFactory::getSingletonPtr()->createCustomClientEntity(
 								entityInfo,
