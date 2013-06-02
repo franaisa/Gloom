@@ -44,12 +44,6 @@
     <Filter Include="Entity\Components\Weapons">
       <UniqueIdentifier>{2e18f618-28c8-447c-ba40-44c0a6894e72}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Entity\Components\Weapons\Header">
-      <UniqueIdentifier>{488abf5e-d8fa-4d1b-ad83-03c7547b87c7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Entity\Components\Weapons\Source">
-      <UniqueIdentifier>{4284771d-620e-4461-a22c-02a82ca6cc13}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Entity\Components\Skills\Header">
       <UniqueIdentifier>{fb3a6c1f-27bf-4b41-aa63-36406d8f4003}</UniqueIdentifier>
     </Filter>
@@ -112,6 +106,33 @@
     </Filter>
     <Filter Include="Entity\Components\Graphics\Decal\Source">
       <UniqueIdentifier>{625a7a46-64b0-4147-94e8-80d67934690f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entity\Components\Weapons\Shoot">
+      <UniqueIdentifier>{1fc6aff8-76f3-482b-b2a3-eb9355734bec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entity\Components\Weapons\Feedback">
+      <UniqueIdentifier>{fb4cfa87-433d-41c3-bf91-ab623c6130af}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entity\Components\Weapons\Ammunition">
+      <UniqueIdentifier>{5e8d9170-4a18-4f53-b5db-a963833cc9a6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entity\Components\Weapons\Shoot\Header">
+      <UniqueIdentifier>{488abf5e-d8fa-4d1b-ad83-03c7547b87c7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entity\Components\Weapons\Shoot\Source">
+      <UniqueIdentifier>{4284771d-620e-4461-a22c-02a82ca6cc13}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entity\Components\Weapons\Ammunition\Header">
+      <UniqueIdentifier>{41226c0e-388f-4e87-b55f-c690a9d37f05}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entity\Components\Weapons\Ammunition\Source">
+      <UniqueIdentifier>{705c27e6-f00f-44f7-b163-fc1446fca8bd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entity\Components\Weapons\Feedback\Header">
+      <UniqueIdentifier>{6467fd98-45fc-49f4-83fc-1a796b68f38d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entity\Components\Weapons\Feedback\Source">
+      <UniqueIdentifier>{41d04d1f-7e31-4c09-a510-24252a19d7f1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -383,16 +404,16 @@
       <Filter>Entity\Components\Physics\Source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Src\Logic\Entity\Components\ShootSniper.cpp">
-      <Filter>Entity\Components\Weapons\Source</Filter>
+      <Filter>Entity\Components\Weapons\Shoot\Source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Src\Logic\Entity\Components\ShootHammer.cpp">
-      <Filter>Entity\Components\Weapons\Source</Filter>
+      <Filter>Entity\Components\Weapons\Shoot\Source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Src\Logic\Entity\Components\ShootMiniGun.cpp">
-      <Filter>Entity\Components\Weapons\Source</Filter>
+      <Filter>Entity\Components\Weapons\Shoot\Source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Src\Logic\Entity\Components\ShootShotGun.cpp">
-      <Filter>Entity\Components\Weapons\Source</Filter>
+      <Filter>Entity\Components\Weapons\Shoot\Source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Src\Logic\Entity\Components\Shadow.cpp">
       <Filter>Entity\Components\Skills\Source</Filter>
@@ -410,7 +431,7 @@
       <Filter>Entity\Components\Skills\Source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Src\Logic\Entity\Components\WeaponsManager.cpp">
-      <Filter>Entity\Components\Weapons\Source</Filter>
+      <Filter>Entity\Components\Weapons\Shoot\Source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Src\Logic\Messages\MessageSetRelatedEntity.cpp">
       <Filter>Messages\Source</Filter>
@@ -494,13 +515,13 @@
       <Filter>Messages\Source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Src\Logic\Entity\Components\MagneticBullet.cpp">
-      <Filter>Entity\Components\Weapons\Source</Filter>
+      <Filter>Entity\Components\Weapons\Shoot\Source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Src\Logic\Entity\Components\IronHellGoat.cpp">
-      <Filter>Entity\Components\Weapons\Source</Filter>
+      <Filter>Entity\Components\Weapons\Shoot\Source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Src\Logic\Entity\Components\FireBallController.cpp">
-      <Filter>Entity\Components\Weapons\Source</Filter>
+      <Filter>Entity\Components\Weapons\Shoot\Source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Src\Logic\Messages\MessageFlash.cpp">
       <Filter>Messages\Source</Filter>
@@ -542,7 +563,10 @@
       <Filter>Entity\Components\Skills\Source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Src\Logic\Entity\Components\Weapon.cpp">
-      <Filter>Entity\Components\Weapons\Source</Filter>
+      <Filter>Entity\Components\Weapons\Shoot\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\Ammo.cpp">
+      <Filter>Entity\Components\Weapons\Ammunition\Source</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -742,19 +766,19 @@
       <Filter>Messages\Header</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Entity\Components\ShootMiniGun.h">
-      <Filter>Entity\Components\Weapons\Header</Filter>
+      <Filter>Entity\Components\Weapons\Shoot\Header</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Entity\Components\ShootHammer.h">
-      <Filter>Entity\Components\Weapons\Header</Filter>
+      <Filter>Entity\Components\Weapons\Shoot\Header</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Entity\Components\ShootShotGun.h">
-      <Filter>Entity\Components\Weapons\Header</Filter>
+      <Filter>Entity\Components\Weapons\Shoot\Header</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Entity\Components\ShootSniper.h">
-      <Filter>Entity\Components\Weapons\Header</Filter>
+      <Filter>Entity\Components\Weapons\Shoot\Header</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Entity\Components\WeaponsManager.h">
-      <Filter>Entity\Components\Weapons\Header</Filter>
+      <Filter>Entity\Components\Weapons\Shoot\Header</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Entity\Components\Shadow.h">
       <Filter>Entity\Components\Skills\Header</Filter>
@@ -897,9 +921,6 @@
     <ClInclude Include="..\..\Src\Logic\Entity\Components\NetCommands.h">
       <Filter>Entity\Components\Network\Header</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Src\Logic\Entity\Components\WeaponType.h">
-      <Filter>Entity\Components\Weapons\Header</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Entity\Components\HudWeapons.h">
       <Filter>Entity\Components\Graphics\Header</Filter>
     </ClInclude>
@@ -946,13 +967,13 @@
       <Filter>Messages\Header</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Entity\Components\MagneticBullet.h">
-      <Filter>Entity\Components\Weapons\Header</Filter>
+      <Filter>Entity\Components\Weapons\Shoot\Header</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Entity\Components\IronHellGoat.h">
-      <Filter>Entity\Components\Weapons\Header</Filter>
+      <Filter>Entity\Components\Weapons\Shoot\Header</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Entity\Components\FireBallController.h">
-      <Filter>Entity\Components\Weapons\Header</Filter>
+      <Filter>Entity\Components\Weapons\Shoot\Header</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Messages\MessageFlash.h">
       <Filter>Messages\Header</Filter>
@@ -997,7 +1018,13 @@
       <Filter>Entity\Components\Skills\Header</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Entity\Components\Weapon.h">
-      <Filter>Entity\Components\Weapons\Header</Filter>
+      <Filter>Entity\Components\Weapons\Shoot\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\WeaponType.h">
+      <Filter>Entity\Components\Weapons</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\Ammo.h">
+      <Filter>Entity\Components\Weapons\Ammunition\Header</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

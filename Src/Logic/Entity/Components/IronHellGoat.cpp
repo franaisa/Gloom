@@ -20,8 +20,6 @@ de disparo de la cabra.
 #include "Logic/Server.h"
 #include "Map/MapEntity.h"
 
-#include "Net/Manager.h"
-
 using namespace std;
 
 namespace Logic {
@@ -190,11 +188,7 @@ namespace Logic {
 
 		_primaryFireIsActive = false;
 
-		// Si estamos en single player o somos el servidor tenemos permiso para
-		// crear la bola de fuego
-		Net::CManager* netMgr = Net::CManager::getSingletonPtr();
-		if( netMgr->imServer() || (!netMgr->imServer() && !netMgr->imClient()) )
-			createFireBall();
+		createFireBall();
 
 		// Emitimos el sonido de lanzar la bola de fuego
 		emitSound(_shootAudio, "fireBallShot");
