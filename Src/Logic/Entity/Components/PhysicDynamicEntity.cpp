@@ -97,7 +97,7 @@ void CPhysicDynamicEntity::process(const std::shared_ptr<CMessage>& message) {
 		}
 		case Message::SET_TRANSFORM: {
 			std::shared_ptr<CMessageTransform> transMsg = std::static_pointer_cast<CMessageTransform>(message);
-			setTransform(transMsg->getTransform(),transMsg->getMakeConversion());
+			setTransform(transMsg->getTransform().getTrans(),transMsg->getTransform().extractQuaternion(),transMsg->getMakeConversion());
 			break;
 		}
 		case Message::ADD_FORCE_PHYSICS: {
@@ -288,8 +288,8 @@ void CPhysicDynamicEntity::setPosition(const Vector3 &position, bool makeConvers
 }
 //---------------------------------------------------------
 
-void CPhysicDynamicEntity::setTransform(const Matrix4 &transform, bool makeConversionToLogicWorld) {
-	_physicEntity.setTransform(transform, makeConversionToLogicWorld);
+void CPhysicDynamicEntity::setTransform(const Vector3 &position, const Quaternion &orientation, bool makeConversionToLogicWorld) {
+	_physicEntity.setTransform(position, orientation, makeConversionToLogicWorld);
 }
 //---------------------------------------------------------
 

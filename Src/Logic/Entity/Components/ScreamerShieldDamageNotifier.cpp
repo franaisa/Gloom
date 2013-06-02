@@ -90,7 +90,7 @@ namespace Logic {
 		Math::setPitchYaw( _owner->getPitchd(), _owner->getYawd(), shootTransform);
 		
 		// Seteamos la posicion fisica del escudo
-		_physicComponent->setTransform( shootTransform, false );
+		_physicComponent->setTransform( shootTransform.getTrans(),shootTransform.extractQuaternion(), false );
 	}
 
 	//________________________________________________________________________

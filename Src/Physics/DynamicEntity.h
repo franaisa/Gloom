@@ -220,11 +220,12 @@ namespace Physics {
 		Setea el transform de la entidad física. Mucho cuidado porque este método
 		lo que hace es transportar a la entidad (no moverla).
 
-		@param transform Transform al que queramos convertir la entidad la entidad.
+		@param position Posicion donde colocaremos la entidad física.
+		@param orientation Orientacion a colocar la entidad física.
 		@param makeConversionToLogicWorld True si queremos que la entidad física
 		se coloque en la posición dada + el desfase entre pivote lógico y físico.
 		*/
-		void setTransform(const Matrix4 &transform, bool makeConversionToLogicWorld);
+		void setTransform(const Vector3 &position, const Quaternion &orientation, bool makeConversionToLogicWorld);
 		
 
 	private:

@@ -219,15 +219,14 @@ namespace Physics {
 	
 	//________________________________________________________________________
 
-	void CDynamicEntity::setTransform(const Matrix4 &transform, bool makeConversionToLogicWorld) {
+	void CDynamicEntity::setTransform(const Vector3 &position, const Quaternion &orientation, bool makeConversionToLogicWorld) {
 		if(makeConversionToLogicWorld) {
-			Matrix4 convertedTransform = transform;
-			convertedTransform.setTrans( convertPhysxCoordsToLogicCoords( transform.getTrans() ) );
-
-			_actor->setGlobalPose( PxTransform( Matrix4ToPxTransform(convertedTransform) ) );
+			//Matrix4 convertedTransform = transform;
+			//convertedTransform.setTrans( convertPhysxCoordsToLogicCoords( transform.getTrans() ) );
+			_actor->setGlobalPose( PxTransform(Vector3ToPxVec3( convertPhysxCoordsToLogicCoords(position)),QuaternionToPxQuat(orientation)));
 		}
 		else {
-			_actor->setGlobalPose( PxTransform( Matrix4ToPxTransform(transform) ) );
+			_actor->setGlobalPose(  PxTransform(Vector3ToPxVec3(position),QuaternionToPxQuat(orientation)) );
 		}
 	}
 
