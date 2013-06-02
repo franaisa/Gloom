@@ -451,19 +451,15 @@ namespace Logic {
 	void CEntity::rotate(int orientation, Ogre::Radian rotation){
 		switch(orientation){
 			case Orientation::eYAW:{
-				Quaternion q(rotation, Vector3::UNIT_Y); 
-				_yawOrientation=_yawOrientation*q;
+				Math::rotate(Vector3::UNIT_Y,rotation,_yawOrientation);
 				break;
 			}
 			case Orientation::ePITCH:{
-				Quaternion q(rotation, Vector3::UNIT_X); 
-				_pitchOrientation=_pitchOrientation*q;
+				Math::rotate(Vector3::UNIT_X,rotation,_pitchOrientation);
 				break;
 			}
 			case Orientation::eROLL:{
-				//No ha sido probado aunque deberia ir
-				Quaternion q(rotation, Vector3::UNIT_Z); 
-				_rollOrientation=_rollOrientation*q;
+				Math::rotate(Vector3::UNIT_Z,rotation,_rollOrientation);
 				break;
 			}
 		}
