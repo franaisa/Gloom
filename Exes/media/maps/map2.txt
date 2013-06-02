@@ -134,6 +134,7 @@ Map = {
 		respawnTime = 5,
 	},
 
+
 	Enemigo1 = {
 		type = "Screamer",
 		position = {0, 0.2, -20},
@@ -150,6 +151,7 @@ Map = {
 		physic_height = 6,
 
 	},
+
 	
 	lavaFondo = {
 		type = "Lava",
