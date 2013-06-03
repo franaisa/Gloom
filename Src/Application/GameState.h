@@ -18,8 +18,6 @@ Contiene la declaración del estado de juego.
 #define __Application_GameState_H
 
 #include "ApplicationState.h"
-#include "Logic/Maps/WorldState.h"
-#include "Logic/Messages/Message.h"
 
 // Predeclaración de clases para ahorrar tiempo de compilación
 namespace Application 
@@ -59,7 +57,7 @@ namespace Application {
 	@date Agosto, 2010
 	*/
 
-	class CGameState : public CApplicationState, public Logic::CWorldState::IObserver {
+	class CGameState : public CApplicationState {
 	public:
 
 		/** 
@@ -67,13 +65,6 @@ namespace Application {
 		*/
 		CGameState(CBaseApplication *app) : CApplicationState(app), 
 				_scene(0), _time(0) {}
-
-		virtual void gameEventOcurred(std::shared_ptr<Logic::CMessage> msg) {
-			/*
-			@deprecated
-			Redefino para que funcione el single player y de momento el multiplayer
-			*/ 	
-		}
 
 		/** 
 		Destructor 
@@ -183,8 +174,6 @@ namespace Application {
 		Escena del estado.
 		*/
 		Graphics::CScene* _scene;
-
-		Logic::CWorldState* _worldState;
 
 		/**
 		Tiempo de juego en milisegundos.

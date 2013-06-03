@@ -19,6 +19,7 @@ Contiene la declaración del estado de juego.
 
 #include "GameState.h"
 #include "Net/Manager.h"
+#include "Logic/Maps/WorldState.h"
 
 namespace Logic {
 	class CGameNetPlayersManager;
@@ -41,7 +42,7 @@ namespace Application {
 	@date Febrero, 2013
 	*/
 
-	class CGameServerState : public CGameState, public Net::CManager::IObserver {
+	class CGameServerState : public CGameState, public Net::CManager::IObserver, public Logic::CWorldState::IObserver {
 	public:
 
 
@@ -107,6 +108,8 @@ namespace Application {
 		*/
 		virtual void disconnectionPacketReceived(Net::CPaquete* packet);
 
+		//______________________________________________________________________________
+
 		// Métodos de CKeyboardListener
 
 		/**
@@ -168,6 +171,16 @@ namespace Application {
 		*/
 		virtual bool mouseReleased(const Input::CMouseState &mouseState);
 
+	protected:
+
+		Logic::CGameNetPlayersManager* _playersMgr;
+
+		Net::CManager* _netMgr;
+
+		Logic::CWorldState* _worldState;
+
+		Logic::CMap* _map;
+
 	private:
 
 		void sendMapInfo(Net::NetID playerNetId);
@@ -178,11 +191,7 @@ namespace Application {
 
 		void createAndMirrorPlayer(int race, Net::NetID playerNetId);
 
-		Logic::CGameNetPlayersManager* _playersMgr;
-
-		Net::CManager* _netMgr;
-
-		Logic::CMap* _map;
+		
 	}; // CMultiplayerTeamDeathmatchServerState
 
 } // namespace Application

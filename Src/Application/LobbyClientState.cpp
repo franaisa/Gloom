@@ -200,7 +200,7 @@ namespace Application {
 				break;
 			}
 			case Net::START_GAME: {
-				_app->setState("gameClient");
+				_app->setState("DMClient");
 				break;
 			}
 		}

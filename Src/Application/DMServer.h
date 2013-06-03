@@ -17,6 +17,10 @@
 
 #include "GameServerState.h"
 
+namespace Logic {
+	class CEntity;
+}
+
 namespace Application {
 	
 	/**
@@ -43,6 +47,8 @@ namespace Application {
 		CDMServer(CBaseApplication* app);
 
 		void setGameConfig(const std::pair<unsigned int, unsigned int>& timeLimit, unsigned int fragLimit, bool voteKick = false);
+
+		virtual void gameEventOcurred(Logic::CEntity* emitter, const std::shared_ptr<Logic::CMessage>& msg);
 
 
 		// =======================================================================
@@ -137,6 +143,8 @@ namespace Application {
 		virtual bool mouseReleased(const Input::CMouseState &mouseState);
 
 	private:
+
+		bool isPlayer(Logic::CEntity* entity);
 
 		int _time;
 		unsigned int _frags;

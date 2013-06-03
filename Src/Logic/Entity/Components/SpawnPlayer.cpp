@@ -19,6 +19,7 @@ Contiene la implementación del componente que gestiona el spawn del jugador.
 #include "PhysicController.h"
 #include "Logic/GameNetMsgManager.h"
 #include "Logic/Entity/Components/Life.h"
+#include "Logic/Maps/WorldState.h"
 
 #include "Logic/Messages/MessagePlayerDead.h"
 #include "Logic/Messages/MessagePlayerSpawn.h"
@@ -101,6 +102,9 @@ namespace Logic
 
 				//Volvemos a activar todos los componentes(lo que hace resetea _isDead y _actualTimeSpawn)
 				_entity->activate();
+
+				// Informamos al estado del mundo de que ha cambiado el estado de muerte de la entidad
+				Logic::CWorldState::getSingletonPtr()->deleteChange(_entity, Message::PLAYER_DEAD);
 
 				//Establecemos la orientación adecuada segun la devolución del manager de spawn
 				Graphics::CCamera *cam=_entity->getMap()->getScene()->getCamera();

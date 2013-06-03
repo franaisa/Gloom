@@ -134,15 +134,6 @@ namespace Logic {
 
 	//______________________________________________________________________________
 
-	void CGameNetPlayersManager::setPlayerMesh(Net::NetID playerNetId, const std::string& mesh) {
-		TNetConnectedPlayersTable::iterator it = _netConnectedPlayers.find(playerNetId);
-		assert(it != _netConnectedPlayers.end() && "No se puede poner el nombre de la maya al player porque no existe en el Manager");
-
-		it->second->setMesh(mesh);
-	}
-
-	//______________________________________________________________________________
-
 	void CGameNetPlayersManager::setEntityID(Net::NetID playerNetId, Logic::TEntityID entityId) {
 		TNetConnectedPlayersTable::iterator it = _netConnectedPlayers.find(playerNetId);
 		assert(it != _netConnectedPlayers.end() && "No se puede asignar el id de entidad al player porque no existe en el Manager");
@@ -160,6 +151,24 @@ namespace Logic {
 		assert(it != _netConnectedPlayers.end() && "No se puede asignar un estado al player porque no existe en el Manager");
 
 		it->second->isSpawned(isSpawned);
+	}
+
+	//______________________________________________________________________________
+
+	void CGameNetPlayersManager::addFragUsingEntityID(Logic::TEntityID entityId) {
+		TLogicConnectedPlayersTable::const_iterator it = _logicConnectedPlayers.find(entityId);
+		assert(it != _logicConnectedPlayers.end() && "No se ha encontrado el id logico buscado");
+
+		it->second->addFrag();
+	}
+
+	//______________________________________________________________________________
+
+	void CGameNetPlayersManager::substractFragUsingEntityID(Logic::TEntityID entityId) {
+		TLogicConnectedPlayersTable::const_iterator it = _logicConnectedPlayers.find(entityId);
+		assert(it != _logicConnectedPlayers.end() && "No se ha encontrado el id logico buscado");
+
+		it->second->substractFrag();
 	}
 
 	//______________________________________________________________________________
@@ -223,6 +232,15 @@ namespace Logic {
 
 	bool CGameNetPlayersManager::existsByLogicId(Logic::TEntityID playerId) {
 		return _logicConnectedPlayers.count(playerId) > 0;
+	}
+
+	//______________________________________________________________________________
+
+	int CGameNetPlayersManager::getFragsUsingEntityID(Logic::TEntityID playerId) {
+		TLogicConnectedPlayersTable::const_iterator it = _logicConnectedPlayers.find(playerId);
+		assert(it != _logicConnectedPlayers.end() && "No se ha encontrado el id logico buscado");
+
+		return it->second->getFrags();
 	}
 
 	//______________________________________________________________________________

@@ -13,9 +13,18 @@
 */
 
 #include "DMServer.h"
+
+#include "Logic/Entity/Entity.h"
+#include "Logic/Server.h"
+#include "Logic/Maps/Map.h"
+#include "Logic/GameNetPlayersManager.h"
+
+#include "Logic/Messages/MessagePlayerDead.h"
 #include "Logic/Messages/Message.h"
+
 #include <math.h>
 #include <vector>
+#include <string>
 
 using namespace std;
 
@@ -43,6 +52,34 @@ namespace Application {
 
 	//______________________________________________________________________________
 
+	void CDMServer::gameEventOcurred(Logic::CEntity* emitter, const shared_ptr<Logic::CMessage>& msg) {
+		switch( msg->getMessageType() ) {
+			case Logic::Message::PLAYER_DEAD: {
+				shared_ptr<Logic::CMessagePlayerDead> playerDeadMsg = static_pointer_cast<Logic::CMessagePlayerDead>(msg);
+				
+				Logic::TEntityID killerID = playerDeadMsg->getKiller();
+				Logic::TEntityID emitterID = emitter->getEntityID();
+				Logic::CEntity* killer = Logic::CServer::getSingletonPtr()->getMap()->getEntityByID(killerID);
+				if( emitter != killer && isPlayer(killer) ) {
+					_playersMgr->addFragUsingEntityID(killerID);
+
+					if(_playersMgr->getFragsUsingEntityID(killerID) == _fragLimit) {
+						// fin de partida
+					}
+				}
+				else {
+					_playersMgr->substractFragUsingEntityID(emitterID);
+				}
+
+				cout << emitter->getName() << " lleva " << _playersMgr->getFragsUsingEntityID(emitterID) << " frags" << endl;
+
+				break;
+			}
+		}
+	}
+
+	//______________________________________________________________________________
+
 	void CDMServer::tick(unsigned int msecs) {
 		CGameServerState::tick(msecs);
 
@@ -56,8 +93,8 @@ namespace Application {
 		else {
 			// Emitimos un mensaje para que se actualice el HUD
 			// con el formato mm::ss
-			unsigned int minutes = ceil( (double)msecs / 60000.0 );
-			unsigned int seconds = (msecs % 60000) / 1000;
+			unsigned int minutes = _time / 60000;
+			unsigned int seconds = (_time % 60000) / 1000;
 		}
 	}
 
@@ -69,7 +106,7 @@ namespace Application {
 		// Construimos la máscara de eventos/mensajes que nos interesan
 		// del worldstate
 		vector<Logic::TMessageType> eventsMask;
-		eventsMask.reserve(1);
+		//eventsMask.reserve(1);
 
 		eventsMask.push_back(Logic::Message::PLAYER_DEAD);
 		_worldState->addObserver(this, eventsMask);
@@ -112,5 +149,18 @@ namespace Application {
 	bool CDMServer::mouseReleased(const Input::CMouseState &mouseState) {
 		return false;
 	} // mouseReleased
+
+	bool CDMServer::isPlayer(Logic::CEntity* entity) {
+		string type = entity->getType();
+		
+		return type == "Screamer"		|| 
+			   type == "Shadow"			|| 
+			   type == "Hound"			|| 
+			   type == "Archangel"		||
+			   type == "LocalScreamer"	|| 
+			   type == "LocalShadow"	|| 
+			   type == "LocalHound"		|| 
+			   type == "LocalArchangel";
+	}
 	
 } // namespace Application

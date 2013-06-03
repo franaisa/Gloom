@@ -81,6 +81,8 @@ namespace Logic {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	void CWorldState::removeObserver(IObserver* listener) {
+		if( _observers.empty() ) return;
+
 		// Debido a que normalmente tendremos un observador registrado
 		// nos podemos permitir el lujo de hacer borrados secuenciales
 		for(auto it = _observers.begin(); it != _observers.end(); ++it) {
@@ -129,7 +131,7 @@ namespace Logic {
 
 	void CWorldState::addChange(CEntity* entity, std::shared_ptr<CMessage> message){
 		if(message->getMessageType() == Message::PLAYER_DEAD)
-			cout << "Alguien ha palmado - WorldState" << endl;
+			cout << entity->getName() << " ha palmado - WorldState" << endl;
 
 		TEntityID id = entity->getEntityID();
 
@@ -152,7 +154,7 @@ namespace Logic {
 			notified = false;
 			for(int k = 0; k < _observers[i].second.size() && !notified; ++k) {
 				if(_observers[i].second[k] == type) {
-					_observers[i].first->gameEventOcurred(message);
+					_observers[i].first->gameEventOcurred(entity, message);
 					notified = true;
 				}
 			}
@@ -162,6 +164,9 @@ namespace Logic {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	void CWorldState::deleteChange(CEntity* entity, unsigned int messageType){
+		if(messageType == Message::PLAYER_DEAD)
+			cout << entity->getName() << " ha resucitado - WorldState" << endl;
+
 		TEntityID id = entity->getEntityID();
 
 		auto entityFound = _entities.find(id);
