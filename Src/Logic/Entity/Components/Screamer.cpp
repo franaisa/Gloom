@@ -195,7 +195,7 @@ namespace Logic {
 		
 		// Si no he hecho ningun rebote, he de coger la del player, si estoy en algun rebote, el rebote se encarga de decirme en q posicion.
 		if(_rebound == 0){
-			_directionShoot = Math::getDirection(_entity->getOrientation());
+			_directionShoot = _entity->getQuatOrientation()*Vector3::NEGATIVE_UNIT_Z;
 			_distanceShoot = _screamerScreamMaxDistance;
 			_positionShoot = _entity->getPosition() + Vector3(0,_heightShoot,0);
 		}

@@ -231,15 +231,14 @@ namespace Logic {
 		//__________________________________________________________________
 
 		/**
-		Devuelve la matriz de rotación de la entidad.
+		Devuelve el quaternion de rotación de la entidad.
 		<p>
 		La orientación es inicialmente leída del mapa como un simple 
-		viraje (si no aparece, se colocará a 0), aunque, obviamente, puede
+		viraje (si no aparece, se asignará el quaternion identidad), aunque, obviamente, puede
 		cambiar con el tiempo.
 
 		@return Orientación en el entorno.
 		*/
-		Matrix3 getOrientation() const;
 		Ogre::Quaternion getQuatOrientation() const;
 		//__________________________________________________________________
 

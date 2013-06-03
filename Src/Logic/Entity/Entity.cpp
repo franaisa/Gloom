@@ -401,13 +401,6 @@ namespace Logic {
 
 	//---------------------------------------------------------
 
-	Matrix3 CEntity::getOrientation() const {
-		Matrix3 rot;
-		_orientation.ToRotationMatrix(rot);
-		return rot;
-	} // getOrientation
-	//---------------------------------------------------------
-
 	Ogre::Quaternion CEntity::getQuatOrientation() const {
 		//Hay que formarla de acuerdo a los nodos
 		return _orientation;
