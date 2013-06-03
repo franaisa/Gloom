@@ -185,11 +185,12 @@ namespace Logic
 		Vector3 posicionModificada = camera->getCameraPosition() + ((8.0f) * direction);
 		
 		//Aqui establezco la rotacion (En un futuro se rotara el modelo)
-		Matrix4 transformModificado;
-		transformModificado.makeTransform(_entity->getPosition(),Vector3::UNIT_SCALE,_entity->getOrientation());
-		Math::setPitchYawRoll(_graphicsEntities[_currentWeapon].pitch, _graphicsEntities[_currentWeapon].yaw, _graphicsEntities[_currentWeapon].roll, transformModificado);
-		_graphicsEntities[_currentWeapon]._graphicsEntity->setTransform(transformModificado.getTrans(),transformModificado.extractQuaternion());
-		_graphicsEntities[_currentWeapon]._graphicsEntity->setPosition(posicionModificada);
+		Quaternion yaw,pitch,roll;
+		Math::rotate(Vector3::UNIT_Y,Ogre::Radian(_graphicsEntities[_currentWeapon].yaw),yaw);
+		Math::rotate(Vector3::UNIT_X,Ogre::Radian(_graphicsEntities[_currentWeapon].pitch),pitch);
+		Math::rotate(Vector3::UNIT_Z,Ogre::Radian(_graphicsEntities[_currentWeapon].roll),roll);
+		_graphicsEntities[_currentWeapon]._graphicsEntity->setTransform(posicionModificada,yaw*pitch*roll);
+
 	}// setTransform
 
 	//---------------------------------------------------------
