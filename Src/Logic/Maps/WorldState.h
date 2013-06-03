@@ -105,6 +105,8 @@ comunicarse con esta clase para introducir el cambio que se ha producido.
 
 		void addChange(CEntity* entity, std::shared_ptr<CMessage> message);
 
+		void deleteChange(CEntity* entity, unsigned int messageType);
+
 		void clearEntities();
 
 		void addObserver(IObserver* listener, const std::vector<TMessageType>& eventsMask);

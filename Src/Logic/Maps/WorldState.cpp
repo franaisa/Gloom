@@ -129,7 +129,7 @@ namespace Logic {
 
 	void CWorldState::addChange(CEntity* entity, std::shared_ptr<CMessage> message){
 		if(message->getMessageType() == Message::PLAYER_DEAD)
-			cout << "Alguien ha palmado" << endl;
+			cout << "Alguien ha palmado - WorldState" << endl;
 
 		TEntityID id = entity->getEntityID();
 
@@ -139,15 +139,10 @@ namespace Logic {
 		if (entityFound== _entities.end())
 			return;
 
+		// Si el mensaje ya esta anotado lo actualizamos, si no,
+		// lo registramos
 		unsigned int type = message->getMessageType();
-
-		auto messageFound = entityFound->second.messages.find(type);
-
-		if(messageFound!=entityFound->second.messages.end())
-			entityFound->second.messages.erase(messageFound);
-
-		TInfo newMessage(type,message);
-		entityFound->second.messages.insert(newMessage);
+		entityFound->second.messages[type] = message;
 
 		bool notified;
 		for(int i = 0; i < _observers.size(); ++i) {
@@ -162,6 +157,23 @@ namespace Logic {
 				}
 			}
 		}
+	}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	void CWorldState::deleteChange(CEntity* entity, unsigned int messageType){
+		TEntityID id = entity->getEntityID();
+
+		auto entityFound = _entities.find(id);
+
+		//if we don't have the entity changed, we do nothing
+		if (entityFound == _entities.end())
+			return;
+
+		auto msgIt = entityFound->second.messages.find(messageType);
+ 
+		if(msgIt!=entityFound->second.messages.end())
+			entityFound->second.messages.erase(msgIt);
 	}
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////

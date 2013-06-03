@@ -103,7 +103,7 @@ namespace Logic {
 				_entity->emitMessage(m);
 
 				_bMensajeDispMandado = true;
-				printf("\nReduciendo mira");
+				//printf("\nReduciendo mira");
 				/**
 				NOTA: De momento tiene el bug de que si disparas cuando no tienes munición, sigue haciendo la dispersión.
 				La movida es que se sabe si tienes munición o no en el método primaryShoot, de su padre ShootRaycast.
@@ -246,7 +246,7 @@ namespace Logic {
 		CEntity* entityHit = fireWeapon();
 		if(entityHit != NULL) 
 		{
-			std::cout << "dado" << std::endl;
+			//std::cout << "dado" << std::endl;
 			triggerHitMessages(entityHit);
 		}
 	}
@@ -262,7 +262,7 @@ namespace Logic {
 		Vector3 dispersionDirection = direction.randomDeviant(angle);
 		dispersionDirection.normalise();
 
-		std::cout << "Angulo: " << angle << std::endl;
+		//std::cout << "Angulo: " << angle << std::endl;
 
 		//El origen debe ser mínimo la capsula (si chocamos el disparo en la capsula al mirar en diferentes direcciones ya esta tratado en la funcion de colision)
 		//Posicion de la entidad + altura de disparo(coincidente con la altura de la camara)
@@ -333,7 +333,7 @@ namespace Logic {
 			if((*it).entity->getName() != _entity->getName())
 			{
 				int danyoTotal = _damage * iRafagas;
-				std::cout << "Le he dado!!! Danyo = " << danyoTotal << std::endl;
+				//std::cout << "Le he dado!!! Danyo = " << danyoTotal << std::endl;
 
 				std::shared_ptr<CMessageDamaged> m = std::make_shared<CMessageDamaged>();
 				m->setDamage(danyoTotal);
