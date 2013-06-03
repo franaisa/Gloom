@@ -219,7 +219,7 @@ namespace Logic
 			//Su orientacion variara si estoy muerto o no
 			if(!_dead){
 				//Si no estoy muerto miro a donde corresponda
-				_graphicsCamera->setOrientation(_target->getQuatOrientation());
+				_graphicsCamera->setOrientation(_target->getOrientation());
 			}
 			//Si estamos muertos miramos al enemigo, diferenciando si fue suicidio o nos mató un enemigo
 			else if(_enemy){

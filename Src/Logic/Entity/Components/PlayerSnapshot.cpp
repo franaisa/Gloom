@@ -107,7 +107,7 @@ namespace Logic {
 
 	void CPlayerSnapshot::takeSnapshot() {
 		Matrix4 transform;
-		transform.makeTransform(_entity->getPosition(),Vector3::UNIT_SCALE,_entity->getQuatOrientation());
+		transform.makeTransform(_entity->getPosition(),Vector3::UNIT_SCALE,_entity->getOrientation());
 		_transformBuffer.push_back( transform );
 	}
 

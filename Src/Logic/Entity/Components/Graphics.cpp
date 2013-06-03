@@ -109,7 +109,7 @@ namespace Logic
 		}
 
 		
-		_graphicsEntity->setTransform(_entity->getPosition(),_entity->getQuatOrientation());
+		_graphicsEntity->setTransform(_entity->getPosition(),_entity->getOrientation());
 		
 		return _graphicsEntity;
 
@@ -172,13 +172,13 @@ namespace Logic
 	//---------------------------------------------------------
 
 	void CGraphics::onActivate() {
-		_graphicsEntity->setTransform(_entity->getPosition(),_entity->getQuatOrientation());
+		_graphicsEntity->setTransform(_entity->getPosition(),_entity->getOrientation());
 	}//---------------------------------------------------------
 	//onActivate
 
 
 	void CGraphics::onTick(unsigned int msecs){
-		_graphicsEntity->setTransform(_entity->getPosition(),_entity->getQuatOrientation());
+		_graphicsEntity->setTransform(_entity->getPosition(),_entity->getOrientation());
 	}//---------------------------------------------------------
 	//onTick
 

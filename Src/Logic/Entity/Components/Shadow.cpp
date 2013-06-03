@@ -168,7 +168,7 @@ namespace Logic {
 		}
 
 		//Ahora comprobamos el angulo entre la visión directa y la orientación del player a cegar
-		float angle = direction.normalisedCopy().angleBetween((entity->getQuatOrientation()*Vector3::NEGATIVE_UNIT_Z).normalisedCopy()).valueDegrees();
+		float angle = direction.normalisedCopy().angleBetween((entity->getOrientation()*Vector3::NEGATIVE_UNIT_Z).normalisedCopy()).valueDegrees();
 
 		//si no lo esta mirando nada no lo cegamos
 		if(angle < 90)

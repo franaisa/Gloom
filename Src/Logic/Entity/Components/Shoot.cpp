@@ -188,7 +188,7 @@ namespace Logic {
 
 	void CShoot::drawParticle(const std::string &particula){
 	
-		Vector3 directionWithForce = _entity->getQuatOrientation()*Vector3::NEGATIVE_UNIT_Z;
+		Vector3 directionWithForce = _entity->getOrientation()*Vector3::NEGATIVE_UNIT_Z;
 		Vector3 positionParticle = (_entity->getPosition()+ Vector3(0,_heightShoot,0)) + ((directionWithForce) * _particlePosition);
 		
 		std::shared_ptr<CMessageCreateParticle> particle = std::make_shared<CMessageCreateParticle>();

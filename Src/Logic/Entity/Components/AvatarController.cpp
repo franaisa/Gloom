@@ -180,7 +180,7 @@ namespace Logic {
 		 }
 		
 		 //Actualizamos la orientacion(en un futuro no estara, esta por el transform que no se ha quitado)
-		 _entity->setOrientation(_entity->getQuatOrientation());
+		 _entity->setOrientation(_entity->getOrientation());
 	
 	}//rotationXY
 	//________________________________________________________________________
@@ -270,7 +270,7 @@ namespace Logic {
 		// que queremos llevar a cabo
 		float displacementYaw = asin(direction.normalisedCopy().x);
 		// Obtenemos una copia de la matriz de transformación del personaje
-		Quaternion characterQuat = _entity->getQuatOrientation();
+		Quaternion characterQuat = _entity->getOrientation();
 		// Si estamos andando hacia atras, invertimos el giro
 		if(direction.z < 0) displacementYaw *= -1;
 

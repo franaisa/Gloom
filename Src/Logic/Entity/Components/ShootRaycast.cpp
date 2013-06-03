@@ -115,7 +115,7 @@ namespace Logic {
 		Physics::SphereGeometry sphere  = Physics::CGeometryFactory::getSingletonPtr()->createSphere(3.5);
 		std::vector<Physics::CSweepHit> hits;
 		//Physics::CServer::getSingletonPtr()->sweepMultiple(sphere, (_entity->getPosition() + Vector3(0,_heightShoot,0)),_directionShoot,_screamerScreamMaxDistance,hitSpots, true);
-		Vector3 vDirectionShoot = _entity->getQuatOrientation()*Vector3::NEGATIVE_UNIT_Z;
+		Vector3 vDirectionShoot = _entity->getOrientation()*Vector3::NEGATIVE_UNIT_Z;
 		Physics::CServer::getSingletonPtr()->sweepMultiple(sphere, (_entity->getPosition() + Vector3(0,_heightShoot,0)),vDirectionShoot, _distance,hits, false, Physics::CollisionGroup::ePLAYER );	
 
 		for(auto it = hits.begin(); it < hits.end(); ++it){
@@ -155,7 +155,7 @@ namespace Logic {
 	// Dispara rayos mediante raycast dependiendo de los parametros del arquetipo del arma
 	CEntity* CShootRaycast::fireWeapon() {
 		//Direccion
-		Vector3 direction = _entity->getQuatOrientation()*Vector3::NEGATIVE_UNIT_Z; //Ojo con las mallas y su orientacion ( o lo mismo es rollo 3quaternion)
+		Vector3 direction = _entity->getOrientation()*Vector3::NEGATIVE_UNIT_Z; //Ojo con las mallas y su orientacion ( o lo mismo es rollo 3quaternion)
 		//Me dispongo a calcular la desviacion del arma, en el map.txt se pondra en grados de dispersion (0 => sin dispersion)
 		Ogre::Radian angle = Ogre::Radian( (  (((float)(rand() % 100))/100.0f) * (_dispersion)) /100);
 		//Esto hace un random total, lo que significa, por ejemplo, que puede que todas las balas vayan hacia la derecha 

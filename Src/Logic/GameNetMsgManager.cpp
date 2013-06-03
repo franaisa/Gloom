@@ -156,7 +156,7 @@ namespace Logic {
 		serialMsg.serialize(destEntity->getType(), false);
 		serialMsg.serialize(destEntity->getName(), false);
 		serialMsg.serialize(destEntity->getPosition());
-		serialMsg.serialize(destEntity->getQuatOrientation());
+		serialMsg.serialize(destEntity->getOrientation());
 
 		if(customInfoForClient != NULL) {
 			// Serializamos la información de la entidad

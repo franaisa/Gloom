@@ -81,11 +81,11 @@ namespace Logic {
 	void CScreamerShieldDamageNotifier::onTick(unsigned int msecs) {
 		// Aunque este no es el sitio mas idoneo para hacer esto, lo
 		// voy a hacer aqui por facilidad
-		Vector3 shootPosition = _owner->getPosition() + ( (_owner->getQuatOrientation() * Vector3::NEGATIVE_UNIT_Z) * _capsuleRadius );
+		Vector3 shootPosition = _owner->getPosition() + ( (_owner->getOrientation() * Vector3::NEGATIVE_UNIT_Z) * _capsuleRadius );
 		shootPosition.y += _heightShoot;
 		
 		// Seteamos la posicion fisica del escudo
-		_physicComponent->setTransform( _owner->getPosition(),_owner->getQuatOrientation(), false );
+		_physicComponent->setTransform( _owner->getPosition(),_owner->getOrientation(), false );
 	}
 
 	//________________________________________________________________________

@@ -113,7 +113,7 @@ namespace Logic {
 
 	void CShootShotGun::fireWeapon(){
 		
-		Vector3 direction = _entity->getQuatOrientation()*Vector3::NEGATIVE_UNIT_Z;
+		Vector3 direction = _entity->getOrientation()*Vector3::NEGATIVE_UNIT_Z;
 		Ogre::Radian angle = Ogre::Radian( (  (((float)(rand() % 100))*0.01f) * (_dispersionAngle)) *0.01f);
 		Vector3 dispersionDirection = direction.randomDeviant(angle);
 		dispersionDirection.normalise();
@@ -149,7 +149,7 @@ namespace Logic {
 			m->setPosition(projectile->getPosition());
 			m->setParticle("impactParticle");
 			// esto no es correcto en realidad, pero hasata que los decals esten en el otro lao, lo dejo asi.
-			m->setDirectionWithForce(-(_entity->getQuatOrientation()*Vector3::NEGATIVE_UNIT_Z));
+			m->setDirectionWithForce(-(_entity->getOrientation()*Vector3::NEGATIVE_UNIT_Z));
 			killedBy->emitMessage(m);
 		}
 

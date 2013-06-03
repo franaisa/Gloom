@@ -106,7 +106,7 @@ namespace Logic {
 
 			_pitchOrientation=Math::fromDegreesToQuaternion(entityInfo->getFloatAttribute("pitch"),Vector3(1,0,0));
 			//Creo que lo siguiente hace falta al menos por el momento(al igual que la ultima linea de rotationXY)
-			setOrientation(getQuatOrientation());
+			setOrientation(getOrientation());
 		}
 
 		// Por comodidad en el mapa escribimos los ángulos en grados.
@@ -116,7 +116,7 @@ namespace Logic {
 
 			_yawOrientation=Math::fromDegreesToQuaternion(entityInfo->getFloatAttribute("yaw"),Vector3(0,1,0));
 			//Creo que lo siguiente hace falta al menos por el momento(al igual que la ultima linea de rotationXY)
-			setOrientation(getQuatOrientation());
+			setOrientation(getOrientation());
 		}
 
 		if(entityInfo->hasAttribute("isPlayer"))
@@ -393,7 +393,7 @@ namespace Logic {
 
 	//---------------------------------------------------------
 
-	Ogre::Quaternion CEntity::getQuatOrientation() const {
+	Ogre::Quaternion CEntity::getOrientation() const {
 		//Hay que formarla de acuerdo a los nodos
 		return _orientation;
 	} // getOrientation

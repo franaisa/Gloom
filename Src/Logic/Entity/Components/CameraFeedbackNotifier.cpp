@@ -229,7 +229,7 @@ namespace Logic {
 		//DICE QUE OBTIENE HORIZONTAL SOLO CUANDO TMB DEVUELVE ALTURA
 		if(_strafingDir == 0) {
 			Matrix4 transform;
-			transform.makeTransform(_entity->getPosition(),Vector3::UNIT_SCALE,_entity->getQuatOrientation());
+			transform.makeTransform(_entity->getPosition(),Vector3::UNIT_SCALE,_entity->getOrientation());
 			Math::yaw(Math::HALF_PI, transform);
 			Vector3 horizontal = Math::getDirection(transform);
 
@@ -358,7 +358,7 @@ namespace Logic {
 		Ogre::Vector3 vMyPos = this->_entity->getPosition();
 
 		//Obtengo el vector en el que estoy mirando, y me quedo sólo en el plano horizontal (quitando la altura)
-		Vector3 vMyDirVision = _entity->getQuatOrientation()*Vector3::NEGATIVE_UNIT_Z;
+		Vector3 vMyDirVision = _entity->getOrientation()*Vector3::NEGATIVE_UNIT_Z;
 		vMyDirVision = Vector3(vMyDirVision.x,0,vMyDirVision.z);
 		//Obtengo el vector desde el enemigo a mi posición; y me quedo sólo con el plano horizontal (quitando la altura)
 		Vector3 vEnemyDirVision = vPosEnemy - vMyPos;
@@ -372,7 +372,7 @@ namespace Logic {
 		//Cambio de sistema de coordenadas para tener la posición del enemigo respecto 
 		//al jugador. Antonio el crack matemático! ^^
 		Matrix4 mat;
-		mat.makeTransform(_entity->getPosition(),Vector3::UNIT_SCALE,_entity->getQuatOrientation());
+		mat.makeTransform(_entity->getPosition(),Vector3::UNIT_SCALE,_entity->getOrientation());
 		mat.inverse();
 		Vector3 vec = mat * vPosEnemy; //este vector es la posicion del enemigo respecto a mi
 		if (vec.x > 0) 

@@ -239,7 +239,7 @@ namespace Logic {
 
 		@return Orientación en el entorno.
 		*/
-		Ogre::Quaternion getQuatOrientation() const;
+		Ogre::Quaternion getOrientation() const;
 		//__________________________________________________________________
 
 		/**

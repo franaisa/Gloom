@@ -44,7 +44,7 @@ namespace Logic
 		if(!_scene->addEntity(_animatedGraphicsEntity))
 			return 0;
 		
-		_animatedGraphicsEntity->setTransform(_entity->getPosition(),_entity->getQuatOrientation());
+		_animatedGraphicsEntity->setTransform(_entity->getPosition(),_entity->getOrientation());
 		
 		if(entityInfo->hasAttribute("defaultAnimation"))
 		{

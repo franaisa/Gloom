@@ -195,7 +195,7 @@ namespace Logic {
 		
 		// Si no he hecho ningun rebote, he de coger la del player, si estoy en algun rebote, el rebote se encarga de decirme en q posicion.
 		if(_rebound == 0){
-			_directionShoot = _entity->getQuatOrientation()*Vector3::NEGATIVE_UNIT_Z;
+			_directionShoot = _entity->getOrientation()*Vector3::NEGATIVE_UNIT_Z;
 			_distanceShoot = _screamerScreamMaxDistance;
 			_positionShoot = _entity->getPosition() + Vector3(0,_heightShoot,0);
 		}
@@ -284,10 +284,10 @@ namespace Logic {
 
 		// Creamos una entidad ScreamerShield
 		// Obtenemos la informacion asociada al arquetipo del escudo del screamer
-		Vector3 shootPosition = _entity->getPosition() + (( _entity->getQuatOrientation()*Vector3::NEGATIVE_UNIT_Z ) * _capsuleRadius );
+		Vector3 shootPosition = _entity->getPosition() + (( _entity->getOrientation()*Vector3::NEGATIVE_UNIT_Z ) * _capsuleRadius );
 		shootPosition.y += _heightShoot;
 		Matrix4 shootTransform;
-		shootTransform.makeTransform(shootPosition,Vector3::UNIT_SCALE,_entity->getQuatOrientation());
+		shootTransform.makeTransform(shootPosition,Vector3::UNIT_SCALE,_entity->getOrientation());
 
 		// Creamos la entidad y la activamos
 		_screamerShield = CEntityFactory::getSingletonPtr()->createEntity( 
