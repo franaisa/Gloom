@@ -84,13 +84,8 @@ namespace Logic {
 		Vector3 shootPosition = _owner->getPosition() + ( (_owner->getQuatOrientation() * Vector3::NEGATIVE_UNIT_Z) * _capsuleRadius );
 		shootPosition.y += _heightShoot;
 		
-		// Sacamos la orientacion de la entidad para setearsela al escudo
-		Matrix4 shootTransform;
-		shootTransform.setTrans(shootPosition);
-		Math::setPitchYaw( _owner->getPitchd(), _owner->getYawd(), shootTransform);
-		
 		// Seteamos la posicion fisica del escudo
-		_physicComponent->setTransform( shootTransform.getTrans(),shootTransform.extractQuaternion(), false );
+		_physicComponent->setTransform( _owner->getPosition(),_owner->getQuatOrientation(), false );
 	}
 
 	//________________________________________________________________________

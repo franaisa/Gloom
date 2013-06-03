@@ -243,38 +243,6 @@ namespace Logic {
 		//__________________________________________________________________
 
 		/**
-		Devuelve el viraje de la entidad.
-		<p>
-		La orientación es inicialmente leída del mapa como un simple 
-		viraje (si no aparece, se colocará a 0), aunque, obviamente, puede
-		cambiar con el tiempo.
-
-		@return Viraje en el entorno.
-		*/
-		float getYawd() const { 
-			Matrix4 transform;
-			transform.makeTransform(this->getPosition(),Vector3::UNIT_SCALE,this->getQuatOrientation());
-			return Math::getYaw(_transform); }
-
-		//__________________________________________________________________________
-
-		/**
-		Devuelve el subviraje de la entidad.
-		<p>
-		La orientación es inicialmente leída del mapa como un simple 
-		subviraje (si no aparece, se colocará a 0), aunque, obviamente, puede
-		cambiar con el tiempo.
-
-		@return Subviraje en el entorno.
-		*/
-		float getPitchd() const {
-			Matrix4 transform;
-			transform.makeTransform(this->getPosition(),Vector3::UNIT_SCALE,this->getQuatOrientation());
-			return Math::getPitch(_transform); }
-
-		//__________________________________________________________________
-
-		/**
 		Establece la posición de la entidad.
 
 		@param position Nueva posición.
