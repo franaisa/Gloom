@@ -81,23 +81,18 @@ namespace Logic  {
 				// en el lugar indicado por el mensaje recibido del servidor.
 
 				std::shared_ptr<CMessagePlayerSpawn> playerSpawnMsg = std::static_pointer_cast<CMessagePlayerSpawn>(message);
-
-				Matrix4 spawnTransform;
-				spawnTransform.makeTransform(playerSpawnMsg->getSpawnPosition(),Vector3::UNIT_SCALE,playerSpawnMsg->getSpawnOrientation());
-
 				// En caso de estar simulando fisica en el cliente, reactivamos las colisiones
 				// y reposicionamos la capsula donde nos diga el servidor.
 				CPhysicController* controllerComponent = _entity->getComponent<CPhysicController>("CPhysicController");
 				if(controllerComponent != NULL) {
 					// Colocamos al player en la posicion dada por el manager de spawn del server
-					controllerComponent->setPhysicPosition( spawnTransform.getTrans() );
+					controllerComponent->setPhysicPosition( playerSpawnMsg->getSpawnPosition() );
 					// Reactivamos la simulacion
+					// Ojo si el cliente pudiera activar algo esto deberia de hacerse como en el componente del servidor SpawnPlayer.cpp
 					controllerComponent->activateSimulation();
 
 					// Seteamos la orientacion a la dada por el server
-					Matrix3 spawnOrientation;
-					spawnTransform.extract3x3Matrix( spawnOrientation );
-					_entity->setOrientation(spawnOrientation);
+					_entity->setYaw(playerSpawnMsg->getSpawnOrientation(),true);
 				}
 			
 				// Volvemos a activar todos los componentes

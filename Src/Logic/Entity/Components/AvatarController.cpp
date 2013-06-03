@@ -178,9 +178,6 @@ namespace Logic {
 				 //Fijando a -88. Formo el quaternion previamente calculado, ahorrando procesamiento
 				 _entity->setPitch(Ogre::Quaternion(0.71934,-0.694658, 0, 0),false);
 		 }
-		
-		 //Actualizamos la orientacion(en un futuro no estara, esta por el transform que no se ha quitado)
-		 _entity->setOrientation(_entity->getOrientation());
 	
 	}//rotationXY
 	//________________________________________________________________________
