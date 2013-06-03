@@ -377,14 +377,6 @@ namespace Logic {
 
 	//---------------------------------------------------------
 
-	void CEntity::setTransform(const Matrix4& transform) {
-		_transform = transform;
-		_orientation=transform.extractQuaternion();
-		_position=transform.getTrans();
-	} // setTransform
-
-	//---------------------------------------------------------
-
 	void CEntity::setPosition(const Vector3 &position) {
 		_position=position;
 		_transform.setTrans(position);

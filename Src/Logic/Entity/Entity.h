@@ -251,7 +251,10 @@ namespace Logic {
 
 		@return Viraje en el entorno.
 		*/
-		float getYawd() const { return Math::getYaw(_transform); }
+		float getYawd() const { 
+			Matrix4 transform;
+			transform.makeTransform(this->getPosition(),Vector3::UNIT_SCALE,this->getQuatOrientation());
+			return Math::getYaw(_transform); }
 
 		//__________________________________________________________________________
 
@@ -264,17 +267,10 @@ namespace Logic {
 
 		@return Subviraje en el entorno.
 		*/
-		float getPitchd() const { return Math::getPitch(_transform); }
-
-		//__________________________________________________________________
-
-		/**
-		Establece la matriz de transformación de la entidad. Avisa a los 
-		componentes del cambio.
-
-		@param transform Nueva matriz de transformación de la entidad.
-		*/
-		void setTransform(const Matrix4& transform);
+		float getPitchd() const {
+			Matrix4 transform;
+			transform.makeTransform(this->getPosition(),Vector3::UNIT_SCALE,this->getQuatOrientation());
+			return Math::getPitch(_transform); }
 
 		//__________________________________________________________________
 
@@ -303,7 +299,7 @@ namespace Logic {
 
 		@return _yawOrientation Quaternion del yaw.
 		*/
-		Quaternion getYaw(){return _yawOrientation;};
+		Quaternion getYaw() const {return _yawOrientation;};
 
 		//__________________________________________________________________
 
@@ -312,7 +308,7 @@ namespace Logic {
 
 		@return _pitchOrientation Quaternion del pitch.
 		*/
-		Quaternion getPitch(){return _pitchOrientation;};
+		Quaternion getPitch() const {return _pitchOrientation;};
 
 		//__________________________________________________________________
 
@@ -321,7 +317,7 @@ namespace Logic {
 
 		@return _rollOrientation Quaternion del roll.
 		*/
-		Quaternion getRoll(){return _rollOrientation;};
+		Quaternion getRoll() const {return _rollOrientation;};
 
 		//__________________________________________________________________
 		/**
