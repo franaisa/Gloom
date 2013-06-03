@@ -34,7 +34,8 @@ namespace Logic
 		if(!IComponent::spawn(entity,map,entityInfo))
 			return false;
 		
-		_initialPosition.makeTransform(_entity->getPosition(),Vector3::UNIT_SCALE,_entity->getOrientation());
+		_initialPosition=_entity->getPosition();
+		_initialOrientation=_entity->getOrientation();
 
 		return true;
 
@@ -66,8 +67,8 @@ namespace Logic
 				_entity->emitMessage(deactivateMsg);
 				//Recolocamos la entidad fisicamente en su inicio para cuando se active nuevamente la trampa
 				std::shared_ptr<CMessageTransform> setTransformMsg = std::make_shared<CMessageTransform>();
-				setTransformMsg->setPosition(_initialPosition.getTrans());
-				setTransformMsg->setOrientation(_initialPosition.extractQuaternion());
+				setTransformMsg->setPosition(_initialPosition);
+				setTransformMsg->setOrientation(_initialOrientation);
 				setTransformMsg->setMakeConversion(true);
 				_entity->emitMessage(setTransformMsg);
 				break;
