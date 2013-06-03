@@ -219,9 +219,7 @@ namespace Logic {
 		}
 
 		// Creamos la entidad
-		Matrix4 transform;
-		transform.makeTransform(position,Vector3::UNIT_SCALE,orientation);
-		CEntity* newEntity = Logic::CEntityFactory::getSingletonPtr()->createEntityById(info, CServer::getSingletonPtr()->getMap(), destID, transform);
+		CEntity* newEntity = Logic::CEntityFactory::getSingletonPtr()->createEntityById(info, CServer::getSingletonPtr()->getMap(), destID, position, orientation);
 
 		// La inicializamos
 		newEntity->activate();

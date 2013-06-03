@@ -62,7 +62,7 @@ namespace Physics {
 	@return Quaternion físico equivalente.
 	*/
 	inline physx::PxQuat QuaternionToPxQuat(const Quaternion &q) {
-		return physx::PxQuat(q.w, q.x, q.y, q.z);
+		return physx::PxQuat(q.x, q.y, q.z, q.w);
 	}
 
 	//________________________________________________________________________

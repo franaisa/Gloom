@@ -142,11 +142,11 @@ namespace Logic {
 
 		//________________________________________________________________________
 
-		CEntity* createEntity(Map::CEntity *entityInfo, Logic::CMap *map, const Matrix4& transform, bool replicate = true);
+		CEntity* createEntity(Map::CEntity *entityInfo, Logic::CMap *map, const Vector3& position, const Quaternion& orientation, bool replicate = true);
 
 		//________________________________________________________________________
 
-		CEntity* createCustomClientEntity(Map::CEntity *entityInfo, Map::CEntity* customClientInfo, Logic::CMap *map, const Matrix4& transform);
+		CEntity* createCustomClientEntity(Map::CEntity *entityInfo, Map::CEntity* customClientInfo, Logic::CMap *map,const Vector3& position, const Quaternion& orientation);
 
 		/**
 		Crea una nueva entidad de juego en un mapa determinado a partir de
@@ -170,7 +170,7 @@ namespace Logic {
 
 		//________________________________________________________________________
 
-		CEntity* createEntityById(Map::CEntity *entityInfo, CMap *map, TEntityID id, const Matrix4& transform, bool replicate = false);
+		CEntity* createEntityById(Map::CEntity *entityInfo, CMap *map, TEntityID id, const Vector3& position, const Quaternion& orientation, bool replicate = false);
 
 		//________________________________________________________________________
 
@@ -332,7 +332,7 @@ namespace Logic {
 
 		//________________________________________________________________________
 
-		Logic::CEntity* initEntity(Logic::CEntity* entity, Map::CEntity* entityInfo, Logic::CMap *map, const Matrix4& transform, bool replicate, Map::CEntity* customInfoForClient = NULL);
+		Logic::CEntity* initEntity(Logic::CEntity* entity, Map::CEntity* entityInfo, Logic::CMap *map, const Vector3& position, const Quaternion& orientation, bool replicate, Map::CEntity* customInfoForClient = NULL);
 
 		/**
 		Única instancia de la clase.

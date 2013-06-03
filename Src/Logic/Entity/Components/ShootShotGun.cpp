@@ -121,14 +121,11 @@ namespace Logic {
 		Vector3 position = _entity->getPosition();
 		position.y += _heightShoot;
 
-		//position += direction * (_capsuleRadius + _projectileRadius + 0.5 );
-		Matrix4 transform = Matrix4::IDENTITY;
-		transform.setTrans(position);
-
 		CEntity *projectileEntity= CEntityFactory::getSingletonPtr()->createEntity( 
 			CEntityFactory::getSingletonPtr()->getInfo("MagneticBullet"),
 			Logic::CServer::getSingletonPtr()->getMap(),
-			transform
+			position,
+			Quaternion::IDENTITY
 		);
 		projectileEntity->activate();
 		projectileEntity->start();

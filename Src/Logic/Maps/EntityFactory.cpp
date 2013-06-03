@@ -281,12 +281,12 @@ namespace Logic {
 
 	//________________________________________________________________________
 
-	Logic::CEntity* CEntityFactory::initEntity(Logic::CEntity* entity, Map::CEntity* entityInfo, Logic::CMap *map, const Matrix4& transform, bool replicate, Map::CEntity* customInfoForClient) {
+	Logic::CEntity* CEntityFactory::initEntity(Logic::CEntity* entity, Map::CEntity* entityInfo, Logic::CMap *map, const Vector3& position, const Quaternion& orientation, bool replicate, Map::CEntity* customInfoForClient) {
 		if(!entity) return NULL;
 
 		// Seteamos la posición de la entidad a ser creada
-		entity->setPosition(transform.getTrans());
-		entity->setOrientation(transform.extractQuaternion());
+		entity->setPosition(position);
+		entity->setOrientation(orientation);
 		if( _dynamicCreation ? entity->dynamicSpawn(map, entityInfo) : entity->spawn(map, entityInfo) ) {
 			// Si la entidad ha sido inicializada con éxito la añadimos al mapa.
 			map->addEntity(entity);
@@ -311,8 +311,8 @@ namespace Logic {
 
 	//________________________________________________________________________
 
-	Logic::CEntity *CEntityFactory::createEntity(Map::CEntity *entityInfo, Logic::CMap *map, const Matrix4& transform, bool replicate) {
-		return initEntity(assembleEntity( entityInfo->getType() ), entityInfo, map, transform, replicate);
+	Logic::CEntity *CEntityFactory::createEntity(Map::CEntity *entityInfo, Logic::CMap *map, const Vector3& position, const Quaternion& orientation, bool replicate) {
+		return initEntity(assembleEntity( entityInfo->getType() ), entityInfo, map, position, orientation, replicate);
 	} // createEntity
 
 	//________________________________________________________________________
@@ -323,14 +323,14 @@ namespace Logic {
 
 	//________________________________________________________________________
 
-	Logic::CEntity *CEntityFactory::createEntityById(Map::CEntity *entityInfo, Logic::CMap *map, TEntityID id, const Matrix4& transform, bool replicate) {
-		return initEntity(assembleEntity( entityInfo->getType(), id ), entityInfo, map, transform, replicate);
+	Logic::CEntity *CEntityFactory::createEntityById(Map::CEntity *entityInfo, Logic::CMap *map, TEntityID id, const Vector3& position, const Quaternion& orientation, bool replicate) {
+		return initEntity(assembleEntity( entityInfo->getType(), id ), entityInfo, map, position, orientation, replicate);
 	} // createEntity
 
 	//________________________________________________________________________
 
-	CEntity* CEntityFactory::createCustomClientEntity(Map::CEntity *entityInfo, Map::CEntity* customClientInfo, Logic::CMap *map, const Matrix4& transform) {
-		return initEntity( assembleEntity( entityInfo->getType() ), entityInfo, map, transform, true, customClientInfo);
+	CEntity* CEntityFactory::createCustomClientEntity(Map::CEntity *entityInfo, Map::CEntity* customClientInfo, Logic::CMap *map, const Vector3& position, const Quaternion& orientation) {
+		return initEntity( assembleEntity( entityInfo->getType() ), entityInfo, map, position, orientation, true, customClientInfo);
 	}
 
 	//________________________________________________________________________

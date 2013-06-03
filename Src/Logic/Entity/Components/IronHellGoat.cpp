@@ -207,14 +207,14 @@ namespace Logic {
 		// del radio de la cápsula + el radio de la bola + un pequeño offset
 		Vector3 shootPosition = _entity->getPosition() + (( _entity->getOrientation()*Vector3::NEGATIVE_UNIT_Z ) * (_capsuleRadius + fireBallRadius + 0.5f) );
 		shootPosition.y += _heightShoot - fireBallRadius;
-		Matrix4 shootTransform;
-		shootTransform.makeTransform(shootPosition,Vector3::UNIT_SCALE,_entity->getOrientation());
+
 		// Creamos la entidad
 		CEntity* fireBall = CEntityFactory::getSingletonPtr()->createCustomClientEntity(
 								entityInfo,
 								clientEntityInfo,
 								CServer::getSingletonPtr()->getMap(),
-								shootTransform
+								shootPosition,
+								_entity->getOrientation()
 							);
 
 		// Eliminamos la copia de la información que hemos creado
