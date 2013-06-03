@@ -115,9 +115,9 @@ namespace Application {
 	//______________________________________________________________________________
 
 	void CDMServer::deactivate() {
-		CGameServerState::deactivate();
-
 		_worldState->removeObserver(this);
+
+		CGameServerState::deactivate();
 	} // deactivate
 
 	//______________________________________________________________________________

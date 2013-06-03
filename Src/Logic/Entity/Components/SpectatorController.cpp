@@ -12,13 +12,21 @@ del espectador.
 */
 
 #include "SpectatorController.h"
+#include "PhysicController.h"
+#include "Camera.h"
+
 #include "Logic/Entity/Entity.h"
+#include "Logic/Server.h"
+#include "Logic/Maps/Map.h"
+
 #include "Map/MapEntity.h"
-#include "Logic/Entity/Components/PhysicController.h"
-#include "Logic/Entity/Components/Camera.h"
 
 #include "Logic/Messages/MessageControl.h"
 #include "Logic/Messages/MessageMouse.h"
+
+// NO DEBERIAN ESTAR AQUI!
+#include "Graphics/Camera.h"
+#include "Graphics/Scene.h"
 
 namespace Logic {
 
@@ -96,8 +104,13 @@ namespace Logic {
 	//________________________________________________________________________
 
 	void CSpectatorController::mouse(float XYturn[]) {
-		_entity->yaw(XYturn[0]);
-		_entity->pitch(XYturn[1]);
+		// @deprecated
+		// El espectador ha dejado de funcionarme... meto la ñapa que había
+		// en el avatarController para que funcione
+		Graphics::CCamera* camera= _entity->getMap()->getScene()->getCamera();
+		camera->moveCamera( Ogre::Radian(XYturn[0]), Ogre::Radian(XYturn[1]) );
+
+		_entity->setOrientation( camera->getRealOrientation() );
 	} // turn
 
 	//________________________________________________________________________
