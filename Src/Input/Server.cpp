@@ -23,7 +23,7 @@ namespace Input {
 
 	//--------------------------------------------------------
 
-	CServer::CServer() : _playerController(0) 
+	CServer::CServer() : _playerController(0), _GUISystem(0)
 	{
 		_instance = this;
 

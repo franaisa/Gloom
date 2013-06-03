@@ -48,7 +48,9 @@ namespace Logic {
 
 	CAvatarController::CAvatarController() : _gravity(Vector3::ZERO),
 											 _touchingGround(false),
-											 _cameraFX(NULL) {
+											 _cameraFX(NULL),
+											 _physicController(0),
+											 _momentum(Vector3::ZERO){
 		
 		// Inicializamos el array que contiene los vectores
 		// de cada tecla de movimiento

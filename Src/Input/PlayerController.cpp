@@ -48,7 +48,7 @@ mover al jugador.
 
 namespace Input {
 
-	CPlayerController::CPlayerController() : _controlledAvatar(0)
+	CPlayerController::CPlayerController() : _controlledAvatar(0), m_iLastTime(0), m_eLastMove(E_MOVE::NONE)
 	{
 
 	} // CPlayerController
