@@ -253,7 +253,8 @@ namespace Logic {
 
 		
 		/**
-		Establece la orientación de la entidad.
+		Establece la orientación de la final de la entidad.
+		Las orientaciones parciales tambien serán actualizadas.
 
 		@param pos Nueva orientación.
 		*/
@@ -573,17 +574,13 @@ namespace Logic {
 		Logic::CMap *_map;
 
 		/**
-		Matriz de transformación de la entidad. Contiene posición y orientación.
+		Variables de posición y orientación(final + parciales).
 		*/
-		Matrix4 _transform;
-
 		Vector3 _position;
 		Ogre::Quaternion _orientation;
 		Ogre::Quaternion _yawOrientation;
 		Ogre::Quaternion _pitchOrientation;
 		Ogre::Quaternion _rollOrientation;
-
-
 
 		/**
 		Atributo que indica si la entidad es el jugador; por defecto

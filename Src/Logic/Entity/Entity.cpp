@@ -36,7 +36,6 @@ namespace Logic {
 										   _map(0),
 										   _type(""), 
 										   _name(""), 
-										   _transform(Matrix4::IDENTITY),
 										   _position(0,0,0),
 										   _orientation(1,0,0,0),
 										   _yawOrientation(1,0,0,0),
@@ -86,37 +85,22 @@ namespace Logic {
 
 		if(entityInfo->hasAttribute("position")) {
 			Vector3 position = entityInfo->getVector3Attribute("position");
-			_transform.setTrans(position);
 			_position=position;
 		}
 
-		//Ahora con quaternion esto no haria falta y se dejarian los casos por separdos, tanto pitch como yaw y luego roll
-		//El orden no importa, ya no hay movidas de uno antes que otro, se deja asi porque todavia se utilizan transforms
-		// Si se establecen los 2 hay que hacerlo a la vez
-		if(entityInfo->hasAttribute("pitch") && entityInfo->hasAttribute("yaw")) {
-			float pitch = Math::fromDegreesToRadians(entityInfo->getFloatAttribute("pitch"));
-			float yaw = Math::fromDegreesToRadians(entityInfo->getFloatAttribute("yaw"));
-			Math::setPitchYaw(pitch,yaw,_transform);
-		}
-
-		// Por comodidad en el mapa escribimos los ángulos en grados.
-		else if(entityInfo->hasAttribute("pitch")) { 
-			float pitch = Math::fromDegreesToRadians(entityInfo->getFloatAttribute("pitch"));
-			Math::pitch(pitch,_transform);
-
-			_pitchOrientation=Math::fromDegreesToQuaternion(entityInfo->getFloatAttribute("pitch"),Vector3(1,0,0));
-			//Creo que lo siguiente hace falta al menos por el momento(al igual que la ultima linea de rotationXY)
-			setOrientation(getOrientation());
-		}
-
-		// Por comodidad en el mapa escribimos los ángulos en grados.
-		else if(entityInfo->hasAttribute("yaw")) {
-			float yaw = Math::fromDegreesToRadians(entityInfo->getFloatAttribute("yaw"));
-			Math::yaw(yaw,_transform);
-
+		if(entityInfo->hasAttribute("yaw")) {
 			_yawOrientation=Math::fromDegreesToQuaternion(entityInfo->getFloatAttribute("yaw"),Vector3(0,1,0));
-			//Creo que lo siguiente hace falta al menos por el momento(al igual que la ultima linea de rotationXY)
-			setOrientation(getOrientation());
+			_orientation=_yawOrientation*_pitchOrientation*_rollOrientation;
+		}
+	
+		if(entityInfo->hasAttribute("pitch")) { 
+			_pitchOrientation=Math::fromDegreesToQuaternion(entityInfo->getFloatAttribute("pitch"),Vector3(1,0,0));
+			_orientation=_yawOrientation*_pitchOrientation*_rollOrientation;
+		}
+
+		if(entityInfo->hasAttribute("roll")) { 
+			_rollOrientation=Math::fromDegreesToQuaternion(entityInfo->getFloatAttribute("roll"),Vector3(0,0,1));
+			_orientation=_yawOrientation*_pitchOrientation*_rollOrientation;
 		}
 
 		if(entityInfo->hasAttribute("isPlayer"))
@@ -379,22 +363,21 @@ namespace Logic {
 
 	void CEntity::setPosition(const Vector3 &position) {
 		_position=position;
-		_transform.setTrans(position);
 	} // setPosition
 
 	//---------------------------------------------------------
 
 	void CEntity::setOrientation(const Ogre::Quaternion& orientation) {
+		//Actualizacion global y parcial
 		_orientation = orientation;
-		Matrix3 rot;
-		orientation.ToRotationMatrix(rot);
-		_transform = rot;
+		_yawOrientation = Quaternion(&orientation.xAxis());
+		_pitchOrientation = Quaternion(&orientation.yAxis());
+		_rollOrientation = Quaternion(&orientation.zAxis());
 	} // setOrientation
 
 	//---------------------------------------------------------
 
 	Ogre::Quaternion CEntity::getOrientation() const {
-		//Hay que formarla de acuerdo a los nodos
 		return _orientation;
 	} // getOrientation
 	//---------------------------------------------------------
