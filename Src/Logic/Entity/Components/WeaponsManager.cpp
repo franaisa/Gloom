@@ -64,11 +64,11 @@ namespace Logic
 		_weaponry.resize(WeaponType::eSIZE);
 
 		// Rellenamos el vector con los punteros a los componentes correspondientes
-		_weaponry[WeaponType::eHAMMER].second = _entity->getComponent<CShootHammer>("CShootHammerAmmo");
-		_weaponry[WeaponType::eSNIPER].second = _entity->getComponent<CShootSniper>("CShootSniperAmmo");
-		_weaponry[WeaponType::eSHOTGUN].second = _entity->getComponent<CShootShotGun>("CShootShotGunAmmo");
-		_weaponry[WeaponType::eMINIGUN].second = _entity->getComponent<CShootMiniGun>("CShootMiniGunAmmo");
-		_weaponry[WeaponType::eIRON_HELL_GOAT].second = _entity->getComponent<CIronHellGoat>("CIronHellGoatAmmo");
+		_weaponry[WeaponType::eHAMMER].second = _entity->getComponent<CShootHammer>("CShootHammer");
+		_weaponry[WeaponType::eSNIPER].second = _entity->getComponent<CShootSniper>("CShootSniper");
+		_weaponry[WeaponType::eSHOTGUN].second = _entity->getComponent<CShootShotGun>("CShootShotGun");
+		_weaponry[WeaponType::eMINIGUN].second = _entity->getComponent<CShootMiniGun>("CShootMiniGun");
+		_weaponry[WeaponType::eIRON_HELL_GOAT].second = _entity->getComponent<CIronHellGoat>("CIronHellGoat");
 
 		/*
 		// Por defecto la primera arma está activada y equipada (es el arma 0).
