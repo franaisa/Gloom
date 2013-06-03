@@ -22,6 +22,7 @@
 #include "Logic/Messages/MessageAddWeapon.h"
 #include "Logic/Messages/MessageActivate.h"
 
+#include "Graphics/HHFXParticle.h"
 
 #include "Net/Manager.h"
 
@@ -35,9 +36,9 @@ namespace Logic {
 	void CSpawnItemManager::onTick(unsigned int msecs) {
 		// Si el item esta en la fase de respawn, comprobamos si se ha cumplido el tiempo
 		// limite para resucitar las entidades graficas y fisicas.
+
 		if(_isRespawning) {
 			_timer += msecs;
-
 			if(_timer >= _respawnTime) {
 				_isRespawning = false;
 				_timer = 0;

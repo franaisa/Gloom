@@ -36,6 +36,7 @@ namespace Graphics{
 		_hhfxScene(NULL)
 	{
 		_instance = this;
+		_hhfxScene = 0;
 	}
 
 	//-------------------------------------------------------------------------------------
@@ -50,7 +51,7 @@ namespace Graphics{
 
 	bool HHFX::Init() 
 	{
-		assert(!_instance && "Segunda inicialización de Graphics::CServer no permitida!");
+		assert(!_instance && "Segunda inicialización de Graphics::HHFX no permitida!");
 
 		new HHFX();
 
@@ -74,6 +75,7 @@ namespace Graphics{
 		{
 			_instance->close();
 			delete _instance;
+			_instance = 0;
 		}
 
 	} // Release
@@ -112,6 +114,9 @@ namespace Graphics{
 
 	void HHFX::deactivate(){
 		clearFFFXScene();
+		_root->removeFrameListener(this);
+		//_sceneMgr->destroyAllMovableObjectsByType("HHFX");
+		_hhfxScene = 0;
 	}
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -130,7 +135,8 @@ namespace Graphics{
 
 	bool HHFX::close()
 	{
-		clearFFFXScene();
+		if( _hhfxScene)
+			clearFFFXScene();
 		return true;
 	} // open
 
@@ -264,6 +270,7 @@ namespace Graphics{
 	void HHFX::clearFFFXScene()
 	{
 		// clear the scene before shutting down ogre since the hhfx ogre implementation holds some Ogre objects.
+		_hhfxScene->Clear();
 	}
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
