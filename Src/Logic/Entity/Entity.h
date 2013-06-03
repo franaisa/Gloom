@@ -218,20 +218,6 @@ namespace Logic {
 
 
 		/**
-		Devuelve la metriz de transformación de la entidad.
-		<p>
-		La posición es inicialmente leída del mapa (si no aparece,
-		se colocará a (0, 0, 0)) y la orientación es también inicialmente 
-		leída del mapa, como un simple viraje (si no aparece, se colocará 
-		a 0). Obviamente, pueden cambiar con el tiempo.
-
-		@return Matriz de transformación de la entidad en el entorno.
-		*/
-		Matrix4 getTransform() const { return _transform; }
-
-		//__________________________________________________________________
-		
-		/**
 		Devuelve la posición de la entidad.
 		<p>
 		La posición es inicialmente leída del mapa (si no aparece,
