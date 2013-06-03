@@ -6,6 +6,10 @@ namespace Logic {
 
 	IMP_FACTORYMESSAGE(CMessagePrimaryShoot);
 
+	CMessagePrimaryShoot::CMessagePrimaryShoot() : CMessage(Message::PRIMARY_SHOOT) {
+		// Nada que hacer
+	}
+
 	CMessagePrimaryShoot::CMessagePrimaryShoot(bool shoot) : _shoot(shoot), CMessage(Message::PRIMARY_SHOOT) {
 		// Nada que hacer
 	} //

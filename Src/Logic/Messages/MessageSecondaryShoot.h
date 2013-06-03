@@ -8,6 +8,7 @@ namespace Logic {
 	class CMessageSecondaryShoot : public CMessage{
 	DEC_FACTORYMESSAGE(CMessageSecondaryShoot);
 	public:
+		CMessageSecondaryShoot();
 		CMessageSecondaryShoot(bool shoot);
 		virtual ~CMessageSecondaryShoot(){};
 		

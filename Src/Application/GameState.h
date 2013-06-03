@@ -27,8 +27,7 @@ namespace Application
 	class CBaseApplication;
 }
 
-namespace Graphics 
-{
+namespace Graphics {
 	class CScene;
 	class CCamera;
 	class CEntity;
@@ -36,8 +35,8 @@ namespace Graphics
 	class CAnimatedEntity;
 }
 
-namespace Application 
-{
+namespace Application {
+	
 	/**
 	Clase CGameState; representa el estado de juego de la aplicación.
 	Se encarga de la preparación y la carga del mapa lógico del juego.
@@ -59,7 +58,8 @@ namespace Application
 	@author David Llansó
 	@date Agosto, 2010
 	*/
-	class CGameState : public CApplicationState, Logic::CWorldState::IObserver {
+
+	class CGameState : public CApplicationState, public Logic::CWorldState::IObserver {
 	public:
 
 		/** 

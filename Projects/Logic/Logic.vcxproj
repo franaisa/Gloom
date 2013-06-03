@@ -81,6 +81,7 @@
     <ClCompile Include="..\..\Src\Graphics\OgreDecal.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\Ammo.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\IronHellGoatAmmo.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\IronHellGoatFeedback.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\MiniGunAmmo.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\ShotGunAmmo.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\SniperAmmo.cpp" />
@@ -140,6 +141,7 @@
     <ClCompile Include="..\..\Src\Logic\Entity\Components\SpikeTrap.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\TransformInterpolator.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\UpdateClientPosition.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\WeaponFeedback.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\WeaponsManager.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\MessageFactory.cpp" />
     <ClCompile Include="..\..\Src\Logic\GameNetMsgManager.cpp" />
@@ -233,6 +235,7 @@
     <ClInclude Include="..\..\Src\Graphics\OgreDecal.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\Ammo.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\IronHellGoatAmmo.h" />
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\IronHellGoatFeedback.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\MiniGunAmmo.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\ShotGunAmmo.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\SniperAmmo.h" />
@@ -293,6 +296,7 @@
     <ClInclude Include="..\..\Src\Logic\Entity\Components\SpikeTrap.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\TransformInterpolator.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\UpdateClientPosition.h" />
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\WeaponFeedback.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\WeaponsManager.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\WeaponType.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\MessageFactory.h" />

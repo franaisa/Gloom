@@ -11,7 +11,7 @@ de disparo de la cabra.
 @date Mayo, 2013
 */
 
-#include "IronHellGoatAmmo.h"
+#include "ShotGunAmmo.h"
 #include "FireBallController.h"
 #include "HudWeapons.h"
 
@@ -24,11 +24,11 @@ using namespace std;
 
 namespace Logic {
 
-	IMP_FACTORY(CIronHellGoatAmmo);
+	IMP_FACTORY(CShotGunAmmo);
 
 	//__________________________________________________________________
 
-	CIronHellGoatAmmo::CIronHellGoatAmmo() : IAmmo("shotGun"),
+	CShotGunAmmo::CShotGunAmmo() : IAmmo("shotGun"),
 											_primaryFireIsActive(false),
 											_elapsedTime(0),
 											_ammoSpentTimer(0),
@@ -39,13 +39,13 @@ namespace Logic {
 
 	//__________________________________________________________________
 
-	CIronHellGoatAmmo::~CIronHellGoatAmmo() {
+	CShotGunAmmo::~CShotGunAmmo() {
 		// Nada que hacer
 	}
 
 	//__________________________________________________________________
 
-	bool CIronHellGoatAmmo::spawn(CEntity* entity, CMap *map, const Map::CEntity *entityInfo) {
+	bool CShotGunAmmo::spawn(CEntity* entity, CMap *map, const Map::CEntity *entityInfo) {
 		if( !IAmmo::spawn(entity, map, entityInfo) ) return false;
 
 		// Nos aseguramos de tener todos los atributos que necesitamos
@@ -68,20 +68,20 @@ namespace Logic {
 
 	//__________________________________________________________________
 
-	void CIronHellGoatAmmo::onActivate() {
+	void CShotGunAmmo::onActivate() {
 		_currentSpentAmmo = _ammoSpentTimer = _elapsedTime = 0;
 	}
 
 	//__________________________________________________________________
 
-	void CIronHellGoatAmmo::onAvailable() {
+	void CShotGunAmmo::onAvailable() {
 		IAmmo::onAvailable();
 		_currentSpentAmmo = _ammoSpentTimer = _elapsedTime = 0;
 	}
 
 	//__________________________________________________________________
 
-	void CIronHellGoatAmmo::onTick(unsigned int msecs) {
+	void CShotGunAmmo::onTick(unsigned int msecs) {
 		// Si el jugador esta dejando pulsado el disparo primario, aumentamos
 		// el tamaño de la bola y reducimos la velocidad hasta un limite
 		if(_primaryFireIsActive) {
@@ -115,19 +115,19 @@ namespace Logic {
 
 	//__________________________________________________________________
 
-	bool CIronHellGoatAmmo::canUsePrimaryFire() {
+	bool CShotGunAmmo::canUsePrimaryFire() {
 		return _primaryFireCooldownTimer == 0 && _currentAmmo > 0;
 	}
 
 	//__________________________________________________________________
 
-	bool CIronHellGoatAmmo::canUseSecondaryFire() {
+	bool CShotGunAmmo::canUseSecondaryFire() {
 		return true;
 	}
 
 	//__________________________________________________________________
 
-	void CIronHellGoatAmmo::primaryFire() {
+	void CShotGunAmmo::primaryFire() {
 		IAmmo::primaryFire();
 
 		_primaryFireCooldownTimer = _primaryFireCooldown;
@@ -138,7 +138,7 @@ namespace Logic {
 
 	//__________________________________________________________________
 
-	void CIronHellGoatAmmo::stopPrimaryFire() {
+	void CShotGunAmmo::stopPrimaryFire() {
 		IAmmo::stopPrimaryFire();
 		
 		if(!_primaryFireIsActive) return;
@@ -151,7 +151,7 @@ namespace Logic {
 
 	//__________________________________________________________________
 
-	void CIronHellGoatAmmo::reduceCooldown(unsigned int percentage) {
+	void CShotGunAmmo::reduceCooldown(unsigned int percentage) {
 		// Si es 0 significa que hay que restaurar al que habia por defecto,
 		// sino decrementamos conforme al porcentaje dado.
 		_primaryFireCooldown = percentage == 0 ? _defaultPrimaryFireCooldown : (_defaultPrimaryFireCooldown - (percentage * _primaryFireCooldown * 0.01f));

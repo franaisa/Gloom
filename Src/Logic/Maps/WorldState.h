@@ -170,6 +170,7 @@ comunicarse con esta clase para introducir el cambio que se ha producido.
 		// =======================================================================
 		//                          MIEMBROS DE CLASE
 		// =======================================================================
+		
 		/**
 		Única instancia de la clase.
 		*/

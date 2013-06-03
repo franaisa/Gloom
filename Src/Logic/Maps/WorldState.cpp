@@ -128,6 +128,9 @@ namespace Logic {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	void CWorldState::addChange(CEntity* entity, std::shared_ptr<CMessage> message){
+		if(message->getMessageType() == Message::PLAYER_DEAD)
+			cout << "Alguien ha palmado" << endl;
+
 		TEntityID id = entity->getEntityID();
 
 		auto entityFound = _entities.find(id);

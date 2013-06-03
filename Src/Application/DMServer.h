@@ -49,6 +49,7 @@ namespace Application {
 		//                           METODOS HEREDADOS
 		// =======================================================================
 
+		virtual void tick(unsigned int msecs);
 
 		/**
 		Función llamada por la aplicación cuando se activa
@@ -137,7 +138,7 @@ namespace Application {
 
 	private:
 
-		unsigned int _time;
+		int _time;
 		unsigned int _frags;
 		unsigned int _fragLimit;
 		bool _voteKick;

@@ -19,11 +19,17 @@ Contiene la implementación del componente que gestiona las armas y que administr
 #include "Logic/Maps/WorldState.h"
 
 #include "Weapon.h"
-#include "ShootShotGunAmmo.h"
+/*#include "ShootShotGunAmmo.h"
 #include "ShootSniperAmmo.h"
 #include "ShootMiniGunAmmo.h"
 #include "ShootHammerAmmo.h"
-#include "IronHellGoatAmmo.h"
+#include "IronHellGoatAmmo.h"*/
+
+#include "ShootShotGun.h"
+#include "ShootSniper.h"
+#include "ShootMiniGun.h"
+#include "ShootHammer.h"
+#include "IronHellGoat.h"
 
 #include "Logic/Messages/MessageChangeWeapon.h"
 #include "Logic/Messages/MessageChangeWeaponGraphics.h"
@@ -58,11 +64,11 @@ namespace Logic
 		_weaponry.resize(WeaponType::eSIZE);
 
 		// Rellenamos el vector con los punteros a los componentes correspondientes
-		_weaponry[WeaponType::eHAMMER].second = _entity->getComponent<CShootHammerAmmo>("CShootHammerAmmo");
-		_weaponry[WeaponType::eSNIPER].second = _entity->getComponent<CShootSniperAmmo>("CShootSniperAmmo");
-		_weaponry[WeaponType::eSHOTGUN].second = _entity->getComponent<CShootShotGunAmmo>("CShootShotGunAmmo");
-		_weaponry[WeaponType::eMINIGUN].second = _entity->getComponent<CShootMiniGunAmmo>("CShootMiniGunAmmo");
-		_weaponry[WeaponType::eIRON_HELL_GOAT].second = _entity->getComponent<CIronHellGoatAmmo>("CIronHellGoatAmmo");
+		_weaponry[WeaponType::eHAMMER].second = _entity->getComponent<CShootHammer>("CShootHammerAmmo");
+		_weaponry[WeaponType::eSNIPER].second = _entity->getComponent<CShootSniper>("CShootSniperAmmo");
+		_weaponry[WeaponType::eSHOTGUN].second = _entity->getComponent<CShootShotGun>("CShootShotGunAmmo");
+		_weaponry[WeaponType::eMINIGUN].second = _entity->getComponent<CShootMiniGun>("CShootMiniGunAmmo");
+		_weaponry[WeaponType::eIRON_HELL_GOAT].second = _entity->getComponent<CIronHellGoat>("CIronHellGoatAmmo");
 
 		/*
 		// Por defecto la primera arma está activada y equipada (es el arma 0).
