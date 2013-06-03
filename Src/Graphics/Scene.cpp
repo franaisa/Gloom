@@ -19,6 +19,7 @@ de una escena.
 #include "Scene.h"
 #include "Camera.h"
 #include "Light.h"
+#include "HHFX.h"
 #include "Server.h"
 #include "StaticEntity.h"
 #include "BaseSubsystems/Server.h"
@@ -67,7 +68,6 @@ namespace Graphics
 
 	CScene::~CScene() 
 	{
-		deactivate();
 		_sceneMgr->destroyStaticGeometry(_staticGeometry);
 		delete _camera;
 		_root->destroySceneManager(_sceneMgr);
@@ -125,8 +125,17 @@ namespace Graphics
 	{
 		buildStaticGeometry();
 		// HACK en pruebas
-		_viewport = BaseSubsystems::CServer::getSingletonPtr()->getRenderWindow()
-						->addViewport(_camera->getCamera());
+		try
+		{
+			_viewport = BaseSubsystems::CServer::getSingletonPtr()->getRenderWindow()
+			->addViewport(_camera->getOgreCamera());
+		}
+		catch(std::exception e)
+		{
+			_viewport = BaseSubsystems::CServer::getSingletonPtr()->getRenderWindow()->getViewport(0);
+			_viewport->setCamera(_camera->getOgreCamera());
+		}
+		
 		_viewport->setBackgroundColour(Ogre::ColourValue::Black);
 		_sceneMgr->setShadowTechnique(Ogre::SHADOWTYPE_STENCIL_ADDITIVE);
 		/*
@@ -143,6 +152,10 @@ namespace Graphics
 			Ogre::MaterialManager::getSingletonPtr()->addListener(_glowMaterialListener);
 
 			_poolParticle->activate();
+			
+			HHFX::getSingletonPtr()->setSceneMgr(_sceneMgr);
+			HHFX::getSingletonPtr()->setCamera(_camera->getOgreCamera());
+			HHFX::getSingletonPtr()->activate();
 		}
 		_sceneMgr->getRootSceneNode()->setVisible(true);
 	} // activate
@@ -156,11 +169,16 @@ namespace Graphics
 			_sceneMgr->destroyLight(_directionalLight);
 			_directionalLight = 0;
 		}
-		if(_viewport)
+		/*if(_viewport)
 		{
 			BaseSubsystems::CServer::getSingletonPtr()->getRenderWindow()->
 					removeViewport(_viewport->getZOrder());
 			_viewport = 0;
+		}*/
+
+		if(_name != "dummy_scene"){
+			
+			HHFX::getSingletonPtr()->deactivate();
 		}
 
 	} // deactivate

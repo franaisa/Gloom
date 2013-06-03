@@ -45,7 +45,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>../../Src;../../dependencies/include/OGRE;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../dependencies/include;../../Src;../../dependencies/include/OGRE;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -81,6 +81,8 @@
     <ClCompile Include="..\..\Src\Graphics\Camera.cpp" />
     <ClCompile Include="..\..\Src\Graphics\CompositorListener.cpp" />
     <ClCompile Include="..\..\Src\Graphics\Entity.cpp" />
+    <ClCompile Include="..\..\Src\Graphics\HHFX.cpp" />
+    <ClCompile Include="..\..\Src\Graphics\HHFXParticle.cpp" />
     <ClCompile Include="..\..\Src\Graphics\Light.cpp" />
     <ClCompile Include="..\..\Src\Graphics\Overlay.cpp" />
     <ClCompile Include="..\..\Src\Graphics\Particle.cpp" />
@@ -95,6 +97,8 @@
     <ClInclude Include="..\..\Src\Graphics\CompositorListener.h" />
     <ClInclude Include="..\..\Src\Graphics\Documentation.h" />
     <ClInclude Include="..\..\Src\Graphics\Entity.h" />
+    <ClInclude Include="..\..\Src\Graphics\HHFX.h" />
+    <ClInclude Include="..\..\Src\Graphics\HHFXParticle.h" />
     <ClInclude Include="..\..\Src\Graphics\Light.h" />
     <ClInclude Include="..\..\Src\Graphics\Overlay.h" />
     <ClInclude Include="..\..\Src\Graphics\Particle.h" />
