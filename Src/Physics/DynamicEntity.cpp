@@ -69,7 +69,7 @@ namespace Physics {
 
 	//________________________________________________________________________
 
-	void CDynamicEntity::load(const Matrix4& transform, const PxGeometry& geometry, PxMaterial& material,
+	void CDynamicEntity::load(const Vector3& position, const Quaternion& orientation, const PxGeometry& geometry, PxMaterial& material,
 							  float density, bool kinematic, bool trigger, bool noGravity, int group, 
 							  const vector<int>& groupList, const Logic::IPhysics *component) {
 
@@ -77,9 +77,9 @@ namespace Physics {
 
 		_isTrigger = trigger;
 
-		// Creamos una esfera dinámica
-		PxTransform globalPose( Matrix4ToPxTransform(transform));
-		
+		// Creamos Transform
+		PxTransform globalPose(Vector3ToPxVec3(position),QuaternionToPxQuat(orientation));
+
 		// Transformación de coordenadas lógicas a coodenadas de PhysX
 		PxTransform shapeOffset( PxVec3(0, getLogicPivotOffset(geometry), 0) );
 
