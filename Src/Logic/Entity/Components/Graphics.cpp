@@ -118,7 +118,7 @@ namespace Logic
 	//---------------------------------------------------------
 	
 	void CGraphics::setTransform(const Vector3 &position, const Ogre::Quaternion &orientation) {
-		_graphicsEntity->setTransform(_entity->getPosition(),orientation);
+		_graphicsEntity->setTransform(position,orientation);
 	}
 
 	//---------------------------------------------------------

@@ -285,7 +285,8 @@ namespace Logic {
 		if(!entity) return NULL;
 
 		// Seteamos la posición de la entidad a ser creada
-		entity->setTransform(transform);
+		entity->setPosition(transform.getTrans());
+		entity->setOrientation(transform.extractQuaternion());
 		if( _dynamicCreation ? entity->dynamicSpawn(map, entityInfo) : entity->spawn(map, entityInfo) ) {
 			// Si la entidad ha sido inicializada con éxito la añadimos al mapa.
 			map->addEntity(entity);
