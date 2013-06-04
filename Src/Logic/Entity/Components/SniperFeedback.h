@@ -11,7 +11,7 @@ de disparo de la cabra.
 @see Logic::CSniperFeedback
 @see Logic::IWeaponFeedback
 
-@author Francisco Aisa García
+@author Antonio Jesus Narvaez
 @date Mayo, 2013
 */
 
