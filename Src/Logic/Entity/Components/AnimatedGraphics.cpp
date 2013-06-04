@@ -74,7 +74,7 @@ namespace Logic
 				//ogre coge y me las borra para optimizar, por lo que al atacharlas luego no existen T-T
 				Graphics::CEntity* entity = new Graphics::CEntity(nameWeapon,entityInfo->getStringAttribute(weapon+"Model"));
 
-				//_animatedGraphicsEntity->attachWeapon(*entity, _entity->getEntityID());
+				_animatedGraphicsEntity->attachWeapon(*entity, _entity->getEntityID());
 				_weapons[i] =  entity;
 			}
 
@@ -95,7 +95,7 @@ namespace Logic
 		//Habria que quitare el string que se pasa por parametro porque no tiene sentido
 		//animationFinished("random");
 		_animatedGraphicsEntity->setAnimation( _defaultAnimation, true );
-		//_animatedGraphicsEntity->attachWeapon(*_weapons[0], _entity->getEntityID());
+		_animatedGraphicsEntity->attachWeapon(*_weapons[0], _entity->getEntityID());
 	}
 	//---------------------------------------------------------
 
@@ -197,7 +197,7 @@ namespace Logic
 	void CAnimatedGraphics::changeWeapon(int newWeapon){
 		if(newWeapon != _currentWeapon)
 			_currentWeapon = newWeapon;
-			//_animatedGraphicsEntity->attachWeapon(*_weapons[_currentWeapon], _entity->getEntityID());
+			_animatedGraphicsEntity->attachWeapon(*_weapons[_currentWeapon], _entity->getEntityID());
 
 			//comprobamos si el material que tenia el arma anterior no era el original
 			// y si no lo era se lo tenemos que cambiar
