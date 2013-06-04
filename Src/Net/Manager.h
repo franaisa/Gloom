@@ -20,6 +20,8 @@ la gestión de la red del juego.
 #define __Net_Manager_H
 
 #include <vector>
+#include <set>
+#include <queue>
 #include <map>
 
 // Predeclaracion de clases
@@ -489,7 +491,9 @@ namespace Net {
 		TConnectionTable _connections;
 
 		/** Vector de observadores. */
-		std::vector<IObserver*> _observers;
+		std::set<IObserver*> _observers;
+
+		std::queue<IObserver*> _observersToBeDeleted;
 
 		/** Vector de paquetes recibidos. */
 		std::vector<Net::CPaquete*> _paquetes;

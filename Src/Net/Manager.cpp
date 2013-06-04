@@ -147,8 +147,7 @@ namespace Net {
 		_paquetes.clear();
 		Net::CManager::getSingletonPtr()->getPackets(_paquetes);
 
-		for(std::vector<Net::CPaquete*>::iterator iterp = _paquetes.begin();iterp != _paquetes.end();++iterp)
-		{
+		for(std::vector<Net::CPaquete*>::iterator iterp = _paquetes.begin();iterp != _paquetes.end();++iterp) {
 			Net::CPaquete* paquete = *iterp;
 			// El mensaje debe ser de tipo CONEXION
 
@@ -156,19 +155,19 @@ namespace Net {
 			{
 				case Net::CONEXION:
 					connect(paquete->getConexion());
-					for(std::vector<IObserver*>::iterator iter = _observers.begin();iter != _observers.end();++iter)
+					for(auto iter = _observers.begin();iter != _observers.end();++iter)
 						(*iter)->connectionPacketReceived(paquete);
 					break;
 				case Net::DATOS:
 					if(!internalData(paquete)){ // Analiza si trae contenido -> TODO: ver funcion
 						//std::cout << "mensaje recibido:  " <<  _observers.size() << std::endl;
-						for(std::vector<IObserver*>::iterator iter = _observers.begin();iter != _observers.end();++iter)
+						for(auto iter = _observers.begin();iter != _observers.end();++iter)
 							(*iter)->dataPacketReceived(paquete);
 					}
 					break;
 				case Net::DESCONEXION:
-					for(int i = 0; i < _observers.size(); ++i)
-						_observers[i]->disconnectionPacketReceived(paquete);
+					for(auto iter = _observers.begin();iter != _observers.end();++iter)
+						(*iter)->disconnectionPacketReceived(paquete);
 					disconnect(paquete->getConexion());
 					//retornar id
 					break;
@@ -176,6 +175,12 @@ namespace Net {
 			delete paquete;
 		}
 
+		if( !_observersToBeDeleted.empty() ) {
+			for(int i = 0; i < _observersToBeDeleted.size(); ++i) {
+				_observers.erase(_observersToBeDeleted.front());
+				_observersToBeDeleted.pop();
+			}
+		}
 	} // tick
 
 	//---------------------------------------------------------
@@ -340,19 +345,17 @@ namespace Net {
 	//---------------------------------------------------------
 
 	void CManager::addObserver(IObserver* listener) {
-		_observers.push_back(listener);
+		_observers.insert(listener);
 	} // addObserver
 
 	//---------------------------------------------------------
 
-	void CManager::removeObserver(IObserver* listener)
-	{
-		for(std::vector<IObserver*>::iterator iter = _observers.begin();iter != _observers.end();++iter)
-			if((*iter)==listener)
-			{
-				_observers.erase(iter);
-				break;
-			}
+	void CManager::removeObserver(IObserver* listener) {
+		// Debido a que los clientes a veces pueden querer quitarse
+		// de la lista de observadores al recibir un paquete de desconexion
+		// del servidor, eliminamos a los observadores en diferido
+		// para que no haya problemas.
+		_observersToBeDeleted.push(listener);
 	} // removeObserver
 
 } // namespace Net
