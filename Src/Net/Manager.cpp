@@ -341,13 +341,17 @@ namespace Net {
 	//---------------------------------------------------------
 
 	void CManager::addObserver(IObserver* listener) {
-		_observers.insert(listener);
+		_observers.push_back(listener);
 	} // addObserver
 
 	//---------------------------------------------------------
 
 	void CManager::removeObserver(IObserver* listener) {
-		_observers.erase(listener);
+		for(auto iter = _observers.begin();iter != _observers.end();++iter)
+			if((*iter)==listener) {
+				_observers.erase(iter);
+				break;
+			}
 	} // removeObserver
 
 } // namespace Net

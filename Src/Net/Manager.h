@@ -490,7 +490,7 @@ namespace Net {
 		TConnectionTable _connections;
 
 		/** Vector de observadores. */
-		std::set<IObserver*> _observers;
+		std::vector<IObserver*> _observers;
 
 		/** Vector de paquetes recibidos. */
 		std::vector<Net::CPaquete*> _paquetes;

@@ -62,10 +62,12 @@ namespace Application {
 		CGameState::activate();
 		
 		// Mostramos el menú de selección de personaje
-		
 		_menuVisile = true;
 		// Registramos a este estado como observador de red para que sea notificado
-		_netMgr->addObserver(this);
+		// siempre y cuando acabemos de entrar en el modo online y no estuvieramos
+		// previamente en un estado online
+		if( !Net::CManager::getSingletonPtr()->imClient() )
+			_netMgr->addObserver(this);
 
 		// Nos registramos como observadores del teclado
 		Input::CInputManager::getSingletonPtr()->addKeyListener(this);
@@ -96,10 +98,10 @@ namespace Application {
 		// Indicamos que ya no queremos ser notificados de la pulsación de teclas
 		Input::CInputManager::getSingletonPtr()->removeKeyListener(this);
 
-		CGameState::deactivate();
-
 		Logic::CScoreboard::getSingletonPtr()->unLoadScoreboard();
 		//GUI::CServer::getSingletonPtr()->destroyLayout(_seleccion);
+
+		CGameState::deactivate();
 	} // deactivate
 
 	//______________________________________________________________________________

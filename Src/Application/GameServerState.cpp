@@ -42,16 +42,18 @@ namespace Application {
 		_playersMgr = Logic::CGameNetPlayersManager::getSingletonPtr();
 		_map = Logic::CServer::getSingletonPtr()->getMap();
 
-		// Nos registramos como observadores de la red para ser notificados
-		_netMgr->addObserver(this);
+		if( !Net::CManager::getSingletonPtr()->imServer() ) {
+			// Nos registramos como observadores de la red para ser notificados
+			_netMgr->addObserver(this);
+
+			// Seteamos el máximo de jugadores a 12 (8 players + 4 espectadores)
+			// @deprecated Deberiamos tomar el valor de flash en lobbyServer y
+			// tomar el numero de jugadores que haya en el gestor de jugadores
+			_netMgr->activateAsServer(1234, 12);
+		}
 
 		// Nos registramos como observadores del teclado
 		Input::CInputManager::getSingletonPtr()->addKeyListener(this);
-
-		// Seteamos el máximo de jugadores a 12 (8 players + 4 espectadores)
-		// @deprecated Deberiamos tomar el valor de flash en lobbyServer y
-		// tomar el numero de jugadores que haya en el gestor de jugadores
-		_netMgr->activateAsServer(1234, 12);
 
 		_worldState = Logic::CWorldState::getSingletonPtr();
 	} // activate
@@ -59,11 +61,6 @@ namespace Application {
 	//______________________________________________________________________________
 
 	void CGameServerState::deactivate() {
-		// Solicitamos dejar de ser notificados
-		_netMgr->removeObserver(this);
-		// Nos desconectamos
-		_netMgr->deactivateNetwork();
-
 		Input::CInputManager::getSingletonPtr()->removeKeyListener(this);
 
 		_playersMgr = NULL;
@@ -337,6 +334,15 @@ namespace Application {
 
 	//______________________________________________________________________________
 
+	void CGameServerState::disconnect() {
+		// Solicitamos dejar de ser notificados
+		_netMgr->removeObserver(this);
+		// Nos desconectamos
+		_netMgr->deactivateNetwork();
+	}
+
+	//______________________________________________________________________________
+
 	bool CGameServerState::keyPressed(Input::TKey key) {
 		return CGameState::keyPressed(key);
 	} // keyPressed
@@ -344,7 +350,19 @@ namespace Application {
 	//______________________________________________________________________________
 
 	bool CGameServerState::keyReleased(Input::TKey key) {
-		return CGameState::keyReleased(key);
+		switch(key.keyId) {
+			case Input::Key::ESCAPE: {
+				// De momento salimos de la partida, pero esto deberia
+				// descubrir un menu de opciones
+				disconnect();
+				_app->setState("menu");
+				break;
+			}
+			default: {
+				return false;
+			}
+		}
+		return true;
 	} // keyReleased
 
 	//______________________________________________________________________________
