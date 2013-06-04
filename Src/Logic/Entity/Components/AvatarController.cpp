@@ -48,7 +48,9 @@ namespace Logic {
 
 	CAvatarController::CAvatarController() : _gravity(Vector3::ZERO),
 											 _touchingGround(false),
-											 _cameraFX(NULL) {
+											 _cameraFX(NULL),
+											 _physicController(0),
+											 _momentum(Vector3::ZERO){
 		
 		// Inicializamos el array que contiene los vectores
 		// de cada tecla de movimiento
@@ -292,13 +294,13 @@ namespace Logic {
 		///////////////////////////////////////////////////////////////
 		////////////////////////// DEBUG MODE /////////////////////////
 		///////////////////////////////////////////////////////////////
-		if(_displacementDir != Vector3::ZERO){
+		/*if(_displacementDir != Vector3::ZERO){
 			++ticks;
 		}else{
 			if(ticks>0)
 				std::cout << "el avatar controller se ha ejecutado " << ticks << " ticks" << std::endl;
 			ticks=0;
-		}
+		}*/
 		///////////////////////////////////////////////////////////////
 		///////////////////////////////////////////////////////////////
 

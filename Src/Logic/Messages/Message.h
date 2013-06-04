@@ -173,7 +173,8 @@ namespace Logic {
 	*/
 	class CMessage { // Abstracta
 	public:
-		TMessageType getMessageType();
+		inline TMessageType getMessageType() { return _type; }
+
 		// Inicializa los mensajes a los valores por defecto
 		CMessage(TMessageType t);
 		virtual ~CMessage();

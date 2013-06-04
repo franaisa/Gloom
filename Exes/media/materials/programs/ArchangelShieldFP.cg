@@ -31,12 +31,12 @@ float4 shield_ps(const PsInput psIn) : COLOR {
 	// obtengo la distancia la pantalla, exagero el valor con un *2
 	float dist = sqrt( dir.x*dir.x + dir.y*dir.y )*2;
 	
-	float1 aux = (1-(dist-0.3))*strength;
+	float aux = (1-(dist-0.3))*strength;
 	
 	// saturo para obtener un valor entre 0 y 1
 	//saturate(aux);
 	//MENTIRA!! el saturate no me devuelve el valor entre 0 y 1, me da otros valores.
-	float1 miSaturate = max(0.0, min(aux,1.0));
+	float miSaturate = max(0.0, min(aux,1.0));
 	
 	//asi que me hago lo del minimo para que sea 1 como mucho.
 	shield = lerp(tempShield, float4(1,1,1,0), miSaturate);

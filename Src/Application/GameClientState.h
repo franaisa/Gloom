@@ -117,13 +117,12 @@ namespace Application {
 		//______________________________________________________________________________
 
 		/**
-		Se dispara cuando se recibe un paquete de desconexion. En el caso del cliente
-		este metodo no deberia dispararse nunca.
+		Se dispara cuando se recibe un paquete de desconexion.
 
 		@see Net::CManager::IObserver
 		@param packet Paquete de desconexion recibido.
 		*/
-		virtual void disconnectionPacketReceived(Net::CPaquete* packet) { /* Los clientes no reciben este tipo de mensajes */ }
+		virtual void disconnectionPacketReceived(Net::CPaquete* packet);
 
 		// Métodos de CKeyboardListener
 		

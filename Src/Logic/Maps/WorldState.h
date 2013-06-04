@@ -54,7 +54,7 @@ comunicarse con esta clase para introducir el cambio que se ha producido.
 		*/
 		class IObserver {
 		public:
-			virtual void gameEventOcurred(std::shared_ptr<Logic::CMessage> msg) = 0;
+			virtual void gameEventOcurred(CEntity* emitter, const std::shared_ptr<Logic::CMessage>& msg) = 0;
 		};
 
 		/**
@@ -104,6 +104,8 @@ comunicarse con esta clase para introducir el cambio que se ha producido.
 		void deleteEntity(CEntity* entity);
 
 		void addChange(CEntity* entity, std::shared_ptr<CMessage> message);
+
+		void deleteChange(CEntity* entity, unsigned int messageType);
 
 		void clearEntities();
 

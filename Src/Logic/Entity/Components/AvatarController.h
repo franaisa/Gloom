@@ -353,8 +353,6 @@ namespace Logic {
 		/** Número máximo de comandos de movimiento. */
 		static const int MAX_MOVEMENT_COMMANDS = Control::CROUCH;
 
-		unsigned int ticks;
-
 	}; // class CAvatarController
 
 	REG_FACTORY(CAvatarController);

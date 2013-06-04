@@ -69,8 +69,13 @@ namespace Logic
 
 				std::string nameWeapon = (aux.str());
 				//creamos la entidad gráfica del arma para poder atacharla al monigote
+				//HACK MEGA BASTISIMO LOOOOOOL
+				//Explicacion del hack, si no atacho todas las armas al bone, tiene pinta de que
+				//ogre coge y me las borra para optimizar, por lo que al atacharlas luego no existen T-T
+				Graphics::CEntity* entity = new Graphics::CEntity(nameWeapon,entityInfo->getStringAttribute(weapon+"Model"));
 
-				_weapons[i] = new Graphics::CEntity(nameWeapon,entityInfo->getStringAttribute(weapon+"Model")); 
+				_animatedGraphicsEntity->attachWeapon(*entity, _entity->getEntityID());
+				_weapons[i] =  entity;
 			}
 
 		if(!_weapons)

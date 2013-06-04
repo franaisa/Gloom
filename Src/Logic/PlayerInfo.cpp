@@ -20,9 +20,10 @@ Contiene la implementación de la clase PlayerInfo para el proyecto de logica.
 
 namespace Logic {
 
-	CPlayerInfo::CPlayerInfo(Net::NetID netId) : _netId(netId), 
-											     _rank(0),
+	CPlayerInfo::CPlayerInfo(Net::NetID netId) : _netId(netId),
 												 _entityId(0),
+												 _frags(0),
+												 _team(Team::eBLUE_TEAM),
 												 _entityIdInitialized(false),
 												 _isPlaying(false) {
 		
@@ -31,9 +32,10 @@ namespace Logic {
 
 	//______________________________________________________________________________
 
-	CPlayerInfo::CPlayerInfo(Net::NetID netId, const std::string& nickname) : _netId(netId), 
-																			  _rank(0),
+	CPlayerInfo::CPlayerInfo(Net::NetID netId, const std::string& nickname) : _netId(netId),
 																			  _entityId(0),
+																			  _frags(0),
+																			  _team(Team::eBLUE_TEAM),
 																			  _name(nickname),
 																			  _entityIdInitialized(false),
 																			  _isPlaying(false) {
@@ -43,14 +45,13 @@ namespace Logic {
 
 	//______________________________________________________________________________
 
-	CPlayerInfo::CPlayerInfo(const CPlayerInfo& rhs) : _name(rhs._name), 
-													   _mesh(rhs._mesh), 
-													   _clan(rhs._clan), 
-													   _rank(rhs._rank),
+	CPlayerInfo::CPlayerInfo(const CPlayerInfo& rhs) : _name(rhs._name),
 													   _entityId(rhs._entityId),
 													   _entityIdInitialized(rhs._entityIdInitialized),
 													   _netId(rhs._netId),
-													   _isPlaying(rhs._isPlaying) {
+													   _isPlaying(rhs._isPlaying),
+													   _frags(rhs._frags),
+													   _team(rhs._team) {
 		// No hay memoria dinamica que inicializar
 	}
 
@@ -59,9 +60,8 @@ namespace Logic {
 	CPlayerInfo& CPlayerInfo::operator=(const CPlayerInfo& rhs) {
 		if(this != &rhs) {
 			_name = rhs._name;
-			_mesh = rhs._mesh;
-			_clan = rhs._clan;
-			_rank = rhs._rank;
+			_frags = rhs._frags;
+			_team = rhs._team;
 			_entityId = rhs._entityId;
 			_entityIdInitialized = rhs._entityIdInitialized;
 			_netId = rhs._netId;
@@ -75,9 +75,8 @@ namespace Logic {
 
 	std::ostream& operator<<(std::ostream& out, const CPlayerInfo& playerInfo) {
 	   out << "Nombre = " << playerInfo._name << std::endl;
-	   out << "Mesh = " << playerInfo._mesh << std::endl;
-	   out << "Clan = " << playerInfo._clan << std::endl;
-	   out << "Rank = " << playerInfo._rank << std::endl;
+	   out << "Frags = " << playerInfo._frags << std::endl;
+	   out << "Team = " << (playerInfo._team == CPlayerInfo::Team::eBLUE_TEAM ? "blue" : "red") << std::endl;
 	   out << "EntityID = " << playerInfo._entityId << std::endl;
 	   out << "EntityIDInitialized = " << (playerInfo._entityIdInitialized ? "true" : "false") << std::endl;
 	   out << "NetID = " << playerInfo._netId << std::endl;
@@ -103,12 +102,6 @@ namespace Logic {
 
 	//______________________________________________________________________________
 
-	std::string CPlayerInfo::getMesh() {
-		return _mesh;
-	}
-
-	//______________________________________________________________________________
-
 	std::pair<TEntityID, bool> CPlayerInfo::getEntityId() {
 		return std::pair<TEntityID, bool>(_entityId, _entityIdInitialized);
 	}
@@ -129,12 +122,6 @@ namespace Logic {
 	
 	void CPlayerInfo::setName(const std::string& name) {
 		this->_name = name;
-	}
-
-	//______________________________________________________________________________
-		
-	void CPlayerInfo::setMesh(const std::string& mesh) {
-		this->_mesh = mesh;
 	}
 
 	//______________________________________________________________________________

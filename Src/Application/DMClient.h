@@ -49,6 +49,10 @@ namespace Application {
 		// =======================================================================
 
 
+		virtual void tick(unsigned int msecs);
+
+		void dataPacketReceived(Net::CPaquete* packet);
+
 		/**
 		Función llamada por la aplicación cuando se activa
 		el estado.

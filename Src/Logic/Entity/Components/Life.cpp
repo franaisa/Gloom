@@ -27,6 +27,7 @@ que controla la vida de un personaje.
 #include "Logic/PlayerInfo.h"
 #include "Logic/GameNetPlayersManager.h"
 #include "Logic/GameNetMsgManager.h"
+#include "Logic/Maps/WorldState.h"
 
 // Mensajes
 #include "Logic/Messages/MessageDamaged.h"
@@ -131,7 +132,7 @@ namespace Logic {
 			case Message::DAMAGED: {
 				std::shared_ptr<CMessageDamaged> dmgMsg = std::static_pointer_cast<CMessageDamaged>(message);
 				damaged( dmgMsg->getDamage(), dmgMsg->getEnemy() );
-				std::cout << "soy " << _entity->getName() << " y me hace " << dmgMsg->getDamage() << " el enemigo " << dmgMsg->getEnemy()->getName() << std::endl;
+				//std::cout << "soy " << _entity->getName() << " y me hace " << dmgMsg->getDamage() << " el enemigo " << dmgMsg->getEnemy()->getName() << std::endl;
 				break;
 			}
 			case Message::ADD_LIFE: {
@@ -286,6 +287,9 @@ namespace Logic {
 		playerDeadMsg->setKiller(enemy->getEntityID());
 		_entity->emitMessage(playerDeadMsg);
 
+		// Informamos al estado del mundo de que se ha producido una muerte
+		Logic::CWorldState::getSingletonPtr()->addChange(_entity, playerDeadMsg);
+
 		// Mensaje para que la camara enfoque al jugador que nos ha matado
 		// En el caso de la red, hay que enviar un mensaje especial para el cliente
 		// Siempre y cuando no haya muerto un remotePlayer/enemigo (debug singlePlayer)
@@ -300,7 +304,6 @@ namespace Logic {
 		// Enviamos el mensaje por la red
 		if( Net::CManager::getSingletonPtr()->imServer() )
 			Logic::CGameNetMsgManager::getSingletonPtr()->sendMessageToOne(cteMsg, camera->getEntityID(), _entity->getEntityID());
-
 	}
 
 	//________________________________________________________________________

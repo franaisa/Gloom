@@ -52,13 +52,13 @@ namespace Application {
 		// @deprecated Deberiamos tomar el valor de flash en lobbyServer y
 		// tomar el numero de jugadores que haya en el gestor de jugadores
 		_netMgr->activateAsServer(1234, 12);
+
+		_worldState = Logic::CWorldState::getSingletonPtr();
 	} // activate
 
 	//______________________________________________________________________________
 
 	void CGameServerState::deactivate() {
-		CGameState::deactivate();
-		
 		// Solicitamos dejar de ser notificados
 		_netMgr->removeObserver(this);
 		// Nos desconectamos
@@ -69,6 +69,9 @@ namespace Application {
 		_playersMgr = NULL;
 		_netMgr = NULL;
 		_map = NULL;
+		_worldState = NULL;
+
+		CGameState::deactivate();
 	} // deactivate
 
 	//______________________________________________________________________________

@@ -131,15 +131,19 @@ build.xml
 !/Projects/Hikari/include
 !/Projects/Hikari/source
 
-# We are going to go through the same process to include the folder with the map.txt and blueprint.txt
 # Clean first level
 /Exes/*
 
 # Bring back media
 !/Exes/media/
 
-# Bring resources.cfg
+# We want resource config files, so do NOT ignore them!
 !/Exes/resources.cfg
+!/Exes/plugins.cfg
+!/Exes/plugins_d.cfg
+
+# HHFX particles
+!/Exes/media/packs/SampleParticlesOgre/
 
 # Profile files
 *.psess

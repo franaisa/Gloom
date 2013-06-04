@@ -142,7 +142,7 @@ namespace Input
 		/**
 		Enumerado con las acciones de movimiento
 		*/
-		enum E_MOVE {LEFT, RIGHT, WALK, WALKBACK };
+		enum E_MOVE {LEFT, RIGHT, WALK, WALKBACK, NONE };
 
 	protected:
 
