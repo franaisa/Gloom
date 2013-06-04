@@ -49,9 +49,6 @@ namespace Logic
 		*/
 		virtual void process(const std::shared_ptr<CMessage>& message);
 
-		
-	
-
 	protected:
 
 		/**
