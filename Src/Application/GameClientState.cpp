@@ -66,8 +66,7 @@ namespace Application {
 		// Registramos a este estado como observador de red para que sea notificado
 		// siempre y cuando acabemos de entrar en el modo online y no estuvieramos
 		// previamente en un estado online
-		if( !Net::CManager::getSingletonPtr()->imClient() )
-			_netMgr->addObserver(this);
+		_netMgr->addObserver(this);
 
 		// Nos registramos como observadores del teclado
 		Input::CInputManager::getSingletonPtr()->addKeyListener(this);
@@ -252,7 +251,7 @@ namespace Application {
 	//______________________________________________________________________________
 
 	void CGameClientState::disconnectionPacketReceived(Net::CPaquete* packet) {
-		std::cout << "Conexion con el servidor perdida" << std::endl;
+		std::cout << "NETWORK: Server is offline" << std::endl;
 		disconnect();
 		_app->setState("menu");
 	}

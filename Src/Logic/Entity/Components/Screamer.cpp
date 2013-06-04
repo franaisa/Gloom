@@ -181,9 +181,9 @@ namespace Logic {
 
 		// @deprectaed De momento se hace esto en el activate para darle
 		// una textura distinta a cada clase.
-		std::shared_ptr<CMessageChangeMaterial> materialMsg = std::make_shared<CMessageChangeMaterial>();
+		/*std::shared_ptr<CMessageChangeMaterial> materialMsg = std::make_shared<CMessageChangeMaterial>();
 		materialMsg->setMaterialName(_materialName);
-		_entity->emitMessage(materialMsg);
+		_entity->emitMessage(materialMsg);*/
 
 		_secondarySkillIsActive = false;
 		_currentScreamerShield = _screamerShieldThreshold;
