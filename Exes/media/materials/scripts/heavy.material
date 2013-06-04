@@ -11,7 +11,7 @@ material Material#35_OgreMax
 			texture_unit Map#8
 			{
 				texture heavy_head.tga
-				filtering linear linear linear
+				filtering trilinear
 			}
 		}
 
@@ -34,7 +34,7 @@ material Material#36_OgreMax
 			texture_unit Map#11
 			{
 				texture eyeball_r.tga
-				filtering linear linear linear
+				filtering trilinear
 			}
 		}
 
@@ -56,8 +56,8 @@ material Material#37_OgreMax
 
 			texture_unit Map#14
 			{
-				texture eyeball_l.tga
-				filtering linear linear linear
+				texture eyeball_r.tga
+				filtering trilinear
 			}
 		}
 
@@ -80,7 +80,7 @@ material Material#38_OgreMax
 			texture_unit Map#17
 			{
 				texture hvyweapon_red.tga
-				filtering linear linear linear
+				filtering trilinear
 			}
 		}
 
@@ -103,7 +103,7 @@ material Material#49_OgreMax
 			texture_unit Map#20
 			{
 				texture hvyweapon_red.tga
-				filtering linear linear linear
+				filtering trilinear
 			}
 		}
 
