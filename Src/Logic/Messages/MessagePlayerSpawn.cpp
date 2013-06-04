@@ -50,7 +50,7 @@ namespace Logic {
 	//________________________________________________________________________
 
 	void CMessagePlayerSpawn::deserialize(Net::CBuffer& buffer) {
-		buffer.serialize(_position);
-		buffer.serialize(_orientation);
+		buffer.deserialize(_position);
+		buffer.deserialize(_orientation);
 	}
 };
