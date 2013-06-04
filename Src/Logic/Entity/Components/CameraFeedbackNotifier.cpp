@@ -228,10 +228,9 @@ namespace Logic {
 		//OJO HAY QUE REVISAR ESTO
 		//DICE QUE OBTIENE HORIZONTAL SOLO CUANDO TMB DEVUELVE ALTURA
 		if(_strafingDir == 0) {
-			Matrix4 transform;
-			transform.makeTransform(_entity->getPosition(),Vector3::UNIT_SCALE,_entity->getOrientation());
-			Math::yaw(Math::HALF_PI, transform);
-			Vector3 horizontal = Math::getDirection(transform);
+			Quaternion yaw(_entity->getYaw());
+			Math::rotate(Vector3::UNIT_Y,Ogre::Radian(Math::HALF_PI),yaw);
+			Vector3 horizontal = yaw * Vector3::NEGATIVE_UNIT_Z;
 
 			_walkAnim.currentHorizontalPos += _walkAnim.horizontalSpeed * msecs;
 			if(_walkAnim.currentHorizontalPos > ((2 * Math::PI) + Math::HALF_PI)) _walkAnim.currentHorizontalPos = Math::HALF_PI;

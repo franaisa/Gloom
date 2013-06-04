@@ -266,7 +266,7 @@ namespace Logic {
 		// Mediante trigonometria basica sacamos el angulo que forma el desplazamiento
 		// que queremos llevar a cabo
 		float displacementYaw = asin(direction.normalisedCopy().x);
-		// Obtenemos una copia de la matriz de transformación del personaje
+		// Obtenemos una copia de la orientacion del personaje
 		Quaternion characterQuat = _entity->getOrientation();
 		// Si estamos andando hacia atras, invertimos el giro
 		if(direction.z < 0) displacementYaw *= -1;

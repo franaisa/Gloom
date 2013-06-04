@@ -103,9 +103,10 @@ namespace Logic {
 			_orientation=_yawOrientation*_pitchOrientation*_rollOrientation;
 		}
 
-		if(entityInfo->hasAttribute("isPlayer"))
+		if(entityInfo->hasAttribute("isPlayer")){
 			_isPlayer = entityInfo->getBoolAttribute("isPlayer");
-		
+
+		}
 
 		// Inicializamos los componentes
 		auto it = _components.begin();

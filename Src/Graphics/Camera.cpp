@@ -104,8 +104,7 @@ namespace Graphics
 	//--------------------------------------------------------
 
 	void CCamera::rollCamera(float fRadian){
-		Ogre::Radian rad(fRadian);
-		_camera->roll(rad);
+		_camera->roll(Ogre::Radian(fRadian));
 	}
 
 	//--------------------------------------------------------

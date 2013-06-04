@@ -138,10 +138,14 @@ namespace Logic
 		_graphicsCamera->rollCamera( (-1 * _currentRoll) + radians );
 		_currentRoll = radians;
 	}
+	
+	//---------------------------------------------------------
 
 	float CCamera::getRoll() {
 		return _currentRoll;
 	}
+
+	//---------------------------------------------------------
 
 	void CCamera::setTargetEnemy(CEntity* enemy){
 		
@@ -162,6 +166,8 @@ namespace Logic
 	Vector3 CCamera::getPosition() const {
 		return _graphicsCamera->getCameraPosition();
 	}
+
+	//---------------------------------------------------------
 
 	Quaternion CCamera::getOrientation() const {
 		return _graphicsCamera->getCameraOrientation();
