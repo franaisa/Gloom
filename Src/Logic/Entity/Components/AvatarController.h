@@ -48,7 +48,7 @@ namespace Logic {
 	@author Francisco Aisa García
 	@date Abril, 2013
 	*/
-
+	
 	class CAvatarController : public IComponent {
 		DEC_FACTORY(CAvatarController);
 	public:

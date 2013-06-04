@@ -112,7 +112,7 @@ Map = {
 		model = "rocketLauncher.mesh",
 		id = "weapon",
 		weaponType = 4,
-		reward = 5,
+		reward = 25,
 		respawnTime = 5,
 	},
 	

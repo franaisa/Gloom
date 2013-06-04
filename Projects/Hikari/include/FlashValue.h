@@ -22,9 +22,9 @@
 #ifndef __FlashValue_H__
 #define __FlashValue_H__
 
-#include "Ogre.h"
 #include "HikariPlatform.h"
 #include <vector>
+#include <Ogre.h>
 
 namespace Hikari {
 

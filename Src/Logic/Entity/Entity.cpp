@@ -146,6 +146,8 @@ namespace Logic {
 		_activated = true;
 
 		for(; it != _components.end(); ++it) {
+			if(it->second.componentPtr->isActivated())
+				continue;
 			it->second.componentPtr->activate();
 			_activated = it->second.componentPtr->isActivated() && _activated;
 		}

@@ -50,7 +50,9 @@ namespace Logic {
 											 _touchingGround(false),
 											 _cameraFX(NULL),
 											 _physicController(0),
-											 _momentum(Vector3::ZERO){
+											 _momentum(Vector3::ZERO),
+											 _displacementDir(Vector3::ZERO),
+											 _dodgeForce(Vector3::ZERO){
 		
 		// Inicializamos el array que contiene los vectores
 		// de cada tecla de movimiento
