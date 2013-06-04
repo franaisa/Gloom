@@ -19,6 +19,7 @@ mover al jugador.
 #include "Logic/Entity/Components/AvatarController.h"
 #include "Logic/Entity/Components/WeaponsManager.h"
 #include "Logic/Entity/Components/ArrayGraphics.h"
+#include "Logic/Messages/MessageHudDebugData.h"
 
 #include "Logic/Messages/MessageChangeWeapon.h"
 
@@ -160,6 +161,12 @@ namespace Input {
 				//return true;
 			}
 			_controlledAvatar->emitMessage(m);
+
+			std::shared_ptr<Logic::CMessageHudDebugData> hud = std::make_shared<Logic::CMessageHudDebugData>();
+			hud->setKey("key");
+			hud->setValue(key.keyId);
+			_controlledAvatar->emitMessage(hud);
+
 			return true;
 		}
 		return true;

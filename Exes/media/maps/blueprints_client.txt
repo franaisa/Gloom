@@ -16,7 +16,7 @@ Grenade CPhysicDynamicEntity CGrenadeControllerClient CParticle CGraphics CAudio
 GrenadeExplotion CGrenadeControllerClient CParticle CGraphics CAudio
 Rocket CPhysicDynamicEntity CRocketControllerClient CParticle CGraphics CAudio
 RocketExplotion CRocketControllerClient CParticle CGraphics CAudio
-Lava CLava CGraphics
+Lava CGraphics
 Elevator CPhysicDynamicEntity CElevator CGraphics
 ElevatorTrigger CPhysicDynamicEntity CElevatorTrigger
 SpotLight CLight CGraphics
