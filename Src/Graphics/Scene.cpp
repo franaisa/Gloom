@@ -153,9 +153,9 @@ namespace Graphics
 
 			_poolParticle->activate();
 			
-			HHFX::getSingletonPtr()->setSceneMgr(_sceneMgr);
-			HHFX::getSingletonPtr()->setCamera(_camera->getOgreCamera());
-			HHFX::getSingletonPtr()->activate();
+			//HHFX::getSingletonPtr()->setSceneMgr(_sceneMgr);
+			//HHFX::getSingletonPtr()->setCamera(_camera->getOgreCamera());
+			//HHFX::getSingletonPtr()->activate();
 		}
 		_sceneMgr->getRootSceneNode()->setVisible(true);
 	} // activate
@@ -178,7 +178,7 @@ namespace Graphics
 
 		if(_name != "dummy_scene"){
 			
-			HHFX::getSingletonPtr()->deactivate();
+			//HHFX::getSingletonPtr()->deactivate();
 		}
 
 	} // deactivate

@@ -243,6 +243,14 @@ namespace Application {
 
 	//______________________________________________________________________________
 
+	void CGameClientState::disconnectionPacketReceived(Net::CPaquete* packet) {
+		std::cout << "Conexion con el servidor perdida" << std::endl;
+		//disconnect();
+		_app->setState("menu");
+	}
+
+	//______________________________________________________________________________
+
 	bool CGameClientState::keyPressed(Input::TKey key) {
 		CGameState::keyPressed(key);
 		

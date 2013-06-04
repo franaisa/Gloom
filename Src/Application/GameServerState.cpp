@@ -59,8 +59,6 @@ namespace Application {
 	//______________________________________________________________________________
 
 	void CGameServerState::deactivate() {
-		CGameState::deactivate();
-		
 		// Solicitamos dejar de ser notificados
 		_netMgr->removeObserver(this);
 		// Nos desconectamos
@@ -72,6 +70,8 @@ namespace Application {
 		_netMgr = NULL;
 		_map = NULL;
 		_worldState = NULL;
+
+		CGameState::deactivate();
 	} // deactivate
 
 	//______________________________________________________________________________

@@ -144,12 +144,16 @@ namespace Application {
 
 	private:
 
+		void endGame();
+
 		bool isPlayer(Logic::CEntity* entity);
 
 		int _time;
-		unsigned int _frags;
 		unsigned int _fragLimit;
 		bool _voteKick;
+		bool _voteMap;
+		bool _inEndGame;
+		bool _autoChangeMap;
 
 	}; // CDMServer
 
