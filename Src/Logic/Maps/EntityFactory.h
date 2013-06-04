@@ -386,12 +386,13 @@ namespace Logic {
 		/**
 		Tipo lista de CEntity donde guardaremos los pendientes de borrar.
 		*/
-		typedef std::list<Logic::CEntity*> TEntityList;
+		typedef std::set<Logic::CEntity*> TEntitySet;
 
 		/**
-		Lista de objetos pendientes de borrar.
+		Lista de objetos pendientes de borrar. Implementado como un set
+		para evitar el problema de que se reciban varias peticiones.
 		*/
-		TEntityList _pendingEntities;
+		TEntitySet _pendingEntities;
 
 		/**
 		Tipo tabla para almacenar entidades blueprint por nombre.
@@ -401,7 +402,7 @@ namespace Logic {
 		/**
 		Tabla donde se almacenan los arquetipos de las entidades.
 		*/
-		std::map<std::string,Map::CEntity *> _archetypes;
+		std::map<std::string, Map::CEntity *> _archetypes;
 		
 		/**
 		Tabla donde se almacenan las entidades blueprint por nombre.
