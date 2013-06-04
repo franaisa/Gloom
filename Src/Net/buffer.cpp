@@ -216,9 +216,9 @@ namespace Net {
 	//__________________________________________________________________
 
 	void CBuffer::serialize(const Quaternion& data) {	
-		serialize(data.getYaw().valueAngleUnits());
-		serialize(data.getPitch().valueAngleUnits());
-		serialize(data.getRoll().valueAngleUnits());
+		serialize(data.getYaw().valueRadians());
+		serialize(data.getPitch().valueRadians());
+		serialize(data.getRoll().valueRadians());
 	}
 
 	//__________________________________________________________________
@@ -231,11 +231,11 @@ namespace Net {
 		read(&pitch, sizeof(pitch));
 		read(&roll, sizeof(roll));
 		
-		Quaternion y(Ogre::Radian(Math::fromDegreesToRadians(yaw)),Vector3::UNIT_Y);
-		Quaternion p(Ogre::Radian(Math::fromDegreesToRadians(pitch)),Vector3::UNIT_X);
-		Quaternion r(Ogre::Radian(Math::fromDegreesToRadians(roll)),Vector3::UNIT_Z);
+		Quaternion y(Ogre::Radian(yaw),Vector3::UNIT_Y);
+		Quaternion p(Ogre::Radian(pitch),Vector3::UNIT_X);
+		Quaternion r(Ogre::Radian(roll),Vector3::UNIT_Z);
 
-		data=yaw*pitch*roll;
+		data=y*p*r;
 	}
 
 	//__________________________________________________________________
