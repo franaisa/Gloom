@@ -44,15 +44,15 @@ namespace Application {
 
 	
 	bool CGameClientState::init(){
+		
+		_menuVisile = false;
+		_netMgr = Net::CManager::getSingletonPtr();
 		// Iniciamos el menu de seleccion de personaje
 		_seleccion = GUI::CServer::getSingletonPtr()->addLayout("seleccion", Hikari::Position(Hikari::Center));
 		_seleccion->load("SeleccionPersonaje.swf");
 		_seleccion->bind("selected",Hikari::FlashDelegate(this, &CGameClientState::classSelected));
 		_seleccion->hide();
 		_seleccion->setTransparent(true, true);
-		_menuVisile = false;
-		_netMgr = Net::CManager::getSingletonPtr();
-
 		return true;
 	}
 
@@ -103,6 +103,7 @@ namespace Application {
 		CGameState::deactivate();
 
 		Logic::CScoreboard::getSingletonPtr()->unLoadScoreboard();
+		//GUI::CServer::getSingletonPtr()->destroyLayout(_seleccion);
 	} // deactivate
 
 	//______________________________________________________________________________

@@ -170,6 +170,7 @@ namespace Logic {
 			_map->deactivate();
 			_gameSpawnManager->deactivate();
 			_gameNetMsgManager->deactivate();
+			_guiManager->deactivate();
 			delete _map;
 			_map = 0;
 		}
