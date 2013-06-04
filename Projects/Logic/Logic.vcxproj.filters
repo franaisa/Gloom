@@ -595,6 +595,9 @@
     <ClCompile Include="..\..\Src\Logic\Entity\Components\MiniGunAmmo.cpp">
       <Filter>Entity\Components\Weapons\Ammunition\Source</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Messages\MessageSpawnIsLive.cpp">
+      <Filter>Messages\Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Src\Logic\Maps\ComponentFactory.h">
@@ -1079,6 +1082,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Entity\Components\MiniGunAmmo.h">
       <Filter>Entity\Components\Weapons\Ammunition\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Messages\MessageSpawnIsLive.h">
+      <Filter>Messages\Header</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

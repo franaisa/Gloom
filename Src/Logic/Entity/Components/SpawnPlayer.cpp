@@ -143,6 +143,7 @@ namespace Logic
 		else if(_reactivePhysicSimulation){
 			_entity->getComponent<CPhysicController>("CPhysicController")->activateSimulation();
 			_reactivePhysicSimulation=false;
+			putToSleep();
 		}
 	} // tick
 	//---------------------------------------------------------

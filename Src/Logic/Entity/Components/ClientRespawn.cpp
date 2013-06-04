@@ -21,6 +21,7 @@
 #include "Logic/Maps/GUIKillersMessage.h"
 #include "../../GameNetPlayersManager.h"
 #include "Logic/Messages/MessageHudSpawn.h"
+#include "Logic/Messages/MessageSpawnIsLive.h"
 
 #include <math.h>
 
@@ -33,8 +34,11 @@ namespace Logic  {
 	//________________________________________________________________________
 
 	bool CClientRespawn::accept(const std::shared_ptr<CMessage>& message) {
-		return message->getMessageType() == Message::PLAYER_DEAD ||
-			   message->getMessageType() == Message::PLAYER_SPAWN;
+		TMessageType msgType = message->getMessageType();
+
+		return msgType == Message::PLAYER_DEAD		||
+			   msgType == Message::PLAYER_SPAWN		||
+			   msgType == Message::SPAWN_IS_LIVE;
 		//return false;
 	} // accept
 
@@ -42,38 +46,43 @@ namespace Logic  {
 
 	void CClientRespawn::process(const std::shared_ptr<CMessage>& message) {
 		switch( message->getMessageType() ) {
-		case Message::PLAYER_DEAD:{
-			// El servidor nos notifica de que hemos muerto, desactivamos
-			// la entidad al completo y su simulacion fisica para que no
-			// podamos colisionar con la cápsula del jugador.
+			case Message::PLAYER_DEAD:{
+				// El servidor nos notifica de que hemos muerto, desactivamos
+				// la entidad al completo y su simulacion fisica para que no
+				// podamos colisionar con la cápsula del jugador.
 
-			// Desactivamos todos los componentes menos estos
-			std::set<std::string> exceptionList;
-			exceptionList.insert( std::string("CClientRespawn") );
-			exceptionList.insert( std::string("CAnimatedGraphics") );
-			exceptionList.insert( std::string("CHudOverlay") );
-			exceptionList.insert( std::string("CNetConnector") );
-			exceptionList.insert( std::string("CAudio") );
+				// Desactivamos todos los componentes menos estos
+				std::set<std::string> exceptionList;
+				exceptionList.insert( std::string("CClientRespawn") );
+				exceptionList.insert( std::string("CAnimatedGraphics") );
+				exceptionList.insert( std::string("CHudOverlay") );
+				exceptionList.insert( std::string("CNetConnector") );
+				exceptionList.insert( std::string("CAudio") );
 
-			// En caso de estar simulando fisica en el cliente, desactivamos
-			// la cápsula.
-			CPhysicController* controllerComponent = _entity->getComponent<CPhysicController>("CPhysicController");
-			if(controllerComponent != NULL) {
-				controllerComponent->deactivateSimulation();
-			}
-			_entity->deactivateAllComponentsExcept(exceptionList);
+				// En caso de estar simulando fisica en el cliente, desactivamos
+				// la cápsula.
+				CPhysicController* controllerComponent = _entity->getComponent<CPhysicController>("CPhysicController");
+				if(controllerComponent != NULL) {
+					controllerComponent->deactivateSimulation();
+				}
+				_entity->deactivateAllComponentsExcept(exceptionList);
 
-			//mostramos en pantalla el mensaje de quien ha matado a quien
-			std::shared_ptr<CMessagePlayerDead> playerDeadMsg = std::static_pointer_cast<CMessagePlayerDead> (message);
-			CEntity* entity = Logic::CServer::getSingletonPtr()->getMap()->getEntityByID(playerDeadMsg->getKiller());
+				//mostramos en pantalla el mensaje de quien ha matado a quien
+				std::shared_ptr<CMessagePlayerDead> playerDeadMsg = std::static_pointer_cast<CMessagePlayerDead> (message);
+				CEntity* entity = Logic::CServer::getSingletonPtr()->getMap()->getEntityByID(playerDeadMsg->getKiller());
 			
-			if(!entity)
+				if(!entity)
+					break;
+
+				updateGUI(entity);
+
 				break;
-
-
-			updateGUI(entity);
-
-			break;
+			}
+			case Message::SPAWN_IS_LIVE: {
+				// El cliente acaba de respawnear, activamos su simulación (un tick después)
+				_entity->getComponent<CPhysicController>("CPhysicController")->activateSimulation();
+				
+				break;
 			}
 			case Message::PLAYER_SPAWN: {
 				// El servidor nos notifica de que debemos respawnear. Activamos
@@ -83,22 +92,21 @@ namespace Logic  {
 				std::shared_ptr<CMessagePlayerSpawn> playerSpawnMsg = std::static_pointer_cast<CMessagePlayerSpawn>(message);
 
 				Matrix4 spawnTransform = playerSpawnMsg->getSpawnTransform();
+				
+				// Colocamos al player en la posicion dada por el manager de spawn del server,
+				// podemos asumir sin problemas que el player tiene capsula
+				_entity->getComponent<CPhysicController>("CPhysicController")->setPhysicPosition( spawnTransform.getTrans() );
 
-				// En caso de estar simulando fisica en el cliente, reactivamos las colisiones
-				// y reposicionamos la capsula donde nos diga el servidor.
-				CPhysicController* controllerComponent = _entity->getComponent<CPhysicController>("CPhysicController");
-				if(controllerComponent != NULL) {
-					// Colocamos al player en la posicion dada por el manager de spawn del server
-					controllerComponent->setPhysicPosition( spawnTransform.getTrans() );
-					// Reactivamos la simulacion
-					controllerComponent->activateSimulation();
+				// Pedimos que se reactive la simulacion en el siguiente tick, ya que si
+				// activasemos la simulacion aqui, se volveria a disparar el trigger antes
+				// de reposicionarnos porque physx lo hace todo en el simulate de un plumazo
+				_entity->emitMessage( std::make_shared<CMessageSpawnIsLive>() );
 
-					// Seteamos la orientacion a la dada por el server
-					Matrix3 spawnOrientation;
-					spawnTransform.extract3x3Matrix( spawnOrientation );
-					_entity->setOrientation(spawnOrientation);
-				}
-			
+				// Seteamos la orientacion a la dada por el server
+				Matrix3 spawnOrientation;
+				spawnTransform.extract3x3Matrix( spawnOrientation );
+				_entity->setOrientation(spawnOrientation);
+
 				// Volvemos a activar todos los componentes
 				_entity->activate();
 
