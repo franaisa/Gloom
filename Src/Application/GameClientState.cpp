@@ -93,10 +93,6 @@ namespace Application {
 	//______________________________________________________________________________
 
 	void CGameClientState::deactivate() {
-		// Indicamos que ya no queremos ser notificados por la red
-		_netMgr->removeObserver(this);
-		// Nos desconectamos
-		_netMgr->deactivateNetwork();
 		// Indicamos que ya no queremos ser notificados de la pulsación de teclas
 		Input::CInputManager::getSingletonPtr()->removeKeyListener(this);
 
@@ -244,9 +240,18 @@ namespace Application {
 
 	//______________________________________________________________________________
 
+	void CGameClientState::disconnect() {
+		// Indicamos que ya no queremos ser notificados por la red
+		_netMgr->removeObserver(this);
+		// Nos desconectamos
+		_netMgr->deactivateNetwork();
+	}
+
+	//______________________________________________________________________________
+
 	void CGameClientState::disconnectionPacketReceived(Net::CPaquete* packet) {
 		std::cout << "Conexion con el servidor perdida" << std::endl;
-		//disconnect();
+		disconnect();
 		_app->setState("menu");
 	}
 
@@ -275,8 +280,16 @@ namespace Application {
 	//______________________________________________________________________________
 
 	bool CGameClientState::keyReleased(Input::TKey key) {
-		CGameState::keyReleased(key);
-
+		switch(key.keyId) {
+			case Input::Key::ESCAPE: {
+				disconnect();
+				_app->setState("menu");
+				break;
+			}
+			default: {
+				return false;
+			}
+		}
 		return true;
 	} // keyReleased
 
@@ -308,8 +321,6 @@ namespace Application {
 		int selectedClass = args.at(0).getNumber();
 		Net::NetMessageType msgType = Net::CLASS_SELECTED;
 		Net::CBuffer msg ( sizeof(msgType) + sizeof(selectedClass) );
-
-
 
  		switch(selectedClass) {
 			case 0:

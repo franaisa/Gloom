@@ -156,19 +156,19 @@ namespace Net {
 			{
 				case Net::CONEXION:
 					connect(paquete->getConexion());
-					for(std::vector<IObserver*>::iterator iter = _observers.begin();iter != _observers.end();++iter)
+					for(auto iter = _observers.begin();iter != _observers.end();++iter)
 						(*iter)->connectionPacketReceived(paquete);
 					break;
 				case Net::DATOS:
 					
 					if(!internalData(paquete)){ // Analiza si trae contenido -> TODO: ver funcion
 						//std::cout << "mensaje recibido:  " <<  _observers.size() << std::endl;
-						for(std::vector<IObserver*>::iterator iter = _observers.begin();iter != _observers.end();++iter)
+						for(auto iter = _observers.begin();iter != _observers.end();++iter)
 							(*iter)->dataPacketReceived(paquete);
 					}
 					break;
 				case Net::DESCONEXION:
-					for(std::vector<IObserver*>::iterator iter = _observers.begin();iter != _observers.end();++iter)
+					for(auto iter = _observers.begin();iter != _observers.end();++iter)
 						(*iter)->disconnectionPacketReceived(paquete);
 					disconnect(paquete->getConexion());
 					//retornar id
@@ -341,19 +341,13 @@ namespace Net {
 	//---------------------------------------------------------
 
 	void CManager::addObserver(IObserver* listener) {
-		_observers.push_back(listener);
+		_observers.insert(listener);
 	} // addObserver
 
 	//---------------------------------------------------------
 
-	void CManager::removeObserver(IObserver* listener)
-	{
-		for(std::vector<IObserver*>::iterator iter = _observers.begin();iter != _observers.end();++iter)
-			if((*iter)==listener)
-			{
-				_observers.erase(iter);
-				break;
-			}
+	void CManager::removeObserver(IObserver* listener) {
+		_observers.erase(listener);
 	} // removeObserver
 
 } // namespace Net

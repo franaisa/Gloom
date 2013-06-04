@@ -186,9 +186,10 @@ namespace Application {
 		virtual bool mouseReleased(const Input::CMouseState &mouseState);
 
 		Hikari::FlashValue classSelected(Hikari::FlashControl* caller, const Hikari::Arguments& args);
-	
 
 	protected:
+
+		void disconnect();
 
 		unsigned int _npings;
 		unsigned int _time;
