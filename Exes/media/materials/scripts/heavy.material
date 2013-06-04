@@ -1,16 +1,17 @@
-material Material#35
+material Material#35_OgreMax
 {
-	technique
+	technique Map#6
 	{
-		pass
+		pass Map#7
 		{
 			ambient 0.588 0.588 0.588 1
 			diffuse 0.588 0.588 0.588 1
 			specular 0 0 0 1 10
 
-			texture_unit
+			texture_unit Map#8
 			{
 				texture heavy_head_red.bmp
+				filtering linear linear linear
 			}
 		}
 
@@ -20,19 +21,20 @@ material Material#35
 
 
 
-material Material#36
+material Material#36_OgreMax
 {
-	technique
+	technique Map#9
 	{
-		pass
+		pass Map#10
 		{
 			ambient 0.588 0.588 0.588 1
 			diffuse 0.588 0.588 0.588 1
 			specular 0 0 0 1 10
 
-			texture_unit
+			texture_unit Map#11
 			{
 				texture eyeball_r.bmp
+				filtering linear linear linear
 			}
 		}
 
@@ -42,19 +44,20 @@ material Material#36
 
 
 
-material Material#37
+material Material#37_OgreMax
 {
-	technique
+	technique Map#12
 	{
-		pass
+		pass Map#13
 		{
 			ambient 0.588 0.588 0.588 1
 			diffuse 0.588 0.588 0.588 1
 			specular 0 0 0 1 10
 
-			texture_unit
+			texture_unit Map#14
 			{
 				texture eyeball_l.bmp
+				filtering linear linear linear
 			}
 		}
 
@@ -64,19 +67,20 @@ material Material#37
 
 
 
-material Material#38
+material Material#38_OgreMax
 {
-	technique
+	technique Map#15
 	{
-		pass
+		pass Map#16
 		{
 			ambient 0.588 0.588 0.588 1
 			diffuse 0.588 0.588 0.588 1
 			specular 0 0 0 1 10
 
-			texture_unit
+			texture_unit Map#17
 			{
 				texture hvyweapon_red.bmp
+				filtering linear linear linear
 			}
 		}
 
@@ -86,19 +90,20 @@ material Material#38
 
 
 
-material Material#49
+material Material#49_OgreMax
 {
-	technique
+	technique Map#18
 	{
-		pass
+		pass Map#19
 		{
 			ambient 0.588 0.588 0.588 1
 			diffuse 0.588 0.588 0.588 1
 			specular 0 0 0 1 10
 
-			texture_unit
+			texture_unit Map#20
 			{
 				texture hvyweapon_red.bmp
+				filtering linear linear linear
 			}
 		}
 
