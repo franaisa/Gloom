@@ -64,7 +64,7 @@ namespace Logic {
 			WAKEUP						= 0x0000001B,//27
 			SLEEP						= 0x0000001C,//28
 			ACTIVATE					= 0x0000001D,//29
-			FREE_SLOT_2					= 0x0000001E,//30
+			DECAL						= 0x0000001E,//30
 			CEALING						= 0x0000001F,//31
 			ADDFORCEPLAYER				= 0x00000020,//32
 			SIDE						= 0x00000021,//33
