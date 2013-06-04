@@ -35,7 +35,7 @@ namespace Net {
 						  _servidorRed(0), 
 						  _clienteRed(0),
 						  _idDispatcher(0) {
-		
+
 		_instance = this;
 	} // CManager
 
@@ -49,7 +49,7 @@ namespace Net {
 
 		_instance = 0;
 	} // ~CManager
-	
+
 	//--------------------------------------------------------
 
 	bool CManager::Init() {
@@ -146,30 +146,29 @@ namespace Net {
 	{
 		_paquetes.clear();
 		Net::CManager::getSingletonPtr()->getPackets(_paquetes);
-		
+
 		for(std::vector<Net::CPaquete*>::iterator iterp = _paquetes.begin();iterp != _paquetes.end();++iterp)
 		{
 			Net::CPaquete* paquete = *iterp;
 			// El mensaje debe ser de tipo CONEXION
-			
+
 			switch (paquete->getTipo())
 			{
 				case Net::CONEXION:
 					connect(paquete->getConexion());
-					for(auto iter = _observers.begin();iter != _observers.end();++iter)
+					for(std::vector<IObserver*>::iterator iter = _observers.begin();iter != _observers.end();++iter)
 						(*iter)->connectionPacketReceived(paquete);
 					break;
 				case Net::DATOS:
-					
 					if(!internalData(paquete)){ // Analiza si trae contenido -> TODO: ver funcion
 						//std::cout << "mensaje recibido:  " <<  _observers.size() << std::endl;
-						for(auto iter = _observers.begin();iter != _observers.end();++iter)
+						for(std::vector<IObserver*>::iterator iter = _observers.begin();iter != _observers.end();++iter)
 							(*iter)->dataPacketReceived(paquete);
 					}
 					break;
 				case Net::DESCONEXION:
-					for(auto iter = _observers.begin();iter != _observers.end();++iter)
-						(*iter)->disconnectionPacketReceived(paquete);
+					for(int i = 0; i < _observers.size(); ++i)
+						_observers[i]->disconnectionPacketReceived(paquete);
 					disconnect(paquete->getConexion());
 					//retornar id
 					break;
@@ -212,10 +211,10 @@ namespace Net {
 		assert(_connections.empty() && "Ya hay una conexion"); // Capamos al cliente a 1 conexión max: la de con el server
 
 		CConexion* connection = _clienteRed->connect(address, port, channels, timeout); // CONNECT
-		
+
 		if(!connection)
 			return false;
-		
+
 		// Almacenamos esa conexión y le otorgamos un ID de red
 		connection->setId(_idDispatcher->getServerId()); // Un cliente sólo se conecta al SERVER
 		addConnection(_idDispatcher->getServerId(), connection); // Guardamos en la tabla
@@ -230,7 +229,7 @@ namespace Net {
 		Net::CBuffer data;
 		data.write(packet->getData(),packet->getDataLength());
 		data.reset();
-		
+
 		Net::NetMessageType msg;
 		data.read(&msg,sizeof(msg));
 		switch (msg)
@@ -267,7 +266,7 @@ namespace Net {
 	void CManager::disconnect(CConexion* connection) {
 		if(_servidorRed) {
 			unsigned int clientId = connection->getId();
-			
+
 			_servidorRed->disconnect(connection);
 			removeConnection(clientId);
 
@@ -278,7 +277,7 @@ namespace Net {
 			removeConnection(_idDispatcher->getServerId());
 		}
 	} // disconnect
-		
+
 	//---------------------------------------------------------
 
 	bool CManager::addConnection(NetID id, CConexion* connection) {
@@ -289,10 +288,10 @@ namespace Net {
 		TConnectionPair elem(id, connection);
 		// Insertamos par id - playerInfo con la conexion correspondiente
 		_connections.insert(elem);
-		
+
 		return true;
 	} // addConection
-		
+
 	//---------------------------------------------------------
 
 	bool CManager::removeConnection(NetID id) {
@@ -300,10 +299,10 @@ namespace Net {
 			CConexion* connection = getConnection(id);
 			_connections.erase(id);
 			delete connection;
-			
+
 			return true;
 		}
-		
+
 		return false;
 	} // removeConection
 
@@ -323,7 +322,7 @@ namespace Net {
 		if(!_connections.empty()) {
 			for(TConnectionTable::const_iterator it = _connections.begin(); it != _connections.end(); it++)
 				delete it->second;
-			
+
 			_connections.clear(); // Quien hace el disconnect
 		}
 	} // deactivateNetwork
@@ -346,9 +345,11 @@ namespace Net {
 
 	//---------------------------------------------------------
 
-	void CManager::removeObserver(IObserver* listener) {
-		for(auto iter = _observers.begin();iter != _observers.end();++iter)
-			if((*iter)==listener) {
+	void CManager::removeObserver(IObserver* listener)
+	{
+		for(std::vector<IObserver*>::iterator iter = _observers.begin();iter != _observers.end();++iter)
+			if((*iter)==listener)
+			{
 				_observers.erase(iter);
 				break;
 			}

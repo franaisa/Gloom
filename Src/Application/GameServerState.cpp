@@ -42,7 +42,7 @@ namespace Application {
 		_playersMgr = Logic::CGameNetPlayersManager::getSingletonPtr();
 		_map = Logic::CServer::getSingletonPtr()->getMap();
 
-		if( !Net::CManager::getSingletonPtr()->imServer() ) {
+		//if( !Net::CManager::getSingletonPtr()->imServer() ) {
 			// Nos registramos como observadores de la red para ser notificados
 			_netMgr->addObserver(this);
 
@@ -50,7 +50,7 @@ namespace Application {
 			// @deprecated Deberiamos tomar el valor de flash en lobbyServer y
 			// tomar el numero de jugadores que haya en el gestor de jugadores
 			_netMgr->activateAsServer(1234, 12);
-		}
+		//}
 
 		// Nos registramos como observadores del teclado
 		Input::CInputManager::getSingletonPtr()->addKeyListener(this);

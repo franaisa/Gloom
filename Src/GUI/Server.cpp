@@ -146,7 +146,6 @@ namespace GUI {
 
 	void CServer::destroyLayout(Hikari::FlashControl* overlay){
 		_manager->destroyFlashControl(overlay);
-
 	}
 
 	//________________________________________________________________________

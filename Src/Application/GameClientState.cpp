@@ -66,7 +66,7 @@ namespace Application {
 		// Registramos a este estado como observador de red para que sea notificado
 		// siempre y cuando acabemos de entrar en el modo online y no estuvieramos
 		// previamente en un estado online
-		if( !Net::CManager::getSingletonPtr()->imClient() )
+		//if( !Net::CManager::getSingletonPtr()->imClient() )
 			_netMgr->addObserver(this);
 
 		// Nos registramos como observadores del teclado
