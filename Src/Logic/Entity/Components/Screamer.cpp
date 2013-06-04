@@ -189,6 +189,7 @@ namespace Logic {
 		_currentScreamerShield = _screamerShieldThreshold;
 		_screamerShieldDamageTimer = _screamerShieldRecoveryTimer = 0;
 	}
+
 	//__________________________________________________________________
 
 	void CScreamer::primarySkill() {
