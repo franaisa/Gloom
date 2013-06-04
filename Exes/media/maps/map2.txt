@@ -111,7 +111,7 @@ Map = {
 		model = "rocketLauncher.mesh",
 		id = "weapon",
 		weaponType = 4,
-		reward = 5,
+		reward = 50,
 		respawnTime = 5,
 	},
 	
@@ -145,7 +145,7 @@ Map = {
 		maxLife=250,
 		PorcentShield=23,
 		isPlayer = false,
-		model = "heavy.mesh",
+		model = "marine.mesh",
 		physic_shape = "capsule",
 		physic_radius = 6,
 		physic_height = 6,
