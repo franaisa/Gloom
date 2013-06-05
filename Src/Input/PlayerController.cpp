@@ -16,9 +16,6 @@ mover al jugador.
 
 #include "Logic/Entity/Entity.h"
 #include "Logic/Messages/Message.h"
-#include "Logic/Entity/Components/AvatarController.h"
-#include "Logic/Entity/Components/WeaponsManager.h"
-#include "Logic/Entity/Components/ArrayGraphics.h"
 #include "Logic/Messages/MessageHudDebugData.h"
 
 #include "Logic/Messages/MessageChangeWeapon.h"
@@ -26,9 +23,9 @@ mover al jugador.
 #include "Logic/Messages/MessageControl.h"
 #include "Logic/Messages/MessageMouse.h"
 
-#include "Logic/Messages/MessageCameraOffset.h"
-#include "Logic/Server.h"
-#include "Logic/Maps/Map.h"
+//#include "Logic/Messages/MessageCameraOffset.h"
+//#include "Logic/Server.h"
+//#include "Logic/Maps/Map.h"
 
 //#include "Logic/Messages/MessageCameraRoll.h"
 
@@ -49,7 +46,7 @@ mover al jugador.
 
 namespace Input {
 
-	CPlayerController::CPlayerController() : _controlledAvatar(0), m_iLastTime(0), m_eLastMove(E_MOVE::NONE)
+	CPlayerController::CPlayerController() : _controlledAvatar(0), m_iLastTime(0), m_eLastMove(NONE)
 	{
 
 	} // CPlayerController
@@ -155,17 +152,10 @@ namespace Input {
 			case Input::Key::E:
 				m->setType(Logic::Control::STOP_SECONDARY_SKILL);
 				break;
-			case Input::Key::ESCAPE:// esto debe desaparecer en el futuro
-					return true;
-			//default:
-				//return true;
+			default:
+				return true;
 			}
 			_controlledAvatar->emitMessage(m);
-
-			std::shared_ptr<Logic::CMessageHudDebugData> hud = std::make_shared<Logic::CMessageHudDebugData>();
-			hud->setKey("key");
-			hud->setValue(key.keyId);
-			_controlledAvatar->emitMessage(hud);
 
 			return true;
 		}
@@ -407,7 +397,6 @@ namespace Input {
 
 			break;
 		}
-
 		_controlledAvatar->emitMessage(m);
 	}//EmitMessageMovement
 

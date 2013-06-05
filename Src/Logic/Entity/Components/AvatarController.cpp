@@ -52,11 +52,27 @@ namespace Logic {
 											 _physicController(0),
 											 _momentum(Vector3::ZERO),
 											 _displacementDir(Vector3::ZERO),
-											 _dodgeForce(Vector3::ZERO){
+											 _dodgeForce(Vector3::ZERO)
+	{
 		
+		//anti release
+		for(int i = 0; i < 18 ; ++i)
+			_movementCommands[i] = Vector3::ZERO;
+
+
 		// Inicializamos el array que contiene los vectores
 		// de cada tecla de movimiento
 		initMovementCommands();
+
+		/*
+
+		
+		std::shared_ptr<Logic::CMessageHudDebugData> hud = std::make_shared<Logic::CMessageHudDebugData>();
+		hud->setKey("keyPressed");
+		hud->setValue(m->getType());
+		_controlledAvatar->emitMessage(hud);
+		_controlledAvatar->emitMessage(m);
+		*/
 	}
 
 	//________________________________________________________________________
@@ -138,6 +154,17 @@ namespace Logic {
 					mouse( mouseMsg->getMouse() );
 				}
 
+				
+				
+				std::shared_ptr<Logic::CMessageHudDebugData> hud = std::make_shared<Logic::CMessageHudDebugData>();
+				hud->setKey("displacementdir");
+				hud->setValue(_displacementDir);
+				_entity->emitMessage(hud);
+
+				std::shared_ptr<Logic::CMessageHudDebugData> hud2 = std::make_shared<Logic::CMessageHudDebugData>();
+				hud2->setKey("lastkey");
+				hud2->setValue(commandType);
+				_entity->emitMessage(hud2);
 				break;
 			}
 			case Message::ADDFORCEPLAYER:{
