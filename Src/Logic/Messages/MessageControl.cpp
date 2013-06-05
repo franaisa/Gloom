@@ -8,7 +8,9 @@ namespace Logic {
 
 	IMP_FACTORYMESSAGE(CMessageControl);
 
-	CMessageControl::CMessageControl( ) : CMessage(Message::CONTROL) {
+	CMessageControl::CMessageControl( ) : CMessage(Message::CONTROL),
+										  _controlType(ControlType::UNASSIGNED),
+										  _seq(0) {
 		// Nada que hacer
 	} //
 	//----------------------------------------------------------

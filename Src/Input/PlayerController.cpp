@@ -394,8 +394,6 @@ namespace Input {
 			case Input::Key::Z:
 				m->setType(Logic::Control::CROUCH);
 				break;
-
-			break;
 		}
 		_controlledAvatar->emitMessage(m);
 	}//EmitMessageMovement
