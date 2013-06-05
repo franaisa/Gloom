@@ -401,8 +401,6 @@ namespace Input {
 			case Input::Key::Z:
 				m->setType(Logic::Control::CROUCH);
 				break;
-
-			break;
 		}
 		std::shared_ptr<Logic::CMessageHudDebugData> hud2 = std::make_shared<Logic::CMessageHudDebugData>();
 		hud2->setKey("lastkey-pcontroller");
