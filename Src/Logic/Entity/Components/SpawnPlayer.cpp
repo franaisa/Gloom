@@ -9,10 +9,11 @@ Contiene la implementación del componente que gestiona el spawn del jugador.
 */
 
 #include "SpawnPlayer.h"
+#include "AvatarController.h"
+#include "PhysicController.h"
 
 #include "Logic/Entity/Entity.h"
 #include "Map/MapEntity.h"
-#include "PhysicController.h"
 #include "Logic/Maps/Map.h"
 #include "Logic/Server.h"
 #include "Logic/GameSpawnManager.h"
@@ -145,6 +146,7 @@ namespace Logic
 		}
 		else if(_reactivePhysicSimulation){
 			_entity->getComponent<CPhysicController>("CPhysicController")->activateSimulation();
+			_entity->getComponent<CAvatarController>("CAvatarController")->wakeUp();
 
 			// Comprobamos el timer de inmunidad al respawnear
 			_inmunityTimer += msecs;
@@ -170,9 +172,11 @@ namespace Logic
 			except.insert( std::string("CHudOverlay") );
 			except.insert( std::string("CNetConnector") );
 			except.insert( std::string("CAudio") );
+			except.insert( std::string("CAvatarController") );
 
 			//Desactivamos la simulación física (no puede estar activo en la escena física al morir)
 			_entity->getComponent<CPhysicController>("CPhysicController")->deactivateSimulation();
+			_entity->getComponent<CAvatarController>("CAvatarController")->putToSleep(true);
 
 			_entity->deactivateAllComponentsExcept(except);
 			_isDead=true;

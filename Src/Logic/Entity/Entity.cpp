@@ -239,7 +239,7 @@ namespace Logic {
 			// No hace falta comprobar si estamos activados o no u ociosos
 			// para procesar mensajes, ya que eso se tiene en cuenta en el
 			// emitMessage
-			if( component->processMessages() && component->isSleeping() && !component->isInDeepSleep() ) {
+			if( !component->isInDeepSleep() && component->processMessages() && component->isSleeping() ) {
 				component->wakeUp();
 			}
 		}

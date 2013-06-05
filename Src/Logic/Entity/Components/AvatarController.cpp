@@ -32,7 +32,6 @@ de la entidad.
 #include "Logic/Messages/MessageAddForcePlayer.h"
 #include "Logic/Messages/MessageSetAnimation.h"
 #include "Logic/Messages/MessageStopAnimation.h"
-#include "Logic/Messages/MessageHudDebugData.h"
 #include "Logic/Messages/MessageChangeGravity.h"
 
 #include "Graphics/Scene.h"
@@ -59,20 +58,9 @@ namespace Logic {
 		for(int i = 0; i < 18 ; ++i)
 			_movementCommands[i] = Vector3::ZERO;
 
-
 		// Inicializamos el array que contiene los vectores
 		// de cada tecla de movimiento
 		initMovementCommands();
-
-		/*
-
-		
-		std::shared_ptr<Logic::CMessageHudDebugData> hud = std::make_shared<Logic::CMessageHudDebugData>();
-		hud->setKey("keyPressed");
-		hud->setValue(m->getType());
-		_controlledAvatar->emitMessage(hud);
-		_controlledAvatar->emitMessage(m);
-		*/
 	}
 
 	//________________________________________________________________________
@@ -125,6 +113,15 @@ namespace Logic {
 	bool CAvatarController::accept(const std::shared_ptr<CMessage>& message) {
 		TMessageType msgType = message->getMessageType();
 
+		if( this->isInDeepSleep() ) {
+			if(msgType == Message::CONTROL) {
+				ControlType ctrlType = std::static_pointer_cast<CMessageControl>(message)->getType();
+
+				if(ctrlType == Control::MOUSE)
+					return false;
+			}
+		}
+
 		return msgType == Message::CONTROL			||
 			   msgType == Message::ADDFORCEPLAYER;
 	} // accept
@@ -136,21 +133,17 @@ namespace Logic {
 			case Message::CONTROL: {
 				ControlType commandType = std::static_pointer_cast<CMessageControl>(message)->getType();
 
-				bool commandAccepted = false;
 				// Comando de movimiento
 				if(commandType >=0 && commandType < MAX_MOVEMENT_COMMANDS) {
 					executeMovementCommand(commandType);
-					commandAccepted = true;
 				}
 				// Comando de salto
 				else if(commandType == Control::JUMP) {
 					executeJump();
-					commandAccepted = true;
 				}
 				// Comando de esquiva
 				else if(commandType > Control::JUMP && commandType < Control::MOUSE) {
 					executeDodge(commandType);
-					commandAccepted = true;
 				}
 				// Comando de raton
 				else if(commandType == Control::MOUSE) {
@@ -158,18 +151,6 @@ namespace Logic {
 					mouse( mouseMsg->getMouse() );
 				}
 
-				
-				std::shared_ptr<Logic::CMessageHudDebugData> hud = std::make_shared<Logic::CMessageHudDebugData>();
-				hud->setKey("displacementdir");
-				hud->setValue(_displacementDir);
-				_entity->emitMessage(hud);
-
-				if(commandAccepted) {
-					std::shared_ptr<Logic::CMessageHudDebugData> hud2 = std::make_shared<Logic::CMessageHudDebugData>();
-					hud2->setKey("lastkey");
-					hud2->setValue(commandType);
-					_entity->emitMessage(hud2);
-				}
 				break;
 			}
 			case Message::ADDFORCEPLAYER:{
