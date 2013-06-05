@@ -63,13 +63,13 @@ namespace Logic
 		switch(message->getMessageType()) {
 			case Message::TOUCHED: {
 				std::shared_ptr<CMessageTouched> touchedMsg = std::static_pointer_cast<CMessageTouched>(message);
-
+				
 				_intrigger.push_back(touchedMsg->getEntity());
 				break;
 			}
 			case Message::UNTOUCHED: {
 				std::shared_ptr<CMessageUntouched> untouchedMsg = std::static_pointer_cast<CMessageUntouched>(message);
-
+				
 				_intrigger.remove(untouchedMsg->getEntity());
 				break;
 			}
@@ -81,6 +81,7 @@ namespace Logic
 
 	//---------------------------------------------------------
 	void CLava::onTick(unsigned int msecs) {
+		
 		if(_intrigger.size()>0 && _timestamp > _timeDamage){
 			std::list<CEntity*>::const_iterator it = _intrigger.begin();
 			for(; it != _intrigger.end(); ++it) {
