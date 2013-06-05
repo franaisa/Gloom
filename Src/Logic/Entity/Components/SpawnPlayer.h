@@ -22,7 +22,7 @@ namespace Logic
 		Constructor por defecto; en la clase base no hace nada.
 		*/
 
-		CSpawnPlayer() : IComponent(){}
+		CSpawnPlayer() : _inmunityTime(500) {}
 		
 
 	
@@ -91,7 +91,8 @@ namespace Logic
 		*/
 		std::string _audioSpawn;
 
-
+		unsigned int _inmunityTimer;
+		unsigned int _inmunityTime;
 
 	}; // class CShoot
 

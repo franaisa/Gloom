@@ -27,6 +27,7 @@ Contiene la implementación del componente que gestiona el spawn del jugador.
 #include "Logic/Messages/MessageHudSpawn.h"
 #include "Logic/Messages/MessageAudio.h"
 #include "Logic/Messages/MessageCreateParticle.h"
+#include "Logic/Messages/MessageSpawnIsLive.h"
 
 #include "Graphics/Scene.h"
 #include "Graphics/Camera.h"
@@ -58,7 +59,7 @@ namespace Logic
 	void CSpawnPlayer::onActivate()
 	{
 		_isDead=false;
-		_actualTimeSpawn=0;
+		_actualTimeSpawn=_inmunityTimer=0;
 		_reactivePhysicSimulation=false;
 
 	} // activate
@@ -138,12 +139,22 @@ namespace Logic
 				audioMsg->setNotIfPlay(false);
 				audioMsg->setIsPlayer(_entity->isPlayer());
 				_entity->emitMessage(audioMsg);
+
+				_inmunityTimer = 0;
 			}
 		}
 		else if(_reactivePhysicSimulation){
 			_entity->getComponent<CPhysicController>("CPhysicController")->activateSimulation();
-			_reactivePhysicSimulation=false;
-			putToSleep();
+
+			// Comprobamos el timer de inmunidad al respawnear
+			_inmunityTimer += msecs;
+			if(_inmunityTimer > _inmunityTime) {
+				_inmunityTimer = 0;
+				_entity->emitMessage( std::make_shared<CMessageSpawnIsLive>() );
+
+				_reactivePhysicSimulation=false;
+				putToSleep();
+			}
 		}
 	} // tick
 	//---------------------------------------------------------
