@@ -32,7 +32,6 @@ de la entidad.
 #include "Logic/Messages/MessageAddForcePlayer.h"
 #include "Logic/Messages/MessageSetAnimation.h"
 #include "Logic/Messages/MessageStopAnimation.h"
-#include "Logic/Messages/MessageHudDebugData.h"
 #include "Logic/Messages/MessageChangeGravity.h"
 
 #include "Graphics/Scene.h"
@@ -59,20 +58,9 @@ namespace Logic {
 		for(int i = 0; i < 18 ; ++i)
 			_movementCommands[i] = Vector3::ZERO;
 
-
 		// Inicializamos el array que contiene los vectores
 		// de cada tecla de movimiento
 		initMovementCommands();
-
-		/*
-
-		
-		std::shared_ptr<Logic::CMessageHudDebugData> hud = std::make_shared<Logic::CMessageHudDebugData>();
-		hud->setKey("keyPressed");
-		hud->setValue(m->getType());
-		_controlledAvatar->emitMessage(hud);
-		_controlledAvatar->emitMessage(m);
-		*/
 	}
 
 	//________________________________________________________________________

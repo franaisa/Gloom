@@ -86,7 +86,7 @@ namespace Logic {
 				ControlType commandType = std::static_pointer_cast<CMessageControl>(message)->getType();
 
 				// Comando de movimiento
-				if(commandType >=0 && commandType < 18) {
+				if(commandType >= 0 && commandType < 16) {
 					executeMovementCommand(commandType);
 				}
 				// Comando de raton
@@ -224,6 +224,13 @@ namespace Logic {
 		_movementCommands[Control::STOP_CROUCH]			= Vector3(0, 1, 0);
 		_movementCommands[Control::JUMP]				= Vector3(0, 1, 0);
 		_movementCommands[Control::STOP_JUMP]			= Vector3(0, -1, 0);
+
+		// Aunque el espectador no haga dodges tiene que leer las teclas
+		// para que no se queden pilladas
+		_movementCommands[Control::SIDEJUMP_LEFT]		= Vector3(1, 0, 0);
+		_movementCommands[Control::SIDEJUMP_RIGHT]		= Vector3(-1, 0, 0);
+		_movementCommands[Control::DODGE_BACKWARDS]		= Vector3(0, 0, -1);
+		_movementCommands[Control::DODGE_FORWARD]		= Vector3(0, 0, 1);
 	}
 
 } // namespace Logic
