@@ -82,10 +82,6 @@ namespace Input {
 	{						
 		if(_controlledAvatar)
 		{
-			std::shared_ptr<Logic::CMessageHudDebugData> hud3 = std::make_shared<Logic::CMessageHudDebugData>();
-			hud3->setKey("ultimatecla");
-			hud3->setValue("keypressed");
-			_controlledAvatar->emitMessage(hud2);
 			int iType = typeOfKey(key);
 			switch (iType)
 			{
