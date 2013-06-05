@@ -82,6 +82,10 @@ namespace Input {
 	{						
 		if(_controlledAvatar)
 		{
+			std::shared_ptr<Logic::CMessageHudDebugData> hud3 = std::make_shared<Logic::CMessageHudDebugData>();
+			hud3->setKey("ultimatecla");
+			hud3->setValue("keypressed");
+			_controlledAvatar->emitMessage(hud2);
 			int iType = typeOfKey(key);
 			switch (iType)
 			{
@@ -109,6 +113,9 @@ namespace Input {
 	{
 		if(_controlledAvatar)
 		{
+			std::shared_ptr<Logic::CMessageHudDebugData> hud3 = std::make_shared<Logic::CMessageHudDebugData>();
+			hud3->setKey("ultimatecla");
+			hud3->setValue("keyreleased");
 			std::shared_ptr<Logic::CMessageControl> m = std::make_shared<Logic::CMessageControl>();
 			switch(key.keyId)
 			{
@@ -397,6 +404,10 @@ namespace Input {
 
 			break;
 		}
+		std::shared_ptr<Logic::CMessageHudDebugData> hud2 = std::make_shared<Logic::CMessageHudDebugData>();
+		hud2->setKey("lastkey-pcontroller");
+		hud2->setValue(m->getType());
+		_controlledAvatar->emitMessage(hud2);
 		_controlledAvatar->emitMessage(m);
 	}//EmitMessageMovement
 

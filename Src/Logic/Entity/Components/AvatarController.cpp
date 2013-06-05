@@ -163,7 +163,7 @@ namespace Logic {
 
 				std::shared_ptr<Logic::CMessageHudDebugData> hud2 = std::make_shared<Logic::CMessageHudDebugData>();
 				hud2->setKey("lastkey");
-				hud2->setValue(commandType);
+				hud2->setValue(std::static_pointer_cast<CMessageControl>(message)->getType());
 				_entity->emitMessage(hud2);
 				break;
 			}
