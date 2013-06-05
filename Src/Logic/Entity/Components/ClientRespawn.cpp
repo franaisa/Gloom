@@ -57,12 +57,16 @@ namespace Logic  {
 				exceptionList.insert( std::string("CHudOverlay") );
 				exceptionList.insert( std::string("CNetConnector") );
 				exceptionList.insert( std::string("CAudio") );
-				exceptionList.insert( std::string("CAvatarController") );
-
+				
 				// En caso de estar simulando fisica en el cliente, desactivamos
 				// la cápsula.
 				_entity->getComponent<CPhysicController>("CPhysicController")->deactivateSimulation();
-				_entity->getComponent<CAvatarController>("CAvatarController")->putToSleep(true);
+
+				CAvatarController* component = _entity->getComponent<CAvatarController>("CAvatarController");
+				if(component != NULL) {
+					exceptionList.insert( std::string("CAvatarController") );
+					_entity->getComponent<CAvatarController>("CAvatarController")->putToSleep(true);
+				}
 
 				_entity->deactivateAllComponentsExcept(exceptionList);
 
@@ -92,7 +96,11 @@ namespace Logic  {
 				// Activamos la simulacion aqui sin problemas. El componente life ignora los mensajes de daño
 				// hasta que no desaparece la inmunidad del respawn. 
 				_entity->getComponent<CPhysicController>("CPhysicController")->activateSimulation();
-				_entity->getComponent<CAvatarController>("CAvatarController")->wakeUp();
+
+				CAvatarController* component = _entity->getComponent<CAvatarController>("CAvatarController");
+				if(component != NULL) {
+					component->wakeUp();
+				}
 
 				// Seteamos la orientacion a la dada por el server
 				Matrix3 spawnOrientation;
