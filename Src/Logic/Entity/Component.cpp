@@ -121,6 +121,7 @@ namespace Logic {
 			_state = ComponentState::eAWAKE;
 			_wantsTick = _tickMask & TickMode::eTICK;
 			_wantsFixedTick = _tickMask & TickMode::eFIXED_TICK;
+			_deepSleep = false;
 
 			_entity->wakeUp(this);
 

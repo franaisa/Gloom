@@ -6,6 +6,7 @@
 */
 
 #include "ClientRespawn.h"
+#include "AvatarController.h"
 
 #include "Logic/Entity/Entity.h"
 #include "PhysicController.h"
@@ -56,13 +57,13 @@ namespace Logic  {
 				exceptionList.insert( std::string("CHudOverlay") );
 				exceptionList.insert( std::string("CNetConnector") );
 				exceptionList.insert( std::string("CAudio") );
+				exceptionList.insert( std::string("CAvatarController") );
 
 				// En caso de estar simulando fisica en el cliente, desactivamos
 				// la cápsula.
-				CPhysicController* controllerComponent = _entity->getComponent<CPhysicController>("CPhysicController");
-				if(controllerComponent != NULL) {
-					controllerComponent->deactivateSimulation();
-				}
+				_entity->getComponent<CPhysicController>("CPhysicController")->deactivateSimulation();
+				_entity->getComponent<CAvatarController>("CAvatarController")->putToSleep(true);
+
 				_entity->deactivateAllComponentsExcept(exceptionList);
 
 				//mostramos en pantalla el mensaje de quien ha matado a quien
@@ -91,6 +92,7 @@ namespace Logic  {
 				// Activamos la simulacion aqui sin problemas. El componente life ignora los mensajes de daño
 				// hasta que no desaparece la inmunidad del respawn. 
 				_entity->getComponent<CPhysicController>("CPhysicController")->activateSimulation();
+				_entity->getComponent<CAvatarController>("CAvatarController")->wakeUp();
 
 				// Seteamos la orientacion a la dada por el server
 				Matrix3 spawnOrientation;
