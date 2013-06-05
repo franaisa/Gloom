@@ -23,6 +23,8 @@ a todas las armas.
 #include "Logic/Messages/MessageAudio.h"
 #include "Logic/Messages/MessageHudAmmo.h"
 #include "Logic/Messages/MessageHudWeapon.h"
+#include "Logic/Messages/MessageDecal.h"
+
 
 // Graficos
 // @deprecated Ogre no deberia estar acoplado a la logica
@@ -181,6 +183,11 @@ namespace Logic {
  
 		/// This method will extract all of the triangles from the mesh to be used later. Only should be called once.
 		/// If you scale your mesh at all, pass it in here.
+
+		shared_ptr<CMessageDecal> message = make_shared<CMessageDecal>();
+		message->setPosition(vPos);
+		_entity->emitMessage(message);
+		//std::cout << "emito el mensaje" << std::endl;
 
 		CGraphics* cGraph;
 		cGraph = pEntity->getComponent<CGraphics>("CGraphics");

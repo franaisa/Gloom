@@ -21,7 +21,6 @@
 #include "Logic/Maps/GUIKillersMessage.h"
 #include "../../GameNetPlayersManager.h"
 #include "Logic/Messages/MessageHudSpawn.h"
-#include "Logic/Messages/MessageSpawnIsLive.h"
 
 #include <math.h>
 
@@ -37,8 +36,7 @@ namespace Logic  {
 		TMessageType msgType = message->getMessageType();
 
 		return msgType == Message::PLAYER_DEAD		||
-			   msgType == Message::PLAYER_SPAWN		||
-			   msgType == Message::SPAWN_IS_LIVE;
+			   msgType == Message::PLAYER_SPAWN;
 		//return false;
 	} // accept
 
@@ -78,12 +76,6 @@ namespace Logic  {
 
 				break;
 			}
-			case Message::SPAWN_IS_LIVE: {
-				// El cliente acaba de respawnear, activamos su simulación (un tick después)
-				_entity->getComponent<CPhysicController>("CPhysicController")->activateSimulation();
-				
-				break;
-			}
 			case Message::PLAYER_SPAWN: {
 				// El servidor nos notifica de que debemos respawnear. Activamos
 				// todos los componentes de la entidad y seteamos nuestra posicion
@@ -96,11 +88,9 @@ namespace Logic  {
 				// Colocamos al player en la posicion dada por el manager de spawn del server,
 				// podemos asumir sin problemas que el player tiene capsula
 				_entity->getComponent<CPhysicController>("CPhysicController")->setPhysicPosition( spawnTransform.getTrans() );
-
-				// Pedimos que se reactive la simulacion en el siguiente tick, ya que si
-				// activasemos la simulacion aqui, se volveria a disparar el trigger antes
-				// de reposicionarnos porque physx lo hace todo en el simulate de un plumazo
-				_entity->emitMessage( std::make_shared<CMessageSpawnIsLive>() );
+				// Activamos la simulacion aqui sin problemas. El componente life ignora los mensajes de daño
+				// hasta que no desaparece la inmunidad del respawn. 
+				_entity->getComponent<CPhysicController>("CPhysicController")->activateSimulation();
 
 				// Seteamos la orientacion a la dada por el server
 				Matrix3 spawnOrientation;

@@ -26,6 +26,8 @@ Contiene la implementación del componente que representa a la escopeta.
 //Debug
 #include "Logic/Messages/MessageHudDebugData.h"
 #include "Logic/Messages/MessageCreateParticle.h"
+#include "Logic/Messages/MessageDecal.h"
+
 
 
 namespace Logic {

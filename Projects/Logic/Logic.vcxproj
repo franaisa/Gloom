@@ -177,6 +177,7 @@
     <ClCompile Include="..\..\Src\Logic\Messages\MessageAudio.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageChangeGravity.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageDamageAmplifier.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Messages\MessageDecal.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageParticleVisibility.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessagePlayerSnapshot.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessagePrimaryShoot.cpp" />
@@ -353,6 +354,7 @@
     <ClInclude Include="..\..\Src\Logic\Messages\MessageControl.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageDamaged.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageDeactivateScreamerShield.h" />
+    <ClInclude Include="..\..\Src\Logic\Messages\MessageDecal.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageFlash.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageHudAmmo.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageHudDebug.h" />

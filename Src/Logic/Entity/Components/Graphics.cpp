@@ -26,6 +26,7 @@ gráfica de la entidad.
 #include "Logic/Messages/MessageActivate.h"
 #include "Logic/Messages/MessageWakeUp.h"
 #include "Logic/Messages/MessageChangeMaterial.h"
+#include "Logic/Messages/MessageDecal.h"
 
 #include <OgreSceneManager.h>
 #include "OgreEntity.h"
@@ -127,7 +128,8 @@ namespace Logic
 
 		return //msgType == Message::SET_TRANSFORM    ||
 			   msgType == Message::ACTIVATE			|| 
-			   msgType == Message::CHANGE_MATERIAL;
+			   msgType == Message::CHANGE_MATERIAL	||
+			   msgType == Message::DECAL			;
 	} // accept
 	
 	//---------------------------------------------------------
@@ -146,6 +148,10 @@ namespace Logic
 			case Message::CHANGE_MATERIAL: {
 				std::shared_ptr<CMessageChangeMaterial> chgMatMsg = std::static_pointer_cast<CMessageChangeMaterial>(message);
 				changeMaterial( chgMatMsg->getMaterialName() );
+				break;
+			}
+			case Message::DECAL: {
+				std::cout << "RECIBIDOOOOOO" << std::endl;
 				break;
 			}
 		}
