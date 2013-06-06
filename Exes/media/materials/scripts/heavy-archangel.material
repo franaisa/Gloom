@@ -1,5 +1,4 @@
-//heavy default material
-material Material#35_OgreMax
+material houndHeadBlue
 {
 	
 	
@@ -27,13 +26,13 @@ material Material#35_OgreMax
 
             texture_unit diffuseMap
             {
-				texture heavy_head_zombie.tga
+				texture heavy_head.tga
 				filtering trilinear
 			}
 			
 			texture_unit aoMap
 			{
-				texture heavy_head_zombie.tga
+				texture heavy_head.tga
 				filtering trilinear
 			}
 		}
@@ -61,7 +60,7 @@ material Material#35_OgreMax
 			
             texture_unit aoMap
 			{
-				texture heavy_head_zombie.tga
+				texture heavy_head.tga
 				filtering trilinear
 			}
 
@@ -82,7 +81,7 @@ material Material#35_OgreMax
 
 
 
-material Material#36_OgreMax
+material houndEyeRBlue
 {
 	set $shininess "60"
 	set $specular "2 2 2 100"
@@ -108,13 +107,13 @@ material Material#36_OgreMax
 
             texture_unit diffuseMap
             {
-				texture heavy_head_zombie.tga
+				texture heavy_head.tga
 				filtering trilinear
 			}
 			
 			texture_unit aoMap
 			{
-				texture heavy_head_zombie.tga
+				texture heavy_head.tga
 				filtering trilinear
 			}
 		}
@@ -142,7 +141,7 @@ material Material#36_OgreMax
 			
             texture_unit aoMap
 			{
-				texture heavy_head_zombie.tga
+				texture heavy_head.tga
 				filtering trilinear
 			}
 
@@ -161,7 +160,7 @@ material Material#36_OgreMax
 
 
 
-material Material#37_OgreMax
+material houndEyeLBlue
 {
 	set $shininess "60"
 	set $specular "2 2 2 100"
@@ -187,13 +186,13 @@ material Material#37_OgreMax
 
             texture_unit diffuseMap
             {
-				texture hvyweapon_red_zombie.tga
+				texture heavy_head.tga
 				filtering trilinear
 			}
 			
 			texture_unit aoMap
 			{
-				texture hvyweapon_red_zombie.tga
+				texture heavy_head.tga
 				filtering trilinear
 			}
 		}
@@ -221,7 +220,7 @@ material Material#37_OgreMax
 			
             texture_unit aoMap
 			{
-				texture heavy_head_zombie.tga
+				texture heavy_head.tga
 				filtering trilinear
 			}
 
@@ -241,7 +240,7 @@ material Material#37_OgreMax
 
 
 //cuerpo
-material Material#38_OgreMax
+material houndBodyBlue
 {
 	set $shininess "15"
 	set $specular "2 2 2 15"
@@ -267,13 +266,13 @@ material Material#38_OgreMax
 
             texture_unit diffuseMap
             {
-				texture hvyweapon_red_zombie.tga
+				texture hvyweapon_blue.tga
 				filtering trilinear
 			}
 			
 			texture_unit aoMap
 			{
-				texture hvyweapon_red_zombie.tga
+				texture hvyweapon_blue.tga
 				filtering trilinear
 			}
 		}
@@ -301,7 +300,7 @@ material Material#38_OgreMax
 			
             texture_unit aoMap
 			{
-				texture hvyweapon_red_zombie.tga
+				texture hvyweapon_blue.tga
 				filtering trilinear
 			}
 
@@ -324,7 +323,7 @@ material Material#38_OgreMax
 
 }
 
-material Material#49_OgreMax
+material houndHandsBlue
 {
 	
 	set $shininess "15"
@@ -351,13 +350,13 @@ material Material#49_OgreMax
 
             texture_unit diffuseMap
             {
-				texture hvyweapon_red_zombie.tga
+				texture hvyweapon_blue.tga
 				filtering trilinear
 			}
 			
 			texture_unit aoMap
 			{
-				texture hvyweapon_red_zombie.tga
+				texture hvyweapon_blue.tga
 				filtering trilinear
 			}
 		}
@@ -385,7 +384,7 @@ material Material#49_OgreMax
 			
             texture_unit aoMap
 			{
-				texture hvyweapon_red_zombie.tga
+				texture hvyweapon_blue.tga
 				filtering trilinear
 			}
 

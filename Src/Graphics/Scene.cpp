@@ -160,7 +160,7 @@ namespace Graphics
 			//_directionalLight->setAttenuation( 100.0f, 1.0f, 1.0f, 1.0f );
 			_directionalLight->setCastShadows(true);
 			_directionalLight->setDiffuseColour(1,1,1);
-			_directionalLight->setSpecularColour(1,1,1);
+			_directionalLight->setSpecularColour(0.3,0.3,0.3);
 
 			//HHFX::getSingletonPtr()->setSceneMgr(_sceneMgr);
 			//HHFX::getSingletonPtr()->setCamera(_camera->getOgreCamera());
