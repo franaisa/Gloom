@@ -124,7 +124,6 @@ namespace Logic
 				
 				//if(Net::CManager::getSingletonPtr()->imServer())
 				//	Logic::CGameNetMsgManager::getSingletonPtr()->sendMessageToOne(new CMessagePlayerSpawn(), camera->getEntityID(), _entity->getEntityID());
-
 				//Mirar porque se creó esto, lo mismo antonio sabe
 				/*
 				std::shared_ptr<CMessageCreateParticle> particle =std::make_shared<CMessageCreateParticle>();
