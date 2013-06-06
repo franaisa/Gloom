@@ -76,7 +76,6 @@ namespace Logic
 
 
 	void CUpdateClientPosition::updateClientPosition(const std::shared_ptr<CMessageSyncPosition> &message){
-	
 		_physicController->setPhysicPosition(message->getPosition());
 		_entity->setOrientation(message->getOrientation());
 	}

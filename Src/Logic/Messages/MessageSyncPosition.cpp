@@ -16,7 +16,7 @@ namespace Logic {
 		_position = position;
 	}//
 	//----------------------------------------------------------
-	Vector3& CMessageSyncPosition::getPosition(){
+	Vector3 CMessageSyncPosition::getPosition(){
 		return _position;
 	}//
 	//----------------------------------------------------------
@@ -25,7 +25,7 @@ namespace Logic {
 		_orientation = orientation;
 	}//
 	//----------------------------------------------------------
-	Quaternion& CMessageSyncPosition::getOrientation(){
+	Quaternion CMessageSyncPosition::getOrientation(){
 		return _orientation;
 	}//
 	//----------------------------------------------------------

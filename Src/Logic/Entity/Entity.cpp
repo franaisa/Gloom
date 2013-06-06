@@ -84,8 +84,7 @@ namespace Logic {
 		}
 
 		if(entityInfo->hasAttribute("position")) {
-			Vector3 position = entityInfo->getVector3Attribute("position");
-			_position=position;
+			_position = entityInfo->getVector3Attribute("position");
 		}
 
 		if(entityInfo->hasAttribute("yaw")) {

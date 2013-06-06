@@ -9,9 +9,9 @@ namespace Logic {
 	DEC_FACTORYMESSAGE(CMessageSyncPosition);
 	public:
 		CMessageSyncPosition();
-		Vector3& getPosition();
+		Vector3 getPosition();
 		void setPosition(const Vector3& position);
-		Quaternion& getOrientation();
+		Quaternion getOrientation();
 		void setOrientation(const Quaternion& orientation);
 
 		virtual ~CMessageSyncPosition(){};
