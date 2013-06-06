@@ -18,14 +18,14 @@ Contiene la declaración del estado de juego.
 #define __Application_GameState_H
 
 #include "ApplicationState.h"
+
 // Predeclaración de clases para ahorrar tiempo de compilación
 namespace Application 
 {
 	class CBaseApplication;
 }
 
-namespace Graphics 
-{
+namespace Graphics {
 	class CScene;
 	class CCamera;
 	class CEntity;
@@ -33,8 +33,8 @@ namespace Graphics
 	class CAnimatedEntity;
 }
 
-namespace Application 
-{
+namespace Application {
+	
 	/**
 	Clase CGameState; representa el estado de juego de la aplicación.
 	Se encarga de la preparación y la carga del mapa lógico del juego.
@@ -56,8 +56,10 @@ namespace Application
 	@author David Llansó
 	@date Agosto, 2010
 	*/
+
 	class CGameState : public CApplicationState {
 	public:
+
 		/** 
 		Constructor de la clase 
 		*/
@@ -179,7 +181,6 @@ namespace Application
 		unsigned int _time;
 		unsigned int _timelogic;
 		unsigned int _timephysics;
-		
 
 	}; // CGameState
 

@@ -17,9 +17,6 @@ namespace Logic
 		Logic::CServer::getSingletonPtr()->MESSAGE_DESTRUCTOR_COUNTER += 1;
 	}
 
-	TMessageType CMessage::getMessageType(){
-		return _type;
-	}//
 	//----------------------------------------------------------
 
 	CMessage::CMessage(TMessageType t) : _type(t) {

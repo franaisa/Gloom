@@ -17,6 +17,10 @@
 
 #include "GameServerState.h"
 
+namespace Logic {
+	class CEntity;
+}
+
 namespace Application {
 	
 	/**
@@ -40,13 +44,18 @@ namespace Application {
 
 		@param app Aplicacion que se encarga de manejar los estados.
 		*/
-		CDMServer(CBaseApplication* app) : CGameServerState(app) { /* Nada que hacer */ }
+		CDMServer(CBaseApplication* app);
+
+		void setGameConfig(const std::pair<unsigned int, unsigned int>& timeLimit, unsigned int fragLimit, bool voteKick = false);
+
+		virtual void gameEventOcurred(Logic::CEntity* emitter, const std::shared_ptr<Logic::CMessage>& msg);
 
 
 		// =======================================================================
 		//                           METODOS HEREDADOS
 		// =======================================================================
 
+		virtual void tick(unsigned int msecs);
 
 		/**
 		Función llamada por la aplicación cuando se activa
@@ -133,6 +142,18 @@ namespace Application {
 		*/
 		virtual bool mouseReleased(const Input::CMouseState &mouseState);
 
+	private:
+
+		void endGame();
+
+		bool isPlayer(Logic::CEntity* entity);
+
+		int _time;
+		unsigned int _fragLimit;
+		bool _voteKick;
+		bool _voteMap;
+		bool _inEndGame;
+		bool _autoChangeMap;
 
 	}; // CDMServer
 

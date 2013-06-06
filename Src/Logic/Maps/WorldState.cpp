@@ -23,6 +23,8 @@ Contiene la implementación del estado del mundo.
 
 #include <cassert>
 
+using namespace std;
+
 namespace Logic {
 
 	CWorldState* CWorldState::_instance = 0;
@@ -72,6 +74,27 @@ namespace Logic {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+	void CWorldState::addObserver(IObserver* listener, const vector<TMessageType>& eventsMask) {
+		_observers.push_back( pair<IObserver*, vector<TMessageType> >(listener, eventsMask) );
+	}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	void CWorldState::removeObserver(IObserver* listener) {
+		if( _observers.empty() ) return;
+
+		// Debido a que normalmente tendremos un observador registrado
+		// nos podemos permitir el lujo de hacer borrados secuenciales
+		for(auto it = _observers.begin(); it != _observers.end(); ++it) {
+			if(it->first == listener) {
+				_observers.erase(it);
+				break;
+			}
+		}
+	}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 	void CWorldState::addEntity(CEntity* entity){
 		TEntityID id = entity->getEntityID();
 
@@ -107,6 +130,9 @@ namespace Logic {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	void CWorldState::addChange(CEntity* entity, std::shared_ptr<CMessage> message){
+		if(message->getMessageType() == Message::PLAYER_DEAD)
+			cout << entity->getName() << " ha palmado - WorldState" << endl;
+
 		TEntityID id = entity->getEntityID();
 
 		auto entityFound = _entities.find(id);
@@ -115,15 +141,44 @@ namespace Logic {
 		if (entityFound== _entities.end())
 			return;
 
+		// Si el mensaje ya esta anotado lo actualizamos, si no,
+		// lo registramos
 		unsigned int type = message->getMessageType();
+		entityFound->second.messages[type] = message;
 
-		auto messageFound = entityFound->second.messages.find(type);
+		bool notified;
+		for(int i = 0; i < _observers.size(); ++i) {
+			// @deprecated
+			// En el futuro esto sera una sola comprobacion de máscara
+			// ahora mismo lo hago un poco a lo bestia
+			notified = false;
+			for(int k = 0; k < _observers[i].second.size() && !notified; ++k) {
+				if(_observers[i].second[k] == type) {
+					_observers[i].first->gameEventOcurred(entity, message);
+					notified = true;
+				}
+			}
+		}
+	}
 
-		if(messageFound!=entityFound->second.messages.end())
-			entityFound->second.messages.erase(messageFound);
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-		TInfo newMessage(type,message);
-		entityFound->second.messages.insert(newMessage);
+	void CWorldState::deleteChange(CEntity* entity, unsigned int messageType){
+		if(messageType == Message::PLAYER_DEAD)
+			cout << entity->getName() << " ha resucitado - WorldState" << endl;
+
+		TEntityID id = entity->getEntityID();
+
+		auto entityFound = _entities.find(id);
+
+		//if we don't have the entity changed, we do nothing
+		if (entityFound == _entities.end())
+			return;
+
+		auto msgIt = entityFound->second.messages.find(messageType);
+ 
+		if(msgIt!=entityFound->second.messages.end())
+			entityFound->second.messages.erase(msgIt);
 	}
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -20,7 +20,9 @@
 */
 
 #include "impl/ViewportOverlay.h"
-
+#include <OgreOverlay.h>
+#include <OgreViewport.h>
+#include <OgreOverlayManager.h>
 using namespace Ogre;
 using namespace Hikari;
 using namespace Hikari::Impl;
@@ -41,12 +43,12 @@ ViewportOverlay::ViewportOverlay(const Ogre::String& name, Ogre::Viewport* viewp
 	overlay->setZOrder(zOrder);
 	resetPosition();
 
-	viewport->getTarget()->addListener(this);
+	//viewport->getTarget()->addListener(this);
 }
 
 ViewportOverlay::~ViewportOverlay()
 {
-	viewport->getTarget()->removeListener(this);
+	//viewport->getTarget()->removeListener(this);
 
 	if(overlay)
 	{
@@ -130,11 +132,13 @@ void ViewportOverlay::resize(int width, int height)
 void ViewportOverlay::hide()
 {
 	isVisible = false;
+	overlay->hide();
 }
 
 void ViewportOverlay::show()
 {
 	isVisible = true;
+	overlay->show();
 }
 
 int ViewportOverlay::getRelativeX(int absX)

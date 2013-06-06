@@ -21,6 +21,8 @@ la ventana, etc.
 #include "BaseSubsystems/Server.h"
 #include "BaseSubsystems/Math.h"
 
+#include "HHFX.h"
+
 #include <assert.h>
 
 #include <OgreRoot.h>
@@ -88,6 +90,8 @@ namespace Graphics
 		if(!BaseSubsystems::CServer::getSingletonPtr())
 			return false;
 
+		if(!Graphics::HHFX::Init())
+			return false;
 		_root = BaseSubsystems::CServer::getSingletonPtr()->getOgreRoot();
 
 		_renderWindow = BaseSubsystems::CServer::getSingletonPtr()->getRenderWindow();

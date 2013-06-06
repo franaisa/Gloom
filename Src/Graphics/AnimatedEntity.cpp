@@ -25,6 +25,7 @@ con animaciones.
 #include <OgreAnimationState.h>
 #include <OgreSceneManager.h>
 #include <OgreSubEntity.h>
+#include <OgreSkeleton.h>
 
 namespace Graphics 
 {
@@ -88,6 +89,11 @@ namespace Graphics
 		
 	void CAnimatedEntity::tick(float secs)
 	{
+		/*
+		Ogre::Skeleton * skeleton = _entity->getSkeleton();
+		Ogre::Bone * bone = skeleton->getBone("Bip01 R Hand");
+		bone->setOrientation(_entityNode->getOrientation());
+		*/
 		if(_currentAnimation)
 		{
 			_currentAnimation->addTime(secs);
@@ -105,6 +111,7 @@ namespace Graphics
 		if(_weapon)
 			_scene->getSceneMgr()->destroyEntity(_weapon);
 		_weapon = _scene->getSceneMgr()->createEntity(arma.getMesh());
+		
 		_entity->attachObjectToBone("Bip01 R Hand",_weapon);
 
 	}

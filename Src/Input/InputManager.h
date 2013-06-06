@@ -294,7 +294,7 @@ namespace Input
 		el gestor no llamará a otros listeners. Por defecto los 
 		métodos devuelven false.
 		*/
-		virtual bool keyPressed(TKey key) {return false;}
+		virtual bool keyPressed(TKey key) {return true;}
 		
 		/**
 		Método que será invocado siempre que se termine la pulsación
@@ -305,7 +305,7 @@ namespace Input
 		el gestor no llamará a otros listeners. Por defecto los 
 		métodos devuelven false.
 		*/
-		virtual bool keyReleased(TKey key) {return false;}
+		virtual bool keyReleased(TKey key) {return true;}
 
 	}; // CKeyboardListener
 	

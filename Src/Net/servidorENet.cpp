@@ -211,7 +211,7 @@ namespace Net {
 		
 		/* Allow up to 3 seconds for the disconnect to succeed
 			and drop any packets received packets.     */
-		while (enet_host_service (server, & event, 50) > 0)
+		/*while (enet_host_service (server, & event, 50) > 0)
 		{
 			switch (event.type)
 			{
@@ -225,8 +225,8 @@ namespace Net {
 					disconnectReceived(conexion);
 				return;
 			}
-		}
-	    
+		}*/
+	    disconnectReceived(conexion);
 		/* We've arrived here, so the disconnect attempt didn't */
 		/* succeed yet.  Force the connection down.             */
 		enet_peer_reset (((CConexionENet*)conexion)->getENetPeer());

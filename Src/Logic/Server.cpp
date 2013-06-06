@@ -164,16 +164,18 @@ namespace Logic {
 
 	void CServer::unLoadLevel()
 	{
+		_guiManager->deactivate();
 		if(_map)
 		{
 			_map->deactivate();
 			_gameSpawnManager->deactivate();
 			_gameNetMsgManager->deactivate();
+			_guiManager->deactivate();
 			delete _map;
 			_map = 0;
 		}
 		_player = 0;
-		_guiManager->deactivate();
+		
 		Logic::CEntityFactory::getSingletonPtr()->releaseDispatcher();
 	} // unLoadLevel
 

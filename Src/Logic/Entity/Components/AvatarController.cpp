@@ -32,7 +32,6 @@ de la entidad.
 #include "Logic/Messages/MessageAddForcePlayer.h"
 #include "Logic/Messages/MessageSetAnimation.h"
 #include "Logic/Messages/MessageStopAnimation.h"
-#include "Logic/Messages/MessageHudDebugData.h"
 #include "Logic/Messages/MessageChangeGravity.h"
 
 #include "Graphics/Scene.h"
@@ -48,8 +47,17 @@ namespace Logic {
 
 	CAvatarController::CAvatarController() : _gravity(Vector3::ZERO),
 											 _touchingGround(false),
-											 _cameraFX(NULL) {
+											 _cameraFX(NULL),
+											 _physicController(0),
+											 _momentum(Vector3::ZERO),
+											 _displacementDir(Vector3::ZERO),
+											 _dodgeForce(Vector3::ZERO)
+	{
 		
+		//anti release
+		for(int i = 0; i < 18 ; ++i)
+			_movementCommands[i] = Vector3::ZERO;
+
 		// Inicializamos el array que contiene los vectores
 		// de cada tecla de movimiento
 		initMovementCommands();
@@ -104,6 +112,15 @@ namespace Logic {
 
 	bool CAvatarController::accept(const std::shared_ptr<CMessage>& message) {
 		TMessageType msgType = message->getMessageType();
+
+		if( this->isInDeepSleep() ) {
+			if(msgType == Message::CONTROL) {
+				ControlType ctrlType = std::static_pointer_cast<CMessageControl>(message)->getType();
+
+				if(ctrlType == Control::MOUSE)
+					return false;
+			}
+		}
 
 		return msgType == Message::CONTROL			||
 			   msgType == Message::ADDFORCEPLAYER;
@@ -292,13 +309,13 @@ namespace Logic {
 		///////////////////////////////////////////////////////////////
 		////////////////////////// DEBUG MODE /////////////////////////
 		///////////////////////////////////////////////////////////////
-		if(_displacementDir != Vector3::ZERO){
+		/*if(_displacementDir != Vector3::ZERO){
 			++ticks;
 		}else{
 			if(ticks>0)
 				std::cout << "el avatar controller se ha ejecutado " << ticks << " ticks" << std::endl;
 			ticks=0;
-		}
+		}*/
 		///////////////////////////////////////////////////////////////
 		///////////////////////////////////////////////////////////////
 

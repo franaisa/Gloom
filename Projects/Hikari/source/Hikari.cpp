@@ -91,13 +91,14 @@ HikariManager* HikariManager::GetPointer()
 
 FlashControl* HikariManager::createFlashOverlay(const Ogre::String& name, Ogre::Viewport* viewport, int width, int height, const Position& position, Ogre::ushort zOrder)
 {
+	auto control = controls.find(name);
+	if(control != controls.end())
+		return control->second;
 	
-	
-	
-	if(controls.find(name) != controls.end())
+	/*if(controls.find(name) != controls.end())
 		OGRE_EXCEPT(Ogre::Exception::ERR_RT_ASSERTION_FAILED, 
 			"An attempt was made to create a FlashControl named '" + name + "' when a FlashControl by the same name already exists!", 
-			"HikariManager::createFlashOverlay");
+			"HikariManager::createFlashOverlay");*/
 	
 	return controls[name] = new FlashControl(name, viewport, width, height, position, zOrder? zOrder : ++zOrderCounter);
 }
@@ -114,22 +115,40 @@ FlashControl* HikariManager::createFlashMaterial(const Ogre::String& name, int w
 
 void HikariManager::destroyFlashControl(FlashControl* controlToDestroy)
 {
-	if(controlToDestroy)
+	/*if(controlToDestroy){
+		auto it = controls.find(controlToDestroy->getName());
 		controlToDestroy->okayToDelete = true;
+		controls.erase(it);
+		delete controlToDestroy;
+	}*/
+	if(controlToDestroy)
+		controlToDestroy->hide();
 }
 
 void HikariManager::destroyFlashControl(const Ogre::String& controlName)
 {
+	/*FlashControl* control = getFlashControl(controlName);
+	if(control)
+		destroyFlashControl(control);*/
+
 	FlashControl* control = getFlashControl(controlName);
 	if(control)
-		control->okayToDelete = true;
+		control->hide();
+
+
 }
 
 void HikariManager::destroyAllControls()
 {
-	for(ControlMap::iterator iter = controls.begin(); iter != controls.end(); iter++)
+	/*for(ControlMap::iterator iter = controls.begin(); iter != controls.end(); iter++){
 		iter->second->okayToDelete = true;
-
+		
+		delete iter->second;
+	}
+	controls.clear();*/
+	for(ControlMap::iterator iter = controls.begin(); iter != controls.end(); iter++){
+		iter->second->hide();
+	}
 	focusedControl = 0;
 }
 
@@ -155,7 +174,9 @@ void HikariManager::update()
 		}
 		else
 		{
-			iter->second->update();
+			
+			if(iter->second->getVisibility())
+				iter->second->update();
 			iter++;
 		}
 	}

@@ -16,6 +16,7 @@
 #define __Application_DMClient_H
 
 #include "GameClientState.h"
+#include "Logic/Maps/WorldState.h"
 
 namespace Application {
 	
@@ -47,6 +48,10 @@ namespace Application {
 		//                           METODOS HEREDADOS
 		// =======================================================================
 
+
+		virtual void tick(unsigned int msecs);
+
+		void dataPacketReceived(Net::CPaquete* packet);
 
 		/**
 		Función llamada por la aplicación cuando se activa

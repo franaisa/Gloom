@@ -44,6 +44,13 @@ namespace Logic {
 	class CPlayerInfo {
 	public:
 
+		struct Team {
+			enum Enum {
+				eBLUE_TEAM	= 0,
+				eRED_TEAM	= 1
+			};
+		};
+
 
 		// =======================================================================
 		//                      CONSTRUCTORES Y DESTRUCTOR
@@ -51,7 +58,7 @@ namespace Logic {
 
 
 		/** Constructor por defecto. */
-		CPlayerInfo() : _rank(0), _entityIdInitialized(false), _entityId(0) {}
+		CPlayerInfo() : _entityIdInitialized(false), _entityId(0) {}
 		
 		//________________________________________________________________________
 
@@ -136,15 +143,6 @@ namespace Logic {
 		//________________________________________________________________________
 
 		/**
-		Devuelve el mesh del player.
-
-		@return El mesh del player.
-		*/
-		std::string getMesh();
-
-		//________________________________________________________________________
-
-		/**
 		Devuelve el identificador de la entidad logica que corresponde al player que
 		describe este CPlayerInfo.
 
@@ -181,6 +179,14 @@ namespace Logic {
 		*/
 		bool isSpawned();
 
+		//________________________________________________________________________
+
+		/**
+		Devuelve el número de frags que lleva el jugador.
+
+		@return Número de frags que lleva el jugador.
+		*/
+		inline int getFrags() { return _frags; }
 
 		// =======================================================================
 		//                               SETTERS
@@ -193,15 +199,6 @@ namespace Logic {
 		@param name Nombre que se le desea asignar al player.
 		*/
 		void setName(const std::string& name);
-
-		//________________________________________________________________________
-
-		/**
-		Asigna un mesh al player.
-
-		@param mesh Nombre del mesh que se le va a asignar al player.
-		*/
-		void setMesh(const std::string& mesh);
 
 		//________________________________________________________________________
 
@@ -230,6 +227,21 @@ namespace Logic {
 		*/
 		void isSpawned(bool playing);
 
+		//________________________________________________________________________
+
+		/**
+		Incrementa el número de frags anotados para el jugador dado.
+		*/
+		inline void addFrag() { ++_frags; }
+
+		//________________________________________________________________________
+
+		/**
+		Decrementa el número de frags anotados para el jugador dado.
+		*/
+		inline void substractFrag() { --_frags; }
+
+
 	private:
 
 
@@ -241,14 +253,9 @@ namespace Logic {
 		/** Nickname del player. */
 		std::string _name;
 
-		/** Nombre del mesh que esta usando el player. */
-		std::string _mesh;
+		int _frags;
 
-		/** Clan al que pertenece este player. */
-		std::string _clan;
-
-		/** Nivel de este player. */
-		unsigned short int _rank;
+		Team::Enum _team;
 
 		/** Identificador de la entidad logica */
 		TEntityID _entityId;

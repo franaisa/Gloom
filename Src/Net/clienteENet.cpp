@@ -204,7 +204,7 @@ namespace Net {
 
 		/* Allow up to 3 seconds for the disconnect to succeed
 			and drop any packets received packets.     */
-		while (enet_host_service (client, & event, 3000) > 0)
+		while (enet_host_service (client, & event, 50) > 0)
 		{
 			switch (event.type)
 			{

@@ -153,7 +153,7 @@ namespace Application {
 		}
 
 		// Empezamos la partida en modo servidor
-		_app->setState("gameServer");
+		_app->setState("DMServer");
 		return FLASH_VOID;
 	} // backReleased
 

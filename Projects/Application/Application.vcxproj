@@ -76,7 +76,7 @@
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>../../Projects\Hikari\include;../../dependencies/include/fmod;../../Src;../../dependencies/include;../../dependencies/include/OGRE;../../dependencies/include/OIS;../../dependencies/include/cegui;../../dependencies/include/PhysX;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../Projects\Hikari\include;../../dependencies/include;../../dependencies/include/fmod;../../Src;../../dependencies/include/OGRE;../../dependencies/include/OIS;../../dependencies/include/cegui;../../dependencies/include/PhysX;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -105,6 +105,8 @@
     <ClCompile Include="..\..\Src\Application\3DApplication.cpp" />
     <ClCompile Include="..\..\Src\Application\BaseApplication.cpp" />
     <ClCompile Include="..\..\Src\Application\Clock.cpp" />
+    <ClCompile Include="..\..\Src\Application\DMClient.cpp" />
+    <ClCompile Include="..\..\Src\Application\DMServer.cpp" />
     <ClCompile Include="..\..\Src\Application\GameOverState.cpp" />
     <ClCompile Include="..\..\Src\Application\Gloom.cpp" />
     <ClCompile Include="..\..\Src\Application\GloomApplication.cpp" />
@@ -126,6 +128,8 @@
     <ClInclude Include="..\..\Src\Application\ApplicationState.h" />
     <ClInclude Include="..\..\Src\Application\BaseApplication.h" />
     <ClInclude Include="..\..\Src\Application\Clock.h" />
+    <ClInclude Include="..\..\Src\Application\DMClient.h" />
+    <ClInclude Include="..\..\Src\Application\DMServer.h" />
     <ClInclude Include="..\..\Src\Application\Documentation.h" />
     <ClInclude Include="..\..\Src\Application\ExitState.h" />
     <ClInclude Include="..\..\Src\Application\GameOverState.h" />

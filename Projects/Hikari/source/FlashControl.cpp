@@ -436,6 +436,8 @@ void FlashControl::getUVScale(Ogre::Real &uScale, Ogre::Real &vScale) const
 
 void FlashControl::injectMouseMove(int xPos, int yPos)
 {
+	if(!overlay->isVisible)
+		return;
 	LRESULT result;
 	windowlessObject->OnWindowMessage(WM_MOUSEMOVE, 0, MAKELPARAM(xPos, yPos), &result);
 }

@@ -267,6 +267,9 @@ namespace Logic {
 		/** Timer que controla el tiempo que ha pasado desde el anterior step de daño. */
 		unsigned int _damageTimer;
 
+		/** Booleano para saber si el player esta respawneando y goza de cierta inmunidad. */
+		bool _respawning;
+
 		/** Ruta del sonido de daño. */
 		std::string _audioPain;
 

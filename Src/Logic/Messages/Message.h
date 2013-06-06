@@ -47,7 +47,7 @@ namespace Logic {
 			CHANGE_WEAPON				= 0x0000000A,//10
 			CHANGE_WEAPON_GRAPHICS		= 0x0000000B,//11
 			COLLISION_DOWN				= 0x0000000C,//12
-			FREE_SLOT_1					= 0x0000000D,//13
+			SPAWN_IS_LIVE				= 0x0000000D,//13
 			HUD_LIFE					= 0x0000000E,//14
 			HUD_SHIELD					= 0x0000000F,//15
 			HUD_AMMO					= 0x00000010,//16
@@ -64,7 +64,7 @@ namespace Logic {
 			WAKEUP						= 0x0000001B,//27
 			SLEEP						= 0x0000001C,//28
 			ACTIVATE					= 0x0000001D,//29
-			FREE_SLOT_2					= 0x0000001E,//30
+			DECAL						= 0x0000001E,//30
 			CEALING						= 0x0000001F,//31
 			ADDFORCEPLAYER				= 0x00000020,//32
 			SIDE						= 0x00000021,//33
@@ -95,7 +95,9 @@ namespace Logic {
 			DAMAGE_AMPLIFIER			= 0x0000003A,//58
 			PLAYER_SNAPSHOT				= 0x0000003B,//59
 			CHANGE_GRAVITY				= 0x0000003C,//60
-			PARTICLE_VISIBILITY			= 0x0000003D //61
+			PARTICLE_VISIBILITY			= 0x0000003D,//61
+			PRIMARY_SHOOT				= 0x0000003E,//62
+			SECONDARY_SHOOT				= 0x0000003F //63
 		};
 	}
 
@@ -171,7 +173,8 @@ namespace Logic {
 	*/
 	class CMessage { // Abstracta
 	public:
-		TMessageType getMessageType();
+		inline TMessageType getMessageType() { return _type; }
+
 		// Inicializa los mensajes a los valores por defecto
 		CMessage(TMessageType t);
 		virtual ~CMessage();

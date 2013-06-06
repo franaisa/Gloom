@@ -45,7 +45,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>../../Projects\Hikari\include;../../Src;../../dependencies/include/OGRE;../../dependencies/include/OIS;../../dependencies/include/PhysX;../../dependencies/include/fmod;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../dependencies/include;../../Projects\Hikari\include;../../Src;../../dependencies/include/OGRE;../../dependencies/include/OIS;../../dependencies/include/PhysX;../../dependencies/include/fmod;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -63,7 +63,7 @@
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>../../Projects\Hikari\include;../../Src;../../dependencies/include/OGRE;../../dependencies/include/OIS;../../dependencies/include/PhysX;../../dependencies/include/fmod;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../dependencies/include;../../Projects\Hikari\include;../../Src;../../dependencies/include/OGRE;../../dependencies/include/OIS;../../dependencies/include/PhysX;../../dependencies/include/fmod;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -79,6 +79,13 @@
   <ItemGroup>
     <ClCompile Include="..\..\Src\Graphics\DecalUtility.cpp" />
     <ClCompile Include="..\..\Src\Graphics\OgreDecal.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\Ammo.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\IronHellGoatAmmo.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\IronHellGoatFeedback.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\MiniGunAmmo.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\ShotGunAmmo.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\SniperAmmo.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\SoulReaperAmmo.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\Weapon.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\ArrayGraphics.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\Audio.cpp" />
@@ -134,6 +141,7 @@
     <ClCompile Include="..\..\Src\Logic\Entity\Components\SpikeTrap.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\TransformInterpolator.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\UpdateClientPosition.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\WeaponFeedback.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\WeaponsManager.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\MessageFactory.cpp" />
     <ClCompile Include="..\..\Src\Logic\GameNetMsgManager.cpp" />
@@ -169,8 +177,10 @@
     <ClCompile Include="..\..\Src\Logic\Messages\MessageAudio.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageChangeGravity.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageDamageAmplifier.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Messages\MessageDecal.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageParticleVisibility.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessagePlayerSnapshot.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Messages\MessagePrimaryShoot.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageReducedCooldown.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageCameraOffset.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageCameraRoll.cpp" />
@@ -202,6 +212,7 @@
     <ClCompile Include="..\..\Src\Logic\Messages\MessageMouse.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessagePlayerDead.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessagePositionSnapshot.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Messages\MessageSecondaryShoot.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageSetAnimation.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageSetRelatedEntity.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageSetPhysicPosition.cpp" />
@@ -209,6 +220,7 @@
     <ClCompile Include="..\..\Src\Logic\Messages\MessageSide.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageSleep.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessagePlayerSpawn.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Messages\MessageSpawnIsLive.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageStopAnimation.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageSwitch.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageSyncPosition.cpp" />
@@ -223,6 +235,13 @@
   <ItemGroup>
     <ClInclude Include="..\..\Src\Graphics\DecalUtility.h" />
     <ClInclude Include="..\..\Src\Graphics\OgreDecal.h" />
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\Ammo.h" />
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\IronHellGoatAmmo.h" />
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\IronHellGoatFeedback.h" />
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\MiniGunAmmo.h" />
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\ShotGunAmmo.h" />
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\SniperAmmo.h" />
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\SoulReaperAmmo.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\Weapon.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\Audio.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\CameraFeedbackNotifier.h" />
@@ -279,6 +298,7 @@
     <ClInclude Include="..\..\Src\Logic\Entity\Components\SpikeTrap.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\TransformInterpolator.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\UpdateClientPosition.h" />
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\WeaponFeedback.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\WeaponsManager.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\WeaponType.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\MessageFactory.h" />
@@ -334,6 +354,7 @@
     <ClInclude Include="..\..\Src\Logic\Messages\MessageControl.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageDamaged.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageDeactivateScreamerShield.h" />
+    <ClInclude Include="..\..\Src\Logic\Messages\MessageDecal.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageFlash.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageHudAmmo.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageHudDebug.h" />
@@ -350,8 +371,10 @@
     <ClInclude Include="..\..\Src\Logic\Messages\MessagePlayerDead.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessagePlayerSnapshot.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessagePositionSnapshot.h" />
+    <ClInclude Include="..\..\Src\Logic\Messages\MessagePrimaryShoot.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageRebound.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageReducedCooldown.h" />
+    <ClInclude Include="..\..\Src\Logic\Messages\MessageSecondaryShoot.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageSetAnimation.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageSetRelatedEntity.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageSetPhysicPosition.h" />
@@ -359,6 +382,7 @@
     <ClInclude Include="..\..\Src\Logic\Messages\MessageSide.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageSleep.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessagePlayerSpawn.h" />
+    <ClInclude Include="..\..\Src\Logic\Messages\MessageSpawnIsLive.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageStopAnimation.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageSwitch.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageSyncPosition.h" />

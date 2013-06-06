@@ -114,7 +114,7 @@ namespace Logic  {
 		/**
 		Devuelve el ping actual del jugador
 		*/
-		float getPing(){return _actualPing;};
+		unsigned int getPing(){return _actualPing;};
 
 
 		void setLerpLevel(Vector3 lerp);

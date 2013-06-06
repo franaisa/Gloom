@@ -152,16 +152,6 @@ namespace Logic {
 		//________________________________________________________________________
 
 		/**
-		Asigna un mesh a un player dado un identificador de red.
-
-		@param playerNetId Identificador de red del player al que queremos cambiarle el mesh.
-		@param mesh Mesh que queremos asignar al player.
-		*/
-		void setPlayerMesh(Net::NetID playerNetId, const std::string& mesh);
-
-		//________________________________________________________________________
-
-		/**
 		Asigna un identificador de entidad a un player dado un identificador de red.
 
 		@param playerNetId Identificador de red del player al que queremos asignar un identificador de entidad.
@@ -178,6 +168,26 @@ namespace Logic {
 		@param isSpawned true si la entidad está spawneada y en la partida.
 		*/
 		void setPlayerState(Net::NetID playerNetId, bool isSpawned);
+
+		//________________________________________________________________________
+
+		/**
+		Incrementa el número de frags de un jugador.
+
+		@param entityId Id de la entidad a la que queremos aumentarle el número
+		de frags.
+		*/
+		void addFragUsingEntityID(Logic::TEntityID entityId);
+
+		//________________________________________________________________________
+
+		/**
+		Decrementa el número de frags de un jugador.
+
+		@param entityId Id de la entidad a la que queremos decrementarle el número
+		de frags.
+		*/
+		void substractFragUsingEntityID(Logic::TEntityID entityId);
 
 
 		// =======================================================================
@@ -263,6 +273,16 @@ namespace Logic {
 		conectados.
 		*/
 		bool existsByLogicId(Logic::TEntityID playerId);
+
+		//________________________________________________________________________
+
+		/**
+		Devuelve el número de frags que lleva el jugador.
+
+		@param playerId Id lógico del jugador.
+		@return El número de frags que lleva el jugador dado.
+		*/
+		int getFragsUsingEntityID(Logic::TEntityID playerId);
 
 
 		// =======================================================================

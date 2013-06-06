@@ -48,7 +48,7 @@ namespace Logic {
 	@author Francisco Aisa García
 	@date Abril, 2013
 	*/
-
+	
 	class CAvatarController : public IComponent {
 		DEC_FACTORY(CAvatarController);
 	public:
@@ -352,8 +352,6 @@ namespace Logic {
 
 		/** Número máximo de comandos de movimiento. */
 		static const int MAX_MOVEMENT_COMMANDS = Control::CROUCH;
-
-		unsigned int ticks;
 
 	}; // class CAvatarController
 

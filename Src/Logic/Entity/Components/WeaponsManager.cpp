@@ -19,6 +19,12 @@ Contiene la implementación del componente que gestiona las armas y que administr
 #include "Logic/Maps/WorldState.h"
 
 #include "Weapon.h"
+/*#include "ShootShotGunAmmo.h"
+#include "ShootSniperAmmo.h"
+#include "ShootMiniGunAmmo.h"
+#include "ShootHammerAmmo.h"
+#include "IronHellGoatAmmo.h"*/
+
 #include "ShootShotGun.h"
 #include "ShootSniper.h"
 #include "ShootMiniGun.h"

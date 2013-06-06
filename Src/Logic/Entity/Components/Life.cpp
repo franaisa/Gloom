@@ -27,6 +27,7 @@ que controla la vida de un personaje.
 #include "Logic/PlayerInfo.h"
 #include "Logic/GameNetPlayersManager.h"
 #include "Logic/GameNetMsgManager.h"
+#include "Logic/Maps/WorldState.h"
 
 // Mensajes
 #include "Logic/Messages/MessageDamaged.h"
@@ -47,7 +48,8 @@ namespace Logic {
 	//________________________________________________________________________
 
 	CLife::CLife() : _damageTimer(0), 
-					 _reducedDamageAbsorption(0) {
+					 _reducedDamageAbsorption(0),
+					 _respawning(false) {
 
 		// Nada que hacer
 	}
@@ -102,6 +104,7 @@ namespace Logic {
 		// Resteamos los valores de salud y escudo a los valores por defecto
 		_currentLife = _defaultLife;
 		_currentShield = 0;
+		//_respawning = false;
 
 		// Actualizamos la info del HUD
 		std::shared_ptr<CMessageHudLife> hudLifeMsg = std::make_shared<CMessageHudLife>();
@@ -118,6 +121,9 @@ namespace Logic {
 	bool CLife::accept(const std::shared_ptr<CMessage>& message) {
 		Logic::TMessageType msgType = message->getMessageType();
 
+		if(_respawning)
+			return msgType == Message::SPAWN_IS_LIVE;
+
 		return msgType == Message::DAMAGED				|| 
 			   msgType == Message::ADD_LIFE				||
 			   msgType == Message::ADD_SHIELD			||
@@ -131,7 +137,7 @@ namespace Logic {
 			case Message::DAMAGED: {
 				std::shared_ptr<CMessageDamaged> dmgMsg = std::static_pointer_cast<CMessageDamaged>(message);
 				damaged( dmgMsg->getDamage(), dmgMsg->getEnemy() );
-				std::cout << "soy " << _entity->getName() << " y me hace " << dmgMsg->getDamage() << " el enemigo " << dmgMsg->getEnemy()->getName() << std::endl;
+				//std::cout << "soy " << _entity->getName() << " y me hace " << dmgMsg->getDamage() << " el enemigo " << dmgMsg->getEnemy()->getName() << std::endl;
 				break;
 			}
 			case Message::ADD_LIFE: {
@@ -148,6 +154,9 @@ namespace Logic {
 				std::shared_ptr<CMessageSetReducedDamage> reducedDmgMsg = std::static_pointer_cast<CMessageSetReducedDamage>(message);
 				reducedDamageAbsorption( reducedDmgMsg->getReducedDamage() );
 				break;
+			}
+			case Message::SPAWN_IS_LIVE: {
+				_respawning = false;	
 			}
 		}
 	} // process
@@ -280,11 +289,16 @@ namespace Logic {
 	//________________________________________________________________________
 
 	void CLife::triggerDeathState(CEntity* enemy) {
+		_respawning = true;
+
 		// Mensaje de playerDead para tratar el respawn y desactivar los componentes
 		// del personaje.
 		std::shared_ptr<CMessagePlayerDead> playerDeadMsg = std::make_shared<CMessagePlayerDead>();
 		playerDeadMsg->setKiller(enemy->getEntityID());
 		_entity->emitMessage(playerDeadMsg);
+
+		// Informamos al estado del mundo de que se ha producido una muerte
+		Logic::CWorldState::getSingletonPtr()->addChange(_entity, playerDeadMsg);
 
 		// Mensaje para que la camara enfoque al jugador que nos ha matado
 		// En el caso de la red, hay que enviar un mensaje especial para el cliente
@@ -300,7 +314,6 @@ namespace Logic {
 		// Enviamos el mensaje por la red
 		if( Net::CManager::getSingletonPtr()->imServer() )
 			Logic::CGameNetMsgManager::getSingletonPtr()->sendMessageToOne(cteMsg, camera->getEntityID(), _entity->getEntityID());
-
 	}
 
 	//________________________________________________________________________

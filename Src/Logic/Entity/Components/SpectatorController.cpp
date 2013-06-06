@@ -12,13 +12,21 @@ del espectador.
 */
 
 #include "SpectatorController.h"
+#include "PhysicController.h"
+#include "Camera.h"
+
 #include "Logic/Entity/Entity.h"
+#include "Logic/Server.h"
+#include "Logic/Maps/Map.h"
+
 #include "Map/MapEntity.h"
-#include "Logic/Entity/Components/PhysicController.h"
-#include "Logic/Entity/Components/Camera.h"
 
 #include "Logic/Messages/MessageControl.h"
 #include "Logic/Messages/MessageMouse.h"
+
+// NO DEBERIAN ESTAR AQUI!
+#include "Graphics/Camera.h"
+#include "Graphics/Scene.h"
 
 namespace Logic {
 
@@ -78,7 +86,7 @@ namespace Logic {
 				ControlType commandType = std::static_pointer_cast<CMessageControl>(message)->getType();
 
 				// Comando de movimiento
-				if(commandType >=0 && commandType < 18) {
+				if(commandType >= 0 && commandType < 16) {
 					executeMovementCommand(commandType);
 				}
 				// Comando de raton
@@ -96,8 +104,13 @@ namespace Logic {
 	//________________________________________________________________________
 
 	void CSpectatorController::mouse(float XYturn[]) {
-		_entity->yaw(XYturn[0]);
-		_entity->pitch(XYturn[1]);
+		// @deprecated
+		// El espectador ha dejado de funcionarme... meto la ñapa que había
+		// en el avatarController para que funcione
+		Graphics::CCamera* camera= _entity->getMap()->getScene()->getCamera();
+		camera->moveCamera( Ogre::Radian(XYturn[0]), Ogre::Radian(XYturn[1]) );
+
+		_entity->setOrientation( camera->getRealOrientation() );
 	} // turn
 
 	//________________________________________________________________________
@@ -211,6 +224,13 @@ namespace Logic {
 		_movementCommands[Control::STOP_CROUCH]			= Vector3(0, 1, 0);
 		_movementCommands[Control::JUMP]				= Vector3(0, 1, 0);
 		_movementCommands[Control::STOP_JUMP]			= Vector3(0, -1, 0);
+
+		// Aunque el espectador no haga dodges tiene que leer las teclas
+		// para que no se queden pilladas
+		_movementCommands[Control::SIDEJUMP_LEFT]		= Vector3(1, 0, 0);
+		_movementCommands[Control::SIDEJUMP_RIGHT]		= Vector3(-1, 0, 0);
+		_movementCommands[Control::DODGE_BACKWARDS]		= Vector3(0, 0, -1);
+		_movementCommands[Control::DODGE_FORWARD]		= Vector3(0, 0, 1);
 	}
 
 } // namespace Logic
