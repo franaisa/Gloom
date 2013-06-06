@@ -209,7 +209,9 @@ namespace Logic
 				Math::rotate(Vector3::UNIT_Y,Ogre::Radian(Math::HALF_PI),_entity->getYaw());
 
 				//En el eje de movimiento horizontal
-				Vector3 directionStrafe = (_entity->getYaw() + Math::PI/2)*Vector3::NEGATIVE_UNIT_Z;
+				//REVISAR NO ESTOY MUY SEGURO
+				Quaternion halfPi(Ogre::Radian(Math::HALF_PI),Vector3::UNIT_Y);
+				Vector3 directionStrafe = (_entity->getYaw() * halfPi)*Vector3::NEGATIVE_UNIT_Z;
 				position += directionStrafe;
 			}
 
