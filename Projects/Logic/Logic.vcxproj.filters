@@ -601,6 +601,9 @@
     <ClCompile Include="..\..\Src\Logic\Messages\MessageDecal.cpp">
       <Filter>Messages\Source</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\AnimationManager.cpp">
+      <Filter>Entity\Components\Graphics\Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Src\Logic\Maps\ComponentFactory.h">
@@ -1091,6 +1094,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Messages\MessageDecal.h">
       <Filter>Messages\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\AnimationManager.h">
+      <Filter>Entity\Components\Graphics\Header</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

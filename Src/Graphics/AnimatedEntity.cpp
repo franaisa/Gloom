@@ -94,7 +94,7 @@ namespace Graphics
 		Ogre::Bone * bone = skeleton->getBone("Bip01 R Hand");
 		bone->setOrientation(_entityNode->getOrientation());
 		*/
-		_entity->setCastShadows(true);
+		
 		if(_currentAnimation)
 		{
 			_currentAnimation->addTime(secs);

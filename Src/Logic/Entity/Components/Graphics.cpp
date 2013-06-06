@@ -136,11 +136,6 @@ namespace Logic
 
 	void CGraphics::process(const std::shared_ptr<CMessage>& message) {
 		switch( message->getMessageType() ) {
-			case Message::SET_TRANSFORM: {
-				std::shared_ptr<CMessageTransform> transformMsg = std::static_pointer_cast<CMessageTransform>(message);
-				_graphicsEntity->setTransform( transformMsg->getTransform() );
-				break;
-			}
 			case Message::ACTIVATE: {
 				setVisible(std::static_pointer_cast<CMessageActivate>(message)->getActivated());
 				break;
@@ -167,11 +162,11 @@ namespace Logic
 	//---------------------------------------------------------
 
 	void CGraphics::changeMaterial(const std::string& materialName) {
-		if(materialName != "original")
+		/*if(materialName != "original")
 			_graphicsEntity->changeMaterial(materialName);
 		else
 			_graphicsEntity->changeMaterial(_materialName);
-		
+		*/
 	}
 
 	//---------------------------------------------------------

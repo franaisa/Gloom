@@ -22,34 +22,78 @@ material Material#25
 		set $specular "2 2 2 100"
 		set $shininess "60"
 		
-		pass
+		pass 
 		{
-			illumination_stage decal
-			fragment_program_ref ilumination_ps
-			{
-				param_named_auto ambient ambient_light_colour
-			}
+			illumination_stage ambient
+		
+			ambient "0 0 0 1"
+			diffuse "1 1 1 1"
+			specular $specular $shininess
+			emissive 0 0 0 0
 			
+			vertex_program_ref ambient_vs
+            {
+            }
+
+            fragment_program_ref ambient_ps
+            {
+            }
+
             texture_unit diffuseMap
             {
-                texture piedra_COLOR2.tga
-				
+				texture piedra_COLOR2.tga
 				filtering anisotropic
+			}
+			
+			texture_unit aoMap
+			{
+				texture piedra_COLOR2.tga
+				filtering anisotropic
+			}
+		}
+
+        pass
+        {
+
+            illumination_stage per_light
+
+            scene_blend add
+            iteration once_per_light
+
+            vertex_program_ref diffuse_vs
+            {
             }
-			texture_unit specularMap
+
+            fragment_program_ref diffuse_ps
+            {
+            }
+
+            ambient "0 0 0 1"
+			diffuse "1 1 1 1"
+			specular $specular $shininess
+			emissive 0 0 0 0
+			
+            texture_unit aoMap
+			{
+				texture piedra_COLOR2.tga
+				filtering anisotropic
+			}
+
+            texture_unit specMap
             {
                 texture piedra_SPEC.tga
 				
 				filtering anisotropic
             }
-			texture_unit normalMap
+
+            texture_unit normalMap
             {
                 texture piedra_NRM.tga
 				
 				filtering anisotropic
             }
+        }
 		
-		}
 	}
 
 }
@@ -63,35 +107,80 @@ material Material#52
 		set $specular "2 2 2 100"
 		set $shininess "60"
 		
-		pass
+		pass 
 		{
-			illumination_stage decal
-			fragment_program_ref ilumination_ps
-			{
-				param_named_auto ambient ambient_light_colour
-			}
+			illumination_stage ambient
+		
+			ambient "0 0 0 1"
+			diffuse "1 1 1 1"
+			specular $specular $shininess
+			emissive 0 0 0 0
 			
+			vertex_program_ref ambient_vs
+            {
+            }
+
+            fragment_program_ref ambient_ps
+            {
+            }
+
             texture_unit diffuseMap
             {
-                texture metalpuerta_COLOR.tga
+				texture metalpuerta_COLOR.tga
 				
 				filtering anisotropic
+			}
+			
+			texture_unit aoMap
+			{
+				texture metalpuerta_COLOR.tga
+				
+				filtering anisotropic
+			}
+		}
+
+        pass
+        {
+
+            illumination_stage per_light
+
+            scene_blend add
+            iteration once_per_light
+
+            vertex_program_ref diffuse_vs
+            {
             }
-			texture_unit specularMap
+
+            fragment_program_ref diffuse_ps
+            {
+            }
+
+            ambient "0 0 0 1"
+			diffuse "1 1 1 1"
+			specular $specular $shininess
+			emissive 0 0 0 0
+			
+            texture_unit aoMap
+			{
+				texture metalpuerta_COLOR.tga
+				
+				filtering anisotropic
+			}
+
+            texture_unit specMap
             {
                 texture metalpuerta_SPEC.tga
 				
 				filtering anisotropic
             }
-			texture_unit normalMap
+
+            texture_unit normalMap
             {
-                texture metalpuerta_NRM.tga
+                texture piedra_NRM.tga
 				
 				filtering anisotropic
             }
-		
-		}
-
+        }
 	}
 
 }
@@ -106,35 +195,83 @@ material Material#39
 		set $diffuse "1 1 1 1"
 		set $specular "2 2 2 100"
 		set $shininess "60"
-				
-		pass
+		
+		pass 
 		{
-			illumination_stage decal
-			fragment_program_ref ilumination_ps
-			{
-				param_named_auto ambient ambient_light_colour
-			}
+			illumination_stage ambient
+		
+			ambient "0 0 0 1"
+			diffuse "1 1 1 1"
+			specular $specular $shininess
+			emissive 0 0 0 0
 			
+			vertex_program_ref ambient_vs
+            {
+            }
+
+            fragment_program_ref ambient_ps
+            {
+            }
+
             texture_unit diffuseMap
             {
-                texture BronzeCopper0030_L_COLOR3.tga
+				texture BronzeCopper0030_L_COLOR3.tga
 				
 				filtering anisotropic
+			}
+			
+			texture_unit aoMap
+			{
+				texture BronzeCopper0030_L_COLOR3.tga
+				
+				filtering anisotropic
+			}
+		}
+
+        pass
+        {
+
+            illumination_stage per_light
+
+            scene_blend add
+            iteration once_per_light
+
+            vertex_program_ref diffuse_vs
+            {
             }
-			texture_unit specularMap
+
+            fragment_program_ref diffuse_ps
+            {
+            }
+
+            ambient "0 0 0 1"
+			diffuse "1 1 1 1"
+			specular $specular $shininess
+			emissive 0 0 0 0
+			
+            texture_unit aoMap
+			{
+				texture BronzeCopper0030_L_COLOR3.tga
+				
+				filtering anisotropic
+			}
+
+            texture_unit specMap
             {
                 texture BronzeCopper0030_L_SPEC.tga
 				
 				filtering anisotropic
             }
-			texture_unit normalMap
+
+            texture_unit normalMap
             {
                 texture BronzeCopper0030_L_NRM.tga
 				
 				filtering anisotropic
             }
+        }
 		
-		}
+		
 
 	}
 
@@ -151,34 +288,80 @@ material Material#38
 		set $specular "2 2 2 100"
 		set $shininess "60"
 		
-		pass
+		pass 
 		{
-			illumination_stage decal
-			fragment_program_ref ilumination_ps
-			{
-				param_named_auto ambient ambient_light_colour
-			}
+			illumination_stage ambient
+		
+			ambient "0 0 0 1"
+			diffuse "1 1 1 1"
+			specular $specular $shininess
+			emissive 0 0 0 0
 			
+			vertex_program_ref ambient_vs
+            {
+            }
+
+            fragment_program_ref ambient_ps
+            {
+            }
+
             texture_unit diffuseMap
             {
-                texture metal_columna_tileado_COLOR.tga
+				texture metal_columna_tileado_COLOR.tga
 				
 				filtering anisotropic
+			}
+			
+			texture_unit aoMap
+			{
+				texture metal_columna_tileado_COLOR.tga
+				
+				filtering anisotropic
+			}
+		}
+
+        pass
+        {
+
+            illumination_stage per_light
+
+            scene_blend add
+            iteration once_per_light
+
+            vertex_program_ref diffuse_vs
+            {
             }
-			texture_unit specularMap
+
+            fragment_program_ref diffuse_ps
+            {
+            }
+
+            ambient "0 0 0 1"
+			diffuse "1 1 1 1"
+			specular $specular $shininess
+			emissive 0 0 0 0
+			
+            texture_unit aoMap
+			{
+				texture metal_columna_tileado_COLOR.tga
+				
+				filtering anisotropic
+			}
+
+            texture_unit specMap
             {
                 texture metal_columna_tileado_SPEC.tga
 				
 				filtering anisotropic
             }
-			texture_unit normalMap
+
+            texture_unit normalMap
             {
                 texture metal_columna_tileado_NRM.tga
 				
 				filtering anisotropic
             }
-		
-		}
+        }
 
 	}
 
@@ -195,34 +378,80 @@ material Material#53
 		set $specular "2 2 2 100"
 		set $shininess "60"
 		
-		pass
+		pass 
 		{
-			illumination_stage decal
-			fragment_program_ref ilumination_ps
-			{
-				param_named_auto ambient ambient_light_colour
-			}
+			illumination_stage ambient
+		
+			ambient "0 0 0 1"
+			diffuse "1 1 1 1"
+			specular $specular $shininess
+			emissive 0 0 0 0
 			
+			vertex_program_ref ambient_vs
+            {
+            }
+
+            fragment_program_ref ambient_ps
+            {
+            }
+
             texture_unit diffuseMap
             {
-                texture viga_COLOR.tga
+				texture viga_COLOR.tga
 				
 				filtering anisotropic
+			}
+			
+			texture_unit aoMap
+			{
+				texture viga_COLOR.tga
+				
+				filtering anisotropic
+			}
+		}
+
+        pass
+        {
+
+            illumination_stage per_light
+
+            scene_blend add
+            iteration once_per_light
+
+            vertex_program_ref diffuse_vs
+            {
             }
-			texture_unit specularMap
+
+            fragment_program_ref diffuse_ps
+            {
+            }
+
+            ambient "0 0 0 1"
+			diffuse "1 1 1 1"
+			specular $specular $shininess
+			emissive 0 0 0 0
+			
+            texture_unit aoMap
+			{
+				texture viga_COLOR.tga
+				
+				filtering anisotropic
+			}
+
+            texture_unit specMap
             {
                 texture viga_SPEC.tga
 				
 				filtering anisotropic
             }
-			texture_unit normalMap
+
+            texture_unit normalMap
             {
                 texture viga_NRM.tga
 				
 				filtering anisotropic
             }
-		
-		}
+        }
 
 	}
 
@@ -239,35 +468,80 @@ material Material#93
 		set $specular "2 2 2 100"
 		set $shininess "60"
 		
-		pass
+		pass 
 		{
-			illumination_stage decal
-			fragment_program_ref ilumination_ps
-			{
-				param_named_auto ambient ambient_light_colour
-			}
+			illumination_stage ambient
+		
+			ambient "0 0 0 1"
+			diffuse "1 1 1 1"
+			specular $specular $shininess
+			emissive 0 0 0 0
 			
+			vertex_program_ref ambient_vs
+            {
+            }
+
+            fragment_program_ref ambient_ps
+            {
+            }
+
             texture_unit diffuseMap
             {
-                texture MetalContainer_COLOR_OXID.tga
+				texture MetalContainer_COLOR_OXID.tga
 				
 				filtering anisotropic
+			}
+			
+			texture_unit aoMap
+			{
+				texture MetalContainer_COLOR_OXID.tga
+				
+				filtering anisotropic
+			}
+		}
+
+        pass
+        {
+
+            illumination_stage per_light
+
+            scene_blend add
+            iteration once_per_light
+
+            vertex_program_ref diffuse_vs
+            {
             }
-			texture_unit specularMap
+
+            fragment_program_ref diffuse_ps
+            {
+            }
+
+            ambient "0 0 0 1"
+			diffuse "1 1 1 1"
+			specular $specular $shininess
+			emissive 0 0 0 0
+			
+            texture_unit aoMap
+			{
+				texture MetalContainer_COLOR_OXID.tga
+				
+				filtering anisotropic
+			}
+
+            texture_unit specMap
             {
                 texture MetalContainers_SPEC.tga
 				
 				filtering anisotropic
             }
-			texture_unit normalMap
+
+            texture_unit normalMap
             {
                 texture MetalContainers_NRM.tga
 				
 				filtering anisotropic
             }
-		
-		}
-
+        }
 	}
 
 }
@@ -284,34 +558,80 @@ material Material#94
 		set $specular "2 2 2 100"
 		set $shininess "60"
 		
-		pass
+		pass 
 		{
-			illumination_stage decal
-			fragment_program_ref ilumination_ps
-			{
-				param_named_auto ambient ambient_light_colour
-			}
+			illumination_stage ambient
+		
+			ambient "0 0 0 1"
+			diffuse "1 1 1 1"
+			specular $specular $shininess
+			emissive 0 0 0 0
 			
+			vertex_program_ref ambient_vs
+            {
+            }
+
+            fragment_program_ref ambient_ps
+            {
+            }
+
             texture_unit diffuseMap
             {
-                texture MetalContainer_COLOR.tga
+				texture MetalContainer_COLOR.tga
 				
 				filtering anisotropic
+			}
+			
+			texture_unit aoMap
+			{
+				texture MetalContainer_COLOR.tga
+				
+				filtering anisotropic
+			}
+		}
+
+        pass
+        {
+
+            illumination_stage per_light
+
+            scene_blend add
+            iteration once_per_light
+
+            vertex_program_ref diffuse_vs
+            {
             }
-			texture_unit specularMap
+
+            fragment_program_ref diffuse_ps
+            {
+            }
+
+            ambient "0 0 0 1"
+			diffuse "1 1 1 1"
+			specular $specular $shininess
+			emissive 0 0 0 0
+			
+            texture_unit aoMap
+			{
+				texture MetalContainer_COLOR.tga
+				
+				filtering anisotropic
+			}
+
+            texture_unit specMap
             {
                 texture MetalContainer_SPEC.tga
 				
 				filtering anisotropic
             }
-			texture_unit normalMap
+
+            texture_unit normalMap
             {
                 texture MetalContainer_NRM.tga
 				
 				filtering anisotropic
             }
-		
-		}
+        }
 	}
 
 }
@@ -327,34 +647,80 @@ material Material#37
 		set $specular "2 2 2 100"
 		set $shininess "60"
 	
-		pass
+		pass 
 		{
-			illumination_stage decal
-			fragment_program_ref ilumination_ps
-			{
-				param_named_auto ambient ambient_light_colour
-			}
+			illumination_stage ambient
+		
+			ambient "0 0 0 1"
+			diffuse "1 1 1 1"
+			specular $specular $shininess
+			emissive 0 0 0 0
 			
+			vertex_program_ref ambient_vs
+            {
+            }
+
+            fragment_program_ref ambient_ps
+            {
+            }
+
             texture_unit diffuseMap
             {
-                texture suelometal_COLOR2.tga
+				texture suelometal_COLOR2.tga
 				
 				filtering anisotropic
+			}
+			
+			texture_unit aoMap
+			{
+				texture suelometal_COLOR2.tga
+				
+				filtering anisotropic
+			}
+		}
+
+        pass
+        {
+
+            illumination_stage per_light
+
+            scene_blend add
+            iteration once_per_light
+
+            vertex_program_ref diffuse_vs
+            {
             }
-			texture_unit specularMap
+
+            fragment_program_ref diffuse_ps
+            {
+            }
+
+            ambient "0 0 0 1"
+			diffuse "1 1 1 1"
+			specular $specular $shininess
+			emissive 0 0 0 0
+			
+            texture_unit aoMap
+			{
+				texture suelometal_COLOR2.tga
+				
+				filtering anisotropic
+			}
+
+            texture_unit specMap
             {
                 texture suelometal_SPEC.tga
 				
 				filtering anisotropic
             }
-			texture_unit normalMap
+
+            texture_unit normalMap
             {
                 texture suelometal_NRM.tga
 				
 				filtering anisotropic
             }
-		
-		}
+        }
 	}
 
 }
@@ -370,34 +736,81 @@ material Material#92
 		set $specular "2 2 2 100"
 		set $shininess "60"
 		
-		pass
+		pass 
 		{
-			illumination_stage decal
-			fragment_program_ref ilumination_ps
-			{
-				param_named_auto ambient ambient_light_colour
-			}
+			illumination_stage ambient
+		
+			ambient "0 0 0 1"
+			diffuse "1 1 1 1"
+			specular $specular $shininess
+			emissive 0 0 0 0
 			
+			vertex_program_ref ambient_vs
+            {
+            }
+
+            fragment_program_ref ambient_ps
+            {
+            }
+
             texture_unit diffuseMap
             {
-                texture ventana_COLOR.tga
+				texture ventana_COLOR.tga
 				
 				filtering anisotropic
+			}
+			
+			texture_unit aoMap
+			{
+				texture ventana_COLOR.tga
+				
+				filtering anisotropic
+			}
+		}
+
+        pass
+        {
+
+            illumination_stage per_light
+
+            scene_blend add
+            iteration once_per_light
+
+            vertex_program_ref diffuse_vs
+            {
             }
-			texture_unit specularMap
+
+            fragment_program_ref diffuse_ps
+            {
+            }
+
+            ambient "0 0 0 1"
+			diffuse "1 1 1 1"
+			specular $specular $shininess
+			emissive 0 0 0 0
+			
+            texture_unit aoMap
+			{
+				texture ventana_COLOR.tga
+				
+				filtering anisotropic
+			}
+
+            texture_unit specMap
             {
                 texture ventana_SPEC.tga
 				
 				filtering anisotropic
             }
-			texture_unit normalMap
+
+            texture_unit normalMap
             {
                 texture ventana_NRM.tga
 				
 				filtering anisotropic
             }
+        }
 		
-		}
 	}
 
 }
@@ -413,34 +826,80 @@ material Material#107
 		set $specular "2 2 2 100"
 		set $shininess "60"
 		
-		pass
+		pass 
 		{
-			illumination_stage decal
-			fragment_program_ref ilumination_ps
-			{
-				param_named_auto ambient ambient_light_colour
-			}
+			illumination_stage ambient
+		
+			ambient "0 0 0 1"
+			diffuse "1 1 1 1"
+			specular $specular $shininess
+			emissive 0 0 0 0
 			
+			vertex_program_ref ambient_vs
+            {
+            }
+
+            fragment_program_ref ambient_ps
+            {
+            }
+
             texture_unit diffuseMap
             {
-                texture techometal_COLOR2.tga
+				texture techometal_COLOR2.tga
 				
 				filtering anisotropic
+			}
+			
+			texture_unit aoMap
+			{
+				texture techometal_COLOR2.tga
+				
+				filtering anisotropic
+			}
+		}
+
+        pass
+        {
+
+            illumination_stage per_light
+
+            scene_blend add
+            iteration once_per_light
+
+            vertex_program_ref diffuse_vs
+            {
             }
-			texture_unit specularMap
+
+            fragment_program_ref diffuse_ps
+            {
+            }
+
+            ambient "0 0 0 1"
+			diffuse "1 1 1 1"
+			specular $specular $shininess
+			emissive 0 0 0 0
+			
+            texture_unit aoMap
+			{
+				texture techometal_COLOR2.tga
+				
+				filtering anisotropic
+			}
+
+            texture_unit specMap
             {
                 texture techometal_SPEC_2.tga
 				
 				filtering anisotropic
             }
-			texture_unit normalMap
+
+            texture_unit normalMap
             {
                 texture techometal_NRM_2.tga
 				
 				filtering anisotropic
             }
-		
-		}
+        }
 	}
 
 }
