@@ -16,18 +16,16 @@ mover al jugador.
 
 #include "Logic/Entity/Entity.h"
 #include "Logic/Messages/Message.h"
-#include "Logic/Entity/Components/AvatarController.h"
-#include "Logic/Entity/Components/WeaponsManager.h"
-#include "Logic/Entity/Components/ArrayGraphics.h"
+#include "Logic/Messages/MessageHudDebugData.h"
 
 #include "Logic/Messages/MessageChangeWeapon.h"
 
 #include "Logic/Messages/MessageControl.h"
 #include "Logic/Messages/MessageMouse.h"
 
-#include "Logic/Messages/MessageCameraOffset.h"
-#include "Logic/Server.h"
-#include "Logic/Maps/Map.h"
+//#include "Logic/Messages/MessageCameraOffset.h"
+//#include "Logic/Server.h"
+//#include "Logic/Maps/Map.h"
 
 //#include "Logic/Messages/MessageCameraRoll.h"
 
@@ -48,7 +46,7 @@ mover al jugador.
 
 namespace Input {
 
-	CPlayerController::CPlayerController() : _controlledAvatar(0), m_iLastTime(0), m_eLastMove(E_MOVE::NONE)
+	CPlayerController::CPlayerController() : _controlledAvatar(0), m_iLastTime(0), m_eLastMove(NONE)
 	{
 
 	} // CPlayerController
@@ -111,6 +109,9 @@ namespace Input {
 	{
 		if(_controlledAvatar)
 		{
+			std::shared_ptr<Logic::CMessageHudDebugData> hud3 = std::make_shared<Logic::CMessageHudDebugData>();
+			hud3->setKey("ultimatecla");
+			hud3->setValue("keyreleased");
 			std::shared_ptr<Logic::CMessageControl> m = std::make_shared<Logic::CMessageControl>();
 			switch(key.keyId)
 			{
@@ -154,12 +155,11 @@ namespace Input {
 			case Input::Key::E:
 				m->setType(Logic::Control::STOP_SECONDARY_SKILL);
 				break;
-			case Input::Key::ESCAPE:// esto debe desaparecer en el futuro
-					return true;
-			//default:
-				//return true;
+			default:
+				return true;
 			}
 			_controlledAvatar->emitMessage(m);
+
 			return true;
 		}
 		return true;
@@ -397,10 +397,11 @@ namespace Input {
 			case Input::Key::Z:
 				m->setType(Logic::Control::CROUCH);
 				break;
-
-			break;
 		}
-
+		std::shared_ptr<Logic::CMessageHudDebugData> hud2 = std::make_shared<Logic::CMessageHudDebugData>();
+		hud2->setKey("lastkey-pcontroller");
+		hud2->setValue(m->getType());
+		_controlledAvatar->emitMessage(hud2);
 		_controlledAvatar->emitMessage(m);
 	}//EmitMessageMovement
 

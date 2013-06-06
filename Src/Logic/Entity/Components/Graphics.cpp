@@ -26,6 +26,7 @@ gráfica de la entidad.
 #include "Logic/Messages/MessageActivate.h"
 #include "Logic/Messages/MessageWakeUp.h"
 #include "Logic/Messages/MessageChangeMaterial.h"
+#include "Logic/Messages/MessageDecal.h"
 
 #include <OgreSceneManager.h>
 #include "OgreEntity.h"
@@ -127,18 +128,14 @@ namespace Logic
 
 		return //msgType == Message::SET_TRANSFORM    ||
 			   msgType == Message::ACTIVATE			|| 
-			   msgType == Message::CHANGE_MATERIAL;
+			   msgType == Message::CHANGE_MATERIAL	||
+			   msgType == Message::DECAL			;
 	} // accept
 	
 	//---------------------------------------------------------
 
 	void CGraphics::process(const std::shared_ptr<CMessage>& message) {
 		switch( message->getMessageType() ) {
-			case Message::SET_TRANSFORM: {
-				std::shared_ptr<CMessageTransform> transformMsg = std::static_pointer_cast<CMessageTransform>(message);
-				_graphicsEntity->setTransform( transformMsg->getTransform() );
-				break;
-			}
 			case Message::ACTIVATE: {
 				setVisible(std::static_pointer_cast<CMessageActivate>(message)->getActivated());
 				break;
@@ -146,6 +143,10 @@ namespace Logic
 			case Message::CHANGE_MATERIAL: {
 				std::shared_ptr<CMessageChangeMaterial> chgMatMsg = std::static_pointer_cast<CMessageChangeMaterial>(message);
 				changeMaterial( chgMatMsg->getMaterialName() );
+				break;
+			}
+			case Message::DECAL: {
+				std::cout << "RECIBIDOOOOOO" << std::endl;
 				break;
 			}
 		}
@@ -161,11 +162,11 @@ namespace Logic
 	//---------------------------------------------------------
 
 	void CGraphics::changeMaterial(const std::string& materialName) {
-		if(materialName != "original")
+		/*if(materialName != "original")
 			_graphicsEntity->changeMaterial(materialName);
 		else
 			_graphicsEntity->changeMaterial(_materialName);
-		
+		*/
 	}
 
 	//---------------------------------------------------------

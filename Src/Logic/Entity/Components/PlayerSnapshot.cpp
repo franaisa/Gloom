@@ -61,8 +61,8 @@ namespace Logic {
 			case Message::SET_ANIMATION: {
 				shared_ptr<CMessageSetAnimation> setAnimMsg = static_pointer_cast<CMessageSetAnimation>(message);
 
-				info.animName = setAnimMsg->getString();
-				info.loop = setAnimMsg->getBool();
+				info.animName = setAnimMsg->getAnimation();
+				info.loop = setAnimMsg->getLoop();
 				info.stop = false;
 
 				break;

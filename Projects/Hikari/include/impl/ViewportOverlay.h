@@ -22,14 +22,14 @@
 #ifndef __ViewportOverlay_H__
 #define __ViewportOverlay_H__
 
-#include "Ogre.h"
+#include <OgreRenderTargetListener.h>
 #include "OgrePanelOverlayElement.h"
 #include "Position.h"
 
 namespace Hikari {
 namespace Impl {
 
-class ViewportOverlay : public Ogre::RenderTargetListener
+class ViewportOverlay 
 {
 public:
 	Ogre::Viewport* viewport;

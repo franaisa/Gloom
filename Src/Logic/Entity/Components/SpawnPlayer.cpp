@@ -9,10 +9,11 @@ Contiene la implementación del componente que gestiona el spawn del jugador.
 */
 
 #include "SpawnPlayer.h"
+#include "AvatarController.h"
+#include "PhysicController.h"
 
 #include "Logic/Entity/Entity.h"
 #include "Map/MapEntity.h"
-#include "PhysicController.h"
 #include "Logic/Maps/Map.h"
 #include "Logic/Server.h"
 #include "Logic/GameSpawnManager.h"
@@ -27,6 +28,7 @@ Contiene la implementación del componente que gestiona el spawn del jugador.
 #include "Logic/Messages/MessageHudSpawn.h"
 #include "Logic/Messages/MessageAudio.h"
 #include "Logic/Messages/MessageCreateParticle.h"
+#include "Logic/Messages/MessageSpawnIsLive.h"
 
 #include "Graphics/Scene.h"
 #include "Graphics/Camera.h"
@@ -58,7 +60,7 @@ namespace Logic
 	void CSpawnPlayer::onActivate()
 	{
 		_isDead=false;
-		_actualTimeSpawn=0;
+		_actualTimeSpawn=_inmunityTimer=0;
 		_reactivePhysicSimulation=false;
 
 	} // activate
@@ -138,11 +140,23 @@ namespace Logic
 				audioMsg->setNotIfPlay(false);
 				audioMsg->setIsPlayer(_entity->isPlayer());
 				_entity->emitMessage(audioMsg);
+
+				_inmunityTimer = 0;
 			}
 		}
 		else if(_reactivePhysicSimulation){
 			_entity->getComponent<CPhysicController>("CPhysicController")->activateSimulation();
-			_reactivePhysicSimulation=false;
+			_entity->getComponent<CAvatarController>("CAvatarController")->wakeUp();
+
+			// Comprobamos el timer de inmunidad al respawnear
+			_inmunityTimer += msecs;
+			if(_inmunityTimer > _inmunityTime) {
+				_inmunityTimer = 0;
+				_entity->emitMessage( std::make_shared<CMessageSpawnIsLive>() );
+
+				_reactivePhysicSimulation=false;
+				putToSleep();
+			}
 		}
 	} // tick
 	//---------------------------------------------------------
@@ -158,9 +172,11 @@ namespace Logic
 			except.insert( std::string("CHudOverlay") );
 			except.insert( std::string("CNetConnector") );
 			except.insert( std::string("CAudio") );
+			except.insert( std::string("CAvatarController") );
 
 			//Desactivamos la simulación física (no puede estar activo en la escena física al morir)
 			_entity->getComponent<CPhysicController>("CPhysicController")->deactivateSimulation();
+			_entity->getComponent<CAvatarController>("CAvatarController")->putToSleep(true);
 
 			_entity->deactivateAllComponentsExcept(except);
 			_isDead=true;

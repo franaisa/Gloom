@@ -111,7 +111,7 @@ Map = {
 		model = "rocketLauncher.mesh",
 		id = "weapon",
 		weaponType = 4,
-		reward = 5,
+		reward = 50,
 		respawnTime = 5,
 	},
 	
@@ -138,18 +138,18 @@ Map = {
 	Enemigo1 = {
 		type = "Screamer",
 		position = {0, 0.2, -20},
-		defaultAnimation = "Idle",
+		defaultAnimation = "idle",
 		yaw = 90,
 		defaultLife = 120,
 		maxShield=100,
 		maxLife=250,
 		PorcentShield=23,
 		isPlayer = false,
-		model = "marine.mesh",
+		model = "heavy.mesh",
 		physic_shape = "capsule",
 		physic_radius = 6,
 		physic_height = 6,
-
+		scale = 0.15,
 	},
 
 	

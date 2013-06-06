@@ -238,8 +238,12 @@ namespace Graphics
 
 	//--------------------------------------------------------
 
-	void CEntity::changeMaterial(const std::string& materialName) {
-		_entity->setMaterialName(materialName);
+	void CEntity::changeMaterial(const std::list<std::string>& materialName) {
+		auto material = materialName.begin();
+		auto end = materialName.end();
+		int i = 0;
+		for(;material!=end;++material,++i)
+			_entity->getSubEntity(i)->setMaterialName(*material);
 	}
 
 	//--------------------------------------------------------

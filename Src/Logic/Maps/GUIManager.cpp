@@ -107,8 +107,9 @@ namespace Logic {
 
 		if(deletedGUI == _loadedGUIs.end())
 			return;
-
+		
 		GUI::CServer::getSingletonPtr()->destroyLayout(deletedGUI->second);
+		_loadedGUIs.erase(deletedGUI);
 	}
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////

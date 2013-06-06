@@ -173,6 +173,8 @@ namespace Application {
 
 	protected:
 
+		void disconnect();
+
 		Logic::CGameNetPlayersManager* _playersMgr;
 
 		Net::CManager* _netMgr;

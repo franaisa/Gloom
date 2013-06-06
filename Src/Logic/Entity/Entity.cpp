@@ -146,6 +146,8 @@ namespace Logic {
 		_activated = true;
 
 		for(; it != _components.end(); ++it) {
+			if(it->second.componentPtr->isActivated())
+				continue;
 			it->second.componentPtr->activate();
 			_activated = it->second.componentPtr->isActivated() && _activated;
 		}
@@ -237,7 +239,7 @@ namespace Logic {
 			// No hace falta comprobar si estamos activados o no u ociosos
 			// para procesar mensajes, ya que eso se tiene en cuenta en el
 			// emitMessage
-			if( component->processMessages() && component->isSleeping() && !component->isInDeepSleep() ) {
+			if( !component->isInDeepSleep() && component->processMessages() && component->isSleeping() ) {
 				component->wakeUp();
 			}
 		}

@@ -48,7 +48,7 @@ namespace Logic {
 	@author Francisco Aisa García
 	@date Abril, 2013
 	*/
-
+	
 	class CAvatarController : public IComponent {
 		DEC_FACTORY(CAvatarController);
 	public:
@@ -187,6 +187,10 @@ namespace Logic {
 		Vector3 getVelocity(){ return _momentum; }
 
 		void setMaxVelocity(float velocity){_maxVelocity = velocity;}
+
+		Vector3 getDisplacementDir(){return _displacementDir;}
+
+		bool getFlying(){return !_touchingGround;}
 
 	protected:
 

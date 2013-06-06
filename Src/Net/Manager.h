@@ -20,6 +20,8 @@ la gestión de la red del juego.
 #define __Net_Manager_H
 
 #include <vector>
+#include <set>
+#include <queue>
 #include <map>
 
 // Predeclaracion de clases
@@ -347,7 +349,7 @@ namespace Net {
 			return _connections.size();
 		}
 
-		
+
 	protected:
 
 
@@ -398,7 +400,7 @@ namespace Net {
 		void getPackets(std::vector<Net::CPaquete*>& _paquetes);
 
 		//________________________________________________________________________
-		
+
 		/**
 		Escribe en un buffer las cabeceras de red que corresponden en función del
 		paquete recibido.
@@ -409,7 +411,7 @@ namespace Net {
 		bool internalData(Net::CPaquete* packet);
 
 		//________________________________________________________________________
-		
+
 		/**
 		Dada una "conexión" realiza la conexión.
 
@@ -419,7 +421,7 @@ namespace Net {
 
 		//________________________________________________________________________
 
-		
+
 
 
 	private:
@@ -439,7 +441,7 @@ namespace Net {
 		CConexion* getConnection(NetID id) { return _connections.find(id)->second; }
 
 		//________________________________________________________________________
-		
+
 		/**
 		Añade una conexión dado un id de red.
 
@@ -480,7 +482,7 @@ namespace Net {
 		// Typedefs para el manejo de tablas de conexión.
 		typedef std::pair<NetID, CConexion*> TConnectionPair;
 		typedef std::map<NetID, CConexion*> TConnectionTable;
-		
+
 		/**
 		Conexiones de red. Es decir, el servidor visto desde el cliente
 		o los clientes vistos desde el servidor. En el cliente solo se 
@@ -489,7 +491,9 @@ namespace Net {
 		TConnectionTable _connections;
 
 		/** Vector de observadores. */
-		std::vector<IObserver*> _observers;
+		std::set<IObserver*> _observers;
+
+		std::queue<IObserver*> _observersToBeDeleted;
 
 		/** Vector de paquetes recibidos. */
 		std::vector<Net::CPaquete*> _paquetes;

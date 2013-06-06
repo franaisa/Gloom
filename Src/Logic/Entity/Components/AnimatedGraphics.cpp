@@ -115,10 +115,7 @@ namespace Logic
 		return CGraphics::accept(message)					||
 			   msgType == Message::SET_ANIMATION			||
 			   msgType == Message::STOP_ANIMATION			||
-			   msgType == Message::CHANGE_WEAPON_GRAPHICS	|| 
-			   msgType == Message::PLAYER_DEAD				||
-			   msgType == Message::DAMAGED					||
-			   msgType == Message::HUD_SPAWN;
+			   msgType == Message::CHANGE_WEAPON_GRAPHICS	;
 
 	} // accept
 	
@@ -127,13 +124,6 @@ namespace Logic
 	void CAnimatedGraphics::process(const std::shared_ptr<CMessage>& message) {
 
 		switch( message->getMessageType() ) {
-			case Message::SET_TRANSFORM: {
-				Matrix4 transform = std::static_pointer_cast<CMessageTransform>(message)->getTransform();
-				Math::setYaw(Math::getYaw(transform), transform);
-
-				_graphicsEntity->setTransform( transform );
-				break;
-			}
 			case Message::ACTIVATE: {
 				setVisible(std::static_pointer_cast<CMessageActivate>(message)->getActivated());
 				break;
@@ -150,7 +140,7 @@ namespace Logic
 				// Un control más sofisticado debería permitir interpolación
 				// de animaciones. Galeon no lo plantea.
 				_animatedGraphicsEntity->stopAllAnimations();
-				_animatedGraphicsEntity->setAnimation( setAnimMsg->getString(), setAnimMsg->getBool() );
+				_animatedGraphicsEntity->setAnimation( setAnimMsg->getAnimation(), setAnimMsg->getLoop() );
 				break;
 			}
 			case Message::STOP_ANIMATION: {
@@ -164,13 +154,7 @@ namespace Logic
 				break;
 			}
 			case Message::PLAYER_DEAD: {
-				_animatedGraphicsEntity->stopAllAnimations();
-				_animatedGraphicsEntity->setAnimation("Death",false);
-				break;
-			}
-			case Message::DAMAGED: {
-				_animatedGraphicsEntity->stopAllAnimations();
-				_animatedGraphicsEntity->setAnimation("Damage",false);
+				_animatedGraphicsEntity->setAnimation("headshot",false);
 				break;
 			}
 			//Por si en redes se utilizara para algo hay que cambiarlo porque es un nonsense
@@ -216,7 +200,7 @@ namespace Logic
 			CGraphics::changeMaterial(_currentMaterialWeapon);
 			if(_currentMaterialWeapon != "original"){
 				_originalMaterialWeapon = _animatedGraphicsEntity->getWeaponMaterial();
-				_animatedGraphicsEntity->changeMaterialToWeapon(materialName);
+				//_animatedGraphicsEntity->changeMaterialToWeapon(materialName);
 			}else{
 				_animatedGraphicsEntity->changeMaterialToWeapon(_originalMaterialWeapon);
 			}

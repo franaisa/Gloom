@@ -181,14 +181,15 @@ namespace Logic {
 
 		// @deprectaed De momento se hace esto en el activate para darle
 		// una textura distinta a cada clase.
-		std::shared_ptr<CMessageChangeMaterial> materialMsg = std::make_shared<CMessageChangeMaterial>();
+		/*std::shared_ptr<CMessageChangeMaterial> materialMsg = std::make_shared<CMessageChangeMaterial>();
 		materialMsg->setMaterialName(_materialName);
-		_entity->emitMessage(materialMsg);
+		_entity->emitMessage(materialMsg);*/
 
 		_secondarySkillIsActive = false;
 		_currentScreamerShield = _screamerShieldThreshold;
 		_screamerShieldDamageTimer = _screamerShieldRecoveryTimer = 0;
 	}
+
 	//__________________________________________________________________
 
 	void CScreamer::primarySkill() {
@@ -269,11 +270,6 @@ namespace Logic {
 				auto m = std::make_shared<CMessageAddForcePlayer>();
 				m->setForce(_directionShoot * (_screamerScreamForce*(1.0f- (*it).distance/_screamerScreamMaxDistance)));
 				(*it).entity->emitMessage(m);
-
-				auto m2 = std::make_shared<CMessageSetAnimation>();
-				m2->setString("Damage");
-				m2->setBool(false);
-				(*it).entity->emitMessage(m2);
 			}
 		}				
 	} // sweepHitConsequences

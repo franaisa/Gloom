@@ -80,6 +80,7 @@
     <ClCompile Include="..\..\Src\Graphics\DecalUtility.cpp" />
     <ClCompile Include="..\..\Src\Graphics\OgreDecal.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\Ammo.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\AnimationManager.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\IronHellGoatAmmo.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\IronHellGoatFeedback.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\MiniGunAmmo.cpp" />
@@ -181,6 +182,7 @@
     <ClCompile Include="..\..\Src\Logic\Messages\MessageAudio.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageChangeGravity.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageDamageAmplifier.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Messages\MessageDecal.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageParticleVisibility.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessagePlayerSnapshot.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessagePrimaryShoot.cpp" />
@@ -223,6 +225,7 @@
     <ClCompile Include="..\..\Src\Logic\Messages\MessageSide.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageSleep.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessagePlayerSpawn.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Messages\MessageSpawnIsLive.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageStopAnimation.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageSwitch.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageSyncPosition.cpp" />
@@ -238,6 +241,7 @@
     <ClInclude Include="..\..\Src\Graphics\DecalUtility.h" />
     <ClInclude Include="..\..\Src\Graphics\OgreDecal.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\Ammo.h" />
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\AnimationManager.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\IronHellGoatAmmo.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\IronHellGoatFeedback.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\MiniGunAmmo.h" />
@@ -360,6 +364,7 @@
     <ClInclude Include="..\..\Src\Logic\Messages\MessageControl.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageDamaged.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageDeactivateScreamerShield.h" />
+    <ClInclude Include="..\..\Src\Logic\Messages\MessageDecal.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageFlash.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageHudAmmo.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageHudDebug.h" />
@@ -387,6 +392,7 @@
     <ClInclude Include="..\..\Src\Logic\Messages\MessageSide.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageSleep.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessagePlayerSpawn.h" />
+    <ClInclude Include="..\..\Src\Logic\Messages\MessageSpawnIsLive.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageStopAnimation.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageSwitch.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageSyncPosition.h" />

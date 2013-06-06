@@ -30,9 +30,6 @@ de la entidad.
 #include "Logic/Messages/MessageControl.h"
 #include "Logic/Messages/MessageMouse.h"
 #include "Logic/Messages/MessageAddForcePlayer.h"
-#include "Logic/Messages/MessageSetAnimation.h"
-#include "Logic/Messages/MessageStopAnimation.h"
-#include "Logic/Messages/MessageHudDebugData.h"
 #include "Logic/Messages/MessageChangeGravity.h"
 
 #include "Graphics/Scene.h"
@@ -50,8 +47,15 @@ namespace Logic {
 											 _touchingGround(false),
 											 _cameraFX(NULL),
 											 _physicController(0),
-											 _momentum(Vector3::ZERO){
+											 _momentum(Vector3::ZERO),
+											 _displacementDir(Vector3::ZERO),
+											 _dodgeForce(Vector3::ZERO)
+	{
 		
+		//anti release
+		for(int i = 0; i < 18 ; ++i)
+			_movementCommands[i] = Vector3::ZERO;
+
 		// Inicializamos el array que contiene los vectores
 		// de cada tecla de movimiento
 		initMovementCommands();
@@ -106,6 +110,15 @@ namespace Logic {
 
 	bool CAvatarController::accept(const std::shared_ptr<CMessage>& message) {
 		TMessageType msgType = message->getMessageType();
+
+		if( this->isInDeepSleep() ) {
+			if(msgType == Message::CONTROL) {
+				ControlType ctrlType = std::static_pointer_cast<CMessageControl>(message)->getType();
+
+				if(ctrlType == Control::MOUSE)
+					return false;
+			}
+		}
 
 		return msgType == Message::CONTROL			||
 			   msgType == Message::ADDFORCEPLAYER;
@@ -356,7 +369,6 @@ namespace Logic {
 
 		_displacementDir += dir;
 
-		executeAnimation(dir);
 	}
 
 	//________________________________________________________________________
@@ -410,63 +422,5 @@ namespace Logic {
 
 	//________________________________________________________________________
 
-	void CAvatarController::executeAnimation(Vector3 dir){
-
-		std::shared_ptr<CMessageSetAnimation> anim = std::make_shared<CMessageSetAnimation>();
-		
-		if(dir.x!=0){
-			if(_displacementDir.x==0){
-				anim->setString("Idle");
-				anim->setBool(true);
-			}else if(_displacementDir.x==1){
-				anim->setString("StrafeLeft");
-				anim->setBool(true);
-			}else if(_displacementDir.x==-1){
-				anim->setString("StrafeRight");
-				anim->setBool(true);
-			}
-		}else if(dir.z!=0){
-			if(_displacementDir.z==0){
-				anim->setString("Idle");
-				anim->setBool(true);
-			}else if(_displacementDir.z==1){
-				anim->setString("Walk");
-				anim->setBool(true);
-			}else if(_displacementDir.z==-1){
-				anim->setString("WalkBack");
-				anim->setBool(true);
-			}
-		}
-		_entity->emitMessage(anim, this); 
-	}
-
-	//________________________________________________________________________
-
-	void CAvatarController::stopAnimation(Vector3 dir){
-		//primero paramos la animación que este corriendo en sentido contrario a lo que hacemos
-		std::shared_ptr<CMessageSetAnimation> stopAnim = std::make_shared<CMessageSetAnimation>();
-
-		if(_displacementDir == Vector3::ZERO){
-			stopAnim->setString("Idle");
-		}else{
-			if(dir.x!= _displacementDir.x){
-				if (_displacementDir.x==0)
-					return;
-				else if(dir.x == -1)
-					stopAnim->setString("StrafeLeft");
-				else
-					stopAnim->setString("StrafeRight");
-			}else if(dir.z!= _displacementDir.z){
-				if (_displacementDir.z==0)
-					return;
-				else if(dir.z == -1)
-					stopAnim->setString("Walk");
-				else
-					stopAnim->setString("WalkBack");
-			}
-		}
-		_entity->emitMessage(stopAnim, this); 
-	}
-	//________________________________________________________________________
 
 } // namespace Logic

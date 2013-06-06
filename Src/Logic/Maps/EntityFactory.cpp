@@ -362,7 +362,7 @@ namespace Logic {
 
 	void CEntityFactory::deferredDeleteEntity(Logic::CEntity *entity, bool toClients) {
 		assert(entity);
-		_pendingEntities.push_back(entity);
+		_pendingEntities.insert(entity);
 		//Comprobamos si debe enviarse a los clientes, porque hay casos en los que no deberia
 		if( Net::CManager::getSingletonPtr()->imServer() && toClients )
 			Logic::CGameNetMsgManager::getSingletonPtr()->sendDestroyEntity( entity->getEntityID() );
@@ -378,8 +378,8 @@ namespace Logic {
 	//________________________________________________________________________
 
 	void CEntityFactory::deleteDefferedEntities() {
-		TEntityList::const_iterator it(_pendingEntities.begin());
-		TEntityList::const_iterator end(_pendingEntities.end());
+		TEntitySet::const_iterator it(_pendingEntities.begin());
+		TEntitySet::const_iterator end(_pendingEntities.end());
 		
 		while(it != end) {
 			CEntity *entity = *it;

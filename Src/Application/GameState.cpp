@@ -107,26 +107,21 @@ namespace Application {
 
 	//--------------------------------------------------------
 
-	bool CGameState::keyPressed(Input::TKey key)
-	{
+	bool CGameState::keyPressed(Input::TKey key) {
 		return false;
-
 	} // keyPressed
 
 	//--------------------------------------------------------
 
-	bool CGameState::keyReleased(Input::TKey key)
-	{
-		switch(key.keyId)
-		{
-		case Input::Key::ESCAPE:
-			_app->setState("menu");
-			break;
-		default:
-			return false;
+	bool CGameState::keyReleased(Input::TKey key) {
+		switch(key.keyId) {
+			case Input::Key::ESCAPE:
+				_app->setState("menu");
+				break;
+			default:
+				return false;
 		}
 		return true;
-
 	} // keyReleased
 
 	//--------------------------------------------------------

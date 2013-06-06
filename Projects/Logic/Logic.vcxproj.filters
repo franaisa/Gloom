@@ -606,6 +606,15 @@
     </ClCompile>
     <ClCompile Include="..\..\Src\Logic\Entity\Components\ShootSoulReaper.cpp">
       <Filter>Entity\Components\Weapons\Shoot\Source</Filter>
+	</ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Messages\MessageSpawnIsLive.cpp">
+      <Filter>Messages\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Messages\MessageDecal.cpp">
+      <Filter>Messages\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\AnimationManager.cpp">
+      <Filter>Entity\Components\Graphics\Source</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1103,6 +1112,15 @@
     </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Entity\Components\ShootSoulReaper.h">
       <Filter>Entity\Components\Weapons\Shoot\Header</Filter>
+	</ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Messages\MessageSpawnIsLive.h">
+      <Filter>Messages\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Messages\MessageDecal.h">
+      <Filter>Messages\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\AnimationManager.h">
+      <Filter>Entity\Components\Graphics\Header</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -48,7 +48,8 @@ namespace Logic {
 	//________________________________________________________________________
 
 	CLife::CLife() : _damageTimer(0), 
-					 _reducedDamageAbsorption(0) {
+					 _reducedDamageAbsorption(0),
+					 _respawning(false) {
 
 		// Nada que hacer
 	}
@@ -103,6 +104,7 @@ namespace Logic {
 		// Resteamos los valores de salud y escudo a los valores por defecto
 		_currentLife = _defaultLife;
 		_currentShield = 0;
+		//_respawning = false;
 
 		// Actualizamos la info del HUD
 		std::shared_ptr<CMessageHudLife> hudLifeMsg = std::make_shared<CMessageHudLife>();
@@ -118,6 +120,9 @@ namespace Logic {
 
 	bool CLife::accept(const std::shared_ptr<CMessage>& message) {
 		Logic::TMessageType msgType = message->getMessageType();
+
+		if(_respawning)
+			return msgType == Message::SPAWN_IS_LIVE;
 
 		return msgType == Message::DAMAGED				|| 
 			   msgType == Message::ADD_LIFE				||
@@ -149,6 +154,9 @@ namespace Logic {
 				std::shared_ptr<CMessageSetReducedDamage> reducedDmgMsg = std::static_pointer_cast<CMessageSetReducedDamage>(message);
 				reducedDamageAbsorption( reducedDmgMsg->getReducedDamage() );
 				break;
+			}
+			case Message::SPAWN_IS_LIVE: {
+				_respawning = false;	
 			}
 		}
 	} // process
@@ -281,6 +289,8 @@ namespace Logic {
 	//________________________________________________________________________
 
 	void CLife::triggerDeathState(CEntity* enemy) {
+		_respawning = true;
+
 		// Mensaje de playerDead para tratar el respawn y desactivar los componentes
 		// del personaje.
 		std::shared_ptr<CMessagePlayerDead> playerDeadMsg = std::make_shared<CMessagePlayerDead>();
