@@ -94,6 +94,7 @@ namespace Graphics
 		Ogre::Bone * bone = skeleton->getBone("Bip01 R Hand");
 		bone->setOrientation(_entityNode->getOrientation());
 		*/
+		_entity->setCastShadows(true);
 		if(_currentAnimation)
 		{
 			_currentAnimation->addTime(secs);
@@ -112,8 +113,11 @@ namespace Graphics
 			_scene->getSceneMgr()->destroyEntity(_weapon);
 		_weapon = _scene->getSceneMgr()->createEntity(arma.getMesh());
 		
-		_entity->attachObjectToBone("Bip01 R Hand",_weapon);
+		_entity->attachObjectToBone("weapon_bone_2",_weapon);
 
+		_entity->getNumSubEntities();
+
+		std::cout << "material name del mierda heavy! " << _entity->getSubEntity(0)->getMaterialName() << std::endl;
 	}
 
 	std::string CAnimatedEntity::getWeaponMaterial(){
@@ -123,6 +127,7 @@ namespace Graphics
 	void CAnimatedEntity::changeMaterialToWeapon(const std::string& materialName){
 		_weapon->setMaterialName(materialName);
 		//_weapon->getSubEntity(0)->getMaterialName();
+		
 	}
 
 

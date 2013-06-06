@@ -164,13 +164,7 @@ namespace Logic
 				break;
 			}
 			case Message::PLAYER_DEAD: {
-				_animatedGraphicsEntity->stopAllAnimations();
-				_animatedGraphicsEntity->setAnimation("Death",false);
-				break;
-			}
-			case Message::DAMAGED: {
-				_animatedGraphicsEntity->stopAllAnimations();
-				_animatedGraphicsEntity->setAnimation("Damage",false);
+				_animatedGraphicsEntity->setAnimation("headshot",false);
 				break;
 			}
 			//Por si en redes se utilizara para algo hay que cambiarlo porque es un nonsense

@@ -402,6 +402,10 @@ namespace Logic {
 		if(_touchingGround) {
 			_momentum.y = _jumpForce;
 			_touchingGround = false;
+			std::shared_ptr<CMessageSetAnimation> anim = std::make_shared<CMessageSetAnimation>();
+			anim->setString("back");
+			anim->setBool(true);
+			_entity->emitMessage(anim, this); 
 		}
 	}
 
@@ -431,24 +435,24 @@ namespace Logic {
 		
 		if(dir.x!=0){
 			if(_displacementDir.x==0){
-				anim->setString("Idle");
+				anim->setString("idle");
 				anim->setBool(true);
 			}else if(_displacementDir.x==1){
-				anim->setString("StrafeLeft");
+				anim->setString("strafeleft");
 				anim->setBool(true);
 			}else if(_displacementDir.x==-1){
-				anim->setString("StrafeRight");
+				anim->setString("straferight");
 				anim->setBool(true);
 			}
 		}else if(dir.z!=0){
 			if(_displacementDir.z==0){
-				anim->setString("Idle");
+				anim->setString("idle");
 				anim->setBool(true);
 			}else if(_displacementDir.z==1){
-				anim->setString("Walk");
+				anim->setString("forward");
 				anim->setBool(true);
 			}else if(_displacementDir.z==-1){
-				anim->setString("WalkBack");
+				anim->setString("back");
 				anim->setBool(true);
 			}
 		}
@@ -462,22 +466,22 @@ namespace Logic {
 		std::shared_ptr<CMessageSetAnimation> stopAnim = std::make_shared<CMessageSetAnimation>();
 
 		if(_displacementDir == Vector3::ZERO){
-			stopAnim->setString("Idle");
+			stopAnim->setString("idle");
 		}else{
 			if(dir.x!= _displacementDir.x){
 				if (_displacementDir.x==0)
 					return;
 				else if(dir.x == -1)
-					stopAnim->setString("StrafeLeft");
+					stopAnim->setString("strafeleft");
 				else
-					stopAnim->setString("StrafeRight");
+					stopAnim->setString("straferight");
 			}else if(dir.z!= _displacementDir.z){
 				if (_displacementDir.z==0)
 					return;
 				else if(dir.z == -1)
-					stopAnim->setString("Walk");
+					stopAnim->setString("forward");
 				else
-					stopAnim->setString("WalkBack");
+					stopAnim->setString("back");
 			}
 		}
 		_entity->emitMessage(stopAnim, this); 
