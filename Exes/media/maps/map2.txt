@@ -8,7 +8,7 @@ Map = {
 	
 	Hacksaw = {
 		type = "Hacksaw",
-		position = {120.0,8.0,-16.0},
+		position = {120.0,16.0,-16.0},
 		positionInitial = {120.0,8.0,-16.0},
 		positionFinal = {86.0,8.0,-16.0},
 		velocity = 0.04,
@@ -25,7 +25,7 @@ Map = {
 	
 	Jumper1 = {
 		type = "Jumper",
-		position = {-199.0, 0.0, 112.0},
+		position = {-199.0, 1.0, 112.0},
 		model = "health1.mesh",
 		model = "jumpy.mesh",
 		force = {1,5,0.1},
@@ -41,7 +41,7 @@ Map = {
 	
 	Orb1 = {
 		type = "ItemSpawn",
-		position = {-29, 68, -28},
+		position = {-29, 70, -28},
 		model = "health1.mesh",
 		id = "orb",
 		reward = 17,
@@ -59,7 +59,7 @@ Map = {
 	
 	Orb3 = {
 		type = "ItemSpawn",
-		position = {-146,99,47},
+		position = {-146,100,47},
 		model = "health1.mesh",
 		id = "orb",
 		reward = 17,
@@ -68,7 +68,7 @@ Map = {
 	
 	Orb4 = {
 		type = "ItemSpawn",
-		position = {-259,64,133},
+		position = {-259,66,133},
 		model = "health1.mesh",
 		id = "orb",
 		reward = 17,
@@ -77,7 +77,7 @@ Map = {
 	
 	Shotgun = {
 		type = "ItemSpawn",
-		position = {18,0,112},
+		position = {18,2,112},
 		model = "shotGun.mesh",
 		id = "weapon",
 		weaponType = 2,
@@ -97,7 +97,7 @@ Map = {
 	
 	Minigun = {
 		type = "ItemSpawn",
-		position = {-91.0, 0.0, -35.0},
+		position = {-91.0, 2.0, -35.0},
 		model = "miniGun.mesh",
 		id = "weapon",
 		weaponType = 3,
@@ -107,7 +107,7 @@ Map = {
 	
 	RocketLauncherAmmo1 = {
 		type = "ItemSpawn",
-		position = {-264,0.0,-53.0},
+		position = {-264,2.0,-53.0},
 		model = "rocketLauncher.mesh",
 		id = "weapon",
 		weaponType = 4,
@@ -117,7 +117,7 @@ Map = {
 	
 	SuperShield = {
 		type = "ItemSpawn",
-		position = {-265,125,47},
+		position = {-265,127,47},
 		model = "shield1.mesh",
 		id = "armor",
 		reward = 100,

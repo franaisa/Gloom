@@ -104,6 +104,7 @@ namespace Physics {
 		aún más genérico.
 
 		@param position Posición donde queremos crear la entidad física.
+		@param orientation Orientacion con la que queremos crear la entidad física.
 		@param geometry Geometría que queremos que tenga la entidad física. 
 		Importante: PhysX solo soporta ciertas geometrias para los dinámicos.
 		@param material Material físico que aplicaremos a la entidad.
@@ -114,7 +115,7 @@ namespace Physics {
 		@param groupList Grupos de colisión con los que queremos que la entidad interactue.
 		@param component Componente lógico asociado.
 		*/
-		void load(const Matrix4& transform, const physx::PxGeometry& geometry, physx::PxMaterial& material, 
+		void load(const Vector3& position, const Quaternion& orientation, const physx::PxGeometry& geometry, physx::PxMaterial& material, 
 				  float density, bool kinematic, bool trigger, bool noGravity, int group, 
 				  const std::vector<int>& groupList, const Logic::IPhysics* component);
 
@@ -220,11 +221,12 @@ namespace Physics {
 		Setea el transform de la entidad física. Mucho cuidado porque este método
 		lo que hace es transportar a la entidad (no moverla).
 
-		@param transform Transform al que queramos convertir la entidad la entidad.
+		@param position Posicion donde colocaremos la entidad física.
+		@param orientation Orientacion a colocar la entidad física.
 		@param makeConversionToLogicWorld True si queremos que la entidad física
 		se coloque en la posición dada + el desfase entre pivote lógico y físico.
 		*/
-		void setTransform(const Matrix4 &transform, bool makeConversionToLogicWorld);
+		void setTransform(const Vector3 &position, const Quaternion &orientation, bool makeConversionToLogicWorld);
 		
 
 	private:

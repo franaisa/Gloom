@@ -111,9 +111,13 @@ namespace Graphics
 		_entityNode = _scene->getSceneMgr()->getRootSceneNode()->createChildSceneNode(_name + "_node");
 		_entityNode->attachObject(_entity);
 
+
 		/*size_t vertexCount, indexCount;
-		Ogre::Vector3* vertexBuffer;
-		unsigned* indexBuffer;
+	
+		//_text = new CObjectTextDisplay(_entity, _scene->getCamera()->getOgreCamera());
+		//_text->enable(false);
+		//_text->setText("Gazpacho");
+		size_t vertexCount, indexCount;
 
 		getMeshInformation(_entity->getMesh(), vertexCount, vertexBuffer, indexCount, indexBuffer);*/
 			
@@ -149,13 +153,13 @@ namespace Graphics
 	
 	//--------------------------------------------------------
 		
-	void CEntity::setTransform(const Matrix4 &transform)
+	void CEntity::setTransform(const Vector3 &position, const Ogre::Quaternion &orientation)
 	{
 		assert(_entityNode && "La entidad no ha sido cargada");
 		if(_entityNode)
 		{
-			_entityNode->setPosition(transform.getTrans());
-			_entityNode->setOrientation(transform.extractQuaternion());
+			_entityNode->setPosition(position);
+			_entityNode->setOrientation(orientation);
 		}
 
 	} // setTransform
@@ -170,7 +174,7 @@ namespace Graphics
 
 	//--------------------------------------------------------
 
-	void CEntity::setOrientation(const Matrix3 &orientation)
+	void CEntity::setOrientation(const Quaternion &orientation)
 	{
 		assert(_entityNode && "La entidad no ha sido cargada");
 		if(_entityNode)
@@ -208,6 +212,26 @@ namespace Graphics
 			_entityNode->setPosition(position);
 
 	} // setPosition
+	
+	//--------------------------------------------------------
+
+	const Vector3& CEntity::getPosition()
+	{
+		assert(_entityNode && "La entidad no ha sido cargada");
+		if(_entityNode)
+			return _entityNode->getPosition();
+
+	} // getPosition
+	
+	//--------------------------------------------------------
+
+	const Quaternion& CEntity::getOrientation()
+	{
+		assert(_entityNode && "La entidad no ha sido cargada");
+		if(_entityNode)
+			return _entityNode->getOrientation();
+
+	} // getOrientation
 	
 	//--------------------------------------------------------
 		

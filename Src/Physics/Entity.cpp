@@ -153,7 +153,21 @@ namespace Physics {
 	//________________________________________________________________________
 
 	Matrix4 CEntity::getTransform() const {
-		return PxTransformToMatrix4( _actor->getGlobalPose() );
+		return PxTransformToMatrix4( _actor->getGlobalPose());
+	}
+
+	//________________________________________________________________________
+
+
+	Vector3 CEntity::getPosition() const {
+		return PxVec3ToVector3(_actor->getGlobalPose().p);
+	}
+
+	//________________________________________________________________________
+
+
+	Quaternion CEntity::getOrientation() const {
+		return PxQuatToQuaternion(_actor->getGlobalPose().q);
 	}
 
 	//________________________________________________________________________

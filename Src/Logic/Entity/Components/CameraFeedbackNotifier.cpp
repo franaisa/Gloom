@@ -225,10 +225,12 @@ namespace Logic {
 	void CCameraFeedbackNotifier::walkEffect(unsigned int msecs) {
 		Vector3 offset = _cameraComponent->getOffset();
 
+		//OJO HAY QUE REVISAR ESTO
+		//DICE QUE OBTIENE HORIZONTAL SOLO CUANDO TMB DEVUELVE ALTURA
 		if(_strafingDir == 0) {
-			Matrix4 transform = _entity->getTransform();
-			Math::yaw(Math::HALF_PI, transform);
-			Vector3 horizontal = Math::getDirection(transform);
+			Quaternion yaw(_entity->getYaw());
+			Math::rotate(Vector3::UNIT_Y,Ogre::Radian(Math::HALF_PI),yaw);
+			Vector3 horizontal = yaw * Vector3::NEGATIVE_UNIT_Z;
 
 			_walkAnim.currentHorizontalPos += _walkAnim.horizontalSpeed * msecs;
 			if(_walkAnim.currentHorizontalPos > ((2 * Math::PI) + Math::HALF_PI)) _walkAnim.currentHorizontalPos = Math::HALF_PI;
@@ -361,7 +363,7 @@ namespace Logic {
 		Ogre::Vector3 vMyPos = this->_entity->getPosition();
 
 		//Obtengo el vector en el que estoy mirando, y me quedo sólo en el plano horizontal (quitando la altura)
-		Vector3 vMyDirVision = Math::getDirection(_entity->getTransform());
+		Vector3 vMyDirVision = _entity->getOrientation()*Vector3::NEGATIVE_UNIT_Z;
 		vMyDirVision = Vector3(vMyDirVision.x,0,vMyDirVision.z);
 		//Obtengo el vector desde el enemigo a mi posición; y me quedo sólo con el plano horizontal (quitando la altura)
 		Vector3 vEnemyDirVision = vPosEnemy - vMyPos;
@@ -374,7 +376,9 @@ namespace Logic {
 
 		//Cambio de sistema de coordenadas para tener la posición del enemigo respecto 
 		//al jugador. Antonio el crack matemático! ^^
-		Matrix4 mat = _entity->getTransform().inverse();
+		Matrix4 mat;
+		mat.makeTransform(_entity->getPosition(),Vector3::UNIT_SCALE,_entity->getOrientation());
+		mat.inverse();
 		Vector3 vec = mat * vPosEnemy; //este vector es la posicion del enemigo respecto a mi
 		if (vec.x > 0) 
 		{

@@ -109,13 +109,12 @@ namespace Logic
 				Logic::CWorldState::getSingletonPtr()->deleteChange(_entity, Message::PLAYER_DEAD);
 
 				//Establecemos la orientación adecuada segun la devolución del manager de spawn
-				Graphics::CCamera *cam=_entity->getMap()->getScene()->getCamera();
-				cam->setYaw(Ogre::Quaternion(0,0,1,0));//180 grados
-				_entity->setOrientation(Ogre::Quaternion(0,0,1,0));
+				_entity->setYaw(spawn->getYaw(),true);
 				
 				// Si eres el server mandar un mensaje de spawn
 				std::shared_ptr<CMessagePlayerSpawn> spawnMsg = std::make_shared<CMessagePlayerSpawn>();
-				spawnMsg->setSpawnTransform( _entity->getTransform() );
+				spawnMsg->setSpawnPosition( _entity->getPosition() );
+				spawnMsg->setSpawnOrientation( _entity->getYaw());
 				_entity->emitMessage(spawnMsg);
 
 				CEntity* camera = CServer::getSingletonPtr()->getMap()->getEntityByName("Camera");

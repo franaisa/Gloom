@@ -120,6 +120,37 @@ namespace Math
 	*/
 	static float fromRadiansToDegrees(float radians) {return radians*_rad2Deg;}
 	
+
+	/**
+	Transforma orientacion en grados en orientacion en quaternion.
+	Nota: Las funciones trigonometricas tienen pequeñisimas desviaciones en decimales por ejemplo al hacer el cos de 90 grados.
+	Si esa infima desviación influyera, deberia de tratarse con casos especiales todos aquellos valores que sean naturales.
+
+	@param degrees Ángulo en grados.
+	@param axe Vector que indica sobre que eje rotamos.
+	@return Ángulo en quaternion.
+	*/
+	static Quaternion fromDegreesToQuaternion(float degrees,const Vector3 &axe){
+		//Hacemos una conversion inicial de grados a radianes ya que las funciones trigonometricas trabajan con radianes
+		float rad= degrees*Math::PI/180;
+		return Quaternion(cos(rad/2.0f), sin(rad/2.0f) * axe.x, sin(rad/2.0f)* axe.y, sin(rad/2.0f) * axe.z);
+	}
+
+	
+	/**
+	Rota el quaternion pasado por parámetro con los radianes especificados tambien por parámetro sobre el eje especificado.
+	Por ejemplo si queremos rotar el yaw, pasariamos el axe(0,1,0) con rotation(radianes) y el quaternion a rotar.
+
+	@param axe Eje sobre el que rotaremos.
+	@param rotation Radianes que rotaremos.
+	@param quaternion Quaternion que será rotado.
+	*/
+	static inline void rotate(const Vector3 &axe, Ogre::Radian rotation, Quaternion &quaternion ){
+		Quaternion q(rotation,axe);
+		quaternion=quaternion*q;
+	}
+
+
 	/**
 	Crea un vector unitario de dirección a partir de un angulo de
 	orientación en radianes.
@@ -488,6 +519,22 @@ namespace Math
 		long guard = (long) (unifRand() * n) + 1;
 		return (guard > n) ? n : guard;
 	}
+
+	//Por si hicieran falta
+	/*float Quaternion::getPitchQuat()
+	{
+	  return atan2(2*(y*z + w*x), w*w - x*x - y*y + z*z);
+	}
+
+	float Quaternion::getYawQuat()
+	{
+	  return asin(-2*(x*z - w*y));
+	}
+
+	float Quaternion::getRollQuat()
+	{
+	  return atan2(2*(x*y + w*z), w*w + x*x - y*y - z*z);
+	}*/
 
 } // namespace Math
 

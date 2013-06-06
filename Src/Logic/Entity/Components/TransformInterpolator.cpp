@@ -105,7 +105,8 @@ namespace Logic {
 			// Ojo! Asumimos que no existe entidad física. La interpolación de entidades
 			// en el cliente no debería tener componente físico. Si lo tiene, tenemos que
 			// mover primero al componente físico para que esto funcione.
-			_entity->setTransform( _buffer.front() );
+			_entity->setPosition( _buffer.front().getTrans() );
+			_entity->setOrientation( _buffer.front().extractQuaternion() );
 			_buffer.pop_front();
 		}
 	}

@@ -92,7 +92,7 @@ namespace Logic {
 				// Comando de raton
 				else if(commandType == Control::MOUSE) {
 					std::shared_ptr<CMessageMouse> mouseMsg = std::static_pointer_cast<CMessageMouse>(message);
-					mouse( mouseMsg->getMouse() );
+					rotationXY( mouseMsg->getMouse() );
 				}
 
 				break;
@@ -103,15 +103,39 @@ namespace Logic {
 
 	//________________________________________________________________________
 
-	void CSpectatorController::mouse(float XYturn[]) {
-		// @deprecated
-		// El espectador ha dejado de funcionarme... meto la ñapa que había
-		// en el avatarController para que funcione
-		Graphics::CCamera* camera= _entity->getMap()->getScene()->getCamera();
-		camera->moveCamera( Ogre::Radian(XYturn[0]), Ogre::Radian(XYturn[1]) );
-
-		_entity->setOrientation( camera->getRealOrientation() );
-	} // turn
+	void CSpectatorController::rotationXY(float XYturn[]) {
+		//Aplicamos las rotaciones pertinentes
+		 Ogre::Real pitchAngle;
+		 Ogre::Real pitchAngleSign;
+ 
+		 //Rotamos el Yaw de la entidad de acuerdo a los grados en radianes pasados como parámetro.
+		 _entity->rotate(Orientation::eYAW,Ogre::Radian(XYturn[0]));
+ 
+		 //Rotamos el Pitch de la entidad de acuerdo a los grados en radianes pasados como parámetro.
+		 _entity->rotate(Orientation::ePITCH,Ogre::Radian(XYturn[1]));
+		
+		 // Ángulo de rotación sobre el eje X.
+		 pitchAngle = (2 * Ogre::Degree(Ogre::Math::ACos(_entity->getPitch().w)).valueDegrees());
+ 
+		 // Para saber el sentido.
+		 pitchAngleSign = _entity->getPitch().x;
+ 
+		 // Limitamos el angulo un poco menos de +90/-90 para evitar perder la direccion (Tomando como referencia a Quake3)
+		 if (pitchAngle > 88.0f)
+		 {
+			 if (pitchAngleSign > 0)
+				 //Fijando a +88. Formo el quaternion previamente calculado, ahorrando procesamiento
+				 _entity->setPitch(Ogre::Quaternion(0.71934,0.694658, 0, 0),false);
+			 else if (pitchAngleSign < 0)
+				 //Fijando a -88. Formo el quaternion previamente calculado, ahorrando procesamiento
+				 _entity->setPitch(Ogre::Quaternion(0.71934,-0.694658, 0, 0),false);
+		 }
+		
+		 //Actualizamos la orientacion(en un futuro no estara, esta por el transform que no se ha quitado)
+		 _entity->setOrientation(_entity->getOrientation());
+	
+	}//rotateXY
+	//________________________________________________________________________
 
 	//________________________________________________________________________
 
@@ -136,23 +160,26 @@ namespace Logic {
 
 	//________________________________________________________________________
 
+
 	Vector3 CSpectatorController::estimateMotionDirection(const Vector3& displ) const {
 		// Si nuestro movimiento es nulo no hacemos nada
 		if(displ * Vector3(1, 0, 1) == Vector3::ZERO) return Vector3::ZERO;
 
 		// Mediante trigonometria basica sacamos el angulo que forma el desplazamiento
 		// que queremos llevar a cabo
-		float displacementYaw = asin(displ.normalisedCopy().x);
-		// Obtenemos una copia de la matriz de transformación del personaje
-		Matrix4 characterTransform = _entity->getTransform();
+		float displacementYaw = asin(_displacementDir.normalisedCopy().x);
+		// Obtenemos una copia de la orientacion del personaje
+		Quaternion characterQuat = _entity->getOrientation();
 		// Si estamos andando hacia atras, invertimos el giro
 		if(displ.z < 0) displacementYaw *= -1;
 
-		// Rotamos la matriz de transformacion tantos grados como diga el vector 
-		// desplazamiento calculado de pulsar las teclas
-		Math::yaw(displacementYaw, characterTransform);
-		// Obtenemos el vector unitario de orientación de la matriz de transformación
-		Vector3 motionDirection = Math::getDirection(characterTransform);
+		// Rotamos tantos grados como diga el vector desplazamiento calculado de pulsar las teclas
+		Math::rotate(Vector3::UNIT_Y,Ogre::Radian(displacementYaw),characterQuat);
+		//Obtenemos la direccion
+		Vector3 directionQuat = characterQuat * Vector3::NEGATIVE_UNIT_Z;
+		//Formamos el vector normalizado de la direccion
+		Vector3 motionDirection(directionQuat.x,0,directionQuat.z);
+		motionDirection.normalise();
 		// Invertimos el vector resultante si nos estamos desplazando hacia atras
 		// porque el yaw se calcula de forma contraria al andar hacia atras
 		if(displ.z < 0) motionDirection *= -1;

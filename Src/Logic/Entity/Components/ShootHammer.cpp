@@ -138,7 +138,8 @@ namespace Logic {
 		CEntity * dynamicItem = CEntityFactory::getSingletonPtr()->createCustomClientEntity(info,
 																				clientEntityInfo,
 																				Logic::CServer::getSingletonPtr()->getMap(),
-																				_elementPulled->getTransform());
+																				_elementPulled->getPosition(),
+																				_elementPulled->getOrientation());
 
 		if(!dynamicItem){
 			std::cout << "ALGO HA IDO MAL Y NO SE HA CREADO LA ENTIDAD" << std::endl;
@@ -148,7 +149,7 @@ namespace Logic {
 		_elementPulling = dynamicItem;
 
 		//por ultimo, ponemos a la entidad donde debe estar
-		_elementPulling->getComponent<CPhysicDynamicEntity>("CPhysicDynamicEntity")->setTransform(_elementPulled->getTransform(), true);
+		_elementPulling->getComponent<CPhysicDynamicEntity>("CPhysicDynamicEntity")->setTransform(_elementPulled->getPosition(),_elementPulled->getOrientation(), true);
 
 		//le metemos donde estamos para que nos siga
 		_elementPulling->getComponent<CPullingMovement>("CPullingMovement")->setPlayer(_entity);
@@ -166,7 +167,7 @@ namespace Logic {
 		//Posicion de la entidad + altura de disparo(coincidente con la altura de la camara)
 		Vector3 origin = _entity->getPosition()+Vector3(0.0f,_heightShoot,0.0f);
 		// Creamos el ray desde el origen en la direccion del raton (desvio ya aplicado)
-		Ray ray(origin, Math::getDirection(_entity->getOrientation()).normalisedCopy());
+		Ray ray(origin, (_entity->getOrientation()*Vector3::NEGATIVE_UNIT_Z).normalisedCopy());
 
 		// Rayo lanzado por el servidor de físicas de acuerdo a la distancia de potencia del arma
 		Physics::CRaycastHit hit;

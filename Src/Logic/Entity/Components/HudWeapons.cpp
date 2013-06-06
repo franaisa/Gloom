@@ -194,7 +194,7 @@ namespace Logic {
 			Math::pitchYawRoll(_graphicsEntities[current].defaultPitch, _graphicsEntities[current].defaultYaw, _graphicsEntities[current].defaultRoll, transformModificado);
 
 			
-			_graphicsEntities[current].graphicsEntity->setTransform(transformModificado);
+			_graphicsEntities[current].graphicsEntity->setTransform(transformModificado.getTrans(),transformModificado.extractQuaternion());
 			//_graphicsEntities[current].graphicsEntity->setPosition(_graphicsEntities[current].offset);
 			
 
@@ -231,7 +231,7 @@ namespace Logic {
 	void CHudWeapons::onStart() {
 		Matrix4 weaponTransform;
 		for(int i = 0; i < WeaponType::eSIZE; ++i) {
-			_graphicsEntities[i].defaultPos = _graphicsEntities[i].graphicsEntity->getTransform().getTrans();
+			_graphicsEntities[i].defaultPos = _graphicsEntities[i].graphicsEntity->getPosition();
 		}
 	}
 	

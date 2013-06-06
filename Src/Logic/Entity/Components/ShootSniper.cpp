@@ -64,8 +64,8 @@ namespace Logic {
 			hudWeapon->shootAnim(-1.5f);
 
 		//Direccion
-		Vector3 direction = Math::getDirection(_entity->getOrientation()); 
-
+		Vector3 direction = _entity->getOrientation()*Vector3::NEGATIVE_UNIT_Z;
+	
 		//Posicion de la entidad + altura de disparo(coincidente con la altura de la camara)
 		Vector3 origin = _entity->getPosition()+Vector3(0.0f,_heightShoot,0.0f);
 		// Creamos el ray desde el origen en la direccion del raton (desvio ya aplicado)
@@ -117,7 +117,8 @@ namespace Logic {
 			hudWeapon->shootAnim(-1.5f);
 
 		//Direccion
-		Vector3 direction = Math::getDirection(_entity->getOrientation()); 
+		Vector3 direction = _entity->getOrientation()*Vector3::NEGATIVE_UNIT_Z;
+
 		//Posicion de la entidad + altura de disparo(coincidente con la altura de la camara)
 		Vector3 origin = _entity->getPosition()+Vector3(0.0f,_heightShoot,0.0f);
 		// Creamos el ray desde el origen en la direccion del raton (desvio ya aplicado)

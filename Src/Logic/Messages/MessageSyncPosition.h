@@ -9,15 +9,19 @@ namespace Logic {
 	DEC_FACTORYMESSAGE(CMessageSyncPosition);
 	public:
 		CMessageSyncPosition();
-		Matrix4 getTransform();
-		void setTransform(const Matrix4& position);
+		Vector3& getPosition();
+		void setPosition(const Vector3& position);
+		Quaternion& getOrientation();
+		void setOrientation(const Quaternion& orientation);
+
 		virtual ~CMessageSyncPosition(){};
 
 		virtual Net::CBuffer serialize();
 		virtual void deserialize(Net::CBuffer& buffer);
 		
 	private:
-		Matrix4 _position;
+		Vector3 _position;
+		Quaternion _orientation;
 	};
 	REG_FACTORYMESSAGE(CMessageSyncPosition);
 };

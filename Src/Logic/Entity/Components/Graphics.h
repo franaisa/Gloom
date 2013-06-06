@@ -105,7 +105,7 @@ namespace Logic
 		*/
 		virtual void process(const std::shared_ptr<CMessage>& message);
 
-		void setTransform(const Matrix4& transform);
+		void setTransform(const Vector3 &position, const Ogre::Quaternion &orientation);
 
 		void setVisible(bool renderGraphicEntity);
 

@@ -10,8 +10,10 @@ namespace Logic {
 	public:
 		CMessagePlayerSpawn();
 
-		Matrix4 getSpawnTransform();
-		void setSpawnTransform(const Matrix4& transform);
+		Vector3 getSpawnPosition();
+		void setSpawnPosition(const Vector3& position);
+		Quaternion getSpawnOrientation();
+		void setSpawnOrientation(const Quaternion& orientation);
 
 		virtual ~CMessagePlayerSpawn(){};
 
@@ -19,7 +21,8 @@ namespace Logic {
 		virtual void deserialize(Net::CBuffer& buffer);
 		
 	private:
-		Matrix4 _spawnTransform;
+		Vector3 _position;
+		Quaternion _orientation;
 	};
 	REG_FACTORYMESSAGE(CMessagePlayerSpawn);
 };

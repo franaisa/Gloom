@@ -76,11 +76,9 @@ namespace Logic
 
 
 	void CUpdateClientPosition::updateClientPosition(const std::shared_ptr<CMessageSyncPosition> &message){
-		Matrix4 clientTransform = message->getTransform();
-		_physicController->setPhysicPosition(clientTransform.getTrans());
-		Matrix3 orientation;
-		clientTransform.extract3x3Matrix(orientation);
-		_entity->setOrientation(orientation);
+	
+		_physicController->setPhysicPosition(message->getPosition());
+		_entity->setOrientation(message->getOrientation());
 	}
 
 } // namespace Logic

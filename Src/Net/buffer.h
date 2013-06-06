@@ -173,6 +173,25 @@ namespace Net {
 		//________________________________________________________________________
 
 		/**
+		Escribe un quaternion en el buffer.
+		
+		@param data Datos a serializar.
+		*/
+		void serialize(const Quaternion& data);
+
+		//________________________________________________________________________
+
+		/**
+		Lee un quaternion del buffer.
+		
+		@param data Datos a deserializar.
+		*/
+		void deserialize(Quaternion& data);
+
+		//________________________________________________________________________
+
+
+		/**
 		Escribe un float en el buffer.
 		
 		@param data Datos a serializar.

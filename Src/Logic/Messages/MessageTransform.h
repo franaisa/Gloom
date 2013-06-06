@@ -9,8 +9,10 @@ namespace Logic {
 	DEC_FACTORYMESSAGE(CMessageTransform);
 	public:
 		CMessageTransform();
-		Matrix4 getTransform();
-		void setTransform(Matrix4 transform);
+		Vector3 getPosition();
+		void setPosition(Vector3 position);
+		Quaternion getOrientation();
+		void setOrientation(Quaternion position);
 		void setMakeConversion(bool convertCoordsToLogicWorld);
 		bool getMakeConversion();
 		virtual ~CMessageTransform(){};
@@ -19,7 +21,8 @@ namespace Logic {
 		virtual void deserialize(Net::CBuffer& buffer);
 
 	private:
-		Matrix4 _transform;
+		Vector3 _position;
+		Quaternion _orientation;
 		bool _convertCoordsToLogicWorld;
 	};
 	REG_FACTORYMESSAGE(CMessageTransform);

@@ -97,7 +97,7 @@ void CPhysicDynamicEntity::process(const std::shared_ptr<CMessage>& message) {
 		}
 		case Message::SET_TRANSFORM: {
 			std::shared_ptr<CMessageTransform> transMsg = std::static_pointer_cast<CMessageTransform>(message);
-			setTransform(transMsg->getTransform(),transMsg->getMakeConversion());
+			setTransform(transMsg->getPosition(),transMsg->getOrientation(),transMsg->getMakeConversion());
 			break;
 		}
 		case Message::ADD_FORCE_PHYSICS: {
@@ -117,7 +117,8 @@ void CPhysicDynamicEntity::process(const std::shared_ptr<CMessage>& message) {
 void CPhysicDynamicEntity::onFixedTick(unsigned int msecs) {
 	// Actualizar la posición y la orientación de la entidad lógica usando la 
 	// información proporcionada por el motor de física	
-	_entity->setTransform( _physicEntity.getTransform() );
+	_entity->setPosition( _physicEntity.getPosition() );
+	_entity->setOrientation( _physicEntity.getOrientation() );
 }
 
 //---------------------------------------------------------
@@ -169,8 +170,6 @@ void CPhysicDynamicEntity::createPhysicEntity(const Map::CEntity *entityInfo) {
 //---------------------------------------------------------
 
 void CPhysicDynamicEntity::createRigid(const Map::CEntity *entityInfo, int group, const std::vector<int>& groupList) {
-	// Leer la posición de la entidad
-	const Matrix4 transform = _entity->getTransform();
 	
 	// Leer el tipo de entidad: estáticos, dinámico o cinemático
 	assert(entityInfo->hasAttribute("physic_type"));
@@ -209,7 +208,7 @@ void CPhysicDynamicEntity::createRigid(const Map::CEntity *entityInfo, int group
 		Physics::Material* defaultMaterial = _materialManager->getMaterial(eDEFAULT);
 		float density = mass / (physicDimensions.x * physicDimensions.y * physicDimensions.z);
 		
-		_physicEntity.load(transform, box, *defaultMaterial, density, isKinematic, isTrigger, _noGravity, group, groupList, this);
+		_physicEntity.load(_entity->getPosition(), _entity->getOrientation(), box, *defaultMaterial, density, isKinematic, isTrigger, _noGravity, group, groupList, this);
 	}
 	else if (physicShape == "sphere") {
 		assert(entityInfo->hasAttribute("physic_radius"));
@@ -219,7 +218,7 @@ void CPhysicDynamicEntity::createRigid(const Map::CEntity *entityInfo, int group
 		Physics::Material* defaultMaterial = _materialManager->getMaterial(eDEFAULT);
 		float density = mass / (4.0f/3.0f * Math::PI * physicRadius * physicRadius * physicRadius);
 
-		_physicEntity.load(transform, sphere, *defaultMaterial, density, isKinematic, isTrigger, _noGravity, group, groupList, this);
+		_physicEntity.load(_entity->getPosition(), _entity->getOrientation(), sphere, *defaultMaterial, density, isKinematic, isTrigger, _noGravity, group, groupList, this);
 	}
 }
 
@@ -286,8 +285,8 @@ void CPhysicDynamicEntity::setPosition(const Vector3 &position, bool makeConvers
 }
 //---------------------------------------------------------
 
-void CPhysicDynamicEntity::setTransform(const Matrix4 &transform, bool makeConversionToLogicWorld) {
-	_physicEntity.setTransform(transform, makeConversionToLogicWorld);
+void CPhysicDynamicEntity::setTransform(const Vector3 &position, const Quaternion &orientation, bool makeConversionToLogicWorld) {
+	_physicEntity.setTransform(position, orientation, makeConversionToLogicWorld);
 }
 //---------------------------------------------------------
 
