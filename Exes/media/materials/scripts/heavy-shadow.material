@@ -11,8 +11,8 @@ material ShadowHead
 		{
 			illumination_stage ambient
 		
-			ambient "0 0 0 1"
-			diffuse "1 1 1 1"
+			ambient 0 0 0 1
+			diffuse 1 1 1 1
 			specular $specular $shininess
 			emissive 0 0 0 0
 			
@@ -53,8 +53,8 @@ material ShadowHead
             {
             }
 
-            ambient "0 0 0 1"
-			diffuse "1 1 1 1"
+            ambient 0 0 0 1
+			diffuse 1 1 1 1
 			specular $specular $shininess
 			emissive 0 0 0 0
 			
@@ -92,8 +92,8 @@ material ShadowEyeR
 		{
 			illumination_stage ambient
 		
-			ambient "0 0 0 1"
-			diffuse "1 1 1 1"
+			ambient 0 0 0 1
+			diffuse 1 1 1 1
 			specular $specular $shininess
 			emissive 0 0 0 0
 			
@@ -134,8 +134,8 @@ material ShadowEyeR
             {
             }
 
-            ambient "0 0 0 1"
-			diffuse "1 1 1 1"
+            ambient 0 0 0 1
+			diffuse 1 1 1 1
 			specular $specular $shininess
 			emissive 0 0 0 0
 			
@@ -171,8 +171,8 @@ material ShadowEyeL
 		{
 			illumination_stage ambient
 		
-			ambient "0 0 0 1"
-			diffuse "1 1 1 1"
+			ambient 0 0 0 1
+			diffuse 1 1 1 1
 			specular $specular $shininess
 			emissive 0 0 0 0
 			
@@ -213,8 +213,8 @@ material ShadowEyeL
             {
             }
 
-            ambient "0 0 0 1"
-			diffuse "1 1 1 1"
+            ambient 0 0 0 1
+			diffuse 1 1 1 1
 			specular $specular $shininess
 			emissive 0 0 0 0
 			
@@ -251,8 +251,8 @@ material ShadowBody
 		{
 			illumination_stage ambient
 		
-			ambient "0 0 0 1"
-			diffuse "1 1 1 1"
+			ambient 0 0 0 1
+			diffuse 1 1 1 1
 			specular $specular $shininess
 			emissive 0.5 0.5 0.5 0.5
 			
@@ -293,8 +293,8 @@ material ShadowBody
             {
             }
 
-            ambient "0 0 0 1"
-			diffuse "1 1 1 1"
+            ambient 0 0 0 1
+			diffuse 1 1 1 1
 			specular $specular $shininess
 			emissive 0 0 0 0
 			
@@ -335,8 +335,8 @@ material ShadowHands
 		{
 			illumination_stage ambient
 		
-			ambient "0 0 0 1"
-			diffuse "1 1 1 1"
+			ambient 0 0 0 1
+			diffuse 1 1 1 1
 			specular $specular $shininess
 			emissive 0 0 0 0
 			
@@ -377,8 +377,8 @@ material ShadowHands
             {
             }
 
-            ambient "0 0 0 1"
-			diffuse "1 1 1 1"
+            ambient 0 0 0 1
+			diffuse 1 1 1 1
 			specular $specular $shininess
 			emissive 0 0 0 0
 			

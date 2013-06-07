@@ -12,8 +12,8 @@ material Material#35_OgreMax
 		{
 			illumination_stage ambient
 		
-			ambient "0 0 0 1"
-			diffuse "1 1 1 1"
+			ambient 0 0 0 1
+			diffuse 1 1 1 1
 			specular $specular $shininess
 			emissive 0 0 0 0
 			
@@ -54,8 +54,8 @@ material Material#35_OgreMax
             {
             }
 
-            ambient "0 0 0 1"
-			diffuse "1 1 1 1"
+            ambient 0 0 0 1
+			diffuse 1 1 1 1
 			specular $specular $shininess
 			emissive 0 0 0 0
 			
@@ -93,8 +93,8 @@ material Material#36_OgreMax
 		{
 			illumination_stage ambient
 		
-			ambient "0 0 0 1"
-			diffuse "1 1 1 1"
+			ambient 0 0 0 1
+			diffuse 1 1 1 1
 			specular $specular $shininess
 			emissive 0 0 0 0
 			
@@ -135,8 +135,8 @@ material Material#36_OgreMax
             {
             }
 
-            ambient "0 0 0 1"
-			diffuse "1 1 1 1"
+            ambient 0 0 0 1
+			diffuse 1 1 1 1
 			specular $specular $shininess
 			emissive 0 0 0 0
 			
@@ -172,8 +172,8 @@ material Material#37_OgreMax
 		{
 			illumination_stage ambient
 		
-			ambient "0 0 0 1"
-			diffuse "1 1 1 1"
+			ambient 0 0 0 1
+			diffuse 1 1 1 1
 			specular $specular $shininess
 			emissive 0 0 0 0
 			
@@ -214,8 +214,8 @@ material Material#37_OgreMax
             {
             }
 
-            ambient "0 0 0 1"
-			diffuse "1 1 1 1"
+            ambient 0 0 0 1
+			diffuse 1 1 1 1
 			specular $specular $shininess
 			emissive 0 0 0 0
 			
@@ -252,8 +252,8 @@ material Material#38_OgreMax
 		{
 			illumination_stage ambient
 		
-			ambient "0 0 0 1"
-			diffuse "1 1 1 1"
+			ambient 0 0 0 1
+			diffuse 1 1 1 1
 			specular $specular $shininess
 			emissive 0.5 0.5 0.5 0.5
 			
@@ -294,8 +294,8 @@ material Material#38_OgreMax
             {
             }
 
-            ambient "0 0 0 1"
-			diffuse "1 1 1 1"
+            ambient 0 0 0 1
+			diffuse 1 1 1 1
 			specular $specular $shininess
 			emissive 0 0 0 0
 			
@@ -336,8 +336,8 @@ material Material#49_OgreMax
 		{
 			illumination_stage ambient
 		
-			ambient "0 0 0 1"
-			diffuse "1 1 1 1"
+			ambient 0 0 0 1
+			diffuse 1 1 1 1
 			specular $specular $shininess
 			emissive 0 0 0 0
 			
@@ -378,8 +378,8 @@ material Material#49_OgreMax
             {
             }
 
-            ambient "0 0 0 1"
-			diffuse "1 1 1 1"
+            ambient 0 0 0 1
+			diffuse 1 1 1 1
 			specular $specular $shininess
 			emissive 0 0 0 0
 			

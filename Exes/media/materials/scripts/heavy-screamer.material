@@ -11,8 +11,8 @@ material ScreamerHead
 		{
 			illumination_stage ambient
 		
-			ambient "0 0 0 1"
-			diffuse "1 1 1 1"
+			ambient 0 0 0 1
+			diffuse 1 1 1 1
 			specular $specular $shininess
 			emissive 0 0 0 0
 			
@@ -53,8 +53,8 @@ material ScreamerHead
             {
             }
 
-            ambient "0 0 0 1"
-			diffuse "1 1 1 1"
+            ambient 0 0 0 1
+			diffuse 1 1 1 1
 			specular $specular $shininess
 			emissive 0 0 0 0
 			
@@ -92,8 +92,8 @@ material ScreamerEyeR
 		{
 			illumination_stage ambient
 		
-			ambient "0 0 0 1"
-			diffuse "1 1 1 1"
+			ambient 0 0 0 1
+			diffuse 1 1 1 1
 			specular $specular $shininess
 			emissive 0 0 0 0
 			
@@ -134,8 +134,8 @@ material ScreamerEyeR
             {
             }
 
-            ambient "0 0 0 1"
-			diffuse "1 1 1 1"
+            ambient 0 0 0 1
+			diffuse 1 1 1 1
 			specular $specular $shininess
 			emissive 0 0 0 0
 			
@@ -171,8 +171,8 @@ material ScreamerEyeR
 		{
 			illumination_stage ambient
 		
-			ambient "0 0 0 1"
-			diffuse "1 1 1 1"
+			ambient 0 0 0 1
+			diffuse 1 1 1 1
 			specular $specular $shininess
 			emissive 0 0 0 0
 			
@@ -213,8 +213,8 @@ material ScreamerEyeR
             {
             }
 
-            ambient "0 0 0 1"
-			diffuse "1 1 1 1"
+            ambient 0 0 0 1
+			diffuse 1 1 1 1
 			specular $specular $shininess
 			emissive 0 0 0 0
 			
@@ -251,8 +251,8 @@ material ScreamerBody
 		{
 			illumination_stage ambient
 		
-			ambient "0 0 0 1"
-			diffuse "1 1 1 1"
+			ambient 0 0 0 1
+			diffuse 1 1 1 1
 			specular $specular $shininess
 			emissive 0.5 0.5 0.5 0.5
 			
@@ -293,8 +293,8 @@ material ScreamerBody
             {
             }
 
-            ambient "0 0 0 1"
-			diffuse "1 1 1 1"
+            ambient 0 0 0 1
+			diffuse 1 1 1 1
 			specular $specular $shininess
 			emissive 0 0 0 0
 			
@@ -335,8 +335,8 @@ material ScreamerHands
 		{
 			illumination_stage ambient
 		
-			ambient "0 0 0 1"
-			diffuse "1 1 1 1"
+			ambient 0 0 0 1
+			diffuse 1 1 1 1
 			specular $specular $shininess
 			emissive 0 0 0 0
 			
@@ -377,8 +377,8 @@ material ScreamerHands
             {
             }
 
-            ambient "0 0 0 1"
-			diffuse "1 1 1 1"
+            ambient 0 0 0 1
+			diffuse 1 1 1 1
 			specular $specular $shininess
 			emissive 0 0 0 0
 			

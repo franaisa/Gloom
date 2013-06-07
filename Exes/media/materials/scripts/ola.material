@@ -489,14 +489,14 @@ material Material#93
             {
 				texture MetalContainer_COLOR_OXID.tga
 				
-				filtering anisotropic
+				filtering trilinear
 			}
 			
 			texture_unit aoMap
 			{
 				texture MetalContainer_COLOR_OXID.tga
 				
-				filtering anisotropic
+				filtering trilinear
 			}
 		}
 
@@ -525,21 +525,21 @@ material Material#93
 			{
 				texture MetalContainer_COLOR_OXID.tga
 				
-				filtering anisotropic
+				filtering trilinear
 			}
 
             texture_unit specMap
             {
                 texture MetalContainers_SPEC.tga
 				
-				filtering anisotropic
+				filtering trilinear
             }
 
             texture_unit normalMap
             {
                 texture MetalContainers_NRM.tga
 				
-				filtering anisotropic
+				filtering trilinear
             }
         }
 	}
@@ -579,14 +579,14 @@ material Material#94
             {
 				texture MetalContainer_COLOR.tga
 				
-				filtering anisotropic
+				filtering trilinear
 			}
 			
 			texture_unit aoMap
 			{
 				texture MetalContainer_COLOR.tga
 				
-				filtering anisotropic
+				filtering trilinear
 			}
 		}
 
@@ -615,21 +615,21 @@ material Material#94
 			{
 				texture MetalContainer_COLOR.tga
 				
-				filtering anisotropic
+				filtering trilinear
 			}
 
             texture_unit specMap
             {
                 texture MetalContainer_SPEC.tga
 				
-				filtering anisotropic
+				filtering trilinear
             }
 
             texture_unit normalMap
             {
                 texture MetalContainer_NRM.tga
 				
-				filtering anisotropic
+				filtering trilinear
             }
         }
 	}

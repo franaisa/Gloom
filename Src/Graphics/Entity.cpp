@@ -216,7 +216,6 @@ namespace Graphics
 		assert(_entityNode && "La entidad no ha sido cargada");
 		if(_entityNode)
 			_entityNode->setScale(scale);
-
 	} // setScale
 	
 	//--------------------------------------------------------

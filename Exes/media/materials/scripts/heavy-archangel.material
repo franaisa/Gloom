@@ -1,4 +1,4 @@
-material houndHeadBlue
+material ArchangelHeadBlue
 {
 	
 	
@@ -11,8 +11,8 @@ material houndHeadBlue
 		{
 			illumination_stage ambient
 		
-			ambient "0 0 0 1"
-			diffuse "1 1 1 1"
+			ambient 0 0 0 1
+			diffuse 1 1 1 1
 			specular $specular $shininess
 			emissive 0 0 0 0
 			
@@ -53,8 +53,8 @@ material houndHeadBlue
             {
             }
 
-            ambient "0 0 0 1"
-			diffuse "1 1 1 1"
+            ambient 0 0 0 1
+			diffuse 1 1 1 1
 			specular $specular $shininess
 			emissive 0 0 0 0
 			
@@ -81,7 +81,7 @@ material houndHeadBlue
 
 
 
-material houndEyeRBlue
+material ArchangelEyeRBlue
 {
 	set $shininess "60"
 	set $specular "2 2 2 100"
@@ -92,8 +92,8 @@ material houndEyeRBlue
 		{
 			illumination_stage ambient
 		
-			ambient "0 0 0 1"
-			diffuse "1 1 1 1"
+			ambient 0 0 0 1
+			diffuse 1 1 1 1
 			specular $specular $shininess
 			emissive 0 0 0 0
 			
@@ -134,8 +134,8 @@ material houndEyeRBlue
             {
             }
 
-            ambient "0 0 0 1"
-			diffuse "1 1 1 1"
+            ambient 0 0 0 1
+			diffuse 1 1 1 1
 			specular $specular $shininess
 			emissive 0 0 0 0
 			
@@ -160,7 +160,7 @@ material houndEyeRBlue
 
 
 
-material houndEyeLBlue
+material ArchangelEyeLBlue
 {
 	set $shininess "60"
 	set $specular "2 2 2 100"
@@ -171,8 +171,8 @@ material houndEyeLBlue
 		{
 			illumination_stage ambient
 		
-			ambient "0 0 0 1"
-			diffuse "1 1 1 1"
+			ambient 0 0 0 1
+			diffuse 1 1 1 1
 			specular $specular $shininess
 			emissive 0 0 0 0
 			
@@ -213,8 +213,8 @@ material houndEyeLBlue
             {
             }
 
-            ambient "0 0 0 1"
-			diffuse "1 1 1 1"
+            ambient 0 0 0 1
+			diffuse 1 1 1 1
 			specular $specular $shininess
 			emissive 0 0 0 0
 			
@@ -240,7 +240,7 @@ material houndEyeLBlue
 
 
 //cuerpo
-material houndBodyBlue
+material ArchangelBodyBlue
 {
 	set $shininess "15"
 	set $specular "2 2 2 15"
@@ -251,8 +251,8 @@ material houndBodyBlue
 		{
 			illumination_stage ambient
 		
-			ambient "0 0 0 1"
-			diffuse "1 1 1 1"
+			ambient 0 0 0 1
+			diffuse 1 1 1 1
 			specular $specular $shininess
 			emissive 0.5 0.5 0.5 0.5
 			
@@ -293,8 +293,8 @@ material houndBodyBlue
             {
             }
 
-            ambient "0 0 0 1"
-			diffuse "1 1 1 1"
+            ambient 0 0 0 1
+			diffuse 1 1 1 1
 			specular $specular $shininess
 			emissive 0 0 0 0
 			
@@ -323,7 +323,7 @@ material houndBodyBlue
 
 }
 
-material houndHandsBlue
+material ArchangelHandsBlue
 {
 	
 	set $shininess "15"
@@ -335,8 +335,8 @@ material houndHandsBlue
 		{
 			illumination_stage ambient
 		
-			ambient "0 0 0 1"
-			diffuse "1 1 1 1"
+			ambient 0 0 0 1
+			diffuse 1 1 1 1
 			specular $specular $shininess
 			emissive 0 0 0 0
 			
@@ -377,8 +377,8 @@ material houndHandsBlue
             {
             }
 
-            ambient "0 0 0 1"
-			diffuse "1 1 1 1"
+            ambient 0 0 0 1
+			diffuse 1 1 1 1
 			specular $specular $shininess
 			emissive 0 0 0 0
 			

@@ -72,18 +72,6 @@ namespace Logic
 			_graphicsEntity->setScale(entityInfo->getVector3Attribute("scale"));
 			// con esto puedo girar lo que quiera cuanto quiera. Lo he probado con el mapa
 		}
-
-		/*
-		//// Esto tb es una guarrada, habra q hacer un componente de luces para controlarlas todas y cargarlas.
-		if(_entity->getName() == "World")
-		{
-			Ogre::Light *luz = _scene->getSceneMgr()->createLight("Luz Puntual");
-			luz->setPosition(entity->getPosition() + Vector3(0,0,0));
-			luz->setType(Ogre::Light::LT_POINT);
-			luz->setDiffuseColour(1.0f,1.0f,0.0f);
-			luz->setPowerScale(Ogre::Real(550));
-		}
-		*/
 		
 
 		return true;
