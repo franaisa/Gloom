@@ -29,16 +29,7 @@ namespace Logic{
 	CAnimationManager::CAnimationManager(): _flying(false){
 		_lastDisplacementAnimation=Vector3::ZERO;
 
-		//iniciamos las animaciones por desplazamiento en tierra
-		_displacementAnims.insert( TAnim(Vector3(0,0,0) ,	"idle"));
-		_displacementAnims.insert( TAnim(Vector3(0,0,1) ,	"forward"));
-		_displacementAnims.insert( TAnim(Vector3(1,0,1) ,	"forwardstrafeleft"));
-		_displacementAnims.insert( TAnim(Vector3(-1,0,1),	"forwardstraferight"));
-		_displacementAnims.insert( TAnim(Vector3(0,0,-1),	"back"));
-		_displacementAnims.insert( TAnim(Vector3(1,0,-1),	"backstrafeleft"));
-		_displacementAnims.insert( TAnim(Vector3(-1,0,-1),	"backstraferight"));
-		_displacementAnims.insert( TAnim(Vector3(1,0,0),	"strafeleft"));
-		_displacementAnims.insert( TAnim(Vector3(-1,0,0),	"straferight"));
+		
 	}
 
 	bool CAnimationManager::spawn(CEntity* entity, CMap *map, const Map::CEntity *entityInfo){
@@ -58,10 +49,12 @@ namespace Logic{
 		Vector3 displacementDir = _avatarController->getDisplacementDir();
 		bool flying = _avatarController->getFlying();
 		if(_lastDisplacementAnimation != displacementDir && !flying){
+			
 			_lastDisplacementAnimation = displacementDir;
+			std::cout << "mandando animacion -> " << _displacementAnims[_lastDisplacementAnimation] << std::endl;
 			std::shared_ptr<CMessageSetAnimation> anim = std::make_shared<CMessageSetAnimation>();
 			anim->setLoop(true);
-			anim->setAnimation(_displacementAnims[_lastDisplacementAnimation]);
+			anim->setAnimation(getMotionAnimation(displacementDir));
 			_entity->emitMessage(anim);
 		}
 		else if ( flying && !_flying ) {
@@ -70,6 +63,7 @@ namespace Logic{
 			anim->setLoop(true);
 			anim->setAnimation("airwalk");
 			_entity->emitMessage(anim);
+			std::cout << "mandando animacion -> airwalk" << std::endl;
 		}
 	}
 
@@ -113,4 +107,20 @@ namespace Logic{
 	void CAnimationManager::sendDeadMessage(TEntityID killer){
 
 	}
+
+	std::string CAnimationManager::getMotionAnimation(const Vector3 &displacementDir){
+		if(displacementDir == Vector3 (0,0,0) )		return	"idle";
+		if(displacementDir == Vector3 (0,0,1) )		return	"forward";
+		if(displacementDir == Vector3 (1,0,1) )		return	"forwardstrafeleft";
+		if(displacementDir == Vector3 (-1,0,1))		return	"forwardstraferight";
+		if(displacementDir == Vector3 (0,0,-1))		return	"back";
+		if(displacementDir == Vector3 (1,0,-1))		return	"backstrafeleft";
+		if(displacementDir == Vector3 (-1,0,-1))	return	"backstraferight";
+		if(displacementDir == Vector3 (1,0,0) )		return	"strafeleft";
+		if(displacementDir == Vector3 (-1,0,0))		return	"straferight";
+
+		//por si las moscas
+		return "idle";
+	}
+
 }

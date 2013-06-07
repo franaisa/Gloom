@@ -243,7 +243,6 @@ namespace Graphics
 		int i = 0;
 		for(;material!=end;++material,++i){
 			_entity->getSubEntity(i)->setMaterialName(*material);
-			std::cout << "poniendo material " << *material << std::endl;
 		}
 	}
 

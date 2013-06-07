@@ -132,6 +132,8 @@ namespace Logic
 
 		void sendDeadMessage(TEntityID killer);
 
+		std::string getMotionAnimation(const Vector3 &displacementDir);
+
 	private:
 
 		// =======================================================================
