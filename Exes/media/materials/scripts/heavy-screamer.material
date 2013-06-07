@@ -1,4 +1,4 @@
-material ScreamerHead
+material ScreamerHeadBlue
 {
 	
 	
@@ -81,7 +81,7 @@ material ScreamerHead
 
 
 
-material ScreamerEyeR
+material ScreamerEyeRBlue
 {
 	set $shininess "60"
 	set $specular "2 2 2 100"
@@ -160,7 +160,7 @@ material ScreamerEyeR
 
 
 
-material ScreamerEyeR
+material ScreamerEyeRBlue
 {
 	set $shininess "60"
 	set $specular "2 2 2 100"
@@ -240,7 +240,7 @@ material ScreamerEyeR
 
 
 //cuerpo
-material ScreamerBody
+material ScreamerBodyBlue
 {
 	set $shininess "15"
 	set $specular "2 2 2 15"
@@ -323,7 +323,7 @@ material ScreamerBody
 
 }
 
-material ScreamerHands
+material ScreamerHandsBlue
 {
 	
 	set $shininess "15"

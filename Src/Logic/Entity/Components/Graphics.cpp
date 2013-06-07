@@ -59,9 +59,7 @@ namespace Logic
 		if(entityInfo->hasAttribute("model"))
 			_model = entityInfo->getStringAttribute("model");
 
-		if(entityInfo->hasAttribute("materialName"))
-			_materialName = entityInfo->getStringAttribute("materialName");
-
+		
 		_graphicsEntity = createGraphicsEntity(entityInfo);
 		if(!_graphicsEntity)
 			return false;
@@ -73,6 +71,18 @@ namespace Logic
 			// con esto puedo girar lo que quiera cuanto quiera. Lo he probado con el mapa
 		}
 		
+		//¿queremos material custom?
+		if(entityInfo->hasAttribute("materialName") && _model == "heavy.mesh"){
+			//material type
+			std::string materialName = entityInfo->getStringAttribute("materialName");
+			_material.push_back(materialName+"HeadBlue");
+			_material.push_back(materialName+"EyeLBlue");
+			_material.push_back(materialName+"EyeRBlue");
+			_material.push_back(materialName+"BodyBlue");
+			_material.push_back(materialName+"HandsBlue");
+
+			_graphicsEntity->changeMaterial(_material);
+		}
 
 		return true;
 

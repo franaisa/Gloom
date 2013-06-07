@@ -152,11 +152,6 @@ namespace Logic
 		std::string _model;
 		
 		/**
-		Nombre del material de la entidad
-		*/
-		std::string _materialName;
-
-		/**
 		Entidad gráfica.
 		*/
 		Graphics::CEntity *_graphicsEntity;
@@ -167,7 +162,7 @@ namespace Logic
 		*/
 		Graphics::CScene* _scene;
 
-
+		std::list<std::string> _material;
 
 	}; // class CGraphics
 

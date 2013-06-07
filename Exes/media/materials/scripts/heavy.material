@@ -1,5 +1,4 @@
-//heavy default material
-material Material#35_OgreMax
+material ScreamerHead
 {
 	
 	
@@ -82,7 +81,7 @@ material Material#35_OgreMax
 
 
 
-material Material#36_OgreMax
+material ScreamerEyeR
 {
 	set $shininess "60"
 	set $specular "2 2 2 100"
@@ -161,7 +160,7 @@ material Material#36_OgreMax
 
 
 
-material Material#37_OgreMax
+material ScreamerEyeR
 {
 	set $shininess "60"
 	set $specular "2 2 2 100"
@@ -241,7 +240,7 @@ material Material#37_OgreMax
 
 
 //cuerpo
-material Material#38_OgreMax
+material ScreamerBody
 {
 	set $shininess "15"
 	set $specular "2 2 2 15"
@@ -324,7 +323,7 @@ material Material#38_OgreMax
 
 }
 
-material Material#49_OgreMax
+material ScreamerHands
 {
 	
 	set $shininess "15"
