@@ -34,9 +34,13 @@ namespace Graphics
 	{
 		if(!_entity->getAllAnimationStates()->hasAnimationState(anim))
 			return false;
-		_currentAnimation = _entity->getAnimationState(anim);
-		_currentAnimation->setEnabled(true);
-		_currentAnimation->setLoop(loop);
+
+		Ogre::AnimationState* animstate = _entity->getAnimationState(anim);
+		TAnim newAnim (anim,animstate);
+		animstate->setEnabled(true);
+		animstate->setLoop(loop);
+
+		_runningAnimations.insert(newAnim);
 		return true;
 
 	} // setAnimation
@@ -45,44 +49,34 @@ namespace Graphics
 		
 	bool CAnimatedEntity::stopAnimation(const std::string &anim)
 	{
-		if(!_entity->getAllAnimationStates()->hasAnimationState(anim))
-			return false;
-		Ogre::AnimationState *animation = _entity->getAnimationState(anim);
-		animation->setEnabled(false);
-		//Por si la animacion es finita y ha acabado.
-		if( animation->hasEnded() )			
-			animation->setTimePosition(0);
-		// Si la animación a parar es la animación activa ya no lo estará.
-		if(animation == _currentAnimation)
-			_currentAnimation = 0;
-		return true;
+		auto myAnim = _runningAnimations.find(anim);
 
+		if(myAnim == _runningAnimations.end())
+			return false;
+
+		myAnim->second->setEnabled(false);
+		myAnim->second->setTimePosition(0);
+
+		_runningAnimations.erase(myAnim);
+
+		return true;
 	} // stopAnimation
 
 	//--------------------------------------------------------
 		
 	void CAnimatedEntity::stopAllAnimations()
 	{
-		if(_entity->getAllAnimationStates()->hasEnabledAnimationState())
-		{
-			Ogre::ConstEnabledAnimationStateIterator it = 
-				_entity->getAllAnimationStates()->getEnabledAnimationStateIterator();
-			Ogre::AnimationState *animation;
+		if(_runningAnimations.empty())
+			return;
 
-			//hay que recorrer con el iterador las animaciones una a una y pausarlas
-			while(it.hasMoreElements())
-			{
-				animation = it.getNext();
-				animation->setEnabled(false);
-				//Por si la animacion es finita y ha acabado.
-				if( animation->hasEnded() )			
-					animation->setTimePosition(0);
-			}
+		auto anim = _runningAnimations.begin();
+		auto end = _runningAnimations.end();
 
-			// Si había animación activa ya no lo está.
-			_currentAnimation = 0;
+		for(;anim!=end;++anim){
+			anim->second->setEnabled(false);
+			anim->second->setTimePosition(0);
 		}
-
+		_runningAnimations.clear();
 	} // stopAllAnimations
 
 	//--------------------------------------------------------
@@ -95,15 +89,27 @@ namespace Graphics
 		bone->setOrientation(_entityNode->getOrientation());
 		*/
 		
-		if(_currentAnimation)
-		{
-			_currentAnimation->addTime(secs);
-			// Comprobamos si la animación ha terminado para avisar, salvo que se trate de una animación final ( en este caso muerte)
-			if(_observer && _currentAnimation->hasEnded() && _currentAnimation->getAnimationName().compare("Death")!=0){
-				_observer->animationFinished(_currentAnimation->getAnimationName());
+		//si no hay animaciones, no hacemos nada
+		if(_runningAnimations.empty())
+			return;
+
+		auto anim = _runningAnimations.begin();
+		auto end = _runningAnimations.end();
+
+		// recorremos todas las animaciones que se están ejectuando, y
+		// les añadimos tiempo para que avancen
+		for(;anim!=end;++anim){
+			anim->second->addTime(secs);
+			// si la animacion ha terminado, avisamos a los observadores 
+			// por si tienen alguna tarea pendiente
+			if(!_observers.empty() && anim->second->hasEnded()){
+				auto obs = _observers.begin();
+				auto obsend = _observers.end();
+
+				for(;obs!=obsend;++obs)
+					(*obs)->animationFinished(anim->second->getAnimationName());
 			}
 		}
-
 	} // tick
 	//--------------------------------------------------------
 

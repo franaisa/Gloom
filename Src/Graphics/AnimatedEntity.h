@@ -86,7 +86,7 @@ namespace Graphics
 		@param mesh Nombre del modelo que debe cargarse.
 		*/
 		CAnimatedEntity(const std::string &name, const std::string &mesh):
-					CEntity(name,mesh), _currentAnimation(0), _weapon(0), _graphicsWeapon(0) {}
+					CEntity(name,mesh), _weapon(0), _graphicsWeapon(0) {}
 
 		/**
 		Destructor de la aplicación.
@@ -126,15 +126,13 @@ namespace Graphics
 		Función que registra al oyente de la entidad gráfica. Por 
 		simplicidad solo habrá un oyente por entidad.
 		*/
-		void setObserver(CAnimatedEntityListener *observer)
-											{_observer = observer;}
+		void addObserver(CAnimatedEntityListener *observer){_observers.push_back(observer);}
 
 		/**
 		Función que quita al oyente de la entidad gráfica. Por 
 		simplicidad solo habrá un oyente por entidad.
 		*/
-		void removeObserver(CAnimatedEntityListener *observer)
-							{if(_observer = observer) _observer = 0;}
+		void removeObserver(CAnimatedEntityListener *observer){_observers.remove(observer);}
 
 		void changeMaterialToWeapon(const std::string& materialName);
 
@@ -148,7 +146,7 @@ namespace Graphics
 		la terminación de las animaciones. Por simplicidad solo habrá
 		un oyente por entidad.
 		*/
-		CAnimatedEntityListener *_observer;
+		std::list<CAnimatedEntityListener*> _observers;
 
 		// Cada entidad debe pertenecer a una escena. Solo permitimos
 		// a la escena actualizar el estado.
@@ -162,17 +160,18 @@ namespace Graphics
 		*/
 		virtual void tick(float secs);
 
-		/**
-		Animación que tiene la entidad activada.
-		*/
-		Ogre::AnimationState *_currentAnimation;
-
 		Ogre::Entity *_weapon;
 
 		Graphics::CEntity *_graphicsWeapon;
 
 		Ogre::SceneNode* _ObjectentityNode;
 
+		/**
+		Estructura de datos de las animaciones que hay ejecutandose
+		*/
+		std::map<std::string, Ogre::AnimationState*> _runningAnimations;
+
+		typedef std::pair<std::string, Ogre::AnimationState*> TAnim;
 	}; // class CAnimatedEntity
 
 } // namespace Graphics

@@ -49,7 +49,7 @@ namespace Logic
 		if(entityInfo->hasAttribute("defaultAnimation"))
 		{
 			_defaultAnimation = entityInfo->getStringAttribute("defaultAnimation");
-			_animatedGraphicsEntity->setObserver(this);
+			_animatedGraphicsEntity->addObserver(this);
 		}
 
 		//cargamos los modelos de las armas para poder ponerselas en la mano conforme los jugadores cambien de arma
@@ -102,7 +102,7 @@ namespace Logic
 	void CAnimatedGraphics::onDeactivate()
 	{
 		CGraphics::onDeactivate();
-
+		_animatedGraphicsEntity->addObserver(this);
 		//En verdad hay que dejar la animación de morir porque desactivaremos al morir
 		//_animatedGraphicsEntity->stopAllAnimations();
 		
