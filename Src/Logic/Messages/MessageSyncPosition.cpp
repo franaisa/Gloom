@@ -33,8 +33,8 @@ namespace Logic {
 
 	Net::CBuffer CMessageSyncPosition::serialize() {
 		// El tamaño de 3 floats para el Vector3 de direccion y 
-		// 3 floats para la orientacion (yaw, pitch, roll)
-		Net::CBuffer buffer( sizeof(int) + (sizeof(float)*6) );
+		// 3 floats para la orientacion (yaw,pitch,roll)
+		Net::CBuffer buffer( sizeof(int) + (sizeof(float)*3) );
 		buffer.serialize(std::string("CMessageSyncPosition"), true);
 		buffer.serialize(_position);
 		buffer.serialize(_orientation);

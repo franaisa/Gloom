@@ -10,9 +10,9 @@ namespace Logic {
 	public:
 		CMessageTransform();
 		Vector3 getPosition();
-		void setPosition(Vector3 position);
+		void setPosition(const Vector3& position);
 		Quaternion getOrientation();
-		void setOrientation(Quaternion position);
+		void setOrientation(const Quaternion& position);
 		void setMakeConversion(bool convertCoordsToLogicWorld);
 		bool getMakeConversion();
 		virtual ~CMessageTransform(){};

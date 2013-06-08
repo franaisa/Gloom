@@ -339,6 +339,24 @@ namespace Net {
 		//________________________________________________________________________
 
 		/**
+		Escribe una matriz de orientacion en el buffer.
+		
+		@param data Datos a serializar.
+		*/
+		void serialize(const Matrix3& data);
+
+		//________________________________________________________________________
+
+		/**
+		Lee una matriz de orientacion del buffer.
+		
+		@param data Datos a deserializar.
+		*/
+		void deserialize(Matrix3& data);
+
+		//________________________________________________________________________
+
+		/**
 		Lee una entidad del mapa (en formato string para la factoria) y la serializa
 		en el buffer.
 

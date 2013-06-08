@@ -17,7 +17,7 @@ namespace Logic {
 	}//
 	//----------------------------------------------------------
 
-	void CMessageTransform::setPosition(Vector3 position){
+	void CMessageTransform::setPosition(const Vector3& position){
 		_position=position;
 	}//
 	//----------------------------------------------------------
@@ -27,7 +27,7 @@ namespace Logic {
 	}//
 	//----------------------------------------------------------
 
-	void CMessageTransform::setOrientation(Quaternion orientation){
+	void CMessageTransform::setOrientation(const Quaternion& orientation){
 		_orientation=orientation;
 	}//
 	//----------------------------------------------------------

@@ -215,27 +215,51 @@ namespace Net {
 
 	//__________________________________________________________________
 
-	void CBuffer::serialize(const Quaternion& data) {	
-		serialize(data.getYaw().valueRadians());
-		serialize(data.getPitch().valueRadians());
-		serialize(data.getRoll().valueRadians());
+	void CBuffer::serialize(const Quaternion& data) {
+
+		Matrix3 m;
+		data.ToRotationMatrix(m);
+		serialize(m);
+
+		/*serialize(data.w);
+		serialize(data.x);
+		serialize(data.y);
+		serialize(data.z);
+
+		serialize(data.getYaw(false).valueRadians());
+		serialize(data.getPitch(false).valueRadians());
+		serialize(data.getRoll(false).valueRadians());*/
 	}
 
 	//__________________________________________________________________
 
 	void CBuffer::deserialize(Quaternion& data) {
-		float yaw, pitch,roll;
+		
+		Matrix3 m;
+		deserialize(m);
+		data.FromRotationMatrix(m);
 
+		/*float w,x,y,z;
+		read(&w,sizeof(w));
+		read(&x,sizeof(x));
+		read(&y,sizeof(y));
+		read(&z,sizeof(z));
+		data=Quaternion(w,x,y,z);
+
+		float yaw, pitch,roll;
 		// Obtenemos Yaw, Pitch y Roll
 		read(&yaw, sizeof(yaw));
 		read(&pitch, sizeof(pitch));
 		read(&roll, sizeof(roll));
 		
-		Quaternion y(Ogre::Radian(yaw),Vector3::UNIT_Y);
-		Quaternion p(Ogre::Radian(pitch),Vector3::UNIT_X);
-		Quaternion r(Ogre::Radian(roll),Vector3::UNIT_Z);
+		Quaternion l1;
+		l1.FromAngleAxis(Ogre::Radian(yaw),Vector3::UNIT_Y);
+		Quaternion l2;
+		l2.FromAngleAxis(Ogre::Radian(pitch),Vector3::UNIT_X);
+		Quaternion l3;
+		l3.FromAngleAxis(Ogre::Radian(roll),Vector3::UNIT_Z);
 
-		data=y*p*r;
+		data=l1*l2*l3;*/
 	}
 
 	//__________________________________________________________________
@@ -352,6 +376,30 @@ namespace Net {
 	}
 
 	//__________________________________________________________________
+
+	//__________________________________________________________________
+
+	void CBuffer::serialize(const Matrix3& data) {
+		Ogre::Radian yaw, pitch, roll;
+		data.ToEulerAnglesYXZ(yaw, pitch, roll);
+		
+		serialize(yaw.valueRadians());
+		serialize(pitch.valueRadians());
+		serialize(roll.valueRadians());
+	}
+
+	//__________________________________________________________________
+
+	void CBuffer::deserialize(Matrix3& data) {
+
+		float yaw, pitch,roll;
+		// Obtenemos el Yaw y el Pitch
+		read(&yaw, sizeof(yaw));
+		read(&pitch, sizeof(pitch));
+		read(&roll, sizeof(roll));
+
+		data.FromEulerAnglesYXZ(Ogre::Radian(yaw),Ogre::Radian(pitch),Ogre::Radian(roll));
+	}
 
 	void CBuffer::serialize(const Map::CEntity* entityInfo) {
 		auto it = entityInfo->_attributes.begin();

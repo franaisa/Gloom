@@ -136,6 +136,39 @@ namespace Math
 		return Quaternion(cos(rad/2.0f), sin(rad/2.0f) * axe.x, sin(rad/2.0f)* axe.y, sin(rad/2.0f) * axe.z);
 	}
 
+	/**
+	Transforma orientacion en radianes en orientacion en quaternion.
+	Nota: Las funciones trigonometricas tienen pequeñisimas desviaciones en decimales por ejemplo al hacer el cos de 90 grados.
+	Si esa infima desviación influyera, deberia de tratarse con casos especiales todos aquellos valores que sean naturales.
+
+	@param rad Ángulo en radianes.
+	@param axe Vector que indica sobre que eje rotamos.
+	@return Ángulo en quaternion.
+	*/
+	static Quaternion fromRadsToQuaternion(float rad,const Vector3 &axe){
+		return Quaternion(cos(rad/2.0f), sin(rad/2.0f) * axe.x, sin(rad/2.0f)* axe.y, sin(rad/2.0f) * axe.z);
+	}
+
+
+	/**
+	Dado el angulo en radianes del yaw, pitch y roll crea el quaternion equivalente.
+	Nota: Las funciones trigonometricas tienen pequeñisimas desviaciones en decimales por ejemplo al hacer el cos de 90 grados.
+	Si esa infima desviación influyera, deberia de tratarse con casos especiales todos aquellos valores que sean naturales.
+
+	@param yaw Yaw en radianes.
+	@param pitch Pitch en radianes.
+	@param roll Roll en radianes.
+	@return Quaternion resultante.
+	*/
+	static Quaternion setQuaternion(float yaw, float pitch, float roll )
+	{
+	  Quaternion qy( cos(yaw/2.0f), 0, sin(yaw/2.0f),0);
+      Quaternion qp( cos(pitch/2.0f), sin(pitch/2.0f), 0, 0);
+      Quaternion qr( cos(roll/2.0f), 0, 0, sin(roll/2.0f) );
+	  Quaternion q;
+	  q=qy*qp*qr;
+      return q;
+	}
 	
 	/**
 	Rota el quaternion pasado por parámetro con los radianes especificados tambien por parámetro sobre el eje especificado.
@@ -520,21 +553,21 @@ namespace Math
 		return (guard > n) ? n : guard;
 	}
 
-	//Por si hicieran falta
-	/*float Quaternion::getPitchQuat()
+	
+	static float getPitchQuat(Quaternion& q)
 	{
-	  return atan2(2*(y*z + w*x), w*w - x*x - y*y + z*z);
+	  return atan2(2*(q.y*q.z + q.w*q.x), q.w*q.w - q.x*q.x - q.y*q.y + q.z*q.z);
 	}
 
-	float Quaternion::getYawQuat()
+	static float getYawQuat(Quaternion& q)
 	{
-	  return asin(-2*(x*z - w*y));
+	  return asin(-2*(q.x*q.z - q.w*q.y));
 	}
 
-	float Quaternion::getRollQuat()
+	static float getRollQuat(Quaternion& q)
 	{
-	  return atan2(2*(x*y + w*z), w*w + x*x - y*y - z*z);
-	}*/
+	  return atan2(2*(q.x*q.y + q.w*q.z), q.w*q.w + q.x*q.x - q.y*q.y - q.z*q.z);
+	}
 
 } // namespace Math
 

@@ -258,7 +258,7 @@ namespace Logic {
 
 		@param pos Nueva orientación.
 		*/
-		void setOrientation(const Ogre::Quaternion& orientation);
+		void setOrientation(const Quaternion& orientation);
 
 		//__________________________________________________________________
 

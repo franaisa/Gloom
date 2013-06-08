@@ -39,7 +39,8 @@ namespace Logic {
 	//________________________________________________________________________
 
 	Net::CBuffer CMessagePlayerSpawn::serialize() {
-		Net::CBuffer buffer(sizeof(int) + sizeof(float) * 6);
+		//3 del vector3 y 4 del quaternion
+		Net::CBuffer buffer(sizeof(int) + sizeof(float) * 7);
 		buffer.serialize(std::string("CMessagePlayerSpawn"), true);
 		buffer.serialize(_position);
 		buffer.serialize(_orientation);

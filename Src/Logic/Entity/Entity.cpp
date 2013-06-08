@@ -369,9 +369,10 @@ namespace Logic {
 
 	//---------------------------------------------------------
 
-	void CEntity::setOrientation(const Ogre::Quaternion& orientation) {
-		//Actualizacion global y parcial
+	void CEntity::setOrientation(const Quaternion& orientation) {
+		//Actualizacion global
 		_orientation = orientation;
+		//Esta mal hay que arreglarlo
 		_yawOrientation = Quaternion(&orientation.xAxis());
 		_pitchOrientation = Quaternion(&orientation.yAxis());
 		_rollOrientation = Quaternion(&orientation.zAxis());
@@ -435,6 +436,11 @@ namespace Logic {
 		}
 		//Actualizamos la orientacion final
 		_orientation=_yawOrientation*_pitchOrientation*_rollOrientation;
+
+		/*Matrix3 o;
+		_orientation.ToRotationMatrix(o);
+		Quaternion je(o);
+		_orientation=je;*/
 	}
 
 } // namespace Logic

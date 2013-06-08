@@ -74,6 +74,93 @@ namespace Logic {
 
 
 	void CShootHammer::primaryFire() {
+
+
+		//PRUEBAS
+		float y,p,r;
+		Quaternion q=_entity->getOrientation();
+		std::cout << "###############################################################"<< std::endl;
+		std::cout << "###############################################################"<< std::endl;
+		std::cout<< "Quaternion inicial " << q << std::endl;
+
+		Quaternion x(&q.xAxis());
+		Quaternion z(&q.yAxis());
+		Quaternion t(&q.zAxis());
+		Quaternion fi,ti;
+		ti=z+x+t;
+		fi.FromAxes(q.xAxis(),q.yAxis(),q.zAxis());
+		std::cout << "Quaternion FromAxis: " << fi<< std::endl;
+		std::cout << "Quaternion Axis*: " << ti<< std::endl;
+
+
+		/*Quaternion h;
+		h=Math::setQuaternion(_entity->getYaw().getYaw().valueRadians(),_entity->getPitch().getPitch().valueRadians(),_entity->getRoll().getRoll().valueRadians());
+		std::cout << "Quaternion Parcial setQ: " << h << std::endl;
+		std::cout << "Quaternion Parcial Inverse setQ: " << h.Inverse() << std::endl;
+
+		Quaternion h1;
+		h1=Math::setQuaternion(q.getYaw(false).valueRadians(),q.getPitch(false).valueRadians(),q.getRoll(false).valueRadians());
+		std::cout << "Quaternion Final setQ: " << h1 << std::endl;*/
+
+
+		/*std::cout << "Parcial yaw: " << _entity->getYaw().getYaw(false) << std::endl;
+		std::cout << "Parcial pitch: " << _entity->getPitch().getPitch(false)<< std::endl;
+		std::cout << "Final yaw: " << q.getYaw(false) << std::endl;
+		std::cout << "Final pitch: " << q.getPitch(false)<< std::endl;
+		//std::cout << "Parcial roll: " << _entity->getRoll() << std::endl;*/
+
+
+		/*Matrix3 o;
+		q.ToRotationMatrix(o);
+		Quaternion je(o);
+		std::cout << "Quaternion matrix : " << je << std::endl;
+
+		Ogre::Radian yaw, pitch, roll;
+		o.ToEulerAnglesYXZ(yaw, pitch, roll);
+		std::cout <<"yaw: " << yaw << std::endl;
+		std::cout <<"pitch: " << pitch << std::endl;
+		std::cout <<"roll: " << roll << std::endl;
+
+		Matrix3 recomp;
+		recomp.FromEulerAnglesYXZ(yaw,pitch,roll);
+		Quaternion jerecomp(recomp);
+		std::cout << "Quaternion matrixRECOMPYXZ : " << jerecomp << std::endl;
+
+		Matrix3 recomp1;
+		recomp1.FromEulerAnglesYXZ(q.getYaw(false),q.getPitch(false),q.getRoll(false));
+		Quaternion jerecomp1(recomp1);
+		std::cout << "Quaternion matrixRECOMPXYZ : " << jerecomp1 << std::endl;
+
+		Quaternion inet;
+		inet=Math::setQuaternion(q.getYaw(false).valueRadians(),q.getPitch(false).valueRadians(),q.getRoll(false).valueRadians());
+		std::cout << "INET: " << inet << std::endl;*/
+
+		
+
+
+		//Igual que INET
+		/*Quaternion l1;
+		l1.FromAngleAxis(q.getYaw(false),Vector3::UNIT_Y);
+		Quaternion l2;
+		l2.FromAngleAxis(q.getPitch(false),Vector3::UNIT_X);
+		Quaternion l3;
+		l3.FromAngleAxis(q.getRoll(false),Vector3::UNIT_Z);
+		Quaternion final;
+		final=l1*l2*l3;
+		std::cout << "Quaternion quat*ypr: " << final << std::endl;
+
+
+		Quaternion x(&q.xAxis());
+		Quaternion z(&q.yAxis());
+		Quaternion t(&q.zAxis());
+		Quaternion fi,ti;
+		fi.FromAxes(q.xAxis(),q.yAxis(),q.zAxis());
+		std::cout << "Quaternion FromAxis: " << fi<< std::endl;*/
+
+
+	
+		
+
 		_primaryFireTimer = _primaryFireCooldown;
 	
 		Vector3 direction = Math::getDirection(_entity->getOrientation()); 
