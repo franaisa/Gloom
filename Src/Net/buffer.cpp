@@ -217,49 +217,17 @@ namespace Net {
 
 	void CBuffer::serialize(const Quaternion& data) {
 
-		Matrix3 m;
-		data.ToRotationMatrix(m);
-		serialize(m);
-
-		/*serialize(data.w);
-		serialize(data.x);
-		serialize(data.y);
-		serialize(data.z);
-
-		serialize(data.getYaw(false).valueRadians());
-		serialize(data.getPitch(false).valueRadians());
-		serialize(data.getRoll(false).valueRadians());*/
+		Vector3 orientation=Math::getEulerYawPitchRoll(data);
+		serialize(orientation);
 	}
 
 	//__________________________________________________________________
 
 	void CBuffer::deserialize(Quaternion& data) {
 		
-		Matrix3 m;
-		deserialize(m);
-		data.FromRotationMatrix(m);
-
-		/*float w,x,y,z;
-		read(&w,sizeof(w));
-		read(&x,sizeof(x));
-		read(&y,sizeof(y));
-		read(&z,sizeof(z));
-		data=Quaternion(w,x,y,z);
-
-		float yaw, pitch,roll;
-		// Obtenemos Yaw, Pitch y Roll
-		read(&yaw, sizeof(yaw));
-		read(&pitch, sizeof(pitch));
-		read(&roll, sizeof(roll));
-		
-		Quaternion l1;
-		l1.FromAngleAxis(Ogre::Radian(yaw),Vector3::UNIT_Y);
-		Quaternion l2;
-		l2.FromAngleAxis(Ogre::Radian(pitch),Vector3::UNIT_X);
-		Quaternion l3;
-		l3.FromAngleAxis(Ogre::Radian(roll),Vector3::UNIT_Z);
-
-		data=l1*l2*l3;*/
+		Vector3 orientation;
+		deserialize(orientation);
+		data=Math::createQuaternionWithEuler(orientation.x,orientation.y,orientation.z);
 	}
 
 	//__________________________________________________________________

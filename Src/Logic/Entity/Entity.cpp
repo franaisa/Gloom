@@ -437,10 +437,6 @@ namespace Logic {
 		//Actualizamos la orientacion final
 		_orientation=_yawOrientation*_pitchOrientation*_rollOrientation;
 
-		/*Matrix3 o;
-		_orientation.ToRotationMatrix(o);
-		Quaternion je(o);
-		_orientation=je;*/
 	}
 
 } // namespace Logic

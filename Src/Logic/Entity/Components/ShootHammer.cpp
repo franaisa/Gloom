@@ -82,16 +82,15 @@ namespace Logic {
 		std::cout << "###############################################################"<< std::endl;
 		std::cout << "###############################################################"<< std::endl;
 		std::cout<< "Quaternion inicial " << q << std::endl;
-
+		
 		Quaternion x(&q.xAxis());
 		Quaternion z(&q.yAxis());
 		Quaternion t(&q.zAxis());
 		Quaternion fi,ti;
-		ti=z+x+t;
 		fi.FromAxes(q.xAxis(),q.yAxis(),q.zAxis());
-		std::cout << "Quaternion FromAxis: " << fi<< std::endl;
-		std::cout << "Quaternion Axis*: " << ti<< std::endl;
+		//std::cout << "Quaternion FromAxis: " << fi<< std::endl;
 
+		
 
 		/*Quaternion h;
 		h=Math::setQuaternion(_entity->getYaw().getYaw().valueRadians(),_entity->getPitch().getPitch().valueRadians(),_entity->getRoll().getRoll().valueRadians());
@@ -102,13 +101,52 @@ namespace Logic {
 		h1=Math::setQuaternion(q.getYaw(false).valueRadians(),q.getPitch(false).valueRadians(),q.getRoll(false).valueRadians());
 		std::cout << "Quaternion Final setQ: " << h1 << std::endl;*/
 
+		Vector3 je=Math::getEulerYawPitchRoll(q);
+		Quaternion create=Math::createQuaternionWithEuler(je.x,je.y,je.z);
+		std::cout << "create: " << create << std::endl;
 
-		/*std::cout << "Parcial yaw: " << _entity->getYaw().getYaw(false) << std::endl;
-		std::cout << "Parcial pitch: " << _entity->getPitch().getPitch(false)<< std::endl;
-		std::cout << "Final yaw: " << q.getYaw(false) << std::endl;
-		std::cout << "Final pitch: " << q.getPitch(false)<< std::endl;
-		//std::cout << "Parcial roll: " << _entity->getRoll() << std::endl;*/
 
+		std::cout << "Parcial yaw: " << _entity->getYaw() << std::endl;
+		std::cout << "Parcial pitch: " << _entity->getPitch()<< std::endl;
+		std::cout << "Parcial roll: " << _entity->getRoll()<< std::endl;
+
+		/*Quaternion yaw=Math::setQuaternion(create.getYaw(false).valueRadians(),0,0);
+		Quaternion pitch=Math::setQuaternion(0,create.getPitch(false).valueRadians(),0);
+		Quaternion roll=Math::setQuaternion(0,0,create.getRoll(false).valueRadians());
+		*/
+		/*std::cout << "VECTOR EULER: " << je << std::endl;
+		Quaternion yaw=Math::createQuaternionWithEuler(je.x,0,0);
+		Quaternion pitch=Math::createQuaternionWithEuler(0,je.y,0);
+		Quaternion roll=Math::createQuaternionWithEuler(0,0,je.z);
+
+		std::cout << "set yaw: " << yaw<< std::endl;
+		std::cout << "set pitch: " << pitch << std::endl;
+		std::cout << "set roll: " << roll<< std::endl;
+
+		std::cout<< "set *final: " << yaw*pitch*roll<< std::endl;*/
+
+
+		Quaternion l1;
+		l1.FromAngleAxis(q.getYaw(false),Vector3::UNIT_Y);
+		Quaternion l2;
+		l2.FromAngleAxis(q.getPitch(false),Vector3::UNIT_X);
+		Quaternion l3;
+		l3.FromAngleAxis(q.getRoll(false),Vector3::UNIT_Z);
+		Quaternion final;
+		final=l2*l1*l3;
+		std::cout << "set yaw: " << l1<< std::endl;
+		std::cout << "set pitch: " << l2 << std::endl;
+		std::cout << "set roll: " << l3<< std::endl;
+		std::cout << "Quaternion quat*rpy: " << final << std::endl;
+
+		/*Quaternion aux1(Ogre::Radian(je.x),Vector3::UNIT_X); 
+		std::cout << "aux1: " << aux1.Inverse() << std::endl;
+		Quaternion aux2(Ogre::Radian(je.y),Vector3::UNIT_Y); 
+		std::cout << "aux2: " << aux2 << std::endl;
+		Quaternion aux3(Ogre::Radian(je.x),Vector3::UNIT_Y); 
+		std::cout << "aux3: " << aux3.Inverse() << std::endl;
+		Quaternion aux4(Ogre::Radian(je.y),Vector3::UNIT_X); 
+		std::cout << "aux4: " << aux4 << std::endl;*/
 
 		/*Matrix3 o;
 		q.ToRotationMatrix(o);

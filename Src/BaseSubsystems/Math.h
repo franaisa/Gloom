@@ -169,6 +169,47 @@ namespace Math
 	  q=qy*qp*qr;
       return q;
 	}
+
+	/**
+	Devuelve en grados de Euler los grados de yaw,pitch y roll por los que esta formado el quaternion.
+
+	@param q Quaternion a extraer los grados.
+	@return Vector3 con el yaw,pitch,roll.
+	*/
+	static Vector3 getEulerYawPitchRoll(const Quaternion& q)
+	{
+		float yaw=atan2(2.0f * q.x * q.w + 2.0f * q.y * q.z, 1 - 2.0f * (q.z*q.z  + q.w*q.w));    
+		float pitch=asin(2.0f * ( q.x * q.z - q.w * q.y ) );                             
+		float roll=atan2(2.0f * q.x * q.y + 2.0f * q.z * q.w, 1 - 2.0f * (q.y*q.y + q.z*q.z));  
+		return Vector3(yaw,pitch,roll);
+	}
+
+	/**
+	Dados los grados de Euler construye el quaternion resultante.
+
+	@param yaw Yaw del quaternion a formar.
+	@param pitch Pitch del quaternion a formar.
+	@param roll Roll del quaternion a formar.
+	@return Quaternion resultante
+	*/
+	static Quaternion createQuaternionWithEuler(float yaw, float pitch, float roll)
+	{
+		float rollOver2 = roll * 0.5f;
+		float sinRollOver2 = sin(rollOver2);
+		float cosRollOver2 = cos(rollOver2);
+		float pitchOver2 = pitch * 0.5f;
+		float sinPitchOver2 = sin(pitchOver2);
+		float cosPitchOver2 = cos(pitchOver2);
+		float yawOver2 = yaw * 0.5f;
+		float sinYawOver2 = sin(yawOver2);
+		float cosYawOver2 = cos(yawOver2);
+		Quaternion result;
+		result.x = cosYawOver2 * cosPitchOver2 * cosRollOver2 + sinYawOver2 * sinPitchOver2 * sinRollOver2;
+		result.y = cosYawOver2 * cosPitchOver2 * sinRollOver2 - sinYawOver2 * sinPitchOver2 * cosRollOver2;
+		result.z = cosYawOver2 * sinPitchOver2 * cosRollOver2 + sinYawOver2 * cosPitchOver2 * sinRollOver2;
+		result.w = sinYawOver2 * cosPitchOver2 * cosRollOver2 - cosYawOver2 * sinPitchOver2 * sinRollOver2;
+		return result;
+	}
 	
 	/**
 	Rota el quaternion pasado por parámetro con los radianes especificados tambien por parámetro sobre el eje especificado.

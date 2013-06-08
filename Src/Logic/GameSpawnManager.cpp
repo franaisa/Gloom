@@ -111,6 +111,7 @@ namespace Logic {
 		}
 		//Ademas por si acaso se pide mas de un punto en el mismo tick hay que marcarlo instantaneamente
 		_listSpawnPoints[random]->getComponent<CPhysicStaticEntity>("CPhysicStaticEntity")->setInTrigger(true);
+		std::cout << "El spawnpoint es: " << random+1 << std::endl;
 		return _listSpawnPoints[random];
 	}
 
