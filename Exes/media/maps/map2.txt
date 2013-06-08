@@ -139,6 +139,7 @@ Map = {
 		type = "Screamer",
 		position = {0, 0.2, -20},
 		defaultAnimation = "idle",
+		materialName="Screamer",
 		yaw = 90,
 		defaultLife = 120,
 		maxShield=100,

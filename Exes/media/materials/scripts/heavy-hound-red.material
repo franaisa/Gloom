@@ -1,4 +1,4 @@
-material houndHeadRed
+material HoundHeadRed
 	
 	
 	set $shininess "60"
@@ -10,8 +10,8 @@ material houndHeadRed
 		{
 			illumination_stage ambient
 		
-			ambient "0 0 0 1"
-			diffuse "1 1 1 1"
+			ambient 0 0 0 1
+			diffuse 1 1 1 1
 			specular $specular $shininess
 			emissive 0 0 0 0
 			
@@ -52,8 +52,8 @@ material houndHeadRed
             {
             }
 
-            ambient "0 0 0 1"
-			diffuse "1 1 1 1"
+            ambient 0 0 0 1
+			diffuse 1 1 1 1
 			specular $specular $shininess
 			emissive 0 0 0 0
 			
@@ -80,7 +80,7 @@ material houndHeadRed
 
 
 
-material houndEyeRRed
+material HoundEyeRRed
 {
 	set $shininess "60"
 	set $specular "2 2 2 100"
@@ -91,8 +91,8 @@ material houndEyeRRed
 		{
 			illumination_stage ambient
 		
-			ambient "0 0 0 1"
-			diffuse "1 1 1 1"
+			ambient 0 0 0 1
+			diffuse 1 1 1 1
 			specular $specular $shininess
 			emissive 0 0 0 0
 			
@@ -133,8 +133,8 @@ material houndEyeRRed
             {
             }
 
-            ambient "0 0 0 1"
-			diffuse "1 1 1 1"
+            ambient 0 0 0 1
+			diffuse 1 1 1 1
 			specular $specular $shininess
 			emissive 0 0 0 0
 			
@@ -159,7 +159,7 @@ material houndEyeRRed
 
 
 
-material houndEyeLRed
+material HoundEyeLRed
 {
 	set $shininess "60"
 	set $specular "2 2 2 100"
@@ -170,8 +170,8 @@ material houndEyeLRed
 		{
 			illumination_stage ambient
 		
-			ambient "0 0 0 1"
-			diffuse "1 1 1 1"
+			ambient 0 0 0 1
+			diffuse 1 1 1 1
 			specular $specular $shininess
 			emissive 0 0 0 0
 			
@@ -212,8 +212,8 @@ material houndEyeLRed
             {
             }
 
-            ambient "0 0 0 1"
-			diffuse "1 1 1 1"
+            ambient 0 0 0 1
+			diffuse 1 1 1 1
 			specular $specular $shininess
 			emissive 0 0 0 0
 			
@@ -239,7 +239,7 @@ material houndEyeLRed
 
 
 //cuerpo
-material houndBodyRed
+material HoundBodyRed
 {
 	set $shininess "15"
 	set $specular "2 2 2 15"
@@ -250,8 +250,8 @@ material houndBodyRed
 		{
 			illumination_stage ambient
 		
-			ambient "0 0 0 1"
-			diffuse "1 1 1 1"
+			ambient 0 0 0 1
+			diffuse 1 1 1 1
 			specular $specular $shininess
 			emissive 0.5 0.5 0.5 0.5
 			
@@ -292,8 +292,8 @@ material houndBodyRed
             {
             }
 
-            ambient "0 0 0 1"
-			diffuse "1 1 1 1"
+            ambient 0 0 0 1
+			diffuse 1 1 1 1
 			specular $specular $shininess
 			emissive 0 0 0 0
 			
@@ -322,7 +322,7 @@ material houndBodyRed
 
 }
 
-material houndHandsRed
+material HoundHandsRed
 {
 	
 	set $shininess "15"
@@ -334,8 +334,8 @@ material houndHandsRed
 		{
 			illumination_stage ambient
 		
-			ambient "0 0 0 1"
-			diffuse "1 1 1 1"
+			ambient 0 0 0 1
+			diffuse 1 1 1 1
 			specular $specular $shininess
 			emissive 0 0 0 0
 			
@@ -376,8 +376,8 @@ material houndHandsRed
             {
             }
 
-            ambient "0 0 0 1"
-			diffuse "1 1 1 1"
+            ambient 0 0 0 1
+			diffuse 1 1 1 1
 			specular $specular $shininess
 			emissive 0 0 0 0
 			

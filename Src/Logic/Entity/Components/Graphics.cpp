@@ -59,9 +59,7 @@ namespace Logic
 		if(entityInfo->hasAttribute("model"))
 			_model = entityInfo->getStringAttribute("model");
 
-		if(entityInfo->hasAttribute("materialName"))
-			_materialName = entityInfo->getStringAttribute("materialName");
-
+		
 		_graphicsEntity = createGraphicsEntity(entityInfo);
 		if(!_graphicsEntity)
 			return false;
@@ -72,19 +70,19 @@ namespace Logic
 			_graphicsEntity->setScale(entityInfo->getVector3Attribute("scale"));
 			// con esto puedo girar lo que quiera cuanto quiera. Lo he probado con el mapa
 		}
-
-		/*
-		//// Esto tb es una guarrada, habra q hacer un componente de luces para controlarlas todas y cargarlas.
-		if(_entity->getName() == "World")
-		{
-			Ogre::Light *luz = _scene->getSceneMgr()->createLight("Luz Puntual");
-			luz->setPosition(entity->getPosition() + Vector3(0,0,0));
-			luz->setType(Ogre::Light::LT_POINT);
-			luz->setDiffuseColour(1.0f,1.0f,0.0f);
-			luz->setPowerScale(Ogre::Real(550));
-		}
-		*/
 		
+		//¿queremos material custom?
+		if(entityInfo->hasAttribute("materialName") && _model == "heavy.mesh"){
+			//material type
+			std::string materialName = entityInfo->getStringAttribute("materialName");
+			_material.push_back(materialName+"HeadBlue");
+			_material.push_back(materialName+"EyeLBlue");
+			_material.push_back(materialName+"EyeRBlue");
+			_material.push_back(materialName+"BodyBlue");
+			_material.push_back(materialName+"HandsBlue");
+
+			_graphicsEntity->changeMaterial(_material);
+		}
 
 		return true;
 

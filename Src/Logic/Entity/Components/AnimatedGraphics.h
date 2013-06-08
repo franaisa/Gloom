@@ -116,6 +116,8 @@ namespace Logic
 		*/
 		virtual Graphics::CEntity* createGraphicsEntity(const Map::CEntity *entityInfo);
 		
+		virtual void onTick(unsigned int msecs);
+
 		/**
 		Entidad gráfica animada.
 		*/

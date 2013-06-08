@@ -216,7 +216,6 @@ namespace Graphics
 		assert(_entityNode && "La entidad no ha sido cargada");
 		if(_entityNode)
 			_entityNode->setScale(scale);
-
 	} // setScale
 	
 	//--------------------------------------------------------
@@ -242,8 +241,9 @@ namespace Graphics
 		auto material = materialName.begin();
 		auto end = materialName.end();
 		int i = 0;
-		for(;material!=end;++material,++i)
+		for(;material!=end;++material,++i){
 			_entity->getSubEntity(i)->setMaterialName(*material);
+		}
 	}
 
 	//--------------------------------------------------------

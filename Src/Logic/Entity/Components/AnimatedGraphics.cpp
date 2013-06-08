@@ -169,6 +169,14 @@ namespace Logic
 	} // process
 	
 	//---------------------------------------------------------
+
+	void CAnimatedGraphics::onTick(unsigned int msecs){
+
+		Matrix4 transform = _entity->getTransform();
+		Math::setYaw(Math::getYaw(transform)+Math::PI,transform);
+		_graphicsEntity->setTransform(transform);
+	}//---------------------------------------------------------
+	//onTick
 	
 	void CAnimatedGraphics::animationFinished(const std::string &animation)
 	{
