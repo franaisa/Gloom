@@ -108,7 +108,7 @@ namespace Graphics
 	//--------------------------------------------------------
 
 	void CAnimatedEntity::attachWeapon(CEntity &arma, unsigned int id){
-		
+/*		
 		if(_weapon)
 			_scene->getSceneMgr()->destroyEntity(_weapon);
 		_weapon = _scene->getSceneMgr()->createEntity(arma.getMesh());
@@ -118,6 +118,7 @@ namespace Graphics
 		_entity->getNumSubEntities();
 
 		std::cout << "material name del mierda heavy! " << _entity->getSubEntity(0)->getMaterialName() << std::endl;
+		*/
 	}
 
 	std::string CAnimatedEntity::getWeaponMaterial(){

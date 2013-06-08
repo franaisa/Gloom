@@ -33,6 +33,10 @@ namespace Graphics
 			_particleNode->setPosition(position);
 		}
 
+		if(!startEmitting){
+			this->deactivate();
+		}
+
 	} // CParticle
 	//--------------------------------------------------------
 
@@ -68,14 +72,14 @@ namespace Graphics
 	
 	void HHFXParticle::activate()
 	{
-		_particle->StopFX();
+		_particle->RunFX();
 
 	} // activate
 	//--------------------------------------------------------
 
 	void HHFXParticle::deactivate()
 	{
-		_particle->RunFX();
+		_particle->StopFX();
 
 	} // deactivate
 	//--------------------------------------------------------
