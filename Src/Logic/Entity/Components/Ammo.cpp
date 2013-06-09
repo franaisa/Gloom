@@ -21,6 +21,9 @@
 #include "Logic/Messages/MessageHudAmmo.h"
 #include "Logic/Messages/MessageHudWeapon.h"
 
+#include "Logic/Messages/MessagePrimaryShoot.h"
+#include "Logic/Messages/MessageSecondaryShoot.h"
+
 // Graficos
 // @deprecated Ogre no deberia estar acoplado a la logica
 #include <OgreSceneManager.h>
@@ -119,6 +122,8 @@ namespace Logic {
 	void IAmmo::primaryFire() {
 		_primaryFireIsActive = true;
 		// Mandar el mensaje primaryFire(true)
+		auto m = make_shared<CMessagePrimaryShoot>(true);
+		_entity->emitMessage(m);
 	}
 
 	//__________________________________________________________________
@@ -126,6 +131,8 @@ namespace Logic {
 	void IAmmo::secondaryFire() {
 		_secondaryFireIsActive = true;
 		// Mandar el mensaje seondaryFire(true)
+		auto m = make_shared<CMessageSecondaryShoot>(true);
+		_entity->emitMessage(m);
 	}
 
 	//__________________________________________________________________
@@ -133,6 +140,8 @@ namespace Logic {
 	void IAmmo::stopPrimaryFire() {
 		_primaryFireIsActive = true;
 		// Mandar el mensaje primaryFire(false)
+		auto m = make_shared<CMessagePrimaryShoot>(false);
+		_entity->emitMessage(m);
 	}
 
 	//__________________________________________________________________
@@ -140,6 +149,8 @@ namespace Logic {
 	void IAmmo::stopSecondaryFire() {
 		_secondaryFireIsActive = false;
 		// Mandar el mensaje secondaryFire(false)
+		auto m = make_shared<CMessageSecondaryShoot>(false);
+		_entity->emitMessage(m);
 	}
 
 	//__________________________________________________________________
@@ -237,4 +248,3 @@ namespace Logic {
 	} // decals
 
 } // namespace Logic
-

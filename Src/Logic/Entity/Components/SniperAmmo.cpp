@@ -122,7 +122,7 @@ namespace Logic {
 	//__________________________________________________________________
 
 	bool CSniperAmmo::canUseSecondaryFire() {
-		return true;
+		return _secondaryFireCooldownTimer == 0 && _currentAmmo > 0;;
 	}
 
 	//__________________________________________________________________
@@ -151,10 +151,35 @@ namespace Logic {
 
 	//__________________________________________________________________
 
+	void CSniperAmmo::secondaryFire() {
+		IAmmo::secondaryFire();
+
+		_secondaryFireCooldownTimer = _secondaryFireCooldown;
+
+		decrementAmmo();
+		++_currentSpentAmmo;
+	}
+
+	//__________________________________________________________________
+
+	void CSniperAmmo::stopSecondaryFire() {
+		IAmmo::stopSecondaryFire();
+		
+		if(!_secondaryFireIsActive) return;
+
+		_secondaryFireIsActive = false;
+
+		// Reseteamos el reloj
+		_currentSpentAmmo = _ammoSpentTimer = _elapsedTime = 0;
+	}
+	//__________________________________________________________________
+
 	void CSniperAmmo::reduceCooldown(unsigned int percentage) {
 		// Si es 0 significa que hay que restaurar al que habia por defecto,
 		// sino decrementamos conforme al porcentaje dado.
 		_primaryFireCooldown = percentage == 0 ? _defaultPrimaryFireCooldown : (_defaultPrimaryFireCooldown - (percentage * _primaryFireCooldown * 0.01f));
+
+		_secondaryFireCooldown = percentage == 0 ? _defaultPrimaryFireCooldown : (_defaultSecondaryFireCooldown - (percentage * _secondaryFireCooldown * 0.01f));
 	}
 
 }//namespace Logic

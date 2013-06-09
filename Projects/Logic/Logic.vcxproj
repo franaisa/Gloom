@@ -84,9 +84,13 @@
     <ClCompile Include="..\..\Src\Logic\Entity\Components\IronHellGoatAmmo.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\IronHellGoatFeedback.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\MiniGunAmmo.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\MiniGunFeedback.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\ShotGunAmmo.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\ShotGunFeedback.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\SniperAmmo.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\SniperFeedback.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\SoulReaperAmmo.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\SoulReaperFeedback.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\Weapon.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\ArrayGraphics.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\Audio.cpp" />
@@ -126,7 +130,7 @@
     <ClCompile Include="..\..\Src\Logic\Entity\Components\TransformSnapshot.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\PositionInterpolator.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\ScreamerShieldDamageNotifier.cpp" />
-    <ClCompile Include="..\..\Src\Logic\Entity\Components\ShootHammer.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\ShootSoulReaper.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\ShootMiniGun.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\ShootShotGun.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\ShootSniper.cpp" />
@@ -241,9 +245,13 @@
     <ClInclude Include="..\..\Src\Logic\Entity\Components\IronHellGoatAmmo.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\IronHellGoatFeedback.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\MiniGunAmmo.h" />
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\MiniGunFeedback.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\ShotGunAmmo.h" />
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\ShotGunFeedback.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\SniperAmmo.h" />
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\SniperFeedback.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\SoulReaperAmmo.h" />
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\SoulReaperFeedback.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\Weapon.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\Audio.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\CameraFeedbackNotifier.h" />
@@ -284,7 +292,7 @@
     <ClInclude Include="..\..\Src\Logic\Entity\Components\TransformSnapshot.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\PositionInterpolator.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\ScreamerShieldDamageNotifier.h" />
-    <ClInclude Include="..\..\Src\Logic\Entity\Components\ShootHammer.h" />
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\ShootSoulReaper.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\ShootMiniGun.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\ShootShotGun.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\ShootSniper.h" />

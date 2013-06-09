@@ -199,7 +199,6 @@ namespace Graphics
 		
 		_entity->attachObjectToBone("weapon_bone_2",_weapon);
 
-		_entity->getNumSubEntities();
 	}
 
 	std::string CAnimatedEntity::getWeaponMaterial(){

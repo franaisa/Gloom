@@ -87,7 +87,7 @@ namespace Logic
 
 			// Por ahora leo a mano cada una de las armas que tiene el usuario
 
-			std::string armas[] = {"hammer","sniper","shotGun","miniGun", "grenadeLauncher"};
+			std::string armas[] = {"soulReaper","sniper","shotGun","miniGun", "grenadeLauncher"};
 
 			
 			for(int i = 0; i < numWeapons; ++i){

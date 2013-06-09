@@ -58,7 +58,7 @@ namespace Logic
 
 			_scene = _entity->getMap()->getScene();
 			WeaponType::Enum current;
-			for(int i = WeaponType::eHAMMER; i < WeaponType::eSIZE; ++i){
+			for(int i = WeaponType::eSOUL_REAPER; i < WeaponType::eSIZE; ++i){
 				
 				current = (WeaponType::Enum)i;
 				std::stringstream aux;

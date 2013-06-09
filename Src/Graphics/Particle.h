@@ -9,8 +9,8 @@ Contiene la declaración de la clase que maneja el Particle.
 
 @see Graphics::CParticle
 
-@author Pablo Terrado
-@date Enero, 2013
+@author Antonio Jesus Narvaez
+@date Junio, 2013
 */
 
 #ifndef __Graphics_Particle_H
@@ -20,12 +20,7 @@ Contiene la declaración de la clase que maneja el Particle.
 #include "Logic\Entity\Entity.h"
 
 // Predeclaración de clases para ahorrar tiempo de compilación
-namespace Ogre 
-{
-	class SceneNode;
-	class ParticleSystem;
 
-}
 namespace Graphics 
 {
 	class CScene;
@@ -51,87 +46,82 @@ namespace Graphics
 
 		@param name Nombre del Particle.
 		*/
-		CParticle(const std::string &particleName, bool isOverlay = false);
+		CParticle(){};
 
 		/**
 		Destructor de la partícula.
 		*/
-		~CParticle();
+		~CParticle(){};
 
 
 		/**
 		posiciona la particula en la pos dada
 		@params position, es un vector3 con la posicion donde se ubicada la particula
 		*/
-		void setPosition(const Vector3 &position);
+		virtual void setPosition(const Vector3 &position) = 0; 
 
 		/**
 		devuelve  la particula en la pos dada
 		@return Vector3 con la posicion donde se ubicada la particula
 		*/
-		Vector3 getPosition();
+		virtual Vector3 getPosition() = 0;
 
 		/**
 		Pone la particula a visible o invisible
 		param visible, visibilidad de la particula
 		*/
-		void setVisible(bool visible);
+		virtual void setVisible(bool visible) = 0;
 
 		/**
 		Pone a la particula en modo activa
 		*/
-		void activate();
+		virtual void activate() = 0;
 
 		/**
 		Pone a la particula en modo pausa
 		*/
-		void deactivate();
+		virtual void deactivate() = 0;
 
 		/**
 		Fuerza la carga de los recursos de la particula
 		*/
-		void loadResources();
+		virtual void loadResources() = 0;
 		
 		/**
 		Indica si la particula esta emitiendo
 		
 		@return bool, true si la particula esta emitiendo, falso si no
 		*/
-		bool isEmitting();
+		virtual bool isEmitting() = 0;
 
 		/**
 		Setea la direccion del emisor que se le introduce a la particula, lleva la magnitud ya multiplicada por la direccion
 
 		@param directionWithForce direcion de la particula con la fuerza ya multiplicada
 		*/
-		void setDirection(const Vector3 &directionWithForce);
+		virtual void setDirection(const Vector3 &directionWithForce) = 0;
 
 		/**
 		Devuelve el objeto ogre de la particula
 
 		@return objeto ogre de la particula.
 		*/
-		Ogre::ParticleSystem* getParticleSystem() {return _particleSystem;}
+		//Ogre::ParticleSystem* getParticleSystem() {return _particleSystem;}
 
-		Ogre::SceneNode * getSceneNode(){ return _sceneNode;}
-
-		
-
-	protected:
-		/** 
-		ParticleSystem _particleSystem(sistema de Particulas)
-		*/
-		Ogre::ParticleSystem* _particleSystem;
+		virtual Ogre::SceneNode * getSceneNode() = 0;
 
 		/**
-		Nombre del ParticleSystem.
+		Cambia la orientación de la entidad.
+
+		@param orientation Referencia a la matriz de rotación con la que debe 
+		orientarse la entidad.
 		*/
-		std::string _nameParticle;
+		virtual void setOrientation(const Matrix3 &orientation) = 0;
 
 		/**
-		scene donde se crea la particula
+		Indica si la particula se a creado correctamente o por el contrario ha dado algun error.
 		*/
-		Ogre::SceneNode *_sceneNode;
+		virtual bool isLoaded() = 0;
 
 	}; // class CParticle
 

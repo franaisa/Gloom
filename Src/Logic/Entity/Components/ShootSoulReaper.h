@@ -1,18 +1,18 @@
 //---------------------------------------------------------------------------
-// ShootHammer.h
+// ShootSoulReaper.h
 //---------------------------------------------------------------------------
 
 /**
-@file ShootHammer.h
+@file ShootSoulReaper.h
 
-Contiene la declaración del componente que implementa el hammer.
+Contiene la declaración del componente que implementa el soulReaper.
 
 @author Jose Antonio García Yáñez
 @date Febrero, 2013
 */
 
-#ifndef __Logic_ShootHammer_H
-#define __Logic_ShootHammer_H
+#ifndef __Logic_ShootSoulReaper_H
+#define __Logic_ShootSoulReaper_H
 
 #include "Logic/Entity/Components/Weapon.h"
 
@@ -21,26 +21,26 @@ namespace Logic {
 	/**
 	@ingroup logicGroup
 
-	Este componente implementa la funcionalidad del hammer. Tan solo necesitamos
+	Este componente implementa la funcionalidad del soulReaper. Tan solo necesitamos
 	redefinir los mensajes que se mandan a las entidades en caso de hit, ya que 
 	el resto del comportamiento esta definido en el arquetipo que describe 
-	al hammer.
+	al soulReaper.
 
 	@author Jose Antonio García Yáñez
 	@date Febrero, 2013
 	*/
 
-	class CShootHammer : public IWeapon {
-		DEC_FACTORY(CShootHammer);
+	class CShootSoulReaper : public IWeapon {
+		DEC_FACTORY(CShootSoulReaper);
 
 	public:
 
 		/** Constructor por defecto. */
-		CShootHammer() : IWeapon("hammer"), _elementPulling(0), _elementPulled(0), _shotsDistanceSecondaryFire(0), _primaryFireTimer(0) { }
+		CShootSoulReaper() : IWeapon("soulReaper"), _elementPulling(0), _elementPulled(0), _shotsDistanceSecondaryFire(0), _primaryFireTimer(0) { }
 
 		//__________________________________________________________________
 
-		virtual ~CShootHammer();
+		virtual ~CShootSoulReaper();
 
 		//__________________________________________________________________
 
@@ -52,7 +52,7 @@ namespace Logic {
 		Inicialización del componente a partir de la información extraida de la entidad
 		leida del mapa:
 		<ul>
-			<li><strong>weaponHammerDamageReflect:</strong> Daño que hace el hammer al golpear contra el mundo. </li>
+			<li><strong>weaponSoulReaperDamageReflect:</strong> Daño que hace el soulReaper al golpear contra el mundo. </li>
 		</ul>
 
 		@param entity Entidad a la que pertenece el componente.
@@ -98,7 +98,7 @@ namespace Logic {
 		virtual void stopSecondaryFire(unsigned int elapsedTime);
 
 		/** Método estático que resetea la cantidad de munición del arma.
-		En el hammer, se establecera a una bala, para que pueda disparar y debido a que cuando dispara no baja tendra balas infinitas
+		En el soulReaper, se establecera a una bala, para que pueda disparar y debido a que cuando dispara no baja tendra balas infinitas
 		*/
 		virtual void resetAmmo();
 
@@ -123,7 +123,7 @@ namespace Logic {
 
 	}; // class CShootRaycast
 
-	REG_FACTORY(CShootHammer);
+	REG_FACTORY(CShootSoulReaper);
 
 } // namespace Logic
 

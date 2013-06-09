@@ -84,8 +84,8 @@
     <ClCompile Include="..\..\Src\Graphics\HHFX.cpp" />
     <ClCompile Include="..\..\Src\Graphics\HHFXParticle.cpp" />
     <ClCompile Include="..\..\Src\Graphics\Light.cpp" />
+    <ClCompile Include="..\..\Src\Graphics\OgreParticle.cpp" />
     <ClCompile Include="..\..\Src\Graphics\Overlay.cpp" />
-    <ClCompile Include="..\..\Src\Graphics\Particle.cpp" />
     <ClCompile Include="..\..\Src\Graphics\PoolParticle.cpp" />
     <ClCompile Include="..\..\Src\Graphics\Scene.cpp" />
     <ClCompile Include="..\..\Src\Graphics\Server.cpp" />
@@ -100,6 +100,7 @@
     <ClInclude Include="..\..\Src\Graphics\HHFX.h" />
     <ClInclude Include="..\..\Src\Graphics\HHFXParticle.h" />
     <ClInclude Include="..\..\Src\Graphics\Light.h" />
+    <ClInclude Include="..\..\Src\Graphics\OgreParticle.h" />
     <ClInclude Include="..\..\Src\Graphics\Overlay.h" />
     <ClInclude Include="..\..\Src\Graphics\Particle.h" />
     <ClInclude Include="..\..\Src\Graphics\PoolParticle.h" />

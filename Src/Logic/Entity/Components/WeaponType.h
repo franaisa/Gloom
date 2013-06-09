@@ -7,7 +7,7 @@ namespace Logic {
 
 	struct WeaponType {
 		enum Enum {
-			eHAMMER,
+			eSOUL_REAPER,
 			eSNIPER,
 			eSHOTGUN,
 			eMINIGUN,
@@ -17,8 +17,8 @@ namespace Logic {
 
 		static std::string toString(WeaponType::Enum weaponType) {
 			switch(weaponType) {
-				case eHAMMER:
-					return "hammer";
+				case eSOUL_REAPER:
+					return "soulReaper";
 				case eSNIPER:
 					return "sniper";
 				case eSHOTGUN:
