@@ -25,6 +25,7 @@ de una escena.
 #include "BaseSubsystems/Server.h"
 #include "BaseSubsystems/Math.h"
 #include "Graphics/Entity.h"
+#include "HHFXParticle.h"
 
 #include <assert.h>
 #include <map>
@@ -276,15 +277,27 @@ namespace Graphics
 
 	CParticle * CScene::createParticle(const std::string &particleName, const Vector3 &position, const Vector3 &directionWithForce){
 
-		CParticle *particle  = _poolParticle->getParticle(particleName);
-		//CParticle *particle = new CParticle(particleName);
-		if(!particle)
-			return 0;
-
+		// creo una particula de hhfx
+		CParticle *particle = new HHFXParticle(particleName, position);
+		if(!particle->isLoaded()){ // si no puedo creala, creo una de ogre
+			delete particle;
+			particle = _poolParticle->getParticle(particleName);
+			if(!particle)
+				return 0; // si la de ogre tampoco tiene exito, devuelvo 0 para control de errores
+		}
 		particle->setPosition(position);
 		
 		if(!directionWithForce.isZeroLength())
 			particle->setDirection(directionWithForce);
+		
+		auto particleVector = _particlesMap.find(particleName);
+		if(particleVector != _particlesMap.end()){
+			particleVector->second.push_back(particle);
+		}else{
+			std::vector<CParticle*> aux;
+			aux.push_back(particle);
+			_particlesMap.insert(std::pair<std::string, std::vector<CParticle*>>(particleName,aux));
+		}
 
 		return particle;
 
@@ -293,7 +306,13 @@ namespace Graphics
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	void CScene::changeVisibilityParticle(const std::string nameParticle, bool visibility){
-		_poolParticle->setVisible(nameParticle, visibility);
+
+		auto particleData = _particlesMap.find(nameParticle)->second;
+		for(auto it = particleData.begin(); it < particleData.end(); ++it){
+			if((*it)->isEmitting()){
+				(*it)->setVisible(visibility);
+			}
+		}
 
 	} // changeVisibilityParticle
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////

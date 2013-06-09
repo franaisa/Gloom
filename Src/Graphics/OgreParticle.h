@@ -1,66 +1,62 @@
 //---------------------------------------------------------------------------
-// HHFXParticle.h
+// OgreParticle.h
 //---------------------------------------------------------------------------
 
 /**
-@file Particle.h
+@file OgreParticle.h
 
-Contiene la declaración de la clase que maneja el Particle.
+Contiene la declaración de la clase que maneja el OgreParticle.
 
-@see Graphics::HHFXParticle
+@see Graphics::COgreParticle
 
-
-@ingroup graphicsGroup
-@author Rubén Mulero
-@date May, 2013
+@author Pablo Terrado
+@date Enero, 2013
 */
 
-#ifndef __Graphics_HHFXParticle_H
-#define __Graphics_HHFXParticle_H
+#ifndef __Graphics_OgreParticle_H
+#define __Graphics_OgreParticle_H
 
 #include "Graphics\Particle.h"
 #include "BaseSubsystems/Math.h"
 #include "Logic\Entity\Entity.h"
+#include "OgreParticleSystem.h"
 
-#include "HHFX.h"
 // Predeclaración de clases para ahorrar tiempo de compilación
 namespace Ogre 
 {
 	class SceneNode;
-	class ParticleSystem;
-
 }
 namespace Graphics 
 {
 	class CScene;
 	class CServer;
-	class HHFX;
 }
 
 namespace Graphics 
 {
 	/**
-	Clase de Particle extendida basada en HHFX. Abstrae toda la lógica de
-	creación de particulas de este tipo a la lógica, de manera que solo le
-	pide un objeto de este tipo y se maneja de la misma manera que el 
-	resto de particulas
+	Clase de OgreParticle extendida basada en Ogre.
 	
+	@ingroup graphicsGroup
+
+	@author Pablo Terrado
+	@date Enero, 2013
 	*/
-	class HHFXParticle : public CParticle
+	class COgreParticle : public CParticle
 	{
 	public:
 
 		/**
 		Constructor de la clase.
 
-		@param name Nombre del Particle.
+		@param name Nombre del OgreParticle.
 		*/
-		HHFXParticle(const std::string &particleName, Vector3 position = Vector3::ZERO, bool isOverlay = false);
+		COgreParticle(const std::string &ogreParticleName, bool isOverlay = false);
 
 		/**
 		Destructor de la partícula.
 		*/
-		~HHFXParticle();
+		~COgreParticle();
 
 
 		/**
@@ -110,48 +106,38 @@ namespace Graphics
 		*/
 		void setDirection(const Vector3 &directionWithForce);
 
+		void setOrientation(const Matrix3 &orientation){};
 		/**
 		Devuelve el objeto ogre de la particula
 
 		@return objeto ogre de la particula.
 		*/
-		//Ogre::ParticleSystem* getParticleSystem() {return _particleSystem;}
+		Ogre::ParticleSystem* getParticleSystem() {return _particleSystem;}
 
-		Ogre::SceneNode * getSceneNode(){ return _particleNode;}
-
-		/**
-		Cambia la orientación de la entidad.
-
-		@param orientation Referencia a la matriz de rotación con la que debe 
-		orientarse la entidad.
-		*/
-		void setOrientation(const Matrix3 &orientation);
+		Ogre::SceneNode * getSceneNode(){ return _sceneNode;}
 
 
-		bool isLoaded(){return _loaded;}
+		bool isLoaded(){ return _particleSystem->isInScene();}
+		
+
 	protected:
-
-		/** Varible que indica si ha cargado bien la particula o no */
-		bool _loaded;
 		/** 
-		ParticleSystem _particleSystem(sistema de Particulas)
+		OgreParticleSystem _ogreParticleSystem(sistema de Particulas)
 		*/
-		HHFX* _particleSystem;
+		Ogre::ParticleSystem* _particleSystem;
 
 		/**
-		Nombre del ParticleSystem.
+		Nombre del OgreParticleSystem.
 		*/
-		std::string _nameParticle;
+		std::string _nameOgreParticle;
 
 		/**
 		scene donde se crea la particula
 		*/
-		IHHFXOgre *_particle;
+		Ogre::SceneNode *_sceneNode;
 
-		Ogre::SceneNode* _particleNode;
-
-	}; // class CParticle
+	}; // class COgreParticle
 
 } // namespace Graphics
 
-#endif // __Graphics_HHFXParticle_H
+#endif // __Graphics_OgreParticle_H
