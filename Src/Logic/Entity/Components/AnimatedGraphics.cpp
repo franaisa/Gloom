@@ -96,6 +96,7 @@ namespace Logic
 		//animationFinished("random");
 		_animatedGraphicsEntity->setAnimation( _defaultAnimation, true );
 		_animatedGraphicsEntity->attachWeapon(*_weapons[0], _entity->getEntityID());
+		_insertAnimation = true;
 	}
 	//---------------------------------------------------------
 
@@ -103,6 +104,7 @@ namespace Logic
 	{
 		CGraphics::onDeactivate();
 		_animatedGraphicsEntity->addObserver(this);
+		_insertAnimation = false;
 		//En verdad hay que dejar la animación de morir porque desactivaremos al morir
 		//_animatedGraphicsEntity->stopAllAnimations();
 		
@@ -139,8 +141,26 @@ namespace Logic
 				// Paramos todas las animaciones antes de poner una nueva.
 				// Un control más sofisticado debería permitir interpolación
 				// de animaciones. Galeon no lo plantea.
-				_animatedGraphicsEntity->stopAllAnimations();
-				_animatedGraphicsEntity->setAnimation( setAnimMsg->getAnimation(), setAnimMsg->getLoop() );
+				
+
+				if(_insertAnimation){
+
+					_animatedGraphicsEntity->stopAllAnimations();
+					_animatedGraphicsEntity->setAnimation( setAnimMsg->getAnimation(), setAnimMsg->getLoop() );
+					_insertAnimation = setAnimMsg->getExclude();
+
+				}else if(!_insertAnimation && setAnimMsg->getExclude()){
+					
+					_animatedGraphicsEntity->stopAllAnimations();
+					_animatedGraphicsEntity->setAnimation( setAnimMsg->getAnimation(), setAnimMsg->getLoop() );
+					
+				}else{
+
+					nextAnim.animation = setAnimMsg->getAnimation();
+					nextAnim.loop = setAnimMsg->getLoop();
+					nextAnim.exclude = setAnimMsg->getExclude();
+
+				}
 				break;
 			}
 			case Message::STOP_ANIMATION: {
@@ -153,17 +173,6 @@ namespace Logic
 				changeWeapon( chgWeaponGraphMsg->getWeapon() );
 				break;
 			}
-			case Message::PLAYER_DEAD: {
-				_animatedGraphicsEntity->setAnimation("headshot",false);
-				break;
-			}
-			//Por si en redes se utilizara para algo hay que cambiarlo porque es un nonsense
-			/*case Message::HUD_SPAWN: {
-				_animatedGraphicsEntity->stopAllAnimations();
-				_animatedGraphicsEntity->setAnimation("Idle",true);
-				break;
-			}
-				*/
 		}
 
 	} // process
@@ -180,9 +189,14 @@ namespace Logic
 	
 	void CAnimatedGraphics::animationFinished(const std::string &animation)
 	{
-		// Al acabar una animación ponemos la de por defecto en loop
-		_animatedGraphicsEntity->stopAllAnimations();
-		_animatedGraphicsEntity->setAnimation(_defaultAnimation,true);
+		if(!_insertAnimation && nextAnim.animation.size()>0){
+
+			_insertAnimation = true;
+			_animatedGraphicsEntity->setAnimation(nextAnim.animation,nextAnim.loop);
+			_insertAnimation = nextAnim.exclude;
+
+			nextAnim.animation="";
+		}
 	}
 
 	//---------------------------------------------------------
@@ -210,7 +224,7 @@ namespace Logic
 				_originalMaterialWeapon = _animatedGraphicsEntity->getWeaponMaterial();
 				//_animatedGraphicsEntity->changeMaterialToWeapon(materialName);
 			}else{
-				_animatedGraphicsEntity->changeMaterialToWeapon(_originalMaterialWeapon);
+				//_animatedGraphicsEntity->changeMaterialToWeapon(_originalMaterialWeapon);
 			}
 		}
 	}

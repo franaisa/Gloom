@@ -13,8 +13,8 @@ namespace Logic {
 		void setAnimation(std::string);
 		bool getLoop();
 		void setLoop(bool loop);
-		bool getContinueWithPrevious();
-		void setContinueWithPrevious(bool continueWithPrevious);
+		bool getExclude();
+		void setExclude(bool exclude);
 		virtual ~CMessageSetAnimation(){};
 
 		virtual Net::CBuffer serialize();
@@ -22,7 +22,7 @@ namespace Logic {
 	private:
 		std::string _animation;
 		bool _loop;
-		bool _continueWithPrevious;
+		bool _exclude;
 	};
 	REG_FACTORYMESSAGE(CMessageSetAnimation);
 };

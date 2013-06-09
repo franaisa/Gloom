@@ -34,13 +34,13 @@ namespace Logic {
 
 	//----------------------------------------------------------
 
-	bool CMessageSetAnimation::getContinueWithPrevious(){
-		return _continueWithPrevious;
+	bool CMessageSetAnimation::getExclude(){
+		return _exclude;
 	}//
 	//----------------------------------------------------------
 
-	void CMessageSetAnimation::setContinueWithPrevious(bool continueWithPrevious){
-		_continueWithPrevious=continueWithPrevious;
+	void CMessageSetAnimation::setExclude(bool exclude){
+		_exclude = exclude;
 	}//
 
 	//----------------------------------------------------------

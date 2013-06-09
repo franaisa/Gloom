@@ -43,7 +43,7 @@ namespace Logic
 	{
 		DEC_FACTORY(CAnimatedGraphics);
 	public:
-
+		
 		/**
 		Constructor por defecto; inicializa los atributos a su valor por 
 		defecto.
@@ -118,6 +118,17 @@ namespace Logic
 		
 		virtual void onTick(unsigned int msecs);
 
+	private:
+
+		/**
+		estructura de la siguiente animacion a ejecutar
+		*/
+		struct Animation{
+			std::string animation;
+			bool loop;
+			bool exclude;
+		};
+
 		/**
 		Entidad gráfica animada.
 		*/
@@ -138,6 +149,10 @@ namespace Logic
 		int _currentWeapon;
 
 		std::string _currentMaterialWeapon;
+
+		bool _insertAnimation;
+
+		Animation nextAnim;
 
 	}; // class CAnimatedGraphics
 

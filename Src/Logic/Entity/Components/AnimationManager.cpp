@@ -46,6 +46,7 @@ namespace Logic{
 		std::shared_ptr<CMessageSetAnimation> anim = std::make_shared<CMessageSetAnimation>();
 		anim->setLoop(true);
 		anim->setAnimation("idle");
+		anim->setExclude(false);
 		_entity->emitMessage(anim);
 	}
 
@@ -58,6 +59,7 @@ namespace Logic{
 			std::shared_ptr<CMessageSetAnimation> anim = std::make_shared<CMessageSetAnimation>();
 			anim->setLoop(true);
 			anim->setAnimation(getMotionAnimation(displacementDir));
+			anim->setExclude(false);
 			_entity->emitMessage(anim);
 		}
 		else if ( flying && !_flying ) {
@@ -65,6 +67,7 @@ namespace Logic{
 			std::shared_ptr<CMessageSetAnimation> anim = std::make_shared<CMessageSetAnimation>();
 			anim->setLoop(true);
 			anim->setAnimation("airwalk");
+			anim->setExclude(false);
 			_entity->emitMessage(anim);
 		}
 		else if ( !flying && _flying ) {
@@ -72,6 +75,7 @@ namespace Logic{
 			std::shared_ptr<CMessageSetAnimation> anim = std::make_shared<CMessageSetAnimation>();
 			anim->setLoop(true);
 			anim->setAnimation(getMotionAnimation(_lastDisplacementAnimation));
+			anim->setExclude(false);
 			_entity->emitMessage(anim);
 		}
 	}
@@ -106,6 +110,7 @@ namespace Logic{
 					std::shared_ptr<CMessageSetAnimation> anim = std::make_shared<CMessageSetAnimation>();
 					anim->setLoop(false);
 					anim->setAnimation("jump");
+					anim->setExclude(true);
 					_entity->emitMessage(anim);
 				}
 				break;
@@ -135,7 +140,7 @@ namespace Logic{
 			anim->setLoop(false);
 			anim->setAnimation("headshot");
 		}
-		std::cout << "enviando animacion de muerte " << anim->getAnimation() << std::endl;
+		anim->setExclude(true);
 		_entity->emitMessage(anim);
 	}
 
