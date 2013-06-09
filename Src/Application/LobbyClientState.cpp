@@ -43,7 +43,7 @@ namespace Application {
 	CLobbyClientState::CLobbyClientState(CBaseApplication *app) :	CApplicationState(app),
 																	_netMgr(NULL),
 																	loadHandle(0),
-																	load—apa(0){
+																	loadGuard(0){
 		// Nada que hacer
 	}
 
@@ -93,7 +93,7 @@ namespace Application {
 		// eventos y nos activamos como clientes.
 		_netMgr->addObserver(this);
 		_netMgr->activateAsClient();
-		load—apa=false;
+		loadGuard=false;
 	} // activate
 
 	//__________________________________________________________________
@@ -174,7 +174,7 @@ namespace Application {
 
 				//creamos el thread que maneja la carga del mapa
 				loadHandle = CreateThread( NULL, 0, CLobbyClientState::loadMapThread, this, 0, NULL);
-
+				loadGuard = true;
 				//if (WaitForSingleObject (loadHandle, INFINITE) == WAIT_OBJECT_0)
 				//CloseHandle(loadHandle);
 
@@ -314,7 +314,8 @@ namespace Application {
 	void CLobbyClientState::tick(unsigned int msecs){
 		CApplicationState::tick(msecs);
 		//asking the thread for completion ... if not the main thread crashes
-		if (WaitForSingleObject (loadHandle, 0) == WAIT_OBJECT_0){
+		if (WaitForSingleObject (loadHandle, 0) == WAIT_OBJECT_0 && loadGuard){
+			loadGuard = false;
 			CloseHandle(loadHandle);
 			printf("\n a ver");
 			// Avisamos de que hemos terminado la carga.

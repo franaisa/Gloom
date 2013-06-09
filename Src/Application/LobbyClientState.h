@@ -200,7 +200,7 @@ namespace Application {
 
 		HANDLE loadHandle;
 
-		bool load—apa;
+		bool loadGuard;
 
 	}; // CMenuState
 

@@ -11,8 +11,8 @@ con animaciones.
 @see Graphics::CAnimatedEntity
 @see Graphics::CEntity
 
-@author David Llansó
-@date Julio, 2010
+@author Rubén Mulero
+@date June, 2013
 */
 
 #ifndef __Graphics_AnimatedEntity_H
@@ -72,11 +72,24 @@ namespace Graphics
 	
 	@ingroup graphicsGroup
 
-	@author David Llansó
-	@date Julio, 2010
+	@author Rubén Mulero
+	@date June, 2013
 	*/
 	class CAnimatedEntity : public CEntity
 	{
+
+		enum AnimState{
+			FADE_IN,
+			FADE_OUT,
+			RUNNING
+		};
+
+		struct Animation{
+			AnimState state;
+			Ogre::AnimationState* animation;
+			float fadeTime;
+		};
+
 	public:
 
 		/**
@@ -98,9 +111,11 @@ namespace Graphics
 
 		@param anim Nombre de la animación a activar.
 		@param loop true si la animación debe reproducirse cíclicamente.
+		@param fadeTime El tiempo de fade-in fade-out de la animación
+
 		@return true si la animación solicitada fue correctamente activada.
 		*/
-		bool setAnimation(const std::string &anim, bool loop);
+		bool setAnimation(const std::string &anim, bool loop, float fadeTime = 0.5f);
 
 		/**
 		Le pone un arma en la mano al monigote
@@ -169,9 +184,15 @@ namespace Graphics
 		/**
 		Estructura de datos de las animaciones que hay ejecutandose
 		*/
-		std::map<std::string, Ogre::AnimationState*> _runningAnimations;
+		std::map< std::string, Animation > _runningAnimations;
 
-		typedef std::pair<std::string, Ogre::AnimationState*> TAnim;
+		typedef std::pair<std::string, Animation> TAnim;
+
+		/**
+		lista de animaciones que deben ser eliminadas de nuestra
+		lista de animaciones ejecutandose
+		*/
+		std::list<std::string> _deletedAnims;
 	}; // class CAnimatedEntity
 
 } // namespace Graphics
