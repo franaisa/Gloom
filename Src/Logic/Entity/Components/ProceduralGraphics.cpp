@@ -77,12 +77,16 @@ namespace Logic
 		//movemos el hueso en función de la orientación de la entidad
 		if(!_insertAnimation)
 			return;
-		Matrix3 orientation;
-		Math::setPitch(_entity->getPitch(),orientation);
+		
+		float pitch = _entity->getPitch();
 
-		std::cout << _entity->getPitch() << std::endl;
+		if(pitch>0.4){
+			pitch = 0.4;
+		}else if(pitch < -0.6){
+			pitch = -0.6;
+		}
 
-		_animatedEntity->moveBone("bip_spine_3",_entity->getPitch());
+		_animatedEntity->moveBone("bip_spine_3", pitch*-1);
 
 	}//---------------------------------------------------------
 	//onTick
