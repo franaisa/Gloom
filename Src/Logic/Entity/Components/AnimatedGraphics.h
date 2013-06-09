@@ -7,8 +7,10 @@ gráfica de una entidad estática.
 @see Logic::CAnimatedGraphics
 @see Logic::CGraphics
 
-@author David Llansó
-@date Agosto, 2010
+@author Rubén Mulero Guerrero
+@author Antonio Jesús Narváez Corrales
+
+@date March, 2013
 */
 #ifndef __Logic_AnimatedGraphics_H
 #define __Logic_AnimatedGraphics_H
@@ -36,8 +38,10 @@ namespace Logic
 	
     @ingroup logicGroup
 
-	@author David Llansó García
-	@date Agosto, 2010
+	@author Rubén Mulero Guerrero
+	@author Antonio Jesús Narváez Corrales
+
+	@date March, 2013
 */
 	class CAnimatedGraphics : public CGraphics, public Graphics::CAnimatedEntityListener
 	{
@@ -90,9 +94,9 @@ namespace Logic
 		*/
 		virtual void onDeactivate();
 		
-		////////////////////////////////////////
-		// Métodos de CAnimatedEntityListener //
-		////////////////////////////////////////
+		// =======================================================================
+		//             MÉTODOS HEREDADOS DE CANIMATEDENTITYLISTENER
+		// =======================================================================
 		/**
 		Método que será invocado siempre que se termine una animación.
 		Las animaciones en cíclicas no invocarán nunca este método.
@@ -101,9 +105,15 @@ namespace Logic
 		*/
 		void animationFinished(const std::string &animation);
 
+		// =======================================================================
+		//                           MÉTODOS PROPIOS
+		// =======================================================================
+
 		void changeWeapon(int newWeapon);
 
 		virtual void changeMaterial(const std::string& materialName);
+
+		Graphics::CAnimatedEntity * getAnimatedEntity(){return _animatedGraphicsEntity;}
 	protected:
 
 		/**

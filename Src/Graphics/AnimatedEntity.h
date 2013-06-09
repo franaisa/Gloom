@@ -141,7 +141,9 @@ namespace Graphics
 		Función que registra al oyente de la entidad gráfica. Por 
 		simplicidad solo habrá un oyente por entidad.
 		*/
-		void addObserver(CAnimatedEntityListener *observer){_observers.push_back(observer);}
+		void addObserver(CAnimatedEntityListener *observer){
+			_observers.push_back(observer);
+		}
 
 		/**
 		Función que quita al oyente de la entidad gráfica. Por 
@@ -153,6 +155,27 @@ namespace Graphics
 
 		std::string getWeaponMaterial();
 
+		/**
+		Orienta el bone en la orientación que se le pasa como parámetro
+
+		@param bone El hueso que estamos modificando
+		@param orientation la orientación que le estamos aplicando al hueso
+		*/
+		void moveBone(const std::string &bone, float pitch);
+
+		/**
+		Hace que la orientación del hueso no esté atachada a la orientación del padre
+
+		@param bone El hueso que queremos liberar
+		*/
+		void freeBoneOrientation(const std::string &bone);
+
+		/**
+		Hace que la orientación del hueso esté atachada a la orientación del padre.
+
+		@param bone El hueso que atachar.
+		*/
+		void lockBoneOrientation(const std::string &bone);
 
 	protected:
 

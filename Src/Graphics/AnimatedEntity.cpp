@@ -211,5 +211,37 @@ namespace Graphics
 		
 	}
 
+	void CAnimatedEntity::freeBoneOrientation(const std::string &bone){
+		_entity->getSkeleton()->getBone(bone)->setManuallyControlled(true);
+	}
+
+	void CAnimatedEntity::lockBoneOrientation(const std::string &bone){
+		_entity->getSkeleton()->getBone(bone)->setManuallyControlled(false);
+	}
+
+	void CAnimatedEntity::moveBone(const std::string &bone, float pitch){
+		Ogre::Bone * entityBone = _entity->getSkeleton()->getBone(bone);
+		entityBone->reset();
+
+		Ogre::Skeleton * skel = _entity->getSkeleton();
+
+		//entityBone->setManuallyControlled(true);
+
+		unsigned short boneHandle = entityBone->getHandle();
+		Ogre::AnimationStateIterator animStateIt = _entity->getAllAnimationStates()->getAnimationStateIterator();
+
+		while( animStateIt.hasMoreElements() )
+		{
+			Ogre::AnimationState *pAnimState = animStateIt.getNext();
+			// ignore disabled animations
+			skel->getAnimation(pAnimState->getAnimationName())->destroyNodeTrack(boneHandle);
+		}
+
+		entityBone->pitch(Ogre::Radian(pitch));
+
+
+
+
+	}
 
 } // namespace Graphics
