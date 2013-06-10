@@ -16,7 +16,7 @@ Contiene la declaración del componente que controla las balas de las shotGun .
 
 
 namespace Logic {
-	class CShootShotGun;
+	class CShotGun;
 	class CPhysicDynamicEntity;
 }
 
@@ -61,7 +61,7 @@ namespace Logic
 		establece quien es el dueño de esta clase
 		@param owner, dueño de esta clase
 		*/
-		void setOwner(CShootShotGun *owner);
+		void setOwner(CShotGun *owner);
 
 		/**
 		Establece las propiedades para que cada bala funcione bien.
@@ -70,7 +70,7 @@ namespace Logic
 		@param projectileDirection, direccion por la que ira el proyectil
 		@param heightShoot, altura del disparo del jugador
 		*/
-		void setProperties(CShootShotGun *owner, float speed, Vector3 projectileDirection, int heightShoot, float damage, float damageBurned){ 
+		void setProperties(CShotGun *owner, float speed, Vector3 projectileDirection, int heightShoot, float damage, float damageBurned){ 
 			_owner = owner; 
 			_speed = speed; 
 			_projectileDirection = projectileDirection;
@@ -130,7 +130,7 @@ namespace Logic
 		/**
 		Puntero al dueño de la bala
 		*/
-		CShootShotGun *_owner;
+		CShotGun *_owner;
 
 		/**
 		Variable booleana que indica si se ha activado el boton derecho

@@ -20,6 +20,8 @@ de disparo de la cabra.
 #include "Logic/Server.h"
 #include "Map/MapEntity.h"
 
+#include "Sniper.h"
+#include "SniperFeedback.h"
 using namespace std;
 
 namespace Logic {
@@ -64,6 +66,10 @@ namespace Logic {
 
 		// Ratio al que gastamos municion
 		_ammoSpentPerSecondaryShot = entityInfo->getIntAttribute(_weaponName + "AmmoSpentPerSecondaryShot");
+
+		_friend = _entity->getComponent<Logic::CSniper>("CSniper");
+		if(!_friend)
+			_friend = _entity->getComponent<Logic::CSniperFeedback>("CSniperFeedback");
 
 		return true;
 	}

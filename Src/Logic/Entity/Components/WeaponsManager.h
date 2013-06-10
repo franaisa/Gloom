@@ -8,7 +8,7 @@
 
 // Predeclaración de clases para ahorrar tiempo de compilación
 namespace Logic {
-	class IWeapon;
+	class IAmmo;
 }
 
 //declaración de la clase
@@ -89,7 +89,7 @@ namespace Logic
 		*/
 		int _currentWeapon;
 
-		std::vector< std::pair<bool, IWeapon*> > _weaponry;
+		std::vector< std::pair<bool, IAmmo*> > _weaponry;
 
 	}; // class CShoot
 

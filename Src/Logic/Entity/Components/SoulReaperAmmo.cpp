@@ -20,6 +20,9 @@ de disparo de la cabra.
 #include "Logic/Server.h"
 #include "Map/MapEntity.h"
 
+#include "SoulReaper.h"
+#include "SoulReaperFeedback.h"
+
 using namespace std;
 
 namespace Logic {
@@ -29,6 +32,7 @@ namespace Logic {
 	//__________________________________________________________________
 
 	CSoulReaperAmmo::CSoulReaperAmmo() : IAmmo("ironHellGoat"),
+											_primaryFireIsActive(false),
 											_secondaryFireIsActive(false),
 											_primaryFireCooldownTimer(0) {
 		// Nada que hacer
@@ -51,6 +55,10 @@ namespace Logic {
 		// Cooldown del disparo principal
 		_defaultPrimaryFireCooldown = _primaryFireCooldown = entityInfo->getFloatAttribute(_weaponName + "PrimaryFireCooldown") * 1000;
 
+		_friend = _entity->getComponent<Logic::CSoulReaper>("CSoulReaper");
+		if(!_friend)
+			_friend = _entity->getComponent<Logic::CSoulReaperFeedback>("CSoulReaperFeedback");
+
 		return true;
 	}
 
@@ -64,7 +72,7 @@ namespace Logic {
 
 	void CSoulReaperAmmo::onAvailable() {
 		IAmmo::onAvailable();
-
+		
 	}
 
 	//__________________________________________________________________
@@ -75,8 +83,11 @@ namespace Logic {
 		if(_primaryFireCooldownTimer > 0) {
 			_primaryFireCooldownTimer -= msecs;
 			
-			if(_primaryFireCooldownTimer < 0)
+			if(_primaryFireCooldownTimer < 0){
 				_primaryFireCooldownTimer = 0;
+				if(_primaryFireIsActive)
+					primaryFire();
+			}
 		}
 	}
 
@@ -99,12 +110,15 @@ namespace Logic {
 
 		_primaryFireCooldownTimer = _primaryFireCooldown;
 
+		_primaryFireIsActive = true;
+
 	} // primaryFire
 	//__________________________________________________________________
 
 	void CSoulReaperAmmo::stopPrimaryFire() {
 		IAmmo::stopPrimaryFire();
 		
+		_primaryFireIsActive = false;
 	} // stopPrimaryFire
 	//__________________________________________________________________
 

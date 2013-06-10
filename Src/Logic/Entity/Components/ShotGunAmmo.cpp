@@ -20,6 +20,9 @@ de disparo de la cabra.
 #include "Logic/Server.h"
 #include "Map/MapEntity.h"
 
+#include "ShotGun.h"
+#include "ShotGunFeedback.h"
+
 using namespace std;
 
 namespace Logic {
@@ -51,6 +54,10 @@ namespace Logic {
 
 		// Cooldown del disparo principal
 		_defaultPrimaryFireCooldown = _primaryFireCooldown = entityInfo->getFloatAttribute(_weaponName + "PrimaryFireCooldown") * 1000;
+
+		_friend = _entity->getComponent<Logic::CShotGun>("CShotGun");
+		if(!_friend)
+			_friend = _entity->getComponent<Logic::CShotGunFeedback>("CShotGunFeedback");
 
 		return true;
 	}

@@ -20,6 +20,9 @@ de disparo de la cabra.
 #include "Logic/Server.h"
 #include "Map/MapEntity.h"
 
+#include "MiniGun.h"
+#include "MiniGunFeedback.h"
+
 using namespace std;
 
 namespace Logic {
@@ -75,6 +78,10 @@ namespace Logic {
 		// Ratio al que gastamos municion
 		_maxAmmoSpentPerSecondaryShot = entityInfo->getIntAttribute(_weaponName + "MaxAmmoSpentPerSecondaryShot");
 		_defaultAmmoSpentTimeStep = _ammoSpentTimeStep = (float)_secondaryFireLoadTime / (float)(_maxAmmoSpentPerSecondaryShot);
+
+		_friend = _entity->getComponent<Logic::CMiniGun>("CMiniGun");
+		if(!_friend)
+			_friend = _entity->getComponent<Logic::CMiniGunFeedback>("CMiniGunFeedback");
 
 		return true;
 	}

@@ -114,6 +114,7 @@ namespace Logic {
 		unsigned int _defaultPrimaryFireCooldown;
 		int _primaryFireCooldownTimer;
 
+		bool _primaryFireIsActive;
 		bool _secondaryFireIsActive;
 	};
 

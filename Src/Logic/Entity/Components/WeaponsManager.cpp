@@ -18,18 +18,18 @@ Contiene la implementación del componente que gestiona las armas y que administr
 #include "Logic/Entity/Components/ArrayGraphics.h"
 #include "Logic/Maps/WorldState.h"
 
-#include "Weapon.h"
+#include "Ammo.h"
 /*#include "ShootShotGunAmmo.h"
 #include "ShootSniperAmmo.h"
 #include "ShootMiniGunAmmo.h"
 #include "ShootSoulReaperAmmo.h"
 #include "IronHellGoatAmmo.h"*/
 
-#include "ShootShotGun.h"
-#include "ShootSniper.h"
-#include "ShootMiniGun.h"
-#include "ShootSoulReaper.h"
-#include "IronHellGoat.h"
+#include "ShotGunAmmo.h"
+#include "SniperAmmo.h"
+#include "MiniGunAmmo.h"
+#include "SoulReaperAmmo.h"
+#include "IronHellGoatAmmo.h"
 
 #include "Logic/Messages/MessageChangeWeapon.h"
 #include "Logic/Messages/MessageChangeWeaponGraphics.h"
@@ -64,11 +64,11 @@ namespace Logic
 		_weaponry.resize(WeaponType::eSIZE);
 
 		// Rellenamos el vector con los punteros a los componentes correspondientes
-		_weaponry[WeaponType::eSOUL_REAPER].second = _entity->getComponent<CShootSoulReaper>("CSoulReaperAmmo");
-		_weaponry[WeaponType::eSNIPER].second = _entity->getComponent<CShootSniper>("CSniperAmmo");
-		_weaponry[WeaponType::eSHOTGUN].second = _entity->getComponent<CShootShotGun>("CShotGunAmmo");
-		_weaponry[WeaponType::eMINIGUN].second = _entity->getComponent<CShootMiniGun>("CMiniGunAmmo");
-		_weaponry[WeaponType::eIRON_HELL_GOAT].second = _entity->getComponent<CIronHellGoat>("CIronHellGoatAmmo");
+		_weaponry[WeaponType::eSOUL_REAPER].second = _entity->getComponent<Logic::CSoulReaperAmmo>("CSoulReaperAmmo");
+		_weaponry[WeaponType::eSNIPER].second = _entity->getComponent<Logic::CSniperAmmo>("CSniperAmmo");
+		_weaponry[WeaponType::eSHOTGUN].second = _entity->getComponent<Logic::CShotGunAmmo>("CShotGunAmmo");
+		_weaponry[WeaponType::eMINIGUN].second = _entity->getComponent<Logic::CMiniGunAmmo>("CMiniGunAmmo");
+		_weaponry[WeaponType::eIRON_HELL_GOAT].second = _entity->getComponent<Logic::CIronHellGoatAmmo>("CIronHellGoatAmmo");
 
 		/*
 		// Por defecto la primera arma está activada y equipada (es el arma 0).

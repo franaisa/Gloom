@@ -162,6 +162,8 @@ namespace Logic {
 		virtual void reduceCooldown(unsigned int percentage) = 0;
 
 
+		virtual void amplifyDamage(unsigned int percentage);
+
 	protected:
 
 
@@ -175,6 +177,11 @@ namespace Logic {
 		*/
 		virtual void onAvailable();
 
+
+		/**
+		Llamado cuando el arma pasa a ser inactiva.
+		*/
+		virtual void onBusy();
 
 		// =======================================================================
 		//                          METODOS PROTEGIDOS
@@ -258,6 +265,7 @@ namespace Logic {
 		/** Nombre del arma con el formato: weapon + <nombre arma>.*/
 		std::string _weaponName;
 
+		IComponent *_friend;
 	}; // class IWeapon
 
 } // namespace Logic
