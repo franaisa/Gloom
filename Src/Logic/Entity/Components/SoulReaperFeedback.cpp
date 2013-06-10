@@ -43,27 +43,30 @@ namespace Logic {
 		if( !IWeaponFeedback::spawn(entity, map, entityInfo) ) return false;
 
 		return true;
-	}
-
+	} // spawn
 	//__________________________________________________________________
 
 	void CSoulReaperFeedback::primaryFire() {
-		// Poner la animacion de carga inestable del arma
-		_hudWeapon->loadingWeapon(true);
-	}
-
+		// Animacion de golpe con el soul Reaper
+		_hudWeapon->shootAnim(-1.85f);
+	} // primaryFire
 	//__________________________________________________________________
 
 	void CSoulReaperFeedback::stopPrimaryFire() {
-		// Parar la animacion de carga
-		_hudWeapon->loadingWeapon(false);
-		_hudWeapon->shootAnim(-1.85f);
-	}
-
+		// por si se quiere hacer algo lo dejo aqui
+		
+	} // stopPrimaryFire
 	//__________________________________________________________________
 
 	void CSoulReaperFeedback::secondaryFire() {
-		// De momento ná pisha
-	}
+		// Iniciar efecto de atraccion de objeto
+	} // secondaryFire
+	//__________________________________________________________________
+
+	void CSoulReaperFeedback::stopSecondaryFire() {
+		// finalizar efecto de atraccion de objeto
+		
+	} // stopSecondaryFire
+	//__________________________________________________________________
 
 }//namespace Logic

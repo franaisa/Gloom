@@ -98,17 +98,7 @@ namespace Logic {
 
 		unsigned int _primaryFireCooldown;
 		unsigned int _defaultPrimaryFireCooldown;
-		int _primaryFireCooldownTimer;
-
-		bool _primaryFireIsActive;
-
-		unsigned int _elapsedTime;
-		unsigned int _maxLoadingTime;
-		unsigned int _ammoSpentTimeStep;
-		unsigned int _ammoSpentTimer;
-		unsigned int _currentSpentAmmo;
-
-		unsigned int _maxAmmoPerShot;
+		int _primaryFireCooldownTimer;		
 	};
 
 	REG_FACTORY(CShotGunAmmo);

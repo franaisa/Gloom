@@ -146,7 +146,7 @@ namespace Logic {
 		/**
 		Resetea la munición.
 		*/
-		inline void resetAmmo();
+		virtual void resetAmmo();
 
 		//__________________________________________________________________
 
@@ -245,6 +245,7 @@ namespace Logic {
 		/** Cuanta munición tenemos actualmente en este arma. */
 		unsigned int _currentAmmo;
 		
+		// creo q las dos siguientes variables no son necesarias
 		/** Radio de la cápsula del personaje */
 		float _capsuleRadius;
 		

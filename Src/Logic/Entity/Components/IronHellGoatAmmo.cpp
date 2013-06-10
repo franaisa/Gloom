@@ -134,6 +134,7 @@ namespace Logic {
 
 		decrementAmmo();
 		++_currentSpentAmmo;
+
 	}
 
 	//__________________________________________________________________

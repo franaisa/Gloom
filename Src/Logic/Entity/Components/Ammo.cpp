@@ -58,14 +58,20 @@ namespace Logic {
 		// Comprobamos que los atributos obligatorios existen
 		assert( entityInfo->hasAttribute(_weaponName + "MaxAmmo") );
 		assert( entityInfo->hasAttribute(_weaponName + "ID") );
+
+		// Creo q esto no es necesario
 		assert( entityInfo->hasAttribute("physic_radius") );
 		assert( entityInfo->hasAttribute("heightShoot") );
+
 
 		// Leemos los atributos obligatorios de arma
 		_weaponID = (WeaponType::Enum)entityInfo->getIntAttribute(_weaponName + "ID");
 		_maxAmmo = entityInfo->getIntAttribute(_weaponName + "MaxAmmo");
+		
+		// Creo q esto no es necesario
 		_capsuleRadius = entityInfo->getFloatAttribute("physic_radius");
 		_heightShoot = entityInfo->getFloatAttribute("heightShoot");
+
 
 		return true;
 	}

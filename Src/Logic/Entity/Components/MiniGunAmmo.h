@@ -122,13 +122,12 @@ namespace Logic {
 
 		bool _secondaryFireIsActive;
 
-		unsigned int _elapsedTime;
-		unsigned int _maxLoadingTime;
-		unsigned int _ammoSpentTimeStep;
-		unsigned int _ammoSpentTimer;
-		unsigned int _currentSpentAmmo;
-
-		unsigned int _maxAmmoPerShot;
+		float _ammoSpentTimer;
+		float _ammoSpentTimeStep;
+		float _defaultAmmoSpentTimeStep;
+		unsigned int _currentSpentSecondaryAmmo;
+		unsigned int _maxAmmoSpentPerSecondaryShot;
+		float _secondaryFireLoadTime;
 	};
 
 	REG_FACTORY(CMiniGunAmmo);

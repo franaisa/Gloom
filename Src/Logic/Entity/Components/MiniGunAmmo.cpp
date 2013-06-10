@@ -29,12 +29,21 @@ namespace Logic {
 	//__________________________________________________________________
 
 	CMiniGunAmmo::CMiniGunAmmo() : IAmmo("miniGun"),
-											_primaryFireIsActive(false),
-											_elapsedTime(0),
-											_ammoSpentTimer(0),
-											_currentSpentAmmo(0),
-											_primaryFireCooldownTimer(0) {
-		// Nada que hacer
+									_primaryFireCooldown(0),
+									_defaultPrimaryFireCooldown(0),
+									_primaryFireCooldownTimer(0),
+									_primaryFireIsActive(false),
+									_secondaryFireCooldown(0),
+									_defaultSecondaryFireCooldown(0),
+									_secondaryFireCooldownTimer(0),
+									_secondaryFireIsActive(false),
+									_ammoSpentTimer(0),
+									_ammoSpentTimeStep(0),
+									_defaultAmmoSpentTimeStep(0),
+									_currentSpentSecondaryAmmo(0),
+									_maxAmmoSpentPerSecondaryShot(0),
+									_secondaryFireLoadTime(0){
+		
 	}
 
 	//__________________________________________________________________
@@ -50,18 +59,22 @@ namespace Logic {
 
 		// Nos aseguramos de tener todos los atributos que necesitamos
 		assert( entityInfo->hasAttribute(_weaponName + "PrimaryFireCooldown") );
-		assert( entityInfo->hasAttribute(_weaponName + "MaximumLoadingTime") );
-		assert( entityInfo->hasAttribute(_weaponName + "MaxAmmoPerShot") );
+		assert( entityInfo->hasAttribute(_weaponName + "SecondaryFireCooldown") );
+		assert( entityInfo->hasAttribute(_weaponName + "SecondaryFireLoadTime") );
+		assert( entityInfo->hasAttribute(_weaponName + "MaxAmmoSpentPerSecondaryShot") );
 
 		// Cooldown del disparo principal
 		_defaultPrimaryFireCooldown = _primaryFireCooldown = entityInfo->getFloatAttribute(_weaponName + "PrimaryFireCooldown") * 1000;
 
+		// Cooldown del disparo secundario
+		_defaultSecondaryFireCooldown = _secondaryFireCooldown = entityInfo->getFloatAttribute(_weaponName + "SecondaryFireCooldown") * 1000;
+
 		// Tiempo de carga del arma
-		_maxLoadingTime = entityInfo->getFloatAttribute(_weaponName + "MaximumLoadingTime") * 1000;
+		_secondaryFireLoadTime = entityInfo->getFloatAttribute(_weaponName + "SecondaryFireLoadTime") * 1000;
 
 		// Ratio al que gastamos municion
-		_maxAmmoPerShot = entityInfo->getIntAttribute(_weaponName + "MaxAmmoPerShot");
-		_ammoSpentTimeStep = (float)_maxLoadingTime / (float)(_maxAmmoPerShot);
+		_maxAmmoSpentPerSecondaryShot = entityInfo->getIntAttribute(_weaponName + "MaxAmmoSpentPerSecondaryShot");
+		_defaultAmmoSpentTimeStep = _ammoSpentTimeStep = (float)_secondaryFireLoadTime / (float)(_maxAmmoSpentPerSecondaryShot);
 
 		return true;
 	}
@@ -69,65 +82,38 @@ namespace Logic {
 	//__________________________________________________________________
 
 	void CMiniGunAmmo::onActivate() {
-		_currentSpentAmmo = _ammoSpentTimer = _elapsedTime = 0;
+		
 	}
 
 	//__________________________________________________________________
 
 	void CMiniGunAmmo::onAvailable() {
 		IAmmo::onAvailable();
-		_currentSpentAmmo = _ammoSpentTimer = _elapsedTime = 0;
+		
 	}
 
 	//__________________________________________________________________
 
-	void CMiniGunAmmo::onTick(unsigned int msecs) {
-		// Si el jugador esta dejando pulsado el disparo primario, aumentamos
-		// el tamaño de la bola y reducimos la velocidad hasta un limite
-		if(_primaryFireIsActive) {
-			if(_currentAmmo > 0 && _currentSpentAmmo < _maxAmmoPerShot) {
-				if(_elapsedTime < _maxLoadingTime) {
-					// Contamos el tiempo que hemos mantenido pulsado el raton
-					_elapsedTime += msecs;
-					// Actualizamos el timer que se encarga de reducir la municion
-					_ammoSpentTimer += msecs;
-					if(_ammoSpentTimer >= _ammoSpentTimeStep) {
-						decrementAmmo();
-						++_currentSpentAmmo;
-						_ammoSpentTimer = 0;
-					}
-
-					if(_elapsedTime >= _maxLoadingTime) {
-						_elapsedTime = _maxLoadingTime;
-					}
-				}
-			}
-		}
+	void CMiniGunAmmo::onTick(unsigned int msecs) {		
 		
 		// Controlamos el cooldown
 		if(_primaryFireCooldownTimer > 0) {
 			_primaryFireCooldownTimer -= msecs;
 			
-			if(_primaryFireCooldownTimer < 0)
-				_primaryFireCooldownTimer = 0;
+			if(_primaryFireCooldownTimer < 0){
+				_primaryFireCooldownTimer = _primaryFireCooldown;
+				decrementAmmo();
+			}
 		}
 
 		if(_secondaryFireIsActive) {
-			if(_currentAmmo > 0 && _currentSpentAmmo < _maxAmmoPerShot) {
-				if(_elapsedTime < _maxLoadingTime) {
-					// Contamos el tiempo que hemos mantenido pulsado el raton
-					_elapsedTime += msecs;
-					// Actualizamos el timer que se encarga de reducir la municion
-					_ammoSpentTimer += msecs;
-					if(_ammoSpentTimer >= _ammoSpentTimeStep) {
-						decrementAmmo();
-						++_currentSpentAmmo;
-						_ammoSpentTimer = 0;
-					}
-
-					if(_elapsedTime >= _maxLoadingTime) {
-						_elapsedTime = _maxLoadingTime;
-					}
+			if(_currentAmmo > 0 && _currentSpentSecondaryAmmo < _maxAmmoSpentPerSecondaryShot) {
+				// Actualizamos el timer que se encarga de reducir la municion
+				_ammoSpentTimer += msecs;
+				if(_ammoSpentTimer >= _ammoSpentTimeStep) {
+					decrementAmmo();
+					++_currentSpentSecondaryAmmo;
+					_ammoSpentTimer = 0;
 				}
 			}
 		}
@@ -144,13 +130,13 @@ namespace Logic {
 	//__________________________________________________________________
 
 	bool CMiniGunAmmo::canUsePrimaryFire() {
-		return _primaryFireCooldownTimer == 0 && _currentAmmo > 0;
+		return _primaryFireCooldownTimer == 0 && _currentAmmo > 0 && !_secondaryFireIsActive;
 	}
 
 	//__________________________________________________________________
 
 	bool CMiniGunAmmo::canUseSecondaryFire() {
-		return _secondaryFireCooldownTimer == 0 && _currentAmmo > 0;
+		return _secondaryFireCooldownTimer == 0 && _currentAmmo > 0 && !_primaryFireIsActive;
 	}
 
 	//__________________________________________________________________
@@ -158,22 +144,18 @@ namespace Logic {
 	void CMiniGunAmmo::primaryFire() {
 		IAmmo::primaryFire();
 
-		_primaryFireCooldownTimer = _primaryFireCooldown;
+		_primaryFireIsActive = true;
 
+		_primaryFireCooldownTimer = _primaryFireCooldown;
 		decrementAmmo();
-		++_currentSpentAmmo;
+		
 	}
 	//__________________________________________________________________
 
 	void CMiniGunAmmo::stopPrimaryFire() {
 		IAmmo::stopPrimaryFire();
-		
-		if(!_primaryFireIsActive) return;
 
 		_primaryFireIsActive = false;
-
-		// Reseteamos el reloj
-		_currentSpentAmmo = _ammoSpentTimer = _elapsedTime = 0;
 	}
 	//__________________________________________________________________
 
@@ -182,20 +164,19 @@ namespace Logic {
 
 		_secondaryFireCooldownTimer = _secondaryFireCooldown;
 
+		// la 1º bala la debo de quitar aqui, si no esperara el cold down y disparara gratis
 		decrementAmmo();
-		++_currentSpentAmmo;
+		++_currentSpentSecondaryAmmo;
 	}
 	//__________________________________________________________________
 
 	void CMiniGunAmmo::stopSecondaryFire() {
 		IAmmo::stopSecondaryFire();
-		
-		if(!_secondaryFireIsActive) return;
 
 		_secondaryFireIsActive = false;
 
 		// Reseteamos el reloj
-		_currentSpentAmmo = _ammoSpentTimer = _elapsedTime = 0;
+		_currentSpentSecondaryAmmo = _ammoSpentTimer = 0;
 	}
 	//__________________________________________________________________
 
@@ -203,6 +184,11 @@ namespace Logic {
 		// Si es 0 significa que hay que restaurar al que habia por defecto,
 		// sino decrementamos conforme al porcentaje dado.
 		_primaryFireCooldown = percentage == 0 ? _defaultPrimaryFireCooldown : (_defaultPrimaryFireCooldown - (percentage * _primaryFireCooldown * 0.01f));
+
+		_secondaryFireCooldown = percentage == 0 ? _defaultSecondaryFireCooldown : (_defaultSecondaryFireCooldown - (percentage * _secondaryFireCooldown * 0.01f));
+
+		_ammoSpentTimeStep = percentage == 0 ? _defaultAmmoSpentTimeStep : (_defaultAmmoSpentTimeStep - (percentage * _ammoSpentTimeStep * 0.01f));
+		
 	}
 
 }//namespace Logic

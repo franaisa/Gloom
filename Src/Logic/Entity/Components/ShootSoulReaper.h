@@ -36,7 +36,12 @@ namespace Logic {
 	public:
 
 		/** Constructor por defecto. */
-		CShootSoulReaper() : IWeapon("soulReaper"), _elementPulling(0), _elementPulled(0), _shotsDistanceSecondaryFire(0), _primaryFireTimer(0) { }
+		CShootSoulReaper() : IWeapon("soulReaper"), _elementPulling(0), 
+													_elementPulled(0),
+													_shotsDistanceSecondaryFire(0), 
+													_primaryFireTimer(0), 
+													_primaryFireIsActive(false),
+													_secondaryFireIsActive(false) { }
 
 		//__________________________________________________________________
 
@@ -71,11 +76,6 @@ namespace Logic {
 
 		virtual void reduceCooldown(unsigned int percentage);
 
-		
-		virtual bool canUsePrimaryFire();
-
-		virtual bool canUseSecondaryFire();
-
 	private:
 
 		void onTick(unsigned int msecs);
@@ -95,14 +95,14 @@ namespace Logic {
 		Este es el método que todas las armas deben redefinir si quieren una accion cuando se suelta el boton de disparo secundario.
 		Si no se redefine, no hara nada.
 		*/
-		virtual void stopSecondaryFire(unsigned int elapsedTime);
+		virtual void stopSecondaryFire();
 
 		/** Método estático que resetea la cantidad de munición del arma.
 		En el soulReaper, se establecera a una bala, para que pueda disparar y debido a que cuando dispara no baja tendra balas infinitas
 		*/
 		virtual void resetAmmo();
 
-		CEntity * fireSecondary();
+		CEntity * checkPullItem();
 
 		float _reboundForce;
 
@@ -120,6 +120,9 @@ namespace Logic {
 		int _primaryFireCooldown;
 
 		int _primaryFireTimer;
+
+		bool _primaryFireIsActive;
+		bool _secondaryFireIsActive;
 
 	}; // class CShootRaycast
 

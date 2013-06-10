@@ -26,6 +26,10 @@ a todas las armas.
 #include "Logic/Messages/MessageDecal.h"
 
 
+#include "Logic/Messages/MessagePrimaryShoot.h"
+#include "Logic/Messages/MessageSecondaryShoot.h"
+
+
 // Graficos
 // @deprecated Ogre no deberia estar acoplado a la logica
 #include <OgreSceneManager.h>
@@ -76,42 +80,28 @@ namespace Logic {
 		// Solo nos interesan los mensajes de disparo.
 		// Es importante que hagamos esto porque si no, el putToSleep
 		// puede convertirse en nocivo.
-		if(message->getMessageType() == Message::CONTROL) {
-			shared_ptr<CMessageControl> controlMsg = static_pointer_cast<CMessageControl>(message);
-			
-			ControlType type = controlMsg->getType();
-			
-			return type == Control::RIGHT_CLICK		||
-				   type == Control::LEFT_CLICK		||
-				   type == Control::UNLEFT_CLICK	||
-				   type == Control::UNRIGHT_CLICK;
-		}
-
-		return false;
+		return	message->getMessageType() == Message::PRIMARY_SHOOT ||
+				message->getMessageType() == Message::SECONDARY_SHOOT;
 	}
 
 	//__________________________________________________________________
 
 	void IWeapon::process(const shared_ptr<CMessage>& message) {
 		switch( message->getMessageType() ) {
-			case Message::CONTROL: {
-				ControlType type = std::static_pointer_cast<CMessageControl>(message)->getType();
-
-				if(type == Control::LEFT_CLICK) {
-					if( canUsePrimaryFire() )
-						primaryFire();
-				}
-				else if(type == Control::RIGHT_CLICK) {
-					if( canUseSecondaryFire() )
-						secondaryFire();
-				}
-				else if(type == Control::UNLEFT_CLICK) {
+			case Message::PRIMARY_SHOOT: {
+				auto primaryShootMsg = static_pointer_cast<CMessagePrimaryShoot>(message);
+				if(primaryShootMsg->getShoot())
+					primaryFire();
+				else
 					stopPrimaryFire();
-				}
-				else if(type == Control::UNRIGHT_CLICK) {
+				break;
+			}
+			case Message::SECONDARY_SHOOT: {
+				auto secondaryShootMsg = static_pointer_cast<CMessageSecondaryShoot>(message);
+				if(secondaryShootMsg ->getShoot())
+					secondaryFire();
+				else
 					stopSecondaryFire();
-				}
-
 				break;
 			}
 		}

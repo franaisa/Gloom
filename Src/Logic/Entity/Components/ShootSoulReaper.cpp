@@ -74,9 +74,11 @@ namespace Logic {
 
 
 	void CShootSoulReaper::primaryFire() {
+		_primaryFireIsActive = true;
+
 		_primaryFireTimer = _primaryFireCooldown;
 	
-		Vector3 direction = Math::getDirection(_entity->getOrientation()); 
+		Vector3 direction = Math::getDirection(_entity->getOrientation());
 
 		Vector3 origin = _entity->getPosition()+Vector3(0.0f,_heightShoot,0.0f);
 
@@ -102,7 +104,7 @@ namespace Logic {
 	void CShootSoulReaper::secondaryFire() {
 
 		//primero preguntamos si podemos atraer algun arma
-		_elementPulled = fireSecondary();
+		_elementPulled = checkPullItem();
 
 		//si no podemos atraer nada, no hacemos nada
 		if(!_elementPulled)
@@ -158,10 +160,9 @@ namespace Logic {
 
 		delete info;
 	} // secondaryShoot
-
 	//__________________________________________________________________
 
-	CEntity * CShootSoulReaper::fireSecondary() {
+	CEntity * CShootSoulReaper::checkPullItem() {
 		//El origen debe ser mínimo la capsula (si chocamos el disparo en la capsula al mirar en diferentes direcciones ya esta tratado en la funcion de colision)
 		//Posicion de la entidad + altura de disparo(coincidente con la altura de la camara)
 		Vector3 origin = _entity->getPosition()+Vector3(0.0f,_heightShoot,0.0f);
@@ -183,16 +184,18 @@ namespace Logic {
 			return NULL;
 
 		return entity;
-	}
+	} // checkPullItem
+	//__________________________________________________________________
 
-	void CShootSoulReaper::stopSecondaryFire(unsigned int elapsedTime){
+	void CShootSoulReaper::stopSecondaryFire(){
 		//si cuando hice click no cogi nada no puedo hacer nada aqui
 		if(!_elementPulling)
 			return;
 		CEntityFactory::getSingletonPtr()->deferredDeleteEntity(_elementPulling, true);
 		_elementPulled->activate();
 		CGameNetMsgManager::getSingletonPtr()->sendActivateEntity(_elementPulled->getEntityID());
-	}
+	} // stopSecondaryFire
+	//__________________________________________________________________
 
 	void CShootSoulReaper::resetEntityPulling(){
 		_elementPulled->activate();
@@ -211,9 +214,10 @@ namespace Logic {
 
 		//nos liberamos del puntero
 		_elementPulled=NULL;
-	}
+	} // resetEntityPulling
+	//__________________________________________________________________
 
-		void CShootSoulReaper::amplifyDamage(unsigned int percentage) {
+	void CShootSoulReaper::amplifyDamage(unsigned int percentage) {
 		// Si es 0 significa que hay que restaurar al que habia por defecto
 		if(percentage == 0) {
 			_primaryFireDamage = _defaultPrimaryFireDamage;
@@ -237,23 +241,16 @@ namespace Logic {
 	} // reduceCooldown
 	//__________________________________________________________________
 
-	bool CShootSoulReaper::canUsePrimaryFire() {
-		return _primaryFireTimer == 0;
-	} // canUsePrimaryFire
-	//__________________________________________________________________
-
-	bool CShootSoulReaper::canUseSecondaryFire() {
-		return true;
-	} // canUseSecondaryFire
-	//__________________________________________________________________
-
 	void CShootSoulReaper::onTick(unsigned int msecs) {
 		// Controlamos el cooldown del disparo primario y secundario
 		if(_primaryFireTimer > 0) {
 			_primaryFireTimer -= msecs;
 			
-			if(_primaryFireTimer < 0)
+			if(_primaryFireTimer < 0){
 				_primaryFireTimer = 0;
+				primaryFire();
+			}
+
 		}
 	} // onTick
 	//__________________________________________________________________

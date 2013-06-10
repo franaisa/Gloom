@@ -243,20 +243,6 @@ namespace Logic {
 
 		//__________________________________________________________________
 
-		/**
-		Establece la guarda que indica cuando se puede hacer
-		uso del disparo primario.
-		*/
-		virtual bool canUsePrimaryFire() = 0;
-
-		//__________________________________________________________________
-		
-		/**
-		Establece la guarda que indica cuando se puede hacer
-		uso del disparo secundario.
-		*/
-		virtual bool canUseSecondaryFire() = 0;
-
 
 		// =======================================================================
 		//                          MIEMBROS PROTEGIDOS
