@@ -101,6 +101,7 @@ namespace Logic  {
 				}
 
 				// Seteamos la orientacion a la dada por el server
+				std::cout << "Cliente recibe : " << playerSpawnMsg->getSpawnOrientation()<< std::endl;
 				_entity->setYaw(playerSpawnMsg->getSpawnOrientation(),true);
 
 

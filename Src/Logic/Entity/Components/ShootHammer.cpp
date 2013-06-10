@@ -83,12 +83,21 @@ namespace Logic {
 		std::cout << "###############################################################"<< std::endl;
 		std::cout<< "Quaternion inicial " << q << std::endl;
 		
-		Quaternion x(&q.xAxis());
+
+		/*Quaternion data;
+		Vector3 orientation=Math::getEulerYawPitchRoll(Quaternion(sqrt(0.5),0,sqrt(0.5),0));
+		std::cout << "vector3: " << orientation << std::endl;
+		std::cout << "Set q : " << Math::setQuaternion(orientation.x,orientation.y,orientation.z)<< std::endl;*/
+		
+
+
+
+		/*Quaternion x(&q.xAxis());
 		Quaternion z(&q.yAxis());
 		Quaternion t(&q.zAxis());
 		Quaternion fi,ti;
 		fi.FromAxes(q.xAxis(),q.yAxis(),q.zAxis());
-		//std::cout << "Quaternion FromAxis: " << fi<< std::endl;
+		std::cout << "Quaternion FromAxis: " << fi<< std::endl;*/
 
 		
 
@@ -101,14 +110,9 @@ namespace Logic {
 		h1=Math::setQuaternion(q.getYaw(false).valueRadians(),q.getPitch(false).valueRadians(),q.getRoll(false).valueRadians());
 		std::cout << "Quaternion Final setQ: " << h1 << std::endl;*/
 
-		Vector3 je=Math::getEulerYawPitchRoll(q);
-		Quaternion create=Math::createQuaternionWithEuler(je.x,je.y,je.z);
-		std::cout << "create: " << create << std::endl;
-
-
-		std::cout << "Parcial yaw: " << _entity->getYaw() << std::endl;
+		/*std::cout << "Parcial yaw: " << _entity->getYaw() << std::endl;
 		std::cout << "Parcial pitch: " << _entity->getPitch()<< std::endl;
-		std::cout << "Parcial roll: " << _entity->getRoll()<< std::endl;
+		std::cout << "Parcial roll: " << _entity->getRoll()<< std::endl;*/
 
 		/*Quaternion yaw=Math::setQuaternion(create.getYaw(false).valueRadians(),0,0);
 		Quaternion pitch=Math::setQuaternion(0,create.getPitch(false).valueRadians(),0);
@@ -126,18 +130,22 @@ namespace Logic {
 		std::cout<< "set *final: " << yaw*pitch*roll<< std::endl;*/
 
 
-		Quaternion l1;
-		l1.FromAngleAxis(q.getYaw(false),Vector3::UNIT_Y);
+		/*Quaternion l1;
+		l1.FromAngleAxis(q.getYaw(),Vector3::UNIT_Y);
 		Quaternion l2;
-		l2.FromAngleAxis(q.getPitch(false),Vector3::UNIT_X);
+		l2.FromAngleAxis(q.getPitch(),Vector3::UNIT_X);
 		Quaternion l3;
-		l3.FromAngleAxis(q.getRoll(false),Vector3::UNIT_Z);
+		l3.FromAngleAxis(q.getRoll(),Vector3::UNIT_Z);
+		if(l3.z!=0){
+			l3=Quaternion::IDENTITY;
+			l2.Inverse();
+		}
 		Quaternion final;
-		final=l2*l1*l3;
+		final=l1*l2*l3;
 		std::cout << "set yaw: " << l1<< std::endl;
 		std::cout << "set pitch: " << l2 << std::endl;
 		std::cout << "set roll: " << l3<< std::endl;
-		std::cout << "Quaternion quat*rpy: " << final << std::endl;
+		std::cout << "Quaternion quat*ypr: " << final << std::endl;*/
 
 		/*Quaternion aux1(Ogre::Radian(je.x),Vector3::UNIT_X); 
 		std::cout << "aux1: " << aux1.Inverse() << std::endl;
@@ -150,21 +158,26 @@ namespace Logic {
 
 		/*Matrix3 o;
 		q.ToRotationMatrix(o);
-		Quaternion je(o);
-		std::cout << "Quaternion matrix : " << je << std::endl;
+		Quaternion j1(o);
+		std::cout << "Quaternion matrix : " << j1 << std::endl;
 
 		Ogre::Radian yaw, pitch, roll;
 		o.ToEulerAnglesYXZ(yaw, pitch, roll);
-		std::cout <<"yaw: " << yaw << std::endl;
-		std::cout <<"pitch: " << pitch << std::endl;
-		std::cout <<"roll: " << roll << std::endl;
+		//std::cout <<"yaw: " << yaw << std::endl;
+		//std::cout <<"pitch: " << pitch << std::endl;
+		//std::cout <<"roll: " << roll << std::endl;
 
 		Matrix3 recomp;
-		recomp.FromEulerAnglesYXZ(yaw,pitch,roll);
+		recomp.FromEulerAnglesYXZ(yaw,Ogre::Radian(0),Ogre::Radian(0));
 		Quaternion jerecomp(recomp);
-		std::cout << "Quaternion matrixRECOMPYXZ : " << jerecomp << std::endl;
-
 		Matrix3 recomp1;
+		
+		Quaternion bi,bu;
+		bi=Math::setQuaternion(yaw.valueRadians(),0,0);
+		bu=Math::setQuaternion(0,pitch.valueRadians(),0);
+		std::cout << "Quaternion matrixRECOM YAW DIRECT : " << bi << std::endl;
+		std::cout << "Quaternion matrixRECOM Pitch DIRECT : " << bu<< std::endl;
+		/*Matrix3 recomp1;
 		recomp1.FromEulerAnglesYXZ(q.getYaw(false),q.getPitch(false),q.getRoll(false));
 		Quaternion jerecomp1(recomp1);
 		std::cout << "Quaternion matrixRECOMPXYZ : " << jerecomp1 << std::endl;
@@ -187,13 +200,8 @@ namespace Logic {
 		final=l1*l2*l3;
 		std::cout << "Quaternion quat*ypr: " << final << std::endl;
 
+		*/
 
-		Quaternion x(&q.xAxis());
-		Quaternion z(&q.yAxis());
-		Quaternion t(&q.zAxis());
-		Quaternion fi,ti;
-		fi.FromAxes(q.xAxis(),q.yAxis(),q.zAxis());
-		std::cout << "Quaternion FromAxis: " << fi<< std::endl;*/
 
 
 	

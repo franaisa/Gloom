@@ -216,18 +216,28 @@ namespace Net {
 	//__________________________________________________________________
 
 	void CBuffer::serialize(const Quaternion& data) {
-
-		Vector3 orientation=Math::getEulerYawPitchRoll(data);
-		serialize(orientation);
+		//Temporal hasta que sepamos saber sacar bien los angulos euler del quaternion
+		Matrix3 orientation;
+		data.ToRotationMatrix(orientation);
+		Ogre::Radian yaw, pitch, roll;
+		orientation.ToEulerAnglesYXZ(yaw, pitch, roll);
+		
+		serialize(yaw.valueRadians());
+		serialize(pitch.valueRadians());
+		serialize(roll.valueRadians());
 	}
 
 	//__________________________________________________________________
 
 	void CBuffer::deserialize(Quaternion& data) {
 		
-		Vector3 orientation;
-		deserialize(orientation);
-		data=Math::createQuaternionWithEuler(orientation.x,orientation.y,orientation.z);
+		float yaw, pitch,roll;
+		// Obtenemos el Yaw y el Pitch
+		read(&yaw, sizeof(yaw));
+		read(&pitch, sizeof(pitch));
+		read(&roll, sizeof(roll));
+
+		data=Math::setQuaternion(yaw,pitch,roll);
 	}
 
 	//__________________________________________________________________
@@ -368,6 +378,8 @@ namespace Net {
 
 		data.FromEulerAnglesYXZ(Ogre::Radian(yaw),Ogre::Radian(pitch),Ogre::Radian(roll));
 	}
+
+	//__________________________________________________________________
 
 	void CBuffer::serialize(const Map::CEntity* entityInfo) {
 		auto it = entityInfo->_attributes.begin();

@@ -170,6 +170,9 @@ namespace Math
       return q;
 	}
 
+
+
+	//ALGO DE ESTE METODO ESTA MAL YA, SI SE SOLUCIONA SE QUITA EL CAMBIO A MATRIX3 PARA OBTENER LOS EULER AUTENTICOS
 	/**
 	Devuelve en grados de Euler los grados de yaw,pitch y roll por los que esta formado el quaternion.
 
@@ -178,39 +181,48 @@ namespace Math
 	*/
 	static Vector3 getEulerYawPitchRoll(const Quaternion& q)
 	{
-		float yaw=atan2(2.0f * q.x * q.w + 2.0f * q.y * q.z, 1 - 2.0f * (q.z*q.z  + q.w*q.w));    
-		float pitch=asin(2.0f * ( q.x * q.z - q.w * q.y ) );                             
-		float roll=atan2(2.0f * q.x * q.y + 2.0f * q.z * q.w, 1 - 2.0f * (q.y*q.y + q.z*q.z));  
-		return Vector3(yaw,pitch,roll);
+        // Store the Euler angles in radians
+        Vector3 yawPitchRoll;
+
+        double sqw = q.w * q.w;
+        double sqx = q.x * q.x;
+        double sqy = q.y * q.y;
+        double sqz = q.z * q.z;
+
+        // If quaternion is normalised the unit is one, otherwise it is the correction factor
+        double unit = sqx + sqy + sqz + sqw;
+        double test = q.x * q.y + q.z * q.w;
+
+        if (test > 0.4999f * unit)                              // 0.4999f OR 0.5f - EPSILON
+        {
+			//std::cout << "test superior" << std::endl;
+            // Singularity at north pole
+            yawPitchRoll.x = 2.0f * atan2(q.x, q.w);  // Yaw
+            yawPitchRoll.y = PI * 0.5f;                         // Pitch
+           yawPitchRoll.z = 0.0f;                                // Roll
+            return yawPitchRoll;
+        }
+        else if (test < -0.4999f * unit)                        // -0.4999f OR -0.5f + EPSILON
+        {
+			//std::cout << "test inferior" << std::endl;
+            // Singularity at south pole
+            yawPitchRoll.x = -2.0f * atan2(q.x, q.w); // Yaw
+            yawPitchRoll.y = -PI * 0.5f;                        // Pitch
+           yawPitchRoll.z = 0.0f;                                // Roll
+            return yawPitchRoll;
+        }
+        else
+        {
+			//std::cout << "Normal" << std::endl;
+            yawPitchRoll.x = atan2(2.0f * q.y * q.w - 2.0f * q.x * q.z,float(( sqx - sqy - sqz + sqw)));       // Yaw
+            yawPitchRoll.y = asin(2.0f * test / unit);                                             // Pitch
+            yawPitchRoll.z = atan2(2.0f * q.x * q.w - 2.0f * q.y * q.z,float(( -sqx + sqy - sqz + sqw)));      // Roll
+        }
+
+        return yawPitchRoll;
+    
 	}
 
-	/**
-	Dados los grados de Euler construye el quaternion resultante.
-
-	@param yaw Yaw del quaternion a formar.
-	@param pitch Pitch del quaternion a formar.
-	@param roll Roll del quaternion a formar.
-	@return Quaternion resultante
-	*/
-	static Quaternion createQuaternionWithEuler(float yaw, float pitch, float roll)
-	{
-		float rollOver2 = roll * 0.5f;
-		float sinRollOver2 = sin(rollOver2);
-		float cosRollOver2 = cos(rollOver2);
-		float pitchOver2 = pitch * 0.5f;
-		float sinPitchOver2 = sin(pitchOver2);
-		float cosPitchOver2 = cos(pitchOver2);
-		float yawOver2 = yaw * 0.5f;
-		float sinYawOver2 = sin(yawOver2);
-		float cosYawOver2 = cos(yawOver2);
-		Quaternion result;
-		result.x = cosYawOver2 * cosPitchOver2 * cosRollOver2 + sinYawOver2 * sinPitchOver2 * sinRollOver2;
-		result.y = cosYawOver2 * cosPitchOver2 * sinRollOver2 - sinYawOver2 * sinPitchOver2 * cosRollOver2;
-		result.z = cosYawOver2 * sinPitchOver2 * cosRollOver2 + sinYawOver2 * cosPitchOver2 * sinRollOver2;
-		result.w = sinYawOver2 * cosPitchOver2 * cosRollOver2 - cosYawOver2 * sinPitchOver2 * sinRollOver2;
-		return result;
-	}
-	
 	/**
 	Rota el quaternion pasado por parámetro con los radianes especificados tambien por parámetro sobre el eje especificado.
 	Por ejemplo si queremos rotar el yaw, pasariamos el axe(0,1,0) con rotation(radianes) y el quaternion a rotar.

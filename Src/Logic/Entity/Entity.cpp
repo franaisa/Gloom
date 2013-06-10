@@ -372,10 +372,15 @@ namespace Logic {
 	void CEntity::setOrientation(const Quaternion& orientation) {
 		//Actualizacion global
 		_orientation = orientation;
-		//Esta mal hay que arreglarlo
-		_yawOrientation = Quaternion(&orientation.xAxis());
-		_pitchOrientation = Quaternion(&orientation.yAxis());
-		_rollOrientation = Quaternion(&orientation.zAxis());
+		//Paso sin optimizar, deberiamos extraer los angulos directamente del quaternion
+		Matrix3 o;
+		_orientation.ToRotationMatrix(o);
+		Ogre::Radian yaw, pitch, roll;
+		o.ToEulerAnglesYXZ(yaw, pitch, roll);
+
+		_yawOrientation = Math::setQuaternion(yaw.valueRadians(),0,0);
+		_pitchOrientation = Math::setQuaternion(0,pitch.valueRadians(),0);
+		_rollOrientation = Math::setQuaternion(0,0,roll.valueRadians());
 	} // setOrientation
 
 	//---------------------------------------------------------
@@ -436,7 +441,6 @@ namespace Logic {
 		}
 		//Actualizamos la orientacion final
 		_orientation=_yawOrientation*_pitchOrientation*_rollOrientation;
-
 	}
 
 } // namespace Logic
