@@ -77,12 +77,12 @@ namespace Logic {
 
 
 		//PRUEBAS
-		float y,p,r;
+		/*float y,p,r;
 		Quaternion q=_entity->getOrientation();
 		std::cout << "###############################################################"<< std::endl;
 		std::cout << "###############################################################"<< std::endl;
 		std::cout<< "Quaternion inicial " << q << std::endl;
-		
+		*/
 
 		/*Quaternion data;
 		Vector3 orientation=Math::getEulerYawPitchRoll(Quaternion(sqrt(0.5),0,sqrt(0.5),0));
