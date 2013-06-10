@@ -1,6 +1,23 @@
-material HoundHeadRed
+vertex_program ArchangelShield_vs hlsl
+{
+	source ArchangelShieldTP.hlsl
+	entry_point mainVS
+	target vs_2_0
+
+}
+
+fragment_program ArchangelShield_ps hlsl
+{
+	source ArchangelShieldTP.hlsl
+	entry_point mainPS
+	target ps_2_0
+}
+
+
+material ArchangelHeadBlueDiamond
+{
 	
-	
+	set $diffuse_tex_shield "PielDiamanteTP.png"
 	set $shininess "60"
 	set $specular "2 2 2 100"
 	
@@ -25,15 +42,40 @@ material HoundHeadRed
 
             texture_unit diffuseMap
             {
-				texture heavy_head_red_invun.tga
+				texture heavy_head.tga
 				filtering trilinear
 			}
 			
 			texture_unit aoMap
 			{
-				texture heavy_head_red_invun.tga
+				texture heavy_head.tga
 				filtering trilinear
 			}
+		}
+		
+		pass 
+		{
+			illumination_stage ambient
+            scene_blend alpha_blend
+			
+			depth_write off
+			
+			vertex_program_ref ArchangelShield_vs
+			{
+				param_named_auto ViewProjectionMatrix worldviewproj_matrix
+				param_named_auto tiempo time
+			}
+			fragment_program_ref ArchangelShield_ps
+            {
+				param_named alpha float 0.25
+				param_named_auto tiempo time
+            }
+			texture_unit 0
+            {
+				tex_coord_set 0
+                texture $diffuse_tex_shield
+				scale 0.2 0.2
+            }
 		}
 
         pass
@@ -59,7 +101,7 @@ material HoundHeadRed
 			
             texture_unit aoMap
 			{
-				texture heavy_head_red_invun.tga
+				texture heavy_head.tga
 				filtering trilinear
 			}
 
@@ -80,8 +122,9 @@ material HoundHeadRed
 
 
 
-material HoundEyeRRed
+material ArchangelEyeRBlueDiamond
 {
+	set $diffuse_tex_shield "PielDiamanteTP.png"
 	set $shininess "60"
 	set $specular "2 2 2 100"
 	
@@ -106,15 +149,40 @@ material HoundEyeRRed
 
             texture_unit diffuseMap
             {
-				texture heavy_head_red_invun.tga
+				texture heavy_head.tga
 				filtering trilinear
 			}
 			
 			texture_unit aoMap
 			{
-				texture heavy_head_red_invun.tga
+				texture heavy_head.tga
 				filtering trilinear
 			}
+		}
+		
+		pass 
+		{
+			illumination_stage ambient
+            scene_blend alpha_blend
+			
+			depth_write off
+			
+			vertex_program_ref ArchangelShield_vs
+			{
+				param_named_auto ViewProjectionMatrix worldviewproj_matrix
+				param_named_auto tiempo time
+			}
+			fragment_program_ref ArchangelShield_ps
+            {
+				param_named alpha float 0.25
+				param_named_auto tiempo time
+            }
+			texture_unit 0
+            {
+				tex_coord_set 0
+                texture $diffuse_tex_shield
+				scale 0.2 0.2
+            }
 		}
 
         pass
@@ -140,7 +208,7 @@ material HoundEyeRRed
 			
             texture_unit aoMap
 			{
-				texture heavy_head_red_invun.tga
+				texture heavy_head.tga
 				filtering trilinear
 			}
 
@@ -159,8 +227,9 @@ material HoundEyeRRed
 
 
 
-material HoundEyeLRed
+material ArchangelEyeLBlueDiamond
 {
+	set $diffuse_tex_shield "PielDiamanteTP.png"
 	set $shininess "60"
 	set $specular "2 2 2 100"
 	
@@ -185,15 +254,40 @@ material HoundEyeLRed
 
             texture_unit diffuseMap
             {
-				texture heavy_head_exponent.tga
+				texture heavy_head.tga
 				filtering trilinear
 			}
 			
 			texture_unit aoMap
 			{
-				texture heavy_head_exponent.tga
+				texture heavy_head.tga
 				filtering trilinear
 			}
+		}
+		
+		pass 
+		{
+			illumination_stage ambient
+            scene_blend alpha_blend
+			
+			depth_write off
+			
+			vertex_program_ref ArchangelShield_vs
+			{
+				param_named_auto ViewProjectionMatrix worldviewproj_matrix
+				param_named_auto tiempo time
+			}
+			fragment_program_ref ArchangelShield_ps
+            {
+				param_named alpha float 0.25
+				param_named_auto tiempo time
+            }
+			texture_unit 0
+            {
+				tex_coord_set 0
+                texture $diffuse_tex_shield
+				scale 0.2 0.2
+            }
 		}
 
         pass
@@ -219,7 +313,7 @@ material HoundEyeLRed
 			
             texture_unit aoMap
 			{
-				texture heavy_head_red_invun.tga
+				texture heavy_head.tga
 				filtering trilinear
 			}
 
@@ -239,8 +333,9 @@ material HoundEyeLRed
 
 
 //cuerpo
-material HoundBodyRed
+material ArchangelBodyBlueDiamond
 {
+	set $diffuse_tex_shield "PielDiamanteTP.png"
 	set $shininess "15"
 	set $specular "2 2 2 15"
 	
@@ -265,15 +360,40 @@ material HoundBodyRed
 
             texture_unit diffuseMap
             {
-				texture hvyweapon_red_invun.tga
+				texture hvyweapon_blue.tga
 				filtering trilinear
 			}
 			
 			texture_unit aoMap
 			{
-				texture hvyweapon_red_invun.tga
+				texture hvyweapon_blue.tga
 				filtering trilinear
 			}
+		}
+		
+		pass 
+		{
+			illumination_stage ambient
+            scene_blend alpha_blend
+			
+			depth_write off
+			
+			vertex_program_ref ArchangelShield_vs
+			{
+				param_named_auto ViewProjectionMatrix worldviewproj_matrix
+				param_named_auto tiempo time
+			}
+			fragment_program_ref ArchangelShield_ps
+            {
+				param_named alpha float 0.25
+				param_named_auto tiempo time
+            }
+			texture_unit 0
+            {
+				tex_coord_set 0
+                texture $diffuse_tex_shield
+				scale 0.2 0.2
+            }
 		}
 
         pass
@@ -299,7 +419,7 @@ material HoundBodyRed
 			
             texture_unit aoMap
 			{
-				texture hvyweapon_red_invun.tga
+				texture hvyweapon_blue.tga
 				filtering trilinear
 			}
 
@@ -322,9 +442,9 @@ material HoundBodyRed
 
 }
 
-material HoundHandsRed
+material ArchangelHandsBlueDiamond
 {
-	
+	set $diffuse_tex_shield "PielDiamanteTP.png"
 	set $shininess "15"
 	set $specular "2 2 2 100"
 	
@@ -349,15 +469,40 @@ material HoundHandsRed
 
             texture_unit diffuseMap
             {
-				texture hvyweapon_red_invun.tga
+				texture hvyweapon_blue.tga
 				filtering trilinear
 			}
 			
 			texture_unit aoMap
 			{
-				texture hvyweapon_red_invun.tga
+				texture hvyweapon_blue.tga
 				filtering trilinear
 			}
+		}
+		
+		pass 
+		{
+			illumination_stage ambient
+            scene_blend alpha_blend
+			
+			depth_write off
+			
+			vertex_program_ref ArchangelShield_vs
+			{
+				param_named_auto ViewProjectionMatrix worldviewproj_matrix
+				param_named_auto tiempo time
+			}
+			fragment_program_ref ArchangelShield_ps
+            {
+				param_named alpha float 0.25
+				param_named_auto tiempo time
+            }
+			texture_unit 0
+            {
+				tex_coord_set 0
+                texture $diffuse_tex_shield
+				scale 0.2 0.2
+            }
 		}
 
         pass
@@ -383,7 +528,7 @@ material HoundHandsRed
 			
             texture_unit aoMap
 			{
-				texture hvyweapon_red_invun.tga
+				texture hvyweapon_blue.tga
 				filtering trilinear
 			}
 

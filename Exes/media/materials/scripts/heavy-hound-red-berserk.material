@@ -1,4 +1,5 @@
-material HoundHeadRed
+material HoundHeadRedBerserk
+{
 	
 	
 	set $shininess "60"
@@ -34,6 +35,25 @@ material HoundHeadRed
 				texture heavy_head_red_invun.tga
 				filtering trilinear
 			}
+		}
+		
+		pass 
+		{
+			illumination_stage ambient
+            scene_blend alpha_blend
+			
+			depth_write off
+			
+			vertex_program_ref berserk_vs
+			{
+				param_named_auto ViewProjectionMatrix worldviewproj_matrix
+				param_named_auto tiempo time
+			}
+			fragment_program_ref berserk_ps
+            {
+				param_named alpha float 0.25
+				param_named_auto tiempo time
+            }
 		}
 
         pass
@@ -80,7 +100,7 @@ material HoundHeadRed
 
 
 
-material HoundEyeRRed
+material HoundEyeRRedBerserk
 {
 	set $shininess "60"
 	set $specular "2 2 2 100"
@@ -115,6 +135,25 @@ material HoundEyeRRed
 				texture heavy_head_red_invun.tga
 				filtering trilinear
 			}
+		}
+		
+		pass 
+		{
+			illumination_stage ambient
+            scene_blend alpha_blend
+			
+			depth_write off
+			
+			vertex_program_ref berserk_vs
+			{
+				param_named_auto ViewProjectionMatrix worldviewproj_matrix
+				param_named_auto tiempo time
+			}
+			fragment_program_ref berserk_ps
+            {
+				param_named alpha float 0.25
+				param_named_auto tiempo time
+            }
 		}
 
         pass
@@ -159,7 +198,7 @@ material HoundEyeRRed
 
 
 
-material HoundEyeLRed
+material HoundEyeLRedBerserk
 {
 	set $shininess "60"
 	set $specular "2 2 2 100"
@@ -194,6 +233,25 @@ material HoundEyeLRed
 				texture heavy_head_exponent.tga
 				filtering trilinear
 			}
+		}
+		
+		pass 
+		{
+			illumination_stage ambient
+            scene_blend alpha_blend
+			
+			depth_write off
+			
+			vertex_program_ref berserk_vs
+			{
+				param_named_auto ViewProjectionMatrix worldviewproj_matrix
+				param_named_auto tiempo time
+			}
+			fragment_program_ref berserk_ps
+            {
+				param_named alpha float 0.25
+				param_named_auto tiempo time
+            }
 		}
 
         pass
@@ -239,7 +297,7 @@ material HoundEyeLRed
 
 
 //cuerpo
-material HoundBodyRed
+material HoundBodyRedBerserk
 {
 	set $shininess "15"
 	set $specular "2 2 2 15"
@@ -274,6 +332,25 @@ material HoundBodyRed
 				texture hvyweapon_red_invun.tga
 				filtering trilinear
 			}
+		}
+		
+		pass 
+		{
+			illumination_stage ambient
+            scene_blend alpha_blend
+			
+			depth_write off
+			
+			vertex_program_ref berserk_vs
+			{
+				param_named_auto ViewProjectionMatrix worldviewproj_matrix
+				param_named_auto tiempo time
+			}
+			fragment_program_ref berserk_ps
+            {
+				param_named alpha float 0.25
+				param_named_auto tiempo time
+            }
 		}
 
         pass
@@ -322,7 +399,7 @@ material HoundBodyRed
 
 }
 
-material HoundHandsRed
+material HoundHandsRedBerserk
 {
 	
 	set $shininess "15"
@@ -358,6 +435,25 @@ material HoundHandsRed
 				texture hvyweapon_red_invun.tga
 				filtering trilinear
 			}
+		}
+		
+		pass 
+		{
+			illumination_stage ambient
+            scene_blend alpha_blend
+			
+			depth_write off
+			
+			vertex_program_ref berserk_vs
+			{
+				param_named_auto ViewProjectionMatrix worldviewproj_matrix
+				param_named_auto tiempo time
+			}
+			fragment_program_ref berserk_ps
+            {
+				param_named alpha float 0.25
+				param_named_auto tiempo time
+            }
 		}
 
         pass

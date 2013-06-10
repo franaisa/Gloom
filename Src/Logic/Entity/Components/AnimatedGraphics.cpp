@@ -22,9 +22,6 @@ gráfica de una entidad estática.
 #include "Logic/Messages/MessageSetAnimation.h"
 #include "Logic/Messages/MessageStopAnimation.h"
 #include "Logic/Messages/MessageChangeWeaponGraphics.h"
-#include "Logic/Messages/MessageTransform.h"
-#include "Logic/Messages/MessageChangeMaterial.h"
-#include "Logic/Messages/MessageActivate.h"
 #include "WeaponType.h"
 
 #include "Graphics/Scene.h"

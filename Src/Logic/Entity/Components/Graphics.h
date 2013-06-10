@@ -16,10 +16,6 @@ gráfica de la entidad.
 #include "Logic/Entity/Component.h"
 #include "Graphics/Entity.h"
 
-#include "Graphics/Scene.h"
-
-#include "OgreSceneManager.h"
-
 // Predeclaración de clases para ahorrar tiempo de compilación
 namespace Graphics 
 {
@@ -110,6 +106,8 @@ namespace Logic
 		void setVisible(bool renderGraphicEntity);
 
 		virtual void changeMaterial(const std::string& materialName);
+
+		virtual void changeMaterial(const std::list<std::string>& materialList);
 
 		virtual void onTick(unsigned int msecs);
 

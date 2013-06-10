@@ -199,6 +199,15 @@ namespace Graphics
 		*/
 		virtual void changeMaterial(const std::list<std::string>& materialList);
 
+
+		/**
+		Cambia todos los materiales de los que está compuesta una entidad por el
+		mismo material, pasado como parámetro
+
+		@param material material que estamos asignando a la nueva entidad
+		*/
+		virtual void changeMaterial(const std::string& material);
+
 		/**
 		Método que te devuelve la lista de materiales de los que está hecha la
 		entidad

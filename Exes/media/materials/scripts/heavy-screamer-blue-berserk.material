@@ -1,4 +1,5 @@
-material HoundHeadRed
+material ScreamerHeadBlueBerserk
+{
 	
 	
 	set $shininess "60"
@@ -25,15 +26,34 @@ material HoundHeadRed
 
             texture_unit diffuseMap
             {
-				texture heavy_head_red_invun.tga
+				texture heavy_head_zombie.tga
 				filtering trilinear
 			}
 			
 			texture_unit aoMap
 			{
-				texture heavy_head_red_invun.tga
+				texture heavy_head_zombie.tga
 				filtering trilinear
 			}
+		}
+		
+		pass 
+		{
+			illumination_stage ambient
+            scene_blend alpha_blend
+			
+			depth_write off
+			
+			vertex_program_ref berserk_vs
+			{
+				param_named_auto ViewProjectionMatrix worldviewproj_matrix
+				param_named_auto tiempo time
+			}
+			fragment_program_ref berserk_ps
+            {
+				param_named alpha float 0.25
+				param_named_auto tiempo time
+            }
 		}
 
         pass
@@ -59,7 +79,7 @@ material HoundHeadRed
 			
             texture_unit aoMap
 			{
-				texture heavy_head_red_invun.tga
+				texture heavy_head_zombie.tga
 				filtering trilinear
 			}
 
@@ -80,7 +100,7 @@ material HoundHeadRed
 
 
 
-material HoundEyeRRed
+material ScreamerEyeRBlueBerserk
 {
 	set $shininess "60"
 	set $specular "2 2 2 100"
@@ -106,15 +126,34 @@ material HoundEyeRRed
 
             texture_unit diffuseMap
             {
-				texture heavy_head_red_invun.tga
+				texture heavy_head_zombie.tga
 				filtering trilinear
 			}
 			
 			texture_unit aoMap
 			{
-				texture heavy_head_red_invun.tga
+				texture heavy_head_zombie.tga
 				filtering trilinear
 			}
+		}
+		
+		pass 
+		{
+			illumination_stage ambient
+            scene_blend alpha_blend
+			
+			depth_write off
+			
+			vertex_program_ref berserk_vs
+			{
+				param_named_auto ViewProjectionMatrix worldviewproj_matrix
+				param_named_auto tiempo time
+			}
+			fragment_program_ref berserk_ps
+            {
+				param_named alpha float 0.25
+				param_named_auto tiempo time
+            }
 		}
 
         pass
@@ -140,7 +179,7 @@ material HoundEyeRRed
 			
             texture_unit aoMap
 			{
-				texture heavy_head_red_invun.tga
+				texture heavy_head_zombie.tga
 				filtering trilinear
 			}
 
@@ -159,7 +198,7 @@ material HoundEyeRRed
 
 
 
-material HoundEyeLRed
+material ScreamerEyeRBlueBerserk
 {
 	set $shininess "60"
 	set $specular "2 2 2 100"
@@ -185,15 +224,34 @@ material HoundEyeLRed
 
             texture_unit diffuseMap
             {
-				texture heavy_head_exponent.tga
+				texture hvyweapon_red_zombie.tga
 				filtering trilinear
 			}
 			
 			texture_unit aoMap
 			{
-				texture heavy_head_exponent.tga
+				texture hvyweapon_red_zombie.tga
 				filtering trilinear
 			}
+		}
+		
+		pass 
+		{
+			illumination_stage ambient
+            scene_blend alpha_blend
+			
+			depth_write off
+			
+			vertex_program_ref berserk_vs
+			{
+				param_named_auto ViewProjectionMatrix worldviewproj_matrix
+				param_named_auto tiempo time
+			}
+			fragment_program_ref berserk_ps
+            {
+				param_named alpha float 0.25
+				param_named_auto tiempo time
+            }
 		}
 
         pass
@@ -219,7 +277,7 @@ material HoundEyeLRed
 			
             texture_unit aoMap
 			{
-				texture heavy_head_red_invun.tga
+				texture heavy_head_zombie.tga
 				filtering trilinear
 			}
 
@@ -239,7 +297,7 @@ material HoundEyeLRed
 
 
 //cuerpo
-material HoundBodyRed
+material ScreamerBodyBlueBerserk
 {
 	set $shininess "15"
 	set $specular "2 2 2 15"
@@ -265,15 +323,34 @@ material HoundBodyRed
 
             texture_unit diffuseMap
             {
-				texture hvyweapon_red_invun.tga
+				texture hvyweapon_red_zombie.tga
 				filtering trilinear
 			}
 			
 			texture_unit aoMap
 			{
-				texture hvyweapon_red_invun.tga
+				texture hvyweapon_red_zombie.tga
 				filtering trilinear
 			}
+		}
+		
+		pass 
+		{
+			illumination_stage ambient
+            scene_blend alpha_blend
+			
+			depth_write off
+			
+			vertex_program_ref berserk_vs
+			{
+				param_named_auto ViewProjectionMatrix worldviewproj_matrix
+				param_named_auto tiempo time
+			}
+			fragment_program_ref berserk_ps
+            {
+				param_named alpha float 0.25
+				param_named_auto tiempo time
+            }
 		}
 
         pass
@@ -299,7 +376,7 @@ material HoundBodyRed
 			
             texture_unit aoMap
 			{
-				texture hvyweapon_red_invun.tga
+				texture hvyweapon_red_zombie.tga
 				filtering trilinear
 			}
 
@@ -322,7 +399,7 @@ material HoundBodyRed
 
 }
 
-material HoundHandsRed
+material ScreamerHandsBlueBerserk
 {
 	
 	set $shininess "15"
@@ -349,15 +426,34 @@ material HoundHandsRed
 
             texture_unit diffuseMap
             {
-				texture hvyweapon_red_invun.tga
+				texture hvyweapon_red_zombie.tga
 				filtering trilinear
 			}
 			
 			texture_unit aoMap
 			{
-				texture hvyweapon_red_invun.tga
+				texture hvyweapon_red_zombie.tga
 				filtering trilinear
 			}
+		}
+		
+		pass 
+		{
+			illumination_stage ambient
+            scene_blend alpha_blend
+			
+			depth_write off
+			
+			vertex_program_ref berserk_vs
+			{
+				param_named_auto ViewProjectionMatrix worldviewproj_matrix
+				param_named_auto tiempo time
+			}
+			fragment_program_ref berserk_ps
+            {
+				param_named alpha float 0.25
+				param_named_auto tiempo time
+            }
 		}
 
         pass
@@ -383,7 +479,7 @@ material HoundHandsRed
 			
             texture_unit aoMap
 			{
-				texture hvyweapon_red_invun.tga
+				texture hvyweapon_red_zombie.tga
 				filtering trilinear
 			}
 

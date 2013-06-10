@@ -309,14 +309,14 @@ material Material#38
             {
 				texture metal_columna_tileado_COLOR.tga
 				
-				filtering anisotropic
+				filtering trilinear
 			}
 			
 			texture_unit aoMap
 			{
 				texture metal_columna_tileado_COLOR.tga
 				
-				filtering anisotropic
+				filtering trilinear
 			}
 		}
 
@@ -345,21 +345,21 @@ material Material#38
 			{
 				texture metal_columna_tileado_COLOR.tga
 				
-				filtering anisotropic
+				filtering trilinear
 			}
 
             texture_unit specMap
             {
                 texture metal_columna_tileado_SPEC.tga
 				
-				filtering anisotropic
+				filtering trilinear
             }
 
             texture_unit normalMap
             {
                 texture metal_columna_tileado_NRM.tga
 				
-				filtering anisotropic
+				filtering trilinear
             }
         }
 
@@ -399,14 +399,14 @@ material Material#53
             {
 				texture viga_COLOR.tga
 				
-				filtering anisotropic
+				filtering trilinear
 			}
 			
 			texture_unit aoMap
 			{
 				texture viga_COLOR.tga
 				
-				filtering anisotropic
+				filtering trilinear
 			}
 		}
 
@@ -435,21 +435,21 @@ material Material#53
 			{
 				texture viga_COLOR.tga
 				
-				filtering anisotropic
+				filtering trilinear
 			}
 
             texture_unit specMap
             {
                 texture viga_SPEC.tga
 				
-				filtering anisotropic
+				filtering trilinear
             }
 
             texture_unit normalMap
             {
                 texture viga_NRM.tga
 				
-				filtering anisotropic
+				filtering trilinear
             }
         }
 
