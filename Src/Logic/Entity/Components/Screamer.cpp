@@ -270,11 +270,6 @@ namespace Logic {
 				auto m = std::make_shared<CMessageAddForcePlayer>();
 				m->setForce(_directionShoot * (_screamerScreamForce*(1.0f- (*it).distance/_screamerScreamMaxDistance)));
 				(*it).entity->emitMessage(m);
-
-				auto m2 = std::make_shared<CMessageSetAnimation>();
-				m2->setString("Damage");
-				m2->setBool(false);
-				(*it).entity->emitMessage(m2);
 			}
 		}				
 	} // sweepHitConsequences

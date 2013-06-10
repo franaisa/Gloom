@@ -135,9 +135,9 @@ namespace Logic {
 					else {
 						// Mandar set animation
 						shared_ptr<CMessageSetAnimation> setAnimMsg = make_shared<CMessageSetAnimation>();
-						setAnimMsg->setString(info.animName);
-						setAnimMsg->setBool(info.loop);
-
+						setAnimMsg->setAnimation(info.animName);
+						setAnimMsg->setLoop(info.loop);
+						setAnimMsg->setExclude(info.exclude);
 						_entity->emitMessage(setAnimMsg);
 					}
 				}

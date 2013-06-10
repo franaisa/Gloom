@@ -23,16 +23,22 @@ namespace Graphics
 	//Constructor de la clase CParticle
 	HHFXParticle::HHFXParticle(const std::string &particleName,Vector3 position, bool startEmitting)
 	{
+		_loaded = false;
 		_particleSystem = HHFX::getSingletonPtr();
 
 		_particle = _particleSystem->createParticle(particleName);
-
+		
 		if(_particle){
 			_particleNode = Graphics::CServer::getSingletonPtr()->getActiveScene()->getSceneMgr()->getRootSceneNode()->createChildSceneNode();
 			_particleNode->attachObject(_particle);
 			_particleNode->setPosition(position);
-		}
 
+			if(!startEmitting){
+				this->deactivate();
+			}
+			_loaded = true;
+		}
+		
 	} // CParticle
 	//--------------------------------------------------------
 
@@ -68,14 +74,14 @@ namespace Graphics
 	
 	void HHFXParticle::activate()
 	{
-		_particle->StopFX();
+		_particle->RunFX();
 
 	} // activate
 	//--------------------------------------------------------
 
 	void HHFXParticle::deactivate()
 	{
-		_particle->RunFX();
+		_particle->StopFX();
 
 	} // deactivate
 	//--------------------------------------------------------

@@ -111,6 +111,34 @@ namespace Logic {
 			if(_primaryFireCooldownTimer < 0)
 				_primaryFireCooldownTimer = 0;
 		}
+
+		if(_secondaryFireIsActive) {
+			if(_currentAmmo > 0 && _currentSpentAmmo < _maxAmmoPerShot) {
+				if(_elapsedTime < _maxLoadingTime) {
+					// Contamos el tiempo que hemos mantenido pulsado el raton
+					_elapsedTime += msecs;
+					// Actualizamos el timer que se encarga de reducir la municion
+					_ammoSpentTimer += msecs;
+					if(_ammoSpentTimer >= _ammoSpentTimeStep) {
+						decrementAmmo();
+						++_currentSpentAmmo;
+						_ammoSpentTimer = 0;
+					}
+
+					if(_elapsedTime >= _maxLoadingTime) {
+						_elapsedTime = _maxLoadingTime;
+					}
+				}
+			}
+		}
+		
+		// Controlamos el cooldown
+		if(_secondaryFireCooldownTimer > 0) {
+			_secondaryFireCooldownTimer -= msecs;
+			
+			if(_secondaryFireCooldownTimer < 0)
+				_secondaryFireCooldownTimer = 0;
+		}
 	}
 
 	//__________________________________________________________________
@@ -122,7 +150,7 @@ namespace Logic {
 	//__________________________________________________________________
 
 	bool CMiniGunAmmo::canUseSecondaryFire() {
-		return true;
+		return _secondaryFireCooldownTimer == 0 && _currentAmmo > 0;
 	}
 
 	//__________________________________________________________________
@@ -135,7 +163,6 @@ namespace Logic {
 		decrementAmmo();
 		++_currentSpentAmmo;
 	}
-
 	//__________________________________________________________________
 
 	void CMiniGunAmmo::stopPrimaryFire() {
@@ -148,7 +175,28 @@ namespace Logic {
 		// Reseteamos el reloj
 		_currentSpentAmmo = _ammoSpentTimer = _elapsedTime = 0;
 	}
+	//__________________________________________________________________
 
+		void CMiniGunAmmo::secondaryFire() {
+		IAmmo::secondaryFire();
+
+		_secondaryFireCooldownTimer = _secondaryFireCooldown;
+
+		decrementAmmo();
+		++_currentSpentAmmo;
+	}
+	//__________________________________________________________________
+
+	void CMiniGunAmmo::stopSecondaryFire() {
+		IAmmo::stopSecondaryFire();
+		
+		if(!_secondaryFireIsActive) return;
+
+		_secondaryFireIsActive = false;
+
+		// Reseteamos el reloj
+		_currentSpentAmmo = _ammoSpentTimer = _elapsedTime = 0;
+	}
 	//__________________________________________________________________
 
 	void CMiniGunAmmo::reduceCooldown(unsigned int percentage) {

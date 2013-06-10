@@ -378,7 +378,22 @@ namespace Math
 
 	} // setPitch
 
-	
+	/**
+	Establece un subviraje a una matriz de transformación.
+
+	@param turn Giro en radianes que se quiere etablecer.
+	@param transform Matriz de transformación a modificar.
+	*/
+	static void setPitch(float turn, Matrix3& rotation) 
+	{
+		rotation = Matrix3::IDENTITY;
+
+		Ogre::Radian yaw, pitch, roll;
+		
+		rotation.ToEulerAnglesYXZ(yaw, pitch, roll);
+		rotation.FromEulerAnglesYXZ(yaw, Ogre::Radian(turn), roll);
+
+	} // setPitch
 
 	/**
 	Aplica un viraje a una matriz de transformación.

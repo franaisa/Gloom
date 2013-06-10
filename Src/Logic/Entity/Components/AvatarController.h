@@ -188,6 +188,10 @@ namespace Logic {
 
 		void setMaxVelocity(float velocity){_maxVelocity = velocity;}
 
+		Vector3 getDisplacementDir(){return _displacementDir;}
+
+		bool getFlying(){return !_touchingGround;}
+
 	protected:
 
 

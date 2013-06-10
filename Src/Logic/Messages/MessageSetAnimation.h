@@ -9,17 +9,20 @@ namespace Logic {
 	DEC_FACTORYMESSAGE(CMessageSetAnimation);
 	public:
 		CMessageSetAnimation();
-		std::string getString();
-		void setString(std::string);
-		bool getBool();
-		void setBool(bool boolean);
+		std::string getAnimation();
+		void setAnimation(std::string);
+		bool getLoop();
+		void setLoop(bool loop);
+		bool getExclude();
+		void setExclude(bool exclude);
 		virtual ~CMessageSetAnimation(){};
 
 		virtual Net::CBuffer serialize();
 		virtual void deserialize(Net::CBuffer& buffer);
 	private:
-		std::string _string;
-		bool _bool;
+		std::string _animation;
+		bool _loop;
+		bool _exclude;
 	};
 	REG_FACTORYMESSAGE(CMessageSetAnimation);
 };

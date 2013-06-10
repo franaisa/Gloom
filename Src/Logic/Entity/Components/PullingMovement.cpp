@@ -16,7 +16,7 @@
 #include "Map/MapEntity.h"
 #include "Basesubsystems/Math.h"
 #include "PhysicDynamicEntity.h"
-#include "ShootHammer.h"
+#include "ShootSoulReaper.h"
 
 #include "Logic/Messages/MessageTouched.h"
 #include "Logic/Messages/MessageAddLife.h"
@@ -96,7 +96,7 @@ namespace Logic {
 
 	void CPullingMovement::setPlayer(CEntity * player){
 		_player = player;
-		_height = _player->getComponent<CShootHammer>("CShootHammer")->getHeight()*0.5;
+		_height = _player->getComponent<CShootSoulReaper>("CShootSoulReaper")->getHeight()*0.5;
 	}
 
 	
@@ -148,8 +148,8 @@ namespace Logic {
 		// borramos esta entidad
 		CEntityFactory::getSingletonPtr()->deferredDeleteEntity(_entity, true);
 
-		//resguardo contra bugs, le decimos al hammer que no está cogiendo ningun item
-		_player->getComponent<CShootHammer>("CShootHammer")->resetEntityPulling();
+		//resguardo contra bugs, le decimos al soulReaper que no está cogiendo ningun item
+		_player->getComponent<CShootSoulReaper>("CShootSoulReaper")->resetEntityPulling();
 	}
 
 //////////////////////////////////////////////////////////////////////////////////////////////////

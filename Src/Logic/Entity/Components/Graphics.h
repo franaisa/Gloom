@@ -16,10 +16,6 @@ gráfica de la entidad.
 #include "Logic/Entity/Component.h"
 #include "Graphics/Entity.h"
 
-#include "Graphics/Scene.h"
-
-#include "OgreSceneManager.h"
-
 // Predeclaración de clases para ahorrar tiempo de compilación
 namespace Graphics 
 {
@@ -111,6 +107,8 @@ namespace Logic
 
 		virtual void changeMaterial(const std::string& materialName);
 
+		virtual void changeMaterial(const std::list<std::string>& materialList);
+
 		virtual void onTick(unsigned int msecs);
 
 		std::string getMeshName(){return _model;}
@@ -152,11 +150,6 @@ namespace Logic
 		std::string _model;
 		
 		/**
-		Nombre del material de la entidad
-		*/
-		std::string _materialName;
-
-		/**
 		Entidad gráfica.
 		*/
 		Graphics::CEntity *_graphicsEntity;
@@ -167,7 +160,7 @@ namespace Logic
 		*/
 		Graphics::CScene* _scene;
 
-
+		std::list<std::string> _material;
 
 	}; // class CGraphics
 

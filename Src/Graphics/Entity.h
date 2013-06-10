@@ -235,11 +235,32 @@ namespace Graphics
 		void setScene(CScene *scene){_scene=scene;}
 
 		/**
-		Metodo que cambia el material de una entidad.
+		Cambia todos los materiales de los que está compuesta una entidad.
+		NOTA IMPORTANTE: Los materiales tienen que darse en el orden en el
+		que están guardados, y este orden es el orden en el que están en el
+		archivo .material, orden que te genera el 3ds por defecto
 
-		@param materialName Nombre del material al que queremos cambiar.
+		@param materialList lista donde estan todos los materiales que se van a
+		asignar
 		*/
-		virtual void changeMaterial(const std::string& materialName);
+		virtual void changeMaterial(const std::list<std::string>& materialList);
+
+
+		/**
+		Cambia todos los materiales de los que está compuesta una entidad por el
+		mismo material, pasado como parámetro
+
+		@param material material que estamos asignando a la nueva entidad
+		*/
+		virtual void changeMaterial(const std::string& material);
+
+		/**
+		Método que te devuelve la lista de materiales de los que está hecha la
+		entidad
+
+		@return la lista de materiales de que consta la entidad
+		*/
+		std::list<std::string> getMaterials();
 
 
 		/**

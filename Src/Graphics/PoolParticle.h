@@ -58,24 +58,10 @@ namespace Graphics
 		metodo invocado desde la escena para dar las particulas a quien se la pida  la escena.
 
 		@param nameParticle, nombre de la particula
+		@param particle, puntero al objeto particle, donde se devolvera el objeto particula creada
+		@return bool, devulve true en caso de que se haya podido crear la particula, false si no.
 		*/
-		CParticle* getParticle(const std::string &nameParticle);
-		/**
-		Actualiza el estado de la escena cada ciclo. Llama a su vez a 
-		todas las entidades.
-		
-		@param secs Número de segundos transcurridos desde la última 
-		llamada.
-		*/
-
-		/**
-		Establece la vision de un tipo de particula o de una particula concreta
-
-		@param nameParticle, nombre de la particula que se quiere cambiar su visibilidad.
-		@param visible, indica si se pone visible o invisible las particulas
-		*/
-		void CPoolParticle::setVisible(const std::string &nameParticle, bool visible);
-
+		CParticle * CPoolParticle::getParticle(const std::string &nameParticle);
 
 		void tick(float secs);
 

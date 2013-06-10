@@ -13,6 +13,8 @@
 #include "Logic/Messages/MessageSetAnimation.h"
 #include "Logic/Messages/MessageStopAnimation.h"
 
+#include "Logic/Maps/WorldState.h"
+
 using namespace std;
 
 namespace Logic {
@@ -61,9 +63,15 @@ namespace Logic {
 			case Message::SET_ANIMATION: {
 				shared_ptr<CMessageSetAnimation> setAnimMsg = static_pointer_cast<CMessageSetAnimation>(message);
 
-				info.animName = setAnimMsg->getString();
-				info.loop = setAnimMsg->getBool();
+				info.animName = setAnimMsg->getAnimation();
+				info.loop = setAnimMsg->getLoop();
 				info.stop = false;
+				info.exclude = setAnimMsg->getExclude();
+
+				// informamos al worldState de la ultima animación que está poniendo
+				// la entidad, para que si alguien se conecta directamente le ponga
+				// la animación que le corresponde
+				Logic::CWorldState::getSingletonPtr()->addChange(_entity, message);
 
 				break;
 			}

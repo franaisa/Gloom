@@ -13,38 +13,50 @@ namespace Logic {
 	}//
 	//----------------------------------------------------------
 
-	std::string CMessageSetAnimation::getString(){
-		return _string;
+	std::string CMessageSetAnimation::getAnimation(){
+		return _animation;
 	}//
 	//----------------------------------------------------------
 
-	void CMessageSetAnimation::setString(std::string string){
-		_string=string;
+	void CMessageSetAnimation::setAnimation(std::string animation){
+		_animation=animation;
 	}//
 	//----------------------------------------------------------
 
-	bool CMessageSetAnimation::getBool(){
-		return _bool;
+	bool CMessageSetAnimation::getLoop(){
+		return _loop;
 	}//
 	//----------------------------------------------------------
 
-	void CMessageSetAnimation::setBool(bool boolean){
-		_bool=boolean;
+	void CMessageSetAnimation::setLoop(bool loop){
+		_loop=loop;
 	}//
+
+	//----------------------------------------------------------
+
+	bool CMessageSetAnimation::getExclude(){
+		return _exclude;
+	}//
+	//----------------------------------------------------------
+
+	void CMessageSetAnimation::setExclude(bool exclude){
+		_exclude = exclude;
+	}//
+
 	//----------------------------------------------------------
 
 	Net::CBuffer CMessageSetAnimation::serialize() {
 		Net::CBuffer buffer((sizeof(int) * 2) + sizeof(bool) + sizeof(unsigned int));
 		buffer.serialize(std::string("CMessageSetAnimation"),true);
-		buffer.serialize(_bool);
-		buffer.serialize(_string, false);
+		buffer.serialize(_loop);
+		buffer.serialize(_animation, false);
 		return buffer;
 	}//
 	//----------------------------------------------------------
 
 	void CMessageSetAnimation::deserialize(Net::CBuffer& buffer) {
-		buffer.deserialize(_bool);
-		buffer.deserialize(_string);
+		buffer.deserialize(_loop);
+		buffer.deserialize(_animation);
 	}
 
 };

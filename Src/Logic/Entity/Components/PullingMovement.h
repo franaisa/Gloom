@@ -29,7 +29,7 @@ namespace Logic {
 	*/
 
 	class CPhysicDynamicEntity;
-	class CShootHammer;
+	class CShootSoulReaper;
 	
 	class CPullingMovement : public IComponent {
 		DEC_FACTORY(CPullingMovement);

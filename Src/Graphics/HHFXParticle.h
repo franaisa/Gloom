@@ -15,9 +15,10 @@ Contiene la declaración de la clase que maneja el Particle.
 @date May, 2013
 */
 
-#ifndef __Graphics_Particle_H
-#define __Graphics_Particle_H
+#ifndef __Graphics_HHFXParticle_H
+#define __Graphics_HHFXParticle_H
 
+#include "Graphics\Particle.h"
 #include "BaseSubsystems/Math.h"
 #include "Logic\Entity\Entity.h"
 
@@ -45,7 +46,7 @@ namespace Graphics
 	resto de particulas
 	
 	*/
-	class HHFXParticle
+	class HHFXParticle : public CParticle
 	{
 	public:
 
@@ -126,7 +127,12 @@ namespace Graphics
 		*/
 		void setOrientation(const Matrix3 &orientation);
 
+
+		bool isLoaded(){return _loaded;}
 	protected:
+
+		/** Varible que indica si ha cargado bien la particula o no */
+		bool _loaded;
 		/** 
 		ParticleSystem _particleSystem(sistema de Particulas)
 		*/
@@ -148,4 +154,4 @@ namespace Graphics
 
 } // namespace Graphics
 
-#endif // __Graphics_Particle_H
+#endif // __Graphics_HHFXParticle_H

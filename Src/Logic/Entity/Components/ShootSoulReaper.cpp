@@ -1,16 +1,16 @@
 /**
-@file ShootHammer.cpp
+@file ShootSoulReaper.cpp
 
-Contiene la implementación del componente que representa al hammer.
+Contiene la implementación del componente que representa al soulReaper.
  
-@see Logic::CShootHammer
+@see Logic::CShootSoulReaper
 @see Logic::CShootRaycast
 
 @author Jose Antonio García Yáñez
 @date Febrero,2013
 */
 
-#include "ShootHammer.h"
+#include "ShootSoulReaper.h"
 #include "Physics/RaycastHit.h"
 #include "Logic/Entity/Entity.h"
 #include "Logic/Maps/EntityFactory.h"
@@ -40,15 +40,15 @@ Contiene la implementación del componente que representa al hammer.
 #include <OgreManualObject.h>
 
 namespace Logic {
-	IMP_FACTORY(CShootHammer);
+	IMP_FACTORY(CShootSoulReaper);
 
-	CShootHammer::~CShootHammer() {
+	CShootSoulReaper::~CShootSoulReaper() {
 		// Nada que hacer
 	}
 
 	//__________________________________________________________________
 	
-	bool CShootHammer::spawn(CEntity* entity, CMap *map, const Map::CEntity *entityInfo) {
+	bool CShootSoulReaper::spawn(CEntity* entity, CMap *map, const Map::CEntity *entityInfo) {
 		if(!IWeapon::spawn(entity,map,entityInfo)) return false;
 
 		if( entityInfo->hasAttribute(_weaponName + "ShotsDistanceSecondaryFire") )
@@ -66,146 +66,14 @@ namespace Logic {
 
 	//__________________________________________________________________
 
-	void CShootHammer::resetAmmo() {
+	void CShootSoulReaper::resetAmmo() {
 		//si yo soy el weapon
 		_currentAmmo = 1;
 	} // resetAmmo
 	//__________________________________________________________________
 
 
-	void CShootHammer::primaryFire() {
-
-
-		//PRUEBAS
-		/*float y,p,r;
-		Quaternion q=_entity->getOrientation();
-		std::cout << "###############################################################"<< std::endl;
-		std::cout << "###############################################################"<< std::endl;
-		std::cout<< "Quaternion inicial " << q << std::endl;
-		*/
-
-		/*Quaternion data;
-		Vector3 orientation=Math::getEulerYawPitchRoll(Quaternion(sqrt(0.5),0,sqrt(0.5),0));
-		std::cout << "vector3: " << orientation << std::endl;
-		std::cout << "Set q : " << Math::setQuaternion(orientation.x,orientation.y,orientation.z)<< std::endl;*/
-		
-
-
-
-		/*Quaternion x(&q.xAxis());
-		Quaternion z(&q.yAxis());
-		Quaternion t(&q.zAxis());
-		Quaternion fi,ti;
-		fi.FromAxes(q.xAxis(),q.yAxis(),q.zAxis());
-		std::cout << "Quaternion FromAxis: " << fi<< std::endl;*/
-
-		
-
-		/*Quaternion h;
-		h=Math::setQuaternion(_entity->getYaw().getYaw().valueRadians(),_entity->getPitch().getPitch().valueRadians(),_entity->getRoll().getRoll().valueRadians());
-		std::cout << "Quaternion Parcial setQ: " << h << std::endl;
-		std::cout << "Quaternion Parcial Inverse setQ: " << h.Inverse() << std::endl;
-
-		Quaternion h1;
-		h1=Math::setQuaternion(q.getYaw(false).valueRadians(),q.getPitch(false).valueRadians(),q.getRoll(false).valueRadians());
-		std::cout << "Quaternion Final setQ: " << h1 << std::endl;*/
-
-		/*std::cout << "Parcial yaw: " << _entity->getYaw() << std::endl;
-		std::cout << "Parcial pitch: " << _entity->getPitch()<< std::endl;
-		std::cout << "Parcial roll: " << _entity->getRoll()<< std::endl;*/
-
-		/*Quaternion yaw=Math::setQuaternion(create.getYaw(false).valueRadians(),0,0);
-		Quaternion pitch=Math::setQuaternion(0,create.getPitch(false).valueRadians(),0);
-		Quaternion roll=Math::setQuaternion(0,0,create.getRoll(false).valueRadians());
-		*/
-		/*std::cout << "VECTOR EULER: " << je << std::endl;
-		Quaternion yaw=Math::createQuaternionWithEuler(je.x,0,0);
-		Quaternion pitch=Math::createQuaternionWithEuler(0,je.y,0);
-		Quaternion roll=Math::createQuaternionWithEuler(0,0,je.z);
-
-		std::cout << "set yaw: " << yaw<< std::endl;
-		std::cout << "set pitch: " << pitch << std::endl;
-		std::cout << "set roll: " << roll<< std::endl;
-
-		std::cout<< "set *final: " << yaw*pitch*roll<< std::endl;*/
-
-
-		/*Quaternion l1;
-		l1.FromAngleAxis(q.getYaw(),Vector3::UNIT_Y);
-		Quaternion l2;
-		l2.FromAngleAxis(q.getPitch(),Vector3::UNIT_X);
-		Quaternion l3;
-		l3.FromAngleAxis(q.getRoll(),Vector3::UNIT_Z);
-		if(l3.z!=0){
-			l3=Quaternion::IDENTITY;
-			l2.Inverse();
-		}
-		Quaternion final;
-		final=l1*l2*l3;
-		std::cout << "set yaw: " << l1<< std::endl;
-		std::cout << "set pitch: " << l2 << std::endl;
-		std::cout << "set roll: " << l3<< std::endl;
-		std::cout << "Quaternion quat*ypr: " << final << std::endl;*/
-
-		/*Quaternion aux1(Ogre::Radian(je.x),Vector3::UNIT_X); 
-		std::cout << "aux1: " << aux1.Inverse() << std::endl;
-		Quaternion aux2(Ogre::Radian(je.y),Vector3::UNIT_Y); 
-		std::cout << "aux2: " << aux2 << std::endl;
-		Quaternion aux3(Ogre::Radian(je.x),Vector3::UNIT_Y); 
-		std::cout << "aux3: " << aux3.Inverse() << std::endl;
-		Quaternion aux4(Ogre::Radian(je.y),Vector3::UNIT_X); 
-		std::cout << "aux4: " << aux4 << std::endl;*/
-
-		/*Matrix3 o;
-		q.ToRotationMatrix(o);
-		Quaternion j1(o);
-		std::cout << "Quaternion matrix : " << j1 << std::endl;
-
-		Ogre::Radian yaw, pitch, roll;
-		o.ToEulerAnglesYXZ(yaw, pitch, roll);
-		//std::cout <<"yaw: " << yaw << std::endl;
-		//std::cout <<"pitch: " << pitch << std::endl;
-		//std::cout <<"roll: " << roll << std::endl;
-
-		Matrix3 recomp;
-		recomp.FromEulerAnglesYXZ(yaw,Ogre::Radian(0),Ogre::Radian(0));
-		Quaternion jerecomp(recomp);
-		Matrix3 recomp1;
-		
-		Quaternion bi,bu;
-		bi=Math::setQuaternion(yaw.valueRadians(),0,0);
-		bu=Math::setQuaternion(0,pitch.valueRadians(),0);
-		std::cout << "Quaternion matrixRECOM YAW DIRECT : " << bi << std::endl;
-		std::cout << "Quaternion matrixRECOM Pitch DIRECT : " << bu<< std::endl;
-		/*Matrix3 recomp1;
-		recomp1.FromEulerAnglesYXZ(q.getYaw(false),q.getPitch(false),q.getRoll(false));
-		Quaternion jerecomp1(recomp1);
-		std::cout << "Quaternion matrixRECOMPXYZ : " << jerecomp1 << std::endl;
-
-		Quaternion inet;
-		inet=Math::setQuaternion(q.getYaw(false).valueRadians(),q.getPitch(false).valueRadians(),q.getRoll(false).valueRadians());
-		std::cout << "INET: " << inet << std::endl;*/
-
-		
-
-
-		//Igual que INET
-		/*Quaternion l1;
-		l1.FromAngleAxis(q.getYaw(false),Vector3::UNIT_Y);
-		Quaternion l2;
-		l2.FromAngleAxis(q.getPitch(false),Vector3::UNIT_X);
-		Quaternion l3;
-		l3.FromAngleAxis(q.getRoll(false),Vector3::UNIT_Z);
-		Quaternion final;
-		final=l1*l2*l3;
-		std::cout << "Quaternion quat*ypr: " << final << std::endl;
-
-		*/
-
-
-
-	
-		
+	void CShootSoulReaper::primaryFire() {
 
 		_primaryFireTimer = _primaryFireCooldown;
 	
@@ -232,7 +100,7 @@ namespace Logic {
 	} // primaryFire
 	//__________________________________________________________________
 
-	void CShootHammer::secondaryFire() {
+	void CShootSoulReaper::secondaryFire() {
 
 		//primero preguntamos si podemos atraer algun arma
 		_elementPulled = fireSecondary();
@@ -295,7 +163,7 @@ namespace Logic {
 
 	//__________________________________________________________________
 
-	CEntity * CShootHammer::fireSecondary() {
+	CEntity * CShootSoulReaper::fireSecondary() {
 		//El origen debe ser mínimo la capsula (si chocamos el disparo en la capsula al mirar en diferentes direcciones ya esta tratado en la funcion de colision)
 		//Posicion de la entidad + altura de disparo(coincidente con la altura de la camara)
 		Vector3 origin = _entity->getPosition()+Vector3(0.0f,_heightShoot,0.0f);
@@ -319,7 +187,7 @@ namespace Logic {
 		return entity;
 	}
 
-	void CShootHammer::stopSecondaryFire(unsigned int elapsedTime){
+	void CShootSoulReaper::stopSecondaryFire(unsigned int elapsedTime){
 		//si cuando hice click no cogi nada no puedo hacer nada aqui
 		if(!_elementPulling)
 			return;
@@ -328,7 +196,7 @@ namespace Logic {
 		CGameNetMsgManager::getSingletonPtr()->sendActivateEntity(_elementPulled->getEntityID());
 	}
 
-	void CShootHammer::resetEntityPulling(){
+	void CShootSoulReaper::resetEntityPulling(){
 		_elementPulled->activate();
 		CGameNetMsgManager::getSingletonPtr()->sendActivateEntity(_elementPulled->getEntityID());
 		_elementPulled->getComponent<CSpawnItemManager>("CSpawnItemManager")->beginRespawn();
@@ -347,7 +215,7 @@ namespace Logic {
 		_elementPulled=NULL;
 	}
 
-		void CShootHammer::amplifyDamage(unsigned int percentage) {
+		void CShootSoulReaper::amplifyDamage(unsigned int percentage) {
 		// Si es 0 significa que hay que restaurar al que habia por defecto
 		if(percentage == 0) {
 			_primaryFireDamage = _defaultPrimaryFireDamage;
@@ -359,7 +227,7 @@ namespace Logic {
 	} // amplifyDamage
 	//__________________________________________________________________
 
-	void CShootHammer::reduceCooldown(unsigned int percentage) {
+	void CShootSoulReaper::reduceCooldown(unsigned int percentage) {
 		// Si es 0 significa que hay que restaurar al que habia por defecto
 		if(percentage == 0) {
 			_primaryFireCooldown = _defaultPrimaryFireCooldown;
@@ -371,17 +239,17 @@ namespace Logic {
 	} // reduceCooldown
 	//__________________________________________________________________
 
-	bool CShootHammer::canUsePrimaryFire() {
+	bool CShootSoulReaper::canUsePrimaryFire() {
 		return _primaryFireTimer == 0;
 	} // canUsePrimaryFire
 	//__________________________________________________________________
 
-	bool CShootHammer::canUseSecondaryFire() {
+	bool CShootSoulReaper::canUseSecondaryFire() {
 		return true;
 	} // canUseSecondaryFire
 	//__________________________________________________________________
 
-	void CShootHammer::onTick(unsigned int msecs) {
+	void CShootSoulReaper::onTick(unsigned int msecs) {
 		// Controlamos el cooldown del disparo primario y secundario
 		if(_primaryFireTimer > 0) {
 			_primaryFireTimer -= msecs;

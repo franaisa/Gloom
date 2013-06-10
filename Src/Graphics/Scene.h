@@ -221,7 +221,10 @@ namespace Graphics
 		CParticle *createParticle(const std::string &particleName, const Vector3 &position, const Vector3 &directionWithForce);
 
 		/**
-		Setea a un grupo de particulas y las pone invisible
+		Pone un tipo de particula o de una particula concreta en visible o invisible
+
+		@param nameParticle, nombre de la particula que se quiere cambiar su visibilidad.
+		@param visible, indica si se pone visible o invisible las particulas
 		*/
 		void changeVisibilityParticle(const std::string nameParticle, bool visibility);
 
@@ -446,6 +449,8 @@ namespace Graphics
 		Pool de particulas
 		*/
 		CPoolParticle *_poolParticle;
+
+		std::map<std::string, std::vector<CParticle*>> _particlesMap;	
 	}; // class CScene
 
 } // namespace Graphics

@@ -240,7 +240,6 @@ namespace Graphics
 		assert(_entityNode && "La entidad no ha sido cargada");
 		if(_entityNode)
 			_entityNode->setScale(scale);
-
 	} // setScale
 	
 	//--------------------------------------------------------
@@ -262,8 +261,19 @@ namespace Graphics
 
 	//--------------------------------------------------------
 
-	void CEntity::changeMaterial(const std::string& materialName) {
-		_entity->setMaterialName(materialName);
+	void CEntity::changeMaterial(const std::list<std::string>& materialName) {
+		auto material = materialName.begin();
+		auto end = materialName.end();
+		int i = 0;
+		for(;material!=end;++material,++i){
+			_entity->getSubEntity(i)->setMaterialName(*material);
+		}
+	}
+
+	//--------------------------------------------------------
+
+	void CEntity::changeMaterial(const std::string & material) {
+		_entity->setMaterialName(material);
 	}
 
 	//--------------------------------------------------------

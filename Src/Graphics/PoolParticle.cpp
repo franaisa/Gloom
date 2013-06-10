@@ -15,7 +15,8 @@ de una escena.
 @date February, 2010
 */
 
-#include "Particle.h"
+#include "Graphics\Particle.h"
+#include "Graphics\OgreParticle.h"
 #include "PoolParticle.h"
 #include "Server.h"
 #include "Scene.h"
@@ -84,7 +85,7 @@ namespace Graphics
 		aux.maxIndex = amount;
 		std::vector<CParticle*> vectorParticle;
 		for(unsigned int i = 0; i < amount; ++i){
-			CParticle *particle = new CParticle(nameParticleSystem);
+			CParticle *particle = new COgreParticle(nameParticleSystem);
 			particle->deactivate();
 			vectorParticle.push_back(particle);
 		}
@@ -97,37 +98,26 @@ namespace Graphics
 	} // loadParticleSystem
 	//--------------------------------------------------------
 
-	CParticle* CPoolParticle::getParticle(const std::string &nameParticle){
+	CParticle * CPoolParticle::getParticle(const std::string &nameParticle){
 	
 		auto particleData = _particlesMap.find(nameParticle);
 		if(particleData == _particlesMap.end())
 			return 0;
 
 		unsigned int index = particleData->second.index;
-		CParticle * result = particleData->second.particles[index];
+		CParticle *particle = particleData->second.particles[index];
 		// Si la particula del indice esta emitiendo, significa que he dado la vuelta al vector y he llegado hasta una particula 
 		// q esta emitiendo, por lo que no puedo devolver ninguna
-		if(result->isEmitting())
+		if(particle->isEmitting())
 			return 0;
 
 		particleData->second.index = (index+1)%(particleData->second.maxIndex);
 
-		result->deactivate();
-		result->activate();
-		return result;
+		particle->deactivate();
+		particle->activate();
+		return particle;
 
 	} // getParticle
-	//--------------------------------------------------------
-
-	void CPoolParticle::setVisible(const std::string &nameParticle, bool visible){
-		auto particleData = _particlesMap.find(nameParticle)->second.particles;
-		for(auto it = particleData.begin(); it < particleData.end(); ++it){
-			if((*it)->isEmitting()){
-				(*it)->setVisible(visible);
-			}
-		}
-		
-	} // setVisible
 	//--------------------------------------------------------
 
 	void CPoolParticle::tick(float secs)

@@ -130,7 +130,7 @@ namespace Logic {
 	
 	void CHudWeapons::onActivate() {
 		//Cuando activamos el componente solo tendremos visible el arma 0( arma melee)
-		_currentWeapon = WeaponType::eHAMMER;
+		_currentWeapon = WeaponType::eSOUL_REAPER;
 		_graphicsEntities[_currentWeapon].graphicsEntity->setVisible(true);
 	} // activate
 
@@ -153,7 +153,7 @@ namespace Logic {
 		
 		// Por ahora leo a mano cada una de las armas que tiene el usuario
 	
-		for(int i = WeaponType::eHAMMER; i < WeaponType::eSIZE; ++i){
+		for(int i = WeaponType::eSOUL_REAPER; i < WeaponType::eSIZE; ++i){
 				
 			WeaponType::Enum current = (WeaponType::Enum)i;
 			std::string currentOnText = WeaponType::toString(current);
@@ -202,7 +202,7 @@ namespace Logic {
 
 			
 		}
-		_overlayWeapon3D[WeaponType::eHAMMER]->setVisible(true);
+		_overlayWeapon3D[WeaponType::eSOUL_REAPER]->setVisible(true);
 		if(!_graphicsEntities)
 			return false;
 		
