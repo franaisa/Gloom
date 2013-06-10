@@ -11,8 +11,8 @@ con animaciones.
 @see Graphics::CAnimatedEntity
 @see Graphics::CEntity
 
-@author David Llansó
-@date Julio, 2010
+@author Rubén Mulero
+@date June, 2013
 */
 
 #ifndef __Graphics_AnimatedEntity_H
@@ -72,11 +72,24 @@ namespace Graphics
 	
 	@ingroup graphicsGroup
 
-	@author David Llansó
-	@date Julio, 2010
+	@author Rubén Mulero
+	@date June, 2013
 	*/
 	class CAnimatedEntity : public CEntity
 	{
+
+		enum AnimState{
+			FADE_IN,
+			FADE_OUT,
+			RUNNING
+		};
+
+		struct Animation{
+			AnimState state;
+			Ogre::AnimationState* animation;
+			float fadeTime;
+		};
+
 	public:
 
 		/**
@@ -86,7 +99,7 @@ namespace Graphics
 		@param mesh Nombre del modelo que debe cargarse.
 		*/
 		CAnimatedEntity(const std::string &name, const std::string &mesh):
-					CEntity(name,mesh), _currentAnimation(0), _weapon(0), _graphicsWeapon(0) {}
+					CEntity(name,mesh), _weapon(0), _graphicsWeapon(0) {}
 
 		/**
 		Destructor de la aplicación.
@@ -98,9 +111,11 @@ namespace Graphics
 
 		@param anim Nombre de la animación a activar.
 		@param loop true si la animación debe reproducirse cíclicamente.
+		@param fadeTime El tiempo de fade-in fade-out de la animación
+
 		@return true si la animación solicitada fue correctamente activada.
 		*/
-		bool setAnimation(const std::string &anim, bool loop);
+		bool setAnimation(const std::string &anim, bool loop, float fadeTime = 0.5f);
 
 		/**
 		Le pone un arma en la mano al monigote
@@ -126,20 +141,41 @@ namespace Graphics
 		Función que registra al oyente de la entidad gráfica. Por 
 		simplicidad solo habrá un oyente por entidad.
 		*/
-		void setObserver(CAnimatedEntityListener *observer)
-											{_observer = observer;}
+		void addObserver(CAnimatedEntityListener *observer){
+			_observers.push_back(observer);
+		}
 
 		/**
 		Función que quita al oyente de la entidad gráfica. Por 
 		simplicidad solo habrá un oyente por entidad.
 		*/
-		void removeObserver(CAnimatedEntityListener *observer)
-							{if(_observer = observer) _observer = 0;}
+		void removeObserver(CAnimatedEntityListener *observer){_observers.remove(observer);}
 
 		void changeMaterialToWeapon(const std::string& materialName);
 
 		std::string getWeaponMaterial();
 
+		/**
+		Orienta el bone en la orientación que se le pasa como parámetro
+
+		@param bone El hueso que estamos modificando
+		@param orientation la orientación que le estamos aplicando al hueso
+		*/
+		void moveBone(const std::string &bone, float pitch);
+
+		/**
+		Hace que la orientación del hueso no esté atachada a la orientación del padre
+
+		@param bone El hueso que queremos liberar
+		*/
+		void freeBoneOrientation(const std::string &bone);
+
+		/**
+		Hace que la orientación del hueso esté atachada a la orientación del padre.
+
+		@param bone El hueso que atachar.
+		*/
+		void lockBoneOrientation(const std::string &bone);
 
 	protected:
 
@@ -148,7 +184,7 @@ namespace Graphics
 		la terminación de las animaciones. Por simplicidad solo habrá
 		un oyente por entidad.
 		*/
-		CAnimatedEntityListener *_observer;
+		std::list<CAnimatedEntityListener*> _observers;
 
 		// Cada entidad debe pertenecer a una escena. Solo permitimos
 		// a la escena actualizar el estado.
@@ -162,17 +198,24 @@ namespace Graphics
 		*/
 		virtual void tick(float secs);
 
-		/**
-		Animación que tiene la entidad activada.
-		*/
-		Ogre::AnimationState *_currentAnimation;
-
 		Ogre::Entity *_weapon;
 
 		Graphics::CEntity *_graphicsWeapon;
 
 		Ogre::SceneNode* _ObjectentityNode;
 
+		/**
+		Estructura de datos de las animaciones que hay ejecutandose
+		*/
+		std::map< std::string, Animation > _runningAnimations;
+
+		typedef std::pair<std::string, Animation> TAnim;
+
+		/**
+		lista de animaciones que deben ser eliminadas de nuestra
+		lista de animaciones ejecutandose
+		*/
+		std::list<std::string> _deletedAnims;
 	}; // class CAnimatedEntity
 
 } // namespace Graphics

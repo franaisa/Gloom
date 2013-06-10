@@ -85,6 +85,7 @@
     <ClCompile Include="..\..\Src\Logic\Entity\Components\IronHellGoatFeedback.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\MiniGunAmmo.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\MiniGunFeedback.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\ProceduralGraphics.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\ShotGunAmmo.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\ShotGunFeedback.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\SniperAmmo.cpp" />
@@ -246,6 +247,7 @@
     <ClInclude Include="..\..\Src\Logic\Entity\Components\IronHellGoatFeedback.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\MiniGunAmmo.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\MiniGunFeedback.h" />
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\ProceduralGraphics.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\ShotGunAmmo.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\ShotGunFeedback.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\SniperAmmo.h" />

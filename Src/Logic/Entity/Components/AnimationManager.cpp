@@ -22,6 +22,10 @@ de la entidad.
 #include "Logic/Messages/MessagePlayerDead.h"
 #include "Logic/Messages/MessageControl.h"
 
+#include "Logic/Server.h"
+
+#include "Logic/Maps/Map.h"
+
 #include "AvatarController.h"
 
 namespace Logic{
@@ -42,6 +46,7 @@ namespace Logic{
 		std::shared_ptr<CMessageSetAnimation> anim = std::make_shared<CMessageSetAnimation>();
 		anim->setLoop(true);
 		anim->setAnimation("idle");
+		anim->setExclude(false);
 		_entity->emitMessage(anim);
 	}
 
@@ -49,12 +54,12 @@ namespace Logic{
 		Vector3 displacementDir = _avatarController->getDisplacementDir();
 		bool flying = _avatarController->getFlying();
 		if(_lastDisplacementAnimation != displacementDir && !flying){
-			
+			_flying = false;
 			_lastDisplacementAnimation = displacementDir;
-			std::cout << "mandando animacion -> " << _displacementAnims[_lastDisplacementAnimation] << std::endl;
 			std::shared_ptr<CMessageSetAnimation> anim = std::make_shared<CMessageSetAnimation>();
 			anim->setLoop(true);
 			anim->setAnimation(getMotionAnimation(displacementDir));
+			anim->setExclude(false);
 			_entity->emitMessage(anim);
 		}
 		else if ( flying && !_flying ) {
@@ -62,8 +67,16 @@ namespace Logic{
 			std::shared_ptr<CMessageSetAnimation> anim = std::make_shared<CMessageSetAnimation>();
 			anim->setLoop(true);
 			anim->setAnimation("airwalk");
+			anim->setExclude(false);
 			_entity->emitMessage(anim);
-			std::cout << "mandando animacion -> airwalk" << std::endl;
+		}
+		else if ( !flying && _flying ) {
+			_flying = false;
+			std::shared_ptr<CMessageSetAnimation> anim = std::make_shared<CMessageSetAnimation>();
+			anim->setLoop(true);
+			anim->setAnimation(getMotionAnimation(_lastDisplacementAnimation));
+			anim->setExclude(false);
+			_entity->emitMessage(anim);
 		}
 	}
 
@@ -92,11 +105,12 @@ namespace Logic{
 				ControlType ctrlType = std::static_pointer_cast<CMessageControl>(message)->getType();
 
 				if( ( ctrlType == ControlType::JUMP || ctrlType == ControlType::DODGE_BACKWARDS || ctrlType == ControlType::DODGE_FORWARD || 
-				ctrlType == ControlType::DODGE_LEFT || ctrlType == ControlType::DODGE_RIGHT ) && !_flying ){
+				ctrlType == ControlType::DODGE_LEFT || ctrlType == ControlType::DODGE_RIGHT ) ){
 
 					std::shared_ptr<CMessageSetAnimation> anim = std::make_shared<CMessageSetAnimation>();
-					anim->setLoop(true);
+					anim->setLoop(false);
 					anim->setAnimation("jump");
+					anim->setExclude(true);
 					_entity->emitMessage(anim);
 				}
 				break;
@@ -105,7 +119,29 @@ namespace Logic{
 	}
 
 	void CAnimationManager::sendDeadMessage(TEntityID killer){
+		CEntity * entity = CServer::getSingletonPtr()->getMap()->getEntityByID(killer);
+		if(!entity)
+			return;
 
+		Vector3 direction = _entity->getPosition() - entity->getPosition();
+
+		float angle = direction.normalisedCopy().angleBetween(Math::getDirection(entity->getOrientation()).normalisedCopy()).valueDegrees();
+
+		std::shared_ptr<CMessageSetAnimation> anim = std::make_shared<CMessageSetAnimation>();
+
+		//si no lo esta mirando la muerte ha sido por detras, luego ponemos
+		//la animacion de muerte por detras
+		if(angle < 90){
+			
+			anim->setLoop(false);
+			anim->setAnimation("deadback");
+		}else{
+		//esta por delante, ponemos la animacion de muerte por delante
+			anim->setLoop(false);
+			anim->setAnimation("headshot");
+		}
+		anim->setExclude(true);
+		_entity->emitMessage(anim);
 	}
 
 	std::string CAnimationManager::getMotionAnimation(const Vector3 &displacementDir){

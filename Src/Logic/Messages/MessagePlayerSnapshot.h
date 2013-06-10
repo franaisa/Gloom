@@ -10,6 +10,7 @@ namespace Logic {
 		std::string animName;
 		bool loop;
 		bool stop;
+		bool exclude;
 	};
 
 	// No heredo de CMessageTransformSnapshot porque me
