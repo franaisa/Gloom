@@ -171,7 +171,7 @@ namespace Logic
 		int y = hudPanelInitialPositionY;
 
 		// Aqui me creo los cuadros para cada arma
-		for(int i=WeaponType::eHAMMER; i< WeaponType::eSIZE; ++i){
+		for(int i=WeaponType::eSOUL_REAPER; i< WeaponType::eSIZE; ++i){
 
 			WeaponType::Enum current = (WeaponType::Enum)i;
 			std::string currentOnText = WeaponType::toString(current);
@@ -335,13 +335,13 @@ namespace Logic
 		_overlayPlay->add2D( _panelElements[current] );
 
 		}
-		// en el HAMMER (que es el arma inicial, debe de estar active)
-		_weaponsBox[WeaponType::eHAMMER][ACTIVE]->setVisible(true);
-		_weaponsBox[WeaponType::eHAMMER][NO_WEAPON]->setVisible(false);
+		// en el SOUL_REAPER (que es el arma inicial, debe de estar active)
+		_weaponsBox[WeaponType::eSOUL_REAPER][ACTIVE]->setVisible(true);
+		_weaponsBox[WeaponType::eSOUL_REAPER][NO_WEAPON]->setVisible(false);
 		_panelElements[AMMO]->setVisible(false);
 		
 		//desactivo el cuadro estandar y activo el de arma activa.
-		_panelWeapon[WeaponType::eHAMMER]->setMaterial("cuadroArmasInUse");
+		_panelWeapon[WeaponType::eSOUL_REAPER]->setMaterial("cuadroArmasInUse");
 
 		//Pongo a false los visibles por si acaso no los pone solos
 		for(int i = 1; i < WeaponType::eSIZE; ++i){
@@ -648,7 +648,7 @@ namespace Logic
 			_weaponsBox[_actualWeapon][NO_AMMO]->setVisible(false);
 			_weaponsBox[_actualWeapon][NO_WEAPON]->setVisible(false);
 
-			if((WeaponType::Enum)_actualWeapon == WeaponType::eHAMMER){
+			if((WeaponType::Enum)_actualWeapon == WeaponType::eSOUL_REAPER){
 				_panelElements[AMMO]->setVisible(false);
 			}else{
 				_panelElements[AMMO]->setVisible(true);
@@ -689,7 +689,7 @@ namespace Logic
 			_weaponsBox[i][NO_AMMO]->setVisible(false);
 		}
 		_overlayPlay->setVisible(true);
-		_actualWeapon = WeaponType::eHAMMER;
+		_actualWeapon = WeaponType::eSOUL_REAPER;
 	}
 	//-------------------------------------------------------
 

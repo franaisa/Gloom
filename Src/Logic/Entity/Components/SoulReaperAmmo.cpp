@@ -50,18 +50,9 @@ namespace Logic {
 
 		// Nos aseguramos de tener todos los atributos que necesitamos
 		assert( entityInfo->hasAttribute(_weaponName + "PrimaryFireCooldown") );
-		assert( entityInfo->hasAttribute(_weaponName + "MaximumLoadingTime") );
-		assert( entityInfo->hasAttribute(_weaponName + "MaxAmmoPerShot") );
 
 		// Cooldown del disparo principal
 		_defaultPrimaryFireCooldown = _primaryFireCooldown = entityInfo->getFloatAttribute(_weaponName + "PrimaryFireCooldown") * 1000;
-
-		// Tiempo de carga del arma
-		_maxLoadingTime = entityInfo->getFloatAttribute(_weaponName + "MaximumLoadingTime") * 1000;
-
-		// Ratio al que gastamos municion
-		_maxAmmoPerShot = entityInfo->getIntAttribute(_weaponName + "MaxAmmoPerShot");
-		_ammoSpentTimeStep = (float)_maxLoadingTime / (float)(_maxAmmoPerShot);
 
 		return true;
 	}

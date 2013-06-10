@@ -1,0 +1,403 @@
+material ScreamerHeadBlue
+{
+	
+	
+	set $shininess "60"
+	set $specular "2 2 2 100"
+	
+	technique 
+	{
+		pass 
+		{
+			illumination_stage ambient
+		
+			ambient 0 0 0 1
+			diffuse 1 1 1 1
+			specular $specular $shininess
+			emissive 0 0 0 0
+			
+			vertex_program_ref ambient_vs
+            {
+            }
+
+            fragment_program_ref ambient_ps
+            {
+            }
+
+            texture_unit diffuseMap
+            {
+				texture heavy_head_zombie.tga
+				filtering trilinear
+			}
+			
+			texture_unit aoMap
+			{
+				texture heavy_head_zombie.tga
+				filtering trilinear
+			}
+		}
+
+        pass
+        {
+
+            illumination_stage per_light
+
+            scene_blend add
+            iteration once_per_light
+
+            vertex_program_ref diffuse_vs
+            {
+            }
+
+            fragment_program_ref diffuse_ps
+            {
+            }
+
+            ambient 0 0 0 1
+			diffuse 1 1 1 1
+			specular $specular $shininess
+			emissive 0 0 0 0
+			
+            texture_unit aoMap
+			{
+				texture heavy_head_zombie.tga
+				filtering trilinear
+			}
+
+            texture_unit specMap
+            {
+                texture heavy_head_spec.tga
+            }
+
+            texture_unit normalMap
+            {
+                texture heavy_head_normal.tga
+            }
+        }
+	}
+	
+
+}
+
+
+
+material ScreamerEyeRBlue
+{
+	set $shininess "60"
+	set $specular "2 2 2 100"
+	
+	technique 
+	{
+		pass 
+		{
+			illumination_stage ambient
+		
+			ambient 0 0 0 1
+			diffuse 1 1 1 1
+			specular $specular $shininess
+			emissive 0 0 0 0
+			
+			vertex_program_ref ambient_vs
+            {
+            }
+
+            fragment_program_ref ambient_ps
+            {
+            }
+
+            texture_unit diffuseMap
+            {
+				texture heavy_head_zombie.tga
+				filtering trilinear
+			}
+			
+			texture_unit aoMap
+			{
+				texture heavy_head_zombie.tga
+				filtering trilinear
+			}
+		}
+
+        pass
+        {
+
+            illumination_stage per_light
+
+            scene_blend add
+            iteration once_per_light
+
+            vertex_program_ref diffuse_vs
+            {
+            }
+
+            fragment_program_ref diffuse_ps
+            {
+            }
+
+            ambient 0 0 0 1
+			diffuse 1 1 1 1
+			specular $specular $shininess
+			emissive 0 0 0 0
+			
+            texture_unit aoMap
+			{
+				texture heavy_head_zombie.tga
+				filtering trilinear
+			}
+
+            texture_unit specMap
+            {
+                texture heavy_head_spec.tga
+            }
+
+            texture_unit normalMap
+            {
+                texture heavy_head_normal.tga
+            }
+        }
+	}
+}
+
+
+
+material ScreamerEyeRBlue
+{
+	set $shininess "60"
+	set $specular "2 2 2 100"
+	
+	technique 
+	{
+		pass 
+		{
+			illumination_stage ambient
+		
+			ambient 0 0 0 1
+			diffuse 1 1 1 1
+			specular $specular $shininess
+			emissive 0 0 0 0
+			
+			vertex_program_ref ambient_vs
+            {
+            }
+
+            fragment_program_ref ambient_ps
+            {
+            }
+
+            texture_unit diffuseMap
+            {
+				texture hvyweapon_red_zombie.tga
+				filtering trilinear
+			}
+			
+			texture_unit aoMap
+			{
+				texture hvyweapon_red_zombie.tga
+				filtering trilinear
+			}
+		}
+
+        pass
+        {
+
+            illumination_stage per_light
+
+            scene_blend add
+            iteration once_per_light
+
+            vertex_program_ref diffuse_vs
+            {
+            }
+
+            fragment_program_ref diffuse_ps
+            {
+            }
+
+            ambient 0 0 0 1
+			diffuse 1 1 1 1
+			specular $specular $shininess
+			emissive 0 0 0 0
+			
+            texture_unit aoMap
+			{
+				texture heavy_head_zombie.tga
+				filtering trilinear
+			}
+
+            texture_unit specMap
+            {
+                texture heavy_head_spec.tga
+            }
+
+            texture_unit normalMap
+            {
+                texture heavy_head_normal.tga
+            }
+        }
+	}
+
+}
+
+
+//cuerpo
+material ScreamerBodyBlue
+{
+	set $shininess "15"
+	set $specular "2 2 2 15"
+	
+	technique 
+	{
+		pass 
+		{
+			illumination_stage ambient
+		
+			ambient 0 0 0 1
+			diffuse 1 1 1 1
+			specular $specular $shininess
+			emissive 0.5 0.5 0.5 0.5
+			
+			vertex_program_ref ambient_vs
+            {
+            }
+
+            fragment_program_ref ambient_ps
+            {
+            }
+
+            texture_unit diffuseMap
+            {
+				texture hvyweapon_red_zombie.tga
+				filtering trilinear
+			}
+			
+			texture_unit aoMap
+			{
+				texture hvyweapon_red_zombie.tga
+				filtering trilinear
+			}
+		}
+
+        pass
+        {
+
+            illumination_stage per_light
+
+            scene_blend add
+            iteration once_per_light
+
+            vertex_program_ref diffuse_vs
+            {
+            }
+
+            fragment_program_ref diffuse_ps
+            {
+            }
+
+            ambient 0 0 0 1
+			diffuse 1 1 1 1
+			specular $specular $shininess
+			emissive 0 0 0 0
+			
+            texture_unit aoMap
+			{
+				texture hvyweapon_red_zombie.tga
+				filtering trilinear
+			}
+
+            texture_unit specMap
+            {
+                texture hvyweapon_blue_SPEC.tga
+            }
+
+            texture_unit normalMap
+            {
+                texture hvyweapon_normal.tga
+            }
+        }
+		
+		
+		
+		
+
+	}
+
+}
+
+material ScreamerHandsBlue
+{
+	
+	set $shininess "15"
+	set $specular "2 2 2 100"
+	
+	technique 
+	{
+		pass 
+		{
+			illumination_stage ambient
+		
+			ambient 0 0 0 1
+			diffuse 1 1 1 1
+			specular $specular $shininess
+			emissive 0 0 0 0
+			
+			vertex_program_ref ambient_vs
+            {
+            }
+
+            fragment_program_ref ambient_ps
+            {
+            }
+
+            texture_unit diffuseMap
+            {
+				texture hvyweapon_red_zombie.tga
+				filtering trilinear
+			}
+			
+			texture_unit aoMap
+			{
+				texture hvyweapon_red_zombie.tga
+				filtering trilinear
+			}
+		}
+
+        pass
+        {
+
+            illumination_stage per_light
+
+            scene_blend add
+            iteration once_per_light
+
+            vertex_program_ref diffuse_vs
+            {
+            }
+
+            fragment_program_ref diffuse_ps
+            {
+            }
+
+            ambient 0 0 0 1
+			diffuse 1 1 1 1
+			specular $specular $shininess
+			emissive 0 0 0 0
+			
+            texture_unit aoMap
+			{
+				texture hvyweapon_red_zombie.tga
+				filtering trilinear
+			}
+
+            texture_unit specMap
+            {
+                texture hvyweapon_blue_SPEC.tga
+            }
+
+            texture_unit normalMap
+            {
+                texture hvyweapon_normal.tga
+            }
+        }
+	}
+
+}

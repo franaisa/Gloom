@@ -1,16 +1,16 @@
 /**
-@file ShootHammer.cpp
+@file ShootSoulReaper.cpp
 
-Contiene la implementación del componente que representa al hammer.
+Contiene la implementación del componente que representa al soulReaper.
  
-@see Logic::CShootHammer
+@see Logic::CShootSoulReaper
 @see Logic::CShootRaycast
 
 @author Jose Antonio García Yáñez
 @date Febrero,2013
 */
 
-#include "ShootHammer.h"
+#include "ShootSoulReaper.h"
 #include "Physics/RaycastHit.h"
 #include "Logic/Entity/Entity.h"
 #include "Logic/Maps/EntityFactory.h"
@@ -40,15 +40,15 @@ Contiene la implementación del componente que representa al hammer.
 #include <OgreManualObject.h>
 
 namespace Logic {
-	IMP_FACTORY(CShootHammer);
+	IMP_FACTORY(CShootSoulReaper);
 
-	CShootHammer::~CShootHammer() {
+	CShootSoulReaper::~CShootSoulReaper() {
 		// Nada que hacer
 	}
 
 	//__________________________________________________________________
 	
-	bool CShootHammer::spawn(CEntity* entity, CMap *map, const Map::CEntity *entityInfo) {
+	bool CShootSoulReaper::spawn(CEntity* entity, CMap *map, const Map::CEntity *entityInfo) {
 		if(!IWeapon::spawn(entity,map,entityInfo)) return false;
 
 		if( entityInfo->hasAttribute(_weaponName + "ShotsDistanceSecondaryFire") )
@@ -66,14 +66,14 @@ namespace Logic {
 
 	//__________________________________________________________________
 
-	void CShootHammer::resetAmmo() {
+	void CShootSoulReaper::resetAmmo() {
 		//si yo soy el weapon
 		_currentAmmo = 1;
 	} // resetAmmo
 	//__________________________________________________________________
 
 
-	void CShootHammer::primaryFire() {
+	void CShootSoulReaper::primaryFire() {
 		_primaryFireTimer = _primaryFireCooldown;
 	
 		Vector3 direction = Math::getDirection(_entity->getOrientation()); 
@@ -99,7 +99,7 @@ namespace Logic {
 	} // primaryFire
 	//__________________________________________________________________
 
-	void CShootHammer::secondaryFire() {
+	void CShootSoulReaper::secondaryFire() {
 
 		//primero preguntamos si podemos atraer algun arma
 		_elementPulled = fireSecondary();
@@ -161,7 +161,7 @@ namespace Logic {
 
 	//__________________________________________________________________
 
-	CEntity * CShootHammer::fireSecondary() {
+	CEntity * CShootSoulReaper::fireSecondary() {
 		//El origen debe ser mínimo la capsula (si chocamos el disparo en la capsula al mirar en diferentes direcciones ya esta tratado en la funcion de colision)
 		//Posicion de la entidad + altura de disparo(coincidente con la altura de la camara)
 		Vector3 origin = _entity->getPosition()+Vector3(0.0f,_heightShoot,0.0f);
@@ -185,7 +185,7 @@ namespace Logic {
 		return entity;
 	}
 
-	void CShootHammer::stopSecondaryFire(unsigned int elapsedTime){
+	void CShootSoulReaper::stopSecondaryFire(unsigned int elapsedTime){
 		//si cuando hice click no cogi nada no puedo hacer nada aqui
 		if(!_elementPulling)
 			return;
@@ -194,7 +194,7 @@ namespace Logic {
 		CGameNetMsgManager::getSingletonPtr()->sendActivateEntity(_elementPulled->getEntityID());
 	}
 
-	void CShootHammer::resetEntityPulling(){
+	void CShootSoulReaper::resetEntityPulling(){
 		_elementPulled->activate();
 		CGameNetMsgManager::getSingletonPtr()->sendActivateEntity(_elementPulled->getEntityID());
 		_elementPulled->getComponent<CSpawnItemManager>("CSpawnItemManager")->beginRespawn();
@@ -213,7 +213,7 @@ namespace Logic {
 		_elementPulled=NULL;
 	}
 
-		void CShootHammer::amplifyDamage(unsigned int percentage) {
+		void CShootSoulReaper::amplifyDamage(unsigned int percentage) {
 		// Si es 0 significa que hay que restaurar al que habia por defecto
 		if(percentage == 0) {
 			_primaryFireDamage = _defaultPrimaryFireDamage;
@@ -225,7 +225,7 @@ namespace Logic {
 	} // amplifyDamage
 	//__________________________________________________________________
 
-	void CShootHammer::reduceCooldown(unsigned int percentage) {
+	void CShootSoulReaper::reduceCooldown(unsigned int percentage) {
 		// Si es 0 significa que hay que restaurar al que habia por defecto
 		if(percentage == 0) {
 			_primaryFireCooldown = _defaultPrimaryFireCooldown;
@@ -237,17 +237,17 @@ namespace Logic {
 	} // reduceCooldown
 	//__________________________________________________________________
 
-	bool CShootHammer::canUsePrimaryFire() {
+	bool CShootSoulReaper::canUsePrimaryFire() {
 		return _primaryFireTimer == 0;
 	} // canUsePrimaryFire
 	//__________________________________________________________________
 
-	bool CShootHammer::canUseSecondaryFire() {
+	bool CShootSoulReaper::canUseSecondaryFire() {
 		return true;
 	} // canUseSecondaryFire
 	//__________________________________________________________________
 
-	void CShootHammer::onTick(unsigned int msecs) {
+	void CShootSoulReaper::onTick(unsigned int msecs) {
 		// Controlamos el cooldown del disparo primario y secundario
 		if(_primaryFireTimer > 0) {
 			_primaryFireTimer -= msecs;

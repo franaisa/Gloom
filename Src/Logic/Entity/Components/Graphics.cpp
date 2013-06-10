@@ -21,15 +21,9 @@ gráfica de la entidad.
 #include "Graphics/Entity.h"
 #include "Graphics/StaticEntity.h"
 
-#include "Logic/Messages/MessageTransform.h"
-#include "Logic/Messages/MessageSleep.h"
 #include "Logic/Messages/MessageActivate.h"
-#include "Logic/Messages/MessageWakeUp.h"
 #include "Logic/Messages/MessageChangeMaterial.h"
 #include "Logic/Messages/MessageDecal.h"
-
-#include <OgreSceneManager.h>
-#include "OgreEntity.h"
 
 namespace Logic 
 {
@@ -59,9 +53,7 @@ namespace Logic
 		if(entityInfo->hasAttribute("model"))
 			_model = entityInfo->getStringAttribute("model");
 
-		if(entityInfo->hasAttribute("materialName"))
-			_materialName = entityInfo->getStringAttribute("materialName");
-
+		
 		_graphicsEntity = createGraphicsEntity(entityInfo);
 		if(!_graphicsEntity)
 			return false;
@@ -72,19 +64,19 @@ namespace Logic
 			_graphicsEntity->setScale(entityInfo->getVector3Attribute("scale"));
 			// con esto puedo girar lo que quiera cuanto quiera. Lo he probado con el mapa
 		}
-
-		/*
-		//// Esto tb es una guarrada, habra q hacer un componente de luces para controlarlas todas y cargarlas.
-		if(_entity->getName() == "World")
-		{
-			Ogre::Light *luz = _scene->getSceneMgr()->createLight("Luz Puntual");
-			luz->setPosition(entity->getPosition() + Vector3(0,0,0));
-			luz->setType(Ogre::Light::LT_POINT);
-			luz->setDiffuseColour(1.0f,1.0f,0.0f);
-			luz->setPowerScale(Ogre::Real(550));
-		}
-		*/
 		
+		//¿queremos material custom?
+		if(entityInfo->hasAttribute("materialName") && _model == "heavy.mesh"){
+			//material type
+			std::string materialName = entityInfo->getStringAttribute("materialName");
+			_material.push_back(materialName+"HeadBlue");
+			_material.push_back(materialName+"EyeLBlue");
+			_material.push_back(materialName+"EyeRBlue");
+			_material.push_back(materialName+"BodyBlue");
+			_material.push_back(materialName+"HandsBlue");
+
+			_graphicsEntity->changeMaterial(_material);
+		}
 
 		return true;
 
@@ -126,8 +118,7 @@ namespace Logic
 	bool CGraphics::accept(const std::shared_ptr<CMessage>& message) {
 		Logic::TMessageType msgType = message->getMessageType();
 
-		return //msgType == Message::SET_TRANSFORM    ||
-			   msgType == Message::ACTIVATE			|| 
+		return msgType == Message::ACTIVATE			|| 
 			   msgType == Message::CHANGE_MATERIAL	||
 			   msgType == Message::DECAL			;
 	} // accept
@@ -136,11 +127,6 @@ namespace Logic
 
 	void CGraphics::process(const std::shared_ptr<CMessage>& message) {
 		switch( message->getMessageType() ) {
-			case Message::SET_TRANSFORM: {
-				std::shared_ptr<CMessageTransform> transformMsg = std::static_pointer_cast<CMessageTransform>(message);
-				_graphicsEntity->setTransform( transformMsg->getTransform() );
-				break;
-			}
 			case Message::ACTIVATE: {
 				setVisible(std::static_pointer_cast<CMessageActivate>(message)->getActivated());
 				break;
@@ -168,10 +154,15 @@ namespace Logic
 
 	void CGraphics::changeMaterial(const std::string& materialName) {
 		if(materialName != "original")
-			_graphicsEntity->changeMaterial(materialName);
+			_graphicsEntity->changeMaterial(_material);
 		else
-			_graphicsEntity->changeMaterial(_materialName);
-		
+			_graphicsEntity->changeMaterial(materialName);
+	}
+
+	//---------------------------------------------------------
+
+	void CGraphics::changeMaterial(const std::list<std::string>& materialList) {
+		_graphicsEntity->changeMaterial(materialList);
 	}
 
 	//---------------------------------------------------------

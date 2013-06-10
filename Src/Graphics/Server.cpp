@@ -132,8 +132,13 @@ namespace Graphics
 	CScene* CServer::createScene(const std::string& name)
 	{
 		//Nos aseguramos de que no exista ya una escena con este nombre.
-		assert(_scenes.find(name)==_scenes.end() && 
+
+		if(_scenes.find(name)!=_scenes.end()){
+			assert(_scenes.find(name)==_scenes.end() && 
 			"Ya se ha creado una escena con este nombre.");
+		}
+
+		
 
 		CScene *scene = new CScene(name);
 		TStringScenePar ssp(name,scene);

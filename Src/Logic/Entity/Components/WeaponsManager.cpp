@@ -22,13 +22,13 @@ Contiene la implementación del componente que gestiona las armas y que administr
 /*#include "ShootShotGunAmmo.h"
 #include "ShootSniperAmmo.h"
 #include "ShootMiniGunAmmo.h"
-#include "ShootHammerAmmo.h"
+#include "ShootSoulReaperAmmo.h"
 #include "IronHellGoatAmmo.h"*/
 
 #include "ShootShotGun.h"
 #include "ShootSniper.h"
 #include "ShootMiniGun.h"
-#include "ShootHammer.h"
+#include "ShootSoulReaper.h"
 #include "IronHellGoat.h"
 
 #include "Logic/Messages/MessageChangeWeapon.h"
@@ -64,7 +64,7 @@ namespace Logic
 		_weaponry.resize(WeaponType::eSIZE);
 
 		// Rellenamos el vector con los punteros a los componentes correspondientes
-		_weaponry[WeaponType::eHAMMER].second = _entity->getComponent<CShootHammer>("CShootHammer");
+		_weaponry[WeaponType::eSOUL_REAPER].second = _entity->getComponent<CShootSoulReaper>("CShootSoulReaper");
 		_weaponry[WeaponType::eSNIPER].second = _entity->getComponent<CShootSniper>("CShootSniper");
 		_weaponry[WeaponType::eSHOTGUN].second = _entity->getComponent<CShootShotGun>("CShootShotGun");
 		_weaponry[WeaponType::eMINIGUN].second = _entity->getComponent<CShootMiniGun>("CShootMiniGun");
@@ -72,9 +72,9 @@ namespace Logic
 
 		/*
 		// Por defecto la primera arma está activada y equipada (es el arma 0).
-		_weaponry[eHAMMER].first = true;
-		_weaponry[eHAMMER].second->stayAvailable();
-		_weaponry[eHAMMER].second->inUse(true);
+		_weaponry[eSOUL_REAPER].first = true;
+		_weaponry[eSOUL_REAPER].second->stayAvailable();
+		_weaponry[eSOUL_REAPER].second->inUse(true);
 
 		
 		// El resto de las armas están desactivadas, ya que no las tenemos
@@ -92,14 +92,14 @@ namespace Logic
 	//---------------------------------------------------------
 
 	void CWeaponsManager::onActivate() {
-		// El arma actual tiene que ser el hammer, que
+		// El arma actual tiene que ser el soulReaper, que
 		// es la única que tenemos de primeras
-		_currentWeapon=WeaponType::eHAMMER;
+		_currentWeapon=WeaponType::eSOUL_REAPER;
 
 		// Por defecto la primera arma está activada y equipadda
-		_weaponry[WeaponType::eHAMMER].first = true;
-		_weaponry[WeaponType::eHAMMER].second->stayAvailable();
-//_weaponry[eHAMMER].second->inUse(true);
+		_weaponry[WeaponType::eSOUL_REAPER].first = true;
+		_weaponry[WeaponType::eSOUL_REAPER].second->stayAvailable();
+//_weaponry[eSOUL_REAPER].second->inUse(true);
 
 		// El resto de las armas están desactivadas, ya que no las tenemos
 		for(unsigned int i = 1; i < _weaponry.size(); ++i) {

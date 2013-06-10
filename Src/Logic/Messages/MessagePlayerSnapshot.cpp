@@ -64,6 +64,7 @@ namespace Logic {
 			buffer.serialize(_animationBuffer[i].animName, false);
 			buffer.write(&_animationBuffer[i].loop, sizeof(bool));
 			buffer.write(&_animationBuffer[i].stop, sizeof(bool));
+			buffer.write(&_animationBuffer[i].exclude, sizeof(bool));
 		}
 		
 		return buffer;
@@ -96,6 +97,7 @@ namespace Logic {
 			buffer.deserialize(_animationBuffer[i].animName);
 			buffer.read(&_animationBuffer[i].loop, sizeof(bool));
 			buffer.read(&_animationBuffer[i].stop, sizeof(bool));
+			buffer.read(&_animationBuffer[i].exclude, sizeof(bool));
 		}
 	}
 

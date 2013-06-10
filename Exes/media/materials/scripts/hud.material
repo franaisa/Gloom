@@ -161,7 +161,7 @@ material cuadroArmasInUse
 	}
 }
 
-material hammer_ACTIVE
+material soulReaper_ACTIVE
 {
 	technique
 	{
@@ -181,7 +181,7 @@ material hammer_ACTIVE
 		}
 	}
 }
-material hammer_NO_AMMO
+material soulReaper_NO_AMMO
 {
 	technique
 	{
@@ -201,7 +201,7 @@ material hammer_NO_AMMO
 		}
 	}
 }
-material hammer_NO_WEAPON
+material soulReaper_NO_WEAPON
 {
 	technique
 	{
