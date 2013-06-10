@@ -98,22 +98,28 @@ namespace Logic {
 		if(_primaryFireCooldownTimer > 0) {
 			_primaryFireCooldownTimer -= msecs;
 			
-			if(_primaryFireCooldownTimer < 0)
+			if(_primaryFireCooldownTimer < 0){
 				_primaryFireCooldownTimer = 0;
+				if(_primaryFireIsActive)
+					primaryFire();
+			}
 		}
 
 		if(_secondaryFireCooldownTimer > 0) {
 			_secondaryFireCooldownTimer -= msecs;
 			
-			if(_secondaryFireCooldownTimer < 0)
+			if(_secondaryFireCooldownTimer < 0){
 				_secondaryFireCooldownTimer = 0;
+				if(_secondaryFireIsActive)
+					secondaryFire();
+			}
 		}
 	}
 
 	//__________________________________________________________________
 
 	bool CSniperAmmo::canUsePrimaryFire() {
-		return _primaryFireCooldownTimer == 0 && _currentAmmo > 0 && _secondaryFireIsActive;
+		return _primaryFireCooldownTimer == 0 && _currentAmmo > 0 && !_secondaryFireIsActive;
 	}
 
 	//__________________________________________________________________

@@ -74,8 +74,6 @@ namespace Logic {
 		
 		virtual void amplifyDamage(unsigned int percentage);
 
-		virtual void reduceCooldown(unsigned int percentage);
-
 	private:
 
 		void onTick(unsigned int msecs);

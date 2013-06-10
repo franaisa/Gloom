@@ -58,10 +58,6 @@ namespace Logic {
 	//__________________________________________________________________
 
 	void CSniper::primaryFire(){
-		// @deprecated Temporal hasta que este bien implementado
-		CHudWeapons* hudWeapon = _entity->getComponent<CHudWeapons>("CHudWeapons");
-		if(hudWeapon != NULL)
-			hudWeapon->shootAnim(-1.5f);
 
 		//Direccion
 		Vector3 direction = Math::getDirection(_entity->getOrientation()); 
@@ -111,10 +107,6 @@ namespace Logic {
 	//-------------------------------------------------------
 
 	void CSniper::secondaryFire(){
-		// @deprecated Temporal hasta que este bien implementado
-		CHudWeapons* hudWeapon = _entity->getComponent<CHudWeapons>("CHudWeapons");
-		if(hudWeapon != NULL)
-			hudWeapon->shootAnim(-1.5f);
 
 		//Direccion
 		Vector3 direction = Math::getDirection(_entity->getOrientation()); 
@@ -225,31 +217,8 @@ namespace Logic {
 	} // amplifyDamage
 	//__________________________________________________________________
 
-	void CSniper::reduceCooldown(unsigned int percentage) {
-		// Si es 0 significa que hay que restaurar al que habia por defecto
-		if(percentage == 0) {
-			_primaryFireCooldown = _defaultPrimaryFireCooldown;
-			_secondaryFireCooldown = _defaultSecondaryFireCooldown;
-		}
-		// Sino aplicamos el porcentaje pasado por parámetro
-		else {
-			_primaryFireCooldown -= percentage * _primaryFireCooldown * 0.01f;
-			_secondaryFireCooldown -= percentage * _secondaryFireCooldown * 0.01f;
-		}
-	} // reduceCooldown
-	//__________________________________________________________________
-
-	bool CSniper::canUsePrimaryFire() {
-		return _primaryFireTimer == 0 && _currentAmmo > 0;
-	} // canUsePrimaryFire
-	//__________________________________________________________________
-
-	bool CSniper::canUseSecondaryFire() {
-		return _secondaryFireTimer == 0 && _currentAmmo >= _secondaryConsumeAmmo;
-	} // canUseSecondaryFire
-	//__________________________________________________________________
-
 	void CSniper::onTick(unsigned int msecs) {
+		/*
 		// Controlamos el cooldown del disparo primario y secundario
 		if(_primaryFireTimer > 0) {
 			_primaryFireTimer -= msecs;
@@ -264,6 +233,7 @@ namespace Logic {
 			if(_secondaryFireTimer < 0)
 				_secondaryFireTimer = 0;
 		}
+		*/
 	} // onTick
 	//__________________________________________________________________
 

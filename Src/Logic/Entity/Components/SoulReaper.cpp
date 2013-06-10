@@ -229,19 +229,8 @@ namespace Logic {
 	} // amplifyDamage
 	//__________________________________________________________________
 
-	void CSoulReaper::reduceCooldown(unsigned int percentage) {
-		// Si es 0 significa que hay que restaurar al que habia por defecto
-		if(percentage == 0) {
-			_primaryFireCooldown = _defaultPrimaryFireCooldown;
-		}
-		// Sino aplicamos el porcentaje pasado por parámetro
-		else {
-			_primaryFireCooldown -= percentage * _primaryFireCooldown * 0.01f;
-		}
-	} // reduceCooldown
-	//__________________________________________________________________
-
 	void CSoulReaper::onTick(unsigned int msecs) {
+		/*
 		// Controlamos el cooldown del disparo primario y secundario
 		if(_primaryFireTimer > 0) {
 			_primaryFireTimer -= msecs;
@@ -252,6 +241,7 @@ namespace Logic {
 			}
 
 		}
+		*/
 	} // onTick
 	//__________________________________________________________________
 } // namespace Logic

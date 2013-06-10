@@ -102,13 +102,6 @@ namespace Logic {
 
 		virtual void amplifyDamage(unsigned int percentage);
 
-		virtual void reduceCooldown(unsigned int percentage);
-
-		
-		virtual bool canUsePrimaryFire();
-
-		virtual bool canUseSecondaryFire();
-
 	private:
 
 		void onTick(unsigned int msecs);
