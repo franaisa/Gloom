@@ -155,14 +155,13 @@ namespace Application {
 
 	void C3DApplication::tick(unsigned int msecs) {
 		// TICK DE RED
-		boost::thread t(&Net::CManager::tick, Net::CManager::getSingletonPtr(), msecs);
+		//boost::thread t(&Net::CManager::tick, Net::CManager::getSingletonPtr(), msecs);
+		Net::CManager::getSingletonPtr()->tick(msecs);
 		// TICK DE INPUT
 		//boost::thread y(&Input::CInputManager::tick, Input::CInputManager::getSingletonPtr() , msecs);
 
 		Input::CInputManager::getSingletonPtr()->tick(msecs);
 
-		t.join();
-		//y.join();
 		// TICK DE LOGICA-FISICA
 		CBaseApplication::tick(msecs);
 
@@ -177,7 +176,6 @@ namespace Application {
 
 		// TICK DE GRÁFICOS
 		Graphics::CServer::getSingletonPtr()->tick(msecs/1000.0f);
-
 		
 		audio.join();
 	} // tick
