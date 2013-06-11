@@ -63,6 +63,10 @@ namespace Logic {
 
 		virtual void secondaryFire();
 
+		//__________________________________________________________________
+
+		virtual void stopSecondaryFire();
+
 	};
 
 	REG_FACTORY(CMiniGunFeedback);

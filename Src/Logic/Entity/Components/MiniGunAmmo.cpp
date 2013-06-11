@@ -109,7 +109,11 @@ namespace Logic {
 			
 			if(_primaryFireCooldownTimer < 0){
 				_primaryFireCooldownTimer = _primaryFireCooldown;
-				decrementAmmo();
+					if(_primaryFireIsActive){
+						// las alternativas son, o enviar un mensaje por cada disparo, o q el componente de shoot tb tenga el cooldown
+					primaryFire();
+					decrementAmmo();
+				}
 			}
 		}
 

@@ -49,21 +49,28 @@ namespace Logic {
 
 	void CMiniGunFeedback::primaryFire() {
 		// Poner la animacion de carga inestable del arma
-		_hudWeapon->loadingWeapon(true);
+		_hudWeapon->continouosShooting(true);
 	}
 
 	//__________________________________________________________________
 
 	void CMiniGunFeedback::stopPrimaryFire() {
 		// Parar la animacion de carga
-		_hudWeapon->loadingWeapon(false);
-		_hudWeapon->shootAnim(-1.85f);
+		_hudWeapon->continouosShooting(false);
 	}
 
 	//__________________________________________________________________
 
 	void CMiniGunFeedback::secondaryFire() {
-		// De momento ná pisha
+		_hudWeapon->loadingWeapon(true);
+	}
+	//__________________________________________________________________
+	
+	void CMiniGunFeedback::stopSecondaryFire() {
+		// Parar la animacion de carga
+		_hudWeapon->loadingWeapon(false);
+		_hudWeapon->shootAnim(-1.85f);
 	}
 
+	//__________________________________________________________________
 }//namespace Logic
