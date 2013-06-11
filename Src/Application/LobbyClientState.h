@@ -161,7 +161,7 @@ namespace Application {
 		virtual void disconnectionPacketReceived(Net::CPaquete* packet) { /* Los clientes no reciben este tipo de mensajes */ }
 
 
-		static DWORD WINAPI loadMapThread(LPVOID lpParam);
+		bool loadMapThread();
 
 	private:
 
@@ -198,9 +198,7 @@ namespace Application {
 
 		std::string _mapName;
 
-		HANDLE loadHandle;
-
-		bool loadGuard;
+		std::shared_ptr<boost::thread> loadThread;
 
 	}; // CMenuState
 

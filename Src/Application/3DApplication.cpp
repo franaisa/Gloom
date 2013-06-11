@@ -157,9 +157,12 @@ namespace Application {
 		// TICK DE RED
 		boost::thread t(&Net::CManager::tick, Net::CManager::getSingletonPtr(), msecs);
 		// TICK DE INPUT
-		boost::thread y(&Input::CInputManager::tick, Input::CInputManager::getSingletonPtr() , msecs);
+		//boost::thread y(&Input::CInputManager::tick, Input::CInputManager::getSingletonPtr() , msecs);
+
+		Input::CInputManager::getSingletonPtr()->tick(msecs);
+
 		t.join();
-		y.join();
+		//y.join();
 		// TICK DE LOGICA-FISICA
 		CBaseApplication::tick(msecs);
 

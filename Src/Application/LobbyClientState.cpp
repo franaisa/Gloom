@@ -42,8 +42,7 @@ namespace Application {
 
 	CLobbyClientState::CLobbyClientState(CBaseApplication *app) :	CApplicationState(app),
 																	_netMgr(NULL),
-																	loadHandle(0),
-																	loadGuard(0){
+																	loadThread(0){
 		// Nada que hacer
 	}
 
@@ -93,7 +92,6 @@ namespace Application {
 		// eventos y nos activamos como clientes.
 		_netMgr->addObserver(this);
 		_netMgr->activateAsClient();
-		loadGuard=false;
 	} // activate
 
 	//__________________________________________________________________
@@ -170,11 +168,11 @@ namespace Application {
 				
 				_menu->hide();
 
-				loadHandle = 0;
 
 				//creamos el thread que maneja la carga del mapa
-				loadHandle = CreateThread( NULL, 0, CLobbyClientState::loadMapThread, this, 0, NULL);
-				loadGuard = true;
+
+				loadThread = std::make_shared<boost::thread>(&CLobbyClientState::loadMapThread , this);
+
 				//if (WaitForSingleObject (loadHandle, INFINITE) == WAIT_OBJECT_0)
 				//CloseHandle(loadHandle);
 
@@ -287,37 +285,19 @@ namespace Application {
 		}
 	} // requestConnectionTo
 
-	DWORD WINAPI CLobbyClientState::loadMapThread(LPVOID arg){
-		/*ExitThread(0);
-		//std::string* mapName = reinterpret_cast<std::string*>(arg);
-
-		CLobbyClientState * lobby = (CLobbyClientState*)arg;
-		if( lobby->loadMap(lobby->_mapName) ) {
-			std::cout << "exit thread" << std::endl;
-		}
-		else {
-			lobby->_netMgr->removeObserver(lobby);
-			lobby->_netMgr->deactivateNetwork();
-			lobby->_app->exitRequest();
-		}*/
-		CLobbyClientState * lobby = (CLobbyClientState*)arg;
+	bool CLobbyClientState::loadMapThread(){
 		return Logic::CEntityFactory::getSingletonPtr()->loadBluePrints("blueprints_client.txt")&&
 			   Logic::CEntityFactory::getSingletonPtr()->loadArchetypes("archetypes.txt");
-		/*return Logic::CEntityFactory::getSingletonPtr()->loadBluePrints("blueprints_client.txt")	&&
-			   Logic::CEntityFactory::getSingletonPtr()->loadArchetypes("archetypes.txt")			&&
-			   Logic::CServer::getSingletonPtr()->loadLevel(mapName + "_client.txt");*/
-
-
-		return 1;
 	}
 
 	void CLobbyClientState::tick(unsigned int msecs){
 		CApplicationState::tick(msecs);
+
 		//asking the thread for completion ... if not the main thread crashes
-		if (WaitForSingleObject (loadHandle, 0) == WAIT_OBJECT_0 && loadGuard){
-			loadGuard = false;
-			CloseHandle(loadHandle);
-			printf("\n a ver");
+		if (loadThread && loadThread->timed_join (boost::posix_time::milliseconds(0))){
+			loadThread->join();
+			loadThread = 0;
+
 			// Avisamos de que hemos terminado la carga.
 			Logic::CServer::getSingletonPtr()->loadLevel(_mapName + "_client.txt");
 			Net::NetMessageType ackMsg = Net::MAP_LOADED;
