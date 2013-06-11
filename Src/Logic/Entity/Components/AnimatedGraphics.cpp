@@ -22,9 +22,6 @@ gráfica de una entidad estática.
 #include "Logic/Messages/MessageSetAnimation.h"
 #include "Logic/Messages/MessageStopAnimation.h"
 #include "Logic/Messages/MessageChangeWeaponGraphics.h"
-#include "Logic/Messages/MessageTransform.h"
-#include "Logic/Messages/MessageChangeMaterial.h"
-#include "Logic/Messages/MessageActivate.h"
 #include "WeaponType.h"
 
 #include "Graphics/Scene.h"
@@ -122,17 +119,13 @@ namespace Logic
 	//---------------------------------------------------------
 
 	void CAnimatedGraphics::process(const std::shared_ptr<CMessage>& message) {
-
+		CGraphics::process(message);
 		switch( message->getMessageType() ) {
-			case Message::ACTIVATE: {
-				setVisible(std::static_pointer_cast<CMessageActivate>(message)->getActivated());
-				break;
-			}
-			case Message::CHANGE_MATERIAL: {
+			/*case Message::CHANGE_MATERIAL: {
 				std::shared_ptr<CMessageChangeMaterial> chgMatMsg = std::static_pointer_cast<CMessageChangeMaterial>(message);
 				changeMaterial( chgMatMsg->getMaterialName() );
 				break;
-			}
+			}*/
 			case Message::SET_ANIMATION: {
 				std::shared_ptr<CMessageSetAnimation> setAnimMsg = std::static_pointer_cast<CMessageSetAnimation>(message);
 
