@@ -212,6 +212,10 @@ namespace Logic {
 			}
 		}
 
+		// @deprecated, aqui va la deserializacion del playersmanager siguiendo la 
+		// estructura del scoreboard
+		Net::CBuffer scoreboard = Logic::CScoreboard::getSingletonPtr()->serialize();
+		worldState.write(scoreboard.getbuffer(), scoreboard.getSize());
 		return worldState;
 	}
 
@@ -268,6 +272,8 @@ namespace Logic {
 			}
 		}
 
+		//updating the scoreboard
+		Logic::CScoreboard::getSingletonPtr()->deserialize(worldState);
 	}
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
