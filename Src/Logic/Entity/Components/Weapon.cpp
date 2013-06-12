@@ -40,7 +40,7 @@ namespace Logic {
 	
 	IWeapon::IWeapon(const string& weaponName) : _weaponName("weapon" + weaponName),
 												 _currentAmmo(0) {
-
+_bDecalsCreated = false;
 		// Nada que inicializar
 	}
 
@@ -184,10 +184,10 @@ namespace Logic {
 		/// This method will extract all of the triangles from the mesh to be used later. Only should be called once.
 		/// If you scale your mesh at all, pass it in here.
 
-		shared_ptr<CMessageDecal> message = make_shared<CMessageDecal>();
-		message->setPosition(vPos);
-		_entity->emitMessage(message);
-		//std::cout << "emito el mensaje" << std::endl;
+		shared_ptr<CMessageDecal> messageDecal = make_shared<CMessageDecal>();
+		messageDecal->setPosition(vPos);
+		_entity->emitMessage(messageDecal);
+		std::cout << "emito el mensaje---" << std::endl;
 
 		CGraphics* cGraph;
 		cGraph = pEntity->getComponent<CGraphics>("CGraphics");
@@ -206,13 +206,24 @@ namespace Logic {
 			std::string textureName = "gunshotwall"; /// Make sure your texture has a depth_bias greater than 1 to avoid z-fighting
 
 			/// We have everything ready to go. Now it's time to actually generate the decal:
-			OgreDecal::Decal decal = generator.createDecal( &worldMesh, pos, width, height, textureName );
- 
+			if (!_bDecalsCreated)
+			{
+				decalObject = cGraph->getSceneManager()->createManualObject();
+				_bDecalsCreated = true;
+			}
+			else
+			{
+				int a;
+			}
+			OgreDecal::Decal decal = generator.createDecal( &worldMesh, pos, width, height, textureName, true, decalObject );
+			std::cout << "ha creado el decal" << std::endl;
 			/// Render the decal object. Always verify the returned object - it will be NULL if no decal could be created.
 			if (decal.object) {
 				//sceneMgr->getRootSceneNode()->createChildSceneNode()->attachObject( decal.object );
 				cGraph->getSceneManager()->getRootSceneNode()->createChildSceneNode()->attachObject( decal.object );
+				//decalObject = NULL;
 			}
+			std::cout << "pinta" << std::endl;
 		}
 	} // decals
 
