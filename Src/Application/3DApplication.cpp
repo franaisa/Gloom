@@ -14,6 +14,7 @@ basadas en Ogre. Esta clase maneja la ejecución de todo el juego.
 @author David Llansó
 @date Julio, 2010
 */
+#include <boost/thread/thread.hpp>
 
 #include "OgreClock.h"
 #include "3DApplication.h"
@@ -154,23 +155,29 @@ namespace Application {
 
 	void C3DApplication::tick(unsigned int msecs) {
 		// TICK DE RED
+		//boost::thread t(&Net::CManager::tick, Net::CManager::getSingletonPtr(), msecs);
 		Net::CManager::getSingletonPtr()->tick(msecs);
-
 		// TICK DE INPUT
+		//boost::thread y(&Input::CInputManager::tick, Input::CInputManager::getSingletonPtr() , msecs);
+
 		Input::CInputManager::getSingletonPtr()->tick(msecs);
-		
+
 		// TICK DE LOGICA-FISICA
 		CBaseApplication::tick(msecs);
+
+		// TICK DE AUDIO
+		//Audio::CServer::getSingletonPtr()->tick(msecs);
+		boost::thread audio( &Audio::CServer::tick, Audio::CServer::getSingletonPtr(), msecs);
 
 		// TICK DEL GUI
 		GUI::CServer::getSingletonPtr()->tick();
 
+		
+
 		// TICK DE GRÁFICOS
 		Graphics::CServer::getSingletonPtr()->tick(msecs/1000.0f);
-
-		// TICK DE AUDIO
-		Audio::CServer::getSingletonPtr()->tick(msecs);
-
+		
+		audio.join();
 	} // tick
 
 } // namespace Application

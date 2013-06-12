@@ -7,8 +7,10 @@ gráfica de una entidad estática.
 @see Logic::CAnimatedGraphics
 @see Logic::IComponent
 
-@author David Llansó
-@date Agosto, 2010
+@author Rubén Mulero Guerrero
+@author Antonio Jesús Narváez Corrales
+
+@date March, 2013
 */
 
 #include "AnimatedGraphics.h"
@@ -20,9 +22,6 @@ gráfica de una entidad estática.
 #include "Logic/Messages/MessageSetAnimation.h"
 #include "Logic/Messages/MessageStopAnimation.h"
 #include "Logic/Messages/MessageChangeWeaponGraphics.h"
-#include "Logic/Messages/MessageTransform.h"
-#include "Logic/Messages/MessageChangeMaterial.h"
-#include "Logic/Messages/MessageActivate.h"
 #include "WeaponType.h"
 
 #include "Graphics/Scene.h"
@@ -49,7 +48,6 @@ namespace Logic
 		if(entityInfo->hasAttribute("defaultAnimation"))
 		{
 			_defaultAnimation = entityInfo->getStringAttribute("defaultAnimation");
-			_animatedGraphicsEntity->addObserver(this);
 		}
 
 		//cargamos los modelos de las armas para poder ponerselas en la mano conforme los jugadores cambien de arma
@@ -92,21 +90,18 @@ namespace Logic
 	{
 		CGraphics::onActivate();
 
-		//Habria que quitare el string que se pasa por parametro porque no tiene sentido
-		//animationFinished("random");
 		_animatedGraphicsEntity->setAnimation( _defaultAnimation, true );
 		_animatedGraphicsEntity->attachWeapon(*_weapons[0], _entity->getEntityID());
 		_insertAnimation = true;
+		_animatedGraphicsEntity->addObserver(this);
 	}
 	//---------------------------------------------------------
 
 	void CAnimatedGraphics::onDeactivate()
 	{
 		CGraphics::onDeactivate();
-		_animatedGraphicsEntity->addObserver(this);
+		_animatedGraphicsEntity->removeObserver(this);
 		_insertAnimation = false;
-		//En verdad hay que dejar la animación de morir porque desactivaremos al morir
-		//_animatedGraphicsEntity->stopAllAnimations();
 		
 	}
 	//---------------------------------------------------------
@@ -124,25 +119,19 @@ namespace Logic
 	//---------------------------------------------------------
 
 	void CAnimatedGraphics::process(const std::shared_ptr<CMessage>& message) {
-
+		CGraphics::process(message);
 		switch( message->getMessageType() ) {
-			case Message::ACTIVATE: {
-				setVisible(std::static_pointer_cast<CMessageActivate>(message)->getActivated());
-				break;
-			}
-			case Message::CHANGE_MATERIAL: {
+			/*case Message::CHANGE_MATERIAL: {
 				std::shared_ptr<CMessageChangeMaterial> chgMatMsg = std::static_pointer_cast<CMessageChangeMaterial>(message);
 				changeMaterial( chgMatMsg->getMaterialName() );
 				break;
-			}
+			}*/
 			case Message::SET_ANIMATION: {
 				std::shared_ptr<CMessageSetAnimation> setAnimMsg = std::static_pointer_cast<CMessageSetAnimation>(message);
 
 				// Paramos todas las animaciones antes de poner una nueva.
-				// Un control más sofisticado debería permitir interpolación
-				// de animaciones. Galeon no lo plantea.
-				
-
+				// Por debajo, el animated Entity nos va a interpolar las animaciones
+				// para que todo quede mejor
 				if(_insertAnimation){
 
 					_animatedGraphicsEntity->stopAllAnimations();
@@ -182,8 +171,8 @@ namespace Logic
 	void CAnimatedGraphics::onTick(unsigned int msecs){
 
 		Matrix4 transform = _entity->getTransform();
-		Math::setYaw(Math::getYaw(transform)+Math::PI,transform);
-		_graphicsEntity->setTransform(transform);
+		Math::setYaw( Math::getYaw( transform ) + Math::PI,transform );
+		_graphicsEntity->setTransform( transform );
 	}//---------------------------------------------------------
 	//onTick
 	
@@ -192,7 +181,7 @@ namespace Logic
 		if(!_insertAnimation && nextAnim.animation.size()>0){
 
 			_insertAnimation = true;
-			_animatedGraphicsEntity->setAnimation(nextAnim.animation,nextAnim.loop);
+			_animatedGraphicsEntity->setAnimation( nextAnim.animation,nextAnim.loop );
 			_insertAnimation = nextAnim.exclude;
 
 			nextAnim.animation="";
@@ -203,7 +192,7 @@ namespace Logic
 	void CAnimatedGraphics::changeWeapon(int newWeapon){
 		if(newWeapon != _currentWeapon)
 			_currentWeapon = newWeapon;
-			_animatedGraphicsEntity->attachWeapon(*_weapons[_currentWeapon], _entity->getEntityID());
+			_animatedGraphicsEntity->attachWeapon( *_weapons[_currentWeapon] , _entity->getEntityID() );
 
 			//comprobamos si el material que tenia el arma anterior no era el original
 			// y si no lo era se lo tenemos que cambiar
@@ -211,7 +200,7 @@ namespace Logic
 			_originalMaterialWeapon = _animatedGraphicsEntity->getWeaponMaterial();
 
 			if(_currentMaterialWeapon != "original")
-				_animatedGraphicsEntity->changeMaterialToWeapon(_currentMaterialWeapon);
+				_animatedGraphicsEntity->changeMaterialToWeapon( _currentMaterialWeapon );
 			//changeMaterial(_currentMaterialWeapon);
 	}
 

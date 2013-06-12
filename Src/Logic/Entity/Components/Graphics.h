@@ -111,6 +111,8 @@ namespace Logic
 
 		virtual void changeMaterial(const std::string& materialName);
 
+		virtual void changeMaterial(const std::list<std::string>& materialList);
+
 		virtual void onTick(unsigned int msecs);
 
 		std::string getMeshName(){return _model;}

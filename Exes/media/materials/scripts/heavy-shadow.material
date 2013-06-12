@@ -306,7 +306,7 @@ material ShadowBodyBlue
 
             texture_unit specMap
             {
-                texture hvyweapon_red_SPEC.tga
+                texture hvyweapon_blue_SPEC.tga
             }
 
             texture_unit normalMap
@@ -390,7 +390,7 @@ material ShadowHandsBlue
 
             texture_unit specMap
             {
-                texture hvyweapon_red_SPEC.tga
+                texture hvyweapon_blue_SPEC.tga
             }
 
             texture_unit normalMap

@@ -1,4 +1,4 @@
-material HoundHeadBlue
+material ArchangelHeadBlue
 {
 	
 	
@@ -26,13 +26,13 @@ material HoundHeadBlue
 
             texture_unit diffuseMap
             {
-				texture heavy_head_blue_invun.tga
+				texture heavy_head.tga
 				filtering trilinear
 			}
 			
 			texture_unit aoMap
 			{
-				texture heavy_head_blue_invun.tga
+				texture heavy_head.tga
 				filtering trilinear
 			}
 		}
@@ -60,7 +60,7 @@ material HoundHeadBlue
 			
             texture_unit aoMap
 			{
-				texture heavy_head_blue_invun.tga
+				texture heavy_head.tga
 				filtering trilinear
 			}
 
@@ -81,7 +81,7 @@ material HoundHeadBlue
 
 
 
-material HoundEyeRBlue
+material ArchangelEyeRBlue
 {
 	set $shininess "60"
 	set $specular "2 2 2 100"
@@ -107,13 +107,13 @@ material HoundEyeRBlue
 
             texture_unit diffuseMap
             {
-				texture heavy_head_blue_invun.tga
+				texture heavy_head.tga
 				filtering trilinear
 			}
 			
 			texture_unit aoMap
 			{
-				texture heavy_head_blue_invun.tga
+				texture heavy_head.tga
 				filtering trilinear
 			}
 		}
@@ -141,7 +141,7 @@ material HoundEyeRBlue
 			
             texture_unit aoMap
 			{
-				texture heavy_head_blue_invun.tga
+				texture heavy_head.tga
 				filtering trilinear
 			}
 
@@ -160,7 +160,7 @@ material HoundEyeRBlue
 
 
 
-material HoundEyeLBlue
+material ArchangelEyeLBlue
 {
 	set $shininess "60"
 	set $specular "2 2 2 100"
@@ -186,13 +186,13 @@ material HoundEyeLBlue
 
             texture_unit diffuseMap
             {
-				texture heavy_head_exponent.tga
+				texture heavy_head.tga
 				filtering trilinear
 			}
 			
 			texture_unit aoMap
 			{
-				texture heavy_head_exponent.tga
+				texture heavy_head.tga
 				filtering trilinear
 			}
 		}
@@ -220,7 +220,7 @@ material HoundEyeLBlue
 			
             texture_unit aoMap
 			{
-				texture heavy_head_blue_invun.tga
+				texture heavy_head.tga
 				filtering trilinear
 			}
 
@@ -240,7 +240,7 @@ material HoundEyeLBlue
 
 
 //cuerpo
-material HoundBodyBlue
+material ArchangelBodyBlue
 {
 	set $shininess "15"
 	set $specular "2 2 2 15"
@@ -266,13 +266,13 @@ material HoundBodyBlue
 
             texture_unit diffuseMap
             {
-				texture hvyweapon_blue_invun.tga
+				texture hvyweapon_blue.tga
 				filtering trilinear
 			}
 			
 			texture_unit aoMap
 			{
-				texture hvyweapon_blue_invun.tga
+				texture hvyweapon_blue.tga
 				filtering trilinear
 			}
 		}
@@ -300,7 +300,7 @@ material HoundBodyBlue
 			
             texture_unit aoMap
 			{
-				texture hvyweapon_blue_invun.tga
+				texture hvyweapon_blue.tga
 				filtering trilinear
 			}
 
@@ -323,7 +323,7 @@ material HoundBodyBlue
 
 }
 
-material HoundHandsBlue
+material ArchangelHandsBlue
 {
 	
 	set $shininess "15"
@@ -350,13 +350,13 @@ material HoundHandsBlue
 
             texture_unit diffuseMap
             {
-				texture hvyweapon_blue_invun.tga
+				texture hvyweapon_blue.tga
 				filtering trilinear
 			}
 			
 			texture_unit aoMap
 			{
-				texture hvyweapon_blue_invun.tga
+				texture hvyweapon_blue.tga
 				filtering trilinear
 			}
 		}
@@ -384,7 +384,7 @@ material HoundHandsBlue
 			
             texture_unit aoMap
 			{
-				texture hvyweapon_blue_invun.tga
+				texture hvyweapon_blue.tga
 				filtering trilinear
 			}
 

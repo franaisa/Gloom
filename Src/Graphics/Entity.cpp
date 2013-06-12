@@ -248,6 +248,12 @@ namespace Graphics
 
 	//--------------------------------------------------------
 
+	void CEntity::changeMaterial(const std::string & material) {
+		_entity->setMaterialName(material);
+	}
+
+	//--------------------------------------------------------
+
 	void CEntity::getMeshInformation(const Ogre::MeshPtr& mesh,size_t &vertex_count, Ogre::Vector3* &vertices,
 									 size_t &index_count, unsigned* &indices,
 									 const Ogre::Vector3 &position,

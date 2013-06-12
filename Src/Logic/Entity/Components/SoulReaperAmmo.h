@@ -61,6 +61,20 @@ namespace Logic {
 		*/
 		virtual void stopPrimaryFire();
 
+		/**
+		Método virtual puro que debe ser implementado por las clases derivadas para
+		especificar que ocurre al usar el disparo primario.
+		*/
+		virtual void secondaryFire();
+
+		//__________________________________________________________________
+
+		/**
+		Este método es invocado cuando se deja de pulsar el botón de disparo
+		primario.
+		*/
+		virtual void stopSecondaryFire();
+
 	protected:
 
 		virtual void onActivate();
@@ -101,14 +115,7 @@ namespace Logic {
 		int _primaryFireCooldownTimer;
 
 		bool _primaryFireIsActive;
-
-		unsigned int _elapsedTime;
-		unsigned int _maxLoadingTime;
-		unsigned int _ammoSpentTimeStep;
-		unsigned int _ammoSpentTimer;
-		unsigned int _currentSpentAmmo;
-
-		unsigned int _maxAmmoPerShot;
+		bool _secondaryFireIsActive;
 	};
 
 	REG_FACTORY(CSoulReaperAmmo);

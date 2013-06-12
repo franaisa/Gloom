@@ -25,13 +25,13 @@ material HoundHeadRed
 
             texture_unit diffuseMap
             {
-				texture heavy_head_blue_invun.tga
+				texture heavy_head_red_invun.tga
 				filtering trilinear
 			}
 			
 			texture_unit aoMap
 			{
-				texture heavy_head_blue_invun.tga
+				texture heavy_head_red_invun.tga
 				filtering trilinear
 			}
 		}
@@ -59,7 +59,7 @@ material HoundHeadRed
 			
             texture_unit aoMap
 			{
-				texture heavy_head_blue_invun.tga
+				texture heavy_head_red_invun.tga
 				filtering trilinear
 			}
 
@@ -106,13 +106,13 @@ material HoundEyeRRed
 
             texture_unit diffuseMap
             {
-				texture heavy_head_blue_invun.tga
+				texture heavy_head_red_invun.tga
 				filtering trilinear
 			}
 			
 			texture_unit aoMap
 			{
-				texture heavy_head_blue_invun.tga
+				texture heavy_head_red_invun.tga
 				filtering trilinear
 			}
 		}
@@ -140,7 +140,7 @@ material HoundEyeRRed
 			
             texture_unit aoMap
 			{
-				texture heavy_head_blue_invun.tga
+				texture heavy_head_red_invun.tga
 				filtering trilinear
 			}
 
@@ -219,7 +219,7 @@ material HoundEyeLRed
 			
             texture_unit aoMap
 			{
-				texture heavy_head_blue_invun.tga
+				texture heavy_head_red_invun.tga
 				filtering trilinear
 			}
 
@@ -265,13 +265,13 @@ material HoundBodyRed
 
             texture_unit diffuseMap
             {
-				texture hvyweapon_blue_invun.tga
+				texture hvyweapon_red_invun.tga
 				filtering trilinear
 			}
 			
 			texture_unit aoMap
 			{
-				texture hvyweapon_blue_invun.tga
+				texture hvyweapon_red_invun.tga
 				filtering trilinear
 			}
 		}
@@ -299,7 +299,7 @@ material HoundBodyRed
 			
             texture_unit aoMap
 			{
-				texture hvyweapon_blue_invun.tga
+				texture hvyweapon_red_invun.tga
 				filtering trilinear
 			}
 
@@ -349,13 +349,13 @@ material HoundHandsRed
 
             texture_unit diffuseMap
             {
-				texture hvyweapon_blue_invun.tga
+				texture hvyweapon_red_invun.tga
 				filtering trilinear
 			}
 			
 			texture_unit aoMap
 			{
-				texture hvyweapon_blue_invun.tga
+				texture hvyweapon_red_invun.tga
 				filtering trilinear
 			}
 		}
@@ -383,7 +383,7 @@ material HoundHandsRed
 			
             texture_unit aoMap
 			{
-				texture hvyweapon_blue_invun.tga
+				texture hvyweapon_red_invun.tga
 				filtering trilinear
 			}
 

@@ -21,15 +21,9 @@ gráfica de la entidad.
 #include "Graphics/Entity.h"
 #include "Graphics/StaticEntity.h"
 
-#include "Logic/Messages/MessageTransform.h"
-#include "Logic/Messages/MessageSleep.h"
 #include "Logic/Messages/MessageActivate.h"
-#include "Logic/Messages/MessageWakeUp.h"
 #include "Logic/Messages/MessageChangeMaterial.h"
 #include "Logic/Messages/MessageDecal.h"
-
-#include <OgreSceneManager.h>
-#include "OgreEntity.h"
 
 namespace Logic 
 {
@@ -124,8 +118,7 @@ namespace Logic
 	bool CGraphics::accept(const std::shared_ptr<CMessage>& message) {
 		Logic::TMessageType msgType = message->getMessageType();
 
-		return //msgType == Message::SET_TRANSFORM    ||
-			   msgType == Message::ACTIVATE			|| 
+		return msgType == Message::ACTIVATE			|| 
 			   msgType == Message::CHANGE_MATERIAL	||
 			   msgType == Message::DECAL			;
 	} // accept
@@ -160,11 +153,16 @@ namespace Logic
 	//---------------------------------------------------------
 
 	void CGraphics::changeMaterial(const std::string& materialName) {
-		/*if(materialName != "original")
-			_graphicsEntity->changeMaterial(materialName);
+		if(materialName != "original")
+			_graphicsEntity->changeMaterial(_material);
 		else
-			_graphicsEntity->changeMaterial(_materialName);
-		*/
+			_graphicsEntity->changeMaterial(materialName);
+	}
+
+	//---------------------------------------------------------
+
+	void CGraphics::changeMaterial(const std::list<std::string>& materialList) {
+		_graphicsEntity->changeMaterial(materialList);
 	}
 
 	//---------------------------------------------------------

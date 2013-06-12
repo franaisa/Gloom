@@ -48,22 +48,19 @@ namespace Logic {
 	//__________________________________________________________________
 
 	void CSniperFeedback::primaryFire() {
-		// Poner la animacion de carga inestable del arma
-		_hudWeapon->loadingWeapon(true);
+		_hudWeapon->shootAnim(-1.5f);
 	}
 
 	//__________________________________________________________________
 
 	void CSniperFeedback::stopPrimaryFire() {
-		// Parar la animacion de carga
-		_hudWeapon->loadingWeapon(false);
-		_hudWeapon->shootAnim(-1.85f);
+		
 	}
 
 	//__________________________________________________________________
 
 	void CSniperFeedback::secondaryFire() {
-		// De momento ná pisha
+		_hudWeapon->shootAnim(-1.5f);
 	}
 
 }//namespace Logic

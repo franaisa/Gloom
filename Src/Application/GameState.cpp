@@ -27,6 +27,8 @@ Contiene la implementación del estado de juego.
 #include "Physics/Server.h"
 #include "Audio\Server.h"
 
+#include <boost/thread/thread.hpp>
+
 namespace Application {
 
 	bool CGameState::init() 
@@ -101,8 +103,12 @@ namespace Application {
 	void CGameState::tick(unsigned int msecs) {
 		// Ejecutamos el tick de la lógica del juego
 		Logic::CServer::getSingletonPtr()->tick(msecs);
+
 		// Ejecutamos el tick de la física del juego.
-		Physics::CServer::getSingletonPtr()->tick(msecs);
+		std::shared_ptr<boost::thread> physics = std::make_shared<boost::thread>(&Physics::CServer::tick , Physics::CServer::getSingletonPtr(), msecs);
+
+		// Ejecutamos el tick de la física del juego.
+		//Physics::CServer::getSingletonPtr()->tick(msecs);
 	} // tick
 
 	//--------------------------------------------------------
