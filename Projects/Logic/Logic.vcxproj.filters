@@ -134,6 +134,54 @@
     <Filter Include="Entity\Components\Weapons\Feedback\Source">
       <UniqueIdentifier>{41d04d1f-7e31-4c09-a510-24252a19d7f1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Entity\Components\Spells">
+      <UniqueIdentifier>{fc2a56b2-6403-44a4-90b0-877a92ef4301}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entity\Components\Spells\Feedback">
+      <UniqueIdentifier>{9365eb31-31f2-4acd-b4d5-f33accb201f4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entity\Components\Spells\Cast">
+      <UniqueIdentifier>{8f01188b-c0d6-42db-a8e2-d7a4a2bc54e7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entity\Components\Spells\Ammunition">
+      <UniqueIdentifier>{9ef33cbc-5e41-4858-8cca-2fb2ef2b9e77}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entity\Components\Spells\Feedback\Header">
+      <UniqueIdentifier>{fcb4d082-a564-4a78-a666-42abb2291736}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entity\Components\Spells\Cast\Header">
+      <UniqueIdentifier>{cf08e64d-02d1-4df6-a992-be61a23764e6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entity\Components\Spells\Ammunition\Header">
+      <UniqueIdentifier>{c4e272e4-4294-471b-98be-822bde76a696}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entity\Components\Spells\Feedback\Source">
+      <UniqueIdentifier>{bd8fbf51-3982-45f3-b03f-ffd5c464edfb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entity\Components\Spells\Cast\Source">
+      <UniqueIdentifier>{b4725566-4ff0-4225-bc89-7c58faa9c6ea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entity\Components\Spells\Ammunition\Source">
+      <UniqueIdentifier>{d57fd097-17a3-4335-9995-a4640eb37448}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entity\Components\Weapons\Managers">
+      <UniqueIdentifier>{473ef99d-143d-4a7a-bd1b-57f031af1a8c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entity\Components\Weapons\Managers\Source">
+      <UniqueIdentifier>{9071eab4-d625-432e-b7e8-8e7612c6b1c1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entity\Components\Weapons\Managers\Header">
+      <UniqueIdentifier>{3978b598-80c6-4773-bd25-af90bf585962}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entity\Components\Spells\Managers">
+      <UniqueIdentifier>{c9cf71c7-92c4-489e-bf26-cdb01c3f385d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entity\Components\Spells\Managers\Header">
+      <UniqueIdentifier>{405b9841-69b8-46a0-be6b-0013aec9e771}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entity\Components\Spells\Managers\Source">
+      <UniqueIdentifier>{029daf25-c829-462d-bea6-11e62a7f5ef2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Src\Logic\Maps\ComponentFactory.cpp">
@@ -418,9 +466,6 @@
     <ClCompile Include="..\..\Src\Logic\Entity\Components\Archangel.cpp">
       <Filter>Entity\Components\Skills\Source</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Src\Logic\Entity\Components\WeaponsManager.cpp">
-      <Filter>Entity\Components\Weapons\Shoot\Source</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Src\Logic\Messages\MessageSetRelatedEntity.cpp">
       <Filter>Messages\Source</Filter>
     </ClCompile>
@@ -553,9 +598,6 @@
     <ClCompile Include="..\..\Src\Logic\Entity\Components\Weapon.cpp">
       <Filter>Entity\Components\Weapons\Shoot\Source</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Src\Logic\Entity\Components\Ammo.cpp">
-      <Filter>Entity\Components\Weapons\Ammunition\Source</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Src\Logic\Entity\Components\IronHellGoatAmmo.cpp">
       <Filter>Entity\Components\Weapons\Ammunition\Source</Filter>
     </ClCompile>
@@ -619,8 +661,38 @@
     <ClCompile Include="..\..\Src\Logic\Entity\Components\SoulReaper.cpp">
       <Filter>Entity\Components\Weapons\Shoot\Source</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\WeaponAmmo.cpp">
+      <Filter>Entity\Components\Weapons\Ammunition\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\SpellFeedback.cpp">
+      <Filter>Entity\Components\Spells\Feedback\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Messages\MessagePrimarySpell.cpp">
+      <Filter>Messages\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Messages\MessageSecondarySpell.cpp">
+      <Filter>Messages\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\SpellAmmo.cpp">
+      <Filter>Entity\Components\Spells\Ammunition\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\Spell.cpp">
+      <Filter>Entity\Components\Spells\Cast\Source</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Src\Logic\Entity\Components\WeaponsManagerClient.cpp">
-      <Filter>Entity\Components\Weapons\Shoot\Source</Filter>
+      <Filter>Entity\Components\Weapons\Managers\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\WeaponsManager.cpp">
+      <Filter>Entity\Components\Weapons\Managers\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\SpellsManager.cpp">
+      <Filter>Entity\Components\Spells\Managers\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\SpellsManagerClient.cpp">
+      <Filter>Entity\Components\Spells\Managers\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Messages\MessageAddSpell.cpp">
+      <Filter>Messages\Source</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -818,9 +890,6 @@
     </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Messages\MessageActivateScreamerShield.h">
       <Filter>Messages\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Logic\Entity\Components\WeaponsManager.h">
-      <Filter>Entity\Components\Weapons\Shoot\Header</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Entity\Components\Shadow.h">
       <Filter>Entity\Components\Skills\Header</Filter>
@@ -1062,12 +1131,6 @@
     <ClInclude Include="..\..\Src\Logic\Entity\Components\Weapon.h">
       <Filter>Entity\Components\Weapons\Shoot\Header</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Src\Logic\Entity\Components\WeaponType.h">
-      <Filter>Entity\Components\Weapons</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Logic\Entity\Components\Ammo.h">
-      <Filter>Entity\Components\Weapons\Ammunition\Header</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Entity\Components\IronHellGoatAmmo.h">
       <Filter>Entity\Components\Weapons\Ammunition\Header</Filter>
     </ClInclude>
@@ -1131,8 +1194,44 @@
     <ClInclude Include="..\..\Src\Logic\Entity\Components\SoulReaper.h">
       <Filter>Entity\Components\Weapons\Shoot\Header</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\WeaponAmmo.h">
+      <Filter>Entity\Components\Weapons\Ammunition\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\SpellType.h">
+      <Filter>Entity\Components\Spells</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\SpellFeedback.h">
+      <Filter>Entity\Components\Spells\Feedback\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Messages\MessagePrimarySpell.h">
+      <Filter>Messages\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Messages\MessageSecondarySpell.h">
+      <Filter>Messages\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\SpellAmmo.h">
+      <Filter>Entity\Components\Spells\Ammunition\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\Spell.h">
+      <Filter>Entity\Components\Spells\Cast\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\WeaponsManager.h">
+      <Filter>Entity\Components\Weapons\Managers\Header</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Entity\Components\WeaponsManagerClient.h">
-      <Filter>Entity\Components\Weapons\Shoot\Header</Filter>
+      <Filter>Entity\Components\Weapons\Managers\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\WeaponType.h">
+      <Filter>Entity\Components\Weapons</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\SpellsManager.h">
+      <Filter>Entity\Components\Spells\Managers\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\SpellsManagerClient.h">
+      <Filter>Entity\Components\Spells\Managers\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Messages\MessageAddSpell.h">
+      <Filter>Messages\Header</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

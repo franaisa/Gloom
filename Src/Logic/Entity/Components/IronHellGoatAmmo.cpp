@@ -5,7 +5,7 @@ Contiene la implementacion del componente
 de disparo de la cabra.
 
 @see Logic::CIronHellGoatAmmo
-@see Logic::IAmmo
+@see Logic::IWeaponAmmo
 
 @author Francisco Aisa García
 @date Mayo, 2013
@@ -31,7 +31,7 @@ namespace Logic {
 
 	//__________________________________________________________________
 
-	CIronHellGoatAmmo::CIronHellGoatAmmo() : IAmmo("ironHellGoat"),
+	CIronHellGoatAmmo::CIronHellGoatAmmo() : IWeaponAmmo("ironHellGoat"),
 											_primaryFireIsActive(false),
 											_elapsedTime(0),
 											_ammoSpentTimer(0),
@@ -49,7 +49,7 @@ namespace Logic {
 	//__________________________________________________________________
 
 	bool CIronHellGoatAmmo::spawn(CEntity* entity, CMap *map, const Map::CEntity *entityInfo) {
-		if( !IAmmo::spawn(entity, map, entityInfo) ) return false;
+		if( !IWeaponAmmo::spawn(entity, map, entityInfo) ) return false;
 
 		// Nos aseguramos de tener todos los atributos que necesitamos
 		assert( entityInfo->hasAttribute(_weaponName + "PrimaryFireCooldown") );
@@ -82,7 +82,7 @@ namespace Logic {
 	//__________________________________________________________________
 
 	void CIronHellGoatAmmo::onAvailable() {
-		IAmmo::onAvailable();
+		IWeaponAmmo::onAvailable();
 		_currentSpentAmmo = _ammoSpentTimer = _elapsedTime = 0;
 	}
 
@@ -135,7 +135,7 @@ namespace Logic {
 	//__________________________________________________________________
 
 	void CIronHellGoatAmmo::primaryFire() {
-		IAmmo::primaryFire();
+		IWeaponAmmo::primaryFire();
 
 		_primaryFireCooldownTimer = _primaryFireCooldown;
 
@@ -147,7 +147,7 @@ namespace Logic {
 	//__________________________________________________________________
 
 	void CIronHellGoatAmmo::stopPrimaryFire() {
-		IAmmo::stopPrimaryFire();
+		IWeaponAmmo::stopPrimaryFire();
 		
 		if(!_primaryFireIsActive) return;
 

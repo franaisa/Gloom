@@ -23,6 +23,7 @@
 #include "Logic/Messages/MessageAddShield.h"
 #include "Logic/Messages/MessageAddAmmo.h"
 #include "Logic/Messages/MessageAddWeapon.h"
+#include "Logic/Messages/MessageAddSpell.h"
 #include "Logic/Messages/MessageActivate.h"
 
 #include "Net/Manager.h"
@@ -143,6 +144,11 @@ namespace Logic {
 				addWeaponMsg->setAddAmmo(_reward);
 				addWeaponMsg->setAddWeapon(_weaponType);
 				actor->emitMessage(addWeaponMsg);
+			}
+			else if(_id == "spell") {
+				std::shared_ptr<CMessageAddSpell> addSpellMsg = std::make_shared<CMessageAddSpell>();
+				addSpellMsg->setSpell(_reward);
+				actor->emitMessage(addSpellMsg);
 			}
 		}
 		// borramos esta entidad

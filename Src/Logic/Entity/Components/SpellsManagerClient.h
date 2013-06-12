@@ -1,14 +1,14 @@
-#ifndef __Logic_WeaponsManager_H
-#define __Logic_WeaponsManager_H
+#ifndef __Logic_SpellsManager_H
+#define __Logic_SpellsManager_H
 
 #include "Logic/Entity/Component.h"
-#include "WeaponType.h"
+#include "SpellType.h"
 
 #include <vector>
 
 // Predeclaración de clases para ahorrar tiempo de compilación
 namespace Logic {
-	class IWeaponAmmo;
+	class ISpellAmmo;
 }
 
 //declaración de la clase
@@ -19,16 +19,16 @@ namespace Logic
 */
 
 
-	class CWeaponsManager : public IComponent
+	class CSpellsManager : public IComponent
 	{
-		DEC_FACTORY(CWeaponsManager);
+		DEC_FACTORY(CSpellsManager);
 
 	public:
 
 		/**
 		Constructor por defecto; en la clase base no hace nada.
 		*/
-		CWeaponsManager();
+		CSpellsManager();
 		
 		/**
 		Inicialización del componente usando la descripción de la entidad que hay en 
@@ -66,34 +66,19 @@ namespace Logic
 		*/
 		virtual void onDeactivate();
 
-		void changeWeapon(unsigned char newWeapon);
-	
-		void amplifyDamage(int percentage);
-
 		void reduceCooldowns(int percentage);
 
-		void addWeapon(int ammo, int weaponIndex);
-
 	protected:
-		/**
-		Función que se llama cuando se quiere cambiar de arma utilizando el scroll. A partir del arma actual,
-		recorre el array del inventario de armas hacia adelante (iWeapon == 100) o hacia atrá (iWeapon == -100),
-		en función de la dirección que se le haya dado al scroll.
-		@return Devuelve el índice del siguiente arma que tenemos (hacia arriba del inventario u hacia abajo)
-		Si no ha encontrado ningún arma siguiente, devuelve -1
-		*/
-		int selectScrollWeapon(int iWeapon);
 
-		/**
-		arma actual equipada
-		*/
-		int _currentWeapon;
+		std::vector< std::pair<bool, ISpellAmmo*> > _spells;
 
-		std::vector< std::pair<bool, IWeaponAmmo*> > _weaponry;
+		SpellType::Enum _primarySpell;
+
+		SpellType::Enum _secondarySpell;
 
 	}; // class CShoot
 
-	REG_FACTORY(CWeaponsManager);
+	REG_FACTORY(CSpellsManager);
 
 } // namespace Logic
 

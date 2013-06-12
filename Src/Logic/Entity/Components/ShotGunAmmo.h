@@ -6,7 +6,7 @@
 @file ShotGun.h
 
 @see Logic::CShotGun
-@see Logic::IAmmo
+@see Logic::IWeaponAmmo
 
 @author Francisco Aisa García
 @date Mayo, 2013
@@ -15,7 +15,7 @@
 #ifndef __Logic_ShotGunAmmo_H
 #define __Logic_ShotGunAmmo_H
 
-#include "Logic/Entity/Components/Ammo.h"
+#include "Logic/Entity/Components/WeaponAmmo.h"
 
 namespace Logic {
 
@@ -27,7 +27,7 @@ namespace Logic {
 	@date Mayo, 2013
 	*/
 
-	class CShotGunAmmo : public IAmmo {
+	class CShotGunAmmo : public IWeaponAmmo {
 		DEC_FACTORY(CShotGunAmmo);
 	public:
 
