@@ -314,14 +314,17 @@ namespace Graphics{
 			// It might not be active anymore for fire-and-forget effects, such as an 
 			// instantaneous explosion.
 			// For such effects, don't bother creating a parent scene node.
+			std::cout << "pregunto si esta activo" << std::endl;
 			if (hhfx->IsFXActive())
 			{
+				std::cout << "me ha dicho que no" << std::endl;
 				//set this class to listen to the fx, to be notified when its created and 
 				//destroyed in OnFXStarted and OnFXStopped
 				hhfx->SetFXListener(this);
 				return hhfx;
 			}
 		}
+		std::cout << "me ha dicho que si" << std::endl;
 		return NULL;
 	}
 
@@ -339,13 +342,13 @@ namespace Graphics{
 		const Vector3& camPos = _camera->getPosition();
 		const Quaternion& camOri = _camera->getOrientation();
 
-		worldTransforms.makeTransform(camPos, Vector3::UNIT_SCALE, camOri);
+		worldTransforms.makeTransform(camPos, Vector3::UNIT_SCALE, Ogre::Quaternion());
 		worldTransforms = worldTransforms.transpose();
 
 		view.setHHFXScene(*_hhfxScene);
 		view.setViewMatrix(worldTransforms);
 		view.setSceneManager(*_sceneMgr);
-
+		view.setUsePostFX(true);
 		_hhfxScene->Render(view, camPos);
 
 		return true;

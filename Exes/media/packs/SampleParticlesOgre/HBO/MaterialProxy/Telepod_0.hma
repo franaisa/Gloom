@@ -1,0 +1,78 @@
+CMaterialProxy	$LOCAL$/Resource
+{
+	EditorInfosPosition = int2(-12, 84);
+	BaseMaterial = "HBO/Materials/Library/Basic_SolidsAmbient.hbo/Solid_Diffuse_SpecColor_NMap_Env";
+	Fields = 
+	{
+		"$LOCAL$/CMaterialProxyField_F29FCB78",
+		"$LOCAL$/CMaterialProxyField_0A94CE7C",
+		"$LOCAL$/CMaterialProxyField_D2B5234F",
+		"$LOCAL$/CMaterialProxyField_0F5530D6",
+		"$LOCAL$/CMaterialProxyField_05A1E441",
+		"$LOCAL$/CMaterialProxyField_9CA53600",
+		"$LOCAL$/CMaterialProxyField_AE8EFCC3",
+		"$LOCAL$/CMaterialProxyField_E5E6747A",
+		"$LOCAL$/CMaterialProxyField_E2D1A955",
+	};
+}
+CMaterialProxyField	$LOCAL$/CMaterialProxyField_F29FCB78
+{
+	EditorInfosPosition = int2(-267, -16);
+	FieldName = "Diffuse";
+	ValTexturePath = "Textures/Telepod_Diffuse.dds";
+}
+CNedEditorMaterialProxy_Data	$LOCAL$/EDITOR
+{
+	Position = float3(-8.5177284e-001, 5.4772437e-002, -8.0516517e-002);
+	EulerOrientation = float3(-3.6629999e+000, -9.5400017e+001, 0.0000000e+000);
+}
+CMaterialProxyField	$LOCAL$/CMaterialProxyField_0A94CE7C
+{
+	EditorInfosPosition = int2(-267, 26);
+	FieldName = "Normal";
+	ValTexturePath = "Textures/Telepod_Nmap.dds";
+}
+CMaterialProxyField	$LOCAL$/CMaterialProxyField_D2B5234F
+{
+	EditorInfosPosition = int2(-267, 69);
+	FieldName = "ReflectedEnvFresnel";
+}
+CMaterialProxyField	$LOCAL$/CMaterialProxyField_0F5530D6
+{
+	EditorInfosPosition = int2(-267, 111);
+	FieldName = "GlossSpecFresnelReflection";
+	FieldType = Float4;
+	ValFloat4 = float4(1.3222645e-001, 6.8052649e-002, 1.0529213e-003, 0.0000000e+000);
+}
+CMaterialProxyField	$LOCAL$/CMaterialProxyField_05A1E441
+{
+	EditorInfosPosition = int2(-267, 154);
+	FieldName = "NormalReflectanceFactor";
+	FieldType = Float;
+	ValFloat = 2.2530596e-001;
+}
+CMaterialProxyField	$LOCAL$/CMaterialProxyField_9CA53600
+{
+	EditorInfosPosition = int2(-267, 197);
+	FieldName = "AmbientCube";
+}
+CMaterialProxyField	$LOCAL$/CMaterialProxyField_AE8EFCC3
+{
+	EditorInfosPosition = int2(-267, 240);
+	FieldName = "AmbientColor";
+	FieldType = ColorRGB;
+	ValFloat3 = float3(9.9999998e-003, 9.9999998e-003, 2.9999999e-002);
+}
+CMaterialProxyField	$LOCAL$/CMaterialProxyField_E5E6747A
+{
+	EditorInfosPosition = int2(-267, 283);
+	FieldName = "DiffuseColor";
+	FieldType = ColorRGB;
+	ValFloat3 = float3(1.0000000e+000, 1.0000000e+000, 1.0000000e+000);
+}
+CMaterialProxyField	$LOCAL$/CMaterialProxyField_E2D1A955
+{
+	EditorInfosPosition = int2(-267, 326);
+	FieldName = "SpecColor";
+	ValTexturePath = "Textures/Telepod_Spec.dds";
+}

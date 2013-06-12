@@ -10,14 +10,13 @@ package
 	import flash.display.StageAlign;
 	import flash.display.StageScaleMode;
 	import flash.external.ExternalInterface;
-
-
+	import scaleform.clik.controls.ScrollingList;
 	
 	/**
 	 * ...
 	 * @author Rubén Mulero
 	 */
-	public class MenuManager extends MovieClip 
+	public class MenuManager extends ScrollingList 
 	{
 		var myCursor:Sprite;
 
@@ -45,6 +44,7 @@ package
 			// respond to mouse move events
 			stage.addEventListener(MouseEvent.MOUSE_MOVE, mouseMoveHandler);
 			stage.addEventListener(Event.MOUSE_LEAVE, mouseLeaveHandler);
+			PopUpManager.createPopUp
 			
 			
 		}

@@ -1,0 +1,43 @@
+CHmlFactory	$LOCAL$/Resource
+{
+	MeshTree = "$LOCAL$/CHmlMeshTreeNode_LOD_F92F98BC";
+	Skins = 
+	{
+		"$LOCAL$/CHmlSkinDescriptor_ABF04D16",
+	};
+}
+CHmlMeshTreeNode_LOD	$LOCAL$/CHmlMeshTreeNode_LOD_F92F98BC
+{
+	LODs = 
+	{
+		"$LOCAL$/CHmlMeshTreeNode_ModelRef_835DC48F",
+	};
+}
+CHmlMeshTreeNode_ModelRef	$LOCAL$/CHmlMeshTreeNode_ModelRef_835DC48F
+{
+	MeshResourcePath = "Meshes//Telepod.hmm";
+}
+CHmlSkinDescriptor	$LOCAL$/CHmlSkinDescriptor_ABF04D16
+{
+	PublishedName = "Default";
+	Materials = 
+	{
+		"$LOCAL$/CHmlSkinMaterial_B8118F81",
+		"$LOCAL$/CHmlSkinMaterial_4F8E64BA",
+	};
+}
+CHmlSkinMaterial	$LOCAL$/CHmlSkinMaterial_B8118F81
+{
+	VirtualName = "02 - Default";
+	MaterialProxy = "MaterialProxies/Telepod.hma/Material_0";
+}
+CHmlSkinMaterial	$LOCAL$/CHmlSkinMaterial_4F8E64BA
+{
+	VirtualName = "02 - Default";
+	MaterialProxy = "MaterialProxies/Telepod.hma/Material_1";
+}
+CNEdEditorModel_Data	$LOCAL$/EDITOR
+{
+	Position = float3(3.3548003e-001, 4.8619075e+000, 9.2503242e+000);
+	EulerOrientation = float3(-1.0702999e+001, 2.8490002e+000, 0.0000000e+000);
+}

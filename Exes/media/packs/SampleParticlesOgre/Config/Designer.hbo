@@ -1,0 +1,17 @@
+CModuleConfigBaseEditor	$LOCAL$/ModuleConfigBaseEditor
+{
+	Backdrops = 
+	{
+		"Models/CubeRoom_Dark.hml",
+		"Models/CubeRoom_Default.hml",
+		"Models/CubeRoom_Light.hml",
+		"Models/Plane_Dark.hml",
+		"Models/Plane_Default.hml",
+		"Models/Plane_Light.hml",
+		"Models/Anneau.hml",
+	};
+}
+CModuleConfigParticleEditor	$LOCAL$/ModuleConfigParticleEditor
+{
+	ShowDetailedBudgets = true;
+}

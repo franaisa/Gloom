@@ -1,0 +1,35 @@
+CMeshImporterConfig	$LOCAL$/Resource
+{
+	ResourcePath = "Meshes/LordGausspic_LOD0.FBX";
+	SourceMeshPath = "Meshes/";
+	AnimationPath = "Animations/";
+	MaterialProxyPath = "MaterialProxies/";
+	MeshPath = "Meshes/";
+	ModelPath = "Models/";
+	LevelPath = "Levels/";
+	EntityPath = "Entities/";
+	OutputHmmPath = "Meshes//LordGausspic_LOD0.hmm";
+	TexturePath = "Textures/";
+	Skeleton = true;
+}
+CNedEditorMesh_Data	$LOCAL$/_EDITOR
+{
+	MeshPath = "Meshes//LordGausspic_LOD0.hmm";
+}
+CMeshImporterConfig	$LOCAL$/CMeshImporterConfig_35CFC710
+{
+	ResourcePath = "Meshes//LordGausspic_LOD0.FBX";
+	SourceMeshPath = "Meshes/";
+	AnimationPath = "Animations/";
+	MaterialProxyPath = "MaterialProxies/";
+	MeshPath = "Meshes/";
+	ModelPath = "Models/";
+	LevelPath = "Levels/";
+	EntityPath = "Entities/";
+	OutputHmmPath = "Meshes//LordGausspic_LOD0.hmm";
+	TexturePath = "Textures/";
+}
+CNedEditorMesh_Data	$LOCAL$/CNedEditorMesh_Data_EF140E0A
+{
+	MeshPath = "Meshes//LordGausspic_LOD0.hmm";
+}
