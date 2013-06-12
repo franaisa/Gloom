@@ -115,48 +115,54 @@ namespace Input {
 			std::shared_ptr<Logic::CMessageControl> m = std::make_shared<Logic::CMessageControl>();
 			switch(key.keyId)
 			{
-			case Input::Key::W:
-				m->setType(Logic::Control::STOP_WALK);
- 				break;
-			case Input::Key::S:
-				m->setType(Logic::Control::STOP_WALKBACK);
-				break;
-			case Input::Key::A:
-			{
-				m->setType(Logic::Control::STOP_STRAFE_LEFT);
-				/*std::cout << "StopStrafeLeft" << std::endl;
+				case Input::Key::W:
+					m->setType(Logic::Control::STOP_WALK);
+ 					break;
+				case Input::Key::S:
+					m->setType(Logic::Control::STOP_WALKBACK);
+					break;
+				case Input::Key::A:
+				{
+					m->setType(Logic::Control::STOP_STRAFE_LEFT);
+										/*std::cout << "StopStrafeLeft" << std::endl;
 				//emitir mensaje de roll
 				std::shared_ptr<Logic::CMessageCameraRoll> messageRoll = std::make_shared<Logic::CMessageCameraRoll>();
 				messageRoll->setRollDegrees(ROLL_DEGREES);//Roll para que vuelva a posición original
 				Logic::CEntity * camera = Logic::CServer::getSingletonPtr()->getMap()->getEntityByType("Camera");
 				camera->emitMessage(messageRoll);*/
-				break;
-			}
-			case Input::Key::D:
-			{
-				m->setType(Logic::Control::STOP_STRAFE_RIGHT);
-				/*
+					break;
+				}
+				case Input::Key::D:
+				{
+					m->setType(Logic::Control::STOP_STRAFE_RIGHT);
+										/*
 				std::cout << "StopStrafeRight" << std::endl;
 				std::shared_ptr<Logic::CMessageCameraRoll> messageRoll = std::make_shared<Logic::CMessageCameraRoll>();
 				messageRoll->setRollDegrees(-ROLL_DEGREES); //Roll para que vuelva a posición original
 				Logic::CEntity * camera = Logic::CServer::getSingletonPtr()->getMap()->getEntityByType("Camera");
 				camera->emitMessage(messageRoll);	*/			
+					break;
+				}
+				case Input::Key::SPACE:
+					m->setType(Logic::Control::STOP_JUMP);
+					break;
+				case Input::Key::Z:
+					m->setType(Logic::Control::STOP_CROUCH);
+					break;
+				case Input::Key::Q:
+					m->setType(Logic::Control::STOP_PRIMARY_SKILL);
+					break;
+				case Input::Key::E:
+					m->setType(Logic::Control::STOP_SECONDARY_SKILL);
+					break;
+				case Input::Key::LCONTROL:
+					m->setType(Logic::Control::STOP_PRIMARY_SPELL);
+					break;
+				case Input::Key::LSHIFT:
+					m->setType(Logic::Control::STOP_SECONDARY_SPELL);
 				break;
-			}
-			case Input::Key::SPACE:
-				m->setType(Logic::Control::STOP_JUMP);
-				break;
-			case Input::Key::Z:
-				m->setType(Logic::Control::STOP_CROUCH);
-				break;
-			case Input::Key::Q:
-				m->setType(Logic::Control::STOP_PRIMARY_SKILL);
-				break;
-			case Input::Key::E:
-				m->setType(Logic::Control::STOP_SECONDARY_SKILL);
-				break;
-			default:
-				return true;
+				default:
+					return true;
 			}
 			_controlledAvatar->emitMessage(m);
 
@@ -278,6 +284,10 @@ namespace Input {
 		{
 			return 3; //Other
 		}
+		else if (key.keyId == Input::Key::LCONTROL || key.keyId == Input::Key::LSHIFT) 
+		{
+			return 3; //Spells
+		}
 		return -1;
 	} // typeOfKey
 
@@ -288,8 +298,7 @@ namespace Input {
 		int iScrollValue = -1;
 		//Asigno 100 he movido la rueda para adelante y -100 si la he movido hacia atrás
 		iScrollValue = (mouseState.posAbsZ > 0) ? 100 : -100; 
-		ChangeWeaponMessage(iScrollValue);
-		
+		ChangeWeaponMessage(iScrollValue);		
 	}
 
 	//--------------------------------------------------------
@@ -469,4 +478,21 @@ namespace Input {
 		}
 
 	}//EmitOtherMessages
+
+	//--------------------------------------------------------
+
+	void CPlayerController::SpellMessage(TKey key)
+	{
+		std::shared_ptr<Logic::CMessageControl> m = std::make_shared<Logic::CMessageControl>();
+		switch (key.keyId)
+		{
+			case Input::Key::LCONTROL:
+				m->setType(Logic::Control::USE_PRIMARY_SKILL);
+			break;
+			case Input::Key::LSHIFT:
+				m->setType(Logic::Control::USE_SECONDARY_SKILL);
+			break;
+		}
+		_controlledAvatar->emitMessage(m);
+	}
 } // namespace Input

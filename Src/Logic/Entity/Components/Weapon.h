@@ -258,6 +258,7 @@ namespace Logic {
 		Ogre::ManualObject* decalObject;
 
 		bool		_bDecalsCreated;
+		bool		_primerDecal;
 
 	}; // class IWeapon
 
