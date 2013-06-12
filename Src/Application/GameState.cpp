@@ -105,10 +105,10 @@ namespace Application {
 		Logic::CServer::getSingletonPtr()->tick(msecs);
 
 		// Ejecutamos el tick de la física del juego.
-		std::shared_ptr<boost::thread> physics = std::make_shared<boost::thread>(&Physics::CServer::tick , Physics::CServer::getSingletonPtr(), msecs);
+		//std::shared_ptr<boost::thread> physics = std::make_shared<boost::thread>(&Physics::CServer::tick , Physics::CServer::getSingletonPtr(), msecs);
 
 		// Ejecutamos el tick de la física del juego.
-		//Physics::CServer::getSingletonPtr()->tick(msecs);
+		Physics::CServer::getSingletonPtr()->tick(msecs);
 	} // tick
 
 	//--------------------------------------------------------

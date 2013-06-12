@@ -1,0 +1,53 @@
+CMeshImporterConfig	$LOCAL$/Resource
+{
+	ResourcePath = "Meshes/CubeRoom_Dark.FBX";
+	SourceMeshPath = "Meshes/";
+	AnimationPath = "Animations/";
+	MaterialProxyPath = "MaterialProxies/";
+	MeshPath = "Meshes/";
+	ModelPath = "Models/";
+	LevelPath = "Levels/";
+	EntityPath = "Entities/";
+	OutputHmmPath = "Meshes//CubeRoom_Dark.hmm";
+	TexturePath = "Textures/";
+}
+CNedEditorMesh_Data	$LOCAL$/_EDITOR
+{
+	Position = float3(-1.0319256e+002, 0.0000000e+000, 1.8785312e+002);
+	EulerOrientation = float3(0.0000000e+000, -2.8781130e+001, 0.0000000e+000);
+	MeshPath = "Meshes//CubeRoom_Dark.hmm";
+}
+CMeshImporterConfig	$LOCAL$/CMeshImporterConfig_617BD683
+{
+	ResourcePath = "Meshes//CubeRoom_Dark.FBX";
+	SourceMeshPath = "Meshes/";
+	AnimationPath = "Animations/";
+	MaterialProxyPath = "MaterialProxies/";
+	MeshPath = "Meshes/";
+	ModelPath = "Models/";
+	LevelPath = "Levels/";
+	EntityPath = "Entities/";
+	OutputHmmPath = "Meshes//CubeRoom_Dark.hmm";
+	TexturePath = "Textures/";
+}
+CNedEditorMesh_Data	$LOCAL$/CNedEditorMesh_Data_7E9B5115
+{
+	MeshPath = "Meshes//CubeRoom_Dark.hmm";
+}
+CMeshImporterConfig	$LOCAL$/CMeshImporterConfig_F8C0FC4B
+{
+	ResourcePath = "Meshes//CubeRoom_Dark.FBX";
+	SourceMeshPath = "Meshes/";
+	AnimationPath = "Animations/";
+	MaterialProxyPath = "MaterialProxies/";
+	MeshPath = "Meshes/";
+	ModelPath = "Models/";
+	LevelPath = "Levels/";
+	EntityPath = "Entities/";
+	OutputHmmPath = "Meshes//CubeRoom_Dark.hmm";
+	TexturePath = "Textures/";
+}
+CNedEditorMesh_Data	$LOCAL$/CNedEditorMesh_Data_2042E51D
+{
+	MeshPath = "Meshes//CubeRoom_Dark.hmm";
+}

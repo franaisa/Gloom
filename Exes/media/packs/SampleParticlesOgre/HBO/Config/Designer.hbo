@@ -1,0 +1,18 @@
+CModuleConfigBaseEditor	$LOCAL$/ModuleConfigBaseEditor
+{
+	Backdrops = 
+	{
+		"HBO/Entities/Models/Anneau.hml",
+		"HBO/Entities/Models/Backdrops_Axis_OpenGL/CubeRoom.hml",
+		"HBO/Entities/Models/Backdrops_Axis_OpenGL/CubeRoomDark.hml",
+		"HBO/Entities/Models/Backdrops_Axis_OpenGL/LargeEditorGround.hml",
+		"HBO/Entities/Models/Backdrops_Axis_OpenGL/ParticlePlayground.hml",
+		"HBO/Entities/Models/Backdrops_Axis_OpenGL/SkySphere.hml",
+		"HBO/Entities/Models/Backdrops_Axis_OpenGL/Dragon.hml",
+		"HBO/Entities/Models/Telepod.hml",
+	};
+}
+CModuleConfigParticleEditor	$LOCAL$/ModuleConfigParticleEditor
+{
+	ShowDetailedBudgets = true;
+}
