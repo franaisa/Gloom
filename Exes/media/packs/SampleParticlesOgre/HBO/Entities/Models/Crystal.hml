@@ -1,0 +1,35 @@
+CHmlFactory	$LOCAL$/Resource
+{
+	MeshTree = "$LOCAL$/CHmlMeshTreeNode_LOD_99C9D972";
+	Skins = 
+	{
+		"$LOCAL$/CHmlSkinDescriptor_D4CE837C",
+	};
+}
+CHmlMeshTreeNode_LOD	$LOCAL$/CHmlMeshTreeNode_LOD_99C9D972
+{
+	LODs = 
+	{
+		"$LOCAL$/CHmlMeshTreeNode_ModelRef_5CE15A6D",
+	};
+}
+CHmlMeshTreeNode_ModelRef	$LOCAL$/CHmlMeshTreeNode_ModelRef_5CE15A6D
+{
+	MeshResourcePath = "Meshes/Crystal.hmm";
+}
+CHmlSkinDescriptor	$LOCAL$/CHmlSkinDescriptor_D4CE837C
+{
+	PublishedName = "Default";
+	Materials = 
+	{
+		"$LOCAL$/CHmlSkinMaterial_E71C044F",
+	};
+}
+CHmlSkinMaterial	$LOCAL$/CHmlSkinMaterial_E71C044F
+{
+	VirtualName = "Crystal";
+	MaterialProxy = "HBO/MaterialProxy/Crystal_0.hma/Resource";
+}
+CNEdEditorModel_Data	$LOCAL$/EDITOR
+{
+}

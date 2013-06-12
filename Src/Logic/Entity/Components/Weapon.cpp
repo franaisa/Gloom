@@ -220,7 +220,5 @@ _primerDecal = true;
 			}
 			std::cout << "pinta" << std::endl;*/
 		}
-	//} // decals
-
 } // namespace Logic
 

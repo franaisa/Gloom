@@ -1,0 +1,22 @@
+CMeshImporterConfig	$LOCAL$/Resource
+{
+	ResourcePath = "Sources/Meshes/Anneau.FBX";
+	SourceMeshPath = "Meshes/";
+	AnimationPath = "Animations/";
+	MaterialProxyPath = "MaterialProxies/";
+	MeshPath = "Meshes/";
+	ModelPath = "Models/";
+	LevelPath = "Levels/";
+	EntityPath = "Entities/";
+	OutputHmmPath = "Meshes//Anneau.hmm";
+	TexturePath = "Textures/";
+	Geometry = false;
+	Animation = true;
+	Skeleton = true;
+}
+CNedEditorMesh_Data	$LOCAL$/_EDITOR
+{
+	Position = float3(-5.2238369e-001, 3.8861310e-001, 3.8267779e-001);
+	EulerOrientation = float3(-3.0968983e+001, -5.3774956e+001, 0.0000000e+000);
+	MeshPath = "Meshes/Anneau.hmm";
+}

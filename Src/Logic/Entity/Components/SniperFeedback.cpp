@@ -49,6 +49,7 @@ namespace Logic {
 
 	void CSniperFeedback::primaryFire() {
 		_hudWeapon->shootAnim(-1.5f);
+		
 	}
 
 	//__________________________________________________________________

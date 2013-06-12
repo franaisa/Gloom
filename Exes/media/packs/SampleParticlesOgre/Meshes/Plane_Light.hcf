@@ -1,0 +1,51 @@
+CMeshImporterConfig	$LOCAL$/Resource
+{
+	ResourcePath = "Meshes/Plane_Light.FBX";
+	SourceMeshPath = "Meshes/";
+	AnimationPath = "Animations/";
+	MaterialProxyPath = "MaterialProxies/";
+	MeshPath = "Meshes/";
+	ModelPath = "Models/";
+	LevelPath = "Levels/";
+	EntityPath = "Entities/";
+	OutputHmmPath = "Meshes//Plane_Light.hmm";
+	TexturePath = "Textures/";
+}
+CNedEditorMesh_Data	$LOCAL$/_EDITOR
+{
+	MeshPath = "Meshes//Plane_Light.hmm";
+}
+CMeshImporterConfig	$LOCAL$/CMeshImporterConfig_589BBD85
+{
+	ResourcePath = "Meshes//Plane_Light.FBX";
+	SourceMeshPath = "Meshes/";
+	AnimationPath = "Animations/";
+	MaterialProxyPath = "MaterialProxies/";
+	MeshPath = "Meshes/";
+	ModelPath = "Models/";
+	LevelPath = "Levels/";
+	EntityPath = "Entities/";
+	OutputHmmPath = "Meshes//Plane_Light.hmm";
+	TexturePath = "Textures/";
+}
+CNedEditorMesh_Data	$LOCAL$/CNedEditorMesh_Data_DC8B4027
+{
+	MeshPath = "Meshes//Plane_Light.hmm";
+}
+CMeshImporterConfig	$LOCAL$/CMeshImporterConfig_E13EA9BF
+{
+	ResourcePath = "Meshes//Plane_Light.FBX";
+	SourceMeshPath = "Meshes/";
+	AnimationPath = "Animations/";
+	MaterialProxyPath = "MaterialProxies/";
+	MeshPath = "Meshes/";
+	ModelPath = "Models/";
+	LevelPath = "Levels/";
+	EntityPath = "Entities/";
+	OutputHmmPath = "Meshes//Plane_Light.hmm";
+	TexturePath = "Textures/";
+}
+CNedEditorMesh_Data	$LOCAL$/CNedEditorMesh_Data_AD551E31
+{
+	MeshPath = "Meshes//Plane_Light.hmm";
+}

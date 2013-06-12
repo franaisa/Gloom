@@ -1,0 +1,39 @@
+CHmlFactory	$LOCAL$/Resource
+{
+	MeshTree = "$LOCAL$/CHmlMeshTreeNode_LOD_8C222EEA";
+	Skins = 
+	{
+		"$LOCAL$/CHmlSkinDescriptor_96C244B4",
+	};
+}
+CHmlMeshTreeNode_LOD	$LOCAL$/CHmlMeshTreeNode_LOD_8C222EEA
+{
+	LODs = 
+	{
+		"$LOCAL$/CHmlMeshTreeNode_ModelRef_FCF43A05",
+	};
+}
+CHmlMeshTreeNode_ModelRef	$LOCAL$/CHmlMeshTreeNode_ModelRef_FCF43A05
+{
+	MeshResourcePath = "Meshes/Anneau.hmm";
+}
+CHmlSkinDescriptor	$LOCAL$/CHmlSkinDescriptor_96C244B4
+{
+	PublishedName = "Default";
+	Materials = 
+	{
+		"$LOCAL$/CHmlSkinMaterial_A43BA0A7",
+	};
+}
+CHmlSkinMaterial	$LOCAL$/CHmlSkinMaterial_A43BA0A7
+{
+	VirtualName = "Ring";
+	MaterialProxy = "HBO/MaterialProxy/Anneau_0.hma/Resource";
+}
+CNEdEditorModel_Data	$LOCAL$/EDITOR
+{
+	Position = float3(-4.8453385e-001, 7.3401034e-001, 5.5505061e-001);
+	EulerOrientation = float3(-4.4891003e+001, -4.1117977e+001, 0.0000000e+000);
+	BackgroundColor = float3(9.7656250e-002, 1.7520142e-001, 1.0000000e+000);
+	LightEulerOrientation = float3(-7.1549785e-001, 9.2535722e-001, 0.0000000e+000);
+}

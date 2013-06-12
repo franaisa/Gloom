@@ -1,0 +1,32 @@
+CHmlFactory	$LOCAL$/Resource
+{
+	MeshTree = "$LOCAL$/CHmlMeshTreeNode_LOD_18FBAB3A";
+	Skins = 
+	{
+		"$LOCAL$/CHmlSkinDescriptor_13A82384",
+	};
+}
+CHmlMeshTreeNode_LOD	$LOCAL$/CHmlMeshTreeNode_LOD_18FBAB3A
+{
+	LODs = 
+	{
+		"$LOCAL$/CHmlMeshTreeNode_ModelRef_905D0515",
+	};
+}
+CHmlMeshTreeNode_ModelRef	$LOCAL$/CHmlMeshTreeNode_ModelRef_905D0515
+{
+	MeshResourcePath = "Meshes//Sphere_Black.hmm";
+}
+CHmlSkinDescriptor	$LOCAL$/CHmlSkinDescriptor_13A82384
+{
+	PublishedName = "Default";
+	Materials = 
+	{
+		"$LOCAL$/CHmlSkinMaterial_D9294437",
+	};
+}
+CHmlSkinMaterial	$LOCAL$/CHmlSkinMaterial_D9294437
+{
+	VirtualName = "Black";
+	MaterialProxy = "MaterialProxies/Sphere_Black_0.hma/Resource";
+}
