@@ -20,6 +20,9 @@ de disparo de la cabra.
 #include "Logic/Server.h"
 #include "Map/MapEntity.h"
 
+#include "SoulReaper.h"
+#include "SoulReaperFeedback.h"
+
 using namespace std;
 
 namespace Logic {
@@ -30,9 +33,7 @@ namespace Logic {
 
 	CSoulReaperAmmo::CSoulReaperAmmo() : IAmmo("ironHellGoat"),
 											_primaryFireIsActive(false),
-											_elapsedTime(0),
-											_ammoSpentTimer(0),
-											_currentSpentAmmo(0),
+											_secondaryFireIsActive(false),
 											_primaryFireCooldownTimer(0) {
 		// Nada que hacer
 	}
@@ -54,60 +55,44 @@ namespace Logic {
 		// Cooldown del disparo principal
 		_defaultPrimaryFireCooldown = _primaryFireCooldown = entityInfo->getFloatAttribute(_weaponName + "PrimaryFireCooldown") * 1000;
 
+		_friend = _entity->getComponent<Logic::CSoulReaper>("CSoulReaper");
+		if(!_friend)
+			_friend = _entity->getComponent<Logic::CSoulReaperFeedback>("CSoulReaperFeedback");
+
 		return true;
 	}
 
 	//__________________________________________________________________
 
 	void CSoulReaperAmmo::onActivate() {
-		_currentSpentAmmo = _ammoSpentTimer = _elapsedTime = 0;
+
 	}
 
 	//__________________________________________________________________
 
 	void CSoulReaperAmmo::onAvailable() {
 		IAmmo::onAvailable();
-		_currentSpentAmmo = _ammoSpentTimer = _elapsedTime = 0;
+		
 	}
 
 	//__________________________________________________________________
 
 	void CSoulReaperAmmo::onTick(unsigned int msecs) {
-		// Si el jugador esta dejando pulsado el disparo primario, aumentamos
-		// el tamaño de la bola y reducimos la velocidad hasta un limite
-		if(_primaryFireIsActive) {
-			if(_currentAmmo > 0 && _currentSpentAmmo < _maxAmmoPerShot) {
-				if(_elapsedTime < _maxLoadingTime) {
-					// Contamos el tiempo que hemos mantenido pulsado el raton
-					_elapsedTime += msecs;
-					// Actualizamos el timer que se encarga de reducir la municion
-					_ammoSpentTimer += msecs;
-					if(_ammoSpentTimer >= _ammoSpentTimeStep) {
-						decrementAmmo();
-						++_currentSpentAmmo;
-						_ammoSpentTimer = 0;
-					}
-
-					if(_elapsedTime >= _maxLoadingTime) {
-						_elapsedTime = _maxLoadingTime;
-					}
-				}
-			}
-		}
 		
 		// Controlamos el cooldown
 		if(_primaryFireCooldownTimer > 0) {
 			_primaryFireCooldownTimer -= msecs;
 			
-			if(_primaryFireCooldownTimer < 0)
+			if(_primaryFireCooldownTimer < 0){
 				_primaryFireCooldownTimer = 0;
+			}
 		}
 	}
 
 	//__________________________________________________________________
 
 	bool CSoulReaperAmmo::canUsePrimaryFire() {
-		return _primaryFireCooldownTimer == 0 && _currentAmmo > 0;
+		return _primaryFireCooldownTimer == 0 && !_secondaryFireIsActive;
 	}
 
 	//__________________________________________________________________
@@ -123,23 +108,31 @@ namespace Logic {
 
 		_primaryFireCooldownTimer = _primaryFireCooldown;
 
-		decrementAmmo();
-		++_currentSpentAmmo;
-	}
+		_primaryFireIsActive = true;
 
+	} // primaryFire
 	//__________________________________________________________________
 
 	void CSoulReaperAmmo::stopPrimaryFire() {
 		IAmmo::stopPrimaryFire();
 		
-		if(!_primaryFireIsActive) return;
-
 		_primaryFireIsActive = false;
+	} // stopPrimaryFire
+	//__________________________________________________________________
 
-		// Reseteamos el reloj
-		_currentSpentAmmo = _ammoSpentTimer = _elapsedTime = 0;
-	}
+	void CSoulReaperAmmo::secondaryFire() {
+		IAmmo::secondaryFire();
 
+		_secondaryFireIsActive = true;
+
+	} // secondaryFire
+	//__________________________________________________________________
+
+	void CSoulReaperAmmo::stopSecondaryFire() {
+		IAmmo::stopPrimaryFire();
+		
+		_secondaryFireIsActive = false;
+	} // stopPrimaryFire
 	//__________________________________________________________________
 
 	void CSoulReaperAmmo::reduceCooldown(unsigned int percentage) {

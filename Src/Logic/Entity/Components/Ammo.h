@@ -139,14 +139,14 @@ namespace Logic {
 		@param ammo Munición a incrementar.
 		@param iAmCath Para el HUD.
 		*/
-		void addAmmo(int weapon, int ammo, bool iAmCatch);
+		virtual void addAmmo(int weapon, int ammo, bool iAmCatch);
 
 		//__________________________________________________________________
 
 		/**
 		Resetea la munición.
 		*/
-		inline void resetAmmo();
+		virtual void resetAmmo();
 
 		//__________________________________________________________________
 
@@ -162,6 +162,8 @@ namespace Logic {
 		virtual void reduceCooldown(unsigned int percentage) = 0;
 
 
+		virtual void amplifyDamage(unsigned int percentage);
+
 	protected:
 
 
@@ -175,6 +177,11 @@ namespace Logic {
 		*/
 		virtual void onAvailable();
 
+
+		/**
+		Llamado cuando el arma pasa a ser inactiva.
+		*/
+		virtual void onBusy();
 
 		// =======================================================================
 		//                          METODOS PROTEGIDOS
@@ -245,6 +252,7 @@ namespace Logic {
 		/** Cuanta munición tenemos actualmente en este arma. */
 		unsigned int _currentAmmo;
 		
+		// creo q las dos siguientes variables no son necesarias
 		/** Radio de la cápsula del personaje */
 		float _capsuleRadius;
 		
@@ -257,6 +265,7 @@ namespace Logic {
 		/** Nombre del arma con el formato: weapon + <nombre arma>.*/
 		std::string _weaponName;
 
+		IComponent *_friend;
 	}; // class IWeapon
 
 } // namespace Logic

@@ -12,7 +12,7 @@ Contiene la implementación del componente que controla la vida de una entidad.
 
 // Logica
 #include "MagneticBullet.h"
-#include "ShootShotGun.h"
+#include "ShotGun.h"
 #include "Logic/Entity/Entity.h"
 #include "Logic/Maps/Map.h"
 #include "Map/MapEntity.h"
@@ -70,7 +70,7 @@ namespace Logic
 	} // process
 	//----------------------------------------------------------
 	
-	void CMagneticBullet::setOwner(CShootShotGun *owner)
+	void CMagneticBullet::setOwner(CShotGun *owner)
 	{
 		_owner = owner;
 	} // setOwner

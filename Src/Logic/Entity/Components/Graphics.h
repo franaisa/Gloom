@@ -16,6 +16,10 @@ gráfica de la entidad.
 #include "Logic/Entity/Component.h"
 #include "Graphics/Entity.h"
 
+#include "Graphics/Scene.h"
+
+#include "OgreSceneManager.h"
+
 // Predeclaración de clases para ahorrar tiempo de compilación
 namespace Graphics 
 {

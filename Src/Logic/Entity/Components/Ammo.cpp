@@ -58,14 +58,22 @@ namespace Logic {
 		// Comprobamos que los atributos obligatorios existen
 		assert( entityInfo->hasAttribute(_weaponName + "MaxAmmo") );
 		assert( entityInfo->hasAttribute(_weaponName + "ID") );
+
+		// Creo q esto no es necesario
 		assert( entityInfo->hasAttribute("physic_radius") );
 		assert( entityInfo->hasAttribute("heightShoot") );
+
 
 		// Leemos los atributos obligatorios de arma
 		_weaponID = (WeaponType::Enum)entityInfo->getIntAttribute(_weaponName + "ID");
 		_maxAmmo = entityInfo->getIntAttribute(_weaponName + "MaxAmmo");
+		
+		// Creo q esto no es necesario
 		_capsuleRadius = entityInfo->getFloatAttribute("physic_radius");
 		_heightShoot = entityInfo->getFloatAttribute("heightShoot");
+
+		
+
 
 		return true;
 	}
@@ -142,8 +150,7 @@ namespace Logic {
 		// Mandar el mensaje primaryFire(false)
 		auto m = make_shared<CMessagePrimaryShoot>(false);
 		_entity->emitMessage(m);
-	}
-
+	} // stopPrimaryFire
 	//__________________________________________________________________
 
 	void IAmmo::stopSecondaryFire() {
@@ -151,8 +158,7 @@ namespace Logic {
 		// Mandar el mensaje secondaryFire(false)
 		auto m = make_shared<CMessageSecondaryShoot>(false);
 		_entity->emitMessage(m);
-	}
-
+	} // stopSecondaryFire
 	//__________________________________________________________________
 
 	void IAmmo::onAvailable() {
@@ -160,8 +166,16 @@ namespace Logic {
 		message->setWeapon(_weaponID);
 		message->setAmmo(_currentAmmo);
 		_entity->emitMessage(message);
-	}
 
+		if(_friend)
+			_friend->stayAvailable();
+	} // onAvailable
+	//__________________________________________________________________
+
+	void IAmmo::onBusy() {
+		if(_friend)
+			_friend->stayBusy();
+	} // onBusy
 	//__________________________________________________________________
 
 	void IAmmo::emitSound(const string &ruta, const string &sound, bool notIfPlay){
@@ -175,14 +189,12 @@ namespace Logic {
 			
 		_entity->emitMessage(audioMsg);
 	} // emitSound
-
 	//__________________________________________________________________
 	
 	void IAmmo::addAmmo(int weapon, int ammo, bool iAmCatch) {
 		_currentAmmo += ammo;
-		if(_currentAmmo > _maxAmmo) 
+		if(_currentAmmo > _maxAmmo)
 			_currentAmmo = _maxAmmo;
-
 		if(iAmCatch) {
 			std::shared_ptr<CMessageHudAmmo> message = std::make_shared<CMessageHudAmmo>();
 			message->setWeapon(_weaponID);
@@ -190,7 +202,6 @@ namespace Logic {
 			_entity->emitMessage(message);
 		}
 	} // addAmmo
-
 	//__________________________________________________________________
 
 	void IAmmo::decrementAmmo(unsigned int ammoSpent) {
@@ -204,8 +215,7 @@ namespace Logic {
 		// Cambio sobre uno, hay q cambiarlo ;-)
 		message->setWeapon(_weaponID);
 		_entity->emitMessage(message);
-	}
-
+	} // decrementAmmo
 	//__________________________________________________________________
 
 	void IAmmo::resetAmmo() {
@@ -246,5 +256,9 @@ namespace Logic {
 			}
 		}
 	} // decals
+
+	void IAmmo::amplifyDamage(unsigned int percentage){
+		
+	}
 
 } // namespace Logic

@@ -20,6 +20,8 @@ de disparo de la cabra.
 #include "Logic/Server.h"
 #include "Map/MapEntity.h"
 
+#include "Sniper.h"
+#include "SniperFeedback.h"
 using namespace std;
 
 namespace Logic {
@@ -29,12 +31,16 @@ namespace Logic {
 	//__________________________________________________________________
 
 	CSniperAmmo::CSniperAmmo() : IAmmo("sniper"),
-											_primaryFireIsActive(false),
-											_elapsedTime(0),
-											_ammoSpentTimer(0),
-											_currentSpentAmmo(0),
-											_primaryFireCooldownTimer(0) {
-		// Nada que hacer
+								_primaryFireCooldown(0),
+								_defaultPrimaryFireCooldown(0),
+								_primaryFireCooldownTimer(0),
+								_primaryFireIsActive(false),
+								_secondaryFireCooldown(0),
+								_defaultSecondaryFireCooldown(0),
+								_secondaryFireCooldownTimer(0),
+								_secondaryFireIsActive(false),
+								_ammoSpentPerSecondaryShot(0){
+		
 	}
 
 	//__________________________________________________________________
@@ -50,18 +56,20 @@ namespace Logic {
 
 		// Nos aseguramos de tener todos los atributos que necesitamos
 		assert( entityInfo->hasAttribute(_weaponName + "PrimaryFireCooldown") );
-		assert( entityInfo->hasAttribute(_weaponName + "MaximumLoadingTime") );
-		assert( entityInfo->hasAttribute(_weaponName + "MaxAmmoPerShot") );
+
+		assert( entityInfo->hasAttribute(_weaponName + "SecondaryFireCooldown") );
+		assert( entityInfo->hasAttribute(_weaponName + "AmmoSpentPerSecondaryShot") );
 
 		// Cooldown del disparo principal
 		_defaultPrimaryFireCooldown = _primaryFireCooldown = entityInfo->getFloatAttribute(_weaponName + "PrimaryFireCooldown") * 1000;
-
-		// Tiempo de carga del arma
-		_maxLoadingTime = entityInfo->getFloatAttribute(_weaponName + "MaximumLoadingTime") * 1000;
+		_defaultSecondaryFireCooldown = _secondaryFireCooldown = entityInfo->getFloatAttribute(_weaponName + "SecondaryFireCooldown") * 1000;
 
 		// Ratio al que gastamos municion
-		_maxAmmoPerShot = entityInfo->getIntAttribute(_weaponName + "MaxAmmoPerShot");
-		_ammoSpentTimeStep = (float)_maxLoadingTime / (float)(_maxAmmoPerShot);
+		_ammoSpentPerSecondaryShot = entityInfo->getIntAttribute(_weaponName + "AmmoSpentPerSecondaryShot");
+
+		_friend = _entity->getComponent<Logic::CSniper>("CSniper");
+		if(!_friend)
+			_friend = _entity->getComponent<Logic::CSniperFeedback>("CSniperFeedback");
 
 		return true;
 	}
@@ -69,60 +77,41 @@ namespace Logic {
 	//__________________________________________________________________
 
 	void CSniperAmmo::onActivate() {
-		_currentSpentAmmo = _ammoSpentTimer = _elapsedTime = 0;
+
 	}
 
 	//__________________________________________________________________
 
 	void CSniperAmmo::onAvailable() {
 		IAmmo::onAvailable();
-		_currentSpentAmmo = _ammoSpentTimer = _elapsedTime = 0;
+
 	}
 
 	//__________________________________________________________________
 
 	void CSniperAmmo::onTick(unsigned int msecs) {
-		// Si el jugador esta dejando pulsado el disparo primario, aumentamos
-		// el tamaño de la bola y reducimos la velocidad hasta un limite
-		if(_primaryFireIsActive) {
-			if(_currentAmmo > 0 && _currentSpentAmmo < _maxAmmoPerShot) {
-				if(_elapsedTime < _maxLoadingTime) {
-					// Contamos el tiempo que hemos mantenido pulsado el raton
-					_elapsedTime += msecs;
-					// Actualizamos el timer que se encarga de reducir la municion
-					_ammoSpentTimer += msecs;
-					if(_ammoSpentTimer >= _ammoSpentTimeStep) {
-						decrementAmmo();
-						++_currentSpentAmmo;
-						_ammoSpentTimer = 0;
-					}
-
-					if(_elapsedTime >= _maxLoadingTime) {
-						_elapsedTime = _maxLoadingTime;
-					}
-				}
-			}
-		}
 		
+		// tengo el cooldown compartio entre ambos disparos.
 		// Controlamos el cooldown
 		if(_primaryFireCooldownTimer > 0) {
 			_primaryFireCooldownTimer -= msecs;
 			
-			if(_primaryFireCooldownTimer < 0)
+			if(_primaryFireCooldownTimer < 0){
 				_primaryFireCooldownTimer = 0;
+			}
 		}
 	}
 
 	//__________________________________________________________________
 
 	bool CSniperAmmo::canUsePrimaryFire() {
-		return _primaryFireCooldownTimer == 0 && _currentAmmo > 0;
+		return _primaryFireCooldownTimer == 0 && _currentAmmo > 0 && !_secondaryFireIsActive;
 	}
 
 	//__________________________________________________________________
 
 	bool CSniperAmmo::canUseSecondaryFire() {
-		return _secondaryFireCooldownTimer == 0 && _currentAmmo > 0;;
+		return _secondaryFireCooldownTimer == 0 && _currentAmmo >= _ammoSpentPerSecondaryShot && !_primaryFireIsActive;
 	}
 
 	//__________________________________________________________________
@@ -132,8 +121,9 @@ namespace Logic {
 
 		_primaryFireCooldownTimer = _primaryFireCooldown;
 
+		_primaryFireIsActive = true;
 		decrementAmmo();
-		++_currentSpentAmmo;
+		
 	}
 
 	//__________________________________________________________________
@@ -141,12 +131,7 @@ namespace Logic {
 	void CSniperAmmo::stopPrimaryFire() {
 		IAmmo::stopPrimaryFire();
 		
-		if(!_primaryFireIsActive) return;
-
 		_primaryFireIsActive = false;
-
-		// Reseteamos el reloj
-		_currentSpentAmmo = _ammoSpentTimer = _elapsedTime = 0;
 	}
 
 	//__________________________________________________________________
@@ -154,23 +139,19 @@ namespace Logic {
 	void CSniperAmmo::secondaryFire() {
 		IAmmo::secondaryFire();
 
-		_secondaryFireCooldownTimer = _secondaryFireCooldown;
+		_primaryFireCooldownTimer = _secondaryFireCooldown;
+		_secondaryFireIsActive = false;
 
-		decrementAmmo();
-		++_currentSpentAmmo;
+		for(unsigned int i = 0; i < _ammoSpentPerSecondaryShot; ++i)
+			decrementAmmo();
 	}
 
 	//__________________________________________________________________
 
 	void CSniperAmmo::stopSecondaryFire() {
 		IAmmo::stopSecondaryFire();
-		
-		if(!_secondaryFireIsActive) return;
 
 		_secondaryFireIsActive = false;
-
-		// Reseteamos el reloj
-		_currentSpentAmmo = _ammoSpentTimer = _elapsedTime = 0;
 	}
 	//__________________________________________________________________
 
@@ -179,7 +160,7 @@ namespace Logic {
 		// sino decrementamos conforme al porcentaje dado.
 		_primaryFireCooldown = percentage == 0 ? _defaultPrimaryFireCooldown : (_defaultPrimaryFireCooldown - (percentage * _primaryFireCooldown * 0.01f));
 
-		_secondaryFireCooldown = percentage == 0 ? _defaultPrimaryFireCooldown : (_defaultSecondaryFireCooldown - (percentage * _secondaryFireCooldown * 0.01f));
+		_secondaryFireCooldown = percentage == 0 ? _defaultSecondaryFireCooldown : (_defaultSecondaryFireCooldown - (percentage * _secondaryFireCooldown * 0.01f));
 	}
 
 }//namespace Logic

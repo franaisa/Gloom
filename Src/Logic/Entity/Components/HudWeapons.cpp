@@ -132,6 +132,7 @@ namespace Logic {
 		//Cuando activamos el componente solo tendremos visible el arma 0( arma melee)
 		_currentWeapon = WeaponType::eSOUL_REAPER;
 		_graphicsEntities[_currentWeapon].graphicsEntity->setVisible(true);
+		_overlayWeapon3D[_currentWeapon]->setVisible(true);
 	} // activate
 
 	//---------------------------------------------------------

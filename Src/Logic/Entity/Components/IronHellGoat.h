@@ -9,7 +9,7 @@ Contiene la declaración de la cabecera del componente
 de disparo de la cabra.
 
 @see Logic::CIronHellGoat
-@see Logic::CShootProjectile
+@see Logic::CProjectile
 
 @author Francisco Aisa García
 @date Mayo, 2013
