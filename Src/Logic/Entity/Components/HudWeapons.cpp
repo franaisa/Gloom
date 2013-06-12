@@ -366,8 +366,6 @@ namespace Logic {
 	//---------------------------------------------------------
 
 	void CHudWeapons::shootAnim(float force) {
-		std::cout << "intento crear la particula" << std::endl;
-		Graphics::HHFXParticle * particula = new Graphics::HHFXParticle("Teleporter",_entity->getPosition()+Vector3(0,4,0)+Math::getDirection(_entity->getOrientation())*3);
 		Matrix4 weaponTransform = _graphicsEntities[_currentWeapon].graphicsEntity->getTransform();
 		Vector3 weaponDir = Math::getDirection( weaponTransform );
 		_shootAnim.offset = weaponDir * force * Vector3(1.0f, 0.0f, 1.0f);

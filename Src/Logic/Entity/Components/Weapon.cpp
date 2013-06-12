@@ -206,18 +206,5 @@ namespace Logic {
 			}
 		}
 	} // decals
-
-
-
-
-	OgreDecal::Decal decal = generator.createDecal( &worldMesh, pos, width, height, textureName, true, decalObject );
-			std::cout << "ha creado el decal" << std::endl;
-			/// Render the decal object. Always verify the returned object - it will be NULL if no decal could be created.
-			if (decal.object) {
-				//sceneMgr->getRootSceneNode()->createChildSceneNode()->attachObject( decal.object );
-				cGraph->getSceneManager()->getRootSceneNode()->createChildSceneNode()->attachObject( decal.object );
-				decalObject = NULL;
-			}
-			std::cout << "pinta" << std::endl;
 } // namespace Logic
 

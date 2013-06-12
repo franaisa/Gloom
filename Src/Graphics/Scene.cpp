@@ -163,9 +163,9 @@ namespace Graphics
 			_directionalLight->setDiffuseColour(1,1,1);
 			_directionalLight->setSpecularColour(0.3,0.3,0.3);
 
-			HHFX::getSingletonPtr()->setSceneMgr(_sceneMgr);
-			HHFX::getSingletonPtr()->setCamera(_camera->getOgreCamera());
-			HHFX::getSingletonPtr()->activate();
+			//HHFX::getSingletonPtr()->setSceneMgr(_sceneMgr);
+			//HHFX::getSingletonPtr()->setCamera(_camera->getOgreCamera());
+			//HHFX::getSingletonPtr()->activate();
 		}
 		_sceneMgr->getRootSceneNode()->setVisible(true);
 	} // activate
@@ -188,7 +188,7 @@ namespace Graphics
 
 		if(_name != "dummy_scene"){
 			
-			HHFX::getSingletonPtr()->deactivate();
+			//HHFX::getSingletonPtr()->deactivate();
 		}
 
 	} // deactivate
