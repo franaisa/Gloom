@@ -216,15 +216,10 @@ namespace Net {
 	//__________________________________________________________________
 
 	void CBuffer::serialize(const Quaternion& data) {
-		//Temporal hasta que sepamos saber sacar bien los angulos euler del quaternion
-		Matrix3 orientation;
-		data.ToRotationMatrix(orientation);
-		Ogre::Radian yaw, pitch, roll;
-		orientation.ToEulerAnglesYXZ(yaw, pitch, roll);
-		
-		serialize(yaw.valueRadians());
-		serialize(pitch.valueRadians());
-		serialize(roll.valueRadians());
+		Vector3 parcial=Math::getEulerYawPitchRoll(data);
+		serialize(parcial.x);
+		serialize(parcial.y);
+		serialize(parcial.z);
 	}
 
 	//__________________________________________________________________

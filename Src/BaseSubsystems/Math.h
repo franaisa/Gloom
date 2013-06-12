@@ -171,57 +171,32 @@ namespace Math
 	}
 
 
-
-	//ALGO DE ESTE METODO ESTA MAL YA, SI SE SOLUCIONA SE QUITA EL CAMBIO A MATRIX3 PARA OBTENER LOS EULER AUTENTICOS
 	/**
 	Devuelve en grados de Euler los grados de yaw,pitch y roll por los que esta formado el quaternion.
 
 	@param q Quaternion a extraer los grados.
 	@return Vector3 con el yaw,pitch,roll.
 	*/
-	static Vector3 getEulerYawPitchRoll(const Quaternion& q)
+	static Vector3 getEulerYawPitchRoll(const Quaternion& quaternion)
 	{
-        // Store the Euler angles in radians
-        Vector3 yawPitchRoll;
-
-        double sqw = q.w * q.w;
-        double sqx = q.x * q.x;
-        double sqy = q.y * q.y;
-        double sqz = q.z * q.z;
-
-        // If quaternion is normalised the unit is one, otherwise it is the correction factor
-        double unit = sqx + sqy + sqz + sqw;
-        double test = q.x * q.y + q.z * q.w;
-
-        if (test > 0.4999f * unit)                              // 0.4999f OR 0.5f - EPSILON
-        {
-			//std::cout << "test superior" << std::endl;
-            // Singularity at north pole
-            yawPitchRoll.x = 2.0f * atan2(q.x, q.w);  // Yaw
-            yawPitchRoll.y = PI * 0.5f;                         // Pitch
-           yawPitchRoll.z = 0.0f;                                // Roll
-            return yawPitchRoll;
-        }
-        else if (test < -0.4999f * unit)                        // -0.4999f OR -0.5f + EPSILON
-        {
-			//std::cout << "test inferior" << std::endl;
-            // Singularity at south pole
-            yawPitchRoll.x = -2.0f * atan2(q.x, q.w); // Yaw
-            yawPitchRoll.y = -PI * 0.5f;                        // Pitch
-           yawPitchRoll.z = 0.0f;                                // Roll
-            return yawPitchRoll;
-        }
-        else
-        {
-			//std::cout << "Normal" << std::endl;
-            yawPitchRoll.x = atan2(2.0f * q.y * q.w - 2.0f * q.x * q.z,float(( sqx - sqy - sqz + sqw)));       // Yaw
-            yawPitchRoll.y = asin(2.0f * test / unit);                                             // Pitch
-            yawPitchRoll.z = atan2(2.0f * q.x * q.w - 2.0f * q.y * q.z,float(( -sqx + sqy - sqz + sqw)));      // Roll
-        }
-
-        return yawPitchRoll;
-    
+		Ogre::Radian mPitch,mRoll,mYaw;
+		mYaw = Ogre::Math::ATan2(2 * quaternion.y * quaternion.w - 2 * quaternion.x * quaternion.z, 1 - 2 * Ogre::Math::Pow(quaternion.y, 2) - 2 * Ogre::Math::Pow(quaternion.z, 2));
+		mRoll = Ogre::Math::ASin(2 * quaternion.x * quaternion.y + 2 * quaternion.z * quaternion.w);
+		mPitch = Ogre::Math::ATan2(2 * quaternion.x * quaternion.w - 2 * quaternion.y * quaternion.z, 1 - 2 * Ogre::Math::Pow(quaternion.x, 2) - 2 * Ogre::Math::Pow(quaternion.z, 2));
+ 
+		if(quaternion.x * quaternion.y + quaternion.z * quaternion.w == 0.5)
+		{
+			mYaw = 2.0f * Ogre::Math::ATan2(quaternion.x, quaternion.w);
+			mPitch = 0.0f;
+		}
+		else if(quaternion.x * quaternion.y + quaternion.z * quaternion.w == -0.5)
+		{ 
+			mYaw = -2.0f * Ogre::Math::ATan2(quaternion.x, quaternion.w);
+			mPitch = 0.0f;
+		}
+		return Vector3(mYaw.valueRadians(),mPitch.valueRadians(),mRoll.valueRadians());
 	}
+
 
 	/**
 	Rota el quaternion pasado por parámetro con los radianes especificados tambien por parámetro sobre el eje especificado.
