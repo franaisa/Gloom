@@ -201,7 +201,6 @@ namespace Logic {
 			message->setAmmo(_currentAmmo);
 			_entity->emitMessage(message);
 		}
-		printf("\nañadiendo municion, arma: %d, municion: %d => total %d", weapon, ammo, _currentAmmo);
 	} // addAmmo
 	//__________________________________________________________________
 
