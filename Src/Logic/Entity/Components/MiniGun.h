@@ -64,9 +64,6 @@ namespace Logic {
 
 		virtual void onFixedTick(unsigned int msecs);
 
-		virtual bool canUsePrimaryFire();
-		virtual bool canUseSecondaryFire();
-
 		//Método que efectua el disparo
 		void		 shoot				();
 
@@ -74,7 +71,7 @@ namespace Logic {
 
 		void		 triggerHitMessages	(CEntity* entityHit);
 
-		void		 secondaryShoot		(int iRafagas);
+		void		 secondaryShoot		();
 
 	private:
 
@@ -85,47 +82,18 @@ namespace Logic {
 		unsigned int _defaultDamage;
 		unsigned int _damage;
 
-		/**
-		Namespace para los tipos de mensajes de control posibles.
-		*/
-		bool _pressThenShoot;
+		unsigned int _secondaryFireCooldown;
+		unsigned int _defaultSecondaryFireCooldown;
+		int _secondaryFireCooldownTimer;
 
-		/**
-			Contador para ir acumulando el tiempo/ticks que se tiene el botón derecho apretado
-		*/
-		int		_contador;
+		float _ammoSpentTimer;
+		float _ammoSpentTimeStep;
+		float _defaultAmmoSpentTimeStep;
+		unsigned int _currentSpentSecondaryAmmo;
+		unsigned int _maxAmmoSpentPerSecondaryShot;
+		float _secondaryFireLoadTime;
 
-		/**
-			Variable booleana que indica si se está acumulando tiempo/ticksporque
-			se tiene el botón derecho pulsado
-		*/
-		bool	_acumulando;
-
-		/**
-			Numero de rafagas que se tienen acumuladas.
-			Una rafaga = 10 unidades de contador.
-		*/
-		int		_iRafagas;
-
-		/**
-			Variable booleana que controla si tenemos el click izquierdo pulsado
-		*/
-		bool	_bLeftClicked;
-
-		/**
-			Variable para contar cuántas veces se ha pulsado el click izquierdo
-		*/
-		int		_iContadorLeftClicked;
-
-		/**
-			Variable booleana para controlar si se ha mandado ya el mensaje de dispersión
-		*/
-		bool	_bMensajeDispMandado;
-
-		/**
-			Número máximo de ráfagas (balas) que se pueden disparar
-		*/
-		int		_iMaxRafagas;
+		bool _secondaryFireIsActive;
 
 		/** Dispersión del arma. */
 		float _dispersion;
@@ -136,6 +104,7 @@ namespace Logic {
 		/** Distancia de alcance del arma. */
 		float _distance;
 
+		bool _primaryFireIsActive;
 	}; // class CMiniGun
 
 	REG_FACTORY(CMiniGun);

@@ -139,7 +139,7 @@ namespace Logic {
 		@param ammo Munición a incrementar.
 		@param iAmCath Para el HUD.
 		*/
-		void addAmmo(int weapon, int ammo, bool iAmCatch);
+		virtual void addAmmo(int weapon, int ammo, bool iAmCatch);
 
 		//__________________________________________________________________
 

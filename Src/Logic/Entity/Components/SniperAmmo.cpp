@@ -90,28 +90,14 @@ namespace Logic {
 	//__________________________________________________________________
 
 	void CSniperAmmo::onTick(unsigned int msecs) {
-		// Si el jugador esta dejando pulsado el disparo primario, aumentamos
-		// el tamaño de la bola y reducimos la velocidad hasta un limite
 		
-		
+		// tengo el cooldown compartio entre ambos disparos.
 		// Controlamos el cooldown
 		if(_primaryFireCooldownTimer > 0) {
 			_primaryFireCooldownTimer -= msecs;
 			
 			if(_primaryFireCooldownTimer < 0){
 				_primaryFireCooldownTimer = 0;
-				if(_primaryFireIsActive)
-					primaryFire();
-			}
-		}
-
-		if(_secondaryFireCooldownTimer > 0) {
-			_secondaryFireCooldownTimer -= msecs;
-			
-			if(_secondaryFireCooldownTimer < 0){
-				_secondaryFireCooldownTimer = 0;
-				if(_secondaryFireIsActive)
-					secondaryFire();
 			}
 		}
 	}
@@ -153,7 +139,7 @@ namespace Logic {
 	void CSniperAmmo::secondaryFire() {
 		IAmmo::secondaryFire();
 
-		_secondaryFireCooldownTimer = _secondaryFireCooldown;
+		_primaryFireCooldownTimer = _secondaryFireCooldown;
 		_secondaryFireIsActive = false;
 
 		for(unsigned int i = 0; i < _ammoSpentPerSecondaryShot; ++i)
@@ -174,7 +160,7 @@ namespace Logic {
 		// sino decrementamos conforme al porcentaje dado.
 		_primaryFireCooldown = percentage == 0 ? _defaultPrimaryFireCooldown : (_defaultPrimaryFireCooldown - (percentage * _primaryFireCooldown * 0.01f));
 
-		_secondaryFireCooldown = percentage == 0 ? _defaultPrimaryFireCooldown : (_defaultSecondaryFireCooldown - (percentage * _secondaryFireCooldown * 0.01f));
+		_secondaryFireCooldown = percentage == 0 ? _defaultSecondaryFireCooldown : (_defaultSecondaryFireCooldown - (percentage * _secondaryFireCooldown * 0.01f));
 	}
 
 }//namespace Logic

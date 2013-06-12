@@ -19,6 +19,7 @@
 
 namespace Logic {
 
+	class CShotGun;
 	/**
     @ingroup logicGroup
 
@@ -61,6 +62,14 @@ namespace Logic {
 		*/
 		virtual void stopPrimaryFire();
 
+		/**
+		Incrementar la munición de un arma.
+
+		@param weapon Identificador del arma.
+		@param ammo Munición a incrementar.
+		@param iAmCath Para el HUD.
+		*/
+		virtual void addAmmo(int weapon, int ammo, bool iAmCatch);
 	protected:
 
 		virtual void onActivate();
@@ -94,11 +103,16 @@ namespace Logic {
 
 	private:
 
+		Logic::CShotGun *_shotGunComponent;
+
 		std::string _shootAudio;
 
 		unsigned int _primaryFireCooldown;
 		unsigned int _defaultPrimaryFireCooldown;
 		int _primaryFireCooldownTimer;		
+
+		float _primaryFireDispersion;
+		int _numberOfShots;
 	};
 
 	REG_FACTORY(CShotGunAmmo);

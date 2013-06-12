@@ -101,18 +101,22 @@ namespace Logic {
 
 	//__________________________________________________________________
 
-	void CMiniGunAmmo::onTick(unsigned int msecs) {		
+	void CMiniGunAmmo::onFixedTick(unsigned int msecs) {		
 		
 		// Controlamos el cooldown
 		if(_primaryFireCooldownTimer > 0) {
 			_primaryFireCooldownTimer -= msecs;
 			
 			if(_primaryFireCooldownTimer < 0){
-				_primaryFireCooldownTimer = _primaryFireCooldown;
+				_primaryFireCooldownTimer = 0;
 					if(_primaryFireIsActive){
+						if(canUsePrimaryFire()){
 						// las alternativas son, o enviar un mensaje por cada disparo, o q el componente de shoot tb tenga el cooldown
-					primaryFire();
-					decrementAmmo();
+							decrementAmmo();
+							_primaryFireCooldownTimer = _primaryFireCooldown;
+						}else{
+							stopPrimaryFire();
+						}
 				}
 			}
 		}
@@ -175,6 +179,7 @@ namespace Logic {
 
 		_secondaryFireCooldownTimer = _secondaryFireCooldown;
 
+		_secondaryFireIsActive = true;
 		// la 1º bala la debo de quitar aqui, si no esperara el cold down y disparara gratis
 		decrementAmmo();
 		++_currentSpentSecondaryAmmo;

@@ -58,7 +58,6 @@ namespace Logic {
 		assert( entityInfo->hasAttribute(_weaponName+"NumberOfShots") );
 
 		assert( entityInfo->hasAttribute(_weaponName + "PrimaryFireDamage") );
-		assert( entityInfo->hasAttribute(_weaponName + "PrimaryFireDamage") );
 
 		// Leemos los atributos
 		_projectileShootForce = entityInfo->getFloatAttribute(_weaponName + "ShootForce");
@@ -95,13 +94,6 @@ namespace Logic {
 	//__________________________________________________________________
 
 	void CShotGun::primaryFire() {
-		_primaryFireCooldownTimer = _primaryFireCooldown;
-
-		// Animacion de disparo
-		// @deprecated Temporal hasta que este bien implementado
-		CHudWeapons* hudWeapon = _entity->getComponent<CHudWeapons>("CHudWeapons");
-		if(hudWeapon != NULL)
-			hudWeapon->shootAnim(-1.0f);
 
 		int shots = _numberOfShots <= _currentAmmo ? _numberOfShots : _currentAmmo;
 		for(int i = 0; i < shots; ++i) {
@@ -128,8 +120,6 @@ namespace Logic {
 			projectileEntity->getComponent<CMagneticBullet>("CMagneticBullet")->setProperties(this, _projectileShootForce, dispersionDirection, _heightShoot, _primaryFireDamage, _damageBurned);
 			_projectiles.insert(projectileEntity);
 		}
-
-		decrementAmmo(shots);
 			
 	} // fireWeapon
 	//_________________________________________________
@@ -163,23 +153,10 @@ namespace Logic {
 	}
 	//_________________________________________________
 
-	void CShotGun::reduceCooldown(unsigned int percentage) {
-		// Si es 0 significa que hay que restaurar al que habia por defecto,
-		// sino decrementamos conforme al porcentaje dado.
-		_primaryFireCooldown = percentage == 0 ? _defaultPrimaryFireCooldown : (_defaultPrimaryFireCooldown  - (percentage * _primaryFireCooldown * 0.01f));
-	}
+	void CShotGun::setCurrentAmmo(unsigned int ammo){
+		_currentAmmo = ammo;
+	} // setCurrentAmmo
 	//_________________________________________________
-
-	bool CShotGun::canUsePrimaryFire() {
-		// Si tienes municion y el cooldown ha bajado
-		return _primaryFireCooldownTimer == 0 && _currentAmmo > 0;
-	}
-	//_________________________________________________
-
-	bool CShotGun::canUseSecondaryFire() {
-		return true;
-	}
-
 
 } // namespace Logic
 

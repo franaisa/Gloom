@@ -81,7 +81,7 @@ namespace Logic {
 
 		virtual void onAvailable();
 
-		virtual void onTick(unsigned int msecs);
+		virtual void onFixedTick(unsigned int msecs);
 
 		virtual bool canUsePrimaryFire();
 

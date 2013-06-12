@@ -85,8 +85,6 @@ namespace Logic {
 			
 			if(_primaryFireCooldownTimer < 0){
 				_primaryFireCooldownTimer = 0;
-				if(_primaryFireIsActive)
-					primaryFire();
 			}
 		}
 	}

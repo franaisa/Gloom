@@ -110,10 +110,7 @@ namespace Logic {
 	//__________________________________________________________________
 
 	void IWeapon::onAvailable() {
-		shared_ptr<CMessageHudWeapon> message = make_shared<CMessageHudWeapon>();
-		message->setWeapon(_weaponID);
-		message->setAmmo(_currentAmmo);
-		_entity->emitMessage(message);
+
 	}
 
 	//__________________________________________________________________
@@ -137,12 +134,14 @@ namespace Logic {
 		if(_currentAmmo > _maxAmmo) 
 			_currentAmmo = _maxAmmo;
 
+		/*
 		if(iAmCatch) {
 			std::shared_ptr<CMessageHudAmmo> message = std::make_shared<CMessageHudAmmo>();
 			message->setWeapon(_weaponID);
 			message->setAmmo(_currentAmmo);
 			_entity->emitMessage(message);
 		}
+		*/
 	} // addAmmo
 
 	//__________________________________________________________________
@@ -150,6 +149,7 @@ namespace Logic {
 	void IWeapon::decrementAmmo(unsigned int ammoSpent) {
 		_currentAmmo -= ammoSpent;
 
+		/*
 		// Notificamos al hud para que cambie la cantidad de municion
 		// que tenemos
 		shared_ptr<CMessageHudAmmo> message = make_shared<CMessageHudAmmo>();
@@ -158,6 +158,7 @@ namespace Logic {
 		// Cambio sobre uno, hay q cambiarlo ;-)
 		message->setWeapon(_weaponID);
 		_entity->emitMessage(message);
+		*/
 	}
 
 	//__________________________________________________________________

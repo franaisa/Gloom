@@ -218,22 +218,28 @@ namespace Logic {
 	//__________________________________________________________________
 
 	void CSniper::onTick(unsigned int msecs) {
-		/*
+		
 		// Controlamos el cooldown del disparo primario y secundario
 		if(_primaryFireTimer > 0) {
 			_primaryFireTimer -= msecs;
 			
-			if(_primaryFireTimer < 0)
+			if(_primaryFireTimer < 0){
 				_primaryFireTimer = 0;
+				if(_primaryFireIsActive)
+					primaryFire();
+			}
 		}
 
 		if(_secondaryFireTimer > 0) {
 			_secondaryFireTimer -= msecs;
 
-			if(_secondaryFireTimer < 0)
+			if(_secondaryFireTimer < 0){
 				_secondaryFireTimer = 0;
+				if(_secondaryFireIsActive)
+					secondaryFire();
+			}
 		}
-		*/
+		
 	} // onTick
 	//__________________________________________________________________
 

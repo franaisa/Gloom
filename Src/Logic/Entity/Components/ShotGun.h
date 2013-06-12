@@ -51,8 +51,6 @@ namespace Logic {
 
 		virtual void amplifyDamage(unsigned int percentage);
 
-		virtual void reduceCooldown(unsigned int percentage);
-
 		/**
 		Metodo llamado por el proyectil para que este sea borrado como entidad y que lo borre de la lista de 
 		proyectiles.
@@ -60,13 +58,11 @@ namespace Logic {
 		*/
 		void destroyProjectile(CEntity *projectile, CEntity *killedBy);
 
+		void setCurrentAmmo(unsigned int ammo);
 	protected:
 
 		virtual void onTick(unsigned int msecs);
-
-		virtual bool canUsePrimaryFire();
-		virtual bool canUseSecondaryFire();
-
+				
 	private:
 
 		unsigned int _defaultPrimaryFireCooldown;

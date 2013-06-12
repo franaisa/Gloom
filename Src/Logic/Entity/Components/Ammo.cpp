@@ -195,15 +195,13 @@ namespace Logic {
 		_currentAmmo += ammo;
 		if(_currentAmmo > _maxAmmo)
 			_currentAmmo = _maxAmmo;
-
-		printf("\nSoy %s y he municion para el arma %d", _entity->getName().c_str(), weapon);
-
 		if(iAmCatch) {
 			std::shared_ptr<CMessageHudAmmo> message = std::make_shared<CMessageHudAmmo>();
 			message->setWeapon(_weaponID);
 			message->setAmmo(_currentAmmo);
 			_entity->emitMessage(message);
 		}
+		printf("\nañadiendo municion, arma: %d, municion: %d => total %d", weapon, ammo, _currentAmmo);
 	} // addAmmo
 	//__________________________________________________________________
 

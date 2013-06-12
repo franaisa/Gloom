@@ -74,7 +74,7 @@ namespace Logic {
 
 
 	void CSoulReaper::primaryFire() {
-		_primaryFireIsActive = true;
+		//_primaryFireIsActive = true;
 
 		_primaryFireTimer = _primaryFireCooldown;
 	

@@ -39,7 +39,7 @@ namespace Logic {
 	public:
 
 		/** Constructor por defecto. */
-		CSniper() : IWeapon("sniper"), _primaryFireTimer(0), _secondaryFireTimer(0) {}
+		CSniper() : IWeapon("sniper"), _primaryFireTimer(0), _secondaryFireTimer(0), _primaryFireIsActive(false), _secondaryFireIsActive(false) {}
 
 		virtual ~CSniper();
 
@@ -136,6 +136,8 @@ namespace Logic {
 		int _primaryFireTimer;
 		int _secondaryFireTimer;
 
+		bool _primaryFireIsActive;
+		bool _secondaryFireIsActive;
 	}; // class CSniper
 
 	REG_FACTORY(CSniper);

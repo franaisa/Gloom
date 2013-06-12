@@ -49,21 +49,19 @@ namespace Logic {
 
 	void CShotGunFeedback::primaryFire() {
 		// Poner la animacion de carga inestable del arma
-		_hudWeapon->loadingWeapon(true);
+		_hudWeapon->shootAnim(-1.0f);
 	}
 
 	//__________________________________________________________________
 
 	void CShotGunFeedback::stopPrimaryFire() {
 		// Parar la animacion de carga
-		_hudWeapon->loadingWeapon(false);
-		_hudWeapon->shootAnim(-1.85f);
 	}
 
 	//__________________________________________________________________
 
 	void CShotGunFeedback::secondaryFire() {
-		// De momento ná pisha
+		// Hacer animacion de atraccion de balas
 	}
 
 }//namespace Logic

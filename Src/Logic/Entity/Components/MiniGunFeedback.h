@@ -67,6 +67,32 @@ namespace Logic {
 
 		virtual void stopSecondaryFire();
 
+		//__________________________________________________________________
+		virtual void onFixedTick(unsigned int msecs);
+
+	protected:
+
+		unsigned int _defaultPrimaryFireCooldown;
+		unsigned int _primaryFireCooldown;
+		int _primaryFireCooldownTimer;
+
+		bool _primaryFireIsActive;
+
+		/** Dispersión del arma. */
+		float _dispersion;
+
+		/** Dispersión original del arma. Variable auxiliar para guardar la referencia leída del mapa.*/
+		float _dispersionOriginal;
+
+		/**
+		Variable para contar cuántas veces se ha pulsado el click izquierdo
+		*/
+		int	_iContadorLeftClicked;
+
+		/**
+		Variable booleana para controlar si se ha mandado ya el mensaje de dispersión
+		*/
+		bool _bMensajeDispMandado;
 	};
 
 	REG_FACTORY(CMiniGunFeedback);

@@ -185,9 +185,11 @@ namespace Logic
 			_weaponry[newWeapon].second->stayAvailable();
 //_weaponry[newWeapon].second->inUse(true);
 			
+			printf("\n cambiando de %d a %d", _currentWeapon, newWeapon);
 			// Actualizamo el indice de arma
 			_currentWeapon = newWeapon;
 
+			
 			// Mandamos un mensaje para actualizar el HUD
 			std::shared_ptr<CMessageChangeWeaponGraphics> chgWpnGraphicsMsg = std::make_shared<CMessageChangeWeaponGraphics>();
 			chgWpnGraphicsMsg->setWeapon(_currentWeapon);

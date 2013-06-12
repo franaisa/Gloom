@@ -34,7 +34,10 @@ namespace Logic {
 	CShotGunAmmo::CShotGunAmmo() : IAmmo("shotGun"),
 									_primaryFireCooldown(0),
 									_defaultPrimaryFireCooldown(0),
-									_primaryFireCooldownTimer(0) {
+									_primaryFireCooldownTimer(0),
+									_primaryFireDispersion(0),
+									_numberOfShots(0),
+									_shotGunComponent(0){
 		// Nada que hacer
 	}
 
@@ -51,14 +54,22 @@ namespace Logic {
 
 		// Nos aseguramos de tener todos los atributos que necesitamos
 		assert( entityInfo->hasAttribute(_weaponName + "PrimaryFireCooldown") );
+		assert( entityInfo->hasAttribute(_weaponName + "PrimaryFireDispersion") );
+		assert( entityInfo->hasAttribute(_weaponName + "NumberOfShots") );
+		
 
 		// Cooldown del disparo principal
 		_defaultPrimaryFireCooldown = _primaryFireCooldown = entityInfo->getFloatAttribute(_weaponName + "PrimaryFireCooldown") * 1000;
 
+		_primaryFireDispersion = entityInfo->getFloatAttribute(_weaponName + "PrimaryFireDispersion");
+		_numberOfShots = entityInfo->getIntAttribute(_weaponName + "NumberOfShots");
+		
+
 		_friend = _entity->getComponent<Logic::CShotGun>("CShotGun");
 		if(!_friend)
 			_friend = _entity->getComponent<Logic::CShotGunFeedback>("CShotGunFeedback");
-
+		else
+			_shotGunComponent = _entity->getComponent<Logic::CShotGun>("CShotGun");;
 		return true;
 	}
 
@@ -117,6 +128,13 @@ namespace Logic {
 	}
 
 	//__________________________________________________________________
+
+	void CShotGunAmmo::addAmmo(int weapon, int ammo, bool iAmCatch){
+		IAmmo::addAmmo(weapon, ammo, iAmCatch);
+
+		if(_shotGunComponent)
+			_shotGunComponent->setCurrentAmmo(_currentAmmo);
+	}
 
 	void CShotGunAmmo::reduceCooldown(unsigned int percentage) {
 		// Si es 0 significa que hay que restaurar al que habia por defecto,

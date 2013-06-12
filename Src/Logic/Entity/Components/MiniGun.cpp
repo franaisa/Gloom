@@ -14,7 +14,7 @@ Contiene la implementación del componente que gestiona las armas y que administr
 #include "Map/MapEntity.h"
 
 #include "Logic/Messages/MessageControl.h"
-#include "Logic/Messages/MessageHudDispersion.h"
+
 
 #include "Physics/Server.h"
 
@@ -25,15 +25,20 @@ namespace Logic {
 	IMP_FACTORY(CMiniGun);
 	
 	CMiniGun::CMiniGun() : IWeapon("miniGun"), 
-									 _pressThenShoot(false), 
-									 _contador(0), 
-									 _acumulando(false),
-									 _iRafagas(0), 
-									 _bLeftClicked(false), 
-									 _iContadorLeftClicked(0),
-									 _primaryFireCooldownTimer(0),
-									 _iMaxRafagas(20),
-									 _bMensajeDispMandado(false) {
+									_primaryFireCooldown(0),
+									_defaultPrimaryFireCooldown(0),
+									_primaryFireCooldownTimer(0),
+									_primaryFireIsActive(false),
+									_secondaryFireCooldown(0),
+									_defaultSecondaryFireCooldown(0),
+									_secondaryFireCooldownTimer(0),
+									_secondaryFireIsActive(false),
+									_ammoSpentTimer(0),
+									_ammoSpentTimeStep(0),
+									_defaultAmmoSpentTimeStep(0),
+									_currentSpentSecondaryAmmo(0),
+									_maxAmmoSpentPerSecondaryShot(0),
+									_secondaryFireLoadTime(0){
 			
 			// Nada que inicializar
 		}
@@ -62,15 +67,25 @@ namespace Logic {
 		//_dispersionOriginal = _dispersion = entityInfo->getFloatAttribute(_weaponName + "Dispersion");
 
 		// Distancia máxima de disparo
-		_distance = entityInfo->getFloatAttribute(_weaponName + "Distance");
+		_distance = entityInfo->getFloatAttribute(_weaponName + "ShotsDistance");
 
 		// Atributos opcionales de audio
 		/*if( entityInfo->hasAttribute(_weaponName + "Audio") )
 			_audioShoot = entityInfo->getStringAttribute(_weaponName + "Audio");*/
 
 		//Dispersión
-		_dispersion = entityInfo->getFloatAttribute(_weaponName+"Dispersion");
+		_dispersion = entityInfo->getFloatAttribute(_weaponName+"PrimaryFireDispersion");
 		_dispersionOriginal = _dispersion;
+
+		// Cooldown del disparo secundario
+		_defaultSecondaryFireCooldown = _secondaryFireCooldown = entityInfo->getFloatAttribute(_weaponName + "SecondaryFireCooldown") * 1000;
+
+		// Tiempo de carga del arma
+		_secondaryFireLoadTime = entityInfo->getFloatAttribute(_weaponName + "SecondaryFireLoadTime") * 1000;
+
+		// Ratio al que gastamos municion
+		_maxAmmoSpentPerSecondaryShot = entityInfo->getIntAttribute(_weaponName + "MaxAmmoSpentPerSecondaryShot");
+		_defaultAmmoSpentTimeStep = _ammoSpentTimeStep = (float)_secondaryFireLoadTime / (float)(_maxAmmoSpentPerSecondaryShot);
 
 		return true;
 	}
@@ -79,152 +94,70 @@ namespace Logic {
 
 	void CMiniGun::onFixedTick(unsigned int msecs) 
 	{
-		// @deprecated Temporal hasta que este bien implementado
-		CHudWeapons* hudWeapon = _entity->getComponent<CHudWeapons>("CHudWeapons");
-		if(hudWeapon != NULL)
-			hudWeapon->continouosShooting(_bLeftClicked && _currentAmmo > 0);
-
-		//std::cout << "fixed" << std::endl;
-		if (_bLeftClicked) 
-		{
-			++_iContadorLeftClicked;
+		if(_primaryFireCooldownTimer > 0) {
+			_primaryFireCooldownTimer -= msecs;
 			
-			//Modificar la dispersión
-			if ((_iContadorLeftClicked < 10) && (!_bMensajeDispMandado)) 
-			{
-				_dispersion = _dispersionOriginal + 15.0f;
-				//Enviamos el mensaje para que empiece a modificar la mirilla con la dispersión
-
-				std::shared_ptr<CMessageHudDispersion> m = std::make_shared<CMessageHudDispersion>();
-				m->setHeight(8.0f);
-				m->setWidth(9.0f);
-				m->setTime(2500);//Tiempo máximo que bajará el tamaño de la mirilla
-				m->setReset(false);
-				_entity->emitMessage(m);
-
-				_bMensajeDispMandado = true;
-				//printf("\nReduciendo mira");
-				/**
-				NOTA: De momento tiene el bug de que si disparas cuando no tienes munición, sigue haciendo la dispersión.
-				La movida es que se sabe si tienes munición o no en el método primaryShoot, de su padre ShootRaycast.
-				Habría que hacer que este método fuese un booleano y devolviese true si ha podido disparar y false si no.
-				De momento no lo cambio porque creo que se va a cambiar la forma de gestionar estos raycast más adelante,
-				pero hay que tenerlo en cuenta (también se tiene que tener en cuenta para cuando se ponga la animación
-				de vibración de la minigun).
-				//*/
-			}			
-			else if (_iContadorLeftClicked < 20) {
-				_dispersion = _dispersionOriginal + 5.0f;
-			}
-			else {
-				_dispersion = _dispersionOriginal;
+			if(_primaryFireCooldownTimer < 0){
+				_primaryFireCooldownTimer = 0;
+				// siempre primary fire, ya que si en cualquier momento tengo q dejar de disparar, ya me llegara el mensaje
+				if(_primaryFireIsActive)
+					primaryFire();
 			}
 		}
 
-		// AQUI ESTA EL PROBLEMA, EL TIMER DEBERIA SER CONTROLADO
-		// SOLO POR LA CLASE PADRE.
-		// LO IDEAL ES QUE LAS CLASES HIJAS DEFINAN CUANDO SE PUEDE
-		// USAR EL ARMA.
-		// Podemos usar una implementacion por defecto pero imponer
-		// metodos abstractos para el canUse, amplify y reduce. De
-		// esta manera las nimiedades de cada arma quedan reservadas
-		// a las armas en concreto aunque se impone una interfaz comun 
-		if(_primaryFireCooldownTimer < _primaryFireCooldown) 
-		{
-			_primaryFireCooldownTimer += msecs;
-		}
-		else 
-		{
-			/*if(_pressThenShoot) {
-				//_primaryCanShoot=true;				
-				//primaryFire();
-			}*/
-			_primaryFireCooldownTimer = 0;
-			if (_bLeftClicked && _currentAmmo > 0)
-			{
-				shoot();
-			}
-		}
-
-		//Comprobamos la funcionalidad del botón derecho
-		if (_acumulando) 
-		{
-			//Si tenemos el botón derecho pulsado, seguimos aumentando el contador
-			_contador++;
-		}
-		else 
-		{
-			//No tenemos pulsado el derecho, así que comprobamos si tenemos rafagas que lanzar
-			if (_iRafagas > 0) 
-			{
-				//Controlo que no se tengan más ráfagas del máximo (en su caso lo seteo a este valor)
-				if (_iRafagas > _iMaxRafagas) 
-				{
-					_iRafagas = _iMaxRafagas;
+		if(_secondaryFireIsActive) {
+			if(_currentAmmo > 0 && _currentSpentSecondaryAmmo < _maxAmmoSpentPerSecondaryShot) {
+				// Actualizamos el timer que se encarga de reducir la municion
+				_ammoSpentTimer += msecs;
+				if(_ammoSpentTimer >= _ammoSpentTimeStep) {
+					++_currentSpentSecondaryAmmo;
+					_ammoSpentTimer = 0;
 				}
-
-				secondaryShoot(_iRafagas);
-				_iRafagas = 0;
 			}
 		}
-	}
+		
+		// Controlamos el cooldown
+		if(_secondaryFireCooldownTimer > 0) {
+			_secondaryFireCooldownTimer -= msecs;
+			
+			if(_secondaryFireCooldownTimer < 0)
+				_secondaryFireCooldownTimer = 0;
+		}
 
-	//__________________________________________________________________
-
-	bool CMiniGun::canUsePrimaryFire() 
-	{
-		return _currentAmmo > 0;
-	}
-	
-	//__________________________________________________________________
-
-	bool CMiniGun::canUseSecondaryFire() 
-	{
-		return !_bLeftClicked;
 	}
 
 	//__________________________________________________________________
 
 	void CMiniGun::primaryFire()
 	{
-		_pressThenShoot=true;
-		_bLeftClicked = true;
-	}
+		_primaryFireCooldownTimer = _primaryFireCooldown;
 
+		_primaryFireIsActive = true;
+
+		shoot();
+	} // primaryFire
+	//__________________________________________________________________
+	
+	void CMiniGun::stopPrimaryFire() 
+	{
+		_primaryFireIsActive = false;
+	} // stopPrimaryFire
 	//__________________________________________________________________
 	
 	void CMiniGun::secondaryFire()
 	{
-		_acumulando = true;
-	}
+		_secondaryFireCooldownTimer = _secondaryFireCooldown;
 
-	//__________________________________________________________________
-
-
-	void CMiniGun::stopPrimaryFire() 
-	{
-		_pressThenShoot=false;
-		_bLeftClicked = false;
-		_iContadorLeftClicked = 0;
-					
-		//Envío el mensaje con valores para que resetee la mirilla
-		auto m = std::make_shared<CMessageHudDispersion>();
-		m->setTime(0);
-		m->setReset(true);
-		_entity->emitMessage(m);
-
-		_bMensajeDispMandado = false;
-
-		_bLeftClicked = false;
-	}
+		_secondaryFireIsActive = true;
+	} // secondaryFire
 	//__________________________________________________________________
 
 	void CMiniGun::stopSecondaryFire() 
 	{
-		_iRafagas = _contador / 10;
-		_acumulando = false;
-		_contador = 0;
-	}
+		_secondaryFireIsActive = false;
+		
+		secondaryShoot();
+	} // stopSecondaryFire
 	//__________________________________________________________________
 
 	void CMiniGun::amplifyDamage(unsigned int percentage) 
@@ -317,10 +250,8 @@ namespace Logic {
 	//__________________________________________________________________
 
 
-	void CMiniGun::secondaryShoot(int iRafagas) 
+	void CMiniGun::secondaryShoot() 
 	{
-		decrementAmmo(iRafagas);
-
 		//Creación de sweephit para 
 		Physics::SphereGeometry sphere  = Physics::CGeometryFactory::getSingletonPtr()->createSphere(3.5);
 		std::vector<Physics::CSweepHit> hits;
@@ -332,7 +263,7 @@ namespace Logic {
 			std::string typeEntity = (*it).entity->getType();
 			if((*it).entity->getName() != _entity->getName())
 			{
-				int danyoTotal = _damage * iRafagas;
+				int danyoTotal = _damage * _currentSpentSecondaryAmmo;
 				//std::cout << "Le he dado!!! Danyo = " << danyoTotal << std::endl;
 
 				std::shared_ptr<CMessageDamaged> m = std::make_shared<CMessageDamaged>();

@@ -155,6 +155,7 @@ namespace Logic
 				break;
 			}
 			case Message::ADD_AMMO: {
+				
 				std::shared_ptr<CMessageAddAmmo> addAmmoMsg = std::static_pointer_cast<CMessageAddAmmo>(message);
 				unsigned int weaponIndex = addAmmoMsg->getAddWeapon();
 				_weaponry[weaponIndex].second->addAmmo(weaponIndex, addAmmoMsg->getAddAmmo(), _weaponry[weaponIndex].first);
@@ -203,11 +204,6 @@ namespace Logic
 			// Actualizamo el indice de arma
 			_currentWeapon = newWeapon;
 
-			// Mandamos un mensaje para actualizar el HUD
-			std::shared_ptr<CMessageChangeWeaponGraphics> chgWpnGraphicsMsg = std::make_shared<CMessageChangeWeaponGraphics>();
-			chgWpnGraphicsMsg->setWeapon(_currentWeapon);
-			_entity->emitMessage(chgWpnGraphicsMsg);
-			Logic::CWorldState::getSingletonPtr()->addChange(_entity,chgWpnGraphicsMsg);
 		}
 		
 	}
