@@ -18,18 +18,18 @@ Contiene la implementación del componente que gestiona las armas y que administr
 #include "Logic/Entity/Components/ArrayGraphics.h"
 #include "Logic/Maps/WorldState.h"
 
-#include "Weapon.h"
+#include "Ammo.h"
 /*#include "ShootShotGunAmmo.h"
 #include "ShootSniperAmmo.h"
 #include "ShootMiniGunAmmo.h"
 #include "ShootSoulReaperAmmo.h"
 #include "IronHellGoatAmmo.h"*/
 
-#include "ShootShotGun.h"
-#include "ShootSniper.h"
-#include "ShootMiniGun.h"
-#include "ShootSoulReaper.h"
-#include "IronHellGoat.h"
+#include "ShotGunAmmo.h"
+#include "SniperAmmo.h"
+#include "MiniGunAmmo.h"
+#include "SoulReaperAmmo.h"
+#include "IronHellGoatAmmo.h"
 
 #include "Logic/Messages/MessageChangeWeapon.h"
 #include "Logic/Messages/MessageChangeWeaponGraphics.h"
@@ -64,11 +64,11 @@ namespace Logic
 		_weaponry.resize(WeaponType::eSIZE);
 
 		// Rellenamos el vector con los punteros a los componentes correspondientes
-		_weaponry[WeaponType::eSOUL_REAPER].second = _entity->getComponent<CShootSoulReaper>("CShootSoulReaper");
-		_weaponry[WeaponType::eSNIPER].second = _entity->getComponent<CShootSniper>("CShootSniper");
-		_weaponry[WeaponType::eSHOTGUN].second = _entity->getComponent<CShootShotGun>("CShootShotGun");
-		_weaponry[WeaponType::eMINIGUN].second = _entity->getComponent<CShootMiniGun>("CShootMiniGun");
-		_weaponry[WeaponType::eIRON_HELL_GOAT].second = _entity->getComponent<CIronHellGoat>("CIronHellGoat");
+		_weaponry[WeaponType::eSOUL_REAPER].second = _entity->getComponent<Logic::CSoulReaperAmmo>("CSoulReaperAmmo");
+		_weaponry[WeaponType::eSNIPER].second = _entity->getComponent<Logic::CSniperAmmo>("CSniperAmmo");
+		_weaponry[WeaponType::eSHOTGUN].second = _entity->getComponent<Logic::CShotGunAmmo>("CShotGunAmmo");
+		_weaponry[WeaponType::eMINIGUN].second = _entity->getComponent<Logic::CMiniGunAmmo>("CMiniGunAmmo");
+		_weaponry[WeaponType::eIRON_HELL_GOAT].second = _entity->getComponent<Logic::CIronHellGoatAmmo>("CIronHellGoatAmmo");
 
 		/*
 		// Por defecto la primera arma está activada y equipada (es el arma 0).
@@ -92,24 +92,22 @@ namespace Logic
 	//---------------------------------------------------------
 
 	void CWeaponsManager::onActivate() {
-		// El arma actual tiene que ser el soulReaper, que
-		// es la única que tenemos de primeras
-		_currentWeapon=WeaponType::eSOUL_REAPER;
-
-		// Por defecto la primera arma está activada y equipadda
-		_weaponry[WeaponType::eSOUL_REAPER].first = true;
-		_weaponry[WeaponType::eSOUL_REAPER].second->stayAvailable();
-//_weaponry[eSOUL_REAPER].second->inUse(true);
-
+		
 		// El resto de las armas están desactivadas, ya que no las tenemos
 		for(unsigned int i = 1; i < _weaponry.size(); ++i) {
 			_weaponry[i].first = false; // Por si acaso habian sido activadas anteriormente
 			_weaponry[i].second->stayBusy();
 			_weaponry[i].second->resetAmmo();
-//_weaponry[i].second->inUse(false);
+
 		}
-	} // activate
-	
+
+		// El arma actual tiene que ser el soulReaper, que
+		// es la única que tenemos de primeras
+		_currentWeapon=WeaponType::eSOUL_REAPER;
+		// Por defecto la primera arma está activada y equipadda
+		_weaponry[WeaponType::eSOUL_REAPER].first = true;
+		_weaponry[WeaponType::eSOUL_REAPER].second->stayAvailable();
+	} // onActivate
 	//---------------------------------------------------------
 
 	void CWeaponsManager::onDeactivate(){
@@ -122,8 +120,7 @@ namespace Logic
 		}
 		*/
 		
-	}// deactivate
-	
+	}// onDeactivate
 	//---------------------------------------------------------
 
 	bool CWeaponsManager::accept(const std::shared_ptr<CMessage>& message) {
@@ -158,6 +155,7 @@ namespace Logic
 				break;
 			}
 			case Message::ADD_AMMO: {
+				
 				std::shared_ptr<CMessageAddAmmo> addAmmoMsg = std::static_pointer_cast<CMessageAddAmmo>(message);
 				unsigned int weaponIndex = addAmmoMsg->getAddWeapon();
 				_weaponry[weaponIndex].second->addAmmo(weaponIndex, addAmmoMsg->getAddAmmo(), _weaponry[weaponIndex].first);
@@ -206,11 +204,6 @@ namespace Logic
 			// Actualizamo el indice de arma
 			_currentWeapon = newWeapon;
 
-			// Mandamos un mensaje para actualizar el HUD
-			std::shared_ptr<CMessageChangeWeaponGraphics> chgWpnGraphicsMsg = std::make_shared<CMessageChangeWeaponGraphics>();
-			chgWpnGraphicsMsg->setWeapon(_currentWeapon);
-			_entity->emitMessage(chgWpnGraphicsMsg);
-			Logic::CWorldState::getSingletonPtr()->addChange(_entity,chgWpnGraphicsMsg);
 		}
 		
 	}

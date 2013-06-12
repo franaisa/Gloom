@@ -403,15 +403,6 @@
     <ClCompile Include="..\..\Src\Logic\Entity\Components\PhysicStaticEntity.cpp">
       <Filter>Entity\Components\Physics\Source</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Src\Logic\Entity\Components\ShootSniper.cpp">
-      <Filter>Entity\Components\Weapons\Shoot\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Logic\Entity\Components\ShootMiniGun.cpp">
-      <Filter>Entity\Components\Weapons\Shoot\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Logic\Entity\Components\ShootShotGun.cpp">
-      <Filter>Entity\Components\Weapons\Shoot\Source</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Src\Logic\Entity\Components\Shadow.cpp">
       <Filter>Entity\Components\Skills\Source</Filter>
     </ClCompile>
@@ -604,9 +595,6 @@
     <ClCompile Include="..\..\Src\Logic\Entity\Components\SoulReaperFeedback.cpp">
       <Filter>Entity\Components\Weapons\Feedback\Source</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Src\Logic\Entity\Components\ShootSoulReaper.cpp">
-      <Filter>Entity\Components\Weapons\Shoot\Source</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Src\Logic\Messages\MessageSpawnIsLive.cpp">
       <Filter>Messages\Source</Filter>
     </ClCompile>
@@ -618,6 +606,21 @@
     </ClCompile>
     <ClCompile Include="..\..\Src\Logic\Entity\Components\ProceduralGraphics.cpp">
       <Filter>Entity\Components\Graphics\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\MiniGun.cpp">
+      <Filter>Entity\Components\Weapons\Shoot\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\ShotGun.cpp">
+      <Filter>Entity\Components\Weapons\Shoot\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\Sniper.cpp">
+      <Filter>Entity\Components\Weapons\Shoot\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\SoulReaper.cpp">
+      <Filter>Entity\Components\Weapons\Shoot\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\WeaponsManagerClient.cpp">
+      <Filter>Entity\Components\Weapons\Shoot\Source</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -815,15 +818,6 @@
     </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Messages\MessageActivateScreamerShield.h">
       <Filter>Messages\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Logic\Entity\Components\ShootMiniGun.h">
-      <Filter>Entity\Components\Weapons\Shoot\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Logic\Entity\Components\ShootShotGun.h">
-      <Filter>Entity\Components\Weapons\Shoot\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Logic\Entity\Components\ShootSniper.h">
-      <Filter>Entity\Components\Weapons\Shoot\Header</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Entity\Components\WeaponsManager.h">
       <Filter>Entity\Components\Weapons\Shoot\Header</Filter>
@@ -1113,9 +1107,6 @@
     <ClInclude Include="..\..\Src\Logic\Entity\Components\SoulReaperFeedback.h">
       <Filter>Entity\Components\Weapons\Feedback\Header</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Src\Logic\Entity\Components\ShootSoulReaper.h">
-      <Filter>Entity\Components\Weapons\Shoot\Header</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Messages\MessageSpawnIsLive.h">
       <Filter>Messages\Header</Filter>
     </ClInclude>
@@ -1127,6 +1118,21 @@
     </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Entity\Components\ProceduralGraphics.h">
       <Filter>Entity\Components\Graphics\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\MiniGun.h">
+      <Filter>Entity\Components\Weapons\Shoot\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\ShotGun.h">
+      <Filter>Entity\Components\Weapons\Shoot\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\Sniper.h">
+      <Filter>Entity\Components\Weapons\Shoot\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\SoulReaper.h">
+      <Filter>Entity\Components\Weapons\Shoot\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\WeaponsManagerClient.h">
+      <Filter>Entity\Components\Weapons\Shoot\Header</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

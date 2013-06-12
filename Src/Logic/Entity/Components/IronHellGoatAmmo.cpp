@@ -20,6 +20,9 @@ de disparo de la cabra.
 #include "Logic/Server.h"
 #include "Map/MapEntity.h"
 
+#include "IronHellGoat.h"
+#include "IronHellGoatFeedback.h"
+
 using namespace std;
 
 namespace Logic {
@@ -62,6 +65,10 @@ namespace Logic {
 		// Ratio al que gastamos municion
 		_maxAmmoPerShot = entityInfo->getIntAttribute(_weaponName + "MaxAmmoPerShot");
 		_ammoSpentTimeStep = (float)_maxLoadingTime / (float)(_maxAmmoPerShot);
+
+		_friend = _entity->getComponent<Logic::CIronHellGoat>("CIronHellGoat");
+		if(!_friend)
+			_friend = _entity->getComponent<Logic::CIronHellGoatFeedback>("CIronHellGoatFeedback");
 
 		return true;
 	}
@@ -134,6 +141,7 @@ namespace Logic {
 
 		decrementAmmo();
 		++_currentSpentAmmo;
+
 	}
 
 	//__________________________________________________________________

@@ -178,18 +178,6 @@ namespace Logic {
 
 		//__________________________________________________________________
 
-		/**
-		Método virtual puro invocado cuando se decrementa el tiempo de cooldown del arma.
-		El cliente es responsable de decrementar los cooldowns de su arma en 
-		el porcentaje dado por parámetro.
-
-		@param percentage Tanto por ciento del 1 al 100 en el que se decrementa
-		el cooldown del arma. Si su valor es 0, significa que debemos resetear
-		los cooldowns del arma a su valor por defecto.
-		*/
-		virtual void reduceCooldown(unsigned int percentage) = 0;
-
-
 	protected:
 
 
@@ -242,20 +230,6 @@ namespace Logic {
 		void drawDecal(Logic::CEntity* pEntity, Vector3 vPos);
 
 		//__________________________________________________________________
-
-		/**
-		Establece la guarda que indica cuando se puede hacer
-		uso del disparo primario.
-		*/
-		virtual bool canUsePrimaryFire() = 0;
-
-		//__________________________________________________________________
-		
-		/**
-		Establece la guarda que indica cuando se puede hacer
-		uso del disparo secundario.
-		*/
-		virtual bool canUseSecondaryFire() = 0;
 
 
 		// =======================================================================
