@@ -96,10 +96,10 @@ namespace Logic {
 						type == Control::UNLEFT_CLICK	||
 						type == Control::UNRIGHT_CLICK;
 		}else{
-			result |= message->getMessageType() == Message::REDUCED_COOLDOWN;
+			result = message->getMessageType() == Message::REDUCED_COOLDOWN;
 		}
 
-		return false;
+		return result;
 	}
 
 	//__________________________________________________________________
