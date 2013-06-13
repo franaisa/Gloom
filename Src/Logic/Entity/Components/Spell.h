@@ -146,6 +146,7 @@ namespace Logic {
 		virtual void onAvailable();
 
 
+		virtual void onDeactivate();
 		// =======================================================================
 		//                          METODOS PROTEGIDOS
 		// =======================================================================
@@ -166,13 +167,6 @@ namespace Logic {
 		// =======================================================================
 		//                          MIEMBROS PROTEGIDOS
 		// =======================================================================
-
-
-		/** Radio de la cápsula del personaje */
-		float _capsuleRadius;
-		
-		/** Altura desde la que sale el disparo. */
-		float _heightShoot;
 		
 		/** Nombre del arma con el formato: weapon + <nombre arma>.*/
 		std::string _spellName;

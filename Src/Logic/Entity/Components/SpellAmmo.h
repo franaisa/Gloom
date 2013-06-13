@@ -147,6 +147,11 @@ namespace Logic {
 		*/
 		virtual void onBusy();
 
+
+		virtual void onActivate();
+
+
+		virtual void onDeactivate();
 		// =======================================================================
 		//                          METODOS PROTEGIDOS
 		// =======================================================================
@@ -175,18 +180,6 @@ namespace Logic {
 		//                          MIEMBROS PROTEGIDOS
 		// =======================================================================
 
-
-		bool _primaryFireIsActive;
-
-		bool _secondaryFireIsActive;
-	
-		// creo q las dos siguientes variables no son necesarias
-		/** Radio de la cápsula del personaje */
-		float _capsuleRadius;
-		
-		/** Altura desde la que sale el disparo. */
-		float _heightShoot;
-		
 		/** Enumerado que indica cual es el identificador de arma. */
 		SpellType::Enum _spellID;
 

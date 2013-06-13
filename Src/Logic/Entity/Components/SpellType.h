@@ -10,7 +10,7 @@ namespace Logic {
 			eAMPLIFY_DAMAGE,
 			eCOME_BACK,
 			eZOOM,
-			eGRAVITY,
+			eGRAVITY,  // hecho
 			eHARD_DEATH,
 			eSHIELD,
 			eCOOLDOWN,

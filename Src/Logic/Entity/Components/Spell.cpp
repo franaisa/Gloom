@@ -47,15 +47,14 @@ namespace Logic {
 		if( !IComponent::spawn(entity,map,entityInfo) ) return false;
 
 		// Comprobamos que los atributos obligatorios existen
-		assert( entityInfo->hasAttribute(_spellName + "MaxAmmo") );
-		assert( entityInfo->hasAttribute(_spellName + "ID") );
-		assert( entityInfo->hasAttribute("physic_radius") );
-		assert( entityInfo->hasAttribute("heightShoot") );
+		assert( entityInfo->hasAttribute(_spellName + "ID") && "Debe tener id, mirar archivo spellType");
+		assert( entityInfo->hasAttribute(_spellName + "IsPassive") && "Es importante que tenga este campo");
+		assert( entityInfo->hasAttribute(_spellName + "IsPrimarySpell") && "Este parametro debe de haberse seteado al crear la entidad");
 
 		// Leemos los atributos obligatorios de arma
 		_spellID = (SpellType::Enum)entityInfo->getIntAttribute(_spellName + "ID");
-		_capsuleRadius = entityInfo->getFloatAttribute("physic_radius");
-		_heightShoot = entityInfo->getFloatAttribute("heightShoot");
+		_isPassive = entityInfo->getBoolAttribute(_spellName + "IsPassive");
+		_isPrimarySpell = entityInfo->getBoolAttribute(_spellName + "IsPrimarySpell");
 
 		return true;
 	}
@@ -103,5 +102,9 @@ namespace Logic {
 	}
 	//_________________________________________________________________
 
+	void ISpell::onDeactivate(){
+		stopSpell();
+	}
+	//_________________________________________________________________
 } // namespace Logic
 

@@ -20,6 +20,9 @@ de disparo de la cabra.
 
 #include "Gravity.h"
 #include "GravityFeedback.h"
+#include "Logic/Messages/MessageReducedCooldown.h"
+
+
 
 using namespace std;
 
@@ -50,6 +53,22 @@ namespace Logic {
 
 	//__________________________________________________________________
 
+	bool CGravityAmmo::accept(const shared_ptr<CMessage>& message) {
+		return ISpellAmmo::accept(message) || 
+			message->getMessageType() == Message::REDUCED_COOLDOWN;
+	} // 
+	//__________________________________________________________________
+
+	void CGravityAmmo::process(const shared_ptr<CMessage>& message) {
+		ISpellAmmo::process(message);
+		switch( message->getMessageType() ) {
+			case Message::REDUCED_COOLDOWN: {
+				reduceCooldown(static_pointer_cast<CMessageReducedCooldown>(message)->getPercentCooldown());
+			break;
+			}
+		}
+	} // process
+	//__________________________________________________________________
 	bool CGravityAmmo::spawn(CEntity* entity, CMap *map, const Map::CEntity *entityInfo) {
 		if( !ISpellAmmo::spawn(entity, map, entityInfo) ) return false;
 

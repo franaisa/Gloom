@@ -43,6 +43,28 @@ namespace Logic {
 
 		//__________________________________________________________________
 
+		/** 
+		Este componente acepta los siguientes mensajes:
+
+		<ul>
+			<li>CONTROL</li>
+		</ul>
+		
+		@param message Mensaje a chequear.
+		@return true si el mensaje es aceptado.
+		*/
+		virtual bool accept(const std::shared_ptr<CMessage>& message);
+
+		//__________________________________________________________________
+
+		/**
+		Método virtual que procesa un mensaje.
+
+		@param message Mensaje a procesar.
+		*/
+		virtual void process(const std::shared_ptr<CMessage>& message);
+
+
 		virtual void reduceCooldown(unsigned int percentage);
 
 		//__________________________________________________________________

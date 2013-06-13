@@ -703,6 +703,15 @@
     <ClCompile Include="..\..\Src\Logic\Entity\Components\GravityFeedback.cpp">
       <Filter>Entity\Components\Spells\Feedback\Source</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\CoolDown.cpp">
+      <Filter>Entity\Components\Spells\Cast\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\CoolDownAmmo.cpp">
+      <Filter>Entity\Components\Spells\Ammunition\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\CoolDownFeedback.cpp">
+      <Filter>Entity\Components\Spells\Feedback\Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Src\Logic\Maps\ComponentFactory.h">
@@ -1249,6 +1258,15 @@
       <Filter>Entity\Components\Spells\Ammunition\Header</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Entity\Components\GravityFeedback.h">
+      <Filter>Entity\Components\Spells\Feedback\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\CoolDown.h">
+      <Filter>Entity\Components\Spells\Cast\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\CoolDownAmmo.h">
+      <Filter>Entity\Components\Spells\Ammunition\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\CoolDownFeedback.h">
       <Filter>Entity\Components\Spells\Feedback\Header</Filter>
     </ClInclude>
   </ItemGroup>

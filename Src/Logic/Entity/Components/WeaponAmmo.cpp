@@ -23,6 +23,7 @@
 
 #include "Logic/Messages/MessagePrimaryShoot.h"
 #include "Logic/Messages/MessageSecondaryShoot.h"
+#include "Logic/Messages/MessageReducedCooldown.h"
 
 // Graficos
 // @deprecated Ogre no deberia estar acoplado a la logica
@@ -84,15 +85,18 @@ namespace Logic {
 		// Solo nos interesan los mensajes de disparo.
 		// Es importante que hagamos esto porque si no, el putToSleep
 		// puede convertirse en nocivo.
+		bool result = false;
 		if(message->getMessageType() == Message::CONTROL) {
 			shared_ptr<CMessageControl> controlMsg = static_pointer_cast<CMessageControl>(message);
 			
 			ControlType type = controlMsg->getType();
 			
-			return type == Control::RIGHT_CLICK		||
-				   type == Control::LEFT_CLICK		||
-				   type == Control::UNLEFT_CLICK	||
-				   type == Control::UNRIGHT_CLICK;
+			result =	type == Control::RIGHT_CLICK	||
+						type == Control::LEFT_CLICK		||
+						type == Control::UNLEFT_CLICK	||
+						type == Control::UNRIGHT_CLICK;
+		}else{
+			result |= message->getMessageType() == Message::REDUCED_COOLDOWN;
 		}
 
 		return false;
@@ -121,6 +125,10 @@ namespace Logic {
 				}
 
 				break;
+			}
+			case Message::REDUCED_COOLDOWN: {
+				reduceCooldown(std::static_pointer_cast<CMessageReducedCooldown>(message)->getPercentCooldown());
+				break;								
 			}
 		}
 	}
