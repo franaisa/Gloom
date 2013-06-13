@@ -142,7 +142,7 @@ namespace Logic
 			case Message::DECAL: {
 				std::cout << "RECIBIDOOOOOO" << std::endl;
 				std::shared_ptr<CMessageDecal> msgDecal = std::static_pointer_cast<CMessageDecal>(message);
-				drawDecal(msgDecal->getPosition());
+				drawDecal(msgDecal->getPosition(), msgDecal->getTexture());
 				break;
 			}
 		}
@@ -200,7 +200,7 @@ namespace Logic
 	}
 	//---------------------------------------------------------
 
-	void CGraphics::drawDecal(Vector3 vPos) {
+	void CGraphics::drawDecal(Vector3 vPos, std::string vTexture) {
 		OgreDecal::OgreMesh worldMesh;
  
 		/// This method will extract all of the triangles from the mesh to be used later. Only should be called once.
@@ -217,7 +217,8 @@ namespace Logic
 		Ogre::Vector3 pos = vPos; /// Send a ray into the mesh
 		float width = 1.0f;
 		float height = 1.0f;
-		std::string textureName = "gunshotwall"; /// Make sure your texture has a depth_bias greater than 1 to avoid z-fighting
+		//std::string textureName = "gunshotwall"; /// Make sure your texture has a depth_bias greater than 1 to avoid z-fighting
+		//std::string textureName = "nicholasCage"; /// Make sure your texture has a depth_bias greater than 1 to avoid z-fighting
 
 		/// We have everything ready to go. Now it's time to actually generate the decal:
 		if (_primerDecal)
@@ -235,7 +236,7 @@ namespace Logic
 
 		//OgreDecal::Decal decal = generator.createDecal( &worldMesh, pos, width, height, textureName, true, decalObject[_iContadorDecals] );
 		Ogre::ManualObject* manObject =  vListaDecals[_iContadorDecals-1];
-		OgreDecal::Decal decal = generator.createDecal( &worldMesh, pos, width, height, textureName, true, manObject );		
+		OgreDecal::Decal decal = generator.createDecal( &worldMesh, pos, width, height, vTexture, false, manObject );		
 		std::cout << "ha creado el decal" << std::endl;
 		/// Render the decal object. Always verify the returned object - it will be NULL if no decal could be created.
 		if ((decal.object) && (_primerDecal)) {

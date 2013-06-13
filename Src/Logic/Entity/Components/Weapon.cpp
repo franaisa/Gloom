@@ -178,8 +178,9 @@ _primerDecal = true;
 
 		shared_ptr<CMessageDecal> messageDecal = make_shared<CMessageDecal>();
 		messageDecal->setPosition(vPos);
-		//_entity->emitMessage(messageDecal);
+		messageDecal->setTexture("nicholasCage");
 		pEntity->emitMessage(messageDecal);
+
 		std::cout << "emito el mensaje---" << std::endl;
 		/*
 		CGraphics* cGraph;
