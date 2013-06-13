@@ -9,6 +9,7 @@ namespace Logic {
 	DEC_FACTORYMESSAGE(CMessageReducedCooldown);
 	public:
 		CMessageReducedCooldown();
+		CMessageReducedCooldown(int percentCooldown);
 		int getPercentCooldown();
 		void setPercentCooldown(int percentCooldown);
 		~CMessageReducedCooldown(){};

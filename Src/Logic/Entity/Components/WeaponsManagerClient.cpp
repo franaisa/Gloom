@@ -18,7 +18,7 @@ Contiene la implementación del componente que gestiona las armas y que administr
 #include "Logic/Entity/Components/ArrayGraphics.h"
 #include "Logic/Maps/WorldState.h"
 
-#include "Ammo.h"
+#include "WeaponAmmo.h"
 /*#include "ShootShotGunAmmo.h"
 #include "ShootSniperAmmo.h"
 #include "ShootMiniGunAmmo.h"

@@ -190,10 +190,11 @@ namespace Input
 		*/
 		void OtherMessages(TKey key);
 
-
 		void ScrollWheelChangeWeapon(const CMouseState &mouseState);
 
 		void ChangeWeaponMessage(int iWeapon);
+
+		void SpellMessage(TKey key);
 
 		//-------------------------------------------
 		//             Variables privados

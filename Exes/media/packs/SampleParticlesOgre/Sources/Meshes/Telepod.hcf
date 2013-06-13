@@ -1,0 +1,16 @@
+CMeshImporterConfig	$LOCAL$/Resource
+{
+	ResourcePath = "Sources/Meshes/Telepod.FBX";
+	SourceMeshPath = "Sources/Meshes";
+	AnimationPath = "Animations";
+	MaterialProxyPath = "HBO/MaterialProxy";
+	ModelPath = "HBO/Entities/Models";
+	MeshPath = "Meshes";
+	OutputHmmPath = "Meshes/Telepod.hmm";
+	TexturePath = "Textures";
+}
+CNedEditorMesh_Data	$LOCAL$/_EDITOR
+{
+	MeshPath = "Meshes/Telepod.hmm";
+	ModelHRotationSpeed = 0.0000000e+000;
+}

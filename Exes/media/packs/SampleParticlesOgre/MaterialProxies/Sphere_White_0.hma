@@ -1,0 +1,19 @@
+CMaterialProxy	$LOCAL$/Resource
+{
+	BaseMaterial = "Materials/Library/Basic_SolidsAmbient.hbo/Solid_Diffuse_SpecColor_NMap_Env";
+	Fields = 
+	{
+		"$LOCAL$/CMaterialProxyField_E67BCB8E",
+		"$LOCAL$/CMaterialProxyField_916EF419",
+	};
+}
+CMaterialProxyField	$LOCAL$/CMaterialProxyField_E67BCB8E
+{
+	FieldName = "Diffuse";
+	ValTexturePath = "Textures//White.dds";
+}
+CMaterialProxyField	$LOCAL$/CMaterialProxyField_916EF419
+{
+	FieldName = "Normal";
+	ValTexturePath = "Textures//NMap_Flat.dds";
+}

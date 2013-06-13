@@ -6,7 +6,7 @@
 @file MiniGun.h
 
 @see Logic::CMiniGun
-@see Logic::IAmmo
+@see Logic::IWeaponAmmo
 
 @author Francisco Aisa García
 @date Mayo, 2013
@@ -15,7 +15,7 @@
 #ifndef __Logic_MiniGunAmmo_H
 #define __Logic_MiniGunAmmo_H
 
-#include "Logic/Entity/Components/Ammo.h"
+#include "Logic/Entity/Components/WeaponAmmo.h"
 
 namespace Logic {
 
@@ -26,7 +26,7 @@ namespace Logic {
 	@date Mayo, 2013
 	*/
 
-	class CMiniGunAmmo : public IAmmo {
+	class CMiniGunAmmo : public IWeaponAmmo {
 		DEC_FACTORY(CMiniGunAmmo);
 	public:
 

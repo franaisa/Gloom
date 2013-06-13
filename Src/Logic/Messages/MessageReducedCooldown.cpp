@@ -11,6 +11,11 @@ namespace Logic {
 	}//
 	//----------------------------------------------------------
 
+	CMessageReducedCooldown::CMessageReducedCooldown(int percentCooldown): CMessage(Message::REDUCED_COOLDOWN), _percentCooldown(percentCooldown) {
+		// Nada que hacer
+	}//
+	//----------------------------------------------------------
+
 	void CMessageReducedCooldown::setPercentCooldown(int percentCooldown){
 		_percentCooldown = percentCooldown;
 	}//

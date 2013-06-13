@@ -9,6 +9,7 @@ namespace Logic {
 	DEC_FACTORYMESSAGE(CMessageChangeGravity);
 	public:
 		CMessageChangeGravity();
+		CMessageChangeGravity(float gravity);
 		virtual ~CMessageChangeGravity(){};
 
 		float getGravity();

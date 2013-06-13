@@ -1,0 +1,32 @@
+CHmlFactory	$LOCAL$/Resource
+{
+	MeshTree = "$LOCAL$/CHmlMeshTreeNode_LOD_97FCD1FE";
+	Skins = 
+	{
+		"$LOCAL$/CHmlSkinDescriptor_8F622068",
+	};
+}
+CHmlMeshTreeNode_LOD	$LOCAL$/CHmlMeshTreeNode_LOD_97FCD1FE
+{
+	LODs = 
+	{
+		"$LOCAL$/CHmlMeshTreeNode_ModelRef_D5F1A0C9",
+	};
+}
+CHmlMeshTreeNode_ModelRef	$LOCAL$/CHmlMeshTreeNode_ModelRef_D5F1A0C9
+{
+	MeshResourcePath = "Meshes//Plane_Default.hmm";
+}
+CHmlSkinDescriptor	$LOCAL$/CHmlSkinDescriptor_8F622068
+{
+	PublishedName = "Default";
+	Materials = 
+	{
+		"$LOCAL$/CHmlSkinMaterial_C3D3DD8B",
+	};
+}
+CHmlSkinMaterial	$LOCAL$/CHmlSkinMaterial_C3D3DD8B
+{
+	VirtualName = "Light";
+	MaterialProxy = "MaterialProxies/Plane_Default_0.hma/Resource";
+}
