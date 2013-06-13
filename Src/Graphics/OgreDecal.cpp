@@ -706,7 +706,7 @@ Decal DecalGenerator::createDecal( TriangleMesh* mesh, const Ogre::Vector3& pos,
 		if (decalObject->getDynamic() && decalObject->getNumSections() > 0)
 		{
 			 /// Update the existng decal instead of starting a new one
-			decalObject->beginUpdate( 0 );
+			 decalObject->beginUpdate( 0 );
 		}
 		else
 		{

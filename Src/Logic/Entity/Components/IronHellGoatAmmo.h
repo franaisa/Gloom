@@ -6,7 +6,7 @@
 @file IronHellGoat.h
 
 @see Logic::CIronHellGoat
-@see Logic::IAmmo
+@see Logic::IWeaponAmmo
 
 @author Francisco Aisa García
 @date Mayo, 2013
@@ -15,7 +15,7 @@
 #ifndef __Logic_IronHellGoatAmmo_H
 #define __Logic_IronHellGoatAmmo_H
 
-#include "Logic/Entity/Components/Ammo.h"
+#include "Logic/Entity/Components/WeaponAmmo.h"
 
 namespace Logic {
 
@@ -26,7 +26,7 @@ namespace Logic {
 	@date Mayo, 2013
 	*/
 
-	class CIronHellGoatAmmo : public IAmmo {
+	class CIronHellGoatAmmo : public IWeaponAmmo {
 		DEC_FACTORY(CIronHellGoatAmmo);
 	public:
 

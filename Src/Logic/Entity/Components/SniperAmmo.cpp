@@ -5,7 +5,7 @@ Contiene la implementacion del componente
 de disparo de la cabra.
 
 @see Logic::CSniperAmmo
-@see Logic::IAmmo
+@see Logic::IWeaponAmmo
 
 @author Francisco Aisa García
 @date Mayo, 2013
@@ -30,7 +30,7 @@ namespace Logic {
 
 	//__________________________________________________________________
 
-	CSniperAmmo::CSniperAmmo() : IAmmo("sniper"),
+	CSniperAmmo::CSniperAmmo() : IWeaponAmmo("sniper"),
 								_primaryFireCooldown(0),
 								_defaultPrimaryFireCooldown(0),
 								_primaryFireCooldownTimer(0),
@@ -52,7 +52,7 @@ namespace Logic {
 	//__________________________________________________________________
 
 	bool CSniperAmmo::spawn(CEntity* entity, CMap *map, const Map::CEntity *entityInfo) {
-		if( !IAmmo::spawn(entity, map, entityInfo) ) return false;
+		if( !IWeaponAmmo::spawn(entity, map, entityInfo) ) return false;
 
 		// Nos aseguramos de tener todos los atributos que necesitamos
 		assert( entityInfo->hasAttribute(_weaponName + "PrimaryFireCooldown") );
@@ -83,7 +83,7 @@ namespace Logic {
 	//__________________________________________________________________
 
 	void CSniperAmmo::onAvailable() {
-		IAmmo::onAvailable();
+		IWeaponAmmo::onAvailable();
 
 	}
 
@@ -117,7 +117,7 @@ namespace Logic {
 	//__________________________________________________________________
 
 	void CSniperAmmo::primaryFire() {
-		IAmmo::primaryFire();
+		IWeaponAmmo::primaryFire();
 
 		_primaryFireCooldownTimer = _primaryFireCooldown;
 
@@ -129,7 +129,7 @@ namespace Logic {
 	//__________________________________________________________________
 
 	void CSniperAmmo::stopPrimaryFire() {
-		IAmmo::stopPrimaryFire();
+		IWeaponAmmo::stopPrimaryFire();
 		
 		_primaryFireIsActive = false;
 	}
@@ -137,7 +137,7 @@ namespace Logic {
 	//__________________________________________________________________
 
 	void CSniperAmmo::secondaryFire() {
-		IAmmo::secondaryFire();
+		IWeaponAmmo::secondaryFire();
 
 		_primaryFireCooldownTimer = _secondaryFireCooldown;
 		_secondaryFireIsActive = false;
@@ -149,7 +149,7 @@ namespace Logic {
 	//__________________________________________________________________
 
 	void CSniperAmmo::stopSecondaryFire() {
-		IAmmo::stopSecondaryFire();
+		IWeaponAmmo::stopSecondaryFire();
 
 		_secondaryFireIsActive = false;
 	}

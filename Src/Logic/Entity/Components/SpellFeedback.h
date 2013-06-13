@@ -1,20 +1,20 @@
 //---------------------------------------------------------------------------
-// Ammo.h
+// SpellFeedback.h
 //---------------------------------------------------------------------------
 
 /**
-@file Ammo.h
+@file SpellFeedback.h
 
 @author Antonio Jesus Narváez Corrales
 @author Francisco Aisa García
 @date Mayo, 2013
 */
 
-#ifndef __Logic_Ammo_H
-#define __Logic_Ammo_H
+#ifndef __Logic_SpellFeedback_H
+#define __Logic_SpellFeedback_H
 
 #include "Logic/Entity/Component.h"
-#include "WeaponType.h"
+#include "SpellType.h"
 
 #include <string>
 
@@ -28,7 +28,7 @@ namespace Logic {
 	@date Mayo, 2013
 	*/
 
-	class IAmmo : public IComponent {
+	class ISpellFeedback : public IComponent {
 	public:
 
 		
@@ -40,14 +40,14 @@ namespace Logic {
 		Constructor parametrizado. Las clases hijas deberán llamar a este constructor
 		con el nombre de su arma.
 
-		@param weaponName Nombre del arma implementada por la clase derivada.
+		@param spellName Nombre del arma implementada por la clase derivada.
 		*/
-		IAmmo(const std::string& weaponName);
+		ISpellFeedback(const std::string& spellName);
 
 		//__________________________________________________________________
 
 		/** Destructor. */
-		virtual ~IAmmo();
+		virtual ~ISpellFeedback();
 
 
 		// =======================================================================
@@ -101,87 +101,31 @@ namespace Logic {
 
 
 		/**
-		Método virtual puro que debe ser implementado por las clases derivadas para
-		especificar que ocurre al usar el disparo primario.
+		Método virtual que debe ser implementado por las clases derivadas para
+		especificar que ocurre al usar el spellCast
 		*/
-		virtual void primaryFire();
+		virtual void spell() { };
 
 		//__________________________________________________________________
 		
 		/**
-		Método virtual puro que debe ser implementado por las clases derivadas para
-		especificar que ocurre al usar el disparo secundario.
-		*/
-		virtual void secondaryFire();
-
-		//__________________________________________________________________
-
-		/**
 		Este método es invocado cuando se deja de pulsar el botón de disparo
 		primario.
 		*/
-		virtual void stopPrimaryFire();
+		virtual void stopSpell() { };
 
 		//__________________________________________________________________
 
 		/**
-		Este método es invocado cuando se deja de pulsar el botón de disparo
-		secundario.
+		Si el hechizo es pasivo, en el onAvailable es donde hara su efecto
 		*/
-		virtual void stopSecondaryFire();
-
-		//__________________________________________________________________
-
-		/**
-		Incrementar la munición de un arma.
-
-		@param weapon Identificador del arma.
-		@param ammo Munición a incrementar.
-		@param iAmCath Para el HUD.
-		*/
-		virtual void addAmmo(int weapon, int ammo, bool iAmCatch);
-
-		//__________________________________________________________________
-
-		/**
-		Resetea la munición.
-		*/
-		virtual void resetAmmo();
-
-		//__________________________________________________________________
-
-		/**
-		Método virtual puro invocado cuando se decrementa el tiempo de cooldown del arma.
-		El cliente es responsable de decrementar los cooldowns de su arma en 
-		el porcentaje dado por parámetro.
-
-		@param percentage Tanto por ciento del 1 al 100 en el que se decrementa
-		el cooldown del arma. Si su valor es 0, significa que debemos resetear
-		los cooldowns del arma a su valor por defecto.
-		*/
-		virtual void reduceCooldown(unsigned int percentage) = 0;
+		virtual void onAvailable() { };
 
 
-		virtual void amplifyDamage(unsigned int percentage);
+		virtual void onBusy() { };
 
 	protected:
 
-
-		// =======================================================================
-		//                    METODOS HEREDADOS DE ICOMPONENT
-		// =======================================================================
-
-
-		/**
-		Llamado cuando el arma pasa a ser activa.
-		*/
-		virtual void onAvailable();
-
-
-		/**
-		Llamado cuando el arma pasa a ser inactiva.
-		*/
-		virtual void onBusy();
 
 		// =======================================================================
 		//                          METODOS PROTEGIDOS
@@ -200,16 +144,6 @@ namespace Logic {
 		//__________________________________________________________________
 
 		/**
-		Decrementa la munición en base al parámetro dado y actualiza la munición
-		que aparece en el HUD.
-
-		@param Cantidad de munición a reducir. Por defecto es 1.
-		*/
-		void decrementAmmo(unsigned int ammoSpent = 1);
-
-		//__________________________________________________________________
-
-		/**
 		Pinta un decal dada una entidad y una posicion
 
 		@deprecated Temporalmente está implementada como un helper, pero
@@ -220,54 +154,24 @@ namespace Logic {
 		*/
 		void drawDecal(Logic::CEntity* pEntity, Vector3 vPos);
 
-		//__________________________________________________________________
-
-		/**
-		Establece la guarda que indica cuando se puede hacer
-		uso del disparo primario.
-		*/
-		virtual bool canUsePrimaryFire() = 0;
-
-		//__________________________________________________________________
-		
-		/**
-		Establece la guarda que indica cuando se puede hacer
-		uso del disparo secundario.
-		*/
-		virtual bool canUseSecondaryFire() = 0;
-
 
 		// =======================================================================
 		//                          MIEMBROS PROTEGIDOS
 		// =======================================================================
 
+		/** Nombre del arma con el formato: spell + <nombre arma>.*/
+		std::string _spellName;
 
-		bool _primaryFireIsActive;
+		unsigned int _spellID;
 
-		bool _secondaryFireIsActive;
+		/** variable que controlara si es conjuro primario o secundario. */
+		bool _isPrimarySpell;
 
-		/** Cuanta munición puede llevar este arma como máximo. */
-		unsigned int _maxAmmo;
-		
-		/** Cuanta munición tenemos actualmente en este arma. */
-		unsigned int _currentAmmo;
-		
-		// creo q las dos siguientes variables no son necesarias
-		/** Radio de la cápsula del personaje */
-		float _capsuleRadius;
-		
-		/** Altura desde la que sale el disparo. */
-		float _heightShoot;
-		
-		/** Enumerado que indica cual es el identificador de arma. */
-		WeaponType::Enum _weaponID;
+		/** Variable para controlar si un hechizo es activo o pasivo */
+		bool _isPassive;
 
-		/** Nombre del arma con el formato: weapon + <nombre arma>.*/
-		std::string _weaponName;
-
-		IComponent *_friend;
-	}; // class IWeapon
+	}; // class ISpellFeedback
 
 } // namespace Logic
 
-#endif // __Logic_Weapon_H
+#endif // __Logic_SpellFeedback_H

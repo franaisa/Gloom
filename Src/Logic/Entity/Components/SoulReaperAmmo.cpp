@@ -5,7 +5,7 @@ Contiene la implementacion del componente
 de disparo de la cabra.
 
 @see Logic::CSoulReaperAmmo
-@see Logic::IAmmo
+@see Logic::IWeaponAmmo
 
 @author Francisco Aisa García
 @date Mayo, 2013
@@ -31,7 +31,7 @@ namespace Logic {
 
 	//__________________________________________________________________
 
-	CSoulReaperAmmo::CSoulReaperAmmo() : IAmmo("ironHellGoat"),
+	CSoulReaperAmmo::CSoulReaperAmmo() : IWeaponAmmo("soulReaper"),
 											_primaryFireIsActive(false),
 											_secondaryFireIsActive(false),
 											_primaryFireCooldownTimer(0) {
@@ -47,7 +47,7 @@ namespace Logic {
 	//__________________________________________________________________
 
 	bool CSoulReaperAmmo::spawn(CEntity* entity, CMap *map, const Map::CEntity *entityInfo) {
-		if( !IAmmo::spawn(entity, map, entityInfo) ) return false;
+		if( !IWeaponAmmo::spawn(entity, map, entityInfo) ) return false;
 
 		// Nos aseguramos de tener todos los atributos que necesitamos
 		assert( entityInfo->hasAttribute(_weaponName + "PrimaryFireCooldown") );
@@ -71,7 +71,7 @@ namespace Logic {
 	//__________________________________________________________________
 
 	void CSoulReaperAmmo::onAvailable() {
-		IAmmo::onAvailable();
+		IWeaponAmmo::onAvailable();
 		
 	}
 
@@ -104,7 +104,7 @@ namespace Logic {
 	//__________________________________________________________________
 
 	void CSoulReaperAmmo::primaryFire() {
-		IAmmo::primaryFire();
+		IWeaponAmmo::primaryFire();
 
 		_primaryFireCooldownTimer = _primaryFireCooldown;
 
@@ -114,14 +114,14 @@ namespace Logic {
 	//__________________________________________________________________
 
 	void CSoulReaperAmmo::stopPrimaryFire() {
-		IAmmo::stopPrimaryFire();
+		IWeaponAmmo::stopPrimaryFire();
 		
 		_primaryFireIsActive = false;
 	} // stopPrimaryFire
 	//__________________________________________________________________
 
 	void CSoulReaperAmmo::secondaryFire() {
-		IAmmo::secondaryFire();
+		IWeaponAmmo::secondaryFire();
 
 		_secondaryFireIsActive = true;
 
@@ -129,7 +129,7 @@ namespace Logic {
 	//__________________________________________________________________
 
 	void CSoulReaperAmmo::stopSecondaryFire() {
-		IAmmo::stopPrimaryFire();
+		IWeaponAmmo::stopPrimaryFire();
 		
 		_secondaryFireIsActive = false;
 	} // stopPrimaryFire

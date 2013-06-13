@@ -99,7 +99,7 @@ namespace Logic
 		return msgType == Message::CAMERA_TO_ENEMY ||
 			   msgType == Message::PLAYER_SPAWN || 
 			   msgType == Message::CAMERA_OFFSET || 
-			   msgType == Message::CAMERA_ROLL;
+			   msgType == Message::CAMERA_ROLL	 ;
 	} // accept
 	//---------------------------------------------------------
 

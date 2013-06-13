@@ -1,7 +1,7 @@
 /**
 @file Ammo.cpp
 
-@see Logic::IAmmo
+@see Logic::IWeaponAmmo
 @see Logic::IComponent
 
 @author Antonio Jesus Narváez Corrales
@@ -9,7 +9,7 @@
 @date Mayo, 2013
 */
 
-#include "Ammo.h"
+#include "WeaponAmmo.h"
 #include "Graphics.h"
 
 // Mapa
@@ -23,6 +23,7 @@
 
 #include "Logic/Messages/MessagePrimaryShoot.h"
 #include "Logic/Messages/MessageSecondaryShoot.h"
+#include "Logic/Messages/MessageReducedCooldown.h"
 
 // Graficos
 // @deprecated Ogre no deberia estar acoplado a la logica
@@ -36,7 +37,7 @@ using namespace std;
 
 namespace Logic {
 	
-	IAmmo::IAmmo(const string& weaponName) : _weaponName("weapon" + weaponName),
+	IWeaponAmmo::IWeaponAmmo(const string& weaponName) : _weaponName("weapon" + weaponName),
 											 _currentAmmo(0),
 											 _primaryFireIsActive(false),
 											 _secondaryFireIsActive(false) {
@@ -46,13 +47,13 @@ namespace Logic {
 
 	//__________________________________________________________________
 
-	IAmmo::~IAmmo() {
+	IWeaponAmmo::~IWeaponAmmo() {
 		// Nada que borrar
 	}
 
 	//__________________________________________________________________
 		
-	bool IAmmo::spawn(CEntity *entity, CMap *map, const Map::CEntity *entityInfo) {
+	bool IWeaponAmmo::spawn(CEntity *entity, CMap *map, const Map::CEntity *entityInfo) {
 		if( !IComponent::spawn(entity,map,entityInfo) ) return false;
 
 		// Comprobamos que los atributos obligatorios existen
@@ -80,27 +81,30 @@ namespace Logic {
 
 	//__________________________________________________________________
 
-	bool IAmmo::accept(const shared_ptr<CMessage>& message) {
+	bool IWeaponAmmo::accept(const shared_ptr<CMessage>& message) {
 		// Solo nos interesan los mensajes de disparo.
 		// Es importante que hagamos esto porque si no, el putToSleep
 		// puede convertirse en nocivo.
+		bool result = false;
 		if(message->getMessageType() == Message::CONTROL) {
 			shared_ptr<CMessageControl> controlMsg = static_pointer_cast<CMessageControl>(message);
 			
 			ControlType type = controlMsg->getType();
 			
-			return type == Control::RIGHT_CLICK		||
-				   type == Control::LEFT_CLICK		||
-				   type == Control::UNLEFT_CLICK	||
-				   type == Control::UNRIGHT_CLICK;
+			result =	type == Control::RIGHT_CLICK	||
+						type == Control::LEFT_CLICK		||
+						type == Control::UNLEFT_CLICK	||
+						type == Control::UNRIGHT_CLICK;
+		}else{
+			result = message->getMessageType() == Message::REDUCED_COOLDOWN;
 		}
 
-		return false;
+		return result;
 	}
 
 	//__________________________________________________________________
 
-	void IAmmo::process(const shared_ptr<CMessage>& message) {
+	void IWeaponAmmo::process(const shared_ptr<CMessage>& message) {
 		switch( message->getMessageType() ) {
 			case Message::CONTROL: {
 				ControlType type = std::static_pointer_cast<CMessageControl>(message)->getType();
@@ -122,12 +126,16 @@ namespace Logic {
 
 				break;
 			}
+			case Message::REDUCED_COOLDOWN: {
+				reduceCooldown(std::static_pointer_cast<CMessageReducedCooldown>(message)->getPercentCooldown());
+				break;								
+			}
 		}
 	}
 
 	//__________________________________________________________________
 
-	void IAmmo::primaryFire() {
+	void IWeaponAmmo::primaryFire() {
 		_primaryFireIsActive = true;
 		// Mandar el mensaje primaryFire(true)
 		auto m = make_shared<CMessagePrimaryShoot>(true);
@@ -136,7 +144,7 @@ namespace Logic {
 
 	//__________________________________________________________________
 
-	void IAmmo::secondaryFire() {
+	void IWeaponAmmo::secondaryFire() {
 		_secondaryFireIsActive = true;
 		// Mandar el mensaje seondaryFire(true)
 		auto m = make_shared<CMessageSecondaryShoot>(true);
@@ -145,7 +153,7 @@ namespace Logic {
 
 	//__________________________________________________________________
 
-	void IAmmo::stopPrimaryFire() {
+	void IWeaponAmmo::stopPrimaryFire() {
 		_primaryFireIsActive = true;
 		// Mandar el mensaje primaryFire(false)
 		auto m = make_shared<CMessagePrimaryShoot>(false);
@@ -153,7 +161,7 @@ namespace Logic {
 	} // stopPrimaryFire
 	//__________________________________________________________________
 
-	void IAmmo::stopSecondaryFire() {
+	void IWeaponAmmo::stopSecondaryFire() {
 		_secondaryFireIsActive = false;
 		// Mandar el mensaje secondaryFire(false)
 		auto m = make_shared<CMessageSecondaryShoot>(false);
@@ -161,7 +169,7 @@ namespace Logic {
 	} // stopSecondaryFire
 	//__________________________________________________________________
 
-	void IAmmo::onAvailable() {
+	void IWeaponAmmo::onAvailable() {
 		shared_ptr<CMessageHudWeapon> message = make_shared<CMessageHudWeapon>();
 		message->setWeapon(_weaponID);
 		message->setAmmo(_currentAmmo);
@@ -172,13 +180,13 @@ namespace Logic {
 	} // onAvailable
 	//__________________________________________________________________
 
-	void IAmmo::onBusy() {
+	void IWeaponAmmo::onBusy() {
 		if(_friend)
 			_friend->stayBusy();
 	} // onBusy
 	//__________________________________________________________________
 
-	void IAmmo::emitSound(const string &ruta, const string &sound, bool notIfPlay){
+	void IWeaponAmmo::emitSound(const string &ruta, const string &sound, bool notIfPlay){
 		shared_ptr<CMessageAudio> audioMsg = make_shared<CMessageAudio>();
 		
 		audioMsg->setRuta(ruta);
@@ -191,7 +199,7 @@ namespace Logic {
 	} // emitSound
 	//__________________________________________________________________
 	
-	void IAmmo::addAmmo(int weapon, int ammo, bool iAmCatch) {
+	void IWeaponAmmo::addAmmo(int weapon, int ammo, bool iAmCatch) {
 		_currentAmmo += ammo;
 		if(_currentAmmo > _maxAmmo)
 			_currentAmmo = _maxAmmo;
@@ -204,7 +212,7 @@ namespace Logic {
 	} // addAmmo
 	//__________________________________________________________________
 
-	void IAmmo::decrementAmmo(unsigned int ammoSpent) {
+	void IWeaponAmmo::decrementAmmo(unsigned int ammoSpent) {
 		_currentAmmo -= ammoSpent;
 
 		// Notificamos al hud para que cambie la cantidad de municion
@@ -218,13 +226,13 @@ namespace Logic {
 	} // decrementAmmo
 	//__________________________________________________________________
 
-	void IAmmo::resetAmmo() {
+	void IWeaponAmmo::resetAmmo() {
 		_currentAmmo = 0;
 	}
 
 	//__________________________________________________________________
 
-	void IAmmo::drawDecal(Logic::CEntity* pEntity, Vector3 vPos) {
+	void IWeaponAmmo::drawDecal(Logic::CEntity* pEntity, Vector3 vPos) {
 		OgreDecal::OgreMesh worldMesh;
  
 		/// This method will extract all of the triangles from the mesh to be used later. Only should be called once.
@@ -257,7 +265,7 @@ namespace Logic {
 		}
 	} // decals
 
-	void IAmmo::amplifyDamage(unsigned int percentage){
+	void IWeaponAmmo::amplifyDamage(unsigned int percentage){
 		
 	}
 

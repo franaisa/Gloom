@@ -299,6 +299,8 @@ namespace Logic {
 		/** Vector de gravedad, puede ser sustituido por un flotante. */
 		Vector3 _gravity;
 
+		
+
 		/** Velocidad máxima de caida. */
 		float _maxGravVelocity;
 

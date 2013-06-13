@@ -20,6 +20,7 @@ gráfica de la entidad.
 
 #include "OgreSceneManager.h"
 
+
 // Predeclaración de clases para ahorrar tiempo de compilación
 namespace Graphics 
 {
@@ -56,7 +57,8 @@ namespace Logic
 		Constructor por defecto; inicializa los atributos a su valor por 
 		defecto.
 		*/
-		CGraphics() : _graphicsEntity(NULL) {}
+		CGraphics() : _graphicsEntity(NULL), _primerDecal(true), _iMaxDecals(20), _iContadorDecals(0) {
+		}
 
 		/**
 		Destructor (virtual); Quita de la escena y destruye la entidad gráfica.
@@ -132,6 +134,8 @@ namespace Logic
 
 		Ogre::SceneManager*		getSceneManager		()		{return _graphicsEntity->getScene()->getSceneMgr(); }
 
+		void					drawDecal			(Vector3 vPos, std::string vTexture);
+
 
 	protected:
 
@@ -165,6 +169,15 @@ namespace Logic
 		Graphics::CScene* _scene;
 
 		std::list<std::string> _material;
+
+		Ogre::ManualObject*					decalObject;
+		std::vector<Ogre::ManualObject*>	vListaDecals;
+
+		bool					_primerDecal;
+
+		int						_iContadorDecals;
+
+		int						_iMaxDecals;
 
 	}; // class CGraphics
 

@@ -6,7 +6,7 @@
 @file SoulReaper.h
 
 @see Logic::CSoulReaper
-@see Logic::IAmmo
+@see Logic::IWeaponAmmo
 
 @author Francisco Aisa García
 @date Mayo, 2013
@@ -15,7 +15,7 @@
 #ifndef __Logic_SoulReaperAmmo_H
 #define __Logic_SoulReaperAmmo_H
 
-#include "Logic/Entity/Components/Ammo.h"
+#include "Logic/Entity/Components/WeaponAmmo.h"
 
 namespace Logic {
 
@@ -26,7 +26,7 @@ namespace Logic {
 	@date Mayo, 2013
 	*/
 
-	class CSoulReaperAmmo : public IAmmo {
+	class CSoulReaperAmmo : public IWeaponAmmo {
 		DEC_FACTORY(CSoulReaperAmmo);
 	public:
 

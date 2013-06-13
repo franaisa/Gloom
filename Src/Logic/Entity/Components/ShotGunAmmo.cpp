@@ -5,7 +5,7 @@ Contiene la implementacion del componente
 de disparo de la cabra.
 
 @see Logic::CShotGunAmmo
-@see Logic::IAmmo
+@see Logic::IWeaponAmmo
 
 @author Francisco Aisa García
 @date Mayo, 2013
@@ -31,7 +31,7 @@ namespace Logic {
 
 	//__________________________________________________________________
 
-	CShotGunAmmo::CShotGunAmmo() : IAmmo("shotGun"),
+	CShotGunAmmo::CShotGunAmmo() : IWeaponAmmo("shotGun"),
 									_primaryFireCooldown(0),
 									_defaultPrimaryFireCooldown(0),
 									_primaryFireCooldownTimer(0),
@@ -50,7 +50,7 @@ namespace Logic {
 	//__________________________________________________________________
 
 	bool CShotGunAmmo::spawn(CEntity* entity, CMap *map, const Map::CEntity *entityInfo) {
-		if( !IAmmo::spawn(entity, map, entityInfo) ) return false;
+		if( !IWeaponAmmo::spawn(entity, map, entityInfo) ) return false;
 
 		// Nos aseguramos de tener todos los atributos que necesitamos
 		assert( entityInfo->hasAttribute(_weaponName + "PrimaryFireCooldown") );
@@ -82,7 +82,7 @@ namespace Logic {
 	//__________________________________________________________________
 
 	void CShotGunAmmo::onAvailable() {
-		IAmmo::onAvailable();
+		IWeaponAmmo::onAvailable();
 		
 	}
 
@@ -114,7 +114,7 @@ namespace Logic {
 	//__________________________________________________________________
 
 	void CShotGunAmmo::primaryFire() {
-		IAmmo::primaryFire();
+		IWeaponAmmo::primaryFire();
 
 		_primaryFireCooldownTimer = _primaryFireCooldown;
 
@@ -124,13 +124,13 @@ namespace Logic {
 	//__________________________________________________________________
 
 	void CShotGunAmmo::stopPrimaryFire() {
-		IAmmo::stopPrimaryFire();
+		IWeaponAmmo::stopPrimaryFire();
 	}
 
 	//__________________________________________________________________
 
 	void CShotGunAmmo::addAmmo(int weapon, int ammo, bool iAmCatch){
-		IAmmo::addAmmo(weapon, ammo, iAmCatch);
+		IWeaponAmmo::addAmmo(weapon, ammo, iAmCatch);
 
 		if(_shotGunComponent)
 			_shotGunComponent->setCurrentAmmo(_currentAmmo);

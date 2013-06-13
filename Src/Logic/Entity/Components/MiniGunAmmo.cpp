@@ -5,7 +5,7 @@ Contiene la implementacion del componente
 de disparo de la cabra.
 
 @see Logic::CMiniGunAmmo
-@see Logic::IAmmo
+@see Logic::IWeaponAmmo
 
 @author Francisco Aisa García
 @date Mayo, 2013
@@ -31,7 +31,7 @@ namespace Logic {
 
 	//__________________________________________________________________
 
-	CMiniGunAmmo::CMiniGunAmmo() : IAmmo("miniGun"),
+	CMiniGunAmmo::CMiniGunAmmo() : IWeaponAmmo("miniGun"),
 									_primaryFireCooldown(0),
 									_defaultPrimaryFireCooldown(0),
 									_primaryFireCooldownTimer(0),
@@ -58,7 +58,7 @@ namespace Logic {
 	//__________________________________________________________________
 
 	bool CMiniGunAmmo::spawn(CEntity* entity, CMap *map, const Map::CEntity *entityInfo) {
-		if( !IAmmo::spawn(entity, map, entityInfo) ) return false;
+		if( !IWeaponAmmo::spawn(entity, map, entityInfo) ) return false;
 
 		// Nos aseguramos de tener todos los atributos que necesitamos
 		assert( entityInfo->hasAttribute(_weaponName + "PrimaryFireCooldown") );
@@ -95,7 +95,7 @@ namespace Logic {
 	//__________________________________________________________________
 
 	void CMiniGunAmmo::onAvailable() {
-		IAmmo::onAvailable();
+		IWeaponAmmo::onAvailable();
 		
 	}
 
@@ -157,7 +157,7 @@ namespace Logic {
 	//__________________________________________________________________
 
 	void CMiniGunAmmo::primaryFire() {
-		IAmmo::primaryFire();
+		IWeaponAmmo::primaryFire();
 
 		_primaryFireIsActive = true;
 
@@ -168,14 +168,14 @@ namespace Logic {
 	//__________________________________________________________________
 
 	void CMiniGunAmmo::stopPrimaryFire() {
-		IAmmo::stopPrimaryFire();
+		IWeaponAmmo::stopPrimaryFire();
 
 		_primaryFireIsActive = false;
 	}
 	//__________________________________________________________________
 
 		void CMiniGunAmmo::secondaryFire() {
-		IAmmo::secondaryFire();
+		IWeaponAmmo::secondaryFire();
 
 		_secondaryFireCooldownTimer = _secondaryFireCooldown;
 
@@ -187,7 +187,7 @@ namespace Logic {
 	//__________________________________________________________________
 
 	void CMiniGunAmmo::stopSecondaryFire() {
-		IAmmo::stopSecondaryFire();
+		IWeaponAmmo::stopSecondaryFire();
 
 		_secondaryFireIsActive = false;
 
