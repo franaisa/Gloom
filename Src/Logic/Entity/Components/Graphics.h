@@ -134,7 +134,7 @@ namespace Logic
 
 		Ogre::SceneManager*		getSceneManager		()		{return _graphicsEntity->getScene()->getSceneMgr(); }
 
-		void					drawDecal			(Vector3 vPos);
+		void					drawDecal			(Vector3 vPos, std::string vTexture);
 
 
 	protected:
