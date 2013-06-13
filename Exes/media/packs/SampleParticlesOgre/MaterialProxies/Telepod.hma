@@ -1,0 +1,160 @@
+CMaterialProxyLibrary	$LOCAL$/Resource
+{
+	MaterialProxyList = 
+	{
+		"$LOCAL$/Material_0",
+		"$LOCAL$/Material_1",
+	};
+}
+CMaterialProxy	$LOCAL$/Material_0
+{
+	EditorInfosPosition = int2(87, -51);
+	BaseMaterial = "Materials/Library/Basic_SolidsAmbient.hbo/Solid_Diffuse_SpecColor_NMap_Env";
+	Fields = 
+	{
+		"$LOCAL$/CMaterialProxyField_30933440",
+		"$LOCAL$/CMaterialProxyField_250E0203",
+		"$LOCAL$/CMaterialProxyField_022DB6C5",
+		"$LOCAL$/CMaterialProxyField_4278CE74",
+		"$LOCAL$/CMaterialProxyField_BAEF0367",
+		"$LOCAL$/CMaterialProxyField_5675F08E",
+		"$LOCAL$/CMaterialProxyField_22548519",
+		"$LOCAL$/CMaterialProxyField_9BCEB378",
+		"$LOCAL$/CMaterialProxyField_2ECE645B",
+	};
+}
+CMaterialProxyField	$LOCAL$/CMaterialProxyField_30933440
+{
+	EditorInfosPosition = int2(-187, -152);
+	FieldName = "Diffuse";
+	ValTexturePath = "Textures/Telepod_Diffuse.dds";
+}
+CMaterialProxyField	$LOCAL$/CMaterialProxyField_250E0203
+{
+	EditorInfosPosition = int2(-187, -109);
+	FieldName = "Normal";
+	ValTexturePath = "Textures/Telepod_Nmap.dds";
+}
+CMaterialProxy	$LOCAL$/Material_1
+{
+	EditorInfosPosition = int2(87, 335);
+	BaseMaterial = "Materials/Library/Basic_SolidsAmbient.hbo/Solid_Diffuse_SpecColor_NMap_Env";
+	Fields = 
+	{
+		"$LOCAL$/CMaterialProxyField_126AD895",
+		"$LOCAL$/CMaterialProxyField_B42CA904",
+		"$LOCAL$/CMaterialProxyField_73749DB2",
+		"$LOCAL$/CMaterialProxyField_78C20DAD",
+		"$LOCAL$/CMaterialProxyField_4A8969BC",
+		"$LOCAL$/CMaterialProxyField_DDD4518F",
+		"$LOCAL$/CMaterialProxyField_C100A616",
+		"$LOCAL$/CMaterialProxyField_DB848481",
+		"$LOCAL$/CMaterialProxyField_2E4E5540",
+	};
+}
+CMaterialProxyField	$LOCAL$/CMaterialProxyField_126AD895
+{
+	EditorInfosPosition = int2(-216, 234);
+	FieldName = "Diffuse";
+	ValTexturePath = "Textures/Telepod_Diffuse.dds";
+}
+CMaterialProxyField	$LOCAL$/CMaterialProxyField_B42CA904
+{
+	EditorInfosPosition = int2(-216, 277);
+	FieldName = "Normal";
+	ValTexturePath = "Textures/Telepod_Nmap.dds";
+}
+CNedEditorMaterialProxy_Data	$LOCAL$/EDITOR
+{
+	SelectedMaterialProxy = "$LOCAL$/Material_0";
+}
+CMaterialProxyField	$LOCAL$/CMaterialProxyField_022DB6C5
+{
+	EditorInfosPosition = int2(-187, -66);
+	FieldName = "ReflectedEnvFresnel";
+	ValTexturePath = "Textures/Cubemaps/Metal1.dds";
+}
+CMaterialProxyField	$LOCAL$/CMaterialProxyField_4278CE74
+{
+	EditorInfosPosition = int2(-187, -23);
+	FieldName = "GlossSpecFresnelReflection";
+	FieldType = Float4;
+	ValFloat4 = float4(1.5277781e-001, 6.0185201e-002, 7.8703701e-002, 1.0000000e-003);
+}
+CMaterialProxyField	$LOCAL$/CMaterialProxyField_BAEF0367
+{
+	EditorInfosPosition = int2(-187, 20);
+	FieldName = "AmbientCube";
+	ValTexturePath = "Textures/Cubemaps/CubeWhite.dds";
+}
+CMaterialProxyField	$LOCAL$/CMaterialProxyField_5675F08E
+{
+	EditorInfosPosition = int2(-187, 63);
+	FieldName = "AmbientColor";
+	FieldType = ColorRGB;
+	ValFloat3 = float3(9.9999998e-003, 9.9999998e-003, 9.9999998e-003);
+}
+CMaterialProxyField	$LOCAL$/CMaterialProxyField_22548519
+{
+	EditorInfosPosition = int2(-187, 106);
+	FieldName = "DiffuseColor";
+	FieldType = ColorRGB;
+	ValFloat3 = float3(1.0000000e+000, 1.0000000e+000, 1.0000000e+000);
+}
+CMaterialProxyField	$LOCAL$/CMaterialProxyField_9BCEB378
+{
+	EditorInfosPosition = int2(-187, 149);
+	FieldName = "SpecColor";
+}
+CMaterialProxyField	$LOCAL$/CMaterialProxyField_2ECE645B
+{
+	EditorInfosPosition = int2(-187, 192);
+	FieldName = "NormalReflectanceFactor";
+	FieldType = Float;
+	ValFloat = 4.8148149e-001;
+}
+CMaterialProxyField	$LOCAL$/CMaterialProxyField_73749DB2
+{
+	EditorInfosPosition = int2(-216, 320);
+	FieldName = "ReflectedEnvFresnel";
+	ValTexturePath = "Textures/Cubemaps/Metal1.dds";
+}
+CMaterialProxyField	$LOCAL$/CMaterialProxyField_78C20DAD
+{
+	EditorInfosPosition = int2(-216, 363);
+	FieldName = "GlossSpecFresnelReflection";
+	FieldType = Float4;
+	ValFloat4 = float4(4.9537039e-001, 2.0000000e-001, 1.0000000e-001, 0.0000000e+000);
+}
+CMaterialProxyField	$LOCAL$/CMaterialProxyField_4A8969BC
+{
+	EditorInfosPosition = int2(-216, 406);
+	FieldName = "AmbientCube";
+	ValTexturePath = "Textures/Cubemaps/CubeWhite.dds";
+}
+CMaterialProxyField	$LOCAL$/CMaterialProxyField_DDD4518F
+{
+	EditorInfosPosition = int2(-216, 449);
+	FieldName = "AmbientColor";
+	FieldType = ColorRGB;
+	ValFloat3 = float3(5.0000001e-002, 5.0000001e-002, 5.0000001e-002);
+}
+CMaterialProxyField	$LOCAL$/CMaterialProxyField_C100A616
+{
+	EditorInfosPosition = int2(-216, 492);
+	FieldName = "DiffuseColor";
+	FieldType = ColorRGB;
+	ValFloat3 = float3(1.0000000e+000, 1.0000000e+000, 1.0000000e+000);
+}
+CMaterialProxyField	$LOCAL$/CMaterialProxyField_DB848481
+{
+	EditorInfosPosition = int2(-216, 535);
+	FieldName = "SpecColor";
+}
+CMaterialProxyField	$LOCAL$/CMaterialProxyField_2E4E5540
+{
+	EditorInfosPosition = int2(-216, 578);
+	FieldName = "NormalReflectanceFactor";
+	FieldType = Float;
+	ValFloat = 3.6036674e-002;
+}

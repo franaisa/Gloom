@@ -1,0 +1,32 @@
+CHmlFactory	$LOCAL$/Resource
+{
+	MeshTree = "$LOCAL$/CHmlMeshTreeNode_LOD_88E2CDCE";
+	Skins = 
+	{
+		"$LOCAL$/CHmlSkinDescriptor_A6847AB8",
+	};
+}
+CHmlMeshTreeNode_LOD	$LOCAL$/CHmlMeshTreeNode_LOD_88E2CDCE
+{
+	LODs = 
+	{
+		"$LOCAL$/CHmlMeshTreeNode_ModelRef_0D92ED59",
+	};
+}
+CHmlMeshTreeNode_ModelRef	$LOCAL$/CHmlMeshTreeNode_ModelRef_0D92ED59
+{
+	MeshResourcePath = "Meshes//CubeRoom_Default.hmm";
+}
+CHmlSkinDescriptor	$LOCAL$/CHmlSkinDescriptor_A6847AB8
+{
+	PublishedName = "Default";
+	Materials = 
+	{
+		"$LOCAL$/CHmlSkinMaterial_AD5A0E9B",
+	};
+}
+CHmlSkinMaterial	$LOCAL$/CHmlSkinMaterial_AD5A0E9B
+{
+	VirtualName = "Light";
+	MaterialProxy = "MaterialProxies/CubeRoom_Default_0.hma/Resource";
+}

@@ -6,14 +6,13 @@ CParticleSystemFactory	$LOCAL$/Resource
 }
 CNEdEditorParticle_Data	$LOCAL$/EDITOR
 {
-	Position = float3(1.0598900e+001, 2.8752236e+000, 2.6781554e+000);
-	EulerOrientation = float3(1.1550301e+000, 7.3689095e+001, 0.0000000e+000);
+	Position = float3(3.8271990e+000, 1.5993350e+000, 3.6246290e+000);
+	EulerOrientation = float3(-4.6215218e-001, 4.4815125e+001, -7.2174858e-005);
 	BackdropPath = "HBO/Entities/Models/Backdrops_Axis_OpenGL/CubeRoomDark.hml";
-	SubEntityTreeFactory = "$LOCAL$/CEntityWithTransformsFactory_09ACED87";
-	IsLooping = true;
 }
-CActionFactoryParticleSpawnerBase	$LOCAL$/Layer_1
+CActionFactoryParticleSpawnerBase	$LOCAL$/Smoke
 {
+	Infinite = true;
 	DurationInSeconds = 2.0000000e+000;
 	SpawnCount = 1.0000000e+001;
 	Descriptor = "$LOCAL$/CParticleDescriptor_AE135B2A";
@@ -23,7 +22,7 @@ CParticleDescriptor	$LOCAL$/CParticleDescriptor_AE135B2A
 	Renderer = "$LOCAL$/CParticleRenderer_Billboard_9136D2F4";
 	CustomFields = 
 	{
-		"$LOCAL$/CParticleFieldDeclaration_BBA6F9FB",
+		"$LOCAL$/CParticleFieldDeclaration_BEF4F9C2",
 	};
 	CustomAttributes = "$LOCAL$/_GlobalAttributes";
 	SpawnEvaluator = "$LOCAL$/CCompilerSyntaxNodeExpression_5566F5E7";
@@ -36,7 +35,7 @@ CActionFactoryWithChilds	$LOCAL$/Spawner
 {
 	ChildList = 
 	{
-		"$LOCAL$/Layer_1",
+		"$LOCAL$/Smoke",
 	};
 }
 CParticleRenderer_Billboard	$LOCAL$/CParticleRenderer_Billboard_9136D2F4
@@ -52,9 +51,9 @@ CCompilerSyntaxNodeExpression	$LOCAL$/CCompilerSyntaxNodeExpression_5566F5E7
 	Life = 3.0;
 	Size = 0.25;
 	TextureID = rand(32, 36);
+	Velocity = float3(0,0.5,0);
 	Rotation = rand(-pi, pi);
 	ScalarRotationSpeed = rand(-1.5, 1.5);
-	Velocity = float3(0, 0.5, 0);
 }";
 }
 CParticleState	$LOCAL$/CParticleState_3AF8190E
@@ -63,9 +62,9 @@ CParticleState	$LOCAL$/CParticleState_3AF8190E
 	Evolvers = 
 	{
 		"$LOCAL$/CParticleEvolver_Physics_36D6D4BD",
-		"$LOCAL$/CParticleEvolver_Rotation_A9817707",
-		"$LOCAL$/CParticleEvolver_Field_CC5515AE",
-		"$LOCAL$/CParticleEvolver_Field_15895CD2",
+		"$LOCAL$/CParticleEvolver_Rotation_BB15179E",
+		"$LOCAL$/CParticleEvolver_Field_B0074FE9",
+		"$LOCAL$/CParticleEvolver_Field_C2E5397D",
 	};
 }
 CParticleEvolver_Physics	$LOCAL$/CParticleEvolver_Physics_36D6D4BD
@@ -75,15 +74,15 @@ CParticleEvolver_Physics	$LOCAL$/CParticleEvolver_Physics_36D6D4BD
 CParticleAttributeList	$LOCAL$/_GlobalAttributes
 {
 }
-CParticleEvolver_Rotation	$LOCAL$/CParticleEvolver_Rotation_A9817707
+CParticleEvolver_Rotation	$LOCAL$/CParticleEvolver_Rotation_BB15179E
 {
 }
-CParticleEvolver_Field	$LOCAL$/CParticleEvolver_Field_CC5515AE
+CParticleEvolver_Field	$LOCAL$/CParticleEvolver_Field_B0074FE9
 {
 	Name = "Size";
-	Evaluator = "$LOCAL$/CParticleStreamFunctionSampleArray_75F395B9";
+	Evaluator = "$LOCAL$/CParticleStreamFunctionSampleArray_D1059308";
 }
-CParticleStreamFunctionSampleArray	$LOCAL$/CParticleStreamFunctionSampleArray_75F395B9
+CParticleStreamFunctionSampleArray	$LOCAL$/CParticleStreamFunctionSampleArray_D1059308
 {
 	Times = 
 	{
@@ -93,40 +92,40 @@ CParticleStreamFunctionSampleArray	$LOCAL$/CParticleStreamFunctionSampleArray_75
 	FloatValues = 
 	{
 		0.0000000e+000,
-		9.1598129e-001,
+		9.7086978e-001,
 	};
 	FloatTangents = 
 	{
 		0.0000000e+000,
-		3.0947933e+000,
+		3.3252034e+000,
 		0.0000000e+000,
 		0.0000000e+000,
 	};
 }
-CNedEditorSpline_Data	$LOCAL$/_CURVE_EDITOR_CParticleStreamFunctionSampleArray_75F395B9
+CNedEditorSpline_Data	$LOCAL$/_CURVE_EDITOR_CParticleStreamFunctionSampleArray_D1059308
 {
 	IsCurveYExist = false;
 	IsCurveZExist = false;
 	IsCurveWExist = false;
 }
-CParticleFieldDeclaration	$LOCAL$/CParticleFieldDeclaration_BBA6F9FB
+CParticleFieldDeclaration	$LOCAL$/CParticleFieldDeclaration_BEF4F9C2
 {
 	FieldName = "Color";
 	FieldType = float4;
 }
-CParticleEvolver_Field	$LOCAL$/CParticleEvolver_Field_15895CD2
+CParticleEvolver_Field	$LOCAL$/CParticleEvolver_Field_C2E5397D
 {
 	Name = "Color";
-	Evaluator = "$LOCAL$/CParticleStreamFunctionSampleArray_52A8504D";
+	Evaluator = "$LOCAL$/CParticleStreamFunctionSampleArray_4733264C";
 }
-CParticleStreamFunctionSampleArray	$LOCAL$/CParticleStreamFunctionSampleArray_52A8504D
+CParticleStreamFunctionSampleArray	$LOCAL$/CParticleStreamFunctionSampleArray_4733264C
 {
 	ValueType = Float4;
 	Times = 
 	{
 		0.0000000e+000,
-		1.8989259e-001,
-		4.7534406e-001,
+		7.0431083e-002,
+		2.5000000e-001,
 		1.0000000e+000,
 	};
 	FloatValues = 
@@ -135,14 +134,14 @@ CParticleStreamFunctionSampleArray	$LOCAL$/CParticleStreamFunctionSampleArray_52
 		0.0000000e+000,
 		0.0000000e+000,
 		0.0000000e+000,
-		1.5739440e+000,
-		7.5036544e-001,
-		4.1837686e-001,
-		3.2042181e-001,
-		8.9576602e-002,
-		7.6608762e-002,
-		5.2269205e-002,
-		1.0273186e+000,
+		2.6710055e+000,
+		6.1583614e-001,
+		2.7930138e-001,
+		1.1989638e-001,
+		1.4328511e-002,
+		8.7462682e-003,
+		8.7462682e-003,
+		1.0000000e+000,
 		0.0000000e+000,
 		0.0000000e+000,
 		0.0000000e+000,
@@ -154,40 +153,36 @@ CParticleStreamFunctionSampleArray	$LOCAL$/CParticleStreamFunctionSampleArray_52
 		0.0000000e+000,
 		0.0000000e+000,
 		0.0000000e+000,
-		9.9090356e-001,
-		2.8432581e-001,
-		2.2701542e-001,
-		3.8343940e-002,
-		-1.7141317e+000,
-		-1.0133464e+000,
-		-4.5346877e-001,
-		4.7726703e-001,
-		-2.5767274e+000,
-		-1.5232887e+000,
-		-6.8166602e-001,
-		7.1744019e-001,
-		-1.7060427e-001,
-		-1.5210621e-001,
-		-1.2190313e-001,
-		1.8100094e-002,
-		-3.1356835e-001,
-		-2.7956915e-001,
-		-2.2405630e-001,
-		3.3267729e-002,
-		-7.1622401e-002,
-		-7.1622401e-002,
-		-7.1622401e-002,
-		-2.1267812e+000,
+		1.2279104e-002,
+		1.2279104e-002,
+		1.2279104e-002,
+		1.2279104e-002,
+		-2.9982228e+000,
+		-4.8974019e-001,
+		-2.4040037e-001,
+		1.7094719e-001,
+		-7.6441760e+000,
+		-1.2486265e+000,
+		-6.1291736e-001,
+		4.3584168e-001,
+		-6.6173743e-003,
+		-4.0177158e-003,
+		-4.0177158e-003,
+		1.5688319e-002,
+		-2.7638584e-002,
+		-1.6780671e-002,
+		-1.6780671e-002,
+		6.5524921e-002,
+		0.0000000e+000,
+		0.0000000e+000,
+		0.0000000e+000,
+		-3.3347433e+000,
 		0.0000000e+000,
 		0.0000000e+000,
 		0.0000000e+000,
 		0.0000000e+000,
 	};
-	MinLimits = float4(0.0000000e+000, 0.0000000e+000, 0.0000000e+000, 0.0000000e+000);
 }
-CNedEditorSpline_Data	$LOCAL$/_CURVE_EDITOR_CParticleStreamFunctionSampleArray_52A8504D
-{
-}
-CEntityWithTransformsFactory	$LOCAL$/CEntityWithTransformsFactory_09ACED87
+CNedEditorSpline_Data	$LOCAL$/_CURVE_EDITOR_CParticleStreamFunctionSampleArray_4733264C
 {
 }

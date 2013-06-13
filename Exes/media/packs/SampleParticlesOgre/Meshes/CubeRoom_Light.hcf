@@ -1,0 +1,51 @@
+CMeshImporterConfig	$LOCAL$/Resource
+{
+	ResourcePath = "Meshes/CubeRoom_Light.FBX";
+	SourceMeshPath = "Meshes/";
+	AnimationPath = "Animations/";
+	MaterialProxyPath = "MaterialProxies/";
+	MeshPath = "Meshes/";
+	ModelPath = "Models/";
+	LevelPath = "Levels/";
+	EntityPath = "Entities/";
+	OutputHmmPath = "Meshes//CubeRoom_Light.hmm";
+	TexturePath = "Textures/";
+}
+CNedEditorMesh_Data	$LOCAL$/_EDITOR
+{
+	MeshPath = "Meshes//CubeRoom_Light.hmm";
+}
+CMeshImporterConfig	$LOCAL$/CMeshImporterConfig_C6723187
+{
+	ResourcePath = "Meshes//CubeRoom_Light.FBX";
+	SourceMeshPath = "Meshes/";
+	AnimationPath = "Animations/";
+	MaterialProxyPath = "MaterialProxies/";
+	MeshPath = "Meshes/";
+	ModelPath = "Models/";
+	LevelPath = "Levels/";
+	EntityPath = "Entities/";
+	OutputHmmPath = "Meshes//CubeRoom_Light.hmm";
+	TexturePath = "Textures/";
+}
+CNedEditorMesh_Data	$LOCAL$/CNedEditorMesh_Data_5C2E2439
+{
+	MeshPath = "Meshes//CubeRoom_Light.hmm";
+}
+CMeshImporterConfig	$LOCAL$/CMeshImporterConfig_62F92FCF
+{
+	ResourcePath = "Meshes//CubeRoom_Light.FBX";
+	SourceMeshPath = "Meshes/";
+	AnimationPath = "Animations/";
+	MaterialProxyPath = "MaterialProxies/";
+	MeshPath = "Meshes/";
+	ModelPath = "Models/";
+	LevelPath = "Levels/";
+	EntityPath = "Entities/";
+	OutputHmmPath = "Meshes//CubeRoom_Light.hmm";
+	TexturePath = "Textures/";
+}
+CNedEditorMesh_Data	$LOCAL$/CNedEditorMesh_Data_8B1A54C1
+{
+	MeshPath = "Meshes//CubeRoom_Light.hmm";
+}

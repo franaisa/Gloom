@@ -1,0 +1,47 @@
+CHmlFactory	$LOCAL$/Resource
+{
+	MeshTree = "$LOCAL$/CHmlMeshTreeNode_LOD_920C75A0";
+	Skins = 
+	{
+		"$LOCAL$/CHmlSkinDescriptor_B9E0B11A",
+	};
+	PublishedAnims = 
+	{
+		"$LOCAL$/CBaseObjectStringPair_ACC1AB2C",
+	};
+}
+CHmlMeshTreeNode_LOD	$LOCAL$/CHmlMeshTreeNode_LOD_920C75A0
+{
+	LODs = 
+	{
+		"$LOCAL$/CHmlMeshTreeNode_ModelRef_FA1FBDE3",
+	};
+}
+CHmlMeshTreeNode_ModelRef	$LOCAL$/CHmlMeshTreeNode_ModelRef_FA1FBDE3
+{
+	MeshResourcePath = "Meshes//LordGausspic_LOD0.hmm";
+}
+CHmlSkinDescriptor	$LOCAL$/CHmlSkinDescriptor_B9E0B11A
+{
+	PublishedName = "Default";
+	Materials = 
+	{
+		"$LOCAL$/CHmlSkinMaterial_94DD7375",
+	};
+}
+CHmlSkinMaterial	$LOCAL$/CHmlSkinMaterial_94DD7375
+{
+	VirtualName = "Lord_Gausspic";
+	MaterialProxy = "MaterialProxies/LordGausspic_LOD0.hma/Material_0";
+}
+CNEdEditorModel_Data	$LOCAL$/EDITOR
+{
+	Position = float3(1.2317690e+001, 1.8811922e+001, 3.9738331e+001);
+	EulerOrientation = float3(-6.6220050e+000, 1.8172014e+001, 0.0000000e+000);
+	AnimVirtualName = "LordGausspic_Anim_Idle";
+}
+CBaseObjectStringPair	$LOCAL$/CBaseObjectStringPair_ACC1AB2C
+{
+	String0 = "LordGausspic_Anim_Idle";
+	String1 = "Animations/Lord_Gaussip/LordGausspic_Anim_Idle.hsa/Resource";
+}

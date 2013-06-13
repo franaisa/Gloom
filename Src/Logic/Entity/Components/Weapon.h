@@ -255,6 +255,11 @@ namespace Logic {
 		/** Nombre del arma con el formato: weapon + <nombre arma>.*/
 		std::string _weaponName;
 
+		Ogre::ManualObject* decalObject;
+
+		bool		_bDecalsCreated;
+		bool		_primerDecal;
+
 	}; // class IWeapon
 
 } // namespace Logic

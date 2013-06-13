@@ -6,7 +6,7 @@
 @file Sniper.h
 
 @see Logic::CSniper
-@see Logic::IAmmo
+@see Logic::IWeaponAmmo
 
 @author Francisco Aisa García
 @date Mayo, 2013
@@ -15,7 +15,7 @@
 #ifndef __Logic_SniperAmmo_H
 #define __Logic_SniperAmmo_H
 
-#include "Logic/Entity/Components/Ammo.h"
+#include "Logic/Entity/Components/WeaponAmmo.h"
 
 namespace Logic {
 
@@ -26,7 +26,7 @@ namespace Logic {
 	@date Mayo, 2013
 	*/
 
-	class CSniperAmmo : public IAmmo {
+	class CSniperAmmo : public IWeaponAmmo {
 		DEC_FACTORY(CSniperAmmo);
 	public:
 

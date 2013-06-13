@@ -11,6 +11,11 @@ namespace Logic {
 	}//
 	//----------------------------------------------------------
 
+	CMessageChangeGravity::CMessageChangeGravity(float gravity) : CMessage(Message::CHANGE_GRAVITY), _gravity(gravity) {
+		// Nada que hacer
+	}//
+	//----------------------------------------------------------
+
 	void CMessageChangeGravity::setGravity(float gravity){
 		_gravity = gravity;
 	}//

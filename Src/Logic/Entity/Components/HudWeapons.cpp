@@ -32,6 +32,8 @@ gráfica de la entidad.
 #include "Logic/Messages/MessageChangeWeaponGraphics.h"
 #include "Logic/Messages/MessageHudDebugData.h"
 
+#include "Graphics/HHFXParticle.h"
+
 using namespace std;
 
 namespace Logic {

@@ -1,0 +1,53 @@
+CMeshImporterConfig	$LOCAL$/Resource
+{
+	ResourcePath = "Meshes/Plane_Dark.FBX";
+	SourceMeshPath = "Meshes/";
+	AnimationPath = "Animations/";
+	MaterialProxyPath = "MaterialProxies/";
+	MeshPath = "Meshes/";
+	ModelPath = "Models/";
+	LevelPath = "Levels/";
+	EntityPath = "Entities/";
+	OutputHmmPath = "Meshes//Plane_Dark.hmm";
+	TexturePath = "Textures/";
+}
+CNedEditorMesh_Data	$LOCAL$/_EDITOR
+{
+	Position = float3(-9.4711693e+001, 2.8174133e+002, 1.8480188e+002);
+	EulerOrientation = float3(-5.3607796e+001, -2.7135323e+001, 0.0000000e+000);
+	MeshPath = "Meshes//Plane_Dark.hmm";
+}
+CMeshImporterConfig	$LOCAL$/CMeshImporterConfig_835FB7A1
+{
+	ResourcePath = "Meshes//Plane_Dark.FBX";
+	SourceMeshPath = "Meshes/";
+	AnimationPath = "Animations/";
+	MaterialProxyPath = "MaterialProxies/";
+	MeshPath = "Meshes/";
+	ModelPath = "Models/";
+	LevelPath = "Levels/";
+	EntityPath = "Entities/";
+	OutputHmmPath = "Meshes//Plane_Dark.hmm";
+	TexturePath = "Textures/";
+}
+CNedEditorMesh_Data	$LOCAL$/CNedEditorMesh_Data_AA9A6B23
+{
+	MeshPath = "Meshes//Plane_Dark.hmm";
+}
+CMeshImporterConfig	$LOCAL$/CMeshImporterConfig_10B67F3B
+{
+	ResourcePath = "Meshes//Plane_Dark.FBX";
+	SourceMeshPath = "Meshes/";
+	AnimationPath = "Animations/";
+	MaterialProxyPath = "MaterialProxies/";
+	MeshPath = "Meshes/";
+	ModelPath = "Models/";
+	LevelPath = "Levels/";
+	EntityPath = "Entities/";
+	OutputHmmPath = "Meshes//Plane_Dark.hmm";
+	TexturePath = "Textures/";
+}
+CNedEditorMesh_Data	$LOCAL$/CNedEditorMesh_Data_0955FF8D
+{
+	MeshPath = "Meshes//Plane_Dark.hmm";
+}

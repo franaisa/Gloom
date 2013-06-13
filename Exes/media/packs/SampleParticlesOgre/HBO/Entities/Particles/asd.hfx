@@ -1,0 +1,102 @@
+CParticleEffect	$LOCAL$/Resource
+{
+	OnSpawn = "$LOCAL$/Spawner";
+	Autostart = true;
+}
+CNEdEditorParticle_Data	$LOCAL$/EDITOR
+{
+	BackdropPath = "Models/CubeRoom_Light.hml";
+	SubEntityTreeFactory = "$LOCAL$/CEntityWithTransformsFactory_71A6D61E";
+	IsLooping = true;
+}
+CActionFactoryParticleSpawnerBase	$LOCAL$/Layer_1
+{
+	DurationInSeconds = 2.0000000e+000;
+	SpawnCount = 1.0000000e+001;
+	Descriptor = "$LOCAL$/CParticleDescriptor_AE135B2A";
+}
+CParticleDescriptor	$LOCAL$/CParticleDescriptor_AE135B2A
+{
+	Renderer = "$LOCAL$/CParticleRenderer_Billboard_9136D2F4";
+	CustomAttributes = "HBO/Entities/Particles/bite.hfx/_GlobalAttributes";
+	SpawnEvaluator = "$LOCAL$/CCompilerSyntaxNodeExpression_5566F5E7";
+	States = 
+	{
+		"$LOCAL$/CParticleState_3AF8190E",
+	};
+}
+CActionFactoryWithChilds	$LOCAL$/Spawner
+{
+	ChildList = 
+	{
+		"$LOCAL$/Layer_1",
+	};
+}
+CParticleRenderer_Billboard	$LOCAL$/CParticleRenderer_Billboard_9136D2F4
+{
+}
+CCompilerSyntaxNodeExpression	$LOCAL$/CCompilerSyntaxNodeExpression_5566F5E7
+{
+	Expression = "function void     Eval()
+{
+	Life = 1.0;
+	Size = 0.25;
+}
+";
+}
+CParticleState	$LOCAL$/CParticleState_3AF8190E
+{
+	StateName = "State_0";
+	Evolvers = 
+	{
+		"$LOCAL$/CParticleEvolver_Physics_36D6D4BD",
+	};
+}
+CParticleEvolver_Physics	$LOCAL$/CParticleEvolver_Physics_36D6D4BD
+{
+	ConstantAcceleration = float3(0.0000000e+000, 2.0000000e+000, 0.0000000e+000);
+}
+CEntityWithTransformsFactory	$LOCAL$/CEntityWithTransformsFactory_71A6D61E
+{
+	SubEntities = 
+	{
+		"$LOCAL$/CEntityFactory_SubEntityReference_77894588",
+		"$LOCAL$/CEntityFactory_SubEntityReference_E09AEE2B",
+		"$LOCAL$/CEntityFactory_SubEntityReference_6C26A0CC",
+		"$LOCAL$/CEntityFactory_SubEntityReference_E0CCEC5F",
+		"$LOCAL$/CEntityFactory_SubEntityReference_91A615A6",
+	};
+	Scripts = "$LOCAL$/CCompilerSyntaxNodeExpression_7E6C1469";
+}
+CCompilerSyntaxNodeExpression	$LOCAL$/CCompilerSyntaxNodeExpression_7E6C1469
+{
+}
+CEntityFactory_SubEntityReference	$LOCAL$/CEntityFactory_SubEntityReference_77894588
+{
+	Entity = "Models/Anneau.hml/Resource";
+	PublishedName = "Anneau";
+}
+CEntityFactory_SubEntityReference	$LOCAL$/CEntityFactory_SubEntityReference_E09AEE2B
+{
+	Entity = "Models/LordGausspic_LOD0.hml/Resource";
+	PublishedName = "LordGausspic_LOD0";
+}
+CShapeProxyFactory	$LOCAL$/CShapeProxyFactory_C9AF65FD
+{
+	SubEntity = "SubEntityName";
+}
+CEntityFactory_SubEntityReference	$LOCAL$/CEntityFactory_SubEntityReference_6C26A0CC
+{
+	Entity = "Models/Anneau.hml/Resource";
+	PublishedName = "Anneau";
+}
+CEntityFactory_SubEntityReference	$LOCAL$/CEntityFactory_SubEntityReference_E0CCEC5F
+{
+	Entity = "HBO/Entities/Models/Anneau.hml/Resource";
+	PublishedName = "Anneau";
+}
+CEntityFactory_SubEntityReference	$LOCAL$/CEntityFactory_SubEntityReference_91A615A6
+{
+	Entity = "Models/Anneau.hml/Resource";
+	PublishedName = "Anneau";
+}

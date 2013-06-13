@@ -121,7 +121,8 @@ namespace Logic {
 		}
 
 		return msgType == Message::CONTROL			||
-			   msgType == Message::ADDFORCEPLAYER;
+			   msgType == Message::ADDFORCEPLAYER	||
+			   msgType == Message::CHANGE_GRAVITY;
 	} // accept
 
 	//________________________________________________________________________
@@ -158,7 +159,7 @@ namespace Logic {
 				break;
 			}
 			case Message::CHANGE_GRAVITY:{
-				_gravity = std::static_pointer_cast<CMessageChangeGravity>(message)->getGravity();
+				_gravity.y = std::static_pointer_cast<CMessageChangeGravity>(message)->getGravity();
 			}
 		}
 

@@ -1,0 +1,32 @@
+CHmlFactory	$LOCAL$/Resource
+{
+	MeshTree = "$LOCAL$/CHmlMeshTreeNode_LOD_96DE7F20";
+	Skins = 
+	{
+		"$LOCAL$/CHmlSkinDescriptor_131F069A",
+	};
+}
+CHmlMeshTreeNode_LOD	$LOCAL$/CHmlMeshTreeNode_LOD_96DE7F20
+{
+	LODs = 
+	{
+		"$LOCAL$/CHmlMeshTreeNode_ModelRef_D2AFA163",
+	};
+}
+CHmlMeshTreeNode_ModelRef	$LOCAL$/CHmlMeshTreeNode_ModelRef_D2AFA163
+{
+	MeshResourcePath = "Meshes//Sphere.hmm";
+}
+CHmlSkinDescriptor	$LOCAL$/CHmlSkinDescriptor_131F069A
+{
+	PublishedName = "Default";
+	Materials = 
+	{
+		"$LOCAL$/CHmlSkinMaterial_185872F5",
+	};
+}
+CHmlSkinMaterial	$LOCAL$/CHmlSkinMaterial_185872F5
+{
+	VirtualName = "lambert1";
+	MaterialProxy = "MaterialProxies/Sphere_0.hma/Resource";
+}

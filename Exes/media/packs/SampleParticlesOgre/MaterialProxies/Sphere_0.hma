@@ -1,0 +1,4 @@
+CMaterialProxy	$LOCAL$/Resource
+{
+	BaseMaterial = "Materials/Library/Basic_SolidsAmbient.hbo/Solid_Diffuse_SpecColor_NMap_Env";
+}
