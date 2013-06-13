@@ -142,7 +142,6 @@ namespace Logic {
 					}
 				}
 			}
-
 			_tickCounter = (_tickCounter + 1) % _ticksPerBuffer;
 		}
 	}
