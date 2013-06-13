@@ -20,17 +20,18 @@ package
 		private function onMouseOver(event: MouseEvent): void {
 			this.removeEventListener(MouseEvent.MOUSE_OVER, onMouseOver);
 			this.addEventListener(MouseEvent.MOUSE_OUT, onMouseOut);
-			this.gotoAndPlay("rollover");
+			this.gotoAndPlay("over");
 		}
 		
 		private function onMouseOut(e:MouseEvent):void {
 			this.removeEventListener(MouseEvent.MOUSE_OUT, onMouseOut);
 			this.addEventListener(MouseEvent.MOUSE_OVER, onMouseOver);
-			this.gotoAndPlay("rollout");
+			this.gotoAndPlay("idle");
 		}
 		
 		private function onMouseClick(e:MouseEvent):void {
 			ExternalInterface.call("exitClick");
+			this.gotoAndPlay("down");
 		}
 		
 	}
