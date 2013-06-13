@@ -18,20 +18,10 @@
 // Mensajes
 #include "Logic/Messages/MessageControl.h"
 #include "Logic/Messages/MessageAudio.h"
-#include "Logic/Messages/MessageHudAmmo.h"
 
-//#include "Logic/Messages/MessageHudSpell.h"
 
 #include "Logic/Messages/MessagePrimarySpell.h"
 #include "Logic/Messages/MessageSecondarySpell.h"
-
-// Graficos
-// @deprecated Ogre no deberia estar acoplado a la logica
-#include <OgreSceneManager.h>
-#include <OgreMaterialManager.h>
-#include <OgreManualObject.h>
-
-#include "Graphics/OgreDecal.h"
 
 using namespace std;
 
@@ -81,9 +71,8 @@ namespace Logic {
 			
 			ControlType type = controlMsg->getType();
 			
-			return type == Control::PRIMARY_SPELL ||
-				   type == Control::SECONDARY_SPELL;
-				   
+			return type == Control::USE_PRIMARY_SPELL ||
+				   type == Control::USE_SECONDARY_SPELL;				   
 		}
 
 		return false;
@@ -96,12 +85,12 @@ namespace Logic {
 			case Message::CONTROL: {
 				ControlType type = std::static_pointer_cast<CMessageControl>(message)->getType();
 
-				if(type == Control::PRIMARY_SPELL) {
-					if(!_isPassive && _isPrimarySpell)
+				if(type == Control::USE_PRIMARY_SPELL) {
+					if(!_isPassive && _isPrimarySpell && canUseSpell())
 						spell();
 				}
-				else if(type == Control::SECONDARY_SPELL) {
-					if(!_isPassive && !_isPrimarySpell)
+				else if(type == Control::USE_SECONDARY_SPELL) {
+					if(!_isPassive && !_isPrimarySpell && canUseSpell())
 						spell();
 				}
 

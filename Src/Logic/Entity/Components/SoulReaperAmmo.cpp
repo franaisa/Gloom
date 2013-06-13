@@ -31,7 +31,7 @@ namespace Logic {
 
 	//__________________________________________________________________
 
-	CSoulReaperAmmo::CSoulReaperAmmo() : IWeaponAmmo("ironHellGoat"),
+	CSoulReaperAmmo::CSoulReaperAmmo() : IWeaponAmmo("soulReaper"),
 											_primaryFireIsActive(false),
 											_secondaryFireIsActive(false),
 											_primaryFireCooldownTimer(0) {

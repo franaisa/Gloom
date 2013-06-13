@@ -79,6 +79,9 @@
   <ItemGroup>
     <ClCompile Include="..\..\Src\Graphics\DecalUtility.cpp" />
     <ClCompile Include="..\..\Src\Graphics\OgreDecal.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\Gravity.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\GravityAmmo.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\GravityFeedback.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\Spell.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\SpellAmmo.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\SpellFeedback.cpp" />
@@ -250,6 +253,9 @@
   <ItemGroup>
     <ClInclude Include="..\..\Src\Graphics\DecalUtility.h" />
     <ClInclude Include="..\..\Src\Graphics\OgreDecal.h" />
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\Gravity.h" />
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\GravityAmmo.h" />
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\GravityFeedback.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\Spell.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\SpellAmmo.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\SpellFeedback.h" />

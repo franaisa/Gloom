@@ -8,7 +8,7 @@ Contiene la implementación del componente que gestiona las armas y que administr
 
 */
 
-#include "SpellsManager.h"
+#include "SpellsManagerClient.h"
 
 #include "Logic/Entity/Entity.h"
 #include "Map/MapEntity.h"
@@ -37,17 +37,17 @@ Contiene la implementación del componente que gestiona las armas y que administr
 
 namespace Logic 
 {
-	IMP_FACTORY(CSpellsManager);
+	IMP_FACTORY(CSpellsManagerClient);
 
 	//---------------------------------------------------------
 	
-	CSpellsManager::CSpellsManager() {
+	CSpellsManagerClient::CSpellsManagerClient() {
 		
 	}
 
 	//---------------------------------------------------------
 
-	bool CSpellsManager::spawn(CEntity *entity, CMap *map, const Map::CEntity *entityInfo) {
+	bool CSpellsManagerClient::spawn(CEntity *entity, CMap *map, const Map::CEntity *entityInfo) {
 		if(!IComponent::spawn(entity,map,entityInfo)) return false;
 
 		// Inicializamos el vector de armas.
@@ -84,7 +84,7 @@ namespace Logic
 	
 	//---------------------------------------------------------
 
-	void CSpellsManager::onActivate() {
+	void CSpellsManagerClient::onActivate() {
 		
 		// El resto de las armas están desactivadas, ya que no las tenemos
 		for(unsigned int i = 1; i < _spells.size(); ++i) {
@@ -95,7 +95,7 @@ namespace Logic
 	} // onActivate
 	//---------------------------------------------------------
 
-	void CSpellsManager::onDeactivate(){
+	void CSpellsManagerClient::onDeactivate(){
 		/*
 		//reset de armas y balas
 		for(unsigned int i = 0; i<_spellry.size();++i){
@@ -108,7 +108,7 @@ namespace Logic
 	}// onDeactivate
 	//---------------------------------------------------------
 
-	bool CSpellsManager::accept(const std::shared_ptr<CMessage>& message) {
+	bool CSpellsManagerClient::accept(const std::shared_ptr<CMessage>& message) {
 		Logic::TMessageType msgType = message->getMessageType();
 
 		return msgType == Message::ADD_SPELL
@@ -117,7 +117,7 @@ namespace Logic
 	
 	//---------------------------------------------------------
 
-	void CSpellsManager::process(const std::shared_ptr<CMessage>& message) {
+	void CSpellsManagerClient::process(const std::shared_ptr<CMessage>& message) {
 		switch( message->getMessageType() ) {
 			case Message::ADD_SPELL: {
 				
@@ -137,7 +137,7 @@ namespace Logic
 	
 	//---------------------------------------------------------
 
-	void CSpellsManager::reduceCooldowns(int percentage) {
+	void CSpellsManagerClient::reduceCooldowns(int percentage) {
 		// Reducimos el cooldown de todas las armas en base al porcentaje dado
 		for(unsigned int i = 0; i < _spells.size(); ++i) {
 			_spells[i].second->reduceCooldown(percentage);

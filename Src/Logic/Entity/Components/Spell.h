@@ -119,62 +119,15 @@ namespace Logic {
 		Método virtual puro que debe ser implementado por las clases derivadas para
 		especificar que ocurre al usar el disparo primario.
 		*/
-		virtual void primaryFire() = 0;
+		virtual void spell(){ };
 
 		//__________________________________________________________________
 		
 		/**
-		Método virtual puro que debe ser implementado por las clases derivadas para
-		especificar que ocurre al usar el disparo secundario.
-		*/
-		virtual void secondaryFire() = 0;
-
-		//__________________________________________________________________
-
-		/**
 		Este método es invocado cuando se deja de pulsar el botón de disparo
 		primario.
 		*/
-		virtual void stopPrimaryFire() { /* Por defecto nada */ }
-
-		//__________________________________________________________________
-
-		/**
-		Este método es invocado cuando se deja de pulsar el botón de disparo
-		secundario.
-		*/
-		virtual void stopSecondaryFire() { /* Por defecto nada */ }
-
-		//__________________________________________________________________
-
-		/**
-		Incrementar la munición de un arma.
-
-		@param spell Identificador del arma.
-		@param ammo Munición a incrementar.
-		@param iAmCath Para el HUD.
-		*/
-		void addAmmo(int spell, int ammo, bool iAmCatch);
-
-		//__________________________________________________________________
-
-		/**
-		Resetea la munición.
-		*/
-		virtual void resetAmmo();
-
-		//__________________________________________________________________
-
-		/**
-		Método virtual puro invocado cuando se amplifica el daño del arma.
-		El cliente es responsable de incrementar el daño de su arma en 
-		el porcentaje dado por parámetro.
-
-		@param percentage Tanto por ciento del 1 al 100 en el que se incrementa
-		el daño del arma. Si su valor es 0, significa que debemos resetear el
-		daño del arma a su valor normal.
-		*/
-		virtual void amplifyDamage(unsigned int percentage) = 0;
+		virtual void stopSpell() { /* Por defecto nada */ }
 
 		//__________________________________________________________________
 
@@ -188,6 +141,7 @@ namespace Logic {
 
 		/**
 		Llamado cuando el arma pasa a ser activa.
+		En los hechizos passivos aqui hara su accion.
 		*/
 		virtual void onAvailable();
 
@@ -208,52 +162,28 @@ namespace Logic {
 
 		//__________________________________________________________________
 
-		/**
-		Decrementa la munición en base al parámetro dado y actualiza la munición
-		que aparece en el HUD.
-
-		@param Cantidad de munición a reducir. Por defecto es 1.
-		*/
-		void decrementAmmo(unsigned int ammoSpent = 1);
-
-		//__________________________________________________________________
-
-		/**
-		Pinta un decal dada una entidad y una posicion
-
-		@deprecated Temporalmente está implementada como un helper, pero
-		en el futuro está función debería formar parte del componente gráfico.
-
-		@param pEntity Entidad sobre la que queremos pintar el decal.
-		@param vPos Posición en la que queremos pintar el decal.
-		*/
-		void drawDecal(Logic::CEntity* pEntity, Vector3 vPos);
-
-		//__________________________________________________________________
-
-
+	
 		// =======================================================================
 		//                          MIEMBROS PROTEGIDOS
 		// =======================================================================
 
 
-		/** Cuanta munición puede llevar este arma como máximo. */
-		unsigned int _maxAmmo;
-		
-		/** Cuanta munición tenemos actualmente en este arma. */
-		unsigned int _currentAmmo;
-		
 		/** Radio de la cápsula del personaje */
 		float _capsuleRadius;
 		
 		/** Altura desde la que sale el disparo. */
 		float _heightShoot;
 		
-		/** Enumerado que indica cual es el identificador de arma. */
-		SpellType::Enum _spellID;
-
-		/** Nombre del arma con el formato: spell + <nombre arma>.*/
+		/** Nombre del arma con el formato: weapon + <nombre arma>.*/
 		std::string _spellName;
+
+		unsigned int _spellID;
+
+		/** variable que controlara si es conjuro primario o secundario. */
+		bool _isPrimarySpell;
+
+		/** Variable para controlar si un hechizo es activo o pasivo */
+		bool _isPassive;
 
 	}; // class ISpell
 

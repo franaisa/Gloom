@@ -125,7 +125,7 @@ namespace Logic {
 		el cooldown del arma. Si su valor es 0, significa que debemos resetear
 		los cooldowns del arma a su valor por defecto.
 		*/
-		virtual void reduceCooldown(unsigned int percentage);
+		virtual void reduceCooldown(unsigned int percentage) { };
 
 	protected:
 
@@ -137,6 +137,7 @@ namespace Logic {
 
 		/**
 		Llamado cuando el arma pasa a ser activa.
+		Si es hechizo es pasivo hara aqui su accion.
 		*/
 		virtual void onAvailable();
 
@@ -163,10 +164,10 @@ namespace Logic {
 		//__________________________________________________________________
 
 		/**
-		Establece la guarda que indica cuando se puede hacer
-		uso del disparo primario.
+		Establece si se puede usar el conjuro o no.
+		Redefinir para los hechizos no pasivos
 		*/
-		virtual bool canUseSpell();
+		virtual bool canUseSpell() { return true; };
 
 		//__________________________________________________________________
 

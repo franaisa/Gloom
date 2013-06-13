@@ -20,9 +20,6 @@
 
 namespace Logic {
 
-	// Forward declarations
-	class CHudWeapons;
-
 	/**
 	@ingroup logicGroup
 
@@ -43,9 +40,9 @@ namespace Logic {
 		Constructor parametrizado. Las clases hijas deberán llamar a este constructor
 		con el nombre de su arma.
 
-		@param weaponName Nombre del arma implementada por la clase derivada.
+		@param spellName Nombre del arma implementada por la clase derivada.
 		*/
-		ISpellFeedback(const std::string& weaponName);
+		ISpellFeedback(const std::string& spellName);
 
 		//__________________________________________________________________
 
@@ -107,7 +104,7 @@ namespace Logic {
 		Método virtual que debe ser implementado por las clases derivadas para
 		especificar que ocurre al usar el spellCast
 		*/
-		virtual void spellCast();
+		virtual void spell() { };
 
 		//__________________________________________________________________
 		
@@ -115,13 +112,17 @@ namespace Logic {
 		Este método es invocado cuando se deja de pulsar el botón de disparo
 		primario.
 		*/
-		virtual void stopSpellCast() { };
+		virtual void stopSpell() { };
 
 		//__________________________________________________________________
 
-		virtual void onAvaiable();
+		/**
+		Si el hechizo es pasivo, en el onAvailable es donde hara su efecto
+		*/
+		virtual void onAvailable() { };
 
-		virtual void onBusy();
+
+		virtual void onBusy() { };
 
 	protected:
 
@@ -158,15 +159,7 @@ namespace Logic {
 		//                          MIEMBROS PROTEGIDOS
 		// =======================================================================
 
-		
-		/** Enumerado que indica cual es el identificador de arma. */
-		SpellType::Enum _weaponID;
-
-		
-
-		CHudWeapons* _hudWeapon;
-
-		/** Nombre del arma con el formato: weapon + <nombre arma>.*/
+		/** Nombre del arma con el formato: spell + <nombre arma>.*/
 		std::string _spellName;
 
 		unsigned int _spellID;
