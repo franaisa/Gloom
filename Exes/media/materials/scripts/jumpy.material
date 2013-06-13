@@ -10,6 +10,7 @@ material Jump
 			specular 0.72 0.72 0.72 1 45
 			cull_hardware none
 			cull_software none
+			
 
 			texture_unit
 			{
