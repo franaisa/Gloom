@@ -1,4 +1,4 @@
-package  
+package principal
 {
 	import flash.display.MovieClip;
 	import flash.display.Sprite;

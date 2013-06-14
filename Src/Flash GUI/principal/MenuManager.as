@@ -1,4 +1,4 @@
-package  
+package principal
 {
 	import flash.ui.Mouse;
 	import flash.display.MovieClip;
