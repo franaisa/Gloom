@@ -8,7 +8,7 @@ Hound CAudio CParticle  CPhysicController CAnimatedGraphics
 Archangel CAudio CParticle  CPhysicController CAnimatedGraphics
 Screamer CAudio CParticle  CPhysicController CAnimatedGraphics
 Shadow CAudio CParticle  CPhysicController CAnimatedGraphics
-Spectator CSpectatorController CPhysicController
+LocalSpectator CSpectatorController CPhysicController
 Camera CCamera
 ItemSpawn  CPhysicStaticEntity CFloatingMovement CSpawnItemManager CGraphics
 ItemSpawnDynamic CPhysicDynamicEntity CPullingMovement CGraphics
