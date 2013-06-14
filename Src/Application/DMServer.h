@@ -153,7 +153,6 @@ namespace Application {
 		bool _voteKick;
 		bool _voteMap;
 		bool _inEndGame;
-		bool _autoChangeMap;
 
 	}; // CDMServer
 

@@ -133,10 +133,7 @@ namespace Application {
 
 		_nextState = it->second;
 
-		
-
 		return true;
-
 	} // setState
 
 	//--------------------------------------------------------

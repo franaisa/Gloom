@@ -31,11 +31,10 @@ using namespace std;
 namespace Application {
 
 	CDMServer::CDMServer(CBaseApplication* app) : CGameServerState(app),
-												  _fragLimit(30),
+												  _fragLimit(1),
 												  _time(900000),
 												  _voteKick(false),
 												  _voteMap(false),
-												  _autoChangeMap(false),
 												  _inEndGame(false) {
 
 		// Nada que hacer

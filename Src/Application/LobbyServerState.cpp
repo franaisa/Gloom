@@ -151,9 +151,14 @@ namespace Application {
 		if (!Logic::CServer::getSingletonPtr()->loadLevel(_map+"_server.txt")) {
 			_app->exitRequest();
 		}
-
+		
 		// Empezamos la partida en modo servidor
 		_app->setState("DMServer");
+
+		Application::CApplicationState* state = _app->getNextState();
+
+		// Configuramos las propiedades del estado
+
 		return FLASH_VOID;
 	} // backReleased
 
