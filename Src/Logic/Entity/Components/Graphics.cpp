@@ -140,7 +140,6 @@ namespace Logic
 				break;
 			}
 			case Message::DECAL: {
-				std::cout << "RECIBIDOOOOOO" << std::endl;
 				std::shared_ptr<CMessageDecal> msgDecal = std::static_pointer_cast<CMessageDecal>(message);
 				drawDecal(msgDecal->getPosition(), msgDecal->getTexture());
 				break;
@@ -217,8 +216,11 @@ namespace Logic
 		Ogre::Vector3 pos = vPos; /// Send a ray into the mesh
 		float width = 1.0f;
 		float height = 1.0f;
-		//std::string textureName = "gunshotwall"; /// Make sure your texture has a depth_bias greater than 1 to avoid z-fighting
-		//std::string textureName = "nicholasCage"; /// Make sure your texture has a depth_bias greater than 1 to avoid z-fighting
+
+		int iRandom = rand() % 130 + 10;//Random entre 150 y 5
+
+		width += iRandom/100.0f;
+		height += iRandom/100.0f;
 
 		/// We have everything ready to go. Now it's time to actually generate the decal:
 		if (_primerDecal)
@@ -237,14 +239,10 @@ namespace Logic
 		//OgreDecal::Decal decal = generator.createDecal( &worldMesh, pos, width, height, textureName, true, decalObject[_iContadorDecals] );
 		Ogre::ManualObject* manObject =  vListaDecals[_iContadorDecals-1];
 		OgreDecal::Decal decal = generator.createDecal( &worldMesh, pos, width, height, vTexture, false, manObject );		
-		std::cout << "ha creado el decal" << std::endl;
 		/// Render the decal object. Always verify the returned object - it will be NULL if no decal could be created.
 		if ((decal.object) && (_primerDecal)) {
-			//sceneMgr->getRootSceneNode()->createChildSceneNode()->attachObject( decal.object );
 			this->getSceneManager()->getRootSceneNode()->createChildSceneNode()->attachObject( decal.object );
-			std::cout << "entraaaaaa" << std::endl;
 		}
-		std::cout << "pinta" << std::endl;
 	} // decals
 
 } // namespace Logic
