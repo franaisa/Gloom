@@ -19,6 +19,7 @@ Contiene la declaración del estado de juego.
 
 #include "GameState.h"
 #include "Net/Manager.h"
+#include "Net/buffer.h"
 #include "Logic/Maps/WorldState.h"
 
 namespace Logic {
@@ -56,7 +57,7 @@ namespace Application {
 
 		@param app Aplicacion que se encarga de manejar los estados.
 		*/
-		CGameServerState(CBaseApplication *app) : CGameState(app), _playersMgr(NULL) {}
+		CGameServerState(CBaseApplication *app, GameMode::Enum mode) : CGameState(app), _gameMode(mode), _playersMgr(NULL) {}
 
 
 		// =======================================================================
@@ -196,11 +197,13 @@ namespace Application {
 		bool _voteMap;
 		bool _voteKick;
 
+		GameMode::Enum _gameMode;
+
 	private:
 
 		void sendMapInfo(Net::NetID playerNetId);
 
-		void sendConnectedPlayersInfo(Net::NetID playerNetId);
+		void sendWorldState(Net::NetID playerNetId);
 
 		void createAndMirrorSpectator(Net::NetID playerNetId);
 

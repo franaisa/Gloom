@@ -17,7 +17,10 @@
 #include "Input/PlayerController.h"
 #include "Input/InputManager.h"
 #include "Logic/Maps/Scoreboard.h"
+#include "Logic/Entity/Entity.h"
 #include "Net/paquete.h"
+
+using namespace std;
 
 namespace Application {
 
@@ -25,10 +28,10 @@ namespace Application {
 		CGameClientState::tick(msecs);
 
 		// Controlamos el tiempo de la partida
-		_time -= msecs;
-		if(_time < 0) {
+		_gameTime -= msecs;
+		if(_gameTime < 0) {
 			// Fin de partida
-			_time = 0;
+			_gameTime = 0;
 
 			// En el cliente
 			// Poner el reloj a 00:00 en el HUD
@@ -36,8 +39,15 @@ namespace Application {
 		else {
 			// @todo En el cliente emitimos un mensaje para que se actualice el HUD
 			// con el formato mm::ss
-			//unsigned int minutes = _time / 60000;
-			//unsigned int seconds = (_time % 60000) / 1000;
+			unsigned int minutes = _gameTime / 60000;
+			unsigned int seconds = (_gameTime % 60000) / 1000;
+
+			if(this->_minutes != minutes || this->_seconds != seconds) {
+				this->_minutes = minutes;
+				this->_seconds = seconds;
+
+				//cout << minutes << ":" << seconds << endl;
+			}
 		}
 	}
 
@@ -74,7 +84,12 @@ namespace Application {
 				_inEndGame = true;
 				
 				// Desactivamos al jugador
-				Input::CServer::getSingletonPtr()->getPlayerController()->deactivate();
+				Logic::CEntity* player = Input::CServer::getSingletonPtr()->getPlayerController()->getControllerAvatar();
+				set<string> exceptionList;
+				exceptionList.insert("CAnimationManager");
+
+				player->deactivateAllComponentsExcept(exceptionList);
+
 				// Fijamos la cámara en el exterior para que rote a nuestro
 				// alrededor
 				Logic::CScoreboard::getSingletonPtr()->activate();

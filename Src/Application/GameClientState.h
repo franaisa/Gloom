@@ -187,12 +187,13 @@ namespace Application {
 
 		Hikari::FlashValue classSelected(Hikari::FlashControl* caller, const Hikari::Arguments& args);
 
+		void basicGameSettings(unsigned int timeLimit, unsigned int goalScore);
+
 	protected:
 
 		void disconnect();
 
 		unsigned int _npings;
-		unsigned int _time;
 		unsigned int _pingActual;
 
 		//menu de seleccion de personaje

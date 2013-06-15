@@ -20,8 +20,7 @@ Contiene la declaración del estado de juego.
 #include "ApplicationState.h"
 
 // Predeclaración de clases para ahorrar tiempo de compilación
-namespace Application 
-{
+namespace Application {
 	class CBaseApplication;
 }
 
@@ -64,7 +63,7 @@ namespace Application {
 		Constructor de la clase 
 		*/
 		CGameState(CBaseApplication *app) : CApplicationState(app), 
-				_scene(0), _time(0) {}
+				_scene(0), _gameTime(0) {}
 
 		/** 
 		Destructor 
@@ -175,12 +174,9 @@ namespace Application {
 		*/
 		Graphics::CScene* _scene;
 
-		/**
-		Tiempo de juego en milisegundos.
-		*/
-		unsigned int _time;
-		unsigned int _timelogic;
-		unsigned int _timephysics;
+		// tiempo de juego
+		int _gameTime;
+		unsigned int _goalScore;
 
 	}; // CGameState
 

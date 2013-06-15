@@ -200,6 +200,10 @@ namespace Application {
 
 		std::shared_ptr<boost::thread> loadThread;
 
+		GameMode::Enum _gameMode;
+		int _gameTimeLeft;
+		unsigned int _goalScore;
+
 	}; // CMenuState
 
 } // namespace Application
