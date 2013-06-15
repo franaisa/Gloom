@@ -114,7 +114,8 @@ namespace Logic {
 			// Posicionamos el grafico y el controlador fisico donde nos indique
 			// el buffer de posiciones interpolado
 			_controller->setPhysicPosition( _transformBuffer.front().getTrans() );
-			_entity->setTransform( _transformBuffer.front() );
+			_entity->setPosition( _transformBuffer.front().getTrans() );
+			_entity->setOrientation( _transformBuffer.front().extractQuaternion());
 			_transformBuffer.pop_front();
 
 			if( !_animationBuffer.empty() ) {
@@ -141,7 +142,6 @@ namespace Logic {
 					}
 				}
 			}
-
 			_tickCounter = (_tickCounter + 1) % _ticksPerBuffer;
 		}
 	}

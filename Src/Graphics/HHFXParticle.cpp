@@ -105,7 +105,7 @@ namespace Graphics
 	
 	void HHFXParticle::setOrientation(const Matrix3 &orientation)
 	{
-		_particleNode->setOrientation(orientation);
+		_particleNode->setOrientation(Quaternion(orientation));
 	} // setOrientatio
 
 } // namespace Graphics

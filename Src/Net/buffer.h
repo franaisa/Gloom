@@ -173,6 +173,25 @@ namespace Net {
 		//________________________________________________________________________
 
 		/**
+		Escribe un quaternion en el buffer.
+		
+		@param data Datos a serializar.
+		*/
+		void serialize(const Quaternion& data);
+
+		//________________________________________________________________________
+
+		/**
+		Lee un quaternion del buffer.
+		
+		@param data Datos a deserializar.
+		*/
+		void deserialize(Quaternion& data);
+
+		//________________________________________________________________________
+
+
+		/**
 		Escribe un float en el buffer.
 		
 		@param data Datos a serializar.
@@ -316,6 +335,24 @@ namespace Net {
 		@param data Datos a deserializar.
 		*/
 		void deserialize(Matrix4& data);
+
+		//________________________________________________________________________
+
+		/**
+		Escribe una matriz de orientacion en el buffer.
+		
+		@param data Datos a serializar.
+		*/
+		void serialize(const Matrix3& data);
+
+		//________________________________________________________________________
+
+		/**
+		Lee una matriz de orientacion del buffer.
+		
+		@param data Datos a deserializar.
+		*/
+		void deserialize(Matrix3& data);
 
 		//________________________________________________________________________
 

@@ -8,7 +8,8 @@ de juego. Es una colección de componentes.
 @see Logic::IComponent
 
 @author David Llansó
-@date Julio, 2010
+@author Jose Antonio García Yáñez
+@date Junio, 2013
 */
 #include "Components\SpawnPlayer.h"
 
@@ -36,12 +37,14 @@ namespace Logic {
 										   _map(0),
 										   _type(""), 
 										   _name(""), 
-										   _transform(Matrix4::IDENTITY),
 										   _position(0,0,0),
-										   _orientation(1,0,0,0),//identidad
+										   _orientation(1,0,0,0),
+										   _yawOrientation(1,0,0,0),
+										   _pitchOrientation(1,0,0,0),
+										   _rollOrientation(1,0,0,0),//identidad
 										   _isPlayer(false), 
 										   _activated(false) {
-
+ 
 
 	} // CEntity
 	
@@ -82,32 +85,28 @@ namespace Logic {
 		}
 
 		if(entityInfo->hasAttribute("position")) {
-			Vector3 position = entityInfo->getVector3Attribute("position");
-			_transform.setTrans(position);
+			_position = entityInfo->getVector3Attribute("position");
 		}
 
-		// Si se establecen los 2 hay que hacerlo a la vez
-		if(entityInfo->hasAttribute("pitch") && entityInfo->hasAttribute("yaw")) {
-			float pitch = Math::fromDegreesToRadians(entityInfo->getFloatAttribute("pitch"));
-			float yaw = Math::fromDegreesToRadians(entityInfo->getFloatAttribute("yaw"));
-			Math::setPitchYaw(pitch,yaw,_transform);
+		if(entityInfo->hasAttribute("yaw")) {
+			_yawOrientation=Math::fromDegreesToQuaternion(entityInfo->getFloatAttribute("yaw"),Vector3(0,1,0));
+			_orientation=_yawOrientation*_pitchOrientation*_rollOrientation;
+		}
+	
+		if(entityInfo->hasAttribute("pitch")) { 
+			_pitchOrientation=Math::fromDegreesToQuaternion(entityInfo->getFloatAttribute("pitch"),Vector3(1,0,0));
+			_orientation=_yawOrientation*_pitchOrientation*_rollOrientation;
 		}
 
-		// Por comodidad en el mapa escribimos los ángulos en grados.
-		else if(entityInfo->hasAttribute("pitch")) { 
-			float pitch = Math::fromDegreesToRadians(entityInfo->getFloatAttribute("pitch"));
-			Math::pitch(pitch,_transform);
+		if(entityInfo->hasAttribute("roll")) { 
+			_rollOrientation=Math::fromDegreesToQuaternion(entityInfo->getFloatAttribute("roll"),Vector3(0,0,1));
+			_orientation=_yawOrientation*_pitchOrientation*_rollOrientation;
 		}
 
-		// Por comodidad en el mapa escribimos los ángulos en grados.
-		else if(entityInfo->hasAttribute("yaw")) {
-			float yaw = Math::fromDegreesToRadians(entityInfo->getFloatAttribute("yaw"));
-			Math::yaw(yaw,_transform);
-		}
-
-		if(entityInfo->hasAttribute("isPlayer"))
+		if(entityInfo->hasAttribute("isPlayer")){
 			_isPlayer = entityInfo->getBoolAttribute("isPlayer");
-		
+
+		}
 
 		// Inicializamos los componentes
 		auto it = _components.begin();
@@ -327,7 +326,6 @@ namespace Logic {
 
 	bool CEntity::removeComponent(IComponent* component) {
 		ComponentInfo info;
-		
 		bool success = false;
 		for(auto it = _components.begin(); it != _components.end() && !success; ++it) {
 			info = it->second;
@@ -377,69 +375,79 @@ namespace Logic {
 
 	//---------------------------------------------------------
 
-	void CEntity::setTransform(const Matrix4& transform) {
-		_transform = transform;
-	} // setTransform
-
-	//---------------------------------------------------------
-
 	void CEntity::setPosition(const Vector3 &position) {
-		_transform.setTrans(position);
+		_position=position;
 	} // setPosition
 
 	//---------------------------------------------------------
 
-	void CEntity::setOrientation(const Ogre::Quaternion& orientation) {
+	void CEntity::setOrientation(const Quaternion& orientation) {
+		//Actualizacion global
 		_orientation = orientation;
-		Matrix3 rot;
-		orientation.ToRotationMatrix(rot);
-		_transform = rot;
+		Vector3 parcial=Math::getEulerYawPitchRoll(_orientation);
+		_yawOrientation = Math::setQuaternion(parcial.x,0,0);
+		_pitchOrientation = Math::setQuaternion(0,parcial.y,0);
+		_rollOrientation = Math::setQuaternion(0,0,parcial.z);
 	} // setOrientation
 
 	//---------------------------------------------------------
 
-	Matrix3 CEntity::getOrientation() const {
-		Matrix3 rot;
-		_orientation.ToRotationMatrix(rot);
-		return rot;
-	} // getOrientation
-	//---------------------------------------------------------
-
-	Ogre::Quaternion CEntity::getQuatOrientation() const {
+	Ogre::Quaternion CEntity::getOrientation() const {
 		return _orientation;
 	} // getOrientation
 	//---------------------------------------------------------
 
-	void CEntity::setYaw(float yaw) {
-		Math::setYaw(yaw,_transform);
-	} // setYaw
-
-	//---------------------------------------------------------
-
-	void CEntity::yaw(float yaw) {
-		Math::yaw(yaw,_transform);
-	} // yaw
-
-	//---------------------------------------------------------
-
-	void CEntity::setPitch(float pitch) {
-		Math::setPitch(pitch,_transform);
-	} // setPitch
-
-	//---------------------------------------------------------
-
-	void CEntity::pitch(float pitch) {
-		Math::pitch(pitch,_transform);
-	} // pitch
-
-	//---------------------------------------------------------
-
-	void CEntity::roll(float roll) {
-		Math::roll(roll, _transform);
+	void CEntity::setYaw(const Quaternion &yaw, bool reset){
+		 _yawOrientation=yaw;
+		if(reset){
+			_rollOrientation=Quaternion(1,0,0,0);
+			_pitchOrientation=Quaternion(1,0,0,0);
+		 }
+		//Actualizamos la orientacion final
+		_orientation=_yawOrientation*_pitchOrientation*_rollOrientation;
 	}
+	// setYaw
+	//---------------------------------------------------------
 
-	void CEntity::setYawPitch(float yaw, float pitch) {
-		Math::pitchYaw(pitch, yaw, _transform);
+	void CEntity::setPitch(const Quaternion &pitch, bool reset) {
+		_pitchOrientation=pitch;
+		if(reset){
+			_rollOrientation=Quaternion(1,0,0,0);
+			_yawOrientation=Quaternion(1,0,0,0);
+		 }
+		//Actualizamos la orientacion final
+		_orientation=_yawOrientation*_pitchOrientation*_rollOrientation;
+	} // setPitch
+	//---------------------------------------------------------
+
+	void CEntity::setRoll(const Quaternion &roll, bool reset) {
+		_rollOrientation=roll;
+		if(reset){
+			_pitchOrientation=Quaternion(1,0,0,0);
+			_yawOrientation=Quaternion(1,0,0,0);
+		 }
+		//Actualizamos la orientacion final
+		_orientation=_yawOrientation*_pitchOrientation*_rollOrientation;
+	} // setRoll
+	//---------------------------------------------------------
+
+	void CEntity::rotate(int orientation, Ogre::Radian rotation){
+		switch(orientation){
+			case Orientation::eYAW:{
+				Math::rotate(Vector3::UNIT_Y,rotation,_yawOrientation);
+				break;
+			}
+			case Orientation::ePITCH:{
+				Math::rotate(Vector3::UNIT_X,rotation,_pitchOrientation);
+				break;
+			}
+			case Orientation::eROLL:{
+				Math::rotate(Vector3::UNIT_Z,rotation,_rollOrientation);
+				break;
+			}
+		}
+		//Actualizamos la orientacion final
+		_orientation=_yawOrientation*_pitchOrientation*_rollOrientation;
 	}
 
 } // namespace Logic

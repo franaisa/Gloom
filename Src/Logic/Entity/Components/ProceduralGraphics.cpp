@@ -78,7 +78,7 @@ namespace Logic
 		if(!_insertAnimation)
 			return;
 		
-		float pitch = _entity->getPitch();
+		float pitch = _entity->getPitch().getPitch().valueRadians();
 
 		if(pitch>0.4){
 			pitch = 0.4;

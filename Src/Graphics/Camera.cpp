@@ -9,8 +9,8 @@ Contiene la implementación de la clase que maneja la cámara.
 
 @see Graphics::CCamera
 
-@author David Llansó
-@date Julio, 2010
+@author Jose Antonio García Yáñez
+@date Mayo, 2013
 */
 
 #include "Camera.h"
@@ -35,26 +35,16 @@ namespace Graphics
 	{
 		_name = name;
 		_scene = scene;
-		
-		// Create the camera's top node (which will only handle position).
+		//Creacion del nodo que contiene a la camara
 		_cameraNode = scene->getSceneMgr()->getRootSceneNode()->createChildSceneNode();
- 
-		// Create the camera's yaw node as a child of camera's top node.
-		_cameraYawNode = _cameraNode->createChildSceneNode();
- 
-		// Create the camera's pitch node as a child of camera's yaw node.
-		_cameraPitchNode = _cameraYawNode->createChildSceneNode();
- 
-		// Create the camera's roll node as a child of camera's pitch node
-		// and attach the camera to it.
-		_cameraRollNode = _cameraPitchNode->createChildSceneNode();
+		//Creación de la camara
 		_camera = scene->getSceneMgr()->createCamera(name + "_camera");
+		//Seteo de atributos de la camara
 		_camera->setNearClipDistance(2);
 		_camera->setFarClipDistance(500);
 		_camera->setFOVy(Ogre::Radian(70));
-		_cameraRollNode->attachObject(this->_camera);
-
-
+		//Atachamos la camara al nodo
+		_cameraNode->attachObject(this->_camera);
 
 	} // CCamera
 
@@ -64,13 +54,7 @@ namespace Graphics
 	{
 		// desacoplamos la cámara de su nodo
 		_cameraNode->detachAllObjects();
-		_cameraYawNode->detachAllObjects();
-		_cameraPitchNode->detachAllObjects();
-		_cameraRollNode->detachAllObjects();
 		_scene->getSceneMgr()->destroyCamera(_camera);
-		_scene->getSceneMgr()->destroySceneNode(_cameraRollNode);
-		_scene->getSceneMgr()->destroySceneNode(_cameraPitchNode);
-		_scene->getSceneMgr()->destroySceneNode(_cameraYawNode);
 		_scene->getSceneMgr()->destroySceneNode(_cameraNode);
 
 	} // ~CCamera
@@ -120,8 +104,7 @@ namespace Graphics
 	//--------------------------------------------------------
 
 	void CCamera::rollCamera(float fRadian){
-		Ogre::Radian rad(fRadian);
-		_camera->roll(rad);
+		_camera->roll(Ogre::Radian(fRadian));
 	}
 
 	//--------------------------------------------------------
@@ -136,57 +119,8 @@ namespace Graphics
 
 		return 0;
 	}
-
+	
 	//--------------------------------------------------------
 
-	void CCamera::moveCamera(Ogre::Radian mRotX, Ogre::Radian mRotY){
-		 Ogre::Real pitchAngle;
-		 Ogre::Real pitchAngleSign;
- 
-		 // Yaws the camera according to the mouse relative movement.
-		 _cameraYawNode->yaw(mRotX);
- 
-		 // Pitches the camera according to the mouse relative movement.
-		 _cameraPitchNode->pitch(mRotY);
-		/*
-		 // Translates the camera according to the translate vector which is
-		 // controlled by the keyboard arrows.
-		 //
-		 // NOTE: We multiply the mTranslateVector by the cameraPitchNode's
-		 // orientation quaternion and the cameraYawNode's orientation
-		 // quaternion to translate the camera accoding to the camera's
-		 // orientation around the Y-axis and the X-axis.
-		 this->cameraNode->translate(this->cameraYawNode->getOrientation() *
-									 this->cameraPitchNode->getOrientation() *
-									 this->mTranslateVector,
-									 Ogre::SceneNode::TS_LOCAL);*/
- 
-		 // Angle of rotation around the X-axis.
-		 pitchAngle = (2 * Ogre::Degree(Ogre::Math::ACos(_cameraPitchNode->getOrientation().w)).valueDegrees());
- 
-		 // Just to determine the sign of the angle we pick up above, the
-		 // value itself does not interest us.
-		 pitchAngleSign = _cameraPitchNode->getOrientation().x;
- 
-		 // Limit the pitch between -90 degress and +90 degrees, Quake3-style.
-		 if (pitchAngle > 90.0f)
-		 {
-			 if (pitchAngleSign > 0)
-				 // Set orientation to 90 degrees on X-axis.
-				 _cameraPitchNode->setOrientation(Ogre::Quaternion(Ogre::Math::Sqrt(0.5f),
-																		Ogre::Math::Sqrt(0.5f), 0, 0));
-			 else if (pitchAngleSign < 0)
-				 // Sets orientation to -90 degrees on X-axis.
-				 _cameraPitchNode->setOrientation(Ogre::Quaternion(Ogre::Math::Sqrt(0.5f),
-																		-Ogre::Math::Sqrt(0.5f), 0, 0));
-		 }
-		 
-	}
-
-	//--------------------------------------------------------
-
-	void CCamera::setYaw(Ogre::Quaternion yaw){
-		_cameraYawNode->setOrientation(yaw);
-	}
 
 } // namespace Graphics
