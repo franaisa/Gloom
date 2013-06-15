@@ -133,7 +133,17 @@ namespace Logic {
 		@param id string que identifica al componente. Es el mismo nombre que el
 		asignado en el blueprints.
 		*/
-		void deactivateAllComponentsExcept(std::set<std::string> exceptionList);
+		void deactivateAllComponentsExcept(const std::set<std::string>& exceptionList);
+
+		//__________________________________________________________________________
+
+		/**
+		Desactiva los componentes que se indiquen.
+
+		@param componentList Array que contiene la lista de componentes que hay que
+		activar.
+		*/
+		void deactivateComponents(const std::vector<std::string>& componentList);
 
 		//__________________________________________________________________
 

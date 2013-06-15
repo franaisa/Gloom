@@ -20,7 +20,6 @@ Contiene la implementación del estado de juego.
 #include "Net/Servidor.h"
 #include "Net/factoriared.h"
 #include "Net/paquete.h"
-#include "Net/buffer.h"
 
 #include "Logic/GameNetPlayersManager.h"
 #include "Logic/Entity/Entity.h"
@@ -90,7 +89,7 @@ namespace Application {
 
 	//______________________________________________________________________________
 
-	void CGameServerState::sendConnectedPlayersInfo(Net::NetID playerNetId) {
+	void CGameServerState::sendWorldState(Net::NetID playerNetId) {
 		// Variables locales
 		Net::NetMessageType loadPlayersMsg = Net::LOAD_WORLD_STATE;
 		
@@ -222,7 +221,7 @@ namespace Application {
 					std::ostringstream convert;
 					convert << playerNetId;
 					std::string nameId = convert.str();
-					playerNick+=nameId;
+					playerNick += nameId;
 				}
 				// Registramos al player en el gestor de jugadores
 				_playersMgr->addPlayer(playerNetId, playerNick);
@@ -232,17 +231,23 @@ namespace Application {
 				break;
 			}
 			case Net::MAP_LOADED: {
-				// Una vez cargado el mapa, comienza la fase de carga de players.
-				// El player que esta siendo conectado deberá cargar a todos los players que ya estaban online.
-				sendConnectedPlayersInfo(playerNetId);
+				Net::CBuffer gameSettingsBuffer;
+				Net::NetMessageType msgType = Net::GAME_SETTINGS;
+
+				gameSettingsBuffer.write(&msgType, sizeof(msgType));
+				
+				gameSettingsBuffer.write(&_gameMode, sizeof(_gameMode));
+				gameSettingsBuffer.write(&_gameTime, sizeof(_gameTime));
+				gameSettingsBuffer.write(&_goalScore, sizeof(_goalScore));
+
+				_netMgr->sendTo( playerNetId, gameSettingsBuffer.getbuffer(), gameSettingsBuffer.getSize() );
 
 				break;
 			}
-			case Net::PLAYERS_LOADED: {
-				Net::NetMessageType loadWorldStateMsg = Net::LOAD_WORLD_STATE;
-				// De momento no serializamos nada, pero aqui habria que liarla
-				// parda para mandarle todo lo que toque al cliente
-				_netMgr->sendTo(playerNetId, &loadWorldStateMsg, sizeof(loadWorldStateMsg));
+			case Net::GAME_SETTINGS_LOADED: {
+				// Una vez cargado el mapa, comienza la fase de carga de players.
+				// El player que esta siendo conectado deberá cargar a todos los players que ya estaban online.
+				sendWorldState(playerNetId);
 
 				break;
 			}

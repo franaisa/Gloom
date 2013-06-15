@@ -37,9 +37,6 @@ namespace Application {
 		// En este caso no hace nada, solo retorna true
 		CApplicationState::init();
 
-		_time = 0;
-		_timelogic=0;
-		_timephysics=0;
 		return true;
 	} // init
 
@@ -83,9 +80,6 @@ namespace Application {
 
 	void CGameState::deactivate() 
 	{
-		//std::cout << "tiempo de procesado fisico: " << _timephysics << std::endl;
-		//std::cout << "tiempo de procesado logico: " << _timelogic << std::endl;
-		//std::cout << "tiempo total jugado: " << _time << std::endl;
 		// Desactivamos la clase que procesa eventos de entrada para 
 		// controlar al jugador.
 		Input::CServer::getSingletonPtr()->getPlayerController()->deactivate();

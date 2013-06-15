@@ -30,12 +30,10 @@ using namespace std;
 
 namespace Application {
 
-	CDMServer::CDMServer(CBaseApplication* app) : CGameServerState(app),
-												  _fragLimit(1),
-												  _time(900000),
+	CDMServer::CDMServer(CBaseApplication* app) : CGameServerState(app, GameMode::eDEATHMATCH),
 												  _forceRespawn(false),
 												  _warmUp(true),
-												  _autoBalanceTeams(false),
+												  //_autoBalanceTeams(false),
 												  _loopMaps(true),
 												  _currentMap(0),
 												  _inEndGame(false) {
@@ -53,9 +51,9 @@ namespace Application {
 		// Se ejecutan los mapas ciclicamente?
 		this->_loopMaps = loopMaps;
 		// Establecemos el tiempo de partida
-		this->_time = (timeLimit.first * 60000) + (timeLimit.second * 1000);
+		this->_gameTime = (timeLimit.first * 60000) + (timeLimit.second * 1000);
 		// Establecemos el limite de frags
-		this->_fragLimit = goalScore;
+		this->_goalScore = goalScore;
 		// Los jugadores respawnean automaticamente?
 		this->_forceRespawn = forceRespawn;
 		// Existe fase de warmUp?
@@ -73,7 +71,7 @@ namespace Application {
 				Logic::TEntityID emitterID = emitter->getEntityID();
 				Logic::CEntity* killer = Logic::CServer::getSingletonPtr()->getMap()->getEntityByID(killerID);
 				if( emitter != killer && isPlayer(killer) ) {
-					if(_playersMgr->addFragUsingEntityID(killerID) == _fragLimit) {
+					if(_playersMgr->addFragUsingEntityID(killerID) == _goalScore) {
 						// fin de partida
 						std::cout << "LA PARTIDA HA FINALIZADO POR LIMITE DE MUERTES!!!" << std::endl;
 						endGame();
@@ -99,8 +97,8 @@ namespace Application {
 		// Para ver si tenemos que finalizar el encuentro
 		if(!_inEndGame) {
 			// Controlamos el tiempo de la partida
-			_time -= msecs;
-			if(_time < 0) {
+			_gameTime -= msecs;
+			if(_gameTime < 0) {
 				std::cout << "LA PARTIDA HA FINALIZADO POR TIEMPO!!" << std::endl;
 
 				endGame();
@@ -114,20 +112,24 @@ namespace Application {
 				// cambiar de mapa o cambiar de modo y mapa
 			}
 			else {
-				if( ++_currentMap < _mapList.size() ) {
-					// Cargar el mapa que corresponda a _currentMap
-					//changeMap(_mapList[_currentMap]);
-				}
-				else if(_loopMaps) {
-					_currentMap = 0;
+				_gameTime -= msecs;
 
-					// Cargar el mapa que corresponda a _currentMap
-					//changeMap(_mapList[_currentMap]);
-				}
-				else {
-					// Finalizar partida
-					disconnect();
-					_app->setState("menu");
+				if(_gameTime < 0) {
+					if( ++_currentMap < _mapList.size() ) {
+						// Cargar el mapa que corresponda a _currentMap
+						//changeMap(_mapList[_currentMap]);
+					}
+					else if(_loopMaps) {
+						_currentMap = 0;
+
+						// Cargar el mapa que corresponda a _currentMap
+						//changeMap(_mapList[_currentMap]);
+					}
+					else {
+						// Finalizar partida
+						disconnect();
+						_app->setState("menu");
+					}
 				}
 			}
 		}
@@ -160,16 +162,30 @@ namespace Application {
 	void CDMServer::endGame() {
 		_inEndGame = true;
 		// Tiempo de espera hasta la siguiente partida
-		_time = _voteMap ? 40000 : 15000;
+		_gameTime = _voteMap ? 40000 : 15000;
 		// Notificar a los clientes de que estamos en la fase endGame
 		Net::NetMessageType endGameMsg = Net::END_GAME;
-		_netMgr->broadcast(&endGameMsg, sizeof(endGameMsg));
+		_netMgr->broadcast( &endGameMsg, sizeof(endGameMsg) );
+
+		// Desactivamos los componentes relevantes en el servidor para asegurarnos
+		// de que aunque el cliente haga chetos no se muevan los jugadores sin permiso
+		// ni se hagan daño.
+		Logic::CEntity* player;
+		std::vector<std::string> componentList;
+		componentList.reserve(4);
+		componentList.push_back("CAvatarController");
+		componentList.push_back("CPhysicController");
+		componentList.push_back("CLife");
+		componentList.push_back("CSpawnPlayer");
+
+		for(auto it = _playersMgr->begin(); it != _playersMgr->end(); ++it) {
+			if( it->getEntityId().second ) {
+				player = _map->getEntityByID( it->getEntityId().first );
+				player->deactivateComponents(componentList);
+			}
+		}
 
 		// @todo
-		// Desactivamos los avatarControllers de todos los players y sus componentes Life
-		// Haremos lo mismo en el cliente pero de esta manera nos aseguramos
-		// que si algun cliente chetea su personaje no se movera en el server
-
 		// Parar la partida (el server y el cliente ya no hacen tick)
 		// Poner la cámara mirando al jugador y que al girar el ratón rote alrededor
 		// del player - cliente

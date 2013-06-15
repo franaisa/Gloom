@@ -118,15 +118,7 @@ namespace Application {
 
 		// Dependiendo del tipo de mensaje
 		switch (msg) {
-			case Net::LOAD_WORLD_STATE: {
-
-				Logic::CWorldState::getSingletonPtr()->deserialize(buffer);
-
-				break;
-			}
-
 			case Net::LOAD_PLAYERS: {
-
 				// Cargamos la informacion del player que nos han enviado
 				Logic::TEntityID entityID;
 				std::string playerClass, name;
@@ -203,6 +195,8 @@ namespace Application {
 				Logic::CEntity* camera = Logic::CServer::getSingletonPtr()->getMap()->getEntityByName("Camera");
 				assert(camera != NULL && "Error, eres un lamer");
 				camera->getComponent<Logic::CCamera>("CCamera")->setTarget(spectator);
+
+				break;
 			}
 			case Net::PING: {
 				// me llega la respuesta de un ping, por lo tanto tomo el tiempo y calculo mi ping
@@ -235,6 +229,8 @@ namespace Application {
 				buffer.deserialize(name);
 
 				Logic::CScoreboard::getSingletonPtr()->deletePlayer(name);
+
+				break;
 			}
 		}
 	}
@@ -382,5 +378,12 @@ namespace Application {
 		
 		return FLASH_VOID;
 	} // backReleased
+
+	//______________________________________________________________________________
+
+	void CGameClientState::basicGameSettings(unsigned int gameTime, unsigned int goalScore) {
+		_gameTime = gameTime;
+		_goalScore = goalScore;
+	}
 
 };

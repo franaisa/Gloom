@@ -150,12 +150,12 @@ namespace Application {
 		bool isPlayer(Logic::CEntity* entity);
 
 		// Game Settings
-		int _time;
-		unsigned int _fragLimit;
+		//int _time;
+		//unsigned int _fragLimit;
 
 		bool _forceRespawn;
 		bool _warmUp;
-		bool _autoBalanceTeams;
+		//bool _autoBalanceTeams;
 
 		// Map Control
 		std::vector<std::string> _mapList; // Se respeta el orden que se le haya dado

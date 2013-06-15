@@ -143,13 +143,14 @@ void CPhysicStaticEntity::createPhysicEntity(const Map::CEntity *entityInfo) {
 
 void CPhysicStaticEntity::createPlane(const Map::CEntity *entityInfo, int group, const std::vector<int>& groupList) {
 	// La posición de la entidad es un punto del plano
-	const Vector3 point = _entity->getPosition();
+	const Vector3 point = _entity->getPosition()-Vector3(0,-10000,0);
 	
 	// Leer el vector normal al plano
 	assert(entityInfo->hasAttribute("physic_normal"));
 	const Vector3 normal = entityInfo->getVector3Attribute("physic_normal");
  
 	Physics::PlaneGeometry plane = _geometryFactory->createPlane(point, normal);
+	
 	Physics::Material* defaultMaterial = _materialManager->getMaterial(eDEFAULT);
 
 	_physicEntity.load(plane, *defaultMaterial, group, groupList, this);
