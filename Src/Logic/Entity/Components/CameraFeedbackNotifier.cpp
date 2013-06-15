@@ -355,7 +355,6 @@ namespace Logic {
 
 	//________________________________________________________________________
 
-
 	void CCameraFeedbackNotifier::calculateEnemyPosition(Vector3 vPosEnemy) { 
 		//Obtengo la posición del enemigo
 		Ogre::Vector3 vEnemyPos = vPosEnemy;
