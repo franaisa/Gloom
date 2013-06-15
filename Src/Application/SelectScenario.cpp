@@ -164,7 +164,7 @@ namespace Application {
 		while (FindNextFile(hFind, &FindData))
 		{     
 			filename = FindData.cFileName;
-			if(filename == "map2_espectador.txt" || filename == "map2.txt" || filename == "map1.txt" || filename == "scenarioTest.txt")
+			if(filename == "map3_espectador.txt" || filename == "map3.txt" || filename == "map2_espectador.txt" || filename == "map2.txt" || filename == "map1.txt" || filename == "scenarioTest.txt")
 				_menu->callFunction("pushFile",Hikari::Args(filename.substr(0,filename.find(".txt"))));
 
 		}
