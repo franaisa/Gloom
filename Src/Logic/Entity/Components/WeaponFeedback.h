@@ -134,6 +134,7 @@ namespace Logic {
 		virtual void stopSecondaryFire() { };
 
 
+		virtual void resetAmmo() {};
 	protected:
 
 

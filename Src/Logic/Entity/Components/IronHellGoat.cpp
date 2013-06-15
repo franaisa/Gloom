@@ -156,18 +156,6 @@ namespace Logic {
 
 	//__________________________________________________________________
 
-	bool CIronHellGoat::canUsePrimaryFire() {
-		return _primaryFireCooldownTimer == 0 && _currentAmmo > 0;
-	}
-
-	//__________________________________________________________________
-
-	bool CIronHellGoat::canUseSecondaryFire() {
-		return !_controllableFireBalls.empty();
-	}
-
-	//__________________________________________________________________
-
 	void CIronHellGoat::primaryFire() {
 		_primaryFireIsActive = true;
 		_primaryFireCooldownTimer = _primaryFireCooldown;
