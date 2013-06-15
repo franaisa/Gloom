@@ -326,7 +326,6 @@ namespace Logic {
 
 	bool CEntity::removeComponent(IComponent* component) {
 		ComponentInfo info;
-		
 		bool success = false;
 		for(auto it = _components.begin(); it != _components.end() && !success; ++it) {
 			info = it->second;
