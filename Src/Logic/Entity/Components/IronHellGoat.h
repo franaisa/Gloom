@@ -89,10 +89,6 @@ namespace Logic {
 
 		virtual void onTick(unsigned int msecs);
 
-		virtual bool canUsePrimaryFire();
-
-		virtual bool canUseSecondaryFire();
-
 		template <typename T>
 		std::string toString(const T& data) const {
 			std::stringstream ss (std::stringstream::in | std::stringstream::out);
