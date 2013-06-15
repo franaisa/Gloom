@@ -48,6 +48,8 @@ namespace Logic {
 		_transformBuffer.push_back( transform );
 	}
 
+	//__________________________________________________________________
+
 } // namespace Logic
 
 
