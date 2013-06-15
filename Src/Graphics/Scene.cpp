@@ -224,6 +224,7 @@ namespace Graphics
 				(*it)->addToStaticGeometry();
 
 			_staticGeometry->build();
+
 		}
 
 	} // buildStaticGeometry
