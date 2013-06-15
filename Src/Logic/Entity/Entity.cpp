@@ -176,14 +176,26 @@ namespace Logic {
 	} // deactivate
 	//---------------------------------------------------------
 
-	void CEntity::deactivateAllComponentsExcept (std::set<std::string> exceptionList) {
+	void CEntity::deactivateAllComponentsExcept(const std::set<std::string>& exceptionList) {
 		for(auto it = _components.begin(); it != _components.end(); ++it) {
 			if( !exceptionList.count(it->first) ) {
 				it->second.componentPtr->deactivate();
 			}
 		}
 	}// deactivateAllComponentsExcept
+	
+	//---------------------------------------------------------
 
+	void CEntity::deactivateComponents(const std::vector<std::string>& componentList) {
+		TComponentMap::iterator it;
+		for(unsigned int i = 0; i < componentList.size(); ++i) {
+			it = _components.find(componentList[i]);
+			if( it != _components.end() ) {
+				it->second.componentPtr->deactivate();
+			}
+		}
+	}
+	
 	//---------------------------------------------------------
 
 	void CEntity::start() {

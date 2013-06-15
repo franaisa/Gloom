@@ -140,6 +140,9 @@ namespace Application {
 
 	private:
 		bool _inEndGame;
+		unsigned int _minutes;
+		unsigned int _seconds;
+
 	}; // CDMClient
 
 } // namespace Application
