@@ -129,7 +129,7 @@ namespace Logic {
 	//__________________________________________________________________
 
 	void CSoulReaperAmmo::stopSecondaryFire() {
-		IWeaponAmmo::stopPrimaryFire();
+		IWeaponAmmo::stopSecondaryFire();
 		
 		_secondaryFireIsActive = false;
 	} // stopPrimaryFire

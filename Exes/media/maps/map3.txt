@@ -1,0 +1,30 @@
+Map = {
+
+	World = {
+		type = "World",
+		model = "mapaAngel.mesh",
+		comment_physic_file = "media/models/ola.RepX",
+		physic_entity = "plane",
+		physic_normal = {0,1,0},
+	},
+	
+	David = {
+		type = "LocalArchangel",
+		isPlayer = true,
+	},
+	
+	Camera = {
+		type = "Camera",
+		height = 8,
+	},
+	Point1 = {
+		type = "SpawnPoint",
+		position = {-219.0, 3.0, -52.0},
+		yaw = 180,
+		physic_entity = "rigid",
+		physic_trigger = true,
+		physic_type = "static",
+		physic_shape = "box",
+		physic_dimensions = { 4, 7, 4 },
+	},
+}

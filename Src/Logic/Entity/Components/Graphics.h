@@ -57,7 +57,7 @@ namespace Logic
 		Constructor por defecto; inicializa los atributos a su valor por 
 		defecto.
 		*/
-		CGraphics() : _graphicsEntity(NULL), _primerDecal(true), _iMaxDecals(20), _iContadorDecals(0) {
+		CGraphics() : _graphicsEntity(NULL), _primerDecal(true), _iMaxDecals(50), _iContadorDecals(0) {
 		}
 
 		/**
