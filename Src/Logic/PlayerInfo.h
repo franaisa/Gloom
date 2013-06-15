@@ -232,7 +232,7 @@ namespace Logic {
 		/**
 		Incrementa el número de frags anotados para el jugador dado.
 		*/
-		inline void addFrag() { ++_frags; }
+		inline unsigned int addFrag() { return ++_frags; }
 
 		//________________________________________________________________________
 

@@ -332,6 +332,19 @@ namespace Application {
 
 	//______________________________________________________________________________
 
+	void CGameServerState::serverSettings(const std::string& serverName, const std::string& serverPassword, unsigned int maxPlayers, 
+								   unsigned int maxSpectators, bool voteMap, bool voteKick) {
+
+		this->_serverName = serverName;
+		this->_serverPassword = serverPassword;
+		this->_maxPlayer = maxPlayers;
+		this->_maxSpectators = maxSpectators;
+		this->_voteMap = voteMap;
+		this->_voteKick = voteKick;
+	}
+
+	//______________________________________________________________________________
+
 	void CGameServerState::disconnect() {
 		// Solicitamos dejar de ser notificados
 		_netMgr->removeObserver(this);

@@ -16,6 +16,7 @@
 #include "Input/Server.h"
 #include "Input/PlayerController.h"
 #include "Input/InputManager.h"
+#include "Logic/Maps/Scoreboard.h"
 #include "Net/paquete.h"
 
 namespace Application {
@@ -44,6 +45,7 @@ namespace Application {
 
 	void CDMClient::activate() {
 		CGameClientState::activate();
+		_inEndGame = false;
 	} // activate
 
 	//______________________________________________________________________________
@@ -69,10 +71,13 @@ namespace Application {
 		// Dependiendo del tipo de mensaje
 		switch (netMsgType) {
 			case Net::END_GAME: {
+				_inEndGame = true;
+				
 				// Desactivamos al jugador
 				Input::CServer::getSingletonPtr()->getPlayerController()->deactivate();
 				// Fijamos la cámara en el exterior para que rote a nuestro
 				// alrededor
+				Logic::CScoreboard::getSingletonPtr()->activate();
 
 				break;
 			}
@@ -82,13 +87,35 @@ namespace Application {
 	//______________________________________________________________________________
 
 	bool CDMClient::keyPressed(Input::TKey key) {
-		return CGameClientState::keyPressed(key);
+		CGameClientState::keyPressed(key);
+
+		switch(key.keyId) {
+			case Input::Key::TAB: {
+				if(!_inEndGame)
+					Logic::CScoreboard::getSingletonPtr()->activate();
+				
+				break;
+			}
+		}
+		
+		return true;
 	} // keyPressed
 
 	//______________________________________________________________________________
 
 	bool CDMClient::keyReleased(Input::TKey key) {
-		return CGameClientState::keyReleased(key);
+		CGameClientState::keyReleased(key);
+
+		switch(key.keyId) {
+			case Input::Key::TAB: {
+				if(!_inEndGame)
+					Logic::CScoreboard::getSingletonPtr()->deactivate();
+				
+				break;
+			}
+		}
+
+		return true;
 	} // keyReleased
 
 	//______________________________________________________________________________
