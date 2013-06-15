@@ -33,8 +33,11 @@ namespace Application {
 	CDMServer::CDMServer(CBaseApplication* app) : CGameServerState(app),
 												  _fragLimit(1),
 												  _time(900000),
-												  _voteKick(false),
-												  _voteMap(false),
+												  _forceRespawn(false),
+												  _warmUp(true),
+												  _autoBalanceTeams(false),
+												  _loopMaps(true),
+												  _currentMap(0),
 												  _inEndGame(false) {
 
 		// Nada que hacer
@@ -42,13 +45,21 @@ namespace Application {
 
 	//______________________________________________________________________________
 
-	void CDMServer::setGameConfig(const pair<unsigned int, unsigned int>& timeLimit, unsigned int fragLimit, bool voteKick) {
+	void CDMServer::gameSettings(const std::vector<std::string>& mapList, bool loopMaps, const std::pair<unsigned int, unsigned int>& timeLimit, 
+								 unsigned int goalScore, bool forceRespawn, bool warmUp) {
+
+		// Establecemos la lista de mapas
+		this->_mapList = mapList;
+		// Se ejecutan los mapas ciclicamente?
+		this->_loopMaps = loopMaps;
 		// Establecemos el tiempo de partida
 		this->_time = (timeLimit.first * 60000) + (timeLimit.second * 1000);
 		// Establecemos el limite de frags
-		this->_fragLimit = fragLimit;
-		// Activamos el votekick
-		this->_voteKick = voteKick;
+		this->_fragLimit = goalScore;
+		// Los jugadores respawnean automaticamente?
+		this->_forceRespawn = forceRespawn;
+		// Existe fase de warmUp?
+		this->_warmUp = warmUp;
 	}
 
 	//______________________________________________________________________________
@@ -62,10 +73,9 @@ namespace Application {
 				Logic::TEntityID emitterID = emitter->getEntityID();
 				Logic::CEntity* killer = Logic::CServer::getSingletonPtr()->getMap()->getEntityByID(killerID);
 				if( emitter != killer && isPlayer(killer) ) {
-					_playersMgr->addFragUsingEntityID(killerID);
-
-					if(_playersMgr->getFragsUsingEntityID(killerID) == _fragLimit) {
+					if(_playersMgr->addFragUsingEntityID(killerID) == _fragLimit) {
 						// fin de partida
+						std::cout << "LA PARTIDA HA FINALIZADO POR LIMITE DE MUERTES!!!" << std::endl;
 						endGame();
 					}
 				}
@@ -73,7 +83,7 @@ namespace Application {
 					_playersMgr->substractFragUsingEntityID(emitterID);
 				}
 
-				cout << killer->getName() << " lleva " << _playersMgr->getFragsUsingEntityID(emitterID) << " frags" << endl;
+				//cout << killer->getName() << " lleva " << _playersMgr->getFragsUsingEntityID(emitterID) << " frags" << endl;
 
 				break;
 			}
@@ -83,40 +93,44 @@ namespace Application {
 	//______________________________________________________________________________
 
 	void CDMServer::tick(unsigned int msecs) {
-		// Si la partida no ha acabado, actualizamos la física y la lógica
-		// y actualizamos el reloj de partida
-		if(!_inEndGame) {
-			CGameServerState::tick(msecs);
+		CGameServerState::tick(msecs);
 
+		// Si la partida ha finalizado comprobamos el tiempo que ha transcurrido
+		// Para ver si tenemos que finalizar el encuentro
+		if(!_inEndGame) {
 			// Controlamos el tiempo de la partida
 			_time -= msecs;
 			if(_time < 0) {
+				std::cout << "LA PARTIDA HA FINALIZADO POR TIEMPO!!" << std::endl;
+
 				endGame();
 			}
 		}
 		// Si la partida ha finalizado dejamos de hacer tick
 		else {
-			_time -=msecs;
-			if(_time < 0) {
-				_time = 0;
+			if(_voteMap) {
+				// Mostrar el menu de votacion de mapa
+				// En funcion del modo y el mapa que se vote
+				// cambiar de mapa o cambiar de modo y mapa
+			}
+			else {
+				if( ++_currentMap < _mapList.size() ) {
+					// Cargar el mapa que corresponda a _currentMap
+					//changeMap(_mapList[_currentMap]);
+				}
+				else if(_loopMaps) {
+					_currentMap = 0;
 
-				if(_autoChangeMap) {
-					// Pasar al siguiente mapa
-					// de la lista
+					// Cargar el mapa que corresponda a _currentMap
+					//changeMap(_mapList[_currentMap]);
 				}
 				else {
-					// Salir de la partida y desconexion
-					//disconnect();
-					//_app->setState("menu");
+					// Finalizar partida
+					disconnect();
+					_app->setState("menu");
 				}
 			}
 		}
-		/*else {
-			// @todo En el cliente emitimos un mensaje para que se actualice el HUD
-			// con el formato mm::ss
-			//unsigned int minutes = _time / 60000;
-			//unsigned int seconds = (_time % 60000) / 1000;
-		}*/
 	}
 
 	//______________________________________________________________________________
@@ -144,13 +158,17 @@ namespace Application {
 	//______________________________________________________________________________
 
 	void CDMServer::endGame() {
-		cout << "LA PARTIDA HA ACABADO!" << endl;
 		_inEndGame = true;
 		// Tiempo de espera hasta la siguiente partida
-		_time = _voteMap ? 45000 : 15000;
+		_time = _voteMap ? 40000 : 15000;
 		// Notificar a los clientes de que estamos en la fase endGame
 		Net::NetMessageType endGameMsg = Net::END_GAME;
 		_netMgr->broadcast(&endGameMsg, sizeof(endGameMsg));
+
+		// @todo
+		// Desactivamos los avatarControllers de todos los players y sus componentes Life
+		// Haremos lo mismo en el cliente pero de esta manera nos aseguramos
+		// que si algun cliente chetea su personaje no se movera en el server
 
 		// Parar la partida (el server y el cliente ya no hacen tick)
 		// Poner la cámara mirando al jugador y que al girar el ratón rote alrededor

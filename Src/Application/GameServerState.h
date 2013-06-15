@@ -171,9 +171,14 @@ namespace Application {
 		*/
 		virtual bool mouseReleased(const Input::CMouseState &mouseState);
 
+		void changeMap(const std::string& mapName) { /* @todo Cambiar el mapa */ }
+
+		void serverSettings(const std::string& serverName, const std::string& serverPassword, unsigned int maxPlayers, 
+							unsigned int maxSpectators, bool voteMap, bool voteKick);
+
 	protected:
 
-		void disconnect();
+		inline void disconnect();
 
 		Logic::CGameNetPlayersManager* _playersMgr;
 
@@ -182,6 +187,14 @@ namespace Application {
 		Logic::CWorldState* _worldState;
 
 		Logic::CMap* _map;
+
+		// Server game settings
+		std::string _serverName;
+		std::string _serverPassword;
+		unsigned int _maxPlayer;
+		unsigned int _maxSpectators;
+		bool _voteMap;
+		bool _voteKick;
 
 	private:
 

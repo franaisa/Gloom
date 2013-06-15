@@ -259,8 +259,6 @@ namespace Application {
 	//______________________________________________________________________________
 
 	bool CGameClientState::keyPressed(Input::TKey key) {
-		CGameState::keyPressed(key);
-		
 		switch(key.keyId) {
 			case Input::Key::C: {//cambio de clase
 				//primero, quitamos al player de escuchar las teclas, para ello lo desactivamos del playerController
@@ -291,6 +289,7 @@ namespace Application {
 				return false;
 			}
 		}
+
 		return true;
 	} // keyReleased
 

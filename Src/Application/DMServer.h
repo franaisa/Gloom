@@ -46,7 +46,8 @@ namespace Application {
 		*/
 		CDMServer(CBaseApplication* app);
 
-		void setGameConfig(const std::pair<unsigned int, unsigned int>& timeLimit, unsigned int fragLimit, bool voteKick = false);
+		void gameSettings(const std::vector<std::string>& mapList, bool loopMaps, const std::pair<unsigned int, unsigned int>& timeLimit, 
+						  unsigned int goalScore, bool forceRespawn, bool warmUp);
 
 		virtual void gameEventOcurred(Logic::CEntity* emitter, const std::shared_ptr<Logic::CMessage>& msg);
 
@@ -148,10 +149,20 @@ namespace Application {
 
 		bool isPlayer(Logic::CEntity* entity);
 
+		// Game Settings
 		int _time;
 		unsigned int _fragLimit;
-		bool _voteKick;
-		bool _voteMap;
+
+		bool _forceRespawn;
+		bool _warmUp;
+		bool _autoBalanceTeams;
+
+		// Map Control
+		std::vector<std::string> _mapList; // Se respeta el orden que se le haya dado
+		bool _loopMaps;
+		unsigned int _currentMap;
+
+		// Variables
 		bool _inEndGame;
 
 	}; // CDMServer

@@ -41,7 +41,7 @@ namespace Application {
 
 		@param app Aplicacion que se encarga de manejar los estados.
 		*/
-		CDMClient(CBaseApplication* app) : CGameClientState(app) { /* Nada que hacer */ }
+		CDMClient(CBaseApplication* app) : CGameClientState(app), _inEndGame(false) { /* Nada que hacer */ }
 
 
 		// =======================================================================
@@ -138,7 +138,8 @@ namespace Application {
 		*/
 		virtual bool mouseReleased(const Input::CMouseState &mouseState);
 
-
+	private:
+		bool _inEndGame;
 	}; // CDMClient
 
 } // namespace Application
