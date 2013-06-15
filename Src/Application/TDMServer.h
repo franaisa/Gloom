@@ -1,30 +1,24 @@
 //---------------------------------------------------------------------------
-// GameServerState.h
+// TDMServer.h
 //---------------------------------------------------------------------------
 
 /**
-@file GameServerState.h
+@file TDMServer.h
 
-Contiene la declaración del estado de juego.
-
+@see Application::CTDMServer
 @see Application::CGameServerState
-@see Application::CGameState
 
 @author Francisco Aisa García
-@date Febrero, 2013
+@date Junio, 2013
 */
 
-#ifndef __Application_GameServerState_H
-#define __Application_GameServerState_H
+#ifndef __Application_TDMServer_H
+#define __Application_TDMServer_H
 
-#include "GameState.h"
-#include "Net/Manager.h"
-#include "Net/buffer.h"
-#include "Logic/Maps/WorldState.h"
+#include "GameServerState.h"
 
 namespace Logic {
-	class CGameNetPlayersManager;
-	class CMap;
+	class CEntity;
 }
 
 namespace Application {
@@ -32,18 +26,11 @@ namespace Application {
 	/**
 	@ingroup applicationGroup
 
-	Representa el estado de juego online para el servidor. En el futuro
-	tendremos diferentes estados por cada modo de juego, pero de momento
-	se queda asi hasta que por lo menos tengamos un deathmatch.
-
-	Hereda de CGameState por que es un estado de juego y de Net::CManager::IObserver
-	para que se le avise de que ha recibido paquetes.
-
 	@author Francisco Aisa García
-	@date Febrero, 2013
+	@date Junio, 2013
 	*/
 
-	class CGameServerState : public CGameState, public Net::CManager::IObserver, public Logic::CWorldState::IObserver {
+	class CTDMServer : public CGameServerState {
 	public:
 
 
@@ -57,13 +44,19 @@ namespace Application {
 
 		@param app Aplicacion que se encarga de manejar los estados.
 		*/
-		CGameServerState(CBaseApplication *app, GameMode::Enum mode) : CGameState(app), _gameMode(mode), _playersMgr(NULL) {}
+		CTDMServer(CBaseApplication* app);
+
+		void gameSettings(const std::vector<std::string>& mapList, bool loopMaps, const std::pair<unsigned int, unsigned int>& timeLimit, 
+						  unsigned int goalScore, bool forceRespawn, bool warmUp, bool autoBalanceTeams);
+
+		virtual void gameEventOcurred(Logic::CEntity* emitter, const std::shared_ptr<Logic::CMessage>& msg);
 
 
 		// =======================================================================
 		//                           METODOS HEREDADOS
 		// =======================================================================
 
+		virtual void tick(unsigned int msecs);
 
 		/**
 		Función llamada por la aplicación cuando se activa
@@ -78,36 +71,6 @@ namespace Application {
 		el estado.
 		*/
 		virtual void deactivate();
-
-		//______________________________________________________________________________
-
-		/**
-		Se dispara cuando se recibe un paquete de datos.
-
-		@see Net::CManager::IObserver
-		@param packet Paquete de datos recibido.
-		*/
-		virtual void dataPacketReceived(Net::CPaquete* packet);
-
-		//______________________________________________________________________________
-
-		/**
-		Se dispara cuando se recibe un paquete de conexion.
-
-		@see Net::CManager::IObserver
-		@param packet Paquete de conexion recibido.
-		*/
-		virtual void connectionPacketReceived(Net::CPaquete* packet);
-
-		//______________________________________________________________________________
-
-		/**
-		Se dispara cuando se recibe un paquete de desconexion.
-
-		@see Net::CManager::IObserver
-		@param packet Paquete de desconexion recibido.
-		*/
-		virtual void disconnectionPacketReceived(Net::CPaquete* packet);
 
 		//______________________________________________________________________________
 
@@ -126,6 +89,8 @@ namespace Application {
 		*/
 		virtual bool keyPressed(Input::TKey key);
 
+		//______________________________________________________________________________
+
 		/**
 		Método que será invocado siempre que se termine la pulsación
 		de una tecla. Será la aplicación quién llame a este método 
@@ -139,6 +104,8 @@ namespace Application {
 		*/
 		virtual bool keyReleased(Input::TKey key);
 
+		//______________________________________________________________________________
+
 		// Métodos de CMouseListener
 
 		/**
@@ -151,6 +118,8 @@ namespace Application {
 		*/
 		virtual bool mouseMoved(const Input::CMouseState &mouseState);
 
+		//______________________________________________________________________________
+
 		/**
 		Método que será invocado siempre que se pulse un botón. La
 		aplicación avisa de este evento al estado actual.
@@ -160,6 +129,8 @@ namespace Application {
 		el gestor no llamará a otros listeners.
 		*/
 		virtual bool mousePressed(const Input::CMouseState &mouseState);
+
+		//______________________________________________________________________________
 
 		/**
 		Método que será invocado siempre que se termine la pulsación
@@ -172,46 +143,29 @@ namespace Application {
 		*/
 		virtual bool mouseReleased(const Input::CMouseState &mouseState);
 
-		void changeMap(const std::string& mapName) { /* @todo Cambiar el mapa */ }
-
-		void serverSettings(const std::string& serverName, const std::string& serverPassword, unsigned int maxPlayers, 
-							unsigned int maxSpectators, bool voteMap, bool voteKick);
-
-	protected:
-
-		inline void disconnect();
-
-		Logic::CGameNetPlayersManager* _playersMgr;
-
-		Net::CManager* _netMgr;
-
-		Logic::CWorldState* _worldState;
-
-		Logic::CMap* _map;
-
-		// Server game settings
-		std::string _serverName;
-		std::string _serverPassword;
-		unsigned int _maxPlayer;
-		unsigned int _maxSpectators;
-		bool _voteMap;
-		bool _voteKick;
-
-		GameMode::Enum _gameMode;
-
 	private:
 
-		void sendMapInfo(Net::NetID playerNetId);
+		void endGame();
 
-		void sendWorldState(Net::NetID playerNetId);
+		bool isPlayer(Logic::CEntity* entity);
 
-		void createAndMirrorSpectator(Net::NetID playerNetId);
+		// Game Settings
+		bool _forceRespawn;
+		bool _warmUp;
+		bool _autoBalanceTeams;
 
-		void createAndMirrorPlayer(int race, Net::NetID playerNetId, const std::string& team);
+		// Map Control
+		std::vector<std::string> _mapList; // Se respeta el orden que se le haya dado
+		bool _loopMaps;
+		unsigned int _currentMap;
 
-		
-	}; // CMultiplayerTeamDeathmatchServerState
+		// Variables
+		bool _inEndGame;
+		unsigned int _blueTeamScore;
+		unsigned int _redTeamScore;
+
+	}; // CTDMServer
 
 } // namespace Application
 
-#endif //  __Application_GameState_H
+#endif // __Application_DMServer_H

@@ -133,7 +133,7 @@ namespace Application {
 
 	//______________________________________________________________________________
 
-	void CGameServerState::createAndMirrorPlayer(int race, Net::NetID playerNetId) {
+	void CGameServerState::createAndMirrorPlayer(int race, Net::NetID playerNetId, const std::string& team) {
 		std::string name = _playersMgr->getPlayerNickname(playerNetId);
 		
 		// Obtenemos el nombre de la clase a la que pertenece el player
@@ -192,6 +192,7 @@ namespace Application {
 		_netMgr->sendTo(playerNetId, buffer.getbuffer(), buffer.getSize());
 
 		_playersMgr->setPlayerState(playerNetId, true);
+		//_playersMgr->setPlayerTeam(playerNetId, team);
 	}
 
 	//______________________________________________________________________________
@@ -276,9 +277,19 @@ namespace Application {
 				int race;
 				inBuffer.deserialize(race);
 
+				/*std::string team;
+				if(_gameMode == GameMode::eTEAM_DEATHMATCH ||
+				   _gameMode == GameMode::eCAPTURE_THE_FLAG) {
+
+					inBuffer.deserialize(team);
+				}
+				else {
+					team = "none";
+				}*/
+
 				// Creamos una entidad jugador con la clase que nos hayan dicho
 				// y la replicamos en el cliente
-				createAndMirrorPlayer(race, playerNetId);
+				createAndMirrorPlayer(race, playerNetId, "none");
 
 				break;
 			}

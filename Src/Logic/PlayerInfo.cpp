@@ -23,7 +23,6 @@ namespace Logic {
 	CPlayerInfo::CPlayerInfo(Net::NetID netId) : _netId(netId),
 												 _entityId(0),
 												 _frags(0),
-												 _team(Team::eBLUE_TEAM),
 												 _entityIdInitialized(false),
 												 _isPlaying(false) {
 		
@@ -35,7 +34,6 @@ namespace Logic {
 	CPlayerInfo::CPlayerInfo(Net::NetID netId, const std::string& nickname) : _netId(netId),
 																			  _entityId(0),
 																			  _frags(0),
-																			  _team(Team::eBLUE_TEAM),
 																			  _name(nickname),
 																			  _entityIdInitialized(false),
 																			  _isPlaying(false) {
@@ -76,7 +74,7 @@ namespace Logic {
 	std::ostream& operator<<(std::ostream& out, const CPlayerInfo& playerInfo) {
 	   out << "Nombre = " << playerInfo._name << std::endl;
 	   out << "Frags = " << playerInfo._frags << std::endl;
-	   out << "Team = " << (playerInfo._team == CPlayerInfo::Team::eBLUE_TEAM ? "blue" : "red") << std::endl;
+	   out << "Team = " << playerInfo._team << std::endl;
 	   out << "EntityID = " << playerInfo._entityId << std::endl;
 	   out << "EntityIDInitialized = " << (playerInfo._entityIdInitialized ? "true" : "false") << std::endl;
 	   out << "NetID = " << playerInfo._netId << std::endl;
@@ -89,6 +87,12 @@ namespace Logic {
 
 	std::string CPlayerInfo::getName() {
 		return _name;
+	}
+
+	//______________________________________________________________________________
+
+	std::string CPlayerInfo::getTeam() {
+		return _team;
 	}
 
 	//______________________________________________________________________________
@@ -122,6 +126,12 @@ namespace Logic {
 	
 	void CPlayerInfo::setName(const std::string& name) {
 		this->_name = name;
+	}
+
+	//______________________________________________________________________________
+
+	void CPlayerInfo::setTeam(const std::string& team) {
+		this->_team = team;
 	}
 
 	//______________________________________________________________________________

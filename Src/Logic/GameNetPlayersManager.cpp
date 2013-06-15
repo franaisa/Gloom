@@ -155,6 +155,15 @@ namespace Logic {
 
 	//______________________________________________________________________________
 
+	void CGameNetPlayersManager::setPlayerTeam(Net::NetID playerNetId, const std::string& team) {
+		TNetConnectedPlayersTable::iterator it = _netConnectedPlayers.find(playerNetId);
+		assert(it != _netConnectedPlayers.end() && "No se puede asignar un estado al player porque no existe en el Manager");
+
+		it->second->setTeam(team);
+	}
+
+	//______________________________________________________________________________
+
 	unsigned int CGameNetPlayersManager::addFragUsingEntityID(Logic::TEntityID entityId) {
 		TLogicConnectedPlayersTable::const_iterator it = _logicConnectedPlayers.find(entityId);
 		assert(it != _logicConnectedPlayers.end() && "No se ha encontrado el id logico buscado");
@@ -200,6 +209,15 @@ namespace Logic {
 
 	//______________________________________________________________________________
 
+	std::string CGameNetPlayersManager::getTeamUsingEntityId(Logic::TEntityID entityId) {
+		TLogicConnectedPlayersTable::const_iterator it = _logicConnectedPlayers.find(entityId);
+		assert(it != _logicConnectedPlayers.end() && "No se ha encontrado el id logico buscado");
+
+		return it->second->getTeam();
+	}
+
+	//______________________________________________________________________________
+
 	unsigned int CGameNetPlayersManager::getNumberOfPlayersConnected() {
 		return _netConnectedPlayers.size();
 	}
@@ -241,6 +259,36 @@ namespace Logic {
 		assert(it != _logicConnectedPlayers.end() && "No se ha encontrado el id logico buscado");
 
 		return it->second->getFrags();
+	}
+
+	//______________________________________________________________________________
+
+	unsigned int CGameNetPlayersManager::blueTeamPlayers() {
+		auto it = _netConnectedPlayers.begin();
+
+		unsigned int nbPlayers = 0;
+		for(; it != _netConnectedPlayers.end(); ++it) {
+			if(it->second->getTeam() == "blue") {
+				++nbPlayers;
+			}
+		}
+
+		return nbPlayers;
+	}
+
+	//______________________________________________________________________________
+
+	unsigned int CGameNetPlayersManager::redTeamPlayers() {
+		auto it = _netConnectedPlayers.begin();
+
+		unsigned int nbPlayers = 0;
+		for(; it != _netConnectedPlayers.end(); ++it) {
+			if(it->second->getTeam() == "red") {
+				++nbPlayers;
+			}
+		}
+
+		return nbPlayers;
 	}
 
 	//______________________________________________________________________________
