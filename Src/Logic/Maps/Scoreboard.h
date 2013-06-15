@@ -1,7 +1,7 @@
 #ifndef __Logic_Scoreboard_H
 #define __Logic_Scoreboard_H
 
-#include "Input/InputManager.h"
+//#include "Input/InputManager.h"
 #include "Net/Buffer.h"
 
 namespace Logic{
@@ -30,7 +30,7 @@ la clase del jugador, las muertes, los frags, los mejores spree, etc.
 </p>
 
 */
-	class CScoreboard : public Input::CKeyboardListener{
+	class CScoreboard /*: public Input::CKeyboardListener*/{
 	public:
 
 		/**
@@ -240,7 +240,7 @@ la clase del jugador, las muertes, los frags, los mejores spree, etc.
 		@return true si el evento ha sido procesado. En este caso 
 		el gestor no llamará a otros listeners.
 		*/
-		bool keyPressed(Input::TKey key);
+		//bool keyPressed(Input::TKey key);
 
 		/**
 		Método que será invocado siempre que se termine la pulsación
@@ -250,7 +250,7 @@ la clase del jugador, las muertes, los frags, los mejores spree, etc.
 		@return true si el evento ha sido procesado. En este caso 
 		el gestor no llamará a otros listeners.
 		*/
-		bool keyReleased(Input::TKey key);
+		//bool keyReleased(Input::TKey key);
 
 	private:
 		/**

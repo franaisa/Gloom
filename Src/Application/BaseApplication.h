@@ -161,7 +161,17 @@ namespace Application
 
 		@return Estado actual de la aplicación.
 		*/
-		CApplicationState *getState() {return _currentState;}
+		CApplicationState* getState() { return _currentState; }
+
+		CApplicationState* getState(const std::string& name) {
+			// Buscamos el estado.
+			TStateTable::const_iterator it;
+			it = _states.find(name);
+
+			return it == _states.end() ? NULL : it->second;
+		}
+
+		CApplicationState* getNextState() { return _nextState; }
 
 		/**
 		Devuelve el tiempo de la aplicación.

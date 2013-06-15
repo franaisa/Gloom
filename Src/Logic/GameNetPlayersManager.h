@@ -176,8 +176,9 @@ namespace Logic {
 
 		@param entityId Id de la entidad a la que queremos aumentarle el número
 		de frags.
+		@return El numero de frags que lleva la entidad.
 		*/
-		void addFragUsingEntityID(Logic::TEntityID entityId);
+		unsigned int addFragUsingEntityID(Logic::TEntityID entityId);
 
 		//________________________________________________________________________
 

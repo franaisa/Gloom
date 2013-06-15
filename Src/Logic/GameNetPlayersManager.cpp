@@ -155,11 +155,11 @@ namespace Logic {
 
 	//______________________________________________________________________________
 
-	void CGameNetPlayersManager::addFragUsingEntityID(Logic::TEntityID entityId) {
+	unsigned int CGameNetPlayersManager::addFragUsingEntityID(Logic::TEntityID entityId) {
 		TLogicConnectedPlayersTable::const_iterator it = _logicConnectedPlayers.find(entityId);
 		assert(it != _logicConnectedPlayers.end() && "No se ha encontrado el id logico buscado");
 
-		it->second->addFrag();
+		return it->second->addFrag();
 	}
 
 	//______________________________________________________________________________

@@ -1,5 +1,6 @@
 material nicholasCage
 {
+	set $glow_tex lava_GLOW.tga
 	technique
 	{
 		pass
@@ -14,6 +15,7 @@ material nicholasCage
 			depth_func less_equal
 			scene_blend src_alpha one_minus_src_alpha
 			depth_bias 100
+			
 
 			texture_unit
 			{
@@ -25,6 +27,22 @@ material nicholasCage
 				rotate 0
 				
 			}
+		}
+	}
+	
+	technique
+	{
+		scheme glow
+		pass
+		{
+			texture_unit
+			{
+				texture $glow_tex
+			}
+			ambient 1 1 1
+			diffuse 1 1 1
+			specular 0 0 0 1
+			emissive 0 0 0
 		}
 	}
 }

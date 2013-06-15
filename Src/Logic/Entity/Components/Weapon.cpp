@@ -178,10 +178,9 @@ _primerDecal = true;
 
 		shared_ptr<CMessageDecal> messageDecal = make_shared<CMessageDecal>();
 		messageDecal->setPosition(vPos);
-		messageDecal->setTexture("nicholasCage");
+		messageDecal->setTexture("gunshotwall");
 		pEntity->emitMessage(messageDecal);
 
-		std::cout << "emito el mensaje---" << std::endl;
 		/*
 		CGraphics* cGraph;
 		cGraph = pEntity->getComponent<CGraphics>("CGraphics");
@@ -220,6 +219,6 @@ _primerDecal = true;
 				_primerDecal = false;
 			}
 			std::cout << "pinta" << std::endl;*/
-		}
+	}
 } // namespace Logic
 
