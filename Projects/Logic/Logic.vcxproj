@@ -79,12 +79,20 @@
   <ItemGroup>
     <ClCompile Include="..\..\Src\Graphics\DecalUtility.cpp" />
     <ClCompile Include="..\..\Src\Graphics\OgreDecal.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\ComeBack.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\ComeBackAmmo.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\CoolDown.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\CoolDownAmmo.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\CoolDownFeedback.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\Gravity.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\GravityAmmo.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\GravityFeedback.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\HardDeath.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\HardDeathAmmo.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\HardDeathFeedback.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\Resurrection.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\ResurrectionAmmo.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\ResurrectionFeedback.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\Spell.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\SpellAmmo.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\SpellFeedback.cpp" />
@@ -161,6 +169,9 @@
     <ClCompile Include="..\..\Src\Logic\Entity\Components\WeaponFeedback.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\WeaponsManager.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\WeaponsManagerClient.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\Zoom.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\ZoomAmmo.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\ZoomFeedback.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\MessageFactory.cpp" />
     <ClCompile Include="..\..\Src\Logic\GameNetMsgManager.cpp" />
     <ClCompile Include="..\..\Src\Logic\GameNetPlayersManager.cpp" />
@@ -256,12 +267,21 @@
   <ItemGroup>
     <ClInclude Include="..\..\Src\Graphics\DecalUtility.h" />
     <ClInclude Include="..\..\Src\Graphics\OgreDecal.h" />
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\ComeBack.h" />
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\ComeBackAmmo.h" />
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\ComeBackFeedback.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\CoolDown.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\CoolDownAmmo.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\CoolDownFeedback.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\Gravity.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\GravityAmmo.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\GravityFeedback.h" />
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\HardDeath.h" />
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\HardDeathAmmo.h" />
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\HardDeathFeedback.h" />
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\Resurrection.h" />
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\ResurrectionAmmo.h" />
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\ResurrectionFeedback.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\Spell.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\SpellAmmo.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\SpellFeedback.h" />
@@ -341,6 +361,9 @@
     <ClInclude Include="..\..\Src\Logic\Entity\Components\WeaponsManager.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\WeaponsManagerClient.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\WeaponType.h" />
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\Zoom.h" />
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\ZoomAmmo.h" />
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\ZoomFeedback.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\MessageFactory.h" />
     <ClInclude Include="..\..\Src\Logic\GameNetMsgManager.h" />
     <ClInclude Include="..\..\Src\Logic\GameNetPlayersManager.h" />

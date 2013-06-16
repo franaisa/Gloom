@@ -712,6 +712,39 @@
     <ClCompile Include="..\..\Src\Logic\Entity\Components\CoolDownFeedback.cpp">
       <Filter>Entity\Components\Spells\Feedback\Source</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\HardDeathAmmo.cpp">
+      <Filter>Entity\Components\Spells\Ammunition\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\HardDeath.cpp">
+      <Filter>Entity\Components\Spells\Cast\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\HardDeathFeedback.cpp">
+      <Filter>Entity\Components\Spells\Feedback\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\ResurrectionAmmo.cpp">
+      <Filter>Entity\Components\Spells\Ammunition\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\Resurrection.cpp">
+      <Filter>Entity\Components\Spells\Cast\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\ResurrectionFeedback.cpp">
+      <Filter>Entity\Components\Spells\Feedback\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\ComeBackAmmo.cpp">
+      <Filter>Entity\Components\Spells\Ammunition\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\ComeBack.cpp">
+      <Filter>Entity\Components\Spells\Cast\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\ZoomAmmo.cpp">
+      <Filter>Entity\Components\Spells\Ammunition\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\Zoom.cpp">
+      <Filter>Entity\Components\Spells\Cast\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\ZoomFeedback.cpp">
+      <Filter>Entity\Components\Spells\Feedback\Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Src\Logic\Maps\ComponentFactory.h">
@@ -1267,6 +1300,42 @@
       <Filter>Entity\Components\Spells\Ammunition\Header</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Entity\Components\CoolDownFeedback.h">
+      <Filter>Entity\Components\Spells\Feedback\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\HardDeathAmmo.h">
+      <Filter>Entity\Components\Spells\Ammunition\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\HardDeath.h">
+      <Filter>Entity\Components\Spells\Cast\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\HardDeathFeedback.h">
+      <Filter>Entity\Components\Spells\Feedback\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\ResurrectionAmmo.h">
+      <Filter>Entity\Components\Spells\Ammunition\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\Resurrection.h">
+      <Filter>Entity\Components\Spells\Cast\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\ResurrectionFeedback.h">
+      <Filter>Entity\Components\Spells\Feedback\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\ComeBackAmmo.h">
+      <Filter>Entity\Components\Spells\Ammunition\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\ComeBack.h">
+      <Filter>Entity\Components\Spells\Cast\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\ComeBackFeedback.h">
+      <Filter>Entity\Components\Spells\Feedback\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\ZoomAmmo.h">
+      <Filter>Entity\Components\Spells\Ammunition\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\Zoom.h">
+      <Filter>Entity\Components\Spells\Cast\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\ZoomFeedback.h">
       <Filter>Entity\Components\Spells\Feedback\Header</Filter>
     </ClInclude>
   </ItemGroup>
