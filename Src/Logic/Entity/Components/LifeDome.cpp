@@ -100,18 +100,20 @@ namespace Logic
 		if (_owner)
 		{
 			_entity->setPosition(_owner->getEntity()->getPosition());
+			std::cout << "Owner position" << _owner->getEntity()->getPosition() << std::endl;
+			std::cout << "Entity position position" << _entity->getPosition() << std::endl;
+			std::cout << std::endl;
 		}
+		
 		
 		CGraphics* cGraph;
 		cGraph = _entity->getComponent<CGraphics>("CGraphics");
 		if (cGraph)
 		{
-			printf("\n Entre");
 			if (_scale < 10.0f)
 			{
 				_scale += 0.005f;
 			}
-			std::cout << "scale--------->" << _scale << std::endl;
 			cGraph->changeScale(_scale);
 			//Ponemos la posición del jugador subiéndolo un poco en el ejeY
 			//cGraph->setPosition(_owner->getEntity()->getPosition() + Vector3(0,1,0));
