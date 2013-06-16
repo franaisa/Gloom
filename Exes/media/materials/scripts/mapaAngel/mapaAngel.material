@@ -2,18 +2,83 @@ material mapaAngel_hueso
 {
 	technique
 	{
-		pass
+		set $ambient "0 0 0 1"
+		set $diffuse "1 1 1 1"
+		set $specular "2 2 2 100"
+		set $shininess "60"
+		
+		pass 
 		{
-			ambient 0.588 0.588 0.588 1
-			diffuse 0.588 0.588 0.588 1
-			specular 0 0 0 1 10
-			scene_blend one one_minus_src_alpha
+			illumination_stage ambient
+		
+			ambient "0 0 0 1"
+			diffuse "1 1 1 1"
+			specular $specular $shininess
+			emissive 0 0 0 0
+			
+			vertex_program_ref ambient_vs
+            {
+            }
 
-			texture_unit
+            fragment_program_ref ambient_ps
+            {
+            }
+
+            texture_unit diffuseMap
+            {
+				texture hueso_difuse.png
+				filtering anisotropic
+			}
+			
+			texture_unit aoMap
 			{
 				texture hueso_difuse.png
+				filtering anisotropic
 			}
 		}
+
+        pass
+        {
+
+            illumination_stage per_light
+
+            scene_blend add
+            iteration once_per_light
+
+            vertex_program_ref diffuse_vs
+            {
+            }
+
+            fragment_program_ref diffuse_ps
+            {
+            }
+
+            ambient "0 0 0 1"
+			diffuse "1 1 1 1"
+			specular $specular $shininess
+			emissive 0 0 0 0
+			
+            texture_unit aoMap
+			{
+				texture hueso_difuse.png
+				filtering anisotropic
+			}
+
+            texture_unit specMap
+            {
+                texture hueso_spec.png
+				
+				
+				filtering anisotropic
+            }
+
+            texture_unit normalMap
+            {
+                texture hueso_normal.png
+				
+				filtering anisotropic
+            }
+        }
 
 	}
 
@@ -25,18 +90,79 @@ material mapaAngel_muro
 {
 	technique
 	{
-		pass
+	
+		pass 
 		{
-			ambient 0.588 0.588 0.588 1
-			diffuse 0.588 0.588 0.588 1
-			specular 0 0 0 1 3
-			scene_blend one one_minus_src_alpha
+			illumination_stage ambient
+		
+			ambient "0 0 0 1"
+			diffuse "1 1 1 1"
+			specular $specular $shininess
+			emissive 0 0 0 0
+			
+			vertex_program_ref ambient_vs
+            {
+            }
 
-			texture_unit
+            fragment_program_ref ambient_ps
+            {
+            }
+
+            texture_unit diffuseMap
+            {
+				texture muro_difuse.png
+				filtering anisotropic
+			}
+			
+			texture_unit aoMap
 			{
 				texture muro_difuse.png
+				filtering anisotropic
 			}
 		}
+
+        pass
+        {
+
+            illumination_stage per_light
+
+            scene_blend add
+            iteration once_per_light
+
+            vertex_program_ref diffuse_vs
+            {
+            }
+
+            fragment_program_ref diffuse_ps
+            {
+            }
+
+            ambient "0 0 0 1"
+			diffuse "1 1 1 1"
+			specular $specular $shininess
+			emissive 0 0 0 0
+			
+            texture_unit aoMap
+			{
+				texture muro_difuse.png
+				filtering anisotropic
+			}
+
+            texture_unit specMap
+            {
+                texture muro_spec.png
+				
+				
+				filtering anisotropic
+            }
+
+            texture_unit normalMap
+            {
+                texture muro_normal.png
+				
+				filtering anisotropic
+            }
+        }
 
 	}
 
@@ -48,17 +174,79 @@ material mapaAngel_pipe
 {
 	technique
 	{
-		pass
+	
+		pass 
 		{
-			ambient 0.588 0.588 0.588 1
-			diffuse 0.588 0.588 0.588 1
-			specular 0 0 0 1 10
+			illumination_stage ambient
+		
+			ambient "0 0 0 1"
+			diffuse "1 1 1 1"
+			specular $specular $shininess
+			emissive 0 0 0 0
+			
+			vertex_program_ref ambient_vs
+            {
+            }
 
-			texture_unit
+            fragment_program_ref ambient_ps
+            {
+            }
+
+            texture_unit diffuseMap
+            {
+				texture pipe_difuse.png
+				filtering anisotropic
+			}
+			
+			texture_unit aoMap
 			{
 				texture pipe_difuse.png
+				filtering anisotropic
 			}
 		}
+
+        pass
+        {
+
+            illumination_stage per_light
+
+            scene_blend add
+            iteration once_per_light
+
+            vertex_program_ref diffuse_vs
+            {
+            }
+
+            fragment_program_ref diffuse_ps
+            {
+            }
+
+            ambient "0 0 0 1"
+			diffuse "1 1 1 1"
+			specular $specular $shininess
+			emissive 0 0 0 0
+			
+            texture_unit aoMap
+			{
+				texture pipe_difuse.png
+				filtering anisotropic
+			}
+
+            texture_unit specMap
+            {
+                texture pipe_spec.png
+				
+				
+				filtering anisotropic
+            }
+
+            texture_unit normalMap
+            {
+                texture pipe_normal.png
+				
+				filtering anisotropic
+            }
+        }
 
 	}
 
@@ -70,17 +258,78 @@ material mapaAngel_rock
 {
 	technique
 	{
-		pass
+		pass 
 		{
-			ambient 0.588 0.588 0.588 1
-			diffuse 0.588 0.588 0.588 1
-			specular 0 0 0 1 10
+			illumination_stage ambient
+		
+			ambient "0 0 0 1"
+			diffuse "1 1 1 1"
+			specular $specular $shininess
+			emissive 0 0 0 0
+			
+			vertex_program_ref ambient_vs
+            {
+            }
 
-			texture_unit
+            fragment_program_ref ambient_ps
+            {
+            }
+
+            texture_unit diffuseMap
+            {
+				texture rock_difuse.png
+				filtering anisotropic
+			}
+			
+			texture_unit aoMap
 			{
 				texture rock_difuse.png
+				filtering anisotropic
 			}
 		}
+
+        pass
+        {
+
+            illumination_stage per_light
+
+            scene_blend add
+            iteration once_per_light
+
+            vertex_program_ref diffuse_vs
+            {
+            }
+
+            fragment_program_ref diffuse_ps
+            {
+            }
+
+            ambient "0 0 0 1"
+			diffuse "1 1 1 1"
+			specular $specular $shininess
+			emissive 0 0 0 0
+			
+            texture_unit aoMap
+			{
+				texture rock_difuse.png
+				filtering anisotropic
+			}
+
+            texture_unit specMap
+            {
+                texture rock_spec.png
+				
+				
+				filtering anisotropic
+            }
+
+            texture_unit normalMap
+            {
+                texture rock_normal.png
+				
+				filtering anisotropic
+            }
+        }
 
 	}
 
@@ -92,19 +341,94 @@ material mapaAngel_suelo
 {
 	technique
 	{
-		pass
+		
+		pass 
 		{
-			ambient 0.588 0.588 0.588 1
-			diffuse 0.588 0.588 0.588 1
-			specular 0 0 0 1 26
-			scene_blend one one_minus_src_alpha
+			illumination_stage ambient
+		
+			ambient "0 0 0 1"
+			diffuse "1 1 1 1"
+			specular $specular $shininess
+			emissive 0 0 0 0
+			
+			vertex_program_ref ambient_vs
+            {
+            }
 
-			texture_unit
+            fragment_program_ref ambient_ps
+            {
+            }
+
+            texture_unit diffuseMap
+            {
+				texture suelo_difuse.png
+				filtering anisotropic
+			}
+			
+			texture_unit aoMap
 			{
 				texture suelo_difuse.png
-				transform 10 0 0 0 0 10 0 0 0 0 1 0 0 0 0 1
+				filtering anisotropic
 			}
 		}
+
+        pass
+        {
+
+            illumination_stage per_light
+
+            scene_blend add
+            iteration once_per_light
+
+            vertex_program_ref diffuse_vs
+            {
+            }
+
+            fragment_program_ref diffuse_ps
+            {
+            }
+
+            ambient "0 0 0 1"
+			diffuse "1 1 1 1"
+			specular $specular $shininess
+			emissive 0 0 0 0
+			
+            texture_unit aoMap
+			{
+				texture suelo_difuse.png
+				filtering anisotropic
+			}
+
+            texture_unit specMap
+            {
+                texture suelo_spec.png
+				
+				
+				filtering anisotropic
+            }
+
+            texture_unit normalMap
+            {
+                texture suelo_normal.png
+				
+				filtering anisotropic
+            }
+        }
+		
+		
+	//	pass
+	//	{
+	//		ambient 0.588 0.588 0.588 1
+	//		diffuse 0.588 0.588 0.588 1
+	//		specular 0 0 0 1 26
+	//		scene_blend one one_minus_src_alpha
+//
+	//		texture_unit
+	//		{
+	//			texture suelo_difuse.png
+	//			transform 10 0 0 0 0 10 0 0 0 0 1 0 0 0 0 1
+	//		}
+	//	}
 
 	}
 
