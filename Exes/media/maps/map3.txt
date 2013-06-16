@@ -3,14 +3,13 @@ Map = {
 	World = {
 		type = "World",
 		model = "mapaAngel.mesh",
-		comment_physic_file = "media/models/ola.RepX",
-		physic_entity = "plane",
-		physic_normal = {0,1,0},
+		physic_file = "media/models/mapaAngel/mapaAngel.RepX",
 	},
 	
 	David = {
 		type = "LocalArchangel",
 		isPlayer = true,
+		position = {0.0, 0.0, 0.0},		
 	},
 	
 	Camera = {
@@ -19,7 +18,7 @@ Map = {
 	},
 	Point1 = {
 		type = "SpawnPoint",
-		position = {-219.0, 3.0, -52.0},
+		position = {0.0, 0.0, 0.0},
 		yaw = 180,
 		physic_entity = "rigid",
 		physic_trigger = true,
