@@ -99,8 +99,10 @@ namespace Logic
 
 		if (_owner)
 		{
-			std::cout << "entro aki pa lo del owner" << std::endl;
 			_entity->setPosition(_owner->getEntity()->getPosition());
+			std::cout << "Owner position" << _owner->getEntity()->getPosition() << std::endl;
+			std::cout << "Entity position position" << _entity->getPosition() << std::endl;
+			std::cout << std::endl;
 		}
 		
 		
@@ -108,7 +110,6 @@ namespace Logic
 		cGraph = _entity->getComponent<CGraphics>("CGraphics");
 		if (cGraph)
 		{
-			printf("\n Entre");
 			if (_scale < 10.0f)
 			{
 				_scale += 0.005f;

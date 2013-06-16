@@ -29,4 +29,3 @@ ScreamerShield CGraphics CTransformInterpolator
 FireBall CGraphics CPositionInterpolator
 MagneticBullet CGraphics CPositionInterpolator
 LifeDome CLifeDome CGraphics CPositionInterpolator
-
