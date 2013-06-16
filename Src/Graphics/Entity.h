@@ -9,8 +9,8 @@ Contiene la declaración de la clase que representa una entidad gráfica.
 
 @see Graphics::CEntity
 
-@author David Llansó
-@date Julio, 2010
+@author
+@date 
 */
 
 #ifndef __Graphics_Entity_H
@@ -62,8 +62,8 @@ namespace Graphics
 	
 	@ingroup graphicsGroup
 
-	@author David Llansó
-	@date Julio, 2010
+	@author 
+	@date 
 	*/
 	class CEntity 
 	{
@@ -85,10 +85,10 @@ namespace Graphics
 		/**
 		Cambia la posición y orientación de la entidad.
 
-		@param transform Referencia a la matriz de transformación con la 
-		que debe posicionarse y orientarse la entidad.
+		@param position Vector de posicion a setear en la entidad.
+		@param orientation Orientacion en quaternion a setear en la entidad.
 		*/
-		void setTransform(const Matrix4 &transform);
+		void setTransform(const Vector3 &position, const Ogre::Quaternion &orientation);
 
 		/**
 		Cambia la posición de la entidad.
@@ -99,12 +99,28 @@ namespace Graphics
 		void setPosition(const Vector3& position);
 
 		/**
+		Devuelve la posicion actual del nodo que contiene la entidad.
+
+		@return Posicion actual de la entidad.
+		*/
+		const Vector3& getPosition();
+
+		/**
 		Cambia la orientación de la entidad.
 
-		@param orientation Referencia a la matriz de rotación con la que debe 
+		@param orientation Referencia al quaternion de rotación con el que debe 
 		orientarse la entidad.
 		*/
-		void setOrientation(const Matrix3 &orientation);
+		void setOrientation(const Quaternion &orientation);
+
+
+		/**
+		Devuelve la orientacion actual del nodo que contiene la entidad.
+
+		@return Orientacion actual de la entidad.
+		*/
+		const Quaternion& getOrientation();
+
 
 		/**
 		 Establece la propiedad visible de la entidad. Si
@@ -120,6 +136,11 @@ namespace Graphics
 		 */
 		void setVisible(bool visible);
 
+		/**
+		Setea la entidad de ogre en nuestra referencia.
+
+		@param scene Referencia a la entidad de Ogre.
+		*/
 		void setOgreEntity(Ogre::Entity* entity);
 
 		/**
@@ -168,12 +189,32 @@ namespace Graphics
 		*/
 		Ogre::Entity* getEntity() {return _entity;}
 
+		/**
+		Devuelve el nombre de la entidad de Ogre.
+
+		@return nombre de la entidad en string.
+		*/
 		std::string getName(){return _name;}
 
+		/**
+		Devuelve el nombre de la malla de la entidad.
+
+		@return nombre de la malla de la entidad en string.
+		*/
 		std::string getMesh(){return _mesh;}
 
+		/**
+		Devuelve el nodo que contiene la entidad en Ogre.
+
+		@return puntero al nodo que contiene la entidad.
+		*/
 		Ogre::SceneNode* getSceneNode() {return _entityNode;}
 
+		/**
+		Setea el nodo de ogre en nuestra referencia y pone el atributo de carga a verdadero.
+
+		@param sceneNode Referencia al nodo de Ogre.
+		*/
 		void setSceneNode(Ogre::SceneNode *sceneNode) {_entityNode = sceneNode;_loaded = true;}
 
 		/**
@@ -186,6 +227,11 @@ namespace Graphics
 		*/
 		bool attachToScene(CScene *scene);
 
+		/**
+		Setea la escena de ogre en nuestra referencia.
+
+		@param scene Referencia a la escena de Ogre.
+		*/
 		void setScene(CScene *scene){_scene=scene;}
 
 		/**
@@ -216,12 +262,21 @@ namespace Graphics
 		*/
 		std::list<std::string> getMaterials();
 
+
+		/**
+		Metodo que obtiene toda la información de la malla cargada en la entidad.
+		*/
 		void getMeshInformation(const Ogre::MeshPtr& mesh,size_t &vertex_count, Ogre::Vector3* &vertices,
 								size_t &index_count, unsigned* &indices,
 								const Ogre::Vector3 &position = Ogre::Vector3::ZERO,
 								const Ogre::Quaternion &orient = Ogre::Quaternion::IDENTITY,
 								const Ogre::Vector3 &scale = Ogre::Vector3::UNIT_SCALE);
 
+		/**
+		Metodo que devuelve un puntero a la escena que contiene la entidad.
+
+		@return puntero a la escena que contiene la entidad.
+		*/
 		CScene*			getScene			() { return _scene; }
 
 	protected:
@@ -231,8 +286,6 @@ namespace Graphics
 		// Por otro lado cada entidad debe pertenecer a una escena. Solo 
 		// permitimos a la escena actualizar el estado.
 		friend class CScene;
-
-		
 
 		/**
 		Descarga una entidad de la escena en la que se encuentra cargada.
@@ -301,7 +354,8 @@ namespace Graphics
 		*/
 		bool _loaded;
 
-		CObjectTextDisplay* _text;
+		//CObjectTextDisplay* _text;
+
 	}; // class CEntity
 
 } // namespace Graphics

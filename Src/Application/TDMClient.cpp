@@ -1,9 +1,9 @@
 //---------------------------------------------------------------------------
-// DMClient.cpp
+// TDMClient.cpp
 //---------------------------------------------------------------------------
 
 /**
-@file DMClient.cpp
+@file TDMClient.cpp
 
 @see Application::CDMClient
 @see Application::CGameClientState
@@ -12,7 +12,7 @@
 @date Junio, 2013
 */
 
-#include "DMClient.h"
+#include "TDMClient.h"
 #include "Input/Server.h"
 #include "Input/PlayerController.h"
 #include "Input/InputManager.h"
@@ -24,7 +24,7 @@ using namespace std;
 
 namespace Application {
 
-	void CDMClient::tick(unsigned int msecs) {
+	void CTDMClient::tick(unsigned int msecs) {
 		CGameClientState::tick(msecs);
 
 		// Controlamos el tiempo de la partida
@@ -53,20 +53,20 @@ namespace Application {
 
 	//______________________________________________________________________________
 
-	void CDMClient::activate() {
+	void CTDMClient::activate() {
 		CGameClientState::activate();
 		_inEndGame = false;
 	} // activate
 
 	//______________________________________________________________________________
 
-	void CDMClient::deactivate() {
+	void CTDMClient::deactivate() {
 		CGameClientState::deactivate();
 	} // deactivate
 
 	//______________________________________________________________________________
 
-	void CDMClient::dataPacketReceived(Net::CPaquete* packet) {
+	void CTDMClient::dataPacketReceived(Net::CPaquete* packet) {
 		CGameClientState::dataPacketReceived(packet);
 
 		// Introducimos los datos recibidos en un buffer
@@ -101,7 +101,7 @@ namespace Application {
 
 	//______________________________________________________________________________
 
-	bool CDMClient::keyPressed(Input::TKey key) {
+	bool CTDMClient::keyPressed(Input::TKey key) {
 		CGameClientState::keyPressed(key);
 
 		switch(key.keyId) {
@@ -118,7 +118,7 @@ namespace Application {
 
 	//______________________________________________________________________________
 
-	bool CDMClient::keyReleased(Input::TKey key) {
+	bool CTDMClient::keyReleased(Input::TKey key) {
 		CGameClientState::keyReleased(key);
 
 		switch(key.keyId) {
@@ -135,19 +135,19 @@ namespace Application {
 
 	//______________________________________________________________________________
 
-	bool CDMClient::mouseMoved(const Input::CMouseState &mouseState) {
+	bool CTDMClient::mouseMoved(const Input::CMouseState &mouseState) {
 		return false;
 	} // mouseMoved
 
 	//______________________________________________________________________________
 
-	bool CDMClient::mousePressed(const Input::CMouseState &mouseState) {
+	bool CTDMClient::mousePressed(const Input::CMouseState &mouseState) {
 		return false;
 	} // mousePressed
 
 	//______________________________________________________________________________
 
-	bool CDMClient::mouseReleased(const Input::CMouseState &mouseState) {
+	bool CTDMClient::mouseReleased(const Input::CMouseState &mouseState) {
 		return false;
 	} // mouseReleased
 	

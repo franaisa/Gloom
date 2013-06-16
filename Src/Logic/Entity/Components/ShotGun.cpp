@@ -97,7 +97,7 @@ namespace Logic {
 
 		int shots = _numberOfShots <= _currentAmmo ? _numberOfShots : _currentAmmo;
 		for(int i = 0; i < shots; ++i) {
-			Vector3 direction = Math::getDirection(_entity->getOrientation());
+			Vector3 direction = _entity->getOrientation()*Vector3::NEGATIVE_UNIT_Z;
 			Ogre::Radian angle = Ogre::Radian( (  (((float)(rand() % 100))*0.01f) * (_dispersionAngle)) *0.01f);
 			Vector3 dispersionDirection = direction.randomDeviant(angle);
 			dispersionDirection.normalise();
@@ -105,14 +105,11 @@ namespace Logic {
 			Vector3 position = _entity->getPosition();
 			position.y += _heightShoot;
 
-			//position += direction * (_capsuleRadius + _projectileRadius + 0.5 );
-			Matrix4 transform = Matrix4::IDENTITY;
-			transform.setTrans(position);
-
 			CEntity *projectileEntity= CEntityFactory::getSingletonPtr()->createEntity( 
 				CEntityFactory::getSingletonPtr()->getInfo("MagneticBullet"),
 				Logic::CServer::getSingletonPtr()->getMap(),
-				transform
+				position,
+				Quaternion::IDENTITY
 			);
 			projectileEntity->activate();
 			projectileEntity->start();
@@ -124,6 +121,7 @@ namespace Logic {
 	} // fireWeapon
 	//_________________________________________________
 
+
 	void CShotGun::destroyProjectile(CEntity *projectile, CEntity *killedBy){
 		if(killedBy->getType() == "World"){
 			drawDecal(killedBy, projectile->getPosition());
@@ -133,7 +131,7 @@ namespace Logic {
 			m->setPosition(projectile->getPosition());
 			m->setParticle("impactParticle");
 			// esto no es correcto en realidad, pero hasata que los decals esten en el otro lao, lo dejo asi.
-			m->setDirectionWithForce(-Math::getDirection(projectile->getOrientation()));
+			m->setDirectionWithForce(-(_entity->getOrientation()*Vector3::NEGATIVE_UNIT_Z));
 			killedBy->emitMessage(m);
 		}
 

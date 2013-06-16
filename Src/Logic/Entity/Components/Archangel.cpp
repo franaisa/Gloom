@@ -155,7 +155,8 @@ namespace Logic {
 			//CEntityFactory::getSingletonPtr()->getInfo("MagneticBullet"),
 			CEntityFactory::getSingletonPtr()->getInfo("LifeDome"),			
 			Logic::CServer::getSingletonPtr()->getMap(),
-			transform
+			position,
+			Quaternion::IDENTITY
 		);
 
 		_lifeDome->activate();

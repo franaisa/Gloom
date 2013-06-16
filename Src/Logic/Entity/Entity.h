@@ -67,6 +67,14 @@ namespace Logic {
 	};
 
 
+	struct Orientation {
+		enum Enum {
+			eYAW		= 0,
+			ePITCH		= 1,
+			eROLL		= 2  
+		};
+	};
+
 	/**
 	Clase que representa una entidad en el entorno virtual. Las entidades
 	son meros contenedores de componentes, y su funcionamiento depende
@@ -133,7 +141,17 @@ namespace Logic {
 		@param id string que identifica al componente. Es el mismo nombre que el
 		asignado en el blueprints.
 		*/
-		void deactivateAllComponentsExcept(std::set<std::string> exceptionList);
+		void deactivateAllComponentsExcept(const std::set<std::string>& exceptionList);
+
+		//__________________________________________________________________________
+
+		/**
+		Desactiva los componentes que se indiquen.
+
+		@param componentList Array que contiene la lista de componentes que hay que
+		activar.
+		*/
+		void deactivateComponents(const std::vector<std::string>& componentList);
 
 		//__________________________________________________________________
 
@@ -210,20 +228,6 @@ namespace Logic {
 
 
 		/**
-		Devuelve la metriz de transformación de la entidad.
-		<p>
-		La posición es inicialmente leída del mapa (si no aparece,
-		se colocará a (0, 0, 0)) y la orientación es también inicialmente 
-		leída del mapa, como un simple viraje (si no aparece, se colocará 
-		a 0). Obviamente, pueden cambiar con el tiempo.
-
-		@return Matriz de transformación de la entidad en el entorno.
-		*/
-		Matrix4 getTransform() const { return _transform; }
-
-		//__________________________________________________________________
-		
-		/**
 		Devuelve la posición de la entidad.
 		<p>
 		La posición es inicialmente leída del mapa (si no aparece,
@@ -232,62 +236,24 @@ namespace Logic {
 
 		@return Posición de la entidad en el entorno.
 		*/
-		Vector3 getPosition() const { return _transform.getTrans(); }
+		Vector3 getPosition() const { return _position; }
 
 		//__________________________________________________________________
 
 		/**
-		Devuelve la matriz de rotación de la entidad.
+		Devuelve el quaternion de rotación de la entidad.
 		<p>
 		La orientación es inicialmente leída del mapa como un simple 
-		viraje (si no aparece, se colocará a 0), aunque, obviamente, puede
+		viraje (si no aparece, se asignará el quaternion identidad), aunque, obviamente, puede
 		cambiar con el tiempo.
 
 		@return Orientación en el entorno.
 		*/
-		Matrix3 getOrientation() const;
-		Ogre::Quaternion getQuatOrientation() const;
+		Ogre::Quaternion getOrientation() const;
 		//__________________________________________________________________
 
 		/**
-		Devuelve el viraje de la entidad.
-		<p>
-		La orientación es inicialmente leída del mapa como un simple 
-		viraje (si no aparece, se colocará a 0), aunque, obviamente, puede
-		cambiar con el tiempo.
-
-		@return Viraje en el entorno.
-		*/
-		float getYaw() const { return Math::getYaw(_transform); }
-
-		//__________________________________________________________________________
-
-		/**
-		Devuelve el subviraje de la entidad.
-		<p>
-		La orientación es inicialmente leída del mapa como un simple 
-		subviraje (si no aparece, se colocará a 0), aunque, obviamente, puede
-		cambiar con el tiempo.
-
-		@return Subviraje en el entorno.
-		*/
-		float getPitch() const { return Math::getPitch(_transform); }
-
-		//__________________________________________________________________
-
-		/**
-		Establece la matriz de transformación de la entidad. Avisa a los 
-		componentes del cambio.
-
-		@param transform Nueva matriz de transformación de la entidad.
-		*/
-		void setTransform(const Matrix4& transform);
-
-		//__________________________________________________________________
-
-		/**
-		Establece la posición de la entidad. Avisa a los componentes
-		del cambio.
+		Establece la posición de la entidad.
 
 		@param position Nueva posición.
 		*/
@@ -297,71 +263,80 @@ namespace Logic {
 
 		
 		/**
-		Establece la orientación de la entidad. Avisa a los componentes
-		del cambio.
+		Establece la orientación de la final de la entidad.
+		Las orientaciones parciales tambien serán actualizadas.
 
 		@param pos Nueva orientación.
 		*/
-		void setOrientation(const Ogre::Quaternion& orientation);
+		void setOrientation(const Quaternion& orientation);
+
+		//__________________________________________________________________
+
+		
+		/**
+		Devuelve el Yaw de la entidad.
+
+		@return _yawOrientation Quaternion del yaw.
+		*/
+		Quaternion getYaw() const {return _yawOrientation;};
 
 		//__________________________________________________________________
 
 		/**
-		Establece el viraje de la entidad. Avisa a los componentes
-		del cambio.
+		Devuelve el Pitch de la entidad.
 
-		@param yaw Nuevo viraje.
+		@return _pitchOrientation Quaternion del pitch.
 		*/
-		void setYaw(float yaw);
+		Quaternion getPitch() const {return _pitchOrientation;};
 
 		//__________________________________________________________________
 
 		/**
-		Vira la entidad. Avisa a los componentes del cambio.
+		Devuelve el Roll de la entidad.
 
-		@param yaw Viraje a aplicar.
+		@return _rollOrientation Quaternion del roll.
 		*/
-		void yaw(float yaw);
+		Quaternion getRoll() const {return _rollOrientation;};
+
+		//__________________________________________________________________
+		/**
+		Establece el Yaw de la entidad.
+
+		@param yaw Orientacion nueva para el yaw.
+		@param reset Boolean para resetear las otras rotaciones.
+		*/
+		void setYaw(const Quaternion &yaw, bool reset);
 
 		//__________________________________________________________________
 
 		/**
-		Establece el subviraje de la entidad. Avisa a los componentes
-		del cambio.
+		Establece el Pitch de la entidad.
 
-		@param yaw Nuevo viraje.
+		@param pitch Orientacion nueva para el pitch.
+		@param reset Boolean para resetear las otras rotaciones.
 		*/
-		void setPitch(float pitch);
+		void setPitch(const Quaternion &pitch, bool reset);
 
 		//__________________________________________________________________
 
 		/**
-		Gira verticalmente la entidad. Avisa a los componentes del cambio.
+		Establece el Roll de la entidad.
 
-		@param pitch subviraje a aplicar.
+		@param roll Orientacion nueva para el roll.
+		@param reset Boolean para resetear las otras rotaciones.
 		*/
-		void pitch(float pitch);
+		void setRoll(const Quaternion &roll, bool reset);
 
 		//__________________________________________________________________
 
-		/**
-		Establece el roll de la entidad. Avisa a los componentes del cambio.
-
-		@param roll Grado de inclinación para el roll.
-		*/
-		void roll(float roll);
-
-
-		//__________________________________________________________________
 
 		/**
-		Establece el yaw y el pitch de la entidad. Avisa a los componentes del cambio.
+		Metodo que permite elegir que eje rotar y cuantos grados hacerlo (en radianes).
 
-		@param yaw Grado de inclinación para el yaw.
-		@param pitch Grado de inclinación para el pitch.
+		@param orientation Eje en el cual queremos rotar.
+		@param rotation Grados en radianes que rotaremos.
 		*/
-		void CEntity::setYawPitch(float yaw, float pitch);
-
+		void rotate(int orientation, Ogre::Radian rotation);
 
 		// =======================================================================
 		//                         MÉTODOS DE CONSULTA
@@ -569,7 +544,7 @@ namespace Logic {
 		@return Cierto si la inicialización ha sido satisfactoria.
 		*/
 		bool dynamicSpawn(CMap* map, Map::CEntity* entityInfo);
-
+		
 
 		// =======================================================================
 		//                         MIEMBROS PROTEGIDOS
@@ -609,13 +584,13 @@ namespace Logic {
 		Logic::CMap *_map;
 
 		/**
-		Matriz de transformación de la entidad. Contiene posición y orientación.
+		Variables de posición y orientación(final + parciales).
 		*/
-		Matrix4 _transform;
-
 		Vector3 _position;
 		Ogre::Quaternion _orientation;
-
+		Ogre::Quaternion _yawOrientation;
+		Ogre::Quaternion _pitchOrientation;
+		Ogre::Quaternion _rollOrientation;
 
 		/**
 		Atributo que indica si la entidad es el jugador; por defecto

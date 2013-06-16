@@ -84,6 +84,8 @@ namespace Physics {
 
 		@param position Posicion en la que queremos crear la entidad. Notar que una vez
 		seteada, ya no podemos moverla de posición.
+		@param orientation Orientacion con la que queremos crear la entidad. Notar que una vez
+		seteada, ya no podemos mover la orientacion.
 		@param geometry Geometría de la entidad estática. Por ser una entidad estática
 		soporta cualquier geometría.
 		@param material Material del que queremos que esté formada la entidad.
@@ -92,7 +94,7 @@ namespace Physics {
 		@param groupList Grupos de colisión con los que queremos que la entidad interactue.
 		@param component Componente lógico asociado.
 		*/
-		void load(const Matrix4& transform, const Geometry& geometry, Material& material, 
+		void load(const Vector3& position, const Quaternion& orientation, const Geometry& geometry, Material& material, 
 				  bool trigger, int group, const std::vector<int>& groupList, const Logic::IPhysics* component);
 
 	}; // class CEntity

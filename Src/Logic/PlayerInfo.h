@@ -134,6 +134,13 @@ namespace Logic {
 		//________________________________________________________________________
 
 		/**
+		Devuelve el nombre del equipo al que pertenece el player.
+		*/
+		std::string getTeam();
+
+		//________________________________________________________________________
+
+		/**
 		Devuelve la clase que esta usando el player.
 
 		@return La clase del player.
@@ -203,6 +210,15 @@ namespace Logic {
 		//________________________________________________________________________
 
 		/**
+		Asigna un equipo al jugador.
+
+		@param team Equipo al que pertenece el jugador
+		*/
+		void setTeam(const std::string& team);
+
+		//________________________________________________________________________
+
+		/**
 		Asigna un identificador de entidad al player.
 
 		@param entityId Identificador de entidad que se le va a asignar al player.
@@ -255,7 +271,7 @@ namespace Logic {
 
 		int _frags;
 
-		Team::Enum _team;
+		std::string _team;
 
 		/** Identificador de la entidad logica */
 		TEntityID _entityId;

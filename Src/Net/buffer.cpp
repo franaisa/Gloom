@@ -215,6 +215,28 @@ namespace Net {
 
 	//__________________________________________________________________
 
+	void CBuffer::serialize(const Quaternion& data) {
+		Vector3 parcial=Math::getEulerYawPitchRoll(data);
+		serialize(parcial.x);
+		serialize(parcial.y);
+		serialize(parcial.z);
+	}
+
+	//__________________________________________________________________
+
+	void CBuffer::deserialize(Quaternion& data) {
+		
+		float yaw, pitch,roll;
+		// Obtenemos el Yaw y el Pitch
+		read(&yaw, sizeof(yaw));
+		read(&pitch, sizeof(pitch));
+		read(&roll, sizeof(roll));
+
+		data=Math::setQuaternion(yaw,pitch,roll);
+	}
+
+	//__________________________________________________________________
+
 	void CBuffer::serialize(const std::string& data, bool crc) {
 		if(crc){
 			int crc = Math::CRC(data);
@@ -310,20 +332,46 @@ namespace Net {
 	//__________________________________________________________________
 
 	void CBuffer::deserialize(Matrix4& data) {
-		Vector3 transform;
+		Vector3 position;
 		float yaw, pitch;
 
 		// Obtenemos los datos del vector
-		read(&transform.x, sizeof(transform.x));
-		read(&transform.y, sizeof(transform.y));
-		read(&transform.z, sizeof(transform.z));
+		read(&position.x, sizeof(position.x));
+		read(&position.y, sizeof(position.y));
+		read(&position.z, sizeof(position.z));
 
 		// Obtenemos el Yaw y el Pitch
 		read(&yaw, sizeof(yaw));
 		read(&pitch, sizeof(pitch));
 		
 		Math::setPitchYaw(pitch,yaw, data);
-		data.setTrans(transform);
+		data.setTrans(position);
+	}
+
+	//__________________________________________________________________
+
+	//__________________________________________________________________
+
+	void CBuffer::serialize(const Matrix3& data) {
+		Ogre::Radian yaw, pitch, roll;
+		data.ToEulerAnglesYXZ(yaw, pitch, roll);
+		
+		serialize(yaw.valueRadians());
+		serialize(pitch.valueRadians());
+		serialize(roll.valueRadians());
+	}
+
+	//__________________________________________________________________
+
+	void CBuffer::deserialize(Matrix3& data) {
+
+		float yaw, pitch,roll;
+		// Obtenemos el Yaw y el Pitch
+		read(&yaw, sizeof(yaw));
+		read(&pitch, sizeof(pitch));
+		read(&roll, sizeof(roll));
+
+		data.FromEulerAnglesYXZ(Ogre::Radian(yaw),Ogre::Radian(pitch),Ogre::Radian(roll));
 	}
 
 	//__________________________________________________________________

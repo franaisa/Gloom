@@ -120,6 +120,98 @@ namespace Math
 	*/
 	static float fromRadiansToDegrees(float radians) {return radians*_rad2Deg;}
 	
+
+	/**
+	Transforma orientacion en grados en orientacion en quaternion.
+	Nota: Las funciones trigonometricas tienen pequeñisimas desviaciones en decimales por ejemplo al hacer el cos de 90 grados.
+	Si esa infima desviación influyera, deberia de tratarse con casos especiales todos aquellos valores que sean naturales.
+
+	@param degrees Ángulo en grados.
+	@param axe Vector que indica sobre que eje rotamos.
+	@return Ángulo en quaternion.
+	*/
+	static Quaternion fromDegreesToQuaternion(float degrees,const Vector3 &axe){
+		//Hacemos una conversion inicial de grados a radianes ya que las funciones trigonometricas trabajan con radianes
+		float rad= degrees*Math::PI/180;
+		return Quaternion(cos(rad/2.0f), sin(rad/2.0f) * axe.x, sin(rad/2.0f)* axe.y, sin(rad/2.0f) * axe.z);
+	}
+
+	/**
+	Transforma orientacion en radianes en orientacion en quaternion.
+	Nota: Las funciones trigonometricas tienen pequeñisimas desviaciones en decimales por ejemplo al hacer el cos de 90 grados.
+	Si esa infima desviación influyera, deberia de tratarse con casos especiales todos aquellos valores que sean naturales.
+
+	@param rad Ángulo en radianes.
+	@param axe Vector que indica sobre que eje rotamos.
+	@return Ángulo en quaternion.
+	*/
+	static Quaternion fromRadsToQuaternion(float rad,const Vector3 &axe){
+		return Quaternion(cos(rad/2.0f), sin(rad/2.0f) * axe.x, sin(rad/2.0f)* axe.y, sin(rad/2.0f) * axe.z);
+	}
+
+
+	/**
+	Dado el angulo en radianes del yaw, pitch y roll crea el quaternion equivalente.
+	Nota: Las funciones trigonometricas tienen pequeñisimas desviaciones en decimales por ejemplo al hacer el cos de 90 grados.
+	Si esa infima desviación influyera, deberia de tratarse con casos especiales todos aquellos valores que sean naturales.
+
+	@param yaw Yaw en radianes.
+	@param pitch Pitch en radianes.
+	@param roll Roll en radianes.
+	@return Quaternion resultante.
+	*/
+	static Quaternion setQuaternion(float yaw, float pitch, float roll )
+	{
+	  Quaternion qy( cos(yaw/2.0f), 0, sin(yaw/2.0f),0);
+      Quaternion qp( cos(pitch/2.0f), sin(pitch/2.0f), 0, 0);
+      Quaternion qr( cos(roll/2.0f), 0, 0, sin(roll/2.0f) );
+	  Quaternion q;
+	  q=qy*qp*qr;
+      return q;
+	}
+
+
+	/**
+	Devuelve en grados de Euler los grados de yaw,pitch y roll por los que esta formado el quaternion.
+
+	@param q Quaternion a extraer los grados.
+	@return Vector3 con el yaw,pitch,roll.
+	*/
+	static Vector3 getEulerYawPitchRoll(const Quaternion& quaternion)
+	{
+		Ogre::Radian mPitch,mRoll,mYaw;
+		mYaw = Ogre::Math::ATan2(2 * quaternion.y * quaternion.w - 2 * quaternion.x * quaternion.z, 1 - 2 * Ogre::Math::Pow(quaternion.y, 2) - 2 * Ogre::Math::Pow(quaternion.z, 2));
+		mRoll = Ogre::Math::ASin(2 * quaternion.x * quaternion.y + 2 * quaternion.z * quaternion.w);
+		mPitch = Ogre::Math::ATan2(2 * quaternion.x * quaternion.w - 2 * quaternion.y * quaternion.z, 1 - 2 * Ogre::Math::Pow(quaternion.x, 2) - 2 * Ogre::Math::Pow(quaternion.z, 2));
+ 
+		if(quaternion.x * quaternion.y + quaternion.z * quaternion.w == 0.5)
+		{
+			mYaw = 2.0f * Ogre::Math::ATan2(quaternion.x, quaternion.w);
+			mPitch = 0.0f;
+		}
+		else if(quaternion.x * quaternion.y + quaternion.z * quaternion.w == -0.5)
+		{ 
+			mYaw = -2.0f * Ogre::Math::ATan2(quaternion.x, quaternion.w);
+			mPitch = 0.0f;
+		}
+		return Vector3(mYaw.valueRadians(),mPitch.valueRadians(),mRoll.valueRadians());
+	}
+
+
+	/**
+	Rota el quaternion pasado por parámetro con los radianes especificados tambien por parámetro sobre el eje especificado.
+	Por ejemplo si queremos rotar el yaw, pasariamos el axe(0,1,0) con rotation(radianes) y el quaternion a rotar.
+
+	@param axe Eje sobre el que rotaremos.
+	@param rotation Radianes que rotaremos.
+	@param quaternion Quaternion que será rotado.
+	*/
+	static inline void rotate(const Vector3 &axe, Ogre::Radian rotation, Quaternion &quaternion ){
+		Quaternion q(rotation,axe);
+		quaternion=quaternion*q;
+	}
+
+
 	/**
 	Crea un vector unitario de dirección a partir de un angulo de
 	orientación en radianes.
@@ -502,6 +594,22 @@ namespace Math
 
 		long guard = (long) (unifRand() * n) + 1;
 		return (guard > n) ? n : guard;
+	}
+
+	
+	static float getPitchQuat(Quaternion& q)
+	{
+	  return atan2(2*(q.y*q.z + q.w*q.x), q.w*q.w - q.x*q.x - q.y*q.y + q.z*q.z);
+	}
+
+	static float getYawQuat(Quaternion& q)
+	{
+	  return asin(-2*(q.x*q.z - q.w*q.y));
+	}
+
+	static float getRollQuat(Quaternion& q)
+	{
+	  return atan2(2*(q.x*q.y + q.w*q.z), q.w*q.w + q.x*q.x - q.y*q.y - q.z*q.z);
 	}
 
 } // namespace Math

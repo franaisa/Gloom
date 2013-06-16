@@ -24,6 +24,15 @@ aplicacion.
 
 namespace Application 
 {
+	struct GameMode {
+		enum Enum {
+			eDUEL,
+			eDEATHMATCH,
+			eTEAM_DEATHMATCH,
+			eCAPTURE_THE_FLAG
+		};
+	};
+
 	/**
 	Clase CApplicationState; representa un estado de la 
 	aplicación, como el estado del menú, o el estado jugando,

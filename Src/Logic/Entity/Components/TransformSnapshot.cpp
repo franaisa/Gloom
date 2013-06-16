@@ -43,8 +43,12 @@ namespace Logic {
 	//__________________________________________________________________
 
 	void CTransformSnapshot::takeSnapshot() {
-		_transformBuffer.push_back( _entity->getTransform() );
+		Matrix4 transform;
+		transform.makeTransform(_entity->getPosition(),Vector3::UNIT_SCALE,_entity->getOrientation());
+		_transformBuffer.push_back( transform );
 	}
+
+	//__________________________________________________________________
 
 } // namespace Logic
 

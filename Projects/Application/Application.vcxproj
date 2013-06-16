@@ -120,6 +120,8 @@
     <ClCompile Include="..\..\Src\Application\OgreClock.cpp" />
     <ClCompile Include="..\..\Src\Application\SelectScenario.cpp" />
     <ClCompile Include="..\..\Src\Application\SinglePlayerState.cpp" />
+    <ClCompile Include="..\..\Src\Application\TDMClient.cpp" />
+    <ClCompile Include="..\..\Src\Application\TDMServer.cpp" />
     <ClCompile Include="..\..\Src\Docs\docCompilando.cpp" />
     <ClCompile Include="..\..\Src\Docs\docDirectorios.cpp" />
   </ItemGroup>
@@ -144,6 +146,8 @@
     <ClInclude Include="..\..\Src\Application\OgreClock.h" />
     <ClInclude Include="..\..\Src\Application\SelectScenario.h" />
     <ClInclude Include="..\..\Src\Application\SinglePlayerState.h" />
+    <ClInclude Include="..\..\Src\Application\TDMClient.h" />
+    <ClInclude Include="..\..\Src\Application\TDMServer.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Galeon.ico" />
