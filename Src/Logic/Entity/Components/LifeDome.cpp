@@ -101,6 +101,7 @@ namespace Logic
 		cGraph = _entity->getComponent<CGraphics>("CGraphics");
 		if (cGraph)
 		{
+			printf("\n Entre");
 			if (_scale < 10.0f)
 			{
 				_scale += 0.005f;
