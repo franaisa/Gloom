@@ -1,0 +1,20 @@
+material vortice
+{
+	technique
+	{
+		pass
+		{
+			ambient 0.588235 0.588235 0.588235 1
+			diffuse 0.588235 0.588235 0.588235 1
+			specular 0 0 0 1 10
+			texture_unit aoMap
+			{
+				texture vortice.png
+				scale 0.1 0.1
+				scroll_anim 1 0.5
+			}
+		}
+
+	}
+
+}
