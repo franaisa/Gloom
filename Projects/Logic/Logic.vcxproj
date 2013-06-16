@@ -79,6 +79,9 @@
   <ItemGroup>
     <ClCompile Include="..\..\Src\Graphics\DecalUtility.cpp" />
     <ClCompile Include="..\..\Src\Graphics\OgreDecal.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\AmplifyDamage.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\AmplifyDamageAmmo.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\AmplifyDamageFeedback.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\ComeBack.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\ComeBackAmmo.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\CoolDown.cpp" />
@@ -267,6 +270,9 @@
   <ItemGroup>
     <ClInclude Include="..\..\Src\Graphics\DecalUtility.h" />
     <ClInclude Include="..\..\Src\Graphics\OgreDecal.h" />
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\AmplifyDamage.h" />
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\AmplifyDamageAmmo.h" />
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\AmplifyDamageFeedback.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\ComeBack.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\ComeBackAmmo.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\ComeBackFeedback.h" />
