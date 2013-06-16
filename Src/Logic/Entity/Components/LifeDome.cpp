@@ -99,8 +99,10 @@ namespace Logic
 
 		if (_owner)
 		{
+			std::cout << "entro aki pa lo del owner" << std::endl;
 			_entity->setPosition(_owner->getEntity()->getPosition());
 		}
+		
 		
 		CGraphics* cGraph;
 		cGraph = _entity->getComponent<CGraphics>("CGraphics");
@@ -110,7 +112,6 @@ namespace Logic
 			{
 				_scale += 0.005f;
 			}
-			std::cout << "scale--------->" << _scale << std::endl;
 			cGraph->changeScale(_scale);
 			//Ponemos la posición del jugador subiéndolo un poco en el ejeY
 			//cGraph->setPosition(_owner->getEntity()->getPosition() + Vector3(0,1,0));

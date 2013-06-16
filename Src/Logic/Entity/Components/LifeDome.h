@@ -38,7 +38,7 @@ namespace Logic
 		/**
 		Constructor por defecto; en la clase base no hace nada.
 		*/
-		CLifeDome() : _scale(1.0f), IComponent() {}
+		CLifeDome() : _scale(1.0f), IComponent(), _owner(NULL) {}
 
 		/** Destructor. */
 		virtual				~CLifeDome			();
