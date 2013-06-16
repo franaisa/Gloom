@@ -96,7 +96,12 @@ namespace Logic
 	//________________________________________________________________________
 
 	void CLifeDome::onFixedTick(unsigned int msecs) {
-	
+
+		if (_owner)
+		{
+			_entity->setPosition(_owner->getEntity()->getPosition());
+		}
+		
 		CGraphics* cGraph;
 		cGraph = _entity->getComponent<CGraphics>("CGraphics");
 		if (cGraph)
@@ -106,9 +111,10 @@ namespace Logic
 			{
 				_scale += 0.005f;
 			}
+			std::cout << "scale--------->" << _scale << std::endl;
 			cGraph->changeScale(_scale);
 			//Ponemos la posición del jugador subiéndolo un poco en el ejeY
-			cGraph->setPosition(_owner->getEntity()->getPosition() + Vector3(0,1,0));
+			//cGraph->setPosition(_owner->getEntity()->getPosition() + Vector3(0,1,0));
 		}
 	}
 	

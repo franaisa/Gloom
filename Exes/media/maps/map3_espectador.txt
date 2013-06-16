@@ -9,7 +9,7 @@ Map = {
 	David = {
 		type = "LocalSpectator",
 		isPlayer = true,
-		position = {0.0, 0.0, 0.0},
+		position = {52.0, 84.0, 122.0},
 	},
 	
 	Camera = {
@@ -18,7 +18,7 @@ Map = {
 	},
 	Point1 = {
 		type = "SpawnPoint",
-		position = {0.0, 0.0, 0.0},
+		position = {52.0, 84.0, 122.0},
 		yaw = 0,
 		physic_entity = "rigid",
 		physic_trigger = true,
