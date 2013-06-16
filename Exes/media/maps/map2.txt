@@ -304,4 +304,19 @@ Map = {
 		position = { 0,-20,0},
 		model = "shotGun.mesh",
 	},
+	
+	Jumper2 = {
+		type = "Jumper",
+		position = {-250.0, 2.0, 10.0},
+		model = "tetera.mesh",
+		force = {1,5,0.1},
+		audio = "media/audio/plasma.wav",
+		physic_entity = "rigid",
+		physic_trigger = true,
+		physic_type = "static",
+		physic_shape = "box",
+		physic_dimensions = { 2, 2, 2 },
+		physic_group = 7,
+		physic_groupList = "1",
+	},
 }

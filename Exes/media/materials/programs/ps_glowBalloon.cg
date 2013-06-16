@@ -1,0 +1,13 @@
+float4 main(float3 WorldNormal : TEXCOORD0,
+			float3 WorldView : TEXCOORD1,
+			uniform float3 GlowColor,
+			uniform float GlowExpon
+			) : COLOR
+{
+    float3 Nn = normalize(WorldNormal);
+    float3 Vn = normalize(WorldView);
+    float edge = 1.0 - dot(Nn, Vn);
+    edge = pow(edge, GlowExpon);
+    float3 result = edge * GlowColor.rgb;
+    return float4(result, edge);
+}

@@ -1,0 +1,38 @@
+material cubo
+{
+	// This is the preferred technique which uses both vertex and
+	// fragment programs, supports coloured lights
+	technique
+	{
+		pass 
+		{
+			ambient 0 0 0 1
+			diffuse 0 0 0 0
+			specular 2 2 2 100
+			emissive 1 1 1 1 
+			
+			
+			texture_unit 
+            {
+				//texture gunflash.jpg
+            }
+
+		}
+		
+		pass
+		{
+			illumination_stage ambient
+            scene_blend alpha_blend
+			
+			depth_write off
+			
+			fragment_program_ref cubo_ps
+            {
+				param_named alpha float 0.25
+				param_named_auto tiempo time
+            }
+		}
+	}
+	
+}
+
