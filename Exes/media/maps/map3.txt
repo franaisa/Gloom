@@ -5,7 +5,9 @@ Map = {
 		model = "mapaAngel.mesh",
 		physic_file = "media/models/mapaAngel/mapaAngel.RepX",
 	},
-	
+	Vortice = {
+		type = "Vortice",
+	},
 	David = {
 		type = "LocalArchangel",
 		isPlayer = true,

@@ -13,7 +13,7 @@ namespace Logic {
 			eGRAVITY,  // hecho
 			eHARD_DEATH,
 			eSHIELD,
-			eCOOLDOWN,
+			eCOOLDOWN, // hecho
 			eRESURECTION,
 			eSIZE,
 		};

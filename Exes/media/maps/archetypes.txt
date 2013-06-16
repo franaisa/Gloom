@@ -1972,5 +1972,20 @@ Map = {
 		physic_group = 11,
 		physic_groupList = "1",
 	},
+	Vortice = {
+		type = "Vortice",
+		position = {-310.0,-410,-50.0},
+		model = "vortice.mesh",
+		scale = 1,
+		damage = 500,
+		timeDamage = 500,
+		physic_entity = "rigid",
+		physic_trigger = true,
+		physic_type = "static",
+		physic_shape = "box",
+		physic_dimensions = { 200, 0.1, 200 },
+		physic_group = 2,
+		physic_groupList = "1",
+	},
 	
 }
