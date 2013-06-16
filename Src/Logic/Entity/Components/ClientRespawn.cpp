@@ -87,12 +87,10 @@ namespace Logic  {
 				// en el lugar indicado por el mensaje recibido del servidor.
 
 				std::shared_ptr<CMessagePlayerSpawn> playerSpawnMsg = std::static_pointer_cast<CMessagePlayerSpawn>(message);
-
-				Matrix4 spawnTransform = playerSpawnMsg->getSpawnTransform();
-				
 				// Colocamos al player en la posicion dada por el manager de spawn del server,
 				// podemos asumir sin problemas que el player tiene capsula
-				_entity->getComponent<CPhysicController>("CPhysicController")->setPhysicPosition( spawnTransform.getTrans() );
+				
+				_entity->getComponent<CPhysicController>("CPhysicController")->setPhysicPosition( playerSpawnMsg->getSpawnPosition() );
 				// Activamos la simulacion aqui sin problemas. El componente life ignora los mensajes de daño
 				// hasta que no desaparece la inmunidad del respawn. 
 				_entity->getComponent<CPhysicController>("CPhysicController")->activateSimulation();
@@ -103,9 +101,9 @@ namespace Logic  {
 				}
 
 				// Seteamos la orientacion a la dada por el server
-				Matrix3 spawnOrientation;
-				spawnTransform.extract3x3Matrix( spawnOrientation );
-				_entity->setOrientation(spawnOrientation);
+				std::cout << "Cliente recibe : " << playerSpawnMsg->getSpawnOrientation()<< std::endl;
+				_entity->setYaw(playerSpawnMsg->getSpawnOrientation(),true);
+
 
 				// Volvemos a activar todos los componentes
 				_entity->activate();

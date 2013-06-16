@@ -44,7 +44,7 @@ namespace Logic {
 
 	float CFloatingMovement::estimateItemRotation(unsigned int msecs) {
 		// Giramos en funcion de la velocidad de giro.
-		return _entity->getYaw() + (_orbitalRotationSpeed * msecs);
+		return _orbitalRotationSpeed * msecs;
 	}
 
 	//________________________________________________________________________
@@ -53,7 +53,7 @@ namespace Logic {
 		// Calculamos la nueva posicion de la vertical del item
 		_entity->setPosition( estimateItemFloatingPos(_entity->getPosition(), msecs) );
 		// Calculamos la nueva orientacion del item
-		_entity->setYaw( estimateItemRotation(msecs) );
+		_entity->rotate(Orientation::eYAW,Ogre::Radian(estimateItemRotation(msecs)));
 		
 	} // tick
 

@@ -72,7 +72,7 @@ namespace Logic
 		_target = CServer::getSingletonPtr()->getPlayer();
 
 		if(!_target){
-			//_graphicsCamera->setTargetCameraPosition(_targetV);
+			_graphicsCamera->setOrientation(Quaternion::IDENTITY);
 			_target = NULL;
 			//deactivate();
 		}
@@ -138,10 +138,14 @@ namespace Logic
 		_graphicsCamera->rollCamera( (-1 * _currentRoll) + radians );
 		_currentRoll = radians;
 	}
+	
+	//---------------------------------------------------------
 
 	float CCamera::getRoll() {
 		return _currentRoll;
 	}
+
+	//---------------------------------------------------------
 
 	void CCamera::setTargetEnemy(CEntity* enemy){
 		
@@ -162,6 +166,8 @@ namespace Logic
 	Vector3 CCamera::getPosition() const {
 		return _graphicsCamera->getCameraPosition();
 	}
+
+	//---------------------------------------------------------
 
 	Quaternion CCamera::getOrientation() const {
 		return _graphicsCamera->getCameraOrientation();
@@ -200,12 +206,12 @@ namespace Logic
 				_fOffsetTimer -= msecs;
 
 				//"Vibración" de la cámara
-				Matrix4 transf = _entity->getTransform();
- 				Math::yaw(Math::HALF_PI, transf);
-				_entity->setTransform(transf);
-				
+				Math::rotate(Vector3::UNIT_Y,Ogre::Radian(Math::HALF_PI),_entity->getYaw());
+
 				//En el eje de movimiento horizontal
-				Vector3 directionStrafe = Math::getDirection(_entity->getYaw() + Math::PI/2);
+				//REVISAR NO ESTOY MUY SEGURO
+				Quaternion halfPi(Ogre::Radian(Math::HALF_PI),Vector3::UNIT_Y);
+				Vector3 directionStrafe = (_entity->getYaw() * halfPi)*Vector3::NEGATIVE_UNIT_Z;
 				position += directionStrafe;
 			}
 
@@ -215,14 +221,15 @@ namespace Logic
 				_graphicsCamera->rollCamera(_fRoll);
 				_fRoll = 0.0f; //Inicializamos el roll para que en el siguiente tick no entre
 			}*/
+			//Actualizamos la posición de la camara
 			_graphicsCamera->setCameraPosition(position);
 			
+			//Su orientacion variara si estoy muerto o no
 			if(!_dead){
-				// Y la posición hacia donde mira la cámara.
-				Vector3 direction = Math::getDirection(_target->getOrientation());
-				//_graphicsCamera->setTargetCameraPosition(position + direction);
+				//Si no estoy muerto miro a donde corresponda
+				_graphicsCamera->setOrientation(_target->getOrientation());
 			}
-			//Si estamos muertos miramos al enemigo, diferenciamos entre nosotros mismos o el rival
+			//Si estamos muertos miramos al enemigo, diferenciando si fue suicidio o nos mató un enemigo
 			else if(_enemy){
 				 if(_enemy->getType().compare("LocalPlayer")!=0)
 				    ;//_graphicsCamera->setTargetCameraPosition(_enemy->getPosition());
@@ -233,7 +240,7 @@ namespace Logic
 			}
 
 		}else{
-			;//_graphicsCamera->setTargetCameraPosition(_targetV);
+			_graphicsCamera->setOrientation(Quaternion::IDENTITY);
 		}
 	} // tick
 

@@ -19,8 +19,10 @@ gráfica de una entidad estática.
 
 #include "Logic/Entity/Entity.h"
 #include "Logic/Maps/Map.h"
+#include "Logic/Messages/MessageActivate.h"
 #include "Logic/Messages/MessageSetAnimation.h"
 #include "Logic/Messages/MessageStopAnimation.h"
+#include "Logic/Messages/MessageChangeMaterial.h"
 #include "Logic/Messages/MessageChangeWeaponGraphics.h"
 #include "WeaponType.h"
 
@@ -43,7 +45,7 @@ namespace Logic
 		if(!_scene->addEntity(_animatedGraphicsEntity))
 			return 0;
 		
-		_animatedGraphicsEntity->setTransform(_entity->getTransform());
+		_animatedGraphicsEntity->setTransform(_entity->getPosition(),_entity->getOrientation());
 		
 		if(entityInfo->hasAttribute("defaultAnimation"))
 		{
@@ -169,10 +171,8 @@ namespace Logic
 	//---------------------------------------------------------
 
 	void CAnimatedGraphics::onTick(unsigned int msecs){
-
-		Matrix4 transform = _entity->getTransform();
-		Math::setYaw( Math::getYaw( transform ) + Math::PI,transform );
-		_graphicsEntity->setTransform( transform );
+		Quaternion rancio(Ogre::Radian(Math::PI),Vector3::UNIT_Y);
+		_graphicsEntity->setTransform(_entity->getPosition(),_entity->getOrientation()*rancio);
 	}//---------------------------------------------------------
 	//onTick
 	

@@ -85,7 +85,7 @@ namespace Logic{
 		_timestamp += msecs;
 		if(_timestamp < 2200){
 			_scene->updateCompositorVariable(_effect, _strengthEffect, _timestamp*0.001);
-			printf("\nDisminuyendo: %d \t le paso: %f y el seno: %f - %f", _timestamp, _timestamp*0.003, sin(_timestamp*0.003)*0.5, sin(_timestamp*0.003)*0.5+1.8);
+			//printf("\nDisminuyendo: %d \t le paso: %f y el seno: %f - %f", _timestamp, _timestamp*0.003, sin(_timestamp*0.003)*0.5, sin(_timestamp*0.003)*0.5+1.8);
 		}else{
 			if(_offsetTimeSin == 0){ _offsetTimeSin = ((_timestamp*0.001) - sin(_timestamp*0.003)*0.5); }
 			_scene->updateCompositorVariable(_effect, _strengthEffect, (std::sin(_timestamp*0.003)*0.5)+_offsetTimeSin);

@@ -15,6 +15,7 @@ Contiene la implementación del estado de lobby del cliente.
 */
 
 #include "LobbyClientState.h"
+#include "GameClientState.h"
 
 #include "Logic/Server.h"
 #include "Logic/Entity/Entity.h"
@@ -189,6 +190,17 @@ namespace Application {
 				
 				break;
 			}
+			case Net::GAME_SETTINGS: {
+				buffer.read(&_gameMode, sizeof(_gameMode));
+				buffer.read(&_gameTimeLeft, sizeof(_gameTimeLeft));
+				buffer.read(&_goalScore, sizeof(_goalScore));
+
+				Net::NetMessageType msgType = Net::GAME_SETTINGS_LOADED;
+
+				_netMgr->broadcast(&msgType, sizeof(msgType));
+
+				break;
+			}
 			case Net::LOAD_WORLD_STATE: {
 				// Deserializar el estado del mundo
 				Logic::CWorldState::getSingletonPtr()->deserialize(buffer);
@@ -198,7 +210,25 @@ namespace Application {
 				break;
 			}
 			case Net::START_GAME: {
-				_app->setState("DMClient");
+				// Dependiendo del modo saltamos a un estado u otro
+				switch(_gameMode) {
+					case GameMode::eDUEL:
+						_app->setState("DUELClient");
+						break;
+					case GameMode::eDEATHMATCH:
+						_app->setState("DMClient");
+						break;
+					case GameMode::eTEAM_DEATHMATCH:
+						_app->setState("TDMClient");
+						break;
+					case GameMode::eCAPTURE_THE_FLAG:
+						_app->setState("CTFClient");
+						break;
+				}
+
+				Application::CGameClientState* nextState = static_cast<CGameClientState*>( _app->getNextState() );
+				nextState->basicGameSettings(_gameTimeLeft, _goalScore);
+
 				break;
 			}
 		}

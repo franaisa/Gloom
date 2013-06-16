@@ -70,7 +70,8 @@ namespace Logic  {
 
 	void CMovementSnapshot::onFixedTick(unsigned int msecs){
 		std::shared_ptr<CMessageSyncPosition> msg = std::make_shared<CMessageSyncPosition>();
-		msg->setTransform( _entity->getTransform() );
+		msg->setPosition( _entity->getPosition() );
+		msg->setOrientation( _entity->getOrientation() );
 		CGameNetMsgManager::getSingletonPtr()->sendEntityMessage(msg, _entity->getEntityID());
 	}
 } // namespace Logic

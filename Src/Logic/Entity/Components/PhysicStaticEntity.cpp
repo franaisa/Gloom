@@ -158,10 +158,7 @@ void CPhysicStaticEntity::createPlane(const Map::CEntity *entityInfo, int group,
 
 //---------------------------------------------------------
 
-void CPhysicStaticEntity::createRigid(const Map::CEntity *entityInfo, int group, const std::vector<int>& groupList) {
-	// Leer la posición de la entidad
-	const Matrix4 transform = _entity->getTransform();
-	
+void CPhysicStaticEntity::createRigid(const Map::CEntity *entityInfo, int group, const std::vector<int>& groupList) {	
 	// Leer el tipo de entidad: estáticos, dinámico o cinemático
 	assert(entityInfo->hasAttribute("physic_type"));
 	const std::string physicType = entityInfo->getStringAttribute("physic_type");
@@ -185,7 +182,7 @@ void CPhysicStaticEntity::createRigid(const Map::CEntity *entityInfo, int group,
 		Physics::BoxGeometry box = _geometryFactory->createBox(physicDimensions);
 		Physics::Material* defaultMaterial = _materialManager->getMaterial(eDEFAULT);
 		
-		_physicEntity.load(transform, box, *defaultMaterial, isTrigger, group, groupList, this);
+		_physicEntity.load(_entity->getPosition(), _entity->getOrientation(), box, *defaultMaterial, isTrigger, group, groupList, this);
 	}
 	else if (physicShape == "sphere") {
 		assert(entityInfo->hasAttribute("physic_radius"));
@@ -194,7 +191,7 @@ void CPhysicStaticEntity::createRigid(const Map::CEntity *entityInfo, int group,
 		Physics::SphereGeometry sphere = _geometryFactory->createSphere(physicRadius);
 		Physics::Material* defaultMaterial = _materialManager->getMaterial(eDEFAULT);
 
-		_physicEntity.load(transform, sphere, *defaultMaterial, isTrigger, group, groupList, this);
+		_physicEntity.load(_entity->getPosition(), _entity->getOrientation(), sphere, *defaultMaterial, isTrigger, group, groupList, this);
 	}
 }
 

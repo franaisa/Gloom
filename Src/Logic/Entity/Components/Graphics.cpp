@@ -104,7 +104,7 @@ namespace Logic
 		}
 
 		
-		_graphicsEntity->setTransform(_entity->getTransform());
+		_graphicsEntity->setTransform(_entity->getPosition(),_entity->getOrientation());
 		
 		return _graphicsEntity;
 
@@ -112,8 +112,8 @@ namespace Logic
 
 	//---------------------------------------------------------
 	
-	void CGraphics::setTransform(const Matrix4& transform) {
-		_graphicsEntity->setTransform(transform);
+	void CGraphics::setTransform(const Vector3 &position, const Ogre::Quaternion &orientation) {
+		_graphicsEntity->setTransform(position,orientation);
 	}
 
 	//---------------------------------------------------------
@@ -173,13 +173,14 @@ namespace Logic
 
 	void CGraphics::onActivate() {
 		setVisible(true);
-		_graphicsEntity->setTransform(_entity->getTransform());
+		_graphicsEntity->setTransform(_entity->getPosition(),_entity->getOrientation());
+
 	}//---------------------------------------------------------
 	//onActivate
 
 
 	void CGraphics::onTick(unsigned int msecs){
-		_graphicsEntity->setTransform(_entity->getTransform());
+		_graphicsEntity->setTransform(_entity->getPosition(),_entity->getOrientation());
 	}//---------------------------------------------------------
 	//onTick
 

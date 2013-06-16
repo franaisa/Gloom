@@ -1,55 +1,33 @@
 //---------------------------------------------------------------------------
-// GameClientState.h
+// TDMClient.h
 //---------------------------------------------------------------------------
 
 /**
-@file GameClientState.h
+@file TDMClient.h
 
-Contiene la declaración del estado de juego.
-
-@see Application::CGameState
+@see Application::CTDMClient
 @see Application::CGameClientState
 
 @author Francisco Aisa García
-@date Febrero, 2013
+@date Junio, 2013
 */
 
-#ifndef __Application_GameClientState_H
-#define __Application_GameClientState_H
+#ifndef __Application_TDMClient_H
+#define __Application_TDMClient_H
 
-#include "GameState.h"
-#include "Net/Manager.h"
-#include "FlashValue.h"
-#include <iostream>
-
-namespace Hikari{
-	class FlashControl;
-}
-
-namespace Net {
-	class CManager;
-}
+#include "GameClientState.h"
+#include "Logic/Maps/WorldState.h"
 
 namespace Application {
 	
 	/**
 	@ingroup applicationGroup
 
-	Representa el estado de juego online para el cliente. En el futuro
-	tendremos diferentes estados por cada modo de juego, pero de momento
-	se queda asi hasta que por lo menos tengamos un deathmatch.
-
-	Hereda de CGameState por que es un estado de juego y de Net::CManager::IObserver
-	para que se le avise de que ha recibido paquetes (en este caso los
-	paquetes de datos son los unicos que el cliente va a querer).
-
 	@author Francisco Aisa García
-	@date Febrero, 2013
-	@deprecated Actualmente hereda de IObserver pero IObserver tiene listeners
-	que no interesan al cliente (como las llamadas de conexion y desconexion).
+	@date Junio, 2013
 	*/
 
-	class CGameClientState : public CGameState, public Net::CManager::IObserver {
+	class CTDMClient : public CGameClientState {
 	public:
 
 
@@ -63,21 +41,17 @@ namespace Application {
 
 		@param app Aplicacion que se encarga de manejar los estados.
 		*/
-		CGameClientState(CBaseApplication *app) : CGameState(app) {}
+		CTDMClient(CBaseApplication* app) : CGameClientState(app), _inEndGame(false) { /* Nada que hacer */ }
 
 
 		// =======================================================================
 		//                           METODOS HEREDADOS
 		// =======================================================================
 
-		/**
-		Función llamada cuando se crea el estado (se "engancha" en la
-		aplicación, para que inicialice sus elementos.
 
-		@return true si todo fue bien.
-		*/
+		virtual void tick(unsigned int msecs);
 
-		virtual bool init();
+		void dataPacketReceived(Net::CPaquete* packet);
 
 		/**
 		Función llamada por la aplicación cuando se activa
@@ -94,38 +68,9 @@ namespace Application {
 		virtual void deactivate();
 
 		//______________________________________________________________________________
-		
-		/**
-		Se dispara cuando se recibe un paquete de datos.
-
-		@see Net::CManager::IObserver
-		@param packet Paquete de datos recibido.
-		*/
-		virtual void dataPacketReceived(Net::CPaquete* packet);
-
-		//______________________________________________________________________________
-
-		/**
-		Se dispara cuando se recibe un paquete de conexion. En el caso del cliente
-		este metodo no deberia dispararse nunca.
-
-		@see Net::CManager::IObserver
-		@param packet Paquete de conexion recibido.
-		*/
-		virtual void connectionPacketReceived(Net::CPaquete* packet) { /* Los clientes no reciben este tipo de mensajes */ }
-
-		//______________________________________________________________________________
-
-		/**
-		Se dispara cuando se recibe un paquete de desconexion.
-
-		@see Net::CManager::IObserver
-		@param packet Paquete de desconexion recibido.
-		*/
-		virtual void disconnectionPacketReceived(Net::CPaquete* packet);
 
 		// Métodos de CKeyboardListener
-		
+
 		/**
 		Método que será invocado siempre que se pulse una tecla. 
 		Será la aplicación quién llame a este método cuando el 
@@ -138,7 +83,9 @@ namespace Application {
 		el gestor no llamará a otros listeners.
 		*/
 		virtual bool keyPressed(Input::TKey key);
-		
+
+		//______________________________________________________________________________
+
 		/**
 		Método que será invocado siempre que se termine la pulsación
 		de una tecla. Será la aplicación quién llame a este método 
@@ -152,8 +99,10 @@ namespace Application {
 		*/
 		virtual bool keyReleased(Input::TKey key);
 
+		//______________________________________________________________________________
+
 		// Métodos de CMouseListener
-		
+
 		/**
 		Método que será invocado siempre que se mueva el ratón. La
 		aplicación avisa de este evento al estado actual.
@@ -163,7 +112,9 @@ namespace Application {
 		el gestor no llamará a otros listeners.
 		*/
 		virtual bool mouseMoved(const Input::CMouseState &mouseState);
-		
+
+		//______________________________________________________________________________
+
 		/**
 		Método que será invocado siempre que se pulse un botón. La
 		aplicación avisa de este evento al estado actual.
@@ -173,6 +124,8 @@ namespace Application {
 		el gestor no llamará a otros listeners.
 		*/
 		virtual bool mousePressed(const Input::CMouseState &mouseState);
+
+		//______________________________________________________________________________
 
 		/**
 		Método que será invocado siempre que se termine la pulsación
@@ -185,26 +138,13 @@ namespace Application {
 		*/
 		virtual bool mouseReleased(const Input::CMouseState &mouseState);
 
-		Hikari::FlashValue classSelected(Hikari::FlashControl* caller, const Hikari::Arguments& args);
+	private:
+		bool _inEndGame;
+		unsigned int _minutes;
+		unsigned int _seconds;
 
-		void basicGameSettings(unsigned int timeLimit, unsigned int goalScore);
-
-	protected:
-
-		void disconnect();
-
-		unsigned int _npings;
-		unsigned int _pingActual;
-
-		//menu de seleccion de personaje
-		Hikari::FlashControl* _seleccion;
-
-		Net::CManager* _netMgr;
-
-		//ñapa porque flash hace lo que le sale de los huevos
-		bool _menuVisile;
-	}; // CMultiplayerTeamDeathmatchClientState
+	}; // CTDMClient
 
 } // namespace Application
 
-#endif //  __Application_GameClientState_H
+#endif // __Application_TDMClient_H

@@ -172,6 +172,17 @@ namespace Logic {
 		//________________________________________________________________________
 
 		/**
+		Asigna un equipo a un player
+
+		@param playerNetId Identificador de red del player.
+		@param team Nombre del equipo al que pertenece. Las posibilidades son
+		red, blue o none.
+		*/
+		void setPlayerTeam(Net::NetID playerNetId, const std::string& team);
+
+		//________________________________________________________________________
+
+		/**
 		Incrementa el número de frags de un jugador.
 
 		@param entityId Id de la entidad a la que queremos aumentarle el número
@@ -224,6 +235,16 @@ namespace Logic {
 		@return Información asociada al player buscado.
 		*/
 		CPlayerInfo getPlayerByEntityId(Logic::TEntityID entityId);
+
+		//________________________________________________________________________
+
+		/**
+		Devuelve el nombre del equipo al que pertenece la entidad buscada.
+
+		@param entityId Id logico de la entidad.
+		@return Nombre del equipo al que pertenece la entidad.
+		*/
+		std::string getTeamUsingEntityId(Logic::TEntityID entityId);
 
 		//________________________________________________________________________
 
@@ -284,6 +305,24 @@ namespace Logic {
 		@return El número de frags que lleva el jugador dado.
 		*/
 		int getFragsUsingEntityID(Logic::TEntityID playerId);
+
+		//________________________________________________________________________
+
+		/**
+		Devuelve el numero de jugadores que hay en el equipo azul.
+
+		@return Numero de jugadores en el equipo azul.
+		*/
+		unsigned int blueTeamPlayers();
+
+		//________________________________________________________________________
+
+		/**
+		Devuelve el numero de jugadores que hay en el equipo rojo.
+
+		@return Numero de jugadores en el equipo rojo.
+		*/
+		unsigned int redTeamPlayers();
 
 
 		// =======================================================================

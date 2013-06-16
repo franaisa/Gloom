@@ -1,18 +1,18 @@
 //---------------------------------------------------------------------------
-// DMServer.cpp
+// TDMServer.cpp
 //---------------------------------------------------------------------------
 
 /**
-@file DMServer.cpp
+@file TDMServer.cpp
 
-@see Application::CDMServer
+@see Application::CTDMServer
 @see Application::CGameServerState
 
 @author Francisco Aisa García
 @date Junio, 2013
 */
 
-#include "DMServer.h"
+#include "TDMServer.h"
 
 #include "Logic/Entity/Entity.h"
 #include "Logic/Server.h"
@@ -30,21 +30,21 @@ using namespace std;
 
 namespace Application {
 
-	CDMServer::CDMServer(CBaseApplication* app) : CGameServerState(app, GameMode::eDEATHMATCH),
-												  _forceRespawn(false),
-												  _warmUp(true),
-												  //_autoBalanceTeams(false),
-												  _loopMaps(true),
-												  _currentMap(0),
-												  _inEndGame(false) {
+	CTDMServer::CTDMServer(CBaseApplication* app) : CGameServerState(app, GameMode::eTEAM_DEATHMATCH),
+													_forceRespawn(false),
+													_warmUp(true),
+													_autoBalanceTeams(false),
+													_loopMaps(true),
+													_currentMap(0),
+													_inEndGame(false) {
 
 		// Nada que hacer
 	}
 
 	//______________________________________________________________________________
 
-	void CDMServer::gameSettings(const std::vector<std::string>& mapList, bool loopMaps, const std::pair<unsigned int, unsigned int>& timeLimit, 
-								 unsigned int goalScore, bool forceRespawn, bool warmUp) {
+	void CTDMServer::gameSettings(const std::vector<std::string>& mapList, bool loopMaps, const std::pair<unsigned int, unsigned int>& timeLimit, 
+								 unsigned int goalScore, bool forceRespawn, bool warmUp, bool autoBalanceTeams) {
 
 		// Establecemos la lista de mapas
 		this->_mapList = mapList;
@@ -58,11 +58,13 @@ namespace Application {
 		this->_forceRespawn = forceRespawn;
 		// Existe fase de warmUp?
 		this->_warmUp = warmUp;
+		// Queremos entrar en un equipo automaticamente?
+		this->_autoBalanceTeams = autoBalanceTeams;
 	}
 
 	//______________________________________________________________________________
 
-	void CDMServer::gameEventOcurred(Logic::CEntity* emitter, const shared_ptr<Logic::CMessage>& msg) {
+	void CTDMServer::gameEventOcurred(Logic::CEntity* emitter, const shared_ptr<Logic::CMessage>& msg) {
 		switch( msg->getMessageType() ) {
 			case Logic::Message::PLAYER_DEAD: {
 				shared_ptr<Logic::CMessagePlayerDead> playerDeadMsg = static_pointer_cast<Logic::CMessagePlayerDead>(msg);
@@ -71,17 +73,38 @@ namespace Application {
 				Logic::TEntityID emitterID = emitter->getEntityID();
 				Logic::CEntity* killer = Logic::CServer::getSingletonPtr()->getMap()->getEntityByID(killerID);
 				if( emitter != killer && isPlayer(killer) ) {
-					if(_playersMgr->addFragUsingEntityID(killerID) == _goalScore) {
-						// fin de partida
-						std::cout << "LA PARTIDA HA FINALIZADO POR LIMITE DE MUERTES!!!" << std::endl;
-						endGame();
+					// Incrementamos el número de muertes del jugador
+					_playersMgr->addFragUsingEntityID(killerID);
+					
+					// Obtenemos el equipo al que pertenece el jugador que acaba de hacer un frag
+					std::string team = _playersMgr->getTeamUsingEntityId(killerID);
+					if(team == "red") {
+						if(++_redTeamScore == _goalScore) {
+							endGame();
+						}
+
+						cout << "El equipo rojo lleva " << _redTeamScore << " muertes" << endl;
+					}
+					else if(team == "blue") {
+						if(++_blueTeamScore == _goalScore) {
+							endGame();
+						}
+
+						cout << "El equipo azul lleva " << _blueTeamScore << " muertes" << endl;
 					}
 				}
 				else {
 					_playersMgr->substractFragUsingEntityID(emitterID);
-				}
 
-				//cout << killer->getName() << " lleva " << _playersMgr->getFragsUsingEntityID(emitterID) << " frags" << endl;
+					// Obtenemos el equipo al que pertenece el jugador que acaba de suicidarse
+					std::string team = _playersMgr->getTeamUsingEntityId(killerID);
+					if(team == "red") {
+						--_redTeamScore;
+					}
+					else if(team == "blue") {
+						--_blueTeamScore;
+					}
+				}
 
 				break;
 			}
@@ -90,7 +113,7 @@ namespace Application {
 
 	//______________________________________________________________________________
 
-	void CDMServer::tick(unsigned int msecs) {
+	void CTDMServer::tick(unsigned int msecs) {
 		CGameServerState::tick(msecs);
 
 		// Si la partida ha finalizado comprobamos el tiempo que ha transcurrido
@@ -137,7 +160,7 @@ namespace Application {
 
 	//______________________________________________________________________________
 
-	void CDMServer::activate() {
+	void CTDMServer::activate() {
 		CGameServerState::activate();
 
 		// Construimos la máscara de eventos/mensajes que nos interesan
@@ -151,7 +174,7 @@ namespace Application {
 
 	//______________________________________________________________________________
 
-	void CDMServer::deactivate() {
+	void CTDMServer::deactivate() {
 		_worldState->removeObserver(this);
 
 		CGameServerState::deactivate();
@@ -159,7 +182,7 @@ namespace Application {
 
 	//______________________________________________________________________________
 
-	void CDMServer::endGame() {
+	void CTDMServer::endGame() {
 		_inEndGame = true;
 		// Tiempo de espera hasta la siguiente partida
 		_gameTime = _voteMap ? 40000 : 15000;
@@ -198,37 +221,37 @@ namespace Application {
 
 	//______________________________________________________________________________
 
-	bool CDMServer::keyPressed(Input::TKey key) {
+	bool CTDMServer::keyPressed(Input::TKey key) {
 		return CGameServerState::keyPressed(key);
 	} // keyPressed
 
 	//______________________________________________________________________________
 
-	bool CDMServer::keyReleased(Input::TKey key) {
+	bool CTDMServer::keyReleased(Input::TKey key) {
 		return CGameServerState::keyReleased(key);
 	} // keyReleased
 
 	//______________________________________________________________________________
 
-	bool CDMServer::mouseMoved(const Input::CMouseState &mouseState) {
+	bool CTDMServer::mouseMoved(const Input::CMouseState &mouseState) {
 		return false;
 	} // mouseMoved
 
 	//______________________________________________________________________________
 
-	bool CDMServer::mousePressed(const Input::CMouseState &mouseState) {
+	bool CTDMServer::mousePressed(const Input::CMouseState &mouseState) {
 		return false;
 	} // mousePressed
 
 	//______________________________________________________________________________
 
-	bool CDMServer::mouseReleased(const Input::CMouseState &mouseState) {
+	bool CTDMServer::mouseReleased(const Input::CMouseState &mouseState) {
 		return false;
 	} // mouseReleased
 
 	//______________________________________________________________________________
 
-	bool CDMServer::isPlayer(Logic::CEntity* entity) {
+	bool CTDMServer::isPlayer(Logic::CEntity* entity) {
 		string type = entity->getType();
 		
 		return type == "Screamer"		|| 

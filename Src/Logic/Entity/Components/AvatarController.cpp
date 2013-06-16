@@ -74,7 +74,7 @@ namespace Logic {
 
 		assert( entityInfo->hasAttribute("acceleration") && "Error: No se ha definido el atributo acceleration en el mapa" );
 		_acceleration = entityInfo->getFloatAttribute("acceleration");
-
+	
 		assert( entityInfo->hasAttribute("maxVelocity") && "Error: No se ha definido el atributo maxVelocity en el mapa" );
 		_maxVelocity = entityInfo->getFloatAttribute("maxVelocity");
 		_maxGravVelocity = _maxVelocity*6;
@@ -147,7 +147,7 @@ namespace Logic {
 				// Comando de raton
 				else if(commandType == Control::MOUSE) {
 					std::shared_ptr<CMessageMouse> mouseMsg = std::static_pointer_cast<CMessageMouse>(message);
-					mouse( mouseMsg->getMouse() );
+					rotationXY( mouseMsg->getMouse() );
 				}
 
 				break;
@@ -167,19 +167,35 @@ namespace Logic {
 
 	//________________________________________________________________________
 
-	void CAvatarController::mouse(float XYturn[]) {
-		//_entity->setYawPitch(XYturn[0],XYturn[1]);
+	void CAvatarController::rotationXY(float XYturn[]) {
+		//Aplicamos las rotaciones pertinentes
+		 Ogre::Real pitchAngle;
+		 Ogre::Real pitchAngleSign;
+ 
+		 //Rotamos el Yaw de la entidad de acuerdo a los grados en radianes pasados como parámetro.
+		 _entity->rotate(Orientation::eYAW,Ogre::Radian(XYturn[0]));
+ 
+		 //Rotamos el Pitch de la entidad de acuerdo a los grados en radianes pasados como parámetro.
+		 _entity->rotate(Orientation::ePITCH,Ogre::Radian(XYturn[1]));
 		
-		//Ñapeado deberia de estar en el componente camera.cpp , aunque ojo son dependientes lo mismo aqui no esta mal
-		//Hay que pensar sobre ello
-		//Si la camara se ejecuta despues de esto vamos retardeds
-		Graphics::CCamera *camera=_entity->getMap()->getScene()->getCamera();
-		camera->moveCamera(Ogre::Radian(XYturn[0]),Ogre::Radian(XYturn[1]));
-
-		_entity->setOrientation(camera->getRealOrientation());
-		
-	} // turn
-
+		 // Ángulo de rotación sobre el eje X.
+		 pitchAngle = (2 * Ogre::Degree(Ogre::Math::ACos(_entity->getPitch().w)).valueDegrees());
+ 
+		 // Para saber el sentido.
+		 pitchAngleSign = _entity->getPitch().x;
+ 
+		 // Limitamos el angulo un poco menos de +90/-90 para evitar perder la direccion (Tomando como referencia a Quake3)
+		 if (pitchAngle > 88.0f)
+		 {
+			 if (pitchAngleSign > 0)
+				 //Fijando a +88. Formo el quaternion previamente calculado, ahorrando procesamiento
+				 _entity->setPitch(Ogre::Quaternion(0.71934,0.694658, 0, 0),false);
+			 else if (pitchAngleSign < 0)
+				 //Fijando a -88. Formo el quaternion previamente calculado, ahorrando procesamiento
+				 _entity->setPitch(Ogre::Quaternion(0.71934,-0.694658, 0, 0),false);
+		 }
+	
+	}//rotationXY
 	//________________________________________________________________________
 
 	void CAvatarController::onStart() {
@@ -268,16 +284,19 @@ namespace Logic {
 		// Mediante trigonometria basica sacamos el angulo que forma el desplazamiento
 		// que queremos llevar a cabo
 		float displacementYaw = asin(direction.normalisedCopy().x);
-		// Obtenemos una copia de la matriz de transformación del personaje
-		Matrix4 characterTransform = _entity->getTransform();
+		// Obtenemos una copia de la orientacion del personaje
+		Quaternion characterQuat = _entity->getOrientation();
 		// Si estamos andando hacia atras, invertimos el giro
 		if(direction.z < 0) displacementYaw *= -1;
 
-		// Rotamos la matriz de transformacion tantos grados como diga el vector 
-		// desplazamiento calculado de pulsar las teclas
-		Math::yaw(displacementYaw, characterTransform);
-		// Obtenemos el vector unitario de orientación de la matriz de transformación
-		Vector3 motionDirection = Math::getDirection(Math::getYaw(characterTransform));
+		// Rotamos tantos grados como diga el vector desplazamiento calculado de pulsar las teclas
+		Math::rotate(Vector3::UNIT_Y,Ogre::Radian(displacementYaw),characterQuat);
+		//Obtenemos la direccion
+		Vector3 directionQuat = characterQuat * Vector3::NEGATIVE_UNIT_Z;
+		//Formamos el vector normalizado de la direccion
+		Vector3 motionDirection(directionQuat.x,0,directionQuat.z);
+		motionDirection.normalise();
+
 		// Invertimos el vector resultante si nos estamos desplazando hacia atras
 		// porque el yaw se calcula de forma contraria al andar hacia atras
 		if(direction.z < 0) motionDirection *= -1;
@@ -311,8 +330,10 @@ namespace Logic {
 		/*if(_displacementDir != Vector3::ZERO){
 			++ticks;
 		}else{
-			if(ticks>0)
+			if(ticks>0){
 				std::cout << "el avatar controller se ha ejecutado " << ticks << " ticks" << std::endl;
+			}
+			auxmsecs=0;
 			ticks=0;
 		}*/
 		///////////////////////////////////////////////////////////////
