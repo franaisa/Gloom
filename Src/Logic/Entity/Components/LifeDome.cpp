@@ -96,6 +96,8 @@ namespace Logic
 	//________________________________________________________________________
 
 	void CLifeDome::onFixedTick(unsigned int msecs) {
+		CGraphics* cGraph;
+		cGraph = _entity->getComponent<CGraphics>("CGraphics");
 
 		if (_owner)
 		{
@@ -103,11 +105,12 @@ namespace Logic
 			std::cout << "Owner position" << _owner->getEntity()->getPosition() << std::endl;
 			std::cout << "Entity position position" << _entity->getPosition() << std::endl;
 			std::cout << std::endl;
+
+			//Desesperacion de poner el cgraph aqui a ver si me mueve la posicion de la cupula pero nada
+			if (cGraph)
+				cGraph->setPosition(_owner->getEntity()->getPosition() + Vector3(0,1,0));
 		}
-		
-		
-		CGraphics* cGraph;
-		cGraph = _entity->getComponent<CGraphics>("CGraphics");
+
 		if (cGraph)
 		{
 			if (_scale < 10.0f)
@@ -118,6 +121,9 @@ namespace Logic
 			//Ponemos la posición del jugador subiéndolo un poco en el ejeY
 			//cGraph->setPosition(_owner->getEntity()->getPosition() + Vector3(0,1,0));
 		}
+		
+		
+		
 	}
 	
 
