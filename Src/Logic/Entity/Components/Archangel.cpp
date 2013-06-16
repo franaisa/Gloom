@@ -158,10 +158,15 @@ namespace Logic {
 			position,
 			Quaternion::IDENTITY
 		);
-
+		std::cout << "creado _lifedome" << std::endl;
 		_lifeDome->activate();
+		std::cout << "activado" << std::endl;
+
 		_lifeDome->start();
+		std::cout << "start " << std::endl;
+
 		_lifeDome->getComponent<CLifeDome>("CLifeDome")->setOwner(this);
+		std::cout << "getcomponent " << std::endl;
 
 		_doingSecondarySkill = true;
 	}
