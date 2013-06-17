@@ -94,6 +94,8 @@ namespace Logic {
 	//__________________________________________________________________
 
 	void CShotGun::primaryFire() {
+		//Sonido
+		emitSound(_weaponSound,_weaponName,false);
 
 		int shots = _numberOfShots <= _currentAmmo ? _numberOfShots : _currentAmmo;
 		for(int i = 0; i < shots; ++i) {

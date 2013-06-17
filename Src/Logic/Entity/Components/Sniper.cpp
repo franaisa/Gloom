@@ -59,6 +59,9 @@ namespace Logic {
 
 	void CSniper::primaryFire(){
 
+		//Sonido
+		emitSound(_weaponSound,_weaponName,false);
+
 		//Direccion
 		Vector3 direction = _entity->getOrientation()*Vector3::NEGATIVE_UNIT_Z;
 	
@@ -104,6 +107,9 @@ namespace Logic {
 	//-------------------------------------------------------
 
 	void CSniper::secondaryFire(){
+
+		//Sonido
+		emitSound(_weaponSound,_weaponName,false);
 
 		//Direccion
 		Vector3 direction = _entity->getOrientation()*Vector3::NEGATIVE_UNIT_Z;
