@@ -1,47 +1,41 @@
-package
+package Seleccion
 {
-	
 	import flash.display.MovieClip;
 	import flash.events.MouseEvent;
 	import flash.external.ExternalInterface;
-	
-	
+	import principal.GloomButton;
+	import principal.MenuManager;
 	/**
 	 * ...
-	 * @author Rubén Mulero
+	 * @author Rubén Mulero Guerrero
 	 */
-	public class ShadowButton extends MovieClip
+	public class ShadowButton extends GloomButton 
 	{
 		private var manager: MenuManager;
+		
+		
 		public function ShadowButton() 
 		{
+			super();
 			manager = parent as MenuManager;
-			this.buttonMode = true;
-			this.addEventListener(MouseEvent.MOUSE_OVER, onMouseOver);
 		}
 		
-		private function onMouseOver(event: MouseEvent): void {
-			this.removeEventListener(MouseEvent.MOUSE_OVER, onMouseOver);
-			this.addEventListener(MouseEvent.MOUSE_OUT, onMouseOut);
-			this.addEventListener(MouseEvent.CLICK, onMouseClick);
-			this.gotoAndPlay("rollover");
+		override protected function onMouseOver(event: MouseEvent): void {
+			super.onMouseOver(event);
 			var selector: ImageSelector = manager.getChildByName("selector") as ImageSelector;
 			selector.gotoAndPlay("shadow");
 		}
 		
-		private function onMouseOut(e:MouseEvent):void {
-			this.removeEventListener(MouseEvent.MOUSE_OUT, onMouseOut);
-			this.addEventListener(MouseEvent.MOUSE_OVER, onMouseOver);
-			this.removeEventListener(MouseEvent.CLICK, onMouseOver);
-			this.gotoAndPlay("idle");
+		override protected function onMouseOut(e:MouseEvent):void {
+			super.onMouseOut(e);
 			var selector: ImageSelector = manager.getChildByName("selector") as ImageSelector;
 			selector.gotoAndPlay("none");
 		}
 		
-		private function onMouseClick(e:MouseEvent):void {
-			this.removeEventListener(MouseEvent.CLICK, onMouseOver);
+		override protected function onMouseClick(e:MouseEvent):void {
 			ExternalInterface.call("selected", 4);
 		}
+		
 	}
 
 }

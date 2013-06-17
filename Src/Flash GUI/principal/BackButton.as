@@ -1,4 +1,4 @@
-package  
+package principal
 {
 	import flash.display.MovieClip;
 	import flash.events.MouseEvent;
@@ -7,7 +7,7 @@ package
 	
 	/**
 	 * ...
-	 * @author Rubén Mulero
+	 * @author Rubén Mulero Guerrero
 	 */
 	public class BackButton extends GloomButton 
 	{
@@ -17,7 +17,7 @@ package
 			super();
 		}
 		
-		override private function onMouseClick(e:MouseEvent):void {
+		protected override function onMouseClick(e:MouseEvent):void {
 			ExternalInterface.call("back");
 		}
 		

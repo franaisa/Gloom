@@ -1,4 +1,4 @@
-package  
+package Server
 {
 	import flash.display.MovieClip;
 	import flash.text.TextField;

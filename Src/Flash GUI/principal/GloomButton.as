@@ -20,13 +20,13 @@ package principal
 			this.addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
 		}
 		
-		private function onMouseOver(event: MouseEvent): void {
+		protected function onMouseOver(event: MouseEvent): void {
 			this.removeEventListener(MouseEvent.MOUSE_OVER, onMouseOver);
 			this.addEventListener(MouseEvent.MOUSE_OUT, onMouseOut);
 			this.gotoAndPlay("over");
 		}
 		
-		private function onMouseOut(e:MouseEvent):void {
+		protected function onMouseOut(e:MouseEvent):void {
 			this.removeEventListener(MouseEvent.MOUSE_OUT, onMouseOut);
 			this.addEventListener(MouseEvent.MOUSE_OVER, onMouseOver);
 			this.gotoAndPlay("idle");
@@ -47,19 +47,21 @@ package principal
 		}
 		
 		public function disableButton():void {
-			removeEventListener.(MouseEvent.MOUSE_OVER, onMouseOver);
+			this.removeEventListener(MouseEvent.MOUSE_OVER, onMouseOver);
 			removeEventListener(MouseEvent.CLICK, onMouseClick);
 			removeEventListener(MouseEvent.MOUSE_UP, onMouseUp);
 			removeEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
 			addEventListener(MouseEvent.MOUSE_OUT, onMouseOut);
+			gotoAndPlay("disabled");
 		}
 		
 		public function enableButton():void {
-			addEventListener.(MouseEvent.MOUSE_OVER, onMouseOver);
-			addEventListener(MouseEvent.CLICK, onMouseClick);
-			addEventListener(MouseEvent.MOUSE_UP, onMouseUp);
-			addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
-			addEventListener(MouseEvent.MOUSE_OUT, onMouseOut);
+			this.addEventListener(MouseEvent.MOUSE_OVER, onMouseOver);
+			this.addEventListener(MouseEvent.CLICK, onMouseClick);
+			this.addEventListener(MouseEvent.MOUSE_UP, onMouseUp);
+			this.addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
+			this.addEventListener(MouseEvent.MOUSE_OUT, onMouseOut);
+			gotoAndPlay("idle");
 		}
 			
 		
