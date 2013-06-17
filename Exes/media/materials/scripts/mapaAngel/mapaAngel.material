@@ -342,7 +342,7 @@ material mapaAngel_suelo
 	technique
 	{
 		
-		pass 
+		/*pass 
 		{
 			illumination_stage ambient
 		
@@ -411,22 +411,23 @@ material mapaAngel_suelo
 				filtering anisotropic
             }
         }
-
+*/
 		
 		
-	//	pass
-	//	{
-	//		ambient 0.588 0.588 0.588 1
-	//		diffuse 0.588 0.588 0.588 1
-	//		specular 0 0 0 1 26
-	//		scene_blend one one_minus_src_alpha
-//
-	//		texture_unit
-	//		{
-	//			texture suelo_difuse.png
-	//			transform 10 0 0 0 0 10 0 0 0 0 1 0 0 0 0 1
-	//		}
-	//	}
+		pass
+		{
+			ambient 0.588 0.588 0.588 1
+			diffuse 0.588 0.588 0.588 1
+			specular 0 0 0 1 26
+			
+			texture_unit diffmap
+			{
+				texture suelo_difuse.png
+				filtering anisotropic
+				transform 10 0 0 0 0 10 0 0 0 0 1 0 0 0 0 1
+				scale 0.1 0.1
+			}
+		}
 
 	}
 

@@ -84,6 +84,7 @@
     <ClCompile Include="..\..\Src\Logic\Entity\Components\AmplifyDamageFeedback.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\ComeBack.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\ComeBackAmmo.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\ComeBackFeedback.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\CoolDown.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\CoolDownAmmo.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\CoolDownFeedback.cpp" />

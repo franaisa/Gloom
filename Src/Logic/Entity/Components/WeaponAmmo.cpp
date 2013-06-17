@@ -40,7 +40,8 @@ namespace Logic {
 	IWeaponAmmo::IWeaponAmmo(const string& weaponName) : _weaponName("weapon" + weaponName),
 											 _currentAmmo(0),
 											 _primaryFireIsActive(false),
-											 _secondaryFireIsActive(false) {
+											 _secondaryFireIsActive(false),
+											 _friends(0){
 
 		// Nada que inicializar
 	}
@@ -175,14 +176,18 @@ namespace Logic {
 		message->setAmmo(_currentAmmo);
 		_entity->emitMessage(message);
 
-		if(_friend)
-			_friend->stayAvailable();
+		for(unsigned int i = 0; i < _friends; ++i){
+			_friend[i]->stayAvailable();
+		}
+		
+			
 	} // onAvailable
 	//__________________________________________________________________
 
 	void IWeaponAmmo::onBusy() {
-		if(_friend)
-			_friend->stayBusy();
+		for(unsigned int i = 0; i < _friends; ++i){
+			_friend[i]->stayBusy();
+		}
 	} // onBusy
 	//__________________________________________________________________
 

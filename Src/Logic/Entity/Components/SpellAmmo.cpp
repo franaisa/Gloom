@@ -27,7 +27,7 @@ using namespace std;
 
 namespace Logic {
 	
-	ISpellAmmo::ISpellAmmo(const string& spellName) : _spellName("spell" + spellName) {
+	ISpellAmmo::ISpellAmmo(const string& spellName) : _spellName("spell" + spellName), _friends(0) {
 
 		// Nada que inicializar
 	}
@@ -111,26 +111,30 @@ namespace Logic {
 			}
 		}
 
-		if(_friend)
-			_friend->stayAvailable();
+		for(unsigned int i = 0; i < _friends; ++i){
+			_friend[i]->stayAvailable();
+		}
 	} // onAvailable
 	//__________________________________________________________________
 
 	void ISpellAmmo::onBusy() {
-		if(_friend)
-			_friend->stayBusy();
+		for(unsigned int i = 0; i < _friends; ++i){
+			_friend[i]->stayBusy();
+		}
 	} // onBusy
 	//__________________________________________________________________
 
 	void ISpellAmmo::onActivate() {
-		if(_friend)
-			_friend->activate();
+		for(unsigned int i = 0; i < _friends; ++i){
+			_friend[i]->activate();
+		}
 	} // onBusy
 	//__________________________________________________________________
 
 	void ISpellAmmo::onDeactivate() {
-		if(_friend)
-			_friend->deactivate();
+		for(unsigned int i = 0; i < _friends; ++i){
+			_friend[i]->deactivate();
+		}
 	} // onBusy
 	//__________________________________________________________________
 

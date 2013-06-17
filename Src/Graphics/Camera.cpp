@@ -42,7 +42,10 @@ namespace Graphics
 		//Seteo de atributos de la camara
 		_camera->setNearClipDistance(2);
 		_camera->setFarClipDistance(500);
-		_camera->setFOVy(Ogre::Radian(70));
+
+		_defaultFov = Math::PI/2;
+
+		_camera->setFOVy(Ogre::Radian(_defaultFov));
 		//Atachamos la camara al nodo
 		_cameraNode->attachObject(this->_camera);
 
@@ -87,18 +90,18 @@ namespace Graphics
 	}
 	//--------------------------------------------------------
 
-	Ogre::Vector3 CCamera::getCameraDirection() {
+	const Vector3& CCamera::getCameraDirection() {
 		return _camera->getRealDirection(); 
 
 	}
 	//--------------------------------------------------------
 
-	Ogre::Quaternion CCamera::getRealOrientation(){
+	const Quaternion& CCamera::getRealOrientation(){
 		return _camera->getRealOrientation();
 	}
 	//--------------------------------------------------------
 
-	void CCamera::setOrientation(Ogre::Quaternion orientation){
+	void CCamera::setOrientation(const Quaternion& orientation){
 		_camera->setOrientation(orientation);
 	}
 	//--------------------------------------------------------
@@ -108,6 +111,13 @@ namespace Graphics
 	}
 
 	//--------------------------------------------------------
+	
+	void CCamera::lookAt(const Vector3& position){
+		_camera->lookAt(position);
+	}
+
+	//--------------------------------------------------------
+
 
 	Graphics::CEntity* CCamera::addEntityChild(const std::string &nameEntity, const std::string &nameMesh, Vector3 position){
 	
@@ -122,5 +132,12 @@ namespace Graphics
 	
 	//--------------------------------------------------------
 
+	void CCamera::setFov(float radianAngle){
+		_camera->setFOVy(Ogre::Radian(radianAngle));
+	}
+
+	void CCamera::resetFov(){
+		_camera->setFOVy(Ogre::Radian(_defaultFov));
+	}
 
 } // namespace Graphics

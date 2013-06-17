@@ -9,7 +9,7 @@ namespace Logic {
 		enum Enum {
 			eAMPLIFY_DAMAGE,// Activo	// hecho		(falta feedback y test)
 			eCOME_BACK,		// Activo	// por hacer
-			eZOOM,			// Activo	// por hacer 
+			eZOOM,			// Activo	// hecho 
 			eGRAVITY,		// Activo	// hecho		(falta feedback y test)
 			eHARD_DEATH,	// Pasivo	// hecho		(falta feedback y test)
 			eSHIELD,		// Activo	// por hacer

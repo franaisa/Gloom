@@ -144,7 +144,9 @@ namespace Graphics
 		/*/
 		_sceneMgr->setAmbientLight(Ogre::ColourValue(0.3f,0.3f,0.3f));
 		/* */
-		
+		float aspectratio = (float)_viewport->getActualWidth()/(float)_viewport->getActualHeight();
+		_camera->getOgreCamera()->setAspectRatio(aspectratio);
+
 		if(_name != "dummy_scene"){
 			_compositorManager->addCompositor(_camera->getOgreCamera()->getViewport(), "Glow");
 			_compositorManager->setCompositorEnabled(_camera->getOgreCamera()->getViewport(), "Glow", true);

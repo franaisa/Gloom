@@ -7,8 +7,8 @@ de una escena.
 @see Logic::CCamera
 @see Logic::IComponent
 
-@author David Llansó
-@date Agosto, 2010
+@author
+@date 
 */
 
 #include "Camera.h"
@@ -231,12 +231,13 @@ namespace Logic
 			}
 			//Si estamos muertos miramos al enemigo, diferenciando si fue suicidio o nos mató un enemigo
 			else if(_enemy){
-				 if(_enemy->getType().compare("LocalPlayer")!=0)
-				    ;//_graphicsCamera->setTargetCameraPosition(_enemy->getPosition());
-				 else{	
-					 _graphicsCamera->setCameraPosition(_enemy->getPosition()+Vector3(0,50,0));
-					 //_graphicsCamera->setTargetCameraPosition(_enemy->getPosition());
-				 }
+				//Enemigo
+				 if(_enemy!=_target)
+					 _graphicsCamera->lookAt(_enemy->getPosition());
+				 //Suicidio
+				 else
+					 _graphicsCamera->lookAt(_enemy->getPosition()+Vector3(0,10,0));
+				 
 			}
 
 		}else{
