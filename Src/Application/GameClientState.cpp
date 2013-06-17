@@ -319,16 +319,15 @@ namespace Application {
 		Net::CBuffer msg ( sizeof(msgType) + sizeof(selectedClass) );
 
  		switch(selectedClass) {
-			case 0:
+			case 0: {
 				if(Input::CServer::getSingletonPtr()->getPlayerController()->getControllerAvatar()) {
 					Input::CServer::getSingletonPtr()->getPlayerController()->activate();
 					_seleccion->hide();
 					_menuVisile = false;
-				} else {
-
-				}
+				} 
 
 				break;
+			}
 			case 1:
 			case 2:
 			case 3:

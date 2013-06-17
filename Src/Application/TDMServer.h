@@ -152,7 +152,6 @@ namespace Application {
 		// Game Settings
 		bool _forceRespawn;
 		bool _warmUp;
-		bool _autoBalanceTeams;
 
 		// Map Control
 		std::vector<std::string> _mapList; // Se respeta el orden que se le haya dado

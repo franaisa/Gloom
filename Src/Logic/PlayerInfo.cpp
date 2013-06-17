@@ -23,6 +23,7 @@ namespace Logic {
 	CPlayerInfo::CPlayerInfo(Net::NetID netId) : _netId(netId),
 												 _entityId(0),
 												 _frags(0),
+												 _team(TeamFaction::eNONE),
 												 _entityIdInitialized(false),
 												 _isPlaying(false) {
 		
@@ -34,6 +35,7 @@ namespace Logic {
 	CPlayerInfo::CPlayerInfo(Net::NetID netId, const std::string& nickname) : _netId(netId),
 																			  _entityId(0),
 																			  _frags(0),
+																			  _team(TeamFaction::eNONE),
 																			  _name(nickname),
 																			  _entityIdInitialized(false),
 																			  _isPlaying(false) {
@@ -91,7 +93,7 @@ namespace Logic {
 
 	//______________________________________________________________________________
 
-	std::string CPlayerInfo::getTeam() {
+	TeamFaction::Enum CPlayerInfo::getTeam() {
 		return _team;
 	}
 
@@ -130,7 +132,7 @@ namespace Logic {
 
 	//______________________________________________________________________________
 
-	void CPlayerInfo::setTeam(const std::string& team) {
+	void CPlayerInfo::setTeam(TeamFaction::Enum team) {
 		this->_team = team;
 	}
 
