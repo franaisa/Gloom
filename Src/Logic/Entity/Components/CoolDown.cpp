@@ -30,9 +30,9 @@ namespace Logic {
 		if(!ISpell::spawn(entity,map,entityInfo)) return false;
 
 		// Nos aseguramos de tener todos los atributos que necesitamos
-		assert( entityInfo->hasAttribute(_spellName + "percentage") );
+		assert( entityInfo->hasAttribute(_spellName + "percentageCooldown") );
 
-		_percentage = entityInfo->getFloatAttribute(_spellName + "percentage");
+		_percentage = entityInfo->getFloatAttribute(_spellName + "percentageCooldown");
 
 		return true;
 	} // spawn

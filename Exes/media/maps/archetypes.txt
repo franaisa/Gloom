@@ -1249,7 +1249,7 @@ Map = {
 		lifeDome = 10,
 
 			weaponsoulReaperName = "soulReaper",
-			weaponsoulReaperModel = "sniper.mesh",
+			weaponsoulReaperModel = "soulReaper.mesh",
 			weaponsoulReaperModelYaw = 0.0,
 			weaponsoulReaperModelPitch = 0.0,
 			weaponsoulReaperOffset = {4.0,-3.5,-7.0},
@@ -1347,6 +1347,53 @@ Map = {
 			weaponironHellGoatMaxFireBallSpeed = 0.035,
 			weaponironHellGoatMaxFireBallExplotionRadius = 30.0,
 			weaponironHellGoatMaxFireBallDamage = 100.0,
+
+		primarySpell = 6,
+		secondarySpell = 3,
+				
+			amplifyDamageID = 0,
+			amplifyDamageIsPassive = false,
+			amplifyDamagePercentDamage = 30,
+			amplifyDamageCooldown = 10,
+			amplifyDamageMaxAmmo = 7,
+			amplifyDamageAmmoPerPull = 3,
+			amplifyDamageDurationEffect = 5,
+			
+			comeBackID = 1,
+			comeBackIsPassive = false,
+			comeBackIsPrimarySpell = false,
+			
+			zoomID = 2,
+			zoomIsPassive = false,
+			zoomIsPrimarySpell = false,
+			
+			gravityID = 3,
+			gravityIsPassive = false,
+			gravityIsPrimarySpell = false,
+			gravitynewGravity = -0.002,
+			gravityCooldown = 10,
+			gravityMaxAmmo = 7,
+			gravityAmmoPerPull = 3,
+			gravityDurationEffect = 5,
+			
+			hardDeathID = 4,
+			hardDeathIsPassive = true,
+			hardDeathIsPrimarySpell = false,
+			hardDeathExplotionRadius = 30.0,
+			hardDeathDamageExplotion = 200.0,
+			
+			shieldID = 5,
+			shieldIsPassive = false,
+			shieldIsPrimarySpell = false,
+			
+			cooldownID = 6,
+			cooldownIsPassive = true,
+			cooldownIsPrimarySpell = false,
+			cooldownpercentageCooldown = 20,
+			
+			resurectionID = 7,
+			resurectionIsPassive = true,
+			resurectionIsPrimarySpell = false,
 			
 		hudCrossX = 4,
 		hudCrossY = 5,

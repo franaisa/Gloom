@@ -265,7 +265,8 @@ namespace Logic {
 		/** Nombre del arma con el formato: weapon + <nombre arma>.*/
 		std::string _weaponName;
 
-		IComponent *_friend;
+		unsigned int _friends;
+		IComponent *_friend[2];
 	}; // class IWeapon
 
 } // namespace Logic

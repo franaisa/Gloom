@@ -40,13 +40,13 @@ namespace Logic {
 
 		//assert( entityInfo->hasAttribute(_spellName + "percentage") );
 		assert( entityInfo->hasAttribute("heightShoot") );
-		assert( entityInfo->hasAttribute(_spellName + "damageExplotion") );
+		assert( entityInfo->hasAttribute(_spellName + "DamageExplotion") );
 		assert( entityInfo->hasAttribute(_spellName + "ExplotionRadius") );
 
 
 		_heightShoot = entityInfo->getFloatAttribute("heightShoot");
-		_damage = entityInfo->getFloatAttribute(_spellName + "damageExplotion");
-		_explotionRadius = entityInfo->getFloatAttribute(_spellName + "explotionRadius");
+		_damage = entityInfo->getFloatAttribute(_spellName + "DamageExplotion");
+		_explotionRadius = entityInfo->getFloatAttribute(_spellName + "ExplotionRadius");
 
 		return true;
 	} // spawn

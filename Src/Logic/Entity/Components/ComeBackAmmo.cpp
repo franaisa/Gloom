@@ -10,15 +10,16 @@ Contiene la implementacion del hechizo de regreso.
 @date Junio, 2013
 */
 
-#include "ComeBackAmmo.h"
+
 
 #include "Logic/Maps/EntityFactory.h"
 #include "Logic/Maps/Map.h"
 #include "Logic/Server.h"
 #include "Map/MapEntity.h"
 
-#include "Gravity.h"
-#include "GravityFeedback.h"
+#include "ComeBackAmmo.h"
+#include "ComeBack.h"
+#include "ComeBackFeedback.h"
 
 #include "Logic/Messages/MessageReducedCooldown.h"
 
@@ -81,6 +82,13 @@ namespace Logic {
 		if(!_friend)
 			_friend = _entity->getComponent<Logic::CGravityFeedback>("CGravityFeedback");
 		*/
+
+		_friend[_friends] = _entity->getComponent<Logic::CComeBack>("CComeBack");
+		if(_friend[_friends]) ++_friends;
+		_friend[_friends] = _entity->getComponent<Logic::CComeBackFeedback>("CComeBackFeedback");
+		if(_friend[_friends]) ++_friends;
+		if(_friends == 0) assert("\nTiene que tenes alguno de los dos componentes");
+
 		return true;
 	}
 

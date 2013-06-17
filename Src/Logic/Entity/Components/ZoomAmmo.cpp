@@ -10,13 +10,12 @@ Contiene la implementacion del hechizo de zoom
 @date Junio, 2013
 */
 
-#include "ZoomAmmo.h"
-
 #include "Logic/Maps/EntityFactory.h"
 #include "Logic/Maps/Map.h"
 #include "Logic/Server.h"
 #include "Map/MapEntity.h"
 
+#include "ZoomAmmo.h"
 #include "Zoom.h"
 #include "ZoomFeedback.h"
 
@@ -81,6 +80,12 @@ namespace Logic {
 		if(!_friend)
 			_friend = _entity->getComponent<Logic::CGravityFeedback>("CGravityFeedback");
 		*/
+		_friend[_friends] = _entity->getComponent<Logic::CZoom>("CZoom");
+		if(_friend[_friends]) ++_friends;
+		_friend[_friends] = _entity->getComponent<Logic::CZoomFeedback>("CZoomFeedback");
+		if(_friend[_friends]) ++_friends;
+		if(_friends == 0) assert("\nTiene que tenes alguno de los dos componentes");
+
 		return true;
 	}
 

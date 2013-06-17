@@ -29,9 +29,9 @@ namespace Logic {
 	bool CAmplifyDamage::spawn(CEntity* entity, CMap *map, const Map::CEntity *entityInfo) {
 		if(!ISpell::spawn(entity,map,entityInfo)) return false;
 
-		assert( entityInfo->hasAttribute(_spellName + "_newPercentDamage") );
+		assert( entityInfo->hasAttribute(_spellName + "PercentDamage") );
 
-		_newPercentDamage = entityInfo->getIntAttribute(_spellName + "_newPercentDamage");
+		_newPercentDamage = entityInfo->getIntAttribute(_spellName + "PercentDamage");
 
 		assert(_newPercentDamage == 0);
 		return true;

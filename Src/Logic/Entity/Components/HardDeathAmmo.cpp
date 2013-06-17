@@ -11,7 +11,7 @@ de disparo de la cabra.
 @date Mayo, 2013
 */
 
-#include "HardDeathAmmo.h"
+
 
 #include "Logic/Maps/EntityFactory.h"
 #include "Logic/Maps/Map.h"
@@ -19,6 +19,7 @@ de disparo de la cabra.
 #include "Map/MapEntity.h"
 
 #include "HardDeathAmmo.h"
+#include "HardDeath.h"
 #include "HardDeathFeedback.h"
 
 using namespace std;
@@ -44,9 +45,11 @@ namespace Logic {
 	bool CHardDeathAmmo::spawn(CEntity* entity, CMap *map, const Map::CEntity *entityInfo) {
 		if( !ISpellAmmo::spawn(entity, map, entityInfo) ) return false;
 
-		_friend = _entity->getComponent<Logic::CHardDeathAmmo>("CHardDeathAmmo");
-		/*if(!_friend)
-			_friend = _entity->getComponent<Logic::CHardDeathFeedback>("CHardDeathFeedback");*/
+		_friend[_friends] = _entity->getComponent<Logic::CHardDeath>("CHardDeath");
+		if(_friend[_friends]) ++_friends;
+		_friend[_friends] = _entity->getComponent<Logic::CHardDeathFeedback>("CHardDeathFeedback");
+		if(_friend[_friends]) ++_friends;
+		if(_friends == 0) assert("\nTiene que tenes alguno de los dos componentes");
 
 		return true;
 	}
