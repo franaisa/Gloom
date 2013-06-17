@@ -86,9 +86,12 @@ namespace Logic {
 		Ray ray(origin, direction);
 			
 		std::vector <Physics::CRaycastHit> hits;
-		// Quizas seria mas correcto comprobar tb el world para que no se pueda dar a traves de las paredes.
-		Physics::CServer::getSingletonPtr()->raycastMultiple(ray, _shotsDistance, hits,true, Physics::CollisionGroup::ePLAYER);
+		Physics::CServer::getSingletonPtr()->raycastMultiple(ray, _shotsDistance, hits,true, Physics::CollisionGroup::ePLAYER  | Physics::CollisionGroup::eWORLD);
 		for (auto it = hits.begin(); it < hits.end(); ++it){
+			//Si tocamos el mundo no continuamos viendo hits
+			if((*it).entity->getType().compare("World")==0){
+				return;
+			}
 			if((*it).entity->getEntityID() != _entity->getEntityID()){
 				std::shared_ptr<CMessageDamaged> m = std::make_shared<CMessageDamaged>();
 				m->setDamage(_primaryFireDamage);

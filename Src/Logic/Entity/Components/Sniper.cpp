@@ -66,9 +66,6 @@ namespace Logic {
 		Vector3 origin = _entity->getPosition()+Vector3(0.0f,_heightShoot,0.0f);
 		// Creamos el ray desde el origen en la direccion del raton (desvio ya aplicado)
 		Ray ray(origin, direction);
-			
-		// Dibujamos el rayo en ogre para poder depurar
-		//drawRaycast(ray);
 
 		// Rayo lanzado por el servidor de físicas de acuerdo a la distancia de potencia del arma
 		std::vector<Physics::CRaycastHit> hits;
