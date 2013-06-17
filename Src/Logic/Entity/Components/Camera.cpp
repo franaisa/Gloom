@@ -38,6 +38,7 @@ namespace Logic
 						 _height(8), 
 						 _currentRoll(0.0f), 
 						 _verticalOffset(0),
+						 _applyRoll(false),
 						 _offset(Vector3::ZERO) {
 
 		// Nada que hacer
@@ -135,7 +136,9 @@ namespace Logic
 	//---------------------------------------------------------
 
 	void CCamera::rollCamera(float radians) {
-		_graphicsCamera->rollCamera( (-1 * _currentRoll) + radians );
+		_applyRoll=true;
+		_toRoll=(-1 * _currentRoll) + radians ;
+		//_graphicsCamera->rollCamera(_toRoll);
 		_currentRoll = radians;
 	}
 	
@@ -242,6 +245,11 @@ namespace Logic
 
 		}else{
 			_graphicsCamera->setOrientation(Quaternion::IDENTITY);
+		}
+		//Aplico efecto de roll si lo hubo
+		if(_applyRoll){
+			_applyRoll=false;
+			_graphicsCamera->rollCamera(_toRoll);
 		}
 	} // tick
 

@@ -19,10 +19,13 @@ Contiene la implementación del componente que gestiona las armas y que administr
 #include "Logic/Entity/Components/Graphics.h"
 #include "Map/MapEntity.h"
 #include "HudWeapons.h"
+#include "Graphics/Server.h"
+#include "Graphics/Scene.h"
 
 #include "Logic/Messages/MessageDamaged.h"
 #include "Logic/Messages/MessageCreateParticle.h"
 
+#include <OgreManualObject.h>
 
 namespace Logic {
 
@@ -81,6 +84,9 @@ namespace Logic {
 		for(int i=0;i<hits.size();++i){
 			//Si tocamos el mundo no continuamos viendo hits y llamamos al pintado del rayo (si se considera necesario)
 			if(hits[i].entity->getType().compare("World")==0){
+				// Dibujamos el rayo lanzandolo algo mas abajo para verlo
+				ray.setOrigin(ray.getOrigin()-Vector3(0,0.05,0));
+				drawRaycast(ray,hits[i].distance);
 				//Si hacemos el rayo extendiendo un mesh sacar a un metodo de pintado
 				/*float distanceWorld=hits[i].distance;
 				//Atendiendo a la distancia y sabiendo que el gráfico de la entidad mide X metros
@@ -118,9 +124,6 @@ namespace Logic {
 		Vector3 origin = _entity->getPosition()+Vector3(0.0f,_heightShoot,0.0f);
 		// Creamos el ray desde el origen en la direccion del raton (desvio ya aplicado)
 		Ray ray(origin, direction);
-			
-		// Dibujamos el rayo en ogre para poder depurar
-		//drawRaycast(ray);
 
 		// Rayo lanzado por el servidor de físicas de acuerdo a la distancia de potencia del arma
 		std::vector<Physics::CRaycastHit> hits;
@@ -246,6 +249,34 @@ namespace Logic {
 		
 	} // onTick
 	//__________________________________________________________________
+
+	// Dibujado de raycast para depurar
+	void CSniper::drawRaycast(const Ray& raycast,int distance) {
+		Graphics::CScene *scene = Graphics::CServer::getSingletonPtr()->getActiveScene();
+		Ogre::SceneManager *mSceneMgr = scene->getSceneMgr();
+
+		std::stringstream aux;
+		aux << "laser" << _weaponName << _temporal;
+		++_temporal;
+		std::string laser = aux.str();
+
+		Ogre::ManualObject* myManualObject =  mSceneMgr->createManualObject(laser); 
+		Ogre::SceneNode* myManualObjectNode = mSceneMgr->getRootSceneNode()->createChildSceneNode(laser+"_node"); 
+ 
+		myManualObject->begin("laser", Ogre::RenderOperation::OT_LINE_STRIP);
+		Vector3 v = raycast.getOrigin();
+		myManualObject->position(v.x,v.y,v.z);
+
+		for(int i=0; i < distance;++i){
+			Vector3 v = raycast.getPoint(i);
+			myManualObject->position(v.x,v.y,v.z);
+			// etc 
+		}
+
+		myManualObject->end(); 
+		myManualObjectNode->attachObject(myManualObject);
+	}// drawRaycast
+
 
 } // namespace Logic
 

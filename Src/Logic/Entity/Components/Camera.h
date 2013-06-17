@@ -202,6 +202,9 @@ namespace Logic
 
 		float _verticalOffset;
 
+		float _toRoll;
+		bool _applyRoll;
+
 	}; // class CCamera
 
 	REG_FACTORY(CCamera);

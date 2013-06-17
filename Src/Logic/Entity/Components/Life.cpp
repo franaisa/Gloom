@@ -39,7 +39,6 @@ que controla la vida de un personaje.
 #include "Logic/Messages/MessagePlayerDead.h"
 #include "Logic/Messages/MessageCameraToEnemy.h"
 #include "Logic/Messages/MessageSetReducedDamage.h"
-#include "Logic/Messages/MessageCameraOffset.h"
 
 namespace Logic {
 	
