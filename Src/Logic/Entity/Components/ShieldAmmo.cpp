@@ -14,12 +14,15 @@ Contiene la implementacion del hechizo de shield
 #include "Logic/Maps/Map.h"
 #include "Logic/Server.h"
 #include "Map/MapEntity.h"
+#include "Physics/Server.h"
+#include "Physics/RaycastHit.h"
 
 #include "ShieldAmmo.h"
 #include "Shield.h"
 #include "ShieldFeedback.h"
 
 #include "Logic/Messages/MessageReducedCooldown.h"
+#include "Logic/Messages/MessageDamaged.h"
 
 using namespace std;
 
@@ -62,24 +65,13 @@ namespace Logic {
 		if( !ISpellAmmo::spawn(entity, map, entityInfo) ) return false;
 
 		// Nos aseguramos de tener todos los atributos que necesitamos
-		/*assert( entityInfo->hasAttribute(_spellName + "Cooldown") );
-		assert( entityInfo->hasAttribute(_spellName + "MaxAmmo") );
-		assert( entityInfo->hasAttribute(_spellName + "AmmoPerPull") );
-		assert( entityInfo->hasAttribute(_spellName + "DurationEffect") );
+		assert( entityInfo->hasAttribute("Cooldown") );
+		assert( entityInfo->hasAttribute( "spellShieldRadius") );
 
 		// Cooldown del disparo principal
-		_defaultCooldown = _cooldown = entityInfo->getFloatAttribute(_spellName + "Cooldown") * 1000;
+		_shieldDamage = entityInfo->getIntAttribute("spellShieldDamage");
+		_shieldRadius = entityInfo->getIntAttribute("spellShieldRadius");
 
-		_duration = entityInfo->getFloatAttribute(_spellName + "DurationEffect") * 1000;
-		assert( _defaultCooldown < _duration && "Cuidado que el coolDown es menor que la duracion del hechizo");
-
-		_maxAmmo = entityInfo->getIntAttribute(_spellName + "MaxAmmo");
-		_ammoPerPull = entityInfo->getIntAttribute(_spellName + "AmmoPerPull");
-
-		_friend = _entity->getComponent<Logic::CGravity>("CGravity");
-		if(!_friend)
-			_friend = _entity->getComponent<Logic::CGravityFeedback>("CGravityFeedback");
-		*/
 		_friend[_friends] = _entity->getComponent<Logic::CShield>("CShield");
 		if(_friend[_friends]) ++_friends;
 		_friend[_friends] = _entity->getComponent<Logic::CShieldFeedback>("CShieldFeedback");
@@ -106,22 +98,9 @@ namespace Logic {
 	//__________________________________________________________________
 
 	void CShieldAmmo::onTick(unsigned int msecs) {
-		/*
-		// Controlamos el cooldown
-		if(_cooldownTimer > 0) {
-			_cooldownTimer -= msecs;
-			
-			if(_cooldownTimer < 0){
-				_cooldownTimer = 0;
-			}
+		if(_spellIsActive){
+			shieldDamage();
 		}
-		if(_durationTimer > 0){
-			_durationTimer -= msecs;
-			if(_durationTimer < 0){
-				// ya lo pongo a cero dentro del metodo
-				stopSpell();
-			}
-		}*/
 	}
 
 	//__________________________________________________________________
@@ -135,30 +114,12 @@ namespace Logic {
 
 	void CShieldAmmo::spell() {
 		ISpellAmmo::spell();
-		/*
-		// Si ya se esta haciendo el hechizo, significa que queremos pararlo
-		if(!_spellIsActive){
-			--_currentAmmo;
-			_cooldownTimer = _cooldown;
-			_durationTimer = _duration;
-			_spellIsActive = true;
-		}else{
-			stopSpell();
-		}
-		*/
+		_spellIsActive = true;
 	} // primaryFire
 	//__________________________________________________________________
 
 	void CShieldAmmo::stopSpell() {
 		ISpellAmmo::stopSpell();
-		/*
-		// Voy a beneficiar si se hace durante poco tiempo
-		// con esto reduzco el cooldown el mismo porcentaje que me quedaba.
-		_cooldown *=(1-(_durationTimer / _duration ));
-
-		_durationTimer = 0;
-		
-		*/
 		_spellIsActive = false;
 	} // stopPrimaryFire
 	//__________________________________________________________________
@@ -173,5 +134,37 @@ namespace Logic {
 		assert(_cooldown < _duration && "La duracion del cooldown reducido es inferior a la del hechizo, lo cual no tiene mucho sentido");
 		
 	}*/
+
+	void CShieldAmmo::shieldDamage() {
+		std::vector<CEntity*> entitiesHit;
+
+		// Hacemos una query de overlap con la geometria de una esfera en la posicion 
+		// en la que se encuentra la granada con el radio que se indique de explosion
+		Physics::SphereGeometry explotionGeom = Physics::CGeometryFactory::getSingletonPtr()->createSphere(_shieldRadius);
+		Physics::CServer::getSingletonPtr()->overlapMultiple(explotionGeom, _entity->getPosition(), entitiesHit);
+		int nbHits = entitiesHit.size();
+		if(nbHits==0){
+			return;
+		}
+
+		// Mandamos el mensaje de daño a cada una de las entidades que hayamos golpeado
+		// Además aplicamos un desplazamiento al jugador 
+		for(int i = 0; i < nbHits; ++i) {
+			// una vez tenemos las entidades en el radio de ceguera, hacemos el segundo filtro
+			//que es coger solo a los players
+			CEntity * aux = entitiesHit[i];
+
+			if(entitiesHit[i] != NULL && 
+				(entitiesHit[i]->getType() == "Hound" || 
+					entitiesHit[i]->getType() == "Screamer" || 
+					entitiesHit[i]->getType() == "Shadow" || 
+					entitiesHit[i]->getType() == "Archangel") ) 
+			{//begin if
+				std::shared_ptr<CMessageDamaged> damage = std::make_shared<CMessageDamaged>();
+				damage->setDamage(_shieldDamage);
+				entitiesHit[i]->emitMessage(damage);
+			}//end if
+		}//end for
+	}
 
 }//namespace Logic
