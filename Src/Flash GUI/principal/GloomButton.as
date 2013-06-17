@@ -13,7 +13,7 @@ package principal
 		
 		public function GloomButton() 
 		{
-			this.buttonMode = true;
+			this.buttonMode = false;
 			this.addEventListener(MouseEvent.MOUSE_OVER, onMouseOver);
 			this.addEventListener(MouseEvent.CLICK, onMouseClick);
 			this.addEventListener(MouseEvent.MOUSE_UP, onMouseUp);

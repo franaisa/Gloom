@@ -171,8 +171,12 @@ namespace Logic
 	//---------------------------------------------------------
 
 	void CAnimatedGraphics::onTick(unsigned int msecs){
-		Quaternion rancio(Ogre::Radian(Math::PI),Vector3::UNIT_Y);
-		_graphicsEntity->setTransform(_entity->getPosition(),_entity->getOrientation()*rancio);
+		Matrix4 transform(_entity->getOrientation());
+		Matrix3 rot;
+		transform.setTrans(_entity->getPosition());
+		Math::setYaw( Math::getYaw( transform ) + Math::PI,transform );
+		transform.extract3x3Matrix(rot);
+		_graphicsEntity->setTransform( transform.getTrans(),  rot);
 	}//---------------------------------------------------------
 	//onTick
 	
