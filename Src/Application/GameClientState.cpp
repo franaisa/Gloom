@@ -45,7 +45,7 @@ namespace Application {
 	
 	bool CGameClientState::init(){
 		
-		_menuVisile = false;
+		_menuVisile = true;
 		_netMgr = Net::CManager::getSingletonPtr();
 		// Iniciamos el menu de seleccion de personaje
 		_seleccion = GUI::CServer::getSingletonPtr()->addLayout("seleccion", Hikari::Position(Hikari::Center));
