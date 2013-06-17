@@ -1,12 +1,12 @@
 material vortice
 {
-	set $glow_tex vortice_glow2.png
+	set $glow_tex vortice_glow4.png
 	technique
 	{
 		pass
 		{
-			ambient 0.588235 0.588235 0.588235 1
-			diffuse 0.588235 0.588235 0.588235 1
+			ambient 0.0 0.0 0.0 1
+			diffuse 0.0 0.0 0.0 1
 			specular 0 0 0 1 10
 			texture_unit aoMap
 			{
