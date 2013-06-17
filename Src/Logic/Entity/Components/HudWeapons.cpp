@@ -52,11 +52,11 @@ namespace Logic {
 		// Valores de configuracion de la animacion de correr
 		_runAnim.currentHorizontalPos = Math::HALF_PI;
 		_runAnim.horizontalSpeed = 0.0075f;
-		_runAnim.horizontalOffset = 0.06f;
+		_runAnim.horizontalOffset = 0.055f;
 
 		_runAnim.currentVerticalPos = Math::HALF_PI;
 		_runAnim.verticalSpeed = 2 * _runAnim.horizontalSpeed;
-		_runAnim.verticalOffset = 0.06f;
+		_runAnim.verticalOffset = 0.055f;
 
 		_runAnim.currentStrafingDir = _runAnim.oldStrafingDir = 0;
 

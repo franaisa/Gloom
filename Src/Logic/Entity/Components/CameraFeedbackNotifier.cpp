@@ -51,11 +51,11 @@ namespace Logic {
 
 		_walkAnim.currentHorizontalPos = Math::HALF_PI;
 		_walkAnim.horizontalSpeed = 0.0075f;
-		_walkAnim.horizontalOffset = 0.06f;
+		_walkAnim.horizontalOffset = 0.055f;
 
 		_walkAnim.currentVerticalPos = Math::HALF_PI;
 		_walkAnim.verticalSpeed = _walkAnim.horizontalSpeed * 2;
-		_walkAnim.verticalOffset = 0.06f;
+		_walkAnim.verticalOffset = 0.055f;
 
 		_walkAnim.currentRoll = 0.0f;
 		_walkAnim.rollSpeed = 0.00005f;
@@ -282,7 +282,7 @@ namespace Logic {
 	void CCameraFeedbackNotifier::playerIsTouchingGround(float hitForce) {
 		if(hitForce < -0.3f) {
 			_playerIsLanding = true;
-			_landForce = hitForce * 0.6;
+			_landForce = hitForce;
 
 			_hudWeaponComponent->playerIsLanding(hitForce, Math::PI / _landRecoverySpeed);
 

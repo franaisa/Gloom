@@ -267,6 +267,14 @@ namespace Logic {
 		/** Frags que el jugador lleva. */ 
 		int _frags;
 
+		unsigned int _deaths;
+
+		unsigned int _bestSpree;
+
+		unsigned int _ping;
+
+		std::string _race;
+
 		/** Equipo al que pertenece el jugador. */
 		TeamFaction::Enum _team;
 
