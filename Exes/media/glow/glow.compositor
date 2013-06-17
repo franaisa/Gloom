@@ -17,7 +17,8 @@ compositor Glow
 		{
 			input none
 			material_scheme glow
- 
+ 		
+			
 			pass clear
 			{
 			}
@@ -31,11 +32,12 @@ compositor Glow
 		target AtoB
 		{
 			input none
- 
+
+			
 			pass clear
 			{
 			}
- 
+			
 			pass render_quad
 			{
 				material GlowCompositorMat/GlowA

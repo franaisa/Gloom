@@ -1249,7 +1249,7 @@ Map = {
 		lifeDome = 10,
 
 			weaponsoulReaperName = "soulReaper",
-			weaponsoulReaperModel = "soulReaper.mesh",
+			weaponsoulReaperModel = "sniper.mesh",
 			weaponsoulReaperModelYaw = 0.0,
 			weaponsoulReaperModelPitch = 0.0,
 			weaponsoulReaperOffset = {4.0,-3.5,-7.0},

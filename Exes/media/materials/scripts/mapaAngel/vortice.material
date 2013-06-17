@@ -1,5 +1,6 @@
 material vortice
 {
+	set $glow_tex vortice_glow.png
 	technique
 	{
 		pass
@@ -15,6 +16,24 @@ material vortice
 			}
 		}
 
+	}
+	technique
+	{
+		scheme glow
+		pass
+		{
+		
+			texture_unit
+			{
+				texture $glow_tex
+				scale 0.1 0.1
+				scroll_anim 1 0.5
+			}
+			ambient 1 1 1
+			diffuse 1 1 1
+			specular 0 0 0 1
+			emissive 0 0 0
+		}
 	}
 
 }

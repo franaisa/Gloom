@@ -178,20 +178,6 @@ namespace Graphics
 			Ogre::Entity *entity;
 			entity = _scene->getSceneMgr()->createEntity(mesh);
 			
-			/*
-			Ogre::MaterialPtr aux= Ogre::MaterialManager::getSingleton().getByName(name);
-			//Ogre::MaterialPtr material = static_cast<Ogre::Material *>(Ogre::MaterialManager::getSingleton().getByName(name).get())->clone(name+"_3D");
-			
-			if(!aux.isNull()){
-				Ogre::MaterialPtr material = aux.get()->clone(nameEntity);
-
-				//material->getTechnique(0)->getPass(0)->setDepthCheckEnabled(false);
-				//material->getTechnique(0)->getPass(0)->setDepthWriteEnabled(false);
-				material->getTechnique(0)->setSceneBlending(Ogre::SBT_TRANSPARENT_ALPHA);
-			
-				entity->setMaterial(material);
-			}
-			*/
 			
 			//scene->getSceneMgr()->getRootSceneNode()->addChild(sceneNode);
 
