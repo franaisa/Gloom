@@ -15,7 +15,7 @@ Contiene la implementación del componente que representa al hechizo de amplifica
 #include "Logic/Server.h"
 #include "Map/MapEntity.h"
 
-//#include "Logic/Messages/MessageChangeGravity.h"
+#include "Logic/Messages/MessageDamageAmplifier.h"
 
 namespace Logic {
 	IMP_FACTORY(CAmplifyDamage);
@@ -29,27 +29,24 @@ namespace Logic {
 	bool CAmplifyDamage::spawn(CEntity* entity, CMap *map, const Map::CEntity *entityInfo) {
 		if(!ISpell::spawn(entity,map,entityInfo)) return false;
 
-		/*assert( entityInfo->hasAttribute(_spellName + "newGravity") );
+		assert( entityInfo->hasAttribute(_spellName + "_newPercentDamage") );
 
-		_newGravity = entityInfo->getFloatAttribute(_spellName + "newGravity");
+		_newPercentDamage = entityInfo->getIntAttribute(_spellName + "_newPercentDamage");
 
-		assert( entityInfo->hasAttribute("gravity") && "Error: No se ha definido el atributo gravity en el mapa" );
-		_defaultGravity = entityInfo->getFloatAttribute("gravity");
-
-		assert(_newGravity == 0);*/
+		assert(_newPercentDamage == 0);
 		return true;
 	} // spawn
 	//__________________________________________________________________
 
 	void CAmplifyDamage::spell(){ 
-		/*auto msg =  std::make_shared<CMessageChangeGravity>(_newGravity);
-		_entity->emitMessage(msg);*/
+		auto msg =  std::make_shared<CMessageDamageAmplifier>(_newPercentDamage);
+		_entity->emitMessage(msg);
 	} // spell
 	//__________________________________________________________________
 		
 	void CAmplifyDamage::stopSpell() { 
-		/*auto msg = std::make_shared<CMessageChangeGravity>(_defaultGravity);
-		_entity->emitMessage(msg);*/
+		auto msg = std::make_shared<CMessageDamageAmplifier>(0);
+		_entity->emitMessage(msg);
 	} // stopSpell
 	//__________________________________________________________________
 

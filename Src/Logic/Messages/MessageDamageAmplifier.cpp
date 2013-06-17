@@ -11,6 +11,11 @@ namespace Logic {
 	}//
 	//----------------------------------------------------------
 
+	CMessageDamageAmplifier::CMessageDamageAmplifier(int percentDamage) : CMessage(Message::DAMAGE_AMPLIFIER), _percentDamage(percentDamage) {
+		// Nada que hacer
+	}//
+	//----------------------------------------------------------
+
 	void CMessageDamageAmplifier::setPercentDamage(int percentDamage){
 		_percentDamage = percentDamage;
 	}//

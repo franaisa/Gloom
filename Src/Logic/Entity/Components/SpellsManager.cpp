@@ -20,11 +20,15 @@ Contiene la implementación del componente que gestiona las armas y que administr
 
 #include "SpellAmmo.h"
 
-#include "ShotGunAmmo.h"
-#include "SniperAmmo.h"
-#include "MiniGunAmmo.h"
-#include "SoulReaperAmmo.h"
-#include "IronHellGoatAmmo.h"
+#include "AmplifyDamageAmmo.h"
+#include "ComeBackAmmo.h"
+#include "ZoomAmmo.h"
+#include "GravityAmmo.h"
+#include "HardDeathAmmo.h"
+#include "ShieldAmmo.h"
+#include "CoolDownAmmo.h"
+#include "ResurrectionAmmo.h"
+
 
 #include "Logic/Messages/MessageReducedCooldown.h"
 #include "Logic/Messages/MessageAddSpell.h"
@@ -52,23 +56,21 @@ namespace Logic
 
 		// Rellenamos el vector con los punteros a los componentes correspondientes
 
-		/*
-		_spells[SpellType::eSOUL_REAPER].second = _entity->getComponent<Logic::CSoulReaperAmmo>("CSoulReaperAmmo");
-		_spells[SpellType::eSNIPER].second = _entity->getComponent<Logic::CSniperAmmo>("CSniperAmmo");
-		_spells[SpellType::eSHOTGUN].second = _entity->getComponent<Logic::CShotGunAmmo>("CShotGunAmmo");
-		_spells[SpellType::eMINIGUN].second = _entity->getComponent<Logic::CMiniGunAmmo>("CMiniGunAmmo");
-		_spells[SpellType::eIRON_HELL_GOAT].second = _entity->getComponent<Logic::CIronHellGoatAmmo>("CIronHellGoatAmmo");
-		*/
-
+		_spells[SpellType::eAMPLIFY_DAMAGE].second = _entity->getComponent<Logic::CAmplifyDamageAmmo>("CAmplifyDamageAmmo");
+		_spells[SpellType::eCOME_BACK].second = _entity->getComponent<Logic::CComeBackAmmo>("CComeBackAmmo");
+		_spells[SpellType::eZOOM].second = _entity->getComponent<Logic::CZoomAmmo>("CZoomAmmo");
+		_spells[SpellType::eGRAVITY].second = _entity->getComponent<Logic::CGravityAmmo>("CGravityAmmo");
+		_spells[SpellType::eHARD_DEATH].second = _entity->getComponent<Logic::CHardDeathAmmo>("CHardDeathAmmo");
+		_spells[SpellType::eSHIELD].second = _entity->getComponent<Logic::CShieldAmmo>("CShieldAmmo");
+		_spells[SpellType::eCOOLDOWN].second = _entity->getComponent<Logic::CCoolDownAmmo>("CCoolDownAmmo");
+		_spells[SpellType::eRESURECTION].second = _entity->getComponent<Logic::CResurrectionAmmo>("CResurrectionAmmo");
 		
-		/*
+		
 		// El resto de las armas están desactivadas, ya que no las tenemos
-		for(unsigned int i = 0; i < _spellry.size(); ++i) {
-			_spellry[i].first = false;
-			_spellry[i].second->stayBusy();
-			_spellry[i].second->inUse(false);
+		for(unsigned int i = 0; i < _spells.size(); ++i) {
+			_spells[i].first = false;
+			_spells[i].second->stayBusy();
 		}
-		*/
 
 		_primarySpell = (SpellType::Enum)entityInfo->getIntAttribute("primarySpell");
 		_secondarySpell = (SpellType::Enum)entityInfo->getIntAttribute("secondarySpell");
@@ -90,14 +92,8 @@ namespace Logic
 	//---------------------------------------------------------
 
 	void CSpellsManager::onDeactivate(){
-		/*
-		//reset de armas y balas
-		for(unsigned int i = 0; i<_spellry.size();++i){
-			_spellry[i].first = false;
-			_spellry[i].second->resetAmmo();
-			_spellry[i].second->inUse(false);
-		}
-		*/
+		
+		// Solo deberias de estar activos estos dos.
 		_spells[_primarySpell].second->deactivate();
 		_spells[_secondarySpell].second->deactivate();
 		
@@ -119,8 +115,18 @@ namespace Logic
 				
 				std::shared_ptr<CMessageAddSpell> addSpellMsg = std::static_pointer_cast<CMessageAddSpell>(message);
 				unsigned int spellIndex = addSpellMsg->getSpell();
-				_spells[spellIndex].first = true;
-				_spells[spellIndex].second->activate();
+				
+				if(spellIndex == 1){
+					_spells[_primarySpell].first = true;
+					_spells[_primarySpell].second->activate();
+				}else{
+					if(spellIndex == 2){
+						_spells[_secondarySpell].first = true;
+						_spells[_secondarySpell].second->activate();		
+					}else{
+						printf("\nCuidado, has puesto un hechizo no valido, o es 1 (primario) o es 2 (secundario)");
+					}
+				}
 				break;
 			}
 			case Message::REDUCED_COOLDOWN: {
@@ -135,12 +141,10 @@ namespace Logic
 	//---------------------------------------------------------
 
 	void CSpellsManager::reduceCooldowns(int percentage) {
-		// Reducimos el cooldown de todas las armas en base al porcentaje dado
-		for(unsigned int i = 0; i < _spells.size(); ++i) {
-			_spells[i].second->reduceCooldown(percentage);
-		}
+		// Reducimos el cooldown de todas los hechizos posibles
+			_spells[_primarySpell].second->reduceCooldown(percentage);
+			_spells[_secondarySpell].second->reduceCooldown(percentage);
 	}
-
 	//---------------------------------------------------------
 
 } // namespace Logic

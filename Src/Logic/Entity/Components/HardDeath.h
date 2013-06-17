@@ -74,7 +74,13 @@ namespace Logic {
 		virtual void stopSpell();
 
 	private:
+
+		void createExplotion();
+		void estimateDamage(CEntity* entityHit, const Vector3& explotionPos);
 		
+		float _heightShoot;
+		float _damage;
+		float _explotionRadius;
 
 	}; // class CShootRaycast
 

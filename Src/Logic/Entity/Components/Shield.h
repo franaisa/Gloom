@@ -1,18 +1,18 @@
 //---------------------------------------------------------------------------
-// AmplifyDamage.h
+// Shield.h
 //---------------------------------------------------------------------------
 
 /**
-@file AmplifyDamage.h
+@file Shield.h
 
-Contiene la declaración del componente que implementa el hechizo de amplificar daño.
+Contiene la declaración del componente que implementa el shield.
 
 @author Jaime Chapinal Cervantes
 @date Junio, 2013
 */
 
-#ifndef __Logic_AmplifyDamage_H
-#define __Logic_AmplifyDamage_H
+#ifndef __Logic_Shield_H
+#define __Logic_Shield_H
 
 #include "Logic/Entity/Components/Spell.h"
 
@@ -26,21 +26,21 @@ namespace Logic {
 	el resto del comportamiento esta definido en el arquetipo que describe 
 	al gravity.
 
-	@author Jose Antonio García Yáñez
-	@date Febrero, 2013
+	@author Jaime Chapinal Cervantes
+	@date Junio, 2013
 	*/
 
-	class CAmplifyDamage : public ISpell {
-		DEC_FACTORY(CAmplifyDamage);
+	class CShield : public ISpell {
+		DEC_FACTORY(CShield);
 
 	public:
 
 		/** Constructor por defecto. */
-		CAmplifyDamage() : ISpell("gravity") { }
+		CShield() : ISpell("shield") { }
 
 		//__________________________________________________________________
 
-		virtual ~CAmplifyDamage();
+		virtual ~CShield();
 
 		//__________________________________________________________________
 
@@ -78,11 +78,13 @@ namespace Logic {
 
 	private:
 		
+		/** Gravedad por defecto. */
+		//float _defaultGravity;
 
-		int _newPercentDamage;
-	}; // class CAmplifyDamage
+		//float _newGravity;
+	}; // class 
 
-	REG_FACTORY(CAmplifyDamage);
+	REG_FACTORY(CShield);
 
 } // namespace Logic
 

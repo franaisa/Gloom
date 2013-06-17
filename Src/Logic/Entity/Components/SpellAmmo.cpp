@@ -163,17 +163,4 @@ namespace Logic {
 	} // stopSpell
 	//__________________________________________________________________
 
-	void ISpellAmmo::emitSound(const string &ruta, const string &sound, bool notIfPlay){
-		shared_ptr<CMessageAudio> audioMsg = make_shared<CMessageAudio>();
-		
-		audioMsg->setRuta(ruta);
-		audioMsg->setId(sound);
-		audioMsg->setPosition( _entity->getPosition() );
-		audioMsg->setNotIfPlay(notIfPlay);
-		audioMsg->setIsPlayer( _entity->isPlayer() );
-			
-		_entity->emitMessage(audioMsg);
-	} // emitSound
-	//__________________________________________________________________
-
 } // namespace Logic

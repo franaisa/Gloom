@@ -1,17 +1,17 @@
 /**
-@file HardDeathFeedback.cpp
+@file CoolDown.cpp
 
 Contiene la implementacion del componente
-de hechizo de hardDeath.
+de disparo de la cabra.
 
-@see Logic::CHardDeathFeedback
+@see Logic::CCoolDownFeedback
 @see Logic::ISpellFeedback
 
-@author Jaime Chapinal Cervantes
-@date Junio, 2013
+@author Francisco Aisa García
+@date Mayo, 2013
 */
 
-#include "HardDeathFeedback.h"
+#include "ShieldFeedback.h"
 #include "HudWeapons.h"
 
 #include "Logic/Maps/EntityFactory.h"
@@ -23,41 +23,38 @@ using namespace std;
 
 namespace Logic {
 
-	IMP_FACTORY(CHardDeathFeedback);
+	IMP_FACTORY(CShieldFeedback);
 
 	//__________________________________________________________________
 
-	CHardDeathFeedback::CHardDeathFeedback() : ISpellFeedback("hardDeath") {
+	CShieldFeedback::CShieldFeedback() : ISpellFeedback("shield") {
 		// Nada que hacer
 	}
 
 	//__________________________________________________________________
 
-	CHardDeathFeedback::~CHardDeathFeedback() {
+	CShieldFeedback::~CShieldFeedback() {
 		// Nada que hacer
 	}
 
 
 	//__________________________________________________________________
 
-	bool CHardDeathFeedback::spawn(CEntity* entity, CMap *map, const Map::CEntity *entityInfo) {
+	bool CShieldFeedback::spawn(CEntity* entity, CMap *map, const Map::CEntity *entityInfo) {
 		if( !ISpellFeedback::spawn(entity, map, entityInfo) ) return false;
 
-		assert( entityInfo->hasAttribute(_spellName + "ExplotionRadius") );
-
-		_explotionRadius = entityInfo->getFloatAttribute(_spellName + "explotionRadius");
 		return true;
 	} // spawn
 	//__________________________________________________________________
 
-	void CHardDeathFeedback::spell(){
+	void CShieldFeedback::spell(){
 		// Efecto cuando se activa la gravedad
 
 	} // spell
 	//__________________________________________________________________
 		
-	void CHardDeathFeedback::stopSpell(){
-		//Aqui he de crear una explosion;
+	void CShieldFeedback::stopSpell(){
+		// Efecto cuando se desactiva la gravedad
 
 	} // stopSpell
 	//__________________________________________________________________

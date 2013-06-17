@@ -9,6 +9,7 @@ namespace Logic {
 	DEC_FACTORYMESSAGE(CMessageDamageAmplifier);
 	public:
 		CMessageDamageAmplifier();
+		CMessageDamageAmplifier(int percentDamage ) ;
 		int getPercentDamage();
 		void setPercentDamage(int percentDamage);
 		~CMessageDamageAmplifier(){};

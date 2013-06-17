@@ -1,22 +1,22 @@
 //---------------------------------------------------------------------------
-// HardDeathFeedback.h
+// ShieldFeedback.h
 //---------------------------------------------------------------------------
 
 /**
-@file HardDeathFeedback.h
+@file ShieldFeedback.h
 
 Contiene la declaración de la cabecera del componente
-de hechizo del hardDeath.
+de disparo de la cabra.
 
-@see Logic::CCoolDownFeedback
+@see Logic::CShieldFeedback
 @see Logic::ISpellFeedback
 
 @author Jaime Chapinal Cervantes
 @date Junio, 2013
 */
 
-#ifndef __Logic_HardDeathFeedback_H
-#define __Logic_HardDeathFeedback_H
+#ifndef __Logic_ShieldFeedback_H
+#define __Logic_ShieldFeedback_H
 
 #include "Logic/Entity/Components/SpellFeedback.h"
 
@@ -29,21 +29,21 @@ namespace Logic {
 
 	Este componente implementa la funcionalidad de la cabra.
 
-	@author Francisco Aisa García
-	@date Mayo, 2013
+	@author Jaime Chapinal Cervantes
+	@date JUnio, 2013
 	*/
 
-	class CHardDeathFeedback : public ISpellFeedback {
-		DEC_FACTORY(CHardDeathFeedback);
+	class CShieldFeedback : public ISpellFeedback {
+		DEC_FACTORY(CShieldFeedback);
 
 	public:
 
 		/** Constructor por defecto. */
-		CHardDeathFeedback();
+		CShieldFeedback();
 
 		//__________________________________________________________________
 
-		virtual ~CHardDeathFeedback();
+		virtual ~CShieldFeedback();
 
 		//__________________________________________________________________
 
@@ -66,13 +66,10 @@ namespace Logic {
 		virtual void stopSpell();
 
 		//__________________________________________________________________
-	private:
-
-		float _explotionRadius;
 	};
 
-	REG_FACTORY(CHardDeathFeedback);
+	REG_FACTORY(CShieldFeedback);
 
 } // namespace Logic
 
-#endif // __Logic_CHardDeathFeedback_H
+#endif // __Logic_ComeBackFeedback_H

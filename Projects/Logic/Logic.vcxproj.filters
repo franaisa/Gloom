@@ -754,6 +754,15 @@
     <ClCompile Include="..\..\Src\Logic\Entity\Components\AmplifyDamageFeedback.cpp">
       <Filter>Entity\Components\Spells\Feedback\Source</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\Shield.cpp">
+      <Filter>Entity\Components\Spells\Cast\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\ShieldAmmo.cpp">
+      <Filter>Entity\Components\Spells\Ammunition\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\ShieldFeedback.cpp">
+      <Filter>Entity\Components\Spells\Feedback\Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Src\Logic\Maps\ComponentFactory.h">
@@ -1354,6 +1363,15 @@
       <Filter>Entity\Components\Spells\Cast\Header</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Entity\Components\AmplifyDamageFeedback.h">
+      <Filter>Entity\Components\Spells\Feedback\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\Shield.h">
+      <Filter>Entity\Components\Spells\Cast\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\ShieldAmmo.h">
+      <Filter>Entity\Components\Spells\Ammunition\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\ShieldFeedback.h">
       <Filter>Entity\Components\Spells\Feedback\Header</Filter>
     </ClInclude>
   </ItemGroup>

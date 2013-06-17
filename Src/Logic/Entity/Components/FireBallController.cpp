@@ -136,6 +136,8 @@ namespace Logic {
 		// No podemos tirar el rayo directamente porque se lo tira a los pies y a veces no hay contacto
 		// Como solucion rapida (aehem.. ñapa) voy a sacar la info de la altura del screamer
 		// que teoricamente es la misma que la de todos los players
+
+		// Enserio!? to, pillate el heaghtshoot y a tomar por culo. U.U
 		Map::CEntity * info = Logic::CEntityFactory::getSingletonPtr()->getInfo("Screamer");
 		if(info != NULL) rayDirection.y += info->getIntAttribute("physic_height");
 		rayDirection = rayDirection - explotionPos;
