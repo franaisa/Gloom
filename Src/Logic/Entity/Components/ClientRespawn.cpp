@@ -140,7 +140,7 @@ namespace Logic  {
 		else{
 			Logic::GUIKillersMessage::getSingletonPtr()->suicide(_entity->getName());
 			Logic::CScoreboard::getSingletonPtr()->addDeath(_entity->getName());
-			//Logic::CScoreboard::getSingletonPtr()->subKill(_entity->getName());
+			Logic::CScoreboard::getSingletonPtr()->subKill(_entity->getName());
 		}
 	}
 
