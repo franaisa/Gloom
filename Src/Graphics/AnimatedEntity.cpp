@@ -129,8 +129,8 @@ namespace Graphics
 			auto delAnim = _deletedAnims.begin();
 			auto delEnd = _deletedAnims.end();
 
-			for(;delAnim!=delEnd;)
-				*delAnim = _runningAnimations.erase(*delAnim);
+			for(;delAnim!=delEnd;delAnim++)
+				_runningAnimations.erase(*delAnim);
 			_deletedAnims.clear();
 		}
 		

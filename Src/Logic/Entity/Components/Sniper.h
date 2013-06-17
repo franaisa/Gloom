@@ -102,6 +102,11 @@ namespace Logic {
 
 		virtual void amplifyDamage(unsigned int percentage);
 
+		/**
+		Dibuja el rayo de disparo de la sniper
+		*/
+		void drawRaycast(const Ray& raycast, int distance);
+
 	private:
 
 		void onTick(unsigned int msecs);
@@ -138,6 +143,9 @@ namespace Logic {
 
 		bool _primaryFireIsActive;
 		bool _secondaryFireIsActive;
+
+		int _temporal;
+
 	}; // class CSniper
 
 	REG_FACTORY(CSniper);

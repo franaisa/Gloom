@@ -202,6 +202,9 @@ namespace Application {
 		Net::CManager* _netMgr;
 
 		//ñapa porque flash hace lo que le sale de los huevos
+
+		private:
+
 		bool _menuVisile;
 	}; // CMultiplayerTeamDeathmatchClientState
 
