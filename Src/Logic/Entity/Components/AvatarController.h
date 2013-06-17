@@ -287,6 +287,16 @@ namespace Logic {
 		*/
 		void setCameraEffect();
 
+		//________________________________________________________________________
+
+		/**
+		Emite el sonido almacenado en la ruta pasada por parametro.
+
+		@param ruta Ruta donde se cuentra el sonido.
+		@param sound Identificador del sonido.
+		@param notIfPlay Booleano que marca si el sonido no debe repetirse si ya esta sonando.
+		*/
+		void emitSound(const std::string &ruta, const std::string &sound, bool notIfPlay);
 
 		// =======================================================================
 		//                          MIEMBROS PROTEGIDOS
