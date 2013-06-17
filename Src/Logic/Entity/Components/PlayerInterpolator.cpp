@@ -29,7 +29,8 @@ namespace Logic {
 
 	//__________________________________________________________________
 
-	CPlayerInterpolator::CPlayerInterpolator() : _tickCounter(0) {
+	CPlayerInterpolator::CPlayerInterpolator() : _tickCounter(0),
+												 _lostTicks(0) {
 		// Nada que hacer
 	}
 
@@ -92,12 +93,35 @@ namespace Logic {
 
 	void CPlayerInterpolator::process(const shared_ptr<CMessage>& message) {
 		shared_ptr<CMessagePlayerSnapshot> snapshotMsg = static_pointer_cast<CMessagePlayerSnapshot>(message);
-		vector<Matrix4> transformBuffer = snapshotMsg->getTransformBuffer();
 
-		interpolateSnapshot(transformBuffer);
+		interpolateSnapshot( snapshotMsg->getTransformBuffer() );
 
 		vector<AnimInfo> tempAnimBuffer = snapshotMsg->getAnimationBuffer();
 		_animationBuffer.insert( _animationBuffer.end(), tempAnimBuffer.begin(), tempAnimBuffer.end() );
+
+		// Si hemos perdido ticks, los descartamos del buffer
+		if(_lostTicks > 0) {
+			// Comprobamos el buffer de transforms
+			unsigned int transformBufferSize = _transformBuffer.size();
+
+			//cout << "He perdido " << _lostTicks << " ticks" << endl;
+
+			if( _lostTicks >= transformBufferSize ) {
+				_transformBuffer.clear();
+				_lostTicks -= transformBufferSize;
+
+				//cout << "Descarto el buffer que me llega por completo" << endl;
+			}
+			else {
+				_transformBuffer.erase( _transformBuffer.begin(), _transformBuffer.begin() + _lostTicks );
+				
+				//cout << "Descarto " << _lostTicks << " ticks y el buffer se queda con un tamano de " << _transformBuffer.size() << endl;
+
+				_lostTicks = 0;
+			}
+
+			// Comprobamos el buffer de animaciones
+		}
 	}
 
 	//__________________________________________________________________
@@ -143,6 +167,12 @@ namespace Logic {
 				}
 			}
 			_tickCounter = (_tickCounter + 1) % _ticksPerBuffer;
+		}
+		else {
+			// Estamos ejecutando ticks con el buffer vacio
+			// tendremos que descartar estos ticks del siguiente buffer
+			// recibido
+			++_lostTicks;
 		}
 	}
 
