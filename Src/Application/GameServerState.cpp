@@ -276,6 +276,7 @@ namespace Application {
 
 				int race;
 				inBuffer.deserialize(race);
+
 				Logic::TeamFaction::Enum team;
 				if(_autoBalanceTeams) {
 					if(_playersMgr->blueTeamPlayers() < _playersMgr->redTeamPlayers()) {
