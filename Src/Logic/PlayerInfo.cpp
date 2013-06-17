@@ -20,9 +20,13 @@ Contiene la implementación de la clase PlayerInfo para el proyecto de logica.
 
 namespace Logic {
 
+
 	CPlayerInfo::CPlayerInfo(Net::NetID netId) : _netId(netId),
 												 _entityId(0),
 												 _frags(0),
+												 _deaths(0),
+												 _bestSpree(0),
+												 _ping(0),
 												 _team(TeamFaction::eNONE),
 												 _entityIdInitialized(false),
 												 _isPlaying(false) {
@@ -35,6 +39,9 @@ namespace Logic {
 	CPlayerInfo::CPlayerInfo(Net::NetID netId, const std::string& nickname) : _netId(netId),
 																			  _entityId(0),
 																			  _frags(0),
+																			  _deaths(0),
+																			  _bestSpree(0),
+																			  _ping(0),
 																			  _team(TeamFaction::eNONE),
 																			  _name(nickname),
 																			  _entityIdInitialized(false),
@@ -51,6 +58,10 @@ namespace Logic {
 													   _netId(rhs._netId),
 													   _isPlaying(rhs._isPlaying),
 													   _frags(rhs._frags),
+													   _deaths(rhs._deaths),
+													   _bestSpree(rhs._bestSpree),
+													   _ping(rhs._ping),
+													   _race(rhs._race),
 													   _team(rhs._team) {
 		// No hay memoria dinamica que inicializar
 	}
@@ -61,6 +72,10 @@ namespace Logic {
 		if(this != &rhs) {
 			_name = rhs._name;
 			_frags = rhs._frags;
+			_deaths = rhs._deaths;
+			_bestSpree = rhs._bestSpree;
+			_ping = rhs._ping;
+			_race = rhs._race;
 			_team = rhs._team;
 			_entityId = rhs._entityId;
 			_entityIdInitialized = rhs._entityIdInitialized;
