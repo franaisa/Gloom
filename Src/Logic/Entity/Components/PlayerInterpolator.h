@@ -133,6 +133,8 @@ namespace Logic {
 		unsigned int _ticksPerBuffer;
 		unsigned int _tickCounter;
 
+		unsigned int _lostTicks;
+
 		std::deque<Matrix4> _transformBuffer;
 		std::deque<AnimInfo> _animationBuffer;
 		CPhysicController* _controller;
