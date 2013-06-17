@@ -14,8 +14,8 @@ Grenade  CPhysicDynamicEntity CGrenadeController CNetConnector
 GrenadeExplotion  CGrenadeController CNetConnector
 Rocket  CPhysicDynamicEntity CRocketController CNetConnector
 RocketExplotion  CRocketController CNetConnector
-Lava  CPhysicStaticEntity CLava
-Vortice CPhysicStaticEntity
+Lava CPhysicStaticEntity CLava
+Vortice CPhysicStaticEntity CLava
 Elevator  CPhysicDynamicEntity CElevator
 ElevatorTrigger  CPhysicDynamicEntity CElevatorTrigger
 Spike  CPhysicDynamicEntity CSpike

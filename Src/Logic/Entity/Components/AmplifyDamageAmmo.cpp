@@ -18,6 +18,7 @@ Contiene la implementacion del hechizo de amplificar daño
 #include "Map/MapEntity.h"
 
 #include "AmplifyDamageAmmo.h"
+#include "AmplifyDamage.h"
 #include "AmplifyDamageFeedback.h"
 
 #include "Logic/Messages/MessageReducedCooldown.h"
@@ -63,7 +64,7 @@ namespace Logic {
 		if( !ISpellAmmo::spawn(entity, map, entityInfo) ) return false;
 
 		// Nos aseguramos de tener todos los atributos que necesitamos
-		/*assert( entityInfo->hasAttribute(_spellName + "Cooldown") );
+		assert( entityInfo->hasAttribute(_spellName + "Cooldown") );
 		assert( entityInfo->hasAttribute(_spellName + "MaxAmmo") );
 		assert( entityInfo->hasAttribute(_spellName + "AmmoPerPull") );
 		assert( entityInfo->hasAttribute(_spellName + "DurationEffect") );
@@ -77,10 +78,12 @@ namespace Logic {
 		_maxAmmo = entityInfo->getIntAttribute(_spellName + "MaxAmmo");
 		_ammoPerPull = entityInfo->getIntAttribute(_spellName + "AmmoPerPull");
 
-		_friend = _entity->getComponent<Logic::CGravity>("CGravity");
-		if(!_friend)
-			_friend = _entity->getComponent<Logic::CGravityFeedback>("CGravityFeedback");
-		*/
+		_friend[_friends] = _entity->getComponent<Logic::CAmplifyDamage>("CAmplifyDamage");
+		if(_friend[_friends]) ++_friends;
+		_friend[_friends] = _entity->getComponent<Logic::CAmplifyDamageFeedback>("CAmplifyDamageFeedback");
+		if(_friend[_friends]) ++_friends;
+		if(_friends == 0) assert("\nTiene que tenes alguno de los dos componentes");
+		
 		return true;
 	}
 
@@ -93,15 +96,15 @@ namespace Logic {
 	//__________________________________________________________________
 
 	void CAmplifyDamageAmmo::onAvailable() {
-		/*ISpellAmmo::onAvailable();		
+		ISpellAmmo::onAvailable();		
 		_currentAmmo += _ammoPerPull;
-		_currentAmmo = _currentAmmo > _maxAmmo ? _maxAmmo : _currentAmmo;*/
+		_currentAmmo = _currentAmmo > _maxAmmo ? _maxAmmo : _currentAmmo;
 	}
 
 	//__________________________________________________________________
 
 	void CAmplifyDamageAmmo::onTick(unsigned int msecs) {
-		/*
+		
 		// Controlamos el cooldown
 		if(_cooldownTimer > 0) {
 			_cooldownTimer -= msecs;
@@ -116,7 +119,7 @@ namespace Logic {
 				// ya lo pongo a cero dentro del metodo
 				stopSpell();
 			}
-		}*/
+		}
 	}
 
 	//__________________________________________________________________
@@ -130,7 +133,7 @@ namespace Logic {
 
 	void CAmplifyDamageAmmo::spell() {
 		ISpellAmmo::spell();
-		/*
+		
 		// Si ya se esta haciendo el hechizo, significa que queremos pararlo
 		if(!_spellIsActive){
 			--_currentAmmo;
@@ -140,33 +143,32 @@ namespace Logic {
 		}else{
 			stopSpell();
 		}
-		*/
+		
 	} // primaryFire
 	//__________________________________________________________________
 
 	void CAmplifyDamageAmmo::stopSpell() {
 		ISpellAmmo::stopSpell();
-		/*
+		
 		// Voy a beneficiar si se hace durante poco tiempo
 		// con esto reduzco el cooldown el mismo porcentaje que me quedaba.
 		_cooldown *=(1-(_durationTimer / _duration ));
 
 		_durationTimer = 0;
 		
-		*/
+		
 		_spellIsActive = false;
 	} // stopPrimaryFire
 	//__________________________________________________________________
 
-	/*
-	void CComeBackAmmo::reduceCooldown(unsigned int percentage) {
+	
+	void CAmplifyDamageAmmo::reduceCooldown(unsigned int percentage) {
 		// Si es 0 significa que hay que restaurar al que habia por defecto,
 		// sino decrementamos conforme al porcentaje dado.
-		
 		
 		_cooldown = percentage == 0 ? _defaultCooldown : (_defaultCooldown - (percentage * _cooldown * 0.01f));
 		assert(_cooldown < _duration && "La duracion del cooldown reducido es inferior a la del hechizo, lo cual no tiene mucho sentido");
 		
-	}*/
+	}
 
 }//namespace Logic

@@ -185,7 +185,6 @@ namespace Logic
 			_weaponry[newWeapon].second->stayAvailable();
 //_weaponry[newWeapon].second->inUse(true);
 			
-			printf("\n cambiando de %d a %d", _currentWeapon, newWeapon);
 			// Actualizamo el indice de arma
 			_currentWeapon = newWeapon;
 

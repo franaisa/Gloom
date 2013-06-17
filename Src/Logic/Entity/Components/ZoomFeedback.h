@@ -21,7 +21,9 @@ de disparo de la cabra.
 #include "Logic/Entity/Components/SpellFeedback.h"
 
 #include <set>
-
+namespace Graphics{
+	class CCamera;
+}
 namespace Logic {
 
 	/**
@@ -66,6 +68,10 @@ namespace Logic {
 		virtual void stopSpell();
 
 		//__________________________________________________________________
+
+	private:
+
+		Graphics::CCamera* _camera;
 	};
 
 	REG_FACTORY(CZoomFeedback);

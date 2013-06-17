@@ -181,8 +181,6 @@ _primerDecal = true;
 		messageDecal->setTexture("gunshotwall");
 		pEntity->emitMessage(messageDecal);
 
-		std::cout << "emito el mensaje" << std::endl;
-
 		/*
 		CGraphics* cGraph;
 		cGraph = pEntity->getComponent<CGraphics>("CGraphics");

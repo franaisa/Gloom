@@ -1,8 +1,8 @@
-package  
+package ScoreDM 
 {
 	import flash.display.MovieClip;
 	import flash.external.ExternalInterface;
-	
+	import ScoreDM.PlayerScore;
 	
 	/**
 	 * Class who manages the scoreboard, adding, deleting and sorting rows when we make changes
@@ -27,6 +27,7 @@ package
 			ExternalInterface.addCallback("changePing", changePing);
 			ExternalInterface.addCallback("changeClass", changeClass);
 			ExternalInterface.addCallback("addLocalPlayer", addLocalPlayer);
+			
 		}
 		
 		/**
@@ -139,6 +140,7 @@ package
 			trace(scores[idx].kills);
 			
 			sortArray();
+			
 		}
 		
 		/**Method who changes the nick of a concrete player

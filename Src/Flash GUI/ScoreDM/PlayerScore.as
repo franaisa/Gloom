@@ -1,4 +1,4 @@
-package  
+package ScoreDM
 {
 	import flash.display.MovieClip;
 	import flash.text.TextField;

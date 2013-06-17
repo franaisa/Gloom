@@ -11,13 +11,12 @@ de hechizo de resurrección.
 @date Junio, 2013
 */
 
-#include "ResurrectionAmmo.h"
-
 #include "Logic/Maps/EntityFactory.h"
 #include "Logic/Maps/Map.h"
 #include "Logic/Server.h"
 #include "Map/MapEntity.h"
 
+#include "ResurrectionAmmo.h"
 #include "Resurrection.h"
 #include "ResurrectionFeedback.h"
 
@@ -48,6 +47,12 @@ namespace Logic {
 		if(!_friend)
 			_friend = _entity->getComponent<Logic::CCoolDownFeedback>("CCoolDownFeedback");
 			*/
+		_friend[_friends] = _entity->getComponent<Logic::CResurrection>("CResurrection");
+		if(_friend[_friends]) ++_friends;
+		_friend[_friends] = _entity->getComponent<Logic::CResurrectionFeedback>("CResurrectionFeedback");
+		if(_friend[_friends]) ++_friends;
+		if(_friends == 0) assert("\nTiene que tenes alguno de los dos componentes");
+
 		return true;
 	}
 	//__________________________________________________________________
