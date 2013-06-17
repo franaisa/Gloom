@@ -50,7 +50,7 @@ la clase del jugador, las muertes, los frags, los mejores spree, etc.
 			//struct members
 			CEntity * entityPlayer;
 			std::string name;
-			unsigned int kills;
+			int kills;
 			unsigned int deaths;
 			unsigned int bestSpree;
 			unsigned int ping;
@@ -136,6 +136,13 @@ la clase del jugador, las muertes, los frags, los mejores spree, etc.
 		@param name Nombre de la entidad que se está actualizando.
 		*/
 		void addKill(const std::string &name);
+
+		/**
+		Método que resta un frag al jugador indicado.
+
+		@param name Nombre de la entidad que se está actualizando.
+		*/
+		void subKill(const std::string &name);
 
 		/**
 		Método que añade una muerte al jugador indicado.
