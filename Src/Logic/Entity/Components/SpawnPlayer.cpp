@@ -115,7 +115,6 @@ namespace Logic
 				std::shared_ptr<CMessagePlayerSpawn> spawnMsg = std::make_shared<CMessagePlayerSpawn>();
 				spawnMsg->setSpawnPosition( _entity->getPosition() );
 				spawnMsg->setSpawnOrientation( _entity->getYaw());
-				std::cout << "Servidor envia : " << _entity->getYaw() << std::endl;
 				_entity->emitMessage(spawnMsg);
 
 				CEntity* camera = CServer::getSingletonPtr()->getMap()->getEntityByName("Camera");

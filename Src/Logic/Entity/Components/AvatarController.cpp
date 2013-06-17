@@ -22,6 +22,7 @@ de la entidad.
 #include "Map/MapEntity.h"
 #include "Logic/Entity/Components/PhysicController.h"
 #include "Logic/Entity/Components/Camera.h"
+#include "Logic/GameNetMsgManager.h"
 
 #include "Logic/Server.h"
 #include "Logic/Maps/Map.h"
@@ -31,6 +32,7 @@ de la entidad.
 #include "Logic/Messages/MessageMouse.h"
 #include "Logic/Messages/MessageAddForcePlayer.h"
 #include "Logic/Messages/MessageChangeGravity.h"
+#include "Logic/Messages/MessageAudio.h"
 
 #include "Graphics/Scene.h"
 #include "Graphics/Camera.h"
@@ -250,6 +252,12 @@ namespace Logic {
 			// Colision con los pies detectada
 			if(_cameraFX != NULL)
 				_cameraFX->playerIsTouchingGround(_momentum.y);
+
+			//Si nos movimos sonido de audio
+			//Si añadimos el comentario no sonaria si al movernos no nos hemos desplazado, esto ocurre en muy pocos casos
+			//Lo suyo seria incluso ver si la distancia recorrida es muy pekeña no sueno
+			if(!Net::CManager::getSingletonPtr()->imServer() && _displacementDir != Vector3::ZERO )//&& oldPosition!=_entity->getPosition()){)
+					emitSound("media/audio/step1.wav",_entity->getName()+"steps",true);
 		}
 		
 		if(collisionFlags & Physics::eCOLLISION_UP) {
@@ -272,6 +280,7 @@ namespace Logic {
 			if(_cameraFX != NULL)
 				_cameraFX->playerIsSideColliding(false, 0);
 		}
+
 
 	}
 
@@ -421,6 +430,8 @@ namespace Logic {
 		if(_touchingGround) {
 			_momentum.y = _jumpForce;
 			_touchingGround = false;
+			if(!Net::CManager::getSingletonPtr()->imServer())
+				emitSound("media/audio/jump.wav",_entity->getName()+"jump",false);
 		}
 	}
 
@@ -440,9 +451,22 @@ namespace Logic {
 			return;
 		Vector3 dir = estimateMotionDirection(_movementCommands[commandType])+Vector3(0,1,0);
 		addForce(dir.normalisedCopy()*_dodgeForce);
+		if(!Net::CManager::getSingletonPtr()->imServer())
+			emitSound("media/audio/sidejump.wav",_entity->getName()+"sideJump",false);
 	}
 
 	//________________________________________________________________________
 
+	void CAvatarController::emitSound(const std::string &ruta, const std::string &sound, bool notIfPlay) {
+			std::shared_ptr<CMessageAudio> audioMsg = std::make_shared<CMessageAudio>();
+			audioMsg->setRuta(ruta);
+			audioMsg->setId(sound);
+			audioMsg->setPosition( _entity->getPosition() );
+			audioMsg->setNotIfPlay(notIfPlay);
+			audioMsg->setIsPlayer(_entity->isPlayer());
+			_entity->emitMessage(audioMsg);
+	}
+
+	//________________________________________________________________________
 
 } // namespace Logic

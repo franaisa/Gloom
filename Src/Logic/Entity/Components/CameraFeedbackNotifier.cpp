@@ -295,7 +295,7 @@ namespace Logic {
 	//________________________________________________________________________
 
 	void CCameraFeedbackNotifier::emitSound(const std::string &ruta, const std::string &sound, bool notIfPlay) {
-		std::shared_ptr<CMessageAudio> audioMsg = std::make_shared<CMessageAudio>();
+			std::shared_ptr<CMessageAudio> audioMsg = std::make_shared<CMessageAudio>();
 			audioMsg->setRuta(ruta);
 			audioMsg->setId(sound);
 			audioMsg->setPosition( _entity->getPosition() );
