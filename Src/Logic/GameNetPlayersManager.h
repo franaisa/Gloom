@@ -19,6 +19,7 @@ Contiene la declaracion de la clase GameNetPlayersManager para el proyecto de lo
 #include <map>
 #include <string>
 #include "PlayerInfo.h"
+#include "Logic/Maps/TeamFaction.h"
 
 // Predeclaracion del typedef NetID
 namespace Net {
@@ -178,7 +179,7 @@ namespace Logic {
 		@param team Nombre del equipo al que pertenece. Las posibilidades son
 		red, blue o none.
 		*/
-		void setPlayerTeam(Net::NetID playerNetId, const std::string& team);
+		void setPlayerTeam(Net::NetID playerNetId, TeamFaction::Enum team);
 
 		//________________________________________________________________________
 
@@ -242,9 +243,9 @@ namespace Logic {
 		Devuelve el nombre del equipo al que pertenece la entidad buscada.
 
 		@param entityId Id logico de la entidad.
-		@return Nombre del equipo al que pertenece la entidad.
+		@return Equipo al que pertenece la entidad.
 		*/
-		std::string getTeamUsingEntityId(Logic::TEntityID entityId);
+		TeamFaction::Enum getTeamUsingEntityId(Logic::TEntityID entityId);
 
 		//________________________________________________________________________
 

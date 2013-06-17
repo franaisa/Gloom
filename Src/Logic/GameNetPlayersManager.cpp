@@ -155,7 +155,7 @@ namespace Logic {
 
 	//______________________________________________________________________________
 
-	void CGameNetPlayersManager::setPlayerTeam(Net::NetID playerNetId, const std::string& team) {
+	void CGameNetPlayersManager::setPlayerTeam(Net::NetID playerNetId, TeamFaction::Enum team) {
 		TNetConnectedPlayersTable::iterator it = _netConnectedPlayers.find(playerNetId);
 		assert(it != _netConnectedPlayers.end() && "No se puede asignar un estado al player porque no existe en el Manager");
 
@@ -209,7 +209,7 @@ namespace Logic {
 
 	//______________________________________________________________________________
 
-	std::string CGameNetPlayersManager::getTeamUsingEntityId(Logic::TEntityID entityId) {
+	TeamFaction::Enum CGameNetPlayersManager::getTeamUsingEntityId(Logic::TEntityID entityId) {
 		TLogicConnectedPlayersTable::const_iterator it = _logicConnectedPlayers.find(entityId);
 		assert(it != _logicConnectedPlayers.end() && "No se ha encontrado el id logico buscado");
 
@@ -268,7 +268,7 @@ namespace Logic {
 
 		unsigned int nbPlayers = 0;
 		for(; it != _netConnectedPlayers.end(); ++it) {
-			if(it->second->getTeam() == "blue") {
+			if(it->second->getTeam() == TeamFaction::eBLUE_TEAM) {
 				++nbPlayers;
 			}
 		}
@@ -283,7 +283,7 @@ namespace Logic {
 
 		unsigned int nbPlayers = 0;
 		for(; it != _netConnectedPlayers.end(); ++it) {
-			if(it->second->getTeam() == "red") {
+			if(it->second->getTeam() == TeamFaction::eRED_TEAM) {
 				++nbPlayers;
 			}
 		}

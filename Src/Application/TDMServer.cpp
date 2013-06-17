@@ -17,6 +17,7 @@
 #include "Logic/Entity/Entity.h"
 #include "Logic/Server.h"
 #include "Logic/Maps/Map.h"
+#include "Logic/Maps/TeamFaction.h"
 #include "Logic/GameNetPlayersManager.h"
 
 #include "Logic/Messages/MessagePlayerDead.h"
@@ -33,10 +34,11 @@ namespace Application {
 	CTDMServer::CTDMServer(CBaseApplication* app) : CGameServerState(app, GameMode::eTEAM_DEATHMATCH),
 													_forceRespawn(false),
 													_warmUp(true),
-													_autoBalanceTeams(false),
 													_loopMaps(true),
 													_currentMap(0),
-													_inEndGame(false) {
+													_inEndGame(false),
+													_blueTeamScore(0),
+													_redTeamScore(0) {
 
 		// Nada que hacer
 	}
@@ -71,37 +73,49 @@ namespace Application {
 				
 				Logic::TEntityID killerID = playerDeadMsg->getKiller();
 				Logic::TEntityID emitterID = emitter->getEntityID();
+				// Si no nos hemos suicidado (ya sea matandonos o muriendo en una trampa)
 				Logic::CEntity* killer = Logic::CServer::getSingletonPtr()->getMap()->getEntityByID(killerID);
 				if( emitter != killer && isPlayer(killer) ) {
 					// Incrementamos el número de muertes del jugador
 					_playersMgr->addFragUsingEntityID(killerID);
 					
 					// Obtenemos el equipo al que pertenece el jugador que acaba de hacer un frag
-					std::string team = _playersMgr->getTeamUsingEntityId(killerID);
-					if(team == "red") {
-						if(++_redTeamScore == _goalScore) {
-							endGame();
+					Logic::TeamFaction::Enum team = _playersMgr->getTeamUsingEntityId(killerID);
+					Logic::TeamFaction::Enum victimTeam = _playersMgr->getTeamUsingEntityId(emitterID);
+					// Si matas a alguien de tu equipo te descuentas frags
+					if(team == victimTeam) {
+						if(team == Logic::TeamFaction::eRED_TEAM) {
+							--_redTeamScore;
 						}
-
-						cout << "El equipo rojo lleva " << _redTeamScore << " muertes" << endl;
+						else if(team == Logic::TeamFaction::eBLUE_TEAM) {
+							--_blueTeamScore;
+						}
 					}
-					else if(team == "blue") {
-						if(++_blueTeamScore == _goalScore) {
-							endGame();
+					// Sino incrementas frags y compruebas si has ganado la partida
+					else {
+						if(team == Logic::TeamFaction::eRED_TEAM) {
+							if(++_redTeamScore == _goalScore) {
+								endGame();
+								cout << "RED TEAM WINS!" << endl;
+							}
 						}
-
-						cout << "El equipo azul lleva " << _blueTeamScore << " muertes" << endl;
+						else if(team == Logic::TeamFaction::eBLUE_TEAM) {
+							if(++_blueTeamScore == _goalScore) {
+								endGame();
+								cout << "BLUE TEAM WINS!" << endl;
+							}
+						}
 					}
 				}
 				else {
 					_playersMgr->substractFragUsingEntityID(emitterID);
 
 					// Obtenemos el equipo al que pertenece el jugador que acaba de suicidarse
-					std::string team = _playersMgr->getTeamUsingEntityId(killerID);
-					if(team == "red") {
+					Logic::TeamFaction::Enum team = _playersMgr->getTeamUsingEntityId(killerID);
+					if(team == Logic::TeamFaction::eRED_TEAM) {
 						--_redTeamScore;
 					}
-					else if(team == "blue") {
+					else if(team == Logic::TeamFaction::eBLUE_TEAM) {
 						--_blueTeamScore;
 					}
 				}
@@ -122,7 +136,7 @@ namespace Application {
 			// Controlamos el tiempo de la partida
 			_gameTime -= msecs;
 			if(_gameTime < 0) {
-				std::cout << "LA PARTIDA HA FINALIZADO POR TIEMPO!!" << std::endl;
+				std::cout << "TIME IS OVER!" << std::endl;
 
 				endGame();
 			}

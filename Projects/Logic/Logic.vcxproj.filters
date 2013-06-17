@@ -1374,5 +1374,8 @@
     <ClInclude Include="..\..\Src\Logic\Entity\Components\ShieldFeedback.h">
       <Filter>Entity\Components\Spells\Feedback\Header</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Maps\TeamFaction.h">
+      <Filter>Maps\Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

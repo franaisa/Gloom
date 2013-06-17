@@ -21,6 +21,7 @@ Contiene la declaración del estado de juego.
 #include "Net/Manager.h"
 #include "Net/buffer.h"
 #include "Logic/Maps/WorldState.h"
+#include "Logic/Maps/TeamFaction.h"
 
 namespace Logic {
 	class CGameNetPlayersManager;
@@ -57,7 +58,8 @@ namespace Application {
 
 		@param app Aplicacion que se encarga de manejar los estados.
 		*/
-		CGameServerState(CBaseApplication *app, GameMode::Enum mode) : CGameState(app), _gameMode(mode), _playersMgr(NULL) {}
+		CGameServerState(CBaseApplication *app, GameMode::Enum mode) : CGameState(app), _gameMode(mode), _playersMgr(NULL),
+																	   _autoBalanceTeams(false) { }
 
 
 		// =======================================================================
@@ -199,6 +201,8 @@ namespace Application {
 
 		GameMode::Enum _gameMode;
 
+		bool _autoBalanceTeams;
+
 	private:
 
 		void sendMapInfo(Net::NetID playerNetId);
@@ -207,7 +211,7 @@ namespace Application {
 
 		void createAndMirrorSpectator(Net::NetID playerNetId);
 
-		void createAndMirrorPlayer(int race, Net::NetID playerNetId, const std::string& team);
+		void createAndMirrorPlayer(int race, Net::NetID playerNetId, Logic::TeamFaction::Enum team);
 
 		
 	}; // CMultiplayerTeamDeathmatchServerState

@@ -73,7 +73,7 @@ namespace Application {
 				if( emitter != killer && isPlayer(killer) ) {
 					if(_playersMgr->addFragUsingEntityID(killerID) == _goalScore) {
 						// fin de partida
-						std::cout << "LA PARTIDA HA FINALIZADO POR LIMITE DE MUERTES!!!" << std::endl;
+						cout << killer->getName() << " WINS THE MATCH" << endl;
 						endGame();
 					}
 				}
@@ -99,7 +99,7 @@ namespace Application {
 			// Controlamos el tiempo de la partida
 			_gameTime -= msecs;
 			if(_gameTime < 0) {
-				std::cout << "LA PARTIDA HA FINALIZADO POR TIEMPO!!" << std::endl;
+				std::cout << "TIME IS OVER!" << std::endl;
 
 				endGame();
 			}

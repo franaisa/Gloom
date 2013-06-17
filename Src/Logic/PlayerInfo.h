@@ -18,6 +18,7 @@ Contiene la declaracion de la clase PlayerInfo para el proyecto de logica.
 
 #include <string>
 #include <set>
+#include "Logic/Maps/TeamFaction.h"
 
 // Predeclaracion del typedef NetID
 namespace Net {
@@ -43,14 +44,6 @@ namespace Logic {
 
 	class CPlayerInfo {
 	public:
-
-		struct Team {
-			enum Enum {
-				eBLUE_TEAM	= 0,
-				eRED_TEAM	= 1
-			};
-		};
-
 
 		// =======================================================================
 		//                      CONSTRUCTORES Y DESTRUCTOR
@@ -135,8 +128,10 @@ namespace Logic {
 
 		/**
 		Devuelve el nombre del equipo al que pertenece el player.
+
+		@return El equipo al que pertenece el jugador.
 		*/
-		std::string getTeam();
+		TeamFaction::Enum getTeam();
 
 		//________________________________________________________________________
 
@@ -214,7 +209,7 @@ namespace Logic {
 
 		@param team Equipo al que pertenece el jugador
 		*/
-		void setTeam(const std::string& team);
+		void setTeam(TeamFaction::Enum team);
 
 		//________________________________________________________________________
 
@@ -269,9 +264,11 @@ namespace Logic {
 		/** Nickname del player. */
 		std::string _name;
 
+		/** Frags que el jugador lleva. */ 
 		int _frags;
 
-		std::string _team;
+		/** Equipo al que pertenece el jugador. */
+		TeamFaction::Enum _team;
 
 		/** Identificador de la entidad logica */
 		TEntityID _entityId;
