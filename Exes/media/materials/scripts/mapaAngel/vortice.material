@@ -1,6 +1,6 @@
 material vortice
 {
-	set $glow_tex vortice_glow.png
+	set $glow_tex vortice_glow2.png
 	technique
 	{
 		pass
