@@ -202,7 +202,7 @@ namespace Logic
 
 	void CGraphics::drawDecal(Vector3 vPos, std::string vTexture) {
 		OgreDecal::OgreMesh worldMesh;
- 
+
 		/// This method will extract all of the triangles from the mesh to be used later. Only should be called once.
 		/// If you scale your mesh at all, pass it in here.
 
