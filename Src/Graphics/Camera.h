@@ -137,7 +137,13 @@ namespace Graphics
 		@param orientation Orientacion puesta en quaternion para setear.
 		*/
 		void setOrientation(Ogre::Quaternion orientation);
+		
+		/**
+		Método que cambia el FOV de la cámara por uno especificado por parametro
+		*/
+		void setFov(float radianAngle);
 
+		void resetFov();
 
 	protected:
 		
@@ -174,6 +180,8 @@ namespace Graphics
 		Nombre de la cámara.
 		*/
 		std::string _name;
+
+		float _defaultFov;
 
 	}; // class CCamera
 

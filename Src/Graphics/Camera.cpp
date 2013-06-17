@@ -42,7 +42,10 @@ namespace Graphics
 		//Seteo de atributos de la camara
 		_camera->setNearClipDistance(2);
 		_camera->setFarClipDistance(500);
-		_camera->setFOVy(Ogre::Radian(70));
+
+		_defaultFov = Math::PI/2;
+
+		_camera->setFOVy(Ogre::Radian(_defaultFov));
 		//Atachamos la camara al nodo
 		_cameraNode->attachObject(this->_camera);
 
@@ -122,5 +125,12 @@ namespace Graphics
 	
 	//--------------------------------------------------------
 
+	void CCamera::setFov(float radianAngle){
+		_camera->setFOVy(Ogre::Radian(radianAngle));
+	}
+
+	void CCamera::resetFov(){
+		_camera->setFOVy(Ogre::Radian(_defaultFov));
+	}
 
 } // namespace Graphics
