@@ -15,7 +15,7 @@ Contiene la implementación del estado de lobby del servidor.
 */
 
 #include "LobbyServerState.h"
-#include "DMServer.h"
+#include "TDMServer.h"
 
 #include "Logic/Server.h"
 #include "Logic/Maps/EntityFactory.h"
@@ -154,16 +154,17 @@ namespace Application {
 		}
 		
 		// Empezamos la partida en modo servidor
-		_app->setState("DMServer");
+		_app->setState("TDMServer");
 
 		// @todo En funcion de los datos leidos de flash, establecer los parametros
 		// de configuracion del servidor y de la partida
-		Application::CDMServer* state = static_cast<CDMServer*>( _app->getNextState() );
+		Application::CTDMServer* state = static_cast<CTDMServer*>( _app->getNextState() );
 		std::vector<std::string> mapList;
 		mapList.push_back(_map);
 
 		state->serverSettings("Servidor Gazpachero", "cobragay", 8, 4, false, false);
-		state->gameSettings(mapList, false, std::pair<unsigned int, unsigned int>(15, 0), 1, false, false);
+		//state->gameSettings(mapList, false, std::pair<unsigned int, unsigned int>(15, 0), 1, false, false);
+		state->gameSettings(mapList, false, std::pair<unsigned int, unsigned int>(15, 0), 5, false, false, true);
 
 		return FLASH_VOID;
 	} // backReleased

@@ -26,6 +26,8 @@ basadas en Ogre. Esta clase maneja la ejecución de todo el juego.
 #include "LobbyServerState.h"
 #include "DMServer.h"
 #include "DMClient.h"
+#include "TDMClient.h"
+#include "TDMServer.h"
 #include "SelectScenario.h"
 #include "SinglePlayerState.h"
 
@@ -77,6 +79,10 @@ namespace Application {
 		if(!addState("DMServer", new CDMServer(this)))
 			return false;
 		if(!addState("DMClient", new CDMClient(this)))
+			return false;
+		if(!addState("TDMClient", new CTDMClient(this)))
+			return false;
+		if(!addState("TDMServer", new CTDMServer(this)))
 			return false;
 		
 		// ESTADO INICIAL
