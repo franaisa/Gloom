@@ -19,6 +19,10 @@ de disparo de la cabra.
 #include "Logic/Server.h"
 #include "Map/MapEntity.h"
 
+
+#include "Graphics/Scene.h"
+#include "Graphics/Camera.h"
+
 using namespace std;
 
 namespace Logic {
@@ -43,18 +47,20 @@ namespace Logic {
 	bool CZoomFeedback::spawn(CEntity* entity, CMap *map, const Map::CEntity *entityInfo) {
 		if( !ISpellFeedback::spawn(entity, map, entityInfo) ) return false;
 
+		_camera = _entity->getMap()->getScene()->getCamera();
+
 		return true;
 	} // spawn
 	//__________________________________________________________________
 
 	void CZoomFeedback::spell(){
-		// Efecto cuando se activa la gravedad
+		_camera->setFov(Math::PI/8);
 
 	} // spell
 	//__________________________________________________________________
 		
 	void CZoomFeedback::stopSpell(){
-		// Efecto cuando se desactiva la gravedad
+		_camera->resetFov();
 
 	} // stopSpell
 	//__________________________________________________________________
