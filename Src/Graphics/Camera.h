@@ -88,14 +88,14 @@ namespace Graphics
 		/**
 			get & set de CameraDirection
 		*/
-		void				setCameraDirection				(const Vector3& direction);
-		Ogre::Vector3				getCameraDirection			();
+		void setCameraDirection(const Vector3& direction);
+		const Vector3 &getCameraDirection();
 
 
 		/**
 		Devuelve el quaternion en el mundo real de la cámara.
 		*/
-		Ogre::Quaternion	getRealOrientation				();
+		const Quaternion& getRealOrientation ();
 
 
 		/**
@@ -136,7 +136,15 @@ namespace Graphics
 
 		@param orientation Orientacion puesta en quaternion para setear.
 		*/
-		void setOrientation(Ogre::Quaternion orientation);
+		void setOrientation(const Quaternion& orientation);
+
+		/**
+		Establece la orientacion para mirar al punto pasado por parametro.
+
+		@param position Posicion hacia donde mirará la camara.
+		*/
+		void lookAt(const Vector3& position);
+
 
 
 	protected:
