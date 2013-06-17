@@ -164,6 +164,7 @@ namespace Application {
 
 		state->serverSettings("Servidor Gazpachero", "cobragay", 8, 4, false, false);
 		state->gameSettings(mapList, false, std::pair<unsigned int, unsigned int>(15, 0), 1, false, false);
+		//state->gameSettings(mapList, false, std::pair<unsigned int, unsigned int>(15, 0), 5, false, false, true);
 
 		return FLASH_VOID;
 	} // backReleased

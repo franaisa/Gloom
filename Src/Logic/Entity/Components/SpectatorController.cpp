@@ -175,7 +175,7 @@ namespace Logic {
 		//Obtenemos la direccion
 		Vector3 directionQuat = characterQuat * Vector3::NEGATIVE_UNIT_Z;
 		//Formamos el vector normalizado de la direccion
-		Vector3 motionDirection(directionQuat.x,0,directionQuat.z);
+		Vector3 motionDirection(directionQuat.x,directionQuat.y,directionQuat.z);
 		motionDirection.normalise();
 		// Invertimos el vector resultante si nos estamos desplazando hacia atras
 		// porque el yaw se calcula de forma contraria al andar hacia atras

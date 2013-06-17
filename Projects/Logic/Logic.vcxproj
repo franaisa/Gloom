@@ -401,6 +401,7 @@
     <ClInclude Include="..\..\Src\Logic\Entity\Components\Graphics.h" />
     <ClInclude Include="..\..\Src\Logic\Documentation.h" />
     <ClInclude Include="..\..\Src\Logic\Maps\Scoreboard.h" />
+    <ClInclude Include="..\..\Src\Logic\Maps\TeamFaction.h" />
     <ClInclude Include="..\..\Src\Logic\Maps\WorldState.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageActivateScreamerShield.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageAddSpell.h" />
