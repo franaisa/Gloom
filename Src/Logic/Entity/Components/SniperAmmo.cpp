@@ -107,12 +107,19 @@ namespace Logic {
 	//__________________________________________________________________
 
 	bool CSniperAmmo::canUsePrimaryFire() {
+		if(_currentAmmo==0)
+			emitSound(_noAmmoSound,"noAmmo",false);
 		return _primaryFireCooldownTimer == 0 && _currentAmmo > 0 && !_secondaryFireIsActive;
 	}
 
 	//__________________________________________________________________
 
 	bool CSniperAmmo::canUseSecondaryFire() {
+		if(_currentAmmo==0)
+			emitSound(_noAmmoSound,"noAmmo",false);
+		//Este sonido deberia ser otro ya que hay balas pero no se puede utilizar la funcion secundaria
+		else if(_currentAmmo<_ammoSpentPerSecondaryShot)
+			emitSound(_noAmmoSound,"noAmmo",false);
 		return _secondaryFireCooldownTimer == 0 && _currentAmmo >= _ammoSpentPerSecondaryShot && !_primaryFireIsActive;
 	}
 

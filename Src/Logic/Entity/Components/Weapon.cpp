@@ -71,7 +71,8 @@ _primerDecal = true;
 		_maxAmmo = entityInfo->getIntAttribute(_weaponName + "MaxAmmo");
 		_capsuleRadius = entityInfo->getFloatAttribute("physic_radius");
 		_heightShoot = entityInfo->getFloatAttribute("heightShoot");
-
+		_weaponSound = entityInfo->getStringAttribute(_weaponName+"Audio");
+		
 		return true;
 	}
 
@@ -91,18 +92,22 @@ _primerDecal = true;
 		switch( message->getMessageType() ) {
 			case Message::PRIMARY_SHOOT: {
 				auto primaryShootMsg = static_pointer_cast<CMessagePrimaryShoot>(message);
-				if(primaryShootMsg->getShoot())
+				if(primaryShootMsg->getShoot()){
 					primaryFire();
-				else
+				}
+				else{
 					stopPrimaryFire();
+				}
 				break;
 			}
 			case Message::SECONDARY_SHOOT: {
 				auto secondaryShootMsg = static_pointer_cast<CMessageSecondaryShoot>(message);
-				if(secondaryShootMsg ->getShoot())
+				if(secondaryShootMsg ->getShoot()){
 					secondaryFire();
-				else
+				}
+				else{
 					stopSecondaryFire();
+				}
 				break;
 			}
 		}
@@ -116,20 +121,7 @@ _primerDecal = true;
 
 	//__________________________________________________________________
 
-	void IWeapon::emitSound(const string &ruta, const string &sound, bool notIfPlay){
-		shared_ptr<CMessageAudio> audioMsg = make_shared<CMessageAudio>();
-		
-		audioMsg->setRuta(ruta);
-		audioMsg->setId(sound);
-		audioMsg->setPosition( _entity->getPosition() );
-		audioMsg->setNotIfPlay(notIfPlay);
-		audioMsg->setIsPlayer( _entity->isPlayer() );
-			
-		_entity->emitMessage(audioMsg);
-	} // emitSound
 
-	//__________________________________________________________________
-	
 	void IWeapon::addAmmo(int weapon, int ammo, bool iAmCatch) {
 		_currentAmmo += ammo;
 		if(_currentAmmo > _maxAmmo) 
@@ -220,5 +212,21 @@ _primerDecal = true;
 			}
 			std::cout << "pinta" << std::endl;*/
 	}
+
+	//__________________________________________________________________
+
+	void IWeapon::emitSound(const string &ruta, const string &sound, bool notIfPlay){
+		shared_ptr<CMessageAudio> audioMsg = make_shared<CMessageAudio>();
+		
+		audioMsg->setRuta(ruta);
+		audioMsg->setId(sound);
+		audioMsg->setPosition( _entity->getPosition() );
+		audioMsg->setNotIfPlay(notIfPlay);
+		audioMsg->setIsPlayer( _entity->isPlayer() );
+			
+		_entity->emitMessage(audioMsg);
+	} // emitSound
+	
+
 } // namespace Logic
 

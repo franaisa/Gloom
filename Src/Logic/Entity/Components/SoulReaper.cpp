@@ -75,7 +75,8 @@ namespace Logic {
 
 
 	void CSoulReaper::primaryFire() {
-		//_primaryFireIsActive = true;
+		//Sonido
+		emitSound(_weaponSound,_weaponName,false);
 
 		_primaryFireTimer = _primaryFireCooldown;
 	
@@ -106,6 +107,8 @@ namespace Logic {
 	//__________________________________________________________________
 
 	void CSoulReaper::secondaryFire() {
+		//Sonido
+		emitSound(_weaponSound,_weaponName,false);
 
 		//primero preguntamos si podemos atraer algun arma
 		_elementPulled = checkPullItem();

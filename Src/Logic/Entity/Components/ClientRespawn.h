@@ -43,6 +43,13 @@ namespace Logic  {
 		//                    METODOS HEREDADOS DE ICOMPONENT
 		// =======================================================================
 
+		/**
+		Inicialización del componente usando la descripción de la entidad que hay en 
+		el fichero de mapa.
+		*/
+		virtual bool spawn(CEntity* entity, CMap *map, const Map::CEntity *entityInfo);
+
+
 		/** 
 		Este componente acepta los siguientes mensajes:
 
@@ -72,6 +79,11 @@ namespace Logic  {
 		los eventos actualizados
 		*/
 		void updateGUI(CEntity* killer);
+
+		/**
+		Ruta del sonido de spawn.
+		*/
+		std::string _audioSpawn;
 
 	}; // class CClientRespawn
 

@@ -87,6 +87,7 @@ namespace Logic {
 		_maxAmmoSpentPerSecondaryShot = entityInfo->getIntAttribute(_weaponName + "MaxAmmoSpentPerSecondaryShot");
 		_defaultAmmoSpentTimeStep = _ammoSpentTimeStep = (float)_secondaryFireLoadTime / (float)(_maxAmmoSpentPerSecondaryShot);
 
+
 		return true;
 	}
 
@@ -185,11 +186,15 @@ namespace Logic {
 			//std::cout << "dado" << std::endl;
 			triggerHitMessages(entityHit);
 		}
+
 	}
 	//__________________________________________________________________
 
 	CEntity* CMiniGun::fireWeapon() 
 	{
+		//Sonido
+		emitSound(_weaponSound,_weaponName,false);
+
 		//Direccion
 		Vector3 direction = Math::getDirection(_entity->getOrientation()); 
 		//Me dispongo a calcular la desviacion del arma, en el map.txt se pondra en grados de dispersion (0 => sin dispersion)
@@ -255,6 +260,9 @@ namespace Logic {
 
 	void CMiniGun::secondaryShoot() 
 	{
+		//Sonido
+		emitSound(_weaponSound,_weaponName,false);
+
 		//Creación de sweephit para 
 		Physics::SphereGeometry sphere  = Physics::CGeometryFactory::getSingletonPtr()->createSphere(3.5);
 		std::vector<Physics::CSweepHit> hits;

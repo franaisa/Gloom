@@ -202,7 +202,7 @@ namespace Logic {
 
 		@param ruta Ruta del sonido que queremos reproducir.
 		@param sound String para identificar el sonido??.
-		@param notIfPlay ?¿?
+		@param notIfPlay Atributo que indica que si el sonido esta sonando no vuelva a sonar.
 		*/
 		void emitSound(const std::string &ruta, const std::string &sound, bool notIfPlay = false);
 
@@ -236,6 +236,9 @@ namespace Logic {
 		//                          MIEMBROS PROTEGIDOS
 		// =======================================================================
 
+
+		/** Ruta del sonido del arma. */
+		std::string _weaponSound;
 
 		/** Cuanta munición puede llevar este arma como máximo. */
 		unsigned int _maxAmmo;

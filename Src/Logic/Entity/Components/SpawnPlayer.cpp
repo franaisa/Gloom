@@ -26,7 +26,6 @@ Contiene la implementación del componente que gestiona el spawn del jugador.
 #include "Logic/Messages/MessagePlayerSpawn.h"
 #include "Logic/Messages/MessageSetPhysicPosition.h"
 #include "Logic/Messages/MessageHudSpawn.h"
-#include "Logic/Messages/MessageAudio.h"
 #include "Logic/Messages/MessageCreateParticle.h"
 #include "Logic/Messages/MessageSpawnIsLive.h"
 
@@ -129,15 +128,6 @@ namespace Logic
 				particle->setParticle("SpawnParticle");
 				particle->setPosition(_entity->getPosition());
 				*/
-
-				//Sonido Spawn
-				std::shared_ptr<CMessageAudio> audioMsg = std::make_shared<CMessageAudio>();
-				audioMsg->setRuta(_audioSpawn);
-				audioMsg->setId("spawn");
-				audioMsg->setPosition(_entity->getPosition());
-				audioMsg->setNotIfPlay(false);
-				audioMsg->setIsPlayer(_entity->isPlayer());
-				_entity->emitMessage(audioMsg);
 
 				_inmunityTimer = 0;
 			}
