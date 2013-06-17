@@ -22,6 +22,7 @@
 #include "Logic/Maps/GUIKillersMessage.h"
 #include "../../GameNetPlayersManager.h"
 #include "Logic/Messages/MessageHudSpawn.h"
+#include "Logic/Messages/MessageAudio.h"
 
 #include <math.h>
 
@@ -31,6 +32,18 @@ namespace Logic  {
 	
 	IMP_FACTORY(CClientRespawn);
 
+	//________________________________________________________________________
+	bool CClientRespawn::spawn(CEntity *entity, CMap *map, const Map::CEntity *entityInfo) 
+	{
+		if(!IComponent::spawn(entity,map,entityInfo))
+			return false;
+
+		if(entityInfo->hasAttribute("audioSpawn"))
+			_audioSpawn =  entityInfo->getStringAttribute("audioSpawn");
+
+		return true;
+
+	} // spawn
 	//________________________________________________________________________
 
 	bool CClientRespawn::accept(const std::shared_ptr<CMessage>& message) {
@@ -118,6 +131,15 @@ namespace Logic  {
 				messageHudSpawn->setTime(0);
 				_entity->emitMessage(messageHudSpawn);
 
+				//Sonido Spawn
+				std::shared_ptr<CMessageAudio> audioMsg = std::make_shared<CMessageAudio>();
+				audioMsg->setRuta(_audioSpawn);
+				audioMsg->setId("spawn");
+				audioMsg->setPosition(entityPos);
+				audioMsg->setNotIfPlay(false);
+				audioMsg->setIsPlayer(_entity->isPlayer());
+				_entity->emitMessage(audioMsg);
+
 				break;
 			}
 		}
@@ -140,7 +162,7 @@ namespace Logic  {
 		else{
 			Logic::GUIKillersMessage::getSingletonPtr()->suicide(_entity->getName());
 			Logic::CScoreboard::getSingletonPtr()->addDeath(_entity->getName());
-			//Logic::CScoreboard::getSingletonPtr()->subKill(_entity->getName());
+			Logic::CScoreboard::getSingletonPtr()->subKill(_entity->getName());
 		}
 	}
 

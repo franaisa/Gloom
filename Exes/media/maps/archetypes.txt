@@ -94,7 +94,7 @@ Map = {
 			weaponsoulReaperShotsPerSecondaryPrimaryFire = 0,
 			weaponsoulReaperMaxAmmo = 1,
 			weaponsoulReaperID = 0,
-			weaponsoulReaperAudio = "media/audio/soulReaper.wav",
+			weaponsoulReaperAudio = "media/audio/plasma.wav",
 			
 			weaponsniperName = "sniper",
 			weaponsniperModel = "sniper.mesh",
@@ -301,7 +301,7 @@ Map = {
 			weaponsoulReaperShotsPerSecondaryPrimaryFire = 0,
 			weaponsoulReaperMaxAmmo = 1,
 			weaponsoulReaperID = 0,
-			weaponsoulReaperAudio = "media/audio/soulReaper.wav",
+			weaponsoulReaperAudio = "media/audio/plasma.wav",
 			
 			weaponsniperName = "sniper",
 			weaponsniperModel = "sniper.mesh",
@@ -496,7 +496,7 @@ Map = {
 			weaponsoulReaperShotsPerSecondaryPrimaryFire = 0,
 			weaponsoulReaperMaxAmmo = 1,
 			weaponsoulReaperID = 0,
-			weaponsoulReaperAudio = "media/audio/soulReaper.wav",
+			weaponsoulReaperAudio = "media/audio/plasma.wav",
 			
 			weaponsniperName = "sniper",
 			weaponsniperModel = "sniper.mesh",
@@ -692,7 +692,7 @@ Map = {
 			weaponsoulReaperShotsPerSecondaryPrimaryFire = 0,
 			weaponsoulReaperMaxAmmo = 1,
 			weaponsoulReaperID = 0,
-			weaponsoulReaperAudio = "media/audio/soulReaper.wav",
+			weaponsoulReaperAudio = "media/audio/plasma.wav",
 			
 			weaponsniperName = "sniper",
 			weaponsniperModel = "sniper.mesh",
@@ -895,7 +895,7 @@ Map = {
 			weaponsoulReaperShotsPerSecondaryPrimaryFire = 0,
 			weaponsoulReaperMaxAmmo = 1,
 			weaponsoulReaperID = 0,
-			weaponsoulReaperAudio = "media/audio/soulReaper.wav",
+			weaponsoulReaperAudio = "media/audio/plasma.wav",
 			
 			weaponsniperName = "sniper",
 			weaponsniperModel = "sniper.mesh",
@@ -1088,7 +1088,7 @@ Map = {
 			weaponsoulReaperShotsPerSecondaryPrimaryFire = 0,
 			weaponsoulReaperMaxAmmo = 1,
 			weaponsoulReaperID = 0,
-			weaponsoulReaperAudio = "media/audio/soulReaper.wav",
+			weaponsoulReaperAudio = "media/audio/plasma.wav",
 			
 			weaponsniperName = "sniper",
 			weaponsniperModel = "sniper.mesh",
@@ -1283,7 +1283,7 @@ Map = {
 			weaponsoulReaperShotsPerSecondaryPrimaryFire = 0,
 			weaponsoulReaperMaxAmmo = 1,
 			weaponsoulReaperID = 0,
-			weaponsoulReaperAudio = "media/audio/soulReaper.wav",
+			weaponsoulReaperAudio = "media/audio/plasma.wav",
 			
 			weaponsniperName = "sniper",
 			weaponsniperModel = "sniper.mesh",
@@ -1531,7 +1531,7 @@ Map = {
 			weaponsoulReaperShotsPerSecondaryPrimaryFire = 0,
 			weaponsoulReaperMaxAmmo = 1,
 			weaponsoulReaperID = 0,
-			weaponsoulReaperAudio = "media/audio/soulReaper.wav",
+			weaponsoulReaperAudio = "media/audio/plasma.wav",
 			
 			weaponsniperName = "sniper",
 			weaponsniperModel = "sniper.mesh",
@@ -1763,7 +1763,7 @@ Map = {
 			weaponsoulReaperShotsPerSecondaryPrimaryFire = 0,
 			weaponsoulReaperMaxAmmo = 1,
 			weaponsoulReaperID = 0,
-			weaponsoulReaperAudio = "media/audio/soulReaper.wav",
+			weaponsoulReaperAudio = "media/audio/plasma.wav",
 			
 			weaponsniperName = "sniper",
 			weaponsniperModel = "sniper.mesh",

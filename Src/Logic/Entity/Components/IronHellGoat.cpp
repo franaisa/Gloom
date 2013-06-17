@@ -174,6 +174,9 @@ namespace Logic {
 	void CIronHellGoat::stopPrimaryFire() {
 		if(!_primaryFireIsActive) return;
 
+		//Sonido
+		emitSound(_weaponSound,_weaponName,false);
+
 		_primaryFireIsActive = false;
 
 		createFireBall();

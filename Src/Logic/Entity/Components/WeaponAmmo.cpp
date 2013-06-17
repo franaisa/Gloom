@@ -69,12 +69,11 @@ namespace Logic {
 		// Leemos los atributos obligatorios de arma
 		_weaponID = (WeaponType::Enum)entityInfo->getIntAttribute(_weaponName + "ID");
 		_maxAmmo = entityInfo->getIntAttribute(_weaponName + "MaxAmmo");
-		
+		_noAmmoSound = entityInfo->getStringAttribute("audioNoAmmo");
+
 		// Creo q esto no es necesario
 		_capsuleRadius = entityInfo->getFloatAttribute("physic_radius");
 		_heightShoot = entityInfo->getFloatAttribute("heightShoot");
-
-		
 
 
 		return true;
@@ -269,9 +268,13 @@ namespace Logic {
 			}
 		}
 	} // decals
+	//__________________________________________________________________
+		
 
 	void IWeaponAmmo::amplifyDamage(unsigned int percentage){
 		
 	}
+
+
 
 } // namespace Logic
