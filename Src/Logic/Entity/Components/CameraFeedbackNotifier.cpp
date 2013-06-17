@@ -59,7 +59,7 @@ namespace Logic {
 
 		_walkAnim.currentRoll = 0.0f;
 		_walkAnim.rollSpeed = 0.00005f;
-		_walkAnim.rollOffset = 0.092f;
+		_walkAnim.rollOffset = 0.192f;
 		_walkAnim.rollCoef = 0.95f;
 		_walkAnim.recoveringRoll = false;
 		_walkAnim.currentStrafingDir = 0;
