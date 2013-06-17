@@ -67,9 +67,11 @@ namespace Logic {
 		// Ratio al que gastamos municion
 		_ammoSpentPerSecondaryShot = entityInfo->getIntAttribute(_weaponName + "AmmoSpentPerSecondaryShot");
 
-		_friend = _entity->getComponent<Logic::CSniper>("CSniper");
-		if(!_friend)
-			_friend = _entity->getComponent<Logic::CSniperFeedback>("CSniperFeedback");
+		_friend[_friends] = _entity->getComponent<Logic::CSniper>("CSniper");
+		if(_friend[_friends]) ++_friends;
+		_friend[_friends] = _entity->getComponent<Logic::CSniperFeedback>("CSniperFeedback");
+		if(_friend[_friends]) ++_friends;
+		if(_friends == 0) assert("\nTiene que tenes alguno de los dos componentes");
 
 		return true;
 	}
@@ -77,7 +79,7 @@ namespace Logic {
 	//__________________________________________________________________
 
 	void CSniperAmmo::onActivate() {
-
+		IWeaponAmmo::onActivate();
 	}
 
 	//__________________________________________________________________

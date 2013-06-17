@@ -66,9 +66,11 @@ namespace Logic {
 		_maxAmmoPerShot = entityInfo->getIntAttribute(_weaponName + "MaxAmmoPerShot");
 		_ammoSpentTimeStep = (float)_maxLoadingTime / (float)(_maxAmmoPerShot);
 
-		_friend = _entity->getComponent<Logic::CIronHellGoat>("CIronHellGoat");
-		if(!_friend)
-			_friend = _entity->getComponent<Logic::CIronHellGoatFeedback>("CIronHellGoatFeedback");
+		_friend[_friends] = _entity->getComponent<Logic::CIronHellGoat>("CIronHellGoat");
+		if(_friend[_friends]) ++_friends;
+		_friend[_friends] = _entity->getComponent<Logic::CIronHellGoatFeedback>("CIronHellGoatFeedback");
+		if(_friend[_friends]) ++_friends;
+		if(_friends == 0) assert("\nTiene que tenes alguno de los dos componentes");
 
 		return true;
 	}

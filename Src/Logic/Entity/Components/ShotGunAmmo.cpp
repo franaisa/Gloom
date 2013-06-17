@@ -65,11 +65,12 @@ namespace Logic {
 		_numberOfShots = entityInfo->getIntAttribute(_weaponName + "NumberOfShots");
 		
 
-		_friend = _entity->getComponent<Logic::CShotGun>("CShotGun");
-		if(!_friend)
-			_friend = _entity->getComponent<Logic::CShotGunFeedback>("CShotGunFeedback");
-		else
-			_shotGunComponent = _entity->getComponent<Logic::CShotGun>("CShotGun");;
+		 _friend[_friends] = _shotGunComponent = _entity->getComponent<Logic::CShotGun>("CShotGun");
+		if(_friend[_friends]) ++_friends;
+		_friend[_friends] = _entity->getComponent<Logic::CShotGunFeedback>("CShotGunFeedback");
+		if(_friend[_friends]) ++_friends;
+		if(_friends == 0) assert("\nTiene que tenes alguno de los dos componentes");
+
 		return true;
 	}
 

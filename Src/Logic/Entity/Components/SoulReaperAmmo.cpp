@@ -55,9 +55,14 @@ namespace Logic {
 		// Cooldown del disparo principal
 		_defaultPrimaryFireCooldown = _primaryFireCooldown = entityInfo->getFloatAttribute(_weaponName + "PrimaryFireCooldown") * 1000;
 
-		_friend = _entity->getComponent<Logic::CSoulReaper>("CSoulReaper");
-		if(!_friend)
-			_friend = _entity->getComponent<Logic::CSoulReaperFeedback>("CSoulReaperFeedback");
+		_friend[_friends] = _entity->getComponent<Logic::CSoulReaper>("CSoulReaper");
+		if(_friend[_friends])
+			++_friends;
+		_friend[_friends] = _entity->getComponent<Logic::CSoulReaperFeedback>("CSoulReaperFeedback");
+		if(_friend[_friends])
+			++_friends;
+		if(_friends == 0)
+			assert("\nTiene que tenes alguno de los dos componentes");
 
 		return true;
 	}

@@ -79,9 +79,11 @@ namespace Logic {
 		_maxAmmoSpentPerSecondaryShot = entityInfo->getIntAttribute(_weaponName + "MaxAmmoSpentPerSecondaryShot");
 		_defaultAmmoSpentTimeStep = _ammoSpentTimeStep = (float)_secondaryFireLoadTime / (float)(_maxAmmoSpentPerSecondaryShot);
 
-		_friend = _entity->getComponent<Logic::CMiniGun>("CMiniGun");
-		if(!_friend)
-			_friend = _entity->getComponent<Logic::CMiniGunFeedback>("CMiniGunFeedback");
+		_friend[_friends] = _entity->getComponent<Logic::CMiniGun>("CMiniGun");
+		if(_friend[_friends]) ++_friends;
+		_friend[_friends] = _entity->getComponent<Logic::CMiniGunFeedback>("CMiniGunFeedback");
+		if(_friend[_friends]) ++_friends;
+		if(_friends == 0) assert("\nTiene que tenes alguno de los dos componentes");
 
 		return true;
 	}

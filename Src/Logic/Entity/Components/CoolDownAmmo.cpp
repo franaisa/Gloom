@@ -11,13 +11,14 @@ de disparo de la cabra.
 @date Mayo, 2013
 */
 
-#include "CoolDownAmmo.h"
+
 
 #include "Logic/Maps/EntityFactory.h"
 #include "Logic/Maps/Map.h"
 #include "Logic/Server.h"
 #include "Map/MapEntity.h"
 
+#include "CoolDownAmmo.h"
 #include "CoolDown.h"
 #include "CoolDownFeedback.h"
 
@@ -44,9 +45,11 @@ namespace Logic {
 	bool CCoolDownAmmo::spawn(CEntity* entity, CMap *map, const Map::CEntity *entityInfo) {
 		if( !ISpellAmmo::spawn(entity, map, entityInfo) ) return false;
 
-		_friend = _entity->getComponent<Logic::CCoolDown>("CCoolDown");
-		if(!_friend)
-			_friend = _entity->getComponent<Logic::CCoolDownFeedback>("CCoolDownFeedback");
+		_friend[_friends] = _entity->getComponent<Logic::CCoolDown>("CCoolDown");
+		if(_friend[_friends]) ++_friends;
+		_friend[_friends] = _entity->getComponent<Logic::CCoolDownFeedback>("CCoolDownFeedback");
+		if(_friend[_friends]) ++_friends;
+		if(_friends == 0) assert("\nTiene que tenes alguno de los dos componentes");
 
 		return true;
 	}

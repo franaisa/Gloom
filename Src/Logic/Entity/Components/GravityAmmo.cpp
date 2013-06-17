@@ -11,15 +11,17 @@ de disparo de la cabra.
 @date Mayo, 2013
 */
 
-#include "GravityAmmo.h"
+
 
 #include "Logic/Maps/EntityFactory.h"
 #include "Logic/Maps/Map.h"
 #include "Logic/Server.h"
 #include "Map/MapEntity.h"
 
+#include "GravityAmmo.h"
 #include "Gravity.h"
 #include "GravityFeedback.h"
+
 #include "Logic/Messages/MessageReducedCooldown.h"
 
 
@@ -87,9 +89,11 @@ namespace Logic {
 		_maxAmmo = entityInfo->getIntAttribute(_spellName + "MaxAmmo");
 		_ammoPerPull = entityInfo->getIntAttribute(_spellName + "AmmoPerPull");
 
-		_friend = _entity->getComponent<Logic::CGravity>("CGravity");
-		if(!_friend)
-			_friend = _entity->getComponent<Logic::CGravityFeedback>("CGravityFeedback");
+		_friend[_friends] = _entity->getComponent<Logic::CGravity>("CGravity");
+		if(_friend[_friends]) ++_friends;
+		_friend[_friends] = _entity->getComponent<Logic::CGravityFeedback>("CGravityFeedback");
+		if(_friend[_friends]) ++_friends;
+		if(_friends == 0) assert("\nTiene que tenes alguno de los dos componentes");
 
 		return true;
 	}
