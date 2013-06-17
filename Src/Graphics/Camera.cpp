@@ -90,18 +90,18 @@ namespace Graphics
 	}
 	//--------------------------------------------------------
 
-	Ogre::Vector3 CCamera::getCameraDirection() {
+	const Vector3& CCamera::getCameraDirection() {
 		return _camera->getRealDirection(); 
 
 	}
 	//--------------------------------------------------------
 
-	Ogre::Quaternion CCamera::getRealOrientation(){
+	const Quaternion& CCamera::getRealOrientation(){
 		return _camera->getRealOrientation();
 	}
 	//--------------------------------------------------------
 
-	void CCamera::setOrientation(Ogre::Quaternion orientation){
+	void CCamera::setOrientation(const Quaternion& orientation){
 		_camera->setOrientation(orientation);
 	}
 	//--------------------------------------------------------
@@ -111,6 +111,13 @@ namespace Graphics
 	}
 
 	//--------------------------------------------------------
+	
+	void CCamera::lookAt(const Vector3& position){
+		_camera->lookAt(position);
+	}
+
+	//--------------------------------------------------------
+
 
 	Graphics::CEntity* CCamera::addEntityChild(const std::string &nameEntity, const std::string &nameMesh, Vector3 position){
 	
