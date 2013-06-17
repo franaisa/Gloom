@@ -77,6 +77,9 @@ Map = {
 		secondarySkillCooldown = 1,
 		invisibilityDuration = 5,
 		
+		spellShieldDamage = 10;
+		spellShieldRadius = 50;
+		
 			weaponsoulReaperName = "soulReaper",
 			weaponsoulReaperModel = "soulReaper.mesh",
 			weaponsoulReaperModelYaw = 0.0,
@@ -264,6 +267,9 @@ Map = {
 		audioSpawn = "media/audio/spawn.wav",
 		audioNoAmmo = "media/audio/noammo.wav",
 		
+		spellShieldDamage = 10;
+		spellShieldRadius = 50;
+		
 		primarySkillCooldown = 2,
 		secondarySkillCooldown = 2,
 		
@@ -448,6 +454,9 @@ Map = {
 		dodgeForce = {2,2,2},
 		rollCamera = 0.15,
 
+		spellShieldDamage = 10;
+		spellShieldRadius = 50;
+		
 		ticksPerSample = 2,
 		samplesPerSnapshot = 3,
 		
@@ -629,6 +638,9 @@ Map = {
 		damageTimeStep = 1,
 		damageOverTime = 1,
 		playerDead = false,
+		
+		spellShieldDamage = 10;
+		spellShieldRadius = 50;
 		
 		acceleration = 0.015,
 		maxVelocity = 1.5,
@@ -819,6 +831,9 @@ Map = {
 		damageTimeStep = 1,
 		damageOverTime = 1,
 		playerDead = false,
+		
+		spellShieldDamage = 10;
+		spellShieldRadius = 50;
 		
 		acceleration = 0.015,
 		maxVelocity = 1.5,
@@ -1023,6 +1038,9 @@ Map = {
 		damageOverTime = 1,
 		playerDead = true,
 		
+		spellShieldDamage = 10;
+		spellShieldRadius = 50;
+		
 		acceleration = 0.015,
 		maxVelocity = 1.5,
 		frictionCoef = 14.0,
@@ -1222,6 +1240,9 @@ Map = {
 		jumpForce = 1.5,
 		dodgeForce = {2,2,2},
 		rollCamera = 0.15,
+		
+		spellShieldDamage = 10;
+		spellShieldRadius = 50;
 
 		ticksPerSample = 2,
 		samplesPerSnapshot = 3,
@@ -1463,6 +1484,9 @@ Map = {
 		jumpForce = 1.5,
 		dodgeForce = {2,2,2},
 		rollCamera = 0.15,
+		
+		spellShieldDamage = 10;
+		spellShieldRadius = 50;
 
 		ticksPerSample = 2,
 		samplesPerSnapshot = 3,

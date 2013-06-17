@@ -94,6 +94,8 @@ namespace Logic {
 
 		virtual void onTick(unsigned int msecs);
 
+		void shieldDamage();
+
 	private:
 
 		//std::string _shootAudio;
@@ -112,6 +114,9 @@ namespace Logic {
 		//unsigned int _cooldownTimer;
 		//unsigned int _durationTimer;
 		
+		float _shieldRadius;
+		int _shieldDamage;
+
 	};
 
 	REG_FACTORY(CShieldAmmo);

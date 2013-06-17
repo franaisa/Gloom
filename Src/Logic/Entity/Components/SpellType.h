@@ -12,7 +12,7 @@ namespace Logic {
 			eZOOM,			// Activo	// hecho 
 			eGRAVITY,		// Activo	// hecho		(falta feedback y test)
 			eHARD_DEATH,	// Pasivo	// hecho		(falta feedback y test)
-			eSHIELD,		// Activo	// por hacer
+			eSHIELD,		// Activo	// en camino
 			eCOOLDOWN,		// Pasivo	// hecho		(falta feedback y test)
 			eRESURECTION,	// Pasivo	// por hacer
 			eSIZE,
