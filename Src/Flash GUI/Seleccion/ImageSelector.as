@@ -1,4 +1,4 @@
-package 
+package Seleccion
 {
 	import flash.display.MovieClip;
 	import flash.events.MouseEvent;

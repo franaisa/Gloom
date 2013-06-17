@@ -1,4 +1,4 @@
-package  
+package SinglePlayer
 {
 	import flash.ui.Mouse;
 	import flash.display.MovieClip;

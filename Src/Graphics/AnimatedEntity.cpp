@@ -101,7 +101,10 @@ namespace Graphics
 			if(anim->second.animation->hasEnded()){
 				anim->second.animation->setEnabled(false);
 				anim->second.animation->setTimePosition(0);
+				auto aux = anim;
+				aux++;
 				_runningAnimations.erase(anim);
+				anim = aux;
 				continue;
 			}
 
@@ -126,8 +129,8 @@ namespace Graphics
 			auto delAnim = _deletedAnims.begin();
 			auto delEnd = _deletedAnims.end();
 
-			for(;delAnim!=delEnd;++delAnim)
-				_runningAnimations.erase(*delAnim);
+			for(;delAnim!=delEnd;)
+				*delAnim = _runningAnimations.erase(*delAnim);
 			_deletedAnims.clear();
 		}
 		

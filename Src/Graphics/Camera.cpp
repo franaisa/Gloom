@@ -43,7 +43,7 @@ namespace Graphics
 		_camera->setNearClipDistance(2);
 		_camera->setFarClipDistance(500);
 
-		_defaultFov = Math::PI/2;
+		_defaultFov = (Math::PI/2)*0.89;
 
 		_camera->setFOVy(Ogre::Radian(_defaultFov));
 		//Atachamos la camara al nodo
