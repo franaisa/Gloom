@@ -28,10 +28,6 @@ package ScoreDM
 			ExternalInterface.addCallback("changeClass", changeClass);
 			ExternalInterface.addCallback("addLocalPlayer", addLocalPlayer);
 			
-			
-			addPlayer("rub0", "Screamer");
-			
-			addKill("rub0", -41);
 		}
 		
 		/**

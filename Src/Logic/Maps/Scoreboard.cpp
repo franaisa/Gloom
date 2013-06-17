@@ -117,6 +117,19 @@ namespace Logic{
 	}
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	void CScoreboard::subKill(const std::string &name) {
+		auto player = _players.find(name);
+
+		if(player==_players.end())
+			return;
+		player->second.kills--;
+
+		//ahora avisamos a la GUI de que ha habido un cambio
+		_scoreboard->callFunction("addKill",Hikari::Args(name)((int)player->second.kills));
+	}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
 	void CScoreboard::addDeath(const std::string &name){
 		auto player = _players.find(name);
