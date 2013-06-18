@@ -8,8 +8,8 @@ namespace Logic {
 	struct SpellType {
 		enum Enum {
 			eAMPLIFY_DAMAGE,// Activo	// hecho		(falta feedback y test)
-			eCOME_BACK,		// Activo	// por hacer
-			eZOOM,			// Activo	// hecho 
+			eCOME_BACK,		// Activo	// hecho		(falta feedback y test)
+			eZOOM,			// Activo	// hecho
 			eGRAVITY,		// Activo	// hecho		(falta feedback y test)
 			eHARD_DEATH,	// Pasivo	// hecho		(falta feedback y test)
 			eSHIELD,		// Activo	// en camino

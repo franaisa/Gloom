@@ -276,6 +276,9 @@ namespace Logic {
 		/** Ruta del sonido de muerte. */
 		std::string _audioDeath;
 
+		// Variables para el hechizo de resurreccion
+		bool _resurrection;
+
 	}; // class CLife
 
 	REG_FACTORY(CLife);
