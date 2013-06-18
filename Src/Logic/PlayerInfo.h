@@ -136,6 +136,15 @@ namespace Logic {
 		//________________________________________________________________________
 
 		/**
+		Devuelve el número de muertes que le han hecho al jugador.
+
+		@return Devuelve el número de muertes que se le han hecho al jugador.
+		*/
+		inline unsigned int getDeaths() { return _deaths; }
+
+		//________________________________________________________________________
+
+		/**
 		Devuelve la clase que esta usando el player.
 
 		@return La clase del player.
@@ -243,7 +252,13 @@ namespace Logic {
 		/**
 		Incrementa el número de frags anotados para el jugador dado.
 		*/
-		inline unsigned int addFrag() { return ++_frags; }
+		inline unsigned int addFrag() { 
+			++_currentSpree;
+			if(_currentSpree > _bestSpree)
+				_bestSpree = _currentSpree;
+
+			return ++_frags; 
+		}
 
 		//________________________________________________________________________
 
@@ -251,6 +266,16 @@ namespace Logic {
 		Decrementa el número de frags anotados para el jugador dado.
 		*/
 		inline void substractFrag() { --_frags; }
+
+		inline unsigned int addDeath() { 
+			_currentSpree = 0;
+
+			return ++_deaths; 
+		}
+
+		inline void subDeath() { --_deaths; }
+
+		inline unsigned int getBestSpree() { return _bestSpree; }
 
 
 	private:
@@ -270,6 +295,8 @@ namespace Logic {
 		unsigned int _deaths;
 
 		unsigned int _bestSpree;
+
+		unsigned int _currentSpree;
 
 		unsigned int _ping;
 

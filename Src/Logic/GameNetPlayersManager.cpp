@@ -182,6 +182,15 @@ namespace Logic {
 
 	//______________________________________________________________________________
 
+	void CGameNetPlayersManager::addDeathUsingEntityID(Logic::TEntityID entityId) {
+		TLogicConnectedPlayersTable::const_iterator it = _logicConnectedPlayers.find(entityId);
+		assert(it != _logicConnectedPlayers.end() && "No se ha encontrado el id logico buscado");
+
+		it->second->addDeath();
+	}
+
+	//______________________________________________________________________________
+
 	CPlayerInfo CGameNetPlayersManager::getPlayer(Net::NetID playerNetId) {
 		TNetConnectedPlayersTable::const_iterator it = _netConnectedPlayers.find(playerNetId);
 		assert(it != _netConnectedPlayers.end() && "No se ha encontrado el id de player buscado");
@@ -263,6 +272,15 @@ namespace Logic {
 
 	//______________________________________________________________________________
 
+	unsigned int CGameNetPlayersManager::getDeathsUsingEntityID(Logic::TEntityID playerId) {
+		TLogicConnectedPlayersTable::const_iterator it = _logicConnectedPlayers.find(playerId);
+		assert(it != _logicConnectedPlayers.end() && "No se ha encontrado el id logico buscado");
+
+		return it->second->getDeaths();
+	}
+
+	//______________________________________________________________________________
+
 	unsigned int CGameNetPlayersManager::blueTeamPlayers() {
 		auto it = _netConnectedPlayers.begin();
 
@@ -289,6 +307,33 @@ namespace Logic {
 		}
 
 		return nbPlayers;
+	}
+
+	//______________________________________________________________________________
+
+	Net::CBuffer CGameNetPlayersManager::serializeScoreboardInfo() {
+		Net::CBuffer buffer;
+		unsigned int nbPlayers = getNumberOfPlayersSpawned();
+
+		buffer.serialize(nbPlayers);
+		
+		TeamFaction::Enum team;
+		for(auto it = begin(); it != end(); ++it) {
+			if( it->isSpawned() ) {
+				buffer.serialize( it->getName(), false );
+				buffer.serialize( it->getPlayerClass(), false );
+				buffer.serialize( it->getFrags() );
+				buffer.serialize( it->getDeaths() );
+				buffer.serialize( it->getBestSpree() );
+				
+				team = it->getTeam();
+
+				buffer.write( &team, sizeof(team) );
+				buffer.serialize(0); // ping
+			}
+		}
+
+		return buffer;
 	}
 
 	//______________________________________________________________________________

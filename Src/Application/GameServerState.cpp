@@ -90,15 +90,15 @@ namespace Application {
 	//______________________________________________________________________________
 
 	void CGameServerState::sendWorldState(Net::NetID playerNetId) {
-		// Variables locales
-		Net::NetMessageType loadPlayersMsg = Net::LOAD_WORLD_STATE;
-		
 		Net::CBuffer worldBuffer = Logic::CWorldState::getSingletonPtr()->serialize();
+		Net::CBuffer scoreboardBuffer = _playersMgr->serializeScoreboardInfo();
 
 		Net::CBuffer sendWorldState;
+		Net::NetMessageType loadPlayersMsg = Net::LOAD_WORLD_STATE;
 
-		sendWorldState.write(&loadPlayersMsg,sizeof(loadPlayersMsg));
-		sendWorldState.write(worldBuffer.getbuffer(), worldBuffer.getSize());
+		sendWorldState.write( &loadPlayersMsg,sizeof(loadPlayersMsg) );
+		sendWorldState.write( worldBuffer.getbuffer(), worldBuffer.getSize() );
+		sendWorldState.write( scoreboardBuffer.getbuffer(), scoreboardBuffer.getSize() );
 				
 		// Enviamos los datos asociados a los players online al nuevo player
 		_netMgr->sendTo(playerNetId, sendWorldState.getbuffer(), sendWorldState.getSize());

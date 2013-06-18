@@ -26,6 +26,7 @@ namespace Logic {
 												 _frags(0),
 												 _deaths(0),
 												 _bestSpree(0),
+												 _currentSpree(0),
 												 _ping(0),
 												 _team(TeamFaction::eNONE),
 												 _entityIdInitialized(false),
@@ -40,6 +41,7 @@ namespace Logic {
 																			  _entityId(0),
 																			  _frags(0),
 																			  _deaths(0),
+																			  _currentSpree(0),
 																			  _bestSpree(0),
 																			  _ping(0),
 																			  _team(TeamFaction::eNONE),
@@ -59,6 +61,7 @@ namespace Logic {
 													   _isPlaying(rhs._isPlaying),
 													   _frags(rhs._frags),
 													   _deaths(rhs._deaths),
+													   _currentSpree(rhs._currentSpree),
 													   _bestSpree(rhs._bestSpree),
 													   _ping(rhs._ping),
 													   _race(rhs._race),
@@ -73,6 +76,7 @@ namespace Logic {
 			_name = rhs._name;
 			_frags = rhs._frags;
 			_deaths = rhs._deaths;
+			_currentSpree = rhs._currentSpree;
 			_bestSpree = rhs._bestSpree;
 			_ping = rhs._ping;
 			_race = rhs._race;

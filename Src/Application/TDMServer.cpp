@@ -120,6 +120,8 @@ namespace Application {
 					}
 				}
 
+				_playersMgr->addDeathUsingEntityID(emitterID);
+
 				break;
 			}
 		}

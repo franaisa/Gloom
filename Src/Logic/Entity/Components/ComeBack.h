@@ -29,6 +29,7 @@ namespace Logic {
 	@author Jose Antonio García Yáñez
 	@date Febrero, 2013
 	*/
+	class CPhysicController;
 
 	class CComeBack : public ISpell {
 		DEC_FACTORY(CComeBack);
@@ -78,10 +79,10 @@ namespace Logic {
 
 	private:
 		
-		/** Gravedad por defecto. */
-		//float _defaultGravity;
+		CPhysicController *_physicController;
 
-		//float _newGravity;
+		Vector3 _comeBackPosition;
+		Quaternion _comeBackOrientation;
 	}; // class CShootRaycast
 
 	REG_FACTORY(CComeBack);

@@ -112,6 +112,11 @@ namespace Logic{
 			return;
 		player->second.kills++;
 
+		if( ++(player->second.currentSpree) > player->second.bestSpree ) {
+			player->second.bestSpree = player->second.currentSpree;
+			_scoreboard->callFunction("addSpree",Hikari::Args(name)((int)player->second.bestSpree));
+		}
+
 		//ahora avisamos a la GUI de que ha habido un cambio
 		_scoreboard->callFunction("addKill",Hikari::Args(name)((int)player->second.kills));
 	}
@@ -137,6 +142,7 @@ namespace Logic{
 		if(player==_players.end())
 			return;
 		player->second.deaths++;
+		player->second.currentSpree = 0;
 
 		//ahora avisamos a la GUI de que ha habido un cambio
 		_scoreboard->callFunction("addDeath",Hikari::Args(name)((int)player->second.deaths));
