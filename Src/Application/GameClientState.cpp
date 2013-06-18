@@ -223,7 +223,7 @@ namespace Application {
 
 				break;
 			}
-			case Net::PLAYER_DISCONNECTED: {
+			case Net::PLAYER_OFF_MATCH: {
 				std::string name;
 				buffer.deserialize(name);
 
@@ -361,9 +361,14 @@ namespace Application {
 				buffer.serialize(selectedClass);
 				_netMgr->broadcast( buffer.getbuffer(), buffer.getSize() );
 
-				if(Input::CServer::getSingletonPtr()->getPlayerController()->getControllerAvatar()){
-					Input::CServer::getSingletonPtr()->getPlayerController()->setControlledAvatar(NULL);
-					Input::CServer::getSingletonPtr()->getPlayerController()->activate();
+				Input::CPlayerController* controller = Input::CServer::getSingletonPtr()->getPlayerController();
+				Logic::CEntity* localPlayer = controller->getControllerAvatar();
+				if(localPlayer){
+					controller->setControlledAvatar(NULL);
+					controller->activate();
+
+					// Como pasamos a modo espectador nos borramos del scoreboard
+					Logic::CScoreboard::getSingletonPtr()->deletePlayer( localPlayer->getName() );
 				}
 
 				break;
