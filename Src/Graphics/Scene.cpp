@@ -40,6 +40,7 @@ de una escena.
 #include <OgreParticleSystem.h>
 #include <OgreCompositionTargetPass.h>
 #include <OgreCompositionPass.h>
+#include <OgreMaterialManager.h>
 #include <OgreCompositorChain.h>
 
 
@@ -62,7 +63,6 @@ namespace Graphics
 		_sceneMgr->getRootSceneNode()->setVisible(false);
 		_compositorManager = Ogre::CompositorManager::getSingletonPtr();
 		_poolParticle = new CPoolParticle();
-
 	} // CScene
 
 	//--------------------------------------------------------
@@ -74,10 +74,17 @@ namespace Graphics
 		_root->destroySceneManager(_sceneMgr);
 		
 		
-		Ogre::MaterialManager::getSingletonPtr()->destroyAllResourcePools();
-		Ogre::MaterialManager::getSingletonPtr()->removeAll();
-		_compositorManager->destroyAllResourcePools();
-		_compositorManager->removeAll();
+		//Ogre::MaterialManager::getSingletonPtr()->destroyAllResourcePools();
+		//Ogre::MaterialManager::getSingletonPtr()->removeAll();
+
+		auto it = _compositorList.begin();
+		auto end = _compositorList.end();
+
+		for(;it!=end;++it){
+			_compositorManager->removeCompositor(_viewport, it->first);
+		}
+		_compositorList.clear();
+		
 	} // ~CScene
 
 	//--------------------------------------------------------
@@ -326,6 +333,7 @@ namespace Graphics
 			return;
 
 		CCompositorListener* newListener = new CCompositorListener();
+		//_compositorManager->GETC
 		_compositorManager->addCompositor(_camera->getOgreCamera()->getViewport(), name)->addListener(newListener);
 		std::pair<std::string,CCompositorListener*> aux(name,newListener);
 
