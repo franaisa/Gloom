@@ -25,11 +25,6 @@ material Material#25
 		pass 
 		{
 			illumination_stage ambient
-		
-			ambient "0 0 0 1"
-			diffuse "1 1 1 1"
-			specular $specular $shininess
-			emissive 0 0 0 0
 			
 			vertex_program_ref ambient_vs
             {
@@ -67,11 +62,6 @@ material Material#25
             fragment_program_ref diffuse_ps
             {
             }
-
-            ambient "0 0 0 1"
-			diffuse "1 1 1 1"
-			specular $specular $shininess
-			emissive 0 0 0 0
 			
             texture_unit aoMap
 			{
@@ -110,11 +100,6 @@ material Material#52
 		pass 
 		{
 			illumination_stage ambient
-		
-			ambient "0 0 0 1"
-			diffuse "1 1 1 1"
-			specular $specular $shininess
-			emissive 0 0 0 0
 			
 			vertex_program_ref ambient_vs
             {
@@ -154,11 +139,6 @@ material Material#52
             fragment_program_ref diffuse_ps
             {
             }
-
-            ambient "0 0 0 1"
-			diffuse "1 1 1 1"
-			specular $specular $shininess
-			emissive 0 0 0 0
 			
             texture_unit aoMap
 			{
@@ -191,19 +171,10 @@ material Material#39
 {
 	technique
 	{
-		set $ambient "0 0 0 1"
-		set $diffuse "1 1 1 1"
-		set $specular "2 2 2 100"
-		set $shininess "60"
 		
 		pass 
 		{
 			illumination_stage ambient
-		
-			ambient "0 0 0 1"
-			diffuse "1 1 1 1"
-			specular $specular $shininess
-			emissive 0 0 0 0
 			
 			vertex_program_ref ambient_vs
             {
@@ -243,11 +214,6 @@ material Material#39
             fragment_program_ref diffuse_ps
             {
             }
-
-            ambient "0 0 0 1"
-			diffuse "1 1 1 1"
-			specular $specular $shininess
-			emissive 0 0 0 0
 			
             texture_unit aoMap
 			{
@@ -292,10 +258,6 @@ material Material#38
 		{
 			illumination_stage ambient
 		
-			ambient "0 0 0 1"
-			diffuse "1 1 1 1"
-			specular $specular $shininess
-			emissive 0 0 0 0
 			
 			vertex_program_ref ambient_vs
             {
@@ -335,11 +297,6 @@ material Material#38
             fragment_program_ref diffuse_ps
             {
             }
-
-            ambient "0 0 0 1"
-			diffuse "1 1 1 1"
-			specular $specular $shininess
-			emissive 0 0 0 0
 			
             texture_unit aoMap
 			{
@@ -381,11 +338,6 @@ material Material#53
 		pass 
 		{
 			illumination_stage ambient
-		
-			ambient "0 0 0 1"
-			diffuse "1 1 1 1"
-			specular $specular $shininess
-			emissive 0 0 0 0
 			
 			vertex_program_ref ambient_vs
             {
@@ -426,11 +378,6 @@ material Material#53
             {
             }
 
-            ambient "0 0 0 1"
-			diffuse "1 1 1 1"
-			specular $specular $shininess
-			emissive 0 0 0 0
-			
             texture_unit aoMap
 			{
 				texture viga_COLOR.tga
@@ -472,11 +419,6 @@ material Material#93
 		{
 			illumination_stage ambient
 		
-			ambient "0 0 0 1"
-			diffuse "1 1 1 1"
-			specular $specular $shininess
-			emissive 0 0 0 0
-			
 			vertex_program_ref ambient_vs
             {
             }
@@ -516,11 +458,6 @@ material Material#93
             {
             }
 
-            ambient "0 0 0 1"
-			diffuse "1 1 1 1"
-			specular $specular $shininess
-			emissive 0 0 0 0
-			
             texture_unit aoMap
 			{
 				texture MetalContainer_COLOR_OXID.tga
@@ -562,11 +499,6 @@ material Material#94
 		{
 			illumination_stage ambient
 		
-			ambient "0 0 0 1"
-			diffuse "1 1 1 1"
-			specular $specular $shininess
-			emissive 0 0 0 0
-			
 			vertex_program_ref ambient_vs
             {
             }
@@ -606,11 +538,6 @@ material Material#94
             {
             }
 
-            ambient "0 0 0 1"
-			diffuse "1 1 1 1"
-			specular $specular $shininess
-			emissive 0 0 0 0
-			
             texture_unit aoMap
 			{
 				texture MetalContainer_COLOR.tga
@@ -651,11 +578,6 @@ material Material#37
 		{
 			illumination_stage ambient
 		
-			ambient "0 0 0 1"
-			diffuse "1 1 1 1"
-			specular $specular $shininess
-			emissive 0 0 0 0
-			
 			vertex_program_ref ambient_vs
             {
             }
@@ -695,11 +617,6 @@ material Material#37
             {
             }
 
-            ambient "0 0 0 1"
-			diffuse "1 1 1 1"
-			specular $specular $shininess
-			emissive 0 0 0 0
-			
             texture_unit aoMap
 			{
 				texture suelometal_COLOR2.tga
@@ -740,11 +657,6 @@ material Material#92
 		{
 			illumination_stage ambient
 		
-			ambient "0 0 0 1"
-			diffuse "1 1 1 1"
-			specular $specular $shininess
-			emissive 0 0 0 0
-			
 			vertex_program_ref ambient_vs
             {
             }
@@ -783,11 +695,6 @@ material Material#92
             fragment_program_ref diffuse_ps
             {
             }
-
-            ambient "0 0 0 1"
-			diffuse "1 1 1 1"
-			specular $specular $shininess
-			emissive 0 0 0 0
 			
             texture_unit aoMap
 			{
@@ -830,10 +737,6 @@ material Material#107
 		{
 			illumination_stage ambient
 		
-			ambient "0 0 0 1"
-			diffuse "1 1 1 1"
-			specular $specular $shininess
-			emissive 0 0 0 0
 			
 			vertex_program_ref ambient_vs
             {
@@ -874,11 +777,6 @@ material Material#107
             {
             }
 
-            ambient "0 0 0 1"
-			diffuse "1 1 1 1"
-			specular $specular $shininess
-			emissive 0 0 0 0
-			
             texture_unit aoMap
 			{
 				texture techometal_COLOR2.tga
