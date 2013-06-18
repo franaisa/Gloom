@@ -1383,6 +1383,11 @@ Map = {
 			comeBackID = 1,
 			comeBackIsPassive = false,
 			comeBackIsPrimarySpell = false,
+			comeBackCooldown = 10,
+			comeBackMaxAmmo = 7,
+			comeBackAmmoPerPull = 3,
+			comeBackDurationEffect = 5,
+			comeBackDistanceEffect = 200,
 			
 			zoomID = 2,
 			zoomIsPassive = false,
@@ -1410,7 +1415,7 @@ Map = {
 			cooldownID = 6,
 			cooldownIsPassive = true,
 			cooldownIsPrimarySpell = false,
-			cooldownpercentageCooldown = 20,
+			cooldownPercentageCooldown = 20,
 			
 			resurectionID = 7,
 			resurectionIsPassive = true,
