@@ -20,6 +20,7 @@ Contiene la declaracion de la clase GameNetPlayersManager para el proyecto de lo
 #include <string>
 #include "PlayerInfo.h"
 #include "Logic/Maps/TeamFaction.h"
+#include "Net/buffer.h"
 
 // Predeclaracion del typedef NetID
 namespace Net {
@@ -202,6 +203,16 @@ namespace Logic {
 		*/
 		void substractFragUsingEntityID(Logic::TEntityID entityId);
 
+		//________________________________________________________________________
+
+		/**
+		Incrementa el número de muertes del jugador.
+
+		@param entityId Id de la entidad a la que queremos decrementarle el número
+		de frags.
+		*/
+		void addDeathUsingEntityID(Logic::TEntityID entityId);
+
 
 		// =======================================================================
 		//                                GETTERS
@@ -310,6 +321,16 @@ namespace Logic {
 		//________________________________________________________________________
 
 		/**
+		Devuelve el número de muertes que lleva el jugador.
+
+		@param playerID Id´lógico del jugdaor.
+		@return El número de muertes que le han hecho al jugador dado.
+		*/
+		unsigned int getDeathsUsingEntityID(Logic::TEntityID playerId);
+
+		//________________________________________________________________________
+
+		/**
 		Devuelve el numero de jugadores que hay en el equipo azul.
 
 		@return Numero de jugadores en el equipo azul.
@@ -324,6 +345,15 @@ namespace Logic {
 		@return Numero de jugadores en el equipo rojo.
 		*/
 		unsigned int redTeamPlayers();
+
+		//________________________________________________________________________
+
+		/**
+		Serializa la información que el scoreboard necesita para inicializarse.
+
+		@return El buffer que contiene la información del scoreboard serializada.
+		*/
+		Net::CBuffer serializeScoreboardInfo();
 
 
 		// =======================================================================
