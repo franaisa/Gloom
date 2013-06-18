@@ -145,6 +145,8 @@ namespace Logic {
 		bool _secondaryFireIsActive;
 
 		int _temporal;
+		Ogre::ManualObject* myManualObject;
+		Ogre::SceneNode* myManualObjectNode;
 
 	}; // class CSniper
 
