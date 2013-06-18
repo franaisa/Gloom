@@ -1,4 +1,4 @@
-material ArchangelHeadBlue
+material HoundHeadBlue
 {
 	
 	
@@ -81,7 +81,7 @@ material ArchangelHeadBlue
 
 
 
-material ArchangelEyeRBlue
+material HoundEyeRBlue
 {
 	set $shininess "60"
 	set $specular "2 2 2 100"
@@ -160,7 +160,7 @@ material ArchangelEyeRBlue
 
 
 
-material ArchangelEyeLBlue
+material HoundEyeLBlue
 {
 	set $shininess "60"
 	set $specular "2 2 2 100"
@@ -240,7 +240,7 @@ material ArchangelEyeLBlue
 
 
 //cuerpo
-material ArchangelBodyBlue
+material HoundBodyBlue
 {
 	set $shininess "15"
 	set $specular "2 2 2 15"
@@ -323,7 +323,7 @@ material ArchangelBodyBlue
 
 }
 
-material ArchangelHandsBlue
+material HoundHandsBlue
 {
 	
 	set $shininess "15"

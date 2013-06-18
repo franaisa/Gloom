@@ -115,12 +115,12 @@ material ArchangelDiamond3
 			vertex_program_ref ArchangelShield_vs
 			{
 				param_named_auto ViewProjectionMatrix worldviewproj_matrix
-				param_named_auto tiempo time
+				
 			}
 			fragment_program_ref ArchangelShield_ps
             {
 				param_named alpha float 0.25
-				param_named_auto tiempo time
+				
             }
 			texture_unit 0
             {

@@ -183,7 +183,7 @@ namespace Logic
 			_insertAnimation = true;
 			_animatedGraphicsEntity->setAnimation( nextAnim.animation,nextAnim.loop );
 			_insertAnimation = nextAnim.exclude;
-
+			_entity->getYaw();
 			nextAnim.animation="";
 		}
 	}

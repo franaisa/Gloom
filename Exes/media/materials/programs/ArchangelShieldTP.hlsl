@@ -1,8 +1,6 @@
 float4x4 ViewProjectionMatrix;
 //float4x4 worldMatrix;
 
-
-float tiempo;
 float alpha;
 sampler shieldTexture: register(s0);
 

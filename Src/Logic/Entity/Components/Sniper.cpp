@@ -85,8 +85,8 @@ namespace Logic {
 			//Si tocamos el mundo no continuamos viendo hits y llamamos al pintado del rayo (si se considera necesario)
 			if(hits[i].entity->getType().compare("World")==0){
 				// Dibujamos el rayo lanzandolo algo mas abajo para verlo
-				ray.setOrigin(ray.getOrigin()-Vector3(0,0.05,0));
-				drawRaycast(ray,hits[i].distance);
+				//ray.setOrigin(ray.getOrigin()-Vector3(0,0.05,0));
+				//drawRaycast(ray,hits[i].distance);
 				//Si hacemos el rayo extendiendo un mesh sacar a un metodo de pintado
 				/*float distanceWorld=hits[i].distance;
 				//Atendiendo a la distancia y sabiendo que el gráfico de la entidad mide X metros
@@ -252,7 +252,7 @@ namespace Logic {
 
 	// Dibujado de raycast para depurar
 	void CSniper::drawRaycast(const Ray& raycast,int distance) {
-		Graphics::CScene *scene = Graphics::CServer::getSingletonPtr()->getActiveScene();
+		/*Graphics::CScene *scene = Graphics::CServer::getSingletonPtr()->getActiveScene();
 		Ogre::SceneManager *mSceneMgr = scene->getSceneMgr();
 
 		std::stringstream aux;
@@ -260,8 +260,8 @@ namespace Logic {
 		++_temporal;
 		std::string laser = aux.str();
 
-		Ogre::ManualObject* myManualObject =  mSceneMgr->createManualObject(laser); 
-		Ogre::SceneNode* myManualObjectNode = mSceneMgr->getRootSceneNode()->createChildSceneNode(laser+"_node"); 
+		myManualObject =  mSceneMgr->createManualObject(laser); 
+		myManualObjectNode = mSceneMgr->getRootSceneNode()->createChildSceneNode(laser+"_node"); 
  
 		myManualObject->begin("laser", Ogre::RenderOperation::OT_LINE_STRIP);
 		Vector3 v = raycast.getOrigin();
@@ -275,6 +275,12 @@ namespace Logic {
 
 		myManualObject->end(); 
 		myManualObjectNode->attachObject(myManualObject);
+		_laserTime
+
+		//Destruccion
+		myManualObjectNode->detachAllObjects();
+		_entity->getMap()->getScene()->getSceneMgr()->destroyManualObject(myManualObject);
+		_entity->getMap()->getScene()->getSceneMgr()->destroySceneNode(myManualObjectNode);*/
 	}// drawRaycast
 
 
