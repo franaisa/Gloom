@@ -204,6 +204,7 @@ namespace Application {
 			case Net::LOAD_WORLD_STATE: {
 				// Deserializar el estado del mundo
 				Logic::CWorldState::getSingletonPtr()->deserialize(buffer);
+				Logic::CScoreboard::getSingletonPtr()->deserialize(buffer);
 
 				Net::NetMessageType ackMsg = Net::NetMessageType::WORLD_STATE_LOADED;
 				_netMgr->broadcast( &ackMsg, sizeof(ackMsg) );

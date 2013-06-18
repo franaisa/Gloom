@@ -45,13 +45,14 @@ la clase del jugador, las muertes, los frags, los mejores spree, etc.
 			PlayerInfo(	const std::string &name, CEntity* &player, const std::string &pClass, int playerTeam = 0, 
 						unsigned int kills = 0, unsigned int death = 0,unsigned int spree = 0, unsigned int lag = 0):
 						entityPlayer(player), name(name), playerClass(pClass), team(playerTeam), deaths(death),
-						bestSpree(spree), ping(lag), kills(kills){}
+						bestSpree(spree), ping(lag), kills(kills), currentSpree(0) {}
 
 			//struct members
 			CEntity * entityPlayer;
 			std::string name;
 			int kills;
 			unsigned int deaths;
+			unsigned int currentSpree;
 			unsigned int bestSpree;
 			unsigned int ping;
 			unsigned int team;

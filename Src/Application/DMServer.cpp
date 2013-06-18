@@ -81,7 +81,9 @@ namespace Application {
 					_playersMgr->substractFragUsingEntityID(emitterID);
 				}
 
-				//cout << killer->getName() << " lleva " << _playersMgr->getFragsUsingEntityID(emitterID) << " frags" << endl;
+				_playersMgr->addDeathUsingEntityID(emitterID);
+
+				//cout << killer->getName() << " lleva " << _playersMgr->getFragsUsingEntityID(killerID) << " frags y " << _playersMgr->getDeathsUsingEntityID(killerID) << " muertes." << endl;
 
 				break;
 			}

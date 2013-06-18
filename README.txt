@@ -20,6 +20,7 @@ GENERAL NOTES
 		- Ángel Arenas Civantos
 
 	** 3D Artists:
+		- Felipe Cambas
 		- Ángel Arenas Civantos
 		- Aaron Pérez
 		- Alberto Moro

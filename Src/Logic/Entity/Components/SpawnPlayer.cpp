@@ -173,7 +173,6 @@ namespace Logic
 			std::shared_ptr<CMessageHudSpawn> m = std::make_shared<CMessageHudSpawn>();
 			m->setTime(_timeSpawn/1000);
 			_entity->emitMessage(m);
-
 		}
 
 	} // process
