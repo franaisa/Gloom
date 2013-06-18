@@ -11,7 +11,6 @@ package principal
 	import flash.display.StageScaleMode;
 	import flash.external.ExternalInterface;
 
-
 	
 	/**
 	 * ...
