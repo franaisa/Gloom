@@ -107,6 +107,17 @@ namespace Application {
 	//______________________________________________________________________________
 
 	void CGameServerState::createAndMirrorSpectator(Net::NetID playerNetId) {
+		// Primero comprobamos si habia una entidad correspondiente a este jugador
+		// ya que durante el juego tambien podemos cambiar de clase.
+		// En caso de que la haya la eliminamos para crear la nueva
+		std::pair<Logic::TEntityID, bool> id = _playersMgr->getPlayerId(playerNetId);
+		if(id.second) { // Si el id devuelto es valido
+			Logic::CEntity* deletePlayer = _map->getEntityByID( id.first );
+			if(deletePlayer) {
+				Logic::CEntityFactory::getSingletonPtr()->deleteEntity(deletePlayer, true);
+			}
+		}
+		
 		// Obtenemos el nickname del jugador que quiere espectar
 		std::string nickname = _playersMgr->getPlayerNickname(playerNetId);
 		// Creamos la entidad espectador con el nombre del jugador
@@ -129,11 +140,26 @@ namespace Application {
 		// Activamos al espectador
 		spectator->activate();
 		spectator->start();
+
+		// Indicamos que el jugador esta en la partida pero no esta participando
+		// ya que es un espectador
+		_playersMgr->setPlayerState(playerNetId, false);
 	}
 
 	//______________________________________________________________________________
 
 	void CGameServerState::createAndMirrorPlayer(int race, Net::NetID playerNetId, Logic::TeamFaction::Enum team) {
+		// Primero comprobamos si habia una entidad correspondiente a este jugador
+		// ya que durante el juego tambien podemos cambiar de clase.
+		// En caso de que la haya la eliminamos para crear la nueva
+		std::pair<Logic::TEntityID, bool> id = _playersMgr->getPlayerId(playerNetId);
+		if(id.second) { // Si el id devuelto es valido
+			Logic::CEntity* deletePlayer = _map->getEntityByID( id.first );
+			if(deletePlayer) {
+				Logic::CEntityFactory::getSingletonPtr()->deleteEntity(deletePlayer, true);
+			}
+		}
+		
 		std::string name = _playersMgr->getPlayerNickname(playerNetId);
 		
 		// Obtenemos el nombre de la clase a la que pertenece el player
@@ -260,20 +286,18 @@ namespace Application {
 			case Net::SPECTATE_REQUEST: {
 				// Creamos una entidad espectador y la replicamos en el cliente
 				createAndMirrorSpectator(playerNetId);
+
+				//debemos enviar un mensaje de player disconnected
+				Net::NetMessageType playerOffMsg = Net::PLAYER_OFF_MATCH;
+				Net::CBuffer spectatingBuffer;
+				spectatingBuffer.write( &playerOffMsg, sizeof(playerOffMsg) );
+				spectatingBuffer.serialize(_playersMgr->getPlayerNickname(playerNetId), false);
+
+				_netMgr->broadcastIgnoring( playerNetId, spectatingBuffer.getbuffer(), spectatingBuffer.getSize() );
+
 				break;
 			}
 			case Net::CLASS_SELECTED: {
-				// Primero comprobamos si habia una entidad correspondiente a este jugador
-				// ya que durante el juego tambien podemos cambiar de clase.
-				// En caso de que la haya la eliminamos para crear la nueva
-				std::pair<Logic::TEntityID, bool> playerId = _playersMgr->getPlayerId(playerNetId);
-				if(playerId.second) { // Si el id devuelto es valido
-					Logic::CEntity* deletePlayer = _map->getEntityByID( playerId.first );
-					if(deletePlayer) {
-						Logic::CEntityFactory::getSingletonPtr()->deleteEntity(deletePlayer, true);
-					}
-				}
-
 				int race;
 				inBuffer.deserialize(race);
 
@@ -342,14 +366,14 @@ namespace Application {
 			Logic::CEntity* entityToBeDeleted = _map->getEntityByID(logicIdPair.first);
 			Logic::CEntityFactory::getSingletonPtr()->deferredDeleteEntity(entityToBeDeleted,true);
 
-			//debemos enviar un mensaje de player disconnected
-			Net::NetMessageType ackMsg = Net::PLAYER_DISCONNECTED;
+			// A nivel logico, conviene que los clientes sepan quien se desconecta,
+			// especialmente para eliminar cosas del hud
+			Net::NetMessageType ackMsg = Net::PLAYER_OFF_MATCH;
 			Net::CBuffer disconnectMsg;
 			disconnectMsg.write(&ackMsg, sizeof(ackMsg));
 			disconnectMsg.serialize(entityToBeDeleted->getName(),false);
 
 			_netMgr->broadcast(disconnectMsg.getbuffer(), disconnectMsg.getSize());
-
 		}
 		
 		// Eliminamos el jugador que se desconecta del manager de jugadores
