@@ -1,0 +1,67 @@
+vertex_program BumpGlossVS_HLSL hlsl
+{
+  source bumpyglossy.hlsl
+  entry_point bumpyGlossy_VS
+  target vs_2_0
+
+  default_params
+  {
+    param_named_auto   WvpXf    worldviewproj_matrix
+    param_named_auto   WorldXf    worldview_matrix
+    param_named_auto   WorldITXf    inverse_transpose_world_matrix 
+    param_named_auto   ViewIXf    inverse_view_matrix
+    param_named_auto   lightPos  light_position 0
+  }
+}
+
+fragment_program BumpGlossFS_HLSL hlsl
+{
+  source bumpyglossy.hlsl
+  entry_point bumpyGlossy_FS
+  target ps_2_0
+
+  default_params
+  {
+    param_named_auto   AmbiColor    ambient_light_colour 0 
+    param_named_auto   DiffuseColor  light_diffuse_colour 0
+    param_named_auto   SpecularColor  light_specular_colour 0
+    param_named      SpecExpon     float 12.0
+    param_named      Kd         float 0.1
+    param_named      Ks         float 0.8
+    param_named      Kr         float 1.0
+    param_named      Bumpy       float 2.0
+    param_named      LightIntensity   float 20.0
+  }
+}
+
+material cubo
+{
+  technique
+  {
+    pass first
+    {
+      vertex_program_ref BumpGlossVS_HLSL
+      {
+      }
+      fragment_program_ref BumpGlossFS_HLSL
+      {
+      }
+      texture_unit
+      {
+        texture Default_color.dds 2d
+      }
+      texture_unit
+      {
+        texture Default_bump_normal.dds 2d
+      }
+      texture_unit
+      {
+        texture Default_gloss.dds 2d
+      }
+      texture_unit
+      {
+        cubic_texture Default_reflection.dds combinedUVW
+      }
+    }
+  }
+}
