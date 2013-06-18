@@ -138,6 +138,8 @@ namespace Logic
 	void CCamera::rollCamera(float radians) {
 		_applyRoll=true;
 		_toRoll=(-1 * _currentRoll) + radians ;
+		if(Math::fromRadiansToDegrees(_toRoll)<0.005)
+			_applyRoll=false;
 		//_graphicsCamera->rollCamera(_toRoll);
 		_currentRoll = radians;
 	}
@@ -249,6 +251,7 @@ namespace Logic
 		//Aplico efecto de roll si lo hubo
 		if(_applyRoll){
 			_applyRoll=false;
+			std::cout << "Aplico rollCamera: " << Math::fromRadiansToDegrees(_toRoll) << std::endl;
 			_graphicsCamera->rollCamera(_toRoll);
 		}
 	} // tick
