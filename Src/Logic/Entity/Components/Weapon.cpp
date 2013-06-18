@@ -44,8 +44,6 @@ namespace Logic {
 	
 	IWeapon::IWeapon(const string& weaponName) : _weaponName("weapon" + weaponName),
 												 _currentAmmo(0) {
-_bDecalsCreated = false;
-_primerDecal = true;
 		// Nada que inicializar
 	}
 
@@ -172,45 +170,6 @@ _primerDecal = true;
 		messageDecal->setPosition(vPos);
 		messageDecal->setTexture("gunshotwall");
 		pEntity->emitMessage(messageDecal);
-
-		/*
-		CGraphics* cGraph;
-		cGraph = pEntity->getComponent<CGraphics>("CGraphics");
-		if (cGraph) {
-			worldMesh.initialize( cGraph->getOgreMesh()->getMesh(), Vector3(1,1,1));
- 
-			/// Get the DecalGenerator singleton and initialize it
-			OgreDecal::DecalGenerator& generator = OgreDecal::DecalGenerator::getSingleton();
-			//generator.initialize( sceneMgr );
-			generator.initialize(cGraph->getSceneManager());
- 
-			/// Set Decal parameters:
-			Ogre::Vector3 pos = vPos; /// Send a ray into the mesh
-			float width = 1.0f;
-			float height = 1.0f;
-			std::string textureName = "gunshotwall"; /// Make sure your texture has a depth_bias greater than 1 to avoid z-fighting
-
-			/// We have everything ready to go. Now it's time to actually generate the decal:
-			if (!_bDecalsCreated)
-			{
-				decalObject = cGraph->getSceneManager()->createManualObject();
-				_bDecalsCreated = true;
-			}
-			else
-			{
-				int a;
-			}
-			OgreDecal::Decal decal = generator.createDecal( &worldMesh, pos, width, height, textureName, true, decalObject );
-			std::cout << "ha creado el decal" << std::endl;
-			/// Render the decal object. Always verify the returned object - it will be NULL if no decal could be created.
-			if ((decal.object) && (_primerDecal)) {
-				//sceneMgr->getRootSceneNode()->createChildSceneNode()->attachObject( decal.object );
-				cGraph->getSceneManager()->getRootSceneNode()->createChildSceneNode()->attachObject( decal.object );
-				//decalObject = NULL;
-				std::cout << "entraaaaaa" << std::endl;
-				_primerDecal = false;
-			}
-			std::cout << "pinta" << std::endl;*/
 	}
 
 	//__________________________________________________________________
