@@ -87,6 +87,7 @@ namespace Application {
 				Logic::CEntity* player = Input::CServer::getSingletonPtr()->getPlayerController()->getControllerAvatar();
 				set<string> exceptionList;
 				exceptionList.insert("CAnimationManager");
+				exceptionList.insert("CClientRespawn");
 
 				player->deactivateAllComponentsExcept(exceptionList);
 

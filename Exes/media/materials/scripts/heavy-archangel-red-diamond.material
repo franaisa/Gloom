@@ -1,4 +1,4 @@
-vertex_program ArchangelShield_vs hlsl
+vertex_program ArchangelDiamond hlsl
 {
 	source ArchangelShieldTP.hlsl
 	entry_point mainVS
@@ -6,13 +6,12 @@ vertex_program ArchangelShield_vs hlsl
 
 }
 
-fragment_program ArchangelShield_ps hlsl
+fragment_program ArchangelDiamondps hlsl
 {
 	source ArchangelShieldTP.hlsl
 	entry_point mainPS
 	target ps_2_0
 }
-
 
 material ArchangelHeadRedDiamond
 {
@@ -60,15 +59,15 @@ material ArchangelHeadRedDiamond
 			
 			depth_write off
 			
-			vertex_program_ref ArchangelShield_vs
+			vertex_program_ref ArchangelDiamond
 			{
 				param_named_auto ViewProjectionMatrix worldviewproj_matrix
-				param_named_auto tiempo time
+				
 			}
-			fragment_program_ref ArchangelShield_ps
+			fragment_program_ref ArchangelDiamondps
             {
 				param_named alpha float 0.25
-				param_named_auto tiempo time
+				
             }
 			texture_unit 0
             {
@@ -167,15 +166,15 @@ material ArchangelEyeRRedDiamond
 			
 			depth_write off
 			
-			vertex_program_ref ArchangelShield_vs
+			vertex_program_ref ArchangelDiamond
 			{
 				param_named_auto ViewProjectionMatrix worldviewproj_matrix
-				param_named_auto tiempo time
+				
 			}
-			fragment_program_ref ArchangelShield_ps
+			fragment_program_ref ArchangelDiamondps
             {
 				param_named alpha float 0.25
-				param_named_auto tiempo time
+				
             }
 			texture_unit 0
             {
@@ -272,15 +271,15 @@ material ArchangelEyeLRedDiamond
 			
 			depth_write off
 			
-			vertex_program_ref ArchangelShield_vs
+			vertex_program_ref ArchangelDiamond
 			{
 				param_named_auto ViewProjectionMatrix worldviewproj_matrix
-				param_named_auto tiempo time
+				
 			}
-			fragment_program_ref ArchangelShield_ps
+			fragment_program_ref ArchangelDiamondps
             {
 				param_named alpha float 0.25
-				param_named_auto tiempo time
+				
             }
 			texture_unit 0
             {
@@ -378,15 +377,15 @@ material ArchangelBodyRedDiamond
 			
 			depth_write off
 			
-			vertex_program_ref ArchangelShield_vs
+			vertex_program_ref ArchangelDiamond
 			{
 				param_named_auto ViewProjectionMatrix worldviewproj_matrix
-				param_named_auto tiempo time
+				
 			}
-			fragment_program_ref ArchangelShield_ps
+			fragment_program_ref ArchangelDiamondps
             {
 				param_named alpha float 0.25
-				param_named_auto tiempo time
+				
             }
 			texture_unit 0
             {
@@ -487,15 +486,15 @@ material ArchangelHandsRedDiamond
 			
 			depth_write off
 			
-			vertex_program_ref ArchangelShield_vs
+			vertex_program_ref ArchangelDiamond
 			{
 				param_named_auto ViewProjectionMatrix worldviewproj_matrix
-				param_named_auto tiempo time
+				
 			}
-			fragment_program_ref ArchangelShield_ps
+			fragment_program_ref ArchangelDiamondps
             {
 				param_named alpha float 0.25
-				param_named_auto tiempo time
+				
             }
 			texture_unit 0
             {

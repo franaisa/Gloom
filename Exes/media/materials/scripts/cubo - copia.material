@@ -1,4 +1,4 @@
-material cubo
+material cubo2
 {
 	// This is the preferred technique which uses both vertex and
 	// fragment programs, supports coloured lights

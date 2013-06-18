@@ -48,7 +48,6 @@ namespace Graphics
 		_camera->setFOVy(Ogre::Radian(_defaultFov));
 		//Atachamos la camara al nodo
 		_cameraNode->attachObject(this->_camera);
-
 	} // CCamera
 
 	//--------------------------------------------------------
