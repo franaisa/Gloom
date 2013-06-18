@@ -80,7 +80,9 @@ namespace Logic {
 	void CFireBallController::process(const shared_ptr<CMessage>& message) {
 		switch( message->getMessageType() ) {
 			case Message::CONTACT_ENTER: {
-				createExplotion();
+				shared_ptr<CMessageContactEnter> contactMsg = static_pointer_cast<CMessageContactEnter>(message);
+				if( contactMsg->getEntity() != _owner->getEntity()->getEntityID() )
+					createExplotion();
 			}
 		}
 	}
