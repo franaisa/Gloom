@@ -137,10 +137,7 @@ namespace Logic
 
 	void CCamera::rollCamera(float radians) {
 		_applyRoll=true;
-		_toRoll=(-1 * _currentRoll) + radians ;
-		if(Math::fromRadiansToDegrees(_toRoll)<0.005)
-			_applyRoll=false;
-		//_graphicsCamera->rollCamera(_toRoll);
+		_toRoll=radians;
 		_currentRoll = radians;
 	}
 	
@@ -214,7 +211,6 @@ namespace Logic
 				Math::rotate(Vector3::UNIT_Y,Ogre::Radian(Math::HALF_PI),_entity->getYaw());
 
 				//En el eje de movimiento horizontal
-				//REVISAR NO ESTOY MUY SEGURO
 				Quaternion halfPi(Ogre::Radian(Math::HALF_PI),Vector3::UNIT_Y);
 				Vector3 directionStrafe = (_entity->getYaw() * halfPi)*Vector3::NEGATIVE_UNIT_Z;
 				position += directionStrafe;
@@ -251,7 +247,6 @@ namespace Logic
 		//Aplico efecto de roll si lo hubo
 		if(_applyRoll){
 			_applyRoll=false;
-			std::cout << "Aplico rollCamera: " << Math::fromRadiansToDegrees(_toRoll) << std::endl;
 			_graphicsCamera->rollCamera(_toRoll);
 		}
 	} // tick
