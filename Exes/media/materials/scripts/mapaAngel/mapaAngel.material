@@ -90,15 +90,15 @@ material mapaAngel_muro
 {
 	technique
 	{
-	
+		
+		set $ambient "0 0 0 1"
+		set $diffuse "1 1 1 1"
+		set $specular "2 2 2 100"
+		set $shininess "60"
+		
 		pass 
 		{
 			illumination_stage ambient
-		
-			ambient "0 0 0 1"
-			diffuse "1 1 1 1"
-			specular $specular $shininess
-			emissive 0 0 0 0
 			
 			vertex_program_ref ambient_vs
             {
@@ -136,11 +136,6 @@ material mapaAngel_muro
             fragment_program_ref diffuse_ps
             {
             }
-
-            ambient "0 0 0 1"
-			diffuse "1 1 1 1"
-			specular $specular $shininess
-			emissive 0 0 0 0
 			
             texture_unit aoMap
 			{
@@ -174,15 +169,14 @@ material mapaAngel_pipe
 {
 	technique
 	{
+		set $ambient "0 0 0 1"
+		set $diffuse "1 1 1 1"
+		set $specular "2 2 2 100"
+		set $shininess "60"
 	
 		pass 
 		{
 			illumination_stage ambient
-		
-			ambient "0 0 0 1"
-			diffuse "1 1 1 1"
-			specular $specular $shininess
-			emissive 0 0 0 0
 			
 			vertex_program_ref ambient_vs
             {
@@ -220,11 +214,6 @@ material mapaAngel_pipe
             fragment_program_ref diffuse_ps
             {
             }
-
-            ambient "0 0 0 1"
-			diffuse "1 1 1 1"
-			specular $specular $shininess
-			emissive 0 0 0 0
 			
             texture_unit aoMap
 			{
@@ -258,14 +247,15 @@ material mapaAngel_rock
 {
 	technique
 	{
+	
+		set $ambient "0 0 0 1"
+		set $diffuse "1 1 1 1"
+		set $specular "2 2 2 100"
+		set $shininess "60"
 		pass 
 		{
 			illumination_stage ambient
 		
-			ambient "0 0 0 1"
-			diffuse "1 1 1 1"
-			specular $specular $shininess
-			emissive 0 0 0 0
 			
 			vertex_program_ref ambient_vs
             {
@@ -303,11 +293,6 @@ material mapaAngel_rock
             fragment_program_ref diffuse_ps
             {
             }
-
-            ambient "0 0 0 1"
-			diffuse "1 1 1 1"
-			specular $specular $shininess
-			emissive 0 0 0 0
 			
             texture_unit aoMap
 			{
@@ -341,16 +326,14 @@ material mapaAngel_suelo
 {
 	technique
 	{
-		
+		set $ambient "0 0 0 1"
+		set $diffuse "1 1 1 1"
+		set $specular "2 2 2 100"
+		set $shininess "60"
 		/*pass 
 		{
 			illumination_stage ambient
 		
-			ambient "0 0 0 1"
-			diffuse "1 1 1 1"
-			specular $specular $shininess
-			emissive 0 0 0 0
-			
 			vertex_program_ref ambient_vs
             {
             }
@@ -387,11 +370,6 @@ material mapaAngel_suelo
             fragment_program_ref diffuse_ps
             {
             }
-
-            ambient "0 0 0 1"
-			diffuse "1 1 1 1"
-			specular $specular $shininess
-			emissive 0 0 0 0
 			
             texture_unit aoMap
 			{

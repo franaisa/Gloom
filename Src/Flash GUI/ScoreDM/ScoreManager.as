@@ -27,14 +27,14 @@ package ScoreDM
 			ExternalInterface.addCallback("changePing", changePing);
 			ExternalInterface.addCallback("changeClass", changeClass);
 			ExternalInterface.addCallback("addLocalPlayer", addLocalPlayer);
-			
+			addPlayer("rub0", "asd");
 		}
 		
 		/**
 		 * Adds a player to the scoreboard
 		 * @param	nick The name of the player being added
 		 */
-		public function addPlayer(nick: String, playerClass: String): void {
+		public function addPlayer(nick: String, playerClass: String, team:int): void {
 			var newscore: PlayerScore = new PlayerScore(nick, playerClass);
 			newscore.name = nick;
 			addChild(newscore);
@@ -52,7 +52,7 @@ package ScoreDM
 		 * different because is the local player
 		 * @param	nick The name of the player being added
 		 */
-		public function addLocalPlayer(nick: String, playerClass: String): void {
+		public function addLocalPlayer(nick: String, playerClass: String, team:int): void {
 			var newscore: PlayerScore = new PlayerScore(nick, playerClass);
 			newscore.name = nick;
 			addChild(newscore);
@@ -70,7 +70,7 @@ package ScoreDM
 		 * Delete a player from de GUI and relocate the elements of the scoreboard
 		 * @param	nick The score we are deleting
 		 */
-		public function deletePlayer(nick: String): void {
+		public function deletePlayer(nick: String, team:int): void {
 			var deletescore: PlayerScore = getChildByName(nick) as PlayerScore;
 			if (deletescore != null) {
 				removeChild(deletescore);
@@ -148,7 +148,7 @@ package ScoreDM
 		 * @param	oldnick The nick the player had.
 		 * @param	newnick The new nick the player has.
 		 */
-		function changeNick(oldnick:String, newnick:String):void {
+		function changeNick(oldnick:String, newnick:String, team:int):void {
 			var actualScore:PlayerScore = getChildByName(oldnick) as PlayerScore;
 			actualScore.nick = newnick;
 		}
@@ -158,7 +158,7 @@ package ScoreDM
 		 * @param	nick The player we are changing de spree
 		 * @param	spree The spree the player has.
 		 */
-		function addSpree(nick:String, spree:int):void {
+		function addSpree(nick:String, spree:int, team:int):void {
 			var actualScore:PlayerScore = getChildByName(nick) as PlayerScore;
 			actualScore.spree = spree;
 		}
@@ -168,7 +168,7 @@ package ScoreDM
 		 * @param	nick The player we are adding deaths
 		 * @param	death the deaths the player has.
 		 */
-		function addDeath(nick:String, death:int):void {
+		function addDeath(nick:String, death:int, team:int):void {
 			var actualScore:PlayerScore = getChildByName(nick) as PlayerScore;
 			actualScore.deaths = death;
 		}
@@ -178,7 +178,7 @@ package ScoreDM
 		 * @param	nick The player we are modifying
 		 * @param	ping The ping the player has.
 		 */
-		function changePing(nick:String, ping:int):void {
+		function changePing(nick:String, ping:int, team:int):void {
 			var actualScore:PlayerScore = getChildByName(nick) as PlayerScore;
 			actualScore.ping = ping;
 		}
@@ -188,7 +188,7 @@ package ScoreDM
 		 * @param	nick The player who changed his class
 		 * @param	newClass The new class the player has
 		 */
-		function changeClass(nick:String, newClass:String):void {
+		function changeClass(nick:String, newClass:String, team:int):void {
 			var actualScore:PlayerScore = getChildByName(nick) as PlayerScore;
 			actualScore.changeClass(newClass);
 		}
