@@ -71,7 +71,7 @@ namespace Logic {
 		_defaultCooldown = _cooldown = entityInfo->getFloatAttribute(_spellName + "Cooldown") * 1000;
 
 		_duration = entityInfo->getFloatAttribute(_spellName + "DurationEffect") * 1000;
-		assert( _defaultCooldown < _duration && "Cuidado que el coolDown es menor que la duracion del hechizo");
+		assert( _defaultCooldown > _duration && "Cuidado que el coolDown es menor que la duracion del hechizo");
 
 		//_maxAmmo = entityInfo->getIntAttribute(_spellName + "MaxAmmo");
 		//_ammoPerPull = entityInfo->getIntAttribute(_spellName + "AmmoPerPull");

@@ -37,7 +37,7 @@ namespace Logic {
 	public:
 
 		/** Constructor por defecto. */
-		CComeBack() : ISpell("gravity") { }
+		CComeBack() : ISpell("comeBack") { }
 
 		//__________________________________________________________________
 

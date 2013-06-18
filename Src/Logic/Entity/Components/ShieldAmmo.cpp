@@ -65,7 +65,7 @@ namespace Logic {
 		if( !ISpellAmmo::spawn(entity, map, entityInfo) ) return false;
 
 		// Nos aseguramos de tener todos los atributos que necesitamos
-		assert( entityInfo->hasAttribute("Cooldown") );
+		//assert( entityInfo->hasAttribute("Cooldown") );
 		assert( entityInfo->hasAttribute( "spellShieldRadius") );
 
 		// Cooldown del disparo principal

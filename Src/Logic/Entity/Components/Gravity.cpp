@@ -36,7 +36,7 @@ namespace Logic {
 		assert( entityInfo->hasAttribute("gravity") && "Error: No se ha definido el atributo gravity en el mapa" );
 		_defaultGravity = entityInfo->getFloatAttribute("gravity");
 
-		assert(_newGravity == 0);
+		assert(_newGravity != 0);
 		return true;
 	} // spawn
 	//__________________________________________________________________

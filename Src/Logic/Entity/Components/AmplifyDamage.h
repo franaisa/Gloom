@@ -36,7 +36,7 @@ namespace Logic {
 	public:
 
 		/** Constructor por defecto. */
-		CAmplifyDamage() : ISpell("gravity") { }
+		CAmplifyDamage() : ISpell("amplifyDamage") { }
 
 		//__________________________________________________________________
 

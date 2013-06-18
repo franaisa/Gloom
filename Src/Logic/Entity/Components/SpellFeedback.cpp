@@ -45,12 +45,13 @@ namespace Logic {
 		// Comprobamos que los atributos obligatorios existen
 		assert( entityInfo->hasAttribute(_spellName + "ID") && "Debe tener id, mirar archivo spellType");
 		assert( entityInfo->hasAttribute(_spellName + "IsPassive") && "Es importante que tenga este campo");
-		assert( entityInfo->hasAttribute(_spellName + "IsPrimarySpell") && "Este parametro debe de haberse seteado al crear la entidad");
 
 		// Leemos los atributos obligatorios de arma
 		_spellID = (SpellType::Enum)entityInfo->getIntAttribute(_spellName + "ID");
 		_isPassive = entityInfo->getBoolAttribute(_spellName + "IsPassive");
-		_isPrimarySpell = entityInfo->getBoolAttribute(_spellName + "IsPrimarySpell");
+
+		assert( entityInfo->hasAttribute("primarySpell") && "Debe de tener campo primarySpell");
+		_isPrimarySpell = _spellID == entityInfo->getIntAttribute("primarySpell");
 
 		return true;
 	}

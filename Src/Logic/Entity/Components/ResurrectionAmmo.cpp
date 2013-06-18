@@ -28,7 +28,7 @@ namespace Logic {
 
 	//__________________________________________________________________
 
-	CResurrectionAmmo::CResurrectionAmmo() : ISpellAmmo("resurection"){
+	CResurrectionAmmo::CResurrectionAmmo() : ISpellAmmo("resurrection"){
 		// Nada que hacer
 	}
 
