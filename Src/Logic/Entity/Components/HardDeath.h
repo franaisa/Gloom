@@ -33,7 +33,9 @@ namespace Logic {
 	public:
 
 		/** Constructor por defecto. */
-		CHardDeath() : ISpell("hardDeath") { }
+		CHardDeath() : ISpell("hardDeath"),	_heightShoot(0),
+											_damage(0),
+											_explotionRadius(0){ }
 
 		//__________________________________________________________________
 

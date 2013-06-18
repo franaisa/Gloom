@@ -22,6 +22,9 @@ de disparo de la cabra.
 #include "HardDeath.h"
 #include "HardDeathFeedback.h"
 
+#include "Logic/Messages/MessagePlayerDead.h"
+
+
 using namespace std;
 
 namespace Logic {
@@ -55,6 +58,16 @@ namespace Logic {
 	}
 	//__________________________________________________________________
 
+	void CHardDeathAmmo::process(const shared_ptr<CMessage>& message) {
+		ISpellAmmo::process(message);
+		switch( message->getMessageType() ) {
+			case Message::PLAYER_DEAD: {
+				ISpellAmmo::spell();
+			break;
+			}
+		}
+	} // process
+	//__________________________________________________________________
 
 
 }//namespace Logic

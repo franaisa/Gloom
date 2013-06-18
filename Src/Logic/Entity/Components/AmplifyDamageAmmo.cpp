@@ -32,7 +32,11 @@ namespace Logic {
 	//__________________________________________________________________
 
 	CAmplifyDamageAmmo::CAmplifyDamageAmmo() : ISpellAmmo("amplifyDamage"),
-								_spellIsActive(false){
+								_spellIsActive(false),
+								_defaultCooldown(0),
+								_duration(0),
+								_maxAmmo(0),
+								_ammoPerPull(0){
 		// Nada que hacer
 	}
 

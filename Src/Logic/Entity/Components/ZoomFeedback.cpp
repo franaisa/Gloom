@@ -31,7 +31,7 @@ namespace Logic {
 
 	//__________________________________________________________________
 
-	CZoomFeedback::CZoomFeedback() : ISpellFeedback("zoom") {
+	CZoomFeedback::CZoomFeedback() : ISpellFeedback("zoom"), _camera(0) {
 		// Nada que hacer
 	}
 

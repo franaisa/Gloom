@@ -30,7 +30,9 @@ namespace Logic {
 	//__________________________________________________________________
 
 	CZoomAmmo::CZoomAmmo() : ISpellAmmo("zoom"),
-								_spellIsActive(false){
+								_spellIsActive(false),
+								_defaultCooldown(0),
+								_duration(0){
 		// Nada que hacer
 	}
 

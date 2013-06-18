@@ -299,12 +299,6 @@ Map = {
 		physic_dimensions = { 4, 7, 4 },
 	},
 	
-	LaserBeam1 = {
-		type = "LaserBeam",
-		position = { 0,-20,0},
-		model = "shotGun.mesh",
-	},
-	
 	Jumper2 = {
 		type = "Jumper",
 		position = {-250.0, 2.0, 10.0},
