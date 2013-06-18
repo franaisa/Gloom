@@ -65,7 +65,7 @@ namespace Logic {
 		virtual void process(const std::shared_ptr<CMessage>& message);
 
 
-		//virtual void reduceCooldown(unsigned int percentage);
+		virtual void reduceCooldown(unsigned int percentage);
 
 		//__________________________________________________________________
 
@@ -98,19 +98,24 @@ namespace Logic {
 
 		//std::string _shootAudio;
 
-		//unsigned int _defaultCooldown;
-		//unsigned int _cooldown;
+		unsigned int _defaultCooldown;
+		unsigned int _cooldown;
 
 		unsigned int  _duration;
 		
-		//unsigned int _maxAmmo;
-		//unsigned int _ammoPerPull;
-		//unsigned int _currentAmmo;
+		unsigned int _maxAmmo;
+		unsigned int _ammoPerPull;
+		unsigned int _currentAmmo;
 
 		bool _spellIsActive;
 
-		//unsigned int _cooldownTimer;
-		//unsigned int _durationTimer;
+		unsigned int _cooldownTimer;
+		unsigned int _durationTimer;
+
+		unsigned int _distanceComeBack;
+
+		Vector3 _comeBackPosition;
+		Quaternion _comeBackOrientation;
 		
 	};
 

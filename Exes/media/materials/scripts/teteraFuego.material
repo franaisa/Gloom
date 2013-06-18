@@ -1,0 +1,61 @@
+vertex_program FireVertexShader cg
+{
+   source Fire.cg
+   entry_point FireVertexShader
+   profiles vs_1_1 arbvp1
+}
+ 
+fragment_program FireFragmentShader cg
+{
+   source Fire.cg
+   entry_point FireFragmentShader
+   profiles ps_2_0 arbfp1
+}
+ 
+material teteraFuego
+{
+   technique
+   {
+      pass
+      {
+         scene_blend alpha_blend
+         cull_hardware none
+         cull_software none
+         depth_write off
+         depth_check on
+ 
+         // Texture unit 0
+         texture_unit noiseTexture
+         {
+             texture fireNoiseTexture.png
+         }
+         // Texture unit 1 (this is a multitexture pass)
+         texture_unit fireTexture
+         {
+             texture fireTexture.jpg
+         }
+         texture_unit alphaTexture
+         {
+             texture fireAlphaTexture.jpg
+         }
+ 
+         vertex_program_ref FireVertexShader
+         {
+            // worldviewproj_matrix: The current world, view and projection matrices concatenated.
+            // This is implicitly a matrix4x4. a 4x4 matrix takes up 4 indexes (4 byte parameters)
+            param_named_auto worldViewProjMatrix worldviewproj_matrix
+            param_named_auto frameTime costime_0_1 1
+            param_named scrollSpeeds float3 1 2 3
+            param_named scales float3 1 2 3
+         }
+ 
+         fragment_program_ref FireFragmentShader
+         {
+            param_named distortion1 float2 0.1 0.2
+            param_named distortion2 float2 0.1 0.3
+            param_named distortion3 float2 0.1 0.1
+            param_named distortion float2 0.8 0.5  // distortionScale and distortionBias in original
+         }
+      }
+   }
+}

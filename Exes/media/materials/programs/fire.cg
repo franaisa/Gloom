@@ -1,0 +1,117 @@
+//http://www.ogre3d.org/tikiwiki/tiki-index.php?page=RasterTek+Fire+Shader&structure=Cookbook
+void FireVertexShader(
+   float4 position : POSITION,
+   float3 normal   : NORMAL,
+   float2 tex : TEXCOORD0,
+ 
+   out float4 outPosition   :   POSITION,
+   out float2 outTex        :   TEXCOORD0,
+   out float2 outTexCoords1 :   TEXCOORD1,
+   out float2 outTexCoords2 :   TEXCOORD2,
+   out float2 outTexCoords3 :   TEXCOORD3,
+ 
+   uniform float4x4 worldViewProjMatrix,
+   // The frameTime variable is updated each frame so the shader has access to an incremental time that is used for scrolling the different noise textures.
+   uniform float frameTime,
+   // The scrollSpeeds variable is a 3 float array that contains three different scrolling speeds.
+   // The x value is the scroll speed for the first noise texture.
+   //  The y value is the scroll speed for the second noise texture.
+   //  The z value is the scroll speed for the third noise texture.
+   uniform float3 scrollSpeeds,
+   // The scales variable is a 3 float array that contains three different scales (or octaves) for the three different noise textures.
+   // The x, y, and z are generally set to 1, 2, and 3. This makes the first noise texture a single tile.
+   // It also makes the second noise texture tiled twice in both directions. And finally it makes the third noise texture tiled three times in both directions.
+   uniform float3 scales
+)
+{
+   // scale to match original
+   frameTime *= 100000;//original = 1000
+ 
+   // Change the position vector to be 4 units for proper matrix calculations.
+   position.w = 1.0f;
+ 
+   outPosition = mul( worldViewProjMatrix, position );
+ 
+   // Store the texture coordinates for the pixel shader.
+   outTex = tex;
+ 
+   // Compute texture coordinates for first noise texture using the first scale and upward scrolling speed values.
+   outTexCoords1 = ( tex * scales.x );
+   outTexCoords1.y = outTexCoords1.y + ( frameTime * scrollSpeeds.x );
+ 
+   // Compute texture coordinates for second noise texture using the second scale and upward scrolling speed values.
+   outTexCoords2 = ( tex * scales.y );
+   outTexCoords2.y = outTexCoords2.y + ( frameTime * scrollSpeeds.y );
+ 
+   // Compute texture coordinates for third noise texture using the third scale and upward scrolling speed values.
+   outTexCoords3 = ( tex * scales.z );
+   outTexCoords3.y = outTexCoords3.y + ( frameTime * scrollSpeeds.z );
+}
+ 
+void FireFragmentShader(
+   float2 uv       : TEXCOORD0,
+   float3 position : TEXCOORD1,
+   float3 normal   : TEXCOORD2,
+ 
+   out float4 outColor : COLOR,
+ 
+   float4 outPosition     : POSITION,
+   float2 inputTex        : TEXCOORD0,
+   float2 inputTexCoords1 : TEXCOORD1,
+   float2 inputTexCoords2 : TEXCOORD2,
+   float2 inputTexCoords3 : TEXCOORD3,
+ 
+   uniform float2 distortion1     : TEXCOORD4,
+   uniform float2 distortion2     : TEXCOORD5,
+   uniform float2 distortion3     : TEXCOORD6,
+   uniform float2 distortion      : TEXCOORD7,
+ 
+   uniform sampler2D noiseTexture : TEXUNIT0,
+   uniform sampler2D fireTexture  : TEXUNIT1,
+   uniform sampler2D alphaTexture : TEXUNIT2
+)
+{
+   // Sample the same noise texture using the three different texture coordinates to get three different noise scales.
+   //float4 noise1 = noiseTexture.Sample( SampleType, inputTexCoords1 );
+   //float4 noise2 = noiseTexture.Sample( SampleType, inputTexCoords2 );
+   //float4 noise3 = noiseTexture.Sample( SampleType, inputTexCoords3 );
+   float4 noise1 = tex2D( noiseTexture, inputTexCoords1 );
+   float4 noise2 = tex2D( noiseTexture, inputTexCoords2 );
+   float4 noise3 = tex2D( noiseTexture, inputTexCoords3 );
+ 
+   // Move the noise from the ( 0, 1 ) range to the ( -1, +1 ) range.
+   noise1 = ( noise1 - 0.5f ) * 2.0f;
+   noise2 = ( noise2 - 0.5f ) * 2.0f;
+   noise3 = ( noise3 - 0.5f ) * 2.0f;
+ 
+   // Distort the three noise x and y coordinates by the three different distortion x and y values.
+   noise1.xy *= distortion1;
+   noise2.xy *= distortion2;
+   noise3.xy *= distortion3;
+ 
+   // Combine all three distorted noise results into a single noise result.
+   float2 finalNoise = noise1 + noise2 + noise3;
+ 
+   // Perturb the input texture Y coordinates by the distortion scale and bias values.
+   // The perturbation gets stronger as you move up the texture which creates the flame flickering at the top effect.
+   float perturb = ( ( 1.0f - inputTex.y ) * distortion.x ) + distortion.y;
+ 
+   // Now create the perturbed and distorted texture sampling coordinates that will be used to sample the fire color texture.
+   float2 noiseCoords;
+   noiseCoords.x = ( finalNoise.x * perturb ) + inputTex.x;
+   noiseCoords.y = ( finalNoise.y * perturb ) + inputTex.y;
+ 
+   // Sample the color from the fire texture using the perturbed and distorted texture sampling coordinates.
+   // Use the clamping sample state instead of the wrap sample state to prevent flames wrapping around.
+   //outColor = fireTexture.Sample( SampleType2, noiseCoords.xy );
+   outColor = tex2D( fireTexture, clamp( noiseCoords, 0, 1 ) );
+ 
+   // Sample the alpha value from the alpha texture using the perturbed and distorted texture sampling coordinates.
+   // This will be used for transparency of the fire.
+   // Use the clamping sample state instead of the wrap sample state to prevent flames wrapping around.
+   //float4 alphaColor = alphaTexture.Sample( SampleType2, noiseCoords.xy );
+   float alphaColor = tex2D( alphaTexture, clamp( noiseCoords, 0, 1 ) );
+ 
+   // Set the alpha blending of the fire to the perturbed and distorted alpha texture value.
+   outColor.a = alphaColor;
+}

@@ -64,24 +64,21 @@ namespace Logic {
 		if( !ISpellAmmo::spawn(entity, map, entityInfo) ) return false;
 
 		// Nos aseguramos de tener todos los atributos que necesitamos
-		/*assert( entityInfo->hasAttribute(_spellName + "Cooldown") );
+		assert( entityInfo->hasAttribute(_spellName + "Cooldown") );
 		assert( entityInfo->hasAttribute(_spellName + "MaxAmmo") );
 		assert( entityInfo->hasAttribute(_spellName + "AmmoPerPull") );
 		assert( entityInfo->hasAttribute(_spellName + "DurationEffect") );
+		assert( entityInfo->hasAttribute(_spellName + "DistanceEffect") );
 
 		// Cooldown del disparo principal
 		_defaultCooldown = _cooldown = entityInfo->getFloatAttribute(_spellName + "Cooldown") * 1000;
-
 		_duration = entityInfo->getFloatAttribute(_spellName + "DurationEffect") * 1000;
 		assert( _defaultCooldown < _duration && "Cuidado que el coolDown es menor que la duracion del hechizo");
 
 		_maxAmmo = entityInfo->getIntAttribute(_spellName + "MaxAmmo");
 		_ammoPerPull = entityInfo->getIntAttribute(_spellName + "AmmoPerPull");
 
-		_friend = _entity->getComponent<Logic::CGravity>("CGravity");
-		if(!_friend)
-			_friend = _entity->getComponent<Logic::CGravityFeedback>("CGravityFeedback");
-		*/
+		_distanceComeBack = entityInfo->getIntAttribute(_spellName + "DistanceEffect");
 
 		_friend[_friends] = _entity->getComponent<Logic::CComeBack>("CComeBack");
 		if(_friend[_friends]) ++_friends;
@@ -101,15 +98,15 @@ namespace Logic {
 	//__________________________________________________________________
 
 	void CComeBackAmmo::onAvailable() {
-		/*ISpellAmmo::onAvailable();		
+		ISpellAmmo::onAvailable();		
 		_currentAmmo += _ammoPerPull;
-		_currentAmmo = _currentAmmo > _maxAmmo ? _maxAmmo : _currentAmmo;*/
+		_currentAmmo = _currentAmmo > _maxAmmo ? _maxAmmo : _currentAmmo;
 	}
 
 	//__________________________________________________________________
 
 	void CComeBackAmmo::onTick(unsigned int msecs) {
-		/*
+		
 		// Controlamos el cooldown
 		if(_cooldownTimer > 0) {
 			_cooldownTimer -= msecs;
@@ -124,49 +121,56 @@ namespace Logic {
 				// ya lo pongo a cero dentro del metodo
 				stopSpell();
 			}
-		}*/
+		}
 	}
 
 	//__________________________________________________________________
 
 	bool CComeBackAmmo::canUseSpell() {
-		return true;
-		//return _cooldownTimer == 0 && _currentAmmo > 0;
+		return _cooldownTimer == 0 && _currentAmmo > 0;
 	}
 
 	//__________________________________________________________________
 
 	void CComeBackAmmo::spell() {
 		ISpellAmmo::spell();
-		/*
 		// Si ya se esta haciendo el hechizo, significa que queremos pararlo
-		if(!_spellIsActive){
+		if(!_spellIsActive ){
 			--_currentAmmo;
 			_cooldownTimer = _cooldown;
 			_durationTimer = _duration;
 			_spellIsActive = true;
+
+			_comeBackPosition = _entity->getPosition();
+			_comeBackOrientation = _entity->getOrientation();
 		}else{
-			stopSpell();
+			if( _comeBackPosition.distance(_entity->getPosition()) <= _distanceComeBack){
+				ISpellAmmo::spell();
+				stopSpell();
+			}
 		}
-		*/
+		
 	} // primaryFire
 	//__________________________________________________________________
 
 	void CComeBackAmmo::stopSpell() {
 		ISpellAmmo::stopSpell();
-		/*
+		
 		// Voy a beneficiar si se hace durante poco tiempo
 		// con esto reduzco el cooldown el mismo porcentaje que me quedaba.
-		_cooldown *=(1-(_durationTimer / _duration ));
+		//_cooldown *=(1-(_durationTimer / _duration ));
+		_cooldown = 0;
 
 		_durationTimer = 0;
 		
-		*/
+		_comeBackPosition = Vector3::ZERO;
+		_comeBackOrientation = Quaternion::ZERO;
+		
 		_spellIsActive = false;
 	} // stopPrimaryFire
 	//__________________________________________________________________
 
-	/*
+	
 	void CComeBackAmmo::reduceCooldown(unsigned int percentage) {
 		// Si es 0 significa que hay que restaurar al que habia por defecto,
 		// sino decrementamos conforme al porcentaje dado.
@@ -175,6 +179,6 @@ namespace Logic {
 		_cooldown = percentage == 0 ? _defaultCooldown : (_defaultCooldown - (percentage * _cooldown * 0.01f));
 		assert(_cooldown < _duration && "La duracion del cooldown reducido es inferior a la del hechizo, lo cual no tiene mucho sentido");
 		
-	}*/
+	}
 
 }//namespace Logic
