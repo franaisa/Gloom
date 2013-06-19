@@ -28,29 +28,7 @@ material mapaAlberto_blanco
 
 
 
-material mapaAlberto_bronceCooper
-{
-	technique
-	{
-		pass
-		{
-			ambient 0.588 0.588 0.588 1
-			diffuse 0.588 0.588 0.588 1
-			specular 0 0 0 1 10
-
-			texture_unit
-			{
-				texture BronzeCopper0030_L_COLOR3.tga
-			}
-		}
-
-	}
-
-}
-
-
-
-material mapaAlberto_container
+material mapaAlberto_container0036
 {
 	technique
 	{
@@ -73,30 +51,7 @@ material mapaAlberto_container
 
 
 
-material mapaAlberto_containerPuerta
-{
-	technique
-	{
-		pass
-		{
-			ambient 0.588 0.588 0.588 1
-			diffuse 0.588 0.588 0.588 1
-			specular 0 0 0 1 10
-			scene_blend one one_minus_src_alpha
-
-			texture_unit
-			{
-				texture MetalContainers0149_S_COLOR_COLOR.tga
-			}
-		}
-
-	}
-
-}
-
-
-
-material mapaAlberto_luces
+material mapaAlberto_luz
 {
 	technique
 	{
@@ -126,28 +81,6 @@ material mapaAlberto_luces
 
 
 
-material mapaAlberto_metalColumna
-{
-	technique
-	{
-		pass
-		{
-			ambient 0.588 0.588 0.588 1
-			diffuse 0.588 0.588 0.588 1
-			specular 0 0 0 1 10
-
-			texture_unit
-			{
-				texture "metal comluman tileado_COLOR1.tga"
-			}
-		}
-
-	}
-
-}
-
-
-
 material mapaAlberto_metalContainer
 {
 	technique
@@ -157,10 +90,11 @@ material mapaAlberto_metalContainer
 			ambient 0.588 0.588 0.588 1
 			diffuse 0.588 0.588 0.588 1
 			specular 0 0 0 1 10
+			scene_blend one one_minus_src_alpha
 
 			texture_unit
 			{
-				texture MetalContainer_COLOR.tga
+				texture MetalContainers0149_S_COLOR_COLOR.tga
 			}
 		}
 
@@ -192,7 +126,7 @@ material mapaAlberto_metalContainer2
 
 
 
-material mapaAlberto_metalPuerta
+material mapaAlberto_negro
 {
 	technique
 	{
@@ -201,50 +135,6 @@ material mapaAlberto_metalPuerta
 			ambient 0.588 0.588 0.588 1
 			diffuse 0.588 0.588 0.588 1
 			specular 0 0 0 1 10
-
-			texture_unit
-			{
-				texture metalpuerta_COLOR.tga
-			}
-		}
-
-	}
-
-}
-
-
-
-material mapaAlberto_mix
-{
-	technique
-	{
-		pass
-		{
-			ambient 0.588 0.588 0.588 1
-			diffuse 0.588 0.588 0.588 1
-			specular 0 0 0 1 10
-		}
-
-	}
-
-}
-
-
-
-material mapaAlberto_piedra
-{
-	technique
-	{
-		pass
-		{
-			ambient 0.588 0.588 0.588 1
-			diffuse 0.588 0.588 0.588 1
-			specular 0 0 0 1 10
-
-			texture_unit
-			{
-				texture piedra_COLOR2.tga
-			}
 		}
 
 	}
@@ -342,7 +232,95 @@ material mapaAlberto_ventana
 
 
 
-material mapaAlberto_viga
+material Material#25
+{
+	technique
+	{
+		pass
+		{
+			ambient 0.588 0.588 0.588 1
+			diffuse 0.588 0.588 0.588 1
+			specular 0 0 0 1 10
+
+			texture_unit
+			{
+				texture piedra_COLOR2.tga
+			}
+		}
+
+	}
+
+}
+
+
+
+material Material#38
+{
+	technique
+	{
+		pass
+		{
+			ambient 0.588 0.588 0.588 1
+			diffuse 0.588 0.588 0.588 1
+			specular 0 0 0 1 10
+
+			texture_unit
+			{
+				texture "metal comluman tileado_COLOR1.tga"
+			}
+		}
+
+	}
+
+}
+
+
+
+material Material#39
+{
+	technique
+	{
+		pass
+		{
+			ambient 0.588 0.588 0.588 1
+			diffuse 0.588 0.588 0.588 1
+			specular 0 0 0 1 10
+
+			texture_unit
+			{
+				texture BronzeCopper0030_L_COLOR3.tga
+			}
+		}
+
+	}
+
+}
+
+
+
+material Material#52
+{
+	technique
+	{
+		pass
+		{
+			ambient 0.588 0.588 0.588 1
+			diffuse 0.588 0.588 0.588 1
+			specular 0 0 0 1 10
+
+			texture_unit
+			{
+				texture metalpuerta_COLOR.tga
+			}
+		}
+
+	}
+
+}
+
+
+
+material Material#53
 {
 	technique
 	{
@@ -355,6 +333,28 @@ material mapaAlberto_viga
 			texture_unit
 			{
 				texture viga_COLOR.tga
+			}
+		}
+
+	}
+
+}
+
+
+
+material Material#93
+{
+	technique
+	{
+		pass
+		{
+			ambient 0.588 0.588 0.588 1
+			diffuse 0.588 0.588 0.588 1
+			specular 0 0 0 1 10
+
+			texture_unit
+			{
+				texture MetalContainer_COLOR.tga
 			}
 		}
 
