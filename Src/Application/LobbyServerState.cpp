@@ -174,14 +174,20 @@ namespace Application {
 	void CLobbyServerState::listFiles() {
 		WIN32_FIND_DATA FindData;
 		HANDLE hFind;
-		hFind = FindFirstFile("media\\maps\\*.txt", &FindData);
+		hFind = FindFirstFile("media\\maps\\*.map", &FindData);
 
 		std::string filename;
+
+		if(hFind){
+			filename = FindData.cFileName;
+			_menu->callFunction("pushFile",Hikari::Args(filename.substr(0,filename.find(".map"))));
+		}
+
+
 		while (FindNextFile(hFind, &FindData))
 		{     
 			filename = FindData.cFileName;
-			if(filename == "map3.txt" || filename == "map2.txt" || filename == "map1.txt" || filename == "scenarioTest.txt")
-				_menu->callFunction("pushFile",Hikari::Args(filename.substr(0,filename.find(".txt"))));
+			_menu->callFunction("pushFile",Hikari::Args(filename.substr(0,filename.find(".map"))));
 
 		}
 	}
