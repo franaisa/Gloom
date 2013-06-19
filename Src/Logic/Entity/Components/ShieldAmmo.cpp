@@ -91,8 +91,8 @@ namespace Logic {
 	}
 	//__________________________________________________________________
 
-	void CShieldAmmo::onAvailable() {
-		/*ISpellAmmo::onAvailable();		
+	void CShieldAmmo::onWake() {
+		/*ISpellAmmo::onWake();		
 		_currentAmmo += _ammoPerPull;
 		_currentAmmo = _currentAmmo > _maxAmmo ? _maxAmmo : _currentAmmo;*/
 	}

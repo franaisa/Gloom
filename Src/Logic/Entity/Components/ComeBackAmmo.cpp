@@ -103,8 +103,8 @@ namespace Logic {
 
 	//__________________________________________________________________
 
-	void CComeBackAmmo::onAvailable() {
-		ISpellAmmo::onAvailable();		
+	void CComeBackAmmo::onWake() {
+		ISpellAmmo::onWake();		
 		_currentAmmo += _ammoPerPull;
 		_currentAmmo = _currentAmmo > _maxAmmo ? _maxAmmo : _currentAmmo;
 	}

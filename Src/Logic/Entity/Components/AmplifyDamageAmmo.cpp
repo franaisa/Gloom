@@ -100,8 +100,8 @@ namespace Logic {
 
 	//__________________________________________________________________
 
-	void CAmplifyDamageAmmo::onAvailable() {
-		ISpellAmmo::onAvailable();		
+	void CAmplifyDamageAmmo::onWake() {
+		ISpellAmmo::onWake();		
 		_currentAmmo += _ammoPerPull;
 		_currentAmmo = _currentAmmo > _maxAmmo ? _maxAmmo : _currentAmmo;
 	}
