@@ -2,7 +2,7 @@ Map = {
 
 	World = {
 		type = "World",
-		model = "ola.mesh",
+		model = "mapaAlberto.mesh",
 		physic_file = "media/models/ola.RepX",
 	},
 	
