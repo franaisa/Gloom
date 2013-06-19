@@ -119,8 +119,8 @@ namespace Logic {
 
 	void CGravityAmmo::onTick(unsigned int msecs) {
 		
-		printf("\n_cooldown timer: %d", _cooldownTimer);
-		printf("\n_duration timer: %d", _durationTimer);
+		//printf("\n_cooldown timer: %d", _cooldownTimer);
+		//printf("\n_duration timer: %d", _durationTimer);
 		// Controlamos el cooldown
 		if(_cooldownTimer > 0) 
 			_cooldownTimer -= msecs;
