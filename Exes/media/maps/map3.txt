@@ -52,8 +52,8 @@ Map = {
 	
 	SuperShield = {
 		type = "ItemSpawn",
-		position = {82.9836, 204.139, -133.918},
-		model = "armadura.mesh",
+		position = {84.2973, 204.139, -134.246},
+		model = "shield1.mesh",
 		id = "armor",
 		reward = 125,
 		respawnTime = 5,
