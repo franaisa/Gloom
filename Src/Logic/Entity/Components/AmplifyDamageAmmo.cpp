@@ -94,6 +94,7 @@ namespace Logic {
 	//__________________________________________________________________
 
 	void CAmplifyDamageAmmo::onActivate() {
+		ISpellAmmo::onActivate();
 		// Aqui enviaria el mensaje o lo que fuera para que pusiera en el hud
 	}
 
@@ -110,27 +111,24 @@ namespace Logic {
 	void CAmplifyDamageAmmo::onTick(unsigned int msecs) {
 		
 		// Controlamos el cooldown
-		if(_cooldownTimer > 0) {
+		if(_cooldownTimer > 0) 
 			_cooldownTimer -= msecs;
-			
-			if(_cooldownTimer < 0){
-				_cooldownTimer = 0;
-			}
-		}
-		if(_durationTimer > 0){
-			_durationTimer -= msecs;
-			if(_durationTimer < 0){
-				// ya lo pongo a cero dentro del metodo
-				stopSpell();
-			}
+		if(_cooldownTimer < 0)
+			_cooldownTimer = 0;
+		
+		if(_spellIsActive){
+			if(_durationTimer > 0)
+				_durationTimer -= msecs;
+			if(_durationTimer <= 0)
+				stopSpell(); // ya lo pongo a cero dentro del metodo
 		}
 	}
 
 	//__________________________________________________________________
 
 	bool CAmplifyDamageAmmo::canUseSpell() {
-		return true;
-		//return _cooldownTimer == 0 && _currentAmmo > 0;
+		//return true;
+		return _spellIsActive || (_cooldownTimer == 0 && _currentAmmo > 0);
 	}
 
 	//__________________________________________________________________
@@ -156,22 +154,29 @@ namespace Logic {
 		
 		// Voy a beneficiar si se hace durante poco tiempo
 		// con esto reduzco el cooldown el mismo porcentaje que me quedaba.
-		_cooldown *=(1-(_durationTimer / _duration ));
+		_durationTimer = _durationTimer < 0 ? 0 : _durationTimer;
+		_cooldownTimer *=(1-((float)_durationTimer / (float)_duration ));
 
 		_durationTimer = 0;
-		
 		
 		_spellIsActive = false;
 	} // stopPrimaryFire
 	//__________________________________________________________________
 
+	void CAmplifyDamageAmmo::addAmmo(){ 
+			_currentAmmo += _ammoPerPull;
+			if(_currentAmmo > _maxAmmo)
+				_currentAmmo = _maxAmmo;
+		//quizas aqui , habria que llamar al addAmmo de los friends, por si acaso estos tiene que hacer algo con el hud por ejemplo
+	} // addAmmo
+	//__________________________________________________________________
 	
 	void CAmplifyDamageAmmo::reduceCooldown(unsigned int percentage) {
 		// Si es 0 significa que hay que restaurar al que habia por defecto,
 		// sino decrementamos conforme al porcentaje dado.
 		
 		_cooldown = percentage == 0 ? _defaultCooldown : (_defaultCooldown - (percentage * _cooldown * 0.01f));
-		assert(_cooldown < _duration && "La duracion del cooldown reducido es inferior a la del hechizo, lo cual no tiene mucho sentido");
+		assert(_cooldown > _duration && "La duracion del cooldown reducido es inferior a la del hechizo, lo cual no tiene mucho sentido");
 		
 	}
 

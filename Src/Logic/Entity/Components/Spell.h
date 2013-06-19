@@ -143,7 +143,7 @@ namespace Logic {
 		Llamado cuando el arma pasa a ser activa.
 		En los hechizos passivos aqui hara su accion.
 		*/
-		virtual void onAvailable();
+		virtual void onWake();
 
 
 		virtual void onDeactivate();

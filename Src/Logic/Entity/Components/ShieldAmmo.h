@@ -83,6 +83,7 @@ namespace Logic {
 		*/
 		virtual void stopSpell();
 
+		//virtual void addAmmo();
 	protected:
 
 		virtual bool canUseSpell();
@@ -90,7 +91,7 @@ namespace Logic {
 
 		virtual void onActivate();
 
-		virtual void onAvailable();
+		virtual void onWake();
 
 		virtual void onTick(unsigned int msecs);
 

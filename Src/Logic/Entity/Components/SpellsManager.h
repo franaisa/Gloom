@@ -68,6 +68,7 @@ namespace Logic
 
 		void reduceCooldowns(int percentage);
 
+		virtual void onStart();
 	protected:
 
 		std::vector< std::pair<bool, ISpellAmmo*> > _spells;

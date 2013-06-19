@@ -100,7 +100,11 @@ namespace Logic {
 
 	//__________________________________________________________________
 
-	void ISpellAmmo::onAvailable(){
+	void ISpellAmmo::onWake(){
+		for(unsigned int i = 0; i < _friends; ++i){
+			_friend[i]->wakeUp();
+		}
+
 		if(_isPassive){
 			if(_isPrimarySpell){
 				shared_ptr<CMessagePrimarySpell> message = make_shared<CMessagePrimarySpell>();
@@ -113,31 +117,30 @@ namespace Logic {
 			}
 		}
 
-		for(unsigned int i = 0; i < _friends; ++i){
-			_friend[i]->stayAvailable();
-		}
-	} // onAvailable
+
+	} // onWake
 	//__________________________________________________________________
 
-	void ISpellAmmo::onBusy() {
+	void ISpellAmmo::onSleep() {
 		for(unsigned int i = 0; i < _friends; ++i){
-			_friend[i]->stayBusy();
+			_friend[i]->putToSleep(true);
 		}
-	} // onBusy
+	} // onSleep
 	//__________________________________________________________________
 
 	void ISpellAmmo::onActivate() {
 		for(unsigned int i = 0; i < _friends; ++i){
 			_friend[i]->activate();
 		}
-	} // onBusy
+	} // onActivate
 	//__________________________________________________________________
 
 	void ISpellAmmo::onDeactivate() {
+		stopSpell();
 		for(unsigned int i = 0; i < _friends; ++i){
 			_friend[i]->deactivate();
 		}
-	} // onBusy
+	} // onDeactivate
 	//__________________________________________________________________
 
 

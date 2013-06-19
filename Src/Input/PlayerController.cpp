@@ -97,6 +97,9 @@ namespace Input {
 					OtherMessages(key);
 					return true;
 				break;				
+				case 4: //Other (debug)
+					SpellMessage(key);
+				break;
 			}//switch iType
 		}//if _controlledAvatar
 		return true;
@@ -286,7 +289,7 @@ namespace Input {
 		}
 		else if (key.keyId == Input::Key::LCONTROL || key.keyId == Input::Key::LSHIFT) 
 		{
-			return 3; //Spells
+			return 4; //Spells
 		}
 		return -1;
 	} // typeOfKey
@@ -487,10 +490,10 @@ namespace Input {
 		switch (key.keyId)
 		{
 			case Input::Key::LCONTROL:
-				m->setType(Logic::Control::USE_PRIMARY_SKILL);
+				m->setType(Logic::Control::USE_PRIMARY_SPELL);
 			break;
 			case Input::Key::LSHIFT:
-				m->setType(Logic::Control::USE_SECONDARY_SKILL);
+				m->setType(Logic::Control::USE_SECONDARY_SPELL);
 			break;
 		}
 		_controlledAvatar->emitMessage(m);

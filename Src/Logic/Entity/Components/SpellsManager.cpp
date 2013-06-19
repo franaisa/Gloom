@@ -66,11 +66,7 @@ namespace Logic
 		_spells[SpellType::eRESURECTION].second = _entity->getComponent<Logic::CResurrectionAmmo>("CResurrectionAmmo");
 		
 		
-		// El resto de las armas están desactivadas, ya que no las tenemos
-		for(unsigned int i = 0; i < _spells.size(); ++i) {
-			_spells[i].first = false;
-			_spells[i].second->stayBusy();
-		}
+
 
 		_primarySpell = (SpellType::Enum)entityInfo->getIntAttribute("primarySpell");
 		_secondarySpell = (SpellType::Enum)entityInfo->getIntAttribute("secondarySpell");
@@ -83,12 +79,22 @@ namespace Logic
 
 	void CSpellsManager::onActivate() {
 		
-		// El resto de las armas están desactivadas, ya que no las tenemos
 		for(unsigned int i = 0; i < _spells.size(); ++i) {
 			_spells[i].first = false; // Por si acaso habian sido activadas anteriormente
+			_spells[i].second->putToSleep(true);
 			_spells[i].second->deactivate();
 		}
 	} // onActivate
+	//---------------------------------------------------------
+
+	void CSpellsManager::onStart(){
+	// El resto de las armas están desactivadas, ya que no las tenemos
+		for(unsigned int i = 0; i < _spells.size(); ++i) {
+			_spells[i].first = false; // Por si acaso habian sido activadas anteriormente
+			_spells[i].second->putToSleep(true);
+			_spells[i].second->deactivate();
+		}
+	} // onStart
 	//---------------------------------------------------------
 
 	void CSpellsManager::onDeactivate(){
@@ -96,6 +102,12 @@ namespace Logic
 		// Solo deberias de estar activos estos dos.
 		_spells[_primarySpell].second->deactivate();
 		_spells[_secondarySpell].second->deactivate();
+
+		for(unsigned int i = 0; i < _spells.size(); ++i) {
+			_spells[i].first = false; // Por si acaso habian sido activadas anteriormente
+			_spells[i].second->putToSleep(true);
+			_spells[i].second->deactivate();
+		}
 		
 	}// onDeactivate
 	//---------------------------------------------------------
@@ -117,12 +129,20 @@ namespace Logic
 				unsigned int spellIndex = addSpellMsg->getSpell();
 				
 				if(spellIndex == 1){
-					_spells[_primarySpell].first = true;
-					_spells[_primarySpell].second->activate();
+					if(!_spells[_primarySpell].first){
+						_spells[_primarySpell].first = true;
+						_spells[_primarySpell].second->activate();
+						_spells[_primarySpell].second->wakeUp();
+					}
+					_spells[_primarySpell].second->addAmmo();
 				}else{
 					if(spellIndex == 2){
-						_spells[_secondarySpell].first = true;
-						_spells[_secondarySpell].second->activate();		
+						if(!_spells[_secondarySpell].first){
+							_spells[_secondarySpell].first = true;
+							_spells[_secondarySpell].second->activate();
+							_spells[_secondarySpell].second->wakeUp();
+						}
+						_spells[_secondarySpell].second->addAmmo();
 					}else{
 						printf("\nCuidado, has puesto un hechizo no valido, o es 1 (primario) o es 2 (secundario)");
 					}

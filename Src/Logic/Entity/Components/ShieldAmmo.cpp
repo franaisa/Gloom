@@ -84,12 +84,11 @@ namespace Logic {
 		return true;
 	}
 
-	//__________________________________________________________________
-
+	//_________________________________________________________________
 	void CShieldAmmo::onActivate() {
+		ISpellAmmo::onActivate();
 		// Aqui enviaria el mensaje o lo que fuera para que pusiera en el hud
 	}
-
 	//__________________________________________________________________
 
 	void CShieldAmmo::onAvailable() {
@@ -126,6 +125,14 @@ namespace Logic {
 		_spellIsActive = false;
 	} // stopPrimaryFire
 	//__________________________________________________________________
+	/*
+	void CShieldAmmo::addAmmo(){ 
+			_currentAmmo += _ammoPerPull;
+			if(_currentAmmo > _maxAmmo)
+				_currentAmmo = _maxAmmo;
+		//quizas aqui , habria que llamar al addAmmo de los friends, por si acaso estos tiene que hacer algo con el hud por ejemplo
+	} // addAmmo
+	//__________________________________________________________________
 
 	/*
 	void CComeBackAmmo::reduceCooldown(unsigned int percentage) {
@@ -134,7 +141,7 @@ namespace Logic {
 		
 		
 		_cooldown = percentage == 0 ? _defaultCooldown : (_defaultCooldown - (percentage * _cooldown * 0.01f));
-		assert(_cooldown < _duration && "La duracion del cooldown reducido es inferior a la del hechizo, lo cual no tiene mucho sentido");
+		assert(_cooldown > _duration && "La duracion del cooldown reducido es inferior a la del hechizo, lo cual no tiene mucho sentido");
 		
 	}*/
 

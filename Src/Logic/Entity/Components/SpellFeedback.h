@@ -117,12 +117,12 @@ namespace Logic {
 		//__________________________________________________________________
 
 		/**
-		Si el hechizo es pasivo, en el onAvailable es donde hara su efecto
+		Si el hechizo es pasivo, en el onWake es donde hara su efecto
 		*/
-		virtual void onAvailable() { };
+		virtual void onWake() { };
 
 
-		virtual void onBusy() { };
+		virtual void onSleep() { };
 
 	protected:
 
