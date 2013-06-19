@@ -34,7 +34,7 @@ Map = {
 	
 	ActiveSpell = {
 		type = "ItemSpawn",
-		position = {-258.661, 156.003, -194.821},
+		position = {-258.071, 156.003, -198.531},
 		model = "loco.mesh",
 		id = "spell",
 		reward = 1,
@@ -81,7 +81,7 @@ Map = {
 	
 	IronHellGoat1 = {
 		type = "ItemSpawn",
-		position = {447.546, 142.652, -122.923},
+		position = {451.142, 142.652, -122.978},
 		model = "rocketLauncher.mesh",
 		id = "weapon",
 		weaponType = 4,
