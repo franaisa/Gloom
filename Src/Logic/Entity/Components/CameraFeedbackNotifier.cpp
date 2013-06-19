@@ -59,7 +59,7 @@ namespace Logic {
 
 		_walkAnim.currentRoll = 0.0f;
 		_walkAnim.rollSpeed = 0.00005f;
-		_walkAnim.rollOffset = 0.012f;
+		_walkAnim.rollOffset = 0.015f;
 		_walkAnim.rollCoef = 0.95f;
 		_walkAnim.recoveringRoll = false;
 		_walkAnim.currentStrafingDir = 0;
@@ -262,9 +262,12 @@ namespace Logic {
 
 		// Recuperamos la posicion inicial multiplicando por el coeficiente
 		// de recuperacion
-		if(_walkAnim.recoveringRoll)
+		if(_walkAnim.recoveringRoll && _walkAnim.currentRoll != 0) {
 			_walkAnim.currentRoll *= _walkAnim.rollCoef;
-		
+			if(abs(_walkAnim.currentRoll) < 0.001)
+				_walkAnim.currentRoll = 0;
+		}
+
 		_cameraComponent->rollCamera(_walkAnim.currentRoll);
 
 		_walkAnim.currentVerticalPos += _walkAnim.verticalSpeed * msecs;
