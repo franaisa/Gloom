@@ -27,7 +27,7 @@ namespace Logic {
 
 	//__________________________________________________________________
 
-	CHardDeathFeedback::CHardDeathFeedback() : ISpellFeedback("hardDeath") {
+	CHardDeathFeedback::CHardDeathFeedback() : ISpellFeedback("hardDeath"),_explotionRadius(0) {
 		// Nada que hacer
 	}
 

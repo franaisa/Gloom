@@ -33,7 +33,7 @@ namespace Logic {
 
 		_newPercentDamage = entityInfo->getIntAttribute(_spellName + "PercentDamage");
 
-		assert(_newPercentDamage == 0);
+		assert(_newPercentDamage != 0);
 		return true;
 	} // spawn
 	//__________________________________________________________________

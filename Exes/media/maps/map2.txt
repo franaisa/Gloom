@@ -115,6 +115,24 @@ Map = {
 		respawnTime = 5,
 	},
 	
+	spell1 = {
+		type = "ItemSpawn",
+		position = {-264,2.0, 5.0},
+		model = "rocketLauncher.mesh",
+		id = "spell",
+		reward = 1,
+		respawnTime = 5,
+	},
+	
+	spell2 = {
+		type = "ItemSpawn",
+		position = {-264,2.0, 30.0},
+		model = "rocketLauncher.mesh",
+		id = "spell",
+		reward = 2,
+		respawnTime = 5,
+	},
+	
 	SuperShield = {
 		type = "ItemSpawn",
 		position = {-265,127,47},
@@ -297,12 +315,6 @@ Map = {
 		physic_type = "static",
 		physic_shape = "box",
 		physic_dimensions = { 4, 7, 4 },
-	},
-	
-	LaserBeam1 = {
-		type = "LaserBeam",
-		position = { 0,-20,0},
-		model = "shotGun.mesh",
 	},
 	
 	Jumper2 = {

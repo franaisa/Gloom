@@ -15,6 +15,7 @@
 #ifndef __Logic_HardDeathAmmo_H
 #define __Logic_HardDeathAmmo_H
 
+#include "Logic/Entity/Component.h"
 #include "Logic/Entity/Components/SpellAmmo.h"
 
 namespace Logic {
@@ -41,7 +42,10 @@ namespace Logic {
 
 		virtual bool spawn(CEntity* entity, CMap *map, const Map::CEntity *entityInfo);
 
-		//__________________________________________________________________	
+		//_________________________________________________________________
+
+		virtual void CHardDeathAmmo::process(const std::shared_ptr<CMessage>& message);
+		//_________________________________________________________________
 
 	private:
 		

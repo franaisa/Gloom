@@ -127,6 +127,7 @@ namespace Logic {
 		*/
 		virtual void reduceCooldown(unsigned int percentage) { };
 
+		virtual void addAmmo() {};
 	protected:
 
 
@@ -139,13 +140,13 @@ namespace Logic {
 		Llamado cuando el arma pasa a ser activa.
 		Si es hechizo es pasivo hara aqui su accion.
 		*/
-		virtual void onAvailable();
+		virtual void onWake();
 
 
 		/**
 		Llamado cuando el arma pasa a ser inactiva.
 		*/
-		virtual void onBusy();
+		virtual void onSleep();
 
 
 		virtual void onActivate();

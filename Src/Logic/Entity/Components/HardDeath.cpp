@@ -53,14 +53,12 @@ namespace Logic {
 	//__________________________________________________________________
 
 	void CHardDeath::spell(){ 
-		//auto msg =  std::make_shared<CMessageReducedCooldown>(_percentage);
-		//_entity->emitMessage(msg);
+			createExplotion();
 	} // spell
 	//__________________________________________________________________
 		
 	void CHardDeath::stopSpell() {
 
-		createExplotion();
 	} // stopSpell
 	//__________________________________________________________________
 
@@ -76,11 +74,9 @@ namespace Logic {
 
 		for(int i = 0; i < entitiesHit.size(); ++i) {
 			// Mandamos el mensaje de daño
-			estimateDamage(entitiesHit[i], explotionPos);
+			if(entitiesHit[i]->getEntityID() != _entity->getEntityID())
+				estimateDamage(entitiesHit[i], explotionPos);
 		}
-
-		// Destruir en diferido esta entidad
-		CEntityFactory::getSingletonPtr()->deferredDeleteEntity(_entity, true);
 	}
 
 	//________________________________________________________________________
@@ -98,7 +94,7 @@ namespace Logic {
 		// Hacemos una query de raycast desde el punto de explosion hasta la entidad analizada
 		// de la query de overlap (para saber el punto de colision).
 		// No es ni lo mas exacto ni lo mas eficiente, pero soluciona la papeleta.
-		Ogre::Ray ray( explotionPos, rayDirection.normalisedCopy() );
+		Ogre::Ray ray( explotionPos, rayDirection);
 
 		std::vector<Physics::CRaycastHit> hitBuffer;
 		Physics::CServer::getSingletonPtr()->raycastMultiple(ray, _explotionRadius, hitBuffer);

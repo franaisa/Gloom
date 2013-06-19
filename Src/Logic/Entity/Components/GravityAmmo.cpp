@@ -84,7 +84,7 @@ namespace Logic {
 		_defaultCooldown = _cooldown = entityInfo->getFloatAttribute(_spellName + "Cooldown") * 1000;
 
 		_duration = entityInfo->getFloatAttribute(_spellName + "DurationEffect") * 1000;
-		assert( _defaultCooldown < _duration && "Cuidado que el coolDown es menor que la duracion del hechizo");
+		assert( _defaultCooldown > _duration && "Cuidado que el coolDown es menor que la duracion del hechizo");
 
 		_maxAmmo = entityInfo->getIntAttribute(_spellName + "MaxAmmo");
 		_ammoPerPull = entityInfo->getIntAttribute(_spellName + "AmmoPerPull");
@@ -101,13 +101,15 @@ namespace Logic {
 	//__________________________________________________________________
 
 	void CGravityAmmo::onActivate() {
+		ISpellAmmo::onActivate();
 		// Aqui enviaria el mensaje o lo que fuera para que pusiera en el hud
+		
 	}
 
 	//__________________________________________________________________
 
-	void CGravityAmmo::onAvailable() {
-		ISpellAmmo::onAvailable();
+	void CGravityAmmo::onWake() {
+		ISpellAmmo::onWake();
 		
 		_currentAmmo += _ammoPerPull;
 		_currentAmmo = _currentAmmo > _maxAmmo ? _maxAmmo : _currentAmmo;
@@ -117,27 +119,26 @@ namespace Logic {
 
 	void CGravityAmmo::onTick(unsigned int msecs) {
 		
+		printf("\n_cooldown timer: %d", _cooldownTimer);
+		printf("\n_duration timer: %d", _durationTimer);
 		// Controlamos el cooldown
-		if(_cooldownTimer > 0) {
+		if(_cooldownTimer > 0) 
 			_cooldownTimer -= msecs;
-			
-			if(_cooldownTimer < 0){
-				_cooldownTimer = 0;
-			}
-		}
-		if(_durationTimer > 0){
-			_durationTimer -= msecs;
-			if(_durationTimer < 0){
-				// ya lo pongo a cero dentro del metodo
-				stopSpell();
-			}
+		if(_cooldownTimer < 0)
+			_cooldownTimer = 0;
+		
+		if(_spellIsActive){
+			if(_durationTimer > 0)
+				_durationTimer -= msecs;
+			if(_durationTimer <= 0)
+				stopSpell(); // ya lo pongo a cero dentro del metodo
 		}
 	}
 
 	//__________________________________________________________________
 
 	bool CGravityAmmo::canUseSpell() {
-		return _cooldownTimer == 0 && _currentAmmo > 0;
+		return _spellIsActive || (_cooldownTimer == 0 && _currentAmmo > 0);
 	}
 
 	//__________________________________________________________________
@@ -163,20 +164,29 @@ namespace Logic {
 		
 		// Voy a beneficiar si se hace durante poco tiempo
 		// con esto reduzco el cooldown el mismo porcentaje que me quedaba.
-		_cooldown *=(1-(_durationTimer / _duration ));
+		_durationTimer = _durationTimer < 0 ? 0 : _durationTimer;
+		_cooldownTimer *=(1-((float)_durationTimer / (float)_duration ));
 
 		_durationTimer = 0;
 		
-
 		_spellIsActive = false;
-	} // stopPrimaryFire
+	} // stopSpell
+	//__________________________________________________________________
+
+	void CGravityAmmo::addAmmo(){ 
+			_currentAmmo += _ammoPerPull;
+			if(_currentAmmo > _maxAmmo)
+				_currentAmmo = _maxAmmo;
+		//quizas aqui , habria que llamar al addAmmo de los friends, por si acaso estos tiene que hacer algo con el hud por ejemplo
+	} // addAmmo
 	//__________________________________________________________________
 
 	void CGravityAmmo::reduceCooldown(unsigned int percentage) {
 		// Si es 0 significa que hay que restaurar al que habia por defecto,
 		// sino decrementamos conforme al porcentaje dado.
 		_cooldown = percentage == 0 ? _defaultCooldown : (_defaultCooldown - (percentage * _cooldown * 0.01f));
-		assert(_cooldown < _duration && "La duracion del cooldown reducido es inferior a la del hechizo, lo cual no tiene mucho sentido");
+		if(_cooldown < _duration) _cooldown = _duration;
+		assert(_cooldown >= _duration && "La duracion del cooldown reducido es inferior a la del hechizo, lo cual no tiene mucho sentido");
 	}
 
 }//namespace Logic

@@ -83,6 +83,8 @@ namespace Logic {
 		*/
 		virtual void stopSpell();
 
+		//virtual void addAmmo();
+
 	protected:
 
 		virtual bool canUseSpell();
@@ -90,7 +92,7 @@ namespace Logic {
 
 		virtual void onActivate();
 
-		virtual void onAvailable();
+		virtual void onWake();
 
 		virtual void onTick(unsigned int msecs);
 
@@ -109,8 +111,8 @@ namespace Logic {
 
 		bool _spellIsActive;
 
-		unsigned int _cooldownTimer;
-		unsigned int _durationTimer;
+		int _cooldownTimer;
+		int _durationTimer;
 		
 	};
 

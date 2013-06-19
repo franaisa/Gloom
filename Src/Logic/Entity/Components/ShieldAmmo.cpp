@@ -33,7 +33,10 @@ namespace Logic {
 	//__________________________________________________________________
 
 	CShieldAmmo::CShieldAmmo() : ISpellAmmo("shield"),
-								_spellIsActive(false){
+								_spellIsActive(false),
+								_shieldDamage(0),
+								_shieldRadius(0) 
+		{
 		// Nada que hacer
 	}
 
@@ -65,7 +68,7 @@ namespace Logic {
 		if( !ISpellAmmo::spawn(entity, map, entityInfo) ) return false;
 
 		// Nos aseguramos de tener todos los atributos que necesitamos
-		assert( entityInfo->hasAttribute("Cooldown") );
+		//assert( entityInfo->hasAttribute("Cooldown") );
 		assert( entityInfo->hasAttribute( "spellShieldRadius") );
 
 		// Cooldown del disparo principal
@@ -81,16 +84,15 @@ namespace Logic {
 		return true;
 	}
 
-	//__________________________________________________________________
-
+	//_________________________________________________________________
 	void CShieldAmmo::onActivate() {
+		ISpellAmmo::onActivate();
 		// Aqui enviaria el mensaje o lo que fuera para que pusiera en el hud
 	}
-
 	//__________________________________________________________________
 
-	void CShieldAmmo::onAvailable() {
-		/*ISpellAmmo::onAvailable();		
+	void CShieldAmmo::onWake() {
+		/*ISpellAmmo::onWake();		
 		_currentAmmo += _ammoPerPull;
 		_currentAmmo = _currentAmmo > _maxAmmo ? _maxAmmo : _currentAmmo;*/
 	}
@@ -99,7 +101,7 @@ namespace Logic {
 
 	void CShieldAmmo::onTick(unsigned int msecs) {
 		if(_spellIsActive){
-			shieldDamage();
+			//shieldDamage();
 		}
 	}
 
@@ -123,6 +125,14 @@ namespace Logic {
 		_spellIsActive = false;
 	} // stopPrimaryFire
 	//__________________________________________________________________
+	/*
+	void CShieldAmmo::addAmmo(){ 
+			_currentAmmo += _ammoPerPull;
+			if(_currentAmmo > _maxAmmo)
+				_currentAmmo = _maxAmmo;
+		//quizas aqui , habria que llamar al addAmmo de los friends, por si acaso estos tiene que hacer algo con el hud por ejemplo
+	} // addAmmo
+	//__________________________________________________________________
 
 	/*
 	void CComeBackAmmo::reduceCooldown(unsigned int percentage) {
@@ -131,7 +141,7 @@ namespace Logic {
 		
 		
 		_cooldown = percentage == 0 ? _defaultCooldown : (_defaultCooldown - (percentage * _cooldown * 0.01f));
-		assert(_cooldown < _duration && "La duracion del cooldown reducido es inferior a la del hechizo, lo cual no tiene mucho sentido");
+		assert(_cooldown > _duration && "La duracion del cooldown reducido es inferior a la del hechizo, lo cual no tiene mucho sentido");
 		
 	}*/
 

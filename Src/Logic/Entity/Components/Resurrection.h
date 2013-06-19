@@ -33,7 +33,7 @@ namespace Logic {
 	public:
 
 		/** Constructor por defecto. */
-		CResurrection() : ISpell("resurection") { }
+		CResurrection() : ISpell("resurrection") { }
 
 		//__________________________________________________________________
 

@@ -21,6 +21,7 @@
 #include "Logic/Messages/MessageAddAmmo.h"
 #include "Logic/Messages/MessageAddWeapon.h"
 #include "Logic/Messages/MessageActivate.h"
+#include "Logic/Messages/MessageAddSpell.h"
 
 #include "Graphics/HHFXParticle.h"
 
@@ -142,6 +143,10 @@ namespace Logic {
 				addWeaponMsg->setAddAmmo(_reward);
 				addWeaponMsg->setAddWeapon(_weaponType);
 				actor->emitMessage(addWeaponMsg);
+			}else if(_id == "spell") {
+				std::shared_ptr<CMessageAddSpell> addSpellMsg = std::make_shared<CMessageAddSpell>();
+				addSpellMsg->setSpell(_reward);
+				actor->emitMessage(addSpellMsg);
 			}
 		}
 		// Arrancamos el timer.

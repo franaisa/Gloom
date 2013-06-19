@@ -219,10 +219,8 @@ namespace Logic {
 		//__________________________________________________________________
 
 		/**
-		Pinta un decal dada una entidad y una posicion
-
-		@deprecated Temporalmente está implementada como un helper, pero
-		en el futuro está función debería formar parte del componente gráfico.
+		Desde esta función se envía un mensaje al componente gráfico de la entidad a la que se ha dado
+		(pEntity) para que se pinte el decal ahí. Es decir, esta función se encarga de enviar el mensaje.
 
 		@param pEntity Entidad sobre la que queremos pintar el decal.
 		@param vPos Posición en la que queremos pintar el decal.
@@ -257,11 +255,6 @@ namespace Logic {
 
 		/** Nombre del arma con el formato: weapon + <nombre arma>.*/
 		std::string _weaponName;
-
-		Ogre::ManualObject* decalObject;
-
-		bool		_bDecalsCreated;
-		bool		_primerDecal;
 
 	}; // class IWeapon
 

@@ -43,16 +43,18 @@ namespace Logic {
 	bool ISpellAmmo::spawn(CEntity *entity, CMap *map, const Map::CEntity *entityInfo) {
 		if( !IComponent::spawn(entity,map,entityInfo) ) return false;
 
+		
+
 		// Comprobamos que los atributos obligatorios existen
 		assert( entityInfo->hasAttribute(_spellName + "ID") && "Debe tener id, mirar archivo spellType");
 		assert( entityInfo->hasAttribute(_spellName + "IsPassive") && "Es importante que tenga este campo");
-		assert( entityInfo->hasAttribute(_spellName + "IsPrimarySpell") && "Este parametro debe de haberse seteado al crear la entidad");
-
+		
 		// Leemos los atributos obligatorios de arma
 		_spellID = (SpellType::Enum)entityInfo->getIntAttribute(_spellName + "ID");
 		_isPassive = entityInfo->getBoolAttribute(_spellName + "IsPassive");
-		_isPrimarySpell = entityInfo->getBoolAttribute(_spellName + "IsPrimarySpell");		
-
+		
+		assert( entityInfo->hasAttribute("primarySpell") && "Debe de tener campo primarySpell");
+		_isPrimarySpell = _spellID == entityInfo->getIntAttribute("primarySpell");
 
 		return true;
 	}
@@ -98,7 +100,11 @@ namespace Logic {
 
 	//__________________________________________________________________
 
-	void ISpellAmmo::onAvailable(){
+	void ISpellAmmo::onWake(){
+		for(unsigned int i = 0; i < _friends; ++i){
+			_friend[i]->wakeUp();
+		}
+
 		if(_isPassive){
 			if(_isPrimarySpell){
 				shared_ptr<CMessagePrimarySpell> message = make_shared<CMessagePrimarySpell>();
@@ -111,31 +117,30 @@ namespace Logic {
 			}
 		}
 
-		for(unsigned int i = 0; i < _friends; ++i){
-			_friend[i]->stayAvailable();
-		}
-	} // onAvailable
+
+	} // onWake
 	//__________________________________________________________________
 
-	void ISpellAmmo::onBusy() {
+	void ISpellAmmo::onSleep() {
 		for(unsigned int i = 0; i < _friends; ++i){
-			_friend[i]->stayBusy();
+			_friend[i]->putToSleep(true);
 		}
-	} // onBusy
+	} // onSleep
 	//__________________________________________________________________
 
 	void ISpellAmmo::onActivate() {
 		for(unsigned int i = 0; i < _friends; ++i){
 			_friend[i]->activate();
 		}
-	} // onBusy
+	} // onActivate
 	//__________________________________________________________________
 
 	void ISpellAmmo::onDeactivate() {
+		stopSpell();
 		for(unsigned int i = 0; i < _friends; ++i){
 			_friend[i]->deactivate();
 		}
-	} // onBusy
+	} // onDeactivate
 	//__________________________________________________________________
 
 

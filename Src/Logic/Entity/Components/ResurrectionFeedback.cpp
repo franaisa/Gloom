@@ -27,7 +27,7 @@ namespace Logic {
 
 	//__________________________________________________________________
 
-	CResurrectionFeedback::CResurrectionFeedback() : ISpellFeedback("resurection") {
+	CResurrectionFeedback::CResurrectionFeedback() : ISpellFeedback("resurrection") {
 		// Nada que hacer
 	}
 
