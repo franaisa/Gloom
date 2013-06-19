@@ -1,0 +1,31 @@
+Map = {
+
+	World = {
+		type = "World",
+		model = "mapaAngel.mesh",
+		physic_file = "media/models/mapaAngel/mapaAngel.RepX",
+	},
+	Vortice = {
+		type = "Vortice",
+	},
+	David = {
+		type = "LocalSpectator",
+		isPlayer = true,
+		position = {52.0, 84.0, 122.0},
+	},
+	
+	Camera = {
+		type = "Camera",
+		height = 8,
+	},
+	Point1 = {
+		type = "SpawnPoint",
+		position = {52.0, 84.0, 122.0},
+		yaw = 0,
+		physic_entity = "rigid",
+		physic_trigger = true,
+		physic_type = "static",
+		physic_shape = "box",
+		physic_dimensions = { 4, 7, 4 },
+	},
+}
