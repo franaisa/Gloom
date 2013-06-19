@@ -203,8 +203,6 @@ namespace Logic {
 		Vector3 dispersionDirection = direction.randomDeviant(angle);
 		dispersionDirection.normalise();
 
-		//std::cout << "Angulo: " << angle << std::endl;
-
 		//El origen debe ser mínimo la capsula (si chocamos el disparo en la capsula al mirar en diferentes direcciones ya esta tratado en la funcion de colision)
 		//Posicion de la entidad + altura de disparo(coincidente con la altura de la camara)
 		Vector3 origin = _entity->getPosition()+Vector3(0.0f,_heightShoot,0.0f);
@@ -221,6 +219,7 @@ namespace Logic {
 		bool disp = Physics::CServer::getSingletonPtr()->raycastSingle(ray, _distance,hits2, Physics::CollisionGroup::eWORLD);
 		if (disp)
 		{
+			//Mandar el mensaje de los decal
 			Vector3 pos = hits2.impact;
 			drawDecal(hits2.entity, hits2.impact);
 			
@@ -275,26 +274,26 @@ namespace Logic {
 			if((*it).entity->getName() != _entity->getName())
 			{
 				int danyoTotal = _damage * _currentSpentSecondaryAmmo;
-				//std::cout << "Le he dado!!! Danyo = " << danyoTotal << std::endl;
-
 				std::shared_ptr<CMessageDamaged> m = std::make_shared<CMessageDamaged>();
 				m->setDamage(danyoTotal);
 				m->setEnemy(_entity);
 				(*it).entity->emitMessage(m);
-
-				//Le he dado
-				/*
-				Vector3 direct = -(_directionShoot.reflect(-(*it).normal));
-				auto m = std::make_shared<CMessageAddForcePlayer>();
-				m->setForce(_directionShoot * (_screamerScreamForce*(1.0f- (*it).distance/_screamerScreamMaxDistance)));
-				(*it).entity->emitMessage(m);
-
-				auto m2 = std::make_shared<CMessageSetAnimation>();
-				m2->setString("Damage");
-				m2->setBool(false);
-				(*it).entity->emitMessage(m2);*/
 			}
 		}
+
+		//Decal, lo calculo sin dispersión
+		Vector3 origin = _entity->getPosition()+Vector3(0.0f,_heightShoot,0.0f);
+		// Creamos el ray desde el origen en la direccion del raton (desvio ya aplicado)
+		Ray ray(origin, Math::getDirection(_entity->getOrientation()));
+		Physics::CRaycastHit hits2;
+		bool disp = Physics::CServer::getSingletonPtr()->raycastSingle(ray, _distance,hits2, Physics::CollisionGroup::eWORLD);
+		if (disp)
+		{
+			//Mandar el mensaje de los decal
+			Vector3 pos = hits2.impact;
+			drawDecal(hits2.entity, hits2.impact);
+		}
+
 	} // secondaryShoot
 
 } // namespace Logic
