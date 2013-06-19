@@ -23,7 +23,7 @@ Map = {
 	
 	SpawnPoint1 = {
 		type = "SpawnPoint",
-		position = {52.0, 84.0, 122.0},
+		position = {-235.435, 219.526, 109.276},
 		yaw = 0,
 		physic_entity = "rigid",
 		physic_trigger = true,
@@ -59,9 +59,18 @@ Map = {
 		respawnTime = 5,
 	},
 	
+	Shield = {
+		type = "ItemSpawn",
+		position = {229.264, 142.335, -370.457},
+		model = "shield1.mesh",
+		id = "armor",
+		reward = 60,
+		respawnTime = 5,
+	},
+	
 	Sniper1 = {
 		type = "ItemSpawn",
-		position = {-258.003, 243.948, 181.588} ,
+		position = {-258.003, 244.648, 181.788} ,
 		model = "sniper.mesh",
 		id = "weapon",
 		weaponType = 1,
@@ -71,7 +80,7 @@ Map = {
 	
 	Sniper2 = {
 		type = "ItemSpawn",
-		position = {280.842, 65.9085, -316.799} ,
+		position = {280.842, 66.6085, -316.999} ,
 		model = "sniper.mesh",
 		id = "weapon",
 		weaponType = 1,
@@ -89,6 +98,16 @@ Map = {
 		respawnTime = 5,
 	},
 	
+	IronHellGoat2 = {
+		type = "ItemSpawn",
+		position = {-34.3487, 117.083, -334.206},
+		model = "rocketLauncher.mesh",
+		id = "weapon",
+		weaponType = 4,
+		reward = 10,
+		respawnTime = 5,
+	},
+	
 	Shotgun1 = {
 		type = "ItemSpawn",
 		position = {-128.255, 197.337, 48.4198},
@@ -99,9 +118,19 @@ Map = {
 		respawnTime = 5,
 	},
 	
+	Shotgun2 = {
+		type = "ItemSpawn",
+		position = {-65.2534, 158.368, -103.51},
+		model = "shotGun.mesh",
+		id = "weapon",
+		weaponType = 2,
+		reward = 30,
+		respawnTime = 5,
+	},
+	
 	Minigun1 = {
 		type = "ItemSpawn",
-		position = {306.738, 139.383, -476.258},
+		position = {306.738, 139.383, -476.958},
 		model = "miniGun.mesh",
 		id = "weapon",
 		weaponType = 3,
@@ -109,5 +138,58 @@ Map = {
 		respawnTime = 5,
 	},
 	
+	SmallOrb1 = {
+		type = "ItemSpawn",
+		position = {-189.875, 161.626, -390.027},
+		model = "healthvial.mesh",
+		id = "orb",
+		reward = 5,
+		respawnTime = 25,
+	},
+	
+	SmallOrb2 = {
+		type = "ItemSpawn",
+		position = {-179.293, 153.387, -388.126},
+		model = "healthvial.mesh",
+		id = "orb",
+		reward = 5,
+		respawnTime = 25,
+	},
+	
+	SmallOrb3 = {
+		type = "ItemSpawn",
+		position = {-166.553, 143.402, -386.915},
+		model = "healthvial.mesh",
+		id = "orb",
+		reward = 5,
+		respawnTime = 25,
+	},
+	
+	SmallOrb4 = {
+		type = "ItemSpawn",
+		position = {-154.716, 131.556, -385.789},
+		model = "healthvial.mesh",
+		id = "orb",
+		reward = 5,
+		respawnTime = 25,
+	},
+	
+	SmallOrb5 = {
+		type = "ItemSpawn",
+		position = {-140.253, 124.428, -377.062},
+		model = "healthvial.mesh",
+		id = "orb",
+		reward = 5,
+		respawnTime = 25,
+	},
+	
+	SmallOrb6 = {
+		type = "ItemSpawn",
+		position = {-128.718, 121.016, -371.167},
+		model = "healthvial.mesh",
+		id = "orb",
+		reward = 5,
+		respawnTime = 25,
+	},
 	
 }
