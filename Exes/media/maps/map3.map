@@ -192,4 +192,67 @@ Map = {
 		respawnTime = 25,
 	},
 	
+	SmallOrb7 = {
+		type = "ItemSpawn",
+		position = {157.379, 138.856, -287.981},
+		model = "healthvial.mesh",
+		id = "orb",
+		reward = 5,
+		respawnTime = 25,
+	},
+	
+	SmallOrb8 = {
+		type = "ItemSpawn",
+		position = {168.706, 138.856, -287.874},
+		model = "healthvial.mesh",
+		id = "orb",
+		reward = 5,
+		respawnTime = 25,
+	},
+	
+	SmallOrb9 = {
+		type = "ItemSpawn",
+		position = {179.721, 138.856, -287.77},
+		model = "healthvial.mesh",
+		id = "orb",
+		reward = 5,
+		respawnTime = 25,
+	},
+	
+	SmallOrb10 = {
+		type = "ItemSpawn",
+		position = {191.832, 138.856, -287.457},
+		model = "healthvial.mesh",
+		id = "orb",
+		reward = 5,
+		respawnTime = 25,
+	},
+	
+	SmallOrb11 = {
+		type = "ItemSpawn",
+		position = {202.255, 138.849, -287.055},
+		model = "healthvial.mesh",
+		id = "orb",
+		reward = 5,
+		respawnTime = 25,
+	},
+	
+	SmallOrb12 = {
+		type = "ItemSpawn",
+		position = {212.425, 138.856, -286.525},
+		model = "healthvial.mesh",
+		id = "orb",
+		reward = 5,
+		respawnTime = 25,
+	},
+	
+	SmallOrb13 = {
+		type = "ItemSpawn",
+		position = {222.324, 138.856, -285.488},
+		model = "healthvial.mesh",
+		id = "orb",
+		reward = 5,
+		respawnTime = 25,
+	},
+	
 }
