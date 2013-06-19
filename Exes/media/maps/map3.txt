@@ -5,9 +5,11 @@ Map = {
 		model = "mapaAngel.mesh",
 		physic_file = "media/models/mapaAngel/mapaAngel.RepX",
 	},
+	
 	Vortice = {
 		type = "Vortice",
 	},
+	
 	David = {
 		type = "LocalArchangel",
 		isPlayer = true,
@@ -18,7 +20,8 @@ Map = {
 		type = "Camera",
 		height = 8,
 	},
-	Point1 = {
+	
+	SpawnPoint1 = {
 		type = "SpawnPoint",
 		position = {52.0, 84.0, 122.0},
 		yaw = 0,
@@ -28,4 +31,83 @@ Map = {
 		physic_shape = "box",
 		physic_dimensions = { 4, 7, 4 },
 	},
+	
+	ActiveSpell = {
+		type = "ItemSpawn",
+		position = {-258.661, 156.003, -194.821},
+		model = "loco.mesh",
+		id = "spell",
+		reward = 1,
+		respawnTime = 5,
+	},
+	
+	PasiveSpell = {
+		type = "ItemSpawn",
+		position = {52.1866, 80.2496, 119.008},
+		model = "loco.mesh",
+		id = "spell",
+		reward = 2,
+		respawnTime = 5,
+	},
+	
+	SuperShield = {
+		type = "ItemSpawn",
+		position = {82.9836, 204.139, -133.918},
+		model = "armadura.mesh",
+		id = "armor",
+		reward = 125,
+		respawnTime = 5,
+	},
+	
+	Sniper1 = {
+		type = "ItemSpawn",
+		position = {-258.003, 243.948, 181.588} ,
+		model = "sniper.mesh",
+		id = "weapon",
+		weaponType = 1,
+		reward = 10,
+		respawnTime = 5,
+	},
+	
+	Sniper2 = {
+		type = "ItemSpawn",
+		position = {280.842, 65.9085, -316.799} ,
+		model = "sniper.mesh",
+		id = "weapon",
+		weaponType = 1,
+		reward = 10,
+		respawnTime = 5,
+	},
+	
+	IronHellGoat1 = {
+		type = "ItemSpawn",
+		position = {447.546, 142.652, -122.923},
+		model = "rocketLauncher.mesh",
+		id = "weapon",
+		weaponType = 4,
+		reward = 10,
+		respawnTime = 5,
+	},
+	
+	Shotgun1 = {
+		type = "ItemSpawn",
+		position = {-128.255, 197.337, 48.4198},
+		model = "shotGun.mesh",
+		id = "weapon",
+		weaponType = 2,
+		reward = 30,
+		respawnTime = 5,
+	},
+	
+	Minigun1 = {
+		type = "ItemSpawn",
+		position = {306.738, 139.383, -476.258},
+		model = "miniGun.mesh",
+		id = "weapon",
+		weaponType = 3,
+		reward = 200,
+		respawnTime = 5,
+	},
+	
+	
 }
