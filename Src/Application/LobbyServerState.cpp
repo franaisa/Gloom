@@ -177,9 +177,12 @@ namespace Application {
 		hFind = FindFirstFile("media\\maps\\*.txt", &FindData);
 
 		std::string filename;
-		while (FindNextFile(hFind, &FindData)) {     
+		while (FindNextFile(hFind, &FindData))
+		{     
 			filename = FindData.cFileName;
-			_menu->callFunction("pushFile",Hikari::Args(filename.substr(0,filename.find(".txt"))));
+			if(filename == "map3.txt" || filename == "map2.txt" || filename == "map1.txt" || filename == "scenarioTest.txt")
+				_menu->callFunction("pushFile",Hikari::Args(filename.substr(0,filename.find(".txt"))));
+
 		}
 	}
 
