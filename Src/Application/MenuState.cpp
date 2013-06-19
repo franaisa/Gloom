@@ -108,16 +108,7 @@ namespace Application {
 			_app->exitRequest();
 			break;
 		case Input::Key::RETURN:
-			/*
-			if (!Logic::CEntityFactory::getSingletonPtr()->loadBluePrints("blueprints.txt"))
-				return false;
-			if (!Logic::CServer::getSingletonPtr()->loadLevel("map.txt"))
-				return false;
-
-			_app->setState("singlePlayer");
-			/*/
 			_app->setState("selectScenario");
-			/* */
 			break;
 			
 		default:

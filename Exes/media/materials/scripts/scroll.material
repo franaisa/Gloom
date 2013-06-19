@@ -1,0 +1,36 @@
+material NoMaterial
+{
+	technique
+	{
+		pass
+		{
+		}
+
+	}
+
+}
+
+
+
+material scrollogre
+{
+	technique Map#2
+	{
+		pass Map#3
+		{
+			ambient 0.854902 0.756863 0.498039 1
+			diffuse 0.854902 0.756863 0.498039 1
+			specular 0 0 0 1 10
+			cull_hardware none
+			cull_software none
+
+			texture_unit Map#4
+			{
+				texture old_paper.jpg
+				filtering linear linear linear
+			}
+		}
+
+	}
+
+}
