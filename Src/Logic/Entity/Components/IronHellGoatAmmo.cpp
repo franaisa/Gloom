@@ -145,7 +145,8 @@ namespace Logic {
 
 		decrementAmmo();
 		++_currentSpentAmmo;
-
+		
+		_primaryFireIsActive = true;
 	}
 
 	//__________________________________________________________________

@@ -1,6 +1,6 @@
 material shotGun
 {
-	set $glow_tex ARMA_B_GLOW2.png
+	set $glow_tex ARMA_B_GLOW_old.png
 	technique
 	{
 		pass

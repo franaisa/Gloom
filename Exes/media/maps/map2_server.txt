@@ -2,8 +2,8 @@ Map = {
 
 	World = {
 		type = "World",
-		model = "ola.mesh",
-		physic_file = "media/models/ola.RepX",
+		model = "mapaAlberto.mesh",
+		physic_file = "media/models/mapaAlberto/mapaAlberto.RepX",
 	},
 	
 	Hacksaw = {
