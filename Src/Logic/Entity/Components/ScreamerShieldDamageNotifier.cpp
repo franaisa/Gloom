@@ -71,25 +71,6 @@ namespace Logic {
 
 	//________________________________________________________________________
 
-	void CScreamerShieldDamageNotifier::onStart() {
-		_physicComponent = _entity->getComponent<CPhysicDynamicEntity>("CPhysicDynamicEntity");
-		assert(_physicComponent != NULL && "Error: Esta entidad no tiene componente fisico, estas en el cliente?");
-	}
-
-	//________________________________________________________________________
-
-	void CScreamerShieldDamageNotifier::onTick(unsigned int msecs) {
-		// Aunque este no es el sitio mas idoneo para hacer esto, lo
-		// voy a hacer aqui por facilidad
-		Vector3 shootPosition = _owner->getPosition() + ( (_owner->getOrientation() * Vector3::NEGATIVE_UNIT_Z) * _capsuleRadius );
-		shootPosition.y += _heightShoot;
-		
-		// Seteamos la posicion fisica del escudo
-		_physicComponent->setTransform( _owner->getPosition(),_owner->getOrientation(), false );
-	}
-
-	//________________________________________________________________________
-
 	void CScreamerShieldDamageNotifier::onActivate() {
 		_reducedDamageAbsorption = 0;
 	}

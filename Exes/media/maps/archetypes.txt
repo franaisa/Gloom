@@ -1018,7 +1018,6 @@ Map = {
 		particleVisible = false,
 	},
 	
-	
 	LocalScreamer = {
 		type = "LocalScreamer",
 		position = {-182.0, 15.0, 47.0},
@@ -2368,7 +2367,7 @@ Map = {
 	ScreamerShield = {
 		type = "ScreamerShield",
 		model = "shieldCone.mesh",
-		msgList= "55,56",
+		msgList= "48",
 		physic_entity = "rigid",
 		physic_trigger = false,
 		physic_type = "kinematic",

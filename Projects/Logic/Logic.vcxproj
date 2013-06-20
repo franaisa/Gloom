@@ -97,6 +97,7 @@
     <ClCompile Include="..\..\Src\Logic\Entity\Components\Resurrection.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\ResurrectionAmmo.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\ResurrectionFeedback.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\ScreamerShieldController.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\Shield.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\ShieldAmmo.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\ShieldFeedback.cpp" />
@@ -203,7 +204,6 @@
     <ClCompile Include="..\..\Src\Logic\Maps\WorldState.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\Message.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageActivate.cpp" />
-    <ClCompile Include="..\..\Src\Logic\Messages\MessageActivateScreamerShield.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageAddAmmo.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageAddForcePhysics.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageAddForcePlayer.cpp" />
@@ -235,7 +235,6 @@
     <ClCompile Include="..\..\Src\Logic\Messages\MessageControl.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageCreateParticle.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageDamaged.cpp" />
-    <ClCompile Include="..\..\Src\Logic\Messages\MessageDeactivateScreamerShield.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageFlash.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageHudAmmo.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageHudDebug.cpp" />
@@ -253,7 +252,7 @@
     <ClCompile Include="..\..\Src\Logic\Messages\MessageSecondaryShoot.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageSecondarySpell.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageSetAnimation.cpp" />
-    <ClCompile Include="..\..\Src\Logic\Messages\MessageSetRelatedEntity.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Messages\MessageSetOwner.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageSetPhysicPosition.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageSetReducedDamage.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageSide.cpp" />
@@ -292,6 +291,7 @@
     <ClInclude Include="..\..\Src\Logic\Entity\Components\Resurrection.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\ResurrectionAmmo.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\ResurrectionFeedback.h" />
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\ScreamerShieldController.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\Shield.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\ShieldAmmo.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\ShieldFeedback.h" />
@@ -403,7 +403,6 @@
     <ClInclude Include="..\..\Src\Logic\Maps\Scoreboard.h" />
     <ClInclude Include="..\..\Src\Logic\Maps\TeamFaction.h" />
     <ClInclude Include="..\..\Src\Logic\Maps\WorldState.h" />
-    <ClInclude Include="..\..\Src\Logic\Messages\MessageActivateScreamerShield.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageAddSpell.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageCameraRoll.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageChangeGravity.h" />
@@ -431,7 +430,6 @@
     <ClInclude Include="..\..\Src\Logic\Messages\MessageContactExit.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageControl.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageDamaged.h" />
-    <ClInclude Include="..\..\Src\Logic\Messages\MessageDeactivateScreamerShield.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageDecal.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageFlash.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageHudAmmo.h" />
@@ -456,7 +454,7 @@
     <ClInclude Include="..\..\Src\Logic\Messages\MessageSecondaryShoot.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageSecondarySpell.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageSetAnimation.h" />
-    <ClInclude Include="..\..\Src\Logic\Messages\MessageSetRelatedEntity.h" />
+    <ClInclude Include="..\..\Src\Logic\Messages\MessageSetOwner.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageSetPhysicPosition.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageSetReducedDamage.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageSide.h" />

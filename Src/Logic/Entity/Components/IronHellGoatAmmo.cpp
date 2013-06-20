@@ -145,16 +145,17 @@ namespace Logic {
 
 		decrementAmmo();
 		++_currentSpentAmmo;
-
+		
+		_primaryFireIsActive = true;
 	}
 
 	//__________________________________________________________________
 
 	void CIronHellGoatAmmo::stopPrimaryFire() {
+		if(!_primaryFireIsActive) return;
+			
 		IWeaponAmmo::stopPrimaryFire();
 		
-		if(!_primaryFireIsActive) return;
-
 		_primaryFireIsActive = false;
 
 		// Reseteamos el reloj

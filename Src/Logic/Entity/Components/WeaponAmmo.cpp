@@ -118,10 +118,10 @@ namespace Logic {
 						secondaryFire();
 				}
 				else if(type == Control::UNLEFT_CLICK) {
-					stopPrimaryFire();
+						stopPrimaryFire();
 				}
 				else if(type == Control::UNRIGHT_CLICK) {
-					stopSecondaryFire();
+						stopSecondaryFire();
 				}
 
 				break;

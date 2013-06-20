@@ -193,6 +193,8 @@ namespace Logic {
 	//__________________________________________________________________
 
 	void CMiniGunAmmo::stopSecondaryFire() {
+		if(!_secondaryFireIsActive) return;
+
 		IWeaponAmmo::stopSecondaryFire();
 
 		_secondaryFireIsActive = false;
