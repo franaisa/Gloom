@@ -12,6 +12,7 @@
 
 #include "Logic/Messages/MessageSetAnimation.h"
 #include "Logic/Messages/MessageStopAnimation.h"
+#include "Logic/Messages/MessageAudio.h"
 
 #include "Logic/Maps/WorldState.h"
 
@@ -48,21 +49,21 @@ namespace Logic {
 	bool CPlayerSnapshot::accept(const shared_ptr<CMessage>& message) {
 		TMessageType msgType = message->getMessageType();
 
-		return msgType == Message::SET_ANIMATION || msgType == Message::STOP_ANIMATION;
+		return msgType == Message::SET_ANIMATION	|| 
+			   msgType == Message::STOP_ANIMATION;	/*||
+			   msgType == Message::AUDIO;*/
 	}
 
 	//__________________________________________________________________
 
 	void CPlayerSnapshot::process(const shared_ptr<CMessage>& message) {
-		// Struct con información sobre la animación
-		AnimInfo info;
-
-		// Anotamos el tick en el que hemos recibido el mensaje de animación
-		info.tick = _tickCounter;
 		switch( message->getMessageType() ) {
 			case Message::SET_ANIMATION: {
 				shared_ptr<CMessageSetAnimation> setAnimMsg = static_pointer_cast<CMessageSetAnimation>(message);
 
+				// Struct con información sobre la animación
+				AnimInfo info;
+				info.tick = _tickCounter;
 				info.animName = setAnimMsg->getAnimation();
 				info.loop = setAnimMsg->getLoop();
 				info.stop = false;
@@ -73,20 +74,32 @@ namespace Logic {
 				// la animación que le corresponde
 				Logic::CWorldState::getSingletonPtr()->addChange(_entity, message);
 
+				_animationBuffer.push_back(info);
+
 				break;
 			}
 			case Message::STOP_ANIMATION: {
 				shared_ptr<CMessageStopAnimation> stopAnimMsg = static_pointer_cast<CMessageStopAnimation>(message);
 
+				// Struct con información sobre la animación
+				AnimInfo info;
+				info.tick = _tickCounter;
 				info.animName = stopAnimMsg->getString();
 				info.loop = false;
 				info.stop = true;
 
+				_animationBuffer.push_back(info);
+
 				break;
 			}
-		}
+			/*case Message::AUDIO: {
+				shared_ptr<CMessageAudio> audioMsg = static_pointer_cast<CMessageAudio>(message);
 
-		_animationBuffer.push_back(info);
+				AudioInfo info;
+				info.tick = _tickCounter;
+				info.audioPath = audioMsg->getRuta();
+			}*/
+		}
 	}
 
 	//__________________________________________________________________
