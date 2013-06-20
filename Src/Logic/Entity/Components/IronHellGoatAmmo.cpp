@@ -152,10 +152,10 @@ namespace Logic {
 	//__________________________________________________________________
 
 	void CIronHellGoatAmmo::stopPrimaryFire() {
+		if(!_primaryFireIsActive) return;
+			
 		IWeaponAmmo::stopPrimaryFire();
 		
-		if(!_primaryFireIsActive) return;
-
 		_primaryFireIsActive = false;
 
 		// Reseteamos el reloj
