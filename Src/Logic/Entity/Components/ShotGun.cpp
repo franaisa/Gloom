@@ -28,6 +28,8 @@ Contiene la implementación del componente que representa a la escopeta.
 #include "Logic/Messages/MessageCreateParticle.h"
 #include "Logic/Messages/MessageDecal.h"
 
+#include "Logic/Messages/MessageCreateParticle.h"
+#include "Graphics/Particle.h"
 
 
 namespace Logic {
@@ -115,9 +117,20 @@ namespace Logic {
 			);
 			projectileEntity->activate();
 			projectileEntity->start();
-
+			_projectileShootForce = 0.0f;
 			projectileEntity->getComponent<CMagneticBullet>("CMagneticBullet")->setProperties(this, _projectileShootForce, dispersionDirection, _heightShoot, _primaryFireDamage, _damageBurned);
 			_projectiles.insert(projectileEntity);
+
+			
+			std::shared_ptr<CMessageCreateParticle> particleMsg = std::make_shared<CMessageCreateParticle>();
+			particleMsg->setParticle("disparoParticle");
+			Vector3 position2 = projectileEntity->getComponent<CMagneticBullet>("CMagneticBullet")->getEntity()->getPosition();
+			position2.y -= 8.0f;
+			//position2 += Math::getDirection(this->getEntity()->getOrientation());
+			std::cout << "posicion= " << position2 << std::endl;
+			std::cout << "orientacion= " << Math::getDirection(this->getEntity()->getOrientation());
+			particleMsg->setPosition(position2);
+			_entity->emitMessage(particleMsg);
 		}
 			
 	} // fireWeapon
