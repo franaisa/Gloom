@@ -1018,7 +1018,6 @@ Map = {
 		particleVisible = false,
 	},
 	
-	
 	LocalScreamer = {
 		type = "LocalScreamer",
 		position = {-182.0, 15.0, 47.0},
