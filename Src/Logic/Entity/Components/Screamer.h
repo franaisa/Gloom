@@ -101,15 +101,6 @@ namespace Logic {
 
 		//__________________________________________________________________
 
-		/**
-		Se dispara cuando el jugador deja de pulsar la tecla de uso de la habilidad
-		primaria.
-
-		*/
-		virtual void stopPrimarySkill();
-
-		//__________________________________________________________________
-
 		/** 
 		Absorbe todos los proyectiles que le llegan de frente. Esta habilidad tiene
 		un límite, si se sobrepasa explotas.
