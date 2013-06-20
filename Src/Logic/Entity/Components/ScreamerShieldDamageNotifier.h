@@ -129,19 +129,6 @@ namespace Logic {
 		*/
 		void setOwner(Logic::CEntity* owner);
 
-		//__________________________________________________________________
-
-		void setOffset(float capsuleRadius, float heightShoot) {
-			_capsuleRadius = capsuleRadius;
-			_heightShoot = heightShoot;
-		}
-
-	protected:
-
-		virtual void onStart();
-
-		virtual void onTick(unsigned int msecs);
-
 	private:
 
 
@@ -156,14 +143,8 @@ namespace Logic {
 		*/
 		float _reducedDamageAbsorption;
 
-		float _capsuleRadius;
-
-		float _heightShoot;
-
 		/** Entidad dueña de esta entidad. */
 		CEntity* _owner;
-
-		CPhysicDynamicEntity* _physicComponent;
 
 	}; // class CScreamerShieldDamageNotifier
 

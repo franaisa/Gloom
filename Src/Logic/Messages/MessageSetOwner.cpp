@@ -1,4 +1,4 @@
-#include "MessageSetRelatedEntity.h"
+#include "MessageSetOwner.h"
 
 #include "Logic/Entity/MessageFactory.h"
 #include "Logic/Entity/Entity.h"
@@ -9,40 +9,40 @@
 
 namespace Logic {
 
-	IMP_FACTORYMESSAGE(CMessageSetRelatedEntity);
+	IMP_FACTORYMESSAGE(CMessageSetOwner);
 
-	CMessageSetRelatedEntity::CMessageSetRelatedEntity() : CMessage(Message::SET_RELATED_ENTITY) {
+	CMessageSetOwner::CMessageSetOwner() : CMessage(Message::SET_OWNER) {
 		// Nada que hacer
 	}//
 	//----------------------------------------------------------
 
-	CMessageSetRelatedEntity::~CMessageSetRelatedEntity() {
+	CMessageSetOwner::~CMessageSetOwner() {
 		// Nada que hacer
 	}
 	//----------------------------------------------------------
 
-	CEntity* CMessageSetRelatedEntity::getRelatedEntity() {
+	CEntity* CMessageSetOwner::getOwner() {
 		return _entity;
 	}//
 	//----------------------------------------------------------
 
-	void CMessageSetRelatedEntity::setRelatedEntity(CEntity* entity) {
+	void CMessageSetOwner::setOwner(CEntity* entity) {
 		this->_entity = entity;
 	}//
 	//----------------------------------------------------------
 	
-	Net::CBuffer CMessageSetRelatedEntity::serialize() {
+	Net::CBuffer CMessageSetOwner::serialize() {
 		Logic::TEntityID id = _entity->getEntityID();
 
 		Net::CBuffer buffer( sizeof(int) + sizeof(id) );
-		buffer.serialize(std::string("CMessageSetRelatedEntity"), true);
+		buffer.serialize(std::string("CMessageSetOwner"), true);
 		buffer.serialize(id);
 		
 		return buffer;
 	}//
 	//----------------------------------------------------------
 
-	void CMessageSetRelatedEntity::deserialize(Net::CBuffer& buffer) {
+	void CMessageSetOwner::deserialize(Net::CBuffer& buffer) {
 		TEntityID id;
 		// Por problemas con enumerados utilizamos directamente
 		// el read en vez del deserialize

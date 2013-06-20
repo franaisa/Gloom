@@ -118,7 +118,7 @@ void CPhysicDynamicEntity::onFixedTick(unsigned int msecs) {
 	// Actualizar la posición y la orientación de la entidad lógica usando la 
 	// información proporcionada por el motor de física	
 	_entity->setPosition( _physicEntity.getPosition() );
-	_entity->setOrientation( _physicEntity.getOrientation());
+	_entity->setOrientation( _physicEntity.getOrientation() );
 }
 
 //---------------------------------------------------------

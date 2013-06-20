@@ -13,6 +13,12 @@ namespace Logic {
 		bool exclude;
 	};
 
+	/*struct AudioInfo {
+		unsigned int tick;
+		std::string audioPath;
+		bool loop;
+	};*/
+
 	// No heredo de CMessageTransformSnapshot porque me
 	// da problemillas con el constructor (por querer hacer un bypass
 	// y llamar a CMessage directamente)

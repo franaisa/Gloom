@@ -11,7 +11,7 @@ Map = {
 	},
 	
 	David = {
-		type = "LocalArchangel",
+		type = "LocalScreamer",
 		isPlayer = true,
 		position = {52.0, 84.0, 122.0},
 	},

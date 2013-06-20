@@ -364,12 +364,6 @@
     <ClCompile Include="..\..\Src\Logic\Messages\MessageHudDebugData.cpp">
       <Filter>Messages\Source</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Src\Logic\Messages\MessageDeactivateScreamerShield.cpp">
-      <Filter>Messages\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Logic\Messages\MessageActivateScreamerShield.cpp">
-      <Filter>Messages\Source</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Src\Logic\Entity\Components\AnimatedGraphics.cpp">
       <Filter>Entity\Components\Graphics\Source</Filter>
     </ClCompile>
@@ -465,9 +459,6 @@
     </ClCompile>
     <ClCompile Include="..\..\Src\Logic\Entity\Components\Archangel.cpp">
       <Filter>Entity\Components\Skills\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Logic\Messages\MessageSetRelatedEntity.cpp">
-      <Filter>Messages\Source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Src\Logic\Maps\GUIKillersMessage.cpp">
       <Filter>Maps\Source Files</Filter>
@@ -766,6 +757,12 @@
     <ClCompile Include="..\..\Src\Logic\Entity\Components\ComeBackFeedback.cpp">
       <Filter>Entity\Components\Spells\Feedback\Source</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\ScreamerShieldController.cpp">
+      <Filter>Entity\Components\Skills\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Messages\MessageSetOwner.cpp">
+      <Filter>Messages\Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Src\Logic\Maps\ComponentFactory.h">
@@ -957,12 +954,6 @@
     <ClInclude Include="..\..\Src\Logic\Messages\MessageHudDebugData.h">
       <Filter>Messages\Header</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Src\Logic\Messages\MessageDeactivateScreamerShield.h">
-      <Filter>Messages\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Logic\Messages\MessageActivateScreamerShield.h">
-      <Filter>Messages\Header</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Entity\Components\Shadow.h">
       <Filter>Entity\Components\Skills\Header</Filter>
     </ClInclude>
@@ -1061,9 +1052,6 @@
     </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Entity\Components\Spike.h">
       <Filter>Entity\Components\Gameplay\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Logic\Messages\MessageSetRelatedEntity.h">
-      <Filter>Messages\Header</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Maps\GUIKillersMessage.h">
       <Filter>Maps\Header Files</Filter>
@@ -1379,6 +1367,12 @@
     </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Maps\TeamFaction.h">
       <Filter>Maps\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\ScreamerShieldController.h">
+      <Filter>Entity\Components\Skills\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Messages\MessageSetOwner.h">
+      <Filter>Messages\Header</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

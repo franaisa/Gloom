@@ -14,6 +14,7 @@ implementa las habilidades del personaje
 
 // Componentes
 #include "Screamer.h"
+#include "AvatarController.h"
 #include "ScreamerShieldDamageNotifier.h"
 #include "PhysicDynamicEntity.h"
 #include "Graphics.h"
@@ -24,31 +25,26 @@ implementa las habilidades del personaje
 #include "Logic/Maps/Map.h"
 #include "Logic/Entity/Entity.h"
 #include "Logic/Server.h"
+#include "Map/MapEntity.h"
 
 // Mensajes
 #include "Logic/Messages/MessageDamaged.h"
+#include "Logic/Messages/MessageSetOwner.h"
 #include "Logic/Messages/MessageChangeMaterial.h"
 #include "Logic/Messages/MessageCreateParticle.h"
 #include "Logic/Messages/MessageAddForcePlayer.h"
 #include "Logic/Messages/MessageSetAnimation.h"
 
-#include "Map/MapEntity.h"
-
-#include "AvatarController.h"
-
 // Física
 #include "Physics/Server.h"
 #include "Physics/GeometryFactory.h"
-
 #include "Physics/SweepHit.h"
 #include "Physics/RaycastHit.h"
-
 
 // Gráficos
 #include "Graphics/Server.h"
 #include "Graphics/Particle.h"
 #include "Graphics/Scene.h"
-
 #include "Graphics/Camera.h"
 
 using namespace std;
@@ -227,16 +223,7 @@ namespace Logic {
 		if(goToReflect && hitWorld.distance > 0)
 			raycastHitConsequences(hitWorld);
 		
-		
-			
-
-		//std::cout << std::endl << "Primary Skill - Screamer" << std::endl;
 	} // primarySkill
-	//__________________________________________________________________
-
-	void CScreamer::stopPrimarySkill(){
-	
-	} // stopPrimarySkill
 	//__________________________________________________________________
 
 	void CScreamer::raycastHitConsequences(const Physics::CRaycastHit &hitWorld){
@@ -263,7 +250,6 @@ namespace Logic {
 	//__________________________________________________________________
 	
 	void CScreamer::sweepHitConsequences(const std::vector<Physics::CSweepHit> &hits){
-		
 		for(auto it = hits.begin(); it < hits.end(); ++it){
 			if((*it).entity->getName() != _entity->getName()){
 				Vector3 direct = -(_directionShoot.reflect(-(*it).normal));
@@ -291,16 +277,15 @@ namespace Logic {
 			_entity->getOrientation()
 		);
 		
-		// Fijamos a nuestra entidad como dueña de la entidad creada en el componente
-		// que recibe las notificaciones de daño.
-		CScreamerShieldDamageNotifier* shieldDmgNotifier = _screamerShield->getComponent<CScreamerShieldDamageNotifier>("CScreamerShieldDamageNotifier");
-		assert(shieldDmgNotifier && "Error: La entidad ScreamerShield no tiene ningun componente llamado CScreamerShieldDamageNotifier");
-		shieldDmgNotifier->setOwner(_entity);
-		shieldDmgNotifier->setOffset(_capsuleRadius, _heightShoot);
-
 		// Activamos la entidad creada
 		_screamerShield->activate();
 		_screamerShield->start();
+
+		// Enviamos el mensaje SET_OWNER para que el escudo se mueva
+		// acorde a los movimientos del player
+		shared_ptr<CMessageSetOwner> setOwnerMsg = make_shared<CMessageSetOwner>();
+		setOwnerMsg->setOwner(_entity);
+		_screamerShield->emitMessage(setOwnerMsg);
 	} // secondarySkill
 	//__________________________________________________________________
 

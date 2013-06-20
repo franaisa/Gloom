@@ -63,8 +63,6 @@ namespace Physics {
 	void CDynamicEntity::load(const std::string &file, int group, const vector<int>& groupList, const Logic::IPhysics* component) {
 		// Cargamos desde fichero los datos del actor
 		CEntity::load(file, group, groupList, component);
-
-		// Asignamos al actor los flags que corresponden a los rigid dinamicos
 	}
 
 	//________________________________________________________________________
@@ -164,18 +162,19 @@ namespace Physics {
 	//________________________________________________________________________
 
 	void CDynamicEntity::clearForce(ForceMode forceMode, bool autowake) {
-			switch(forceMode) {
-			case eFORCE:
+		switch(forceMode) {
+			case eFORCE: {
 				//_dynamicActor->clearForce(PxForceMode::eFORCE,autowake);
 				//Poniendo velocidad a pelo porque el clearForce no hace lo que dice
-				_dynamicActor->setLinearVelocity(PxVec3(0.0,0.0,0.0),autowake);
+				_dynamicActor->setLinearVelocity( PxVec3(0.0, 0.0, 0.0), autowake );
 				break;
-
-			case eIMPULSE:
+			}
+			case eIMPULSE: {
 				//_dynamicActor->clearForce(PxForceMode::eIMPULSE,autowake);
 				//Poniendo velocidad a pelo porque el clearForce no hace lo que dice
-				_dynamicActor->setLinearVelocity(PxVec3(0.0,0.0,0.0),autowake);
+				_dynamicActor->setLinearVelocity( PxVec3(0.0, 0.0, 0.0), autowake );
 				break;
+			}
 		}
 	}
 
@@ -221,10 +220,10 @@ namespace Physics {
 
 	void CDynamicEntity::setTransform(const Vector3 &position, const Quaternion &orientation, bool makeConversionToLogicWorld) {
 		if(makeConversionToLogicWorld) {
-			_actor->setGlobalPose( PxTransform(Vector3ToPxVec3( convertPhysxCoordsToLogicCoords(position)),QuaternionToPxQuat(orientation)));
+			_actor->setGlobalPose( PxTransform( Vector3ToPxVec3( convertPhysxCoordsToLogicCoords(position) ), QuaternionToPxQuat(orientation) ) );
 		}
 		else {
-			_actor->setGlobalPose(  PxTransform(Vector3ToPxVec3(position),QuaternionToPxQuat(orientation)) );
+			_actor->setGlobalPose(  PxTransform( Vector3ToPxVec3(position), QuaternionToPxQuat(orientation) ) );
 		}
 	}
 
