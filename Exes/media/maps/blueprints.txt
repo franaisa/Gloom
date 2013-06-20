@@ -31,7 +31,7 @@ SpotLight CLight CGraphics
 DirectionalLight CLight CGraphics
 ScreamerShield CGraphics CPhysicDynamicEntity CScreamerShieldDamageNotifier CScreamerShieldController
 MagneticBullet CMagneticBullet CPhysicDynamicEntity CGraphics
-FireBall CFireBallController CPhysicDynamicEntity CGraphics
+FireBall CFireBallController CPhysicDynamicEntity CParticle CGraphics
 LaserBeam CGraphics
 LifeDome CLifeDome CPhysicDynamicEntity CGraphics
 Vortice CLava CGraphics CPhysicStaticEntity

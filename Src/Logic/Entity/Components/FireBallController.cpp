@@ -17,6 +17,7 @@
 
 #include "Logic/Messages/MessageContactEnter.h"
 #include "Logic/Messages/MessageDamaged.h"
+#include "Logic/Messages/MessageCreateParticle.h"
 
 #include "Map/MapEntity.h"
 
@@ -126,6 +127,11 @@ namespace Logic {
 
 		// Destruir en diferido esta entidad
 		CEntityFactory::getSingletonPtr()->deferredDeleteEntity(_entity, true);
+
+		shared_ptr<CMessageCreateParticle> particleMsg = make_shared<CMessageCreateParticle>();
+		particleMsg->setPosition(explotionPos);
+		particleMsg->setParticle("ExplosionParticle");
+		_entity->emitMessage(particleMsg);
 	}
 
 	//________________________________________________________________________
