@@ -1,6 +1,6 @@
 particle_system ExplosionParticle
 {
-	material Fireball
+	material explosionMaterial
 	particle_width 5.0
 	particle_height 5.0
 	quota 50
