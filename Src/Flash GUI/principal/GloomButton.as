@@ -18,6 +18,7 @@ package principal
 			this.addEventListener(MouseEvent.CLICK, onMouseClick);
 			this.addEventListener(MouseEvent.MOUSE_UP, onMouseUp);
 			this.addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
+			
 		}
 		
 		protected function onMouseOver(event: MouseEvent): void {
