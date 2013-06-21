@@ -763,6 +763,12 @@
     <ClCompile Include="..\..\Src\Logic\Entity\Components\Scope.cpp">
       <Filter>Entity\Components\Spells\Cast\Source</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\Hud.cpp">
+      <Filter>Entity\Components\Graphics\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Messages\MessageHud.cpp">
+      <Filter>Messages\Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Src\Logic\Maps\ComponentFactory.h">
@@ -1373,6 +1379,12 @@
     </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Entity\Components\ScopeAmmo.h">
       <Filter>Entity\Components\Spells\Ammunition\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\Hud.h">
+      <Filter>Entity\Components\Graphics\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Messages\MessageHud.h">
+      <Filter>Messages\Header</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

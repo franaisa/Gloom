@@ -19,6 +19,7 @@ clase.
 #include "Logic/Entity/Entity.h"
 #include "Map/MapEntity.h"
 #include "Logic/Messages/MessageChangeMaterial.h"
+#include "Logic/Messages/MessageHud.h"
 #include "Logic/Maps/WorldState.h"
 
 #include "Logic/Messages/MessageChangePlayerClass.h"
@@ -107,12 +108,18 @@ namespace Logic {
 				if(type == Control::USE_PRIMARY_SKILL) {
 					if( canUsePrimarySkill() ) {
 						primarySkill();
+						std::shared_ptr<CMessageHud> hudmsg = std::make_shared<CMessageHud>();
+						hudmsg->setType(CMessageHud::HudType::PRIMARY_SKILL);
+						_entity->emitMessage(hudmsg);
 						_primarySkillTimer = _primarySkillCooldown;
 					}
 				}
 				else if(type == Control::USE_SECONDARY_SKILL) {
 					if( canUseSecondarySkill() ) {
 						secondarySkill();
+						std::shared_ptr<CMessageHud> hudmsg = std::make_shared<CMessageHud>();
+						hudmsg->setType(CMessageHud::HudType::SECONDARY_SKILL);
+						_entity->emitMessage(hudmsg);
 						_secondarySkillTimer = _secondarySkillCooldown;
 					}
 				}
