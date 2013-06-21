@@ -19,6 +19,8 @@ de hechizo de hardDeath.
 #include "Logic/Server.h"
 #include "Map/MapEntity.h"
 
+#include "Logic/Messages/MessageCreateParticle.h"
+
 using namespace std;
 
 namespace Logic {
@@ -51,13 +53,16 @@ namespace Logic {
 	//__________________________________________________________________
 
 	void CHardDeathFeedback::spell(){
-		// Efecto cuando se activa la gravedad
-
+		
+		shared_ptr<CMessageCreateParticle> particleMsg = make_shared<CMessageCreateParticle>();
+		particleMsg->setPosition(_entity->getPosition());
+		particleMsg->setParticle("ExplosionParticle");
+		_entity->emitMessage(particleMsg);
 	} // spell
 	//__________________________________________________________________
 		
 	void CHardDeathFeedback::stopSpell(){
-		//Aqui he de crear una explosion;
+		
 
 	} // stopSpell
 	//__________________________________________________________________

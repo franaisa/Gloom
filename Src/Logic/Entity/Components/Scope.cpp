@@ -1,15 +1,15 @@
 /**
-@file Zoom.cpp
+@file Scope.cpp
 
-Contiene la implementación del componente que representa al hechizo zoom.
+Contiene la implementación del componente que representa al hechizo scope.
  
-@see Logic::CZoom
+@see Logic::CScope
 
 @author Jaime Chapinal Cervantes
 @date Junio,2013
 */
 
-#include "Zoom.h"
+#include "Scope.h"
 #include "Logic/Entity/Entity.h"
 #include "Logic/Maps/EntityFactory.h"
 #include "Logic/Server.h"
@@ -18,15 +18,15 @@ Contiene la implementación del componente que representa al hechizo zoom.
 //#include "Logic/Messages/MessageChangeGravity.h"
 
 namespace Logic {
-	IMP_FACTORY(CZoom);
+	IMP_FACTORY(CScope);
 
-	CZoom::~CZoom() {
+	CScope::~CScope() {
 		// Nada que hacer
 	}
 
 	//__________________________________________________________________
 	
-	bool CZoom::spawn(CEntity* entity, CMap *map, const Map::CEntity *entityInfo) {
+	bool CScope::spawn(CEntity* entity, CMap *map, const Map::CEntity *entityInfo) {
 		if(!ISpell::spawn(entity,map,entityInfo)) return false;
 
 		/*assert( entityInfo->hasAttribute(_spellName + "newGravity") );
@@ -41,13 +41,13 @@ namespace Logic {
 	} // spawn
 	//__________________________________________________________________
 
-	void CZoom::spell(){ 
+	void CScope::spell(){ 
 		/*auto msg =  std::make_shared<CMessageChangeGravity>(_newGravity);
 		_entity->emitMessage(msg);*/
 	} // spell
 	//__________________________________________________________________
 		
-	void CZoom::stopSpell() { 
+	void CScope::stopSpell() { 
 		/*auto msg = std::make_shared<CMessageChangeGravity>(_defaultGravity);
 		_entity->emitMessage(msg);*/
 	} // stopSpell

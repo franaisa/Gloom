@@ -1,18 +1,18 @@
 //---------------------------------------------------------------------------
-// Zoom.h
+// Scope.h
 //---------------------------------------------------------------------------
 
 /**
-@file Zoom.h
+@file Scope.h
 
-Contiene la declaración del componente que implementa el zoom.
+Contiene la declaración del componente que implementa el scope.
 
 @author Jaime Chapinal Cervantes
 @date Junio, 2013
 */
 
-#ifndef __Logic_Zoom_H
-#define __Logic_Zoom_H
+#ifndef __Logic_Scope_H
+#define __Logic_Scope_H
 
 #include "Logic/Entity/Components/Spell.h"
 
@@ -30,17 +30,17 @@ namespace Logic {
 	@date Junio, 2013
 	*/
 
-	class CZoom : public ISpell {
-		DEC_FACTORY(CZoom);
+	class CScope : public ISpell {
+		DEC_FACTORY(CScope);
 
 	public:
 
 		/** Constructor por defecto. */
-		CZoom() : ISpell("zoom") { }
+		CScope() : ISpell("scope") { }
 
 		//__________________________________________________________________
 
-		virtual ~CZoom();
+		virtual ~CScope();
 
 		//__________________________________________________________________
 
@@ -84,7 +84,7 @@ namespace Logic {
 		//float _newGravity;
 	}; // class 
 
-	REG_FACTORY(CZoom);
+	REG_FACTORY(CScope);
 
 } // namespace Logic
 

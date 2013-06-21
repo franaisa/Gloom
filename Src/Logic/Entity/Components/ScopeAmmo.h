@@ -1,19 +1,19 @@
 //---------------------------------------------------------------------------
-// ZoomAmmo.h
+// ScopeAmmo.h
 //---------------------------------------------------------------------------
 
 /**
-@file ZoomAmmo.h
+@file ScopeAmmo.h
 
-@see Logic::CZoomAmmo
+@see Logic::CScopeAmmo
 @see Logic::ISpellAmmo
 
 @author Jaime Chapinal Cervantes
 @date Junio, 2013
 */
 
-#ifndef __Logic_ZoomAmmo_H
-#define __Logic_ZoomAmmo_H
+#ifndef __Logic_ScopeAmmo_H
+#define __Logic_ScopeAmmo_H
 
 #include "Logic/Entity/Components/SpellAmmo.h"
 
@@ -26,16 +26,16 @@ namespace Logic {
 	@date Junio, 2013
 	*/
 
-	class CZoomAmmo : public ISpellAmmo {
-		DEC_FACTORY(CZoomAmmo);
+	class CScopeAmmo : public ISpellAmmo {
+		DEC_FACTORY(CScopeAmmo);
 	public:
 
 		/** Constructor por defecto. */
-		CZoomAmmo();
+		CScopeAmmo();
 
 		//__________________________________________________________________
 
-		virtual ~CZoomAmmo();
+		virtual ~CScopeAmmo();
 
 		//__________________________________________________________________
 
@@ -109,14 +109,12 @@ namespace Logic {
 		//unsigned int _ammoPerPull;
 		//unsigned int _currentAmmo;
 
-		bool _spellIsActive;
-
 		int _cooldownTimer;
 		int _durationTimer;
 		
 	};
 
-	REG_FACTORY(CZoomAmmo);
+	REG_FACTORY(CScopeAmmo);
 
 } // namespace Logic
 

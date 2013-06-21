@@ -72,7 +72,7 @@ namespace Logic {
 		_maxAmmo = entityInfo->getIntAttribute(_weaponName + "MaxAmmo");
 		_capsuleRadius = entityInfo->getFloatAttribute("physic_radius");
 		_heightShoot = entityInfo->getFloatAttribute("heightShoot");
-		_weaponSound = entityInfo->getStringAttribute(_weaponName+"Audio");
+		
 		
 		return true;
 	}

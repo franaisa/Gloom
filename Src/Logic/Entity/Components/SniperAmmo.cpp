@@ -79,7 +79,8 @@ namespace Logic {
 	//__________________________________________________________________
 
 	void CSniperAmmo::onActivate() {
-		IWeaponAmmo::onActivate();
+		//Reiniciamos el cooldown
+		reduceCooldown(0);
 	}
 
 	//__________________________________________________________________

@@ -91,7 +91,8 @@ namespace Logic {
 	//__________________________________________________________________
 
 	void CMiniGunAmmo::onActivate() {
-		
+		//Reiniciamos el cooldown
+		reduceCooldown(0);
 	}
 
 	//__________________________________________________________________

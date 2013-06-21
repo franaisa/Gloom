@@ -193,6 +193,9 @@ namespace Logic {
 		/** Variable para controlar si un hechizo es activo o pasivo */
 		bool _isPassive;
 
+		/** Variable de control, que controla si el hechizo esta activo o no*/
+		bool _spellIsActive;
+
 		unsigned int _friends;
 		IComponent *_friend[2];
 	}; // class ISpell

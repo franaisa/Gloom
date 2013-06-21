@@ -74,6 +74,16 @@ namespace Logic {
 	}// spawn
 	//________________________________________________
 
+	void CShotGun::onActivate() {
+		
+		//Reiniciamos el cooldown
+		reduceCooldown(0);
+		//y los daños
+		amplifyDamage(0);
+	}
+
+	//__________________________________________________________________
+
 	void CShotGun::secondaryFire() {
 		// yo le digo que deben de volver, y a partir de ahi, ellas solas encuentran el camino :D
 		if(!_projectiles.empty()){
@@ -85,6 +95,7 @@ namespace Logic {
 	//__________________________________________________________________
 
 	void CShotGun::onTick(unsigned int msecs) {
+		/*
 		// Controlamos el cooldown del disparo primario y secundario
 		if(_primaryFireCooldownTimer > 0) {
 			_primaryFireCooldownTimer -= msecs;
@@ -92,12 +103,12 @@ namespace Logic {
 			if(_primaryFireCooldownTimer < 0)
 				_primaryFireCooldownTimer = 0;
 		}
+		*/
 	}
 	//__________________________________________________________________
 
 	void CShotGun::primaryFire() {
-		//Sonido
-		emitSound(_weaponSound,_weaponName,false);
+		
 
 		/*std::shared_ptr<CMessageCreateParticle> particleMsg = std::make_shared<CMessageCreateParticle>();
 		particleMsg->setParticle("test");

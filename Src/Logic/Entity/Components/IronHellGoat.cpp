@@ -104,6 +104,11 @@ namespace Logic {
 
 	void CIronHellGoat::onActivate() {
 		_currentSpentAmmo = _ammoSpentTimer = _elapsedTime = 0;
+		
+		//Reiniciamos el cooldown
+		reduceCooldown(0);
+		//y los daños
+		amplifyDamage(0);
 	}
 
 	//__________________________________________________________________
@@ -174,8 +179,7 @@ namespace Logic {
 	void CIronHellGoat::stopPrimaryFire() {
 		if(!_primaryFireIsActive) return;
 
-		//Sonido
-		emitSound(_weaponSound,_weaponName,false);
+		
 
 		_primaryFireIsActive = false;
 

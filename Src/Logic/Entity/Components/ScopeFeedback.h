@@ -1,22 +1,22 @@
 //---------------------------------------------------------------------------
-// ZoomFeedback.h
+// ScopeFeedback.h
 //---------------------------------------------------------------------------
 
 /**
-@file ZoomFeedback.h
+@file ScopeFeedback.h
 
 Contiene la declaración de la cabecera del componente
 de disparo de la cabra.
 
-@see Logic::CZoomFeedback
+@see Logic::CScopeFeedback
 @see Logic::ISpellFeedback
 
 @author Jaime Chapinal Cervantes
 @date Junio, 2013
 */
 
-#ifndef __Logic_ZoomFeedback_H
-#define __Logic_ZoomFeedback_H
+#ifndef __Logic_ScopeFeedback_H
+#define __Logic_ScopeFeedback_H
 
 #include "Logic/Entity/Components/SpellFeedback.h"
 
@@ -35,22 +35,25 @@ namespace Logic {
 	@date JUnio, 2013
 	*/
 
-	class CZoomFeedback : public ISpellFeedback {
-		DEC_FACTORY(CZoomFeedback);
+	class CScopeFeedback : public ISpellFeedback {
+		DEC_FACTORY(CScopeFeedback);
 
 	public:
 
 		/** Constructor por defecto. */
-		CZoomFeedback();
+		CScopeFeedback();
 
 		//__________________________________________________________________
 
-		virtual ~CZoomFeedback();
+		virtual ~CScopeFeedback();
 
 		//__________________________________________________________________
 
 		virtual bool spawn(CEntity* entity, CMap *map, const Map::CEntity *entityInfo);
 
+		//__________________________________________________________________
+
+		virtual void onActivate();
 		//__________________________________________________________________
 
 		/**
@@ -74,7 +77,7 @@ namespace Logic {
 		Graphics::CCamera* _camera;
 	};
 
-	REG_FACTORY(CZoomFeedback);
+	REG_FACTORY(CScopeFeedback);
 
 } // namespace Logic
 
