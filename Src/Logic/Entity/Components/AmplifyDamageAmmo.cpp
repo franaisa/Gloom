@@ -32,7 +32,6 @@ namespace Logic {
 	//__________________________________________________________________
 
 	CAmplifyDamageAmmo::CAmplifyDamageAmmo() : ISpellAmmo("amplifyDamage"),
-								_spellIsActive(false),
 								_defaultCooldown(0),
 								_duration(0),
 								_maxAmmo(0),
@@ -150,6 +149,7 @@ namespace Logic {
 	//__________________________________________________________________
 
 	void CAmplifyDamageAmmo::stopSpell() {
+		if(!_spellIsActive) return;
 		ISpellAmmo::stopSpell();
 		
 		// Voy a beneficiar si se hace durante poco tiempo

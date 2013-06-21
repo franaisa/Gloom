@@ -62,7 +62,11 @@ namespace Logic {
 	protected:
 
 		virtual void onTick(unsigned int msecs);
-				
+		
+		/**
+		Llamado cuando el arma pasa a ser activa.
+		*/
+		virtual void onActivate();	
 	private:
 
 		unsigned int _defaultPrimaryFireCooldown;

@@ -27,7 +27,7 @@ namespace Logic {
 
 	//__________________________________________________________________
 
-	CComeBackFeedback::CComeBackFeedback() : ISpellFeedback("comeBack") {
+	CComeBackFeedback::CComeBackFeedback() : ISpellFeedback("comeBack"), _spellIsActive(false) {
 		// Nada que hacer
 	}
 
@@ -48,14 +48,19 @@ namespace Logic {
 	//__________________________________________________________________
 
 	void CComeBackFeedback::spell(){
-		// Efecto cuando se activa la gravedad
-
+		// Efecto cuando se activa
+		if(!_spellIsActive){
+			_spellIsActive = true;
+		}else{
+			//Si entra aqui es que me estoy teleportando atras
+		}
+		
 	} // spell
 	//__________________________________________________________________
 		
 	void CComeBackFeedback::stopSpell(){
-		// Efecto cuando se desactiva la gravedad
-
+		// Efecto cuando se desactiva
+		_spellIsActive = false;
 	} // stopSpell
 	//__________________________________________________________________
 

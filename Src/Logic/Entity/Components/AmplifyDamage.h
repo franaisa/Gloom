@@ -16,6 +16,11 @@ Contiene la declaración del componente que implementa el hechizo de amplificar d
 
 #include "Logic/Entity/Components/Spell.h"
 
+
+namespace Logic {
+	class IWeapon;
+}
+
 namespace Logic {
 	
 	/**
@@ -80,6 +85,8 @@ namespace Logic {
 		
 
 		int _newPercentDamage;
+
+		std::vector< IWeapon*> _weaponry;
 	}; // class CAmplifyDamage
 
 	REG_FACTORY(CAmplifyDamage);

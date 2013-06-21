@@ -17,6 +17,10 @@ Contiene la declaración del componente que implementa el coolDown.
 #include "Logic/Entity/Components/Spell.h"
 
 namespace Logic {
+	class IWeaponAmmo;
+	class IWeapon;
+}
+namespace Logic {
 	
 	/**
 	@ingroup logicGroup
@@ -80,6 +84,9 @@ namespace Logic {
 		
 		// porcentaje que recudira el cooldown
 		float _percentage;
+
+		std::vector< IWeaponAmmo*> _weaponryAmmo;
+		std::vector< IWeapon*> _weaponryShoot;
 
 	}; // class CShootRaycast
 

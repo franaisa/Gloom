@@ -75,7 +75,7 @@ namespace Logic {
 		switch( message->getMessageType() ) {
 			case Message::PRIMARY_SPELL: {
 				shared_ptr<CMessagePrimarySpell> primarySpellMsg = static_pointer_cast<CMessagePrimarySpell>(message);
-				if(!_isPassive && _isPrimarySpell){
+				if(_isPrimarySpell){
 					if( primarySpellMsg->getSpell() )
 						spell();
 					else
@@ -85,7 +85,7 @@ namespace Logic {
 			}
 			case Message::SECONDARY_SPELL: {
 				shared_ptr<CMessageSecondarySpell> secondarySpellMsg = static_pointer_cast<CMessageSecondarySpell>(message);
-				if(!_isPassive && !_isPrimarySpell){
+				if(!_isPrimarySpell){
 					if( secondarySpellMsg->getSpell() )
 						spell();
 					else
@@ -104,7 +104,6 @@ namespace Logic {
 	//_________________________________________________________________
 
 	void ISpell::onDeactivate(){
-		stopSpell();
 	}
 	//_________________________________________________________________
 } // namespace Logic

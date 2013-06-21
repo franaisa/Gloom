@@ -61,6 +61,11 @@ namespace Logic {
 		*/
 		virtual bool spawn(CEntity* entity, CMap *map, const Map::CEntity *entityInfo);
 		
+		/**
+		Llamado cuando el arma pasa a ser activa.
+		*/
+		virtual void onActivate();
+
 		// =======================================================================
 		//                          METODOS PROPIOS
 		// =======================================================================

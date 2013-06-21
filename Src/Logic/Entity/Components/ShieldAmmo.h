@@ -110,7 +110,7 @@ namespace Logic {
 		//unsigned int _ammoPerPull;
 		//unsigned int _currentAmmo;
 
-		bool _spellIsActive;
+		
 
 		//unsigned int _cooldownTimer;
 		//unsigned int _durationTimer;

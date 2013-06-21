@@ -60,10 +60,19 @@ namespace Logic {
 	} // spawn
 	//__________________________________________________________________
 
+	void CSniper::onActivate() {
+
+		//Reiniciamos el cooldown
+		reduceCooldown(0);
+		//y los daños
+		amplifyDamage(0);
+	}
+
+	//__________________________________________________________________
+
 	void CSniper::primaryFire(){
 
-		//Sonido
-		emitSound(_weaponSound,_weaponName,false);
+		
 
 		//Direccion
 		Vector3 direction = _entity->getOrientation()*Vector3::NEGATIVE_UNIT_Z;
@@ -113,9 +122,6 @@ namespace Logic {
 	//-------------------------------------------------------
 
 	void CSniper::secondaryFire(){
-
-		//Sonido
-		emitSound(_weaponSound,_weaponName,false);
 
 		//Direccion
 		Vector3 direction = _entity->getOrientation()*Vector3::NEGATIVE_UNIT_Z;
@@ -225,7 +231,7 @@ namespace Logic {
 	//__________________________________________________________________
 
 	void CSniper::onTick(unsigned int msecs) {
-		
+		/*
 		// Controlamos el cooldown del disparo primario y secundario
 		if(_primaryFireTimer > 0) {
 			_primaryFireTimer -= msecs;
@@ -246,7 +252,7 @@ namespace Logic {
 					secondaryFire();
 			}
 		}
-		
+		*/
 	} // onTick
 	//__________________________________________________________________
 

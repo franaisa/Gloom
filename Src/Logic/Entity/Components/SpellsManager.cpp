@@ -22,7 +22,7 @@ Contiene la implementación del componente que gestiona las armas y que administr
 
 #include "AmplifyDamageAmmo.h"
 #include "ComeBackAmmo.h"
-#include "ZoomAmmo.h"
+#include "ScopeAmmo.h"
 #include "GravityAmmo.h"
 #include "HardDeathAmmo.h"
 #include "ShieldAmmo.h"
@@ -58,7 +58,7 @@ namespace Logic
 
 		_spells[SpellType::eAMPLIFY_DAMAGE].second = _entity->getComponent<Logic::CAmplifyDamageAmmo>("CAmplifyDamageAmmo");
 		_spells[SpellType::eCOME_BACK].second = _entity->getComponent<Logic::CComeBackAmmo>("CComeBackAmmo");
-		_spells[SpellType::eZOOM].second = _entity->getComponent<Logic::CZoomAmmo>("CZoomAmmo");
+		_spells[SpellType::eSCOPE].second = _entity->getComponent<Logic::CScopeAmmo>("CScopeAmmo");
 		_spells[SpellType::eGRAVITY].second = _entity->getComponent<Logic::CGravityAmmo>("CGravityAmmo");
 		_spells[SpellType::eHARD_DEATH].second = _entity->getComponent<Logic::CHardDeathAmmo>("CHardDeathAmmo");
 		_spells[SpellType::eSHIELD].second = _entity->getComponent<Logic::CShieldAmmo>("CShieldAmmo");

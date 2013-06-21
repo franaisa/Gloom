@@ -91,7 +91,8 @@ namespace Logic {
 	//__________________________________________________________________
 
 	void CMiniGunAmmo::onActivate() {
-		
+		//Reiniciamos el cooldown
+		reduceCooldown(0);
 	}
 
 	//__________________________________________________________________
@@ -193,6 +194,8 @@ namespace Logic {
 	//__________________________________________________________________
 
 	void CMiniGunAmmo::stopSecondaryFire() {
+		if(!_secondaryFireIsActive) return;
+
 		IWeaponAmmo::stopSecondaryFire();
 
 		_secondaryFireIsActive = false;
