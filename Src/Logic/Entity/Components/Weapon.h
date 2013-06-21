@@ -249,8 +249,7 @@ namespace Logic {
 		// =======================================================================
 
 
-		/** Ruta del sonido del arma. */
-		std::string _weaponSound;
+
 
 		/** Cuanta munición puede llevar este arma como máximo. */
 		unsigned int _maxAmmo;

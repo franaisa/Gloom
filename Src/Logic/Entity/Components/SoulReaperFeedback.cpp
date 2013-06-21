@@ -62,6 +62,8 @@ namespace Logic {
 
 	void CSoulReaperFeedback::secondaryFire() {
 		// Iniciar efecto de atraccion de objeto
+		//Sonido
+		emitSound(_weaponSound,_weaponName,false);
 	} // secondaryFire
 	//__________________________________________________________________
 

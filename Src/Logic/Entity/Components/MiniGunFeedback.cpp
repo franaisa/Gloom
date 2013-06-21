@@ -64,6 +64,8 @@ namespace Logic {
 	void CMiniGunFeedback::primaryFire() {
 		// Poner la animacion de carga inestable del arma
 		_hudWeapon->continouosShooting(true);
+		//Sonido
+		emitSound(_weaponSound,_weaponName,false);
 	}
 
 	//__________________________________________________________________
@@ -84,6 +86,7 @@ namespace Logic {
 
 	void CMiniGunFeedback::secondaryFire() {
 		_hudWeapon->loadingWeapon(true);
+		
 	}
 	//__________________________________________________________________
 	
@@ -91,6 +94,8 @@ namespace Logic {
 		// Parar la animacion de carga
 		_hudWeapon->loadingWeapon(false);
 		_hudWeapon->shootAnim(-1.85f);
+		//Sonido
+		emitSound(_weaponSound,_weaponName,false);
 	}
 
 	//__________________________________________________________________
@@ -104,6 +109,7 @@ namespace Logic {
 
 				if(_primaryFireIsActive){
 					// las alternativas son, o enviar un mensaje por cada disparo, o q el componente de shoot tb tenga el cooldown
+					primaryFire();
 
 					++_iContadorLeftClicked;
 

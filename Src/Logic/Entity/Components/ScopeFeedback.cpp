@@ -53,6 +53,11 @@ namespace Logic {
 	} // spawn
 	//__________________________________________________________________
 
+	void CScopeFeedback::onActivate(){
+		_camera->resetFov();
+	} // onActivate
+	//__________________________________________________________________
+
 	void CScopeFeedback::spell(){
 		_camera->setFov(Math::PI/8);
 

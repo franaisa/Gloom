@@ -49,6 +49,8 @@ namespace Logic {
 	bool IWeaponFeedback::spawn(CEntity *entity, CMap *map, const Map::CEntity *entityInfo) {
 		if( !IComponent::spawn(entity,map,entityInfo) ) return false;
 
+		_weaponSound = entityInfo->getStringAttribute(_weaponName+"Audio");
+
 		_hudWeapon = _entity->getComponent<CHudWeapons>("CHudWeapons");
 		assert(_hudWeapon != NULL && "Error: El cliente necesita tener un componente de grafico del arma");
 

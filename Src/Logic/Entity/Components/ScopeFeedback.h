@@ -53,6 +53,9 @@ namespace Logic {
 
 		//__________________________________________________________________
 
+		virtual void onActivate();
+		//__________________________________________________________________
+
 		/**
 		Método virtual que debe ser implementado por las clases derivadas para
 		especificar que ocurre al usar el spellCast

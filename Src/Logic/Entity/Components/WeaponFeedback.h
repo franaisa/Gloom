@@ -174,6 +174,9 @@ namespace Logic {
 		/** Enumerado que indica cual es el identificador de arma. */
 		WeaponType::Enum _weaponID;
 
+		/** Ruta del sonido del arma. */
+		std::string _weaponSound;
+
 		/** Nombre del arma con el formato: weapon + <nombre arma>.*/
 		std::string _weaponName;
 
