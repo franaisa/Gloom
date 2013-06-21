@@ -1,0 +1,18 @@
+material muzzleFlashTest
+{
+	technique
+	{
+		pass
+		{
+			depth_write off
+			scene_blend alpha_blend
+			lighting off
+
+			texture_unit
+			{
+				texture muzzleFlashTest.png
+				tex_address_mode clamp
+			}
+		}
+	}
+}

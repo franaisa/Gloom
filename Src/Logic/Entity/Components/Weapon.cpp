@@ -38,6 +38,9 @@ a todas las armas.
 
 #include "Graphics/OgreDecal.h"
 
+#include "Logic/Messages/MessageCreateParticle.h"
+#include "Graphics/Particle.h"
+
 using namespace std;
 
 namespace Logic {
@@ -92,6 +95,7 @@ namespace Logic {
 				auto primaryShootMsg = static_pointer_cast<CMessagePrimaryShoot>(message);
 				if(primaryShootMsg->getShoot()){
 					primaryFire();
+					particles();
 				}
 				else{
 					stopPrimaryFire();
@@ -185,6 +189,32 @@ namespace Logic {
 			
 		_entity->emitMessage(audioMsg);
 	} // emitSound
+
+	//__________________________________________________________________
+
+	void IWeapon::particles()
+	{
+		std::cout << "particula" << std::endl;
+		std::shared_ptr<CMessageCreateParticle> particleMsg = std::make_shared<CMessageCreateParticle>();
+		particleMsg->setParticle("explosionMuzzleFlash");
+
+		Vector3 position2 = this->getEntity()->getPosition();
+		position2.y += _heightShoot;
+		std::cout << "posicionOrig = " << position2 << std::endl;
+
+		float fOffset = 4.0f;
+		Vector3 orientation = Math::getDirection(this->getEntity()->getOrientation()) * fOffset;		
+		std::cout << "orientacion = " << orientation << std::endl;
+
+		position2 += orientation;
+		std::cout << "posicion NUEVA = " << position2 << std::endl;
+
+		particleMsg->setPosition(position2);
+		//Vector3 dir(0,0,0);
+		//particleMsg->setDirectionWithForce(dir);
+		_entity->emitMessage(particleMsg);
+	}
+
 	
 
 } // namespace Logic
