@@ -85,10 +85,7 @@ namespace Logic
 		*/
 		virtual void onActivate();
 
-
-		void				setOwner			(Logic::CArchangel *owner);
-
-
+		void setOwner(Logic::CEntity *owner);
 
 	protected:
 
@@ -111,7 +108,7 @@ namespace Logic
 		//                          MIEMBROS PRIVADOS
 		// =======================================================================
 
-		CArchangel*		_owner;		
+		CEntity*		_owner;		
 
 		float			_capsuleRadius;
 

@@ -28,5 +28,5 @@ Hacksaw CGraphics CHacksaw
 ScreamerShield CGraphics CScreamerShieldController
 FireBall CGraphics CPositionInterpolator
 MagneticBullet CGraphics CPositionInterpolator
-LifeDome CLifeDome CGraphics CPositionInterpolator
+LifeDome CGraphics CPositionInterpolator
 Vortice CGraphics

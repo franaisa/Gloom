@@ -104,6 +104,7 @@ namespace Logic {
 			// mover primero al componente físico para que esto funcione.
 			_entity->setPosition( _buffer.front() );
 			_buffer.pop_front();
+			printf("\nSoy %s y posicoin %f, %f, %f", _entity->getName().c_str(),_entity->getPosition().x,_entity->getPosition().y,_entity->getPosition().z);
 		}
 		// Estamos perdiendo ticks por algun motivo
 		// hay que extrapolar y descartar del buffer

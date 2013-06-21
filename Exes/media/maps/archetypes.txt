@@ -2394,7 +2394,7 @@ Map = {
 		physic_mass = 10,
 		ticksPerSample = 1,
 		samplesPerSnapshot = 2,		
-		scale = {5,5,5},
+		scale = {2,2,2},
 	},
 	
 	LifeDome = {

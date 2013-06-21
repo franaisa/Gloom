@@ -151,16 +151,17 @@ namespace Logic {
 		Matrix4 transform = Matrix4::IDENTITY;
 		transform.setTrans(position);
 
+		printf("\nCreando el life dome");
 		_lifeDome = CEntityFactory::getSingletonPtr()->createEntity(
 			CEntityFactory::getSingletonPtr()->getInfo("LifeDome"),			
 			Logic::CServer::getSingletonPtr()->getMap(),
 			position,
 			Quaternion::IDENTITY
 		);
-
+		_lifeDome->getComponent<CLifeDome>("CLifeDome")->setOwner(_entity);
 		_lifeDome->activate();
 		_lifeDome->start();
-		_lifeDome->getComponent<CLifeDome>("CLifeDome")->setOwner(this);
+		
 
 		_doingSecondarySkill = true;
 	}

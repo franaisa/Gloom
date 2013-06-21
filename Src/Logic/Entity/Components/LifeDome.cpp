@@ -89,28 +89,30 @@ namespace Logic
 	}
 	//________________________________________________________________________
 	
-	void CLifeDome::setOwner(Logic::CArchangel *owner)
+	void CLifeDome::setOwner(Logic::CEntity *owner)
 	{
+		printf("\Owner asignao a %s",owner->getName().c_str());
 		_owner = owner;
 	} // setOwner
 	//________________________________________________________________________
 
 	void CLifeDome::onFixedTick(unsigned int msecs) {
+		/*
 		CGraphics* cGraph;
 		cGraph = _entity->getComponent<CGraphics>("CGraphics");
-
+		*/
 		if (_owner)
 		{
-			_entity->setPosition(_owner->getEntity()->getPosition());
-			std::cout << "Owner position" << _owner->getEntity()->getPosition() << std::endl;
-			std::cout << "Entity position position" << _entity->getPosition() << std::endl;
-			std::cout << std::endl;
-
+			_physicComponent->move(_owner->getPosition());
+			printf("\n\nYo soy %s y mi owner es %s. \nPosicon1: %f %f %f . \nPosicion2: %f %f %f ", _entity->getName().c_str(), _owner->getName().c_str(), 
+				_owner->getPosition().x,_owner->getPosition().y,_owner->getPosition().z,_entity->getPosition().x,_entity->getPosition().y,_entity->getPosition().z);
+			/*
 			//Desesperacion de poner el cgraph aqui a ver si me mueve la posicion de la cupula pero nada
 			if (cGraph)
-				cGraph->setPosition(_owner->getEntity()->getPosition() + Vector3(0,1,0));
+				cGraph->setPosition(_owner->getPosition() + Vector3(0,1,0));
+			*/
 		}
-
+		/*
 		if (cGraph)
 		{
 			if (_scale < 10.0f)
@@ -121,6 +123,7 @@ namespace Logic
 			//Ponemos la posición del jugador subiéndolo un poco en el ejeY
 			//cGraph->setPosition(_owner->getEntity()->getPosition() + Vector3(0,1,0));
 		}
+		*/
 		
 		
 		

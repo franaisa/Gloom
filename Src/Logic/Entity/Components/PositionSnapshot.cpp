@@ -42,6 +42,7 @@ namespace Logic {
 	//__________________________________________________________________
 
 	void CPositionSnapshot::takeSnapshot() {
+		printf("\nSoy %s y posicoin %f, %f, %f", _entity->getName().c_str(),_entity->getPosition().x,_entity->getPosition().y,_entity->getPosition().z);
 		_positionBuffer.push_back( _entity->getPosition() );
 	}
 
