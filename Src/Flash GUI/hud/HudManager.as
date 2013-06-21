@@ -44,7 +44,7 @@ package hud
 			ExternalInterface.addCallback("updateTime", updateTime);
 			ExternalInterface.addCallback("updateArmor", updateArmor);
 			ExternalInterface.addCallback("updateLife", updateLife);
-			ExternalInterface.addCallback("primaryskill", primarySkill);
+			ExternalInterface.addCallback("primarySkill", primarySkill);
 			ExternalInterface.addCallback("secondarySkill", secondarySkill);
 			ExternalInterface.addCallback("primarySpell", primarySpell);
 			ExternalInterface.addCallback("secondarySpell", secondarySpell);
@@ -58,6 +58,7 @@ package hud
 			ExternalInterface.addCallback("hit", onHit);
 			/*ExternalInterface.addCallback("updatePrimarySpellCooldown", addLocalPlayer);
 			ExternalInterface.addCallback("updatePrimarySpellCooldown", addLocalPlayer);*/
+			
 		}
 		
 		public function updateWeapon(weapon:String) {
@@ -66,8 +67,8 @@ package hud
 				
 			}
 			this.bullets.gotoAndPlay(weapon);
-			var actual:MovieClip = getChildByName(weapon) as MovieClip
-			actual.gotoAndPlay("selected");
+			equippedWeapon = getChildByName(weapon) as MovieClip
+			equippedWeapon.gotoAndPlay("selected");
 		}
 		
 		public function updateBullets(bullets:int) {
@@ -96,40 +97,39 @@ package hud
 		
 		public function updateLife(life:int) {
 			
-			if (life > 100) {
-				lifebar.scale = 1.0;
+			/*if (life > 100) {
 				lifebar.gotoAndPlay("idle");
-				return;
-			}
-			trace(lifebar.x);
+			}*/
 			lifebar.scaleX = (2 + (life / 100.0) ) / 3;
 			lifebar.scaleY = (2 + (life / 100.0) ) / 3;
-			trace(lifebar.x);
 			if ( life <= 15 ) {
 				lifebar.gotoAndPlay("danger");
+			}else {
+				lifebar.gotoAndPlay("idle");
+				lifebar.stop();
 			}
 			
 		}
 		
-		public function primarySkill(weapon:String) {
+		public function primarySkill() {
 			
 			primaryskill.gotoAndPlay("cooldown");
 			
 		}
 		
-		public function secondarySkill(weapon:String) {
+		public function secondarySkill() {
 			
 			secondaryskill.gotoAndPlay("cooldown");
 			
 		}
 		
-		public function primarySpell(weapon:String) {
+		public function primarySpell() {
 			
 			primaryskill.gotoAndPlay("cooldown");
 			
 		}
 		
-		public function secondarySpell(weapon:String) {
+		public function secondarySpell() {
 			
 			secondaryskill.gotoAndPlay("cooldown");
 			

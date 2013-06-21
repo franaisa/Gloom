@@ -32,12 +32,7 @@ namespace Logic{
 		weapons[WeaponType::eMINIGUN] = "minigun";
 		weapons[WeaponType::eIRON_HELL_GOAT] = "ironhellgoat";
 		
-		CGUIManager * guiManager = Logic::CGUIManager::getSingletonPtr();
-		guiManager->addGUI("hud", Hikari::Position(Hikari::Center));
-		guiManager->load("Hud", "Hud.swf");
-		guiManager->setTransparent("Hud",true);
-		_hud = guiManager->getGUIControl("Hud");
-		_hud->hide();
+		
 	}
 
 	CHud::~CHud(){
@@ -54,11 +49,16 @@ namespace Logic{
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	void CHud::onDeactivate(){
-		_hud->show();
+		_hud->hide();
 	}
 
 	void CHud::onActivate(){
-		_hud->hide();
+		CGUIManager * guiManager = Logic::CGUIManager::getSingletonPtr();
+		guiManager->addGUI("hud", Hikari::Position(Hikari::Center));
+		guiManager->load("hud", "Hud.swf");
+		guiManager->setTransparent("hud",true);
+		_hud = guiManager->getGUIControl("hud");
+		_hud->show();
 	}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -236,7 +236,7 @@ namespace Logic{
 		_hud->callFunction("primarySpell", Hikari::Args());
 	}
 	void CHud::secondarySpell(){
-		_hud->callFunction("SecondarySpell", Hikari::Args());
+		_hud->callFunction("secondarySpell", Hikari::Args());
 	}
 	
 }
