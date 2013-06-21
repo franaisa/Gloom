@@ -38,6 +38,9 @@ a todas las armas.
 
 #include "Graphics/OgreDecal.h"
 
+#include "Logic/Messages/MessageCreateParticle.h"
+#include "Graphics/Particle.h"
+
 using namespace std;
 
 namespace Logic {
@@ -92,6 +95,19 @@ namespace Logic {
 				auto primaryShootMsg = static_pointer_cast<CMessagePrimaryShoot>(message);
 				if(primaryShootMsg->getShoot()){
 					primaryFire();
+
+							std::shared_ptr<CMessageCreateParticle> particleMsg = std::make_shared<CMessageCreateParticle>();
+		particleMsg->setParticle("test");
+		Vector3 position2 = this->getEntity()->getPosition();
+		position2.y += _heightShoot;
+
+		float fOffset = 2.0f;
+		std::cout << "posicion= " << position2 ;
+		Vector3 orientation = Math::getDirection(this->getEntity()->getOrientation())*fOffset;			
+		position2 += orientation;
+
+		particleMsg->setPosition(position2);
+		_entity->emitMessage(particleMsg);
 				}
 				else{
 					stopPrimaryFire();

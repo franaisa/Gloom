@@ -99,6 +99,19 @@ namespace Logic {
 		//Sonido
 		emitSound(_weaponSound,_weaponName,false);
 
+		/*std::shared_ptr<CMessageCreateParticle> particleMsg = std::make_shared<CMessageCreateParticle>();
+		particleMsg->setParticle("test");
+		Vector3 position2 = this->getEntity()->getPosition();
+		position2.y += _heightShoot;
+
+		float fOffset = 2.0f;
+		std::cout << "posicion= " << position2 ;
+		Vector3 orientation = Math::getDirection(this->getEntity()->getOrientation())*fOffset;			
+		position2 += orientation;
+
+		particleMsg->setPosition(position2);
+		_entity->emitMessage(particleMsg);*/
+
 		int shots = _numberOfShots <= _currentAmmo ? _numberOfShots : _currentAmmo;
 		for(int i = 0; i < shots; ++i) {
 			Vector3 direction = _entity->getOrientation()*Vector3::NEGATIVE_UNIT_Z;
@@ -119,18 +132,8 @@ namespace Logic {
 			projectileEntity->start();
 			_projectileShootForce = 0.0f;
 			projectileEntity->getComponent<CMagneticBullet>("CMagneticBullet")->setProperties(this, _projectileShootForce, dispersionDirection, _heightShoot, _primaryFireDamage, _damageBurned);
-			_projectiles.insert(projectileEntity);
-
+			_projectiles.insert(projectileEntity);		
 			
-			std::shared_ptr<CMessageCreateParticle> particleMsg = std::make_shared<CMessageCreateParticle>();
-			particleMsg->setParticle("disparoParticle");
-			Vector3 position2 = projectileEntity->getComponent<CMagneticBullet>("CMagneticBullet")->getEntity()->getPosition();
-			position2.y -= 8.0f;
-			//position2 += Math::getDirection(this->getEntity()->getOrientation());
-			std::cout << "posicion= " << position2 << std::endl;
-			std::cout << "orientacion= " << Math::getDirection(this->getEntity()->getOrientation());
-			particleMsg->setPosition(position2);
-			_entity->emitMessage(particleMsg);
 		}
 			
 	} // fireWeapon
