@@ -28,10 +28,6 @@ Contiene la implementación del componente que representa a la escopeta.
 #include "Logic/Messages/MessageCreateParticle.h"
 #include "Logic/Messages/MessageDecal.h"
 
-#include "Logic/Messages/MessageCreateParticle.h"
-#include "Graphics/Particle.h"
-
-
 namespace Logic {
 	IMP_FACTORY(CShotGun);
 
@@ -141,7 +137,6 @@ namespace Logic {
 			);
 			projectileEntity->activate();
 			projectileEntity->start();
-			_projectileShootForce = 0.0f;
 			projectileEntity->getComponent<CMagneticBullet>("CMagneticBullet")->setProperties(this, _projectileShootForce, dispersionDirection, _heightShoot, _primaryFireDamage, _damageBurned);
 			_projectiles.insert(projectileEntity);		
 			

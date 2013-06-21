@@ -191,6 +191,9 @@ namespace Logic {
 
 		//__________________________________________________________________
 
+		//Pintar las particulas para el arma
+		void particles();
+
 	protected:
 
 
