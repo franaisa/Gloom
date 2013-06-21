@@ -94,6 +94,7 @@
     <ClCompile Include="..\..\Src\Logic\Entity\Components\HardDeath.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\HardDeathAmmo.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\HardDeathFeedback.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\Hud.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\Resurrection.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\ResurrectionAmmo.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\ResurrectionFeedback.cpp" />
@@ -215,6 +216,7 @@
     <ClCompile Include="..\..\Src\Logic\Messages\MessageChangeGravity.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageDamageAmplifier.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageDecal.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Messages\MessageHud.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageParticleVisibility.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessagePlayerSnapshot.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessagePrimaryShoot.cpp" />
@@ -288,6 +290,7 @@
     <ClInclude Include="..\..\Src\Logic\Entity\Components\HardDeath.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\HardDeathAmmo.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\HardDeathFeedback.h" />
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\Hud.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\Resurrection.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\ResurrectionAmmo.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\ResurrectionFeedback.h" />
@@ -403,6 +406,7 @@
     <ClInclude Include="..\..\Src\Logic\Maps\Scoreboard.h" />
     <ClInclude Include="..\..\Src\Logic\Maps\TeamFaction.h" />
     <ClInclude Include="..\..\Src\Logic\Maps\WorldState.h" />
+    <ClInclude Include="..\..\Src\Logic\Messages\MessageHud.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageAddSpell.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageCameraRoll.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageChangeGravity.h" />

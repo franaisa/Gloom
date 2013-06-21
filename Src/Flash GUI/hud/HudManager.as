@@ -46,6 +46,8 @@ package hud
 			ExternalInterface.addCallback("updateLife", updateLife);
 			ExternalInterface.addCallback("primaryskill", primarySkill);
 			ExternalInterface.addCallback("secondarySkill", secondarySkill);
+			ExternalInterface.addCallback("primarySpell", primarySpell);
+			ExternalInterface.addCallback("secondarySpell", secondarySpell);
 			ExternalInterface.addCallback("updatePrimarySkillCooldown", updatePrimarySkillCooldown);
 			ExternalInterface.addCallback("updatePrimarySpellCooldown", updatePrimarySpellCooldown);
 			ExternalInterface.addCallback("updateSecondarySpellCooldown", updateSecondarySpellCooldown);
@@ -116,6 +118,18 @@ package hud
 		}
 		
 		public function secondarySkill(weapon:String) {
+			
+			secondaryskill.gotoAndPlay("cooldown");
+			
+		}
+		
+		public function primarySpell(weapon:String) {
+			
+			primaryskill.gotoAndPlay("cooldown");
+			
+		}
+		
+		public function secondarySpell(weapon:String) {
 			
 			secondaryskill.gotoAndPlay("cooldown");
 			
