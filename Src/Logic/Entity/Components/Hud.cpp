@@ -59,6 +59,7 @@ namespace Logic{
 		guiManager->setTransparent("hud",true);
 		_hud = guiManager->getGUIControl("hud");
 		_hud->show();
+		_hud->callFunction("updateWeapon",Hikari::Args(weapons[0]));
 	}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
