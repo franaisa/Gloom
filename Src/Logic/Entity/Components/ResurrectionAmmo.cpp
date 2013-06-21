@@ -57,6 +57,19 @@ namespace Logic {
 	}
 	//__________________________________________________________________
 
+	void CResurrectionAmmo::spell() {
+		ISpellAmmo::spell();
 
+		_spellIsActive = true;
+
+	} // spell
+	//__________________________________________________________________
+
+	void CResurrectionAmmo::stopSpell() {
+		ISpellAmmo::stopSpell();
+
+		_spellIsActive = false;
+	} // stopSpell
+	//__________________________________________________________________
 
 }//namespace Logic

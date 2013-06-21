@@ -1,50 +1,46 @@
 //---------------------------------------------------------------------------
-// CoolDown.h
+// Scope.h
 //---------------------------------------------------------------------------
 
 /**
-@file CoolDown.h
+@file Scope.h
 
-Contiene la declaración del componente que implementa el coolDown.
+Contiene la declaración del componente que implementa el scope.
 
-@author Jose Antonio García Yáñez
-@date Febrero, 2013
+@author Jaime Chapinal Cervantes
+@date Junio, 2013
 */
 
-#ifndef __Logic_CoolDown_H
-#define __Logic_CoolDown_H
+#ifndef __Logic_Scope_H
+#define __Logic_Scope_H
 
 #include "Logic/Entity/Components/Spell.h"
 
-namespace Logic {
-	class IWeaponAmmo;
-	class IWeapon;
-}
 namespace Logic {
 	
 	/**
 	@ingroup logicGroup
 
-	Este componente implementa la funcionalidad del coolDown. Tan solo necesitamos
+	Este componente implementa la funcionalidad del gravity. Tan solo necesitamos
 	redefinir los mensajes que se mandan a las entidades en caso de hit, ya que 
 	el resto del comportamiento esta definido en el arquetipo que describe 
-	al coolDown.
+	al gravity.
 
-	@author Jose Antonio García Yáñez
-	@date Febrero, 2013
+	@author Jaime Chapinal Cervantes
+	@date Junio, 2013
 	*/
 
-	class CCoolDown : public ISpell {
-		DEC_FACTORY(CCoolDown);
+	class CScope : public ISpell {
+		DEC_FACTORY(CScope);
 
 	public:
 
 		/** Constructor por defecto. */
-		CCoolDown() : ISpell("coolDown"), _percentage(0) { }
+		CScope() : ISpell("scope") { }
 
 		//__________________________________________________________________
 
-		virtual ~CCoolDown();
+		virtual ~CScope();
 
 		//__________________________________________________________________
 
@@ -56,7 +52,7 @@ namespace Logic {
 		Inicialización del componente a partir de la información extraida de la entidad
 		leida del mapa:
 		<ul>
-			<li><strong>spellCoolDownDamageReflect:</strong> Daño que hace el coolDown al golpear contra el mundo. </li>
+			<li><strong>spellGravityDamageReflect:</strong> Daño que hace el gravity al golpear contra el mundo. </li>
 		</ul>
 
 		@param entity Entidad a la que pertenece el componente.
@@ -82,15 +78,13 @@ namespace Logic {
 
 	private:
 		
-		// porcentaje que recudira el cooldown
-		float _percentage;
+		/** Gravedad por defecto. */
+		//float _defaultGravity;
 
-		std::vector< IWeaponAmmo*> _weaponryAmmo;
-		std::vector< IWeapon*> _weaponryShoot;
+		//float _newGravity;
+	}; // class 
 
-	}; // class CShootRaycast
-
-	REG_FACTORY(CCoolDown);
+	REG_FACTORY(CScope);
 
 } // namespace Logic
 

@@ -43,7 +43,19 @@ namespace Logic {
 
 		//__________________________________________________________________
 
-	
+		/**
+		Método virtual puro que debe ser implementado por las clases derivadas para
+		especificar que ocurre al usar el disparo primario.
+		*/
+		virtual void spell();
+
+		//__________________________________________________________________
+		
+		/**
+		Este método es invocado cuando se deja de pulsar el botón de disparo
+		primario.
+		*/
+		virtual void stopSpell();	
 
 	private:
 

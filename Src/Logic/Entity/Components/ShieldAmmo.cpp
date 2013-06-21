@@ -33,7 +33,6 @@ namespace Logic {
 	//__________________________________________________________________
 
 	CShieldAmmo::CShieldAmmo() : ISpellAmmo("shield"),
-								_spellIsActive(false),
 								_shieldDamage(0),
 								_shieldRadius(0) 
 		{

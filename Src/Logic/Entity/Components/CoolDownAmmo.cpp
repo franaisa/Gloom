@@ -55,6 +55,19 @@ namespace Logic {
 	}
 	//__________________________________________________________________
 
+	void CCoolDownAmmo::spell() {
+		ISpellAmmo::spell();
 
+		_spellIsActive = true;
+
+	} // spell
+	//__________________________________________________________________
+
+	void CCoolDownAmmo::stopSpell() {
+		ISpellAmmo::stopSpell();
+
+		_spellIsActive = false;
+	} // stopSpell
+	//__________________________________________________________________
 
 }//namespace Logic

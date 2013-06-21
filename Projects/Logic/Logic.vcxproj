@@ -177,9 +177,9 @@
     <ClCompile Include="..\..\Src\Logic\Entity\Components\WeaponFeedback.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\WeaponsManager.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\WeaponsManagerClient.cpp" />
-    <ClCompile Include="..\..\Src\Logic\Entity\Components\Zoom.cpp" />
-    <ClCompile Include="..\..\Src\Logic\Entity\Components\ZoomAmmo.cpp" />
-    <ClCompile Include="..\..\Src\Logic\Entity\Components\ZoomFeedback.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\Scope.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\ScopeAmmo.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\ScopeFeedback.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\MessageFactory.cpp" />
     <ClCompile Include="..\..\Src\Logic\GameNetMsgManager.cpp" />
     <ClCompile Include="..\..\Src\Logic\GameNetPlayersManager.cpp" />
@@ -374,9 +374,9 @@
     <ClInclude Include="..\..\Src\Logic\Entity\Components\WeaponsManager.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\WeaponsManagerClient.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\WeaponType.h" />
-    <ClInclude Include="..\..\Src\Logic\Entity\Components\Zoom.h" />
-    <ClInclude Include="..\..\Src\Logic\Entity\Components\ZoomAmmo.h" />
-    <ClInclude Include="..\..\Src\Logic\Entity\Components\ZoomFeedback.h" />
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\Scope.h" />
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\ScopeAmmo.h" />
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\ScopeFeedback.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\MessageFactory.h" />
     <ClInclude Include="..\..\Src\Logic\GameNetMsgManager.h" />
     <ClInclude Include="..\..\Src\Logic\GameNetPlayersManager.h" />

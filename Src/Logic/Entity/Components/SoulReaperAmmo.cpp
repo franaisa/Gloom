@@ -70,7 +70,8 @@ namespace Logic {
 	//__________________________________________________________________
 
 	void CSoulReaperAmmo::onActivate() {
-
+		//Reiniciamos el cooldown
+		reduceCooldown(0);
 	}
 
 	//__________________________________________________________________

@@ -23,6 +23,9 @@ Contiene la implementacion del hechizo de regreso.
 
 #include "Logic/Messages/MessageReducedCooldown.h"
 
+#include "Logic/Messages/MessagePrimarySpell.h"
+#include "Logic/Messages/MessageSecondarySpell.h"
+
 using namespace std;
 
 namespace Logic {
@@ -32,7 +35,6 @@ namespace Logic {
 	//__________________________________________________________________
 
 	CComeBackAmmo::CComeBackAmmo() : ISpellAmmo("comeBack"),
-								_spellIsActive(false),
 								_defaultCooldown(0),
 								_duration(0),
 								_maxAmmo(0),
@@ -145,10 +147,16 @@ namespace Logic {
 			_spellIsActive = true;
 
 			_comeBackPosition = _entity->getPosition();
-			_comeBackOrientation = _entity->getOrientation();
 		}else{
 			if( _comeBackPosition.distance(_entity->getPosition()) <= _distanceComeBack){
-				ISpellAmmo::spell();
+				// fuerzo a que el mensaje de spell se reenvie
+				if(_isPrimarySpell){
+					auto m = make_shared<CMessagePrimarySpell>(true);
+						_entity->emitMessage(m);
+					}else{
+						auto m = make_shared<CMessageSecondarySpell>(true);
+						_entity->emitMessage(m);
+					}
 				stopSpell();
 			}
 		}
@@ -157,6 +165,7 @@ namespace Logic {
 	//__________________________________________________________________
 
 	void CComeBackAmmo::stopSpell() {
+		if(!_spellIsActive) return;
 		ISpellAmmo::stopSpell();
 		
 		// Voy a beneficiar si se hace durante poco tiempo
@@ -169,7 +178,6 @@ namespace Logic {
 		_durationTimer = 0;
 		
 		_comeBackPosition = Vector3::ZERO;
-		_comeBackOrientation = Quaternion::ZERO;
 		
 		_spellIsActive = false;
 	} // stopPrimaryFire
@@ -186,7 +194,6 @@ namespace Logic {
 	void CComeBackAmmo::reduceCooldown(unsigned int percentage) {
 		// Si es 0 significa que hay que restaurar al que habia por defecto,
 		// sino decrementamos conforme al porcentaje dado.
-		
 		
 		_cooldown = percentage == 0 ? _defaultCooldown : (_defaultCooldown - (percentage * _cooldown * 0.01f));
 		assert(_cooldown > _duration && "La duracion del cooldown reducido es inferior a la del hechizo, lo cual no tiene mucho sentido");

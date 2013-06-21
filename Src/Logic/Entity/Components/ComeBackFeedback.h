@@ -66,6 +66,9 @@ namespace Logic {
 		virtual void stopSpell();
 
 		//__________________________________________________________________
+
+
+		bool _spellIsActive;
 	};
 
 	REG_FACTORY(CComeBackFeedback);

@@ -1,9 +1,9 @@
 /**
-@file ZoomAmmo.cpp
+@file ScopeAmmo.cpp
 
 Contiene la implementacion del hechizo de zoom
 
-@see Logic::CZoomAmmo
+@see Logic::CScopeAmmo
 @see Logic::ISpellAmmo
 
 @author Jaime Chapinal Cervantes
@@ -15,9 +15,9 @@ Contiene la implementacion del hechizo de zoom
 #include "Logic/Server.h"
 #include "Map/MapEntity.h"
 
-#include "ZoomAmmo.h"
-#include "Zoom.h"
-#include "ZoomFeedback.h"
+#include "ScopeAmmo.h"
+#include "Scope.h"
+#include "ScopeFeedback.h"
 
 #include "Logic/Messages/MessageReducedCooldown.h"
 
@@ -25,12 +25,11 @@ using namespace std;
 
 namespace Logic {
 
-	IMP_FACTORY(CZoomAmmo);
+	IMP_FACTORY(CScopeAmmo);
 
 	//__________________________________________________________________
 
-	CZoomAmmo::CZoomAmmo() : ISpellAmmo("zoom"),
-								_spellIsActive(false),
+	CScopeAmmo::CScopeAmmo() : ISpellAmmo("zoom"),
 								_defaultCooldown(0),
 								_duration(0),
 								_cooldownTimer(0),
@@ -41,19 +40,19 @@ namespace Logic {
 
 	//__________________________________________________________________
 
-	CZoomAmmo::~CZoomAmmo() {
+	CScopeAmmo::~CScopeAmmo() {
 		// Nada que hacer
 	}
 
 	//__________________________________________________________________
 
-	bool CZoomAmmo::accept(const shared_ptr<CMessage>& message) {
+	bool CScopeAmmo::accept(const shared_ptr<CMessage>& message) {
 		return ISpellAmmo::accept(message) || 
 			message->getMessageType() == Message::REDUCED_COOLDOWN;
 	} // 
 	//__________________________________________________________________
 
-	void CZoomAmmo::process(const shared_ptr<CMessage>& message) {
+	void CScopeAmmo::process(const shared_ptr<CMessage>& message) {
 		ISpellAmmo::process(message);
 		switch( message->getMessageType() ) {
 			case Message::REDUCED_COOLDOWN: {
@@ -63,7 +62,7 @@ namespace Logic {
 		}
 	} // process
 	//__________________________________________________________________
-	bool CZoomAmmo::spawn(CEntity* entity, CMap *map, const Map::CEntity *entityInfo) {
+	bool CScopeAmmo::spawn(CEntity* entity, CMap *map, const Map::CEntity *entityInfo) {
 		if( !ISpellAmmo::spawn(entity, map, entityInfo) ) return false;
 
 		// Nos aseguramos de tener todos los atributos que necesitamos
@@ -81,9 +80,9 @@ namespace Logic {
 		//_maxAmmo = entityInfo->getIntAttribute(_spellName + "MaxAmmo");
 		//_ammoPerPull = entityInfo->getIntAttribute(_spellName + "AmmoPerPull");
 		
-		_friend[_friends] = _entity->getComponent<Logic::CZoom>("CZoom");
+		_friend[_friends] = _entity->getComponent<Logic::CScope>("CScope");
 		if(_friend[_friends]) ++_friends;
-		_friend[_friends] = _entity->getComponent<Logic::CZoomFeedback>("CZoomFeedback");
+		_friend[_friends] = _entity->getComponent<Logic::CScopeFeedback>("CScopeFeedback");
 		if(_friend[_friends]) ++_friends;
 		if(_friends == 0) assert("\nTiene que tenes alguno de los dos componentes");
 
@@ -92,14 +91,14 @@ namespace Logic {
 
 	//__________________________________________________________________
 
-	void CZoomAmmo::onActivate() {
+	void CScopeAmmo::onActivate() {
 		ISpellAmmo::onActivate();
 		// Aqui enviaria el mensaje o lo que fuera para que pusiera en el hud
 	}
 
 	//__________________________________________________________________
 
-	void CZoomAmmo::onWake() {
+	void CScopeAmmo::onWake() {
 		ISpellAmmo::onWake();		
 		/*
 		_currentAmmo += _ammoPerPull;
@@ -108,7 +107,7 @@ namespace Logic {
 
 	//__________________________________________________________________
 
-	void CZoomAmmo::onTick(unsigned int msecs) {
+	void CScopeAmmo::onTick(unsigned int msecs) {
 		
 		// Controlamos el cooldown
 		if(_cooldownTimer > 0) 
@@ -129,13 +128,13 @@ namespace Logic {
 
 	//__________________________________________________________________
 
-	bool CZoomAmmo::canUseSpell() {
+	bool CScopeAmmo::canUseSpell() {
 		return _spellIsActive || ( _cooldownTimer == 0);// && _currentAmmo > 0;
 	}
 
 	//__________________________________________________________________
 
-	void CZoomAmmo::spell() {
+	void CScopeAmmo::spell() {
 		ISpellAmmo::spell();
 		
 		// Si ya se esta haciendo el hechizo, significa que queremos pararlo
@@ -151,7 +150,7 @@ namespace Logic {
 	} // primaryFire
 	//__________________________________________________________________
 
-	void CZoomAmmo::stopSpell() {
+	void CScopeAmmo::stopSpell() {
 		ISpellAmmo::stopSpell();
 		
 		// Voy a beneficiar si se hace durante poco tiempo
@@ -161,13 +160,12 @@ namespace Logic {
 
 		_durationTimer = 0;
 		
-		
 		_spellIsActive = false;
 	} // stopPrimaryFire
 	//__________________________________________________________________
 
 	/*
-	void CZoomAmmo::addAmmo(){ 
+	void CScopeAmmo::addAmmo(){ 
 			_currentAmmo += _ammoPerPull;
 			if(_currentAmmo > _maxAmmo)
 				_currentAmmo = _maxAmmo;
@@ -176,7 +174,7 @@ namespace Logic {
 	//__________________________________________________________________
 	*/
 	
-	void CZoomAmmo::reduceCooldown(unsigned int percentage) {
+	void CScopeAmmo::reduceCooldown(unsigned int percentage) {
 		// Si es 0 significa que hay que restaurar al que habia por defecto,
 		// sino decrementamos conforme al porcentaje dado.
 		

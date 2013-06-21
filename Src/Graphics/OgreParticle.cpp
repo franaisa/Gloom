@@ -109,9 +109,9 @@ namespace Graphics
 	{
 		_particleSystem->setEmitting(true);
 		for(int i = 0 ; i < _particleSystem->getNumEmitters(); ++i){
-			/*
-			_ogreOgreParticleSystem->getEmitter(i)->resetDimensions();
 			
+			_particleSystem->getEmitter(i)->resetDimensions();
+			/*
 			_ogreOgreParticleSystem->getEmitter(i)->setEmitted(false);
 			_ogreOgreParticleSystem->getEmitter(i)->setEmitted(true);
 			*/			

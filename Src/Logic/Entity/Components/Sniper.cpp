@@ -60,6 +60,16 @@ namespace Logic {
 	} // spawn
 	//__________________________________________________________________
 
+	void CSniper::onActivate() {
+
+		//Reiniciamos el cooldown
+		reduceCooldown(0);
+		//y los daños
+		amplifyDamage(0);
+	}
+
+	//__________________________________________________________________
+
 	void CSniper::primaryFire(){
 
 		//Sonido
@@ -225,7 +235,7 @@ namespace Logic {
 	//__________________________________________________________________
 
 	void CSniper::onTick(unsigned int msecs) {
-		
+		/*
 		// Controlamos el cooldown del disparo primario y secundario
 		if(_primaryFireTimer > 0) {
 			_primaryFireTimer -= msecs;
@@ -246,7 +256,7 @@ namespace Logic {
 					secondaryFire();
 			}
 		}
-		
+		*/
 	} // onTick
 	//__________________________________________________________________
 

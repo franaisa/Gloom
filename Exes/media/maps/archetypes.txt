@@ -180,8 +180,8 @@ Map = {
 			weaponironHellGoatMaxFireBallExplotionRadius = 30.0,
 			weaponironHellGoatMaxFireBallDamage = 100.0,
 			
-		primarySpell = 6,
-		secondarySpell = 3,
+		primarySpell = 0,
+		secondarySpell = 2,
 				
 			spellamplifyDamageID = 0,
 			spellamplifyDamageIsPassive = false,
@@ -199,11 +199,11 @@ Map = {
 			spellcomeBackDurationEffect = 5,
 			spellcomeBackDistanceEffect = 200,
 			
-			spellzoomID = 2,
-			spellzoomIsPassive = false,
-			spellzoomCooldown = 10,
-			spellzoomMaxAmmo = 7,
-			spellzoomDurationEffect = 5,
+			spellscopeID = 2,
+			spellscopeIsPassive = false,
+			spellscopeCooldown = 10,
+			spellscopeMaxAmmo = 7,
+			spellscopeDurationEffect = 5,
 			
 			spellgravityID = 3,
 			spellgravityIsPassive = false,
@@ -437,8 +437,8 @@ Map = {
 			weaponironHellGoatMaxFireBallExplotionRadius = 30.0,
 			weaponironHellGoatMaxFireBallDamage = 100.0,
 		
-		primarySpell = 6,
-		secondarySpell = 3,
+		primarySpell = 0,
+		secondarySpell = 2,
 				
 			spellamplifyDamageID = 0,
 			spellamplifyDamageIsPassive = false,
@@ -456,11 +456,11 @@ Map = {
 			spellcomeBackDurationEffect = 5,
 			spellcomeBackDistanceEffect = 200,
 			
-			spellzoomID = 2,
-			spellzoomIsPassive = false,
-			spellzoomCooldown = 10,
-			spellzoomMaxAmmo = 7,
-			spellzoomDurationEffect = 5,
+			spellscopeID = 2,
+			spellscopeIsPassive = false,
+			spellscopeCooldown = 10,
+			spellscopeMaxAmmo = 7,
+			spellscopeDurationEffect = 5,
 			
 			spellgravityID = 3,
 			spellgravityIsPassive = false,
@@ -682,8 +682,8 @@ Map = {
 			weaponironHellGoatMaxFireBallExplotionRadius = 30.0,
 			weaponironHellGoatMaxFireBallDamage = 100.0,
 		
-		primarySpell = 6,
-		secondarySpell = 3,
+		primarySpell = 0,
+		secondarySpell = 2,
 				
 			spellamplifyDamageID = 0,
 			spellamplifyDamageIsPassive = false,
@@ -701,11 +701,11 @@ Map = {
 			spellcomeBackDurationEffect = 5,
 			spellcomeBackDistanceEffect = 200,
 			
-			spellzoomID = 2,
-			spellzoomIsPassive = false,
-			spellzoomCooldown = 10,
-			spellzoomMaxAmmo = 7,
-			spellzoomDurationEffect = 5,
+			spellscopeID = 2,
+			spellscopeIsPassive = false,
+			spellscopeCooldown = 10,
+			spellscopeMaxAmmo = 7,
+			spellscopeDurationEffect = 5,
 			
 			spellgravityID = 3,
 			spellgravityIsPassive = false,
@@ -928,8 +928,8 @@ Map = {
 			weaponironHellGoatMaxFireBallExplotionRadius = 30.0,
 			weaponironHellGoatMaxFireBallDamage = 100.0,
 		
-		primarySpell = 6,
-		secondarySpell = 3,
+		primarySpell = 0,
+		secondarySpell = 2,
 				
 			spellamplifyDamageID = 0,
 			spellamplifyDamageIsPassive = false,
@@ -947,11 +947,11 @@ Map = {
 			spellcomeBackDurationEffect = 5,
 			spellcomeBackDistanceEffect = 200,
 			
-			spellzoomID = 2,
-			spellzoomIsPassive = false,
-			spellzoomCooldown = 10,
-			spellzoomMaxAmmo = 7,
-			spellzoomDurationEffect = 5,
+			spellscopeID = 2,
+			spellscopeIsPassive = false,
+			spellscopeCooldown = 10,
+			spellscopeMaxAmmo = 7,
+			spellscopeDurationEffect = 5,
 			
 			spellgravityID = 3,
 			spellgravityIsPassive = false,
@@ -1180,8 +1180,8 @@ Map = {
 			weaponironHellGoatMaxFireBallExplotionRadius = 30.0,
 			weaponironHellGoatMaxFireBallDamage = 100.0,
 		
-		primarySpell = 6,
-		secondarySpell = 3,
+		primarySpell = 0,
+		secondarySpell = 2,
 				
 			spellamplifyDamageID = 0,
 			spellamplifyDamageIsPassive = false,
@@ -1199,11 +1199,11 @@ Map = {
 			spellcomeBackDurationEffect = 5,
 			spellcomeBackDistanceEffect = 200,
 			
-			spellzoomID = 2,
-			spellzoomIsPassive = false,
-			spellzoomCooldown = 10,
-			spellzoomMaxAmmo = 7,
-			spellzoomDurationEffect = 5,
+			spellscopeID = 2,
+			spellscopeIsPassive = false,
+			spellscopeCooldown = 10,
+			spellscopeMaxAmmo = 7,
+			spellscopeDurationEffect = 5,
 			
 			spellgravityID = 3,
 			spellgravityIsPassive = false,
@@ -1423,8 +1423,8 @@ Map = {
 			weaponironHellGoatMaxFireBallExplotionRadius = 30.0,
 			weaponironHellGoatMaxFireBallDamage = 100.0,
 		
-		primarySpell = 6,
-		secondarySpell = 3,
+		primarySpell = 0,
+		secondarySpell = 2,
 				
 			spellamplifyDamageID = 0,
 			spellamplifyDamageIsPassive = false,
@@ -1442,11 +1442,11 @@ Map = {
 			spellcomeBackDurationEffect = 5,
 			spellcomeBackDistanceEffect = 200,
 			
-			spellzoomID = 2,
-			spellzoomIsPassive = false,
-			spellzoomCooldown = 10,
-			spellzoomMaxAmmo = 7,
-			spellzoomDurationEffect = 5,
+			spellscopeID = 2,
+			spellscopeIsPassive = false,
+			spellscopeCooldown = 10,
+			spellscopeMaxAmmo = 7,
+			spellscopeDurationEffect = 5,
 			
 			spellgravityID = 3,
 			spellgravityIsPassive = false,
@@ -1668,8 +1668,8 @@ Map = {
 			weaponironHellGoatMaxFireBallExplotionRadius = 30.0,
 			weaponironHellGoatMaxFireBallDamage = 100.0,
 
-		primarySpell = 6,
-		secondarySpell = 3,
+		primarySpell = 0,
+		secondarySpell = 2,
 				
 			spellamplifyDamageID = 0,
 			spellamplifyDamageIsPassive = false,
@@ -1687,11 +1687,11 @@ Map = {
 			spellcomeBackDurationEffect = 5,
 			spellcomeBackDistanceEffect = 200,
 			
-			spellzoomID = 2,
-			spellzoomIsPassive = false,
-			spellzoomCooldown = 10,
-			spellzoomMaxAmmo = 7,
-			spellzoomDurationEffect = 5,
+			spellscopeID = 2,
+			spellscopeIsPassive = false,
+			spellscopeCooldown = 10,
+			spellscopeMaxAmmo = 7,
+			spellscopeDurationEffect = 5,
 			
 			spellgravityID = 3,
 			spellgravityIsPassive = false,
@@ -1919,8 +1919,8 @@ Map = {
 			weaponironHellGoatMaxFireBallExplotionRadius = 30.0,
 			weaponironHellGoatMaxFireBallDamage = 100.0,
 		
-		primarySpell = 6,
-		secondarySpell = 3,
+		primarySpell = 0,
+		secondarySpell = 2,
 				
 			spellamplifyDamageID = 0,
 			spellamplifyDamageIsPassive = false,
@@ -1938,11 +1938,11 @@ Map = {
 			spellcomeBackDurationEffect = 5,
 			spellcomeBackDistanceEffect = 200,
 			
-			spellzoomID = 2,
-			spellzoomIsPassive = false,
-			spellzoomCooldown = 10,
-			spellzoomMaxAmmo = 7,
-			spellzoomDurationEffect = 5,
+			spellscopeID = 2,
+			spellscopeIsPassive = false,
+			spellscopeCooldown = 10,
+			spellscopeMaxAmmo = 7,
+			spellscopeDurationEffect = 5,
 			
 			spellgravityID = 3,
 			spellgravityIsPassive = false,
@@ -2201,8 +2201,8 @@ Map = {
 			weaponironHellGoatMaxFireBallExplotionRadius = 30.0,
 			weaponironHellGoatMaxFireBallDamage = 100.0,
 		
-		primarySpell = 6,
-		secondarySpell = 3,
+		primarySpell = 0,
+		secondarySpell = 2,
 				
 			spellamplifyDamageID = 0,
 			spellamplifyDamageIsPassive = false,
@@ -2220,11 +2220,11 @@ Map = {
 			spellcomeBackDurationEffect = 5,
 			spellcomeBackDistanceEffect = 200,
 			
-			spellzoomID = 2,
-			spellzoomIsPassive = false,
-			spellzoomCooldown = 10,
-			spellzoomMaxAmmo = 7,
-			spellzoomDurationEffect = 5,
+			spellscopeID = 2,
+			spellscopeIsPassive = false,
+			spellscopeCooldown = 10,
+			spellscopeMaxAmmo = 7,
+			spellscopeDurationEffect = 5,
 			
 			spellgravityID = 3,
 			spellgravityIsPassive = false,

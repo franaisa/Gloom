@@ -77,7 +77,8 @@ namespace Logic {
 	//__________________________________________________________________
 
 	void CShotGunAmmo::onActivate() {
-		
+		//Reiniciamos el cooldown
+		reduceCooldown(0);
 	}
 
 	//__________________________________________________________________

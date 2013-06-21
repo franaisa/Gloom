@@ -69,5 +69,19 @@ namespace Logic {
 	} // process
 	//__________________________________________________________________
 
+	void CHardDeathAmmo::spell() {
+		ISpellAmmo::spell();
+
+		_spellIsActive = true;
+
+	} // spell
+	//__________________________________________________________________
+
+	void CHardDeathAmmo::stopSpell() {
+		ISpellAmmo::stopSpell();
+
+		_spellIsActive = false;
+	} // stopSpell
+	//__________________________________________________________________
 
 }//namespace Logic

@@ -41,7 +41,6 @@ namespace Logic {
 								_maxAmmo(0),
 								_ammoPerPull(0),
 								_currentAmmo(0),
-								_spellIsActive(false),
 								_cooldownTimer(0),
 								_durationTimer(0){
 		// Nada que hacer

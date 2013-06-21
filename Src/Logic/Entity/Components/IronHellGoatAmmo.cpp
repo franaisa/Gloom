@@ -78,7 +78,9 @@ namespace Logic {
 	//__________________________________________________________________
 
 	void CIronHellGoatAmmo::onActivate() {
-		_currentSpentAmmo = _ammoSpentTimer = _elapsedTime = 0;
+		//Reiniciamos el cooldown
+		reduceCooldown(0);
+		
 	}
 
 	//__________________________________________________________________
@@ -86,6 +88,7 @@ namespace Logic {
 	void CIronHellGoatAmmo::onAvailable() {
 		IWeaponAmmo::onAvailable();
 		_currentSpentAmmo = _ammoSpentTimer = _elapsedTime = 0;
+		_primaryFireCooldown = _defaultPrimaryFireCooldown;
 	}
 
 	//__________________________________________________________________
@@ -168,6 +171,8 @@ namespace Logic {
 		// Si es 0 significa que hay que restaurar al que habia por defecto,
 		// sino decrementamos conforme al porcentaje dado.
 		_primaryFireCooldown = percentage == 0 ? _defaultPrimaryFireCooldown : (_defaultPrimaryFireCooldown - (percentage * _primaryFireCooldown * 0.01f));
+
+
 	}
 
 }//namespace Logic

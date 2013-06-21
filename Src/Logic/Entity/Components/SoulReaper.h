@@ -74,6 +74,11 @@ namespace Logic {
 		
 		virtual void amplifyDamage(unsigned int percentage);
 
+		/**
+		Llamado cuando el arma pasa a ser activa.
+		*/
+		virtual void onActivate();
+
 	private:
 
 		void onTick(unsigned int msecs);

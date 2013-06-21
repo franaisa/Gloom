@@ -11,7 +11,7 @@ de disparo de la cabra.
 @date Mayo, 2013
 */
 
-#include "ZoomFeedback.h"
+#include "ScopeFeedback.h"
 #include "HudWeapons.h"
 
 #include "Logic/Maps/EntityFactory.h"
@@ -27,24 +27,24 @@ using namespace std;
 
 namespace Logic {
 
-	IMP_FACTORY(CZoomFeedback);
+	IMP_FACTORY(CScopeFeedback);
 
 	//__________________________________________________________________
 
-	CZoomFeedback::CZoomFeedback() : ISpellFeedback("zoom"), _camera(0) {
+	CScopeFeedback::CScopeFeedback() : ISpellFeedback("zoom"), _camera(0) {
 		// Nada que hacer
 	}
 
 	//__________________________________________________________________
 
-	CZoomFeedback::~CZoomFeedback() {
+	CScopeFeedback::~CScopeFeedback() {
 		// Nada que hacer
 	}
 
 
 	//__________________________________________________________________
 
-	bool CZoomFeedback::spawn(CEntity* entity, CMap *map, const Map::CEntity *entityInfo) {
+	bool CScopeFeedback::spawn(CEntity* entity, CMap *map, const Map::CEntity *entityInfo) {
 		if( !ISpellFeedback::spawn(entity, map, entityInfo) ) return false;
 
 		_camera = _entity->getMap()->getScene()->getCamera();
@@ -53,13 +53,13 @@ namespace Logic {
 	} // spawn
 	//__________________________________________________________________
 
-	void CZoomFeedback::spell(){
-//		_camera->setFov(Math::PI/8);
+	void CScopeFeedback::spell(){
+		_camera->setFov(Math::PI/8);
 
 	} // spell
 	//__________________________________________________________________
 		
-	void CZoomFeedback::stopSpell(){
+	void CScopeFeedback::stopSpell(){
 		_camera->resetFov();
 
 	} // stopSpell

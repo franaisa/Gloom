@@ -1,7 +1,7 @@
 /**
 @file Scope.cpp
 
-Contiene la implementación del componente que representa al hechizo zoom.
+Contiene la implementación del componente que representa al hechizo scope.
  
 @see Logic::CScope
 

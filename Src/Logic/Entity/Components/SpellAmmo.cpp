@@ -145,7 +145,7 @@ namespace Logic {
 
 
 	void ISpellAmmo::spell() {
-		
+		if (_spellIsActive) return;
 		// Si a llegao aqui, esq no es pasiva
 		// Mandar el mensaje spell(true)
 		if(_isPrimarySpell){
@@ -159,7 +159,7 @@ namespace Logic {
 	//__________________________________________________________________
 
 	void ISpellAmmo::stopSpell() {
-		
+		if (!_spellIsActive) return;
 		// Si a llegao aqui, esq no es pasiva
 		// Mandar el mensaje spell(false)
 		if(_isPrimarySpell){

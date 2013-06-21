@@ -66,6 +66,16 @@ namespace Logic {
 
 	//__________________________________________________________________
 
+	void CSoulReaper::onActivate() {
+		
+		//Reiniciamos el cooldown
+		reduceCooldown(0);
+		//y los daños
+		amplifyDamage(0);
+	}
+
+	//__________________________________________________________________
+
 	void CSoulReaper::resetAmmo() {
 		//si yo soy el weapon
 		_currentAmmo = 1;
@@ -75,8 +85,7 @@ namespace Logic {
 
 
 	void CSoulReaper::primaryFire() {
-		//Sonido
-		emitSound(_weaponSound,_weaponName,false);
+		
 
 		_primaryFireTimer = _primaryFireCooldown;
 	

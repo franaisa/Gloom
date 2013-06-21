@@ -9,7 +9,7 @@ namespace Logic {
 		enum Enum {
 			eAMPLIFY_DAMAGE,// Activo	// hecho		(falta feedback y test)
 			eCOME_BACK,		// Activo	// hecho		(falta feedback y test)
-			eZOOM,			// Activo	// hecho
+			eSCOPE,			// Activo	// hecho
 			eGRAVITY,		// Activo	// hecho		(falta feedback y test)
 			eHARD_DEATH,	// Pasivo	// hecho		(falta feedback y test)
 			eSHIELD,		// Activo	// en camino
@@ -25,8 +25,8 @@ namespace Logic {
 				return "amplifyDamage";
 			case eCOME_BACK:
 				return "comeBack";
-			case eZOOM:
-				return "zoom";
+			case eSCOPE:
+				return "scope";
 			case eGRAVITY:
 				return "gravity";
 			case eHARD_DEATH:
