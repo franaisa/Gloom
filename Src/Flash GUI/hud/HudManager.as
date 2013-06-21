@@ -53,10 +53,9 @@ package hud
 			ExternalInterface.addCallback("updateCrosshair", updateCrosshair);
 			ExternalInterface.addCallback("updateTeam", updateTeam);
 			ExternalInterface.addCallback("updateBullets", updateBullets);
+			ExternalInterface.addCallback("hit", onHit);
 			/*ExternalInterface.addCallback("updatePrimarySpellCooldown", addLocalPlayer);
-			ExternalInterface.addCallback("updatePrimarySpellCooldown", addLocalPlayer);
 			ExternalInterface.addCallback("updatePrimarySpellCooldown", addLocalPlayer);*/
-			weaponPicked("Iron hell Goat");
 		}
 		
 		public function updateWeapon(weapon:String) {
@@ -87,10 +86,10 @@ package hud
 			
 		}
 		
-		public function updateArmor(amor:int) {
-			
-			/*var armor:MovieClip = getChildByName(weapon) as MovieClip;
-			armor.rotation = ( 90 / 100 ) * armor;*/
+		public function updateArmor(armadura:int) {
+			trace(this.armor.armorbar.rotation);
+			this.armor.armorbar.rotation = ( 90 / 100 ) * armadura;
+			trace(this.armor.armorbar.rotation);
 		}
 		
 		public function updateLife(life:int) {
@@ -156,6 +155,9 @@ package hud
 			
 			time.gotoAndPlay(team);
 			
+		}
+		public function onHit():void {
+			hit.gotoAndPlay("hit");
 		}
 		
 	}
