@@ -1,0 +1,60 @@
+particle_system testMuzzleFlash
+{
+	material muzzleFlashTest
+	particle_width 1.0
+	particle_height 1.0
+	quota 50
+	cull_each false
+	sorted false
+	local_space false
+	iteration_interval 0.0
+	nonvisible_update_timeout 0.0
+	billboard_type point
+	billboard_origin center
+	billboard_rotation_type vertex
+	point_rendering false
+	accurate_facing false
+
+	emitter Point
+	{
+		position 0.0 0.0 0.0
+		direction 0.0 1.0 0.0
+		angle 0
+		emission_rate 5
+		velocity_min 0.1
+		velocity_max 0.4
+		time_to_live_min 0.1
+		time_to_live_max 0.9
+		duration_min 0.1
+		duration_max 1
+		repeat_delay_min 0
+		repeat_delay_max 0
+		colour_range_start 0 0 0 1
+		colour_range_end 1 0.666667 0 1
+	}
+
+	affector ColourInterpolator
+	{
+		time0 0
+		colour0 0.7 0.666667 0 0.7
+		time1 0.2
+		colour1 0.8 0.8 0 0.5
+		time2 0.5
+		colour2 0.9 0.9 0 0.3
+		time3 0.8
+		colour3 1 1 0 0.1
+	}
+
+	affector Scaler
+	{
+		rate 1.0
+	}
+
+	affector LinearForce
+	{
+		force_vector 0.0 0.3 0.0
+		force_application add
+	}
+
+
+}

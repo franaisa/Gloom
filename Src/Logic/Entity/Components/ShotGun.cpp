@@ -28,8 +28,6 @@ Contiene la implementación del componente que representa a la escopeta.
 #include "Logic/Messages/MessageCreateParticle.h"
 #include "Logic/Messages/MessageDecal.h"
 
-
-
 namespace Logic {
 	IMP_FACTORY(CShotGun);
 
@@ -108,6 +106,19 @@ namespace Logic {
 	void CShotGun::primaryFire() {
 		
 
+		/*std::shared_ptr<CMessageCreateParticle> particleMsg = std::make_shared<CMessageCreateParticle>();
+		particleMsg->setParticle("test");
+		Vector3 position2 = this->getEntity()->getPosition();
+		position2.y += _heightShoot;
+
+		float fOffset = 2.0f;
+		std::cout << "posicion= " << position2 ;
+		Vector3 orientation = Math::getDirection(this->getEntity()->getOrientation())*fOffset;			
+		position2 += orientation;
+
+		particleMsg->setPosition(position2);
+		_entity->emitMessage(particleMsg);*/
+
 		int shots = _numberOfShots <= _currentAmmo ? _numberOfShots : _currentAmmo;
 		for(int i = 0; i < shots; ++i) {
 			Vector3 direction = _entity->getOrientation()*Vector3::NEGATIVE_UNIT_Z;
@@ -126,9 +137,9 @@ namespace Logic {
 			);
 			projectileEntity->activate();
 			projectileEntity->start();
-
 			projectileEntity->getComponent<CMagneticBullet>("CMagneticBullet")->setProperties(this, _projectileShootForce, dispersionDirection, _heightShoot, _primaryFireDamage, _damageBurned);
-			_projectiles.insert(projectileEntity);
+			_projectiles.insert(projectileEntity);		
+			
 		}
 			
 	} // fireWeapon
