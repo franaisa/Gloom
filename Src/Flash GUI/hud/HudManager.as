@@ -59,6 +59,11 @@ package hud
 			
 			primaryspell.visible = false;
 			secondaryspell.visible = false;
+			ironhellgoat.visible = false;
+			shotgun.visible = false;
+			minigun.visible = false;
+			railgun.visible = false;
+			
 		}
 		
 		public function updateWeapon(weapon:String) {
@@ -70,23 +75,35 @@ package hud
 				this.bullets.gotoAndPlay(weapon);
 			}
 			
-			equippedWeapon = getChildByName(weapon) as MovieClip
+			equippedWeapon = getChildByName(weapon) as MovieClip;
 			equippedWeapon.gotoAndPlay("selected");
-			
+			//equippedWeapon.name = weapon;
 			if (weapon == "soulreaper") {
 				this.bullets.asd.text = "";
 			}
 		}
 		
-		public function updateBullets(bullets:int) {
-			this.bullets.asd.text = bullets.toString();
-			
+		public function updateBullets(bullets:int, weapon: String) {
+			if (equippedWeapon != null && equippedWeapon.name == weapon) {
+				this.bullets.asd.text = bullets.toString();
+			}
+			var weaponaux:MovieClip = getChildByName(weapon) as MovieClip;
+			if (weaponaux.visible == false) {
+				weaponPicked(weapon);
+				weaponaux.visible = true;
+			}
 		}
 		
 		public function weaponPicked(weapon:String) {
-			
-			pickedmessage.picked(weapon);
-			
+			if (weapon == "ironhellgoat") {
+				pickedmessage.picked("Iron Hell Goat");
+			} else if (weapon == "shotgun") {
+				pickedmessage.picked("ShotGun");
+			} else if (weapon == "minigun") {
+				pickedmessage.picked("MiniGun");
+			} else if (weapon == "railgun") {
+				pickedmessage.picked("RailGun");
+			} 
 		}
 		
 		public function updateTime(mins:int, secs:int) {

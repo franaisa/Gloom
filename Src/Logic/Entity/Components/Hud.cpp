@@ -187,10 +187,10 @@ namespace Logic{
 	}
 	void CHud::hudWeapon(int ammo, int weapon){
 		_hud->callFunction("updateWeapon",Hikari::Args(weapons[weapon]));
-		_hud->callFunction("updateBullets", Hikari::Args(ammo));
+		_hud->callFunction("updateBullets", Hikari::Args(ammo)(weapons[weapon]));
 	}
 	void CHud::hudAmmo(int ammo, int weapon){
-		_hud->callFunction("updateBullets", Hikari::Args(ammo));
+		_hud->callFunction("updateBullets", Hikari::Args(ammo)(weapons[weapon]));
 	}
 	void CHud::hudSpawn(int spawn){
 		_hud->hide();

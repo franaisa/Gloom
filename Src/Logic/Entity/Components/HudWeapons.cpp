@@ -202,7 +202,7 @@ namespace Logic {
 			
 
 			_overlayWeapon3D[current]->setVisible(false);
-
+			_overlayWeapon3D[current]->setZBuffer(1);
 			
 		}
 		_overlayWeapon3D[WeaponType::eSOUL_REAPER]->setVisible(true);
