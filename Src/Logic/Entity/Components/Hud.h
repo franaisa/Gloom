@@ -63,7 +63,7 @@ namespace Logic
 
 	protected:
 
-		//virtual void onFixedTick(unsigned int msecs);
+		virtual void onFixedTick(unsigned int msecs);
 
 		void hudLife(int health);
 		void hudShield(int shield);
@@ -92,9 +92,11 @@ namespace Logic
 
 	private:
 
-		Hikari::FlashControl * _hud;
+		Hikari::FlashControl * _hud, *_respawn;
 
 		std::string weapons[WeaponType::eSIZE];
+
+		int _spawnTime,_acumSpawn;
 	};
 
 	REG_FACTORY(CHud);

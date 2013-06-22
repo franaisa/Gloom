@@ -55,10 +55,16 @@ namespace Logic{
 		guiManager->load("hud", "Hud.swf");
 		guiManager->setTransparent("hud",true);
 		_hud = guiManager->getGUIControl("hud");
-		
 		_hud->callFunction("updateWeapon",Hikari::Args(weapons[WeaponType::eSOUL_REAPER]));
 		_hud->hide();
 
+		
+
+		guiManager->addGUI("respawn", Hikari::Position(Hikari::Center));
+		guiManager->load("respawn", "Respawn.swf");
+		guiManager->setTransparent("respawn",true);
+		_respawn = guiManager->getGUIControl("respawn");
+		_respawn->hide();
 
 		assert( entityInfo->hasAttribute("primarySkillCooldown") && "Error: primarySkillCooldown no esta definido en el mapa" );
 		// Pasamos el tiempo a msecs
@@ -128,17 +134,17 @@ namespace Logic{
 				hudWeapon( hudWeaponMsg->getAmmo(), hudWeaponMsg->getWeapon() );
 				break;
 			}
-			/*case Message::HUD_SPAWN: {
+			case Message::HUD_SPAWN: {
 				std::shared_ptr<CMessageHudSpawn> hudSpawnMsg = std::static_pointer_cast<CMessageHudSpawn>(message);
 				_spawnTime = hudSpawnMsg->getTime();
 				_acumSpawn=3000;
 				if(_spawnTime==0){
 					hudRespawn();
 				}else{
-					hudDeath();
+					_respawn->show();
 				}
 				break;
-			}*/
+			}
 
 			case Message::HUD:{
 				std::shared_ptr<CMessageHud> hudmsg = std::static_pointer_cast<CMessageHud>(message);
@@ -230,6 +236,7 @@ namespace Logic{
 	}
 
 	void CHud::hudRespawn(){
+		_respawn->hide();
 		_hud->show();
 	}
 
@@ -282,4 +289,19 @@ namespace Logic{
 		_hud->callFunction("secondarySpell", Hikari::Args());
 	}
 	
+
+	void CHud::onFixedTick(unsigned int msecs){
+		if(_respawn->getVisibility()){
+			_acumSpawn += msecs;
+			if(_acumSpawn>1000){
+				_respawn->callFunction("time", Hikari::Args(--_spawnTime));
+				_acumSpawn = 0;
+				/////////////////////////////////////////////////////////////////////////////////////
+				////////	Borrar en un futuro, espero que el server no llegue a -5		/////////
+				/////////////////////////////////////////////////////////////////////////////////////
+				if(_spawnTime<-5)
+					hudRespawn();
+			}
+		}
+	}
 }
