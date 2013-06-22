@@ -68,6 +68,10 @@ namespace Logic
 
 		void reduceCooldowns(int percentage);
 
+		float getPrimaryCoolDown();
+		float getSecondaryCoolDown();
+		bool isPrimaryPassive();
+		bool isSecondaryPassive();
 	protected:
 
 		std::vector< std::pair<bool, ISpellAmmo*> > _spells;

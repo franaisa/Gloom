@@ -128,6 +128,11 @@ namespace Logic {
 		virtual void reduceCooldown(unsigned int percentage) { };
 
 		virtual void addAmmo() {};
+
+		virtual bool isPassive(){return _isPassive;}
+
+		virtual float getCoolDown(){return 0.0;}
+
 	protected:
 
 

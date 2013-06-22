@@ -148,14 +148,20 @@ package hud
 		}
 		
 		public function primarySpell() {
-			
-			primaryskill.coolDown()
+			if (primarySpell.visible == false) {
+				primarySpell.visible = true
+				return;
+			}
+			primarySpell.coolDown()
 			
 		}
 		
 		public function secondarySpell() {
-			
-			secondaryskill.coolDown()
+			if (secondarySpell.visible == false) {
+				secondarySpell.visible = true
+				return;
+			}
+			secondarySpell.coolDown()
 			
 		}
 		

@@ -1,6 +1,5 @@
 #include "Hud.h"
 
-
 #include "Map/MapEntity.h"
 
 #include "Logic/Messages/Message.h"
@@ -17,11 +16,12 @@
 #include "Logic/Messages/MessageHud.h"
 #include "Logic/Messages/MessageHudDebugData.h"
 #include "Logic/Messages/MessageImpact.h"
+#include "Logic/Messages/MessageAddSpell.h"
 
 #include "Logic/Maps/GUIManager.h"
 
 #include "FlashControl.h"
-
+#include "SpellsManagerClient.h"
 #include <assert.h>
 
 namespace Logic{
@@ -99,7 +99,8 @@ namespace Logic{
 				msgType == Message::HUD_DISPERSION	||
 				msgType == Message::PRIMARY_SPELL	||
 				msgType == Message::SECONDARY_SPELL	||
-				msgType == Message::HUD				;
+				msgType == Message::HUD				||
+				msgType == Message::ADD_SPELL;
 
 	}
 
@@ -177,6 +178,28 @@ namespace Logic{
 				}
 				break;
 			}*/
+
+			case Message::ADD_SPELL: {
+				
+				std::shared_ptr<CMessageAddSpell> addSpellMsg = std::static_pointer_cast<CMessageAddSpell>(message);
+				unsigned int spellIndex = addSpellMsg->getSpell();
+				CSpellsManagerClient * spellmanager = _entity->getComponent<CSpellsManagerClient>("CSpellsManagerClient");
+				if(spellIndex == 1){
+					if ( spellmanager->isPrimaryPassive() ){
+						
+						updatePrimarySpellCooldown(spellmanager->getPrimaryCoolDown());
+						primarySpell();
+					}
+				}else{
+					if(spellIndex == 2){
+						updateSecondarySpellCooldown(spellmanager->getPrimaryCoolDown());
+						secondarySpell();
+					}else{
+						printf("\nCuidado, has puesto un hechizo no valido, o es 1 (primario) o es 2 (secundario)");
+					}
+				}
+				break;
+			}
 		}
 
 	} // process
