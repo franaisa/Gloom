@@ -56,9 +56,9 @@ package hud
 			ExternalInterface.addCallback("updateTeam", updateTeam);
 			ExternalInterface.addCallback("updateBullets", updateBullets);
 			ExternalInterface.addCallback("hit", onHit);
-			/*ExternalInterface.addCallback("updatePrimarySpellCooldown", addLocalPlayer);
-			ExternalInterface.addCallback("updatePrimarySpellCooldown", addLocalPlayer);*/
 			
+			primaryspell.visible = false;
+			secondaryspell.visible = false;
 		}
 		
 		public function updateWeapon(weapon:String) {
@@ -66,9 +66,16 @@ package hud
 				equippedWeapon.gotoAndPlay("unselected");
 				
 			}
-			this.bullets.gotoAndPlay(weapon);
+			if (this.bullets.currentFrameLabel != weapon) {
+				this.bullets.gotoAndPlay(weapon);
+			}
+			
 			equippedWeapon = getChildByName(weapon) as MovieClip
 			equippedWeapon.gotoAndPlay("selected");
+			
+			if (weapon == "soulreaper") {
+				this.bullets.asd.text = "";
+			}
 		}
 		
 		public function updateBullets(bullets:int) {
@@ -113,49 +120,49 @@ package hud
 		
 		public function primarySkill() {
 			
-			primaryskill.gotoAndPlay("cooldown");
+			primaryskill.coolDown()
 			
 		}
 		
 		public function secondarySkill() {
 			
-			secondaryskill.gotoAndPlay("cooldown");
+			secondaryskill.coolDown()
 			
 		}
 		
 		public function primarySpell() {
 			
-			primaryskill.gotoAndPlay("cooldown");
+			primaryskill.coolDown()
 			
 		}
 		
 		public function secondarySpell() {
 			
-			secondaryskill.gotoAndPlay("cooldown");
+			secondaryskill.coolDown()
 			
 		}
 		
 		public function updatePrimarySkillCooldown(cooldownTime:Number) {
 			
-			primaryskill.stage.frameRate = 30 / cooldownTime;
+			primaryskill.speed = 1.0 / cooldownTime;
+			
 			
 		}
 		
 		public function updatePrimarySpellCooldown(cooldownTime:Number) {
 			
-			secondaryskill.stage.frameRate = 60 / cooldownTime;
+			primaryspell.speed = 1.0 / cooldownTime;
 			
 		}
 		
 		public function updateSecondarySpellCooldown(cooldownTime:Number) {
 			
-			secondaryspell.stage.frameRate = 60 / cooldownTime;
-			
+			secondaryspell.speed = 2.0 / cooldownTime;
 		}
 		
 		public function updateSecondarySkillCooldown(cooldownTime:Number) {
 			
-			primaryspell.stage.frameRate = 30 / cooldownTime;
+			secondaryskill.speed = 2.0 / cooldownTime;
 			
 		}
 		

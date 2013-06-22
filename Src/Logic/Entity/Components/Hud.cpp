@@ -1,5 +1,8 @@
 #include "Hud.h"
 
+
+#include "Map/MapEntity.h"
+
 #include "Logic/Messages/Message.h"
 #include "Logic/Messages/MessageHudLife.h"
 #include "Logic/Messages/MessageHudShield.h"
@@ -19,6 +22,7 @@
 
 #include "FlashControl.h"
 
+#include <assert.h>
 
 namespace Logic{
 
@@ -43,6 +47,27 @@ namespace Logic{
 
 	bool CHud::spawn(CEntity* entity, CMap *map, const Map::CEntity *entityInfo){
 
+
+
+
+		CGUIManager * guiManager = Logic::CGUIManager::getSingletonPtr();
+		guiManager->addGUI("hud", Hikari::Position(Hikari::Center));
+		guiManager->load("hud", "Hud.swf");
+		guiManager->setTransparent("hud",true);
+		_hud = guiManager->getGUIControl("hud");
+		
+		_hud->callFunction("updateWeapon",Hikari::Args(weapons[WeaponType::eSOUL_REAPER]));
+		_hud->hide();
+
+
+		assert( entityInfo->hasAttribute("primarySkillCooldown") && "Error: primarySkillCooldown no esta definido en el mapa" );
+		// Pasamos el tiempo a msecs
+		updatePrimarySkillCooldown( entityInfo->getFloatAttribute("primarySkillCooldown") );
+
+		// Leemos el tiempo de cooldown de la habilidad secundaria
+		assert( entityInfo->hasAttribute("secondarySkillCooldown") && "Error: secondarySkillCooldown no esta definido en el mapa" );
+
+		updateSecondarySkillCooldown ( entityInfo->getFloatAttribute("secondarySkillCooldown") );
 		return true;
 	}
 
@@ -53,13 +78,7 @@ namespace Logic{
 	}
 
 	void CHud::onActivate(){
-		CGUIManager * guiManager = Logic::CGUIManager::getSingletonPtr();
-		guiManager->addGUI("hud", Hikari::Position(Hikari::Center));
-		guiManager->load("hud", "Hud.swf");
-		guiManager->setTransparent("hud",true);
-		_hud = guiManager->getGUIControl("hud");
 		_hud->show();
-		_hud->callFunction("updateWeapon",Hikari::Args(weapons[0]));
 	}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
