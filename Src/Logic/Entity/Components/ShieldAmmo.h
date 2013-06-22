@@ -1,15 +1,15 @@
 //---------------------------------------------------------------------------
-// ShieldAmmo.h
+// Shield.h
 //---------------------------------------------------------------------------
 
 /**
-@file ShieldAmmo.h
+@file Shield.h
 
-@see Logic::CShieldAmmo
+@see Logic::CShield
 @see Logic::ISpellAmmo
 
-@author Jaime Chapinal Cervantes
-@date Junio, 2013
+@author Francisco Aisa García
+@date Mayo, 2013
 */
 
 #ifndef __Logic_ShieldAmmo_H
@@ -22,8 +22,8 @@ namespace Logic {
 	/**
     @ingroup logicGroup
 
-	@author Jaime Chapinal Cervantes
-	@date Junio, 2013
+	@author Francisco Aisa García
+	@date Mayo, 2013
 	*/
 
 	class CShieldAmmo : public ISpellAmmo {
@@ -65,7 +65,7 @@ namespace Logic {
 		virtual void process(const std::shared_ptr<CMessage>& message);
 
 
-		//virtual void reduceCooldown(unsigned int percentage);
+		virtual void reduceCooldown(unsigned int percentage);
 
 		//__________________________________________________________________
 
@@ -83,7 +83,8 @@ namespace Logic {
 		*/
 		virtual void stopSpell();
 
-		//virtual void addAmmo();
+
+		virtual void addAmmo();
 	protected:
 
 		virtual bool canUseSpell();
@@ -95,33 +96,27 @@ namespace Logic {
 
 		virtual void onTick(unsigned int msecs);
 
-		void shieldDamage();
-
 	private:
 
-		//std::string _shootAudio;
+		std::string _shootAudio;
 
-		//unsigned int _defaultCooldown;
-		//unsigned int _cooldown;
+		unsigned int _defaultCooldown;
+		unsigned int _cooldown;
 
 		unsigned int  _duration;
 		
-		//unsigned int _maxAmmo;
-		//unsigned int _ammoPerPull;
-		//unsigned int _currentAmmo;
+		unsigned int _maxAmmo;
+		unsigned int _ammoPerPull;
+		unsigned int _currentAmmo;
 
 		
-
-		//unsigned int _cooldownTimer;
-		//unsigned int _durationTimer;
+		int _cooldownTimer;
+		int _durationTimer;
 		
-		float _shieldRadius;
-		int _shieldDamage;
-
 	};
 
 	REG_FACTORY(CShieldAmmo);
 
 } // namespace Logic
 
-#endif // __Logic_ComeBackAmmo_H
+#endif // __Logic_ShieldAmmo_H

@@ -1,17 +1,17 @@
 /**
-@file LifeDome.h
+@file ShieldSpellController.h
 
 Contiene la declaración del componente que controla la cúpula de la segunda habilidad del Archangel que da vida .
 
-@see Logic::CLifeDome
+@see Logic::CShieldSpellController
 @see Logic::IComponent
 
 @author Jaime Chapinal Cervantes
 @date Mayo, 2013
 */
 
-#ifndef __Logic_LifeDome_H
-#define __Logic_LifeDome_H
+#ifndef __Logic_ShieldSpellController_H
+#define __Logic_ShieldSpellController_H
 
 #include "Logic/Entity/Component.h"
 
@@ -32,17 +32,17 @@ namespace Logic
 	@author Jaime Chapinal Cervantes
 	@date Mayo, 2013
 */
-	class CLifeDome : public IComponent
+	class CShieldSpellController : public IComponent
 	{
-		DEC_FACTORY(CLifeDome);
+		DEC_FACTORY(CShieldSpellController);
 	public:
 		/**
 		Constructor por defecto; en la clase base no hace nada.
 		*/
-		CLifeDome() : _scale(1.0f), IComponent(), _owner(NULL) {}
+		CShieldSpellController() : IComponent(), _owner(NULL) {}
 
 		/** Destructor. */
-		virtual				~CLifeDome			();
+		virtual				~CShieldSpellController			();
 
 		// =======================================================================
 		//                    METODOS HEREDADOS DE ICOMPONENT
@@ -88,6 +88,8 @@ namespace Logic
 
 		void setOwner(Logic::CEntity *owner);
 
+		void setProperties(float damage);
+
 	protected:
 
 		virtual void onStart();
@@ -95,7 +97,7 @@ namespace Logic
 		virtual void onFixedTick(unsigned int msecs);
 
 		//Función de cuando se tocan el lifeDome
-		void lifeDomeTouched(CEntity *entityTouched);
+		void touched(CEntity *entityTouched);
 
 		CGraphics* _cGraph;
 		/*
@@ -112,18 +114,11 @@ namespace Logic
 
 		CEntity*		_owner;		
 
-		float			_capsuleRadius;
+		float _damage;
+	};//class CShieldSpellController
 
-
-		float			_scale;
-
-		unsigned int _life;
-		unsigned int _lifePerFriend;
-
-	};//class CLifeDome
-
-	REG_FACTORY(CLifeDome);
+	REG_FACTORY(CShieldSpellController);
 
 } // namespace Logic
 
-#endif // __Logic_LifeDome_H
+#endif // __Logic_ShieldSpellController_H

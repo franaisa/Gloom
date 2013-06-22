@@ -20,7 +20,6 @@ Contiene la implementación del componente que controla la vida de una entidad.
 #include "Logic/Maps/EntityFactory.h"
 
 // Fisica
-
 #include "Logic/Messages/MessageDamaged.h"
 #include "Logic/Messages/MessageTouched.h"
 #include "PhysicDynamicEntity.h"

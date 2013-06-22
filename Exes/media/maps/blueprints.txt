@@ -34,4 +34,5 @@ MagneticBullet CMagneticBullet CPhysicDynamicEntity CGraphics
 FireBall CFireBallController CPhysicDynamicEntity CParticle CGraphics
 LaserBeam CGraphics
 LifeDome CLifeDome CPhysicDynamicEntity CGraphics
+ShieldSpell CShieldSpellController CPhysicDynamicEntity CGraphics
 Vortice CLava CGraphics CPhysicStaticEntity

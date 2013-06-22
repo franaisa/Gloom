@@ -146,7 +146,7 @@ namespace Logic
 			}
 		}
 
-	} // process
+		} // process
 
 	//---------------------------------------------------------
 
@@ -180,6 +180,8 @@ namespace Logic
 
 
 	void CGraphics::onTick(unsigned int msecs){
+		if(_entity->getName() == "LifeDome")
+			printf("\n\nYo soy %s \nPosicon1: %f %f %f ", _entity->getName().c_str(), _entity->getPosition().x,_entity->getPosition().y,_entity->getPosition().z);
 		_graphicsEntity->setTransform(_entity->getPosition(),_entity->getOrientation());
 	}//---------------------------------------------------------
 	//onTick
