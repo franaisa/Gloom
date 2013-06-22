@@ -77,9 +77,6 @@ Map = {
 		secondarySkillCooldown = 1,
 		invisibilityDuration = 5,
 		
-		spellShieldDamage = 10;
-		spellShieldRadius = 50;
-		
 			weaponsoulReaperName = "soulReaper",
 			weaponsoulReaperModel = "soulReaper.mesh",
 			weaponsoulReaperModelYaw = 0.0,
@@ -220,8 +217,13 @@ Map = {
 			
 			spellshieldID = 5,
 			spellshieldIsPassive = false,
-			spellShieldDamage = 8,
-			spellShieldRadius = 10,
+			spellshieldCooldown = 10,
+			spellshieldMaxAmmo = 7,
+			spellshieldAmmoPerPull = 3,
+			spellshieldDurationEffect = 5,
+			spellshieldDamage = 8,
+			spellshieldPercentageAbsorbed = 10,
+			
 			
 			spellcoolDownID = 6,
 			spellcoolDownIsPassive = true,
@@ -316,9 +318,6 @@ Map = {
 		audioDeath = "media/audio/splatdeath_03.wav",
 		audioSpawn = "media/audio/spawn.wav",
 		audioNoAmmo = "media/audio/noammo.wav",
-		
-		spellShieldDamage = 10;
-		spellShieldRadius = 50;
 		
 		primarySkillCooldown = 2,
 		secondarySkillCooldown = 2,
@@ -477,8 +476,13 @@ Map = {
 			
 			spellshieldID = 5,
 			spellshieldIsPassive = false,
-			spellShieldDamage = 8,
-			spellShieldRadius = 10,
+			spellshieldCooldown = 10,
+			spellshieldMaxAmmo = 7,
+			spellshieldAmmoPerPull = 3,
+			spellshieldDurationEffect = 5,
+			spellshieldDamage = 8,
+			spellshieldPercentageAbsorbed = 10,
+			
 			
 			spellcoolDownID = 6,
 			spellcoolDownIsPassive = true,
@@ -554,8 +558,6 @@ Map = {
 		dodgeForce = {2,2,2},
 		rollCamera = 0.15,
 
-		spellShieldDamage = 10;
-		spellShieldRadius = 50;
 		
 		ticksPerSample = 2,
 		samplesPerSnapshot = 3,
@@ -581,6 +583,8 @@ Map = {
 		
 		inmunityDuration = 5,
 		lifeDome = 10,
+		lifeDomeLife = 10;
+		lifeDomePerFriend = 4;
 		
 			weaponsoulReaperName = "soulReaper",
 			weaponsoulReaperModel = "soulReaper.mesh",
@@ -722,8 +726,13 @@ Map = {
 			
 			spellshieldID = 5,
 			spellshieldIsPassive = false,
-			spellShieldDamage = 8,
-			spellShieldRadius = 10,
+			spellshieldCooldown = 10,
+			spellshieldMaxAmmo = 7,
+			spellshieldAmmoPerPull = 3,
+			spellshieldDurationEffect = 5,
+			spellshieldDamage = 8,
+			spellshieldPercentageAbsorbed = 10,
+			
 			
 			spellcoolDownID = 6,
 			spellcoolDownIsPassive = true,
@@ -789,8 +798,6 @@ Map = {
 		damageOverTime = 1,
 		playerDead = false,
 		
-		spellShieldDamage = 10;
-		spellShieldRadius = 50;
 		
 		acceleration = 0.015,
 		maxVelocity = 0.9,
@@ -968,8 +975,13 @@ Map = {
 			
 			spellshieldID = 5,
 			spellshieldIsPassive = false,
-			spellShieldDamage = 8,
-			spellShieldRadius = 10,
+			spellshieldCooldown = 10,
+			spellshieldMaxAmmo = 7,
+			spellshieldAmmoPerPull = 3,
+			spellshieldDurationEffect = 5,
+			spellshieldDamage = 8,
+			spellshieldPercentageAbsorbed = 10,
+			
 			
 			spellcoolDownID = 6,
 			spellcoolDownIsPassive = true,
@@ -1031,8 +1043,6 @@ Map = {
 		damageOverTime = 1,
 		playerDead = false,
 		
-		spellShieldDamage = 10;
-		spellShieldRadius = 50;
 		
 		acceleration = 0.015,
 		maxVelocity = 0.9,
@@ -1220,8 +1230,13 @@ Map = {
 			
 			spellshieldID = 5,
 			spellshieldIsPassive = false,
-			spellShieldDamage = 8,
-			spellShieldRadius = 10,
+			spellshieldCooldown = 10,
+			spellshieldMaxAmmo = 7,
+			spellshieldAmmoPerPull = 3,
+			spellshieldDurationEffect = 5,
+			spellshieldDamage = 8,
+			spellshieldPercentageAbsorbed = 10,
+			
 			
 			spellcoolDownID = 6,
 			spellcoolDownIsPassive = true,
@@ -1287,9 +1302,7 @@ Map = {
 		damageOverTime = 1,
 		playerDead = true,
 		
-		spellShieldDamage = 10;
-		spellShieldRadius = 50;
-		
+	
 		acceleration = 0.015,
 		maxVelocity = 0.9,
 		frictionCoef = 14.0,
@@ -1463,8 +1476,13 @@ Map = {
 			
 			spellshieldID = 5,
 			spellshieldIsPassive = false,
-			spellShieldDamage = 8,
-			spellShieldRadius = 10,
+			spellshieldCooldown = 10,
+			spellshieldMaxAmmo = 7,
+			spellshieldAmmoPerPull = 3,
+			spellshieldDurationEffect = 5,
+			spellshieldDamage = 8,
+			spellshieldPercentageAbsorbed = 10,
+			
 			
 			spellcoolDownID = 6,
 			spellcoolDownIsPassive = true,
@@ -1539,9 +1557,6 @@ Map = {
 		jumpForce = 1.5,
 		dodgeForce = {2,2,2},
 		rollCamera = 0.15,
-		
-		spellShieldDamage = 10;
-		spellShieldRadius = 50;
 
 		ticksPerSample = 2,
 		samplesPerSnapshot = 3,
@@ -1708,8 +1723,13 @@ Map = {
 			
 			spellshieldID = 5,
 			spellshieldIsPassive = false,
-			spellShieldDamage = 8,
-			spellShieldRadius = 10,
+			spellshieldCooldown = 10,
+			spellshieldMaxAmmo = 7,
+			spellshieldAmmoPerPull = 3,
+			spellshieldDurationEffect = 5,
+			spellshieldDamage = 8,
+			spellshieldPercentageAbsorbed = 10,
+			
 			
 			spellcoolDownID = 6,
 			spellcoolDownIsPassive = true,
@@ -1786,9 +1806,6 @@ Map = {
 		jumpForce = 1.5,
 		dodgeForce = {2,2,2},
 		rollCamera = 0.15,
-		
-		spellShieldDamage = 10;
-		spellShieldRadius = 50;
 
 		ticksPerSample = 2,
 		samplesPerSnapshot = 3,
@@ -1959,8 +1976,13 @@ Map = {
 			
 			spellshieldID = 5,
 			spellshieldIsPassive = false,
-			spellShieldDamage = 8,
-			spellShieldRadius = 10,
+			spellshieldCooldown = 10,
+			spellshieldMaxAmmo = 7,
+			spellshieldAmmoPerPull = 3,
+			spellshieldDurationEffect = 5,
+			spellshieldDamage = 8,
+			spellshieldPercentageAbsorbed = 10,
+			
 			
 			spellcoolDownID = 6,
 			spellcoolDownIsPassive = true,
@@ -2241,8 +2263,13 @@ Map = {
 			
 			spellshieldID = 5,
 			spellshieldIsPassive = false,
-			spellShieldDamage = 8,
-			spellShieldRadius = 10,
+			spellshieldCooldown = 10,
+			spellshieldMaxAmmo = 7,
+			spellshieldAmmoPerPull = 3,
+			spellshieldDurationEffect = 5,
+			spellshieldDamage = 8,
+			spellshieldPercentageAbsorbed = 10,
+			
 			
 			spellcoolDownID = 6,
 			spellcoolDownIsPassive = true,
@@ -2394,7 +2421,7 @@ Map = {
 		physic_mass = 10,
 		ticksPerSample = 1,
 		samplesPerSnapshot = 2,		
-		scale = {5,5,5},
+		scale = {2,2,2},
 	},
 	
 	LifeDome = {
@@ -2412,6 +2439,23 @@ Map = {
 		ticksPerSample = 1,
 		samplesPerSnapshot = 2,		
 		scale = {5,5,5},
+	},
+	
+	ShieldSpell = {
+		type = "ShieldSpell",
+		model = "lifeDome.mesh",
+		msgList= "55,56",
+		physic_entity = "rigid",
+		physic_trigger = true,
+		physic_type = "kinematic",
+		physic_shape = "sphere",
+		physic_radius = 0.2,
+		physic_group = 11,
+		physic_groupList = "1", 
+		physic_mass = 10,
+		ticksPerSample = 1,
+		samplesPerSnapshot = 2,		
+		scale = {2,2,2},
 	},
 	
 	Jumper1 = {

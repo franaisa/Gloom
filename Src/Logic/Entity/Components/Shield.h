@@ -16,6 +16,10 @@ Contiene la declaración del componente que implementa el shield.
 
 #include "Logic/Entity/Components/Spell.h"
 
+namespace Logic{
+	class CEntity;
+}
+
 namespace Logic {
 	
 	/**
@@ -36,7 +40,7 @@ namespace Logic {
 	public:
 
 		/** Constructor por defecto. */
-		CShield() : ISpell("shield") { }
+		CShield() : ISpell("shield"),_shieldSpell(0) { }
 
 		//__________________________________________________________________
 
@@ -76,12 +80,25 @@ namespace Logic {
 		*/
 		virtual void stopSpell();
 
+		virtual void onDeactivate();
 	private:
 		
 		/** Gravedad por defecto. */
 		//float _defaultGravity;
 
 		//float _newGravity;
+		float _heightShoot;
+
+		/** Daño del escudo al entrar en el */
+		float _damage;
+
+		/** Radio del escudo */
+		float _radius;
+
+		/** Porcentaje de daño absorvido */
+		float _percentageAbsorbed;
+
+		CEntity *_shieldSpell;
 	}; // class 
 
 	REG_FACTORY(CShield);

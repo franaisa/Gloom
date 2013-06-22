@@ -196,14 +196,15 @@ namespace Logic {
 	{
 		std::cout << "particula" << std::endl;
 		std::shared_ptr<CMessageCreateParticle> particleMsg = std::make_shared<CMessageCreateParticle>();
-		particleMsg->setParticle("explosionMuzzleFlash");
+		particleMsg->setParticle("ShootParticle2");
 
-		Vector3 position2 = this->getEntity()->getPosition();
+		Vector3 position2 = _entity->getPosition();
 		position2.y += _heightShoot;
 		std::cout << "posicionOrig = " << position2 << std::endl;
 
-		float fOffset = 4.0f;
-		Vector3 orientation = Math::getDirection(this->getEntity()->getOrientation()) * fOffset;		
+		
+		float fOffset = 8.0f;
+		Vector3 orientation = Math::getDirection(_entity->getOrientation()) * fOffset;
 		std::cout << "orientacion = " << orientation << std::endl;
 
 		position2 += orientation;

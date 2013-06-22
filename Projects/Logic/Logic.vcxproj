@@ -102,6 +102,7 @@
     <ClCompile Include="..\..\Src\Logic\Entity\Components\Shield.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\ShieldAmmo.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\ShieldFeedback.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\shieldSpellController.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\Spell.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\SpellAmmo.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\SpellFeedback.cpp" />
@@ -298,6 +299,7 @@
     <ClInclude Include="..\..\Src\Logic\Entity\Components\Shield.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\ShieldAmmo.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\ShieldFeedback.h" />
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\shieldSpellController.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\Spell.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\SpellAmmo.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\SpellFeedback.h" />

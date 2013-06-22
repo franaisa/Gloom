@@ -18,6 +18,7 @@ Contiene la declaración del componente que controla la cúpula de la segunda habi
 namespace Logic {
 	class CArchangel;
 	class CPhysicDynamicEntity;
+	class CGraphics;
 }
 
 //declaración de la clase
@@ -85,10 +86,7 @@ namespace Logic
 		*/
 		virtual void onActivate();
 
-
-		void				setOwner			(Logic::CArchangel *owner);
-
-
+		void setOwner(Logic::CEntity *owner);
 
 	protected:
 
@@ -97,8 +95,9 @@ namespace Logic
 		virtual void onFixedTick(unsigned int msecs);
 
 		//Función de cuando se tocan el lifeDome
-		void			lifeDomeTouched		();
+		void lifeDomeTouched(CEntity *entityTouched);
 
+		CGraphics* _cGraph;
 		/*
 		Puntero al componente fisico de la bala, se tiene por optimizacion
 		*/
@@ -111,12 +110,15 @@ namespace Logic
 		//                          MIEMBROS PRIVADOS
 		// =======================================================================
 
-		CArchangel*		_owner;		
+		CEntity*		_owner;		
 
 		float			_capsuleRadius;
 
 
 		float			_scale;
+
+		unsigned int _life;
+		unsigned int _lifePerFriend;
 
 	};//class CLifeDome
 

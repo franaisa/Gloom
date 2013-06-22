@@ -5,8 +5,8 @@ material 01-Default
 	{
 		pass
 		{
-			ambient 1 0 0 1
-			diffuse 1 0 0 1
+			ambient 1 0.5 0 1
+			diffuse 1 0.5 0 1
 			specular 0 0 0 10 0
 		}
 
