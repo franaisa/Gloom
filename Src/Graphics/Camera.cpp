@@ -40,7 +40,7 @@ namespace Graphics
 		//Creación de la camara
 		_camera = scene->getSceneMgr()->createCamera(name + "_camera");
 		//Seteo de atributos de la camara
-		_camera->setNearClipDistance(2);
+		_camera->setNearClipDistance(1);
 		_camera->setFarClipDistance(500);
 
 		_defaultFov = (Math::PI/2)*0.89;
