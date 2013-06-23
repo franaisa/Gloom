@@ -1582,6 +1582,8 @@ Map = {
 		
 		inmunityDuration = 5,
 		lifeDome = 10,
+		lifeDomeLife = 10;
+		lifeDomePerFriend = 4;
 
 			weaponsoulReaperName = "soulReaper",
 			weaponsoulReaperModel = "soulReaper.mesh",
