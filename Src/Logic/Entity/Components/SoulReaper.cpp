@@ -135,21 +135,22 @@ namespace Logic {
 
 		std::string weapon, mesh, reward;
 
-		std::stringstream weaponaux;
-		weaponaux <<  _elementPulled->getComponent<CSpawnItemManager>("CSpawnItemManager")->getWeaponType();
+		auto componentCSpawnItemManager= _elementPulled->getComponent<CSpawnItemManager>("CSpawnItemManager");
+		std::stringstream weaponaux ;
+		weaponaux <<  componentCSpawnItemManager->getWeaponType();
 		weapon = weaponaux.str();
 
 		std::stringstream rewardaux;
-		rewardaux <<  _elementPulled->getComponent<CSpawnItemManager>("CSpawnItemManager")->getReward();
+		rewardaux <<  componentCSpawnItemManager->getReward();
 		reward = rewardaux.str();
 
 		//info->setAttribute("model",_elementPulled->getComponent<CGraphics>("CGraphics")->getMeshName());
 		info->setAttribute("weaponType", weapon);
 		info->setAttribute("reward", reward);
-		info->setAttribute("id", _elementPulled->getComponent<CSpawnItemManager>("CSpawnItemManager")->getId());
+		info->setAttribute("id", componentCSpawnItemManager->getId());
 		
 		Map::CEntity* clientEntityInfo = new Map::CEntity( info->getName() );
-		clientEntityInfo->setAttribute("model",_elementPulled->getComponent<CSpawnItemManager>("CSpawnItemManager")->getModel());
+		clientEntityInfo->setAttribute("model",componentCSpawnItemManager->getModel());
 
 		//creamos la entidad con la información obtenida
 		CEntity * dynamicItem = CEntityFactory::getSingletonPtr()->createCustomClientEntity(info,
