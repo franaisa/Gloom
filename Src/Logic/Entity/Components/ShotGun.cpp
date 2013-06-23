@@ -85,13 +85,13 @@ namespace Logic {
 		if(!_projectiles.empty()){
 			for(auto it = _projectiles.begin(); it != _projectiles.end(); ++it){
 				(*it)->getComponent<CMagneticBullet>("CMagneticBullet")->setProjectileDirection(_entity->getPosition() + Vector3(0,_heightShoot, 0));
-				printf("\nBalas Volviendo");
 			} 
 		}
 	} // secondaryShoot
 	//__________________________________________________________________
 
 	void CShotGun::onTick(unsigned int msecs) {
+		//printf("\n Balas en la lista %d",_projectiles.size());
 		/*
 		// Controlamos el cooldown del disparo primario y secundario
 		if(_primaryFireCooldownTimer > 0) {
