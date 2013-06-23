@@ -1,17 +1,15 @@
 package hud 
 {
-	import flash.display.MovieClip;
-	
 	/**
 	 * ...
 	 * @author ...
 	 */
-	public class CoolDown extends MovieClip 
+	public class CoolDown 
 	{
 		
 		public function CoolDown() 
 		{
-			trace ("asd");
+			
 		}
 		
 	}

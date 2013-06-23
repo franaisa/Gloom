@@ -148,20 +148,20 @@ package hud
 		}
 		
 		public function primarySpell() {
-			if (primarySpell.visible == false) {
-				primarySpell.visible = true
+			if (primaryspell.visible == false) {
+				primaryspell.visible = true
 				return;
 			}
-			primarySpell.coolDown()
+			primaryspell.gotoAndPlay("cooldown");
 			
 		}
 		
 		public function secondarySpell() {
-			if (secondarySpell.visible == false) {
-				secondarySpell.visible = true
+			if (secondaryspell.visible == false) {
+				secondaryspell.visible = true
 				return;
 			}
-			secondarySpell.coolDown()
+			secondaryspell.gotoAndPlay("cooldown");
 			
 		}
 		

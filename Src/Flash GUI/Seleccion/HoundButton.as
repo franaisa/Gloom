@@ -11,13 +11,13 @@ package Seleccion
 	 */
 	public class HoundButton extends GloomButton 
 	{
-		private var manager: MenuManager;
+		private var manager: SelectionManager;
 		
 		
 		public function HoundButton() 
 		{
 			super();
-			manager = parent as MenuManager;
+			manager = parent as SelectionManager;
 		}
 		
 		override protected function onMouseOver(event: MouseEvent): void {
@@ -33,7 +33,20 @@ package Seleccion
 		}
 		
 		override protected function onMouseClick(e:MouseEvent):void {
-			ExternalInterface.call("selected", 2);
+			manager.classSelected(this.name);
+		}
+		
+		override protected function onMouseDown(e:MouseEvent):void {
+			
+			if (this.currentFrameLabel == "down") {
+				
+				this.addEventListener(MouseEvent.MOUSE_UP, onMouseUp);
+				this.addEventListener(MouseEvent.MOUSE_OUT, onMouseOut);
+				return;
+			}
+			this.gotoAndPlay("down");
+			this.removeEventListener(MouseEvent.MOUSE_OUT, onMouseOut);
+			this.removeEventListener(MouseEvent.MOUSE_UP, onMouseUp);
 		}
 		
 	}

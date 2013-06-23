@@ -11,13 +11,13 @@ package Seleccion
 	 */
 	public class ScreamerButton extends GloomButton 
 	{
-		private var manager: MenuManager;
+		private var manager: SelectionManager;
 		
 		
 		public function ScreamerButton() 
 		{
 			super();
-			manager = parent as MenuManager;
+			manager = parent as SelectionManager;
 		}
 		
 		override protected function onMouseOver(event: MouseEvent): void {
@@ -33,9 +33,21 @@ package Seleccion
 		}
 		
 		override protected function onMouseClick(e:MouseEvent):void {
-			ExternalInterface.call("selected", 1);
+			manager.classSelected(this.name);
 		}
 		
+		override protected function onMouseDown(e:MouseEvent):void {
+			
+			if (this.currentFrameLabel == "down") {
+				
+				this.addEventListener(MouseEvent.MOUSE_UP, onMouseUp);
+				this.addEventListener(MouseEvent.MOUSE_OUT, onMouseOut);
+				return;
+			}
+			this.gotoAndPlay("down");
+			this.removeEventListener(MouseEvent.MOUSE_OUT, onMouseOut);
+			this.removeEventListener(MouseEvent.MOUSE_UP, onMouseUp);
+		}
 	}
 
 }
