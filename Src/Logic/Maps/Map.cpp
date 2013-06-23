@@ -71,7 +71,7 @@ namespace Logic {
 				info->setName((*it)->getName());
 				entity = entityFactory->createEntity(info,map, false);
 			}
-			assert(entity && "No se pudo crear una entidad del mapa");
+			assert(entity && "No se pudo crear una entidad del mapa." );
 		}
 
 		return map;

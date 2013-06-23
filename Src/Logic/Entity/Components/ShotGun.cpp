@@ -91,6 +91,7 @@ namespace Logic {
 	//__________________________________________________________________
 
 	void CShotGun::onTick(unsigned int msecs) {
+		//printf("\n Balas en la lista %d",_projectiles.size());
 		/*
 		// Controlamos el cooldown del disparo primario y secundario
 		if(_primaryFireCooldownTimer > 0) {
@@ -148,7 +149,7 @@ namespace Logic {
 
 	void CShotGun::destroyProjectile(CEntity *projectile, CEntity *killedBy){
 		if(killedBy->getType() == "World"){
-			drawDecal(killedBy, projectile->getPosition());
+			//drawDecal(killedBy, projectile->getPosition());
 
 			// Añado aqui las particulas de dado en la pared.
 			auto m = std::make_shared<CMessageCreateParticle>();

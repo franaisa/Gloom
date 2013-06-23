@@ -583,8 +583,6 @@ Map = {
 		
 		inmunityDuration = 5,
 		lifeDome = 10,
-		lifeDomeLife = 10;
-		lifeDomePerFriend = 4;
 		
 			weaponsoulReaperName = "soulReaper",
 			weaponsoulReaperModel = "soulReaper.mesh",
@@ -2421,13 +2419,15 @@ Map = {
 		physic_mass = 10,
 		ticksPerSample = 1,
 		samplesPerSnapshot = 2,		
-		scale = {2,2,2},
+		scale = {1,1,1},
 	},
 	
 	LifeDome = {
 		type = "LifeDome",
 		model = "lifeDome.mesh",
 		msgList= "55,56",
+		lifeDomeLife = 10;
+		lifeDomePerFriend = 4;
 		physic_entity = "rigid",
 		physic_trigger = true,
 		physic_type = "kinematic",

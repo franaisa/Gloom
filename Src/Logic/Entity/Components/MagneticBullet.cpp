@@ -22,6 +22,7 @@ Contiene la implementación del componente que controla la vida de una entidad.
 // Fisica
 #include "Logic/Messages/MessageDamaged.h"
 #include "Logic/Messages/MessageTouched.h"
+#include "Logic/Messages/MessageAddAmmo.h"
 #include "PhysicDynamicEntity.h"
 
 
@@ -87,8 +88,11 @@ namespace Logic
 		}else{
 			if(impactEntity->getName() == _owner->getEntity()->getName()){
 				if(_returning){
-					// no me gusta poner que el arma es el dos, pero bueno
-					_owner->addAmmo(2,1,true);
+					std::shared_ptr<CMessageAddAmmo> addAmmoMsg = std::make_shared<CMessageAddAmmo>();
+					addAmmoMsg->setAddAmmo(1);
+					addAmmoMsg->setAddWeapon(WeaponType::eSHOTGUN);
+					_owner->getEntity()->emitMessage(addAmmoMsg);
+					//_owner->addAmmo(WeaponType::eSHOTGUN,1,true);
 					_owner->destroyProjectile(_entity, impactEntity);
 				}
 			}else{
@@ -126,7 +130,7 @@ namespace Logic
 			/*
 			_projectileDirection = Math::getDirection(_owner->getEntity()->getOrientation());
 			/*/
-			_projectileDirection = (_owner->getEntity()->getPosition()+(Vector3(2,_heightShoot-3,0)) - _entity->getPosition());
+			_projectileDirection = (_owner->getEntity()->getPosition()+(Vector3(1.5,_heightShoot*0.5,0)) - _entity->getPosition());
 			_projectileDirection.normalise();
 			/* */
 		}

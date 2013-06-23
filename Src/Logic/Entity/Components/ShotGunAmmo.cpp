@@ -122,7 +122,10 @@ namespace Logic {
 
 		_primaryFireCooldownTimer = _primaryFireCooldown;
 
-		decrementAmmo();
+		int shots = _numberOfShots <= _currentAmmo ? _numberOfShots : _currentAmmo;
+		for(int i = 0; i < shots; ++i) {
+			decrementAmmo();
+		}
 	}
 
 	//__________________________________________________________________

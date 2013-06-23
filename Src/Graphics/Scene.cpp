@@ -317,10 +317,14 @@ namespace Graphics
 
 	void CScene::changeVisibilityParticle(const std::string nameParticle, bool visibility){
 
-		auto particleData = _particlesMap.find(nameParticle)->second;
-		for(auto it = particleData.begin(); it < particleData.end(); ++it){
-			if((*it)->isEmitting()){
-				(*it)->setVisible(visibility);
+		auto temp = _particlesMap.find(nameParticle);
+		if(temp != _particlesMap.end())
+		{
+			auto particleData = temp->second;
+			for(auto it = particleData.begin(); it < particleData.end(); ++it){
+				if((*it)->isEmitting()){
+					(*it)->setVisible(visibility);
+				}
 			}
 		}
 
