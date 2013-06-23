@@ -121,7 +121,7 @@ namespace Application {
 		// Obtenemos el nickname del jugador que quiere espectar
 		std::string nickname = _playersMgr->getPlayerNickname(playerNetId);
 		// Creamos la entidad espectador con el nombre del jugador
-		Logic::CEntity* spectator = _map->createPlayer(nickname, "Spectator");
+		Logic::CEntity* spectator = _map->createPlayer(nickname, "Spectator", "", "");
 		// Obtenemos la id logica de la entidad espectador
 		Logic::TEntityID spectatorId = spectator->getEntityID();
 		// Seteamos la id logica del jugador en el gestor de jugadores
@@ -148,7 +148,7 @@ namespace Application {
 
 	//______________________________________________________________________________
 
-	void CGameServerState::createAndMirrorPlayer(int race, Net::NetID playerNetId, Logic::TeamFaction::Enum team) {
+	void CGameServerState::createAndMirrorPlayer(int race, Net::NetID playerNetId,std::string spell1, std::string spell2, Logic::TeamFaction::Enum team) {
 		// Primero comprobamos si habia una entidad correspondiente a este jugador
 		// ya que durante el juego tambien podemos cambiar de clase.
 		// En caso de que la haya la eliminamos para crear la nueva
@@ -180,7 +180,7 @@ namespace Application {
 		}
 
 		// Creamos el player
-		Logic::CEntity* player = _map->createPlayer(name, playerClass);
+		Logic::CEntity* player = _map->createPlayer(name, playerClass, spell1, spell2);
 		// Seteamos la id logica asociada al player
 		Logic::TEntityID playerId = player->getEntityID();
 		_playersMgr->setEntityID(playerNetId, playerId);
@@ -198,7 +198,8 @@ namespace Application {
 		buffer.write(&playerId, sizeof(playerId));
 		buffer.serialize(player->getName(), false); // Nombre del player
 		buffer.serialize(player->getType(), false); // Clase del player
-				
+		buffer.serialize(spell1, false);
+		buffer.serialize(spell2, false);
 		// Enviamos la entidad nueva al resto de jugadores
 		_netMgr->broadcastIgnoring(playerNetId, buffer.getbuffer(), buffer.getSize());
 
@@ -211,6 +212,8 @@ namespace Application {
 		buffer.write(&playerId, sizeof(playerId));
 		buffer.serialize(player->getName(), false); // Nombre del player
 		buffer.serialize(player->getType(), false); // Clase del player
+		buffer.serialize(spell1, false);
+		buffer.serialize(spell2, false);
 
 		player->activate();
 		player->start();
@@ -299,8 +302,11 @@ namespace Application {
 			}
 			case Net::CLASS_SELECTED: {
 				int race;
+				std::string spell1, spell2;
 				inBuffer.deserialize(race);
-
+				inBuffer.deserialize(spell1);
+				inBuffer.deserialize(spell2);
+				
 				Logic::TeamFaction::Enum team;
 				if(_autoBalanceTeams) {
 					if(_playersMgr->blueTeamPlayers() < _playersMgr->redTeamPlayers()) {
@@ -323,7 +329,7 @@ namespace Application {
 
 				// Creamos una entidad jugador con la clase que nos hayan dicho
 				// y la replicamos en el cliente
-				createAndMirrorPlayer(race, playerNetId, team);
+				createAndMirrorPlayer(race, playerNetId, spell1, spell2, team);
 
 				break;
 			}

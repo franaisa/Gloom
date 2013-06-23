@@ -211,7 +211,7 @@ namespace Application {
 
 		void createAndMirrorSpectator(Net::NetID playerNetId);
 
-		void createAndMirrorPlayer(int race, Net::NetID playerNetId, Logic::TeamFaction::Enum team);
+		void createAndMirrorPlayer(int race, Net::NetID playerNetId,std::string spell1, std::string spell2, Logic::TeamFaction::Enum team);
 
 		
 	}; // CMultiplayerTeamDeathmatchServerState
