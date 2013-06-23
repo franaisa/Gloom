@@ -1,5 +1,7 @@
 #include "Hud.h"
 
+#include "Map/MapEntity.h"
+
 #include "Logic/Messages/Message.h"
 #include "Logic/Messages/MessageHudLife.h"
 #include "Logic/Messages/MessageHudShield.h"
@@ -14,11 +16,13 @@
 #include "Logic/Messages/MessageHud.h"
 #include "Logic/Messages/MessageHudDebugData.h"
 #include "Logic/Messages/MessageImpact.h"
+#include "Logic/Messages/MessageAddSpell.h"
 
 #include "Logic/Maps/GUIManager.h"
 
 #include "FlashControl.h"
-
+#include "SpellsManagerClient.h"
+#include <assert.h>
 
 namespace Logic{
 
@@ -43,6 +47,33 @@ namespace Logic{
 
 	bool CHud::spawn(CEntity* entity, CMap *map, const Map::CEntity *entityInfo){
 
+
+
+
+		CGUIManager * guiManager = Logic::CGUIManager::getSingletonPtr();
+		guiManager->addGUI("hud", Hikari::Position(Hikari::Center));
+		guiManager->load("hud", "Hud.swf");
+		guiManager->setTransparent("hud",true);
+		_hud = guiManager->getGUIControl("hud");
+		_hud->callFunction("updateWeapon",Hikari::Args(weapons[WeaponType::eSOUL_REAPER]));
+		_hud->hide();
+
+		
+
+		guiManager->addGUI("respawn", Hikari::Position(Hikari::Center));
+		guiManager->load("respawn", "Respawn.swf");
+		guiManager->setTransparent("respawn",true);
+		_respawn = guiManager->getGUIControl("respawn");
+		_respawn->hide();
+
+		assert( entityInfo->hasAttribute("primarySkillCooldown") && "Error: primarySkillCooldown no esta definido en el mapa" );
+		// Pasamos el tiempo a msecs
+		updatePrimarySkillCooldown( entityInfo->getFloatAttribute("primarySkillCooldown") );
+
+		// Leemos el tiempo de cooldown de la habilidad secundaria
+		assert( entityInfo->hasAttribute("secondarySkillCooldown") && "Error: secondarySkillCooldown no esta definido en el mapa" );
+
+		updateSecondarySkillCooldown ( entityInfo->getFloatAttribute("secondarySkillCooldown") );
 		return true;
 	}
 
@@ -53,13 +84,7 @@ namespace Logic{
 	}
 
 	void CHud::onActivate(){
-		CGUIManager * guiManager = Logic::CGUIManager::getSingletonPtr();
-		guiManager->addGUI("hud", Hikari::Position(Hikari::Center));
-		guiManager->load("hud", "Hud.swf");
-		guiManager->setTransparent("hud",true);
-		_hud = guiManager->getGUIControl("hud");
 		_hud->show();
-		_hud->callFunction("updateWeapon",Hikari::Args(weapons[0]));
 	}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -80,7 +105,8 @@ namespace Logic{
 				msgType == Message::HUD_DISPERSION	||
 				msgType == Message::PRIMARY_SPELL	||
 				msgType == Message::SECONDARY_SPELL	||
-				msgType == Message::HUD				;
+				msgType == Message::HUD				||
+				msgType == Message::ADD_SPELL;
 
 	}
 
@@ -108,17 +134,17 @@ namespace Logic{
 				hudWeapon( hudWeaponMsg->getAmmo(), hudWeaponMsg->getWeapon() );
 				break;
 			}
-			/*case Message::HUD_SPAWN: {
+			case Message::HUD_SPAWN: {
 				std::shared_ptr<CMessageHudSpawn> hudSpawnMsg = std::static_pointer_cast<CMessageHudSpawn>(message);
 				_spawnTime = hudSpawnMsg->getTime();
 				_acumSpawn=3000;
 				if(_spawnTime==0){
 					hudRespawn();
 				}else{
-					hudDeath();
+					_respawn->show();
 				}
 				break;
-			}*/
+			}
 
 			case Message::HUD:{
 				std::shared_ptr<CMessageHud> hudmsg = std::static_pointer_cast<CMessageHud>(message);
@@ -158,6 +184,28 @@ namespace Logic{
 				}
 				break;
 			}*/
+
+			case Message::ADD_SPELL: {
+				
+				std::shared_ptr<CMessageAddSpell> addSpellMsg = std::static_pointer_cast<CMessageAddSpell>(message);
+				unsigned int spellIndex = addSpellMsg->getSpell();
+				CSpellsManagerClient * spellmanager = _entity->getComponent<CSpellsManagerClient>("CSpellsManagerClient");
+				if(spellIndex == 1){
+					if ( spellmanager->isPrimaryPassive() ){
+						
+						updatePrimarySpellCooldown(spellmanager->getPrimaryCoolDown());
+						primarySpell();
+					}
+				}else{
+					if(spellIndex == 2){
+						updateSecondarySpellCooldown(spellmanager->getPrimaryCoolDown());
+						secondarySpell();
+					}else{
+						printf("\nCuidado, has puesto un hechizo no valido, o es 1 (primario) o es 2 (secundario)");
+					}
+				}
+				break;
+			}
 		}
 
 	} // process
@@ -168,10 +216,10 @@ namespace Logic{
 	}
 	void CHud::hudWeapon(int ammo, int weapon){
 		_hud->callFunction("updateWeapon",Hikari::Args(weapons[weapon]));
-		_hud->callFunction("updateBullets", Hikari::Args(ammo));
+		_hud->callFunction("updateBullets", Hikari::Args(ammo)(weapons[weapon]));
 	}
 	void CHud::hudAmmo(int ammo, int weapon){
-		_hud->callFunction("updateBullets", Hikari::Args(ammo));
+		_hud->callFunction("updateBullets", Hikari::Args(ammo)(weapons[weapon]));
 	}
 	void CHud::hudSpawn(int spawn){
 		_hud->hide();
@@ -188,6 +236,7 @@ namespace Logic{
 	}
 
 	void CHud::hudRespawn(){
+		_respawn->hide();
 		_hud->show();
 	}
 
@@ -240,4 +289,19 @@ namespace Logic{
 		_hud->callFunction("secondarySpell", Hikari::Args());
 	}
 	
+
+	void CHud::onFixedTick(unsigned int msecs){
+		if(_respawn->getVisibility()){
+			_acumSpawn += msecs;
+			if(_acumSpawn>1000){
+				_respawn->callFunction("time", Hikari::Args(--_spawnTime));
+				_acumSpawn = 0;
+				/////////////////////////////////////////////////////////////////////////////////////
+				////////	Borrar en un futuro, espero que el server no llegue a -5		/////////
+				/////////////////////////////////////////////////////////////////////////////////////
+				if(_spawnTime<-5)
+					hudRespawn();
+			}
+		}
+	}
 }

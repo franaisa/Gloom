@@ -85,6 +85,8 @@ namespace Logic {
 
 
 		virtual void addAmmo();
+
+		float getCoolDown(){return _cooldown;}
 	protected:
 
 		virtual bool canUseSpell();

@@ -1073,7 +1073,7 @@ Map = {
 		audioSpawn = "media/audio/spawn.wav",
 		audioNoAmmo = "media/audio/noammo.wav",
 		
-		primarySkillCooldown = 2,
+		primarySkillCooldown = 7,
 		secondarySkillCooldown = 2,
 		
 		screamerShieldThreshold = 100,

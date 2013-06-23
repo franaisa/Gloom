@@ -147,5 +147,19 @@ namespace Logic
 	}
 	//---------------------------------------------------------
 
+
+	float CSpellsManagerClient::getPrimaryCoolDown(){
+		return _spells[_primarySpell].second->getCoolDown();
+	}
+	float CSpellsManagerClient::getSecondaryCoolDown(){
+		return _spells[_secondarySpell].second->getCoolDown();
+	}
+	bool CSpellsManagerClient::isPrimaryPassive(){
+		return _spells[_primarySpell].second->isPassive();
+	}
+	bool CSpellsManagerClient::isSecondaryPassive(){
+		return _spells[_secondarySpell].second->isPassive();
+	}
+
 } // namespace Logic
 

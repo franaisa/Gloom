@@ -1,5 +1,5 @@
-#ifndef __Logic_MessageAddSpell_H
-#define __Logic_MessageAddSpell_H
+#ifndef __Logic_MessageHud_H
+#define __Logic_MessageHud_H
 
 #include "Message.h"
 
