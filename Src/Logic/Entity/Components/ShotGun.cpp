@@ -85,6 +85,7 @@ namespace Logic {
 		if(!_projectiles.empty()){
 			for(auto it = _projectiles.begin(); it != _projectiles.end(); ++it){
 				(*it)->getComponent<CMagneticBullet>("CMagneticBullet")->setProjectileDirection(_entity->getPosition() + Vector3(0,_heightShoot, 0));
+				printf("\nBalas Volviendo");
 			} 
 		}
 	} // secondaryShoot
@@ -148,7 +149,7 @@ namespace Logic {
 
 	void CShotGun::destroyProjectile(CEntity *projectile, CEntity *killedBy){
 		if(killedBy->getType() == "World"){
-			drawDecal(killedBy, projectile->getPosition());
+			//drawDecal(killedBy, projectile->getPosition());
 
 			// Añado aqui las particulas de dado en la pared.
 			auto m = std::make_shared<CMessageCreateParticle>();

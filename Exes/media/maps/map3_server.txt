@@ -25,4 +25,24 @@ Map = {
 		physic_shape = "box",
 		physic_dimensions = { 4, 7, 4 },
 	},
+	
+	Shotgun1 = {
+		type = "ItemSpawn",
+		position = {-128.255, 197.337, 48.4198},
+		model = "shotGun.mesh",
+		id = "weapon",
+		weaponType = 2,
+		reward = 30,
+		respawnTime = 5,
+	},
+	
+	Shotgun2 = {
+		type = "ItemSpawn",
+		position = {-65.2534, 158.368, -103.51},
+		model = "shotGun.mesh",
+		id = "weapon",
+		weaponType = 2,
+		reward = 30,
+		respawnTime = 5,
+	},
 }
