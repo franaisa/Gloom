@@ -186,6 +186,16 @@ namespace Logic {
 		_screamerShieldDamageTimer = _screamerShieldRecoveryTimer = 0;
 	}
 
+	//________________________________________________________________________
+
+	void CScreamer::onDeactivate() {
+		if(_screamerShield != NULL) {
+			// Destruimos la entidad e indicamos a los clientes que tambien la destruyan
+			CEntityFactory::getSingletonPtr()->deferredDeleteEntity(_screamerShield, true);
+			_screamerShield = NULL;
+		}
+	}
+
 	//__________________________________________________________________
 
 	void CScreamer::primarySkill() {

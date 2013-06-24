@@ -138,6 +138,8 @@ namespace Logic {
 		*/
 		virtual void onTick(unsigned int msecs);
 
+		virtual void onDeactivate();
+
 	private:
 
 
