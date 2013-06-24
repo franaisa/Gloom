@@ -134,7 +134,9 @@ namespace Logic
 		}
 		else if(_reactivePhysicSimulation){
 			_entity->getComponent<CPhysicController>("CPhysicController")->activateSimulation();
-			_entity->getComponent<CAvatarController>("CAvatarController")->wakeUp();
+			CAvatarController* avatarComp = _entity->getComponent<CAvatarController>("CAvatarController");
+			if(avatarComp != NULL) 
+				avatarComp->wakeUp();
 
 			// Comprobamos el timer de inmunidad al respawnear
 			_inmunityTimer += msecs;
@@ -166,7 +168,9 @@ namespace Logic
 
 			//Desactivamos la simulación física (no puede estar activo en la escena física al morir)
 			_entity->getComponent<CPhysicController>("CPhysicController")->deactivateSimulation();
-			_entity->getComponent<CAvatarController>("CAvatarController")->putToSleep(true);
+			CAvatarController* avatarComp = _entity->getComponent<CAvatarController>("CAvatarController");
+			if(avatarComp != NULL) 
+				avatarComp->putToSleep(true);
 
 			_entity->deactivateAllComponentsExcept(except);
 			_isDead=true;

@@ -87,7 +87,7 @@ void CPhysicController::onTick(unsigned int msecs) {
 
 //________________________________________________________________________
 
-void  CPhysicController::setPhysicPosition (const Vector3 &position){
+void  CPhysicController::setPhysicPosition (const Vector3 &position) {
 	//Teletransportamos al player y ponemos la logica en el mismo momento(sino ocurrirían teletransportaciones gráficas)
 	_controller.setPosition(position);
 	_entity->setPosition( _controller.getPosition() );
