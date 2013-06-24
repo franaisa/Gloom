@@ -205,21 +205,20 @@ namespace Application {
 
 		buffer.reset();
 
-		Net::CBuffer buffer2;
 		// Enviamos la entidad nueva al jugador local
 		netMsg = Net::LOAD_LOCAL_PLAYER;
 		// Serializamos toda la información que se necesita para la creación de la entidad
-		buffer2.write(&netMsg, sizeof(netMsg));
-		buffer2.write(&playerId, sizeof(playerId));
-		buffer2.serialize(player->getName(), false); // Nombre del player
-		buffer2.serialize(player->getType(), false); // Clase del player
-		buffer2.serialize(spell1, false);
-		buffer2.serialize(spell2, false);
+		buffer.write(&netMsg, sizeof(netMsg));
+		buffer.write(&playerId, sizeof(playerId));
+		buffer.serialize(player->getName(), false); // Nombre del player
+		buffer.serialize(player->getType(), false); // Clase del player
+		buffer.serialize(spell1, false);
+		buffer.serialize(spell2, false);
 
 		player->activate();
 		player->start();
 
-		_netMgr->sendTo(playerNetId, buffer2.getbuffer(), buffer.getSize());
+		_netMgr->sendTo(playerNetId, buffer.getbuffer(), buffer.getSize());
 
 		_playersMgr->setPlayerState(playerNetId, true);
 		_playersMgr->setPlayerTeam(playerNetId, team);
