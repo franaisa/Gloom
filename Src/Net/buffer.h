@@ -419,7 +419,7 @@ namespace Net {
 			/** Tamaño de la memoria logica ocupada. */
 			size_t _size;
 			
-			/** Tamaño delta. */
+			/** Tamaño de los incrementos de memoria en los resizes. */
 			size_t _delta;
 		
 			/** Contador de referencias para copy-on-write. */

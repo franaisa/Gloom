@@ -143,6 +143,7 @@ namespace Net {
 			createOwnInstance();
 		}
 
+		_wrapperPtr->_size = 0;
 		_wrapperPtr->_current = _wrapperPtr->_begin;
 	}
 
@@ -347,8 +348,6 @@ namespace Net {
 		Math::setPitchYaw(pitch,yaw, data);
 		data.setTrans(position);
 	}
-
-	//__________________________________________________________________
 
 	//__________________________________________________________________
 
