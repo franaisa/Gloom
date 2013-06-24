@@ -54,13 +54,11 @@ package Seleccion
 		}
 		
 		public function addSpell(spell: String) {
-			
 			if (spell1 != spell && spell2 != spell) {
-				if (spell2 != null) {
+				if (spell2 != null && spell2.length > 0) {
 					var auxspell:GloomButton = getChildByName(spell2) as GloomButton;
 					auxspell.gotoAndPlay("idle");
 				}
-				
 				
 				spell2 = spell1;
 				spell1 = spell;

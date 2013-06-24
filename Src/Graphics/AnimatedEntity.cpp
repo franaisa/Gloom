@@ -39,8 +39,28 @@ namespace Graphics
 		auto runningAnim = _runningAnimations.find(anim);
 
 		if(runningAnim != _runningAnimations.end()){
-			if(runningAnim->second.state == FADE_OUT)
+			if(runningAnim->second.state == FADE_OUT){
 				runningAnim->second.state = FADE_IN;
+
+				//comprobamos que la animación no estaba justo para 
+				//ser sacada
+				if(!_deletedAnims.empty()){
+					
+					auto delAnim = _deletedAnims.begin();
+					auto delEnd = _deletedAnims.end();
+
+					for(;delAnim!=delEnd;delAnim++){
+						if ((*delAnim) == runningAnim->second.animation->getAnimationName()){
+							_deletedAnims.erase(delAnim);
+							runningAnim->second.animation->setEnabled(true);
+							break;
+						}
+					}
+					
+				}
+				
+			}
+			
 			return true;
 		}
 
@@ -129,8 +149,9 @@ namespace Graphics
 			auto delAnim = _deletedAnims.begin();
 			auto delEnd = _deletedAnims.end();
 
-			for(;delAnim!=delEnd;delAnim++)
+			for(;delAnim!=delEnd;delAnim++){
 				_runningAnimations.erase(*delAnim);
+			}
 			_deletedAnims.clear();
 		}
 		
@@ -150,11 +171,9 @@ namespace Graphics
 			case FADE_IN:{
 				float weight = anim->second.animation->getWeight();
 				weight+=secs/anim->second.fadeTime;
-				//std::cout << "fade in weight" << weight << "inc factor" << secs/anim->second.fadeTime << std::endl;
 				if( weight > 1.0f ){
 					weight = 1.0f;
 					anim->second.state = RUNNING;
-					//std::cout << "animation running" << std::endl;
 				}
 				anim->second.animation->setWeight(weight);
 				anim->second.animation->addTime(secs);
@@ -162,7 +181,6 @@ namespace Graphics
 			}
 			case FADE_OUT:{
 				float weight = anim->second.animation->getWeight();
-				//std::cout << "fade out " << weight << std::endl;
 				weight-=secs/anim->second.fadeTime;
 				if( weight < 0.0f ){
 					weight = 0.0f;
