@@ -29,6 +29,40 @@ Map = {
 		physic_dimensions = { 4, 7, 4 },
 	},
 	
+	lava1 = {
+		type = "Lava",
+		position = {75,146.6, -142.9},
+		model = "mapaAngel_lava1.mesh",
+		scale = 1,
+		yaw = 180,
+		damage = 500,
+		timeDamage = 500,
+		physic_entity = "rigid",
+		physic_trigger = true,
+		physic_type = "static",
+		physic_shape = "box",
+		physic_dimensions = { 150, 10, 250 },
+		physic_group = 2,
+		physic_groupList = "1",
+	},
+	
+	lava2 = {
+		type = "Lava",
+		position = {57,23,113},
+		model = "mapaAngel_lava1.mesh",
+		scale = 1,
+		yaw = 180,
+		damage = 500,
+		timeDamage = 500,
+		physic_entity = "rigid",
+		physic_trigger = true,
+		physic_type = "static",
+		physic_shape = "box",
+		physic_dimensions = { 200, 10, 200 },
+		physic_group = 2,
+		physic_groupList = "1",
+	},
+	
 	ActiveSpell = {
 		type = "ItemSpawn",
 		position = {-258.071, 156.003, -198.531},
@@ -50,7 +84,7 @@ Map = {
 	SuperShield = {
 		type = "ItemSpawn",
 		position = {84.2973, 204.139, -134.246},
-		model = "shield1.mesh",
+		model = "armour.mesh",
 		id = "armor",
 		reward = 125,
 		respawnTime = 5,
@@ -59,7 +93,7 @@ Map = {
 	Shield = {
 		type = "ItemSpawn",
 		position = {229.264, 142.335, -370.457},
-		model = "shield1.mesh",
+		model = "armourSmall.mesh",
 		id = "armor",
 		reward = 60,
 		respawnTime = 5,

@@ -6,29 +6,16 @@ Map = {
 		physic_file = "media/models/mapaAlberto/mapaAlberto.RepX",
 	},
 	
-	Hacksaw = {
-		type = "Hacksaw",
-		position = {120.0,16.0,-16.0},
-		positionInitial = {120.0,8.0,-16.0},
-		positionFinal = {86.0,8.0,-16.0},
-		velocity = 0.04,
-		model = "sierra.mesh",
-		physic_entity = "rigid",
-		physic_trigger = true,
-		physic_type = "kinematic",
-		physic_shape = "box",
-		physic_dimensions = { 1, 1, 1 },
-		physic_mass = 1,
-		physic_group = 8,
-		physic_groupList = "1",
+	David = {
+		type = "LocalArchangel",
+		isPlayer = true,
 	},
-	
-	Jumper1 = {
+		Jumper1 = {
 		type = "Jumper",
-		position = {-199.0, 1.0, 112.0},
+		position = {-275.4,0.5,28.1},
 		model = "health1.mesh",
 		model = "jumpy.mesh",
-		force = {1,5,0.1},
+		force = {1,5,0.0},
 		physic_entity = "rigid",
 		physic_trigger = true,
 		physic_type = "static",
@@ -41,7 +28,7 @@ Map = {
 	
 	Orb1 = {
 		type = "ItemSpawn",
-		position = {-29, 70, -28},
+		position = {-60.2, 48.0, -185.3},
 		model = "health1.mesh",
 		id = "orb",
 		reward = 17,
@@ -77,7 +64,7 @@ Map = {
 	
 	Shotgun = {
 		type = "ItemSpawn",
-		position = {18,2,112},
+		position = {42.9,0.2,34.9},
 		model = "shotGun.mesh",
 		id = "weapon",
 		weaponType = 2,
@@ -87,7 +74,7 @@ Map = {
 	
 	Sniper = {
 		type = "ItemSpawn",
-		position = {-265,105,-55} ,
+		position = {-397.7,74.8,-228.6} ,
 		model = "sniper.mesh",
 		id = "weapon",
 		weaponType = 1,
@@ -97,7 +84,7 @@ Map = {
 	
 	Minigun = {
 		type = "ItemSpawn",
-		position = {-91.0, 2.0, -35.0},
+		position = {-149.6, 0.4, -199.0},
 		model = "miniGun.mesh",
 		id = "weapon",
 		weaponType = 3,
@@ -107,7 +94,7 @@ Map = {
 	
 	RocketLauncherAmmo1 = {
 		type = "ItemSpawn",
-		position = {-264,2.0,-53.0},
+		position = {-397.8, 0.6,-227.0},
 		model = "rocketLauncher.mesh",
 		id = "weapon",
 		weaponType = 4,
@@ -115,27 +102,9 @@ Map = {
 		respawnTime = 5,
 	},
 	
-	spell1 = {
-		type = "ItemSpawn",
-		position = {-264,2.0, 5.0},
-		model = "scroll.mesh",
-		id = "spell",
-		reward = 1,
-		respawnTime = 5,
-	},
-	
-	spell2 = {
-		type = "ItemSpawn",
-		position = {-264,2.0, 30.0},
-		model = "scroll.mesh",
-		id = "spell",
-		reward = 2,
-		respawnTime = 5,
-	},
-	
 	SuperShield = {
 		type = "ItemSpawn",
-		position = {-265,127,47},
+		position = {-396.4,24.3,61.7},
 		model = "armour.mesh",
 		id = "armor",
 		reward = 100,
@@ -144,37 +113,17 @@ Map = {
 	
 	miniShield = {
 		type = "ItemSpawn",
-		position = {-182.0, 2.0, 47.0},
+		position = {-238.9, 0.4, -75.6},
 		scale = 1,
 		model = "armour.mesh",
 		id = "armor",
 		reward = 50,
 		respawnTime = 5,
 	},
-
-
-	Enemigo1 = {
-		type = "Screamer",
-		position = {0, 0.2, -20},
-		defaultAnimation = "idle",
-		materialName="Screamer",
-		yaw = 90,
-		defaultLife = 120,
-		maxShield=100,
-		maxLife=250,
-		PorcentShield=23,
-		isPlayer = false,
-		model = "heavy.mesh",
-		physic_shape = "capsule",
-		physic_radius = 6,
-		physic_height = 6,
-		scale = 0.15,
-	},
-
 	
 	lavaFondo = {
 		type = "Lava",
-		position = {-80.0,-20.0, 45.0},
+		position = {-218.0,-20.0, -67.7},
 		model = "lavaFondo.mesh",
 		scale = 1,
 		damage = 500,
@@ -187,11 +136,7 @@ Map = {
 		physic_group = 2,
 		physic_groupList = "1",
 	},
-	
-	David = {
-		type = "LocalArchangel",
-		isPlayer = true,
-	},
+
 	
 	Camera = {
 		type = "Camera",
@@ -200,7 +145,7 @@ Map = {
 	
 	Point1 = {
 		type = "SpawnPoint",
-		position = {-219.0, 3.0, -52.0},
+		position = {32.2, 4.4, -102.0},
 		yaw = 180,
 		physic_entity = "rigid",
 		physic_trigger = true,
@@ -208,10 +153,9 @@ Map = {
 		physic_shape = "box",
 		physic_dimensions = { 4, 7, 4 },
 	},
-	
 	Point2 = {
 		type = "SpawnPoint",
-		position = {73,3,-49},
+		position = {-379.5, 5.6, -133.9},
 		yaw = 180,
 		physic_entity = "rigid",
 		physic_trigger = true,
@@ -219,11 +163,10 @@ Map = {
 		physic_shape = "box",
 		physic_dimensions = { 4, 7, 4 },
 	},
-	
 	Point3 = {
 		type = "SpawnPoint",
-		position = {27,3,116},
-		yaw = 0,
+		position = {45.7, 50.5, -193.3},
+		yaw = 180,
 		physic_entity = "rigid",
 		physic_trigger = true,
 		physic_type = "static",
@@ -232,118 +175,22 @@ Map = {
 	},
 	Point4 = {
 		type = "SpawnPoint",
-		position = {-68.0, 28.0, 117.0},
-		yaw = 0,
+		position = {99.5, 78.7, 50.4},
+		yaw = 180,
 		physic_entity = "rigid",
 		physic_trigger = true,
 		physic_type = "static",
 		physic_shape = "box",
 		physic_dimensions = { 4, 7, 4 },
 	},
-	
 	Point5 = {
 		type = "SpawnPoint",
-		position = {46,3,116},
-		yaw = 0,
+		position = {287.5, 0.6, -112.9},
+		yaw = 180,
 		physic_entity = "rigid",
 		physic_trigger = true,
 		physic_type = "static",
 		physic_shape = "box",
 		physic_dimensions = { 4, 7, 4 },
-	},
-	
-	Point6 = {
-		type = "SpawnPoint",
-		position = {189,3,-10},
-		yaw = 90,
-		physic_entity = "rigid",
-		physic_trigger = true,
-		physic_type = "static",
-		physic_shape = "box",
-		physic_dimensions = { 4, 7, 4 },
-	},
-	Point7 = {
-		type = "SpawnPoint",
-		position = {27.0, 66.0, -28.0},
-		yaw = 90,
-		physic_entity = "rigid",
-		physic_trigger = true,
-		physic_type = "static",
-		physic_shape = "box",
-		physic_dimensions = { 4, 7, 4 },
-	},
-	
-	Point8 = {
-		type = "SpawnPoint",
-		position = {188,106,58},
-		yaw = 90,
-		physic_entity = "rigid",
-		physic_trigger = true,
-		physic_type = "static",
-		physic_shape = "box",
-		physic_dimensions = { 4, 7, 4 },
-	},
-	
-	Point9 = {
-		type = "SpawnPoint",
-		position = {69,106,131},
-		yaw = 90,
-		physic_entity = "rigid",
-		physic_trigger = true,
-		physic_type = "static",
-		physic_shape = "box",
-		physic_dimensions = { 4, 7, 4 },
-	},
-	
-	Point10 = {
-		type = "SpawnPoint",
-		position = {-146,106,130},
-		yaw = 0,
-		physic_entity = "rigid",
-		physic_trigger = true,
-		physic_type = "static",
-		physic_shape = "box",
-		physic_dimensions = { 4, 7, 4 },
-	},
-	
-	Point11 = {
-		type = "SpawnPoint",
-		position = {28,110,-29},
-		yaw = 90,
-		physic_entity = "rigid",
-		physic_trigger = true,
-		physic_type = "static",
-		physic_shape = "box",
-		physic_dimensions = { 4, 7, 4 },
-	},
-	
-	Jumper2 = {
-		type = "Jumper",
-		position = {-250.0, 2.0, 10.0},
-		model = "tetera.mesh",
-		force = {1,5,0.1},
-		audio = "media/audio/plasma.wav",
-		physic_entity = "rigid",
-		physic_trigger = true,
-		physic_type = "static",
-		physic_shape = "box",
-		physic_dimensions = { 2, 2, 2 },
-		physic_group = 7,
-		physic_groupList = "1",
-	},
-	
-	Jumper3 = {
-		type = "Jumper",
-		position = {-250.0, 2.0, 45.0},
-		model = "teteraFuego.mesh",
-		force = {1,5,0.1},
-		audio = "media/audio/plasma.wav",
-		physic_entity = "rigid",
-		physic_trigger = true,
-		physic_type = "static",
-		physic_shape = "box",
-		physic_dimensions = { 2, 2, 2 },
-		physic_group = 7,
-		physic_groupList = "1",
 	},
 }
