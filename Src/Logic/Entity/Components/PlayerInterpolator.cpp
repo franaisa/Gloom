@@ -100,7 +100,7 @@ namespace Logic {
 		_animationBuffer.insert( _animationBuffer.end(), tempAnimBuffer.begin(), tempAnimBuffer.end() );
 
 		// Si hemos perdido ticks, los descartamos del buffer
-		if(_lostTicks > 0) {
+		/*if(_lostTicks > 0) {
 			// Comprobamos el buffer de transforms
 			unsigned int transformBufferSize = _transformBuffer.size();
 
@@ -121,7 +121,7 @@ namespace Logic {
 			}
 
 			// Comprobamos el buffer de animaciones
-		}
+		}*/
 	}
 
 	//__________________________________________________________________
@@ -138,7 +138,6 @@ namespace Logic {
 			// Posicionamos el grafico y el controlador fisico donde nos indique
 			// el buffer de posiciones interpolado
 			_controller->setPhysicPosition( _transformBuffer.front().getTrans() );
-			_entity->setPosition( _transformBuffer.front().getTrans() );
 			_entity->setOrientation( _transformBuffer.front().extractQuaternion() );
 			_transformBuffer.pop_front();
 
@@ -172,7 +171,7 @@ namespace Logic {
 			// Estamos ejecutando ticks con el buffer vacio
 			// tendremos que descartar estos ticks del siguiente buffer
 			// recibido
-			++_lostTicks;
+			//++_lostTicks;
 
 			//cout << "Pierdo " << ++_lostTicks << " ticks" << endl;
 			//cout << "Pierdo ticks" << endl;
