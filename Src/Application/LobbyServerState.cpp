@@ -163,7 +163,7 @@ namespace Application {
 		mapList.push_back(_map);
 
 		state->serverSettings("Servidor Gazpachero", "cobragay", 8, 4, false, false);
-		state->gameSettings(mapList, false, std::pair<unsigned int, unsigned int>(30, 0), 100, false, false);
+		state->gameSettings(mapList, false, std::pair<unsigned int, unsigned int>(15, 0), 15, false, false);
 		//state->gameSettings(mapList, false, std::pair<unsigned int, unsigned int>(15, 0), 5, false, false, true);
 
 		return FLASH_VOID;

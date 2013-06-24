@@ -43,8 +43,7 @@ Contiene la implementación del estado de juego.
 namespace Application {
 
 	
-	bool CGameClientState::init(){
-		
+	bool CGameClientState::init() {
 		_netMgr = Net::CManager::getSingletonPtr();
 		// Iniciamos el menu de seleccion de personaje
 		_seleccion = GUI::CServer::getSingletonPtr()->addLayout("seleccion", Hikari::Position(Hikari::Center));
@@ -61,7 +60,6 @@ namespace Application {
 		CGameState::activate();
 		
 		// Mostramos el menú de selección de personaje
-		std::cout << "true" << std::endl;
 		// Registramos a este estado como observador de red para que sea notificado
 		// siempre y cuando acabemos de entrar en el modo online y no estuvieramos
 		// previamente en un estado online
