@@ -53,7 +53,10 @@ namespace Application {
 				// muestra el tiempo).
 				if(player != NULL) {
 					Logic::CHud* hudComponent = player->getComponent<Logic::CHud>("CHud");
-					hudComponent->updateMatchTime(minutes, seconds);
+					// De momento el espectador no tiene hud, por eso hago esta
+					// comprobacion
+					if(hudComponent != NULL)
+						hudComponent->updateMatchTime(minutes, seconds);
 				}
 			}
 		}
