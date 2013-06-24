@@ -120,16 +120,18 @@ namespace Application {
 			case Net::LOAD_PLAYERS: {
 				// Cargamos la informacion del player que nos han enviado
 				Logic::TEntityID entityID;
-				std::string playerClass, name;
+				std::string playerClass, name, spell1, spell2;
 				int nbPlayers;
 
 				buffer.read(&nbPlayers, sizeof(nbPlayers));
 				buffer.read(&entityID, sizeof(entityID));
 				buffer.deserialize(name);
 				buffer.deserialize(playerClass);
+				buffer.deserialize(spell1);
+				buffer.deserialize(spell2);
 
 				// Llamo al metodo de creacion del jugador
-				Logic::CEntity * player = Logic::CServer::getSingletonPtr()->getMap()->createPlayer(name, playerClass, entityID);
+				Logic::CEntity * player = Logic::CServer::getSingletonPtr()->getMap()->createPlayer(name, playerClass, entityID, spell1, spell2);
 
 				//Lo cargamos en el gestor de players, pero aqui tenemos que ver si el player ya existía antes, 
 				//para en vez de re-cargarlo simplemente cambiarle la clase
@@ -151,13 +153,15 @@ namespace Application {
 				// Deserializamos la información de nuestro player
 				Logic::TEntityID entityID;
 				buffer.read(&entityID, sizeof(entityID));
-				std::string playerClass, name;
+				std::string playerClass, name, spell1, spell2;
 				buffer.deserialize(name);
 				buffer.deserialize(playerClass);
+				buffer.deserialize(spell1);
+				buffer.deserialize(spell2);
 
 				// Creamos al jugador como local (es decir, lo seteamos
 				// como el jugador controlado por las teclas).
-				Logic::CEntity* player = Logic::CServer::getSingletonPtr()->getMap()->createLocalPlayer(name, playerClass, entityID);
+				Logic::CEntity* player = Logic::CServer::getSingletonPtr()->getMap()->createLocalPlayer(name, playerClass, entityID, spell1, spell2);
 
 				//Lo cargamos en el gestor de players, pero aqui tenemos que ver si el player ya existía antes, 
 				//para en vez de re-cargarlo simplemente cambiarle la clase
@@ -187,7 +191,7 @@ namespace Application {
 				buffer.read( &entityId, sizeof(entityId) );
 				buffer.deserialize(nickname);
 				
-				Logic::CEntity* spectator = Logic::CServer::getSingletonPtr()->getMap()->createLocalPlayer(nickname, "Spectator", entityId);
+				Logic::CEntity* spectator = Logic::CServer::getSingletonPtr()->getMap()->createLocalPlayer(nickname, "Spectator", entityId, "", "");
 				spectator->activate();
 				spectator->start();
 
@@ -316,10 +320,30 @@ namespace Application {
 
 	Hikari::FlashValue CGameClientState::classSelected(Hikari::FlashControl* caller, const Hikari::Arguments& args) {
 		
-		int selectedClass = args.at(0).getNumber();
+		std::string sClass = args.at(0).getString();
+		std::string spell1, spell2;
+		spell1 = args.at(1).getString();
+		spell2 = args.at(2).getString();
 		Net::NetMessageType msgType = Net::CLASS_SELECTED;
-		Net::CBuffer msg ( sizeof(msgType) + sizeof(selectedClass) );
+		
 
+		int selectedClass;
+
+		if(sClass == "screamer"){
+			selectedClass = 1;
+		} else if(sClass == "hound"){
+			selectedClass = 2;
+		} else if(sClass == "archangel"){
+			selectedClass = 3;
+		} else if(sClass == "shadow"){
+			selectedClass = 4;
+		} else if(sClass == "spectator"){
+			selectedClass = 5;
+		}else if(sClass == "cancel"){
+			selectedClass = 0;
+		}
+
+		Net::CBuffer msg(sizeof(msgType) + sizeof(selectedClass) + sizeof(spell1.length()) + sizeof(spell2.length()));
  		switch(selectedClass) {
 			case 0: {
 				if(Input::CServer::getSingletonPtr()->getPlayerController()->getControllerAvatar()) {
@@ -340,6 +364,8 @@ namespace Application {
 				//enviamos la clase elegida
 				msg.serialize(msgType);
 				msg.serialize(selectedClass);
+				msg.serialize(spell1, false);
+				msg.serialize(spell2, false);
 				_netMgr->broadcast( msg.getbuffer(), msg.getSize() );
 
 				if(Input::CServer::getSingletonPtr()->getPlayerController()->getControllerAvatar()){

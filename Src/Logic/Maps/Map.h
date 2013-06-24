@@ -181,7 +181,7 @@ namespace Logic
 		@param name Nombre del jugador.
 		*/
 
-		CEntity* createPlayer(const std::string &name, const std::string &type);
+		CEntity* createPlayer(const std::string &name, const std::string &type, const std::string &spell1, const std::string &spell2);
 
 		/**
 		Crea un nuevo jugador y le porporciona un nombre determinado.
@@ -189,9 +189,9 @@ namespace Logic
 		@param name Nombre del jugador.
 		@param id La id de la entidad que devuelve el método.
 		*/
-		CEntity* createLocalPlayer(const std::string &name, const std::string &type, TEntityID id);
+		CEntity* createLocalPlayer(const std::string &name, const std::string &type, TEntityID id, const std::string &spell1, const std::string &spell2);
 
-		CEntity* createPlayer(const std::string &name, const std::string &type, TEntityID id);
+		CEntity* createPlayer(const std::string &name, const std::string &type, TEntityID id, const std::string &spell1, const std::string &spell2);
 
 		/**
 			Método que elimina una entidad en el siguiente tick del mapa
@@ -216,6 +216,8 @@ namespace Logic
 		void doTick(unsigned int msecs);
 
 		void doFixedTick(unsigned int msecs);
+
+		std::string getSpellNumber(const std::string &spell);
 
 		struct EntityInfo {
 			CEntity* _entityPtr;
