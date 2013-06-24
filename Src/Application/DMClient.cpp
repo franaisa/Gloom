@@ -18,6 +18,7 @@
 #include "Input/InputManager.h"
 #include "Logic/Maps/Scoreboard.h"
 #include "Logic/Entity/Entity.h"
+#include "Logic/Entity/Components/Hud.h"
 #include "Net/paquete.h"
 
 using namespace std;
@@ -46,7 +47,14 @@ namespace Application {
 				this->_minutes = minutes;
 				this->_seconds = seconds;
 
-				//cout << minutes << ":" << seconds << endl;
+				// Mostramos el tiempo en el hud del player
+				Logic::CEntity* player = Input::CServer::getSingletonPtr()->getPlayerController()->getControllerAvatar();
+				// De momento solo mostramos el tiempo si el player esta dentro de la partida (en los menus no se 
+				// muestra el tiempo).
+				if(player != NULL) {
+					Logic::CHud* hudComponent = player->getComponent<Logic::CHud>("CHud");
+					hudComponent->updateMatchTime(minutes, seconds);
+				}
 			}
 		}
 	}

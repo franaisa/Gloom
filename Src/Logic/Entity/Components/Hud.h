@@ -61,6 +61,8 @@ namespace Logic
 
 		virtual void onActivate();
 
+		void updateMatchTime(unsigned int minutes, unsigned int seconds);
+
 	protected:
 
 		virtual void onFixedTick(unsigned int msecs);

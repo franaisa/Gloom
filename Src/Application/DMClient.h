@@ -18,6 +18,10 @@
 #include "GameClientState.h"
 #include "Logic/Maps/WorldState.h"
 
+namespace Logic {
+	class CHud;
+};
+
 namespace Application {
 	
 	/**
