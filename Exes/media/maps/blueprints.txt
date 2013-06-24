@@ -10,7 +10,8 @@ Screamer CAudio CParticle  CPhysicController CAnimatedGraphics
 Shadow CAudio CParticle  CPhysicController CAnimatedGraphics
 LocalSpectator CSpectatorController CPhysicController
 Camera CCamera
-ItemSpawn  CPhysicStaticEntity CFloatingMovement CSpawnItemManager CGraphics
+ItemSpawn CPhysicStaticEntity CFloatingMovement CSpawnItemManager CGraphics
+Ammo CPhysicStaticEntity CSpawnItemManager CGraphics
 ItemSpawnDynamic CPhysicDynamicEntity CPullingMovement CGraphics
 SpawnPoint CPhysicStaticEntity
 Jumper CGraphics CPhysicStaticEntity CJumper CAudio CParticle
