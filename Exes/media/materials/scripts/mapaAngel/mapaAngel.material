@@ -330,7 +330,8 @@ material mapaAngel_suelo
 		set $diffuse "1 1 1 1"
 		set $specular "2 2 2 100"
 		set $shininess "60"
-		/*pass 
+/*
+		pass 
 		{
 			illumination_stage ambient
 		
@@ -389,9 +390,9 @@ material mapaAngel_suelo
 				filtering anisotropic
             }
         }
-*/
+
 		
-		
+*/	
 		pass
 		{
 			ambient 0.588 0.588 0.588 1
@@ -408,5 +409,4 @@ material mapaAngel_suelo
 		}
 
 	}
-
 }
