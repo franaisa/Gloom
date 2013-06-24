@@ -420,9 +420,10 @@ namespace Logic {
 		playerInfo->setName(name);
 
 		//ñapa de momento, que no me apetece pensar y quiero acabarlo rapido xD
-		playerInfo->setAttribute("primarySpell", getSpellNumber(spell1));
-		playerInfo->setAttribute("secondarySpell", getSpellNumber(spell2));
-		
+		if(type != "Spectator"){
+			playerInfo->setAttribute("primarySpell", getSpellNumber(spell1));
+			playerInfo->setAttribute("secondarySpell", getSpellNumber(spell2));
+		}
 
 		
 		// Creamos la entidad y modificamos el resto de parametros que necesitamos
@@ -442,8 +443,10 @@ namespace Logic {
 
 		// Asignar nombre
 		playerInfo->setName(name);
-		playerInfo->setAttribute("primarySpell", getSpellNumber(spell1));
-		playerInfo->setAttribute("secondarySpell", getSpellNumber(spell2));
+		if(type != "Spectator"){
+			playerInfo->setAttribute("primarySpell", getSpellNumber(spell1));
+			playerInfo->setAttribute("secondarySpell", getSpellNumber(spell2));
+		}
 		// Creamos la entidad y modificamos el resto de parametros que necesitamos
 		CEntity* playerCreated = CEntityFactory::getSingletonPtr()->createEntityById(playerInfo, this, id);
 		playerCreated->setPosition( playerCreated->getPosition());

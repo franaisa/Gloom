@@ -219,7 +219,7 @@ namespace Application {
 		player->activate();
 		player->start();
 
-		_netMgr->sendTo(playerNetId, buffer2.getbuffer(), buffer2.getSize());
+		_netMgr->sendTo(playerNetId, buffer2.getbuffer(), buffer.getSize());
 
 		_playersMgr->setPlayerState(playerNetId, true);
 		_playersMgr->setPlayerTeam(playerNetId, team);
