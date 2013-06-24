@@ -213,8 +213,8 @@ namespace Logic{
 
 	} // process
 
-	void CHud::updateMatchTime(unsigned int minutes, unsigned int seconds) {
-		//_hud->callFunction( "updateMatchTime", Hikari::Args(minutes)(seconds) );
+	void CHud::updateMatchTime(int minutes, int seconds) {
+		_hud->callFunction( "updateTime", Hikari::Args(minutes)(seconds) );
 	}
 
 	void CHud::hudLife(int health){

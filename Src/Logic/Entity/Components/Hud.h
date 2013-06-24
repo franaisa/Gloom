@@ -61,7 +61,7 @@ namespace Logic
 
 		virtual void onActivate();
 
-		void updateMatchTime(unsigned int minutes, unsigned int seconds);
+		void updateMatchTime(int minutes, int seconds);
 
 	protected:
 

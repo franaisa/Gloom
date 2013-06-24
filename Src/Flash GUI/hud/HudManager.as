@@ -119,8 +119,13 @@ package hud
 		
 		public function updateTime(mins:int, secs:int) {
 			
-			time.mins = mins;
-			time.secs = secs;
+			time.mins.text = mins.toString();
+			if (secs < 10) {
+				time.secs.text = "0"+secs.toString();
+			}else {
+				time.secs.text = secs.toString();
+			}
+			
 			
 		}
 		
