@@ -675,6 +675,7 @@ Map = {
 		physic_dimensions = { 4, 7, 4 },
 	},
 	
+
 	Enemigo1 = {
 		type = "Screamer",
 		position = {0, 0.2, -20},
@@ -693,4 +694,165 @@ Map = {
 		scale = 0.15,
     },
 	
+
+	ShotgunAmmo1 = {
+		type = "Ammo",
+		position = {118.983, 0.51058, -143.614},
+		model = "shotGunAmmo.mesh",
+		id = "ammo",
+		weaponType = 2,
+		reward = 15,
+		respawnTime = 20,
+	},
+	
+	ShotgunAmmo2 = {
+		type = "Ammo",
+		position = {225.023, 0.571823, -71.39},
+		model = "shotGunAmmo.mesh",
+		id = "ammo",
+		weaponType = 2,
+		reward = 15,
+		respawnTime = 20,
+	},
+	
+	ShotgunAmmo3 = {
+		type = "Ammo",
+		position = {225.023, 0.571823, -71.39},
+		model = "shotGunAmmo.mesh",
+		id = "ammo",
+		weaponType = 2,
+		reward = 15,
+		respawnTime = 20,
+	},
+	
+	ShotgunAmmo4 = {
+		type = "Ammo",
+		position = {-362.857, 0.664502, 66.9392},
+		model = "shotGunAmmo.mesh",
+		id = "ammo",
+		weaponType = 2,
+		reward = 15,
+		respawnTime = 20,
+	},
+	
+	ShotgunAmmo5 = {
+		type = "Ammo",
+		position = {64.3496, 78.6529, -8.67489},
+		model = "shotGunAmmo.mesh",
+		id = "ammo",
+		weaponType = 2,
+		reward = 15,
+		respawnTime = 20,
+	},
+	
+	IronHellGoatAmmo1 = {
+		type = "Ammo",
+		position = {73.4929, 0.48245, -17.33},
+		model = "ironHellGoatAmmo.mesh",
+		id = "ammo",
+		weaponType = 4,
+		reward = 5,
+		respawnTime = 20,
+	},
+	
+	IronHellGoatAmmo2 = {
+		type = "Ammo",
+		position = {66.7495, 0.480398, -26.8473},
+		model = "ironHellGoatAmmo.mesh",
+		id = "ammo",
+		weaponType = 4,
+		reward = 5,
+		respawnTime = 20,
+	},
+	
+	IronHellGoatAmmo3 = {
+		type = "Ammo",
+		position = {-379.909, 0.680705, -230.897},
+		model = "ironHellGoatAmmo.mesh",
+		id = "ammo",
+		weaponType = 4,
+		reward = 5,
+		respawnTime = 20,
+	},
+	
+	MinigunAmmo1 = {
+		type = "Ammo",
+		position = {48.5479, 0.28835, -172.243},
+		model = "sphere.mesh",
+		id = "ammo",
+		weaponType = 3,
+		reward = 30,
+		respawnTime = 20,
+	},
+	
+	MinigunAmmo2 = {
+		type = "Ammo",
+		position = {-152.632, 0.472601, -211.63},
+		model = "sphere.mesh",
+		id = "ammo",
+		weaponType = 3,
+		reward = 30,
+		respawnTime = 20,
+	},
+	
+	MinigunAmmo3 = {
+		type = "Ammo",
+		position = {-152.346, 0.472294, -188.268},
+		model = "sphere.mesh",
+		id = "ammo",
+		weaponType = 3,
+		reward = 30,
+		respawnTime = 20,
+	},
+	
+	SniperAmmo1 = {
+		type = "Ammo",
+		position = {-400.625, 0.631543, -119.066},
+		model = "sniperAmmo.mesh",
+		id = "ammo",
+		weaponType = 1,
+		reward = 5,
+		respawnTime = 20,
+	},
+	
+	SniperAmmo2 = {
+		type = "Ammo",
+		position = {-400.539, 0.69909, 21.8122},
+		model = "sniperAmmo.mesh",
+		id = "ammo",
+		weaponType = 1,
+		reward = 5,
+		respawnTime = 20,
+	},
+	
+	SniperAmmo3 = {
+		type = "Ammo",
+		position = {47.0265, 47.8757, -211.542},
+		model = "sniperAmmo.mesh",
+		id = "ammo",
+		weaponType = 1,
+		reward = 5,
+		respawnTime = 20,
+	},
+	
+	SniperAmmo4 = {
+		type = "Ammo",
+		position = {-372.011, 75.2429, -8.87294},
+		model = "sniperAmmo.mesh",
+		id = "ammo",
+		weaponType = 1,
+		reward = 5,
+		respawnTime = 20,
+	},
+	
+	SniperAmmo5 = {
+		type = "Ammo",
+		position = {-372.018, 75.2432, -138.764},
+		model = "sniperAmmo.mesh",
+		id = "ammo",
+		weaponType = 1,
+		reward = 5,
+		respawnTime = 20,
+	},
+
 }

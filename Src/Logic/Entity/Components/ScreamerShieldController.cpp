@@ -74,6 +74,8 @@ namespace Logic {
 	void CScreamerShieldController::onFixedTick(unsigned int msecs) {
 		// Aunque este no es el sitio mas idoneo para hacer esto, lo
 		// voy a hacer aqui por facilidad
+		if(_owner == NULL) return;
+
 		Vector3 shootPosition = _owner->getPosition() + ( (_owner->getOrientation() * Vector3::NEGATIVE_UNIT_Z) * _capsuleRadius );
 		shootPosition.y += _heightShoot;
 		

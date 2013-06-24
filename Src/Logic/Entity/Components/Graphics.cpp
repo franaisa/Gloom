@@ -158,9 +158,9 @@ namespace Logic
 
 	void CGraphics::changeMaterial(const std::string& materialName) {
 		if(materialName != "original")
-			_graphicsEntity->changeMaterial(_material);
-		else
 			_graphicsEntity->changeMaterial(materialName);
+		else
+			_graphicsEntity->changeMaterial(_material);
 	}
 
 	//---------------------------------------------------------

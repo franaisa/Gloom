@@ -1814,6 +1814,18 @@ Map = {
 		physic_groupList = "1",
 	},
 	
+	ammo = {
+		type = "Ammo",
+		msgList= "6,14,15,16,17, 29",
+		physic_entity = "rigid",
+		physic_trigger = true,
+		physic_type = "static",
+		physic_shape = "sphere",
+		physic_radius = 3,
+		physic_group = 12,
+		physic_groupList = "1",
+	},
+	
 	dynamicitem = {
 		type = "ItemSpawnDynamic",
 		msgList= "6,14,15,16,17,55,56",

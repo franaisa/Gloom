@@ -23,7 +23,7 @@ package Seleccion
 		
 		override protected function onMouseOver(event: MouseEvent): void {
 			super.onMouseOver(event);
-			manager.spellselector.gotoAndPlay("comeback");
+			manager.spellselector.gotoAndPlay("amplifydamage");
 		}
 		
 		override protected function onMouseOut(e:MouseEvent):void {
@@ -32,6 +32,7 @@ package Seleccion
 		}
 		
 		override protected function onMouseClick(e:MouseEvent):void {
+			
 			manager.addSpell(this.name);
 		}
 		
