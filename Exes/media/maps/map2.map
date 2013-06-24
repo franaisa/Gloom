@@ -675,4 +675,22 @@ Map = {
 		physic_dimensions = { 4, 7, 4 },
 	},
 	
+	Enemigo1 = {
+		type = "Screamer",
+		position = {0, 0.2, -20},
+		defaultAnimation = "idle",
+		materialName="Screamer",
+		yaw = 90,
+		defaultLife = 120,
+		maxShield=100,
+		maxLife=250,
+		PorcentShield=23,
+		isPlayer = false,
+		model = "heavy.mesh",
+		physic_shape = "capsule",
+		physic_radius = 6,
+		physic_height = 6,
+		scale = 0.15,
+    },
+	
 }
