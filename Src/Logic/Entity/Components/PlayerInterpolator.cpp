@@ -100,20 +100,20 @@ namespace Logic {
 		_animationBuffer.insert( _animationBuffer.end(), tempAnimBuffer.begin(), tempAnimBuffer.end() );
 
 		// Si hemos perdido ticks, los descartamos del buffer
-		/*if(_lostTicks > 0) {
+		if(_lostTicks > 0) {
 			// Comprobamos el buffer de transforms
 			unsigned int transformBufferSize = _transformBuffer.size();
 
 			//cout << "He perdido " << _lostTicks << " ticks" << endl;
 
 			if( _lostTicks >= transformBufferSize ) {
-				//_transformBuffer.clear();
+				_transformBuffer.clear();
 				_lostTicks -= transformBufferSize;
 
 				//cout << "Descarto el buffer que me llega por completo" << endl;
 			}
 			else {
-				//_transformBuffer.erase( _transformBuffer.begin(), _transformBuffer.begin() + _lostTicks );
+				_transformBuffer.erase( _transformBuffer.begin(), _transformBuffer.begin() + _lostTicks );
 				
 				//cout << "Descarto " << _lostTicks << " ticks y el buffer se queda con un tamano de " << _transformBuffer.size() << endl;
 
@@ -121,7 +121,7 @@ namespace Logic {
 			}
 
 			// Comprobamos el buffer de animaciones
-		}*/
+		}
 	}
 
 	//__________________________________________________________________
@@ -172,8 +172,10 @@ namespace Logic {
 			// Estamos ejecutando ticks con el buffer vacio
 			// tendremos que descartar estos ticks del siguiente buffer
 			// recibido
+			++_lostTicks;
+
 			//cout << "Pierdo " << ++_lostTicks << " ticks" << endl;
-			cout << "Pierdo ticks" << endl;
+			//cout << "Pierdo ticks" << endl;
 		}
 	}
 
