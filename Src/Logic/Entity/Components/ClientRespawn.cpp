@@ -68,6 +68,7 @@ namespace Logic  {
 				exceptionList.insert( std::string("CClientRespawn") );
 				exceptionList.insert( std::string("CAnimatedGraphics") );
 				exceptionList.insert( std::string("CHudOverlay") );
+				exceptionList.insert( std::string("CHud") );
 				exceptionList.insert( std::string("CNetConnector") );
 				exceptionList.insert( std::string("CAudio") );
 				

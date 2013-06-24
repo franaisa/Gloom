@@ -138,10 +138,13 @@ namespace Logic{
 				std::shared_ptr<CMessageHudSpawn> hudSpawnMsg = std::static_pointer_cast<CMessageHudSpawn>(message);
 				_spawnTime = hudSpawnMsg->getTime();
 				_acumSpawn=3000;
+				std::cout << "me llega nensaje respawn" << _spawnTime << std::endl;
 				if(_spawnTime==0){
 					hudRespawn();
+					std::cout << "respawn end" << std::endl;
 				}else{
 					_respawn->show();
+					std::cout << "respawn init" << std::endl;
 				}
 				break;
 			}
@@ -238,6 +241,7 @@ namespace Logic{
 	void CHud::hudRespawn(){
 		_respawn->hide();
 		_hud->show();
+		_hud->callFunction("reset", Hikari::Args());
 	}
 
 	void CHud::hudShield(int shield){
@@ -299,8 +303,8 @@ namespace Logic{
 				/////////////////////////////////////////////////////////////////////////////////////
 				////////	Borrar en un futuro, espero que el server no llegue a -5		/////////
 				/////////////////////////////////////////////////////////////////////////////////////
-				if(_spawnTime<-2)
-					hudRespawn();
+				//if(_spawnTime<-2)
+					//hudRespawn();
 			}
 		}
 	}

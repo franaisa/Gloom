@@ -56,6 +56,7 @@ package hud
 			ExternalInterface.addCallback("updateTeam", updateTeam);
 			ExternalInterface.addCallback("updateBullets", updateBullets);
 			ExternalInterface.addCallback("hit", onHit);
+			ExternalInterface.addCallback("reset", reset);
 			
 			primaryspell.visible = false;
 			secondaryspell.visible = false;
@@ -64,6 +65,16 @@ package hud
 			minigun.visible = false;
 			railgun.visible = false;
 			
+		}
+		
+		public function reset() {
+			primaryspell.visible = false;
+			secondaryspell.visible = false;
+			ironhellgoat.visible = false;
+			shotgun.visible = false;
+			minigun.visible = false;
+			railgun.visible = false;
+			updateWeapon("soulreaper");
 		}
 		
 		public function updateWeapon(weapon:String) {
