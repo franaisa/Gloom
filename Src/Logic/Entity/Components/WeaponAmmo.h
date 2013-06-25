@@ -97,7 +97,7 @@ namespace Logic {
 		/**
 		Metodo virtual invocado cuando se desactiva la entidad
 		*/
-		virtual void void onDeactivate();
+		virtual void onDeactivate();
 
 		// =======================================================================
 		//                          METODOS PROPIOS

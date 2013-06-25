@@ -24,7 +24,7 @@ namespace Audio
 {
 	CServer *CServer::_instance = 0;
 
-	CServer::CServer()
+	CServer::CServer() : _audioResourcesPath("media/audio/")
 	{
 		assert(!_instance && "Segunda inicialización de Audio::CServer no permitida!");
 		_volume=0.5f;
@@ -96,7 +96,8 @@ namespace Audio
 		_system->set3DSettings(_doppler,1.0f,_rolloff);
 
 		//Cargamos la banda sonora del juego
-		playStreamingLoopSound("media/audio/themeGloom.wav", "theme");
+		std::string themeSong = _audioResourcesPath + "footStep.wav";
+		playStreamingLoopSound(themeSong.c_str(), "theme");
 
 		return true;
 
@@ -152,7 +153,7 @@ namespace Audio
 	}//ERRCHECK
 	//--------------------------------------------------------
 
-	void CServer::playSound(char* rutaSonido, const std::string& id, bool notIfPlay){
+	void CServer::playSound(const char* rutaSonido, const std::string& id, bool notIfPlay){
 
 		//Si queremos que suene solamente si no esta sonando ya
 		if(notIfPlay){
@@ -197,7 +198,7 @@ namespace Audio
 	}//playSound
 	//--------------------------------------------------------
 
-	void CServer::playLoopSound(char* rutaSonido, const std::string& id){
+	void CServer::playLoopSound(const char* rutaSonido, const std::string& id){
 		//Carga del sonido
 		Sound *sound;
 		FMOD_RESULT result = _system->createSound(
@@ -233,7 +234,7 @@ namespace Audio
 	}//playLoopSound
 	//--------------------------------------------------------
 
-	void CServer::playSound3D(char* rutaSonido, const std::string& id,Vector3 position, bool notIfPlay){
+	void CServer::playSound3D(const char* rutaSonido, const std::string& id,Vector3 position, bool notIfPlay){
 
 		//Si queremos que suena solamente si no esta sonando ya
 		if(notIfPlay){
@@ -287,7 +288,7 @@ namespace Audio
 	}//playSound3D
 	//--------------------------------------------------------
 
-	void CServer::playLoopSound3D(char* rutaSonido, const std::string& id, Vector3 position){
+	void CServer::playLoopSound3D(const char* rutaSonido, const std::string& id, Vector3 position){
 		//Carga del sonido
 		Sound *sound;
 		FMOD_RESULT result = _system->createSound(
@@ -356,12 +357,14 @@ namespace Audio
 	}//stopAllSounds
 	//--------------------------------------------------------
 
-	void CServer::playStreamingSound(char* rutaSonido, const std::string& id){
+	void CServer::playStreamingSound(const char* rutaSonido, const std::string& id, bool loopSound){
 		//Carga del sonido
+		unsigned int soundMask = loopSound ? FMOD_DEFAULT : FMOD_DEFAULT | FMOD_LOOP_NORMAL;
+		
 		Sound *sound;
 		FMOD_RESULT result = _system->createStream(
 		rutaSonido, // path del archivo de sonido
-		FMOD_DEFAULT, // flags
+		soundMask, // flags
 		0, // información adicional (nada en este caso)
 		& sound); // devolución del handle al buffer
 		ERRCHECK(result);
@@ -391,7 +394,7 @@ namespace Audio
 	}//playSound
 	//--------------------------------------------------------
 
-	void CServer::playStreamingLoopSound(char* rutaSonido, const std::string& id){
+	void CServer::playStreamingLoopSound(const char* rutaSonido, const std::string& id){
 		//Carga del sonido
 		Sound *sound;
 		FMOD_RESULT result = _system->createStream(

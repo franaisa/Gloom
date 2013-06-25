@@ -18,6 +18,7 @@
 #include "Input/InputManager.h"
 #include "Logic/Maps/Scoreboard.h"
 #include "Logic/Entity/Entity.h"
+#include "Logic/Entity/Components/Hud.h"
 #include "Net/paquete.h"
 
 using namespace std;
@@ -34,7 +35,17 @@ namespace Application {
 			_gameTime = 0;
 
 			// En el cliente
-			// Poner el reloj a 00:00 en el HUD
+			// Mostramos el tiempo en el hud del player
+			Logic::CEntity* player = Input::CServer::getSingletonPtr()->getPlayerController()->getControllerAvatar();
+			// De momento solo mostramos el tiempo si el player esta dentro de la partida (en los menus no se 
+			// muestra el tiempo).
+			if(player != NULL) {
+				Logic::CHud* hudComponent = player->getComponent<Logic::CHud>("CHud");
+				// De momento el espectador no tiene hud, por eso hago esta
+				// comprobacion
+				if(hudComponent != NULL)
+					hudComponent->updateMatchTime(0, 0);
+			}
 		}
 		else {
 			// @todo En el cliente emitimos un mensaje para que se actualice el HUD
@@ -46,7 +57,17 @@ namespace Application {
 				this->_minutes = minutes;
 				this->_seconds = seconds;
 
-				//cout << minutes << ":" << seconds << endl;
+				// Mostramos el tiempo en el hud del player
+				Logic::CEntity* player = Input::CServer::getSingletonPtr()->getPlayerController()->getControllerAvatar();
+				// De momento solo mostramos el tiempo si el player esta dentro de la partida (en los menus no se 
+				// muestra el tiempo).
+				if(player != NULL) {
+					Logic::CHud* hudComponent = player->getComponent<Logic::CHud>("CHud");
+					// De momento el espectador no tiene hud, por eso hago esta
+					// comprobacion
+					if(hudComponent != NULL)
+						hudComponent->updateMatchTime(minutes, seconds);
+				}
 			}
 		}
 	}
