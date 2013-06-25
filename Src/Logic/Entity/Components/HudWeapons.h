@@ -302,7 +302,7 @@ namespace Logic {
 		Graphics::COverlay *_overlayWeapon3D[WeaponType::eSIZE];
 
 
-		Quaternion _rancio;
+		Quaternion _halfPi;
 	}; // class CGraphics
 
 	REG_FACTORY(CHudWeapons);

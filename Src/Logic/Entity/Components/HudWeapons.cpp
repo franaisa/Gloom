@@ -113,6 +113,7 @@ namespace Logic {
 		_fallAnim.movementDir = 0;
 		
 		_fallAnim.offset = Vector3::ZERO;
+		_halfPi= Quaternion(Ogre::Radian(Math::PI),Vector3::UNIT_Y);
 	}
 
 	//---------------------------------------------------------
@@ -461,42 +462,24 @@ namespace Logic {
 	void CHudWeapons::walkAnim(unsigned int msecs) {
 		// Obtenemos la posicion del arma
 
-	LARGE_INTEGER iniTime, endTime;
-
-  QueryPerformanceCounter(&iniTime);
+		//LARGE_INTEGER iniTime, endTime;
+		// QueryPerformanceCounter(&iniTime);
 
 		Matrix4 weaponTransform = _graphicsEntities[_currentWeapon].graphicsEntity->getTransform();
 		Math::yaw(Math::HALF_PI, weaponTransform);
 		_runAnim.offset = Math::getDirection(weaponTransform);
 
-		  QueryPerformanceCounter(&endTime);
+		/*  QueryPerformanceCounter(&endTime);
 
-   LARGE_INTEGER freq;
-  QueryPerformanceFrequency(&freq);
-  double result = (double)(endTime.QuadPart - iniTime.QuadPart) / (double)freq.QuadPart;
-
-  printf("Antiguo: %.16g segundos\n", result);
-
+		LARGE_INTEGER freq;
+		QueryPerformanceFrequency(&freq);
+		double result = (double)(endTime.QuadPart - iniTime.QuadPart) / (double)freq.QuadPart;
+		printf("Antiguo: %.16g segundos\n", result);*/
 
 
-
-   QueryPerformanceCounter(&iniTime);
-
-
-		//Vector3 parcial=Math::getEulerYawPitchRoll(_graphicsEntities[_currentWeapon].graphicsEntity->getOrientation());
-		//Quaternion yawOrientation = Math::setQuaternion(parcial.x,0,0);
-		//Quaternion pitchOrientation = Math::setQuaternion(0,parcial.y,0);
-		//_runAnim.offset = ((yawOrientation * _rancio) * pitchOrientation)* Vector3::NEGATIVE_UNIT_Z;
-		_runAnim.offset=(_graphicsEntities[_currentWeapon].graphicsEntity->getOrientation() * _rancio) * Vector3::NEGATIVE_UNIT_Z;
-		_runAnim.offset.normalise();
-
-
-  QueryPerformanceCounter(&endTime);
-
-  QueryPerformanceFrequency(&freq);
-  result = (double)(endTime.QuadPart - iniTime.QuadPart) / (double)freq.QuadPart;
-
-  printf("Nuevo: %.16g segundos\n", result);
+		//CON ESTO SERIA SUFICIENTE
+		/*_runAnim.offset=(_graphicsEntities[_currentWeapon].graphicsEntity->getOrientation() * _halfPi) * Vector3::NEGATIVE_UNIT_Z;
+		_runAnim.offset.normalise();*/
 
 	
 		_runAnim.offset *= sineStep(msecs, _runAnim.currentHorizontalPos, _runAnim.horizontalOffset, _runAnim.horizontalSpeed, Math::HALF_PI, (2 * Math::PI) + Math::HALF_PI)
