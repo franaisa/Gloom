@@ -115,31 +115,21 @@ namespace Logic
 		
 		if (_owner)
 		{
-			_physicComponent->setPosition(_owner->getPosition(), true);
-			
-			/*
-			printf("\n\nYo soy %s y mi owner es %s. \nPosicon1: %f %f %f . \nPosicion2: %f %f %f ", _entity->getName().c_str(), _owner->getName().c_str(), 
-				_owner->getPosition().x,_owner->getPosition().y,_owner->getPosition().z,_entity->getPosition().x,_entity->getPosition().y,_entity->getPosition().z);
-			*/
-			/*
-			//Desesperacion de poner el cgraph aqui a ver si me mueve la posicion de la cupula pero nada
-			if (cGraph)
-				cGraph->setPosition(_owner->getPosition() + Vector3(0,1,0));
-			*/
-		}
-		
-		if (_cGraph )
-		{
-			if(_owner)
-				_entity->setPosition(_owner->getPosition());
-			if (_scale < 10.0f)
+			if (_cGraph )
 			{
-				_scale += 0.005f;
+				_entity->setPosition(_owner->getPosition());
+				if (_scale < 10.0f)
+				{
+					_scale += 0.005f;
+				}
+				_cGraph->changeScale(_scale);
+				//Ponemos la posición del jugador subiéndolo un poco en el ejeY
+				//cGraph->setPosition(_owner->getEntity()->getPosition() + Vector3(0,1,0));
+			}else{
+				if(_physicComponent)
+					_physicComponent->setPosition(_owner->getPosition(), true);
 			}
-			_cGraph->changeScale(_scale);
-			//Ponemos la posición del jugador subiéndolo un poco en el ejeY
-			//cGraph->setPosition(_owner->getEntity()->getPosition() + Vector3(0,1,0));
-		}	
+		}
 	}
 	
 
