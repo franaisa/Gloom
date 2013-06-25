@@ -128,7 +128,7 @@ namespace Logic
 	void CSpellsManager::process(const std::shared_ptr<CMessage>& message) {
 		switch( message->getMessageType() ) {
 			case Message::ADD_SPELL: {
-				
+				std::cout << "addspell recibido" << std::endl;
 				std::shared_ptr<CMessageAddSpell> addSpellMsg = std::static_pointer_cast<CMessageAddSpell>(message);
 				unsigned int spellIndex = addSpellMsg->getSpell();
 				

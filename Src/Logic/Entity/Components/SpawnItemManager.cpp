@@ -147,6 +147,7 @@ namespace Logic {
 				std::shared_ptr<CMessageAddSpell> addSpellMsg = std::make_shared<CMessageAddSpell>();
 				addSpellMsg->setSpell(_reward);
 				actor->emitMessage(addSpellMsg);
+				std::cout << "addspell" << std::endl;
 			}
 		}
 		// Arrancamos el timer.
