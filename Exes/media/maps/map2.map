@@ -555,147 +555,7 @@ Map = {
 		respawnTime = 25,
 	},
 	
-	lavaFondo = {
-		type = "Lava",
-		position = {-218.0,-20.0, -67.7},
-		model = "lavaFondo.mesh",
-		scale = 1,
-		damage = 500,
-		timeDamage = 500,
-		physic_entity = "rigid",
-		physic_trigger = true,
-		physic_type = "static",
-		physic_shape = "box",
-		physic_dimensions = { 200, 0.1, 200 },
-		physic_group = 2,
-		physic_groupList = "1",
-	},
-
-	Camera = {
-		type = "Camera",
-		height = 8,
-	},
-	
-	SpawnPoint1 = {
-		type = "SpawnPoint",
-		position = {-236.57, 0.548904, 59.9902},
-		yaw = 180,
-		physic_entity = "rigid",
-		physic_trigger = true,
-		physic_type = "static",
-		physic_shape = "box",
-		physic_dimensions = { 4, 7, 4 },
-	},
-	
-	SpawnPoint2 = {
-		type = "SpawnPoint",
-		position = {158.461, 0.533236, -153.248},
-		yaw = 180,
-		physic_entity = "rigid",
-		physic_trigger = true,
-		physic_type = "static",
-		physic_shape = "box",
-		physic_dimensions = { 4, 7, 4 },
-	},
-	
-	SpawnPoint3 = {
-		type = "SpawnPoint",
-		position = {283.529, 0.606699, 29.9253},
-		yaw = 180,
-		physic_entity = "rigid",
-		physic_trigger = true,
-		physic_type = "static",
-		physic_shape = "box",
-		physic_dimensions = { 4, 7, 4 },
-	},
-	
-	SpawnPoint4 = {
-		type = "SpawnPoint",
-		position = {115.584, 3.00282, -226.303},
-		yaw = 180,
-		physic_entity = "rigid",
-		physic_trigger = true,
-		physic_type = "static",
-		physic_shape = "box",
-		physic_dimensions = { 4, 7, 4 },
-	},
-	
-	SpawnPoint5 = {
-		type = "SpawnPoint",
-		position = {117.981, 3.00103, -225.294},
-		yaw = 180,
-		physic_entity = "rigid",
-		physic_trigger = true,
-		physic_type = "static",
-		physic_shape = "box",
-		physic_dimensions = { 4, 7, 4 },
-	},
-	
-	SpawnPoint6 = {
-		type = "SpawnPoint",
-		position = {36.9112, 0.298983, -162.241},
-		yaw = 180,
-		physic_entity = "rigid",
-		physic_trigger = true,
-		physic_type = "static",
-		physic_shape = "box",
-		physic_dimensions = { 4, 7, 4 },
-	},
-	
-	SpawnPoint7 = {
-		type = "SpawnPoint",
-		position = {-330.834, 0.635771, -227.516},
-		yaw = 180,
-		physic_entity = "rigid",
-		physic_trigger = true,
-		physic_type = "static",
-		physic_shape = "box",
-		physic_dimensions = { 4, 7, 4 },
-	},
-	
-	SpawnPoint8 = {
-		type = "SpawnPoint",
-		position = {-141.796, 48.1512, -240.047},
-		yaw = 180,
-		physic_entity = "rigid",
-		physic_trigger = true,
-		physic_type = "static",
-		physic_shape = "box",
-		physic_dimensions = { 4, 7, 4 },
-	},
-	
-	SpawnPoint9 = {
-		type = "SpawnPoint",
-		position = {91.367, 47.811, -236.545},
-		yaw = 180,
-		physic_entity = "rigid",
-		physic_trigger = true,
-		physic_type = "static",
-		physic_shape = "box",
-		physic_dimensions = { 4, 7, 4 },
-	},
-	
-
-	Enemigo1 = {
-		type = "Screamer",
-		position = {0, 0.2, -20},
-		defaultAnimation = "idle",
-		materialName="Screamer",
-		yaw = 90,
-		defaultLife = 120,
-		maxShield=100,
-		maxLife=250,
-		PorcentShield=23,
-		isPlayer = false,
-		model = "heavy.mesh",
-		physic_shape = "capsule",
-		physic_radius = 6,
-		physic_height = 6,
-		scale = 0.15,
-    },
-	
-
-	ShotgunAmmo1 = {
+		ShotgunAmmo1 = {
 		type = "Ammo",
 		position = {118.983, 0.51058, -143.614},
 		model = "shotGunAmmo.mesh",
@@ -854,5 +714,147 @@ Map = {
 		reward = 5,
 		respawnTime = 20,
 	},
+	
+	lavaFondo = {
+		type = "Lava",
+		position = {-218.0,-20.0, -67.7},
+		model = "lavaFondo.mesh",
+		scale = 1,
+		damage = 500,
+		timeDamage = 500,
+		physic_entity = "rigid",
+		physic_trigger = true,
+		physic_type = "static",
+		physic_shape = "box",
+		physic_dimensions = { 200, 0.1, 200 },
+		physic_group = 2,
+		physic_groupList = "1",
+	},
+
+	Camera = {
+		type = "Camera",
+		height = 8,
+	},
+	
+	SpawnPoint1 = {
+		type = "SpawnPoint",
+		position = {-236.57, 0.548904, 59.9902},
+		yaw = 180,
+		physic_entity = "rigid",
+		physic_trigger = true,
+		physic_type = "static",
+		physic_shape = "box",
+		physic_dimensions = { 4, 7, 4 },
+	},
+	
+	SpawnPoint2 = {
+		type = "SpawnPoint",
+		position = {158.461, 0.533236, -153.248},
+		yaw = 180,
+		physic_entity = "rigid",
+		physic_trigger = true,
+		physic_type = "static",
+		physic_shape = "box",
+		physic_dimensions = { 4, 7, 4 },
+	},
+	
+	SpawnPoint3 = {
+		type = "SpawnPoint",
+		position = {283.529, 0.606699, 29.9253},
+		yaw = 180,
+		physic_entity = "rigid",
+		physic_trigger = true,
+		physic_type = "static",
+		physic_shape = "box",
+		physic_dimensions = { 4, 7, 4 },
+	},
+	
+	SpawnPoint4 = {
+		type = "SpawnPoint",
+		position = {115.584, 3.00282, -226.303},
+		yaw = 180,
+		physic_entity = "rigid",
+		physic_trigger = true,
+		physic_type = "static",
+		physic_shape = "box",
+		physic_dimensions = { 4, 7, 4 },
+	},
+	
+	SpawnPoint5 = {
+		type = "SpawnPoint",
+		position = {117.981, 3.00103, -225.294},
+		yaw = 180,
+		physic_entity = "rigid",
+		physic_trigger = true,
+		physic_type = "static",
+		physic_shape = "box",
+		physic_dimensions = { 4, 7, 4 },
+	},
+	
+	SpawnPoint6 = {
+		type = "SpawnPoint",
+		position = {36.9112, 0.298983, -162.241},
+		yaw = 180,
+		physic_entity = "rigid",
+		physic_trigger = true,
+		physic_type = "static",
+		physic_shape = "box",
+		physic_dimensions = { 4, 7, 4 },
+	},
+	
+	SpawnPoint7 = {
+		type = "SpawnPoint",
+		position = {-330.834, 0.635771, -227.516},
+		yaw = 180,
+		physic_entity = "rigid",
+		physic_trigger = true,
+		physic_type = "static",
+		physic_shape = "box",
+		physic_dimensions = { 4, 7, 4 },
+	},
+	
+	SpawnPoint8 = {
+		type = "SpawnPoint",
+		position = {-141.796, 48.1512, -240.047},
+		yaw = 180,
+		physic_entity = "rigid",
+		physic_trigger = true,
+		physic_type = "static",
+		physic_shape = "box",
+		physic_dimensions = { 4, 7, 4 },
+	},
+	
+	SpawnPoint9 = {
+		type = "SpawnPoint",
+		position = {91.367, 47.811, -236.545},
+		yaw = 180,
+		physic_entity = "rigid",
+		physic_trigger = true,
+		physic_type = "static",
+		physic_shape = "box",
+		physic_dimensions = { 4, 7, 4 },
+	},
+	
+
+	Enemigo1 = {
+		type = "Screamer",
+		position = {0, 0.2, -20},
+		defaultAnimation = "idle",
+		materialName="Screamer",
+		yaw = 90,
+		defaultLife = 120,
+		maxShield=100,
+		maxLife=250,
+		PorcentShield=23,
+		isPlayer = false,
+		model = "heavy.mesh",
+		physic_shape = "capsule",
+		physic_radius = 6,
+		physic_height = 6,
+		scale = 0.15,
+    },
+	
+
+
 
 }
