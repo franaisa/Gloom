@@ -53,7 +53,7 @@ namespace Logic
 		defecto.
 		*/
 		CAnimatedGraphics() : CGraphics(), _animatedGraphicsEntity(0), _currentWeapon(0), _currentMaterialWeapon("original"),
-				_defaultAnimation(""), _weapons(NULL) {}
+				_defaultAnimation(""), _weapons(NULL), _pi(Ogre::Radian(Math::PI),Vector3::UNIT_Y) {}
 
 		/**
 		Destructor (virtual); Quita de la escena y destruye la entidad gráfica y la animada.
@@ -163,6 +163,8 @@ namespace Logic
 		bool _insertAnimation;
 
 		Animation nextAnim;
+
+		Quaternion _pi;
 
 	}; // class CAnimatedGraphics
 
