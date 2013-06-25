@@ -174,9 +174,7 @@ void HikariManager::update()
 		}
 		else
 		{
-			
-			if(iter->second->getVisibility())
-				iter->second->update();
+			iter->second->update();
 			iter++;
 		}
 	}
