@@ -62,11 +62,12 @@ namespace Logic
 				std::shared_ptr<CMessageTouched> touchedMsg = std::static_pointer_cast<CMessageTouched>(message);
 
 				applyJump(touchedMsg->getEntity());
-				audioMsg->setRuta(_audio);
-				audioMsg->setId("jumper");
-				audioMsg->setPosition(_entity->getPosition());
-				audioMsg->setNotIfPlay(false);
-				audioMsg->setIsPlayer(false);
+
+				audioMsg->setAudioName(_audio);
+				audioMsg->isLoopable(false);
+				audioMsg->is3dSound(true);
+				audioMsg->streamSound(false);
+
 				_entity->emitMessage(audioMsg);
 				
 				break;

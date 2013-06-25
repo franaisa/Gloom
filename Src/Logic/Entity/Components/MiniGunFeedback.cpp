@@ -65,7 +65,7 @@ namespace Logic {
 		// Poner la animacion de carga inestable del arma
 		_hudWeapon->continouosShooting(true);
 		//Sonido
-		emitSound(_weaponSound,_weaponName,false);
+		emitSound(_weaponSound, false, true, false);
 	}
 
 	//__________________________________________________________________
@@ -95,7 +95,7 @@ namespace Logic {
 		_hudWeapon->loadingWeapon(false);
 		_hudWeapon->shootAnim(-1.85f);
 		//Sonido
-		emitSound(_weaponSound,_weaponName,false);
+		emitSound(_weaponSound, false, true, false);
 	}
 
 	//__________________________________________________________________

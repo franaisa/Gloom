@@ -85,6 +85,9 @@ namespace Graphics
 		}
 		_compositorList.clear();
 		
+		if(_poolParticle)
+			delete _poolParticle;
+
 	} // ~CScene
 
 	//--------------------------------------------------------

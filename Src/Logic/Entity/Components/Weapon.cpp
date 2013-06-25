@@ -183,14 +183,13 @@ namespace Logic {
 
 	//__________________________________________________________________
 
-	void IWeapon::emitSound(const string &ruta, const string &sound, bool notIfPlay){
+	void IWeapon::emitSound(const string &soundName, bool loopSound, bool play3d, bool streamSound){
 		shared_ptr<CMessageAudio> audioMsg = make_shared<CMessageAudio>();
 		
-		audioMsg->setRuta(ruta);
-		audioMsg->setId(sound);
-		audioMsg->setPosition( _entity->getPosition() );
-		audioMsg->setNotIfPlay(notIfPlay);
-		audioMsg->setIsPlayer( _entity->isPlayer() );
+		audioMsg->setAudioName(soundName);
+		audioMsg->isLoopable(loopSound);
+		audioMsg->is3dSound(play3d);
+		audioMsg->streamSound(streamSound);
 			
 		_entity->emitMessage(audioMsg);
 	} // emitSound
@@ -210,7 +209,9 @@ namespace Logic {
 
 		
 		float fOffset = 8.0f;
-		Vector3 orientation = Math::getDirection(_entity->getOrientation()) * fOffset;
+		Vector3 orientation= _entity->getOrientation()*Vector3::NEGATIVE_UNIT_Z;
+		orientation.normalise();
+		orientation *= fOffset;
 		//std::cout << "orientacion = " << orientation << std::endl;
 
 		position2 += orientation;

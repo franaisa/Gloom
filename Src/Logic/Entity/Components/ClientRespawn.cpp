@@ -135,11 +135,12 @@ namespace Logic  {
 
 				//Sonido Spawn
 				std::shared_ptr<CMessageAudio> audioMsg = std::make_shared<CMessageAudio>();
-				audioMsg->setRuta(_audioSpawn);
-				audioMsg->setId("spawn");
-				audioMsg->setPosition(entityPos);
-				audioMsg->setNotIfPlay(false);
-				audioMsg->setIsPlayer(_entity->isPlayer());
+
+				audioMsg->setAudioName(_audioSpawn);
+				audioMsg->isLoopable(false);
+				audioMsg->is3dSound(true);
+				audioMsg->streamSound(false);
+
 				_entity->emitMessage(audioMsg);
 
 				break;

@@ -94,14 +94,13 @@ namespace Logic {
 
 	//__________________________________________________________________
 
-	void ISpellFeedback::emitSound(const string &ruta, const string &sound, bool notIfPlay){
+	void ISpellFeedback::emitSound(const string &soundName, bool loopSound, bool play3d, bool streamSound){
 		shared_ptr<CMessageAudio> audioMsg = make_shared<CMessageAudio>();
 		
-		audioMsg->setRuta(ruta);
-		audioMsg->setId(sound);
-		audioMsg->setPosition( _entity->getPosition() );
-		audioMsg->setNotIfPlay(notIfPlay);
-		audioMsg->setIsPlayer( _entity->isPlayer() );
+		audioMsg->setAudioName(soundName);
+		audioMsg->isLoopable(loopSound);
+		audioMsg->is3dSound(play3d);
+		audioMsg->streamSound(streamSound);
 			
 		_entity->emitMessage(audioMsg);
 	} // emitSound

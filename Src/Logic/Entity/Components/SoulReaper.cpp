@@ -89,7 +89,8 @@ namespace Logic {
 
 		_primaryFireTimer = _primaryFireCooldown;
 	
-		Vector3 direction = Math::getDirection(_entity->getOrientation());
+		Vector3 direction = _entity->getOrientation()*Vector3::NEGATIVE_UNIT_Z;
+		direction.normalise();
 
 		Vector3 origin = _entity->getPosition()+Vector3(0.0f,_heightShoot,0.0f);
 
