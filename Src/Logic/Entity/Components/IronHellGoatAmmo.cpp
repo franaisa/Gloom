@@ -162,9 +162,6 @@ namespace Logic {
 		
 		_primaryFireIsActive = false;
 
-		// Emitimos el sonido de lanzar la bola de fuego
-		emitSound("ignite_pitch.wav", false, true, false);
-
 		// Reseteamos el reloj
 		_currentSpentAmmo = _ammoSpentTimer = _elapsedTime = 0;
 	}
