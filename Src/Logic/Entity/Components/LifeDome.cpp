@@ -106,7 +106,6 @@ namespace Logic
 	
 	void CLifeDome::setOwner(Logic::CEntity *owner)
 	{
-		printf("\Owner asignao a %s",owner->getName().c_str());
 		_owner = owner;
 	} // setOwner
 	//________________________________________________________________________
@@ -126,8 +125,9 @@ namespace Logic
 				//Ponemos la posición del jugador subiéndolo un poco en el ejeY
 				//cGraph->setPosition(_owner->getEntity()->getPosition() + Vector3(0,1,0));
 			}else{
-				if(_physicComponent)
+				if(_physicComponent){
 					_physicComponent->setPosition(_owner->getPosition(), true);
+				}
 			}
 		}
 	}
@@ -142,7 +142,6 @@ namespace Logic
 
 	void CLifeDome::lifeDomeTouched(CEntity *entityTouched)
 	{
-		std::cout << "Tocado! al principio me toca a mi" << std::endl;
 		auto temp = _lifeGiven.find(entityTouched->getEntityID());
 		if(entityTouched->getEntityID() != _owner->getEntityID() && temp == _lifeGiven.end()){
 			// He de comprobar que es amigo, o eso, o en el filtro que solo le de a los amigos
