@@ -150,6 +150,10 @@ namespace Logic {
 	void CMiniGun::stopPrimaryFire() 
 	{
 		_primaryFireIsActive = false;
+
+		//paro el sonido de la mingun
+		//emitSound("shotgun.wav", false, true, false);
+
 	} // stopPrimaryFire
 	//__________________________________________________________________
 	

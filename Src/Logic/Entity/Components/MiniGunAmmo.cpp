@@ -172,13 +172,7 @@ namespace Logic {
 
 		_primaryFireCooldownTimer = _primaryFireCooldown;
 		decrementAmmo();
-
-		auto m = std:: make_shared<CMessageAudio>();
-		m->setAudioName("minigun.wav");
-		m->isLoopable(false);
-		m->is3dSound(true);
-		_entity->emitMessage(m);
-		
+	
 	}
 	//__________________________________________________________________
 
@@ -186,15 +180,6 @@ namespace Logic {
 		IWeaponAmmo::stopPrimaryFire();
 
 		_primaryFireIsActive = false;
-
-		// He de parar aqui el sonido
-		/*
-		auto m = std:: make_shared<CMessageAudio>();
-		m->st
-		m->isLoopable(false);
-		m->is3dSound(true);
-		_entity->emitMessage(m);
-		*/
 	}
 	//__________________________________________________________________
 

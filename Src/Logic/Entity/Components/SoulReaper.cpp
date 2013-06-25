@@ -118,14 +118,14 @@ namespace Logic {
 
 	void CSoulReaper::secondaryFire() {
 		
-
 		//primero preguntamos si podemos atraer algun arma
 		_elementPulled = checkPullItem();
 
 		//si no podemos atraer nada, no hacemos nada
-		if(!_elementPulled)
+		if(!_elementPulled){
 			return;
-		
+		}
+
 		//cogemos la entidad estatica y la desactivamos
 		_elementPulled->deactivate();
 		CGameNetMsgManager::getSingletonPtr()->sendDeactivateEntity(_elementPulled->getEntityID());

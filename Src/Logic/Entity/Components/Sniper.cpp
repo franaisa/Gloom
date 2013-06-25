@@ -72,8 +72,6 @@ namespace Logic {
 
 	void CSniper::primaryFire(){
 
-		
-
 		//Direccion
 		Vector3 direction = _entity->getOrientation()*Vector3::NEGATIVE_UNIT_Z;
 	
