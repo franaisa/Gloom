@@ -19,6 +19,7 @@ que controla las acciones de la bola de fuego.
 namespace Logic {
 	class CIronHellGoat;
 	class CPhysicDynamicEntity;
+	class CEntity;
 }
 
 namespace Logic {
@@ -137,6 +138,8 @@ namespace Logic {
 
 		float _explotionRadius;
 
+
+		Logic::CEntity *_world;
 	}; // class CFireBallController
 
 	REG_FACTORY(CFireBallController);

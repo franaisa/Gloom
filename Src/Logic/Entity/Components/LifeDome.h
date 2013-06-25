@@ -120,6 +120,7 @@ namespace Logic
 		unsigned int _life;
 		unsigned int _lifePerFriend;
 
+		std::set<int> _lifeGiven;
 	};//class CLifeDome
 
 	REG_FACTORY(CLifeDome);

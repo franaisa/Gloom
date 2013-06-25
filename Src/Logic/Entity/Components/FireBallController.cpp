@@ -15,6 +15,9 @@
 #include "Physics/Server.h"
 #include "Physics/GeometryFactory.h"
 
+#include "Logic/Server.h"
+#include "Logic/Maps/Map.h"
+
 #include "Logic/Messages/MessageContactEnter.h"
 #include "Logic/Messages/MessageDamaged.h"
 #include "Logic/Messages/MessageCreateParticle.h"
@@ -67,6 +70,7 @@ namespace Logic {
 		_explotionRadius = entityInfo->getFloatAttribute("explotionRadius");
 		_direction = entityInfo->getVector3Attribute("direction");
 
+		_world = Logic::CServer::getSingletonPtr()->getMap()->getEntityByName("World");
 		return true;
 	}
 
@@ -131,7 +135,7 @@ namespace Logic {
 		shared_ptr<CMessageCreateParticle> particleMsg = make_shared<CMessageCreateParticle>();
 		particleMsg->setPosition(explotionPos);
 		particleMsg->setParticle("ExplosionParticle");
-		_entity->emitMessage(particleMsg);
+		_world->emitMessage(particleMsg);
 	}
 
 	//________________________________________________________________________

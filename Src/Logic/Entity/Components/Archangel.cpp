@@ -21,6 +21,7 @@ implementa las habilidades del personaje
 
 #include "Logic/Messages/MessageSetReducedDamage.h"
 #include "Logic/Messages/MessageChangeMaterial.h"
+#include "Logic/Messages/MessageSetOwner.h"
 
 #include "Logic/Maps/EntityFactory.h"
 #include "Logic/Server.h"
@@ -161,6 +162,12 @@ namespace Logic {
 		_lifeDome->getComponent<CLifeDome>("CLifeDome")->setOwner(_entity);
 		_lifeDome->activate();
 		_lifeDome->start();
+		
+		// Enviamos el mensaje SET_OWNER para que el escudo se mueva
+		// acorde a los movimientos del player
+		std::shared_ptr<CMessageSetOwner> setOwnerMsg = std::make_shared<CMessageSetOwner>();
+		setOwnerMsg->setOwner(_entity);
+		_lifeDome->emitMessage(setOwnerMsg);
 		
 
 		_doingSecondarySkill = true;

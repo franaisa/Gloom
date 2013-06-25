@@ -22,6 +22,9 @@ Contiene la implementación del componente que controla la vida cúpula del arcáng
 #include "Archangel.h"
 #include "Logic/Messages/MessageTouched.h"
 #include "Logic/Messages/MessageAddLife.h"
+#include "Logic/Messages/MessageSetOwner.h"
+
+
 
 namespace Logic 
 {
@@ -87,6 +90,10 @@ namespace Logic
 				lifeDomeTouched(msg->getEntity());
 				break;
 			}
+			case Message::SET_OWNER: {
+				setOwner( std::static_pointer_cast<CMessageSetOwner>(message)->getOwner() );
+				break;
+			}
 		}
 	} // process
 
@@ -146,12 +153,15 @@ namespace Logic
 	void CLifeDome::lifeDomeTouched(CEntity *entityTouched)
 	{
 		std::cout << "Tocado! al principio me toca a mi" << std::endl;
-		if(entityTouched->getEntityID() != _entity->getEntityID()){
+		auto temp = _lifeGiven.find(entityTouched->getEntityID());
+		if(entityTouched->getEntityID() != _entity->getEntityID() && temp == _lifeGiven.end()){
 			// He de comprobar que es amigo, o eso, o en el filtro que solo le de a los amigos
 			std::shared_ptr<CMessageAddLife> addLifeMsg = std::make_shared<CMessageAddLife>();
 			addLifeMsg->setAddLife(_life);
 			entityTouched->emitMessage(addLifeMsg);
 
+			// Lo insertamos en la lista para que no se le envie mas veces.
+			_lifeGiven.insert(_entity->getEntityID());
 			std::shared_ptr<CMessageAddLife> addLifeMsg2 = std::make_shared<CMessageAddLife>();
 			addLifeMsg2->setAddLife(_lifePerFriend);
 			_entity->emitMessage(addLifeMsg2);
