@@ -120,6 +120,9 @@ namespace Logic {
 		particleMsg->setPosition(position2);
 		_entity->emitMessage(particleMsg);*/
 
+		//Sonido
+		emitSound("shotgun.wav", false, true, false);
+
 		int shots = _numberOfShots <= _currentAmmo ? _numberOfShots : _currentAmmo;
 		for(int i = 0; i < shots; ++i) {
 			Vector3 direction = _entity->getOrientation()*Vector3::NEGATIVE_UNIT_Z;

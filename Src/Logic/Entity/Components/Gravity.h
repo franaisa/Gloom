@@ -36,7 +36,7 @@ namespace Logic {
 	public:
 
 		/** Constructor por defecto. */
-		CGravity() : ISpell("gravity"), _newGravity(0), _defaultGravity(0) { }
+		CGravity() : ISpell("gravity") { }
 
 		//__________________________________________________________________
 
@@ -78,10 +78,7 @@ namespace Logic {
 
 	private:
 		
-		/** Gravedad por defecto. */
-		float _defaultGravity;
-
-		float _newGravity;
+		
 	}; // class CShootRaycast
 
 	REG_FACTORY(CGravity);

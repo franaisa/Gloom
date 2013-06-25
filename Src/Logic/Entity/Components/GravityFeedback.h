@@ -66,6 +66,12 @@ namespace Logic {
 		virtual void stopSpell();
 
 		//__________________________________________________________________
+
+
+		/** Gravedad por defecto. */
+		float _defaultGravity;
+
+		float _newGravity;
 	};
 
 	REG_FACTORY(CGravityFeedback);

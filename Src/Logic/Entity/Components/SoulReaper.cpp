@@ -112,6 +112,9 @@ namespace Logic {
 				return;
 			}
 		}
+
+		//Sonido
+		emitSound("hammer.wav", false, true, false);
 	
 	} // primaryFire
 	//__________________________________________________________________
@@ -123,8 +126,15 @@ namespace Logic {
 		_elementPulled = checkPullItem();
 
 		//si no podemos atraer nada, no hacemos nada
-		if(!_elementPulled)
+		if(!_elementPulled){
+			
+			//Sonido de no poder coger na con el hammer
+			emitSound("hammer.wav", false, true, false);
 			return;
+		}
+
+			//Sonido de estar atrayendo algo con soul reaper
+			emitSound("hammer.wav", false, true, false);
 		
 		//cogemos la entidad estatica y la desactivamos
 		_elementPulled->deactivate();

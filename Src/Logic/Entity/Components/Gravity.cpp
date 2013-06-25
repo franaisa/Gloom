@@ -15,7 +15,7 @@ Contiene la implementación del componente que representa al gravity.
 #include "Logic/Server.h"
 #include "Map/MapEntity.h"
 
-#include "Logic/Messages/MessageChangeGravity.h"
+
 
 namespace Logic {
 	IMP_FACTORY(CGravity);
@@ -31,25 +31,18 @@ namespace Logic {
 
 		assert( entityInfo->hasAttribute(_spellName + "newGravity") );
 
-		_newGravity = entityInfo->getFloatAttribute(_spellName + "newGravity");
-
-		assert( entityInfo->hasAttribute("gravity") && "Error: No se ha definido el atributo gravity en el mapa" );
-		_defaultGravity = entityInfo->getFloatAttribute("gravity");
-
-		assert(_newGravity != 0);
+		
 		return true;
 	} // spawn
 	//__________________________________________________________________
 
 	void CGravity::spell(){ 
-		auto msg =  std::make_shared<CMessageChangeGravity>(_newGravity);
-		_entity->emitMessage(msg);
+		
 	} // spell
 	//__________________________________________________________________
 		
 	void CGravity::stopSpell() { 
-		auto msg = std::make_shared<CMessageChangeGravity>(_defaultGravity);
-		_entity->emitMessage(msg);	
+		
 	} // stopSpell
 	//__________________________________________________________________
 
