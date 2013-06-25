@@ -151,7 +151,7 @@ namespace Logic
 			entityTouched->emitMessage(addLifeMsg);
 
 			// Lo insertamos en la lista para que no se le envie mas veces.
-			_lifeGiven.insert(_entity->getEntityID());
+			_lifeGiven.insert(entityTouched->getEntityID());
 			std::shared_ptr<CMessageAddLife> addLifeMsg2 = std::make_shared<CMessageAddLife>();
 			addLifeMsg2->setAddLife(_lifePerFriend);
 			_entity->emitMessage(addLifeMsg2);
