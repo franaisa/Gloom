@@ -144,7 +144,7 @@ namespace Logic
 	{
 		std::cout << "Tocado! al principio me toca a mi" << std::endl;
 		auto temp = _lifeGiven.find(entityTouched->getEntityID());
-		if(entityTouched->getEntityID() != owner->getEntityID() && temp == _lifeGiven.end()){
+		if(entityTouched->getEntityID() != _owner->getEntityID() && temp == _lifeGiven.end()){
 			// He de comprobar que es amigo, o eso, o en el filtro que solo le de a los amigos
 			std::shared_ptr<CMessageAddLife> addLifeMsg = std::make_shared<CMessageAddLife>();
 			addLifeMsg->setAddLife(_life);
