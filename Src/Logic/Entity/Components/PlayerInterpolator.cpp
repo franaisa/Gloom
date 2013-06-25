@@ -20,6 +20,7 @@
 #include "Logic/Messages/Message.h"
 #include "Logic/Messages/MessageSetAnimation.h"
 #include "Logic/Messages/MessageStopAnimation.h"
+#include "Logic/Messages/MessageAudio.h"
 
 using namespace std;
 
@@ -99,6 +100,9 @@ namespace Logic {
 		vector<AnimInfo> tempAnimBuffer = snapshotMsg->getAnimationBuffer();
 		_animationBuffer.insert( _animationBuffer.end(), tempAnimBuffer.begin(), tempAnimBuffer.end() );
 
+		vector<AudioInfo> tempAudioBuffer = snapshotMsg->getAudioBuffer();
+		_audioBuffer.insert( _audioBuffer.end(), tempAudioBuffer.begin(), tempAudioBuffer.end() );
+
 		// Si hemos perdido ticks, los descartamos del buffer
 		/*if(_lostTicks > 0) {
 			// Comprobamos el buffer de transforms
@@ -165,6 +169,20 @@ namespace Logic {
 					}
 				}
 			}
+
+			if( !_audioBuffer.empty() ) {
+				if( _audioBuffer.front().tick == _tickCounter ) {
+					AudioInfo info = _audioBuffer.front();
+					_audioBuffer.pop_front();
+					
+					shared_ptr<CMessageAudio> audioMsg = make_shared<CMessageAudio>();
+					audioMsg->setAudioName(info.audioName);
+					audioMsg->isLoopable(info.loopSound);
+					audioMsg->is3dSound(info.play3d);
+					audioMsg->streamSound(info.streamSound);
+				}
+			}
+
 			_tickCounter = (_tickCounter + 1) % _ticksPerBuffer;
 		}
 		else {
