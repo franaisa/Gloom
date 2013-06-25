@@ -66,7 +66,11 @@ namespace Logic
 		_spells[SpellType::eRESURECTION].second = _entity->getComponent<Logic::CResurrectionAmmo>("CResurrectionAmmo");
 		
 		
-
+		// El resto de las armas están desactivadas, ya que no las tenemos
+		for(unsigned int i = 0; i < _spells.size(); ++i) {
+			_spells[i].first = false;
+			_spells[i].second->stayBusy();
+		}
 
 		_primarySpell = (SpellType::Enum)entityInfo->getIntAttribute("primarySpell");
 		_secondarySpell = (SpellType::Enum)entityInfo->getIntAttribute("secondarySpell");

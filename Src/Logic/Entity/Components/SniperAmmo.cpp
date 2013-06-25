@@ -22,6 +22,7 @@ de disparo de la cabra.
 
 #include "Sniper.h"
 #include "SniperFeedback.h"
+#include "Logic/Messages/MessageAudio.h"
 using namespace std;
 
 namespace Logic {
@@ -134,6 +135,11 @@ namespace Logic {
 		_primaryFireIsActive = true;
 		decrementAmmo();
 		
+		auto m = std:: make_shared<CMessageAudio>();
+		m->setAudioName("sniper.wav");
+		m->isLoopable(false);
+		m->is3dSound(true);
+		_entity->emitMessage(m);
 	}
 
 	//__________________________________________________________________
@@ -154,6 +160,12 @@ namespace Logic {
 
 		for(unsigned int i = 0; i < _ammoSpentPerSecondaryShot; ++i)
 			decrementAmmo();
+
+		auto m = std:: make_shared<CMessageAudio>();
+		m->setAudioName("sniper.wav");
+		m->isLoopable(false);
+		m->is3dSound(true);
+		_entity->emitMessage(m);
 	}
 
 	//__________________________________________________________________
