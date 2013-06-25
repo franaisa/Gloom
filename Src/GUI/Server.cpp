@@ -101,33 +101,33 @@ namespace GUI {
 
 	//________________________________________________________________________
 
-	Hikari::FlashControl* CServer::addLayout(const std::string& layoutName, Hikari::Position pos, unsigned int width, unsigned int height) {
+	Hikari::FlashControl* CServer::addLayout(const std::string& layoutName, Hikari::Position pos, unsigned int width, unsigned int height, unsigned short zOrder) {
 
 			return BaseSubsystems::CServer::getSingletonPtr()->getHikari()->
 							createFlashOverlay(layoutName,Graphics::CServer::getSingletonPtr()->getActiveScene()->getViewport(),
-							width, height, pos,1);
+							width, height, pos, zOrder);
 	}
 
 	//________________________________________________________________________
 
-	Hikari::FlashControl* CServer::addLayout(const std::string& layoutName, Hikari::Position pos, float relativePos) {
+	Hikari::FlashControl* CServer::addLayout(const std::string& layoutName, Hikari::Position pos, float relativePos, unsigned short zOrder) {
 
 			return BaseSubsystems::CServer::getSingletonPtr()->getHikari()->
 							createFlashOverlay(layoutName,Graphics::CServer::getSingletonPtr()->getActiveScene()->getViewport(),
 							BaseSubsystems::CServer::getSingletonPtr()->getRenderWindow()->getWidth()*relativePos, 
 							BaseSubsystems::CServer::getSingletonPtr()->getRenderWindow()->getHeight()*relativePos, 
-							pos,1);
+							pos, zOrder);
 	}
 
 	//________________________________________________________________________
 
-	Hikari::FlashControl* CServer::addLayout(const std::string& layoutName, Hikari::Position pos) {
+	Hikari::FlashControl* CServer::addLayout(const std::string& layoutName, Hikari::Position pos, unsigned short zOrder) {
 
 			return BaseSubsystems::CServer::getSingletonPtr()->getHikari()->
 							createFlashOverlay(layoutName,Graphics::CServer::getSingletonPtr()->getActiveScene()->getViewport(),
 							BaseSubsystems::CServer::getSingletonPtr()->getRenderWindow()->getWidth(), 
 							BaseSubsystems::CServer::getSingletonPtr()->getRenderWindow()->getHeight(), 
-							pos,1);
+							pos, zOrder);
 	}
 
 	//________________________________________________________________________
