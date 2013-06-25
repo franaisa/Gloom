@@ -34,13 +34,17 @@ gráfica de la entidad.
 
 #include "Graphics/HHFXParticle.h"
 
+#include <stdio.h>
+#include <windows.h>
+
+
 using namespace std;
 
 namespace Logic {
 	IMP_FACTORY(CHudWeapons);
 	
 	//---------------------------------------------------------
-
+	
 	CHudWeapons::CHudWeapons() : _currentWeapon(0), 
 								 _graphicsEntities(0),
 								 _playerIsWalking(false),
@@ -59,7 +63,7 @@ namespace Logic {
 		_runAnim.verticalOffset = 0.055f;
 
 		_runAnim.currentStrafingDir = _runAnim.oldStrafingDir = 0;
-
+		
 		_runAnim.offset = Vector3::ZERO;
 
 		// Valores de configuracion de la animacion de aterrizar
@@ -366,8 +370,8 @@ namespace Logic {
 	//---------------------------------------------------------
 
 	void CHudWeapons::shootAnim(float force) {
-		Matrix4 weaponTransform = _graphicsEntities[_currentWeapon].graphicsEntity->getTransform();
-		Vector3 weaponDir = Math::getDirection( weaponTransform );
+		Vector3 weaponDir =  _graphicsEntities[_currentWeapon].graphicsEntity->getOrientation() * Vector3::NEGATIVE_UNIT_Z;
+		weaponDir.normalise();
 		_shootAnim.offset = weaponDir * force * Vector3(1.0f, 0.0f, 1.0f);
 	}
 
@@ -380,8 +384,8 @@ namespace Logic {
 	//---------------------------------------------------------
 
 	void CHudWeapons::rapidShootAnim(unsigned int msecs) {
-		Matrix4 weaponTransform = _graphicsEntities[_currentWeapon].graphicsEntity->getTransform();
-		Vector3 weaponDir = Math::getDirection(weaponTransform);
+		Vector3 weaponDir = _graphicsEntities[_currentWeapon].graphicsEntity->getOrientation() * Vector3::NEGATIVE_UNIT_Z;
+		weaponDir.normalise();
 
 		_rapidShootAnim.offset = weaponDir * _rapidShootAnim.shakeOffset * Vector3(1.0f, 0.0f, 1.0f);
 		_rapidShootAnim.shakeOffset *= -1.0f;
@@ -456,10 +460,45 @@ namespace Logic {
 
 	void CHudWeapons::walkAnim(unsigned int msecs) {
 		// Obtenemos la posicion del arma
+
+	LARGE_INTEGER iniTime, endTime;
+
+  QueryPerformanceCounter(&iniTime);
+
 		Matrix4 weaponTransform = _graphicsEntities[_currentWeapon].graphicsEntity->getTransform();
 		Math::yaw(Math::HALF_PI, weaponTransform);
 		_runAnim.offset = Math::getDirection(weaponTransform);
 
+		  QueryPerformanceCounter(&endTime);
+
+   LARGE_INTEGER freq;
+  QueryPerformanceFrequency(&freq);
+  double result = (double)(endTime.QuadPart - iniTime.QuadPart) / (double)freq.QuadPart;
+
+  printf("Antiguo: %.16g segundos\n", result);
+
+
+
+
+   QueryPerformanceCounter(&iniTime);
+
+
+		//Vector3 parcial=Math::getEulerYawPitchRoll(_graphicsEntities[_currentWeapon].graphicsEntity->getOrientation());
+		//Quaternion yawOrientation = Math::setQuaternion(parcial.x,0,0);
+		//Quaternion pitchOrientation = Math::setQuaternion(0,parcial.y,0);
+		//_runAnim.offset = ((yawOrientation * _rancio) * pitchOrientation)* Vector3::NEGATIVE_UNIT_Z;
+		_runAnim.offset=(_graphicsEntities[_currentWeapon].graphicsEntity->getOrientation() * _rancio) * Vector3::NEGATIVE_UNIT_Z;
+		_runAnim.offset.normalise();
+
+
+  QueryPerformanceCounter(&endTime);
+
+  QueryPerformanceFrequency(&freq);
+  result = (double)(endTime.QuadPart - iniTime.QuadPart) / (double)freq.QuadPart;
+
+  printf("Nuevo: %.16g segundos\n", result);
+
+	
 		_runAnim.offset *= sineStep(msecs, _runAnim.currentHorizontalPos, _runAnim.horizontalOffset, _runAnim.horizontalSpeed, Math::HALF_PI, (2 * Math::PI) + Math::HALF_PI)
 							  * Vector3(1.0f, 0.0f, 1.0f);
 		
