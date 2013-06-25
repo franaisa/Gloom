@@ -400,8 +400,8 @@ namespace Logic {
 	void CEntity::setYaw(const Quaternion &yaw, bool reset){
 		 _yawOrientation=yaw;
 		if(reset){
-			_rollOrientation=Quaternion(1,0,0,0);
-			_pitchOrientation=Quaternion(1,0,0,0);
+			_rollOrientation=Quaternion::IDENTITY;
+			_pitchOrientation=Quaternion::IDENTITY;
 		 }
 		//Actualizamos la orientacion final
 		_orientation=_yawOrientation*_pitchOrientation*_rollOrientation;
@@ -412,8 +412,8 @@ namespace Logic {
 	void CEntity::setPitch(const Quaternion &pitch, bool reset) {
 		_pitchOrientation=pitch;
 		if(reset){
-			_rollOrientation=Quaternion(1,0,0,0);
-			_yawOrientation=Quaternion(1,0,0,0);
+			_rollOrientation=Quaternion::IDENTITY;
+			_yawOrientation=Quaternion::IDENTITY;
 		 }
 		//Actualizamos la orientacion final
 		_orientation=_yawOrientation*_pitchOrientation*_rollOrientation;
@@ -423,8 +423,8 @@ namespace Logic {
 	void CEntity::setRoll(const Quaternion &roll, bool reset) {
 		_rollOrientation=roll;
 		if(reset){
-			_pitchOrientation=Quaternion(1,0,0,0);
-			_yawOrientation=Quaternion(1,0,0,0);
+			_pitchOrientation=Quaternion::IDENTITY;
+			_yawOrientation=Quaternion::IDENTITY;
 		 }
 		//Actualizamos la orientacion final
 		_orientation=_yawOrientation*_pitchOrientation*_rollOrientation;

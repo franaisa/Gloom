@@ -300,6 +300,9 @@ namespace Logic {
 
 		//////////////////////Gestion de armas
 		Graphics::COverlay *_overlayWeapon3D[WeaponType::eSIZE];
+
+
+		Quaternion _rancio;
 	}; // class CGraphics
 
 	REG_FACTORY(CHudWeapons);
