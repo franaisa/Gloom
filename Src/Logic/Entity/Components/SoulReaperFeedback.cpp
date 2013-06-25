@@ -50,7 +50,7 @@ namespace Logic {
 		// Animacion de golpe con el soul Reaper
 		_hudWeapon->shootAnim(-1.85f);
 		//Sonido
-		emitSound(_weaponSound,_weaponName,false);
+		emitSound(_weaponSound, false, true, false);
 	} // primaryFire
 	//__________________________________________________________________
 
@@ -63,7 +63,7 @@ namespace Logic {
 	void CSoulReaperFeedback::secondaryFire() {
 		// Iniciar efecto de atraccion de objeto
 		//Sonido
-		emitSound(_weaponSound,_weaponName,false);
+		emitSound(_weaponSound, false, true, false);
 	} // secondaryFire
 	//__________________________________________________________________
 

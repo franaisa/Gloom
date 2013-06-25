@@ -76,44 +76,24 @@ namespace Audio
 		/**
 		Se encarga de cargar un sonido (no 3D) y reproducirlo en modo normal.
 		*/
-		void playSound(const char* rutaSonido, const std::string& id, bool notIfPlay);
-
-		/**
-		Se encarga de cargar un sonido (no 3D) y reproducirlo en modo loop.
-		*/
-		void playLoopSound(const char* rutaSonido, const std::string& id);
-
-		/**
-		Se encarga de cargar un sonido 3D y reproducirlo en modo normal.
-		*/
-		void playSound3D(const char* rutaSonido, const std::string& id, Vector3 position, bool notIfPlay);
+		void playSound(const std::string& soundName, bool loopSound = false, bool streamSound = false);
 
 		/**
 		Se encarga de cargar un sonido 3D y reproducirlo en modo loop.
 		*/
-		void playLoopSound3D(const char* rutaSonido, const std::string& id, Vector3 position);
+		void playSound3D(const std::string& soundName, const Vector3& position, const Vector3& speed, bool loopSound = false, bool streamSound = false);
 
 		/**
 		Se encarga de parar un sonido introduciendo su nombre como parámetro.
 
 		@param id El identificador del sonido
 		*/
-		void stopSound(const std::string& id);
+		void stopSound(const std::string& soundName);
 
 		/**
 		Se encarga de parar todos los sonidos
 		*/
 		void stopAllSounds();
-
-		/**
-		Se encarga de cargar un sonido (no 3D) y reproducirlo en modo normal.
-		*/
-		void playStreamingSound(const char* rutaSonido, const std::string& id, bool loopSound = false);
-
-		/**
-		Se encarga de cargar un sonido (no 3D) y reproducirlo en modo loop.
-		*/
-		void playStreamingLoopSound(const char* rutaSonido, const std::string& id);
 
 		/**
 		Se encarga de mutear el sonido que se reproduce por los canales.

@@ -34,14 +34,7 @@ namespace Logic
 		/**
 		Constructor por defecto; en la clase base no hace nada.
 		*/
-		CAudio() : IComponent(){};
-
-		
-		/**
-		Inicialización del componente usando la descripción de la entidad que hay en 
-		el fichero de mapa.
-		*/
-		virtual bool spawn(CEntity* entity, CMap *map, const Map::CEntity *entityInfo);
+		CAudio() {};
 
 		/**
 		Este componente sólo acepta mensajes de tipo AUDIO.

@@ -319,11 +319,12 @@ namespace Logic {
 
 	void CLife::triggerDeathSound() {
 		std::shared_ptr<CMessageAudio> audioMsg = std::make_shared<CMessageAudio>();
-		audioMsg->setRuta(_audioDeath);
-		audioMsg->setId("death");
-		audioMsg->setPosition( _entity->getPosition() );
-		audioMsg->setNotIfPlay(false);
-		audioMsg->setIsPlayer(_entity->isPlayer());
+
+		audioMsg->setAudioName(_audioDeath);
+		audioMsg->isLoopable(false);
+		audioMsg->is3dSound(true);
+		audioMsg->streamSound(false);
+
 		_entity->emitMessage(audioMsg);
 	}
 
@@ -331,11 +332,12 @@ namespace Logic {
 
 	void CLife::triggerHurtSound() {
 		std::shared_ptr<CMessageAudio> audioMsg = std::make_shared<CMessageAudio>();
-		audioMsg->setRuta(_audioPain);
-		audioMsg->setId("pain");
-		audioMsg->setPosition( _entity->getPosition() );
-		audioMsg->setNotIfPlay(false);
-		audioMsg->setIsPlayer(_entity->isPlayer());
+
+		audioMsg->setAudioName(_audioPain);
+		audioMsg->isLoopable(false);
+		audioMsg->is3dSound(true);
+		audioMsg->streamSound(false);
+
 		_entity->emitMessage(audioMsg);
 	}
 

@@ -9,27 +9,26 @@ namespace Logic {
 	DEC_FACTORYMESSAGE(CMessageAudio);
 	public:
 		CMessageAudio();
-		void setRuta(std::string ruta);
-		std::string getRuta();
-		void setId(std::string id);
-		std::string getId();
-		void setPosition(Vector3 position);
-		Vector3 getPosition();
-		bool getNotIfPlay();
-		void setNotIfPlay(bool notIfPlay);
-		bool getIsPlayer();
-		void setIsPlayer(bool isPlayer);
 		virtual ~CMessageAudio(){};
+
+		void setAudioName(const std::string& name);
+		void is3dSound(bool play3d);
+		void isLoopable(bool loop);
+		void streamSound(bool stream);
+
+		std::string getAudioName();
+		bool is3dSound();
+		bool isLoopable();
+		bool streamSound();
 		
 		virtual Net::CBuffer serialize();
 		virtual void deserialize(Net::CBuffer& buffer);
 
 	protected:
-		std::string _ruta;
-		std::string _id;
-		Vector3 _position;
-		bool _notIfPlay;
-		bool _isPlayer;
+		std::string _name;
+		bool _loop;
+		bool _play3d;
+		bool _stream;
 	};
 	REG_FACTORYMESSAGE(CMessageAudio);
 

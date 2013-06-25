@@ -16,60 +16,44 @@ Contiene la implementación del componente que controla el sonido de una entidad.
 
 #include "../../Messages/MessageAudio.h"
 
+using namespace std;
+
 namespace Logic 
 {
 	IMP_FACTORY(CAudio);
-	
-	//---------------------------------------------------------
-	
-	bool CAudio::spawn(CEntity *entity, CMap *map, const Map::CEntity *entityInfo) 
-	{
-		if(!IComponent::spawn(entity,map,entityInfo))
-			return false;		
 
-		return true;
-
-	} // spawn
-	//---------------------------------------------------------
-
-	bool CAudio::accept(const std::shared_ptr<CMessage>& message)
-	{
+	bool CAudio::accept(const std::shared_ptr<CMessage>& message) {
 		return message->getMessageType() == Message::AUDIO;
 	} // accept
 	//---------------------------------------------------------
 
-	void CAudio::process(const std::shared_ptr<CMessage>& message)
-	{
-		std::string ruta,id;
-		Vector3 position;
-		bool notIfPlay;
-		bool localPlayer;
-
-		switch(message->getMessageType())
-		{
-		case Message::AUDIO:
-			{
+	void CAudio::process(const std::shared_ptr<CMessage>& message) {
+		switch( message->getMessageType() ) {
+			case Message::AUDIO: {
 				//Recogemos los datos
 				std::shared_ptr<CMessageAudio> audioMsg = std::static_pointer_cast<CMessageAudio>(message);
 
-				ruta=audioMsg->getRuta();
-				id=audioMsg->getId();
-				position=audioMsg->getPosition();
-				notIfPlay=audioMsg->getNotIfPlay();
-				localPlayer=audioMsg->getIsPlayer();
-				//Le decimos al server de audio lo que queremos reproducir
-				char *aux=new char[ruta.size()+1];
-				aux[ruta.size()]=0;
-				memcpy(aux,ruta.c_str(),ruta.size());
-				//Si es local el sonido será stereo
-				if(localPlayer)
-					Audio::CServer::getSingletonPtr()->playSound(aux,id,notIfPlay);
-				//En otro caso se trata de un sonido con posición 3D
-				else
-					Audio::CServer::getSingletonPtr()->playSound3D(aux,id,position,notIfPlay);	
-			}
-			break;
+				string name = audioMsg->getAudioName();
+				bool play3dSound = audioMsg->is3dSound();
+				bool loopSound = audioMsg->isLoopable();
+				bool streamSound = audioMsg->streamSound();
 
+				// Si el sonido lo reproduce el jugador en primera persona, reproducimos
+				// el audio en estereo para evitar problemas, en cualquier otro caso
+				// reproducimos el sonido en 3d (si corresponde)
+				if( _entity->isPlayer() )
+					Audio::CServer::getSingletonPtr()->playSound(name, loopSound, streamSound);
+				else {
+					if(play3dSound) {
+						Audio::CServer::getSingletonPtr()->playSound3D(name, _entity->getPosition(), Vector3::ZERO, loopSound, streamSound);
+					}
+					else {
+						Audio::CServer::getSingletonPtr()->playSound(name, loopSound, streamSound);
+					}
+				}
+
+				break;
+			}
 		}
 
 	} // process

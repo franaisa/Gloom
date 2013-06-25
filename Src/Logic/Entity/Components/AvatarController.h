@@ -290,13 +290,15 @@ namespace Logic {
 		//________________________________________________________________________
 
 		/**
-		Emite el sonido almacenado en la ruta pasada por parametro.
+		Emite el sonido pasado por parámetro.
 
-		@param ruta Ruta donde se cuentra el sonido.
-		@param sound Identificador del sonido.
-		@param notIfPlay Booleano que marca si el sonido no debe repetirse si ya esta sonando.
+		@param soundName Nombre del archivo de audio que queremos reproducir.
+		@param loopSound true queremos reproducir el sonido en loop.
+		@param play3d true si queremos que el sonido se reproduzca en 3d.
+		@param streamSound true si queremos que el sonido se reproduzca en streaming. Util
+		para ficheros muy grandes como por ejemplo la música.
 		*/
-		void emitSound(const std::string &ruta, const std::string &sound, bool notIfPlay);
+		void emitSound(const std::string &soundName, bool loopSound, bool play3d, bool streamSound);
 
 		// =======================================================================
 		//                          MIEMBROS PROTEGIDOS

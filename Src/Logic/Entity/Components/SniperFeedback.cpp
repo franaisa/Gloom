@@ -50,7 +50,7 @@ namespace Logic {
 	void CSniperFeedback::primaryFire() {
 		_hudWeapon->shootAnim(-1.5f);
 		//Sonido
-		emitSound(_weaponSound,_weaponName,false);
+		emitSound(_weaponSound, false, true, false);
 	}
 
 	//__________________________________________________________________
@@ -64,7 +64,7 @@ namespace Logic {
 	void CSniperFeedback::secondaryFire() {
 		_hudWeapon->shootAnim(-1.5f);
 		//Sonido
-		emitSound(_weaponSound,_weaponName,false);
+		emitSound(_weaponSound, false, true, false);
 	}
 
 }//namespace Logic

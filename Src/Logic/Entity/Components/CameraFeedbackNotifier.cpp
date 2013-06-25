@@ -225,11 +225,9 @@ namespace Logic {
 	void CCameraFeedbackNotifier::walkEffect(unsigned int msecs) {
 		Vector3 offset = _cameraComponent->getOffset();
 
-		//OJO HAY QUE REVISAR ESTO
-		//DICE QUE OBTIENE HORIZONTAL SOLO CUANDO TMB DEVUELVE ALTURA
 		if(_strafingDir == 0) {
-			Quaternion yaw(_entity->getYaw());
-			Math::rotate(Vector3::UNIT_Y,Ogre::Radian(Math::HALF_PI),yaw);
+			Quaternion yaw( _entity->getYaw() );
+			Math::rotate( Vector3::UNIT_Y, Ogre::Radian(Math::HALF_PI), yaw);
 			Vector3 horizontal = yaw * Vector3::NEGATIVE_UNIT_Z;
 
 			_walkAnim.currentHorizontalPos += _walkAnim.horizontalSpeed * msecs;
@@ -289,22 +287,24 @@ namespace Logic {
 
 			_hudWeaponComponent->playerIsLanding(hitForce, Math::PI / _landRecoverySpeed);
 
+			// @deprecated
 			// Esto es temporal hasta que el sonido este bien hecho ---------------------
 			if(hitForce < -2.0f)
-				emitSound("media/audio/girl_grunt.wav", "grunt");
+				emitSound("landingMaleGrunt.wav", false, true, false);
 		}
 	}
 
 	//________________________________________________________________________
 
-	void CCameraFeedbackNotifier::emitSound(const std::string &ruta, const std::string &sound, bool notIfPlay) {
-			std::shared_ptr<CMessageAudio> audioMsg = std::make_shared<CMessageAudio>();
-			audioMsg->setRuta(ruta);
-			audioMsg->setId(sound);
-			audioMsg->setPosition( _entity->getPosition() );
-			audioMsg->setNotIfPlay(notIfPlay);
-			audioMsg->setIsPlayer(_entity->isPlayer());
-			_entity->emitMessage(audioMsg);
+	void CCameraFeedbackNotifier::emitSound(const std::string &soundName, bool loopSound, bool play3d, bool streamSound) {
+		std::shared_ptr<CMessageAudio> audioMsg = std::make_shared<CMessageAudio>();
+			
+		audioMsg->setAudioName(soundName);
+		audioMsg->isLoopable(loopSound);
+		audioMsg->is3dSound(play3d);
+		audioMsg->streamSound(streamSound);
+
+		_entity->emitMessage(audioMsg);
 	}
 
 	//________________________________________________________________________

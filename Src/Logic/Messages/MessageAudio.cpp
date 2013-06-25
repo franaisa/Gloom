@@ -6,78 +6,64 @@ namespace Logic {
 
 	IMP_FACTORYMESSAGE(CMessageAudio);
 
-	CMessageAudio::CMessageAudio() : CMessage(Message::AUDIO) {
+	CMessageAudio::CMessageAudio() : CMessage(Message::AUDIO),
+									 _play3d(false),
+									 _loop(false),
+									 _stream(false) {
 		// Nada que hacer
 	} //
 	//----------------------------------------------------------
-	std::string CMessageAudio::getRuta(){
-		return _ruta;
+	std::string CMessageAudio::getAudioName(){
+		return _name;
 	}//
 	//----------------------------------------------------------
 
-	void CMessageAudio::setRuta(std::string ruta){
-		_ruta=ruta;
+	void CMessageAudio::setAudioName(const std::string& name){
+		this->_name = name;
 	}//
 	//----------------------------------------------------------
 
-	void CMessageAudio::setId(std::string id){
-		_id=id;
-	}//
-	//----------------------------------------------------------
+	void CMessageAudio::is3dSound(bool play3d) {
+		this->_play3d = play3d;
+	}
+		
+	void CMessageAudio::isLoopable(bool loop) {
+		this->_loop = loop;
+	}
 
-	std::string CMessageAudio::getId(){
-		return _id;
-	}//
-	//----------------------------------------------------------
+	bool CMessageAudio::is3dSound() {
+		return _play3d;
+	}
+		
+	bool CMessageAudio::isLoopable() {
+		return _loop;
+	}
 
-	void CMessageAudio::setPosition(Vector3 position){
-		_position=position;
-	}//
-	//----------------------------------------------------------
-
-	Vector3 CMessageAudio::getPosition(){
-		return _position;
-	}//
-	//----------------------------------------------------------
-
-	void CMessageAudio::setNotIfPlay(bool notIfPlay){
-		_notIfPlay=notIfPlay;
-	}//
-	//----------------------------------------------------------
-
-	bool CMessageAudio::getNotIfPlay(){
-		return _notIfPlay;
-	}//
-	//----------------------------------------------------------
-
-	void CMessageAudio::setIsPlayer(bool isPlayer){
-		_isPlayer=isPlayer;
-	}//
-	//----------------------------------------------------------
-
-	bool CMessageAudio::getIsPlayer(){
-		return _isPlayer;
-	}//
-	//----------------------------------------------------------
-
+	void CMessageAudio::streamSound(bool stream) {
+		this->_stream = stream;
+	}
+		
+	bool CMessageAudio::streamSound() {
+		return _stream;
+	}
 
 	Net::CBuffer CMessageAudio::serialize() {
-		Net::CBuffer buffer((sizeof(int)*3) + (sizeof(float) * 3) + sizeof(bool));
-		buffer.serialize(std::string("CMessageAudio"), true);
-		buffer.serialize(_ruta, false);
-		buffer.serialize(_id, false);
-		buffer.serialize(_position);
-		buffer.serialize(_notIfPlay);
+		Net::CBuffer buffer;
+		buffer.serialize( std::string("CMessageAudio"), true );
+		buffer.serialize(_name, false);
+		buffer.write( &_play3d, sizeof(_play3d) );
+		buffer.write( &_loop, sizeof(_loop) );
+		buffer.write( &_stream, sizeof(_stream) );
 
 		return buffer;
 	}//
 	//----------------------------------------------------------
 
 	void CMessageAudio::deserialize(Net::CBuffer& buffer) {
-		buffer.deserialize(_ruta);
-		buffer.deserialize(_id);
-		buffer.deserialize(_position);
-		buffer.deserialize(_notIfPlay);
+		buffer.deserialize(_name);
+		buffer.read( &_play3d, sizeof(_play3d) );
+		buffer.read( &_loop, sizeof(_loop) );
+		buffer.read( &_stream, sizeof(_stream) );
 	}
 
 };

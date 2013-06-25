@@ -252,12 +252,6 @@ namespace Logic {
 			// Colision con los pies detectada
 			if(_cameraFX != NULL)
 				_cameraFX->playerIsTouchingGround(_momentum.y);
-
-			//Si nos movimos sonido de audio
-			//Si añadimos el comentario no sonaria si al movernos no nos hemos desplazado, esto ocurre en muy pocos casos
-			//Lo suyo seria incluso ver si la distancia recorrida es muy pekeña no sueno
-			if(!Net::CManager::getSingletonPtr()->imServer() && _displacementDir != Vector3::ZERO )//&& oldPosition!=_entity->getPosition()){)
-					emitSound("media/audio/step1.wav",_entity->getName()+"steps",true);
 		}
 		
 		if(collisionFlags & Physics::eCOLLISION_UP) {
@@ -281,7 +275,11 @@ namespace Logic {
 				_cameraFX->playerIsSideColliding(false, 0);
 		}
 
-
+		// @deprecated
+		/*if(_displacementDir != Vector3::ZERO && _touchingGround && !(collisionFlags & Physics::eCOLLISION_SIDES)) {
+			if(!Net::CManager::getSingletonPtr()->imServer() )
+				emitSound("footStep.wav", true, true, false);
+		}*/
 	}
 
 	//________________________________________________________________________
@@ -430,8 +428,10 @@ namespace Logic {
 		if(_touchingGround) {
 			_momentum.y = _jumpForce;
 			_touchingGround = false;
+
+			// @deprecated
 			if(!Net::CManager::getSingletonPtr()->imServer())
-				emitSound("media/audio/jump.wav",_entity->getName()+"jump",false);
+				emitSound("jump.wav", false, true, false);
 		}
 	}
 
@@ -451,20 +451,23 @@ namespace Logic {
 			return;
 		Vector3 dir = estimateMotionDirection(_movementCommands[commandType])+Vector3(0,1,0);
 		addForce(dir.normalisedCopy()*_dodgeForce);
+
+		// @deprecated
 		if(!Net::CManager::getSingletonPtr()->imServer())
-			emitSound("media/audio/sidejump.wav",_entity->getName()+"sideJump",false);
+			emitSound("sidejump.wav", false, true, false);
 	}
 
 	//________________________________________________________________________
 
-	void CAvatarController::emitSound(const std::string &ruta, const std::string &sound, bool notIfPlay) {
-			std::shared_ptr<CMessageAudio> audioMsg = std::make_shared<CMessageAudio>();
-			audioMsg->setRuta(ruta);
-			audioMsg->setId(sound);
-			audioMsg->setPosition( _entity->getPosition() );
-			audioMsg->setNotIfPlay(notIfPlay);
-			audioMsg->setIsPlayer(_entity->isPlayer());
-			_entity->emitMessage(audioMsg);
+	void CAvatarController::emitSound(const std::string &soundName, bool loopSound, bool play3d, bool streamSound) {
+		std::shared_ptr<CMessageAudio> audioMsg = std::make_shared<CMessageAudio>();
+			
+		audioMsg->setAudioName(soundName);
+		audioMsg->isLoopable(loopSound);
+		audioMsg->is3dSound(play3d);
+		audioMsg->streamSound(streamSound);
+
+		_entity->emitMessage(audioMsg);
 	}
 
 	//________________________________________________________________________

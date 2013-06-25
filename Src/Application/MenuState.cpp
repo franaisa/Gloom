@@ -17,6 +17,7 @@ Contiene la implementación del estado de menú.
 #include "MenuState.h"
 
 #include "Logic/Server.h"
+#include "Audio/Server.h"
 #include "Logic/Maps/EntityFactory.h"
 #include "Logic/Maps/Map.h"
 
@@ -71,6 +72,9 @@ namespace Application {
 	{
 		CApplicationState::activate();
 		_menu->show();
+
+		// Ponemos el sonido del menu
+		Audio::CServer::getSingletonPtr()->playSound("themeGloom.wav", true, true);
 
 	} // activate
 

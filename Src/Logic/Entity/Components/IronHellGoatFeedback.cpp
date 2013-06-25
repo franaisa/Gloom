@@ -59,7 +59,7 @@ namespace Logic {
 		_hudWeapon->loadingWeapon(false);
 		_hudWeapon->shootAnim(-1.85f);
 		//Sonido
-		emitSound(_weaponSound,_weaponName,false);
+		emitSound(_weaponSound, false, true, false);
 	}
 
 	//__________________________________________________________________
