@@ -49,6 +49,9 @@ namespace Logic {
 	void CSoulReaperFeedback::primaryFire() {
 		// Animacion de golpe con el soul Reaper
 		_hudWeapon->shootAnim(-1.85f);
+
+		//Sonido
+		emitSound("hammer.wav", false, true, false, false);
 	} // primaryFire
 
 }//namespace Logic

@@ -112,8 +112,6 @@ namespace Logic {
 	void CSoulReaperAmmo::primaryFire() {
 		IWeaponAmmo::primaryFire();
 
-		
-
 		_primaryFireCooldownTimer = _primaryFireCooldown;
 
 		_primaryFireIsActive = true;

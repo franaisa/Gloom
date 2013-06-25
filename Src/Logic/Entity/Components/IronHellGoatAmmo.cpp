@@ -129,7 +129,7 @@ namespace Logic {
 
 	bool CIronHellGoatAmmo::canUsePrimaryFire() {
 		if(_currentAmmo==0)
-			emitSound(_noAmmoSound, false, true, false);
+			emitSound(_noAmmoSound, false, true, false, false);
 
 		return _primaryFireCooldownTimer == 0 && _currentAmmo > 0;
 	}

@@ -201,7 +201,7 @@ namespace Logic {
 		@param streamSound true si queremos que el sonido se reproduzca en streaming. Util
 		para ficheros muy grandes como por ejemplo la música.
 		*/
-		void emitSound(const std::string &soundName, bool loopSound, bool play3d, bool streamSound);
+		void emitSound(const std::string &soundName, bool loopSound, bool play3d, bool streamSound, bool stopSound);
 
 		//__________________________________________________________________
 

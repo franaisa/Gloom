@@ -15,11 +15,13 @@ namespace Logic {
 		void is3dSound(bool play3d);
 		void isLoopable(bool loop);
 		void streamSound(bool stream);
+		void stopSound(bool stop);
 
 		std::string getAudioName();
 		bool is3dSound();
 		bool isLoopable();
 		bool streamSound();
+		bool stopSound();
 		
 		virtual Net::CBuffer serialize();
 		virtual void deserialize(Net::CBuffer& buffer);
@@ -29,6 +31,7 @@ namespace Logic {
 		bool _loop;
 		bool _play3d;
 		bool _stream;
+		bool _stop;
 	};
 	REG_FACTORYMESSAGE(CMessageAudio);
 
