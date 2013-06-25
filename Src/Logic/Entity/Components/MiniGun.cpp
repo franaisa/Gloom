@@ -141,11 +141,7 @@ namespace Logic {
 	{
 		_primaryFireCooldownTimer = _primaryFireCooldown;
 
-		if(!_primaryFireIsActive)
-			emitSound("minigun.wav", false, true, false);
 		_primaryFireIsActive = true;
-
-		
 
 		shoot();
 	} // primaryFire
@@ -165,19 +161,12 @@ namespace Logic {
 	{
 		_secondaryFireCooldownTimer = _secondaryFireCooldown;
 
-		if(!_secondaryFireIsActive)
-			// pongo el sonido de cargar armar
-			emitSound("minigun.wav", false, true, false);
-
 		_secondaryFireIsActive = true;
 	} // secondaryFire
 	//__________________________________________________________________
 
 	void CMiniGun::stopSecondaryFire() 
 	{
-		//Sonido
-		emitSound("minigun.wav", false, true, false);
-
 		_secondaryFireIsActive = false;
 		
 		secondaryShoot();

@@ -155,8 +155,9 @@ namespace Logic {
 		@param play3d true si queremos que el sonido se reproduzca en 3d.
 		@param streamSound true si queremos que el sonido se reproduzca en streaming. Util
 		para ficheros muy grandes como por ejemplo la música.
+		@param stopSound true si queremos parar la reproducción del sonido.
 		*/
-		void emitSound(const std::string &soundName, bool loopSound, bool play3d, bool streamSound);
+		void emitSound(const std::string &soundName, bool loopSound, bool play3d, bool streamSound, bool stopSound);
 
 		//__________________________________________________________________
 

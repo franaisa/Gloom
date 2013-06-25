@@ -65,7 +65,7 @@ namespace Logic {
 		// Poner la animacion de carga inestable del arma
 		_hudWeapon->continouosShooting(true);
 		//Sonido
-		emitSound(_weaponSound, false, true, false);
+		emitSound(_weaponSound, true, true, false, false);
 	}
 
 	//__________________________________________________________________
@@ -73,6 +73,8 @@ namespace Logic {
 	void CMiniGunFeedback::stopPrimaryFire() {
 		// Parar la animacion de carga
 		_hudWeapon->continouosShooting(false);
+		//Sonido
+		emitSound("miniGun", true, true, false, true);
 		
 		_iContadorLeftClicked = 0;
 		//Envío el mensaje con valores para que resetee la mirilla
@@ -95,7 +97,7 @@ namespace Logic {
 		_hudWeapon->loadingWeapon(false);
 		_hudWeapon->shootAnim(-1.85f);
 		//Sonido
-		emitSound(_weaponSound, false, true, false);
+		emitSound("miniGun", false, true, false, true);
 	}
 
 	//__________________________________________________________________

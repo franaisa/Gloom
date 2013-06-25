@@ -58,6 +58,9 @@ namespace Logic {
 		// Parar la animacion de carga
 		_hudWeapon->loadingWeapon(false);
 		_hudWeapon->shootAnim(-1.85f);
+
+		// Emitimos el sonido de lanzar la bola de fuego
+		emitSound("ignite_pitch.wav", false, true, false, false);
 	}
 
 	//__________________________________________________________________

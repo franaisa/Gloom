@@ -19,6 +19,7 @@ namespace Logic {
 		bool loopSound;
 		bool play3d;
 		bool streamSound;
+		bool stopSound;
 	};
 
 	// No heredo de CMessageTransformSnapshot porque me
