@@ -131,6 +131,7 @@ namespace Logic
 				std::shared_ptr<CMessageAddSpell> addSpellMsg = std::static_pointer_cast<CMessageAddSpell>(message);
 				unsigned int spellIndex = addSpellMsg->getSpell();
 				
+				printf("\nLlegado mensaje %d",spellIndex);
 				if(spellIndex == 1){
 					_spells[_primarySpell].first = true;
 					_spells[_primarySpell].second->activate();
