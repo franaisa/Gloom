@@ -133,12 +133,20 @@ namespace Logic
 				
 				printf("\nLlegado mensaje %d",spellIndex);
 				if(spellIndex == 1){
-					_spells[_primarySpell].first = true;
-					_spells[_primarySpell].second->activate();
+					if(!_spells[_primarySpell].first){
+						_spells[_primarySpell].first = true;
+						_spells[_primarySpell].second->activate();
+						_spells[_primarySpell].second->wakeUp();
+					}
+					_spells[_primarySpell].second->addAmmo();
 				}else{
 					if(spellIndex == 2){
-						_spells[_secondarySpell].first = true;
-						_spells[_secondarySpell].second->activate();		
+						if(!_spells[_secondarySpell].first){
+							_spells[_secondarySpell].first = true;
+							_spells[_secondarySpell].second->activate();
+							_spells[_secondarySpell].second->wakeUp();
+						}
+						_spells[_secondarySpell].second->addAmmo();
 					}else{
 						printf("\nCuidado, has puesto un hechizo no valido, o es 1 (primario) o es 2 (secundario)");
 					}

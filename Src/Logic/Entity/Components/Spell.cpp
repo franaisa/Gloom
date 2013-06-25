@@ -98,6 +98,11 @@ namespace Logic {
 
 	//__________________________________________________________________
 
+	void ISpell::onActivate() { 
+		printf("\n Activando hechizo con nombre: %s",_spellName.c_str());
+	} // onActivate
+	//__________________________________________________________________
+
 	void ISpell::onWake() {
 
 	}
@@ -106,5 +111,8 @@ namespace Logic {
 	void ISpell::onDeactivate(){
 	}
 	//_________________________________________________________________
+
+
+
 } // namespace Logic
 

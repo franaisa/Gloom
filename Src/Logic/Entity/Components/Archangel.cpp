@@ -168,7 +168,6 @@ namespace Logic {
 		std::shared_ptr<CMessageSetOwner> setOwnerMsg = std::make_shared<CMessageSetOwner>();
 		setOwnerMsg->setOwner(_entity);
 		_lifeDome->emitMessage(setOwnerMsg);
-		
 		_doingSecondarySkill = true;
 	}
 

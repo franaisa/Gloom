@@ -94,6 +94,11 @@ namespace Logic {
 
 	//__________________________________________________________________
 
+	void ISpellFeedback::onActivate() { 
+		printf("\n Activando hechizo con nombre: %s",_spellName.c_str());
+	} // onActivate
+	//__________________________________________________________________
+
 	void ISpellFeedback::emitSound(const string &soundName, bool loopSound, bool play3d, bool streamSound){
 		shared_ptr<CMessageAudio> audioMsg = make_shared<CMessageAudio>();
 		
