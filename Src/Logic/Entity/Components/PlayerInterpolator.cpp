@@ -174,12 +174,15 @@ namespace Logic {
 				if( _audioBuffer.front().tick == _tickCounter ) {
 					AudioInfo info = _audioBuffer.front();
 					_audioBuffer.pop_front();
-					
+
 					shared_ptr<CMessageAudio> audioMsg = make_shared<CMessageAudio>();
 					audioMsg->setAudioName(info.audioName);
 					audioMsg->isLoopable(info.loopSound);
 					audioMsg->is3dSound(info.play3d);
 					audioMsg->streamSound(info.streamSound);
+					audioMsg->stopSound(info.stopSound);
+
+					_entity->emitMessage(audioMsg);
 				}
 			}
 
