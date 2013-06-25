@@ -368,6 +368,9 @@ namespace Logic {
 		*/
 		Vector3 _movementCommands[18];
 
+
+		bool _playingsound;
+
 		/** Número máximo de comandos de movimiento. */
 		static const int MAX_MOVEMENT_COMMANDS = Control::CROUCH;
 

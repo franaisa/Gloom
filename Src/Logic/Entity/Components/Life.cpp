@@ -194,6 +194,10 @@ namespace Logic {
 		// Actualizamos los puntos de salud y armadura del personaje.
 		// En caso de muerte activamos la escena de muerte y disparamos los sonidos
 		// correspondientes.
+
+		if(damage == 0)
+			return;
+
 		if( updateLife(damage) ) {
 			triggerDeathState(enemy);
 			triggerDeathSound();
@@ -205,7 +209,6 @@ namespace Logic {
 
 		// @deprecated -> guarreo para el gamelab por falta de tiempo, pero
 		// esto aqui esta muy muy mal hecho (niños malos xD)
-
 		std::shared_ptr<CMessageHud> hudMsg = std::make_shared<CMessageHud>();
 		hudMsg->setType(CMessageHud::HudType::HIT);
 		enemy->emitMessage(hudMsg);

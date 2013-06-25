@@ -51,7 +51,8 @@ namespace Logic {
 											 _physicController(0),
 											 _momentum(Vector3::ZERO),
 											 _displacementDir(Vector3::ZERO),
-											 _dodgeForce(Vector3::ZERO)
+											 _dodgeForce(Vector3::ZERO),
+											 _playingsound(0)
 	{
 		
 		//anti release
@@ -319,6 +320,30 @@ namespace Logic {
 		// de rozamiento
 		float coef = (_displacementDir == Vector3::ZERO) ? 0.8f : _maxVelocity/(_maxVelocity+(0.5*_acceleration*msecs));
 		
+		if(_displacementDir == Vector3::ZERO && _playingsound){
+			std::shared_ptr<CMessageAudio> audioMsg = std::make_shared<CMessageAudio>();
+		
+			audioMsg->setAudioName("footStep2");
+			audioMsg->isLoopable(true);
+			audioMsg->is3dSound(true);
+			audioMsg->streamSound(false);
+			audioMsg->stopSound(true);
+			
+			_entity->emitMessage(audioMsg);
+			_playingsound = false;
+		}else if (_displacementDir != Vector3::ZERO && !_playingsound){
+			std::shared_ptr<CMessageAudio> audioMsg = std::make_shared<CMessageAudio>();
+		
+			audioMsg->setAudioName("footStep2.wav");
+			audioMsg->isLoopable(true);
+			audioMsg->is3dSound(true);
+			audioMsg->streamSound(false);
+			audioMsg->stopSound(false);
+			
+			_entity->emitMessage(audioMsg);
+			_playingsound = true;
+		}
+
 		/*
 		if(_displacementDir != Vector3::ZERO){
 		    std::shared_ptr<CMessageHudDebugData> m = std::make_shared<CMessageHudDebugData>();
@@ -364,6 +389,19 @@ namespace Logic {
 		// Calculamos el coeficiente de movimiento aereo (que debería ser más reducido
 		// que el terrestre) teniendo en cuenta los milisegundos transcurridos
 		float speedCoef = _airSpeedCoef / (double)msecs;
+
+		if (_playingsound){
+			std::shared_ptr<CMessageAudio> audioMsg = std::make_shared<CMessageAudio>();
+		
+			audioMsg->setAudioName("footStep2");
+			audioMsg->isLoopable(true);
+			audioMsg->is3dSound(true);
+			audioMsg->streamSound(false);
+			audioMsg->stopSound(true);
+			
+			_entity->emitMessage(audioMsg);
+			_playingsound = false;
+		}
 
 		// Aumentamos el desplazamiento en la dirección dada teniendo en cuenta
 		// que nos movemos más lento en el aire -> -> s = u · t + 1/2 · a · t^2
