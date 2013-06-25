@@ -57,6 +57,7 @@ namespace Logic {
 
 	void CGravityFeedback::spell(){
 		// Efecto cuando se activa la gravedad
+		printf("\Bajando gravedad");
 		auto msg =  std::make_shared<CMessageChangeGravity>(_newGravity);
 		_entity->emitMessage(msg);
 
