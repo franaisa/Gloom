@@ -83,12 +83,22 @@ namespace Logic
 
 	void CSpellsManagerClient::onActivate() {
 		
-		// El resto de las armas están desactivadas, ya que no las tenemos
 		for(unsigned int i = 0; i < _spells.size(); ++i) {
 			_spells[i].first = false; // Por si acaso habian sido activadas anteriormente
+			_spells[i].second->putToSleep(true);
 			_spells[i].second->deactivate();
 		}
 	} // onActivate
+	//---------------------------------------------------------
+
+	void CSpellsManagerClient::onStart(){
+	// El resto de las armas están desactivadas, ya que no las tenemos
+		for(unsigned int i = 0; i < _spells.size(); ++i) {
+			_spells[i].first = false; // Por si acaso habian sido activadas anteriormente
+			_spells[i].second->putToSleep(true);
+			_spells[i].second->deactivate();
+		}
+	} // onStart
 	//---------------------------------------------------------
 
 	void CSpellsManagerClient::onDeactivate(){
@@ -97,6 +107,11 @@ namespace Logic
 		_spells[_primarySpell].second->deactivate();
 		_spells[_secondarySpell].second->deactivate();
 		
+		for(unsigned int i = 0; i < _spells.size(); ++i) {
+			_spells[i].first = false; // Por si acaso habian sido activadas anteriormente
+			_spells[i].second->putToSleep(true);
+			_spells[i].second->deactivate();
+		}
 	}// onDeactivate
 	//---------------------------------------------------------
 

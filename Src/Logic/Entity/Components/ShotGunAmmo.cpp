@@ -22,6 +22,7 @@ de disparo de la cabra.
 
 #include "ShotGun.h"
 #include "ShotGunFeedback.h"
+#include "Logic/Messages/MessageAudio.h"
 
 using namespace std;
 
@@ -126,6 +127,11 @@ namespace Logic {
 		for(int i = 0; i < shots; ++i) {
 			decrementAmmo();
 		}
+		auto m = std:: make_shared<CMessageAudio>();
+		m->setAudioName("shotgun.wav");
+		m->isLoopable(false);
+		m->is3dSound(true);
+		_entity->emitMessage(m);
 	}
 
 	//__________________________________________________________________
