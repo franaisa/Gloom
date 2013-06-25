@@ -50,8 +50,8 @@ namespace Logic {
 		TMessageType msgType = message->getMessageType();
 
 		return msgType == Message::SET_ANIMATION	|| 
-			   msgType == Message::STOP_ANIMATION;	/*||
-			   msgType == Message::AUDIO;*/
+			   msgType == Message::STOP_ANIMATION	||
+			   msgType == Message::AUDIO;
 	}
 
 	//__________________________________________________________________
@@ -92,13 +92,20 @@ namespace Logic {
 
 				break;
 			}
-			/*case Message::AUDIO: {
+			case Message::AUDIO: {
 				shared_ptr<CMessageAudio> audioMsg = static_pointer_cast<CMessageAudio>(message);
 
 				AudioInfo info;
 				info.tick = _tickCounter;
-				info.audioPath = audioMsg->getRuta();
-			}*/
+				info.audioName = audioMsg->getAudioName();
+				info.loopSound = audioMsg->isLoopable();
+				info.play3d = audioMsg->is3dSound();
+				info.streamSound = audioMsg->streamSound();
+
+				_audioBuffer.push_back(info);
+
+				break;
+			}
 		}
 	}
 
@@ -117,11 +124,13 @@ namespace Logic {
 		shared_ptr<CMessagePlayerSnapshot> snapshotMsg = make_shared<CMessagePlayerSnapshot>();
 		snapshotMsg->setTransformBuffer(_transformBuffer);
 		snapshotMsg->setAnimationBuffer(_animationBuffer);
+		//snapshotMsg->setAudioBuffer(_audioBuffer);
 		_entity->emitMessage(snapshotMsg);
 
 		// Limpiar el buffer para la siguiente snapshot
 		_transformBuffer.clear();
 		_animationBuffer.clear();
+		//_audioBuffer.clear();
 	}
 
 	//__________________________________________________________________

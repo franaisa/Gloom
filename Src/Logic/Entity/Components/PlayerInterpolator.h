@@ -137,6 +137,7 @@ namespace Logic {
 
 		std::deque<Matrix4> _transformBuffer;
 		std::deque<AnimInfo> _animationBuffer;
+		std::deque<AudioInfo> _audioBuffer;
 		CPhysicController* _controller;
 
 	}; // class CPlayerInterpolator

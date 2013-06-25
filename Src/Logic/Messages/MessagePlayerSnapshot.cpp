@@ -45,21 +45,35 @@ namespace Logic {
 	}
 
 	//__________________________________________________________________
+
+	void CMessagePlayerSnapshot::setAudioBuffer(const std::vector<AudioInfo>& buffer) {
+		_audioBuffer = buffer;
+	}
+
+	//__________________________________________________________________
+
+	std::vector<AudioInfo> CMessagePlayerSnapshot::getAudioBuffer() {
+		return _audioBuffer;
+	}
+
+	//__________________________________________________________________
 		
 	Net::CBuffer CMessagePlayerSnapshot::serialize() {
 		// Tamaño igual = cabecera(int) + tambuffer(int) + num matrices (5 floats * tamBuffer)
-		int transformBufferSize( _transformBuffer.size() ), animationBufferSize( _animationBuffer.size() );
+		unsigned int transformBufferSize( _transformBuffer.size() ), animationBufferSize( _animationBuffer.size() ), audioBufferSize( _audioBuffer.size() );
 
 		Net::CBuffer buffer;
 		buffer.serialize(std::string("CMessagePlayerSnapshot"), true);
+		
 		// Copiamos las posiciones y rotaciones del player
 		buffer.serialize(transformBufferSize);
-		for(int i = 0; i < transformBufferSize; ++i) {
+		for(unsigned int i = 0; i < transformBufferSize; ++i) {
 			buffer.serialize(_transformBuffer[i]);
 		}
+		
 		// Copiamos las animaciones que se hayan producido
 		buffer.serialize(animationBufferSize);
-		for(int i = 0; i < animationBufferSize; ++i) {
+		for(unsigned int i = 0; i < animationBufferSize; ++i) {
 			buffer.serialize(_animationBuffer[i].tick);
 			buffer.serialize(_animationBuffer[i].animName, false);
 			buffer.write(&_animationBuffer[i].loop, sizeof(bool));
@@ -67,13 +81,23 @@ namespace Logic {
 			buffer.write(&_animationBuffer[i].exclude, sizeof(bool));
 		}
 		
+		// Copiamos los sonidos que se hayan reproducido
+		buffer.serialize(audioBufferSize);
+		for(unsigned int i = 0; i < audioBufferSize; ++i) {
+			buffer.serialize(_audioBuffer[i].tick);
+			buffer.serialize(_audioBuffer[i].audioName, false);
+			buffer.write(&_audioBuffer[i].loopSound, sizeof(bool));
+			buffer.write(&_audioBuffer[i].play3d, sizeof(bool));
+			buffer.write(&_audioBuffer[i].streamSound, sizeof(bool));
+		}
+
 		return buffer;
 	}
 
 	//__________________________________________________________________
 
 	void CMessagePlayerSnapshot::deserialize(Net::CBuffer& buffer) {
-		int transformBufferSize, animationBufferSize;
+		int transformBufferSize, animationBufferSize, audioBufferSize;
 		// Deserializar el tamaño del buffer
 		buffer.deserialize(transformBufferSize);
 
@@ -98,6 +122,20 @@ namespace Logic {
 			buffer.read(&_animationBuffer[i].loop, sizeof(bool));
 			buffer.read(&_animationBuffer[i].stop, sizeof(bool));
 			buffer.read(&_animationBuffer[i].exclude, sizeof(bool));
+		}
+
+		buffer.deserialize(audioBufferSize);
+
+		// Resize del buffer de sonido al tamaño leido
+		_audioBuffer.clear();
+		_audioBuffer.resize(audioBufferSize);
+		// Leemos tantos strings como nos diga el tamaño
+		for(int i = 0; i < audioBufferSize; ++i) {
+			buffer.deserialize(_audioBuffer[i].tick);
+			buffer.deserialize(_audioBuffer[i].audioName);
+			buffer.read(&_audioBuffer[i].loopSound, sizeof(bool));
+			buffer.read(&_audioBuffer[i].play3d, sizeof(bool));
+			buffer.read(&_audioBuffer[i].streamSound, sizeof(bool));
 		}
 	}
 

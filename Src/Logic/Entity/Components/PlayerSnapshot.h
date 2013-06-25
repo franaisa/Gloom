@@ -79,8 +79,9 @@ namespace Logic {
 		unsigned int _ticksPerBuffer;
 		unsigned int _tickCounter;
 
-		std::vector<Matrix4> _transformBuffer;
-		std::vector<AnimInfo> _animationBuffer;
+		std::vector<Matrix4>	_transformBuffer;
+		std::vector<AnimInfo>	_animationBuffer;
+		std::vector<AudioInfo>	_audioBuffer;
 
 	}; // class CPlayerSnapshot
 
