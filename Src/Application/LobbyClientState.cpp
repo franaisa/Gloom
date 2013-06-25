@@ -87,8 +87,6 @@ namespace Application {
 
 		// Mostramos el menu del cliente
 		_menu->show();
-		int menu = ((rand()*clock())%7)+1;
-		_loadMenu->callFunction("loadMenu",Hikari::Args(menu));
 		// Nos registramos como observadores de la red para ser notificados de
 		// eventos y nos activamos como clientes.
 		_netMgr->addObserver(this);
