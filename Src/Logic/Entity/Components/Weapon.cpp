@@ -117,10 +117,15 @@ namespace Logic {
 
 	//__________________________________________________________________
 
+	void IWeapon::onDeactivate(){
+		stopPrimaryFire();
+		stopSecondaryFire();
+	} // onDeactivate
+	//__________________________________________________________________
+
 	void IWeapon::onAvailable() {
 
-	}
-
+	} // onAvailable
 	//__________________________________________________________________
 
 
@@ -192,6 +197,7 @@ namespace Logic {
 
 	//__________________________________________________________________
 
+
 	void IWeapon::particles()
 	{
 		std::cout << "particula" << std::endl;
@@ -200,15 +206,15 @@ namespace Logic {
 
 		Vector3 position2 = _entity->getPosition();
 		position2.y += _heightShoot;
-		std::cout << "posicionOrig = " << position2 << std::endl;
+		//std::cout << "posicionOrig = " << position2 << std::endl;
 
 		
 		float fOffset = 8.0f;
 		Vector3 orientation = Math::getDirection(_entity->getOrientation()) * fOffset;
-		std::cout << "orientacion = " << orientation << std::endl;
+		//std::cout << "orientacion = " << orientation << std::endl;
 
 		position2 += orientation;
-		std::cout << "posicion NUEVA = " << position2 << std::endl;
+		//std::cout << "posicion NUEVA = " << position2 << std::endl;
 
 		particleMsg->setPosition(position2);
 		//Vector3 dir(0,0,0);

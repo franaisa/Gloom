@@ -131,8 +131,13 @@ namespace Logic {
 				break;								
 			}
 		}
-	}
+	} // process
+	//__________________________________________________________________
 
+	void IWeaponAmmo::onDeactivate(){
+		stopPrimaryFire();
+		stopSecondaryFire();
+	} // onDeactivate
 	//__________________________________________________________________
 
 	void IWeaponAmmo::primaryFire() {
@@ -141,7 +146,6 @@ namespace Logic {
 		auto m = make_shared<CMessagePrimaryShoot>(true);
 		_entity->emitMessage(m);
 	}
-
 	//__________________________________________________________________
 
 	void IWeaponAmmo::secondaryFire() {

@@ -121,9 +121,10 @@ namespace Logic
 			*/
 		}
 		
-		if (_cGraph)
+		if (_cGraph )
 		{
-			_entity->setPosition(_owner->getPosition());
+			if(_owner)
+				_entity->setPosition(_owner->getPosition());
 			if (_scale < 10.0f)
 			{
 				_scale += 0.005f;
