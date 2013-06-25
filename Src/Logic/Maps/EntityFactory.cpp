@@ -363,6 +363,10 @@ namespace Logic {
 
 	void CEntityFactory::deferredDeleteEntity(Logic::CEntity *entity, bool toClients) {
 		assert(entity);
+
+		if (_pendingEntities.find(entity) != _pendingEntities.end())
+			return;
+
 		_pendingEntities.insert(entity);
 
 		//la borramos del worldstate para evitar problemas y crashes
