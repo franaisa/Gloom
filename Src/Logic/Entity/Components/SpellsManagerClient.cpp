@@ -135,10 +135,12 @@ namespace Logic
 				if(spellIndex == 1){
 					_spells[_primarySpell].first = true;
 					_spells[_primarySpell].second->activate();
+					_spells[_primarySpell].second->wakeUp();
 				}else{
 					if(spellIndex == 2){
 						_spells[_secondarySpell].first = true;
-						_spells[_secondarySpell].second->activate();		
+						_spells[_secondarySpell].second->activate();
+						_spells[_secondarySpell].second->wakeUp();
 					}else{
 						printf("\nCuidado, has puesto un hechizo no valido, o es 1 (primario) o es 2 (secundario)");
 					}
