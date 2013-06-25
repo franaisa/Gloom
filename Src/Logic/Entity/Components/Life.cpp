@@ -338,6 +338,7 @@ namespace Logic {
 		audioMsg->isLoopable(false);
 		audioMsg->is3dSound(true);
 		audioMsg->streamSound(false);
+		audioMsg->stopSound(false);
 
 		_entity->emitMessage(audioMsg);
 	}

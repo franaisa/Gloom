@@ -59,6 +59,14 @@ namespace Logic  {
 	void CClientRespawn::process(const std::shared_ptr<CMessage>& message) {
 		switch( message->getMessageType() ) {
 			case Message::PLAYER_DEAD:{
+				// @deprecated Esto no deberia hacerse aqui pero como mañana es la gamelab
+				// lo dejo asi. El problema es que el componente del servidor no procesa
+				// el mensaje de audio de muerte mandado desde el cliente
+				std::shared_ptr<CMessageAudio> audioMsg = std::make_shared<CMessageAudio>();
+				audioMsg->setAudioName("slapchot.wav");
+				audioMsg->is3dSound(true);
+				_entity->emitMessage(audioMsg);
+
 				// El servidor nos notifica de que hemos muerto, desactivamos
 				// la entidad al completo y su simulacion fisica para que no
 				// podamos colisionar con la cápsula del jugador.
