@@ -370,8 +370,7 @@ namespace Logic {
 	//---------------------------------------------------------
 
 	void CHudWeapons::shootAnim(float force) {
-		Quaternion weaponOrientation= _graphicsEntities[_currentWeapon].graphicsEntity->getOrientation();
-		Vector3 weaponDir = weaponOrientation * Vector3::NEGATIVE_UNIT_Z;
+		Vector3 weaponDir =  _graphicsEntities[_currentWeapon].graphicsEntity->getOrientation() * Vector3::NEGATIVE_UNIT_Z;
 		weaponDir.normalise();
 		_shootAnim.offset = weaponDir * force * Vector3(1.0f, 0.0f, 1.0f);
 	}
@@ -385,12 +384,7 @@ namespace Logic {
 	//---------------------------------------------------------
 
 	void CHudWeapons::rapidShootAnim(unsigned int msecs) {
-		/*Matrix4 weaponTransform = _graphicsEntities[_currentWeapon].graphicsEntity->getTransform();
-		Vector3 weaponDir = Math::getDirection(weaponTransform);*/
-
-		Vector3 parcial=Math::getEulerYawPitchRoll(_graphicsEntities[_currentWeapon].graphicsEntity->getOrientation());
-		Quaternion yawOrientation = Math::setQuaternion(parcial.x,0,0);
-		Vector3 weaponDir = yawOrientation * Vector3::NEGATIVE_UNIT_Z;
+		Vector3 weaponDir = _graphicsEntities[_currentWeapon].graphicsEntity->getOrientation() * Vector3::NEGATIVE_UNIT_Z;
 		weaponDir.normalise();
 
 		_rapidShootAnim.offset = weaponDir * _rapidShootAnim.shakeOffset * Vector3(1.0f, 0.0f, 1.0f);
