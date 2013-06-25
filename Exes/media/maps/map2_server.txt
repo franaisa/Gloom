@@ -551,7 +551,7 @@ Map = {
 		respawnTime = 25,
 	},
 	
-		ShotgunAmmo1 = {
+	ShotgunAmmo1 = {
 		type = "Ammo",
 		position = {118.983, 0.51058, -143.614},
 		model = "shotGunAmmo.mesh",
