@@ -726,7 +726,7 @@ Map = {
 		physic_trigger = true,
 		physic_type = "static",
 		physic_shape = "box",
-		physic_dimensions = { 200, 0.1, 200 },
+		physic_dimensions = { 2000, 100, 2000 },
 		physic_group = 2,
 		physic_groupList = "1",
 	},
