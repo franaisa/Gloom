@@ -136,9 +136,10 @@ namespace Logic {
 
 	void CHound::onFixedTick(unsigned int msecs) {
 		if(charge && _doingPrimarySkill){
-			Vector3 direction = Math::getDirection(_entity->getOrientation()).normalisedCopy();
-				direction *= msecs * _biteMaxVelocity;
-				_physicController->move(direction, Physics::CollisionGroup::eWORLD, msecs);
+			Vector3 direction = _entity->getOrientation() * Vector3::NEGATIVE_UNIT_Z;
+			direction.normalise();
+			direction *= msecs * _biteMaxVelocity;
+			_physicController->move(direction, Physics::CollisionGroup::eWORLD, msecs);
 		}
 	}
 

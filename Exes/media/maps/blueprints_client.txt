@@ -31,3 +31,4 @@ MagneticBullet CGraphics CPositionInterpolator
 LifeDome CLifeDome CGraphics 
 ShieldSpell CShieldSpellController CGraphics 
 Vortice CGraphics
+Ammo CPhysicStaticEntity CSpawnItemManager CGraphics

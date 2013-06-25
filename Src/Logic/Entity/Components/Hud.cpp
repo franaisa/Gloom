@@ -41,6 +41,7 @@ namespace Logic{
 
 	CHud::~CHud(){
 		Logic::CGUIManager::getSingletonPtr()->deleteGUI("hud");
+		Logic::CGUIManager::getSingletonPtr()->deleteGUI("respawn");
 	}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -81,10 +82,12 @@ namespace Logic{
 
 	void CHud::onDeactivate(){
 		_hud->hide();
+		_respawn->hide();
 	}
 
 	void CHud::onActivate(){
 		_hud->show();
+		_respawn->hide();
 	}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -138,13 +141,10 @@ namespace Logic{
 				std::shared_ptr<CMessageHudSpawn> hudSpawnMsg = std::static_pointer_cast<CMessageHudSpawn>(message);
 				_spawnTime = hudSpawnMsg->getTime();
 				_acumSpawn=3000;
-				std::cout << "me llega nensaje respawn" << _spawnTime << std::endl;
 				if(_spawnTime==0){
 					hudRespawn();
-					std::cout << "respawn end" << std::endl;
 				}else{
 					_respawn->show();
-					std::cout << "respawn init" << std::endl;
 				}
 				break;
 			}
@@ -301,7 +301,8 @@ namespace Logic{
 		if(_respawn->getVisibility()){
 			_acumSpawn += msecs;
 			if(_acumSpawn>1000){
-				_respawn->callFunction("time", Hikari::Args(--_spawnTime));
+				/*if(_respawn->getVisibility())
+					_respawn->callFunction("time", Hikari::Args(--_spawnTime));*/
 				_acumSpawn = 0;
 				/////////////////////////////////////////////////////////////////////////////////////
 				////////	Borrar en un futuro, espero que el server no llegue a -5		/////////

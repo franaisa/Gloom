@@ -209,7 +209,9 @@ namespace Logic {
 
 		
 		float fOffset = 8.0f;
-		Vector3 orientation = Math::getDirection(_entity->getOrientation()) * fOffset;
+		Vector3 orientation= _entity->getOrientation()*Vector3::NEGATIVE_UNIT_Z;
+		orientation.normalise();
+		orientation *= fOffset;
 		//std::cout << "orientacion = " << orientation << std::endl;
 
 		position2 += orientation;

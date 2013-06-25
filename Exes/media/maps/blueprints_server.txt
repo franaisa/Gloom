@@ -29,3 +29,4 @@ FireBall CFireBallController CPhysicDynamicEntity CPositionSnapshot CNetConnecto
 MagneticBullet CMagneticBullet CPhysicDynamicEntity CPositionSnapshot CNetConnector
 LifeDome CLifeDome CPhysicDynamicEntity CNetConnector
 ShieldSpell CShieldSpellController CPhysicDynamicEntity CNetConnector
+Ammo CPhysicStaticEntity CSpawnItemManager CGraphics

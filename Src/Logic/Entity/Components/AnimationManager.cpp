@@ -124,8 +124,10 @@ namespace Logic{
 			return;
 
 		Vector3 direction = _entity->getPosition() - entity->getPosition();
-
-		float angle = direction.normalisedCopy().angleBetween(Math::getDirection(entity->getOrientation()).normalisedCopy()).valueDegrees();
+		direction.normalise();
+		Vector3 entityDirection = entity->getOrientation()*Vector3::NEGATIVE_UNIT_Z;
+		entityDirection.normalise();
+		float angle = direction.angleBetween(entityDirection).valueDegrees();
 
 		std::shared_ptr<CMessageSetAnimation> anim = std::make_shared<CMessageSetAnimation>();
 

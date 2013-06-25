@@ -166,7 +166,9 @@ namespace Logic
 	void CParticle::onTick(unsigned int msecs) {
 		if(!_particles.empty()){
 			for(auto it = _particles.begin(); it < _particles.end(); ++it){
-				(*it)._particle->setPosition(_entity->getPosition() + ( (*it)._particleOffset * (_entity->getOrientation() *Vector3::NEGATIVE_UNIT_Z) ));
+				Vector3 orientation = _entity->getOrientation() *Vector3::NEGATIVE_UNIT_Z;
+				orientation.normalise();
+				(*it)._particle->setPosition(_entity->getPosition() + ( (*it)._particleOffset * orientation ));
 			}
 		}
 	} // tick
