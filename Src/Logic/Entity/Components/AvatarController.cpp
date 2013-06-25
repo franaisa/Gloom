@@ -319,30 +319,6 @@ namespace Logic {
 		// Si no nos queremos desplazar en ninguna dirección aplicamos el coeficiente
 		// de rozamiento
 		float coef = (_displacementDir == Vector3::ZERO) ? 0.8f : _maxVelocity/(_maxVelocity+(0.5*_acceleration*msecs));
-		
-		if(_displacementDir == Vector3::ZERO && _playingsound){
-			std::shared_ptr<CMessageAudio> audioMsg = std::make_shared<CMessageAudio>();
-		
-			audioMsg->setAudioName("footStep2");
-			audioMsg->isLoopable(true);
-			audioMsg->is3dSound(true);
-			audioMsg->streamSound(false);
-			audioMsg->stopSound(true);
-			
-			_entity->emitMessage(audioMsg);
-			_playingsound = false;
-		}else if (_displacementDir != Vector3::ZERO && !_playingsound){
-			std::shared_ptr<CMessageAudio> audioMsg = std::make_shared<CMessageAudio>();
-		
-			audioMsg->setAudioName("footStep2.wav");
-			audioMsg->isLoopable(true);
-			audioMsg->is3dSound(true);
-			audioMsg->streamSound(false);
-			audioMsg->stopSound(false);
-			
-			_entity->emitMessage(audioMsg);
-			_playingsound = true;
-		}
 
 		/*
 		if(_displacementDir != Vector3::ZERO){

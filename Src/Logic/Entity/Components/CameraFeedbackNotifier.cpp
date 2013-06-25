@@ -46,7 +46,8 @@ namespace Logic {
 														 _strafingDir(0),
 														 _landRecoverySpeed(0.007f),
 														 _currentLandOffset(0),
-														 _flashVisible(true){
+														 _flashVisible(true),
+														 _footStepRecover(false) {
 
 
 		_walkAnim.currentHorizontalPos = Math::HALF_PI;
@@ -269,8 +270,14 @@ namespace Logic {
 		_cameraComponent->rollCamera(_walkAnim.currentRoll);
 
 		_walkAnim.currentVerticalPos += _walkAnim.verticalSpeed * msecs;
+		if(_walkAnim.currentVerticalPos > ((3 * Math::PI) / 2) && !_footStepRecover) {
+			emitSound("footStep3.wav", false, true, false, false);
+			_footStepRecover = true;
+		}
+
 		if(_walkAnim.currentVerticalPos > ((2 * Math::PI) + Math::HALF_PI)) {
 			_walkAnim.currentVerticalPos = Math::HALF_PI;
+			_footStepRecover = false;
 		}
 
 		offset.y += sin(_walkAnim.currentVerticalPos) * _walkAnim.verticalOffset;
@@ -287,22 +294,26 @@ namespace Logic {
 
 			_hudWeaponComponent->playerIsLanding(hitForce, Math::PI / _landRecoverySpeed);
 
+			if(hitForce < -0.7f)
+				emitSound("land.wav", false, true, false, false);
+
 			// @deprecated
 			// Esto es temporal hasta que el sonido este bien hecho ---------------------
 			if(hitForce < -2.0f)
-				emitSound("landingMaleGrunt.wav", false, true, false);
+				emitSound("landingMaleGrunt.wav", false, true, false, false);
 		}
 	}
 
 	//________________________________________________________________________
 
-	void CCameraFeedbackNotifier::emitSound(const std::string &soundName, bool loopSound, bool play3d, bool streamSound) {
+	void CCameraFeedbackNotifier::emitSound(const std::string &soundName, bool loopSound, bool play3d, bool streamSound, bool stopSound) {
 		std::shared_ptr<CMessageAudio> audioMsg = std::make_shared<CMessageAudio>();
-			
+		
 		audioMsg->setAudioName(soundName);
 		audioMsg->isLoopable(loopSound);
 		audioMsg->is3dSound(play3d);
 		audioMsg->streamSound(streamSound);
+		audioMsg->stopSound(stopSound);
 
 		_entity->emitMessage(audioMsg);
 	}
