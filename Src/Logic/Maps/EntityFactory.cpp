@@ -364,6 +364,10 @@ namespace Logic {
 	void CEntityFactory::deferredDeleteEntity(Logic::CEntity *entity, bool toClients) {
 		assert(entity);
 		_pendingEntities.insert(entity);
+
+		//la borramos del worldstate para evitar problemas y crashes
+		CWorldState::getSingletonPtr()->deleteEntity(entity);
+
 		//Comprobamos si debe enviarse a los clientes, porque hay casos en los que no deberia
 		if( Net::CManager::getSingletonPtr()->imServer() && toClients )
 			Logic::CGameNetMsgManager::getSingletonPtr()->sendDestroyEntity( entity->getEntityID() );
