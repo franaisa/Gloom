@@ -301,7 +301,7 @@ Map = {
 		screamerScreamMaxDistance = 300,
 		
 			weaponsoulReaperName = "soulReaper",
-			weaponsoulReaperModel = "soulReaper.mesh",
+			weaponsoulReaperModel = "shotgun_2.mesh",
 			weaponsoulReaperModelYaw = 0.0,
 			weaponsoulReaperModelPitch = 0.0,
 			weaponsoulReaperOffset = {4.0,-3.5,-4.0},

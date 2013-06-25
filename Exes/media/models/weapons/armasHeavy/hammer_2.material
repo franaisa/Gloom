@@ -1,5 +1,5 @@
 
-material grenadeLauncher
+material hammer
 {
 	technique
 	{
@@ -8,10 +8,11 @@ material grenadeLauncher
 			ambient 0.588 0.588 0.588 1
 			diffuse 0.588 0.588 0.588 1
 			specular 0 0 0 1 10
+			scene_blend one one_minus_src_alpha
 
 			texture_unit
 			{
-				texture Mr_Freeze_Gun_D.tga
+				texture tex1.png
 			}
 		}
 

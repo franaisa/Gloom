@@ -91,8 +91,13 @@ namespace Logic {
 				break;
 			}
 		}
-	}
+	} // process
+	//__________________________________________________________________
 
+	void IWeaponFeedback::onDeactivate(){
+		stopPrimaryFire();
+		stopSecondaryFire();
+	} // onDeactivate
 	//__________________________________________________________________
 
 	void IWeaponFeedback::emitSound(const string &ruta, const string &sound, bool notIfPlay){
