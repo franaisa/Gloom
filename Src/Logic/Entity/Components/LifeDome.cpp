@@ -154,7 +154,7 @@ namespace Logic
 			_lifeGiven.insert(entityTouched->getEntityID());
 			std::shared_ptr<CMessageAddLife> addLifeMsg2 = std::make_shared<CMessageAddLife>();
 			addLifeMsg2->setAddLife(_lifePerFriend);
-			_entity->emitMessage(addLifeMsg2);
+			_owner->emitMessage(addLifeMsg2);
 		}
 
 	}
