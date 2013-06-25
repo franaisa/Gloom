@@ -100,7 +100,7 @@ FlashControl* HikariManager::createFlashOverlay(const Ogre::String& name, Ogre::
 			"An attempt was made to create a FlashControl named '" + name + "' when a FlashControl by the same name already exists!", 
 			"HikariManager::createFlashOverlay");*/
 	
-	return controls[name] = new FlashControl(name, viewport, width, height, position, 55/*zOrder? zOrder : ++zOrderCounter*/);
+	return controls[name] = new FlashControl(name, viewport, width, height, position, zOrder);
 }
 
 FlashControl* HikariManager::createFlashMaterial(const Ogre::String& name, int width, int height)

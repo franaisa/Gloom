@@ -65,6 +65,7 @@ package hud
 			minigun.visible = false;
 			railgun.visible = false;
 			
+			
 		}
 		
 		public function reset() {
@@ -142,13 +143,19 @@ package hud
 			}*/
 			lifebar.scaleX = (2 + (life / 100.0) ) / 3;
 			lifebar.scaleY = (2 + (life / 100.0) ) / 3;
+			
+			if (lifebar.scaleX > 1) {
+				lifebar.scaleX = 1;
+				lifebar.scaleY = 1;
+			}
+			
 			if ( life <= 15 ) {
 				lifebar.gotoAndPlay("danger");
 			}else {
 				lifebar.gotoAndPlay("idle");
 				lifebar.stop();
 			}
-			
+			lifenumber.text = life.toString();
 		}
 		
 		public function primarySkill() {

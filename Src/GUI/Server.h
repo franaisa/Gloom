@@ -117,7 +117,7 @@ namespace GUI
 		ejecutar todas las llamadas que quieras la interfaz de flash
 		*/
 
-		Hikari::FlashControl* addLayout(const std::string& layoutName, Hikari::Position pos, unsigned int width, unsigned int height);
+		Hikari::FlashControl* addLayout(const std::string& layoutName, Hikari::Position pos, unsigned int width, unsigned int height, unsigned short zOrder = 15);
 
 		/**
 		Método de creacion de un layout con un nombre, posicion y medidas del layout. Devuelve
@@ -130,7 +130,7 @@ namespace GUI
 		@return un FlashControl con el controlador del layout, listo para cargar el swf y bindear y
 		ejecutar todas las llamadas que quieras la interfaz de flash
 		*/
-		Hikari::FlashControl* addLayout(const std::string& layoutName, Hikari::Position pos, float relativePos);
+		Hikari::FlashControl* addLayout(const std::string& layoutName, Hikari::Position pos, float relativePos, unsigned short zOrder = 15);
 
 		/**
 		Método de creacion de un layout con un nombre, posicion y con el tamaño total de la pantalla. Devuelve
@@ -142,7 +142,7 @@ namespace GUI
 		@return un FlashControl con el controlador del layout, listo para cargar el swf y bindear y
 		ejecutar todas las llamadas que quieras la interfaz de flash
 		*/
-		Hikari::FlashControl* addLayout(const std::string& layoutName, Hikari::Position pos);
+		Hikari::FlashControl* addLayout(const std::string& layoutName, Hikari::Position pos, unsigned short zOrder = 15);
 
 		/**
 		Método de creacion de un layout con un nombre, posicion y con el tamaño total de la
