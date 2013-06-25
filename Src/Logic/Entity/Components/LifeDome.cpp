@@ -67,7 +67,10 @@ namespace Logic
 	bool CLifeDome::accept(const std::shared_ptr<CMessage>& message) {
 		Logic::TMessageType msgType = message->getMessageType();
 
-		return msgType == Message::DAMAGED || msgType == Message::SET_REDUCED_DAMAGE || msgType == Message::TOUCHED;
+		return msgType == Message::DAMAGED				|| 
+			   msgType == Message::SET_REDUCED_DAMAGE	|| 
+			   msgType == Message::TOUCHED				||
+			   msgType == Message::SET_OWNER;
 	} // accept
 	
 	//________________________________________________________________________
@@ -86,7 +89,7 @@ namespace Logic
 			}
 			case Message::TOUCHED:
 			{				
-				auto msg = std::static_pointer_cast<CMessageTouched>(message);
+				std::shared_ptr<CMessageTouched> msg = std::static_pointer_cast<CMessageTouched>(message);
 				lifeDomeTouched(msg->getEntity());
 				break;
 			}
@@ -112,13 +115,10 @@ namespace Logic
 
 	void CLifeDome::onFixedTick(unsigned int msecs) {
 		
-		if (_owner)
-		{
-			if (_cGraph )
-			{
+		if (_owner) {
+			if (_cGraph ) {
 				_entity->setPosition(_owner->getPosition());
-				if (_scale < 10.0f)
-				{
+				if (_scale < 10.0f) {
 					_scale += 0.005f;
 				}
 				_cGraph->changeScale(_scale);
