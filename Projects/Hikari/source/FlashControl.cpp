@@ -600,6 +600,8 @@ void FlashControl::update()
 	}
 	else 
 	{
+		if(name=="respawn")
+			std::cout << "respawn" << std::endl;
 		memset(mainBuffer, 0, dirtyBufSize);
 		memset(altBuffer, 255, dirtyBufSize);
 
