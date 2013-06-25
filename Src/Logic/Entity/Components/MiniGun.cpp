@@ -203,7 +203,7 @@ namespace Logic {
 		
 
 		//Direccion
-		Vector3 direction = Math::getDirection(_entity->getOrientation()); 
+		Vector3 direction = _entity->getOrientation() * Vector3::NEGATIVE_UNIT_Z; 
 		//Me dispongo a calcular la desviacion del arma, en el map.txt se pondra en grados de dispersion (0 => sin dispersion)
 		Ogre::Radian angle = Ogre::Radian( (  (((float)(rand() % 100))/100.0f) * (_dispersion)) /100);
 		//Esto hace un random total, lo que significa, por ejemplo, que puede que todas las balas vayan hacia la derecha 
@@ -272,7 +272,8 @@ namespace Logic {
 		Physics::SphereGeometry sphere  = Physics::CGeometryFactory::getSingletonPtr()->createSphere(3.5);
 		std::vector<Physics::CSweepHit> hits;
 		//Physics::CServer::getSingletonPtr()->sweepMultiple(sphere, (_entity->getPosition() + Vector3(0,_heightShoot,0)),_directionShoot,_screamerScreamMaxDistance,hitSpots, true);
-		Vector3 vDirectionShoot = Math::getDirection(_entity->getOrientation());
+		Vector3 vDirectionShoot =_entity->getOrientation() * Vector3::NEGATIVE_UNIT_Z;
+		vDirectionShoot.normalise();
 		Physics::CServer::getSingletonPtr()->sweepMultiple(sphere, (_entity->getPosition() + Vector3(0,_heightShoot,0)),vDirectionShoot, _distance,hits, false, Physics::CollisionGroup::ePLAYER );	
 
 		for(auto it = hits.begin(); it < hits.end(); ++it){
@@ -289,8 +290,10 @@ namespace Logic {
 
 		//Decal, lo calculo sin dispersión
 		Vector3 origin = _entity->getPosition()+Vector3(0.0f,_heightShoot,0.0f);
-		// Creamos el ray desde el origen en la direccion del raton (desvio ya aplicado)
-		Ray ray(origin, Math::getDirection(_entity->getOrientation()));
+		// Creamos el ray desde el origen en la direccion del raton
+		Vector3 direction= _entity->getOrientation() * Vector3::NEGATIVE_UNIT_Z;
+		direction.normalise();
+		Ray ray(origin, direction);
 		Physics::CRaycastHit hits2;
 		bool disp = Physics::CServer::getSingletonPtr()->raycastSingle(ray, _distance,hits2, Physics::CollisionGroup::eWORLD);
 		if (disp)
