@@ -89,13 +89,18 @@ namespace Logic {
 
 	//__________________________________________________________________
 
+	void CPlayerClass::onDeactivate() {
+		stopPrimarySkill();
+		stopSecondarySkill();
+	}// onDeactivate
+	//__________________________________________________________________
+
 	void CPlayerClass::onStart() {
 		std::shared_ptr<CMessageChangeMaterial> materialMsg = std::make_shared<CMessageChangeMaterial>();
 		materialMsg->setMaterialName("original");
 		_entity->emitMessage(materialMsg);
 		Logic::CWorldState::getSingletonPtr()->addChange(_entity,materialMsg);
 	}
-	
 	//__________________________________________________________________
 
 	void CPlayerClass::process(const std::shared_ptr<CMessage>& message) {

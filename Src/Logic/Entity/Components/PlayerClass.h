@@ -146,6 +146,9 @@ namespace Logic {
 		*/
 		virtual void onActivate();
 
+
+		virtual void onDeactivate();
+
 		
 		// =======================================================================
 		//                            METODOS PROPIOS

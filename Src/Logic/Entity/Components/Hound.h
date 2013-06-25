@@ -113,7 +113,7 @@ namespace Logic {
 		virtual void stopPrimarySkill();
 
 		/** Metodo a invocar cuando haya pasado el tiempo de la secondary skill*/
-		void endTimeSecondarySkill();
+		virtual void stopSecondarySkill();
 
 	protected:
 

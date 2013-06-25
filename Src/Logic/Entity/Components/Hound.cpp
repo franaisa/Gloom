@@ -152,16 +152,11 @@ namespace Logic {
 
 		_doingSecondarySkill = false;
 	}
-
 	//__________________________________________________________________
 
 	void CHound::primarySkill() {
 
 		//desactivo el rigid normal y lo cambio por un trigger
-
-
-
-
 		/*
 		//Arrancamos el cronometro
 		_berserkerTimer= _berserkerDuration;
@@ -212,7 +207,7 @@ namespace Logic {
 	} // secondarySkill
 	//__________________________________________________________________
 
-	void CHound::endTimeSecondarySkill(){
+	void CHound::stopSecondarySkill(){
 
 		printf("\n Terminando habilidad");
 
