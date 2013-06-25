@@ -1,17 +1,3 @@
-material NoMaterial
-{
-	technique
-	{
-		pass
-		{
-		}
-
-	}
-
-}
-
-
-
 material scrollogre
 {
 	technique Map#2
@@ -26,7 +12,7 @@ material scrollogre
 
 			texture_unit Map#4
 			{
-				texture old_paper.jpg
+				texture old_paper2.tga
 				filtering linear linear linear
 			}
 		}
