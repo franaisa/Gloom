@@ -189,6 +189,9 @@ namespace Logic {
 
 		CHudWeapons* _hudWeapon;
 
+		bool _primaryFireIsActive;
+		bool _secondaryFireIsActive;
+
 	}; // class IWeaponFeedback
 
 } // namespace Logic

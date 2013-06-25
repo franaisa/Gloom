@@ -34,7 +34,9 @@ using namespace std;
 
 namespace Logic {
 	
-	IWeaponFeedback::IWeaponFeedback(const string& weaponName) : _weaponName("weapon" + weaponName) {
+	IWeaponFeedback::IWeaponFeedback(const string& weaponName) : _weaponName("weapon" + weaponName),
+																 _primaryFireIsActive(false),
+																 _secondaryFireIsActive(false) {
 		// Nada que inicializar
 	}
 
@@ -73,20 +75,28 @@ namespace Logic {
 			case Message::PRIMARY_SHOOT: {
 				shared_ptr<CMessagePrimaryShoot> primaryShootMsg = static_pointer_cast<CMessagePrimaryShoot>(message);
 
-				if( primaryShootMsg->getShoot() )
+				if( primaryShootMsg->getShoot() ) {
 					primaryFire();
-				else
+					_primaryFireIsActive = true;
+				}
+				else {
 					stopPrimaryFire();
+					_primaryFireIsActive = false;
+				}
 
 				break;
 			}
 			case Message::SECONDARY_SHOOT: {
 				shared_ptr<CMessageSecondaryShoot> secondaryShootMsg = static_pointer_cast<CMessageSecondaryShoot>(message);
 
-				if( secondaryShootMsg->getShoot() )
+				if( secondaryShootMsg->getShoot() ) {
 					secondaryFire();
-				else
+					_secondaryFireIsActive = true;
+				}
+				else {
 					stopSecondaryFire();
+					_secondaryFireIsActive = false;
+				}
 
 				break;
 			}
@@ -95,8 +105,14 @@ namespace Logic {
 	//__________________________________________________________________
 
 	void IWeaponFeedback::onDeactivate(){
-		stopPrimaryFire();
-		stopSecondaryFire();
+		if(_primaryFireIsActive) {
+			stopPrimaryFire();
+			_primaryFireIsActive = false;
+		}
+		if(_secondaryFireIsActive) {
+			stopSecondaryFire();
+			_secondaryFireIsActive = false;
+		}
 	} // onDeactivate
 	//__________________________________________________________________
 
