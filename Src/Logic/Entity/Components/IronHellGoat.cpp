@@ -179,14 +179,9 @@ namespace Logic {
 	void CIronHellGoat::stopPrimaryFire() {
 		if(!_primaryFireIsActive) return;
 
-		
-
 		_primaryFireIsActive = false;
 
 		createFireBall();
-
-		// Emitimos el sonido de lanzar la bola de fuego
-		emitSound(_shootAudio, false, true, false);
 
 		// Reseteamos el reloj
 		_currentSpentAmmo = _ammoSpentTimer = _elapsedTime = 0;

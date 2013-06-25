@@ -58,8 +58,6 @@ namespace Logic {
 		// Parar la animacion de carga
 		_hudWeapon->loadingWeapon(false);
 		_hudWeapon->shootAnim(-1.85f);
-		//Sonido
-		emitSound(_weaponSound, false, true, false);
 	}
 
 	//__________________________________________________________________

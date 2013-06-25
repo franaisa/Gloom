@@ -162,6 +162,9 @@ namespace Logic {
 		
 		_primaryFireIsActive = false;
 
+		// Emitimos el sonido de lanzar la bola de fuego
+		emitSound(_shootAudio, false, true, false);
+
 		// Reseteamos el reloj
 		_currentSpentAmmo = _ammoSpentTimer = _elapsedTime = 0;
 	}
@@ -172,8 +175,6 @@ namespace Logic {
 		// Si es 0 significa que hay que restaurar al que habia por defecto,
 		// sino decrementamos conforme al porcentaje dado.
 		_primaryFireCooldown = percentage == 0 ? _defaultPrimaryFireCooldown : (_defaultPrimaryFireCooldown - (percentage * _primaryFireCooldown * 0.01f));
-
-
 	}
 
 }//namespace Logic
