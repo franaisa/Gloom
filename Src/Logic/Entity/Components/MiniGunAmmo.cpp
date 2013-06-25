@@ -22,6 +22,7 @@ de disparo de la cabra.
 
 #include "MiniGun.h"
 #include "MiniGunFeedback.h"
+#include "Logic/Messages/MessageAudio.h"
 
 using namespace std;
 
@@ -117,6 +118,7 @@ namespace Logic {
 						// las alternativas son, o enviar un mensaje por cada disparo, o q el componente de shoot tb tenga el cooldown
 							decrementAmmo();
 							_primaryFireCooldownTimer = _primaryFireCooldown;
+							
 						}else{
 							stopPrimaryFire();
 						}
@@ -170,6 +172,12 @@ namespace Logic {
 
 		_primaryFireCooldownTimer = _primaryFireCooldown;
 		decrementAmmo();
+
+		auto m = std:: make_shared<CMessageAudio>();
+		m->setAudioName("minigun.wav");
+		m->isLoopable(false);
+		m->is3dSound(true);
+		_entity->emitMessage(m);
 		
 	}
 	//__________________________________________________________________
@@ -178,6 +186,15 @@ namespace Logic {
 		IWeaponAmmo::stopPrimaryFire();
 
 		_primaryFireIsActive = false;
+
+		// He de parar aqui el sonido
+		/*
+		auto m = std:: make_shared<CMessageAudio>();
+		m->st
+		m->isLoopable(false);
+		m->is3dSound(true);
+		_entity->emitMessage(m);
+		*/
 	}
 	//__________________________________________________________________
 
@@ -190,6 +207,8 @@ namespace Logic {
 		// la 1º bala la debo de quitar aqui, si no esperara el cold down y disparara gratis
 		decrementAmmo();
 		++_currentSpentSecondaryAmmo;
+
+		//Inicio el sonido de carga del arma
 	}
 	//__________________________________________________________________
 
@@ -202,6 +221,13 @@ namespace Logic {
 
 		// Reseteamos el reloj
 		_currentSpentSecondaryAmmo = _ammoSpentTimer = 0;
+
+		// Termino el sonido del disparo cargao
+		auto m = std:: make_shared<CMessageAudio>();
+		m->setAudioName("minigun.wav");
+		m->isLoopable(false);
+		m->is3dSound(true);
+		_entity->emitMessage(m);
 	}
 	//__________________________________________________________________
 

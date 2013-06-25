@@ -68,6 +68,8 @@ namespace Logic
 
 		void reduceCooldowns(int percentage);
 
+		virtual void onStart();
+
 		float getPrimaryCoolDown();
 		float getSecondaryCoolDown();
 		bool isPrimaryPassive();

@@ -55,17 +55,7 @@ namespace Logic {
 		// en cuenta la municion y las demas historias
 		virtual void primaryFire();
 
-		//__________________________________________________________________
-
-		virtual void stopPrimaryFire();
-
-		//__________________________________________________________________
-
-		virtual void secondaryFire();
-
-		//__________________________________________________________________
-
-		virtual void stopSecondaryFire();
+		virtual void secondaryFire() { }
 	};
 
 	REG_FACTORY(CSoulReaperFeedback);

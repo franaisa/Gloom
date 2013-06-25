@@ -39,6 +39,7 @@ que controla la vida de un personaje.
 #include "Logic/Messages/MessagePlayerDead.h"
 #include "Logic/Messages/MessageCameraToEnemy.h"
 #include "Logic/Messages/MessageSetReducedDamage.h"
+#include "Logic/Messages/MessageHud.h"
 
 namespace Logic {
 	
@@ -105,6 +106,7 @@ namespace Logic {
 		_currentShield = 0;
 		//_respawning = false;
 
+		// @deprecated
 		// Actualizamos la info del HUD
 		std::shared_ptr<CMessageHudLife> hudLifeMsg = std::make_shared<CMessageHudLife>();
 		hudLifeMsg->setLife(_currentLife);
@@ -169,6 +171,7 @@ namespace Logic {
 			_currentLife =  _damageOverTime < _currentLife ? (_currentLife - _damageOverTime) : 1;
 
 			// Actualización la información de vida del HUD
+			// @deprecated
 			std::shared_ptr<CMessageHudLife> hudLifeMsg = std::make_shared<CMessageHudLife>();
 			hudLifeMsg->setLife(_currentLife);
 			_entity->emitMessage(hudLifeMsg);	
@@ -199,6 +202,14 @@ namespace Logic {
 		else {
 			triggerHurtSound();
 		}
+
+		// @deprecated -> guarreo para el gamelab por falta de tiempo, pero
+		// esto aqui esta muy muy mal hecho (niños malos xD)
+
+		std::shared_ptr<CMessageHud> hudMsg = std::make_shared<CMessageHud>();
+		hudMsg->setType(CMessageHud::HudType::HIT);
+		enemy->emitMessage(hudMsg);
+
 	}// damaged
 	
 	//________________________________________________________________________

@@ -46,7 +46,7 @@ namespace Application {
 	bool CGameClientState::init() {
 		_netMgr = Net::CManager::getSingletonPtr();
 		// Iniciamos el menu de seleccion de personaje
-		_seleccion = GUI::CServer::getSingletonPtr()->addLayout("seleccion", Hikari::Position(Hikari::Center));
+		_seleccion = GUI::CServer::getSingletonPtr()->addLayout("seleccion", Hikari::Position(Hikari::Center), (unsigned short) 55);
 		_seleccion->load("SeleccionPersonaje.swf");
 		_seleccion->bind("selected",Hikari::FlashDelegate(this, &CGameClientState::classSelected));
 		_seleccion->hide();

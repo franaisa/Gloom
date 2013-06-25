@@ -49,28 +49,6 @@ namespace Logic {
 	void CSoulReaperFeedback::primaryFire() {
 		// Animacion de golpe con el soul Reaper
 		_hudWeapon->shootAnim(-1.85f);
-		//Sonido
-		emitSound(_weaponSound, false, true, false);
 	} // primaryFire
-	//__________________________________________________________________
-
-	void CSoulReaperFeedback::stopPrimaryFire() {
-		// por si se quiere hacer algo lo dejo aqui
-		
-	} // stopPrimaryFire
-	//__________________________________________________________________
-
-	void CSoulReaperFeedback::secondaryFire() {
-		// Iniciar efecto de atraccion de objeto
-		//Sonido
-		emitSound(_weaponSound, false, true, false);
-	} // secondaryFire
-	//__________________________________________________________________
-
-	void CSoulReaperFeedback::stopSecondaryFire() {
-		// finalizar efecto de atraccion de objeto
-		
-	} // stopSecondaryFire
-	//__________________________________________________________________
 
 }//namespace Logic

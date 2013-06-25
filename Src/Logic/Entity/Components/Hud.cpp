@@ -158,7 +158,9 @@ namespace Logic{
 					case CMessageHud::HudType::SECONDARY_SKILL:
 						secondarySkill();
 						break;
-					break;
+					case CMessageHud::HudType::HIT:
+						_hud->callFunction( "hit", Hikari::Args());
+						break;
 				}
 			}
 

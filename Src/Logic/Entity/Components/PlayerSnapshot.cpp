@@ -124,13 +124,13 @@ namespace Logic {
 		shared_ptr<CMessagePlayerSnapshot> snapshotMsg = make_shared<CMessagePlayerSnapshot>();
 		snapshotMsg->setTransformBuffer(_transformBuffer);
 		snapshotMsg->setAnimationBuffer(_animationBuffer);
-		//snapshotMsg->setAudioBuffer(_audioBuffer);
+		snapshotMsg->setAudioBuffer(_audioBuffer);
 		_entity->emitMessage(snapshotMsg);
 
 		// Limpiar el buffer para la siguiente snapshot
 		_transformBuffer.clear();
 		_animationBuffer.clear();
-		//_audioBuffer.clear();
+		_audioBuffer.clear();
 	}
 
 	//__________________________________________________________________
