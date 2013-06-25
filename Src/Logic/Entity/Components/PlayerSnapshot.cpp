@@ -101,6 +101,7 @@ namespace Logic {
 				info.loopSound = audioMsg->isLoopable();
 				info.play3d = audioMsg->is3dSound();
 				info.streamSound = audioMsg->streamSound();
+				info.stopSound = audioMsg->stopSound();
 
 				_audioBuffer.push_back(info);
 

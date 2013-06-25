@@ -100,13 +100,14 @@ namespace Logic {
 	} // onDeactivate
 	//__________________________________________________________________
 
-	void IWeaponFeedback::emitSound(const string &soundName, bool loopSound, bool play3d, bool streamSound){
+	void IWeaponFeedback::emitSound(const string &soundName, bool loopSound, bool play3d, bool streamSound, bool stopSound){
 		shared_ptr<CMessageAudio> audioMsg = make_shared<CMessageAudio>();
 		
 		audioMsg->setAudioName(soundName);
 		audioMsg->isLoopable(loopSound);
 		audioMsg->is3dSound(play3d);
 		audioMsg->streamSound(streamSound);
+		audioMsg->stopSound(stopSound);
 			
 		_entity->emitMessage(audioMsg);
 	} // emitSound

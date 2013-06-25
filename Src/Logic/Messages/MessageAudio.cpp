@@ -9,7 +9,8 @@ namespace Logic {
 	CMessageAudio::CMessageAudio() : CMessage(Message::AUDIO),
 									 _play3d(false),
 									 _loop(false),
-									 _stream(false) {
+									 _stream(false),
+									 _stop(false) {
 		// Nada que hacer
 	} //
 	//----------------------------------------------------------
@@ -47,13 +48,28 @@ namespace Logic {
 		return _stream;
 	}
 
+	void CMessageAudio::stopSound(bool stop) {
+		this->_stop = stop;
+	}
+
+	bool CMessageAudio::stopSound() {
+		return _stop;
+	}
+
 	Net::CBuffer CMessageAudio::serialize() {
 		Net::CBuffer buffer;
 		buffer.serialize( std::string("CMessageAudio"), true );
 		buffer.serialize(_name, false);
-		buffer.write( &_play3d, sizeof(_play3d) );
-		buffer.write( &_loop, sizeof(_loop) );
-		buffer.write( &_stream, sizeof(_stream) );
+
+		// Comprimimos en un byte todos los booleanos
+		unsigned char booleanMask = 0;
+
+		booleanMask |= _loop	? (1 << 0) : 0;
+		booleanMask |= _play3d	? (1 << 1) : 0;
+		booleanMask |= _stream	? (1 << 2) : 0;
+		booleanMask |= _stop	? (1 << 3) : 0;
+
+		buffer.write( &booleanMask, sizeof(booleanMask) );
 
 		return buffer;
 	}//
@@ -61,9 +77,14 @@ namespace Logic {
 
 	void CMessageAudio::deserialize(Net::CBuffer& buffer) {
 		buffer.deserialize(_name);
-		buffer.read( &_play3d, sizeof(_play3d) );
-		buffer.read( &_loop, sizeof(_loop) );
-		buffer.read( &_stream, sizeof(_stream) );
+
+		unsigned char booleanMask;
+		buffer.read( &booleanMask, sizeof(booleanMask) );
+
+		_loop	= booleanMask & (1 << 0);
+		_play3d	= booleanMask & (1 << 1);
+		_stream	= booleanMask & (1 << 2);
+		_stop	= booleanMask & (1 << 3);
 	}
 
 };

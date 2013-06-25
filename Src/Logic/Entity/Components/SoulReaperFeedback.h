@@ -55,7 +55,10 @@ namespace Logic {
 		// en cuenta la municion y las demas historias
 		virtual void primaryFire();
 
-		virtual void secondaryFire() { }
+		virtual void secondaryFire() { 
+			//Sonido
+			emitSound("hammer.wav", false, true, false, false); 
+		}
 	};
 
 	REG_FACTORY(CSoulReaperFeedback);

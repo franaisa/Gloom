@@ -151,7 +151,7 @@ namespace Logic {
 
 	bool CMiniGunAmmo::canUsePrimaryFire() {
 		if(_currentAmmo==0)
-			emitSound(_noAmmoSound, false, true, false);
+			emitSound(_noAmmoSound, false, true, false, false);
 		return _primaryFireCooldownTimer == 0 && _currentAmmo > 0 && !_secondaryFireIsActive;
 	}
 
@@ -159,7 +159,7 @@ namespace Logic {
 
 	bool CMiniGunAmmo::canUseSecondaryFire() {
 		if(_currentAmmo==0)
-			emitSound(_noAmmoSound, false, true, false);
+			emitSound(_noAmmoSound, false, true, false, false);
 		return _secondaryFireCooldownTimer == 0 && _currentAmmo > 0 && !_primaryFireIsActive;
 	}
 

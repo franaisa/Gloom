@@ -99,6 +99,7 @@ namespace Logic {
 			booleanMask |= _audioBuffer[i].loopSound	? (1 << 0) : 0;
 			booleanMask |= _audioBuffer[i].play3d		? (1 << 1) : 0;
 			booleanMask |= _audioBuffer[i].streamSound	? (1 << 2) : 0;
+			booleanMask |= _audioBuffer[i].stopSound	? (1 << 3) : 0;
 
 			buffer.write( &booleanMask, sizeof(booleanMask) );
 		}
@@ -153,6 +154,7 @@ namespace Logic {
 			_audioBuffer[i].loopSound	= booleanMask & (1 << 0);
 			_audioBuffer[i].play3d		= booleanMask & (1 << 1);
 			_audioBuffer[i].streamSound	= booleanMask & (1 << 2);
+			_audioBuffer[i].stopSound	= booleanMask & (1 << 3);
 		}
 	}
 

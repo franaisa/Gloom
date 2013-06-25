@@ -112,9 +112,6 @@ namespace Logic {
 	void CSoulReaperAmmo::primaryFire() {
 		IWeaponAmmo::primaryFire();
 
-		//Sonido
-		emitSound("hammer.wav", false, true, false);
-
 		_primaryFireCooldownTimer = _primaryFireCooldown;
 
 		_primaryFireIsActive = true;
@@ -131,9 +128,6 @@ namespace Logic {
 
 	void CSoulReaperAmmo::secondaryFire() {
 		IWeaponAmmo::secondaryFire();
-
-		//Sonido
-		emitSound("hammer.wav", false, true, false);
 
 		_secondaryFireIsActive = true;
 
