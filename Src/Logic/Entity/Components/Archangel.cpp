@@ -169,7 +169,6 @@ namespace Logic {
 		setOwnerMsg->setOwner(_entity);
 		_lifeDome->emitMessage(setOwnerMsg);
 		
-
 		_doingSecondarySkill = true;
 	}
 
