@@ -220,7 +220,8 @@ namespace Net {
 		Vector3 parcial=Math::getEulerYawPitchRoll(data);
 		serialize(parcial.x);
 		serialize(parcial.y);
-		serialize(parcial.z);
+		// @deprecated No enviamos el roll ya que en ningun momento lo estamos utilizando
+		//serialize(parcial.z);
 	}
 
 	//__________________________________________________________________
@@ -231,9 +232,10 @@ namespace Net {
 		// Obtenemos el Yaw y el Pitch
 		read(&yaw, sizeof(yaw));
 		read(&pitch, sizeof(pitch));
-		read(&roll, sizeof(roll));
+		// @deprecated Se acabo la lectura ya que el roll lo suprimimos para ganar espacio
+		//read(&roll, sizeof(roll));
 
-		data=Math::setQuaternion(yaw,pitch,roll);
+		data=Math::setQuaternion(yaw,pitch,0);
 	}
 
 	//__________________________________________________________________
