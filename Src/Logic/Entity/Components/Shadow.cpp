@@ -180,7 +180,7 @@ namespace Logic {
 
 		float flashFactor;
 
-		flashFactor = 45 * (angle/10);
+		flashFactor = 22 * (angle/10);
 
 
 
