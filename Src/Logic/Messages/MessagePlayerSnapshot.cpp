@@ -61,6 +61,8 @@ namespace Logic {
 	Net::CBuffer CMessagePlayerSnapshot::serialize() {
 		// Tamaño igual = cabecera(int) + tambuffer(int) + num matrices (5 floats * tamBuffer)
 		unsigned int transformBufferSize( _transformBuffer.size() ), animationBufferSize( _animationBuffer.size() ), audioBufferSize( _audioBuffer.size() );
+		// Para mandar una ristra de booleanos usaremos un unico byte
+		unsigned char booleanMask;
 
 		Net::CBuffer buffer;
 		buffer.serialize(std::string("CMessagePlayerSnapshot"), true);
@@ -71,24 +73,34 @@ namespace Logic {
 			buffer.serialize(_transformBuffer[i]);
 		}
 		
+		booleanMask = 0;
+
 		// Copiamos las animaciones que se hayan producido
 		buffer.serialize(animationBufferSize);
 		for(unsigned int i = 0; i < animationBufferSize; ++i) {
 			buffer.serialize(_animationBuffer[i].tick);
 			buffer.serialize(_animationBuffer[i].animName, false);
-			buffer.write(&_animationBuffer[i].loop, sizeof(bool));
-			buffer.write(&_animationBuffer[i].stop, sizeof(bool));
-			buffer.write(&_animationBuffer[i].exclude, sizeof(bool));
+
+			booleanMask |= _animationBuffer[i].loop		? (1 << 0) : 0;
+			booleanMask |= _animationBuffer[i].stop		? (1 << 1) : 0;
+			booleanMask |= _animationBuffer[i].exclude	? (1 << 2) : 0;
+
+			buffer.write( &booleanMask, sizeof(booleanMask) );
 		}
 		
+		booleanMask = 0;
+
 		// Copiamos los sonidos que se hayan reproducido
 		buffer.serialize(audioBufferSize);
 		for(unsigned int i = 0; i < audioBufferSize; ++i) {
 			buffer.serialize(_audioBuffer[i].tick);
 			buffer.serialize(_audioBuffer[i].audioName, false);
-			buffer.write(&_audioBuffer[i].loopSound, sizeof(bool));
-			buffer.write(&_audioBuffer[i].play3d, sizeof(bool));
-			buffer.write(&_audioBuffer[i].streamSound, sizeof(bool));
+			
+			booleanMask |= _audioBuffer[i].loopSound	? (1 << 0) : 0;
+			booleanMask |= _audioBuffer[i].play3d		? (1 << 1) : 0;
+			booleanMask |= _audioBuffer[i].streamSound	? (1 << 2) : 0;
+
+			buffer.write( &booleanMask, sizeof(booleanMask) );
 		}
 
 		return buffer;
@@ -98,6 +110,7 @@ namespace Logic {
 
 	void CMessagePlayerSnapshot::deserialize(Net::CBuffer& buffer) {
 		int transformBufferSize, animationBufferSize, audioBufferSize;
+		unsigned char booleanMask;
 		// Deserializar el tamaño del buffer
 		buffer.deserialize(transformBufferSize);
 
@@ -119,9 +132,11 @@ namespace Logic {
 		for(int i = 0; i < animationBufferSize; ++i) {
 			buffer.deserialize(_animationBuffer[i].tick);
 			buffer.deserialize(_animationBuffer[i].animName);
-			buffer.read(&_animationBuffer[i].loop, sizeof(bool));
-			buffer.read(&_animationBuffer[i].stop, sizeof(bool));
-			buffer.read(&_animationBuffer[i].exclude, sizeof(bool));
+			buffer.read( &booleanMask, sizeof(booleanMask) );
+
+			_animationBuffer[i].loop	= booleanMask & (1 << 0);
+			_animationBuffer[i].stop	= booleanMask & (1 << 1);
+			_animationBuffer[i].exclude	= booleanMask & (1 << 2);
 		}
 
 		buffer.deserialize(audioBufferSize);
@@ -133,9 +148,11 @@ namespace Logic {
 		for(int i = 0; i < audioBufferSize; ++i) {
 			buffer.deserialize(_audioBuffer[i].tick);
 			buffer.deserialize(_audioBuffer[i].audioName);
-			buffer.read(&_audioBuffer[i].loopSound, sizeof(bool));
-			buffer.read(&_audioBuffer[i].play3d, sizeof(bool));
-			buffer.read(&_audioBuffer[i].streamSound, sizeof(bool));
+			buffer.read( &booleanMask, sizeof(booleanMask) );
+
+			_audioBuffer[i].loopSound	= booleanMask & (1 << 0);
+			_audioBuffer[i].play3d		= booleanMask & (1 << 1);
+			_audioBuffer[i].streamSound	= booleanMask & (1 << 2);
 		}
 	}
 
