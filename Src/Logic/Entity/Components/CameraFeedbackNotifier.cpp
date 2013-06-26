@@ -270,14 +270,14 @@ namespace Logic {
 		_cameraComponent->rollCamera(_walkAnim.currentRoll);
 
 		_walkAnim.currentVerticalPos += _walkAnim.verticalSpeed * msecs;
-		if(_walkAnim.currentVerticalPos > ((3 * Math::PI) / 2) && !_footStepRecover) {
+		/*if(_walkAnim.currentVerticalPos > ((3 * Math::PI) / 2) && !_footStepRecover) {
 			emitSound("footStep3.wav", false, true, false, false);
 			_footStepRecover = true;
-		}
+		}*/
 
 		if(_walkAnim.currentVerticalPos > ((2 * Math::PI) + Math::HALF_PI)) {
 			_walkAnim.currentVerticalPos = Math::HALF_PI;
-			_footStepRecover = false;
+			//_footStepRecover = false;
 		}
 
 		offset.y += sin(_walkAnim.currentVerticalPos) * _walkAnim.verticalOffset;
