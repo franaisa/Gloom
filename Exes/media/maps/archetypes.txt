@@ -55,7 +55,7 @@ Map = {
 		rollCamera = 0.15,
 
 		ticksPerSample = 2,
-		samplesPerSnapshot = 3,
+		samplesPerSnapshot = 2,
 		
 		physic_shape = "capsule",
 		physic_radius = 3,
@@ -265,7 +265,7 @@ Map = {
 		rollCamera = 0.15,
 
 		ticksPerSample = 2,
-		samplesPerSnapshot = 3,
+		samplesPerSnapshot = 2,
 
 		physic_shape = "capsule",
 		physic_radius = 3,
@@ -489,7 +489,7 @@ Map = {
 
 		
 		ticksPerSample = 2,
-		samplesPerSnapshot = 3,
+		samplesPerSnapshot = 2,
 		
 		physic_shape = "capsule",
 		physic_radius = 3,
@@ -701,7 +701,7 @@ Map = {
 		rollCamera = 0.15,
 
 		ticksPerSample = 2,
-		samplesPerSnapshot = 3,
+		samplesPerSnapshot = 2,
 		
 		physic_shape = "capsule",
 		physic_radius = 3,
@@ -910,7 +910,7 @@ Map = {
 		rollCamera = 0.15,
 
 		ticksPerSample = 2,
-		samplesPerSnapshot = 3,
+		samplesPerSnapshot = 2,
 		
 		physic_shape = "capsule",
 		physic_radius = 3,
@@ -1133,7 +1133,7 @@ Map = {
 		rollCamera = 0.15,
 
 		ticksPerSample = 2,
-		samplesPerSnapshot = 3,
+		samplesPerSnapshot = 2,
 		
 		physic_shape = "capsule",
 		physic_radius = 3,
@@ -1342,7 +1342,7 @@ Map = {
 		rollCamera = 0.15,
 
 		ticksPerSample = 2,
-		samplesPerSnapshot = 3,
+		samplesPerSnapshot = 2,
 
 		physic_shape = "capsule",
 		physic_radius = 3,
@@ -1554,7 +1554,7 @@ Map = {
 		rollCamera = 0.15,
 
 		ticksPerSample = 2,
-		samplesPerSnapshot = 3,
+		samplesPerSnapshot = 2,
 
 		physic_shape = "capsule",
 		physic_radius = 3,
@@ -2126,7 +2126,7 @@ Map = {
 		physic_group = 17,
 		physic_groupList = "14, 15, 16", 
 		ticksPerSample = 2,
-		samplesPerSnapshot = 3,
+		samplesPerSnapshot = 2,
 	},
 	
 	MagneticBullet = {
