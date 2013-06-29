@@ -95,7 +95,7 @@ namespace Logic {
 	//__________________________________________________________________
 
 	void ISpellFeedback::onActivate() { 
-		printf("\n Activando hechizo con nombre: %s",_spellName.c_str());
+		//printf("\n Activando hechizo con nombre: %s",_spellName.c_str());
 	} // onActivate
 	//__________________________________________________________________
 

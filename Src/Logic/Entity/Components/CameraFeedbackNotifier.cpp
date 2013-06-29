@@ -103,7 +103,10 @@ namespace Logic {
 		switch( message->getMessageType() ) {
 			case Message::DAMAGED: {
 				std::shared_ptr<CMessageDamaged> damageMess = std::static_pointer_cast<CMessageDamaged>(message);
-				damaged(damageMess->getEnemy()->getPosition());
+				CEntity* enemy = damageMess->getEnemy();
+				if(enemy != NULL)
+					damaged( enemy->getPosition() );
+				
 				break;
 			}
 			/*case Message::SET_REDUCED_DAMAGE: {
