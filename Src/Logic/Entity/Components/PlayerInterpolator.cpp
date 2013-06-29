@@ -141,6 +141,8 @@ namespace Logic {
 		if( !_transformBuffer.empty() && !_connecting ) {
 			// Posicionamos el grafico y el controlador fisico donde nos indique
 			// el buffer de posiciones interpolado
+			_extrapolatedTicks = 0;
+
 			Matrix4 newTransform = _transformBuffer.front();
 			Vector3 newPosition = newTransform.getTrans();
 			_extrapolatedMotion = newPosition - _entity->getPosition();
