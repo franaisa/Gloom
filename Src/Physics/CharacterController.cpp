@@ -25,21 +25,35 @@
 #include <PxPhysics.h>
 #include <PxScene.h>
 #include <PxShape.h>
+#include <PxArticulation.h>
 #include <PxRigidDynamic.h>
+#include <PxAggregate.h>
 #include <extensions/PxDefaultSimulationFilterShader.h>
 #include <characterkinematic/PxCapsuleController.h>
 #include <characterkinematic/PxController.h>
 #include <characterkinematic/PxControllerManager.h>
 
+#include <PxStringTable.h>
+#include <cooking/PxCooking.h>
+#include <extensions/PxDefaultSimulationFilterShader.h>
+#include <extensions/PxSimpleFactory.h>
+#include <extensions/PxDefaultStreams.h>
+#include <geometry/PxGeometryHelpers.h>
+#include <RepX/RepXUtility.h>
+
 using namespace physx;
 
 namespace Physics {
 
-	CCharacterController::CCharacterController() {
+	CCharacterController::CCharacterController() : _controller(NULL), _ragdoll(NULL) {
 		// Obtenemos la sdk de physics y comprobamos que ha sido inicializada
 		_physxSDK = Physics::CServer::getSingletonPtr()->getPhysxSDK();
 		assert(_physxSDK && "No se ha inicializado physX");
 		
+		// Obtenemos la clase de cocinado de physX y comprobamos que ha sido inicializada
+		_cooking = Physics::CServer::getSingletonPtr()->getCooking();
+		assert(_cooking && "El cocinado de physx no ha sido activado");
+
 		// Obtenemos la escena de physx y comprobamos que ha sido inicializada
 		_scene = Physics::CServer::getSingletonPtr()->getActiveScene();
 		assert(_scene && "No existe una escena fisica");
@@ -62,12 +76,70 @@ namespace Physics {
 			_controller = NULL;
 		}
 
+		if(_ragdoll != NULL) {
+			Physics::CServer::getSingletonPtr()->destroyAggregate(_ragdoll);
+			_ragdoll = NULL;
+		}
+
 		// Fijamos los punteros a physx como nulos
 		_physxSDK = NULL;
 		_scene = NULL;
 		_controllerManager = NULL;
 		_collisionManager = NULL;
 	} // ~CCharacterController
+
+	//________________________________________________________________________
+
+	void CCharacterController::loadRagdoll(const std::string &file, int group, const std::vector<int>& groupList, const Logic::IPhysics* component) {
+		assert(_scene);
+
+		// Preparar parámetros para deserializar
+		PxDefaultFileInputData data(file.c_str());
+		PxCollection* bufferCollection = _physxSDK->createCollection();
+		PxCollection* sceneCollection = _physxSDK->createCollection();
+		PxStringTable* stringTable = NULL; 
+		PxUserReferences* externalRefs = NULL; 
+		PxUserReferences* userRefs = NULL; 
+
+		// Deserializar a partir del fichero RepX
+		repx::deserializeFromRepX(data, *_physxSDK, *_cooking, stringTable, externalRefs, 
+								  *bufferCollection, *sceneCollection, userRefs);
+
+		// Añadir entidades físicas a la escena
+		_physxSDK->addCollection(*sceneCollection, *_scene);
+
+		// Asumimos que los datos contenidos en el fichero corresponden a los colliders
+		// y articulaciones de un ragdoll
+		PxSerializable* serializable;
+		PxActor* actor = NULL;
+		PxRigidActor* rigid = NULL;
+		for (unsigned int i = 0; i < sceneCollection->getNbObjects(); ++i) {
+			serializable = sceneCollection->getObject(i);
+			
+			// Las articulaciones también son actores
+			if( actor = serializable->is<PxActor>() ) {
+				// Añadimos el actor al conjunto de actores del ragdoll
+				_ragdoll->addActor(*actor);
+				// Anotamos el componente lógico asociado a la entidad física
+				actor->userData = (void*)component;
+
+				// Si es un collider y no una articulación (hitbox) le asignamos
+				// los filtros de colisión que correspondan
+				if( rigid = serializable->is<PxRigidActor>() ) {
+					// Establecemos el grupo de colision
+					PxSetGroup(*rigid, group);
+					// Establecemos los filtros de colisión
+					Physics::CServer::getSingletonPtr()->setupFiltering(rigid, group, groupList);
+				}
+			}
+		}
+
+		_scene->addAggregate(*_ragdoll);
+
+		// Liberar recursos
+		bufferCollection->release();
+		sceneCollection->release();
+	}
 
 	//________________________________________________________________________
 

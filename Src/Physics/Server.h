@@ -36,6 +36,7 @@ namespace Physics {
 
 namespace physx {
 	class PxActor;
+	class PxAggregate;
 	class PxAllocatorCallback;
 	class PxCapsuleController;
 	class PxController;
@@ -197,6 +198,16 @@ namespace Physics {
 		@param actor Actor físico asociado a la entidad.
 		 */
 		void destroyActor(physx::PxActor* actor);
+
+		//________________________________________________________________________
+
+		/**
+		Elimina un agregado de la escena junto con todos los actores asociados a dicho
+		agregado.
+
+		@param aggregate Agregado asociado a la entidad.
+		 */
+		void destroyAggregate(physx::PxAggregate* aggregate);
 
 
 		// =======================================================================
