@@ -501,6 +501,15 @@ namespace Physics {
 		//________________________________________________________________________
 
 		/**
+		Devuelve un puntero a foundation.
+
+		@return Puntero a foundation.
+		*/
+		physx::PxFoundation* getFoundation() const { return _foundation; }
+
+		//________________________________________________________________________
+
+		/**
 		Devuelve un puntero al gestor de colisiones.
 
 		@return Puntero al gestor de colisiones.

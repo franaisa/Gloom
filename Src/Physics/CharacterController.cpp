@@ -34,6 +34,7 @@
 #include <characterkinematic/PxControllerManager.h>
 
 #include <PxStringTable.h>
+#include <extensions/PxStringTableExt.h>
 #include <cooking/PxCooking.h>
 #include <extensions/PxDefaultSimulationFilterShader.h>
 #include <extensions/PxSimpleFactory.h>
@@ -97,7 +98,7 @@ namespace Physics {
 		PxDefaultFileInputData data(file.c_str());
 		PxCollection* bufferCollection = _physxSDK->createCollection();
 		PxCollection* sceneCollection = _physxSDK->createCollection();
-		PxStringTable* stringTable = NULL; 
+		PxStringTable* stringTable = &PxStringTableExt::createStringTable( CServer::getSingletonPtr()->getFoundation()->getAllocatorCallback() );
 		PxUserReferences* externalRefs = NULL; 
 		PxUserReferences* userRefs = NULL; 
 
@@ -106,14 +107,19 @@ namespace Physics {
 								  *bufferCollection, *sceneCollection, userRefs);
 
 		// Añadir entidades físicas a la escena
-		_physxSDK->addCollection(*sceneCollection, *_scene);
+		//_physxSDK->addCollection(*sceneCollection, *_scene);
+		// Calculamos el numero de entidades fisicas leidas
+		PxU32 nbActors = sceneCollection->getNbObjects();
+		// Creamos un agregado con el numero maximo de actores leidos y activamos
+		// las colisiones para el propio ragdoll (selfcollisions = true)
+		_ragdoll = _physxSDK->createAggregate(nbActors, true);
 
 		// Asumimos que los datos contenidos en el fichero corresponden a los colliders
 		// y articulaciones de un ragdoll
 		PxSerializable* serializable;
 		PxActor* actor = NULL;
 		PxRigidActor* rigid = NULL;
-		for (unsigned int i = 0; i < sceneCollection->getNbObjects(); ++i) {
+		for (unsigned int i = 0; i < nbActors; ++i) {
 			serializable = sceneCollection->getObject(i);
 			
 			// Las articulaciones también son actores
@@ -134,6 +140,7 @@ namespace Physics {
 			}
 		}
 
+		// Añadimos el agregado a la escena
 		_scene->addAggregate(*_ragdoll);
 
 		// Liberar recursos

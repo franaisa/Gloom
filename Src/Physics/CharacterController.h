@@ -31,6 +31,7 @@ namespace physx {
 	class PxRigidActor;
 	class PxAggregate;
 	class PxCooking;
+	class PxStringTable;
 }
 
 namespace Physics {
@@ -227,7 +228,7 @@ namespace Physics {
 		/** Controlador de la cápsula del controller. */
 		physx::PxCapsuleController* _controller;
 
-		/** Agregado que contiene todos los actores y articulaciones que pertenecen al ragdoll */
+		/** Agregado que contiene todos los actores y articulaciones que pertenecen al ragdoll. */
 		physx::PxAggregate* _ragdoll;
 
 		/** Gestor de controladores en PhysX. */
