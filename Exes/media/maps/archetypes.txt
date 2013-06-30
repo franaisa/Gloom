@@ -55,7 +55,7 @@ Map = {
 		rollCamera = 0.15,
 
 		ticksPerSample = 2,
-		samplesPerSnapshot = 3,
+		samplesPerSnapshot = 2,
 		
 		physic_shape = "capsule",
 		physic_radius = 3,
@@ -169,7 +169,7 @@ Map = {
 			weaponironHellGoatMaxAmmoPerShot = 5,
 			weaponironHellGoatDefaultFireBallRadius = 2.0,
 			weaponironHellGoatDefaultFireBallSpeed = 0.15,
-			weaponironHellGoatDefaultFireBallExplotionRadius = 30.0,
+			weaponironHellGoatDefaultFireBallExplotionRadius = 10.0,
 			weaponironHellGoatDefaultFireBallDamage = 50.0,
 
 			weaponironHellGoatMaxFireBallRadius = 5.0,
@@ -265,7 +265,7 @@ Map = {
 		rollCamera = 0.15,
 
 		ticksPerSample = 2,
-		samplesPerSnapshot = 3,
+		samplesPerSnapshot = 2,
 
 		physic_shape = "capsule",
 		physic_radius = 3,
@@ -392,7 +392,7 @@ Map = {
 			weaponironHellGoatMaxAmmoPerShot = 5,
 			weaponironHellGoatDefaultFireBallRadius = 2.0,
 			weaponironHellGoatDefaultFireBallSpeed = 0.15,
-			weaponironHellGoatDefaultFireBallExplotionRadius = 30.0,
+			weaponironHellGoatDefaultFireBallExplotionRadius = 10.0,
 			weaponironHellGoatDefaultFireBallDamage = 50.0,
 
 			weaponironHellGoatMaxFireBallRadius = 5.0,
@@ -489,7 +489,7 @@ Map = {
 
 		
 		ticksPerSample = 2,
-		samplesPerSnapshot = 3,
+		samplesPerSnapshot = 2,
 		
 		physic_shape = "capsule",
 		physic_radius = 3,
@@ -605,7 +605,7 @@ Map = {
 			weaponironHellGoatMaxAmmoPerShot = 5,
 			weaponironHellGoatDefaultFireBallRadius = 2.0,
 			weaponironHellGoatDefaultFireBallSpeed = 0.15,
-			weaponironHellGoatDefaultFireBallExplotionRadius = 30.0,
+			weaponironHellGoatDefaultFireBallExplotionRadius = 10.0,
 			weaponironHellGoatDefaultFireBallDamage = 50.0,
 
 			weaponironHellGoatMaxFireBallRadius = 5.0,
@@ -701,7 +701,7 @@ Map = {
 		rollCamera = 0.15,
 
 		ticksPerSample = 2,
-		samplesPerSnapshot = 3,
+		samplesPerSnapshot = 2,
 		
 		physic_shape = "capsule",
 		physic_radius = 3,
@@ -818,7 +818,7 @@ Map = {
 			weaponironHellGoatMaxAmmoPerShot = 5,
 			weaponironHellGoatDefaultFireBallRadius = 2.0,
 			weaponironHellGoatDefaultFireBallSpeed = 0.15,
-			weaponironHellGoatDefaultFireBallExplotionRadius = 30.0,
+			weaponironHellGoatDefaultFireBallExplotionRadius = 10.0,
 			weaponironHellGoatDefaultFireBallDamage = 50.0,
 
 			weaponironHellGoatMaxFireBallRadius = 5.0,
@@ -910,7 +910,7 @@ Map = {
 		rollCamera = 0.15,
 
 		ticksPerSample = 2,
-		samplesPerSnapshot = 3,
+		samplesPerSnapshot = 2,
 		
 		physic_shape = "capsule",
 		physic_radius = 3,
@@ -1037,7 +1037,7 @@ Map = {
 			weaponironHellGoatMaxAmmoPerShot = 5,
 			weaponironHellGoatDefaultFireBallRadius = 2.0,
 			weaponironHellGoatDefaultFireBallSpeed = 0.15,
-			weaponironHellGoatDefaultFireBallExplotionRadius = 30.0,
+			weaponironHellGoatDefaultFireBallExplotionRadius = 10.0,
 			weaponironHellGoatDefaultFireBallDamage = 50.0,
 
 			weaponironHellGoatMaxFireBallRadius = 5.0,
@@ -1133,7 +1133,7 @@ Map = {
 		rollCamera = 0.15,
 
 		ticksPerSample = 2,
-		samplesPerSnapshot = 3,
+		samplesPerSnapshot = 2,
 		
 		physic_shape = "capsule",
 		physic_radius = 3,
@@ -1247,7 +1247,7 @@ Map = {
 			weaponironHellGoatMaxAmmoPerShot = 5,
 			weaponironHellGoatDefaultFireBallRadius = 2.0,
 			weaponironHellGoatDefaultFireBallSpeed = 0.15,
-			weaponironHellGoatDefaultFireBallExplotionRadius = 30.0,
+			weaponironHellGoatDefaultFireBallExplotionRadius = 10.0,
 			weaponironHellGoatDefaultFireBallDamage = 50.0,
 
 			weaponironHellGoatMaxFireBallRadius = 5.0,
@@ -1342,7 +1342,7 @@ Map = {
 		rollCamera = 0.15,
 
 		ticksPerSample = 2,
-		samplesPerSnapshot = 3,
+		samplesPerSnapshot = 2,
 
 		physic_shape = "capsule",
 		physic_radius = 3,
@@ -1458,7 +1458,7 @@ Map = {
 			weaponironHellGoatMaxAmmoPerShot = 5,
 			weaponironHellGoatDefaultFireBallRadius = 2.0,
 			weaponironHellGoatDefaultFireBallSpeed = 0.15,
-			weaponironHellGoatDefaultFireBallExplotionRadius = 30.0,
+			weaponironHellGoatDefaultFireBallExplotionRadius = 10.0,
 			weaponironHellGoatDefaultFireBallDamage = 50.0,
 
 			weaponironHellGoatMaxFireBallRadius = 5.0,
@@ -1554,7 +1554,7 @@ Map = {
 		rollCamera = 0.15,
 
 		ticksPerSample = 2,
-		samplesPerSnapshot = 3,
+		samplesPerSnapshot = 2,
 
 		physic_shape = "capsule",
 		physic_radius = 3,
@@ -1674,7 +1674,7 @@ Map = {
 			weaponironHellGoatMaxAmmoPerShot = 5,
 			weaponironHellGoatDefaultFireBallRadius = 2.0,
 			weaponironHellGoatDefaultFireBallSpeed = 0.15,
-			weaponironHellGoatDefaultFireBallExplotionRadius = 30.0,
+			weaponironHellGoatDefaultFireBallExplotionRadius = 10.0,
 			weaponironHellGoatDefaultFireBallDamage = 50.0,
 
 			weaponironHellGoatMaxFireBallRadius = 5.0,
@@ -1973,7 +1973,7 @@ Map = {
 			weaponironHellGoatMaxAmmoPerShot = 5,
 			weaponironHellGoatDefaultFireBallRadius = 2.0,
 			weaponironHellGoatDefaultFireBallSpeed = 0.15,
-			weaponironHellGoatDefaultFireBallExplotionRadius = 30.0,
+			weaponironHellGoatDefaultFireBallExplotionRadius = 10.0,
 			weaponironHellGoatDefaultFireBallDamage = 50.0,
 
 			weaponironHellGoatMaxFireBallRadius = 5.0,
@@ -2126,7 +2126,7 @@ Map = {
 		physic_group = 17,
 		physic_groupList = "14, 15, 16", 
 		ticksPerSample = 2,
-		samplesPerSnapshot = 3,
+		samplesPerSnapshot = 2,
 	},
 	
 	MagneticBullet = {

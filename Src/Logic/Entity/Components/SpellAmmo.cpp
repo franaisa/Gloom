@@ -132,7 +132,7 @@ namespace Logic {
 		for(unsigned int i = 0; i < _friends; ++i){
 			_friend[i]->activate();
 		}
-		printf("\nActivao el hechizo ocon id %d",_spellID);
+		//printf("\nActivao el hechizo ocon id %d",_spellID);
 	} // onActivate
 	//__________________________________________________________________
 

@@ -78,7 +78,7 @@ namespace Graphics
 		int positionUnderscore = nameParticleSystemAndAmount.length()-2;
 		int amount = std::atoi(nameParticleSystemAndAmount.substr(positionUnderscore).c_str());
 		std::string nameParticleSystem = nameParticleSystemAndAmount.substr(0,positionUnderscore-1);
-		printf("\nCargada particula: %s, %d veces", nameParticleSystem.c_str(), amount);
+		//printf("\nCargada particula: %s, %d veces", nameParticleSystem.c_str(), amount);
 
 		TParticles aux;
 		aux.index = 0;

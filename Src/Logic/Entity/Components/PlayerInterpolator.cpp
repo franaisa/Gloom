@@ -31,7 +31,10 @@ namespace Logic {
 	//__________________________________________________________________
 
 	CPlayerInterpolator::CPlayerInterpolator() : _tickCounter(0),
-												 _lostTicks(0) {
+												 _lostTicks(0),
+												 _extrapolatedTicks(0),
+												 _connecting(true),
+												 _extrapolatedMotion(Vector3::ZERO) {
 		// Nada que hacer
 	}
 
@@ -94,8 +97,14 @@ namespace Logic {
 
 	void CPlayerInterpolator::process(const shared_ptr<CMessage>& message) {
 		shared_ptr<CMessagePlayerSnapshot> snapshotMsg = static_pointer_cast<CMessagePlayerSnapshot>(message);
-
+		
 		interpolateSnapshot( snapshotMsg->getTransformBuffer() );
+
+		if(_connecting) {
+			// Preparamos el buffer doble
+			if(_transformBuffer.size() == 2 * _ticksPerBuffer)
+				_connecting = false;
+		}
 
 		vector<AnimInfo> tempAnimBuffer = snapshotMsg->getAnimationBuffer();
 		_animationBuffer.insert( _animationBuffer.end(), tempAnimBuffer.begin(), tempAnimBuffer.end() );
@@ -104,28 +113,19 @@ namespace Logic {
 		_audioBuffer.insert( _audioBuffer.end(), tempAudioBuffer.begin(), tempAudioBuffer.end() );
 
 		// Si hemos perdido ticks, los descartamos del buffer
-		/*if(_lostTicks > 0) {
+		if(_lostTicks > 0) {
 			// Comprobamos el buffer de transforms
 			unsigned int transformBufferSize = _transformBuffer.size();
-
-			//cout << "He perdido " << _lostTicks << " ticks" << endl;
 
 			if( _lostTicks >= transformBufferSize ) {
 				_transformBuffer.clear();
 				_lostTicks -= transformBufferSize;
-
-				//cout << "Descarto el buffer que me llega por completo" << endl;
 			}
 			else {
 				_transformBuffer.erase( _transformBuffer.begin(), _transformBuffer.begin() + _lostTicks );
-				
-				//cout << "Descarto " << _lostTicks << " ticks y el buffer se queda con un tamano de " << _transformBuffer.size() << endl;
-
 				_lostTicks = 0;
 			}
-
-			// Comprobamos el buffer de animaciones
-		}*/
+		}
 	}
 
 	//__________________________________________________________________
@@ -138,11 +138,17 @@ namespace Logic {
 	//__________________________________________________________________
 
 	void CPlayerInterpolator::onFixedTick(unsigned int msecs) {
-		if( !_transformBuffer.empty() ) {
+		if( !_transformBuffer.empty() && !_connecting ) {
 			// Posicionamos el grafico y el controlador fisico donde nos indique
 			// el buffer de posiciones interpolado
-			_controller->setPhysicPosition( _transformBuffer.front().getTrans() );
-			_entity->setOrientation( _transformBuffer.front().extractQuaternion() );
+			_extrapolatedTicks = 0;
+
+			Matrix4 newTransform = _transformBuffer.front();
+			Vector3 newPosition = newTransform.getTrans();
+			_extrapolatedMotion = newPosition - _entity->getPosition();
+
+			_controller->setPhysicPosition( newPosition );
+			_entity->setOrientation( newTransform.extractQuaternion() );
 			_transformBuffer.pop_front();
 
 			if( !_animationBuffer.empty() ) {
@@ -192,10 +198,16 @@ namespace Logic {
 			// Estamos ejecutando ticks con el buffer vacio
 			// tendremos que descartar estos ticks del siguiente buffer
 			// recibido
-			//++_lostTicks;
-
-			//cout << "Pierdo " << ++_lostTicks << " ticks" << endl;
-			//cout << "Pierdo ticks" << endl;
+			if(!_connecting) {
+				++_lostTicks;
+				
+				if( _extrapolatedTicks < 2) {
+					_controller->setPhysicPosition( _entity->getPosition() + _extrapolatedMotion );
+					
+					if( ++_extrapolatedTicks == 2 )
+						_extrapolatedMotion = Vector3::ZERO;
+				}
+			}
 		}
 	}
 

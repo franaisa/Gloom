@@ -140,6 +140,10 @@ namespace Logic {
 		std::deque<AudioInfo> _audioBuffer;
 		CPhysicController* _controller;
 
+		bool _connecting;
+
+		unsigned int _extrapolatedTicks;
+		Vector3 _extrapolatedMotion;
 	}; // class CPlayerInterpolator
 
 	REG_FACTORY(CPlayerInterpolator);
