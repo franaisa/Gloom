@@ -166,6 +166,14 @@ namespace Physics {
 
 		//__________________________________________________________________
 
+		float getCapsuleRadius();
+
+		//__________________________________________________________________
+
+		float getCapsuleHeight();
+
+		//__________________________________________________________________
+
 		/** Activa la simulación física de la cápsula. */
 		void activateSimulation();
 

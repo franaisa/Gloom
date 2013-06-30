@@ -223,3 +223,15 @@ unsigned CPhysicController::move(const Vector3& movement, unsigned int customFil
 unsigned int CPhysicController::getDefaultFilterMask() {
 	return _controller.getFilterMask();
 }
+
+//________________________________________________________________________
+
+float CPhysicController::getCapsuleRadius() {
+	return _controller.getCapsuleRadius();
+}
+
+//________________________________________________________________________
+
+float CPhysicController::getCapsuleHeight() {
+	return _controller.getCapsuleHeight();
+}

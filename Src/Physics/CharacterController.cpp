@@ -183,6 +183,18 @@ namespace Physics {
 		_controller->setPosition( PxExtendedVec3(pos.x, pos.y, pos.z) );
 	}
 
+	//__________________________________________________________________
+
+	float CCharacterController::getCapsuleRadius() {
+		return _controller->getRadius();
+	}
+
+	//__________________________________________________________________
+
+	float CCharacterController::getCapsuleHeight() {
+		return _controller->getHeight();
+	}
+
 	//________________________________________________________________________
 
 	void CCharacterController::activateSimulation() {
