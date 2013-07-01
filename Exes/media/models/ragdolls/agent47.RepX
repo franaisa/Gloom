@@ -6,7 +6,7 @@
 		<Speed >10</Speed>
 	</Scale>
 	<PxMaterial >
-		<Id >1037951888</Id>
+		<Id >1428993824</Id>
 		<DynamicFriction >0.3</DynamicFriction>
 		<StaticFriction >0.3</StaticFriction>
 		<Restitution >0.5</Restitution>
@@ -14,7 +14,7 @@
 		<RestitutionCombineMode >eAVERAGE</RestitutionCombineMode>
 	</PxMaterial>
 	<PxMaterial >
-		<Id >1037951984</Id>
+		<Id >1428993728</Id>
 		<DynamicFriction >0.3</DynamicFriction>
 		<StaticFriction >0.3</StaticFriction>
 		<Restitution >0.5</Restitution>
@@ -22,7 +22,7 @@
 		<RestitutionCombineMode >eAVERAGE</RestitutionCombineMode>
 	</PxMaterial>
 	<PxMaterial >
-		<Id >1037952080</Id>
+		<Id >1428993632</Id>
 		<DynamicFriction >0.3</DynamicFriction>
 		<StaticFriction >0.3</StaticFriction>
 		<Restitution >0.5</Restitution>
@@ -30,7 +30,7 @@
 		<RestitutionCombineMode >eAVERAGE</RestitutionCombineMode>
 	</PxMaterial>
 	<PxMaterial >
-		<Id >1037952176</Id>
+		<Id >1428993536</Id>
 		<DynamicFriction >0.3</DynamicFriction>
 		<StaticFriction >0.3</StaticFriction>
 		<Restitution >0.5</Restitution>
@@ -38,7 +38,7 @@
 		<RestitutionCombineMode >eAVERAGE</RestitutionCombineMode>
 	</PxMaterial>
 	<PxMaterial >
-		<Id >1038491712</Id>
+		<Id >1428992000</Id>
 		<DynamicFriction >0.3</DynamicFriction>
 		<StaticFriction >0.3</StaticFriction>
 		<Restitution >0.5</Restitution>
@@ -46,7 +46,7 @@
 		<RestitutionCombineMode >eAVERAGE</RestitutionCombineMode>
 	</PxMaterial>
 	<PxMaterial >
-		<Id >1038491616</Id>
+		<Id >1428992096</Id>
 		<DynamicFriction >0.3</DynamicFriction>
 		<StaticFriction >0.3</StaticFriction>
 		<Restitution >0.5</Restitution>
@@ -54,7 +54,7 @@
 		<RestitutionCombineMode >eAVERAGE</RestitutionCombineMode>
 	</PxMaterial>
 	<PxMaterial >
-		<Id >1038491520</Id>
+		<Id >1428992384</Id>
 		<DynamicFriction >0.3</DynamicFriction>
 		<StaticFriction >0.3</StaticFriction>
 		<Restitution >0.5</Restitution>
@@ -62,7 +62,7 @@
 		<RestitutionCombineMode >eAVERAGE</RestitutionCombineMode>
 	</PxMaterial>
 	<PxMaterial >
-		<Id >1038491424</Id>
+		<Id >1428992192</Id>
 		<DynamicFriction >0.3</DynamicFriction>
 		<StaticFriction >0.3</StaticFriction>
 		<Restitution >0.5</Restitution>
@@ -70,7 +70,7 @@
 		<RestitutionCombineMode >eAVERAGE</RestitutionCombineMode>
 	</PxMaterial>
 	<PxMaterial >
-		<Id >1037952560</Id>
+		<Id >1428992288</Id>
 		<DynamicFriction >0.3</DynamicFriction>
 		<StaticFriction >0.3</StaticFriction>
 		<Restitution >0.5</Restitution>
@@ -78,7 +78,7 @@
 		<RestitutionCombineMode >eAVERAGE</RestitutionCombineMode>
 	</PxMaterial>
 	<PxMaterial >
-		<Id >1037952464</Id>
+		<Id >1428992768</Id>
 		<DynamicFriction >0.3</DynamicFriction>
 		<StaticFriction >0.3</StaticFriction>
 		<Restitution >0.5</Restitution>
@@ -86,7 +86,7 @@
 		<RestitutionCombineMode >eAVERAGE</RestitutionCombineMode>
 	</PxMaterial>
 	<PxMaterial >
-		<Id >1037952368</Id>
+		<Id >1428993344</Id>
 		<DynamicFriction >0.3</DynamicFriction>
 		<StaticFriction >0.3</StaticFriction>
 		<Restitution >0.5</Restitution>
@@ -94,7 +94,7 @@
 		<RestitutionCombineMode >eAVERAGE</RestitutionCombineMode>
 	</PxMaterial>
 	<PxMaterial >
-		<Id >1037952272</Id>
+		<Id >1428993440</Id>
 		<DynamicFriction >0.3</DynamicFriction>
 		<StaticFriction >0.3</StaticFriction>
 		<Restitution >0.5</Restitution>
@@ -102,7 +102,7 @@
 		<RestitutionCombineMode >eAVERAGE</RestitutionCombineMode>
 	</PxMaterial>
 	<PxMaterial >
-		<Id >1037951696</Id>
+		<Id >1428992672</Id>
 		<DynamicFriction >0.3</DynamicFriction>
 		<StaticFriction >0.3</StaticFriction>
 		<Restitution >0.5</Restitution>
@@ -110,7 +110,7 @@
 		<RestitutionCombineMode >eAVERAGE</RestitutionCombineMode>
 	</PxMaterial>
 	<PxMaterial >
-		<Id >1037951600</Id>
+		<Id >1428992576</Id>
 		<DynamicFriction >0.3</DynamicFriction>
 		<StaticFriction >0.3</StaticFriction>
 		<Restitution >0.5</Restitution>
@@ -118,7 +118,7 @@
 		<RestitutionCombineMode >eAVERAGE</RestitutionCombineMode>
 	</PxMaterial>
 	<PxMaterial >
-		<Id >1037951504</Id>
+		<Id >1428992480</Id>
 		<DynamicFriction >0.3</DynamicFriction>
 		<StaticFriction >0.3</StaticFriction>
 		<Restitution >0.5</Restitution>
@@ -126,7 +126,7 @@
 		<RestitutionCombineMode >eAVERAGE</RestitutionCombineMode>
 	</PxMaterial>
 	<PxMaterial >
-		<Id >1037951408</Id>
+		<Id >1428994016</Id>
 		<DynamicFriction >0.3</DynamicFriction>
 		<StaticFriction >0.3</StaticFriction>
 		<Restitution >0.5</Restitution>
@@ -134,7 +134,7 @@
 		<RestitutionCombineMode >eAVERAGE</RestitutionCombineMode>
 	</PxMaterial>
 	<PxMaterial >
-		<Id >1037951216</Id>
+		<Id >1428993152</Id>
 		<DynamicFriction >0.3</DynamicFriction>
 		<StaticFriction >0.3</StaticFriction>
 		<Restitution >0.5</Restitution>
@@ -142,7 +142,7 @@
 		<RestitutionCombineMode >eAVERAGE</RestitutionCombineMode>
 	</PxMaterial>
 	<PxMaterial >
-		<Id >1037951120</Id>
+		<Id >1428993056</Id>
 		<DynamicFriction >0.3</DynamicFriction>
 		<StaticFriction >0.3</StaticFriction>
 		<Restitution >0.5</Restitution>
@@ -150,7 +150,7 @@
 		<RestitutionCombineMode >eAVERAGE</RestitutionCombineMode>
 	</PxMaterial>
 	<PxMaterial >
-		<Id >1037951312</Id>
+		<Id >1428993248</Id>
 		<DynamicFriction >0.3</DynamicFriction>
 		<StaticFriction >0.3</StaticFriction>
 		<Restitution >0.5</Restitution>
@@ -158,7 +158,7 @@
 		<RestitutionCombineMode >eAVERAGE</RestitutionCombineMode>
 	</PxMaterial>
 	<PxMaterial >
-		<Id >1037951024</Id>
+		<Id >1428992960</Id>
 		<DynamicFriction >0.3</DynamicFriction>
 		<StaticFriction >0.3</StaticFriction>
 		<Restitution >0.5</Restitution>
@@ -166,7 +166,7 @@
 		<RestitutionCombineMode >eAVERAGE</RestitutionCombineMode>
 	</PxMaterial>
 	<PxMaterial >
-		<Id >1037950928</Id>
+		<Id >1428992864</Id>
 		<DynamicFriction >0.3</DynamicFriction>
 		<StaticFriction >0.3</StaticFriction>
 		<Restitution >0.5</Restitution>
@@ -174,7 +174,7 @@
 		<RestitutionCombineMode >eAVERAGE</RestitutionCombineMode>
 	</PxMaterial>
 	<PxMaterial >
-		<Id >1037951792</Id>
+		<Id >1428993920</Id>
 		<DynamicFriction >0.3</DynamicFriction>
 		<StaticFriction >0.3</StaticFriction>
 		<Restitution >0.5</Restitution>
@@ -182,42 +182,42 @@
 		<RestitutionCombineMode >eAVERAGE</RestitutionCombineMode>
 	</PxMaterial>
 	<PxRigidDynamic >
-		<Id >1038527824</Id>
+		<Id >1038525968</Id>
 		<Name >Bip01 Pelvis</Name>
 		<ActorFlags >eVISUALIZATION</ActorFlags>
 		<DominanceGroup >0</DominanceGroup>
 		<OwnerClient >0</OwnerClient>
 		<ClientBehaviorBits >0</ClientBehaviorBits>
-		<GlobalPose >0.707106 9.68575e-007 0.707108 -9.68575e-007 0 -1.23224 97.331</GlobalPose>
+		<GlobalPose >0.707106 9.83477e-007 0.707107 -9.53674e-007 0 -0.123224 9.7331</GlobalPose>
 		<Shapes >
 			<PxShape >
 				<Geometry >
 					<PxCapsuleGeometry >
-						<Radius >9.33687</Radius>
-						<HalfHeight >3.49543</HalfHeight>
+						<Radius >0.933687</Radius>
+						<HalfHeight >0.349543</HalfHeight>
 					</PxCapsuleGeometry>
 				</Geometry>
 				<LocalPose >0.5 -0.5 0.5 0.5 0 0 0</LocalPose>
 				<SimulationFilterData >4 0 5 0</SimulationFilterData>
 				<QueryFilterData >0 0 0 0</QueryFilterData>
 				<Materials >
-					<PxMaterialRef >1037950928</PxMaterialRef>
+					<PxMaterialRef >1428992864</PxMaterialRef>
 				</Materials>
-				<ContactOffset >0.2</ContactOffset>
-				<RestOffset >0.1</RestOffset>
+				<ContactOffset >0.002</ContactOffset>
+				<RestOffset >0.001</RestOffset>
 				<Flags >eSIMULATION_SHAPE|eSCENE_QUERY_SHAPE|eVISUALIZATION</Flags>
 				<Name >Bip01 Pelvis</Name>
 			</PxShape>
 		</Shapes>
-		<CMassLocalPose >-3.69366e-007 -6.17584e-008 0.382681 0.92388 0 0 0</CMassLocalPose>
+		<CMassLocalPose >-3.69366e-007 -6.17575e-008 0.382683 0.92388 0 0 0</CMassLocalPose>
 		<Mass >5324.14</Mass>
-		<MassSpaceInertiaTensor >293532 293532 202349</MassSpaceInertiaTensor>
+		<MassSpaceInertiaTensor >2935.32 2935.32 2023.48</MassSpaceInertiaTensor>
 		<LinearVelocity >0 0 0</LinearVelocity>
 		<AngularVelocity >0 0 0</AngularVelocity>
 		<LinearDamping >0</LinearDamping>
 		<AngularDamping >0.05</AngularDamping>
 		<MaxAngularVelocity >7</MaxAngularVelocity>
-		<SleepThreshold >0.005</SleepThreshold>
+		<SleepThreshold >5e-005</SleepThreshold>
 		<SolverIterationCounts >
 			<minPositionIters >30</minPositionIters>
 			<minVelocityIters >1</minVelocityIters>
@@ -226,42 +226,42 @@
 		<RigidDynamicFlags >eKINEMATIC</RigidDynamicFlags>
 	</PxRigidDynamic>
 	<PxRigidDynamic >
-		<Id >1038528176</Id>
+		<Id >1038525632</Id>
 		<Name >Bip01 Spine</Name>
 		<ActorFlags >eVISUALIZATION</ActorFlags>
 		<DominanceGroup >0</DominanceGroup>
 		<OwnerClient >0</OwnerClient>
 		<ClientBehaviorBits >0</ClientBehaviorBits>
-		<GlobalPose >0.707058 -0.00830363 0.707058 -0.00830263 4.66566e-007 -1.22475 107.447</GlobalPose>
+		<GlobalPose >0.707058 -0.00830364 0.707058 -0.00830264 2.87752e-008 -0.122475 10.7447</GlobalPose>
 		<Shapes >
 			<PxShape >
 				<Geometry >
 					<PxCapsuleGeometry >
-						<Radius >8.06913</Radius>
-						<HalfHeight >3.37458</HalfHeight>
+						<Radius >0.806913</Radius>
+						<HalfHeight >0.337458</HalfHeight>
 					</PxCapsuleGeometry>
 				</Geometry>
-				<LocalPose >0.5 -0.5 0.5 0.5 4.7057 4.6129e-007 -1.4122e-007</LocalPose>
+				<LocalPose >0.5 -0.5 0.5 0.5 0.47057 4.77301e-008 -1.4122e-008</LocalPose>
 				<SimulationFilterData >4 0 5 0</SimulationFilterData>
 				<QueryFilterData >0 0 0 0</QueryFilterData>
 				<Materials >
-					<PxMaterialRef >1037951024</PxMaterialRef>
+					<PxMaterialRef >1428992960</PxMaterialRef>
 				</Materials>
-				<ContactOffset >0.2</ContactOffset>
-				<RestOffset >0.1</RestOffset>
+				<ContactOffset >0.002</ContactOffset>
+				<RestOffset >0.001</RestOffset>
 				<Flags >eSIMULATION_SHAPE|eSCENE_QUERY_SHAPE|eVISUALIZATION</Flags>
 				<Name >Bip01 Spine</Name>
 			</PxShape>
 		</Shapes>
-		<CMassLocalPose >-2.02573e-007 -4.47127e-008 0.215536 0.976496 4.7057 4.76837e-007 -1.4122e-007</CMassLocalPose>
+		<CMassLocalPose >-1.93561e-007 -8.03333e-008 0.23043 0.973089 0.47057 4.76837e-008 -1.4122e-008</CMassLocalPose>
 		<Mass >3581.3</Mass>
-		<MassSpaceInertiaTensor >155036 155036 102262</MassSpaceInertiaTensor>
+		<MassSpaceInertiaTensor >1550.36 1550.36 1022.62</MassSpaceInertiaTensor>
 		<LinearVelocity >0 0 0</LinearVelocity>
 		<AngularVelocity >0 0 0</AngularVelocity>
 		<LinearDamping >0</LinearDamping>
 		<AngularDamping >0.05</AngularDamping>
 		<MaxAngularVelocity >7</MaxAngularVelocity>
-		<SleepThreshold >0.005</SleepThreshold>
+		<SleepThreshold >5e-005</SleepThreshold>
 		<SolverIterationCounts >
 			<minPositionIters >30</minPositionIters>
 			<minVelocityIters >1</minVelocityIters>
@@ -270,42 +270,42 @@
 		<RigidDynamicFlags >eKINEMATIC</RigidDynamicFlags>
 	</PxRigidDynamic>
 	<PxRigidDynamic >
-		<Id >1038528512</Id>
+		<Id >1038525280</Id>
 		<Name >Bip01 Spine1</Name>
 		<ActorFlags >eVISUALIZATION</ActorFlags>
 		<DominanceGroup >0</DominanceGroup>
 		<OwnerClient >0</OwnerClient>
 		<ClientBehaviorBits >0</ClientBehaviorBits>
-		<GlobalPose >0.707024 0.0108248 0.707024 0.0108258 2.56031e-007 -1.419 116.855</GlobalPose>
+		<GlobalPose >0.707024 0.0108248 0.707024 0.0108258 2.56031e-008 -0.1419 11.6855</GlobalPose>
 		<Shapes >
 			<PxShape >
 				<Geometry >
 					<PxCapsuleGeometry >
-						<Radius >12.791</Radius>
-						<HalfHeight >2.34544</HalfHeight>
+						<Radius >1.2791</Radius>
+						<HalfHeight >0.234544</HalfHeight>
 					</PxCapsuleGeometry>
 				</Geometry>
-				<LocalPose >0.707107 0 8.9407e-008 0.707107 16.8096 4.76837e-007 -6.74077e-007</LocalPose>
+				<LocalPose >0.707107 0 8.9407e-008 0.707107 1.68096 4.76837e-008 -6.74077e-008</LocalPose>
 				<SimulationFilterData >4 0 5 0</SimulationFilterData>
 				<QueryFilterData >0 0 0 0</QueryFilterData>
 				<Materials >
-					<PxMaterialRef >1037951312</PxMaterialRef>
+					<PxMaterialRef >1428993248</PxMaterialRef>
 				</Materials>
-				<ContactOffset >0.2</ContactOffset>
-				<RestOffset >0.1</RestOffset>
+				<ContactOffset >0.002</ContactOffset>
+				<RestOffset >0.001</RestOffset>
 				<Flags >eSIMULATION_SHAPE|eSCENE_QUERY_SHAPE|eVISUALIZATION</Flags>
 				<Name >Bip01 Spine1</Name>
 			</PxShape>
 		</Shapes>
-		<CMassLocalPose >0 0 0 1 16.8096 4.76837e-007 -6.74076e-007</CMassLocalPose>
+		<CMassLocalPose >0 0 0 1 1.68096 4.76837e-008 -6.74077e-008</CMassLocalPose>
 		<Mass >11177</Mass>
-		<MassSpaceInertiaTensor >770913 922174 922174</MassSpaceInertiaTensor>
+		<MassSpaceInertiaTensor >7709.13 9221.75 9221.75</MassSpaceInertiaTensor>
 		<LinearVelocity >0 0 0</LinearVelocity>
 		<AngularVelocity >0 0 0</AngularVelocity>
 		<LinearDamping >0</LinearDamping>
 		<AngularDamping >0.05</AngularDamping>
 		<MaxAngularVelocity >7</MaxAngularVelocity>
-		<SleepThreshold >0.005</SleepThreshold>
+		<SleepThreshold >5e-005</SleepThreshold>
 		<SolverIterationCounts >
 			<minPositionIters >30</minPositionIters>
 			<minVelocityIters >1</minVelocityIters>
@@ -314,42 +314,42 @@
 		<RigidDynamicFlags >eKINEMATIC</RigidDynamicFlags>
 	</PxRigidDynamic>
 	<PxRigidDynamic >
-		<Id >1038528864</Id>
+		<Id >1038524944</Id>
 		<Name >Bip01 Neck</Name>
 		<ActorFlags >eVISUALIZATION</ActorFlags>
 		<DominanceGroup >0</DominanceGroup>
 		<OwnerClient >0</OwnerClient>
 		<ClientBehaviorBits >0</ClientBehaviorBits>
-		<GlobalPose >0.707024 0.0108248 0.707024 0.0108258 -1.16236e-006 -0.384369 150.457</GlobalPose>
+		<GlobalPose >0.707024 0.0108248 0.707024 0.0108258 -1.16236e-007 -0.0384369 15.0457</GlobalPose>
 		<Shapes >
 			<PxShape >
 				<Geometry >
 					<PxCapsuleGeometry >
-						<Radius >4.48617</Radius>
-						<HalfHeight >1.14496</HalfHeight>
+						<Radius >0.448617</Radius>
+						<HalfHeight >0.114496</HalfHeight>
 					</PxCapsuleGeometry>
 				</Geometry>
-				<LocalPose >-0.707107 0 -2.98023e-008 -0.707107 3.39748 -4.76837e-007 -2.46145e-007</LocalPose>
+				<LocalPose >-0.707107 0 -2.98023e-008 -0.707107 0.339748 -4.76837e-008 -2.46145e-008</LocalPose>
 				<SimulationFilterData >4 0 5 0</SimulationFilterData>
 				<QueryFilterData >0 0 0 0</QueryFilterData>
 				<Materials >
-					<PxMaterialRef >1037951120</PxMaterialRef>
+					<PxMaterialRef >1428993056</PxMaterialRef>
 				</Materials>
-				<ContactOffset >0.2</ContactOffset>
-				<RestOffset >0.1</RestOffset>
+				<ContactOffset >0.002</ContactOffset>
+				<RestOffset >0.001</RestOffset>
 				<Flags >eSIMULATION_SHAPE|eSCENE_QUERY_SHAPE|eVISUALIZATION</Flags>
 				<Name >Bip01 Neck</Name>
 			</PxShape>
 		</Shapes>
-		<CMassLocalPose >0 0 0 1 3.39748 -4.76837e-007 -2.46145e-007</CMassLocalPose>
+		<CMassLocalPose >0 0 0 1 0.339748 -4.76837e-008 -2.46145e-008</CMassLocalPose>
 		<Mass >522.981</Mass>
-		<MassSpaceInertiaTensor >4501.54 5789.08 5789.08</MassSpaceInertiaTensor>
+		<MassSpaceInertiaTensor >45.0154 57.8908 57.8908</MassSpaceInertiaTensor>
 		<LinearVelocity >0 0 0</LinearVelocity>
 		<AngularVelocity >0 0 0</AngularVelocity>
 		<LinearDamping >0</LinearDamping>
 		<AngularDamping >0.05</AngularDamping>
 		<MaxAngularVelocity >7</MaxAngularVelocity>
-		<SleepThreshold >0.005</SleepThreshold>
+		<SleepThreshold >5e-005</SleepThreshold>
 		<SolverIterationCounts >
 			<minPositionIters >30</minPositionIters>
 			<minVelocityIters >1</minVelocityIters>
@@ -358,42 +358,42 @@
 		<RigidDynamicFlags >eKINEMATIC</RigidDynamicFlags>
 	</PxRigidDynamic>
 	<PxRigidDynamic >
-		<Id >1038529200</Id>
+		<Id >1038524592</Id>
 		<Name >Bip01 Head</Name>
 		<ActorFlags >eVISUALIZATION</ActorFlags>
 		<DominanceGroup >0</DominanceGroup>
 		<OwnerClient >0</OwnerClient>
 		<ClientBehaviorBits >0</ClientBehaviorBits>
-		<GlobalPose >0.707107 -2.10734e-008 0.707107 9.70781e-007 -1.44751e-006 -0.176342 157.249</GlobalPose>
+		<GlobalPose >0.707107 -2.10734e-008 0.707107 9.70781e-007 -2.55459e-008 -0.0176342 15.7249</GlobalPose>
 		<Shapes >
 			<PxShape >
 				<Geometry >
 					<PxCapsuleGeometry >
-						<Radius >13.5698</Radius>
-						<HalfHeight >0.757751</HalfHeight>
+						<Radius >1.35698</Radius>
+						<HalfHeight >0.0757751</HalfHeight>
 					</PxCapsuleGeometry>
 				</Geometry>
-				<LocalPose >0.707107 -0.707107 -1.54543e-008 -1.54543e-008 10.7777 2.00412 -0.00119892</LocalPose>
+				<LocalPose >0.707107 -0.707107 -1.54543e-008 -1.54543e-008 1.07777 0.200412 -0.000119892</LocalPose>
 				<SimulationFilterData >4 0 5 0</SimulationFilterData>
 				<QueryFilterData >0 0 0 0</QueryFilterData>
 				<Materials >
-					<PxMaterialRef >1037951216</PxMaterialRef>
+					<PxMaterialRef >1428993152</PxMaterialRef>
 				</Materials>
-				<ContactOffset >0.2</ContactOffset>
-				<RestOffset >0.1</RestOffset>
+				<ContactOffset >0.002</ContactOffset>
+				<RestOffset >0.001</RestOffset>
 				<Flags >eSIMULATION_SHAPE|eSCENE_QUERY_SHAPE|eVISUALIZATION</Flags>
 				<Name >Bip01 Head</Name>
 			</PxShape>
 		</Shapes>
-		<CMassLocalPose >0 0 -1.17514e-006 1 10.7777 2.00412 -0.00119892</CMassLocalPose>
+		<CMassLocalPose >0 0 -1.04924e-006 1 1.07777 0.200412 -0.000119892</CMassLocalPose>
 		<Mass >11343.4</Mass>
-		<MassSpaceInertiaTensor >898194 851657 898194</MassSpaceInertiaTensor>
+		<MassSpaceInertiaTensor >8981.94 8516.57 8981.94</MassSpaceInertiaTensor>
 		<LinearVelocity >0 0 0</LinearVelocity>
 		<AngularVelocity >0 0 0</AngularVelocity>
 		<LinearDamping >0</LinearDamping>
 		<AngularDamping >0.05</AngularDamping>
 		<MaxAngularVelocity >7</MaxAngularVelocity>
-		<SleepThreshold >0.005</SleepThreshold>
+		<SleepThreshold >5e-005</SleepThreshold>
 		<SolverIterationCounts >
 			<minPositionIters >30</minPositionIters>
 			<minVelocityIters >1</minVelocityIters>
@@ -402,42 +402,42 @@
 		<RigidDynamicFlags >eKINEMATIC</RigidDynamicFlags>
 	</PxRigidDynamic>
 	<PxRigidDynamic >
-		<Id >1038529552</Id>
+		<Id >1038524256</Id>
 		<Name >Bip01 Ponytail1</Name>
 		<ActorFlags >eVISUALIZATION</ActorFlags>
 		<DominanceGroup >0</DominanceGroup>
 		<OwnerClient >0</OwnerClient>
 		<ClientBehaviorBits >0</ClientBehaviorBits>
-		<GlobalPose >0.499982 -0.499983 0.500187 -0.499849 -1.02487e-005 -9.53324 168.703</GlobalPose>
+		<GlobalPose >0.499982 -0.499983 0.500187 -0.499849 -1.02488e-006 -0.953324 16.8703</GlobalPose>
 		<Shapes >
 			<PxShape >
 				<Geometry >
 					<PxCapsuleGeometry >
-						<Radius >0.323674</Radius>
-						<HalfHeight >5.07474</HalfHeight>
+						<Radius >0.0323674</Radius>
+						<HalfHeight >0.507474</HalfHeight>
 					</PxCapsuleGeometry>
 				</Geometry>
-				<LocalPose >0.707107 0 -2.98023e-008 0.707107 5.37872 0 -2.36556e-007</LocalPose>
+				<LocalPose >0.707107 0 -2.98023e-008 0.707107 0.537872 0 -2.36556e-008</LocalPose>
 				<SimulationFilterData >4 0 5 0</SimulationFilterData>
 				<QueryFilterData >0 0 0 0</QueryFilterData>
 				<Materials >
-					<PxMaterialRef >1037951408</PxMaterialRef>
+					<PxMaterialRef >1428994016</PxMaterialRef>
 				</Materials>
-				<ContactOffset >0.2</ContactOffset>
-				<RestOffset >0.1</RestOffset>
+				<ContactOffset >0.002</ContactOffset>
+				<RestOffset >0.001</RestOffset>
 				<Flags >eSIMULATION_SHAPE|eSCENE_QUERY_SHAPE|eVISUALIZATION</Flags>
 				<Name >Bip01 Ponytail1</Name>
 			</PxShape>
 		</Shapes>
-		<CMassLocalPose >0 0 0 1 5.37872 0 -2.36556e-007</CMassLocalPose>
+		<CMassLocalPose >0 0 0 1 0.537872 0 -2.36556e-008</CMassLocalPose>
 		<Mass >3.48253</Mass>
-		<MassSpaceInertiaTensor >0.180935 32.6023 32.6023</MassSpaceInertiaTensor>
+		<MassSpaceInertiaTensor >0.00180935 0.326023 0.326023</MassSpaceInertiaTensor>
 		<LinearVelocity >0 0 0</LinearVelocity>
 		<AngularVelocity >0 0 0</AngularVelocity>
 		<LinearDamping >0</LinearDamping>
 		<AngularDamping >0.05</AngularDamping>
 		<MaxAngularVelocity >7</MaxAngularVelocity>
-		<SleepThreshold >0.005</SleepThreshold>
+		<SleepThreshold >5e-005</SleepThreshold>
 		<SolverIterationCounts >
 			<minPositionIters >30</minPositionIters>
 			<minVelocityIters >1</minVelocityIters>
@@ -446,42 +446,42 @@
 		<RigidDynamicFlags >eKINEMATIC</RigidDynamicFlags>
 	</PxRigidDynamic>
 	<PxRigidDynamic >
-		<Id >1038529888</Id>
+		<Id >1038523904</Id>
 		<Name >Bip01 L Clavicle</Name>
 		<ActorFlags >eVISUALIZATION</ActorFlags>
 		<DominanceGroup >0</DominanceGroup>
 		<OwnerClient >0</OwnerClient>
 		<ClientBehaviorBits >0</ClientBehaviorBits>
-		<GlobalPose >-0.0335929 0.229314 0.0744783 0.969917 3.07861 -0.389772 150.457</GlobalPose>
+		<GlobalPose >-0.0335929 0.229314 0.0744783 0.969917 0.307861 -0.0389773 15.0457</GlobalPose>
 		<Shapes >
 			<PxShape >
 				<Geometry >
 					<PxCapsuleGeometry >
-						<Radius >3.61043</Radius>
-						<HalfHeight >5.22366</HalfHeight>
+						<Radius >0.361043</Radius>
+						<HalfHeight >0.522366</HalfHeight>
 					</PxCapsuleGeometry>
 				</Geometry>
-				<LocalPose >0.707107 0 -2.98023e-008 0.707107 8.82484 0 0</LocalPose>
+				<LocalPose >0.707107 0 -2.98023e-008 0.707107 0.882484 0 0</LocalPose>
 				<SimulationFilterData >4 0 5 0</SimulationFilterData>
 				<QueryFilterData >0 0 0 0</QueryFilterData>
 				<Materials >
-					<PxMaterialRef >1037951504</PxMaterialRef>
+					<PxMaterialRef >1428992480</PxMaterialRef>
 				</Materials>
-				<ContactOffset >0.2</ContactOffset>
-				<RestOffset >0.1</RestOffset>
+				<ContactOffset >0.002</ContactOffset>
+				<RestOffset >0.001</RestOffset>
 				<Flags >eSIMULATION_SHAPE|eSCENE_QUERY_SHAPE|eVISUALIZATION</Flags>
 				<Name >Bip01 L Clavicle</Name>
 			</PxShape>
 		</Shapes>
-		<CMassLocalPose >0 0 0 1 8.82484 0 0</CMassLocalPose>
+		<CMassLocalPose >0 0 0 1 0.882484 0 0</CMassLocalPose>
 		<Mass >624.966</Mass>
-		<MassSpaceInertiaTensor >3816.3 14481 14481</MassSpaceInertiaTensor>
+		<MassSpaceInertiaTensor >38.163 144.81 144.81</MassSpaceInertiaTensor>
 		<LinearVelocity >0 0 0</LinearVelocity>
 		<AngularVelocity >0 0 0</AngularVelocity>
 		<LinearDamping >0</LinearDamping>
 		<AngularDamping >0.05</AngularDamping>
 		<MaxAngularVelocity >7</MaxAngularVelocity>
-		<SleepThreshold >0.005</SleepThreshold>
+		<SleepThreshold >5e-005</SleepThreshold>
 		<SolverIterationCounts >
 			<minPositionIters >30</minPositionIters>
 			<minVelocityIters >1</minVelocityIters>
@@ -490,42 +490,42 @@
 		<RigidDynamicFlags >eKINEMATIC</RigidDynamicFlags>
 	</PxRigidDynamic>
 	<PxRigidDynamic >
-		<Id >1038530240</Id>
+		<Id >1038523568</Id>
 		<Name >Bip01 L UpperArm</Name>
 		<ActorFlags >eVISUALIZATION</ActorFlags>
 		<DominanceGroup >0</DominanceGroup>
 		<OwnerClient >0</OwnerClient>
 		<ClientBehaviorBits >0</ClientBehaviorBits>
-		<GlobalPose >0.0269808 0.398166 0.0586502 0.915039 18.6762 1.88825 142.518</GlobalPose>
+		<GlobalPose >0.0269808 0.398166 0.0586502 0.915039 1.86762 0.188825 14.2518</GlobalPose>
 		<Shapes >
 			<PxShape >
 				<Geometry >
 					<PxCapsuleGeometry >
-						<Radius >5.15783</Radius>
-						<HalfHeight >8.05856</HalfHeight>
+						<Radius >0.515783</Radius>
+						<HalfHeight >0.805856</HalfHeight>
 					</PxCapsuleGeometry>
 				</Geometry>
-				<LocalPose >0.707107 -2.98023e-008 0 0.707107 13.2015 0.136301 0.035881</LocalPose>
+				<LocalPose >0.707107 -2.98023e-008 0 0.707107 1.32015 0.0136301 0.0035881</LocalPose>
 				<SimulationFilterData >4 0 5 0</SimulationFilterData>
 				<QueryFilterData >0 0 0 0</QueryFilterData>
 				<Materials >
-					<PxMaterialRef >1037951600</PxMaterialRef>
+					<PxMaterialRef >1428992576</PxMaterialRef>
 				</Materials>
-				<ContactOffset >0.2</ContactOffset>
-				<RestOffset >0.1</RestOffset>
+				<ContactOffset >0.002</ContactOffset>
+				<RestOffset >0.001</RestOffset>
 				<Flags >eSIMULATION_SHAPE|eSCENE_QUERY_SHAPE|eVISUALIZATION</Flags>
 				<Name >Bip01 L UpperArm</Name>
 			</PxShape>
 		</Shapes>
-		<CMassLocalPose >0 0 0 1 13.2015 0.136301 0.035881</CMassLocalPose>
+		<CMassLocalPose >0 0 0 1 1.32015 0.0136301 0.0035881</CMassLocalPose>
 		<Mass >1921.78</Mass>
-		<MassSpaceInertiaTensor >24033.7 99476.4 99476.4</MassSpaceInertiaTensor>
+		<MassSpaceInertiaTensor >240.337 994.764 994.764</MassSpaceInertiaTensor>
 		<LinearVelocity >0 0 0</LinearVelocity>
 		<AngularVelocity >0 0 0</AngularVelocity>
 		<LinearDamping >0</LinearDamping>
 		<AngularDamping >0.05</AngularDamping>
 		<MaxAngularVelocity >7</MaxAngularVelocity>
-		<SleepThreshold >0.005</SleepThreshold>
+		<SleepThreshold >5e-005</SleepThreshold>
 		<SolverIterationCounts >
 			<minPositionIters >30</minPositionIters>
 			<minVelocityIters >1</minVelocityIters>
@@ -534,42 +534,42 @@
 		<RigidDynamicFlags >eKINEMATIC</RigidDynamicFlags>
 	</PxRigidDynamic>
 	<PxRigidDynamic >
-		<Id >1038530576</Id>
+		<Id >1038523216</Id>
 		<Name >Bip01 L Forearm</Name>
 		<ActorFlags >eVISUALIZATION</ActorFlags>
 		<DominanceGroup >0</DominanceGroup>
 		<OwnerClient >0</OwnerClient>
 		<ClientBehaviorBits >0</ClientBehaviorBits>
-		<GlobalPose >-0.0393177 0.397138 -0.0936663 0.91212 36.5158 5.28757 123.373</GlobalPose>
+		<GlobalPose >-0.0393177 0.397138 -0.0936663 0.91212 3.65158 0.528757 12.3373</GlobalPose>
 		<Shapes >
 			<PxShape >
 				<Geometry >
 					<PxCapsuleGeometry >
-						<Radius >3.94934</Radius>
-						<HalfHeight >7.69404</HalfHeight>
+						<Radius >0.394934</Radius>
+						<HalfHeight >0.769404</HalfHeight>
 					</PxCapsuleGeometry>
 				</Geometry>
-				<LocalPose >0.999924 0.00357708 0.00357719 0.0112032 11.6454 0.0364523 0.0895386</LocalPose>
+				<LocalPose >0.999924 0.00357708 0.00357719 0.0112032 1.16454 0.00364523 0.00895386</LocalPose>
 				<SimulationFilterData >4 0 5 0</SimulationFilterData>
 				<QueryFilterData >0 0 0 0</QueryFilterData>
 				<Materials >
-					<PxMaterialRef >1037951696</PxMaterialRef>
+					<PxMaterialRef >1428992672</PxMaterialRef>
 				</Materials>
-				<ContactOffset >0.2</ContactOffset>
-				<RestOffset >0.1</RestOffset>
+				<ContactOffset >0.002</ContactOffset>
+				<RestOffset >0.001</RestOffset>
 				<Flags >eSIMULATION_SHAPE|eSCENE_QUERY_SHAPE|eVISUALIZATION</Flags>
 				<Name >Bip01 L Forearm</Name>
 			</PxShape>
 		</Shapes>
-		<CMassLocalPose >1.27642e-005 -0.00353684 0.00361698 0.999987 11.6454 0.0364523 0.0895386</CMassLocalPose>
-		<Mass >1012.04</Mass>
-		<MassSpaceInertiaTensor >7490.12 40583.7 40583.7</MassSpaceInertiaTensor>
+		<CMassLocalPose >0.00878814 -0.00350496 0.00364788 0.999949 1.16454 0.00364523 0.00895386</CMassLocalPose>
+		<Mass >1012.05</Mass>
+		<MassSpaceInertiaTensor >74.9012 405.838 405.838</MassSpaceInertiaTensor>
 		<LinearVelocity >0 0 0</LinearVelocity>
 		<AngularVelocity >0 0 0</AngularVelocity>
 		<LinearDamping >0</LinearDamping>
 		<AngularDamping >0.05</AngularDamping>
 		<MaxAngularVelocity >7</MaxAngularVelocity>
-		<SleepThreshold >0.005</SleepThreshold>
+		<SleepThreshold >5e-005</SleepThreshold>
 		<SolverIterationCounts >
 			<minPositionIters >30</minPositionIters>
 			<minVelocityIters >1</minVelocityIters>
@@ -578,42 +578,42 @@
 		<RigidDynamicFlags >eKINEMATIC</RigidDynamicFlags>
 	</PxRigidDynamic>
 	<PxRigidDynamic >
-		<Id >1038530928</Id>
+		<Id >1038522880</Id>
 		<Name >Bip01 L Hand</Name>
 		<ActorFlags >eVISUALIZATION</ActorFlags>
 		<DominanceGroup >0</DominanceGroup>
 		<OwnerClient >0</OwnerClient>
 		<ClientBehaviorBits >0</ClientBehaviorBits>
-		<GlobalPose >-0.68358 0.351467 0.185807 0.612099 52.0345 0.585573 106.689</GlobalPose>
+		<GlobalPose >-0.68358 0.351467 0.185807 0.612099 5.20345 0.0585573 10.6689</GlobalPose>
 		<Shapes >
 			<PxShape >
 				<Geometry >
 					<PxCapsuleGeometry >
-						<Radius >3.76965</Radius>
-						<HalfHeight >0.923886</HalfHeight>
+						<Radius >0.376965</Radius>
+						<HalfHeight >0.0923886</HalfHeight>
 					</PxCapsuleGeometry>
 				</Geometry>
-				<LocalPose >0.707107 -2.98023e-008 1.19209e-007 0.707107 4.68574 0 2.86102e-006</LocalPose>
+				<LocalPose >0.707107 -2.98023e-008 1.19209e-007 0.707107 0.468574 0 2.86102e-007</LocalPose>
 				<SimulationFilterData >4 0 5 0</SimulationFilterData>
 				<QueryFilterData >0 0 0 0</QueryFilterData>
 				<Materials >
-					<PxMaterialRef >1037952272</PxMaterialRef>
+					<PxMaterialRef >1428993440</PxMaterialRef>
 				</Materials>
-				<ContactOffset >0.2</ContactOffset>
-				<RestOffset >0.1</RestOffset>
+				<ContactOffset >0.002</ContactOffset>
+				<RestOffset >0.001</RestOffset>
 				<Flags >eSIMULATION_SHAPE|eSCENE_QUERY_SHAPE|eVISUALIZATION</Flags>
 				<Name >Bip01 L Hand</Name>
 			</PxShape>
 		</Shapes>
-		<CMassLocalPose >0 0 0 1 4.68574 0 2.86102e-006</CMassLocalPose>
+		<CMassLocalPose >0 0 0 1 0.468574 0 2.86102e-007</CMassLocalPose>
 		<Mass >306.873</Mass>
-		<MassSpaceInertiaTensor >1861.52 2369.56 2369.56</MassSpaceInertiaTensor>
+		<MassSpaceInertiaTensor >18.6152 23.6956 23.6956</MassSpaceInertiaTensor>
 		<LinearVelocity >0 0 0</LinearVelocity>
 		<AngularVelocity >0 0 0</AngularVelocity>
 		<LinearDamping >0</LinearDamping>
 		<AngularDamping >0.05</AngularDamping>
 		<MaxAngularVelocity >7</MaxAngularVelocity>
-		<SleepThreshold >0.005</SleepThreshold>
+		<SleepThreshold >5e-005</SleepThreshold>
 		<SolverIterationCounts >
 			<minPositionIters >30</minPositionIters>
 			<minVelocityIters >1</minVelocityIters>
@@ -622,42 +622,42 @@
 		<RigidDynamicFlags >eKINEMATIC</RigidDynamicFlags>
 	</PxRigidDynamic>
 	<PxRigidDynamic >
-		<Id >1038510240</Id>
+		<Id >1428303872</Id>
 		<Name >Bip01 R Clavicle</Name>
 		<ActorFlags >eVISUALIZATION</ActorFlags>
 		<DominanceGroup >0</DominanceGroup>
 		<OwnerClient >0</OwnerClient>
 		<ClientBehaviorBits >0</ClientBehaviorBits>
-		<GlobalPose >0.0741511 0.967671 -0.034306 0.238614 -3.07861 -0.389781 150.457</GlobalPose>
+		<GlobalPose >0.0741511 0.967671 -0.034306 0.238614 -0.307861 -0.0389781 15.0457</GlobalPose>
 		<Shapes >
 			<PxShape >
 				<Geometry >
 					<PxCapsuleGeometry >
-						<Radius >3.61043</Radius>
-						<HalfHeight >5.22366</HalfHeight>
+						<Radius >0.361043</Radius>
+						<HalfHeight >0.522366</HalfHeight>
 					</PxCapsuleGeometry>
 				</Geometry>
-				<LocalPose >0.707107 -5.96046e-008 5.96046e-008 0.707107 8.82482 0 0</LocalPose>
+				<LocalPose >0.707107 -5.96046e-008 5.96046e-008 0.707107 0.882482 0 0</LocalPose>
 				<SimulationFilterData >4 0 5 0</SimulationFilterData>
 				<QueryFilterData >0 0 0 0</QueryFilterData>
 				<Materials >
-					<PxMaterialRef >1037952368</PxMaterialRef>
+					<PxMaterialRef >1428993344</PxMaterialRef>
 				</Materials>
-				<ContactOffset >0.2</ContactOffset>
-				<RestOffset >0.1</RestOffset>
+				<ContactOffset >0.002</ContactOffset>
+				<RestOffset >0.001</RestOffset>
 				<Flags >eSIMULATION_SHAPE|eSCENE_QUERY_SHAPE|eVISUALIZATION</Flags>
 				<Name >Bip01 R Clavicle</Name>
 			</PxShape>
 		</Shapes>
-		<CMassLocalPose >0 0 0 1 8.82482 0 0</CMassLocalPose>
+		<CMassLocalPose >0 0 0 1 0.882482 0 0</CMassLocalPose>
 		<Mass >624.966</Mass>
-		<MassSpaceInertiaTensor >3816.3 14481 14481</MassSpaceInertiaTensor>
+		<MassSpaceInertiaTensor >38.163 144.81 144.81</MassSpaceInertiaTensor>
 		<LinearVelocity >0 0 0</LinearVelocity>
 		<AngularVelocity >0 0 0</AngularVelocity>
 		<LinearDamping >0</LinearDamping>
 		<AngularDamping >0.05</AngularDamping>
 		<MaxAngularVelocity >7</MaxAngularVelocity>
-		<SleepThreshold >0.005</SleepThreshold>
+		<SleepThreshold >5e-005</SleepThreshold>
 		<SolverIterationCounts >
 			<minPositionIters >30</minPositionIters>
 			<minVelocityIters >1</minVelocityIters>
@@ -666,42 +666,42 @@
 		<RigidDynamicFlags >eKINEMATIC</RigidDynamicFlags>
 	</PxRigidDynamic>
 	<PxRigidDynamic >
-		<Id >1038510592</Id>
+		<Id >1428304208</Id>
 		<Name >Bip01 R UpperArm</Name>
 		<ActorFlags >eVISUALIZATION</ActorFlags>
 		<DominanceGroup >0</DominanceGroup>
 		<OwnerClient >0</OwnerClient>
 		<ClientBehaviorBits >0</ClientBehaviorBits>
-		<GlobalPose >0.0183725 0.918493 0.00928464 0.394901 -18.5244 1.85413 142.217</GlobalPose>
+		<GlobalPose >0.0183725 0.918493 0.00928464 0.394901 -1.85244 0.185413 14.2217</GlobalPose>
 		<Shapes >
 			<PxShape >
 				<Geometry >
 					<PxCapsuleGeometry >
-						<Radius >5.15784</Radius>
-						<HalfHeight >8.05855</HalfHeight>
+						<Radius >0.515784</Radius>
+						<HalfHeight >0.805855</HalfHeight>
 					</PxCapsuleGeometry>
 				</Geometry>
-				<LocalPose >0.707107 -1.19209e-007 0 0.707107 13.2015 0.136302 -0.035881</LocalPose>
+				<LocalPose >0.707107 -1.19209e-007 0 0.707107 1.32015 0.0136302 -0.0035881</LocalPose>
 				<SimulationFilterData >4 0 5 0</SimulationFilterData>
 				<QueryFilterData >0 0 0 0</QueryFilterData>
 				<Materials >
-					<PxMaterialRef >1037952464</PxMaterialRef>
+					<PxMaterialRef >1428992768</PxMaterialRef>
 				</Materials>
-				<ContactOffset >0.2</ContactOffset>
-				<RestOffset >0.1</RestOffset>
+				<ContactOffset >0.002</ContactOffset>
+				<RestOffset >0.001</RestOffset>
 				<Flags >eSIMULATION_SHAPE|eSCENE_QUERY_SHAPE|eVISUALIZATION</Flags>
 				<Name >Bip01 R UpperArm</Name>
 			</PxShape>
 		</Shapes>
-		<CMassLocalPose >0 0 0 1 13.2015 0.136302 -0.035881</CMassLocalPose>
+		<CMassLocalPose >0 0 0 1 1.32015 0.0136302 -0.0035881</CMassLocalPose>
 		<Mass >1921.78</Mass>
-		<MassSpaceInertiaTensor >24033.9 99476.7 99476.7</MassSpaceInertiaTensor>
+		<MassSpaceInertiaTensor >240.339 994.766 994.766</MassSpaceInertiaTensor>
 		<LinearVelocity >0 0 0</LinearVelocity>
 		<AngularVelocity >0 0 0</AngularVelocity>
 		<LinearDamping >0</LinearDamping>
 		<AngularDamping >0.05</AngularDamping>
 		<MaxAngularVelocity >7</MaxAngularVelocity>
-		<SleepThreshold >0.005</SleepThreshold>
+		<SleepThreshold >5e-005</SleepThreshold>
 		<SolverIterationCounts >
 			<minPositionIters >30</minPositionIters>
 			<minVelocityIters >1</minVelocityIters>
@@ -710,42 +710,42 @@
 		<RigidDynamicFlags >eKINEMATIC</RigidDynamicFlags>
 	</PxRigidDynamic>
 	<PxRigidDynamic >
-		<Id >1038510928</Id>
+		<Id >1428304560</Id>
 		<Name >Bip01 R Forearm</Name>
 		<ActorFlags >eVISUALIZATION</ActorFlags>
 		<DominanceGroup >0</DominanceGroup>
 		<OwnerClient >0</OwnerClient>
 		<ClientBehaviorBits >0</ClientBehaviorBits>
-		<GlobalPose >-0.073494 0.915732 -0.0302198 0.393853 -36.6643 2.93823 123.083</GlobalPose>
+		<GlobalPose >-0.0734939 0.915732 -0.0302198 0.393853 -3.66643 0.293823 12.3083</GlobalPose>
 		<Shapes >
 			<PxShape >
 				<Geometry >
 					<PxCapsuleGeometry >
-						<Radius >3.94931</Radius>
-						<HalfHeight >7.69043</HalfHeight>
+						<Radius >0.394931</Radius>
+						<HalfHeight >0.769043</HalfHeight>
 					</PxCapsuleGeometry>
 				</Geometry>
-				<LocalPose >0.0111721 0.00367492 -0.00514883 0.999917 11.6453 -0.0637937 -0.0917816</LocalPose>
+				<LocalPose >0.0111721 0.00367492 -0.00514883 0.999917 1.16453 -0.00637937 -0.00917816</LocalPose>
 				<SimulationFilterData >4 0 5 0</SimulationFilterData>
 				<QueryFilterData >0 0 0 0</QueryFilterData>
 				<Materials >
-					<PxMaterialRef >1037952560</PxMaterialRef>
+					<PxMaterialRef >1428992288</PxMaterialRef>
 				</Materials>
-				<ContactOffset >0.2</ContactOffset>
-				<RestOffset >0.1</RestOffset>
+				<ContactOffset >0.002</ContactOffset>
+				<RestOffset >0.001</RestOffset>
 				<Flags >eSIMULATION_SHAPE|eSCENE_QUERY_SHAPE|eVISUALIZATION</Flags>
 				<Name >Bip01 R Forearm</Name>
 			</PxShape>
 		</Shapes>
-		<CMassLocalPose >1.90331e-005 0.00373212 -0.00510752 0.99998 11.6453 -0.0637937 -0.0917816</CMassLocalPose>
+		<CMassLocalPose >1.90331e-005 0.00373211 -0.00510752 0.99998 1.16453 -0.00637937 -0.00917816</CMassLocalPose>
 		<Mass >1011.67</Mass>
-		<MassSpaceInertiaTensor >7487.13 40543.5 40543.5</MassSpaceInertiaTensor>
+		<MassSpaceInertiaTensor >74.8712 405.435 405.435</MassSpaceInertiaTensor>
 		<LinearVelocity >0 0 0</LinearVelocity>
 		<AngularVelocity >0 0 0</AngularVelocity>
 		<LinearDamping >0</LinearDamping>
 		<AngularDamping >0.05</AngularDamping>
 		<MaxAngularVelocity >7</MaxAngularVelocity>
-		<SleepThreshold >0.005</SleepThreshold>
+		<SleepThreshold >5e-005</SleepThreshold>
 		<SolverIterationCounts >
 			<minPositionIters >30</minPositionIters>
 			<minVelocityIters >1</minVelocityIters>
@@ -754,42 +754,42 @@
 		<RigidDynamicFlags >eKINEMATIC</RigidDynamicFlags>
 	</PxRigidDynamic>
 	<PxRigidDynamic >
-		<Id >1038511280</Id>
+		<Id >1428304896</Id>
 		<Name >Bip01 R Hand</Name>
 		<ActorFlags >eVISUALIZATION</ActorFlags>
 		<DominanceGroup >0</DominanceGroup>
 		<OwnerClient >0</OwnerClient>
 		<ClientBehaviorBits >0</ClientBehaviorBits>
-		<GlobalPose >-0.1977 -0.621721 0.679719 -0.335201 -52.4608 -0.747208 106.404</GlobalPose>
+		<GlobalPose >-0.1977 -0.621721 0.679719 -0.335201 -5.24608 -0.0747208 10.6404</GlobalPose>
 		<Shapes >
 			<PxShape >
 				<Geometry >
 					<PxCapsuleGeometry >
-						<Radius >3.76965</Radius>
-						<HalfHeight >2.25028</HalfHeight>
+						<Radius >0.376965</Radius>
+						<HalfHeight >0.225028</HalfHeight>
 					</PxCapsuleGeometry>
 				</Geometry>
-				<LocalPose >0.707107 2.98023e-008 0 0.707107 4.68572 0 0</LocalPose>
+				<LocalPose >0.707107 2.98023e-008 0 0.707107 0.468572 0 0</LocalPose>
 				<SimulationFilterData >4 0 5 0</SimulationFilterData>
 				<QueryFilterData >0 0 0 0</QueryFilterData>
 				<Materials >
-					<PxMaterialRef >1038491424</PxMaterialRef>
+					<PxMaterialRef >1428992192</PxMaterialRef>
 				</Materials>
-				<ContactOffset >0.2</ContactOffset>
-				<RestOffset >0.1</RestOffset>
+				<ContactOffset >0.002</ContactOffset>
+				<RestOffset >0.001</RestOffset>
 				<Flags >eSIMULATION_SHAPE|eSCENE_QUERY_SHAPE|eVISUALIZATION</Flags>
 				<Name >Bip01 R Hand</Name>
 			</PxShape>
 		</Shapes>
-		<CMassLocalPose >0 0 0 1 4.68572 0 0</CMassLocalPose>
+		<CMassLocalPose >0 0 0 1 0.468572 0 0</CMassLocalPose>
 		<Mass >425.301</Mass>
-		<MassSpaceInertiaTensor >2702.96 4892.09 4892.09</MassSpaceInertiaTensor>
+		<MassSpaceInertiaTensor >27.0296 48.9209 48.9209</MassSpaceInertiaTensor>
 		<LinearVelocity >0 0 0</LinearVelocity>
 		<AngularVelocity >0 0 0</AngularVelocity>
 		<LinearDamping >0</LinearDamping>
 		<AngularDamping >0.05</AngularDamping>
 		<MaxAngularVelocity >7</MaxAngularVelocity>
-		<SleepThreshold >0.005</SleepThreshold>
+		<SleepThreshold >5e-005</SleepThreshold>
 		<SolverIterationCounts >
 			<minPositionIters >30</minPositionIters>
 			<minVelocityIters >1</minVelocityIters>
@@ -798,42 +798,42 @@
 		<RigidDynamicFlags >eKINEMATIC</RigidDynamicFlags>
 	</PxRigidDynamic>
 	<PxRigidDynamic >
-		<Id >1038511616</Id>
+		<Id >1428305248</Id>
 		<Name >Bip01 L Thigh</Name>
 		<ActorFlags >eVISUALIZATION</ActorFlags>
 		<DominanceGroup >0</DominanceGroup>
 		<OwnerClient >0</OwnerClient>
 		<ClientBehaviorBits >0</ClientBehaviorBits>
-		<GlobalPose >-0.70653 0.0285596 0.70653 -0.0285605 8.79602 -1.23223 97.331</GlobalPose>
+		<GlobalPose >-0.70653 0.0285596 0.70653 -0.0285605 0.879603 -0.123223 9.7331</GlobalPose>
 		<Shapes >
 			<PxShape >
 				<Geometry >
 					<PxCapsuleGeometry >
-						<Radius >10.1536</Radius>
-						<HalfHeight >12.6652</HalfHeight>
+						<Radius >1.01536</Radius>
+						<HalfHeight >1.26652</HalfHeight>
 					</PxCapsuleGeometry>
 				</Geometry>
-				<LocalPose >0.707107 -1.78814e-007 5.96046e-008 0.707107 22.8453 0.0426083 -0.207752</LocalPose>
+				<LocalPose >0.707107 -1.78814e-007 5.96046e-008 0.707107 2.28453 0.00426083 -0.0207752</LocalPose>
 				<SimulationFilterData >4 0 5 0</SimulationFilterData>
 				<QueryFilterData >0 0 0 0</QueryFilterData>
 				<Materials >
-					<PxMaterialRef >1038491520</PxMaterialRef>
+					<PxMaterialRef >1428992384</PxMaterialRef>
 				</Materials>
-				<ContactOffset >0.2</ContactOffset>
-				<RestOffset >0.1</RestOffset>
+				<ContactOffset >0.002</ContactOffset>
+				<RestOffset >0.001</RestOffset>
 				<Flags >eSIMULATION_SHAPE|eSCENE_QUERY_SHAPE|eVISUALIZATION</Flags>
 				<Name >Bip01 L Thigh</Name>
 			</PxShape>
 		</Shapes>
-		<CMassLocalPose >0 -1.71722e-007 0 1 22.8453 0.0426083 -0.207752</CMassLocalPose>
+		<CMassLocalPose >0 -1.69106e-007 0 1 2.28453 0.00426083 -0.0207752</CMassLocalPose>
 		<Mass >12589</Mass>
-		<MassSpaceInertiaTensor >603732 1.95721e+006 1.95721e+006</MassSpaceInertiaTensor>
+		<MassSpaceInertiaTensor >6037.32 19572.1 19572.1</MassSpaceInertiaTensor>
 		<LinearVelocity >0 0 0</LinearVelocity>
 		<AngularVelocity >0 0 0</AngularVelocity>
 		<LinearDamping >0</LinearDamping>
 		<AngularDamping >0.05</AngularDamping>
 		<MaxAngularVelocity >7</MaxAngularVelocity>
-		<SleepThreshold >0.005</SleepThreshold>
+		<SleepThreshold >5e-005</SleepThreshold>
 		<SolverIterationCounts >
 			<minPositionIters >30</minPositionIters>
 			<minVelocityIters >1</minVelocityIters>
@@ -842,42 +842,42 @@
 		<RigidDynamicFlags >eKINEMATIC</RigidDynamicFlags>
 	</PxRigidDynamic>
 	<PxRigidDynamic >
-		<Id >1038511968</Id>
+		<Id >1428305584</Id>
 		<Name >Bip01 L Calf</Name>
 		<ActorFlags >eVISUALIZATION</ActorFlags>
 		<DominanceGroup >0</DominanceGroup>
 		<OwnerClient >0</OwnerClient>
 		<ClientBehaviorBits >0</ClientBehaviorBits>
-		<GlobalPose >-0.705851 -0.0421183 0.705851 0.0421174 8.79602 -4.92404 51.7409</GlobalPose>
+		<GlobalPose >-0.705851 -0.0421183 0.705851 0.0421174 0.879602 -0.492404 5.17409</GlobalPose>
 		<Shapes >
 			<PxShape >
 				<Geometry >
 					<PxCapsuleGeometry >
-						<Radius >7.68462</Radius>
-						<HalfHeight >13.2711</HalfHeight>
+						<Radius >0.768462</Radius>
+						<HalfHeight >1.32711</HalfHeight>
 					</PxCapsuleGeometry>
 				</Geometry>
-				<LocalPose >0.707107 -8.9407e-008 5.96046e-008 0.707107 20.9029 -0.370555 0.058322</LocalPose>
+				<LocalPose >0.707107 -8.9407e-008 5.96046e-008 0.707107 2.09029 -0.0370555 0.0058322</LocalPose>
 				<SimulationFilterData >4 0 5 0</SimulationFilterData>
 				<QueryFilterData >0 0 0 0</QueryFilterData>
 				<Materials >
-					<PxMaterialRef >1038491616</PxMaterialRef>
+					<PxMaterialRef >1428992096</PxMaterialRef>
 				</Materials>
-				<ContactOffset >0.2</ContactOffset>
-				<RestOffset >0.1</RestOffset>
+				<ContactOffset >0.002</ContactOffset>
+				<RestOffset >0.001</RestOffset>
 				<Flags >eSIMULATION_SHAPE|eSCENE_QUERY_SHAPE|eVISUALIZATION</Flags>
 				<Name >Bip01 L Calf</Name>
 			</PxShape>
 		</Shapes>
-		<CMassLocalPose >0 0 0 1 20.9029 -0.370555 0.0583219</CMassLocalPose>
+		<CMassLocalPose >0 0 0 1 2.09029 -0.0370555 0.00583219</CMassLocalPose>
 		<Mass >6825.02</Mass>
-		<MassSpaceInertiaTensor >190295 886858 886858</MassSpaceInertiaTensor>
+		<MassSpaceInertiaTensor >1902.95 8868.58 8868.57</MassSpaceInertiaTensor>
 		<LinearVelocity >0 0 0</LinearVelocity>
 		<AngularVelocity >0 0 0</AngularVelocity>
 		<LinearDamping >0</LinearDamping>
 		<AngularDamping >0.05</AngularDamping>
 		<MaxAngularVelocity >7</MaxAngularVelocity>
-		<SleepThreshold >0.005</SleepThreshold>
+		<SleepThreshold >5e-005</SleepThreshold>
 		<SolverIterationCounts >
 			<minPositionIters >30</minPositionIters>
 			<minVelocityIters >1</minVelocityIters>
@@ -886,42 +886,42 @@
 		<RigidDynamicFlags >eKINEMATIC</RigidDynamicFlags>
 	</PxRigidDynamic>
 	<PxRigidDynamic >
-		<Id >1038512304</Id>
+		<Id >1428305936</Id>
 		<Name >Bip01 L Foot</Name>
 		<ActorFlags >eVISUALIZATION</ActorFlags>
 		<DominanceGroup >0</DominanceGroup>
 		<OwnerClient >0</OwnerClient>
 		<ClientBehaviorBits >0</ClientBehaviorBits>
-		<GlobalPose >0.707107 4.7907e-007 -0.707107 4.90308e-007 8.79601 0.0568497 10.1523</GlobalPose>
+		<GlobalPose >0.707107 4.7907e-007 -0.707107 4.90308e-007 0.879601 0.00568497 1.01523</GlobalPose>
 		<Shapes >
 			<PxShape >
 				<Geometry >
 					<PxCapsuleGeometry >
-						<Radius >6.56598</Radius>
-						<HalfHeight >2.06603</HalfHeight>
+						<Radius >0.656598</Radius>
+						<HalfHeight >0.206603</HalfHeight>
 					</PxCapsuleGeometry>
 				</Geometry>
-				<LocalPose >0.707107 -0.707107 6.32203e-008 6.32203e-008 5.05661 3.34258 -9.53674e-007</LocalPose>
+				<LocalPose >0.707107 -0.707107 6.32203e-008 6.32203e-008 0.505661 0.334258 -9.53674e-008</LocalPose>
 				<SimulationFilterData >4 0 5 0</SimulationFilterData>
 				<QueryFilterData >0 0 0 0</QueryFilterData>
 				<Materials >
-					<PxMaterialRef >1038491712</PxMaterialRef>
+					<PxMaterialRef >1428992000</PxMaterialRef>
 				</Materials>
-				<ContactOffset >0.2</ContactOffset>
-				<RestOffset >0.1</RestOffset>
+				<ContactOffset >0.002</ContactOffset>
+				<RestOffset >0.001</RestOffset>
 				<Flags >eSIMULATION_SHAPE|eSCENE_QUERY_SHAPE|eVISUALIZATION</Flags>
 				<Name >Bip01 L Foot</Name>
 			</PxShape>
 		</Shapes>
-		<CMassLocalPose >0 0 -2.4641e-007 1 5.05661 3.34258 -9.53674e-007</CMassLocalPose>
+		<CMassLocalPose >0 0 -1.28338e-007 1 0.505661 0.334258 -9.53674e-008</CMassLocalPose>
 		<Mass >1745.38</Mass>
-		<MassSpaceInertiaTensor >44401.2 32511.7 44401.2</MassSpaceInertiaTensor>
+		<MassSpaceInertiaTensor >444.012 325.116 444.011</MassSpaceInertiaTensor>
 		<LinearVelocity >0 0 0</LinearVelocity>
 		<AngularVelocity >0 0 0</AngularVelocity>
 		<LinearDamping >0</LinearDamping>
 		<AngularDamping >0.05</AngularDamping>
 		<MaxAngularVelocity >7</MaxAngularVelocity>
-		<SleepThreshold >0.005</SleepThreshold>
+		<SleepThreshold >5e-005</SleepThreshold>
 		<SolverIterationCounts >
 			<minPositionIters >30</minPositionIters>
 			<minVelocityIters >1</minVelocityIters>
@@ -930,42 +930,42 @@
 		<RigidDynamicFlags >eKINEMATIC</RigidDynamicFlags>
 	</PxRigidDynamic>
 	<PxRigidDynamic >
-		<Id >1038512656</Id>
+		<Id >1428306272</Id>
 		<Name >Bip01 L Toe0</Name>
 		<ActorFlags >eVISUALIZATION</ActorFlags>
 		<DominanceGroup >0</DominanceGroup>
 		<OwnerClient >0</OwnerClient>
 		<ClientBehaviorBits >0</ClientBehaviorBits>
-		<GlobalPose >0.459964 -0.537059 -0.459964 0.53706 8.79603 -11.9102 0.0368465</GlobalPose>
+		<GlobalPose >0.459964 -0.537059 -0.459964 0.53706 0.879603 -1.19102 0.00368467</GlobalPose>
 		<Shapes >
 			<PxShape >
 				<Geometry >
 					<PxCapsuleGeometry >
-						<Radius >2.09005</Radius>
-						<HalfHeight >2.86231</HalfHeight>
+						<Radius >0.209005</Radius>
+						<HalfHeight >0.286231</HalfHeight>
 					</PxCapsuleGeometry>
 				</Geometry>
-				<LocalPose >0.707107 -2.98023e-008 2.98023e-008 0.707107 4.94315 0.659703 9.53674e-007</LocalPose>
+				<LocalPose >0.707107 -2.98023e-008 2.98023e-008 0.707107 0.494315 0.0659703 9.53674e-008</LocalPose>
 				<SimulationFilterData >4 0 5 0</SimulationFilterData>
 				<QueryFilterData >0 0 0 0</QueryFilterData>
 				<Materials >
-					<PxMaterialRef >1037952176</PxMaterialRef>
+					<PxMaterialRef >1428993536</PxMaterialRef>
 				</Materials>
-				<ContactOffset >0.2</ContactOffset>
-				<RestOffset >0.1</RestOffset>
+				<ContactOffset >0.002</ContactOffset>
+				<RestOffset >0.001</RestOffset>
 				<Flags >eSIMULATION_SHAPE|eSCENE_QUERY_SHAPE|eVISUALIZATION</Flags>
 				<Name >Bip01 L Toe0</Name>
 			</PxShape>
 		</Shapes>
-		<CMassLocalPose >0 0 0 1 4.94315 0.659703 9.53674e-007</CMassLocalPose>
+		<CMassLocalPose >0 0 0 1 0.494315 0.0659703 9.53674e-008</CMassLocalPose>
 		<Mass >116.805</Mass>
-		<MassSpaceInertiaTensor >238.414 852.08 852.08</MassSpaceInertiaTensor>
+		<MassSpaceInertiaTensor >2.38414 8.5208 8.5208</MassSpaceInertiaTensor>
 		<LinearVelocity >0 0 0</LinearVelocity>
 		<AngularVelocity >0 0 0</AngularVelocity>
 		<LinearDamping >0</LinearDamping>
 		<AngularDamping >0.05</AngularDamping>
 		<MaxAngularVelocity >7</MaxAngularVelocity>
-		<SleepThreshold >0.005</SleepThreshold>
+		<SleepThreshold >5e-005</SleepThreshold>
 		<SolverIterationCounts >
 			<minPositionIters >30</minPositionIters>
 			<minVelocityIters >1</minVelocityIters>
@@ -974,42 +974,42 @@
 		<RigidDynamicFlags >eKINEMATIC</RigidDynamicFlags>
 	</PxRigidDynamic>
 	<PxRigidDynamic >
-		<Id >1038512992</Id>
+		<Id >1428306624</Id>
 		<Name >Bip01 R Thigh</Name>
 		<ActorFlags >eVISUALIZATION</ActorFlags>
 		<DominanceGroup >0</DominanceGroup>
 		<OwnerClient >0</OwnerClient>
 		<ClientBehaviorBits >0</ClientBehaviorBits>
-		<GlobalPose >0.70653 -0.0285595 -0.70653 0.0285606 -8.79603 -1.23225 97.331</GlobalPose>
+		<GlobalPose >0.70653 -0.0285595 -0.70653 0.0285606 -0.879603 -0.123225 9.7331</GlobalPose>
 		<Shapes >
 			<PxShape >
 				<Geometry >
 					<PxCapsuleGeometry >
-						<Radius >10.1536</Radius>
-						<HalfHeight >12.6652</HalfHeight>
+						<Radius >1.01536</Radius>
+						<HalfHeight >1.26652</HalfHeight>
 					</PxCapsuleGeometry>
 				</Geometry>
-				<LocalPose >0.707107 -1.19209e-007 0 0.707107 22.8453 0.0426102 0.207753</LocalPose>
+				<LocalPose >0.707107 -1.19209e-007 0 0.707107 2.28453 0.00426102 0.0207753</LocalPose>
 				<SimulationFilterData >4 0 5 0</SimulationFilterData>
 				<QueryFilterData >0 0 0 0</QueryFilterData>
 				<Materials >
-					<PxMaterialRef >1037952080</PxMaterialRef>
+					<PxMaterialRef >1428993632</PxMaterialRef>
 				</Materials>
-				<ContactOffset >0.2</ContactOffset>
-				<RestOffset >0.1</RestOffset>
+				<ContactOffset >0.002</ContactOffset>
+				<RestOffset >0.001</RestOffset>
 				<Flags >eSIMULATION_SHAPE|eSCENE_QUERY_SHAPE|eVISUALIZATION</Flags>
 				<Name >Bip01 R Thigh</Name>
 			</PxShape>
 		</Shapes>
-		<CMassLocalPose >0 0 0 1 22.8453 0.0426102 0.207753</CMassLocalPose>
+		<CMassLocalPose >0 0 0 1 2.28453 0.00426102 0.0207753</CMassLocalPose>
 		<Mass >12589</Mass>
-		<MassSpaceInertiaTensor >603732 1.95721e+006 1.95721e+006</MassSpaceInertiaTensor>
+		<MassSpaceInertiaTensor >6037.32 19572.1 19572.1</MassSpaceInertiaTensor>
 		<LinearVelocity >0 0 0</LinearVelocity>
 		<AngularVelocity >0 0 0</AngularVelocity>
 		<LinearDamping >0</LinearDamping>
 		<AngularDamping >0.05</AngularDamping>
 		<MaxAngularVelocity >7</MaxAngularVelocity>
-		<SleepThreshold >0.005</SleepThreshold>
+		<SleepThreshold >5e-005</SleepThreshold>
 		<SolverIterationCounts >
 			<minPositionIters >30</minPositionIters>
 			<minVelocityIters >1</minVelocityIters>
@@ -1018,42 +1018,42 @@
 		<RigidDynamicFlags >eKINEMATIC</RigidDynamicFlags>
 	</PxRigidDynamic>
 	<PxRigidDynamic >
-		<Id >1038513344</Id>
+		<Id >1428306960</Id>
 		<Name >Bip01 R Calf</Name>
 		<ActorFlags >eVISUALIZATION</ActorFlags>
 		<DominanceGroup >0</DominanceGroup>
 		<OwnerClient >0</OwnerClient>
 		<ClientBehaviorBits >0</ClientBehaviorBits>
-		<GlobalPose >-0.705851 -0.0421184 0.705851 0.0421173 -8.79602 -4.92406 51.7409</GlobalPose>
+		<GlobalPose >-0.705851 -0.0421184 0.705851 0.0421173 -0.879602 -0.492406 5.17409</GlobalPose>
 		<Shapes >
 			<PxShape >
 				<Geometry >
 					<PxCapsuleGeometry >
-						<Radius >7.68462</Radius>
-						<HalfHeight >13.271</HalfHeight>
+						<Radius >0.768462</Radius>
+						<HalfHeight >1.3271</HalfHeight>
 					</PxCapsuleGeometry>
 				</Geometry>
-				<LocalPose >0.707107 -2.98023e-008 5.96046e-008 0.707107 20.9029 -0.370554 -0.0583191</LocalPose>
+				<LocalPose >0.707107 -2.98023e-008 5.96046e-008 0.707107 2.09029 -0.0370554 -0.00583191</LocalPose>
 				<SimulationFilterData >4 0 5 0</SimulationFilterData>
 				<QueryFilterData >0 0 0 0</QueryFilterData>
 				<Materials >
-					<PxMaterialRef >1037951984</PxMaterialRef>
+					<PxMaterialRef >1428993728</PxMaterialRef>
 				</Materials>
-				<ContactOffset >0.2</ContactOffset>
-				<RestOffset >0.1</RestOffset>
+				<ContactOffset >0.002</ContactOffset>
+				<RestOffset >0.001</RestOffset>
 				<Flags >eSIMULATION_SHAPE|eSCENE_QUERY_SHAPE|eVISUALIZATION</Flags>
 				<Name >Bip01 R Calf</Name>
 			</PxShape>
 		</Shapes>
-		<CMassLocalPose >0 0 0 1 20.9029 -0.370554 -0.0583191</CMassLocalPose>
+		<CMassLocalPose >0 0 0 1 2.09029 -0.0370554 -0.00583191</CMassLocalPose>
 		<Mass >6825.02</Mass>
-		<MassSpaceInertiaTensor >190295 886857 886857</MassSpaceInertiaTensor>
+		<MassSpaceInertiaTensor >1902.95 8868.57 8868.57</MassSpaceInertiaTensor>
 		<LinearVelocity >0 0 0</LinearVelocity>
 		<AngularVelocity >0 0 0</AngularVelocity>
 		<LinearDamping >0</LinearDamping>
 		<AngularDamping >0.05</AngularDamping>
 		<MaxAngularVelocity >7</MaxAngularVelocity>
-		<SleepThreshold >0.005</SleepThreshold>
+		<SleepThreshold >5e-005</SleepThreshold>
 		<SolverIterationCounts >
 			<minPositionIters >30</minPositionIters>
 			<minVelocityIters >1</minVelocityIters>
@@ -1062,42 +1062,42 @@
 		<RigidDynamicFlags >eKINEMATIC</RigidDynamicFlags>
 	</PxRigidDynamic>
 	<PxRigidDynamic >
-		<Id >1038513680</Id>
+		<Id >1428307312</Id>
 		<Name >Bip01 R Foot</Name>
 		<ActorFlags >eVISUALIZATION</ActorFlags>
 		<DominanceGroup >0</DominanceGroup>
 		<OwnerClient >0</OwnerClient>
 		<ClientBehaviorBits >0</ClientBehaviorBits>
-		<GlobalPose >0.707107 4.7907e-007 -0.707107 4.90308e-007 -8.79603 0.0568256 10.1523</GlobalPose>
+		<GlobalPose >0.707107 4.7907e-007 -0.707107 4.90308e-007 -0.879603 0.00568256 1.01523</GlobalPose>
 		<Shapes >
 			<PxShape >
 				<Geometry >
 					<PxCapsuleGeometry >
-						<Radius >6.56598</Radius>
-						<HalfHeight >2.06603</HalfHeight>
+						<Radius >0.656598</Radius>
+						<HalfHeight >0.206603</HalfHeight>
 					</PxCapsuleGeometry>
 				</Geometry>
-				<LocalPose >0.707107 -0.707107 6.32203e-008 6.32203e-008 5.05661 3.34258 -9.53674e-007</LocalPose>
+				<LocalPose >0.707107 -0.707107 6.32203e-008 6.32203e-008 0.505661 0.334258 -9.53674e-008</LocalPose>
 				<SimulationFilterData >4 0 5 0</SimulationFilterData>
 				<QueryFilterData >0 0 0 0</QueryFilterData>
 				<Materials >
-					<PxMaterialRef >1037951888</PxMaterialRef>
+					<PxMaterialRef >1428993824</PxMaterialRef>
 				</Materials>
-				<ContactOffset >0.2</ContactOffset>
-				<RestOffset >0.1</RestOffset>
+				<ContactOffset >0.002</ContactOffset>
+				<RestOffset >0.001</RestOffset>
 				<Flags >eSIMULATION_SHAPE|eSCENE_QUERY_SHAPE|eVISUALIZATION</Flags>
 				<Name >Bip01 R Foot</Name>
 			</PxShape>
 		</Shapes>
-		<CMassLocalPose >0 0 -1.64273e-007 1 5.05661 3.34258 -9.53674e-007</CMassLocalPose>
+		<CMassLocalPose >0 0 -1.28338e-007 1 0.505661 0.334258 -9.53674e-008</CMassLocalPose>
 		<Mass >1745.38</Mass>
-		<MassSpaceInertiaTensor >44401.2 32511.7 44401.2</MassSpaceInertiaTensor>
+		<MassSpaceInertiaTensor >444.012 325.116 444.011</MassSpaceInertiaTensor>
 		<LinearVelocity >0 0 0</LinearVelocity>
 		<AngularVelocity >0 0 0</AngularVelocity>
 		<LinearDamping >0</LinearDamping>
 		<AngularDamping >0.05</AngularDamping>
 		<MaxAngularVelocity >7</MaxAngularVelocity>
-		<SleepThreshold >0.005</SleepThreshold>
+		<SleepThreshold >5e-005</SleepThreshold>
 		<SolverIterationCounts >
 			<minPositionIters >30</minPositionIters>
 			<minVelocityIters >1</minVelocityIters>
@@ -1106,42 +1106,42 @@
 		<RigidDynamicFlags >eKINEMATIC</RigidDynamicFlags>
 	</PxRigidDynamic>
 	<PxRigidDynamic >
-		<Id >1038556160</Id>
+		<Id >1428316160</Id>
 		<Name >Bip01 R Toe0</Name>
 		<ActorFlags >eVISUALIZATION</ActorFlags>
 		<DominanceGroup >0</DominanceGroup>
 		<OwnerClient >0</OwnerClient>
 		<ClientBehaviorBits >0</ClientBehaviorBits>
-		<GlobalPose >0.460476 -0.536621 -0.460476 0.536621 -8.79601 -11.9103 0.0368465</GlobalPose>
+		<GlobalPose >0.460476 -0.536621 -0.460476 0.536621 -0.879601 -1.19103 0.00368467</GlobalPose>
 		<Shapes >
 			<PxShape >
 				<Geometry >
 					<PxCapsuleGeometry >
-						<Radius >2.09005</Radius>
-						<HalfHeight >2.86231</HalfHeight>
+						<Radius >0.209005</Radius>
+						<HalfHeight >0.286231</HalfHeight>
 					</PxCapsuleGeometry>
 				</Geometry>
-				<LocalPose >0.707107 -8.9407e-008 2.98023e-008 0.707107 4.94315 0.659702 9.53674e-007</LocalPose>
+				<LocalPose >0.707107 -8.9407e-008 2.98023e-008 0.707107 0.494315 0.0659702 9.53674e-008</LocalPose>
 				<SimulationFilterData >4 0 5 0</SimulationFilterData>
 				<QueryFilterData >0 0 0 0</QueryFilterData>
 				<Materials >
-					<PxMaterialRef >1037951792</PxMaterialRef>
+					<PxMaterialRef >1428993920</PxMaterialRef>
 				</Materials>
-				<ContactOffset >0.2</ContactOffset>
-				<RestOffset >0.1</RestOffset>
+				<ContactOffset >0.002</ContactOffset>
+				<RestOffset >0.001</RestOffset>
 				<Flags >eSIMULATION_SHAPE|eSCENE_QUERY_SHAPE|eVISUALIZATION</Flags>
 				<Name >Bip01 R Toe0</Name>
 			</PxShape>
 		</Shapes>
-		<CMassLocalPose >0 0 0 1 4.94315 0.659702 9.53674e-007</CMassLocalPose>
+		<CMassLocalPose >0 0 0 1 0.494315 0.0659702 9.53674e-008</CMassLocalPose>
 		<Mass >116.805</Mass>
-		<MassSpaceInertiaTensor >238.414 852.08 852.079</MassSpaceInertiaTensor>
+		<MassSpaceInertiaTensor >2.38414 8.52079 8.52079</MassSpaceInertiaTensor>
 		<LinearVelocity >0 0 0</LinearVelocity>
 		<AngularVelocity >0 0 0</AngularVelocity>
 		<LinearDamping >0</LinearDamping>
 		<AngularDamping >0.05</AngularDamping>
 		<MaxAngularVelocity >7</MaxAngularVelocity>
-		<SleepThreshold >0.005</SleepThreshold>
+		<SleepThreshold >5e-005</SleepThreshold>
 		<SolverIterationCounts >
 			<minPositionIters >30</minPositionIters>
 			<minVelocityIters >1</minVelocityIters>

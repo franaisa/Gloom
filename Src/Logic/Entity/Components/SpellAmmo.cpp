@@ -51,7 +51,6 @@ namespace Logic {
 		
 		// Leemos los atributos obligatorios de arma
 		_spellID = (SpellType::Enum)entityInfo->getIntAttribute(_spellName + "ID");
-		_isPassive = entityInfo->getBoolAttribute(_spellName + "IsPassive");
 		
 		assert( entityInfo->hasAttribute("primarySpell") && "Debe de tener campo primarySpell");
 		_isPrimarySpell = _spellID == entityInfo->getIntAttribute("primarySpell");
