@@ -26,6 +26,7 @@ básicas de los rigid bodies.
 #include <PxScene.h>
 #include <PxShape.h>
 #include <PxRigidActor.h>
+#include <PxAggregate.h>
 #include <PxRigidDynamic.h>
 #include <PxRigidStatic.h>
 #include <PxStringTable.h>
@@ -33,6 +34,7 @@ básicas de los rigid bodies.
 #include <extensions/PxDefaultSimulationFilterShader.h>
 #include <extensions/PxSimpleFactory.h>
 #include <extensions/PxDefaultStreams.h>
+#include <extensions/PxStringTableExt.h>
 #include <geometry/PxGeometryHelpers.h>
 #include <RepX/RepXUtility.h>
 
@@ -40,7 +42,10 @@ using namespace physx;
 
 namespace Physics {
 
-	CEntity::CEntity() : _isTrigger(false) {
+	CEntity::CEntity() : _isTrigger(false),
+						 _actor(NULL),
+						 _aggregate(NULL) {
+
 		Physics::CServer* physicsServer = Physics::CServer::getSingletonPtr();
 
 		// Obtenemos la sdk de physics y comprobamos que ha sido inicializada
@@ -71,51 +76,36 @@ namespace Physics {
 			_actor = NULL;
 		}
 
+		if(_aggregate != NULL) {
+			Physics::CServer::getSingletonPtr()->destroyAggregate(_aggregate);
+			_aggregate = NULL;
+		}
+
 		// Fijamos los punteros a physx como nulos
 		_physxSDK = NULL;
+		_cooking = NULL;
 		_scene = NULL;
 		_collisionManager = NULL;
 	} // ~CEntity
 
 	//________________________________________________________________________
 
-	void CEntity::load(const std::string &file, int group, const std::vector<int>& groupList, const Logic::IPhysics* component) {
-		_actor = deserializeFromRepXFile(file, group, groupList, component);
+	void CEntity::load(const std::string &file, int group, const std::vector<int>& groupList, const Logic::IPhysics* component, bool nameActors) {
+		deserializeFromRepXFile(file, group, groupList, component, nameActors);
 	}
 
 	//________________________________________________________________________
 
-	float CEntity::getLogicPivotOffset(const PxGeometry& geometry) {
-		switch( geometry.getType() ) {
-			case PxGeometryType::eBOX:
-				// Devolver la altura media de la caja
-				return static_cast<const PxBoxGeometry*>(&geometry)->halfExtents.y;
-				break;
-
-			case PxGeometryType::eSPHERE:
-				// Devolver el radio de la esfera
-				return static_cast<const PxSphereGeometry*>(&geometry)->radius;
-				break;
-
-			case PxGeometryType::eCAPSULE:
-				// Devolver el radio de la cupula mas la mitad de la altura
-				return static_cast<const PxCapsuleGeometry*>(&geometry)->halfHeight;
-				break;
-		}
-
-		return 0;
-	}
-
-	//________________________________________________________________________
-
-	PxRigidActor* CEntity::deserializeFromRepXFile(const std::string &file, int group, const std::vector<int>& groupList, const Logic::IPhysics* component) {
+	void CEntity::deserializeFromRepXFile(const std::string &file, int group, const std::vector<int>& groupList, const Logic::IPhysics* component,
+										  bool nameActors) {
 		assert(_scene);
 
 		// Preparar parámetros para deserializar
 		PxDefaultFileInputData data(file.c_str());
 		PxCollection* bufferCollection = _physxSDK->createCollection();
 		PxCollection* sceneCollection = _physxSDK->createCollection();
-		PxStringTable* stringTable = NULL; 
+		//PxStringTable* stringTable = nameActors ? &PxStringTableExt::createStringTable( CServer::getSingletonPtr()->getFoundation()->getAllocatorCallback() ) : NULL; 
+		PxStringTable* stringTable = &PxStringTableExt::createStringTable( CServer::getSingletonPtr()->getFoundation()->getAllocatorCallback() ); 
 		PxUserReferences* externalRefs = NULL; 
 		PxUserReferences* userRefs = NULL; 
 
@@ -123,30 +113,85 @@ namespace Physics {
 		repx::deserializeFromRepX(data, *_physxSDK, *_cooking, stringTable, externalRefs, 
 								  *bufferCollection, *sceneCollection, userRefs);
 
-		// Añadir entidades físicas a la escena
-		_physxSDK->addCollection(*sceneCollection, *_scene);
+		// Obtenemos el número de actores que debemos cargar
+		PxU32 nbActors = sceneCollection->getNbObjects();
 
-		// Buscar una entidad de tipo PxRigidActor. Asumimos que hay exactamente 1 en el fichero.
-		PxRigidActor* actor = NULL;
-		for (unsigned int i = 0; i < sceneCollection->getNbObjects() && !actor; ++i) {
-			PxSerializable* p = sceneCollection->getObject(i);
-			actor = p->is<PxRigidActor>();
+		if(nbActors > 1) {
+			deserializeAggregate(sceneCollection, nbActors, component, group, groupList);
 		}
-		assert(actor);
-
-		// Anotar el componente lógico asociado a la entidad física
-		actor->userData = (void*)component;
-
-		// Establecer el grupo de colisión
-		PxSetGroup(*actor, group);
-		// Establecer los filtros de colisión
-		Physics::CServer::getSingletonPtr()->setupFiltering(actor, group, groupList);
+		else {
+			deserializeActor(sceneCollection, component, group, groupList);
+		}
 
 		// Liberar recursos
 		bufferCollection->release();
 		sceneCollection->release();
+	}
 
-		return actor;
+	//________________________________________________________________________
+
+	void CEntity::deserializeAggregate(PxCollection* sceneCollection, unsigned int nbActors, const Logic::IPhysics* component, int group, const std::vector<int>& groupList) {
+		// Creamos un agregado con el numero maximo de actores leidos y activamos
+		// las colisiones para el propio ragdoll (selfcollisions = true)
+		_aggregate = _physxSDK->createAggregate(nbActors, true);
+
+		// Asumimos que los datos contenidos en el fichero corresponden a los colliders
+		// y articulaciones de un ragdoll
+		PxSerializable* serializable;
+		PxActor* actor = NULL;
+		PxRigidActor* rigid = NULL;
+		for (unsigned int i = 0; i < nbActors; ++i) {
+			serializable = sceneCollection->getObject(i);
+			
+			// Las articulaciones también son actores
+			if( actor = serializable->is<PxActor>() ) {
+				// Añadimos el actor al conjunto de actores del ragdoll
+				_aggregate->addActor(*actor);
+				// Anotamos el componente lógico asociado a la entidad física
+				actor->userData = (void*)component;
+
+				// Si es un collider y no una articulación (hitbox) le asignamos
+				// los filtros de colisión que correspondan
+				if( rigid = serializable->is<PxRigidActor>() ) {
+					// Establecemos el grupo de colision
+					PxSetGroup(*rigid, group);
+					// Establecemos los filtros de colisión
+					Physics::CServer::getSingletonPtr()->setupFiltering(rigid, group, groupList);
+
+					// Para pasar los shapes a kinematicos -------------------------- (testing)
+					/*PxRigidDynamic* dyn = serializable->is<PxRigidDynamic>();
+					if(dyn)
+						dyn->setRigidDynamicFlag(PxRigidDynamicFlag::eKINEMATIC, true);
+					*/
+				}
+			}
+		}
+
+		// Añadimos el agregado a la escena
+		_scene->addAggregate(*_aggregate);
+	}
+
+	//________________________________________________________________________
+
+	void CEntity::deserializeActor(PxCollection* sceneCollection, const Logic::IPhysics* component, int group, const std::vector<int>& groupList) {
+		// Añadir entidades físicas a la escena
+		_physxSDK->addCollection(*sceneCollection, *_scene);
+
+		// Buscar una entidad de tipo PxRigidActor. Asumimos que hay exactamente 1 en el fichero.
+		_actor = NULL;
+		for (unsigned int i = 0; i < sceneCollection->getNbObjects() && !_actor; ++i) {
+			PxSerializable* p = sceneCollection->getObject(i);
+			_actor = p->is<PxRigidActor>();
+		}
+		assert(_actor);
+
+		// Anotar el componente lógico asociado a la entidad física
+		_actor->userData = (void*)component;
+
+		// Establecer el grupo de colisión
+		PxSetGroup(*_actor, group);
+		// Establecer los filtros de colisión
+		Physics::CServer::getSingletonPtr()->setupFiltering(_actor, group, groupList);
 	}
 
 	//________________________________________________________________________
@@ -170,6 +215,48 @@ namespace Physics {
 	//________________________________________________________________________
 
 	void CEntity::activateSimulation() {
+		if(_actor != NULL) {
+			activateSimulation(_actor);
+		}
+
+		if(_aggregate != NULL) {
+			unsigned int nbActors = _aggregate->getNbActors();
+			PxActor** actorsBuffer = new PxActor* [nbActors];
+
+			_aggregate->getActors(actorsBuffer, nbActors);
+			for(unsigned int i = 0; i < nbActors; ++i) {
+				activateSimulation(actorsBuffer[i]);
+			}
+
+			// Liberamos la memoria temporal reservada
+			delete actorsBuffer;
+		}
+	}
+
+	//________________________________________________________________________
+
+	void CEntity::deactivateSimulation() {
+		if(_actor != NULL) {
+			deactivateSimulation(_actor);
+		}
+
+		if(_aggregate != NULL) {
+			unsigned int nbActors = _aggregate->getNbActors();
+			PxActor** actorsBuffer = new PxActor* [nbActors];
+
+			_aggregate->getActors(actorsBuffer, nbActors);
+			for(unsigned int i = 0; i < nbActors; ++i) {
+				deactivateSimulation(actorsBuffer[i]);
+			}
+
+			// Liberamos la memoria temporal reservada
+			delete actorsBuffer;
+		}
+	}
+
+	//________________________________________________________________________
+
+	void CEntity::activateSimulation(physx::PxActor* actor) {
 		// Activamos todos los shapes del componente por completo en PhysX
 		// Para ello, obtenemos todos sus shapes y ponemos los flags a true
 
@@ -193,7 +280,7 @@ namespace Physics {
 
 	//________________________________________________________________________
 
-	void CEntity::deactivateSimulation() {
+	void CEntity::deactivateSimulation(physx::PxActor* actor) {
 		// Desactivamos todos los shapes del componente por completo en PhysX
 		// Para ello, obtenemos todos sus shapes y ponemos los flags a false
 
@@ -213,6 +300,29 @@ namespace Physics {
 		}
 
 		delete [] actorShapes;
+	}
+
+	//________________________________________________________________________
+
+	float CEntity::getLogicPivotOffset(const PxGeometry& geometry) {
+		switch( geometry.getType() ) {
+			case PxGeometryType::eBOX:
+				// Devolver la altura media de la caja
+				return static_cast<const PxBoxGeometry*>(&geometry)->halfExtents.y;
+				break;
+
+			case PxGeometryType::eSPHERE:
+				// Devolver el radio de la esfera
+				return static_cast<const PxSphereGeometry*>(&geometry)->radius;
+				break;
+
+			case PxGeometryType::eCAPSULE:
+				// Devolver el radio de la cupula mas la mitad de la altura
+				return static_cast<const PxCapsuleGeometry*>(&geometry)->halfHeight;
+				break;
+		}
+
+		return 0;
 	}
 
 } // namespace Physics
