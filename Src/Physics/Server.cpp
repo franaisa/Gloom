@@ -213,6 +213,29 @@ namespace Physics {
 
 	//________________________________________________________________________
 
+	void CServer::destroyAggregate(physx::PxAggregate* aggregate) {
+		assert(_scene);
+
+		unsigned int nbActors = aggregate->getNbActors();
+		PxActor** actorsBuffer = new PxActor* [nbActors];
+
+		aggregate->getActors(actorsBuffer, nbActors);
+		for(unsigned int i = 0; i < nbActors; ++i) {
+			Physics::CServer::getSingletonPtr()->destroyActor(actorsBuffer[i]);
+		}
+
+		// Liberamos la memoria temporal reservada
+		delete actorsBuffer;
+
+		// Eliminar agregado de la escena
+		_scene->removeAggregate(*aggregate);
+
+		// Liberar recursos
+		aggregate->release();
+	}
+
+	//________________________________________________________________________
+
 	bool CServer::tick(unsigned int msecs) {
 		assert(_scene);
 		_acumTime += msecs;

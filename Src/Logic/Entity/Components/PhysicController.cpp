@@ -134,7 +134,7 @@ void CPhysicController::createController(const Map::CEntity *entityInfo) {
 	
 	// Leer el volumen de colisión del controller. Por ahora sólo admitimos cápsulas.
 	std::string shape = "capsule";
-	if (entityInfo->hasAttribute("physic_shape")) {
+	if( entityInfo->hasAttribute("physic_shape") ) {
 		shape = entityInfo->getStringAttribute("physic_shape");
 		assert(shape == "capsule");
 	}
@@ -151,6 +151,12 @@ void CPhysicController::createController(const Map::CEntity *entityInfo) {
 	int group = 0;
 	std::vector<int> groupList;
 	readCollisionGroupInfo(entityInfo, group, groupList);
+
+	// Si existe un fichero que indica las posiciones de los hitboxes
+	if( entityInfo->hasAttribute("physic_ragdoll") ) {
+		std::string ragdollFileName = entityInfo->getStringAttribute("physic_ragdoll");
+		_controller.loadRagdoll(ragdollFileName, group, groupList, this);
+	}
 
 	// Inicializar el controller de tipo capsula
 	_controller.load(position, radius, height, group, groupList, this);
@@ -222,4 +228,16 @@ unsigned CPhysicController::move(const Vector3& movement, unsigned int customFil
 
 unsigned int CPhysicController::getDefaultFilterMask() {
 	return _controller.getFilterMask();
+}
+
+//________________________________________________________________________
+
+float CPhysicController::getCapsuleRadius() {
+	return _controller.getCapsuleRadius();
+}
+
+//________________________________________________________________________
+
+float CPhysicController::getCapsuleHeight() {
+	return _controller.getCapsuleHeight();
 }

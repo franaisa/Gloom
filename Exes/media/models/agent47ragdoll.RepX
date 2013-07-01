@@ -1,0 +1,3062 @@
+<PhysX30Collection version="3.2.0" >
+	<UpVector >0 0 0</UpVector>
+	<Scale >
+		<Length >1</Length>
+		<Mass >1000</Mass>
+		<Speed >10</Speed>
+	</Scale>
+	<PxMaterial >
+		<Id >2231460544</Id>
+		<DynamicFriction >0.3</DynamicFriction>
+		<StaticFriction >0.3</StaticFriction>
+		<Restitution >0.5</Restitution>
+		<FrictionCombineMode >eAVERAGE</FrictionCombineMode>
+		<RestitutionCombineMode >eAVERAGE</RestitutionCombineMode>
+	</PxMaterial>
+	<PxMaterial >
+		<Id >2231466144</Id>
+		<DynamicFriction >0.3</DynamicFriction>
+		<StaticFriction >0.3</StaticFriction>
+		<Restitution >0.5</Restitution>
+		<FrictionCombineMode >eAVERAGE</FrictionCombineMode>
+		<RestitutionCombineMode >eAVERAGE</RestitutionCombineMode>
+	</PxMaterial>
+	<PxMaterial >
+		<Id >2231465584</Id>
+		<DynamicFriction >0.3</DynamicFriction>
+		<StaticFriction >0.3</StaticFriction>
+		<Restitution >0.5</Restitution>
+		<FrictionCombineMode >eAVERAGE</FrictionCombineMode>
+		<RestitutionCombineMode >eAVERAGE</RestitutionCombineMode>
+	</PxMaterial>
+	<PxMaterial >
+		<Id >2231465920</Id>
+		<DynamicFriction >0.3</DynamicFriction>
+		<StaticFriction >0.3</StaticFriction>
+		<Restitution >0.5</Restitution>
+		<FrictionCombineMode >eAVERAGE</FrictionCombineMode>
+		<RestitutionCombineMode >eAVERAGE</RestitutionCombineMode>
+	</PxMaterial>
+	<PxMaterial >
+		<Id >2231459424</Id>
+		<DynamicFriction >0.3</DynamicFriction>
+		<StaticFriction >0.3</StaticFriction>
+		<Restitution >0.5</Restitution>
+		<FrictionCombineMode >eAVERAGE</FrictionCombineMode>
+		<RestitutionCombineMode >eAVERAGE</RestitutionCombineMode>
+	</PxMaterial>
+	<PxMaterial >
+		<Id >2231460432</Id>
+		<DynamicFriction >0.3</DynamicFriction>
+		<StaticFriction >0.3</StaticFriction>
+		<Restitution >0.5</Restitution>
+		<FrictionCombineMode >eAVERAGE</FrictionCombineMode>
+		<RestitutionCombineMode >eAVERAGE</RestitutionCombineMode>
+	</PxMaterial>
+	<PxMaterial >
+		<Id >2231460656</Id>
+		<DynamicFriction >0.3</DynamicFriction>
+		<StaticFriction >0.3</StaticFriction>
+		<Restitution >0.5</Restitution>
+		<FrictionCombineMode >eAVERAGE</FrictionCombineMode>
+		<RestitutionCombineMode >eAVERAGE</RestitutionCombineMode>
+	</PxMaterial>
+	<PxMaterial >
+		<Id >2231459200</Id>
+		<DynamicFriction >0.3</DynamicFriction>
+		<StaticFriction >0.3</StaticFriction>
+		<Restitution >0.5</Restitution>
+		<FrictionCombineMode >eAVERAGE</FrictionCombineMode>
+		<RestitutionCombineMode >eAVERAGE</RestitutionCombineMode>
+	</PxMaterial>
+	<PxMaterial >
+		<Id >2231459984</Id>
+		<DynamicFriction >0.3</DynamicFriction>
+		<StaticFriction >0.3</StaticFriction>
+		<Restitution >0.5</Restitution>
+		<FrictionCombineMode >eAVERAGE</FrictionCombineMode>
+		<RestitutionCombineMode >eAVERAGE</RestitutionCombineMode>
+	</PxMaterial>
+	<PxMaterial >
+		<Id >2231461888</Id>
+		<DynamicFriction >0.3</DynamicFriction>
+		<StaticFriction >0.3</StaticFriction>
+		<Restitution >0.5</Restitution>
+		<FrictionCombineMode >eAVERAGE</FrictionCombineMode>
+		<RestitutionCombineMode >eAVERAGE</RestitutionCombineMode>
+	</PxMaterial>
+	<PxMaterial >
+		<Id >2231461440</Id>
+		<DynamicFriction >0.3</DynamicFriction>
+		<StaticFriction >0.3</StaticFriction>
+		<Restitution >0.5</Restitution>
+		<FrictionCombineMode >eAVERAGE</FrictionCombineMode>
+		<RestitutionCombineMode >eAVERAGE</RestitutionCombineMode>
+	</PxMaterial>
+	<PxMaterial >
+		<Id >2231463008</Id>
+		<DynamicFriction >0.3</DynamicFriction>
+		<StaticFriction >0.3</StaticFriction>
+		<Restitution >0.5</Restitution>
+		<FrictionCombineMode >eAVERAGE</FrictionCombineMode>
+		<RestitutionCombineMode >eAVERAGE</RestitutionCombineMode>
+	</PxMaterial>
+	<PxMaterial >
+		<Id >2231457520</Id>
+		<DynamicFriction >0.3</DynamicFriction>
+		<StaticFriction >0.3</StaticFriction>
+		<Restitution >0.5</Restitution>
+		<FrictionCombineMode >eAVERAGE</FrictionCombineMode>
+		<RestitutionCombineMode >eAVERAGE</RestitutionCombineMode>
+	</PxMaterial>
+	<PxMaterial >
+		<Id >2231464464</Id>
+		<DynamicFriction >0.3</DynamicFriction>
+		<StaticFriction >0.3</StaticFriction>
+		<Restitution >0.5</Restitution>
+		<FrictionCombineMode >eAVERAGE</FrictionCombineMode>
+		<RestitutionCombineMode >eAVERAGE</RestitutionCombineMode>
+	</PxMaterial>
+	<PxMaterial >
+		<Id >2231452256</Id>
+		<DynamicFriction >0.3</DynamicFriction>
+		<StaticFriction >0.3</StaticFriction>
+		<Restitution >0.5</Restitution>
+		<FrictionCombineMode >eAVERAGE</FrictionCombineMode>
+		<RestitutionCombineMode >eAVERAGE</RestitutionCombineMode>
+	</PxMaterial>
+	<PxMaterial >
+		<Id >2231461328</Id>
+		<DynamicFriction >0.3</DynamicFriction>
+		<StaticFriction >0.3</StaticFriction>
+		<Restitution >0.5</Restitution>
+		<FrictionCombineMode >eAVERAGE</FrictionCombineMode>
+		<RestitutionCombineMode >eAVERAGE</RestitutionCombineMode>
+	</PxMaterial>
+	<PxMaterial >
+		<Id >2231452144</Id>
+		<DynamicFriction >0.3</DynamicFriction>
+		<StaticFriction >0.3</StaticFriction>
+		<Restitution >0.5</Restitution>
+		<FrictionCombineMode >eAVERAGE</FrictionCombineMode>
+		<RestitutionCombineMode >eAVERAGE</RestitutionCombineMode>
+	</PxMaterial>
+	<PxMaterial >
+		<Id >2231462784</Id>
+		<DynamicFriction >0.3</DynamicFriction>
+		<StaticFriction >0.3</StaticFriction>
+		<Restitution >0.5</Restitution>
+		<FrictionCombineMode >eAVERAGE</FrictionCombineMode>
+		<RestitutionCombineMode >eAVERAGE</RestitutionCombineMode>
+	</PxMaterial>
+	<PxMaterial >
+		<Id >2231462896</Id>
+		<DynamicFriction >0.3</DynamicFriction>
+		<StaticFriction >0.3</StaticFriction>
+		<Restitution >0.5</Restitution>
+		<FrictionCombineMode >eAVERAGE</FrictionCombineMode>
+		<RestitutionCombineMode >eAVERAGE</RestitutionCombineMode>
+	</PxMaterial>
+	<PxMaterial >
+		<Id >2231463232</Id>
+		<DynamicFriction >0.3</DynamicFriction>
+		<StaticFriction >0.3</StaticFriction>
+		<Restitution >0.5</Restitution>
+		<FrictionCombineMode >eAVERAGE</FrictionCombineMode>
+		<RestitutionCombineMode >eAVERAGE</RestitutionCombineMode>
+	</PxMaterial>
+	<PxMaterial >
+		<Id >2231465808</Id>
+		<DynamicFriction >0.3</DynamicFriction>
+		<StaticFriction >0.3</StaticFriction>
+		<Restitution >0.5</Restitution>
+		<FrictionCombineMode >eAVERAGE</FrictionCombineMode>
+		<RestitutionCombineMode >eAVERAGE</RestitutionCombineMode>
+	</PxMaterial>
+	<PxMaterial >
+		<Id >2231463568</Id>
+		<DynamicFriction >0.3</DynamicFriction>
+		<StaticFriction >0.3</StaticFriction>
+		<Restitution >0.5</Restitution>
+		<FrictionCombineMode >eAVERAGE</FrictionCombineMode>
+		<RestitutionCombineMode >eAVERAGE</RestitutionCombineMode>
+	</PxMaterial>
+	<PxRigidDynamic >
+		<Id >2230332096</Id>
+		<Name >Bip01 Pelvis</Name>
+		<ActorFlags >eVISUALIZATION</ActorFlags>
+		<DominanceGroup >0</DominanceGroup>
+		<OwnerClient >0</OwnerClient>
+		<ClientBehaviorBits >0</ClientBehaviorBits>
+		<GlobalPose >0.707106 9.98378e-007 0.707107 -9.98378e-007 9.53674e-007 -1.23224 97.331</GlobalPose>
+		<Shapes >
+			<PxShape >
+				<Geometry >
+					<PxCapsuleGeometry >
+						<Radius >16.9229</Radius>
+						<HalfHeight >1.76089</HalfHeight>
+					</PxCapsuleGeometry>
+				</Geometry>
+				<LocalPose >0.5 -0.5 0.5 0.5 -4.95929 -0.237047 -0.452933</LocalPose>
+				<SimulationFilterData >4 0 5 0</SimulationFilterData>
+				<QueryFilterData >0 0 0 0</QueryFilterData>
+				<Materials >
+					<PxMaterialRef >2231457520</PxMaterialRef>
+				</Materials>
+				<ContactOffset >0.2</ContactOffset>
+				<RestOffset >0.1</RestOffset>
+				<Flags >eSIMULATION_SHAPE|eSCENE_QUERY_SHAPE|eVISUALIZATION</Flags>
+				<Name >Bip01 Pelvis</Name>
+			</PxShape>
+		</Shapes>
+		<CMassLocalPose >-1.2001e-006 -4.71331e-007 0.341222 0.939983 -4.95929 -0.237047 -0.452933</CMassLocalPose>
+		<Mass >23.4692</Mass>
+		<MassSpaceInertiaTensor >3072.3 3072.3 2779.22</MassSpaceInertiaTensor>
+		<LinearVelocity >0 0 0</LinearVelocity>
+		<AngularVelocity >0 0 0</AngularVelocity>
+		<LinearDamping >0</LinearDamping>
+		<AngularDamping >0.05</AngularDamping>
+		<MaxAngularVelocity >7</MaxAngularVelocity>
+		<SleepThreshold >0.005</SleepThreshold>
+		<SolverIterationCounts >
+			<minPositionIters >30</minPositionIters>
+			<minVelocityIters >1</minVelocityIters>
+		</SolverIterationCounts>
+		<ContactReportThreshold >3.40282e+038</ContactReportThreshold>
+	</PxRigidDynamic>
+	<PxRigidDynamic >
+		<Id >2230336256</Id>
+		<Name >Bip01 Spine</Name>
+		<ActorFlags >eVISUALIZATION</ActorFlags>
+		<DominanceGroup >0</DominanceGroup>
+		<OwnerClient >0</OwnerClient>
+		<ClientBehaviorBits >0</ClientBehaviorBits>
+		<GlobalPose >0.707058 -0.00830364 0.707058 -0.00830263 -9.53674e-007 -1.22475 107.447</GlobalPose>
+		<Shapes >
+			<PxShape >
+				<Geometry >
+					<PxCapsuleGeometry >
+						<Radius >17.5646</Radius>
+						<HalfHeight >2.0269</HalfHeight>
+					</PxCapsuleGeometry>
+				</Geometry>
+				<LocalPose >0.5 -0.5 0.5 0.5 6.17804 1.70833 -0.453663</LocalPose>
+				<SimulationFilterData >4 0 5 0</SimulationFilterData>
+				<QueryFilterData >0 0 0 0</QueryFilterData>
+				<Materials >
+					<PxMaterialRef >2231452144</PxMaterialRef>
+				</Materials>
+				<ContactOffset >0.2</ContactOffset>
+				<RestOffset >0.1</RestOffset>
+				<Flags >eSIMULATION_SHAPE|eSCENE_QUERY_SHAPE|eVISUALIZATION</Flags>
+				<Name >Bip01 Spine</Name>
+			</PxShape>
+		</Shapes>
+		<CMassLocalPose >-7.20707e-007 -2.48032e-007 0.438513 0.898725 6.17804 1.70833 -0.453663</CMassLocalPose>
+		<Mass >26.6277</Mass>
+		<MassSpaceInertiaTensor >3808.9 3808.9 3407.22</MassSpaceInertiaTensor>
+		<LinearVelocity >0 -0 0</LinearVelocity>
+		<AngularVelocity >0 -0 0</AngularVelocity>
+		<LinearDamping >0</LinearDamping>
+		<AngularDamping >0.05</AngularDamping>
+		<MaxAngularVelocity >7</MaxAngularVelocity>
+		<SleepThreshold >0.005</SleepThreshold>
+		<SolverIterationCounts >
+			<minPositionIters >30</minPositionIters>
+			<minVelocityIters >1</minVelocityIters>
+		</SolverIterationCounts>
+		<ContactReportThreshold >3.40282e+038</ContactReportThreshold>
+	</PxRigidDynamic>
+	<PxRigidDynamic >
+		<Id >2230344576</Id>
+		<Name >Bip01 Spine1</Name>
+		<ActorFlags >eVISUALIZATION</ActorFlags>
+		<DominanceGroup >0</DominanceGroup>
+		<OwnerClient >0</OwnerClient>
+		<ClientBehaviorBits >0</ClientBehaviorBits>
+		<GlobalPose >0.707024 0.0108248 0.707024 0.0108258 -7.39098e-006 -1.419 116.855</GlobalPose>
+		<Shapes >
+			<PxShape >
+				<Geometry >
+					<PxCapsuleGeometry >
+						<Radius >20.9385</Radius>
+						<HalfHeight >1.21694</HalfHeight>
+					</PxCapsuleGeometry>
+				</Geometry>
+				<LocalPose >0.5 -0.5 0.5 0.5 20.2103 1.48276 0.946162</LocalPose>
+				<SimulationFilterData >4 0 5 0</SimulationFilterData>
+				<QueryFilterData >0 0 0 0</QueryFilterData>
+				<Materials >
+					<PxMaterialRef >2231452256</PxMaterialRef>
+				</Materials>
+				<ContactOffset >0.2</ContactOffset>
+				<RestOffset >0.1</RestOffset>
+				<Flags >eSIMULATION_SHAPE|eSCENE_QUERY_SHAPE|eVISUALIZATION</Flags>
+				<Name >Bip01 Spine1</Name>
+			</PxShape>
+		</Shapes>
+		<CMassLocalPose >-1.25039e-006 -6.5435e-007 0.17194 0.985108 20.2103 1.48276 0.946162</CMassLocalPose>
+		<Mass >41.8048</Mass>
+		<MassSpaceInertiaTensor >7904.22 7904.22 7478.19</MassSpaceInertiaTensor>
+		<LinearVelocity >0 0 0</LinearVelocity>
+		<AngularVelocity >0 0 0</AngularVelocity>
+		<LinearDamping >0</LinearDamping>
+		<AngularDamping >0.05</AngularDamping>
+		<MaxAngularVelocity >7</MaxAngularVelocity>
+		<SleepThreshold >0.005</SleepThreshold>
+		<SolverIterationCounts >
+			<minPositionIters >30</minPositionIters>
+			<minVelocityIters >1</minVelocityIters>
+		</SolverIterationCounts>
+		<ContactReportThreshold >3.40282e+038</ContactReportThreshold>
+	</PxRigidDynamic>
+	<PxRigidDynamic >
+		<Id >2230330016</Id>
+		<Name >Bip01 Neck</Name>
+		<ActorFlags >eVISUALIZATION</ActorFlags>
+		<DominanceGroup >0</DominanceGroup>
+		<OwnerClient >0</OwnerClient>
+		<ClientBehaviorBits >0</ClientBehaviorBits>
+		<GlobalPose >0.707024 0.0108248 0.707024 0.0108258 -6.85519e-007 -0.384368 150.457</GlobalPose>
+		<Shapes >
+			<PxShape >
+				<Geometry >
+					<PxCapsuleGeometry >
+						<Radius >4.55129</Radius>
+						<HalfHeight >1.06985</HalfHeight>
+					</PxCapsuleGeometry>
+				</Geometry>
+				<LocalPose >-0.707023 -0.0108253 0.0108252 0.707024 3.39746 -4.76837e-007 -6.35373e-009</LocalPose>
+				<SimulationFilterData >4 0 5 0</SimulationFilterData>
+				<QueryFilterData >0 0 0 0</QueryFilterData>
+				<Materials >
+					<PxMaterialRef >2231463232</PxMaterialRef>
+				</Materials>
+				<ContactOffset >0.2</ContactOffset>
+				<RestOffset >0.1</RestOffset>
+				<Flags >eSIMULATION_SHAPE|eSCENE_QUERY_SHAPE|eVISUALIZATION</Flags>
+				<Name >Bip01 Neck</Name>
+			</PxShape>
+		</Shapes>
+		<CMassLocalPose >0 0 0.0153092 0.999883 3.39746 -4.76837e-007 -6.35373e-009</CMassLocalPose>
+		<Mass >0.534146</Mass>
+		<MassSpaceInertiaTensor >4.7142 5.94039 5.94039</MassSpaceInertiaTensor>
+		<LinearVelocity >0 0 0</LinearVelocity>
+		<AngularVelocity >0 0 0</AngularVelocity>
+		<LinearDamping >0</LinearDamping>
+		<AngularDamping >0.05</AngularDamping>
+		<MaxAngularVelocity >7</MaxAngularVelocity>
+		<SleepThreshold >0.005</SleepThreshold>
+		<SolverIterationCounts >
+			<minPositionIters >30</minPositionIters>
+			<minVelocityIters >1</minVelocityIters>
+		</SolverIterationCounts>
+		<ContactReportThreshold >3.40282e+038</ContactReportThreshold>
+	</PxRigidDynamic>
+	<PxRigidDynamic >
+		<Id >2230330432</Id>
+		<Name >Bip01 Head</Name>
+		<ActorFlags >eVISUALIZATION</ActorFlags>
+		<DominanceGroup >0</DominanceGroup>
+		<OwnerClient >0</OwnerClient>
+		<ClientBehaviorBits >0</ClientBehaviorBits>
+		<GlobalPose >0.707107 -2.23517e-008 0.707107 9.83477e-007 -2.39909e-006 -0.176341 157.249</GlobalPose>
+		<Shapes >
+			<PxShape >
+				<Geometry >
+					<PxCapsuleGeometry >
+						<Radius >13.7495</Radius>
+						<HalfHeight >3.2046</HalfHeight>
+					</PxCapsuleGeometry>
+				</Geometry>
+				<LocalPose >-0.004583 0.0153986 0.995019 -0.0983794 6.32404 2.67418 -0.220399</LocalPose>
+				<SimulationFilterData >4 0 5 0</SimulationFilterData>
+				<QueryFilterData >0 0 0 0</QueryFilterData>
+				<Materials >
+					<PxMaterialRef >2231462784</PxMaterialRef>
+				</Materials>
+				<ContactOffset >0.2</ContactOffset>
+				<RestOffset >0.1</RestOffset>
+				<Flags >eSIMULATION_SHAPE|eSCENE_QUERY_SHAPE|eVISUALIZATION</Flags>
+				<Name >Bip01 Head</Name>
+			</PxShape>
+		</Shapes>
+		<CMassLocalPose >-0.00795709 -0.00384716 0.0984107 0.995107 6.32404 2.67418 -0.220399</CMassLocalPose>
+		<Mass >14.6946</Mass>
+		<MassSpaceInertiaTensor >1183.16 1487.91 1487.91</MassSpaceInertiaTensor>
+		<LinearVelocity >0 0 0</LinearVelocity>
+		<AngularVelocity >0 0 0</AngularVelocity>
+		<LinearDamping >0</LinearDamping>
+		<AngularDamping >0.05</AngularDamping>
+		<MaxAngularVelocity >7</MaxAngularVelocity>
+		<SleepThreshold >0.005</SleepThreshold>
+		<SolverIterationCounts >
+			<minPositionIters >30</minPositionIters>
+			<minVelocityIters >1</minVelocityIters>
+		</SolverIterationCounts>
+		<ContactReportThreshold >3.40282e+038</ContactReportThreshold>
+	</PxRigidDynamic>
+	<PxRigidDynamic >
+		<Id >2230331264</Id>
+		<Name >Bip01 Ponytail1</Name>
+		<ActorFlags >eVISUALIZATION</ActorFlags>
+		<DominanceGroup >0</DominanceGroup>
+		<OwnerClient >0</OwnerClient>
+		<ClientBehaviorBits >0</ClientBehaviorBits>
+		<GlobalPose >0.499982 -0.499983 0.500187 -0.499849 -1.10832e-005 -9.53324 168.703</GlobalPose>
+		<Shapes >
+			<PxShape >
+				<Geometry >
+					<PxCapsuleGeometry >
+						<Radius >0.3243</Radius>
+						<HalfHeight >5.0545</HalfHeight>
+					</PxCapsuleGeometry>
+				</Geometry>
+				<LocalPose >-0.000108093 -0.707094 0.70712 -0.000107974 5.37872 -1.52589e-005 7.5329e-009</LocalPose>
+				<SimulationFilterData >4 0 5 0</SimulationFilterData>
+				<QueryFilterData >0 0 0 0</QueryFilterData>
+				<Materials >
+					<PxMaterialRef >2231460544</PxMaterialRef>
+				</Materials>
+				<ContactOffset >0.2</ContactOffset>
+				<RestOffset >0.1</RestOffset>
+				<Flags >eSIMULATION_SHAPE|eSCENE_QUERY_SHAPE|eVISUALIZATION</Flags>
+				<Name >Bip01 Ponytail1</Name>
+			</PxShape>
+		</Shapes>
+		<CMassLocalPose >0.382683 -0.000141153 5.84673e-005 0.92388 5.37872 -1.52588e-005 7.45058e-009</CMassLocalPose>
+		<Mass >0.0034829</Mass>
+		<MassSpaceInertiaTensor >0.000181647 0.0323631 0.0323631</MassSpaceInertiaTensor>
+		<LinearVelocity >0 -0 0</LinearVelocity>
+		<AngularVelocity >0 -0 0</AngularVelocity>
+		<LinearDamping >0</LinearDamping>
+		<AngularDamping >0.05</AngularDamping>
+		<MaxAngularVelocity >7</MaxAngularVelocity>
+		<SleepThreshold >0.005</SleepThreshold>
+		<SolverIterationCounts >
+			<minPositionIters >30</minPositionIters>
+			<minVelocityIters >1</minVelocityIters>
+		</SolverIterationCounts>
+		<ContactReportThreshold >3.40282e+038</ContactReportThreshold>
+	</PxRigidDynamic>
+	<PxRigidDynamic >
+		<Id >2227466848</Id>
+		<Name >Bip01 L Clavicle</Name>
+		<ActorFlags >eVISUALIZATION</ActorFlags>
+		<DominanceGroup >0</DominanceGroup>
+		<OwnerClient >0</OwnerClient>
+		<ClientBehaviorBits >0</ClientBehaviorBits>
+		<GlobalPose >-0.0335929 0.229314 0.0744783 0.969917 3.07861 -0.389772 150.457</GlobalPose>
+		<Shapes >
+			<PxShape >
+				<Geometry >
+					<PxCapsuleGeometry >
+						<Radius >3.88148</Radius>
+						<HalfHeight >5.04749</HalfHeight>
+					</PxCapsuleGeometry>
+				</Geometry>
+				<LocalPose >4.87777e-007 -1.47235e-008 -0.0193755 0.999812 8.82483 9.53674e-007 0</LocalPose>
+				<SimulationFilterData >4 0 5 0</SimulationFilterData>
+				<QueryFilterData >0 0 0 0</QueryFilterData>
+				<Materials >
+					<PxMaterialRef >2231464464</PxMaterialRef>
+				</Materials>
+				<ContactOffset >0.2</ContactOffset>
+				<RestOffset >0.1</RestOffset>
+				<Flags >eSIMULATION_SHAPE|eSCENE_QUERY_SHAPE|eVISUALIZATION</Flags>
+				<Name >Bip01 L Clavicle</Name>
+			</PxShape>
+		</Shapes>
+		<CMassLocalPose >0 0 -0.0193755 0.999812 8.82483 9.53674e-007 0</CMassLocalPose>
+		<Mass >0.722756</Mass>
+		<MassSpaceInertiaTensor >5.07544 17.1734 17.1734</MassSpaceInertiaTensor>
+		<LinearVelocity >0 0 0</LinearVelocity>
+		<AngularVelocity >0 0 0</AngularVelocity>
+		<LinearDamping >0</LinearDamping>
+		<AngularDamping >0.05</AngularDamping>
+		<MaxAngularVelocity >7</MaxAngularVelocity>
+		<SleepThreshold >0.005</SleepThreshold>
+		<SolverIterationCounts >
+			<minPositionIters >30</minPositionIters>
+			<minVelocityIters >1</minVelocityIters>
+		</SolverIterationCounts>
+		<ContactReportThreshold >3.40282e+038</ContactReportThreshold>
+	</PxRigidDynamic>
+	<PxRigidDynamic >
+		<Id >2227467264</Id>
+		<Name >Bip01 L UpperArm</Name>
+		<ActorFlags >eVISUALIZATION</ActorFlags>
+		<DominanceGroup >0</DominanceGroup>
+		<OwnerClient >0</OwnerClient>
+		<ClientBehaviorBits >0</ClientBehaviorBits>
+		<GlobalPose >0.0269808 0.398166 0.0586502 0.915039 18.6762 1.88825 142.518</GlobalPose>
+		<Shapes >
+			<PxShape >
+				<Geometry >
+					<PxCapsuleGeometry >
+						<Radius >6.25879</Radius>
+						<HalfHeight >9.59428</HalfHeight>
+					</PxCapsuleGeometry>
+				</Geometry>
+				<LocalPose >-0.149979 0.200225 0.100401 0.962983 14.9911 -1.59036 1.52099</LocalPose>
+				<SimulationFilterData >4 0 5 0</SimulationFilterData>
+				<QueryFilterData >0 0 0 0</QueryFilterData>
+				<Materials >
+					<PxMaterialRef >2231462896</PxMaterialRef>
+				</Materials>
+				<ContactOffset >0.2</ContactOffset>
+				<RestOffset >0.1</RestOffset>
+				<Flags >eSIMULATION_SHAPE|eSCENE_QUERY_SHAPE|eVISUALIZATION</Flags>
+				<Name >Bip01 L UpperArm</Name>
+			</PxShape>
+		</Shapes>
+		<CMassLocalPose >0.0143465 0.214275 0.0652456 0.974486 14.9911 -1.59036 1.52099</CMassLocalPose>
+		<Mass >3.38839</Mass>
+		<MassSpaceInertiaTensor >62.3429 252.458 252.458</MassSpaceInertiaTensor>
+		<LinearVelocity >0 0 0</LinearVelocity>
+		<AngularVelocity >0 0 0</AngularVelocity>
+		<LinearDamping >0</LinearDamping>
+		<AngularDamping >0.05</AngularDamping>
+		<MaxAngularVelocity >7</MaxAngularVelocity>
+		<SleepThreshold >0.005</SleepThreshold>
+		<SolverIterationCounts >
+			<minPositionIters >30</minPositionIters>
+			<minVelocityIters >1</minVelocityIters>
+		</SolverIterationCounts>
+		<ContactReportThreshold >3.40282e+038</ContactReportThreshold>
+	</PxRigidDynamic>
+	<PxRigidDynamic >
+		<Id >2227472672</Id>
+		<Name >Bip01 L Forearm</Name>
+		<ActorFlags >eVISUALIZATION</ActorFlags>
+		<DominanceGroup >0</DominanceGroup>
+		<OwnerClient >0</OwnerClient>
+		<ClientBehaviorBits >0</ClientBehaviorBits>
+		<GlobalPose >-0.0393177 0.397138 -0.0936663 0.91212 36.5158 5.28757 123.373</GlobalPose>
+		<Shapes >
+			<PxShape >
+				<Geometry >
+					<PxCapsuleGeometry >
+						<Radius >9.09603</Radius>
+						<HalfHeight >0.159482</HalfHeight>
+					</PxCapsuleGeometry>
+				</Geometry>
+				<LocalPose >0.707107 1.19209e-007 0 0.707107 2.87441 -0.359076 -1.37454</LocalPose>
+				<SimulationFilterData >4 0 5 0</SimulationFilterData>
+				<QueryFilterData >0 0 0 0</QueryFilterData>
+				<Materials >
+					<PxMaterialRef >2231461328</PxMaterialRef>
+				</Materials>
+				<ContactOffset >0.2</ContactOffset>
+				<RestOffset >0.1</RestOffset>
+				<Flags >eSIMULATION_SHAPE|eSCENE_QUERY_SHAPE|eVISUALIZATION</Flags>
+				<Name >Bip01 L Forearm</Name>
+			</PxShape>
+		</Shapes>
+		<CMassLocalPose >0 0 0 1 2.87441 -0.359076 -1.37454</CMassLocalPose>
+		<Mass >3.23533</Mass>
+		<MassSpaceInertiaTensor >107.759 109.555 109.555</MassSpaceInertiaTensor>
+		<LinearVelocity >0 0 0</LinearVelocity>
+		<AngularVelocity >0 0 0</AngularVelocity>
+		<LinearDamping >0</LinearDamping>
+		<AngularDamping >0.05</AngularDamping>
+		<MaxAngularVelocity >7</MaxAngularVelocity>
+		<SleepThreshold >0.005</SleepThreshold>
+		<SolverIterationCounts >
+			<minPositionIters >30</minPositionIters>
+			<minVelocityIters >1</minVelocityIters>
+		</SolverIterationCounts>
+		<ContactReportThreshold >3.40282e+038</ContactReportThreshold>
+	</PxRigidDynamic>
+	<PxRigidDynamic >
+		<Id >2227468512</Id>
+		<Name >Bip01 L Hand</Name>
+		<ActorFlags >eVISUALIZATION</ActorFlags>
+		<DominanceGroup >0</DominanceGroup>
+		<OwnerClient >0</OwnerClient>
+		<ClientBehaviorBits >0</ClientBehaviorBits>
+		<GlobalPose >-0.68358 0.351467 0.185807 0.612099 52.0345 0.585572 106.689</GlobalPose>
+		<Shapes >
+			<PxShape >
+				<Geometry >
+					<PxCapsuleGeometry >
+						<Radius >7.61659</Radius>
+						<HalfHeight >0.0513244</HalfHeight>
+					</PxCapsuleGeometry>
+				</Geometry>
+				<LocalPose >0.5 -0.5 0.5 0.5 4.50516 1.81834 0.169898</LocalPose>
+				<SimulationFilterData >4 0 5 0</SimulationFilterData>
+				<QueryFilterData >0 0 0 0</QueryFilterData>
+				<Materials >
+					<PxMaterialRef >2231463008</PxMaterialRef>
+				</Materials>
+				<ContactOffset >0.2</ContactOffset>
+				<RestOffset >0.1</RestOffset>
+				<Flags >eSIMULATION_SHAPE|eSCENE_QUERY_SHAPE|eVISUALIZATION</Flags>
+				<Name >Bip01 L Hand</Name>
+			</PxShape>
+		</Shapes>
+		<CMassLocalPose >-1.25725e-005 -4.26308e-006 0.432261 0.901749 4.50516 1.81834 0.169898</CMassLocalPose>
+		<Mass >1.86956</Mass>
+		<MassSpaceInertiaTensor >43.7678 43.7679 43.4916</MassSpaceInertiaTensor>
+		<LinearVelocity >0 0 0</LinearVelocity>
+		<AngularVelocity >0 0 0</AngularVelocity>
+		<LinearDamping >0</LinearDamping>
+		<AngularDamping >0.05</AngularDamping>
+		<MaxAngularVelocity >7</MaxAngularVelocity>
+		<SleepThreshold >0.005</SleepThreshold>
+		<SolverIterationCounts >
+			<minPositionIters >30</minPositionIters>
+			<minVelocityIters >1</minVelocityIters>
+		</SolverIterationCounts>
+		<ContactReportThreshold >3.40282e+038</ContactReportThreshold>
+	</PxRigidDynamic>
+	<PxRigidDynamic >
+		<Id >2227470592</Id>
+		<Name >Bip01 R Clavicle</Name>
+		<ActorFlags >eVISUALIZATION</ActorFlags>
+		<DominanceGroup >0</DominanceGroup>
+		<OwnerClient >0</OwnerClient>
+		<ClientBehaviorBits >0</ClientBehaviorBits>
+		<GlobalPose >0.0741511 0.967671 -0.034306 0.238614 -3.07861 -0.389781 150.457</GlobalPose>
+		<Shapes >
+			<PxShape >
+				<Geometry >
+					<PxCapsuleGeometry >
+						<Radius >3.68897</Radius>
+						<HalfHeight >5.16875</HalfHeight>
+					</PxCapsuleGeometry>
+				</Geometry>
+				<LocalPose >-3.65736e-008 1.45831e-007 0.999983 0.00585806 8.82483 -4.73114e-007 0</LocalPose>
+				<SimulationFilterData >4 0 5 0</SimulationFilterData>
+				<QueryFilterData >0 0 0 0</QueryFilterData>
+				<Materials >
+					<PxMaterialRef >2231461440</PxMaterialRef>
+				</Materials>
+				<ContactOffset >0.2</ContactOffset>
+				<RestOffset >0.1</RestOffset>
+				<Flags >eSIMULATION_SHAPE|eSCENE_QUERY_SHAPE|eVISUALIZATION</Flags>
+				<Name >Bip01 R Clavicle</Name>
+			</PxShape>
+		</Shapes>
+		<CMassLocalPose >0 0 -0.00585807 0.999983 8.82483 -4.76837e-007 0</CMassLocalPose>
+		<Mass >0.652237</Mass>
+		<MassSpaceInertiaTensor >4.15183 15.2091 15.2091</MassSpaceInertiaTensor>
+		<LinearVelocity >0 0 0</LinearVelocity>
+		<AngularVelocity >0 0 0</AngularVelocity>
+		<LinearDamping >0</LinearDamping>
+		<AngularDamping >0.05</AngularDamping>
+		<MaxAngularVelocity >7</MaxAngularVelocity>
+		<SleepThreshold >0.005</SleepThreshold>
+		<SolverIterationCounts >
+			<minPositionIters >30</minPositionIters>
+			<minVelocityIters >1</minVelocityIters>
+		</SolverIterationCounts>
+		<ContactReportThreshold >3.40282e+038</ContactReportThreshold>
+	</PxRigidDynamic>
+	<PxRigidDynamic >
+		<Id >2227471424</Id>
+		<Name >Bip01 R UpperArm</Name>
+		<ActorFlags >eVISUALIZATION</ActorFlags>
+		<DominanceGroup >0</DominanceGroup>
+		<OwnerClient >0</OwnerClient>
+		<ClientBehaviorBits >0</ClientBehaviorBits>
+		<GlobalPose >0.0183726 0.918493 0.00928465 0.394901 -18.5244 1.85413 142.217</GlobalPose>
+		<Shapes >
+			<PxShape >
+				<Geometry >
+					<PxCapsuleGeometry >
+						<Radius >6.93392</Radius>
+						<HalfHeight >10.6437</HalfHeight>
+					</PxCapsuleGeometry>
+				</Geometry>
+				<LocalPose >0.968952 0.178968 0.170452 0.00689593 11.5867 5.65427 -2.26785</LocalPose>
+				<SimulationFilterData >4 0 5 0</SimulationFilterData>
+				<QueryFilterData >0 0 0 0</QueryFilterData>
+				<Materials >
+					<PxMaterialRef >2231460656</PxMaterialRef>
+				</Materials>
+				<ContactOffset >0.2</ContactOffset>
+				<RestOffset >0.1</RestOffset>
+				<Flags >eSIMULATION_SHAPE|eSCENE_QUERY_SHAPE|eVISUALIZATION</Flags>
+				<Name >Bip01 R UpperArm</Name>
+			</PxShape>
+		</Shapes>
+		<CMassLocalPose >0.185558 -0.13154 0.209239 0.951044 11.5867 5.65427 -2.26785</CMassLocalPose>
+		<Mass >4.6118</Mass>
+		<MassSpaceInertiaTensor >104.152 422.42 422.42</MassSpaceInertiaTensor>
+		<LinearVelocity >0 0 0</LinearVelocity>
+		<AngularVelocity >0 0 0</AngularVelocity>
+		<LinearDamping >0</LinearDamping>
+		<AngularDamping >0.05</AngularDamping>
+		<MaxAngularVelocity >7</MaxAngularVelocity>
+		<SleepThreshold >0.005</SleepThreshold>
+		<SolverIterationCounts >
+			<minPositionIters >30</minPositionIters>
+			<minVelocityIters >1</minVelocityIters>
+		</SolverIterationCounts>
+		<ContactReportThreshold >3.40282e+038</ContactReportThreshold>
+	</PxRigidDynamic>
+	<PxRigidDynamic >
+		<Id >1586818656</Id>
+		<Name >Bip01 R Forearm</Name>
+		<ActorFlags >eVISUALIZATION</ActorFlags>
+		<DominanceGroup >0</DominanceGroup>
+		<OwnerClient >0</OwnerClient>
+		<ClientBehaviorBits >0</ClientBehaviorBits>
+		<GlobalPose >-0.0734939 0.915732 -0.0302198 0.393853 -36.6643 2.93823 123.083</GlobalPose>
+		<Shapes >
+			<PxShape >
+				<Geometry >
+					<PxCapsuleGeometry >
+						<Radius >9.11368</Radius>
+						<HalfHeight >0.397601</HalfHeight>
+					</PxCapsuleGeometry>
+				</Geometry>
+				<LocalPose >0.707107 -0.707107 -1.39698e-009 -3.26471e-008 3.15875 0.726623 0.663238</LocalPose>
+				<SimulationFilterData >4 0 5 0</SimulationFilterData>
+				<QueryFilterData >0 0 0 0</QueryFilterData>
+				<Materials >
+					<PxMaterialRef >2231465584</PxMaterialRef>
+				</Materials>
+				<ContactOffset >0.2</ContactOffset>
+				<RestOffset >0.1</RestOffset>
+				<Flags >eSIMULATION_SHAPE|eSCENE_QUERY_SHAPE|eVISUALIZATION</Flags>
+				<Name >Bip01 R Forearm</Name>
+			</PxShape>
+		</Shapes>
+		<CMassLocalPose >1.44168e-008 0.0104111 -1.38468e-006 0.999946 3.15875 0.726623 0.663238</CMassLocalPose>
+		<Mass >3.37831</Mass>
+		<MassSpaceInertiaTensor >118.784 113.963 118.784</MassSpaceInertiaTensor>
+		<LinearVelocity >0 0 0</LinearVelocity>
+		<AngularVelocity >0 0 0</AngularVelocity>
+		<LinearDamping >0</LinearDamping>
+		<AngularDamping >0.05</AngularDamping>
+		<MaxAngularVelocity >7</MaxAngularVelocity>
+		<SleepThreshold >0.005</SleepThreshold>
+		<SolverIterationCounts >
+			<minPositionIters >30</minPositionIters>
+			<minVelocityIters >1</minVelocityIters>
+		</SolverIterationCounts>
+		<ContactReportThreshold >3.40282e+038</ContactReportThreshold>
+	</PxRigidDynamic>
+	<PxRigidDynamic >
+		<Id >1586819488</Id>
+		<Name >Bip01 R Hand</Name>
+		<ActorFlags >eVISUALIZATION</ActorFlags>
+		<DominanceGroup >0</DominanceGroup>
+		<OwnerClient >0</OwnerClient>
+		<ClientBehaviorBits >0</ClientBehaviorBits>
+		<GlobalPose >-0.197701 -0.621721 0.679719 -0.335201 -52.4608 -0.747208 106.404</GlobalPose>
+		<Shapes >
+			<PxShape >
+				<Geometry >
+					<PxCapsuleGeometry >
+						<Radius >8.36955</Radius>
+						<HalfHeight >0.237638</HalfHeight>
+					</PxCapsuleGeometry>
+				</Geometry>
+				<LocalPose >0.5 -0.5 0.5 0.5 4.53313 1.28218 -1.24784</LocalPose>
+				<SimulationFilterData >4 0 5 0</SimulationFilterData>
+				<QueryFilterData >0 0 0 0</QueryFilterData>
+				<Materials >
+					<PxMaterialRef >2231465808</PxMaterialRef>
+				</Materials>
+				<ContactOffset >0.2</ContactOffset>
+				<RestOffset >0.1</RestOffset>
+				<Flags >eSIMULATION_SHAPE|eSCENE_QUERY_SHAPE|eVISUALIZATION</Flags>
+				<Name >Bip01 R Hand</Name>
+			</PxShape>
+		</Shapes>
+		<CMassLocalPose >-1.66986e-006 -2.68721e-006 -0.253608 0.967307 4.53313 1.28218 -1.24784</CMassLocalPose>
+		<Mass >2.56041</Mass>
+		<MassSpaceInertiaTensor >74.4469 74.4469 72.4746</MassSpaceInertiaTensor>
+		<LinearVelocity >0 -0 0</LinearVelocity>
+		<AngularVelocity >0 -0 0</AngularVelocity>
+		<LinearDamping >0</LinearDamping>
+		<AngularDamping >0.05</AngularDamping>
+		<MaxAngularVelocity >7</MaxAngularVelocity>
+		<SleepThreshold >0.005</SleepThreshold>
+		<SolverIterationCounts >
+			<minPositionIters >30</minPositionIters>
+			<minVelocityIters >1</minVelocityIters>
+		</SolverIterationCounts>
+		<ContactReportThreshold >3.40282e+038</ContactReportThreshold>
+	</PxRigidDynamic>
+	<PxRigidDynamic >
+		<Id >1586820320</Id>
+		<Name >Bip01 L Thigh</Name>
+		<ActorFlags >eVISUALIZATION</ActorFlags>
+		<DominanceGroup >0</DominanceGroup>
+		<OwnerClient >0</OwnerClient>
+		<ClientBehaviorBits >0</ClientBehaviorBits>
+		<GlobalPose >-0.70653 0.0285596 0.70653 -0.0285605 8.79602 -1.23223 97.331</GlobalPose>
+		<Shapes >
+			<PxShape >
+				<Geometry >
+					<PxCapsuleGeometry >
+						<Radius >18.6629</Radius>
+						<HalfHeight >1.92221</HalfHeight>
+					</PxCapsuleGeometry>
+				</Geometry>
+				<LocalPose >0.0106438 -0.0330303 0.143247 0.989078 26.1829 3.72857 -0.0481938</LocalPose>
+				<SimulationFilterData >4 0 5 0</SimulationFilterData>
+				<QueryFilterData >0 0 0 0</QueryFilterData>
+				<Materials >
+					<PxMaterialRef >2231459984</PxMaterialRef>
+				</Materials>
+				<ContactOffset >0.2</ContactOffset>
+				<RestOffset >0.1</RestOffset>
+				<Flags >eSIMULATION_SHAPE|eSCENE_QUERY_SHAPE|eVISUALIZATION</Flags>
+				<Name >Bip01 L Thigh</Name>
+			</PxShape>
+		</Shapes>
+		<CMassLocalPose >0.00489741 -0.0338624 0.143054 0.989123 26.1829 3.72857 -0.0481939</CMassLocalPose>
+		<Mass >31.4355</Mass>
+		<MassSpaceInertiaTensor >4526.19 4998.28 4998.28</MassSpaceInertiaTensor>
+		<LinearVelocity >0 -0 0</LinearVelocity>
+		<AngularVelocity >0 -0 0</AngularVelocity>
+		<LinearDamping >0</LinearDamping>
+		<AngularDamping >0.05</AngularDamping>
+		<MaxAngularVelocity >7</MaxAngularVelocity>
+		<SleepThreshold >0.005</SleepThreshold>
+		<SolverIterationCounts >
+			<minPositionIters >30</minPositionIters>
+			<minVelocityIters >1</minVelocityIters>
+		</SolverIterationCounts>
+		<ContactReportThreshold >3.40282e+038</ContactReportThreshold>
+	</PxRigidDynamic>
+	<PxRigidDynamic >
+		<Id >1586820736</Id>
+		<Name >Bip01 L Calf</Name>
+		<ActorFlags >eVISUALIZATION</ActorFlags>
+		<DominanceGroup >0</DominanceGroup>
+		<OwnerClient >0</OwnerClient>
+		<ClientBehaviorBits >0</ClientBehaviorBits>
+		<GlobalPose >-0.705851 -0.0421183 0.705851 0.0421174 8.79602 -4.92404 51.7409</GlobalPose>
+		<Shapes >
+			<PxShape >
+				<Geometry >
+					<PxCapsuleGeometry >
+						<Radius >9.29922</Radius>
+						<HalfHeight >14.0544</HalfHeight>
+					</PxCapsuleGeometry>
+				</Geometry>
+				<LocalPose >0.707107 -8.9407e-008 2.98023e-008 0.707107 21.2657 -0.675326 0.962729</LocalPose>
+				<SimulationFilterData >4 0 5 0</SimulationFilterData>
+				<QueryFilterData >0 0 0 0</QueryFilterData>
+				<Materials >
+					<PxMaterialRef >2231461888</PxMaterialRef>
+				</Materials>
+				<ContactOffset >0.2</ContactOffset>
+				<RestOffset >0.1</RestOffset>
+				<Flags >eSIMULATION_SHAPE|eSCENE_QUERY_SHAPE|eVISUALIZATION</Flags>
+				<Name >Bip01 L Calf</Name>
+			</PxShape>
+		</Shapes>
+		<CMassLocalPose >0 0 0 1 21.2657 -0.675326 0.962729</CMassLocalPose>
+		<Mass >11.0047</Mass>
+		<MassSpaceInertiaTensor >446.691 1779.92 1779.92</MassSpaceInertiaTensor>
+		<LinearVelocity >0 0 0</LinearVelocity>
+		<AngularVelocity >0 0 0</AngularVelocity>
+		<LinearDamping >0</LinearDamping>
+		<AngularDamping >0.05</AngularDamping>
+		<MaxAngularVelocity >7</MaxAngularVelocity>
+		<SleepThreshold >0.005</SleepThreshold>
+		<SolverIterationCounts >
+			<minPositionIters >30</minPositionIters>
+			<minVelocityIters >1</minVelocityIters>
+		</SolverIterationCounts>
+		<ContactReportThreshold >3.40282e+038</ContactReportThreshold>
+	</PxRigidDynamic>
+	<PxRigidDynamic >
+		<Id >2227470176</Id>
+		<Name >Bip01 L Foot</Name>
+		<ActorFlags >eVISUALIZATION</ActorFlags>
+		<DominanceGroup >0</DominanceGroup>
+		<OwnerClient >0</OwnerClient>
+		<ClientBehaviorBits >0</ClientBehaviorBits>
+		<GlobalPose >0.707107 5.00819e-007 -0.707107 4.66593e-007 8.79601 0.0568485 10.1523</GlobalPose>
+		<Shapes >
+			<PxShape >
+				<Geometry >
+					<PxCapsuleGeometry >
+						<Radius >8.88064</Radius>
+						<HalfHeight >4.58551</HalfHeight>
+					</PxCapsuleGeometry>
+				</Geometry>
+				<LocalPose >-0.523841 -0.487156 0.507413 0.480417 4.52954 3.43146 0.521451</LocalPose>
+				<SimulationFilterData >4 0 5 0</SimulationFilterData>
+				<QueryFilterData >0 0 0 0</QueryFilterData>
+				<Materials >
+					<PxMaterialRef >2231459424</PxMaterialRef>
+				</Materials>
+				<ContactOffset >0.2</ContactOffset>
+				<RestOffset >0.1</RestOffset>
+				<Flags >eSIMULATION_SHAPE|eSCENE_QUERY_SHAPE|eVISUALIZATION</Flags>
+				<Name >Bip01 L Foot</Name>
+			</PxShape>
+		</Shapes>
+		<CMassLocalPose >-0.0315424 -0.357755 0.0065081 0.93326 4.52954 3.43146 0.521451</CMassLocalPose>
+		<Mass >5.20599</Mass>
+		<MassSpaceInertiaTensor >304.565 182.15 304.565</MassSpaceInertiaTensor>
+		<LinearVelocity >0 0 0</LinearVelocity>
+		<AngularVelocity >0 0 0</AngularVelocity>
+		<LinearDamping >0</LinearDamping>
+		<AngularDamping >0.05</AngularDamping>
+		<MaxAngularVelocity >7</MaxAngularVelocity>
+		<SleepThreshold >0.005</SleepThreshold>
+		<SolverIterationCounts >
+			<minPositionIters >30</minPositionIters>
+			<minVelocityIters >1</minVelocityIters>
+		</SolverIterationCounts>
+		<ContactReportThreshold >3.40282e+038</ContactReportThreshold>
+	</PxRigidDynamic>
+	<PxRigidDynamic >
+		<Id >2227468096</Id>
+		<Name >Bip01 L Toe0</Name>
+		<ActorFlags >eVISUALIZATION</ActorFlags>
+		<DominanceGroup >0</DominanceGroup>
+		<OwnerClient >0</OwnerClient>
+		<ClientBehaviorBits >0</ClientBehaviorBits>
+		<GlobalPose >0.459965 -0.537059 -0.459964 0.53706 8.79603 -11.9102 0.0368438</GlobalPose>
+		<Shapes >
+			<PxShape >
+				<Geometry >
+					<PxCapsuleGeometry >
+						<Radius >4.17644</Radius>
+						<HalfHeight >0.62992</HalfHeight>
+					</PxCapsuleGeometry>
+				</Geometry>
+				<LocalPose >0.312127 -0.610646 0.265149 0.677779 8.42526 2.56227 -0.325427</LocalPose>
+				<SimulationFilterData >4 0 5 0</SimulationFilterData>
+				<QueryFilterData >0 0 0 0</QueryFilterData>
+				<Materials >
+					<PxMaterialRef >2231460432</PxMaterialRef>
+				</Materials>
+				<ContactOffset >0.2</ContactOffset>
+				<RestOffset >0.1</RestOffset>
+				<Flags >eSIMULATION_SHAPE|eSCENE_QUERY_SHAPE|eVISUALIZATION</Flags>
+				<Name >Bip01 L Toe0</Name>
+			</PxShape>
+		</Shapes>
+		<CMassLocalPose >0.0170184 0.0553831 0.108394 0.992418 8.42526 2.56227 -0.325427</CMassLocalPose>
+		<Mass >0.374183</Mass>
+		<MassSpaceInertiaTensor >3.16238 3.16238 2.73112</MassSpaceInertiaTensor>
+		<LinearVelocity >0 0 0</LinearVelocity>
+		<AngularVelocity >0 0 0</AngularVelocity>
+		<LinearDamping >0</LinearDamping>
+		<AngularDamping >0.05</AngularDamping>
+		<MaxAngularVelocity >7</MaxAngularVelocity>
+		<SleepThreshold >0.005</SleepThreshold>
+		<SolverIterationCounts >
+			<minPositionIters >30</minPositionIters>
+			<minVelocityIters >1</minVelocityIters>
+		</SolverIterationCounts>
+		<ContactReportThreshold >3.40282e+038</ContactReportThreshold>
+	</PxRigidDynamic>
+	<PxRigidDynamic >
+		<Id >1586953664</Id>
+		<Name >Bip01 R Thigh</Name>
+		<ActorFlags >eVISUALIZATION</ActorFlags>
+		<DominanceGroup >0</DominanceGroup>
+		<OwnerClient >0</OwnerClient>
+		<ClientBehaviorBits >0</ClientBehaviorBits>
+		<GlobalPose >0.70653 -0.0285595 -0.70653 0.0285606 -8.79602 -1.23225 97.331</GlobalPose>
+		<Shapes >
+			<PxShape >
+				<Geometry >
+					<PxCapsuleGeometry >
+						<Radius >19.7264</Radius>
+						<HalfHeight >6.0035</HalfHeight>
+					</PxCapsuleGeometry>
+				</Geometry>
+				<LocalPose >0.707107 -0.707107 -1.54543e-008 -1.54543e-008 30.228 0.245193 1.77562</LocalPose>
+				<SimulationFilterData >4 0 5 0</SimulationFilterData>
+				<QueryFilterData >0 0 0 0</QueryFilterData>
+				<Materials >
+					<PxMaterialRef >2231465920</PxMaterialRef>
+				</Materials>
+				<ContactOffset >0.2</ContactOffset>
+				<RestOffset >0.1</RestOffset>
+				<Flags >eSIMULATION_SHAPE|eSCENE_QUERY_SHAPE|eVISUALIZATION</Flags>
+				<Name >Bip01 R Thigh</Name>
+			</PxShape>
+		</Shapes>
+		<CMassLocalPose >0 0 -1.98797e-007 1 30.228 0.245193 1.77562</CMassLocalPose>
+		<Mass >46.8324</Mass>
+		<MassSpaceInertiaTensor >10624 7860.78 10624</MassSpaceInertiaTensor>
+		<LinearVelocity >0 -0 0</LinearVelocity>
+		<AngularVelocity >0 -0 0</AngularVelocity>
+		<LinearDamping >0</LinearDamping>
+		<AngularDamping >0.05</AngularDamping>
+		<MaxAngularVelocity >7</MaxAngularVelocity>
+		<SleepThreshold >0.005</SleepThreshold>
+		<SolverIterationCounts >
+			<minPositionIters >30</minPositionIters>
+			<minVelocityIters >1</minVelocityIters>
+		</SolverIterationCounts>
+		<ContactReportThreshold >3.40282e+038</ContactReportThreshold>
+	</PxRigidDynamic>
+	<PxRigidDynamic >
+		<Id >2232693760</Id>
+		<Name >Bip01 R Calf</Name>
+		<ActorFlags >eVISUALIZATION</ActorFlags>
+		<DominanceGroup >0</DominanceGroup>
+		<OwnerClient >0</OwnerClient>
+		<ClientBehaviorBits >0</ClientBehaviorBits>
+		<GlobalPose >-0.705851 -0.0421184 0.705851 0.0421174 -8.79603 -4.92406 51.7409</GlobalPose>
+		<Shapes >
+			<PxShape >
+				<Geometry >
+					<PxCapsuleGeometry >
+						<Radius >9.30468</Radius>
+						<HalfHeight >14.2653</HalfHeight>
+					</PxCapsuleGeometry>
+				</Geometry>
+				<LocalPose >-0.17704 0.00898562 0.00194195 0.984161 23.9763 -0.693781 -0.663241</LocalPose>
+				<SimulationFilterData >4 0 5 0</SimulationFilterData>
+				<QueryFilterData >0 0 0 0</QueryFilterData>
+				<Materials >
+					<PxMaterialRef >2231459200</PxMaterialRef>
+				</Materials>
+				<ContactOffset >0.2</ContactOffset>
+				<RestOffset >0.1</RestOffset>
+				<Flags >eSIMULATION_SHAPE|eSCENE_QUERY_SHAPE|eVISUALIZATION</Flags>
+				<Name >Bip01 R Calf</Name>
+			</PxShape>
+		</Shapes>
+		<CMassLocalPose >0.0534086 0.00919148 -0.000170771 0.998531 23.9763 -0.693781 -0.663241</CMassLocalPose>
+		<Mass >11.1344</Mass>
+		<MassSpaceInertiaTensor >452.777 1833.8 1833.8</MassSpaceInertiaTensor>
+		<LinearVelocity >0 0 0</LinearVelocity>
+		<AngularVelocity >0 0 0</AngularVelocity>
+		<LinearDamping >0</LinearDamping>
+		<AngularDamping >0.05</AngularDamping>
+		<MaxAngularVelocity >7</MaxAngularVelocity>
+		<SleepThreshold >0.005</SleepThreshold>
+		<SolverIterationCounts >
+			<minPositionIters >30</minPositionIters>
+			<minVelocityIters >1</minVelocityIters>
+		</SolverIterationCounts>
+		<ContactReportThreshold >3.40282e+038</ContactReportThreshold>
+	</PxRigidDynamic>
+	<PxRigidDynamic >
+		<Id >2232684608</Id>
+		<Name >Bip01 R Foot</Name>
+		<ActorFlags >eVISUALIZATION</ActorFlags>
+		<DominanceGroup >0</DominanceGroup>
+		<OwnerClient >0</OwnerClient>
+		<ClientBehaviorBits >0</ClientBehaviorBits>
+		<GlobalPose >0.707107 5.00143e-007 -0.707107 4.69234e-007 -8.79603 0.0568253 10.1523</GlobalPose>
+		<Shapes >
+			<PxShape >
+				<Geometry >
+					<PxCapsuleGeometry >
+						<Radius >8.99534</Radius>
+						<HalfHeight >2.11134</HalfHeight>
+					</PxCapsuleGeometry>
+				</Geometry>
+				<LocalPose >0.707107 -0.707107 6.32203e-008 6.32203e-008 4.44222 1.13031 0.710649</LocalPose>
+				<SimulationFilterData >4 0 5 0</SimulationFilterData>
+				<QueryFilterData >0 0 0 0</QueryFilterData>
+				<Materials >
+					<PxMaterialRef >2231466144</PxMaterialRef>
+				</Materials>
+				<ContactOffset >0.2</ContactOffset>
+				<RestOffset >0.1</RestOffset>
+				<Flags >eSIMULATION_SHAPE|eSCENE_QUERY_SHAPE|eVISUALIZATION</Flags>
+				<Name >Bip01 R Foot</Name>
+			</PxShape>
+		</Shapes>
+		<CMassLocalPose >0 0 -2.84288e-007 1 4.44222 1.13031 0.710649</CMassLocalPose>
+		<Mass >4.12232</Mass>
+		<MassSpaceInertiaTensor >179.011 142.11 179.011</MassSpaceInertiaTensor>
+		<LinearVelocity >0 0 0</LinearVelocity>
+		<AngularVelocity >0 0 0</AngularVelocity>
+		<LinearDamping >0</LinearDamping>
+		<AngularDamping >0.05</AngularDamping>
+		<MaxAngularVelocity >7</MaxAngularVelocity>
+		<SleepThreshold >0.005</SleepThreshold>
+		<SolverIterationCounts >
+			<minPositionIters >30</minPositionIters>
+			<minVelocityIters >1</minVelocityIters>
+		</SolverIterationCounts>
+		<ContactReportThreshold >3.40282e+038</ContactReportThreshold>
+	</PxRigidDynamic>
+	<PxRigidDynamic >
+		<Id >2232690016</Id>
+		<Name >Bip01 R Toe0</Name>
+		<ActorFlags >eVISUALIZATION</ActorFlags>
+		<DominanceGroup >0</DominanceGroup>
+		<OwnerClient >0</OwnerClient>
+		<ClientBehaviorBits >0</ClientBehaviorBits>
+		<GlobalPose >0.460476 -0.536621 -0.460476 0.536621 -8.79601 -11.9103 0.0368447</GlobalPose>
+		<Shapes >
+			<PxShape >
+				<Geometry >
+					<PxCapsuleGeometry >
+						<Radius >5.51937</Radius>
+						<HalfHeight >0.796131</HalfHeight>
+					</PxCapsuleGeometry>
+				</Geometry>
+				<LocalPose >0.536164 -0.424365 0.445836 0.577644 7.18916 1.95527 -0.843008</LocalPose>
+				<SimulationFilterData >4 0 5 0</SimulationFilterData>
+				<QueryFilterData >0 0 0 0</QueryFilterData>
+				<Materials >
+					<PxMaterialRef >2231463568</PxMaterialRef>
+				</Materials>
+				<ContactOffset >0.2</ContactOffset>
+				<RestOffset >0.1</RestOffset>
+				<Flags >eSIMULATION_SHAPE|eSCENE_QUERY_SHAPE|eVISUALIZATION</Flags>
+				<Name >Bip01 R Toe0</Name>
+			</PxShape>
+		</Shapes>
+		<CMassLocalPose >-0.0297933 0.122225 0.00367068 0.992048 7.18916 1.95527 -0.843008</CMassLocalPose>
+		<Mass >0.856682</Mass>
+		<MassSpaceInertiaTensor >12.5423 12.5423 10.9032</MassSpaceInertiaTensor>
+		<LinearVelocity >0 0 0</LinearVelocity>
+		<AngularVelocity >0 0 0</AngularVelocity>
+		<LinearDamping >0</LinearDamping>
+		<AngularDamping >0.05</AngularDamping>
+		<MaxAngularVelocity >7</MaxAngularVelocity>
+		<SleepThreshold >0.005</SleepThreshold>
+		<SolverIterationCounts >
+			<minPositionIters >30</minPositionIters>
+			<minVelocityIters >1</minVelocityIters>
+		</SolverIterationCounts>
+		<ContactReportThreshold >3.40282e+038</ContactReportThreshold>
+	</PxRigidDynamic>
+	<PxD6Joint >
+		<Id >2232566912</Id>
+		<Actors >
+			<actor0 >2230330432</actor0>
+			<actor1 >2230331264</actor1>
+		</Actors>
+		<LocalPose >
+			<eACTOR0 >-9.44465e-005 0.000144495 0.706988 0.707226 11.4538 9.35692 4.32366e-006</eACTOR0>
+			<eACTOR1 >-2.47819e-008 3.09575e-012 -1.25292e-008 1 9.53674e-007 0 0</eACTOR1>
+		</LocalPose>
+		<BreakForce >
+			<force >3.40282e+038</force>
+			<torque >3.40282e+038</torque>
+		</BreakForce>
+		<ConstraintFlags >eVISUALIZATION</ConstraintFlags>
+		<Name >Bip01 Ponytail1 UConstraint</Name>
+		<Motion >
+			<eX >eLOCKED</eX>
+			<eY >eLOCKED</eY>
+			<eZ >eLOCKED</eZ>
+			<eTWIST >eLOCKED</eTWIST>
+			<eSWING1 >eLIMITED</eSWING1>
+			<eSWING2 >eLIMITED</eSWING2>
+		</Motion>
+		<LinearLimit >
+			<Restitution >0</Restitution>
+			<Spring >0</Spring>
+			<Damping >0</Damping>
+			<ContactDistance >0.05</ContactDistance>
+			<Value >3.40282e+038</Value>
+		</LinearLimit>
+		<TwistLimit >
+			<Restitution >0</Restitution>
+			<Spring >0</Spring>
+			<Damping >0</Damping>
+			<ContactDistance >0.05</ContactDistance>
+			<Upper >1.5708</Upper>
+			<Lower >-1.5708</Lower>
+		</TwistLimit>
+		<SwingLimit >
+			<Restitution >0.1</Restitution>
+			<Spring >0</Spring>
+			<Damping >0</Damping>
+			<ContactDistance >0</ContactDistance>
+			<YAngle >0.261799</YAngle>
+			<ZAngle >0.261799</ZAngle>
+		</SwingLimit>
+		<Drive >
+			<eX >
+				<Spring >0</Spring>
+				<Damping >0</Damping>
+				<ForceLimit >0</ForceLimit>
+				<Flags >eACCELERATION</Flags>
+			</eX>
+			<eY >
+				<Spring >0</Spring>
+				<Damping >0</Damping>
+				<ForceLimit >0</ForceLimit>
+				<Flags >eACCELERATION</Flags>
+			</eY>
+			<eZ >
+				<Spring >0</Spring>
+				<Damping >0</Damping>
+				<ForceLimit >0</ForceLimit>
+				<Flags >eACCELERATION</Flags>
+			</eZ>
+			<eSWING >
+				<Spring >0</Spring>
+				<Damping >0</Damping>
+				<ForceLimit >0</ForceLimit>
+				<Flags >eACCELERATION</Flags>
+			</eSWING>
+			<eTWIST >
+				<Spring >0</Spring>
+				<Damping >0</Damping>
+				<ForceLimit >0</ForceLimit>
+				<Flags >eACCELERATION</Flags>
+			</eTWIST>
+			<eSLERP >
+				<Spring >0</Spring>
+				<Damping >0</Damping>
+				<ForceLimit >0</ForceLimit>
+			</eSLERP>
+		</Drive>
+		<DrivePosition >0 0 0 1 0 0 0</DrivePosition>
+		<DriveVelocity >
+			<linear >0 0 0</linear>
+			<angular >0 0 0</angular>
+		</DriveVelocity>
+		<ProjectionLinearTolerance >0.1</ProjectionLinearTolerance>
+		<ProjectionAngularTolerance >0.0872665</ProjectionAngularTolerance>
+	</PxD6Joint>
+	<PxD6Joint >
+		<Id >2232570752</Id>
+		<Actors >
+			<actor0 >2227472672</actor0>
+			<actor1 >2227468512</actor1>
+		</Actors>
+		<LocalPose >
+			<eACTOR0 >-0.706152 0.00615874 -0.0308458 0.707361 23.2658 -4.76837e-007 1.52588e-005</eACTOR0>
+			<eACTOR1 >9.68575e-008 1.49012e-008 -5.96046e-008 1 3.8147e-006 0 1.90735e-006</eACTOR1>
+		</LocalPose>
+		<BreakForce >
+			<force >3.40282e+038</force>
+			<torque >3.40282e+038</torque>
+		</BreakForce>
+		<ConstraintFlags >eVISUALIZATION</ConstraintFlags>
+		<Name >Bip01 L Hand UConstraint</Name>
+		<Motion >
+			<eX >eLOCKED</eX>
+			<eY >eLOCKED</eY>
+			<eZ >eLOCKED</eZ>
+			<eTWIST >eLOCKED</eTWIST>
+			<eSWING1 >eLIMITED</eSWING1>
+			<eSWING2 >eLIMITED</eSWING2>
+		</Motion>
+		<LinearLimit >
+			<Restitution >0</Restitution>
+			<Spring >0</Spring>
+			<Damping >0</Damping>
+			<ContactDistance >0.05</ContactDistance>
+			<Value >3.40282e+038</Value>
+		</LinearLimit>
+		<TwistLimit >
+			<Restitution >0</Restitution>
+			<Spring >0</Spring>
+			<Damping >0</Damping>
+			<ContactDistance >0.05</ContactDistance>
+			<Upper >1.5708</Upper>
+			<Lower >-1.5708</Lower>
+		</TwistLimit>
+		<SwingLimit >
+			<Restitution >0.1</Restitution>
+			<Spring >0</Spring>
+			<Damping >0</Damping>
+			<ContactDistance >0</ContactDistance>
+			<YAngle >0.261799</YAngle>
+			<ZAngle >0.261799</ZAngle>
+		</SwingLimit>
+		<Drive >
+			<eX >
+				<Spring >0</Spring>
+				<Damping >0</Damping>
+				<ForceLimit >0</ForceLimit>
+				<Flags >eACCELERATION</Flags>
+			</eX>
+			<eY >
+				<Spring >0</Spring>
+				<Damping >0</Damping>
+				<ForceLimit >0</ForceLimit>
+				<Flags >eACCELERATION</Flags>
+			</eY>
+			<eZ >
+				<Spring >0</Spring>
+				<Damping >0</Damping>
+				<ForceLimit >0</ForceLimit>
+				<Flags >eACCELERATION</Flags>
+			</eZ>
+			<eSWING >
+				<Spring >0</Spring>
+				<Damping >0</Damping>
+				<ForceLimit >0</ForceLimit>
+				<Flags >eACCELERATION</Flags>
+			</eSWING>
+			<eTWIST >
+				<Spring >0</Spring>
+				<Damping >0</Damping>
+				<ForceLimit >0</ForceLimit>
+				<Flags >eACCELERATION</Flags>
+			</eTWIST>
+			<eSLERP >
+				<Spring >0</Spring>
+				<Damping >0</Damping>
+				<ForceLimit >0</ForceLimit>
+			</eSLERP>
+		</Drive>
+		<DrivePosition >0 0 0 1 0 0 0</DrivePosition>
+		<DriveVelocity >
+			<linear >0 0 0</linear>
+			<angular >0 0 0</angular>
+		</DriveVelocity>
+		<ProjectionLinearTolerance >0.1</ProjectionLinearTolerance>
+		<ProjectionAngularTolerance >0.0872665</ProjectionAngularTolerance>
+	</PxD6Joint>
+	<PxD6Joint >
+		<Id >2232564512</Id>
+		<Actors >
+			<actor0 >2227467264</actor0>
+			<actor1 >2227472672</actor1>
+		</Actors>
+		<LocalPose >
+			<eACTOR0 >0.117079 0.697347 -0.117079 0.697347 26.3881 9.53674e-007 0</eACTOR0>
+			<eACTOR1 >6.58545e-008 0.707107 -4.4781e-008 0.707107 0 0 0</eACTOR1>
+		</LocalPose>
+		<BreakForce >
+			<force >3.40282e+038</force>
+			<torque >3.40282e+038</torque>
+		</BreakForce>
+		<ConstraintFlags >eVISUALIZATION</ConstraintFlags>
+		<Name >Bip01 L Forearm UConstraint</Name>
+		<Motion >
+			<eX >eLOCKED</eX>
+			<eY >eLOCKED</eY>
+			<eZ >eLOCKED</eZ>
+			<eTWIST >eLIMITED</eTWIST>
+			<eSWING1 >eLOCKED</eSWING1>
+			<eSWING2 >eLOCKED</eSWING2>
+		</Motion>
+		<LinearLimit >
+			<Restitution >0</Restitution>
+			<Spring >0</Spring>
+			<Damping >0</Damping>
+			<ContactDistance >0.05</ContactDistance>
+			<Value >3.40282e+038</Value>
+		</LinearLimit>
+		<TwistLimit >
+			<Restitution >0</Restitution>
+			<Spring >0</Spring>
+			<Damping >0</Damping>
+			<ContactDistance >0.05</ContactDistance>
+			<Upper >2.61799</Upper>
+			<Lower >0</Lower>
+		</TwistLimit>
+		<SwingLimit >
+			<Restitution >0</Restitution>
+			<Spring >0</Spring>
+			<Damping >0</Damping>
+			<ContactDistance >0.05</ContactDistance>
+			<YAngle >1.5708</YAngle>
+			<ZAngle >1.5708</ZAngle>
+		</SwingLimit>
+		<Drive >
+			<eX >
+				<Spring >0</Spring>
+				<Damping >0</Damping>
+				<ForceLimit >0</ForceLimit>
+				<Flags >eACCELERATION</Flags>
+			</eX>
+			<eY >
+				<Spring >0</Spring>
+				<Damping >0</Damping>
+				<ForceLimit >0</ForceLimit>
+				<Flags >eACCELERATION</Flags>
+			</eY>
+			<eZ >
+				<Spring >0</Spring>
+				<Damping >0</Damping>
+				<ForceLimit >0</ForceLimit>
+				<Flags >eACCELERATION</Flags>
+			</eZ>
+			<eSWING >
+				<Spring >0</Spring>
+				<Damping >0</Damping>
+				<ForceLimit >0</ForceLimit>
+				<Flags >eACCELERATION</Flags>
+			</eSWING>
+			<eTWIST >
+				<Spring >0</Spring>
+				<Damping >0</Damping>
+				<ForceLimit >0</ForceLimit>
+				<Flags >eACCELERATION</Flags>
+			</eTWIST>
+			<eSLERP >
+				<Spring >0</Spring>
+				<Damping >0</Damping>
+				<ForceLimit >0</ForceLimit>
+			</eSLERP>
+		</Drive>
+		<DrivePosition >0 0 0 1 0 0 0</DrivePosition>
+		<DriveVelocity >
+			<linear >0 0 0</linear>
+			<angular >0 0 0</angular>
+		</DriveVelocity>
+		<ProjectionLinearTolerance >0.1</ProjectionLinearTolerance>
+		<ProjectionAngularTolerance >0.0872665</ProjectionAngularTolerance>
+	</PxD6Joint>
+	<PxD6Joint >
+		<Id >2232568672</Id>
+		<Actors >
+			<actor0 >2227466848</actor0>
+			<actor1 >2227467264</actor1>
+		</Actors>
+		<LocalPose >
+			<eACTOR0 >0.267094 -0.333318 -0.482185 0.764891 17.6497 0 3.05176e-005</eACTOR0>
+			<eACTOR1 >0.27911 3.87946e-008 -8.31813e-009 0.960259 -7.62939e-006 1.90735e-006 1.52588e-005</eACTOR1>
+		</LocalPose>
+		<BreakForce >
+			<force >3.40282e+038</force>
+			<torque >3.40282e+038</torque>
+		</BreakForce>
+		<ConstraintFlags >eVISUALIZATION</ConstraintFlags>
+		<Name >Bip01 L UpperArm UConstraint</Name>
+		<Motion >
+			<eX >eLOCKED</eX>
+			<eY >eLOCKED</eY>
+			<eZ >eLOCKED</eZ>
+			<eTWIST >eLOCKED</eTWIST>
+			<eSWING1 >eLIMITED</eSWING1>
+			<eSWING2 >eLIMITED</eSWING2>
+		</Motion>
+		<LinearLimit >
+			<Restitution >0</Restitution>
+			<Spring >0</Spring>
+			<Damping >0</Damping>
+			<ContactDistance >0.05</ContactDistance>
+			<Value >3.40282e+038</Value>
+		</LinearLimit>
+		<TwistLimit >
+			<Restitution >0</Restitution>
+			<Spring >0</Spring>
+			<Damping >0</Damping>
+			<ContactDistance >0.05</ContactDistance>
+			<Upper >1.5708</Upper>
+			<Lower >-1.5708</Lower>
+		</TwistLimit>
+		<SwingLimit >
+			<Restitution >0.1</Restitution>
+			<Spring >0</Spring>
+			<Damping >0</Damping>
+			<ContactDistance >0</ContactDistance>
+			<YAngle >1.0472</YAngle>
+			<ZAngle >1.22173</ZAngle>
+		</SwingLimit>
+		<Drive >
+			<eX >
+				<Spring >0</Spring>
+				<Damping >0</Damping>
+				<ForceLimit >0</ForceLimit>
+				<Flags >eACCELERATION</Flags>
+			</eX>
+			<eY >
+				<Spring >0</Spring>
+				<Damping >0</Damping>
+				<ForceLimit >0</ForceLimit>
+				<Flags >eACCELERATION</Flags>
+			</eY>
+			<eZ >
+				<Spring >0</Spring>
+				<Damping >0</Damping>
+				<ForceLimit >0</ForceLimit>
+				<Flags >eACCELERATION</Flags>
+			</eZ>
+			<eSWING >
+				<Spring >0</Spring>
+				<Damping >0</Damping>
+				<ForceLimit >0</ForceLimit>
+				<Flags >eACCELERATION</Flags>
+			</eSWING>
+			<eTWIST >
+				<Spring >0</Spring>
+				<Damping >0</Damping>
+				<ForceLimit >0</ForceLimit>
+				<Flags >eACCELERATION</Flags>
+			</eTWIST>
+			<eSLERP >
+				<Spring >0</Spring>
+				<Damping >0</Damping>
+				<ForceLimit >0</ForceLimit>
+			</eSLERP>
+		</Drive>
+		<DrivePosition >0 0 0 1 0 0 0</DrivePosition>
+		<DriveVelocity >
+			<linear >0 0 0</linear>
+			<angular >0 0 0</angular>
+		</DriveVelocity>
+		<ProjectionLinearTolerance >0.1</ProjectionLinearTolerance>
+		<ProjectionAngularTolerance >0.0872665</ProjectionAngularTolerance>
+	</PxD6Joint>
+	<PxD6Joint >
+		<Id >2232563232</Id>
+		<Actors >
+			<actor0 >1586818656</actor0>
+			<actor1 >1586819488</actor1>
+		</Actors>
+		<LocalPose >
+			<eACTOR0 >0.706152 -0.00615869 -0.0308458 0.707361 23.2658 9.53674e-007 -7.62939e-006</eACTOR0>
+			<eACTOR1 >-2.98023e-008 3.72529e-009 -4.47035e-008 1 3.8147e-006 -7.62939e-006 0</eACTOR1>
+		</LocalPose>
+		<BreakForce >
+			<force >3.40282e+038</force>
+			<torque >3.40282e+038</torque>
+		</BreakForce>
+		<ConstraintFlags >eVISUALIZATION</ConstraintFlags>
+		<Name >Bip01 R Hand UConstraint</Name>
+		<Motion >
+			<eX >eLOCKED</eX>
+			<eY >eLOCKED</eY>
+			<eZ >eLOCKED</eZ>
+			<eTWIST >eLOCKED</eTWIST>
+			<eSWING1 >eLIMITED</eSWING1>
+			<eSWING2 >eLIMITED</eSWING2>
+		</Motion>
+		<LinearLimit >
+			<Restitution >0</Restitution>
+			<Spring >0</Spring>
+			<Damping >0</Damping>
+			<ContactDistance >0.05</ContactDistance>
+			<Value >3.40282e+038</Value>
+		</LinearLimit>
+		<TwistLimit >
+			<Restitution >0</Restitution>
+			<Spring >0</Spring>
+			<Damping >0</Damping>
+			<ContactDistance >0.05</ContactDistance>
+			<Upper >1.5708</Upper>
+			<Lower >-1.5708</Lower>
+		</TwistLimit>
+		<SwingLimit >
+			<Restitution >0.1</Restitution>
+			<Spring >0</Spring>
+			<Damping >0</Damping>
+			<ContactDistance >0</ContactDistance>
+			<YAngle >0.261799</YAngle>
+			<ZAngle >0.261799</ZAngle>
+		</SwingLimit>
+		<Drive >
+			<eX >
+				<Spring >0</Spring>
+				<Damping >0</Damping>
+				<ForceLimit >0</ForceLimit>
+				<Flags >eACCELERATION</Flags>
+			</eX>
+			<eY >
+				<Spring >0</Spring>
+				<Damping >0</Damping>
+				<ForceLimit >0</ForceLimit>
+				<Flags >eACCELERATION</Flags>
+			</eY>
+			<eZ >
+				<Spring >0</Spring>
+				<Damping >0</Damping>
+				<ForceLimit >0</ForceLimit>
+				<Flags >eACCELERATION</Flags>
+			</eZ>
+			<eSWING >
+				<Spring >0</Spring>
+				<Damping >0</Damping>
+				<ForceLimit >0</ForceLimit>
+				<Flags >eACCELERATION</Flags>
+			</eSWING>
+			<eTWIST >
+				<Spring >0</Spring>
+				<Damping >0</Damping>
+				<ForceLimit >0</ForceLimit>
+				<Flags >eACCELERATION</Flags>
+			</eTWIST>
+			<eSLERP >
+				<Spring >0</Spring>
+				<Damping >0</Damping>
+				<ForceLimit >0</ForceLimit>
+			</eSLERP>
+		</Drive>
+		<DrivePosition >0 0 0 1 0 0 0</DrivePosition>
+		<DriveVelocity >
+			<linear >0 0 0</linear>
+			<angular >0 0 0</angular>
+		</DriveVelocity>
+		<ProjectionLinearTolerance >0.1</ProjectionLinearTolerance>
+		<ProjectionAngularTolerance >0.0872665</ProjectionAngularTolerance>
+	</PxD6Joint>
+	<PxD6Joint >
+		<Id >2232562912</Id>
+		<Actors >
+			<actor0 >2227471424</actor0>
+			<actor1 >1586818656</actor1>
+		</Actors>
+		<LocalPose >
+			<eACTOR0 >0.0706532 0.703568 -0.0706532 0.703568 26.3881 4.76837e-007 -7.62939e-006</eACTOR0>
+			<eACTOR1 >7.3757e-008 0.707107 -7.3757e-008 0.707107 0 9.53674e-007 0</eACTOR1>
+		</LocalPose>
+		<BreakForce >
+			<force >3.40282e+038</force>
+			<torque >3.40282e+038</torque>
+		</BreakForce>
+		<ConstraintFlags >eVISUALIZATION</ConstraintFlags>
+		<Name >Bip01 R Forearm UConstraint</Name>
+		<Motion >
+			<eX >eLOCKED</eX>
+			<eY >eLOCKED</eY>
+			<eZ >eLOCKED</eZ>
+			<eTWIST >eLIMITED</eTWIST>
+			<eSWING1 >eLOCKED</eSWING1>
+			<eSWING2 >eLOCKED</eSWING2>
+		</Motion>
+		<LinearLimit >
+			<Restitution >0</Restitution>
+			<Spring >0</Spring>
+			<Damping >0</Damping>
+			<ContactDistance >0.05</ContactDistance>
+			<Value >3.40282e+038</Value>
+		</LinearLimit>
+		<TwistLimit >
+			<Restitution >0</Restitution>
+			<Spring >0</Spring>
+			<Damping >0</Damping>
+			<ContactDistance >0.05</ContactDistance>
+			<Upper >2.61799</Upper>
+			<Lower >0</Lower>
+		</TwistLimit>
+		<SwingLimit >
+			<Restitution >0</Restitution>
+			<Spring >0</Spring>
+			<Damping >0</Damping>
+			<ContactDistance >0.05</ContactDistance>
+			<YAngle >1.5708</YAngle>
+			<ZAngle >1.5708</ZAngle>
+		</SwingLimit>
+		<Drive >
+			<eX >
+				<Spring >0</Spring>
+				<Damping >0</Damping>
+				<ForceLimit >0</ForceLimit>
+				<Flags >eACCELERATION</Flags>
+			</eX>
+			<eY >
+				<Spring >0</Spring>
+				<Damping >0</Damping>
+				<ForceLimit >0</ForceLimit>
+				<Flags >eACCELERATION</Flags>
+			</eY>
+			<eZ >
+				<Spring >0</Spring>
+				<Damping >0</Damping>
+				<ForceLimit >0</ForceLimit>
+				<Flags >eACCELERATION</Flags>
+			</eZ>
+			<eSWING >
+				<Spring >0</Spring>
+				<Damping >0</Damping>
+				<ForceLimit >0</ForceLimit>
+				<Flags >eACCELERATION</Flags>
+			</eSWING>
+			<eTWIST >
+				<Spring >0</Spring>
+				<Damping >0</Damping>
+				<ForceLimit >0</ForceLimit>
+				<Flags >eACCELERATION</Flags>
+			</eTWIST>
+			<eSLERP >
+				<Spring >0</Spring>
+				<Damping >0</Damping>
+				<ForceLimit >0</ForceLimit>
+			</eSLERP>
+		</Drive>
+		<DrivePosition >0 0 0 1 0 0 0</DrivePosition>
+		<DriveVelocity >
+			<linear >0 0 0</linear>
+			<angular >0 0 0</angular>
+		</DriveVelocity>
+		<ProjectionLinearTolerance >0.1</ProjectionLinearTolerance>
+		<ProjectionAngularTolerance >0.0872665</ProjectionAngularTolerance>
+	</PxD6Joint>
+	<PxD6Joint >
+		<Id >2232565952</Id>
+		<Actors >
+			<actor0 >2227470592</actor0>
+			<actor1 >2227471424</actor1>
+		</Actors>
+		<LocalPose >
+			<eACTOR0 >-0.245233 0.357274 -0.506415 0.745493 17.6497 0 -1.52588e-005</eACTOR0>
+			<eACTOR1 >-0.279111 0 9.21246e-009 0.960259 0 1.90735e-006 -2.28882e-005</eACTOR1>
+		</LocalPose>
+		<BreakForce >
+			<force >3.40282e+038</force>
+			<torque >3.40282e+038</torque>
+		</BreakForce>
+		<ConstraintFlags >eVISUALIZATION</ConstraintFlags>
+		<Name >Bip01 R UpperArm UConstraint</Name>
+		<Motion >
+			<eX >eLOCKED</eX>
+			<eY >eLOCKED</eY>
+			<eZ >eLOCKED</eZ>
+			<eTWIST >eLOCKED</eTWIST>
+			<eSWING1 >eLIMITED</eSWING1>
+			<eSWING2 >eLIMITED</eSWING2>
+		</Motion>
+		<LinearLimit >
+			<Restitution >0</Restitution>
+			<Spring >0</Spring>
+			<Damping >0</Damping>
+			<ContactDistance >0.05</ContactDistance>
+			<Value >3.40282e+038</Value>
+		</LinearLimit>
+		<TwistLimit >
+			<Restitution >0</Restitution>
+			<Spring >0</Spring>
+			<Damping >0</Damping>
+			<ContactDistance >0.05</ContactDistance>
+			<Upper >1.5708</Upper>
+			<Lower >-1.5708</Lower>
+		</TwistLimit>
+		<SwingLimit >
+			<Restitution >0.1</Restitution>
+			<Spring >0</Spring>
+			<Damping >0</Damping>
+			<ContactDistance >0</ContactDistance>
+			<YAngle >1.0472</YAngle>
+			<ZAngle >1.22173</ZAngle>
+		</SwingLimit>
+		<Drive >
+			<eX >
+				<Spring >0</Spring>
+				<Damping >0</Damping>
+				<ForceLimit >0</ForceLimit>
+				<Flags >eACCELERATION</Flags>
+			</eX>
+			<eY >
+				<Spring >0</Spring>
+				<Damping >0</Damping>
+				<ForceLimit >0</ForceLimit>
+				<Flags >eACCELERATION</Flags>
+			</eY>
+			<eZ >
+				<Spring >0</Spring>
+				<Damping >0</Damping>
+				<ForceLimit >0</ForceLimit>
+				<Flags >eACCELERATION</Flags>
+			</eZ>
+			<eSWING >
+				<Spring >0</Spring>
+				<Damping >0</Damping>
+				<ForceLimit >0</ForceLimit>
+				<Flags >eACCELERATION</Flags>
+			</eSWING>
+			<eTWIST >
+				<Spring >0</Spring>
+				<Damping >0</Damping>
+				<ForceLimit >0</ForceLimit>
+				<Flags >eACCELERATION</Flags>
+			</eTWIST>
+			<eSLERP >
+				<Spring >0</Spring>
+				<Damping >0</Damping>
+				<ForceLimit >0</ForceLimit>
+			</eSLERP>
+		</Drive>
+		<DrivePosition >0 0 0 1 0 0 0</DrivePosition>
+		<DriveVelocity >
+			<linear >0 0 0</linear>
+			<angular >0 0 0</angular>
+		</DriveVelocity>
+		<ProjectionLinearTolerance >0.1</ProjectionLinearTolerance>
+		<ProjectionAngularTolerance >0.0872665</ProjectionAngularTolerance>
+	</PxD6Joint>
+	<PxD6Joint >
+		<Id >2232564032</Id>
+		<Actors >
+			<actor0 >2230330016</actor0>
+			<actor1 >2230330432</actor1>
+		</Actors>
+		<LocalPose >
+			<eACTOR0 >2.83567e-014 -5.35723e-015 0.102396 0.994744 6.79491 -4.76837e-007 -9.09495e-013</eACTOR0>
+			<eACTOR1 >6.50175e-010 -2.22185e-016 -2.86374e-029 1 -3.05176e-005 2.68221e-007 1.25056e-012</eACTOR1>
+		</LocalPose>
+		<BreakForce >
+			<force >3.40282e+038</force>
+			<torque >3.40282e+038</torque>
+		</BreakForce>
+		<ConstraintFlags >eVISUALIZATION</ConstraintFlags>
+		<Name >Bip01 Head UConstraint</Name>
+		<Motion >
+			<eX >eLOCKED</eX>
+			<eY >eLOCKED</eY>
+			<eZ >eLOCKED</eZ>
+			<eTWIST >eLIMITED</eTWIST>
+			<eSWING1 >eLIMITED</eSWING1>
+			<eSWING2 >eLIMITED</eSWING2>
+		</Motion>
+		<LinearLimit >
+			<Restitution >0</Restitution>
+			<Spring >0</Spring>
+			<Damping >0</Damping>
+			<ContactDistance >0.05</ContactDistance>
+			<Value >3.40282e+038</Value>
+		</LinearLimit>
+		<TwistLimit >
+			<Restitution >0</Restitution>
+			<Spring >0</Spring>
+			<Damping >0</Damping>
+			<ContactDistance >0.05</ContactDistance>
+			<Upper >1.5708</Upper>
+			<Lower >-1.5708</Lower>
+		</TwistLimit>
+		<SwingLimit >
+			<Restitution >0.1</Restitution>
+			<Spring >0</Spring>
+			<Damping >0</Damping>
+			<ContactDistance >0</ContactDistance>
+			<YAngle >0.523599</YAngle>
+			<ZAngle >0.523599</ZAngle>
+		</SwingLimit>
+		<Drive >
+			<eX >
+				<Spring >0</Spring>
+				<Damping >0</Damping>
+				<ForceLimit >0</ForceLimit>
+				<Flags >eACCELERATION</Flags>
+			</eX>
+			<eY >
+				<Spring >0</Spring>
+				<Damping >0</Damping>
+				<ForceLimit >0</ForceLimit>
+				<Flags >eACCELERATION</Flags>
+			</eY>
+			<eZ >
+				<Spring >0</Spring>
+				<Damping >0</Damping>
+				<ForceLimit >0</ForceLimit>
+				<Flags >eACCELERATION</Flags>
+			</eZ>
+			<eSWING >
+				<Spring >0</Spring>
+				<Damping >0</Damping>
+				<ForceLimit >0</ForceLimit>
+				<Flags >eACCELERATION</Flags>
+			</eSWING>
+			<eTWIST >
+				<Spring >0</Spring>
+				<Damping >0</Damping>
+				<ForceLimit >0</ForceLimit>
+				<Flags >eACCELERATION</Flags>
+			</eTWIST>
+			<eSLERP >
+				<Spring >0</Spring>
+				<Damping >0</Damping>
+				<ForceLimit >0</ForceLimit>
+			</eSLERP>
+		</Drive>
+		<DrivePosition >0 0 0 1 0 0 0</DrivePosition>
+		<DriveVelocity >
+			<linear >0 0 0</linear>
+			<angular >0 0 0</angular>
+		</DriveVelocity>
+		<ProjectionLinearTolerance >0.1</ProjectionLinearTolerance>
+		<ProjectionAngularTolerance >0.0872665</ProjectionAngularTolerance>
+	</PxD6Joint>
+	<PxD6Joint >
+		<Id >2232569152</Id>
+		<Actors >
+			<actor0 >2230330016</actor0>
+			<actor1 >2227466848</actor1>
+		</Actors>
+		<LocalPose >
+			<eACTOR0 >0.524794 -0.0683924 0.847443 -0.0418892 0 0.00540161 3.07861</eACTOR0>
+			<eACTOR1 >-1.55531e-007 2.23517e-008 -4.05125e-008 1 0 4.76837e-007 0</eACTOR1>
+		</LocalPose>
+		<BreakForce >
+			<force >3.40282e+038</force>
+			<torque >3.40282e+038</torque>
+		</BreakForce>
+		<ConstraintFlags >eVISUALIZATION</ConstraintFlags>
+		<Name >Bip01 L Clavicle UConstraint</Name>
+		<Motion >
+			<eX >eLOCKED</eX>
+			<eY >eLOCKED</eY>
+			<eZ >eLOCKED</eZ>
+			<eTWIST >eLOCKED</eTWIST>
+			<eSWING1 >eLOCKED</eSWING1>
+			<eSWING2 >eLOCKED</eSWING2>
+		</Motion>
+		<LinearLimit >
+			<Restitution >0</Restitution>
+			<Spring >0</Spring>
+			<Damping >0</Damping>
+			<ContactDistance >0.05</ContactDistance>
+			<Value >3.40282e+038</Value>
+		</LinearLimit>
+		<TwistLimit >
+			<Restitution >0</Restitution>
+			<Spring >0</Spring>
+			<Damping >0</Damping>
+			<ContactDistance >0.05</ContactDistance>
+			<Upper >1.5708</Upper>
+			<Lower >-1.5708</Lower>
+		</TwistLimit>
+		<SwingLimit >
+			<Restitution >0</Restitution>
+			<Spring >0</Spring>
+			<Damping >0</Damping>
+			<ContactDistance >0.05</ContactDistance>
+			<YAngle >1.5708</YAngle>
+			<ZAngle >1.5708</ZAngle>
+		</SwingLimit>
+		<Drive >
+			<eX >
+				<Spring >0</Spring>
+				<Damping >0</Damping>
+				<ForceLimit >0</ForceLimit>
+				<Flags >eACCELERATION</Flags>
+			</eX>
+			<eY >
+				<Spring >0</Spring>
+				<Damping >0</Damping>
+				<ForceLimit >0</ForceLimit>
+				<Flags >eACCELERATION</Flags>
+			</eY>
+			<eZ >
+				<Spring >0</Spring>
+				<Damping >0</Damping>
+				<ForceLimit >0</ForceLimit>
+				<Flags >eACCELERATION</Flags>
+			</eZ>
+			<eSWING >
+				<Spring >0</Spring>
+				<Damping >0</Damping>
+				<ForceLimit >0</ForceLimit>
+				<Flags >eACCELERATION</Flags>
+			</eSWING>
+			<eTWIST >
+				<Spring >0</Spring>
+				<Damping >0</Damping>
+				<ForceLimit >0</ForceLimit>
+				<Flags >eACCELERATION</Flags>
+			</eTWIST>
+			<eSLERP >
+				<Spring >0</Spring>
+				<Damping >0</Damping>
+				<ForceLimit >0</ForceLimit>
+			</eSLERP>
+		</Drive>
+		<DrivePosition >0 0 0 1 0 0 0</DrivePosition>
+		<DriveVelocity >
+			<linear >0 0 0</linear>
+			<angular >0 0 0</angular>
+		</DriveVelocity>
+		<ProjectionLinearTolerance >0.1</ProjectionLinearTolerance>
+		<ProjectionAngularTolerance >0.0872665</ProjectionAngularTolerance>
+	</PxD6Joint>
+	<PxD6Joint >
+		<Id >2232568192</Id>
+		<Actors >
+			<actor0 >2230330016</actor0>
+			<actor1 >2227470592</actor1>
+		</Actors>
+		<LocalPose >
+			<eACTOR0 >-0.516635 0.0687884 0.852442 -0.0412299 0 0.00541878 -3.07861</eACTOR0>
+			<eACTOR1 >-6.57514e-007 7.45058e-009 7.40401e-008 1 0 0 0</eACTOR1>
+		</LocalPose>
+		<BreakForce >
+			<force >3.40282e+038</force>
+			<torque >3.40282e+038</torque>
+		</BreakForce>
+		<ConstraintFlags >eVISUALIZATION</ConstraintFlags>
+		<Name >Bip01 R Clavicle UConstraint</Name>
+		<Motion >
+			<eX >eLOCKED</eX>
+			<eY >eLOCKED</eY>
+			<eZ >eLOCKED</eZ>
+			<eTWIST >eLOCKED</eTWIST>
+			<eSWING1 >eLOCKED</eSWING1>
+			<eSWING2 >eLOCKED</eSWING2>
+		</Motion>
+		<LinearLimit >
+			<Restitution >0</Restitution>
+			<Spring >0</Spring>
+			<Damping >0</Damping>
+			<ContactDistance >0.05</ContactDistance>
+			<Value >3.40282e+038</Value>
+		</LinearLimit>
+		<TwistLimit >
+			<Restitution >0</Restitution>
+			<Spring >0</Spring>
+			<Damping >0</Damping>
+			<ContactDistance >0.05</ContactDistance>
+			<Upper >1.5708</Upper>
+			<Lower >-1.5708</Lower>
+		</TwistLimit>
+		<SwingLimit >
+			<Restitution >0</Restitution>
+			<Spring >0</Spring>
+			<Damping >0</Damping>
+			<ContactDistance >0.05</ContactDistance>
+			<YAngle >1.5708</YAngle>
+			<ZAngle >1.5708</ZAngle>
+		</SwingLimit>
+		<Drive >
+			<eX >
+				<Spring >0</Spring>
+				<Damping >0</Damping>
+				<ForceLimit >0</ForceLimit>
+				<Flags >eACCELERATION</Flags>
+			</eX>
+			<eY >
+				<Spring >0</Spring>
+				<Damping >0</Damping>
+				<ForceLimit >0</ForceLimit>
+				<Flags >eACCELERATION</Flags>
+			</eY>
+			<eZ >
+				<Spring >0</Spring>
+				<Damping >0</Damping>
+				<ForceLimit >0</ForceLimit>
+				<Flags >eACCELERATION</Flags>
+			</eZ>
+			<eSWING >
+				<Spring >0</Spring>
+				<Damping >0</Damping>
+				<ForceLimit >0</ForceLimit>
+				<Flags >eACCELERATION</Flags>
+			</eSWING>
+			<eTWIST >
+				<Spring >0</Spring>
+				<Damping >0</Damping>
+				<ForceLimit >0</ForceLimit>
+				<Flags >eACCELERATION</Flags>
+			</eTWIST>
+			<eSLERP >
+				<Spring >0</Spring>
+				<Damping >0</Damping>
+				<ForceLimit >0</ForceLimit>
+			</eSLERP>
+		</Drive>
+		<DrivePosition >0 0 0 1 0 0 0</DrivePosition>
+		<DriveVelocity >
+			<linear >0 0 0</linear>
+			<angular >0 0 0</angular>
+		</DriveVelocity>
+		<ProjectionLinearTolerance >0.1</ProjectionLinearTolerance>
+		<ProjectionAngularTolerance >0.0872665</ProjectionAngularTolerance>
+	</PxD6Joint>
+	<PxD6Joint >
+		<Id >2232567872</Id>
+		<Actors >
+			<actor0 >2230344576</actor0>
+			<actor1 >2230330016</actor1>
+		</Actors>
+		<LocalPose >
+			<eACTOR0 >-8.67084e-014 1.77636e-015 9.31322e-010 1 33.6184 -0.00541019 -1.50067e-008</eACTOR0>
+			<eACTOR1 >-8.68194e-014 -1.77636e-015 -3.08445e-028 1 1.52588e-005 4.76837e-007 9.09495e-013</eACTOR1>
+		</LocalPose>
+		<BreakForce >
+			<force >3.40282e+038</force>
+			<torque >3.40282e+038</torque>
+		</BreakForce>
+		<ConstraintFlags >eVISUALIZATION</ConstraintFlags>
+		<Name >Bip01 Neck UConstraint</Name>
+		<Motion >
+			<eX >eLOCKED</eX>
+			<eY >eLOCKED</eY>
+			<eZ >eLOCKED</eZ>
+			<eTWIST >eLOCKED</eTWIST>
+			<eSWING1 >eLIMITED</eSWING1>
+			<eSWING2 >eLIMITED</eSWING2>
+		</Motion>
+		<LinearLimit >
+			<Restitution >0</Restitution>
+			<Spring >0</Spring>
+			<Damping >0</Damping>
+			<ContactDistance >0.05</ContactDistance>
+			<Value >3.40282e+038</Value>
+		</LinearLimit>
+		<TwistLimit >
+			<Restitution >0</Restitution>
+			<Spring >0</Spring>
+			<Damping >0</Damping>
+			<ContactDistance >0.05</ContactDistance>
+			<Upper >1.5708</Upper>
+			<Lower >-1.5708</Lower>
+		</TwistLimit>
+		<SwingLimit >
+			<Restitution >0.1</Restitution>
+			<Spring >0</Spring>
+			<Damping >0</Damping>
+			<ContactDistance >0</ContactDistance>
+			<YAngle >0.0872665</YAngle>
+			<ZAngle >0.0872665</ZAngle>
+		</SwingLimit>
+		<Drive >
+			<eX >
+				<Spring >0</Spring>
+				<Damping >0</Damping>
+				<ForceLimit >0</ForceLimit>
+				<Flags >eACCELERATION</Flags>
+			</eX>
+			<eY >
+				<Spring >0</Spring>
+				<Damping >0</Damping>
+				<ForceLimit >0</ForceLimit>
+				<Flags >eACCELERATION</Flags>
+			</eY>
+			<eZ >
+				<Spring >0</Spring>
+				<Damping >0</Damping>
+				<ForceLimit >0</ForceLimit>
+				<Flags >eACCELERATION</Flags>
+			</eZ>
+			<eSWING >
+				<Spring >0</Spring>
+				<Damping >0</Damping>
+				<ForceLimit >0</ForceLimit>
+				<Flags >eACCELERATION</Flags>
+			</eSWING>
+			<eTWIST >
+				<Spring >0</Spring>
+				<Damping >0</Damping>
+				<ForceLimit >0</ForceLimit>
+				<Flags >eACCELERATION</Flags>
+			</eTWIST>
+			<eSLERP >
+				<Spring >0</Spring>
+				<Damping >0</Damping>
+				<ForceLimit >0</ForceLimit>
+			</eSLERP>
+		</Drive>
+		<DrivePosition >0 0 0 1 0 0 0</DrivePosition>
+		<DriveVelocity >
+			<linear >0 0 0</linear>
+			<angular >0 0 0</angular>
+		</DriveVelocity>
+		<ProjectionLinearTolerance >0.1</ProjectionLinearTolerance>
+		<ProjectionAngularTolerance >0.0872665</ProjectionAngularTolerance>
+	</PxD6Joint>
+	<PxD6Joint >
+		<Id >2232569312</Id>
+		<Actors >
+			<actor0 >2230336256</actor0>
+			<actor1 >2230344576</actor1>
+		</Actors>
+		<LocalPose >
+			<eACTOR0 >4.38535e-008 1.62882e-007 -0.000872329 1 9.40993 -0.0267298 -7.41379e-008</eACTOR0>
+			<eACTOR1 >3.71541e-008 -1.06581e-014 9.31322e-010 1 0 0 0</eACTOR1>
+		</LocalPose>
+		<BreakForce >
+			<force >3.40282e+038</force>
+			<torque >3.40282e+038</torque>
+		</BreakForce>
+		<ConstraintFlags >eVISUALIZATION</ConstraintFlags>
+		<Name >Bip01 Spine1 UConstraint</Name>
+		<Motion >
+			<eX >eLOCKED</eX>
+			<eY >eLOCKED</eY>
+			<eZ >eLOCKED</eZ>
+			<eTWIST >eLIMITED</eTWIST>
+			<eSWING1 >eLIMITED</eSWING1>
+			<eSWING2 >eLIMITED</eSWING2>
+		</Motion>
+		<LinearLimit >
+			<Restitution >0</Restitution>
+			<Spring >0</Spring>
+			<Damping >0</Damping>
+			<ContactDistance >0.05</ContactDistance>
+			<Value >3.40282e+038</Value>
+		</LinearLimit>
+		<TwistLimit >
+			<Restitution >0</Restitution>
+			<Spring >0</Spring>
+			<Damping >0</Damping>
+			<ContactDistance >0.05</ContactDistance>
+			<Upper >1.5708</Upper>
+			<Lower >-1.5708</Lower>
+		</TwistLimit>
+		<SwingLimit >
+			<Restitution >0.1</Restitution>
+			<Spring >0</Spring>
+			<Damping >0</Damping>
+			<ContactDistance >0</ContactDistance>
+			<YAngle >0.0872665</YAngle>
+			<ZAngle >0.0872665</ZAngle>
+		</SwingLimit>
+		<Drive >
+			<eX >
+				<Spring >0</Spring>
+				<Damping >0</Damping>
+				<ForceLimit >0</ForceLimit>
+				<Flags >eACCELERATION</Flags>
+			</eX>
+			<eY >
+				<Spring >0</Spring>
+				<Damping >0</Damping>
+				<ForceLimit >0</ForceLimit>
+				<Flags >eACCELERATION</Flags>
+			</eY>
+			<eZ >
+				<Spring >0</Spring>
+				<Damping >0</Damping>
+				<ForceLimit >0</ForceLimit>
+				<Flags >eACCELERATION</Flags>
+			</eZ>
+			<eSWING >
+				<Spring >0</Spring>
+				<Damping >0</Damping>
+				<ForceLimit >0</ForceLimit>
+				<Flags >eACCELERATION</Flags>
+			</eSWING>
+			<eTWIST >
+				<Spring >0</Spring>
+				<Damping >0</Damping>
+				<ForceLimit >0</ForceLimit>
+				<Flags >eACCELERATION</Flags>
+			</eTWIST>
+			<eSLERP >
+				<Spring >0</Spring>
+				<Damping >0</Damping>
+				<ForceLimit >0</ForceLimit>
+			</eSLERP>
+		</Drive>
+		<DrivePosition >0 0 0 1 0 0 0</DrivePosition>
+		<DriveVelocity >
+			<linear >0 0 0</linear>
+			<angular >0 0 0</angular>
+		</DriveVelocity>
+		<ProjectionLinearTolerance >0.1</ProjectionLinearTolerance>
+		<ProjectionAngularTolerance >0.0872665</ProjectionAngularTolerance>
+	</PxD6Joint>
+	<PxD6Joint >
+		<Id >2232563552</Id>
+		<Actors >
+			<actor0 >2227470176</actor0>
+			<actor1 >2227468096</actor1>
+		</Actors>
+		<LocalPose >
+			<eACTOR0 >6.16333e-008 4.76579e-009 0.759517 0.650487 10.1154 11.9671 0</eACTOR0>
+			<eACTOR1 >4.37114e-008 4.49356e-014 -2.68605e-021 1 9.53674e-007 -4.76837e-007 0</eACTOR1>
+		</LocalPose>
+		<BreakForce >
+			<force >3.40282e+038</force>
+			<torque >3.40282e+038</torque>
+		</BreakForce>
+		<ConstraintFlags >eVISUALIZATION</ConstraintFlags>
+		<Name >Bip01 L Toe0 UConstraint</Name>
+		<Motion >
+			<eX >eLOCKED</eX>
+			<eY >eLOCKED</eY>
+			<eZ >eLOCKED</eZ>
+			<eTWIST >eLOCKED</eTWIST>
+			<eSWING1 >eLIMITED</eSWING1>
+			<eSWING2 >eLIMITED</eSWING2>
+		</Motion>
+		<LinearLimit >
+			<Restitution >0</Restitution>
+			<Spring >0</Spring>
+			<Damping >0</Damping>
+			<ContactDistance >0.05</ContactDistance>
+			<Value >3.40282e+038</Value>
+		</LinearLimit>
+		<TwistLimit >
+			<Restitution >0</Restitution>
+			<Spring >0</Spring>
+			<Damping >0</Damping>
+			<ContactDistance >0.05</ContactDistance>
+			<Upper >1.5708</Upper>
+			<Lower >-1.5708</Lower>
+		</TwistLimit>
+		<SwingLimit >
+			<Restitution >0.1</Restitution>
+			<Spring >0</Spring>
+			<Damping >0</Damping>
+			<ContactDistance >0</ContactDistance>
+			<YAngle >0.261799</YAngle>
+			<ZAngle >0.261799</ZAngle>
+		</SwingLimit>
+		<Drive >
+			<eX >
+				<Spring >0</Spring>
+				<Damping >0</Damping>
+				<ForceLimit >0</ForceLimit>
+				<Flags >eACCELERATION</Flags>
+			</eX>
+			<eY >
+				<Spring >0</Spring>
+				<Damping >0</Damping>
+				<ForceLimit >0</ForceLimit>
+				<Flags >eACCELERATION</Flags>
+			</eY>
+			<eZ >
+				<Spring >0</Spring>
+				<Damping >0</Damping>
+				<ForceLimit >0</ForceLimit>
+				<Flags >eACCELERATION</Flags>
+			</eZ>
+			<eSWING >
+				<Spring >0</Spring>
+				<Damping >0</Damping>
+				<ForceLimit >0</ForceLimit>
+				<Flags >eACCELERATION</Flags>
+			</eSWING>
+			<eTWIST >
+				<Spring >0</Spring>
+				<Damping >0</Damping>
+				<ForceLimit >0</ForceLimit>
+				<Flags >eACCELERATION</Flags>
+			</eTWIST>
+			<eSLERP >
+				<Spring >0</Spring>
+				<Damping >0</Damping>
+				<ForceLimit >0</ForceLimit>
+			</eSLERP>
+		</Drive>
+		<DrivePosition >0 0 0 1 0 0 0</DrivePosition>
+		<DriveVelocity >
+			<linear >0 0 0</linear>
+			<angular >0 0 0</angular>
+		</DriveVelocity>
+		<ProjectionLinearTolerance >0.1</ProjectionLinearTolerance>
+		<ProjectionAngularTolerance >0.0872665</ProjectionAngularTolerance>
+	</PxD6Joint>
+	<PxD6Joint >
+		<Id >2232564192</Id>
+		<Actors >
+			<actor0 >1586820736</actor0>
+			<actor1 >2227470176</actor1>
+		</Actors>
+		<LocalPose >
+			<eACTOR0 >-5.20726e-009 8.72675e-008 0.0595636 0.998225 41.8858 2.38419e-007 9.53674e-007</eACTOR0>
+			<eACTOR1 >4.37115e-008 -1.69407e-021 1.481e-028 1 0 3.35276e-008 0</eACTOR1>
+		</LocalPose>
+		<BreakForce >
+			<force >3.40282e+038</force>
+			<torque >3.40282e+038</torque>
+		</BreakForce>
+		<ConstraintFlags >eVISUALIZATION</ConstraintFlags>
+		<Name >Bip01 L Foot UConstraint</Name>
+		<Motion >
+			<eX >eLOCKED</eX>
+			<eY >eLOCKED</eY>
+			<eZ >eLOCKED</eZ>
+			<eTWIST >eLOCKED</eTWIST>
+			<eSWING1 >eLIMITED</eSWING1>
+			<eSWING2 >eLIMITED</eSWING2>
+		</Motion>
+		<LinearLimit >
+			<Restitution >0</Restitution>
+			<Spring >0</Spring>
+			<Damping >0</Damping>
+			<ContactDistance >0.05</ContactDistance>
+			<Value >3.40282e+038</Value>
+		</LinearLimit>
+		<TwistLimit >
+			<Restitution >0</Restitution>
+			<Spring >0</Spring>
+			<Damping >0</Damping>
+			<ContactDistance >0.05</ContactDistance>
+			<Upper >1.5708</Upper>
+			<Lower >-1.5708</Lower>
+		</TwistLimit>
+		<SwingLimit >
+			<Restitution >0.1</Restitution>
+			<Spring >0</Spring>
+			<Damping >0</Damping>
+			<ContactDistance >0</ContactDistance>
+			<YAngle >0.261799</YAngle>
+			<ZAngle >0.261799</ZAngle>
+		</SwingLimit>
+		<Drive >
+			<eX >
+				<Spring >0</Spring>
+				<Damping >0</Damping>
+				<ForceLimit >0</ForceLimit>
+				<Flags >eACCELERATION</Flags>
+			</eX>
+			<eY >
+				<Spring >0</Spring>
+				<Damping >0</Damping>
+				<ForceLimit >0</ForceLimit>
+				<Flags >eACCELERATION</Flags>
+			</eY>
+			<eZ >
+				<Spring >0</Spring>
+				<Damping >0</Damping>
+				<ForceLimit >0</ForceLimit>
+				<Flags >eACCELERATION</Flags>
+			</eZ>
+			<eSWING >
+				<Spring >0</Spring>
+				<Damping >0</Damping>
+				<ForceLimit >0</ForceLimit>
+				<Flags >eACCELERATION</Flags>
+			</eSWING>
+			<eTWIST >
+				<Spring >0</Spring>
+				<Damping >0</Damping>
+				<ForceLimit >0</ForceLimit>
+				<Flags >eACCELERATION</Flags>
+			</eTWIST>
+			<eSLERP >
+				<Spring >0</Spring>
+				<Damping >0</Damping>
+				<ForceLimit >0</ForceLimit>
+			</eSLERP>
+		</Drive>
+		<DrivePosition >0 0 0 1 0 0 0</DrivePosition>
+		<DriveVelocity >
+			<linear >0 0 0</linear>
+			<angular >0 0 0</angular>
+		</DriveVelocity>
+		<ProjectionLinearTolerance >0.1</ProjectionLinearTolerance>
+		<ProjectionAngularTolerance >0.0872665</ProjectionAngularTolerance>
+	</PxD6Joint>
+	<PxD6Joint >
+		<Id >2232565472</Id>
+		<Actors >
+			<actor0 >1586820320</actor0>
+			<actor1 >1586820736</actor1>
+		</Actors>
+		<LocalPose >
+			<eACTOR0 >0.0705919 0.703574 -0.0705919 0.703574 45.7393 9.53674e-007 -1.90735e-006</eACTOR0>
+			<eACTOR1 >-9.03523e-007 0.707107 9.03523e-007 0.707107 3.8147e-006 9.53674e-007 -9.53674e-007</eACTOR1>
+		</LocalPose>
+		<BreakForce >
+			<force >3.40282e+038</force>
+			<torque >3.40282e+038</torque>
+		</BreakForce>
+		<ConstraintFlags >eVISUALIZATION</ConstraintFlags>
+		<Name >Bip01 L Calf UConstraint</Name>
+		<Motion >
+			<eX >eLOCKED</eX>
+			<eY >eLOCKED</eY>
+			<eZ >eLOCKED</eZ>
+			<eTWIST >eLIMITED</eTWIST>
+			<eSWING1 >eLOCKED</eSWING1>
+			<eSWING2 >eLOCKED</eSWING2>
+		</Motion>
+		<LinearLimit >
+			<Restitution >0</Restitution>
+			<Spring >0</Spring>
+			<Damping >0</Damping>
+			<ContactDistance >0.05</ContactDistance>
+			<Value >3.40282e+038</Value>
+		</LinearLimit>
+		<TwistLimit >
+			<Restitution >0</Restitution>
+			<Spring >0</Spring>
+			<Damping >0</Damping>
+			<ContactDistance >0.05</ContactDistance>
+			<Upper >2.61799</Upper>
+			<Lower >0</Lower>
+		</TwistLimit>
+		<SwingLimit >
+			<Restitution >0</Restitution>
+			<Spring >0</Spring>
+			<Damping >0</Damping>
+			<ContactDistance >0.05</ContactDistance>
+			<YAngle >1.5708</YAngle>
+			<ZAngle >1.5708</ZAngle>
+		</SwingLimit>
+		<Drive >
+			<eX >
+				<Spring >0</Spring>
+				<Damping >0</Damping>
+				<ForceLimit >0</ForceLimit>
+				<Flags >eACCELERATION</Flags>
+			</eX>
+			<eY >
+				<Spring >0</Spring>
+				<Damping >0</Damping>
+				<ForceLimit >0</ForceLimit>
+				<Flags >eACCELERATION</Flags>
+			</eY>
+			<eZ >
+				<Spring >0</Spring>
+				<Damping >0</Damping>
+				<ForceLimit >0</ForceLimit>
+				<Flags >eACCELERATION</Flags>
+			</eZ>
+			<eSWING >
+				<Spring >0</Spring>
+				<Damping >0</Damping>
+				<ForceLimit >0</ForceLimit>
+				<Flags >eACCELERATION</Flags>
+			</eSWING>
+			<eTWIST >
+				<Spring >0</Spring>
+				<Damping >0</Damping>
+				<ForceLimit >0</ForceLimit>
+				<Flags >eACCELERATION</Flags>
+			</eTWIST>
+			<eSLERP >
+				<Spring >0</Spring>
+				<Damping >0</Damping>
+				<ForceLimit >0</ForceLimit>
+			</eSLERP>
+		</Drive>
+		<DrivePosition >0 0 0 1 0 0 0</DrivePosition>
+		<DriveVelocity >
+			<linear >0 0 0</linear>
+			<angular >0 0 0</angular>
+		</DriveVelocity>
+		<ProjectionLinearTolerance >0.1</ProjectionLinearTolerance>
+		<ProjectionAngularTolerance >0.0872665</ProjectionAngularTolerance>
+	</PxD6Joint>
+	<PxD6Joint >
+		<Id >2232564352</Id>
+		<Actors >
+			<actor0 >2232684608</actor0>
+			<actor1 >2232690016</actor1>
+		</Actors>
+		<LocalPose >
+			<eACTOR0 >6.16378e-008 4.70703e-009 0.758897 0.651211 10.1154 11.9671 0</eACTOR0>
+			<eACTOR1 >4.37114e-008 5.82756e-015 7.45058e-009 1 -9.53674e-007 -4.76837e-007 0</eACTOR1>
+		</LocalPose>
+		<BreakForce >
+			<force >3.40282e+038</force>
+			<torque >3.40282e+038</torque>
+		</BreakForce>
+		<ConstraintFlags >eVISUALIZATION</ConstraintFlags>
+		<Name >Bip01 R Toe0 UConstraint</Name>
+		<Motion >
+			<eX >eLOCKED</eX>
+			<eY >eLOCKED</eY>
+			<eZ >eLOCKED</eZ>
+			<eTWIST >eLOCKED</eTWIST>
+			<eSWING1 >eLIMITED</eSWING1>
+			<eSWING2 >eLIMITED</eSWING2>
+		</Motion>
+		<LinearLimit >
+			<Restitution >0</Restitution>
+			<Spring >0</Spring>
+			<Damping >0</Damping>
+			<ContactDistance >0.05</ContactDistance>
+			<Value >3.40282e+038</Value>
+		</LinearLimit>
+		<TwistLimit >
+			<Restitution >0</Restitution>
+			<Spring >0</Spring>
+			<Damping >0</Damping>
+			<ContactDistance >0.05</ContactDistance>
+			<Upper >1.5708</Upper>
+			<Lower >-1.5708</Lower>
+		</TwistLimit>
+		<SwingLimit >
+			<Restitution >0.1</Restitution>
+			<Spring >0</Spring>
+			<Damping >0</Damping>
+			<ContactDistance >0</ContactDistance>
+			<YAngle >0.261799</YAngle>
+			<ZAngle >0.261799</ZAngle>
+		</SwingLimit>
+		<Drive >
+			<eX >
+				<Spring >0</Spring>
+				<Damping >0</Damping>
+				<ForceLimit >0</ForceLimit>
+				<Flags >eACCELERATION</Flags>
+			</eX>
+			<eY >
+				<Spring >0</Spring>
+				<Damping >0</Damping>
+				<ForceLimit >0</ForceLimit>
+				<Flags >eACCELERATION</Flags>
+			</eY>
+			<eZ >
+				<Spring >0</Spring>
+				<Damping >0</Damping>
+				<ForceLimit >0</ForceLimit>
+				<Flags >eACCELERATION</Flags>
+			</eZ>
+			<eSWING >
+				<Spring >0</Spring>
+				<Damping >0</Damping>
+				<ForceLimit >0</ForceLimit>
+				<Flags >eACCELERATION</Flags>
+			</eSWING>
+			<eTWIST >
+				<Spring >0</Spring>
+				<Damping >0</Damping>
+				<ForceLimit >0</ForceLimit>
+				<Flags >eACCELERATION</Flags>
+			</eTWIST>
+			<eSLERP >
+				<Spring >0</Spring>
+				<Damping >0</Damping>
+				<ForceLimit >0</ForceLimit>
+			</eSLERP>
+		</Drive>
+		<DrivePosition >0 0 0 1 0 0 0</DrivePosition>
+		<DriveVelocity >
+			<linear >0 0 0</linear>
+			<angular >0 0 0</angular>
+		</DriveVelocity>
+		<ProjectionLinearTolerance >0.1</ProjectionLinearTolerance>
+		<ProjectionAngularTolerance >0.0872665</ProjectionAngularTolerance>
+	</PxD6Joint>
+	<PxD6Joint >
+		<Id >2232564992</Id>
+		<Actors >
+			<actor0 >2232693760</actor0>
+			<actor1 >2232684608</actor1>
+		</Actors>
+		<LocalPose >
+			<eACTOR0 >4.36341e-008 2.60363e-009 0.0595636 0.998225 41.8858 -3.57628e-007 0</eACTOR0>
+			<eACTOR1 >4.54747e-013 -1.69407e-021 1.54074e-033 1 3.8147e-006 -2.04891e-007 0</eACTOR1>
+		</LocalPose>
+		<BreakForce >
+			<force >3.40282e+038</force>
+			<torque >3.40282e+038</torque>
+		</BreakForce>
+		<ConstraintFlags >eVISUALIZATION</ConstraintFlags>
+		<Name >Bip01 R Foot UConstraint</Name>
+		<Motion >
+			<eX >eLOCKED</eX>
+			<eY >eLOCKED</eY>
+			<eZ >eLOCKED</eZ>
+			<eTWIST >eLOCKED</eTWIST>
+			<eSWING1 >eLIMITED</eSWING1>
+			<eSWING2 >eLIMITED</eSWING2>
+		</Motion>
+		<LinearLimit >
+			<Restitution >0</Restitution>
+			<Spring >0</Spring>
+			<Damping >0</Damping>
+			<ContactDistance >0.05</ContactDistance>
+			<Value >3.40282e+038</Value>
+		</LinearLimit>
+		<TwistLimit >
+			<Restitution >0</Restitution>
+			<Spring >0</Spring>
+			<Damping >0</Damping>
+			<ContactDistance >0.05</ContactDistance>
+			<Upper >1.5708</Upper>
+			<Lower >-1.5708</Lower>
+		</TwistLimit>
+		<SwingLimit >
+			<Restitution >0.1</Restitution>
+			<Spring >0</Spring>
+			<Damping >0</Damping>
+			<ContactDistance >0</ContactDistance>
+			<YAngle >0.261799</YAngle>
+			<ZAngle >0.261799</ZAngle>
+		</SwingLimit>
+		<Drive >
+			<eX >
+				<Spring >0</Spring>
+				<Damping >0</Damping>
+				<ForceLimit >0</ForceLimit>
+				<Flags >eACCELERATION</Flags>
+			</eX>
+			<eY >
+				<Spring >0</Spring>
+				<Damping >0</Damping>
+				<ForceLimit >0</ForceLimit>
+				<Flags >eACCELERATION</Flags>
+			</eY>
+			<eZ >
+				<Spring >0</Spring>
+				<Damping >0</Damping>
+				<ForceLimit >0</ForceLimit>
+				<Flags >eACCELERATION</Flags>
+			</eZ>
+			<eSWING >
+				<Spring >0</Spring>
+				<Damping >0</Damping>
+				<ForceLimit >0</ForceLimit>
+				<Flags >eACCELERATION</Flags>
+			</eSWING>
+			<eTWIST >
+				<Spring >0</Spring>
+				<Damping >0</Damping>
+				<ForceLimit >0</ForceLimit>
+				<Flags >eACCELERATION</Flags>
+			</eTWIST>
+			<eSLERP >
+				<Spring >0</Spring>
+				<Damping >0</Damping>
+				<ForceLimit >0</ForceLimit>
+			</eSLERP>
+		</Drive>
+		<DrivePosition >0 0 0 1 0 0 0</DrivePosition>
+		<DriveVelocity >
+			<linear >0 0 0</linear>
+			<angular >0 0 0</angular>
+		</DriveVelocity>
+		<ProjectionLinearTolerance >0.1</ProjectionLinearTolerance>
+		<ProjectionAngularTolerance >0.0872665</ProjectionAngularTolerance>
+	</PxD6Joint>
+	<PxD6Joint >
+		<Id >2232564672</Id>
+		<Actors >
+			<actor0 >1586953664</actor0>
+			<actor1 >2232693760</actor1>
+		</Actors>
+		<LocalPose >
+			<eACTOR0 >0.0705919 0.703574 -0.0705919 0.703574 45.7393 0 0</eACTOR0>
+			<eACTOR1 >-9.03523e-007 0.707107 9.03523e-007 0.707107 7.62939e-006 9.53674e-007 0</eACTOR1>
+		</LocalPose>
+		<BreakForce >
+			<force >3.40282e+038</force>
+			<torque >3.40282e+038</torque>
+		</BreakForce>
+		<ConstraintFlags >eVISUALIZATION</ConstraintFlags>
+		<Name >Bip01 R Calf UConstraint</Name>
+		<Motion >
+			<eX >eLOCKED</eX>
+			<eY >eLOCKED</eY>
+			<eZ >eLOCKED</eZ>
+			<eTWIST >eLIMITED</eTWIST>
+			<eSWING1 >eLOCKED</eSWING1>
+			<eSWING2 >eLOCKED</eSWING2>
+		</Motion>
+		<LinearLimit >
+			<Restitution >0</Restitution>
+			<Spring >0</Spring>
+			<Damping >0</Damping>
+			<ContactDistance >0.05</ContactDistance>
+			<Value >3.40282e+038</Value>
+		</LinearLimit>
+		<TwistLimit >
+			<Restitution >0</Restitution>
+			<Spring >0</Spring>
+			<Damping >0</Damping>
+			<ContactDistance >0.05</ContactDistance>
+			<Upper >2.61799</Upper>
+			<Lower >0</Lower>
+		</TwistLimit>
+		<SwingLimit >
+			<Restitution >0</Restitution>
+			<Spring >0</Spring>
+			<Damping >0</Damping>
+			<ContactDistance >0.05</ContactDistance>
+			<YAngle >1.5708</YAngle>
+			<ZAngle >1.5708</ZAngle>
+		</SwingLimit>
+		<Drive >
+			<eX >
+				<Spring >0</Spring>
+				<Damping >0</Damping>
+				<ForceLimit >0</ForceLimit>
+				<Flags >eACCELERATION</Flags>
+			</eX>
+			<eY >
+				<Spring >0</Spring>
+				<Damping >0</Damping>
+				<ForceLimit >0</ForceLimit>
+				<Flags >eACCELERATION</Flags>
+			</eY>
+			<eZ >
+				<Spring >0</Spring>
+				<Damping >0</Damping>
+				<ForceLimit >0</ForceLimit>
+				<Flags >eACCELERATION</Flags>
+			</eZ>
+			<eSWING >
+				<Spring >0</Spring>
+				<Damping >0</Damping>
+				<ForceLimit >0</ForceLimit>
+				<Flags >eACCELERATION</Flags>
+			</eSWING>
+			<eTWIST >
+				<Spring >0</Spring>
+				<Damping >0</Damping>
+				<ForceLimit >0</ForceLimit>
+				<Flags >eACCELERATION</Flags>
+			</eTWIST>
+			<eSLERP >
+				<Spring >0</Spring>
+				<Damping >0</Damping>
+				<ForceLimit >0</ForceLimit>
+			</eSLERP>
+		</Drive>
+		<DrivePosition >0 0 0 1 0 0 0</DrivePosition>
+		<DriveVelocity >
+			<linear >0 0 0</linear>
+			<angular >0 0 0</angular>
+		</DriveVelocity>
+		<ProjectionLinearTolerance >0.1</ProjectionLinearTolerance>
+		<ProjectionAngularTolerance >0.0872665</ProjectionAngularTolerance>
+	</PxD6Joint>
+	<PxD6Joint >
+		<Id >2232565312</Id>
+		<Actors >
+			<actor0 >2230332096</actor0>
+			<actor1 >2230336256</actor1>
+		</Actors>
+		<LocalPose >
+			<eACTOR0 >-2.11711e-006 -7.96095e-007 0.0379135 0.999281 10.1156 -0.00748742 1.40387e-005</eACTOR0>
+			<eACTOR1 >-9.10098e-009 2.13163e-014 0 1 0 0 -1.00044e-011</eACTOR1>
+		</LocalPose>
+		<BreakForce >
+			<force >3.40282e+038</force>
+			<torque >3.40282e+038</torque>
+		</BreakForce>
+		<ConstraintFlags >eVISUALIZATION</ConstraintFlags>
+		<Name >Bip01 Spine UConstraint</Name>
+		<Motion >
+			<eX >eLOCKED</eX>
+			<eY >eLOCKED</eY>
+			<eZ >eLOCKED</eZ>
+			<eTWIST >eLIMITED</eTWIST>
+			<eSWING1 >eLIMITED</eSWING1>
+			<eSWING2 >eLIMITED</eSWING2>
+		</Motion>
+		<LinearLimit >
+			<Restitution >0</Restitution>
+			<Spring >0</Spring>
+			<Damping >0</Damping>
+			<ContactDistance >0.05</ContactDistance>
+			<Value >3.40282e+038</Value>
+		</LinearLimit>
+		<TwistLimit >
+			<Restitution >0</Restitution>
+			<Spring >0</Spring>
+			<Damping >0</Damping>
+			<ContactDistance >0.05</ContactDistance>
+			<Upper >1.5708</Upper>
+			<Lower >-1.5708</Lower>
+		</TwistLimit>
+		<SwingLimit >
+			<Restitution >0.1</Restitution>
+			<Spring >0</Spring>
+			<Damping >0</Damping>
+			<ContactDistance >0</ContactDistance>
+			<YAngle >0.0872665</YAngle>
+			<ZAngle >0.0872665</ZAngle>
+		</SwingLimit>
+		<Drive >
+			<eX >
+				<Spring >0</Spring>
+				<Damping >0</Damping>
+				<ForceLimit >0</ForceLimit>
+				<Flags >eACCELERATION</Flags>
+			</eX>
+			<eY >
+				<Spring >0</Spring>
+				<Damping >0</Damping>
+				<ForceLimit >0</ForceLimit>
+				<Flags >eACCELERATION</Flags>
+			</eY>
+			<eZ >
+				<Spring >0</Spring>
+				<Damping >0</Damping>
+				<ForceLimit >0</ForceLimit>
+				<Flags >eACCELERATION</Flags>
+			</eZ>
+			<eSWING >
+				<Spring >0</Spring>
+				<Damping >0</Damping>
+				<ForceLimit >0</ForceLimit>
+				<Flags >eACCELERATION</Flags>
+			</eSWING>
+			<eTWIST >
+				<Spring >0</Spring>
+				<Damping >0</Damping>
+				<ForceLimit >0</ForceLimit>
+				<Flags >eACCELERATION</Flags>
+			</eTWIST>
+			<eSLERP >
+				<Spring >0</Spring>
+				<Damping >0</Damping>
+				<ForceLimit >0</ForceLimit>
+			</eSLERP>
+		</Drive>
+		<DrivePosition >0 0 0 1 0 0 0</DrivePosition>
+		<DriveVelocity >
+			<linear >0 0 0</linear>
+			<angular >0 0 0</angular>
+		</DriveVelocity>
+		<ProjectionLinearTolerance >0.1</ProjectionLinearTolerance>
+		<ProjectionAngularTolerance >0.0872665</ProjectionAngularTolerance>
+	</PxD6Joint>
+	<PxD6Joint >
+		<Id >2232568032</Id>
+		<Actors >
+			<actor0 >2230332096</actor0>
+			<actor1 >1586820320</actor1>
+		</Actors>
+		<LocalPose >
+			<eACTOR0 >0.0402363 0.995382 0.00351813 -0.0870837 -1.52588e-005 1.64509e-005 8.79603</eACTOR0>
+			<eACTOR1 >1.39824e-006 -5.16874e-009 -9.93508e-021 1 0 0 0</eACTOR1>
+		</LocalPose>
+		<BreakForce >
+			<force >3.40282e+038</force>
+			<torque >3.40282e+038</torque>
+		</BreakForce>
+		<ConstraintFlags >eVISUALIZATION</ConstraintFlags>
+		<Name >Bip01 L Thigh UConstraint</Name>
+		<Motion >
+			<eX >eLOCKED</eX>
+			<eY >eLOCKED</eY>
+			<eZ >eLOCKED</eZ>
+			<eTWIST >eLIMITED</eTWIST>
+			<eSWING1 >eLIMITED</eSWING1>
+			<eSWING2 >eLIMITED</eSWING2>
+		</Motion>
+		<LinearLimit >
+			<Restitution >0</Restitution>
+			<Spring >0</Spring>
+			<Damping >0</Damping>
+			<ContactDistance >0.05</ContactDistance>
+			<Value >3.40282e+038</Value>
+		</LinearLimit>
+		<TwistLimit >
+			<Restitution >0</Restitution>
+			<Spring >0</Spring>
+			<Damping >0</Damping>
+			<ContactDistance >0.05</ContactDistance>
+			<Upper >1.5708</Upper>
+			<Lower >-1.5708</Lower>
+		</TwistLimit>
+		<SwingLimit >
+			<Restitution >0.1</Restitution>
+			<Spring >0</Spring>
+			<Damping >0</Damping>
+			<ContactDistance >0</ContactDistance>
+			<YAngle >0.261799</YAngle>
+			<ZAngle >0.785398</ZAngle>
+		</SwingLimit>
+		<Drive >
+			<eX >
+				<Spring >0</Spring>
+				<Damping >0</Damping>
+				<ForceLimit >0</ForceLimit>
+				<Flags >eACCELERATION</Flags>
+			</eX>
+			<eY >
+				<Spring >0</Spring>
+				<Damping >0</Damping>
+				<ForceLimit >0</ForceLimit>
+				<Flags >eACCELERATION</Flags>
+			</eY>
+			<eZ >
+				<Spring >0</Spring>
+				<Damping >0</Damping>
+				<ForceLimit >0</ForceLimit>
+				<Flags >eACCELERATION</Flags>
+			</eZ>
+			<eSWING >
+				<Spring >0</Spring>
+				<Damping >0</Damping>
+				<ForceLimit >0</ForceLimit>
+				<Flags >eACCELERATION</Flags>
+			</eSWING>
+			<eTWIST >
+				<Spring >0</Spring>
+				<Damping >0</Damping>
+				<ForceLimit >0</ForceLimit>
+				<Flags >eACCELERATION</Flags>
+			</eTWIST>
+			<eSLERP >
+				<Spring >0</Spring>
+				<Damping >0</Damping>
+				<ForceLimit >0</ForceLimit>
+			</eSLERP>
+		</Drive>
+		<DrivePosition >0 0 0 1 0 0 0</DrivePosition>
+		<DriveVelocity >
+			<linear >0 0 0</linear>
+			<angular >0 0 0</angular>
+		</DriveVelocity>
+		<ProjectionLinearTolerance >0.1</ProjectionLinearTolerance>
+		<ProjectionAngularTolerance >0.0872665</ProjectionAngularTolerance>
+	</PxD6Joint>
+	<PxD6Joint >
+		<Id >2232568832</Id>
+		<Actors >
+			<actor0 >2230332096</actor0>
+			<actor1 >1586953664</actor1>
+		</Actors>
+		<LocalPose >
+			<eACTOR0 >0.0402364 0.995382 -0.00352219 0.0870853 1.52588e-005 -7.86781e-006 -8.79603</eACTOR0>
+			<eACTOR1 >1.37927e-006 1.08152e-009 -5.18375e-021 1 0 0 0</eACTOR1>
+		</LocalPose>
+		<BreakForce >
+			<force >3.40282e+038</force>
+			<torque >3.40282e+038</torque>
+		</BreakForce>
+		<ConstraintFlags >eVISUALIZATION</ConstraintFlags>
+		<Name >Bip01 R Thigh UConstraint</Name>
+		<Motion >
+			<eX >eLOCKED</eX>
+			<eY >eLOCKED</eY>
+			<eZ >eLOCKED</eZ>
+			<eTWIST >eLIMITED</eTWIST>
+			<eSWING1 >eLIMITED</eSWING1>
+			<eSWING2 >eLIMITED</eSWING2>
+		</Motion>
+		<LinearLimit >
+			<Restitution >0</Restitution>
+			<Spring >0</Spring>
+			<Damping >0</Damping>
+			<ContactDistance >0.05</ContactDistance>
+			<Value >3.40282e+038</Value>
+		</LinearLimit>
+		<TwistLimit >
+			<Restitution >0</Restitution>
+			<Spring >0</Spring>
+			<Damping >0</Damping>
+			<ContactDistance >0.05</ContactDistance>
+			<Upper >1.5708</Upper>
+			<Lower >-1.5708</Lower>
+		</TwistLimit>
+		<SwingLimit >
+			<Restitution >0.1</Restitution>
+			<Spring >0</Spring>
+			<Damping >0</Damping>
+			<ContactDistance >0</ContactDistance>
+			<YAngle >0.261799</YAngle>
+			<ZAngle >0.785398</ZAngle>
+		</SwingLimit>
+		<Drive >
+			<eX >
+				<Spring >0</Spring>
+				<Damping >0</Damping>
+				<ForceLimit >0</ForceLimit>
+				<Flags >eACCELERATION</Flags>
+			</eX>
+			<eY >
+				<Spring >0</Spring>
+				<Damping >0</Damping>
+				<ForceLimit >0</ForceLimit>
+				<Flags >eACCELERATION</Flags>
+			</eY>
+			<eZ >
+				<Spring >0</Spring>
+				<Damping >0</Damping>
+				<ForceLimit >0</ForceLimit>
+				<Flags >eACCELERATION</Flags>
+			</eZ>
+			<eSWING >
+				<Spring >0</Spring>
+				<Damping >0</Damping>
+				<ForceLimit >0</ForceLimit>
+				<Flags >eACCELERATION</Flags>
+			</eSWING>
+			<eTWIST >
+				<Spring >0</Spring>
+				<Damping >0</Damping>
+				<ForceLimit >0</ForceLimit>
+				<Flags >eACCELERATION</Flags>
+			</eTWIST>
+			<eSLERP >
+				<Spring >0</Spring>
+				<Damping >0</Damping>
+				<ForceLimit >0</ForceLimit>
+			</eSLERP>
+		</Drive>
+		<DrivePosition >0 0 0 1 0 0 0</DrivePosition>
+		<DriveVelocity >
+			<linear >0 0 0</linear>
+			<angular >0 0 0</angular>
+		</DriveVelocity>
+		<ProjectionLinearTolerance >0.1</ProjectionLinearTolerance>
+		<ProjectionAngularTolerance >0.0872665</ProjectionAngularTolerance>
+	</PxD6Joint>
+</PhysX30Collection>

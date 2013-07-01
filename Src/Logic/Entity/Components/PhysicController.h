@@ -128,6 +128,10 @@ namespace Logic {
 
 		unsigned int getDefaultFilterMask();
 
+		float getCapsuleRadius();
+
+		float getCapsuleHeight();
+
 	private:
 
 

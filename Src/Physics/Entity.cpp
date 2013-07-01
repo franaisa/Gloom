@@ -124,19 +124,18 @@ namespace Physics {
 								  *bufferCollection, *sceneCollection, userRefs);
 
 		// Añadir entidades físicas a la escena
-		_physxSDK->addCollection(*sceneCollection, *_scene); 
+		_physxSDK->addCollection(*sceneCollection, *_scene);
 
 		// Buscar una entidad de tipo PxRigidActor. Asumimos que hay exactamente 1 en el fichero.
 		PxRigidActor* actor = NULL;
-		for (unsigned int i=0; (i<sceneCollection->getNbObjects()) && !actor; i++) {
+		for (unsigned int i = 0; i < sceneCollection->getNbObjects() && !actor; ++i) {
 			PxSerializable* p = sceneCollection->getObject(i);
 			actor = p->is<PxRigidActor>();
-
 		}
 		assert(actor);
 
 		// Anotar el componente lógico asociado a la entidad física
-		actor->userData = (void*) component;
+		actor->userData = (void*)component;
 
 		// Establecer el grupo de colisión
 		PxSetGroup(*actor, group);

@@ -36,6 +36,7 @@ namespace Physics {
 
 namespace physx {
 	class PxActor;
+	class PxAggregate;
 	class PxAllocatorCallback;
 	class PxCapsuleController;
 	class PxController;
@@ -197,6 +198,16 @@ namespace Physics {
 		@param actor Actor físico asociado a la entidad.
 		 */
 		void destroyActor(physx::PxActor* actor);
+
+		//________________________________________________________________________
+
+		/**
+		Elimina un agregado de la escena junto con todos los actores asociados a dicho
+		agregado.
+
+		@param aggregate Agregado asociado a la entidad.
+		 */
+		void destroyAggregate(physx::PxAggregate* aggregate);
 
 
 		// =======================================================================
@@ -486,6 +497,15 @@ namespace Physics {
 		@return Puntero al sistema de cocinado de PhysX.
 		*/
 		physx::PxCooking* getCooking() const  { return _cooking; }
+
+		//________________________________________________________________________
+
+		/**
+		Devuelve un puntero a foundation.
+
+		@return Puntero a foundation.
+		*/
+		physx::PxFoundation* getFoundation() const { return _foundation; }
 
 		//________________________________________________________________________
 

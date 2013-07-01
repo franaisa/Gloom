@@ -11,6 +11,14 @@ Map = {
 		isPlayer = true,
 	},
 	
+	Gazpacho = {
+		type = "Screamer",
+		isPlayer = false,
+		position = {0.0, 0.0, 0.0},
+		model = "agent47.mesh",
+		physic_ragdoll = "media/models/agent47ragdoll.RepX",
+	},
+	
 	Jumper1 = {
 		type = "Jumper",
 		position = {-275.4,0.5,28.1},

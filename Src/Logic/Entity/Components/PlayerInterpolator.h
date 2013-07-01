@@ -123,6 +123,8 @@ namespace Logic {
 
 		void interpolateSnapshot(const std::vector<Matrix4>& buffer);
 
+		void storeSnapshot(const std::shared_ptr<CMessagePlayerSnapshot>& snapshotMsg);
+
 		// =======================================================================
 		//                          MIEMBROS PRIVADOS
 		// =======================================================================

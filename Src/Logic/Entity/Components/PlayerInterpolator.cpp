@@ -12,6 +12,8 @@
 #include "PlayerInterpolator.h"
 #include "PhysicController.h"
 
+#include "Physics/Server.h"
+
 // Map
 #include "Logic/Maps/Map.h"
 #include "Map/MapEntity.h"
@@ -65,7 +67,9 @@ namespace Logic {
 	//__________________________________________________________________
 
 	bool CPlayerInterpolator::accept(const shared_ptr<CMessage>& message) {
-		return message->getMessageType() == Message::PLAYER_SNAPSHOT;
+		TMessageType msgType = message->getMessageType();
+
+		return msgType == Message::PLAYER_SNAPSHOT;
 	}
 
 	//__________________________________________________________________
@@ -96,8 +100,17 @@ namespace Logic {
 	//__________________________________________________________________
 
 	void CPlayerInterpolator::process(const shared_ptr<CMessage>& message) {
-		shared_ptr<CMessagePlayerSnapshot> snapshotMsg = static_pointer_cast<CMessagePlayerSnapshot>(message);
-		
+		switch( message->getMessageType() ) {
+			case Message::PLAYER_SNAPSHOT: {
+				storeSnapshot( static_pointer_cast<CMessagePlayerSnapshot>(message) );
+				break;
+			}
+		}
+	}
+
+	//__________________________________________________________________
+
+	void CPlayerInterpolator::storeSnapshot(const shared_ptr<CMessagePlayerSnapshot>& snapshotMsg) {
 		interpolateSnapshot( snapshotMsg->getTransformBuffer() );
 
 		if(_connecting) {
@@ -145,6 +158,7 @@ namespace Logic {
 
 			Matrix4 newTransform = _transformBuffer.front();
 			Vector3 newPosition = newTransform.getTrans();
+
 			_extrapolatedMotion = newPosition - _entity->getPosition();
 
 			_controller->setPhysicPosition( newPosition );
@@ -201,11 +215,16 @@ namespace Logic {
 			if(!_connecting) {
 				++_lostTicks;
 				
-				if( _extrapolatedTicks < 2) {
-					_controller->setPhysicPosition( _entity->getPosition() + _extrapolatedMotion );
+				if( _extrapolatedTicks < 2 ) {
+					Vector3 newPosition = _entity->getPosition() + _extrapolatedMotion;
+					Physics::CapsuleGeometry controllerGeometry = Physics::CapsuleGeometry( _controller->getCapsuleRadius(), _controller->getCapsuleHeight() / 2.0f );
+
+					if( !Physics::CServer::getSingletonPtr()->overlapAny( controllerGeometry, newPosition ) ) {
+						_controller->setPhysicPosition( newPosition );
 					
-					if( ++_extrapolatedTicks == 2 )
-						_extrapolatedMotion = Vector3::ZERO;
+						if( ++_extrapolatedTicks == 2 )
+							_extrapolatedMotion = Vector3::ZERO;
+					}
 				}
 			}
 		}

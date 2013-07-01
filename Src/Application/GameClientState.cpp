@@ -279,13 +279,14 @@ namespace Application {
 	bool CGameClientState::keyReleased(Input::TKey key) {
 		switch(key.keyId) {
 			case Input::Key::ESCAPE: {
-				if(_seleccion->getVisibility()){
+				if( _seleccion->getVisibility() ) {
 					_seleccion->hide();
-					break;
+				}
+				else {
+					disconnect();
+					_app->setState("menu");
 				}
 
-				disconnect();
-				_app->setState("menu");
 				break;
 			}
 			default: {

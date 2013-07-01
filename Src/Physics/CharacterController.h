@@ -28,6 +28,10 @@ namespace physx {
 	class PxControllerManager;
 	class PxScene;
 	class PxPhysics;
+	class PxRigidActor;
+	class PxAggregate;
+	class PxCooking;
+	class PxStringTable;
 }
 
 namespace Physics {
@@ -36,6 +40,7 @@ namespace Physics {
 
 namespace Logic {
 	class CPhysicController;
+	class IPhysics;
 }
 
 namespace Physics {
@@ -89,6 +94,20 @@ namespace Physics {
 		//                            METODOS PROPIOS
 		// =======================================================================
 
+
+		/**
+		Deserializa los datos de un fichero y los asigna al controlador del jugador.
+
+		Este método debería ser utilizado para cargar ragdolls o hitboxes.
+
+		@param file Fichero desde el que se van a leer los datos.
+		@param group Grupo de colisión que queremos asignar al actor.
+		@param groupList Grupos de colisión con los que el actor quiere interactuar.
+		@param component Componente lógico asociado.
+		*/
+		void loadRagdoll(const std::string &file, int group, const std::vector<int>& groupList, const Logic::IPhysics* component);
+
+		//__________________________________________________________________
 
 		/**
 		Método que se encarga de inicializar por completo el controlador. El
@@ -166,6 +185,14 @@ namespace Physics {
 
 		//__________________________________________________________________
 
+		float getCapsuleRadius();
+
+		//__________________________________________________________________
+
+		float getCapsuleHeight();
+
+		//__________________________________________________________________
+
 		/** Activa la simulación física de la cápsula. */
 		void activateSimulation();
 
@@ -178,12 +205,31 @@ namespace Physics {
 
 
 		// =======================================================================
+		//                          MÉTODOS PRIVADOS
+		// =======================================================================
+
+
+		/** 
+		Método para construir un actor de PhysX a partir de un fichero RepX.
+
+		@param file Fichero desde el que se van a leer los datos.
+		@param group Grupo de colisión que queremos asignar al actor.
+		@param groupList Grupos de colisión con los que el actor quiere interactuar.
+		@param component Componente lógico asociado.
+		*/
+		physx::PxRigidActor* deserializeFromRepXFile(const std::string &file, int group, const std::vector<int>& groupList, const Logic::IPhysics* component);
+
+
+		// =======================================================================
 		//                          MIEMBROS PRIVADOS
 		// =======================================================================
 
 
 		/** Controlador de la cápsula del controller. */
 		physx::PxCapsuleController* _controller;
+
+		/** Agregado que contiene todos los actores y articulaciones que pertenecen al ragdoll. */
+		physx::PxAggregate* _ragdoll;
 
 		/** Gestor de controladores en PhysX. */
 		physx::PxControllerManager* _controllerManager;
@@ -196,6 +242,9 @@ namespace Physics {
 
 		/** Puntero al gestor de colisiones */
 		CCollisionManager* _collisionManager;
+
+		/** Puntero al cocinado de PhysX. */
+		physx::PxCooking* _cooking;
 
 		/** Mascara de filtros asignados al controlador de capsula. */
 		physx::PxU32 _filterMask;
