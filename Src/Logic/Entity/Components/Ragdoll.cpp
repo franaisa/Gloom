@@ -144,7 +144,7 @@ void CRagdoll::onStart() {
 
 		if( boneList[i]->isRigidDynamic() ) {
 			physx::PxRigidDynamic* dyn = static_cast<physx::PxRigidDynamic*>(boneList[i]);
-			//dyn->setGlobalPose( physx::PxTransform( Vector3ToPxVec3(position) ) );
+			//dyn->setGlobalPose( physx::PxTransform( Vector3ToPxVec3(position), QuaternionToPxQuat(orientation) ) );
 			//dyn->setRigidDynamicFlag(physx::PxRigidDynamicFlag::eKINEMATIC, false);
 		}
 	}

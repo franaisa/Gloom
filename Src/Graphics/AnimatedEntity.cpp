@@ -275,15 +275,39 @@ namespace Graphics
 	}
 
 	Quaternion CAnimatedEntity::getBoneOrientation(const std::string& boneName) {
+		Ogre::SceneNode *parent = _entityNode;
 		Ogre::Bone* bone = _skeleton->getBone(boneName);
+		Ogre::Quaternion parentQuat = parent->_getDerivedOrientation();
+		Ogre::Vector3 parentPos = parent->_getDerivedPosition();
+		Ogre::Quaternion boneQuat = bone->_getDerivedOrientation();
+		Ogre::Vector3 bonePos = bone->_getDerivedPosition();
 
-		return bone->getOrientation();
+		Ogre::Quaternion worldQuat = parentQuat * boneQuat; // actually, it might be parentQuat * boneQuat, I forgot
+		Ogre::Vector3 worldPos = parentQuat * bonePos + parentPos;
+		
+		//Ogre::Bone* bone = _skeleton->getBone(boneName);
+
+		//return bone->getOrientation();
+
+		return worldQuat;
 	}
 
 	Vector3 CAnimatedEntity::getBonePosition(const std::string& boneName) {
+		Ogre::SceneNode* parent = _entityNode;
 		Ogre::Bone* bone = _skeleton->getBone(boneName);
+		Ogre::Quaternion parentQuat = parent->_getDerivedOrientation();
+		Ogre::Vector3 parentPos = parent->_getDerivedPosition();
+		Ogre::Quaternion boneQuat = bone->_getDerivedOrientation();
+		Ogre::Vector3 bonePos = bone->_getDerivedPosition();
 
-		return bone->getPosition();
+		Ogre::Quaternion worldQuat = parentQuat * boneQuat; // actually, it might be parentQuat * boneQuat, I forgot
+		Ogre::Vector3 worldPos = parentQuat * bonePos + parentPos;
+
+		//Ogre::Bone* bone = _skeleton->getBone(boneName);
+
+		//return bone->getPosition();
+
+		return worldPos;
 	}
 
 	void CAnimatedEntity::setBoneOrientation(const std::string& boneName, const Quaternion& orientation) {
