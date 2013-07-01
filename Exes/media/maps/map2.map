@@ -15,7 +15,7 @@ Map = {
 		type = "Screamer",
 		isPlayer = false,
 		position = {0, 0.2, -20},
-		model = "agent47.mesh",
+		model = "ragdolls/agent47.mesh",
 	},
 	
 	Jumper1 = {

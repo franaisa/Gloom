@@ -254,7 +254,7 @@ Map = {
 		damageOverTime = 1,
 		playerDead = true,
 		
-		ragdoll_file = "media/models/agent47ragdoll.RepX",
+		ragdoll_file = "media/models/ragdolls/agent47.RepX",
 		ragdoll_group = 1,
 		ragdoll_groupList = "-1",
 		
