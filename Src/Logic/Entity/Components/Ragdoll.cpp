@@ -118,17 +118,16 @@ void CRagdoll::process(const std::shared_ptr<CMessage>& message) {
 
 void CRagdoll::onFixedTick(unsigned int msecs) {
 	// Actualizar en base a las posiciones de los bones
-	/*vector<physx::PxActor*> boneList = _physicEntity.getActors();
+	vector<physx::PxActor*> boneList = _physicEntity.getActors();
 	for(int i = 0; i < boneList.size(); ++i) {
 		if( boneList[i]->isRigidDynamic() ) {
 			physx::PxRigidDynamic* dyn = static_cast<physx::PxRigidDynamic*>(boneList[i]);
 			physx::PxTransform transform = dyn->getGlobalPose();
 			Matrix4 ogreTransform = PxTransformToMatrix4(transform);
 
-			_animatedGraphicsComponent->setBoneOrientation(boneList[i]->getName(), ogreTransform.extractQuaternion());
-			_animatedGraphicsComponent->setBonePosition(boneList[i]->getName(), ogreTransform.getTrans());
+			_animatedGraphicsComponent->setBonePose( boneList[i]->getName(), ogreTransform.getTrans(), ogreTransform.extractQuaternion() );
 		}
-	}*/
+	}
 }
 
 //________________________________________________________________________
@@ -139,13 +138,12 @@ void CRagdoll::onStart() {
 	vector<physx::PxActor*> boneList = _physicEntity.getActors();
 	for(int i = 0; i < boneList.size(); ++i) {
 		Vector3 position = _animatedGraphicsComponent->getBonePosition( boneList[i]->getName() );
-		//position.y += 100;
 		Quaternion orientation = _animatedGraphicsComponent->getBoneOrientation( boneList[i]->getName() );
 
 		if( boneList[i]->isRigidDynamic() ) {
 			physx::PxRigidDynamic* dyn = static_cast<physx::PxRigidDynamic*>(boneList[i]);
 			dyn->setGlobalPose( physx::PxTransform( Vector3ToPxVec3(position), QuaternionToPxQuat(orientation) ) );
-			//dyn->setRigidDynamicFlag(physx::PxRigidDynamicFlag::eKINEMATIC, false);
+			dyn->setRigidDynamicFlag(physx::PxRigidDynamicFlag::eKINEMATIC, false);
 		}
 	}
 }

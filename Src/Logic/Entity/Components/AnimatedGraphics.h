@@ -119,9 +119,13 @@ namespace Logic
 
 		Quaternion getBoneOrientation(const std::string& boneName);
 
+		void getBonePose(const std::string& boneName, Vector3& position, Quaternion& orientation);
+
 		void setBoneOrientation(const std::string& boneName, const Quaternion& orientation);
 
 		void setBonePosition(const std::string& boneName, const Vector3& position);
+
+		void setBonePose(const std::string& boneName, const Vector3& position, const Quaternion& orientation);
 
 	protected:
 
