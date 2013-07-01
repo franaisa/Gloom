@@ -32,6 +32,8 @@ namespace physx {
 	class PxPhysics;
 	class PxRigidActor;
 	class PxCooking;
+	class PxCollection;
+	class PxAggregate;
 }
 
 namespace Physics {
@@ -88,8 +90,9 @@ namespace Physics {
 		@param group Grupo de colisión que queremos asignar al actor.
 		@param groupList Grupos de colisión con los que el actor quiere interactuar.
 		@param component Componente lógico asociado.
+		@param nameActors true si queremos que los colliders tengan un nombre asignado.
 		*/
-		virtual void load(const std::string &file, int group, const std::vector<int>& groupList, const Logic::IPhysics* component) = 0;
+		virtual void load(const std::string &file, int group, const std::vector<int>& groupList, const Logic::IPhysics* component, bool nameActors = false) = 0;
 
 		//________________________________________________________________________
 
@@ -121,19 +124,69 @@ namespace Physics {
 
 
 		// =======================================================================
-		//                          METODOS PRIVADOS
+		//                          METODOS PROTEGIDOS
 		// =======================================================================
 
 
 		/** 
-		Método para construir un actor de PhysX a partir de un fichero RepX.
+		Método para construir un actor de PhysX a partir de un fichero RepX. Si existen
+		varios actores en el fichero se cargarán como un agregado (se asume que todos los
+		actores serán usados en una misma entidad).
 
 		@param file Fichero desde el que se van a leer los datos.
 		@param group Grupo de colisión que queremos asignar al actor.
 		@param groupList Grupos de colisión con los que el actor quiere interactuar.
 		@param component Componente lógico asociado.
+		@param nameActors true si queremos que se le asigne nombres a los colliders.
 		*/
-		physx::PxRigidActor* deserializeFromRepXFile(const std::string &file, int group, const std::vector<int>& groupList, const Logic::IPhysics* component);
+		void deserializeFromRepXFile(const std::string &file, int group, const std::vector<int>& groupList, const Logic::IPhysics* component,
+									 bool nameActors);
+
+		//________________________________________________________________________
+
+		/**
+		Dada una colección de elementos, deserializa todos sus actores en un agregado.
+
+		Normalmente usaremos esta función para deserializar ragdolls.
+
+		@param sceneCollection Colección de elementos.
+		@param nbActors Número de actores en la colección.
+		@param component Componente lógico asociado a cada uno de los actores del agregado.
+		@param group Grupo de colisión del agregado.
+		@param Grupos de colisión con los que el agregado debe interactuar.
+		*/
+		void deserializeAggregate(physx::PxCollection* sceneCollection, unsigned int nbActors, const Logic::IPhysics* component, int group, const std::vector<int>& groupList);
+
+		//________________________________________________________________________
+
+		/**
+		Dada una colección de elementos, deserializa un solo actor. Se usa cuando se sabe
+		que solo existe un actor en el fichero que vamos a deserializar.
+
+		@param sceneCollection Colección de elementos.
+		@param component Componente lógico asociado al actor que se va a deserializar.
+		@param group Grupo de colisión del actor.
+		@param Grupos de colisión con los que el actor debe interactuar.
+		*/
+		void deserializeActor(physx::PxCollection* sceneCollection, const Logic::IPhysics* component, int group, const std::vector<int>& groupList);
+
+		//________________________________________________________________________
+
+		/**
+		Dado un actor, se activa su simulación física.
+
+		@param actor Actor que va a ser activado.
+		*/
+		void activateSimulation(physx::PxActor* actor);
+
+		//________________________________________________________________________
+
+		/**
+		Dado un actor, se desactiva su simulación física.
+
+		@param actor Actor que va a ser desactivado.
+		*/
+		void deactivateSimulation(physx::PxActor* actor);
 
 		//________________________________________________________________________
 
@@ -156,6 +209,9 @@ namespace Physics {
 
 		/** Puntero al actor de PhysX. Importante: Tiene que ser inicializado por la clase hija. */
 		physx::PxRigidActor* _actor;
+
+		/** Agregado que contiene todos los actores leidos desde fichero (si es que hay más de uno). */
+		physx::PxAggregate* _aggregate;
 
 		/** Puntero a la escena de PhysX. */
 		physx::PxScene* _scene;

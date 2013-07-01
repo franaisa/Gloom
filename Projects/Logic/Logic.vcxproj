@@ -95,6 +95,7 @@
     <ClCompile Include="..\..\Src\Logic\Entity\Components\HardDeathAmmo.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\HardDeathFeedback.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\Hud.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\Ragdoll.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\Resurrection.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\ResurrectionAmmo.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\ResurrectionFeedback.cpp" />
@@ -292,6 +293,7 @@
     <ClInclude Include="..\..\Src\Logic\Entity\Components\HardDeathAmmo.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\HardDeathFeedback.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\Hud.h" />
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\Ragdoll.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\Resurrection.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\ResurrectionAmmo.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\ResurrectionFeedback.h" />

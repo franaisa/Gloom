@@ -87,8 +87,9 @@ namespace Physics {
 		@param group Grupo de colisión que queremos asignar al actor.
 		@param groupList Grupos de colisión con los que el actor quiere interactuar.
 		@param component Componente lógico asociado.
+		@param nameActors true si queremos que se le asigne nombres a los colliders.
 		*/
-		virtual void load(const std::string &file, int group, const std::vector<int>& groupList, const Logic::IPhysics *component);
+		virtual void load(const std::string &file, int group, const std::vector<int>& groupList, const Logic::IPhysics *component, bool nameActors = false);
 
 
 		// =======================================================================

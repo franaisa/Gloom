@@ -60,9 +60,9 @@ namespace Physics {
 
 	//________________________________________________________________________
 
-	void CDynamicEntity::load(const std::string &file, int group, const vector<int>& groupList, const Logic::IPhysics* component) {
+	void CDynamicEntity::load(const std::string &file, int group, const vector<int>& groupList, const Logic::IPhysics* component, bool nameActors) {
 		// Cargamos desde fichero los datos del actor
-		CEntity::load(file, group, groupList, component);
+		CEntity::load(file, group, groupList, component, nameActors);
 	}
 
 	//________________________________________________________________________

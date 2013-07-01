@@ -6,7 +6,7 @@ LocalScreamer CScreamer  CMiniGunFeedback CShotGunFeedback CIronHellGoatFeedback
 RemotePlayer CLife CSpawnPlayer CAudio CParticle  CPhysicController CAnimatedGraphics
 Hound CAudio CParticle  CPhysicController CAnimatedGraphics
 Archangel CAudio CParticle  CPhysicController CAnimatedGraphics
-Screamer CAudio CParticle  CPhysicController CAnimatedGraphics
+Screamer CAudio CParticle CPhysicController CAnimatedGraphics CRagdoll
 Shadow CAudio CParticle  CPhysicController CAnimatedGraphics
 LocalSpectator CSpectatorController CPhysicController
 Camera CCamera

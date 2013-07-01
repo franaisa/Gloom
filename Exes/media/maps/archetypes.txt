@@ -254,6 +254,10 @@ Map = {
 		damageOverTime = 1,
 		playerDead = true,
 		
+		ragdoll_file = "media/models/agent47ragdoll.RepX",
+		ragdoll_group = 1,
+		ragdoll_groupList = "-1",
+		
 		acceleration = 0.015,
 		maxVelocity = 0.9,
 		frictionCoef = 14.0,

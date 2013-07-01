@@ -152,12 +152,6 @@ void CPhysicController::createController(const Map::CEntity *entityInfo) {
 	std::vector<int> groupList;
 	readCollisionGroupInfo(entityInfo, group, groupList);
 
-	// Si existe un fichero que indica las posiciones de los hitboxes
-	if( entityInfo->hasAttribute("physic_ragdoll") ) {
-		std::string ragdollFileName = entityInfo->getStringAttribute("physic_ragdoll");
-		_controller.loadRagdoll(ragdollFileName, group, groupList, this);
-	}
-
 	// Inicializar el controller de tipo capsula
 	_controller.load(position, radius, height, group, groupList, this);
 } 

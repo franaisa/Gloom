@@ -1,16 +1,16 @@
 /**
-@file PhysicDynamicEntity.h
+@file Ragdoll.h
 
 
-@see Logic::CPhysicDynamicEntity
+@see Logic::CRagdoll
 @see Logic::IComponent
 
 @author Francisco Aisa García
-@date Marzo, 2013
+@date Julio, 2013
 */
 
-#ifndef __Logic_PhysicDynamicEntity_H
-#define __Logic_PhysicDynamicEntity_H
+#ifndef __Logic_Ragdoll_H
+#define __Logic_Ragdoll_H
 
 #include "Physics.h"
 #include "Physics/DynamicEntity.h"
@@ -34,19 +34,19 @@ namespace Logic {
 	@author Francisco Aisa García
 	@date Marzo, 2013
 	*/
-	class CPhysicDynamicEntity : public IPhysics {
-		DEC_FACTORY(CPhysicDynamicEntity);
+	class CRagdoll : public IPhysics {
+		DEC_FACTORY(CRagdoll);
 	public:
 	
 		/**
 		Constructor por defecto.
 		*/
-		CPhysicDynamicEntity();
+		CRagdoll();
 
 		/**
 		Destructor. Elimina el objeto físico de la escena y lo destruye. 
 		*/
-		virtual ~CPhysicDynamicEntity();
+		virtual ~CRagdoll();
 		
 		/**
 		Inicializa el componente usando los atributos definidos en el fichero de mapa.
@@ -73,28 +73,9 @@ namespace Logic {
 
 		virtual void onContact (IPhysics *otherComponent, bool enter);
 
-	    //void onShapeHit(const physx::PxControllerShapeHit &hit);
-
 		virtual void onShapeHit(IPhysics *otherComponent, const Vector3& colisionPos, const Vector3& colisionNormal) { onContact(otherComponent, true); }
 
-		//Metodo que devuelve el booleano _inTrigger que nos indica si hay alguien dentro del trigger
-		bool getInTrigger(){ return _inTrigger; };
-
-		//Metodo que devuelve el booleano _inContact que nos indica si hay alguien tocando la entidad
-		bool getInContact(){ return _inContact; };
-
-		bool getInControllerContact(){ return _inControllerContact; };
-
-		void setPosition(const Vector3 &position, bool makeConversionToLogicWorld);
-
-		void setTransform(const Vector3 &position, const Quaternion &orientation, bool makeConversionToLogicWorld);
-
 		void addForce(const Vector3& force, Physics::ForceMode mode = Physics::eFORCE, bool autowake = true);
-
-		/**
-		Limpia las fuerzas acumuladas que podria llevar la entidad.
-		*/
-		void clearForce(Physics::ForceMode mode = Physics::eFORCE, bool autowake = true);
 
 		void addTorque(const Vector3& force, Physics::ForceMode mode = Physics::eFORCE, bool autowake = true);
 
@@ -102,8 +83,6 @@ namespace Logic {
 
 		void activateSimulation();
 		
-		void move(const Vector3& disp);
-
 	protected:
 
 		/**
@@ -118,26 +97,17 @@ namespace Logic {
 		*/
 		virtual void onFixedTick(unsigned int msecs);
 
+		virtual void onStart();
+
 	private:
 
 		void readCollisionGroupInfo(const Map::CEntity *entityInfo, int& group, std::vector<int>& groupList);
 
 		/**
-		Crea el actor de PhysX que representa la entidad física a partir de la
-		información del mapa.
-		*/
-		void createPhysicEntity(const Map::CEntity *entityInfo);
-				
-		/**
-		Crea una entidad rígida (estática, dinámica o cinemática) a partir de la información de mapa. 
-		*/
-		void createRigid(const Map::CEntity *entityInfo, int group, const std::vector<int>& groupList);
-		
-		/**
 		Crea una entidad rígida (estática, dinámica o cinemática) a partir de un fichero RepX
 		exportando previamente con el plug-in the PhysX para 3ds Max.
 		*/
-		void createFromFile(const Map::CEntity *entityInfo, int group, const std::vector<int>& groupList);
+		void loadRagdoll(const Map::CEntity *entityInfo, int group, const std::vector<int>& groupList);
 
 		// Servidor de física
 		Physics::CServer* _server;
@@ -146,32 +116,12 @@ namespace Logic {
 
 		Physics::CMaterialManager* _materialManager;
 
-		// Actor que representa la entidad física en PhysX
-		//physx::PxRigidActor *_actor;
-
 		Physics::CDynamicEntity _physicEntity;
 
-		// Vector de deplazamiento recibido en el último mensaje de tipo KINEMATIC_MOVE. Sirve
-		// para mover entidades físicas cinemáticas.
-		Vector3 _movement;
+	}; // class CRagdoll
 
-		//Booleano que controla si hay alguien dentro del posible trigger que puede tener la entidad, por defecto desactivado
-		bool _inTrigger;
-
-		//Booleano que controla si hay alguien en contacto con la entidad, por defecto desactivado
-		bool _inContact;
-
-		bool _inControllerContact;
-
-		bool _sleepUntil;
-
-		bool _isTrigger;
-
-		bool _noGravity;
-	}; // class CPhysicDynamicEntity
-
-	REG_FACTORY(CPhysicDynamicEntity);
+	REG_FACTORY(CRagdoll);
 
 } // namespace Logic
 
-#endif // __Logic_PhysicEntity_H
+#endif // __Logic_Ragdoll_H
