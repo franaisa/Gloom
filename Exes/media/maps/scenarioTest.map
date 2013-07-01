@@ -5,7 +5,7 @@ Map = {
 		model = "scenarioTest.mesh",
 		physic_entity = "plane",
 		physic_group = 0,
-		physic_groupList = "10",
+		physic_groupList = "-1",
 	},
 	Ascensor1T = {
 		type = "ElevatorTrigger",
@@ -107,7 +107,7 @@ Map = {
 		physic_radius = 6,
 		physic_height = 6,
 		scale = 0.15,
-	},
+    },
 	
 	David = {
 		type = "LocalArchangel",
@@ -121,7 +121,7 @@ Map = {
 	},
 	Point1 = {
 		type = "SpawnPoint",
-		position = {0,5,00},
+		position = {0,20,00},
 		physic_entity = "rigid",
 		physic_trigger = true,
 		physic_type = "static",
