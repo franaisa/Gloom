@@ -275,11 +275,15 @@ namespace Graphics
 	}
 
 	Quaternion CAnimatedEntity::getBoneOrientation(const std::string& boneName) {
-		return _skeleton->getBone(boneName)->getOrientation();
+		Ogre::Bone* bone = _skeleton->getBone(boneName);
+
+		return bone->getOrientation();
 	}
 
 	Vector3 CAnimatedEntity::getBonePosition(const std::string& boneName) {
-		return _skeleton->getBone(boneName)->getPosition();
+		Ogre::Bone* bone = _skeleton->getBone(boneName);
+
+		return bone->getPosition();
 	}
 
 	void CAnimatedEntity::setBoneOrientation(const std::string& boneName, const Quaternion& orientation) {
@@ -288,7 +292,6 @@ namespace Graphics
 			bone->setManuallyControlled(true);
 			//bone->setInheritOrientation(false);
 		}
-		
 		bone->setOrientation(orientation);
 	}
 

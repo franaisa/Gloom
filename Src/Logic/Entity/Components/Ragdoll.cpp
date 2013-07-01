@@ -139,6 +139,7 @@ void CRagdoll::onStart() {
 	vector<physx::PxActor*> boneList = _physicEntity.getActors();
 	for(int i = 0; i < boneList.size(); ++i) {
 		Vector3 position = _animatedGraphicsComponent->getBonePosition( boneList[i]->getName() );
+		position.y += 100;
 		Quaternion orientation = _animatedGraphicsComponent->getBoneOrientation( boneList[i]->getName() );
 
 		if( boneList[i]->isRigidDynamic() ) {

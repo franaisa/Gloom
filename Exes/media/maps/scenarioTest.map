@@ -7,6 +7,7 @@ Map = {
 		physic_group = 0,
 		physic_groupList = "-1",
 	},
+	
 	Ascensor1T = {
 		type = "ElevatorTrigger",
 		position = {-51.0, 5.0, 1.0},
@@ -93,7 +94,7 @@ Map = {
 	
 	Enemigo1 = {
 		type = "Screamer",
-		position = {0, 0.2, -20},
+		position = {0, 0.2, 0},
 		defaultAnimation = "idle",
 		materialName="Screamer",
 		yaw = 90,
@@ -102,7 +103,7 @@ Map = {
 		maxLife=250,
 		PorcentShield=23,
 		isPlayer = false,
-		model = "heavy.mesh",
+		model = "agent47.mesh",
 		physic_shape = "capsule",
 		physic_radius = 6,
 		physic_height = 6,
@@ -119,9 +120,10 @@ Map = {
 		type = "Camera",
 		height = 8,
 	},
+	
 	Point1 = {
 		type = "SpawnPoint",
-		position = {0,20,00},
+		position = {3.0, 0.2, 0.0},
 		physic_entity = "rigid",
 		physic_trigger = true,
 		physic_type = "static",
