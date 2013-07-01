@@ -39,6 +39,7 @@ básicas de los rigid bodies.
 #include <RepX/RepXUtility.h>
 
 using namespace physx;
+using namespace std;
 
 namespace Physics {
 
@@ -92,6 +93,48 @@ namespace Physics {
 
 	void CEntity::load(const std::string &file, int group, const std::vector<int>& groupList, const Logic::IPhysics* component, bool nameActors) {
 		deserializeFromRepXFile(file, group, groupList, component, nameActors);
+	}
+
+	//________________________________________________________________________
+
+	vector<string> CEntity::getActorNames() {
+		vector<string> actorNamesList;
+
+		unsigned int nbActors = _aggregate->getNbActors();
+		PxActor** actorsBuffer = new PxActor* [nbActors];
+
+		actorNamesList.reserve(nbActors);
+
+		_aggregate->getActors(actorsBuffer, nbActors);
+		for(unsigned int i = 0; i < nbActors; ++i) {
+			actorNamesList.push_back( actorsBuffer[i]->getName() );
+		}
+
+		// Liberamos la memoria temporal reservada
+		delete actorsBuffer;
+
+		return actorNamesList;
+	}
+	
+	//________________________________________________________________________
+
+	std::vector< physx::PxActor* > CEntity::getActors() {
+		std::vector< physx::PxActor* > actors;
+
+		unsigned int nbActors = _aggregate->getNbActors();
+		PxActor** actorsBuffer = new PxActor* [nbActors];
+
+		actors.reserve(nbActors);
+
+		_aggregate->getActors(actorsBuffer, nbActors);
+		for(unsigned int i = 0; i < nbActors; ++i) {
+			actors.push_back( actorsBuffer[i] );
+		}
+
+		// Liberamos la memoria temporal reservada
+		delete actorsBuffer;
+
+		return actors;
 	}
 
 	//________________________________________________________________________
@@ -159,10 +202,10 @@ namespace Physics {
 					Physics::CServer::getSingletonPtr()->setupFiltering(rigid, group, groupList);
 
 					// Para pasar los shapes a kinematicos -------------------------- (testing)
-					/*PxRigidDynamic* dyn = serializable->is<PxRigidDynamic>();
+					PxRigidDynamic* dyn = serializable->is<PxRigidDynamic>();
 					if(dyn)
 						dyn->setRigidDynamicFlag(PxRigidDynamicFlag::eKINEMATIC, true);
-					*/
+					
 				}
 			}
 		}

@@ -259,10 +259,46 @@ namespace Graphics
 		}
 
 		entityBone->pitch(Ogre::Radian(pitch));
+	}
 
+	bool CAnimatedEntity::load() {
+		bool success = CEntity::load();
+		_skeleton = _entity->getSkeleton();
 
+		// Como listar todos los huesos
+		/*auto masterIt = _skeleton->getBoneIterator();
+		for(auto it = masterIt.begin(); it != masterIt.end(); ++it) {
+			std::cout << (*it)->getName() << std::endl;
+		}*/
 
+		return success;
+	}
 
+	Quaternion CAnimatedEntity::getBoneOrientation(const std::string& boneName) {
+		return _skeleton->getBone(boneName)->getOrientation();
+	}
+
+	Vector3 CAnimatedEntity::getBonePosition(const std::string& boneName) {
+		return _skeleton->getBone(boneName)->getPosition();
+	}
+
+	void CAnimatedEntity::setBoneOrientation(const std::string& boneName, const Quaternion& orientation) {
+		Ogre::Bone* bone = _skeleton->getBone(boneName);
+		if( !bone->isManuallyControlled() ) {
+			bone->setManuallyControlled(true);
+			//bone->setInheritOrientation(false);
+		}
+		
+		bone->setOrientation(orientation);
+	}
+
+	void CAnimatedEntity::setBonePosition(const std::string& boneName, const Vector3& position) {
+		Ogre::Bone* bone = _skeleton->getBone(boneName);
+		if( !bone->isManuallyControlled() ) {
+			bone->setManuallyControlled(true);
+		}
+
+		bone->setPosition(position);
 	}
 
 } // namespace Graphics

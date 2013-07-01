@@ -27,6 +27,8 @@ namespace Physics {
 // Los componentes pertenecen al namespace Logic
 namespace Logic {	
 	
+	class CAnimatedGraphics;
+
 	/**
 	
     @ingroup logicGroup
@@ -108,6 +110,8 @@ namespace Logic {
 		exportando previamente con el plug-in the PhysX para 3ds Max.
 		*/
 		void loadRagdoll(const Map::CEntity *entityInfo, int group, const std::vector<int>& groupList);
+
+		CAnimatedGraphics* _animatedGraphicsComponent;
 
 		// Servidor de física
 		Physics::CServer* _server;

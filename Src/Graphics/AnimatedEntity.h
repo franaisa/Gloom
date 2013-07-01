@@ -99,7 +99,7 @@ namespace Graphics
 		@param mesh Nombre del modelo que debe cargarse.
 		*/
 		CAnimatedEntity(const std::string &name, const std::string &mesh):
-					CEntity(name,mesh), _weapon(0), _graphicsWeapon(0) {}
+					CEntity(name,mesh), _weapon(0), _graphicsWeapon(0), _skeleton(0) {}
 
 		/**
 		Destructor de la aplicación.
@@ -177,6 +177,14 @@ namespace Graphics
 		*/
 		void lockBoneOrientation(const std::string &bone);
 
+		Quaternion getBoneOrientation(const std::string& boneName);
+
+		Vector3 getBonePosition(const std::string& boneName);
+
+		void setBoneOrientation(const std::string& boneName, const Quaternion& orientation);
+
+		void setBonePosition(const std::string& boneName, const Vector3& position);
+
 	protected:
 
 		/**
@@ -198,11 +206,15 @@ namespace Graphics
 		*/
 		virtual void tick(float secs);
 
+		virtual bool load();
+
 		Ogre::Entity *_weapon;
 
 		Graphics::CEntity *_graphicsWeapon;
 
 		Ogre::SceneNode* _ObjectentityNode;
+
+		Ogre::Skeleton* _skeleton;
 
 		/**
 		Estructura de datos de las animaciones que hay ejecutandose

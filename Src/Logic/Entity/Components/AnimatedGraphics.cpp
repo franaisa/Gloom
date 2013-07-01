@@ -216,4 +216,20 @@ namespace Logic
 			}
 		}
 	}
+
+	Vector3 CAnimatedGraphics::getBonePosition(const std::string& boneName) {
+		return _animatedGraphicsEntity->getBonePosition(boneName);
+	}
+
+	Quaternion CAnimatedGraphics::getBoneOrientation(const std::string& boneName) {
+		return _animatedGraphicsEntity->getBoneOrientation(boneName);
+	}
+
+	void CAnimatedGraphics::setBoneOrientation(const std::string& boneName, const Quaternion& orientation) {
+		_animatedGraphicsEntity->setBoneOrientation(boneName, orientation);
+	}
+
+	void CAnimatedGraphics::setBonePosition(const std::string& boneName, const Vector3& position) {
+		_animatedGraphicsEntity->setBonePosition(boneName, position);
+	}
 } // namespace Logic

@@ -119,6 +119,9 @@ namespace Physics {
 		/** Desactiva la simulación física. */
 		void deactivateSimulation();
 
+		std::vector<std::string> getActorNames();
+
+		std::vector< physx::PxActor* > getActors();
 
 	protected:
 

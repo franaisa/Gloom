@@ -9,6 +9,7 @@
 */
 
 #include "Ragdoll.h"
+#include "AnimatedGraphics.h"
 #include "Logic/Entity/Entity.h"
 #include "Map/MapEntity.h"
 #include "Physics/Server.h"
@@ -24,11 +25,17 @@
 #include "Logic/Messages/MessageContactEnter.h"
 #include "Logic/Messages/MessageContactExit.h"
 
+// @deprecated MEGA-DEPRECATED
+#include <PhysX/PxActor.h>
+#include <PhysX/PxRigidDynamic.h>
+#include <Physics/Conversions.h>
+
 #define _USE_MATH_DEFINES
 #include <math.h>
 
 using namespace Logic;
 using namespace Physics;
+using namespace std;
 
 IMP_FACTORY(CRagdoll);
 
@@ -67,6 +74,8 @@ bool CRagdoll::spawn(Logic::CEntity *entity, CMap *map, const Map::CEntity *enti
 
 	// Nos aseguramos de que exista un componente gráfico animado
 	// al que podamos bindear colliders
+	_animatedGraphicsComponent = _entity->getComponent<CAnimatedGraphics>("CAnimatedGraphics");
+	assert(_animatedGraphicsComponent != NULL && "Error: Los componentes de ragdoll necesitan tener entidades animadas");
 
 	return true;
 } 
@@ -109,6 +118,17 @@ void CRagdoll::process(const std::shared_ptr<CMessage>& message) {
 
 void CRagdoll::onFixedTick(unsigned int msecs) {
 	// Actualizar en base a las posiciones de los bones
+	/*vector<physx::PxActor*> boneList = _physicEntity.getActors();
+	for(int i = 0; i < boneList.size(); ++i) {
+		if( boneList[i]->isRigidDynamic() ) {
+			physx::PxRigidDynamic* dyn = static_cast<physx::PxRigidDynamic*>(boneList[i]);
+			physx::PxTransform transform = dyn->getGlobalPose();
+			Matrix4 ogreTransform = PxTransformToMatrix4(transform);
+
+			_animatedGraphicsComponent->setBoneOrientation(boneList[i]->getName(), ogreTransform.extractQuaternion());
+			_animatedGraphicsComponent->setBonePosition(boneList[i]->getName(), ogreTransform.getTrans());
+		}
+	}*/
 }
 
 //________________________________________________________________________
@@ -116,6 +136,17 @@ void CRagdoll::onFixedTick(unsigned int msecs) {
 void CRagdoll::onStart() {
 	// Bindeamos los huesos de la entidad gráfica a los colliders del
 	// ragdoll
+	vector<physx::PxActor*> boneList = _physicEntity.getActors();
+	for(int i = 0; i < boneList.size(); ++i) {
+		Vector3 position = _animatedGraphicsComponent->getBonePosition( boneList[i]->getName() );
+		Quaternion orientation = _animatedGraphicsComponent->getBoneOrientation( boneList[i]->getName() );
+
+		if( boneList[i]->isRigidDynamic() ) {
+			physx::PxRigidDynamic* dyn = static_cast<physx::PxRigidDynamic*>(boneList[i]);
+			dyn->setGlobalPose( physx::PxTransform( Vector3ToPxVec3(position), QuaternionToPxQuat(orientation) ) );
+			dyn->setRigidDynamicFlag(physx::PxRigidDynamicFlag::eKINEMATIC, false);
+		}
+	}
 }
 
 //________________________________________________________________________
