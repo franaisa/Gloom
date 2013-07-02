@@ -7,14 +7,14 @@ namespace Logic {
 
 	struct SpellType {
 		enum Enum {
-			eAMPLIFY_DAMAGE,// Activo	// funcionando	(falta feedback)
-			eCOME_BACK,		// Activo	// hecho chapuza(falta feedback y test)
-			eSCOPE,			// Activo	// funcionando	(falta feedback)
-			eGRAVITY,		// Activo	// funcionando	(falta feedback)
-			eHARD_DEATH,	// Pasivo	// hecho		(falta feedback y test)
-			eSHIELD,		// Activo	// hecho		(falta feedback y test)
-			eCOOLDOWN,		// Pasivo	// funcionando	(falta feedback)
-			eRESURECTION,	// Pasivo	// aplazado
+			eAMPLIFY_DAMAGE,// Hecho		(falta feedback y test)
+			eCOME_BACK,		//
+			eCOOLDOWN,		// Hecho		(falta feedback y test)
+			eGRAVITY,		// Hecho		(falta feedback y test)
+			eHARD_DEATH,	// Hecho		(falta feedback y test)
+			eHUNGRY,		//
+			eSHIELD,		// Hecho		(falta feedback y test)
+			eRESURECTION,	//
 			eSIZE,
 		};
 
@@ -25,16 +25,16 @@ namespace Logic {
 				return "amplifyDamage";
 			case eCOME_BACK:
 				return "comeBack";
-			case eSCOPE:
-				return "scope";
+			case eCOOLDOWN:
+				return "cooldown";
 			case eGRAVITY:
 				return "gravity";
 			case eHARD_DEATH:
 				return "hardDeath";
+			case eHUNGRY:
+				return "hardDeath";
 			case eSHIELD:
 				return "shield";
-			case eCOOLDOWN:
-				return "cooldown";
 			case eRESURECTION:
 				return "resurection";
 			}

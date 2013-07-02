@@ -21,7 +21,7 @@
 #include "Logic/Maps/GUIManager.h"
 
 #include "FlashControl.h"
-#include "SpellsManagerClient.h"
+
 #include <assert.h>
 
 namespace Logic{
@@ -191,7 +191,7 @@ namespace Logic{
 			}*/
 
 			case Message::ADD_SPELL: {
-				
+				/*
 				std::shared_ptr<CMessageAddSpell> addSpellMsg = std::static_pointer_cast<CMessageAddSpell>(message);
 				unsigned int spellIndex = addSpellMsg->getSpell();
 				CSpellsManagerClient * spellmanager = _entity->getComponent<CSpellsManagerClient>("CSpellsManagerClient");
@@ -209,6 +209,7 @@ namespace Logic{
 						printf("\nCuidado, has puesto un hechizo no valido, o es 1 (primario) o es 2 (secundario)");
 					}
 				}
+				*/
 				break;
 			}
 		}

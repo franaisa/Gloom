@@ -22,6 +22,7 @@ Contiene la implementación del componente que controla la vida cúpula del arcáng
 #include "Archangel.h"
 #include "Logic/Messages/MessageTouched.h"
 #include "Logic/Messages/MessageDamaged.h"
+#include "Logic/Messages/MessageSetOwner.h"
 
 namespace Logic 
 {
@@ -53,6 +54,7 @@ namespace Logic
 
 		_cGraph = _entity->getComponent<CGraphics>("CGraphics");
 
+		// El tamaño de esta bola se indica en el archetypes.
 		return true;
 
 	} // spawn
@@ -62,7 +64,8 @@ namespace Logic
 	bool CShieldSpellController::accept(const std::shared_ptr<CMessage>& message) {
 		Logic::TMessageType msgType = message->getMessageType();
 
-		return msgType == Message::TOUCHED;
+		return	msgType == Message::TOUCHED || 
+				msgType == Message::SET_OWNER;;
 	} // accept
 	
 	//________________________________________________________________________
@@ -73,6 +76,10 @@ namespace Logic
 			{				
 				auto msg = std::static_pointer_cast<CMessageTouched>(message);
 				touched(msg->getEntity());
+				break;
+			}
+			case Message::SET_OWNER: {
+				setOwner( std::static_pointer_cast<CMessageSetOwner>(message)->getOwner() );
 				break;
 			}
 		}

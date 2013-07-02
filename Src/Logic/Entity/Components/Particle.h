@@ -53,10 +53,7 @@ namespace Logic
 		*/
 		virtual void onActivate();
 
-		/**
-		Metodo que se llama en el 1º tick
-		*/
-		virtual void onStart();
+		
 		/**
 		mensajes aceptados por el componente
 		*/
@@ -70,6 +67,13 @@ namespace Logic
 		
 
 	protected:
+
+
+		/**
+		Metodo que se llama en el 1º tick
+		*/
+		virtual void onStart();
+
 
 		/**
 		Método llamado en cada frame que actualiza el estado del componente de la particula.

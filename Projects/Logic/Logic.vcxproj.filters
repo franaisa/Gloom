@@ -137,33 +137,6 @@
     <Filter Include="Entity\Components\Spells">
       <UniqueIdentifier>{fc2a56b2-6403-44a4-90b0-877a92ef4301}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Entity\Components\Spells\Feedback">
-      <UniqueIdentifier>{9365eb31-31f2-4acd-b4d5-f33accb201f4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Entity\Components\Spells\Cast">
-      <UniqueIdentifier>{8f01188b-c0d6-42db-a8e2-d7a4a2bc54e7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Entity\Components\Spells\Ammunition">
-      <UniqueIdentifier>{9ef33cbc-5e41-4858-8cca-2fb2ef2b9e77}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Entity\Components\Spells\Feedback\Header">
-      <UniqueIdentifier>{fcb4d082-a564-4a78-a666-42abb2291736}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Entity\Components\Spells\Cast\Header">
-      <UniqueIdentifier>{cf08e64d-02d1-4df6-a992-be61a23764e6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Entity\Components\Spells\Ammunition\Header">
-      <UniqueIdentifier>{c4e272e4-4294-471b-98be-822bde76a696}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Entity\Components\Spells\Feedback\Source">
-      <UniqueIdentifier>{bd8fbf51-3982-45f3-b03f-ffd5c464edfb}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Entity\Components\Spells\Cast\Source">
-      <UniqueIdentifier>{b4725566-4ff0-4225-bc89-7c58faa9c6ea}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Entity\Components\Spells\Ammunition\Source">
-      <UniqueIdentifier>{d57fd097-17a3-4335-9995-a4640eb37448}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Entity\Components\Weapons\Managers">
       <UniqueIdentifier>{473ef99d-143d-4a7a-bd1b-57f031af1a8c}</UniqueIdentifier>
     </Filter>
@@ -173,14 +146,23 @@
     <Filter Include="Entity\Components\Weapons\Managers\Header">
       <UniqueIdentifier>{3978b598-80c6-4773-bd25-af90bf585962}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Entity\Components\Spells\Managers">
-      <UniqueIdentifier>{c9cf71c7-92c4-489e-bf26-cdb01c3f385d}</UniqueIdentifier>
+    <Filter Include="Entity\Components\Spells\Cast">
+      <UniqueIdentifier>{9fbd6cc7-610a-462e-80e1-79fb92d85728}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Entity\Components\Spells\Managers\Header">
-      <UniqueIdentifier>{405b9841-69b8-46a0-be6b-0013aec9e771}</UniqueIdentifier>
+    <Filter Include="Entity\Components\Spells\Feedback">
+      <UniqueIdentifier>{1c96990f-ee70-40c3-9255-5302287137be}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Entity\Components\Spells\Managers\Source">
-      <UniqueIdentifier>{029daf25-c829-462d-bea6-11e62a7f5ef2}</UniqueIdentifier>
+    <Filter Include="Entity\Components\Spells\Cast\Header">
+      <UniqueIdentifier>{a69c8395-86dd-48f5-8ce0-91fa85be7abf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entity\Components\Spells\Feedback\Header">
+      <UniqueIdentifier>{7f1dcf1c-4c43-456c-b74a-0fb01bc996a3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entity\Components\Spells\Cast\Source">
+      <UniqueIdentifier>{d4b6176b-2904-436a-9eff-ffcd12d82966}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entity\Components\Spells\Feedback\Source">
+      <UniqueIdentifier>{ef08bac3-2145-4530-8677-137f339a06f3}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -655,20 +637,11 @@
     <ClCompile Include="..\..\Src\Logic\Entity\Components\WeaponAmmo.cpp">
       <Filter>Entity\Components\Weapons\Ammunition\Source</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Src\Logic\Entity\Components\SpellFeedback.cpp">
-      <Filter>Entity\Components\Spells\Feedback\Source</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Src\Logic\Messages\MessagePrimarySpell.cpp">
       <Filter>Messages\Source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Src\Logic\Messages\MessageSecondarySpell.cpp">
       <Filter>Messages\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Logic\Entity\Components\SpellAmmo.cpp">
-      <Filter>Entity\Components\Spells\Ammunition\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Logic\Entity\Components\Spell.cpp">
-      <Filter>Entity\Components\Spells\Cast\Source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Src\Logic\Entity\Components\WeaponsManagerClient.cpp">
       <Filter>Entity\Components\Weapons\Managers\Source</Filter>
@@ -676,77 +649,8 @@
     <ClCompile Include="..\..\Src\Logic\Entity\Components\WeaponsManager.cpp">
       <Filter>Entity\Components\Weapons\Managers\Source</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Src\Logic\Entity\Components\SpellsManager.cpp">
-      <Filter>Entity\Components\Spells\Managers\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Logic\Entity\Components\SpellsManagerClient.cpp">
-      <Filter>Entity\Components\Spells\Managers\Source</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Src\Logic\Messages\MessageAddSpell.cpp">
       <Filter>Messages\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Logic\Entity\Components\Gravity.cpp">
-      <Filter>Entity\Components\Spells\Cast\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Logic\Entity\Components\GravityAmmo.cpp">
-      <Filter>Entity\Components\Spells\Ammunition\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Logic\Entity\Components\GravityFeedback.cpp">
-      <Filter>Entity\Components\Spells\Feedback\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Logic\Entity\Components\CoolDown.cpp">
-      <Filter>Entity\Components\Spells\Cast\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Logic\Entity\Components\CoolDownAmmo.cpp">
-      <Filter>Entity\Components\Spells\Ammunition\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Logic\Entity\Components\CoolDownFeedback.cpp">
-      <Filter>Entity\Components\Spells\Feedback\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Logic\Entity\Components\HardDeathAmmo.cpp">
-      <Filter>Entity\Components\Spells\Ammunition\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Logic\Entity\Components\HardDeath.cpp">
-      <Filter>Entity\Components\Spells\Cast\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Logic\Entity\Components\HardDeathFeedback.cpp">
-      <Filter>Entity\Components\Spells\Feedback\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Logic\Entity\Components\ResurrectionAmmo.cpp">
-      <Filter>Entity\Components\Spells\Ammunition\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Logic\Entity\Components\Resurrection.cpp">
-      <Filter>Entity\Components\Spells\Cast\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Logic\Entity\Components\ResurrectionFeedback.cpp">
-      <Filter>Entity\Components\Spells\Feedback\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Logic\Entity\Components\ComeBackAmmo.cpp">
-      <Filter>Entity\Components\Spells\Ammunition\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Logic\Entity\Components\ComeBack.cpp">
-      <Filter>Entity\Components\Spells\Cast\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Logic\Entity\Components\AmplifyDamageAmmo.cpp">
-      <Filter>Entity\Components\Spells\Ammunition\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Logic\Entity\Components\AmplifyDamage.cpp">
-      <Filter>Entity\Components\Spells\Cast\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Logic\Entity\Components\AmplifyDamageFeedback.cpp">
-      <Filter>Entity\Components\Spells\Feedback\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Logic\Entity\Components\Shield.cpp">
-      <Filter>Entity\Components\Spells\Cast\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Logic\Entity\Components\ShieldAmmo.cpp">
-      <Filter>Entity\Components\Spells\Ammunition\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Logic\Entity\Components\ShieldFeedback.cpp">
-      <Filter>Entity\Components\Spells\Feedback\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Logic\Entity\Components\ComeBackFeedback.cpp">
-      <Filter>Entity\Components\Spells\Feedback\Source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Src\Logic\Entity\Components\ScreamerShieldController.cpp">
       <Filter>Entity\Components\Skills\Source</Filter>
@@ -754,26 +658,71 @@
     <ClCompile Include="..\..\Src\Logic\Messages\MessageSetOwner.cpp">
       <Filter>Messages\Source</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Src\Logic\Entity\Components\ScopeAmmo.cpp">
-      <Filter>Entity\Components\Spells\Ammunition\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Logic\Entity\Components\ScopeFeedback.cpp">
-      <Filter>Entity\Components\Spells\Feedback\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Logic\Entity\Components\Scope.cpp">
-      <Filter>Entity\Components\Spells\Cast\Source</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Src\Logic\Entity\Components\Hud.cpp">
       <Filter>Entity\Components\Graphics\Source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Src\Logic\Messages\MessageHud.cpp">
       <Filter>Messages\Source</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Src\Logic\Entity\Components\shieldSpellController.cpp">
-      <Filter>Entity\Components\Spells\Cast\Source</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Src\Logic\Entity\Components\Ragdoll.cpp">
       <Filter>Entity\Components\Physics\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\AmplifyDamageServer.cpp">
+      <Filter>Entity\Components\Spells\Cast\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\ComeBackServer.cpp">
+      <Filter>Entity\Components\Spells\Cast\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\CoolDownServer.cpp">
+      <Filter>Entity\Components\Spells\Cast\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\GravityServer.cpp">
+      <Filter>Entity\Components\Spells\Cast\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\HardDeathServer.cpp">
+      <Filter>Entity\Components\Spells\Cast\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\ResurrectionServer.cpp">
+      <Filter>Entity\Components\Spells\Cast\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\ShieldServer.cpp">
+      <Filter>Entity\Components\Spells\Cast\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\ComeBackClient.cpp">
+      <Filter>Entity\Components\Spells\Feedback\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\ShieldClient.cpp">
+      <Filter>Entity\Components\Spells\Feedback\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\GravityClient.cpp">
+      <Filter>Entity\Components\Spells\Feedback\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\HardDeathClient.cpp">
+      <Filter>Entity\Components\Spells\Feedback\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\ResurrectionClient.cpp">
+      <Filter>Entity\Components\Spells\Feedback\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\Spell.cpp">
+      <Filter>Entity\Components\Spells</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\AmplifyDamageClient.cpp">
+      <Filter>Entity\Components\Spells\Feedback\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\HungryServer.cpp">
+      <Filter>Entity\Components\Spells\Cast\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\HungryClient.cpp">
+      <Filter>Entity\Components\Spells\Feedback\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\CoolDownClient.cpp">
+      <Filter>Entity\Components\Spells\Feedback\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\Scope.cpp">
+      <Filter>Entity\Components\Spells\Cast\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\ShieldSpellController.cpp">
+      <Filter>Entity\Components\Spells\Cast\Source</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1272,20 +1221,11 @@
     <ClInclude Include="..\..\Src\Logic\Entity\Components\SpellType.h">
       <Filter>Entity\Components\Spells</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Src\Logic\Entity\Components\SpellFeedback.h">
-      <Filter>Entity\Components\Spells\Feedback\Header</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Messages\MessagePrimarySpell.h">
       <Filter>Messages\Header</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Messages\MessageSecondarySpell.h">
       <Filter>Messages\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Logic\Entity\Components\SpellAmmo.h">
-      <Filter>Entity\Components\Spells\Ammunition\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Logic\Entity\Components\Spell.h">
-      <Filter>Entity\Components\Spells\Cast\Header</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Entity\Components\WeaponsManager.h">
       <Filter>Entity\Components\Weapons\Managers\Header</Filter>
@@ -1296,77 +1236,8 @@
     <ClInclude Include="..\..\Src\Logic\Entity\Components\WeaponType.h">
       <Filter>Entity\Components\Weapons</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Src\Logic\Entity\Components\SpellsManager.h">
-      <Filter>Entity\Components\Spells\Managers\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Logic\Entity\Components\SpellsManagerClient.h">
-      <Filter>Entity\Components\Spells\Managers\Header</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Messages\MessageAddSpell.h">
       <Filter>Messages\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Logic\Entity\Components\Gravity.h">
-      <Filter>Entity\Components\Spells\Cast\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Logic\Entity\Components\GravityAmmo.h">
-      <Filter>Entity\Components\Spells\Ammunition\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Logic\Entity\Components\GravityFeedback.h">
-      <Filter>Entity\Components\Spells\Feedback\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Logic\Entity\Components\CoolDown.h">
-      <Filter>Entity\Components\Spells\Cast\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Logic\Entity\Components\CoolDownAmmo.h">
-      <Filter>Entity\Components\Spells\Ammunition\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Logic\Entity\Components\CoolDownFeedback.h">
-      <Filter>Entity\Components\Spells\Feedback\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Logic\Entity\Components\HardDeathAmmo.h">
-      <Filter>Entity\Components\Spells\Ammunition\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Logic\Entity\Components\HardDeath.h">
-      <Filter>Entity\Components\Spells\Cast\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Logic\Entity\Components\HardDeathFeedback.h">
-      <Filter>Entity\Components\Spells\Feedback\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Logic\Entity\Components\ResurrectionAmmo.h">
-      <Filter>Entity\Components\Spells\Ammunition\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Logic\Entity\Components\Resurrection.h">
-      <Filter>Entity\Components\Spells\Cast\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Logic\Entity\Components\ResurrectionFeedback.h">
-      <Filter>Entity\Components\Spells\Feedback\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Logic\Entity\Components\ComeBackAmmo.h">
-      <Filter>Entity\Components\Spells\Ammunition\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Logic\Entity\Components\ComeBack.h">
-      <Filter>Entity\Components\Spells\Cast\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Logic\Entity\Components\ComeBackFeedback.h">
-      <Filter>Entity\Components\Spells\Feedback\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Logic\Entity\Components\AmplifyDamageAmmo.h">
-      <Filter>Entity\Components\Spells\Ammunition\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Logic\Entity\Components\AmplifyDamage.h">
-      <Filter>Entity\Components\Spells\Cast\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Logic\Entity\Components\AmplifyDamageFeedback.h">
-      <Filter>Entity\Components\Spells\Feedback\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Logic\Entity\Components\Shield.h">
-      <Filter>Entity\Components\Spells\Cast\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Logic\Entity\Components\ShieldAmmo.h">
-      <Filter>Entity\Components\Spells\Ammunition\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Logic\Entity\Components\ShieldFeedback.h">
-      <Filter>Entity\Components\Spells\Feedback\Header</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Maps\TeamFaction.h">
       <Filter>Maps\Header Files</Filter>
@@ -1377,26 +1248,68 @@
     <ClInclude Include="..\..\Src\Logic\Messages\MessageSetOwner.h">
       <Filter>Messages\Header</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Src\Logic\Entity\Components\Scope.h">
-      <Filter>Entity\Components\Spells\Cast\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Logic\Entity\Components\ScopeFeedback.h">
-      <Filter>Entity\Components\Spells\Feedback\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Logic\Entity\Components\ScopeAmmo.h">
-      <Filter>Entity\Components\Spells\Ammunition\Header</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Entity\Components\Hud.h">
       <Filter>Entity\Components\Graphics\Header</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Messages\MessageHud.h">
       <Filter>Messages\Header</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Src\Logic\Entity\Components\shieldSpellController.h">
-      <Filter>Entity\Components\Spells\Cast\Header</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Entity\Components\Ragdoll.h">
       <Filter>Entity\Components\Physics\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\AmplifyDamageServer.h">
+      <Filter>Entity\Components\Spells\Cast\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\ShieldServer.h">
+      <Filter>Entity\Components\Spells\Cast\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\ComeBackServer.h">
+      <Filter>Entity\Components\Spells\Cast\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\CoolDownServer.h">
+      <Filter>Entity\Components\Spells\Cast\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\GravityServer.h">
+      <Filter>Entity\Components\Spells\Cast\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\HardDeathServer.h">
+      <Filter>Entity\Components\Spells\Cast\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\ResurrectionServer.h">
+      <Filter>Entity\Components\Spells\Cast\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\ComeBackClient.h">
+      <Filter>Entity\Components\Spells\Feedback\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\CoolDownClient.h">
+      <Filter>Entity\Components\Spells\Feedback\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\GravityClient.h">
+      <Filter>Entity\Components\Spells\Feedback\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\HardDeathClient.h">
+      <Filter>Entity\Components\Spells\Feedback\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\ResurrectionClient.h">
+      <Filter>Entity\Components\Spells\Feedback\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\ShieldClient.h">
+      <Filter>Entity\Components\Spells\Feedback\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\Spell.h">
+      <Filter>Entity\Components\Spells</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\AmplifyDamageClient.h">
+      <Filter>Entity\Components\Spells\Feedback\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\HungryClient.h">
+      <Filter>Entity\Components\Spells\Feedback\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\HungryServer.h">
+      <Filter>Entity\Components\Spells\Cast\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\ShieldSpellController.h">
+      <Filter>Entity\Components\Spells\Cast\Header</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

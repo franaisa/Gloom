@@ -88,28 +88,7 @@ namespace Logic {
 
 		//__________________________________________________________________
 
-		/** 
-		Este componente acepta los siguientes mensajes:
 
-		<ul>
-			<li>CONTROL</li>
-		</ul>
-		
-		@param message Mensaje a chequear.
-		@return true si el mensaje es aceptado.
-		*/
-		virtual bool accept(const std::shared_ptr<CMessage>& message);
-
-		//__________________________________________________________________
-
-		/**
-		Método virtual que procesa un mensaje.
-
-		@param message Mensaje a procesar.
-		*/
-		virtual void process(const std::shared_ptr<CMessage>& message);
-
-		virtual void onActivate();
 		// =======================================================================
 		//                          METODOS PROPIOS
 		// =======================================================================
@@ -119,13 +98,12 @@ namespace Logic {
 		Método virtual puro que debe ser implementado por las clases derivadas para
 		especificar que ocurre al usar el disparo primario.
 		*/
-		virtual void spell(){ };
+		virtual void spell() = 0;
 
 		//__________________________________________________________________
 		
 		/**
-		Este método es invocado cuando se deja de pulsar el botón de disparo
-		primario.
+		Este método es invocado cuando se muere.
 		*/
 		virtual void stopSpell() { /* Por defecto nada */ }
 
@@ -138,13 +116,9 @@ namespace Logic {
 		//                    METODOS HEREDADOS DE ICOMPONENT
 		// =======================================================================
 
+		virtual void onStart();
 
-		/**
-		Llamado cuando el arma pasa a ser activa.
-		En los hechizos passivos aqui hara su accion.
-		*/
-		virtual void onWake();
-
+		virtual void onActivate();
 
 		virtual void onDeactivate();
 
@@ -175,12 +149,8 @@ namespace Logic {
 
 		unsigned int _spellID;
 
-		/** variable que controlara si es conjuro primario o secundario. */
-		bool _isPrimarySpell;
-
-		/** Variable para controlar si un hechizo es activo o pasivo */
-		bool _isPassive;
-
+		/** Variable para controlar si un hechizo esta seleccionado o no. Indicando si debe desactivarse al hacer el onStart o no.*/
+		bool _mustDeactivate;
 	}; // class ISpell
 
 } // namespace Logic
