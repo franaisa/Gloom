@@ -265,43 +265,67 @@ namespace Graphics
 		bool success = CEntity::load();
 		_skeleton = _entity->getSkeleton();
 
-		// Como listar todos los huesos
-		/*auto masterIt = _skeleton->getBoneIterator();
-		for(auto it = masterIt.begin(); it != masterIt.end(); ++it) {
-			std::cout << (*it)->getName() << std::endl;
-		}*/
-
 		return success;
 	}
 
 	Quaternion CAnimatedEntity::getBoneOrientation(const std::string& boneName) {
-		Ogre::Bone* bone = _skeleton->getBone(boneName);
+		Ogre::Quaternion parentQuat = _entityNode->_getDerivedOrientation();
+		Ogre::Quaternion boneQuat = _skeleton->getBone(boneName)->_getDerivedOrientation();
 
-		return bone->getOrientation();
+		return parentQuat * boneQuat;
 	}
 
 	Vector3 CAnimatedEntity::getBonePosition(const std::string& boneName) {
-		Ogre::Bone* bone = _skeleton->getBone(boneName);
+		Ogre::Quaternion parentQuat = _entityNode->_getDerivedOrientation();
+		Ogre::Vector3 parentPos = _entityNode->_getDerivedPosition();
+		Ogre::Vector3 bonePos = _skeleton->getBone(boneName)->_getDerivedPosition();
 
-		return bone->getPosition();
+		return parentQuat * bonePos + parentPos;
+	}
+
+	void CAnimatedEntity::getBonePose(const std::string& boneName, Vector3& position, Quaternion& orientation) {
+		Ogre::Bone* bone = _skeleton->getBone(boneName);
+		Ogre::Quaternion parentQuat = _entityNode->_getDerivedOrientation();
+		Ogre::Vector3 parentPos = _entityNode->_getDerivedPosition();
+		Ogre::Quaternion boneQuat = bone->_getDerivedOrientation();
+		Ogre::Vector3 bonePos = bone->_getDerivedPosition();
+
+		orientation = parentQuat * boneQuat;
+		position = parentQuat * bonePos + parentPos;
 	}
 
 	void CAnimatedEntity::setBoneOrientation(const std::string& boneName, const Quaternion& orientation) {
+		Ogre::Quaternion parentQuat = _entityNode->_getDerivedOrientation(); // node local ori
 		Ogre::Bone* bone = _skeleton->getBone(boneName);
-		if( !bone->isManuallyControlled() ) {
-			bone->setManuallyControlled(true);
-			//bone->setInheritOrientation(false);
-		}
-		bone->setOrientation(orientation);
+		bone->setManuallyControlled(true);
+		Ogre::Quaternion worldQuat(orientation); // desired orientation in world terms
+		Ogre::Quaternion boneQuat = worldQuat.Inverse() * parentQuat; // equiv to ("boneQuat = worldQuat / parentQuat")
+		bone->_setDerivedOrientation(boneQuat);
 	}
 
 	void CAnimatedEntity::setBonePosition(const std::string& boneName, const Vector3& position) {
+		Ogre::Vector3 parentPos = _entityNode->_getDerivedPosition(); // node local pos
+		Ogre::Vector3 parentQuatXbonePos = position - parentPos;
+		Ogre::Quaternion parentQuat = _entityNode->_getDerivedOrientation(); // node local ori
+		Ogre::Vector3 bonePos = parentQuat.Inverse() * parentQuatXbonePos;
+		Ogre::Vector3 inverseParentScale = 1.0 / _entityNode->_getDerivedScale();
 		Ogre::Bone* bone = _skeleton->getBone(boneName);
-		if( !bone->isManuallyControlled() ) {
-			bone->setManuallyControlled(true);
-		}
+		bone->setManuallyControlled(true);
+		bone->_setDerivedPosition(bonePos * inverseParentScale);
+	}
 
-		bone->setPosition(position);
+	void CAnimatedEntity::setBonePose(const std::string& boneName, const Vector3& position, const Quaternion& orientation) {
+		Ogre::Vector3 parentPos = _entityNode->_getDerivedPosition(); // node local pos
+		Ogre::Vector3 parentQuatXbonePos = position - parentPos;
+		Ogre::Quaternion parentQuat = _entityNode->_getDerivedOrientation(); // node local ori
+		Ogre::Vector3 bonePos = parentQuat.Inverse() * parentQuatXbonePos;
+		Ogre::Vector3 inverseParentScale = 1.0 / _entityNode->_getDerivedScale();
+		Ogre::Bone* bone = _skeleton->getBone(boneName);
+		bone->setManuallyControlled(true);
+		bone->_setDerivedPosition(bonePos * inverseParentScale);
+		Ogre::Quaternion worldQuat(orientation); // desired orientation in world terms
+		Ogre::Quaternion boneQuat = worldQuat.Inverse() * parentQuat; // equiv to ("boneQuat = worldQuat / parentQuat")
+		bone->_setDerivedOrientation(boneQuat);
 	}
 
 } // namespace Graphics

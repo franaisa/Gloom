@@ -25,11 +25,6 @@
 #include "Logic/Messages/MessageContactEnter.h"
 #include "Logic/Messages/MessageContactExit.h"
 
-// @deprecated MEGA-DEPRECATED
-#include <PhysX/PxActor.h>
-#include <PhysX/PxRigidDynamic.h>
-#include <Physics/Conversions.h>
-
 #define _USE_MATH_DEFINES
 #include <math.h>
 
@@ -42,16 +37,13 @@ IMP_FACTORY(CRagdoll);
 //________________________________________________________________________
 
 CRagdoll::CRagdoll() {
-	_server = CServer::getSingletonPtr();
-	_geometryFactory = Physics::CGeometryFactory::getSingletonPtr();
-	_materialManager = Physics::CMaterialManager::getSingletonPtr();
+	// Nada que hacer
 }
 
 //________________________________________________________________________
 
 CRagdoll::~CRagdoll() {
-	// El destructor de _physicEntity ya sabe que hacer
-	_server = NULL;
+	// Nada que hacer
 } 
 
 //________________________________________________________________________
@@ -82,53 +74,19 @@ bool CRagdoll::spawn(Logic::CEntity *entity, CMap *map, const Map::CEntity *enti
 
 //________________________________________________________________________
 
-bool CRagdoll::accept(const std::shared_ptr<CMessage>& message) {
-	Logic::TMessageType msgType = message->getMessageType();
-
-	return	msgType == Message::ACTIVATE				||
-			msgType == Message::ADD_FORCE_PHYSICS;
-}
-
-//________________________________________________________________________
-
-void CRagdoll::process(const std::shared_ptr<CMessage>& message) {
-	switch( message->getMessageType() ) {
-		case Message::ACTIVATE: {
-			bool activate = std::static_pointer_cast<CMessageActivate>(message)->getActivated();
-			if(activate)
-				activateSimulation();
-			else
-				deactivateSimulation();
-
-			break;
-		}
-		case Message::ADD_FORCE_PHYSICS: {
-			std::shared_ptr<CMessageAddForcePhysics> forceMsg = std::static_pointer_cast<CMessageAddForcePhysics>(message);
-
-			if( !forceMsg->getGravity() )
-				_physicEntity.disableGravity(true);
-
-			addForce( forceMsg->getForceVector(), forceMsg->getForceMode() );
-			break;
-		}
-	}
-}
-
-//________________________________________________________________________
+// @deprecated Toda esta parte esta deprecada, deberiamos tener un iterador al hueso
+// bindeada al collider de manera que no se hagan busquedas en el tick
 
 void CRagdoll::onFixedTick(unsigned int msecs) {
 	// Actualizar en base a las posiciones de los bones
-	/*vector<physx::PxActor*> boneList = _physicEntity.getActors();
+	Vector3 position;
+	Quaternion orientation;
+	
+	vector<Physics::CDynamicEntity*> boneList = _aggregate.getEntities();
 	for(int i = 0; i < boneList.size(); ++i) {
-		if( boneList[i]->isRigidDynamic() ) {
-			physx::PxRigidDynamic* dyn = static_cast<physx::PxRigidDynamic*>(boneList[i]);
-			physx::PxTransform transform = dyn->getGlobalPose();
-			Matrix4 ogreTransform = PxTransformToMatrix4(transform);
-
-			_animatedGraphicsComponent->setBoneOrientation(boneList[i]->getName(), ogreTransform.extractQuaternion());
-			_animatedGraphicsComponent->setBonePosition(boneList[i]->getName(), ogreTransform.getTrans());
-		}
-	}*/
+		boneList[i]->getGlobalPose(position, orientation);
+		_animatedGraphicsComponent->setBonePose( boneList[i]->getName(), position, orientation );
+	}
 }
 
 //________________________________________________________________________
@@ -136,17 +94,13 @@ void CRagdoll::onFixedTick(unsigned int msecs) {
 void CRagdoll::onStart() {
 	// Bindeamos los huesos de la entidad gráfica a los colliders del
 	// ragdoll
-	vector<physx::PxActor*> boneList = _physicEntity.getActors();
+	vector<Physics::CDynamicEntity*> boneList = _aggregate.getEntities();
 	for(int i = 0; i < boneList.size(); ++i) {
 		Vector3 position = _animatedGraphicsComponent->getBonePosition( boneList[i]->getName() );
-		//position.y += 100;
 		Quaternion orientation = _animatedGraphicsComponent->getBoneOrientation( boneList[i]->getName() );
 
-		if( boneList[i]->isRigidDynamic() ) {
-			physx::PxRigidDynamic* dyn = static_cast<physx::PxRigidDynamic*>(boneList[i]);
-			//dyn->setGlobalPose( physx::PxTransform( Vector3ToPxVec3(position) ) );
-			//dyn->setRigidDynamicFlag(physx::PxRigidDynamicFlag::eKINEMATIC, false);
-		}
+		boneList[i]->setGlobalPose(position, orientation, false);
+		boneList[i]->setKinematic(false);
 	}
 }
 
@@ -181,7 +135,7 @@ void CRagdoll::loadRagdoll(const Map::CEntity *entityInfo, int group, const std:
 	const std::string file = entityInfo->getStringAttribute("ragdoll_file");
 
 	// Crear el actor a partir del fichero RepX
-	_physicEntity.load(file, group, groupList, this, true);
+	_aggregate.load(file, group, groupList, this, true);
 }
 
 //________________________________________________________________________
@@ -218,24 +172,12 @@ void CRagdoll::onContact (IPhysics *otherComponent, bool enter) {
 
 //________________________________________________________________________
 
-void CRagdoll::addForce(const Vector3& force, Physics::ForceMode mode, bool autowake) {
-	_physicEntity.addForce(force, mode, autowake);
-}
-
-//________________________________________________________________________
-
-void CRagdoll::addTorque(const Vector3& force, Physics::ForceMode mode, bool autowake) {
-	_physicEntity.addTorque(force, mode, autowake);
-}
-
-//________________________________________________________________________
-
 void CRagdoll::deactivateSimulation() {
-	_physicEntity.deactivateSimulation();
+	_aggregate.deactivateSimulation();
 }
 
 //________________________________________________________________________
 
 void CRagdoll::activateSimulation() {
-	_physicEntity.activateSimulation();
+	_aggregate.activateSimulation();
 }

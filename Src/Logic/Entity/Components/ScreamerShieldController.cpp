@@ -81,7 +81,7 @@ namespace Logic {
 		
 		// Seteamos la posicion fisica del escudo
 		if(_physicComponent) {
-			_physicComponent->setTransform( shootPosition, _owner->getOrientation(), false );
+			_physicComponent->setGlobalPose( shootPosition, _owner->getOrientation(), false );
 		}
 		else {
 			_entity->setPosition( shootPosition );

@@ -87,7 +87,7 @@ namespace Logic {
 
 		void setPosition(const Vector3 &position, bool makeConversionToLogicWorld);
 
-		void setTransform(const Vector3 &position, const Quaternion &orientation, bool makeConversionToLogicWorld);
+		void setGlobalPose(const Vector3 &position, const Quaternion &orientation, bool makeConversionToLogicWorld);
 
 		void addForce(const Vector3& force, Physics::ForceMode mode = Physics::eFORCE, bool autowake = true);
 
