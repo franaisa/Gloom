@@ -64,43 +64,45 @@ bool CRagdoll::spawn(Logic::CEntity *entity, CMap *map, const Map::CEntity *enti
 	// Creamos el ragdoll leyendo desde fichero
 	loadRagdoll(entityInfo, group, groupList);
 
-	// Nos aseguramos de que exista un componente gráfico animado
-	// al que podamos bindear colliders
-	_animatedGraphicsComponent = _entity->getComponent<CAnimatedGraphics>("CAnimatedGraphics");
-	assert(_animatedGraphicsComponent != NULL && "Error: Los componentes de ragdoll necesitan tener entidades animadas");
-
 	return true;
 } 
 
 //________________________________________________________________________
 
-// @deprecated Toda esta parte esta deprecada, deberiamos tener un iterador al hueso
-// bindeada al collider de manera que no se hagan busquedas en el tick
-
 void CRagdoll::onFixedTick(unsigned int msecs) {
-	// Actualizar en base a las posiciones de los bones
-	// El error se acumula
+	// Actualizamos las posiciones y orientaciones de los bones en base a la
+	// fisica si estamos ejecutando el ragdoll o en base a las animaciones si
+	// estamos haciendo de hitboxes
 	Vector3 position; Quaternion orientation;
-	
-	vector<Physics::CDynamicEntity*> boneList = _aggregate.getEntities();
-	for(int i = 0; i < boneList.size(); ++i) {
-		boneList[i]->getGlobalPose(position, orientation);
-		_animatedGraphicsComponent->setBonePose( boneList[i]->getName(), position, orientation );
+
+	for(int i = 0; i < _ragdollBonesBuffer.size(); ++i) {
+		_ragdollBonesBuffer[i].second->getGlobalPose(position, orientation);
+		_ragdollBonesBuffer[i].first.setGlobalPose(position, orientation);
 	}
 }
 
 //________________________________________________________________________
 
 void CRagdoll::onStart() {
-	// Bindeamos los huesos de la entidad gráfica a los colliders del
-	// ragdoll
-	Vector3 position; Quaternion orientation;
+	// Nos aseguramos de que exista un componente gráfico animado
+	CAnimatedGraphics* animComp = _entity->getComponent<CAnimatedGraphics>("CAnimatedGraphics");
+	assert(animComp != NULL && "Error: Los componentes de ragdoll necesitan tener entidades animadas");
 
+	// Obtenemos la lista de huesos que tiene un collider asignado
+	// Bindeamos los colliders con los respectivos huesos de la entidad gráfica
 	vector<Physics::CDynamicEntity*> boneList = _aggregate.getEntities();
-	for(int i = 0; i < boneList.size(); ++i) {
-		_animatedGraphicsComponent->getBonePose(boneList[i]->getName(), position, orientation);
-		boneList[i]->setGlobalPose(position, orientation, false);
-		//boneList[i]->setKinematic(false);
+	unsigned int nbBones = boneList.size();
+	_ragdollBonesBuffer.reserve(nbBones);
+	for(int i = 0; i < nbBones; ++i) {
+		_ragdollBonesBuffer.push_back( pair<Graphics::CBone, Physics::CDynamicEntity*>( animComp->getBone( boneList[i]->getName() ), boneList[i] ) );
+	}
+
+	// Colocamos los colliders en la posicion en la que se encuentren los bones
+	// de primeras
+	Vector3 position; Quaternion orientation;
+	for(int i = 0; i < _ragdollBonesBuffer.size(); ++i) {
+		_ragdollBonesBuffer[i].first.getGlobaPose(position, orientation); // Sacamos la orientacion de los huesos graficos
+		_ragdollBonesBuffer[i].second->setGlobalPose(position, orientation, false); // Seteamos la orientacion de lo fisico
 	}
 }
 

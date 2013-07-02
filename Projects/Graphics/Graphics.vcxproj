@@ -93,6 +93,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Src\Graphics\AnimatedEntity.h" />
+    <ClInclude Include="..\..\Src\Graphics\Bone.h" />
     <ClInclude Include="..\..\Src\Graphics\Camera.h" />
     <ClInclude Include="..\..\Src\Graphics\CompositorListener.h" />
     <ClInclude Include="..\..\Src\Graphics\Documentation.h" />

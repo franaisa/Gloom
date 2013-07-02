@@ -14,6 +14,7 @@
 
 #include "Physics.h"
 #include "Physics/Aggregate.h"
+#include "Graphics/Bone.h"
 
 #include <vector>
 
@@ -89,9 +90,9 @@ namespace Logic {
 		void loadRagdoll(const Map::CEntity *entityInfo, int group, const std::vector<int>& groupList);
 
 
+		std::vector< std::pair< Graphics::CBone, Physics::CDynamicEntity* > > _ragdollBonesBuffer;
 
-
-		CAnimatedGraphics* _animatedGraphicsComponent;
+		//CAnimatedGraphics* _animatedGraphicsComponent;
 
 		Physics::CAggregate _aggregate;
 

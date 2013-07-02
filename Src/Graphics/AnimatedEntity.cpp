@@ -16,6 +16,7 @@ con animaciones.
 */
 
 #include "AnimatedEntity.h"
+#include "Bone.h"
 
 #include <assert.h>
 #include "Server.h"
@@ -319,6 +320,10 @@ namespace Graphics
 		Ogre::Bone* bone = _skeleton->getBone(boneName);
 		bone->setManuallyControlled(true);
 		bone->_setDerivedPosition(_entityNode->_getDerivedOrientation().Inverse() * (position - _entityNode->_getDerivedPosition()));
+	}
+
+	Graphics::CBone CAnimatedEntity::getBone(const std::string& boneName) const {
+		return Graphics::CBone( _entityNode, _skeleton->getBone(boneName) );
 	}
 
 } // namespace Graphics
