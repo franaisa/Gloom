@@ -202,9 +202,9 @@ namespace Physics {
 					Physics::CServer::getSingletonPtr()->setupFiltering(rigid, group, groupList);
 
 					// Para pasar los shapes a kinematicos -------------------------- (testing)
-					//PxRigidDynamic* dyn = serializable->is<PxRigidDynamic>();
-					//if(dyn)
-					//	dyn->setRigidDynamicFlag(PxRigidDynamicFlag::eKINEMATIC, true);
+					PxRigidDynamic* dyn = serializable->is<PxRigidDynamic>();
+					if(dyn)
+						dyn->setRigidDynamicFlag(PxRigidDynamicFlag::eKINEMATIC, true);
 					
 				}
 			}

@@ -11,27 +11,27 @@
         <Simulation SolverIteration="30" SimulationLoop="Continue Simulation" LastFrameMode="Continue Simulation" />
     </SceneParameters>
     <SceneObjects>
-        <RigidBody Attach="Bip01 Pelvis" Type="Kinematic" Position="0 -1.23224 97.331" SwitchEnabled="false" SwitchAtFrame="0" Velocity="0 0 0" Spin="0 0 0" />
-        <RigidBody Attach="Bip01 Spine" Type="Kinematic" Position="-4.87108e-007 -1.22475 107.447" SwitchEnabled="false" SwitchAtFrame="0" Velocity="0 -0 0" Spin="0 -0 0" />
-        <RigidBody Attach="Bip01 Spine1" Type="Kinematic" Position="2.56031e-007 -1.419 116.855" SwitchEnabled="false" SwitchAtFrame="0" Velocity="0 0 0" Spin="0 0 0" />
-        <RigidBody Attach="Bip01 Neck" Type="Kinematic" Position="-1.16236e-006 -0.384369 150.457" SwitchEnabled="false" SwitchAtFrame="0" Velocity="0 0 0" Spin="0 0 0" />
-        <RigidBody Attach="Bip01 Head" Type="Kinematic" Position="-1.44751e-006 -0.176342 157.249" SwitchEnabled="false" SwitchAtFrame="0" Velocity="0 0 0" Spin="0 0 0" />
-        <RigidBody Attach="Bip01 Ponytail1" Type="Kinematic" Position="-1.02487e-005 -9.53324 168.703" SwitchEnabled="false" SwitchAtFrame="0" Velocity="0 -0 0" Spin="0 -0 0" />
-        <RigidBody Attach="Bip01 L Clavicle" Type="Kinematic" Position="3.07861 -0.389772 150.457" SwitchEnabled="false" SwitchAtFrame="0" Velocity="0 0 0" Spin="0 0 0" />
-        <RigidBody Attach="Bip01 L UpperArm" Type="Kinematic" Position="18.6762 1.88825 142.518" SwitchEnabled="false" SwitchAtFrame="0" Velocity="0 0 0" Spin="0 0 0" />
-        <RigidBody Attach="Bip01 L Forearm" Type="Kinematic" Position="36.5158 5.28757 123.373" SwitchEnabled="false" SwitchAtFrame="0" Velocity="0 0 0" Spin="0 0 0" />
-        <RigidBody Attach="Bip01 L Hand" Type="Kinematic" Position="52.0345 0.585573 106.689" SwitchEnabled="false" SwitchAtFrame="0" Velocity="0 0 0" Spin="0 0 0" />
-        <RigidBody Attach="Bip01 R Clavicle" Type="Kinematic" Position="-3.07861 -0.389781 150.457" SwitchEnabled="false" SwitchAtFrame="0" Velocity="0 0 0" Spin="0 0 0" />
-        <RigidBody Attach="Bip01 R UpperArm" Type="Kinematic" Position="-18.5244 1.85413 142.217" SwitchEnabled="false" SwitchAtFrame="0" Velocity="0 0 0" Spin="0 0 0" />
-        <RigidBody Attach="Bip01 R Forearm" Type="Kinematic" Position="-36.6643 2.93823 123.083" SwitchEnabled="false" SwitchAtFrame="0" Velocity="0 0 0" Spin="0 0 0" />
-        <RigidBody Attach="Bip01 R Hand" Type="Kinematic" Position="-52.4608 -0.747208 106.404" SwitchEnabled="false" SwitchAtFrame="0" Velocity="0 -0 0" Spin="0 -0 0" />
-        <RigidBody Attach="Bip01 L Thigh" Type="Kinematic" Position="8.79602 -1.23223 97.331" SwitchEnabled="false" SwitchAtFrame="0" Velocity="0 -0 0" Spin="0 -0 0" />
-        <RigidBody Attach="Bip01 L Calf" Type="Kinematic" Position="8.79602 -4.92404 51.7409" SwitchEnabled="false" SwitchAtFrame="0" Velocity="0 0 0" Spin="0 0 0" />
-        <RigidBody Attach="Bip01 L Foot" Type="Kinematic" Position="8.79601 0.05685 10.1523" SwitchEnabled="false" SwitchAtFrame="0" Velocity="0 0 0" Spin="0 0 0" />
-        <RigidBody Attach="Bip01 L Toe0" Type="Kinematic" Position="8.79603 -11.9102 0.0368465" SwitchEnabled="false" SwitchAtFrame="0" Velocity="0 0 0" Spin="0 0 0" />
-        <RigidBody Attach="Bip01 R Thigh" Type="Kinematic" Position="-8.79603 -1.23225 97.331" SwitchEnabled="false" SwitchAtFrame="0" Velocity="0 -0 0" Spin="0 -0 0" />
-        <RigidBody Attach="Bip01 R Calf" Type="Kinematic" Position="-8.79602 -4.92406 51.7409" SwitchEnabled="false" SwitchAtFrame="0" Velocity="0 0 0" Spin="0 0 0" />
-        <RigidBody Attach="Bip01 R Foot" Type="Kinematic" Position="-8.79603 0.0568259 10.1523" SwitchEnabled="false" SwitchAtFrame="0" Velocity="0 0 0" Spin="0 0 0" />
-        <RigidBody Attach="Bip01 R Toe0" Type="Kinematic" Position="-8.79601 -11.9103 0.0368465" SwitchEnabled="false" SwitchAtFrame="0" Velocity="0 0 0" Spin="0 0 0" />
+        <RigidBody Attach="Bip01 Pelvis" Type="Dynamic" Position="0 -1.23224 97.331" SwitchEnabled="false" SwitchAtFrame="0" Velocity="0 0 0" Spin="0 0 0" />
+        <RigidBody Attach="Bip01 Spine" Type="Dynamic" Position="2.28148e-007 -1.22475 107.447" SwitchEnabled="false" SwitchAtFrame="0" Velocity="0 -0 0" Spin="0 -0 0" />
+        <RigidBody Attach="Bip01 Spine1" Type="Dynamic" Position="2.56031e-007 -1.419 116.855" SwitchEnabled="false" SwitchAtFrame="0" Velocity="0 0 0" Spin="0 0 0" />
+        <RigidBody Attach="Bip01 Neck" Type="Dynamic" Position="-1.16236e-006 -0.384369 150.457" SwitchEnabled="false" SwitchAtFrame="0" Velocity="0 0 0" Spin="0 0 0" />
+        <RigidBody Attach="Bip01 Head" Type="Dynamic" Position="-1.44751e-006 -0.176342 157.249" SwitchEnabled="false" SwitchAtFrame="0" Velocity="0 0 0" Spin="0 0 0" />
+        <RigidBody Attach="Bip01 Ponytail1" Type="Dynamic" Position="-1.02487e-005 -9.53324 168.703" SwitchEnabled="false" SwitchAtFrame="0" Velocity="0 -0 0" Spin="0 -0 0" />
+        <RigidBody Attach="Bip01 L Clavicle" Type="Dynamic" Position="3.07861 -0.389772 150.457" SwitchEnabled="false" SwitchAtFrame="0" Velocity="0 0 0" Spin="0 0 0" />
+        <RigidBody Attach="Bip01 L UpperArm" Type="Dynamic" Position="18.6762 1.88825 142.518" SwitchEnabled="false" SwitchAtFrame="0" Velocity="0 0 0" Spin="0 0 0" />
+        <RigidBody Attach="Bip01 L Forearm" Type="Dynamic" Position="36.5158 5.28757 123.373" SwitchEnabled="false" SwitchAtFrame="0" Velocity="0 0 0" Spin="0 0 0" />
+        <RigidBody Attach="Bip01 L Hand" Type="Dynamic" Position="52.0345 0.585573 106.689" SwitchEnabled="false" SwitchAtFrame="0" Velocity="0 0 0" Spin="0 0 0" />
+        <RigidBody Attach="Bip01 R Clavicle" Type="Dynamic" Position="-3.07861 -0.389781 150.457" SwitchEnabled="false" SwitchAtFrame="0" Velocity="0 0 0" Spin="0 0 0" />
+        <RigidBody Attach="Bip01 R UpperArm" Type="Dynamic" Position="-18.5244 1.85413 142.217" SwitchEnabled="false" SwitchAtFrame="0" Velocity="0 0 0" Spin="0 0 0" />
+        <RigidBody Attach="Bip01 R Forearm" Type="Dynamic" Position="-36.6643 2.93823 123.083" SwitchEnabled="false" SwitchAtFrame="0" Velocity="0 0 0" Spin="0 0 0" />
+        <RigidBody Attach="Bip01 R Hand" Type="Dynamic" Position="-52.4608 -0.747208 106.404" SwitchEnabled="false" SwitchAtFrame="0" Velocity="0 -0 0" Spin="0 -0 0" />
+        <RigidBody Attach="Bip01 L Thigh" Type="Dynamic" Position="8.79602 -1.23223 97.331" SwitchEnabled="false" SwitchAtFrame="0" Velocity="0 -0 0" Spin="0 -0 0" />
+        <RigidBody Attach="Bip01 L Calf" Type="Dynamic" Position="8.79602 -4.92404 51.7409" SwitchEnabled="false" SwitchAtFrame="0" Velocity="0 0 0" Spin="0 0 0" />
+        <RigidBody Attach="Bip01 L Foot" Type="Dynamic" Position="8.79601 0.0568497 10.1523" SwitchEnabled="false" SwitchAtFrame="0" Velocity="0 0 0" Spin="0 0 0" />
+        <RigidBody Attach="Bip01 L Toe0" Type="Dynamic" Position="8.79603 -11.9102 0.0368465" SwitchEnabled="false" SwitchAtFrame="0" Velocity="0 0 0" Spin="0 0 0" />
+        <RigidBody Attach="Bip01 R Thigh" Type="Dynamic" Position="-8.79603 -1.23225 97.331" SwitchEnabled="false" SwitchAtFrame="0" Velocity="0 -0 0" Spin="0 -0 0" />
+        <RigidBody Attach="Bip01 R Calf" Type="Dynamic" Position="-8.79602 -4.92406 51.7409" SwitchEnabled="false" SwitchAtFrame="0" Velocity="0 0 0" Spin="0 0 0" />
+        <RigidBody Attach="Bip01 R Foot" Type="Dynamic" Position="-8.79603 0.0568256 10.1523" SwitchEnabled="false" SwitchAtFrame="0" Velocity="0 0 0" Spin="0 0 0" />
+        <RigidBody Attach="Bip01 R Toe0" Type="Dynamic" Position="-8.79601 -11.9103 0.0368465" SwitchEnabled="false" SwitchAtFrame="0" Velocity="0 0 0" Spin="0 0 0" />
     </SceneObjects>
 </PhysicsPlugin>
