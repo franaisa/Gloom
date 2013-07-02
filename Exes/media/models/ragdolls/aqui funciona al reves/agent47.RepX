@@ -6,7 +6,7 @@
 		<Speed >10</Speed>
 	</Scale>
 	<PxMaterial >
-		<Id >1361891648</Id>
+		<Id >1435425024</Id>
 		<DynamicFriction >0.3</DynamicFriction>
 		<StaticFriction >0.3</StaticFriction>
 		<Restitution >0.5</Restitution>
@@ -14,7 +14,7 @@
 		<RestitutionCombineMode >eAVERAGE</RestitutionCombineMode>
 	</PxMaterial>
 	<PxMaterial >
-		<Id >1361891744</Id>
+		<Id >1435425120</Id>
 		<DynamicFriction >0.3</DynamicFriction>
 		<StaticFriction >0.3</StaticFriction>
 		<Restitution >0.5</Restitution>
@@ -22,7 +22,7 @@
 		<RestitutionCombineMode >eAVERAGE</RestitutionCombineMode>
 	</PxMaterial>
 	<PxMaterial >
-		<Id >1361891840</Id>
+		<Id >1435425216</Id>
 		<DynamicFriction >0.3</DynamicFriction>
 		<StaticFriction >0.3</StaticFriction>
 		<Restitution >0.5</Restitution>
@@ -30,7 +30,7 @@
 		<RestitutionCombineMode >eAVERAGE</RestitutionCombineMode>
 	</PxMaterial>
 	<PxMaterial >
-		<Id >1361891936</Id>
+		<Id >1435425312</Id>
 		<DynamicFriction >0.3</DynamicFriction>
 		<StaticFriction >0.3</StaticFriction>
 		<Restitution >0.5</Restitution>
@@ -38,7 +38,7 @@
 		<RestitutionCombineMode >eAVERAGE</RestitutionCombineMode>
 	</PxMaterial>
 	<PxMaterial >
-		<Id >1361892704</Id>
+		<Id >1435426080</Id>
 		<DynamicFriction >0.3</DynamicFriction>
 		<StaticFriction >0.3</StaticFriction>
 		<Restitution >0.5</Restitution>
@@ -46,7 +46,7 @@
 		<RestitutionCombineMode >eAVERAGE</RestitutionCombineMode>
 	</PxMaterial>
 	<PxMaterial >
-		<Id >1361892608</Id>
+		<Id >1435425984</Id>
 		<DynamicFriction >0.3</DynamicFriction>
 		<StaticFriction >0.3</StaticFriction>
 		<Restitution >0.5</Restitution>
@@ -54,7 +54,7 @@
 		<RestitutionCombineMode >eAVERAGE</RestitutionCombineMode>
 	</PxMaterial>
 	<PxMaterial >
-		<Id >1361892512</Id>
+		<Id >1435425888</Id>
 		<DynamicFriction >0.3</DynamicFriction>
 		<StaticFriction >0.3</StaticFriction>
 		<Restitution >0.5</Restitution>
@@ -62,7 +62,7 @@
 		<RestitutionCombineMode >eAVERAGE</RestitutionCombineMode>
 	</PxMaterial>
 	<PxMaterial >
-		<Id >1361892416</Id>
+		<Id >1435425792</Id>
 		<DynamicFriction >0.3</DynamicFriction>
 		<StaticFriction >0.3</StaticFriction>
 		<Restitution >0.5</Restitution>
@@ -70,7 +70,7 @@
 		<RestitutionCombineMode >eAVERAGE</RestitutionCombineMode>
 	</PxMaterial>
 	<PxMaterial >
-		<Id >1361892320</Id>
+		<Id >1435425696</Id>
 		<DynamicFriction >0.3</DynamicFriction>
 		<StaticFriction >0.3</StaticFriction>
 		<Restitution >0.5</Restitution>
@@ -78,7 +78,7 @@
 		<RestitutionCombineMode >eAVERAGE</RestitutionCombineMode>
 	</PxMaterial>
 	<PxMaterial >
-		<Id >1361892224</Id>
+		<Id >1435425600</Id>
 		<DynamicFriction >0.3</DynamicFriction>
 		<StaticFriction >0.3</StaticFriction>
 		<Restitution >0.5</Restitution>
@@ -86,7 +86,7 @@
 		<RestitutionCombineMode >eAVERAGE</RestitutionCombineMode>
 	</PxMaterial>
 	<PxMaterial >
-		<Id >1361892128</Id>
+		<Id >1435425504</Id>
 		<DynamicFriction >0.3</DynamicFriction>
 		<StaticFriction >0.3</StaticFriction>
 		<Restitution >0.5</Restitution>
@@ -94,7 +94,7 @@
 		<RestitutionCombineMode >eAVERAGE</RestitutionCombineMode>
 	</PxMaterial>
 	<PxMaterial >
-		<Id >1361892032</Id>
+		<Id >1435425408</Id>
 		<DynamicFriction >0.3</DynamicFriction>
 		<StaticFriction >0.3</StaticFriction>
 		<Restitution >0.5</Restitution>
@@ -102,7 +102,7 @@
 		<RestitutionCombineMode >eAVERAGE</RestitutionCombineMode>
 	</PxMaterial>
 	<PxMaterial >
-		<Id >1361891552</Id>
+		<Id >1435424928</Id>
 		<DynamicFriction >0.3</DynamicFriction>
 		<StaticFriction >0.3</StaticFriction>
 		<Restitution >0.5</Restitution>
@@ -110,7 +110,7 @@
 		<RestitutionCombineMode >eAVERAGE</RestitutionCombineMode>
 	</PxMaterial>
 	<PxMaterial >
-		<Id >1361891456</Id>
+		<Id >1435424832</Id>
 		<DynamicFriction >0.3</DynamicFriction>
 		<StaticFriction >0.3</StaticFriction>
 		<Restitution >0.5</Restitution>
@@ -118,7 +118,7 @@
 		<RestitutionCombineMode >eAVERAGE</RestitutionCombineMode>
 	</PxMaterial>
 	<PxMaterial >
-		<Id >1361891360</Id>
+		<Id >1435424736</Id>
 		<DynamicFriction >0.3</DynamicFriction>
 		<StaticFriction >0.3</StaticFriction>
 		<Restitution >0.5</Restitution>
@@ -126,7 +126,7 @@
 		<RestitutionCombineMode >eAVERAGE</RestitutionCombineMode>
 	</PxMaterial>
 	<PxMaterial >
-		<Id >1361891264</Id>
+		<Id >1435424640</Id>
 		<DynamicFriction >0.3</DynamicFriction>
 		<StaticFriction >0.3</StaticFriction>
 		<Restitution >0.5</Restitution>
@@ -134,7 +134,7 @@
 		<RestitutionCombineMode >eAVERAGE</RestitutionCombineMode>
 	</PxMaterial>
 	<PxMaterial >
-		<Id >1361891072</Id>
+		<Id >1435424448</Id>
 		<DynamicFriction >0.3</DynamicFriction>
 		<StaticFriction >0.3</StaticFriction>
 		<Restitution >0.5</Restitution>
@@ -142,7 +142,7 @@
 		<RestitutionCombineMode >eAVERAGE</RestitutionCombineMode>
 	</PxMaterial>
 	<PxMaterial >
-		<Id >1361890976</Id>
+		<Id >1435424352</Id>
 		<DynamicFriction >0.3</DynamicFriction>
 		<StaticFriction >0.3</StaticFriction>
 		<Restitution >0.5</Restitution>
@@ -150,7 +150,7 @@
 		<RestitutionCombineMode >eAVERAGE</RestitutionCombineMode>
 	</PxMaterial>
 	<PxMaterial >
-		<Id >1361891168</Id>
+		<Id >1435424544</Id>
 		<DynamicFriction >0.3</DynamicFriction>
 		<StaticFriction >0.3</StaticFriction>
 		<Restitution >0.5</Restitution>
@@ -158,7 +158,7 @@
 		<RestitutionCombineMode >eAVERAGE</RestitutionCombineMode>
 	</PxMaterial>
 	<PxMaterial >
-		<Id >1361890880</Id>
+		<Id >1435424256</Id>
 		<DynamicFriction >0.3</DynamicFriction>
 		<StaticFriction >0.3</StaticFriction>
 		<Restitution >0.5</Restitution>
@@ -166,7 +166,7 @@
 		<RestitutionCombineMode >eAVERAGE</RestitutionCombineMode>
 	</PxMaterial>
 	<PxMaterial >
-		<Id >1361665552</Id>
+		<Id >1435413120</Id>
 		<DynamicFriction >0.3</DynamicFriction>
 		<StaticFriction >0.3</StaticFriction>
 		<Restitution >0.5</Restitution>
@@ -174,7 +174,7 @@
 		<RestitutionCombineMode >eAVERAGE</RestitutionCombineMode>
 	</PxMaterial>
 	<PxMaterial >
-		<Id >1361892800</Id>
+		<Id >1435426176</Id>
 		<DynamicFriction >0.3</DynamicFriction>
 		<StaticFriction >0.3</StaticFriction>
 		<Restitution >0.5</Restitution>
@@ -182,7 +182,7 @@
 		<RestitutionCombineMode >eAVERAGE</RestitutionCombineMode>
 	</PxMaterial>
 	<PxRigidDynamic >
-		<Id >1360688448</Id>
+		<Id >1360576928</Id>
 		<Name >Bip01 Pelvis</Name>
 		<ActorFlags >eVISUALIZATION</ActorFlags>
 		<DominanceGroup >0</DominanceGroup>
@@ -201,7 +201,7 @@
 				<SimulationFilterData >4 0 5 0</SimulationFilterData>
 				<QueryFilterData >0 0 0 0</QueryFilterData>
 				<Materials >
-					<PxMaterialRef >1361665552</PxMaterialRef>
+					<PxMaterialRef >1435413120</PxMaterialRef>
 				</Materials>
 				<ContactOffset >0.002</ContactOffset>
 				<RestOffset >0.001</RestOffset>
@@ -225,7 +225,7 @@
 		<ContactReportThreshold >3.40282e+038</ContactReportThreshold>
 	</PxRigidDynamic>
 	<PxRigidDynamic >
-		<Id >1360688784</Id>
+		<Id >1360577280</Id>
 		<Name >Bip01 Spine</Name>
 		<ActorFlags >eVISUALIZATION</ActorFlags>
 		<DominanceGroup >0</DominanceGroup>
@@ -244,7 +244,7 @@
 				<SimulationFilterData >4 0 5 0</SimulationFilterData>
 				<QueryFilterData >0 0 0 0</QueryFilterData>
 				<Materials >
-					<PxMaterialRef >1361890880</PxMaterialRef>
+					<PxMaterialRef >1435424256</PxMaterialRef>
 				</Materials>
 				<ContactOffset >0.002</ContactOffset>
 				<RestOffset >0.001</RestOffset>
@@ -268,7 +268,7 @@
 		<ContactReportThreshold >3.40282e+038</ContactReportThreshold>
 	</PxRigidDynamic>
 	<PxRigidDynamic >
-		<Id >1360689136</Id>
+		<Id >1360577616</Id>
 		<Name >Bip01 Spine1</Name>
 		<ActorFlags >eVISUALIZATION</ActorFlags>
 		<DominanceGroup >0</DominanceGroup>
@@ -287,7 +287,7 @@
 				<SimulationFilterData >4 0 5 0</SimulationFilterData>
 				<QueryFilterData >0 0 0 0</QueryFilterData>
 				<Materials >
-					<PxMaterialRef >1361891168</PxMaterialRef>
+					<PxMaterialRef >1435424544</PxMaterialRef>
 				</Materials>
 				<ContactOffset >0.002</ContactOffset>
 				<RestOffset >0.001</RestOffset>
@@ -311,7 +311,7 @@
 		<ContactReportThreshold >3.40282e+038</ContactReportThreshold>
 	</PxRigidDynamic>
 	<PxRigidDynamic >
-		<Id >1360689472</Id>
+		<Id >1360577968</Id>
 		<Name >Bip01 Neck</Name>
 		<ActorFlags >eVISUALIZATION</ActorFlags>
 		<DominanceGroup >0</DominanceGroup>
@@ -330,7 +330,7 @@
 				<SimulationFilterData >4 0 5 0</SimulationFilterData>
 				<QueryFilterData >0 0 0 0</QueryFilterData>
 				<Materials >
-					<PxMaterialRef >1361890976</PxMaterialRef>
+					<PxMaterialRef >1435424352</PxMaterialRef>
 				</Materials>
 				<ContactOffset >0.002</ContactOffset>
 				<RestOffset >0.001</RestOffset>
@@ -354,7 +354,7 @@
 		<ContactReportThreshold >3.40282e+038</ContactReportThreshold>
 	</PxRigidDynamic>
 	<PxRigidDynamic >
-		<Id >1360689824</Id>
+		<Id >1360578304</Id>
 		<Name >Bip01 Head</Name>
 		<ActorFlags >eVISUALIZATION</ActorFlags>
 		<DominanceGroup >0</DominanceGroup>
@@ -373,7 +373,7 @@
 				<SimulationFilterData >4 0 5 0</SimulationFilterData>
 				<QueryFilterData >0 0 0 0</QueryFilterData>
 				<Materials >
-					<PxMaterialRef >1361891072</PxMaterialRef>
+					<PxMaterialRef >1435424448</PxMaterialRef>
 				</Materials>
 				<ContactOffset >0.002</ContactOffset>
 				<RestOffset >0.001</RestOffset>
@@ -397,7 +397,7 @@
 		<ContactReportThreshold >3.40282e+038</ContactReportThreshold>
 	</PxRigidDynamic>
 	<PxRigidDynamic >
-		<Id >1360690160</Id>
+		<Id >1360578656</Id>
 		<Name >Bip01 Ponytail1</Name>
 		<ActorFlags >eVISUALIZATION</ActorFlags>
 		<DominanceGroup >0</DominanceGroup>
@@ -416,7 +416,7 @@
 				<SimulationFilterData >4 0 5 0</SimulationFilterData>
 				<QueryFilterData >0 0 0 0</QueryFilterData>
 				<Materials >
-					<PxMaterialRef >1361891264</PxMaterialRef>
+					<PxMaterialRef >1435424640</PxMaterialRef>
 				</Materials>
 				<ContactOffset >0.002</ContactOffset>
 				<RestOffset >0.001</RestOffset>
@@ -440,7 +440,7 @@
 		<ContactReportThreshold >3.40282e+038</ContactReportThreshold>
 	</PxRigidDynamic>
 	<PxRigidDynamic >
-		<Id >1360690512</Id>
+		<Id >1360578992</Id>
 		<Name >Bip01 L Clavicle</Name>
 		<ActorFlags >eVISUALIZATION</ActorFlags>
 		<DominanceGroup >0</DominanceGroup>
@@ -459,7 +459,7 @@
 				<SimulationFilterData >4 0 5 0</SimulationFilterData>
 				<QueryFilterData >0 0 0 0</QueryFilterData>
 				<Materials >
-					<PxMaterialRef >1361891360</PxMaterialRef>
+					<PxMaterialRef >1435424736</PxMaterialRef>
 				</Materials>
 				<ContactOffset >0.002</ContactOffset>
 				<RestOffset >0.001</RestOffset>
@@ -483,7 +483,7 @@
 		<ContactReportThreshold >3.40282e+038</ContactReportThreshold>
 	</PxRigidDynamic>
 	<PxRigidDynamic >
-		<Id >1360690848</Id>
+		<Id >1360579344</Id>
 		<Name >Bip01 L UpperArm</Name>
 		<ActorFlags >eVISUALIZATION</ActorFlags>
 		<DominanceGroup >0</DominanceGroup>
@@ -502,7 +502,7 @@
 				<SimulationFilterData >4 0 5 0</SimulationFilterData>
 				<QueryFilterData >0 0 0 0</QueryFilterData>
 				<Materials >
-					<PxMaterialRef >1361891456</PxMaterialRef>
+					<PxMaterialRef >1435424832</PxMaterialRef>
 				</Materials>
 				<ContactOffset >0.002</ContactOffset>
 				<RestOffset >0.001</RestOffset>
@@ -526,7 +526,7 @@
 		<ContactReportThreshold >3.40282e+038</ContactReportThreshold>
 	</PxRigidDynamic>
 	<PxRigidDynamic >
-		<Id >1360691200</Id>
+		<Id >1360579680</Id>
 		<Name >Bip01 L Forearm</Name>
 		<ActorFlags >eVISUALIZATION</ActorFlags>
 		<DominanceGroup >0</DominanceGroup>
@@ -545,7 +545,7 @@
 				<SimulationFilterData >4 0 5 0</SimulationFilterData>
 				<QueryFilterData >0 0 0 0</QueryFilterData>
 				<Materials >
-					<PxMaterialRef >1361891552</PxMaterialRef>
+					<PxMaterialRef >1435424928</PxMaterialRef>
 				</Materials>
 				<ContactOffset >0.002</ContactOffset>
 				<RestOffset >0.001</RestOffset>
@@ -569,7 +569,7 @@
 		<ContactReportThreshold >3.40282e+038</ContactReportThreshold>
 	</PxRigidDynamic>
 	<PxRigidDynamic >
-		<Id >1360691536</Id>
+		<Id >1360580032</Id>
 		<Name >Bip01 L Hand</Name>
 		<ActorFlags >eVISUALIZATION</ActorFlags>
 		<DominanceGroup >0</DominanceGroup>
@@ -588,7 +588,7 @@
 				<SimulationFilterData >4 0 5 0</SimulationFilterData>
 				<QueryFilterData >0 0 0 0</QueryFilterData>
 				<Materials >
-					<PxMaterialRef >1361892032</PxMaterialRef>
+					<PxMaterialRef >1435425408</PxMaterialRef>
 				</Materials>
 				<ContactOffset >0.002</ContactOffset>
 				<RestOffset >0.001</RestOffset>
@@ -612,7 +612,7 @@
 		<ContactReportThreshold >3.40282e+038</ContactReportThreshold>
 	</PxRigidDynamic>
 	<PxRigidDynamic >
-		<Id >1361321936</Id>
+		<Id >1435833408</Id>
 		<Name >Bip01 R Clavicle</Name>
 		<ActorFlags >eVISUALIZATION</ActorFlags>
 		<DominanceGroup >0</DominanceGroup>
@@ -631,7 +631,7 @@
 				<SimulationFilterData >4 0 5 0</SimulationFilterData>
 				<QueryFilterData >0 0 0 0</QueryFilterData>
 				<Materials >
-					<PxMaterialRef >1361892128</PxMaterialRef>
+					<PxMaterialRef >1435425504</PxMaterialRef>
 				</Materials>
 				<ContactOffset >0.002</ContactOffset>
 				<RestOffset >0.001</RestOffset>
@@ -655,7 +655,7 @@
 		<ContactReportThreshold >3.40282e+038</ContactReportThreshold>
 	</PxRigidDynamic>
 	<PxRigidDynamic >
-		<Id >1361322272</Id>
+		<Id >1435833760</Id>
 		<Name >Bip01 R UpperArm</Name>
 		<ActorFlags >eVISUALIZATION</ActorFlags>
 		<DominanceGroup >0</DominanceGroup>
@@ -674,7 +674,7 @@
 				<SimulationFilterData >4 0 5 0</SimulationFilterData>
 				<QueryFilterData >0 0 0 0</QueryFilterData>
 				<Materials >
-					<PxMaterialRef >1361892224</PxMaterialRef>
+					<PxMaterialRef >1435425600</PxMaterialRef>
 				</Materials>
 				<ContactOffset >0.002</ContactOffset>
 				<RestOffset >0.001</RestOffset>
@@ -698,7 +698,7 @@
 		<ContactReportThreshold >3.40282e+038</ContactReportThreshold>
 	</PxRigidDynamic>
 	<PxRigidDynamic >
-		<Id >1361322624</Id>
+		<Id >1435834096</Id>
 		<Name >Bip01 R Forearm</Name>
 		<ActorFlags >eVISUALIZATION</ActorFlags>
 		<DominanceGroup >0</DominanceGroup>
@@ -717,7 +717,7 @@
 				<SimulationFilterData >4 0 5 0</SimulationFilterData>
 				<QueryFilterData >0 0 0 0</QueryFilterData>
 				<Materials >
-					<PxMaterialRef >1361892320</PxMaterialRef>
+					<PxMaterialRef >1435425696</PxMaterialRef>
 				</Materials>
 				<ContactOffset >0.002</ContactOffset>
 				<RestOffset >0.001</RestOffset>
@@ -741,7 +741,7 @@
 		<ContactReportThreshold >3.40282e+038</ContactReportThreshold>
 	</PxRigidDynamic>
 	<PxRigidDynamic >
-		<Id >1361322960</Id>
+		<Id >1435834448</Id>
 		<Name >Bip01 R Hand</Name>
 		<ActorFlags >eVISUALIZATION</ActorFlags>
 		<DominanceGroup >0</DominanceGroup>
@@ -760,7 +760,7 @@
 				<SimulationFilterData >4 0 5 0</SimulationFilterData>
 				<QueryFilterData >0 0 0 0</QueryFilterData>
 				<Materials >
-					<PxMaterialRef >1361892416</PxMaterialRef>
+					<PxMaterialRef >1435425792</PxMaterialRef>
 				</Materials>
 				<ContactOffset >0.002</ContactOffset>
 				<RestOffset >0.001</RestOffset>
@@ -784,7 +784,7 @@
 		<ContactReportThreshold >3.40282e+038</ContactReportThreshold>
 	</PxRigidDynamic>
 	<PxRigidDynamic >
-		<Id >1361323312</Id>
+		<Id >1435834784</Id>
 		<Name >Bip01 L Thigh</Name>
 		<ActorFlags >eVISUALIZATION</ActorFlags>
 		<DominanceGroup >0</DominanceGroup>
@@ -803,7 +803,7 @@
 				<SimulationFilterData >4 0 5 0</SimulationFilterData>
 				<QueryFilterData >0 0 0 0</QueryFilterData>
 				<Materials >
-					<PxMaterialRef >1361892512</PxMaterialRef>
+					<PxMaterialRef >1435425888</PxMaterialRef>
 				</Materials>
 				<ContactOffset >0.002</ContactOffset>
 				<RestOffset >0.001</RestOffset>
@@ -827,7 +827,7 @@
 		<ContactReportThreshold >3.40282e+038</ContactReportThreshold>
 	</PxRigidDynamic>
 	<PxRigidDynamic >
-		<Id >1361987168</Id>
+		<Id >1435835136</Id>
 		<Name >Bip01 L Calf</Name>
 		<ActorFlags >eVISUALIZATION</ActorFlags>
 		<DominanceGroup >0</DominanceGroup>
@@ -846,7 +846,7 @@
 				<SimulationFilterData >4 0 5 0</SimulationFilterData>
 				<QueryFilterData >0 0 0 0</QueryFilterData>
 				<Materials >
-					<PxMaterialRef >1361892608</PxMaterialRef>
+					<PxMaterialRef >1435425984</PxMaterialRef>
 				</Materials>
 				<ContactOffset >0.002</ContactOffset>
 				<RestOffset >0.001</RestOffset>
@@ -870,7 +870,7 @@
 		<ContactReportThreshold >3.40282e+038</ContactReportThreshold>
 	</PxRigidDynamic>
 	<PxRigidDynamic >
-		<Id >1361987520</Id>
+		<Id >1435835472</Id>
 		<Name >Bip01 L Foot</Name>
 		<ActorFlags >eVISUALIZATION</ActorFlags>
 		<DominanceGroup >0</DominanceGroup>
@@ -889,7 +889,7 @@
 				<SimulationFilterData >4 0 5 0</SimulationFilterData>
 				<QueryFilterData >0 0 0 0</QueryFilterData>
 				<Materials >
-					<PxMaterialRef >1361892704</PxMaterialRef>
+					<PxMaterialRef >1435426080</PxMaterialRef>
 				</Materials>
 				<ContactOffset >0.002</ContactOffset>
 				<RestOffset >0.001</RestOffset>
@@ -913,7 +913,7 @@
 		<ContactReportThreshold >3.40282e+038</ContactReportThreshold>
 	</PxRigidDynamic>
 	<PxRigidDynamic >
-		<Id >1361987856</Id>
+		<Id >1435835824</Id>
 		<Name >Bip01 L Toe0</Name>
 		<ActorFlags >eVISUALIZATION</ActorFlags>
 		<DominanceGroup >0</DominanceGroup>
@@ -932,7 +932,7 @@
 				<SimulationFilterData >4 0 5 0</SimulationFilterData>
 				<QueryFilterData >0 0 0 0</QueryFilterData>
 				<Materials >
-					<PxMaterialRef >1361891936</PxMaterialRef>
+					<PxMaterialRef >1435425312</PxMaterialRef>
 				</Materials>
 				<ContactOffset >0.002</ContactOffset>
 				<RestOffset >0.001</RestOffset>
@@ -956,7 +956,7 @@
 		<ContactReportThreshold >3.40282e+038</ContactReportThreshold>
 	</PxRigidDynamic>
 	<PxRigidDynamic >
-		<Id >1361988208</Id>
+		<Id >1435836160</Id>
 		<Name >Bip01 R Thigh</Name>
 		<ActorFlags >eVISUALIZATION</ActorFlags>
 		<DominanceGroup >0</DominanceGroup>
@@ -975,7 +975,7 @@
 				<SimulationFilterData >4 0 5 0</SimulationFilterData>
 				<QueryFilterData >0 0 0 0</QueryFilterData>
 				<Materials >
-					<PxMaterialRef >1361891840</PxMaterialRef>
+					<PxMaterialRef >1435425216</PxMaterialRef>
 				</Materials>
 				<ContactOffset >0.002</ContactOffset>
 				<RestOffset >0.001</RestOffset>
@@ -999,7 +999,7 @@
 		<ContactReportThreshold >3.40282e+038</ContactReportThreshold>
 	</PxRigidDynamic>
 	<PxRigidDynamic >
-		<Id >1361988544</Id>
+		<Id >1435836512</Id>
 		<Name >Bip01 R Calf</Name>
 		<ActorFlags >eVISUALIZATION</ActorFlags>
 		<DominanceGroup >0</DominanceGroup>
@@ -1018,7 +1018,7 @@
 				<SimulationFilterData >4 0 5 0</SimulationFilterData>
 				<QueryFilterData >0 0 0 0</QueryFilterData>
 				<Materials >
-					<PxMaterialRef >1361891744</PxMaterialRef>
+					<PxMaterialRef >1435425120</PxMaterialRef>
 				</Materials>
 				<ContactOffset >0.002</ContactOffset>
 				<RestOffset >0.001</RestOffset>
@@ -1042,7 +1042,7 @@
 		<ContactReportThreshold >3.40282e+038</ContactReportThreshold>
 	</PxRigidDynamic>
 	<PxRigidDynamic >
-		<Id >1361988896</Id>
+		<Id >1435836848</Id>
 		<Name >Bip01 R Foot</Name>
 		<ActorFlags >eVISUALIZATION</ActorFlags>
 		<DominanceGroup >0</DominanceGroup>
@@ -1061,7 +1061,7 @@
 				<SimulationFilterData >4 0 5 0</SimulationFilterData>
 				<QueryFilterData >0 0 0 0</QueryFilterData>
 				<Materials >
-					<PxMaterialRef >1361891648</PxMaterialRef>
+					<PxMaterialRef >1435425024</PxMaterialRef>
 				</Materials>
 				<ContactOffset >0.002</ContactOffset>
 				<RestOffset >0.001</RestOffset>
@@ -1085,7 +1085,7 @@
 		<ContactReportThreshold >3.40282e+038</ContactReportThreshold>
 	</PxRigidDynamic>
 	<PxRigidDynamic >
-		<Id >1361989232</Id>
+		<Id >1435885968</Id>
 		<Name >Bip01 R Toe0</Name>
 		<ActorFlags >eVISUALIZATION</ActorFlags>
 		<DominanceGroup >0</DominanceGroup>
@@ -1104,7 +1104,7 @@
 				<SimulationFilterData >4 0 5 0</SimulationFilterData>
 				<QueryFilterData >0 0 0 0</QueryFilterData>
 				<Materials >
-					<PxMaterialRef >1361892800</PxMaterialRef>
+					<PxMaterialRef >1435426176</PxMaterialRef>
 				</Materials>
 				<ContactOffset >0.002</ContactOffset>
 				<RestOffset >0.001</RestOffset>
@@ -1128,14 +1128,14 @@
 		<ContactReportThreshold >3.40282e+038</ContactReportThreshold>
 	</PxRigidDynamic>
 	<PxD6Joint >
-		<Id >1360682080</Id>
+		<Id >327572576</Id>
 		<Actors >
-			<actor0 >1360689824</actor0>
-			<actor1 >1360690160</actor1>
+			<actor0 >1360578304</actor0>
+			<actor1 >1360578656</actor1>
 		</Actors>
 		<LocalPose >
 			<eACTOR0 >-9.44824e-005 0.000144566 0.706988 0.707225 1.14538 0.935691 4.32366e-007</eACTOR0>
-			<eACTOR1 >-2.91038e-011 -7.28217e-012 -1.25292e-008 1 9.53674e-008 0 0</eACTOR1>
+			<eACTOR1 >-6.91216e-011 -7.28884e-012 -1.25292e-008 1 9.53674e-008 0 0</eACTOR1>
 		</LocalPose>
 		<BreakForce >
 			<force >3.40282e+037</force>
@@ -1220,10 +1220,10 @@
 		<ProjectionAngularTolerance >0.0872665</ProjectionAngularTolerance>
 	</PxD6Joint>
 	<PxD6Joint >
-		<Id >1360682192</Id>
+		<Id >327573168</Id>
 		<Actors >
-			<actor0 >1360691200</actor0>
-			<actor1 >1360691536</actor1>
+			<actor0 >1360579680</actor0>
+			<actor1 >1360580032</actor1>
 		</Actors>
 		<LocalPose >
 			<eACTOR0 >-0.706152 0.00615868 -0.0308458 0.707361 2.32658 0 1.52588e-006</eACTOR0>
@@ -1312,14 +1312,14 @@
 		<ProjectionAngularTolerance >0.0872665</ProjectionAngularTolerance>
 	</PxD6Joint>
 	<PxD6Joint >
-		<Id >1360682672</Id>
+		<Id >327572816</Id>
 		<Actors >
-			<actor0 >1360690848</actor0>
-			<actor1 >1360691200</actor1>
+			<actor0 >1360579344</actor0>
+			<actor1 >1360579680</actor1>
 		</Actors>
 		<LocalPose >
 			<eACTOR0 >0.117079 0.697347 -0.117079 0.697347 2.63881 -9.53674e-008 0</eACTOR0>
-			<eACTOR1 >-7.90253e-009 0.707107 1.31709e-008 0.707107 0 0 0</eACTOR1>
+			<eACTOR1 >-1.58051e-008 0.707107 1.58051e-008 0.707107 0 0 0</eACTOR1>
 		</LocalPose>
 		<BreakForce >
 			<force >3.40282e+037</force>
@@ -1404,14 +1404,14 @@
 		<ProjectionAngularTolerance >0.0872665</ProjectionAngularTolerance>
 	</PxD6Joint>
 	<PxD6Joint >
-		<Id >1360682560</Id>
+		<Id >327573056</Id>
 		<Actors >
-			<actor0 >1360690512</actor0>
-			<actor1 >1360690848</actor1>
+			<actor0 >1360578992</actor0>
+			<actor1 >1360579344</actor1>
 		</Actors>
 		<LocalPose >
 			<eACTOR0 >0.267093 -0.333318 -0.482185 0.764891 1.76497 0 3.05176e-006</eACTOR0>
-			<eACTOR1 >0.279109 2.32768e-008 -1.16361e-009 0.960259 -7.62939e-007 9.53674e-008 1.52588e-006</eACTOR1>
+			<eACTOR1 >0.279109 5.43125e-008 -1.16361e-009 0.960259 -7.62939e-007 9.53674e-008 1.52588e-006</eACTOR1>
 		</LocalPose>
 		<BreakForce >
 			<force >3.40282e+037</force>
@@ -1496,10 +1496,10 @@
 		<ProjectionAngularTolerance >0.0872665</ProjectionAngularTolerance>
 	</PxD6Joint>
 	<PxD6Joint >
-		<Id >1360682320</Id>
+		<Id >327572336</Id>
 		<Actors >
-			<actor0 >1361322624</actor0>
-			<actor1 >1361322960</actor1>
+			<actor0 >1435834096</actor0>
+			<actor1 >1435834448</actor1>
 		</Actors>
 		<LocalPose >
 			<eACTOR0 >0.706152 -0.0061588 -0.0308458 0.707361 2.32658 9.53674e-008 -7.62939e-007</eACTOR0>
@@ -1588,14 +1588,14 @@
 		<ProjectionAngularTolerance >0.0872665</ProjectionAngularTolerance>
 	</PxD6Joint>
 	<PxD6Joint >
-		<Id >1360682800</Id>
+		<Id >1364169424</Id>
 		<Actors >
-			<actor0 >1361322272</actor0>
-			<actor1 >1361322624</actor1>
+			<actor0 >1435833760</actor0>
+			<actor1 >1435834096</actor1>
 		</Actors>
 		<LocalPose >
-			<eACTOR0 >0.0706533 0.703569 -0.0706533 0.703568 2.63881 4.76837e-008 -7.62939e-007</eACTOR0>
-			<eACTOR1 >1.71221e-007 0.707107 -1.97563e-007 0.707106 0 0 0</eACTOR1>
+			<eACTOR0 >0.0706533 0.703568 -0.0706533 0.703568 2.63881 4.76837e-008 -7.62939e-007</eACTOR0>
+			<eACTOR1 >1.4488e-007 0.707107 -1.60685e-007 0.707106 0 0 0</eACTOR1>
 		</LocalPose>
 		<BreakForce >
 			<force >3.40282e+037</force>
@@ -1680,14 +1680,14 @@
 		<ProjectionAngularTolerance >0.0872665</ProjectionAngularTolerance>
 	</PxD6Joint>
 	<PxD6Joint >
-		<Id >1360682912</Id>
+		<Id >1364170256</Id>
 		<Actors >
-			<actor0 >1361321936</actor0>
-			<actor1 >1361322272</actor1>
+			<actor0 >1435833408</actor0>
+			<actor1 >1435833760</actor1>
 		</Actors>
 		<LocalPose >
 			<eACTOR0 >-0.245232 0.357274 -0.506416 0.745493 1.76497 -4.76837e-008 -1.52588e-006</eACTOR0>
-			<eACTOR1 >-0.27911 -2.32768e-008 8.31812e-009 0.960259 0 1.43051e-007 -2.28882e-006</eACTOR1>
+			<eACTOR1 >-0.27911 -1.55179e-008 8.31812e-009 0.960259 0 1.43051e-007 -2.28882e-006</eACTOR1>
 		</LocalPose>
 		<BreakForce >
 			<force >3.40282e+037</force>
@@ -1772,10 +1772,10 @@
 		<ProjectionAngularTolerance >0.0872665</ProjectionAngularTolerance>
 	</PxD6Joint>
 	<PxD6Joint >
-		<Id >1360683040</Id>
+		<Id >1364170384</Id>
 		<Actors >
-			<actor0 >1360689472</actor0>
-			<actor1 >1360689824</actor1>
+			<actor0 >1360577968</actor0>
+			<actor1 >1360578304</actor1>
 		</Actors>
 		<LocalPose >
 			<eACTOR0 >-2.77007e-014 -8.92871e-015 0.102396 0.994744 0.679491 -9.53674e-008 -1.81899e-013</eACTOR0>
@@ -1864,14 +1864,14 @@
 		<ProjectionAngularTolerance >0.0872665</ProjectionAngularTolerance>
 	</PxD6Joint>
 	<PxD6Joint >
-		<Id >1360683152</Id>
+		<Id >1364170496</Id>
 		<Actors >
-			<actor0 >1360689472</actor0>
-			<actor1 >1360690512</actor1>
+			<actor0 >1360577968</actor0>
+			<actor1 >1360578992</actor1>
 		</Actors>
 		<LocalPose >
-			<eACTOR0 >0.524794 -0.0683924 0.847443 -0.0418892 0 0.000540209 0.307861</eACTOR0>
-			<eACTOR1 >-1.45286e-007 3.72529e-008 -6.56582e-008 1 0 0 0</eACTOR1>
+			<eACTOR0 >0.524794 -0.0683926 0.847443 -0.041889 0 0.000540209 0.307861</eACTOR0>
+			<eACTOR1 >-3.88362e-007 6.70552e-008 -1.52737e-007 1 0 0 0</eACTOR1>
 		</LocalPose>
 		<BreakForce >
 			<force >3.40282e+037</force>
@@ -1956,14 +1956,14 @@
 		<ProjectionAngularTolerance >0.0872665</ProjectionAngularTolerance>
 	</PxD6Joint>
 	<PxD6Joint >
-		<Id >1360683280</Id>
+		<Id >1364170864</Id>
 		<Actors >
-			<actor0 >1360689472</actor0>
-			<actor1 >1361321936</actor1>
+			<actor0 >1360577968</actor0>
+			<actor1 >1435833408</actor1>
 		</Actors>
 		<LocalPose >
-			<eACTOR0 >-0.516635 0.068789 0.852442 -0.0412293 0 0.000541925 -0.307861</eACTOR0>
-			<eACTOR1 >1.43424e-007 -1.49012e-008 -4.70318e-008 1 0 0 0</eACTOR1>
+			<eACTOR0 >-0.516635 0.0687891 0.852442 -0.0412293 0 0.000541925 -0.307861</eACTOR0>
+			<eACTOR1 >2.76603e-007 -1.49012e-007 1.86269e-009 1 0 0 0</eACTOR1>
 		</LocalPose>
 		<BreakForce >
 			<force >3.40282e+037</force>
@@ -2048,10 +2048,10 @@
 		<ProjectionAngularTolerance >0.0872665</ProjectionAngularTolerance>
 	</PxD6Joint>
 	<PxD6Joint >
-		<Id >1360683392</Id>
+		<Id >1364169904</Id>
 		<Actors >
-			<actor0 >1360689136</actor0>
-			<actor1 >1360689472</actor1>
+			<actor0 >1360577616</actor0>
+			<actor1 >1360577968</actor1>
 		</Actors>
 		<LocalPose >
 			<eACTOR0 >2.79776e-014 1.77636e-015 9.31322e-010 1 3.36184 -0.000541019 -1.50058e-009</eACTOR0>
@@ -2140,10 +2140,10 @@
 		<ProjectionAngularTolerance >0.0872665</ProjectionAngularTolerance>
 	</PxD6Joint>
 	<PxD6Joint >
-		<Id >1360683520</Id>
+		<Id >1364170016</Id>
 		<Actors >
-			<actor0 >1360688784</actor0>
-			<actor1 >1360689136</actor1>
+			<actor0 >1360577280</actor0>
+			<actor1 >1360577616</actor1>
 		</Actors>
 		<LocalPose >
 			<eACTOR0 >4.38535e-008 1.62882e-007 -0.00087233 1 0.940993 -0.00267298 -7.41379e-009</eACTOR0>
@@ -2232,13 +2232,13 @@
 		<ProjectionAngularTolerance >0.0872665</ProjectionAngularTolerance>
 	</PxD6Joint>
 	<PxD6Joint >
-		<Id >1360683632</Id>
+		<Id >1364170144</Id>
 		<Actors >
-			<actor0 >1361987520</actor0>
-			<actor1 >1361987856</actor1>
+			<actor0 >1435835472</actor0>
+			<actor1 >1435835824</actor1>
 		</Actors>
 		<LocalPose >
-			<eACTOR0 >6.16333e-008 4.76579e-009 0.759517 0.650487 1.01154 1.19671 0</eACTOR0>
+			<eACTOR0 >6.16333e-008 4.76582e-009 0.759517 0.650487 1.01154 1.19671 0</eACTOR0>
 			<eACTOR1 >4.37114e-008 -1.3018e-014 -2.01341e-022 1 -9.53674e-008 7.15256e-008 0</eACTOR1>
 		</LocalPose>
 		<BreakForce >
@@ -2324,10 +2324,10 @@
 		<ProjectionAngularTolerance >0.0872665</ProjectionAngularTolerance>
 	</PxD6Joint>
 	<PxD6Joint >
-		<Id >1360683760</Id>
+		<Id >1364170736</Id>
 		<Actors >
-			<actor0 >1361987168</actor0>
-			<actor1 >1361987520</actor1>
+			<actor0 >1435835136</actor0>
+			<actor1 >1435835472</actor1>
 		</Actors>
 		<LocalPose >
 			<eACTOR0 >3.91368e-008 7.79675e-008 0.0595636 0.998225 4.18858 -3.57628e-008 9.53674e-008</eACTOR0>
@@ -2416,10 +2416,10 @@
 		<ProjectionAngularTolerance >0.0872665</ProjectionAngularTolerance>
 	</PxD6Joint>
 	<PxD6Joint >
-		<Id >327572688</Id>
+		<Id >1364169776</Id>
 		<Actors >
-			<actor0 >1361323312</actor0>
-			<actor1 >1361987168</actor1>
+			<actor0 >1435834784</actor0>
+			<actor1 >1435835136</actor1>
 		</Actors>
 		<LocalPose >
 			<eACTOR0 >0.0705928 0.703574 -0.0705929 0.703574 4.57393 0 -1.90735e-007</eACTOR0>
@@ -2508,10 +2508,10 @@
 		<ProjectionAngularTolerance >0.0872665</ProjectionAngularTolerance>
 	</PxD6Joint>
 	<PxD6Joint >
-		<Id >327572816</Id>
+		<Id >1364170624</Id>
 		<Actors >
-			<actor0 >1361988896</actor0>
-			<actor1 >1361989232</actor1>
+			<actor0 >1435836848</actor0>
+			<actor1 >1435885968</actor1>
 		</Actors>
 		<LocalPose >
 			<eACTOR0 >6.16378e-008 4.70701e-009 0.758896 0.651211 1.01154 1.19671 0</eACTOR0>
@@ -2600,10 +2600,10 @@
 		<ProjectionAngularTolerance >0.0872665</ProjectionAngularTolerance>
 	</PxD6Joint>
 	<PxD6Joint >
-		<Id >327572928</Id>
+		<Id >1364170976</Id>
 		<Actors >
-			<actor0 >1361988544</actor0>
-			<actor1 >1361988896</actor1>
+			<actor0 >1435836512</actor0>
+			<actor1 >1435836848</actor1>
 		</Actors>
 		<LocalPose >
 			<eACTOR0 >4.62374e-008 -4.10302e-008 0.0595636 0.998225 4.18858 -3.57628e-008 0</eACTOR0>
@@ -2692,10 +2692,10 @@
 		<ProjectionAngularTolerance >0.0872665</ProjectionAngularTolerance>
 	</PxD6Joint>
 	<PxD6Joint >
-		<Id >327572096</Id>
+		<Id >1360683280</Id>
 		<Actors >
-			<actor0 >1361988208</actor0>
-			<actor1 >1361988544</actor1>
+			<actor0 >1435836160</actor0>
+			<actor1 >1435836512</actor1>
 		</Actors>
 		<LocalPose >
 			<eACTOR0 >0.0705928 0.703574 -0.0705929 0.703574 4.57393 0 0</eACTOR0>
@@ -2784,10 +2784,10 @@
 		<ProjectionAngularTolerance >0.0872665</ProjectionAngularTolerance>
 	</PxD6Joint>
 	<PxD6Joint >
-		<Id >327573168</Id>
+		<Id >1360682192</Id>
 		<Actors >
-			<actor0 >1360688448</actor0>
-			<actor1 >1360688784</actor1>
+			<actor0 >1360576928</actor0>
+			<actor1 >1360577280</actor1>
 		</Actors>
 		<LocalPose >
 			<eACTOR0 >-2.1022e-006 -3.60168e-008 0.0379137 0.999281 1.01156 -0.000748742 1.40387e-006</eACTOR0>
@@ -2876,14 +2876,14 @@
 		<ProjectionAngularTolerance >0.0872665</ProjectionAngularTolerance>
 	</PxD6Joint>
 	<PxD6Joint >
-		<Id >327572576</Id>
+		<Id >1360683760</Id>
 		<Actors >
-			<actor0 >1360688448</actor0>
-			<actor1 >1361323312</actor1>
+			<actor0 >1360576928</actor0>
+			<actor1 >1435834784</actor1>
 		</Actors>
 		<LocalPose >
-			<eACTOR0 >0.0402362 0.995382 0.00351872 -0.0870837 -1.52588e-006 1.64509e-006 0.879603</eACTOR0>
-			<eACTOR1 >8.15205e-007 -8.1282e-009 -3.72529e-009 1 0 0 0</eACTOR1>
+			<eACTOR0 >0.0402362 0.995382 0.00351825 -0.0870837 -1.52588e-006 1.64509e-006 0.879603</eACTOR0>
+			<eACTOR1 >1.29724e-006 -4.87456e-009 -3.72529e-009 1 0 0 0</eACTOR1>
 		</LocalPose>
 		<BreakForce >
 			<force >3.40282e+037</force>
@@ -2968,14 +2968,14 @@
 		<ProjectionAngularTolerance >0.0872665</ProjectionAngularTolerance>
 	</PxD6Joint>
 	<PxD6Joint >
-		<Id >327572448</Id>
+		<Id >1360683632</Id>
 		<Actors >
-			<actor0 >1360688448</actor0>
-			<actor1 >1361988208</actor1>
+			<actor0 >1360576928</actor0>
+			<actor1 >1435836160</actor1>
 		</Actors>
 		<LocalPose >
-			<eACTOR0 >0.0402362 0.995382 -0.00352158 0.0870853 1.52588e-006 -7.86781e-007 -0.879603</eACTOR0>
-			<eACTOR1 >7.5349e-007 3.64808e-009 -1.46187e-022 1 0 0 0</eACTOR1>
+			<eACTOR0 >0.0402363 0.995382 -0.00352206 0.0870852 1.52588e-006 -7.86781e-007 -0.879603</eACTOR0>
+			<eACTOR1 >1.24104e-006 2.88323e-009 -2.40778e-022 1 0 0 0</eACTOR1>
 		</LocalPose>
 		<BreakForce >
 			<force >3.40282e+037</force>
