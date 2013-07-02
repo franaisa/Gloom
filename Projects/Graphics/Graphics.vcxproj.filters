@@ -97,5 +97,8 @@
     <ClInclude Include="..\..\Src\Graphics\OgreParticle.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Src\Graphics\Bone.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
