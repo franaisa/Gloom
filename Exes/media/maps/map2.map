@@ -16,6 +16,7 @@ Map = {
 		isPlayer = false,
 		position = {20, 0.2, -20},
 		model = "ragdolls/agent47.mesh",
+		yaw = 180,
 	},
 	
 	Jumper1 = {
