@@ -16,6 +16,9 @@ Map = {
 		isPlayer = false,
 		position = {20, 0.2, -20},
 		model = "ragdolls/agent47.mesh",
+		ragdoll_file = "media/models/ragdolls/agent47.RepX",
+		ragdoll_group = 1,
+		ragdoll_groupList = "-1",
 	},
 	
 	Jumper1 = {

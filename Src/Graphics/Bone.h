@@ -16,31 +16,42 @@ namespace Graphics {
 
 	class CBone {
 	public:
+
 		CBone(Ogre::SceneNode* parentNode, Ogre::Bone* ogreBone) : _parentNode(parentNode), _bone(ogreBone) {
 			// Nada que hacer
 		}
+
+		//________________________________________________________________________
 
 		~CBone() {
 			// Nada que hacer
 		}
 
+		//________________________________________________________________________
+
 		void setManuallyControlled(bool setToManual) {
 			_bone->setManuallyControlled(setToManual);
 		}
+
+		//________________________________________________________________________
 
 		bool isManuallyControlled() {
 			return _bone->isManuallyControlled();
 		}
 
-		void getGlobaPose(Vector3& worldPosition, Quaternion& worldOrientation) {
-			Ogre::Quaternion parentQuat = _parentNode->_getDerivedOrientation();
-			Ogre::Vector3 parentPos = _parentNode->_getDerivedPosition();
-			Ogre::Quaternion boneQuat = _bone->_getDerivedOrientation();
-			Ogre::Vector3 bonePos = _bone->_getDerivedPosition();
+		//________________________________________________________________________
 
-			worldOrientation = boneQuat * parentQuat;
+		void getGlobaPose(Vector3& worldPosition, Quaternion& worldOrientation) {
+			Quaternion parentQuat = _parentNode->_getDerivedOrientation();
+			Vector3 parentPos = _parentNode->_getDerivedPosition();
+			Quaternion boneQuat = _bone->_getDerivedOrientation();
+			Vector3 bonePos = _bone->_getDerivedPosition();
+
+			worldOrientation = parentQuat * boneQuat;
 			worldPosition = parentQuat * bonePos + parentPos;
 		}
+
+		//________________________________________________________________________
 
 		void setGlobalPose(const Vector3& worldPosition, Quaternion& worldOrientation) {
 			_bone->setManuallyControlled(true);

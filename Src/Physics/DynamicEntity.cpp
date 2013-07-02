@@ -246,7 +246,7 @@ namespace Physics {
 			_actor->setGlobalPose( PxTransform( Vector3ToPxVec3( convertPhysxCoordsToLogicCoords(position) ), QuaternionToPxQuat(orientation) ) );
 		}
 		else {
-			_actor->setGlobalPose(  PxTransform( Vector3ToPxVec3(position), QuaternionToPxQuat(orientation) ) );
+			_actor->setGlobalPose( PxTransform( Vector3ToPxVec3(position), QuaternionToPxQuat(orientation) ) );
 		}
 	}
 

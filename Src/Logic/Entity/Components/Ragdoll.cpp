@@ -81,6 +81,7 @@ void CRagdoll::process(const std::shared_ptr<CMessage>& message) {
 			// Convertimos todas las shapes fisicas en dinamicas para que
 			// el motor de fisicas tome el control
 			for(int i = 0; i < _ragdollBonesBuffer.size(); ++i) {
+				_ragdollBonesBuffer[i].first.setManuallyControlled(true);
 				_ragdollBonesBuffer[i].second->setKinematic(false);
 			}
 
@@ -93,6 +94,7 @@ void CRagdoll::process(const std::shared_ptr<CMessage>& message) {
 			// Convertimos todas las shapes fisicas en kinemáticas para
 			// alinear los colliders a los huesos en cada frame de la animación
 			for(int i = 0; i < _ragdollBonesBuffer.size(); ++i) {
+				_ragdollBonesBuffer[i].first.setManuallyControlled(false);
 				_ragdollBonesBuffer[i].second->setKinematic(true);
 			}
 
