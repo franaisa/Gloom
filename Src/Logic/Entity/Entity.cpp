@@ -39,9 +39,6 @@ namespace Logic {
 										   _name(""), 
 										   _position(0,0,0),
 										   _orientation(1,0,0,0),
-										   _yawOrientation(1,0,0,0),
-										   _pitchOrientation(1,0,0,0),
-										   _rollOrientation(1,0,0,0),//identidad
 										   _isPlayer(false), 
 										   _activated(false) {
  
@@ -89,18 +86,25 @@ namespace Logic {
 		}
 
 		if(entityInfo->hasAttribute("yaw")) {
-			_yawOrientation=Math::fromDegreesToQuaternion(entityInfo->getFloatAttribute("yaw"),Vector3(0,1,0));
-			_orientation=_yawOrientation*_pitchOrientation*_rollOrientation;
+			//Como es el primero podemos optimizar
+			_orientation=Math::fromDegreesToQuaternion(entityInfo->getFloatAttribute("yaw"),Vector3(0,1,0));
 		}
 	
-		if(entityInfo->hasAttribute("pitch")) { 
-			_pitchOrientation=Math::fromDegreesToQuaternion(entityInfo->getFloatAttribute("pitch"),Vector3(1,0,0));
-			_orientation=_yawOrientation*_pitchOrientation*_rollOrientation;
+		if(entityInfo->hasAttribute("pitch")) {
+			//Solo puede tener antes el yaw
+			Vector3 parcial=Math::getEulerYawPitchRoll(_orientation);
+			Quaternion yawOrientation = Math::setQuaternion(parcial.x,0,0);
+			Quaternion pitchOrientation=Math::fromDegreesToQuaternion(entityInfo->getFloatAttribute("pitch"),Vector3(1,0,0));
+			_orientation=yawOrientation*pitchOrientation;
 		}
 
 		if(entityInfo->hasAttribute("roll")) { 
-			_rollOrientation=Math::fromDegreesToQuaternion(entityInfo->getFloatAttribute("roll"),Vector3(0,0,1));
-			_orientation=_yawOrientation*_pitchOrientation*_rollOrientation;
+			//Puede tener tanto yaw como pitch
+			Vector3 parcial=Math::getEulerYawPitchRoll(_orientation);
+			Quaternion yawOrientation = Math::setQuaternion(parcial.x,0,0);
+			Quaternion pitchOrientation = Math::setQuaternion(0,parcial.y,0);
+			Quaternion rollOrientation=Math::fromDegreesToQuaternion(entityInfo->getFloatAttribute("roll"),Vector3(0,0,1));
+			_orientation=yawOrientation*pitchOrientation*rollOrientation;
 		}
 
 		if(entityInfo->hasAttribute("isPlayer")){
@@ -384,10 +388,6 @@ namespace Logic {
 	void CEntity::setOrientation(const Quaternion& orientation) {
 		//Actualizacion global
 		_orientation = orientation;
-		Vector3 parcial=Math::getEulerYawPitchRoll(_orientation);
-		_yawOrientation = Math::setQuaternion(parcial.x,0,0);
-		_pitchOrientation = Math::setQuaternion(0,parcial.y,0);
-		_rollOrientation = Math::setQuaternion(0,0,parcial.z);
 	} // setOrientation
 
 	//---------------------------------------------------------
@@ -398,56 +398,90 @@ namespace Logic {
 	//---------------------------------------------------------
 
 	void CEntity::setYaw(const Quaternion &yaw, bool reset){
-		 _yawOrientation=yaw;
 		if(reset){
-			_rollOrientation=Quaternion::IDENTITY;
-			_pitchOrientation=Quaternion::IDENTITY;
+			_orientation=yaw;
 		 }
-		//Actualizamos la orientacion final
-		_orientation=_yawOrientation*_pitchOrientation*_rollOrientation;
+		else{
+			Vector3 parcial=Math::getEulerYawPitchRoll(_orientation);
+			Quaternion pitchOrientation = Math::setQuaternion(0,parcial.y,0);
+			Quaternion rollOrientation = Math::setQuaternion(0,0,parcial.z);
+			//Actualizamos la orientacion final
+			_orientation=yaw*pitchOrientation*rollOrientation;
+		}
 	}
 	// setYaw
 	//---------------------------------------------------------
 
 	void CEntity::setPitch(const Quaternion &pitch, bool reset) {
-		_pitchOrientation=pitch;
 		if(reset){
-			_rollOrientation=Quaternion::IDENTITY;
-			_yawOrientation=Quaternion::IDENTITY;
+			_orientation=pitch;
 		 }
-		//Actualizamos la orientacion final
-		_orientation=_yawOrientation*_pitchOrientation*_rollOrientation;
+		else{
+			Vector3 parcial=Math::getEulerYawPitchRoll(_orientation);
+			Quaternion yawOrientation = Math::setQuaternion(parcial.x,0,0);
+			Quaternion rollOrientation = Math::setQuaternion(0,0,parcial.z);
+			//Actualizamos la orientacion final
+			_orientation=yawOrientation*pitch*rollOrientation;
+		}
 	} // setPitch
 	//---------------------------------------------------------
 
 	void CEntity::setRoll(const Quaternion &roll, bool reset) {
-		_rollOrientation=roll;
 		if(reset){
-			_pitchOrientation=Quaternion::IDENTITY;
-			_yawOrientation=Quaternion::IDENTITY;
+			_orientation=roll;
 		 }
-		//Actualizamos la orientacion final
-		_orientation=_yawOrientation*_pitchOrientation*_rollOrientation;
+		else{
+			Vector3 parcial=Math::getEulerYawPitchRoll(_orientation);
+			Quaternion yawOrientation = Math::setQuaternion(parcial.x,0,0);
+			Quaternion pitchOrientation = Math::setQuaternion(0,parcial.y,0);
+			//Actualizamos la orientacion final
+			_orientation=yawOrientation*pitchOrientation*roll;
+		}
 	} // setRoll
 	//---------------------------------------------------------
 
+	Quaternion CEntity::getYaw() const{
+		Vector3 parcial=Math::getEulerYawPitchRoll(_orientation);
+		return Math::setQuaternion(parcial.x,0,0);
+	} // getYaw
+	//---------------------------------------------------------
+
+
+	Quaternion CEntity::getPitch() const{
+		Vector3 parcial=Math::getEulerYawPitchRoll(_orientation);
+		return Math::setQuaternion(0,parcial.y,0);
+	} // getPitch
+	//---------------------------------------------------------
+
+	Quaternion CEntity::getRoll() const{
+		Vector3 parcial=Math::getEulerYawPitchRoll(_orientation);
+		return Math::setQuaternion(0,0,parcial.z);
+	} // getRoll
+	//---------------------------------------------------------
+
+
+
 	void CEntity::rotate(int orientation, Ogre::Radian rotation){
+		Vector3 parcial=Math::getEulerYawPitchRoll(_orientation);
+		Quaternion yawOrientation = Math::setQuaternion(parcial.x,0,0);
+		Quaternion pitchOrientation = Math::setQuaternion(0,parcial.y,0);
+		Quaternion rollOrientation = Math::setQuaternion(0,0,parcial.z);
 		switch(orientation){
 			case Orientation::eYAW:{
-				Math::rotate(Vector3::UNIT_Y,rotation,_yawOrientation);
+				Math::rotate(Vector3::UNIT_Y,rotation,yawOrientation);
 				break;
 			}
 			case Orientation::ePITCH:{
-				Math::rotate(Vector3::UNIT_X,rotation,_pitchOrientation);
+				Math::rotate(Vector3::UNIT_X,rotation,pitchOrientation);
 				break;
 			}
 			case Orientation::eROLL:{
-				Math::rotate(Vector3::UNIT_Z,rotation,_rollOrientation);
+				Math::rotate(Vector3::UNIT_Z,rotation,rollOrientation);
 				break;
 			}
 		}
 		//Actualizamos la orientacion final
-		_orientation=_yawOrientation*_pitchOrientation*_rollOrientation;
+		_orientation=yawOrientation*pitchOrientation*rollOrientation;
 	}
 
 } // namespace Logic
