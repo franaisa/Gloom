@@ -326,6 +326,7 @@ namespace Graphics
 		Ogre::Quaternion worldQuat(orientation); // desired orientation in world terms
 		Ogre::Quaternion boneQuat = worldQuat.Inverse() * parentQuat; // equiv to ("boneQuat = worldQuat / parentQuat")
 		bone->_setDerivedOrientation(boneQuat);
+
 	}
 
 } // namespace Graphics
