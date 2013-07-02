@@ -79,8 +79,7 @@ bool CRagdoll::spawn(Logic::CEntity *entity, CMap *map, const Map::CEntity *enti
 
 void CRagdoll::onFixedTick(unsigned int msecs) {
 	// Actualizar en base a las posiciones de los bones
-	Vector3 position;
-	Quaternion orientation;
+	Vector3 position; Quaternion orientation;
 	
 	vector<Physics::CDynamicEntity*> boneList = _aggregate.getEntities();
 	for(int i = 0; i < boneList.size(); ++i) {
@@ -94,13 +93,14 @@ void CRagdoll::onFixedTick(unsigned int msecs) {
 void CRagdoll::onStart() {
 	// Bindeamos los huesos de la entidad gráfica a los colliders del
 	// ragdoll
+	Vector3 position; Quaternion orientation;
+
 	vector<Physics::CDynamicEntity*> boneList = _aggregate.getEntities();
 	for(int i = 0; i < boneList.size(); ++i) {
-		Vector3 position = _animatedGraphicsComponent->getBonePosition( boneList[i]->getName() );
-		Quaternion orientation = _animatedGraphicsComponent->getBoneOrientation( boneList[i]->getName() );
+		_animatedGraphicsComponent->getBonePose(boneList[i]->getName(), position, orientation);
 
 		boneList[i]->setGlobalPose(position, orientation, false);
-		boneList[i]->setKinematic(false);
+		//boneList[i]->setKinematic(false);
 	}
 }
 

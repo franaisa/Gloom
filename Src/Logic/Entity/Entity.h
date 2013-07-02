@@ -8,7 +8,8 @@ de juego. Es una colección de componentes.
 @see Logic::IComponent
 
 @author Francisco Aisa García
-@date Abril, 2013
+@author Jose Antonio García Yáñez
+@date Junio, 2013
 */
 
 #ifndef __Logic_Entity_H
@@ -96,6 +97,7 @@ namespace Logic {
     @ingroup entityGroup
 
 	@author Francisco Aisa García
+	@author Jose Antonio García Yáñez
 	@date Abril, 2013
 	*/
 
@@ -278,7 +280,7 @@ namespace Logic {
 
 		@return _yawOrientation Quaternion del yaw.
 		*/
-		Quaternion getYaw() const {return _yawOrientation;};
+		Quaternion getYaw() const;
 
 		//__________________________________________________________________
 
@@ -287,7 +289,7 @@ namespace Logic {
 
 		@return _pitchOrientation Quaternion del pitch.
 		*/
-		Quaternion getPitch() const {return _pitchOrientation;};
+		Quaternion getPitch() const;
 
 		//__________________________________________________________________
 
@@ -296,7 +298,7 @@ namespace Logic {
 
 		@return _rollOrientation Quaternion del roll.
 		*/
-		Quaternion getRoll() const {return _rollOrientation;};
+		Quaternion getRoll() const;
 
 		//__________________________________________________________________
 		/**
@@ -584,13 +586,10 @@ namespace Logic {
 		Logic::CMap *_map;
 
 		/**
-		Variables de posición y orientación(final + parciales).
+		Variables de posición y orientación.
 		*/
 		Vector3 _position;
 		Ogre::Quaternion _orientation;
-		Ogre::Quaternion _yawOrientation;
-		Ogre::Quaternion _pitchOrientation;
-		Ogre::Quaternion _rollOrientation;
 
 		/**
 		Atributo que indica si la entidad es el jugador; por defecto

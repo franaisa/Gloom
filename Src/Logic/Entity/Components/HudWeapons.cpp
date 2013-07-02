@@ -478,8 +478,8 @@ namespace Logic {
 
 
 		//CON ESTO SERIA SUFICIENTE
-		/*_runAnim.offset=(_graphicsEntities[_currentWeapon].graphicsEntity->getOrientation() * _halfPi) * Vector3::NEGATIVE_UNIT_Z;
-		_runAnim.offset.normalise();*/
+		_runAnim.offset=(_graphicsEntities[_currentWeapon].graphicsEntity->getOrientation() * _halfPi) * Vector3::NEGATIVE_UNIT_Z;
+		_runAnim.offset.normalise();
 
 	
 		_runAnim.offset *= sineStep(msecs, _runAnim.currentHorizontalPos, _runAnim.horizontalOffset, _runAnim.horizontalSpeed, Math::HALF_PI, (2 * Math::PI) + Math::HALF_PI)

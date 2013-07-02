@@ -181,11 +181,14 @@ namespace Logic {
 		 //Rotamos el Pitch de la entidad de acuerdo a los grados en radianes pasados como parámetro.
 		 _entity->rotate(Orientation::ePITCH,Ogre::Radian(XYturn[1]));
 		
+		 //Obtenemos el pitch actual
+		 Quaternion actualPitch=_entity->getPitch();
+
 		 // Ángulo de rotación sobre el eje X.
-		 pitchAngle = (2 * Ogre::Degree(Ogre::Math::ACos(_entity->getPitch().w)).valueDegrees());
+		 pitchAngle = (2 * Ogre::Degree(Ogre::Math::ACos(actualPitch.w)).valueDegrees());
  
 		 // Para saber el sentido.
-		 pitchAngleSign = _entity->getPitch().x;
+		 pitchAngleSign = actualPitch.x;
  
 		 // Limitamos el angulo un poco menos de +90/-90 para evitar perder la direccion (Tomando como referencia a Quake3)
 		 if (pitchAngle > 88.0f)
