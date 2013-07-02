@@ -79,13 +79,14 @@ bool CRagdoll::spawn(Logic::CEntity *entity, CMap *map, const Map::CEntity *enti
 
 void CRagdoll::onFixedTick(unsigned int msecs) {
 	// Actualizar en base a las posiciones de los bones
-	Vector3 position; Quaternion orientation;
+	// El error se acumula
+	/*Vector3 position; Quaternion orientation;
 	
 	vector<Physics::CDynamicEntity*> boneList = _aggregate.getEntities();
 	for(int i = 0; i < boneList.size(); ++i) {
 		boneList[i]->getGlobalPose(position, orientation);
 		_animatedGraphicsComponent->setBonePose( boneList[i]->getName(), position, orientation );
-	}
+	}*/
 }
 
 //________________________________________________________________________
@@ -101,6 +102,13 @@ void CRagdoll::onStart() {
 
 		boneList[i]->setGlobalPose(position, orientation, false);
 		//boneList[i]->setKinematic(false);
+	}
+
+	// Para testear
+	for(int i = 0; i < boneList.size(); ++i) {
+		boneList[i]->getGlobalPose(position, orientation);
+
+		_animatedGraphicsComponent->setBonePose( boneList[i]->getName(), position, orientation );
 	}
 }
 
