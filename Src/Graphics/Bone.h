@@ -1,6 +1,7 @@
 #ifndef __Graphics_Bone_H
 #define __Graphics_Bone_H
 
+#include <Basesubsystems/math.h>
 #include <OgreBone.h>
 #include <OgreSceneNode.h>
 
@@ -37,7 +38,7 @@ namespace Graphics {
 			Ogre::Quaternion boneQuat = _bone->_getDerivedOrientation();
 			Ogre::Vector3 bonePos = _bone->_getDerivedPosition();
 
-			worldOrientation = parentQuat * boneQuat;
+			worldOrientation = boneQuat * parentQuat;
 			worldPosition = parentQuat * bonePos + parentPos;
 		}
 
