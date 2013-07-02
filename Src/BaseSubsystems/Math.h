@@ -639,21 +639,6 @@ namespace Math
 		return (guard > n) ? n : guard;
 	}
 
-	
-	static float getPitchQuat(Quaternion& q)
-	{
-	  return atan2(2*(q.y*q.z + q.w*q.x), q.w*q.w - q.x*q.x - q.y*q.y + q.z*q.z);
-	}
-
-	static float getYawQuat(Quaternion& q)
-	{
-	  return asin(-2*(q.x*q.z - q.w*q.y));
-	}
-
-	static float getRollQuat(Quaternion& q)
-	{
-	  return atan2(2*(q.x*q.y + q.w*q.z), q.w*q.w + q.x*q.x - q.y*q.y - q.z*q.z);
-	}
 
 } // namespace Math
 
