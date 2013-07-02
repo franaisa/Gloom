@@ -10,18 +10,12 @@
 
 #include "Ragdoll.h"
 #include "AnimatedGraphics.h"
-#include "Logic/Entity/Entity.h"
 #include "Map/MapEntity.h"
-#include "Physics/Server.h"
-#include "Physics/GeometryFactory.h"
-#include "Physics/MaterialManager.h"
+#include "Physics/DynamicEntity.h"
 
+#include "Logic/Messages/MessagePlayerDead.h"
 #include "Logic/Messages/MessageTouched.h"
-#include "Logic/Messages/MessageActivate.h"
 #include "Logic/Messages/MessageUntouched.h"
-#include "Logic/Messages/MessageSetPhysicPosition.h"
-#include "Logic/Messages/MessageTransform.h"
-#include "Logic/Messages/MessageAddForcePhysics.h"
 #include "Logic/Messages/MessageContactEnter.h"
 #include "Logic/Messages/MessageContactExit.h"
 
@@ -36,7 +30,7 @@ IMP_FACTORY(CRagdoll);
 
 //________________________________________________________________________
 
-CRagdoll::CRagdoll() {
+CRagdoll::CRagdoll() : _ragdollHasControl(false) {
 	// Nada que hacer
 }
 
@@ -65,7 +59,47 @@ bool CRagdoll::spawn(Logic::CEntity *entity, CMap *map, const Map::CEntity *enti
 	loadRagdoll(entityInfo, group, groupList);
 
 	return true;
-} 
+}
+
+//________________________________________________________________________
+
+bool CRagdoll::accept(const std::shared_ptr<CMessage>& message) {
+	TMessageType msgType = message->getMessageType();
+
+	return msgType == Message::PLAYER_DEAD	||
+		   msgType == Message::PLAYER_SPAWN;
+} // accept
+
+//________________________________________________________________________
+
+void CRagdoll::process(const std::shared_ptr<CMessage>& message) {
+	switch( message->getMessageType() ) {
+		case Message::PLAYER_DEAD: {
+			// Indicamos que la fisica tiene el control
+			_ragdollHasControl = true;
+
+			// Convertimos todas las shapes fisicas en dinamicas para que
+			// el motor de fisicas tome el control
+			for(int i = 0; i < _ragdollBonesBuffer.size(); ++i) {
+				_ragdollBonesBuffer[i].second->setKinematic(false);
+			}
+
+			break;
+		}
+		case Message::PLAYER_SPAWN: {
+			// Indicamos que la lógica tiene el control
+			_ragdollHasControl = false;
+
+			// Convertimos todas las shapes fisicas en kinemáticas para
+			// alinear los colliders a los huesos en cada frame de la animación
+			for(int i = 0; i < _ragdollBonesBuffer.size(); ++i) {
+				_ragdollBonesBuffer[i].second->setKinematic(true);
+			}
+
+			break;
+		}
+	}
+} // process
 
 //________________________________________________________________________
 
@@ -75,9 +109,22 @@ void CRagdoll::onFixedTick(unsigned int msecs) {
 	// estamos haciendo de hitboxes
 	Vector3 position; Quaternion orientation;
 
+	/*if(_ragdollHasControl) {
+		for(int i = 0; i < _ragdollBonesBuffer.size(); ++i) {
+			_ragdollBonesBuffer[i].second->getGlobalPose(position, orientation); // Sacamos la orientacion de lo fisico
+			_ragdollBonesBuffer[i].first.setGlobalPose(position, orientation); // Seteamos la orientacion a lo gráfico
+		}
+	}
+	else {
+		for(int i = 0; i < _ragdollBonesBuffer.size(); ++i) {
+			_ragdollBonesBuffer[i].first.getGlobaPose(position, orientation); // Sacamos la orientacion de los huesos graficos
+			_ragdollBonesBuffer[i].second->setGlobalPose(position, orientation, false); // Seteamos la orientacion de lo fisico
+		}
+	}*/
+
 	for(int i = 0; i < _ragdollBonesBuffer.size(); ++i) {
-		_ragdollBonesBuffer[i].second->getGlobalPose(position, orientation);
-		_ragdollBonesBuffer[i].first.setGlobalPose(position, orientation);
+		_ragdollBonesBuffer[i].second->getGlobalPose(position, orientation); // Sacamos la orientacion de lo fisico
+		_ragdollBonesBuffer[i].first.setGlobalPose(position, orientation); // Seteamos la orientacion a lo gráfico
 	}
 }
 
@@ -103,7 +150,14 @@ void CRagdoll::onStart() {
 	for(int i = 0; i < _ragdollBonesBuffer.size(); ++i) {
 		_ragdollBonesBuffer[i].first.getGlobaPose(position, orientation); // Sacamos la orientacion de los huesos graficos
 		_ragdollBonesBuffer[i].second->setGlobalPose(position, orientation, false); // Seteamos la orientacion de lo fisico
+		//_ragdollBonesBuffer[i].second->setKinematic(false);
 	}
+}
+
+//________________________________________________________________________
+
+void CRagdoll::onActivate() {
+	_ragdollHasControl = false;
 }
 
 //________________________________________________________________________

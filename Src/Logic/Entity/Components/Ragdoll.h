@@ -50,6 +50,10 @@ namespace Logic {
 		*/
 		virtual bool spawn(CEntity* entity, CMap *map, const Map::CEntity *entityInfo);
 
+		virtual bool accept(const std::shared_ptr<CMessage>& message);
+
+		virtual void process(const std::shared_ptr<CMessage>& message);
+
 		/**
 		Se invoca cuando se produce una colisión entre una entidad física y un trigger.
 		*/
@@ -79,6 +83,8 @@ namespace Logic {
 
 		virtual void onStart();
 
+		virtual void onActivate();
+
 	private:
 
 		void readCollisionGroupInfo(const Map::CEntity *entityInfo, int& group, std::vector<int>& groupList);
@@ -90,9 +96,9 @@ namespace Logic {
 		void loadRagdoll(const Map::CEntity *entityInfo, int group, const std::vector<int>& groupList);
 
 
-		std::vector< std::pair< Graphics::CBone, Physics::CDynamicEntity* > > _ragdollBonesBuffer;
+		bool _ragdollHasControl;
 
-		//CAnimatedGraphics* _animatedGraphicsComponent;
+		std::vector< std::pair< Graphics::CBone, Physics::CDynamicEntity* > > _ragdollBonesBuffer;
 
 		Physics::CAggregate _aggregate;
 
