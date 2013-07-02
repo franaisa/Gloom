@@ -280,7 +280,7 @@ namespace Logic {
 
 		@return _yawOrientation Quaternion del yaw.
 		*/
-		Quaternion getYaw() const;
+		Quaternion getYaw();
 
 		//__________________________________________________________________
 
@@ -289,7 +289,7 @@ namespace Logic {
 
 		@return _pitchOrientation Quaternion del pitch.
 		*/
-		Quaternion getPitch() const;
+		Quaternion getPitch();
 
 		//__________________________________________________________________
 
@@ -298,16 +298,15 @@ namespace Logic {
 
 		@return _rollOrientation Quaternion del roll.
 		*/
-		Quaternion getRoll() const;
+		Quaternion getRoll();
 
 		//__________________________________________________________________
 		/**
 		Establece el Yaw de la entidad.
 
 		@param yaw Orientacion nueva para el yaw.
-		@param reset Boolean para resetear las otras rotaciones.
 		*/
-		void setYaw(const Quaternion &yaw, bool reset);
+		void setYaw(const Quaternion &yaw);
 
 		//__________________________________________________________________
 
@@ -315,9 +314,8 @@ namespace Logic {
 		Establece el Pitch de la entidad.
 
 		@param pitch Orientacion nueva para el pitch.
-		@param reset Boolean para resetear las otras rotaciones.
 		*/
-		void setPitch(const Quaternion &pitch, bool reset);
+		void setPitch(const Quaternion &pitch);
 
 		//__________________________________________________________________
 
@@ -325,9 +323,8 @@ namespace Logic {
 		Establece el Roll de la entidad.
 
 		@param roll Orientacion nueva para el roll.
-		@param reset Boolean para resetear las otras rotaciones.
 		*/
-		void setRoll(const Quaternion &roll, bool reset);
+		void setRoll(const Quaternion &roll);
 
 		//__________________________________________________________________
 

@@ -184,6 +184,9 @@ namespace Math
 		mRoll = Ogre::Math::ASin(2 * quaternion.x * quaternion.y + 2 * quaternion.z * quaternion.w);
 		mPitch = Ogre::Math::ATan2(2 * quaternion.x * quaternion.w - 2 * quaternion.y * quaternion.z, 1 - 2 * Ogre::Math::Pow(quaternion.x, 2) - 2 * Ogre::Math::Pow(quaternion.z, 2));
  
+		//Solo añadir si se dejara que pudieras llegar a 90/-90º de pitch
+		//En cuyo caso las funciones de getYawQuaternion y getPitchQuaternion deberían añadirlo tambien
+		/*
 		if(quaternion.x * quaternion.y + quaternion.z * quaternion.w == 0.5)
 		{
 			mYaw = 2.0f * Ogre::Math::ATan2(quaternion.x, quaternion.w);
@@ -194,7 +197,47 @@ namespace Math
 			mYaw = -2.0f * Ogre::Math::ATan2(quaternion.x, quaternion.w);
 			mPitch = 0.0f;
 		}
+		*/
 		return Vector3(mYaw.valueRadians(),mPitch.valueRadians(),mRoll.valueRadians());
+	}
+
+
+	/**
+	Devuelve el quaternion yaw extraido del quaternion pasado como parámetro.
+
+	@param q Quaternion a extraer el quaternion yaw.
+	@return Quaternion yaw.
+	*/
+	static Quaternion getYawQuaternion(const Quaternion& quaternion)
+	{
+		Ogre::Radian mYaw = Ogre::Math::ATan2(2 * quaternion.y * quaternion.w - 2 * quaternion.x * quaternion.z, 1 - 2 * Ogre::Math::Pow(quaternion.y, 2) - 2 * Ogre::Math::Pow(quaternion.z, 2));
+		return Quaternion(cos(mYaw.valueRadians()/2.0f), 0, sin(mYaw.valueRadians()/2.0f),0);
+	}
+
+
+	/**
+	Devuelve el quaternion pitch extraido del quaternion pasado como parámetro.
+
+	@param q Quaternion a extraer el quaternion pitch.
+	@return Quaternion pitch.
+	*/
+	static Quaternion getPitchQuaternion(const Quaternion& quaternion)
+	{
+		Ogre::Radian mPitch = Ogre::Math::ATan2(2 * quaternion.x * quaternion.w - 2 * quaternion.y * quaternion.z, 1 - 2 * Ogre::Math::Pow(quaternion.x, 2) - 2 * Ogre::Math::Pow(quaternion.z, 2));
+		return Quaternion(cos(mPitch.valueRadians()/2.0f), sin(mPitch.valueRadians()/2.0f), 0, 0);
+	}
+
+
+	/**
+	Devuelve el quaternion roll extraido del quaternion pasado como parámetro.
+
+	@param q Quaternion a extraer el quaternion roll.
+	@return Quaternion roll.
+	*/
+	static Quaternion getRollQuaternion(const Quaternion& quaternion)
+	{
+		Ogre::Radian mRoll = Ogre::Math::ASin(2 * quaternion.x * quaternion.y + 2 * quaternion.z * quaternion.w);
+		return Quaternion(cos(mRoll.valueRadians()/2.0f), 0, sin(mRoll.valueRadians()/2.0f),0);
 	}
 
 

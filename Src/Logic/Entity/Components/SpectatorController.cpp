@@ -128,10 +128,10 @@ namespace Logic {
 		 {
 			 if (pitchAngleSign > 0)
 				 //Fijando a +88. Formo el quaternion previamente calculado, ahorrando procesamiento
-				 _entity->setPitch(Ogre::Quaternion(0.71934,0.694658, 0, 0),false);
+				 _entity->setPitch(Ogre::Quaternion(0.71934,0.694658, 0, 0));
 			 else if (pitchAngleSign < 0)
 				 //Fijando a -88. Formo el quaternion previamente calculado, ahorrando procesamiento
-				 _entity->setPitch(Ogre::Quaternion(0.71934,-0.694658, 0, 0),false);
+				 _entity->setPitch(Ogre::Quaternion(0.71934,-0.694658, 0, 0));
 		 }
 		
 	}//rotateXY

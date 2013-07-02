@@ -108,7 +108,7 @@ namespace Logic
 				Logic::CWorldState::getSingletonPtr()->deleteChange(_entity, Message::PLAYER_DEAD);
 
 				//Establecemos la orientación adecuada segun la devolución del manager de spawn
-				_entity->setYaw(spawn->getYaw(),true);
+				_entity->setOrientation(spawn->getYaw());
 				
 				// Si eres el server mandar un mensaje de spawn
 				std::shared_ptr<CMessagePlayerSpawn> spawnMsg = std::make_shared<CMessagePlayerSpawn>();

@@ -124,7 +124,7 @@ namespace Logic  {
 				}
 
 				// Seteamos la orientacion a la dada por el server
-				_entity->setYaw(playerSpawnMsg->getSpawnOrientation(),true);
+				_entity->setOrientation(playerSpawnMsg->getSpawnOrientation());
 
 
 				// Volvemos a activar todos los componentes
