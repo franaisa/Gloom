@@ -216,8 +216,6 @@ namespace Graphics
 
 		Graphics::CEntity *_graphicsWeapon;
 
-		Ogre::SceneNode* _ObjectentityNode;
-
 		Ogre::Skeleton* _skeleton;
 
 		/**

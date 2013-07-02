@@ -71,6 +71,11 @@ namespace Physics {
 
 		//________________________________________________________________________
 
+		/** Constructor por parámetro */
+		CDynamicEntity::CDynamicEntity(physx::PxRigidActor* adoptActor);
+
+		//________________________________________________________________________
+
 		/** Destructor. */
 		virtual ~CDynamicEntity();
 
@@ -87,9 +92,8 @@ namespace Physics {
 		@param group Grupo de colisión que queremos asignar al actor.
 		@param groupList Grupos de colisión con los que el actor quiere interactuar.
 		@param component Componente lógico asociado.
-		@param nameActors true si queremos que se le asigne nombres a los colliders.
 		*/
-		virtual void load(const std::string &file, int group, const std::vector<int>& groupList, const Logic::IPhysics *component, bool nameActors = false);
+		virtual void load(const std::string &file, int group, const std::vector<int>& groupList, const Logic::IPhysics *component);
 
 
 		// =======================================================================
@@ -179,6 +183,16 @@ namespace Physics {
 		//________________________________________________________________________
 
 		/**
+		Cambia el modo del actor de dinámico a kinemático y viceversa.
+
+		@return True para configurar el actor como kinemático, false para configurarlo
+		como dinámico (controlado por el motor).
+		*/
+		void setKinematic(bool kinematic);
+
+		//________________________________________________________________________
+
+		/**
 		Método para mover a la entidad física.
 
 		IMPORTANTE: Para poder mover el actor éste debe ser kinemático, en caso contrario
@@ -227,8 +241,17 @@ namespace Physics {
 		@param makeConversionToLogicWorld True si queremos que la entidad física
 		se coloque en la posición dada + el desfase entre pivote lógico y físico.
 		*/
-		void setTransform(const Vector3 &position, const Quaternion &orientation, bool makeConversionToLogicWorld);
+		void setGlobalPose(const Vector3 &position, const Quaternion& orientation, bool makeConversionToLogicWorld);
 		
+		//________________________________________________________________________
+
+		/**
+		Devuelve la posición y orientación de la entidad.
+
+		@param position Posición de la entidad.
+		@param orientation Orientación de la entidad.
+		*/
+		void getGlobalPose(Vector3& position, Quaternion& orientation);
 
 	private:
 

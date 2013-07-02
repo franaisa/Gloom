@@ -70,6 +70,11 @@ namespace Physics {
 
 		//________________________________________________________________________
 
+		/** Constructor por parámetro */
+		CEntity::CEntity(physx::PxRigidActor* adoptActor);
+
+		//________________________________________________________________________
+
 		/** Destructor. */
 		virtual ~CEntity();
 
@@ -90,9 +95,8 @@ namespace Physics {
 		@param group Grupo de colisión que queremos asignar al actor.
 		@param groupList Grupos de colisión con los que el actor quiere interactuar.
 		@param component Componente lógico asociado.
-		@param nameActors true si queremos que los colliders tengan un nombre asignado.
 		*/
-		virtual void load(const std::string &file, int group, const std::vector<int>& groupList, const Logic::IPhysics* component, bool nameActors = false) = 0;
+		virtual void load(const std::string &file, int group, const std::vector<int>& groupList, const Logic::IPhysics* component) = 0;
 
 		//________________________________________________________________________
 
@@ -119,9 +123,22 @@ namespace Physics {
 		/** Desactiva la simulación física. */
 		void deactivateSimulation();
 
-		std::vector<std::string> getActorNames();
+		//________________________________________________________________________
 
-		std::vector< physx::PxActor* > getActors();
+		/** 
+		Devuelve el nombre del actor físico. OJO! Si el actor no se ha inicializado
+		usando una stringTable explota.
+		*/
+		std::string getName();
+
+		//________________________________________________________________________
+
+		/**
+		Método para saber si la entidad física es dinámica.
+
+		@return True si la entidad física es dinámica.
+		*/
+		bool isDynamic();
 
 	protected:
 
@@ -140,56 +157,8 @@ namespace Physics {
 		@param group Grupo de colisión que queremos asignar al actor.
 		@param groupList Grupos de colisión con los que el actor quiere interactuar.
 		@param component Componente lógico asociado.
-		@param nameActors true si queremos que se le asigne nombres a los colliders.
 		*/
-		void deserializeFromRepXFile(const std::string &file, int group, const std::vector<int>& groupList, const Logic::IPhysics* component,
-									 bool nameActors);
-
-		//________________________________________________________________________
-
-		/**
-		Dada una colección de elementos, deserializa todos sus actores en un agregado.
-
-		Normalmente usaremos esta función para deserializar ragdolls.
-
-		@param sceneCollection Colección de elementos.
-		@param nbActors Número de actores en la colección.
-		@param component Componente lógico asociado a cada uno de los actores del agregado.
-		@param group Grupo de colisión del agregado.
-		@param Grupos de colisión con los que el agregado debe interactuar.
-		*/
-		void deserializeAggregate(physx::PxCollection* sceneCollection, unsigned int nbActors, const Logic::IPhysics* component, int group, const std::vector<int>& groupList);
-
-		//________________________________________________________________________
-
-		/**
-		Dada una colección de elementos, deserializa un solo actor. Se usa cuando se sabe
-		que solo existe un actor en el fichero que vamos a deserializar.
-
-		@param sceneCollection Colección de elementos.
-		@param component Componente lógico asociado al actor que se va a deserializar.
-		@param group Grupo de colisión del actor.
-		@param Grupos de colisión con los que el actor debe interactuar.
-		*/
-		void deserializeActor(physx::PxCollection* sceneCollection, const Logic::IPhysics* component, int group, const std::vector<int>& groupList);
-
-		//________________________________________________________________________
-
-		/**
-		Dado un actor, se activa su simulación física.
-
-		@param actor Actor que va a ser activado.
-		*/
-		void activateSimulation(physx::PxActor* actor);
-
-		//________________________________________________________________________
-
-		/**
-		Dado un actor, se desactiva su simulación física.
-
-		@param actor Actor que va a ser desactivado.
-		*/
-		void deactivateSimulation(physx::PxActor* actor);
+		void deserializeFromRepXFile(const std::string &file, int group, const std::vector<int>& groupList, const Logic::IPhysics* component);
 
 		//________________________________________________________________________
 
@@ -213,22 +182,7 @@ namespace Physics {
 		/** Puntero al actor de PhysX. Importante: Tiene que ser inicializado por la clase hija. */
 		physx::PxRigidActor* _actor;
 
-		/** Agregado que contiene todos los actores leidos desde fichero (si es que hay más de uno). */
-		physx::PxAggregate* _aggregate;
-
-		/** Puntero a la escena de PhysX. */
-		physx::PxScene* _scene;
-
-		/** Puntero al core de PhysX. */
-		physx::PxPhysics* _physxSDK;
-
-		/** Puntero al cocinado de PhysX. */
-		physx::PxCooking* _cooking;
-
-		/** Puntero al gestor de colisiones */
-		CCollisionManager* _collisionManager;
-
-		/** True si el actor representa a un trigger. */
+		/** True si el actor representa a un trigger. Útil solo si tenemos una única shape por actor. */
 		bool _isTrigger;
 
 	}; // class CEntity

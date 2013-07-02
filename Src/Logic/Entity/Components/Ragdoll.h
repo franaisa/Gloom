@@ -13,20 +13,14 @@
 #define __Logic_Ragdoll_H
 
 #include "Physics.h"
-#include "Physics/DynamicEntity.h"
+#include "Physics/Aggregate.h"
 
 #include <vector>
-
-// Predeclaración de tipos
-namespace Physics {
-	class CServer;
-	class CGeometryFactory;
-	class CMaterialManager;
-};
 
 // Los componentes pertenecen al namespace Logic
 namespace Logic {	
 	
+	// Predeclaración de clase
 	class CAnimatedGraphics;
 
 	/**
@@ -56,19 +50,6 @@ namespace Logic {
 		virtual bool spawn(CEntity* entity, CMap *map, const Map::CEntity *entityInfo);
 
 		/**
-		Este componente sólo acepta mensajes de tipo KINEMATIC_MOVE. Estos mensajes  
-		sólo se utilizan para mover entidades de tipo cinemático.
-		*/
-		virtual bool accept(const std::shared_ptr<CMessage>& message);
-
-		/**
-		Cuando recibe mensajes de tipo KINEMATIC_MOVE almacena los movimientos para aplicarlos 
-		en el próximo tick sobre la entidad cinemática. Si en un ciclo se reciben varios 
-		mensajes KINEMATIC_MOVE se acumulan. 
-		*/
-		virtual void process(const std::shared_ptr<CMessage>& message);
-
-		/**
 		Se invoca cuando se produce una colisión entre una entidad física y un trigger.
 		*/
 		virtual void onTrigger (IPhysics *otherComponent, bool enter);
@@ -76,10 +57,6 @@ namespace Logic {
 		virtual void onContact (IPhysics *otherComponent, bool enter);
 
 		virtual void onShapeHit(IPhysics *otherComponent, const Vector3& colisionPos, const Vector3& colisionNormal) { onContact(otherComponent, true); }
-
-		void addForce(const Vector3& force, Physics::ForceMode mode = Physics::eFORCE, bool autowake = true);
-
-		void addTorque(const Vector3& force, Physics::ForceMode mode = Physics::eFORCE, bool autowake = true);
 
 		void deactivateSimulation();
 
@@ -111,16 +88,12 @@ namespace Logic {
 		*/
 		void loadRagdoll(const Map::CEntity *entityInfo, int group, const std::vector<int>& groupList);
 
+
+
+
 		CAnimatedGraphics* _animatedGraphicsComponent;
 
-		// Servidor de física
-		Physics::CServer* _server;
-
-		Physics::CGeometryFactory* _geometryFactory;
-
-		Physics::CMaterialManager* _materialManager;
-
-		Physics::CDynamicEntity _physicEntity;
+		Physics::CAggregate _aggregate;
 
 	}; // class CRagdoll
 
