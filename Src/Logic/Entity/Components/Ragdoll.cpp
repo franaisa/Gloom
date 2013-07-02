@@ -122,10 +122,10 @@ void CRagdoll::onFixedTick(unsigned int msecs) {
 		}
 	}*/
 
-	for(int i = 0; i < _ragdollBonesBuffer.size(); ++i) {
+	/*for(int i = 0; i < _ragdollBonesBuffer.size(); ++i) {
 		_ragdollBonesBuffer[i].second->getGlobalPose(position, orientation); // Sacamos la orientacion de lo fisico
 		_ragdollBonesBuffer[i].first.setGlobalPose(position, orientation); // Seteamos la orientacion a lo gráfico
-	}
+	}*/
 }
 
 //________________________________________________________________________
