@@ -168,7 +168,7 @@ namespace Logic {
 		_elementPulling = dynamicItem;
 
 		//por ultimo, ponemos a la entidad donde debe estar
-		_elementPulling->getComponent<CPhysicDynamicEntity>("CPhysicDynamicEntity")->setTransform(_elementPulled->getPosition(),_elementPulled->getOrientation(), true);
+		_elementPulling->getComponent<CPhysicDynamicEntity>("CPhysicDynamicEntity")->setGlobalPose(_elementPulled->getPosition(),_elementPulled->getOrientation(), true);
 
 		//le metemos donde estamos para que nos siga
 		_elementPulling->getComponent<CPullingMovement>("CPullingMovement")->setPlayer(_entity);

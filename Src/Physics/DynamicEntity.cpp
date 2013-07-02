@@ -52,6 +52,13 @@ namespace Physics {
 
 	//________________________________________________________________________
 
+	/** Constructor por parámetro */
+	CDynamicEntity::CDynamicEntity(physx::PxRigidActor* adoptActor) : CEntity(adoptActor) {
+		_dynamicActor = adoptActor->isRigidDynamic() ? static_cast<PxRigidDynamic*>(adoptActor) : NULL;
+	}
+
+	//________________________________________________________________________
+
 	CDynamicEntity::~CDynamicEntity() {
 		// El destructor del padre se encarga de liberar la memoria reservada
 		// por el actor en PhysX
@@ -60,9 +67,9 @@ namespace Physics {
 
 	//________________________________________________________________________
 
-	void CDynamicEntity::load(const std::string &file, int group, const vector<int>& groupList, const Logic::IPhysics* component, bool nameActors) {
+	void CDynamicEntity::load(const std::string &file, int group, const vector<int>& groupList, const Logic::IPhysics* component) {
 		// Cargamos desde fichero los datos del actor
-		CEntity::load(file, group, groupList, component, nameActors);
+		CEntity::load(file, group, groupList, component);
 	}
 
 	//________________________________________________________________________
@@ -71,7 +78,11 @@ namespace Physics {
 							  float density, bool kinematic, bool trigger, bool noGravity, int group, 
 							  const vector<int>& groupList, const Logic::IPhysics *component) {
 
-		assert(_scene);
+		// Obtenemos el puntero al servidor de fisicas
+		Physics::CServer* physicsServer = Physics::CServer::getSingletonPtr();
+		PxScene* scene = physicsServer->getActiveScene();
+		PxPhysics* physics = physicsServer->getPhysxSDK();
+		assert(scene);
 
 		_isTrigger = trigger;
 
@@ -83,9 +94,9 @@ namespace Physics {
 
 		// Crear esfera dinámico o cinemático
 		if (kinematic)
-			_actor = _dynamicActor = PxCreateKinematic(*_physxSDK, globalPose, geometry, material, density, shapeOffset);
+			_actor = _dynamicActor = PxCreateKinematic(*physics, globalPose, geometry, material, density, shapeOffset);
 		else
-			_actor = _dynamicActor = PxCreateDynamic(*_physxSDK, globalPose, geometry, material, density, shapeOffset);
+			_actor = _dynamicActor = PxCreateDynamic(*physics, globalPose, geometry, material, density, shapeOffset);
 	
 		// Transformarlo en trigger si es necesario
 		if (trigger) {
@@ -106,7 +117,7 @@ namespace Physics {
 		Physics::CServer::getSingletonPtr()->setupFiltering(_dynamicActor, group, groupList);
 
 		// Añadir el actor a la escena
-		_scene->addActor(*_dynamicActor);
+		scene->addActor(*_dynamicActor);
 	}
 
 	//________________________________________________________________________
@@ -186,6 +197,18 @@ namespace Physics {
 
 	//________________________________________________________________________
 
+	/**
+	Cambia el modo del actor de dinámico a kinemático y viceversa.
+
+	@return True para configurar el actor como kinemático, false para configurarlo
+	como dinámico (controlado por el motor).
+	*/
+	void CDynamicEntity::setKinematic(bool kinematic) {
+		_dynamicActor->setRigidDynamicFlag(PxRigidDynamicFlag::eKINEMATIC, kinematic);
+	}
+
+	//________________________________________________________________________
+
 	void CDynamicEntity::move(const Matrix4& transform) {
 		assert( isKinematic() );
 
@@ -218,13 +241,23 @@ namespace Physics {
 	
 	//________________________________________________________________________
 
-	void CDynamicEntity::setTransform(const Vector3 &position, const Quaternion &orientation, bool makeConversionToLogicWorld) {
+	void CDynamicEntity::setGlobalPose(const Vector3 &position, const Quaternion &orientation, bool makeConversionToLogicWorld) {
 		if(makeConversionToLogicWorld) {
 			_actor->setGlobalPose( PxTransform( Vector3ToPxVec3( convertPhysxCoordsToLogicCoords(position) ), QuaternionToPxQuat(orientation) ) );
 		}
 		else {
 			_actor->setGlobalPose(  PxTransform( Vector3ToPxVec3(position), QuaternionToPxQuat(orientation) ) );
 		}
+	}
+
+	//________________________________________________________________________
+
+	void CDynamicEntity::getGlobalPose(Vector3& position, Quaternion& orientation) {
+		PxTransform transform = _actor->getGlobalPose();
+		Matrix4 ogreTransform = PxTransformToMatrix4(transform);
+
+		position = ogreTransform.getTrans();
+		orientation = ogreTransform.extractQuaternion();
 	}
 
 	//________________________________________________________________________

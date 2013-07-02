@@ -44,27 +44,15 @@ using namespace std;
 namespace Physics {
 
 	CEntity::CEntity() : _isTrigger(false),
-						 _actor(NULL),
-						 _aggregate(NULL) {
-
-		Physics::CServer* physicsServer = Physics::CServer::getSingletonPtr();
-
-		// Obtenemos la sdk de physics y comprobamos que ha sido inicializada
-		_physxSDK = physicsServer->getPhysxSDK();
-		assert(_physxSDK && "No se ha inicializado physX");
-		
-		// Obtenemos la clase de cocinado de physX y comprobamos que ha sido inicializada
-		_cooking = physicsServer->getCooking();
-		assert(_cooking && "El cocinado de physx no ha sido activado");
-
-		// Obtenemos la escena de physx y comprobamos que ha sido inicializada
-		_scene = physicsServer->getActiveScene();
-		assert(_scene && "No existe una escena fisica");
-
-		// Obtenemos el gestor de colisiones
-		_collisionManager = physicsServer->getCollisionManager();
-		assert(_collisionManager && "No existe ningun gestor de colisiones");
+						 _actor(NULL) {
 	} // CEntity
+
+	//________________________________________________________________________
+
+	CEntity::CEntity(physx::PxRigidActor* adoptActor) : _isTrigger(false) {
+		// Asignamos el actor
+		this->_actor = adoptActor;
+	}
 
 	//________________________________________________________________________
 
@@ -76,149 +64,38 @@ namespace Physics {
 			Physics::CServer::getSingletonPtr()->destroyActor(_actor);
 			_actor = NULL;
 		}
-
-		if(_aggregate != NULL) {
-			Physics::CServer::getSingletonPtr()->destroyAggregate(_aggregate);
-			_aggregate = NULL;
-		}
-
-		// Fijamos los punteros a physx como nulos
-		_physxSDK = NULL;
-		_cooking = NULL;
-		_scene = NULL;
-		_collisionManager = NULL;
 	} // ~CEntity
 
 	//________________________________________________________________________
 
-	void CEntity::load(const std::string &file, int group, const std::vector<int>& groupList, const Logic::IPhysics* component, bool nameActors) {
-		deserializeFromRepXFile(file, group, groupList, component, nameActors);
+	void CEntity::load(const std::string &file, int group, const std::vector<int>& groupList, const Logic::IPhysics* component) {
+		deserializeFromRepXFile(file, group, groupList, component);
 	}
 
 	//________________________________________________________________________
 
-	vector<string> CEntity::getActorNames() {
-		vector<string> actorNamesList;
-
-		unsigned int nbActors = _aggregate->getNbActors();
-		PxActor** actorsBuffer = new PxActor* [nbActors];
-
-		actorNamesList.reserve(nbActors);
-
-		_aggregate->getActors(actorsBuffer, nbActors);
-		for(unsigned int i = 0; i < nbActors; ++i) {
-			actorNamesList.push_back( actorsBuffer[i]->getName() );
-		}
-
-		// Liberamos la memoria temporal reservada
-		delete actorsBuffer;
-
-		return actorNamesList;
-	}
-	
-	//________________________________________________________________________
-
-	std::vector< physx::PxActor* > CEntity::getActors() {
-		std::vector< physx::PxActor* > actors;
-
-		unsigned int nbActors = _aggregate->getNbActors();
-		PxActor** actorsBuffer = new PxActor* [nbActors];
-
-		actors.reserve(nbActors);
-
-		_aggregate->getActors(actorsBuffer, nbActors);
-		for(unsigned int i = 0; i < nbActors; ++i) {
-			actors.push_back( actorsBuffer[i] );
-		}
-
-		// Liberamos la memoria temporal reservada
-		delete actorsBuffer;
-
-		return actors;
-	}
-
-	//________________________________________________________________________
-
-	void CEntity::deserializeFromRepXFile(const std::string &file, int group, const std::vector<int>& groupList, const Logic::IPhysics* component,
-										  bool nameActors) {
-		assert(_scene);
+	void CEntity::deserializeFromRepXFile(const std::string &file, int group, const std::vector<int>& groupList, const Logic::IPhysics* component) {
+		// Obtenemos el puntero al servidor de fisicas
+		Physics::CServer* physicsServer = Physics::CServer::getSingletonPtr();
+		PxScene* scene = physicsServer->getActiveScene();
+		PxPhysics* physics = physicsServer->getPhysxSDK();
+		PxCooking* cooking = physicsServer->getCooking();
+		assert(scene);
 
 		// Preparar parámetros para deserializar
 		PxDefaultFileInputData data(file.c_str());
-		PxCollection* bufferCollection = _physxSDK->createCollection();
-		PxCollection* sceneCollection = _physxSDK->createCollection();
-		//PxStringTable* stringTable = nameActors ? &PxStringTableExt::createStringTable( CServer::getSingletonPtr()->getFoundation()->getAllocatorCallback() ) : NULL; 
-		PxStringTable* stringTable = &PxStringTableExt::createStringTable( CServer::getSingletonPtr()->getFoundation()->getAllocatorCallback() ); 
+		PxCollection* bufferCollection = physics->createCollection();
+		PxCollection* sceneCollection = physics->createCollection(); 
+		PxStringTable* stringTable = NULL; 
 		PxUserReferences* externalRefs = NULL; 
 		PxUserReferences* userRefs = NULL; 
 
 		// Deserializar a partir del fichero RepX
-		repx::deserializeFromRepX(data, *_physxSDK, *_cooking, stringTable, externalRefs, 
+		repx::deserializeFromRepX(data, *physics, *cooking, stringTable, externalRefs, 
 								  *bufferCollection, *sceneCollection, userRefs);
 
-		// Obtenemos el número de actores que debemos cargar
-		PxU32 nbActors = sceneCollection->getNbObjects();
-
-		if(nbActors > 1) {
-			deserializeAggregate(sceneCollection, nbActors, component, group, groupList);
-		}
-		else {
-			deserializeActor(sceneCollection, component, group, groupList);
-		}
-
-		// Liberar recursos
-		bufferCollection->release();
-		sceneCollection->release();
-	}
-
-	//________________________________________________________________________
-
-	void CEntity::deserializeAggregate(PxCollection* sceneCollection, unsigned int nbActors, const Logic::IPhysics* component, int group, const std::vector<int>& groupList) {
-		// Creamos un agregado con el numero maximo de actores leidos y activamos
-		// las colisiones para el propio ragdoll (selfcollisions = true)
-		_aggregate = _physxSDK->createAggregate(nbActors, true);
-
-		// Asumimos que los datos contenidos en el fichero corresponden a los colliders
-		// y articulaciones de un ragdoll
-		PxSerializable* serializable;
-		PxActor* actor = NULL;
-		PxRigidActor* rigid = NULL;
-		for (unsigned int i = 0; i < nbActors; ++i) {
-			serializable = sceneCollection->getObject(i);
-			
-			// Las articulaciones también son actores
-			if( actor = serializable->is<PxActor>() ) {
-				// Añadimos el actor al conjunto de actores del ragdoll
-				_aggregate->addActor(*actor);
-				// Anotamos el componente lógico asociado a la entidad física
-				actor->userData = (void*)component;
-
-				// Si es un collider y no una articulación (hitbox) le asignamos
-				// los filtros de colisión que correspondan
-				if( rigid = serializable->is<PxRigidActor>() ) {
-					// Establecemos el grupo de colision
-					PxSetGroup(*rigid, group);
-					// Establecemos los filtros de colisión
-					Physics::CServer::getSingletonPtr()->setupFiltering(rigid, group, groupList);
-
-					// Para pasar los shapes a kinematicos -------------------------- (testing)
-					//PxRigidDynamic* dyn = serializable->is<PxRigidDynamic>();
-					//if(dyn)
-					//	dyn->setRigidDynamicFlag(PxRigidDynamicFlag::eKINEMATIC, true);
-					
-				}
-			}
-		}
-
-		// Añadimos el agregado a la escena
-		_scene->addAggregate(*_aggregate);
-	}
-
-	//________________________________________________________________________
-
-	void CEntity::deserializeActor(PxCollection* sceneCollection, const Logic::IPhysics* component, int group, const std::vector<int>& groupList) {
 		// Añadir entidades físicas a la escena
-		_physxSDK->addCollection(*sceneCollection, *_scene);
+		physics->addCollection(*sceneCollection, *scene);
 
 		// Buscar una entidad de tipo PxRigidActor. Asumimos que hay exactamente 1 en el fichero.
 		_actor = NULL;
@@ -235,6 +112,10 @@ namespace Physics {
 		PxSetGroup(*_actor, group);
 		// Establecer los filtros de colisión
 		Physics::CServer::getSingletonPtr()->setupFiltering(_actor, group, groupList);
+
+		// Liberar recursos
+		bufferCollection->release();
+		sceneCollection->release();
 	}
 
 	//________________________________________________________________________
@@ -258,48 +139,6 @@ namespace Physics {
 	//________________________________________________________________________
 
 	void CEntity::activateSimulation() {
-		if(_actor != NULL) {
-			activateSimulation(_actor);
-		}
-
-		if(_aggregate != NULL) {
-			unsigned int nbActors = _aggregate->getNbActors();
-			PxActor** actorsBuffer = new PxActor* [nbActors];
-
-			_aggregate->getActors(actorsBuffer, nbActors);
-			for(unsigned int i = 0; i < nbActors; ++i) {
-				activateSimulation(actorsBuffer[i]);
-			}
-
-			// Liberamos la memoria temporal reservada
-			delete actorsBuffer;
-		}
-	}
-
-	//________________________________________________________________________
-
-	void CEntity::deactivateSimulation() {
-		if(_actor != NULL) {
-			deactivateSimulation(_actor);
-		}
-
-		if(_aggregate != NULL) {
-			unsigned int nbActors = _aggregate->getNbActors();
-			PxActor** actorsBuffer = new PxActor* [nbActors];
-
-			_aggregate->getActors(actorsBuffer, nbActors);
-			for(unsigned int i = 0; i < nbActors; ++i) {
-				deactivateSimulation(actorsBuffer[i]);
-			}
-
-			// Liberamos la memoria temporal reservada
-			delete actorsBuffer;
-		}
-	}
-
-	//________________________________________________________________________
-
-	void CEntity::activateSimulation(physx::PxActor* actor) {
 		// Activamos todos los shapes del componente por completo en PhysX
 		// Para ello, obtenemos todos sus shapes y ponemos los flags a true
 
@@ -323,7 +162,7 @@ namespace Physics {
 
 	//________________________________________________________________________
 
-	void CEntity::deactivateSimulation(physx::PxActor* actor) {
+	void CEntity::deactivateSimulation() {
 		// Desactivamos todos los shapes del componente por completo en PhysX
 		// Para ello, obtenemos todos sus shapes y ponemos los flags a false
 
@@ -343,6 +182,18 @@ namespace Physics {
 		}
 
 		delete [] actorShapes;
+	}
+
+	//________________________________________________________________________
+
+	std::string CEntity::getName() {
+		return _actor->getName();
+	}
+
+	//________________________________________________________________________
+
+	bool CEntity::isDynamic() {
+		return _actor->isRigidDynamic();
 	}
 
 	//________________________________________________________________________

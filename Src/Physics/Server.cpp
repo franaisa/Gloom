@@ -216,7 +216,7 @@ namespace Physics {
 	void CServer::destroyAggregate(physx::PxAggregate* aggregate) {
 		assert(_scene);
 
-		unsigned int nbActors = aggregate->getNbActors();
+		/*unsigned int nbActors = aggregate->getNbActors();
 		PxActor** actorsBuffer = new PxActor* [nbActors];
 
 		aggregate->getActors(actorsBuffer, nbActors);
@@ -225,7 +225,7 @@ namespace Physics {
 		}
 
 		// Liberamos la memoria temporal reservada
-		delete actorsBuffer;
+		delete actorsBuffer;*/
 
 		// Eliminar agregado de la escena
 		_scene->removeAggregate(*aggregate);

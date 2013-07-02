@@ -97,7 +97,7 @@ void CPhysicDynamicEntity::process(const std::shared_ptr<CMessage>& message) {
 		}
 		case Message::SET_TRANSFORM: {
 			std::shared_ptr<CMessageTransform> transMsg = std::static_pointer_cast<CMessageTransform>(message);
-			setTransform(transMsg->getPosition(),transMsg->getOrientation(),transMsg->getMakeConversion());
+			setGlobalPose(transMsg->getPosition(),transMsg->getOrientation(),transMsg->getMakeConversion());
 			break;
 		}
 		case Message::ADD_FORCE_PHYSICS: {
@@ -285,8 +285,8 @@ void CPhysicDynamicEntity::setPosition(const Vector3 &position, bool makeConvers
 }
 //---------------------------------------------------------
 
-void CPhysicDynamicEntity::setTransform(const Vector3 &position, const Quaternion &orientation, bool makeConversionToLogicWorld) {
-	_physicEntity.setTransform(position, orientation, makeConversionToLogicWorld);
+void CPhysicDynamicEntity::setGlobalPose(const Vector3 &position, const Quaternion &orientation, bool makeConversionToLogicWorld) {
+	_physicEntity.setGlobalPose(position, orientation, makeConversionToLogicWorld);
 }
 //---------------------------------------------------------
 
