@@ -175,14 +175,10 @@ namespace Physics {
 	void CDynamicEntity::clearForce(ForceMode forceMode, bool autowake) {
 		switch(forceMode) {
 			case eFORCE: {
-				//_dynamicActor->clearForce(PxForceMode::eFORCE,autowake);
-				//Poniendo velocidad a pelo porque el clearForce no hace lo que dice
 				_dynamicActor->setLinearVelocity( PxVec3(0.0, 0.0, 0.0), autowake );
 				break;
 			}
 			case eIMPULSE: {
-				//_dynamicActor->clearForce(PxForceMode::eIMPULSE,autowake);
-				//Poniendo velocidad a pelo porque el clearForce no hace lo que dice
 				_dynamicActor->setLinearVelocity( PxVec3(0.0, 0.0, 0.0), autowake );
 				break;
 			}
@@ -253,11 +249,8 @@ namespace Physics {
 	//________________________________________________________________________
 
 	void CDynamicEntity::getGlobalPose(Vector3& position, Quaternion& orientation) {
-		PxTransform transform = _actor->getGlobalPose();
-		Matrix4 ogreTransform = PxTransformToMatrix4(transform);
-
-		position = ogreTransform.getTrans();
-		orientation = ogreTransform.extractQuaternion();
+		position =  PxVec3ToVector3( _actor->getGlobalPose().p );
+		orientation = PxQuatToQuaternion( _actor->getGlobalPose().q );
 	}
 
 	//________________________________________________________________________
