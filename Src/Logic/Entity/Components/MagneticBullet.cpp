@@ -80,13 +80,13 @@ namespace Logic
 	{
 		//printf("\nSoy %d Y Impacto con %s", _entity->getName().c_str(), impactEntity->getName().c_str());
 		if(impactEntity->getType() == "World"){
-			// Por ahora le paso x quien me he meurto, en un futuro deberian estar los decals en mas facil acceso, como en graphics y ya ta :D
+			// Por ahora le paso x quien me he muerto, en un futuro deberian estar los decals en mas facil acceso, como en graphics y ya ta :D
 			if(_owner)
 				_owner->destroyProjectile(_entity, impactEntity);
 			else
 				CEntityFactory::getSingletonPtr()->deferredDeleteEntity(_entity, true);
 		}else{
-			if(impactEntity->getName() == _owner->getEntity()->getName()){
+			if( impactEntity == _owner->getEntity() ){
 				if(_returning){
 					std::shared_ptr<CMessageAddAmmo> addAmmoMsg = std::make_shared<CMessageAddAmmo>();
 					addAmmoMsg->setAddAmmo(1);
@@ -109,6 +109,7 @@ namespace Logic
 
 					if(_burned){
 						//Envio el mensaje que daño de fuego tb.
+
 					}
 				}
 			}
