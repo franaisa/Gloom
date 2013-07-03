@@ -80,6 +80,7 @@ namespace Logic  {
 				exceptionList.insert( std::string("CHud") );
 				exceptionList.insert( std::string("CNetConnector") );
 				exceptionList.insert( std::string("CAudio") );
+				exceptionList.insert( std::string("CRagdoll") );
 				
 				// En caso de estar simulando fisica en el cliente, desactivamos
 				// la cápsula.

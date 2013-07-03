@@ -166,6 +166,7 @@ namespace Logic
 			except.insert( std::string("CAvatarController") );
 			except.insert( std::string("CPlayerSnapshot") );
 			except.insert( std::string("CParticle") );
+			except.insert( std::string("CRagdoll") );
 
 			//Desactivamos la simulación física (no puede estar activo en la escena física al morir)
 			_entity->getComponent<CPhysicController>("CPhysicController")->deactivateSimulation();
