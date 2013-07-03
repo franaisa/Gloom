@@ -32,13 +32,13 @@ namespace Logic {
 	//__________________________________________________________________
 
 	void CHungryClient::spell(){ 
-		// feedback de cooldown reducio
+		// feedback de hungry 
 
 	} // spell
 	//__________________________________________________________________
 		
 	void CHungryClient::stopSpell() { 
-		// fin feedback de cooldown reducio
+		// fin feedback de hungry 
 
 	} // stopSpell
 	//__________________________________________________________________

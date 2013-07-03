@@ -15,6 +15,8 @@ Contiene la implementación del componente que representa al hungry.
 #include "Logic/Server.h"
 #include "Map/MapEntity.h"
 
+#include "Logic/Messages/MessageSpellHungry.h"
+
 namespace Logic {
 	IMP_FACTORY(CHungryServer);
 
@@ -27,10 +29,10 @@ namespace Logic {
 	bool CHungryServer::spawn(CEntity* entity, CMap *map, const Map::CEntity *entityInfo) {
 		if(!ISpell::spawn(entity,map,entityInfo)) return false;
 
-		// Nos aseguramos de tener todos los atributos que necesitamos
-		//assert( entityInfo->hasAttribute(_spellName + "PercentageCooldown") );
+		//Nos aseguramos de tener todos los atributos que necesitamos
+		assert( entityInfo->hasAttribute(_spellName + "Percentage") );
 
-		//_percentage = entityInfo->getFloatAttribute(_spellName + "PercentageCooldown");
+		_percentage = entityInfo->getFloatAttribute(_spellName + "Percentage");
 
 
 		return true;
@@ -39,14 +41,17 @@ namespace Logic {
 
 	void CHungryServer::spell(){ 
 		
-		
+		auto msg =  std::make_shared<CMessageSpellHungry>(_percentage);
+		_entity->emitMessage(msg);
 
 	} // spell
 	//__________________________________________________________________
 		
 	void CHungryServer::stopSpell() { 
 	
-		
+		auto msg =  std::make_shared<CMessageSpellHungry>(0);
+		_entity->emitMessage(msg);
+
 	} // stopSpell
 	//__________________________________________________________________
 

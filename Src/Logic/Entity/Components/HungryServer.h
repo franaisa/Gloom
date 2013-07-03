@@ -40,7 +40,7 @@ namespace Logic {
 	public:
 
 		/** Constructor por defecto. */
-		CHungryServer() : ISpell("hungry") { }
+		CHungryServer() : ISpell("hungry"), _percentage(0) { }
 
 		//__________________________________________________________________
 
@@ -82,6 +82,7 @@ namespace Logic {
 
 	private:
 		
+		float _percentage;
 	}; // class CShootRaycast
 
 	REG_FACTORY(CHungryServer);

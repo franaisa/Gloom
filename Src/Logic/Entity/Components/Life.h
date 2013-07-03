@@ -279,6 +279,9 @@ namespace Logic {
 		// Variables para el hechizo de resurreccion
 		bool _resurrection;
 
+		/** Variable que indica cuanto se modificara los pack de vida por el hechizo spellHungry. Tomara valores entre 0 y 1 */
+		float _spellHungry;
+
 	}; // class CLife
 
 	REG_FACTORY(CLife);

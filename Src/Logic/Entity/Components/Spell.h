@@ -116,8 +116,6 @@ namespace Logic {
 		//                    METODOS HEREDADOS DE ICOMPONENT
 		// =======================================================================
 
-		virtual void onStart();
-
 		virtual void onActivate();
 
 		virtual void onDeactivate();

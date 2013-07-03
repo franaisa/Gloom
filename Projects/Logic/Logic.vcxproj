@@ -101,6 +101,8 @@
     <ClCompile Include="..\..\Src\Logic\Entity\Components\ShieldServer.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\ShieldSpellController.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\Spell.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\SpellsManagerServer.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\SpellsManagerClient.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\WeaponAmmo.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\AnimationManager.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\IronHellGoatAmmo.cpp" />
@@ -252,6 +254,7 @@
     <ClCompile Include="..\..\Src\Logic\Messages\MessageSleep.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessagePlayerSpawn.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageSpawnIsLive.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Messages\MessageSpellHungry.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageStopAnimation.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageSwitch.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageSyncPosition.cpp" />
@@ -287,6 +290,8 @@
     <ClInclude Include="..\..\Src\Logic\Entity\Components\ShieldServer.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\ShieldSpellController.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\Spell.h" />
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\SpellsManagerServer.h" />
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\SpellsManagerClient.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\SpellType.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\WeaponAmmo.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\AnimationManager.h" />
@@ -446,6 +451,7 @@
     <ClInclude Include="..\..\Src\Logic\Messages\MessageSleep.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessagePlayerSpawn.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageSpawnIsLive.h" />
+    <ClInclude Include="..\..\Src\Logic\Messages\MessageSpellHungry.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageStopAnimation.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageSwitch.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageSyncPosition.h" />

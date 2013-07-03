@@ -1,5 +1,5 @@
-#ifndef __Logic_SpellsManagerClient_H
-#define __Logic_SpellsManagerClient_H
+#ifndef __Logic_SpellsManagerServer_H
+#define __Logic_SpellsManagerServer_H
 
 #include "Logic/Entity/Component.h"
 #include "SpellType.h"
@@ -14,16 +14,16 @@ namespace Logic
 */
 
 
-	class CSpellsManagerClient : public IComponent
+	class CSpellsManagerServer : public IComponent
 	{
-		DEC_FACTORY(CSpellsManagerClient);
+		DEC_FACTORY(CSpellsManagerServer);
 
 	public:
 
 		/**
 		Constructor por defecto; en la clase base no hace nada.
 		*/
-		CSpellsManagerClient();
+		CSpellsManagerServer();
 		
 		/**
 		Inicialización del componente usando la descripción de la entidad que hay en 
@@ -47,7 +47,7 @@ namespace Logic
 		const Map::CEntity *entityInfoSpawn;
 	}; // class CShoot
 
-	REG_FACTORY(CSpellsManagerClient);
+	REG_FACTORY(CSpellsManagerServer);
 
 } // namespace Logic
 

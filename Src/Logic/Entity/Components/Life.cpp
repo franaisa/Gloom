@@ -40,6 +40,7 @@ que controla la vida de un personaje.
 #include "Logic/Messages/MessageCameraToEnemy.h"
 #include "Logic/Messages/MessageSetReducedDamage.h"
 #include "Logic/Messages/MessageHud.h"
+#include "Logic/Messages/MessageSpellHungry.h"
 
 namespace Logic {
 	
@@ -49,7 +50,8 @@ namespace Logic {
 
 	CLife::CLife() : _damageTimer(0), 
 					 _reducedDamageAbsorption(0),
-					 _respawning(false) {
+					 _respawning(false),
+					 _spellHungry(0){
 
 		// Nada que hacer
 	}
@@ -128,7 +130,8 @@ namespace Logic {
 		return msgType == Message::DAMAGED				|| 
 			   msgType == Message::ADD_LIFE				||
 			   msgType == Message::ADD_SHIELD			||
-			   msgType == Message::SET_REDUCED_DAMAGE;
+			   msgType == Message::SET_REDUCED_DAMAGE	||
+			   msgType == Message::SPELL_HUNGRY;
 	} // accept
 	
 	//________________________________________________________________________
@@ -158,6 +161,10 @@ namespace Logic {
 			}
 			case Message::SPAWN_IS_LIVE: {
 				_respawning = false;	
+			}
+			 case Message::SPELL_HUNGRY: {
+				std::shared_ptr<CMessageSpellHungry> SpellHungryrMsg = std::static_pointer_cast<CMessageSpellHungry>(message);
+				_spellHungry = SpellHungryrMsg->getSpellHungry();
 			}
 		}
 	} // process
@@ -218,6 +225,7 @@ namespace Logic {
 	//________________________________________________________________________
 	
 	void CLife::addLife(int life) {
+		life *= (1+_spellHungry);
 		if(_currentLife < _maxLife) {
 			if(_currentLife + life <= _maxLife)
 				_currentLife += life;

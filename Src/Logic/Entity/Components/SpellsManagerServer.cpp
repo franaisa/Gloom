@@ -1,42 +1,42 @@
 /**
-@file SpellManagerClient.cpp
+@file SpellManagerServer.cpp
 
 Contiene la implementación del componente que gestiona las armas y que administra el disparo.
  
-@see Logic::CSpellManagerClient
+@see Logic::CSpellManagerServer
 @see Logic::IComponent
 
 @Author Antonio Jesus Narvaez
 @date July, 2013
 */
 
-#include "SpellsManagerClient.h"
+#include "SpellsManagerServer.h"
 
 #include "Logic/Entity/Entity.h"
 #include "Map/MapEntity.h"
 
-#include "AmplifyDamageClient.h"
-#include "ComeBackClient.h"
-#include "HungryClient.h"
-#include "GravityClient.h"
-#include "HardDeathClient.h"
-#include "ShieldClient.h"
-#include "CoolDownClient.h"
-#include "ResurrectionClient.h"
+#include "AmplifyDamageServer.h"
+#include "ComeBackServer.h"
+#include "HungryServer.h"
+#include "GravityServer.h"
+#include "HardDeathServer.h"
+#include "ShieldServer.h"
+#include "CoolDownServer.h"
+#include "ResurrectionServer.h"
 
 namespace Logic 
 {
-	IMP_FACTORY(CSpellsManagerClient);
+	IMP_FACTORY(CSpellsManagerServer);
 
 	//---------------------------------------------------------
 	
-	CSpellsManagerClient::CSpellsManagerClient() {
+	CSpellsManagerServer::CSpellsManagerServer() {
 		
 	}
 
 	//---------------------------------------------------------
 
-	bool CSpellsManagerClient::spawn(CEntity *entity, CMap *map, const Map::CEntity *entityInfo) {
+	bool CSpellsManagerServer::spawn(CEntity *entity, CMap *map, const Map::CEntity *entityInfo) {
 		if(!IComponent::spawn(entity,map,entityInfo)) return false;
 
 		assert( entityInfo->hasAttribute("primarySpell") && "Debe de tener campo primarySpell");
@@ -56,13 +56,13 @@ namespace Logic
 	
 	//---------------------------------------------------------
 
-	void CSpellsManagerClient::onStart(){
+	void CSpellsManagerServer::onStart(){
 	// El resto de las armas están desactivadas, ya que no las tenemos
 		addComponent();
 	} // onStart
 	//---------------------------------------------------------
 
-	void CSpellsManagerClient::addComponent(){
+	void CSpellsManagerServer::addComponent(){
 		IComponent *temp;
 		std::string ID;
 		int i;
@@ -70,36 +70,36 @@ namespace Logic
 		for(i = 0, spell = _primarySpell; i<2 ;++i, spell = _secondarySpell){
 			switch(spell){
 				case SpellType::eAMPLIFY_DAMAGE: 
-						temp = new CAmplifyDamageClient();
-						ID = std::string("CAmplifyDamageClient");
+						temp = new CAmplifyDamageServer();
+						ID = std::string("CAmplifyDamageServer");
 				break;
 				case SpellType::eCOME_BACK: 
-						temp = new CComeBackClient();
-						ID = std::string("CComeBackClient");
+						temp = new CComeBackServer();
+						ID = std::string("CComeBackServer");
 				break;
 				case SpellType::eCOOLDOWN: 
-						temp = new CCoolDownClient();
-						ID = "CCoolDownClient";
+						temp = new CCoolDownServer();
+						ID = "CCoolDownServer";
 				break;
 				case SpellType::eGRAVITY: 
-						temp = new CGravityClient();
-						ID = "CGravityClient";
+						temp = new CGravityServer();
+						ID = "CGravityServer";
 				break;
 				case SpellType::eHARD_DEATH: 
-						temp = new CHardDeathClient();
-						ID = "CHardDeathClient";
+						temp = new CHardDeathServer();
+						ID = "CHardDeathServer";
 				break;
 				case SpellType::eHUNGRY: 
-						temp = new CHungryClient();
-						ID = "CHungryClient";
+						temp = new CHungryServer();
+						ID = "CHungryServer";
 				break;
 				case SpellType::eSHIELD: 
-						temp = new CShieldClient();
-						ID = "CShieldClient";
+						temp = new CShieldServer();
+						ID = "CShieldServer";
 				break;
 				case SpellType::eRESURECTION: 
-						temp = new CResurrectionClient();
-						ID = "CResurrectionClient";
+						temp = new CResurrectionServer();
+						ID = "CResurrectionServer";
 				break;
 			}
 			temp->spawn(entitySpawn, mapSpawn, entityInfoSpawn);

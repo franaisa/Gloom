@@ -733,6 +733,15 @@
     <ClCompile Include="..\..\Src\Logic\Entity\Components\ShieldSpellController.cpp">
       <Filter>Entity\Components\Spells\Cast\Source</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\SpellsManagerClient.cpp">
+      <Filter>Entity\Components\Spells\Manager\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\SpellsManagerServer.cpp">
+      <Filter>Entity\Components\Spells\Manager\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Messages\MessageSpellHungry.cpp">
+      <Filter>Messages\Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Src\Logic\Maps\ComponentFactory.h">
@@ -1319,6 +1328,15 @@
     </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Entity\Components\ShieldSpellController.h">
       <Filter>Entity\Components\Spells\Cast\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\SpellsManagerClient.h">
+      <Filter>Entity\Components\Spells\Manager\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\SpellsManagerServer.h">
+      <Filter>Entity\Components\Spells\Manager\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Messages\MessageSpellHungry.h">
+      <Filter>Messages\Header</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

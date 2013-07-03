@@ -201,6 +201,7 @@ Map = {
 			spellhardDeathDamageExplotion = 200.0,
 			
 			spellhungryID = 5,
+			spellhungryPercentage = 0.5,
 			
 			spellshieldID = 6,
 			spellshieldDamage = 7,
@@ -399,6 +400,7 @@ Map = {
 			spellhardDeathDamageExplotion = 200.0,
 			
 			spellhungryID = 5,
+			spellhungryPercentage = 0.5,
 			
 			spellshieldID = 6,
 			spellshieldDamage = 7,
@@ -588,6 +590,7 @@ Map = {
 			spellhardDeathDamageExplotion = 200.0,
 			
 			spellhungryID = 5,
+			spellhungryPercentage = 0.5,
 			
 			spellshieldID = 6,
 			spellshieldDamage = 7,
@@ -777,6 +780,7 @@ Map = {
 			spellhardDeathDamageExplotion = 200.0,
 			
 			spellhungryID = 5,
+			spellhungryPercentage = 0.5,
 			
 			spellshieldID = 6,
 			spellshieldDamage = 7,
@@ -972,6 +976,7 @@ Map = {
 			spellhardDeathDamageExplotion = 200.0,
 			
 			spellhungryID = 5,
+			spellhungryPercentage = 0.5,
 			
 			spellshieldID = 6,
 			spellshieldDamage = 7,
@@ -1158,6 +1163,7 @@ Map = {
 			spellhardDeathDamageExplotion = 200.0,
 			
 			spellhungryID = 5,
+			spellhungryPercentage = 0.5,
 			
 			spellshieldID = 6,
 			spellshieldDamage = 7,
@@ -1345,6 +1351,7 @@ Map = {
 			spellhardDeathDamageExplotion = 200.0,
 			
 			spellhungryID = 5,
+			spellhungryPercentage = 0.5,
 			
 			spellshieldID = 6,
 			spellshieldDamage = 7,
@@ -1537,6 +1544,7 @@ Map = {
 			spellhardDeathDamageExplotion = 200.0,
 			
 			spellhungryID = 5,
+			spellhungryPercentage = 0.5,
 			
 			spellshieldID = 6,
 			spellshieldDamage = 7,
@@ -1812,6 +1820,7 @@ Map = {
 			spellhardDeathDamageExplotion = 200.0,
 			
 			spellhungryID = 5,
+			spellhungryPercentage = 0.5,
 			
 			spellshieldID = 6,
 			spellshieldDamage = 7,

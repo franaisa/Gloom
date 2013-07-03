@@ -52,32 +52,15 @@ namespace Logic {
 		// Leemos los atributos obligatorios de arma
 		_spellID = (SpellType::Enum)entityInfo->getIntAttribute(_spellName + "ID");
 		
-		assert( entityInfo->hasAttribute("primarySpell") && "Debe de tener campo primarySpell");
-		assert( entityInfo->hasAttribute("secondarySpell") && "Debe de tener campo secondarySpell");
 		
-		_mustDeactivate = (_spellID != entityInfo->getIntAttribute("primarySpell") && _spellID != entityInfo->getIntAttribute("secondarySpell"));
 
 		return true;
 	} // spawn+
 	//__________________________________________________________________
 
 	void ISpell::onActivate(){
-		
-		/*
-		if(_mustDeactivate)
-			deactivate();
-		else
-			spell();
-			*/
+		spell();
 	} // onActivate
-	//__________________________________________________________________
-
-	void ISpell::onStart(){
-		if(_mustDeactivate)
-			deactivate();
-		else
-			spell();
-	} // onStart
 	//__________________________________________________________________
 
 	void ISpell::onDeactivate(){
