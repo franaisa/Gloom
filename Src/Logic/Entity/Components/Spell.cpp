@@ -62,10 +62,13 @@ namespace Logic {
 	//__________________________________________________________________
 
 	void ISpell::onActivate(){
+		
+		/*
 		if(_mustDeactivate)
 			deactivate();
 		else
 			spell();
+			*/
 	} // onActivate
 	//__________________________________________________________________
 
