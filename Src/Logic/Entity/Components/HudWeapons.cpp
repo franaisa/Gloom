@@ -113,7 +113,7 @@ namespace Logic {
 		_fallAnim.movementDir = 0;
 		
 		_fallAnim.offset = Vector3::ZERO;
-		_halfPi= Quaternion(Ogre::Radian(Math::PI),Vector3::UNIT_Y);
+		_halfPi= Quaternion(Ogre::Radian(Math::HALF_PI),Vector3::UNIT_Y);
 	}
 
 	//---------------------------------------------------------
@@ -197,14 +197,8 @@ namespace Logic {
 			assert(_graphicsEntities[current].graphicsEntity != 0 && "error al cargar la entidad grafica");
 			//_weaponsEntities[current] = _overlayWeapon3D[current]->add3D(currentOnText, modelWeapon, &offsetPositionWeapon);
 
-			
-			Matrix4 transformModificado = _graphicsEntities[current].graphicsEntity->getTransform();
-			Math::pitchYawRoll(_graphicsEntities[current].defaultPitch, _graphicsEntities[current].defaultYaw, _graphicsEntities[current].defaultRoll, transformModificado);
-
-			
-			_graphicsEntities[current].graphicsEntity->setTransform(transformModificado.getTrans(),transformModificado.extractQuaternion());
-			//_graphicsEntities[current].graphicsEntity->setPosition(_graphicsEntities[current].offset);
-			
+			_graphicsEntities[current].graphicsEntity->setOrientation(Math::setQuaternion(_graphicsEntities[current].defaultYaw, _graphicsEntities[current].defaultPitch, _graphicsEntities[current].defaultRoll));
+	
 
 			_overlayWeapon3D[current]->setVisible(false);
 			_overlayWeapon3D[current]->setZBuffer(1);
@@ -317,9 +311,8 @@ namespace Logic {
 	//---------------------------------------------------------
 
 	void CHudWeapons::fallAnim(unsigned int msecs) {
-		Matrix4 weaponTransform = _graphicsEntities[_currentWeapon].graphicsEntity->getTransform();
-		Math::yaw(Math::HALF_PI, weaponTransform);
-		Vector3 horizontal = Math::getDirection(weaponTransform);
+		Vector3 horizontal = (_graphicsEntities[_currentWeapon].graphicsEntity->getOrientation() * _halfPi) * Vector3::NEGATIVE_UNIT_Z;
+		horizontal.normalise();
 		Vector3 maxOffset = _fallAnim.horizontalOffset * _fallAnim.movementDir * horizontal;
 
 		horizontal *= _fallAnim.movementDir * _fallAnim.horizontalSpeed * msecs * Vector3(1.0f, 0.0f, 1.0f);
@@ -342,9 +335,8 @@ namespace Logic {
 
 	void CHudWeapons::loadWeaponAnim(unsigned int msecs) {
 		// Calculamos el ruido horizontal
-		Matrix4 weaponTransform = _graphicsEntities[_currentWeapon].graphicsEntity->getTransform();
-		Math::yaw(Math::HALF_PI, weaponTransform);
-		_unstableLoadAnim.offset = Math::getDirection(weaponTransform);
+		_unstableLoadAnim.offset = (_graphicsEntities[_currentWeapon].graphicsEntity->getOrientation() * _halfPi) * Vector3::NEGATIVE_UNIT_Z;
+		_unstableLoadAnim.offset.normalise();
 
 		_unstableLoadAnim.offset *= Math::unifRand(0.0f, _unstableLoadAnim.currentNoise) * Vector3(1.0f, 0.0f, 1.0f);
 
@@ -460,28 +452,9 @@ namespace Logic {
 	//---------------------------------------------------------
 
 	void CHudWeapons::walkAnim(unsigned int msecs) {
-		// Obtenemos la posicion del arma
-
-		//LARGE_INTEGER iniTime, endTime;
-		// QueryPerformanceCounter(&iniTime);
-
-		Matrix4 weaponTransform = _graphicsEntities[_currentWeapon].graphicsEntity->getTransform();
-		Math::yaw(Math::HALF_PI, weaponTransform);
-		_runAnim.offset = Math::getDirection(weaponTransform);
-
-		/*  QueryPerformanceCounter(&endTime);
-
-		LARGE_INTEGER freq;
-		QueryPerformanceFrequency(&freq);
-		double result = (double)(endTime.QuadPart - iniTime.QuadPart) / (double)freq.QuadPart;
-		printf("Antiguo: %.16g segundos\n", result);*/
-
-
-		//CON ESTO SERIA SUFICIENTE
-		_runAnim.offset=(_graphicsEntities[_currentWeapon].graphicsEntity->getOrientation() * _halfPi) * Vector3::NEGATIVE_UNIT_Z;
+		_runAnim.offset = (_graphicsEntities[_currentWeapon].graphicsEntity->getOrientation() * _halfPi) * Vector3::NEGATIVE_UNIT_Z;
 		_runAnim.offset.normalise();
 
-	
 		_runAnim.offset *= sineStep(msecs, _runAnim.currentHorizontalPos, _runAnim.horizontalOffset, _runAnim.horizontalSpeed, Math::HALF_PI, (2 * Math::PI) + Math::HALF_PI)
 							  * Vector3(1.0f, 0.0f, 1.0f);
 		
