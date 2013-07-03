@@ -1666,8 +1666,6 @@ Map = {
 	
 	Enemigo1 = {
 		type = "RemotePlayer",
-		model = "heavy.mesh",
-		scale = 0.15,
 		syncPosTimeStamp = 0.1,
 		timeSpawn = 4,
 		defaultLife = 120,
@@ -1686,8 +1684,7 @@ Map = {
 		jumpForce = 1.5,
 		dodgeForce = {2,2,2},
 		rollCamera = 0.15,
-
-
+		
 		physic_shape = "capsule",
 		physic_radius = 3,
 		physic_height = 3,

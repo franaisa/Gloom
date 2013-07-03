@@ -55,18 +55,9 @@ namespace Graphics {
 
 		void setGlobalPose(const Vector3& worldPosition, Quaternion& worldOrientation) {
 			_bone->setManuallyControlled(true);
-			_bone->_setDerivedPosition(_parentNode->_getDerivedOrientation().Inverse() * (worldPosition - _parentNode->_getDerivedPosition()));
 
-			/*Ogre::Vector3 parentPos = _parentNode->_getDerivedPosition(); // node local pos
-			Ogre::Vector3 parentQuatXbonePos = worldPosition - parentPos;
-			Ogre::Quaternion parentQuat = _parentNode->_getDerivedOrientation(); // node local ori
-			Ogre::Vector3 bonePos = parentQuat.Inverse() * parentQuatXbonePos;
-			Ogre::Vector3 inverseParentScale = 1.0 / _parentNode->_getDerivedScale();
-			_bone->setManuallyControlled(true);
-			_bone->_setDerivedPosition(bonePos * inverseParentScale);
-			Ogre::Quaternion worldQuat(worldOrientation); // desired orientation in world terms
-			Ogre::Quaternion boneQuat = worldQuat.Inverse() * parentQuat; // equiv to ("boneQuat = worldQuat / parentQuat")
-			_bone->_setDerivedOrientation(boneQuat);*/
+			_bone->_setDerivedOrientation( _parentNode->_getDerivedOrientation().Inverse() * worldOrientation );
+			_bone->_setDerivedPosition(  _parentNode->_getDerivedOrientation().Inverse() * (worldPosition - _parentNode->_getDerivedPosition()) );
 		}
 
 	private:

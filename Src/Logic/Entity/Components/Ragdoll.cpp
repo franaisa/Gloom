@@ -82,7 +82,7 @@ void CRagdoll::process(const std::shared_ptr<CMessage>& message) {
 			// el motor de fisicas tome el control
 			for(int i = 0; i < _ragdollBonesBuffer.size(); ++i) {
 				_ragdollBonesBuffer[i].first.setManuallyControlled(true);
-				_ragdollBonesBuffer[i].second->setKinematic(false);
+				//_ragdollBonesBuffer[i].second->setKinematic(false);
 			}
 
 			break;
@@ -95,7 +95,7 @@ void CRagdoll::process(const std::shared_ptr<CMessage>& message) {
 			// alinear los colliders a los huesos en cada frame de la animación
 			for(int i = 0; i < _ragdollBonesBuffer.size(); ++i) {
 				_ragdollBonesBuffer[i].first.setManuallyControlled(false);
-				_ragdollBonesBuffer[i].second->setKinematic(true);
+				//_ragdollBonesBuffer[i].second->setKinematic(true);
 			}
 
 			break;
@@ -139,13 +139,13 @@ void CRagdoll::onStart() {
 	CAnimatedGraphics* animComp = _entity->getComponent<CAnimatedGraphics>("CAnimatedGraphics");
 	assert(animComp != NULL && "Error: Los componentes de ragdoll necesitan tener entidades animadas");
 
-	
 	// Obtenemos la lista de huesos que tiene un collider asignado
 	// Bindeamos los colliders con los respectivos huesos de la entidad gráfica
 	vector<Physics::CDynamicEntity*> boneList = _aggregate.getEntities();
 	unsigned int nbBones = boneList.size();
 	_ragdollBonesBuffer.reserve(nbBones);
 	for(int i = 0; i < nbBones; ++i) {
+		boneList[i]->setKinematic(true);
 		_ragdollBonesBuffer.push_back( pair<Graphics::CBone, Physics::CDynamicEntity*>( animComp->getBone( boneList[i]->getName() ), boneList[i] ) );
 	}
 
@@ -154,9 +154,8 @@ void CRagdoll::onStart() {
 	Vector3 position; Quaternion orientation;
 	for(int i = 0; i < _ragdollBonesBuffer.size(); ++i) {
 		_ragdollBonesBuffer[i].first.getGlobaPose(position, orientation); // Sacamos la orientacion de los huesos graficos
-
 		_ragdollBonesBuffer[i].second->setGlobalPose(position, orientation, false); // Seteamos la orientacion de lo fisico
-		_ragdollBonesBuffer[i].second->setKinematic(false);
+		//_ragdollBonesBuffer[i].second->setKinematic(false);
 	}
 }
 

@@ -134,12 +134,6 @@ namespace Physics {
 					PxSetGroup(*rigid, group);
 					// Establecemos los filtros de colisión
 					Physics::CServer::getSingletonPtr()->setupFiltering(rigid, group, groupList);
-
-					// Para pasar los shapes a kinematicos -------------------------- (testing)
-					PxRigidDynamic* dyn = serializable->is<PxRigidDynamic>();
-					if(dyn)
-						dyn->setRigidDynamicFlag(PxRigidDynamicFlag::eKINEMATIC, true);
-
 					// Creamos una nueva entidad a partir del actor de physx dado
 					if( rigid->isRigidDynamic() )
 						_actors.push_back( new Physics::CDynamicEntity(rigid) );
