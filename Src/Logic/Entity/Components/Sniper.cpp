@@ -56,6 +56,8 @@ namespace Logic {
 
 		_defaultSecondaryFireDamage = _secondaryFireDamage = entityInfo->getFloatAttribute(_weaponName + "SecondaryFireDamage");
 
+		_burnedIncrementPercentageDamage = entityInfo->getFloatAttribute(_weaponName + "BurnedIncrementPercentageDamage") / 100;
+
 		return true;
 	} // spawn
 	//__________________________________________________________________
@@ -82,7 +84,7 @@ namespace Logic {
 
 		// Rayo lanzado por el servidor de físicas de acuerdo a la distancia de potencia del arma
 		std::vector<Physics::CRaycastHit> hits;
-		Physics::CServer::getSingletonPtr()->raycastMultiple(ray, _shotsDistance, hits,true,Physics::CollisionGroup::ePLAYER | Physics::CollisionGroup::eWORLD);
+		Physics::CServer::getSingletonPtr()->raycastMultiple(ray, _shotsDistance, hits,true,Physics::CollisionGroup::ePLAYER | Physics::CollisionGroup::eWORLD | Physics::CollisionGroup::eFIREBALL);
 
 		decrementAmmo();
 
@@ -91,9 +93,6 @@ namespace Logic {
 		for(int i=0;i<hits.size();++i){
 			//Si tocamos el mundo no continuamos viendo hits y llamamos al pintado del rayo (si se considera necesario)
 			if(hits[i].entity->getType().compare("World")==0){
-				// Dibujamos el rayo lanzandolo algo mas abajo para verlo
-				//ray.setOrigin(ray.getOrigin()-Vector3(0,0.05,0));
-				//drawRaycast(ray,hits[i].distance);
 				//Si hacemos el rayo extendiendo un mesh sacar a un metodo de pintado
 				/*float distanceWorld=hits[i].distance;
 				//Atendiendo a la distancia y sabiendo que el gráfico de la entidad mide X metros
@@ -109,11 +108,22 @@ namespace Logic {
 				laser->setOrientation(_entity->getOrientation());
 				CGraphics *cGraphics=laser->getComponent<CGraphics>("CGraphics");
 				cGraphics->changeScale(Vector3(0.2,0.2,10));//Alargamos el cilindro*/
+
+				//Antes de salir desactivamos el quemado para el siguiente disparo
+				_burned=false;
+
 				return;
+			}
+			//Si tocamos una bola de fuego, activamos el quemado
+			if(hits[i].entity->getType().compare("FireBall")==0){
+				_burned=true;
 			}
 			//Sino mientras que no seamos nosotros mismos
 			if(hits[i].entity->getEntityID()!=_entity->getEntityID()){
-				triggerHitMessages(hits[i].entity, _primaryFireDamage);
+				if(_burned)
+					triggerHitMessages(hits[i].entity, _primaryFireDamage + _primaryFireDamage * _burnedIncrementPercentageDamage);
+				else
+					triggerHitMessages(hits[i].entity, _primaryFireDamage);
 			}
 		}
 	}//primaryFireWeapon
@@ -131,18 +141,20 @@ namespace Logic {
 
 		// Rayo lanzado por el servidor de físicas de acuerdo a la distancia de potencia del arma
 		std::vector<Physics::CRaycastHit> hits;
-		Physics::CServer::getSingletonPtr()->raycastMultiple(ray, _shotsDistance, hits,true,Physics::CollisionGroup::ePLAYER | Physics::CollisionGroup::eWORLD);
+		Physics::CServer::getSingletonPtr()->raycastMultiple(ray, _shotsDistance, hits,true,Physics::CollisionGroup::ePLAYER | Physics::CollisionGroup::eWORLD | Physics::CollisionGroup::eFIREBALL);
 
 		//Cogemos lo primero tocado que no seamos nosotros mismos y vemos si a un rango X hay enemigos (no nosotros)
 		//Ojo en cooperativo tendremos que hacer distincion entre otros players aliados
 		CEntity* entityHit=NULL;
-		std::string type;
 		for(int i=0;i<hits.size();++i){
 			//Si tocamos mundo terminamos
 			if(hits[i].entity->getType().compare("World")==0)
 				break;
+			//Si es una bola de fuego activamos el quemado
+			if(hits[i].entity->getType().compare("FireBall")==0){
+				_burned=true;
+			}
 			//Entidades validas (Player que no seamos nosotros mismos)
-			type = hits[i].entity->getType();
 			if(hits[i].entity!=_entity){
 				entityHit=hits[i].entity;
 				break;
@@ -154,11 +166,20 @@ namespace Logic {
 		if(entityHit!=NULL){
 			enemyToExpand=findEnemyToExpand(entityHit);
 			//Aplicamos daño a la entidad dada y a la más próxima (si la hay)
-			triggerHitMessages(entityHit, _primaryFireDamage);
+			if(_burned)
+				triggerHitMessages(entityHit, _secondaryFireDamage + _secondaryFireDamage * _burnedIncrementPercentageDamage);
+			else
+				triggerHitMessages(entityHit, _secondaryFireDamage);
 			if(enemyToExpand!=NULL){
-				triggerHitMessages(enemyToExpand, _secondaryFireDamage);
+				if(_burned)
+					triggerHitMessages(enemyToExpand, _secondaryFireDamage + _secondaryFireDamage * _burnedIncrementPercentageDamage);
+				else
+					triggerHitMessages(enemyToExpand, _secondaryFireDamage);
 			}
 		}//if(entityHit!=NULL)
+
+		//Desactivamos el daño por quemado
+		_burned=false;
 
 		decrementAmmo(_secondaryConsumeAmmo);
 	}//secondaryFireWeapon
@@ -204,14 +225,12 @@ namespace Logic {
 	}//findEnemyToExpand
 	//-------------------------------------------------------
 
-	// Implementación por defecto de triggerHitMessages
 	void CSniper::triggerHitMessages(CEntity* entityHit, float damageFire) {
 		std::shared_ptr<CMessageDamaged> m = std::make_shared<CMessageDamaged>();
 		m->setDamage(damageFire);
 		m->setEnemy(_entity);
 		entityHit->emitMessage(m);
-
-	}// triggerHitMessager
+	}// triggerHitMessages
 	//__________________________________________________________________
 
 	void CSniper::amplifyDamage(unsigned int percentage) {
@@ -254,38 +273,6 @@ namespace Logic {
 	} // onTick
 	//__________________________________________________________________
 
-	// Dibujado de raycast para depurar
-	void CSniper::drawRaycast(const Ray& raycast,int distance) {
-		/*Graphics::CScene *scene = Graphics::CServer::getSingletonPtr()->getActiveScene();
-		Ogre::SceneManager *mSceneMgr = scene->getSceneMgr();
-
-		std::stringstream aux;
-		aux << "laser" << _weaponName << _temporal;
-		++_temporal;
-		std::string laser = aux.str();
-
-		myManualObject =  mSceneMgr->createManualObject(laser); 
-		myManualObjectNode = mSceneMgr->getRootSceneNode()->createChildSceneNode(laser+"_node"); 
- 
-		myManualObject->begin("laser", Ogre::RenderOperation::OT_LINE_STRIP);
-		Vector3 v = raycast.getOrigin();
-		myManualObject->position(v.x,v.y,v.z);
-
-		for(int i=0; i < distance;++i){
-			Vector3 v = raycast.getPoint(i);
-			myManualObject->position(v.x,v.y,v.z);
-			// etc 
-		}
-
-		myManualObject->end(); 
-		myManualObjectNode->attachObject(myManualObject);
-		_laserTime
-
-		//Destruccion
-		myManualObjectNode->detachAllObjects();
-		_entity->getMap()->getScene()->getSceneMgr()->destroyManualObject(myManualObject);
-		_entity->getMap()->getScene()->getSceneMgr()->destroySceneNode(myManualObjectNode);*/
-	}// drawRaycast
 
 
 } // namespace Logic

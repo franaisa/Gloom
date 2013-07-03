@@ -39,7 +39,7 @@ namespace Logic {
 	public:
 
 		/** Constructor por defecto. */
-		CSniper() : IWeapon("sniper"), _primaryFireTimer(0), _secondaryFireTimer(0), _primaryFireIsActive(false), _secondaryFireIsActive(false) {}
+		CSniper() : IWeapon("sniper"), _primaryFireTimer(0), _secondaryFireTimer(0), _primaryFireIsActive(false), _secondaryFireIsActive(false), _burned(false) {}
 
 		virtual ~CSniper();
 
@@ -149,9 +149,12 @@ namespace Logic {
 		bool _primaryFireIsActive;
 		bool _secondaryFireIsActive;
 
-		int _temporal;
-		Ogre::ManualObject* myManualObject;
-		Ogre::SceneNode* myManualObjectNode;
+		/**
+		Manejo de incremento de daño por atravesar una bola de fuego.
+		*/
+		float _burnedIncrementPercentageDamage;
+		bool _burned;
+		
 
 	}; // class CSniper
 
