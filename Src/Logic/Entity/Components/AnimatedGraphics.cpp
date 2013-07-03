@@ -171,7 +171,7 @@ namespace Logic
 	//---------------------------------------------------------
 
 	void CAnimatedGraphics::onTick(unsigned int msecs){
-		_graphicsEntity->setTransform(_entity->getPosition(),_entity->getYaw()*_pi);
+		_graphicsEntity->setTransform(_entity->getPosition(),_entity->getYaw());
 	}//---------------------------------------------------------
 	//onTick
 	

@@ -111,7 +111,8 @@ void CRagdoll::onFixedTick(unsigned int msecs) {
 	// estamos haciendo de hitboxes
 	Vector3 position; Quaternion orientation;
 
-	/*if(_ragdollHasControl) {
+	/*
+	if(_ragdollHasControl) {
 		for(int i = 0; i < _ragdollBonesBuffer.size(); ++i) {
 			_ragdollBonesBuffer[i].second->getGlobalPose(position, orientation); // Sacamos la orientacion de lo fisico
 			_ragdollBonesBuffer[i].first.setGlobalPose(position, orientation); // Seteamos la orientacion a lo gráfico
@@ -122,12 +123,13 @@ void CRagdoll::onFixedTick(unsigned int msecs) {
 			_ragdollBonesBuffer[i].first.getGlobaPose(position, orientation); // Sacamos la orientacion de los huesos graficos
 			_ragdollBonesBuffer[i].second->setGlobalPose(position, orientation, false); // Seteamos la orientacion de lo fisico
 		}
-	}*/
-
-	/*for(int i = 0; i < _ragdollBonesBuffer.size(); ++i) {
+	}
+	/*/
+	for(int i = 0; i < _ragdollBonesBuffer.size(); ++i) {
 		_ragdollBonesBuffer[i].second->getGlobalPose(position, orientation); // Sacamos la orientacion de lo fisico
 		_ragdollBonesBuffer[i].first.setGlobalPose(position, orientation); // Seteamos la orientacion a lo gráfico
-	}*/
+	}
+	/* */
 }
 
 //________________________________________________________________________
@@ -152,30 +154,9 @@ void CRagdoll::onStart() {
 	Vector3 position; Quaternion orientation;
 	for(int i = 0; i < _ragdollBonesBuffer.size(); ++i) {
 		_ragdollBonesBuffer[i].first.getGlobaPose(position, orientation); // Sacamos la orientacion de los huesos graficos
-	
-		
-		////////////////////////////////
-		/*
-		float y = orientation.getYaw().valueRadians();
-		float p = orientation.getPitch().valueRadians();
-		float r = orientation.getRoll().valueRadians();
-		*/
-		/*
-		Ogre::Vector3 auxV = Ogre::Vector3(y.valueRadians(),(p).valueRadians(),r.valueRadians());
-		Ogre::Quaternion auxQ = Ogre::Quaternion(&auxV);
-		*/
-		/*
-		Ogre::Quaternion auxQ = Math::setQuaternion(y,p*Math::HALF_PI,r);
-		auxQ.normalise();
-		orientation = auxQ;
-		*/
-		//orientation.FromAngleAxis(Ogre::Radian(180.0f),Vector3(0,0,1));
-		
 
-		////////////////////////////////
-		
 		_ragdollBonesBuffer[i].second->setGlobalPose(position, orientation, false); // Seteamos la orientacion de lo fisico
-		//_ragdollBonesBuffer[i].second->setKinematic(false);
+		_ragdollBonesBuffer[i].second->setKinematic(false);
 	}
 }
 
