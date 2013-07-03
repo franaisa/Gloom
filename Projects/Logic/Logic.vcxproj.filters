@@ -164,6 +164,15 @@
     <Filter Include="Entity\Components\Spells\Feedback\Source">
       <UniqueIdentifier>{ef08bac3-2145-4530-8677-137f339a06f3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Entity\Components\Spells\Manager">
+      <UniqueIdentifier>{2d685d2b-b629-453d-88af-b9084c724ae6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entity\Components\Spells\Manager\Header">
+      <UniqueIdentifier>{477fbba3-8cc7-4aeb-b74a-75897ffe608e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entity\Components\Spells\Manager\Source">
+      <UniqueIdentifier>{8b025f19-d1df-4bc7-8abf-711902e40ee9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Src\Logic\Maps\ComponentFactory.cpp">
