@@ -140,14 +140,6 @@ namespace Graphics
 		
 	void CAnimatedEntity::tick(float secs)
 	{
-		/*if(_skeletonDebug != NULL) {
-			_skeletonDebug->update();
-		}*/
-		/*
-		Ogre::Skeleton * skeleton = _entity->getSkeleton();
-		Ogre::Bone * bone = skeleton->getBone("Bip01 R Hand");
-		bone->setOrientation(_entityNode->getOrientation());
-		*/
 
 		//primero hacemos un delete deferred de las animaciones
 		//que han terminado
@@ -227,24 +219,29 @@ namespace Graphics
 		_entity->attachObjectToBone("weapon_bone_2",_weapon);
 
 	}
+	//--------------------------------------------------------
 
 	std::string CAnimatedEntity::getWeaponMaterial(){
 		return _weapon->getSubEntity(0)->getMaterialName();
 	}
+	//--------------------------------------------------------
 
 	void CAnimatedEntity::changeMaterialToWeapon(const std::string& materialName){
 		_weapon->setMaterialName(materialName);
 		//_weapon->getSubEntity(0)->getMaterialName();
 		
 	}
+	//--------------------------------------------------------
 
 	void CAnimatedEntity::freeBoneOrientation(const std::string &bone){
 		_entity->getSkeleton()->getBone(bone)->setManuallyControlled(true);
 	}
+	//--------------------------------------------------------
 
 	void CAnimatedEntity::lockBoneOrientation(const std::string &bone){
 		_entity->getSkeleton()->getBone(bone)->setManuallyControlled(false);
 	}
+	//--------------------------------------------------------
 
 	void CAnimatedEntity::moveBone(const std::string &bone, float pitch){
 		Ogre::Bone * entityBone = _entity->getSkeleton()->getBone(bone);
@@ -266,66 +263,28 @@ namespace Graphics
 
 		entityBone->pitch(Ogre::Radian(pitch));
 	}
+	//--------------------------------------------------------
 
 	bool CAnimatedEntity::load() {
 		bool success = CEntity::load();
 		_skeleton = _entity->getSkeleton();
 
-		/*_skeletonDebug = new SkeletonDebug(_entity, _scene->getSceneMgr(), _scene->getCamera()->getOgreCamera());
-		_skeletonDebug->showAxes(true);
-		_skeletonDebug->showBones(true);
-		_skeletonDebug->showNames(true);*/
-
 		return success;
 	}
-
-	void CAnimatedEntity::unload() {
-		CEntity::unload();
-
-		/*if(_skeletonDebug != NULL)
-			delete _skeletonDebug;^*/
-	}
+	//--------------------------------------------------------
 
 	Graphics::CBone CAnimatedEntity::getRootBone() const {
 		return Graphics::CBone( _entityNode, _skeleton->getRootBone() );
 	}
+	//--------------------------------------------------------
 
 	Graphics::CBone CAnimatedEntity::getBone(const std::string& boneName) const {
 		return Graphics::CBone( _entityNode, _skeleton->getBone(boneName) );
 	}
+	//--------------------------------------------------------
 
 	void CAnimatedEntity::notifyDirty() {
 		_entity->getAllAnimationStates()->_notifyDirty();
-	}
-
-	void CAnimatedEntity::listBones() {
-		auto boneIt = _skeleton->getBoneIterator();
-		CBone* bone, * hijoputa;
-
-		auto it = boneIt.begin();
-		hijoputa = new CBone( _entityNode, *it);
-		++it;
-
-		Ogre::Vector3 bonePosition; Ogre::Quaternion boneOrientation;
-		hijoputa->getGlobaPose(bonePosition, boneOrientation);
-		float min = (_entityNode->getPosition() - bonePosition).length();
-		
-		
-		for(;it != boneIt.end(); ++it) {
-			bone = new CBone( _entityNode, *it);
-			bone->getGlobaPose(bonePosition, boneOrientation);
-
-			if( (_entityNode->getPosition() - bonePosition).length() < min) {
-				min = (_entityNode->getPosition() - bonePosition).length();
-				hijoputa = bone;
-				//std::cout << "ESTE ES EL HIJO DE PUTA: " << bone->getName() << std::endl;
-
-			}
-
-			//std::cout << (*it)->getName() << " = " << (*it)->getPosition() << std::endl;
-		}
-		
-		std::cout << "ESTE ES EL HIJO DE PUTA: " << hijoputa->getName() << std::endl;
 	}
 
 } // namespace Graphics

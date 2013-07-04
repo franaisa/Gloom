@@ -8,11 +8,17 @@
 @date Julio, 2013
 */
 
+// Componentes
 #include "Ragdoll.h"
 #include "AnimatedGraphics.h"
+
+// Factoria y Mapa
 #include "Map/MapEntity.h"
+
+// Fisica
 #include "Physics/DynamicEntity.h"
 
+// Mensajes
 #include "Logic/Messages/MessagePlayerDead.h"
 #include "Logic/Messages/MessageTouched.h"
 #include "Logic/Messages/MessageUntouched.h"
@@ -92,7 +98,8 @@ void CRagdoll::process(const std::shared_ptr<CMessage>& message) {
 			_ragdollHasControl = false;
 
 			// Convertimos todas las shapes fisicas en kinemáticas para
-			// alinear los colliders a los huesos en cada frame de la animación
+			// alinear los colliders a los huesos de la entidad gráfica 
+			// en cada frame de la animación
 			for(int i = 0; i < _ragdollBonesBuffer.size(); ++i) {
 				_ragdollBonesBuffer[i].first.setManuallyControlled(false);
 				_ragdollBonesBuffer[i].second->setKinematic(true);
@@ -122,14 +129,6 @@ void CRagdoll::onFixedTick(unsigned int msecs) {
 			_ragdollBonesBuffer[i].second->setGlobalPose(position, orientation, false); // Seteamos la orientacion de lo fisico
 		}
 	}
-	
-	
-	
-	/*for(int i = 0; i < _ragdollBonesBuffer.size(); ++i) {
-		_ragdollBonesBuffer[i].second->getGlobalPose(position, orientation); // Sacamos la orientacion de lo fisico
-		_ragdollBonesBuffer[i].first.setGlobalPose(position, orientation); // Seteamos la orientacion a lo gráfico
-	}
-	/* */
 }
 
 //________________________________________________________________________
@@ -139,8 +138,8 @@ void CRagdoll::onStart() {
 	CAnimatedGraphics* animComp = _entity->getComponent<CAnimatedGraphics>("CAnimatedGraphics");
 	assert(animComp != NULL && "Error: Los componentes de ragdoll necesitan tener entidades animadas");
 
-	// Obtenemos la lista de huesos que tiene un collider asignado
-	// Bindeamos los colliders con los respectivos huesos de la entidad gráfica
+	// Obtenemos la lista de huesos que el ragdoll controla
+	// Bindeamos los colliders con los huesos de la entidad gráfica que correspondan
 	vector<Physics::CDynamicEntity*> boneList = _aggregate.getEntities();
 	unsigned int nbBones = boneList.size();
 	_ragdollBonesBuffer.reserve(nbBones);
@@ -148,15 +147,6 @@ void CRagdoll::onStart() {
 		boneList[i]->setKinematic(true);
 		_ragdollBonesBuffer.push_back( pair<Graphics::CBone, Physics::CDynamicEntity*>( animComp->getBone( boneList[i]->getName() ), boneList[i] ) );
 	}
-
-	// Colocamos los colliders en la posicion en la que se encuentren los bones
-	// de primeras
-	/*Vector3 position; Quaternion orientation;
-	for(int i = 0; i < _ragdollBonesBuffer.size(); ++i) {
-		_ragdollBonesBuffer[i].first.getGlobaPose(position, orientation); // Sacamos la orientacion de los huesos graficos
-		_ragdollBonesBuffer[i].second->setGlobalPose(position, orientation, false); // Seteamos la orientacion de lo fisico
-		//_ragdollBonesBuffer[i].second->setKinematic(false);
-	}*/
 }
 
 //________________________________________________________________________
@@ -201,33 +191,33 @@ void CRagdoll::loadRagdoll(const Map::CEntity *entityInfo, int group, const std:
 
 //________________________________________________________________________
 
-void CRagdoll::onTrigger(IPhysics *otherComponent, bool enter) {
+void CRagdoll::onTrigger(IPhysics* otherComponent, bool enter) {
 	// Construimos un mensaje de tipo TOUCHED o UNTOUCHED y lo enviamos a 
 	// todos los componentes de la entidad. 
-	if (enter) {
-		std::shared_ptr<CMessageTouched> m = std::make_shared<CMessageTouched>();
-		m->setEntity(otherComponent->getEntity());
-		_entity->emitMessage(m);
+	if(enter) {
+		std::shared_ptr<CMessageTouched> onTriggerMsg = std::make_shared<CMessageTouched>();
+		onTriggerMsg->setEntity( otherComponent->getEntity() );
+		_entity->emitMessage(onTriggerMsg);
 	} 
 	else {
-		std::shared_ptr<CMessageUntouched> m = std::make_shared<CMessageUntouched>();
-		m->setEntity(otherComponent->getEntity());
-		_entity->emitMessage(m);
+		std::shared_ptr<CMessageUntouched> onTriggerMsg = std::make_shared<CMessageUntouched>();
+		onTriggerMsg->setEntity( otherComponent->getEntity() );
+		_entity->emitMessage(onTriggerMsg);
 	}
 }
 
 //________________________________________________________________________
 
-void CRagdoll::onContact (IPhysics *otherComponent, bool enter) {
-	if (enter) {
-		std::shared_ptr<CMessageContactEnter> msg = std::make_shared<CMessageContactEnter>();
-		msg->setEntity( otherComponent->getEntity()->getEntityID() );
-		_entity->emitMessage(msg);
+void CRagdoll::onContact(IPhysics* otherComponent, bool enter) {
+	if(enter) {
+		std::shared_ptr<CMessageContactEnter> onContactMsg = std::make_shared<CMessageContactEnter>();
+		onContactMsg->setEntity( otherComponent->getEntity()->getEntityID() );
+		_entity->emitMessage(onContactMsg);
 	} 
 	else {
-		std::shared_ptr<CMessageContactExit> m = std::make_shared<CMessageContactExit>();
-		m->setEntity(otherComponent->getEntity()->getEntityID());
-		_entity->emitMessage(m);
+		std::shared_ptr<CMessageContactExit> onContactMsg = std::make_shared<CMessageContactExit>();
+		onContactMsg->setEntity( otherComponent->getEntity()->getEntityID() );
+		_entity->emitMessage(onContactMsg);
 	}
 }
 

@@ -122,8 +122,6 @@ namespace Logic
 
 		void notifyDirty();
 
-		void listBones();
-
 	protected:
 
 		/**

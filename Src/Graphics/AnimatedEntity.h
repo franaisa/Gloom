@@ -185,8 +185,6 @@ namespace Graphics
 
 		void notifyDirty();
 
-		void listBones();
-
 	protected:
 
 		/**
@@ -210,8 +208,6 @@ namespace Graphics
 
 		virtual bool load();
 
-		virtual void unload();
-
 		Ogre::Entity *_weapon;
 
 		Graphics::CEntity *_graphicsWeapon;
@@ -231,7 +227,6 @@ namespace Graphics
 		*/
 		std::list<std::string> _deletedAnims;
 
-		//SkeletonDebug* _skeletonDebug;
 	}; // class CAnimatedEntity
 
 } // namespace Graphics
