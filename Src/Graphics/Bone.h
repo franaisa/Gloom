@@ -29,6 +29,12 @@ namespace Graphics {
 
 		//________________________________________________________________________
 
+		std::string getName() {
+			return _bone->getName();
+		}
+
+		//________________________________________________________________________
+
 		void setManuallyControlled(bool setToManual) {
 			_bone->setManuallyControlled(setToManual);
 		}
