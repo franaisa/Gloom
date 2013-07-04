@@ -82,7 +82,7 @@ void CRagdoll::process(const std::shared_ptr<CMessage>& message) {
 			// el motor de fisicas tome el control
 			for(int i = 0; i < _ragdollBonesBuffer.size(); ++i) {
 				_ragdollBonesBuffer[i].first.setManuallyControlled(true);
-				_ragdollBonesBuffer[i].second->setKinematic(false);
+				//_ragdollBonesBuffer[i].second->setKinematic(false);
 			}
 
 			break;
@@ -95,7 +95,7 @@ void CRagdoll::process(const std::shared_ptr<CMessage>& message) {
 			// alinear los colliders a los huesos en cada frame de la animación
 			for(int i = 0; i < _ragdollBonesBuffer.size(); ++i) {
 				_ragdollBonesBuffer[i].first.setManuallyControlled(false);
-				_ragdollBonesBuffer[i].second->setKinematic(true);
+				//_ragdollBonesBuffer[i].second->setKinematic(true);
 			}
 
 			break;
@@ -110,7 +110,7 @@ void CRagdoll::onFixedTick(unsigned int msecs) {
 	// fisica si estamos ejecutando el ragdoll o en base a las animaciones si
 	// estamos haciendo de hitboxes
 	Vector3 position; Quaternion orientation;
-	if(_ragdollHasControl) {
+	/*if(_ragdollHasControl) {
 		for(int i = 0; i < _ragdollBonesBuffer.size(); ++i) {
 			_ragdollBonesBuffer[i].second->getGlobalPose(position, orientation); // Sacamos la orientacion de lo fisico
 			_ragdollBonesBuffer[i].first.setGlobalPose(position, orientation); // Seteamos la orientacion a lo gráfico
@@ -122,9 +122,9 @@ void CRagdoll::onFixedTick(unsigned int msecs) {
 			_ragdollBonesBuffer[i].second->setGlobalPose(position, orientation, false); // Seteamos la orientacion de lo fisico
 		}
 	}
-
+	*/
 	
-	/*
+	
 	for(int i = 0; i < _ragdollBonesBuffer.size(); ++i) {
 		_ragdollBonesBuffer[i].second->getGlobalPose(position, orientation); // Sacamos la orientacion de lo fisico
 		_ragdollBonesBuffer[i].first.setGlobalPose(position, orientation); // Seteamos la orientacion a lo gráfico
@@ -151,12 +151,12 @@ void CRagdoll::onStart() {
 
 	// Colocamos los colliders en la posicion en la que se encuentren los bones
 	// de primeras
-	/*Vector3 position; Quaternion orientation;
+	Vector3 position; Quaternion orientation;
 	for(int i = 0; i < _ragdollBonesBuffer.size(); ++i) {
 		_ragdollBonesBuffer[i].first.getGlobaPose(position, orientation); // Sacamos la orientacion de los huesos graficos
 		_ragdollBonesBuffer[i].second->setGlobalPose(position, orientation, false); // Seteamos la orientacion de lo fisico
-		_ragdollBonesBuffer[i].second->setKinematic(false);
-	}*/
+		//_ragdollBonesBuffer[i].second->setKinematic(false);
+	}
 }
 
 //________________________________________________________________________
