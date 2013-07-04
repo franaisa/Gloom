@@ -110,7 +110,6 @@ void CRagdoll::onFixedTick(unsigned int msecs) {
 	// fisica si estamos ejecutando el ragdoll o en base a las animaciones si
 	// estamos haciendo de hitboxes
 	Vector3 position; Quaternion orientation;
-
 	if(_ragdollHasControl) {
 		for(int i = 0; i < _ragdollBonesBuffer.size(); ++i) {
 			_ragdollBonesBuffer[i].second->getGlobalPose(position, orientation); // Sacamos la orientacion de lo fisico
@@ -123,6 +122,8 @@ void CRagdoll::onFixedTick(unsigned int msecs) {
 			_ragdollBonesBuffer[i].second->setGlobalPose(position, orientation, false); // Seteamos la orientacion de lo fisico
 		}
 	}
+
+	
 	/*
 	for(int i = 0; i < _ragdollBonesBuffer.size(); ++i) {
 		_ragdollBonesBuffer[i].second->getGlobalPose(position, orientation); // Sacamos la orientacion de lo fisico

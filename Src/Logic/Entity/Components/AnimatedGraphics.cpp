@@ -220,4 +220,12 @@ namespace Logic
 	Graphics::CBone CAnimatedGraphics::getBone(const std::string& boneName) const {
 		return _animatedGraphicsEntity->getBone(boneName);
 	}
+
+	Graphics::CBone CAnimatedGraphics::getRootBone() const {
+		return _animatedGraphicsEntity->getRootBone();
+	}
+
+	void CAnimatedGraphics::notifyDirty() {
+		_animatedGraphicsEntity->notifyDirty();
+	}
 } // namespace Logic

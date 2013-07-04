@@ -269,8 +269,16 @@ namespace Graphics
 		return success;
 	}
 
+	Graphics::CBone CAnimatedEntity::getRootBone() const {
+		return Graphics::CBone( _entityNode, _skeleton->getRootBone() );
+	}
+
 	Graphics::CBone CAnimatedEntity::getBone(const std::string& boneName) const {
 		return Graphics::CBone( _entityNode, _skeleton->getBone(boneName) );
+	}
+
+	void CAnimatedEntity::notifyDirty() {
+		_entity->getAllAnimationStates()->_notifyDirty();
 	}
 
 } // namespace Graphics

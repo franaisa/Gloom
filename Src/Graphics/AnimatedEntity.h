@@ -177,7 +177,11 @@ namespace Graphics
 		*/
 		void lockBoneOrientation(const std::string &bone);
 
+		Graphics::CBone getRootBone() const;
+
 		Graphics::CBone getBone(const std::string& boneName) const;
+
+		void notifyDirty();
 
 	protected:
 

@@ -118,6 +118,10 @@ namespace Logic
 
 		Graphics::CBone getBone(const std::string& boneName) const;
 
+		Graphics::CBone getRootBone() const;
+
+		void notifyDirty();
+
 	protected:
 
 		/**

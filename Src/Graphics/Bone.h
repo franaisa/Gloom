@@ -60,6 +60,24 @@ namespace Graphics {
 			_bone->_setDerivedPosition(  _parentNode->_getDerivedOrientation().Inverse() * (worldPosition - _parentNode->_getDerivedPosition()) );
 		}
 
+		//________________________________________________________________________
+
+		void yaw(float radians) {
+			_bone->yaw( Ogre::Radian(radians) );
+		}
+
+		//________________________________________________________________________
+
+		void pitch(float radians) {
+			_bone->pitch( Ogre::Radian(radians) );
+		}
+
+		//________________________________________________________________________
+
+		void roll(float radians) {
+			_bone->roll( Ogre::Radian(radians) );
+		}
+
 	private:
 		Ogre::SceneNode* _parentNode;
 		Ogre::Bone* _bone;
