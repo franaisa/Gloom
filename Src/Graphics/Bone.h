@@ -12,8 +12,6 @@
 
 namespace Graphics {
 	
-	//typedef Ogre::Bone CBone;
-
 	class CBone {
 	public:
 
@@ -49,19 +47,14 @@ namespace Graphics {
 
 		void getGlobaPose(Vector3& worldPosition, Quaternion& worldOrientation) {
 			Quaternion parentQuat = _parentNode->_getDerivedOrientation();
-			Vector3 parentPos = _parentNode->_getDerivedPosition();
-			Quaternion boneQuat = _bone->_getDerivedOrientation();
-			Vector3 bonePos = _bone->_getDerivedPosition();
 
-			worldOrientation = parentQuat * boneQuat;
-			worldPosition = parentQuat * bonePos + parentPos;
+			worldOrientation = parentQuat * _bone->_getDerivedOrientation();
+			worldPosition = parentQuat * _bone->_getDerivedPosition() + _parentNode->_getDerivedPosition();
 		}
 
 		//________________________________________________________________________
 
 		void setGlobalPose(const Vector3& worldPosition, Quaternion& worldOrientation) {
-			_bone->setManuallyControlled(true);
-
 			_bone->_setDerivedOrientation( _parentNode->_getDerivedOrientation().Inverse() * worldOrientation );
 			_bone->_setDerivedPosition(  _parentNode->_getDerivedOrientation().Inverse() * (worldPosition - _parentNode->_getDerivedPosition()) );
 		}

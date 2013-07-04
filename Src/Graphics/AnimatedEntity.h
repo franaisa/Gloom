@@ -21,6 +21,8 @@ con animaciones.
 #include "Entity.h"
 #include "Bone.h"
 
+class SkeletonDebug;
+
 // Predeclaración de clases para ahorrar tiempo de compilación
 namespace Ogre 
 {
@@ -224,6 +226,7 @@ namespace Graphics
 		lista de animaciones ejecutandose
 		*/
 		std::list<std::string> _deletedAnims;
+
 	}; // class CAnimatedEntity
 
 } // namespace Graphics

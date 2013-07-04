@@ -21,7 +21,9 @@ con animaciones.
 #include <assert.h>
 #include "Server.h"
 #include "Scene.h"
+#include "Camera.h"
 #include "Entity.h"
+#include "SkeletonDebug.h"
 #include <OgreEntity.h>
 #include <OgreAnimationState.h>
 #include <OgreSceneManager.h>
@@ -138,11 +140,6 @@ namespace Graphics
 		
 	void CAnimatedEntity::tick(float secs)
 	{
-		/*
-		Ogre::Skeleton * skeleton = _entity->getSkeleton();
-		Ogre::Bone * bone = skeleton->getBone("Bip01 R Hand");
-		bone->setOrientation(_entityNode->getOrientation());
-		*/
 
 		//primero hacemos un delete deferred de las animaciones
 		//que han terminado
@@ -209,7 +206,7 @@ namespace Graphics
 				for(;obs!=obsend;++obs)
 					(*obs)->animationFinished(anim->second.animation->getAnimationName());
 			}
-		}
+		}		
 	} // tick
 	//--------------------------------------------------------
 
@@ -222,24 +219,29 @@ namespace Graphics
 		_entity->attachObjectToBone("weapon_bone_2",_weapon);
 
 	}
+	//--------------------------------------------------------
 
 	std::string CAnimatedEntity::getWeaponMaterial(){
 		return _weapon->getSubEntity(0)->getMaterialName();
 	}
+	//--------------------------------------------------------
 
 	void CAnimatedEntity::changeMaterialToWeapon(const std::string& materialName){
 		_weapon->setMaterialName(materialName);
 		//_weapon->getSubEntity(0)->getMaterialName();
 		
 	}
+	//--------------------------------------------------------
 
 	void CAnimatedEntity::freeBoneOrientation(const std::string &bone){
 		_entity->getSkeleton()->getBone(bone)->setManuallyControlled(true);
 	}
+	//--------------------------------------------------------
 
 	void CAnimatedEntity::lockBoneOrientation(const std::string &bone){
 		_entity->getSkeleton()->getBone(bone)->setManuallyControlled(false);
 	}
+	//--------------------------------------------------------
 
 	void CAnimatedEntity::moveBone(const std::string &bone, float pitch){
 		Ogre::Bone * entityBone = _entity->getSkeleton()->getBone(bone);
@@ -261,6 +263,7 @@ namespace Graphics
 
 		entityBone->pitch(Ogre::Radian(pitch));
 	}
+	//--------------------------------------------------------
 
 	bool CAnimatedEntity::load() {
 		bool success = CEntity::load();
@@ -268,14 +271,17 @@ namespace Graphics
 
 		return success;
 	}
+	//--------------------------------------------------------
 
 	Graphics::CBone CAnimatedEntity::getRootBone() const {
 		return Graphics::CBone( _entityNode, _skeleton->getRootBone() );
 	}
+	//--------------------------------------------------------
 
 	Graphics::CBone CAnimatedEntity::getBone(const std::string& boneName) const {
 		return Graphics::CBone( _entityNode, _skeleton->getBone(boneName) );
 	}
+	//--------------------------------------------------------
 
 	void CAnimatedEntity::notifyDirty() {
 		_entity->getAllAnimationStates()->_notifyDirty();
