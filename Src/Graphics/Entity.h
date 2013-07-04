@@ -310,7 +310,7 @@ namespace Graphics
 		comprobaciónes de si la entidad está o no cargada o de si pertenece
 		a una escena. Esto se debe hacer de manera externa.
 		*/
-		void unload();
+		virtual void unload();
 		
 		/**
 		Actualiza el estado de la entidad cada ciclo. En esta clase no se

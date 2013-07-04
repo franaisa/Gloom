@@ -68,6 +68,12 @@ namespace Graphics {
 
 		//________________________________________________________________________
 
+		void setLocalPosition(const Vector3& position) {
+			_bone->setPosition(position);
+		}
+
+		//________________________________________________________________________
+
 		void yaw(float radians) {
 			_bone->yaw( Ogre::Radian(radians) );
 		}

@@ -228,4 +228,8 @@ namespace Logic
 	void CAnimatedGraphics::notifyDirty() {
 		_animatedGraphicsEntity->notifyDirty();
 	}
+
+	void CAnimatedGraphics::listBones() {
+		_animatedGraphicsEntity->listBones();
+	}
 } // namespace Logic
