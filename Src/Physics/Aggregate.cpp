@@ -26,11 +26,13 @@
 #include <PxScene.h>
 #include <PxShape.h>
 #include <PxRigidActor.h>
+#include <PxArticulationJoint.h>
 #include <PxAggregate.h>
 #include <PxRigidDynamic.h>
 #include <PxRigidStatic.h>
 #include <PxStringTable.h>
 #include <cooking/PxCooking.h>
+#include <extensions/PxD6Joint.h>
 #include <extensions/PxDefaultSimulationFilterShader.h>
 #include <extensions/PxSimpleFactory.h>
 #include <extensions/PxDefaultStreams.h>
@@ -112,14 +114,27 @@ namespace Physics {
 		// Reservamos memoria para el numero de actores que va a contener el agregado
 		_actors.reserve(nbActors);
 
+		PxPhysics* physxSDK = Physics::CServer::getSingletonPtr()->getPhysxSDK();
+
 		// Asumimos que los datos contenidos en el fichero corresponden a los colliders
 		// y articulaciones de un ragdoll
 		PxSerializable* serializable;
 		PxActor* actor = NULL;
 		PxRigidActor* rigid = NULL;
+		
+		PxArticulation* articulation;
+		PxArticulationJoint* artJoint;
+		PxD6Joint* joint;
+		
 		for (unsigned int i = 0; i < nbActors; ++i) {
 			serializable = sceneCollection->getObject(i);
 			
+			if( joint = serializable->is<PxD6Joint>() ) {
+				//cout << "joint = " << joint->getName() << endl;
+				// Crear una articulacion a partir del joint
+				//_aggregate->addArticulation(articulation);
+			}
+
 			// Las articulaciones también son actores
 			if( actor = serializable->is<PxActor>() ) {
 				// Añadimos el actor al conjunto de actores del ragdoll
@@ -143,6 +158,7 @@ namespace Physics {
 
 		// Añadimos el agregado a la escena
 		Physics::CServer::getSingletonPtr()->getActiveScene()->addAggregate(*_aggregate);
+		
 	}
 
 	//________________________________________________________________________
