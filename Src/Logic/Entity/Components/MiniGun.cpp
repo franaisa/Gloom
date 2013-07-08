@@ -9,6 +9,7 @@ Contiene la implementación del componente que gestiona las armas y que administr
 
 #include "MiniGun.h"
 #include "HudWeapons.h"
+#include "ScreamerShieldDamageNotifier.h"
 
 // Mapa
 #include "Map/MapEntity.h"
@@ -247,9 +248,24 @@ namespace Logic {
 
 		//Devolvemos lo primero tocado que no seamos nosotros mismos
 		CEntity* touched=NULL;
-		for(int i=0;i<hits.size();++i)
-			if(hits[i].entity!=_entity)
-				touched=hits[i].entity;
+		for(int i=0;i<hits.size();++i) {
+			if(hits[i].entity!=_entity) {
+				if(hits[i].entity->getType() == "ScreamerShield") 
+				{
+					CEntity* screamerShieldOwner = hits[i].entity->getComponent<CScreamerShieldDamageNotifier>("CScreamerShieldDamageNotifier")->getOwner();
+
+					// Si se trata de nuestro propio escudo salir
+					if(screamerShieldOwner == _entity)
+						break;
+				}
+				else 
+				{
+					touched=hits[i].entity;
+					break;
+				}
+			}
+		}
+
 		return touched;
 		
 	}// fireWeapon
@@ -281,8 +297,16 @@ namespace Logic {
 
 		for(auto it = hits.begin(); it < hits.end(); ++it){
 			std::string typeEntity = (*it).entity->getType();
-			if((*it).entity->getName() != _entity->getName())
+			if((*it).entity != _entity)
 			{
+				if( (*it).entity->getType() == "ScreamerShield") 
+				{
+					CEntity* screamerShieldOwner = (*it).entity->getComponent<CScreamerShieldDamageNotifier>("CScreamerShieldDamageNotifier")->getOwner();
+
+					if(screamerShieldOwner == _entity)
+						break;
+				}
+
 				int danyoTotal = _damage * _currentSpentSecondaryAmmo;
 				std::shared_ptr<CMessageDamaged> m = std::make_shared<CMessageDamaged>();
 				m->setDamage(danyoTotal);

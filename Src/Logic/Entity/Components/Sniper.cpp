@@ -11,6 +11,7 @@ Contiene la implementación del componente que gestiona las armas y que administr
 */
 
 #include "Sniper.h"
+#include "ScreamerShieldDamageNotifier.h"
 
 #include "Physics/Server.h"
 #include "Physics/RaycastHit.h"
@@ -116,15 +117,34 @@ namespace Logic {
 				return;
 			}
 			//Si tocamos una bola de fuego, activamos el quemado
-			if(hits[i].entity->getType().compare("FireBall")==0){
+			else if(hits[i].entity->getType().compare("FireBall")==0){
 				_burned=true;
 			}
+			else if(hits[i].entity->getType() == "ScreamerShield") {
+				// Tras mandar los mensajes de daño al escudo del screamer
+				// abortamos la ejecución del bucle ya que el escudo evita
+				// que el rayo de la sniper llegue más lejos
+				CEntity* screamerShieldOwner = hits[i].entity->getComponent<CScreamerShieldDamageNotifier>("CScreamerShieldDamageNotifier")->getOwner();
+				
+				// Si no se trata de nuestro propio escudo mandamos los
+				// mensajes de daño
+				if(screamerShieldOwner != _entity) {
+					if(_burned)
+						triggerHitMessages(hits[i].entity, _primaryFireDamage + _primaryFireDamage * _burnedIncrementPercentageDamage);
+					else
+						triggerHitMessages(hits[i].entity, _primaryFireDamage);
+				}
+
+				break;
+			}
 			//Sino mientras que no seamos nosotros mismos
-			if(hits[i].entity->getEntityID()!=_entity->getEntityID()){
+			else if(hits[i].entity!=_entity){
 				if(_burned)
 					triggerHitMessages(hits[i].entity, _primaryFireDamage + _primaryFireDamage * _burnedIncrementPercentageDamage);
 				else
 					triggerHitMessages(hits[i].entity, _primaryFireDamage);
+
+				
 			}
 		}
 	}//primaryFireWeapon
@@ -157,6 +177,13 @@ namespace Logic {
 			}
 			//Entidades validas (Player que no seamos nosotros mismos)
 			if(hits[i].entity!=_entity){
+				if(hits[i].entity->getType() == "ScreamerShield") {
+					CEntity* screamerShieldOwner = hits[i].entity->getComponent<CScreamerShieldDamageNotifier>("CScreamerShieldDamageNotifier")->getOwner();
+
+					if(screamerShieldOwner == _entity)
+						break;
+				}
+
 				entityHit=hits[i].entity;
 				break;
 			}
