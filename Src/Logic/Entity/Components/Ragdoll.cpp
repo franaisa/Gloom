@@ -211,7 +211,7 @@ void CRagdoll::onTrigger(IPhysics* otherComponent, bool enter) {
 void CRagdoll::onContact(IPhysics* otherComponent, bool enter) {
 	if(enter) {
 		std::shared_ptr<CMessageContactEnter> onContactMsg = std::make_shared<CMessageContactEnter>();
-		onContactMsg->setEntity( otherComponent->getEntity()->getEntityID() );
+		onContactMsg->setEntity( otherComponent->getEntity() );
 		_entity->emitMessage(onContactMsg);
 	} 
 	else {

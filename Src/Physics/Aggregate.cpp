@@ -158,7 +158,6 @@ namespace Physics {
 
 		// Añadimos el agregado a la escena
 		Physics::CServer::getSingletonPtr()->getActiveScene()->addAggregate(*_aggregate);
-		
 	}
 
 	//________________________________________________________________________

@@ -97,13 +97,13 @@ namespace Logic {
 		Ray ray(origin, direction);
 			
 		std::vector <Physics::CRaycastHit> hits;
-		Physics::CServer::getSingletonPtr()->raycastMultiple(ray, _shotsDistance, hits,true, Physics::CollisionGroup::ePLAYER  | Physics::CollisionGroup::eWORLD);
+		Physics::CServer::getSingletonPtr()->raycastMultiple(ray, _shotsDistance, hits, true, Physics::CollisionGroup::ePLAYER | Physics::CollisionGroup::eWORLD | Physics::CollisionGroup::eSCREAMER_SHIELD);
 		for (auto it = hits.begin(); it < hits.end(); ++it){
 			//Si tocamos el mundo no continuamos viendo hits
 			if((*it).entity->getType().compare("World")==0){
 				return;
 			}
-			if((*it).entity->getEntityID() != _entity->getEntityID()){
+			if((*it).entity != _entity && (*it).entity->getType() != "ScreamerShield"){
 				std::shared_ptr<CMessageDamaged> m = std::make_shared<CMessageDamaged>();
 				m->setDamage(_primaryFireDamage);
 				m->setEnemy(_entity);

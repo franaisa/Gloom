@@ -195,7 +195,6 @@ namespace Logic {
 		CEntity* entityHit = fireWeapon();
 		if(entityHit != NULL) 
 		{
-			//std::cout << "dado" << std::endl;
 			triggerHitMessages(entityHit);
 		}
 
@@ -244,7 +243,7 @@ namespace Logic {
 
 		// Rayo lanzado por el servidor de físicas de acuerdo a la distancia de potencia del arma
 		std::vector<Physics::CRaycastHit> hits;
-		Physics::CServer::getSingletonPtr()->raycastMultiple(ray, _distance,hits, true,Physics::CollisionGroup::ePLAYER);
+		Physics::CServer::getSingletonPtr()->raycastMultiple(ray, _distance,hits, true, Physics::CollisionGroup::ePLAYER | Physics::CollisionGroup::eSCREAMER_SHIELD);
 
 		//Devolvemos lo primero tocado que no seamos nosotros mismos
 		CEntity* touched=NULL;
@@ -278,7 +277,7 @@ namespace Logic {
 		//Physics::CServer::getSingletonPtr()->sweepMultiple(sphere, (_entity->getPosition() + Vector3(0,_heightShoot,0)),_directionShoot,_screamerScreamMaxDistance,hitSpots, true);
 		Vector3 vDirectionShoot =_entity->getOrientation() * Vector3::NEGATIVE_UNIT_Z;
 		vDirectionShoot.normalise();
-		Physics::CServer::getSingletonPtr()->sweepMultiple(sphere, (_entity->getPosition() + Vector3(0,_heightShoot,0)),vDirectionShoot, _distance,hits, false, Physics::CollisionGroup::ePLAYER );	
+		Physics::CServer::getSingletonPtr()->sweepMultiple(sphere, (_entity->getPosition() + Vector3(0,_heightShoot,0)),vDirectionShoot, _distance,hits, false, Physics::CollisionGroup::ePLAYER | Physics::CollisionGroup::eSCREAMER_SHIELD );	
 
 		for(auto it = hits.begin(); it < hits.end(); ++it){
 			std::string typeEntity = (*it).entity->getType();

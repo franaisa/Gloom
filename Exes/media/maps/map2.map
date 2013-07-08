@@ -7,7 +7,7 @@ Map = {
 	},
 	
 	David = {
-		type = "LocalShadow",
+		type = "LocalScreamer",
 		isPlayer = true,
 	},
 	

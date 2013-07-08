@@ -9,6 +9,7 @@
 
 #include "FireBallController.h"
 #include "IronHellGoat.h"
+#include "ScreamerShieldDamageNotifier.h"
 #include "PhysicDynamicEntity.h"
 
 #include "Logic/Maps/EntityFactory.h"
@@ -86,8 +87,26 @@ namespace Logic {
 		switch( message->getMessageType() ) {
 			case Message::CONTACT_ENTER: {
 				shared_ptr<CMessageContactEnter> contactMsg = static_pointer_cast<CMessageContactEnter>(message);
-				if( contactMsg->getEntity() != _owner->getEntity()->getEntityID() )
-					createExplotion();
+				
+				CEntity* entityContacted = contactMsg->getEntity();
+				CEntity* fireBallOwner = _owner->getEntity();
+				if( entityContacted != fireBallOwner ) {
+					if( entityContacted->getType() == "ScreamerShield" ) {
+						CEntity* screamerShieldOwner = entityContacted->getComponent<CScreamerShieldDamageNotifier>("CScreamerShieldDamageNotifier")->getOwner();
+
+						// Comprobamos que el screamer shield que hemos alcanzado
+						// no es el nuestro
+						if( screamerShieldOwner != fireBallOwner) {
+							shared_ptr<CMessageDamaged> dmgMsg = make_shared<CMessageDamaged>();
+							dmgMsg->setDamage(_damage);
+							dmgMsg->setEnemy( _owner->getEntity() );
+							entityContacted->emitMessage(dmgMsg);
+						}
+					}
+					else {
+						createExplotion();
+					}
+				}
 			}
 		}
 	}
@@ -120,8 +139,6 @@ namespace Logic {
 		vector<CEntity*> entitiesHit;
 		Physics::SphereGeometry explotionGeom = Physics::CGeometryFactory::getSingletonPtr()->createSphere(_explotionRadius);
 		Vector3 explotionPos = _entity->getPosition();
-		// @deprecated hay que tener en cuenta el grupo del screamer shield, cuando esten
-		// bien puestos los grupos lo meto
 		Physics::CServer::getSingletonPtr()->overlapMultiple(explotionGeom, explotionPos, entitiesHit, Physics::CollisionGroup::ePLAYER);
 
 		for(int i = 0; i < entitiesHit.size(); ++i) {
@@ -131,7 +148,7 @@ namespace Logic {
 
 		// Destruir en diferido esta entidad
 		CEntityFactory::getSingletonPtr()->deferredDeleteEntity(_entity, true);
-
+		// Creamos las particulas de la explosion
 		shared_ptr<CMessageCreateParticle> particleMsg = make_shared<CMessageCreateParticle>();
 		particleMsg->setPosition(explotionPos);
 		particleMsg->setParticle("ExplosionParticle");

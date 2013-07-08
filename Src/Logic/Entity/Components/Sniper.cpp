@@ -84,7 +84,8 @@ namespace Logic {
 
 		// Rayo lanzado por el servidor de físicas de acuerdo a la distancia de potencia del arma
 		std::vector<Physics::CRaycastHit> hits;
-		Physics::CServer::getSingletonPtr()->raycastMultiple(ray, _shotsDistance, hits,true,Physics::CollisionGroup::ePLAYER | Physics::CollisionGroup::eWORLD | Physics::CollisionGroup::eFIREBALL);
+		Physics::CServer::getSingletonPtr()->raycastMultiple(ray, _shotsDistance, hits,true, Physics::CollisionGroup::ePLAYER | Physics::CollisionGroup::eWORLD | Physics::CollisionGroup::eFIREBALL |
+																							 Physics::CollisionGroup::eSCREAMER_SHIELD);
 
 		decrementAmmo();
 
@@ -141,7 +142,7 @@ namespace Logic {
 
 		// Rayo lanzado por el servidor de físicas de acuerdo a la distancia de potencia del arma
 		std::vector<Physics::CRaycastHit> hits;
-		Physics::CServer::getSingletonPtr()->raycastMultiple(ray, _shotsDistance, hits,true,Physics::CollisionGroup::ePLAYER | Physics::CollisionGroup::eWORLD | Physics::CollisionGroup::eFIREBALL);
+		Physics::CServer::getSingletonPtr()->raycastMultiple(ray, _shotsDistance, hits, true, Physics::CollisionGroup::ePLAYER | Physics::CollisionGroup::eWORLD | Physics::CollisionGroup::eFIREBALL | Physics::CollisionGroup::eSCREAMER_SHIELD);
 
 		//Cogemos lo primero tocado que no seamos nosotros mismos y vemos si a un rango X hay enemigos (no nosotros)
 		//Ojo en cooperativo tendremos que hacer distincion entre otros players aliados
@@ -163,7 +164,7 @@ namespace Logic {
 		//Si hemos tocado una entidad, vemos si hay daño de expansion a otra entidad
 		//Por último aplicamos el daño correspondiente a las entidades pertinentes
 		CEntity *enemyToExpand=NULL;
-		if(entityHit!=NULL){
+		if(entityHit!=NULL && entityHit->getType() != "ScreamerShield"){
 			enemyToExpand=findEnemyToExpand(entityHit);
 			//Aplicamos daño a la entidad dada y a la más próxima (si la hay)
 			if(_burned)

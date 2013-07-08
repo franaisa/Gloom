@@ -258,7 +258,7 @@ void CPhysicDynamicEntity::onContact (IPhysics *otherComponent, bool enter) {
 	if (enter) {
 		_inContact=true;
 		std::shared_ptr<CMessageContactEnter> msg = std::make_shared<CMessageContactEnter>();
-		msg->setEntity( otherComponent->getEntity()->getEntityID() );
+		msg->setEntity( otherComponent->getEntity() );
 		_entity->emitMessage(msg);
 	} else {
 		_inContact=false;
