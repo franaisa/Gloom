@@ -9,6 +9,7 @@ Contiene la implementación del componente que gestiona las armas y que administr
 
 #include "MiniGun.h"
 #include "HudWeapons.h"
+#include "ScreamerShieldDamageNotifier.h"
 
 // Mapa
 #include "Map/MapEntity.h"
@@ -195,7 +196,6 @@ namespace Logic {
 		CEntity* entityHit = fireWeapon();
 		if(entityHit != NULL) 
 		{
-			//std::cout << "dado" << std::endl;
 			triggerHitMessages(entityHit);
 		}
 
@@ -244,13 +244,28 @@ namespace Logic {
 
 		// Rayo lanzado por el servidor de físicas de acuerdo a la distancia de potencia del arma
 		std::vector<Physics::CRaycastHit> hits;
-		Physics::CServer::getSingletonPtr()->raycastMultiple(ray, _distance,hits, true,Physics::CollisionGroup::ePLAYER);
+		Physics::CServer::getSingletonPtr()->raycastMultiple(ray, _distance,hits, true, Physics::CollisionGroup::ePLAYER | Physics::CollisionGroup::eSCREAMER_SHIELD);
 
 		//Devolvemos lo primero tocado que no seamos nosotros mismos
 		CEntity* touched=NULL;
-		for(int i=0;i<hits.size();++i)
-			if(hits[i].entity!=_entity)
-				touched=hits[i].entity;
+		for(int i=0;i<hits.size();++i) {
+			if(hits[i].entity!=_entity) {
+				if(hits[i].entity->getType() == "ScreamerShield") 
+				{
+					CEntity* screamerShieldOwner = hits[i].entity->getComponent<CScreamerShieldDamageNotifier>("CScreamerShieldDamageNotifier")->getOwner();
+
+					// Si se trata de nuestro propio escudo salir
+					if(screamerShieldOwner == _entity)
+						break;
+				}
+				else 
+				{
+					touched=hits[i].entity;
+					break;
+				}
+			}
+		}
+
 		return touched;
 		
 	}// fireWeapon
@@ -278,12 +293,20 @@ namespace Logic {
 		//Physics::CServer::getSingletonPtr()->sweepMultiple(sphere, (_entity->getPosition() + Vector3(0,_heightShoot,0)),_directionShoot,_screamerScreamMaxDistance,hitSpots, true);
 		Vector3 vDirectionShoot =_entity->getOrientation() * Vector3::NEGATIVE_UNIT_Z;
 		vDirectionShoot.normalise();
-		Physics::CServer::getSingletonPtr()->sweepMultiple(sphere, (_entity->getPosition() + Vector3(0,_heightShoot,0)),vDirectionShoot, _distance,hits, false, Physics::CollisionGroup::ePLAYER );	
+		Physics::CServer::getSingletonPtr()->sweepMultiple(sphere, (_entity->getPosition() + Vector3(0,_heightShoot,0)),vDirectionShoot, _distance,hits, false, Physics::CollisionGroup::ePLAYER | Physics::CollisionGroup::eSCREAMER_SHIELD );	
 
 		for(auto it = hits.begin(); it < hits.end(); ++it){
 			std::string typeEntity = (*it).entity->getType();
-			if((*it).entity->getName() != _entity->getName())
+			if((*it).entity != _entity)
 			{
+				if( (*it).entity->getType() == "ScreamerShield") 
+				{
+					CEntity* screamerShieldOwner = (*it).entity->getComponent<CScreamerShieldDamageNotifier>("CScreamerShieldDamageNotifier")->getOwner();
+
+					if(screamerShieldOwner == _entity)
+						break;
+				}
+
 				int danyoTotal = _damage * _currentSpentSecondaryAmmo;
 				std::shared_ptr<CMessageDamaged> m = std::make_shared<CMessageDamaged>();
 				m->setDamage(danyoTotal);

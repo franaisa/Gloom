@@ -11,6 +11,7 @@ Contiene la implementación del componente que gestiona las armas y que administr
 */
 
 #include "Sniper.h"
+#include "ScreamerShieldDamageNotifier.h"
 
 #include "Physics/Server.h"
 #include "Physics/RaycastHit.h"
@@ -84,7 +85,8 @@ namespace Logic {
 
 		// Rayo lanzado por el servidor de físicas de acuerdo a la distancia de potencia del arma
 		std::vector<Physics::CRaycastHit> hits;
-		Physics::CServer::getSingletonPtr()->raycastMultiple(ray, _shotsDistance, hits,true,Physics::CollisionGroup::ePLAYER | Physics::CollisionGroup::eWORLD | Physics::CollisionGroup::eFIREBALL);
+		Physics::CServer::getSingletonPtr()->raycastMultiple(ray, _shotsDistance, hits,true, Physics::CollisionGroup::ePLAYER | Physics::CollisionGroup::eWORLD | Physics::CollisionGroup::eFIREBALL |
+																							 Physics::CollisionGroup::eSCREAMER_SHIELD);
 
 		decrementAmmo();
 
@@ -115,15 +117,34 @@ namespace Logic {
 				return;
 			}
 			//Si tocamos una bola de fuego, activamos el quemado
-			if(hits[i].entity->getType().compare("FireBall")==0){
+			else if(hits[i].entity->getType().compare("FireBall")==0){
 				_burned=true;
 			}
+			else if(hits[i].entity->getType() == "ScreamerShield") {
+				// Tras mandar los mensajes de daño al escudo del screamer
+				// abortamos la ejecución del bucle ya que el escudo evita
+				// que el rayo de la sniper llegue más lejos
+				CEntity* screamerShieldOwner = hits[i].entity->getComponent<CScreamerShieldDamageNotifier>("CScreamerShieldDamageNotifier")->getOwner();
+				
+				// Si no se trata de nuestro propio escudo mandamos los
+				// mensajes de daño
+				if(screamerShieldOwner != _entity) {
+					if(_burned)
+						triggerHitMessages(hits[i].entity, _primaryFireDamage + _primaryFireDamage * _burnedIncrementPercentageDamage);
+					else
+						triggerHitMessages(hits[i].entity, _primaryFireDamage);
+				}
+
+				break;
+			}
 			//Sino mientras que no seamos nosotros mismos
-			if(hits[i].entity->getEntityID()!=_entity->getEntityID()){
+			else if(hits[i].entity!=_entity){
 				if(_burned)
 					triggerHitMessages(hits[i].entity, _primaryFireDamage + _primaryFireDamage * _burnedIncrementPercentageDamage);
 				else
 					triggerHitMessages(hits[i].entity, _primaryFireDamage);
+
+				
 			}
 		}
 	}//primaryFireWeapon
@@ -141,7 +162,7 @@ namespace Logic {
 
 		// Rayo lanzado por el servidor de físicas de acuerdo a la distancia de potencia del arma
 		std::vector<Physics::CRaycastHit> hits;
-		Physics::CServer::getSingletonPtr()->raycastMultiple(ray, _shotsDistance, hits,true,Physics::CollisionGroup::ePLAYER | Physics::CollisionGroup::eWORLD | Physics::CollisionGroup::eFIREBALL);
+		Physics::CServer::getSingletonPtr()->raycastMultiple(ray, _shotsDistance, hits, true, Physics::CollisionGroup::ePLAYER | Physics::CollisionGroup::eWORLD | Physics::CollisionGroup::eFIREBALL | Physics::CollisionGroup::eSCREAMER_SHIELD);
 
 		//Cogemos lo primero tocado que no seamos nosotros mismos y vemos si a un rango X hay enemigos (no nosotros)
 		//Ojo en cooperativo tendremos que hacer distincion entre otros players aliados
@@ -156,6 +177,13 @@ namespace Logic {
 			}
 			//Entidades validas (Player que no seamos nosotros mismos)
 			if(hits[i].entity!=_entity){
+				if(hits[i].entity->getType() == "ScreamerShield") {
+					CEntity* screamerShieldOwner = hits[i].entity->getComponent<CScreamerShieldDamageNotifier>("CScreamerShieldDamageNotifier")->getOwner();
+
+					if(screamerShieldOwner == _entity)
+						break;
+				}
+
 				entityHit=hits[i].entity;
 				break;
 			}
@@ -163,7 +191,7 @@ namespace Logic {
 		//Si hemos tocado una entidad, vemos si hay daño de expansion a otra entidad
 		//Por último aplicamos el daño correspondiente a las entidades pertinentes
 		CEntity *enemyToExpand=NULL;
-		if(entityHit!=NULL){
+		if(entityHit!=NULL && entityHit->getType() != "ScreamerShield"){
 			enemyToExpand=findEnemyToExpand(entityHit);
 			//Aplicamos daño a la entidad dada y a la más próxima (si la hay)
 			if(_burned)

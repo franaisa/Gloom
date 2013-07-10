@@ -13,6 +13,7 @@ Contiene la implementación del componente que controla la vida de una entidad.
 // Logica
 #include "MagneticBullet.h"
 #include "ShotGun.h"
+#include "ScreamerShieldDamageNotifier.h"
 #include "Logic/Entity/Entity.h"
 #include "Logic/Maps/Map.h"
 #include "Map/MapEntity.h"
@@ -96,10 +97,26 @@ namespace Logic
 					_owner->destroyProjectile(_entity, impactEntity);
 				}
 			}else{
-				if(impactEntity->getType() == "FireBall")
+				std::string entityType = impactEntity->getType();
+
+				if(entityType == "FireBall")
 				{
 					_burned = true;
 					// lo suyo seria cambiar el efecto y ponerle algo guapo para que se vea q esta incendia
+				}else if(entityType == "ScreamerShield"){
+					CEntity* screamerShieldOwner = impactEntity->getComponent<CScreamerShieldDamageNotifier>("CScreamerShieldDamageNotifier")->getOwner();
+
+					// Comprobamos que el screamer shield que hemos alcanzado
+					// no es el nuestro
+					if( screamerShieldOwner != _owner->getEntity()) {
+						std::shared_ptr<CMessageDamaged> dmgMsg = std::make_shared<CMessageDamaged>();
+						dmgMsg->setDamage(_damage);
+						
+						if(_owner)
+							dmgMsg->setEnemy( _owner->getEntity() );
+						
+						impactEntity->emitMessage(dmgMsg);
+					}
 				}else{
 					std::shared_ptr<CMessageDamaged> m = std::make_shared<CMessageDamaged>();
 					m->setDamage(_damage);
