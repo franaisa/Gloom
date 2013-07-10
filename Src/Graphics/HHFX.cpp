@@ -96,8 +96,6 @@ namespace Graphics{
 		// Set default mipmap level (NB some APIs ignore this)
 		Ogre::TextureManager::getSingleton().setDefaultNumMipmaps(5);
 
-		
-
 		return true;
 
 	} // open
@@ -171,8 +169,6 @@ namespace Graphics{
 		/////////////////////////////////////////////////////////////////////////////////////////
 		// preload the distortion texture with hardware gamma correction
 		/////////////////////////////////////////////////////////////////////////////////////////
-
-		Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
 
 		LogManager::getSingleton().logMessage(LML_NORMAL, "[HHFX] ---------- preload texture hardware gamma ----------");
 

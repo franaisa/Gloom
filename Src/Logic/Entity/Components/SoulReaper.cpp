@@ -35,9 +35,11 @@ Contiene la implementación del componente que representa al soulReaper.
 
 #include "Graphics/Camera.h"
 
-#include <OgreSceneManager.h>
-#include <OgreMaterialManager.h>
-#include <OgreManualObject.h>
+
+#include <OgreMeshManager.h>
+#include <OgreResourceGroupManager.h>
+#include <OgreResourceManager.h>
+#include <OgreCodec.h>
 
 namespace Logic {
 	IMP_FACTORY(CSoulReaper);
@@ -85,6 +87,12 @@ namespace Logic {
 
 
 	void CSoulReaper::primaryFire() {
+
+		
+		Ogre::StringVectorPtr names = Ogre::ResourceGroupManager::getSingleton().findResourceNames("Prueba",std::string("*"));
+		for(Ogre::StringVector::iterator itName = names->begin(); itName!=names->end(); ++itName){
+			std::cout << "Nombre: " << *itName << std::endl;
+		}
 		
 
 		_primaryFireTimer = _primaryFireCooldown;
