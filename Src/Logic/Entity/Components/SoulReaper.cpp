@@ -88,13 +88,6 @@ namespace Logic {
 
 	void CSoulReaper::primaryFire() {
 
-		
-		Ogre::StringVectorPtr names = Ogre::ResourceGroupManager::getSingleton().findResourceNames("Prueba",std::string("*"));
-		for(Ogre::StringVector::iterator itName = names->begin(); itName!=names->end(); ++itName){
-			std::cout << "Nombre: " << *itName << std::endl;
-		}
-		
-
 		_primaryFireTimer = _primaryFireCooldown;
 	
 		Vector3 direction = _entity->getOrientation()*Vector3::NEGATIVE_UNIT_Z;

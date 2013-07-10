@@ -110,39 +110,24 @@ namespace Graphics
 		//Carga el manager de overlays
 		_overlayManager = Ogre::OverlayManager::getSingletonPtr();
 
-
-		//Precarga de todas las texturas existentes
-		/*Ogre::ResourceManager::ResourceMapIterator iterTexture = Ogre::MaterialManager::getSingleton().getResourceIterator();
-		while(iterTexture.hasMoreElements())
-		{
-			iterTexture.getNext()->load();
-			//std::cout << "CARGA DE LA TEXTURA: " << iterTexture.getNext()->getName() << std::endl;
-		}*/
-
-		//Alguien precarga antes a Fireball, para que sea cargado con el grupo debe de ser descargado (esta puesto para demostrar simplemente, el rollo es cargar las cosas todas juntas no al tuntun)
-		Ogre::MaterialManager::getSingleton().unload("Fireball.png");
-		
-		//Precarga de los recursos que son texturas de forma selectiva ( segun grupos de recursos ).
-		Ogre::StringVectorPtr names = Ogre::ResourceGroupManager::getSingleton().findResourceNames("Prueba",std::string("*.png"));
-		for(Ogre::StringVector::iterator itName = names->begin(); itName!=names->end(); ++itName){
+		//Declaracion de los recursos que son texturas png de forma selectiva (especificando grupo)
+		Ogre::StringVectorPtr texturePngNames = Ogre::ResourceGroupManager::getSingleton().findResourceNames("Prueba","*.png");
+		for(Ogre::StringVector::iterator itName = texturePngNames->begin(); itName!=texturePngNames->end(); ++itName){
 			Ogre::ResourceGroupManager::getSingleton().declareResource(*itName,"Texture","Prueba");
 		}
+		//Declaracion de los recursos que son texturas png de forma selectiva (especificando grupo)
+		Ogre::StringVectorPtr textureJpgNames = Ogre::ResourceGroupManager::getSingleton().findResourceNames("Prueba","*.jpg");
+		for(Ogre::StringVector::iterator itName = textureJpgNames->begin(); itName!=textureJpgNames->end(); ++itName){
+			Ogre::ResourceGroupManager::getSingleton().declareResource(*itName,"Texture","Prueba");
+		}
+		//Declaracion de los recursos que son mallas de forma selectiva 
+		Ogre::StringVectorPtr meshNames = Ogre::ResourceGroupManager::getSingleton().findResourceNames("Prueba","*.mesh");
+		for(Ogre::StringVector::iterator itName = meshNames->begin(); itName!=meshNames->end(); ++itName){
+			Ogre::ResourceGroupManager::getSingleton().declareResource(*itName,"Mesh","Prueba");
+		}
+		//Inicializacion y precarga de las texturas y mallas previamente declaradas (especificando el grupo "Prueba")
 		Ogre::ResourceGroupManager::getSingleton().initialiseResourceGroup("Prueba");
 		Ogre::ResourceGroupManager::getSingleton().loadResourceGroup("Prueba");
-
-
-		/*Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
-
-		Ogre::ResourceManager::ResourceMapIterator iterMesh = Ogre::MeshManager::getSingleton().getResourceIterator();
-		//Ogre::ResourceGroupManager::resourceExists(Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,je);
-		while(iterMesh.hasMoreElements())
-		{
-			iterMesh.getNext()->load();
-			//Ogre::MeshManager::getSingletonPtr()->load(iterMesh.getNext()->getName(), Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
-			//std::cout << "CARGA DE LA MALLA: " << iterMesh.getNext()->getName() << std::endl;
-		}*/
-		
-		
 
 		return true;
 

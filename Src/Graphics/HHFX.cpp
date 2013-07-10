@@ -175,6 +175,7 @@ namespace Graphics{
 		// ok then, load all the textures in the HellHeaven resource group
 		String resourceGroup("HellHeaven");
 
+		//Si algun dia se utilizase HellHeaven habria que optimizar la inicializacion y carga de recursos
 		ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
 		ResourceGroupManager::getSingleton().loadResourceGroup(resourceGroup);
 
