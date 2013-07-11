@@ -437,9 +437,10 @@ namespace BaseSubsystems
 			_renderWindow->setDeactivateOnFocusChange(false);
 #endif
 
-			// Inicializa los recursos que deben haber sido cargados en
-			// setupResources()
+			// Inicializa los recursos indicados que deben haber sido cargados en setupResources()
+			// Convendria descargar la seccion general de resources.cfg
 			Ogre::ResourceGroupManager::getSingletonPtr()->initialiseResourceGroup("General");
+			
 		}
 		catch(Ogre::Exception e)
 		{

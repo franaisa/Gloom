@@ -96,8 +96,6 @@ namespace Graphics{
 		// Set default mipmap level (NB some APIs ignore this)
 		Ogre::TextureManager::getSingleton().setDefaultNumMipmaps(5);
 
-		
-
 		return true;
 
 	} // open
@@ -172,13 +170,12 @@ namespace Graphics{
 		// preload the distortion texture with hardware gamma correction
 		/////////////////////////////////////////////////////////////////////////////////////////
 
-		Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
-
 		LogManager::getSingleton().logMessage(LML_NORMAL, "[HHFX] ---------- preload texture hardware gamma ----------");
 
 		// ok then, load all the textures in the HellHeaven resource group
 		String resourceGroup("HellHeaven");
 
+		//Si algun dia se utilizase HellHeaven habria que optimizar la inicializacion y carga de recursos
 		ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
 		ResourceGroupManager::getSingleton().loadResourceGroup(resourceGroup);
 

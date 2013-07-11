@@ -35,9 +35,11 @@ Contiene la implementación del componente que representa al soulReaper.
 
 #include "Graphics/Camera.h"
 
-#include <OgreSceneManager.h>
-#include <OgreMaterialManager.h>
-#include <OgreManualObject.h>
+
+#include <OgreMeshManager.h>
+#include <OgreResourceGroupManager.h>
+#include <OgreResourceManager.h>
+#include <OgreCodec.h>
 
 namespace Logic {
 	IMP_FACTORY(CSoulReaper);
@@ -85,7 +87,6 @@ namespace Logic {
 
 
 	void CSoulReaper::primaryFire() {
-		
 
 		_primaryFireTimer = _primaryFireCooldown;
 	
