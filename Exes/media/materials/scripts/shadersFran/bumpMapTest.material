@@ -1,0 +1,40 @@
+material bumpMapTest {
+	technique {
+		pass {
+		
+			vertex_program_ref bumpMapVertexShader {
+				param_named_auto	ViewProjectionMatrix 	worldviewproj_matrix
+				param_named_auto	eyePosition					camera_position_object_space
+				
+				param_named 	lightPosition		float3	1.0			20.0			1.0
+			}
+			
+			fragment_program_ref bumpMapFragmentShader {
+				param_named_auto	inverseViewProjMatrix	inverse_viewproj_matrix
+				param_named_auto	eyePosition					camera_position_object_space
+				param_named_auto	globalAmbient				ambient_light_colour
+				
+				param_named	numLights			int		1
+				param_named 	lightColor 			float3 	0.9 			0.9			0.9
+				param_named 	lightPosition		float3	1.0			20.0			1.0
+				param_named	lightKc				float3	0.5
+				param_named 	lightKl				float3	0.5
+				param_named	lightKq				float3	0.2
+				param_named	Ke					float3	0.0			0.0			0.0
+				param_named	Ka					float3	0.0215		0.1745		0.0215
+				param_named	Kd					float3	0.07568	0.61424	0.07568
+				param_named	Ks					float3	0.633		0.727811	0.633
+				param_named 	shininess			float		76.8
+			}
+			
+			texture_unit DiffMap0 {
+				texture rockwall.tga
+			}
+			
+			texture_unit NormalMap {
+				texture rockwall_NH.tga
+			}
+			
+		}
+	}
+}
