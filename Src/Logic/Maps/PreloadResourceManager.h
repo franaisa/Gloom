@@ -52,19 +52,19 @@ namespace Logic
 		static void Release();
 
 		/**
-		Función llamada para declarar e inicializar los recursos comunes.
+		Función llamada para la declaracion, inicializacion y precarga de los recursos comunes.
 		*/
 		void preloadCommon();
 
 		/**
-		Función llamada para la precarga de recursos del nivel pasado como parámetro.
+		Función llamada para la declaracion, inicialización y precarga de recursos del nivel pasado como parámetro.
 
 		@param filename Nombre del mapa a cargar sus recursos.
 		*/
 		void preloadResources(const std::string &mapName);
 
 		/**
-		Función llamada para la el borrado de recursos del nivel pasado como parámetro.
+		Función llamada para la descarga y borrado de recursos del nivel pasado como parámetro.
 
 		@param filename Nombre del mapa a borrar sus recursos.
 		*/
