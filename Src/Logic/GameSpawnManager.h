@@ -16,7 +16,6 @@ Contiene la declaración del gestor de los mensajes de red durante la partida.
 #ifndef __GameSpawnManager_H
 #define __GameSpawnManager_H
 
-#include "BaseSubsystems\Math.h"
 #include "Entity\Entity.h"
 
 namespace Logic 
@@ -33,9 +32,9 @@ namespace Logic
 	public:
 
 		/**
-		Devuelve la única instancia de la clase CServer.
+		Devuelve la única instancia de la clase CGameSpawnManager.
 		
-		@return Única instancia de la clase CServer.
+		@return Única instancia de la clase CGameSpawnManager.
 		*/
 		static CGameSpawnManager* getSingletonPtr() {return _instance;}
 

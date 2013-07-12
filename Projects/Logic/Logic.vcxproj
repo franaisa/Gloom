@@ -194,6 +194,7 @@
     <ClCompile Include="..\..\Src\Logic\Entity\Components\AvatarController.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\Camera.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\Graphics.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Maps\PreloadResourceManager.cpp" />
     <ClCompile Include="..\..\Src\Logic\Maps\Scoreboard.cpp" />
     <ClCompile Include="..\..\Src\Logic\Maps\WorldState.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\Message.cpp" />
@@ -389,6 +390,7 @@
     <ClInclude Include="..\..\Src\Logic\Entity\Components\Camera.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\Graphics.h" />
     <ClInclude Include="..\..\Src\Logic\Documentation.h" />
+    <ClInclude Include="..\..\Src\Logic\Maps\PreloadResourceManager.h" />
     <ClInclude Include="..\..\Src\Logic\Maps\Scoreboard.h" />
     <ClInclude Include="..\..\Src\Logic\Maps\TeamFaction.h" />
     <ClInclude Include="..\..\Src\Logic\Maps\WorldState.h" />

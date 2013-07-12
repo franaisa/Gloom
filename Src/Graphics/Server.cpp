@@ -31,10 +31,6 @@ la ventana, etc.
 #include <OgreOverlayManager.h>
 #include <OgreRay.h>
 
-#include <OgreMeshManager.h>
-#include <OgreResourceGroupManager.h>
-#include <OgreResourceManager.h>
-#include <OgreCodec.h>
 
 namespace Graphics 
 {
@@ -110,25 +106,6 @@ namespace Graphics
 		//Carga el manager de overlays
 		_overlayManager = Ogre::OverlayManager::getSingletonPtr();
 
-		//Declaracion de los recursos que son texturas png de forma selectiva (especificando grupo)
-		Ogre::StringVectorPtr texturePngNames = Ogre::ResourceGroupManager::getSingleton().findResourceNames("Prueba","*.png");
-		for(Ogre::StringVector::iterator itName = texturePngNames->begin(); itName!=texturePngNames->end(); ++itName){
-			Ogre::ResourceGroupManager::getSingleton().declareResource(*itName,"Texture","Prueba");
-		}
-		//Declaracion de los recursos que son texturas png de forma selectiva (especificando grupo)
-		Ogre::StringVectorPtr textureJpgNames = Ogre::ResourceGroupManager::getSingleton().findResourceNames("Prueba","*.jpg");
-		for(Ogre::StringVector::iterator itName = textureJpgNames->begin(); itName!=textureJpgNames->end(); ++itName){
-			Ogre::ResourceGroupManager::getSingleton().declareResource(*itName,"Texture","Prueba");
-		}
-		//Declaracion de los recursos que son mallas de forma selectiva 
-		Ogre::StringVectorPtr meshNames = Ogre::ResourceGroupManager::getSingleton().findResourceNames("Prueba","*.mesh");
-		for(Ogre::StringVector::iterator itName = meshNames->begin(); itName!=meshNames->end(); ++itName){
-			Ogre::ResourceGroupManager::getSingleton().declareResource(*itName,"Mesh","Prueba");
-		}
-		//Inicializacion y precarga de las texturas y mallas previamente declaradas (especificando el grupo "Prueba")
-		Ogre::ResourceGroupManager::getSingleton().initialiseResourceGroup("Prueba");
-		Ogre::ResourceGroupManager::getSingleton().loadResourceGroup("Prueba");
-
 		return true;
 
 	} // open
@@ -161,8 +138,6 @@ namespace Graphics
 			assert(_scenes.find(name)==_scenes.end() && 
 			"Ya se ha creado una escena con este nombre.");
 		}
-
-		
 
 		CScene *scene = new CScene(name);
 		TStringScenePar ssp(name,scene);

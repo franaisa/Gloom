@@ -14,6 +14,7 @@ la gestión de la lógica del juego.
 #include "Logic/Maps/Map.h"
 #include "Logic/GameNetMsgManager.h"
 #include "Logic/GameSpawnManager.h"
+#include "Logic/Maps/PreloadResourceManager.h"
 #include "Logic/GameNetPlayersManager.h"
 #include "Logic/Maps/EntityFactory.h"
 #include "Logic/Maps/GUIManager.h"
@@ -107,6 +108,11 @@ namespace Logic {
 			return false;
 		_gameSpawnManager = Logic::CGameSpawnManager::getSingletonPtr();
 
+		//Inicializamos el gestor de precarga de recursos
+		if (!Logic::CPreloadResourceManager::Init())
+			return false;
+		_preloadResourceManager = Logic::CPreloadResourceManager::getSingletonPtr();
+
 		// Inicializamos el gestor de jugadores en red
 		if(!Logic::CGameNetPlayersManager::Init())
 			return false;
@@ -141,6 +147,8 @@ namespace Logic {
 
 		Logic::CWorldState::Release();
 
+		Logic::CPreloadResourceManager::Release();
+
 	} // close
 
 	//--------------------------------------------------------
@@ -152,10 +160,10 @@ namespace Logic {
 
 		if(_map = CMap::createMapFromFile(filename))
 		{
-			std::cout << "loadlevel terminado" << std::endl;
+			std::cout << "loadlevel terminado: "<< _map->getMapName() << std::endl;
 			return true;
 		}
-
+		
 		return false;
 
 	} // loadLevel
@@ -167,6 +175,7 @@ namespace Logic {
 		_guiManager->deactivate();
 		if(_map)
 		{
+			_preloadResourceManager->unloadResources(_map->getMapName());
 			_map->deactivate();
 			_gameSpawnManager->deactivate();
 			_gameNetMsgManager->deactivate();
@@ -185,6 +194,7 @@ namespace Logic {
 		_gameSpawnManager->activate();
 		_gameNetMsgManager->activate();
 		_guiManager->activate();
+		_preloadResourceManager->preloadResources(_map->getMapName());
 
 		// Activamos el mapa
 		bool success = _map->activate();
@@ -201,6 +211,7 @@ namespace Logic {
 
 	void CServer::deactivateMap() 
 	{
+		//HOLA, SOY DEACTIVATE MAP Y NADIE ME LLAMA
 		_gameSpawnManager->deactivate();
 		_gameNetMsgManager->deactivate();
 		
