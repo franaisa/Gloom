@@ -1,23 +1,22 @@
+// @author Francisco Aisa García
+
 // Registros de texturas
-sampler DiffMap0: register(s0);
+sampler DiffMap			: register(s0);
+sampler SpecMap 		: register(s1);
 
 // Parametros de Ogre
-float4x4 ViewProjectionMatrix;
-float4x4 inverseViewProjMatrix;
+float4x4 viewProjectionMatrix;
 float4 globalAmbient;
 float3 eyePosition;
 
-// Parametros para el fragment shader (desde codigo)
-float3 lightColor;
-float3 lightPosition;
-float lightKc;
-float lightKl;
-float lightKq;
-float3 Ke;
-float3 Ka;
-float3 Kd;
-float3 Ks;
-float shininess;
+float4 lightPosition;
+float4 lightColor;
+float4 lightAttenuation;
+
+// Parametros para el fragment shader
+float Ka; // constante de ambiente
+float Kd; // constante de difuso
+float shininess; // constante de shininess
 
 // Información de entrada del vertex shader
 struct VsInput {
@@ -47,7 +46,7 @@ struct PsInput {
 VsOutput vertex_main(const VsInput IN) {
 	VsOutput OUT;
 
-	OUT.position = mul(ViewProjectionMatrix, IN.position);
+	OUT.position = mul(viewProjectionMatrix, IN.position);
 	OUT.uv0 = IN.uv0;
 	
 	OUT.objectPos = IN.position;
@@ -58,18 +57,21 @@ VsOutput vertex_main(const VsInput IN) {
 
 //________________________________________________________________________
 
-float computeAttenuation(float3 P) {
-	float d = distance(P, lightPosition);
-	return 1 / (lightKc + lightKl * d + lightKq * d * d);
+float computeAttenuation(float4 lightPos, float3 P) {
+	float d = distance(P, lightPos.xyz);
+	// y = constant att, z = linear att, w = quadratic att
+	return 1 / (lightAttenuation.y + lightAttenuation.z * d + lightAttenuation.w * d * d);
 }
 
-void computeLighting(float3 P, float3 N, out float3 diffuseResult, out float3 specularResult) {
-	float attenuation = computeAttenuation(P);
-
+void computeLighting(float4 lightPos, float4 lightCol, float3 P, float3 N, out float3 diffuseResult, out float3 specularResult) {
+	float attenuation = computeAttenuation(lightPos, P);
+	if(attenuation > 1.0f)
+		attenuation = 1.0f;
+	
 	// Compute the diffuse lighting
-	float3 L = normalize(lightPosition - P);
+	float3 L = normalize(lightPos.xyz - P);
 	float  diffuseLight = max(dot(N, L), 0);
-	diffuseResult = attenuation * lightColor * diffuseLight;
+	diffuseResult = attenuation * lightColor.xyz * diffuseLight;
 
 	// Compute the specular lighting
 	float3 V = normalize(eyePosition - P);
@@ -78,7 +80,7 @@ void computeLighting(float3 P, float3 N, out float3 diffuseResult, out float3 sp
 	if (diffuseLight <= 0)
 		specularLight = 0;
 	
-	specularResult = attenuation * lightColor * specularLight;
+	specularResult = attenuation * lightColor.xyz * specularLight;
 }
 
 //________________________________________________________________________
@@ -88,8 +90,7 @@ float4 fragment_main(const PsInput IN) : COLOR {
 	float3 P = IN.position.xyz;
 	float3 N = normalize(IN.normal);
 
-	// Compute emissive and ambient terms
-	float3 emissive = Ke;
+	// Compute ambient term
 	float3 ambient = Ka * globalAmbient;
 
 	// Compute the diffuse and specular terms
@@ -98,19 +99,19 @@ float4 fragment_main(const PsInput IN) : COLOR {
 	float3 diffuseSum  = 0;
 	float3 specularSum = 0;
 
-	// Depende del numero de luces que afecte al material
-	// hay que calcularlo desde la logica
-	for (int i = 0; i < 1; ++i) {
-    	computeLighting(P, N, diffuseLight, specularLight);
-    	diffuseSum += diffuseLight;
+	// Ejecutar tantas veces como luces haya
+	//for (int i = 0; i < 1; ++i) {
+		computeLighting(lightPosition, lightColor, P, N, diffuseLight, specularLight);
+		diffuseSum += diffuseLight;
 		specularSum += specularLight;
-	}
+	//}
+	
+    // Kd allows us to modulate diffuse. Sometimes is too much if just based on the diffuse texture
+	float3 diffuse = Kd * diffuseSum;
+  	// Specular constant is read from channel alpha
+	float3 specular = (tex2D(SpecMap, IN.uv0)).w * specularSum;
 
-    // Modulate diffuse and specular by material color
-	float3 diffuse  = Kd * diffuseSum;
-  	float3 specular = Ks * specularSum;
+	float3 color = ambient + diffuse + specular;
 
-	float3 color = emissive + ambient + diffuse + specular;
-
-	return float4(color, 1.0f) *  tex2D(DiffMap0, IN.uv0);
+	return float4(color, 1.0f) * float4( (tex2D(DiffMap, IN.uv0)).xyz, 1.0f);
 }
