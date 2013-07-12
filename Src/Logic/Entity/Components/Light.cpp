@@ -22,28 +22,59 @@ Contiene la implementación del componente que controla la vida de una entidad.
 #include <OgreSceneManager.h>
 #include "Logic/Server.h"
 
-namespace Logic 
-{
+#include <OgreMeshManager.h>
+#include <OgreMaterial.h>
+#include <OgreMesh.h>
+#include <OgreEntity.h>
+
+using namespace Ogre;
+
+namespace Logic {
+
 	IMP_FACTORY(CLight);
+
+	CLight::CLight() {
+		// Nada que hacer
+	}
+
+	//---------------------------------------------------------
+
+	CLight::~CLight() {
+
+	}
 	
 	//---------------------------------------------------------
 	
-	
-	bool CLight::spawn(CEntity *entity, CMap *map, const Map::CEntity *entityInfo) 
-	{
-		if(!IComponent::spawn(entity,map,entityInfo))
-			return false;
+	bool CLight::spawn(CEntity *entity, CMap *map, const Map::CEntity *entityInfo) {
+		if( !IComponent::spawn(entity,map,entityInfo) ) return false;
 
-		_light = new Graphics::CLight();
-		Vector3 position = entityInfo->getVector3Attribute("position");
-		Vector3 direction;
+		// Nos aseguramos de que haya una posicion que asignar a la luz
+		assert( entityInfo->hasAttribute("position") );
+
+		_light.createPointLight(Graphics::CServer::getSingletonPtr()->getActiveScene(), "luzTest", entityInfo->getVector3Attribute("position") );
+
+		//_light.setposition( entityInfo->getVector3Attribute("position") );
+
+		if( entityInfo->hasAttribute("color") ) {
+			Ogre::Vector3 color = entityInfo->getVector3Attribute("color");
+			_light.setColour(color.x, color.y, color.z);
+		}
+
+		if( entityInfo->hasAttribute("attenuation") ) {
+			Ogre::Vector3 attenuation = entityInfo->getVector3Attribute("attenuation");
+			// Como de momento no contemplamos el rango de alcance en las luces
+			// lo fijamos a un valor arbitrario
+			_light.setAttenuation(50.0f, attenuation.x, attenuation.y, attenuation.z);
+		}
+
+		/*Vector3 direction;
 		
 		if(entityInfo->hasAttribute("direction"))
 			direction = entityInfo->getVector3Attribute("direction");
 
 		std::string type = entityInfo->getStringAttribute("type");
 		if(type == "SpotLight"){
-			_light->createSpotlLight(_entity->getMap()->getScene(), _entity->getName(), position, direction);
+			_light.createSpotlLight(_entity->getMap()->getScene(), _entity->getName(), position, direction);
 			if(entityInfo->hasAttribute("innerAngle") && entityInfo->hasAttribute("outerAngle"))
 				_light->setRange(entityInfo->getFloatAttribute("innerAngle"), entityInfo->getFloatAttribute("outerAngle") );
 		}
@@ -67,43 +98,39 @@ namespace Logic
 
 		if(entityInfo->hasAttribute("intensity"))
 			_light->setIntensity(entityInfo->getFloatAttribute("intensity"));
+		*/
 
 		//_light->attachToScene();
 
 		return true;
 
 	} // spawn
-	
-	//---------------------------------------------------------
 
-	bool CLight::accept(const std::shared_ptr<CMessage>& message)
-	{
-		return false;
-		//return message->getMessageType() == Message::DAMAGED;
-		
-	} // accept
-	
-	//---------------------------------------------------------
-
-	void CLight::process(const std::shared_ptr<CMessage>& message)
-	{
-		/*
-		switch(message->getMessageType())
-		{
-
+	void CLight::onStart() {
+		/*MeshPtr pMesh = MeshManager::getSingleton().load("agent47.mesh",
+        ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,    
+        HardwareBuffer::HBU_DYNAMIC_WRITE_ONLY,
+        HardwareBuffer::HBU_STATIC_WRITE_ONLY,
+        true, true);
+		// so we can still read it
+ 
+		// build tangent vectors, all our meshes use only one texture coordset 
+		// Note: we can build into VES_TANGENT now (SM2+)
+ 
+		unsigned short src, dest;   
+		if (!pMesh->suggestTangentVectorBuildParams(VES_TANGENT, src, dest)) {
+			pMesh->buildTangentVectors(VES_TANGENT, src, dest);
 		}
-		*/
 
-	} // process
-	//----------------------------------------------------------
-/*
-	void CLight::onTick(unsigned int msecs)
-	{
-		
-	} // tick
-	//----------------------------------------------------------
-*/
+		// Creamos un objeto 3d
+		Entity* hitman = Graphics::CServer::getSingletonPtr()->getActiveScene()->getSceneMgr()->createEntity(pMesh);
+		//Entity* hitman = mSceneMgr->createEntity("hitman", "agent47.mesh");
+		hitman->setMaterialName("pointLightTest"); // asignamos el material
 
+		SceneNode* hitmanNode = Graphics::CServer::getSingletonPtr()->getActiveScene()->getSceneMgr()->getRootSceneNode()->createChildSceneNode();
+		hitmanNode->attachObject(hitman);
+		hitmanNode->setPosition(0, 0, 0);*/
+	}
 
 } // namespace Logic
 

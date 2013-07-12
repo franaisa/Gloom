@@ -13,17 +13,17 @@ material pointLightTest {
 				param_named_auto	lightColor						light_diffuse_colour						0
 				param_named_auto	lightAttenuation				light_attenuation							0
 				
-				param_named	Ka					float		0.5
-				param_named	Kd					float		0.3
-				param_named 	shininess			float		76.0
+				param_named			Ka								float												0.5
+				param_named			Kd								float												0.3
+				param_named 			shininess						float												76.0
 			}
 			
 			texture_unit Texture {
-				texture suelo.tga
+				texture suelote.tga
 			}
 			
 			texture_unit SpecMap {
-				sueloSpecular.tga
+				texture sueloteSpec.tga
 			}
 			
 		}

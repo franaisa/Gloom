@@ -85,6 +85,14 @@ namespace Graphics
 		*/
 		void setColour(float r, float g, float b);
 		/**
+		Método para setear la atenuación de la luz
+		@param Range rango de alcance de la luz.
+		@param Kc Constante de atenuación constante.
+		@param Kl Constante de atenuación lineal.
+		@param Kq Constante de atenuación cuadrática.
+		*/
+		void setAttenuation(float Range, float Kc, float Kl, float Kq);
+		/**
 		Método que setea el color difuso de la luz
 		@param r el rojo
 		@param g el verde
