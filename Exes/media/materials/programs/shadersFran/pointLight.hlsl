@@ -2,7 +2,6 @@
 
 // Registros de texturas
 sampler DiffMap			: register(s0);
-sampler SpecMap 		: register(s1);
 
 // Parametros de Ogre
 float4x4 viewProjectionMatrix;
@@ -65,14 +64,13 @@ float computeAttenuation(float4 lightPos, float3 P) {
 
 void computeLighting(float4 lightPos, float4 lightCol, float3 P, float3 N, out float3 diffuseResult, out float3 specularResult) {
 	float attenuation = computeAttenuation(lightPos, P);
-	//if(attenuation > 1.0f)
-	//	attenuation = 1.0f;
-	attenuation = 1.0f;
+	if(attenuation > 1.0f)
+		attenuation = 1.0f;
 	
 	// Compute the diffuse lighting
 	float3 L = normalize(lightPos.xyz - P);
 	float  diffuseLight = max(dot(N, L), 0);
-	diffuseResult = attenuation * lightColor.xyz * diffuseLight;
+	diffuseResult = attenuation * lightCol.xyz * diffuseLight;
 
 	// Compute the specular lighting
 	float3 V = normalize(eyePosition - P);
@@ -81,7 +79,7 @@ void computeLighting(float4 lightPos, float4 lightCol, float3 P, float3 N, out f
 	if (diffuseLight <= 0)
 		specularLight = 0;
 	
-	specularResult = attenuation * lightColor.xyz * specularLight;
+	specularResult = attenuation * lightCol.xyz * specularLight;
 }
 
 //________________________________________________________________________
@@ -110,10 +108,9 @@ float4 fragment_main(const PsInput IN) : COLOR {
     // Kd allows us to modulate diffuse. Sometimes is too much if just based on the diffuse texture
 	float3 diffuse = Kd * diffuseSum;
   	// Specular constant is read from channel alpha
-	// @deprecated needs to read from diffuse texture not its own texture
-	float3 specular = (tex2D(SpecMap, IN.uv0)).w * specularSum;
+	float3 specular = tex2D(DiffMap, IN.uv0).w * specularSum;
 
 	float3 color = ambient + diffuse + specular;
 
-	return float4(color, 1.0f) * float4( (tex2D(DiffMap, IN.uv0)).xyz, 1.0f );
+	return float4(color, 1.0f) * float4( tex2D(DiffMap, IN.uv0).xyz, 1.0f );
 }

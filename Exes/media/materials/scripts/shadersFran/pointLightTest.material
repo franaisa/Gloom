@@ -18,12 +18,8 @@ material pointLightTest {
 				param_named 			shininess						float												76.0
 			}
 			
-			texture_unit Texture {
-				texture suelote.tga
-			}
-			
-			texture_unit SpecMap {
-				texture sueloteSpec.tga
+			texture_unit DiffMap {
+				texture rock_difuse_targa.tga
 			}
 			
 		}

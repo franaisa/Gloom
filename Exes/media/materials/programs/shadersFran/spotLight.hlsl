@@ -1,30 +1,27 @@
-// Registros de texturas
-sampler DiffMap0: register(s0);
+// @author Francisco Aisa García
 
-// Parametros de Ogre
-float4x4 ViewProjectionMatrix;
-float4x4 inverseViewProjMatrix;
+// Registros de texturas
+sampler DiffMap : register(s0);
+
+// Parametros proporcionados por Ogre
+float4x4 viewProjectionMatrix;
 float4 globalAmbient;
 float3 eyePosition;
+float4 lightPosition;
+float3 lightDirection;
+float4 lightColor;
+float4 lightAttenuation;
 
-// Parametros para el fragment shader (desde codigo)
+// Parametros para el fragment shader
 
 // Propiedades de la luz
-float3 lightColor;
-float3 lightPosition;
-float3 lightDirection;
 float lightCosInnerCone;
 float lightCosOuterCone;
-float lightKc;
-float lightKl;
-float lightKq;
 
 // Propiedades del material
-float3 Ke;
-float3 Ka;
-float3 Kd;
-float3 Ks;
-float shininess;
+float Ka; // constante ambiente
+float Kd; // constante difuso
+float shininess; // brillo
 
 // Información de entrada del vertex shader
 struct VsInput {
@@ -54,7 +51,7 @@ struct PsInput {
 VsOutput vertex_main(const VsInput IN) {
 	VsOutput OUT;
 
-	OUT.position = mul(ViewProjectionMatrix, IN.position);
+	OUT.position = mul(viewProjectionMatrix, IN.position);
 	OUT.uv0 = IN.uv0;
 	
 	OUT.objectPos = IN.position;
@@ -66,15 +63,16 @@ VsOutput vertex_main(const VsInput IN) {
 //________________________________________________________________________
 
 float computeAttenuation(float3 P) {
-	float d = distance(P, lightPosition);
-	return 1 / (lightKc + lightKl * d + lightKq * d * d);
+	float d = distance(P, lightPosition.xyz);
+	// y = constant att, z = linear att, w = quadratic att
+	return 1 / (lightAttenuation.y + lightAttenuation.z * d + lightAttenuation.w * d * d);
 }
 
 float dualConeSpotlight(float3 P) {
-	float3 V = normalize(P - lightPosition);
+	float3 V = normalize(P - lightPosition.xyz);
 	float cosOuterCone = lightCosOuterCone;
 	float cosInnerCone = lightCosInnerCone;
-	//float cosDirection = dot(V, lightDirection);
+
 	float cosDirection = dot(V, normalize(lightDirection)); // In case the direction is not normalized
 	return smoothstep(cosOuterCone, cosInnerCone, cosDirection);
 }
@@ -82,13 +80,16 @@ float dualConeSpotlight(float3 P) {
 void computeLighting(float3 P, float3 N, out float3 diffuseResult, out float3 specularResult) {
 	// Compute the attenuation factor
 	float attenuation = computeAttenuation(P);
+	if(attenuation > 1.0f)
+		attenuation = 1.0f;
+	
 	// Compute the spot effect based on the cones of the spotlight
 	float spotEffect = dualConeSpotlight(P);
 
 	// Compute the diffuse lighting
-	float3 L = normalize(lightPosition - P);
+	float3 L = normalize(lightPosition.xyz - P);
 	float  diffuseLight = max(dot(N, L), 0);
-	diffuseResult = attenuation * spotEffect * lightColor * diffuseLight;
+	diffuseResult = attenuation * spotEffect * lightColor.xyz * diffuseLight;
 
 	// Compute the specular lighting
 	float3 V = normalize(eyePosition - P);
@@ -97,7 +98,7 @@ void computeLighting(float3 P, float3 N, out float3 diffuseResult, out float3 sp
 	if (diffuseLight <= 0)
 		specularLight = 0;
 	
-	specularResult = attenuation * spotEffect * lightColor * specularLight;
+	specularResult = attenuation * spotEffect * lightColor.xyz * specularLight;
 }
 
 //________________________________________________________________________
@@ -107,8 +108,7 @@ float4 fragment_main(const PsInput IN) : COLOR {
 	float3 P = IN.position.xyz;
 	float3 N = normalize(IN.normal);
 
-	// Compute emissive and ambient terms
-	float3 emissive = Ke;
+	// Compute ambient term
 	float3 ambient = Ka * globalAmbient;
 
 	// Compute the diffuse and specular terms
@@ -127,9 +127,9 @@ float4 fragment_main(const PsInput IN) : COLOR {
 
     // Modulate diffuse and specular by material color
 	float3 diffuse  = Kd * diffuseSum;
-  	float3 specular = Ks * specularSum;
+  	float3 specular = tex2D(DiffMap, IN.uv0).w * specularSum;
 
-	float3 color = emissive + ambient + diffuse + specular;
+	float3 color = ambient + diffuse + specular;
 
-	return float4(color, 1.0f) *  tex2D(DiffMap0, IN.uv0);
+	return float4(color, 1.0f) *  float4( tex2D(DiffMap, IN.uv0).xyz, 1.0f );
 }
