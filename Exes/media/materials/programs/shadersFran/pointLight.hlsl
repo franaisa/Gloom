@@ -56,14 +56,14 @@ VsOutput vertex_main(const VsInput IN) {
 
 //________________________________________________________________________
 
-float computeAttenuation(float4 lightPos, float3 P) {
+float computeAttenuation(float4 lightPos, float4 att, float3 P) {
 	float d = distance(P, lightPos.xyz);
 	// y = constant att, z = linear att, w = quadratic att
-	return 1 / (lightAttenuation.y + lightAttenuation.z * d + lightAttenuation.w * d * d);
+	return 1 / (att.y + att.z * d + att.w * d * d);
 }
 
-void computeLighting(float4 lightPos, float4 lightCol, float3 P, float3 N, out float3 diffuseResult, out float3 specularResult) {
-	float attenuation = computeAttenuation(lightPos, P);
+void computeLighting(float4 lightPos, float4 lightCol, float3 P, float3 N, float3 eyePos, float shin, float4 att, out float3 diffuseResult, out float3 specularResult) {
+	float attenuation = computeAttenuation(lightPos, att, P);
 	if(attenuation > 1.0f)
 		attenuation = 1.0f;
 	
@@ -73,9 +73,9 @@ void computeLighting(float4 lightPos, float4 lightCol, float3 P, float3 N, out f
 	diffuseResult = attenuation * lightCol.xyz * diffuseLight;
 
 	// Compute the specular lighting
-	float3 V = normalize(eyePosition - P);
+	float3 V = normalize(eyePos - P);
 	float3 H = normalize(L + V);
-	float specularLight = pow(max(dot(N, H), 0), shininess);
+	float specularLight = pow(max(dot(N, H), 0), shin);
 	if (diffuseLight <= 0)
 		specularLight = 0;
 	
@@ -100,7 +100,7 @@ float4 fragment_main(const PsInput IN) : COLOR {
 
 	// Ejecutar tantas veces como luces haya
 	//for (int i = 0; i < 1; ++i) {
-		computeLighting(lightPosition, lightColor, P, N, diffuseLight, specularLight);
+		computeLighting(lightPosition, lightColor, P, N, eyePosition, shininess, lightAttenuation, diffuseLight, specularLight);
 		diffuseSum += diffuseLight;
 		specularSum += specularLight;
 	//}
