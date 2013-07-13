@@ -1637,7 +1637,7 @@ Map = {
 	
 	ammo = {
 		type = "Ammo",
-		msgList= "6,14,15,16,17, 29",
+		msgList= "6,14,15,16,17,29",
 		physic_entity = "rigid",
 		physic_trigger = true,
 		physic_type = "static",
@@ -1999,18 +1999,19 @@ Map = {
 	
 	SpikeTrap = {
 		type = "SpikeTrap",
-		position = {51.0, 6.0, 1.0},
-		model = "miniGun.mesh",
-		audio = "plasma.wav",
+		position = {51.0, 0.0, 1.0},
+		model = "barril.mesh",
+		audioTrap = "plasma.wav",
 		coolDown = 4,
 		physic_entity = "rigid",
 		physic_trigger = true,
 		physic_type = "static",
 		physic_shape = "box",
-		physic_dimensions = { 2, 2, 2 },
+		physic_dimensions = { 2, 3, 2 },
 		physic_group = 11,
 		physic_groupList = "1",
 	},
+	
 	Vortice = {
 		type = "Vortice",
 		position = {-310.0,-410,-50.0},

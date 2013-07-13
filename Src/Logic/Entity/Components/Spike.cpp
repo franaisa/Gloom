@@ -17,6 +17,7 @@ Contiene la implementación del componente que controla los contactos con el pinc
 #include "PhysicDynamicEntity.h"
 #include "Logic/Maps/Map.h"
 #include "Logic/Server.h"
+#include "Logic/Maps/WorldState.h"
 
 #include "Logic/Messages/MessageActivate.h"
 #include "Logic/Messages/MessageDamaged.h"
@@ -65,6 +66,7 @@ namespace Logic
 				std::shared_ptr<CMessageActivate> deactivateMsg = std::make_shared<CMessageActivate>();
 				deactivateMsg->setActivated(false);
 				_entity->emitMessage(deactivateMsg);
+				Logic::CWorldState::getSingletonPtr()->addChange(_entity, deactivateMsg);
 				//Recolocamos la entidad fisicamente en su inicio para cuando se active nuevamente la trampa
 				std::shared_ptr<CMessageTransform> setTransformMsg = std::make_shared<CMessageTransform>();
 				setTransformMsg->setPosition(_initialPosition);

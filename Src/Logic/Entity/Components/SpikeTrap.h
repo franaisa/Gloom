@@ -79,6 +79,11 @@ namespace Logic
 	private:
 
 		/**
+		Audio de la trampa.
+		*/
+		std::string _audioTrap;
+
+		/**
 		Timer que lleva el control del cooldown.
 		*/
 		int _timer;

@@ -463,6 +463,7 @@ namespace Logic {
 	//________________________________________________________________________
 
 	void CAvatarController::executeDodge(ControlType commandType){
+		
 		_displacementDir += _movementCommands[commandType];
 		if(!_touchingGround)
 			return;

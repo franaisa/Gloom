@@ -17,10 +17,13 @@ Contiene la implementación del componente que controla el movimiento de los pinc
 #include "PhysicController.h"
 #include "Logic/Maps/Map.h"
 #include "Logic/Server.h"
+#include "Logic/Maps/WorldState.h"
 
 #include "Logic/Messages/MessageTouched.h"
 #include "Logic/Messages/MessageAddForcePhysics.h"
 #include "Logic/Messages/MessageActivate.h"
+#include "Logic/Messages/MessageAudio.h"
+
 
 
 namespace Logic 
@@ -43,6 +46,7 @@ namespace Logic
 		_spikes = new CEntity*[_numSpikes];
 		_velocitySpikes = entityInfo->getIntAttribute("velocitySpikes");
 		_directionSpikes = entityInfo->getVector3Attribute("directionSpikes");
+		_audioTrap = entityInfo->getStringAttribute("audioTrap");
 		return true;
 
 	} // spawn
@@ -76,6 +80,7 @@ namespace Logic
 		deactivateMsg->setActivated(false);
 		for(int i=0; i<_numSpikes; i++){
 			_spikes[i]->emitMessage(deactivateMsg);
+			Logic::CWorldState::getSingletonPtr()->addChange(_spikes[i], deactivateMsg);
 		}
 	}// onStart
 	//---------------------------------------------------------
@@ -92,20 +97,35 @@ namespace Logic
 		
 		switch( message->getMessageType() ) {
 			case Message::TOUCHED: {
-				if(!_isRespawning){
-					//Creamos el mensaje de fuerza para los pinchos
-					std::shared_ptr<CMessageAddForcePhysics> forceMsg = std::make_shared<CMessageAddForcePhysics>();
-					forceMsg->setForce(_directionSpikes* _velocitySpikes, Physics::ForceMode::eFORCE );
-					forceMsg->setGravity(false);
-					//Activacion y fuerza
-					std::shared_ptr<CMessageActivate> activateMsg = std::make_shared<CMessageActivate>();
-					for(int i=0; i<_numSpikes; i++){
-						activateMsg->setActivated(true);
-						_spikes[i]->emitMessage(activateMsg);
-						_spikes[i]->emitMessage(forceMsg);
-					}
-					_isRespawning=true;
+				//Creamos el mensaje de fuerza para los pinchos
+				std::shared_ptr<CMessageAddForcePhysics> forceMsg = std::make_shared<CMessageAddForcePhysics>();
+				forceMsg->setForce(_directionSpikes* _velocitySpikes, Physics::ForceMode::eFORCE );
+				forceMsg->setGravity(false);
+				//Activacion y fuerza
+				std::shared_ptr<CMessageActivate> activateMsg = std::make_shared<CMessageActivate>();
+				for(int i=0; i<_numSpikes; i++){
+					activateMsg->setActivated(true);
+					_spikes[i]->emitMessage(activateMsg);
+					Logic::CWorldState::getSingletonPtr()->addChange(_spikes[i],activateMsg);
+					_spikes[i]->emitMessage(forceMsg);
 				}
+				//Audio
+				std::shared_ptr<CMessageAudio> audioMsg = std::make_shared<CMessageAudio>();
+				audioMsg->setAudioName(_audioTrap);
+				audioMsg->isLoopable(false);
+				audioMsg->is3dSound(true);
+				audioMsg->streamSound(false);
+				audioMsg->stopSound(false);
+				_entity->emitMessage(audioMsg);
+
+				//Volvemos invisible la trampa
+				//Desactivamos la entidad grafica y fisica.
+				std::shared_ptr<CMessageActivate> deactivateMsg = std::make_shared<CMessageActivate>();
+				deactivateMsg->setActivated(false);
+				_entity->emitMessage(deactivateMsg);
+				Logic::CWorldState::getSingletonPtr()->addChange(_entity, deactivateMsg);
+					
+				_isRespawning=true;
 				break;
 			}
 		}
@@ -121,6 +141,13 @@ namespace Logic
 			if(_timer >= _coolDownTime) {
 				_isRespawning = false;
 				_timer = 0;
+				//Volvemos visible la trampa
+				//Activamos la entidad grafica y fisica
+				std::shared_ptr<CMessageActivate> activateMsg = std::make_shared<CMessageActivate>();
+				activateMsg->setActivated(true);
+				_entity->emitMessage(activateMsg);
+				Logic::CWorldState::getSingletonPtr()->addChange(_entity,activateMsg);
+				
 			}
 		}
 	} // onTick
