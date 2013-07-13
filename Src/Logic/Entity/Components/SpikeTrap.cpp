@@ -18,13 +18,14 @@ Contiene la implementación del componente que controla el movimiento de los pinc
 #include "Logic/Maps/Map.h"
 #include "Logic/Server.h"
 #include "Logic/Maps/WorldState.h"
+#include "Logic/Maps/EntityFactory.h"
 
 #include "Logic/Messages/MessageTouched.h"
 #include "Logic/Messages/MessageAddForcePhysics.h"
 #include "Logic/Messages/MessageActivate.h"
 #include "Logic/Messages/MessageAudio.h"
 
-
+using namespace std;
 
 namespace Logic 
 {
@@ -43,48 +44,30 @@ namespace Logic
 
 		_numTrap = entityInfo->getIntAttribute("numTrap");
 		_numSpikes = entityInfo->getIntAttribute("numSpikes");
-		_spikes = new CEntity*[_numSpikes];
 		_velocitySpikes = entityInfo->getIntAttribute("velocitySpikes");
 		_directionSpikes = entityInfo->getVector3Attribute("directionSpikes");
 		_audioTrap = entityInfo->getStringAttribute("audioTrap");
-		return true;
 
-	} // spawn
-	
-	//---------------------------------------------------------
-
-
-	
-	void CSpikeTrap::onActivate()
-	{
-		// Leer los parametros que toquen para los proyectiles
-		std::stringstream numTrap;
-		numTrap << _numTrap;
-		std::string nTrap = numTrap.str();
-		//Cogemos los pinchos asociados a esta trampa 
+		//Lectura de los pinchos asociados a la trampa
 		for(int i=1; i<=_numSpikes; i++){
 			std::stringstream numI;
 			numI << i;
 			std::string nI = numI.str();
-			_spikes[i-1] = CServer::getSingletonPtr()->getMap()->getEntityByName("Pincho"+nTrap+nI);
+			_spikesPosition.push_back(entityInfo->getVector3Attribute("spike"+nI+"Position"));
+			_spikesYaw.push_back(entityInfo->getFloatAttribute("spike"+nI+"Yaw"));
+			_spikesPitch.push_back(entityInfo->getFloatAttribute("spike"+nI+"Pitch"));		
 		}
+
+	} // spawn
+	
+	//---------------------------------------------------------
+	
+	void CSpikeTrap::onActivate()
+	{
 		_isRespawning=false;
 		_timer=0;
-
 	} // activate
 	//---------------------------------------------------------
-
-	void CSpikeTrap::onStart(){
-		//Desactivamos los pinchos para que solo salgan al darle a la trampa
-		std::shared_ptr<CMessageActivate> deactivateMsg = std::make_shared<CMessageActivate>();
-		deactivateMsg->setActivated(false);
-		for(int i=0; i<_numSpikes; i++){
-			_spikes[i]->emitMessage(deactivateMsg);
-			Logic::CWorldState::getSingletonPtr()->addChange(_spikes[i], deactivateMsg);
-		}
-	}// onStart
-	//---------------------------------------------------------
-
 
 	bool CSpikeTrap::accept(const std::shared_ptr<CMessage>& message)
 	{
@@ -94,42 +77,38 @@ namespace Logic
 	//---------------------------------------------------------
 
 	void CSpikeTrap::process(const std::shared_ptr<CMessage>& message) {
-		
 		switch( message->getMessageType() ) {
 			case Message::TOUCHED: {
-				//Creamos el mensaje de fuerza para los pinchos
-				std::shared_ptr<CMessageAddForcePhysics> forceMsg = std::make_shared<CMessageAddForcePhysics>();
-				forceMsg->setForce(_directionSpikes* _velocitySpikes, Physics::ForceMode::eFORCE );
-				forceMsg->setGravity(false);
-				//Activacion y fuerza
-				std::shared_ptr<CMessageActivate> activateMsg = std::make_shared<CMessageActivate>();
-				for(int i=0; i<_numSpikes; i++){
-					activateMsg->setActivated(true);
-					_spikes[i]->emitMessage(activateMsg);
-					Logic::CWorldState::getSingletonPtr()->addChange(_spikes[i],activateMsg);
-					_spikes[i]->emitMessage(forceMsg);
-				}
-				//Audio
-				std::shared_ptr<CMessageAudio> audioMsg = std::make_shared<CMessageAudio>();
-				audioMsg->setAudioName(_audioTrap);
-				audioMsg->isLoopable(false);
-				audioMsg->is3dSound(true);
-				audioMsg->streamSound(false);
-				audioMsg->stopSound(false);
-				_entity->emitMessage(audioMsg);
-
-				//Volvemos invisible la trampa
-				//Desactivamos la entidad grafica y fisica.
-				std::shared_ptr<CMessageActivate> deactivateMsg = std::make_shared<CMessageActivate>();
-				deactivateMsg->setActivated(false);
-				_entity->emitMessage(deactivateMsg);
-				Logic::CWorldState::getSingletonPtr()->addChange(_entity, deactivateMsg);
+				//Creamos los pinchos
+				std::vector<CEntity*> spikes=createSpikes();
+				for(auto it = spikes.begin(); it != spikes.end(); ++it) {
+					//Creamos el mensaje de fuerza para los pinchos
+					std::shared_ptr<CMessageAddForcePhysics> forceMsg = std::make_shared<CMessageAddForcePhysics>();
+					forceMsg->setForce(_directionSpikes* _velocitySpikes, Physics::ForceMode::eFORCE );
+					forceMsg->setGravity(false);
+					(*it)->emitMessage(forceMsg);
 					
+					//Audio
+					std::shared_ptr<CMessageAudio> audioMsg = std::make_shared<CMessageAudio>();
+					audioMsg->setAudioName(_audioTrap);
+					audioMsg->isLoopable(false);
+					audioMsg->is3dSound(true);
+					audioMsg->streamSound(false);
+					audioMsg->stopSound(false);
+					_entity->emitMessage(audioMsg);
+
+					//Volvemos invisible la trampa
+					//Desactivamos la entidad grafica y fisica.
+					std::shared_ptr<CMessageActivate> deactivateMsg = std::make_shared<CMessageActivate>();
+					deactivateMsg->setActivated(false);
+					_entity->emitMessage(deactivateMsg);
+					Logic::CWorldState::getSingletonPtr()->addChange(_entity, deactivateMsg);
+				}
+				
 				_isRespawning=true;
 				break;
 			}
 		}
-
 	} // process
 	//----------------------------------------------------------
 
@@ -152,6 +131,39 @@ namespace Logic
 		}
 	} // onTick
 	//----------------------------------------------------------
+	
+	//OJO SE PODRIA HACER QUE EN DICHO METODO AL SPIKE SE LE ASIGNE DE OWNER EL QUE ACTIVO LA TRAMPA ASI SERA COMO MATAR CON DICHA TRAMPA Y SUMARA FRAGS
+	std::vector<CEntity*> CSpikeTrap::createSpikes(){
+		// Vector de pinchos a devolver
+		std::vector<CEntity*> spikes;
+		for(int i=0;i<_numSpikes;i++){
+			// Obtenemos la información estandard asociada a un pincho
+			Map::CEntity* entityInfo = CEntityFactory::getSingletonPtr()->getInfo("Spike")->clone();
+
+			// Creamos la entidad
+			CEntity* spike= CEntityFactory::getSingletonPtr()->createEntity(
+									entityInfo,
+									CServer::getSingletonPtr()->getMap(),
+									_spikesPosition[i],
+									Math::setQuaternion(Math::fromDegreesToRadians(_spikesYaw[i]),Math::fromDegreesToRadians(_spikesPitch[i]),0),
+									true
+								);
+
+			// Eliminamos la copia de la información que hemos creado
+			delete entityInfo;
+
+			// Arrancamos la entidad
+			spike->activate();
+			spike->start();
+		
+			spikes.push_back(spike);
+		}
+
+		return spikes;
+
+	} // createSpikes
+	//----------------------------------------------------------
+	
 
 } // namespace Logic
 

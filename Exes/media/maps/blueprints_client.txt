@@ -12,10 +12,6 @@ LocalSpectator CSpectatorController CPhysicController
 ItemSpawn CFloatingMovement CSpawnItemManager CGraphics
 ItemSpawnDynamic CPositionInterpolator CGraphics
 Jumper CGraphics CAudio CParticle
-Grenade CPhysicDynamicEntity CGrenadeControllerClient CParticle CGraphics CAudio
-GrenadeExplotion CGrenadeControllerClient CParticle CGraphics CAudio
-Rocket CPhysicDynamicEntity CRocketControllerClient CParticle CGraphics CAudio
-RocketExplotion CRocketControllerClient CParticle CGraphics CAudio
 Lava CGraphics
 Elevator CPhysicDynamicEntity CElevator CGraphics
 ElevatorTrigger CPhysicDynamicEntity CElevatorTrigger
@@ -23,7 +19,6 @@ SpotLight CLight CGraphics
 DirectionalLight CLight CGraphics
 PointLight CLight CGraphics
 ContenedorLava CGraphics CPhysicStaticEntity
-Spike CGraphics CSpike
 Hacksaw CGraphics CHacksaw
 ScreamerShield CGraphics CScreamerShieldController
 FireBall CGraphics CPositionInterpolator
@@ -32,3 +27,5 @@ LifeDome CLifeDome CGraphics
 ShieldSpell CShieldSpellController CGraphics 
 Vortice CGraphics
 Ammo CPhysicStaticEntity CSpawnItemManager CGraphics
+SpikeTrap CAudio CGraphics
+Spike CGraphics CPositionInterpolator

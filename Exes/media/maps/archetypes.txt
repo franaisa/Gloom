@@ -1622,7 +1622,7 @@ Map = {
 	
 	item = {
 		type = "ItemSpawn",
-		msgList= "6,14,15,16,17, 29",
+		msgList= "6,14,15,16,17,29",
 		orbitalOffset = 0.065,
 		orbitalSpeed = 0.0060,
 		orbitalRotationSpeed = 0.0025,
@@ -2000,6 +2000,7 @@ Map = {
 	SpikeTrap = {
 		type = "SpikeTrap",
 		position = {51.0, 0.0, 1.0},
+		msgList= "29,41",
 		model = "barril.mesh",
 		audioTrap = "plasma.wav",
 		coolDown = 4,
@@ -2010,6 +2011,23 @@ Map = {
 		physic_dimensions = { 2, 3, 2 },
 		physic_group = 11,
 		physic_groupList = "1",
+	},
+	
+	Spike = {
+		type = "Spike",
+		msgList= "29,55,56",
+		model = "cone.mesh",
+		physic_entity = "rigid",
+		physic_trigger = true,
+		physic_type = "dynamic",
+		physic_shape = "box",
+		physic_dimensions = { 1, 1, 1 },
+		physic_mass = 0.4,
+		physic_noGravity = true,
+		physic_group = 9,
+		physic_groupList = "-1",
+		ticksPerSample = 3,
+		samplesPerSnapshot = 2,
 	},
 	
 	Vortice = {
