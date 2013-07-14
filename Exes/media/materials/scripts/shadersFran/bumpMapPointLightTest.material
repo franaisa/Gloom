@@ -19,11 +19,11 @@ material bumpMapPointLightTest {
 			}
 			
 			texture_unit DiffMap {
-				texture suelo.tga
+				texture wallTest.jpg
 			}
 			
 			texture_unit NormalMap {
-				texture sueloNormal.tga
+				texture wallTestNormalMap.tga
 			}
 			
 		}
