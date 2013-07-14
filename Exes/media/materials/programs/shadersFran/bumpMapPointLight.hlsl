@@ -5,7 +5,7 @@ sampler DiffMap			: register(s0);
 sampler NormalMap	: register(s1);
 
 // Parametros de Ogre
-float4x4 ViewProjectionMatrix;
+float4x4 viewProjectionMatrix;
 float4 globalAmbient;
 float3 eyePosition;
 float4 lightPosition;
@@ -50,7 +50,7 @@ struct PsInput {
 VsOutput vertex_main(const VsInput IN) {
 	VsOutput OUT;
 
-	OUT.position = mul(ViewProjectionMatrix, IN.position);
+	OUT.position = mul(viewProjectionMatrix, IN.position);
 	OUT.uv0 = IN.uv0;
 	OUT.objectPos = IN.position;
 	OUT.normal = IN.normal;
@@ -70,6 +70,10 @@ VsOutput vertex_main(const VsInput IN) {
 }
 
 //________________________________________________________________________
+
+float3 expand(float3 v) {
+	return (v - 0.5) * 2;
+}
 
 float4 compute_light(float3 N, float3 globalAmbient, float3 lightColor, float3 lightDirection, float3 halfAngle,
 							  float Ka, float Kd, float Ks, float shininess) {
@@ -99,6 +103,7 @@ float4 compute_light(float3 N, float3 globalAmbient, float3 lightColor, float3 l
 // FRAGMENT SHADER
 float4 fragment_main(const PsInput IN) : COLOR {
 	float3 N = tex2D(NormalMap, IN.uv0).xyz;
+	N = expand(N);
 	N = normalize(N);
 	
 	float4 color = compute_light(N, globalAmbient, lightColor.xyz, IN.lightDirection, IN.halfAngle, Ka, Kd, tex2D(DiffMap, IN.uv0).w, shininess);
