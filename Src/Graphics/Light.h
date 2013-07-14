@@ -119,7 +119,7 @@ namespace Graphics
 		Método que setea la posición de la luz
 		@param position la posición en la que queremos la luz
 		*/
-		void setposition(Vector3 position){_light->setPosition(position);}
+		void setPosition(Vector3 position){_light->setPosition(position);}
 
 		/**
 		Método que setea la fuerza de la luz
