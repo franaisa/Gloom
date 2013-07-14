@@ -15,6 +15,8 @@ Contiene la declaración del componente que controla la aparicion de pinchos.
 #include "Logic/Entity/Component.h"
 #include "Logic/Entity/Entity.h"
 
+#include "Logic/Entity/Components/Spike.h"
+
 
 //declaración de la clase
 namespace Logic 
@@ -71,12 +73,29 @@ namespace Logic
 		virtual void onTick(unsigned int msecs);
 
 		/**
-		Metodo que se ejecuta antes del primer ticky despues de las activaciones.
+		Metodo que se encarga de la creacion de los pinchos.
+
+		@return std::set<CEntity*> vector de pinchos creados.
 		*/
-		virtual void onStart();
+		std::vector<CEntity*> createSpikes();
+
+		/**
+		Metodo que convierte a string cualquier tipo de dato.
+		*/
+		template <typename T>
+		std::string toString(const T& data) const {
+			std::stringstream ss (std::stringstream::in | std::stringstream::out);
+			ss << data;
+			return ss.str();
+		}
 
 
 	private:
+		
+		/**
+		Audio de la trampa.
+		*/
+		std::string _audioTrap;
 
 		/**
 		Timer que lleva el control del cooldown.
@@ -114,9 +133,11 @@ namespace Logic
 		Vector3 _directionSpikes;
 
 		/**
-		Pinchos asociados a la trampa.
+		Atributos de los pinchos asociados a la trampa.
 		*/
-		CEntity** _spikes;
+		std::vector<Vector3> _spikesPosition;
+		std::vector<float> _spikesYaw;
+		std::vector<float> _spikesPitch;
 
 	}; // class CSpikeTrap
 

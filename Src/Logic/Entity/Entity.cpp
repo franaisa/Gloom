@@ -38,7 +38,7 @@ namespace Logic {
 										   _type(""), 
 										   _name(""), 
 										   _position(0,0,0),
-										   _orientation(1,0,0,0),
+										   _orientation(Ogre::Quaternion::IDENTITY),
 										   _isPlayer(false), 
 										   _activated(false) {
  

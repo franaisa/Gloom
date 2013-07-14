@@ -15,17 +15,13 @@ Ammo CPhysicStaticEntity CSpawnItemManager CGraphics
 ItemSpawnDynamic CPhysicDynamicEntity CPullingMovement CGraphics
 SpawnPoint CPhysicStaticEntity
 Jumper CGraphics CPhysicStaticEntity CJumper CAudio CParticle
-Grenade CGraphics CPhysicDynamicEntity CGrenadeController CParticle CAudio
-GrenadeExplotion CGraphics CGrenadeController CParticle CAudio
-Rocket CGraphics CRocketController CPhysicDynamicEntity CAudio CParticle
-RocketExplotion CGraphics CRocketController CAudio CParticle
 Lava CGraphics CPhysicStaticEntity CLava
 LavaFondo CGraphics CPhysicStaticEntity CLava
 ContenedorLava CGraphics CPhysicStaticEntity
 Elevator CGraphics CPhysicDynamicEntity CElevator
 ElevatorTrigger CPhysicDynamicEntity CElevatorTrigger
-SpikeTrap CGraphics CPhysicStaticEntity CSpikeTrap CAudio
-Spike CGraphics CPhysicDynamicEntity CSpike
+SpikeTrap CSpikeTrap CPhysicStaticEntity CAudio CGraphics
+Spike CSpike CPhysicDynamicEntity CGraphics
 Hacksaw CGraphics CPhysicDynamicEntity CHacksaw
 TestPointLight CLight
 PointLight CLight CGraphics

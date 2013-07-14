@@ -727,6 +727,11 @@ Map = {
 		physic_groupList = "1",
 	},
 	
+	SpikeTrap1 = {
+		type = "SpikeTrap",
+		position = {-0.9, -3, 33},
+	},
+	
 	Camera = {
 		type = "Camera",
 		height = 8,
