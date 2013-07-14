@@ -1,0 +1,31 @@
+material bumpMapPointLightTest {
+	technique {
+		pass {
+		
+			vertex_program_ref bumpMapPointLightVertexShader {
+				param_named_auto	ViewProjectionMatrix 	worldviewproj_matrix
+				param_named_auto	eyePosition					camera_position_object_space
+				param_named_auto	lightPosition					light_position_object_space			0
+			}
+			
+			fragment_program_ref bumpMapPointLightFragmentShader {
+				param_named_auto	globalAmbient		ambient_light_colour
+				param_named_auto	lightAttenuation		light_attenuation				0
+				
+				param_named	lightColor			float4 	0.9f	0.9f	0.9f	1.0f	
+				param_named	Ka					float		0.2
+				param_named	Kd					float		0.6
+				param_named 	shininess			float		76.8
+			}
+			
+			texture_unit DiffMap {
+				texture muro_difuse_targa.tga
+			}
+			
+			texture_unit NormalMap {
+				texture muro_normal_targa.tga
+			}
+			
+		}
+	}
+}
