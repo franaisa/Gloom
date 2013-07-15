@@ -1,15 +1,16 @@
 // @author Francisco Aisa García
 
 // Registros de texturas
-sampler DiffMap			: register(s0); // RGB = Difuso ; A = Especular
-sampler NormalMap	: register(s1); // Bump Map
+sampler DiffMap				: register(s0); // RGB = Difuso ; A = Especular
+sampler NormalMap		: register(s1); // Bump Map
+samplerCUBE CubeMap	: register(s2); // Cube Map
 
 // Parametros proporcionados por Ogre
 float4x4 viewProjectionMatrix;
 float4 globalAmbient;
 float3 eyePosition;
-float3 lightDir;
 float4 lightPosition;
+float4 lightDir;
 float4 lightColor;
 float4 lightAttenuation;
 
@@ -20,10 +21,6 @@ float Ka;
 float Kd;
 // Potencia de brillo del especular
 float shininess;
-
-// Propiedades del spot light
-float lightCosInnerCone;
-float lightCosOuterCone;
 
 // Información de entrada del vertex shader
 struct VsInput {
@@ -37,18 +34,18 @@ struct VsInput {
 struct VsOutput {
 	float4 position 			: POSITION;
 	float2 uv0 					: TEXCOORD0;
-	float4 objectPos			: TEXCOORD1;
-	float3 normal				: TEXCOORD2;
-	float3 lightDirection	: TEXCOORD3;
+	float3 normal				: TEXCOORD1;
+	float3 lightDirection	: TEXCOORD2;
+	float3 toEyeDir			: TEXCOORD3;
 	float3 halfAngle			: TEXCOORD4;
 };
 
 // Información de entrada del fragment shader
 struct PsInput {
 	float2 uv0 					: TEXCOORD0;
-	float4 position			: TEXCOORD1;
-	float3 normal				: TEXCOORD2;
-	float3 lightDirection	: TEXCOORD3;
+	float3 normal				: TEXCOORD1;
+	float3 lightDirection	: TEXCOORD2;
+	float3 toEyeDir			: TEXCOORD3;
 	float3 halfAngle			: TEXCOORD4;
 };
 
@@ -62,7 +59,6 @@ VsOutput vertex_main(const VsInput IN) {
 	// y las normales
 	OUT.position = mul(viewProjectionMatrix, IN.position);
 	OUT.uv0 = IN.uv0;
-	OUT.objectPos = IN.position;
 	OUT.normal = IN.normal;
 	
 	// Construimos la matriz 3x3 que nos permite pasar del espacio objeto al espacio
@@ -71,28 +67,21 @@ VsOutput vertex_main(const VsInput IN) {
 	float3x3 rotation = float3x3(IN.tangent.xyz, binormal, IN.normal);
 	
 	// Obtenemos vector director de cámara y del rayo de luz
-	float3 eyeDirection = (eyePosition - IN.position).xyz;
-	OUT.lightDirection = (lightPosition.xyz - IN.position).xyz;
+	OUT.toEyeDir = (eyePosition - IN.position).xyz;
+	OUT.lightDirection = -lightDir.xyz;
 	OUT.lightDirection = normalize(OUT.lightDirection);
 	
 	// Rotamos los vectores en base a la matriz 3x3 construida anteriormente
-	eyeDirection = mul(rotation, eyeDirection);
+	OUT.toEyeDir = mul(rotation, OUT.toEyeDir);
 	OUT.lightDirection = mul(rotation, OUT.lightDirection);
-	OUT.halfAngle = normalize( normalize(OUT.lightDirection) + normalize(eyeDirection) );
+	OUT.halfAngle = normalize( normalize(OUT.lightDirection) + normalize(OUT.toEyeDir) );
+	
+	OUT.toEyeDir = normalize( OUT.toEyeDir );
 
 	return OUT;
 }
 
 //________________________________________________________________________
-
-float dualConeSpotlight(float3 P) {
-	float3 V = normalize(P - lightPosition.xyz);
-	float cosOuterCone = lightCosOuterCone;
-	float cosInnerCone = lightCosInnerCone;
-
-	float cosDirection = dot(V, normalize(lightDir));
-	return smoothstep(cosOuterCone, cosInnerCone, cosDirection);
-}
 
 // Las normales estan comprimidas en el espacio [0-1]. Esta función las desomprime
 // al espacio [-1, 1]
@@ -100,18 +89,16 @@ float3 expand(float3 v) {
 	return (v - 0.5) * 2;
 }
 
-float4 computeLighting(float3 P, float3 N, float3 globalAmbient, float3 lightColor, float3 lightDirection, float3 halfAngle, float Ka, float Kd, float Ks, float shininess) {
-	
-	// Calculamos el efecto del sopt light
-	float spotEffect = dualConeSpotlight(P);
+void computeLighting(float3 N, float3 globalAmbient, float3 lightColor, float3 lightDirection, float3 halfAngle,
+							  float Ka, float Kd, float Ks, float shininess, out float3 ambient, out float3 diffuse, out float3 specular) {
 	
 	// Calculamos la cantidad de luz ambiente
-	float3 ambient = Ka * globalAmbient;
+	ambient = Ka * globalAmbient;
 	
 	// Calculamos la cantidad de luz ambiente basandonos en la ley del coseno de Lambert
 	float3 L = lightDirection;
 	float diffuseLight = max( dot(L, N), 0 );
-	float3 diffuse = Kd * spotEffect * lightColor * diffuseLight;
+	diffuse = Kd * lightColor * diffuseLight;
 	
 	// Calculamos la cantidad de especular
 	float3 H = halfAngle;
@@ -119,10 +106,7 @@ float4 computeLighting(float3 P, float3 N, float3 globalAmbient, float3 lightCol
 	if(diffuseLight <= 0)
 		specularLight = 0;
 		
-	float3 specular = Ks * spotEffect * lightColor * specularLight;
-	
-	float3 color = ambient + diffuse + specular;
-	return float4(color, 1.0f);
+	specular = Ks * lightColor * specularLight;
 }
 
 //________________________________________________________________________
@@ -135,8 +119,17 @@ float4 fragment_main(const PsInput IN) : COLOR {
 	N = normalize(N);
 	
 	// Calculamos el color del pixel en base a la luz recibida
-	// Notar que la constante de especular se obtiene del canal alfa de la textura de bump
-	float4 color = computeLighting(IN.position.xyz, N, globalAmbient, lightColor.xyz, IN.lightDirection, IN.halfAngle, Ka, Kd, tex2D(NormalMap, IN.uv0).w, shininess);
+	// Notar que la constante de especular se obtiene del canal alfa de la textura de normales
+	float3 specular, diffuse, ambient;
+	computeLighting(N, globalAmbient, lightColor.xyz, IN.lightDirection, IN.halfAngle, Ka, Kd, tex2D(NormalMap, IN.uv0).w, shininess, ambient, diffuse, specular);
 	
-	return color * float4( tex2D(DiffMap, IN.uv0).xyz, 1.0f );
+	// Calculamos el color del texCube que corresponde al angulo de reflexión
+	// entre el ojo y la normal
+	float3 reflectionColor = texCUBE( CubeMap, reflect(-IN.toEyeDir, N) ).xyz;
+	
+	// Al resultado final de la iluminación del material hay que sumar
+	// el color del entorno reflejado por el especular
+	float3 color = ( (ambient + diffuse + specular) * tex2D(DiffMap, IN.uv0).xyz ) + ( specular * reflectionColor );
+	
+	return float4(color, 1.0f);
 }

@@ -117,8 +117,8 @@ float4 fragment_main(const PsInput IN) : COLOR {
 	N = normalize(N);
 	
 	// Calculamos el color del pixel en base a la luz recibida
-	// Notar que la constante de especular se obtiene del canal alfa de la textura de difuso
-	float4 color = computeLighting(N, globalAmbient, lightColor.xyz, IN.lightDirection, IN.halfAngle, Ka, Kd, tex2D(DiffMap, IN.uv0).w, shininess);
+	// Notar que la constante de especular se obtiene del canal alfa de la textura de bump
+	float4 color = computeLighting(N, globalAmbient, lightColor.xyz, IN.lightDirection, IN.halfAngle, Ka, Kd, tex2D(NormalMap, IN.uv0).w, shininess);
 	
 	return color * float4( tex2D(DiffMap, IN.uv0).xyz, 1.0f );
 }
