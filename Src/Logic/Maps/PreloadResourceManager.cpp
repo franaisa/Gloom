@@ -98,6 +98,9 @@ namespace Logic {
 	{	
 		//El string section contendrá el nombre del mapa sin tener en cuenta SP o MP
 		//Nota: Actualmente se toman como diferenciantes el . para SP y la _ para MP.
+		if(mapName == "lightTesting.map")
+			return;
+
 		string section;
 		for (int i=0; i<mapName.length(); ++i){
 			if(mapName[i]!='_' && mapName[i]!='.')
@@ -133,6 +136,9 @@ namespace Logic {
 
 	void CPreloadResourceManager::unloadResources(const string &mapName)
 	{	
+		if(mapName == "lightTesting.map")
+			return;
+
 		//El string section contendrá el nombre del mapa sin tener en cuenta SP o MP
 		//Nota: Actualmente se toman como diferenciantes el . para SP y la _ para MP.
 		string section;

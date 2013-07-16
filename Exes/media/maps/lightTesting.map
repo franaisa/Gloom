@@ -1,0 +1,40 @@
+Map = {
+
+	GroundPlane = {
+		type = "TestGround",
+		position = {0, 0, 0},
+		physic_entity = "plane",
+		physic_normal = { 0, 1, 0 },
+		physic_group = 0,
+		physic_groupList = "-1",
+	},
+	
+	TestLight = {
+		type = "PointLight",
+		model = "health1.mesh",
+		position = {0, 20, 0},
+		color = {1.0, 0.0, 0.0},
+	},
+	
+	Player = {
+		type = "LocalSpectator",
+		isPlayer = true,
+		position = {0, 5, 0},
+	},
+	
+	Camera = {
+		type = "Camera",
+		height = 8,
+	},
+
+	UniqueSpawnPoint = {
+		type = "SpawnPoint",
+		position = {3.0, 0.2, 0.0},
+		physic_entity = "rigid",
+		physic_trigger = true,
+		physic_type = "static",
+		physic_shape = "box",
+		physic_dimensions = { 4, 7, 4 },
+	},
+	
+}

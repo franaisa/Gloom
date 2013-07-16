@@ -15,8 +15,8 @@ del espectador.
 @date Abril, 2013
 */
 
-#ifndef __Logic_AvatarController_H
-#define __Logic_AvatarController_H
+#ifndef __Logic_SpectatorController_H
+#define __Logic_SpectatorController_H
 
 #include "Logic/Entity/Component.h"
 
@@ -243,4 +243,4 @@ namespace Logic {
 
 } // namespace Logic
 
-#endif // __Logic_AvatarController_H
+#endif // __Logic_SpectatorController_H

@@ -13,7 +13,7 @@ material bumpMapPointLightTest {
 				param_named_auto	lightAttenuation		light_attenuation				0
 				param_named_auto	lightColor				light_diffuse_colour			0
 				
-				param_named	Ka					float		0.2
+				param_named	Ka					float		1.0
 				param_named	Kd					float		0.6
 				param_named 	shininess			float		70.0
 			}

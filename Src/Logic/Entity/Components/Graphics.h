@@ -132,6 +132,8 @@ namespace Logic
 
 		Ogre::Entity*			getOgreMesh			()		{return _graphicsEntity->getEntity(); }
 
+		Ogre::SceneNode*		getOgreSceneNode	()		{return _graphicsEntity->getSceneNode(); }
+
 		Ogre::SceneManager*		getSceneManager		()		{return _graphicsEntity->getScene()->getSceneMgr(); }
 
 		void					drawDecal			(Vector3 vPos, std::string vTexture);

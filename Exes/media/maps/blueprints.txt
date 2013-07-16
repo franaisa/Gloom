@@ -33,3 +33,4 @@ LaserBeam CGraphics
 LifeDome CLifeDome CPhysicDynamicEntity CGraphics
 ShieldSpell CShieldSpellController CPhysicDynamicEntity CGraphics
 Vortice CLava CGraphics CPhysicStaticEntity
+TestGround CGraphicPlane CPhysicStaticEntity

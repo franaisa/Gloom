@@ -85,6 +85,7 @@
     <ClCompile Include="..\..\Src\Logic\Entity\Components\ComeBackServer.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\CoolDownClient.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\CoolDownServer.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\GraphicPlane.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\GravityClient.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\GravityServer.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\HardDeathClient.cpp" />
@@ -276,6 +277,7 @@
     <ClInclude Include="..\..\Src\Logic\Entity\Components\ComeBackServer.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\CoolDownClient.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\CoolDownServer.h" />
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\GraphicPlane.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\GravityClient.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\GravityServer.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\HardDeathClient.h" />
