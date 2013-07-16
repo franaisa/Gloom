@@ -20,11 +20,11 @@ material mapaAngel_hueso {
 			}
 			
 			texture_unit DiffMap {
-				texture hueso_difuse_targa.tga
+				texture hueso_DIF.jpg
 			}
 			
 			texture_unit NormalMap {
-				texture hueso_normal_targa.tga
+				texture hueso_NRM_SPEC.tga
 			}
 			
 		}
@@ -56,11 +56,11 @@ material mapaAngel_muro {
 			}
 			
 			texture_unit DiffMap {
-				texture muro_difuse_targa.tga
+				texture muro_DIF.jpg
 			}
 			
 			texture_unit NormalMap {
-				texture muro_normal_targa.tga
+				texture muro_NRM_SPEC.tga
 			}
 			
 		}
@@ -70,78 +70,36 @@ material mapaAngel_muro {
 
 
 
-material mapaAngel_pipe
-{
-	technique
-	{
-		set $ambient "0 0 0 1"
-		set $diffuse "1 1 1 1"
-		set $specular "2 2 2 100"
-		set $shininess "60"
-	
-		pass 
-		{
-			illumination_stage ambient
-			
-			vertex_program_ref ambient_vs
-            {
-            }
+material mapaAngel_pipe {
 
-            fragment_program_ref ambient_ps
-            {
-            }
-
-            texture_unit diffuseMap
-            {
-				texture pipe_difuse.png
-				filtering anisotropic
+	technique {
+		pass {
+		
+			vertex_program_ref bumpMapPointLightVertexShader {
+				param_named_auto	viewProjectionMatrix 	worldviewproj_matrix
+				param_named_auto	eyePosition					camera_position_object_space
+				param_named_auto	lightPosition					light_position_object_space			0
 			}
 			
-			texture_unit aoMap
-			{
-				texture pipe_difuse.png
-				filtering anisotropic
+			fragment_program_ref bumpMapPointLightFragmentShader {
+				param_named_auto	globalAmbient		ambient_light_colour
+				param_named_auto	lightAttenuation		light_attenuation				0
+				
+				param_named	lightColor			float4 	0.9f	0.9f	0.9f	1.0f	
+				param_named	Ka					float		0.2
+				param_named	Kd					float		0.6
+				param_named 	shininess			float		70.0
 			}
+			
+			texture_unit DiffMap {
+				texture pipe_DIF.jpg
+			}
+			
+			texture_unit NormalMap {
+				texture pipe_NRM_SPEC.tga
+			}
+			
 		}
-
-        pass
-        {
-
-            illumination_stage per_light
-
-            scene_blend add
-            iteration once_per_light
-
-            vertex_program_ref diffuse_vs
-            {
-            }
-
-            fragment_program_ref diffuse_ps
-            {
-            }
-			
-            texture_unit aoMap
-			{
-				texture pipe_difuse.png
-				filtering anisotropic
-			}
-
-            texture_unit specMap
-            {
-                texture pipe_spec.png
-				
-				
-				filtering anisotropic
-            }
-
-            texture_unit normalMap
-            {
-                texture pipe_normal.png
-				
-				filtering anisotropic
-            }
-        }
-
 	}
 
 }
@@ -170,11 +128,11 @@ material mapaAngel_rock {
 			}
 			
 			texture_unit DiffMap {
-				texture rock_difuse_targa.tga
+				texture rock_DIF.jpg
 			}
 			
 			texture_unit NormalMap {
-				texture rock_normal_targa.tga
+				texture rock_NRM_SPEC.tga
 			}
 			
 		}
@@ -263,7 +221,7 @@ material mapaAngel_suelo
 			
 			texture_unit diffmap
 			{
-				texture suelo_difuse.png
+				texture suelo_DIF.jpg
 				filtering anisotropic
 				transform 10 0 0 0 0 10 0 0 0 0 1 0 0 0 0 1
 				scale 0.1 0.1

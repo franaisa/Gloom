@@ -14,6 +14,7 @@ del espectador.
 #include "SpectatorController.h"
 #include "PhysicController.h"
 #include "Camera.h"
+#include "AnimatedGraphics.h"
 
 #include "Logic/Entity/Entity.h"
 #include "Logic/Server.h"
@@ -36,7 +37,8 @@ namespace Logic {
 
 	CSpectatorController::CSpectatorController() : _frictionCoef(0.95f),
 												   _acceleration(0.0006f), 
-												   _maxVelocity(1.2f) {
+												   _maxVelocity(1.2f),
+												   _currentFollowedPlayer(NULL) {
 
 		// Inicializamos el array que contiene los vectores
 		// de cada tecla de movimiento
@@ -75,7 +77,9 @@ namespace Logic {
 	//________________________________________________________________________
 
 	bool CSpectatorController::accept(const std::shared_ptr<CMessage>& message) {
-		return message->getMessageType() == Message::CONTROL;
+		TMessageType msgType = message->getMessageType();
+
+		return msgType == Message::CONTROL;
 	} // accept
 
 	//________________________________________________________________________
@@ -85,14 +89,53 @@ namespace Logic {
 			case Message::CONTROL: {
 				ControlType commandType = std::static_pointer_cast<CMessageControl>(message)->getType();
 
-				// Comando de movimiento
-				if(commandType >= 0 && commandType < 16) {
-					executeMovementCommand(commandType);
+				if(commandType == ControlType::LEFT_CLICK) {
+					// Posicionar la camara en el siguiente enemigo
+					CMap* map = CServer::getSingletonPtr()->getMap();
+					CEntity* nextPlayer = map->getEntityByType("RemotePlayer", _currentFollowedPlayer);
+
+					CEntity* cameraEnt = map->getEntityByName("Camera");
+					CCamera* cameraComp = cameraEnt->getComponent<CCamera>("CCamera");
+					if(nextPlayer != NULL) {
+						if(_currentFollowedPlayer != NULL)
+							_currentFollowedPlayer->getComponent<CAnimatedGraphics>("CAnimatedGraphics")->setVisible(true);
+						
+						nextPlayer->getComponent<CAnimatedGraphics>("CAnimatedGraphics")->setVisible(false);
+						cameraComp->setTarget(nextPlayer);
+						_currentFollowedPlayer = nextPlayer;
+					}
+					else {
+						if(_currentFollowedPlayer != NULL) {
+							_currentFollowedPlayer->getComponent<CAnimatedGraphics>("CAnimatedGraphics")->setVisible(true);
+							_currentFollowedPlayer = NULL;
+						}
+
+						cameraComp->setTarget(_entity);
+					}
 				}
-				// Comando de raton
-				else if(commandType == Control::MOUSE) {
-					std::shared_ptr<CMessageMouse> mouseMsg = std::static_pointer_cast<CMessageMouse>(message);
-					rotationXY( mouseMsg->getMouse() );
+				else if(commandType == ControlType::RIGHT_CLICK) {
+					// Modo camara libre
+					if(_currentFollowedPlayer != NULL) {
+						_currentFollowedPlayer->getComponent<CAnimatedGraphics>("CAnimatedGraphics")->setVisible(true);
+						_currentFollowedPlayer = NULL;
+					}
+
+					CServer::getSingletonPtr()->getMap()->getEntityByName("Camera")->getComponent<CCamera>("CCamera")->setTarget(_entity);
+				}
+				else {
+					if( _currentFollowedPlayer == NULL ) {
+						ControlType commandType = std::static_pointer_cast<CMessageControl>(message)->getType();
+
+						// Comando de movimiento
+						if(commandType >= 0 && commandType < 16) {
+							executeMovementCommand(commandType);
+						}
+						// Comando de raton
+						else if(commandType == Control::MOUSE) {
+							std::shared_ptr<CMessageMouse> mouseMsg = std::static_pointer_cast<CMessageMouse>(message);
+							rotationXY( mouseMsg->getMouse() );
+						}
+					}
 				}
 
 				break;
@@ -128,14 +171,13 @@ namespace Logic {
 		 {
 			 if (pitchAngleSign > 0)
 				 //Fijando a +88. Formo el quaternion previamente calculado, ahorrando procesamiento
-				 _entity->setPitch(Ogre::Quaternion(0.71934,0.694658, 0, 0));
+				 _entity->setPitch(Ogre::Quaternion(0.71934, 0.694658, 0, 0));
 			 else if (pitchAngleSign < 0)
 				 //Fijando a -88. Formo el quaternion previamente calculado, ahorrando procesamiento
-				 _entity->setPitch(Ogre::Quaternion(0.71934,-0.694658, 0, 0));
+				 _entity->setPitch(Ogre::Quaternion(0.71934, -0.694658, 0, 0));
 		 }
 		
-	}//rotateXY
-	//________________________________________________________________________
+	}
 
 	//________________________________________________________________________
 

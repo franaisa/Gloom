@@ -46,8 +46,6 @@ namespace Logic {
 
 	protected:
 
-		virtual void onStart();
-
 		/**
 		Luz
 		*/

@@ -106,32 +106,6 @@ namespace Logic {
 
 	} // spawn
 
-	void CLight::onStart() {
-		/*MeshPtr pMesh = MeshManager::getSingleton().load("agent47.mesh",
-        ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,    
-        HardwareBuffer::HBU_DYNAMIC_WRITE_ONLY,
-        HardwareBuffer::HBU_STATIC_WRITE_ONLY,
-        true, true);
-		// so we can still read it
- 
-		// build tangent vectors, all our meshes use only one texture coordset 
-		// Note: we can build into VES_TANGENT now (SM2+)
- 
-		unsigned short src, dest;   
-		if (!pMesh->suggestTangentVectorBuildParams(VES_TANGENT, src, dest)) {
-			pMesh->buildTangentVectors(VES_TANGENT, src, dest);
-		}
-
-		// Creamos un objeto 3d
-		Entity* hitman = Graphics::CServer::getSingletonPtr()->getActiveScene()->getSceneMgr()->createEntity(pMesh);
-		//Entity* hitman = mSceneMgr->createEntity("hitman", "agent47.mesh");
-		hitman->setMaterialName("pointLightTest"); // asignamos el material
-
-		SceneNode* hitmanNode = Graphics::CServer::getSingletonPtr()->getActiveScene()->getSceneMgr()->getRootSceneNode()->createChildSceneNode();
-		hitmanNode->attachObject(hitman);
-		hitmanNode->setPosition(0, 0, 0);*/
-	}
-
 } // namespace Logic
 
 

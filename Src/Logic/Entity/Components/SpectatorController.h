@@ -225,6 +225,9 @@ namespace Logic {
 		/** Vector de inercia. */
 		Vector3 _momentum;
 
+		/** Puntero a la entidad que estamos siguiendo */
+		CEntity* _currentFollowedPlayer;
+
 		/** Puntero al controlador fisico del player. Nos lo quedamos por motivos de eficiencia. */
 		CPhysicController* _physicController;
 
