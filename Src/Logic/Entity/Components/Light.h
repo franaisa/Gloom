@@ -46,10 +46,16 @@ namespace Logic {
 
 	protected:
 
+		virtual void onStart();
+
+		//virtual void onTick(unsigned int msecs);
+
 		/**
 		Luz
 		*/
 		Graphics::CLight _light;
+
+		Vector3 _position;
 
 	}; // class CLight
 

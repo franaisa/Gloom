@@ -51,11 +51,13 @@ namespace Logic {
 		// Nos aseguramos de que haya una posicion que asignar a la luz
 		assert( entityInfo->hasAttribute("position") );
 
-		_light.createPointLight(Graphics::CServer::getSingletonPtr()->getActiveScene(), "luzTest", entityInfo->getVector3Attribute("position") );
+		_position = entityInfo->getVector3Attribute("position");
+
+		//_light.createPointLight(Graphics::CServer::getSingletonPtr()->getActiveScene(), "luzTest", entityInfo->getVector3Attribute("position") );
 
 		//_light.setposition( entityInfo->getVector3Attribute("position") );
 
-		if( entityInfo->hasAttribute("color") ) {
+		/*if( entityInfo->hasAttribute("color") ) {
 			Ogre::Vector3 color = entityInfo->getVector3Attribute("color");
 			_light.setColour(color.x, color.y, color.z);
 		}
@@ -65,7 +67,7 @@ namespace Logic {
 			// Como de momento no contemplamos el rango de alcance en las luces
 			// lo fijamos a un valor arbitrario
 			_light.setAttenuation(50.0f, attenuation.x, attenuation.y, attenuation.z);
-		}
+		}*/
 
 		/*Vector3 direction;
 		
@@ -105,6 +107,14 @@ namespace Logic {
 		return true;
 
 	} // spawn
+
+	void CLight::onStart() {
+		_light.createPointLight(Graphics::CServer::getSingletonPtr()->getActiveScene(), "luzTest", _position );
+	}
+
+	/*void CLight::onTick(unsigned int msecs) {
+		_light.setPosition(_entity->getPosition());
+	}*/
 
 } // namespace Logic
 
