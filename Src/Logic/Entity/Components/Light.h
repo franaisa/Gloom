@@ -13,8 +13,11 @@ Contiene la declaración del componente que controla la vida de una entidad.
 #ifndef __Logic_Light_H
 #define __Logic_Light_H
 
-#include "Graphics/Light.h"
 #include "Logic/Entity/Component.h"
+
+namespace Graphics {
+	class CLight;
+}
 
 //declaración de la clase
 namespace Logic {
@@ -53,9 +56,14 @@ namespace Logic {
 		/**
 		Luz
 		*/
-		Graphics::CLight _light;
+		Graphics::CLight* _light;
 
 		Vector3 _position;
+		Vector3 _direction;
+		Vector3 _color;
+		Vector3 _attenuation;
+		float _innerAngle;
+		float _outerAngle;
 
 	}; // class CLight
 

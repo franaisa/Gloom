@@ -18,22 +18,18 @@ Contiene la declaración de la clase que representa una Luz.
 
 #include "BaseSubsystems/Math.h"
 
-
-
 // Predeclaración de clases para ahorrar tiempo de compilación
-namespace Ogre 
-{
+namespace Ogre {
 	class SceneNode;
 	class Light;
 }
 
-namespace Graphics 
-{
+namespace Graphics {
 	class CScene;
 }
 
-namespace Graphics 
-{
+namespace Graphics {
+
 	/**
 	Clase que representa las luces en el escenario de ogre, contiene una referencia
 	que representa la luz de ogre y otra que es el nodo de la escena al que está 
@@ -44,34 +40,20 @@ namespace Graphics
 	*/
 	class CLight{
 	public:
-		CLight():_light(NULL) {}
+		CLight();
+		CLight(const std::string& lightName, const Vector3& position = Vector3::ZERO, const Vector3& direction = Vector3::NEGATIVE_UNIT_Y);
 		~CLight();
-		/**
-		Método que crea una luz direccional en la posición dada, que mira en la
-		dirección que se le indica como parámetro
-		@param name El nombre de la luz que se va a crear
-		@param position la posición de la escena donde se va a crear la luz
-		@param direction Dirección en la que mira la luz que se crea
-		@return true si todo fue bien, false en caso contrario
-		*/
-		bool createDirectionalLight(CScene* scene, std::string name, Vector3 position, Vector3 direction);
-		/**
-		Método que crea una luz puntual en la posición dada, que mira en la
-		dirección que se le indica como parámetro
-		@param name El nombre de la luz que se va a crear
-		@param position la posición de la escena donde se va a crear la luz
-		@param direction Dirección en la que mira la luz que se crea
-		@return true si todo fue bien, false en caso contrario
-		*/
-		bool createPointLight(CScene* scene, std::string name, Vector3 position);
-		/**
-		Método que crea una luz local en la posición dada.
-		@param name El nombre de la luz que se va a crear
-		@param position la posición de la escena donde se va a crear la luz
-		@return true si todo fue bien, false en caso contrario
-		*/
-		bool createSpotlLight(CScene* scene, std::string name, Vector3 position, Vector3 direction);
 
+		/**
+		Método que setea la posición de la luz
+		@param position la posición en la que queremos la luz
+		*/
+		void setPosition(const Vector3& position);
+		/**
+		Método que setea la dirección de la luz
+		@param direction la dirección en la que queremos que mire la luz
+		*/
+		void setDirection(const Vector3& direction);
 		/**
 		Método controla las sombras que castea la luz.
 		@param enabled indica si las sombras se activan o se desactivan
@@ -83,7 +65,7 @@ namespace Graphics
 		@param g el verde
 		@param b el azul
 		*/
-		void setColour(float r, float g, float b);
+		void setColor(float r, float g, float b);
 		/**
 		Método para setear la atenuación de la luz
 		@param Range rango de alcance de la luz.
@@ -93,48 +75,26 @@ namespace Graphics
 		*/
 		void setAttenuation(float Range, float Kc, float Kl, float Kq);
 		/**
-		Método que setea el color difuso de la luz
-		@param r el rojo
-		@param g el verde
-		@param b el azul
+		Método para configurar los parámetros de los spotlights.
+		@param innerAngle Ángulo del cono interior (en radianes).
+		@param outerAngle Ángulo del cono exterior (en radianes).
 		*/
-		void setSpecularColour(float r, float g, float b);
-
+		void setSpotLightParams(float innerAngle, float outerAngle);
+		
 		/**
 		Método que devuelve la dirección de la luz
 		@return la dirección en la que mira la luz
 		*/
-		Vector3 getDirection(){return _light->getDirection();}
-		/**
-		Método que setea la dirección de la luz
-		@param direction la dirección en la que queremos que mire la luz
-		*/
-		void setDirection(Vector3 direction){_light->setDirection(direction);}
+		Vector3 getDirection();
 		/**
 		Método que devuelve la posición de la luz
 		@return la posición de la luz
 		*/
-		Vector3 getPosition(){return _light->getDirection();}
-		/**
-		Método que setea la posición de la luz
-		@param position la posición en la que queremos la luz
-		*/
-		void setPosition(Vector3 position){_light->setPosition(position);}
-
-		/**
-		Método que setea la fuerza de la luz
-		@param intensiy la fuerza emisora de la luz.
-		*/
-		void setIntensity(float intensity){_light->setPowerScale(intensity);}
-
-		/**
-		Método que setea el angulo de salida de un Sporlight y en angulo Maximo.
-		@pamam innerAngle angulo de salida del SpotLight
-		@pamam outerAngle angulo de salida del SpotLight
-		*/
-		void setRange(float innerAngle, float outerAngle){_light->setSpotlightRange(Ogre::Radian(innerAngle), Ogre::Radian(outerAngle));}	
+		Vector3 getPosition();
+		
 
 	protected:
+
 		Ogre::Light* _light;
 	};
 

@@ -9,11 +9,20 @@ Map = {
 		physic_groupList = "-1",
 	},
 	
-	TestLight = {
+	TestLight1 = {
 		type = "PointLight",
-		model = "health1.mesh",
+		model = "arcan.mesh",
+		pitch = -90,
 		position = {0, 20, 0},
 		color = {1.0, 0.0, 0.0},
+	},
+	
+	TestLight2 = {
+		type = "PointLight",
+		model = "arcan.mesh",
+		pitch = -90,
+		position = {300, 30, 300},
+		color = {0.0, 1.0, 0.0},
 	},
 	
 	Player = {

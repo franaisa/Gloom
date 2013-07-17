@@ -9,6 +9,7 @@ Archangel CAudio CParticle  CPhysicController CAnimatedGraphics
 Screamer CAudio CParticle CPhysicController CAnimatedGraphics
 Shadow CAudio CParticle  CPhysicController CAnimatedGraphics
 LocalSpectator CSpectatorController CPhysicController
+Gusiluz	CSpectatorController CPhysicController CLight
 Camera CCamera
 ItemSpawn CPhysicStaticEntity CFloatingMovement CSpawnItemManager CGraphics
 Ammo CPhysicStaticEntity CSpawnItemManager CGraphics
