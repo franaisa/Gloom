@@ -98,8 +98,6 @@ namespace Logic {
 	{	
 		//El string section contendrá el nombre del mapa sin tener en cuenta SP o MP
 		//Nota: Actualmente se toman como diferenciantes el . para SP y la _ para MP.
-		if(mapName == "lightTesting.map")
-			return;
 
 		string section;
 		for (int i=0; i<mapName.length(); ++i){
@@ -108,6 +106,10 @@ namespace Logic {
 			else
 				break;
 		}
+		//Si no existe el grupo terminamos
+		//Dicho grupo tiene que estar declarado en Resources.cfg
+		if(!Ogre::ResourceGroupManager::getSingleton().resourceGroupExists(section))
+			return;
 
 		//Declaracion de los recursos que son texturas png de forma selectiva
 		Ogre::StringVectorPtr texturePngNames = Ogre::ResourceGroupManager::getSingleton().findResourceNames(section,"*.png");
@@ -136,9 +138,6 @@ namespace Logic {
 
 	void CPreloadResourceManager::unloadResources(const string &mapName)
 	{	
-		if(mapName == "lightTesting.map")
-			return;
-
 		//El string section contendrá el nombre del mapa sin tener en cuenta SP o MP
 		//Nota: Actualmente se toman como diferenciantes el . para SP y la _ para MP.
 		string section;
@@ -148,6 +147,11 @@ namespace Logic {
 			else
 				break;
 		}
+
+		//Si no existe el grupo terminamos
+		//Dicho grupo tiene que estar declarado en Resources.cfg
+		if(!Ogre::ResourceGroupManager::getSingleton().resourceGroupExists(section))
+			return;
 
 		Ogre::ResourceGroupManager::getSingleton().unloadResourceGroup(section);
 		Ogre::ResourceGroupManager::getSingleton().clearResourceGroup(section);
