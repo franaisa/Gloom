@@ -46,9 +46,11 @@ namespace Logic {
 		*/
 		virtual bool spawn(CEntity* entity, CMap *map, const Map::CEntity *entityInfo);
 
-	protected:
+		virtual bool accept(const std::shared_ptr<CMessage>& message);
 
-		virtual void onStart();
+		virtual void process(const std::shared_ptr<CMessage>& message);
+
+	protected:
 
 		//virtual void onTick(unsigned int msecs);
 

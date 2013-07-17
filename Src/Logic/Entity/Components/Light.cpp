@@ -34,14 +34,14 @@ namespace Logic {
 		// Nada que hacer
 	}
 
-	//---------------------------------------------------------
+	//________________________________________________________________________
 
 	CLight::~CLight() {
 		if(_light != NULL)
 			delete _light;
 	}
 	
-	//---------------------------------------------------------
+	//________________________________________________________________________
 	
 	bool CLight::spawn(CEntity *entity, CMap *map, const Map::CEntity *entityInfo) {
 		if( !IComponent::spawn(entity,map,entityInfo) ) return false;
@@ -80,20 +80,47 @@ namespace Logic {
 
 	} // spawn
 
-	void CLight::onStart() {
-		_light = new(nothrow) Graphics::CLight(_lightType, _entity->getName(), _position, _direction);
+	//________________________________________________________________________
 
-		if( _color != Vector3::ZERO ) {
-			_light->setColor(_color.x, _color.y, _color.z);
+	bool CLight::accept(const std::shared_ptr<CMessage>& message) {
+		TMessageType msgType = message->getMessageType();
+
+		return msgType == Message::TOUCHED		||
+			   msgType == Message::UNTOUCHED;
+	} // accept
+
+	//________________________________________________________________________
+
+	void CLight::process(const std::shared_ptr<CMessage>& message) {
+		switch( message->getMessageType() ) {
+			case Message::TOUCHED: {
+				_light = new(nothrow) Graphics::CLight(_lightType, _entity->getName(), _position, _direction);
+
+				if( _color != Vector3::ZERO ) {
+					_light->setColor(_color.x, _color.y, _color.z);
+				}
+				if( _attenuation != Vector3::ZERO ) {
+					// De momento ignoramos el rango en los shaders
+					_light->setAttenuation(0.0f, _attenuation.x, _attenuation.y, _attenuation.z);
+				}
+				if( _innerAngle != 0.0f || _outerAngle != 0.0f ) {
+					_light->setSpotLightParams(_innerAngle, _outerAngle);
+				}
+
+				break;
+			}
+			case Message::UNTOUCHED: {
+				if(_light != NULL) {
+					delete _light;
+					_light = NULL;
+				}
+
+				break;
+			}				   
 		}
-		if( _attenuation != Vector3::ZERO ) {
-			// De momento ignoramos el rango en los shaders
-			_light->setAttenuation(0.0f, _attenuation.x, _attenuation.y, _attenuation.z);
-		}
-		if( _innerAngle != 0.0f || _outerAngle != 0.0f ) {
-			_light->setSpotLightParams(_innerAngle, _outerAngle);
-		}
-	}
+	} // process
+
+	//________________________________________________________________________
 
 	/*void CLight::onTick(unsigned int msecs) {
 		_light->setPosition( _entity->getPosition() );

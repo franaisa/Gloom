@@ -24,7 +24,7 @@ ElevatorTrigger CPhysicDynamicEntity CElevatorTrigger
 SpikeTrap CSpikeTrap CPhysicStaticEntity CAudio CGraphics
 Spike CSpike CPhysicDynamicEntity CGraphics
 Hacksaw CGraphics CPhysicDynamicEntity CHacksaw
-Light CLight CGraphics
+Light CLight CGraphics CPhysicStaticEntity
 ScreamerShield CGraphics CPhysicDynamicEntity CScreamerShieldDamageNotifier CScreamerShieldController
 MagneticBullet CMagneticBullet CPhysicDynamicEntity CGraphics
 FireBall CFireBallController CPhysicDynamicEntity CParticle CGraphics

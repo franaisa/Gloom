@@ -23,13 +23,13 @@ namespace Logic {
 
 	}
 	
-	//---------------------------------------------------------
+	//________________________________________________________________________
 
 	CGraphicPlane::~CGraphicPlane() {
 
 	} // ~CGraphics
 	
-	//---------------------------------------------------------
+	//________________________________________________________________________
 
 	void CGraphicPlane::onStart() {
 		Ogre::SceneManager* sceneMgr = Graphics::CServer::getSingletonPtr()->getActiveScene()->getSceneMgr();
@@ -54,14 +54,6 @@ namespace Logic {
 		// Asignamos manualmente el material de pruebas
 		entGround->setMaterialName("bumpLightingTest");
 		entGround->setCastShadows(false);
-
-		/*Ogre::Light* l = sceneMgr->createLight("TestLight");
-		l->setPosition(0, 20, 0);
-		l->setDirection(1, -1, 1);
-		//l->setSpotlightInnerAngle( Ogre::Radian(0.31756043f) );
-		//l->setSpotlightOuterAngle( Ogre::Radian(0.55481103f) );
-		l->setDiffuseColour(0.0f, 0.0f, 0.9f);
-		l->setAttenuation(70, 0.01, 0.01, 0.0001);*/
 	} // spawn
 
 } // namespace Logic
