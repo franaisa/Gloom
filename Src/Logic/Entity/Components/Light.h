@@ -7,7 +7,8 @@ Contiene la declaración del componente que controla la vida de una entidad.
 @see Logic::IComponent
 
 @author Antonio Jesus Narvaez
-@date Marzo, 2013
+@author Francisco Aisa García
+@date Julio, 2013
 */
 
 #ifndef __Logic_Light_H
