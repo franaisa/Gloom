@@ -7,15 +7,26 @@
 
 namespace Graphics {
 
-	CLight::CLight() : _light(NULL) {
-		// Nada que hacer
-	}
-
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	CLight::CLight(const std::string& lightName, const Vector3& position, const Vector3& direction) {
+	CLight::CLight(LightType::Enum lightType, const std::string& lightName, const Vector3& position, const Vector3& direction) {
 		// Creamos una luz a través del gestor de escena
 		_light = CServer::getSingletonPtr()->getActiveScene()->getSceneMgr()->createLight(lightName);
+
+		switch(lightType) {
+			case LightType::eDIRECTIONAL_LIGHT:
+				_light->setType(Ogre::Light::LT_DIRECTIONAL);
+				break;
+
+			case LightType::ePOINT_LIGHT:
+				_light->setType(Ogre::Light::LT_POINT);
+				break;
+
+			case LightType::eSPOT_LIGHT:
+				_light->setType(Ogre::Light::LT_SPOTLIGHT);
+				break;
+		}
+
 		// Asignamos solo los atributos esenciales, posicion y direccion (si es que la tienen)
 		_light->setPosition(position);
 		_light->setDirection(direction);

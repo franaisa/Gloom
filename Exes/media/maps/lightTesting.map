@@ -9,20 +9,35 @@ Map = {
 		physic_groupList = "-1",
 	},
 	
-	TestLight1 = {
-		type = "PointLight",
+	TestLight2 = {
+		type = "Light",
 		model = "arcan.mesh",
 		pitch = -90,
+		lightType = "point",
 		position = {0, 20, 0},
 		color = {1.0, 0.0, 0.0},
 	},
 	
-	TestLight2 = {
-		type = "PointLight",
+	TestLight1 = {
+		type = "Light",
 		model = "arcan.mesh",
 		pitch = -90,
+		lightType = "directional",
 		position = {300, 30, 300},
+		direction = {1, -1, 1},
 		color = {0.0, 1.0, 0.0},
+	},
+	
+	TestLight0 = {
+		type = "Light",
+		model = "arcan.mesh",
+		pitch = -90,
+		lightType = "spot",
+		position = {0, 20, 0},
+		direction = {1, -1, 1},
+		color = {0.0, 0.0, 1.0},
+		innerAngle = 0.63,
+		outerAngle = 1.11,
 	},
 	
 	Player = {

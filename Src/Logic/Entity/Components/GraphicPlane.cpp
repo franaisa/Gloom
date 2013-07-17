@@ -52,7 +52,7 @@ namespace Logic {
 		groundNode->setPosition(0.0f, 0.0f, 0.0f);
 
 		// Asignamos manualmente el material de pruebas
-		entGround->setMaterialName("bumpMapPointLightTest");
+		entGround->setMaterialName("bumpLightingTest");
 		entGround->setCastShadows(false);
 
 		/*Ogre::Light* l = sceneMgr->createLight("TestLight");

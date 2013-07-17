@@ -17,8 +17,6 @@ Contiene la implementación del componente que controla la vida de una entidad.
 
 #include "Map/MapEntity.h"
 
-#include "Graphics/Light.h"
-
 using namespace std;
 
 namespace Logic {
@@ -50,8 +48,17 @@ namespace Logic {
 
 		// ATRIBUTOS OBLIGATORIOS
 		assert( entityInfo->hasAttribute("position") );
+		assert( entityInfo->hasAttribute("lightType") );
 
 		_position = entityInfo->getVector3Attribute("position");
+
+		std::string lightTypeString = entityInfo->getStringAttribute("lightType");
+		if(lightTypeString == "directional")
+			_lightType = Graphics::LightType::eDIRECTIONAL_LIGHT;
+		else if(lightTypeString == "point")
+			_lightType = Graphics::LightType::ePOINT_LIGHT;
+		else
+			_lightType = Graphics::LightType::eSPOT_LIGHT;
 
 		// ATRIBUTOS OPCIONALES
 		if( entityInfo->hasAttribute("direction") )
@@ -74,7 +81,7 @@ namespace Logic {
 	} // spawn
 
 	void CLight::onStart() {
-		_light = new(nothrow) Graphics::CLight(_entity->getName(), _position, _direction);
+		_light = new(nothrow) Graphics::CLight(_lightType, _entity->getName(), _position, _direction);
 
 		if( _color != Vector3::ZERO ) {
 			_light->setColor(_color.x, _color.y, _color.z);

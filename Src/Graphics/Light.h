@@ -30,6 +30,14 @@ namespace Graphics {
 
 namespace Graphics {
 
+	struct LightType {
+		enum Enum {
+			eDIRECTIONAL_LIGHT,
+			ePOINT_LIGHT,
+			eSPOT_LIGHT
+		};
+	};
+
 	/**
 	Clase que representa las luces en el escenario de ogre, contiene una referencia
 	que representa la luz de ogre y otra que es el nodo de la escena al que está 
@@ -40,8 +48,7 @@ namespace Graphics {
 	*/
 	class CLight{
 	public:
-		CLight();
-		CLight(const std::string& lightName, const Vector3& position = Vector3::ZERO, const Vector3& direction = Vector3::NEGATIVE_UNIT_Y);
+		CLight(const LightType::Enum lightType, const std::string& lightName, const Vector3& position = Vector3::ZERO, const Vector3& direction = Vector3::NEGATIVE_UNIT_Y);
 		~CLight();
 
 		/**
