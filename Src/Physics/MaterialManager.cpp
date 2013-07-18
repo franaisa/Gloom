@@ -72,7 +72,7 @@ namespace Physics {
 
 	//________________________________________________________________________
 
-	Material* CMaterialManager::getMaterial(MaterialType material) {
+	Material* CMaterialManager::getMaterial(MaterialType::Enum material) {
 		return _materialTable[material];
 	}
 

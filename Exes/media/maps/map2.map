@@ -867,20 +867,25 @@ Map = {
 	},
 
 	Light1= {
-		type = "Light",
+		type = "TestLight",
 		model = "arcan.mesh",
 		pitch = -90,
 		lightType = "point",
 		position = {-52.0654, 60.1029, -108.08},
 		color = {1.0, 0.0, 0.0},
 		
-		physic_entity = "rigid",
-		physic_trigger = true,
-		physic_type = "static",
-		physic_shape = "sphere",
-		physic_radius = 40,
 		physic_group = 18,
 		physic_groupList = "1",
+		physic_trigger = true,
+		physic_entityList = "
+			physic_position = 50	0	0
+			physic_shape = sphere
+			physic_radius = 10
+			
+			physic_position = -40	20	3
+			physic_shape = box
+			physic_dimensions = 3.0	8.0 	3.0
+		",
 	},
 	
 	Light2 = {

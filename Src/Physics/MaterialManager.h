@@ -26,8 +26,10 @@ namespace Physics {
 	typedef physx::PxMaterial Material;
 
 	// Enumerado que contiene la lista de materiales que podemos usar
-	enum MaterialType {
-		eDEFAULT
+	struct MaterialType {
+		enum Enum {
+			eDEFAULT
+		};
 	};
 
 
@@ -84,7 +86,7 @@ namespace Physics {
 
 		@param material Tipo de material que queremos.
 		*/
-		Material* getMaterial(MaterialType material);
+		Material* getMaterial(MaterialType::Enum material);
 
 	private:
 

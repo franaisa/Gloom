@@ -205,7 +205,7 @@ void CPhysicDynamicEntity::createRigid(const Map::CEntity *entityInfo, int group
 		const Vector3 physicDimensions = entityInfo->getVector3Attribute("physic_dimensions");
 
 		Physics::BoxGeometry box = _geometryFactory->createBox(physicDimensions);
-		Physics::Material* defaultMaterial = _materialManager->getMaterial(eDEFAULT);
+		Physics::Material* defaultMaterial = _materialManager->getMaterial(Physics::MaterialType::eDEFAULT);
 		float density = mass / (physicDimensions.x * physicDimensions.y * physicDimensions.z);
 		
 		_physicEntity.load(_entity->getPosition(), _entity->getOrientation(), box, *defaultMaterial, density, isKinematic, isTrigger, _noGravity, group, groupList, this);
@@ -215,7 +215,7 @@ void CPhysicDynamicEntity::createRigid(const Map::CEntity *entityInfo, int group
 		const float physicRadius = entityInfo->getFloatAttribute("physic_radius");
 		
 		Physics::SphereGeometry sphere = _geometryFactory->createSphere(physicRadius);
-		Physics::Material* defaultMaterial = _materialManager->getMaterial(eDEFAULT);
+		Physics::Material* defaultMaterial = _materialManager->getMaterial(Physics::MaterialType::eDEFAULT);
 		float density = mass / (4.0f/3.0f * Math::PI * physicRadius * physicRadius * physicRadius);
 
 		_physicEntity.load(_entity->getPosition(), _entity->getOrientation(), sphere, *defaultMaterial, density, isKinematic, isTrigger, _noGravity, group, groupList, this);
