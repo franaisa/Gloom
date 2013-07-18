@@ -247,6 +247,10 @@ namespace Logic
 		m->setAmmo(ammo);//No es necesario esto, ya que solo actualizare el hud como que puedo coger el arma pero no mostrara sus balas(en este caso concreto)
 		_entity->emitMessage(m);
 		*/
+
+		if(_currentWeapon == WeaponType::eSOUL_REAPER){
+			changeWeapon(weaponIndex);
+		}
 	}
 
 	//---------------------------------------------------------
