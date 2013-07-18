@@ -9,3 +9,9 @@ fragment_program bumpLightingFragmentShader hlsl {
 	entry_point fragment_main
 	target ps_2_0
 }
+
+fragment_program bumpLightingFragment_DIFF_SPEC hlsl {
+	source bumpLighting.hlsl
+	entry_point fragment_diffuseAndSpecular
+	target ps_2_0
+}
