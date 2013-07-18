@@ -188,7 +188,7 @@ namespace Logic
 		if(newWeapon >= WeaponType::eSIZE){
 			return;
 		}
-		if(_weaponry[newWeapon].first && (newWeapon != _currentWeapon))
+		if( _weaponry[newWeapon].first && (newWeapon != _currentWeapon) && ( _weaponry[newWeapon].second->getAmmo() > 0 || newWeapon == WeaponType::eSOUL_REAPER ) )
 		{
 			// Indicamos que el arma actual ya no está equipada
 			// Desactivamos el componente Shoot del arma actual

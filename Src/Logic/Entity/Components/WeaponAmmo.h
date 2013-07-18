@@ -152,6 +152,8 @@ namespace Logic {
 		*/
 		virtual void resetAmmo();
 
+		virtual unsigned int getAmmo(){return _currentAmmo;}
+
 		//__________________________________________________________________
 
 		/**
