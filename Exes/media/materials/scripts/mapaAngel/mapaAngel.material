@@ -1,323 +1,183 @@
-material mapaAngel_hueso
-{
-	technique
-	{
-		set $ambient "0 0 0 1"
-		set $diffuse "1 1 1 1"
-		set $specular "2 2 2 100"
-		set $shininess "60"
+material mapaAngel_hueso {
+	technique {
+		pass {
 		
-		pass 
-		{
-			illumination_stage ambient
-		
-			ambient "0 0 0 1"
-			diffuse "1 1 1 1"
-			specular $specular $shininess
-			emissive 0 0 0 0
-			
-			vertex_program_ref ambient_vs
-            {
-            }
-
-            fragment_program_ref ambient_ps
-            {
-            }
-
-            texture_unit diffuseMap
-            {
-				texture hueso_difuse.png
-				filtering anisotropic
+			vertex_program_ref bumpLightingVertexShader {
+				// Parametros obtenidos de Ogre
+				param_named_auto	viewProjectionMatrix 		worldviewproj_matrix
+				param_named_auto	eyePosition					camera_position_object_space
+				param_named_auto	lightPosition					light_position_object_space			0
+				param_named_auto	lightDir							light_direction_object_space			0
+				param_named_auto	spotLightParams			spotlight_params							0
 			}
 			
-			texture_unit aoMap
-			{
-				texture hueso_difuse.png
-				filtering anisotropic
+			fragment_program_ref bumpLightingFragmentShader {
+				// Parametros obtenidos de Ogre
+				param_named_auto	globalAmbient		ambient_light_colour
+				param_named_auto	lightAttenuation		light_attenuation						0
+				param_named_auto	lightPosition			light_position_object_space		0
+				param_named_auto	lightDir					light_direction_object_space		0
+				param_named_auto	lightColor				light_diffuse_colour					0
+				param_named_auto	spotLightParams	spotlight_params						0
+				
+				// Constante para regular la cantidad de ambiente
+				param_named	Ka							float		1.0
+				// Constante para regular la cantidad de difuso
+				param_named	Kd							float		0.6
+				// Constante de brillo especular
+				param_named 	shininess					float		70.0
 			}
+			
+			// Textura de difuso
+			texture_unit DiffMap {
+				texture hueso_DIF.jpg
+			}
+			
+			// Textura para el bump mapping. En el alfa esta el mapa de especulares.
+			texture_unit NormalMap {
+				texture hueso_NRM_SPEC.tga
+			}
+			
 		}
-
-        pass
-        {
-
-            illumination_stage per_light
-
-            scene_blend add
-            iteration once_per_light
-
-            vertex_program_ref diffuse_vs
-            {
-            }
-
-            fragment_program_ref diffuse_ps
-            {
-            }
-
-            ambient "0 0 0 1"
-			diffuse "1 1 1 1"
-			specular $specular $shininess
-			emissive 0 0 0 0
-			
-            texture_unit aoMap
-			{
-				texture hueso_difuse.png
-				filtering anisotropic
-			}
-
-            texture_unit specMap
-            {
-                texture hueso_spec.png
-				
-				
-				filtering anisotropic
-            }
-
-            texture_unit normalMap
-            {
-                texture hueso_normal.png
-				
-				filtering anisotropic
-            }
-        }
-
 	}
-
 }
 
 
 
-material mapaAngel_muro
-{
-	technique
-	{
+material mapaAngel_muro {
+	technique {
+		pass {
 		
-		set $ambient "0 0 0 1"
-		set $diffuse "1 1 1 1"
-		set $specular "2 2 2 100"
-		set $shininess "60"
-		
-		pass 
-		{
-			illumination_stage ambient
-			
-			vertex_program_ref ambient_vs
-            {
-            }
-
-            fragment_program_ref ambient_ps
-            {
-            }
-
-            texture_unit diffuseMap
-            {
-				texture muro_difuse.png
-				filtering anisotropic
+			vertex_program_ref bumpLightingVertexShader {
+				// Parametros obtenidos de Ogre
+				param_named_auto	viewProjectionMatrix 		worldviewproj_matrix
+				param_named_auto	eyePosition					camera_position_object_space
+				param_named_auto	lightPosition					light_position_object_space			0
+				param_named_auto	lightDir							light_direction_object_space			0
+				param_named_auto	spotLightParams			spotlight_params							0
 			}
 			
-			texture_unit aoMap
-			{
-				texture muro_difuse.png
-				filtering anisotropic
+			fragment_program_ref bumpLightingFragmentShader {
+				// Parametros obtenidos de Ogre
+				param_named_auto	globalAmbient		ambient_light_colour
+				param_named_auto	lightAttenuation		light_attenuation						0
+				param_named_auto	lightPosition			light_position_object_space		0
+				param_named_auto	lightDir					light_direction_object_space		0
+				param_named_auto	lightColor				light_diffuse_colour					0
+				param_named_auto	spotLightParams	spotlight_params						0
+				
+				// Constante para regular la cantidad de ambiente
+				param_named	Ka							float		1.0
+				// Constante para regular la cantidad de difuso
+				param_named	Kd							float		0.6
+				// Constante de brillo especular
+				param_named 	shininess					float		70.0
 			}
+			
+			// Textura de difuso
+			texture_unit DiffMap {
+				texture muro_DIF.jpg
+			}
+			
+			// Textura para el bump mapping. En el alfa esta el mapa de especulares.
+			texture_unit NormalMap {
+				texture muro_NRM_SPEC.tga
+			}
+			
 		}
-
-        pass
-        {
-
-            illumination_stage per_light
-
-            scene_blend add
-            iteration once_per_light
-
-            vertex_program_ref diffuse_vs
-            {
-            }
-
-            fragment_program_ref diffuse_ps
-            {
-            }
-			
-            texture_unit aoMap
-			{
-				texture muro_difuse.png
-				filtering anisotropic
-			}
-
-            texture_unit specMap
-            {
-                texture muro_spec.png
-				
-				
-				filtering anisotropic
-            }
-
-            texture_unit normalMap
-            {
-                texture muro_normal.png
-				
-				filtering anisotropic
-            }
-        }
-
 	}
-
 }
 
 
 
-material mapaAngel_pipe
-{
-	technique
-	{
-		set $ambient "0 0 0 1"
-		set $diffuse "1 1 1 1"
-		set $specular "2 2 2 100"
-		set $shininess "60"
-	
-		pass 
-		{
-			illumination_stage ambient
-			
-			vertex_program_ref ambient_vs
-            {
-            }
-
-            fragment_program_ref ambient_ps
-            {
-            }
-
-            texture_unit diffuseMap
-            {
-				texture pipe_difuse.png
-				filtering anisotropic
+material mapaAngel_pipe {
+	technique {
+		pass {
+		
+			vertex_program_ref bumpLightingVertexShader {
+				// Parametros obtenidos de Ogre
+				param_named_auto	viewProjectionMatrix 		worldviewproj_matrix
+				param_named_auto	eyePosition					camera_position_object_space
+				param_named_auto	lightPosition					light_position_object_space			0
+				param_named_auto	lightDir							light_direction_object_space			0
+				param_named_auto	spotLightParams			spotlight_params							0
 			}
 			
-			texture_unit aoMap
-			{
-				texture pipe_difuse.png
-				filtering anisotropic
+			fragment_program_ref bumpLightingFragmentShader {
+				// Parametros obtenidos de Ogre
+				param_named_auto	globalAmbient		ambient_light_colour
+				param_named_auto	lightAttenuation		light_attenuation						0
+				param_named_auto	lightPosition			light_position_object_space		0
+				param_named_auto	lightDir					light_direction_object_space		0
+				param_named_auto	lightColor				light_diffuse_colour					0
+				param_named_auto	spotLightParams	spotlight_params						0
+				
+				// Constante para regular la cantidad de ambiente
+				param_named	Ka							float		1.0
+				// Constante para regular la cantidad de difuso
+				param_named	Kd							float		0.6
+				// Constante de brillo especular
+				param_named 	shininess					float		70.0
 			}
+			
+			// Textura de difuso
+			texture_unit DiffMap {
+				texture pipe_DIF.jpg
+			}
+			
+			// Textura para el bump mapping. En el alfa esta el mapa de especulares.
+			texture_unit NormalMap {
+				texture pipe_NRM_SPEC.tga
+			}
+			
 		}
-
-        pass
-        {
-
-            illumination_stage per_light
-
-            scene_blend add
-            iteration once_per_light
-
-            vertex_program_ref diffuse_vs
-            {
-            }
-
-            fragment_program_ref diffuse_ps
-            {
-            }
-			
-            texture_unit aoMap
-			{
-				texture pipe_difuse.png
-				filtering anisotropic
-			}
-
-            texture_unit specMap
-            {
-                texture pipe_spec.png
-				
-				
-				filtering anisotropic
-            }
-
-            texture_unit normalMap
-            {
-                texture pipe_normal.png
-				
-				filtering anisotropic
-            }
-        }
-
 	}
-
 }
 
 
 
-material mapaAngel_rock
-{
-	technique
-	{
-	
-		set $ambient "0 0 0 1"
-		set $diffuse "1 1 1 1"
-		set $specular "2 2 2 100"
-		set $shininess "60"
-		pass 
-		{
-			illumination_stage ambient
+material mapaAngel_rock {
+	technique {
+		pass {
 		
-			
-			vertex_program_ref ambient_vs
-            {
-            }
-
-            fragment_program_ref ambient_ps
-            {
-            }
-
-            texture_unit diffuseMap
-            {
-				texture rock_difuse.png
-				filtering anisotropic
+			vertex_program_ref bumpLightingVertexShader {
+				// Parametros obtenidos de Ogre
+				param_named_auto	viewProjectionMatrix 		worldviewproj_matrix
+				param_named_auto	eyePosition					camera_position_object_space
+				param_named_auto	lightPosition					light_position_object_space			0
+				param_named_auto	lightDir							light_direction_object_space			0
+				param_named_auto	spotLightParams			spotlight_params							0
 			}
 			
-			texture_unit aoMap
-			{
-				texture rock_difuse.png
-				filtering anisotropic
+			fragment_program_ref bumpLightingFragmentShader {
+				// Parametros obtenidos de Ogre
+				param_named_auto	globalAmbient		ambient_light_colour
+				param_named_auto	lightAttenuation		light_attenuation						0
+				param_named_auto	lightPosition			light_position_object_space		0
+				param_named_auto	lightDir					light_direction_object_space		0
+				param_named_auto	lightColor				light_diffuse_colour					0
+				param_named_auto	spotLightParams	spotlight_params						0
+				
+				// Constante para regular la cantidad de ambiente
+				param_named	Ka							float		1.0
+				// Constante para regular la cantidad de difuso
+				param_named	Kd							float		0.6
+				// Constante de brillo especular
+				param_named 	shininess					float		70.0
 			}
+			
+			// Textura de difuso
+			texture_unit DiffMap {
+				texture rock_DIF.jpg
+			}
+			
+			// Textura para el bump mapping. En el alfa esta el mapa de especulares.
+			texture_unit NormalMap {
+				texture rock_NRM_SPEC.tga
+			}
+			
 		}
-
-        pass
-        {
-
-            illumination_stage per_light
-
-            scene_blend add
-            iteration once_per_light
-
-            vertex_program_ref diffuse_vs
-            {
-            }
-
-            fragment_program_ref diffuse_ps
-            {
-            }
-			
-            texture_unit aoMap
-			{
-				texture rock_difuse.png
-				filtering anisotropic
-			}
-
-            texture_unit specMap
-            {
-                texture rock_spec.png
-				
-				
-				filtering anisotropic
-            }
-
-            texture_unit normalMap
-            {
-                texture rock_normal.png
-				
-				filtering anisotropic
-            }
-        }
-
 	}
-
 }
 
 
@@ -401,7 +261,7 @@ material mapaAngel_suelo
 			
 			texture_unit diffmap
 			{
-				texture suelo_difuse.png
+				texture suelo_DIF.jpg
 				filtering anisotropic
 				transform 10 0 0 0 0 10 0 0 0 0 1 0 0 0 0 1
 				scale 0.1 0.1

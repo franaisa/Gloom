@@ -1,0 +1,27 @@
+material pointLightTest {
+	technique {
+		pass {
+		
+			vertex_program_ref pointLightVertexShader {
+				param_named_auto	viewProjectionMatrix 	worldviewproj_matrix
+			}
+			
+			fragment_program_ref pointLightFragmentShader {
+				param_named_auto	eyePosition					camera_position_object_space
+				param_named_auto	globalAmbient				ambient_light_colour
+				param_named_auto	lightPosition					light_position_object_space			0
+				param_named_auto	lightColor						light_diffuse_colour						0
+				param_named_auto	lightAttenuation				light_attenuation							0
+				
+				param_named			Ka								float												0.5
+				param_named			Kd								float												0.3
+				param_named 			shininess						float												76.0
+			}
+			
+			texture_unit DiffMap {
+				texture rock_difuse_targa.tga
+			}
+			
+		}
+	}
+}

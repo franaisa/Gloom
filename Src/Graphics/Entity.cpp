@@ -28,6 +28,7 @@ Contiene la implementación de la clase que representa una entidad gráfica.
 #include <OgreCamera.h>
 #include <OgreMesh.h>
 #include <OgreSubMesh.h>
+#include <OgreMeshManager.h>
 
 #include <Graphics/Server.h>
 #include <Graphics/Camera.h>
@@ -100,7 +101,26 @@ namespace Graphics
 	{
 		try
 		{
-			_entity = _scene->getSceneMgr()->createEntity(_mesh);
+			// @deprecated De momento calculo las tangentes a los vertices desde
+			// Ogre para poder usar bump mapping. Lo ideal es que las tangentes
+			// se precalculen al exportar los modelos.
+
+			Ogre::MeshPtr pMesh = Ogre::MeshManager::getSingleton().load(_mesh,
+				Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,    
+				Ogre::HardwareBuffer::HBU_DYNAMIC_WRITE_ONLY,
+				Ogre::HardwareBuffer::HBU_STATIC_WRITE_ONLY,
+				true, true);
+			// so we can still read it
+ 
+			// build tangent vectors, all our meshes use only one texture coordset 
+			// Note: we can build into VES_TANGENT now (SM2+)
+ 
+			unsigned short src, dest;
+			if (!pMesh->suggestTangentVectorBuildParams(Ogre::VES_TANGENT, src, dest)) {
+				pMesh->buildTangentVectors(Ogre::VES_TANGENT, src, dest);
+			}
+
+			_entity = _scene->getSceneMgr()->createEntity(pMesh);
 			//_entity->setCastShadows(true);
 		}
 		catch(std::exception e)

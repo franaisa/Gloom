@@ -7,103 +7,138 @@ Contiene la implementación del componente que controla la vida de una entidad.
 @see Logic::IComponent
 
 @author Antonio Jesus Narvaez
-@date Marzo, 2013
+@author Francisco Aisa García
+@date Julio, 2013
 */
 
 #include "Light.h"
 
-#include "Logic/Entity/Entity.h"
-#include "Logic/Maps/Map.h"
-#include "Map/MapEntity.h"
 #include "Application/BaseApplication.h"
-#include "Graphics/Light.h"
-#include "Graphics/Scene.h"
-#include "Graphics/Server.h"
-#include <OgreSceneManager.h>
-#include "Logic/Server.h"
+#include "Logic/LightManager.h"
+#include "Map/MapEntity.h"
 
-namespace Logic 
-{
+using namespace std;
+
+namespace Logic {
+
 	IMP_FACTORY(CLight);
-	
-	//---------------------------------------------------------
-	
-	
-	bool CLight::spawn(CEntity *entity, CMap *map, const Map::CEntity *entityInfo) 
-	{
-		if(!IComponent::spawn(entity,map,entityInfo))
-			return false;
 
-		_light = new Graphics::CLight();
-		Vector3 position = entityInfo->getVector3Attribute("position");
-		Vector3 direction;
+	CLight::CLight() : _light(NULL),
+					   _position(Vector3::ZERO),
+					   _direction(Vector3::NEGATIVE_UNIT_Y),
+					   _color(Vector3::ZERO),
+					   _attenuation(Vector3::ZERO),
+					   _innerAngle(0.0f),
+					   _outerAngle(0.0f) {
 		
-		if(entityInfo->hasAttribute("direction"))
-			direction = entityInfo->getVector3Attribute("direction");
+		// Nada que hacer
+	}
 
-		std::string type = entityInfo->getStringAttribute("type");
-		if(type == "SpotLight"){
-			_light->createSpotlLight(_entity->getMap()->getScene(), _entity->getName(), position, direction);
-			if(entityInfo->hasAttribute("innerAngle") && entityInfo->hasAttribute("outerAngle"))
-				_light->setRange(entityInfo->getFloatAttribute("innerAngle"), entityInfo->getFloatAttribute("outerAngle") );
-		}
-		if(type == "DirectionalLight")
-			_light->createDirectionalLight(_entity->getMap()->getScene(), _entity->getName(), position, direction);
-		if(type == "PointLight")
-			_light->createPointLight(_entity->getMap()->getScene(),_entity->getName(), position);
+	//________________________________________________________________________
 
-		if(entityInfo->hasAttribute("castShadows"))
-			_light->setCastShadows(entityInfo->getBoolAttribute("castShadows"));
+	CLight::~CLight() {
+		// Nada que hacer
+	}
+	
+	//________________________________________________________________________
+	
+	bool CLight::spawn(CEntity *entity, CMap *map, const Map::CEntity *entityInfo) {
+		if( !IComponent::spawn(entity,map,entityInfo) ) return false;
 
-		if(entityInfo->hasAttribute("colour")){
-			Vector3 colour = entityInfo->getVector3Attribute("colour");
-			_light->setColour(colour.x, colour.y, colour.z);
-		}
-		
-		if(entityInfo->hasAttribute("specularColour")){
-			Vector3 specularColour = entityInfo->getVector3Attribute("specularColour");
-			_light->setSpecularColour(specularColour.x, specularColour.y, specularColour.z);
-		}
+		// ATRIBUTOS OBLIGATORIOS
+		assert( entityInfo->hasAttribute("position") );
+		assert( entityInfo->hasAttribute("lightType") );
 
-		if(entityInfo->hasAttribute("intensity"))
-			_light->setIntensity(entityInfo->getFloatAttribute("intensity"));
+		_position = entityInfo->getVector3Attribute("position");
 
-		//_light->attachToScene();
+		std::string lightTypeString = entityInfo->getStringAttribute("lightType");
+		if(lightTypeString == "directional")
+			_lightType = Graphics::LightType::eDIRECTIONAL_LIGHT;
+		else if(lightTypeString == "point")
+			_lightType = Graphics::LightType::ePOINT_LIGHT;
+		else
+			_lightType = Graphics::LightType::eSPOT_LIGHT;
+
+		// ATRIBUTOS OPCIONALES
+		if( entityInfo->hasAttribute("direction") )
+			_direction = entityInfo->getVector3Attribute("direction");
+
+		if( entityInfo->hasAttribute("color") )
+			_color = entityInfo->getVector3Attribute("color");
+
+		if( entityInfo->hasAttribute("attenuation") )
+			_attenuation = entityInfo->getVector3Attribute("attenuation");
+
+		if( entityInfo->hasAttribute("innerAngle") )
+			_innerAngle = entityInfo->getFloatAttribute("innerAngle");
+
+		if( entityInfo->hasAttribute("outerAngle") )
+			_outerAngle = entityInfo->getFloatAttribute("outerAngle");
 
 		return true;
 
 	} // spawn
-	
-	//---------------------------------------------------------
 
-	bool CLight::accept(const std::shared_ptr<CMessage>& message)
-	{
-		return false;
-		//return message->getMessageType() == Message::DAMAGED;
-		
+	//________________________________________________________________________
+
+	bool CLight::accept(const std::shared_ptr<CMessage>& message) {
+		TMessageType msgType = message->getMessageType();
+
+		return msgType == Message::TOUCHED;
 	} // accept
-	
-	//---------------------------------------------------------
 
-	void CLight::process(const std::shared_ptr<CMessage>& message)
-	{
-		/*
-		switch(message->getMessageType())
-		{
+	//________________________________________________________________________
 
+	void CLight::process(const std::shared_ptr<CMessage>& message) {
+		switch( message->getMessageType() ) {
+			case Message::TOUCHED: {
+				_light = CLightManager::getSingletonPtr()->createLight(_lightType, _entity->getName(), _position, _direction);
+
+				if(_light != NULL) {
+					if( _color != Vector3::ZERO ) {
+						_light->setColor(_color.x, _color.y, _color.z);
+					}
+					if( _attenuation != Vector3::ZERO ) {
+						// De momento ignoramos el rango en los shaders
+						_light->setAttenuation(0.0f, _attenuation.x, _attenuation.y, _attenuation.z);
+					}
+					if( _innerAngle != 0.0f || _outerAngle != 0.0f ) {
+						_light->setSpotLightParams(_innerAngle, _outerAngle);
+					}
+				}
+
+				break;
+			}			   
 		}
-		*/
-
 	} // process
-	//----------------------------------------------------------
-/*
-	void CLight::onTick(unsigned int msecs)
-	{
-		
-	} // tick
-	//----------------------------------------------------------
-*/
 
+	//________________________________________________________________________
+
+	/*void CLight::onStart() {
+		_light = CLightManager::getSingletonPtr()->createLight(_lightType, _entity->getName(), _position, _direction);
+
+		if(_light != NULL) {
+			if( _color != Vector3::ZERO ) {
+				_light->setColor(_color.x, _color.y, _color.z);
+			}
+			if( _attenuation != Vector3::ZERO ) {
+				// De momento ignoramos el rango en los shaders
+				_light->setAttenuation(0.0f, _attenuation.x, _attenuation.y, _attenuation.z);
+			}
+			if( _innerAngle != 0.0f || _outerAngle != 0.0f ) {
+				_light->setSpotLightParams(_innerAngle, _outerAngle);
+			}
+		}
+	}
+
+	void CLight::onTick(unsigned int msecs) {
+		_position = _entity->getPosition();
+		_light->setPosition( _position );
+		
+		Matrix3 rotation;
+		_entity->getOrientation().ToRotationMatrix(rotation);
+		_light->setDirection( Math::getDirection( Matrix4(rotation) ) );
+	}*/
 
 } // namespace Logic
 

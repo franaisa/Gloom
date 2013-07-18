@@ -95,7 +95,8 @@ namespace Physics {
 			ePROJECTILE				= (1 << 14),
 			eMAGNETIC_PROJECTILE	= (1 << 15),
 			eFIREBALL				= (1 << 16),
-			eSCREAMER_SHIELD		= (1 << 17)
+			eSCREAMER_SHIELD		= (1 << 17),
+			eLIGHT					= (1 << 18)
 		};
 
 		unsigned int getPlayersMask() {

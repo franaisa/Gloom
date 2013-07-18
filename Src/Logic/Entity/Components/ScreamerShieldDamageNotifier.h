@@ -129,6 +129,16 @@ namespace Logic {
 		*/
 		void setOwner(Logic::CEntity* owner);
 
+		//__________________________________________________________________
+
+		/**
+		Devuelve el puntero a la entidad dueña del escudo del screamer.
+
+		@return Puntero a la entidad dueña. NULL en caso de que el dueño no haya
+		sido asignado.
+		*/
+		CEntity* getOwner() { return _owner; }
+
 	private:
 
 

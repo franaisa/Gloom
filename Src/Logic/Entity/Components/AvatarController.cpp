@@ -111,6 +111,12 @@ namespace Logic {
 
 	//________________________________________________________________________
 
+	void CAvatarController::onWake() {
+		_displacementDir = _momentum = Vector3::ZERO;
+	}
+
+	//________________________________________________________________________
+
 	bool CAvatarController::accept(const std::shared_ptr<CMessage>& message) {
 		TMessageType msgType = message->getMessageType();
 
@@ -463,6 +469,7 @@ namespace Logic {
 	//________________________________________________________________________
 
 	void CAvatarController::executeDodge(ControlType commandType){
+		
 		_displacementDir += _movementCommands[commandType];
 		if(!_touchingGround)
 			return;

@@ -33,6 +33,9 @@ namespace physx {
 	class PxCooking;
 	class PxCollection;
 	class PxAggregate;
+	class PxJoint;
+	class PxD6Joint;
+	class PxArticulation;
 }
 
 namespace Physics {

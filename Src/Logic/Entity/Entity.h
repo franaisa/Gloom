@@ -456,6 +456,8 @@ namespace Logic {
 		*/
 		void setName(const std::string& name) { this->_name = name; }
 
+		//__________________________________________________________________
+
 		void wakeUp(IComponent* component);
 
 	protected:

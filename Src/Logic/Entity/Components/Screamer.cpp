@@ -274,14 +274,17 @@ namespace Logic {
 	void CScreamer::secondarySkill() {
 		_secondarySkillIsActive = true;
 
+		Map::CEntity* screamerShieldInfo = CEntityFactory::getSingletonPtr()->getInfo("ScreamerShield");
+		float screamerShieldRadius = screamerShieldInfo->getFloatAttribute("physic_radius");
+
 		// Creamos una entidad ScreamerShield
 		// Obtenemos la informacion asociada al arquetipo del escudo del screamer
-		Vector3 shootPosition = _entity->getPosition() + (( _entity->getOrientation()*Vector3::NEGATIVE_UNIT_Z ) * _capsuleRadius );
+		Vector3 shootPosition = _entity->getPosition() + ( (_entity->getOrientation() * Vector3::NEGATIVE_UNIT_Z ) * (_capsuleRadius + screamerShieldRadius) );
 		shootPosition.y += _heightShoot;
 
 		// Creamos la entidad y la activamos
 		_screamerShield = CEntityFactory::getSingletonPtr()->createEntity( 
-			CEntityFactory::getSingletonPtr()->getInfo("ScreamerShield"),
+			screamerShieldInfo,
 			Logic::CServer::getSingletonPtr()->getMap(),
 			shootPosition,
 			_entity->getOrientation()

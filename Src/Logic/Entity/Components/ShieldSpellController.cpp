@@ -105,11 +105,11 @@ namespace Logic
 
 	void CShieldSpellController::onFixedTick(unsigned int msecs) {
 		
-		if (_owner){
+		if (_physicComponent && _owner){
 			_physicComponent->setPosition(_owner->getPosition(), true);
 		}
 		
-		if (_cGraph){
+		if (_cGraph && _owner){
 			_entity->setPosition(_owner->getPosition());
 		}	
 	}

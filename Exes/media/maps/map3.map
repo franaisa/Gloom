@@ -11,9 +11,8 @@ Map = {
 	},
 	
 	David = {
-		type = "LocalHound",
+		type = "LocalSpectator",
 		isPlayer = true,
-		position = {52.0, 84.0, 122.0},
 	},
 	
 	Camera = {

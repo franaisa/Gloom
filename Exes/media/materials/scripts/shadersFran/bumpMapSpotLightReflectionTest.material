@@ -1,0 +1,41 @@
+material bumpMapSpotLightReflectionTest {
+	
+	technique {
+		pass {
+		
+			vertex_program_ref bumpMapSpotLightReflectionVertexShader {
+				param_named_auto	viewProjectionMatrix 	worldviewproj_matrix
+				param_named_auto	eyePosition					camera_position_object_space
+				param_named_auto	lightPosition					light_position_object_space			0
+			}
+			
+			fragment_program_ref bumpMapSpotLightReflectionFragmentShader {
+				param_named_auto	globalAmbient		ambient_light_colour
+				param_named_auto	lightAttenuation		light_attenuation						0
+				param_named_auto	lightPosition			light_position_object_space		0
+				param_named_auto	lightDir					light_direction_object_space		0
+				param_named_auto	lightColor				light_diffuse_colour					0
+				
+				param_named	lightCosInnerCone		float		0.95
+				param_named	lightCosOuterCone		float		0.85
+				param_named	Ka					float		0.2
+				param_named	Kd					float		0.6
+				param_named 	shininess			float		70.0
+			}
+			
+			texture_unit DiffMap {
+				texture wallTest.jpg
+			}
+			
+			texture_unit NormalMap {
+				texture wallTestNormalMap.tga
+			}
+			
+			texture_unit CubeMap {
+				texture cubeMap.dds cubic
+			}
+			
+		}
+	}
+	
+}

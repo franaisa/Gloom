@@ -31,6 +31,7 @@ la ventana, etc.
 #include <OgreOverlayManager.h>
 #include <OgreRay.h>
 
+
 namespace Graphics 
 {
 	CServer *CServer::_instance = 0;
@@ -137,8 +138,6 @@ namespace Graphics
 			assert(_scenes.find(name)==_scenes.end() && 
 			"Ya se ha creado una escena con este nombre.");
 		}
-
-		
 
 		CScene *scene = new CScene(name);
 		TStringScenePar ssp(name,scene);

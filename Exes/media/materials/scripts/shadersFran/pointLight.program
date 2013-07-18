@@ -1,0 +1,11 @@
+vertex_program pointLightVertexShader hlsl {
+	source pointLight.hlsl
+	entry_point vertex_main
+	target vs_2_0
+}
+
+fragment_program pointLightFragmentShader hlsl {
+	source pointLight.hlsl
+	entry_point fragment_main
+	target ps_2_0
+}

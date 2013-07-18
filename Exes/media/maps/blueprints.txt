@@ -9,27 +9,22 @@ Archangel CAudio CParticle  CPhysicController CAnimatedGraphics
 Screamer CAudio CParticle CPhysicController CAnimatedGraphics
 Shadow CAudio CParticle  CPhysicController CAnimatedGraphics
 LocalSpectator CSpectatorController CPhysicController
+Gusiluz	CSpectatorController CPhysicController CLight
 Camera CCamera
 ItemSpawn CPhysicStaticEntity CFloatingMovement CSpawnItemManager CGraphics
 Ammo CPhysicStaticEntity CSpawnItemManager CGraphics
 ItemSpawnDynamic CPhysicDynamicEntity CPullingMovement CGraphics
 SpawnPoint CPhysicStaticEntity
 Jumper CGraphics CPhysicStaticEntity CJumper CAudio CParticle
-Grenade CGraphics CPhysicDynamicEntity CGrenadeController CParticle CAudio
-GrenadeExplotion CGraphics CGrenadeController CParticle CAudio
-Rocket CGraphics CRocketController CPhysicDynamicEntity CAudio CParticle
-RocketExplotion CGraphics CRocketController CAudio CParticle
 Lava CGraphics CPhysicStaticEntity CLava
 LavaFondo CGraphics CPhysicStaticEntity CLava
 ContenedorLava CGraphics CPhysicStaticEntity
 Elevator CGraphics CPhysicDynamicEntity CElevator
 ElevatorTrigger CPhysicDynamicEntity CElevatorTrigger
-SpikeTrap CGraphics CPhysicStaticEntity CSpikeTrap CAudio
-Spike CGraphics CPhysicDynamicEntity CSpike
+SpikeTrap CSpikeTrap CPhysicStaticEntity CAudio CGraphics
+Spike CSpike CPhysicDynamicEntity CGraphics
 Hacksaw CGraphics CPhysicDynamicEntity CHacksaw
-PointLight CLight CGraphics
-SpotLight CLight CGraphics
-DirectionalLight CLight CGraphics
+Light CLight CGraphics CPhysicStaticEntity
 ScreamerShield CGraphics CPhysicDynamicEntity CScreamerShieldDamageNotifier CScreamerShieldController
 MagneticBullet CMagneticBullet CPhysicDynamicEntity CGraphics
 FireBall CFireBallController CPhysicDynamicEntity CParticle CGraphics
@@ -37,3 +32,4 @@ LaserBeam CGraphics
 LifeDome CLifeDome CPhysicDynamicEntity CGraphics
 ShieldSpell CShieldSpellController CPhysicDynamicEntity CGraphics
 Vortice CLava CGraphics CPhysicStaticEntity
+TestGround CGraphicPlane CPhysicStaticEntity

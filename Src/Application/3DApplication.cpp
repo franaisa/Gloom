@@ -172,8 +172,6 @@ namespace Application {
 		// TICK DEL GUI
 		GUI::CServer::getSingletonPtr()->tick();
 
-		
-
 		// TICK DE GRÁFICOS
 		Graphics::CServer::getSingletonPtr()->tick(msecs/1000.0f);
 		

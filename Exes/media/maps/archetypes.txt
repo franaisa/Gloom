@@ -1622,7 +1622,7 @@ Map = {
 	
 	item = {
 		type = "ItemSpawn",
-		msgList= "6,14,15,16,17, 29",
+		msgList= "6,14,15,16,17,29",
 		orbitalOffset = 0.065,
 		orbitalSpeed = 0.0060,
 		orbitalRotationSpeed = 0.0025,
@@ -1637,7 +1637,7 @@ Map = {
 	
 	ammo = {
 		type = "Ammo",
-		msgList= "6,14,15,16,17, 29",
+		msgList= "6,14,15,16,17,29",
 		physic_entity = "rigid",
 		physic_trigger = true,
 		physic_type = "static",
@@ -1856,45 +1856,6 @@ Map = {
 		samplesPerSnapshot = 2,
 	},
 
-	SpotLight = {
-		type = "SpotLight",
-		position = {10.0,10.0,10.0},
-		direction = {0.0,-1.0,0.0},
-		castShadows = true,
-		colour = {1.0,1.0,1.0},
-		specularColour = {0.0,0.0,0.0},
-		intensity = 1500,
-		innerAngle = 0.8,
-		outerAngle = 1.6,
-		static = true,
-		model = "esfera.mesh",
-		scale = {25,25,25},
-	},
-	
-	DirectionalLight = {
-		type = "DirectionalLight",
-		position = {0.0,10.0,0.0},
-		direction = {0.0,-1.0,0.0},
-		castShadows = true,
-		colour = {0.0,0.0,0.0},
-		specularColour = {0.0,0.0,0.0},
-		intensity = 1500,
-		static = true,
-		model = "esfera.mesh",
-	},
-	
-	PointLight = {
-		type = "PointLight",
-		position = {0.0,10.0,0.0},
-		castShadows = true,
-		colour = {1.0,1.0,1.0},
-		specularColour = {0.0,0.0,0.0},
-		intensity = 1500,
-		static = true,
-		model = "esfera.mesh",
-		intensity = 5,
-	},	
-	
 	lava = {
 		type = "Lava",
 		position = {-10.0,0.2, -50.0},
@@ -1919,7 +1880,7 @@ Map = {
 		physic_trigger = false,
 		physic_type = "kinematic",
 		physic_shape = "sphere",
-		physic_radius = 1.5,
+		physic_radius = 5,
 		physic_mass = 10,
 		physic_group = 17,
 		physic_groupList = "14, 15, 16", 
@@ -1937,7 +1898,7 @@ Map = {
 		physic_shape = "sphere",
 		physic_radius = 1,
 		physic_group = 15,
-		physic_groupList = "0,1,16", 
+		physic_groupList = "0,1,16,17", 
 		physic_mass = 10,
 		ticksPerSample = 1,
 		samplesPerSnapshot = 2,		
@@ -1983,7 +1944,7 @@ Map = {
 	Jumper1 = {
 		type = "Jumper",
 		position = {51.0, 0.0, 1.0},
-		msgList= "32",
+		msgList= "32,41",
 		model = "jumper.mesh",
 		force = {-1,3.5,0},
 		audio = "plasma.wav",
@@ -1999,18 +1960,37 @@ Map = {
 	
 	SpikeTrap = {
 		type = "SpikeTrap",
-		position = {51.0, 6.0, 1.0},
-		model = "miniGun.mesh",
-		audio = "plasma.wav",
+		position = {51.0, 0.0, 1.0},
+		msgList= "29,41",
+		model = "barril.mesh",
+		audioTrap = "plasma.wav",
 		coolDown = 4,
 		physic_entity = "rigid",
 		physic_trigger = true,
 		physic_type = "static",
 		physic_shape = "box",
-		physic_dimensions = { 2, 2, 2 },
+		physic_dimensions = { 2, 3, 2 },
 		physic_group = 11,
 		physic_groupList = "1",
 	},
+	
+	Spike = {
+		type = "Spike",
+		msgList= "29,55,56",
+		model = "cone.mesh",
+		physic_entity = "rigid",
+		physic_trigger = true,
+		physic_type = "dynamic",
+		physic_shape = "box",
+		physic_dimensions = { 1, 1, 1 },
+		physic_mass = 0.4,
+		physic_noGravity = true,
+		physic_group = 9,
+		physic_groupList = "-1",
+		ticksPerSample = 3,
+		samplesPerSnapshot = 2,
+	},
+	
 	Vortice = {
 		type = "Vortice",
 		position = {-310.0,-410,-50.0},

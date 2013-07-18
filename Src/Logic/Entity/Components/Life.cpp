@@ -299,12 +299,17 @@ namespace Logic {
 			_currentLife -= damage;
 		}
 
+		//Para no tener puntos de vida negativos
+		if(_currentLife<1)
+			_currentLife=0;
+
+
 		// Actualizamos los puntos de salud mostrados en el HUD
 		std::shared_ptr<CMessageHudLife> hudLifeMsg = std::make_shared<CMessageHudLife>();
 		hudLifeMsg->setLife(_currentLife);
 		_entity->emitMessage(hudLifeMsg);
 
-		return _currentLife < 1;
+		return _currentLife == 0;
 	}
 
 	//________________________________________________________________________

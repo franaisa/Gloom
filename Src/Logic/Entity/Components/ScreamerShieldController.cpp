@@ -76,7 +76,11 @@ namespace Logic {
 		// voy a hacer aqui por facilidad
 		if(_owner == NULL) return;
 
-		Vector3 shootPosition = _owner->getPosition() + ( (_owner->getOrientation() * Vector3::NEGATIVE_UNIT_Z) * _capsuleRadius );
+		float screamerShieldRadius = CEntityFactory::getSingletonPtr()->getInfo("ScreamerShield")->getFloatAttribute("physic_radius");
+
+		// Creamos una entidad ScreamerShield
+		// Obtenemos la informacion asociada al arquetipo del escudo del screamer
+		Vector3 shootPosition = _owner->getPosition() + ( (_owner->getOrientation() * Vector3::NEGATIVE_UNIT_Z ) * (_capsuleRadius + screamerShieldRadius) );
 		shootPosition.y += _heightShoot;
 		
 		// Seteamos la posicion fisica del escudo

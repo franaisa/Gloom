@@ -15,8 +15,8 @@ del espectador.
 @date Abril, 2013
 */
 
-#ifndef __Logic_AvatarController_H
-#define __Logic_AvatarController_H
+#ifndef __Logic_SpectatorController_H
+#define __Logic_SpectatorController_H
 
 #include "Logic/Entity/Component.h"
 
@@ -225,6 +225,9 @@ namespace Logic {
 		/** Vector de inercia. */
 		Vector3 _momentum;
 
+		/** Puntero a la entidad que estamos siguiendo */
+		CEntity* _currentFollowedPlayer;
+
 		/** Puntero al controlador fisico del player. Nos lo quedamos por motivos de eficiencia. */
 		CPhysicController* _physicController;
 
@@ -240,4 +243,4 @@ namespace Logic {
 
 } // namespace Logic
 
-#endif // __Logic_AvatarController_H
+#endif // __Logic_SpectatorController_H

@@ -1,0 +1,90 @@
+Map = {
+
+	GroundPlane = {
+		type = "TestGround",
+		position = {0, 0, 0},
+		physic_entity = "plane",
+		physic_normal = { 0, 1, 0 },
+		physic_group = 0,
+		physic_groupList = "-1",
+	},
+	
+	TestLight2 = {
+		type = "Light",
+		model = "arcan.mesh",
+		pitch = -90,
+		lightType = "point",
+		position = {0, 20, 0},
+		color = {1.0, 0.0, 0.0},
+		
+		physic_entity = "rigid",
+		physic_trigger = true,
+		physic_type = "static",
+		physic_shape = "sphere",
+		physic_radius = 40,
+		physic_group = 18,
+		physic_groupList = "1",
+	},
+	
+	TestLight1 = {
+		type = "Light",
+		model = "arcan.mesh",
+		pitch = -90,
+		lightType = "directional",
+		position = {300, 30, 300},
+		direction = {1, -1, 1},
+		color = {0.0, 1.0, 0.0},
+		
+		physic_entity = "rigid",
+		physic_trigger = true,
+		physic_type = "static",
+		physic_shape = "sphere",
+		physic_radius = 40,
+		physic_group = 18,
+		physic_groupList = "1",
+	},
+	
+	TestLight0 = {
+		type = "Light",
+		model = "arcan.mesh",
+		pitch = -90,
+		lightType = "spot",
+		position = {-300, 20, -300},
+		direction = {1, -1, 1},
+		color = {0.0, 0.0, 1.0},
+		innerAngle = 0.63,
+		outerAngle = 1.11,
+		
+		physic_entity = "rigid",
+		physic_trigger = true,
+		physic_type = "static",
+		physic_shape = "sphere",
+		physic_radius = 40,
+		physic_group = 18,
+		physic_groupList = "1",
+	},
+	
+	Player = {
+		type = "LocalSpectator",
+		isPlayer = true,
+		position = {0, 5, 0},
+		physic_group = 1,
+		physic_groupList = "-1",
+	},
+	
+	Camera = {
+		type = "Camera",
+		height = 8,
+	},
+
+	UniqueSpawnPoint = {
+		type = "SpawnPoint",
+		position = {3.0, 0.2, 0.0},
+		physic_entity = "rigid",
+		physic_trigger = true,
+		physic_type = "static",
+		physic_shape = "box",
+		physic_dimensions = { 4, 7, 4 },
+	},
+	
+}

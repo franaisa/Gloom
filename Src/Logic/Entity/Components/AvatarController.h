@@ -199,6 +199,7 @@ namespace Logic {
 		//                          MÉTODOS PROTEGIDOS
 		// =======================================================================
 
+		virtual void onWake();
 
 		/**
 		Setea el puntero al componente del controlador físico para evitar overhead

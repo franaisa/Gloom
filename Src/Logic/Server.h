@@ -23,6 +23,9 @@ namespace Logic
 	class CEntity;
 	class CGameNetMsgManager;
 	class CGameSpawnManager;
+	class CPreloadResourceManager;
+	class CLightManager;
+	class CGameNetPlayersManager;
 	class CGUIManager;
 }
 
@@ -114,6 +117,13 @@ namespace Logic
 		CGameSpawnManager *getSpawnManager() {return _gameSpawnManager;}
 
 		/**
+		Devuelve el manager de puntos de spawn
+
+		@return Manager de puntos de spawn
+		*/
+		CPreloadResourceManager *getPreloadResourceManager() {return _preloadResourceManager;}
+
+		/**
 		Devuelve la entidad del jugador.
 
 		@return Entidad del jugador.
@@ -199,15 +209,23 @@ namespace Logic
 		/**
 		Gestor de los mensajes que llegan por la red
 		*/
-		Logic::CGameNetMsgManager* _gameNetMsgManager;
+		CGameNetMsgManager* _gameNetMsgManager;
 
 		/**
 		Gestor de los puntos de respawn
 		*/
-		Logic::CGameSpawnManager* _gameSpawnManager;
+		CGameSpawnManager* _gameSpawnManager;
 
-		Logic::CGUIManager* _guiManager;
+		/**
+		Gestor de la GUI.
+		*/
+		CGUIManager* _guiManager;
 
+		/**
+		Gestor de precarga de recursos.
+		*/
+		CPreloadResourceManager* _preloadResourceManager;
+		
 		/**
 			mi ping actual
 		*/
