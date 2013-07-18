@@ -52,7 +52,9 @@ namespace Logic {
 
 	protected:
 
-		//virtual void onTick(unsigned int msecs);
+		/*virtual void onTick(unsigned int msecs);
+
+		virtual void onStart();*/
 
 		/**
 		Luz

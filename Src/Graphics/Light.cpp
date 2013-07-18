@@ -89,4 +89,10 @@ namespace Graphics {
 	Vector3 CLight::getPosition() {
 		return _light->getDirection();
 	}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	std::string CLight::getName() {
+		return _light->getName();
+	}
 }

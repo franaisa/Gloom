@@ -19,6 +19,7 @@ la gestión de la lógica del juego.
 #include "Logic/Maps/EntityFactory.h"
 #include "Logic/Maps/GUIManager.h"
 #include "Logic/Maps/WorldState.h"
+#include "Logic/LightManager.h"
 
 #include "Map/MapParser.h"
 
@@ -113,6 +114,10 @@ namespace Logic {
 			return false;
 		_preloadResourceManager = Logic::CPreloadResourceManager::getSingletonPtr();
 
+		// Inicializamos el gestor de luces
+		if( !CLightManager::Init() )
+			return false;
+
 		// Inicializamos el gestor de jugadores en red
 		if(!Logic::CGameNetPlayersManager::Init())
 			return false;
@@ -148,6 +153,10 @@ namespace Logic {
 		Logic::CWorldState::Release();
 
 		Logic::CPreloadResourceManager::Release();
+
+		CLightManager::Release();
+
+		CGameNetPlayersManager::Release();
 
 	} // close
 
@@ -195,6 +204,8 @@ namespace Logic {
 		_gameNetMsgManager->activate();
 		_guiManager->activate();
 		_preloadResourceManager->preloadResources(_map->getMapName());
+		CGameNetPlayersManager::getSingletonPtr()->activate();
+		CLightManager::getSingletonPtr()->activate();
 
 		// Activamos el mapa
 		bool success = _map->activate();
@@ -214,6 +225,8 @@ namespace Logic {
 		//HOLA, SOY DEACTIVATE MAP Y NADIE ME LLAMA
 		_gameSpawnManager->deactivate();
 		_gameNetMsgManager->deactivate();
+		CGameNetPlayersManager::getSingletonPtr()->deactivate();
+		CLightManager::getSingletonPtr()->deactivate();
 		
 		_map->deactivate();
 

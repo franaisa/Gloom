@@ -99,6 +99,7 @@ namespace Graphics {
 		*/
 		Vector3 getPosition();
 		
+		std::string getName();
 
 	protected:
 

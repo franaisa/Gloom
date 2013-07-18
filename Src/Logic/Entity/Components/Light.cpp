@@ -14,7 +14,7 @@ Contiene la implementación del componente que controla la vida de una entidad.
 #include "Light.h"
 
 #include "Application/BaseApplication.h"
-
+#include "Logic/LightManager.h"
 #include "Map/MapEntity.h"
 
 using namespace std;
@@ -37,8 +37,7 @@ namespace Logic {
 	//________________________________________________________________________
 
 	CLight::~CLight() {
-		if(_light != NULL)
-			delete _light;
+		// Nada que hacer
 	}
 	
 	//________________________________________________________________________
@@ -85,8 +84,7 @@ namespace Logic {
 	bool CLight::accept(const std::shared_ptr<CMessage>& message) {
 		TMessageType msgType = message->getMessageType();
 
-		return msgType == Message::TOUCHED		||
-			   msgType == Message::UNTOUCHED;
+		return msgType == Message::TOUCHED;
 	} // accept
 
 	//________________________________________________________________________
@@ -94,41 +92,53 @@ namespace Logic {
 	void CLight::process(const std::shared_ptr<CMessage>& message) {
 		switch( message->getMessageType() ) {
 			case Message::TOUCHED: {
-				_light = new(nothrow) Graphics::CLight(_lightType, _entity->getName(), _position, _direction);
+				_light = CLightManager::getSingletonPtr()->createLight(_lightType, _entity->getName(), _position, _direction);
 
-				if( _color != Vector3::ZERO ) {
-					_light->setColor(_color.x, _color.y, _color.z);
-				}
-				if( _attenuation != Vector3::ZERO ) {
-					// De momento ignoramos el rango en los shaders
-					_light->setAttenuation(0.0f, _attenuation.x, _attenuation.y, _attenuation.z);
-				}
-				if( _innerAngle != 0.0f || _outerAngle != 0.0f ) {
-					_light->setSpotLightParams(_innerAngle, _outerAngle);
-				}
-
-				break;
-			}
-			case Message::UNTOUCHED: {
 				if(_light != NULL) {
-					delete _light;
-					_light = NULL;
+					if( _color != Vector3::ZERO ) {
+						_light->setColor(_color.x, _color.y, _color.z);
+					}
+					if( _attenuation != Vector3::ZERO ) {
+						// De momento ignoramos el rango en los shaders
+						_light->setAttenuation(0.0f, _attenuation.x, _attenuation.y, _attenuation.z);
+					}
+					if( _innerAngle != 0.0f || _outerAngle != 0.0f ) {
+						_light->setSpotLightParams(_innerAngle, _outerAngle);
+					}
 				}
 
 				break;
-			}				   
+			}			   
 		}
 	} // process
 
 	//________________________________________________________________________
 
-	/*void CLight::onTick(unsigned int msecs) {
-		_light->setPosition( _entity->getPosition() );
+	/*void CLight::onStart() {
+		_light = CLightManager::getSingletonPtr()->createLight(_lightType, _entity->getName(), _position, _direction);
+
+		if(_light != NULL) {
+			if( _color != Vector3::ZERO ) {
+				_light->setColor(_color.x, _color.y, _color.z);
+			}
+			if( _attenuation != Vector3::ZERO ) {
+				// De momento ignoramos el rango en los shaders
+				_light->setAttenuation(0.0f, _attenuation.x, _attenuation.y, _attenuation.z);
+			}
+			if( _innerAngle != 0.0f || _outerAngle != 0.0f ) {
+				_light->setSpotLightParams(_innerAngle, _outerAngle);
+			}
+		}
+	}
+
+	void CLight::onTick(unsigned int msecs) {
+		_position = _entity->getPosition();
+		_light->setPosition( _position );
 		
-		/*Matrix3 rotation;
+		Matrix3 rotation;
 		_entity->getOrientation().ToRotationMatrix(rotation);
-		_light->setDirection( Math::getDirection( Matrix4(rotation) ) );*/
-	//}
+		_light->setDirection( Math::getDirection( Matrix4(rotation) ) );
+	}*/
 
 } // namespace Logic
 

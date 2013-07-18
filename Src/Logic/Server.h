@@ -24,6 +24,8 @@ namespace Logic
 	class CGameNetMsgManager;
 	class CGameSpawnManager;
 	class CPreloadResourceManager;
+	class CLightManager;
+	class CGameNetPlayersManager;
 	class CGUIManager;
 }
 
@@ -223,7 +225,7 @@ namespace Logic
 		Gestor de precarga de recursos.
 		*/
 		CPreloadResourceManager* _preloadResourceManager;
-
+		
 		/**
 			mi ping actual
 		*/

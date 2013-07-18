@@ -748,6 +748,9 @@
     <ClCompile Include="..\..\Src\Logic\Entity\Components\GraphicPlane.cpp">
       <Filter>Entity\Components\Graphics\Source</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\LightManager.cpp">
+      <Filter>Maps\Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Src\Logic\Maps\ComponentFactory.h">
@@ -1349,6 +1352,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Entity\Components\GraphicPlane.h">
       <Filter>Entity\Components\Graphics\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\LightManager.h">
+      <Filter>Maps\Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

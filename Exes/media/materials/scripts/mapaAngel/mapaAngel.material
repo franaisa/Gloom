@@ -1,143 +1,183 @@
 material mapaAngel_hueso {
-
 	technique {
 		pass {
 		
-			vertex_program_ref bumpMapPointLightVertexShader {
-				param_named_auto	viewProjectionMatrix 	worldviewproj_matrix
+			vertex_program_ref bumpLightingVertexShader {
+				// Parametros obtenidos de Ogre
+				param_named_auto	viewProjectionMatrix 		worldviewproj_matrix
 				param_named_auto	eyePosition					camera_position_object_space
 				param_named_auto	lightPosition					light_position_object_space			0
+				param_named_auto	lightDir							light_direction_object_space			0
+				param_named_auto	spotLightParams			spotlight_params							0
 			}
 			
-			fragment_program_ref bumpMapPointLightFragmentShader {
+			fragment_program_ref bumpLightingFragmentShader {
+				// Parametros obtenidos de Ogre
 				param_named_auto	globalAmbient		ambient_light_colour
-				param_named_auto	lightAttenuation		light_attenuation				0
+				param_named_auto	lightAttenuation		light_attenuation						0
+				param_named_auto	lightPosition			light_position_object_space		0
+				param_named_auto	lightDir					light_direction_object_space		0
+				param_named_auto	lightColor				light_diffuse_colour					0
+				param_named_auto	spotLightParams	spotlight_params						0
 				
-				param_named	lightColor			float4 	0.9f	0.9f	0.9f	1.0f	
-				param_named	Ka					float		0.2
-				param_named	Kd					float		0.6
-				param_named 	shininess			float		70.0
+				// Constante para regular la cantidad de ambiente
+				param_named	Ka							float		1.0
+				// Constante para regular la cantidad de difuso
+				param_named	Kd							float		0.6
+				// Constante de brillo especular
+				param_named 	shininess					float		70.0
 			}
 			
+			// Textura de difuso
 			texture_unit DiffMap {
 				texture hueso_DIF.jpg
 			}
 			
+			// Textura para el bump mapping. En el alfa esta el mapa de especulares.
 			texture_unit NormalMap {
 				texture hueso_NRM_SPEC.tga
 			}
 			
 		}
 	}
-
 }
 
 
 
 material mapaAngel_muro {
-
 	technique {
 		pass {
 		
-			vertex_program_ref bumpMapPointLightVertexShader {
-				param_named_auto	viewProjectionMatrix 	worldviewproj_matrix
+			vertex_program_ref bumpLightingVertexShader {
+				// Parametros obtenidos de Ogre
+				param_named_auto	viewProjectionMatrix 		worldviewproj_matrix
 				param_named_auto	eyePosition					camera_position_object_space
 				param_named_auto	lightPosition					light_position_object_space			0
+				param_named_auto	lightDir							light_direction_object_space			0
+				param_named_auto	spotLightParams			spotlight_params							0
 			}
 			
-			fragment_program_ref bumpMapPointLightFragmentShader {
+			fragment_program_ref bumpLightingFragmentShader {
+				// Parametros obtenidos de Ogre
 				param_named_auto	globalAmbient		ambient_light_colour
-				param_named_auto	lightAttenuation		light_attenuation				0
+				param_named_auto	lightAttenuation		light_attenuation						0
+				param_named_auto	lightPosition			light_position_object_space		0
+				param_named_auto	lightDir					light_direction_object_space		0
+				param_named_auto	lightColor				light_diffuse_colour					0
+				param_named_auto	spotLightParams	spotlight_params						0
 				
-				param_named	lightColor			float4 	0.9f	0.9f	0.9f	1.0f	
-				param_named	Ka					float		0.2
-				param_named	Kd					float		0.6
-				param_named 	shininess			float		70.0
+				// Constante para regular la cantidad de ambiente
+				param_named	Ka							float		1.0
+				// Constante para regular la cantidad de difuso
+				param_named	Kd							float		0.6
+				// Constante de brillo especular
+				param_named 	shininess					float		70.0
 			}
 			
+			// Textura de difuso
 			texture_unit DiffMap {
 				texture muro_DIF.jpg
 			}
 			
+			// Textura para el bump mapping. En el alfa esta el mapa de especulares.
 			texture_unit NormalMap {
 				texture muro_NRM_SPEC.tga
 			}
 			
 		}
 	}
-
 }
 
 
 
 material mapaAngel_pipe {
-
 	technique {
 		pass {
 		
-			vertex_program_ref bumpMapPointLightVertexShader {
-				param_named_auto	viewProjectionMatrix 	worldviewproj_matrix
+			vertex_program_ref bumpLightingVertexShader {
+				// Parametros obtenidos de Ogre
+				param_named_auto	viewProjectionMatrix 		worldviewproj_matrix
 				param_named_auto	eyePosition					camera_position_object_space
 				param_named_auto	lightPosition					light_position_object_space			0
+				param_named_auto	lightDir							light_direction_object_space			0
+				param_named_auto	spotLightParams			spotlight_params							0
 			}
 			
-			fragment_program_ref bumpMapPointLightFragmentShader {
+			fragment_program_ref bumpLightingFragmentShader {
+				// Parametros obtenidos de Ogre
 				param_named_auto	globalAmbient		ambient_light_colour
-				param_named_auto	lightAttenuation		light_attenuation				0
+				param_named_auto	lightAttenuation		light_attenuation						0
+				param_named_auto	lightPosition			light_position_object_space		0
+				param_named_auto	lightDir					light_direction_object_space		0
+				param_named_auto	lightColor				light_diffuse_colour					0
+				param_named_auto	spotLightParams	spotlight_params						0
 				
-				param_named	lightColor			float4 	0.9f	0.9f	0.9f	1.0f	
-				param_named	Ka					float		0.2
-				param_named	Kd					float		0.6
-				param_named 	shininess			float		70.0
+				// Constante para regular la cantidad de ambiente
+				param_named	Ka							float		1.0
+				// Constante para regular la cantidad de difuso
+				param_named	Kd							float		0.6
+				// Constante de brillo especular
+				param_named 	shininess					float		70.0
 			}
 			
+			// Textura de difuso
 			texture_unit DiffMap {
 				texture pipe_DIF.jpg
 			}
 			
+			// Textura para el bump mapping. En el alfa esta el mapa de especulares.
 			texture_unit NormalMap {
 				texture pipe_NRM_SPEC.tga
 			}
 			
 		}
 	}
-
 }
 
 
 
 material mapaAngel_rock {
-
 	technique {
 		pass {
 		
-			vertex_program_ref bumpMapPointLightVertexShader {
-				param_named_auto	viewProjectionMatrix 	worldviewproj_matrix
+			vertex_program_ref bumpLightingVertexShader {
+				// Parametros obtenidos de Ogre
+				param_named_auto	viewProjectionMatrix 		worldviewproj_matrix
 				param_named_auto	eyePosition					camera_position_object_space
 				param_named_auto	lightPosition					light_position_object_space			0
+				param_named_auto	lightDir							light_direction_object_space			0
+				param_named_auto	spotLightParams			spotlight_params							0
 			}
 			
-			fragment_program_ref bumpMapPointLightFragmentShader {
+			fragment_program_ref bumpLightingFragmentShader {
+				// Parametros obtenidos de Ogre
 				param_named_auto	globalAmbient		ambient_light_colour
-				param_named_auto	lightAttenuation		light_attenuation				0
+				param_named_auto	lightAttenuation		light_attenuation						0
+				param_named_auto	lightPosition			light_position_object_space		0
+				param_named_auto	lightDir					light_direction_object_space		0
+				param_named_auto	lightColor				light_diffuse_colour					0
+				param_named_auto	spotLightParams	spotlight_params						0
 				
-				param_named	lightColor			float4 	0.9f	0.9f	0.9f	1.0f	
-				param_named	Ka					float		0.2
-				param_named	Kd					float		0.6
-				param_named 	shininess			float		70.0
+				// Constante para regular la cantidad de ambiente
+				param_named	Ka							float		1.0
+				// Constante para regular la cantidad de difuso
+				param_named	Kd							float		0.6
+				// Constante de brillo especular
+				param_named 	shininess					float		70.0
 			}
 			
+			// Textura de difuso
 			texture_unit DiffMap {
 				texture rock_DIF.jpg
 			}
 			
+			// Textura para el bump mapping. En el alfa esta el mapa de especulares.
 			texture_unit NormalMap {
 				texture rock_NRM_SPEC.tga
 			}
 			
 		}
 	}
-
 }
 
 

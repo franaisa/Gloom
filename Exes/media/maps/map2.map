@@ -7,8 +7,10 @@ Map = {
 	},	
 
 	David = {
-		type = "LocalScreamer",
+		type = "LocalSpectator",
 		isPlayer = true,
+		physic_group = 1,
+		physic_groupList = "-1",
 	},
 	
 	Gazpacho = {
@@ -864,4 +866,88 @@ Map = {
 		spike3Pitch = 90,
 	},
 
+	Light1= {
+		type = "Light",
+		model = "arcan.mesh",
+		pitch = -90,
+		lightType = "point",
+		position = {-52.0654, 60.1029, -108.08},
+		color = {1.0, 0.0, 0.0},
+		
+		physic_entity = "rigid",
+		physic_trigger = true,
+		physic_type = "static",
+		physic_shape = "sphere",
+		physic_radius = 40,
+		physic_group = 18,
+		physic_groupList = "1",
+	},
+	
+	Light2 = {
+		type = "Light",
+		model = "arcan.mesh",
+		pitch = -90,
+		lightType = "point",
+		position = {-366.06, 97.5802, -209.778},
+		color = {0.0, 1.0, 0.0},
+		
+		physic_entity = "rigid",
+		physic_trigger = true,
+		physic_type = "static",
+		physic_shape = "sphere",
+		physic_radius = 40,
+		physic_group = 18,
+		physic_groupList = "1",
+	},
+	
+	Light3 = {
+		type = "Light",
+		model = "arcan.mesh",
+		pitch = -90,
+		lightType = "point",
+		position = {96.901, 96.6666, -241.674},
+		color = {0.0, 0.0, 1.0},
+		
+		physic_entity = "rigid",
+		physic_trigger = true,
+		physic_type = "static",
+		physic_shape = "sphere",
+		physic_radius = 40,
+		physic_group = 18,
+		physic_groupList = "1",
+	},
+	
+	Light4 = {
+		type = "Light",
+		model = "arcan.mesh",
+		pitch = -90,
+		lightType = "point",
+		position = {273.793, 110.409, -62.9833},
+		color = {1.0, 0.0, 1.0},
+		
+		physic_entity = "rigid",
+		physic_trigger = true,
+		physic_type = "static",
+		physic_shape = "sphere",
+		physic_radius = 40,
+		physic_group = 18,
+		physic_groupList = "1",
+	},
+	
+	Light5 = {
+		type = "Light",
+		model = "arcan.mesh",
+		pitch = -90,
+		lightType = "point",
+		position = {110.185, 103.558, 58.317},
+		color = {0.0, 1.0, 1.0},
+		
+		physic_entity = "rigid",
+		physic_trigger = true,
+		physic_type = "static",
+		physic_shape = "sphere",
+		physic_radius = 40,
+		physic_group = 18,
+		physic_groupList = "1",
+	},
 }
