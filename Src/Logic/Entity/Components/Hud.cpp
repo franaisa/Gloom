@@ -145,6 +145,7 @@ namespace Logic{
 					hudRespawn();
 				}else{
 					_respawn->show();
+					_hud->hide();
 				}
 				break;
 			}

@@ -278,16 +278,11 @@ namespace Logic {
 
 		if(_currentShield > 0) {
 			int damageAbsorbedByShield = _shieldDamageAbsorption * damage;
-			int damageAbsorbedByLife = damage - damageAbsorbedByShield;
-			
-			if(_currentShield >= damageAbsorbedByShield) {
-				_currentShield -= damageAbsorbedByShield;
-				_currentLife -= damageAbsorbedByLife;
-			}
-			else {
-				damageAbsorbedByShield -= _currentShield;
+			_currentLife -= damage - damageAbsorbedByShield;
+			_currentShield -= damageAbsorbedByShield;
+			if(_currentShield < 0) {
+				_currentLife -= _currentShield;
 				_currentShield = 0;
-				_currentLife -= damageAbsorbedByLife + damageAbsorbedByShield;
 			}
 
 			// Actualizamos los puntos de armadura mostrados en el HUD
@@ -299,17 +294,12 @@ namespace Logic {
 			_currentLife -= damage;
 		}
 
-		//Para no tener puntos de vida negativos
-		if(_currentLife<1)
-			_currentLife=0;
-
-
 		// Actualizamos los puntos de salud mostrados en el HUD
 		std::shared_ptr<CMessageHudLife> hudLifeMsg = std::make_shared<CMessageHudLife>();
 		hudLifeMsg->setLife(_currentLife);
 		_entity->emitMessage(hudLifeMsg);
 
-		return _currentLife == 0;
+		return _currentLife < 1;
 	}
 
 	//________________________________________________________________________
