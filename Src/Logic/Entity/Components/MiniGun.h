@@ -112,6 +112,9 @@ namespace Logic {
 		/** Dispersión original del arma. Variable auxiliar para guardar la referencia leída del mapa.*/
 		float _dispersionOriginal;
 
+		/** cantidad de dispersion que se le quita al arma por disparo. */
+		float _dispersionReductionPerShoot;
+
 		/** Distancia de alcance del arma. */
 		float _distance;
 
