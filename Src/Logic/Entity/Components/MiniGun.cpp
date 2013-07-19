@@ -58,14 +58,17 @@ namespace Logic {
 		// Nos aseguramos de tener los atributos obligatorios
 		assert( entityInfo->hasAttribute(_weaponName + "PrimaryFireCooldown") );
 		assert( entityInfo->hasAttribute(_weaponName + "PrimaryFireDamage") );
-		assert( entityInfo->hasAttribute(_weaponName + "Dispersion") );
-		assert( entityInfo->hasAttribute(_weaponName + "Distance") );
+		assert( entityInfo->hasAttribute(_weaponName + "ShotsDistance") );
+		assert( entityInfo->hasAttribute(_weaponName + "PrimaryFireDispersion") );
+		assert( entityInfo->hasAttribute(_weaponName + "PrimaryFireDispersionReductionPerShoot") );
+		assert( entityInfo->hasAttribute(_weaponName + "SecondaryFireCooldown") );
+		assert( entityInfo->hasAttribute(_weaponName + "SecondaryFireLoadTime") );
+		assert( entityInfo->hasAttribute(_weaponName + "MaxAmmoSpentPerSecondaryShot") );
+		
 
 		_defaultPrimaryFireCooldown = _primaryFireCooldown = entityInfo->getFloatAttribute(_weaponName + "PrimaryFireCooldown") * 1000;
 		_defaultDamage = _damage = entityInfo->getIntAttribute(_weaponName + "PrimaryFireDamage");
 
-		// Dispersión del arma
-		//_dispersionOriginal = _dispersion = entityInfo->getFloatAttribute(_weaponName + "Dispersion");
 
 		// Distancia máxima de disparo
 		_distance = entityInfo->getFloatAttribute(_weaponName + "ShotsDistance");
@@ -75,8 +78,8 @@ namespace Logic {
 			_audioShoot = entityInfo->getStringAttribute(_weaponName + "Audio");*/
 
 		//Dispersión
-		_dispersion = entityInfo->getFloatAttribute(_weaponName+"PrimaryFireDispersion");
-		_dispersionOriginal = _dispersion;
+		_dispersionOriginal = _dispersion = entityInfo->getFloatAttribute(_weaponName+"PrimaryFireDispersion");
+		_dispersionReductionPerShoot =  entityInfo->getFloatAttribute(_weaponName+"PrimaryFireDispersionReductionPerShoot");
 
 		// Cooldown del disparo secundario
 		_defaultSecondaryFireCooldown = _secondaryFireCooldown = entityInfo->getFloatAttribute(_weaponName + "SecondaryFireCooldown") * 1000;
@@ -144,6 +147,12 @@ namespace Logic {
 
 		_primaryFireIsActive = true;
 
+		
+		if(_dispersion){ // Si mayor que cero
+			_dispersion = std::max(0.0f, _dispersion - _dispersionReductionPerShoot);
+			//_dispersion = _dispersion < 0 ? 0 : _dispersion;
+		}
+
 		shoot();
 	} // primaryFire
 	//__________________________________________________________________
@@ -152,6 +161,7 @@ namespace Logic {
 	{
 		_primaryFireIsActive = false;
 
+		_dispersion = _dispersionOriginal;
 		//paro el sonido de la mingun
 		//emitSound("shotgun.wav", false, true, false);
 
