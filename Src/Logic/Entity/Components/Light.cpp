@@ -70,6 +70,9 @@ namespace Logic {
 		if( entityInfo->hasAttribute("attenuation") )
 			_attenuation = entityInfo->getVector3Attribute("attenuation");
 
+		// De momento no lo utilizo, pero podría ser útil si está bien calculado
+		// con respecto a las atenuaciones para ahorrar calculos en el shader. Además
+		// Ogre también se aprovecha de esto para apagar desactivar luces.
 		if( entityInfo->hasAttribute("range") )
 			_range = entityInfo->getFloatAttribute("range");
 
@@ -103,8 +106,9 @@ namespace Logic {
 						_light->setColor(_color.x, _color.y, _color.z);
 					}
 					if( _attenuation != Vector3::ZERO ) {
-						// De momento ignoramos el rango en los shaders
-						_light->setAttenuation(_range, _attenuation.x, _attenuation.y, _attenuation.z);
+						// Por defecto ogre pasa 0 de atenuacion. Metemos como atenuacion "infinito"
+						// porque sino Ogre automaticamente deja de renderizar la luz a esa distancia
+						_light->setAttenuation(0xFFFFFFFF, _attenuation.x, _attenuation.y, _attenuation.z);
 					}
 					if( _innerAngle != 0.0f || _outerAngle != 0.0f ) {
 						_light->setSpotLightParams(_innerAngle, _outerAngle);
@@ -112,13 +116,13 @@ namespace Logic {
 				}
 
 				break;
-			}			   
+			}
 		}
 	} // process
 
 	//________________________________________________________________________
 
-	void CLight::onStart() {
+	/*void CLight::onStart() {
 		_light = CLightManager::getSingletonPtr()->createLight(_lightType, _entity->getName(), _position, _direction);
 
 		if(_light != NULL) {
@@ -127,13 +131,13 @@ namespace Logic {
 			}
 			if( _attenuation != Vector3::ZERO ) {
 				// De momento ignoramos el rango en los shaders
-				_light->setAttenuation(_range, _attenuation.x, _attenuation.y, _attenuation.z);
+				_light->setAttenuation(0xFFFFFFFF, _attenuation.x, _attenuation.y, _attenuation.z);
 			}
 			if( _innerAngle != 0.0f || _outerAngle != 0.0f ) {
 				_light->setSpotLightParams(_innerAngle, _outerAngle);
 			}
 		}
-	}
+	}*/
 	/*
 	void CLight::onTick(unsigned int msecs) {
 		_position = _entity->getPosition();

@@ -873,6 +873,7 @@ Map = {
 		lightType = "point",
 		position = {-52.0654, 60.1029, -108.08},
 		color = {1.0, 0.0, 0.0},
+		attenuation = {1.0, 0.001, 0.0001},
 		
 		physic_group = 18,
 		physic_groupList = "1",
@@ -895,6 +896,7 @@ Map = {
 		lightType = "point",
 		position = {-366.06, 97.5802, -209.778},
 		color = {0.0, 1.0, 0.0},
+		attenuation = {1.0, 0.001, 0.0001},
 		
 		physic_entity = "rigid",
 		physic_trigger = true,
@@ -912,6 +914,7 @@ Map = {
 		lightType = "point",
 		position = {96.901, 96.6666, -241.674},
 		color = {0.0, 0.0, 1.0},
+		attenuation = {1.0, 0.001, 0.0001},
 		
 		physic_entity = "rigid",
 		physic_trigger = true,
