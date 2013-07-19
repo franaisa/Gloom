@@ -1,0 +1,17 @@
+vertex_program bumpLightingReflectionVertexShader hlsl {
+	source bumpLightingReflection.hlsl
+	entry_point vertex_main
+	target vs_2_0
+}
+
+fragment_program bumpLightingReflectionFragmentShader hlsl {
+	source bumpLightingReflection.hlsl
+	entry_point fragment_main
+	target ps_2_0
+}
+
+fragment_program bumpLightingReflectionFragment_DIFF_SPEC hlsl {
+	source bumpLightingReflection.hlsl
+	entry_point fragment_diffuseAndSpecular
+	target ps_2_0
+}

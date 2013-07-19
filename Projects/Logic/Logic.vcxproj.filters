@@ -751,6 +751,9 @@
     <ClCompile Include="..\..\Src\Logic\LightManager.cpp">
       <Filter>Maps\Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\PhysicStaticCompound.cpp">
+      <Filter>Entity\Components\Physics\Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Src\Logic\Maps\ComponentFactory.h">
@@ -1355,6 +1358,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Src\Logic\LightManager.h">
       <Filter>Maps\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\PhysicStaticCompound.h">
+      <Filter>Entity\Components\Physics\Header</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

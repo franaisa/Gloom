@@ -20,11 +20,6 @@ Map = {
 		physic_group = 7,
 		physic_groupList = "1",
 	},
-	
-	SpikeTrap1 = {
-		type = "SpikeTrap",
-		position = {-0.9, -3, 33},
-	},
 
 	ActiveSpell = {
 		type = "ItemSpawn",

@@ -188,7 +188,7 @@ namespace Logic
 		if(newWeapon >= WeaponType::eSIZE){
 			return;
 		}
-		if(_weaponry[newWeapon].first && (newWeapon != _currentWeapon))
+		if( _weaponry[newWeapon].first && (newWeapon != _currentWeapon) && ( _weaponry[newWeapon].second->getAmmo() > 0 || newWeapon == WeaponType::eSOUL_REAPER ) )
 		{
 			// Indicamos que el arma actual ya no está equipada
 			// Desactivamos el componente Shoot del arma actual
@@ -257,6 +257,10 @@ namespace Logic
 		m->setAmmo(ammo);//No es necesario esto, ya que solo actualizare el hud como que puedo coger el arma pero no mostrara sus balas(en este caso concreto)
 		_entity->emitMessage(m);
 		*/
+		//si llevabamos la melee, cambiamos de melee al arma que acabamos de coger
+		if(_currentWeapon == WeaponType::eSOUL_REAPER){
+			changeWeapon(weaponIndex);
+		}
 	}
 
 	//---------------------------------------------------------
