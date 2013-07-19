@@ -23,7 +23,7 @@ material bumpLightingTest {
 				param_named_auto	spotLightParams			spotlight_params							0
 				
 				// Constante para regular la cantidad de ambiente
-				param_named			Ka								float		1.0
+				param_named			Ka								float		0.3
 				// Constante para regular la cantidad de difuso
 				param_named			Kd								float		0.6
 				// Constante de brillo especular
@@ -65,7 +65,7 @@ material bumpLightingTest {
 				param_named_auto	spotLightParams			spotlight_params							1
 				
 				// Constante para regular la cantidad de ambiente
-				param_named			Ka								float		1.0
+				param_named			Ka								float		0.3
 				// Constante para regular la cantidad de difuso
 				param_named			Kd								float		0.6
 				// Constante de brillo especular
@@ -107,7 +107,7 @@ material bumpLightingTest {
 				param_named_auto	spotLightParams			spotlight_params							2
 				
 				// Constante para regular la cantidad de ambiente
-				param_named			Ka								float		1.0
+				param_named			Ka								float		0.3
 				// Constante para regular la cantidad de difuso
 				param_named			Kd								float		0.6
 				// Constante de brillo especular

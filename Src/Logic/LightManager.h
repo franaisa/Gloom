@@ -29,7 +29,7 @@ namespace Logic {
 	class CLightManager {
 	public:
 
-		static const int MAX_LIGHTS = 1;
+		
 
 		// =======================================================================
 		//                  METODOS DE INICIALIZACION Y ACTIVACION
@@ -90,6 +90,8 @@ namespace Logic {
 		// =======================================================================
 		//                          MIEMBROS PRIVADOS
 		// =======================================================================
+
+		int MAX_LIGHTS;
 
 		std::deque<Graphics::CLight*> _activeLights;
 
