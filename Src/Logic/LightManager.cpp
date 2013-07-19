@@ -25,8 +25,9 @@ namespace Logic {
 
 	//______________________________________________________________________________
 
-	CLightManager::CLightManager() {
+	CLightManager::CLightManager(){
 		_instance = this;
+		_instance->MAX_LIGHTS = 3;
 	} // CServer
 
 	//______________________________________________________________________________
