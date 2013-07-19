@@ -23,7 +23,7 @@ material bumpLightingTest {
 				param_named_auto	spotLightParams			spotlight_params							0
 				
 				// Constante para regular la cantidad de ambiente
-				param_named			Ka								float		0.3
+				param_named			Ka								float		0.2
 				// Constante para regular la cantidad de difuso
 				param_named			Kd								float		0.6
 				// Constante de brillo especular
@@ -57,15 +57,12 @@ material bumpLightingTest {
 			
 			fragment_program_ref bumpLightingFragment_DIFF_SPEC {
 				// Parametros obtenidos de Ogre
-				param_named_auto	globalAmbient				ambient_light_colour
 				param_named_auto	lightAttenuation				light_attenuation							1
 				param_named_auto	lightPosition					light_position_object_space			1
 				param_named_auto	lightDir							light_direction_object_space			1
 				param_named_auto	lightColor						light_diffuse_colour						1
 				param_named_auto	spotLightParams			spotlight_params							1
 				
-				// Constante para regular la cantidad de ambiente
-				param_named			Ka								float		0.3
 				// Constante para regular la cantidad de difuso
 				param_named			Kd								float		0.6
 				// Constante de brillo especular
@@ -99,15 +96,12 @@ material bumpLightingTest {
 			
 			fragment_program_ref bumpLightingFragment_DIFF_SPEC {
 				// Parametros obtenidos de Ogre
-				param_named_auto	globalAmbient				ambient_light_colour
 				param_named_auto	lightAttenuation				light_attenuation							2
 				param_named_auto	lightPosition					light_position_object_space			2
 				param_named_auto	lightDir							light_direction_object_space			2
 				param_named_auto	lightColor						light_diffuse_colour						2
 				param_named_auto	spotLightParams			spotlight_params							2
 				
-				// Constante para regular la cantidad de ambiente
-				param_named			Ka								float		0.3
 				// Constante para regular la cantidad de difuso
 				param_named			Kd								float		0.6
 				// Constante de brillo especular

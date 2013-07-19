@@ -80,8 +80,8 @@ float computeAttenuation(float3 lightPos, float4 att, float3 P) {
 
 //________________________________________________________________________
 
-void computeLighting(float3 lightPosition, float4 lightAttenuation, float3 P, float3 N, float3 globalAmbient, float3 lightColor, float3 lightDirection, float3 halfAngle,
-							   float Ka, float Kd, float Ks, float shininess, out float3 diffuse, out float3 specular) {
+void computeLighting(float3 lightPosition, float4 lightAttenuation, float3 P, float3 N, float3 lightColor, float3 lightDirection, float3 halfAngle,
+							   float Kd, float Ks, float shininess, out float3 diffuse, out float3 specular) {
 	
 	// Calculamos la atenuacion. Si el rango es 0, quiere decir que no queremos
 	// atenuacion
@@ -177,7 +177,7 @@ float4 fragment_main(const PsInput IN) : COLOR {
 	// Calculamos el color del pixel en base a la luz recibida
 	// Notar que la constante de especular se obtiene del canal alfa de la textura de normales
 	float3 specular, diffuse;
-	computeLighting(lightPosition.xyz, lightAttenuation, IN.position.xyz, N, globalAmbient, lightColor.xyz, IN.lightDirection, IN.halfAngle, Ka, Kd, tex2D(NormalMap, IN.uv0).w, shininess, diffuse, specular);
+	computeLighting(lightPosition.xyz, lightAttenuation, IN.position.xyz, N, lightColor.xyz, IN.lightDirection, IN.halfAngle, Kd, tex2D(NormalMap, IN.uv0).w, shininess, diffuse, specular);
 	
 	// Al resultado final de la iluminación del material hay que sumar
 	// el color del entorno reflejado por el especular
@@ -197,7 +197,7 @@ float4 fragment_diffuseAndSpecular(const PsInput IN) : COLOR {
 	// Calculamos el color del pixel en base a la luz recibida
 	// Notar que la constante de especular se obtiene del canal alfa de la textura de normales
 	float3 specular, diffuse;
-	computeLighting(lightPosition.xyz, lightAttenuation, IN.position.xyz, N, globalAmbient, lightColor.xyz, IN.lightDirection, IN.halfAngle, Ka, Kd, tex2D(NormalMap, IN.uv0).w, shininess, diffuse, specular);
+	computeLighting(lightPosition.xyz, lightAttenuation, IN.position.xyz, N, lightColor.xyz, IN.lightDirection, IN.halfAngle, Kd, tex2D(NormalMap, IN.uv0).w, shininess, diffuse, specular);
 	
 	// Al resultado final de la iluminación del material hay que sumar
 	// el color del entorno reflejado por el especular
