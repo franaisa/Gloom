@@ -126,7 +126,6 @@ namespace Logic {
 		if(!_elementPulled){
 			return;
 		}
-
 		//cogemos la entidad estatica y la desactivamos
 		_elementPulled->deactivate();
 		CGameNetMsgManager::getSingletonPtr()->sendDeactivateEntity(_elementPulled->getEntityID());
@@ -213,6 +212,7 @@ namespace Logic {
 		CEntityFactory::getSingletonPtr()->deferredDeleteEntity(_elementPulling, true);
 		_elementPulled->activate();
 		CGameNetMsgManager::getSingletonPtr()->sendActivateEntity(_elementPulled->getEntityID());
+		_elementPulling = NULL;
 	} // stopSecondaryFire
 	//__________________________________________________________________
 
@@ -249,18 +249,57 @@ namespace Logic {
 	//__________________________________________________________________
 
 	void CSoulReaper::onTick(unsigned int msecs) {
-		/*
-		// Controlamos el cooldown del disparo primario y secundario
-		if(_primaryFireTimer > 0) {
-			_primaryFireTimer -= msecs;
-			
-			if(_primaryFireTimer < 0){
-				_primaryFireTimer = 0;
-				
-			}
+		//el tick solo me interesa cuando estoy cogiendo algo
+		if(!_elementPulling)
+			return;
 
+
+		Vector3 origin = _entity->getPosition()+Vector3(0.0f,_heightShoot,0.0f);
+
+		// 3.5 mirao a ojo a traves del visual debbuger 
+		Physics::SphereGeometry sphere  = Physics::CGeometryFactory::getSingletonPtr()->createSphere(3.5);
+		std::vector<Physics::CSweepHit> hitSpots;
+		Physics::CServer::getSingletonPtr()->sweepMultiple(sphere, origin,(_entity->getOrientation()*Vector3::NEGATIVE_UNIT_Z).normalisedCopy(), _shotsDistanceSecondaryFire,hitSpots, false, Physics::CollisionGroup::eITEM );
+		
+		if ( hitSpots.size() < 1 ){
+			stopSecondaryFire();
+			return;
 		}
-		*/
+		
+		//recorremos el resultado del sweep en busca de nuestro amado item
+		CEntity * item = 0;
+
+		for(auto it = hitSpots.begin(); it < hitSpots.end(); ++it){
+			if( (*it).entity->getType() == "ItemSpawnDynamic"){
+				item =(*it).entity;
+				break;
+			}
+		}	
+
+		if(!item){//si no lo hemos encontrado en el sweep, es que estamos fuera de rango
+			stopSecondaryFire();
+			return;
+		}
+
+		// Creamos el ray desde el origen en la direccion del raton (desvio ya aplicado)
+		Ray ray(origin, ( item->getPosition() - origin ).normalisedCopy());
+
+		// Rayo lanzado por el servidor de físicas de acuerdo a la distancia de potencia del arma
+		Physics::CRaycastHit hit;
+		int nbHits = 0;
+		//drawRaycast(ray);
+		
+		bool valid = Physics::CServer::getSingletonPtr()->raycastSingle(ray, _shotsDistanceSecondaryFire+1, hit,Physics::CollisionGroup::eITEM);
+		
+		if(!valid){
+			stopSecondaryFire();
+			return;
+		}
+		CEntity *entity = hit.entity;
+		
+		if( entity->getType()=="ItemSpawnDynamic" || entity->getType()=="ItemSpawn" )
+			return;
+		stopSecondaryFire();
 	} // onTick
 	//__________________________________________________________________
 } // namespace Logic

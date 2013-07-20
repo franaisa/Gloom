@@ -158,7 +158,7 @@ namespace Logic {
 	//__________________________________________________________________
 
 	void IWeaponAmmo::stopPrimaryFire() {
-		_primaryFireIsActive = true;
+		_primaryFireIsActive = false;
 		// Mandar el mensaje primaryFire(false)
 		auto m = make_shared<CMessagePrimaryShoot>(false);
 		_entity->emitMessage(m);

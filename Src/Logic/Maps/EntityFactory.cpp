@@ -369,6 +369,9 @@ namespace Logic {
 
 		_pendingEntities.insert(entity);
 
+
+		std::cout << entity->getName() << std::endl;
+
 		//la borramos del worldstate para evitar problemas y crashes
 		CWorldState::getSingletonPtr()->deleteEntity(entity);
 
