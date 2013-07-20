@@ -65,6 +65,7 @@ namespace Logic {
 		assert( entityInfo->hasAttribute(_weaponName + "MaxFireBallSpeed") );
 		assert( entityInfo->hasAttribute(_weaponName + "MaxFireBallExplotionRadius") );
 		assert( entityInfo->hasAttribute(_weaponName + "MaxFireBallDamage") );
+		assert( entityInfo->hasAttribute(_weaponName + "ExplotionStrength") );
 		assert( entityInfo->hasAttribute(_weaponName + "Audio") );
 
 		// Cooldown del disparo principal
@@ -94,6 +95,7 @@ namespace Logic {
 		_fireBallSpeedTemporalIncrement = (maxFireBallSpeed - _defaultFireBallSpeed) / _maxLoadingTime;
 		_fireBallExplotionRadiusTemporalIncrement = (maxFireBallExplotionRadius - _defaultFireBallExplotionRadius) / _maxLoadingTime;
 
+		_explotionStrength = entityInfo->getFloatAttribute(_weaponName + "ExplotionStrength");
 		// Obtenemos los sonidos que produce el arma
 		_shootAudio = entityInfo->getStringAttribute(_weaponName + "Audio");
 
@@ -270,6 +272,8 @@ namespace Logic {
 		entityInfo->setAttribute( "explotionRadius", toString(fireBallExplotionRadius) );
 		entityInfo->setAttribute( "damage", toString(fireBallDamage) );
 		entityInfo->setAttribute( "direction", toString( _entity->getOrientation()*Vector3::NEGATIVE_UNIT_Z ));
+		entityInfo->setAttribute( "strength", toString( _explotionStrength + _elapsedTime/ _maxLoadingTime ) );
+		
 
 		// El único atributo que nos interesa pasar al cliente es la escala para que la bola
 		// aparezca gráficamente más grande o más pequeña

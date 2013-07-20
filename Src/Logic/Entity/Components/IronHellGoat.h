@@ -152,6 +152,8 @@ namespace Logic {
 		float _fireBallRadiusTemporalIncrement;
 		float _fireBallSpeedTemporalIncrement;
 		float _fireBallExplotionRadiusTemporalIncrement;
+
+		float _explotionStrength;
 	};
 
 	REG_FACTORY(CIronHellGoat);

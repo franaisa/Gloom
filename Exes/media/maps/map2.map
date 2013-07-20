@@ -847,25 +847,6 @@ Map = {
 		physic_dimensions = { 4, 7, 4 },
 	},
 
-	SpikeTrap1 = {
-		type = "SpikeTrap",
-		position = {-0.9, -3, 33},
-		coolDown = 6,
-		numSpikes = 3,
-		numTrap= 1,
-		velocitySpikes = 25000,
-		directionSpikes = { 0, 0, 1},
-		spike1Position = {40.0, 6.0, -231.0},
-		spike1Yaw = 0,
-		spike1Pitch = 90,
-		spike2Position = {30.0, 6.0, -231.0},
-		spike2Yaw = 0,
-		spike2Pitch = 90,
-		spike3Position = {20.0, 6.0, -231.0},
-		spike3Yaw = 0,
-		spike3Pitch = 90,
-	},
-
 	Light1= {
 		type = "TestLight",
 		model = "arcan.mesh",

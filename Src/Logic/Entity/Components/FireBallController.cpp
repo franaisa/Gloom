@@ -22,6 +22,8 @@
 #include "Logic/Messages/MessageContactEnter.h"
 #include "Logic/Messages/MessageDamaged.h"
 #include "Logic/Messages/MessageCreateParticle.h"
+#include "Logic/Messages/MessageAddForcePlayer.h"
+
 
 #include "Map/MapEntity.h"
 
@@ -65,11 +67,13 @@ namespace Logic {
 		assert( entityInfo->hasAttribute("damage") );
 		assert( entityInfo->hasAttribute("explotionRadius") );
 		assert( entityInfo->hasAttribute("direction") );
+		assert( entityInfo->hasAttribute("strength") );
 
 		_speed = entityInfo->getFloatAttribute("speed");
 		_damage = entityInfo->getFloatAttribute("damage");
 		_explotionRadius = entityInfo->getFloatAttribute("explotionRadius");
 		_direction = entityInfo->getVector3Attribute("direction");
+		_strength = entityInfo->getFloatAttribute("strength");
 
 		_world = Logic::CServer::getSingletonPtr()->getMap()->getEntityByName("World");
 		return true;
@@ -191,6 +195,11 @@ namespace Logic {
 		damageDone->setDamage(dmg);
 		damageDone->setEnemy( _owner->getEntity() );
 		entityHit->emitMessage(damageDone);
+
+		//send force message
+		std::shared_ptr<CMessageAddForcePlayer> force = std::make_shared<CMessageAddForcePlayer>();
+		force->setForce( (entityHit->getPosition() - _entity->getPosition()).normalisedCopy() * _strength);
+		entityHit->emitMessage(force);
 	}
 
 } // namespace Logic

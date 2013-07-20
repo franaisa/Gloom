@@ -138,6 +138,7 @@ namespace Logic {
 
 		float _explotionRadius;
 
+		float _strength;
 
 		Logic::CEntity *_world;
 	}; // class CFireBallController
