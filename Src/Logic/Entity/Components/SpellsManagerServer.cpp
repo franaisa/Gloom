@@ -58,7 +58,7 @@ namespace Logic
 
 	void CSpellsManagerServer::onStart(){
 	// El resto de las armas están desactivadas, ya que no las tenemos
-		//addComponent();
+		addComponent();
 	} // onStart
 	//---------------------------------------------------------
 

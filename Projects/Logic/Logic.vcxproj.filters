@@ -727,9 +727,6 @@
     <ClCompile Include="..\..\Src\Logic\Entity\Components\CoolDownClient.cpp">
       <Filter>Entity\Components\Spells\Feedback\Source</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Src\Logic\Entity\Components\Scope.cpp">
-      <Filter>Entity\Components\Spells\Cast\Source</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Src\Logic\Entity\Components\ShieldSpellController.cpp">
       <Filter>Entity\Components\Spells\Cast\Source</Filter>
     </ClCompile>
