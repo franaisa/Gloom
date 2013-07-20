@@ -114,7 +114,7 @@ namespace Logic {
 
 	private:
 
-		void onTick(unsigned int msecs);
+		//void onTick(unsigned int msecs);
 
 		/**
 		Distancia máxima de expansión para el disparo secundario de la sniper.

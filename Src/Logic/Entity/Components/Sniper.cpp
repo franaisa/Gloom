@@ -74,84 +74,6 @@ namespace Logic {
 	//__________________________________________________________________
 
 	void CSniper::primaryFire(){
-
-		//Direccion
-		Vector3 direction = _entity->getOrientation()*Vector3::NEGATIVE_UNIT_Z;
-	
-		//Posicion de la entidad + altura de disparo(coincidente con la altura de la camara)
-		Vector3 origin = _entity->getPosition()+Vector3(0.0f,_heightShoot,0.0f);
-		// Creamos el ray desde el origen en la direccion del raton (desvio ya aplicado)
-		Ray ray(origin, direction);
-
-		// Rayo lanzado por el servidor de físicas de acuerdo a la distancia de potencia del arma
-		std::vector<Physics::CRaycastHit> hits;
-		Physics::CServer::getSingletonPtr()->raycastMultiple(ray, _shotsDistance, hits,true, Physics::CollisionGroup::ePLAYER | Physics::CollisionGroup::eWORLD | Physics::CollisionGroup::eFIREBALL |
-																							 Physics::CollisionGroup::eSCREAMER_SHIELD);
-
-		decrementAmmo();
-
-		//Aplicamos daño si no somos nosotros mismos(se podria modificar la fisica para que no nos devuelva a nosotros)
-		//Y ademas no hemos tocado ya pared
-		for(int i=0;i<hits.size();++i){
-			//Si tocamos el mundo no continuamos viendo hits y llamamos al pintado del rayo (si se considera necesario)
-			if(hits[i].entity->getType().compare("World")==0){
-				//Si hacemos el rayo extendiendo un mesh sacar a un metodo de pintado
-				/*float distanceWorld=hits[i].distance;
-				//Atendiendo a la distancia y sabiendo que el gráfico de la entidad mide X metros
-				//La escala que debera tener es
-				float expansion=distanceWorld/10;
-				Vector3 newScale(expansion,1,1);
-				//La posicion por tanto sera	
-				Vector3 newPosition=_entity->getPosition()+Vector3(0.0f,_heightShoot,0.0f) + ( Math::getDirection( _entity->getOrientation() ) 
-					* (_capsuleRadius + 0.2f +10.0f));//10.0f es el changeScale, no sale bien pk el mesh no tiene la z con 1Unidad
-				//Cogemos un laser y lo seteamos (pull de laseres?)
-				CEntity *laser=Logic::CServer::getSingletonPtr()->getMap()->getEntityByName("LaserBeam1");
-				laser->setPosition(newPosition);
-				laser->setOrientation(_entity->getOrientation());
-				CGraphics *cGraphics=laser->getComponent<CGraphics>("CGraphics");
-				cGraphics->changeScale(Vector3(0.2,0.2,10));//Alargamos el cilindro*/
-
-				//Antes de salir desactivamos el quemado para el siguiente disparo
-				_burned=false;
-
-				return;
-			}
-			//Si tocamos una bola de fuego, activamos el quemado
-			else if(hits[i].entity->getType().compare("FireBall")==0){
-				_burned=true;
-			}
-			else if(hits[i].entity->getType() == "ScreamerShield") {
-				// Tras mandar los mensajes de daño al escudo del screamer
-				// abortamos la ejecución del bucle ya que el escudo evita
-				// que el rayo de la sniper llegue más lejos
-				CEntity* screamerShieldOwner = hits[i].entity->getComponent<CScreamerShieldDamageNotifier>("CScreamerShieldDamageNotifier")->getOwner();
-				
-				// Si no se trata de nuestro propio escudo mandamos los
-				// mensajes de daño
-				if(screamerShieldOwner != _entity) {
-					if(_burned)
-						triggerHitMessages(hits[i].entity, _primaryFireDamage + _primaryFireDamage * _burnedIncrementPercentageDamage);
-					else
-						triggerHitMessages(hits[i].entity, _primaryFireDamage);
-				}
-
-				break;
-			}
-			//Sino mientras que no seamos nosotros mismos
-			else if(hits[i].entity!=_entity){
-				if(_burned)
-					triggerHitMessages(hits[i].entity, _primaryFireDamage + _primaryFireDamage * _burnedIncrementPercentageDamage);
-				else
-					triggerHitMessages(hits[i].entity, _primaryFireDamage);
-
-				
-			}
-		}
-	}//primaryFireWeapon
-	//-------------------------------------------------------
-
-	void CSniper::secondaryFire(){
-
 		//Direccion
 		Vector3 direction = _entity->getOrientation()*Vector3::NEGATIVE_UNIT_Z;
 
@@ -169,10 +91,10 @@ namespace Logic {
 		CEntity* entityHit=NULL;
 		for(int i=0;i<hits.size();++i){
 			//Si tocamos mundo terminamos
-			if(hits[i].entity->getType().compare("World")==0)
+			if(hits[i].entity->getType() == "World")
 				break;
 			//Si es una bola de fuego activamos el quemado
-			if(hits[i].entity->getType().compare("FireBall")==0){
+			if(hits[i].entity->getType() == "FireBall"){
 				_burned=true;
 			}
 			//Entidades validas (Player que no seamos nosotros mismos)
@@ -210,6 +132,69 @@ namespace Logic {
 		_burned=false;
 
 		decrementAmmo(_secondaryConsumeAmmo);
+	}//primaryFireWeapon
+	//-------------------------------------------------------
+
+	void CSniper::secondaryFire(){
+
+		//Direccion
+		Vector3 direction = _entity->getOrientation()*Vector3::NEGATIVE_UNIT_Z;
+	
+		//Posicion de la entidad + altura de disparo(coincidente con la altura de la camara)
+		Vector3 origin = _entity->getPosition()+Vector3(0.0f,_heightShoot,0.0f);
+		// Creamos el ray desde el origen en la direccion del raton (desvio ya aplicado)
+		Ray ray(origin, direction);
+
+		// Rayo lanzado por el servidor de físicas de acuerdo a la distancia de potencia del arma
+		std::vector<Physics::CRaycastHit> hits;
+		Physics::CServer::getSingletonPtr()->raycastMultiple(ray, _shotsDistance, hits,true, Physics::CollisionGroup::ePLAYER | Physics::CollisionGroup::eWORLD | Physics::CollisionGroup::eFIREBALL |
+																							 Physics::CollisionGroup::eSCREAMER_SHIELD);
+
+		decrementAmmo();
+
+		//Aplicamos daño si no somos nosotros mismos(se podria modificar la fisica para que no nos devuelva a nosotros)
+		//Y ademas no hemos tocado ya pared
+		for(int i=0;i<hits.size();++i){
+			//Si tocamos el mundo no continuamos viendo hits y llamamos al pintado del rayo (si se considera necesario)
+			if(hits[i].entity->getType() == "World"){
+
+				//Antes de salir desactivamos el quemado para el siguiente disparo
+				_burned=false;
+
+				return;
+			}
+			//Si tocamos una bola de fuego, activamos el quemado
+			else if(hits[i].entity->getType() == "FireBall"){
+				_burned=true;
+			}
+			else if(hits[i].entity->getType() == "ScreamerShield") {
+				// Tras mandar los mensajes de daño al escudo del screamer
+				// abortamos la ejecución del bucle ya que el escudo evita
+				// que el rayo de la sniper llegue más lejos
+				CEntity* screamerShieldOwner = hits[i].entity->getComponent<CScreamerShieldDamageNotifier>("CScreamerShieldDamageNotifier")->getOwner();
+				
+				// Si no se trata de nuestro propio escudo mandamos los
+				// mensajes de daño
+				if(screamerShieldOwner != _entity) {
+					if(_burned)
+						triggerHitMessages(hits[i].entity, _primaryFireDamage + _primaryFireDamage * _burnedIncrementPercentageDamage);
+					else
+						triggerHitMessages(hits[i].entity, _primaryFireDamage);
+				}
+
+				break;
+			}
+			//Sino mientras que no seamos nosotros mismos
+			else if(hits[i].entity!=_entity){
+				if(_burned)
+					triggerHitMessages(hits[i].entity, _primaryFireDamage + _primaryFireDamage * _burnedIncrementPercentageDamage);
+				else
+					triggerHitMessages(hits[i].entity, _primaryFireDamage);
+
+				
+			}
+		}
+		
 	}//secondaryFireWeapon
 	//-------------------------------------------------------
 
@@ -273,32 +258,7 @@ namespace Logic {
 			_secondaryFireDamage += percentage * _secondaryFireDamage * 0.01f;
 		}
 	} // amplifyDamage
-	//__________________________________________________________________
 
-	void CSniper::onTick(unsigned int msecs) {
-		/*
-		// Controlamos el cooldown del disparo primario y secundario
-		if(_primaryFireTimer > 0) {
-			_primaryFireTimer -= msecs;
-			
-			if(_primaryFireTimer < 0){
-				_primaryFireTimer = 0;
-				if(_primaryFireIsActive)
-					primaryFire();
-			}
-		}
-
-		if(_secondaryFireTimer > 0) {
-			_secondaryFireTimer -= msecs;
-
-			if(_secondaryFireTimer < 0){
-				_secondaryFireTimer = 0;
-				if(_secondaryFireIsActive)
-					secondaryFire();
-			}
-		}
-		*/
-	} // onTick
 	//__________________________________________________________________
 
 
