@@ -263,7 +263,15 @@ namespace Logic
 			for (int i = _currentWeapon + 1; i < _weaponry.size(); ++i)
 			{
 				//Comprobamos si en ese índice tenemos arma
-				if (_weaponry[i].first)
+				if (_weaponry[i].first && ( _weaponry[i].second->getAmmo() > 0 || i == WeaponType::eSOUL_REAPER ))
+					return i;
+			}
+
+			//Recorremos todas las armas del inventario desde el principio, para hacerlo circular
+			for (int i = WeaponType::eSOUL_REAPER; i <= _currentWeapon; ++i)
+			{
+				//Comprobamos si en ese índice tenemos arma y tiene balas
+				if (_weaponry[i].first && ( _weaponry[i].second->getAmmo() > 0 || i == WeaponType::eSOUL_REAPER ))
 					return i;
 			}
 		}
@@ -272,8 +280,15 @@ namespace Logic
 			//Recorremos todas las armas del inventario desde la actual hasta el principio
 			for (int i = _currentWeapon - 1; i >= 0; --i)
 			{
-				//Comprobamos si en ese índice tenemos arma
+				//Comprobamos si en ese índice tenemos arma y tiene balas
 				if (_weaponry[i].first)
+					return i;
+			}
+
+			for (int i = WeaponType::eSIZE - 1 ; i > _currentWeapon; --i)
+			{
+				//Comprobamos si en ese índice tenemos arma
+				if (_weaponry[i].first && ( _weaponry[i].second->getAmmo() > 0 || i == WeaponType::eSOUL_REAPER ))
 					return i;
 			}
 		}
