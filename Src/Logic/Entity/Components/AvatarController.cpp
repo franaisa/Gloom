@@ -112,7 +112,7 @@ namespace Logic {
 	//________________________________________________________________________
 
 	void CAvatarController::onWake() {
-		_displacementDir = _momentum = Vector3::ZERO;
+		_momentum = Vector3::ZERO;
 	}
 
 	//________________________________________________________________________
@@ -126,6 +126,9 @@ namespace Logic {
 
 				if(ctrlType == Control::MOUSE)
 					return false;
+			}
+			else {
+				return false;
 			}
 		}
 

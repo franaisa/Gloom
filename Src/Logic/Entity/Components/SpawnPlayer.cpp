@@ -162,8 +162,8 @@ namespace Logic
 			except.insert( std::string("CHudOverlay") );
 			except.insert( std::string("CHud") );
 			except.insert( std::string("CNetConnector") );
-			except.insert( std::string("CAudio") );
 			except.insert( std::string("CAvatarController") );
+			except.insert( std::string("CAudio") );
 			except.insert( std::string("CPlayerSnapshot") );
 			except.insert( std::string("CParticle") );
 			except.insert( std::string("CRagdoll") );
