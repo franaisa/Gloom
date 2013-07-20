@@ -47,12 +47,12 @@ namespace Logic
 
 
 		/** Constructor por defecto. */
-		CProceduralGraphics(): _insertAnimation(true), _animatedEntity(0){}
+		CProceduralGraphics();
 
 		//________________________________________________________________________
 
 		/** Destructor por defecto. */
-		virtual ~CProceduralGraphics(){}
+		virtual ~CProceduralGraphics();
 
 
 		// =======================================================================
@@ -76,7 +76,7 @@ namespace Logic
 		@param entityInfo Información de construcción del objeto leído del fichero de disco.
 		@return Cierto si la inicialización ha sido satisfactoria.
 		*/
-		//virtual bool spawn(CEntity* entity, CMap *map, const Map::CEntity *entityInfo);
+		virtual bool spawn(CEntity* entity, CMap *map, const Map::CEntity *entityInfo);
 
 		//________________________________________________________________________
 
@@ -150,6 +150,21 @@ namespace Logic
 		Entidad gráfica animada.
 		*/
 		Graphics::CAnimatedEntity *_animatedEntity;
+
+		/** Nombre del hueso que vamos a mover. */
+		std::string _masterBoneName;
+
+		/** Cota superior de pitch. */
+		float _upperPitchBound;
+
+		/** Cota inferior de pitch. */
+		float _lowerPitchBound;
+
+		/** Cota superior de yaw. */
+		float _upperYawBound;
+
+		/** Cota inferior de yaw. */
+		float _lowerYawBound;
 
 		bool _insertAnimation;
 

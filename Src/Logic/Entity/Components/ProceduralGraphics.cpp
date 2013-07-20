@@ -24,25 +24,57 @@ namespace Logic
 {
 	IMP_FACTORY(CProceduralGraphics);
 
+	//---------------------------------------------------------
+
+	CProceduralGraphics::CProceduralGraphics() : _insertAnimation(true),
+												 _lowerPitchBound(-0.6f),
+												 _upperPitchBound(0.4f),
+												 _lowerYawBound(-0.3f),
+												 _upperYawBound(0.3f),
+												 _animatedEntity(NULL) { 
+	
+		// Nada que hacer
+	}
+
+	//---------------------------------------------------------
+
+	CProceduralGraphics::~CProceduralGraphics() {
+		// Nada que hacer
+	}
+	
+	//---------------------------------------------------------
+	
+	bool CProceduralGraphics::spawn(CEntity* entity, CMap *map, const Map::CEntity *entityInfo){
+		if( !IComponent::spawn(entity,map,entityInfo) ) return false;
+
+		assert( entityInfo->hasAttribute("aimingBoneName") );
+		_masterBoneName = entityInfo->getStringAttribute("aimingBoneName");
+
+		if( entityInfo->hasAttribute("upperPitchBound") )
+			_upperPitchBound = entityInfo->getFloatAttribute("upperPitchBound");
+		if( entityInfo->hasAttribute("lowerPitchBound") )
+			_lowerPitchBound = entityInfo->getFloatAttribute("lowerPitchBound");
+		if( entityInfo->hasAttribute("upperYawBound") )
+			_upperYawBound = entityInfo->getFloatAttribute("upperYawBound");
+		if( entityInfo->hasAttribute("lowerYawBound") )
+			_lowerYawBound = entityInfo->getFloatAttribute("lowerYawBound");
+
+		return true;
+	}
 	
 	//---------------------------------------------------------
 
-	
-	//---------------------------------------------------------
-
-	void CProceduralGraphics::onActivate()
-	{
+	void CProceduralGraphics::onActivate() {
 		_animatedEntity = _entity->getComponent<CAnimatedGraphics>("CAnimatedGraphics")->getAnimatedEntity();
 		_animatedEntity->addObserver(this);
-		_animatedEntity->freeBoneOrientation("bip_spine_3");
+		_animatedEntity->freeBoneOrientation(_masterBoneName);
 	}
 	//---------------------------------------------------------
 
-	void CProceduralGraphics::onDeactivate()
-	{
+	void CProceduralGraphics::onDeactivate() {
 		_animatedEntity->removeObserver(this);
-		
 	}
+	
 	//---------------------------------------------------------
 
 	bool CProceduralGraphics::accept(const std::shared_ptr<CMessage>& message) {
@@ -69,33 +101,34 @@ namespace Logic
 		}
 
 	} // process
-	
+
 	//---------------------------------------------------------
 
-	void CProceduralGraphics::onTick(unsigned int msecs){
-
+	void CProceduralGraphics::onTick(unsigned int msecs) {
 		//movemos el hueso en función de la orientación de la entidad
 		if(!_insertAnimation)
 			return;
 		
 		float pitch = _entity->getPitch().getPitch().valueRadians();
 
-		if(pitch>0.4){
-			pitch = 0.4;
-		}else if(pitch < -0.6){
-			pitch = -0.6;
+		if(pitch > _upperPitchBound) {
+			pitch = _upperPitchBound;
+		}
+		else if(pitch < _lowerPitchBound) {
+			pitch = _lowerPitchBound;
 		}
 
-		_animatedEntity->moveBone("bip_spine_3", pitch*-1);
-
-	}//---------------------------------------------------------
+		_animatedEntity->moveBone(_masterBoneName, -pitch);
+	}
+	
+	//---------------------------------------------------------
 	//onTick
 	
-	void CProceduralGraphics::animationFinished(const std::string &animation)
-	{
-		if(!_insertAnimation){
+	void CProceduralGraphics::animationFinished(const std::string &animation) {
+		if(!_insertAnimation) {
 			_insertAnimation = true;
-			_animatedEntity->freeBoneOrientation("bip_spine_3");
+			_animatedEntity->freeBoneOrientation(_masterBoneName);
 		}
 	}
+
 } // namespace Logic
