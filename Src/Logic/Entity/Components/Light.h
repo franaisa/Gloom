@@ -52,9 +52,9 @@ namespace Logic {
 
 	protected:
 
-		/*virtual void onTick(unsigned int msecs);
+		/*virtual void onTick(unsigned int msecs);*/
 
-		virtual void onStart();*/
+		//virtual void onStart();
 
 		/**
 		Luz
@@ -69,6 +69,7 @@ namespace Logic {
 		Vector3 _attenuation;
 		float _innerAngle;
 		float _outerAngle;
+		float _range;
 
 	}; // class CLight
 

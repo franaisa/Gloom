@@ -1,8 +1,8 @@
-material bumpLightingTest {
+material bumpLightingReflectionTest {
 	technique {
 		pass {
 		
-			vertex_program_ref bumpLightingVertexShader {
+			vertex_program_ref bumpLightingReflectionVertexShader {
 				// Parametros obtenidos de Ogre
 				param_named_auto	viewProjectionMatrix 		worldviewproj_matrix
 				param_named_auto	eyePosition					camera_position_object_space
@@ -13,7 +13,7 @@ material bumpLightingTest {
 			
 			// La primera pasada del fragment shader calcula el ambiente. El resto de pasadas solo el difuso y el especular
 			// ya que el ambiente solo es necesario  calcularlo  una vez.
-			fragment_program_ref bumpLightingFragmentShader {
+			fragment_program_ref bumpLightingReflectionFragmentShader {
 				// Parametros obtenidos de Ogre
 				param_named_auto	globalAmbient				ambient_light_colour
 				param_named_auto	lightAttenuation				light_attenuation							0
@@ -40,13 +40,18 @@ material bumpLightingTest {
 				texture wallTestNormalMap.tga
 			}
 			
+			// Textura del entorno para mostrar ls reflejos
+			texture_unit CubeMap {
+				texture cubeMap.dds cubic
+			}
+			
 		}
 		
 		pass {
 		
 			scene_blend add
 		
-			vertex_program_ref bumpLightingVertexShader {
+			vertex_program_ref bumpLightingReflectionVertexShader {
 				// Parametros obtenidos de Ogre
 				param_named_auto	viewProjectionMatrix 		worldviewproj_matrix
 				param_named_auto	eyePosition					camera_position_object_space
@@ -55,14 +60,17 @@ material bumpLightingTest {
 				param_named_auto	spotLightParams			spotlight_params							1
 			}
 			
-			fragment_program_ref bumpLightingFragment_DIFF_SPEC {
+			fragment_program_ref bumpLightingReflectionFragment_DIFF_SPEC {
 				// Parametros obtenidos de Ogre
+				param_named_auto	globalAmbient				ambient_light_colour
 				param_named_auto	lightAttenuation				light_attenuation							1
 				param_named_auto	lightPosition					light_position_object_space			1
 				param_named_auto	lightDir							light_direction_object_space			1
 				param_named_auto	lightColor						light_diffuse_colour						1
 				param_named_auto	spotLightParams			spotlight_params							1
 				
+				// Constante para regular la cantidad de ambiente
+				param_named			Ka								float		0.2
 				// Constante para regular la cantidad de difuso
 				param_named			Kd								float		0.6
 				// Constante de brillo especular
@@ -77,6 +85,11 @@ material bumpLightingTest {
 			// Textura para el bump mapping. En el alfa esta el mapa de especulares.
 			texture_unit NormalMap {
 				texture wallTestNormalMap.tga
+			}
+			
+			// Textura del entorno para mostrar ls reflejos
+			texture_unit CubeMap {
+				texture cubeMap.dds cubic
 			}
 			
 		}
@@ -85,7 +98,7 @@ material bumpLightingTest {
 		
 			scene_blend add
 		
-			vertex_program_ref bumpLightingVertexShader {
+			vertex_program_ref bumpLightingReflectionVertexShader {
 				// Parametros obtenidos de Ogre
 				param_named_auto	viewProjectionMatrix 		worldviewproj_matrix
 				param_named_auto	eyePosition					camera_position_object_space
@@ -94,14 +107,17 @@ material bumpLightingTest {
 				param_named_auto	spotLightParams			spotlight_params							2
 			}
 			
-			fragment_program_ref bumpLightingFragment_DIFF_SPEC {
+			fragment_program_ref bumpLightingReflectionFragment_DIFF_SPEC {
 				// Parametros obtenidos de Ogre
+				param_named_auto	globalAmbient				ambient_light_colour
 				param_named_auto	lightAttenuation				light_attenuation							2
 				param_named_auto	lightPosition					light_position_object_space			2
 				param_named_auto	lightDir							light_direction_object_space			2
 				param_named_auto	lightColor						light_diffuse_colour						2
 				param_named_auto	spotLightParams			spotlight_params							2
 				
+				// Constante para regular la cantidad de ambiente
+				param_named			Ka								float		0.2
 				// Constante para regular la cantidad de difuso
 				param_named			Kd								float		0.6
 				// Constante de brillo especular
@@ -116,6 +132,11 @@ material bumpLightingTest {
 			// Textura para el bump mapping. En el alfa esta el mapa de especulares.
 			texture_unit NormalMap {
 				texture wallTestNormalMap.tga
+			}
+			
+			// Textura del entorno para mostrar ls reflejos
+			texture_unit CubeMap {
+				texture cubeMap.dds cubic
 			}
 			
 		}
