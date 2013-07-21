@@ -50,9 +50,7 @@ namespace Logic
 		if(!IComponent::spawn(entity,map,entityInfo))
 			return false;
 
-		_physicComponent = _entity->getComponent<CPhysicDynamicEntity>("CPhysicDynamicEntity"); 	
-
-		_cGraph = _entity->getComponent<CGraphics>("CGraphics");
+		
 
 		// El tamaño de esta bola se indica en el archetypes.
 		return true;
@@ -72,8 +70,7 @@ namespace Logic
 
 	void CShieldSpellController::process(const std::shared_ptr<CMessage>& message) {
 		switch( message->getMessageType() ) {
-			case Message::TOUCHED:
-			{				
+			case Message::TOUCHED: {				
 				auto msg = std::static_pointer_cast<CMessageTouched>(message);
 				touched(msg->getEntity());
 				break;
@@ -88,7 +85,7 @@ namespace Logic
 	//________________________________________________________________________
 
 	void CShieldSpellController::onStart() {
-		
+
 	}
 	//________________________________________________________________________
 	
@@ -97,21 +94,34 @@ namespace Logic
 	} // setProperty
 	//________________________________________________________________________
 
-	void CShieldSpellController::setOwner(Logic::CEntity *owner)
-	{
+	void CShieldSpellController::setOwner(Logic::CEntity *owner){
+
+		_physicComponent = _entity->getComponent<CPhysicDynamicEntity>("CPhysicDynamicEntity"); 	
+
+		_cGraph = _entity->getComponent<CGraphics>("CGraphics");
+
 		_owner = owner;
+
+		printf("\nOwner puesto \n");
 	} // setOwner
 	//________________________________________________________________________
 
 	void CShieldSpellController::onFixedTick(unsigned int msecs) {
 		
-		if (_physicComponent && _owner){
-			_physicComponent->setPosition(_owner->getPosition(), true);
-		}
+		if(_owner){
+			if (_physicComponent){
+				_physicComponent->setPosition(_owner->getPosition(), true);
+			}
 		
-		if (_cGraph && _owner){
-			_entity->setPosition(_owner->getPosition());
-		}	
+			if (_cGraph){
+				
+				_entity->setPosition(_owner->getPosition());
+			}	
+			/*
+			printf("\nOwner: %s position %d, %d, %d",_owner->getName().c_str(),_owner->getPosition().x,_owner->getPosition().y,_owner->getPosition().z);
+			printf("\nShield: %s position %d, %d, %d",_entity->getName().c_str(),_entity->getPosition().x,_entity->getPosition().y,_entity->getPosition().z);
+			*/
+		}
 	}
 	
 
@@ -124,8 +134,8 @@ namespace Logic
 
 	void CShieldSpellController::touched(CEntity *entityTouched)
 	{
-		std::cout << "Tocado! al principio me toca a mi" << std::endl;
-		if(entityTouched->getEntityID() != _entity->getEntityID()){
+		//std::cout << "Tocado! al principio me toca a mi" << std::endl;
+		if(entityTouched->getEntityID() != _owner->getEntityID()){
 			// He de comprobar que es amigo, o eso, o en el filtro que solo le de a los amigos
 			std::shared_ptr<CMessageDamaged> damageDone = std::make_shared<CMessageDamaged>();
 			damageDone->setDamage(_damage);

@@ -147,7 +147,7 @@ namespace Logic {
 		_lifeDomeTimer = _lifeDomeDuration;
 
 		Vector3 position = _entity->getPosition();
-		position.y += _heightShoot;
+		position.y += _heightShoot*0.5;
 
 		Matrix4 transform = Matrix4::IDENTITY;
 		transform.setTrans(position);

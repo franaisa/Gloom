@@ -53,6 +53,7 @@ namespace Logic {
 			_entity->getPosition()+Vector3(0,_heightShoot*0.5,0),
 			Quaternion::IDENTITY
 		);
+		_shieldSpell->getComponent<CShieldSpellController>("CShieldSpellController")->setOwner(_entity);
 		_shieldSpell->getComponent<CShieldSpellController>("CShieldSpellController")->setProperties(_damage);
 		_shieldSpell->activate();
 		_shieldSpell->start();
