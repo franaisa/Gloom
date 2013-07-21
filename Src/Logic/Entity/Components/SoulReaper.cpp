@@ -69,11 +69,12 @@ namespace Logic {
 	//__________________________________________________________________
 
 	void CSoulReaper::onActivate() {
-		
+		/*
 		//Reiniciamos el cooldown
 		reduceCooldown(0);
 		//y los daños
 		amplifyDamage(0);
+		*/
 	}
 
 	//__________________________________________________________________
@@ -113,7 +114,6 @@ namespace Logic {
 				return;
 			}
 		}
-	
 	} // primaryFire
 	//__________________________________________________________________
 
@@ -245,6 +245,7 @@ namespace Logic {
 		else {
 			_primaryFireDamage += percentage * _primaryFireDamage * 0.01f;
 		}
+
 	} // amplifyDamage
 	//__________________________________________________________________
 

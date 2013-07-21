@@ -72,10 +72,12 @@ namespace Logic {
 
 	void CShotGun::onActivate() {
 		
+		/*
 		//Reiniciamos el cooldown
 		reduceCooldown(0);
 		//y los daños
 		amplifyDamage(0);
+		*/
 	}
 
 	//__________________________________________________________________
@@ -141,8 +143,7 @@ namespace Logic {
 			projectileEntity->getComponent<CMagneticBullet>("CMagneticBullet")->setProperties(this, _projectileShootForce, dispersionDirection, _heightShoot, _primaryFireDamage, _damageBurned);
 			_projectiles.insert(projectileEntity);		
 			
-		}
-			
+		}			
 	} // fireWeapon
 	//_________________________________________________
 
@@ -166,6 +167,7 @@ namespace Logic {
 	//_________________________________________________
 	
 	void CShotGun::amplifyDamage(unsigned int percentage) {
+
 		if(percentage == 0) {
 			_primaryFireDamage = _defaultPrimaryFireDamage;
 		}

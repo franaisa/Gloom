@@ -65,10 +65,12 @@ namespace Logic {
 
 	void CSniper::onActivate() {
 
+		/*
 		//Reiniciamos el cooldown
 		reduceCooldown(0);
 		//y los daños
 		amplifyDamage(0);
+		*/
 	}
 
 	//__________________________________________________________________
@@ -194,7 +196,6 @@ namespace Logic {
 				
 			}
 		}
-		
 	}//secondaryFireWeapon
 	//-------------------------------------------------------
 
@@ -247,6 +248,7 @@ namespace Logic {
 	//__________________________________________________________________
 
 	void CSniper::amplifyDamage(unsigned int percentage) {
+
 		// Si es 0 significa que hay que restaurar al que habia por defecto
 		if(percentage == 0) {
 			_primaryFireDamage = _defaultPrimaryFireDamage;

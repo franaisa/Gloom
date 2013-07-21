@@ -62,6 +62,7 @@ namespace Logic {
 		*/
 		for(unsigned int i = 0; i < WeaponType::eSIZE;++i){
 			_weaponry[i]->amplifyDamage(_newPercentDamage);
+			
 		}
 	} // spell
 	//__________________________________________________________________
