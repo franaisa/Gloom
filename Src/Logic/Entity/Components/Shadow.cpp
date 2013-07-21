@@ -26,6 +26,8 @@ implementa las habilidades del personaje
 
 #include <assert.h>
 
+
+
 namespace Logic {
 
 	IMP_FACTORY(CShadow);
@@ -123,7 +125,7 @@ namespace Logic {
 		// Hacemos una query de overlap con la geometria de una esfera en la posicion 
 		// en la que se encuentra la granada con el radio que se indique de explosion
 		Physics::SphereGeometry explotionGeom = Physics::CGeometryFactory::getSingletonPtr()->createSphere(_flashRadius);
-		Physics::CServer::getSingletonPtr()->overlapMultiple(explotionGeom, _entity->getPosition(), entitiesHit);
+		Physics::CServer::getSingletonPtr()->overlapMultiple(explotionGeom, _entity->getPosition(), entitiesHit, Physics::CollisionGroup::ePLAYER);
 		int nbHits = entitiesHit.size();
 		if(nbHits==0){
 			return;
@@ -134,13 +136,8 @@ namespace Logic {
 		for(int i = 0; i < nbHits; ++i) {
 			// una vez tenemos las entidades en el radio de ceguera, hacemos el segundo filtro
 			//que es coger solo a los players
-			CEntity * aux = entitiesHit[i];
 
-			if(entitiesHit[i] != NULL && 
-				(entitiesHit[i]->getType() == "Hound" || 
-					entitiesHit[i]->getType() == "Screamer" || 
-					entitiesHit[i]->getType() == "Shadow" || 
-					entitiesHit[i]->getType() == "Archangel") ) 
+			if(entitiesHit[i] != NULL && entitiesHit[i] != _entity ) 
 			{//begin if
 				flashEntity(entitiesHit[i]);
 			}//end if
@@ -154,8 +151,8 @@ namespace Logic {
 			return;
 
 		//primero trazamos un raycast para filtrar si hay algo entre la entidad y yo
-		Vector3 direction = entity->getPosition() - _entity->getPosition();
-		Ogre::Ray ray( _entity->getPosition()+Vector3(0,8,0), direction.normalisedCopy() );
+		Vector3 direction = _entity->getPosition() - entity->getPosition();
+		Ogre::Ray ray( entity->getPosition()+Vector3(0,8,0), direction.normalisedCopy() );
 		
 		std::vector<Physics::CRaycastHit> hitBuffer;
 
@@ -171,12 +168,14 @@ namespace Logic {
 		float angle = direction.normalisedCopy().angleBetween((entity->getOrientation()*Vector3::NEGATIVE_UNIT_Z).normalisedCopy()).valueDegrees();
 
 		//si no lo esta mirando nada no lo cegamos
-		if(angle < 90)
-			return;
+		//if(angle < 90)
+		//	return;
+
+		
+
+		//angle-=90;
 
 		std::cout << "angulo " << angle << std::endl;
-
-		angle-=90;
 
 		float flashFactor;
 
