@@ -122,7 +122,7 @@ namespace Logic {
 
 	//________________________________________________________________________
 
-	/*void CLight::onStart() {
+	void CLight::onStart() {
 		_light = CLightManager::getSingletonPtr()->createLight(_lightType, _entity->getName(), _position, _direction);
 
 		if(_light != NULL) {
@@ -137,7 +137,7 @@ namespace Logic {
 				_light->setSpotLightParams(_innerAngle, _outerAngle);
 			}
 		}
-	}*/
+	}
 	/*
 	void CLight::onTick(unsigned int msecs) {
 		_position = _entity->getPosition();
