@@ -107,10 +107,12 @@ namespace Logic {
 	void CIronHellGoat::onActivate() {
 		_currentSpentAmmo = _ammoSpentTimer = _elapsedTime = 0;
 		
+		/*
 		//Reiniciamos el cooldown
 		reduceCooldown(0);
 		//y los daños
 		amplifyDamage(0);
+		*/
 	}
 
 	//__________________________________________________________________
@@ -170,10 +172,6 @@ namespace Logic {
 		decrementAmmo();
 		++_currentSpentAmmo;
 
-		// @deprecated Temporal hasta que este bien implementado
-		CHudWeapons* hudWeapon = _entity->getComponent<CHudWeapons>("CHudWeapons");
-		if(hudWeapon != NULL)
-			hudWeapon->loadingWeapon(true);
 	}
 
 	//__________________________________________________________________
@@ -187,13 +185,6 @@ namespace Logic {
 
 		// Reseteamos el reloj
 		_currentSpentAmmo = _ammoSpentTimer = _elapsedTime = 0;
-
-		// @deprecated Temporal hasta que este bien implementado
-		CHudWeapons* hudWeapon = _entity->getComponent<CHudWeapons>("CHudWeapons");
-		if(hudWeapon != NULL) {
-			hudWeapon->loadingWeapon(false);
-			hudWeapon->shootAnim(-1.85f);
-		}
 	}
 
 	//__________________________________________________________________
@@ -232,6 +223,7 @@ namespace Logic {
 	//__________________________________________________________________
 
 	void CIronHellGoat::amplifyDamage(unsigned int percentage) {
+
 		// Si es 0 significa que hay que restaurar al que habia por defecto
 		if(percentage == 0) {
 			_currentDefaultFireBallDamage = _defaultFireBallDamage;

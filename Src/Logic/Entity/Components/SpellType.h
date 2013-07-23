@@ -10,7 +10,7 @@ namespace Logic {
 			eAMPLIFY_DAMAGE,// Hecho		(falta feedback y test)
 			eCOME_BACK,		//
 			eCOOLDOWN,		// Hecho		(falta feedback y test)
-			eGRAVITY,		// Hecho		(falta feedback y test)
+			eGRAVITY,		// Hecho		(falta feedback)
 			eHARD_DEATH,	// Hecho		(falta feedback y test)
 			eHUNGRY,		//
 			eSHIELD,		// Hecho		(falta feedback y test)

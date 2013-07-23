@@ -54,7 +54,7 @@ namespace Logic {
 
 		/*virtual void onTick(unsigned int msecs);*/
 
-		//virtual void onStart();
+		virtual void onStart();
 
 		/**
 		Luz

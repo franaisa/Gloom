@@ -1,17 +1,79 @@
+// Vertex shader del bump 
 vertex_program bumpLightingVertexShader hlsl {
 	source bumpLighting.hlsl
 	entry_point vertex_main
 	target vs_2_0
+	
+	default_params {
+        // Información sobre las luces de Ogre
+		param_named_auto	viewProjectionMatrix 		worldviewproj_matrix
+		param_named_auto	eyePosition					camera_position_object_space
+		param_named_auto	lightPosition					light_position_object_space			0
+		param_named_auto	lightDir							light_direction_object_space			0
+		param_named_auto	spotLightParams			spotlight_params							0
+    }
 }
 
+//________________________________________________________________________
+
+// Vertex shader de ambiente
+vertex_program bumpLightingVertex_AMB hlsl {
+	source bumpLighting.hlsl
+	entry_point vertex_AMB
+	target vs_2_0
+	
+	default_params {
+		param_named_auto	viewProjectionMatrix 		worldviewproj_matrix
+    }
+}
+
+//________________________________________________________________________
+
+// Fragment shader de bump que calcula ambiente + difuso + especular
 fragment_program bumpLightingFragmentShader hlsl {
 	source bumpLighting.hlsl
 	entry_point fragment_main
 	target ps_2_0
+	
+	default_params {
+		 // Información sobre las luces de Ogre
+		param_named_auto	globalAmbient				ambient_light_colour
+		param_named_auto	lightAttenuation				light_attenuation							0
+		param_named_auto	lightPosition					light_position_object_space			0
+		param_named_auto	lightDir							light_direction_object_space			0
+		param_named_auto	lightColor						light_diffuse_colour						0
+		param_named_auto	spotLightParams			spotlight_params							0
+    }
 }
 
+//________________________________________________________________________
+
+// Fragment shader para calcular solo ambiente
+fragment_program bumpLightingFragment_AMB hlsl {
+	source bumpLighting.hlsl
+	entry_point fragment_AMB
+	target ps_2_0
+	
+	default_params {
+		// Nivel de ambiente configurado en el juego
+		param_named_auto	globalAmbient				ambient_light_colour
+    }
+}
+
+//________________________________________________________________________
+
+// Fragment shader para calcular difuso y especular
 fragment_program bumpLightingFragment_DIFF_SPEC hlsl {
 	source bumpLighting.hlsl
-	entry_point fragment_diffuseAndSpecular
+	entry_point fragment_DIFF_SPEC
 	target ps_2_0
+	
+	default_params {
+		 // Información sobre las luces de Ogre
+		param_named_auto	lightAttenuation				light_attenuation							0
+		param_named_auto	lightPosition					light_position_object_space			0
+		param_named_auto	lightDir							light_direction_object_space			0
+		param_named_auto	lightColor						light_diffuse_colour						0
+		param_named_auto	spotLightParams			spotlight_params							0
+    }
 }

@@ -60,6 +60,7 @@ namespace Logic {
 
 	void ISpell::onActivate(){
 		spell();
+		printf("\n he sido activado con exito, soy %s", SpellType::toString((SpellType::Enum)_spellID).c_str());
 	} // onActivate
 	//__________________________________________________________________
 

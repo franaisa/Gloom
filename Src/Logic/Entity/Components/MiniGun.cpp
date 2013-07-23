@@ -98,10 +98,13 @@ namespace Logic {
 
 	void CMiniGun::onActivate() {
 		_currentSpentSecondaryAmmo = _ammoSpentTimer = 0;
+
+		/*
 		//Reiniciamos el cooldown
 		reduceCooldown(0);
 		//y los daños
 		amplifyDamage(0);
+		*/
 	}
 	//__________________________________________________________________
 
@@ -154,6 +157,7 @@ namespace Logic {
 		}
 
 		shoot();
+		
 	} // primaryFire
 	//__________________________________________________________________
 	
