@@ -29,34 +29,37 @@ material mapaAlberto_blanco
 
 
 material mapaAlberto_bronzecopper {
-
 	technique {
 		pass {
 		
-			vertex_program_ref bumpLightingVertexShader {
-				// Parametros obtenidos de Ogre
-				param_named_auto	viewProjectionMatrix 		worldviewproj_matrix
-				param_named_auto	eyePosition					camera_position_object_space
-				param_named_auto	lightPosition					light_position_object_space			0
-				param_named_auto	lightDir							light_direction_object_space			0
-				param_named_auto	spotLightParams			spotlight_params							0
+			vertex_program_ref bumpLightingVertex_AMB {
+			}
+		
+			fragment_program_ref bumpLightingFragment_AMB {
+				// Constante para regular la cantidad de ambiente
+				param_named			Ka								float		0.6
 			}
 			
-			fragment_program_ref bumpLightingFragmentShader {
-				// Parametros obtenidos de Ogre
-				param_named_auto	globalAmbient		ambient_light_colour
-				param_named_auto	lightAttenuation		light_attenuation						0
-				param_named_auto	lightPosition			light_position_object_space		0
-				param_named_auto	lightDir					light_direction_object_space		0
-				param_named_auto	lightColor				light_diffuse_colour					0
-				param_named_auto	spotLightParams	spotlight_params						0
-				
-				// Constante para regular la cantidad de ambiente
-				param_named	Ka							float		1.0
+			// Textura de difuso
+			texture_unit DiffMap {
+				texture BronzeCopper0030_L_COLOR3.tga
+			}
+			
+		}
+		
+		pass {
+		
+			scene_blend add
+			iteration once_per_light
+		
+			vertex_program_ref bumpLightingVertexShader {
+			}
+			
+			fragment_program_ref bumpLightingFragment_DIFF_SPEC {
 				// Constante para regular la cantidad de difuso
-				param_named	Kd							float		0.6
+				param_named			Kd								float		0.6
 				// Constante de brillo especular
-				param_named 	shininess					float		70.0
+				param_named 			shininess						float		70.0
 			}
 			
 			// Textura de difuso
@@ -71,40 +74,42 @@ material mapaAlberto_bronzecopper {
 			
 		}
 	}
-	
 }
 
 
 
 material mapaAlberto_comluman {
-
 	technique {
 		pass {
 		
-			vertex_program_ref bumpLightingVertexShader {
-				// Parametros obtenidos de Ogre
-				param_named_auto	viewProjectionMatrix 		worldviewproj_matrix
-				param_named_auto	eyePosition					camera_position_object_space
-				param_named_auto	lightPosition					light_position_object_space			0
-				param_named_auto	lightDir							light_direction_object_space			0
-				param_named_auto	spotLightParams			spotlight_params							0
+			vertex_program_ref bumpLightingVertex_AMB {
+			}
+		
+			fragment_program_ref bumpLightingFragment_AMB {
+				// Constante para regular la cantidad de ambiente
+				param_named			Ka								float		0.6
 			}
 			
-			fragment_program_ref bumpLightingFragmentShader {
-				// Parametros obtenidos de Ogre
-				param_named_auto	globalAmbient		ambient_light_colour
-				param_named_auto	lightAttenuation		light_attenuation						0
-				param_named_auto	lightPosition			light_position_object_space		0
-				param_named_auto	lightDir					light_direction_object_space		0
-				param_named_auto	lightColor				light_diffuse_colour					0
-				param_named_auto	spotLightParams	spotlight_params						0
-				
-				// Constante para regular la cantidad de ambiente
-				param_named	Ka							float		1.0
+			// Textura de difuso
+			texture_unit DiffMap {
+				texture metal_columna_tileado_COLOR.tga
+			}
+			
+		}
+		
+		pass {
+		
+			scene_blend add
+			iteration once_per_light
+		
+			vertex_program_ref bumpLightingVertexShader {
+			}
+			
+			fragment_program_ref bumpLightingFragment_DIFF_SPEC {
 				// Constante para regular la cantidad de difuso
-				param_named	Kd							float		0.6
+				param_named			Kd								float		0.6
 				// Constante de brillo especular
-				param_named 	shininess					float		70.0
+				param_named 			shininess						float		70.0
 			}
 			
 			// Textura de difuso
@@ -119,7 +124,6 @@ material mapaAlberto_comluman {
 			
 		}
 	}
-	
 }
 
 
@@ -155,34 +159,37 @@ material mapaAlberto_luces
 
 
 material mapaAlberto_metalContainer {
-	
 	technique {
 		pass {
 		
-			vertex_program_ref bumpLightingVertexShader {
-				// Parametros obtenidos de Ogre
-				param_named_auto	viewProjectionMatrix 		worldviewproj_matrix
-				param_named_auto	eyePosition					camera_position_object_space
-				param_named_auto	lightPosition					light_position_object_space			0
-				param_named_auto	lightDir							light_direction_object_space			0
-				param_named_auto	spotLightParams			spotlight_params							0
+			vertex_program_ref bumpLightingVertex_AMB {
+			}
+		
+			fragment_program_ref bumpLightingFragment_AMB {
+				// Constante para regular la cantidad de ambiente
+				param_named			Ka								float		0.6
 			}
 			
-			fragment_program_ref bumpLightingFragmentShader {
-				// Parametros obtenidos de Ogre
-				param_named_auto	globalAmbient		ambient_light_colour
-				param_named_auto	lightAttenuation		light_attenuation						0
-				param_named_auto	lightPosition			light_position_object_space		0
-				param_named_auto	lightDir					light_direction_object_space		0
-				param_named_auto	lightColor				light_diffuse_colour					0
-				param_named_auto	spotLightParams	spotlight_params						0
-				
-				// Constante para regular la cantidad de ambiente
-				param_named	Ka							float		1.0
+			// Textura de difuso
+			texture_unit DiffMap {
+				texture MetalContainer_COLOR.tga
+			}
+			
+		}
+		
+		pass {
+		
+			scene_blend add
+			iteration once_per_light
+		
+			vertex_program_ref bumpLightingVertexShader {
+			}
+			
+			fragment_program_ref bumpLightingFragment_DIFF_SPEC {
 				// Constante para regular la cantidad de difuso
-				param_named	Kd							float		0.6
+				param_named			Kd								float		0.6
 				// Constante de brillo especular
-				param_named 	shininess					float		70.0
+				param_named 			shininess						float		70.0
 			}
 			
 			// Textura de difuso
@@ -196,41 +203,43 @@ material mapaAlberto_metalContainer {
 			}
 			
 		}
-	}
-	
+	}	
 }
 
 
 
 material mapaAlberto_metalContainer0149 {
-
 	technique {
 		pass {
 		
-			vertex_program_ref bumpLightingVertexShader {
-				// Parametros obtenidos de Ogre
-				param_named_auto	viewProjectionMatrix 		worldviewproj_matrix
-				param_named_auto	eyePosition					camera_position_object_space
-				param_named_auto	lightPosition					light_position_object_space			0
-				param_named_auto	lightDir							light_direction_object_space			0
-				param_named_auto	spotLightParams			spotlight_params							0
+			vertex_program_ref bumpLightingVertex_AMB {
+			}
+		
+			fragment_program_ref bumpLightingFragment_AMB {
+				// Constante para regular la cantidad de ambiente
+				param_named			Ka								float		0.6
 			}
 			
-			fragment_program_ref bumpLightingFragmentShader {
-				// Parametros obtenidos de Ogre
-				param_named_auto	globalAmbient		ambient_light_colour
-				param_named_auto	lightAttenuation		light_attenuation						0
-				param_named_auto	lightPosition			light_position_object_space		0
-				param_named_auto	lightDir					light_direction_object_space		0
-				param_named_auto	lightColor				light_diffuse_colour					0
-				param_named_auto	spotLightParams	spotlight_params						0
-				
-				// Constante para regular la cantidad de ambiente
-				param_named	Ka							float		1.0
+			// Textura de difuso
+			texture_unit DiffMap {
+				texture MetalContainers0149_S_COLOR_COLOR.tga
+			}
+			
+		}
+		
+		pass {
+		
+			scene_blend add
+			iteration once_per_light
+		
+			vertex_program_ref bumpLightingVertexShader {
+			}
+			
+			fragment_program_ref bumpLightingFragment_DIFF_SPEC {
 				// Constante para regular la cantidad de difuso
-				param_named	Kd							float		0.6
+				param_named			Kd								float		0.6
 				// Constante de brillo especular
-				param_named 	shininess					float		70.0
+				param_named 			shininess						float		70.0
 			}
 			
 			// Textura de difuso
@@ -244,41 +253,43 @@ material mapaAlberto_metalContainer0149 {
 			}
 			
 		}
-	}
-	
+	}	
 }
 
 
 
 material mapaAlberto_metalContainers {
-
 	technique {
 		pass {
 		
-			vertex_program_ref bumpLightingVertexShader {
-				// Parametros obtenidos de Ogre
-				param_named_auto	viewProjectionMatrix 		worldviewproj_matrix
-				param_named_auto	eyePosition					camera_position_object_space
-				param_named_auto	lightPosition					light_position_object_space			0
-				param_named_auto	lightDir							light_direction_object_space			0
-				param_named_auto	spotLightParams			spotlight_params							0
+			vertex_program_ref bumpLightingVertex_AMB {
+			}
+		
+			fragment_program_ref bumpLightingFragment_AMB {
+				// Constante para regular la cantidad de ambiente
+				param_named			Ka								float		0.6
 			}
 			
-			fragment_program_ref bumpLightingFragmentShader {
-				// Parametros obtenidos de Ogre
-				param_named_auto	globalAmbient		ambient_light_colour
-				param_named_auto	lightAttenuation		light_attenuation						0
-				param_named_auto	lightPosition			light_position_object_space		0
-				param_named_auto	lightDir					light_direction_object_space		0
-				param_named_auto	lightColor				light_diffuse_colour					0
-				param_named_auto	spotLightParams	spotlight_params						0
-				
-				// Constante para regular la cantidad de ambiente
-				param_named	Ka							float		1.0
+			// Textura de difuso
+			texture_unit DiffMap {
+				texture MetalContainer_COLOR.tga
+			}
+			
+		}
+		
+		pass {
+		
+			scene_blend add
+			iteration once_per_light
+		
+			vertex_program_ref bumpLightingVertexShader {
+			}
+			
+			fragment_program_ref bumpLightingFragment_DIFF_SPEC {
 				// Constante para regular la cantidad de difuso
-				param_named	Kd							float		0.6
+				param_named			Kd								float		0.6
 				// Constante de brillo especular
-				param_named 	shininess					float		70.0
+				param_named 			shininess						float		70.0
 			}
 			
 			// Textura de difuso
@@ -293,40 +304,42 @@ material mapaAlberto_metalContainers {
 			
 		}
 	}
-	
 }
 
 
 
 material mapaAlberto_metalpuerta {
-
 	technique {
 		pass {
 		
-			vertex_program_ref bumpLightingVertexShader {
-				// Parametros obtenidos de Ogre
-				param_named_auto	viewProjectionMatrix 		worldviewproj_matrix
-				param_named_auto	eyePosition					camera_position_object_space
-				param_named_auto	lightPosition					light_position_object_space			0
-				param_named_auto	lightDir							light_direction_object_space			0
-				param_named_auto	spotLightParams			spotlight_params							0
+			vertex_program_ref bumpLightingVertex_AMB {
+			}
+		
+			fragment_program_ref bumpLightingFragment_AMB {
+				// Constante para regular la cantidad de ambiente
+				param_named			Ka								float		0.6
 			}
 			
-			fragment_program_ref bumpLightingFragmentShader {
-				// Parametros obtenidos de Ogre
-				param_named_auto	globalAmbient		ambient_light_colour
-				param_named_auto	lightAttenuation		light_attenuation						0
-				param_named_auto	lightPosition			light_position_object_space		0
-				param_named_auto	lightDir					light_direction_object_space		0
-				param_named_auto	lightColor				light_diffuse_colour					0
-				param_named_auto	spotLightParams	spotlight_params						0
-				
-				// Constante para regular la cantidad de ambiente
-				param_named	Ka							float		1.0
+			// Textura de difuso
+			texture_unit DiffMap {
+				texture metalpuerta_COLOR.tga
+			}
+			
+		}
+		
+		pass {
+		
+			scene_blend add
+			iteration once_per_light
+		
+			vertex_program_ref bumpLightingVertexShader {
+			}
+			
+			fragment_program_ref bumpLightingFragment_DIFF_SPEC {
 				// Constante para regular la cantidad de difuso
-				param_named	Kd							float		0.6
+				param_named			Kd								float		0.6
 				// Constante de brillo especular
-				param_named 	shininess					float		70.0
+				param_named 			shininess						float		70.0
 			}
 			
 			// Textura de difuso
@@ -341,7 +354,6 @@ material mapaAlberto_metalpuerta {
 			
 		}
 	}
-	
 }
 
 
@@ -360,36 +372,16 @@ material mapaAlberto_mix {
 }
 
 
-
 material mapaAlberto_piedra {
-
 	technique {
 		pass {
 		
-			vertex_program_ref bumpLightingVertexShader {
-				// Parametros obtenidos de Ogre
-				param_named_auto	viewProjectionMatrix 		worldviewproj_matrix
-				param_named_auto	eyePosition					camera_position_object_space
-				param_named_auto	lightPosition					light_position_object_space			0
-				param_named_auto	lightDir							light_direction_object_space			0
-				param_named_auto	spotLightParams			spotlight_params							0
+			vertex_program_ref bumpLightingVertex_AMB {
 			}
-			
-			fragment_program_ref bumpLightingFragmentShader {
-				// Parametros obtenidos de Ogre
-				param_named_auto	globalAmbient		ambient_light_colour
-				param_named_auto	lightAttenuation		light_attenuation						0
-				param_named_auto	lightPosition			light_position_object_space		0
-				param_named_auto	lightDir					light_direction_object_space		0
-				param_named_auto	lightColor				light_diffuse_colour					0
-				param_named_auto	spotLightParams	spotlight_params						0
-				
+		
+			fragment_program_ref bumpLightingFragment_AMB {
 				// Constante para regular la cantidad de ambiente
-				param_named	Ka							float		1.0
-				// Constante para regular la cantidad de difuso
-				param_named	Kd							float		0.6
-				// Constante de brillo especular
-				param_named 	shininess					float		70.0
+				param_named			Ka								float		0.6
 			}
 			
 			// Textura de difuso
@@ -397,35 +389,17 @@ material mapaAlberto_piedra {
 				texture piedra_COLOR2.tga
 			}
 			
-			// Textura para el bump mapping. En el alfa esta el mapa de especulares.
-			texture_unit NormalMap {
-				texture piedra_NRM.tga
-			}
-			
 		}
+		
 		pass {
 		
-			
 			scene_blend add
-			iteration once_per_light point
-			
+			iteration once_per_light
+		
 			vertex_program_ref bumpLightingVertexShader {
-				// Parametros obtenidos de Ogre
-				param_named_auto	viewProjectionMatrix 		worldviewproj_matrix 
-				param_named_auto	eyePosition					camera_position_object_space
-				param_named_auto	lightPosition					light_position_object_space		0
-				param_named_auto	lightDir							light_direction_object_space 0
-				param_named_auto	spotLightParams			spotlight_params						0
 			}
 			
 			fragment_program_ref bumpLightingFragment_DIFF_SPEC {
-				// Parametros obtenidos de Ogre
-				param_named_auto	lightAttenuation				light_attenuation							0
-				param_named_auto	lightPosition					light_position_object_space			0
-				param_named_auto	lightDir							light_direction_object_space			0
-				param_named_auto	lightColor						light_diffuse_colour						0
-				param_named_auto	spotLightParams			spotlight_params							0
-				
 				// Constante para regular la cantidad de difuso
 				param_named			Kd								float		0.6
 				// Constante de brillo especular
@@ -443,8 +417,7 @@ material mapaAlberto_piedra {
 			}
 			
 		}
-	}
-	
+	}	
 }
 
 
@@ -454,30 +427,12 @@ material mapaAlberto_suelo {
 	technique {
 		pass {
 		
-			vertex_program_ref bumpLightingVertexShader {
-				// Parametros obtenidos de Ogre
-				param_named_auto	viewProjectionMatrix 		worldviewproj_matrix
-				param_named_auto	eyePosition					camera_position_object_space
-				param_named_auto	lightPosition					light_position_object_space			0
-				param_named_auto	lightDir							light_direction_object_space			0
-				param_named_auto	spotLightParams			spotlight_params							0
+			vertex_program_ref bumpLightingVertex_AMB {
 			}
-			
-			fragment_program_ref bumpLightingFragmentShader {
-				// Parametros obtenidos de Ogre
-				param_named_auto	globalAmbient		ambient_light_colour
-				param_named_auto	lightAttenuation		light_attenuation						0
-				param_named_auto	lightPosition			light_position_object_space		0
-				param_named_auto	lightDir					light_direction_object_space		0
-				param_named_auto	lightColor				light_diffuse_colour					0
-				param_named_auto	spotLightParams	spotlight_params						0
-				
+		
+			fragment_program_ref bumpLightingFragment_AMB {
 				// Constante para regular la cantidad de ambiente
-				param_named	Ka							float		1.0
-				// Constante para regular la cantidad de difuso
-				param_named	Kd							float		0.6
-				// Constante de brillo especular
-				param_named 	shininess					float		70.0
+				param_named			Ka								float		0.6
 			}
 			
 			// Textura de difuso
@@ -485,35 +440,17 @@ material mapaAlberto_suelo {
 				texture suelo_COLOR.tga
 			}
 			
-			// Textura para el bump mapping. En el alfa esta el mapa de especulares.
-			texture_unit NormalMap {
-				texture suelo_NRM.tga
-			}
-			
 		}
+		
 		pass {
 		
-			
 			scene_blend add
-			iteration once_per_light point
-			
+			iteration once_per_light
+		
 			vertex_program_ref bumpLightingVertexShader {
-				// Parametros obtenidos de Ogre
-				param_named_auto	viewProjectionMatrix 		worldviewproj_matrix 
-				param_named_auto	eyePosition					camera_position_object_space
-				param_named_auto	lightPosition					light_position_object_space		0
-				param_named_auto	lightDir							light_direction_object_space 0
-				param_named_auto	spotLightParams			spotlight_params						0
 			}
 			
 			fragment_program_ref bumpLightingFragment_DIFF_SPEC {
-				// Parametros obtenidos de Ogre
-				param_named_auto	lightAttenuation				light_attenuation							0
-				param_named_auto	lightPosition					light_position_object_space			0
-				param_named_auto	lightDir							light_direction_object_space			0
-				param_named_auto	lightColor						light_diffuse_colour						0
-				param_named_auto	spotLightParams			spotlight_params							0
-				
 				// Constante para regular la cantidad de difuso
 				param_named			Kd								float		0.6
 				// Constante de brillo especular
@@ -532,40 +469,42 @@ material mapaAlberto_suelo {
 			
 		}
 	}
-	
 }
 
 
 
 material mapaAlberto_suelometal{
-
 	technique {
 		pass {
 		
-			vertex_program_ref bumpLightingVertexShader {
-				// Parametros obtenidos de Ogre
-				param_named_auto	viewProjectionMatrix 		worldviewproj_matrix
-				param_named_auto	eyePosition					camera_position_object_space
-				param_named_auto	lightPosition					light_position_object_space			0
-				param_named_auto	lightDir							light_direction_object_space			0
-				param_named_auto	spotLightParams			spotlight_params							0
+			vertex_program_ref bumpLightingVertex_AMB {
+			}
+		
+			fragment_program_ref bumpLightingFragment_AMB {
+				// Constante para regular la cantidad de ambiente
+				param_named			Ka								float		0.6
 			}
 			
-			fragment_program_ref bumpLightingFragmentShader {
-				// Parametros obtenidos de Ogre
-				param_named_auto	globalAmbient		ambient_light_colour
-				param_named_auto	lightAttenuation		light_attenuation						0
-				param_named_auto	lightPosition			light_position_object_space		0
-				param_named_auto	lightDir					light_direction_object_space		0
-				param_named_auto	lightColor				light_diffuse_colour					0
-				param_named_auto	spotLightParams	spotlight_params						0
-				
-				// Constante para regular la cantidad de ambiente
-				param_named	Ka							float		1.0
+			// Textura de difuso
+			texture_unit DiffMap {
+				texture suelometal_COLOR2.tga
+			}
+			
+		}
+		
+		pass {
+		
+			scene_blend add
+			iteration once_per_light
+		
+			vertex_program_ref bumpLightingVertexShader {
+			}
+			
+			fragment_program_ref bumpLightingFragment_DIFF_SPEC {
 				// Constante para regular la cantidad de difuso
-				param_named	Kd							float		0.6
+				param_named			Kd								float		0.6
 				// Constante de brillo especular
-				param_named 	shininess					float		70.0
+				param_named 			shininess						float		70.0
 			}
 			
 			// Textura de difuso
@@ -580,40 +519,42 @@ material mapaAlberto_suelometal{
 			
 		}
 	}
-	
 }
 
 
 
 material mapaAlberto_techometal {
-
 	technique {
 		pass {
 		
-			vertex_program_ref bumpLightingVertexShader {
-				// Parametros obtenidos de Ogre
-				param_named_auto	viewProjectionMatrix 		worldviewproj_matrix
-				param_named_auto	eyePosition					camera_position_object_space
-				param_named_auto	lightPosition					light_position_object_space			0
-				param_named_auto	lightDir							light_direction_object_space			0
-				param_named_auto	spotLightParams			spotlight_params							0
+			vertex_program_ref bumpLightingVertex_AMB {
+			}
+		
+			fragment_program_ref bumpLightingFragment_AMB {
+				// Constante para regular la cantidad de ambiente
+				param_named			Ka								float		0.6
 			}
 			
-			fragment_program_ref bumpLightingFragmentShader {
-				// Parametros obtenidos de Ogre
-				param_named_auto	globalAmbient		ambient_light_colour
-				param_named_auto	lightAttenuation		light_attenuation						0
-				param_named_auto	lightPosition			light_position_object_space		0
-				param_named_auto	lightDir					light_direction_object_space		0
-				param_named_auto	lightColor				light_diffuse_colour					0
-				param_named_auto	spotLightParams	spotlight_params						0
-				
-				// Constante para regular la cantidad de ambiente
-				param_named	Ka							float		1.0
+			// Textura de difuso
+			texture_unit DiffMap {
+				texture techometal_COLOR2.tga
+			}
+			
+		}
+		
+		pass {
+		
+			scene_blend add
+			iteration once_per_light
+		
+			vertex_program_ref bumpLightingVertexShader {
+			}
+			
+			fragment_program_ref bumpLightingFragment_DIFF_SPEC {
 				// Constante para regular la cantidad de difuso
-				param_named	Kd							float		0.6
+				param_named			Kd								float		0.6
 				// Constante de brillo especular
-				param_named 	shininess					float		70.0
+				param_named 			shininess						float		70.0
 			}
 			
 			// Textura de difuso
@@ -628,40 +569,42 @@ material mapaAlberto_techometal {
 			
 		}
 	}
-	
 }
 
 
 
 material mapaAlberto_ventana {
-
 	technique {
 		pass {
 		
-			vertex_program_ref bumpLightingVertexShader {
-				// Parametros obtenidos de Ogre
-				param_named_auto	viewProjectionMatrix 		worldviewproj_matrix
-				param_named_auto	eyePosition					camera_position_object_space
-				param_named_auto	lightPosition					light_position_object_space			0
-				param_named_auto	lightDir							light_direction_object_space			0
-				param_named_auto	spotLightParams			spotlight_params							0
+			vertex_program_ref bumpLightingVertex_AMB {
+			}
+		
+			fragment_program_ref bumpLightingFragment_AMB {
+				// Constante para regular la cantidad de ambiente
+				param_named			Ka								float		0.6
 			}
 			
-			fragment_program_ref bumpLightingFragmentShader {
-				// Parametros obtenidos de Ogre
-				param_named_auto	globalAmbient		ambient_light_colour
-				param_named_auto	lightAttenuation		light_attenuation						0
-				param_named_auto	lightPosition			light_position_object_space		0
-				param_named_auto	lightDir					light_direction_object_space		0
-				param_named_auto	lightColor				light_diffuse_colour					0
-				param_named_auto	spotLightParams	spotlight_params						0
-				
-				// Constante para regular la cantidad de ambiente
-				param_named	Ka							float		1.0
+			// Textura de difuso
+			texture_unit DiffMap {
+				texture ventana_COLOR.tga
+			}
+			
+		}
+		
+		pass {
+		
+			scene_blend add
+			iteration once_per_light
+		
+			vertex_program_ref bumpLightingVertexShader {
+			}
+			
+			fragment_program_ref bumpLightingFragment_DIFF_SPEC {
 				// Constante para regular la cantidad de difuso
-				param_named	Kd							float		0.6
+				param_named			Kd								float		0.6
 				// Constante de brillo especular
-				param_named 	shininess					float		70.0
+				param_named 			shininess						float		70.0
 			}
 			
 			// Textura de difuso
@@ -675,41 +618,43 @@ material mapaAlberto_ventana {
 			}
 			
 		}
-	}
-	
+	}	
 }
 
 
 
 material mapaAlberto_viga {
-	
 	technique {
 		pass {
 		
-			vertex_program_ref bumpLightingVertexShader {
-				// Parametros obtenidos de Ogre
-				param_named_auto	viewProjectionMatrix 		worldviewproj_matrix
-				param_named_auto	eyePosition					camera_position_object_space
-				param_named_auto	lightPosition					light_position_object_space			0
-				param_named_auto	lightDir							light_direction_object_space			0
-				param_named_auto	spotLightParams			spotlight_params							0
+			vertex_program_ref bumpLightingVertex_AMB {
+			}
+		
+			fragment_program_ref bumpLightingFragment_AMB {
+				// Constante para regular la cantidad de ambiente
+				param_named			Ka								float		0.6
 			}
 			
-			fragment_program_ref bumpLightingFragmentShader {
-				// Parametros obtenidos de Ogre
-				param_named_auto	globalAmbient		ambient_light_colour
-				param_named_auto	lightAttenuation		light_attenuation						0
-				param_named_auto	lightPosition			light_position_object_space		0
-				param_named_auto	lightDir					light_direction_object_space		0
-				param_named_auto	lightColor				light_diffuse_colour					0
-				param_named_auto	spotLightParams	spotlight_params						0
-				
-				// Constante para regular la cantidad de ambiente
-				param_named	Ka							float		1.0
+			// Textura de difuso
+			texture_unit DiffMap {
+				texture viga_COLOR.tga
+			}
+			
+		}
+		
+		pass {
+		
+			scene_blend add
+			iteration once_per_light
+		
+			vertex_program_ref bumpLightingVertexShader {
+			}
+			
+			fragment_program_ref bumpLightingFragment_DIFF_SPEC {
 				// Constante para regular la cantidad de difuso
-				param_named	Kd							float		0.6
+				param_named			Kd								float		0.6
 				// Constante de brillo especular
-				param_named 	shininess					float		70.0
+				param_named 			shininess						float		70.0
 			}
 			
 			// Textura de difuso
@@ -723,41 +668,43 @@ material mapaAlberto_viga {
 			}
 			
 		}
-	}
-	
+	}	
 }
 
 
 
 material metalContainer_metalContainer0036 {
-	
 	technique {
 		pass {
 		
-			vertex_program_ref bumpLightingVertexShader {
-				// Parametros obtenidos de Ogre
-				param_named_auto	viewProjectionMatrix 		worldviewproj_matrix
-				param_named_auto	eyePosition					camera_position_object_space
-				param_named_auto	lightPosition					light_position_object_space			0
-				param_named_auto	lightDir							light_direction_object_space			0
-				param_named_auto	spotLightParams			spotlight_params							0
+			vertex_program_ref bumpLightingVertex_AMB {
+			}
+		
+			fragment_program_ref bumpLightingFragment_AMB {
+				// Constante para regular la cantidad de ambiente
+				param_named			Ka								float		0.6
 			}
 			
-			fragment_program_ref bumpLightingFragmentShader {
-				// Parametros obtenidos de Ogre
-				param_named_auto	globalAmbient		ambient_light_colour
-				param_named_auto	lightAttenuation		light_attenuation						0
-				param_named_auto	lightPosition			light_position_object_space		0
-				param_named_auto	lightDir					light_direction_object_space		0
-				param_named_auto	lightColor				light_diffuse_colour					0
-				param_named_auto	spotLightParams	spotlight_params						0
-				
-				// Constante para regular la cantidad de ambiente
-				param_named	Ka							float		1.0
+			// Textura de difuso
+			texture_unit DiffMap {
+				texture MetalContainers0036_S_COLOR.tga
+			}
+			
+		}
+		
+		pass {
+		
+			scene_blend add
+			iteration once_per_light
+		
+			vertex_program_ref bumpLightingVertexShader {
+			}
+			
+			fragment_program_ref bumpLightingFragment_DIFF_SPEC {
 				// Constante para regular la cantidad de difuso
-				param_named	Kd							float		0.6
+				param_named			Kd								float		0.6
 				// Constante de brillo especular
-				param_named 	shininess					float		70.0
+				param_named 			shininess						float		70.0
 			}
 			
 			// Textura de difuso
@@ -771,6 +718,5 @@ material metalContainer_metalContainer0036 {
 			}
 			
 		}
-	}
-	
+	}	
 }

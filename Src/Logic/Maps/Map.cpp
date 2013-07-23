@@ -516,5 +516,24 @@ namespace Logic {
 		} else if(spell=="resurrection"){
 			return "7";
 		}
+		/* Debe de quedar tal que asi :D
+		if(spell=="amplifydamage"){
+			return "0";
+		} else if(spell=="comeback"){
+			return "1";
+		} else if(spell=="cooldown"){
+			return "2";
+		} else if(spell=="gravity"){
+			return "3";
+		} else if(spell=="harddeath"){
+			return "4";
+		} else if(spell=="eHungry"){
+			return "5";
+		} else if(spell=="shield"){
+			return "6";
+		} else if(spell=="resurrection"){
+			return "7";
+		}
+		*/
 	}
 } // namespace Logic
