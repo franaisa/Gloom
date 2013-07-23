@@ -168,19 +168,18 @@ namespace Logic {
 		float angle = direction.normalisedCopy().angleBetween((entity->getOrientation()*Vector3::NEGATIVE_UNIT_Z).normalisedCopy()).valueDegrees();
 
 		//si no lo esta mirando nada no lo cegamos
-		//if(angle < 90)
-		//	return;
+		if(angle > 90)
+			return;
 
-		
 
-		//angle-=90;
-
-		std::cout << "angulo " << angle << std::endl;
+		//std::cout << "angulo " << angle << std::endl;
 
 		float flashFactor;
 
-		flashFactor = 22 * (angle/10);
-
+		if(angle>1.0)
+			flashFactor = 50 * (90/angle);
+		else
+			flashFactor = 50;
 
 
 		//mandamos un mensaje de flashazo

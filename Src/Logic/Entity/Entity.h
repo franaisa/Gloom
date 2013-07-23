@@ -7,8 +7,11 @@ de juego. Es una colección de componentes.
 @see Logic::CEntity
 @see Logic::IComponent
 
+@author Antonio Jesús Narváez Corrales
+@author Rubén Mulero Guerrero
 @author Francisco Aisa García
-@author Jose Antonio García Yáñez
+@author Jaime Chapinal Cervantes
+
 @date Junio, 2013
 */
 

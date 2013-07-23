@@ -58,40 +58,56 @@ package hud
 			ExternalInterface.addCallback("hit", onHit);
 			ExternalInterface.addCallback("reset", reset);
 			
-			primaryspell.visible = false;
-			secondaryspell.visible = false;
-			ironhellgoat.visible = false;
-			shotgun.visible = false;
-			minigun.visible = false;
-			railgun.visible = false;
+			ironhellgoat.gotoAndPlay("none");
+			shotgun.gotoAndPlay("none");
+			minigun.gotoAndPlay("none");
+			railgun.gotoAndPlay("none");
 			
-			
+			soulreaper.selector.visible = false;
+			ironhellgoat.selector.visible = false;
+			shotgun.selector.visible = false;
+			minigun.selector.visible = false;
+			railgun.selector.visible = false;
 		}
 		
 		public function reset() {
-			primaryspell.visible = false;
-			secondaryspell.visible = false;
-			ironhellgoat.visible = false;
-			shotgun.visible = false;
-			minigun.visible = false;
-			railgun.visible = false;
+			ironhellgoat.gotoAndPlay("none");
+			shotgun.gotoAndPlay("none");
+			minigun.gotoAndPlay("none");
+			railgun.gotoAndPlay("none");
+			
+			ironhellgoat.selector.visible = false;
+			shotgun.selector.visible = false;
+			minigun.selector.visible = false;
+			railgun.selector.visible = false;
+			
 			updateWeapon("soulreaper");
+			
+			updateArmor(0);
 		}
 		
 		public function updateWeapon(weapon:String) {
 			if (equippedWeapon != null) {
-				equippedWeapon.gotoAndPlay("unselected");
+				equippedWeapon.selector.visible = false;
 				
 			}
-			if (this.bullets.currentFrameLabel != weapon) {
+			/*if (this.bullets.currentFrameLabel != weapon) {
 				this.bullets.gotoAndPlay(weapon);
-			}
+			}*/
 			
 			equippedWeapon = getChildByName(weapon) as MovieClip;
-			equippedWeapon.gotoAndPlay("selected");
+			equippedWeapon.selector.visible = true;
 			//equippedWeapon.name = weapon;
 			if (weapon == "soulreaper") {
 				this.bullets.asd.text = "";
+				
+			}
+			crosshair.gotoAndPlay(weapon);
+			
+			trace(equippedWeapon.currentFrameLabel);
+			
+			if (equippedWeapon.currentFrameLabel != "avaiable") {
+				equippedWeapon.gotoAndPlay("avaiable");
 			}
 		}
 		
@@ -103,6 +119,12 @@ package hud
 			if (weaponaux.visible == false) {
 				weaponPicked(weapon);
 				weaponaux.visible = true;
+			}
+			
+			if (bullets == 0) {
+				
+				equippedWeapon.gotoAndPlay("unavaiable");
+				
 			}
 		}
 		
@@ -131,9 +153,12 @@ package hud
 		}
 		
 		public function updateArmor(armadura:int) {
-			trace(this.armor.armorbar.rotation);
-			this.armor.armorbar.rotation = ( 90 / 100 ) * armadura;
-			trace(this.armor.armorbar.rotation);
+			lifebar.armorbar.scaleX = armadura / 100.0;
+			
+			if (lifebar.armorbar.scaleX > 1) {
+				lifebar.armorbar.scaleX = 1;
+			}
+			lifebar.armornumber.text = armadura.toString();
 		}
 		
 		public function updateLife(life:int) {
@@ -141,21 +166,19 @@ package hud
 			/*if (life > 100) {
 				lifebar.gotoAndPlay("idle");
 			}*/
-			lifebar.scaleX = (2 + (life / 100.0) ) / 3;
-			lifebar.scaleY = (2 + (life / 100.0) ) / 3;
+			lifebar.lifebar.scaleX = life / 100.0;
 			
-			if (lifebar.scaleX > 1) {
-				lifebar.scaleX = 1;
-				lifebar.scaleY = 1;
+			if (lifebar.lifebar.scaleX > 1) {
+				lifebar.lifebar.scaleX = 1;
 			}
 			
-			if ( life <= 15 ) {
-				lifebar.gotoAndPlay("danger");
+			/*if ( life <= 15 ) {
+				lifebar.lifebar.gotoAndPlay("danger");
 			}else {
-				lifebar.gotoAndPlay("idle");
-				lifebar.stop();
-			}
-			lifenumber.text = life.toString();
+				lifebar.lifebar.gotoAndPlay("idle");
+				lifebar.lifebar.stop();
+			}*/
+			lifebar.lifenumber.text = life.toString();
 		}
 		
 		public function primarySkill() {
@@ -171,45 +194,58 @@ package hud
 		}
 		
 		public function primarySpell() {
-			if (primaryspell.visible == false) {
+			/*if (primaryspell.visible == false) {
 				primaryspell.visible = true
 				return;
 			}
 			primaryspell.gotoAndPlay("cooldown");
-			
+			*/
 		}
 		
 		public function secondarySpell() {
-			if (secondaryspell.visible == false) {
+			/*if (secondaryspell.visible == false) {
 				secondaryspell.visible = true
 				return;
 			}
-			secondaryspell.gotoAndPlay("cooldown");
+			secondaryspell.gotoAndPlay("cooldown");*/
 			
 		}
 		
 		public function updatePrimarySkillCooldown(cooldownTime:Number) {
 			
-			primaryskill.speed = 1.0 / cooldownTime;
+			//primaryskill.speed = 1.0 / cooldownTime;
 			
+			if (cooldownTime >= 1) {
+				primaryskill.gotoAndPlay("avaiable");
+			}else {
+				if (this.bullets.currentFrameLabel != "cd") {
+					secondaryskill.gotoAndPlay("cd");
+				}
+			}
 			
 		}
 		
 		public function updatePrimarySpellCooldown(cooldownTime:Number) {
 			
-			primaryspell.speed = 1.0 / cooldownTime;
+			//primaryspell.speed = 1.0 / cooldownTime;
 			
 		}
 		
 		public function updateSecondarySpellCooldown(cooldownTime:Number) {
 			
-			secondaryspell.speed = 2.0 / cooldownTime;
+			//secondaryspell.speed = 2.0 / cooldownTime;
 		}
 		
 		public function updateSecondarySkillCooldown(cooldownTime:Number) {
 			
-			secondaryskill.speed = 2.0 / cooldownTime;
-			
+			//secondaryskill.speed = 2.0 / cooldownTime;
+			if (cooldownTime >= 1) {
+				secondaryskill.gotoAndPlay("avaiable");
+			}else {
+				if (this.bullets.currentFrameLabel != "cd") {
+					secondaryskill.gotoAndPlay("cd");
+				}
+			}
 		}
 		
 		public function updateCrosshair(crosshair:String) {

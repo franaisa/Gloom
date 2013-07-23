@@ -7,8 +7,12 @@ de juego. Es una colección de componentes.
 @see Logic::CEntity
 @see Logic::IComponent
 
-@author David Llansó
-@author Jose Antonio García Yáñez
+@author Antonio Jesús Narváez Corrales
+@author Rubén Mulero Guerrero
+@author Francisco Aisa García
+@author Jaime Chapinal Cervantes
+
+
 @date Junio, 2013
 */
 #include "Components\SpawnPlayer.h"
