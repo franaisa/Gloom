@@ -12,12 +12,12 @@ material bumpLightingTest {
 			
 			// Textura de difuso
 			texture_unit DiffMap {
-				texture wallTest.jpg
+				texture floor_COLOR.tga
 			}
 			
 		}
 		
-		/*pass {
+		pass {
 		
 			scene_blend add
 			iteration once_per_light
@@ -34,15 +34,15 @@ material bumpLightingTest {
 			
 			// Textura de difuso
 			texture_unit DiffMap {
-				texture wallTest.jpg
+				texture floor_COLOR.tga
 			}
 			
 			// Textura para el bump mapping. En el alfa esta el mapa de especulares.
 			texture_unit NormalMap {
-				texture wallTestNormalMap.tga
+				texture floor_NRM.tga
 			}
 			
-		}*/
+		}
 		
 	}
 }

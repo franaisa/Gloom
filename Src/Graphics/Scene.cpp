@@ -148,7 +148,7 @@ namespace Graphics
 		}
 		
 		_viewport->setBackgroundColour(Ogre::ColourValue::Black);
-		_sceneMgr->setShadowTechnique(Ogre::SHADOWTYPE_STENCIL_ADDITIVE);
+		//_sceneMgr->setShadowTechnique(Ogre::SHADOWTYPE_STENCIL_ADDITIVE);
 		/*
 		_sceneMgr->setAmbientLight(Ogre::ColourValue(1,1,1));
 		/*/

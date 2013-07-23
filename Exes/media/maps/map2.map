@@ -2,6 +2,7 @@ Map = {
 
 	World = {
 		type = "World",
+		static = true,
 		model = "mapaAlberto.mesh",
 		physic_file = "media/models/mapaAlberto/mapaAlberto.RepX",
 	},	
