@@ -17,7 +17,7 @@ material bumpLightingTest {
 			
 		}
 		
-		/*pass {
+		pass {
 		
 			scene_blend add
 			iteration once_per_light
@@ -42,7 +42,7 @@ material bumpLightingTest {
 				texture wallTestNormalMap.tga
 			}
 			
-		}*/
+		}
 		
 	}
 }
