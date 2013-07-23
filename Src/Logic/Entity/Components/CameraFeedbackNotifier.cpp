@@ -190,8 +190,8 @@ namespace Logic {
 		//ahora actualizamos el flashazo si procede
 		if(_flashFactor > 1.0){
 			_flashFactor-=0.5f;
-			_scene->updateCompositorVariable(_flashEffect,"flashLevel",1.0/_flashFactor);
-			std::cout << "estoy flasheado" << 1.0/_flashFactor << std::endl;
+			_scene->updateCompositorVariable(_flashEffect,"flashLevel",_flashFactor);
+			std::cout << "estoy flasheado" << _flashFactor << std::endl;
 		}else if(_flashVisible){
 			_scene->setCompositorVisible(_flashEffect, false);
 			_flashVisible = false;

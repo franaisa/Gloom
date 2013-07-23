@@ -44,6 +44,8 @@ de una escena.
 #include <OgreCompositorChain.h>
 
 
+#include <ParticleUniverse\ParticleUniverseSystemManager.h>
+
 #include <OgreCompositorManager.h>
 #include <OgreMaterialManager.h>
 
@@ -181,6 +183,8 @@ namespace Graphics
 			//HHFX::getSingletonPtr()->activate();
 		}
 		_sceneMgr->getRootSceneNode()->setVisible(true);
+
+		ParticleUniverse::ParticleSystemManager* pManager = ParticleUniverse::ParticleSystemManager::getSingletonPtr();
 	} // activate
 
 	//--------------------------------------------------------
