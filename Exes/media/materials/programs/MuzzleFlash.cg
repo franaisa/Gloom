@@ -11,7 +11,7 @@ float4 flash_ps (float2 texCoord  : TEXCOORD0
    
    float flash = flashLevel;
    
-	if(flash<1.0){
+	if(flash>1.0){
 		flash=1;
 	}
    

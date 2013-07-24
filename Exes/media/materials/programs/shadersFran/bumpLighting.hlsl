@@ -49,19 +49,6 @@ struct PsInput {
 	float3 halfAngle			: TEXCOORD4;
 };
 
-struct VsInput_AMB {
-	float4 position 			: POSITION;
-	float2 uv0 					: TEXCOORD0;
-};
-
-struct VsOutput_AMB {
-	float4 position 			: POSITION;
-	float2 uv0 					: TEXCOORD0;
-};
-
-struct PsInput_AMB {
-	float2 uv0					: TEXCOORD0;
-};
 
 // ========================================================================
 // 									   FUNCIONES DE CALCULO
@@ -173,22 +160,11 @@ VsOutput vertex_main(const VsInput IN) {
 	return OUT;
 }
 
-//________________________________________________________________________
-
-VsOutput_AMB vertex_AMB(const VsInput_AMB IN) {
-	VsOutput_AMB OUT;
-
-	OUT.position = mul(viewProjectionMatrix, IN.position);
-	OUT.uv0 = IN.uv0;
-	
-	return OUT;
-}
 
 // ========================================================================
 // 									   FRAGMENT SHADER
 // ========================================================================
 
-// Fragment para calcular ambiente + difuso + especular
 float4 fragment_main(const PsInput IN) : COLOR {
 	// Obtenemos las normales y las descomprimimos
 	float3 N = tex2D(NormalMap, IN.uv0).xyz;
@@ -196,7 +172,7 @@ float4 fragment_main(const PsInput IN) : COLOR {
 	N = normalize(N);
 	
 	// Calculamos la cantidad de luz ambiente
-	float3 ambient = Ka * globalAmbient.xyz;
+	float3 ambient = Ka * globalAmbient;
 	
 	// Calculamos el color del pixel en base a la luz recibida
 	// Notar que la constante de especular se obtiene del canal alfa de la textura de normales
@@ -212,17 +188,7 @@ float4 fragment_main(const PsInput IN) : COLOR {
 
 //________________________________________________________________________
 
-// Fragment para calcular ambiente
-float4 fragment_AMB(const PsInput_AMB IN) : COLOR {
-	float3 color = Ka * globalAmbient.xyz * tex2D(DiffMap, IN.uv0).xyz;
-	
-	return float4(color, 1.0f);
-}
-
-//________________________________________________________________________
-
-// Fragment para calcular difuso + especular
-float4 fragment_DIFF_SPEC(const PsInput IN) : COLOR {
+float4 fragment_diffuseAndSpecular(const PsInput IN) : COLOR {
 	// Obtenemos las normales y las descomprimimos
 	float3 N = tex2D(NormalMap, IN.uv0).xyz;
 	N = expand(N);

@@ -181,7 +181,7 @@ Map = {
 			weaponironHellGoatMaxFireBallDamage = 100.0,
 			
 		primarySpell = 0,
-		secondarySpell = 1,
+		secondarySpell = 2,
 				
 			spellamplifyDamageID = 0,
 			spellamplifyDamagePercentDamage = 30,
@@ -384,7 +384,7 @@ Map = {
 			weaponironHellGoatMaxFireBallDamage = 100.0,
 		
 		primarySpell = 0,
-		secondarySpell = 1,
+		secondarySpell = 2,
 				
 			spellamplifyDamageID = 0,
 			spellamplifyDamagePercentDamage = 30,
@@ -578,7 +578,7 @@ Map = {
 			weaponironHellGoatMaxFireBallDamage = 100.0,
 		
 		primarySpell = 0,
-		secondarySpell = 1,
+		secondarySpell = 2,
 				
 			spellamplifyDamageID = 0,
 			spellamplifyDamagePercentDamage = 30,
@@ -772,7 +772,7 @@ Map = {
 			weaponironHellGoatMaxFireBallDamage = 100.0,
 		
 		primarySpell = 0,
-		secondarySpell = 1,
+		secondarySpell = 2,
 				
 			spellamplifyDamageID = 0,
 			spellamplifyDamagePercentDamage = 30,
@@ -971,7 +971,7 @@ Map = {
 			weaponironHellGoatMaxFireBallDamage = 100.0,
 		
 		primarySpell = 0,
-		secondarySpell = 1,
+		secondarySpell = 2,
 				
 			spellamplifyDamageID = 0,
 			spellamplifyDamagePercentDamage = 30,
@@ -1161,7 +1161,7 @@ Map = {
 			weaponironHellGoatMaxFireBallDamage = 100.0,
 		
 		primarySpell = 0,
-		secondarySpell = 1,
+		secondarySpell = 2,
 				
 			spellamplifyDamageID = 0,
 			spellamplifyDamagePercentDamage = 30,
@@ -1352,7 +1352,7 @@ Map = {
 			weaponironHellGoatMaxFireBallDamage = 100.0,
 
 		primarySpell = 0,
-		secondarySpell = 1,
+		secondarySpell = 2,
 				
 			spellamplifyDamageID = 0,
 			spellamplifyDamagePercentDamage = 30,
@@ -1549,7 +1549,7 @@ Map = {
 			weaponironHellGoatMaxFireBallDamage = 100.0,
 		
 		primarySpell = 0,
-		secondarySpell = 1,
+		secondarySpell = 2,
 				
 			spellamplifyDamageID = 0,
 			spellamplifyDamagePercentDamage = 30,
@@ -1824,7 +1824,7 @@ Map = {
 			weaponironHellGoatMaxFireBallDamage = 100.0,
 		
 		primarySpell = 0,
-		secondarySpell = 1,
+		secondarySpell = 2,
 				
 			spellamplifyDamageID = 0,
 			spellamplifyDamagePercentDamage = 30,
@@ -1948,7 +1948,7 @@ Map = {
 	ShieldSpell = {
 		type = "ShieldSpell",
 		model = "lifeDome.mesh",
-		msgList= "48,55,56",
+		msgList= "55,56",
 		physic_entity = "rigid",
 		physic_trigger = true,
 		physic_type = "kinematic",

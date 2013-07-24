@@ -10,7 +10,7 @@ material BaseGlow
         set $glow_amount "0.7"
  
         technique Shaders
-        {
+        { 
                 pass
                 {
                         ambient $ambient
@@ -62,10 +62,11 @@ material BaseGlow
                                 tex_address_mode border
                                 tex_border_colour 1 1 1
                         }
-                }
-        }
+                }  
+ 
+        }  
         technique Fallback
-        {
+        { 
                 pass
                 {
                         ambient $ambient
@@ -77,26 +78,26 @@ material BaseGlow
                                 texture $diffuse_tex
                         }
                 }
-        }
+        }  
         technique Glow
-        {
+        { 
                 scheme Scheme/Glow
                 pass
                 {
                         ambient $glow_amount $glow_amount $glow_amount 1
  
                         vertex_program_ref BaseAmbient_vp
-                        {
-                        }
+                        { 
+                        }   
  
                         fragment_program_ref BaseAmbient_fp
                         {
-                        }
+                        } 
  
                         texture_unit GlowMap
                         {
                                 texture $glow_tex
                         }
                 }
-        }
+        }  
 }
