@@ -74,7 +74,6 @@ namespace Logic {
 		_light->setOrientation( _entity->getOrientation() );
 
 		if(_timer != 0.0f) {
-			cout << "tiempo de luz = " << _timer << endl;
 			_timer -= msecs;
 			if(_timer <= 0.0f) {
 				turnOff();

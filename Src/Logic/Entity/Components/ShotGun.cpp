@@ -15,6 +15,7 @@ Contiene la implementación del componente que representa a la escopeta.
 
 // Logica
 #include "MagneticBullet.h"
+#include "DynamicLight.h"
 #include "Logic/Maps/EntityFactory.h"
 #include "Logic/Maps/Map.h"
 #include "Logic/Entity/Entity.h"
@@ -141,9 +142,16 @@ namespace Logic {
 			projectileEntity->activate();
 			projectileEntity->start();
 			projectileEntity->getComponent<CMagneticBullet>("CMagneticBullet")->setProperties(this, _projectileShootForce, dispersionDirection, _heightShoot, _primaryFireDamage, _damageBurned);
-			_projectiles.insert(projectileEntity);		
-			
+			_projectiles.insert(projectileEntity);
 		}			
+
+		if(shots > 0) {
+			// Shoot flash
+			CDynamicLight* shootFlash = _entity->getComponent<CDynamicLight>("CDynamicLight");
+			shootFlash->setColor( Vector3(1.0f, 1.0f, 0.72f) );
+			shootFlash->setAttenuation( Vector3(1.0f, 0.014f, 0.0007f) );
+			shootFlash->turnOn( Vector3(0.0f, _heightShoot, 0.0f), 0.1f );
+		}
 	} // fireWeapon
 	//_________________________________________________
 
