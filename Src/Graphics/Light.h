@@ -62,6 +62,12 @@ namespace Graphics {
 		*/
 		void setDirection(const Vector3& direction);
 		/**
+		Método que setea la rotación de la luz
+		@param Quaternion que expresa la dirección en la que queremos
+		girar la luz.
+		*/
+		void setOrientation(const Quaternion& rotation);
+		/**
 		Método controla las sombras que castea la luz.
 		@param enabled indica si las sombras se activan o se desactivan
 		*/

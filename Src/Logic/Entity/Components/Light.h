@@ -50,11 +50,23 @@ namespace Logic {
 
 		virtual void process(const std::shared_ptr<CMessage>& message);
 
+		void setColor(const Vector3& color);
+
+		void setAttenuation(const Vector3& attenuation);
+
+		void setRange(float range);
+
+		void setSpotLightParams(float innerAngle, float outerAngle);
+
+		void setPosition(const Vector3& position);
+
+		void setOrientation(const Quaternion& rotation);
+
+		void setDirection(const Vector3& direction);
+
 	protected:
 
-		/*virtual void onTick(unsigned int msecs);*/
-
-		virtual void onStart();
+		//virtual void onStart();
 
 		/**
 		Luz
@@ -71,6 +83,7 @@ namespace Logic {
 		float _outerAngle;
 		float _range;
 
+		bool _isStatic;
 	}; // class CLight
 
 	REG_FACTORY(CLight);

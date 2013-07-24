@@ -72,8 +72,11 @@ namespace Logic {
 
 	//______________________________________________________________________________
 
-	Graphics::CLight* CLightManager::createLight(Graphics::LightType::Enum lightType, const std::string& lightName, 
+	Graphics::CLight* CLightManager::createLight(Graphics::LightType::Enum lightType, const std::string& lightName, bool isStatic, 
 												 const Vector3& position, const Vector3& direction) {
+
+		if(!isStatic)
+			return new(nothrow) Graphics::CLight(lightType, lightName, position, direction);
 
 		// Como se trata de un número reducido de luces, podemos hacer la busqueda
 		// secuencial
@@ -99,5 +102,12 @@ namespace Logic {
 		}
 
 		return newLight;
+	}
+
+	//______________________________________________________________________________
+
+	void CLightManager::destroyLight(Graphics::CLight* light, bool isStatic) {
+		if(!isStatic && light != NULL)
+			delete light;
 	}
 }

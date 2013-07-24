@@ -24,6 +24,7 @@ namespace Logic {
 	IMP_FACTORY(CLight);
 
 	CLight::CLight() : _light(NULL),
+					   _isStatic(true),
 					   _position(Vector3::ZERO),
 					   _direction(Vector3::NEGATIVE_UNIT_Y),
 					   _color(Vector3::ZERO),
@@ -39,6 +40,7 @@ namespace Logic {
 
 	CLight::~CLight() {
 		// Nada que hacer
+		CLightManager::getSingletonPtr()->destroyLight(_light, _isStatic);
 	}
 	
 	//________________________________________________________________________
@@ -47,10 +49,7 @@ namespace Logic {
 		if( !IComponent::spawn(entity,map,entityInfo) ) return false;
 
 		// ATRIBUTOS OBLIGATORIOS
-		assert( entityInfo->hasAttribute("position") );
 		assert( entityInfo->hasAttribute("lightType") );
-
-		_position = entityInfo->getVector3Attribute("position");
 
 		std::string lightTypeString = entityInfo->getStringAttribute("lightType");
 		if(lightTypeString == "directional")
@@ -59,6 +58,11 @@ namespace Logic {
 			_lightType = Graphics::LightType::ePOINT_LIGHT;
 		else
 			_lightType = Graphics::LightType::eSPOT_LIGHT;
+
+		if( entityInfo->hasAttribute("position") )
+			_position = entityInfo->getVector3Attribute("position");
+		else
+			assert( !_isStatic );
 
 		// ATRIBUTOS OPCIONALES
 		if( entityInfo->hasAttribute("direction") )
@@ -70,9 +74,12 @@ namespace Logic {
 		if( entityInfo->hasAttribute("attenuation") )
 			_attenuation = entityInfo->getVector3Attribute("attenuation");
 
-		// De momento no lo utilizo, pero podría ser útil si está bien calculado
-		// con respecto a las atenuaciones para ahorrar calculos en el shader. Además
-		// Ogre también se aprovecha de esto para apagar desactivar luces.
+		// Si el rango es 0 o no se especifica entonces asumimos que el rango
+		// es infinito. En caso contrario aplicamos el rango dado.
+		// OJITO! Ogre usa el rango para dejar de renderizar las luces cuando no miran
+		// a camara, si el rango no esta bien calculado es un canteo (sobretodo para
+		// el calculo de difuso, el de especular da igual xq tiene que mirar
+		// a la luz)
 		if( entityInfo->hasAttribute("range") )
 			_range = entityInfo->getFloatAttribute("range");
 
@@ -99,7 +106,7 @@ namespace Logic {
 	void CLight::process(const std::shared_ptr<CMessage>& message) {
 		switch( message->getMessageType() ) {
 			case Message::TOUCHED: {
-				_light = CLightManager::getSingletonPtr()->createLight(_lightType, _entity->getName(), _position, _direction);
+				_light = CLightManager::getSingletonPtr()->createLight(_lightType, _entity->getName(), _isStatic, _position, _direction);
 
 				if(_light != NULL) {
 					if( _color != Vector3::ZERO ) {
@@ -108,7 +115,7 @@ namespace Logic {
 					if( _attenuation != Vector3::ZERO ) {
 						// Por defecto ogre pasa 0 de atenuacion. Metemos como atenuacion "infinito"
 						// porque sino Ogre automaticamente deja de renderizar la luz a esa distancia
-						_light->setAttenuation(0xFFFFFFFF, _attenuation.x, _attenuation.y, _attenuation.z);
+						_light->setAttenuation(_range != 0.0f ? _range : 0xFFFFFFFF, _attenuation.x, _attenuation.y, _attenuation.z);
 					}
 					if( _innerAngle != 0.0f || _outerAngle != 0.0f ) {
 						_light->setSpotLightParams(_innerAngle, _outerAngle);
@@ -122,8 +129,8 @@ namespace Logic {
 
 	//________________________________________________________________________
 
-	void CLight::onStart() {
-		_light = CLightManager::getSingletonPtr()->createLight(_lightType, _entity->getName(), _position, _direction);
+	/*void CLight::onStart() {
+		_light = CLightManager::getSingletonPtr()->createLight(_lightType, _entity->getName(), _isStatic, _position, _direction);
 
 		if(_light != NULL) {
 			if( _color != Vector3::ZERO ) {
@@ -131,22 +138,65 @@ namespace Logic {
 			}
 			if( _attenuation != Vector3::ZERO ) {
 				// De momento ignoramos el rango en los shaders
-				_light->setAttenuation(0xFFFFFFFF, _attenuation.x, _attenuation.y, _attenuation.z);
+				_light->setAttenuation(_range != 0.0f ? _range : 0xFFFFFFFF, _attenuation.x, _attenuation.y, _attenuation.z);
 			}
 			if( _innerAngle != 0.0f || _outerAngle != 0.0f ) {
 				_light->setSpotLightParams(_innerAngle, _outerAngle);
 			}
 		}
-	}
-	/*
-	void CLight::onTick(unsigned int msecs) {
-		_position = _entity->getPosition();
-		_light->setPosition( _position );
-		
-		Matrix3 rotation;
-		_entity->getOrientation().ToRotationMatrix(rotation);
-		_light->setDirection( Math::getDirection( Matrix4(rotation) ) );
 	}*/
+
+	//________________________________________________________________________
+
+	void CLight::setColor(const Vector3& color) {
+		this->_color = color;
+		if(_light != NULL)
+			_light->setColor(_color.x, _color.y, _color.z);
+	}
+
+	//________________________________________________________________________
+
+	void CLight::setAttenuation(const Vector3& attenuation) {
+		this->_attenuation = attenuation;
+		if(_light != NULL)
+			_light->setAttenuation(_range != 0.0f ? _range : 0xFFFFFFFF, _attenuation.x, _attenuation.y, _attenuation.z);
+	}
+
+	//________________________________________________________________________
+
+	void CLight::setRange(float range) {
+		this->_range = range;
+		if(_light != NULL)
+			_light->setAttenuation(_range != 0.0f ? _range : 0xFFFFFFFF, _attenuation.x, _attenuation.y, _attenuation.z);
+	}
+
+	//________________________________________________________________________
+
+	void CLight::setSpotLightParams(float innerAngle, float outerAngle) {
+		this->_innerAngle = innerAngle;
+		this->_outerAngle = outerAngle;
+		if(_light != NULL)
+			_light->setSpotLightParams(_innerAngle, _outerAngle);
+	}
+
+	//________________________________________________________________________
+
+	void CLight::setPosition(const Vector3& position) {
+		_light->setPosition(position);
+	}
+
+	//________________________________________________________________________
+
+	void CLight::setOrientation(const Quaternion& rotation) {
+		_light->setOrientation(rotation);
+	}
+
+	//________________________________________________________________________
+
+	void CLight::setDirection(const Vector3& direction) {
+		_light->setDirection(direction);
+	}
+
 
 } // namespace Logic
 

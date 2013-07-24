@@ -819,7 +819,7 @@ Map = {
 		damageTimeStep = 1,
 		damageOverTime = 1,
 		playerDead = false,
-		
+		lightType = "point",
 		
 		acceleration = 0.015,
 		maxVelocity = 0.9,
@@ -1022,7 +1022,7 @@ Map = {
 		damageTimeStep = 1,
 		damageOverTime = 1,
 		playerDead = true,
-		
+		lightType = "point",
 	
 		acceleration = 0.015,
 		maxVelocity = 0.9,
@@ -1212,7 +1212,7 @@ Map = {
 		damageTimeStep = 1,
 		damageOverTime = 1,
 		playerDead = false,
-		
+		lightType = "point",
 		acceleration = 0.015,
 		maxVelocity = 0.9,
 		frictionCoef = 14.0,
@@ -1404,7 +1404,7 @@ Map = {
 		damageTimeStep = 1,
 		damageOverTime = 1,
 		playerDead = false,
-	
+		lightType = "point",
 		acceleration = 0.015,
 		maxVelocity = 0.9,
 		frictionCoef = 14.0,
@@ -1875,8 +1875,11 @@ Map = {
 		physic_groupList = "-1",
 		ticksPerSample = 3,
 		samplesPerSnapshot = 2,
+		lightType = "point",
+		color = {0.98, 0.74, 0.0},
+		attenuation = {1.0, 0.027, 0.0028},
 	},
-
+	
 	lava = {
 		type = "Lava",
 		position = {-10.0,0.2, -50.0},
@@ -2028,4 +2031,19 @@ Map = {
 		physic_groupList = "1",
 	},
 	
+	Light = {
+		type = "StaticLight",
+		color = {0.9, 0.9, 0.9},
+		
+		model = "arcan.mesh",
+		pitch = -90,
+		
+		physic_entity = "rigid",
+		physic_trigger = true,
+		physic_type = "static",
+		physic_shape = "sphere",
+		physic_radius = 40,
+		physic_group = 18,
+		physic_groupList = "1",
+	},
 }

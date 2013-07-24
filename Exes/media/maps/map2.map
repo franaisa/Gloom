@@ -850,6 +850,7 @@ Map = {
 
 	Light1= {
 		type = "TestLight",
+		static = true,
 		model = "arcan.mesh",
 		pitch = -90,
 		lightType = "point",
@@ -872,72 +873,32 @@ Map = {
 	},
 	
 	Light2 = {
-		type = "Light",
-		model = "arcan.mesh",
-		pitch = -90,
+		type = "StaticLight",
 		lightType = "point",
 		position = {-366.06, 97.5802, -209.778},
 		color = {0.0, 1.0, 0.0},
 		attenuation = {1.0, 0.001, 0.0001},
-		
-		physic_entity = "rigid",
-		physic_trigger = true,
-		physic_type = "static",
-		physic_shape = "sphere",
-		physic_radius = 40,
-		physic_group = 18,
-		physic_groupList = "1",
 	},
 	
 	Light3 = {
-		type = "Light",
-		model = "arcan.mesh",
-		pitch = -90,
+		type = "StaticLight",
 		lightType = "point",
 		position = {96.901, 96.6666, -241.674},
 		color = {0.0, 0.0, 1.0},
 		attenuation = {1.0, 0.001, 0.0001},
-		
-		physic_entity = "rigid",
-		physic_trigger = true,
-		physic_type = "static",
-		physic_shape = "sphere",
-		physic_radius = 40,
-		physic_group = 18,
-		physic_groupList = "1",
 	},
 	
 	Light4 = {
-		type = "Light",
-		model = "arcan.mesh",
-		pitch = -90,
+		type = "StaticLight",
 		lightType = "point",
 		position = {273.793, 110.409, -62.9833},
 		color = {1.0, 0.0, 1.0},
-		
-		physic_entity = "rigid",
-		physic_trigger = true,
-		physic_type = "static",
-		physic_shape = "sphere",
-		physic_radius = 40,
-		physic_group = 18,
-		physic_groupList = "1",
 	},
-	
+
 	Light5 = {
-		type = "Light",
-		model = "arcan.mesh",
-		pitch = -90,
+		type = "StaticLight",
 		lightType = "point",
 		position = {110.185, 103.558, 58.317},
 		color = {0.0, 1.0, 1.0},
-		
-		physic_entity = "rigid",
-		physic_trigger = true,
-		physic_type = "static",
-		physic_shape = "sphere",
-		physic_radius = 40,
-		physic_group = 18,
-		physic_groupList = "1",
 	},
 }

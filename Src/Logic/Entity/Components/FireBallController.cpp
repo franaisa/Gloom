@@ -95,6 +95,9 @@ namespace Logic {
 				CEntity* entityContacted = contactMsg->getEntity();
 				CEntity* fireBallOwner = _owner->getEntity();
 				if( entityContacted != fireBallOwner ) {
+					// Destruir en diferido esta entidad
+					CEntityFactory::getSingletonPtr()->deferredDeleteEntity(_entity, true);
+
 					if( entityContacted->getType() == "ScreamerShield" ) {
 						CEntity* screamerShieldOwner = entityContacted->getComponent<CScreamerShieldDamageNotifier>("CScreamerShieldDamageNotifier")->getOwner();
 
@@ -150,8 +153,6 @@ namespace Logic {
 			estimateDamage(entitiesHit[i], explotionPos);
 		}
 
-		// Destruir en diferido esta entidad
-		CEntityFactory::getSingletonPtr()->deferredDeleteEntity(_entity, true);
 		// Creamos las particulas de la explosion
 		shared_ptr<CMessageCreateParticle> particleMsg = make_shared<CMessageCreateParticle>();
 		particleMsg->setPosition(explotionPos);

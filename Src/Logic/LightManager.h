@@ -70,7 +70,9 @@ namespace Logic {
 		/** Función llamada desactivar la escucha. */
 		void deactivate();
 
-		Graphics::CLight* createLight(Graphics::LightType::Enum lightType, const std::string& lightName, const Vector3& position, const Vector3& direction);
+		Graphics::CLight* createLight(Graphics::LightType::Enum lightType, const std::string& lightName, bool isStatic, const Vector3& position, const Vector3& direction);
+
+		void destroyLight(Graphics::CLight* light, bool isStatic);
 
 	private:
 
