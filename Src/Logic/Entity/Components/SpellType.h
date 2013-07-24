@@ -32,7 +32,7 @@ namespace Logic {
 			case eHARD_DEATH:
 				return "hardDeath";
 			case eHUNGRY:
-				return "hardDeath";
+				return "eHungry";
 			case eSHIELD:
 				return "shield";
 			case eRESURECTION:

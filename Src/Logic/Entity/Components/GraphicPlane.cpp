@@ -37,7 +37,7 @@ namespace Logic {
 		// Construimos un mesh gráfico para el plano
 		Ogre::Plane plane(Ogre::Vector3::UNIT_Y, 0);
 		Ogre::MeshPtr planeMesh = Ogre::MeshManager::getSingleton().createPlane("ground", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
-													  plane, 1500, 1500, 20, 20, true, 1, 40, 40, Ogre::Vector3::UNIT_Z);
+													  plane, 1500, 1500, 20, 20, true, 1, 15, 15, Ogre::Vector3::UNIT_Z);
 
 		// Le pedimos a Ogre que nos calcule las tangentes con mucho cariño si puede ser
 		unsigned short src, dest;

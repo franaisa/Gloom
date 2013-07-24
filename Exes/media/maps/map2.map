@@ -2,12 +2,13 @@ Map = {
 
 	World = {
 		type = "World",
+		static = true,
 		model = "mapaAlberto.mesh",
 		physic_file = "media/models/mapaAlberto/mapaAlberto.RepX",
 	},	
 
 	David = {
-		type = "LocalScreamer",
+		type = "LocalArchangel",
 		isPlayer = true,
 		physic_group = 1,
 		physic_groupList = "-1",
