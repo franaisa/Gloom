@@ -64,9 +64,11 @@ namespace Logic {
 
 		void setDirection(const Vector3& direction);
 
+		void turnOff();
+
 	protected:
 
-		//virtual void onStart();
+		virtual void onStart();
 
 		/**
 		Luz
@@ -83,7 +85,8 @@ namespace Logic {
 		float _outerAngle;
 		float _range;
 
-		bool _isStatic;
+		bool _isOn;
+		bool _controlledByManager;
 	}; // class CLight
 
 	REG_FACTORY(CLight);

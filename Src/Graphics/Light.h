@@ -48,7 +48,7 @@ namespace Graphics {
 	*/
 	class CLight{
 	public:
-		CLight(const LightType::Enum lightType, const std::string& lightName, const Vector3& position = Vector3::ZERO, const Vector3& direction = Vector3::NEGATIVE_UNIT_Y);
+		CLight(const LightType::Enum lightType, const Vector3& position = Vector3::ZERO, const Vector3& direction = Vector3::NEGATIVE_UNIT_Y);
 		~CLight();
 
 		/**

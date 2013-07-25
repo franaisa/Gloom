@@ -42,15 +42,11 @@ namespace Logic {
 
 		void turnOn(const Vector3& offset = Vector3::ZERO, float timeToLive = 0.0f);
 
-		void turnOff();
-
 	protected:
-
-		//virtual void onStart() { }
 
 		virtual void onTick(unsigned int msecs);
 
-		int _timer;
+		float _timer;
 		Vector3 _offset;
 	}; // class CDynamicLight
 

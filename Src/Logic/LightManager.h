@@ -70,9 +70,9 @@ namespace Logic {
 		/** Función llamada desactivar la escucha. */
 		void deactivate();
 
-		Graphics::CLight* createLight(Graphics::LightType::Enum lightType, const std::string& lightName, bool isStatic, const Vector3& position, const Vector3& direction);
+		void createLight(Graphics::CLight* & light, Logic::CLight* lightComp, Graphics::LightType::Enum lightType, bool controlledByManager, const Vector3& position, const Vector3& direction);
 
-		void destroyLight(Graphics::CLight* light, bool isStatic);
+		void destroyLight(Graphics::CLight* light, bool controlledByManager);
 
 	private:
 
@@ -95,7 +95,7 @@ namespace Logic {
 
 		int MAX_LIGHTS;
 
-		std::deque<Graphics::CLight*> _activeLights;
+		std::list< std::pair<Graphics::CLight*, Logic::CLight*> > _activeLights;
 
 		/** Única instancia de la clase. */
 		static CLightManager* _instance;
