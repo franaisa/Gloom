@@ -41,7 +41,7 @@ namespace Logic {
 		_offset = offset;
 
 		// Creamos la luz con la información del arquetipos y la posicion de la entidad
-		CLightManager::getSingletonPtr()->createLight(_light, this, _lightType, _controlledByManager, _entity->getPosition(), -_entity->getOrientation().zAxis());
+		CLightManager::getSingletonPtr()->createLight(_light, this, _lightType, _controlledByManager, _entity->getPosition() + _offset, -_entity->getOrientation().zAxis());
 
 		if(_light != NULL) {
 			if( _color != Vector3::ZERO ) {

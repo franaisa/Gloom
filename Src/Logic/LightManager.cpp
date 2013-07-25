@@ -62,10 +62,6 @@ namespace Logic {
 	//______________________________________________________________________________
 
 	void CLightManager::deactivate() {
-		/*for(int i = 0; i < _instance->_activeLights.size(); ++i) {
-			delete _instance->_activeLights[i].first;
-		}*/
-
 		_instance->_activeLights.clear();
 	} // deactivate
 
