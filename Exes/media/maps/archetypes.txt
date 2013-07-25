@@ -1877,6 +1877,7 @@ Map = {
 		samplesPerSnapshot = 2,
 		lightType = "point",
 		color = {0.98, 0.74, 0.0},
+		range = 160,
 		attenuation = {1.0, 0.027, 0.0028},
 	},
 	

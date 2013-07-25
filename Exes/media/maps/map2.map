@@ -877,7 +877,6 @@ Map = {
 		lightType = "point",
 		position = {-366.06, 97.5802, -209.778},
 		color = {0.0, 1.0, 0.0},
-		attenuation = {1.0, 0.001, 0.0001},
 	},
 	
 	Light3 = {

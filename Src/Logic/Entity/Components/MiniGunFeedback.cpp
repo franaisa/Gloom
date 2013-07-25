@@ -13,6 +13,7 @@ de disparo de la cabra.
 
 #include "MiniGunFeedback.h"
 #include "HudWeapons.h"
+#include "DynamicLight.h"
 
 #include "Logic/Maps/EntityFactory.h"
 #include "Logic/Maps/Map.h"
@@ -66,6 +67,14 @@ namespace Logic {
 		_hudWeapon->continouosShooting(true);
 		//Sonido
 		//emitSound(_weaponSound, true, true, false, false);
+		
+		// Shoot flash
+		CDynamicLight* shootFlash = _entity->getComponent<CDynamicLight>("CDynamicLight");
+		shootFlash->setColor( Vector3(0.9f, 0.9f, 0.9f) );
+		shootFlash->setAttenuation( Vector3(1.0f, 0.014f, 0.0007f) );
+		shootFlash->setRange(325.0f);
+		shootFlash->turnOn( Vector3(0.0f, _heightShoot, 0.0f) );
+		_firingRound = _primaryFireIsActive = true;
 	}
 
 	//__________________________________________________________________
@@ -82,6 +91,9 @@ namespace Logic {
 		m->setTime(0);
 		m->setReset(true);
 		_entity->emitMessage(m);
+
+		_entity->getComponent<CDynamicLight>("CDynamicLight")->turnOff();
+		_primaryFireIsActive = false;
 	}
 
 	//__________________________________________________________________
@@ -97,15 +109,26 @@ namespace Logic {
 		_hudWeapon->loadingWeapon(false);
 		_hudWeapon->shootAnim(-1.85f);
 		//Sonido
-		emitSound("miniGun", false, true, false, true);
+		//emitSound("miniGun", false, true, false, true);
+		
+		// Shoot flash
+		CDynamicLight* shootFlash = _entity->getComponent<CDynamicLight>("CDynamicLight");
+		shootFlash->setColor( Vector3(0.9f, 0.9f, 0.9f) );
+		shootFlash->setAttenuation( Vector3(1.0f, 0.014f, 0.0007f) );
+		shootFlash->setRange(325.0f);
+		shootFlash->turnOn( Vector3(0.0f, _heightShoot, 0.0f), 0.1f );
 	}
 
 	//__________________________________________________________________
 
 	void CMiniGunFeedback::onFixedTick(unsigned int msecs){
-		if(_primaryFireCooldownTimer > 0) {
+		if(_primaryFireIsActive) {
+			flashAnim();
+		}
+		
+		/*if(_primaryFireCooldownTimer > 0) {
 			_primaryFireCooldownTimer -= msecs;
-			
+
 			if(_primaryFireCooldownTimer < 0){
 				_primaryFireCooldownTimer = _primaryFireCooldown;
 
@@ -128,7 +151,7 @@ namespace Logic {
 						m->setReset(false);
 						_entity->emitMessage(m);
 
-						_bMensajeDispMandado = true;
+						_bMensajeDispMandado = true;*/
 						//printf("\nReduciendo mira");
 						/**
 						NOTA: De momento tiene el bug de que si disparas cuando no tienes munición, sigue haciendo la dispersión.
@@ -138,7 +161,7 @@ namespace Logic {
 						pero hay que tenerlo en cuenta (también se tiene que tener en cuenta para cuando se ponga la animación
 						de vibración de la minigun).
 						//*/
-					}			
+					/*}			
 					else if (_iContadorLeftClicked < 20) {
 						_dispersion = _dispersionOriginal + 5.0f;
 					}
@@ -149,6 +172,24 @@ namespace Logic {
 				} // fin _primaryFireIsActive
 
 			}
+		}*/
+	}
+
+	void CMiniGunFeedback::flashAnim() {
+		// Shoot flash
+		CDynamicLight* shootFlash = _entity->getComponent<CDynamicLight>("CDynamicLight");
+
+		if(_firingRound) {
+			float r, g, b;
+			r = g = Math::unifRand(0.9f, 1.0f);
+			b = Math::unifRand(0.85f, 1.0f);
+			
+			shootFlash->setColor( Vector3(r, g, b) );
 		}
+		else {
+			shootFlash->setColor( Vector3(0.0f, 0.0f, 0.0f) );
+		}
+
+		_firingRound = !_firingRound;
 	}
 }//namespace Logic

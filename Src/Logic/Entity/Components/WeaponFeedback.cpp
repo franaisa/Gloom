@@ -56,6 +56,9 @@ namespace Logic {
 		_hudWeapon = _entity->getComponent<CHudWeapons>("CHudWeapons");
 		assert(_hudWeapon != NULL && "Error: El cliente necesita tener un componente de grafico del arma");
 
+		assert( entityInfo->hasAttribute("heightShoot") );
+		_heightShoot = entityInfo->getFloatAttribute("heightShoot");
+
 		return true;
 	}
 

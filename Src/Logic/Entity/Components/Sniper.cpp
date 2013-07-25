@@ -12,7 +12,6 @@ Contiene la implementación del componente que gestiona las armas y que administr
 
 #include "Sniper.h"
 #include "ScreamerShieldDamageNotifier.h"
-#include "DynamicLight.h"
 
 #include "Physics/Server.h"
 #include "Physics/RaycastHit.h"
@@ -77,12 +76,6 @@ namespace Logic {
 	//__________________________________________________________________
 
 	void CSniper::primaryFire(){
-		// Shoot flash
-		CDynamicLight* shootFlash = _entity->getComponent<CDynamicLight>("CDynamicLight");
-		shootFlash->setColor( Vector3(0.04f, 0.91f, 0.97f) );
-		shootFlash->setAttenuation( Vector3(1.0f, 0.014f, 0.0007f) );
-		shootFlash->turnOn( Vector3(0.0f, _heightShoot, 0.0f), 0.1f );
-
 		//Direccion
 		Vector3 direction = _entity->getOrientation()*Vector3::NEGATIVE_UNIT_Z;
 
@@ -145,12 +138,6 @@ namespace Logic {
 	//-------------------------------------------------------
 
 	void CSniper::secondaryFire(){
-		// Shoot flash
-		CDynamicLight* shootFlash = _entity->getComponent<CDynamicLight>("CDynamicLight");
-		shootFlash->setColor( Vector3(0.04f, 0.91f, 0.97f) );
-		shootFlash->setAttenuation( Vector3(1.0f, 0.014f, 0.0007f) );
-		shootFlash->turnOn( Vector3(0.0f, _heightShoot, 0.0f), 0.1f );
-
 		//Direccion
 		Vector3 direction = _entity->getOrientation()*Vector3::NEGATIVE_UNIT_Z;
 	

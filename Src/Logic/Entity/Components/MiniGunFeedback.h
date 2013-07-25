@@ -72,6 +72,8 @@ namespace Logic {
 
 	protected:
 
+		void flashAnim();
+
 		unsigned int _defaultPrimaryFireCooldown;
 		unsigned int _primaryFireCooldown;
 		int _primaryFireCooldownTimer;
@@ -93,6 +95,7 @@ namespace Logic {
 		Variable booleana para controlar si se ha mandado ya el mensaje de dispersión
 		*/
 		bool _bMensajeDispMandado;
+		bool _firingRound;
 	};
 
 	REG_FACTORY(CMiniGunFeedback);

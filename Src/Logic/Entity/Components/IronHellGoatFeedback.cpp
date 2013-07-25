@@ -13,6 +13,7 @@ de disparo de la cabra.
 
 #include "IronHellGoatFeedback.h"
 #include "HudWeapons.h"
+#include "DynamicLight.h"
 
 #include "Logic/Maps/EntityFactory.h"
 #include "Logic/Maps/Map.h"
@@ -61,6 +62,13 @@ namespace Logic {
 
 		// Emitimos el sonido de lanzar la bola de fuego
 		emitSound("ignite_pitch.wav", false, true, false, false);
+
+		// Shoot flash
+		CDynamicLight* shootFlash = _entity->getComponent<CDynamicLight>("CDynamicLight");
+		shootFlash->setColor( Vector3(1.0f, 0.8f, 0.0f) );
+		shootFlash->setAttenuation( Vector3(1.0f, 0.014f, 0.0007f) );
+		shootFlash->setRange(325.0f);
+		shootFlash->turnOn(Vector3(0.0f, _heightShoot, 0.0f), 0.1f);
 	}
 
 	//__________________________________________________________________

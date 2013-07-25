@@ -46,6 +46,8 @@ namespace Logic {
 
 	protected:
 
+		//virtual void onStart() { }
+
 		virtual void onTick(unsigned int msecs);
 
 		int _timer;

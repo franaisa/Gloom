@@ -182,19 +182,25 @@ namespace Logic {
 	//________________________________________________________________________
 
 	void CLight::setPosition(const Vector3& position) {
-		_light->setPosition(position);
+		this->_position = position;
+		if(_light != NULL)
+			_light->setPosition(position);
 	}
 
 	//________________________________________________________________________
 
 	void CLight::setOrientation(const Quaternion& rotation) {
-		_light->setOrientation(rotation);
+		this->_direction = -rotation.zAxis();
+		if(_light != NULL)
+			_light->setDirection(_direction);
 	}
 
 	//________________________________________________________________________
 
 	void CLight::setDirection(const Vector3& direction) {
-		_light->setDirection(direction);
+		this->_direction = direction;
+		if(_light != NULL)
+			_light->setDirection(direction);
 	}
 
 
