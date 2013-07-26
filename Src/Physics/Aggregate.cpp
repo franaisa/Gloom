@@ -130,7 +130,34 @@ namespace Physics {
 			serializable = sceneCollection->getObject(i);
 			
 			if( joint = serializable->is<PxD6Joint>() ) {
-				//cout << "joint = " << joint->getName() << endl;
+				/*cout << "joint = " << joint->getName() << endl;
+				std::string name = joint->getName();
+				if(name == "Bip01 Head UConstraint") {
+					PxJointLimitPair limits(0.174533, 0.174633, 0.0);
+					//PxJointLimitPair limits(0.174533, 0.134633, 0.05);
+					joint->setTwistLimit(limits);
+				}
+				else if(name == "Bip01 Spine1 UConstraint") {
+					PxJointLimitPair limits(0.0872665, 0.0873665, 0.0);
+					//PxJointLimitPair limits(0.0872665, 0.0473665, 0.05);
+					joint->setTwistLimit(limits);
+				}
+				else if(name == "Bip01 Spine UConstraint") {
+					PxJointLimitPair limits(0.0872665, 0.0873665, 0.0);
+					//PxJointLimitPair limits(0.0872665, 0.0473665, 0.05);
+					joint->setTwistLimit(limits);
+				}
+				else if(name == "Bip01 L Thigh UConstraint") {
+					PxJointLimitPair limits(0.174533, 0.174633, 0.0);
+					//PxJointLimitPair limits(0.174533, 0.074633, 0.05);
+					joint->setTwistLimit(limits);
+				}
+				else if(name == "Bip01 R Thigh UConstraint") {
+					PxJointLimitPair limits(0.174533, 0.174633, 0.0);
+					//PxJointLimitPair limits(0.174533, 0.074633, 0.05);
+					joint->setTwistLimit(limits);
+				}*/
+				
 				// Crear una articulacion a partir del joint
 				//_aggregate->addArticulation(articulation);
 			}
