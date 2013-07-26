@@ -34,6 +34,7 @@ implementa las habilidades del personaje
 #include "Logic/Messages/MessageCreateParticle.h"
 #include "Logic/Messages/MessageAddForcePlayer.h"
 #include "Logic/Messages/MessageSetAnimation.h"
+#include "Logic/Messages/MessageHud.h"
 
 // Física
 #include "Physics/Server.h"
@@ -299,6 +300,12 @@ namespace Logic {
 		shared_ptr<CMessageSetOwner> setOwnerMsg = make_shared<CMessageSetOwner>();
 		setOwnerMsg->setOwner(_entity);
 		_screamerShield->emitMessage(setOwnerMsg);
+
+		//mandamos al jugador que tiene la habilidad disponible
+
+		std::shared_ptr<CMessageHud> hudMsg = std::make_shared<CMessageHud>();
+		hudMsg->setType(CMessageHud::HudType::SECONDARY_ACTIVE);
+		_entity->emitMessage(hudMsg);
 	} // secondarySkill
 	//__________________________________________________________________
 
@@ -310,6 +317,17 @@ namespace Logic {
 			CEntityFactory::getSingletonPtr()->deferredDeleteEntity(_screamerShield, true);
 			_screamerShield = NULL;
 		}
+
+		if(_secondarySkillCooldown > 0){
+			std::shared_ptr<CMessageHud> hudMsg = std::make_shared<CMessageHud>();
+			hudMsg->setType(CMessageHud::HudType::SECONDARY_AVAIABLE);
+			_entity->emitMessage(hudMsg);
+		}else{
+			std::shared_ptr<CMessageHud> hudMsg = std::make_shared<CMessageHud>();
+			hudMsg->setType(CMessageHud::HudType::SECONDARY_SKILL);
+			_entity->emitMessage(hudMsg);
+		}
+
 	} // stopSecondarySkill
 	//__________________________________________________________________
 

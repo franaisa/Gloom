@@ -76,8 +76,8 @@ namespace Logic
 		void hudDeath();
 		void hudRespawn();
 		void weaponPicked(int weapon);
-		void updatePrimarySkillCooldown(float cooldown);
-		void updateSecondarySkillCooldown(float cooldown);
+		void primarySkillAvaiable();
+		void secondarySkillAvaiable();
 		void updatePrimarySpellCooldown(float cooldown);
 		void updateSecondarySpellCooldown(float cooldown);
 		void primarySkill();

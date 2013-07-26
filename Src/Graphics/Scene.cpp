@@ -205,7 +205,7 @@ namespace Graphics
 
 		if(_name != "dummy_scene"){
 			
-			//HHFX::getSingletonPtr()->deactivate();
+			ParticleUniverse::ParticleSystemManager::getSingletonPtr()->destroyAllParticleSystems(_sceneMgr);
 		}
 
 	} // deactivate
