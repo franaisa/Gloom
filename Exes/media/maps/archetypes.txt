@@ -820,6 +820,8 @@ Map = {
 		damageOverTime = 1,
 		playerDead = false,
 		lightType = "point",
+		controlledByManager = false,
+		on = false,
 		
 		acceleration = 0.015,
 		maxVelocity = 0.9,
@@ -1023,7 +1025,9 @@ Map = {
 		damageOverTime = 1,
 		playerDead = true,
 		lightType = "point",
-	
+		controlledByManager = false,
+		on = false,
+		
 		acceleration = 0.015,
 		maxVelocity = 0.9,
 		frictionCoef = 14.0,
@@ -1213,6 +1217,8 @@ Map = {
 		damageOverTime = 1,
 		playerDead = false,
 		lightType = "point",
+		controlledByManager = false,
+		on = false,
 		acceleration = 0.015,
 		maxVelocity = 0.9,
 		frictionCoef = 14.0,
@@ -1405,6 +1411,8 @@ Map = {
 		damageOverTime = 1,
 		playerDead = false,
 		lightType = "point",
+		controlledByManager = false,
+		on = false,
 		acceleration = 0.015,
 		maxVelocity = 0.9,
 		frictionCoef = 14.0,
@@ -1879,6 +1887,8 @@ Map = {
 		color = {0.98, 0.74, 0.0},
 		range = 160,
 		attenuation = {1.0, 0.027, 0.0028},
+		controlledByManager = false,
+		on = true,
 	},
 	
 	lava = {
@@ -2033,8 +2043,10 @@ Map = {
 	},
 	
 	Light = {
-		type = "StaticLight",
+		type = "Light",
 		color = {0.9, 0.9, 0.9},
+		controlledByManager = false,
+		on = true,
 		
 		model = "arcan.mesh",
 		pitch = -90,
