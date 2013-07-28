@@ -48,8 +48,8 @@ package hud
 			ExternalInterface.addCallback("secondarySkill", secondarySkill);
 			ExternalInterface.addCallback("primarySpell", primarySpell);
 			ExternalInterface.addCallback("secondarySpell", secondarySpell);
-			ExternalInterface.addCallback("updatePrimarySkillCooldown", updatePrimarySkillCooldown);
-			ExternalInterface.addCallback("updatePrimarySpellCooldown", updatePrimarySpellCooldown);
+			ExternalInterface.addCallback("secondarySkillAvaiable", secondarySkillAvaiable);
+			ExternalInterface.addCallback("primarySkillAvaiable", primarySkillAvaiable);
 			ExternalInterface.addCallback("updateSecondarySpellCooldown", updateSecondarySpellCooldown);
 			ExternalInterface.addCallback("updateSecondarySkillCooldown", updateSecondarySkillCooldown);
 			ExternalInterface.addCallback("updateCrosshair", updateCrosshair);
@@ -183,13 +183,13 @@ package hud
 		
 		public function primarySkill() {
 			
-			primaryskill.coolDown()
+			primaryskill.gotoAndPlay("cd");
 			
 		}
 		
 		public function secondarySkill() {
 			
-			secondaryskill.coolDown()
+			secondaryskill.gotoAndPlay("cd");
 			
 		}
 		
@@ -211,17 +211,19 @@ package hud
 			
 		}
 		
-		public function updatePrimarySkillCooldown(cooldownTime:Number) {
+		public function primarySkillAvaiable() {
 			
 			//primaryskill.speed = 1.0 / cooldownTime;
 			
-			if (cooldownTime >= 1) {
+			/*if (cooldownTime >= 1) {
 				primaryskill.gotoAndPlay("avaiable");
 			}else {
 				if (this.bullets.currentFrameLabel != "cd") {
 					secondaryskill.gotoAndPlay("cd");
 				}
-			}
+			}*/
+			
+			primaryskill.gotoAndPlay("avaiable");
 			
 		}
 		
@@ -236,16 +238,19 @@ package hud
 			//secondaryspell.speed = 2.0 / cooldownTime;
 		}
 		
-		public function updateSecondarySkillCooldown(cooldownTime:Number) {
+		public function secondarySkillAvaiable() {
 			
 			//secondaryskill.speed = 2.0 / cooldownTime;
-			if (cooldownTime >= 1) {
+			/*if (cooldownTime >= 1) {
 				secondaryskill.gotoAndPlay("avaiable");
 			}else {
 				if (this.bullets.currentFrameLabel != "cd") {
 					secondaryskill.gotoAndPlay("cd");
 				}
-			}
+			}*/
+			
+			secondaryskill.gotoAndPlay("avaiable");
+			
 		}
 		
 		public function updateCrosshair(crosshair:String) {
