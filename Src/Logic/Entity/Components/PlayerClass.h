@@ -213,6 +213,8 @@ namespace Logic {
 		*/
 		virtual void onTick(unsigned int msecs);
 
+		//virtual void onFixedTick(unsigned int msecs){};
+
 		/**
 		Setea el puntero al componente del controlador físico para evitar overhead
 		de mensajes en el tick.

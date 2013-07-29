@@ -106,7 +106,7 @@ namespace Logic{
 				msgType == Message::CHANGE_MATERIAL_HUD_WEAPON ||
 				msgType == Message::IMPACT			||
 				msgType == Message::HUD_DISPERSION	||
-				msgType == Message::HUD				||
+				msgType == Message::HUD				;
 
 	}
 
