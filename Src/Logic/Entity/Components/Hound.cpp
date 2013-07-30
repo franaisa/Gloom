@@ -82,34 +82,6 @@ namespace Logic {
 	void CHound::onTick(unsigned int msecs) {
 		CPlayerClass::onTick(msecs);
 
-		// Si la habilidad primaria esta en uso, controlar el tiempo
-		// de duración de la habilidad. Cuando se cumpla el tiempo,
-		// deshabilitamos el shader y el efecto beserker.
-		/*
-		if(_doingPrimarySkill){
-			if(_berserkerTimer > 0) {
-				_berserkerTimer -= msecs;
-			}else{
-				// Volvemos a los valores de daño y cd's originales
-				//Ponemos los valores de daño y cd's del berserker (mensaje con porcentajes de incremento y reduccion respecto al original)
- 				std::shared_ptr<CMessageDamageAmplifier> damageAmplifierMsg = std::make_shared<CMessageDamageAmplifier>();
-				std::shared_ptr<CMessageReducedCooldown> reducedCdMsg = std::make_shared<CMessageReducedCooldown>();
-				reducedCdMsg->setPercentCooldown(0);
-				damageAmplifierMsg->setPercentDamage(0);
-				_entity->emitMessage(damageAmplifierMsg);
-				_entity->emitMessage(reducedCdMsg);
-	
-				//le seteamos el material al material por defecto
-				std::shared_ptr<CMessageChangeMaterial> materialMsg = std::make_shared<CMessageChangeMaterial>();
-				materialMsg->setMaterialName("original");
-				_entity->emitMessage(materialMsg);
-				Logic::CWorldState::getSingletonPtr()->addChange(_entity,materialMsg);
-				_berserkerTimer = _berserkerDuration;
-				_doingPrimarySkill = false;
-			}
-		}
-		*/
-
 		if(_doingSecondarySkill){
 			if(_biteTimer > 0) {
 				_biteTimer -= msecs;
