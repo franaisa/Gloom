@@ -31,14 +31,14 @@ namespace Logic {
 	//__________________________________________________________________
 
 	CMiniGunFeedback::CMiniGunFeedback() : IWeaponFeedback("miniGun"),
-												_defaultPrimaryFireCooldown(0),
-												_primaryFireCooldown(0),
-												_primaryFireCooldownTimer(0),
-												_primaryFireIsActive(false),
-												_dispersion(0),
-												_dispersionOriginal(0),
-												_iContadorLeftClicked(0),
-												_bMensajeDispMandado(false){
+										  _defaultPrimaryFireCooldown(0),
+										  _primaryFireCooldown(0),
+										  _primaryFireCooldownTimer(0),
+									      _primaryFireIsActive(false),
+										  _dispersion(0),
+										  _dispersionOriginal(0),
+										  _iContadorLeftClicked(0),
+										  _bMensajeDispMandado(false){
 		// Nada que hacer
 	}
 

@@ -106,6 +106,9 @@ namespace Logic {
 
 		_rapidShootAnim.offset = Vector3::ZERO;
 
+		_rapidShootAnim.firingRate = 50;
+		_rapidShootAnim.acumFiringTime = 0;
+
 		// Valores de configuración de la animación de salto
 		_fallAnim.currentHorizontalPos = 0.0f;
 		_fallAnim.horizontalSpeed = 0.0002f;
@@ -372,6 +375,8 @@ namespace Logic {
 
 	void CHudWeapons::continouosShooting(bool state) {
 		_continouslyShooting = state;
+		if(!_continouslyShooting)
+			_rapidShootAnim.acumFiringTime = 0;
 	}
 
 	//---------------------------------------------------------
@@ -380,8 +385,13 @@ namespace Logic {
 		Vector3 weaponDir = _graphicsEntities[_currentWeapon].graphicsEntity->getOrientation() * Vector3::NEGATIVE_UNIT_Z;
 		weaponDir.normalise();
 
-		_rapidShootAnim.offset = weaponDir * _rapidShootAnim.shakeOffset * Vector3(1.0f, 0.0f, 1.0f);
-		_rapidShootAnim.shakeOffset *= -1.0f;
+		_rapidShootAnim.acumFiringTime += msecs;
+		if(_rapidShootAnim.acumFiringTime > _rapidShootAnim.firingRate) {
+			_rapidShootAnim.offset = weaponDir * _rapidShootAnim.shakeOffset * Vector3(1.0f, 0.0f, 1.0f);
+			_rapidShootAnim.shakeOffset *= -1.0f;
+
+			_rapidShootAnim.acumFiringTime = 0;
+		}
 
 		_rapidShootAnim.offset.y = sineStep(msecs, _rapidShootAnim.currentVerticalPos, _rapidShootAnim.verticalOffset, _rapidShootAnim.verticalSpeed);
 	}

@@ -118,7 +118,7 @@ namespace Logic {
 						_light->setColor(_color.x, _color.y, _color.z);
 					}
 					if( _attenuation != Vector3::ZERO ) {
-						// Por defecto ogre pasa 0 de atenuacion. Metemos como atenuacion "infinito"
+						// Si el rango es 0, metemos como atenuacion "infinito"
 						// porque sino Ogre automaticamente deja de renderizar la luz a esa distancia
 						_light->setAttenuation(_range != 0.0f ? _range : 0xFFFFFFFF, _attenuation.x, _attenuation.y, _attenuation.z);
 					}

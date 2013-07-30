@@ -95,19 +95,18 @@ namespace Logic{
 	bool CHud::accept(const std::shared_ptr<CMessage>& message) {
 		Logic::TMessageType msgType = message->getMessageType();
 
-		return	msgType == Message::HUD_LIFE		|| 
-				msgType == Message::HUD_SHIELD		|| 
-				msgType == Message::HUD_AMMO		|| 
-				msgType == Message::HUD_WEAPON		|| 
-				msgType == Message::HUD_DISPERSION  ||
-				msgType == Message::HUD_SPAWN		|| 
-				msgType == Message::HUD_DEBUG		|| 
-				msgType == Message::HUD_DEBUG_DATA	||
-				msgType == Message::CHANGE_MATERIAL_HUD_WEAPON ||
-				msgType == Message::IMPACT			||
-				msgType == Message::HUD_DISPERSION	||
-				msgType == Message::HUD				||
-
+		return	msgType == Message::HUD_LIFE					|| 
+				msgType == Message::HUD_SHIELD					|| 
+				msgType == Message::HUD_AMMO					|| 
+				msgType == Message::HUD_WEAPON					|| 
+				msgType == Message::HUD_DISPERSION				||
+				msgType == Message::HUD_SPAWN					|| 
+				msgType == Message::HUD_DEBUG					|| 
+				msgType == Message::HUD_DEBUG_DATA				||
+				msgType == Message::CHANGE_MATERIAL_HUD_WEAPON	||
+				msgType == Message::IMPACT						||
+				msgType == Message::HUD_DISPERSION				||
+				msgType == Message::HUD;
 	}
 
 
