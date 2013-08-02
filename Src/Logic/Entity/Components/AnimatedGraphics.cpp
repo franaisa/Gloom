@@ -34,7 +34,15 @@ namespace Logic
 	IMP_FACTORY(CAnimatedGraphics);
 
 	CAnimatedGraphics::~CAnimatedGraphics(){
-		if(_weapons != NULL) delete _weapons;
+		if(_weapons != NULL) {
+			for(int i = WeaponType::eSOUL_REAPER; i < WeaponType::eSIZE; ++i) {
+				if(_weapons[i] != NULL) {
+					delete _weapons[i];
+				}
+			}
+
+			delete _weapons;
+		}
 	}
 	
 	//---------------------------------------------------------
