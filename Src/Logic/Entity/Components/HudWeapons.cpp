@@ -204,7 +204,9 @@ namespace Logic {
 	
 
 			_overlayWeapon3D[current]->setVisible(false);
-			_overlayWeapon3D[current]->setZBuffer(1);
+			_overlayWeapon3D[current]->setZBuffer(15);
+			
+			
 			
 		}
 		_overlayWeapon3D[WeaponType::eSOUL_REAPER]->setVisible(true);
@@ -271,6 +273,7 @@ namespace Logic {
 	//---------------------------------------------------------
 
 	void CHudWeapons::onFixedTick(unsigned int msecs) {
+		_graphicsEntities[_currentWeapon].graphicsEntity->setVisible(true);
 		if(_playerIsLanding)
 			landAnim(msecs);
 		else if(_playerIsWalking)
@@ -296,7 +299,6 @@ namespace Logic {
 			_rapidShootAnim.offset *= _rapidShootAnim.recoveryCoef;
 			_rapidShootAnim.currentVerticalPos *= _rapidShootAnim.recoveryCoef;
 		}
-
 		_graphicsEntities[_currentWeapon].graphicsEntity->setPosition( _graphicsEntities[_currentWeapon].defaultPos + 
 																	   _runAnim.offset + 
 																	   _landAnim.offset +

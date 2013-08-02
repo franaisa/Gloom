@@ -110,10 +110,10 @@ namespace Logic {
 		_gameSpawnManager = Logic::CGameSpawnManager::getSingletonPtr();
 
 		//Inicializamos el gestor de precarga de recursos
-		if (!Logic::CPreloadResourceManager::Init())
+		/*if (!Logic::CPreloadResourceManager::Init())
 			return false;
 		_preloadResourceManager = Logic::CPreloadResourceManager::getSingletonPtr();
-
+		*/
 		// Inicializamos el gestor de luces
 		if( !CLightManager::Init() )
 			return false;
@@ -152,7 +152,7 @@ namespace Logic {
 
 		Logic::CWorldState::Release();
 
-		Logic::CPreloadResourceManager::Release();
+		//Logic::CPreloadResourceManager::Release();
 
 		CLightManager::Release();
 
