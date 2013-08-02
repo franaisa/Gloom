@@ -49,7 +49,6 @@ namespace Logic{
 		_strengthEffect = "strength";
 		_timestamp = 0;
 		_offsetTimeSin = 0;
-		this->putToSleep();
 	}
 	//------------------------------------------------------
 
