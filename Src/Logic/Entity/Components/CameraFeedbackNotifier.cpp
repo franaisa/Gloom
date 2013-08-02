@@ -149,10 +149,10 @@ namespace Logic {
 		// Por ahora esta a hierro, lo suyo es ponerlo por el mapa
 		_scene->updateCompositorVariable(_effect, _strengthEffect, 1);
 
-		/*_scene->createCompositor(_motionblur);
+		_scene->createCompositor(_motionblur);
 		_scene->setCompositorVisible(_motionblur, true);
 		// Por ahora esta a hierro, lo suyo es ponerlo por el mapa
-		_scene->updateCompositorVariable(_motionblur, "blur", 0.75);*/
+		_scene->updateCompositorVariable(_motionblur, "blur", 0.75);
 		
 		_scene->createCompositor(_flashEffect);
 		_scene->setCompositorVisible(_flashEffect, false);
@@ -182,10 +182,10 @@ namespace Logic {
 		//Ahora actualizamos el motion blur
 		float blur = (_avatarc->getVelocity().length()/_maxVelocity)/2;
 
-		/*if(blur>0.5)
+		if(blur>0.5)
 			blur=0.5f;
 
-		_scene->updateCompositorVariable(_motionblur, "blur", blur);*/
+		_scene->updateCompositorVariable(_motionblur, "blur", blur);
 
 		//ahora actualizamos el flashazo si procede
 		if(_flashFactor > 1.0){
