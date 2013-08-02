@@ -50,8 +50,6 @@ package hud
 			ExternalInterface.addCallback("secondarySpell", secondarySpell);
 			ExternalInterface.addCallback("secondarySkillAvaiable", secondarySkillAvaiable);
 			ExternalInterface.addCallback("primarySkillAvaiable", primarySkillAvaiable);
-			ExternalInterface.addCallback("updateSecondarySpellCooldown", updateSecondarySpellCooldown);
-			ExternalInterface.addCallback("updateSecondarySkillCooldown", updateSecondarySkillCooldown);
 			ExternalInterface.addCallback("updateCrosshair", updateCrosshair);
 			ExternalInterface.addCallback("updateTeam", updateTeam);
 			ExternalInterface.addCallback("updateBullets", updateBullets);
