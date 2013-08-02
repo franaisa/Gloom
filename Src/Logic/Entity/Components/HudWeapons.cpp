@@ -106,7 +106,7 @@ namespace Logic {
 
 		_rapidShootAnim.offset = Vector3::ZERO;
 
-		_rapidShootAnim.firingRate = 50;
+		_rapidShootAnim.firingRate = 20;
 		_rapidShootAnim.acumFiringTime = 0;
 
 		// Valores de configuración de la animación de salto

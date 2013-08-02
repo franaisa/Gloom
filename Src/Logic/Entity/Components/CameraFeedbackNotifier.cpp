@@ -186,7 +186,7 @@ namespace Logic {
 			blur=0.5f;
 
 		_scene->updateCompositorVariable(_motionblur, "blur", blur);
-
+		
 		//ahora actualizamos el flashazo si procede
 		if(_flashFactor > 1.0){
 			_flashFactor-=0.5f;
