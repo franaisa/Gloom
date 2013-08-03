@@ -179,12 +179,12 @@ namespace Logic{
 		anim.first = "forward";
 		_animations.insert(anim);
 
-		anim.second.animation = "straferight";
+		anim.second.animation = "strafe_right";
 		anim.second.rewind = -1;
 		anim.first = "forwardstrafeleft";
 		_animations.insert(anim);
 
-		anim.second.animation = "straferight";
+		anim.second.animation = "strafe_right";
 		anim.second.rewind = 1;
 		anim.first = "forwardstraferight";
 		_animations.insert(anim);
@@ -194,22 +194,22 @@ namespace Logic{
 		anim.first = "back";
 		_animations.insert(anim);
 
-		anim.second.animation = "straferight";
+		anim.second.animation = "strafe_right";
 		anim.second.rewind = -1;
 		anim.first = "backstrafeleft";
 		_animations.insert(anim);
 
-		anim.second.animation = "straferight";
+		anim.second.animation = "strafe_right";
 		anim.second.rewind = 1;
 		anim.first = "backstraferight";
 		_animations.insert(anim);
 
-		anim.second.animation = "straferight";
+		anim.second.animation = "strafe_right";
 		anim.second.rewind = -1;
 		anim.first = "strafeleft";
 		_animations.insert(anim);
 
-		anim.second.animation = "straferight";
+		anim.second.animation = "strafe_right";
 		anim.second.rewind = 1;
 		anim.first = "straferight";
 		_animations.insert(anim);
