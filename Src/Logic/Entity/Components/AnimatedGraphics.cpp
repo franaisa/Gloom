@@ -100,7 +100,7 @@ namespace Logic
 	{
 		CGraphics::onActivate();
 
-		_animatedGraphicsEntity->setAnimation( _defaultAnimation, true );
+		_animatedGraphicsEntity->setAnimation( _defaultAnimation,1, true );
 		//_animatedGraphicsEntity->attachWeapon(*_weapons[0], _entity->getEntityID());
 		_insertAnimation = true;
 		_animatedGraphicsEntity->addObserver(this);
@@ -158,7 +158,7 @@ namespace Logic
 					nextAnim.animation = setAnimMsg->getAnimation();
 					nextAnim.loop = setAnimMsg->getLoop();
 					nextAnim.exclude = setAnimMsg->getExclude();
-
+					nextAnim.rewind = setAnimMsg->getRewind();
 				}
 				break;
 			}
@@ -188,7 +188,7 @@ namespace Logic
 		if(!_insertAnimation && nextAnim.animation.size()>0){
 
 			_insertAnimation = true;
-			_animatedGraphicsEntity->setAnimation( nextAnim.animation,nextAnim.loop );
+			_animatedGraphicsEntity->setAnimation( nextAnim.animation,nextAnim.rewind, nextAnim.loop );
 			_insertAnimation = nextAnim.exclude;
 			//_entity->getYaw(); Linea random
 			nextAnim.animation="";
