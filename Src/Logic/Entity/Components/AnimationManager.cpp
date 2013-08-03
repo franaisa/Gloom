@@ -161,7 +161,6 @@ namespace Logic{
 		if(displacementDir == Vector3 (1,0,-1))		return	"backstrafeleft";
 		if(displacementDir == Vector3 (-1,0,-1))	return	"backstraferight";
 		if(displacementDir == Vector3 (1,0,0) )		return	"strafeleft";
-		if(displacementDir == Vector3 (-1,0,0))		return	"straferightminigun";
 
 		//por si las moscas
 		return "idle";
