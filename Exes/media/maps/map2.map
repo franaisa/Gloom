@@ -8,7 +8,7 @@ Map = {
 	},	
 
 	David = {
-		type = "LocalHound",
+		type = "LocalArchangel",
 		isPlayer = true,
 		physic_group = 1,
 		physic_groupList = "-1",

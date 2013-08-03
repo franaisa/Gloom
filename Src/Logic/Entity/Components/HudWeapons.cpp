@@ -32,6 +32,8 @@ gráfica de la entidad.
 #include "Logic/Messages/MessageChangeWeaponGraphics.h"
 #include "Logic/Messages/MessageHudDebugData.h"
 
+#include "Graphics/HHFXParticle.h"
+
 #include <stdio.h>
 #include <windows.h>
 
@@ -63,13 +65,6 @@ namespace Logic {
 		_runAnim.currentStrafingDir = _runAnim.oldStrafingDir = 0;
 		
 		_runAnim.offset = Vector3::ZERO;
-
-		// Valores de configuración de la animación de cambiar de arma
-		_chgWpnAnim.horizontalSpeed = 0.02f;
-		_chgWpnAnim.verticalSpeed = 0.01f;
-		_chgWpnAnim.timeAnim = 600;
-		_chgWpnAnim.timer = 0;
-		_chgWpnAnim.offset = Vector3::ZERO;
 
 		// Valores de configuracion de la animacion de aterrizar
 		_landAnim.force = 0.0f;
@@ -261,7 +256,6 @@ namespace Logic {
 	void CHudWeapons::process(const std::shared_ptr<CMessage>& message) {
 		switch( message->getMessageType() ) {
 			case Message::CHANGE_WEAPON_GRAPHICS: {
-				_chgWpnAnim.timer = _chgWpnAnim.timeAnim;
 				std::shared_ptr<CMessageChangeWeaponGraphics> chgWpnMsg = std::static_pointer_cast<CMessageChangeWeaponGraphics>(message);
 				changeWeapon( chgWpnMsg->getWeapon() );
 				break;
@@ -281,10 +275,7 @@ namespace Logic {
 
 	void CHudWeapons::onFixedTick(unsigned int msecs) {
 		_graphicsEntities[_currentWeapon].graphicsEntity->setVisible(true);
-		if(_chgWpnAnim.timer > 0) {
-			changeWeaponAnim(msecs);
-		}
-		else if(_playerIsLanding)
+		if(_playerIsLanding)
 			landAnim(msecs);
 		else if(_playerIsWalking)
 			walkAnim(msecs);
@@ -310,7 +301,6 @@ namespace Logic {
 			_rapidShootAnim.currentVerticalPos *= _rapidShootAnim.recoveryCoef;
 		}
 		_graphicsEntities[_currentWeapon].graphicsEntity->setPosition( _graphicsEntities[_currentWeapon].defaultPos + 
-																	   //_chgWpnAnim.offset +
 																	   _runAnim.offset + 
 																	   _landAnim.offset +
 																	   _idleAnim.offset +
@@ -409,28 +399,6 @@ namespace Logic {
 
 		_rapidShootAnim.offset.y = sineStep(msecs, _rapidShootAnim.currentVerticalPos, 
 			_rapidShootAnim.verticalOffset, _rapidShootAnim.verticalSpeed);
-	}
-
-	//________________________________________________________________________
-
-	void CHudWeapons::changeWeaponAnim(unsigned int msecs) {
-		// Calculamos el vector ortogonal al plano formado por el vector forward
-		//Vector3 displ = _graphicsEntities[_currentWeapon].graphicsEntity->getOrientation() * _halfPi * Vector3::NEGATIVE_UNIT_Z;
-		//displ.normalise();
-
-		//Euler eulerOrientation( _graphicsEntities[_currentWeapon].graphicsEntity->getOrientation() );
-
-		/*displ.x *= _chgWpnAnim.horizontalSpeed * msecs;
-		displ.z *= _chgWpnAnim.horizontalSpeed * msecs;
-		displ.y = _chgWpnAnim.verticalSpeed * msecs;
-
-		_chgWpnAnim.offset -= displ;*/
-
-		_chgWpnAnim.timer -= msecs;
-		if(_chgWpnAnim.timer < 0) {
-			_chgWpnAnim.timer = 0;
-			_chgWpnAnim.offset = Vector3::ZERO;
-		}
 	}
 
 	//________________________________________________________________________

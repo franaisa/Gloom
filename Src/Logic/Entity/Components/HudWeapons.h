@@ -13,7 +13,6 @@ gráfica del jugador, es decir, todas las armas que este portara.
 #ifndef __Logic_HudWeapons_H
 #define __Logic_HudWeapons_H
 
-#include "BaseSubsystems/Math.h"
 #include "Logic/Entity/Component.h"
 #include "WeaponType.h"
 
@@ -128,8 +127,6 @@ namespace Logic {
 
 		void rapidShootAnim(unsigned int msecs);
 
-		void changeWeaponAnim(unsigned int msecs);
-
 		void continouosShooting(bool state);
 
 		void playerIsWalking(bool walking, int direction = 0);
@@ -223,17 +220,6 @@ namespace Logic {
 
 			Vector3 offset;
 		};
-
-		//__________________________________________________________________
-
-		struct ChangeWeaponAnim {
-			float horizontalSpeed;
-			float verticalSpeed;
-			unsigned int timeAnim;
-			int timer;
-
-			Vector3 offset;
-		};
 		
 		//__________________________________________________________________
 
@@ -301,8 +287,13 @@ namespace Logic {
 
 		//__________________________________________________________________
 
+		struct ChangeWeaponAnim {
+			Vector3 offset;
+		};
+
+		//__________________________________________________________________
+
 		RunAnim _runAnim;
-		ChangeWeaponAnim _chgWpnAnim;
 		LandAnim _landAnim;
 		IdleAnim _idleAnim;
 		ShootAnim _shootAnim;
