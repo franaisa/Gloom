@@ -34,5 +34,8 @@
     <ClInclude Include="..\..\Src\BaseSubsystems\simplexnoise.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Src\BaseSubsystems\Euler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

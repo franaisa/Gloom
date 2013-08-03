@@ -21,6 +21,7 @@ Se ofrecen también una serie de funciones auxiliares.
 #define __BaseSubsystems_Math_H
 
 // Includes de Ogre donde se definen los tipos
+#include "Euler.h"
 #include <OgreVector2.h>
 #include <OgreVector3.h>
 #include <OgreVector4.h>
@@ -30,6 +31,12 @@ Se ofrecen también una serie de funciones auxiliares.
 #include <OgreRay.h>
 #include <OgreLight.h>
 #include <string>
+
+/**
+Clase de ayuda para pasar de grados de euler a quaterniones
+y viceversa.
+*/
+typedef Ogre::Euler Euler;
 
 /**
 Definicion de matriz de 4x4. La definición del tipo de datos

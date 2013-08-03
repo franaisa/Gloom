@@ -179,13 +179,12 @@ void CPhysicDynamicEntity::createRigid(const Map::CEntity *entityInfo, int group
 	// Leer la forma (shape)
 	assert(entityInfo->hasAttribute("physic_shape"));
 	const std::string physicShape = entityInfo->getStringAttribute("physic_shape");
-	assert(physicShape == "box" || physicShape == "sphere");
+	assert(physicShape == "box" || physicShape == "sphere" || physicShape == "capsule");
 
 	// Leer si es un trigger (por defecto no)
 	bool isTrigger = false;
 	if (entityInfo->hasAttribute("physic_trigger"))
 		isTrigger = entityInfo->getBoolAttribute("physic_trigger");
-
 
 	// Leer la masa (por defecto 0)
 	float mass = 0;
@@ -219,6 +218,20 @@ void CPhysicDynamicEntity::createRigid(const Map::CEntity *entityInfo, int group
 		float density = mass / (4.0f/3.0f * Math::PI * physicRadius * physicRadius * physicRadius);
 
 		_physicEntity.load(_entity->getPosition(), _entity->getOrientation(), sphere, *defaultMaterial, density, isKinematic, isTrigger, _noGravity, group, groupList, this);
+	}
+	else if(physicShape == "capsule") {
+		assert(entityInfo->hasAttribute("physic_radius"));
+		assert(entityInfo->hasAttribute("physic_height"));
+		const float radius = entityInfo->getFloatAttribute("physic_radius");
+		const float height = entityInfo->getFloatAttribute("physic_height");
+		float cilinderHeight = height - (2 * radius); // Altura del cilindro
+		
+		Physics::CapsuleGeometry capsule = _geometryFactory->createCapsule(radius, height);
+		Physics::Material* defaultMaterial = _materialManager->getMaterial(Physics::MaterialType::eDEFAULT);
+		// Densidad = Masa / volumen del cilindro + volumen de las dos semiesferas (o volumen de una esfera)
+		float density = mass / (4.0f/3.0f * Math::PI * pow(radius, 3)) + (cilinderHeight * Math::PI * pow(radius, 2));
+
+		_physicEntity.load(_entity->getPosition(), _entity->getOrientation(), capsule, *defaultMaterial, density, isKinematic, isTrigger, _noGravity, group, groupList, this);
 	}
 }
 
