@@ -145,13 +145,13 @@ namespace Logic
 				if(_insertAnimation){
 
 					_animatedGraphicsEntity->stopAllAnimations();
-					_animatedGraphicsEntity->setAnimation( setAnimMsg->getAnimation(), setAnimMsg->getLoop() );
+					_animatedGraphicsEntity->setAnimation( setAnimMsg->getAnimation(), setAnimMsg->getRewind(), setAnimMsg->getLoop());
 					_insertAnimation = setAnimMsg->getExclude();
 
 				}else if(!_insertAnimation && setAnimMsg->getExclude()){
 					
 					_animatedGraphicsEntity->stopAllAnimations();
-					_animatedGraphicsEntity->setAnimation( setAnimMsg->getAnimation(), setAnimMsg->getLoop() );
+					_animatedGraphicsEntity->setAnimation( setAnimMsg->getAnimation(), setAnimMsg->getRewind() , setAnimMsg->getLoop());
 					
 				}else{
 

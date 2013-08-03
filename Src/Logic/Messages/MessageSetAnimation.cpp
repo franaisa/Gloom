@@ -43,12 +43,22 @@ namespace Logic {
 		_exclude = exclude;
 	}//
 
+	int CMessageSetAnimation::getRewind(){
+		return _rewind;
+	}//
+	//----------------------------------------------------------
+
+	void CMessageSetAnimation::setRewind(int rewind){
+		_rewind = rewind;
+	}//
+
 	//----------------------------------------------------------
 
 	Net::CBuffer CMessageSetAnimation::serialize() {
 		Net::CBuffer buffer((sizeof(int) * 2) + sizeof(bool) + sizeof(unsigned int));
 		buffer.serialize(std::string("CMessageSetAnimation"),true);
 		buffer.serialize(_loop);
+		buffer.serialize(_rewind);
 		buffer.serialize(_animation, false);
 		return buffer;
 	}//
@@ -56,7 +66,9 @@ namespace Logic {
 
 	void CMessageSetAnimation::deserialize(Net::CBuffer& buffer) {
 		buffer.deserialize(_loop);
+		buffer.deserialize(_rewind);
 		buffer.deserialize(_animation);
+		
 	}
 
 };

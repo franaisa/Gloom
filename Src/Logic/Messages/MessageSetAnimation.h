@@ -15,6 +15,9 @@ namespace Logic {
 		void setLoop(bool loop);
 		bool getExclude();
 		void setExclude(bool exclude);
+		void setRewind(int rewind);
+		int getRewind();
+
 		virtual ~CMessageSetAnimation(){};
 
 		virtual Net::CBuffer serialize();
@@ -23,6 +26,7 @@ namespace Logic {
 		std::string _animation;
 		bool _loop;
 		bool _exclude;
+		int _rewind;
 	};
 	REG_FACTORYMESSAGE(CMessageSetAnimation);
 };
