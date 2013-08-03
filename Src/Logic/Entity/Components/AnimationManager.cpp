@@ -43,6 +43,8 @@ namespace Logic{
 	}
 
 	void CAnimationManager::onStart(){
+		initAnimationCommands();
+
 		std::shared_ptr<CMessageSetAnimation> anim = std::make_shared<CMessageSetAnimation>();
 		anim->setLoop(true);
 		anim->setAnimation("idle");
