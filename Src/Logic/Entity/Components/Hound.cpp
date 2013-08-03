@@ -22,8 +22,11 @@ implementa las habilidades del personaje
 #include "Logic/Messages/MessageReducedCooldown.h"
 #include "Logic/Messages/MessageChangeMaterial.h"
 #include "Logic/Messages/MessageParticleVisibility.h"
+#include "Logic/Messages/MessageTouched.h"
+#include "Logic/Messages/MessageDamaged.h"
 #include "PhysicController.h"
 #include "AvatarController.h"
+#include "PhysicDynamicEntity.h"
 
 #include "Graphics/poolParticle.h"
 
@@ -69,11 +72,15 @@ namespace Logic {
 
 		assert( entityInfo->hasAttribute("biteDuration") && "Error: No se ha definido el atributo biteDuration en el mapa" );
 		_biteDuration = entityInfo->getFloatAttribute("biteDuration") * 1000;
+
+		assert( entityInfo->hasAttribute("biteDamage") && "Error: No se ha definido el atributo biteDamage en el mapa" );
+		_biteDamage = entityInfo->getFloatAttribute("biteDamage");
+
 		//_berserkerDamagePercent = entityInfo->getFloatAttribute("berserkerDamagePercent");
 		//_berserkerCooldownPercent = entityInfo->getFloatAttribute("berserkerCooldownPercent");
 
+		_trigger = _entity->getComponent<CPhysicDynamicEntity>("CPhysicDynamicEntity");
 		_physicController = _entity->getComponent<CPhysicController>("CPhysicController");
-
 		return true;
 	} // spawn
 
@@ -82,7 +89,7 @@ namespace Logic {
 	void CHound::onTick(unsigned int msecs) {
 		CPlayerClass::onTick(msecs);
 
-		if(_doingSecondarySkill){
+		if(_doingPrimarySkill){
 			if(_biteTimer > 0) {
 				_biteTimer -= msecs;
 			}else{
@@ -90,7 +97,7 @@ namespace Logic {
 			}
 		}
 
-		if(_doingPrimarySkill){
+		/*if(_doingPrimarySkill){
 			if(_biteTimer > _biteDuration*0.5) {
 				_biteTimer -= msecs;
 				
@@ -103,17 +110,19 @@ namespace Logic {
 				charge = false;
 				_doingPrimarySkill = false;
 			}
-		}
+		}*/
 	}
 
-	void CHound::onFixedTick(unsigned int msecs) {
+	//________________________________________________________________________
+
+	/*void CHound::onFixedTick(unsigned int msecs) {
 		if(charge && _doingPrimarySkill){
 			Vector3 direction = _entity->getOrientation() * Vector3::NEGATIVE_UNIT_Z;
 			direction.normalise();
 			direction *= msecs * _biteMaxVelocity;
 			_physicController->move(direction, Physics::CollisionGroup::eWORLD, msecs);
 		}
-	}
+	}*/
 
 	//________________________________________________________________________
 
@@ -124,40 +133,48 @@ namespace Logic {
 
 		_doingSecondarySkill = false;
 	}
+
+
+	void CHound::onStart(unsigned int msecs){
+		_trigger->deactivateSimulation();
+	}
+
+
+	bool CHound::accept(const std::shared_ptr<CMessage>& message) {
+		return CPlayerClass::accept(message) ||
+			message->getMessageType() == Message::TOUCHED;
+	}
+
+	void CHound::process(const std::shared_ptr<CMessage>& message){
+		CPlayerClass::process(message);
+		if ( message->getMessageType() == Message::TOUCHED){
+			std::shared_ptr<CMessageTouched> msg = std::static_pointer_cast<CMessageTouched>(message);
+			CEntity* entity = msg->getEntity();
+
+			std::shared_ptr<CMessageDamaged> damage = std::make_shared<CMessageDamaged>();
+			damage->setEnemy(_entity);
+			damage->setDamage(_biteDamage);
+			entity->emitMessage(damage);
+		}
+	}
+
 	//__________________________________________________________________
 
 	void CHound::primarySkill() {
-
-		//desactivo el rigid normal y lo cambio por un trigger
-		/*
-		//Arrancamos el cronometro
-		_berserkerTimer= _berserkerDuration;
-
-		
-		//Ponemos los valores de daño y cd's del berserker (mensaje con porcentajes de incremento y reduccion respecto al original)
-		std::shared_ptr<CMessageDamageAmplifier> damageAmplifierMsg = std::make_shared<CMessageDamageAmplifier>();
-		std::shared_ptr<CMessageReducedCooldown> reducedCdMsg = std::make_shared<CMessageReducedCooldown>();
-		reducedCdMsg->setPercentCooldown(_berserkerCooldownPercent);
-		damageAmplifierMsg->setPercentDamage(_berserkerDamagePercent);
-		_entity->emitMessage(damageAmplifierMsg);
-		_entity->emitMessage(reducedCdMsg);
-
-		//le cambiamos el material para que empiece a brillar
-		std::shared_ptr<CMessageChangeMaterial> materialMsg = std::make_shared<CMessageChangeMaterial>();
-		materialMsg->setMaterialName("berserk");
-		_entity->emitMessage(materialMsg);
-		Logic::CWorldState::getSingletonPtr()->addChange(_entity,materialMsg);
+		_trigger->activateSimulation();
 		_doingPrimarySkill = true;
-		*/
+		_biteTimer = _biteDuration;
+		_physicController->deactivateSimulation();
 	} // primarySkill
 
 	//__________________________________________________________________
 
 	void CHound::stopPrimarySkill() {
-		/*_doingPrimarySkill = false;
-		_avatarController->setMaxVelocity(_maxDefaultVelocity);
-		charge = false;
-		_biteTimer = 0;*/
+		_doingPrimarySkill = false;
+		
+		_biteTimer = 0;
+		_trigger->deactivateSimulation();
+		_physicController->activateSimulation();
 	}
 
 	//__________________________________________________________________

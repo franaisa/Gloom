@@ -22,8 +22,9 @@ implementa las habilidades del personaje
 
 namespace Logic {
 	//forward declarations 
-	class CPhysicController;
+	class CPhysicDynamicEntity;
 	class CAvatarController;
+	class CPhysicController;
 
 	/**
 	Clase que implementa las habilidades propias
@@ -80,6 +81,27 @@ namespace Logic {
 
 		//__________________________________________________________________
 
+		/** 
+		Este componente acepta los siguientes mensajes:
+
+		<ul>
+			<li>TOUCHED</li>
+		</ul>
+		
+		@param message Mensaje a chequear.
+		@return true si el mensaje es aceptado.
+		*/
+		virtual bool accept(const std::shared_ptr<CMessage>& message);
+
+		//__________________________________________________________________
+
+		/**
+		Método virtual que procesa un mensaje.
+
+		@param message Mensaje a procesar.
+		*/
+		virtual void process(const std::shared_ptr<CMessage>& message);
+
 		/**
 		Metodo que se llama al activar el componente.
 		Restea los campos de la clase a los valores por defecto.
@@ -122,9 +144,11 @@ namespace Logic {
 
 		@param msecs Milisegundos transcurridos desde el último tick.
 		*/
-		virtual void onFixedTick(unsigned int msecs);
+		//virtual void onFixedTick(unsigned int msecs);
 
 		virtual void onTick(unsigned int msecs);
+
+		virtual void onStart(unsigned int msecs);
 
 	private:
 
@@ -154,6 +178,8 @@ namespace Logic {
 
 		float _biteDuration;
 
+		float _biteDamage;
+
 		float _biteMaxVelocity;
 
 		bool charge;
@@ -162,9 +188,9 @@ namespace Logic {
 		*/
 		std::string _materialName;
 
-		CPhysicController* _physicController;
+		CPhysicDynamicEntity* _trigger;
 		CAvatarController* _avatarController;
-
+		CPhysicController* _physicController;
 	}; // class CHound
 
 	REG_FACTORY(CHound);

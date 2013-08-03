@@ -661,9 +661,10 @@ Map = {
 		primarySkillCooldown = 25,
 		secondarySkillCooldown = 20,
 		berserkerDuration=20,
-		biteMaxVelocity=0.2;
+		biteMaxVelocity=3.0;
 		biteVelocity=0.10;
 		biteDuration=0.5;
+		biteDamage = 40.0;
 		
 			weaponsoulReaperName = "soulReaper",
 			weaponsoulReaperModel = "soulReaper.mesh",
@@ -1448,6 +1449,11 @@ Map = {
 		biteMaxVelocity=0.2;
 		biteVelocity=0.10;
 		biteDuration=0.5;
+		biteDamage = 40.0;
+		
+		physic_entity = "rigid",
+		physic_trigger = true,
+		physic_type = "kinematic",
 
 			weaponsoulReaperName = "soulReaper",
 			weaponsoulReaperModel = "soulReaper.mesh",
