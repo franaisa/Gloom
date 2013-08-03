@@ -43,7 +43,7 @@ using namespace std;
 namespace Logic {
 	IMP_FACTORY(CHudWeapons);
 	
-	//---------------------------------------------------------
+	//________________________________________________________________________
 	
 	CHudWeapons::CHudWeapons() : _currentWeapon(0), 
 								 _graphicsEntities(0),
@@ -106,7 +106,7 @@ namespace Logic {
 
 		_rapidShootAnim.offset = Vector3::ZERO;
 
-		_rapidShootAnim.firingRate = 50;
+		_rapidShootAnim.firingRate = 20;
 		_rapidShootAnim.acumFiringTime = 0;
 
 		// Valores de configuración de la animación de salto
@@ -119,7 +119,7 @@ namespace Logic {
 		_halfPi= Quaternion(Ogre::Radian(Math::HALF_PI),Vector3::UNIT_Y);
 	}
 
-	//---------------------------------------------------------
+	//________________________________________________________________________
 
 	CHudWeapons::~CHudWeapons() {
 		if(_graphicsEntities) {
@@ -136,7 +136,7 @@ namespace Logic {
 
 	} // ~CGraphics
 
-	//---------------------------------------------------------
+	//________________________________________________________________________
 	
 	void CHudWeapons::onActivate() {
 		//Cuando activamos el componente solo tendremos visible el arma 0( arma melee)
@@ -145,14 +145,14 @@ namespace Logic {
 		_overlayWeapon3D[_currentWeapon]->setVisible(true);
 	} // activate
 
-	//---------------------------------------------------------
+	//________________________________________________________________________
 
 	void CHudWeapons::onDeactivate() {
 		//Cuando desactivamos el componente, desactivaremos el arma actual
 		_overlayWeapon3D[_currentWeapon]->setVisible(false);
 	} // deactivate
 
-	//---------------------------------------------------------
+	//________________________________________________________________________
 
 	bool CHudWeapons::spawn(CEntity *entity, CMap *map, const Map::CEntity *entityInfo) {
 		if(!IComponent::spawn(entity,map,entityInfo))
@@ -233,7 +233,7 @@ namespace Logic {
 
 	} // spawn
 
-	//---------------------------------------------------------
+	//________________________________________________________________________
 
 	void CHudWeapons::onStart() {
 		Matrix4 weaponTransform;
@@ -242,7 +242,7 @@ namespace Logic {
 		}
 	}
 	
-	//---------------------------------------------------------
+	//________________________________________________________________________
 
 	bool CHudWeapons::accept(const std::shared_ptr<CMessage>& message) {
 		Logic::TMessageType msgType = message->getMessageType();
@@ -251,7 +251,7 @@ namespace Logic {
 			   msgType == Message::CHANGE_WEAPON_GRAPHICS;
 	} // accept
 	
-	//---------------------------------------------------------
+	//________________________________________________________________________
 
 	void CHudWeapons::process(const std::shared_ptr<CMessage>& message) {
 		switch( message->getMessageType() ) {
@@ -262,7 +262,8 @@ namespace Logic {
 			}
 		}
 	} // process
-	//---------------------------------------------------------
+	
+	//________________________________________________________________________
 
 	void CHudWeapons::changeWeapon(int newWeapon) {
 		_overlayWeapon3D[_currentWeapon]->setVisible(false);
@@ -270,7 +271,7 @@ namespace Logic {
 		_currentWeapon = newWeapon;
 	}
 
-	//---------------------------------------------------------
+	//________________________________________________________________________
 
 	void CHudWeapons::onFixedTick(unsigned int msecs) {
 		_graphicsEntities[_currentWeapon].graphicsEntity->setVisible(true);
@@ -313,7 +314,7 @@ namespace Logic {
 			_fallAnim.offset *= 0.96f;
 	}
 
-	//---------------------------------------------------------
+	//________________________________________________________________________
 
 	void CHudWeapons::fallAnim(unsigned int msecs) {
 		Vector3 horizontal = (_graphicsEntities[_currentWeapon].graphicsEntity->getOrientation() * _halfPi) * Vector3::NEGATIVE_UNIT_Z;
@@ -327,7 +328,7 @@ namespace Logic {
 		}
 	}
 
-	//---------------------------------------------------------
+	//________________________________________________________________________
 
 	void CHudWeapons::loadingWeapon(bool state) {
 		_loadingWeapon = state;
@@ -336,7 +337,7 @@ namespace Logic {
 		}
 	}
 
-	//---------------------------------------------------------
+	//________________________________________________________________________
 
 	void CHudWeapons::loadWeaponAnim(unsigned int msecs) {
 		// Calculamos el ruido horizontal
@@ -354,7 +355,8 @@ namespace Logic {
 		}
 		
 		// Calculamos la velocidad de movimiento vertical
-		_unstableLoadAnim.offset.y = sineStep(msecs, _unstableLoadAnim.currentVerticalPos, _unstableLoadAnim.verticalOffset, _unstableLoadAnim.currentVerticalSpeed);
+		_unstableLoadAnim.offset.y = sineStep(msecs, _unstableLoadAnim.currentVerticalPos, 
+			_unstableLoadAnim.verticalOffset, _unstableLoadAnim.currentVerticalSpeed);
 		
 		if(_unstableLoadAnim.currentVerticalSpeed != _unstableLoadAnim.maxVerticalSpeed) {
 			_unstableLoadAnim.currentVerticalSpeed += _unstableLoadAnim.speedInc;
@@ -365,7 +367,7 @@ namespace Logic {
 		}
 	}
 
-	//---------------------------------------------------------
+	//________________________________________________________________________
 
 	void CHudWeapons::shootAnim(float force) {
 		Vector3 weaponDir =  _graphicsEntities[_currentWeapon].graphicsEntity->getOrientation() * Vector3::NEGATIVE_UNIT_Z;
@@ -373,7 +375,7 @@ namespace Logic {
 		_shootAnim.offset = weaponDir * force * Vector3(1.0f, 0.0f, 1.0f);
 	}
 
-	//---------------------------------------------------------
+	//________________________________________________________________________
 
 	void CHudWeapons::continouosShooting(bool state) {
 		_continouslyShooting = state;
@@ -381,7 +383,7 @@ namespace Logic {
 			_rapidShootAnim.acumFiringTime = 0;
 	}
 
-	//---------------------------------------------------------
+	//________________________________________________________________________
 
 	void CHudWeapons::rapidShootAnim(unsigned int msecs) {
 		Vector3 weaponDir = _graphicsEntities[_currentWeapon].graphicsEntity->getOrientation() * Vector3::NEGATIVE_UNIT_Z;
@@ -395,10 +397,11 @@ namespace Logic {
 			_rapidShootAnim.acumFiringTime = 0;
 		}
 
-		_rapidShootAnim.offset.y = sineStep(msecs, _rapidShootAnim.currentVerticalPos, _rapidShootAnim.verticalOffset, _rapidShootAnim.verticalSpeed);
+		_rapidShootAnim.offset.y = sineStep(msecs, _rapidShootAnim.currentVerticalPos, 
+			_rapidShootAnim.verticalOffset, _rapidShootAnim.verticalSpeed);
 	}
 
-	//---------------------------------------------------------
+	//________________________________________________________________________
 
 	float CHudWeapons::sineStep(unsigned int msecs, float& currentSinePosition, float offset, float speed, float loBound, float hiBound) {
 		currentSinePosition += speed * msecs;
@@ -407,13 +410,13 @@ namespace Logic {
 		return sin(currentSinePosition) * offset;
 	}
 
-	//---------------------------------------------------------
+	//________________________________________________________________________
 
 	void CHudWeapons::idleAnim(unsigned int msecs) {
 		_idleAnim.offset.y = sineStep(msecs, _idleAnim.currentVerticalPos, _idleAnim.verticalOffset, _idleAnim.verticalSpeed);
 	}
 
-	//---------------------------------------------------------
+	//________________________________________________________________________
 
 	void CHudWeapons::landAnim(unsigned int msecs) {
 		_landAnim.currentOffset += _landAnim.recoverySpeed * msecs;
@@ -424,7 +427,7 @@ namespace Logic {
 		}
 	}
 
-	//---------------------------------------------------------
+	//________________________________________________________________________
 
 	void CHudWeapons::offsetRecovery(unsigned int msecs) {
 		_runAnim.offset *= Vector3(0.85f, 0.85f, 0.85f);
@@ -434,7 +437,7 @@ namespace Logic {
 		
 	}
 
-	//---------------------------------------------------------
+	//________________________________________________________________________
 
 	void CHudWeapons::playerIsWalking(bool walking, int direction) { 
 		_playerIsWalking = walking;
@@ -447,7 +450,7 @@ namespace Logic {
 		}
 	}
 
-	//---------------------------------------------------------
+	//________________________________________________________________________
 
 	void CHudWeapons::playerIsLanding(float hitForce, float estimatedLandingTime) {
 		_playerIsLanding = true;
@@ -455,22 +458,24 @@ namespace Logic {
 		_landAnim.recoverySpeed = Math::PI / estimatedLandingTime;
 	}
 
-	//---------------------------------------------------------
+	//________________________________________________________________________
 
 	void CHudWeapons::playerIsFalling(bool falling, int direction) {
 		_fallAnim.movementDir = (_playerIsFalling = falling) ? direction : 0;
 	}
 
-	//---------------------------------------------------------
+	//________________________________________________________________________
 
 	void CHudWeapons::walkAnim(unsigned int msecs) {
 		_runAnim.offset = (_graphicsEntities[_currentWeapon].graphicsEntity->getOrientation() * _halfPi) * Vector3::NEGATIVE_UNIT_Z;
 		_runAnim.offset.normalise();
 
-		_runAnim.offset *= sineStep(msecs, _runAnim.currentHorizontalPos, _runAnim.horizontalOffset, _runAnim.horizontalSpeed, Math::HALF_PI, (2 * Math::PI) + Math::HALF_PI)
-							  * Vector3(1.0f, 0.0f, 1.0f);
+		_runAnim.offset *= sineStep(msecs, _runAnim.currentHorizontalPos, _runAnim.horizontalOffset, 
+									_runAnim.horizontalSpeed, Math::HALF_PI, (2 * Math::PI) + Math::HALF_PI)
+							* Vector3(1.0f, 0.0f, 1.0f);
 		
-		_runAnim.offset.y = sineStep(msecs, _runAnim.currentVerticalPos, _runAnim.verticalOffset, _runAnim.verticalSpeed, Math::HALF_PI, (2 * Math::PI) + Math::HALF_PI);
+		_runAnim.offset.y = sineStep(msecs, _runAnim.currentVerticalPos, _runAnim.verticalOffset, 
+			_runAnim.verticalSpeed, Math::HALF_PI, (2 * Math::PI) + Math::HALF_PI);
 	}
 
 } // namespace Logic

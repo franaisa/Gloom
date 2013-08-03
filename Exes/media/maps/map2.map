@@ -875,12 +875,10 @@ Map = {
 	
 	Light2 = {
 		type = "Light",
-		lightType = "point",
+		lightType = "directional",
 		position = {-97.9955, 68.2714, -211.816},
 		direction = {0.0, -1.0, 0.0},
 		color = {1.0, 1.0, 1.0},
-		range = 200,
-		attenuation = {1.0, 0.022, 0.0019},
 		innerAngle = 0.63,
 		outerAngle = 1.11,
 	},
@@ -889,87 +887,6 @@ Map = {
 		type = "Light",
 		lightType = "point",
 		position = {12.4903, 59.4316, -212.197},
-		color = {1.0, 1.0, 1.0},
-		range = 200,
-		attenuation = {1.0, 0.022, 0.0019},
-	},
-	
-	Light4 = {
-		type = "Light",
-		lightType = "point",
-		position = {179.721, 109.467, -132.365},
-		color = {1.0, 1.0, 1.0},
-		range = 200,
-		attenuation = {1.0, 0.022, 0.0019},
-	},
-
-	Light5 = {
-		type = "Light",
-		lightType = "point",
-		position = {248.83, 109.446, -97.621},
-		color = {1.0, 1.0, 1.0},
-		range = 200,
-		attenuation = {1.0, 0.022, 0.0019},
-	},
-	
-	Light6 = {
-		type = "Light",
-		lightType = "point",
-		position = {167.527, 109.411, -0.0937823},
-		color = {1.0, 1.0, 1.0},
-		range = 200,
-		attenuation = {1.0, 0.022, 0.0019},
-	},
-	
-	Light7 = {
-		type = "Light",
-		lightType = "point",
-		position = {-6.62075, 88.5311, 27.7032},
-		color = {1.0, 1.0, 1.0},
-		range = 200,
-		attenuation = {1.0, 0.022, 0.0019},
-	},
-	
-	Light8 = {
-		type = "Light",
-		lightType = "point",
-		position = {-230.292, 88.7531, 27.6848},
-		color = {1.0, 1.0, 1.0},
-		range = 200,
-		attenuation = {1.0, 0.022, 0.0019},
-	},
-	
-	Light9 = {
-		type = "Light",
-		lightType = "point",
-		position = {-389.545, 76.2065, -41.9835},
-		color = {1.0, 1.0, 1.0},
-		range = 200,
-		attenuation = {1.0, 0.022, 0.0019},
-	},
-	
-	Light10 = {
-		type = "Light",
-		lightType = "point",
-		position = {-389.207, 76.2065, -123.052},
-		color = {1.0, 1.0, 1.0},
-		range = 200,
-		attenuation = {1.0, 0.022, 0.0019},
-	},
-	
-	Light11 = {
-		type = "Light",
-		lightType = "point",
-		position = {-38.4059, 4.3946, 24.2108},
-		color = {1.0, 1.0, 1.0},
-		range = 200,
-		attenuation = {1.0, 0.022, 0.0019},
-	},
-	
-	Light12 = {
-		type = "Light",
-		lightType = "point",
-		position = {-152.006, 4.39868, 24.6323},
 		color = {1.0, 1.0, 1.0},
 		range = 200,
 		attenuation = {1.0, 0.022, 0.0019},

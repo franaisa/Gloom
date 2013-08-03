@@ -1,9 +1,6 @@
-material shotGun
-{
+material shotGun {
 	set $glow_tex ARMA_B_GLOW_old.png
-	technique
-	{
-		/*
+	technique {
 		pass {
 		
 			vertex_program_ref bumpLightingVertex_AMB {
@@ -47,33 +44,13 @@ material shotGun
 			}
 			
 		}
-		*/
-	
-		pass
-		{
-			cull_software none
-			cull_hardware none
-			texture_unit
-			{
-				texture ARMA_B.png
-			}
-		}
-
 	}
-	technique
-	{
+	technique {
 		scheme glow
-		pass
-		{
-		
-			texture_unit
-			{
+		pass {
+			texture_unit {
 				texture $glow_tex
 			}
-			ambient 1 1 1
-			diffuse 1 1 1
-			specular 0 0 0 1
-			emissive 0 0 0
 		}
 	}
 
