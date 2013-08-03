@@ -1429,6 +1429,7 @@ Map = {
 		physic_height = 6,
 		physic_group = 1,
 		physic_groupList = "-1",
+		physic_mass = 1,
 		
 		numWeapons = 6,
 		heightShoot = 8,
