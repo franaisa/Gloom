@@ -24,7 +24,7 @@ a todas las armas.
 #include "Logic/Messages/MessageHudAmmo.h"
 #include "Logic/Messages/MessageHudWeapon.h"
 #include "Logic/Messages/MessageDecal.h"
-
+#include "Logic/Messages/MessageBlockShoot.h"
 
 #include "Logic/Messages/MessagePrimaryShoot.h"
 #include "Logic/Messages/MessageSecondaryShoot.h"
@@ -46,6 +46,7 @@ using namespace std;
 namespace Logic {
 	
 	IWeapon::IWeapon(const string& weaponName) : _weaponName("weapon" + weaponName),
+												 _ableToShoot(true),
 												 _currentAmmo(0) {
 		// Nada que inicializar
 	}
@@ -80,11 +81,14 @@ namespace Logic {
 	//__________________________________________________________________
 
 	bool IWeapon::accept(const shared_ptr<CMessage>& message) {
+		TMessageType msgType = message->getMessageType();
+
 		// Solo nos interesan los mensajes de disparo.
 		// Es importante que hagamos esto porque si no, el putToSleep
 		// puede convertirse en nocivo.
-		return	message->getMessageType() == Message::PRIMARY_SHOOT ||
-				message->getMessageType() == Message::SECONDARY_SHOOT;
+		return msgType == Message::PRIMARY_SHOOT	|| 
+			   msgType == Message::SECONDARY_SHOOT	||
+			   msgType == Message::BLOCK_SHOOT;
 	}
 
 	//__________________________________________________________________
@@ -92,24 +96,33 @@ namespace Logic {
 	void IWeapon::process(const shared_ptr<CMessage>& message) {
 		switch( message->getMessageType() ) {
 			case Message::PRIMARY_SHOOT: {
-				auto primaryShootMsg = static_pointer_cast<CMessagePrimaryShoot>(message);
-				if(primaryShootMsg->getShoot()){
-					primaryFire();
-					particles();
-				}
-				else{
-					stopPrimaryFire();
+				if(_ableToShoot) {
+					auto primaryShootMsg = static_pointer_cast<CMessagePrimaryShoot>(message);
+					if(primaryShootMsg->getShoot()){
+						primaryFire();
+						particles();
+					}
+					else{
+						stopPrimaryFire();
+					}
 				}
 				break;
 			}
 			case Message::SECONDARY_SHOOT: {
-				auto secondaryShootMsg = static_pointer_cast<CMessageSecondaryShoot>(message);
-				if(secondaryShootMsg ->getShoot()){
-					secondaryFire();
+				if(_ableToShoot) {
+					auto secondaryShootMsg = static_pointer_cast<CMessageSecondaryShoot>(message);
+					if(secondaryShootMsg ->getShoot()){
+						secondaryFire();
+					}
+					else{
+						stopSecondaryFire();
+					}
 				}
-				else{
-					stopSecondaryFire();
-				}
+				break;
+			}
+			case Message::BLOCK_SHOOT: {
+				auto blockShootMsg = static_pointer_cast<CMessageBlockShoot>(message);
+				_ableToShoot = blockShootMsg->canShoot();
 				break;
 			}
 		}
@@ -127,7 +140,6 @@ namespace Logic {
 
 	} // onAvailable
 	//__________________________________________________________________
-
 
 	void IWeapon::addAmmo(int weapon, int ammo, bool iAmCatch) {
 		_currentAmmo += ammo;
