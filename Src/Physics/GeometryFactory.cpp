@@ -64,6 +64,12 @@ namespace Physics {
 
 	//________________________________________________________________________
 
+	CapsuleGeometry CGeometryFactory::createCapsule(float radius, float height) {
+		return PxCapsuleGeometry(radius, height / 2.0f);
+	}
+
+	//________________________________________________________________________
+
 	PlaneGeometry CGeometryFactory::createPlane(const Vector3 &point, const Vector3 &normal) {
 		return PxPlane( Vector3ToPxVec3(point), Vector3ToPxVec3(normal) );
 	}

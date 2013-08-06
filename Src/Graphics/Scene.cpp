@@ -205,7 +205,7 @@ namespace Graphics
 
 		if(_name != "dummy_scene"){
 			
-			//HHFX::getSingletonPtr()->deactivate();
+			ParticleUniverse::ParticleSystemManager::getSingletonPtr()->destroyAllParticleSystems(_sceneMgr);
 		}
 
 	} // deactivate
@@ -296,13 +296,10 @@ namespace Graphics
 	CParticle * CScene::createParticle(const std::string &particleName, const Vector3 &position, const Vector3 &directionWithForce){
 
 		// creo una particula de hhfx
-		CParticle *particle = new HHFXParticle(particleName, position);
-		if(!particle->isLoaded()){ // si no puedo creala, creo una de ogre
-			delete particle;
-			particle = _poolParticle->getParticle(particleName);
-			if(!particle)
-				return 0; // si la de ogre tampoco tiene exito, devuelvo 0 para control de errores
-		}
+		CParticle *particle = _poolParticle->getParticle(particleName);
+		if(!particle)
+			return 0; // si la de ogre tampoco tiene exito, devuelvo 0 para control de errores
+		
 		particle->setPosition(position);
 		
 		if(!directionWithForce.isZeroLength())

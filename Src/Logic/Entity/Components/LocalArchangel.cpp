@@ -27,7 +27,6 @@ namespace Logic{
 		_scene->setCompositorVisible(_effect, false);
 		_strengthEffect = "strength";
 		_timestamp = 0;
-		this->putToSleep();
 	}
 	//------------------------------------------------------
 

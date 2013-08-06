@@ -21,9 +21,9 @@ namespace Logic {
 
 	IMP_FACTORY(CDynamicLight);
 
-	CDynamicLight::CDynamicLight() : _timer(0.0f) {
+	CDynamicLight::CDynamicLight() : _timer(0.0f),
+									 _offset(Vector3::ZERO) {
 		// Nada que hacer
-		_isStatic = false;
 	}
 
 	//________________________________________________________________________
@@ -36,12 +36,12 @@ namespace Logic {
 	
 	void CDynamicLight::turnOn(const Vector3& offset, float timeToLive) {
 		// El tiempo dado esta en segundos, lo pasamos a msecs
-		_timer = timeToLive * 1000;
+		_timer = timeToLive * 1000.0f;
 		// Offset que la luz va a tener
 		_offset = offset;
 
 		// Creamos la luz con la información del arquetipos y la posicion de la entidad
-		_light = CLightManager::getSingletonPtr()->createLight(_lightType, _entity->getName(), _isStatic, _entity->getPosition(), -_entity->getOrientation().zAxis());
+		CLightManager::getSingletonPtr()->createLight(_light, this, _lightType, _controlledByManager, _entity->getPosition() + _offset, -_entity->getOrientation().zAxis());
 
 		if(_light != NULL) {
 			if( _color != Vector3::ZERO ) {
@@ -59,14 +59,6 @@ namespace Logic {
 
 	//________________________________________________________________________
 
-	void CDynamicLight::turnOff() {
-		// Destruimos la luz
-		CLightManager::getSingletonPtr()->destroyLight(_light, _isStatic);
-		_light = NULL;
-	}
-
-	//________________________________________________________________________
-
 	void CDynamicLight::onTick(unsigned int msecs) {
 		if(_light == NULL) return;
 
@@ -77,6 +69,7 @@ namespace Logic {
 			_timer -= msecs;
 			if(_timer <= 0.0f) {
 				turnOff();
+				_timer = 0.0f;
 			}
 		}
 	}

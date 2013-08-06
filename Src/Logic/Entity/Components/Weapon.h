@@ -195,8 +195,19 @@ namespace Logic {
 
 		//__________________________________________________________________
 
-		//Pintar las particulas para el arma
+		/**
+		Pintar las particulas para el arma
+		*/
 		void particles();
+
+		//__________________________________________________________________
+
+		/**
+		Bloquea el disparo si asi se indica.
+
+		@param unable true si queremos bloquear el disparo.
+		*/
+		void ableToShoot(bool able) { _ableToShoot = able; }
 
 	protected:
 
@@ -251,8 +262,6 @@ namespace Logic {
 		*/
 		void drawDecal(Logic::CEntity* pEntity, Vector3 vPos);
 
-		//__________________________________________________________________
-
 
 		// =======================================================================
 		//                          MIEMBROS PROTEGIDOS
@@ -278,6 +287,9 @@ namespace Logic {
 
 		/** Nombre del arma con el formato: weapon + <nombre arma>.*/
 		std::string _weaponName;
+
+		/** true si por alguna razon no podemos disparar. */
+		bool _ableToShoot;
 
 	}; // class IWeapon
 

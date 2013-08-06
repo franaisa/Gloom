@@ -69,12 +69,12 @@ namespace Logic{
 
 		assert( entityInfo->hasAttribute("primarySkillCooldown") && "Error: primarySkillCooldown no esta definido en el mapa" );
 		// Pasamos el tiempo a msecs
-		updatePrimarySkillCooldown( entityInfo->getFloatAttribute("primarySkillCooldown") );
+		//updatePrimarySkillCooldown( entityInfo->getFloatAttribute("primarySkillCooldown") );
 
 		// Leemos el tiempo de cooldown de la habilidad secundaria
 		assert( entityInfo->hasAttribute("secondarySkillCooldown") && "Error: secondarySkillCooldown no esta definido en el mapa" );
 
-		updateSecondarySkillCooldown ( entityInfo->getFloatAttribute("secondarySkillCooldown") );
+		//updateSecondarySkillCooldown ( entityInfo->getFloatAttribute("secondarySkillCooldown") );
 		return true;
 	}
 
@@ -95,22 +95,18 @@ namespace Logic{
 	bool CHud::accept(const std::shared_ptr<CMessage>& message) {
 		Logic::TMessageType msgType = message->getMessageType();
 
-		return	msgType == Message::HUD_LIFE		|| 
-				msgType == Message::HUD_SHIELD		|| 
-				msgType == Message::HUD_AMMO		|| 
-				msgType == Message::HUD_WEAPON		|| 
-				msgType == Message::HUD_DISPERSION  ||
-				msgType == Message::HUD_SPAWN		|| 
-				msgType == Message::HUD_DEBUG		|| 
-				msgType == Message::HUD_DEBUG_DATA	||
-				msgType == Message::CHANGE_MATERIAL_HUD_WEAPON ||
-				msgType == Message::IMPACT			||
-				msgType == Message::HUD_DISPERSION	||
-				msgType == Message::PRIMARY_SPELL	||
-				msgType == Message::SECONDARY_SPELL	||
-				msgType == Message::HUD				||
-				msgType == Message::ADD_SPELL;
-
+		return	msgType == Message::HUD_LIFE					|| 
+				msgType == Message::HUD_SHIELD					|| 
+				msgType == Message::HUD_AMMO					|| 
+				msgType == Message::HUD_WEAPON					|| 
+				msgType == Message::HUD_DISPERSION				||
+				msgType == Message::HUD_SPAWN					|| 
+				msgType == Message::HUD_DEBUG					|| 
+				msgType == Message::HUD_DEBUG_DATA				||
+				msgType == Message::CHANGE_MATERIAL_HUD_WEAPON	||
+				msgType == Message::IMPACT						||
+				msgType == Message::HUD_DISPERSION				||
+				msgType == Message::HUD;
 	}
 
 
@@ -162,55 +158,18 @@ namespace Logic{
 					case CMessageHud::HudType::HIT:
 						_hud->callFunction( "hit", Hikari::Args());
 						break;
+					case CMessageHud::HudType::PRIMARY_AVAIABLE:
+						_hud->callFunction("primarySkillAvaiable", Hikari::Args());
+						break;
+					case CMessageHud::HudType::SECONDARY_AVAIABLE:
+						_hud->callFunction("secondarySkillAvaiable", Hikari::Args());
+						break;
 				}
 			}
 
 			case Message::IMPACT: {
 				std::shared_ptr<CMessageImpact> impMes = std::static_pointer_cast<CMessageImpact>(message);
 				hudDirectionImpact( impMes->getDirectionImpact() );
-				break;
-			}
-
-			case Message::PRIMARY_SPELL:
-				primarySpell();
-				break;
-
-			case Message::SECONDARY_SPELL:
-				secondarySpell();
-				break;
-			/*case Message::HUD_DISPERSION: {
-				std::shared_ptr<CMessageHudDispersion> hudDisp = std::static_pointer_cast<CMessageHudDispersion>(message);
-				_dispersionTime = hudDisp->getTime();
-				_resetMirilla = hudDisp->getReset();
-
-				if (!_resetMirilla)
-				{
-					_dispersionWidth = hudDisp->getHeight();
-					_dispersionHeight = hudDisp->getWidth();
-				}
-				break;
-			}*/
-
-			case Message::ADD_SPELL: {
-				/*
-				std::shared_ptr<CMessageAddSpell> addSpellMsg = std::static_pointer_cast<CMessageAddSpell>(message);
-				unsigned int spellIndex = addSpellMsg->getSpell();
-				CSpellsManagerClient * spellmanager = _entity->getComponent<CSpellsManagerClient>("CSpellsManagerClient");
-				if(spellIndex == 1){
-					if ( spellmanager->isPrimaryPassive() ){
-						
-						updatePrimarySpellCooldown(spellmanager->getPrimaryCoolDown());
-						primarySpell();
-					}
-				}else{
-					if(spellIndex == 2){
-						updateSecondarySpellCooldown(spellmanager->getPrimaryCoolDown());
-						secondarySpell();
-					}else{
-						printf("\nCuidado, has puesto un hechizo no valido, o es 1 (primario) o es 2 (secundario)");
-					}
-				}
-				*/
 				break;
 			}
 		}
@@ -274,11 +233,11 @@ namespace Logic{
 		_hud->callFunction("weaponPicked", Hikari::Args(sweapon));
 	}
 
-	void CHud::updatePrimarySkillCooldown(float cooldown){
-		_hud->callFunction("updatePrimarySkillCooldown", Hikari::Args(cooldown));
+	void CHud::primarySkillAvaiable(){
+		_hud->callFunction("primarySkillAvaiable", Hikari::Args());
 	}
-	void CHud::updateSecondarySkillCooldown(float cooldown){
-		_hud->callFunction("updateSecondarySkillCooldown", Hikari::Args(cooldown));
+	void CHud::secondarySkillAvaiable(){
+		_hud->callFunction("secondarySkillAvaiable", Hikari::Args());
 	}
 	void CHud::updatePrimarySpellCooldown(float cooldown){
 		_hud->callFunction("updatePrimarySpellCooldown", Hikari::Args(cooldown));
@@ -305,8 +264,8 @@ namespace Logic{
 		if(_respawn->getVisibility()){
 			_acumSpawn += msecs;
 			if(_acumSpawn>1000){
-				/*if(_respawn->getVisibility())
-					_respawn->callFunction("time", Hikari::Args(--_spawnTime));*/
+				if(_respawn->getVisibility())
+					_respawn->callFunction("time", Hikari::Args(--_spawnTime));
 				_acumSpawn = 0;
 				/////////////////////////////////////////////////////////////////////////////////////
 				////////	Borrar en un futuro, espero que el server no llegue a -5		/////////

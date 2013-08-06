@@ -296,9 +296,6 @@ namespace Logic {
 		CFireBallController* fbController = fireBall->getComponent<CFireBallController>("CFireBallController");
 		fbController->setOwner(this);
 
-		CDynamicLight* fbLight = fireBall->getComponent<CDynamicLight>("CDynamicLight");
-		fbLight->turnOn();
-
 		// Arrancamos la entidad
 		fireBall->activate();
 		fireBall->start();

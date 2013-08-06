@@ -210,6 +210,7 @@
     <ClCompile Include="..\..\Src\Logic\Messages\MessageAddSpell.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageAddWeapon.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageAudio.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Messages\MessageBlockShoot.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageChangeGravity.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageDamageAmplifier.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageDecal.cpp" />
@@ -401,6 +402,7 @@
     <ClInclude Include="..\..\Src\Logic\Maps\Scoreboard.h" />
     <ClInclude Include="..\..\Src\Logic\Maps\TeamFaction.h" />
     <ClInclude Include="..\..\Src\Logic\Maps\WorldState.h" />
+    <ClInclude Include="..\..\Src\Logic\Messages\MessageBlockShoot.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageHud.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageAddSpell.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageCameraRoll.h" />

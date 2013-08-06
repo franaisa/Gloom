@@ -89,6 +89,17 @@ namespace Physics {
 		//________________________________________________________________________
 
 		/**
+		Crear una capsula a partir de un radio y una altura dadas.
+
+		@param radius Radio de la cápsula.
+		@param height Altura de la cápsula (incluyendo semiesferas).
+		@return La geometría de una cápsula.
+		*/
+		CapsuleGeometry createCapsule(float radius, float height);
+
+		//________________________________________________________________________
+
+		/**
 		Crea una caja dadas unas dimensiones.
 
 		@param dimensions Anchura, altura y profundidad de la caja.

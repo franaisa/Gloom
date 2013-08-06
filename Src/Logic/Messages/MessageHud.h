@@ -11,7 +11,11 @@ namespace Logic {
 	enum HudType{
 		PRIMARY_SKILL,
 		SECONDARY_SKILL,
-		HIT
+		HIT,
+		SECONDARY_AVAIABLE,
+		PRIMARY_AVAIABLE,
+		PRIMARY_ACTIVE,
+		SECONDARY_ACTIVE
 	};
 
 	public:

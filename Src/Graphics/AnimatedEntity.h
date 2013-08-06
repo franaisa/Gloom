@@ -90,6 +90,7 @@ namespace Graphics
 			AnimState state;
 			Ogre::AnimationState* animation;
 			float fadeTime;
+			int direction;
 		};
 
 	public:
@@ -117,7 +118,7 @@ namespace Graphics
 
 		@return true si la animación solicitada fue correctamente activada.
 		*/
-		bool setAnimation(const std::string &anim, bool loop, float fadeTime = 0.15f);
+		bool setAnimation(const std::string &anim, bool loop, int rewind, float fadeTime = 0.15f);
 
 		/**
 		Le pone un arma en la mano al monigote

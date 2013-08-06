@@ -147,15 +147,28 @@ namespace Logic {
 		if(_primarySkillTimer > 0) {
 			_primarySkillTimer -= msecs;
 			
-			if(_primarySkillTimer < 0)
+			if(_primarySkillTimer < 0){
 				_primarySkillTimer = 0;
+				//mandamos al jugador que tiene la habilidad disponible
+
+				std::shared_ptr<CMessageHud> hudMsg = std::make_shared<CMessageHud>();
+				hudMsg->setType(CMessageHud::HudType::PRIMARY_AVAIABLE);
+				_entity->emitMessage(hudMsg);
+			}
 		}
 
 		if(_secondarySkillTimer > 0) {
 			_secondarySkillTimer -= msecs;
 
-			if(_secondarySkillTimer < 0)
+			if(_secondarySkillTimer < 0){
 				_secondarySkillTimer = 0;
+
+				//mandamos al jugador que tiene la habilidad disponible
+
+				std::shared_ptr<CMessageHud> hudMsg = std::make_shared<CMessageHud>();
+				hudMsg->setType(CMessageHud::HudType::SECONDARY_AVAIABLE);
+				_entity->emitMessage(hudMsg);
+			}
 		}
 	} // tick
 

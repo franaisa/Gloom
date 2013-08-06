@@ -33,7 +33,7 @@ con animaciones.
 namespace Graphics 
 {
 		
-	bool CAnimatedEntity::setAnimation(const std::string &anim, bool loop, float fadeTime)
+	bool CAnimatedEntity::setAnimation(const std::string &anim, bool loop, int rewind, float fadeTime)
 	{
 		if(!_entity->getAllAnimationStates()->hasAnimationState(anim))
 			return false;
@@ -63,7 +63,7 @@ namespace Graphics
 				}
 				
 			}
-			
+			runningAnim->second.direction = 1;
 			return true;
 		}
 
@@ -79,6 +79,7 @@ namespace Graphics
 		animation.animation = animstate;
 		animation.state = FADE_IN;
 		animation.fadeTime = fadeTime;
+		animation.direction = 1;
 
 		//metemos la animacion en la lista de animaciones ejecutandose
 		TAnim newAnim (anim,animation);
@@ -174,7 +175,7 @@ namespace Graphics
 					anim->second.state = RUNNING;
 				}
 				anim->second.animation->setWeight(weight);
-				anim->second.animation->addTime(secs);
+				anim->second.animation->addTime(secs * anim->second.direction);
 				break;
 			}
 			case FADE_OUT:{
@@ -188,12 +189,12 @@ namespace Graphics
 					anim->second.animation->setTimePosition(0);
 				}else{
 					anim->second.animation->setWeight(weight);
-					anim->second.animation->addTime(secs);
+					anim->second.animation->addTime(secs * anim->second.direction);
 				}
 				break;
 			}
 			case RUNNING:
-				anim->second.animation->addTime(secs);
+				anim->second.animation->addTime(secs * anim->second.direction);
 				break;
 			}//switch
 

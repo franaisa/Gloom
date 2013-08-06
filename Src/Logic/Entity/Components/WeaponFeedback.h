@@ -194,6 +194,8 @@ namespace Logic {
 
 		float _heightShoot;
 
+		bool _ableToShoot;
+
 	}; // class IWeaponFeedback
 
 } // namespace Logic

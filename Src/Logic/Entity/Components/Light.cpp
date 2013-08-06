@@ -24,7 +24,7 @@ namespace Logic {
 	IMP_FACTORY(CLight);
 
 	CLight::CLight() : _light(NULL),
-					   _isStatic(true),
+					   _isOn(true),
 					   _position(Vector3::ZERO),
 					   _direction(Vector3::NEGATIVE_UNIT_Y),
 					   _color(Vector3::ZERO),
@@ -39,8 +39,7 @@ namespace Logic {
 	//________________________________________________________________________
 
 	CLight::~CLight() {
-		// Nada que hacer
-		CLightManager::getSingletonPtr()->destroyLight(_light, _isStatic);
+		turnOff();
 	}
 	
 	//________________________________________________________________________
@@ -59,12 +58,18 @@ namespace Logic {
 		else
 			_lightType = Graphics::LightType::eSPOT_LIGHT;
 
+		assert( entityInfo->hasAttribute("controlledByManager") );
+		_controlledByManager = entityInfo->getBoolAttribute("controlledByManager");
+
 		if( entityInfo->hasAttribute("position") )
 			_position = entityInfo->getVector3Attribute("position");
 		else
-			assert( !_isStatic );
+			assert( !_controlledByManager );
 
 		// ATRIBUTOS OPCIONALES
+		if( entityInfo->hasAttribute("on") )
+			_isOn = entityInfo->getBoolAttribute("on");
+
 		if( entityInfo->hasAttribute("direction") )
 			_direction = entityInfo->getVector3Attribute("direction");
 
@@ -106,14 +111,14 @@ namespace Logic {
 	void CLight::process(const std::shared_ptr<CMessage>& message) {
 		switch( message->getMessageType() ) {
 			case Message::TOUCHED: {
-				_light = CLightManager::getSingletonPtr()->createLight(_lightType, _entity->getName(), _isStatic, _position, _direction);
+				CLightManager::getSingletonPtr()->createLight(_light, this, _lightType, _controlledByManager, _position, _direction);
 
 				if(_light != NULL) {
 					if( _color != Vector3::ZERO ) {
 						_light->setColor(_color.x, _color.y, _color.z);
 					}
 					if( _attenuation != Vector3::ZERO ) {
-						// Por defecto ogre pasa 0 de atenuacion. Metemos como atenuacion "infinito"
+						// Si el rango es 0, metemos como atenuacion "infinito"
 						// porque sino Ogre automaticamente deja de renderizar la luz a esa distancia
 						_light->setAttenuation(_range != 0.0f ? _range : 0xFFFFFFFF, _attenuation.x, _attenuation.y, _attenuation.z);
 					}
@@ -129,22 +134,24 @@ namespace Logic {
 
 	//________________________________________________________________________
 
-	/*void CLight::onStart() {
-		_light = CLightManager::getSingletonPtr()->createLight(_lightType, _entity->getName(), _isStatic, _position, _direction);
+	void CLight::onStart() {
+		if(_isOn) {
+			CLightManager::getSingletonPtr()->createLight(_light, this, _lightType, _controlledByManager, _position, _direction);
 
-		if(_light != NULL) {
-			if( _color != Vector3::ZERO ) {
-				_light->setColor(_color.x, _color.y, _color.z);
-			}
-			if( _attenuation != Vector3::ZERO ) {
-				// De momento ignoramos el rango en los shaders
-				_light->setAttenuation(_range != 0.0f ? _range : 0xFFFFFFFF, _attenuation.x, _attenuation.y, _attenuation.z);
-			}
-			if( _innerAngle != 0.0f || _outerAngle != 0.0f ) {
-				_light->setSpotLightParams(_innerAngle, _outerAngle);
+			if(_light != NULL) {
+				if( _color != Vector3::ZERO ) {
+					_light->setColor(_color.x, _color.y, _color.z);
+				}
+				if( _attenuation != Vector3::ZERO ) {
+					// De momento ignoramos el rango en los shaders
+					_light->setAttenuation(_range != 0.0f ? _range : 0xFFFFFFFF, _attenuation.x, _attenuation.y, _attenuation.z);
+				}
+				if( _innerAngle != 0.0f || _outerAngle != 0.0f ) {
+					_light->setSpotLightParams(_innerAngle, _outerAngle);
+				}
 			}
 		}
-	}*/
+	}
 
 	//________________________________________________________________________
 
@@ -203,6 +210,13 @@ namespace Logic {
 			_light->setDirection(direction);
 	}
 
+	//________________________________________________________________________
+
+	void CLight::turnOff() {
+		// Destruimos la luz
+		CLightManager::getSingletonPtr()->destroyLight(_light, _controlledByManager);
+		_light = NULL;
+	}
 
 } // namespace Logic
 
