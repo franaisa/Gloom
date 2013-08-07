@@ -43,6 +43,11 @@ material lavaFondo {
 				texture lava_NRM.tga
 			}
 			
+			// Textura de especular
+			texture_unit SpecMap {
+				texture lava_SPEC.tga
+			}
+			
 		}
 	}
 	
