@@ -129,4 +129,18 @@ namespace Map {
 
 	} // getVector3Attribute
 
+	//--------------------------------------------------------
+
+	const Quaternion CEntity::getQuaternionAttribute(const std::string &attr) const {
+		std::stringstream quatStream( (*_attributes.find(attr)).second );
+
+		Quaternion quat;
+		quatStream >> quat.x;
+		quatStream >> quat.y;
+		quatStream >> quat.z;
+		quatStream >> quat.w;
+
+		return quat;
+	}
+
 } // namespace Map

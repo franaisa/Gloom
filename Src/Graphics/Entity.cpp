@@ -128,9 +128,9 @@ namespace Graphics
 			std::cout << e.what() << std::endl;
 			return false;
 		}
+
 		_entityNode = _scene->getSceneMgr()->getRootSceneNode()->createChildSceneNode(_name + "_node");
 		_entityNode->attachObject(_entity);
-
 
 		/*size_t vertexCount, indexCount;
 	

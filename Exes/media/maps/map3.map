@@ -6,14 +6,58 @@ Map = {
 		physic_file = "media/models/mapaAngel/mapaAngel.RepX",
 	},
 	
+	Light0 = {
+		type = "Light",
+		lightType = "point",
+		position = {-253.04, 228.582, -101.719},
+		color = {0.9, 0.9, 0.9},
+		range = 3250,
+		attenuation = {1.0, 0.0014, 0.000007},
+	},
+	
+	Light1 = {
+		type = "Light",
+		lightType = "point",
+		position = {-44.851, 208.733, -84.244},
+		color = {0.9, 0.9, 0.9},
+		range = 600,
+		attenuation = {1.0, 0.007, 0.0002},
+	},
+	
 	Light2 = {
 		type = "Light",
-		lightType = "directional",
-		position = {-97.9955, 68.2714, -211.816},
-		direction = {0.0, -1.0, 0.0},
-		color = {1.0, 1.0, 1.0},
-		innerAngle = 0.63,
-		outerAngle = 1.11,
+		lightType = "point",
+		position = {-187.423, 230.983, -415.099},
+		color = {0.9, 0.9, 0.9},
+		range = 600,
+		attenuation = {1.0, 0.007, 0.0002},
+	},
+	
+	Light3 = {
+		type = "Light",
+		lightType = "point",
+		position = {-187.423, 230.983, -415.099},
+		color = {0.9, 0.9, 0.9},
+		range = 200,
+		attenuation = {1.0, 0.022, 0.0019},
+	},
+	
+	Light4 = {
+		type = "Light",
+		lightType = "point",
+		position = {70.6804, 130.962, -415.095},
+		color = {0.9, 0.9, 0.9},
+		range = 200,
+		attenuation = {1.0, 0.022, 0.0019},
+	},
+	
+	Light5 = {
+		type = "Light",
+		lightType = "point",
+		position = {301.074, 164.798, -468.904},
+		color = {0.9, 0.9, 0.9},
+		range = 600,
+		attenuation = {1.0, 0.007, 0.0002},
 	},
 	
 	Vortice = {
