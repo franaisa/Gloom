@@ -42,6 +42,11 @@ material Armour_material {
 				texture Armour_normal.tga
 			}
 			
+			// Textura de especular
+			texture_unit SpecMap {
+				texture Armour_spec.tga
+			}
+			
 		}
 	}
 }

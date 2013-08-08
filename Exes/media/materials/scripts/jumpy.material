@@ -43,6 +43,11 @@ material Jump {
 				texture Jump_NM.tga
 			}
 			
+			// Textura de especular
+			texture_unit SpecMap {
+				texture Jump_SP.tga
+			}
+			
 		}
 	}
 }

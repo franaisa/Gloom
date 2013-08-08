@@ -1,0 +1,32 @@
+compositor heatDistortion {
+	technique {
+        // Temporary textures
+        texture scene target_width target_height PF_A8R8G8B8
+		texture heatMap target_width target_height PF_A8R8G8B8
+		
+        target scene {
+            // Render output from previous compositor (or original scene)
+            input previous
+        }
+		
+		target heatMap {
+			input none
+			material_scheme heatDistortion
+			
+			pass clear{}
+			pass render_scene{}
+		}
+
+        target_output {
+            // Start with clear output
+            input none
+            // Draw a fullscreen quad with the black and white image
+            pass render_quad {
+                // Renders a fullscreen quad with a material
+                material heatMaterial
+                input 0 scene
+				input 1 heatMap
+            }
+        }
+    }
+} 
