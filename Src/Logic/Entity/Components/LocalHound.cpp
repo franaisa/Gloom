@@ -21,14 +21,8 @@ namespace Logic{
 		//creating the effect and hiding
 		_scene = _entity->getMap()->getScene();
 
-		assert( entityInfo->hasAttribute("maxVelocity") && "Error: No se ha definido el atributo maxVelocity en el mapa" );
-		_maxDefaultVelocity = entityInfo->getFloatAttribute("maxVelocity");
-
 		assert( entityInfo->hasAttribute("biteMaxVelocity") && "Error: No se ha definido el atributo biteMaxVelocity en el mapa" );
 		_biteMaxVelocity = entityInfo->getFloatAttribute("biteMaxVelocity");
-
-		assert( entityInfo->hasAttribute("biteVelocity") && "Error: No se ha definido el atributo biteVelocity en el mapa" );
-		_bitetVelocity = entityInfo->getFloatAttribute("biteVelocity");
 
 		assert( entityInfo->hasAttribute("biteDuration") && "Error: No se ha definido el atributo biteDuration en el mapa" );
 		_biteDuration = entityInfo->getFloatAttribute("biteDuration") * 1000;
@@ -49,27 +43,29 @@ namespace Logic{
 		_strengthEffect = "strength";
 		_timestamp = 0;
 		_offsetTimeSin = 0;
-		this->putToSleep();
 	}
 	//------------------------------------------------------
 
 	bool CLocalHound::accept(const std::shared_ptr<CMessage>& message) {
 		Logic::TMessageType msgType = message->getMessageType();
-		return msgType == Message::CHANGE_MATERIAL;
+		return CPlayerClass::accept(message) ||
+				msgType == Message::CHANGE_MATERIAL;
 	} // accept
 	//------------------------------------------------------
 
 	void CLocalHound::process(const std::shared_ptr<CMessage>& message) {
 		std::shared_ptr<CMessageChangeMaterial> materialMsg = std::static_pointer_cast<CMessageChangeMaterial>(message);
 
-		if (materialMsg->getMaterialName() == "original"){
+		CPlayerClass::process(message);
+
+		/*if (materialMsg->getMaterialName() == "original"){
 			_scene->setCompositorVisible(_effect, false);
 			this->putToSleep();
 			// Si funcionara el awake no haria falta
 			_timestamp = 0;
 		}else{
 			_scene->setCompositorVisible(_effect, true);
-		}
+		}*/
 	}
 	//------------------------------------------------------
 
@@ -120,7 +116,7 @@ namespace Logic{
 				stopPrimarySkill();
 				charge = false;
 				_doingPrimarySkill = false;
-				_avatarController->activate();
+				_avatarController->wakeUp();
 			}
 		}
 		
@@ -144,7 +140,7 @@ namespace Logic{
 
 		//lo primero de todo cambiamos los valores del avatarController para que nos mueva mucho mas lento
 		//_avatarController->setMaxVelocity(_bitetVelocity);
-		_avatarController->deactivate();
+		_avatarController->putToSleep(true);
 
 		_biteTimer = _biteDuration;
 	}

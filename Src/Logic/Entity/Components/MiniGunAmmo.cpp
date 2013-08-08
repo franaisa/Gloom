@@ -208,11 +208,11 @@ namespace Logic {
 		_currentSpentSecondaryAmmo = _ammoSpentTimer = 0;
 
 		// Termino el sonido del disparo cargao
-		auto m = std:: make_shared<CMessageAudio>();
+		/*auto m = std:: make_shared<CMessageAudio>();
 		m->setAudioName("minigun.wav");
 		m->isLoopable(false);
 		m->is3dSound(true);
-		_entity->emitMessage(m);
+		_entity->emitMessage(m);*/
 	}
 	//__________________________________________________________________
 

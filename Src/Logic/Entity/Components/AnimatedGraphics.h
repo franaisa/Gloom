@@ -145,6 +145,7 @@ namespace Logic
 			std::string animation;
 			bool loop;
 			bool exclude;
+			int rewind;
 		};
 
 		/**

@@ -12,7 +12,7 @@ material bumpLightingTest {
 			
 			// Textura de difuso
 			texture_unit DiffMap {
-				texture wallTest.jpg
+				texture floor_COLOR.tga
 			}
 			
 		}
@@ -34,12 +34,17 @@ material bumpLightingTest {
 			
 			// Textura de difuso
 			texture_unit DiffMap {
-				texture wallTest.jpg
+				texture floor_COLOR.tga
 			}
 			
-			// Textura para el bump mapping. En el alfa esta el mapa de especulares.
+			// Textura para el bump mapping.
 			texture_unit NormalMap {
-				texture wallTestNormalMap.tga
+				texture floor_NRM.tga
+			}
+			
+			// Textura de especular
+			texture_unit SpecMap {
+				texture floor_SPEC.tga
 			}
 			
 		}

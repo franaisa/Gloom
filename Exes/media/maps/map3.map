@@ -6,6 +6,16 @@ Map = {
 		physic_file = "media/models/mapaAngel/mapaAngel.RepX",
 	},
 	
+	Light2 = {
+		type = "Light",
+		lightType = "directional",
+		position = {-97.9955, 68.2714, -211.816},
+		direction = {0.0, -1.0, 0.0},
+		color = {1.0, 1.0, 1.0},
+		innerAngle = 0.63,
+		outerAngle = 1.11,
+	},
+	
 	Vortice = {
 		type = "Vortice",
 	},

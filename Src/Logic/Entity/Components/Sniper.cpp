@@ -138,7 +138,6 @@ namespace Logic {
 	//-------------------------------------------------------
 
 	void CSniper::secondaryFire(){
-
 		//Direccion
 		Vector3 direction = _entity->getOrientation()*Vector3::NEGATIVE_UNIT_Z;
 	

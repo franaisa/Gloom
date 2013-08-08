@@ -11,57 +11,28 @@ Map = {
 	
 	TestLight2 = {
 		type = "Light",
-		model = "arcan.mesh",
-		pitch = -90,
 		lightType = "point",
-		position = {0, 100, 0},
-		color = {0.9, 0, 0},
-		
-		physic_entity = "rigid",
-		physic_trigger = true,
-		physic_type = "static",
-		physic_shape = "sphere",
-		physic_radius = 40,
-		physic_group = 18,
-		physic_groupList = "1",
+		position = {0, 30, 0},
+		color = {0.0, 0.9, 0.9},
+
 	},
 	
 	TestLight1 = {
 		type = "Light",
-		model = "arcan.mesh",
-		pitch = -90,
-		lightType = "point",
-		position = {300, 100, 0},
+		lightType = "directional",
+		position = {300, 50, 0},
 		direction = {1, -1, 1},
-		color = {0, 0.9, 0},
-		
-		physic_entity = "rigid",
-		physic_trigger = true,
-		physic_type = "static",
-		physic_shape = "sphere",
-		physic_radius = 40,
-		physic_group = 18,
-		physic_groupList = "1",
+		color = {0.9, 0.0, 0.0},
 	},
 	
 	TestLight0 = {
 		type = "Light",
-		model = "arcan.mesh",
-		pitch = -90,
-		lightType = "point",
-		position = {-300, 100, 0},
-		direction = {1, -1, 1},
-		color = {0, 0, 0.9},
+		lightType = "spot",
+		position = {-300, 20, 0},
+		direction = {-1, -1, -1},
+		color = {0.0, 0.9, 0.0},
 		innerAngle = 0.63,
 		outerAngle = 1.11,
-		
-		physic_entity = "rigid",
-		physic_trigger = true,
-		physic_type = "static",
-		physic_shape = "sphere",
-		physic_radius = 40,
-		physic_group = 18,
-		physic_groupList = "1",
 	},
 	
 	Player = {

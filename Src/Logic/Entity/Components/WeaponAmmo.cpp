@@ -24,6 +24,7 @@
 #include "Logic/Messages/MessagePrimaryShoot.h"
 #include "Logic/Messages/MessageSecondaryShoot.h"
 #include "Logic/Messages/MessageReducedCooldown.h"
+#include "Logic/Messages/MessageBlockShoot.h"
 
 // Graficos
 // @deprecated Ogre no deberia estar acoplado a la logica
@@ -39,6 +40,7 @@ namespace Logic {
 	
 	IWeaponAmmo::IWeaponAmmo(const string& weaponName) : _weaponName("weapon" + weaponName),
 											 _currentAmmo(0),
+											 _ableToShoot(true),
 											 _primaryFireIsActive(false),
 											 _secondaryFireIsActive(false),
 											 _friends(0){
@@ -96,7 +98,8 @@ namespace Logic {
 						type == Control::UNLEFT_CLICK	||
 						type == Control::UNRIGHT_CLICK;
 		}else{
-			result = message->getMessageType() == Message::REDUCED_COOLDOWN;
+			result = message->getMessageType() == Message::REDUCED_COOLDOWN	||
+					 message->getMessageType() == Message::BLOCK_SHOOT;
 		}
 
 		return result;
@@ -107,21 +110,23 @@ namespace Logic {
 	void IWeaponAmmo::process(const shared_ptr<CMessage>& message) {
 		switch( message->getMessageType() ) {
 			case Message::CONTROL: {
-				ControlType type = std::static_pointer_cast<CMessageControl>(message)->getType();
+				if(_ableToShoot) {
+					ControlType type = std::static_pointer_cast<CMessageControl>(message)->getType();
 
-				if(type == Control::LEFT_CLICK) {
-					if( canUsePrimaryFire() )
-						primaryFire();
-				}
-				else if(type == Control::RIGHT_CLICK) {
-					if( canUseSecondaryFire() )
-						secondaryFire();
-				}
-				else if(type == Control::UNLEFT_CLICK) {
-						stopPrimaryFire();
-				}
-				else if(type == Control::UNRIGHT_CLICK) {
-						stopSecondaryFire();
+					if(type == Control::LEFT_CLICK) {
+						if( canUsePrimaryFire() )
+							primaryFire();
+					}
+					else if(type == Control::RIGHT_CLICK) {
+						if( canUseSecondaryFire() )
+							secondaryFire();
+					}
+					else if(type == Control::UNLEFT_CLICK) {
+							stopPrimaryFire();
+					}
+					else if(type == Control::UNRIGHT_CLICK) {
+							stopSecondaryFire();
+					}
 				}
 
 				break;
@@ -129,6 +134,11 @@ namespace Logic {
 			case Message::REDUCED_COOLDOWN: {
 				reduceCooldown(std::static_pointer_cast<CMessageReducedCooldown>(message)->getPercentCooldown());
 				break;								
+			}
+			case Message::BLOCK_SHOOT: {
+				auto blockShootMsg = static_pointer_cast<CMessageBlockShoot>(message);
+				_ableToShoot = blockShootMsg->canShoot();
+				break;
 			}
 		}
 	} // process

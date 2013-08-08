@@ -12,6 +12,7 @@ de disparo de la cabra.
 */
 
 #include "IronHellGoat.h"
+#include "DynamicLight.h"
 #include "FireBallController.h"
 #include "HudWeapons.h"
 
@@ -171,7 +172,6 @@ namespace Logic {
 
 		decrementAmmo();
 		++_currentSpentAmmo;
-
 	}
 
 	//__________________________________________________________________

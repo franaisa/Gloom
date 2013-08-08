@@ -9,9 +9,9 @@ namespace Graphics {
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	CLight::CLight(LightType::Enum lightType, const std::string& lightName, const Vector3& position, const Vector3& direction) {
+	CLight::CLight(LightType::Enum lightType, const Vector3& position, const Vector3& direction) {
 		// Creamos una luz a través del gestor de escena
-		_light = CServer::getSingletonPtr()->getActiveScene()->getSceneMgr()->createLight(lightName);
+		_light = CServer::getSingletonPtr()->getActiveScene()->getSceneMgr()->createLight();
 
 		switch(lightType) {
 			case LightType::eDIRECTIONAL_LIGHT:
@@ -51,6 +51,12 @@ namespace Graphics {
 
 	void CLight::setDirection(const Vector3& direction) {
 		_light->setDirection(direction);
+	}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	void CLight::setOrientation(const Quaternion& rotation) {
+		_light->setDirection( -rotation.zAxis() );
 	}
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -91,8 +91,6 @@ namespace Graphics
 		if(!BaseSubsystems::CServer::getSingletonPtr())
 			return false;
 
-		if(!Graphics::HHFX::Init())
-			return false;
 		_root = BaseSubsystems::CServer::getSingletonPtr()->getOgreRoot();
 
 		_renderWindow = BaseSubsystems::CServer::getSingletonPtr()->getRenderWindow();

@@ -13,6 +13,7 @@ de disparo de la cabra.
 
 #include "SniperFeedback.h"
 #include "HudWeapons.h"
+#include "DynamicLight.h"
 
 #include "Logic/Maps/EntityFactory.h"
 #include "Logic/Maps/Map.h"
@@ -51,6 +52,13 @@ namespace Logic {
 		_hudWeapon->shootAnim(-1.5f);
 		//Sonido
 		emitSound(_weaponSound, false, true, false, false);
+
+		// Shoot flash
+		CDynamicLight* shootFlash = _entity->getComponent<CDynamicLight>("CDynamicLight");
+		shootFlash->setColor( Vector3(0.04f, 0.91f, 0.97f) );
+		shootFlash->setAttenuation( Vector3(1.0f, 0.014f, 0.0007f) );
+		shootFlash->setRange(325.0f);
+		shootFlash->turnOn( Vector3(0.0f, _heightShoot, 0.0f), 0.1f );
 	}
 
 	//__________________________________________________________________
@@ -65,6 +73,12 @@ namespace Logic {
 		_hudWeapon->shootAnim(-1.5f);
 		//Sonido
 		emitSound(_weaponSound, false, true, false, false);
+		// Shoot flash
+		CDynamicLight* shootFlash = _entity->getComponent<CDynamicLight>("CDynamicLight");
+		shootFlash->setColor( Vector3(0.04f, 0.91f, 0.97f) );
+		shootFlash->setAttenuation( Vector3(1.0f, 0.014f, 0.0007f) );
+		shootFlash->setRange(325.0f);
+		shootFlash->turnOn( Vector3(0.0f, _heightShoot, 0.0f), 0.1f );
 	}
 
 }//namespace Logic

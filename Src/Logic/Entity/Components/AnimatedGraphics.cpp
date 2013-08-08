@@ -34,7 +34,15 @@ namespace Logic
 	IMP_FACTORY(CAnimatedGraphics);
 
 	CAnimatedGraphics::~CAnimatedGraphics(){
-		if(_weapons != NULL) delete _weapons;
+		if(_weapons != NULL) {
+			for(int i = WeaponType::eSOUL_REAPER; i < WeaponType::eSIZE; ++i) {
+				if(_weapons[i] != NULL) {
+					delete _weapons[i];
+				}
+			}
+
+			delete _weapons;
+		}
 	}
 	
 	//---------------------------------------------------------
@@ -92,7 +100,7 @@ namespace Logic
 	{
 		CGraphics::onActivate();
 
-		_animatedGraphicsEntity->setAnimation( _defaultAnimation, true );
+		_animatedGraphicsEntity->setAnimation( _defaultAnimation,1, true );
 		//_animatedGraphicsEntity->attachWeapon(*_weapons[0], _entity->getEntityID());
 		_insertAnimation = true;
 		_animatedGraphicsEntity->addObserver(this);
@@ -137,20 +145,20 @@ namespace Logic
 				if(_insertAnimation){
 
 					_animatedGraphicsEntity->stopAllAnimations();
-					_animatedGraphicsEntity->setAnimation( setAnimMsg->getAnimation(), setAnimMsg->getLoop() );
+					_animatedGraphicsEntity->setAnimation( setAnimMsg->getAnimation(), setAnimMsg->getRewind(), setAnimMsg->getLoop());
 					_insertAnimation = setAnimMsg->getExclude();
 
 				}else if(!_insertAnimation && setAnimMsg->getExclude()){
 					
 					_animatedGraphicsEntity->stopAllAnimations();
-					_animatedGraphicsEntity->setAnimation( setAnimMsg->getAnimation(), setAnimMsg->getLoop() );
+					_animatedGraphicsEntity->setAnimation( setAnimMsg->getAnimation(), setAnimMsg->getRewind() , setAnimMsg->getLoop());
 					
 				}else{
 
 					nextAnim.animation = setAnimMsg->getAnimation();
 					nextAnim.loop = setAnimMsg->getLoop();
 					nextAnim.exclude = setAnimMsg->getExclude();
-
+					nextAnim.rewind = setAnimMsg->getRewind();
 				}
 				break;
 			}
@@ -180,7 +188,7 @@ namespace Logic
 		if(!_insertAnimation && nextAnim.animation.size()>0){
 
 			_insertAnimation = true;
-			_animatedGraphicsEntity->setAnimation( nextAnim.animation,nextAnim.loop );
+			_animatedGraphicsEntity->setAnimation( nextAnim.animation,nextAnim.rewind, nextAnim.loop );
 			_insertAnimation = nextAnim.exclude;
 			//_entity->getYaw(); Linea random
 			nextAnim.animation="";

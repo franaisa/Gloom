@@ -141,8 +141,7 @@ namespace Logic {
 			projectileEntity->activate();
 			projectileEntity->start();
 			projectileEntity->getComponent<CMagneticBullet>("CMagneticBullet")->setProperties(this, _projectileShootForce, dispersionDirection, _heightShoot, _primaryFireDamage, _damageBurned);
-			_projectiles.insert(projectileEntity);		
-			
+			_projectiles.insert(projectileEntity);
 		}			
 	} // fireWeapon
 	//_________________________________________________

@@ -34,6 +34,8 @@ implementa las habilidades del personaje
 #include "Logic/Messages/MessageCreateParticle.h"
 #include "Logic/Messages/MessageAddForcePlayer.h"
 #include "Logic/Messages/MessageSetAnimation.h"
+#include "Logic/Messages/MessageHud.h"
+#include "Logic/Messages/MessageBlockShoot.h"
 
 // Física
 #include "Physics/Server.h"
@@ -299,17 +301,44 @@ namespace Logic {
 		shared_ptr<CMessageSetOwner> setOwnerMsg = make_shared<CMessageSetOwner>();
 		setOwnerMsg->setOwner(_entity);
 		_screamerShield->emitMessage(setOwnerMsg);
+
+		// Enviamos un mensaje para indicar que se bloquee el disparo
+		shared_ptr<CMessageBlockShoot> canShootMsg = make_shared<CMessageBlockShoot>();
+		canShootMsg->canShoot(false);
+		_entity->emitMessage(canShootMsg);
+
+		// Mandamos al jugador que tiene la habilidad disponible
+		std::shared_ptr<CMessageHud> hudMsg = std::make_shared<CMessageHud>();
+		hudMsg->setType(CMessageHud::HudType::SECONDARY_ACTIVE);
+		_entity->emitMessage(hudMsg);
 	} // secondarySkill
 	//__________________________________________________________________
 
 	void CScreamer::stopSecondarySkill() {
 		_secondarySkillIsActive = false;
 
+		// Enviamos un mensaje para indicar que el disparo ya no esta bloqueado
+		shared_ptr<CMessageBlockShoot> canShootMsg = make_shared<CMessageBlockShoot>();
+		canShootMsg->canShoot(true);
+		_entity->emitMessage(canShootMsg);
+
 		if(_screamerShield != NULL) {
 			// Destruimos la entidad e indicamos a los clientes que tambien la destruyan
 			CEntityFactory::getSingletonPtr()->deferredDeleteEntity(_screamerShield, true);
 			_screamerShield = NULL;
 		}
+
+		if(_secondarySkillCooldown > 0) {
+			std::shared_ptr<CMessageHud> hudMsg = std::make_shared<CMessageHud>();
+			hudMsg->setType(CMessageHud::HudType::SECONDARY_AVAIABLE);
+			_entity->emitMessage(hudMsg);
+		}
+		else {
+			std::shared_ptr<CMessageHud> hudMsg = std::make_shared<CMessageHud>();
+			hudMsg->setType(CMessageHud::HudType::SECONDARY_SKILL);
+			_entity->emitMessage(hudMsg);
+		}
+
 	} // stopSecondarySkill
 	//__________________________________________________________________
 
@@ -356,7 +385,6 @@ namespace Logic {
 
 		checkSecondarySkill(msecs);
 	} // onTick
-	//________________________________________________________________________
 
 } // namespace Logic
 

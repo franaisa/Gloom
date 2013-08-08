@@ -280,6 +280,9 @@ namespace Logic {
 			float verticalOffset;
 
 			Vector3 offset;
+
+			int acumFiringTime;
+			int firingRate;
 		};
 
 		//__________________________________________________________________

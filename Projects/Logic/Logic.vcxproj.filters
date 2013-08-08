@@ -751,6 +751,12 @@
     <ClCompile Include="..\..\Src\Logic\Entity\Components\PhysicStaticCompound.cpp">
       <Filter>Entity\Components\Physics\Source</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\DynamicLight.cpp">
+      <Filter>Entity\Components\Graphics\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Messages\MessageBlockShoot.cpp">
+      <Filter>Messages\Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Src\Logic\Maps\ComponentFactory.h">
@@ -1358,6 +1364,12 @@
     </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Entity\Components\PhysicStaticCompound.h">
       <Filter>Entity\Components\Physics\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\DynamicLight.h">
+      <Filter>Entity\Components\Graphics\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Messages\MessageBlockShoot.h">
+      <Filter>Messages\Header</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

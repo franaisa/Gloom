@@ -34,6 +34,13 @@ namespace Logic
 		DEC_FACTORY(CAnimationManager);
 	public:
 
+		struct Animation{
+			std::string animation;
+			int rewind;
+		};
+
+
+
 		/**
 		Constructor por defecto; inicializa los atributos a su valor por 
 		defecto.
@@ -44,6 +51,7 @@ namespace Logic
 		destructor
 		*/
 		virtual ~CAnimationManager() {}
+
 
 		// =======================================================================
 		//                    METODOS HEREDADOS DE ICOMPONENT
@@ -134,6 +142,10 @@ namespace Logic
 
 		std::string getMotionAnimation(const Vector3 &displacementDir);
 
+
+		void initAnimationCommands();
+
+
 	private:
 
 		// =======================================================================
@@ -143,15 +155,15 @@ namespace Logic
 		Tabla que representa las animaciones que el personaje debe poner
 		cuando se está moviendo por el suelo
 		*/
-		std::map<Vector3,std::string> _displacementAnims;
 
 		Vector3 _lastDisplacementAnimation;
-
-		typedef std::pair<Vector3,std::string> TAnim;
 
 		CAvatarController* _avatarController;
 
 		bool _flying;
+
+		typedef std::pair<std::string, Animation> TAnimation;
+		std::map<std::string, Animation> _animations;
 	}; // class CAnimatedGraphics
 
 	REG_FACTORY(CAnimationManager);

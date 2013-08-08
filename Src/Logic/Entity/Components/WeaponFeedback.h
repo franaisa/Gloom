@@ -192,6 +192,10 @@ namespace Logic {
 		bool _primaryFireIsActive;
 		bool _secondaryFireIsActive;
 
+		float _heightShoot;
+
+		bool _ableToShoot;
+
 	}; // class IWeaponFeedback
 
 } // namespace Logic

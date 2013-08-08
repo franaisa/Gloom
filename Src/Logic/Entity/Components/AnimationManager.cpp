@@ -43,6 +43,8 @@ namespace Logic{
 	}
 
 	void CAnimationManager::onStart(){
+		initAnimationCommands();
+
 		std::shared_ptr<CMessageSetAnimation> anim = std::make_shared<CMessageSetAnimation>();
 		anim->setLoop(true);
 		anim->setAnimation("idle");
@@ -53,23 +55,27 @@ namespace Logic{
 	void CAnimationManager::onFixedTick(unsigned int msecs){
 		Vector3 displacementDir = _avatarController->getDisplacementDir();
 		bool flying = _avatarController->getFlying();
-		if(_lastDisplacementAnimation != displacementDir && !flying){
+		if(_lastDisplacementAnimation != displacementDir/* && !flying*/){
+
+			auto animation = _animations.find(getMotionAnimation(displacementDir));
+
 			_flying = false;
 			_lastDisplacementAnimation = displacementDir;
 			std::shared_ptr<CMessageSetAnimation> anim = std::make_shared<CMessageSetAnimation>();
 			anim->setLoop(true);
-			anim->setAnimation(getMotionAnimation(displacementDir));
+			anim->setAnimation(animation->second.animation);
 			anim->setExclude(false);
+			anim->setRewind(animation->second.rewind);
 			_entity->emitMessage(anim);
 		}
-		else if ( flying && !_flying ) {
+		/*else if ( flying && !_flying ) {
 			_flying = true;
 			std::shared_ptr<CMessageSetAnimation> anim = std::make_shared<CMessageSetAnimation>();
 			anim->setLoop(true);
 			anim->setAnimation("airwalk");
 			anim->setExclude(false);
 			_entity->emitMessage(anim);
-		}
+		}*/
 		else if ( !flying && _flying ) {
 			_flying = false;
 			std::shared_ptr<CMessageSetAnimation> anim = std::make_shared<CMessageSetAnimation>();
@@ -155,10 +161,57 @@ namespace Logic{
 		if(displacementDir == Vector3 (1,0,-1))		return	"backstrafeleft";
 		if(displacementDir == Vector3 (-1,0,-1))	return	"backstraferight";
 		if(displacementDir == Vector3 (1,0,0) )		return	"strafeleft";
-		if(displacementDir == Vector3 (-1,0,0))		return	"straferightminigun";
 
 		//por si las moscas
 		return "idle";
+	}
+
+	void CAnimationManager::initAnimationCommands(){
+		TAnimation anim;
+		anim.second.animation = "idle";
+		anim.second.rewind = 1;
+		anim.first = "idle";
+		_animations.insert(anim);
+		
+		anim.second.animation = "forward";
+		anim.second.rewind = 1;
+		anim.first = "forward";
+		_animations.insert(anim);
+
+		anim.second.animation = "strafe_right";
+		anim.second.rewind = -1;
+		anim.first = "forwardstrafeleft";
+		_animations.insert(anim);
+
+		anim.second.animation = "strafe_right";
+		anim.second.rewind = 1;
+		anim.first = "forwardstraferight";
+		_animations.insert(anim);
+
+		anim.second.animation = "forward";
+		anim.second.rewind = -1;
+		anim.first = "back";
+		_animations.insert(anim);
+
+		anim.second.animation = "strafe_right";
+		anim.second.rewind = -1;
+		anim.first = "backstrafeleft";
+		_animations.insert(anim);
+
+		anim.second.animation = "strafe_right";
+		anim.second.rewind = 1;
+		anim.first = "backstraferight";
+		_animations.insert(anim);
+
+		anim.second.animation = "strafe_right";
+		anim.second.rewind = -1;
+		anim.first = "strafeleft";
+		_animations.insert(anim);
+
+		anim.second.animation = "strafe_right";
+		anim.second.rewind = 1;
+		anim.first = "straferight";
+		_animations.insert(anim);
 	}
 
 }

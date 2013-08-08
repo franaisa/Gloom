@@ -82,6 +82,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Src\BaseSubsystems\Documentation.h" />
+    <ClInclude Include="..\..\Src\BaseSubsystems\Euler.h" />
     <ClInclude Include="..\..\Src\BaseSubsystems\Factory.h" />
     <ClInclude Include="..\..\Src\BaseSubsystems\Math.h" />
     <ClInclude Include="..\..\Src\BaseSubsystems\Server.h" />

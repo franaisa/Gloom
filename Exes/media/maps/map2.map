@@ -2,12 +2,13 @@ Map = {
 
 	World = {
 		type = "World",
+		static = true,
 		model = "mapaAlberto.mesh",
 		physic_file = "media/models/mapaAlberto/mapaAlberto.RepX",
 	},	
 
 	David = {
-		type = "LocalArchangel",
+		type = "LocalScreamer",
 		isPlayer = true,
 		physic_group = 1,
 		physic_groupList = "-1",
@@ -846,16 +847,18 @@ Map = {
 		physic_shape = "box",
 		physic_dimensions = { 4, 7, 4 },
 	},
-
+	
 	Light1= {
-		type = "TestLight",
+		type = "TriggerLight",
+		controlledByManager = true,
+		on = false,
 		model = "arcan.mesh",
 		pitch = -90,
 		lightType = "point",
 		position = {-52.0654, 60.1029, -108.08},
 		color = {1.0, 0.0, 0.0},
 		attenuation = {1.0, 0.001, 0.0001},
-		
+
 		physic_group = 18,
 		physic_groupList = "1",
 		physic_trigger = true,
@@ -863,7 +866,7 @@ Map = {
 			physic_position = 50	0	0
 			physic_shape = sphere
 			physic_radius = 10
-			
+
 			physic_position = -40	20	3
 			physic_shape = box
 			physic_dimensions = 3.0	8.0 	3.0
@@ -872,71 +875,20 @@ Map = {
 	
 	Light2 = {
 		type = "Light",
-		model = "arcan.mesh",
-		pitch = -90,
-		lightType = "point",
-		position = {-366.06, 97.5802, -209.778},
-		color = {0.0, 1.0, 0.0},
-		attenuation = {1.0, 0.001, 0.0001},
-		
-		physic_entity = "rigid",
-		physic_trigger = true,
-		physic_type = "static",
-		physic_shape = "sphere",
-		physic_radius = 40,
-		physic_group = 18,
-		physic_groupList = "1",
+		lightType = "directional",
+		position = {-97.9955, 68.2714, -211.816},
+		direction = {0.0, -1.0, 0.0},
+		color = {1.0, 1.0, 1.0},
+		innerAngle = 0.63,
+		outerAngle = 1.11,
 	},
 	
 	Light3 = {
 		type = "Light",
-		model = "arcan.mesh",
-		pitch = -90,
 		lightType = "point",
-		position = {96.901, 96.6666, -241.674},
-		color = {0.0, 0.0, 1.0},
-		attenuation = {1.0, 0.001, 0.0001},
-		
-		physic_entity = "rigid",
-		physic_trigger = true,
-		physic_type = "static",
-		physic_shape = "sphere",
-		physic_radius = 40,
-		physic_group = 18,
-		physic_groupList = "1",
-	},
-	
-	Light4 = {
-		type = "Light",
-		model = "arcan.mesh",
-		pitch = -90,
-		lightType = "point",
-		position = {273.793, 110.409, -62.9833},
-		color = {1.0, 0.0, 1.0},
-		
-		physic_entity = "rigid",
-		physic_trigger = true,
-		physic_type = "static",
-		physic_shape = "sphere",
-		physic_radius = 40,
-		physic_group = 18,
-		physic_groupList = "1",
-	},
-	
-	Light5 = {
-		type = "Light",
-		model = "arcan.mesh",
-		pitch = -90,
-		lightType = "point",
-		position = {110.185, 103.558, 58.317},
-		color = {0.0, 1.0, 1.0},
-		
-		physic_entity = "rigid",
-		physic_trigger = true,
-		physic_type = "static",
-		physic_shape = "sphere",
-		physic_radius = 40,
-		physic_group = 18,
-		physic_groupList = "1",
+		position = {12.4903, 59.4316, -212.197},
+		color = {1.0, 1.0, 1.0},
+		range = 200,
+		attenuation = {1.0, 0.022, 0.0019},
 	},
 }

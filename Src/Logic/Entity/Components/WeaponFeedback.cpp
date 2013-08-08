@@ -21,6 +21,7 @@
 #include "Logic/Messages/MessageHudWeapon.h"
 #include "Logic/Messages/MessagePrimaryShoot.h"
 #include "Logic/Messages/MessageSecondaryShoot.h"
+#include "Logic/Messages/MessageBlockShoot.h"
 
 // Graficos
 // @deprecated Ogre no deberia estar acoplado a la logica
@@ -35,6 +36,7 @@ using namespace std;
 namespace Logic {
 	
 	IWeaponFeedback::IWeaponFeedback(const string& weaponName) : _weaponName("weapon" + weaponName),
+																 _ableToShoot(true),
 																 _primaryFireIsActive(false),
 																 _secondaryFireIsActive(false) {
 		// Nada que inicializar
@@ -56,6 +58,9 @@ namespace Logic {
 		_hudWeapon = _entity->getComponent<CHudWeapons>("CHudWeapons");
 		assert(_hudWeapon != NULL && "Error: El cliente necesita tener un componente de grafico del arma");
 
+		assert( entityInfo->hasAttribute("heightShoot") );
+		_heightShoot = entityInfo->getFloatAttribute("heightShoot");
+
 		return true;
 	}
 
@@ -64,8 +69,9 @@ namespace Logic {
 	bool IWeaponFeedback::accept(const shared_ptr<CMessage>& message) {
 		TMessageType msgType = message->getMessageType();
 
-		return msgType == Message::PRIMARY_SHOOT ||
-			   msgType == Message::SECONDARY_SHOOT;
+		return msgType == Message::PRIMARY_SHOOT	||
+			   msgType == Message::SECONDARY_SHOOT	||
+			   msgType == Message::BLOCK_SHOOT;
 	}
 
 	//__________________________________________________________________
@@ -73,31 +79,40 @@ namespace Logic {
 	void IWeaponFeedback::process(const shared_ptr<CMessage>& message) {
 		switch( message->getMessageType() ) {
 			case Message::PRIMARY_SHOOT: {
-				shared_ptr<CMessagePrimaryShoot> primaryShootMsg = static_pointer_cast<CMessagePrimaryShoot>(message);
+				if(_ableToShoot) {
+					shared_ptr<CMessagePrimaryShoot> primaryShootMsg = static_pointer_cast<CMessagePrimaryShoot>(message);
 
-				if( primaryShootMsg->getShoot() ) {
-					primaryFire();
-					_primaryFireIsActive = true;
-				}
-				else {
-					stopPrimaryFire();
-					_primaryFireIsActive = false;
+					if( primaryShootMsg->getShoot() ) {
+						primaryFire();
+						_primaryFireIsActive = true;
+					}
+					else {
+						stopPrimaryFire();
+						_primaryFireIsActive = false;
+					}
 				}
 
 				break;
 			}
 			case Message::SECONDARY_SHOOT: {
-				shared_ptr<CMessageSecondaryShoot> secondaryShootMsg = static_pointer_cast<CMessageSecondaryShoot>(message);
+				if(_ableToShoot) {
+					shared_ptr<CMessageSecondaryShoot> secondaryShootMsg = static_pointer_cast<CMessageSecondaryShoot>(message);
 
-				if( secondaryShootMsg->getShoot() ) {
-					secondaryFire();
-					_secondaryFireIsActive = true;
-				}
-				else {
-					stopSecondaryFire();
-					_secondaryFireIsActive = false;
+					if( secondaryShootMsg->getShoot() ) {
+						secondaryFire();
+						_secondaryFireIsActive = true;
+					}
+					else {
+						stopSecondaryFire();
+						_secondaryFireIsActive = false;
+					}
 				}
 
+				break;
+			}
+			case Message::BLOCK_SHOOT: {
+				auto blockShootMsg = static_pointer_cast<CMessageBlockShoot>(message);
+				_ableToShoot = blockShootMsg->canShoot();
 				break;
 			}
 		}

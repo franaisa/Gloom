@@ -63,6 +63,25 @@ fragment_program bumpLightingFragment_AMB hlsl {
 //________________________________________________________________________
 
 // Fragment shader para calcular difuso y especular
+fragment_program bumpLightingFragment_DIFF_ALPHASPEC hlsl {
+	source bumpLighting.hlsl
+	entry_point fragment_DIFF_ALPHASPEC
+	target ps_2_0
+	
+	default_params {
+		 // Información sobre las luces de Ogre
+		param_named_auto	lightAttenuation				light_attenuation							0
+		param_named_auto	lightPosition					light_position_object_space			0
+		param_named_auto	lightDir							light_direction_object_space			0
+		param_named_auto	lightColor						light_diffuse_colour						0
+		param_named_auto	spotLightParams			spotlight_params							0
+    }
+}
+
+//________________________________________________________________________
+
+// Fragment shader para calcular difuso y especular a partir de un mapa de especulares separado que contiene
+// color en vez de solo intensidad
 fragment_program bumpLightingFragment_DIFF_SPEC hlsl {
 	source bumpLighting.hlsl
 	entry_point fragment_DIFF_SPEC

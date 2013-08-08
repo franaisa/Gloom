@@ -26,20 +26,20 @@ namespace Logic {
 	IMP_FACTORY(CMiniGun);
 	
 	CMiniGun::CMiniGun() : IWeapon("miniGun"), 
-									_primaryFireCooldown(0),
-									_defaultPrimaryFireCooldown(0),
-									_primaryFireCooldownTimer(0),
-									_primaryFireIsActive(false),
-									_secondaryFireCooldown(0),
-									_defaultSecondaryFireCooldown(0),
-									_secondaryFireCooldownTimer(0),
-									_secondaryFireIsActive(false),
-									_ammoSpentTimer(0),
-									_ammoSpentTimeStep(0),
-									_defaultAmmoSpentTimeStep(0),
-									_currentSpentSecondaryAmmo(0),
-									_maxAmmoSpentPerSecondaryShot(0),
-									_secondaryFireLoadTime(0){
+							_primaryFireCooldown(0),
+							_defaultPrimaryFireCooldown(0),
+							_primaryFireCooldownTimer(0),
+							_primaryFireIsActive(false),
+							_secondaryFireCooldown(0),
+							_defaultSecondaryFireCooldown(0),
+							_secondaryFireCooldownTimer(0),
+							_secondaryFireIsActive(false),
+							_ammoSpentTimer(0),
+							_ammoSpentTimeStep(0),
+							_defaultAmmoSpentTimeStep(0),
+							_currentSpentSecondaryAmmo(0),
+							_maxAmmoSpentPerSecondaryShot(0),
+							_secondaryFireLoadTime(0){
 			
 			// Nada que inicializar
 		}

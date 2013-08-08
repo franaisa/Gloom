@@ -87,7 +87,7 @@ namespace Physics {
 		_isTrigger = trigger;
 
 		// Creamos Transform
-		PxTransform globalPose(Vector3ToPxVec3(position),QuaternionToPxQuat(orientation));
+		PxTransform globalPose( Vector3ToPxVec3(position), QuaternionToPxQuat(orientation) );
 
 		// Transformación de coordenadas lógicas a coodenadas de PhysX
 		PxTransform shapeOffset( PxVec3(0, getLogicPivotOffset(geometry), 0) );
