@@ -15,9 +15,9 @@ Vortice CPhysicStaticEntity CLava
 Elevator  CPhysicDynamicEntity CElevator
 ElevatorTrigger  CPhysicDynamicEntity CElevatorTrigger
 Hacksaw  CPhysicDynamicEntity CHacksaw
-SpotLight CLight 
-DirectionalLight CLight 
-PointLight CLight 
+Light 
+MovableLight 
+TriggerLight  
 ContenedorLava  CPhysicStaticEntity
 ScreamerShield CScreamerShieldDamageNotifier CScreamerShieldController CPhysicDynamicEntity CNetConnector
 FireBall CFireBallController CPhysicDynamicEntity CPositionSnapshot CNetConnector

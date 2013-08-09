@@ -337,7 +337,8 @@ namespace Application {
 			// Inicializamos el dispatcher de entidades lógicas en base a nuestro id de red y el
 			// número de jugadores que hay en la partida
 			// @deprecated lo ideal es que el server mande el numero de players de la partida
-			Logic::CEntityFactory::getSingletonPtr()->initDispatcher( _netMgr->getID(), 12 );
+			//Logic::CEntityFactory::getSingletonPtr()->initDispatcher( _netMgr->getID(), 12 );
+			Logic::CEntityFactory::getSingletonPtr()->initDispatcher();
 		}
 	}
 
