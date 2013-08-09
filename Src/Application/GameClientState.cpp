@@ -179,6 +179,14 @@ namespace Application {
 				assert(camera != NULL && "Error: Esto no se puede hacer asi que sois unos lamers, ahora el servidor que hace?");
 				camera->getComponent<Logic::CCamera>("CCamera")->setTarget(player);
 
+				//ack message to avoid deads
+				Net::NetMessageType msgping = Net::LOCAL_PLAYER_LOADED;
+				Logic::TEntityID id = player->getEntityID();
+				Net::CBuffer ackBuffer(sizeof(msgping) + sizeof(id));
+				ackBuffer.write(&msgping, sizeof(msgping));
+				ackBuffer.write(&id, sizeof(id));
+				_netMgr->broadcast(ackBuffer.getbuffer(), ackBuffer.getSize());
+
 				break;
 			}
 			case Net::LOAD_LOCAL_SPECTATOR: {

@@ -15,7 +15,7 @@
 
 // Mapa
 #include "Map/MapEntity.h"
-
+#include "Logic/Maps/EntityFactory.h"
 // Mensajes
 #include "Logic/Messages/MessageAudio.h"
 #include "Logic/Messages/MessageHudWeapon.h"
@@ -35,7 +35,7 @@ using namespace std;
 
 namespace Logic {
 	
-	IWeaponFeedback::IWeaponFeedback(const string& weaponName) : _weaponName("weapon" + weaponName),
+	IWeaponFeedback::IWeaponFeedback(const string& weaponName) : _weaponName(weaponName),
 																 _ableToShoot(true),
 																 _primaryFireIsActive(false),
 																 _secondaryFireIsActive(false) {
@@ -53,7 +53,7 @@ namespace Logic {
 	bool IWeaponFeedback::spawn(CEntity *entity, CMap *map, const Map::CEntity *entityInfo) {
 		if( !IComponent::spawn(entity,map,entityInfo) ) return false;
 
-		_weaponSound = entityInfo->getStringAttribute(_weaponName+"Audio");
+		_weaponSound = CEntityFactory::getSingletonPtr()->getInfo(_weaponName)->getStringAttribute("Audio");
 
 		_hudWeapon = _entity->getComponent<CHudWeapons>("CHudWeapons");
 		assert(_hudWeapon != NULL && "Error: El cliente necesita tener un componente de grafico del arma");

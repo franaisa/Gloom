@@ -116,6 +116,8 @@ namespace Logic
 				spawnMsg->setSpawnOrientation( _entity->getYaw());
 				_entity->emitMessage(spawnMsg);
 
+				std::cout << "enviando mensaje de spawn" << std::endl;
+
 				CEntity* camera = CServer::getSingletonPtr()->getMap()->getEntityByName("Camera");
 				assert(camera != NULL && "Error: Esto no se puede hacer asi que sois unos lamers, ahora el servidor que hace?");
 				camera->emitMessage(spawnMsg);

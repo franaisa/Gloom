@@ -12,6 +12,10 @@ Contiene la implementación del componente que gestiona las armas y que administr
 #include "ScreamerShieldDamageNotifier.h"
 
 // Mapa
+
+#include "Logic/Maps/EntityFactory.h"
+#include "Logic/Maps/Map.h"
+#include "Logic/Server.h"
 #include "Map/MapEntity.h"
 
 #include "Logic/Messages/MessageControl.h"
@@ -53,42 +57,44 @@ namespace Logic {
 	//__________________________________________________________________
 
 	bool CMiniGun::spawn(CEntity* entity, CMap* map, const Map::CEntity* entityInfo) {
-		if( !IWeapon::spawn(entity, map, entityInfo) ) return false;
+		Map::CEntity* weapon = CEntityFactory::getSingletonPtr()->getInfo(_weaponName);
+
+		if( !IWeapon::spawn(entity, map, weapon) ) return false;
 
 		// Nos aseguramos de tener los atributos obligatorios
-		assert( entityInfo->hasAttribute(_weaponName + "PrimaryFireCooldown") );
-		assert( entityInfo->hasAttribute(_weaponName + "PrimaryFireDamage") );
-		assert( entityInfo->hasAttribute(_weaponName + "ShotsDistance") );
-		assert( entityInfo->hasAttribute(_weaponName + "PrimaryFireDispersion") );
-		assert( entityInfo->hasAttribute(_weaponName + "PrimaryFireDispersionReductionPerShoot") );
-		assert( entityInfo->hasAttribute(_weaponName + "SecondaryFireCooldown") );
-		assert( entityInfo->hasAttribute(_weaponName + "SecondaryFireLoadTime") );
-		assert( entityInfo->hasAttribute(_weaponName + "MaxAmmoSpentPerSecondaryShot") );
+		assert( weapon->hasAttribute( "PrimaryFireCooldown") );
+		assert( weapon->hasAttribute( "PrimaryFireDamage") );
+		assert( weapon->hasAttribute( "ShotsDistance") );
+		assert( weapon->hasAttribute( "PrimaryFireDispersion") );
+		assert( weapon->hasAttribute( "PrimaryFireDispersionReductionPerShoot") );
+		assert( weapon->hasAttribute( "SecondaryFireCooldown") );
+		assert( weapon->hasAttribute( "SecondaryFireLoadTime") );
+		assert( weapon->hasAttribute( "MaxAmmoSpentPerSecondaryShot") );
 		
 
-		_defaultPrimaryFireCooldown = _primaryFireCooldown = entityInfo->getFloatAttribute(_weaponName + "PrimaryFireCooldown") * 1000;
-		_defaultDamage = _damage = entityInfo->getIntAttribute(_weaponName + "PrimaryFireDamage");
+		_defaultPrimaryFireCooldown = _primaryFireCooldown = weapon->getFloatAttribute( "PrimaryFireCooldown") * 1000;
+		_defaultDamage = _damage = weapon->getIntAttribute( "PrimaryFireDamage");
 
 
 		// Distancia máxima de disparo
-		_distance = entityInfo->getFloatAttribute(_weaponName + "ShotsDistance");
+		_distance = weapon->getFloatAttribute( "ShotsDistance");
 
 		// Atributos opcionales de audio
-		/*if( entityInfo->hasAttribute(_weaponName + "Audio") )
-			_audioShoot = entityInfo->getStringAttribute(_weaponName + "Audio");*/
+		/*if( entityInfo->hasAttribute( "Audio") )
+			_audioShoot = entityInfo->getStringAttribute( "Audio");*/
 
 		//Dispersión
-		_dispersionOriginal = _dispersion = entityInfo->getFloatAttribute(_weaponName+"PrimaryFireDispersion");
-		_dispersionReductionPerShoot =  entityInfo->getFloatAttribute(_weaponName+"PrimaryFireDispersionReductionPerShoot");
+		_dispersionOriginal = _dispersion = weapon->getFloatAttribute("PrimaryFireDispersion");
+		_dispersionReductionPerShoot =  weapon->getFloatAttribute("PrimaryFireDispersionReductionPerShoot");
 
 		// Cooldown del disparo secundario
-		_defaultSecondaryFireCooldown = _secondaryFireCooldown = entityInfo->getFloatAttribute(_weaponName + "SecondaryFireCooldown") * 1000;
+		_defaultSecondaryFireCooldown = _secondaryFireCooldown = weapon->getFloatAttribute( "SecondaryFireCooldown") * 1000;
 
 		// Tiempo de carga del arma
-		_secondaryFireLoadTime = entityInfo->getFloatAttribute(_weaponName + "SecondaryFireLoadTime") * 1000;
+		_secondaryFireLoadTime = weapon->getFloatAttribute( "SecondaryFireLoadTime") * 1000;
 
 		// Ratio al que gastamos municion
-		_maxAmmoSpentPerSecondaryShot = entityInfo->getIntAttribute(_weaponName + "MaxAmmoSpentPerSecondaryShot");
+		_maxAmmoSpentPerSecondaryShot = weapon->getIntAttribute( "MaxAmmoSpentPerSecondaryShot");
 		_defaultAmmoSpentTimeStep = _ammoSpentTimeStep = (float)_secondaryFireLoadTime / (float)(_maxAmmoSpentPerSecondaryShot);
 
 

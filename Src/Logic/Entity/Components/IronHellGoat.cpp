@@ -52,53 +52,55 @@ namespace Logic {
 	//__________________________________________________________________
 
 	bool CIronHellGoat::spawn(CEntity* entity, CMap *map, const Map::CEntity *entityInfo) {
-		if( !IWeapon::spawn(entity, map, entityInfo) ) return false;
+		Map::CEntity* weapon = CEntityFactory::getSingletonPtr()->getInfo(_weaponName);
+
+		if( !IWeapon::spawn(entity, map, weapon) ) return false;
 
 		// Nos aseguramos de tener todos los atributos que necesitamos
-		assert( entityInfo->hasAttribute(_weaponName + "PrimaryFireCooldown") );
-		assert( entityInfo->hasAttribute(_weaponName + "MaximumLoadingTime") );
-		assert( entityInfo->hasAttribute(_weaponName + "DefaultFireBallRadius") );
-		assert( entityInfo->hasAttribute(_weaponName + "DefaultFireBallSpeed" ) );
-		assert( entityInfo->hasAttribute(_weaponName + "DefaultFireBallExplotionRadius") );
-		assert( entityInfo->hasAttribute(_weaponName + "DefaultFireBallDamage") );
-		assert( entityInfo->hasAttribute(_weaponName + "MaxAmmoPerShot") );
-		assert( entityInfo->hasAttribute(_weaponName + "MaxFireBallRadius") );
-		assert( entityInfo->hasAttribute(_weaponName + "MaxFireBallSpeed") );
-		assert( entityInfo->hasAttribute(_weaponName + "MaxFireBallExplotionRadius") );
-		assert( entityInfo->hasAttribute(_weaponName + "MaxFireBallDamage") );
-		assert( entityInfo->hasAttribute(_weaponName + "ExplotionStrength") );
-		assert( entityInfo->hasAttribute(_weaponName + "Audio") );
+		assert( weapon->hasAttribute( "PrimaryFireCooldown") );
+		assert( weapon->hasAttribute( "MaximumLoadingTime") );
+		assert( weapon->hasAttribute( "DefaultFireBallRadius") );
+		assert( weapon->hasAttribute( "DefaultFireBallSpeed" ) );
+		assert( weapon->hasAttribute( "DefaultFireBallExplotionRadius") );
+		assert( weapon->hasAttribute( "DefaultFireBallDamage") );
+		assert( weapon->hasAttribute( "MaxAmmoPerShot") );
+		assert( weapon->hasAttribute( "MaxFireBallRadius") );
+		assert( weapon->hasAttribute( "MaxFireBallSpeed") );
+		assert( weapon->hasAttribute( "MaxFireBallExplotionRadius") );
+		assert( weapon->hasAttribute( "MaxFireBallDamage") );
+		assert( weapon->hasAttribute( "ExplotionStrength") );
+		assert( weapon->hasAttribute( "Audio") );
 
 		// Cooldown del disparo principal
-		_defaultPrimaryFireCooldown = _primaryFireCooldown = entityInfo->getFloatAttribute(_weaponName + "PrimaryFireCooldown") * 1000;
+		_defaultPrimaryFireCooldown = _primaryFireCooldown = weapon->getFloatAttribute( "PrimaryFireCooldown") * 1000;
 
 		// Tiempo de carga del arma
-		_maxLoadingTime = entityInfo->getFloatAttribute(_weaponName + "MaximumLoadingTime") * 1000;
+		_maxLoadingTime = weapon->getFloatAttribute( "MaximumLoadingTime") * 1000;
 
 		// Ratio al que gastamos municion
-		_maxAmmoPerShot = entityInfo->getIntAttribute(_weaponName + "MaxAmmoPerShot");
+		_maxAmmoPerShot = weapon->getIntAttribute( "MaxAmmoPerShot");
 		_ammoSpentTimeStep = (float)_maxLoadingTime / (float)(_maxAmmoPerShot);
 
 		// Valores de creación de la bola de fuego por defecto
-		_defaultFireBallRadius = entityInfo->getFloatAttribute(_weaponName + "DefaultFireBallRadius");
-		_defaultFireBallSpeed = entityInfo->getFloatAttribute(_weaponName + "DefaultFireBallSpeed");
-		_defaultFireBallExplotionRadius = entityInfo->getFloatAttribute(_weaponName + "DefaultFireBallExplotionRadius");
-		_currentDefaultFireBallDamage = _defaultFireBallDamage = entityInfo->getFloatAttribute(_weaponName + "DefaultFireBallDamage");
+		_defaultFireBallRadius = weapon->getFloatAttribute( "DefaultFireBallRadius");
+		_defaultFireBallSpeed = weapon->getFloatAttribute( "DefaultFireBallSpeed");
+		_defaultFireBallExplotionRadius = weapon->getFloatAttribute( "DefaultFireBallExplotionRadius");
+		_currentDefaultFireBallDamage = _defaultFireBallDamage = weapon->getFloatAttribute( "DefaultFireBallDamage");
 
 		// Valores de creación máximos de la bola de fuego
-		float maxFireBallRadius = entityInfo->getFloatAttribute(_weaponName + "MaxFireBallRadius");
-		float maxFireBallSpeed = entityInfo->getFloatAttribute(_weaponName + "MaxFireBallSpeed");
-		float maxFireBallExplotionRadius = entityInfo->getFloatAttribute(_weaponName + "MaxFireBallExplotionRadius");
-		_currentMaxFireBallDamage = _maxFireBallDamage = entityInfo->getFloatAttribute(_weaponName + "MaxFireBallDamage");
+		float maxFireBallRadius = weapon->getFloatAttribute( "MaxFireBallRadius");
+		float maxFireBallSpeed = weapon->getFloatAttribute( "MaxFireBallSpeed");
+		float maxFireBallExplotionRadius = weapon->getFloatAttribute( "MaxFireBallExplotionRadius");
+		_currentMaxFireBallDamage = _maxFireBallDamage = weapon->getFloatAttribute( "MaxFireBallDamage");
 
 		// Calculamos los factores de crecimiento en funcion del tiempo maximo de carga
 		_fireBallRadiusTemporalIncrement = (maxFireBallRadius - _defaultFireBallRadius) / _maxLoadingTime;
 		_fireBallSpeedTemporalIncrement = (maxFireBallSpeed - _defaultFireBallSpeed) / _maxLoadingTime;
 		_fireBallExplotionRadiusTemporalIncrement = (maxFireBallExplotionRadius - _defaultFireBallExplotionRadius) / _maxLoadingTime;
 
-		_explotionStrength = entityInfo->getFloatAttribute(_weaponName + "ExplotionStrength");
+		_explotionStrength = weapon->getFloatAttribute("ExplotionStrength");
 		// Obtenemos los sonidos que produce el arma
-		_shootAudio = entityInfo->getStringAttribute(_weaponName + "Audio");
+		_shootAudio = weapon->getStringAttribute("Audio");
 
 		return true;
 	}

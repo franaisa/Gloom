@@ -25,6 +25,7 @@ gráfica de una entidad estática.
 #include "Logic/Messages/MessageChangeMaterial.h"
 #include "Logic/Messages/MessageChangeWeaponGraphics.h"
 #include "WeaponType.h"
+#include "Logic/Maps/EntityFactory.h"
 
 #include "Graphics/Scene.h"
 #include "Graphics/Entity.h"
@@ -80,7 +81,7 @@ namespace Logic
 				//HACK MEGA BASTISIMO LOOOOOOL
 				//Explicacion del hack, si no atacho todas las armas al bone, tiene pinta de que
 				//ogre coge y me las borra para optimizar, por lo que al atacharlas luego no existen T-T
-				Graphics::CEntity* entity = new Graphics::CEntity(nameWeapon,entityInfo->getStringAttribute(weapon+"Model"));
+				Graphics::CEntity* entity = new Graphics::CEntity(nameWeapon,CEntityFactory::getSingletonPtr()->getInfo(WeaponType::toString(current))->getStringAttribute("Model"));
 
 				//_animatedGraphicsEntity->attachWeapon(*entity, _entity->getEntityID());
 				_weapons[i] =  entity;

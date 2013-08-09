@@ -47,13 +47,15 @@ namespace Logic {
 	//__________________________________________________________________
 
 	bool CSoulReaperAmmo::spawn(CEntity* entity, CMap *map, const Map::CEntity *entityInfo) {
-		if( !IWeaponAmmo::spawn(entity, map, entityInfo) ) return false;
+		Map::CEntity* weapon = CEntityFactory::getSingletonPtr()->getInfo(_weaponName);
+
+		if( !IWeaponAmmo::spawn(entity, map, weapon) ) return false;
 
 		// Nos aseguramos de tener todos los atributos que necesitamos
-		assert( entityInfo->hasAttribute(_weaponName + "PrimaryFireCooldown") );
+		assert( weapon->hasAttribute("PrimaryFireCooldown") );
 
 		// Cooldown del disparo principal
-		_defaultPrimaryFireCooldown = _primaryFireCooldown = entityInfo->getFloatAttribute(_weaponName + "PrimaryFireCooldown") * 1000;
+		_defaultPrimaryFireCooldown = _primaryFireCooldown = weapon->getFloatAttribute("PrimaryFireCooldown") * 1000;
 
 		_friend[_friends] = _entity->getComponent<Logic::CSoulReaper>("CSoulReaper");
 		if(_friend[_friends])

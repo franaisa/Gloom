@@ -38,7 +38,7 @@ using namespace std;
 
 namespace Logic {
 	
-	IWeaponAmmo::IWeaponAmmo(const string& weaponName) : _weaponName("weapon" + weaponName),
+	IWeaponAmmo::IWeaponAmmo(const string& weaponName) : _weaponName(weaponName),
 											 _currentAmmo(0),
 											 _ableToShoot(true),
 											 _primaryFireIsActive(false),
@@ -60,22 +60,22 @@ namespace Logic {
 		if( !IComponent::spawn(entity,map,entityInfo) ) return false;
 
 		// Comprobamos que los atributos obligatorios existen
-		assert( entityInfo->hasAttribute(_weaponName + "MaxAmmo") );
-		assert( entityInfo->hasAttribute(_weaponName + "ID") );
+		assert( entityInfo->hasAttribute("MaxAmmo") );
+		assert( entityInfo->hasAttribute("ID") );
 
 		// Creo q esto no es necesario
-		assert( entityInfo->hasAttribute("physic_radius") );
-		assert( entityInfo->hasAttribute("heightShoot") );
+		/*assert( entityInfo->hasAttribute("physic_radius") );
+		assert( entityInfo->hasAttribute("heightShoot") );*/
 
 
 		// Leemos los atributos obligatorios de arma
-		_weaponID = (WeaponType::Enum)entityInfo->getIntAttribute(_weaponName + "ID");
-		_maxAmmo = entityInfo->getIntAttribute(_weaponName + "MaxAmmo");
+		_weaponID = (WeaponType::Enum)entityInfo->getIntAttribute("ID");
+		_maxAmmo = entityInfo->getIntAttribute("MaxAmmo");
 		_noAmmoSound = entityInfo->getStringAttribute("audioNoAmmo");
 
 		// Creo q esto no es necesario
-		_capsuleRadius = entityInfo->getFloatAttribute("physic_radius");
-		_heightShoot = entityInfo->getFloatAttribute("heightShoot");
+		/*_capsuleRadius = entityInfo->getFloatAttribute("physic_radius");
+		_heightShoot = entityInfo->getFloatAttribute("heightShoot");*/
 
 
 		return true;

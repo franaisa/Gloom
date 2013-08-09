@@ -150,6 +150,10 @@ namespace Logic {
 				continue;
 			it->second.componentPtr->activate();
 			_activated = it->second.componentPtr->isActivated() && _activated;
+
+			if(!_activated)
+				std::cout << "algun componente no se ha activado " << it->first << std::endl;
+
 		}
 
 		return _activated;

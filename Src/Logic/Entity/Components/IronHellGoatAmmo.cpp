@@ -49,21 +49,23 @@ namespace Logic {
 	//__________________________________________________________________
 
 	bool CIronHellGoatAmmo::spawn(CEntity* entity, CMap *map, const Map::CEntity *entityInfo) {
-		if( !IWeaponAmmo::spawn(entity, map, entityInfo) ) return false;
+		Map::CEntity* weapon = CEntityFactory::getSingletonPtr()->getInfo(_weaponName);
+
+		if( !IWeaponAmmo::spawn(entity, map, weapon) ) return false;
 
 		// Nos aseguramos de tener todos los atributos que necesitamos
-		assert( entityInfo->hasAttribute(_weaponName + "PrimaryFireCooldown") );
-		assert( entityInfo->hasAttribute(_weaponName + "MaximumLoadingTime") );
-		assert( entityInfo->hasAttribute(_weaponName + "MaxAmmoPerShot") );
+		assert( weapon->hasAttribute("PrimaryFireCooldown") );
+		assert( weapon->hasAttribute("MaximumLoadingTime") );
+		assert( weapon->hasAttribute("MaxAmmoPerShot") );
 
 		// Cooldown del disparo principal
-		_defaultPrimaryFireCooldown = _primaryFireCooldown = entityInfo->getFloatAttribute(_weaponName + "PrimaryFireCooldown") * 1000;
+		_defaultPrimaryFireCooldown = _primaryFireCooldown = weapon->getFloatAttribute( "PrimaryFireCooldown") * 1000;
 
 		// Tiempo de carga del arma
-		_maxLoadingTime = entityInfo->getFloatAttribute(_weaponName + "MaximumLoadingTime") * 1000;
+		_maxLoadingTime = weapon->getFloatAttribute( "MaximumLoadingTime") * 1000;
 
 		// Ratio al que gastamos municion
-		_maxAmmoPerShot = entityInfo->getIntAttribute(_weaponName + "MaxAmmoPerShot");
+		_maxAmmoPerShot = weapon->getIntAttribute( "MaxAmmoPerShot");
 		_ammoSpentTimeStep = (float)_maxLoadingTime / (float)(_maxAmmoPerShot);
 
 		_friend[_friends] = _entity->getComponent<Logic::CIronHellGoat>("CIronHellGoat");
