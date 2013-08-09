@@ -103,8 +103,10 @@ namespace Logic
 				return 0;
 		}
 
-		
-		_graphicsEntity->setTransform(_entity->getPosition(),_entity->getOrientation());
+		// La fase de spawn de todas las entidades se encarga de leer posicion y orientacion
+		// por eso al ejecutar esta instruccion estamos colocando a la entidad grafica en
+		// su sitio
+		_graphicsEntity->setTransform(_entity->getPosition(), _entity->getOrientation());
 		
 		return _graphicsEntity;
 
