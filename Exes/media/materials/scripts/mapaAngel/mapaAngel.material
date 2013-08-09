@@ -25,7 +25,7 @@ material mapaAngel_hueso {
 			vertex_program_ref bumpLightingVertexShader {
 			}
 			
-			fragment_program_ref bumpLightingFragment_DIFF_SPEC {
+			fragment_program_ref bumpLightingFragment_DIFF_ALPHASPEC {
 				// Constante para regular la cantidad de difuso
 				param_named			Kd								float		0.6
 				// Constante de brillo especular
@@ -75,7 +75,7 @@ material mapaAngel_muro {
 			vertex_program_ref bumpLightingVertexShader {
 			}
 			
-			fragment_program_ref bumpLightingFragment_DIFF_SPEC {
+			fragment_program_ref bumpLightingFragment_DIFF_ALPHASPEC {
 				// Constante para regular la cantidad de difuso
 				param_named			Kd								float		0.6
 				// Constante de brillo especular
@@ -125,7 +125,7 @@ material mapaAngel_pipe {
 			vertex_program_ref bumpLightingVertexShader {
 			}
 			
-			fragment_program_ref bumpLightingFragment_DIFF_SPEC {
+			fragment_program_ref bumpLightingFragment_DIFF_ALPHASPEC {
 				// Constante para regular la cantidad de difuso
 				param_named			Kd								float		0.6
 				// Constante de brillo especular
@@ -175,7 +175,7 @@ material mapaAngel_rock {
 			vertex_program_ref bumpLightingVertexShader {
 			}
 			
-			fragment_program_ref bumpLightingFragment_DIFF_SPEC {
+			fragment_program_ref bumpLightingFragment_DIFF_ALPHASPEC {
 				// Constante para regular la cantidad de difuso
 				param_named			Kd								float		0.6
 				// Constante de brillo especular

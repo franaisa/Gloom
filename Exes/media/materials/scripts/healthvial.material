@@ -1,6 +1,5 @@
 material healthvial
 {
-	set $glow_tex healthvial_glow.tga
 	technique
 	{
 		pass
@@ -25,7 +24,7 @@ material healthvial
 		{		
 			texture_unit
 			{
-				texture $glow_tex
+				texture healthvial_glow.tga
 			}
 			ambient 1 1 1
 			diffuse 1 1 1

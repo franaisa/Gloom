@@ -89,6 +89,10 @@ namespace Logic {
 			_position = entityInfo->getVector3Attribute("position");
 		}
 
+		if(entityInfo->hasAttribute("rotation")) {
+			_orientation = entityInfo->getQuaternionAttribute("rotation");
+		}
+
 		if(entityInfo->hasAttribute("yaw")) {
 			_orientation = Math::fromDegreesToQuaternion(entityInfo->getFloatAttribute("yaw"),Vector3(0,1,0));
 		}

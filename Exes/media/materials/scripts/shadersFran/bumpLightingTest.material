@@ -37,9 +37,14 @@ material bumpLightingTest {
 				texture floor_COLOR.tga
 			}
 			
-			// Textura para el bump mapping. En el alfa esta el mapa de especulares.
+			// Textura para el bump mapping.
 			texture_unit NormalMap {
 				texture floor_NRM.tga
+			}
+			
+			// Textura de especular
+			texture_unit SpecMap {
+				texture floor_SPEC.tga
 			}
 			
 		}

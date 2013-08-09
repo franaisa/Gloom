@@ -1,0 +1,26 @@
+material heatDistortion {
+	technique {
+		pass {
+			vertex_program_ref heatVertexShader {
+				// Parametros obtenidos de Ogre
+				param_named_auto	viewProjectionMatrix 		worldviewproj_matrix
+				param_named_auto	worldViewMatrix			worldview_matrix
+				param_named_auto	cameraPosition				camera_position_object_space
+				param_named_auto 	clock							time
+				
+				param_named 			strength						float								0.2
+			}
+		
+			fragment_program_ref heatFragmentShader {
+				param_named			transparency					float								0.05
+			}
+		
+			texture_unit SceneSampler {}
+			texture_unit HeatMap {}
+			
+			texture_unit HeatTexture {
+				texture heatFilter.png
+			}
+		}
+	}
+}

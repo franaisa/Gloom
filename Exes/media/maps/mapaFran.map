@@ -1,0 +1,614 @@
+Map = {
+
+	Omni001 = {
+		type = "Light",
+		position = {4.509790, 484.470001, 3.152890},
+		rotation = "0.000000 0.000000 0.000000 1.000000",
+		lightType = "point",
+		color = {1.000000, 1.000000, 1.000000},
+		attenuation = {1.000000, 0.000000, 0.000000},
+	},
+
+	Player = {
+		type = "LocalSpectator",
+		isPlayer = true,
+		position = {0, 5, 0},
+		physic_group = 1,
+		physic_groupList = "-1",
+	},
+	
+	Camera = {
+		type = "Camera",
+		height = 8,
+	},
+
+	UniqueSpawnPoint = {
+		type = "SpawnPoint",
+		position = {3.0, 0.2, 0.0},
+		physic_entity = "rigid",
+		physic_trigger = true,
+		physic_type = "static",
+		physic_shape = "box",
+		physic_dimensions = { 4, 7, 4 },
+	},
+
+	Box001 = {
+		type = "WorldTesting",
+		model = "Box001.mesh",
+		scale = {3.825540, 1.200000, 2.929960},
+		position = {0.000000, 264.691010, -0.000012},
+		rotation = "0.000000 0.000000 0.000000 1.000000",
+		static = true,
+	},
+
+	Cylinder001 = {
+		type = "WorldTesting",
+		model = "Cylinder001.mesh",
+		scale = {1.718050, 1.000000, 1.276290},
+		position = {0.000000, 264.691010, -0.000012},
+		rotation = "0.000000 0.000000 0.000000 1.000000",
+		static = true,
+	},
+
+	Box002 = {
+		type = "WorldTesting",
+		model = "Box002.mesh",
+		scale = {1.962030, 0.810000, 2.503830},
+		position = {0.000000, 355.096008, -0.000013},
+		rotation = "0.000000 0.000000 0.000000 1.000000",
+		static = true,
+	},
+
+	Box003 = {
+		type = "WorldTesting",
+		model = "Box003.mesh",
+		scale = {1.000000, 1.000000, 1.256920},
+		position = {-139.522003, 356.226013, -0.000016},
+		rotation = "0.000000 0.000000 0.000000 1.000000",
+		static = true,
+	},
+
+	Box004 = {
+		type = "WorldTesting",
+		model = "Box004.mesh",
+		position = {27.936501, 358.583008, 2.539670},
+		rotation = "0.000000 0.000000 0.000000 1.000000",
+		static = true,
+	},
+
+	Box005 = {
+		type = "WorldTesting",
+		model = "Box005.mesh",
+		scale = {4.765840, 1.000000, 2.276110},
+		position = {1.109620, 355.096008, 98.546402},
+		rotation = "0.000000 0.000000 0.000000 1.000000",
+		static = true,
+	},
+
+	Box006 = {
+		type = "WorldTesting",
+		model = "Box006.mesh",
+		scale = {4.765840, 1.000000, 1.832130},
+		position = {1.109620, 355.096008, -98.934998},
+		rotation = "0.000000 0.000000 0.000000 1.000000",
+		static = true,
+	},
+
+	Box007 = {
+		type = "WorldTesting",
+		model = "Box007.mesh",
+		scale = {0.668524, 0.570368, 3.861950},
+		position = {-122.111000, 355.096008, 3.096990},
+		rotation = "0.000000 0.000000 0.000000 1.000000",
+		static = true,
+	},
+
+	Box009 = {
+		type = "WorldTesting",
+		model = "Box009.mesh",
+		scale = {1.553670, 2.000000, 0.500000},
+		position = {-172.542007, 489.602997, -115.239998},
+		rotation = "0.000000 0.000000 0.000000 1.000000",
+		static = true,
+	},
+
+	Box010 = {
+		type = "WorldTesting",
+		model = "Box010.mesh",
+		scale = {1.553670, 2.000000, 0.900000},
+		position = {-172.479004, 402.149994, -94.110703},
+		rotation = "0.000000 0.000000 0.000000 1.000000",
+		static = true,
+	},
+
+	Box011 = {
+		type = "WorldTesting",
+		model = "Box011.mesh",
+		scale = {3.954140, 0.369826, 0.643759},
+		position = {-28.489599, 317.468994, 234.022003},
+		rotation = "0.000000 0.000000 0.199766 0.979844",
+		static = true,
+	},
+
+	Box012 = {
+		type = "WorldTesting",
+		model = "Box012.mesh",
+		scale = {1.200000, 0.700000, 0.900000},
+		position = {-178.130005, 458.535004, -171.358002},
+		rotation = "0.000000 0.000000 0.000000 1.000000",
+		static = true,
+	},
+
+	Box013 = {
+		type = "WorldTesting",
+		model = "Box013.mesh",
+		scale = {0.532600, 2.200940, 7.810230},
+		position = {-244.697998, 488.992004, 125.558998},
+		rotation = "0.000000 0.000000 0.000000 1.000000",
+		static = true,
+	},
+
+	Box014 = {
+		type = "WorldTesting",
+		model = "Box014.mesh",
+		scale = {1.553670, 2.000000, 0.900000},
+		position = {-172.479004, 402.149994, 100.711998},
+		rotation = "0.000000 0.000000 0.000000 1.000000",
+		static = true,
+	},
+
+	Box015 = {
+		type = "WorldTesting",
+		model = "Box015.mesh",
+		scale = {0.372040, 1.000000, 0.281073},
+		position = {190.660004, 376.628998, -213.878006},
+		rotation = "0.000000 0.000000 0.000000 1.000000",
+		static = true,
+	},
+
+	Box016 = {
+		type = "WorldTesting",
+		model = "Box016.mesh",
+		scale = {0.372040, 1.000000, 0.281073},
+		position = {244.623001, 376.628998, -272.751007},
+		rotation = "0.000000 0.000000 0.000000 1.000000",
+		static = true,
+	},
+
+	Box017 = {
+		type = "WorldTesting",
+		model = "Box017.mesh",
+		scale = {0.372040, 1.000000, 0.281073},
+		position = {142.636002, 376.628998, -321.716003},
+		rotation = "0.000000 0.000000 0.000000 1.000000",
+		static = true,
+	},
+
+	Box018 = {
+		type = "WorldTesting",
+		model = "Box018.mesh",
+		scale = {0.372040, 1.000000, 0.281073},
+		position = {208.617996, 376.628998, -370.898010},
+		rotation = "0.000000 0.000000 0.000000 1.000000",
+		static = true,
+	},
+
+	Box019 = {
+		type = "WorldTesting",
+		model = "Box019.mesh",
+		scale = {0.372040, 1.000000, 0.281073},
+		position = {288.971985, 376.628998, -358.928986},
+		rotation = "0.000000 0.000000 0.000000 1.000000",
+		static = true,
+	},
+
+	Box020 = {
+		type = "WorldTesting",
+		model = "Box020.mesh",
+		scale = {1.632050, 1.000000, 0.781335},
+		position = {214.634995, 376.628998, -509.385010},
+		rotation = "0.000000 0.000000 0.000000 1.000000",
+		static = true,
+	},
+
+	Box021 = {
+		type = "WorldTesting",
+		model = "Box021.mesh",
+		scale = {2.049460, 0.404150, 3.374560},
+		position = {256.694000, 476.196014, 96.633003},
+		rotation = "0.000000 0.000000 0.000000 1.000000",
+		static = true,
+	},
+
+	Box022 = {
+		type = "WorldTesting",
+		model = "Box022.mesh",
+		scale = {2.712540, 2.543640, 2.000000},
+		position = {13.205400, 405.247986, 2.073060},
+		rotation = "0.000000 0.000000 0.000000 1.000000",
+		static = true,
+	},
+
+	Box023 = {
+		type = "WorldTesting",
+		model = "Box023.mesh",
+		scale = {0.386531, 2.079110, 0.209308},
+		position = {132.416000, 408.104004, -75.971802},
+		rotation = "0.000000 0.000000 0.000000 1.000000",
+		static = true,
+	},
+
+	Box024 = {
+		type = "WorldTesting",
+		model = "Box024.mesh",
+		scale = {0.386531, 2.079110, 0.209308},
+		position = {132.416000, 408.104004, 76.175697},
+		rotation = "0.000000 0.000000 0.000000 1.000000",
+		static = true,
+	},
+
+	Box025 = {
+		type = "WorldTesting",
+		model = "Box025.mesh",
+		scale = {1.664000, 0.434822, 3.202240},
+		position = {-168.533005, 570.661011, 0.952886},
+		rotation = "0.000000 0.000000 0.000000 1.000000",
+		static = true,
+	},
+
+	Box026 = {
+		type = "WorldTesting",
+		model = "Box026.mesh",
+		scale = {1.553670, 2.000000, 0.500000},
+		position = {-172.542007, 489.602997, 118.008003},
+		rotation = "0.000000 0.000000 0.000000 1.000000",
+		static = true,
+	},
+
+	Box027 = {
+		type = "WorldTesting",
+		model = "Box027.mesh",
+		scale = {3.318020, 2.104570, 0.530872},
+		position = {17.931900, 480.428009, 118.255997},
+		rotation = "0.000000 0.000000 0.000000 1.000000",
+		static = true,
+	},
+
+	Box029 = {
+		type = "WorldTesting",
+		model = "Box029.mesh",
+		scale = {4.242410, 2.907160, 2.179410},
+		position = {-6.995040, 264.303009, 148.240997},
+		rotation = "0.000000 0.000000 0.000000 1.000000",
+		static = true,
+	},
+
+	Box030 = {
+		type = "WorldTesting",
+		model = "Box030.mesh",
+		scale = {4.242410, 2.907160, 0.565845},
+		position = {0.347244, 264.303009, -92.768402},
+		rotation = "0.000000 0.000000 0.000000 1.000000",
+		static = true,
+	},
+
+	Box031 = {
+		type = "WorldTesting",
+		model = "Box031.mesh",
+		scale = {4.087190, 2.907160, 7.528650},
+		position = {-200.552002, 264.303009, 156.451996},
+		rotation = "0.000000 0.000000 0.000000 1.000000",
+		static = true,
+	},
+
+	Box032 = {
+		type = "WorldTesting",
+		model = "Box032.mesh",
+		scale = {5.361440, 2.907160, 3.550940},
+		position = {226.682999, 264.303009, 18.128401},
+		rotation = "0.000000 0.000000 0.000000 1.000000",
+		static = true,
+	},
+
+	Box033 = {
+		type = "WorldTesting",
+		model = "Box033.mesh",
+		scale = {1.830200, 1.568450, 0.154773},
+		position = {-147.634003, 269.468994, 3.507850},
+		rotation = "0.000000 -0.707107 0.000000 0.707107",
+		static = true,
+	},
+
+	Box034 = {
+		type = "WorldTesting",
+		model = "Box034.mesh",
+		scale = {1.830200, 1.568450, 0.154773},
+		position = {146.061996, 269.468994, 3.507850},
+		rotation = "0.000000 -0.707107 0.000000 0.707107",
+		static = true,
+	},
+
+	Box035 = {
+		type = "WorldTesting",
+		model = "Box035.mesh",
+		scale = {3.825540, 1.200000, 2.929960},
+		position = {0.000000, 264.691010, -0.000012},
+		rotation = "0.000000 0.000000 0.000000 1.000000",
+		static = true,
+	},
+
+	Box036 = {
+		type = "WorldTesting",
+		model = "Box036.mesh",
+		scale = {3.318020, 2.104570, 0.485875},
+		position = {17.931900, 480.428986, -115.213997},
+		rotation = "0.000000 0.000000 0.000000 1.000000",
+		static = true,
+	},
+
+	Box037 = {
+		type = "WorldTesting",
+		model = "Box037.mesh",
+		scale = {0.183645, 2.104570, 0.375445},
+		position = {150.087997, 480.428009, 40.333000},
+		rotation = "0.000000 0.000000 0.000000 1.000000",
+		static = true,
+	},
+
+	Box038 = {
+		type = "WorldTesting",
+		model = "Box038.mesh",
+		scale = {0.183645, 2.104570, 0.375445},
+		position = {150.087997, 480.428009, -34.957901},
+		rotation = "0.000000 0.000000 0.000000 1.000000",
+		static = true,
+	},
+
+	Box039 = {
+		type = "WorldTesting",
+		model = "Box039.mesh",
+		scale = {3.899730, 2.104570, 0.489421},
+		position = {-0.192047, 268.838989, 117.637001},
+		rotation = "0.000000 0.000000 0.000000 1.000000",
+		static = true,
+	},
+
+	Box040 = {
+		type = "WorldTesting",
+		model = "Box040.mesh",
+		scale = {4.001350, 2.104570, 0.255089},
+		position = {-0.192047, 268.838989, -98.342201},
+		rotation = "0.000000 0.000000 0.000000 1.000000",
+		static = true,
+	},
+
+	Box041 = {
+		type = "WorldTesting",
+		model = "Box041.mesh",
+		scale = {0.258817, 25.268999, 0.538668},
+		position = {146.460999, 273.566986, -68.869598},
+		rotation = "0.000000 0.000000 0.000000 1.000000",
+		static = true,
+	},
+
+	Box042 = {
+		type = "WorldTesting",
+		model = "Box042.mesh",
+		scale = {0.258817, 25.268999, 0.538668},
+		position = {146.460999, 273.566986, 80.866501},
+		rotation = "0.000000 0.000000 0.000000 1.000000",
+		static = true,
+	},
+
+	Box043 = {
+		type = "WorldTesting",
+		model = "Box043.mesh",
+		scale = {0.258817, 25.268999, 0.538668},
+		position = {-147.876999, 273.566986, -68.869598},
+		rotation = "0.000000 0.000000 0.000000 1.000000",
+		static = true,
+	},
+
+	Box044 = {
+		type = "WorldTesting",
+		model = "Box044.mesh",
+		scale = {0.258817, 25.268999, 0.538668},
+		position = {-147.876999, 273.566986, 77.885803},
+		rotation = "0.000000 0.000000 0.000000 1.000000",
+		static = true,
+	},
+
+	Box045 = {
+		type = "WorldTesting",
+		model = "Box045.mesh",
+		scale = {1.262960, 0.310134, 3.820940},
+		position = {282.365997, 398.127014, 128.350998},
+		rotation = "0.000000 0.000000 0.000000 1.000000",
+		static = true,
+	},
+
+	Shield0 = {
+		type = "ItemSpawn",
+		model = "armourSmall.mesh",
+		position = {221.212997, 520.135986, -0.095756},
+		rotation = "0.000000 0.000000 0.000000 1.000000",
+		id = "armor",
+		reward = 60,
+		respawnTime = 25.000000,
+	},
+
+	SuperShield1 = {
+		type = "ItemSpawn",
+		model = "armour.mesh",
+		position = {-170.304993, 508.669006, -170.445007},
+		rotation = "0.000000 0.000000 0.000000 1.000000",
+		id = "armor",
+		reward = 140,
+		respawnTime = 55.000000,
+	},
+
+	Sniper2 = {
+		type = "ItemSpawn",
+		model = "sniper.mesh",
+		position = {221.212997, 430.191986, -526.510010},
+		rotation = "0.000000 0.000000 0.000000 1.000000",
+		id = "weapon",
+		weaponType = 1,
+		reward = 10,
+		respawnTime = 25.000000,
+	},
+
+	Box046 = {
+		type = "WorldTesting",
+		model = "Box046.mesh",
+		scale = {5.775750, 0.404150, 1.014750},
+		position = {65.032898, 476.339996, 388.710999},
+		rotation = "0.000000 0.000000 0.000000 1.000000",
+		static = true,
+	},
+
+	Box047 = {
+		type = "WorldTesting",
+		model = "Box047.mesh",
+		scale = {0.258817, 10.464300, 2.855600},
+		position = {146.460999, 332.399994, 3.396260},
+		rotation = "0.000000 0.000000 0.000000 1.000000",
+		static = true,
+	},
+
+	Box048 = {
+		type = "WorldTesting",
+		model = "Box048.mesh",
+		scale = {0.258817, 10.464300, 2.855600},
+		position = {-147.630997, 332.399994, 3.396260},
+		rotation = "0.000000 0.000000 0.000000 1.000000",
+		static = true,
+	},
+
+	Box049 = {
+		type = "WorldTesting",
+		model = "Box049.mesh",
+		scale = {9.784560, 2.907160, 4.075550},
+		position = {122.624001, 264.303009, 279.423004},
+		rotation = "0.000000 0.000000 0.000000 1.000000",
+		static = true,
+	},
+
+	Box050 = {
+		type = "WorldTesting",
+		model = "Box050.mesh",
+		scale = {5.575560, 5.046910, 1.643150},
+		position = {-28.559700, 266.730988, 389.514008},
+		rotation = "0.000000 0.000000 0.000000 1.000000",
+		static = true,
+	},
+
+	Box051 = {
+		type = "WorldTesting",
+		model = "Box051.mesh",
+		scale = {0.183645, 2.104570, 2.442640},
+		position = {142.080002, 480.428009, 237.901001},
+		rotation = "0.000000 0.000000 0.000000 1.000000",
+		static = true,
+	},
+
+	Box052 = {
+		type = "WorldTesting",
+		model = "Box052.mesh",
+		scale = {6.886440, 2.272300, 0.209147},
+		position = {-2.850860, 485.279999, 460.674988},
+		rotation = "0.000000 0.000000 0.000000 1.000000",
+		static = true,
+	},
+
+	Box053 = {
+		type = "WorldTesting",
+		model = "Box053.mesh",
+		scale = {3.385960, 2.272300, 0.209147},
+		position = {14.029300, 485.279999, 334.466003},
+		rotation = "0.000000 0.000000 0.000000 1.000000",
+		static = true,
+	},
+
+	Box054 = {
+		type = "WorldTesting",
+		model = "Box054.mesh",
+		scale = {3.302390, 1.663230, 0.180288},
+		position = {152.546005, 410.140015, 244.705994},
+		rotation = "0.000000 -0.707107 0.000000 0.707107",
+		static = true,
+	},
+
+	Box055 = {
+		type = "WorldTesting",
+		model = "Box055.mesh",
+		scale = {1.262960, 0.310134, 3.820940},
+		position = {220.113007, 398.127014, 128.350998},
+		rotation = "0.000000 0.000000 0.000000 1.000000",
+		static = true,
+	},
+
+	Box056 = {
+		type = "WorldTesting",
+		model = "Box056.mesh",
+		scale = {0.168414, 0.404150, 0.307965},
+		position = {121.190002, 492.631012, 237.479004},
+		rotation = "0.000000 0.000000 0.000000 1.000000",
+		static = true,
+	},
+
+	Box057 = {
+		type = "WorldTesting",
+		model = "Box057.mesh",
+		scale = {1.553670, 2.000000, 2.487110},
+		position = {-172.479004, 402.149994, 237.322998},
+		rotation = "0.000000 0.000000 0.000000 1.000000",
+		static = true,
+	},
+
+	Box059 = {
+		type = "WorldTesting",
+		model = "Box059.mesh",
+		scale = {3.151330, 2.907160, 1.652730},
+		position = {237.360001, 264.303009, -125.306000},
+		rotation = "0.000000 0.000000 0.000000 1.000000",
+		static = true,
+	},
+
+	Box060 = {
+		type = "WorldTesting",
+		model = "Box060.mesh",
+		scale = {4.001350, 2.104570, 0.364787},
+		position = {-0.289215, 268.838989, -120.443001},
+		rotation = "0.000000 0.000000 0.000000 1.000000",
+		static = true,
+	},
+
+	Box061 = {
+		type = "WorldTesting",
+		model = "Box061.mesh",
+		scale = {0.443181, 3.142860, 2.387300},
+		position = {174.296005, 267.851013, 235.464005},
+		rotation = "0.000000 0.000000 0.000000 1.000000",
+		static = true,
+	},
+
+	Box062 = {
+		type = "WorldTesting",
+		model = "Box062.mesh",
+		scale = {2.514360, 3.031570, 0.348698},
+		position = {255.386002, 267.623993, 132.787003},
+		rotation = "0.000000 0.000000 0.000000 1.000000",
+		static = true,
+	},
+
+	Box063 = {
+		type = "WorldTesting",
+		model = "Box063.mesh",
+		scale = {0.747370, 4.922350, 2.714200},
+		position = {340.649994, 266.730988, 10.072500},
+		rotation = "0.000000 0.000000 0.000000 1.000000",
+		static = true,
+	},
+
+}

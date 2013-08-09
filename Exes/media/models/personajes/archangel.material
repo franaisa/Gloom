@@ -25,7 +25,7 @@ material archangel {
 			vertex_program_ref bumpLightingVertexShader {
 			}
 			
-			fragment_program_ref bumpLightingFragment_DIFF_SPEC {
+			fragment_program_ref bumpLightingFragment_DIFF_ALPHASPEC {
 				// Constante para regular la cantidad de difuso
 				param_named			Kd								float		0.6
 				// Constante de brillo especular

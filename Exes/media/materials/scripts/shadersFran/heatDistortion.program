@@ -1,0 +1,11 @@
+vertex_program heatVertexShader hlsl {
+	source heatDistortion.hlsl
+	entry_point VS_Heat
+	target vs_3_0
+}
+
+fragment_program heatFragmentShader hlsl {
+	source heatDistortion.hlsl
+	entry_point PS_Heat
+	target ps_3_0
+}

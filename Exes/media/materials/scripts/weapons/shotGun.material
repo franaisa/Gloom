@@ -1,5 +1,5 @@
 material shotGun {
-	set $glow_tex ARMA_B_GLOW_old.png
+
 	technique {
 		pass {
 		
@@ -43,15 +43,23 @@ material shotGun {
 				texture shotgun_NRM.tga
 			}
 			
+			// Textura de especular
+			texture_unit SpecMap {
+				texture shotgun_SPEC.tga
+			}
+			
 		}
 	}
+	
 	technique {
 		scheme glow
+		
 		pass {
 			texture_unit {
-				texture $glow_tex
+				texture ARMA_B_GLOW_old.png
 			}
 		}
+		
 	}
 
 }

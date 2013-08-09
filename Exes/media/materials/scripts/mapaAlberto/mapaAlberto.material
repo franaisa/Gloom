@@ -72,6 +72,11 @@ material mapaAlberto_bronzecopper {
 				texture BronzeCopper0030_L_NRM.tga
 			}
 			
+			// Textura de especular
+			texture_unit SpecMap {
+				texture BronzeCopper0030_L_SPEC.tga
+			}
+			
 		}
 	}
 }
@@ -120,6 +125,11 @@ material mapaAlberto_comluman {
 			// Textura para el bump mapping. En el alfa esta el mapa de especulares.
 			texture_unit NormalMap {
 				texture metal_columna_tileado_NRM.tga
+			}
+			
+			// Textura de especular
+			texture_unit SpecMap {
+				texture metal_columna_tileado_SPEC.tga
 			}
 			
 		}
@@ -202,6 +212,11 @@ material mapaAlberto_metalContainer {
 				texture MetalContainer_NRM.tga
 			}
 			
+			// Textura de especular
+			texture_unit SpecMap {
+				texture MetalContainer_SPEC.tga
+			}
+			
 		}
 	}	
 }
@@ -250,6 +265,11 @@ material mapaAlberto_metalContainer0149 {
 			// Textura para el bump mapping. En el alfa esta el mapa de especulares.
 			texture_unit NormalMap {
 				texture MetalContainers0149_S_COLOR_NRM.tga
+			}
+			
+			// Textura de especular
+			texture_unit SpecMap {
+				texture MetalContainers0149_S_COLOR_SPEC.tga
 			}
 			
 		}
@@ -302,6 +322,11 @@ material mapaAlberto_metalContainers {
 				texture MetalContainer_NRM.tga
 			}
 			
+			// Textura de especular
+			texture_unit SpecMap {
+				texture MetalContainer_SPEC.tga
+			}
+			
 		}
 	}
 }
@@ -350,6 +375,11 @@ material mapaAlberto_metalpuerta {
 			// Textura para el bump mapping. En el alfa esta el mapa de especulares.
 			texture_unit NormalMap {
 				texture metalpuerta_NRM.tga
+			}
+			
+			// Textura de especular
+			texture_unit SpecMap {
+				texture metalpuerta_SPEC.tga
 			}
 			
 		}
@@ -416,6 +446,11 @@ material mapaAlberto_piedra {
 				texture piedra_NRM.tga
 			}
 			
+			// Textura de especular
+			texture_unit SpecMap {
+				texture piedra_SPEC.tga
+			}
+			
 		}
 	}	
 }
@@ -465,6 +500,11 @@ material mapaAlberto_suelo {
 			// Textura para el bump mapping. En el alfa esta el mapa de especulares.
 			texture_unit NormalMap {
 				texture suelo_NRM.tga
+			}
+			
+			// Textura de especular
+			texture_unit SpecMap {
+				texture suelo_SPEC.tga
 			}
 			
 		}
@@ -517,6 +557,11 @@ material mapaAlberto_suelometal{
 				texture suelometal_NRM.tga
 			}
 			
+			// Textura de especular
+			texture_unit SpecMap {
+				texture suelometal_SPEC.tga
+			}
+			
 		}
 	}
 }
@@ -565,6 +610,11 @@ material mapaAlberto_techometal {
 			// Textura para el bump mapping. En el alfa esta el mapa de especulares.
 			texture_unit NormalMap {
 				texture techometal_NRM_2.tga
+			}
+			
+			// Textura de especular
+			texture_unit SpecMap {
+				texture techometal_SPEC_2.tga
 			}
 			
 		}
@@ -617,6 +667,11 @@ material mapaAlberto_ventana {
 				texture ventana_NRM.tga
 			}
 			
+			// Textura de especular
+			texture_unit SpecMap {
+				texture ventana_SPEC.tga
+			}
+			
 		}
 	}	
 }
@@ -667,6 +722,11 @@ material mapaAlberto_viga {
 				texture viga_NRM.tga
 			}
 			
+			// Textura de especular
+			texture_unit SpecMap {
+				texture viga_SPEC.tga
+			}
+			
 		}
 	}	
 }
@@ -715,6 +775,11 @@ material metalContainer_metalContainer0036 {
 			// Textura para el bump mapping. En el alfa esta el mapa de especulares.
 			texture_unit NormalMap {
 				texture MetalContainers0036_S_NRM.tga
+			}
+			
+			// Textura de especular
+			texture_unit SpecMap {
+				texture MetalContainers0036_S_SPEC.tga
 			}
 			
 		}
