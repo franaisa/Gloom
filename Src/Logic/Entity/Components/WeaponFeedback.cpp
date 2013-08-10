@@ -22,6 +22,7 @@
 #include "Logic/Messages/MessagePrimaryShoot.h"
 #include "Logic/Messages/MessageSecondaryShoot.h"
 #include "Logic/Messages/MessageBlockShoot.h"
+#include "Logic/Messages/MessageCreateParticle.h"
 
 // Graficos
 // @deprecated Ogre no deberia estar acoplado a la logica
@@ -53,6 +54,21 @@ namespace Logic {
 	bool IWeaponFeedback::spawn(CEntity *entity, CMap *map, const Map::CEntity *entityInfo) {
 		if( !IComponent::spawn(entity,map,entityInfo) ) return false;
 
+		if(entityInfo->hasAttribute(_weaponName+"PrimaryFireParticle"))
+			_primaryFireParticle = entityInfo->getStringAttribute(_weaponName+"PrimaryFireParticle");
+		else
+			_primaryFireParticle = "fogonazo";
+
+		if(entityInfo->hasAttribute(_weaponName+"SecondaryFireParticle"))
+			_secondaryFireParticle = entityInfo->getStringAttribute(_weaponName+"SecondaryFireParticle");
+		else
+			_secondaryFireParticle = "fogonazo";
+		
+		if(entityInfo->hasAttribute(_weaponName+"ParticlePosition"))
+			_particlePosition = entityInfo->getVector3Attribute(_weaponName+"ParticlePosition");
+		else
+			_particlePosition = Vector3(6, 5, 6);
+		
 		_weaponSound = entityInfo->getStringAttribute(_weaponName+"Audio");
 
 		_hudWeapon = _entity->getComponent<CHudWeapons>("CHudWeapons");
@@ -85,6 +101,7 @@ namespace Logic {
 					if( primaryShootMsg->getShoot() ) {
 						primaryFire();
 						_primaryFireIsActive = true;
+						emitParticle(true);
 					}
 					else {
 						stopPrimaryFire();
@@ -101,6 +118,7 @@ namespace Logic {
 					if( secondaryShootMsg->getShoot() ) {
 						secondaryFire();
 						_secondaryFireIsActive = true;
+						emitParticle(false);
 					}
 					else {
 						stopSecondaryFire();
@@ -177,6 +195,30 @@ namespace Logic {
 			}
 		}
 	} // decals
+
+	void IWeaponFeedback::emitParticle(bool primaryShoot){
+		std::shared_ptr<CMessageCreateParticle> particleMsg = std::make_shared<CMessageCreateParticle>();
+		particleMsg->setParticle( primaryShoot?_primaryFireParticle:_secondaryFireParticle );
+
+		Vector3 particlePosition = _entity->getPosition();
+		particlePosition.y += _heightShoot;
+		//std::cout << "posicionOrig = " << position2 << std::endl;
+
+
+		Vector3 orientation= _entity->getOrientation()*Vector3::NEGATIVE_UNIT_Z;
+		orientation.normalise();
+		/*
+		float fOffset = 8.0f;
+		orientation *= fOffset;
+		particlePosition += orientation;
+		/*/
+		orientation *= _particlePosition;
+		particlePosition += orientation;
+		/* */
+
+		particleMsg->setPosition(particlePosition);
+		_entity->emitMessage(particleMsg);
+	}
 
 } // namespace Logic
 

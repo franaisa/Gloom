@@ -119,7 +119,11 @@ namespace Logic
 			for(auto it = _particles.begin(); it < _particles.end(); ++it){
 				(*it)._particle = _scene->createParticle((*it)._particleName, _entity->getPosition() + ( (*it)._particleOffset * (_entity->getOrientation()*Vector3::NEGATIVE_UNIT_Z) ), (*it)._particleEmitterDirection );
 				// tengo q hacer esto para la habilidad del hound
-				(*it)._particle->setVisible((*it)._particleVisible);
+				if((*it)._particle){
+					(*it)._particle->setVisible((*it)._particleVisible);
+				}else{
+					// supongo q lo ideal seria quitarlo de la lista
+				}
 			}
 
 		}
@@ -166,9 +170,11 @@ namespace Logic
 	void CParticle::onTick(unsigned int msecs) {
 		if(!_particles.empty()){
 			for(auto it = _particles.begin(); it < _particles.end(); ++it){
-				Vector3 orientation = _entity->getOrientation() *Vector3::NEGATIVE_UNIT_Z;
-				orientation.normalise();
-				(*it)._particle->setPosition(_entity->getPosition() + ( (*it)._particleOffset * orientation ));
+				if((*it)._particle){
+					Vector3 orientation = _entity->getOrientation() *Vector3::NEGATIVE_UNIT_Z;
+					orientation.normalise();
+					(*it)._particle->setPosition(_entity->getPosition() + ( (*it)._particleOffset * orientation ));
+				}
 			}
 		}
 	} // tick

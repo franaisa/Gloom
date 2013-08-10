@@ -16,7 +16,8 @@ de una escena.
 */
 
 #include "Graphics\Particle.h"
-#include "Graphics\OgreParticle.h"
+//#include "Graphics\OgreParticle.h"
+#include "Graphics\PUParticle.h"
 #include "PoolParticle.h"
 #include "Server.h"
 #include "Scene.h"
@@ -71,21 +72,21 @@ namespace Graphics
 	void CPoolParticle::loadParticleSystem(const std::string &completeNameParticleSystem){
 		if(completeNameParticleSystem == "." || completeNameParticleSystem == ".." ||  completeNameParticleSystem ==  "LEEME.txt")
 			return;
-		int position = completeNameParticleSystem.find(".particle");
+		int position = completeNameParticleSystem.find(".pu");
 		if(position == std::string::npos)
 			return;
 		std::string nameParticleSystemAndAmount = completeNameParticleSystem.substr(0, position);
 		int positionUnderscore = nameParticleSystemAndAmount.length()-2;
 		int amount = std::atoi(nameParticleSystemAndAmount.substr(positionUnderscore).c_str());
 		std::string nameParticleSystem = nameParticleSystemAndAmount.substr(0,positionUnderscore-1);
-		//printf("\nCargada particula: %s, %d veces", nameParticleSystem.c_str(), amount);
+		printf("\nCargada particula: %s, %d veces", nameParticleSystem.c_str(), amount);
 
 		TParticles aux;
 		aux.index = 0;
 		aux.maxIndex = amount;
 		std::vector<CParticle*> vectorParticle;
 		for(unsigned int i = 0; i < amount; ++i){
-			CParticle *particle = new COgreParticle(nameParticleSystem);
+			CParticle *particle = new PUParticle(nameParticleSystem);
 			particle->deactivate();
 			vectorParticle.push_back(particle);
 		}

@@ -107,6 +107,7 @@ Map = {
 			weaponsniperBurnedIncrementPercentageDamage = 30,
 			weaponsniperMaxAmmo = 10,
 			weaponsniperID = 1,
+			weaponsniperPrimaryFireParticle = "sniperPrimaryShoot",
 			weaponsniperParticlePosition = {6, 5, 6},
 			weaponsniperAudio = "sniper.wav",
 			
@@ -310,6 +311,7 @@ Map = {
 			weaponsniperBurnedIncrementPercentageDamage = 30,
 			weaponsniperMaxAmmo = 10,
 			weaponsniperID = 1,
+			weaponsniperPrimaryFireParticle = "sniperPrimaryShoot",
 			weaponsniperParticlePosition = {6, 5, 6},
 			weaponsniperAudio = "sniper.wav",
 			
@@ -503,6 +505,7 @@ Map = {
 			weaponsniperBurnedIncrementPercentageDamage = 30,
 			weaponsniperMaxAmmo = 10,
 			weaponsniperID = 1,
+			weaponsniperPrimaryFireParticle = "sniperPrimaryShoot",			
 			weaponsniperParticlePosition = {6, 5, 6},
 			weaponsniperAudio = "sniper.wav",
 			
@@ -697,6 +700,7 @@ Map = {
 			weaponsniperBurnedIncrementPercentageDamage = 30,
 			weaponsniperMaxAmmo = 10,
 			weaponsniperID = 1,
+			weaponsniperPrimaryFireParticle = "sniperPrimaryShoot",			
 			weaponsniperParticlePosition = {6, 5, 6},
 			weaponsniperAudio = "sniper.wav",
 			
@@ -898,6 +902,7 @@ Map = {
 			weaponsniperBurnedIncrementPercentageDamage = 30,
 			weaponsniperMaxAmmo = 10,
 			weaponsniperID = 1,
+			weaponsniperPrimaryFireParticle = "sniperPrimaryShoot",			
 			weaponsniperParticlePosition = {6, 5, 6},
 			weaponsniperAudio = "sniper.wav",
 			
@@ -1090,6 +1095,7 @@ Map = {
 			weaponsniperBurnedIncrementPercentageDamage = 30,
 			weaponsniperMaxAmmo = 10,
 			weaponsniperID = 1,
+			weaponsniperPrimaryFireParticle = "sniperPrimaryShoot",			
 			weaponsniperParticlePosition = {6, 5, 6},
 			weaponsniperAudio = "sniper.wav",
 			
@@ -1283,6 +1289,7 @@ Map = {
 			weaponsniperBurnedIncrementPercentageDamage = 30,
 			weaponsniperMaxAmmo = 10,
 			weaponsniperID = 1,
+			weaponsniperPrimaryFireParticle = "sniperPrimaryShoot",			
 			weaponsniperParticlePosition = {6, 5, 6},
 			weaponsniperAudio = "sniper.wav",
 			
@@ -1487,6 +1494,7 @@ Map = {
 			weaponsniperBurnedIncrementPercentageDamage = 30,
 			weaponsniperMaxAmmo = 10,
 			weaponsniperID = 1,
+			weaponsniperPrimaryFireParticle = "sniperPrimaryShoot",			
 			weaponsniperParticlePosition = {6, 5, 6},
 			weaponsniperAudio = "sniper.wav",
 			
@@ -1763,6 +1771,7 @@ Map = {
 			weaponsniperBurnedIncrementPercentageDamage = 30,
 			weaponsniperMaxAmmo = 10,
 			weaponsniperID = 1,
+			weaponsniperPrimaryFireParticle = "sniperPrimaryShoot",			
 			weaponsniperParticlePosition = {6, 5, 6},
 			weaponsniperAudio = "sniper.wav",
 			

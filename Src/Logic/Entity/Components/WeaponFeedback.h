@@ -172,6 +172,10 @@ namespace Logic {
 		*/
 		void drawDecal(Logic::CEntity* pEntity, Vector3 vPos);
 
+		/**
+		Metodo que emite el mensaje que pintara la particula
+		*/
+		void IWeaponFeedback::emitParticle(bool primaryShoot = true);
 
 		// =======================================================================
 		//                          MIEMBROS PROTEGIDOS
@@ -195,6 +199,11 @@ namespace Logic {
 		float _heightShoot;
 
 		bool _ableToShoot;
+		
+		std::string _primaryFireParticle;
+		std::string _secondaryFireParticle;
+		Vector3 _particlePosition;
+		
 
 	}; // class IWeaponFeedback
 

@@ -295,10 +295,10 @@ namespace Graphics
 
 	CParticle * CScene::createParticle(const std::string &particleName, const Vector3 &position, const Vector3 &directionWithForce){
 
-		// creo una particula de hhfx
+
 		CParticle *particle = _poolParticle->getParticle(particleName);
 		if(!particle)
-			return 0; // si la de ogre tampoco tiene exito, devuelvo 0 para control de errores
+			return 0; // si no tiene exito, devuelvo 0 para control de errores
 		
 		particle->setPosition(position);
 		

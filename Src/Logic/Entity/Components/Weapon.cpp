@@ -212,7 +212,7 @@ namespace Logic {
 
 	void IWeapon::particles()
 	{
-		std::cout << "particula" << std::endl;
+		//std::cout << "particula" << std::endl;
 		std::shared_ptr<CMessageCreateParticle> particleMsg = std::make_shared<CMessageCreateParticle>();
 		particleMsg->setParticle("ShootParticle2");
 
@@ -220,16 +220,13 @@ namespace Logic {
 		position2.y += _heightShoot;
 		//std::cout << "posicionOrig = " << position2 << std::endl;
 
-		
 		float fOffset = 8.0f;
 		Vector3 orientation= _entity->getOrientation()*Vector3::NEGATIVE_UNIT_Z;
 		orientation.normalise();
 		orientation *= fOffset;
 		//std::cout << "orientacion = " << orientation << std::endl;
-
 		position2 += orientation;
 		//std::cout << "posicion NUEVA = " << position2 << std::endl;
-
 		particleMsg->setPosition(position2);
 		//Vector3 dir(0,0,0);
 		//particleMsg->setDirectionWithForce(dir);
