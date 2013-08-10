@@ -51,19 +51,21 @@ namespace Logic {
 	//__________________________________________________________________
 
 	bool CShotGunAmmo::spawn(CEntity* entity, CMap *map, const Map::CEntity *entityInfo) {
-		if( !IWeaponAmmo::spawn(entity, map, entityInfo) ) return false;
+		Map::CEntity* weapon = CEntityFactory::getSingletonPtr()->getInfo(_weaponName);
+
+		if( !IWeaponAmmo::spawn(entity, map, weapon) ) return false;
 
 		// Nos aseguramos de tener todos los atributos que necesitamos
-		assert( entityInfo->hasAttribute(_weaponName + "PrimaryFireCooldown") );
-		assert( entityInfo->hasAttribute(_weaponName + "PrimaryFireDispersion") );
-		assert( entityInfo->hasAttribute(_weaponName + "NumberOfShots") );
+		assert( weapon->hasAttribute("PrimaryFireCooldown") );
+		assert( weapon->hasAttribute("PrimaryFireDispersion") );
+		assert( weapon->hasAttribute("NumberOfShots") );
 		
 
 		// Cooldown del disparo principal
-		_defaultPrimaryFireCooldown = _primaryFireCooldown = entityInfo->getFloatAttribute(_weaponName + "PrimaryFireCooldown") * 1000;
+		_defaultPrimaryFireCooldown = _primaryFireCooldown = weapon->getFloatAttribute("PrimaryFireCooldown") * 1000;
 
-		_primaryFireDispersion = entityInfo->getFloatAttribute(_weaponName + "PrimaryFireDispersion");
-		_numberOfShots = entityInfo->getIntAttribute(_weaponName + "NumberOfShots");
+		_primaryFireDispersion = weapon->getFloatAttribute("PrimaryFireDispersion");
+		_numberOfShots = weapon->getIntAttribute("NumberOfShots");
 		
 
 		 _friend[_friends] = _shotGunComponent = _entity->getComponent<Logic::CShotGun>("CShotGun");

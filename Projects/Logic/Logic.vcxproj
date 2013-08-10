@@ -81,6 +81,7 @@
     <ClCompile Include="..\..\Src\Graphics\OgreDecal.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\AmplifyDamageClient.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\AmplifyDamageServer.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\Bite.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\ComeBackClient.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\ComeBackServer.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\CoolDownClient.cpp" />
@@ -128,7 +129,7 @@
     <ClCompile Include="..\..\Src\Logic\Entity\Components\MagneticBullet.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\FireBallController.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\IronHellGoat.cpp" />
-    <ClCompile Include="..\..\Src\Logic\Entity\Components\MovementSanpshot.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\MovementSnapshot.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\PlayerInterpolator.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\PlayerSnapshot.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\PositionSnapshot.cpp" />
@@ -276,6 +277,7 @@
     <ClInclude Include="..\..\Src\Graphics\OgreDecal.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\AmplifyDamageClient.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\AmplifyDamageServer.h" />
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\Bite.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\ComeBackClient.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\ComeBackServer.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\CoolDownClient.h" />

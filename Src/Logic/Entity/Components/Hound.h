@@ -188,6 +188,8 @@ namespace Logic {
 		*/
 		std::string _materialName;
 
+		CEntity* _biteTrigger;
+
 		CPhysicDynamicEntity* _trigger;
 		CAvatarController* _avatarController;
 		CPhysicController* _physicController;

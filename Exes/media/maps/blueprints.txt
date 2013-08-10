@@ -36,3 +36,4 @@ TestGround CGraphicPlane CPhysicStaticEntity
 Light CLight CGraphics
 MovableLight CDynamicLight CGraphics
 TriggerLight CLight CGraphics CPhysicStaticCompound
+Bite CPhysicDynamicEntity CBite

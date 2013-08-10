@@ -104,9 +104,15 @@ namespace Logic  {
 
 				updateGUI(entity);
 
+				std::cout << "mensaje dead recibido" << std::endl;
+
 				break;
 			}
 			case Message::PLAYER_SPAWN: {
+
+				std::cout << "mensaje spawn recibido" << std::endl;
+
+
 				// El servidor nos notifica de que debemos respawnear. Activamos
 				// todos los componentes de la entidad y seteamos nuestra posicion
 				// en el lugar indicado por el mensaje recibido del servidor.

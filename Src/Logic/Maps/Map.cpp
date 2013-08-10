@@ -267,6 +267,7 @@ namespace Logic {
 					auto otherIt = _entityInfoTable.find( entity->getEntityID() );
 					otherIt->second._fixedTickIterator = _entitiesWithFixedTick.end();
 					it = _entitiesWithFixedTick.erase(it);
+					std::cout << "esta entidad no quiere fixed tick:  " << entity->getName() << std::endl;
 					continue;
 				}
 
@@ -296,6 +297,7 @@ namespace Logic {
 			info._fixedTickIterator = fixedTickIt;
 
 			_entityInfoTable.insert( pair<TEntityID, EntityInfo>(entityId, info) );
+			std::cout << "añadiendo al mapa " << entity->getName() << std::endl;
 		}
 	} // addEntity
 
@@ -306,7 +308,7 @@ namespace Logic {
 		auto it = _entityInfoTable.find( entity->getEntityID() );
 		if( it != _entityInfoTable.end() ) {
 			EntityInfo info = it->second;
-
+			std::cout << "borrando del mapa " << entity->getName() << std::endl;
 			if(info._entityPtr->isActivated())
 				info._entityPtr->deactivate();
 

@@ -54,20 +54,22 @@ namespace Logic {
 	//__________________________________________________________________
 
 	bool CSniperAmmo::spawn(CEntity* entity, CMap *map, const Map::CEntity *entityInfo) {
-		if( !IWeaponAmmo::spawn(entity, map, entityInfo) ) return false;
+		Map::CEntity* weapon = CEntityFactory::getSingletonPtr()->getInfo(_weaponName);
+
+		if( !IWeaponAmmo::spawn(entity, map, weapon) ) return false;
 
 		// Nos aseguramos de tener todos los atributos que necesitamos
-		assert( entityInfo->hasAttribute(_weaponName + "PrimaryFireCooldown") );
+		assert( weapon->hasAttribute("PrimaryFireCooldown") );
 
-		assert( entityInfo->hasAttribute(_weaponName + "SecondaryFireCooldown") );
-		assert( entityInfo->hasAttribute(_weaponName + "AmmoSpentPerSecondaryShot") );
+		assert( weapon->hasAttribute("SecondaryFireCooldown") );
+		assert( weapon->hasAttribute("AmmoSpentPerSecondaryShot") );
 
 		// Cooldown del disparo principal
-		_defaultPrimaryFireCooldown = _primaryFireCooldown = entityInfo->getFloatAttribute(_weaponName + "PrimaryFireCooldown") * 1000;
-		_defaultSecondaryFireCooldown = _secondaryFireCooldown = entityInfo->getFloatAttribute(_weaponName + "SecondaryFireCooldown") * 1000;
+		_defaultPrimaryFireCooldown = _primaryFireCooldown = weapon->getFloatAttribute("PrimaryFireCooldown") * 1000;
+		_defaultSecondaryFireCooldown = _secondaryFireCooldown = weapon->getFloatAttribute("SecondaryFireCooldown") * 1000;
 
 		// Ratio al que gastamos municion
-		_ammoSpentPerSecondaryShot = entityInfo->getIntAttribute(_weaponName + "AmmoSpentPerSecondaryShot");
+		_ammoSpentPerSecondaryShot = weapon->getIntAttribute("AmmoSpentPerSecondaryShot");
 
 		_friend[_friends] = _entity->getComponent<Logic::CSniper>("CSniper");
 		if(_friend[_friends]) ++_friends;

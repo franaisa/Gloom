@@ -183,6 +183,7 @@ namespace Logic {
 		TEntityID destID; 
 			serialMsg.read(&destID, sizeof(destID));
 		
+
 		//Si el ID no lo tenemos ya en nuestro mapa proseguimos con la creacion
 		if(CServer::getSingletonPtr()->getMap()->getEntityByID(destID)!=0){//si lo encontramos terminamos
 			return;

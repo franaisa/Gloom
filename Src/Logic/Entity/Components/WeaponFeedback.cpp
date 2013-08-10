@@ -15,7 +15,7 @@
 
 // Mapa
 #include "Map/MapEntity.h"
-
+#include "Logic/Maps/EntityFactory.h"
 // Mensajes
 #include "Logic/Messages/MessageAudio.h"
 #include "Logic/Messages/MessageHudWeapon.h"
@@ -36,7 +36,7 @@ using namespace std;
 
 namespace Logic {
 	
-	IWeaponFeedback::IWeaponFeedback(const string& weaponName) : _weaponName("weapon" + weaponName),
+	IWeaponFeedback::IWeaponFeedback(const string& weaponName) : _weaponName(weaponName),
 																 _ableToShoot(true),
 																 _primaryFireIsActive(false),
 																 _secondaryFireIsActive(false) {
@@ -54,22 +54,26 @@ namespace Logic {
 	bool IWeaponFeedback::spawn(CEntity *entity, CMap *map, const Map::CEntity *entityInfo) {
 		if( !IComponent::spawn(entity,map,entityInfo) ) return false;
 
-		if(entityInfo->hasAttribute(_weaponName+"PrimaryFireParticle"))
-			_primaryFireParticle = entityInfo->getStringAttribute(_weaponName+"PrimaryFireParticle");
+		
+		
+		Map::CEntity *tempEntity = CEntityFactory::getSingletonPtr()->getInfo(_weaponName);
+		_weaponSound = tempEntity->getStringAttribute("Audio");
+
+		if(tempEntity->hasAttribute("PrimaryFireParticle"))
+			_primaryFireParticle = tempEntity->getStringAttribute("PrimaryFireParticle");
 		else
 			_primaryFireParticle = "fogonazo";
 
-		if(entityInfo->hasAttribute(_weaponName+"SecondaryFireParticle"))
-			_secondaryFireParticle = entityInfo->getStringAttribute(_weaponName+"SecondaryFireParticle");
+		if(tempEntity->hasAttribute("SecondaryFireParticle"))
+			_secondaryFireParticle = tempEntity->getStringAttribute("SecondaryFireParticle");
 		else
 			_secondaryFireParticle = "fogonazo";
 		
-		if(entityInfo->hasAttribute(_weaponName+"ParticlePosition"))
-			_particlePosition = entityInfo->getVector3Attribute(_weaponName+"ParticlePosition");
+		if(tempEntity->hasAttribute("ParticlePosition"))
+			_particlePosition = tempEntity->getVector3Attribute("ParticlePosition");
 		else
 			_particlePosition = Vector3(6, 5, 6);
-		
-		_weaponSound = entityInfo->getStringAttribute(_weaponName+"Audio");
+
 
 		_hudWeapon = _entity->getComponent<CHudWeapons>("CHudWeapons");
 		assert(_hudWeapon != NULL && "Error: El cliente necesita tener un componente de grafico del arma");

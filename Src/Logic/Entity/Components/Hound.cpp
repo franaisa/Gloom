@@ -16,6 +16,7 @@ implementa las habilidades del personaje
 #include "Hound.h"
 #include "Map/MapEntity.h"
 #include "Logic/Entity/Entity.h"
+#include "Logic/Maps/EntityFactory.h"
 #include "Logic/Maps/WorldState.h"
 #include "Physics/Server.h"
 #include "Logic/Messages/MessageDamageAmplifier.h"
@@ -79,8 +80,14 @@ namespace Logic {
 		//_berserkerDamagePercent = entityInfo->getFloatAttribute("berserkerDamagePercent");
 		//_berserkerCooldownPercent = entityInfo->getFloatAttribute("berserkerCooldownPercent");
 
-		_trigger = _entity->getComponent<CPhysicDynamicEntity>("CPhysicDynamicEntity");
 		_physicController = _entity->getComponent<CPhysicController>("CPhysicController");
+
+
+		Map::CEntity* trigger = CEntityFactory::getSingletonPtr()->getInfo("Bite");
+
+		_biteTrigger = CEntityFactory::getSingletonPtr()->createEntity(trigger, map, false);
+		_trigger = _biteTrigger->getComponent<CPhysicDynamicEntity>("CPhysicDynamicEntity");
+
 		return true;
 	} // spawn
 
@@ -92,25 +99,15 @@ namespace Logic {
 		if(_doingPrimarySkill){
 			if(_biteTimer > 0) {
 				_biteTimer -= msecs;
+				_trigger->setPosition(_entity->getPosition(),true);
 			}else{
 				stopSecondarySkill();
 			}
 		}
+	}
 
-		/*if(_doingPrimarySkill){
-			if(_biteTimer > _biteDuration*0.5) {
-				_biteTimer -= msecs;
-				
-			}else if(_biteTimer > 0) {
-				_biteTimer -= msecs;
-
-				charge = true;
-			}else{
-				stopPrimarySkill();
-				charge = false;
-				_doingPrimarySkill = false;
-			}
-		}*/
+	void CHound::onStart(unsigned int msecs){
+		_biteTrigger->deactivate();
 	}
 
 	//________________________________________________________________________
@@ -132,11 +129,9 @@ namespace Logic {
 		_berserkerTimer = _berserkerDuration;
 
 		_doingSecondarySkill = false;
-	}
 
-
-	void CHound::onStart(unsigned int msecs){
-		_trigger->deactivateSimulation();
+		if ( _biteTrigger->isActivated() )
+			_biteTrigger->deactivate();
 	}
 
 
@@ -161,7 +156,6 @@ namespace Logic {
 	//__________________________________________________________________
 
 	void CHound::primarySkill() {
-		_trigger->activateSimulation();
 		_doingPrimarySkill = true;
 		_biteTimer = _biteDuration;
 		_physicController->deactivateSimulation();
@@ -173,7 +167,6 @@ namespace Logic {
 		_doingPrimarySkill = false;
 		
 		_biteTimer = 0;
-		_trigger->deactivateSimulation();
 		_physicController->activateSimulation();
 	}
 

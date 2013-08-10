@@ -167,36 +167,34 @@ namespace Logic {
 		for(int i = WeaponType::eSOUL_REAPER; i < WeaponType::eSIZE; ++i){
 				
 			WeaponType::Enum current = (WeaponType::Enum)i;
-			std::string currentOnText = WeaponType::toString(current);
-		
-			std::stringstream aux;
-			aux << "weapon" << currentOnText;
-			std::string weapon = aux.str();
+			std::string strWeapon = WeaponType::toString(current);
+
+			Map::CEntity* weapon = CEntityFactory::getSingletonPtr()->getInfo(strWeapon);
 				
 			//_graphicsEntities[i]._graphicsEntity = createGraphicsEntity(weapon, entityInfo->getStringAttribute(weapon+"Model"));
 			_graphicsEntities[current].defaultYaw = _graphicsEntities[current].defaultPitch = _graphicsEntities[current].defaultRoll = 0;
-			if(entityInfo->hasAttribute(weapon+"ModelYaw"))
-				_graphicsEntities[current].defaultYaw = entityInfo->getFloatAttribute(weapon+"ModelYaw");
-			if(entityInfo->hasAttribute(weapon+"ModelPitch"))
-				_graphicsEntities[current].defaultPitch = entityInfo->getFloatAttribute(weapon+"ModelPitch");
-			if(entityInfo->hasAttribute(weapon+"ModelRoll"))
-				_graphicsEntities[current].defaultPitch = entityInfo->getFloatAttribute(weapon+"ModelRoll");
+			if(weapon->hasAttribute("ModelYaw"))
+				_graphicsEntities[current].defaultYaw = weapon->getFloatAttribute("ModelYaw");
+			if(weapon->hasAttribute("ModelPitch"))
+				_graphicsEntities[current].defaultPitch = weapon->getFloatAttribute("ModelPitch");
+			if(weapon->hasAttribute("ModelRoll"))
+				_graphicsEntities[current].defaultPitch = weapon->getFloatAttribute("ModelRoll");
 				
 			//Esto puede petar si no esta, pero creo q es obligatorio
-			if(!entityInfo->hasAttribute(weapon+"Offset"))
+			if(!weapon->hasAttribute("Offset"))
 				assert("seguro que no tiene offset?");
 
-			_graphicsEntities[current].offset = entityInfo->getVector3Attribute(weapon+"Offset");
+			_graphicsEntities[current].offset = weapon->getVector3Attribute("Offset");
 				
 			
 			// Ahora voy a crear los overlays por cada arma en 3D
 
 			Graphics::CServer *server = Graphics::CServer::getSingletonPtr();
 
-			_overlayWeapon3D[current] = server->createOverlay( "_overlay3D"+currentOnText, _scene );
-			std::string modelWeapon = entityInfo->getStringAttribute("weapon"+currentOnText+"Model");			
+			_overlayWeapon3D[current] = server->createOverlay( "_overlay3D"+strWeapon, _scene );
+			std::string modelWeapon = weapon->getStringAttribute("Model");			
 			
-			_graphicsEntities[current].graphicsEntity = _overlayWeapon3D[current]->add3D(currentOnText, modelWeapon,_graphicsEntities[current].offset);
+			_graphicsEntities[current].graphicsEntity = _overlayWeapon3D[current]->add3D(strWeapon, modelWeapon,_graphicsEntities[current].offset);
 			assert(_graphicsEntities[current].graphicsEntity != 0 && "error al cargar la entidad grafica");
 			//_weaponsEntities[current] = _overlayWeapon3D[current]->add3D(currentOnText, modelWeapon, &offsetPositionWeapon);
 
@@ -216,13 +214,13 @@ namespace Logic {
 		// Usamos un pequeño truco para calcular a la velocidad a la que tiene que incrementar
 		// el ruido de carga
 		// Primero obtenemos el tiempo máximo de carga del Iron Hell Goat
-		Map::CEntity* info = CEntityFactory::getSingletonPtr()->getInfo("Screamer");
-		assert( info->hasAttribute("weaponironHellGoatPrimaryFireLoadTime") );
+		Map::CEntity* info = CEntityFactory::getSingletonPtr()->getInfo("ironHellGoat");
+		assert( info->hasAttribute("PrimaryFireLoadTime") );
 
 		// Una vez conocido el tiempo de carga, como sabemos que vamos a utilizar fixed ticks
 		// de 16 msecs, calculamos cuantos ticks van a pasar (aproximadamente) hasta que se
 		// tiene el arma cargada.
-		unsigned int nbTicks = (info->getIntAttribute("weaponironHellGoatPrimaryFireLoadTime") * 1000) / 16;
+		unsigned int nbTicks = (info->getIntAttribute("PrimaryFireLoadTime") * 1000) / 16;
 
 		// Calculamos el incremento de la velocidad distribuyendola uniformemente entre los
 		// ticks de carga
