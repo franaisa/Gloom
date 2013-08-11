@@ -1,0 +1,36 @@
+system sniperPrimaryShoot
+{
+    technique 
+    {
+        material                                ParticleUniverse/Lightning
+        default_particle_width                  1.05
+        default_particle_height                 0
+        renderer                                Billboard
+        {
+            billboard_type                      oriented_shape
+            billboard_origin                    bottom_center
+        }
+        emitter                                 Line 
+        {
+            emission_rate                       100
+            time_to_live                        0.2
+            velocity                            500
+            direction                           0 0 0
+            end                                 33 9 0
+            min_increment                       1.5
+            max_increment                       4.5
+            max_deviation                       0.3
+        }
+        affector                                Line 
+        {
+            max_deviation                       2
+            time_step                           30
+            end                                 45 9 0
+            drift                               30
+        }
+        affector                                Align 
+        {
+            resize                              true
+        }
+    }
+}

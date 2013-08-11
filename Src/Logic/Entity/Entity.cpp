@@ -89,6 +89,10 @@ namespace Logic {
 			_position = entityInfo->getVector3Attribute("position");
 		}
 
+		if(entityInfo->hasAttribute("rotation")) {
+			_orientation = entityInfo->getQuaternionAttribute("rotation");
+		}
+
 		if(entityInfo->hasAttribute("yaw")) {
 			_orientation = Math::fromDegreesToQuaternion(entityInfo->getFloatAttribute("yaw"),Vector3(0,1,0));
 		}
@@ -150,6 +154,10 @@ namespace Logic {
 				continue;
 			it->second.componentPtr->activate();
 			_activated = it->second.componentPtr->isActivated() && _activated;
+
+			if(!_activated)
+				std::cout << "algun componente no se ha activado " << it->first << std::endl;
+
 		}
 
 		return _activated;

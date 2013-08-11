@@ -51,16 +51,18 @@ namespace Logic {
 	//__________________________________________________________________
 	
 	bool CSoulReaper::spawn(CEntity* entity, CMap *map, const Map::CEntity *entityInfo) {
-		if(!IWeapon::spawn(entity,map,entityInfo)) return false;
+		Map::CEntity* weapon = CEntityFactory::getSingletonPtr()->getInfo(_weaponName);
+
+		if( !IWeapon::spawn(entity, map, weapon) ) return false;
 
 		
-		_shotsDistanceSecondaryFire = entityInfo->getFloatAttribute(_weaponName + "ShotsDistanceSecondaryFire");
+		_shotsDistanceSecondaryFire = weapon->getFloatAttribute("ShotsDistanceSecondaryFire");
 
-		_shotsDistance = entityInfo->getFloatAttribute(_weaponName + "ShotsDistance");
+		_shotsDistance = weapon->getFloatAttribute("ShotsDistance");
 
-		_defaultPrimaryFireDamage = _primaryFireDamage = entityInfo->getFloatAttribute(_weaponName + "PrimaryFireDamage");
+		_defaultPrimaryFireDamage = _primaryFireDamage = weapon->getFloatAttribute("PrimaryFireDamage");
 
-		_defaultPrimaryFireCooldown = _primaryFireCooldown = entityInfo->getFloatAttribute(_weaponName+"PrimaryFireCooldown") * 1000;
+		_defaultPrimaryFireCooldown = _primaryFireCooldown = weapon->getFloatAttribute("PrimaryFireCooldown") * 1000;
 
 
 		return true;

@@ -16,12 +16,15 @@ Contiene la implementación del componente que gestiona las armas y que administr
 #include "Physics/Server.h"
 #include "Physics/RaycastHit.h"
 #include "Logic/Server.h"
-#include "Logic/Maps/Map.h"
 #include "Logic/Entity/Components/Graphics.h"
-#include "Map/MapEntity.h"
 #include "HudWeapons.h"
 #include "Graphics/Server.h"
 #include "Graphics/Scene.h"
+
+#include "Logic/Maps/EntityFactory.h"
+#include "Logic/Maps/Map.h"
+#include "Logic/Server.h"
+#include "Map/MapEntity.h"
 
 #include "Logic/Messages/MessageDamaged.h"
 #include "Logic/Messages/MessageCreateParticle.h"
@@ -38,26 +41,28 @@ namespace Logic {
 	//-------------------------------------------------------
 
 	bool CSniper::spawn(CEntity* entity, CMap *map, const Map::CEntity *entityInfo) {
-		if(!IWeapon::spawn(entity,map,entityInfo)) return false;
+		Map::CEntity* weapon = CEntityFactory::getSingletonPtr()->getInfo(_weaponName);
 
-		if(entityInfo->hasAttribute(_weaponName+"MaxExpansiveDistance"))
-			_maxExpansiveDistance = entityInfo->getFloatAttribute(_weaponName+"MaxExpansiveDistance");
+		if( !IWeapon::spawn(entity, map, weapon) ) return false;
 
-		if(entityInfo->hasAttribute(_weaponName+"AmmoSpentPerSecondaryShot"))
-			_secondaryConsumeAmmo = entityInfo->getIntAttribute(_weaponName+"AmmoSpentPerSecondaryShot");
+		if(weapon->hasAttribute("MaxExpansiveDistance"))
+			_maxExpansiveDistance = weapon->getFloatAttribute("MaxExpansiveDistance");
+
+		if(weapon->hasAttribute("AmmoSpentPerSecondaryShot"))
+			_secondaryConsumeAmmo = weapon->getIntAttribute("AmmoSpentPerSecondaryShot");
 		
-		if( entityInfo->hasAttribute(_weaponName + "ShotsDistance") )
-			_shotsDistance = entityInfo->getFloatAttribute(_weaponName + "ShotsDistance");
+		if( weapon->hasAttribute("ShotsDistance") )
+			_shotsDistance = weapon->getFloatAttribute("ShotsDistance");
 
-		_defaultPrimaryFireCooldown = _primaryFireCooldown = entityInfo->getFloatAttribute(_weaponName+"PrimaryFireCooldown") * 1000;
+		_defaultPrimaryFireCooldown = _primaryFireCooldown = weapon->getFloatAttribute("PrimaryFireCooldown") * 1000;
 
-		_defaultPrimaryFireDamage = _primaryFireDamage = entityInfo->getFloatAttribute(_weaponName + "PrimaryFireDamage");
+		_defaultPrimaryFireDamage = _primaryFireDamage = weapon->getFloatAttribute("PrimaryFireDamage");
 
-		_defaultSecondaryFireCooldown = _secondaryFireCooldown = entityInfo->getFloatAttribute(_weaponName+"SecondaryFireCooldown") * 1000;
+		_defaultSecondaryFireCooldown = _secondaryFireCooldown = weapon->getFloatAttribute("SecondaryFireCooldown") * 1000;
 
-		_defaultSecondaryFireDamage = _secondaryFireDamage = entityInfo->getFloatAttribute(_weaponName + "SecondaryFireDamage");
+		_defaultSecondaryFireDamage = _secondaryFireDamage = weapon->getFloatAttribute("SecondaryFireDamage");
 
-		_burnedIncrementPercentageDamage = entityInfo->getFloatAttribute(_weaponName + "BurnedIncrementPercentageDamage") / 100;
+		_burnedIncrementPercentageDamage = weapon->getFloatAttribute("BurnedIncrementPercentageDamage") / 100;
 
 		return true;
 	} // spawn

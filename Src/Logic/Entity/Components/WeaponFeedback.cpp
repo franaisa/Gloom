@@ -15,13 +15,14 @@
 
 // Mapa
 #include "Map/MapEntity.h"
-
+#include "Logic/Maps/EntityFactory.h"
 // Mensajes
 #include "Logic/Messages/MessageAudio.h"
 #include "Logic/Messages/MessageHudWeapon.h"
 #include "Logic/Messages/MessagePrimaryShoot.h"
 #include "Logic/Messages/MessageSecondaryShoot.h"
 #include "Logic/Messages/MessageBlockShoot.h"
+#include "Logic/Messages/MessageCreateParticle.h"
 
 // Graficos
 // @deprecated Ogre no deberia estar acoplado a la logica
@@ -35,7 +36,7 @@ using namespace std;
 
 namespace Logic {
 	
-	IWeaponFeedback::IWeaponFeedback(const string& weaponName) : _weaponName("weapon" + weaponName),
+	IWeaponFeedback::IWeaponFeedback(const string& weaponName) : _weaponName(weaponName),
 																 _ableToShoot(true),
 																 _primaryFireIsActive(false),
 																 _secondaryFireIsActive(false) {
@@ -53,7 +54,26 @@ namespace Logic {
 	bool IWeaponFeedback::spawn(CEntity *entity, CMap *map, const Map::CEntity *entityInfo) {
 		if( !IComponent::spawn(entity,map,entityInfo) ) return false;
 
-		_weaponSound = entityInfo->getStringAttribute(_weaponName+"Audio");
+		
+		
+		Map::CEntity *tempEntity = CEntityFactory::getSingletonPtr()->getInfo(_weaponName);
+		_weaponSound = tempEntity->getStringAttribute("Audio");
+
+		if(tempEntity->hasAttribute("PrimaryFireParticle"))
+			_primaryFireParticle = tempEntity->getStringAttribute("PrimaryFireParticle");
+		else
+			_primaryFireParticle = "fogonazo";
+
+		if(tempEntity->hasAttribute("SecondaryFireParticle"))
+			_secondaryFireParticle = tempEntity->getStringAttribute("SecondaryFireParticle");
+		else
+			_secondaryFireParticle = "fogonazo";
+		
+		if(tempEntity->hasAttribute("ParticlePosition"))
+			_particlePosition = tempEntity->getVector3Attribute("ParticlePosition");
+		else
+			_particlePosition = Vector3(6, 5, 6);
+
 
 		_hudWeapon = _entity->getComponent<CHudWeapons>("CHudWeapons");
 		assert(_hudWeapon != NULL && "Error: El cliente necesita tener un componente de grafico del arma");
@@ -85,6 +105,7 @@ namespace Logic {
 					if( primaryShootMsg->getShoot() ) {
 						primaryFire();
 						_primaryFireIsActive = true;
+						emitParticle(true);
 					}
 					else {
 						stopPrimaryFire();
@@ -101,6 +122,7 @@ namespace Logic {
 					if( secondaryShootMsg->getShoot() ) {
 						secondaryFire();
 						_secondaryFireIsActive = true;
+						emitParticle(false);
 					}
 					else {
 						stopSecondaryFire();
@@ -177,6 +199,30 @@ namespace Logic {
 			}
 		}
 	} // decals
+
+	void IWeaponFeedback::emitParticle(bool primaryShoot){
+		std::shared_ptr<CMessageCreateParticle> particleMsg = std::make_shared<CMessageCreateParticle>();
+		particleMsg->setParticle( primaryShoot?_primaryFireParticle:_secondaryFireParticle );
+
+		Vector3 particlePosition = _entity->getPosition();
+		particlePosition.y += _heightShoot;
+		//std::cout << "posicionOrig = " << position2 << std::endl;
+
+
+		Vector3 orientation= _entity->getOrientation()*Vector3::NEGATIVE_UNIT_Z;
+		orientation.normalise();
+		/*
+		float fOffset = 8.0f;
+		orientation *= fOffset;
+		particlePosition += orientation;
+		/*/
+		orientation *= _particlePosition;
+		particlePosition += orientation;
+		/* */
+
+		particleMsg->setPosition(particlePosition);
+		_entity->emitMessage(particleMsg);
+	}
 
 } // namespace Logic
 

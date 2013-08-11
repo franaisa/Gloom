@@ -44,27 +44,28 @@ namespace Logic {
 	//________________________________________________
 
 	bool CShotGun::spawn(CEntity* entity, CMap *map, const Map::CEntity *entityInfo){
-		if(!IWeapon::spawn(entity, map, entityInfo))
-			return false;
+		Map::CEntity* weapon = CEntityFactory::getSingletonPtr()->getInfo(_weaponName);
+
+		if( !IWeapon::spawn(entity, map, weapon) ) return false;
 
 		// Nos aseguramos de tener todos los parametros que necesitamos
-		assert( entityInfo->hasAttribute(_weaponName+"ShootForce") );
-		assert( entityInfo->hasAttribute(_weaponName+"ProjectileRadius") );
-		assert( entityInfo->hasAttribute(_weaponName+"PrimaryFireDispersion") );
-		assert( entityInfo->hasAttribute(_weaponName+"DamageBurned") );
-		assert( entityInfo->hasAttribute(_weaponName+"PrimaryFireCooldown") );
-		assert( entityInfo->hasAttribute(_weaponName+"NumberOfShots") );
+		assert( weapon->hasAttribute("ShootForce") );
+		assert( weapon->hasAttribute("ProjectileRadius") );
+		assert( weapon->hasAttribute("PrimaryFireDispersion") );
+		assert( weapon->hasAttribute("DamageBurned") );
+		assert( weapon->hasAttribute("PrimaryFireCooldown") );
+		assert( weapon->hasAttribute("NumberOfShots") );
 
-		assert( entityInfo->hasAttribute(_weaponName + "PrimaryFireDamage") );
+		assert( weapon->hasAttribute("PrimaryFireDamage") );
 
 		// Leemos los atributos
-		_projectileShootForce = entityInfo->getFloatAttribute(_weaponName + "ShootForce");
-		_projectileRadius = entityInfo->getFloatAttribute(_weaponName + "ProjectileRadius");
-		_dispersionAngle  = entityInfo->getFloatAttribute(_weaponName+"PrimaryFireDispersion");
-		_damageBurned = entityInfo->getFloatAttribute(_weaponName+"DamageBurned");
-		_defaultPrimaryFireCooldown = _primaryFireCooldown = entityInfo->getFloatAttribute(_weaponName+"PrimaryFireCooldown") * 1000;
-		_numberOfShots = entityInfo->getIntAttribute(_weaponName+"NumberOfShots");
-		_defaultPrimaryFireDamage = _primaryFireDamage = entityInfo->getFloatAttribute(_weaponName + "PrimaryFireDamage");
+		_projectileShootForce = weapon->getFloatAttribute("ShootForce");
+		_projectileRadius = weapon->getFloatAttribute("ProjectileRadius");
+		_dispersionAngle  = weapon->getFloatAttribute("PrimaryFireDispersion");
+		_damageBurned = weapon->getFloatAttribute("DamageBurned");
+		_defaultPrimaryFireCooldown = _primaryFireCooldown = weapon->getFloatAttribute("PrimaryFireCooldown") * 1000;
+		_numberOfShots = weapon->getIntAttribute("NumberOfShots");
+		_defaultPrimaryFireDamage = _primaryFireDamage = weapon->getFloatAttribute("PrimaryFireDamage");
 
 		return true;
 	}// spawn

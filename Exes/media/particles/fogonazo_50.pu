@@ -1,0 +1,44 @@
+system fogonazo
+{
+    technique 
+    {
+        position                                0 -12 0
+        visual_particle_quota                   40
+        emitted_emitter_quota                   40
+        material                                PUMediaPack/Ring_14
+        default_particle_width                  0.3
+        default_particle_height                 0.3
+        renderer                                Billboard
+        {
+            common_direction                    0 1 0
+            common_up_vector                    0 0 1
+        }
+        emitter                                 Point wooshEmitter
+        {
+            emission_rate                       100
+            angle                               179
+            time_to_live                        0.2
+            duration                            0.2
+            direction                           0 0 0
+            force_emission                      true
+        }
+        affector                                Scale 
+        {
+            xyz_scale                           300
+            since_start_system                  true
+        }
+        affector                                Colour 
+        {
+            time_colour                         0    1 0.5 0 1
+            time_colour                         0.5  1 1 0.1 1
+            time_colour                         1    0 0 0 0
+            colour_operation                    multiply
+        }
+        observer                                OnClear 
+        {
+            handler                             DoStopSystem 
+            {
+            }
+        }
+    }
+}

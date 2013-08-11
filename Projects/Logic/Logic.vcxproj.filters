@@ -559,9 +559,6 @@
     <ClCompile Include="..\..\Src\Logic\Entity\Components\PlayerInterpolator.cpp">
       <Filter>Entity\Components\Network\Source</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Src\Logic\Entity\Components\MovementSanpshot.cpp">
-      <Filter>Entity\Components\Network\Source</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Src\Logic\Messages\MessageChangeGravity.cpp">
       <Filter>Messages\Source</Filter>
     </ClCompile>
@@ -756,6 +753,12 @@
     </ClCompile>
     <ClCompile Include="..\..\Src\Logic\Messages\MessageBlockShoot.cpp">
       <Filter>Messages\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\Bite.cpp">
+      <Filter>Entity\Components\Skills\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\MovementSnapshot.cpp">
+      <Filter>Entity\Components\Network\Source</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1370,6 +1373,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Messages\MessageBlockShoot.h">
       <Filter>Messages\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\Bite.h">
+      <Filter>Entity\Components\Skills\Header</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

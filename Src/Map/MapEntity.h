@@ -138,6 +138,8 @@ namespace Map
 		*/
 		const Vector3 getVector3Attribute(const std::string &attr) const;
 
+		const Quaternion getQuaternionAttribute(const std::string &attr) const;
+
 		/**
 		Devuelve un string con el tipo de la entidad.
 

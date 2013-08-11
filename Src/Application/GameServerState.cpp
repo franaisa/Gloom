@@ -342,6 +342,14 @@ namespace Application {
 				_netMgr->sendTo(playerNetId, ackBuffer.getbuffer(), ackBuffer.getSize());
 				break;
 			}
+			case Net::LOCAL_PLAYER_LOADED:
+			{
+				Logic::TEntityID id;
+				inBuffer.deserialize(id);
+				Logic::CEntity* player = _map->getEntityByID(id);
+				player->activate();
+				player->start();
+			}
 		}
 
 	} // dataPacketReceived

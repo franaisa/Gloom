@@ -53,9 +53,11 @@ namespace Logic {
 	bool CMiniGunFeedback::spawn(CEntity* entity, CMap *map, const Map::CEntity *entityInfo) {
 		if( !IWeaponFeedback::spawn(entity, map, entityInfo) ) return false;
 
-		_defaultPrimaryFireCooldown = _primaryFireCooldown = entityInfo->getFloatAttribute(_weaponName + "PrimaryFireCooldown") * 1000;
+		Map::CEntity* weapon = CEntityFactory::getSingletonPtr()->getInfo(_weaponName);
 
-		_dispersionOriginal = _dispersion = entityInfo->getFloatAttribute(_weaponName+"PrimaryFireDispersion");
+		_defaultPrimaryFireCooldown = _primaryFireCooldown = weapon->getFloatAttribute("PrimaryFireCooldown") * 1000;
+
+		_dispersionOriginal = _dispersion = weapon->getFloatAttribute("PrimaryFireDispersion");
 		
 		return true;
 	}

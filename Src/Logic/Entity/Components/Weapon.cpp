@@ -17,6 +17,7 @@ a todas las armas.
 
 // Mapa
 #include "Map/MapEntity.h"
+#include "Logic/Maps/EntityFactory.h"
 
 // Mensajes
 #include "Logic/Messages/MessageControl.h"
@@ -45,7 +46,7 @@ using namespace std;
 
 namespace Logic {
 	
-	IWeapon::IWeapon(const string& weaponName) : _weaponName("weapon" + weaponName),
+	IWeapon::IWeapon(const string& weaponName) : _weaponName(weaponName),
 												 _ableToShoot(true),
 												 _currentAmmo(0) {
 		// Nada que inicializar
@@ -63,16 +64,21 @@ namespace Logic {
 		if( !IComponent::spawn(entity,map,entityInfo) ) return false;
 
 		// Comprobamos que los atributos obligatorios existen
-		assert( entityInfo->hasAttribute(_weaponName + "MaxAmmo") );
-		assert( entityInfo->hasAttribute(_weaponName + "ID") );
-		assert( entityInfo->hasAttribute("physic_radius") );
-		assert( entityInfo->hasAttribute("heightShoot") );
+		assert( entityInfo->hasAttribute("MaxAmmo") );
+		assert( entityInfo->hasAttribute("ID") );
+		
 
 		// Leemos los atributos obligatorios de arma
-		_weaponID = (WeaponType::Enum)entityInfo->getIntAttribute(_weaponName + "ID");
-		_maxAmmo = entityInfo->getIntAttribute(_weaponName + "MaxAmmo");
-		_capsuleRadius = entityInfo->getFloatAttribute("physic_radius");
-		_heightShoot = entityInfo->getFloatAttribute("heightShoot");
+		_weaponID = (WeaponType::Enum)entityInfo->getIntAttribute("ID");
+
+		
+		Map::CEntity* myEntityInfo = CEntityFactory::getSingletonPtr()->getInfo(_entity->getType());
+
+		_maxAmmo = entityInfo->getIntAttribute("MaxAmmo");
+		assert( myEntityInfo->hasAttribute("physic_radius") );
+		assert( myEntityInfo->hasAttribute("heightShoot") );
+		_capsuleRadius = myEntityInfo->getFloatAttribute("physic_radius");
+		_heightShoot = myEntityInfo->getFloatAttribute("heightShoot");
 		
 		
 		return true;
@@ -212,7 +218,7 @@ namespace Logic {
 
 	void IWeapon::particles()
 	{
-		std::cout << "particula" << std::endl;
+		//std::cout << "particula" << std::endl;
 		std::shared_ptr<CMessageCreateParticle> particleMsg = std::make_shared<CMessageCreateParticle>();
 		particleMsg->setParticle("ShootParticle2");
 
@@ -220,16 +226,13 @@ namespace Logic {
 		position2.y += _heightShoot;
 		//std::cout << "posicionOrig = " << position2 << std::endl;
 
-		
 		float fOffset = 8.0f;
 		Vector3 orientation= _entity->getOrientation()*Vector3::NEGATIVE_UNIT_Z;
 		orientation.normalise();
 		orientation *= fOffset;
 		//std::cout << "orientacion = " << orientation << std::endl;
-
 		position2 += orientation;
 		//std::cout << "posicion NUEVA = " << position2 << std::endl;
-
 		particleMsg->setPosition(position2);
 		//Vector3 dir(0,0,0);
 		//particleMsg->setDirectionWithForce(dir);
