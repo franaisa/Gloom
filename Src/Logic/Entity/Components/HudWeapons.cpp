@@ -33,6 +33,7 @@ gráfica de la entidad.
 #include "Logic/Messages/MessageTransform.h"
 #include "Logic/Messages/MessageChangeWeaponGraphics.h"
 #include "Logic/Messages/MessageHudDebugData.h"
+#include "Logic/Messages/MessageBlockShoot.h"
 
 #include <stdio.h>
 #include <windows.h>
@@ -264,7 +265,7 @@ namespace Logic {
 	void CHudWeapons::process(const std::shared_ptr<CMessage>& message) {
 		switch( message->getMessageType() ) {
 			case Message::CHANGE_WEAPON_GRAPHICS: {
-				std::shared_ptr<CMessageChangeWeaponGraphics> chgWpnMsg = std::static_pointer_cast<CMessageChangeWeaponGraphics>(message);
+				std::shared_ptr<CMessageChangeWeaponGraphics> chgWpnMsg = static_pointer_cast<CMessageChangeWeaponGraphics>(message);
 				changeWeapon( chgWpnMsg->getWeapon() );
 				break;
 			}
@@ -274,9 +275,9 @@ namespace Logic {
 	//________________________________________________________________________
 
 	void CHudWeapons::changeWeapon(int newWeapon) {
-		/*_overlayWeapon3D[_currentWeapon]->setVisible(false);
-		_overlayWeapon3D[newWeapon]->setVisible(true);
-		_currentWeapon = newWeapon;*/
+		shared_ptr<CMessageBlockShoot> lockWeaponsMsg = make_shared<CMessageBlockShoot>();
+		lockWeaponsMsg->canShoot(false);
+		_entity->emitMessage(lockWeaponsMsg);
 
 		_chgWpnAnim.nextWeapon = newWeapon;
 
@@ -463,6 +464,10 @@ namespace Logic {
 		else if(_chgWpnAnim.x < 0.0f) {
 			_changingWeapon = false;
 			_chgWpnAnim.offset = Vector3::ZERO;
+
+			shared_ptr<CMessageBlockShoot> lockWeaponsMsg = make_shared<CMessageBlockShoot>();
+			lockWeaponsMsg->canShoot(true);
+			_entity->emitMessage(lockWeaponsMsg);
 		}
 	}
 
