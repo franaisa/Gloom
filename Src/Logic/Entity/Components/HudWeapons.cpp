@@ -13,6 +13,8 @@ gráfica de la entidad.
 
 #include "HudWeapons.h"
 
+#include "BaseSubsystems/Euler.h"
+
 // Logica
 #include "Logic/Entity/Entity.h"
 #include "Logic/Maps/Map.h"
@@ -32,8 +34,6 @@ gráfica de la entidad.
 #include "Logic/Messages/MessageChangeWeaponGraphics.h"
 #include "Logic/Messages/MessageHudDebugData.h"
 
-#include "Graphics/HHFXParticle.h"
-
 #include <stdio.h>
 #include <windows.h>
 
@@ -47,10 +47,12 @@ namespace Logic {
 	
 	CHudWeapons::CHudWeapons() : _currentWeapon(0), 
 								 _graphicsEntities(0),
+								 _changingWeapon(false),
 								 _playerIsWalking(false),
 								 _playerIsLanding(false),
 								 _loadingWeapon(false),
 								 _continouslyShooting(false),
+								 _threePiQuarters(3 * Math::PI / 4.0f),
 								 _playerIsFalling(false) {
 
 		// Valores de configuracion de la animacion de correr
@@ -108,6 +110,14 @@ namespace Logic {
 
 		_rapidShootAnim.firingRate = 20;
 		_rapidShootAnim.acumFiringTime = 0;
+
+		// Valores de configuracion de la animacion de cambio de arma
+		_chgWpnAnim.sineOffset = 0.5f;
+		_chgWpnAnim.xSpeed = 0.022f;
+		_chgWpnAnim.x = 0.0f;
+		_chgWpnAnim.horizontalSpeed = 0.8f;
+		_chgWpnAnim.offset = Vector3::ZERO;
+		_chgWpnAnim.takingAway = false;
 
 		// Valores de configuración de la animación de salto
 		_fallAnim.currentHorizontalPos = 0.0f;
@@ -267,13 +277,21 @@ namespace Logic {
 		_overlayWeapon3D[_currentWeapon]->setVisible(false);
 		_overlayWeapon3D[newWeapon]->setVisible(true);
 		_currentWeapon = newWeapon;
+
+		_changingWeapon = true;
+		_chgWpnAnim.offset = Vector3::ZERO;
+		_chgWpnAnim.x = 0.0f;
+		_chgWpnAnim.takingAway = true;
 	}
 
 	//________________________________________________________________________
 
 	void CHudWeapons::onFixedTick(unsigned int msecs) {
 		_graphicsEntities[_currentWeapon].graphicsEntity->setVisible(true);
-		if(_playerIsLanding)
+		if(_changingWeapon) {
+			changeWeaponAnim(msecs);
+		}
+		else if(_playerIsLanding)
 			landAnim(msecs);
 		else if(_playerIsWalking)
 			walkAnim(msecs);
@@ -299,6 +317,7 @@ namespace Logic {
 			_rapidShootAnim.currentVerticalPos *= _rapidShootAnim.recoveryCoef;
 		}
 		_graphicsEntities[_currentWeapon].graphicsEntity->setPosition( _graphicsEntities[_currentWeapon].defaultPos + 
+																	   _chgWpnAnim.offset +
 																	   _runAnim.offset + 
 																	   _landAnim.offset +
 																	   _idleAnim.offset +
@@ -397,6 +416,49 @@ namespace Logic {
 
 		_rapidShootAnim.offset.y = sineStep(msecs, _rapidShootAnim.currentVerticalPos, 
 			_rapidShootAnim.verticalOffset, _rapidShootAnim.verticalSpeed);
+	}
+
+	//________________________________________________________________________
+
+	void CHudWeapons::changeWeaponAnim(unsigned int msecs) {
+		// Rotamos la orientacion del arma ligeramente para que parezca que la 
+		// enfundamos
+		Euler euler( _graphicsEntities[_currentWeapon].graphicsEntity->getOrientation() );
+		euler.yaw( Ogre::Radian( Math::PI / 8.0f) );
+
+		// Calculamos el desplazamiento sobre el eje x para la ecuacion lineal
+		// construida para el seno
+		if(_chgWpnAnim.takingAway)
+			_chgWpnAnim.x += _chgWpnAnim.xSpeed * msecs;
+		else
+			_chgWpnAnim.x -= _chgWpnAnim.xSpeed * msecs;
+
+		// Desplazamos sobre la horizontal el arma
+		_chgWpnAnim.offset = euler.toQuaternion() * Vector3::NEGATIVE_UNIT_Z;
+		_chgWpnAnim.offset.normalise();
+		_chgWpnAnim.offset *= -_chgWpnAnim.x * _chgWpnAnim.horizontalSpeed * Vector3(1.0f, 0.0f, 1.0f);
+
+		// Desplazamos sobre la vertical el arma en base a la ecuacion precalculada
+        if (_chgWpnAnim.x < _threePiQuarters) {
+			// Si aun no hemos acabado de dibujar la curva del seno, calcular la
+			// proxima posicion para la y dada esta x
+			_chgWpnAnim.offset.y = sin(_chgWpnAnim.x) * _chgWpnAnim.sineOffset;
+        }
+        else {
+			// Esta es la ecuacion que describe una recta que pasa por el punto
+			// Seno(3PI/4) * k (con K el offset del seno) y el punto Seno(PI).
+
+            // Ecuacion de la recta pre-calculada
+			_chgWpnAnim.offset.y = (-0.9003163162f * _chgWpnAnim.sineOffset) * (_chgWpnAnim.x - Math::PI);
+        }
+
+		if(_chgWpnAnim.takingAway && _chgWpnAnim.x > 6.0f) {
+			_chgWpnAnim.takingAway = false;
+		}
+		else if(_chgWpnAnim.x < 0.0f) {
+			_changingWeapon = false;
+			_chgWpnAnim.offset = Vector3::ZERO;
+		}
 	}
 
 	//________________________________________________________________________

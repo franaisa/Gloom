@@ -117,6 +117,8 @@ namespace Logic {
 		*/
 		void walkAnim(unsigned int msecs);
 
+		void changeWeaponAnim(unsigned int msecs);
+
 		void landAnim(unsigned int msecs);
 
 		void idleAnim(unsigned int msecs);
@@ -166,6 +168,7 @@ namespace Logic {
 		bool _loadingWeapon;
 		bool _continouslyShooting;
 		bool _playerIsFalling;
+		bool _changingWeapon;
 
 		/**
 		Estructura donde se guardara el offset y las modificaciones en el arma
@@ -288,11 +291,20 @@ namespace Logic {
 		//__________________________________________________________________
 
 		struct ChangeWeaponAnim {
+			float sineOffset;
+			float xSpeed;
+			float x;
+
+			float horizontalSpeed;
+
+			bool takingAway;
+
 			Vector3 offset;
 		};
 
 		//__________________________________________________________________
 
+		ChangeWeaponAnim _chgWpnAnim;
 		RunAnim _runAnim;
 		LandAnim _landAnim;
 		IdleAnim _idleAnim;
@@ -304,6 +316,7 @@ namespace Logic {
 		//////////////////////Gestion de armas
 		Graphics::COverlay *_overlayWeapon3D[WeaponType::eSIZE];
 
+		float _threePiQuarters;
 
 		Quaternion _halfPi;
 	}; // class CGraphics
