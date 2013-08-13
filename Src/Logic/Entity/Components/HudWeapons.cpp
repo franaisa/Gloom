@@ -274,12 +274,13 @@ namespace Logic {
 	//________________________________________________________________________
 
 	void CHudWeapons::changeWeapon(int newWeapon) {
-		_overlayWeapon3D[_currentWeapon]->setVisible(false);
+		/*_overlayWeapon3D[_currentWeapon]->setVisible(false);
 		_overlayWeapon3D[newWeapon]->setVisible(true);
-		_currentWeapon = newWeapon;
+		_currentWeapon = newWeapon;*/
+
+		_chgWpnAnim.nextWeapon = newWeapon;
 
 		_changingWeapon = true;
-		_chgWpnAnim.offset = Vector3::ZERO;
 		_chgWpnAnim.x = 0.0f;
 		_chgWpnAnim.takingAway = true;
 	}
@@ -454,6 +455,10 @@ namespace Logic {
 
 		if(_chgWpnAnim.takingAway && _chgWpnAnim.x > 6.0f) {
 			_chgWpnAnim.takingAway = false;
+			
+			_overlayWeapon3D[_currentWeapon]->setVisible(false);
+			_overlayWeapon3D[_chgWpnAnim.nextWeapon]->setVisible(true);
+			_currentWeapon = _chgWpnAnim.nextWeapon;
 		}
 		else if(_chgWpnAnim.x < 0.0f) {
 			_changingWeapon = false;

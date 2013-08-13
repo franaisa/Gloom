@@ -299,6 +299,8 @@ namespace Logic {
 
 			bool takingAway;
 
+			int nextWeapon;
+
 			Vector3 offset;
 		};
 
