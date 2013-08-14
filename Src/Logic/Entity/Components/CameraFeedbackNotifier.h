@@ -16,7 +16,7 @@ del Screamer.
 #define __Logic_CameraFeedbackNotifier_H
 
 #include "Logic/Entity/Component.h"
-
+#include "AvatarController.h"
 
 namespace Graphics {
 	class CScene;
@@ -25,7 +25,6 @@ namespace Graphics {
 namespace Logic {
 	class CCamera;
 	class CHudWeapons;
-	class CAvatarController;
 }
 
 namespace Logic {
@@ -38,7 +37,7 @@ namespace Logic {
 	@date Abril, 2013
 	*/
 	
-	class CCameraFeedbackNotifier : public IComponent {
+	class CCameraFeedbackNotifier : public IComponent, public CAvatarController::IObserver {
 		DEC_FACTORY(CCameraFeedbackNotifier);
 	public:
 
@@ -99,6 +98,29 @@ namespace Logic {
 
 		//__________________________________________________________________
 
+		// Al aterrizar
+		virtual void onLand();
+		// Al andar (tienes que tocar suelo)
+		virtual void onWalk();
+		// Al saltar (tienes que tocar suelo)
+		virtual void onJump()	{ }
+		// Al esquivar (tienes que tocar suelo)
+		virtual void onDodge()	{ }
+		// Al parar (tienes que tocar suelo)
+		virtual void onIdle();
+		// Al estar en el aire - jumper o caida
+		virtual void onAir();
+
+		// Se llama para indicar si tocamos la pared
+		// Al entrar en contacto y dejar de contactar
+		virtual void sideCollision(bool contacting);
+		// Se llama para indicar si tocamos el techo
+		// Al entrar en contacto y dejar de contactar
+		virtual void topCollision(bool contacting)	{ }
+		// Se llama para indicar si tocamos el suelo
+		// Al entrar en contacto y dejar de contactar
+		virtual void downCollision(bool contacting)	{ }
+
 		/**
 		Este método debe ser usado por aquella entidad que cree a esta entidad,
 		para indicar que ésta última le pertenece.
@@ -113,9 +135,9 @@ namespace Logic {
 
 		void offsetRecovery(unsigned int msecs);
 
-		void playerIsTouchingGround(float hitForce);
+		//void playerIsTouchingGround(float hitForce);
 
-		void playerIsSideColliding(bool colliding, float force);
+		//void playerIsSideColliding(bool colliding, float force);
 
 		void playerIsFalling(bool falling, int direction = 0);
 
@@ -135,16 +157,6 @@ namespace Logic {
 
 	private:
 
-		/**
-		Emite el sonido pasado por parámetro.
-
-		@param soundName Nombre del archivo de audio que queremos reproducir.
-		@param loopSound true queremos reproducir el sonido en loop.
-		@param play3d true si queremos que el sonido se reproduzca en 3d.
-		@param streamSound true si queremos que el sonido se reproduzca en streaming. Util
-		para ficheros muy grandes como por ejemplo la música.
-		*/
-		void emitSound(const std::string &soundName, bool loopSound, bool play3d, bool streamSound, bool stopSound);
 
 		// =======================================================================
 		//                          MIEMBROS PRIVADOS
@@ -197,7 +209,7 @@ namespace Logic {
 		//______________________
 
 		float _maxVelocity;
-		Logic::CAvatarController* _avatarc;
+		CAvatarController* _avatarc;
 
 		bool _effectIsActivated;
 		std::string _effect, _motionblur, _flashEffect;

@@ -47,12 +47,14 @@ namespace Logic {
 
 	CAvatarController::CAvatarController() : _gravity(Vector3::ZERO),
 											 _touchingGround(false),
+											 _sideColliding(false),
+											 _collisionOnTop(false),
+											 _walking(false),
 											 _cameraFX(NULL),
 											 _physicController(0),
 											 _momentum(Vector3::ZERO),
 											 _displacementDir(Vector3::ZERO),
-											 _dodgeForce(Vector3::ZERO),
-											 _playingsound(0)
+											 _dodgeForce(Vector3::ZERO)
 	{
 		
 		//anti release
@@ -238,7 +240,7 @@ namespace Logic {
 		// Debido al reposicionamiento de la cápsula que hace PhysX, le seteamos un offset fijo
 		// al movernos para asegurarnos de que hay colision
 		Vector3 oldPosition = _entity->getPosition();
-		manageCollisions( _physicController->move(displacement-Vector3(0,0.15f,0), msecs), oldPosition );
+		manageCollisions( _physicController->move(displacement-Vector3(0.0f, 0.15f, 0.0f), msecs), oldPosition );
 	} // tick
 
 	//________________________________________________________________________
@@ -246,13 +248,22 @@ namespace Logic {
 	void CAvatarController::setCameraEffect() {
 		if(_cameraFX == NULL) return; // Por si se trata de un remote player
 
-		if(_touchingGround && _displacementDir != Vector3::ZERO) {
-			// Efecto de andar
-			_cameraFX->playerIsWalking(true, _displacementDir.x);
+		if(_touchingGround && !_walking && _displacementDir != Vector3::ZERO ) {
+			for(auto it = _observers.begin(); it != _observers.end(); ++it) {
+				(*it)->onWalk();
+			}
+
+			_walking = true;
 		}
-		else {
-			// Parar efecto de andar
-			_cameraFX->playerIsWalking(false);
+		else if(_touchingGround && _walking && _displacementDir == Vector3::ZERO) {
+			for(auto it = _observers.begin(); it != _observers.end(); ++it) {
+				(*it)->onIdle();
+			}
+
+			_walking = false;
+		}
+		else if(!_touchingGround) {
+			_walking = false;
 		}
 
 		_cameraFX->playerIsFalling(!_touchingGround, _displacementDir.x);
@@ -261,38 +272,65 @@ namespace Logic {
 	//________________________________________________________________________
 
 	void CAvatarController::manageCollisions(unsigned collisionFlags, Vector3 oldPosition) {
-		if(_touchingGround = collisionFlags & Physics::eCOLLISION_DOWN) {
-			// Colision con los pies detectada
-			if(_cameraFX != NULL)
-				_cameraFX->playerIsTouchingGround(_momentum.y);
+		// Comprobamos si estamos tocando suelo o caemos
+		if( !_touchingGround && (collisionFlags & Physics::eCOLLISION_DOWN) ) {
+			_touchingGround = true;
+			for(auto it = _observers.begin(); it != _observers.end(); ++it) {
+				(*it)->onLand();
+				(*it)->downCollision(_touchingGround);
+			}
 		}
-		
-		if(collisionFlags & Physics::eCOLLISION_UP) {
-			// Colisión con la cabeza
+		else if( _touchingGround && !(collisionFlags & Physics::eCOLLISION_DOWN) ) {
+			_touchingGround = false;
+			for(auto it = _observers.begin(); it != _observers.end(); ++it) {
+				(*it)->onAir();
+				(*it)->downCollision(_touchingGround);
+			}
+		}
+
+		// Comprobamos si estamos colisionando a los los lados
+		if( !_sideColliding && (collisionFlags & Physics::eCOLLISION_SIDES) ) {
+			// Empiezo a chocar por los lados
+			_sideColliding = true;
+			for(auto it = _observers.begin(); it != _observers.end(); ++it) {
+				(*it)->sideCollision(_sideColliding);
+			}
+		}
+		else if(_sideColliding && !(collisionFlags & Physics::eCOLLISION_SIDES) ) {
+			// Dejo de chocar por los lados
+			_sideColliding = false;
+			for(auto it = _observers.begin(); it != _observers.end(); ++it) {
+				(*it)->sideCollision(_sideColliding);
+			}
+		}
+
+		// Comprobamos si estamos chocando con la cabezota
+		if( !_collisionOnTop && (collisionFlags & Physics::eCOLLISION_UP) ) {
+			// Empiezo a chocar con el cabezon
+			_collisionOnTop = true;
+			for(auto it = _observers.begin(); it != _observers.end(); ++it) {
+				(*it)->topCollision(_collisionOnTop);
+			}
+
+			// Frenamos de golpe la velocidad a la que estuvieramos ascendiendo
 			_momentum.y = 0;
 		}
-
+		else if( _collisionOnTop && !(collisionFlags & Physics::eCOLLISION_UP) ) {
+			// Dejo de chocar con la chola
+			_collisionOnTop = false;
+			for(auto it = _observers.begin(); it != _observers.end(); ++it) {
+				(*it)->topCollision(_collisionOnTop);
+			}
+		}
+		
 		if(collisionFlags & Physics::eCOLLISION_SIDES){
-			//necesitamos la posicion anterior del personaje, para ver la dirección 
-			//y la velocidad a la que nos hemos movido, y calculamos el momentum
-			//resultado de habernos movido y haber chocado contra las paredes
+			// Necesitamos la posicion anterior del personaje, para ver la dirección 
+			// y la velocidad a la que nos hemos movido, y calculamos el momentum
+			// resultado de habernos movido y haber chocado contra las paredes
 			Vector3 newMom = _entity->getPosition() - oldPosition;
-			_momentum.x=newMom.x;
-			_momentum.z=newMom.z;
-
-			if(_cameraFX != NULL)
-				_cameraFX->playerIsSideColliding( true, _momentum.length() );
+			_momentum.x = newMom.x;
+			_momentum.z = newMom.z;
 		}
-		else {
-			if(_cameraFX != NULL)
-				_cameraFX->playerIsSideColliding(false, 0);
-		}
-
-		// @deprecated
-		/*if(_displacementDir != Vector3::ZERO && _touchingGround && !(collisionFlags & Physics::eCOLLISION_SIDES)) {
-			if(!Net::CManager::getSingletonPtr()->imServer() )
-				emitSound("footStep.wav", true, true, false);
-		}*/
 	}
 
 	//________________________________________________________________________
@@ -310,11 +348,11 @@ namespace Logic {
 		if(direction.z < 0) displacementYaw *= -1;
 
 		// Rotamos tantos grados como diga el vector desplazamiento calculado de pulsar las teclas
-		Math::rotate(Vector3::UNIT_Y,Ogre::Radian(displacementYaw),characterQuat);
+		Math::rotate( Vector3::UNIT_Y,Ogre::Radian(displacementYaw), characterQuat);
 		//Obtenemos la direccion
 		Vector3 directionQuat = characterQuat * Vector3::NEGATIVE_UNIT_Z;
 		//Formamos el vector normalizado de la direccion
-		Vector3 motionDirection(directionQuat.x,0,directionQuat.z);
+		Vector3 motionDirection(directionQuat.x, 0, directionQuat.z);
 		motionDirection.normalise();
 
 		// Invertimos el vector resultante si nos estamos desplazando hacia atras
@@ -330,34 +368,7 @@ namespace Logic {
 	Vector3 CAvatarController::estimateGroundMotion(unsigned int msecs) {
 		// Si no nos queremos desplazar en ninguna dirección aplicamos el coeficiente
 		// de rozamiento
-		float coef = (_displacementDir == Vector3::ZERO) ? 0.8f : _maxVelocity/(_maxVelocity+(0.5*_acceleration*msecs));
-
-		/*
-		if(_displacementDir != Vector3::ZERO){
-		    std::shared_ptr<CMessageHudDebugData> m = std::make_shared<CMessageHudDebugData>();
-		    m->setKey("incremento");
-		    m->setValue(_momentum);
-		    _entity->emitMessage(m);
-		
-		}
-		*/
-		// Aumentamos el desplazamiento en la dirección dada en función de la aceleración
-		// y el tiempo transcurrido -> s = u · t + 1/2 · a · t^2
-
-		///////////////////////////////////////////////////////////////
-		////////////////////////// DEBUG MODE /////////////////////////
-		///////////////////////////////////////////////////////////////
-		/*if(_displacementDir != Vector3::ZERO){
-			++ticks;
-		}else{
-			if(ticks>0){
-				std::cout << "el avatar controller se ha ejecutado " << ticks << " ticks" << std::endl;
-			}
-			auxmsecs=0;
-			ticks=0;
-		}*/
-		///////////////////////////////////////////////////////////////
-		///////////////////////////////////////////////////////////////
+		float coef = (_displacementDir == Vector3::ZERO) ? 0.8f : _maxVelocity / (_maxVelocity + (0.5 * _acceleration * msecs) );
 
 		_momentum += Vector3(1,0,1) * estimateMotionDirection(_displacementDir) * _acceleration * msecs * 0.5f;
 		// Multiplicamos la inercia por el coeficiente de rozamiento (para decelerarla)
@@ -378,19 +389,6 @@ namespace Logic {
 		// que el terrestre) teniendo en cuenta los milisegundos transcurridos
 		float speedCoef = _airSpeedCoef / (double)msecs;
 
-		if (_playingsound){
-			std::shared_ptr<CMessageAudio> audioMsg = std::make_shared<CMessageAudio>();
-		
-			audioMsg->setAudioName("footStep2");
-			audioMsg->isLoopable(true);
-			audioMsg->is3dSound(true);
-			audioMsg->streamSound(false);
-			audioMsg->stopSound(true);
-			
-			_entity->emitMessage(audioMsg);
-			_playingsound = false;
-		}
-
 		// Aumentamos el desplazamiento en la dirección dada teniendo en cuenta
 		// que nos movemos más lento en el aire -> -> s = u · t + 1/2 · a · t^2
 		_momentum += Vector3(speedCoef, 0, speedCoef) * estimateMotionDirection(_displacementDir) * _acceleration * msecs * 0.5f;
@@ -407,10 +405,10 @@ namespace Logic {
 
 	void CAvatarController::normalizeGravity() {
 		// Normalizamos la velocidad vertical
-		float gVelocity = (_momentum*Vector3(0,1,0)).length();
-		if(gVelocity >_maxGravVelocity){
+		float gVelocity = ( _momentum*Vector3(0, 1, 0) ).length();
+		if(gVelocity >_maxGravVelocity) {
 			double coef = _maxGravVelocity/gVelocity;
-			_momentum*=Vector3(1,coef,1);
+			_momentum *= Vector3(1, coef, 1);
 		}
 	}
 
@@ -419,11 +417,7 @@ namespace Logic {
 	void CAvatarController::executeMovementCommand(ControlType commandType) {
 		Vector3 dir = _movementCommands[commandType];
 
-		//seteamos la animacion correcta con el resultado de las teclas pulsadas
-		//stopAnimation(dir);
-
 		_displacementDir += dir;
-
 	}
 
 	//________________________________________________________________________
@@ -450,53 +444,68 @@ namespace Logic {
 
 	//________________________________________________________________________
 
-	void CAvatarController::executeJump(){
+	void CAvatarController::executeJump() {
 		if(_touchingGround) {
 			_momentum.y = _jumpForce;
 			_touchingGround = false;
 
-			// @deprecated
-			if(!Net::CManager::getSingletonPtr()->imServer())
-				emitSound("jump.wav", false, true, false);
+			for(auto it = _observers.begin(); it != _observers.end(); ++it) {
+				(*it)->onJump();
+				(*it)->onAir();
+				(*it)->downCollision(_touchingGround);
+			}
 		}
 	}
 
 	//________________________________________________________________________
 
 	void CAvatarController::addForce(const Vector3 &force){
-		_momentum+=force;
-		if(_momentum.y>0 && _touchingGround)
-			_touchingGround=false;
+		_momentum += force;
+		if(_momentum.y > 0 && _touchingGround) {
+			_touchingGround = false;
+			for(auto it = _observers.begin(); it != _observers.end(); ++it) {
+				(*it)->onAir();
+				(*it)->downCollision(_touchingGround);
+			}
+		}
+	}
+
+	//________________________________________________________________________
+
+	void CAvatarController::addObserver(IObserver* observer) {
+		_observers.push_back(observer);
+	}
+
+	//________________________________________________________________________
+
+	void CAvatarController::removeObserver(IObserver* observer) {
+		for(auto it = _observers.begin(); it != _observers.end(); ++it) {
+			if(*it == observer) {
+				_observers.erase(it);
+				break;
+			}
+		}
 	}
 
 	//________________________________________________________________________
 
 	void CAvatarController::executeDodge(ControlType commandType){
-		
 		_displacementDir += _movementCommands[commandType];
 		if(!_touchingGround)
 			return;
-		Vector3 dir = estimateMotionDirection(_movementCommands[commandType])+Vector3(0,1,0);
-		addForce(dir.normalisedCopy()*_dodgeForce);
+		
+		Vector3 dir = estimateMotionDirection(_movementCommands[commandType]) + Vector3(0, 1, 0);
+		Vector3 force = dir.normalisedCopy() * _dodgeForce;
 
-		// @deprecated
-		if(!Net::CManager::getSingletonPtr()->imServer())
-			emitSound("sidejump.wav", false, true, false);
+		_momentum += force;
+		if(_momentum.y > 0 && _touchingGround) {
+			_touchingGround = false;
+			for(auto it = _observers.begin(); it != _observers.end(); ++it) {
+				(*it)->onDodge();
+				(*it)->onAir();
+				(*it)->downCollision(_touchingGround);
+			}
+		}
 	}
-
-	//________________________________________________________________________
-
-	void CAvatarController::emitSound(const std::string &soundName, bool loopSound, bool play3d, bool streamSound) {
-		std::shared_ptr<CMessageAudio> audioMsg = std::make_shared<CMessageAudio>();
-			
-		audioMsg->setAudioName(soundName);
-		audioMsg->isLoopable(loopSound);
-		audioMsg->is3dSound(play3d);
-		audioMsg->streamSound(streamSound);
-
-		_entity->emitMessage(audioMsg);
-	}
-
-	//________________________________________________________________________
 
 } // namespace Logic

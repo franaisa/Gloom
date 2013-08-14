@@ -15,7 +15,6 @@ del Screamer.
 #include "Graphics/Scene.h"
 #include "CameraFeedbackNotifier.h"
 #include "Camera.h"
-#include "AvatarController.h"
 #include "HudWeapons.h"
 #include "Logic/Server.h"
 #include "Logic/Entity/Entity.h"
@@ -30,8 +29,6 @@ del Screamer.
 #include "Logic/Messages/MessageCameraOffset.h"
 #include "Logic/Messages/MessageControl.h"
 #include "Logic/Messages/MessageImpact.h"
-#include "Logic/Messages/MessageHudDebugData.h"
-#include "Logic/Messages/MessageAudio.h"
 
 namespace Logic {
 	
@@ -134,9 +131,11 @@ namespace Logic {
 		assert(_cameraComponent != NULL && "Error: La entidad camara no tiene un componente de camara");
 		_hudWeaponComponent = _entity->getComponent<CHudWeapons>("CHudWeapons");
 		assert(_hudWeaponComponent != NULL && "Error: No existe el componente de arma en el hud");
-		
 		_avatarc = _entity->getComponent<CAvatarController>("CAvatarController");
 		assert(_avatarc != NULL && "Error: no tenemos avatar controller lol");
+
+		// Nos registramos como observadores (no hace falta que nos desregistremos)
+		_avatarc->addObserver(this);
 
 		_scene = _entity->getMap()->getScene();
 		_effect = "damageCompositor";
@@ -165,7 +164,7 @@ namespace Logic {
 	void CCameraFeedbackNotifier::onFixedTick(unsigned int msecs) {
 		if(_playerIsLanding)
 			landEffect(msecs);
-		else if(_playerIsWalking && !_playerIsSideColliding)
+		else if(_playerIsWalking /*&& !_playerIsSideColliding*/)
 			walkEffect(msecs);
 		else
 			offsetRecovery(msecs);
@@ -200,6 +199,22 @@ namespace Logic {
 
 	//________________________________________________________________________
 
+	void CCameraFeedbackNotifier::onWalk() { 
+		_playerIsWalking = true;
+	}
+
+	void CCameraFeedbackNotifier::onAir() {
+		_playerIsWalking = false;
+		_strafingDir = 0;
+		_hudWeaponComponent->playerIsWalking(_playerIsWalking, 0);
+	}
+
+	void CCameraFeedbackNotifier::onIdle() {
+		_playerIsWalking = false;
+		_strafingDir = 0;
+		_hudWeaponComponent->playerIsWalking(_playerIsWalking, 1);
+	}
+
 	void CCameraFeedbackNotifier::playerIsWalking(bool walking, int direction) { 
 		_hudWeaponComponent->playerIsWalking(walking, direction);
 		
@@ -229,6 +244,9 @@ namespace Logic {
 	void CCameraFeedbackNotifier::walkEffect(unsigned int msecs) {
 		Vector3 offset = _cameraComponent->getOffset();
 
+		_walkAnim.currentStrafingDir = _strafingDir;
+		_strafingDir = _avatarc->getDisplacementDir().x;
+		_hudWeaponComponent->playerIsWalking(_playerIsWalking, _avatarc->getDisplacementDir().x);
 		if(_strafingDir == 0) {
 			Quaternion yaw( _entity->getYaw() );
 			Math::rotate( Vector3::UNIT_Y, Ogre::Radian(Math::HALF_PI), yaw);
@@ -273,14 +291,8 @@ namespace Logic {
 		_cameraComponent->rollCamera(_walkAnim.currentRoll);
 
 		_walkAnim.currentVerticalPos += _walkAnim.verticalSpeed * msecs;
-		/*if(_walkAnim.currentVerticalPos > ((3 * Math::PI) / 2) && !_footStepRecover) {
-			emitSound("footStep3.wav", false, true, false, false);
-			_footStepRecover = true;
-		}*/
-
 		if(_walkAnim.currentVerticalPos > ((2 * Math::PI) + Math::HALF_PI)) {
 			_walkAnim.currentVerticalPos = Math::HALF_PI;
-			//_footStepRecover = false;
 		}
 
 		offset.y += sin(_walkAnim.currentVerticalPos) * _walkAnim.verticalOffset;
@@ -290,41 +302,20 @@ namespace Logic {
 
 	//________________________________________________________________________
 
-	void CCameraFeedbackNotifier::playerIsTouchingGround(float hitForce) {
+	void CCameraFeedbackNotifier::onLand() {
+		float hitForce = _avatarc->getMomentum().y;
 		if(hitForce < -0.3f) {
 			_playerIsLanding = true;
 			_landForce = hitForce;
 
 			_hudWeaponComponent->playerIsLanding(hitForce, Math::PI / _landRecoverySpeed);
-
-			if(hitForce < -0.7f)
-				emitSound("land.wav", false, true, false, false);
-
-			// @deprecated
-			// Esto es temporal hasta que el sonido este bien hecho ---------------------
-			if(hitForce < -2.0f)
-				emitSound("landingMaleGrunt.wav", false, true, false, false);
 		}
 	}
 
 	//________________________________________________________________________
 
-	void CCameraFeedbackNotifier::emitSound(const std::string &soundName, bool loopSound, bool play3d, bool streamSound, bool stopSound) {
-		std::shared_ptr<CMessageAudio> audioMsg = std::make_shared<CMessageAudio>();
-		
-		audioMsg->setAudioName(soundName);
-		audioMsg->isLoopable(loopSound);
-		audioMsg->is3dSound(play3d);
-		audioMsg->streamSound(streamSound);
-		audioMsg->stopSound(stopSound);
-
-		_entity->emitMessage(audioMsg);
-	}
-
-	//________________________________________________________________________
-
-	void CCameraFeedbackNotifier::playerIsSideColliding(bool colliding, float force) {
-		_playerIsSideColliding = colliding;
+	void CCameraFeedbackNotifier::sideCollision(bool contacting) {
+		_playerIsSideColliding = contacting;
 	}
 
 	//________________________________________________________________________

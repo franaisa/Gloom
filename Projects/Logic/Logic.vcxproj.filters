@@ -760,6 +760,9 @@
     <ClCompile Include="..\..\Src\Logic\Entity\Components\MovementSnapshot.cpp">
       <Filter>Entity\Components\Network\Source</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\CharacterSound.cpp">
+      <Filter>Entity\Components\Audio\Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Src\Logic\Maps\ComponentFactory.h">
@@ -1376,6 +1379,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Entity\Components\Bite.h">
       <Filter>Entity\Components\Skills\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\CharacterSound.h">
+      <Filter>Entity\Components\Audio\Header</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
