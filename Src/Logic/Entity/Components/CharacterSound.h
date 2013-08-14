@@ -103,10 +103,6 @@ namespace Logic {
 		virtual void onIdle();
 		virtual void onAir();
 
-		//virtual void downCollision(bool contacting) { std::cout << "downCollision = " << (contacting ? "true" : "false") << std::endl; }
-		//virtual void topCollision(bool contacting) { std::cout << "topCollision = " << (contacting ? "true" : "false") << std::endl; }
-		//virtual void sideCollision(bool contacting) { std::cout << "sideCollision = " << (contacting ? "true" : "false") << std::endl; }
-
 	protected:
 
 

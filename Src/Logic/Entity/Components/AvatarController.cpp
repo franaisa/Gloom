@@ -50,7 +50,6 @@ namespace Logic {
 											 _sideColliding(false),
 											 _collisionOnTop(false),
 											 _walking(false),
-											 _cameraFX(NULL),
 											 _physicController(0),
 											 _momentum(Vector3::ZERO),
 											 _displacementDir(Vector3::ZERO),
@@ -82,7 +81,7 @@ namespace Logic {
 	
 		assert( entityInfo->hasAttribute("maxVelocity") && "Error: No se ha definido el atributo maxVelocity en el mapa" );
 		_maxVelocity = entityInfo->getFloatAttribute("maxVelocity");
-		_maxGravVelocity = _maxVelocity*6;
+		_maxGravVelocity = _maxVelocity * 6;
 
 		assert( entityInfo->hasAttribute("frictionCoef") && "Error: No se ha definido el atributo frictionCoef en el mapa" );
 		_frictionCoef = entityInfo->getFloatAttribute("frictionCoef");
@@ -221,8 +220,6 @@ namespace Logic {
 		// de desplazar al controlador del jugador.
 		_physicController = _entity->getComponent<CPhysicController>("CPhysicController");
 		assert(_physicController && "Error: El player no tiene un controlador fisico");
-
-		_cameraFX = _entity->getComponent<CCameraFeedbackNotifier>("CCameraFeedbackNotifier");
 	}
 
 	//________________________________________________________________________
@@ -246,8 +243,6 @@ namespace Logic {
 	//________________________________________________________________________
 
 	void CAvatarController::setCameraEffect() {
-		if(_cameraFX == NULL) return; // Por si se trata de un remote player
-
 		if(_touchingGround && !_walking && _displacementDir != Vector3::ZERO ) {
 			for(auto it = _observers.begin(); it != _observers.end(); ++it) {
 				(*it)->onWalk();
@@ -265,8 +260,6 @@ namespace Logic {
 		else if(!_touchingGround) {
 			_walking = false;
 		}
-
-		_cameraFX->playerIsFalling(!_touchingGround, _displacementDir.x);
 	}
 
 	//________________________________________________________________________

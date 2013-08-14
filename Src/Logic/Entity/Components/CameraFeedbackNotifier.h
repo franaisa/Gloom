@@ -102,24 +102,10 @@ namespace Logic {
 		virtual void onLand();
 		// Al andar (tienes que tocar suelo)
 		virtual void onWalk();
-		// Al saltar (tienes que tocar suelo)
-		virtual void onJump()	{ }
-		// Al esquivar (tienes que tocar suelo)
-		virtual void onDodge()	{ }
 		// Al parar (tienes que tocar suelo)
 		virtual void onIdle();
-		// Al estar en el aire - jumper o caida
+		// Al estar en el aire
 		virtual void onAir();
-
-		// Se llama para indicar si tocamos la pared
-		// Al entrar en contacto y dejar de contactar
-		virtual void sideCollision(bool contacting);
-		// Se llama para indicar si tocamos el techo
-		// Al entrar en contacto y dejar de contactar
-		virtual void topCollision(bool contacting)	{ }
-		// Se llama para indicar si tocamos el suelo
-		// Al entrar en contacto y dejar de contactar
-		virtual void downCollision(bool contacting)	{ }
 
 		/**
 		Este método debe ser usado por aquella entidad que cree a esta entidad,
@@ -129,17 +115,9 @@ namespace Logic {
 		*/
 		void setOwner(Logic::CEntity* owner);
 
-		void playerIsWalking(bool walking, int direction = 1);
-
 		void walkEffect(unsigned int msecs);
 
 		void offsetRecovery(unsigned int msecs);
-
-		//void playerIsTouchingGround(float hitForce);
-
-		//void playerIsSideColliding(bool colliding, float force);
-
-		void playerIsFalling(bool falling, int direction = 0);
 
 		void landEffect(unsigned int msecs);
 
@@ -148,6 +126,8 @@ namespace Logic {
 		circulito de la mirilla en función de dicha posición
 		*/
 		void calculateEnemyPosition(Vector3 vPosEnemy);
+
+		float getLandRecoverySpeed() { return _landRecoverySpeed; }
 
 	protected:
 
@@ -167,8 +147,6 @@ namespace Logic {
 		CEntity* _owner;
 
 		CCamera* _cameraComponent;
-
-		CHudWeapons* _hudWeaponComponent;
 
 		//______________________
 
@@ -227,8 +205,6 @@ namespace Logic {
 		*/
 		float _flashFactor;
 		bool _flashVisible;
-
-		bool _footStepRecover;
 
 	}; // class CCameraFeedbackNotifier
 

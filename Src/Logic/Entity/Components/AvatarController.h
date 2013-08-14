@@ -338,11 +338,11 @@ namespace Logic {
 
 		/** true si el personaje está tocando el suelo, false si esta en el aire. */
 		bool _touchingGround;
-
+		/** true si el personaje esta colisionando por los laterales */
 		bool _sideColliding;
-
+		/** true si el personaje esta colisionando con la cabeza */
 		bool _collisionOnTop;
-
+		/** true si el personaje esta andando */
 		bool _walking;
 
 		/** Vector de gravedad, puede ser sustituido por un flotante. */
@@ -389,13 +389,6 @@ namespace Logic {
 
 		/** Puntero al controlador fisico del player. Nos lo quedamos por motivos de eficiencia. */
 		CPhysicController* _physicController;
-
-		/** 
-		Puntero al notificador de feedback de la camara. Para evitar mandar mensajes en cada tick.
-		Será distinto de null solo en el caso del local player (que son los unicos que deberian mover
-		a la camara).
-		*/
-		CCameraFeedbackNotifier* _cameraFX;
 
 		/** 
 		Array que contiene los vectores que corresponden a cada uno de los movimientos

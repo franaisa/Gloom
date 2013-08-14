@@ -15,6 +15,7 @@ gráfica del jugador, es decir, todas las armas que este portara.
 
 #include "Logic/Entity/Component.h"
 #include "WeaponType.h"
+#include "AvatarController.h"
 
 // Predeclaración de clases para ahorrar tiempo de compilación
 namespace Graphics {
@@ -25,6 +26,8 @@ namespace Graphics {
 
 //declaración de la clase
 namespace Logic {
+
+	class CAvatarController;
 
 	/**
 	Componente que se encarga de la representación gráfica de una entidad.
@@ -41,7 +44,7 @@ namespace Logic {
 	@date Agosto, 2010
 	*/
 
-	class CHudWeapons : public IComponent {
+	class CHudWeapons : public IComponent, public CAvatarController::IObserver {
 		DEC_FACTORY(CHudWeapons);
 	public:
 
@@ -111,6 +114,11 @@ namespace Logic {
 		*/
 		void changeWeapon(int newWeapon);
 
+		virtual void onLand();
+		virtual void onWalk();
+		virtual void onIdle();
+		virtual void onAir();
+
 		/**
 		Metodo que controla el movimiento del arma,
 		el comentario te lo dejo a ti fran :D
@@ -131,11 +139,7 @@ namespace Logic {
 
 		void continouosShooting(bool state);
 
-		void playerIsWalking(bool walking, int direction = 0);
-
 		void offsetRecovery(unsigned int msecs);
-
-		void playerIsLanding(float hitForce, float estimatedLandingTime);
 
 		void playerIsFalling(bool falling, int direction = 0);
 	
@@ -317,6 +321,8 @@ namespace Logic {
 
 		//////////////////////Gestion de armas
 		Graphics::COverlay *_overlayWeapon3D[WeaponType::eSIZE];
+
+		CAvatarController* _avatarController;
 
 		float _threePiQuarters;
 

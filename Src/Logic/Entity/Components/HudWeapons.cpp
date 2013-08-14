@@ -12,6 +12,7 @@ gráfica de la entidad.
 */
 
 #include "HudWeapons.h"
+#include "CameraFeedbackNotifier.h"
 
 #include "BaseSubsystems/Euler.h"
 
@@ -161,6 +162,9 @@ namespace Logic {
 	void CHudWeapons::onDeactivate() {
 		//Cuando desactivamos el componente, desactivaremos el arma actual
 		_overlayWeapon3D[_currentWeapon]->setVisible(false);
+
+		_fallAnim.movementDir = _runAnim.currentStrafingDir = 0;
+		_playerIsWalking = _playerIsLanding = _playerIsFalling = false;
 	} // deactivate
 
 	//________________________________________________________________________
@@ -245,10 +249,17 @@ namespace Logic {
 	//________________________________________________________________________
 
 	void CHudWeapons::onStart() {
-		Matrix4 weaponTransform;
 		for(int i = 0; i < WeaponType::eSIZE; ++i) {
 			_graphicsEntities[i].defaultPos = _graphicsEntities[i].graphicsEntity->getPosition();
 		}
+
+		_avatarController = _entity->getComponent<CAvatarController>("CAvatarController");
+		assert(_avatarController != NULL && "Error: Se necesita el componente avatar controller");
+
+		_avatarController->addObserver(this);
+
+		float cameraLandTime = Math::PI / _entity->getComponent<CCameraFeedbackNotifier>("CCameraFeedbackNotifier")->getLandRecoverySpeed();
+		_landAnim.recoverySpeed = Math::PI / cameraLandTime;
 	}
 	
 	//________________________________________________________________________
@@ -271,6 +282,41 @@ namespace Logic {
 			}
 		}
 	} // process
+
+	//________________________________________________________________________
+
+	void CHudWeapons::onLand() {
+		float hitForce = _avatarController->getMomentum().y;
+		if(hitForce < -0.3f) {
+			_playerIsLanding = true;
+			_landAnim.force = hitForce * 0.2f;
+		}
+
+		_fallAnim.movementDir = 0;
+		_playerIsFalling = false;
+	}
+
+	//________________________________________________________________________
+
+	void CHudWeapons::onWalk() {
+		_playerIsWalking = true;
+	}
+
+	//________________________________________________________________________
+
+	void CHudWeapons::onIdle() {
+		_playerIsWalking = false;
+		_runAnim.currentStrafingDir = 0;
+	}
+
+	//________________________________________________________________________
+
+	void CHudWeapons::onAir() {
+		_playerIsWalking = false;
+		_playerIsFalling = true;
+		_runAnim.currentStrafingDir = 0;
+		_fallAnim.movementDir = _avatarController->getDisplacementDir().x;
+	}
 	
 	//________________________________________________________________________
 
@@ -504,28 +550,6 @@ namespace Logic {
 		_landAnim.offset *= Vector3(0.85f, 0.85f, 0.85f);
 		_runAnim.currentHorizontalPos *= 0.85f;
 		_runAnim.currentVerticalPos *= 2 * 0.85f;
-		
-	}
-
-	//________________________________________________________________________
-
-	void CHudWeapons::playerIsWalking(bool walking, int direction) { 
-		_playerIsWalking = walking;
-		if(_playerIsWalking) {
-			_runAnim.oldStrafingDir = _runAnim.currentStrafingDir;
-			_runAnim.currentStrafingDir = direction;
-		}
-		else {
-			_runAnim.currentStrafingDir = 0;
-		}
-	}
-
-	//________________________________________________________________________
-
-	void CHudWeapons::playerIsLanding(float hitForce, float estimatedLandingTime) {
-		_playerIsLanding = true;
-		_landAnim.force = hitForce * 0.2f;
-		_landAnim.recoverySpeed = Math::PI / estimatedLandingTime;
 	}
 
 	//________________________________________________________________________
@@ -537,6 +561,9 @@ namespace Logic {
 	//________________________________________________________________________
 
 	void CHudWeapons::walkAnim(unsigned int msecs) {
+		_runAnim.oldStrafingDir = _runAnim.currentStrafingDir;
+		_runAnim.currentStrafingDir = _avatarController->getDisplacementDir().x;
+
 		_runAnim.offset = (_graphicsEntities[_currentWeapon].graphicsEntity->getOrientation() * _halfPi) * Vector3::NEGATIVE_UNIT_Z;
 		_runAnim.offset.normalise();
 

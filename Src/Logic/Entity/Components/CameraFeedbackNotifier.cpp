@@ -43,8 +43,7 @@ namespace Logic {
 														 _strafingDir(0),
 														 _landRecoverySpeed(0.007f),
 														 _currentLandOffset(0),
-														 _flashVisible(true),
-														 _footStepRecover(false) {
+														 _flashVisible(true) {
 
 
 		_walkAnim.currentHorizontalPos = Math::HALF_PI;
@@ -78,7 +77,6 @@ namespace Logic {
 		assert( entityInfo->hasAttribute("maxVelocity") && "Error: No se ha definido el atributo maxVelocity en el mapa" );
 		_maxVelocity = entityInfo->getFloatAttribute("maxVelocity");
 		
-
 		return true;
 	} // spawn
 	
@@ -87,8 +85,7 @@ namespace Logic {
 	bool CCameraFeedbackNotifier::accept(const std::shared_ptr<CMessage>& message) {
 		Logic::TMessageType msgType = message->getMessageType();
 
-		return msgType == Message::DAMAGED				|| 
-			   //msgType == Message::SET_REDUCED_DAMAGE	||
+		return msgType == Message::DAMAGED	||
 			   msgType == Message::FLASH;
 	} // accept
 	
@@ -117,8 +114,6 @@ namespace Logic {
 				_scene->setCompositorVisible(_flashEffect, true);
 				break;
 			}
-
-
 		}
 	} // process
 
@@ -129,8 +124,6 @@ namespace Logic {
 		assert(cameraEntity != NULL && "Error: No existe una entidad camara");
 		_cameraComponent = cameraEntity->getComponent<CCamera>("CCamera");
 		assert(_cameraComponent != NULL && "Error: La entidad camara no tiene un componente de camara");
-		_hudWeaponComponent = _entity->getComponent<CHudWeapons>("CHudWeapons");
-		assert(_hudWeaponComponent != NULL && "Error: No existe el componente de arma en el hud");
 		_avatarc = _entity->getComponent<CAvatarController>("CAvatarController");
 		assert(_avatarc != NULL && "Error: no tenemos avatar controller lol");
 
@@ -164,7 +157,7 @@ namespace Logic {
 	void CCameraFeedbackNotifier::onFixedTick(unsigned int msecs) {
 		if(_playerIsLanding)
 			landEffect(msecs);
-		else if(_playerIsWalking /*&& !_playerIsSideColliding*/)
+		else if(_playerIsWalking)
 			walkEffect(msecs);
 		else
 			offsetRecovery(msecs);
@@ -203,29 +196,18 @@ namespace Logic {
 		_playerIsWalking = true;
 	}
 
+	//________________________________________________________________________
+
 	void CCameraFeedbackNotifier::onAir() {
 		_playerIsWalking = false;
 		_strafingDir = 0;
-		_hudWeaponComponent->playerIsWalking(_playerIsWalking, 0);
 	}
+
+	//________________________________________________________________________
 
 	void CCameraFeedbackNotifier::onIdle() {
 		_playerIsWalking = false;
 		_strafingDir = 0;
-		_hudWeaponComponent->playerIsWalking(_playerIsWalking, 1);
-	}
-
-	void CCameraFeedbackNotifier::playerIsWalking(bool walking, int direction) { 
-		_hudWeaponComponent->playerIsWalking(walking, direction);
-		
-		_playerIsWalking = walking;
-		if(_playerIsWalking) {
-			_walkAnim.currentStrafingDir = _strafingDir;
-			_strafingDir = direction;
-		}
-		else {
-			_strafingDir = 0;
-		}
 	}
 
 	//________________________________________________________________________
@@ -246,7 +228,6 @@ namespace Logic {
 
 		_walkAnim.currentStrafingDir = _strafingDir;
 		_strafingDir = _avatarc->getDisplacementDir().x;
-		_hudWeaponComponent->playerIsWalking(_playerIsWalking, _avatarc->getDisplacementDir().x);
 		if(_strafingDir == 0) {
 			Quaternion yaw( _entity->getYaw() );
 			Math::rotate( Vector3::UNIT_Y, Ogre::Radian(Math::HALF_PI), yaw);
@@ -307,21 +288,7 @@ namespace Logic {
 		if(hitForce < -0.3f) {
 			_playerIsLanding = true;
 			_landForce = hitForce;
-
-			_hudWeaponComponent->playerIsLanding(hitForce, Math::PI / _landRecoverySpeed);
 		}
-	}
-
-	//________________________________________________________________________
-
-	void CCameraFeedbackNotifier::sideCollision(bool contacting) {
-		_playerIsSideColliding = contacting;
-	}
-
-	//________________________________________________________________________
-
-	void CCameraFeedbackNotifier::playerIsFalling(bool falling, int direction) {
-		_hudWeaponComponent->playerIsFalling(falling, direction);
 	}
 
 	//________________________________________________________________________
@@ -399,8 +366,6 @@ namespace Logic {
 		impact->setDirectionImpact(fRadianes);							 
 		_entity->emitMessage(impact);
 	}
-
-	//________________________________________________________________________
 
 } // namespace Logic
 
