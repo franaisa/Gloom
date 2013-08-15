@@ -112,6 +112,12 @@ void CRagdoll::process(const std::shared_ptr<CMessage>& message) {
 
 //________________________________________________________________________
 
+std::string CRagdoll::getPhysicName() {
+	return "Ragdoll" + _entity->getName();
+}
+
+//________________________________________________________________________
+
 void CRagdoll::onFixedTick(unsigned int msecs) {
 	// Actualizamos las posiciones y orientaciones de los bones en base a la
 	// fisica si estamos ejecutando el ragdoll o en base a las animaciones si

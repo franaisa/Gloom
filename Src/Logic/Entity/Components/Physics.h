@@ -60,6 +60,8 @@ namespace Logic {
 			}
 		}
 
+		virtual std::string getPhysicName() = 0;
+
 		/**
 		Este método es invocado desde el motor de física cuando una entidad entra o sale de un
 		trigger físico. Se notifica tanto al componente asociado al trigger como al componente

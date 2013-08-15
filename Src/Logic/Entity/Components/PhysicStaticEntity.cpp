@@ -262,6 +262,12 @@ void CPhysicStaticEntity::onShapeHit(IPhysics *otherComponent, const Vector3& co
 
 //---------------------------------------------------------
 
+std::string CPhysicStaticEntity::getPhysicName() {
+	return _physicEntity.getName();
+}
+
+//---------------------------------------------------------
+
 void CPhysicStaticEntity::deactivateSimulation() {
 	_physicEntity.deactivateSimulation();
 }

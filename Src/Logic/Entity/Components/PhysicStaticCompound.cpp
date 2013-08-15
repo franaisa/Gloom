@@ -86,6 +86,12 @@ namespace Logic {
 
 	//________________________________________________________________________
 
+	std::string CPhysicStaticCompound::getPhysicName() {
+		return "Compound_" + _entity->getName();
+	}
+
+	//________________________________________________________________________
+
 	void CPhysicStaticCompound::readCollisionGroupInfo(const Map::CEntity *entityInfo, int& group, vector<int>& groupList) {
 		// Leer el grupo de colisión (por defecto grupo 0)
 		if (entityInfo->hasAttribute("physic_group"))

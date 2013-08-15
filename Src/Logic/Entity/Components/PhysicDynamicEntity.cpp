@@ -114,6 +114,12 @@ void CPhysicDynamicEntity::process(const std::shared_ptr<CMessage>& message) {
 
 //---------------------------------------------------------
 
+std::string CPhysicDynamicEntity::getPhysicName() {
+	return _physicEntity.getName();
+}
+
+//---------------------------------------------------------
+
 void CPhysicDynamicEntity::onFixedTick(unsigned int msecs) {
 	// Actualizar la posición y la orientación de la entidad lógica usando la 
 	// información proporcionada por el motor de física	

@@ -122,6 +122,11 @@ namespace Logic {
 
 		CAvatarController* _avatarController;
 
+		std::string _footstepSound;
+
+		float _feetToNeckDist;
+		float _capsuleRadius;
+
 	}; // class CCharacterSound
 
 	REG_FACTORY(CCharacterSound);

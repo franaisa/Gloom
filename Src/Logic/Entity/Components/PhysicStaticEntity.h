@@ -72,7 +72,9 @@ namespace Logic {
 		*/
 		virtual void process(const std::shared_ptr<CMessage>& message);
 
-		
+
+		virtual std::string getPhysicName();
+
  
 		/**
 		Se invoca cuando se produce una colisión entre una entidad física y un trigger.

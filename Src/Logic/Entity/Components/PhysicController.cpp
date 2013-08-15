@@ -56,6 +56,12 @@ bool CPhysicController::spawn(CEntity* entity, CMap *map, const Map::CEntity *en
 
 //________________________________________________________________________
 
+std::string CPhysicController::getPhysicName() {
+	return "CC_" + _entity->getName();
+}
+
+//________________________________________________________________________
+
 void  CPhysicController::setPhysicPosition (const Vector3 &position) {
 	//Teletransportamos al player y ponemos la logica en el mismo momento(sino ocurrirían teletransportaciones gráficas)
 	_controller.setPosition(position);

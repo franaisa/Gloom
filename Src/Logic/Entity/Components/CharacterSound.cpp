@@ -15,6 +15,9 @@ clase.
 #include "CharacterSound.h"
 #include "PhysicController.h"
 
+#include "Logic/Entity/Entity.h"
+#include "Map/MapEntity.h"
+
 #include "Audio/Server.h"
 
 using namespace std;
@@ -23,6 +26,7 @@ namespace Logic {
 	IMP_FACTORY(CCharacterSound);
 	
 	CCharacterSound::CCharacterSound() : _audioServer(NULL),
+										 _footstepSound("step1.wav"),
 										 _playerIsWalking(false),
 										 _footstepTimeStep(365),
 										 _footstepTimer(_footstepTimeStep) {
@@ -40,6 +44,12 @@ namespace Logic {
 
 	bool CCharacterSound::spawn(CEntity* entity, CMap* map, const Map::CEntity* entityInfo) {
 		if( !IComponent::spawn(entity,map,entityInfo) ) return false;
+
+		assert( entityInfo->hasAttribute("physic_radius") );
+		assert( entityInfo->hasAttribute("physic_height") );
+
+		_capsuleRadius = entityInfo->getFloatAttribute("physic_radius");
+		_feetToNeckDist = ( 2 * entityInfo->getFloatAttribute("physic_height") ) - _capsuleRadius;
 
 		return true;
 	} // spawn
@@ -67,7 +77,7 @@ namespace Logic {
 		if(_playerIsWalking) {
 			_footstepTimer -= msecs;
 			if(_footstepTimer < 0) {
-				_audioServer->playSound("step1.wav", false, false);
+				_audioServer->playSound(_footstepSound, false, false);
 				_footstepTimer = _footstepTimeStep;
 			}
 		}
@@ -127,7 +137,42 @@ namespace Logic {
 	//__________________________________________________________________
 
 	void CCharacterSound::onShapeHit(IPhysics* otherComponent, const Vector3& colisionPos, const Vector3& colisionNormal) {
-		//cout << "Me la pego contra " << otherComponent->getEntity()->getName() << endl;
+		if(otherComponent->getEntity()->getType() == "World") {
+			// Como el mundo se carga desde fichero, podemos garantizar que sus
+			// colliders tienen nombre asignado
+			string material = otherComponent->getPhysicName();
+
+			// Calculamos la distancia del punto de impacto a los pies para saber
+			// si la colision ha sido contra la cabeza, el costado o los pies
+			Vector3 vectorToFeet = colisionPos - _entity->getPosition();
+			float distanceToFeet = vectorToFeet.length();
+
+			// Colision con los pies
+			if(distanceToFeet < _capsuleRadius) {
+				// Actualizamos el sonido que debe reproducirse al pisar por si acaso
+				// pisamos otro tipo de superficie
+				//_footstepSound = "fs_" + material + ".wav";
+			}
+			// Colision con la chola
+			else if(distanceToFeet > _feetToNeckDist) {
+				Vector3 momentum = _avatarController->getMomentum();
+
+				if(momentum.length() > 1.5f) {
+					//@todo
+					// Reproducimos el sonido de impacto contra la chola
+				}
+			}
+			// Colision lateral
+			else {
+				Vector3 momentum = _avatarController->getMomentum();
+				Vector2 momentum2d(momentum.x, momentum.z);
+
+				if(momentum2d.length() > 1.5f) {
+					//@todo
+					// Reproducimos el sonido de impacto contra el costado
+				}
+			}
+		}
 	}
 
 } // namespace Logic
