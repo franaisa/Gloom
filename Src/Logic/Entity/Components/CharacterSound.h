@@ -16,6 +16,7 @@
 #include "BaseSubsystems/Math.h"
 #include "Logic/Entity/Component.h"
 #include "AvatarController.h"
+#include "Physics.h"
 
 #include <string>
 
@@ -34,7 +35,8 @@ namespace Logic {
 	@date Febrero, 2013
 	*/
 
-	class CCharacterSound : public IComponent, public CAvatarController::IObserver {
+	class CCharacterSound : public IComponent, public CAvatarController::IObserver,
+							public IPhysics::IObserver {
 		DEC_FACTORY(CCharacterSound);
 	public:
 
@@ -72,28 +74,10 @@ namespace Logic {
 		*/
 		virtual bool spawn(CEntity* entity, CMap* map, const Map::CEntity* entityInfo);
 
-		//__________________________________________________________________
 
-		/** 
-		Este componente acepta los siguientes mensajes:
-
-		<ul>
-			<li>USE_PRIMARY_SKILL</li>
-		</ul>
-		
-		@param message Mensaje a chequear.
-		@return true si el mensaje es aceptado.
-		*/
-		virtual bool accept(const std::shared_ptr<CMessage>& message);
-
-		//__________________________________________________________________
-
-		/**
-		Método virtual que procesa un mensaje.
-
-		@param message Mensaje a procesar.
-		*/
-		virtual void process(const std::shared_ptr<CMessage>& message);
+		// =======================================================================
+		//             METODOS HEREDADOS DE CAVATARCONTROLLER::IOBSERVER
+		// =======================================================================
 
 
 		virtual void onLand();
@@ -102,6 +86,13 @@ namespace Logic {
 		virtual void onDodge();
 		virtual void onIdle();
 		virtual void onAir();
+
+
+		// =======================================================================
+		//				 METODOS HEREDADOS DE IPHYSICS::IOBSERVER
+		// =======================================================================
+
+		virtual void onShapeHit(IPhysics* otherComponent, const Vector3& colisionPos, const Vector3& colisionNormal);
 
 	protected:
 
@@ -114,11 +105,14 @@ namespace Logic {
 
 		virtual void onTick(unsigned int msecs);
 
+		virtual void onActivate();
 
 		// =======================================================================
 		//                          MIEMBROS PROTEGIDOS
 		// =======================================================================
 
+
+		bool _playerIsWalking;
 
 		int _footstepTimer;
 

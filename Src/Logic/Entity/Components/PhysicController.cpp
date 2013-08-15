@@ -56,37 +56,6 @@ bool CPhysicController::spawn(CEntity* entity, CMap *map, const Map::CEntity *en
 
 //________________________________________________________________________
 
-/*bool CPhysicController::accept(CMessage *message) {
-	return message->getMessageType() == Message::AVATAR_WALK;
-}
-
-//________________________________________________________________________
-
-void CPhysicController::process(const std::shared_ptr<CMessage>& message) {
-	switch( message->getMessageType() ) {
-		case Message::AVATAR_WALK: {
-			// Anotamos el vector de desplazamiento para usarlo posteriormente en 
-			// el método tick. De esa forma, si recibimos varios mensajes AVATAR_WALK
-			// en el mismo ciclo sólo tendremos en cuenta el último.
-			_movement = std::static_pointer_cast<CMessageAvatarWalk>(message)->getDirection();
-		
-			break;
-		}
-	}
-}
-
-//________________________________________________________________________
-
-void CPhysicController::onTick(unsigned int msecs) {
-	// Sino hay movimiento no hacemos nada
-	if(_movement == Vector3::ZERO) return;
-
-	// Movemos el character controller
-	moveController(_movement, msecs);
-}*/
-
-//________________________________________________________________________
-
 void  CPhysicController::setPhysicPosition (const Vector3 &position) {
 	//Teletransportamos al player y ponemos la logica en el mismo momento(sino ocurrirían teletransportaciones gráficas)
 	_controller.setPosition(position);
@@ -159,21 +128,28 @@ void CPhysicController::createController(const Map::CEntity *entityInfo) {
 //________________________________________________________________________
 
 void CPhysicController::onTrigger(IPhysics *otherComponent, bool enter) {
-
+	// Mediante patron observador
+	for(auto it = _observers.begin(); it != _observers.end(); ++it) {
+		(*it)->onTrigger(otherComponent, enter);
+	}
 }
 
 //________________________________________________________________________
 
-void CPhysicController::onShapeHit(IPhysics *otherComponent, const Vector3& colisionPos, const Vector3& colisionNormal) {
-	// Implementar la funcionalidad que corresponda en IPhysics, aunque
-	// si nos vemos forzados a hacer este tipo de ñapas es que algo estamos
-	// haciendo mal. Hay que ser mas elegantes for the win.
+void CPhysicController::onShapeHit(IPhysics* otherComponent, const Vector3& colisionPos, const Vector3& colisionNormal) {
+	// Mediante patron observador
+	for(auto it = _observers.begin(); it != _observers.end(); ++it) {
+		(*it)->onShapeHit(otherComponent, colisionPos, colisionNormal);
+	}
 }
 
 //________________________________________________________________________
 
 void CPhysicController::onContact (IPhysics *otherComponent, bool enter) {
-	//std::cout<< "contacto entre kinematics en oncontact" << std::endl;
+	// Mediante patron observador
+	for(auto it = _observers.begin(); it != _observers.end(); ++it) {
+		(*it)->onContact(otherComponent, enter);
+	}
 }
 
 //________________________________________________________________________

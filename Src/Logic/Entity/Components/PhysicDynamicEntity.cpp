@@ -249,6 +249,11 @@ void CPhysicDynamicEntity::createFromFile(const Map::CEntity *entityInfo, int gr
 //---------------------------------------------------------
 
 void CPhysicDynamicEntity::onTrigger(IPhysics *otherComponent, bool enter) {
+	// Mediante patron observador
+	for(auto it = _observers.begin(); it != _observers.end(); ++it) {
+		(*it)->onTrigger(otherComponent, enter);
+	}
+
 	// Construimos un mensaje de tipo TOUCHED o UNTOUCHED y lo enviamos a 
 	// todos los componentes de la entidad. 
 
@@ -268,6 +273,11 @@ void CPhysicDynamicEntity::onTrigger(IPhysics *otherComponent, bool enter) {
 //---------------------------------------------------------
 
 void CPhysicDynamicEntity::onContact (IPhysics *otherComponent, bool enter) {
+	// Mediante patron observador
+	for(auto it = _observers.begin(); it != _observers.end(); ++it) {
+		(*it)->onContact(otherComponent, enter);
+	}
+
 	if (enter) {
 		_inContact=true;
 		std::shared_ptr<CMessageContactEnter> msg = std::make_shared<CMessageContactEnter>();
@@ -280,12 +290,17 @@ void CPhysicDynamicEntity::onContact (IPhysics *otherComponent, bool enter) {
 		_entity->emitMessage(m);
 	}
 }
+
 //---------------------------------------------------------
 
-/*void CPhysicDynamicEntity::onShapeHit (const PxControllerShapeHit &hit) {
-	//std::cout << _entity->getName() << " le llega el contacto con " << ((IPhysics*)(hit.controller->getUserData()))->getEntity()->getName() << std::endl;
+void CPhysicDynamicEntity::onShapeHit(IPhysics *otherComponent, const Vector3& colisionPos, const Vector3& colisionNormal) {
+	// Mediante patron observador
+	for(auto it = _observers.begin(); it != _observers.end(); ++it) {
+		(*it)->onShapeHit(otherComponent, colisionPos, colisionNormal);
+	}
+}
 
-}*/
+//---------------------------------------------------------
 
 void CPhysicDynamicEntity::move(const Vector3& disp) {
 	_physicEntity.move(disp);

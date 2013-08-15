@@ -204,6 +204,11 @@ namespace Logic {
 	//________________________________________________________________________
 
 	void CPhysicStaticCompound::onTrigger(IPhysics *otherComponent, bool enter) {
+		// Mediante patron observador
+		for(auto it = _observers.begin(); it != _observers.end(); ++it) {
+			(*it)->onTrigger(otherComponent, enter);
+		}
+
 		// Construimos un mensaje de tipo TOUCHED o UNTOUCHED y lo enviamos a 
 		// todos los componentes de la entidad. 
 		if(enter) {
@@ -221,6 +226,11 @@ namespace Logic {
 	//________________________________________________________________________
 
 	void CPhysicStaticCompound::onContact (IPhysics *otherComponent,bool enter) {
+		// Mediante patron observador
+		for(auto it = _observers.begin(); it != _observers.end(); ++it) {
+			(*it)->onContact(otherComponent, enter);
+		}
+
 		if(enter) {
 			shared_ptr<CMessageContactEnter> contactEnterMsg = make_shared<CMessageContactEnter>();
 			contactEnterMsg->setEntity( otherComponent->getEntity() );
@@ -230,6 +240,15 @@ namespace Logic {
 			shared_ptr<CMessageContactExit> contactExitMsg = make_shared<CMessageContactExit>();
 			contactExitMsg->setEntity(otherComponent->getEntity()->getEntityID());
 			_entity->emitMessage(contactExitMsg);
+		}
+	}
+
+	//________________________________________________________________________
+
+	void CPhysicStaticCompound::onShapeHit(IPhysics *otherComponent, const Vector3& colisionPos, const Vector3& colisionNormal) {
+		// Mediante patron observador
+		for(auto it = _observers.begin(); it != _observers.end(); ++it) {
+			(*it)->onShapeHit(otherComponent, colisionPos, colisionNormal);
 		}
 	}
 

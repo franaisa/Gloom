@@ -73,9 +73,7 @@ namespace Logic {
 
 		virtual void onContact (IPhysics *otherComponent, bool enter);
 
-	    //void onShapeHit(const physx::PxControllerShapeHit &hit);
-
-		virtual void onShapeHit(IPhysics *otherComponent, const Vector3& colisionPos, const Vector3& colisionNormal) { onContact(otherComponent, true); }
+		virtual void onShapeHit(IPhysics *otherComponent, const Vector3& colisionPos, const Vector3& colisionNormal);
 
 		//Metodo que devuelve el booleano _inTrigger que nos indica si hay alguien dentro del trigger
 		bool getInTrigger(){ return _inTrigger; };

@@ -13,15 +13,20 @@ clase.
 */
 
 #include "CharacterSound.h"
+#include "PhysicController.h"
 
 #include "Audio/Server.h"
+
+using namespace std;
 
 namespace Logic {
 	IMP_FACTORY(CCharacterSound);
 	
 	CCharacterSound::CCharacterSound() : _audioServer(NULL),
-										 _footstepTimeStep(1000),
+										 _playerIsWalking(false),
+										 _footstepTimeStep(365),
 										 _footstepTimer(_footstepTimeStep) {
+		
 		// No hay memoria dinamica que reservar
 	}
 
@@ -38,19 +43,6 @@ namespace Logic {
 
 		return true;
 	} // spawn
-	
-	//__________________________________________________________________
-
-	bool CCharacterSound::accept(const std::shared_ptr<CMessage>& message) {
-		return false;
-	} // accept
-
-	//__________________________________________________________________
-
-	void CCharacterSound::process(const std::shared_ptr<CMessage>& message) {
-		Logic::TMessageType msgType = message->getMessageType();
-
-	} // process
 
 	//__________________________________________________________________
 
@@ -58,20 +50,33 @@ namespace Logic {
 		// Nos quedamos con el puntero al servidor de audio para evitar sobrecarga
 		_audioServer = Audio::CServer::getSingletonPtr();
 		// Nos quedamos con el componente de movimiento para evitar sobrecarga
+		// y nos registramos como observadores de el
 		_avatarController = _entity->getComponent<CAvatarController>("CAvatarController");
 		assert(_avatarController != NULL && "Error: Es necesario disponer del componente de movimiento");
-		// Añadimos el observador (no es necesario eliminarlo mas tarde)
 		_avatarController->addObserver(this);
+
+		// Nos registramos como observadores de la capsula fisica tambien
+		CPhysicController* physicCont = _entity->getComponent<CPhysicController>("CPhysicController");
+		assert(physicCont != NULL && "Error: Se necesita tener un controlador fisico");
+		physicCont->addObserver(this);
 	}
 
 	//__________________________________________________________________
 
 	void CCharacterSound::onTick(unsigned int msecs) {
-		_footstepTimer -= msecs;
-		if(_footstepTimer < 0) {
-			//_audioServer->playSound("footsteps", false, false);
-			_footstepTimer = _footstepTimeStep;
+		if(_playerIsWalking) {
+			_footstepTimer -= msecs;
+			if(_footstepTimer < 0) {
+				_audioServer->playSound("step1.wav", false, false);
+				_footstepTimer = _footstepTimeStep;
+			}
 		}
+	}
+
+	//__________________________________________________________________
+
+	void CCharacterSound::onActivate() {
+		_playerIsWalking = false;
 	}
 
 	//__________________________________________________________________
@@ -91,7 +96,8 @@ namespace Logic {
 	//__________________________________________________________________
 
 	void CCharacterSound::onWalk() {
-		std::cout << "Ando" << std::endl;
+		_playerIsWalking = true;
+		_footstepTimer = _footstepTimeStep;
 	}
 
 	//__________________________________________________________________
@@ -109,13 +115,19 @@ namespace Logic {
 	//__________________________________________________________________
 
 	void CCharacterSound::onIdle() {
-		std::cout << "Paro" << std::endl;
+		_playerIsWalking = false;
 	}
 
 	//__________________________________________________________________
 
 	void CCharacterSound::onAir() {
-		std::cout << "En el aire" << std::endl;
+		_playerIsWalking = false;
+	}
+
+	//__________________________________________________________________
+
+	void CCharacterSound::onShapeHit(IPhysics* otherComponent, const Vector3& colisionPos, const Vector3& colisionNormal) {
+		//cout << "Me la pego contra " << otherComponent->getEntity()->getName() << endl;
 	}
 
 } // namespace Logic

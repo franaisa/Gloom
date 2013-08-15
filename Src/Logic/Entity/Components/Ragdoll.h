@@ -61,7 +61,7 @@ namespace Logic {
 
 		virtual void onContact (IPhysics *otherComponent, bool enter);
 
-		virtual void onShapeHit(IPhysics *otherComponent, const Vector3& colisionPos, const Vector3& colisionNormal) { onContact(otherComponent, true); }
+		virtual void onShapeHit(IPhysics *otherComponent, const Vector3& colisionPos, const Vector3& colisionNormal);
 
 		void deactivateSimulation();
 

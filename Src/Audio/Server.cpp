@@ -133,8 +133,7 @@ namespace Audio
 					at = {directionAvatar.x,directionAvatar.y,directionAvatar.z};          // vector at: hacia donde se mira
 
 				// se coloca el listener
-				_system->set3DListenerAttributes(0,&listenerPos, &listenerVel,
-										 &at, &up);
+				_system->set3DListenerAttributes(0,&listenerPos, &listenerVel, &at, &up);
 			}
 			//Actualizamos el sistema
 			_system->update();
@@ -178,10 +177,10 @@ namespace Audio
 		//Reproducción en canal
 		Channel *canal;
 		result = _system->playSound(
-		FMOD_CHANNEL_FREE , // dejamos que FMOD seleccione cualquiera
-		sound, // sonido que se “engancha” a ese canal
-		false, // arranca sin “pause” (se reproduce directamente)
-		& canal); // devuelve el canal que asigna
+			FMOD_CHANNEL_FREE , // dejamos que FMOD seleccione cualquiera
+			sound, // sonido que se “engancha” a ese canal
+			false, // arranca sin “pause” (se reproduce directamente)
+			& canal); // devuelve el canal que asigna
 		ERRCHECK(result);
 		// el sonido ya está reproduciendo!!
 		result = canal->setVolume(_volume);
@@ -246,7 +245,7 @@ namespace Audio
 		FMOD_VECTOR
 			pos={position.x,position.y,position.z}, // posición
 			vel={speed.x, speed.y, speed.z};  // velocidad (para el doppler)
-			canal->set3DAttributes(& pos, & vel);
+			canal->set3DAttributes(&pos, &vel);
 			ERRCHECK(result);
 
 		//Distancia a la que empieza a atenuarse y a la cual ya no se atenua mas respectivamente
@@ -261,12 +260,10 @@ namespace Audio
 
 		//Guardamos la asociacion nombreSonido/Canal
 		size_t charPosition = soundName.find('.');
-		if(charPosition != std::string::npos) {
+		if(charPosition != std::string::npos)
 			_soundChannel[soundName.substr(0, charPosition)] = canal;
-		}
-		else {
+		else
 			_soundChannel[soundName] = canal;
-		}
 	}//playSound3D
 	//--------------------------------------------------------
 
