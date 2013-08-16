@@ -18,8 +18,7 @@ Contiene la implementación del componente que controla el sonido de una entidad.
 
 using namespace std;
 
-namespace Logic 
-{
+namespace Logic {
 	IMP_FACTORY(CAudio);
 
 	bool CAudio::accept(const std::shared_ptr<CMessage>& message) {
@@ -63,7 +62,6 @@ namespace Logic
 		}
 
 	} // process
-	//----------------------------------------------------------
 
 } // namespace Logic
 

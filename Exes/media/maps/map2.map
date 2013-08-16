@@ -1,5 +1,12 @@
 Map = {
 
+	LavaSound = {
+		type = "AmbientSound",
+		position = {-133.692, 0.45532, -156.18},
+		staticAudio_name = "ambient/a51.mp3",
+		staticAudio_stream = true,
+	},
+
 	World = {
 		type = "World",
 		static = true,

@@ -151,7 +151,7 @@ namespace Logic {
 			if(distanceToFeet < _capsuleRadius) {
 				// Actualizamos el sonido que debe reproducirse al pisar por si acaso
 				// pisamos otro tipo de superficie
-				//_footstepSound = "fs_" + material + ".wav";
+				_footstepSound = "footsteps/" + material + ".wav";
 			}
 			// Colision con la chola
 			else if(distanceToFeet > _feetToNeckDist) {
