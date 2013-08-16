@@ -55,7 +55,6 @@ namespace Logic
 
 		if(entityInfo->hasAttribute("model"))
 			_model = entityInfo->getStringAttribute("model");
-
 		
 		_graphicsEntity = createGraphicsEntity(entityInfo);
 		if(!_graphicsEntity)
@@ -79,6 +78,16 @@ namespace Logic
 			_material.push_back(materialName+"HandsBlue");
 
 			_graphicsEntity->changeMaterial(_material);
+		}
+
+		std::vector<unsigned int> lightGroups = readLightGroups(entityInfo);
+		if( !lightGroups.empty() ) {
+			unsigned int lightMask = 0;
+			for(int i = 0; i < lightGroups.size(); ++i) {
+				lightMask |= (1 << lightGroups[i]);
+			}
+
+			_graphicsEntity->setLightMask(lightMask);
 		}
 
 		return true;
@@ -111,6 +120,31 @@ namespace Logic
 		return _graphicsEntity;
 
 	} // createGraphicsEntity
+
+	//---------------------------------------------------------
+
+	std::vector<unsigned int> CGraphics::readLightGroups(const Map::CEntity *entityInfo) {
+		std::vector<unsigned int> lightGroups;
+
+		if( entityInfo->hasAttribute("lightMask") ) {
+			std::istringstream groupListString( entityInfo->getStringAttribute("lightMask") );
+
+			// Para cada cadena entre comas...
+			do {
+				std::string groupNumber;
+				std::getline(groupListString, groupNumber, ',');	// linea entre delimitadores
+				
+				std::istringstream str(groupNumber);				// wrappeamos cadena como Input Stream
+				do {												// Le quitamos los espacios...
+					std::getline(str, groupNumber, ' ');			// linea entre espacios
+				} while ( groupNumber.size() == 0 && !str.eof() );
+
+				lightGroups.push_back( atoi(groupNumber.c_str()) );
+			} while ( !groupListString.eof() );
+		}
+
+		return lightGroups;
+	}
 
 	//---------------------------------------------------------
 	

@@ -12,6 +12,7 @@ Map = {
 		static = true,
 		model = "mapaAlberto.mesh",
 		physic_file = "media/models/mapaAlberto/mapaAlberto.RepX",
+		lightMask = "0, 1, 2",
 	},	
 
 	David = {

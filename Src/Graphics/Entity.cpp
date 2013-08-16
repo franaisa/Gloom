@@ -201,6 +201,14 @@ namespace Graphics
 			_entityNode->setOrientation(orientation);
 
 	} // setOrientation
+
+	//--------------------------------------------------------
+
+	void CEntity::setLightMask(unsigned int lightMask) 
+	{
+		assert(_entity != NULL && "Error: La entidad grafica no existe");
+		_entity->setLightMask(lightMask);
+	}
 	
 	//--------------------------------------------------------
 		

@@ -100,8 +100,8 @@ namespace Logic {
 		@param direction Dirección a la que queremos que apunte la luz. En el caso
 		de ser puntual, no afecta la dirección que pongamos.
 		*/
-		void createLight(Graphics::CLight* & light, Logic::CLight* lightComp, Graphics::LightType::Enum lightType, 
-			             bool controlledByManager, const Vector3& position, const Vector3& direction);
+		void createLight(Graphics::CLight* & light, Graphics::LightType::Enum lightType, unsigned int lightGroup, 
+						 bool isStatic, Logic::CLight* lightComp, bool controlledByManager, const Vector3& position, const Vector3& direction);
 
 		//________________________________________________________________________
 

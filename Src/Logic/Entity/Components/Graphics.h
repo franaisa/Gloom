@@ -154,11 +154,13 @@ namespace Logic
 		*/
 		virtual Graphics::CEntity* createGraphicsEntity(const Map::CEntity *entityInfo);
 
+		std::vector<unsigned int> readLightGroups(const Map::CEntity *entityInfo);
+
 		/**
 		Atributo con el nombre del modelo gráfico de la entidad.
 		*/
 		std::string _model;
-		
+
 		/**
 		Entidad gráfica.
 		*/

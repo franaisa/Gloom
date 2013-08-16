@@ -223,6 +223,9 @@ namespace Logic {
 		/** Atenuación de la luz. x = constante, y = linear, z = cuadrática. */
 		Vector3 _attenuation;
 
+		/** Grupo al que pertenece la luz. */
+		unsigned int _lightGroup;
+
 		/** Ángulo del cono interior del spotlight. Solo útil para spotlights. */
 		float _innerAngle;
 
@@ -237,6 +240,9 @@ namespace Logic {
 
 		/** true si queremos que el manager gestione la creación/destrucción de ésta luz. */
 		bool _controlledByManager;
+
+		/** true si la luz es estatica, es decir, si ha sido precocinada en el lightmap. */
+		bool _static;
 	}; // class CLight
 
 	REG_FACTORY(CLight);
