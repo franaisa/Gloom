@@ -50,6 +50,7 @@ namespace Logic {
 		Ogre::SceneNode* groundNode = sceneMgr->getRootSceneNode()->createChildSceneNode();
 		groundNode->attachObject(entGround);
 		groundNode->setPosition(0.0f, 0.0f, 0.0f);
+		entGround->setLightMask(1 << 0 | 1 << 2);
 
 		// Asignamos manualmente el material de pruebas
 		entGround->setMaterialName("bumpLightingTest");

@@ -15,6 +15,13 @@ float4 lightColor;
 float4 lightAttenuation;
 float4 spotLightParams;
 
+// Parametro customizado que se le pasa a cada luz
+// Si la w vale 1.0f quiere decir que la luz ha sido marcada como static = true
+// Calcular bump mapping con difuso + especular
+// Si la w vale 0.0f quiere decir que la luz ha sido marcada como dinamica
+// Aplicar light map + bumped diffuse
+float4 customLightParams;
+
 // Parametros uniformes
 // Constante para modular el ambiente
 float Ka;

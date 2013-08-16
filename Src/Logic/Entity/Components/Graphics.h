@@ -143,6 +143,8 @@ namespace Logic
 
 		virtual void onDeactivate();
 
+		virtual void onStart();
+
 		/**
 		Método virtual que construye la entidad gráfica de la entidad. Otros
 		componentes pueden sobreescribirlo para inicializar otro tipo de
@@ -154,7 +156,7 @@ namespace Logic
 		*/
 		virtual Graphics::CEntity* createGraphicsEntity(const Map::CEntity *entityInfo);
 
-		std::vector<unsigned int> readLightGroups(const Map::CEntity *entityInfo);
+		unsigned int readLightMask(const Map::CEntity *entityInfo);
 
 		/**
 		Atributo con el nombre del modelo gráfico de la entidad.
@@ -165,6 +167,8 @@ namespace Logic
 		Entidad gráfica.
 		*/
 		Graphics::CEntity *_graphicsEntity;
+
+		unsigned int _lightMask;
 
 		/**
 		Escena gráfica donde se encontrarán las representaciones gráficas de

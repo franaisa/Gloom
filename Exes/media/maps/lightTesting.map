@@ -14,6 +14,8 @@ Map = {
 		lightType = "point",
 		position = {0, 30, 0},
 		color = {0.0, 0.9, 0.9},
+		lightGroup = 2,
+		lightIsStatic = true,
 	},
 	
 	TestLight1 = {
@@ -22,6 +24,8 @@ Map = {
 		position = {300, 50, 0},
 		direction = {1, -1, 1},
 		color = {0.9, 0.0, 0.0},
+		lightGroup = 1,
+		lightIsStatic = true,
 	},
 	
 	TestLight0 = {
@@ -32,6 +36,8 @@ Map = {
 		color = {0.0, 0.9, 0.0},
 		innerAngle = 0.63,
 		outerAngle = 1.11,
+		lightGroup = 0,
+		lightIsStatic = true,
 	},
 	
 	Player = {

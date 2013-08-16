@@ -80,15 +80,7 @@ namespace Logic
 			_graphicsEntity->changeMaterial(_material);
 		}
 
-		std::vector<unsigned int> lightGroups = readLightGroups(entityInfo);
-		if( !lightGroups.empty() ) {
-			unsigned int lightMask = 0;
-			for(int i = 0; i < lightGroups.size(); ++i) {
-				lightMask |= (1 << lightGroups[i]);
-			}
-
-			_graphicsEntity->setLightMask(lightMask);
-		}
+		_lightMask = readLightMask(entityInfo);
 
 		return true;
 
@@ -123,7 +115,7 @@ namespace Logic
 
 	//---------------------------------------------------------
 
-	std::vector<unsigned int> CGraphics::readLightGroups(const Map::CEntity *entityInfo) {
+	unsigned int CGraphics::readLightMask(const Map::CEntity *entityInfo) {
 		std::vector<unsigned int> lightGroups;
 
 		if( entityInfo->hasAttribute("lightMask") ) {
@@ -143,7 +135,18 @@ namespace Logic
 			} while ( !groupListString.eof() );
 		}
 
-		return lightGroups;
+		unsigned int lightMask;
+		if( !lightGroups.empty() ) {
+			lightMask = 0;
+			for(int i = 0; i < lightGroups.size(); ++i) {
+				lightMask |= (1 << lightGroups[i]);
+			}
+		}
+		else {
+			lightMask = 0xFFFFFFFF;
+		}
+
+		return lightMask;
 	}
 
 	//---------------------------------------------------------
@@ -220,7 +223,6 @@ namespace Logic
 	}//---------------------------------------------------------
 	//onTick
 
-
 	void CGraphics::changeScale(float newScale){
 		_graphicsEntity->setScale(newScale);		
 	}//---------------------------------------------------------
@@ -228,6 +230,11 @@ namespace Logic
 
 	void CGraphics::onDeactivate() {
 		setVisible(false);
+	}
+	//---------------------------------------------------------
+
+	void CGraphics::onStart() {
+		_graphicsEntity->setLightMask(_lightMask);
 	}
 	//---------------------------------------------------------
 

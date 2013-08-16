@@ -879,6 +879,8 @@ Map = {
 			physic_shape = box
 			physic_dimensions = 3.0	8.0 	3.0
 		",
+		lightGroup = 1,
+		lightIsStatic = true,
 	},
 	
 	Light2 = {
@@ -889,6 +891,8 @@ Map = {
 		color = {1.0, 1.0, 1.0},
 		innerAngle = 0.63,
 		outerAngle = 1.11,
+		lightGroup = 2,
+		lightIsStatic = true,
 	},
 	
 	Light3 = {
@@ -898,5 +902,7 @@ Map = {
 		color = {1.0, 1.0, 1.0},
 		range = 200,
 		attenuation = {1.0, 0.022, 0.0019},
+		lightGroup = 3,
+		lightIsStatic = true,
 	},
 }

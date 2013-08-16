@@ -11,6 +11,7 @@ vertex_program bumpLightingVertexShader hlsl {
 		param_named_auto	lightPosition					light_position_object_space			0
 		param_named_auto	lightDir							light_direction_object_space			0
 		param_named_auto	spotLightParams			spotlight_params							0
+		param_named_auto	customLightParams		light_custom									0		0
     }
 }
 
@@ -24,6 +25,7 @@ vertex_program bumpLightingVertex_AMB hlsl {
 	
 	default_params {
 		param_named_auto	viewProjectionMatrix 		worldviewproj_matrix
+		param_named_auto	customLightParams		light_custom									0		0
     }
 }
 
@@ -43,6 +45,7 @@ fragment_program bumpLightingFragmentShader hlsl {
 		param_named_auto	lightDir							light_direction_object_space			0
 		param_named_auto	lightColor						light_diffuse_colour						0
 		param_named_auto	spotLightParams			spotlight_params							0
+		param_named_auto	customLightParams		light_custom									0		0
     }
 }
 
@@ -57,6 +60,7 @@ fragment_program bumpLightingFragment_AMB hlsl {
 	default_params {
 		// Nivel de ambiente configurado en el juego
 		param_named_auto	globalAmbient				ambient_light_colour
+		param_named_auto	customLightParams		light_custom									0		0
     }
 }
 
@@ -75,6 +79,7 @@ fragment_program bumpLightingFragment_DIFF_ALPHASPEC hlsl {
 		param_named_auto	lightDir							light_direction_object_space			0
 		param_named_auto	lightColor						light_diffuse_colour						0
 		param_named_auto	spotLightParams			spotlight_params							0
+		param_named_auto	customLightParams		light_custom									0		0
     }
 }
 
@@ -94,5 +99,6 @@ fragment_program bumpLightingFragment_DIFF_SPEC hlsl {
 		param_named_auto	lightDir							light_direction_object_space			0
 		param_named_auto	lightColor						light_diffuse_colour						0
 		param_named_auto	spotLightParams			spotlight_params							0
+		param_named_auto	customLightParams		light_custom									0		0
     }
 }

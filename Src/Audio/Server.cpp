@@ -123,7 +123,7 @@ namespace Audio
 			//Si hay un player con el que actualizarnos, seteamos la nueva posición
 			if(_soundAvatar) {
 				Logic::CAvatarController* avatarCont = _soundAvatar->getComponent<Logic::CAvatarController>("CAvatarController");
-				Vector3 momentum = avatarCont->getMomentum();
+				Vector3 momentum = avatarCont != NULL ? avatarCont->getMomentum() : Vector3::ZERO;
 
 				Vector3 positionAvatar	=_soundAvatar->getPosition();
 				Vector3 directionAvatar =_soundAvatar->getOrientation() * Vector3::NEGATIVE_UNIT_Z;
