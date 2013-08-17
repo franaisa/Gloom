@@ -180,6 +180,11 @@ namespace Logic{
 		_hud->callFunction( "updateTime", Hikari::Args(minutes)(seconds) );
 	}
 
+	void spreeMessage(const std::string& message) {
+		std::cout << message << std::endl;
+		//_hud->callFunction( "spreeMessage", Hikari::Args(message) );
+	}
+
 	void CHud::hudLife(int health){
 		_hud->callFunction("updateLife", Hikari::Args(health));
 	}
