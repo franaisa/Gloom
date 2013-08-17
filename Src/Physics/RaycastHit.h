@@ -17,6 +17,7 @@ información del hit de un raycast de físicas.
 
 namespace Logic {
 	class CEntity;
+	class IPhysics;
 }
 
 namespace Physics {
@@ -30,8 +31,12 @@ namespace Physics {
 	*/
 
 	struct CRaycastHit {
-		/** Puntero a la entidad golpeada */
+		/** Puntero a la entidad golpeada. */
 		Logic::CEntity* entity;
+		/** Puntero al componente fisico de la entidad golpeada. */
+		Logic::IPhysics* physicComponent;
+		/** Nombre del collider golpeado, unknown en el caso de no tener un nombre asignado.*/
+		std::string colliderName;
 		/** Distancia desde el punto de salida del ray hasta el golpeo. */
 		float distance;
 		/** Punto de impacto del raycast. */

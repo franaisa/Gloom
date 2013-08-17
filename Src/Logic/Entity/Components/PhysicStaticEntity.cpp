@@ -204,6 +204,9 @@ void CPhysicStaticEntity::createFromFile(const Map::CEntity *entityInfo, int gro
 
 	// Crear el actor a partir del fichero RepX
 	_physicEntity.load(file, group, groupList, this);
+
+	// Los colliders se crean con nombres al ser leidos de fichero
+	_collidersHaveName = true;
 }
 
 //---------------------------------------------------------

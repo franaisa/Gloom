@@ -28,8 +28,8 @@ Map = {
 		position = {20, 0.2, -20},
 		model = "ragdolls/agent47.mesh",
 		ragdoll_file = "media/models/ragdolls/hitman.RepX",
-		ragdoll_group = 18,
-		ragdoll_groupList = "0",
+		ragdoll_group = 19,
+		ragdoll_groupList = "-1",
 	},
 	
 	Jumper1 = {

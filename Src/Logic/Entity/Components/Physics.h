@@ -36,6 +36,10 @@ namespace Logic {
 	*/
 	class IPhysics : public IComponent {
 	public:
+
+		IPhysics() : _collidersHaveName(false) {
+			// Nada que hacer
+		}
  
 		// Te la dedico Ruben!
 		class IObserver {
@@ -91,9 +95,12 @@ namespace Logic {
 		// generalista.
 		virtual void onShapeHit(IPhysics *otherComponent, const Vector3& colisionPos, const Vector3& colisionNormal) = 0;
 
+		bool collidersHaveName() { return _collidersHaveName; }
+
 	protected:
 
 		std::list<IObserver*> _observers;
+		bool _collidersHaveName;
 
 	}; // class IPhysics
 

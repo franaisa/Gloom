@@ -37,7 +37,7 @@ IMP_FACTORY(CRagdoll);
 //________________________________________________________________________
 
 CRagdoll::CRagdoll() : _ragdollHasControl(false) {
-	// Nada que hacer
+	_collidersHaveName = true;
 }
 
 //________________________________________________________________________
