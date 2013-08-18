@@ -81,12 +81,14 @@
     <ClCompile Include="..\..\Src\Graphics\OgreDecal.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\AmplifyDamageClient.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\AmplifyDamageServer.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\AudioTrigger.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\Bite.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\ComeBackClient.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\ComeBackServer.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\CoolDownClient.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\CoolDownServer.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\DynamicLight.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\CharacterSound.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\GraphicPlane.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\GravityClient.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\GravityServer.cpp" />
@@ -106,6 +108,7 @@
     <ClCompile Include="..\..\Src\Logic\Entity\Components\Spell.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\SpellsManagerServer.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\SpellsManagerClient.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\StaticAudio.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\WeaponAmmo.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\AnimationManager.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\IronHellGoatAmmo.cpp" />
@@ -277,12 +280,14 @@
     <ClInclude Include="..\..\Src\Graphics\OgreDecal.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\AmplifyDamageClient.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\AmplifyDamageServer.h" />
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\AudioTrigger.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\Bite.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\ComeBackClient.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\ComeBackServer.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\CoolDownClient.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\CoolDownServer.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\DynamicLight.h" />
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\CharacterSound.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\GraphicPlane.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\GravityClient.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\GravityServer.h" />
@@ -303,6 +308,7 @@
     <ClInclude Include="..\..\Src\Logic\Entity\Components\SpellsManagerServer.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\SpellsManagerClient.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\SpellType.h" />
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\StaticAudio.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\WeaponAmmo.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\AnimationManager.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\IronHellGoatAmmo.h" />

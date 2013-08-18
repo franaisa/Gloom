@@ -171,7 +171,12 @@ namespace Logic {
 
 		//__________________________________________________________________
 
+		/**
+		Ejecuta la fase de procesado de mensajes para la entidad.
+		*/
 		void processComponentMessages();
+
+		//__________________________________________________________________
 
 		/**
 		Función llamada en cada frame para que se realicen las funciones
@@ -185,6 +190,14 @@ namespace Logic {
 		*/
 		bool tick(unsigned int msecs);
 
+		//__________________________________________________________________
+
+		/**
+		Igual que tick, pero se ejecuta en trozos fijos de tiempo.
+
+		@param msecs Milisegundos transcurridos desde el ultimo tick, siempre
+		seran de una cantidad fija.
+		*/
 		bool fixedTick(unsigned int msecs);
 
 		//__________________________________________________________________
@@ -255,6 +268,7 @@ namespace Logic {
 		@return Orientación en el entorno.
 		*/
 		Ogre::Quaternion getOrientation() const;
+
 		//__________________________________________________________________
 
 		/**
@@ -275,7 +289,10 @@ namespace Logic {
 		*/
 		void setOrientation(const Quaternion& orientation);
 
-		//__________________________________________________________________
+
+		// =======================================================================
+		//							   MÉTODOS WTF?
+		// =======================================================================
 
 		
 		/**
@@ -331,7 +348,6 @@ namespace Logic {
 
 		//__________________________________________________________________
 
-
 		/**
 		Metodo que permite elegir que eje rotar y cuantos grados hacerlo (en radianes).
 
@@ -339,6 +355,7 @@ namespace Logic {
 		@param rotation Grados en radianes que rotaremos.
 		*/
 		void rotate(int orientation, Ogre::Radian rotation);
+
 
 		// =======================================================================
 		//                         MÉTODOS DE CONSULTA
@@ -461,7 +478,15 @@ namespace Logic {
 
 		//__________________________________________________________________
 
+		/**
+		Helper para registrar de vuelta un componente en la lista de ticks o
+		fixed tick (si estaba durmiendo).
+
+		@param component Componente que queremos volver a registrar en la lista
+		de ticks.
+		*/
 		void wakeUp(IComponent* component);
+
 
 	protected:
 
@@ -561,7 +586,10 @@ namespace Logic {
 			std::list<IComponent*>::const_reverse_iterator fixedTickIterator;
 		};
 
+		/** Lista de componentes que tienen tick. */
 		std::list<IComponent*> _componentsWithTick;
+		
+		/** Lista de componentes que tienen fixed tick. */
 		std::list<IComponent*> _componentsWithFixedTick;
 
 		/** Identificador único de la entidad. */
@@ -570,10 +598,8 @@ namespace Logic {
 		// typedef
 		typedef std::map<std::string, ComponentInfo> TComponentMap;
 
-		/**
-		*/
+		/** Lista de componentes que posee la entidad. */
 		TComponentMap _components;
-
 
 		/** Indica si la entidad está activada. */
 		bool _activated;
@@ -587,11 +613,11 @@ namespace Logic {
 		/** Mapa lógico donde está la entidad. */
 		Logic::CMap *_map;
 
-		/**
-		Variables de posición y orientación.
-		*/
+		/** Posicion de la entidad. */
 		Vector3 _position;
-		Ogre::Quaternion _orientation;
+
+		/** Orientacion de la entidad. */
+		Quaternion _orientation;
 
 		/**
 		Atributo que indica si la entidad es el jugador; por defecto

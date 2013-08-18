@@ -105,8 +105,7 @@ namespace Audio
 
 		@param controlledAvatar Componente al que le preguntaremos la posición de la entidad.
 		*/
-		void setSoundAvatar(Logic::CEntity *controlledAvatar) 
-										{_soundAvatar = controlledAvatar;};
+		void setSoundAvatar(Logic::CEntity *controlledAvatar) { _soundAvatar = controlledAvatar; }
 
 	protected:
 

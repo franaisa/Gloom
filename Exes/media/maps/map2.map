@@ -1,10 +1,18 @@
 Map = {
 
+	LavaSound = {
+		type = "AmbientSound",
+		position = {-133.692, 0.45532, -156.18},
+		staticAudio_name = "ambient/a51.mp3",
+		staticAudio_stream = true,
+	},
+
 	World = {
 		type = "World",
 		static = true,
 		model = "mapaAlberto.mesh",
 		physic_file = "media/models/mapaAlberto/mapaAlberto.RepX",
+		lightMask = "0, 1, 2",
 	},	
 
 	David = {
@@ -20,8 +28,8 @@ Map = {
 		position = {20, 0.2, -20},
 		model = "ragdolls/agent47.mesh",
 		ragdoll_file = "media/models/ragdolls/hitman.RepX",
-		ragdoll_group = 18,
-		ragdoll_groupList = "0",
+		ragdoll_group = 19,
+		ragdoll_groupList = "-1",
 	},
 	
 	Jumper1 = {
@@ -871,6 +879,8 @@ Map = {
 			physic_shape = box
 			physic_dimensions = 3.0	8.0 	3.0
 		",
+		lightGroup = 1,
+		lightIsStatic = true,
 	},
 	
 	Light2 = {
@@ -881,6 +891,8 @@ Map = {
 		color = {1.0, 1.0, 1.0},
 		innerAngle = 0.63,
 		outerAngle = 1.11,
+		lightGroup = 2,
+		lightIsStatic = true,
 	},
 	
 	Light3 = {
@@ -890,5 +902,7 @@ Map = {
 		color = {1.0, 1.0, 1.0},
 		range = 200,
 		attenuation = {1.0, 0.022, 0.0019},
+		lightGroup = 3,
+		lightIsStatic = true,
 	},
 }

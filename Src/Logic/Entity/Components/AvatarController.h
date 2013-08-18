@@ -53,6 +53,32 @@ namespace Logic {
 		DEC_FACTORY(CAvatarController);
 	public:
 
+		class IObserver {
+		public:
+			// Al aterrizar
+			virtual void onLand()	{ }
+			// Al andar (tienes que tocar suelo)
+			virtual void onWalk()	{ }
+			// Al saltar (tienes que tocar suelo)
+			virtual void onJump()	{ }
+			// Al esquivar (tienes que tocar suelo)
+			virtual void onDodge()	{ }
+			// Al parar (tienes que tocar suelo)
+			virtual void onIdle()	{ }
+			// Al estar en el aire - jumper o caida
+			virtual void onAir()	{ }
+
+			// Se llama para indicar si tocamos la pared
+			// Al entrar en contacto y dejar de contactar
+			virtual void sideCollision(bool contacting)	{ }
+			// Se llama para indicar si tocamos el techo
+			// Al entrar en contacto y dejar de contactar
+			virtual void topCollision(bool contacting)	{ }
+			// Se llama para indicar si tocamos el suelo
+			// Al entrar en contacto y dejar de contactar
+			virtual void downCollision(bool contacting)	{ }
+		};
+
 
 		// =======================================================================
 		//                      CONSTRUCTORES Y DESTRUCTOR
@@ -180,17 +206,21 @@ namespace Logic {
 		*/
 		void addForce(const Vector3 &force);
 
-		void executeAnimation(Vector3 dir);
+		// OJITO CON AÑADIR DOS VECES!! que no hago comprobaciones
+		// de si ya estaba el observador
+		void addObserver(IObserver* observer);
 
-		void stopAnimation(Vector3 dir);
+		void removeObserver(IObserver* observer);
+
+		Vector3 getMomentum() { return _momentum; }
 
 		Vector3 getVelocity(){ return _momentum; }
 
-		void setMaxVelocity(float velocity){_maxVelocity = velocity;}
+		void setMaxVelocity(float velocity) { _maxVelocity = velocity; }
 
-		Vector3 getDisplacementDir(){return _displacementDir;}
+		Vector3 getDisplacementDir() { return _displacementDir; }
 
-		bool getFlying(){return !_touchingGround;}
+		bool getFlying() { return !_touchingGround; }
 
 	protected:
 
@@ -299,7 +329,7 @@ namespace Logic {
 		@param streamSound true si queremos que el sonido se reproduzca en streaming. Util
 		para ficheros muy grandes como por ejemplo la música.
 		*/
-		void emitSound(const std::string &soundName, bool loopSound, bool play3d, bool streamSound);
+		//void emitSound(const std::string &soundName, bool loopSound, bool play3d, bool streamSound);
 
 		// =======================================================================
 		//                          MIEMBROS PROTEGIDOS
@@ -308,11 +338,15 @@ namespace Logic {
 
 		/** true si el personaje está tocando el suelo, false si esta en el aire. */
 		bool _touchingGround;
+		/** true si el personaje esta colisionando por los laterales */
+		bool _sideColliding;
+		/** true si el personaje esta colisionando con la cabeza */
+		bool _collisionOnTop;
+		/** true si el personaje esta andando */
+		bool _walking;
 
 		/** Vector de gravedad, puede ser sustituido por un flotante. */
 		Vector3 _gravity;
-
-		
 
 		/** Velocidad máxima de caida. */
 		float _maxGravVelocity;
@@ -357,20 +391,16 @@ namespace Logic {
 		CPhysicController* _physicController;
 
 		/** 
-		Puntero al notificador de feedback de la camara. Para evitar mandar mensajes en cada tick.
-		Será distinto de null solo en el caso del local player (que son los unicos que deberian mover
-		a la camara).
-		*/
-		CCameraFeedbackNotifier* _cameraFX;
-
-		/** 
 		Array que contiene los vectores que corresponden a cada uno de los movimientos
 		de desplazamiento y salto que se pueden realizar. 
 		*/
 		Vector3 _movementCommands[18];
 
-
-		bool _playingsound;
+		/**
+		Lista de observadores. Utilizado para notificar a otros componentes sobre
+		acciones interesantes del controlador de movimiento.
+		*/
+		std::list<IObserver*> _observers;
 
 		/** Número máximo de comandos de movimiento. */
 		static const int MAX_MOVEMENT_COMMANDS = Control::CROUCH;

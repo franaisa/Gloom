@@ -17,7 +17,19 @@ namespace Logic{
 		_instance = this;
 		_guiManager = CGUIManager::getSingletonPtr();
 		_scoreboard = 0;
+
+		_spreeMsgList.reserve(8);
+		_spreeMsgList.push_back("Killing Spree");
+		_spreeMsgList.push_back("Blood Bath");
+		_spreeMsgList.push_back("Ludicrous Massacre");
+		_spreeMsgList.push_back("Daunting Feast");
+		_spreeMsgList.push_back("Wicked Carnival");
+		_spreeMsgList.push_back("Devil's Playground");
+		_spreeMsgList.push_back("Soul Master");
+		_spreeMsgList.push_back("Ownage");
 	}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	CScoreboard::~CScoreboard(){
 		_instance = 0;
@@ -117,8 +129,20 @@ namespace Logic{
 			_scoreboard->callFunction("addSpree",Hikari::Args(name)((int)player->second.bestSpree));
 		}
 
+		showSpreeMessage(player->second.currentSpree);
+
 		//ahora avisamos a la GUI de que ha habido un cambio
 		_scoreboard->callFunction("addKill",Hikari::Args(name)((int)player->second.kills));
+	}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	void CScoreboard::showSpreeMessage(unsigned int nbKills) {
+		if(nbKills % 3 == 0 && nbKills < 25) {
+			unsigned int index = nbKills / 3;
+			std::cout << _spreeMsgList[index - 1] << std::endl;
+			//_scoreboard->callFunction( "showSpreeMessage", Hikari::Args(_spreeMsgList[index - 1]) );
+		}
 	}
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -10,6 +10,7 @@ Contiene la declaración de la clase que representa una Luz.
 @see Graphics::Clight
 
 @author Rubén Mulero
+@author Francisco Aisa García
 @date March, 2013
 */
 
@@ -104,7 +105,27 @@ namespace Graphics {
 		@return la posición de la luz
 		*/
 		Vector3 getPosition();
-		
+		/**
+		Asigna un grupo a la luz. Si el grupo de esta luz no esta incluido en
+		la mascara de luces asignada a las entidades graficas, esta luz no
+		afectara a dicha entidad.
+
+		@param group Grupo de la luz.
+		*/
+		void setGroup(unsigned int group);
+		/**
+		Configura la luz como estatica o dinamica. Dependiendo de si la luz
+		ha sido clasificada como estatica o dinamica, el shader de bump
+		se calculara de una forma distinta para aprovechar los lightmaps.
+
+		@param isStatic true si queremos que la luz sea estatica.
+		*/
+		void setStatic(bool isStatic);
+		/**
+		Devuelve el nombre de la luz.
+
+		@return El nombre de la luz.
+		*/
 		std::string getName();
 
 	protected:

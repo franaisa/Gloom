@@ -12,6 +12,9 @@ gráfica de la entidad.
 */
 
 #include "HudWeapons.h"
+#include "CameraFeedbackNotifier.h"
+
+#include "BaseSubsystems/Euler.h"
 
 // Logica
 #include "Logic/Entity/Entity.h"
@@ -31,8 +34,7 @@ gráfica de la entidad.
 #include "Logic/Messages/MessageTransform.h"
 #include "Logic/Messages/MessageChangeWeaponGraphics.h"
 #include "Logic/Messages/MessageHudDebugData.h"
-
-#include "Graphics/HHFXParticle.h"
+#include "Logic/Messages/MessageBlockShoot.h"
 
 #include <stdio.h>
 #include <windows.h>
@@ -47,11 +49,20 @@ namespace Logic {
 	
 	CHudWeapons::CHudWeapons() : _currentWeapon(0), 
 								 _graphicsEntities(0),
+								 _changingWeapon(false),
 								 _playerIsWalking(false),
 								 _playerIsLanding(false),
 								 _loadingWeapon(false),
 								 _continouslyShooting(false),
+								 _linking(false),
+								 _threePiQuarters(3 * Math::PI / 4.0f),
 								 _playerIsFalling(false) {
+
+		// Valores de configuracion de la animacion de linkar
+		_linkAnim.sinOffset = 0.05f;
+		_linkAnim.x = 0.0f;
+		_linkAnim.xSpeed = 0.028f;
+		_linkAnim.offset = Vector3::ZERO;
 
 		// Valores de configuracion de la animacion de correr
 		_runAnim.currentHorizontalPos = Math::HALF_PI;
@@ -109,6 +120,14 @@ namespace Logic {
 		_rapidShootAnim.firingRate = 20;
 		_rapidShootAnim.acumFiringTime = 0;
 
+		// Valores de configuracion de la animacion de cambio de arma
+		_chgWpnAnim.sineOffset = 0.5f;
+		_chgWpnAnim.xSpeed = 0.022f;
+		_chgWpnAnim.x = 0.0f;
+		_chgWpnAnim.horizontalSpeed = 0.8f;
+		_chgWpnAnim.offset = Vector3::ZERO;
+		_chgWpnAnim.takingAway = false;
+
 		// Valores de configuración de la animación de salto
 		_fallAnim.currentHorizontalPos = 0.0f;
 		_fallAnim.horizontalSpeed = 0.0002f;
@@ -150,6 +169,9 @@ namespace Logic {
 	void CHudWeapons::onDeactivate() {
 		//Cuando desactivamos el componente, desactivaremos el arma actual
 		_overlayWeapon3D[_currentWeapon]->setVisible(false);
+
+		_fallAnim.movementDir = _runAnim.currentStrafingDir = 0;
+		_playerIsWalking = _playerIsLanding = _playerIsFalling = false;
 	} // deactivate
 
 	//________________________________________________________________________
@@ -234,10 +256,17 @@ namespace Logic {
 	//________________________________________________________________________
 
 	void CHudWeapons::onStart() {
-		Matrix4 weaponTransform;
 		for(int i = 0; i < WeaponType::eSIZE; ++i) {
 			_graphicsEntities[i].defaultPos = _graphicsEntities[i].graphicsEntity->getPosition();
 		}
+
+		_avatarController = _entity->getComponent<CAvatarController>("CAvatarController");
+		assert(_avatarController != NULL && "Error: Se necesita el componente avatar controller");
+
+		_avatarController->addObserver(this);
+
+		float cameraLandTime = Math::PI / _entity->getComponent<CCameraFeedbackNotifier>("CCameraFeedbackNotifier")->getLandRecoverySpeed();
+		_landAnim.recoverySpeed = Math::PI / cameraLandTime;
 	}
 	
 	//________________________________________________________________________
@@ -254,27 +283,73 @@ namespace Logic {
 	void CHudWeapons::process(const std::shared_ptr<CMessage>& message) {
 		switch( message->getMessageType() ) {
 			case Message::CHANGE_WEAPON_GRAPHICS: {
-				std::shared_ptr<CMessageChangeWeaponGraphics> chgWpnMsg = std::static_pointer_cast<CMessageChangeWeaponGraphics>(message);
+				std::shared_ptr<CMessageChangeWeaponGraphics> chgWpnMsg = static_pointer_cast<CMessageChangeWeaponGraphics>(message);
 				changeWeapon( chgWpnMsg->getWeapon() );
 				break;
 			}
 		}
 	} // process
+
+	//________________________________________________________________________
+
+	void CHudWeapons::onLand() {
+		float hitForce = _avatarController->getMomentum().y;
+		if(hitForce < -0.3f) {
+			_playerIsLanding = true;
+			_landAnim.force = hitForce * 0.2f;
+		}
+
+		_fallAnim.movementDir = 0;
+		_playerIsFalling = false;
+	}
+
+	//________________________________________________________________________
+
+	void CHudWeapons::onWalk() {
+		_playerIsWalking = true;
+	}
+
+	//________________________________________________________________________
+
+	void CHudWeapons::onIdle() {
+		_playerIsWalking = false;
+		_runAnim.currentStrafingDir = 0;
+	}
+
+	//________________________________________________________________________
+
+	void CHudWeapons::onAir() {
+		_playerIsWalking = false;
+		_playerIsFalling = true;
+		_runAnim.currentStrafingDir = 0;
+		_fallAnim.movementDir = _avatarController->getDisplacementDir().x;
+	}
 	
 	//________________________________________________________________________
 
 	void CHudWeapons::changeWeapon(int newWeapon) {
-		_overlayWeapon3D[_currentWeapon]->setVisible(false);
-		_overlayWeapon3D[newWeapon]->setVisible(true);
-		_currentWeapon = newWeapon;
+		shared_ptr<CMessageBlockShoot> lockWeaponsMsg = make_shared<CMessageBlockShoot>();
+		lockWeaponsMsg->canShoot(false);
+		_entity->emitMessage(lockWeaponsMsg);
+
+		_chgWpnAnim.nextWeapon = newWeapon;
+
+		_changingWeapon = true;
+		_chgWpnAnim.x = 0.0f;
+		_chgWpnAnim.takingAway = true;
 	}
 
 	//________________________________________________________________________
 
 	void CHudWeapons::onFixedTick(unsigned int msecs) {
 		_graphicsEntities[_currentWeapon].graphicsEntity->setVisible(true);
-		if(_playerIsLanding)
+		if(_changingWeapon) {
+			changeWeaponAnim(msecs);
+		}
+		else if(_playerIsLanding)
 			landAnim(msecs);
+		else if(_linking)
+			linkAnim(msecs);
 		else if(_playerIsWalking)
 			walkAnim(msecs);
 		else if(_playerIsFalling) {
@@ -298,7 +373,10 @@ namespace Logic {
 			_rapidShootAnim.offset *= _rapidShootAnim.recoveryCoef;
 			_rapidShootAnim.currentVerticalPos *= _rapidShootAnim.recoveryCoef;
 		}
+
 		_graphicsEntities[_currentWeapon].graphicsEntity->setPosition( _graphicsEntities[_currentWeapon].defaultPos + 
+																	   _linkAnim.offset +
+																	   _chgWpnAnim.offset +
 																	   _runAnim.offset + 
 																	   _landAnim.offset +
 																	   _idleAnim.offset +
@@ -310,6 +388,10 @@ namespace Logic {
 
 		if(!_playerIsFalling)
 			_fallAnim.offset *= 0.96f;
+		if(!_linking) {
+			_linkAnim.offset *= 0.95f;
+			_linkAnim.x *= 0.95f;
+		}
 	}
 
 	//________________________________________________________________________
@@ -401,6 +483,57 @@ namespace Logic {
 
 	//________________________________________________________________________
 
+	void CHudWeapons::changeWeaponAnim(unsigned int msecs) {
+		// Rotamos la orientacion del arma ligeramente para que parezca que la 
+		// enfundamos
+		Euler euler( _graphicsEntities[_currentWeapon].graphicsEntity->getOrientation() );
+		euler.yaw( Ogre::Radian( Math::PI / 8.0f) );
+
+		// Calculamos el desplazamiento sobre el eje x para la ecuacion lineal
+		// construida para el seno
+		if(_chgWpnAnim.takingAway)
+			_chgWpnAnim.x += _chgWpnAnim.xSpeed * msecs;
+		else
+			_chgWpnAnim.x -= _chgWpnAnim.xSpeed * msecs;
+
+		// Desplazamos sobre la horizontal el arma
+		_chgWpnAnim.offset = euler.toQuaternion() * Vector3::NEGATIVE_UNIT_Z;
+		_chgWpnAnim.offset.normalise();
+		_chgWpnAnim.offset *= -_chgWpnAnim.x * _chgWpnAnim.horizontalSpeed * Vector3(1.0f, 0.0f, 1.0f);
+
+		// Desplazamos sobre la vertical el arma en base a la ecuacion precalculada
+        if (_chgWpnAnim.x < _threePiQuarters) {
+			// Si aun no hemos acabado de dibujar la curva del seno, calcular la
+			// proxima posicion para la y dada esta x
+			_chgWpnAnim.offset.y = sin(_chgWpnAnim.x) * _chgWpnAnim.sineOffset;
+        }
+        else {
+			// Esta es la ecuacion que describe una recta que pasa por el punto
+			// Seno(3PI/4) * k (con K el offset del seno) y el punto Seno(PI).
+
+            // Ecuacion de la recta pre-calculada
+			_chgWpnAnim.offset.y = (-0.9003163162f * _chgWpnAnim.sineOffset) * (_chgWpnAnim.x - Math::PI);
+        }
+
+		if(_chgWpnAnim.takingAway && _chgWpnAnim.x > 6.0f) {
+			_chgWpnAnim.takingAway = false;
+			
+			_overlayWeapon3D[_currentWeapon]->setVisible(false);
+			_overlayWeapon3D[_chgWpnAnim.nextWeapon]->setVisible(true);
+			_currentWeapon = _chgWpnAnim.nextWeapon;
+		}
+		else if(_chgWpnAnim.x < 0.0f) {
+			_changingWeapon = false;
+			_chgWpnAnim.offset = Vector3::ZERO;
+
+			shared_ptr<CMessageBlockShoot> lockWeaponsMsg = make_shared<CMessageBlockShoot>();
+			lockWeaponsMsg->canShoot(true);
+			_entity->emitMessage(lockWeaponsMsg);
+		}
+	}
+
+	//________________________________________________________________________
+
 	float CHudWeapons::sineStep(unsigned int msecs, float& currentSinePosition, float offset, float speed, float loBound, float hiBound) {
 		currentSinePosition += speed * msecs;
 		if(currentSinePosition > hiBound) currentSinePosition = loBound;
@@ -412,6 +545,12 @@ namespace Logic {
 
 	void CHudWeapons::idleAnim(unsigned int msecs) {
 		_idleAnim.offset.y = sineStep(msecs, _idleAnim.currentVerticalPos, _idleAnim.verticalOffset, _idleAnim.verticalSpeed);
+	}
+
+	//________________________________________________________________________
+
+	void CHudWeapons::linkAnim(unsigned int msecs) {
+		_linkAnim.offset.y = sineStep(msecs, _linkAnim.x, _linkAnim.sinOffset, _linkAnim.xSpeed);
 	}
 
 	//________________________________________________________________________
@@ -432,28 +571,6 @@ namespace Logic {
 		_landAnim.offset *= Vector3(0.85f, 0.85f, 0.85f);
 		_runAnim.currentHorizontalPos *= 0.85f;
 		_runAnim.currentVerticalPos *= 2 * 0.85f;
-		
-	}
-
-	//________________________________________________________________________
-
-	void CHudWeapons::playerIsWalking(bool walking, int direction) { 
-		_playerIsWalking = walking;
-		if(_playerIsWalking) {
-			_runAnim.oldStrafingDir = _runAnim.currentStrafingDir;
-			_runAnim.currentStrafingDir = direction;
-		}
-		else {
-			_runAnim.currentStrafingDir = 0;
-		}
-	}
-
-	//________________________________________________________________________
-
-	void CHudWeapons::playerIsLanding(float hitForce, float estimatedLandingTime) {
-		_playerIsLanding = true;
-		_landAnim.force = hitForce * 0.2f;
-		_landAnim.recoverySpeed = Math::PI / estimatedLandingTime;
 	}
 
 	//________________________________________________________________________
@@ -465,6 +582,9 @@ namespace Logic {
 	//________________________________________________________________________
 
 	void CHudWeapons::walkAnim(unsigned int msecs) {
+		_runAnim.oldStrafingDir = _runAnim.currentStrafingDir;
+		_runAnim.currentStrafingDir = _avatarController->getDisplacementDir().x;
+
 		_runAnim.offset = (_graphicsEntities[_currentWeapon].graphicsEntity->getOrientation() * _halfPi) * Vector3::NEGATIVE_UNIT_Z;
 		_runAnim.offset.normalise();
 

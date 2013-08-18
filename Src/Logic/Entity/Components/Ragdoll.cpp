@@ -37,7 +37,7 @@ IMP_FACTORY(CRagdoll);
 //________________________________________________________________________
 
 CRagdoll::CRagdoll() : _ragdollHasControl(false) {
-	// Nada que hacer
+	_collidersHaveName = true;
 }
 
 //________________________________________________________________________
@@ -109,6 +109,12 @@ void CRagdoll::process(const std::shared_ptr<CMessage>& message) {
 		}
 	}
 } // process
+
+//________________________________________________________________________
+
+std::string CRagdoll::getPhysicName() {
+	return "Ragdoll" + _entity->getName();
+}
 
 //________________________________________________________________________
 
@@ -192,32 +198,27 @@ void CRagdoll::loadRagdoll(const Map::CEntity *entityInfo, int group, const std:
 //________________________________________________________________________
 
 void CRagdoll::onTrigger(IPhysics* otherComponent, bool enter) {
-	// Construimos un mensaje de tipo TOUCHED o UNTOUCHED y lo enviamos a 
-	// todos los componentes de la entidad. 
-	if(enter) {
-		std::shared_ptr<CMessageTouched> onTriggerMsg = std::make_shared<CMessageTouched>();
-		onTriggerMsg->setEntity( otherComponent->getEntity() );
-		_entity->emitMessage(onTriggerMsg);
-	} 
-	else {
-		std::shared_ptr<CMessageUntouched> onTriggerMsg = std::make_shared<CMessageUntouched>();
-		onTriggerMsg->setEntity( otherComponent->getEntity() );
-		_entity->emitMessage(onTriggerMsg);
+	// Mediante patron observador
+	for(auto it = _observers.begin(); it != _observers.end(); ++it) {
+		(*it)->onContact(otherComponent, enter);
 	}
 }
 
 //________________________________________________________________________
 
 void CRagdoll::onContact(IPhysics* otherComponent, bool enter) {
-	if(enter) {
-		std::shared_ptr<CMessageContactEnter> onContactMsg = std::make_shared<CMessageContactEnter>();
-		onContactMsg->setEntity( otherComponent->getEntity() );
-		_entity->emitMessage(onContactMsg);
-	} 
-	else {
-		std::shared_ptr<CMessageContactExit> onContactMsg = std::make_shared<CMessageContactExit>();
-		onContactMsg->setEntity( otherComponent->getEntity()->getEntityID() );
-		_entity->emitMessage(onContactMsg);
+	// Mediante patron observador
+	for(auto it = _observers.begin(); it != _observers.end(); ++it) {
+		(*it)->onContact(otherComponent, enter);
+	}
+}
+
+//________________________________________________________________________
+
+void CRagdoll::onShapeHit(IPhysics *otherComponent, const Vector3& colisionPos, const Vector3& colisionNormal) {
+	// Mediante patron observador
+	for(auto it = _observers.begin(); it != _observers.end(); ++it) {
+		(*it)->onShapeHit(otherComponent, colisionPos, colisionNormal);
 	}
 }
 

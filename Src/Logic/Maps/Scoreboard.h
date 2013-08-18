@@ -261,6 +261,11 @@ la clase del jugador, las muertes, los frags, los mejores spree, etc.
 		//bool keyReleased(Input::TKey key);
 
 	private:
+
+		void showSpreeMessage(unsigned int nbKills);
+
+		std::vector<std::string> _spreeMsgList;
+
 		/**
 		Única instancia de la clase.
 		*/

@@ -15,6 +15,7 @@ gráfica del jugador, es decir, todas las armas que este portara.
 
 #include "Logic/Entity/Component.h"
 #include "WeaponType.h"
+#include "AvatarController.h"
 
 // Predeclaración de clases para ahorrar tiempo de compilación
 namespace Graphics {
@@ -25,6 +26,8 @@ namespace Graphics {
 
 //declaración de la clase
 namespace Logic {
+
+	class CAvatarController;
 
 	/**
 	Componente que se encarga de la representación gráfica de una entidad.
@@ -41,7 +44,7 @@ namespace Logic {
 	@date Agosto, 2010
 	*/
 
-	class CHudWeapons : public IComponent {
+	class CHudWeapons : public IComponent, public CAvatarController::IObserver {
 		DEC_FACTORY(CHudWeapons);
 	public:
 
@@ -111,11 +114,18 @@ namespace Logic {
 		*/
 		void changeWeapon(int newWeapon);
 
+		virtual void onLand();
+		virtual void onWalk();
+		virtual void onIdle();
+		virtual void onAir();
+
 		/**
 		Metodo que controla el movimiento del arma,
 		el comentario te lo dejo a ti fran :D
 		*/
 		void walkAnim(unsigned int msecs);
+
+		void changeWeaponAnim(unsigned int msecs);
 
 		void landAnim(unsigned int msecs);
 
@@ -129,17 +139,17 @@ namespace Logic {
 
 		void continouosShooting(bool state);
 
-		void playerIsWalking(bool walking, int direction = 0);
-
 		void offsetRecovery(unsigned int msecs);
-
-		void playerIsLanding(float hitForce, float estimatedLandingTime);
 
 		void playerIsFalling(bool falling, int direction = 0);
 	
 		void loadWeaponAnim(unsigned int msecs);
 
 		void loadingWeapon(bool state);
+
+		void linking(bool state) { _linking = state; }
+
+		void linkAnim(unsigned int msecs);
 
 	protected:
 
@@ -166,6 +176,8 @@ namespace Logic {
 		bool _loadingWeapon;
 		bool _continouslyShooting;
 		bool _playerIsFalling;
+		bool _changingWeapon;
+		bool _linking;
 
 		/**
 		Estructura donde se guardara el offset y las modificaciones en el arma
@@ -288,11 +300,30 @@ namespace Logic {
 		//__________________________________________________________________
 
 		struct ChangeWeaponAnim {
+			float sineOffset;
+			float xSpeed;
+			float x;
+
+			float horizontalSpeed;
+
+			bool takingAway;
+
+			int nextWeapon;
+
+			Vector3 offset;
+		};
+
+		struct LinkAnim {
+			float sinOffset;
+			float xSpeed;
+			float x;
 			Vector3 offset;
 		};
 
 		//__________________________________________________________________
 
+		LinkAnim _linkAnim;
+		ChangeWeaponAnim _chgWpnAnim;
 		RunAnim _runAnim;
 		LandAnim _landAnim;
 		IdleAnim _idleAnim;
@@ -304,6 +335,9 @@ namespace Logic {
 		//////////////////////Gestion de armas
 		Graphics::COverlay *_overlayWeapon3D[WeaponType::eSIZE];
 
+		CAvatarController* _avatarController;
+
+		float _threePiQuarters;
 
 		Quaternion _halfPi;
 	}; // class CGraphics

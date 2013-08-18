@@ -36,7 +36,36 @@ namespace Logic {
 	*/
 	class IPhysics : public IComponent {
 	public:
+
+		IPhysics() : _collidersHaveName(false) {
+			// Nada que hacer
+		}
  
+		// Te la dedico Ruben!
+		class IObserver {
+		public:
+			virtual void onTrigger(IPhysics* otherComponent, bool enter) { }
+			virtual void onContact(IPhysics* otherComponent, bool enter) { }
+			virtual void onShapeHit(IPhysics* otherComponent, const Vector3& colisionPos, const Vector3& colisionNormal) { }
+		};
+
+		// Ojito con añadir dos veces un mismo listener, que no hago comprobaciones!!
+		void addObserver(IObserver* observer) { 
+			_observers.push_back(observer);
+		}
+
+		// Busqueda lineal para eliminar el observador
+		void removeObserver(IObserver* observer) { 
+			for(auto it = _observers.begin(); it != _observers.end(); ++it) {
+				if(*it == observer) {
+					_observers.erase(it);
+					break;
+				}
+			}
+		}
+
+		virtual std::string getPhysicName() = 0;
+
 		/**
 		Este método es invocado desde el motor de física cuando una entidad entra o sale de un
 		trigger físico. Se notifica tanto al componente asociado al trigger como al componente
@@ -65,6 +94,13 @@ namespace Logic {
 		// estar aqui (o al menos eso me dice la intuicion). Quizas la interfaz Iphysics es demasiado
 		// generalista.
 		virtual void onShapeHit(IPhysics *otherComponent, const Vector3& colisionPos, const Vector3& colisionNormal) = 0;
+
+		bool collidersHaveName() { return _collidersHaveName; }
+
+	protected:
+
+		std::list<IObserver*> _observers;
+		bool _collidersHaveName;
 
 	}; // class IPhysics
 

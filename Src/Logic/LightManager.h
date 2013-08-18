@@ -89,10 +89,16 @@ namespace Logic {
 
 		@param light Componente grafico que encapsula la luz. Una vez creada la luz
 		el manager devuelve un puntero a la nueva luz.
+		@param lightType Tipo de luz que queremos crear, puntual, focal o direccional.
+		@param lightGroup Grupo de la luz, usado para comparar con la mascara de luz
+		de las entidades graficas (para verificar si la luz afecta o no).
+		@param isStatic true si la luz es estatica. Las luces estaticas procesan el
+		shader de bump a partir de una textura precocinada, por lo que practicamente
+		no realizan calculos. Si la luz es dinamica se realiza el calculo completo
+		de bump.
 		@param lightComp Componente de luz asociado a la luz gráfica. Se usa para
 		notificarle cuando la luz sea destruida por el manager (si se le cede
 		el control a manager).
-		@param lightType Tipo de luz que queremos crear, puntual, focal o direccional.
 		@param controlledByManager true si queremos que el manager tenga en cuenta 
 		esta luz. Cuando el número de máximo de luces soportadas se alcance, el
 		manager empezara a apagar las luces más antiguas.
@@ -100,8 +106,8 @@ namespace Logic {
 		@param direction Dirección a la que queremos que apunte la luz. En el caso
 		de ser puntual, no afecta la dirección que pongamos.
 		*/
-		void createLight(Graphics::CLight* & light, Logic::CLight* lightComp, Graphics::LightType::Enum lightType, 
-			             bool controlledByManager, const Vector3& position, const Vector3& direction);
+		void createLight(Graphics::CLight* & light, Graphics::LightType::Enum lightType, unsigned int lightGroup, 
+						 bool isStatic, Logic::CLight* lightComp, bool controlledByManager, const Vector3& position, const Vector3& direction);
 
 		//________________________________________________________________________
 

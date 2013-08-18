@@ -12,6 +12,7 @@ Contiene la implementación del componente que gestiona las armas y que administr
 
 #include "Sniper.h"
 #include "ScreamerShieldDamageNotifier.h"
+#include "Physics.h"
 
 #include "Physics/Server.h"
 #include "Physics/RaycastHit.h"

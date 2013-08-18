@@ -121,6 +121,7 @@ namespace Graphics
 			}
 
 			_entity = _scene->getSceneMgr()->createEntity(pMesh);
+			_entity->setLightMask(1 << 0);
 			//_entity->setCastShadows(true);
 		}
 		catch(std::exception e)
@@ -201,6 +202,14 @@ namespace Graphics
 			_entityNode->setOrientation(orientation);
 
 	} // setOrientation
+
+	//--------------------------------------------------------
+
+	void CEntity::setLightMask(unsigned int lightMask) 
+	{
+		assert(_entity != NULL && "Error: La entidad grafica no existe");
+		_entity->setLightMask(lightMask);
+	}
 	
 	//--------------------------------------------------------
 		

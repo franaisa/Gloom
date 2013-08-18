@@ -67,18 +67,22 @@ namespace Logic {
 
 	//______________________________________________________________________________
 
-	void CLightManager::createLight(Graphics::CLight* & light, Logic::CLight* lightComp, Graphics::LightType::Enum lightType, bool controlledByManager, 
-									const Vector3& position, const Vector3& direction) {
+	void CLightManager::createLight(Graphics::CLight* & light, Graphics::LightType::Enum lightType, unsigned int lightGroup, 
+									bool isStatic, Logic::CLight* lightComp, bool controlledByManager, const Vector3& position, const Vector3& direction) {
 
 		if(light != NULL) 
 			return;
 
 		if(!controlledByManager) {
 			light = new(nothrow) Graphics::CLight(lightType, position, direction);
+			light->setGroup(lightGroup);
+			light->setStatic(isStatic);
 		}
 		else {
 			// En caso de sobrepasar el tope de luces, borramos la mas antigua
 			light = new(nothrow) Graphics::CLight(lightType, position, direction);
+			light->setGroup(lightGroup);
+			light->setStatic(isStatic);
 			if(light) {
 				_activeLights.push_front( std::pair<Graphics::CLight*, Logic::CLight*>(light, lightComp) );
 

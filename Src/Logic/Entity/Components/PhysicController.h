@@ -66,6 +66,8 @@ namespace Logic {
 		*/
 		virtual bool spawn(CEntity* entity, CMap *map, const Map::CEntity *entityInfo);
 
+		virtual std::string getPhysicName();
+
 		/**
 		Setea la posición del controlador
 		*/

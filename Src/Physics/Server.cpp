@@ -459,12 +459,15 @@ namespace Physics {
 			IPhysics* component;
 			CRaycastHit raycastHit;
 			for(int i = 0; i < nbHits; ++i) {
-				component = static_cast<IPhysics*>( hitBuffer[i].shape->getActor().userData );
+				PxRigidActor& actor = hitBuffer[i].shape->getActor();
+				component = static_cast<IPhysics*>(actor.userData);
 
-				raycastHit.entity = component->getEntity();
-				raycastHit.distance = hitBuffer[i].distance;
-				raycastHit.impact = PxVec3ToVector3(hitBuffer[i].impact);
-				raycastHit.normal = PxVec3ToVector3(hitBuffer[i].normal);
+				raycastHit.entity			= component->getEntity();
+				raycastHit.physicComponent	= component;
+				raycastHit.colliderName		= component->collidersHaveName() ? actor.getName() : "unknown";
+				raycastHit.distance			= hitBuffer[i].distance;
+				raycastHit.impact			= PxVec3ToVector3(hitBuffer[i].impact);
+				raycastHit.normal			= PxVec3ToVector3(hitBuffer[i].normal);
 
 				hits.push_back(raycastHit);
 			}
@@ -478,11 +481,6 @@ namespace Physics {
 		}
 	}
 
-	//________________________________________________________________________
-
-	bool sweepComparator(const CSweepHit& hit1, const CSweepHit& hit2) { 
-		return hit1.distance < hit2.distance; 
-	}
 	//________________________________________________________________________
 
 	bool CServer::raycastSingle(const Ray& ray, float maxDistance, CRaycastHit& hit, unsigned int filterMask) const {
@@ -508,12 +506,18 @@ namespace Physics {
 			validEntity = _scene->raycastSingle(origin, unitDir, maxDistance, outputFlags, hitSpot, filters);
 		}
 
+		
 		// Introducimos la información devuelta en la estructura que vamos a devolver
-		if(validEntity){
-			hit.entity		= static_cast<IPhysics*>( hitSpot.shape->getActor().userData )->getEntity();
-			hit.distance	= hitSpot.distance;
-			hit.impact		= PxVec3ToVector3( hitSpot.impact );
-			hit.normal		= PxVec3ToVector3( hitSpot.normal );
+		if(validEntity) {
+			PxRigidActor& actor = hitSpot.shape->getActor();
+			IPhysics* physicComponent = static_cast<IPhysics*>(actor.userData);
+
+			hit.entity			= physicComponent->getEntity();
+			hit.physicComponent	= physicComponent;
+			hit.colliderName	= physicComponent->collidersHaveName() ? actor.getName() : "unknown";
+			hit.distance		= hitSpot.distance;
+			hit.impact			= PxVec3ToVector3( hitSpot.impact );
+			hit.normal			= PxVec3ToVector3( hitSpot.normal );
 		}
 
 		return validEntity;
@@ -536,6 +540,12 @@ namespace Physics {
 			filters.data.word0 = filterMask;
 			return _scene->raycastAny(origin, unitDir, maxDistance, hit, filters);
 		}
+	}
+
+	//________________________________________________________________________
+
+	bool sweepComparator(const CSweepHit& hit1, const CSweepHit& hit2) { 
+		return hit1.distance < hit2.distance; 
 	}
 
 	//________________________________________________________________________

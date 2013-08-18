@@ -113,6 +113,15 @@ namespace Graphics
 		*/
 		void setOrientation(const Quaternion &orientation);
 
+		/**
+		Solo las luces que esten dentro de la mascara especificada por parametro
+		afectara a esta entidad grafica.
+
+		@param lightMask mascara de luces aplicada a esta entidad para discriminar
+		luces.
+		*/
+		void setLightMask(unsigned int lightMask);
+
 
 		/**
 		Devuelve la orientacion actual del nodo que contiene la entidad.

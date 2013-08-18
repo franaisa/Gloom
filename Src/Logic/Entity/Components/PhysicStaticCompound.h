@@ -59,13 +59,15 @@ namespace Logic {
 		*/
 		virtual void process(const std::shared_ptr<CMessage>& message);
 
-		
+
+		virtual std::string getPhysicName();
+
  
 		virtual void onTrigger (IPhysics *otherComponent, bool enter);
 
 		virtual void onContact (IPhysics *otherComponent, bool enter);
 
-		virtual void onShapeHit(IPhysics *otherComponent, const Vector3& colisionPos, const Vector3& colisionNormal) { onContact(otherComponent, true); }
+		virtual void onShapeHit(IPhysics *otherComponent, const Vector3& colisionPos, const Vector3& colisionNormal);
 
 
 

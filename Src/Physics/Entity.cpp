@@ -86,7 +86,7 @@ namespace Physics {
 		PxDefaultFileInputData data(file.c_str());
 		PxCollection* bufferCollection = physics->createCollection();
 		PxCollection* sceneCollection = physics->createCollection(); 
-		PxStringTable* stringTable = NULL; 
+		PxStringTable* stringTable = &PxStringTableExt::createStringTable( CServer::getSingletonPtr()->getFoundation()->getAllocatorCallback() ); 
 		PxUserReferences* externalRefs = NULL; 
 		PxUserReferences* userRefs = NULL; 
 

@@ -24,7 +24,9 @@ namespace Logic {
 	IMP_FACTORY(CLight);
 
 	CLight::CLight() : _light(NULL),
+					   _lightGroup(0),
 					   _isOn(true),
+					   _static(false),
 					   _position(Vector3::ZERO),
 					   _direction(Vector3::NEGATIVE_UNIT_Y),
 					   _color(Vector3::ZERO),
@@ -67,6 +69,12 @@ namespace Logic {
 			assert( !_controlledByManager );
 
 		// ATRIBUTOS OPCIONALES
+		if( entityInfo->hasAttribute("lightGroup") )
+			_lightGroup = entityInfo->getIntAttribute("lightGroup");
+
+		if( entityInfo->hasAttribute("lightIsStatic") )
+			_static = entityInfo->getBoolAttribute("lightIsStatic");
+
 		if( entityInfo->hasAttribute("on") )
 			_isOn = entityInfo->getBoolAttribute("on");
 
@@ -116,7 +124,7 @@ namespace Logic {
 	void CLight::process(const std::shared_ptr<CMessage>& message) {
 		switch( message->getMessageType() ) {
 			case Message::TOUCHED: {
-				CLightManager::getSingletonPtr()->createLight(_light, this, _lightType, _controlledByManager, _position, _direction);
+				CLightManager::getSingletonPtr()->createLight(_light, _lightType, _lightGroup, _static, this, _controlledByManager, _position, _direction);
 
 				if(_light != NULL) {
 					if( _color != Vector3::ZERO ) {
@@ -141,7 +149,7 @@ namespace Logic {
 
 	void CLight::onStart() {
 		if(_isOn) {
-			CLightManager::getSingletonPtr()->createLight(_light, this, _lightType, _controlledByManager, _position, _direction);
+			CLightManager::getSingletonPtr()->createLight(_light, _lightType, _lightGroup, _static, this, _controlledByManager, _position, _direction);
 
 			if(_light != NULL) {
 				if( _color != Vector3::ZERO ) {

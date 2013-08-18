@@ -14,6 +14,7 @@ de disparo de la cabra.
 #include "SoulReaperFeedback.h"
 #include "HudWeapons.h"
 
+#include "Audio/Server.h"
 #include "Logic/Maps/EntityFactory.h"
 #include "Logic/Maps/Map.h"
 #include "Logic/Server.h"
@@ -44,14 +45,27 @@ namespace Logic {
 
 		return true;
 	} // spawn
+
 	//__________________________________________________________________
 
 	void CSoulReaperFeedback::primaryFire() {
 		// Animacion de golpe con el soul Reaper
-		_hudWeapon->shootAnim(-1.85f);
+		_hudWeapon->shootAnim(1.5f);
 
 		//Sonido
-		emitSound("hammer.wav", false, true, false, false);
+		Audio::CServer::getSingletonPtr()->playSound("hammer.wav", false, false);
 	} // primaryFire
+
+	//__________________________________________________________________
+
+	void CSoulReaperFeedback::secondaryFire() {
+		_hudWeapon->linking(true);
+	}
+
+	//__________________________________________________________________
+
+	void CSoulReaperFeedback::stopSecondaryFire() {
+		_hudWeapon->linking(false);
+	}
 
 }//namespace Logic

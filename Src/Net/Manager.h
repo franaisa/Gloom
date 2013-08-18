@@ -333,12 +333,15 @@ namespace Net {
 		*/
 		void removeObserver(IObserver* listener);
 
+		//________________________________________________________________________
+
 		/**
 		Dada una "conexión" realiza la desconexión.
 
 		@param connection Objeto que representa la conexión.
 		*/
 		void disconnect(CConexion* connection);
+
 		//________________________________________________________________________
 
 		/**

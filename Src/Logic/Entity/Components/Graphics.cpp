@@ -55,7 +55,6 @@ namespace Logic
 
 		if(entityInfo->hasAttribute("model"))
 			_model = entityInfo->getStringAttribute("model");
-
 		
 		_graphicsEntity = createGraphicsEntity(entityInfo);
 		if(!_graphicsEntity)
@@ -80,6 +79,8 @@ namespace Logic
 
 			_graphicsEntity->changeMaterial(_material);
 		}
+
+		_lightMask = readLightMask(entityInfo);
 
 		return true;
 
@@ -111,6 +112,42 @@ namespace Logic
 		return _graphicsEntity;
 
 	} // createGraphicsEntity
+
+	//---------------------------------------------------------
+
+	unsigned int CGraphics::readLightMask(const Map::CEntity *entityInfo) {
+		std::vector<unsigned int> lightGroups;
+
+		if( entityInfo->hasAttribute("lightMask") ) {
+			std::istringstream groupListString( entityInfo->getStringAttribute("lightMask") );
+
+			// Para cada cadena entre comas...
+			do {
+				std::string groupNumber;
+				std::getline(groupListString, groupNumber, ',');	// linea entre delimitadores
+				
+				std::istringstream str(groupNumber);				// wrappeamos cadena como Input Stream
+				do {												// Le quitamos los espacios...
+					std::getline(str, groupNumber, ' ');			// linea entre espacios
+				} while ( groupNumber.size() == 0 && !str.eof() );
+
+				lightGroups.push_back( atoi(groupNumber.c_str()) );
+			} while ( !groupListString.eof() );
+		}
+
+		unsigned int lightMask;
+		if( !lightGroups.empty() ) {
+			lightMask = 0;
+			for(int i = 0; i < lightGroups.size(); ++i) {
+				lightMask |= (1 << lightGroups[i]);
+			}
+		}
+		else {
+			lightMask = 0xFFFFFFFF;
+		}
+
+		return lightMask;
+	}
 
 	//---------------------------------------------------------
 	
@@ -186,7 +223,6 @@ namespace Logic
 	}//---------------------------------------------------------
 	//onTick
 
-
 	void CGraphics::changeScale(float newScale){
 		_graphicsEntity->setScale(newScale);		
 	}//---------------------------------------------------------
@@ -194,6 +230,11 @@ namespace Logic
 
 	void CGraphics::onDeactivate() {
 		setVisible(false);
+	}
+	//---------------------------------------------------------
+
+	void CGraphics::onStart() {
+		_graphicsEntity->setLightMask(_lightMask);
 	}
 	//---------------------------------------------------------
 

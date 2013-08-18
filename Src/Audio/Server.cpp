@@ -16,6 +16,7 @@ Contiene la implementación de la clase principal de audio, llevará el control de
 #include "Server.h"
 
 #include "Logic/Entity/Entity.h"
+#include "Logic/Entity/Components/AvatarController.h"
 
 #include <cassert>
 #include <iostream>
@@ -113,28 +114,29 @@ namespace Audio
 
 	//--------------------------------------------------------
 
-	void CServer::tick(unsigned int msecs) 
-	{
-		_timeToExecute+=msecs;
+	void CServer::tick(unsigned int msecs) {
+		_timeToExecute += msecs;
 		//Si ha pasado el tiempo mínimo para actualizarnos lo hacemos
-		if(_timeToExecute>=_minimumExecuteTime){
+		if(_timeToExecute >= _minimumExecuteTime) {
 			//Reseteamos el tiempo
-			_timeToExecute=0;
+			_timeToExecute = 0;
 			//Si hay un player con el que actualizarnos, seteamos la nueva posición
-			if(_soundAvatar){
-				Vector3 positionAvatar=_soundAvatar->getPosition();
-				Vector3 directionAvatar=_soundAvatar->getOrientation()*Vector3::NEGATIVE_UNIT_Z;
+			if(_soundAvatar) {
+				Logic::CAvatarController* avatarCont = _soundAvatar->getComponent<Logic::CAvatarController>("CAvatarController");
+				Vector3 momentum = avatarCont != NULL ? avatarCont->getMomentum() : Vector3::ZERO;
+
+				Vector3 positionAvatar	=_soundAvatar->getPosition();
+				Vector3 directionAvatar =_soundAvatar->getOrientation() * Vector3::NEGATIVE_UNIT_Z;
 				directionAvatar.normalise();
 
 				FMOD_VECTOR
-					listenerPos = {positionAvatar.x,positionAvatar.y+_playerHeight,positionAvatar.z}, // posición del listener
-					listenerVel = {0.0f,0.0f,0.0f}, // velocidad
-					up = {0.0f,1.0f,0.0f},          // vector up: hacia la “coronilla”
-					at = {directionAvatar.x,directionAvatar.y,directionAvatar.z};          // vector at: hacia donde se mira
+					listenerPos =	{positionAvatar.x, positionAvatar.y + _playerHeight, positionAvatar.z}, // posición del listener
+					listenerVel =	{momentum.x, momentum.y, momentum.z},									// velocidad
+					up =			{0.0f, 1.0f, 0.0f},														// vector up: hacia la “coronilla”
+					at =			{directionAvatar.x, directionAvatar.y, directionAvatar.z};				// vector at: hacia donde se mira
 
 				// se coloca el listener
-				_system->set3DListenerAttributes(0,&listenerPos, &listenerVel,
-										 &at, &up);
+				_system->set3DListenerAttributes(0, &listenerPos, &listenerVel, &at, &up);
 			}
 			//Actualizamos el sistema
 			_system->update();
@@ -162,9 +164,7 @@ namespace Audio
 				(_audioResourcesPath + soundName).c_str(),	// path del archivo de sonido
 				soundMask,									// flags
 				0,											// información adicional (nada en este caso)
-				& sound	); 									// devolución del handle al buffer
-										  
-											
+				& sound	); 									// devolución del handle al buffer		
 		}
 		else {
 			result = _system->createSound( 
@@ -178,30 +178,24 @@ namespace Audio
 		//Reproducción en canal
 		Channel *canal;
 		result = _system->playSound(
-		FMOD_CHANNEL_FREE , // dejamos que FMOD seleccione cualquiera
-		sound, // sonido que se “engancha” a ese canal
-		false, // arranca sin “pause” (se reproduce directamente)
-		& canal); // devuelve el canal que asigna
+			FMOD_CHANNEL_REUSE , // dejamos que FMOD seleccione cualquiera
+			sound, // sonido que se “engancha” a ese canal
+			false, // arranca sin “pause” (se reproduce directamente)
+			& canal); // devuelve el canal que asigna
 		ERRCHECK(result);
 		// el sonido ya está reproduciendo!!
 		result = canal->setVolume(_volume);
 		ERRCHECK(result);
 
-		int can;
+		/*int can;
 		canal->getIndex(&can);
-		//cout << "el numero de canal ocupado es " << can << endl;
+		cout << "el numero de canal ocupado es " << can << endl;
 		int numcanales;
 		_system->getChannelsPlaying(&numcanales);
-		//cout << "El numero de canales usados al cargar el sonido es " << numcanales << endl;
+		cout << "El numero de canales usados al cargar el sonido es " << numcanales << endl;*/
 
 		//Guardamos la asociacion nombreSonido/Canal
-		size_t charPosition = soundName.find('.');
-		if(charPosition != std::string::npos) {
-			_soundChannel[soundName.substr(0, charPosition)] = canal;
-		}
-		else {
-			_soundChannel[soundName] = canal;
-		}
+		_soundChannel[soundName] = canal;
 
 	}//playSound
 	//--------------------------------------------------------
@@ -230,11 +224,11 @@ namespace Audio
 		}
 		ERRCHECK(result);
 
-		
 		Channel *canal;
+
 		//Reproducción en canal
 		result = _system->playSound(
-		FMOD_CHANNEL_FREE , // dejamos que FMOD seleccione cualquiera
+		FMOD_CHANNEL_REUSE , // dejamos que FMOD seleccione cualquiera
 		sound, // sonido que se “engancha” a ese canal
 		false, // arranca sin “pause” (se reproduce directamente)
 		& canal); // devuelve el canal que asigna
@@ -246,27 +240,22 @@ namespace Audio
 		FMOD_VECTOR
 			pos={position.x,position.y,position.z}, // posición
 			vel={speed.x, speed.y, speed.z};  // velocidad (para el doppler)
-			canal->set3DAttributes(& pos, & vel);
+			canal->set3DAttributes(&pos, &vel);
 			ERRCHECK(result);
 
 		//Distancia a la que empieza a atenuarse y a la cual ya no se atenua mas respectivamente
 		result = canal->set3DMinMaxDistance(50.0f,10000.0f);
 		ERRCHECK(result);
-	/*	int can;
+
+		/*int can;
 		canal->getIndex(&can);
 		cout << "el numero de canal ocupado es " << can << endl;
 		int numcanales;
 		_system->getChannelsPlaying(&numcanales);
 		cout << "El numero de canales usados al cargar el sonido es " << numcanales << endl;*/
-
+		
 		//Guardamos la asociacion nombreSonido/Canal
-		size_t charPosition = soundName.find('.');
-		if(charPosition != std::string::npos) {
-			_soundChannel[soundName.substr(0, charPosition)] = canal;
-		}
-		else {
-			_soundChannel[soundName] = canal;
-		}
+		_soundChannel[soundName] = canal;
 	}//playSound3D
 	//--------------------------------------------------------
 
@@ -313,7 +302,6 @@ namespace Audio
 			}
 
 		}
-
 	}//mute
 	//--------------------------------------------------------
 
