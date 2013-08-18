@@ -54,8 +54,15 @@ namespace Logic {
 								 _playerIsLanding(false),
 								 _loadingWeapon(false),
 								 _continouslyShooting(false),
+								 _linking(false),
 								 _threePiQuarters(3 * Math::PI / 4.0f),
 								 _playerIsFalling(false) {
+
+		// Valores de configuracion de la animacion de linkar
+		_linkAnim.sinOffset = 0.05f;
+		_linkAnim.x = 0.0f;
+		_linkAnim.xSpeed = 0.028f;
+		_linkAnim.offset = Vector3::ZERO;
 
 		// Valores de configuracion de la animacion de correr
 		_runAnim.currentHorizontalPos = Math::HALF_PI;
@@ -341,6 +348,8 @@ namespace Logic {
 		}
 		else if(_playerIsLanding)
 			landAnim(msecs);
+		else if(_linking)
+			linkAnim(msecs);
 		else if(_playerIsWalking)
 			walkAnim(msecs);
 		else if(_playerIsFalling) {
@@ -364,7 +373,9 @@ namespace Logic {
 			_rapidShootAnim.offset *= _rapidShootAnim.recoveryCoef;
 			_rapidShootAnim.currentVerticalPos *= _rapidShootAnim.recoveryCoef;
 		}
+
 		_graphicsEntities[_currentWeapon].graphicsEntity->setPosition( _graphicsEntities[_currentWeapon].defaultPos + 
+																	   _linkAnim.offset +
 																	   _chgWpnAnim.offset +
 																	   _runAnim.offset + 
 																	   _landAnim.offset +
@@ -377,6 +388,10 @@ namespace Logic {
 
 		if(!_playerIsFalling)
 			_fallAnim.offset *= 0.96f;
+		if(!_linking) {
+			_linkAnim.offset *= 0.95f;
+			_linkAnim.x *= 0.95f;
+		}
 	}
 
 	//________________________________________________________________________
@@ -530,6 +545,12 @@ namespace Logic {
 
 	void CHudWeapons::idleAnim(unsigned int msecs) {
 		_idleAnim.offset.y = sineStep(msecs, _idleAnim.currentVerticalPos, _idleAnim.verticalOffset, _idleAnim.verticalSpeed);
+	}
+
+	//________________________________________________________________________
+
+	void CHudWeapons::linkAnim(unsigned int msecs) {
+		_linkAnim.offset.y = sineStep(msecs, _linkAnim.x, _linkAnim.sinOffset, _linkAnim.xSpeed);
 	}
 
 	//________________________________________________________________________

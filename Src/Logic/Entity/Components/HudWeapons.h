@@ -147,6 +147,10 @@ namespace Logic {
 
 		void loadingWeapon(bool state);
 
+		void linking(bool state) { _linking = state; }
+
+		void linkAnim(unsigned int msecs);
+
 	protected:
 
 		virtual void onStart();
@@ -173,6 +177,7 @@ namespace Logic {
 		bool _continouslyShooting;
 		bool _playerIsFalling;
 		bool _changingWeapon;
+		bool _linking;
 
 		/**
 		Estructura donde se guardara el offset y las modificaciones en el arma
@@ -308,8 +313,16 @@ namespace Logic {
 			Vector3 offset;
 		};
 
+		struct LinkAnim {
+			float sinOffset;
+			float xSpeed;
+			float x;
+			Vector3 offset;
+		};
+
 		//__________________________________________________________________
 
+		LinkAnim _linkAnim;
 		ChangeWeaponAnim _chgWpnAnim;
 		RunAnim _runAnim;
 		LandAnim _landAnim;

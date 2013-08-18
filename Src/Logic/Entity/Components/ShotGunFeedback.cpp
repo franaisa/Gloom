@@ -50,7 +50,7 @@ namespace Logic {
 
 	void CShotGunFeedback::primaryFire() {
 		// Poner la animacion de carga inestable del arma
-		_hudWeapon->shootAnim(-1.0f);
+		_hudWeapon->shootAnim(-1.5f);
 		//Sonido
 		emitSound(_weaponSound, false, true, false, false);
 
