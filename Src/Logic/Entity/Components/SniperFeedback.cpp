@@ -14,6 +14,7 @@ de disparo de la cabra.
 #include "SniperFeedback.h"
 #include "HudWeapons.h"
 #include "DynamicLight.h"
+#include "CameraFeedbackNotifier.h"
 
 #include "Logic/Maps/EntityFactory.h"
 #include "Logic/Maps/Map.h"
@@ -52,6 +53,10 @@ namespace Logic {
 		_hudWeapon->shootAnim(-1.5f);
 		//Sonido
 		emitSound(_weaponSound, false, true, false, false);
+
+		// Shader de onda
+		CCameraFeedbackNotifier* _cameraFX = _entity->getComponent<CCameraFeedbackNotifier>("CCameraFeedbackNotifier");
+		_cameraFX->weaponShockWave( Vector2(0.72f, 0.74f), 0.4f, 0.001f, 0.03f, 50.0f, 0.35f );
 
 		// Shoot flash
 		CDynamicLight* shootFlash = _entity->getComponent<CDynamicLight>("CDynamicLight");

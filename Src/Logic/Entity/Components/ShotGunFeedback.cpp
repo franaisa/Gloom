@@ -14,6 +14,7 @@ de disparo de la cabra.
 #include "ShotGunFeedback.h"
 #include "HudWeapons.h"
 #include "DynamicLight.h"
+#include "CameraFeedbackNotifier.h"
 
 #include "Logic/Maps/EntityFactory.h"
 #include "Logic/Maps/Map.h"
@@ -49,10 +50,14 @@ namespace Logic {
 	//__________________________________________________________________
 
 	void CShotGunFeedback::primaryFire() {
-		// Poner la animacion de carga inestable del arma
+		// Animación de disparo
 		_hudWeapon->shootAnim(-1.5f);
-		//Sonido
+		// Sonido de disparo
 		emitSound(_weaponSound, false, true, false, false);
+
+		// Shader de onda
+		CCameraFeedbackNotifier* _cameraFX = _entity->getComponent<CCameraFeedbackNotifier>("CCameraFeedbackNotifier");
+		_cameraFX->weaponShockWave( Vector2(0.67f, 0.77f), 0.37f, 0.0009f, 0.04f, 40.0f, 0.3f );
 
 		// Shoot flash
 		CDynamicLight* shootFlash = _entity->getComponent<CDynamicLight>("CDynamicLight");
@@ -65,7 +70,6 @@ namespace Logic {
 	//__________________________________________________________________
 
 	void CShotGunFeedback::stopPrimaryFire() {
-		// Parar la animacion de carga
 	}
 
 	//__________________________________________________________________

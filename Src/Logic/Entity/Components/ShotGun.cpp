@@ -72,7 +72,6 @@ namespace Logic {
 	//________________________________________________
 
 	void CShotGun::onActivate() {
-		
 		/*
 		//Reiniciamos el cooldown
 		reduceCooldown(0);
@@ -108,8 +107,6 @@ namespace Logic {
 	//__________________________________________________________________
 
 	void CShotGun::primaryFire() {
-		
-
 		/*std::shared_ptr<CMessageCreateParticle> particleMsg = std::make_shared<CMessageCreateParticle>();
 		particleMsg->setParticle("test");
 		Vector3 position2 = this->getEntity()->getPosition();

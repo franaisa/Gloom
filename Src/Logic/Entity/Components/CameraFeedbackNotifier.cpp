@@ -43,6 +43,11 @@ namespace Logic {
 														 _strafingDir(0),
 														 _landRecoverySpeed(0.007f),
 														 _currentLandOffset(0),
+														 _shockWavePos(0.0f),
+														 _shockWaveSpeed(0.001f),
+														 //_shockWaveSpeed(0.0001f),
+														 _shockWaveLength(0.4f),
+														 _shockWaveIsActive(false),
 														 _flashVisible(true) {
 
 
@@ -150,6 +155,12 @@ namespace Logic {
 		_scene->setCompositorVisible(_flashEffect, false);
 		// Por ahora esta a hierro, lo suyo es ponerlo por el mapa
 		_scene->updateCompositorVariable(_flashEffect, "flashLevel", 1.0);
+
+		_scene->createCompositor("shockWaveCompositor");
+		_scene->setCompositorVisible("shockWaveCompositor", false);
+		//Actualizar durante el tick la variable de tiempo desde 0 a 1 y luego apagar
+		//el compositor, de esta forma solo aparece una onda
+		//Actualizar tambien el centro de la onda para cada arma
 	}
 
 	//________________________________________________________________________
@@ -188,6 +199,38 @@ namespace Logic {
 			_scene->setCompositorVisible(_flashEffect, false);
 			_flashVisible = false;
 		}
+
+		if(_shockWaveIsActive) {
+			_shockWavePos += _shockWaveSpeed * msecs;
+			if(_shockWavePos > _shockWaveLength) {
+				_shockWaveIsActive = false;
+				_shockWavePos = 0.0f;
+				_scene->setCompositorVisible("shockWaveCompositor", false);
+			}
+			else {
+				_scene->updateCompositorVariable("shockWaveCompositor", "wavePos", _shockWavePos);
+			}
+		}
+	}
+
+	//________________________________________________________________________
+
+	void CCameraFeedbackNotifier::weaponShockWave(const Vector2& waveCenter, float waveLength, float waveSpeed, 
+												  float waveSize, float waveCurvature, float waveIntensity) {
+
+		// Configuramos los valores del shader
+		_scene->setCompositorVisible("shockWaveCompositor", true);
+		_scene->updateCompositorVariable("shockWaveCompositor", "waveLength", waveLength);
+		_scene->updateCompositorVariable("shockWaveCompositor", "waveU", waveCenter.x);
+		_scene->updateCompositorVariable("shockWaveCompositor", "waveV", waveCenter.y);
+		_scene->updateCompositorVariable("shockWaveCompositor", "waveSize", waveSize);
+		_scene->updateCompositorVariable("shockWaveCompositor", "waveCurvature", waveCurvature);
+		_scene->updateCompositorVariable("shockWaveCompositor", "waveIntensity", waveIntensity);
+		_scene->updateCompositorVariable("shockWaveCompositor", "wavePos", 0.0f);
+		
+		_shockWaveLength = waveLength;
+		_shockWaveSpeed = waveSpeed;
+		_shockWaveIsActive = true;
 	}
 
 	//________________________________________________________________________
