@@ -83,6 +83,7 @@
     <ClCompile Include="..\..\Src\Logic\Entity\Components\AmplifyDamageServer.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\AudioTrigger.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\Bite.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\CharacterName.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\ComeBackClient.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\ComeBackServer.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\CoolDownClient.cpp" />
@@ -282,6 +283,7 @@
     <ClInclude Include="..\..\Src\Logic\Entity\Components\AmplifyDamageServer.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\AudioTrigger.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\Bite.h" />
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\CharacterName.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\ComeBackClient.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\ComeBackServer.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\CoolDownClient.h" />

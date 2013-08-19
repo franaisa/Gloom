@@ -129,6 +129,8 @@ namespace Logic
 
 		void					setPosition			(Vector3 vPos);
 
+		Graphics::CEntity* getGraphicEntity() { return _graphicsEntity; }
+
 
 		Ogre::Entity*			getOgreMesh			()		{return _graphicsEntity->getEntity(); }
 
