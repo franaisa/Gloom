@@ -90,6 +90,7 @@
     <ClCompile Include="..\..\Src\Logic\Entity\Components\CoolDownServer.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\DynamicLight.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\CharacterSound.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\EnemyInSight.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\GraphicPlane.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\GravityClient.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\GravityServer.cpp" />
@@ -290,6 +291,7 @@
     <ClInclude Include="..\..\Src\Logic\Entity\Components\CoolDownServer.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\DynamicLight.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\CharacterSound.h" />
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\EnemyInSight.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\GraphicPlane.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\GravityClient.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\GravityServer.h" />

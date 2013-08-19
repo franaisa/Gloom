@@ -82,6 +82,8 @@ namespace Logic {
 		else {
 			_text2d->load( _entity->getMap()->getScene(), NULL, _offset, _entity->getName(), _font, Vector4(_color.x, _color.y, _color.z, 1.0f) );
 		}
+
+		_text2d->setVisible(false);
 	}
 
 } // namespace Logic

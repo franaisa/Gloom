@@ -1,23 +1,29 @@
 /**
-@file CharacterName.h
+@file EnemyInSight.h
 
-@see Logic::CCharacterName
+@see Logic::CEnemyInSight
 @see Logic::IComponent
 
 @author Francisco Aisa García
 @date Agosto, 2013
 */
 
-#ifndef __Logic_CharacterName_H
-#define __Logic_CharacterName_H
+#ifndef __Logic_EnemyInSight_H
+#define __Logic_EnemyInSight_H
 
 #include "Logic/Entity/Component.h"
+
+namespace Physics {
+	class CServer;
+}
 
 namespace Graphics {
 	class CMovable2dText;
 }
 
 namespace Logic {
+
+	class CCharacterName;
 
 	/**
 
@@ -27,8 +33,8 @@ namespace Logic {
 	@date Agosto, 2013
 	*/
 
-	class CCharacterName : public IComponent {
-		DEC_FACTORY(CCharacterName);
+	class CEnemyInSight : public IComponent {
+		DEC_FACTORY(CEnemyInSight);
 	public:
 
 
@@ -38,12 +44,12 @@ namespace Logic {
 
 
 		/** Constructor por defecto.*/
-		CCharacterName();
+		CEnemyInSight();
 
 		//________________________________________________________________________
 
 		/** Destructor. */
-		virtual ~CCharacterName();
+		virtual ~CEnemyInSight();
 
 
 		// =======================================================================
@@ -75,10 +81,6 @@ namespace Logic {
 		// =======================================================================
 
 
-		void setVisible(bool isVisible);
-
-		bool isVisible();
-
 
 	protected:
 
@@ -88,26 +90,23 @@ namespace Logic {
 		// =======================================================================
 		
 
-		/**
-		Dependiendo de si en el mapa se ha especificado que la luz este encendida o
-		apagada, al ejecutarse este método se enciende la luz o se deja apagada.
-		*/
-		virtual void onStart();
+		virtual void onTick(unsigned int msecs);
 
 
 		// =======================================================================
 		//                          MIEMBROS PROTEGIDOS
 		// =======================================================================
 
-		Graphics::CMovable2dText* _text2d;
+		std::map<CCharacterName*, int> _namesBeingShown;
+		int _raycastTimer;
+		unsigned int _raycastTimeStep;
+		unsigned int _visibilityTimeStep;
+		Physics::CServer* _physicsServer;
+		float _heightShoot;
 
-		Vector3 _offset;
-		Vector3 _color;
-		std::string _font;
+	}; // class CEnemyInSight
 
-	}; // class CCharacterName
-
-	REG_FACTORY(CCharacterName);
+	REG_FACTORY(CEnemyInSight);
 
 } // namespace Logic
 
