@@ -1,0 +1,29 @@
+material shockWaveMaterial {
+	technique {
+		pass {
+			vertex_program_ref shockWaveVertexShader {
+				// Parametros obtenidos de Ogre
+				param_named_auto	viewProjectionMatrix 		worldviewproj_matrix
+			}
+		
+			fragment_program_ref shockWaveFragmentShader {
+				// Controla hasta donde llega la onda, si es 1, entonces coge toda la pantalla si parte del centro
+				param_named			wavePos						float									0
+				// Hasta donde alcanza la onda
+				param_named			waveLength					float									1
+				// Coordenadas baricentricas del centro de la onda
+				param_named			waveU							float									0.5
+				param_named			waveV							float									0.5
+				// Tamaño del la onda
+				param_named			waveSize						float									0.025
+				// Curvatura del surco
+				param_named			waveCurvature				float									40.0
+				// Intensidad de la onda
+				param_named			waveIntensity					float									0.4
+			}
+		
+			// Textura de post-procesado de la escena
+			texture_unit SceneSampler { }
+		}
+	}
+}

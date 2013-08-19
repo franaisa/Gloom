@@ -96,6 +96,19 @@ namespace Logic {
 		*/
 		void damaged(Vector3 vPosEnemy);
 
+		/**
+		Ejecuta el shader de efecto onda.
+
+		@param waveCenter Centro de la onda.
+		@param waveLenght Hasta donde llega la onda. El máximo es 1 (alcanza toda la pantalla).
+		@param waveSpeed Velocidad a la que se desplaza la onda.
+		@param waveSize Tamaño de la onda.
+		@param waveCurvature Curvatura de la onda.
+		@param waveIntensity Pronunciación de la curva.
+		*/
+		void weaponShockWave(const Vector2& waveCenter, float waveLength, float waveSpeed, 
+							 float waveSize, float waveCurvature, float waveIntensity);
+
 		//__________________________________________________________________
 
 		// Al aterrizar
@@ -205,6 +218,11 @@ namespace Logic {
 		*/
 		float _flashFactor;
 		bool _flashVisible;
+
+		bool _shockWaveIsActive;
+		float _shockWavePos;
+		float _shockWaveSpeed;
+		float _shockWaveLength;
 
 	}; // class CCameraFeedbackNotifier
 
