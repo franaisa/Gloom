@@ -27,7 +27,9 @@ namespace Graphics {
 
 	//________________________________________________________________________
 
-	void CMovable2dText::load(CScene* scene, CEntity* parent, const Ogre::Vector3& position, const std::string& text, const std::string& textFont, const Ogre::Vector4& color) {
+	void CMovable2dText::load(CScene* scene, CEntity* parent, const Ogre::Vector3& position, const std::string& text, 
+							  const std::string& textFont, const Ogre::Vector4& color, float textSize) {
+
 		std::string textMaterial = text + "_textMaterial";
 		std::string writeTexture = text + "_writeTexture";
 		
@@ -39,6 +41,7 @@ namespace Graphics {
 		
 		// Cargamos la fuente dada
 		FontPtr font = FontManager::getSingleton().getByName(textFont);
+		//font->setTrueTypeSize();
 		// Escribimos sobre la textura en la que vamos a pegar la fuente
 		// el fondo que hemos generado previamente
 		TexturePtr texture = TextureManager::getSingleton().createManual(writeTexture, "General", TEX_TYPE_2D, 512, 512, MIP_UNLIMITED , PF_A8R8G8B8, Ogre::TU_STATIC | Ogre::TU_AUTOMIPMAP);
@@ -65,7 +68,7 @@ namespace Graphics {
 		m_QuadMaterial->load();
 
 		// Cargamos sobre el billboard el nuevo material generado con el texto
-		CBillboard::load(scene, parent, textMaterial, position, Ogre::Vector2::ZERO);
+		CBillboard::load( scene, parent, textMaterial, position, Ogre::Vector2(textSize, textSize) );
 	}
 
 	//________________________________________________________________________
@@ -78,6 +81,12 @@ namespace Graphics {
 
 	bool CMovable2dText::isVisible() {
 		return CBillboard::isVisible();
+	}
+
+	//________________________________________________________________________
+
+	void CMovable2dText::setPosition(const Ogre::Vector3& position) {
+		CBillboard::setPosition(position);
 	}
 
 	//________________________________________________________________________

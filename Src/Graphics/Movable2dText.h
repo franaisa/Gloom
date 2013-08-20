@@ -47,9 +47,10 @@ namespace Graphics {
 		CMovable2dText();
 		~CMovable2dText();
 
-		void load(CScene* scene, CEntity* parent, const Vector3& position, const std::string& text, const std::string& textFont, const Vector4& color);
+		void load(CScene* scene, CEntity* parent, const Vector3& position, const std::string& text, const std::string& textFont, const Vector4& color, float textSize);
 		void setVisible(bool isVisible);
 		bool isVisible();
+		void setPosition(const Vector3& position);
 
 	protected:
 

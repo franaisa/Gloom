@@ -12,6 +12,8 @@
 #include "CharacterName.h"
 #include "Graphics.h"
 #include "AnimatedGraphics.h"
+#include "BaseSubsystems/Euler.h"
+#include "BaseSubsystems/Math.h"
 
 #include "Graphics/Movable2dText.h"
 
@@ -28,7 +30,8 @@ namespace Logic {
 	//________________________________________________________________________
 
 	CCharacterName::CCharacterName() : _text2d(NULL),
-									   _color(1.0f, 1.0f, 1.0f) {
+									   _color(1.0f, 1.0f, 1.0f),
+									   _size(20.0f) {
 		// Nada que hacer
 	}
 
@@ -51,6 +54,9 @@ namespace Logic {
 		_offset = entityInfo->getVector3Attribute("textOffset");
 		_font = entityInfo->getStringAttribute("textFont");
 
+		if( entityInfo->hasAttribute("textSize") )
+			_size = entityInfo->getFloatAttribute("textSize");
+
 		if( entityInfo->hasAttribute("textColor") )
 			_color = entityInfo->getVector3Attribute("textColor");
 
@@ -61,6 +67,9 @@ namespace Logic {
 
 	void CCharacterName::setVisible(bool isVisible) {
 		_text2d->setVisible(isVisible);
+
+		if( isVisible && isSleeping() )
+			wakeUp();
 	}
 
 	//________________________________________________________________________
@@ -73,17 +82,25 @@ namespace Logic {
 
 	void CCharacterName::onStart() {
 		_text2d = new Graphics::CMovable2dText();
-
-		CGraphics* graphicComponent = _entity->getComponent<CAnimatedGraphics>("CAnimatedGraphics");
-		if(graphicComponent != NULL) {
-			Graphics::CEntity* graphicEntity = graphicComponent->getGraphicEntity();
-			_text2d->load( _entity->getMap()->getScene(), graphicEntity, _offset, _entity->getName(), _font, Vector4(_color.x, _color.y, _color.z, 1.0f) );
-		}
-		else {
-			_text2d->load( _entity->getMap()->getScene(), NULL, _offset, _entity->getName(), _font, Vector4(_color.x, _color.y, _color.z, 1.0f) );
-		}
-
+		// Debido a que el pivote del billboard tambien se modifica si colgamos la entidad
+		// de una entidad grafica, creamos un nodo nuevo y actualizamos su posicion en el tick
+		_text2d->load( _entity->getMap()->getScene(), NULL, _offset, _entity->getName(), _font, Vector4(_color.x, _color.y, _color.z, 1.0f), _size );
+		
+		// @todo
+		// Comprobamos si tenemos equipo, si no lo tenemos, directamente no mostramos el nombre
+		// porque todos somos enemigos. Si estamos en el mismo equipo del player, mostramos nuestro
+		// nombre con el color que corresponda, y si no lo estamos configuramos el color pero
+		// no mostramos el nombre
 		_text2d->setVisible(false);
+	}
+
+	//________________________________________________________________________
+
+	void CCharacterName::onTick(unsigned int msecs) {
+		if( _text2d->isVisible() )
+			_text2d->setPosition( _entity->getPosition() + Vector3(0.0f, 15.0f, 0.0f) );
+		else
+			putToSleep();
 	}
 
 } // namespace Logic

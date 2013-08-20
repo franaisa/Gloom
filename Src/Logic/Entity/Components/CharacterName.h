@@ -94,6 +94,8 @@ namespace Logic {
 		*/
 		virtual void onStart();
 
+		virtual void onTick(unsigned int msecs);
+
 
 		// =======================================================================
 		//                          MIEMBROS PROTEGIDOS
@@ -101,6 +103,7 @@ namespace Logic {
 
 		Graphics::CMovable2dText* _text2d;
 
+		float _size;
 		Vector3 _offset;
 		Vector3 _color;
 		std::string _font;

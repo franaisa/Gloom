@@ -22,6 +22,7 @@
 namespace Ogre {
 	class BillboardSet;
 	class Billboard;
+	class SceneNode;
 }
 
 namespace Graphics {
@@ -43,11 +44,13 @@ namespace Graphics {
 		void load(CScene* scene, CEntity* parent, const std::string& materialName, const Vector3& position, const Vector2& defaultDimensions);
 		void setVisible(bool isVisible);
 		bool isVisible();
+		void setPosition(const Vector3& position);
 
 	private:
 
 		Ogre::BillboardSet* _billboardSet;
 		Ogre::Billboard* _billboard;
+		Ogre::SceneNode* _sceneNode;
 	};
 
 }

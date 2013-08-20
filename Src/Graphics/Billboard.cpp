@@ -35,22 +35,21 @@ namespace Graphics {
 		// Si existe una entidad grafica atachamos el billboard a su nodo de escena,
 		// en caso contrario creamos un nodo nuevo y tomamos la posicion dada como
 		// global.
-		SceneNode* sceneNode;
 		if(parent != NULL) {
-			sceneNode = parent->getSceneNode();
+			_sceneNode = parent->getSceneNode();
 			_billboard = _billboardSet->createBillboard(position);
 		}
 		else {
-			sceneNode = static_cast<SceneNode*>( sceneMgr->getRootSceneNode()->createChild() );
+			_sceneNode = static_cast<SceneNode*>( sceneMgr->getRootSceneNode()->createChild() );
 			_billboard = _billboardSet->createBillboard(Ogre::Vector3::ZERO);
-			sceneNode->setPosition(position);
+			_sceneNode->setPosition(position);
 		}
 
 		if(defaultDimensions != Ogre::Vector2::ZERO)
 			_billboardSet->setDefaultDimensions(defaultDimensions.x, defaultDimensions.y);
 
 		// Atachamos el billboard al nodo de escena
-		sceneNode->attachObject(_billboardSet);
+		_sceneNode->attachObject(_billboardSet);
 	}
 
 	//________________________________________________________________________
@@ -63,5 +62,11 @@ namespace Graphics {
 
 	bool CBillboard::isVisible() {
 		return _billboardSet->isVisible();
+	}
+
+	//________________________________________________________________________
+
+	void CBillboard::setPosition(const Ogre::Vector3& position) {
+		_sceneNode->setPosition(position);
 	}
 }
