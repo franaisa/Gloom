@@ -78,12 +78,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Src\Graphics\AnimatedEntity.cpp" />
+    <ClCompile Include="..\..\Src\Graphics\Billboard.cpp" />
     <ClCompile Include="..\..\Src\Graphics\Camera.cpp" />
     <ClCompile Include="..\..\Src\Graphics\CompositorListener.cpp" />
     <ClCompile Include="..\..\Src\Graphics\Entity.cpp" />
     <ClCompile Include="..\..\Src\Graphics\HHFX.cpp" />
     <ClCompile Include="..\..\Src\Graphics\HHFXParticle.cpp" />
     <ClCompile Include="..\..\Src\Graphics\Light.cpp" />
+    <ClCompile Include="..\..\Src\Graphics\Movable2dText.cpp" />
     <ClCompile Include="..\..\Src\Graphics\ObjectTextDisplay.cpp" />
     <ClCompile Include="..\..\Src\Graphics\OgreParticle.cpp" />
     <ClCompile Include="..\..\Src\Graphics\Overlay.cpp" />
@@ -96,6 +98,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Src\Graphics\AnimatedEntity.h" />
+    <ClInclude Include="..\..\Src\Graphics\Billboard.h" />
     <ClInclude Include="..\..\Src\Graphics\Bone.h" />
     <ClInclude Include="..\..\Src\Graphics\Camera.h" />
     <ClInclude Include="..\..\Src\Graphics\CompositorListener.h" />
@@ -104,6 +107,7 @@
     <ClInclude Include="..\..\Src\Graphics\HHFX.h" />
     <ClInclude Include="..\..\Src\Graphics\HHFXParticle.h" />
     <ClInclude Include="..\..\Src\Graphics\Light.h" />
+    <ClInclude Include="..\..\Src\Graphics\Movable2dText.h" />
     <ClInclude Include="..\..\Src\Graphics\ObjectTextDisplay.h" />
     <ClInclude Include="..\..\Src\Graphics\OgreParticle.h" />
     <ClInclude Include="..\..\Src\Graphics\Overlay.h" />

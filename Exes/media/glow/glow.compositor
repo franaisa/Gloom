@@ -25,6 +25,7 @@ compositor Glow
  
 			pass render_scene
 			{
+				last_render_queue 105
 			}
 		}
  

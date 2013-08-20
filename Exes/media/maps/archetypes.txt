@@ -52,6 +52,9 @@ Map = {
 		jumpForce = 1.5,
 		dodgeForce = {2,2,2},
 		rollCamera = 0.15,
+		
+		textOffset = {6.0, 15.0, 0.0},
+		textFont = "StarWars",
 
 		ticksPerSample = 2,
 		samplesPerSnapshot = 2,
@@ -140,6 +143,9 @@ Map = {
 		dodgeForce = {2,2,2},
 		rollCamera = 0.15,
 
+		textOffset = {6.0, 15.0, 0.0},
+		textFont = "StarWars",
+		
 		ticksPerSample = 2,
 		samplesPerSnapshot = 2,
 
@@ -240,6 +246,8 @@ Map = {
 		dodgeForce = {2,2,2},
 		rollCamera = 0.15,
 
+		textOffset = {6.0, 15.0, 0.0},
+		textFont = "StarWars",
 		
 		ticksPerSample = 2,
 		samplesPerSnapshot = 2,
@@ -329,6 +337,9 @@ Map = {
 		jumpForce = 1.5,
 		dodgeForce = {2,2,2},
 		rollCamera = 0.15,
+		
+		textOffset = {6.0, 15.0, 0.0},
+		textFont = "StarWars",
 
 		ticksPerSample = 2,
 		samplesPerSnapshot = 2,
@@ -880,6 +891,9 @@ Map = {
 		shieldDamageAbsorption = 20,
 		damageTimeStep = 1,
 		damageOverTime = 1,
+		
+		textOffset = {6.0, 15.0, 0.0},
+		textFont = "StarWars",
 
 		acceleration = 0.015,
 		maxVelocity = 0.9,
