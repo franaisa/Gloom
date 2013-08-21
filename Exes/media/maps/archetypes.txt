@@ -53,8 +53,8 @@ Map = {
 		dodgeForce = {2,2,2},
 		rollCamera = 0.15,
 		
-		textOffset = {6.0, 15.0, 0.0},
-		textFont = "StarWars",
+		textOffset = {0.0, 17.0, 0.0},
+		textFont = "HammerHead",
 
 		ticksPerSample = 2,
 		samplesPerSnapshot = 2,
@@ -143,8 +143,8 @@ Map = {
 		dodgeForce = {2,2,2},
 		rollCamera = 0.15,
 
-		textOffset = {6.0, 15.0, 0.0},
-		textFont = "StarWars",
+		textOffset = {0.0, 17.0, 0.0},
+		textFont = "HammerHead",
 		
 		ticksPerSample = 2,
 		samplesPerSnapshot = 2,
@@ -246,8 +246,8 @@ Map = {
 		dodgeForce = {2,2,2},
 		rollCamera = 0.15,
 
-		textOffset = {6.0, 15.0, 0.0},
-		textFont = "StarWars",
+		textOffset = {0.0, 17.0, 0.0},
+		textFont = "HammerHead",
 		
 		ticksPerSample = 2,
 		samplesPerSnapshot = 2,
@@ -338,8 +338,8 @@ Map = {
 		dodgeForce = {2,2,2},
 		rollCamera = 0.15,
 		
-		textOffset = {6.0, 15.0, 0.0},
-		textFont = "StarWars",
+		textOffset = {0.0, 17.0, 0.0},
+		textFont = "HammerHead",
 
 		ticksPerSample = 2,
 		samplesPerSnapshot = 2,
@@ -892,8 +892,8 @@ Map = {
 		damageTimeStep = 1,
 		damageOverTime = 1,
 		
-		textOffset = {6.0, 15.0, 0.0},
-		textFont = "StarWars",
+		textOffset = {0.0, 17.0, 0.0},
+		textFont = "HammerHead",
 
 		acceleration = 0.015,
 		maxVelocity = 0.9,

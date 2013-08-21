@@ -16,6 +16,8 @@ gráfica de la entidad.
 
 #include "BaseSubsystems/Euler.h"
 
+#include "Audio/Server.h"
+
 // Logica
 #include "Logic/Entity/Entity.h"
 #include "Logic/Maps/Map.h"
@@ -328,6 +330,8 @@ namespace Logic {
 	//________________________________________________________________________
 
 	void CHudWeapons::changeWeapon(int newWeapon) {
+		_linking = _continouslyShooting = _loadingWeapon = false;
+
 		shared_ptr<CMessageBlockShoot> lockWeaponsMsg = make_shared<CMessageBlockShoot>();
 		lockWeaponsMsg->canShoot(false);
 		_entity->emitMessage(lockWeaponsMsg);
@@ -521,6 +525,24 @@ namespace Logic {
 			_overlayWeapon3D[_currentWeapon]->setVisible(false);
 			_overlayWeapon3D[_chgWpnAnim.nextWeapon]->setVisible(true);
 			_currentWeapon = _chgWpnAnim.nextWeapon;
+
+			Audio::CServer* _audioServer = Audio::CServer::getSingletonPtr();
+			switch(_currentWeapon) {
+				case WeaponType::eSOUL_REAPER:
+					_audioServer->playSound("holster/soulReaper.mp3");
+					break;
+				case WeaponType::eSHOTGUN:
+					_audioServer->playSound("holster/shotgun.mp3");
+					break;
+				case WeaponType::eMINIGUN:
+					_audioServer->playSound("holster/minigun.mp3");
+					break;
+				case WeaponType::eIRON_HELL_GOAT:
+					break;
+				case WeaponType::eSNIPER:
+					_audioServer->playSound("holster/sniper.mp3");
+					break;
+			}
 		}
 		else if(_chgWpnAnim.x < 0.0f) {
 			_changingWeapon = false;
