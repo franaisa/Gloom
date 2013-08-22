@@ -341,6 +341,8 @@ namespace Logic {
 		_changingWeapon = true;
 		_chgWpnAnim.x = 0.0f;
 		_chgWpnAnim.takingAway = true;
+
+		Audio::CServer::getSingletonPtr()->playSound("holster/change.wav");
 	}
 
 	//________________________________________________________________________
@@ -526,23 +528,7 @@ namespace Logic {
 			_overlayWeapon3D[_chgWpnAnim.nextWeapon]->setVisible(true);
 			_currentWeapon = _chgWpnAnim.nextWeapon;
 
-			Audio::CServer* _audioServer = Audio::CServer::getSingletonPtr();
-			switch(_currentWeapon) {
-				case WeaponType::eSOUL_REAPER:
-					_audioServer->playSound("holster/soulReaper.mp3");
-					break;
-				case WeaponType::eSHOTGUN:
-					_audioServer->playSound("holster/shotgun.mp3");
-					break;
-				case WeaponType::eMINIGUN:
-					_audioServer->playSound("holster/minigun.mp3");
-					break;
-				case WeaponType::eIRON_HELL_GOAT:
-					break;
-				case WeaponType::eSNIPER:
-					_audioServer->playSound("holster/sniper.mp3");
-					break;
-			}
+			Audio::CServer::getSingletonPtr()->playSound("holster/change.wav");
 		}
 		else if(_chgWpnAnim.x < 0.0f) {
 			_changingWeapon = false;
