@@ -21,6 +21,7 @@ de una escena.
 #include "BaseSubsystems/Math.h"
 #include "OgreMaterialManager.h"
 #include "OgreTechnique.h"
+#include <OgreTexture.h>
 
 // Predeclaración de clases para ahorrar tiempo de compilación
 namespace Ogre 
@@ -80,7 +81,7 @@ namespace Graphics
 	@author David Llansó
 	@date Julio, 2010
 	*/
-	class CScene 
+	class CScene
 	{
 	public:
 
@@ -270,6 +271,8 @@ namespace Graphics
 		/////////////////////////////////////////////////////////////////////////////////////////
 	protected:
 
+		void createZBufferTexture();
+
 		/**
 		Clase amiga. Solo el servidor gráfico puede crear o liberar escenas, 
 		activarlas o desactivarlas y actualizar su estado.
@@ -450,7 +453,10 @@ namespace Graphics
 		*/
 		CPoolParticle *_poolParticle;
 
-		std::map<std::string, std::vector<CParticle*>> _particlesMap;	
+		std::map< std::string, std::vector<CParticle*> > _particlesMap;
+
+		Ogre::TexturePtr _depthMapTexture;
+
 	}; // class CScene
 
 } // namespace Graphics

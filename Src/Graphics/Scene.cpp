@@ -12,6 +12,7 @@ de una escena.
 
 @author Antonio Jesús Narvaez Corrales
 @author Rubén Mulero Guerrero
+@author Francisco Aisa García
 @date February, 2010
 */
 
@@ -136,6 +137,13 @@ namespace Graphics
 
 	void CScene::activate()
 	{
+		if(_name != "dummy_scene") {
+			// Creamos una textura especial sobre la cual vamos a renderizar
+			// el z-buffer continuamente para que los shaders puedan acceder
+			// a ella de manera facil para hacer calculos de post-procesado
+			createZBufferTexture();
+		}
+
 		buildStaticGeometry();
 		// HACK en pruebas
 		try
@@ -148,7 +156,9 @@ namespace Graphics
 			_viewport = BaseSubsystems::CServer::getSingletonPtr()->getRenderWindow()->getViewport(0);
 			_viewport->setCamera(_camera->getOgreCamera());
 		}
-		
+
+		int z = _viewport->getZOrder();
+
 		_viewport->setBackgroundColour(Ogre::ColourValue::Black);
 		//_sceneMgr->setShadowTechnique(Ogre::SHADOWTYPE_STENCIL_ADDITIVE);
 		/*
@@ -167,21 +177,8 @@ namespace Graphics
 			Ogre::MaterialManager::getSingletonPtr()->addListener(_glowMaterialListener);
 
 			_poolParticle->activate();
-
-			/*_directionalLight = _sceneMgr->createLight("HackLight");
-			_directionalLight->setPosition(Vector3(0, 20, 0));
-			//_directionalLight->setType(Ogre::Light::LT_DIRECTIONAL);
-			//_directionalLight->setDirection( Vector3(0, -1, 0) );
-			//_directionalLight->setDirection( Vector3::ZERO - Vector3(50,50,50) );
-			//_directionalLight->setAttenuation( 100.0f, 1.0f, 1.0f, 1.0f );
-			_directionalLight->setCastShadows(false);
-			_directionalLight->setDiffuseColour(0.0f, 0.9f, 0.0f);
-			_directionalLight->setSpecularColour(0.3,0.3,0.3);*/
-
-			//HHFX::getSingletonPtr()->setSceneMgr(_sceneMgr);
-			//HHFX::getSingletonPtr()->setCamera(_camera->getOgreCamera());
-			//HHFX::getSingletonPtr()->activate();
 		}
+
 		_sceneMgr->getRootSceneNode()->setVisible(true);
 
 		ParticleUniverse::ParticleSystemManager* pManager = ParticleUniverse::ParticleSystemManager::getSingletonPtr();
@@ -222,6 +219,41 @@ namespace Graphics
 		_poolParticle->tick(secs);
 		
 	} // tick
+
+	//--------------------------------------------------------
+
+	void CScene::createZBufferTexture() {
+		Ogre::RenderWindow* window = BaseSubsystems::CServer::getSingletonPtr()->getRenderWindow();
+		
+		// Creamos la textura que va a contener el z-buffer
+		_depthMapTexture = Ogre::TextureManager::getSingleton().createManual(
+				_name + "_DepthMap", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
+				Ogre::TEX_TYPE_2D, window->getWidth(), window->getHeight(),
+				0, Ogre::PF_FLOAT16_R, Ogre::TU_RENDERTARGET);
+
+		// Sacamos el render target de la textura y le añadimos un viewport asociado a la camara
+		// que renderiza la escena.
+		Ogre::RenderTexture* depthTarget = _depthMapTexture->getBuffer()->getRenderTarget();
+		Ogre::Viewport* depthViewport = depthTarget->addViewport( _camera->getOgreCamera() );
+		
+		depthViewport->setBackgroundColour(Ogre::ColourValue::Black);
+
+		// Cargamos el material que se encarga de renderizar el z-buffer
+		Ogre::MaterialPtr mDepthMaterial = Ogre::MaterialManager::getSingleton().getByName("DepthMap");
+		mDepthMaterial->load(); // needs to be loaded manually
+		Ogre::Technique* mDepthTechnique = mDepthMaterial->getBestTechnique();
+
+		// Create a custom render queue invocation sequence for the depth render texture
+		Ogre::RenderQueueInvocationSequence* invocationSequence =
+			Ogre::Root::getSingleton().createRenderQueueInvocationSequence("DepthMap");
+
+		// Add a render queue invocation to the sequence, and disable shadows for it
+		Ogre::RenderQueueInvocation* invocation = invocationSequence->add(Ogre::RENDER_QUEUE_MAIN, "main");
+		invocation->setSuppressShadows(true);
+
+		// Set the render queue invocation sequence for the depth render texture viewport
+		depthViewport->setRenderQueueInvocationSequenceName("DepthMap");
+	}
 
 	//--------------------------------------------------------
 
