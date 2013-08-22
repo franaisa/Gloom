@@ -89,6 +89,7 @@
     <ClCompile Include="..\..\Src\Graphics\ObjectTextDisplay.cpp" />
     <ClCompile Include="..\..\Src\Graphics\OgreParticle.cpp" />
     <ClCompile Include="..\..\Src\Graphics\Overlay.cpp" />
+    <ClCompile Include="..\..\Src\Graphics\Plane.cpp" />
     <ClCompile Include="..\..\Src\Graphics\PoolParticle.cpp" />
     <ClCompile Include="..\..\Src\Graphics\PUParticle.cpp" />
     <ClCompile Include="..\..\Src\Graphics\Scene.cpp" />
@@ -112,6 +113,7 @@
     <ClInclude Include="..\..\Src\Graphics\OgreParticle.h" />
     <ClInclude Include="..\..\Src\Graphics\Overlay.h" />
     <ClInclude Include="..\..\Src\Graphics\Particle.h" />
+    <ClInclude Include="..\..\Src\Graphics\Plane.h" />
     <ClInclude Include="..\..\Src\Graphics\PoolParticle.h" />
     <ClInclude Include="..\..\Src\Graphics\PUParticle.h" />
     <ClInclude Include="..\..\Src\Graphics\Scene.h" />
