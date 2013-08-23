@@ -220,8 +220,6 @@ namespace Graphics
 		*/
 		int getHeight();
 
-		void setZBufferAsTexture(const std::string& materialName, unsigned int technique, unsigned int pass, unsigned int textureUnitState);
-
 	protected:
 
 		/**

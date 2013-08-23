@@ -1,0 +1,45 @@
+vertex_program motionBlurFranVertex hlsl {
+	source motionBlurFran.hlsl
+	entry_point vertex_main
+	target vs_2_0
+}
+
+fragment_program motionBlurFranFragment hlsl {
+	source motionBlurFran.hlsl
+	entry_point fragment_main
+	target ps_2_0
+}
+
+material motionBlurFranMaterial {
+	technique {
+		pass {
+			lighting off
+			depth_check off
+		
+			vertex_program_ref motionBlurFranVertex {
+				// Parametros obtenidos de Ogre
+				param_named_auto	viewProjectionMatrix 		viewproj_matrix
+			}
+		
+			fragment_program_ref motionBlurFranFragment {
+				param_named_auto	viewProjectionMatrix 		viewproj_matrix
+				param_named_auto	inverseViewProjMatrix	inverse_viewproj_matrix
+				// Matriz identidad
+				param_named			previousViewProjMatrix	float4x4								1 0 0 0	0 1 0 0	0 0 1 0	0 0 0 1
+				//param_named			previousViewMatrix		float4x4								1 0 0 0	0 1 0 0	0 0 1 0	0 0 0 1
+				//param_named			previousProjectionMatrix	float4x4								1 0 0 0	0 1 0 0	0 0 1 0	0 0 0 1
+			}
+		
+			// Textura de post-procesado de la escena
+			texture_unit SceneSampler {
+				tex_address_mode clamp
+				filtering linear linear none
+				colour_op replace
+			}
+			
+			texture_unit DepthMap {
+				// DepthMap de la escena actual
+			}
+		}
+	}
+}

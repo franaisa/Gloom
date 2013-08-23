@@ -1,0 +1,42 @@
+compositor MotionBlurFranCompositor
+{
+	technique
+	{
+		texture	rt0 			target_width target_height PF_A8R8G8B8
+		texture 	depthMap	target_width target_height PF_A8R8G8B8
+ 
+		// Obtenemos la escena
+		target rt0
+		{
+			input previous
+		}
+ 
+		// Renderizamos la escena con el esquema de profunidad
+		// para obtener el depth map
+		target depthMap
+		{
+			input none
+			material_scheme depthScheme
+			
+			pass clear
+			{
+			}
+ 
+			pass render_scene
+			{
+			}
+		}
+ 
+		// Computamos el motion blur
+		target_output
+		{
+			input none
+			pass render_quad
+			{
+				material motionBlurFranMaterial
+				input 0 rt0
+				input 1 depthMap
+			}
+		}
+	}
+}

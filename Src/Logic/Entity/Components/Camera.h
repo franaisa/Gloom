@@ -14,11 +14,11 @@ de una escena.
 #define __Logic_Camera_H
 
 #include "Logic/Entity/Component.h"
+#include "Graphics/Camera.h"
 
 // Predeclaración de clases para ahorrar tiempo de compilación
 namespace Graphics 
 {
-	class CCamera;
 	class CScene;
 }
 

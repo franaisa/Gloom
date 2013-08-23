@@ -258,12 +258,7 @@ namespace Graphics
 	int CServer::getHeight(){
 		return _overlayManager->getViewportHeight();
 	} //get Height
-	//--------------------------------------------------------
 
-	void CServer::setZBufferAsTexture(const std::string& materialName, unsigned int technique, unsigned int pass, unsigned int textureUnitState) {
-		Ogre::MaterialPtr material = Ogre::MaterialManager::getSingletonPtr()->getByName(materialName);
-		material->getTechnique(technique)->getPass(pass)->getTextureUnitState(textureUnitState)->setTexture(_activeScene->_depthMapTexture);
-	}
 	//--------------------------------------------------------
 
 	void CServer::tick(float secs) 

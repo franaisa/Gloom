@@ -17,6 +17,7 @@ de una escena.
 */
 
 #include "Particle.h"
+#include "MotionBlur.h"
 #include "Scene.h"
 #include "Camera.h"
 #include "Light.h"
@@ -57,7 +58,7 @@ de una escena.
 namespace Graphics 
 {
 	CScene::CScene(const std::string& name) : _viewport(0), 
-		_staticGeometry(0), _directionalLight(0)
+		_staticGeometry(0), _directionalLight(0), _motionBlur(0)
 	{
 		_root = BaseSubsystems::CServer::getSingletonPtr()->getOgreRoot();
 		_sceneMgr = _root->createSceneManager(Ogre::ST_INTERIOR, name);
@@ -137,12 +138,6 @@ namespace Graphics
 
 	void CScene::activate()
 	{
-		if(_name != "dummy_scene") {
-			// Creamos una textura especial sobre la cual vamos a renderizar
-			// el z-buffer continuamente para que los shaders puedan acceder
-			// a ella de manera facil para hacer calculos de post-procesado
-			createZBufferTexture();
-		}
 
 		buildStaticGeometry();
 		// HACK en pruebas
@@ -157,9 +152,13 @@ namespace Graphics
 			_viewport->setCamera(_camera->getOgreCamera());
 		}
 
-		int z = _viewport->getZOrder();
+		// Multiplicar la una por la otra para conseguir la matriz anterior
+		// de vista y proyeccion
+		//_camera->getOgreCamera()->getViewMatrix();
+		//_camera->getOgreCamera()->getProjectionMatrix();
 
 		_viewport->setBackgroundColour(Ogre::ColourValue::Black);
+		//_viewport->setMaterialScheme("depthScheme");
 		//_sceneMgr->setShadowTechnique(Ogre::SHADOWTYPE_STENCIL_ADDITIVE);
 		/*
 		_sceneMgr->setAmbientLight(Ogre::ColourValue(1,1,1));
@@ -177,6 +176,8 @@ namespace Graphics
 			Ogre::MaterialManager::getSingletonPtr()->addListener(_glowMaterialListener);
 
 			_poolParticle->activate();
+
+			//_motionBlur = new CMotionBlur( _compositorManager, getCamera()->getOgreCamera() );
 		}
 
 		_sceneMgr->getRootSceneNode()->setVisible(true);
@@ -205,6 +206,8 @@ namespace Graphics
 			ParticleUniverse::ParticleSystemManager::getSingletonPtr()->destroyAllParticleSystems(_sceneMgr);
 		}
 
+		if(_motionBlur != NULL)
+			delete _motionBlur;
 	} // deactivate
 	
 	//--------------------------------------------------------
@@ -219,41 +222,6 @@ namespace Graphics
 		_poolParticle->tick(secs);
 		
 	} // tick
-
-	//--------------------------------------------------------
-
-	void CScene::createZBufferTexture() {
-		Ogre::RenderWindow* window = BaseSubsystems::CServer::getSingletonPtr()->getRenderWindow();
-		
-		// Creamos la textura que va a contener el z-buffer
-		_depthMapTexture = Ogre::TextureManager::getSingleton().createManual(
-				_name + "_DepthMap", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
-				Ogre::TEX_TYPE_2D, window->getWidth(), window->getHeight(),
-				0, Ogre::PF_FLOAT16_R, Ogre::TU_RENDERTARGET);
-
-		// Sacamos el render target de la textura y le añadimos un viewport asociado a la camara
-		// que renderiza la escena.
-		Ogre::RenderTexture* depthTarget = _depthMapTexture->getBuffer()->getRenderTarget();
-		Ogre::Viewport* depthViewport = depthTarget->addViewport( _camera->getOgreCamera() );
-		
-		depthViewport->setBackgroundColour(Ogre::ColourValue::Black);
-
-		// Cargamos el material que se encarga de renderizar el z-buffer
-		Ogre::MaterialPtr mDepthMaterial = Ogre::MaterialManager::getSingleton().getByName("DepthMap");
-		mDepthMaterial->load(); // needs to be loaded manually
-		Ogre::Technique* mDepthTechnique = mDepthMaterial->getBestTechnique();
-
-		// Create a custom render queue invocation sequence for the depth render texture
-		Ogre::RenderQueueInvocationSequence* invocationSequence =
-			Ogre::Root::getSingleton().createRenderQueueInvocationSequence("DepthMap");
-
-		// Add a render queue invocation to the sequence, and disable shadows for it
-		Ogre::RenderQueueInvocation* invocation = invocationSequence->add(Ogre::RENDER_QUEUE_MAIN, "main");
-		invocation->setSuppressShadows(true);
-
-		// Set the render queue invocation sequence for the depth render texture viewport
-		depthViewport->setRenderQueueInvocationSequenceName("DepthMap");
-	}
 
 	//--------------------------------------------------------
 
@@ -407,8 +375,9 @@ namespace Graphics
 			return;
 
 		_compositorList[name]->inputCompositor(variable, value);
-
 	}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	bool CScene::getCompositorVisible(const std::string &name){
 		return _compositorManager->getCompositorChain(_camera->getOgreCamera()->getViewport())->getCompositor(name)->getEnabled();

@@ -24,6 +24,19 @@ material mapaAlberto_blanco
 
 	}
 
+	technique
+	{
+		scheme depthScheme
+		pass
+		{
+			vertex_program_ref depthMapVertex
+			{
+			}
+			fragment_program_ref depthMapFragment
+			{
+			}
+		}
+	}
 }
 
 
@@ -77,6 +90,20 @@ material mapaAlberto_bronzecopper {
 				texture BronzeCopper0030_L_SPEC.tga
 			}
 			
+		}
+	}
+	
+	technique
+	{
+		scheme depthScheme
+		pass
+		{
+			vertex_program_ref depthMapVertex
+			{
+			}
+			fragment_program_ref depthMapFragment
+			{
+			}
 		}
 	}
 }
@@ -134,6 +161,20 @@ material mapaAlberto_comluman {
 			
 		}
 	}
+	
+	technique
+	{
+		scheme depthScheme
+		pass
+		{
+			vertex_program_ref depthMapVertex
+			{
+			}
+			fragment_program_ref depthMapFragment
+			{
+			}
+		}
+	}
 }
 
 
@@ -164,6 +205,19 @@ material mapaAlberto_luces
 
 	}
 
+	technique
+	{
+		scheme depthScheme
+		pass
+		{
+			vertex_program_ref depthMapVertex
+			{
+			}
+			fragment_program_ref depthMapFragment
+			{
+			}
+		}
+	}
 }
 
 
@@ -217,6 +271,20 @@ material mapaAlberto_metalContainer {
 				texture MetalContainer_SPEC.tga
 			}
 			
+		}
+	}
+
+	technique
+	{
+		scheme depthScheme
+		pass
+		{
+			vertex_program_ref depthMapVertex
+			{
+			}
+			fragment_program_ref depthMapFragment
+			{
+			}
 		}
 	}	
 }
@@ -273,7 +341,21 @@ material mapaAlberto_metalContainer0149 {
 			}
 			
 		}
-	}	
+	}
+
+	technique
+	{
+		scheme depthScheme
+		pass
+		{
+			vertex_program_ref depthMapVertex
+			{
+			}
+			fragment_program_ref depthMapFragment
+			{
+			}
+		}
+	}
 }
 
 
@@ -329,6 +411,20 @@ material mapaAlberto_metalContainers {
 			
 		}
 	}
+	
+	technique
+	{
+		scheme depthScheme
+		pass
+		{
+			vertex_program_ref depthMapVertex
+			{
+			}
+			fragment_program_ref depthMapFragment
+			{
+			}
+		}
+	}
 }
 
 
@@ -382,6 +478,20 @@ material mapaAlberto_metalpuerta {
 				texture metalpuerta_SPEC.tga
 			}
 			
+		}
+	}
+	
+	technique
+	{
+		scheme depthScheme
+		pass
+		{
+			vertex_program_ref depthMapVertex
+			{
+			}
+			fragment_program_ref depthMapFragment
+			{
+			}
 		}
 	}
 }
@@ -452,7 +562,21 @@ material mapaAlberto_piedra {
 			}
 			
 		}
-	}	
+	}
+
+	technique
+	{
+		scheme depthScheme
+		pass
+		{
+			vertex_program_ref depthMapVertex
+			{
+			}
+			fragment_program_ref depthMapFragment
+			{
+			}
+		}
+	}
 }
 
 
@@ -507,6 +631,20 @@ material mapaAlberto_suelo {
 				texture suelo_SPEC.tga
 			}
 			
+		}
+	}
+	
+	technique
+	{
+		scheme depthScheme
+		pass
+		{
+			vertex_program_ref depthMapVertex
+			{
+			}
+			fragment_program_ref depthMapFragment
+			{
+			}
 		}
 	}
 }
@@ -564,6 +702,20 @@ material mapaAlberto_suelometal{
 			
 		}
 	}
+	
+	technique
+	{
+		scheme depthScheme
+		pass
+		{
+			vertex_program_ref depthMapVertex
+			{
+			}
+			fragment_program_ref depthMapFragment
+			{
+			}
+		}
+	}
 }
 
 
@@ -617,6 +769,20 @@ material mapaAlberto_techometal {
 				texture techometal_SPEC_2.tga
 			}
 			
+		}
+	}
+	
+	technique
+	{
+		scheme depthScheme
+		pass
+		{
+			vertex_program_ref depthMapVertex
+			{
+			}
+			fragment_program_ref depthMapFragment
+			{
+			}
 		}
 	}
 }
@@ -673,6 +839,20 @@ material mapaAlberto_ventana {
 			}
 			
 		}
+	}
+
+	technique
+	{
+		scheme depthScheme
+		pass
+		{
+			vertex_program_ref depthMapVertex
+			{
+			}
+			fragment_program_ref depthMapFragment
+			{
+			}
+		}
 	}	
 }
 
@@ -728,7 +908,21 @@ material mapaAlberto_viga {
 			}
 			
 		}
-	}	
+	}
+
+	technique
+	{
+		scheme depthScheme
+		pass
+		{
+			vertex_program_ref depthMapVertex
+			{
+			}
+			fragment_program_ref depthMapFragment
+			{
+			}
+		}
+	}
 }
 
 
@@ -783,5 +977,19 @@ material metalContainer_metalContainer0036 {
 			}
 			
 		}
-	}	
+	}
+
+	technique
+	{
+		scheme depthScheme
+		pass
+		{
+			vertex_program_ref depthMapVertex
+			{
+			}
+			fragment_program_ref depthMapFragment
+			{
+			}
+		}
+	}
 }

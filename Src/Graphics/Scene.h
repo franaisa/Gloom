@@ -44,6 +44,7 @@ namespace Graphics
 	class CompositorManager;
 	class CCompositorListener;
 	class CPoolParticle;
+	class CMotionBlur;
 }
 
 namespace Graphics 
@@ -231,8 +232,6 @@ namespace Graphics
 
 		void changeAmbientLight(Vector3 Light);
 
-
-
 		/////////////////////////////////////////////////////////////////////////////////////////
 		/////////////////////////////////////////////////////////////////////////////////////////
 		// SubClase que hago para hacer ciertas pruebas con el Glow guay.
@@ -271,7 +270,6 @@ namespace Graphics
 		/////////////////////////////////////////////////////////////////////////////////////////
 	protected:
 
-		void createZBufferTexture();
 
 		/**
 		Clase amiga. Solo el servidor gráfico puede crear o liberar escenas, 
@@ -456,6 +454,8 @@ namespace Graphics
 		std::map< std::string, std::vector<CParticle*> > _particlesMap;
 
 		Ogre::TexturePtr _depthMapTexture;
+
+		CMotionBlur* _motionBlur;
 
 	}; // class CScene
 

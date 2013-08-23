@@ -17,6 +17,8 @@ Contiene la declaración de la clase que maneja la cámara.
 #define __Graphics_Camera_H
 
 #include "BaseSubsystems/Math.h"
+#include <OgreCamera.h>
+#include <list>
 
 // Predeclaración de clases para ahorrar tiempo de compilación
 namespace Ogre 
@@ -30,6 +32,10 @@ namespace Graphics
 	class CServer;
 	class CEntity;
 }
+namespace Logic
+{
+	class CCamera;
+}
 
 namespace Graphics 
 {
@@ -42,7 +48,7 @@ namespace Graphics
 	@author Jose Antonio García Yáñez
 	@date Mayo, 2013
 	*/
-	class CCamera 
+	class CCamera
 	{
 	public:
 
@@ -156,6 +162,10 @@ namespace Graphics
 		Método que resetea el fov y lo pone por defecto
 		*/
 		void resetFov();
+
+		Matrix4 getProjectionMatrix();
+
+		Matrix4 getViewMatrix();
 
 	protected:
 		

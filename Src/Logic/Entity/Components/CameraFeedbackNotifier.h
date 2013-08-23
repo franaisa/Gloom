@@ -17,6 +17,7 @@ del Screamer.
 
 #include "Logic/Entity/Component.h"
 #include "AvatarController.h"
+#include "Graphics/Camera.h"
 
 namespace Graphics {
 	class CScene;

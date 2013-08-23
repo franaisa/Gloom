@@ -1,0 +1,44 @@
+// material in DepthShadowmap.material for vertex shader
+vertex_program depthMapVertex hlsl
+{
+    source depthMap.hlsl
+    entry_point casterVP
+    target vs_2_0
+
+    default_params
+    {
+        param_named_auto worldViewProj worldviewproj_matrix
+        param_named_auto texelOffsets texel_offsets
+        param_named_auto depthRange scene_depth_range
+    }
+}
+
+// material in DepthShadowmap.material for pixel shader
+fragment_program depthMapFragment hlsl
+{
+    source depthMap.hlsl
+    entry_point casterFP
+    target ps_2_0
+
+    default_params
+    {
+    }
+}
+
+// material for objects in the scene
+material depthMaterial
+{
+	technique
+	{
+		scheme depthScheme
+		pass
+		{
+			vertex_program_ref depthMapVertex
+			{
+			}
+			fragment_program_ref depthMapFragment
+			{
+			}
+		}
+	}
+}
