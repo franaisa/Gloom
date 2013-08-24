@@ -3,42 +3,13 @@ sampler SceneSampler	: register(s0);
 sampler DepthMap			: register(s1);
 
 // Parametros uniformes
-float4x4 viewProjectionMatrix;
 float4x4 inverseViewProjMatrix;
-
 float4x4 previousViewProjMatrix;
-
-//float4x4 previousViewMatrix;
-//float4x4 previousProjectionMatrix;
-
-// Información de entrada del vertex shader
-struct VsInput {
-	float4 vertex 				: POSITION;
-	float2 texcoord 			: TEXCOORD0;
-};
-
-// Información de salida del vertex shader
-struct VsOutput {
-	float4 position 			: POSITION;
-	float2 uvmain		 		: TEXCOORD0;
-};
 
 // Información de entrada del fragment shader
 struct PsInput {
 	float2 uvmain 			: TEXCOORD0;
 };
-
-//__________________________________________________________________
-
-// VERTEX SHADER
-VsOutput vertex_main(const VsInput IN) {
-	VsOutput OUT;
-	
-	OUT.position = mul(viewProjectionMatrix, IN.vertex);
-	OUT.uvmain = IN.texcoord;
-	
-	return OUT;
-}
 
 //__________________________________________________________________
 
@@ -72,7 +43,7 @@ float4 fragment_main(const PsInput IN) : COLOR {
 	// Get the initial color at this pixel.
 	float4 color = tex2D(SceneSampler, IN.uvmain);
 	float2 texCoord = IN.uvmain + velocity;
-	int numSamples = 8;
+	int numSamples = 15;
 	for(int i = 1; i < numSamples; ++i, texCoord += velocity) {
 		// Sample the color buffer along the velocity vector.
 		float4 currentColor = tex2D(SceneSampler, texCoord);
@@ -82,6 +53,8 @@ float4 fragment_main(const PsInput IN) : COLOR {
 	
 	// Average all of the samples to get the final blur color.
 	float4 finalColor = color / numSamples;
+	//float4 finalColor = float4( viewProjectionMatrix._11, viewProjectionMatrix._12, viewProjectionMatrix._13, 1.0f );
 	
+	//return tex2D(DepthMap, IN.uvmain);
 	return finalColor;
 }

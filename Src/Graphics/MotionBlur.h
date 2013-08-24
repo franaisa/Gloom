@@ -21,6 +21,10 @@ namespace Ogre {
 	class CompositorManager;
 }
 
+namespace Graphics {
+	class CCamera;
+}
+
 /**
 
 @author Francisco Aisa García
@@ -38,18 +42,30 @@ namespace Graphics {
 	class CMotionBlur : public Ogre::CompositorInstance::Listener, public Ogre::Camera::Listener {
 	public:
 
-		CMotionBlur(Ogre::CompositorManager* compositorManager, Ogre::Camera* camera);
+		CMotionBlur(Ogre::CompositorManager* compositorManager, Graphics::CCamera* camera);
 		~CMotionBlur();
 
 		virtual void notifyMaterialRender(Ogre::uint32 pass_id, Ogre::MaterialPtr &mat);
 
-		virtual void cameraPreRenderScene(Ogre::Camera* cam);
+		virtual void cameraPreRenderScene(Ogre::Camera* camera);
+		virtual void cameraPostRenderScene(Ogre::Camera* camera);
+		virtual void cameraDestroyed(Ogre::Camera *camera);
+
+		void tick(unsigned int msecs);
 
 	protected:
 
+		float _previousFPS;
+
+		Ogre::Matrix4 _inverseViewProjMatrix;
 		Ogre::Matrix4 _previousViewProjMatrix;
+		
+		Ogre::Quaternion _previousOrientation;
+		Ogre::Vector3 _previousPosition;
+
 		Ogre::CompositorInstance* _compositor;
-		Ogre::Camera* _camera;
+		Ogre::Camera* _sceneCamera;
+		Ogre::SceneNode* _cameraNode;
 	};
 
 } // namespace Graphics
