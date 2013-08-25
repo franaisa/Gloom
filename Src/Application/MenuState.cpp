@@ -74,7 +74,7 @@ namespace Application {
 		_menu->show();
 
 		// Ponemos el sonido del menu
-		Audio::CServer::getSingletonPtr()->playSound("themeGloom.wav", true, true);
+		Audio::CServer::getSingletonPtr()->playSound("music/themeGloom.wav", true, true);
 
 	} // activate
 

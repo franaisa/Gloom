@@ -177,7 +177,7 @@ namespace Graphics
 
 			_poolParticle->activate();
 
-			//_motionBlur = new CMotionBlur( _compositorManager, getCamera()->getOgreCamera() );
+			//_motionBlur = new CMotionBlur( _compositorManager, _camera );
 		}
 
 		_sceneMgr->getRootSceneNode()->setVisible(true);
@@ -221,6 +221,8 @@ namespace Graphics
 			(*it)->tick(secs);
 		_poolParticle->tick(secs);
 		
+		/*if(_motionBlur != NULL)
+			_motionBlur->tick(secs);*/
 	} // tick
 
 	//--------------------------------------------------------

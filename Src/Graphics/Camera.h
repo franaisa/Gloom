@@ -163,9 +163,7 @@ namespace Graphics
 		*/
 		void resetFov();
 
-		Matrix4 getProjectionMatrix();
-
-		Matrix4 getViewMatrix();
+		Ogre::SceneNode* getSceneNode() { return _cameraNode; }
 
 	protected:
 		

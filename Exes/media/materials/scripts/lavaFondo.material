@@ -1,5 +1,4 @@
 material lavaFondo {
-	set $glow_tex lava_GLOW.tga
 	technique {
 		pass {
 		
@@ -59,8 +58,26 @@ material lavaFondo {
 				param_named_auto tiempo time
 			}
 		
-			texture_unit {
-				texture $glow_tex
+			fragment_program_ref GlowMappingFragment {
+			}
+		
+			texture_unit DiffMap {
+				texture lava_COLOR.tga
+			}
+		
+			texture_unit GlowMap {
+				texture lava_GLOW.tga
+			}
+		}
+	}
+	
+	technique {
+		scheme depthScheme
+		pass {
+			vertex_program_ref depthMapVertex {
+			}
+			
+			fragment_program_ref depthMapFragment {
 			}
 		}
 	}

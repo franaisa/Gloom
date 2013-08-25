@@ -73,7 +73,7 @@ namespace Application {
 		Logic::CEntityFactory::getSingletonPtr()->dynamicCreation(true);
 
 		//paramos el sonido de menu
-		Audio::CServer::getSingletonPtr()->stopSound("themeGloom.wav");
+		Audio::CServer::getSingletonPtr()->stopSound("music/themeGloom.wav");
 		//Audio::CServer::getSingletonPtr()->stopAllSounds();
 	} // activate
 

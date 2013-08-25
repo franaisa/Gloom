@@ -26,7 +26,7 @@ namespace Logic {
 	IMP_FACTORY(CCharacterSound);
 	
 	CCharacterSound::CCharacterSound() : _audioServer(NULL),
-										 _footstepSound("step1.wav"),
+										 _footstepSound("footsteps/step1.wav"),
 										 _playerIsWalking(false),
 										 _footstepTimeStep(365),
 										 _footstepTimer(_footstepTimeStep) {
@@ -96,11 +96,11 @@ namespace Logic {
 
 		// Sonido de aterrizar
 		if(landForce < -0.7f)
-			_audioServer->playSound("land.wav", false, false);
+			_audioServer->playSound("land/land.wav", false, false);
 
 		// Sonido de hacernos daño al caer
 		if(landForce < -2.0f)
-			_audioServer->playSound("landingMaleGrunt.wav", false, false);
+			_audioServer->playSound("damage/landingMaleGrunt.wav", false, false);
 	}
 
 	//__________________________________________________________________
@@ -113,13 +113,13 @@ namespace Logic {
 	//__________________________________________________________________
 
 	void CCharacterSound::onJump() {
-		_audioServer->playSound("jump.wav", false, false);
+		_audioServer->playSound("character/jump.wav", false, false);
 	}
 
 	//__________________________________________________________________
 
 	void CCharacterSound::onDodge() {
-		_audioServer->playSound("sidejump.wav", false, false);
+		_audioServer->playSound("character/sidejump.wav", false, false);
 	}
 
 	//__________________________________________________________________

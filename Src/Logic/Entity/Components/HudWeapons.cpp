@@ -342,7 +342,7 @@ namespace Logic {
 		_chgWpnAnim.x = 0.0f;
 		_chgWpnAnim.takingAway = true;
 
-		Audio::CServer::getSingletonPtr()->playSound("holster/change.wav");
+		Audio::CServer::getSingletonPtr()->playSound("weapons/change.wav");
 	}
 
 	//________________________________________________________________________
@@ -528,7 +528,7 @@ namespace Logic {
 			_overlayWeapon3D[_chgWpnAnim.nextWeapon]->setVisible(true);
 			_currentWeapon = _chgWpnAnim.nextWeapon;
 
-			Audio::CServer::getSingletonPtr()->playSound("holster/change.wav");
+			Audio::CServer::getSingletonPtr()->playSound("weapons/change.wav");
 		}
 		else if(_chgWpnAnim.x < 0.0f) {
 			_changingWeapon = false;
