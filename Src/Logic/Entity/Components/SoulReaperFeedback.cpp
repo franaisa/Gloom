@@ -53,7 +53,7 @@ namespace Logic {
 		_hudWeapon->shootAnim(1.5f);
 
 		//Sonido
-		Audio::CServer::getSingletonPtr()->playSound("hammer.wav", false, false);
+		Audio::CServer::getSingletonPtr()->playSound("weapons/soulReaper/hammer.wav", false, false);
 	} // primaryFire
 
 	//__________________________________________________________________
