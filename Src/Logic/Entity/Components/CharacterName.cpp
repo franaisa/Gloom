@@ -98,7 +98,7 @@ namespace Logic {
 
 	void CCharacterName::onTick(unsigned int msecs) {
 		if( _text2d->isVisible() )
-			_text2d->setPosition( _entity->getPosition() + Vector3(0.0f, 15.0f, 0.0f) );
+			_text2d->setPosition( _entity->getPosition() + _offset );
 		else
 			putToSleep();
 	}

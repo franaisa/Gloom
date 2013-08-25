@@ -1,0 +1,13 @@
+fragment_program FragmentDepthMap glsl
+{
+   source depthmap.frag
+}
+
+fragment_program FragmentSampler glsl
+{
+    source sampler.frag
+    default_params
+    {
+        param_named Depth int 0
+    }
+}

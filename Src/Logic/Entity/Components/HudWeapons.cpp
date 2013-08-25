@@ -16,6 +16,8 @@ gráfica de la entidad.
 
 #include "BaseSubsystems/Euler.h"
 
+#include "Audio/Server.h"
+
 // Logica
 #include "Logic/Entity/Entity.h"
 #include "Logic/Maps/Map.h"
@@ -328,6 +330,8 @@ namespace Logic {
 	//________________________________________________________________________
 
 	void CHudWeapons::changeWeapon(int newWeapon) {
+		_linking = _continouslyShooting = _loadingWeapon = false;
+
 		shared_ptr<CMessageBlockShoot> lockWeaponsMsg = make_shared<CMessageBlockShoot>();
 		lockWeaponsMsg->canShoot(false);
 		_entity->emitMessage(lockWeaponsMsg);
@@ -337,6 +341,8 @@ namespace Logic {
 		_changingWeapon = true;
 		_chgWpnAnim.x = 0.0f;
 		_chgWpnAnim.takingAway = true;
+
+		Audio::CServer::getSingletonPtr()->playSound("weapons/change.wav");
 	}
 
 	//________________________________________________________________________
@@ -521,6 +527,8 @@ namespace Logic {
 			_overlayWeapon3D[_currentWeapon]->setVisible(false);
 			_overlayWeapon3D[_chgWpnAnim.nextWeapon]->setVisible(true);
 			_currentWeapon = _chgWpnAnim.nextWeapon;
+
+			Audio::CServer::getSingletonPtr()->playSound("weapons/change.wav");
 		}
 		else if(_chgWpnAnim.x < 0.0f) {
 			_changingWeapon = false;

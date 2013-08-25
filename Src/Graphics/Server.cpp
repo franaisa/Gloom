@@ -258,9 +258,9 @@ namespace Graphics
 	int CServer::getHeight(){
 		return _overlayManager->getViewportHeight();
 	} //get Height
+
 	//--------------------------------------------------------
 
-	
 	void CServer::tick(float secs) 
 	{
 		if(_activeScene != _dummyScene)

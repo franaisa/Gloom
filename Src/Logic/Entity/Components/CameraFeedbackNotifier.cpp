@@ -12,7 +12,6 @@ del Screamer.
 @date Abril, 2013
 */
 
-#include "Graphics/Scene.h"
 #include "CameraFeedbackNotifier.h"
 #include "Camera.h"
 #include "HudWeapons.h"
@@ -21,6 +20,8 @@ del Screamer.
 #include "Logic/Maps/Map.h"
 #include "Map/MapEntity.h"
 #include "Application/BaseApplication.h"
+#include "Graphics/Scene.h"
+#include "Graphics/Server.h"
 
 // Mensajes
 #include "Logic/Messages/MessageDamaged.h"
@@ -158,9 +159,6 @@ namespace Logic {
 
 		_scene->createCompositor("shockWaveCompositor");
 		_scene->setCompositorVisible("shockWaveCompositor", false);
-		//Actualizar durante el tick la variable de tiempo desde 0 a 1 y luego apagar
-		//el compositor, de esta forma solo aparece una onda
-		//Actualizar tambien el centro de la onda para cada arma
 	}
 
 	//________________________________________________________________________

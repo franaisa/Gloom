@@ -243,6 +243,9 @@ namespace Logic {
 				info->setName(entityName);
 				entity = Logic::CEntityFactory::getSingletonPtr()->createEntityById(info,Logic::CServer::getSingletonPtr()->getMap(), id);
 			}
+			else {
+				std::cerr << "Warning: Habia una entidad con el id que se ha pasado, se va a liar parda!!!" << std::endl;
+			}
 
 			unsigned int messageSize;
 
@@ -253,7 +256,7 @@ namespace Logic {
 			for(int j = 0; j < messageSize ; ++j){
 				int typeMessage;
 				//read message type
-				worldState.read(&typeMessage, sizeof(int));
+				worldState.read( &typeMessage, sizeof(int) );
 
 				//deserialize message
 				std::shared_ptr<CMessage> messageReceived( Logic::CMessageFactory::getSingletonPtr()->create(typeMessage) );

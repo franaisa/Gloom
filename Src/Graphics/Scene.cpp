@@ -12,10 +12,12 @@ de una escena.
 
 @author Antonio Jesús Narvaez Corrales
 @author Rubén Mulero Guerrero
+@author Francisco Aisa García
 @date February, 2010
 */
 
 #include "Particle.h"
+#include "MotionBlur.h"
 #include "Scene.h"
 #include "Camera.h"
 #include "Light.h"
@@ -56,7 +58,7 @@ de una escena.
 namespace Graphics 
 {
 	CScene::CScene(const std::string& name) : _viewport(0), 
-		_staticGeometry(0), _directionalLight(0)
+		_staticGeometry(0), _directionalLight(0), _motionBlur(0)
 	{
 		_root = BaseSubsystems::CServer::getSingletonPtr()->getOgreRoot();
 		_sceneMgr = _root->createSceneManager(Ogre::ST_INTERIOR, name);
@@ -136,6 +138,7 @@ namespace Graphics
 
 	void CScene::activate()
 	{
+
 		buildStaticGeometry();
 		// HACK en pruebas
 		try
@@ -148,8 +151,14 @@ namespace Graphics
 			_viewport = BaseSubsystems::CServer::getSingletonPtr()->getRenderWindow()->getViewport(0);
 			_viewport->setCamera(_camera->getOgreCamera());
 		}
-		
+
+		// Multiplicar la una por la otra para conseguir la matriz anterior
+		// de vista y proyeccion
+		//_camera->getOgreCamera()->getViewMatrix();
+		//_camera->getOgreCamera()->getProjectionMatrix();
+
 		_viewport->setBackgroundColour(Ogre::ColourValue::Black);
+		//_viewport->setMaterialScheme("depthScheme");
 		//_sceneMgr->setShadowTechnique(Ogre::SHADOWTYPE_STENCIL_ADDITIVE);
 		/*
 		_sceneMgr->setAmbientLight(Ogre::ColourValue(1,1,1));
@@ -168,20 +177,9 @@ namespace Graphics
 
 			_poolParticle->activate();
 
-			/*_directionalLight = _sceneMgr->createLight("HackLight");
-			_directionalLight->setPosition(Vector3(0, 20, 0));
-			//_directionalLight->setType(Ogre::Light::LT_DIRECTIONAL);
-			//_directionalLight->setDirection( Vector3(0, -1, 0) );
-			//_directionalLight->setDirection( Vector3::ZERO - Vector3(50,50,50) );
-			//_directionalLight->setAttenuation( 100.0f, 1.0f, 1.0f, 1.0f );
-			_directionalLight->setCastShadows(false);
-			_directionalLight->setDiffuseColour(0.0f, 0.9f, 0.0f);
-			_directionalLight->setSpecularColour(0.3,0.3,0.3);*/
-
-			//HHFX::getSingletonPtr()->setSceneMgr(_sceneMgr);
-			//HHFX::getSingletonPtr()->setCamera(_camera->getOgreCamera());
-			//HHFX::getSingletonPtr()->activate();
+			//_motionBlur = new CMotionBlur( _compositorManager, _camera );
 		}
+
 		_sceneMgr->getRootSceneNode()->setVisible(true);
 
 		ParticleUniverse::ParticleSystemManager* pManager = ParticleUniverse::ParticleSystemManager::getSingletonPtr();
@@ -208,6 +206,8 @@ namespace Graphics
 			ParticleUniverse::ParticleSystemManager::getSingletonPtr()->destroyAllParticleSystems(_sceneMgr);
 		}
 
+		if(_motionBlur != NULL)
+			delete _motionBlur;
 	} // deactivate
 	
 	//--------------------------------------------------------
@@ -221,6 +221,8 @@ namespace Graphics
 			(*it)->tick(secs);
 		_poolParticle->tick(secs);
 		
+		/*if(_motionBlur != NULL)
+			_motionBlur->tick(secs);*/
 	} // tick
 
 	//--------------------------------------------------------
@@ -375,8 +377,9 @@ namespace Graphics
 			return;
 
 		_compositorList[name]->inputCompositor(variable, value);
-
 	}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	bool CScene::getCompositorVisible(const std::string &name){
 		return _compositorManager->getCompositorChain(_camera->getOgreCamera()->getViewport())->getCompositor(name)->getEnabled();

@@ -19,7 +19,6 @@ de una escena.
 #include "Map/MapEntity.h"
 
 #include "Graphics/Scene.h"
-#include "Graphics/Camera.h"
 
 #include "Interpolation.h"
 #include "AvatarController.h"
@@ -250,7 +249,6 @@ namespace Logic
 			_graphicsCamera->rollCamera(_toRoll);
 		}
 	} // tick
-
 
 } // namespace Logic
 

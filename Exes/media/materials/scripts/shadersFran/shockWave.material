@@ -1,6 +1,9 @@
 material shockWaveMaterial {
 	technique {
 		pass {
+			lighting off
+			depth_check off
+		
 			vertex_program_ref shockWaveVertexShader {
 				// Parametros obtenidos de Ogre
 				param_named_auto	viewProjectionMatrix 		worldviewproj_matrix
@@ -23,7 +26,11 @@ material shockWaveMaterial {
 			}
 		
 			// Textura de post-procesado de la escena
-			texture_unit SceneSampler { }
+			texture_unit SceneSampler {
+				tex_address_mode clamp
+				filtering linear linear none
+				colour_op replace
+			}
 		}
 	}
 }

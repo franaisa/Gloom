@@ -1,0 +1,8 @@
+HammerHead 
+{
+	// HammerHead Thin Font
+	type 			truetype
+	source 		HammerheadThin.ttf
+	size 			10
+	resolution 	512
+}

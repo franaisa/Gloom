@@ -15,7 +15,7 @@
 
 // Predeclaración de clases para ahorrar tiempo de compilación
 namespace Graphics {
-	class CEntity;
+	class CPlane;
 }
 
 //declaración de la clase
@@ -29,10 +29,50 @@ namespace Logic {
 
 		virtual ~CGraphicPlane();
 
+		virtual bool spawn(CEntity* entity, CMap *map, const Map::CEntity *entityInfo);
+
 	protected:
 
 		virtual void onStart();
 
+		unsigned int readLightMask(const Map::CEntity *entityInfo);
+
+	private:
+
+		Graphics::CPlane* _plane;
+
+		/** Mascara de luces */
+		unsigned int _lightMask;
+
+		/** Orientacion del plano */
+		Vector3 _orientation;
+
+		/** Anchura del plano */
+		float _width;
+
+		/** Altura del plano */
+		float _height;
+
+		/** Numero de segmentos horizontales */
+		unsigned int _xSegments;
+
+		/** Numero de segmentos verticales */
+		unsigned int _ySegments;
+
+		/** Repeticion del tiling en la u */
+		float _uTiling;
+
+		/** Repeticion el tiling en la v */
+		float _vTiling;
+
+		/** Vector up del plano */
+		Vector3 _upVector;
+
+		/** Nombre del material que usa el plano */
+		std::string _materialName;
+
+		/** True si el plano genera sombras */
+		bool _castShadows;
 
 	}; // class CGraphicPlane
 

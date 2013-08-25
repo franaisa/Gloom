@@ -17,7 +17,6 @@ compositor Glow
 		{
 			input none
 			material_scheme glow
- 		
 			
 			pass clear
 			{

@@ -21,6 +21,7 @@ de una escena.
 #include "BaseSubsystems/Math.h"
 #include "OgreMaterialManager.h"
 #include "OgreTechnique.h"
+#include <OgreTexture.h>
 
 // Predeclaración de clases para ahorrar tiempo de compilación
 namespace Ogre 
@@ -43,6 +44,7 @@ namespace Graphics
 	class CompositorManager;
 	class CCompositorListener;
 	class CPoolParticle;
+	class CMotionBlur;
 }
 
 namespace Graphics 
@@ -80,7 +82,7 @@ namespace Graphics
 	@author David Llansó
 	@date Julio, 2010
 	*/
-	class CScene 
+	class CScene
 	{
 	public:
 
@@ -230,8 +232,6 @@ namespace Graphics
 
 		void changeAmbientLight(Vector3 Light);
 
-
-
 		/////////////////////////////////////////////////////////////////////////////////////////
 		/////////////////////////////////////////////////////////////////////////////////////////
 		// SubClase que hago para hacer ciertas pruebas con el Glow guay.
@@ -269,6 +269,7 @@ namespace Graphics
 		/////////////////////////////////////////////////////////////////////////////////////////
 		/////////////////////////////////////////////////////////////////////////////////////////
 	protected:
+
 
 		/**
 		Clase amiga. Solo el servidor gráfico puede crear o liberar escenas, 
@@ -450,7 +451,12 @@ namespace Graphics
 		*/
 		CPoolParticle *_poolParticle;
 
-		std::map<std::string, std::vector<CParticle*>> _particlesMap;	
+		std::map< std::string, std::vector<CParticle*> > _particlesMap;
+
+		Ogre::TexturePtr _depthMapTexture;
+
+		CMotionBlur* _motionBlur;
+
 	}; // class CScene
 
 } // namespace Graphics

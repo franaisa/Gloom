@@ -73,7 +73,6 @@ namespace Audio
 
 	void CServer::Release()
 	{
-		std::cout << "Liberamos el server de audio" << std::endl;
 		if(_instance)
 		{
 			_instance->close();
@@ -148,7 +147,7 @@ namespace Audio
 	void CServer::ERRCHECK(FMOD_RESULT result){
 		if (result != FMOD_OK){
 			cerr << "FMOD error! " << result << endl << FMOD_ErrorString(result);
-			exit(-1);
+			throw;
 		}
 	}//ERRCHECK
 	//--------------------------------------------------------
@@ -173,7 +172,11 @@ namespace Audio
 				0,											// información adicional (nada en este caso)
 				& sound	);									// devolución del handle al buffer 
 		}
-		ERRCHECK(result);
+		
+		if( result != FMOD_OK ) {
+			std::cerr << "Error: No se ha podido cargar el fichero " << soundName << std::endl;
+			throw;
+		}
 
 		//Reproducción en canal
 		Channel *canal;
@@ -222,7 +225,11 @@ namespace Audio
 				0,											// información adicional (nada en este caso)
 				& sound	);									// devolución del handle al buffer 
 		}
-		ERRCHECK(result);
+		
+		if( result != FMOD_OK ) {
+			std::cerr << "Error: No se ha podido cargar el fichero " << soundName << std::endl;
+			throw;
+		}
 
 		Channel *canal;
 

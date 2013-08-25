@@ -1,0 +1,15 @@
+vertex_program GlowMappingVertex hlsl {
+	source glowMapping.hlsl
+	entry_point vertex_main
+	target vs_2_0
+	
+	default_params {
+		param_named_auto	viewProjectionMatrix 		worldviewproj_matrix
+    }
+}
+
+fragment_program GlowMappingFragment hlsl {
+	source glowMapping.hlsl
+	entry_point fragment_main
+	target ps_2_0
+}
