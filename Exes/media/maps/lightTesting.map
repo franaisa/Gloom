@@ -13,7 +13,7 @@ Map = {
 		plane_uTiling = 15,
 		plane_vTiling = 15,
 		plane_upVector = {0, 0, 1},
-		plane_material = "bumpLightingTest",
+		plane_material = "lavaFondo",
 		
 		physic_entity = "plane",
 		physic_normal = { 0, 1, 0 },
