@@ -129,7 +129,7 @@ namespace Application {
 	bool CLobbyClientState::loadMap(const string& mapName) {
 		return Logic::CEntityFactory::getSingletonPtr()->loadBluePrints("blueprints_client.txt")	&&
 			   Logic::CEntityFactory::getSingletonPtr()->loadArchetypes("archetypes.txt")			&&
-			   Logic::CServer::getSingletonPtr()->loadLevel(mapName + "_client.txt");
+			   Logic::CServer::getSingletonPtr()->loadLevel(_mapName + "_client.txt");
 	}
 
 	//__________________________________________________________________
@@ -170,12 +170,12 @@ namespace Application {
 
 				//creamos el thread que maneja la carga del mapa
 
-				loadThread = std::make_shared<boost::thread>(&CLobbyClientState::loadMapThread , this);
+				//loadThread = std::make_shared<boost::thread>(&CLobbyClientState::loadMapThread , this);
 
 				//if (WaitForSingleObject (loadHandle, INFINITE) == WAIT_OBJECT_0)
 				//CloseHandle(loadHandle);
 
-				/*if( loadMap(mapName) ) {
+				if( loadMap(mapName) ) {
 					// Avisamos de que hemos terminado la carga.
 					Net::NetMessageType ackMsg = Net::MAP_LOADED;
 					_netMgr->broadcast( &ackMsg, sizeof(ackMsg) );
@@ -184,7 +184,7 @@ namespace Application {
 					_netMgr->removeObserver(this);
 					_netMgr->deactivateNetwork();
 					_app->exitRequest();
-				}*/
+				}
 				
 				break;
 			}
@@ -323,7 +323,8 @@ namespace Application {
 		CApplicationState::tick(msecs);
 
 		//asking the thread for completion ... if not the main thread crashes
-		if (loadThread && loadThread->timed_join (boost::posix_time::milliseconds(0))){
+		//if (loadThread && loadThread->timed_join (boost::posix_time::milliseconds(0))){
+		/*if(loadThread){
 			loadThread->join();
 			loadThread = 0;
 
@@ -339,7 +340,7 @@ namespace Application {
 			// @deprecated lo ideal es que el server mande el numero de players de la partida
 			//Logic::CEntityFactory::getSingletonPtr()->initDispatcher( _netMgr->getID(), 12 );
 			Logic::CEntityFactory::getSingletonPtr()->initDispatcher();
-		}
+		}*/
 	}
 
 
