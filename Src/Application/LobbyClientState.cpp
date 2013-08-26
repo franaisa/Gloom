@@ -323,7 +323,8 @@ namespace Application {
 		CApplicationState::tick(msecs);
 
 		//asking the thread for completion ... if not the main thread crashes
-		if (loadThread && loadThread->timed_join (boost::posix_time::milliseconds(0))){
+		//if (loadThread && loadThread->timed_join (boost::posix_time::milliseconds(0))){
+		if(loadThread){
 			loadThread->join();
 			loadThread = 0;
 
