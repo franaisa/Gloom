@@ -166,8 +166,8 @@ namespace Application {
 		CBaseApplication::tick(msecs);
 
 		// TICK DE AUDIO
-		//Audio::CServer::getSingletonPtr()->tick(msecs);
-		boost::thread audio( &Audio::CServer::tick, Audio::CServer::getSingletonPtr(), msecs);
+		Audio::CServer::getSingletonPtr()->tick(msecs);
+		//boost::thread audio( &Audio::CServer::tick, Audio::CServer::getSingletonPtr(), msecs);
 
 		// TICK DEL GUI
 		GUI::CServer::getSingletonPtr()->tick();
@@ -175,7 +175,7 @@ namespace Application {
 		// TICK DE GRÁFICOS
 		Graphics::CServer::getSingletonPtr()->tick(msecs/1000.0f);
 		
-		audio.join();
+		//audio.join();
 	} // tick
 
 } // namespace Application
