@@ -29,7 +29,7 @@ Map = {
 	
 	SuperShield = {
 		type = "SuperShield",
-		msgList= "6,14,15,16,17,29",
+		msgList= "6,14,15,16,17,29,41",
 		
 		model = "armour.mesh",
 		id = "armor",
@@ -53,7 +53,7 @@ Map = {
 	
 	Shield = {
 		type = "Shield",
-		msgList= "6,14,15,16,17,29",
+		msgList= "6,14,15,16,17,29,41",
 		
 		model = "armourSmall.mesh",
 		id = "armor",
@@ -77,7 +77,7 @@ Map = {
 	
 	Powerup1 = {
 		type = "Powerup1",
-		msgList= "6,14,15,16,17,29",
+		msgList= "6,14,15,16,17,29,41",
 		
 		model = "scroll.mesh",
 		id = "spell",
@@ -101,7 +101,7 @@ Map = {
 	
 	Powerup2 = {
 		type = "Powerup2",
-		msgList= "6,14,15,16,17,29",
+		msgList= "6,14,15,16,17,29,41",
 		
 		model = "scroll.mesh",
 		id = "spell",
@@ -125,7 +125,7 @@ Map = {
 	
 	Orb = {
 		type = "Orb",
-		msgList= "6,14,15,16,17,29",
+		msgList= "6,14,15,16,17,29,41",
 		
 		model = "health1.mesh",
 		id = "orb",
@@ -149,7 +149,7 @@ Map = {
 	
 	SmallOrb = {
 		type = "SmallOrb",
-		msgList= "6,14,15,16,17,29",
+		msgList= "6,14,15,16,17,29,41",
 		
 		model = "healthvial.mesh",
 		id = "orb",
@@ -173,7 +173,7 @@ Map = {
 	
 	ShotgunItem = {
 		type = "ShotgunItem",
-		msgList= "6,14,15,16,17,29",
+		msgList= "6,14,15,16,17,29,41",
 		
 		model = "shotGun.mesh",
 		id = "weapon",
@@ -195,7 +195,7 @@ Map = {
 	
 	ShotgunAmmo = {
 		type = "ShotgunAmmo",
-		msgList= "6,14,15,16,17,29",
+		msgList= "6,14,15,16,17,29,41",
 		
 		model = "shotGunAmmo.mesh",
 		id = "ammo",
@@ -214,7 +214,7 @@ Map = {
 	
 	SniperItem = {
 		type = "SniperItem",
-		msgList= "6,14,15,16,17,29",
+		msgList= "6,14,15,16,17,29,41",
 		
 		model = "sniper.mesh",
 		id = "weapon",
@@ -236,7 +236,7 @@ Map = {
 	
 	SniperAmmo = {
 		type = "SniperAmmo",
-		msgList= "6,14,15,16,17,29",
+		msgList= "6,14,15,16,17,29,41",
 		
 		model = "sniperAmmo.mesh",
 		id = "ammo",
@@ -255,7 +255,7 @@ Map = {
 	
 	MinigunItem = {
 		type = "MinigunItem",
-		msgList= "6,14,15,16,17,29",
+		msgList= "6,14,15,16,17,29,41",
 		
 		model = "miniGun.mesh",
 		id = "weapon",
@@ -277,7 +277,7 @@ Map = {
 	
 	MinigunAmmo = {
 		type = "MinigunAmmo",
-		msgList= "6,14,15,16,17,29",
+		msgList= "6,14,15,16,17,29,41",
 		
 		model = "sphere.mesh",
 		id = "ammo",
@@ -296,7 +296,7 @@ Map = {
 	
 	IronHellGoatItem = {
 		type = "IronHellGoatItem",
-		msgList= "6,14,15,16,17,29",
+		msgList= "6,14,15,16,17,29,41",
 		
 		model = "rocketLauncher.mesh",
 		id = "weapon",
@@ -318,7 +318,7 @@ Map = {
 	
 	IronHellGoatAmmo = {
 		type = "IronHellGoatAmmo",
-		msgList= "6,14,15,16,17,29",
+		msgList= "6,14,15,16,17,29,41",
 		
 		model = "ironHellGoatAmmo.mesh",
 		id = "ammo",
