@@ -189,6 +189,7 @@ namespace Logic{
 		_hud->callFunction("updateLife", Hikari::Args(health));
 	}
 	void CHud::hudWeapon(int ammo, int weapon){
+
 		_hud->callFunction("updateWeapon",Hikari::Args(weapons[weapon]));
 		_hud->callFunction("updateBullets", Hikari::Args(ammo)(weapons[weapon]));
 	}

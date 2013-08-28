@@ -82,8 +82,6 @@
     <ClCompile Include="..\..\Src\Graphics\Camera.cpp" />
     <ClCompile Include="..\..\Src\Graphics\CompositorListener.cpp" />
     <ClCompile Include="..\..\Src\Graphics\Entity.cpp" />
-    <ClCompile Include="..\..\Src\Graphics\HHFX.cpp" />
-    <ClCompile Include="..\..\Src\Graphics\HHFXParticle.cpp" />
     <ClCompile Include="..\..\Src\Graphics\Light.cpp" />
     <ClCompile Include="..\..\Src\Graphics\MotionBlur.cpp" />
     <ClCompile Include="..\..\Src\Graphics\Movable2dText.cpp" />
@@ -106,8 +104,6 @@
     <ClInclude Include="..\..\Src\Graphics\CompositorListener.h" />
     <ClInclude Include="..\..\Src\Graphics\Documentation.h" />
     <ClInclude Include="..\..\Src\Graphics\Entity.h" />
-    <ClInclude Include="..\..\Src\Graphics\HHFX.h" />
-    <ClInclude Include="..\..\Src\Graphics\HHFXParticle.h" />
     <ClInclude Include="..\..\Src\Graphics\Light.h" />
     <ClInclude Include="..\..\Src\Graphics\MotionBlur.h" />
     <ClInclude Include="..\..\Src\Graphics\Movable2dText.h" />

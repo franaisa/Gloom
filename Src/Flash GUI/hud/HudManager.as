@@ -34,6 +34,7 @@ package hud
 	public class HudManager extends MovieClip 
 	{
 		private var equippedWeapon:MovieClip;
+		private var reseted:Boolean;
 		
 		public function HudManager() 
 		{
@@ -56,7 +57,7 @@ package hud
 			ExternalInterface.addCallback("hit", onHit);
 			ExternalInterface.addCallback("reset", reset);
 			
-			ironhellgoat.gotoAndPlay("none");
+			/*ironhellgoat.gotoAndPlay("none");
 			shotgun.gotoAndPlay("none");
 			minigun.gotoAndPlay("none");
 			railgun.gotoAndPlay("none");
@@ -65,7 +66,8 @@ package hud
 			ironhellgoat.selector.visible = false;
 			shotgun.selector.visible = false;
 			minigun.selector.visible = false;
-			railgun.selector.visible = false;
+			railgun.selector.visible = false;*/
+			
 		}
 		
 		public function reset() {
@@ -100,9 +102,13 @@ package hud
 				this.bullets.asd.text = "";
 				
 			}
+			
+			if (crosshair.currentFrameLabel == weapon) {
+				return;
+			}
+			
 			crosshair.gotoAndPlay(weapon);
 			
-			trace(equippedWeapon.currentFrameLabel);
 			
 			if (equippedWeapon.currentFrameLabel != "avaiable") {
 				equippedWeapon.gotoAndPlay("avaiable");
