@@ -78,10 +78,10 @@ package Seleccion
 		}
 		
 		public function selectionFinished() {
-			if (spell1 == null || spell2 == null || playerClass == null) {
+			if (playerClass == null) {
 				return;
 			}
-			ExternalInterface.call("selected", playerClass, spell1, spell2);
+			ExternalInterface.call("selected", playerClass);
 		}
 		
 		public function classSelected(playerClass:String):void {
