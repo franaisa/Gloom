@@ -3,6 +3,8 @@ material shockWaveMaterial {
 		pass {
 			lighting off
 			depth_check off
+			cull_hardware none
+			cull_software none
 		
 			vertex_program_ref shockWaveVertexShader {
 				// Parametros obtenidos de Ogre
