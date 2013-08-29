@@ -94,6 +94,7 @@ namespace Logic {
 				
 				CEntity* entityContacted = contactMsg->getEntity();
 				CEntity* fireBallOwner = _owner->getEntity();
+				Physics::CContactPoint contactPoint = contactMsg->getContactPoint();
 				if( entityContacted != fireBallOwner ) {
 					// Destruir en diferido esta entidad
 					CEntityFactory::getSingletonPtr()->deferredDeleteEntity(_entity, true);
@@ -111,7 +112,7 @@ namespace Logic {
 						}
 					}
 					else {
-						createExplotion();
+						createExplotion(contactPoint);
 					}
 				}
 			}
@@ -140,7 +141,7 @@ namespace Logic {
 
 	//________________________________________________________________________
 
-	void CFireBallController::createExplotion() {
+	void CFireBallController::createExplotion(const Physics::CContactPoint& contactPoint) {
 		// Generar un overlap y mandar los mensajes de daño a las entidades
 		// con las que se impacte
 		vector<CEntity*> entitiesHit;

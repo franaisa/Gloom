@@ -13,6 +13,7 @@ Contiene la implementación del gestor de colisiones.
 #include "Conversions.h"
 #include "Logic/Entity/Components/PhysicController.h"
 #include "Logic/Entity/Entity.h"
+#include "ContactPoint.h"
 
 #include <PxRigidActor.h>
 #include <PxShape.h> 
@@ -75,6 +76,15 @@ namespace Physics {
 			unsigned int bufferSize = 1;
 			PxContactPairPoint* contactBuffer = new PxContactPairPoint[bufferSize];
 			unsigned int nbContacts = cp.extractContacts(contactBuffer, bufferSize);
+			
+			// Rellenamos los datos del punto de contacto
+			CContactPoint contactPoint;
+			if(nbContacts > 0) {
+				contactPoint.impulse = PxVec3ToVector3( contactBuffer[0].impulse );
+				contactPoint.normal = PxVec3ToVector3( contactBuffer[0].normal );
+				contactPoint.position = PxVec3ToVector3( contactBuffer[0].position );
+				contactPoint.separation = contactBuffer[0].separation;
+			}
 
 			// Obtenemos los datos logicos asociados al primer actor
 			IPhysics* firstActorBeingContacted = (IPhysics*) pairHeader.actors[0]->userData;
@@ -85,8 +95,8 @@ namespace Physics {
 			assert(secondActorBeingContacted);
 
 			// Disparamos los metodos onContact de la interfaz logica
-			firstActorBeingContacted->onContact(secondActorBeingContacted, enter);
-			secondActorBeingContacted->onContact(firstActorBeingContacted, enter);
+			firstActorBeingContacted->onContact(secondActorBeingContacted, contactPoint, enter);
+			secondActorBeingContacted->onContact(firstActorBeingContacted, contactPoint, enter);
 
 			delete [] contactBuffer;
 		}

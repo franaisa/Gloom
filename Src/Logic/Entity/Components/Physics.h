@@ -14,14 +14,9 @@ componentes físicos.
 
 #ifndef __Logic_Physics_H
 #define __Logic_Physics_H
-//
-#include "Logic/Entity/Component.h"
-#include <iostream>
 
-// Predeclaración de tipos
-namespace physx {
-	struct PxTriggerPair;
-};
+#include "Logic/Entity/Component.h"
+#include "Physics/ContactPoint.h"
 
 // Los componentes pertenecen al namespace Logic
 namespace Logic {	
@@ -45,7 +40,7 @@ namespace Logic {
 		class IObserver {
 		public:
 			virtual void onTrigger(IPhysics* otherComponent, bool enter) { }
-			virtual void onContact(IPhysics* otherComponent, bool enter) { }
+			virtual void onContact(IPhysics* otherComponent, const Physics::CContactPoint& contactPoint, bool enter) { }
 			virtual void onShapeHit(IPhysics* otherComponent, const Vector3& colisionPos, const Vector3& colisionNormal) { }
 		};
 
@@ -88,7 +83,7 @@ namespace Logic {
 
 		@param otherComponent Componente asociado a la otra entidad que nos ha golpeado.
 		*/
-		virtual void onContact(IPhysics *otherComponent, bool enter) = 0;
+		virtual void onContact(IPhysics *otherComponent, const Physics::CContactPoint& contactPoint, bool enter) = 0;
 
 		// Me he sacado el on shape hit aqui para evitar la ñapa de jose, pero aun asi, no deberia
 		// estar aqui (o al menos eso me dice la intuicion). Quizas la interfaz Iphysics es demasiado

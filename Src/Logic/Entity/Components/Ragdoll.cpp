@@ -200,16 +200,16 @@ void CRagdoll::loadRagdoll(const Map::CEntity *entityInfo, int group, const std:
 void CRagdoll::onTrigger(IPhysics* otherComponent, bool enter) {
 	// Mediante patron observador
 	for(auto it = _observers.begin(); it != _observers.end(); ++it) {
-		(*it)->onContact(otherComponent, enter);
+		(*it)->onTrigger(otherComponent, enter);
 	}
 }
 
 //________________________________________________________________________
 
-void CRagdoll::onContact(IPhysics* otherComponent, bool enter) {
+void CRagdoll::onContact(IPhysics *otherComponent, const Physics::CContactPoint& contactPoint, bool enter) {
 	// Mediante patron observador
 	for(auto it = _observers.begin(); it != _observers.end(); ++it) {
-		(*it)->onContact(otherComponent, enter);
+		(*it)->onContact(otherComponent, contactPoint, enter);
 	}
 }
 
