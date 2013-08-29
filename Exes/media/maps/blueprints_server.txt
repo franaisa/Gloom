@@ -42,3 +42,4 @@ ShotgunAmmo CPhysicStaticEntity CSpawnItemManager CNetConnector
 IronHellGoatAmmo CPhysicStaticEntity CSpawnItemManager CNetConnector
 MinigunAmmo CPhysicStaticEntity CSpawnItemManager CNetConnector
 SniperAmmo CPhysicStaticEntity CSpawnItemManager CNetConnector
+Explotion

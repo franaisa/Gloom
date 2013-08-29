@@ -154,10 +154,10 @@ namespace Logic {
 		}
 
 		// Creamos las particulas de la explosion
-		shared_ptr<CMessageCreateParticle> particleMsg = make_shared<CMessageCreateParticle>();
-		particleMsg->setPosition(explotionPos);
-		particleMsg->setParticle("ExplosionParticle");
-		_world->emitMessage(particleMsg);
+		Map::CEntity* entityInfo = CEntityFactory::getSingletonPtr()->getInfo("Explotion");
+		CEntity* explotion = CEntityFactory::getSingletonPtr()->createEntity(entityInfo, _entity->getMap(), _entity->getPosition(), Quaternion::IDENTITY );
+		explotion->activate();
+		explotion->start();
 	}
 
 	//________________________________________________________________________

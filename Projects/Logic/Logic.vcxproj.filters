@@ -775,6 +775,9 @@
     <ClCompile Include="..\..\Src\Logic\Entity\Components\EnemyInSight.cpp">
       <Filter>Entity\Components\Graphics\Source</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\ParticleSystem.cpp">
+      <Filter>Entity\Components\Graphics\Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Src\Logic\Maps\ComponentFactory.h">
@@ -1405,6 +1408,9 @@
       <Filter>Entity\Components\Graphics\Header</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Entity\Components\EnemyInSight.h">
+      <Filter>Entity\Components\Graphics\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\ParticleSystem.h">
       <Filter>Entity\Components\Graphics\Header</Filter>
     </ClInclude>
   </ItemGroup>

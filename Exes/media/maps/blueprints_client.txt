@@ -44,3 +44,4 @@ ShotgunAmmo CSpawnItemManager CGraphics
 IronHellGoatAmmo CSpawnItemManager CGraphics
 MinigunAmmo CSpawnItemManager CGraphics
 SniperAmmo CSpawnItemManager CGraphics
+Explotion CParticleSystem

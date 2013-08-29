@@ -147,6 +147,13 @@ Map = {
 		physic_groupList = "1",
 	},
 	
+	Explotion = {
+		type = "Explotion",
+		particle_scriptName = "explosion",
+		particle_on = true,
+		particle_destroyEntityOnExpiry = true,
+	},
+	
 	SmallOrb = {
 		type = "SmallOrb",
 		msgList= "6,14,15,16,17,29,41",
@@ -155,7 +162,7 @@ Map = {
 		id = "orb",
 		reward = 5,
 		respawnTime = 25,
-		
+
 		audioTrigger_name = "items/healthVial.wav",
 		audioTrigger_stream = false,
 		
