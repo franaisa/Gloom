@@ -235,7 +235,7 @@ void CPhysicStaticEntity::onTrigger(IPhysics *otherComponent, bool enter) {
 
 //---------------------------------------------------------
 
-void CPhysicStaticEntity::onContact (IPhysics *otherComponent, bool enter) {
+void CPhysicStaticEntity::onContact (IPhysics* otherComponent, bool enter) {
 	// Mediante patron observador
 	for(auto it = _observers.begin(); it != _observers.end(); ++it) {
 		(*it)->onContact(otherComponent, enter);

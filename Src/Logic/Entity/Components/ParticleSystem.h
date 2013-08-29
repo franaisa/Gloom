@@ -42,6 +42,19 @@ namespace Logic {
 
 		virtual void onParticlesExpired();
 
+		void start() { _particleSystem->start(); }
+		void start(float stopTime) { _particleSystem->start(stopTime); }
+		void startAndStopFade(float stopTime) { _particleSystem->startAndStopFade(stopTime); }
+		
+		void stop() { _particleSystem->stop(); }
+		void stop(float stopTime) { _particleSystem->stop(stopTime); }
+		void stopFade(float stopTime) { _particleSystem->stopFade(stopTime); }
+
+		void pause() { _particleSystem->pause(); }
+		void pause(float pauseTime) { _particleSystem->pause(pauseTime); }
+
+		void resume() { _particleSystem->resume(); }
+
 	protected:
 
 		virtual void onStart();

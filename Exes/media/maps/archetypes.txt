@@ -18,6 +18,10 @@ Map = {
 	
 	Spawn = {
 		type = "SpawnPoint",
+		
+		particle_scriptName = "teleport",
+		particle_on = false,
+		
 		physic_entity = "rigid",
 		physic_trigger = true,
 		physic_type = "static",
