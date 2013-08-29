@@ -217,25 +217,33 @@ namespace Net {
 	//__________________________________________________________________
 
 	void CBuffer::serialize(const Quaternion& data) {
-		Vector3 parcial=Math::getEulerYawPitchRoll(data);
+		Quaternion temp = data;
+		write(&(temp.x), sizeof(temp.x));
+		write(&(temp.y), sizeof(temp.y));
+		write(&(temp.z), sizeof(temp.z));
+		write(&(temp.w), sizeof(temp.w));
+		/*Vector3 parcial=Math::getEulerYawPitchRoll(data);
 		serialize(parcial.x);
 		serialize(parcial.y);
 		// @deprecated No enviamos el roll ya que en ningun momento lo estamos utilizando
-		//serialize(parcial.z);
+		//serialize(parcial.z);*/
 	}
 
 	//__________________________________________________________________
 
 	void CBuffer::deserialize(Quaternion& data) {
-		
-		float yaw, pitch,roll;
+		read(&data.x, sizeof(data.x));
+		read(&data.y, sizeof(data.y));
+		read(&data.z, sizeof(data.z));
+		read(&data.w, sizeof(data.w));
+		/*float yaw, pitch,roll;
 		// Obtenemos el Yaw y el Pitch
 		read(&yaw, sizeof(yaw));
 		read(&pitch, sizeof(pitch));
 		// @deprecated Se acabo la lectura ya que el roll lo suprimimos para ganar espacio
 		//read(&roll, sizeof(roll));
 
-		data=Math::setQuaternion(yaw,pitch,0);
+		data=Math::setQuaternion(yaw,pitch,0);*/
 	}
 
 	//__________________________________________________________________

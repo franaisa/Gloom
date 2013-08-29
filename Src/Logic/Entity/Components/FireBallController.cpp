@@ -11,6 +11,7 @@
 #include "IronHellGoat.h"
 #include "ScreamerShieldDamageNotifier.h"
 #include "PhysicDynamicEntity.h"
+#include "ParticleSystem.h"
 
 #include "Logic/Maps/EntityFactory.h"
 #include "Physics/Server.h"
@@ -159,6 +160,11 @@ namespace Logic {
 		CEntity* explotion = CEntityFactory::getSingletonPtr()->createEntity(entityInfo, _entity->getMap(), _entity->getPosition(), Quaternion::IDENTITY );
 		explotion->activate();
 		explotion->start();
+
+		// @todo
+		// Creamos las particulas de humo que rodean a la bola
+		// de fuego
+
 	}
 
 	//________________________________________________________________________

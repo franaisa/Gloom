@@ -55,6 +55,8 @@ namespace Logic {
 
 		void resume() { _particleSystem->resume(); }
 
+		void setDirection(const Vector3& direction) { _particleSystem->setDirection(direction); }
+
 	protected:
 
 		virtual void onStart();
