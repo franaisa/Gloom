@@ -46,7 +46,17 @@ Map = {
 		physic_group = 7,
 		physic_groupList = "1",
 	},
-
+	
+	ExplosionCompositor= {
+		type = "RemotePlayer",
+		isPlayer = false,
+		position = {-355.4,0.5,38.1},
+		model = "ragdolls/agent47.mesh",
+		ragdoll_file = "media/models/ragdolls/hitman.RepX",
+		ragdoll_group = 19,
+		ragdoll_groupList = "-1",
+		
+	},
 	ActiveSpell = {
 		type = "ItemSpawn",
 		position = {-96.3475, 0.420609, 22.3819},
