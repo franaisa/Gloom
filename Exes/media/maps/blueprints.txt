@@ -16,7 +16,7 @@ ItemSpawn CPhysicStaticEntity CFloatingMovement CSpawnItemManager CGraphics
 Ammo CPhysicStaticEntity CSpawnItemManager CGraphics
 ItemSpawnDynamic CPhysicDynamicEntity CPullingMovement CGraphics
 SpawnPoint CPhysicStaticEntity CParticleSystem
-Jumper CGraphics CPhysicStaticEntity CJumper CAudio CParticle
+Jumper CGraphics CPhysicStaticEntity CJumper CAudio CParticle CParticleSystem
 Lava CGraphics CPhysicStaticEntity CLava
 LavaFondo CGraphics CPhysicStaticEntity CLava
 ContenedorLava CGraphics CPhysicStaticEntity

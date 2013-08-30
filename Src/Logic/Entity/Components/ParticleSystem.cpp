@@ -31,6 +31,7 @@ namespace Logic {
 	//______________________________________________________________________________
 
 	CParticleSystem::CParticleSystem() : _particleSystem(NULL),
+										 _offset(Vector3::ZERO),
 									     _emitting(false) {
 		// Nada que hacer
 	}
@@ -63,6 +64,9 @@ namespace Logic {
 		if( entityInfo->hasAttribute("particle_destroyEntityOnExpiry") )
 			_destroyEntityOnExpiry = entityInfo->getBoolAttribute("particle_destroyEntityOnExpiry");
 
+		if( entityInfo->hasAttribute("particle_offset") )
+			_offset = entityInfo->getVector3Attribute("particle_offset");
+
 		return true;
 	} // spawn
 	
@@ -71,7 +75,7 @@ namespace Logic {
 	void CParticleSystem::onStart() {
 		_particleSystem = new(nothrow) Graphics::PUParticle(_scriptName);
 		_particleSystem->addObserver(this); // No es necesario hacer el remove
-		_particleSystem->setPosition( _entity->getPosition() );
+		_particleSystem->setPosition( _entity->getPosition() + _offset );
 		_particleSystem->setOrientation( _entity->getOrientation() );
 
 		if(_emitting)

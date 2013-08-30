@@ -69,6 +69,7 @@ namespace Logic {
 		std::string _scriptName;
 
 		Vector3 _direction;
+		Vector3 _offset;
 
 		bool _destroyEntityOnExpiry;
 		bool _emitting;
