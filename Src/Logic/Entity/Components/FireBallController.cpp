@@ -25,6 +25,7 @@
 #include "Logic/Messages/MessageCreateParticle.h"
 #include "Logic/Messages/MessageAddForcePlayer.h"
 
+#include "BaseSubsystems/Euler.h"
 
 #include "Map/MapEntity.h"
 
@@ -157,14 +158,19 @@ namespace Logic {
 
 		// Creamos las particulas de la explosion
 		Map::CEntity* entityInfo = CEntityFactory::getSingletonPtr()->getInfo("Explotion");
-		CEntity* explotion = CEntityFactory::getSingletonPtr()->createEntity(entityInfo, _entity->getMap(), _entity->getPosition(), Quaternion::IDENTITY );
+		CEntity* explotion = CEntityFactory::getSingletonPtr()->createEntity(entityInfo, _entity->getMap(), contactPoint.position, Quaternion::IDENTITY );
 		explotion->activate();
 		explotion->start();
 
-		// @todo
-		// Creamos las particulas de humo que rodean a la bola
-		// de fuego
+		// Creamos las particulas de humo que rodean a la bola de fuego
+		Euler euler(Quaternion::IDENTITY);
+		euler.setDirection(contactPoint.normal);
+		euler.pitch( Ogre::Radian(Math::HALF_PI) );
 
+		entityInfo = CEntityFactory::getSingletonPtr()->getInfo("SmokeBash");
+		CEntity* smokeBash = CEntityFactory::getSingletonPtr()->createEntity(entityInfo, _entity->getMap(), contactPoint.position, euler.toQuaternion() );
+		smokeBash->activate();
+		smokeBash->start();
 	}
 
 	//________________________________________________________________________

@@ -153,7 +153,14 @@ Map = {
 	
 	Explotion = {
 		type = "Explotion",
-		particle_scriptName = "explosion",
+		particle_scriptName = "Explosion/mp_explosion_03",
+		particle_on = true,
+		particle_destroyEntityOnExpiry = true,
+	},
+	
+	SmokeBash = {
+		type = "SmokeBash",
+		particle_scriptName = "Smoke/mp_smoke_bash",
 		particle_on = true,
 		particle_destroyEntityOnExpiry = true,
 	},

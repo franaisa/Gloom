@@ -72,6 +72,7 @@ namespace Logic {
 		_particleSystem = new(nothrow) Graphics::PUParticle(_scriptName);
 		_particleSystem->addObserver(this); // No es necesario hacer el remove
 		_particleSystem->setPosition( _entity->getPosition() );
+		_particleSystem->setOrientation( _entity->getOrientation() );
 
 		if(_emitting)
 			_particleSystem->start();
