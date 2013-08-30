@@ -54,3 +54,5 @@ MinigunAmmo CPhysicStaticEntity CSpawnItemManager CGraphics
 SniperAmmo CPhysicStaticEntity CSpawnItemManager CGraphics
 Explotion CParticleSystem
 SmokeBash CParticleSystem
+BulletSpark CParticleSystem
+BloodStrike CParticleSystem

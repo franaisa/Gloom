@@ -8,6 +8,8 @@
 //-----------------------------------------------------------------------------------------------------------------------
 system Blood/mp_bloodsstrike_03
 {
+	scale_velocity                              0.06
+    scale                                       0.06 0.06 0.06
     technique 
     {
         visual_particle_quota                   100
