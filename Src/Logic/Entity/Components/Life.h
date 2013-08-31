@@ -221,7 +221,7 @@ namespace Logic {
 		//__________________________________________________________________
 
 		/**	Dispara el sonido de muerte. */
-		void triggerDeathSound();
+		void triggerDeathSound(CEntity* enemy);
 
 		//__________________________________________________________________
 

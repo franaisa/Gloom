@@ -207,7 +207,7 @@ namespace Logic {
 
 		if( updateLife(damage) ) {
 			triggerDeathState(enemy);
-			triggerDeathSound();
+			triggerDeathSound(enemy);
 		}
 		// Si el personaje no ha muerto lanzamos los sonidos de daño.
 		else {
@@ -263,7 +263,7 @@ namespace Logic {
 
 	void CLife::suicide() {
 		triggerDeathState(_entity);
-		triggerDeathSound();
+		triggerDeathSound(_entity);
 	}
 
 	//________________________________________________________________________
@@ -334,10 +334,16 @@ namespace Logic {
 
 	//________________________________________________________________________
 
-	void CLife::triggerDeathSound() {
+	void CLife::triggerDeathSound(CEntity* enemy) {
 		std::shared_ptr<CMessageAudio> audioMsg = std::make_shared<CMessageAudio>();
 
-		audioMsg->setAudioName(_audioDeath);
+		std::string audioFile;
+		if(enemy->getType() == "Lava")
+			audioFile = "damage/lava_burned.wav";
+		else
+			audioFile = "damage/splatdeath_03.wav";
+
+		audioMsg->setAudioName(audioFile);
 		audioMsg->isLoopable(false);
 		audioMsg->is3dSound(true);
 		audioMsg->streamSound(false);

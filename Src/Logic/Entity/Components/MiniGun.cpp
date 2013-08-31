@@ -332,7 +332,7 @@ namespace Logic {
 
 	void CMiniGun::secondaryShoot() 
 	{
-		
+		if( !isActivated() ) return;
 
 		//Creación de sweephit para 
 		Physics::SphereGeometry sphere  = Physics::CGeometryFactory::getSingletonPtr()->createSphere(3.5);
