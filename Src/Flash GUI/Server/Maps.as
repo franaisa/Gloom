@@ -2,13 +2,11 @@ package Server
 {
 	import flash.display.MovieClip;
 	import flash.display.Sprite;
+	import flash.events.MouseEvent;
 	import flash.geom.Rectangle;
 	import flash.text.TextField;	
 	import flash.external.ExternalInterface;
 	import principal.MenuManager;
-	import scaleform.clik.constants.ScrollBarTrackMode;
-	import scaleform.clik.controls.ScrollBar;
-	
 	/**
 	 * ...
 	 * @author Rubén Mulero
@@ -31,20 +29,22 @@ package Server
 	
 			
 			
+			pushFile("belshir vestege1");
+			pushFile("belshir vestege2");
+			pushFile("belshir vestege3");
 			pushFile("belshir vestege");
 			pushFile("belshir vestege");
 			pushFile("belshir vestege");
 			pushFile("belshir vestege");
 			pushFile("belshir vestege");
 			pushFile("belshir vestege");
-			pushFile("belshir vestege");
-			pushFile("belshir vestege");
-			pushFile("belshir vestege");
-			pushFile("belshir vestege");
-			pushFile("belshir vestege");
-			pushFile("belshir vestege");
-			pushFile("belshir vestege");
-			pushFile("belshir vestege");
+			pushFile("belshir vestege4");
+			pushFile("belshir vestege5");
+			pushFile("belshir vestege6");
+			pushFile("belshir vestege7");
+			pushFile("belshir vestege8");
+			
+			
 		}
 		
 		public function get actualMap():String {
@@ -57,8 +57,6 @@ package Server
 			newfile.x = 0;
 			textbox.x = 0;
 			
-			trace (content.height);
-			
 			textbox.y =pos * newfile.height;
 			newfile.y =pos * newfile.height;
 			content.addChild(textbox);
@@ -67,8 +65,6 @@ package Server
 			maps.push(newfile);
 			
 			
-			this.scrollbar.setScrollProperties(1, 0, content.height - 133);
-			this.scrollbar.position = 0;
 		}
 		
 		public function unLightElements(txt: String): void {
