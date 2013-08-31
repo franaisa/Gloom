@@ -207,8 +207,8 @@ namespace Logic {
 			return;
 
 		if( updateLife(damage) ) {
-			triggerDeathState(enemy);
 			triggerDeathSound(enemy);
+			triggerDeathState(enemy);
 		}
 		// Si el personaje no ha muerto lanzamos los sonidos de daño.
 		else {

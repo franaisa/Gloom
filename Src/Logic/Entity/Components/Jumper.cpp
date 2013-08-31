@@ -71,7 +71,8 @@ namespace Logic
 
 				_entity->emitMessage(audioMsg);
 
-				_entity->getComponent<CParticleSystem>("CParticleSystem")->start();
+				//@todo mandar un mensaje de ejecutar particulas
+				//_entity->getComponent<CParticleSystem>("CParticleSystem")->start();
 				
 				break;
 			}

@@ -36,6 +36,7 @@ implementa las habilidades del personaje
 #include "Logic/Messages/MessageSetAnimation.h"
 #include "Logic/Messages/MessageHud.h"
 #include "Logic/Messages/MessageBlockShoot.h"
+#include "Logic/Messages/MessageAudio.h"
 
 // Física
 #include "Physics/Server.h"
@@ -201,7 +202,17 @@ namespace Logic {
 	//__________________________________________________________________
 
 	void CScreamer::primarySkill() {
+		// Sonido de grito
+		std::shared_ptr<CMessageAudio> audioMsg = std::make_shared<CMessageAudio>();
 		
+		audioMsg->setAudioName("character/scream.ogg");
+		audioMsg->isLoopable(false);
+		audioMsg->is3dSound(true);
+		audioMsg->streamSound(false);
+		audioMsg->stopSound(false);
+			
+		_entity->emitMessage(audioMsg);
+
 		// Si no he hecho ningun rebote, he de coger la del player, si estoy en algun rebote, el rebote se encarga de decirme en q posicion.
 		if(_rebound == 0){
 			_directionShoot = _entity->getOrientation()*Vector3::NEGATIVE_UNIT_Z;
