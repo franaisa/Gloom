@@ -15,6 +15,7 @@ que controla las acciones de la bola de fuego.
 #define __Logic_FireBallController_H
 
 #include "Logic/Entity/Component.h"
+#include "Physics/ContactPoint.h"
 
 namespace Logic {
 	class CIronHellGoat;
@@ -122,7 +123,7 @@ namespace Logic {
 
 	private:
 
-		void createExplotion();
+		void createExplotion(const Physics::CContactPoint& contactPoint);
 
 		void estimateDamage(CEntity* entityHit, const Vector3& explotionPos);
 

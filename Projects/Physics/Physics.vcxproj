@@ -87,6 +87,7 @@
     <ClInclude Include="..\..\Src\Physics\CharacterController.h" />
     <ClInclude Include="..\..\Src\Physics\Cloth.h" />
     <ClInclude Include="..\..\Src\Physics\CollisionManager.h" />
+    <ClInclude Include="..\..\Src\Physics\ContactPoint.h" />
     <ClInclude Include="..\..\Src\Physics\Conversions.h" />
     <ClInclude Include="..\..\Src\Physics\DynamicEntity.h" />
     <ClInclude Include="..\..\Src\Physics\Entity.h" />

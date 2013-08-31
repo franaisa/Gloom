@@ -92,7 +92,8 @@ namespace Logic {
 
 		// Rayo lanzado por el servidor de físicas de acuerdo a la distancia de potencia del arma
 		std::vector<Physics::CRaycastHit> hits;
-		Physics::CServer::getSingletonPtr()->raycastMultiple(ray, _shotsDistance, hits, true, Physics::CollisionGroup::ePLAYER | Physics::CollisionGroup::eWORLD | Physics::CollisionGroup::eFIREBALL | Physics::CollisionGroup::eSCREAMER_SHIELD);
+		Physics::CServer::getSingletonPtr()->raycastMultiple(ray, _shotsDistance, hits, true, Physics::CollisionGroup::ePLAYER | Physics::CollisionGroup::eWORLD |
+														Physics::CollisionGroup::eHITBOX | Physics::CollisionGroup::eFIREBALL | Physics::CollisionGroup::eSCREAMER_SHIELD);
 
 		//Cogemos lo primero tocado que no seamos nosotros mismos y vemos si a un rango X hay enemigos (no nosotros)
 		//Ojo en cooperativo tendremos que hacer distincion entre otros players aliados
@@ -115,6 +116,16 @@ namespace Logic {
 				}
 
 				entityHit=hits[i].entity;
+
+				// Particulas de sangre
+				Euler euler(Quaternion::IDENTITY);
+				euler.setDirection(hits[i].normal);
+
+				Map::CEntity* entityInfo = CEntityFactory::getSingletonPtr()->getInfo("BloodStrike");
+				CEntity* bloodStrike = CEntityFactory::getSingletonPtr()->createEntity(entityInfo, _entity->getMap(), hits[i].impact, euler.toQuaternion() );
+				bloodStrike->activate();
+				bloodStrike->start();
+
 				break;
 			}
 		}
@@ -155,7 +166,7 @@ namespace Logic {
 		// Rayo lanzado por el servidor de físicas de acuerdo a la distancia de potencia del arma
 		std::vector<Physics::CRaycastHit> hits;
 		Physics::CServer::getSingletonPtr()->raycastMultiple(ray, _shotsDistance, hits,true, Physics::CollisionGroup::ePLAYER | Physics::CollisionGroup::eWORLD | Physics::CollisionGroup::eFIREBALL |
-																							 Physics::CollisionGroup::eSCREAMER_SHIELD);
+																							 Physics::CollisionGroup::eHITBOX | Physics::CollisionGroup::eSCREAMER_SHIELD);
 
 		decrementAmmo();
 
@@ -193,6 +204,15 @@ namespace Logic {
 			}
 			//Sino mientras que no seamos nosotros mismos
 			else if(hits[i].entity!=_entity){
+				// Particulas de sangre
+				Euler euler(Quaternion::IDENTITY);
+				euler.setDirection(hits[i].normal);
+
+				Map::CEntity* entityInfo = CEntityFactory::getSingletonPtr()->getInfo("BloodStrike");
+				CEntity* bloodStrike = CEntityFactory::getSingletonPtr()->createEntity(entityInfo, _entity->getMap(), hits[i].impact, euler.toQuaternion() );
+				bloodStrike->activate();
+				bloodStrike->start();
+
 				if(_burned)
 					triggerHitMessages(hits[i].entity, _primaryFireDamage + _primaryFireDamage * _burnedIncrementPercentageDamage);
 				else

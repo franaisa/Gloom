@@ -10,10 +10,8 @@ de Particle Universe.
 
 @see Graphics::PUParticle
 
-@author Rubén Mulero Guerrero
-@author Antonio Jesús Narváez Corrales
-
-@date Enero, 2013
+@author Francisco Aisa García
+@date Agosto, 2013
 */
 
 #ifndef __Graphics_PUParticle_H
@@ -24,47 +22,71 @@ de Particle Universe.
 #include "Logic\Entity\Entity.h"
 #include "OgreParticleSystem.h"
 
+#include "ParticleUniverse\ParticleUniverseCommon.h"
+#include "ParticleUniverse\ParticleUniverseSystemListener.h"
+
 // Predeclaración de clases para ahorrar tiempo de compilación
-namespace Ogre 
-{
+namespace Ogre {
 	class SceneNode;
 }
-namespace Graphics 
-{
+
+namespace Graphics {
 	class CScene;
 	class CServer;
 }
 
-namespace ParticleUniverse
-{
+namespace ParticleUniverse {
 	class ParticleSystem;
 }
 
-namespace Graphics 
-{
+namespace Graphics {
+	
 	/**
 	Clase de PUParticle extendida basada en Ogre.
 	
 	@ingroup graphicsGroup
 
-	@author Pablo Terrado
-	@date Enero, 2013
+	@author Francisco Aisa García
+	@date Agosto, 2013
 	*/
-	class PUParticle : public CParticle
-	{
+
+	class PUParticle : public ParticleUniverse::ParticleSystemListener {
 	public:
+
+		class IObserver {
+		public:
+			virtual void onEmitterStart() { };
+			virtual void onEmitterStop() { };
+			virtual void onParticlesExpired() { };
+		};
 
 		/**
 		Constructor de la clase.
 
 		@param name Nombre del OgreParticle.
 		*/
-		PUParticle(const std::string &ogreParticleName, bool isOverlay = false);
+		PUParticle(const std::string& scriptName);
 
 		/**
 		Destructor de la partícula.
 		*/
 		~PUParticle();
+
+		virtual void handleParticleSystemEvent(ParticleUniverse::ParticleSystem* particleSystem, 
+											   ParticleUniverse::ParticleUniverseEvent& particleUniverseEvent);
+
+		void start();
+		void start(float stopTime);
+		void startAndStopFade(float stopTime);
+		
+		void stop();
+		void stop(float stopTime);
+		void stopFade(float stopTime);
+
+		void pause();
+		void pause(float pauseTime);
+
+		void resume();
 
 
 		/**
@@ -85,50 +107,21 @@ namespace Graphics
 		*/
 		void setVisible(bool visible);
 
-		/**
-		Pone a la particula en modo activa
-		*/
-		void activate();
-
-		/**
-		Pone a la particula en modo pausa
-		*/
-		void deactivate();
-
-		/**
-		Fuerza la carga de los recursos de la particula
-		*/
-		void loadResources();
-		
-		/**
-		Indica si la particula esta emitiendo
-		
-		@return bool, true si la particula esta emitiendo, falso si no
-		*/
-		bool isEmitting();
 
 		/**
 		Setea la direccion del emisor que se le introduce a la particula, lleva la magnitud ya multiplicada por la direccion
 
 		@param directionWithForce direcion de la particula con la fuerza ya multiplicada
 		*/
-		void setDirection(const Vector3 &directionWithForce);
+		void setDirection(const Vector3 &direction);
 
-		void setOrientation(const Matrix3 &orientation){};
-		/**
-		Devuelve el objeto ogre de la particula
+		void setOrientation(const Quaternion &orientation);
 
-		@return objeto ogre de la particula.
-		*/
-		ParticleUniverse::ParticleSystem* getParticleSystem() {return _particleSystem;}
-
-		Ogre::SceneNode * getSceneNode(){ return _sceneNode;}
-
-
-		bool isLoaded();
-		
+		void addObserver(IObserver* observer);
+		void removeObserver(IObserver* observer);
 
 	protected:
+
 		/** 
 		OgreParticleSystem _ogreParticleSystem(sistema de Particulas)
 		*/
@@ -143,6 +136,12 @@ namespace Graphics
 		scene donde se crea la particula
 		*/
 		Ogre::SceneNode *_sceneNode;
+
+	private:
+
+		std::list<IObserver*> _observers;
+
+		static unsigned int _counter;
 
 	}; // class PUParticle
 

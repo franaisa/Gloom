@@ -86,6 +86,12 @@ namespace Logic
 				_owner->destroyProjectile(_entity, impactEntity);
 			else
 				CEntityFactory::getSingletonPtr()->deferredDeleteEntity(_entity, true);
+
+			// Particulas de colision
+			Map::CEntity* entityInfo = CEntityFactory::getSingletonPtr()->getInfo("BulletSpark");
+			CEntity* bulletSpark = CEntityFactory::getSingletonPtr()->createEntity( entityInfo, _entity->getMap(), _entity->getPosition(), _entity->getOrientation() );
+			bulletSpark->activate();
+			bulletSpark->start();
 		}else{
 			if( impactEntity == _owner->getEntity() ){
 				if(_returning){
@@ -128,6 +134,12 @@ namespace Logic
 						//Envio el mensaje que daño de fuego tb.
 
 					}
+
+					// Particulas de sangre
+					Map::CEntity* entityInfo = CEntityFactory::getSingletonPtr()->getInfo("BloodStrike");
+					CEntity* bloodStrike = CEntityFactory::getSingletonPtr()->createEntity( entityInfo, _entity->getMap(), _entity->getPosition(), _entity->getOrientation() );
+					bloodStrike->activate();
+					bloodStrike->start();
 				}
 			}
 		}

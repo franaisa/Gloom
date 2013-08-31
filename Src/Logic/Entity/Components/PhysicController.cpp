@@ -151,10 +151,10 @@ void CPhysicController::onShapeHit(IPhysics* otherComponent, const Vector3& coli
 
 //________________________________________________________________________
 
-void CPhysicController::onContact (IPhysics *otherComponent, bool enter) {
+void CPhysicController::onContact(IPhysics *otherComponent, const Physics::CContactPoint& contactPoint, bool enter) {
 	// Mediante patron observador
 	for(auto it = _observers.begin(); it != _observers.end(); ++it) {
-		(*it)->onContact(otherComponent, enter);
+		(*it)->onContact(otherComponent, contactPoint, enter);
 	}
 }
 

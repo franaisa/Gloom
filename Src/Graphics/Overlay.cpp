@@ -178,7 +178,6 @@ namespace Graphics
 			Ogre::Entity *entity;
 			entity = _scene->getSceneMgr()->createEntity(mesh);
 			
-			
 			//scene->getSceneMgr()->getRootSceneNode()->addChild(sceneNode);
 
 			//sceneNode->attachObject((Ogre::MovableObject *)entity);
