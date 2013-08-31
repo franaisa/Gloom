@@ -6,6 +6,9 @@ package Server
 	import flash.text.TextField;	
 	import flash.external.ExternalInterface;
 	import principal.MenuManager;
+	import scaleform.clik.constants.ScrollBarTrackMode;
+	import scaleform.clik.controls.ScrollBar;
+	
 	/**
 	 * ...
 	 * @author Rubén Mulero
@@ -26,6 +29,22 @@ package Server
 			pos = 0;
 			ExternalInterface.addCallback("pushFile", pushFile);
 	
+			
+			
+			pushFile("belshir vestege");
+			pushFile("belshir vestege");
+			pushFile("belshir vestege");
+			pushFile("belshir vestege");
+			pushFile("belshir vestege");
+			pushFile("belshir vestege");
+			pushFile("belshir vestege");
+			pushFile("belshir vestege");
+			pushFile("belshir vestege");
+			pushFile("belshir vestege");
+			pushFile("belshir vestege");
+			pushFile("belshir vestege");
+			pushFile("belshir vestege");
+			pushFile("belshir vestege");
 		}
 		
 		public function get actualMap():String {
@@ -35,14 +54,21 @@ package Server
 		public function pushFile(file: String): void {
 			var newfile: TextFile = new TextFile(this,file);
 			var textbox: Texto = new Texto(file);
-			newfile.x = x + 1;
-			textbox.x = x;
-			textbox.y =  265 + pos * newfile.height;
-			newfile.y = 265 + pos * newfile.height;
-			manager.addChild(textbox);
-			manager.addChild(newfile);
+			newfile.x = 0;
+			textbox.x = 0;
+			
+			trace (content.height);
+			
+			textbox.y =pos * newfile.height;
+			newfile.y =pos * newfile.height;
+			content.addChild(textbox);
+			content.addChild(newfile);
 			pos++;
 			maps.push(newfile);
+			
+			
+			this.scrollbar.setScrollProperties(1, 0, content.height - 133);
+			this.scrollbar.position = 0;
 		}
 		
 		public function unLightElements(txt: String): void {
