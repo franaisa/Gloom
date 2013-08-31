@@ -8,6 +8,8 @@
 //-----------------------------------------------------------------------------------------------------------------------
 system Explosion/mp_explosion_04_blue
  {
+	scale_velocity                              0.02
+    scale                                       0.02 0.02 0.02
     technique 
     {
         visual_particle_quota                   12

@@ -19,9 +19,6 @@ Map = {
 	Spawn = {
 		type = "SpawnPoint",
 		
-		particle_scriptName = "teleport",
-		particle_on = false,
-		
 		physic_entity = "rigid",
 		physic_trigger = true,
 		physic_type = "static",
@@ -165,6 +162,13 @@ Map = {
 		particle_destroyEntityOnExpiry = true,
 	},
 	
+	SpawnParticles = {
+		type = "SpawnParticles",
+		particle_scriptName = "teleport",
+		particle_on = true,
+		particle_destroyEntityOnExpiry = true,
+	},
+	
 	BloodStrike = {
 		type = "BloodStrike",
 		particle_scriptName = "Blood/mp_bloodsstrike_03",
@@ -172,9 +176,23 @@ Map = {
 		particle_destroyEntityOnExpiry = true,
 	},
 	
+	LavaBurn = {
+		type = "LavaBurn",
+		particle_scriptName = "lavaBurn",
+		particle_on = true,
+		particle_destroyEntityOnExpiry = true,
+	},
+	
 	BulletSpark = {
 		type = "BulletSpark",
 		particle_scriptName = "bullet_spark",
+		particle_on = true,
+		particle_destroyEntityOnExpiry = true,
+	},
+	
+	SniperTrail = {
+		type = "SniperTrail",
+		particle_scriptName = "Explosion/mp_explosion_04_blue",
 		particle_on = true,
 		particle_destroyEntityOnExpiry = true,
 	},
@@ -213,6 +231,9 @@ Map = {
 		reward = 15,
 		respawnTime = 25,
 		
+		audioTrigger_name = "weapons/shotgun/shotgunPickup.wav",
+		audioTrigger_stream = false,
+		
 		orbitalOffset = 0.065,
 		orbitalSpeed = 0.0060,
 		orbitalRotationSpeed = 0.0025,
@@ -235,6 +256,9 @@ Map = {
 		reward = 15,
 		respawnTime = 20,
 		
+		audioTrigger_name = "weapons/ammoPickup.wav",
+		audioTrigger_stream = false,
+		
 		physic_entity = "rigid",
 		physic_trigger = true,
 		physic_type = "static",
@@ -253,6 +277,9 @@ Map = {
 		weaponType = 1,
 		reward = 10,
 		respawnTime = 25,
+		
+		audioTrigger_name = "weapons/sniper/sniperPickup.wav",
+		audioTrigger_stream = false,
 		
 		orbitalOffset = 0.065,
 		orbitalSpeed = 0.0060,
@@ -276,6 +303,9 @@ Map = {
 		reward = 5,
 		respawnTime = 20,
 		
+		audioTrigger_name = "weapons/ammoPickup.wav",
+		audioTrigger_stream = false,
+		
 		physic_entity = "rigid",
 		physic_trigger = true,
 		physic_type = "static",
@@ -294,6 +324,9 @@ Map = {
 		weaponType = 3,
 		reward = 150,
 		respawnTime = 25,
+		
+		audioTrigger_name = "weapons/minigun/minigunPickup.wav",
+		audioTrigger_stream = false,
 		
 		orbitalOffset = 0.065,
 		orbitalSpeed = 0.0060,
@@ -317,6 +350,9 @@ Map = {
 		reward = 30,
 		respawnTime = 20,
 		
+		audioTrigger_name = "weapons/ammoPickup.wav",
+		audioTrigger_stream = false,
+		
 		physic_entity = "rigid",
 		physic_trigger = true,
 		physic_type = "static",
@@ -335,6 +371,9 @@ Map = {
 		weaponType = 4,
 		reward = 10,
 		respawnTime = 25,
+		
+		audioTrigger_name = "weapons/ironHellGoat/ironHellGoatPickup.wav",
+		audioTrigger_stream = false,
 		
 		orbitalOffset = 0.065,
 		orbitalSpeed = 0.0060,
@@ -357,6 +396,9 @@ Map = {
 		weaponType = 4,
 		reward = 5,
 		respawnTime = 20,
+		
+		audioTrigger_name = "weapons/ammoPickup.wav",
+		audioTrigger_stream = false,
 		
 		physic_entity = "rigid",
 		physic_trigger = true,

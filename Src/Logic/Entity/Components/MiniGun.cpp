@@ -19,7 +19,7 @@ Contiene la implementación del componente que gestiona las armas y que administr
 #include "Map/MapEntity.h"
 
 #include "Logic/Messages/MessageControl.h"
-
+#include "Audio/Server.h"
 
 #include "Physics/Server.h"
 
@@ -263,12 +263,16 @@ namespace Logic {
 
 			Euler euler(Quaternion::IDENTITY);
 			euler.setDirection(hits2.normal);
-			//euler.pitch( Ogre::Radian(Math::HALF_PI) );
+			euler.yaw( Ogre::Radian(Math::HALF_PI) );
 
 			Map::CEntity* entityInfo = CEntityFactory::getSingletonPtr()->getInfo("BulletSpark");
 			CEntity* bulletSpark = CEntityFactory::getSingletonPtr()->createEntity(entityInfo, _entity->getMap(), hits2.impact, euler.toQuaternion() );
 			bulletSpark->activate();
 			bulletSpark->start();
+
+			int randomValue = Math::unifRand(2);
+			std::string ricochetSound = (randomValue == 1 ? "weapons/hit/ric3.wav" : "weapons/hit/ric2.wav");
+			Audio::CServer::getSingletonPtr()->playSound3D(ricochetSound, hits2.impact, Vector3::ZERO, false, false);
 		}
 
 		// Rayo lanzado por el servidor de físicas de acuerdo a la distancia de potencia del arma
@@ -328,7 +332,7 @@ namespace Logic {
 
 	void CMiniGun::secondaryShoot() 
 	{
-		
+		if( !isActivated() ) return;
 
 		//Creación de sweephit para 
 		Physics::SphereGeometry sphere  = Physics::CGeometryFactory::getSingletonPtr()->createSphere(3.5);
@@ -382,12 +386,16 @@ namespace Logic {
 
 			Euler euler(Quaternion::IDENTITY);
 			euler.setDirection(hits2.normal);
-			//euler.pitch( Ogre::Radian(Math::HALF_PI) );
+			euler.yaw( Ogre::Radian(Math::HALF_PI) );
 
 			Map::CEntity* entityInfo = CEntityFactory::getSingletonPtr()->getInfo("BulletSpark");
 			CEntity* bulletSpark = CEntityFactory::getSingletonPtr()->createEntity(entityInfo, _entity->getMap(), hits2.impact, euler.toQuaternion() );
 			bulletSpark->activate();
 			bulletSpark->start();
+
+			int randomValue = Math::unifRand(2);
+			std::string ricochetSound = (randomValue == 1 ? "weapons/hit/ric3.wav" : "weapons/hit/ric2.wav");
+			Audio::CServer::getSingletonPtr()->playSound3D(ricochetSound, hits2.impact, Vector3::ZERO, false, false);
 		}
 
 	} // secondaryShoot

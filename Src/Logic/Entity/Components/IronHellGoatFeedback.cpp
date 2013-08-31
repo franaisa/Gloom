@@ -61,7 +61,7 @@ namespace Logic {
 		_hudWeapon->shootAnim(-1.85f);
 
 		// Emitimos el sonido de lanzar la bola de fuego
-		emitSound("weapons/ironHellGoat/ignite_pitch.wav", false, true, false, false);
+		emitSound("weapons/ironHellGoat/shootFireBall2.wav", false, true, false, false);
 
 		// Shoot flash
 		CDynamicLight* shootFlash = _entity->getComponent<CDynamicLight>("CDynamicLight");
