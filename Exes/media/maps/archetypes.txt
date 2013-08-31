@@ -19,9 +19,6 @@ Map = {
 	Spawn = {
 		type = "SpawnPoint",
 		
-		particle_scriptName = "teleport",
-		particle_on = false,
-		
 		physic_entity = "rigid",
 		physic_trigger = true,
 		physic_type = "static",
@@ -165,6 +162,13 @@ Map = {
 		particle_destroyEntityOnExpiry = true,
 	},
 	
+	SpawnParticles = {
+		type = "SpawnParticles",
+		particle_scriptName = "teleport",
+		particle_on = true,
+		particle_destroyEntityOnExpiry = true,
+	},
+	
 	BloodStrike = {
 		type = "BloodStrike",
 		particle_scriptName = "Blood/mp_bloodsstrike_03",
@@ -175,6 +179,13 @@ Map = {
 	BulletSpark = {
 		type = "BulletSpark",
 		particle_scriptName = "bullet_spark",
+		particle_on = true,
+		particle_destroyEntityOnExpiry = true,
+	},
+	
+	SniperTrail = {
+		type = "SniperTrail",
+		particle_scriptName = "sniper_trail",
 		particle_on = true,
 		particle_destroyEntityOnExpiry = true,
 	},

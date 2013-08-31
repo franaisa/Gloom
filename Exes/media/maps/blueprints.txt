@@ -15,7 +15,7 @@ Camera CCamera
 ItemSpawn CPhysicStaticEntity CFloatingMovement CSpawnItemManager CGraphics
 Ammo CPhysicStaticEntity CSpawnItemManager CGraphics
 ItemSpawnDynamic CPhysicDynamicEntity CPullingMovement CGraphics
-SpawnPoint CPhysicStaticEntity CParticleSystem
+SpawnPoint CPhysicStaticEntity
 Jumper CGraphics CPhysicStaticEntity CJumper CAudio CParticle CParticleSystem
 Lava CGraphics CPhysicStaticEntity CLava
 LavaFondo CGraphics CPhysicStaticEntity CLava
@@ -56,3 +56,5 @@ Explotion CParticleSystem
 SmokeBash CParticleSystem
 BulletSpark CParticleSystem
 BloodStrike CParticleSystem
+SniperTrail CParticleSystem
+SpawnParticles CParticleSystem

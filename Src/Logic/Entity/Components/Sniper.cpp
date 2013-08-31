@@ -100,8 +100,14 @@ namespace Logic {
 		CEntity* entityHit=NULL;
 		for(int i=0;i<hits.size();++i){
 			//Si tocamos mundo terminamos
-			if(hits[i].entity->getType() == "World")
+			if(hits[i].entity->getType() == "World") {
+				Map::CEntity* entityInfo = CEntityFactory::getSingletonPtr()->getInfo("SniperTrail");
+				CEntity* sniperTrail = CEntityFactory::getSingletonPtr()->createEntity(entityInfo, _entity->getMap(), hits[i].impact, Quaternion::IDENTITY );
+				sniperTrail->activate();
+				sniperTrail->start();
+				
 				break;
+			}
 			//Si es una bola de fuego activamos el quemado
 			if(hits[i].entity->getType() == "FireBall"){
 				_burned=true;
@@ -175,6 +181,11 @@ namespace Logic {
 		for(int i=0;i<hits.size();++i){
 			//Si tocamos el mundo no continuamos viendo hits y llamamos al pintado del rayo (si se considera necesario)
 			if(hits[i].entity->getType() == "World"){
+
+				Map::CEntity* entityInfo = CEntityFactory::getSingletonPtr()->getInfo("SniperTrail");
+				CEntity* sniperTrail = CEntityFactory::getSingletonPtr()->createEntity(entityInfo, _entity->getMap(), hits[i].impact, Quaternion::IDENTITY );
+				sniperTrail->activate();
+				sniperTrail->start();
 
 				//Antes de salir desactivamos el quemado para el siguiente disparo
 				_burned=false;
