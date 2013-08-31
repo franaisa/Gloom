@@ -38,17 +38,17 @@ namespace Graphics
 	CPoolParticle::~CPoolParticle() 
 	{
 		// borro todas las particulas almacenadas
-		for(auto it = _particlesMap.begin(); it != _particlesMap.end(); ++it){
+		/*for(auto it = _particlesMap.begin(); it != _particlesMap.end(); ++it){
 			for(auto it2 = (*it).second.particles.begin(); it2 < (*it).second.particles.end(); ++it2){
 				delete (*it2);
 			}
-		}
+		}*/
 	} // ~CPoolParticle
 	//--------------------------------------------------------
 
 	void CPoolParticle::activate()
 	{
-		WIN32_FIND_DATA findFileData;
+		/*WIN32_FIND_DATA findFileData;
 		HANDLE          hFind;
  
 		char* dir(".\\media\\particles\\*");
@@ -64,13 +64,13 @@ namespace Graphics
         // Listamos todos los ficheros restantes
         while (FindNextFile(hFind, &findFileData) != 0)
 			loadParticleSystem(findFileData.cFileName);
-		}
+		}*/
 
 	} // activate
 	//--------------------------------------------------------
 	
 	void CPoolParticle::loadParticleSystem(const std::string &completeNameParticleSystem){
-		if(completeNameParticleSystem == "." || completeNameParticleSystem == ".." ||  completeNameParticleSystem ==  "LEEME.txt")
+		/*if(completeNameParticleSystem == "." || completeNameParticleSystem == ".." ||  completeNameParticleSystem ==  "LEEME.txt")
 			return;
 		int position = completeNameParticleSystem.find(".pu");
 		if(position == std::string::npos)
@@ -94,14 +94,14 @@ namespace Graphics
 
 		vectorParticle[0]->loadResources();
 
-		_particlesMap.insert(std::pair<std::string, TParticles>(nameParticleSystem,aux));
+		_particlesMap.insert(std::pair<std::string, TParticles>(nameParticleSystem,aux));*/
 
 	} // loadParticleSystem
 	//--------------------------------------------------------
 
 	CParticle * CPoolParticle::getParticle(const std::string &nameParticle){
 	
-		auto particleData = _particlesMap.find(nameParticle);
+		/*auto particleData = _particlesMap.find(nameParticle);
 		if(particleData == _particlesMap.end())
 			return 0;
 
@@ -116,8 +116,8 @@ namespace Graphics
 
 		particle->deactivate();
 		particle->activate();
-		return particle;
-
+		return particle;*/
+		return NULL;
 	} // getParticle
 	//--------------------------------------------------------
 

@@ -14,6 +14,8 @@ Contiene la implementación del componente que gestiona las armas y que administr
 #include "ScreamerShieldDamageNotifier.h"
 #include "Physics.h"
 
+#include "Audio/Server.h"
+
 #include "Physics/Server.h"
 #include "Physics/RaycastHit.h"
 #include "Logic/Server.h"
@@ -92,15 +94,24 @@ namespace Logic {
 
 		// Rayo lanzado por el servidor de físicas de acuerdo a la distancia de potencia del arma
 		std::vector<Physics::CRaycastHit> hits;
-		Physics::CServer::getSingletonPtr()->raycastMultiple(ray, _shotsDistance, hits, true, Physics::CollisionGroup::ePLAYER | Physics::CollisionGroup::eWORLD | Physics::CollisionGroup::eFIREBALL | Physics::CollisionGroup::eSCREAMER_SHIELD);
+		Physics::CServer::getSingletonPtr()->raycastMultiple(ray, _shotsDistance, hits, true, Physics::CollisionGroup::ePLAYER | Physics::CollisionGroup::eWORLD |
+														Physics::CollisionGroup::eHITBOX | Physics::CollisionGroup::eFIREBALL | Physics::CollisionGroup::eSCREAMER_SHIELD);
 
 		//Cogemos lo primero tocado que no seamos nosotros mismos y vemos si a un rango X hay enemigos (no nosotros)
 		//Ojo en cooperativo tendremos que hacer distincion entre otros players aliados
 		CEntity* entityHit=NULL;
 		for(int i=0;i<hits.size();++i){
 			//Si tocamos mundo terminamos
-			if(hits[i].entity->getType() == "World")
+			if(hits[i].entity->getType() == "World") {
+				Map::CEntity* entityInfo = CEntityFactory::getSingletonPtr()->getInfo("SniperTrail");
+				CEntity* sniperTrail = CEntityFactory::getSingletonPtr()->createEntity(entityInfo, _entity->getMap(), hits[i].impact, Quaternion::IDENTITY );
+				sniperTrail->activate();
+				sniperTrail->start();
+
+				Audio::CServer::getSingletonPtr()->playSound3D("weapons/hit/elec_ric.wav", _entity->getPosition(), Vector3::ZERO, false, false);
+				
 				break;
+			}
 			//Si es una bola de fuego activamos el quemado
 			if(hits[i].entity->getType() == "FireBall"){
 				_burned=true;
@@ -115,6 +126,16 @@ namespace Logic {
 				}
 
 				entityHit=hits[i].entity;
+
+				// Particulas de sangre
+				Euler euler(Quaternion::IDENTITY);
+				euler.setDirection(hits[i].normal);
+
+				Map::CEntity* entityInfo = CEntityFactory::getSingletonPtr()->getInfo("BloodStrike");
+				CEntity* bloodStrike = CEntityFactory::getSingletonPtr()->createEntity(entityInfo, _entity->getMap(), hits[i].impact, euler.toQuaternion() );
+				bloodStrike->activate();
+				bloodStrike->start();
+
 				break;
 			}
 		}
@@ -155,7 +176,7 @@ namespace Logic {
 		// Rayo lanzado por el servidor de físicas de acuerdo a la distancia de potencia del arma
 		std::vector<Physics::CRaycastHit> hits;
 		Physics::CServer::getSingletonPtr()->raycastMultiple(ray, _shotsDistance, hits,true, Physics::CollisionGroup::ePLAYER | Physics::CollisionGroup::eWORLD | Physics::CollisionGroup::eFIREBALL |
-																							 Physics::CollisionGroup::eSCREAMER_SHIELD);
+																							 Physics::CollisionGroup::eHITBOX | Physics::CollisionGroup::eSCREAMER_SHIELD);
 
 		decrementAmmo();
 
@@ -164,6 +185,13 @@ namespace Logic {
 		for(int i=0;i<hits.size();++i){
 			//Si tocamos el mundo no continuamos viendo hits y llamamos al pintado del rayo (si se considera necesario)
 			if(hits[i].entity->getType() == "World"){
+
+				Map::CEntity* entityInfo = CEntityFactory::getSingletonPtr()->getInfo("SniperTrail");
+				CEntity* sniperTrail = CEntityFactory::getSingletonPtr()->createEntity(entityInfo, _entity->getMap(), hits[i].impact, Quaternion::IDENTITY );
+				sniperTrail->activate();
+				sniperTrail->start();
+
+				Audio::CServer::getSingletonPtr()->playSound3D("weapons/hit/elec_ric.wav", _entity->getPosition(), Vector3::ZERO, false, false);
 
 				//Antes de salir desactivamos el quemado para el siguiente disparo
 				_burned=false;
@@ -193,6 +221,15 @@ namespace Logic {
 			}
 			//Sino mientras que no seamos nosotros mismos
 			else if(hits[i].entity!=_entity){
+				// Particulas de sangre
+				Euler euler(Quaternion::IDENTITY);
+				euler.setDirection(hits[i].normal);
+
+				Map::CEntity* entityInfo = CEntityFactory::getSingletonPtr()->getInfo("BloodStrike");
+				CEntity* bloodStrike = CEntityFactory::getSingletonPtr()->createEntity(entityInfo, _entity->getMap(), hits[i].impact, euler.toQuaternion() );
+				bloodStrike->activate();
+				bloodStrike->start();
+
 				if(_burned)
 					triggerHitMessages(hits[i].entity, _primaryFireDamage + _primaryFireDamage * _burnedIncrementPercentageDamage);
 				else

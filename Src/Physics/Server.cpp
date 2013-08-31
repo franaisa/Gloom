@@ -340,21 +340,19 @@ namespace Physics {
 									 PxFilterObjectAttributes attributes1, PxFilterData filterData1,
 									 PxPairFlags& pairFlags, const void* constantBlock, PxU32 constantBlockSize) {
         
-		// Si alguno de los dos actores es un trigger...
-		if( PxFilterObjectIsTrigger(attributes0) || PxFilterObjectIsTrigger(attributes1) ) {
-			if( (filterData0.word0 & filterData1.word1) && (filterData1.word0 & filterData0.word1) )
-				pairFlags = PxPairFlag::eTRIGGER_DEFAULT;
-		
-			return PxFilterFlag::eDEFAULT;
+		// Tanto para triggers como para objetos rigidos, solo estamos interesados en que se nos
+		// notifique si los grupos de colision coinciden
+		if( (filterData0.word0 & filterData1.word1) && (filterData1.word0 & filterData0.word1) ) {
+			// Tanto para triggers como para objetos normales estamos interesados en saber cuando
+			// se produce un impacto y cuando deja de producirse
+			pairFlags =  PxPairFlag::eNOTIFY_TOUCH_FOUND | PxPairFlag::eNOTIFY_TOUCH_LOST;
+
+			// Si ademas el objeto NO es un trigger, queremos resolver la colision y obtener los
+			// puntos de contacto
+			if( !PxFilterObjectIsTrigger(attributes0) && !PxFilterObjectIsTrigger(attributes1) ) {
+				pairFlags |= PxPairFlag::eRESOLVE_CONTACTS | PxPairFlag::eNOTIFY_CONTACT_POINTS;
+			}
 		}
-
-		// Generamos el comportamiento por defecto de contacto entre shapes
-		pairFlags = PxPairFlag::eCONTACT_DEFAULT;
-
-		// Disparar la llamada a onContact de collisonManager siempre que los grupos de colision
-		// sean los adecuados
-		if((filterData0.word0 & filterData1.word1) && (filterData1.word0 & filterData0.word1))
-			pairFlags |= PxPairFlag::eNOTIFY_TOUCH_FOUND;
 
 		return PxFilterFlag::eDEFAULT;
 	}

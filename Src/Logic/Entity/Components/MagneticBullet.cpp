@@ -10,6 +10,8 @@ Contiene la implementación del componente que controla la vida de una entidad.
 @date Mayo, 2013
 */
 
+#include "Audio/Server.h"
+
 // Logica
 #include "MagneticBullet.h"
 #include "ShotGun.h"
@@ -86,6 +88,17 @@ namespace Logic
 				_owner->destroyProjectile(_entity, impactEntity);
 			else
 				CEntityFactory::getSingletonPtr()->deferredDeleteEntity(_entity, true);
+
+			// Particulas de colision
+			Map::CEntity* entityInfo = CEntityFactory::getSingletonPtr()->getInfo("BulletSpark");
+			CEntity* bulletSpark = CEntityFactory::getSingletonPtr()->createEntity( entityInfo, _entity->getMap(), _entity->getPosition(), _entity->getOrientation() );
+			bulletSpark->activate();
+			bulletSpark->start();
+
+
+			int randomValue = Math::unifRand(2);
+			std::string ricochetSound = (randomValue == 1 ? "weapons/hit/ric3.wav" : "weapons/hit/ric2.wav");
+			Audio::CServer::getSingletonPtr()->playSound3D(ricochetSound, _entity->getPosition(), Vector3::ZERO, false, false);
 		}else{
 			if( impactEntity == _owner->getEntity() ){
 				if(_returning){
@@ -128,6 +141,12 @@ namespace Logic
 						//Envio el mensaje que daño de fuego tb.
 
 					}
+
+					// Particulas de sangre
+					Map::CEntity* entityInfo = CEntityFactory::getSingletonPtr()->getInfo("BloodStrike");
+					CEntity* bloodStrike = CEntityFactory::getSingletonPtr()->createEntity( entityInfo, _entity->getMap(), _entity->getPosition(), _entity->getOrientation() );
+					bloodStrike->activate();
+					bloodStrike->start();
 				}
 			}
 		}

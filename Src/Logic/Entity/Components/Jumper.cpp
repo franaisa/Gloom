@@ -11,6 +11,7 @@ Contiene la implementación del componente que gestiona la aplicacion de una fuer
 */
 
 #include "Jumper.h"
+#include "ParticleSystem.h"
 
 #include "Logic/Entity/Entity.h"
 #include "Map/MapEntity.h"
@@ -69,6 +70,9 @@ namespace Logic
 				audioMsg->streamSound(false);
 
 				_entity->emitMessage(audioMsg);
+
+				//@todo mandar un mensaje de ejecutar particulas
+				//_entity->getComponent<CParticleSystem>("CParticleSystem")->start();
 				
 				break;
 			}

@@ -19,6 +19,7 @@ que controla la vida de un personaje.
 #include "Logic/Entity/Entity.h"
 #include "Logic/Maps/Map.h"
 #include "Map/MapEntity.h"
+#include "Logic/Maps/EntityFactory.h"
 #include "Application/BaseApplication.h"
 
 // Para informar por red que se ha acabado el juego
@@ -206,8 +207,8 @@ namespace Logic {
 			return;
 
 		if( updateLife(damage) ) {
+			triggerDeathSound(enemy);
 			triggerDeathState(enemy);
-			triggerDeathSound();
 		}
 		// Si el personaje no ha muerto lanzamos los sonidos de daño.
 		else {
@@ -263,7 +264,7 @@ namespace Logic {
 
 	void CLife::suicide() {
 		triggerDeathState(_entity);
-		triggerDeathSound();
+		triggerDeathSound(_entity);
 	}
 
 	//________________________________________________________________________
@@ -334,10 +335,25 @@ namespace Logic {
 
 	//________________________________________________________________________
 
-	void CLife::triggerDeathSound() {
+	void CLife::triggerDeathSound(CEntity* enemy) {
 		std::shared_ptr<CMessageAudio> audioMsg = std::make_shared<CMessageAudio>();
 
-		audioMsg->setAudioName(_audioDeath);
+		std::string audioFile;
+		if(enemy->getType() == "Lava") {
+			audioFile = "damage/lava_burned.wav";
+
+			// No va aqui pero bueno pongo las particulas
+			// de quemado temporalmente
+			Map::CEntity* entityInfo = CEntityFactory::getSingletonPtr()->getInfo("LavaBurn");
+			CEntity* lavaBurn = CEntityFactory::getSingletonPtr()->createEntity(entityInfo, _entity->getMap(), _entity->getPosition(), Quaternion::IDENTITY );
+			lavaBurn->activate();
+			lavaBurn->start();
+		}
+		else {
+			audioFile = "damage/splatdeath_03.wav";
+		}
+
+		audioMsg->setAudioName(audioFile);
 		audioMsg->isLoopable(false);
 		audioMsg->is3dSound(true);
 		audioMsg->streamSound(false);
