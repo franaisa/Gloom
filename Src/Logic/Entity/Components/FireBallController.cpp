@@ -13,6 +13,8 @@
 #include "PhysicDynamicEntity.h"
 #include "ParticleSystem.h"
 
+#include "Audio/Server.h"
+
 #include "Logic/Maps/EntityFactory.h"
 #include "Physics/Server.h"
 #include "Physics/GeometryFactory.h"
@@ -155,6 +157,9 @@ namespace Logic {
 			// Mandamos el mensaje de daño
 			estimateDamage(entitiesHit[i], explotionPos);
 		}
+
+		// Creamos el sonido de explosion
+		Audio::CServer::getSingletonPtr()->playSound3D("weapons/hit/fireball_hit.wav", contactPoint.position, Vector3::ZERO, false, false);
 
 		// Creamos las particulas de la explosion
 		Map::CEntity* entityInfo = CEntityFactory::getSingletonPtr()->getInfo("Explotion");
