@@ -17,6 +17,7 @@
 #include "Map/MapEntity.h"
 #include "Basesubsystems/Math.h"
 #include "Interpolation.h"
+#include "Audio/Server.h"
 
 #include "Logic/Messages/MessagePlayerDead.h"
 #include "Logic/Messages/MessagePlayerSpawn.h"
@@ -34,6 +35,7 @@ namespace Logic  {
 	IMP_FACTORY(CClientRespawn);
 
 	//________________________________________________________________________
+	
 	bool CClientRespawn::spawn(CEntity *entity, CMap *map, const Map::CEntity *entityInfo) 
 	{
 		if(!IComponent::spawn(entity,map,entityInfo))
@@ -128,6 +130,8 @@ namespace Logic  {
 				CEntity* spawnParticles = CEntityFactory::getSingletonPtr()->createEntity(entityInfo, _entity->getMap(), spawnPos, Quaternion::IDENTITY, false);
 				spawnParticles->activate();
 				spawnParticles->start();
+
+				Audio::CServer::getSingletonPtr()->playSound3D("gameplay/spawn.wav", spawnPos, Vector3::ZERO, false, false);
 
 				_entity->getComponent<CPhysicController>("CPhysicController")->setPhysicPosition(spawnPos);
 				// Activamos la simulacion aqui sin problemas. El componente life ignora los mensajes de daño

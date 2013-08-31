@@ -10,6 +10,8 @@ Contiene la implementación del componente que controla la vida de una entidad.
 @date Mayo, 2013
 */
 
+#include "Audio/Server.h"
+
 // Logica
 #include "MagneticBullet.h"
 #include "ShotGun.h"
@@ -92,6 +94,11 @@ namespace Logic
 			CEntity* bulletSpark = CEntityFactory::getSingletonPtr()->createEntity( entityInfo, _entity->getMap(), _entity->getPosition(), _entity->getOrientation() );
 			bulletSpark->activate();
 			bulletSpark->start();
+
+
+			int randomValue = Math::unifRand(2);
+			std::string ricochetSound = (randomValue == 1 ? "weapons/hit/ric3.wav" : "weapons/hit/ric2.wav");
+			Audio::CServer::getSingletonPtr()->playSound3D(ricochetSound, _entity->getPosition(), Vector3::ZERO, false, false);
 		}else{
 			if( impactEntity == _owner->getEntity() ){
 				if(_returning){

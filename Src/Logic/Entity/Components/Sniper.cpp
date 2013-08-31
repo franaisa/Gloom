@@ -14,6 +14,8 @@ Contiene la implementación del componente que gestiona las armas y que administr
 #include "ScreamerShieldDamageNotifier.h"
 #include "Physics.h"
 
+#include "Audio/Server.h"
+
 #include "Physics/Server.h"
 #include "Physics/RaycastHit.h"
 #include "Logic/Server.h"
@@ -105,6 +107,8 @@ namespace Logic {
 				CEntity* sniperTrail = CEntityFactory::getSingletonPtr()->createEntity(entityInfo, _entity->getMap(), hits[i].impact, Quaternion::IDENTITY );
 				sniperTrail->activate();
 				sniperTrail->start();
+
+				Audio::CServer::getSingletonPtr()->playSound3D("weapons/hit/elec_ric.wav", _entity->getPosition(), Vector3::ZERO, false, false);
 				
 				break;
 			}
@@ -186,6 +190,8 @@ namespace Logic {
 				CEntity* sniperTrail = CEntityFactory::getSingletonPtr()->createEntity(entityInfo, _entity->getMap(), hits[i].impact, Quaternion::IDENTITY );
 				sniperTrail->activate();
 				sniperTrail->start();
+
+				Audio::CServer::getSingletonPtr()->playSound3D("weapons/hit/elec_ric.wav", _entity->getPosition(), Vector3::ZERO, false, false);
 
 				//Antes de salir desactivamos el quemado para el siguiente disparo
 				_burned=false;
