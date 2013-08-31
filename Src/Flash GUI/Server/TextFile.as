@@ -20,7 +20,10 @@ package Server
 		}
 		
 		public function unLight(): void {
-			gotoAndPlay("off");
+			if (currentFrameLabel != "off") {
+				gotoAndPlay("off");
+			}
+			
 		}
 		
 		public function onMouseClick(e: MouseEvent): void {
