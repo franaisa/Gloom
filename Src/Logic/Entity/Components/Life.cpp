@@ -19,6 +19,7 @@ que controla la vida de un personaje.
 #include "Logic/Entity/Entity.h"
 #include "Logic/Maps/Map.h"
 #include "Map/MapEntity.h"
+#include "Logic/Maps/EntityFactory.h"
 #include "Application/BaseApplication.h"
 
 // Para informar por red que se ha acabado el juego
@@ -338,10 +339,19 @@ namespace Logic {
 		std::shared_ptr<CMessageAudio> audioMsg = std::make_shared<CMessageAudio>();
 
 		std::string audioFile;
-		if(enemy->getType() == "Lava")
+		if(enemy->getType() == "Lava") {
 			audioFile = "damage/lava_burned.wav";
-		else
+
+			// No va aqui pero bueno pongo las particulas
+			// de quemado temporalmente
+			Map::CEntity* entityInfo = CEntityFactory::getSingletonPtr()->getInfo("LavaBurn");
+			CEntity* lavaBurn = CEntityFactory::getSingletonPtr()->createEntity(entityInfo, _entity->getMap(), _entity->getPosition(), Quaternion::IDENTITY );
+			lavaBurn->activate();
+			lavaBurn->start();
+		}
+		else {
 			audioFile = "damage/splatdeath_03.wav";
+		}
 
 		audioMsg->setAudioName(audioFile);
 		audioMsg->isLoopable(false);

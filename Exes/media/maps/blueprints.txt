@@ -58,3 +58,4 @@ BulletSpark CParticleSystem
 BloodStrike CParticleSystem
 SniperTrail CParticleSystem
 SpawnParticles CParticleSystem
+LavaBurn CParticleSystem

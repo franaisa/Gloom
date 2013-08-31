@@ -176,6 +176,13 @@ Map = {
 		particle_destroyEntityOnExpiry = true,
 	},
 	
+	LavaBurn = {
+		type = "LavaBurn",
+		particle_scriptName = "lavaBurn",
+		particle_on = true,
+		particle_destroyEntityOnExpiry = true,
+	},
+	
 	BulletSpark = {
 		type = "BulletSpark",
 		particle_scriptName = "bullet_spark",
@@ -185,7 +192,7 @@ Map = {
 	
 	SniperTrail = {
 		type = "SniperTrail",
-		particle_scriptName = "sniper_trail",
+		particle_scriptName = "Explosion/mp_explosion_04_blue",
 		particle_on = true,
 		particle_destroyEntityOnExpiry = true,
 	},
