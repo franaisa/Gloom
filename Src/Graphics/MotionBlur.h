@@ -49,8 +49,7 @@ namespace Graphics {
 
 	protected:
 
-		Ogre::Vector3 _previousCameraPosition;
-		Ogre::Matrix4 _previousViewProjMatrix;
+		Ogre::Quaternion _previousCameraOrientation;
 		
 		Ogre::CompositorInstance* _compositor;
 		Ogre::Camera* _sceneCamera;

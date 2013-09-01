@@ -7,8 +7,6 @@ float4x4 viewProjMatrix;
 float4x4 inverseViewProjMatrix;
 float4x4 previousViewProjMatrix;
 float3 lightPosition;
-float3 currentCameraPos;
-float3 previousCameraPos; 
 
 // Información de entrada del fragment shader
 struct PsInput {
@@ -33,7 +31,7 @@ float4 fragment_main(const PsInput IN) : COLOR {
     worldPos /= worldPos.w;*/
 	
 	// Calculamos la posicion de la luz en la pantalla
-	float4 screenPosition = mul( viewProjMatrix, float4(previousCameraPos, 1.0f) );
+	float4 screenPosition = mul( previousViewProjMatrix, float4(lightPosition, 1.0f) );
     screenPosition.xyz /= screenPosition.w;
     screenPosition.x = screenPosition.x/2.0f+0.5f;
     screenPosition.y = (-screenPosition.y/2.0f+0.5f);
@@ -53,7 +51,7 @@ float4 fragment_main(const PsInput IN) : COLOR {
 	}
 	
 	// Calculamos la posicion de la luz en la pantalla
-	screenPosition = mul( viewProjMatrix, float4(currentCameraPos, 1.0f) );
+	screenPosition = mul( viewProjMatrix, float4(lightPosition, 1.0f) );
     screenPosition.xyz /= screenPosition.w;
     screenPosition.x = screenPosition.x/2.0f+0.5f;
     screenPosition.y = (-screenPosition.y/2.0f+0.5f);

@@ -1,12 +1,18 @@
-// Textura
-sampler SceneSampler	: register(s0);
-sampler DepthMap			: register(s1);
+// Texturas
+sampler SceneSampler	: register(s0); // Render de la escena
+sampler DepthMap			: register(s1); // Render del Z-Buffer
 
 // Parametros uniformes
+// Inversa de la matriz de vista-proyeccion del frame actual
 float4x4 inverseViewProjMatrix;
-float4x4	motionCorrectorMatrix;
+// Matriz de vista-proyeccion del frame anterior. La pasamos corregida
+// desde codigo para que solo tenga en cuenta la rotacion del frame anterior
+// y no la posicion. De esta manera conseguimos que el blur solo afecta a la
+// rotacion de camara
 float4x4 previousViewProjMatrix;
+// Tiempo transcurrido entre el frame anterior y el actual
 float deltaTime;
+// Factor de blur, controla cuanto se difumina la imagen
 float blurriness;
 
 // Información de entrada del fragment shader
@@ -16,59 +22,52 @@ struct PsInput {
 
 //__________________________________________________________________
 
-// FRAGMENT SHADER
+// FRAGMENT SHADER - Implementacion basada en la propuesta en GPU Gems 3
 float4 fragment_main(const PsInput IN) : COLOR {
-	// EXTRAER LA POSICION DEL PIXEL EN EL MUNDO
-
-	// Get the depth buffer value at this pixel. 
+   // En primer lugar, calculamos la posicion del pixel en el mundo
+   
+   // Sacamos el nivel de profunidad del pixel
 	float zOverW = tex2D(DepthMap, IN.uvmain).x;
-	// H is the viewport position at this pixel in the range -1 to 1.
+   // H es la posicion del viewport en este pixel en el rango [-1, 1]
 	float4 H = float4(IN.uvmain.x * 2 - 1, (1 - IN.uvmain.y) * 2 - 1, zOverW, 1);
-	// Transform by the view-projection inverse.
+   // Transformamos usando la inversa de la matriz vista-proyeccion actual
 	float4 D = mul(inverseViewProjMatrix, H);
-	// Divide by w to get the world position.
+   // Dividimos por w para obtener la posicion del pixel en el mundo
 	float4 worldPos = D / D.w;
 	
+   // En segundo lugar, obtenemos el vector velocidad del pixel teniendo en cuanta
+   // la posicion que el pixel tenia en el frame anterior
 	
-	// COMPUTAR LOS VECTORES DE VELOCIDAD DE CADA PIXEL CON RESPECTO AL FRAME ANTERIOR
-	
-	// Current viewport position
+	// Posicion actual del viewport
 	float4 currentPos = H;
-	// Use the world position, and transform by the previous view-projection matrix.
+   // Situamos el pixel en el frame anterior usando la posicion del mundo calculada
+   // previamente y la matriz de vista-proyeccion del frame anterior
 	float4 previousPos = mul(previousViewProjMatrix, worldPos);
-	// Convert to nonhomogeneous points [-1,1] by dividing by w.
+   // Convertimos a coordenadas no homogeneas [-1, 1] diviendo por w.
 	previousPos /= previousPos.w;
-	// Use this frame's position and last frame's to compute the pixel velocity.
-	float2 velocity = ((currentPos - previousPos) / deltaTime).xy;
-	
-	// Corregimos el desplazamiento producido por el movimiento de camara
-	float4 previousCameraPos = mul(motionCorrectorMatrix, worldPos);
-	previousCameraPos /= previousCameraPos.w;
-	float2 cameraVelocity = ((currentPos - previousCameraPos) / deltaTime).xy;
-	
-	// Restamos el desplazamiento producido al mover la camara para que el blur
-	// solo se produzca en la rotacion
-	velocity = velocity - cameraVelocity;
-	
-	// Escalamos la velocidad para controlar cuanto blur queremos
+   // Usamos la posicion del frame actual y la del frame anterior para calcular
+   // el vector de velocidad teniendo en cuenta el tiempo transcurrido entre frames
+	float2 velocity = ((currentPos - previousPos) / deltaTime).xy;	
+	// Escalamos la velocidad para controlar la cantidad de blur generado
 	velocity *= blurriness;
 	
+	// En tercer lugar, difuminamos la escena en funcion del vector velocidad
+   // calculado previamente
 	
-	// BLURREAR SEGUN LA VELOCIDAD A LA QUE NOS MOVEMOS
-	
-	// Get the initial color at this pixel.
+   // Sacamos el color inicial del pixel
 	float4 color = tex2D(SceneSampler, IN.uvmain);
 	float2 texCoord = IN.uvmain + velocity;
-	int numSamples = 7;
+	int numSamples = 5;
 	for(int i = 1; i < numSamples; ++i, texCoord += velocity) {
-		// Sample the color buffer along the velocity vector.
+      // Sampleamos el buffer de color a lo largo del vector velocidad
 		float4 currentColor = tex2D(SceneSampler, texCoord);
-		// Add the current color to our color sum.
+      // Sumamos el color actual a la suma total
 		color += currentColor;
 	}
 	
-	// Average all of the samples to get the final blur color.
+   // Calculamos la media de todas las muestras para obtener el color final de blur
 	float4 finalColor = color / numSamples;
 	
+   // Devolvemos el color calculado
 	return finalColor;
 }

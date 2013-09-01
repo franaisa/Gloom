@@ -15,9 +15,6 @@ material volumetricLightMaterial {
 				param_named			inverseViewProjMatrix	matrix4x4		1 0 0 0	0 1 0 0	0 0 1 0	0 0 0 1
 				param_named			previousViewProjMatrix	matrix4x4		1 0 0 0	0 1 0 0	0 0 1 0	0 0 0 1
 				param_named			lightPosition					float3			0 0 0
-				
-				param_named			currentCameraPos			float3			0 0 0
-				param_named			previousCameraPos		float3			0 0 0
 			
 				// @todo
 				// Hay que pasar la posicion de la luz y multiplicarla por la matriz world-view-projection

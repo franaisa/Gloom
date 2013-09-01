@@ -20,8 +20,7 @@
 
 namespace Graphics {
 	
-	CMotionBlur::CMotionBlur(Ogre::CompositorManager* compositorManager, Graphics::CCamera* camera) : _previousViewProjMatrix(Matrix4::IDENTITY),
-																									  _previousCameraPosition(Vector3::ZERO),
+	CMotionBlur::CMotionBlur(Ogre::CompositorManager* compositorManager, Graphics::CCamera* camera) : _previousCameraOrientation(Quaternion::IDENTITY),
 																									  _sceneCamera( camera->getOgreCamera() ) {
 		_sceneCamera = camera->getOgreCamera();
 		_cameraNode = camera->getSceneNode();
@@ -72,25 +71,26 @@ namespace Graphics {
 
 		Ogre::GpuProgramParametersSharedPtr fpParams = mat->getTechnique(0)->getPass(0)->getFragmentProgramParameters();
 
-		// Pasamos la matriz de vista-proyeccion del frame anterior
-		fpParams->setNamedConstant("previousViewProjMatrix", _previousViewProjMatrix);
+		// Construimos una matriz de vista-proyeccion que no tenga en cuenta la posicion del frame
+		// anterior, solo la rotacion. De esta forma el blur solo afecta a la rotacion de camara.
+		Matrix4 motionCorrectedMatrix = _sceneCamera->getProjectionMatrix() * Ogre::Math::makeViewMatrix(_sceneCamera->getDerivedPosition(), _previousCameraOrientation);
+
+		// Pasamos la matriz de vista-proyeccion del frame anterior corregida para tener en
+		// cuenta solo las rotaciones de camara
+		fpParams->setNamedConstant("previousViewProjMatrix", motionCorrectedMatrix);
+		_previousCameraOrientation	= _sceneCamera->getDerivedOrientation();
 
 		// Calculamos la matriz vista-proyeccion para el siguiente frame y pasamos al 
 		// shader la inversa de la matriz actual de vista-proyeccion
 		Matrix4 projectionMatrix	= _sceneCamera->getProjectionMatrix();
 		Matrix4 viewMatrix			= _sceneCamera->getViewMatrix();
 		Matrix4 viewProjMatrix		= projectionMatrix * viewMatrix;
-		_previousViewProjMatrix		= viewProjMatrix;
 
 		// Pasamos la inversa de la matriz vista-proyeccion
-		fpParams->setNamedConstant("inverseViewProjMatrix", viewProjMatrix.inverse());
+		fpParams->setNamedConstant( "inverseViewProjMatrix", viewProjMatrix.inverse() );
 
 		// Calculamos el tiempo transcurrido para renderizar la escena en este frame
 		float deltaTime = 1.0f / BaseSubsystems::CServer::getSingletonPtr()->getRenderWindow()->getStatistics().lastFPS;
 		fpParams->setNamedConstant("deltaTime", deltaTime);
-
-		Matrix4 motionCorrectorMatrix = projectionMatrix * Ogre::Math::makeViewMatrix(_previousCameraPosition, _sceneCamera->getDerivedOrientation());
-		fpParams->setNamedConstant("motionCorrectorMatrix", motionCorrectorMatrix);
-		_previousCameraPosition = _sceneCamera->getDerivedPosition();
 	}
 }
