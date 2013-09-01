@@ -99,6 +99,7 @@
     <ClCompile Include="..\..\Src\Logic\Entity\Components\Hud.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\HungryClient.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\HungryServer.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\KillStreak.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\ParticleSystem.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\PhysicStaticCompound.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\Ragdoll.cpp" />
@@ -301,6 +302,7 @@
     <ClInclude Include="..\..\Src\Logic\Entity\Components\Hud.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\HungryClient.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\HungryServer.h" />
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\KillStreak.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\ParticleSystem.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\PhysicStaticCompound.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\Ragdoll.h" />
