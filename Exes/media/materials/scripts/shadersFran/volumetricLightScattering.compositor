@@ -16,7 +16,7 @@ compositor volumetricLightCompositor
 		target depthMap
 		{
 			input none
-			material_scheme depthScheme
+			material_scheme blackScheme
 			
 			pass clear
 			{

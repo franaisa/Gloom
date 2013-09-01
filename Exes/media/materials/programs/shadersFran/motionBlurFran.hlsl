@@ -2,6 +2,8 @@
 sampler SceneSampler	: register(s0); // Render de la escena
 sampler DepthMap			: register(s1); // Render del Z-Buffer
 
+#define NUM_SAMPLES 12
+
 // Parametros uniformes
 // Inversa de la matriz de vista-proyeccion del frame actual
 float4x4 inverseViewProjMatrix;
@@ -57,8 +59,7 @@ float4 fragment_main(const PsInput IN) : COLOR {
    // Sacamos el color inicial del pixel
 	float4 color = tex2D(SceneSampler, IN.uvmain);
 	float2 texCoord = IN.uvmain + velocity;
-	int numSamples = 5;
-	for(int i = 1; i < numSamples; ++i, texCoord += velocity) {
+	for(int i = 1; i < NUM_SAMPLES; ++i, texCoord += velocity) {
       // Sampleamos el buffer de color a lo largo del vector velocidad
 		float4 currentColor = tex2D(SceneSampler, texCoord);
       // Sumamos el color actual a la suma total
@@ -66,7 +67,7 @@ float4 fragment_main(const PsInput IN) : COLOR {
 	}
 	
    // Calculamos la media de todas las muestras para obtener el color final de blur
-	float4 finalColor = color / numSamples;
+	float4 finalColor = color / NUM_SAMPLES;
 	
    // Devolvemos el color calculado
 	return finalColor;
