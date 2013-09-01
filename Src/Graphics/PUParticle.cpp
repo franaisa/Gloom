@@ -79,13 +79,14 @@ namespace Graphics {
 		
 		// Paramos el sistema de particulo por si acaso se estaba
 		// ejecutando
-		//_particleSystem->stop();
+		_particleSystem->stop();
 
 		// Desatachamos el sistema de particulas del nodo de escena
 		// al que pertenece
 		//_sceneNode->detachObject(_particleSystem);
 		
-		//_particleSystem->removeParticleSystemListener(this);
+		// Nos desregistramos como listeners
+		_particleSystem->removeParticleSystemListener(this);
 
 		// Pedimos a particle universe que destruya el sistema de particulas
 		particleMgr->destroyParticleSystem(_name, sceneMgr);

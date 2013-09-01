@@ -10,6 +10,7 @@
 */
 
 #include "MotionBlur.h"
+#include "BaseSubsystems/Server.h"
 
 #include <OgreCompositorManager.h>
 
@@ -19,8 +20,8 @@
 
 namespace Graphics {
 	
-	CMotionBlur::CMotionBlur(Ogre::CompositorManager* compositorManager, Graphics::CCamera* camera) : _previousViewProjMatrix(Matrix4::IDENTITY), 
-																									  _previousFPS(0.0f),
+	CMotionBlur::CMotionBlur(Ogre::CompositorManager* compositorManager, Graphics::CCamera* camera) : _previousViewProjMatrix(Matrix4::IDENTITY),
+																									  _previousCameraPosition(Vector3::ZERO),
 																									  _sceneCamera( camera->getOgreCamera() ) {
 		_sceneCamera = camera->getOgreCamera();
 		_cameraNode = camera->getSceneNode();
@@ -30,9 +31,11 @@ namespace Graphics {
 
 		_compositor = compositorManager->addCompositor(cameraViewport, "MotionBlurFranCompositor");
 		compositorManager->setCompositorEnabled(cameraViewport, "MotionBlurFranCompositor", true);
+
+		/*_compositor = compositorManager->addCompositor(cameraViewport, "volumetricLightCompositor");
+		compositorManager->setCompositorEnabled(cameraViewport, "volumetricLightCompositor", true);*/
 		
 		_compositor->addListener(this);
-		_sceneCamera->addListener(this);
 	}
 
 	//________________________________________________________________________
@@ -40,65 +43,62 @@ namespace Graphics {
 	CMotionBlur::~CMotionBlur() {
 		// Nada que hacer
 		_compositor->removeListener(this);
-
-		if(_sceneCamera != NULL)
-			_sceneCamera->removeListener(this);
 	}
 
 	//________________________________________________________________________
 
 	void CMotionBlur::notifyMaterialRender(Ogre::uint32 pass_id, Ogre::MaterialPtr &mat) {
-		// Actualizamos los parametros del shader antes de que sea renderizado
-		Ogre::GpuProgramParametersSharedPtr fpParams = mat->getTechnique(0)->getPass(0)->getFragmentProgramParameters();
-		fpParams->setNamedConstant("inverseViewProjMatrix", _inverseViewProjMatrix);
-		fpParams->setNamedConstant("previousViewProjMatrix", _previousViewProjMatrix);
-	}
+		/*Ogre::GpuProgramParametersSharedPtr fpParams = mat->getTechnique(0)->getPass(0)->getFragmentProgramParameters();
 
-	//________________________________________________________________________
+		//fpParams->setNamedConstant("previousViewProjMatrix", _previousViewProjMatrix);
 
-	void CMotionBlur::cameraPreRenderScene(Ogre::Camera* camera) {
-		// Antes de renderizar la escena, almacenamos la inversa de la matriz de vista
-		// y proyeccion con la que se va a realizar el render
-		Matrix4 projectionMatrix  = _sceneCamera->getProjectionMatrix();
-		_inverseViewProjMatrix	  = (projectionMatrix * _sceneCamera->getViewMatrix()).inverse();
-	}
-
-	//________________________________________________________________________
-
-	// No sirve porque al compositor se le llama despues de esto
-	void CMotionBlur::cameraPostRenderScene(Ogre::Camera* camera) {
-		// Despues de renderizar la escena nos quedamos con la matriz que de vista
-		// y proyeccion con la que se renderizo la escena
-		Matrix4 previousProjectionMatrix = _sceneCamera->getProjectionMatrix();
-		Matrix4 previousViewMatrix = _sceneCamera->getViewMatrix();
-		_previousViewProjMatrix = previousProjectionMatrix * previousViewMatrix;
-	}
-
-	//________________________________________________________________________
-
-	void CMotionBlur::tick(unsigned int msecs) {
-		// compute view projection inverse matrix
-		/*Ogre::Matrix4 projectionMatrix   = _sceneCamera->getProjectionMatrix();
-		_inverseViewProjMatrix = (projectionMatrix * _sceneCamera->getViewMatrix()).inverse();
-
-		float interpolationFactor				= _previousFPS * 0.03f; // m_timeScale is a multiplier to control motion blur interactively
-		Ogre::Quaternion current_orientation	= _sceneCamera->getDerivedOrientation();
-		Ogre::Vector3 current_position			= _sceneCamera->getDerivedPosition();
-		Ogre::Quaternion estimatedOrientation	= Ogre::Quaternion::Slerp(interpolationFactor, current_orientation, (_previousOrientation));
-		Ogre::Vector3 estimatedPosition			= (1-interpolationFactor) * current_position + interpolationFactor * (_previousPosition);
-		Ogre::Matrix4 prev_viewMatrix			= Ogre::Math::makeViewMatrix(estimatedPosition, estimatedOrientation);
-		// compute final matrix
-		_previousViewProjMatrix = projectionMatrix * prev_viewMatrix;
-
-		// update position and orientation for next update time
-		_previousOrientation = current_orientation;
-		_previousPosition = current_position;
-		_previousFPS = 1.0f / msecs * 0.001f;*/
-	}
-
-	//________________________________________________________________________
+		// Pasamos la matriz de vista y proyeccion
+		Matrix4 projectionMatrix = _sceneCamera->getProjectionMatrix();
+		Matrix4 viewMatrix = _sceneCamera->getViewMatrix();
+		Matrix4 viewProjMatrix = projectionMatrix * viewMatrix;
+		_previousViewProjMatrix = viewProjMatrix;
+		fpParams->setNamedConstant("viewProjMatrix", viewProjMatrix);
 		
-	void CMotionBlur::cameraDestroyed(Ogre::Camera *camera) {
-		_sceneCamera = NULL;
+		//fpParams->setNamedConstant("inverseViewProjMatrix", viewProjMatrix.inverse());
+
+		// Pasamos la direccion de la luz --> {-52.0654, 60.1029, -108.08}
+		Vector3 lightPosition(-52.0654f, 60.1029f, -108.08f);
+		//fpParams->setNamedConstant("lightPosition", lightPosition);
+
+		fpParams->setNamedConstant("currentCameraPos", _sceneCamera->getDerivedPosition());
+		fpParams->setNamedConstant("previousCameraPos", _previousCameraPosition);
+
+		_previousCameraPosition = _sceneCamera->getDerivedPosition();*/
+
+		Ogre::GpuProgramParametersSharedPtr fpParams = mat->getTechnique(0)->getPass(0)->getFragmentProgramParameters();
+
+		// Pasamos la matriz de vista-proyeccion del frame anterior
+		fpParams->setNamedConstant("previousViewProjMatrix", _previousViewProjMatrix);
+
+		// Calculamos la matriz vista-proyeccion para el siguiente frame y pasamos al 
+		// shader la inversa de la matriz actual de vista-proyeccion
+		Matrix4 projectionMatrix	= _sceneCamera->getProjectionMatrix();
+		Matrix4 viewMatrix			= _sceneCamera->getViewMatrix();
+		Matrix4 viewProjMatrix		= projectionMatrix * viewMatrix;
+		_previousViewProjMatrix		= viewProjMatrix;
+
+		// Pasamos la matriz actual de vista-proyeccion
+		//fpParams->setNamedConstant("viewProjMatrix", viewProjMatrix);
+		
+		// Pasamos la inversa de la matriz vista-proyeccion
+		fpParams->setNamedConstant("inverseViewProjMatrix", viewProjMatrix.inverse());
+
+		// Calculamos el tiempo transcurrido para renderizar la escena en este frame
+		float deltaTime = 1.0f / BaseSubsystems::CServer::getSingletonPtr()->getRenderWindow()->getStatistics().lastFPS;
+		fpParams->setNamedConstant("deltaTime", deltaTime);
+
+		// Pasamos las posiciones de camara actual y anterior
+		/*Vector3 currentCameraPosition = _sceneCamera->getDerivedPosition();
+		fpParams->setNamedConstant("currentCameraPosition", currentCameraPosition);
+		fpParams->setNamedConstant("previousCameraPosition", _previousCameraPosition);
+
+		// Nos quedamos con la posicion de este frame de la camara para comparar
+		// con el frame siguiente
+		_previousCameraPosition = currentCameraPosition;*/
 	}
 }

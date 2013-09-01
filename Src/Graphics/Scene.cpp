@@ -203,7 +203,7 @@ namespace Graphics
 
 		if(_name != "dummy_scene"){
 			
-			ParticleUniverse::ParticleSystemManager::getSingletonPtr()->destroyAllParticleSystems(_sceneMgr);
+			//ParticleUniverse::ParticleSystemManager::getSingletonPtr()->destroyAllParticleSystems(_sceneMgr);
 		}
 
 		if(_motionBlur != NULL)
