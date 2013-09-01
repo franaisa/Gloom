@@ -4,10 +4,8 @@ sampler DepthMap			: register(s1);
 
 // Parametros uniformes
 float4x4 inverseViewProjMatrix;
-float4x4	viewProjMatrix;
+float4x4	motionCorrectorMatrix;
 float4x4 previousViewProjMatrix;
-float3 currentCameraPosition;
-float3 previousCameraPosition;
 float deltaTime;
 float blurriness;
 
@@ -42,7 +40,17 @@ float4 fragment_main(const PsInput IN) : COLOR {
 	previousPos /= previousPos.w;
 	// Use this frame's position and last frame's to compute the pixel velocity.
 	float2 velocity = ((currentPos - previousPos) / deltaTime).xy;
-	// Scale velocity based on how much blurriness we want
+	
+	// Corregimos el desplazamiento producido por el movimiento de camara
+	float4 previousCameraPos = mul(motionCorrectorMatrix, worldPos);
+	previousCameraPos /= previousCameraPos.w;
+	float2 cameraVelocity = ((currentPos - previousCameraPos) / deltaTime).xy;
+	
+	// Restamos el desplazamiento producido al mover la camara para que el blur
+	// solo se produzca en la rotacion
+	velocity = velocity - cameraVelocity;
+	
+	// Escalamos la velocidad para controlar cuanto blur queremos
 	velocity *= blurriness;
 	
 	

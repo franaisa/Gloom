@@ -17,13 +17,11 @@ material motionBlurFranMaterial {
 			depth_check off
 		
 			fragment_program_ref motionBlurFranFragment {
-				param_named			viewProjMatrix				matrix4x4		1 0 0 0	0 1 0 0	0 0 1 0	0 0 0 1
+				param_named			motionCorrectorMatrix	matrix4x4		1 0 0 0	0 1 0 0	0 0 1 0	0 0 0 1
 				param_named			inverseViewProjMatrix	matrix4x4		1 0 0 0	0 1 0 0	0 0 1 0	0 0 0 1
 				param_named			previousViewProjMatrix	matrix4x4		1 0 0 0	0 1 0 0	0 0 1 0	0 0 0 1
 				param_named			deltaTime						float				0
-				param_named			blurriness						float				0.0001
-				param_named			currentCameraPosition	float3			0 0 0
-				param_named			previousCameraPosition	float3			0 0 0
+				param_named			blurriness						float				0.00005
 			}
 		
 			// Textura de post-procesado de la escena

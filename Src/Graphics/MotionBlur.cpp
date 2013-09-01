@@ -82,9 +82,6 @@ namespace Graphics {
 		Matrix4 viewProjMatrix		= projectionMatrix * viewMatrix;
 		_previousViewProjMatrix		= viewProjMatrix;
 
-		// Pasamos la matriz actual de vista-proyeccion
-		//fpParams->setNamedConstant("viewProjMatrix", viewProjMatrix);
-		
 		// Pasamos la inversa de la matriz vista-proyeccion
 		fpParams->setNamedConstant("inverseViewProjMatrix", viewProjMatrix.inverse());
 
@@ -92,13 +89,8 @@ namespace Graphics {
 		float deltaTime = 1.0f / BaseSubsystems::CServer::getSingletonPtr()->getRenderWindow()->getStatistics().lastFPS;
 		fpParams->setNamedConstant("deltaTime", deltaTime);
 
-		// Pasamos las posiciones de camara actual y anterior
-		/*Vector3 currentCameraPosition = _sceneCamera->getDerivedPosition();
-		fpParams->setNamedConstant("currentCameraPosition", currentCameraPosition);
-		fpParams->setNamedConstant("previousCameraPosition", _previousCameraPosition);
-
-		// Nos quedamos con la posicion de este frame de la camara para comparar
-		// con el frame siguiente
-		_previousCameraPosition = currentCameraPosition;*/
+		Matrix4 motionCorrectorMatrix = projectionMatrix * Ogre::Math::makeViewMatrix(_previousCameraPosition, _sceneCamera->getDerivedOrientation());
+		fpParams->setNamedConstant("motionCorrectorMatrix", motionCorrectorMatrix);
+		_previousCameraPosition = _sceneCamera->getDerivedPosition();
 	}
 }
