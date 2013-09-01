@@ -66,7 +66,8 @@ namespace Graphics {
 		fpParams->setNamedConstant( "inverseViewProjMatrix", viewProjMatrix.inverse() );
 
 		// Calculamos el tiempo transcurrido para renderizar la escena en este frame
-		float deltaTime = 1.0f / BaseSubsystems::CServer::getSingletonPtr()->getRenderWindow()->getStatistics().lastFPS;
-		fpParams->setNamedConstant("deltaTime", deltaTime);
+		float lastFPS = BaseSubsystems::CServer::getSingletonPtr()->getRenderWindow()->getStatistics().lastFPS;
+		if(lastFPS > 60.0f) lastFPS = 60.0f;
+		fpParams->setNamedConstant("deltaTime", 1.0f / lastFPS);
 	}
 }
