@@ -95,6 +95,7 @@
     <ClCompile Include="..\..\Src\Graphics\Server.cpp" />
     <ClCompile Include="..\..\Src\Graphics\SkeletonDebug.cpp" />
     <ClCompile Include="..\..\Src\Graphics\StaticEntity.cpp" />
+    <ClCompile Include="..\..\Src\Graphics\VolumetricLightScattering.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Src\Graphics\AnimatedEntity.h" />
@@ -118,6 +119,7 @@
     <ClInclude Include="..\..\Src\Graphics\Server.h" />
     <ClInclude Include="..\..\Src\Graphics\SkeletonDebug.h" />
     <ClInclude Include="..\..\Src\Graphics\StaticEntity.h" />
+    <ClInclude Include="..\..\Src\Graphics\VolumetricLightScattering.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BaseSubsystems\BaseSubsystems.vcxproj">

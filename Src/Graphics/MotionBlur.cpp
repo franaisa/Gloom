@@ -30,9 +30,6 @@ namespace Graphics {
 
 		_compositor = compositorManager->addCompositor(cameraViewport, "MotionBlurFranCompositor");
 		compositorManager->setCompositorEnabled(cameraViewport, "MotionBlurFranCompositor", true);
-
-		/*_compositor = compositorManager->addCompositor(cameraViewport, "volumetricLightCompositor");
-		compositorManager->setCompositorEnabled(cameraViewport, "volumetricLightCompositor", true);*/
 		
 		_compositor->addListener(this);
 	}
@@ -47,28 +44,7 @@ namespace Graphics {
 	//________________________________________________________________________
 
 	void CMotionBlur::notifyMaterialRender(Ogre::uint32 pass_id, Ogre::MaterialPtr &mat) {
-		/*Ogre::GpuProgramParametersSharedPtr fpParams = mat->getTechnique(0)->getPass(0)->getFragmentProgramParameters();
-
-		//fpParams->setNamedConstant("previousViewProjMatrix", _previousViewProjMatrix);
-
-		// Pasamos la matriz de vista y proyeccion
-		Matrix4 projectionMatrix = _sceneCamera->getProjectionMatrix();
-		Matrix4 viewMatrix = _sceneCamera->getViewMatrix();
-		Matrix4 viewProjMatrix = projectionMatrix * viewMatrix;
-		_previousViewProjMatrix = viewProjMatrix;
-		fpParams->setNamedConstant("viewProjMatrix", viewProjMatrix);
-		
-		//fpParams->setNamedConstant("inverseViewProjMatrix", viewProjMatrix.inverse());
-
-		// Pasamos la direccion de la luz --> {-52.0654, 60.1029, -108.08}
-		Vector3 lightPosition(-52.0654f, 60.1029f, -108.08f);
-		//fpParams->setNamedConstant("lightPosition", lightPosition);
-
-		fpParams->setNamedConstant("currentCameraPos", _sceneCamera->getDerivedPosition());
-		fpParams->setNamedConstant("previousCameraPos", _previousCameraPosition);
-
-		_previousCameraPosition = _sceneCamera->getDerivedPosition();*/
-
+		// Obtenemos el puntero al gestor de parametros del fragment shader
 		Ogre::GpuProgramParametersSharedPtr fpParams = mat->getTechnique(0)->getPass(0)->getFragmentProgramParameters();
 
 		// Construimos una matriz de vista-proyeccion que no tenga en cuenta la posicion del frame

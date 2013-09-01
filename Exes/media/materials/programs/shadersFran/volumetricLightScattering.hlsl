@@ -4,8 +4,6 @@ sampler DepthMap			: register(s1);
 
 // Parametros uniformes
 float4x4 viewProjMatrix;
-float4x4 inverseViewProjMatrix;
-float4x4 previousViewProjMatrix;
 float3 lightPosition;
 
 // Información de entrada del fragment shader
@@ -31,7 +29,7 @@ float4 fragment_main(const PsInput IN) : COLOR {
     worldPos /= worldPos.w;*/
 	
 	// Calculamos la posicion de la luz en la pantalla
-	float4 screenPosition = mul( previousViewProjMatrix, float4(lightPosition, 1.0f) );
+	float4 screenPosition = mul( viewProjMatrix, float4(lightPosition, 1.0f) );
     screenPosition.xyz /= screenPosition.w;
     screenPosition.x = screenPosition.x/2.0f+0.5f;
     screenPosition.y = (-screenPosition.y/2.0f+0.5f);
@@ -49,15 +47,6 @@ float4 fragment_main(const PsInput IN) : COLOR {
 	else {
 		color = tex2D(DepthMap, IN.texCoord);
 	}
-	
-	// Calculamos la posicion de la luz en la pantalla
-	screenPosition = mul( viewProjMatrix, float4(lightPosition, 1.0f) );
-    screenPosition.xyz /= screenPosition.w;
-    screenPosition.x = screenPosition.x/2.0f+0.5f;
-    screenPosition.y = (-screenPosition.y/2.0f+0.5f);
-	if(IN.texCoord.x < screenPosition.x + 0.02f && IN.texCoord.x > screenPosition.x - 0.02f && IN.texCoord.y < screenPosition.y + 0.02f && IN.texCoord.y > screenPosition.y - 0.02f && screenPosition.w > 0) {
-		color = float4(1.0f, 0.0f, 0.0f, 1.0f);
-	}
-	
+
 	return color;
 }

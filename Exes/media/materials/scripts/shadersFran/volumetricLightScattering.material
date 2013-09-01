@@ -12,8 +12,6 @@ material volumetricLightMaterial {
 		
 			fragment_program_ref volumetricLightFragment {
 				param_named			viewProjMatrix				matrix4x4		1 0 0 0	0 1 0 0	0 0 1 0	0 0 0 1
-				param_named			inverseViewProjMatrix	matrix4x4		1 0 0 0	0 1 0 0	0 0 1 0	0 0 0 1
-				param_named			previousViewProjMatrix	matrix4x4		1 0 0 0	0 1 0 0	0 0 1 0	0 0 0 1
 				param_named			lightPosition					float3			0 0 0
 			
 				// @todo
