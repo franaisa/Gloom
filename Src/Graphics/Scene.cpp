@@ -177,7 +177,7 @@ namespace Graphics
 
 			_poolParticle->activate();
 
-			//_motionBlur = new CMotionBlur( _compositorManager, _camera );
+			_motionBlur = new CMotionBlur( _compositorManager, _camera );
 		}
 
 		_sceneMgr->getRootSceneNode()->setVisible(true);
@@ -203,7 +203,7 @@ namespace Graphics
 
 		if(_name != "dummy_scene"){
 			
-			ParticleUniverse::ParticleSystemManager::getSingletonPtr()->destroyAllParticleSystems(_sceneMgr);
+			//ParticleUniverse::ParticleSystemManager::getSingletonPtr()->destroyAllParticleSystems(_sceneMgr);
 		}
 
 		if(_motionBlur != NULL)
