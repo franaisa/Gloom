@@ -277,6 +277,7 @@
     <ClCompile Include="..\..\Src\Logic\Messages\MessageWakeUp.cpp" />
     <ClCompile Include="..\..\Src\Logic\PlayerInfo.cpp" />
     <ClCompile Include="..\..\Src\Logic\Server.cpp" />
+    <ClCompile Include="KillStreak.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Src\Graphics\DecalUtility.h" />
@@ -487,6 +488,7 @@
     <ClInclude Include="..\..\Src\Logic\Messages\MessageWakeUp.h" />
     <ClInclude Include="..\..\Src\Logic\PlayerInfo.h" />
     <ClInclude Include="..\..\Src\Logic\Server.h" />
+    <ClInclude Include="KillStreak.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BaseSubsystems\BaseSubsystems.vcxproj">

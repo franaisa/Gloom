@@ -32,67 +32,6 @@ Map = {
 		ragdoll_groupList = "-1",
 	},
 	
-	Sebolla1 = {
-		type = "RemotePlayer",
-		isPlayer = false,
-		position = {35, 0.2, -159},
-		model = "ragdolls/agent47.mesh",
-		ragdoll_file = "media/models/ragdolls/hitman.RepX",
-		ragdoll_group = 19,
-		ragdoll_groupList = "-1",
-	},
-	
-	Sebolla2 = {
-		type = "RemotePlayer",
-		isPlayer = false,
-		position = {35, 0.2, -159},
-		model = "ragdolls/agent47.mesh",
-		ragdoll_file = "media/models/ragdolls/hitman.RepX",
-		ragdoll_group = 19,
-		ragdoll_groupList = "-1",
-	},
-	
-	Sebolla3 = {
-		type = "RemotePlayer",
-		isPlayer = false,
-		position = {35, 0.2, -151},
-		model = "ragdolls/agent47.mesh",
-		ragdoll_file = "media/models/ragdolls/hitman.RepX",
-		ragdoll_group = 19,
-		ragdoll_groupList = "-1",
-	},
-	
-	Sebolla4 = {
-		type = "RemotePlayer",
-		isPlayer = false,
-		position = {34, 0.2, -128},
-		model = "ragdolls/agent47.mesh",
-		ragdoll_file = "media/models/ragdolls/hitman.RepX",
-		ragdoll_group = 19,
-		ragdoll_groupList = "-1",
-	},
-	
-	Sebolla5 = {
-		type = "RemotePlayer",
-		isPlayer = false,
-		position = {35, 0.2, -105},
-		model = "ragdolls/agent47.mesh",
-		ragdoll_file = "media/models/ragdolls/hitman.RepX",
-		ragdoll_group = 19,
-		ragdoll_groupList = "-1",
-	},
-	
-		
-	Sebolla6 = {
-		type = "RemotePlayer",
-		isPlayer = false,
-		position = {33, 0.3, -71},
-		model = "ragdolls/agent47.mesh",
-		ragdoll_file = "media/models/ragdolls/hitman.RepX",
-		ragdoll_group = 19,
-		ragdoll_groupList = "-1",
-	},
-	
 	Jumper1 = {
 		type = "Jumper",
 		position = {-275.4,0.5,28.1},
