@@ -125,6 +125,8 @@ namespace Logic {
 	//__________________________________________________________________
 
 	void CCharacterSound::onIdle() {
+		if (_entity)
+			std::cout << _entity->getPosition() << std::endl;
 		_playerIsWalking = false;
 	}
 

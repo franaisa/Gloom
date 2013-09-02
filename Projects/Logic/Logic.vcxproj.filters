@@ -778,6 +778,9 @@
     <ClCompile Include="..\..\Src\Logic\Entity\Components\ParticleSystem.cpp">
       <Filter>Entity\Components\Graphics\Source</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\KillStreak.cpp">
+      <Filter>Entity\Components\Gameplay\Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Src\Logic\Maps\ComponentFactory.h">
@@ -1412,6 +1415,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Entity\Components\ParticleSystem.h">
       <Filter>Entity\Components\Graphics\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\KillStreak.h">
+      <Filter>Entity\Components\Gameplay\Header</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -1669,4 +1669,8 @@ Map = {
 		
 		damage = 40.0,
 	},
+	
+	KillStreak = {
+		type = "KillStreak",
+	},
 }

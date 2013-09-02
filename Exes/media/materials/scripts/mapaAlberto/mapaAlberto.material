@@ -26,6 +26,8 @@ material mapaAlberto_blanco
 
 	technique
 	{
+		lighting off
+		
 		scheme depthScheme
 		pass
 		{
@@ -95,6 +97,8 @@ material mapaAlberto_bronzecopper {
 	
 	technique
 	{
+		lighting off
+		
 		scheme depthScheme
 		pass
 		{
@@ -164,6 +168,8 @@ material mapaAlberto_comluman {
 	
 	technique
 	{
+		lighting off
+	
 		scheme depthScheme
 		pass
 		{
@@ -207,6 +213,8 @@ material mapaAlberto_luces
 
 	technique
 	{
+		lighting off
+	
 		scheme depthScheme
 		pass
 		{
@@ -276,6 +284,8 @@ material mapaAlberto_metalContainer {
 
 	technique
 	{
+		lighting off
+	
 		scheme depthScheme
 		pass
 		{
@@ -345,6 +355,8 @@ material mapaAlberto_metalContainer0149 {
 
 	technique
 	{
+		lighting off
+	
 		scheme depthScheme
 		pass
 		{
@@ -414,6 +426,8 @@ material mapaAlberto_metalContainers {
 	
 	technique
 	{
+		lighting off
+	
 		scheme depthScheme
 		pass
 		{
@@ -483,6 +497,8 @@ material mapaAlberto_metalpuerta {
 	
 	technique
 	{
+		lighting off
+	
 		scheme depthScheme
 		pass
 		{
@@ -566,6 +582,8 @@ material mapaAlberto_piedra {
 
 	technique
 	{
+		lighting off
+		
 		scheme depthScheme
 		pass
 		{
@@ -636,6 +654,8 @@ material mapaAlberto_suelo {
 	
 	technique
 	{
+		lighting off
+	
 		scheme depthScheme
 		pass
 		{
@@ -705,6 +725,8 @@ material mapaAlberto_suelometal{
 	
 	technique
 	{
+		lighting off
+	
 		scheme depthScheme
 		pass
 		{
@@ -774,6 +796,8 @@ material mapaAlberto_techometal {
 	
 	technique
 	{
+		lighting off
+	
 		scheme depthScheme
 		pass
 		{
@@ -843,6 +867,8 @@ material mapaAlberto_ventana {
 
 	technique
 	{
+		lighting off
+	
 		scheme depthScheme
 		pass
 		{
@@ -912,6 +938,8 @@ material mapaAlberto_viga {
 
 	technique
 	{
+		lighting off
+	
 		scheme depthScheme
 		pass
 		{
@@ -981,6 +1009,8 @@ material metalContainer_metalContainer0036 {
 
 	technique
 	{
+		lighting off
+	
 		scheme depthScheme
 		pass
 		{

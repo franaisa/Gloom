@@ -1,16 +1,16 @@
 //---------------------------------------------------------------------------
-// MotionBlur.h
+// VolumetricLightScattering.h
 //---------------------------------------------------------------------------
 
 /**
-@file MotionBlur.h
+@file VolumetricLightScattering.h
 
 @author Francisco Aisa García
 @date Agosto, 2013
 */
 
-#ifndef __Graphics_MotionBlur_H
-#define __Graphics_MotionBlur_H
+#ifndef __Graphics_VolumetricLightScattering_H
+#define __Graphics_VolumetricLightScattering_H
 
 #include <OgreMatrix4.h>
 #include <OgreCamera.h>
@@ -39,17 +39,15 @@ namespace Graphics {
 	@date Agosto, 2013
 	*/
 	
-	class CMotionBlur : public Ogre::CompositorInstance::Listener {
+	class CVolumetricLightScattering : public Ogre::CompositorInstance::Listener {
 	public:
 
-		CMotionBlur(Ogre::CompositorManager* compositorManager, Graphics::CCamera* camera);
-		~CMotionBlur();
+		CVolumetricLightScattering(Ogre::CompositorManager* compositorManager, Graphics::CCamera* camera);
+		~CVolumetricLightScattering();
 
 		virtual void notifyMaterialRender(Ogre::uint32 pass_id, Ogre::MaterialPtr &mat);
 
 	protected:
-
-		Ogre::Quaternion _previousCameraOrientation;
 		
 		Ogre::CompositorInstance* _compositor;
 		Ogre::Camera* _sceneCamera;
