@@ -138,7 +138,6 @@ namespace Logic {
 
 		_scene = _entity->getMap()->getScene();
 		_effect = "damageCompositor";
-		_motionblur = "Motion Blur";
 		_flashEffect = "Muzzle Flash";
 		_strengthEffect = "strength";
 		_effectIsActivated = false;
@@ -146,11 +145,6 @@ namespace Logic {
 		_scene->setCompositorVisible(_effect, false);
 		// Por ahora esta a hierro, lo suyo es ponerlo por el mapa
 		_scene->updateCompositorVariable(_effect, _strengthEffect, 1);
-
-		_scene->createCompositor(_motionblur);
-		_scene->setCompositorVisible(_motionblur, true);
-		// Por ahora esta a hierro, lo suyo es ponerlo por el mapa
-		_scene->updateCompositorVariable(_motionblur, "blur", 0.0);
 		
 		_scene->createCompositor(_flashEffect);
 		_scene->setCompositorVisible(_flashEffect, false);
@@ -179,14 +173,6 @@ namespace Logic {
 				_scene->setCompositorVisible(_effect, false);
 			}
 		}
-
-		//Ahora actualizamos el motion blur
-		float blur = (_avatarc->getVelocity().length()/_maxVelocity)/2;
-
-		if(blur>0.5)
-			blur=0.5f;
-
-		_scene->updateCompositorVariable(_motionblur, "blur", 0.0f);
 		
 		//ahora actualizamos el flashazo si procede
 		if(_flashFactor > 1.0){

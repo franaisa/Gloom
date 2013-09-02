@@ -169,7 +169,7 @@ namespace Graphics
 			_poolParticle->activate();
 
 			_motionBlur = new CMotionBlur(_compositorManager, _camera);
-			//_volumetricLight = new CVolumetricLightScattering(_compositorManager, _camera);
+			_volumetricLight = new CVolumetricLightScattering(_compositorManager, _camera);
 		}
 
 		_sceneMgr->getRootSceneNode()->setVisible(true);
