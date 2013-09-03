@@ -223,6 +223,7 @@
     <ClCompile Include="..\..\Src\Logic\Messages\MessageDamageAmplifier.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageDecal.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageHud.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Messages\MessageKillStreak.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageParticleVisibility.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessagePlayerSnapshot.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessagePrimaryShoot.cpp" />
@@ -458,6 +459,7 @@
     <ClInclude Include="..\..\Src\Logic\Messages\MessageHudSpawn.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageHudWeapon.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageImpact.h" />
+    <ClInclude Include="..\..\Src\Logic\Messages\MessageKillStreak.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageKinematicMove.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageMouse.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageParticleVisibility.h" />

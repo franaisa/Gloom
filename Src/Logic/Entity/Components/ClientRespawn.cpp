@@ -107,8 +107,6 @@ namespace Logic  {
 
 				updateGUI(entity);
 
-				std::cout << "mensaje dead recibido" << std::endl;
-
 				break;
 			}
 			case Message::PLAYER_SPAWN: {

@@ -18,6 +18,7 @@ Contiene la declaración del componente que controla el componente de los kill st
 #include "Logic/Server.h"
 
 #include "Logic/Messages/MessagePlayerDead.h"
+#include "Logic/Messages/MessageKillStreak.h"
 
 #include "Logic/Messages/MessageKinematicMove.h"
 #include "Logic/Messages/MessageTouched.h"
@@ -68,7 +69,7 @@ namespace Logic
 
 	bool CKillStreak::accept(const std::shared_ptr<CMessage>& message)
 	{
-		return message->getMessageType() == Message::PLAYER_DEAD;
+		return message->getMessageType() == Message::KILL_STREAK;
 	} // accept
 	
 	//---------------------------------------------------------
@@ -77,7 +78,7 @@ namespace Logic
 	{
 		switch(message->getMessageType())
 		{
-			case Message::PLAYER_DEAD:
+			case Message::KILL_STREAK:
 				dead(message);
 			break;
 		}
@@ -87,22 +88,33 @@ namespace Logic
 
 	void CKillStreak::onFixedTick(unsigned int msecs)
 	{
-
+		//std::cout << "Yo soy = " << _entity->getName() << std::endl;
 	} // tick
 	//----------------------------------------------------------
 
 	void CKillStreak::dead(const std::shared_ptr<CMessage>& message)
 	{		
+		std::shared_ptr<CMessageKillStreak> mesKS = std::static_pointer_cast<CMessageKillStreak> (message);
+		//CEntity* entity = Logic::CServer::getSingletonPtr()->getMap()->getEntityByID(mesKS->getKiller());
+		std::cout << "ola ke ase! mi entity es: " << _entity->getName() << " y me ha llegado en el mensaje " << mesKS->getKiller() << std::endl;
+		/*
 		std::shared_ptr<CMessagePlayerDead> playerDeadMsg = std::static_pointer_cast<CMessagePlayerDead> (message);
 		CEntity* entity = Logic::CServer::getSingletonPtr()->getMap()->getEntityByID(playerDeadMsg->getKiller());
 
+		std::cout << "Yo soy = " << _entity->getName() << std::endl;
+
 		if (entity)
 		{
+			std::cout << "----------------------------" << std::endl;
+			//std::cout << "Yo soy = " << _entity->getName() << std::endl;
+			std::cout << "El asesino es: " << entity->getName() << std::endl;
 			if (entity->getName().compare(_entity->getName()) == 0)
-				std::cout << "YO SOY EL ASESINO! " << std::endl;
+				std::cout << "YO soy el asesino. " << std::endl;
 			else
-				std::cout << "El asesino es: " << entity->getName() << std::endl;
-		}			
+				std::cout << "El asesino es OTRO." << std::endl;
+			std::cout << "----------------------------" << std::endl;
+
+		}*/		
 	}
 
 } // namespace Logic

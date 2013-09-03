@@ -11,14 +11,12 @@ material volumetricLightMaterial {
 			depth_check off
 		
 			fragment_program_ref volumetricLightFragment {
-				param_named			viewProjMatrix				matrix4x4		1 0 0 0	0 1 0 0	0 0 1 0	0 0 0 1
-				param_named			lightPosition					float3			0 0 0
-			
-				// @todo
-				// Hay que pasar la posicion de la luz y multiplicarla por la matriz world-view-projection
-				// Hay que obtener dicha matriz previamente y pasarla como parametro uniforme
-				// La posicion en la pantalla de un vertice es: vertice.xy / vertice.w 
-				// vertice es el vertice proyectado pasado por el vertex shader
+				param_named		viewProjMatrix		matrix4x4		1 0 0 0	0 1 0 0	0 0 1 0	0 0 0 1
+				param_named		lightPosition			float3			0 0 0
+				param_named		Density					float				0.5
+				param_named		Decay					float				0.95
+				param_named		Weight					float 				1.0
+				param_named		Exposure				float				0.15
 			}
 		
 			// Textura de post-procesado de la escena
@@ -28,8 +26,8 @@ material volumetricLightMaterial {
 				colour_op replace
 			}
 			
-			texture_unit DepthMap {
-				// DepthMap de la escena actual
+			texture_unit occlusionMap {
+				// occlusionMap de la escena actual
 			}
 		}
 	}

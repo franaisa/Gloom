@@ -204,7 +204,7 @@ namespace Logic {
 		CAvatarController* _avatarc;
 
 		bool _effectIsActivated;
-		std::string _effect, _motionblur, _flashEffect;
+		std::string _effect, _flashEffect;
 		std::string _strengthEffect;
 		Graphics::CScene *_scene;
 		int _timestamp;

@@ -781,6 +781,9 @@
     <ClCompile Include="..\..\Src\Logic\Entity\Components\KillStreak.cpp">
       <Filter>Entity\Components\Gameplay\Source</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Messages\MessageKillStreak.cpp">
+      <Filter>Messages\Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Src\Logic\Maps\ComponentFactory.h">
@@ -1418,6 +1421,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Entity\Components\KillStreak.h">
       <Filter>Entity\Components\Gameplay\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Messages\MessageKillStreak.h">
+      <Filter>Messages\Header</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

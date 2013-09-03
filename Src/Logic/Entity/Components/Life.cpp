@@ -42,6 +42,7 @@ que controla la vida de un personaje.
 #include "Logic/Messages/MessageSetReducedDamage.h"
 #include "Logic/Messages/MessageHud.h"
 #include "Logic/Messages/MessageSpellHungry.h"
+#include "Logic/Messages/MessageKillStreak.h"
 
 namespace Logic {
 	
@@ -313,6 +314,13 @@ namespace Logic {
 		std::shared_ptr<CMessagePlayerDead> playerDeadMsg = std::make_shared<CMessagePlayerDead>();
 		playerDeadMsg->setKiller(enemy->getEntityID());
 		_entity->emitMessage(playerDeadMsg);
+
+		//Emitir el mensaje para los killstreak, no me está llegando :S
+		std::cout << "El asesino es " << enemy->getName() << " y ha matado a " << _entity->getName() << std::endl;
+		std::shared_ptr<CMessageKillStreak> msKS = std::make_shared<CMessageKillStreak>();
+		msKS->setKiller(enemy->getEntityID());
+		enemy->emitMessage(msKS);
+
 
 		// Informamos al estado del mundo de que se ha producido una muerte
 		Logic::CWorldState::getSingletonPtr()->addChange(_entity, playerDeadMsg);

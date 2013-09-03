@@ -2,8 +2,8 @@ compositor volumetricLightCompositor
 {
 	technique
 	{
-		texture	rt0 			target_width target_height PF_A8R8G8B8
-		texture 	depthMap	target_width target_height PF_A8R8G8B8
+		texture	rt0 					target_width target_height PF_A8R8G8B8
+		texture 	occlusionMap	target_width target_height PF_A8R8G8B8
  
 		// Obtenemos la escena
 		target rt0
@@ -13,7 +13,7 @@ compositor volumetricLightCompositor
  
 		// Renderizamos la escena con el esquema de profunidad
 		// para obtener el depth map
-		target depthMap
+		target occlusionMap
 		{
 			input none
 			material_scheme blackScheme
@@ -36,7 +36,7 @@ compositor volumetricLightCompositor
 			{
 				material volumetricLightMaterial
 				input 0 rt0
-				input 1 depthMap
+				input 1 occlusionMap
 			}
 		}
 	}
