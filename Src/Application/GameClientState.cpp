@@ -414,6 +414,9 @@ namespace Application {
 	void CGameClientState::basicGameSettings(unsigned int gameTime, unsigned int goalScore) {
 		_gameTime = gameTime;
 		_goalScore = goalScore;
+
+		_infiniteScore = _goalScore == 0;
+		_infiniteTime = _gameTime == 0;
 	}
 
 };
