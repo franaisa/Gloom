@@ -143,13 +143,15 @@ namespace Application {
 
 		// Si la partida ha finalizado comprobamos el tiempo que ha transcurrido
 		// Para ver si tenemos que finalizar el encuentro
-		if(!_inEndGame && !_unlimitedTime) {
+		if(!_inEndGame) {
 			// Controlamos el tiempo de la partida
-			_gameTime -= msecs;
-			if(_gameTime < 0) {
-				std::cout << "TIME IS OVER!" << std::endl;
+			if(!_unlimitedTime) {
+				_gameTime -= msecs;
+				if(_gameTime < 0) {
+					std::cout << "TIME IS OVER!" << std::endl;
 
-				endGame();
+					endGame();
+				}
 			}
 		}
 		// Si la partida ha finalizado dejamos de hacer tick
