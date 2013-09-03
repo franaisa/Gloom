@@ -112,6 +112,16 @@ namespace Logic {
 				m->setDamage(_primaryFireDamage);
 				m->setEnemy(_entity);
 				(*it).entity->emitMessage(m);
+				
+				// Pintamos las particulas de sangre
+				Euler euler(Quaternion::IDENTITY);
+				euler.setDirection((*it).normal);
+
+				Map::CEntity* entityInfo = CEntityFactory::getSingletonPtr()->getInfo("BloodStrike");
+				CEntity* bloodStrike = CEntityFactory::getSingletonPtr()->createEntity(entityInfo, _entity->getMap(), (*it).impact, euler.toQuaternion() );
+				bloodStrike->activate();
+				bloodStrike->start();
+
 				// esto es para que salga una vez que ya le ha dao a alguien que no eres tu mismo.
 				return;
 			}

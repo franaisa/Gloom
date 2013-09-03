@@ -41,12 +41,6 @@
     <ClCompile Include="..\..\Src\Graphics\PoolParticle.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Src\Graphics\HHFXParticle.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Graphics\HHFX.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Src\Graphics\OgreParticle.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -69,6 +63,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Src\Graphics\MotionBlur.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Graphics\VolumetricLightScattering.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -109,12 +106,6 @@
     <ClInclude Include="..\..\Src\Graphics\PoolParticle.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Src\Graphics\HHFX.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Graphics\HHFXParticle.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Src\Graphics\OgreParticle.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -140,6 +131,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Src\Graphics\MotionBlur.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Graphics\VolumetricLightScattering.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

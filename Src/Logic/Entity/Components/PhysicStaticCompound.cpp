@@ -231,15 +231,16 @@ namespace Logic {
 
 	//________________________________________________________________________
 
-	void CPhysicStaticCompound::onContact (IPhysics *otherComponent,bool enter) {
+	void CPhysicStaticCompound::onContact(IPhysics *otherComponent, const Physics::CContactPoint& contactPoint, bool enter) {
 		// Mediante patron observador
 		for(auto it = _observers.begin(); it != _observers.end(); ++it) {
-			(*it)->onContact(otherComponent, enter);
+			(*it)->onContact(otherComponent, contactPoint, enter);
 		}
 
 		if(enter) {
 			shared_ptr<CMessageContactEnter> contactEnterMsg = make_shared<CMessageContactEnter>();
 			contactEnterMsg->setEntity( otherComponent->getEntity() );
+			contactEnterMsg->setContactPoint(contactPoint);
 			_entity->emitMessage(contactEnterMsg);
 		} 
 		else {

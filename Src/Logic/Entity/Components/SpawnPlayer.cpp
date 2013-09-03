@@ -12,6 +12,10 @@ Contiene la implementación del componente que gestiona el spawn del jugador.
 #include "AvatarController.h"
 #include "PhysicController.h"
 
+#include "Net/Manager.h"
+#include "Audio/Server.h"
+
+#include "Logic/Maps/EntityFactory.h"
 #include "Logic/Entity/Entity.h"
 #include "Map/MapEntity.h"
 #include "Logic/Maps/Map.h"
@@ -96,9 +100,19 @@ namespace Logic
 				//LLamamos al manager de spawn que nos devolverá una posición
 				CEntity *spawn = CServer::getSingletonPtr()->getSpawnManager()->getSpawnPosition();
 
+				Vector3 spawnPos = spawn->getPosition();
+
+				Map::CEntity* entityInfo = CEntityFactory::getSingletonPtr()->getInfo("SpawnParticles");
+				CEntity* spawnParticles = CEntityFactory::getSingletonPtr()->createEntity(entityInfo, _entity->getMap(), spawnPos, Quaternion::IDENTITY, false);
+				spawnParticles->activate();
+				spawnParticles->start();
+
+				if( !Net::CManager::getSingletonPtr()->imServer() )
+					Audio::CServer::getSingletonPtr()->playSound3D("gameplay/spawn.wav", spawnPos, Vector3::ZERO, false, false);
+
 				//Ponemos la entidad física en la posición instantaneamente ( no se puede permitir el envio de mensajes )
 				//La simulacion fisica tiene que ser activada en el siguiente tick, para que el player se resitue bien
-				_entity->getComponent<CPhysicController>("CPhysicController")->setPhysicPosition(spawn->getPosition());
+				_entity->getComponent<CPhysicController>("CPhysicController")->setPhysicPosition(spawnPos);
 				_reactivePhysicSimulation=true;
 
 				//Volvemos a activar todos los componentes(lo que hace resetea _isDead y _actualTimeSpawn)

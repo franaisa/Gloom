@@ -235,17 +235,18 @@ void CPhysicStaticEntity::onTrigger(IPhysics *otherComponent, bool enter) {
 
 //---------------------------------------------------------
 
-void CPhysicStaticEntity::onContact (IPhysics *otherComponent, bool enter) {
+void CPhysicStaticEntity::onContact(IPhysics *otherComponent, const Physics::CContactPoint& contactPoint, bool enter) {
 	// Mediante patron observador
 	for(auto it = _observers.begin(); it != _observers.end(); ++it) {
-		(*it)->onContact(otherComponent, enter);
+		(*it)->onContact(otherComponent, contactPoint, enter);
 	}
 
 	if (enter) {
 		_inContact=true;
-			std::shared_ptr<CMessageContactEnter> msg = std::make_shared<CMessageContactEnter>();
-			msg->setEntity( otherComponent->getEntity() );
-			_entity->emitMessage(msg);
+		std::shared_ptr<CMessageContactEnter> msg = std::make_shared<CMessageContactEnter>();
+		msg->setEntity( otherComponent->getEntity() );
+		msg->setContactPoint(contactPoint);
+		_entity->emitMessage(msg);
 	} else {
 		_inContact=false;
 		std::shared_ptr<CMessageContactExit> m = std::make_shared<CMessageContactExit>();

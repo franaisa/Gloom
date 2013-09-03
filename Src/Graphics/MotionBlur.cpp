@@ -10,6 +10,7 @@
 */
 
 #include "MotionBlur.h"
+#include "BaseSubsystems/Server.h"
 
 #include <OgreCompositorManager.h>
 
@@ -19,8 +20,7 @@
 
 namespace Graphics {
 	
-	CMotionBlur::CMotionBlur(Ogre::CompositorManager* compositorManager, Graphics::CCamera* camera) : _previousViewProjMatrix(Matrix4::IDENTITY), 
-																									  _previousFPS(0.0f),
+	CMotionBlur::CMotionBlur(Ogre::CompositorManager* compositorManager, Graphics::CCamera* camera) : _previousCameraOrientation(Quaternion::IDENTITY),
 																									  _sceneCamera( camera->getOgreCamera() ) {
 		_sceneCamera = camera->getOgreCamera();
 		_cameraNode = camera->getSceneNode();
@@ -32,7 +32,6 @@ namespace Graphics {
 		compositorManager->setCompositorEnabled(cameraViewport, "MotionBlurFranCompositor", true);
 		
 		_compositor->addListener(this);
-		_sceneCamera->addListener(this);
 	}
 
 	//________________________________________________________________________
@@ -40,65 +39,35 @@ namespace Graphics {
 	CMotionBlur::~CMotionBlur() {
 		// Nada que hacer
 		_compositor->removeListener(this);
-
-		if(_sceneCamera != NULL)
-			_sceneCamera->removeListener(this);
 	}
 
 	//________________________________________________________________________
 
 	void CMotionBlur::notifyMaterialRender(Ogre::uint32 pass_id, Ogre::MaterialPtr &mat) {
-		// Actualizamos los parametros del shader antes de que sea renderizado
+		// Obtenemos el puntero al gestor de parametros del fragment shader
 		Ogre::GpuProgramParametersSharedPtr fpParams = mat->getTechnique(0)->getPass(0)->getFragmentProgramParameters();
-		fpParams->setNamedConstant("inverseViewProjMatrix", _inverseViewProjMatrix);
-		fpParams->setNamedConstant("previousViewProjMatrix", _previousViewProjMatrix);
-	}
 
-	//________________________________________________________________________
+		// Construimos una matriz de vista-proyeccion que no tenga en cuenta la posicion del frame
+		// anterior, solo la rotacion. De esta forma el blur solo afecta a la rotacion de camara.
+		Matrix4 motionCorrectedMatrix = _sceneCamera->getProjectionMatrix() * Ogre::Math::makeViewMatrix(_sceneCamera->getDerivedPosition(), _previousCameraOrientation);
 
-	void CMotionBlur::cameraPreRenderScene(Ogre::Camera* camera) {
-		// Antes de renderizar la escena, almacenamos la inversa de la matriz de vista
-		// y proyeccion con la que se va a realizar el render
-		Matrix4 projectionMatrix  = _sceneCamera->getProjectionMatrix();
-		_inverseViewProjMatrix	  = (projectionMatrix * _sceneCamera->getViewMatrix()).inverse();
-	}
+		// Pasamos la matriz de vista-proyeccion del frame anterior corregida para tener en
+		// cuenta solo las rotaciones de camara
+		fpParams->setNamedConstant("previousViewProjMatrix", motionCorrectedMatrix);
+		_previousCameraOrientation	= _sceneCamera->getDerivedOrientation();
 
-	//________________________________________________________________________
+		// Calculamos la matriz vista-proyeccion para el siguiente frame y pasamos al 
+		// shader la inversa de la matriz actual de vista-proyeccion
+		Matrix4 projectionMatrix	= _sceneCamera->getProjectionMatrix();
+		Matrix4 viewMatrix			= _sceneCamera->getViewMatrix();
+		Matrix4 viewProjMatrix		= projectionMatrix * viewMatrix;
 
-	// No sirve porque al compositor se le llama despues de esto
-	void CMotionBlur::cameraPostRenderScene(Ogre::Camera* camera) {
-		// Despues de renderizar la escena nos quedamos con la matriz que de vista
-		// y proyeccion con la que se renderizo la escena
-		Matrix4 previousProjectionMatrix = _sceneCamera->getProjectionMatrix();
-		Matrix4 previousViewMatrix = _sceneCamera->getViewMatrix();
-		_previousViewProjMatrix = previousProjectionMatrix * previousViewMatrix;
-	}
+		// Pasamos la inversa de la matriz vista-proyeccion
+		fpParams->setNamedConstant( "inverseViewProjMatrix", viewProjMatrix.inverse() );
 
-	//________________________________________________________________________
-
-	void CMotionBlur::tick(unsigned int msecs) {
-		// compute view projection inverse matrix
-		/*Ogre::Matrix4 projectionMatrix   = _sceneCamera->getProjectionMatrix();
-		_inverseViewProjMatrix = (projectionMatrix * _sceneCamera->getViewMatrix()).inverse();
-
-		float interpolationFactor				= _previousFPS * 0.03f; // m_timeScale is a multiplier to control motion blur interactively
-		Ogre::Quaternion current_orientation	= _sceneCamera->getDerivedOrientation();
-		Ogre::Vector3 current_position			= _sceneCamera->getDerivedPosition();
-		Ogre::Quaternion estimatedOrientation	= Ogre::Quaternion::Slerp(interpolationFactor, current_orientation, (_previousOrientation));
-		Ogre::Vector3 estimatedPosition			= (1-interpolationFactor) * current_position + interpolationFactor * (_previousPosition);
-		Ogre::Matrix4 prev_viewMatrix			= Ogre::Math::makeViewMatrix(estimatedPosition, estimatedOrientation);
-		// compute final matrix
-		_previousViewProjMatrix = projectionMatrix * prev_viewMatrix;
-
-		// update position and orientation for next update time
-		_previousOrientation = current_orientation;
-		_previousPosition = current_position;
-		_previousFPS = 1.0f / msecs * 0.001f;*/
-	}
-
-	//________________________________________________________________________
-		
-	void CMotionBlur::cameraDestroyed(Ogre::Camera *camera) {
-		_sceneCamera = NULL;
+		// Calculamos el tiempo transcurrido para renderizar la escena en este frame
+		float lastFPS = BaseSubsystems::CServer::getSingletonPtr()->getRenderWindow()->getStatistics().lastFPS;
+		if(lastFPS > 60.0f) lastFPS = 60.0f;
+		fpParams->setNamedConstant("deltaTime", 1.0f / lastFPS);
 	}
 }

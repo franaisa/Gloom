@@ -1,0 +1,14 @@
+material sunMaterial {
+	technique {
+		lightning off
+	
+		pass {
+			// Textura de difuso
+			texture_unit DiffMap {
+				texture sun.jpg
+			}
+			
+		}
+		
+	}
+}

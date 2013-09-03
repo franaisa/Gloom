@@ -11,6 +11,9 @@
 #include "IronHellGoat.h"
 #include "ScreamerShieldDamageNotifier.h"
 #include "PhysicDynamicEntity.h"
+#include "ParticleSystem.h"
+
+#include "Audio/Server.h"
 
 #include "Logic/Maps/EntityFactory.h"
 #include "Physics/Server.h"
@@ -24,6 +27,7 @@
 #include "Logic/Messages/MessageCreateParticle.h"
 #include "Logic/Messages/MessageAddForcePlayer.h"
 
+#include "BaseSubsystems/Euler.h"
 
 #include "Map/MapEntity.h"
 
@@ -94,6 +98,7 @@ namespace Logic {
 				
 				CEntity* entityContacted = contactMsg->getEntity();
 				CEntity* fireBallOwner = _owner->getEntity();
+				Physics::CContactPoint contactPoint = contactMsg->getContactPoint();
 				if( entityContacted != fireBallOwner ) {
 					// Destruir en diferido esta entidad
 					CEntityFactory::getSingletonPtr()->deferredDeleteEntity(_entity, true);
@@ -111,7 +116,7 @@ namespace Logic {
 						}
 					}
 					else {
-						createExplotion();
+						createExplotion(contactPoint);
 					}
 				}
 			}
@@ -140,7 +145,7 @@ namespace Logic {
 
 	//________________________________________________________________________
 
-	void CFireBallController::createExplotion() {
+	void CFireBallController::createExplotion(const Physics::CContactPoint& contactPoint) {
 		// Generar un overlap y mandar los mensajes de daño a las entidades
 		// con las que se impacte
 		vector<CEntity*> entitiesHit;
@@ -153,11 +158,24 @@ namespace Logic {
 			estimateDamage(entitiesHit[i], explotionPos);
 		}
 
+		// Creamos el sonido de explosion
+		Audio::CServer::getSingletonPtr()->playSound3D("weapons/hit/fireball_hit.wav", contactPoint.position, Vector3::ZERO, false, false);
+
 		// Creamos las particulas de la explosion
-		shared_ptr<CMessageCreateParticle> particleMsg = make_shared<CMessageCreateParticle>();
-		particleMsg->setPosition(explotionPos);
-		particleMsg->setParticle("ExplosionParticle");
-		_world->emitMessage(particleMsg);
+		Map::CEntity* entityInfo = CEntityFactory::getSingletonPtr()->getInfo("Explotion");
+		CEntity* explotion = CEntityFactory::getSingletonPtr()->createEntity(entityInfo, _entity->getMap(), contactPoint.position, Quaternion::IDENTITY );
+		explotion->activate();
+		explotion->start();
+
+		// Creamos las particulas de humo que rodean a la bola de fuego
+		Euler euler(Quaternion::IDENTITY);
+		euler.setDirection(contactPoint.normal);
+		euler.pitch( Ogre::Radian(Math::HALF_PI) );
+
+		entityInfo = CEntityFactory::getSingletonPtr()->getInfo("SmokeBash");
+		CEntity* smokeBash = CEntityFactory::getSingletonPtr()->createEntity(entityInfo, _entity->getMap(), contactPoint.position, euler.toQuaternion() );
+		smokeBash->activate();
+		smokeBash->start();
 	}
 
 	//________________________________________________________________________

@@ -12,14 +12,14 @@ Contiene la implementación del componente que gestiona las armas y que administr
 #include "ScreamerShieldDamageNotifier.h"
 
 // Mapa
-
+#include "BaseSubsystems/Euler.h"
 #include "Logic/Maps/EntityFactory.h"
 #include "Logic/Maps/Map.h"
 #include "Logic/Server.h"
 #include "Map/MapEntity.h"
 
 #include "Logic/Messages/MessageControl.h"
-
+#include "Audio/Server.h"
 
 #include "Physics/Server.h"
 
@@ -255,16 +255,29 @@ namespace Logic {
 			drawDecal(hits2.entity, hits2.impact);
 			
 			// Añado aqui las particulas de dado en la pared.
-			auto m = std::make_shared<CMessageCreateParticle>();
+			/*auto m = std::make_shared<CMessageCreateParticle>();
 			m->setPosition(hits2.impact);
 			m->setParticle("impactParticle");
 			m->setDirectionWithForce(hits2.normal);
-			hits2.entity->emitMessage(m);
+			hits2.entity->emitMessage(m);*/
+
+			Euler euler(Quaternion::IDENTITY);
+			euler.setDirection(hits2.normal);
+			euler.yaw( Ogre::Radian(Math::HALF_PI) );
+
+			Map::CEntity* entityInfo = CEntityFactory::getSingletonPtr()->getInfo("BulletSpark");
+			CEntity* bulletSpark = CEntityFactory::getSingletonPtr()->createEntity(entityInfo, _entity->getMap(), hits2.impact, euler.toQuaternion() );
+			bulletSpark->activate();
+			bulletSpark->start();
+
+			int randomValue = Math::unifRand(2);
+			std::string ricochetSound = (randomValue == 1 ? "weapons/hit/ric3.wav" : "weapons/hit/ric2.wav");
+			Audio::CServer::getSingletonPtr()->playSound3D(ricochetSound, hits2.impact, Vector3::ZERO, false, false);
 		}
 
 		// Rayo lanzado por el servidor de físicas de acuerdo a la distancia de potencia del arma
 		std::vector<Physics::CRaycastHit> hits;
-		Physics::CServer::getSingletonPtr()->raycastMultiple(ray, _distance,hits, true, Physics::CollisionGroup::ePLAYER | Physics::CollisionGroup::eSCREAMER_SHIELD);
+		Physics::CServer::getSingletonPtr()->raycastMultiple(ray, _distance,hits, true, Physics::CollisionGroup::ePLAYER | Physics::CollisionGroup::eSCREAMER_SHIELD | Physics::CollisionGroup::eHITBOX);
 
 		//Devolvemos lo primero tocado que no seamos nosotros mismos
 		CEntity* touched=NULL;
@@ -281,9 +294,23 @@ namespace Logic {
 				else 
 				{
 					touched=hits[i].entity;
+
+					Euler euler(Quaternion::IDENTITY);
+					euler.setDirection(hits[i].normal);
+
+					Map::CEntity* entityInfo = CEntityFactory::getSingletonPtr()->getInfo("BloodStrike");
+					CEntity* bloodStrike = CEntityFactory::getSingletonPtr()->createEntity(entityInfo, _entity->getMap(), hits[i].impact, euler.toQuaternion() );
+					bloodStrike->activate();
+					bloodStrike->start();
+
 					break;
 				}
 			}
+		}
+
+		// Creamos particulas de sangre
+		if(touched != NULL) {
+			
 		}
 
 		return touched;
@@ -305,7 +332,7 @@ namespace Logic {
 
 	void CMiniGun::secondaryShoot() 
 	{
-		
+		if( !isActivated() ) return;
 
 		//Creación de sweephit para 
 		Physics::SphereGeometry sphere  = Physics::CGeometryFactory::getSingletonPtr()->createSphere(3.5);
@@ -332,6 +359,14 @@ namespace Logic {
 				m->setDamage(danyoTotal);
 				m->setEnemy(_entity);
 				(*it).entity->emitMessage(m);
+
+				Euler euler(Quaternion::IDENTITY);
+				euler.setDirection((*it).normal);
+
+				Map::CEntity* entityInfo = CEntityFactory::getSingletonPtr()->getInfo("BloodStrike");
+				CEntity* bloodStrike = CEntityFactory::getSingletonPtr()->createEntity(entityInfo, _entity->getMap(), (*it).impact, euler.toQuaternion() );
+				bloodStrike->activate();
+				bloodStrike->start();
 			}
 		}
 
@@ -348,6 +383,19 @@ namespace Logic {
 			//Mandar el mensaje de los decal
 			Vector3 pos = hits2.impact;
 			drawDecal(hits2.entity, hits2.impact);
+
+			Euler euler(Quaternion::IDENTITY);
+			euler.setDirection(hits2.normal);
+			euler.yaw( Ogre::Radian(Math::HALF_PI) );
+
+			Map::CEntity* entityInfo = CEntityFactory::getSingletonPtr()->getInfo("BulletSpark");
+			CEntity* bulletSpark = CEntityFactory::getSingletonPtr()->createEntity(entityInfo, _entity->getMap(), hits2.impact, euler.toQuaternion() );
+			bulletSpark->activate();
+			bulletSpark->start();
+
+			int randomValue = Math::unifRand(2);
+			std::string ricochetSound = (randomValue == 1 ? "weapons/hit/ric3.wav" : "weapons/hit/ric2.wav");
+			Audio::CServer::getSingletonPtr()->playSound3D(ricochetSound, hits2.impact, Vector3::ZERO, false, false);
 		}
 
 	} // secondaryShoot

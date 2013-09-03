@@ -19,6 +19,7 @@ que controla la vida de un personaje.
 #include "Logic/Entity/Entity.h"
 #include "Logic/Maps/Map.h"
 #include "Map/MapEntity.h"
+#include "Logic/Maps/EntityFactory.h"
 #include "Application/BaseApplication.h"
 
 // Para informar por red que se ha acabado el juego
@@ -41,6 +42,7 @@ que controla la vida de un personaje.
 #include "Logic/Messages/MessageSetReducedDamage.h"
 #include "Logic/Messages/MessageHud.h"
 #include "Logic/Messages/MessageSpellHungry.h"
+#include "Logic/Messages/MessageKillStreak.h"
 
 namespace Logic {
 	
@@ -206,8 +208,8 @@ namespace Logic {
 			return;
 
 		if( updateLife(damage) ) {
+			triggerDeathSound(enemy);
 			triggerDeathState(enemy);
-			triggerDeathSound();
 		}
 		// Si el personaje no ha muerto lanzamos los sonidos de daño.
 		else {
@@ -263,7 +265,7 @@ namespace Logic {
 
 	void CLife::suicide() {
 		triggerDeathState(_entity);
-		triggerDeathSound();
+		triggerDeathSound(_entity);
 	}
 
 	//________________________________________________________________________
@@ -313,6 +315,13 @@ namespace Logic {
 		playerDeadMsg->setKiller(enemy->getEntityID());
 		_entity->emitMessage(playerDeadMsg);
 
+		//Emitir el mensaje para los killstreak, no me está llegando :S
+		std::cout << "El asesino es " << enemy->getName() << " y ha matado a " << _entity->getName() << std::endl;
+		std::shared_ptr<CMessageKillStreak> msKS = std::make_shared<CMessageKillStreak>();
+		msKS->setKiller(enemy->getEntityID());
+		enemy->emitMessage(msKS);
+
+
 		// Informamos al estado del mundo de que se ha producido una muerte
 		Logic::CWorldState::getSingletonPtr()->addChange(_entity, playerDeadMsg);
 
@@ -334,10 +343,25 @@ namespace Logic {
 
 	//________________________________________________________________________
 
-	void CLife::triggerDeathSound() {
+	void CLife::triggerDeathSound(CEntity* enemy) {
 		std::shared_ptr<CMessageAudio> audioMsg = std::make_shared<CMessageAudio>();
 
-		audioMsg->setAudioName(_audioDeath);
+		std::string audioFile;
+		if(enemy->getType() == "Lava") {
+			audioFile = "damage/lava_burned.wav";
+
+			// No va aqui pero bueno pongo las particulas
+			// de quemado temporalmente
+			Map::CEntity* entityInfo = CEntityFactory::getSingletonPtr()->getInfo("LavaBurn");
+			CEntity* lavaBurn = CEntityFactory::getSingletonPtr()->createEntity(entityInfo, _entity->getMap(), _entity->getPosition(), Quaternion::IDENTITY );
+			lavaBurn->activate();
+			lavaBurn->start();
+		}
+		else {
+			audioFile = "damage/splatdeath_03.wav";
+		}
+
+		audioMsg->setAudioName(audioFile);
 		audioMsg->isLoopable(false);
 		audioMsg->is3dSound(true);
 		audioMsg->streamSound(false);

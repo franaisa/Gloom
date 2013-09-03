@@ -775,9 +775,21 @@
     <ClCompile Include="..\..\Src\Logic\Entity\Components\EnemyInSight.cpp">
       <Filter>Entity\Components\Graphics\Source</Filter>
     </ClCompile>
+<<<<<<< HEAD
     <ClCompile Include="..\..\Src\Logic\Entity\Components\ExplosionCompositor.cpp">
       <Filter>Entity\Components\Gameplay\Source</Filter>
     </ClCompile>
+=======
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\ParticleSystem.cpp">
+      <Filter>Entity\Components\Graphics\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\KillStreak.cpp">
+      <Filter>Entity\Components\Gameplay\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Messages\MessageKillStreak.cpp">
+      <Filter>Messages\Source</Filter>
+    </ClCompile>
+>>>>>>> cff324d42d381efe8b6c56305d7c00e8b2c8345d
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Src\Logic\Maps\ComponentFactory.h">
@@ -1410,8 +1422,20 @@
     <ClInclude Include="..\..\Src\Logic\Entity\Components\EnemyInSight.h">
       <Filter>Entity\Components\Graphics\Header</Filter>
     </ClInclude>
+<<<<<<< HEAD
     <ClInclude Include="..\..\Src\Logic\Entity\Components\ExplosionCompositor.h">
       <Filter>Entity\Components\Gameplay\Header</Filter>
     </ClInclude>
+=======
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\ParticleSystem.h">
+      <Filter>Entity\Components\Graphics\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\KillStreak.h">
+      <Filter>Entity\Components\Gameplay\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Messages\MessageKillStreak.h">
+      <Filter>Messages\Header</Filter>
+    </ClInclude>
+>>>>>>> cff324d42d381efe8b6c56305d7c00e8b2c8345d
   </ItemGroup>
 </Project>

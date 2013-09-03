@@ -13,6 +13,7 @@ Contiene la implementación del gestor de colisiones.
 #include "Conversions.h"
 #include "Logic/Entity/Components/PhysicController.h"
 #include "Logic/Entity/Entity.h"
+#include "ContactPoint.h"
 
 #include <PxRigidActor.h>
 #include <PxShape.h> 
@@ -61,15 +62,29 @@ namespace Physics {
 
 			// Nos aseguramos de que las shapes contra las que se ha detectado contacto no han
 			// sido borradas
-			if( cp.flags & (PxContactPairFlag::eDELETED_SHAPE_0 | PxContactPairFlag::eDELETED_SHAPE_0) )
+			if( cp.flags & (PxContactPairFlag::eDELETED_SHAPE_0 | PxContactPairFlag::eDELETED_SHAPE_1) )
 				continue;
 
 			// Comprobamos si acabamos de tocar o dejar de tocar el objeto
+			// No hace falta comprobar mas flags porque solo hemos pedido que 
+			// de estos dos nos notifiquen
 			bool enter = cp.events & PxPairFlag::eNOTIFY_TOUCH_FOUND;
 			bool exit = cp.events & PxPairFlag::eNOTIFY_TOUCH_LOST;
 
-			if (!enter && !exit)
-				continue;
+			// El numero de contactos esta limitado al tamaño del buffer, solo
+			// queremos recibir un punto de contacto
+			unsigned int bufferSize = 1;
+			PxContactPairPoint* contactBuffer = new PxContactPairPoint[bufferSize];
+			unsigned int nbContacts = cp.extractContacts(contactBuffer, bufferSize);
+			
+			// Rellenamos los datos del punto de contacto
+			CContactPoint contactPoint;
+			if(nbContacts > 0) {
+				contactPoint.impulse = PxVec3ToVector3( contactBuffer[0].impulse );
+				contactPoint.normal = PxVec3ToVector3( contactBuffer[0].normal );
+				contactPoint.position = PxVec3ToVector3( contactBuffer[0].position );
+				contactPoint.separation = contactBuffer[0].separation;
+			}
 
 			// Obtenemos los datos logicos asociados al primer actor
 			IPhysics* firstActorBeingContacted = (IPhysics*) pairHeader.actors[0]->userData;
@@ -80,8 +95,10 @@ namespace Physics {
 			assert(secondActorBeingContacted);
 
 			// Disparamos los metodos onContact de la interfaz logica
-			firstActorBeingContacted->onContact(secondActorBeingContacted, enter);
-			secondActorBeingContacted->onContact(firstActorBeingContacted, enter);
+			firstActorBeingContacted->onContact(secondActorBeingContacted, contactPoint, enter);
+			secondActorBeingContacted->onContact(firstActorBeingContacted, contactPoint, enter);
+
+			delete [] contactBuffer;
 		}
 	}
 
@@ -90,20 +107,15 @@ namespace Physics {
 	void CCollisionManager::onTrigger(PxTriggerPair *pairs, PxU32 count) {
 		// Recorrer el array de colisiones
 		for (unsigned int i = 0; i < count; ++i) {
-		
 			// Ignoramos los pares en los que alguna de las shapes (del trigger o de la otra entidad) ha sido borrada
 			if( pairs[i].flags & (PxTriggerPairFlag::eDELETED_SHAPE_TRIGGER | PxTriggerPairFlag::eDELETED_SHAPE_OTHER) )
 				continue;
 
 			// Comprobamos si estamos saliendo o entrando en el trigger
+			// No hace falta comprobar mas flags porque solo hemos pedido que 
+			// de estos dos nos notifiquen
 			bool enter = pairs[i].status & PxPairFlag::eNOTIFY_TOUCH_FOUND;
 			bool exit = pairs[i].status & PxPairFlag::eNOTIFY_TOUCH_LOST;
-
-			// Sólo tenemos en cuenta los eventos de entrada y salida del trigger. En PhysX 2.8 y anteriores
-			// también se notificada si el objeto permanecía dentro del trigger. La documentación no deja muy
-			// claro si este comportamiento se ha eliminado de manera definitiva.
-			if (!enter && !exit)
-				continue;
 
 			// Obtenemos los datos lógicos asociados al trigger que se ha disparado
 			IPhysics *triggerComponent = (IPhysics *) pairs[i].triggerShape->getActor().userData;

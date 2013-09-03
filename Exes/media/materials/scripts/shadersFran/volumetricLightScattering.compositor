@@ -1,0 +1,43 @@
+compositor volumetricLightCompositor
+{
+	technique
+	{
+		texture	rt0 					target_width target_height PF_A8R8G8B8
+		texture 	occlusionMap	target_width target_height PF_A8R8G8B8
+ 
+		// Obtenemos la escena
+		target rt0
+		{
+			input previous
+		}
+ 
+		// Renderizamos la escena con el esquema de profunidad
+		// para obtener el depth map
+		target occlusionMap
+		{
+			input none
+			material_scheme blackScheme
+			
+			pass clear
+			{
+			}
+ 
+			pass render_scene
+			{
+			}
+		}
+ 
+		// Ejecutamos el pixel shader teniendo el z-buffer en textura
+		// y la escena en textura
+		target_output
+		{
+			input none
+			pass render_quad
+			{
+				material volumetricLightMaterial
+				input 0 rt0
+				input 1 occlusionMap
+			}
+		}
+	}
+}

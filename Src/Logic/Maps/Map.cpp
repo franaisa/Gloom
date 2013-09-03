@@ -417,18 +417,12 @@ namespace Logic {
 	//--------------------------------------------------------
 	//--------------------------------------------------------
 	
-	CEntity* CMap::createPlayer(const std::string &name, const std::string &type, const std::string &spell1, const std::string &spell2) {
+	CEntity* CMap::createPlayer(const std::string &name, const std::string &type) {
 		//cogemos el player necesario
 		Map::CEntity *playerInfo = CEntityFactory::getSingletonPtr()->getInfo(type);
 
 		// Asignar nombre
 		playerInfo->setName(name);
-
-		//ñapa de momento, que no me apetece pensar y quiero acabarlo rapido xD
-		if(type != "Spectator"){
-			playerInfo->setAttribute("primarySpell", getSpellNumber(spell1));
-			playerInfo->setAttribute("secondarySpell", getSpellNumber(spell2));
-		}
 
 		
 		// Creamos la entidad y modificamos el resto de parametros que necesitamos
@@ -440,7 +434,7 @@ namespace Logic {
 	//--------------------------------------------------------
 	//--------------------------------------------------------
 
-	CEntity* CMap::createLocalPlayer(const std::string &name, const std::string &type , TEntityID id, const std::string &spell1, const std::string &spell2){
+	CEntity* CMap::createLocalPlayer(const std::string &name, const std::string &type , TEntityID id){
 
 		//cogemos el player necesario
 		std::string temp = "Local"+type;
@@ -448,10 +442,6 @@ namespace Logic {
 
 		// Asignar nombre
 		playerInfo->setName(name);
-		if(type != "Spectator"){
-			playerInfo->setAttribute("primarySpell", getSpellNumber(spell1));
-			playerInfo->setAttribute("secondarySpell", getSpellNumber(spell2));
-		}
 		// Creamos la entidad y modificamos el resto de parametros que necesitamos
 		CEntity* playerCreated = CEntityFactory::getSingletonPtr()->createEntityById(playerInfo, this, id);
 		playerCreated->setPosition( playerCreated->getPosition());
@@ -470,7 +460,7 @@ namespace Logic {
 	//--------------------------------------------------------
 	//--------------------------------------------------------
 
-	CEntity* CMap::createPlayer(const std::string &name, const std::string &type, TEntityID id, const std::string &spell1, const std::string &spell2){
+	CEntity* CMap::createPlayer(const std::string &name, const std::string &type, TEntityID id){
 
 		//cogemos el player necesario
 		Map::CEntity *playerInfo = CEntityFactory::getSingletonPtr()->getInfo(type);
@@ -497,45 +487,5 @@ namespace Logic {
 
 	void CMap::setFixedTimeStep(unsigned int stepSize) {
 		_fixedTimeStep = stepSize;
-	}
-
-
-	std::string CMap::getSpellNumber(const std::string &spell){
-		if(spell=="amplifydamage"){
-			return "0";
-		} else if(spell=="comeback"){
-			return "1";
-		} else if(spell=="scope"){
-			return "2";
-		} else if(spell=="gravity"){
-			return "3";
-		} else if(spell=="harddeath"){
-			return "4";
-		} else if(spell=="shield"){
-			return "5";
-		} else if(spell=="cooldown"){
-			return "6";
-		} else if(spell=="resurrection"){
-			return "7";
-		}
-		/* Debe de quedar tal que asi :D
-		if(spell=="amplifydamage"){
-			return "0";
-		} else if(spell=="comeback"){
-			return "1";
-		} else if(spell=="cooldown"){
-			return "2";
-		} else if(spell=="gravity"){
-			return "3";
-		} else if(spell=="harddeath"){
-			return "4";
-		} else if(spell=="eHungry"){
-			return "5";
-		} else if(spell=="shield"){
-			return "6";
-		} else if(spell=="resurrection"){
-			return "7";
-		}
-		*/
 	}
 } // namespace Logic

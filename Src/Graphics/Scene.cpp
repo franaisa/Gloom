@@ -18,6 +18,7 @@ de una escena.
 
 #include "Particle.h"
 #include "MotionBlur.h"
+#include "VolumetricLightScattering.h"
 #include "Scene.h"
 #include "Camera.h"
 #include "Light.h"
@@ -58,7 +59,7 @@ de una escena.
 namespace Graphics 
 {
 	CScene::CScene(const std::string& name) : _viewport(0), 
-		_staticGeometry(0), _directionalLight(0), _motionBlur(0)
+		_staticGeometry(0), _directionalLight(0), _motionBlur(0), _volumetricLight(0)
 	{
 		_root = BaseSubsystems::CServer::getSingletonPtr()->getOgreRoot();
 		_sceneMgr = _root->createSceneManager(Ogre::ST_INTERIOR, name);
@@ -152,19 +153,9 @@ namespace Graphics
 			_viewport->setCamera(_camera->getOgreCamera());
 		}
 
-		// Multiplicar la una por la otra para conseguir la matriz anterior
-		// de vista y proyeccion
-		//_camera->getOgreCamera()->getViewMatrix();
-		//_camera->getOgreCamera()->getProjectionMatrix();
-
 		_viewport->setBackgroundColour(Ogre::ColourValue::Black);
-		//_viewport->setMaterialScheme("depthScheme");
-		//_sceneMgr->setShadowTechnique(Ogre::SHADOWTYPE_STENCIL_ADDITIVE);
-		/*
-		_sceneMgr->setAmbientLight(Ogre::ColourValue(1,1,1));
-		/*/
 		_sceneMgr->setAmbientLight(Ogre::ColourValue(0.3f,0.3f,0.3f));
-		/* */
+
 		float aspectratio = (float)_viewport->getActualWidth()/(float)_viewport->getActualHeight();
 		_camera->getOgreCamera()->setAspectRatio(aspectratio);
 
@@ -177,7 +168,8 @@ namespace Graphics
 
 			_poolParticle->activate();
 
-			//_motionBlur = new CMotionBlur( _compositorManager, _camera );
+			_motionBlur = new CMotionBlur(_compositorManager, _camera);
+			//_volumetricLight = new CVolumetricLightScattering(_compositorManager, _camera);
 		}
 
 		_sceneMgr->getRootSceneNode()->setVisible(true);
@@ -189,25 +181,15 @@ namespace Graphics
 
 	void CScene::deactivate()
 	{
-		/*if(_directionalLight)
-		{
-			_sceneMgr->destroyLight(_directionalLight);
-			_directionalLight = 0;
-		}*/
-		/*if(_viewport)
-		{
-			BaseSubsystems::CServer::getSingletonPtr()->getRenderWindow()->
-					removeViewport(_viewport->getZOrder());
-			_viewport = 0;
-		}*/
-
-		if(_name != "dummy_scene"){
-			
-			ParticleUniverse::ParticleSystemManager::getSingletonPtr()->destroyAllParticleSystems(_sceneMgr);
+		if(_motionBlur != NULL) {
+			delete _motionBlur;
+			_motionBlur = NULL;
 		}
 
-		if(_motionBlur != NULL)
-			delete _motionBlur;
+		if(_volumetricLight != NULL) {
+			delete _volumetricLight;
+			_volumetricLight = NULL;
+		}
 	} // deactivate
 	
 	//--------------------------------------------------------
@@ -220,9 +202,6 @@ namespace Graphics
 		for(; it != end; it++)
 			(*it)->tick(secs);
 		_poolParticle->tick(secs);
-		
-		/*if(_motionBlur != NULL)
-			_motionBlur->tick(secs);*/
 	} // tick
 
 	//--------------------------------------------------------

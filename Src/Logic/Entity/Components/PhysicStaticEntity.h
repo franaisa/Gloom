@@ -81,7 +81,7 @@ namespace Logic {
 		*/
 		virtual void onTrigger (IPhysics *otherComponent, bool enter);
 
-		virtual void onContact (IPhysics *otherComponent, bool enter);
+		virtual void onContact(IPhysics *otherComponent, const Physics::CContactPoint& contactPoint, bool enter);
 
 	    //void onShapeHit(const physx::PxControllerShapeHit &hit);
 

@@ -1,0 +1,30 @@
+vertex_program blackVertex hlsl {
+    source black.hlsl
+    entry_point vertex_main
+    target vs_2_0
+
+    default_params {
+        param_named_auto worldViewProj worldviewproj_matrix
+    }
+}
+
+fragment_program blackFragment hlsl {
+    source black.hlsl
+    entry_point fragment_main
+    target ps_2_0
+}
+
+material blackMaterial {
+	technique {
+		lighting off
+	
+		scheme blackScheme
+		pass {
+			vertex_program_ref blackVertex {
+			}
+			
+			fragment_program_ref blackFragment {
+			}
+		}
+	}
+}

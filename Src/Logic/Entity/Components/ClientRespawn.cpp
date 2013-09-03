@@ -8,6 +8,7 @@
 #include "ClientRespawn.h"
 #include "AvatarController.h"
 
+#include "Logic/Maps/EntityFactory.h"
 #include "Logic/Entity/Entity.h"
 #include "PhysicController.h"
 #include "Logic/Server.h"
@@ -16,6 +17,7 @@
 #include "Map/MapEntity.h"
 #include "Basesubsystems/Math.h"
 #include "Interpolation.h"
+#include "Audio/Server.h"
 
 #include "Logic/Messages/MessagePlayerDead.h"
 #include "Logic/Messages/MessagePlayerSpawn.h"
@@ -33,6 +35,7 @@ namespace Logic  {
 	IMP_FACTORY(CClientRespawn);
 
 	//________________________________________________________________________
+	
 	bool CClientRespawn::spawn(CEntity *entity, CMap *map, const Map::CEntity *entityInfo) 
 	{
 		if(!IComponent::spawn(entity,map,entityInfo))
@@ -104,8 +107,6 @@ namespace Logic  {
 
 				updateGUI(entity);
 
-				std::cout << "mensaje dead recibido" << std::endl;
-
 				break;
 			}
 			case Message::PLAYER_SPAWN: {
@@ -120,8 +121,17 @@ namespace Logic  {
 				std::shared_ptr<CMessagePlayerSpawn> playerSpawnMsg = std::static_pointer_cast<CMessagePlayerSpawn>(message);
 				// Colocamos al player en la posicion dada por el manager de spawn del server,
 				// podemos asumir sin problemas que el player tiene capsula
-				
-				_entity->getComponent<CPhysicController>("CPhysicController")->setPhysicPosition( playerSpawnMsg->getSpawnPosition() );
+
+				Vector3 spawnPos = playerSpawnMsg->getSpawnPosition();
+
+				Map::CEntity* entityInfo = CEntityFactory::getSingletonPtr()->getInfo("SpawnParticles");
+				CEntity* spawnParticles = CEntityFactory::getSingletonPtr()->createEntity(entityInfo, _entity->getMap(), spawnPos, Quaternion::IDENTITY, false);
+				spawnParticles->activate();
+				spawnParticles->start();
+
+				Audio::CServer::getSingletonPtr()->playSound3D("gameplay/spawn.wav", spawnPos, Vector3::ZERO, false, false);
+
+				_entity->getComponent<CPhysicController>("CPhysicController")->setPhysicPosition(spawnPos);
 				// Activamos la simulacion aqui sin problemas. El componente life ignora los mensajes de daño
 				// hasta que no desaparece la inmunidad del respawn. 
 				_entity->getComponent<CPhysicController>("CPhysicController")->activateSimulation();

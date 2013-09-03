@@ -14,7 +14,6 @@ Contiene la declaración del componente que controla las balas de las shotGun .
 
 #include "Logic/Entity/Component.h"
 
-
 namespace Logic {
 	class CShotGun;
 	class CPhysicDynamicEntity;

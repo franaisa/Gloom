@@ -100,6 +100,8 @@
     <ClCompile Include="..\..\Src\Logic\Entity\Components\Hud.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\HungryClient.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\HungryServer.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\KillStreak.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\ParticleSystem.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\PhysicStaticCompound.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\Ragdoll.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\ResurrectionClient.cpp" />
@@ -222,6 +224,7 @@
     <ClCompile Include="..\..\Src\Logic\Messages\MessageDamageAmplifier.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageDecal.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageHud.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Messages\MessageKillStreak.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageParticleVisibility.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessagePlayerSnapshot.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessagePrimaryShoot.cpp" />
@@ -302,6 +305,8 @@
     <ClInclude Include="..\..\Src\Logic\Entity\Components\Hud.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\HungryClient.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\HungryServer.h" />
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\KillStreak.h" />
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\ParticleSystem.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\PhysicStaticCompound.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\Ragdoll.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\ResurrectionClient.h" />
@@ -456,6 +461,7 @@
     <ClInclude Include="..\..\Src\Logic\Messages\MessageHudSpawn.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageHudWeapon.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageImpact.h" />
+    <ClInclude Include="..\..\Src\Logic\Messages\MessageKillStreak.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageKinematicMove.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageMouse.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageParticleVisibility.h" />

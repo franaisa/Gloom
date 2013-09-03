@@ -45,6 +45,7 @@ namespace Graphics
 	class CCompositorListener;
 	class CPoolParticle;
 	class CMotionBlur;
+	class CVolumetricLightScattering;
 }
 
 namespace Graphics 
@@ -456,6 +457,7 @@ namespace Graphics
 		Ogre::TexturePtr _depthMapTexture;
 
 		CMotionBlur* _motionBlur;
+		CVolumetricLightScattering* _volumetricLight;
 
 	}; // class CScene
 

@@ -11,6 +11,7 @@ Contiene la implementación de la clase que maneja el PUParticle.
 
 @author Rubén Mulero Guerrero
 @author Antonio Jesús Narváez Corrales
+@author Francisco Aisa García
 
 @date Enero, 2013
 */
@@ -28,94 +29,200 @@ Contiene la implementación de la clase que maneja el PUParticle.
 
 #include <OgreParticleAffector.h>
 
-namespace Graphics 
-{
+using namespace std;
+
+namespace Graphics {
+	
+	unsigned int PUParticle::_counter = 0;
+
+	//______________________________________________________________________________
+
 	//Constructor de la clase PUParticle
-	PUParticle::PUParticle(const std::string &particleName, bool isOverlay)
-	{
-		static int counter = 0;
-	
-		Ogre::SceneManager *scene = Graphics::CServer::getSingletonPtr()->getActiveScene()->getSceneMgr();
+	PUParticle::PUParticle(const std::string& scriptName) {
+		// Obtenemos los punteros a los singleton
+		Ogre::SceneManager* sceneMgr = Graphics::CServer::getSingletonPtr()->getActiveScene()->getSceneMgr();
+		ParticleUniverse::ParticleSystemManager* particleMgr = ParticleUniverse::ParticleSystemManager::getSingletonPtr();
 
-		char num[5];
-		sprintf(num, "%d", counter++);
+		// Creamos un nombre unico (por si las moscas)
+		std::stringstream particleName;
+		particleName << scriptName;
+		particleName << _counter++;
 
-		_name = particleName + num;	
-
-		_particleSystem = ParticleUniverse::ParticleSystemManager::getSingletonPtr()->createParticleSystem(_name, particleName, scene);
+		// Nos quedamos con el nombre que asignamos al sistema
+		// de particulas
+		_name = particleName.str();
 		
-		_sceneNode = scene->getRootSceneNode()->createChildSceneNode();
-		
+		// Le pedimos a particle universe que nos cree
+		// un sistema de particulas a partir del script dado
+		// por parametro
+		_particleSystem = particleMgr->createParticleSystem(_name, scriptName, sceneMgr);
+
+		// Atachamos el sistema de particulas a la escena
+		_sceneNode = sceneMgr->getRootSceneNode()->createChildSceneNode();
 		_sceneNode->attachObject(_particleSystem);
-	} // PUParticle
-	//--------------------------------------------------------
 
-	PUParticle::~PUParticle(){
+		// Realizamos la carga del sitema de particulas aqui
+		// para evitar caidas en el frame rate
+		_particleSystem->prepare();
+
+		// Nos registramos como observadores del sistema de particulas creado
+		// para que se nos notifique ante ciertos eventos
+		_particleSystem->addParticleSystemListener(this); // En general no vamos a necesitar hacer el remove
+	}
 	
-		ParticleUniverse::ParticleSystemManager::getSingletonPtr()->destroyParticleSystem(_name,Graphics::CServer::getSingletonPtr()->getActiveScene()->getSceneMgr());
-	
-		_particleSystem = NULL;
-		//_sceneNode = NULL;
+	//______________________________________________________________________________
+
+	PUParticle::~PUParticle() {
+		// Obtenemos los punteros a los singleton
+		Ogre::SceneManager* sceneMgr = Graphics::CServer::getSingletonPtr()->getActiveScene()->getSceneMgr();
+		ParticleUniverse::ParticleSystemManager* particleMgr = ParticleUniverse::ParticleSystemManager::getSingletonPtr();
 		
-	} // ~PUParticle
-	//--------------------------------------------------------
+		// Paramos el sistema de particulo por si acaso se estaba
+		// ejecutando
+		_particleSystem->stop();
 
-	void PUParticle::setPosition(const Vector3 &position){
+		// Desatachamos el sistema de particulas del nodo de escena
+		// al que pertenece
+		//_sceneNode->detachObject(_particleSystem);
+		
+		// Nos desregistramos como listeners
+		_particleSystem->removeParticleSystemListener(this);
+
+		// Pedimos a particle universe que destruya el sistema de particulas
+		particleMgr->destroyParticleSystem(_name, sceneMgr);
+	}
+
+	//______________________________________________________________________________
+
+	void PUParticle::handleParticleSystemEvent(ParticleUniverse::ParticleSystem* particleSystem,
+											   ParticleUniverse::ParticleUniverseEvent& particleUniverseEvent) {
+
+		using namespace ParticleUniverse;
+
+		switch(particleUniverseEvent.eventType) {
+			// Cuando el emisor comienza a emitir
+			case PU_EVT_EMITTER_STARTED: {
+				for(auto it = _observers.begin(); it != _observers.end(); ++it)
+					(*it)->onEmitterStart();
+
+				break;
+			}
+			// Cuando el emisor para de emitir
+			case PU_EVT_EMITTER_STOPPED: {
+				for(auto it = _observers.begin(); it != _observers.end(); ++it)
+					(*it)->onEmitterStop();
+
+				break;
+			}
+			// Cuando se acaban las particulas
+			case PU_EVT_NO_PARTICLES_LEFT: {
+				for(auto it = _observers.begin(); it != _observers.end(); ++it)
+					(*it)->onParticlesExpired();
+
+				break;
+			}
+		}
+	}
+
+	//______________________________________________________________________________
+
+	void PUParticle::start() {
+		_particleSystem->start();
+	}
+
+	//______________________________________________________________________________
+
+	void PUParticle::start(float stopTime) {
+		_particleSystem->start(stopTime);
+	}
+
+	//______________________________________________________________________________
+
+	void PUParticle::startAndStopFade(float stopTime) {
+		_particleSystem->startAndStopFade(stopTime);
+	}
+
+	//______________________________________________________________________________
+		
+	void PUParticle::stop() {
+		_particleSystem->stop();
+	}
+
+	//______________________________________________________________________________
+
+	void PUParticle::stop(float stopTime) {
+		_particleSystem->stop(stopTime);
+	}
+
+	//______________________________________________________________________________
+
+	void PUParticle::stopFade(float stopTime) {
+		_particleSystem->stopFade(stopTime);
+	}
+
+	//______________________________________________________________________________
+
+	void PUParticle::pause() {
+		_particleSystem->pause();
+	}
+
+	//______________________________________________________________________________
+
+	void PUParticle::pause(float pauseTime) {
+		_particleSystem->pause(pauseTime);
+	}
+
+	//______________________________________________________________________________
+
+	void PUParticle::resume() {
+		_particleSystem->resume();
+	}
+	
+	//______________________________________________________________________________
+
+	void PUParticle::setPosition(const Ogre::Vector3 &position) {
 		_sceneNode->setPosition(position);
-
 	} // setPosition
-	//--------------------------------------------------------
+	
+	//______________________________________________________________________________
 
-	Vector3 PUParticle::getPosition(){
+	Ogre::Vector3 PUParticle::getPosition() {
 		return _sceneNode->getPosition();
 	} // getPosition
-	//--------------------------------------------------------
 	
-	void PUParticle::setDirection(const Vector3 &directionWithForce){
-		
-		_sceneNode->setDirection(directionWithForce);
-				
+	//______________________________________________________________________________
+	
+	void PUParticle::setDirection(const Ogre::Vector3 &direction) {
+		_sceneNode->setDirection(direction);
 	} // setDirection
-	//--------------------------------------------------------
 
-	void PUParticle::setVisible(bool visible){
+	//______________________________________________________________________________
+
+	void PUParticle::setOrientation(const Ogre::Quaternion &orientation) {
+		_sceneNode->setOrientation(orientation);
+	}
+	
+	//______________________________________________________________________________
+
+	void PUParticle::setVisible(bool visible) {
 		_particleSystem->setVisible(visible);
-
 	} // setVisible
-	//--------------------------------------------------------
-	
-	void PUParticle::activate()
-	{
-		_particleSystem->start();
 
-	} // activate
-	//--------------------------------------------------------
+	//______________________________________________________________________________
 
-	void PUParticle::deactivate()
-	{
-		_particleSystem->stop();
-		//_particleSystem->clear();
+	void PUParticle::addObserver(IObserver* observer) {
+		_observers.push_back(observer);
+	}
 
-	} // deactivate
-	//--------------------------------------------------------
+	//______________________________________________________________________________
 
-	void PUParticle::loadResources()
-	{
-		activate();
-		this->setPosition(Vector3(0,-5000,0));
-		deactivate();
-
-	} // loadResources
-	//--------------------------------------------------------
-
-	bool PUParticle::isEmitting(){
-		return (_particleSystem->isEnabled());
-
-	} // isEmitting
-	//--------------------------------------------------------
-	
-	bool PUParticle::isLoaded(){
-		return _particleSystem->isInScene();
+	void PUParticle::removeObserver(IObserver* observer) {
+		for(auto it = _observers.begin(); it != _observers.end(); ++it) {
+			if(*it == observer) {
+				_observers.erase(it);
+				break;
+			}
+		}
 	}
 
 } // namespace Graphics

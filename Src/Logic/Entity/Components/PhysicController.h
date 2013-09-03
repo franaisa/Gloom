@@ -81,9 +81,9 @@ namespace Logic {
 		/**
 		Se invoca cuando se produce una colisión entre una entidad física y un trigger.
 		*/
-		virtual void  onTrigger (IPhysics *otherComponent, bool enter);
+		virtual void  onTrigger(IPhysics *otherComponent, bool enter);
 
-		virtual void onContact (IPhysics *otherComponent,bool enter);
+		virtual void onContact(IPhysics *otherComponent, const Physics::CContactPoint& contactPoint, bool enter);
 
 		/**
 		Se invoca cuando se produce una colisión entre un character controller y una entidad física.

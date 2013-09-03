@@ -1,0 +1,7 @@
+material skydomeMat {
+	technique {
+		texture_unit {
+			skydome.jpg
+		}
+	}
+}
