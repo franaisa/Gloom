@@ -131,7 +131,6 @@ namespace Application {
 
 	Hikari::FlashValue CLobbyServerState::createReleased(Hikari::FlashControl* caller, const Hikari::Arguments& args) {
 		// Deshabilitamos el boton crear partida
-		_menu->callFunction("disableCreate",Hikari::Args());
 		
 		// Cogemos el mapa en el que crear la partida y lo cargamos
 		_map=args.at(0).getString();
@@ -154,7 +153,21 @@ namespace Application {
 		}
 		
 		// Empezamos la partida en modo servidor
-		_app->setState("DMServer");
+
+		std::string mode = args.at(1).getString();
+		if(mode == "Duel")
+			_app->setState("DMServer");
+		else if (mode == "DeathMatch")
+			_app->setState("DMServer");
+		else if (mode == "Team DeathMatch")
+			_app->setState("TDMServer");
+
+		/*
+		pushFile("DeathMatch");
+			pushFile("Duel");
+			pushFile("Team DeathMatch");
+
+		*/
 
 		// @todo En funcion de los datos leidos de flash, establecer los parametros
 		// de configuracion del servidor y de la partida
@@ -162,10 +175,23 @@ namespace Application {
 		std::vector<std::string> mapList;
 		mapList.push_back(_map);
 
-		state->serverSettings("Servidor Gazpachero", "cobragay", 8, 4, false, false);
-		state->gameSettings(mapList, false, std::pair<unsigned int, unsigned int>(45, 0), 100, false, false);
+		state->serverSettings(args.at(2).getString(), args.at(3).getString(), args.at(4).getNumber(), args.at(5).getNumber(), false, false);
+		state->gameSettings(mapList, false, std::pair<unsigned int, unsigned int>(args.at(7).getNumber(), 0), 100, false, args.at(11).getBool());
 		//state->gameSettings(mapList, false, std::pair<unsigned int, unsigned int>(15, 0), 5, false, false, true);
-
+		/*
+					0			manager.mapas.actualMap, 
+					1			manager.modo.actualMode, 
+					2			manager.settings.servername.text,
+					3			manager.settings.serverpass.text,
+					4			int(manager.settings.players.text),
+					5			int(manager.settings.spectators.text),
+					6			int(manager.gamerules.deathlimit.text),
+					7			int(manager.gamerules.matchtime.text),
+					8			int(manager.gamerules.fraglimit.text),
+					9			manager.settings.autobalance.selected,
+					10			manager.gamerules.ff.selected,
+					11			manager.gamerules.warmup.selected);
+		*/
 		return FLASH_VOID;
 	} // backReleased
 

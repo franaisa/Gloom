@@ -24,12 +24,12 @@ package ScoreTDM
 			
 			ExternalInterface.addCallback("ChangeScores", changeScores);
 			
-			addPlayer("manolo", "Screamer", 1);
+			/*addPlayer("manolo", "Screamer", 1);
 			addPlayer("pepito", "Screamer", 1);
 			addPlayer("juan", "Screamer", 2);
 			addKill("juan", 2, 3);
 			addPlayer("juan", "Screamer", 1);
-			head.scoreblue.text = "88";
+			head.scoreblue.text = "88";*/
 		}
 		
 		public function addPlayer(nick: String, playerClass: String, team:int): void {

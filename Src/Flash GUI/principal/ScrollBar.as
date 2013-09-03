@@ -18,19 +18,16 @@ package principal
 		public function ScrollBar() 
 		{
 			padre = parent as Maps;
-			stage.addEventListener(MouseEvent.MOUSE_DOWN, onPressed);
-			stage.addEventListener(MouseEvent.MOUSE_UP, onReleased);
+			scroller.addEventListener(MouseEvent.MOUSE_DOWN, onPressed);
 			
 			initPos = padre.content.y;
-			trace( - (this.height / 2) + (scroller.height/2));
 			scroller.x = 0;
 			scroller.y = 0 - (this.height / 2) + (scroller.height/2)
 		}
 		
 		public function onPressed(e: Event):void {
 			upper = 0 - (this.height / 2) + (scroller.height/2);
-			trace(scroller.y);
-			
+			stage.addEventListener(MouseEvent.MOUSE_UP, onReleased);
 			scroller.startDrag(false, new Rectangle( scroller.x, upper, 0, this.height - scroller.height ) );
 			stage.addEventListener(MouseEvent.MOUSE_MOVE, this.moved);
 			
@@ -38,6 +35,8 @@ package principal
 		
 		public function onReleased(e: Event):void {
 			stage.removeEventListener(MouseEvent.MOUSE_MOVE, this.moved);
+			
+			stage.removeEventListener(MouseEvent.MOUSE_UP, onReleased);
 			scroller.stopDrag();
 			
 		}

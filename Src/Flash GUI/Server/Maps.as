@@ -26,24 +26,6 @@ package Server
 			manager = parent as MenuManager;
 			pos = 0;
 			ExternalInterface.addCallback("pushFile", pushFile);
-	
-			
-			
-			pushFile("belshir vestege1");
-			pushFile("belshir vestege2");
-			pushFile("belshir vestege3");
-			pushFile("belshir vestege");
-			pushFile("belshir vestege");
-			pushFile("belshir vestege");
-			pushFile("belshir vestege");
-			pushFile("belshir vestege");
-			pushFile("belshir vestege");
-			pushFile("belshir vestege4");
-			pushFile("belshir vestege5");
-			pushFile("belshir vestege6");
-			pushFile("belshir vestege7");
-			pushFile("belshir vestege8");
-			
 			
 		}
 		

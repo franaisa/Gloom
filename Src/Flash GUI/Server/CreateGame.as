@@ -5,7 +5,7 @@ package Server
 	import flash.external.ExternalInterface;
 	import principal.GloomButton;
 	import principal.MenuManager;
-	
+	import fl.controls.CheckBox;
 	/**
 	 * ...
 	 * @author Rubén Mulero
@@ -17,15 +17,30 @@ package Server
 		{
 			super();
 			manager = parent as MenuManager;
-			this.buttonMode = true;
-			ExternalInterface.addCallback("enableBegin", enableButton);
-			ExternalInterface.addCallback("disableBegin", disableButton);
+			this.buttonMode = false;
 		}
 		
 		protected override function onMouseClick(e:MouseEvent):void {
-			var mymap:Maps = manager.getChildByName("mapas") as Maps;
-			ExternalInterface.call("createGame",mymap.actualMap);
-			disableButton();
+			
+			
+			if (manager.modo.actualMode == null || manager.mapas.actualMap == null) {
+				return;
+			}
+			
+			ExternalInterface.call("createGame", 
+								manager.mapas.actualMap, 
+								manager.modo.actualMode, 
+								manager.settings.servername.text,
+								manager.settings.serverpass.text,
+								int(manager.settings.players.text),
+								int(manager.settings.spectators.text),
+								int(manager.gamerules.deathlimit.text),
+								int(manager.gamerules.matchtime.text),
+								int(manager.gamerules.fraglimit.text),
+								manager.settings.autobalance.selected,
+								manager.gamerules.ff.selected,
+								manager.gamerules.warmup.selected);
+			
 		}
 		
 	}
