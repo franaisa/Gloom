@@ -137,8 +137,7 @@ namespace Application {
 		_map=args.at(0).getString();
 
 		// Inicializar dispatcher - 0 es el id del server
-		// @deprecated El numero de jugadores maximo debe leerse de flash
-		Logic::CEntityFactory::getSingletonPtr()->initDispatcher(0, 12);
+		Logic::CEntityFactory::getSingletonPtr()->initDispatcher(0, args.at(4).getNumber());
 
 		if (!Logic::CEntityFactory::getSingletonPtr()->loadBluePrints("blueprints_server.txt")) {
 			_app->exitRequest();
@@ -163,7 +162,7 @@ namespace Application {
 			mapList.push_back(_map);
 
 			state->serverSettings(args.at(2).getString(), args.at(3).getString(), args.at(4).getNumber(), args.at(5).getNumber(), false, false);
-			state->gameSettings(mapList, false, std::pair<unsigned int, unsigned int>(args.at(7).getNumber(), 0), args.at(8).getNumber(), false, args.at(11).getBool());
+			state->gameSettings(mapList, false, std::pair<unsigned int, unsigned int>(args.at(7).getNumber(), 0), args.at(8).getNumber(), args.at(6).getBool(), args.at(11).getBool());
 		}
 		else if (mode == "DeathMatch") {
 			_app->setState("DMServer");
@@ -172,7 +171,7 @@ namespace Application {
 			mapList.push_back(_map);
 
 			state->serverSettings(args.at(2).getString(), args.at(3).getString(), args.at(4).getNumber(), args.at(5).getNumber(), false, false);
-			state->gameSettings(mapList, false, std::pair<unsigned int, unsigned int>(args.at(7).getNumber(), 0), args.at(8).getNumber(), false, args.at(11).getBool());
+			state->gameSettings(mapList, false, std::pair<unsigned int, unsigned int>(args.at(7).getNumber(), 0), args.at(8).getNumber(), args.at(6).getBool(), args.at(11).getBool());
 		}
 		else if (mode == "Team DeathMatch") {
 			_app->setState("TDMServer");
@@ -181,21 +180,9 @@ namespace Application {
 			mapList.push_back(_map);
 
 			state->serverSettings(args.at(2).getString(), args.at(3).getString(), args.at(4).getNumber(), args.at(5).getNumber(), false, false);
-			state->gameSettings(mapList, false, std::pair<unsigned int, unsigned int>(args.at(7).getNumber(), 0), args.at(8).getNumber(), false, args.at(11).getBool(), true);
+			state->gameSettings(mapList, false, std::pair<unsigned int, unsigned int>(args.at(7).getNumber(), 0), args.at(8).getNumber(), args.at(6).getBool(), args.at(11).getBool(), true);
 		}
 
-		/*
-		pushFile("DeathMatch");
-			pushFile("Duel");
-			pushFile("Team DeathMatch");
-
-		*/
-
-		// @todo En funcion de los datos leidos de flash, establecer los parametros
-		// de configuracion del servidor y de la partida
-		
-
-		
 		//state->gameSettings(mapList, false, std::pair<unsigned int, unsigned int>(15, 0), 5, false, false, true);
 		/*
 					0			manager.mapas.actualMap, 
@@ -204,7 +191,7 @@ namespace Application {
 					3			manager.settings.serverpass.text,
 					4			int(manager.settings.players.text),
 					5			int(manager.settings.spectators.text),
-					6			int(manager.gamerules.deathlimit.text),
+					6			manager.gamerules.forcerespawn,
 					7			int(manager.gamerules.matchtime.text),
 					8			int(manager.gamerules.fraglimit.text),
 					9			manager.settings.autobalance.selected,

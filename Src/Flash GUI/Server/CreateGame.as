@@ -26,7 +26,6 @@ package Server
 			if (manager.modo.actualMode == null || manager.mapas.actualMap == null) {
 				return;
 			}
-			
 			ExternalInterface.call("createGame", 
 								manager.mapas.actualMap, 
 								manager.modo.actualMode, 
@@ -34,7 +33,7 @@ package Server
 								manager.settings.serverpass.text,
 								int(manager.settings.players.text),
 								int(manager.settings.spectators.text),
-								int(manager.gamerules.deathlimit.text),
+								manager.gamerules.forcerespawn.selected,
 								int(manager.gamerules.matchtime.text),
 								int(manager.gamerules.fraglimit.text),
 								manager.settings.autobalance.selected,
