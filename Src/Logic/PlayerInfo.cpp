@@ -170,6 +170,18 @@ namespace Logic {
 
 	//______________________________________________________________________________
 
+	void CPlayerInfo::setFrags(int frags) {
+		this->_frags = frags;
+	}
+
+	//________________________________________________________________________
+
+	void CPlayerInfo::setDeaths(int deaths) {
+		this->_deaths = deaths;
+	}
+
+	//______________________________________________________________________________
+
 	void CPlayerInfo::isSpawned(bool playing) {
 		_isPlaying = playing;
 	}

@@ -18,6 +18,7 @@ Contiene la implementación del estado del mundo.
 #include "Logic/Maps/EntityFactory.h"
 #include "Logic/Maps/Scoreboard.h"
 #include "Logic/Entity/Entity.h"
+#include "Logic/GameNetPlayersManager.h"
 
 #include "Map/MapEntity.h"
 
@@ -194,9 +195,34 @@ namespace Logic {
 
 		//serialize all entities
 		for(;entities!=end;++entities){
+			std::string entityType = entities->second.entity->getType();
+			
 			worldState.serialize(entities->second.id);
-			worldState.serialize(entities->second.entity->getType(), false);
+			worldState.serialize(entityType, false);
 			worldState.serialize(entities->second.entity->getName(), false);
+
+			// Si se trata de un player, serializamos el equipo al que pertenece y su id de red
+			if(entityType == "Hound" || entityType == "Archangel" || entityType == "Shadow" || entityType == "Screamer") {
+				Logic::CGameNetPlayersManager* playersMgr = Logic::CGameNetPlayersManager::getSingletonPtr();
+				Logic::CPlayerInfo playerInfo = playersMgr->getPlayerByEntityId(entities->second.id);
+				Net::NetID netId = playerInfo.getNetId();
+				Logic::TeamFaction::Enum team = playerInfo.getTeam();
+				int frags = playerInfo.getFrags();
+				int deaths = playerInfo.getDeaths();
+
+				worldState.write( &netId, sizeof(netId) );
+				worldState.write( &team, sizeof(team) );
+				worldState.write( &frags, sizeof(frags) );
+				worldState.write( &deaths, sizeof(deaths) );
+			}
+
+			if(entityType == "Spectator") {
+				Logic::CPlayerInfo playerInfo = Logic::CGameNetPlayersManager::getSingletonPtr()->getPlayerByEntityId(entities->second.id);
+				Net::NetID netId = playerInfo.getNetId();
+
+				worldState.write( &netId, sizeof(netId) );
+			}
+
 			if(entities->second.messages.empty()){
 				worldState.serialize(0);
 				continue;
@@ -247,6 +273,44 @@ namespace Logic {
 				std::cerr << "Warning: Habia una entidad con el id que se ha pasado, se va a liar parda!!!" << std::endl;
 			}
 
+			//if the entity is a player, we must add it to the scoreboard and read its team faction
+			if(entityType == "Hound" || entityType == "Archangel" || entityType == "Shadow" || entityType == "Screamer") {
+				Net::NetID netId;
+				Logic::TeamFaction::Enum team;
+				int frags, deaths;
+
+				worldState.read( &netId, sizeof(netId) );
+				worldState.read( &team, sizeof(team) );
+				worldState.read( &frags, sizeof(frags) );
+				worldState.read( &deaths, sizeof(deaths) );
+
+				Logic::CGameNetPlayersManager* playersMgr = Logic::CGameNetPlayersManager::getSingletonPtr();
+				playersMgr->addPlayer(netId, entityName);
+				playersMgr->setEntityID(netId, id);
+				playersMgr->setPlayerTeam(netId, team);
+				playersMgr->setPlayerState(netId, true);
+				playersMgr->setFrags(netId, frags);
+				playersMgr->setDeaths(netId, deaths);
+
+				if(!Logic::CScoreboard::getSingletonPtr()->getPlayer(entityName))
+					Logic::CScoreboard::getSingletonPtr()->addPlayer(entityName, entity, entityType);
+				else
+					Logic::CScoreboard::getSingletonPtr()->changePlayerEntity(entityName, entity, entityType);
+			}
+
+			if(entityType == "Spectator") {
+				Net::NetID netId;
+				worldState.read( &netId, sizeof(netId) );
+
+				Logic::CGameNetPlayersManager* playersMgr = Logic::CGameNetPlayersManager::getSingletonPtr();
+				playersMgr->addPlayer(netId, entityName);
+				playersMgr->setEntityID(netId, id);
+				playersMgr->setPlayerTeam(netId, Logic::TeamFaction::eNONE);
+				playersMgr->setPlayerState(netId, false);
+				playersMgr->setFrags(netId, 0);
+				playersMgr->setDeaths(netId, 0);
+			}
+
 			unsigned int messageSize;
 
 			worldState.deserialize(messageSize);
@@ -264,14 +328,6 @@ namespace Logic {
 
 				//send message to entity
 				addChange(entity, messageReceived);
-			}
-
-			//if the entity is a player, we must add it to the scoreboard
-			if(entityType == "Hound" || entityType == "Archangel" || entityType == "Shadow" || entityType == "Screamer"){
-				if(!Logic::CScoreboard::getSingletonPtr()->getPlayer(entityName))
-					Logic::CScoreboard::getSingletonPtr()->addPlayer(entityName, entity, entityType);
-				else
-					Logic::CScoreboard::getSingletonPtr()->changePlayerEntity(entityName, entity, entityType);
 			}
 		}
 

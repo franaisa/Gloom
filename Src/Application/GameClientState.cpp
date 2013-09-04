@@ -33,6 +33,7 @@ Contiene la implementación del estado de juego.
 #include "Logic/Maps/Scoreboard.h"
 #include "Logic/Entity/Components/Camera.h"
 #include "Logic/Maps/WorldState.h"
+#include "Logic/Entity/Components/CharacterName.h"
 
 #include "Hikari.h"
 #include "FlashValue.h"
@@ -118,88 +119,189 @@ namespace Application {
 			case Net::LOAD_PLAYERS: {
 				// Cargamos la informacion del player que nos han enviado
 				Logic::TEntityID entityID;
+				Logic::TeamFaction::Enum team;
 				std::string playerClass, name;
+				Net::NetID newPlayerNetId;
 				int nbPlayers;
 
 				buffer.read(&nbPlayers, sizeof(nbPlayers));
+				buffer.read(&newPlayerNetId, sizeof(newPlayerNetId));
 				buffer.read(&entityID, sizeof(entityID));
 				buffer.deserialize(name);
 				buffer.deserialize(playerClass);
 
-				// Llamo al metodo de creacion del jugador
-				Logic::CEntity * player = Logic::CServer::getSingletonPtr()->getMap()->createPlayer(name, playerClass, entityID);
+				if(playerClass == "Spectator") {
+					// Actualizamos el gestor de players
+					Logic::CGameNetPlayersManager* playersMgr = Logic::CGameNetPlayersManager::getSingletonPtr();
+					if( !playersMgr->existsByNetId(newPlayerNetId) )
+						playersMgr->addPlayer(newPlayerNetId, name);
+					else
+						playersMgr->setPlayerNickname(newPlayerNetId, name);
+				
+					playersMgr->setEntityID(newPlayerNetId, entityID);
+					playersMgr->setPlayerTeam(newPlayerNetId, Logic::TeamFaction::eNONE);
+					playersMgr->setPlayerState(newPlayerNetId, false);
+					playersMgr->setFrags(newPlayerNetId, 0);
+					playersMgr->setDeaths(newPlayerNetId, 0);
 
-				//Lo cargamos en el gestor de players, pero aqui tenemos que ver si el player ya existía antes, 
-				//para en vez de re-cargarlo simplemente cambiarle la clase
-				std::string playerName = player->getName();
+					// Pedimos al scoreboard que se borre este nombre por si acaso
+					// hubiera habido algun jugador que haya pasado a modo espectador
+					Logic::CScoreboard::getSingletonPtr()->deletePlayer(name);
 
-				if(!Logic::CScoreboard::getSingletonPtr()->getPlayer(playerName))
-					Logic::CScoreboard::getSingletonPtr()->addPlayer(playerName, player, playerClass);
-				else
-					Logic::CScoreboard::getSingletonPtr()->changePlayerEntity(playerName, player, playerClass);
+					//@todo añadir al scoreboard como spectating
+				}
+				else {
+					buffer.read(&team, sizeof(team));
 
-				// No es necesario enviar confirmacion
-				player->activate();
-				player->start();
+					// Llamo al metodo de creacion del jugador
+					Logic::CEntity * player = Logic::CServer::getSingletonPtr()->getMap()->createPlayer(name, playerClass, entityID);
 
+					//Lo cargamos en el gestor de players, pero aqui tenemos que ver si el player ya existía antes, 
+					//para en vez de re-cargarlo simplemente cambiarle la clase
+					std::string playerName = player->getName();
+
+					if(!Logic::CScoreboard::getSingletonPtr()->getPlayer(playerName))
+						Logic::CScoreboard::getSingletonPtr()->addPlayer(playerName, player, playerClass);
+					else
+						Logic::CScoreboard::getSingletonPtr()->changePlayerEntity(playerName, player, playerClass);
+
+					// Actualizamos el gestor de players
+					Logic::CGameNetPlayersManager* playersMgr = Logic::CGameNetPlayersManager::getSingletonPtr();
+					if( !playersMgr->existsByNetId(newPlayerNetId) )
+						playersMgr->addPlayer(newPlayerNetId, name);
+					else
+						playersMgr->setPlayerNickname(newPlayerNetId, name);
+				
+					playersMgr->setEntityID(newPlayerNetId, entityID);
+					playersMgr->setPlayerTeam(newPlayerNetId, team);
+					playersMgr->setPlayerState(newPlayerNetId, true);
+					playersMgr->setFrags(newPlayerNetId, 0);
+					playersMgr->setDeaths(newPlayerNetId, 0);
+
+					// No es necesario enviar confirmacion
+					player->activate();
+					player->start();
+				}
+				
 				break;
 			}
 
 			case Net::LOAD_LOCAL_PLAYER: {
 				// Deserializamos la información de nuestro player
+				Net::NetID newPlayerNetId;
+				buffer.read(&newPlayerNetId, sizeof(newPlayerNetId));
 				Logic::TEntityID entityID;
 				buffer.read(&entityID, sizeof(entityID));
 				std::string playerClass, name;
 				buffer.deserialize(name);
 				buffer.deserialize(playerClass);
 
-				// Creamos al jugador como local (es decir, lo seteamos
-				// como el jugador controlado por las teclas).
-				Logic::CEntity* player = Logic::CServer::getSingletonPtr()->getMap()->createLocalPlayer(name, playerClass, entityID);
+				Logic::CGameNetPlayersManager* playersMgr = Logic::CGameNetPlayersManager::getSingletonPtr();
+				if(playerClass == "Spectator") {
+					Logic::CEntity* spectator = Logic::CServer::getSingletonPtr()->getMap()->createLocalPlayer(name, playerClass, entityID);
+					spectator->activate();
+					spectator->start();
 
-				//Lo cargamos en el gestor de players, pero aqui tenemos que ver si el player ya existía antes, 
-				//para en vez de re-cargarlo simplemente cambiarle la clase
-				std::string playerName = player->getName();
+					Logic::CEntity* camera = Logic::CServer::getSingletonPtr()->getMap()->getEntityByName("Camera");
+					assert(camera != NULL && "Error, eres un lamer");
+					camera->getComponent<Logic::CCamera>("CCamera")->setTarget(spectator);
 
-				if(!Logic::CScoreboard::getSingletonPtr()->getPlayer(playerName))
-					Logic::CScoreboard::getSingletonPtr()->addLocalPlayer(playerName, player, playerClass);
-				else
-					Logic::CScoreboard::getSingletonPtr()->changePlayerEntity(playerName, player, playerClass);
-
-				//activamos la entidad
-				player->activate();
-				player->start();
-
-				// Fijamos el objetivo de la camara
-				Logic::CEntity* camera = Logic::CServer::getSingletonPtr()->getMap()->getEntityByName("Camera");
-				assert(camera != NULL && "Error: Esto no se puede hacer asi que sois unos lamers, ahora el servidor que hace?");
-				camera->getComponent<Logic::CCamera>("CCamera")->setTarget(player);
-
-				//ack message to avoid deads
-				Net::NetMessageType msgping = Net::LOCAL_PLAYER_LOADED;
-				Logic::TEntityID id = player->getEntityID();
-				Net::CBuffer ackBuffer(sizeof(msgping) + sizeof(id));
-				ackBuffer.write(&msgping, sizeof(msgping));
-				ackBuffer.write(&id, sizeof(id));
-				_netMgr->broadcast(ackBuffer.getbuffer(), ackBuffer.getSize());
-
-				break;
-			}
-			case Net::LOAD_LOCAL_SPECTATOR: {
-				// Deserializamos la info del espectador y lo cargamos
-				Logic::TEntityID entityId;
-				std::string nickname;
+					// Actualizamos el gestor de players
+					if( !playersMgr->existsByNetId(newPlayerNetId) )
+						playersMgr->addPlayer(newPlayerNetId, name);
+					else
+						playersMgr->setPlayerNickname(newPlayerNetId, name);
 				
-				buffer.read( &entityId, sizeof(entityId) );
-				buffer.deserialize(nickname);
-				
-				Logic::CEntity* spectator = Logic::CServer::getSingletonPtr()->getMap()->createLocalPlayer(nickname, "Spectator", entityId);
-				spectator->activate();
-				spectator->start();
+					playersMgr->setEntityID(newPlayerNetId, entityID);
+					playersMgr->setPlayerTeam(newPlayerNetId, Logic::TeamFaction::eNONE);
+					playersMgr->setPlayerState(newPlayerNetId, false);
+					playersMgr->setFrags(newPlayerNetId, 0);
+					playersMgr->setDeaths(newPlayerNetId, 0);
 
-				Logic::CEntity* camera = Logic::CServer::getSingletonPtr()->getMap()->getEntityByName("Camera");
-				assert(camera != NULL && "Error, eres un lamer");
-				camera->getComponent<Logic::CCamera>("CCamera")->setTarget(spectator);
+					// Pedimos al scoreboard que se borre este nombre por si acaso
+					// hubiera habido algun jugador que haya pasado a modo espectador
+					Logic::CScoreboard::getSingletonPtr()->deletePlayer(name);
+
+					//@todo añadir al scoreboard como spectating
+
+					// Recorremos cada una de las entidades del gestor de players, para
+					// indicarles que nosotros somos el player para saber como deberiamos
+					// visualizar sus nombres
+					auto it = playersMgr->begin();
+					for(; it != playersMgr->end(); ++it) {
+						if( it->isSpawned() ) {
+							Logic::CEntity* player = Logic::CServer::getSingletonPtr()->getMap()->getEntityByID( it->getEntityId().first );
+							player->getComponent<Logic::CCharacterName>("CCharacterName")->setVisible(true);
+						}
+					}
+				}
+				else {
+					Logic::TeamFaction::Enum team;
+					buffer.read(&team, sizeof(team));
+
+					// Creamos al jugador como local (es decir, lo seteamos
+					// como el jugador controlado por las teclas).
+					Logic::CEntity* player = Logic::CServer::getSingletonPtr()->getMap()->createLocalPlayer(name, playerClass, entityID);
+
+					//Lo cargamos en el gestor de players, pero aqui tenemos que ver si el player ya existía antes, 
+					//para en vez de re-cargarlo simplemente cambiarle la clase
+					std::string playerName = player->getName();
+
+					if(!Logic::CScoreboard::getSingletonPtr()->getPlayer(playerName))
+						Logic::CScoreboard::getSingletonPtr()->addLocalPlayer(playerName, player, playerClass);
+					else
+						Logic::CScoreboard::getSingletonPtr()->changePlayerEntity(playerName, player, playerClass);
+
+					// Actualizamos el gestor de players
+					if( !playersMgr->existsByNetId(newPlayerNetId) )
+						playersMgr->addPlayer(newPlayerNetId, name);
+					else
+						playersMgr->setPlayerNickname(newPlayerNetId, name);
+				
+					playersMgr->setEntityID(newPlayerNetId, entityID);
+					playersMgr->setPlayerTeam(newPlayerNetId, team);
+					playersMgr->setPlayerState(newPlayerNetId, true);
+					playersMgr->setFrags(newPlayerNetId, 0);
+					playersMgr->setDeaths(newPlayerNetId, 0);
+
+					//activamos la entidad
+					player->activate();
+					player->start();
+
+					// Fijamos el objetivo de la camara
+					Logic::CEntity* camera = Logic::CServer::getSingletonPtr()->getMap()->getEntityByName("Camera");
+					assert(camera != NULL && "Error: Esto no se puede hacer asi que sois unos lamers, ahora el servidor que hace?");
+					camera->getComponent<Logic::CCamera>("CCamera")->setTarget(player);
+
+					//ack message to avoid deads
+					Net::NetMessageType msgping = Net::LOCAL_PLAYER_LOADED;
+					Logic::TEntityID id = player->getEntityID();
+					Net::CBuffer ackBuffer(sizeof(msgping) + sizeof(id));
+					ackBuffer.write(&msgping, sizeof(msgping));
+					ackBuffer.write(&id, sizeof(id));
+					_netMgr->broadcast(ackBuffer.getbuffer(), ackBuffer.getSize());
+
+					// Recorremos cada una de las entidades del gestor de players, para
+					// indicarles que nosotros somos el player para saber como deberiamos
+					// visualizar sus nombres
+					Logic::TeamFaction::Enum myTeam = playersMgr->getTeamUsingEntityId(entityID);
+
+					auto it = playersMgr->begin();
+					for(; it != playersMgr->end(); ++it) {
+						
+						if( it->isSpawned() ) {
+							Logic::TEntityID id = it->getEntityId().first;
+
+							if(entityID != id) {
+								Logic::CEntity* player = Logic::CServer::getSingletonPtr()->getMap()->getEntityByID(id);
+								Logic::TeamFaction::Enum playerTeam = playersMgr->getTeamUsingEntityId(id);
+
+								if(myTeam == Logic::TeamFaction::eNONE || playerTeam == Logic::TeamFaction::eNONE || myTeam == playerTeam)
+									player->getComponent<Logic::CCharacterName>("CCharacterName")->setVisible(true);
+							}
+						}
+					}
+				}
 
 				break;
 			}
@@ -230,10 +332,18 @@ namespace Application {
 				break;
 			}
 			case Net::PLAYER_OFF_MATCH: {
+				Net::NetID playerNetId;
+				buffer.read(&playerNetId, sizeof(playerNetId));
 				std::string name;
 				buffer.deserialize(name);
 
+				// Por si acaso estaba registrado
 				Logic::CScoreboard::getSingletonPtr()->deletePlayer(name);
+
+				// Actualizamos el gestor de players
+				Logic::CGameNetPlayersManager* playersMgr = Logic::CGameNetPlayersManager::getSingletonPtr();
+				if( playersMgr->existsByNetId(playerNetId) )
+					playersMgr->removePlayer(playerNetId);
 
 				break;
 			}
@@ -358,6 +468,7 @@ namespace Application {
 			case 2:
 			case 3:
 			case 4:
+			case 5:
 
 				_seleccion->hide();
 				_menuVisile = false;
@@ -372,36 +483,6 @@ namespace Application {
 				}
 
 				break;
-			case 5: {
-				_seleccion->hide();
-				_menuVisile = false;
-				//random de la clase y lo enviamos por red
-				/*int randomclass = ((rand()*clock())%4)+1;
-				msg.serialize(msgType);
-				msg.serialize(randomclass);
-				_netMgr->broadcast( msg.getbuffer(), msg.getSize() );
-				*/
-
-				// @deprecated Provisionalmente usamos el boton de random como boton
-				// espectador
-				Net::NetMessageType spectatorSelectedMsg = Net::SPECTATE_REQUEST;
-				Net::CBuffer buffer ( sizeof(spectatorSelectedMsg) + sizeof(selectedClass) );
-				buffer.write(&spectatorSelectedMsg, sizeof(spectatorSelectedMsg));
-				buffer.serialize(selectedClass);
-				_netMgr->broadcast( buffer.getbuffer(), buffer.getSize() );
-
-				Input::CPlayerController* controller = Input::CServer::getSingletonPtr()->getPlayerController();
-				Logic::CEntity* localPlayer = controller->getControllerAvatar();
-				if(localPlayer){
-					controller->setControlledAvatar(NULL);
-					controller->activate();
-
-					// Como pasamos a modo espectador nos borramos del scoreboard
-					Logic::CScoreboard::getSingletonPtr()->deletePlayer( localPlayer->getName() );
-				}
-
-				break;
-			}
 		}//switch
 
 		//enviamos el mensaje

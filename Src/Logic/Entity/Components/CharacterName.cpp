@@ -20,6 +20,10 @@
 #include "Application/BaseApplication.h"
 #include "Map/MapEntity.h"
 #include "Logic/Maps/Map.h"
+#include "Logic/GameNetPlayersManager.h"
+
+#include "Input/Server.h"
+#include "Input/PlayerController.h"
 
 using namespace std;
 
@@ -81,17 +85,40 @@ namespace Logic {
 	//________________________________________________________________________
 
 	void CCharacterName::onStart() {
+		// Obtenemos la entidad que corresponde al player y comprobamos su tipo
+		// Si se trata de un espectador, mostramos siempre el nombre.
+		// En caso contrario, si estamos en tdm mostramos nuestro nombre si el 
+		// player esta en nuestro equipo. Si el player no esta en nuestro equipo
+		// playerInSight se encargara de hacer que nos mostremos encendidos
+		CGameNetPlayersManager* playersMgr = CGameNetPlayersManager::getSingletonPtr();
+		TeamFaction::Enum myTeam = playersMgr->getTeamUsingEntityId( _entity->getEntityID() );
+		if(myTeam == TeamFaction::eRED_TEAM)
+			_color = Vector3(1.0f, 0.0f, 0.0f);
+		else if(myTeam == TeamFaction::eBLUE_TEAM)
+			_color = Vector3(0.0f, 0.0f, 1.0f);
+		 
+		bool showName = false;
+		CEntity* playerEntity = Input::CServer::getSingletonPtr()->getPlayerController()->getControllerAvatar();
+		if(playerEntity != NULL) {
+			if(playerEntity->getType() == "Spectator") {
+				showName = true;
+			}
+			else {
+				TeamFaction::Enum playerTeam = playersMgr->getTeamUsingEntityId( playerEntity->getEntityID() );
+				
+				if(myTeam == TeamFaction::eNONE || playerTeam == TeamFaction::eNONE)
+					showName = false;
+				else if(playerTeam == myTeam)
+					showName = true;
+			}
+		}
+
 		_text2d = new Graphics::CMovable2dText();
 		// Debido a que el pivote del billboard tambien se modifica si colgamos la entidad
 		// de una entidad grafica, creamos un nodo nuevo y actualizamos su posicion en el tick
 		_text2d->load( _entity->getMap()->getScene(), NULL, _offset, _entity->getName(), _font, Vector4(_color.x, _color.y, _color.z, 1.0f), _size );
-		
-		// @todo
-		// Comprobamos si tenemos equipo, si no lo tenemos, directamente no mostramos el nombre
-		// porque todos somos enemigos. Si estamos en el mismo equipo del player, mostramos nuestro
-		// nombre con el color que corresponda, y si no lo estamos configuramos el color pero
-		// no mostramos el nombre
-		_text2d->setVisible(false);
+		// En funcion del equipo del player dibujamos el nombre o no
+		_text2d->setVisible(showName);
 	}
 
 	//________________________________________________________________________

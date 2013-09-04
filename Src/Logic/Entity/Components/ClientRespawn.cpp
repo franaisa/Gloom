@@ -186,12 +186,20 @@ namespace Logic  {
 
 			Logic::CScoreboard::getSingletonPtr()->addKill(killer->getName());
 			Logic::CScoreboard::getSingletonPtr()->addDeath(_entity->getName());
+
+			Logic::CGameNetPlayersManager* playersMgr = Logic::CGameNetPlayersManager::getSingletonPtr();
+			playersMgr->addFragUsingEntityID(killer->getEntityID());
+			playersMgr->addDeathUsingEntityID(_entity->getEntityID());
 		}
 		//sino ha sido un player es que se ha suicidado el retard
 		else{
 			Logic::GUIKillersMessage::getSingletonPtr()->suicide(_entity->getName());
 			Logic::CScoreboard::getSingletonPtr()->addDeath(_entity->getName());
 			Logic::CScoreboard::getSingletonPtr()->subKill(_entity->getName());
+
+			Logic::CGameNetPlayersManager* playersMgr = Logic::CGameNetPlayersManager::getSingletonPtr();
+			playersMgr->substractFragUsingEntityID(_entity->getEntityID());
+			playersMgr->addDeathUsingEntityID(_entity->getEntityID());
 		}
 	}
 

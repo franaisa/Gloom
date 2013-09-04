@@ -157,9 +157,27 @@ namespace Logic {
 
 	void CGameNetPlayersManager::setPlayerTeam(Net::NetID playerNetId, TeamFaction::Enum team) {
 		TNetConnectedPlayersTable::iterator it = _netConnectedPlayers.find(playerNetId);
-		assert(it != _netConnectedPlayers.end() && "No se puede asignar un estado al player porque no existe en el Manager");
+		assert(it != _netConnectedPlayers.end() && "No se puede asignar un equipo al player porque no existe en el Manager");
 
 		it->second->setTeam(team);
+	}
+
+	//______________________________________________________________________________
+
+	void CGameNetPlayersManager::setFrags(Net::NetID playerNetId, int frags) {
+		TNetConnectedPlayersTable::iterator it = _netConnectedPlayers.find(playerNetId);
+		assert(it != _netConnectedPlayers.end() && "No se puede asignar frags al player porque no existe en el Manager");
+
+		it->second->setFrags(frags);
+	}
+
+	//________________________________________________________________________
+
+	void CGameNetPlayersManager::setDeaths(Net::NetID playerNetId, int deaths) {
+		TNetConnectedPlayersTable::iterator it = _netConnectedPlayers.find(playerNetId);
+		assert(it != _netConnectedPlayers.end() && "No se puede asignar deaths al player porque no existe en el Manager");
+
+		it->second->setDeaths(deaths);
 	}
 
 	//______________________________________________________________________________
