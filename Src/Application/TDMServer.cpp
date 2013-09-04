@@ -37,6 +37,8 @@ namespace Application {
 													_loopMaps(true),
 													_currentMap(0),
 													_inEndGame(false),
+													_unlimitedTime(false),
+													_unlimitedScore(false),
 													_blueTeamScore(0),
 													_redTeamScore(0) {
 
@@ -62,6 +64,13 @@ namespace Application {
 		this->_warmUp = warmUp;
 		// Queremos entrar en un equipo automaticamente?
 		this->_autoBalanceTeams = autoBalanceTeams;
+
+		// Comprobamos si se ha configurado el tiempo y el score 
+		// como infinito
+		if(this->_gameTime == 0)
+			_unlimitedTime = true;
+		if(this->_goalScore == 0)
+			_unlimitedScore = true;
 	}
 
 	//______________________________________________________________________________
@@ -94,13 +103,13 @@ namespace Application {
 					// Sino incrementas frags y compruebas si has ganado la partida
 					else {
 						if(team == Logic::TeamFaction::eRED_TEAM) {
-							if(++_redTeamScore == _goalScore) {
+							if(++_redTeamScore == _goalScore && !_unlimitedScore) {
 								endGame();
 								cout << "RED TEAM WINS!" << endl;
 							}
 						}
 						else if(team == Logic::TeamFaction::eBLUE_TEAM) {
-							if(++_blueTeamScore == _goalScore) {
+							if(++_blueTeamScore == _goalScore && !_unlimitedScore) {
 								endGame();
 								cout << "BLUE TEAM WINS!" << endl;
 							}
@@ -136,11 +145,13 @@ namespace Application {
 		// Para ver si tenemos que finalizar el encuentro
 		if(!_inEndGame) {
 			// Controlamos el tiempo de la partida
-			_gameTime -= msecs;
-			if(_gameTime < 0) {
-				std::cout << "TIME IS OVER!" << std::endl;
+			if(!_unlimitedTime) {
+				_gameTime -= msecs;
+				if(_gameTime < 0) {
+					std::cout << "TIME IS OVER!" << std::endl;
 
-				endGame();
+					endGame();
+				}
 			}
 		}
 		// Si la partida ha finalizado dejamos de hacer tick

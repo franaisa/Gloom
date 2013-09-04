@@ -201,6 +201,9 @@ namespace Application {
 
 		Net::CManager* _netMgr;
 
+		bool _infiniteTime;
+		bool _infiniteScore;
+
 		//ñapa porque flash hace lo que le sale de los huevos
 
 		private:

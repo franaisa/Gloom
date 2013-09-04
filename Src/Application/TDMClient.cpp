@@ -28,6 +28,8 @@ namespace Application {
 	void CTDMClient::tick(unsigned int msecs) {
 		CGameClientState::tick(msecs);
 
+		if(_infiniteTime) return;
+
 		// Controlamos el tiempo de la partida
 		_gameTime -= msecs;
 		if(_gameTime < 0) {

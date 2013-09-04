@@ -203,7 +203,6 @@ namespace Application {
 		GameMode::Enum _gameMode;
 		int _gameTimeLeft;
 		unsigned int _goalScore;
-
 	}; // CMenuState
 
 } // namespace Application

@@ -16,6 +16,7 @@ Contiene la implementación del estado de lobby del servidor.
 
 #include "LobbyServerState.h"
 #include "DMServer.h"
+#include "TDMServer.h"
 
 #include "Logic/Server.h"
 #include "Logic/Maps/EntityFactory.h"
@@ -136,8 +137,7 @@ namespace Application {
 		_map=args.at(0).getString();
 
 		// Inicializar dispatcher - 0 es el id del server
-		// @deprecated El numero de jugadores maximo debe leerse de flash
-		Logic::CEntityFactory::getSingletonPtr()->initDispatcher(0, 12);
+		Logic::CEntityFactory::getSingletonPtr()->initDispatcher(0, args.at(4).getNumber());
 
 		if (!Logic::CEntityFactory::getSingletonPtr()->loadBluePrints("blueprints_server.txt")) {
 			_app->exitRequest();
@@ -155,28 +155,34 @@ namespace Application {
 		// Empezamos la partida en modo servidor
 
 		std::string mode = args.at(1).getString();
-		if(mode == "Duel")
+		if(mode == "Duel") {
 			_app->setState("DMServer");
-		else if (mode == "DeathMatch")
+			Application::CDMServer* state = static_cast<CDMServer*>( _app->getNextState() );
+			std::vector<std::string> mapList;
+			mapList.push_back(_map);
+
+			state->serverSettings(args.at(2).getString(), args.at(3).getString(), args.at(4).getNumber(), args.at(5).getNumber(), false, false);
+			state->gameSettings(mapList, false, std::pair<unsigned int, unsigned int>(args.at(7).getNumber(), 0), args.at(8).getNumber(), args.at(6).getBool(), args.at(11).getBool());
+		}
+		else if (mode == "DeathMatch") {
 			_app->setState("DMServer");
-		else if (mode == "Team DeathMatch")
+			Application::CDMServer* state = static_cast<CDMServer*>( _app->getNextState() );
+			std::vector<std::string> mapList;
+			mapList.push_back(_map);
+
+			state->serverSettings(args.at(2).getString(), args.at(3).getString(), args.at(4).getNumber(), args.at(5).getNumber(), false, false);
+			state->gameSettings(mapList, false, std::pair<unsigned int, unsigned int>(args.at(7).getNumber(), 0), args.at(8).getNumber(), args.at(6).getBool(), args.at(11).getBool());
+		}
+		else if (mode == "Team DeathMatch") {
 			_app->setState("TDMServer");
+			Application::CTDMServer* state = static_cast<CTDMServer*>( _app->getNextState() );
+			std::vector<std::string> mapList;
+			mapList.push_back(_map);
 
-		/*
-		pushFile("DeathMatch");
-			pushFile("Duel");
-			pushFile("Team DeathMatch");
+			state->serverSettings(args.at(2).getString(), args.at(3).getString(), args.at(4).getNumber(), args.at(5).getNumber(), false, false);
+			state->gameSettings(mapList, false, std::pair<unsigned int, unsigned int>(args.at(7).getNumber(), 0), args.at(8).getNumber(), args.at(6).getBool(), args.at(11).getBool(), true);
+		}
 
-		*/
-
-		// @todo En funcion de los datos leidos de flash, establecer los parametros
-		// de configuracion del servidor y de la partida
-		Application::CDMServer* state = static_cast<CDMServer*>( _app->getNextState() );
-		std::vector<std::string> mapList;
-		mapList.push_back(_map);
-
-		state->serverSettings(args.at(2).getString(), args.at(3).getString(), args.at(4).getNumber(), args.at(5).getNumber(), false, false);
-		state->gameSettings(mapList, false, std::pair<unsigned int, unsigned int>(args.at(7).getNumber(), 0), 100, args.at(6).getBool(), args.at(11).getBool());
 		//state->gameSettings(mapList, false, std::pair<unsigned int, unsigned int>(15, 0), 5, false, false, true);
 		/*
 					0			manager.mapas.actualMap, 
