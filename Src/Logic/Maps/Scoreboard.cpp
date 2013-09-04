@@ -22,6 +22,7 @@ namespace Logic{
 		_spreeMsgList.push_back("Killing Spree");
 		_spreeMsgList.push_back("Blood Bath");
 		_spreeMsgList.push_back("Ludicrous Massacre");
+		_spreeMsgList.push_back("Gruesome Carnage");
 		_spreeMsgList.push_back("Daunting Feast");
 		_spreeMsgList.push_back("Wicked Carnival");
 		_spreeMsgList.push_back("Devil's Playground");

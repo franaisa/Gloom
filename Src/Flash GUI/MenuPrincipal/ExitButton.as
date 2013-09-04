@@ -15,6 +15,10 @@ package MenuPrincipal
 			
 		}
 		
+		
+		protected override function onMouseClick(e:MouseEvent):void {
+			ExternalInterface.call("exitClick");
+		}
 	}
 
 }

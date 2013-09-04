@@ -189,11 +189,12 @@ namespace Logic{
 		_hud->callFunction("updateLife", Hikari::Args(health));
 	}
 	void CHud::hudWeapon(int ammo, int weapon){
-
+		std::cout << "weapon " << weapons[weapon] << std::endl;
 		_hud->callFunction("updateWeapon",Hikari::Args(weapons[weapon]));
 		_hud->callFunction("updateBullets", Hikari::Args(ammo)(weapons[weapon]));
 	}
 	void CHud::hudAmmo(int ammo, int weapon){
+		std::cout << "bullets " << weapons[weapon] << std::endl;
 		_hud->callFunction("updateBullets", Hikari::Args(ammo)(weapons[weapon]));
 	}
 	void CHud::hudSpawn(int spawn){

@@ -7,7 +7,7 @@ namespace Logic {
 	IMP_FACTORYMESSAGE(CMessageKillStreak);
 
 	
-	CMessageKillStreak::CMessageKillStreak() : CMessage(Message::PLAYER_DEAD) {
+	CMessageKillStreak::CMessageKillStreak() : CMessage(Message::KILL_STREAK) {
 		// Nada que hacer
 	}//
 	//----------------------------------------------------------

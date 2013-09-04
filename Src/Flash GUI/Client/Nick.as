@@ -1,4 +1,4 @@
-package  
+package  Client
 {
 	import flash.display.Sprite;
 	import flash.events.TextEvent;
@@ -66,13 +66,13 @@ package
 		private function onMouseOver(event: MouseEvent): void {
 			this.removeEventListener(MouseEvent.MOUSE_OVER, onMouseOver);
 			this.addEventListener(MouseEvent.MOUSE_OUT, onMouseOut);
-			manager.mouseHide();
+			//manager.mouseHide();
 		}
 		
 		private function onMouseOut(e:MouseEvent):void {
 			this.removeEventListener(MouseEvent.MOUSE_OUT, onMouseOut);
 			this.addEventListener(MouseEvent.MOUSE_OVER, onMouseOver);
-			manager.mouseShow();
+			//manager.mouseShow();
 		}
 		
 	}

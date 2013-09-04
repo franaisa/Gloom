@@ -163,6 +163,9 @@ namespace Application {
 		unsigned int _blueTeamScore;
 		unsigned int _redTeamScore;
 
+		bool _unlimitedTime;
+		bool _unlimitedScore;
+
 	}; // CTDMServer
 
 } // namespace Application

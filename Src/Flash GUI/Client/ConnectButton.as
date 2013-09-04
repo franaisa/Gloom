@@ -1,58 +1,35 @@
-package  
+package Client
 {
 	import flash.display.MovieClip;
 	import flash.events.MouseEvent;
 	import flash.external.ExternalInterface;
-	
+	import principal.GloomButton;
 	/**
 	 * ...
 	 * @author Rubén Mulero
 	 */
-	public class ConnectButton extends MovieClip 
+	public class ConnectButton extends GloomButton 
 	{
 		private var manager: NetMenu;
 		
 		public function ConnectButton() 
 		{
-			
+			super();
 			manager = parent as NetMenu;
+		}
+		
+		protected override function onMouseClick(e:MouseEvent):void {
 			
-			this.buttonMode = true;
-			this.addEventListener(MouseEvent.MOUSE_OVER, onMouseOver);
-			this.addEventListener(MouseEvent.CLICK, onMouseClick);
-			ExternalInterface.addCallback("enableButton", enable);
-		}
-		
-		public function enable(): void {
-			this.addEventListener(MouseEvent.MOUSE_OVER, onMouseOver);
-			this.addEventListener(MouseEvent.CLICK, onMouseClick);
-			gotoAndPlay("idle");
-		}
-		
-		private function onMouseOver(event: MouseEvent): void {
-			this.removeEventListener(MouseEvent.MOUSE_OVER, onMouseOver);
-			this.addEventListener(MouseEvent.MOUSE_OUT, onMouseOut);
-			this.gotoAndPlay("rollover");
+			if (manager.currentFrameLabel == "ip") {
+				var ip: String;
+				var nick: String;
+				ip = manager.ip;
+				nick = manager.nick;
+				this.removeEventListener(MouseEvent.MOUSE_OUT, onMouseOut);
+				this.removeEventListener(MouseEvent.MOUSE_OVER, onMouseOver);
+				ExternalInterface.call("connect", ip, nick);
+			}
 			
-		}
-		
-		private function onMouseOut(e:MouseEvent):void {
-			this.removeEventListener(MouseEvent.MOUSE_OUT, onMouseOut);
-			this.addEventListener(MouseEvent.MOUSE_OVER, onMouseOver);
-			this.gotoAndPlay("rollout");
-		}
-		
-		private function onMouseClick(e:MouseEvent):void {
-			
-			var ip: String;
-			var nick: String;
-			ip = manager.ip;
-			nick = manager.nick;
-			this.gotoAndPlay("clicked");
-			this.removeEventListener(MouseEvent.MOUSE_OUT, onMouseOut);
-			this.removeEventListener(MouseEvent.MOUSE_OVER, onMouseOver);
-			trace(nick);
-			ExternalInterface.call("connect", ip, nick);
 		}
 		
 	}

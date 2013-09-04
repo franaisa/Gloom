@@ -22,6 +22,12 @@ package principal
 
 		public function MenuManager() {
 			init();
+			
+		}
+		
+		function childAddedToStage ( event:Event ) : void
+		{
+			 this.setChildIndex(this.getChildAt(getChildIndex(myCursor)), (this.numChildren-1));
 		}
 		
 	//////////////////////////////////////////////////////////////////////////////////////////////
@@ -37,14 +43,15 @@ package principal
 			myCursor = new CustomMouse();
 			myCursor.mouseEnabled = false;
 			myCursor.visible = false;
+			//myCursor.setChildIndex(myCursor, numChildren - 1);
 			
 			// add the cursor  to the scene
 			addChild(myCursor);
-			
+			//this.setChildIndex(this.getChildAt(getChildIndex(myCursor)), (this.numChildren-1));
 			// respond to mouse move events
 			stage.addEventListener(MouseEvent.MOUSE_MOVE, mouseMoveHandler);
 			stage.addEventListener(Event.MOUSE_LEAVE, mouseLeaveHandler);
-			
+			stage.addEventListener ( Event.ADDED , childAddedToStage );
 			
 		}
 		

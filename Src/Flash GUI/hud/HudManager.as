@@ -56,7 +56,6 @@ package hud
 			ExternalInterface.addCallback("updateBullets", updateBullets);
 			ExternalInterface.addCallback("hit", onHit);
 			ExternalInterface.addCallback("reset", reset);
-			
 			/*ironhellgoat.gotoAndPlay("none");
 			shotgun.gotoAndPlay("none");
 			minigun.gotoAndPlay("none");
@@ -116,13 +115,17 @@ package hud
 		}
 		
 		public function updateBullets(bullets:int, weapon: String) {
+			
+			
+			
 			if (equippedWeapon != null && equippedWeapon.name == weapon) {
 				this.bullets.asd.text = bullets.toString();
 			}
 			var weaponaux:MovieClip = getChildByName(weapon) as MovieClip;
-			if (weaponaux.visible == false) {
+			
+			if (weaponaux.currentFrameLabel == "none") {
 				weaponPicked(weapon);
-				weaponaux.visible = true;
+				weaponaux.gotoAndPlay("avaiable");
 			}
 			
 			if (bullets == 0) {

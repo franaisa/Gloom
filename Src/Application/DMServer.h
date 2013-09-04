@@ -165,6 +165,9 @@ namespace Application {
 		// Variables
 		bool _inEndGame;
 
+		bool _unlimitedTime;
+		bool _unlimitedScore;
+
 	}; // CDMServer
 
 } // namespace Application

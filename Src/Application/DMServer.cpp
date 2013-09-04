@@ -34,6 +34,8 @@ namespace Application {
 												  _forceRespawn(false),
 												  _warmUp(true),
 												  //_autoBalanceTeams(false),
+												  _unlimitedTime(false),
+												  _unlimitedScore(false),
 												  _loopMaps(true),
 												  _currentMap(0),
 												  _inEndGame(false) {
@@ -58,6 +60,13 @@ namespace Application {
 		this->_forceRespawn = forceRespawn;
 		// Existe fase de warmUp?
 		this->_warmUp = warmUp;
+
+		// Comprobamos si se ha configurado el tiempo y el score 
+		// como infinito
+		if(this->_gameTime == 0)
+			_unlimitedTime = true;
+		if(this->_goalScore == 0)
+			_unlimitedScore = true;
 	}
 
 	//______________________________________________________________________________
@@ -71,7 +80,7 @@ namespace Application {
 				Logic::TEntityID emitterID = emitter->getEntityID();
 				Logic::CEntity* killer = Logic::CServer::getSingletonPtr()->getMap()->getEntityByID(killerID);
 				if( emitter != killer && isPlayer(killer) ) {
-					if(_playersMgr->addFragUsingEntityID(killerID) == _goalScore) {
+					if(_playersMgr->addFragUsingEntityID(killerID) == _goalScore && !_unlimitedScore) {
 						// fin de partida
 						cout << killer->getName() << " WINS THE MATCH" << endl;
 						endGame();
@@ -99,11 +108,13 @@ namespace Application {
 		// Para ver si tenemos que finalizar el encuentro
 		if(!_inEndGame) {
 			// Controlamos el tiempo de la partida
-			_gameTime -= msecs;
-			if(_gameTime < 0) {
-				std::cout << "TIME IS OVER!" << std::endl;
+			if(!_unlimitedTime) {
+				_gameTime -= msecs;
+				if(_gameTime < 0) {
+					std::cout << "TIME IS OVER!" << std::endl;
 
-				endGame();
+					endGame();
+				}
 			}
 		}
 		// Si la partida ha finalizado dejamos de hacer tick
