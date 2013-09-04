@@ -26,7 +26,6 @@ package Server
 			manager = parent as MenuManager;
 			pos = 0;
 			ExternalInterface.addCallback("pushFile", pushFile);
-			
 		}
 		
 		public function get actualMap():String {
