@@ -34,7 +34,7 @@ package Server
 								manager.settings.serverpass.text,
 								int(manager.settings.players.text),
 								int(manager.settings.spectators.text),
-								int(manager.gamerules.deathlimit.text),
+								manager.gamerules.forcerespawn,
 								int(manager.gamerules.matchtime.text),
 								int(manager.gamerules.fraglimit.text),
 								manager.settings.autobalance.selected,

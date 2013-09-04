@@ -176,7 +176,7 @@ namespace Application {
 		mapList.push_back(_map);
 
 		state->serverSettings(args.at(2).getString(), args.at(3).getString(), args.at(4).getNumber(), args.at(5).getNumber(), false, false);
-		state->gameSettings(mapList, false, std::pair<unsigned int, unsigned int>(args.at(7).getNumber(), 0), 100, false, args.at(11).getBool());
+		state->gameSettings(mapList, false, std::pair<unsigned int, unsigned int>(args.at(7).getNumber(), 0), 100, args.at(6).getBool(), args.at(11).getBool());
 		//state->gameSettings(mapList, false, std::pair<unsigned int, unsigned int>(15, 0), 5, false, false, true);
 		/*
 					0			manager.mapas.actualMap, 
@@ -185,7 +185,7 @@ namespace Application {
 					3			manager.settings.serverpass.text,
 					4			int(manager.settings.players.text),
 					5			int(manager.settings.spectators.text),
-					6			int(manager.gamerules.deathlimit.text),
+					6			manager.gamerules.forcerespawn,
 					7			int(manager.gamerules.matchtime.text),
 					8			int(manager.gamerules.fraglimit.text),
 					9			manager.settings.autobalance.selected,
