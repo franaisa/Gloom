@@ -194,7 +194,7 @@ namespace Application {
 		// Server game settings
 		std::string _serverName;
 		std::string _serverPassword;
-		unsigned int _maxPlayer;
+		unsigned int _maxPlayers;
 		unsigned int _maxSpectators;
 		bool _voteMap;
 		bool _voteKick;

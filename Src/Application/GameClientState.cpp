@@ -347,6 +347,30 @@ namespace Application {
 
 				break;
 			}
+			case Net::NO_FREE_PLAYER_SLOTS: {
+				std::cerr << "Error: There are no available player slots" << std::endl;
+				Input::CPlayerController* playerController = Input::CServer::getSingletonPtr()->getPlayerController();
+				Logic::CEntity* entity = playerController->getControllerAvatar();
+				if( entity )
+					playerController->activate();
+
+				break;
+			}
+			case Net::NO_FREE_SPECTATOR_SLOTS: {
+				std::cerr << "Error: There are no available spectator slots" << std::endl;
+				Input::CPlayerController* playerController = Input::CServer::getSingletonPtr()->getPlayerController();
+				Logic::CEntity* entity = playerController->getControllerAvatar();
+				if( entity )
+					playerController->activate();
+
+				break;
+			}
+			case Net::PLAYER_KICK: {
+				std::cerr << "You have been kicked" << std::endl;
+				disconnect();
+				_app->setState("menu");
+				break;
+			}
 		}
 	}
 
@@ -373,6 +397,10 @@ namespace Application {
 		switch(key.keyId) {
 			case Input::Key::C: {//cambio de clase
 				//primero, quitamos al player de escuchar las teclas, para ello lo desactivamos del playerController
+				
+				Input::CPlayerController* playerController = Input::CServer::getSingletonPtr()->getPlayerController();
+				Logic::CEntity* entity = playerController->getControllerAvatar();
+				
 				Input::CServer::getSingletonPtr()->getPlayerController()->deactivate();
 				//mostramos la gui
 				_seleccion->show();

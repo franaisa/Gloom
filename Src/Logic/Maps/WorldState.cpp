@@ -309,6 +309,8 @@ namespace Logic {
 				playersMgr->setPlayerState(netId, false);
 				playersMgr->setFrags(netId, 0);
 				playersMgr->setDeaths(netId, 0);
+
+				continue;
 			}
 
 			unsigned int messageSize;

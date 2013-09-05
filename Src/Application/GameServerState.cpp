@@ -307,33 +307,83 @@ namespace Application {
 				inBuffer.deserialize(race);
 				
 				if(race == 5) {
-					// Creamos una entidad espectador y la replicamos en el cliente
-					createAndMirrorSpectator(playerNetId);
-				}
-				else {
-					Logic::TeamFaction::Enum team;
-					if(_autoBalanceTeams) {
-						if(_playersMgr->blueTeamPlayers() < _playersMgr->redTeamPlayers()) {
-							team = Logic::TeamFaction::eBLUE_TEAM;
+					unsigned int nbSpectators = 0;
+					for(auto it = _playersMgr->begin(); it != _playersMgr->end(); ++it) {
+						std::pair<Logic::TEntityID, bool> id = _playersMgr->getPlayerId(playerNetId);
+						if(id.second) {
+							if(Logic::CServer::getSingletonPtr()->getMap()->getEntityByID(id.first)->getType() == "Spectator")
+								++nbSpectators;
 						}
-						else {
-							team = Logic::TeamFaction::eRED_TEAM;
-						}
+					}
+
+					if(nbSpectators < _maxSpectators) {
+						// Creamos una entidad espectador y la replicamos en el cliente
+						createAndMirrorSpectator(playerNetId);
+					}
+					else if(_playersMgr->getNumberOfPlayersConnected() > _maxPlayers + _maxSpectators) {
+						Net::NetMessageType kickMsg = Net::PLAYER_KICK;
+						_netMgr->sendTo( playerNetId, &kickMsg, sizeof(kickMsg) );
 					}
 					else {
-						if(_gameMode == GameMode::eTEAM_DEATHMATCH ||
-						   _gameMode == GameMode::eCAPTURE_THE_FLAG) {
-
-							inBuffer.read(&team, sizeof(team));
-						}
-						else {
-							team = Logic::TeamFaction::eNONE;
-						}
+						// Mandamos un mensaje de que no existen slots disponibles
+						// para jugar
+						Net::NetMessageType noSlotsMsg = Net::NO_FREE_SPECTATOR_SLOTS;
+						Net::CBuffer errorBuffer( sizeof(noSlotsMsg) );
+						errorBuffer.write( &noSlotsMsg, sizeof(noSlotsMsg) );
+						_netMgr->sendTo(playerNetId, errorBuffer.getbuffer(), errorBuffer.getSize());
+					}
+				}
+				else {
+					// Si quedan slots para conectarse como jugador permitimos que
+					// se conecte, sino le mandamos un mensaje
+					bool isChanging = false;
+					if( _playersMgr->existsByNetId(playerNetId) ) {
+						isChanging = _playersMgr->getPlayer(playerNetId).isSpawned();
 					}
 
-					// Creamos una entidad jugador con la clase que nos hayan dicho
-					// y la replicamos en el cliente
-					createAndMirrorPlayer(race, playerNetId, team);
+					// Si estamos cambiando de clase, consideramos un jugador menos, ya que
+					// nosotros si no contariamos
+					unsigned nbPlayersPlaying = _playersMgr->getNumberOfPlayersSpawned();
+					if(isChanging)
+						--nbPlayersPlaying;
+
+					if( nbPlayersPlaying < _maxPlayers) {
+						Logic::TeamFaction::Enum team;
+						if(_autoBalanceTeams) {
+							if(_playersMgr->blueTeamPlayers() < _playersMgr->redTeamPlayers()) {
+								team = Logic::TeamFaction::eBLUE_TEAM;
+							}
+							else {
+								team = Logic::TeamFaction::eRED_TEAM;
+							}
+						}
+						else {
+							if(_gameMode == GameMode::eTEAM_DEATHMATCH ||
+							   _gameMode == GameMode::eCAPTURE_THE_FLAG) {
+
+								inBuffer.read(&team, sizeof(team));
+							}
+							else {
+								team = Logic::TeamFaction::eNONE;
+							}
+						}
+
+						// Creamos una entidad jugador con la clase que nos hayan dicho
+						// y la replicamos en el cliente
+						createAndMirrorPlayer(race, playerNetId, team);
+					}
+					else if(_playersMgr->getNumberOfPlayersConnected() > _maxPlayers + _maxSpectators) {
+						Net::NetMessageType kickMsg = Net::PLAYER_KICK;
+						_netMgr->sendTo( playerNetId, &kickMsg, sizeof(kickMsg) );
+					}
+					else {
+						// Mandamos un mensaje de que no existen slots disponibles
+						// para jugar
+						Net::NetMessageType noSlotsMsg = Net::NO_FREE_PLAYER_SLOTS;
+						Net::CBuffer errorBuffer( sizeof(noSlotsMsg) );
+						errorBuffer.write( &noSlotsMsg, sizeof(noSlotsMsg) );
+						_netMgr->sendTo(playerNetId, errorBuffer.getbuffer(), errorBuffer.getSize());
+					}
 				}
 
 				break;
@@ -354,6 +404,8 @@ namespace Application {
 				Logic::CEntity* player = _map->getEntityByID(id);
 				player->activate();
 				player->start();
+
+				break;
 			}
 		}
 
@@ -363,12 +415,17 @@ namespace Application {
 
 	void CGameServerState::connectionPacketReceived(Net::CPaquete* packet) {
 		Net::NetID playerId = packet->getConexion()->getId();
-		
-		// Avisamos al player que quiere conectarse de que nos envie la información
-		// asociada a su player
-		Net::NetMessageType msg = Net::SEND_PLAYER_INFO;
-
-		_netMgr->sendTo( playerId, &msg, sizeof(msg) );
+		Logic::CGameNetPlayersManager* playersMgr = Logic::CGameNetPlayersManager::getSingletonPtr();
+		if(playersMgr->getNumberOfPlayersConnected() >= _maxPlayers + _maxSpectators) {
+			Net::NetMessageType msgType = Net::MATCH_IS_FULL;
+			_netMgr->sendTo( playerId, &msgType, sizeof(msgType) ); 
+		}
+		else {
+			// Avisamos al player que quiere conectarse de que nos envie la información
+			// asociada a su player
+			Net::NetMessageType msg = Net::SEND_PLAYER_INFO;
+			_netMgr->sendTo( playerId, &msg, sizeof(msg) );
+		}
 	} // connexionPacketReceived
 
 	//______________________________________________________________________________
@@ -380,24 +437,26 @@ namespace Application {
 		// Eliminamos la entidad manejada por el cliente que se quiere desconectar.
 		// Para ello comprobamos si tiene asignado un id de entidad. Si no lo tiene, es que
 		// no ha sido creada ninguna entidad (podria estar conectandose).
-		std::pair<Logic::TEntityID, bool> logicIdPair = _playersMgr->getPlayerId(playerNetId);
-		if(logicIdPair.second) {
-			Logic::CEntity* entityToBeDeleted = _map->getEntityByID(logicIdPair.first);
-			Logic::CEntityFactory::getSingletonPtr()->deferredDeleteEntity(entityToBeDeleted, true);
+		if( _playersMgr->existsByNetId(playerNetId) ) {
+			std::pair<Logic::TEntityID, bool> logicIdPair = _playersMgr->getPlayerId(playerNetId);
+			if(logicIdPair.second) {
+				Logic::CEntity* entityToBeDeleted = _map->getEntityByID(logicIdPair.first);
+				Logic::CEntityFactory::getSingletonPtr()->deferredDeleteEntity(entityToBeDeleted, true);
 
-			// A nivel logico, conviene que los clientes sepan quien se desconecta,
-			// especialmente para eliminar cosas del hud
-			Net::NetMessageType ackMsg = Net::PLAYER_OFF_MATCH;
-			Net::CBuffer disconnectMsg;
-			disconnectMsg.write(&ackMsg, sizeof(ackMsg));
-			disconnectMsg.write(&playerNetId, sizeof(playerNetId));
-			disconnectMsg.serialize(entityToBeDeleted->getName(), false);
+				// A nivel logico, conviene que los clientes sepan quien se desconecta,
+				// especialmente para eliminar cosas del hud
+				Net::NetMessageType ackMsg = Net::PLAYER_OFF_MATCH;
+				Net::CBuffer disconnectMsg;
+				disconnectMsg.write(&ackMsg, sizeof(ackMsg));
+				disconnectMsg.write(&playerNetId, sizeof(playerNetId));
+				disconnectMsg.serialize(entityToBeDeleted->getName(), false);
 
-			_netMgr->broadcast(disconnectMsg.getbuffer(), disconnectMsg.getSize());
+				_netMgr->broadcast(disconnectMsg.getbuffer(), disconnectMsg.getSize());
+			}
+
+			// Eliminamos el jugador que se desconecta del manager de jugadores
+			_playersMgr->removePlayer(playerNetId);
 		}
-		
-		// Eliminamos el jugador que se desconecta del manager de jugadores
-		_playersMgr->removePlayer(playerNetId);
 	} // disconnexionPacketReceived
 
 	//______________________________________________________________________________
@@ -407,7 +466,7 @@ namespace Application {
 
 		this->_serverName = serverName;
 		this->_serverPassword = serverPassword;
-		this->_maxPlayer = maxPlayers;
+		this->_maxPlayers = maxPlayers;
 		this->_maxSpectators = maxSpectators;
 		this->_voteMap = voteMap;
 		this->_voteKick = voteKick;
