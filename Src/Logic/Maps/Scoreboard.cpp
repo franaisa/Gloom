@@ -18,7 +18,7 @@ namespace Logic{
 		_guiManager = CGUIManager::getSingletonPtr();
 		_scoreboard = 0;
 
-		_spreeMsgList.reserve(8);
+		_spreeMsgList.reserve(9);
 		_spreeMsgList.push_back("Killing Spree");
 		_spreeMsgList.push_back("Blood Bath");
 		_spreeMsgList.push_back("Ludicrous Massacre");
@@ -109,11 +109,12 @@ namespace Logic{
 	void CScoreboard::deletePlayer(const std::string &name){
 		auto player = _players.find(name);
 
-		if(player!=_players.end())
+		if(player!=_players.end()) {
 			_players.erase(player);
 
-		//ahora avisamos a la GUI de que ha habido un cambio
-		_scoreboard->callFunction("deletePlayer",Hikari::Args(name));
+			//ahora avisamos a la GUI de que ha habido un cambio
+			_scoreboard->callFunction("deletePlayer",Hikari::Args(name));
+		}
 	}
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -139,7 +140,7 @@ namespace Logic{
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	void CScoreboard::showSpreeMessage(unsigned int nbKills) {
-		if(nbKills % 3 == 0 && nbKills < 25) {
+		if(nbKills % 3 == 0 && nbKills < 28) {
 			unsigned int index = nbKills / 3;
 			std::cout << _spreeMsgList[index - 1] << std::endl;
 			//_scoreboard->callFunction( "showSpreeMessage", Hikari::Args(_spreeMsgList[index - 1]) );

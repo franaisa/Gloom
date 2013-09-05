@@ -79,7 +79,6 @@ namespace Logic {
 
 		bool isVisible();
 
-
 	protected:
 
 

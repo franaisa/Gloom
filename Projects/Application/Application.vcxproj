@@ -150,7 +150,6 @@
     <ClInclude Include="..\..\Src\Application\TDMServer.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.cd" />
     <None Include="Galeon.ico" />
     <None Include="small.ico" />
   </ItemGroup>

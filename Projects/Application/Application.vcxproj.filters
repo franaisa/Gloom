@@ -157,6 +157,5 @@
     <None Include="small.ico">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="app.cd" />
   </ItemGroup>
 </Project>
