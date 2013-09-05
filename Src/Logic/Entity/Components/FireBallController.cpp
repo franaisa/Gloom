@@ -16,6 +16,7 @@
 #include "Audio/Server.h"
 
 #include "Logic/Maps/EntityFactory.h"
+#include "Logic/GameNetPlayersManager.h"
 #include "Physics/Server.h"
 #include "Physics/GeometryFactory.h"
 
@@ -109,10 +110,34 @@ namespace Logic {
 						// Comprobamos que el screamer shield que hemos alcanzado
 						// no es el nuestro
 						if( screamerShieldOwner != fireBallOwner) {
-							shared_ptr<CMessageDamaged> dmgMsg = make_shared<CMessageDamaged>();
-							dmgMsg->setDamage(_damage);
-							dmgMsg->setEnemy( _owner->getEntity() );
-							entityContacted->emitMessage(dmgMsg);
+
+							CGameNetPlayersManager* playersMgr = CGameNetPlayersManager::getSingletonPtr();
+							TEntityID enemyId = entityContacted->getEntityID();
+							if( playersMgr->existsByLogicId(enemyId) ) {
+								TeamFaction::Enum enemyTeam = playersMgr->getTeamUsingEntityId(enemyId);
+								TeamFaction::Enum myTeam = playersMgr->getTeamUsingEntityId(_owner->getEntity()->getEntityID());
+
+								if( !playersMgr->friendlyFireIsActive() ) {
+									if(enemyTeam == TeamFaction::eNONE || myTeam == TeamFaction::eNONE || enemyTeam != myTeam) {
+										std::shared_ptr<CMessageDamaged> damageDone = std::make_shared<CMessageDamaged>();
+										damageDone->setDamage(_damage);
+										damageDone->setEnemy( _owner->getEntity() );
+										entityContacted->emitMessage(damageDone);
+									}
+								}
+								else {
+									std::shared_ptr<CMessageDamaged> damageDone = std::make_shared<CMessageDamaged>();
+									damageDone->setDamage(_damage);
+									damageDone->setEnemy( _owner->getEntity() );
+									entityContacted->emitMessage(damageDone);
+								}
+							}
+							else {
+								shared_ptr<CMessageDamaged> dmgMsg = make_shared<CMessageDamaged>();
+								dmgMsg->setDamage(_damage);
+								dmgMsg->setEnemy( _owner->getEntity() );
+								entityContacted->emitMessage(dmgMsg);
+							}
 						}
 					}
 					else {
@@ -210,10 +235,34 @@ namespace Logic {
 		}
 
 		//send damage message
-		std::shared_ptr<CMessageDamaged> damageDone = std::make_shared<CMessageDamaged>();
-		damageDone->setDamage(dmg);
-		damageDone->setEnemy( _owner->getEntity() );
-		entityHit->emitMessage(damageDone);
+		CGameNetPlayersManager* playersMgr = CGameNetPlayersManager::getSingletonPtr();
+		TEntityID enemyId = entityHit->getEntityID();
+		TEntityID playerId = _owner->getEntity()->getEntityID();
+		if( playersMgr->existsByLogicId(enemyId) ) {
+			TeamFaction::Enum enemyTeam = playersMgr->getTeamUsingEntityId(enemyId);
+			TeamFaction::Enum myTeam = playersMgr->getTeamUsingEntityId(playerId);
+
+			if( !playersMgr->friendlyFireIsActive() && enemyId != playerId) {
+				if(enemyTeam == TeamFaction::eNONE || myTeam == TeamFaction::eNONE || enemyTeam != myTeam) {
+					std::shared_ptr<CMessageDamaged> damageDone = std::make_shared<CMessageDamaged>();
+					damageDone->setDamage(dmg);
+					damageDone->setEnemy( _owner->getEntity() );
+					entityHit->emitMessage(damageDone);
+				}
+			}
+			else {
+				std::shared_ptr<CMessageDamaged> damageDone = std::make_shared<CMessageDamaged>();
+				damageDone->setDamage(dmg);
+				damageDone->setEnemy( _owner->getEntity() );
+				entityHit->emitMessage(damageDone);
+			}
+		}
+		else {
+			std::shared_ptr<CMessageDamaged> damageDone = std::make_shared<CMessageDamaged>();
+			damageDone->setDamage(dmg);
+			damageDone->setEnemy( _owner->getEntity() );
+			entityHit->emitMessage(damageDone);
+		}
 
 		//send force message
 		std::shared_ptr<CMessageAddForcePlayer> force = std::make_shared<CMessageAddForcePlayer>();

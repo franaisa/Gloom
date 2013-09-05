@@ -26,6 +26,7 @@ Contiene la implementación del componente que representa al soulReaper.
 #include "Logic/Entity/Components/Graphics.h"
 #include "Logic/Entity/Components/PhysicDynamicEntity.h"
 #include "Logic/Entity/Components/PhysicStaticEntity.h"
+#include "Logic/GameNetPlayersManager.h"
 
 #include "Logic/Messages/MessageControl.h"
 #include "Logic/Messages/MessageActivate.h"
@@ -108,10 +109,35 @@ namespace Logic {
 				return;
 			}
 			if((*it).entity != _entity && (*it).entity->getType() != "ScreamerShield"){
-				std::shared_ptr<CMessageDamaged> m = std::make_shared<CMessageDamaged>();
-				m->setDamage(_primaryFireDamage);
-				m->setEnemy(_entity);
-				(*it).entity->emitMessage(m);
+				//send damage message
+				CGameNetPlayersManager* playersMgr = CGameNetPlayersManager::getSingletonPtr();
+				TEntityID enemyId = (*it).entity->getEntityID();
+				TEntityID playerId = _entity->getEntityID();
+				if( playersMgr->existsByLogicId(enemyId) ) {
+					TeamFaction::Enum enemyTeam = playersMgr->getTeamUsingEntityId(enemyId);
+					TeamFaction::Enum myTeam = playersMgr->getTeamUsingEntityId(playerId);
+
+					if( !playersMgr->friendlyFireIsActive() && enemyId != playerId) {
+						if(enemyTeam == TeamFaction::eNONE || myTeam == TeamFaction::eNONE || enemyTeam != myTeam) {
+							std::shared_ptr<CMessageDamaged> damageDone = std::make_shared<CMessageDamaged>();
+							damageDone->setDamage(_primaryFireDamage);
+							damageDone->setEnemy( _entity );
+							(*it).entity->emitMessage(damageDone);
+						}
+					}
+					else {
+						std::shared_ptr<CMessageDamaged> damageDone = std::make_shared<CMessageDamaged>();
+						damageDone->setDamage(_primaryFireDamage);
+						damageDone->setEnemy( _entity );
+						(*it).entity->emitMessage(damageDone);
+					}
+				}
+				else {
+					std::shared_ptr<CMessageDamaged> damageDone = std::make_shared<CMessageDamaged>();
+					damageDone->setDamage(_primaryFireDamage);
+					damageDone->setEnemy( _entity );
+					(*it).entity->emitMessage(damageDone);
+				}
 				
 				// Pintamos las particulas de sangre
 				Euler euler(Quaternion::IDENTITY);

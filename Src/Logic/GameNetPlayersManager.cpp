@@ -24,7 +24,7 @@ namespace Logic {
 
 	//______________________________________________________________________________
 
-	CGameNetPlayersManager::CGameNetPlayersManager() {
+	CGameNetPlayersManager::CGameNetPlayersManager() : _friendlyFire(false) {
 		_instance = this;
 	} // CServer
 
@@ -178,6 +178,12 @@ namespace Logic {
 		assert(it != _netConnectedPlayers.end() && "No se puede asignar deaths al player porque no existe en el Manager");
 
 		it->second->setDeaths(deaths);
+	}
+
+	//________________________________________________________________________
+
+	void CGameNetPlayersManager::setFriendlyFire(bool friendlyFire) {
+		_friendlyFire = friendlyFire;
 	}
 
 	//______________________________________________________________________________

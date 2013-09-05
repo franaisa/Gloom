@@ -205,6 +205,13 @@ namespace Logic {
 		//________________________________________________________________________
 
 		/**
+		Indica si friendly fire esta activo.
+		*/
+		void setFriendlyFire(bool friendlyFire);
+
+		//________________________________________________________________________
+
+		/**
 		Incrementa el número de frags de un jugador.
 
 		@param entityId Id de la entidad a la que queremos aumentarle el número
@@ -351,6 +358,15 @@ namespace Logic {
 		//________________________________________________________________________
 
 		/**
+		Devuelve el estado de friendly fire.
+
+		@return true si el fuego amigo esta activo.
+		*/
+		bool friendlyFireIsActive() { return _friendlyFire; }
+
+		//________________________________________________________________________
+
+		/**
 		Devuelve el numero de jugadores que hay en el equipo azul.
 
 		@return Numero de jugadores en el equipo azul.
@@ -430,6 +446,12 @@ namespace Logic {
 
 		/** Única instancia de la clase. */
 		static CGameNetPlayersManager* _instance;
+		
+		/** 
+		true si friendly fire esta activado. Este atributo no deberia estar aqui
+		pero por accesibilidad lo he dejado.
+		*/
+		bool _friendlyFire;
 	};
 
 

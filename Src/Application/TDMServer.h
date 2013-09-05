@@ -47,7 +47,7 @@ namespace Application {
 		CTDMServer(CBaseApplication* app);
 
 		void gameSettings(const std::vector<std::string>& mapList, bool loopMaps, const std::pair<unsigned int, unsigned int>& timeLimit, 
-						  unsigned int goalScore, bool forceRespawn, bool warmUp, bool autoBalanceTeams);
+						  unsigned int goalScore, bool forceRespawn, bool warmUp, bool autoBalanceTeams, bool friendlyFire);
 
 		virtual void gameEventOcurred(Logic::CEntity* emitter, const std::shared_ptr<Logic::CMessage>& msg);
 

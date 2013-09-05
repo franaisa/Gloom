@@ -177,6 +177,8 @@ namespace Logic  {
 	void CClientRespawn::updateGUI(CEntity* killer){
 		//updateamos el mensaje de pepito mato a juanito
 		std::string type = killer->getType();
+		TEntityID killerId = killer->getEntityID();
+		TEntityID playerId = _entity->getEntityID();
 			
 		if(type == "Screamer" || type == "Shadow" || type == "Hound" || type == "Archangel" ||
 			type == "LocalScreamer" || type == "LocalShadow" || type == "LocalHound" || type == "LocalArchangel"){
@@ -188,8 +190,19 @@ namespace Logic  {
 			Logic::CScoreboard::getSingletonPtr()->addDeath(_entity->getName());
 
 			Logic::CGameNetPlayersManager* playersMgr = Logic::CGameNetPlayersManager::getSingletonPtr();
-			playersMgr->addFragUsingEntityID(killer->getEntityID());
-			playersMgr->addDeathUsingEntityID(_entity->getEntityID());
+			if(killer == _entity) // Nos hemos suicidado
+				playersMgr->substractFragUsingEntityID(killerId);
+			else {
+				TeamFaction::Enum killerTeam = playersMgr->getTeamUsingEntityId(killerId);
+				TeamFaction::Enum playerTeam = playersMgr->getTeamUsingEntityId(playerId);
+
+				if(killerTeam != TeamFaction::eNONE || playerTeam != TeamFaction::eNONE || killerTeam != playerTeam)
+					playersMgr->addFragUsingEntityID(killerId); // Hemos matado a un enemigo, contamos el frag
+				else
+					playersMgr->substractFragUsingEntityID(killerId); // Hemos matado a un compañero restamos frags
+			}
+
+			playersMgr->addDeathUsingEntityID(playerId);
 		}
 		//sino ha sido un player es que se ha suicidado el retard
 		else{
@@ -198,8 +211,8 @@ namespace Logic  {
 			Logic::CScoreboard::getSingletonPtr()->subKill(_entity->getName());
 
 			Logic::CGameNetPlayersManager* playersMgr = Logic::CGameNetPlayersManager::getSingletonPtr();
-			playersMgr->substractFragUsingEntityID(_entity->getEntityID());
-			playersMgr->addDeathUsingEntityID(_entity->getEntityID());
+			playersMgr->substractFragUsingEntityID(playerId);
+			playersMgr->addDeathUsingEntityID(playerId);
 		}
 	}
 

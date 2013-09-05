@@ -14,6 +14,7 @@ Contiene la implementación del componente que gestiona las armas y que administr
 // Mapa
 #include "BaseSubsystems/Euler.h"
 #include "Logic/Maps/EntityFactory.h"
+#include "Logic/GameNetPlayersManager.h"
 #include "Logic/Maps/Map.h"
 #include "Logic/Server.h"
 #include "Map/MapEntity.h"
@@ -321,10 +322,35 @@ namespace Logic {
 
 	void CMiniGun::triggerHitMessages(CEntity* entityHit) 
 	{
-		std::shared_ptr<CMessageDamaged> m = std::make_shared<CMessageDamaged>();
-		m->setDamage(_damage);
-		m->setEnemy(_entity);
-		entityHit->emitMessage(m);
+		//send damage message
+		CGameNetPlayersManager* playersMgr = CGameNetPlayersManager::getSingletonPtr();
+		TEntityID enemyId = entityHit->getEntityID();
+		TEntityID playerId = _entity->getEntityID();
+		if( playersMgr->existsByLogicId(enemyId) ) {
+			TeamFaction::Enum enemyTeam = playersMgr->getTeamUsingEntityId(enemyId);
+			TeamFaction::Enum myTeam = playersMgr->getTeamUsingEntityId(playerId);
+
+			if( !playersMgr->friendlyFireIsActive() && enemyId != playerId) {
+				if(enemyTeam == TeamFaction::eNONE || myTeam == TeamFaction::eNONE || enemyTeam != myTeam) {
+					std::shared_ptr<CMessageDamaged> damageDone = std::make_shared<CMessageDamaged>();
+					damageDone->setDamage(_damage);
+					damageDone->setEnemy( _entity );
+					entityHit->emitMessage(damageDone);
+				}
+			}
+			else {
+				std::shared_ptr<CMessageDamaged> damageDone = std::make_shared<CMessageDamaged>();
+				damageDone->setDamage(_damage);
+				damageDone->setEnemy( _entity );
+				entityHit->emitMessage(damageDone);
+			}
+		}
+		else {
+			std::shared_ptr<CMessageDamaged> damageDone = std::make_shared<CMessageDamaged>();
+			damageDone->setDamage(_damage);
+			damageDone->setEnemy( _entity );
+			entityHit->emitMessage(damageDone);
+		}
 	}// triggerHitMessages
 
 	//__________________________________________________________________
@@ -355,10 +381,36 @@ namespace Logic {
 				}
 
 				int danyoTotal = _damage * _currentSpentSecondaryAmmo;
-				std::shared_ptr<CMessageDamaged> m = std::make_shared<CMessageDamaged>();
-				m->setDamage(danyoTotal);
-				m->setEnemy(_entity);
-				(*it).entity->emitMessage(m);
+
+				//send damage message
+				CGameNetPlayersManager* playersMgr = CGameNetPlayersManager::getSingletonPtr();
+				TEntityID enemyId = (*it).entity->getEntityID();
+				TEntityID playerId = _entity->getEntityID();
+				if( playersMgr->existsByLogicId(enemyId) ) {
+					TeamFaction::Enum enemyTeam = playersMgr->getTeamUsingEntityId(enemyId);
+					TeamFaction::Enum myTeam = playersMgr->getTeamUsingEntityId(playerId);
+
+					if( !playersMgr->friendlyFireIsActive() && enemyId != playerId) {
+						if(enemyTeam == TeamFaction::eNONE || myTeam == TeamFaction::eNONE || enemyTeam != myTeam) {
+							std::shared_ptr<CMessageDamaged> damageDone = std::make_shared<CMessageDamaged>();
+							damageDone->setDamage(danyoTotal);
+							damageDone->setEnemy( _entity );
+							(*it).entity->emitMessage(damageDone);
+						}
+					}
+					else {
+						std::shared_ptr<CMessageDamaged> damageDone = std::make_shared<CMessageDamaged>();
+						damageDone->setDamage(danyoTotal);
+						damageDone->setEnemy( _entity );
+						(*it).entity->emitMessage(damageDone);
+					}
+				}
+				else {
+					std::shared_ptr<CMessageDamaged> damageDone = std::make_shared<CMessageDamaged>();
+					damageDone->setDamage(danyoTotal);
+					damageDone->setEnemy( _entity );
+					(*it).entity->emitMessage(damageDone);
+				}
 
 				Euler euler(Quaternion::IDENTITY);
 				euler.setDirection((*it).normal);

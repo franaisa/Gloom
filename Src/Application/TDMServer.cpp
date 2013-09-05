@@ -48,7 +48,7 @@ namespace Application {
 	//______________________________________________________________________________
 
 	void CTDMServer::gameSettings(const std::vector<std::string>& mapList, bool loopMaps, const std::pair<unsigned int, unsigned int>& timeLimit, 
-								 unsigned int goalScore, bool forceRespawn, bool warmUp, bool autoBalanceTeams) {
+								  unsigned int goalScore, bool forceRespawn, bool warmUp, bool autoBalanceTeams, bool friendlyFire) {
 
 		// Establecemos la lista de mapas
 		this->_mapList = mapList;
@@ -64,6 +64,8 @@ namespace Application {
 		this->_warmUp = warmUp;
 		// Queremos entrar en un equipo automaticamente?
 		this->_autoBalanceTeams = autoBalanceTeams;
+		// Configuramos el friendly fire
+		Logic::CGameNetPlayersManager::getSingletonPtr()->setFriendlyFire(friendlyFire);
 
 		// Comprobamos si se ha configurado el tiempo y el score 
 		// como infinito
