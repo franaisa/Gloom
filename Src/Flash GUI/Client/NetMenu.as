@@ -3,6 +3,7 @@ package Client
 	import flash.display.MovieClip;
 	import flash.text.TextField;
 	import principal.MenuManager
+	import flash.external.ExternalInterface;
 	/**
 	 * ...
 	 * @author Rubén Mulero
@@ -14,6 +15,7 @@ package Client
 		public function NetMenu() 
 		{
 			super();
+			ExternalInterface.addCallback("connectionFailed", connectionFailed);
 		}
 		
 		public function registerIp(ip: Ip): void {
@@ -32,6 +34,11 @@ package Client
 			return myNick.nick;
 		}
 		
+		public function connectionFailed():void {
+			
+			connectWindow.gotoAndPlay("failed");
+			
+		}
 	}
 
 }

@@ -473,10 +473,6 @@ namespace Input {
 				camera->emitMessage(m3);*/
 			}
 			break;
-			case Input::Key::ESCAPE:// esto debe desaparecer en el futuro
-				std::cout << "escape pulsado" << std::endl;
-				//return true;
-			break;
 		}
 
 	}//EmitOtherMessages

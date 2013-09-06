@@ -320,10 +320,6 @@ namespace Application {
 						// Creamos una entidad espectador y la replicamos en el cliente
 						createAndMirrorSpectator(playerNetId);
 					}
-					else if(_playersMgr->getNumberOfPlayersConnected() > _maxPlayers + _maxSpectators) {
-						Net::NetMessageType kickMsg = Net::PLAYER_KICK;
-						_netMgr->sendTo( playerNetId, &kickMsg, sizeof(kickMsg) );
-					}
 					else {
 						// Mandamos un mensaje de que no existen slots disponibles
 						// para jugar
@@ -371,10 +367,6 @@ namespace Application {
 						// Creamos una entidad jugador con la clase que nos hayan dicho
 						// y la replicamos en el cliente
 						createAndMirrorPlayer(race, playerNetId, team);
-					}
-					else if(_playersMgr->getNumberOfPlayersConnected() > _maxPlayers + _maxSpectators) {
-						Net::NetMessageType kickMsg = Net::PLAYER_KICK;
-						_netMgr->sendTo( playerNetId, &kickMsg, sizeof(kickMsg) );
 					}
 					else {
 						// Mandamos un mensaje de que no existen slots disponibles

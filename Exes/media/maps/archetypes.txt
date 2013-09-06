@@ -1672,6 +1672,9 @@ Map = {
 	
 	KillStreak = {
 		type = "KillStreak",
-
+		KillsLevel1 = 3,
+		KillsLevel2 = 5,
+		KillsLevel3 = 10,
+		KillsLevel4 = 20,
 	},
 }

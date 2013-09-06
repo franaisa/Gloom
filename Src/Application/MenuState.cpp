@@ -180,4 +180,8 @@ namespace Application {
 
 	} // multiplayerReleased
 
+	void CMenuState::netError(){
+		_menu->callFunction("netError", Hikari::Args());
+	}
+
 } // namespace Application
