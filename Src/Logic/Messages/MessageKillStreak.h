@@ -13,9 +13,9 @@ namespace Logic {
 		
 		virtual Net::CBuffer serialize();
 		virtual void deserialize(Net::CBuffer& buffer);
-
-		void setKiller(Logic::TEntityID killer)		{_killer = killer;}
-		Logic::TEntityID getKiller()				{return _killer;}
+		
+		Logic::TEntityID getKiller			()								{return _killer;}
+				void setKiller					(Logic::TEntityID killer)		{_killer = killer;}
 
 	private:
 		Logic::TEntityID _killer;

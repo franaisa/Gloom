@@ -15,6 +15,7 @@
 #include "Application/BaseApplication.h"
 #include "Map/MapEntity.h"
 #include "Logic/Maps/Map.h"
+#include "Logic/GameNetPlayersManager.h"
 
 #include "Physics/Server.h"
 #include "Physics/RaycastHit.h"
@@ -91,10 +92,16 @@ namespace Logic {
 				}
 
 				if(enemyEntity != NULL) {
-					CCharacterName* charName = enemyEntity->getComponent<CCharacterName>("CCharacterName");
-					if(charName != NULL) {
-						_namesBeingShown[charName] = _visibilityTimeStep;
-						charName->setVisible(true);
+					CGameNetPlayersManager* playersMgr = CGameNetPlayersManager::getSingletonPtr();
+					TeamFaction::Enum myTeam = playersMgr->getTeamUsingEntityId( _entity->getEntityID() );
+					TeamFaction::Enum otherEntityTeam = playersMgr->getTeamUsingEntityId( enemyEntity->getEntityID() );
+
+					if(myTeam == TeamFaction::eNONE || otherEntityTeam == TeamFaction::eNONE || myTeam != otherEntityTeam) {
+						CCharacterName* charName = enemyEntity->getComponent<CCharacterName>("CCharacterName");
+						if(charName != NULL) {
+							_namesBeingShown[charName] = _visibilityTimeStep;
+							charName->setVisible(true);
+						}
 					}
 				}
 			}

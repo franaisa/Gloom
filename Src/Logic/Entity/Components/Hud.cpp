@@ -177,6 +177,7 @@ namespace Logic{
 	} // process
 
 	void CHud::updateMatchTime(int minutes, int seconds) {
+		std::cout << "updatetime" << std::endl;
 		_hud->callFunction( "updateTime", Hikari::Args(minutes)(seconds) );
 	}
 
@@ -186,6 +187,7 @@ namespace Logic{
 	}
 
 	void CHud::hudLife(int health){
+		std::cout << "updatelife" << std::endl;
 		_hud->callFunction("updateLife", Hikari::Args(health));
 	}
 	void CHud::hudWeapon(int ammo, int weapon){
@@ -214,6 +216,7 @@ namespace Logic{
 	void CHud::hudRespawn(){
 		_respawn->hide();
 		_hud->show();
+		std::cout << "reset" << std::endl;
 		_hud->callFunction("reset", Hikari::Args());
 	}
 

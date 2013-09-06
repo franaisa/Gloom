@@ -161,7 +161,7 @@ namespace Application {
 			std::vector<std::string> mapList;
 			mapList.push_back(_map);
 
-			state->serverSettings(args.at(2).getString(), args.at(3).getString(), args.at(4).getNumber(), args.at(5).getNumber(), false, false);
+			state->serverSettings(args.at(2).getString(), args.at(3).getString(), 2, args.at(5).getNumber(), false, false);
 			state->gameSettings(mapList, false, std::pair<unsigned int, unsigned int>(args.at(7).getNumber(), 0), args.at(8).getNumber(), args.at(6).getBool(), args.at(11).getBool());
 		}
 		else if (mode == "DeathMatch") {
@@ -180,7 +180,7 @@ namespace Application {
 			mapList.push_back(_map);
 
 			state->serverSettings(args.at(2).getString(), args.at(3).getString(), args.at(4).getNumber(), args.at(5).getNumber(), false, false);
-			state->gameSettings(mapList, false, std::pair<unsigned int, unsigned int>(args.at(7).getNumber(), 0), args.at(8).getNumber(), args.at(6).getBool(), args.at(11).getBool(), true);
+			state->gameSettings(mapList, false, std::pair<unsigned int, unsigned int>(args.at(7).getNumber(), 0), args.at(8).getNumber(), args.at(6).getBool(), args.at(11).getBool(), true, args.at(10).getBool());
 		}
 
 		//state->gameSettings(mapList, false, std::pair<unsigned int, unsigned int>(15, 0), 5, false, false, true);

@@ -239,6 +239,24 @@ namespace Logic {
 		void setNetId(Net::NetID netId);
 
 		//________________________________________________________________________
+
+		/**
+		Asigna el numero de frags dados al player.
+
+		@param frags Numero de frags que queremos asignar al player.
+		*/
+		void setFrags(int frags);
+
+		//________________________________________________________________________
+
+		/**
+		Asigna el numero de muertes dadas al player.
+
+		@param deaths Numero de muertes que queremos asignar al player.
+		*/
+		void setDeaths(int deaths);
+
+		//________________________________________________________________________
 		
 		/**
 		Setea el estado del jugador, si jugando o espectando/conectandose.

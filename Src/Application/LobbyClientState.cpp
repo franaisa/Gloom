@@ -230,6 +230,11 @@ namespace Application {
 
 				break;
 			}
+			case Net::MATCH_IS_FULL: {
+				std::cerr << "Error: La partida esta llena." << std::endl;
+				Net::CManager::getSingletonPtr()->disconnect( packet->getConexion() );
+				break;
+			}
 		}
 	} // dataPacketReceived
 

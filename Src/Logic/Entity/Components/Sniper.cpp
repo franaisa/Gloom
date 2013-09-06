@@ -27,6 +27,7 @@ Contiene la implementación del componente que gestiona las armas y que administr
 #include "Logic/Maps/EntityFactory.h"
 #include "Logic/Maps/Map.h"
 #include "Logic/Server.h"
+#include "Logic/GameNetPlayersManager.h"
 #include "Map/MapEntity.h"
 
 #include "Logic/Messages/MessageDamaged.h"
@@ -282,10 +283,35 @@ namespace Logic {
 	//-------------------------------------------------------
 
 	void CSniper::triggerHitMessages(CEntity* entityHit, float damageFire) {
-		std::shared_ptr<CMessageDamaged> m = std::make_shared<CMessageDamaged>();
-		m->setDamage(damageFire);
-		m->setEnemy(_entity);
-		entityHit->emitMessage(m);
+		//send damage message
+		CGameNetPlayersManager* playersMgr = CGameNetPlayersManager::getSingletonPtr();
+		TEntityID enemyId = entityHit->getEntityID();
+		TEntityID playerId = _entity->getEntityID();
+		if( playersMgr->existsByLogicId(enemyId) ) {
+			TeamFaction::Enum enemyTeam = playersMgr->getTeamUsingEntityId(enemyId);
+			TeamFaction::Enum myTeam = playersMgr->getTeamUsingEntityId(playerId);
+
+			if( !playersMgr->friendlyFireIsActive() && enemyId != playerId) {
+				if(enemyTeam == TeamFaction::eNONE || myTeam == TeamFaction::eNONE || enemyTeam != myTeam) {
+					std::shared_ptr<CMessageDamaged> damageDone = std::make_shared<CMessageDamaged>();
+					damageDone->setDamage(damageFire);
+					damageDone->setEnemy(_entity);
+					entityHit->emitMessage(damageDone);
+				}
+			}
+			else {
+				std::shared_ptr<CMessageDamaged> damageDone = std::make_shared<CMessageDamaged>();
+				damageDone->setDamage(damageFire);
+				damageDone->setEnemy( _entity );
+				entityHit->emitMessage(damageDone);
+			}
+		}
+		else {
+			std::shared_ptr<CMessageDamaged> damageDone = std::make_shared<CMessageDamaged>();
+			damageDone->setDamage(damageFire);
+			damageDone->setEnemy( _entity );
+			entityHit->emitMessage(damageDone);
+		}
 	}// triggerHitMessages
 	//__________________________________________________________________
 
