@@ -16,7 +16,7 @@ Map = {
 	},	
 
 	David = {
-		type = "LocalArchangel",
+		type = "LocalScreamer",
 		isPlayer = true,
 		physic_group = 1,
 		physic_groupList = "-1",

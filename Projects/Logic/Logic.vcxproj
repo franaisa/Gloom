@@ -91,7 +91,6 @@
     <ClCompile Include="..\..\Src\Logic\Entity\Components\DynamicLight.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\CharacterSound.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\EnemyInSight.cpp" />
-    <ClCompile Include="..\..\Src\Logic\Entity\Components\ExplosionCompositor.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\GraphicPlane.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\GravityClient.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\GravityServer.cpp" />
@@ -101,6 +100,7 @@
     <ClCompile Include="..\..\Src\Logic\Entity\Components\HungryClient.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\HungryServer.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\KillStreak.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\LocalScreamer.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\ParticleSystem.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\PhysicStaticCompound.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\Ragdoll.cpp" />
@@ -296,7 +296,6 @@
     <ClInclude Include="..\..\Src\Logic\Entity\Components\DynamicLight.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\CharacterSound.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\EnemyInSight.h" />
-    <ClInclude Include="..\..\Src\Logic\Entity\Components\ExplosionCompositor.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\GraphicPlane.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\GravityClient.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\GravityServer.h" />
@@ -306,6 +305,7 @@
     <ClInclude Include="..\..\Src\Logic\Entity\Components\HungryClient.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\HungryServer.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\KillStreak.h" />
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\LocalScreamer.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\ParticleSystem.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\PhysicStaticCompound.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\Ragdoll.h" />
