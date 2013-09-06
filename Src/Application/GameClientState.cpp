@@ -22,6 +22,8 @@ Contiene la implementación del estado de juego.
 #include "Net/paquete.h"
 #include "Net/buffer.h"
 
+#include "MenuState.h"
+
 #include "Input/InputManager.h"
 
 #include "Logic/GameNetPlayersManager.h"
@@ -397,6 +399,8 @@ namespace Application {
 		std::cout << "NETWORK: Server is offline" << std::endl;
 		disconnect();
 		_app->setState("menu");
+		Application::CMenuState* state = static_cast<CMenuState*>( _app->getState( "menu" ) );
+		state->netError();
 	}
 
 	//______________________________________________________________________________
