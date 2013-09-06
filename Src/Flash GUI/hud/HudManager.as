@@ -116,7 +116,9 @@ package hud
 		
 		public function updateBullets(bullets:int, weapon: String) {
 			
-			
+			if (weapon == "soulreaper") {
+				return;
+			}
 			
 			if (equippedWeapon != null && equippedWeapon.name == weapon) {
 				this.bullets.asd.text = bullets.toString();

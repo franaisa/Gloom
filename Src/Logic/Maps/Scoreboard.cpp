@@ -19,15 +19,15 @@ namespace Logic{
 		_scoreboard = 0;
 
 		_spreeMsgList.reserve(9);
-		_spreeMsgList.push_back("Killing Spree");
-		_spreeMsgList.push_back("Blood Bath");
-		_spreeMsgList.push_back("Ludicrous Massacre");
-		_spreeMsgList.push_back("Gruesome Carnage");
-		_spreeMsgList.push_back("Daunting Feast");
-		_spreeMsgList.push_back("Wicked Carnival");
-		_spreeMsgList.push_back("Devil's Playground");
-		_spreeMsgList.push_back("Soul Master");
-		_spreeMsgList.push_back("Ownage");
+		_spreeMsgList.push_back("is on Killing Spree");
+		_spreeMsgList.push_back("is in Blood Bath");
+		_spreeMsgList.push_back("is on Ludicrous Massacre");
+		_spreeMsgList.push_back("is on Gruesome Carnage");
+		_spreeMsgList.push_back("is on Daunting Feast");
+		_spreeMsgList.push_back("is in Wicked Carnival");
+		_spreeMsgList.push_back("is in Devil's Playground");
+		_spreeMsgList.push_back("is the Soul Master");
+		_spreeMsgList.push_back("owns");
 	}
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -131,7 +131,7 @@ namespace Logic{
 			_scoreboard->callFunction("addSpree",Hikari::Args(name)((int)player->second.bestSpree));
 		}
 
-		showSpreeMessage(player->second.currentSpree);
+		showSpreeMessage(player->second.name, player->second.currentSpree);
 
 		//ahora avisamos a la GUI de que ha habido un cambio
 		_scoreboard->callFunction("addKill",Hikari::Args(name)((int)player->second.kills));
@@ -139,11 +139,11 @@ namespace Logic{
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	void CScoreboard::showSpreeMessage(unsigned int nbKills) {
+	void CScoreboard::showSpreeMessage(const std::string &name, unsigned int nbKills) {
 		if(nbKills % 3 == 0 && nbKills < 28) {
 			unsigned int index = nbKills / 3;
 			std::cout << _spreeMsgList[index - 1] << std::endl;
-			//_scoreboard->callFunction( "showSpreeMessage", Hikari::Args(_spreeMsgList[index - 1]) );
+			_spreeMenu->callFunction( "spree", Hikari::Args(name)(_spreeMsgList[index - 1]) );
 		}
 	}
 
@@ -400,6 +400,13 @@ namespace Logic{
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
+	void CScoreboard::loadSpreeMenu()  {
+		_guiManager->addGUI("spreeMenu", Hikari::Position(Hikari::Center), 0.85f);
+		_guiManager->load("spreeMenu", "spreeMenu.swf");
+		_guiManager->showGUI("spreeMenu");
+		_guiManager->setTransparent("spreeMenu",true);
+		_spreeMenu = _guiManager->getGUIControl("spreeMenu");
+		_spreeMenu->show();
+	}
 
 }
