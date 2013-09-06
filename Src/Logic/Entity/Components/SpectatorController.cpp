@@ -38,11 +38,21 @@ namespace Logic {
 	CSpectatorController::CSpectatorController() : _frictionCoef(0.95f),
 												   _acceleration(0.0006f), 
 												   _maxVelocity(1.2f),
+												   _currentPlayerClass(0),
 												   _currentFollowedPlayer(NULL) {
 
 		// Inicializamos el array que contiene los vectores
 		// de cada tecla de movimiento
 		initMovementCommands();
+
+		_playerClasses[0].first = "Hound";
+		_playerClasses[0].second = NULL;
+		_playerClasses[1].first = "Screamer";
+		_playerClasses[1].second = NULL;
+		_playerClasses[2].first = "Shadow";
+		_playerClasses[2].second = NULL;
+		_playerClasses[3].first = "Archangel";
+		_playerClasses[3].second = NULL;
 	}
 
 	//________________________________________________________________________
@@ -92,7 +102,7 @@ namespace Logic {
 				if(commandType == ControlType::LEFT_CLICK) {
 					// Posicionar la camara en el siguiente enemigo
 					CMap* map = CServer::getSingletonPtr()->getMap();
-					CEntity* nextPlayer = map->getEntityByType("RemotePlayer", _currentFollowedPlayer);
+					CEntity* nextPlayer = getNextPlayerToSpectateAs();
 
 					CEntity* cameraEnt = map->getEntityByName("Camera");
 					CCamera* cameraComp = cameraEnt->getComponent<CCamera>("CCamera");
@@ -300,6 +310,29 @@ namespace Logic {
 		_movementCommands[Control::SIDEJUMP_RIGHT]		= Vector3(-1, 0, 0);
 		_movementCommands[Control::DODGE_BACKWARDS]		= Vector3(0, 0, -1);
 		_movementCommands[Control::DODGE_FORWARD]		= Vector3(0, 0, 1);
+	}
+
+	//________________________________________________________________________
+
+	CEntity* CSpectatorController::getNextPlayerToSpectateAs() {
+		CMap* map = CServer::getSingletonPtr()->getMap();
+		std::pair<std::string, CEntity*> nextElegiblePlayer; 
+		CEntity* nextPlayer = NULL;
+		int i = 0;
+
+		// Buscamos el siguiente jugador disponible (sea de la raza que sea)
+		// que podamos usar para espectar, si no encontramos ninguno devolvemos
+		// null
+		do {
+			nextElegiblePlayer = _playerClasses[_currentPlayerClass];
+			nextPlayer = map->getEntityByType(nextElegiblePlayer.first, nextElegiblePlayer.second);
+			_playerClasses[_currentPlayerClass].second = nextPlayer;
+			
+			_currentPlayerClass = (_currentPlayerClass + 1) % 4;
+			++i;
+		} while(nextPlayer == NULL && i < 4);
+
+		return nextPlayer;
 	}
 
 } // namespace Logic
