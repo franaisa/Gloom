@@ -197,11 +197,7 @@ namespace Application {
 			}
 
 			case Net::LOAD_LOCAL_PLAYER: {
-				if(_menuVisile) {
-					_seleccion->hide();
-					_menuVisile = false;
-				}
-				
+
 				// Deserializamos la información de nuestro player
 				Net::NetID newPlayerNetId;
 				buffer.read(&newPlayerNetId, sizeof(newPlayerNetId));
@@ -212,6 +208,7 @@ namespace Application {
 				buffer.deserialize(playerClass);
 
 				Logic::CGameNetPlayersManager* playersMgr = Logic::CGameNetPlayersManager::getSingletonPtr();
+				_seleccion->hide();
 				if(playerClass == "Spectator") {
 					Logic::CEntity* spectator = Logic::CServer::getSingletonPtr()->getMap()->createLocalPlayer(name, playerClass, entityID);
 					spectator->activate();
@@ -368,10 +365,12 @@ namespace Application {
 			}
 			case Net::NO_FREE_PLAYER_SLOTS: {
 				std::cerr << "Error: There are no available player slots" << std::endl;
+				_seleccion->callFunction("playerFull");
 				break;
 			}
 			case Net::NO_FREE_SPECTATOR_SLOTS: {
 				std::cerr << "Error: There are no available spectator slots" << std::endl;
+				_seleccion->callFunction("spectatorFull");
 				break;
 			}
 			case Net::PLAYER_KICK: {
