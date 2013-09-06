@@ -46,7 +46,7 @@ mover al jugador.
 
 namespace Input {
 
-	CPlayerController::CPlayerController() : _controlledAvatar(0), m_iLastTime(0), m_eLastMove(NONE)
+	CPlayerController::CPlayerController() : _controlledAvatar(0), m_iLastTime(0), m_eLastMove(NONE), _listening(false)
 	{
 
 	} // CPlayerController
@@ -62,18 +62,25 @@ namespace Input {
 	//--------------------------------------------------------
 
 	void CPlayerController::activate()
-	{		
-		CInputManager::getSingletonPtr()->addKeyListener(this);
-		CInputManager::getSingletonPtr()->addMouseListener(this);
+	{	
+		if(!_listening) {
+			CInputManager::getSingletonPtr()->addKeyListener(this);
+			CInputManager::getSingletonPtr()->addMouseListener(this);
 
+			_listening = true;
+		}
 	} // activate
 
 	//--------------------------------------------------------
 
 	void CPlayerController::deactivate()
 	{
-		CInputManager::getSingletonPtr()->removeKeyListener(this);
-		CInputManager::getSingletonPtr()->removeMouseListener(this);
+		if(_listening) {
+			CInputManager::getSingletonPtr()->removeKeyListener(this);
+			CInputManager::getSingletonPtr()->removeMouseListener(this);
+
+			_listening = false;
+		}
 	} // deactivate
 
 	//--------------------------------------------------------

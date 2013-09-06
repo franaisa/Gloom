@@ -201,6 +201,15 @@ namespace Logic {
 		*/
 		void initMovementCommands();
 
+		//________________________________________________________________________	
+
+		/**
+		Devuelve la siguiente entidad sobre la que vamos a espectar.
+
+		@return Siguiente jugador para espectar.
+		*/
+		CEntity* getNextPlayerToSpectateAs();
+
 
 		// =======================================================================
 		//                          MIEMBROS PROTEGIDOS
@@ -236,6 +245,9 @@ namespace Logic {
 		de desplazamiento y salto que se pueden realizar. 
 		*/
 		Vector3 _movementCommands[18];
+
+		std::pair<std::string, CEntity*> _playerClasses[4];
+		unsigned int _currentPlayerClass;
 
 	}; // class CSpectatorController
 

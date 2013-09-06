@@ -210,6 +210,8 @@ namespace Input
 		*/
 		E_MOVE m_eLastMove;
 
+		bool _listening;
+
 	}; // class CPlayerController
 
 }
