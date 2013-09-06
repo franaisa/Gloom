@@ -122,7 +122,7 @@ namespace Application {
 					_playersMgr->substractFragUsingEntityID(emitterID);
 
 					// Obtenemos el equipo al que pertenece el jugador que acaba de suicidarse
-					Logic::TeamFaction::Enum team = _playersMgr->getTeamUsingEntityId(killerID);
+					Logic::TeamFaction::Enum team = _playersMgr->getTeamUsingEntityId(emitterID);
 					if(team == Logic::TeamFaction::eRED_TEAM) {
 						--_redTeamScore;
 					}

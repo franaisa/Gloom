@@ -316,7 +316,6 @@ namespace Logic {
 		_entity->emitMessage(playerDeadMsg);
 
 		//Emitir el mensaje para los killstreak, no me está llegando :S
-		std::cout << "El asesino es " << enemy->getName() << " y ha matado a " << _entity->getName() << std::endl;
 		std::shared_ptr<CMessageKillStreak> msKS = std::make_shared<CMessageKillStreak>();
 		msKS->setKiller(enemy->getEntityID());
 		enemy->emitMessage(msKS);

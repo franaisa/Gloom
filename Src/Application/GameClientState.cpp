@@ -22,6 +22,8 @@ Contiene la implementación del estado de juego.
 #include "Net/paquete.h"
 #include "Net/buffer.h"
 
+#include "MenuState.h"
+
 #include "Input/InputManager.h"
 
 #include "Logic/GameNetPlayersManager.h"
@@ -52,6 +54,14 @@ namespace Application {
 		_seleccion->bind("selected",Hikari::FlashDelegate(this, &CGameClientState::classSelected));
 		_seleccion->hide();
 		_seleccion->setTransparent(true, true);
+
+		_escmenu = GUI::CServer::getSingletonPtr()->addLayout("ScapeMenu", Hikari::Position(Hikari::Center), (unsigned short) 56);
+		_escmenu->load("ESCMenu.swf");
+		_escmenu->bind("exitClick",Hikari::FlashDelegate(this, &CGameClientState::exit));
+		_escmenu->bind("resume",Hikari::FlashDelegate(this, &CGameClientState::resume));
+		_escmenu->hide();
+		_escmenu->setTransparent(true, true);
+
 		return true;
 	}
 
@@ -187,6 +197,11 @@ namespace Application {
 			}
 
 			case Net::LOAD_LOCAL_PLAYER: {
+				if(_menuVisile) {
+					_seleccion->hide();
+					_menuVisile = false;
+				}
+				
 				// Deserializamos la información de nuestro player
 				Net::NetID newPlayerNetId;
 				buffer.read(&newPlayerNetId, sizeof(newPlayerNetId));
@@ -303,6 +318,10 @@ namespace Application {
 					}
 				}
 
+				Input::CPlayerController* playerController = Input::CServer::getSingletonPtr()->getPlayerController();
+				if( playerController->getControllerAvatar() )
+					playerController->activate();
+
 				break;
 			}
 			case Net::PING: {
@@ -349,20 +368,10 @@ namespace Application {
 			}
 			case Net::NO_FREE_PLAYER_SLOTS: {
 				std::cerr << "Error: There are no available player slots" << std::endl;
-				Input::CPlayerController* playerController = Input::CServer::getSingletonPtr()->getPlayerController();
-				Logic::CEntity* entity = playerController->getControllerAvatar();
-				if( entity )
-					playerController->activate();
-
 				break;
 			}
 			case Net::NO_FREE_SPECTATOR_SLOTS: {
 				std::cerr << "Error: There are no available spectator slots" << std::endl;
-				Input::CPlayerController* playerController = Input::CServer::getSingletonPtr()->getPlayerController();
-				Logic::CEntity* entity = playerController->getControllerAvatar();
-				if( entity )
-					playerController->activate();
-
 				break;
 			}
 			case Net::PLAYER_KICK: {
@@ -389,23 +398,33 @@ namespace Application {
 		std::cout << "NETWORK: Server is offline" << std::endl;
 		disconnect();
 		_app->setState("menu");
+		Application::CMenuState* state = static_cast<CMenuState*>( _app->getState( "menu" ) );
+		state->netError();
 	}
 
 	//______________________________________________________________________________
 
 	bool CGameClientState::keyPressed(Input::TKey key) {
 		switch(key.keyId) {
+			case Input::Key::ESCAPE: {
+				if( _seleccion->getVisibility() ) {
+					_seleccion->hide();
+				}else if ( _escmenu->getVisibility() ) {
+					
+					//_escmenu->hide();
+
+				}else {
+					_escmenu->show();
+					Input::CServer::getSingletonPtr()->getPlayerController()->deactivate();
+				}
+
+				break;
+			}
 			case Input::Key::C: {//cambio de clase
 				//primero, quitamos al player de escuchar las teclas, para ello lo desactivamos del playerController
-				
-				Input::CPlayerController* playerController = Input::CServer::getSingletonPtr()->getPlayerController();
-				Logic::CEntity* entity = playerController->getControllerAvatar();
-				
 				Input::CServer::getSingletonPtr()->getPlayerController()->deactivate();
 				//mostramos la gui
 				_seleccion->show();
-				_menuVisile = true;
-				std::cout << "true" << std::endl;
 				break;
 			}
 			default: {
@@ -419,14 +438,16 @@ namespace Application {
 	//______________________________________________________________________________
 
 	bool CGameClientState::keyReleased(Input::TKey key) {
-		switch(key.keyId) {
+		/*switch(key.keyId) {
 			case Input::Key::ESCAPE: {
 				if( _seleccion->getVisibility() ) {
 					_seleccion->hide();
-				}
-				else {
-					disconnect();
-					_app->setState("menu");
+				}else if ( _escmenu->getVisibility() ) {
+					
+					_escmenu->hide();
+
+				}else {
+					_escmenu->show();
 				}
 
 				break;
@@ -434,7 +455,7 @@ namespace Application {
 			default: {
 				return false;
 			}
-		}
+		}*/
 
 		return true;
 	} // keyReleased
@@ -482,12 +503,13 @@ namespace Application {
 		}
 
 		Net::CBuffer msg(sizeof(msgType) + sizeof(selectedClass));
+		Input::CPlayerController* playerController = Input::CServer::getSingletonPtr()->getPlayerController();
  		switch(selectedClass) {
 			case 0: {
-				if(Input::CServer::getSingletonPtr()->getPlayerController()->getControllerAvatar()) {
-					Input::CServer::getSingletonPtr()->getPlayerController()->activate();
+
+				if( playerController->getControllerAvatar() ) {
+					playerController->activate();
 					_seleccion->hide();
-					_menuVisile = false;
 				} 
 
 				break;
@@ -498,17 +520,10 @@ namespace Application {
 			case 4:
 			case 5:
 
-				_seleccion->hide();
-				_menuVisile = false;
 				//enviamos la clase elegida
 				msg.serialize(msgType);
 				msg.serialize(selectedClass);
 				_netMgr->broadcast( msg.getbuffer(), msg.getSize() );
-
-				if(Input::CServer::getSingletonPtr()->getPlayerController()->getControllerAvatar()){
-					Input::CServer::getSingletonPtr()->getPlayerController()->setControlledAvatar(NULL);
-					Input::CServer::getSingletonPtr()->getPlayerController()->activate();
-				}
 
 				break;
 		}//switch
@@ -518,6 +533,20 @@ namespace Application {
 		return FLASH_VOID;
 	} // backReleased
 
+	Hikari::FlashValue CGameClientState::exit(Hikari::FlashControl* caller, const Hikari::Arguments& args){
+		disconnect();
+		_app->setState("menu");
+		_escmenu->hide();
+
+		return FLASH_VOID;
+	}
+
+	Hikari::FlashValue CGameClientState::resume(Hikari::FlashControl* caller, const Hikari::Arguments& args){
+		Input::CServer::getSingletonPtr()->getPlayerController()->activate();
+		_escmenu->hide();
+
+		return FLASH_VOID;
+	}
 	//______________________________________________________________________________
 
 	void CGameClientState::basicGameSettings(unsigned int gameTime, unsigned int goalScore) {

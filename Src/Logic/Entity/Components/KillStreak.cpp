@@ -36,18 +36,17 @@ namespace Logic
 		if(!IComponent::spawn(entity,map,entityInfo))
 			return false;
 
-		/*if(entityInfo->hasAttribute("waitTime"))
-			_waitTime= entityInfo->getIntAttribute("waitTime");
+		if(entityInfo->hasAttribute("KillsLevel1"))
+			_iKillsLevel1= entityInfo->getIntAttribute("KillsLevel1"); //cargar desde fichero
 
-		if(entityInfo->hasAttribute("positionInitial"))
-			_positionInitial = entityInfo->getVector3Attribute("positionInitial");
+		if(entityInfo->hasAttribute("KillsLevel2"))
+			_iKillsLevel2 = entityInfo->getIntAttribute("KillsLevel2");
 
-		if(entityInfo->hasAttribute("positionFinal"))
-			_positionFinal = entityInfo->getVector3Attribute("positionFinal");
+		if(entityInfo->hasAttribute("KillsLevel3"))
+			_iKillsLevel3 = entityInfo->getIntAttribute("KillsLevel3");
 
-		if(entityInfo->hasAttribute("velocity"))
-			_velocity = entityInfo->getFloatAttribute("velocity");*/
-
+		if(entityInfo->hasAttribute("KillsLevel4"))
+			_iKillsLevel4 = entityInfo->getIntAttribute("KillsLevel4");
 
 
 		return true;
@@ -60,6 +59,8 @@ namespace Logic
 	
 	void CKillStreak::onActivate()
 	{
+		//Al morir, y revivir, el jugador se pasa por este método de activación, así que se reseteao a 0 
+		//el contador de killstreaks
 		_iContKills = 0;
 
 	} // activate
@@ -88,33 +89,18 @@ namespace Logic
 
 	void CKillStreak::onFixedTick(unsigned int msecs)
 	{
-		//std::cout << "Yo soy = " << _entity->getName() << std::endl;
+		//std::cout << "Mi id es " << this->getEntity() << " y mi kill streak es " << _iContKills << std::endl;
 	} // tick
 	//----------------------------------------------------------
 
 	void CKillStreak::dead(const std::shared_ptr<CMessage>& message)
 	{		
 		std::shared_ptr<CMessageKillStreak> mesKS = std::static_pointer_cast<CMessageKillStreak> (message);
-		//CEntity* entity = Logic::CServer::getSingletonPtr()->getMap()->getEntityByID(mesKS->getKiller());
-		std::cout << "ola ke ase! mi entity es: " << _entity->getName() << " y me ha llegado en el mensaje " << mesKS->getKiller() << std::endl;
-		/*
-		std::shared_ptr<CMessagePlayerDead> playerDeadMsg = std::static_pointer_cast<CMessagePlayerDead> (message);
-		CEntity* entity = Logic::CServer::getSingletonPtr()->getMap()->getEntityByID(playerDeadMsg->getKiller());
+		//std::cout << "ola ke ase! mi entity es: " << _entity->getEntityID() << " y me ha llegado en el mensaje " << mesKS->getKiller() << std::endl;
 
-		std::cout << "Yo soy = " << _entity->getName() << std::endl;
+		++_iContKills;
 
-		if (entity)
-		{
-			std::cout << "----------------------------" << std::endl;
-			//std::cout << "Yo soy = " << _entity->getName() << std::endl;
-			std::cout << "El asesino es: " << entity->getName() << std::endl;
-			if (entity->getName().compare(_entity->getName()) == 0)
-				std::cout << "YO soy el asesino. " << std::endl;
-			else
-				std::cout << "El asesino es OTRO." << std::endl;
-			std::cout << "----------------------------" << std::endl;
-
-		}*/		
+		//std::cout << "Contador kill streak " << _iContKills << std::endl;
 	}
 
 } // namespace Logic

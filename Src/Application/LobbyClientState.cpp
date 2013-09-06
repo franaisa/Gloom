@@ -315,7 +315,7 @@ namespace Application {
 	void CLobbyClientState::requestConnectionTo(const string& ip) {
 		// Pedimos la conexion a la ip dada
 		if ( !_netMgr->connectTo( (char*)ip.c_str(), 1234, 1) ) {
-			_menu->callFunction( "enableButton", Hikari::Args() );
+			_menu->callFunction( "connectionFailed", Hikari::Args() );
 		}
 	} // requestConnectionTo
 

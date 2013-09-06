@@ -156,6 +156,8 @@ namespace Application
 		*/
 		virtual bool mouseReleased(const Input::CMouseState &mouseState);
 
+		void netError();
+
 	private:
 
 		/**

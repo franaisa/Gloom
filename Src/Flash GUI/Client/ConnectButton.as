@@ -20,7 +20,10 @@ package Client
 		
 		protected override function onMouseClick(e:MouseEvent):void {
 			
-			if (manager.currentFrameLabel == "ip") {
+			if (manager.currentFrameLabel == "ip" && manager.connectWindow.visible == false) {
+				
+				manager.connectWindow.visible = true;
+				
 				var ip: String;
 				var nick: String;
 				ip = manager.ip;
