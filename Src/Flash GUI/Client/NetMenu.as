@@ -42,7 +42,6 @@ package Client
 		}
 		
 		public function serverFull():void {
-			
 			connectWindow.gotoAndPlay("full");
 			
 		}
