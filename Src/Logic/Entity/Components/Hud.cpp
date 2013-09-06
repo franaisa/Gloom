@@ -271,12 +271,13 @@ namespace Logic{
 		if(_respawn->getVisibility()){
 			_acumSpawn += msecs;
 			if(_acumSpawn>1000){
-				if(_respawn->getVisibility())
-					_respawn->callFunction("time", Hikari::Args(--_spawnTime));
+				//if(_respawn->getVisibility())
+				//	_respawn->callFunction("time", Hikari::Args(--_spawnTime));
 				_acumSpawn = 0;
 				/////////////////////////////////////////////////////////////////////////////////////
 				////////	Borrar en un futuro, espero que el server no llegue a -5		/////////
 				/////////////////////////////////////////////////////////////////////////////////////
+				--_spawnTime;
 				if(_spawnTime<-2)
 					hudRespawn();
 			}
