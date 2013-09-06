@@ -200,8 +200,7 @@ namespace Application {
 		unsigned int _npings;
 		unsigned int _pingActual;
 
-		//menu de seleccion de personaje
-		Hikari::FlashControl *_seleccion, *_escmenu;
+		
 
 		Net::CManager* _netMgr;
 
@@ -212,7 +211,8 @@ namespace Application {
 
 		private:
 
-		bool _menuVisile;
+			//menu de seleccion de personaje
+			Hikari::FlashControl *_seleccion, *_escmenu;
 	}; // CMultiplayerTeamDeathmatchClientState
 
 } // namespace Application

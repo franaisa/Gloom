@@ -16,6 +16,7 @@ package Client
 		{
 			super();
 			ExternalInterface.addCallback("connectionFailed", connectionFailed);
+			ExternalInterface.addCallback("serverFull", serverFull);
 		}
 		
 		public function registerIp(ip: Ip): void {
@@ -37,6 +38,12 @@ package Client
 		public function connectionFailed():void {
 			
 			connectWindow.gotoAndPlay("failed");
+			
+		}
+		
+		public function serverFull():void {
+			
+			connectWindow.gotoAndPlay("full");
 			
 		}
 	}

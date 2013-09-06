@@ -50,6 +50,8 @@ package Seleccion
 			stage.addEventListener(MouseEvent.MOUSE_MOVE, mouseMoveHandler);
 			stage.addEventListener(Event.MOUSE_LEAVE, mouseLeaveHandler);
 			
+			ExternalInterface.addCallback("playerFull", playerFull);
+			ExternalInterface.addCallback("spectatorFull", spectatorFull);
 			
 		}
 		
@@ -100,6 +102,17 @@ package Seleccion
 				shadow.gotoAndPlay("idle");
 			}
 		}
+		
+		
+		public function spectatorFull():void {
+			errormsg.gotoAndPlay("spectator");
+		}
+		
+		
+		public function playerFull():void {
+			errormsg.gotoAndPlay("player");
+		}
+		
 	//////////////////////////////////////////////////////////////////////////////////////////////
 	//////////////////////////////////////////////////////////////////////////////////////////////
 		
@@ -127,6 +140,7 @@ package Seleccion
 		{
 			myCursor.visible = false;
 		}
+		
 
 	}
 }
