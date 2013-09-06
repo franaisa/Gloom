@@ -187,6 +187,11 @@ namespace Application {
 			}
 
 			case Net::LOAD_LOCAL_PLAYER: {
+				if(_menuVisile) {
+					_seleccion->hide();
+					_menuVisile = false;
+				}
+				
 				// Deserializamos la información de nuestro player
 				Net::NetID newPlayerNetId;
 				buffer.read(&newPlayerNetId, sizeof(newPlayerNetId));
@@ -303,6 +308,10 @@ namespace Application {
 					}
 				}
 
+				Input::CPlayerController* playerController = Input::CServer::getSingletonPtr()->getPlayerController();
+				if( playerController->getControllerAvatar() )
+					playerController->activate();
+
 				break;
 			}
 			case Net::PING: {
@@ -349,20 +358,10 @@ namespace Application {
 			}
 			case Net::NO_FREE_PLAYER_SLOTS: {
 				std::cerr << "Error: There are no available player slots" << std::endl;
-				Input::CPlayerController* playerController = Input::CServer::getSingletonPtr()->getPlayerController();
-				Logic::CEntity* entity = playerController->getControllerAvatar();
-				if( entity )
-					playerController->activate();
-
 				break;
 			}
 			case Net::NO_FREE_SPECTATOR_SLOTS: {
 				std::cerr << "Error: There are no available spectator slots" << std::endl;
-				Input::CPlayerController* playerController = Input::CServer::getSingletonPtr()->getPlayerController();
-				Logic::CEntity* entity = playerController->getControllerAvatar();
-				if( entity )
-					playerController->activate();
-
 				break;
 			}
 			case Net::PLAYER_KICK: {
@@ -397,10 +396,6 @@ namespace Application {
 		switch(key.keyId) {
 			case Input::Key::C: {//cambio de clase
 				//primero, quitamos al player de escuchar las teclas, para ello lo desactivamos del playerController
-				
-				Input::CPlayerController* playerController = Input::CServer::getSingletonPtr()->getPlayerController();
-				Logic::CEntity* entity = playerController->getControllerAvatar();
-				
 				Input::CServer::getSingletonPtr()->getPlayerController()->deactivate();
 				//mostramos la gui
 				_seleccion->show();
@@ -482,10 +477,12 @@ namespace Application {
 		}
 
 		Net::CBuffer msg(sizeof(msgType) + sizeof(selectedClass));
+		Input::CPlayerController* playerController = Input::CServer::getSingletonPtr()->getPlayerController();
  		switch(selectedClass) {
 			case 0: {
-				if(Input::CServer::getSingletonPtr()->getPlayerController()->getControllerAvatar()) {
-					Input::CServer::getSingletonPtr()->getPlayerController()->activate();
+
+				if( playerController->getControllerAvatar() ) {
+					playerController->activate();
 					_seleccion->hide();
 					_menuVisile = false;
 				} 
@@ -498,17 +495,10 @@ namespace Application {
 			case 4:
 			case 5:
 
-				_seleccion->hide();
-				_menuVisile = false;
 				//enviamos la clase elegida
 				msg.serialize(msgType);
 				msg.serialize(selectedClass);
 				_netMgr->broadcast( msg.getbuffer(), msg.getSize() );
-
-				if(Input::CServer::getSingletonPtr()->getPlayerController()->getControllerAvatar()){
-					Input::CServer::getSingletonPtr()->getPlayerController()->setControlledAvatar(NULL);
-					Input::CServer::getSingletonPtr()->getPlayerController()->activate();
-				}
 
 				break;
 		}//switch
