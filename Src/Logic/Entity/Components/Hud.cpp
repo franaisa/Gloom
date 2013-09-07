@@ -187,7 +187,7 @@ namespace Logic{
 	}
 
 	void CHud::hudLife(int health){
-		std::cout << "updatelife" << std::endl;
+		//std::cout << "updatelife" << std::endl;
 		_hud->callFunction("updateLife", Hikari::Args(health));
 	}
 	void CHud::hudWeapon(int ammo, int weapon){
