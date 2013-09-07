@@ -1,5 +1,6 @@
 #include "MessageAudio.h"
 
+#include "Audio/Server.h"
 #include <string>
 
 namespace Logic {
@@ -59,7 +60,10 @@ namespace Logic {
 	Net::CBuffer CMessageAudio::serialize() {
 		Net::CBuffer buffer;
 		buffer.serialize( std::string("CMessageAudio"), true );
-		buffer.serialize(_name, false);
+
+		// Mandamos el nombre del fichero de audio que queremos
+		// reproducir como un entero (usando el CRC)
+		buffer.serialize(_name, true);
 
 		// Comprimimos en un byte todos los booleanos
 		unsigned char booleanMask = 0;
@@ -76,7 +80,12 @@ namespace Logic {
 	//----------------------------------------------------------
 
 	void CMessageAudio::deserialize(Net::CBuffer& buffer) {
-		buffer.deserialize(_name);
+		int CRC;
+		buffer.read( &CRC, sizeof(CRC) );
+
+		// Traducimos el codigo CRC a partir de la tabla generada
+		// por el servidor de audio
+		_name = Audio::CServer::getSingletonPtr()->translateCRC(CRC);
 
 		unsigned char booleanMask;
 		buffer.read( &booleanMask, sizeof(booleanMask) );

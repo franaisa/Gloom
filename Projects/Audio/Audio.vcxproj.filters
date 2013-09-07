@@ -41,5 +41,8 @@
     <ClInclude Include="..\..\Src\Audio\fmod_output.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\..\..\Visual Studio 2012\Projects\test\test\dirent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

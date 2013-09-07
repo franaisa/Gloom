@@ -19,6 +19,7 @@ la gestión del audio en el juego.
 #include <iostream>
 #include <string>
 #include <map>
+#include "dirent.h"
 
 using namespace FMOD;
 
@@ -107,6 +108,8 @@ namespace Audio
 		*/
 		void setSoundAvatar(Logic::CEntity *controlledAvatar) { _soundAvatar = controlledAvatar; }
 
+		std::string translateCRC(int CRC);
+
 	protected:
 
 		/**
@@ -147,6 +150,9 @@ namespace Audio
 		SoundChannelMap _soundChannel;
 
 	private:
+
+		void createCRCTable(const std::string& rootDirectory);
+
 		/**
 		Única instancia de la clase.
 		*/
@@ -191,6 +197,8 @@ namespace Audio
 
 		/** Ruta por defecto a la biblioteca de sonidos usados por el juego. */
 		std::string _audioResourcesPath;
+
+		std::map<int, std::string> _CRCTable;
 
 	}; // class CServer
 

@@ -97,6 +97,8 @@ namespace Audio
 		//Configuración 3D, el parámetro central es el factor de distancia (FMOD trabaja en metros/segundos)
 		_system->set3DSettings(_doppler, 1.0f, _rolloff);
 
+		createCRCTable( _audioResourcesPath.substr(0, _audioResourcesPath.size() - 1) );
+
 		return true;
 
 	} // open
@@ -310,8 +312,52 @@ namespace Audio
 
 		}
 	}//mute
+
 	//--------------------------------------------------------
 
+	void CServer::createCRCTable(const string& rootDirectory) {
+		DIR* dir;
+		struct dirent* ent;
 
+		// Si el directorio dado en la primera llamada es invalido,
+		// no se hace nada
+		if( (dir = opendir( rootDirectory.c_str() ) ) != NULL ) {
+			// Explorar todos los elementos del directorio actual
+			while( (ent = readdir(dir) ) != NULL ) {
+				// Si se trata de un elemento que no sea el directorio actual o el padre
+				// comprobamos si se trata de una carpeta o un fichero. Si es una carpeta
+				// la exploramos recursivamente, si no, almacenamos el fichero en nuestra 
+				// tabla con el formato crc-nombre
+				if(strcmp(ent->d_name, ".") != 0 && strcmp(ent->d_name, "..") != 0) {
+					if(ent->d_type == DT_DIR) {
+						// Para acceder al directorio necesitamos la ruta completa
+						std::string fullDirectoryPath = rootDirectory + "/" + ent->d_name;
+						createCRCTable( fullDirectoryPath.c_str() );
+					}
+					else {
+						// Nos quedamos con la ruta relativa al fichero, que es la que se
+						// va a pasar por mensaje y la que queremos traducir
+						std::string fileRelativePath = rootDirectory + "/" + ent->d_name;
+						fileRelativePath.replace(0, _audioResourcesPath.size(), 0, ' ');
+
+						assert( _CRCTable.insert( std::pair<int, std::string>( Math::CRC(fileRelativePath), fileRelativePath ) ).second && 
+							    "Error: Existen dos rutas de audio con el mismo checksum");
+					}
+				}
+			}
+
+			// Una vez explorado el directorio lo cerramos
+			closedir(dir);
+		}
+	}
+
+	//--------------------------------------------------------
+
+	std::string CServer::translateCRC(int CRC) {
+		auto it = _CRCTable.find(CRC);
+		assert(it != _CRCTable.end() && "Error: Estas buscando un CRC que no existe");
+
+		return it->second;
+	}
 
 } // namespace Audio
