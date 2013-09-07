@@ -76,7 +76,7 @@ namespace Logic {
 			if(_invisibilityTimer > 0) {
 				_invisibilityTimer -= msecs;
 				if(_invisibilityTimer < 1600 && !_playingShadowOut) {
- 					emitSound("character/shadowOut.ogg", false, false, false, false);
+ 					emitSound("character/shadowOut.ogg", false, false, false, false, true);
 					_playingShadowOut = true;
 				}
 			}else{
@@ -94,7 +94,7 @@ namespace Logic {
 				_doingPrimarySkill = false;
 				
 				// Dejamos de reproducir el sonido chunger
-				emitSound("character/shadow.ogg", false, false, false, true);
+				emitSound("character/shadow.ogg", false, false, false, true, true);
 				_playingSound = false;
 				_playingShadowOut = false;
 			}
@@ -111,7 +111,7 @@ namespace Logic {
 
 	void CShadow::onDeactivate() {
 		if(_playingSound) {
-			emitSound("character/shadow.ogg", false, false, false, true);
+			emitSound("character/shadow.ogg", false, false, false, true, true);
 			_playingSound = _playingShadowOut = false;
 		}
 	}
@@ -132,8 +132,8 @@ namespace Logic {
 
 		// Creamos el sonido de acojonamiento indicando que
 		// el shadow esta entre las sombras malotas
-		emitSound("character/shadow.ogg", true, false, false, false);
-		emitSound("character/shadowIn.ogg", false, false, false, false);
+		emitSound("character/shadow.ogg", true, false, false, false, true);
+		emitSound("character/shadowIn.ogg", false, false, false, false, true);
 		_playingSound = true;
 	}
 
@@ -166,7 +166,7 @@ namespace Logic {
 			}//end if
 		}//end for
 
-		emitSound("character/shadowFlash.ogg", false, true, false, false);
+		emitSound("character/shadowFlash.ogg", false, true, false, false, false);
 	}
 
 

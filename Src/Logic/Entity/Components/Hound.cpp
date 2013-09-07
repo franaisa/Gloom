@@ -160,7 +160,7 @@ namespace Logic {
 		_biteTimer = _biteDuration;
 		_physicController->deactivateSimulation();
 
-		emitSound("character/houndBite.wav", false, true, false, false);
+		emitSound("character/houndBite.wav", false, true, false, false, false);
 	} // primarySkill
 
 	//__________________________________________________________________
@@ -189,7 +189,7 @@ namespace Logic {
 
 		_doingSecondarySkill = true;
 
-		emitSound("character/houndSmell.wav", false, true, true, false);
+		emitSound("character/houndSmell.wav", false, true, true, false, false);
 	} // secondarySkill
 	//__________________________________________________________________
 
@@ -204,7 +204,7 @@ namespace Logic {
 
 		_doingSecondarySkill = false;
 
-		emitSound("character/houndSmell.wav", false, false, false, true);
+		emitSound("character/houndSmell.wav", false, false, false, true, false);
 	}
 	
 

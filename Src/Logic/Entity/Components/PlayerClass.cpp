@@ -208,7 +208,7 @@ namespace Logic {
 
 	//__________________________________________________________________
 
-	void CPlayerClass::emitSound(const std::string &soundName, bool loopSound, bool play3d, bool streamSound, bool stopSound){
+	void CPlayerClass::emitSound(const std::string &soundName, bool loopSound, bool play3d, bool streamSound, bool stopSound, bool playerOnly){
 		std::shared_ptr<CMessageAudio> audioMsg = std::make_shared<CMessageAudio>();
 		
 		audioMsg->setAudioName(soundName);
@@ -216,6 +216,7 @@ namespace Logic {
 		audioMsg->is3dSound(play3d);
 		audioMsg->streamSound(streamSound);
 		audioMsg->stopSound(stopSound);
+		audioMsg->isPlayerOnlySound(playerOnly);
 			
 		_entity->emitMessage(audioMsg);
 	} // emitSound
