@@ -34,7 +34,7 @@ namespace Logic {
 
 	//__________________________________________________________________
 
-	CShadow::CShadow() : CPlayerClass("shadow") {
+	CShadow::CShadow() : CPlayerClass("shadow"), _playingSound(false), _playingShadowOut(false) {
 		// Nada que hacer
 	}
 
@@ -75,8 +75,12 @@ namespace Logic {
 		if(_doingPrimarySkill){
 			if(_invisibilityTimer > 0) {
 				_invisibilityTimer -= msecs;
+				if(_invisibilityTimer < 1600 && !_playingShadowOut) {
+ 					emitSound("character/shadowOut.ogg", false, false, false, false);
+					_playingShadowOut = true;
+				}
 			}else{
-				// Desactivamos el shader de invisibilidad
+				// Desactivamos el "shader" de invisibilidad (shader por llamarle algo)
 				std::shared_ptr<CMessageChangeMaterial> materialMsg = std::make_shared<CMessageChangeMaterial>();
 				materialMsg->setMaterialName("original");
 				_entity->emitMessage(materialMsg);
@@ -88,6 +92,11 @@ namespace Logic {
 				*/
 				_invisibilityTimer = _invisibilityDuration;
 				_doingPrimarySkill = false;
+				
+				// Dejamos de reproducir el sonido chunger
+				emitSound("character/shadow.ogg", false, false, false, true);
+				_playingSound = false;
+				_playingShadowOut = false;
 			}
 		}
 	}
@@ -96,6 +105,15 @@ namespace Logic {
 
 	void CShadow::onActivate() {
 		CPlayerClass::onActivate();
+	}
+
+	//________________________________________________________________________
+
+	void CShadow::onDeactivate() {
+		if(_playingSound) {
+			emitSound("character/shadow.ogg", false, false, false, true);
+			_playingSound = _playingShadowOut = false;
+		}
 	}
 
 	//__________________________________________________________________
@@ -112,6 +130,11 @@ namespace Logic {
 		Logic::CWorldState::getSingletonPtr()->addChange(_entity,materialMsg);
 		_doingPrimarySkill = true;
 
+		// Creamos el sonido de acojonamiento indicando que
+		// el shadow esta entre las sombras malotas
+		emitSound("character/shadow.ogg", true, false, false, false);
+		emitSound("character/shadowIn.ogg", false, false, false, false);
+		_playingSound = true;
 	}
 
 	//__________________________________________________________________
@@ -142,6 +165,8 @@ namespace Logic {
 				flashEntity(entitiesHit[i]);
 			}//end if
 		}//end for
+
+		emitSound("character/shadowFlash.ogg", false, true, false, false);
 	}
 
 

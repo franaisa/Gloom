@@ -19,7 +19,11 @@ namespace Graphics {
 	//________________________________________________________________________
 
 	CBillboard::~CBillboard() {
-		// Nada que hacer
+		SceneManager* sceneMgr = CServer::getSingletonPtr()->getActiveScene()->getSceneMgr();
+		
+		_sceneNode->detachAllObjects();
+		sceneMgr->destroyBillboardSet(_billboardSet);
+		sceneMgr->destroySceneNode(_sceneNode);
 	}
 
 	//________________________________________________________________________
