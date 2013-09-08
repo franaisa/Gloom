@@ -98,7 +98,12 @@ namespace Logic
 		/**
 		Constructor por defecto; en la clase base no hace nada.
 		*/
-		CKillStreak() : IComponent() {}
+		CKillStreak() : IComponent(){
+						_iKillsLevel1 = 3;
+						_iKillsLevel2 = 5;
+						_iKillsLevel3 = 10;
+						_iKillsLevel4 = 20;
+					}
 
 		
 		/**
@@ -131,9 +136,13 @@ namespace Logic
 
 		@param msecs Milisegundos transcurridos desde el último tick. Son siempre constantes.
 		*/
-		virtual void onFixedTick(unsigned int msecs);
+		virtual void onFixedTick							(unsigned int msecs);
 
-		void dead(const std::shared_ptr<CMessage>& message);
+		//Función que se llama cuando llega un mensaje de kill streak
+		void dead											(const std::shared_ptr<CMessage>& message);
+
+		//Función que setea el nivel en función del número de muertes
+		void SetLevel										();
 
 	private:
 

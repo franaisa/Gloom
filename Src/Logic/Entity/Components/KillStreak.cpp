@@ -28,8 +28,9 @@ Contiene la declaración del componente que controla el componente de los kill st
 namespace Logic 
 {
 	IMP_FACTORY(CKillStreak);
-	
+
 	//---------------------------------------------------------
+
 	
 	bool CKillStreak::spawn(CEntity *entity, CMap *map, const Map::CEntity *entityInfo) 
 	{
@@ -48,7 +49,6 @@ namespace Logic
 		if(entityInfo->hasAttribute("KillsLevel4"))
 			_iKillsLevel4 = entityInfo->getIntAttribute("KillsLevel4");
 
-
 		return true;
 
 	} // spawn
@@ -62,6 +62,7 @@ namespace Logic
 		//Al morir, y revivir, el jugador se pasa por este método de activación, así que se reseteao a 0 
 		//el contador de killstreaks
 		_iContKills = 0;
+		_iLevel = 0;
 
 	} // activate
 	//---------------------------------------------------------
@@ -95,13 +96,30 @@ namespace Logic
 
 	void CKillStreak::dead(const std::shared_ptr<CMessage>& message)
 	{		
-		std::shared_ptr<CMessageKillStreak> mesKS = std::static_pointer_cast<CMessageKillStreak> (message);
-		//std::cout << "ola ke ase! mi entity es: " << _entity->getEntityID() << " y me ha llegado en el mensaje " << mesKS->getKiller() << std::endl;
-
+		std::shared_ptr<CMessageKillStreak> mesKS = std::static_pointer_cast<CMessageKillStreak> (message);	
+		
 		++_iContKills;
 
-		//std::cout << "Contador kill streak " << _iContKills << std::endl;
+		SetLevel();
 	}
+
+	void CKillStreak::SetLevel()
+	{
+		//seteamos el nivel
+		if (_iContKills < _iKillsLevel1)
+			_iLevel = 0;
+		else if ((_iContKills >= _iKillsLevel1) && (_iContKills < _iKillsLevel2))
+			_iLevel = 1;
+		else if ((_iContKills >= _iKillsLevel2) && (_iContKills < _iKillsLevel3))
+			_iLevel = 2;
+		else if ((_iContKills >= _iKillsLevel3) && (_iContKills < _iKillsLevel4))
+			_iLevel = 3;
+		else //_iContKills >= 4
+			_iLevel = 4;
+
+		//std::cout << "Soy : " << _entity->getName() << " y mi nivel es : " << _iLevel << " y mi killstreak es " << _iContKills <<std::endl;
+	}
+
 
 } // namespace Logic
 
