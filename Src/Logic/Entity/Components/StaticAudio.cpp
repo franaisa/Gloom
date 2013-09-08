@@ -43,11 +43,13 @@ namespace Logic {
 
 	void CStaticAudio::onActivate() {
 		Vector3 audioPos = _position != Vector3::ZERO ? _position : _entity->getPosition();
-		Audio::CServer::getSingletonPtr()->playSound3D(_audioName, audioPos, Vector3::ZERO, true, _streamAudio);
+		_channelIndex = Audio::CServer::getSingletonPtr()->playSound3D(_audioName, audioPos, Vector3::ZERO, true, _streamAudio);
 	}
 
 	void CStaticAudio::onDeactivate() {
-		Audio::CServer::getSingletonPtr()->stopSound(_audioName);
+		// Pedimos que se borre el sonido de ese canal porque siempre va a estar ocupado
+		// ya que todos los sonidos ambientales siempre estan en loop
+		Audio::CServer::getSingletonPtr()->stopSound(_channelIndex);
 	}
 
 } // namespace Logic

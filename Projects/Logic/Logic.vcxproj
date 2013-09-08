@@ -88,6 +88,7 @@
     <ClCompile Include="..\..\Src\Logic\Entity\Components\ComeBackServer.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\CoolDownClient.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\CoolDownServer.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\DynamicAudio.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\DynamicLight.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\CharacterSound.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\EnemyInSight.cpp" />
@@ -285,6 +286,7 @@
     <ClInclude Include="..\..\Src\Graphics\OgreDecal.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\AmplifyDamageClient.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\AmplifyDamageServer.h" />
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\AudioListener.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\AudioTrigger.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\Bite.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\CharacterName.h" />
@@ -292,6 +294,7 @@
     <ClInclude Include="..\..\Src\Logic\Entity\Components\ComeBackServer.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\CoolDownClient.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\CoolDownServer.h" />
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\DynamicAudio.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\DynamicLight.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\CharacterSound.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\EnemyInSight.h" />

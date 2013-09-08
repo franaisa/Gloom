@@ -784,6 +784,9 @@
     <ClCompile Include="..\..\Src\Logic\Messages\MessageKillStreak.cpp">
       <Filter>Messages\Source</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\DynamicAudio.cpp">
+      <Filter>Entity\Components\Audio\Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Src\Logic\Maps\ComponentFactory.h">
@@ -1424,6 +1427,12 @@
     </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Messages\MessageKillStreak.h">
       <Filter>Messages\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\DynamicAudio.h">
+      <Filter>Entity\Components\Audio\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\AudioListener.h">
+      <Filter>Entity\Components\Audio\Header</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
