@@ -23,7 +23,7 @@ namespace Graphics {
 
 namespace Logic {
 
-	class CCharacterName;
+	class CEntity;
 
 	/**
 
@@ -97,7 +97,7 @@ namespace Logic {
 		//                          MIEMBROS PROTEGIDOS
 		// =======================================================================
 
-		std::map<CCharacterName*, int> _namesBeingShown;
+		std::map<CEntity*, int> _namesBeingShown;
 		int _raycastTimer;
 		unsigned int _raycastTimeStep;
 		unsigned int _visibilityTimeStep;

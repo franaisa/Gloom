@@ -15,6 +15,7 @@
 #include "Application/BaseApplication.h"
 #include "Map/MapEntity.h"
 #include "Logic/Maps/Map.h"
+#include "Logic/Server.h"
 #include "Logic/GameNetPlayersManager.h"
 
 #include "Physics/Server.h"
@@ -58,7 +59,8 @@ namespace Logic {
 
 	void CEnemyInSight::onTick(unsigned int msecs) {
 		if( !_namesBeingShown.empty() ) {
-			vector< map<CCharacterName*, int>::iterator > entitiesToBeDeleted;
+			vector< map<CEntity*, int>::iterator > entitiesToBeDeleted;
+			entitiesToBeDeleted.reserve( _namesBeingShown.size() );
 
 			auto it = _namesBeingShown.begin();
 			for(; it != _namesBeingShown.end(); ++it) {
@@ -68,9 +70,18 @@ namespace Logic {
 				}
 			}
 
+			CEntity* entity;
+			CCharacterName* charName;
+			CMap* map = CServer::getSingletonPtr()->getMap();
 			for(int i = 0; i < entitiesToBeDeleted.size(); ++i) {
-				entitiesToBeDeleted[i]->first->setVisible(false);
-				_namesBeingShown.erase( entitiesToBeDeleted[i] );
+				entity = map->getEntityByID( entitiesToBeDeleted[i]->first->getEntityID() );
+				if(entity != NULL) { // Nos aseguramos de que la entidad no haya sido borrada
+					charName = entitiesToBeDeleted[i]->first->getComponent<CCharacterName>("CCharacterName");
+					if(charName != NULL) {
+						charName->setVisible(false);
+						_namesBeingShown.erase(entitiesToBeDeleted[i]);
+					}
+				}
 			}
 		}
 		
@@ -99,7 +110,7 @@ namespace Logic {
 					if(myTeam == TeamFaction::eNONE || otherEntityTeam == TeamFaction::eNONE || myTeam != otherEntityTeam) {
 						CCharacterName* charName = enemyEntity->getComponent<CCharacterName>("CCharacterName");
 						if(charName != NULL) {
-							_namesBeingShown[charName] = _visibilityTimeStep;
+							_namesBeingShown[enemyEntity] = _visibilityTimeStep;
 							charName->setVisible(true);
 						}
 					}

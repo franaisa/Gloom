@@ -37,6 +37,7 @@ namespace Logic {
 				bool loopSound		= audioMsg->isLoopable();
 				bool streamSound	= audioMsg->streamSound();
 				bool stopSound		= audioMsg->stopSound();
+				bool playerOnly		= audioMsg->isPlayerOnlySound();
 
 				if(stopSound) {
 					Audio::CServer::getSingletonPtr()->stopSound(name);
@@ -47,7 +48,7 @@ namespace Logic {
 					// reproducimos el sonido en 3d (si corresponde)
 					if( _entity->isPlayer() )
 						Audio::CServer::getSingletonPtr()->playSound(name, loopSound, streamSound);
-					else {
+					else if(!playerOnly) {
 						if(play3dSound) {
 							Audio::CServer::getSingletonPtr()->playSound3D(name, _entity->getPosition(), Vector3::ZERO, loopSound, streamSound);
 						}

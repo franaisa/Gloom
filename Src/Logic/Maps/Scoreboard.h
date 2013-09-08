@@ -262,7 +262,9 @@ la clase del jugador, las muertes, los frags, los mejores spree, etc.
 
 	private:
 
-		void showSpreeMessage(unsigned int nbKills);
+		void showSpreeMessage(const std::string &name, unsigned int nbKills);
+
+		void loadSpreeMenu();
 
 		std::vector<std::string> _spreeMsgList;
 
@@ -291,7 +293,7 @@ la clase del jugador, las muertes, los frags, los mejores spree, etc.
 		Variable que guarda el control de flash. Lo guardamos porque lo vamos
 		a utilizar mucho y llamar muchas veces al manager es muy costoso
 		*/
-		Hikari::FlashControl * _scoreboard;
+		Hikari::FlashControl * _scoreboard, *_spreeMenu;
 	};
 
 }

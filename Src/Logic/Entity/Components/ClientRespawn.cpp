@@ -24,7 +24,6 @@
 #include "Logic/Maps/GUIKillersMessage.h"
 #include "../../GameNetPlayersManager.h"
 #include "Logic/Messages/MessageHudSpawn.h"
-#include "Logic/Messages/MessageAudio.h"
 
 #include <math.h>
 
@@ -160,14 +159,7 @@ namespace Logic  {
 				_entity->emitMessage(messageHudSpawn);
 
 				//Sonido Spawn
-				std::shared_ptr<CMessageAudio> audioMsg = std::make_shared<CMessageAudio>();
-
-				audioMsg->setAudioName(_audioSpawn);
-				audioMsg->isLoopable(false);
-				audioMsg->is3dSound(true);
-				audioMsg->streamSound(false);
-
-				_entity->emitMessage(audioMsg);
+				Audio::CServer::getSingletonPtr()->playSound3D(_audioSpawn, _entity->getPosition(), Vector3::ZERO);
 
 				break;
 			}
