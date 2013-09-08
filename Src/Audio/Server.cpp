@@ -17,10 +17,12 @@ Contiene la implementación de la clase principal de audio, llevará el control de
 
 #include "Logic/Entity/Entity.h"
 #include "Logic/Entity/Components/AvatarController.h"
+#include "Logic/Entity/Components/AudioListener.h"
 
 #include <cassert>
 #include <iostream>
 
+using namespace FMOD;
 using namespace std;
 
 namespace Audio
@@ -154,7 +156,22 @@ namespace Audio
 	}//ERRCHECK
 	//--------------------------------------------------------
 
-	void CServer::playSound(const string& soundName, bool loopSound, bool streamSound){
+	FMOD_RESULT F_CALLBACK trackEnd(FMOD_CHANNEL *srcChannel, FMOD_CHANNEL_CALLBACKTYPE type, void *commanddata1, void *commanddata2) {
+		if(type == FMOD_CHANNEL_CALLBACKTYPE_END && commanddata1 != NULL) {
+			Channel* channel = reinterpret_cast<Channel*>(srcChannel);
+			Logic::IAudioListener* listener = reinterpret_cast<Logic::IAudioListener*>(commanddata1);
+			
+			int channelIndex;
+			channel->getIndex(&channelIndex);
+			listener->trackEnd(channelIndex);
+		}
+
+		return FMOD_OK;
+	}
+
+	//--------------------------------------------------------
+
+	unsigned int CServer::playSound(const string& soundName, bool loopSound, bool streamSound, Logic::IAudioListener* userData) {
 		unsigned int soundMask = loopSound ? (FMOD_DEFAULT | FMOD_LOOP_NORMAL) : FMOD_DEFAULT;
 		
 		//Carga del sonido
@@ -180,32 +197,33 @@ namespace Audio
 			throw;
 		}
 
-		//Reproducción en canal
-		Channel *canal;
+		//Reproducción en channel
+		Channel *channel;
 		result = _system->playSound(
 			FMOD_CHANNEL_REUSE , // dejamos que FMOD seleccione cualquiera
-			sound, // sonido que se “engancha” a ese canal
+			sound, // sonido que se “engancha” a ese channel
 			false, // arranca sin “pause” (se reproduce directamente)
-			& canal); // devuelve el canal que asigna
+			& channel); // devuelve el channel que asigna
 		ERRCHECK(result);
 		// el sonido ya está reproduciendo!!
-		result = canal->setVolume(_volume);
+		result = channel->setVolume(_volume);
 		ERRCHECK(result);
 
-		/*int can;
-		canal->getIndex(&can);
-		cout << "el numero de canal ocupado es " << can << endl;
-		int numcanales;
-		_system->getChannelsPlaying(&numcanales);
-		cout << "El numero de canales usados al cargar el sonido es " << numcanales << endl;*/
+		// Si nos pasan un puntero al listener fijamos el callback
+		// para que se le avise de los eventos pertinentes
+		if(userData != NULL)
+			channel->setCallback(trackEnd);
 
-		//Guardamos la asociacion nombreSonido/Canal
-		_soundChannel[soundName] = canal;
+		channel->setUserData( (void*)userData );
 
+		int channelIndex;
+		channel->getIndex(&channelIndex);
+		return channelIndex;
 	}//playSound
+
 	//--------------------------------------------------------
 
-	void CServer::playSound3D(const string& soundName, const Vector3& position, const Vector3& speed, bool loopSound, bool streamSound){
+	unsigned int CServer::playSound3D(const string& soundName, const Vector3& position, const Vector3& speed, bool loopSound, bool streamSound, Logic::IAudioListener* userData) {
 		unsigned int soundMask = loopSound ? (FMOD_3D | FMOD_LOOP_NORMAL) : FMOD_3D;
 
 		//Carga del sonido
@@ -233,72 +251,70 @@ namespace Audio
 			throw;
 		}
 
-		Channel *canal;
+		Channel *channel;
 
-		//Reproducción en canal
+		//Reproducción en channel
 		result = _system->playSound(
 		FMOD_CHANNEL_REUSE , // dejamos que FMOD seleccione cualquiera
-		sound, // sonido que se “engancha” a ese canal
+		sound, // sonido que se “engancha” a ese channel
 		false, // arranca sin “pause” (se reproduce directamente)
-		& canal); // devuelve el canal que asigna
+		& channel); // devuelve el channel que asigna
 		ERRCHECK(result);
 		// el sonido ya está reproduciendo!!
-		result = canal->setVolume(_volume);
+		result = channel->setVolume(_volume);
 		ERRCHECK(result);
 
 		FMOD_VECTOR
 			pos={position.x,position.y,position.z}, // posición
 			vel={speed.x, speed.y, speed.z};  // velocidad (para el doppler)
-			canal->set3DAttributes(&pos, &vel);
+			channel->set3DAttributes(&pos, &vel);
 			ERRCHECK(result);
 
 		//Distancia a la que empieza a atenuarse y a la cual ya no se atenua mas respectivamente
-		result = canal->set3DMinMaxDistance(50.0f,10000.0f);
+		result = channel->set3DMinMaxDistance(50.0f,10000.0f);
 		ERRCHECK(result);
 
-		/*int can;
-		canal->getIndex(&can);
-		cout << "el numero de canal ocupado es " << can << endl;
-		int numcanales;
-		_system->getChannelsPlaying(&numcanales);
-		cout << "El numero de canales usados al cargar el sonido es " << numcanales << endl;*/
-		
-		//Guardamos la asociacion nombreSonido/Canal
-		_soundChannel[soundName] = canal;
+		// Si nos pasan un puntero al listener fijamos el callback
+		// para que se le avise de los eventos pertinentes
+		if(userData != NULL)
+			channel->setCallback(trackEnd);
+
+		channel->setUserData( (void*)userData );
+
+		int channelIndex;
+		channel->getIndex(&channelIndex);
+		return channelIndex;
 	}//playSound3D
 	//--------------------------------------------------------
 
-	void CServer::stopSound(const string& soundName){
-		auto it = _soundChannel.find(soundName);
-		if( it != _soundChannel.end() ){
-			it->second->stop();
-			_soundChannel.erase(it);
-		}
+	void CServer::stopSound(int channelIndex) {
+		Channel* channel;
+		FMOD_RESULT result = _system->getChannel(channelIndex, &channel);
+		if(result == FMOD_OK)
+			channel->stop();
 	}//stopSound
 	//--------------------------------------------------------
 
-	void CServer::stopAllSounds(){
-		Channel *canal;
+	void CServer::stopAllSounds() {
+		Channel* channel;
 		//Recorremos los 32 canales y paramos su reproduccion
-		for(int i=0;i<32;i++){
-			_system->getChannel(i,&canal);
-			canal->stop();
+		for(int i = 0; i < 32; ++i) {
+			_system->getChannel(i, &channel);
+			channel->stop();
 		}
-		//Limpiamos el mapa idSonido-canal
-		_soundChannel.clear();
 	}//stopAllSounds
 	//--------------------------------------------------------
 
-	void CServer::mute(){
-		Channel* canal;
+	void CServer::mute() {
+		Channel* channel;
 		//Si el server estaba muteado lo desmuteamos y viceversa
 		if(_isMute){
 			_isMute=false;
 			_volume=0.5;
 			//Recorremos los 32 canales y cambiamos su volumen
 			for(int i=0;i<32;i++){
-				_system->getChannel(i,&canal);
-				canal->setVolume(0);
+				_system->getChannel(i,&channel);
+				channel->setVolume(0);
 			}
 		}
 		else{
@@ -306,8 +322,8 @@ namespace Audio
 			_volume=0;
 			//Recorremos los 32 canales y cambiamos su volumen
 			for(int i=0;i<32;i++){
-				_system->getChannel(i,&canal);
-				canal->setVolume(0);
+				_system->getChannel(i,&channel);
+				channel->setVolume(0);
 			}
 
 		}
@@ -357,7 +373,22 @@ namespace Audio
 		auto it = _CRCTable.find(CRC);
 		assert(it != _CRCTable.end() && "Error: Estas buscando un CRC que no existe");
 
+		cout << CRC << " = " << it->second << endl;
+
 		return it->second;
+	}
+
+	//--------------------------------------------------------
+
+	void CServer::update3DAttributes(int channelIndex, const Vector3& position, const Vector3& speed) {
+		Channel* channel;
+		_system->getChannel(channelIndex, &channel);
+
+		FMOD_VECTOR
+			pos = {position.x, position.y, position.z},
+			vel = {speed.x, speed.y, speed.z}; 
+
+		channel->set3DAttributes(&pos, &vel);
 	}
 
 } // namespace Audio

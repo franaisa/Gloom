@@ -74,10 +74,6 @@ namespace Logic {
 
 				break;
 			}
-			/*case Message::UNTOUCHED: {
-				Audio::CServer::getSingletonPtr()->stopSound(_name);
-				break;
-			}*/
 		}
 	} // process
 
