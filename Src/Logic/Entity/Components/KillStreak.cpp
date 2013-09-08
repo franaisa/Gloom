@@ -100,7 +100,15 @@ namespace Logic
 		
 		++_iContKills;
 
+		//Comprobacion de si hemos cambiado de nivel
+		int iAntiguoNivel = _iLevel;
 		SetLevel();
+
+		if (iAntiguoNivel != _iLevel)
+		{
+			//Si hay cambio de nivel, comprobar el tipo del personaje y realizar su kill streak determinado (ver cabecera de la clase .h)
+			//Voy a intentar de momento hacerlo todo en esta misma clase para no crear muchos componentes y dejarlo todo centralizado aquí (si se puede)
+		}
 	}
 
 	void CKillStreak::SetLevel()
