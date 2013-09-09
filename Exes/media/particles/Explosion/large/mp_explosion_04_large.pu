@@ -8,6 +8,8 @@
 //-----------------------------------------------------------------------------------------------------------------------
 system Explosion/mp_explosion_04
  {
+	scale_velocity                              0.2
+    scale                                       0.2 0.2 0.2
     technique 
     {
         visual_particle_quota                   12

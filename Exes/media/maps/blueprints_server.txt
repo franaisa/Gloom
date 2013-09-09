@@ -48,4 +48,5 @@ BulletSpark
 BloodStrike
 SniperTrail
 SpawnParticles
-LavaBurn CParticleSystem
+LavaBurn
+ScreamerExplotion

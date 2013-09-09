@@ -51,3 +51,4 @@ BloodStrike CParticleSystem
 SniperTrail CParticleSystem
 SpawnParticles CParticleSystem
 LavaBurn CParticleSystem
+ScreamerExplotion CParticleSystem
