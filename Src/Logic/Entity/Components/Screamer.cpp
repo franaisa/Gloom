@@ -359,6 +359,9 @@ namespace Logic {
 	//__________________________________________________________________
 
 	void CScreamer::createExplotion() {
+		Map::CEntity* screamerInfo = CEntityFactory::getSingletonPtr()->getInfo("Screamer");
+		float height = screamerInfo->getFloatAttribute("heightShoot");
+		
 		// EntitiesHit sera el buffer que contendra la lista de entidades que ha colisionado
 		// con el overlap
 		vector<CEntity*> entitiesHit;
@@ -367,6 +370,7 @@ namespace Logic {
 		// en la que se encuentra la granada con el radio que se indique de explosion
 		Physics::SphereGeometry explotionGeom = Physics::CGeometryFactory::getSingletonPtr()->createSphere(_screamerExplotionRadius);
 		Vector3 explotionPos = _entity->getPosition();
+		explotionPos.y += height;
 		Physics::CServer::getSingletonPtr()->overlapMultiple(explotionGeom, explotionPos, entitiesHit);
 
 		int nbHits = entitiesHit.size();
@@ -384,10 +388,11 @@ namespace Logic {
 			}
 		}
 
-		shared_ptr<CMessageCreateParticle> particleMsg = make_shared<CMessageCreateParticle>();
-        particleMsg->setParticle("explotionParticles");
-        particleMsg->setPosition(explotionPos);
-        _entity->emitMessage(particleMsg);
+		// Creamos las particulas de la explosion
+		Map::CEntity* entityInfo = CEntityFactory::getSingletonPtr()->getInfo("ScreamerExplotion");
+		CEntity* explotion = CEntityFactory::getSingletonPtr()->createEntity(entityInfo, _entity->getMap(), explotionPos, Quaternion::IDENTITY );
+		explotion->activate();
+		explotion->start();
 	} // createExplotion
 	//________________________________________________________________________
 

@@ -787,6 +787,9 @@
     <ClCompile Include="..\..\Src\Logic\Entity\Components\DynamicAudio.cpp">
       <Filter>Entity\Components\Audio\Source</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Messages\MessageParticleStart.cpp">
+      <Filter>Messages\Source</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Src\Logic\Entity\Components\SpectatorHud.cpp">
       <Filter>Entity\Components\Graphics\Source</Filter>
     </ClCompile>
@@ -1437,8 +1440,11 @@
     <ClInclude Include="..\..\Src\Logic\Entity\Components\AudioListener.h">
       <Filter>Entity\Components\Audio\Header</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Messages\MessageParticleStart.h">
+      <Filter>Messages\Header</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Entity\Components\SpectatorHud.h">
-      <Filter>Entity\Components\Graphics\Header</Filter>
+      <Filter>Entity\Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

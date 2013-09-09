@@ -39,21 +39,23 @@ namespace Logic {
 		virtual ~CParticleSystem();
 
 		virtual bool spawn(CEntity* entity, CMap *map, const Map::CEntity *entityInfo);
+		virtual bool accept(const std::shared_ptr<CMessage>& message);
+		virtual void process(const std::shared_ptr<CMessage>& message);
 
 		virtual void onParticlesExpired();
 
-		void start() { _particleSystem->start(); }
-		void start(float stopTime) { _particleSystem->start(stopTime); }
-		void startAndStopFade(float stopTime) { _particleSystem->startAndStopFade(stopTime); }
+		void startEmitting() { _particleSystem->start(); }
+		void startEmitting(float stopTime) { _particleSystem->start(stopTime); }
+		void startAndStopFadeEmitting(float stopTime) { _particleSystem->startAndStopFade(stopTime); }
 		
-		void stop() { _particleSystem->stop(); }
-		void stop(float stopTime) { _particleSystem->stop(stopTime); }
-		void stopFade(float stopTime) { _particleSystem->stopFade(stopTime); }
+		void stopEmitting() { _particleSystem->stop(); }
+		void stopEmitting(float stopTime) { _particleSystem->stop(stopTime); }
+		void stopFadeEmitting(float stopTime) { _particleSystem->stopFade(stopTime); }
 
-		void pause() { _particleSystem->pause(); }
-		void pause(float pauseTime) { _particleSystem->pause(pauseTime); }
+		void pauseEmitting() { _particleSystem->pause(); }
+		void pauseEmitting(float pauseTime) { _particleSystem->pause(pauseTime); }
 
-		void resume() { _particleSystem->resume(); }
+		void resumeEmitting() { _particleSystem->resume(); }
 
 		void setDirection(const Vector3& direction) { _particleSystem->setDirection(direction); }
 		void setOrientation(const Quaternion& orientation) { _particleSystem->setOrientation(orientation); }
