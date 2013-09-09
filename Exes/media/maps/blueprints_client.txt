@@ -9,7 +9,7 @@ Shadow CCharacterName CClientRespawn CPhysicController CDynamicAudio CParticle C
 Hound CCharacterName CClientRespawn CPhysicController CDynamicAudio CParticle CPlayerInterpolator CAnimatedGraphics CKillStreak
 Archangel CCharacterName CClientRespawn CPhysicController CDynamicAudio CParticle CPlayerInterpolator CAnimatedGraphics CKillStreak
 RemotePlayer CCharacterName CClientRespawn CPhysicController CDynamicAudio CParticle CPlayerInterpolator CAnimatedGraphics 
-LocalSpectator CSpectatorController CPhysicController
+LocalSpectator CSpectatorController CPhysicController CSpectatorHud
 ItemSpawn CFloatingMovement CSpawnItemManager CGraphics
 ItemSpawnDynamic CPositionInterpolator CGraphics
 Jumper CGraphics CAudio CParticle CParticleSystem
@@ -21,7 +21,7 @@ Hacksaw CGraphics CHacksaw
 ScreamerShield CGraphics CScreamerShieldController
 FireBall CGraphics CPositionInterpolator CDynamicLight
 MagneticBullet CGraphics CPositionInterpolator
-LifeDome CLifeDome CGraphics 
+LifeDome CLifeDome CParticleSystem 
 ShieldSpell CShieldSpellController CGraphics 
 Vortice CGraphics
 Ammo CPhysicStaticEntity CSpawnItemManager CGraphics
@@ -51,3 +51,4 @@ BloodStrike CParticleSystem
 SniperTrail CParticleSystem
 SpawnParticles CParticleSystem
 LavaBurn CParticleSystem
+ScreamerExplotion CParticleSystem

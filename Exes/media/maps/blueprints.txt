@@ -29,7 +29,7 @@ ScreamerShield CGraphics CPhysicDynamicEntity CScreamerShieldDamageNotifier CScr
 MagneticBullet CMagneticBullet CPhysicDynamicEntity CGraphics
 FireBall CFireBallController CPhysicDynamicEntity CParticle CDynamicLight CGraphics
 LaserBeam CGraphics
-LifeDome CLifeDome CPhysicDynamicEntity CGraphics
+LifeDome CLifeDome CPhysicDynamicEntity CParticleSystem
 ShieldSpell CShieldSpellController CPhysicDynamicEntity CGraphics
 Vortice CLava CGraphics CPhysicStaticEntity
 TestGround CGraphicPlane CPhysicStaticEntity
@@ -59,3 +59,4 @@ BloodStrike CParticleSystem
 SniperTrail CParticleSystem
 SpawnParticles CParticleSystem
 LavaBurn CParticleSystem
+ScreamerExplotion CParticleSystem

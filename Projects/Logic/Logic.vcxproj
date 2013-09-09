@@ -97,6 +97,7 @@
     <ClCompile Include="..\..\Src\Logic\Entity\Components\PhysicStaticCompound.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\Ragdoll.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\ScreamerShieldController.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\SpectatorHud.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\Spell.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\SpellsManagerServer.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\SpellsManagerClient.cpp" />
@@ -291,6 +292,7 @@
     <ClInclude Include="..\..\Src\Logic\Entity\Components\PhysicStaticCompound.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\Ragdoll.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\ScreamerShieldController.h" />
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\SpectatorHud.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\Spell.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\SpellsManagerServer.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\SpellsManagerClient.h" />
