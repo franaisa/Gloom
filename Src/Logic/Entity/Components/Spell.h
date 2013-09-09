@@ -12,12 +12,10 @@ a todas las armas.
 @author Francisco Aisa García
 @date Mayo, 2013
 */
-
 #ifndef __Logic_Spell_H
 #define __Logic_Spell_H
 
 #include "Logic/Entity/Component.h"
-#include "SpellType.h"
 
 #include <string>
 
@@ -57,7 +55,7 @@ namespace Logic {
 
 		@param spellName Nombre del arma implementada por la clase derivada.
 		*/
-		ISpell(const std::string& spellName);
+		ISpell(const std::string &spellName);
 
 		//__________________________________________________________________
 
@@ -105,10 +103,11 @@ namespace Logic {
 		/**
 		Este método es invocado cuando se muere.
 		*/
-		virtual void stopSpell() { /* Por defecto nada */ }
+		virtual void stopSpell() { /* Por defecto nada */ };
 
 		//__________________________________________________________________
 
+		void addDuration();
 	protected:
 
 
@@ -116,16 +115,15 @@ namespace Logic {
 		//                    METODOS HEREDADOS DE ICOMPONENT
 		// =======================================================================
 
-		virtual void onActivate();
+		virtual void onTick(unsigned int msecs);
 
-		virtual void onDeactivate();
-
+		virtual void onWake();
 		
 		// =======================================================================
 		//                          METODOS PROTEGIDOS
 		// =======================================================================
 
-
+		
 		/**
 		Helper para emitir un sonido dada una ruta.
 
@@ -147,8 +145,8 @@ namespace Logic {
 
 		unsigned int _spellID;
 
-		/** Variable para controlar si un hechizo esta seleccionado o no. Indicando si debe desactivarse al hacer el onStart o no.*/
-		bool _mustDeactivate;
+		int _currentTime;
+		unsigned int _duration;
 	}; // class ISpell
 
 } // namespace Logic

@@ -15,7 +15,7 @@ Contiene la implementación del componente que controla la vida cúpula del arcáng
 #include "PhysicDynamicEntity.h"
 
 #include "Graphics/Entity.h"
-#include "Graphics.h"
+#include "ParticleSystem.h"
 #include "Logic/Maps/Map.h"
 #include "Map/MapEntity.h"
 
@@ -54,7 +54,7 @@ namespace Logic
 
 		_physicComponent = _entity->getComponent<CPhysicDynamicEntity>("CPhysicDynamicEntity"); 	
 
-		_cGraph = _entity->getComponent<CGraphics>("CGraphics");
+		_cGraph = _entity->getComponent<CParticleSystem>("CParticleSystem");
 
 		_life  = entityInfo->getIntAttribute("lifeDomeLife");
 		_lifePerFriend = entityInfo->getIntAttribute("lifeDomePerFriend");
@@ -117,11 +117,10 @@ namespace Logic
 		
 		if (_owner) {
 			if (_cGraph ) {
-				_entity->setPosition(_owner->getPosition());
-				if (_scale < 10.0f) {
-					_scale += 0.005f;
-				}
-				_cGraph->changeScale(_scale);
+				Vector3 pos = _owner->getPosition();
+				_entity->setPosition(pos);
+				_cGraph->setPosition(pos);
+
 				//Ponemos la posición del jugador subiéndolo un poco en el ejeY
 				//cGraph->setPosition(_owner->getEntity()->getPosition() + Vector3(0,1,0));
 			}else{

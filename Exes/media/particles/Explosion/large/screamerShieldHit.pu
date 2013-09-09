@@ -1,0 +1,61 @@
+system screamerShieldHit
+{
+	scale_velocity                           0.02
+    scale                                       0.02 0.02 0.02
+    technique 
+    {
+        visual_particle_quota                   100
+        material                                mp_explosion_flare_02
+        renderer                                Billboard
+        {
+            billboard_rotation_type             vertex
+        }
+        emitter                                 Point 
+        {
+            emission_rate                       400
+            angle                               360
+            time_to_live                        dyn_random
+            {
+                min                             0.4
+                max                             0.8
+            }
+            velocity                            dyn_random
+            {
+                min                             200
+                max                             500
+            }
+            duration                            0.3
+            all_particle_dimensions             dyn_random
+            {
+                min                             60
+                max                             80
+            }
+            direction                           1 0.5 0
+            colour                              0 0 0 1
+            force_emission                      true
+        }
+        affector                                Colour 
+        {
+            time_colour                         0    0.772 0.208 0.953 1
+            time_colour                         1    0 0 0 1
+        }
+        affector                                Scale 
+        {
+            xyz_scale                           -10
+        }
+        affector                                ScaleVelocity 
+        {
+            velocity_scale                      dyn_curved_linear
+            {
+                control_point                   0 -1000
+                control_point                   1 0
+            }
+        }
+        observer                                OnClear 
+        {
+            handler                             DoStopSystem 
+            {
+            }
+        }
+    }
+}
