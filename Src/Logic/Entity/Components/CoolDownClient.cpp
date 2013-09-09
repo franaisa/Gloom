@@ -31,6 +31,13 @@ namespace Logic {
 	} // spawn
 	//__________________________________________________________________
 
+	/*
+	void CCoolDownClient::onStart(){
+	
+	} // onStart
+	//__________________________________________________________________
+	*/
+
 	void CCoolDownClient::spell(){ 
 		// feedback de cooldown reducio
 

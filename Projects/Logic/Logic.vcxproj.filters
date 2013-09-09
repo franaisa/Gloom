@@ -676,38 +676,8 @@
     <ClCompile Include="..\..\Src\Logic\Entity\Components\AmplifyDamageServer.cpp">
       <Filter>Entity\Components\Spells\Cast\Source</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Src\Logic\Entity\Components\ComeBackServer.cpp">
-      <Filter>Entity\Components\Spells\Cast\Source</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Src\Logic\Entity\Components\CoolDownServer.cpp">
       <Filter>Entity\Components\Spells\Cast\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Logic\Entity\Components\GravityServer.cpp">
-      <Filter>Entity\Components\Spells\Cast\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Logic\Entity\Components\HardDeathServer.cpp">
-      <Filter>Entity\Components\Spells\Cast\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Logic\Entity\Components\ResurrectionServer.cpp">
-      <Filter>Entity\Components\Spells\Cast\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Logic\Entity\Components\ShieldServer.cpp">
-      <Filter>Entity\Components\Spells\Cast\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Logic\Entity\Components\ComeBackClient.cpp">
-      <Filter>Entity\Components\Spells\Feedback\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Logic\Entity\Components\ShieldClient.cpp">
-      <Filter>Entity\Components\Spells\Feedback\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Logic\Entity\Components\GravityClient.cpp">
-      <Filter>Entity\Components\Spells\Feedback\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Logic\Entity\Components\HardDeathClient.cpp">
-      <Filter>Entity\Components\Spells\Feedback\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Logic\Entity\Components\ResurrectionClient.cpp">
-      <Filter>Entity\Components\Spells\Feedback\Source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Src\Logic\Entity\Components\Spell.cpp">
       <Filter>Entity\Components\Spells</Filter>
@@ -715,17 +685,8 @@
     <ClCompile Include="..\..\Src\Logic\Entity\Components\AmplifyDamageClient.cpp">
       <Filter>Entity\Components\Spells\Feedback\Source</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Src\Logic\Entity\Components\HungryServer.cpp">
-      <Filter>Entity\Components\Spells\Cast\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Logic\Entity\Components\HungryClient.cpp">
-      <Filter>Entity\Components\Spells\Feedback\Source</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Src\Logic\Entity\Components\CoolDownClient.cpp">
       <Filter>Entity\Components\Spells\Feedback\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Logic\Entity\Components\ShieldSpellController.cpp">
-      <Filter>Entity\Components\Spells\Cast\Source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Src\Logic\Entity\Components\SpellsManagerClient.cpp">
       <Filter>Entity\Components\Spells\Manager\Source</Filter>
@@ -1323,40 +1284,10 @@
     <ClInclude Include="..\..\Src\Logic\Entity\Components\AmplifyDamageServer.h">
       <Filter>Entity\Components\Spells\Cast\Header</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Src\Logic\Entity\Components\ShieldServer.h">
-      <Filter>Entity\Components\Spells\Cast\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Logic\Entity\Components\ComeBackServer.h">
-      <Filter>Entity\Components\Spells\Cast\Header</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Entity\Components\CoolDownServer.h">
       <Filter>Entity\Components\Spells\Cast\Header</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Src\Logic\Entity\Components\GravityServer.h">
-      <Filter>Entity\Components\Spells\Cast\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Logic\Entity\Components\HardDeathServer.h">
-      <Filter>Entity\Components\Spells\Cast\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Logic\Entity\Components\ResurrectionServer.h">
-      <Filter>Entity\Components\Spells\Cast\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Logic\Entity\Components\ComeBackClient.h">
-      <Filter>Entity\Components\Spells\Feedback\Header</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Entity\Components\CoolDownClient.h">
-      <Filter>Entity\Components\Spells\Feedback\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Logic\Entity\Components\GravityClient.h">
-      <Filter>Entity\Components\Spells\Feedback\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Logic\Entity\Components\HardDeathClient.h">
-      <Filter>Entity\Components\Spells\Feedback\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Logic\Entity\Components\ResurrectionClient.h">
-      <Filter>Entity\Components\Spells\Feedback\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Logic\Entity\Components\ShieldClient.h">
       <Filter>Entity\Components\Spells\Feedback\Header</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Entity\Components\Spell.h">
@@ -1364,15 +1295,6 @@
     </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Entity\Components\AmplifyDamageClient.h">
       <Filter>Entity\Components\Spells\Feedback\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Logic\Entity\Components\HungryClient.h">
-      <Filter>Entity\Components\Spells\Feedback\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Logic\Entity\Components\HungryServer.h">
-      <Filter>Entity\Components\Spells\Cast\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Logic\Entity\Components\ShieldSpellController.h">
-      <Filter>Entity\Components\Spells\Cast\Header</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Entity\Components\SpellsManagerClient.h">
       <Filter>Entity\Components\Spells\Manager\Header</Filter>
