@@ -12,7 +12,7 @@ RemotePlayer CCharacterName CClientRespawn CPhysicController CDynamicAudio CPart
 LocalSpectator CSpectatorController CPhysicController
 ItemSpawn CFloatingMovement CSpawnItemManager CGraphics
 ItemSpawnDynamic CPositionInterpolator CGraphics
-Jumper CGraphics CAudio CParticle
+Jumper CGraphics CAudio CParticle CParticleSystem
 Lava CGraphics
 Elevator CPhysicDynamicEntity CElevator CGraphics
 ElevatorTrigger CPhysicDynamicEntity CElevatorTrigger

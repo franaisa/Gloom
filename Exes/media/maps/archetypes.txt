@@ -1468,7 +1468,7 @@ Map = {
 	
 	Jumper = {
 		type = "Jumper",
-		msgList= "32,41",
+		msgList= "32,41,69",
 		model = "jumper.mesh",
 
 		audio = "gameplay/plasma.wav",
@@ -1484,7 +1484,6 @@ Map = {
 		particle_scriptName = "Woosh/mp_woosh_12",
 		particle_on = false,
 		particle_destroyEntityOnExpiry = false,
-		particle_offset = {0.0, 20.0, 0.0},
 	},
 	
 	SpikeTrap = {
