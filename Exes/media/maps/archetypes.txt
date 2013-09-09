@@ -148,6 +148,13 @@ Map = {
 		physic_groupList = "1",
 	},
 	
+	ScreamerShieldHit = {
+		type = "ScreamerShieldHit",
+		particle_scriptName = "screamerShieldHit",
+		particle_on = true,
+		particle_destroyEntityOnExpiry = true,
+	},
+	
 	ScreamerExplotion = {
 		type = "ScreamerExplotion",
 		particle_scriptName = "Explosion/mp_explosion_04",
@@ -1444,7 +1451,6 @@ Map = {
 	
 	LifeDome = {
 		type = "LifeDome",
-		model = "lifeDome.mesh",
 		msgList= "48,55,56",
 		lifeDomeLife = 10;
 		lifeDomePerFriend = 4;
@@ -1456,9 +1462,9 @@ Map = {
 		physic_group = 11,
 		physic_groupList = "1", 
 		physic_mass = 10,
-		ticksPerSample = 1,
-		samplesPerSnapshot = 2,		
-		scale = {5,5,5},
+		particle_scriptName = "lifeDome",
+		particle_on = true,
+		particle_destroyEntityOnExpiry = false,
 	},
 	
 	ShieldSpell = {
