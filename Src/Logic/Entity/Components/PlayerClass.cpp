@@ -24,6 +24,7 @@ clase.
 
 #include "Logic/Messages/MessageChangePlayerClass.h"
 #include "Logic/Messages/MessageControl.h"
+#include "Logic/Messages/MessageAudio.h"
 
 namespace Logic {
 	//IMP_FACTORY(CPlayerClass);
@@ -204,6 +205,21 @@ namespace Logic {
 	bool CPlayerClass::canUseSecondarySkill() {
 		return _secondarySkillTimer == 0;
 	}
+
+	//__________________________________________________________________
+
+	void CPlayerClass::emitSound(const std::string &soundName, bool loopSound, bool play3d, bool streamSound, bool stopSound, bool playerOnly){
+		std::shared_ptr<CMessageAudio> audioMsg = std::make_shared<CMessageAudio>();
+		
+		audioMsg->setAudioName(soundName);
+		audioMsg->isLoopable(loopSound);
+		audioMsg->is3dSound(play3d);
+		audioMsg->streamSound(streamSound);
+		audioMsg->stopSound(stopSound);
+		audioMsg->isPlayerOnlySound(playerOnly);
+			
+		_entity->emitMessage(audioMsg);
+	} // emitSound
 
 } // namespace Logic
 

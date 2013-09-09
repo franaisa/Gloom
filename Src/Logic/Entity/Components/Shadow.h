@@ -108,6 +108,8 @@ namespace Logic {
 		*/
 		virtual void onTick(unsigned int msecs);
 
+		virtual void onDeactivate();
+
 	private:
 
 
@@ -134,6 +136,9 @@ namespace Logic {
 		Distancia máxima de cegado
 		*/
 		float _flashRadius;
+
+		bool _playingSound;
+		bool _playingShadowOut;
 	}; // class CShadow
 
 	REG_FACTORY(CShadow);

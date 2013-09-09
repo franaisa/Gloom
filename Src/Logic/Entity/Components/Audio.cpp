@@ -37,23 +37,33 @@ namespace Logic {
 				bool loopSound		= audioMsg->isLoopable();
 				bool streamSound	= audioMsg->streamSound();
 				bool stopSound		= audioMsg->stopSound();
+				bool playerOnly		= audioMsg->isPlayerOnlySound();
 
+				Audio::CServer* audioServer = Audio::CServer::getSingletonPtr();
 				if(stopSound) {
-					Audio::CServer::getSingletonPtr()->stopSound(name);
+					auto it = _tracksBeingPlayed.find(name);
+					if( it != _tracksBeingPlayed.end() ) {
+						audioServer->stopSound( it->second );
+						_tracksBeingPlayed.erase(it);
+					}
 				}
 				else {
 					// Si el sonido lo reproduce el jugador en primera persona, reproducimos
 					// el audio en estereo para evitar problemas, en cualquier otro caso
 					// reproducimos el sonido en 3d (si corresponde)
-					if( _entity->isPlayer() )
-						Audio::CServer::getSingletonPtr()->playSound(name, loopSound, streamSound);
-					else {
-						if(play3dSound) {
-							Audio::CServer::getSingletonPtr()->playSound3D(name, _entity->getPosition(), Vector3::ZERO, loopSound, streamSound);
-						}
-						else {
-							Audio::CServer::getSingletonPtr()->playSound(name, loopSound, streamSound);
-						}
+					if( _entity->isPlayer() ) {
+						unsigned int channelIndex = audioServer->playSound(name, loopSound, streamSound, this);
+						_tracksBeingPlayed[name] = channelIndex;
+					}
+					else if(!playerOnly) {
+						unsigned int channelIndex;
+
+						if(play3dSound)
+							channelIndex = audioServer->playSound3D(name, _entity->getPosition(), Vector3::ZERO, loopSound, streamSound, this);
+						else
+							channelIndex = audioServer->playSound(name, loopSound, streamSound, this);
+
+						_tracksBeingPlayed[name] = channelIndex;
 					}
 				}
 
@@ -62,6 +72,26 @@ namespace Logic {
 		}
 
 	} // process
+
+	void CAudio::onDeactivate() {
+		Audio::CServer* audioServer = Audio::CServer::getSingletonPtr();
+		auto it = _tracksBeingPlayed.begin();
+		for(; it != _tracksBeingPlayed.end(); ++it) {
+			audioServer->stopSound(it->second);
+		}
+
+		_tracksBeingPlayed.clear();
+	}
+
+	void CAudio::trackEnd(int channelIndex) {
+		auto it = _tracksBeingPlayed.begin();
+		for(; it != _tracksBeingPlayed.end(); ++it) {
+			if(it->second == channelIndex) {
+				_tracksBeingPlayed.erase(it);
+				break;
+			}
+		}
+	}
 
 } // namespace Logic
 

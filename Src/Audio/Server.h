@@ -19,13 +19,13 @@ la gestión del audio en el juego.
 #include <iostream>
 #include <string>
 #include <map>
-
-using namespace FMOD;
+#include "dirent.h"
 
 // Predeclaración de clases para ahorrar tiempo de compilación
 namespace Logic 
 {
 	class CEntity;
+	class IAudioListener;
 }
 
 // Declaración de la clase
@@ -43,6 +43,7 @@ namespace Audio
 	{
 	public:
 
+		
 		/**
 		Devuelve la única instancia de la clase CServer.
 		
@@ -76,19 +77,19 @@ namespace Audio
 		/**
 		Se encarga de cargar un sonido (no 3D) y reproducirlo en modo normal.
 		*/
-		void playSound(const std::string& soundName, bool loopSound = false, bool streamSound = false);
+		unsigned int playSound(const std::string& soundName, bool loopSound = false, bool streamSound = false, Logic::IAudioListener* userData = NULL);
 
 		/**
 		Se encarga de cargar un sonido 3D y reproducirlo en modo loop.
 		*/
-		void playSound3D(const std::string& soundName, const Vector3& position, const Vector3& speed, bool loopSound = false, bool streamSound = false);
+		unsigned int playSound3D(const std::string& soundName, const Vector3& position, const Vector3& speed, bool loopSound = false, bool streamSound = false, Logic::IAudioListener* userData = NULL);
 
 		/**
 		Se encarga de parar un sonido introduciendo su nombre como parámetro.
 
 		@param id El identificador del sonido
 		*/
-		void stopSound(const std::string& soundName);
+		void stopSound(int channelIndex);
 
 		/**
 		Se encarga de parar todos los sonidos
@@ -106,6 +107,10 @@ namespace Audio
 		@param controlledAvatar Componente al que le preguntaremos la posición de la entidad.
 		*/
 		void setSoundAvatar(Logic::CEntity *controlledAvatar) { _soundAvatar = controlledAvatar; }
+
+		void update3DAttributes(int channelIndex, const Vector3& position, const Vector3& speed);
+
+		std::string translateCRC(int CRC);
 
 	protected:
 
@@ -140,13 +145,10 @@ namespace Audio
 		*/
 		void ERRCHECK(FMOD_RESULT result);
 
-		/**
-		Guarda las asociaciones de nombreSonido/Canal
-		*/
-		typedef std::map<std::string, Channel *> SoundChannelMap;
-		SoundChannelMap _soundChannel;
-
 	private:
+
+		void createCRCTable(const std::string& rootDirectory);
+
 		/**
 		Única instancia de la clase.
 		*/
@@ -155,7 +157,7 @@ namespace Audio
 		/**
 		Variable sistema de fmod.
 		*/
-		System* _system; // reminiscencias de C
+		FMOD::System* _system; // reminiscencias de C
 
 		/**
 		Variable que controla el volumen de los sonidos por defecto.
@@ -191,6 +193,8 @@ namespace Audio
 
 		/** Ruta por defecto a la biblioteca de sonidos usados por el juego. */
 		std::string _audioResourcesPath;
+
+		std::map<int, std::string> _CRCTable;
 
 	}; // class CServer
 

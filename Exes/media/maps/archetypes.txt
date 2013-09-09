@@ -599,6 +599,7 @@ Map = {
 
 		particleName = "Odor",
 		particleVisible = false,
+		
 	},
 	
 	Archangel = {
@@ -886,6 +887,10 @@ Map = {
 		hudPanelDebugHeight = 5,
 		hudPanelDebugFontSize = 22,
 		
+		KillsLevel1 = 3,
+		KillsLevel2 = 5,
+		KillsLevel3 = 10,
+		KillsLevel4 = 20,
 	},
 	
 	LocalShadow = {
@@ -975,6 +980,11 @@ Map = {
 		hudPanelDebugHeight = 5,
 		hudPanelDebugFontSize = 22,
 		
+		KillsLevel1 = 3,
+		KillsLevel2 = 5,
+		KillsLevel3 = 10,
+		KillsLevel4 = 20,
+
 	},
 	
 	LocalArchangel = {
@@ -1066,6 +1076,10 @@ Map = {
 		hudPanelDebugHeight = 5,
 		hudPanelDebugFontSize = 22,
 		
+		KillsLevel1 = 3,
+		KillsLevel2 = 5,
+		KillsLevel3 = 10,
+		KillsLevel4 = 20,
 	},
 	
 	LocalHound = {
@@ -1202,6 +1216,10 @@ Map = {
 		hudPanelDebugHeight = 5,
 		hudPanelDebugFontSize = 22,
 		
+		KillsLevel1 = 3,
+		KillsLevel2 = 5,
+		KillsLevel3 = 10,
+		KillsLevel4 = 20,
 	},
 	
 	Spectator = {
@@ -1672,9 +1690,5 @@ Map = {
 	
 	KillStreak = {
 		type = "KillStreak",
-		KillsLevel1 = 3,
-		KillsLevel2 = 5,
-		KillsLevel3 = 10,
-		KillsLevel4 = 20,
 	},
 }

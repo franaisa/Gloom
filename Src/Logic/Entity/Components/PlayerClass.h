@@ -241,6 +241,20 @@ namespace Logic {
 		*/
 		inline bool canUseSecondarySkill();
 
+		//__________________________________________________________________
+
+		/**
+		Emite el sonido pasado por parámetro.
+
+		@param soundName Nombre del archivo de audio que queremos reproducir.
+		@param loopSound true queremos reproducir el sonido en loop.
+		@param play3d true si queremos que el sonido se reproduzca en 3d.
+		@param streamSound true si queremos que el sonido se reproduzca en streaming. Util
+		para ficheros muy grandes como por ejemplo la música.
+		@param stopSound true si queremos parar la reproducción del sonido.
+		@param playerOnly true si queremos que el sonido solo suene en el player y no en los remotos.
+		*/
+		void emitSound(const std::string &soundName, bool loopSound, bool play3d, bool streamSound, bool stopSound, bool playerOnly);
 
 		// =======================================================================
 		//                          MIEMBROS PROTEGIDOS

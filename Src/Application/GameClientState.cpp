@@ -304,11 +304,11 @@ namespace Application {
 						if( it->isSpawned() ) {
 							Logic::TEntityID id = it->getEntityId().first;
 
-							if(entityID != id) {
+							if(entityID != id) { // Comprobamos que no se trate de nosotros mismos
 								Logic::CEntity* player = Logic::CServer::getSingletonPtr()->getMap()->getEntityByID(id);
 								Logic::TeamFaction::Enum playerTeam = playersMgr->getTeamUsingEntityId(id);
 
-								if(myTeam == Logic::TeamFaction::eNONE || playerTeam == Logic::TeamFaction::eNONE || myTeam == playerTeam)
+								if(myTeam != Logic::TeamFaction::eNONE && playerTeam != Logic::TeamFaction::eNONE && myTeam == playerTeam)
 									player->getComponent<Logic::CCharacterName>("CCharacterName")->setVisible(true);
 							}
 						}
