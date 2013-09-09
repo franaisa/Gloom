@@ -101,7 +101,8 @@ namespace Graphics
 
 	CParticle * CPoolParticle::getParticle(const std::string &nameParticle){
 	
-		/*auto particleData = _particlesMap.find(nameParticle);
+		/*
+		auto particleData = _particlesMap.find(nameParticle);
 		if(particleData == _particlesMap.end())
 			return 0;
 
@@ -116,8 +117,11 @@ namespace Graphics
 
 		particle->deactivate();
 		particle->activate();
-		return particle;*/
+		return particle;
+		
+		/*/
 		return NULL;
+		/* */
 	} // getParticle
 	//--------------------------------------------------------
 
