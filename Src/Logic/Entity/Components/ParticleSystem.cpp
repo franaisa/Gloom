@@ -69,6 +69,23 @@ namespace Logic {
 
 		return true;
 	} // spawn
+
+	//______________________________________________________________________________
+
+	bool CParticleSystem::accept(const std::shared_ptr<CMessage>& message) {
+		return message->getMessageType() == Message::PARTICLE_START;
+	}
+	
+	//______________________________________________________________________________
+
+	void CParticleSystem::process(const std::shared_ptr<CMessage>& message) {
+		switch( message->getMessageType() ) {
+			case Message::PARTICLE_START: {
+				_particleSystem->start();
+				break;
+			}
+		}
+	}
 	
 	//______________________________________________________________________________
 	
