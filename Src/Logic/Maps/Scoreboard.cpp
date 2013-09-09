@@ -307,6 +307,7 @@ namespace Logic{
 			_scoreboard->callFunction("changePing",Hikari::Args(it->second.name)((int)it->second.ping));
 			_scoreboard->callFunction("addSpree",Hikari::Args(it->second.name)((int)it->second.bestSpree));
 		}
+		loadSpreeMenu();
 	}
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -330,6 +331,7 @@ namespace Logic{
 			_scoreboard->callFunction("changePing",Hikari::Args(it->second.name)((int)it->second.ping));
 			_scoreboard->callFunction("addSpree",Hikari::Args(it->second.name)((int)it->second.bestSpree));
 		}
+		loadSpreeMenu();
 	}
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -402,7 +404,7 @@ namespace Logic{
 
 	void CScoreboard::loadSpreeMenu()  {
 		_guiManager->addGUI("spreeMenu", Hikari::Position(Hikari::Center), 0.85f);
-		_guiManager->load("spreeMenu", "spreeMenu.swf");
+		_guiManager->load("spreeMenu", "spreeMsg.swf");
 		_guiManager->showGUI("spreeMenu");
 		_guiManager->setTransparent("spreeMenu",true);
 		_spreeMenu = _guiManager->getGUIControl("spreeMenu");
