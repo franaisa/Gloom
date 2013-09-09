@@ -24,6 +24,7 @@ del espectador.
 namespace Logic {
 	class CMessageControl;
 	class CPhysicController;
+	class CSpectatorHud;
 }
 
 // Declaración de la clase
@@ -239,6 +240,8 @@ namespace Logic {
 
 		/** Puntero al controlador fisico del player. Nos lo quedamos por motivos de eficiencia. */
 		CPhysicController* _physicController;
+
+		CSpectatorHud * _hud;
 
 		/** 
 		Array que contiene los vectores que corresponden a cada uno de los movimientos

@@ -15,6 +15,8 @@ del espectador.
 #include "PhysicController.h"
 #include "Camera.h"
 #include "AnimatedGraphics.h"
+#include "SpectatorHud.h"
+
 
 #include "Logic/Entity/Entity.h"
 #include "Logic/Server.h"
@@ -75,6 +77,8 @@ namespace Logic {
 		assert( entityInfo->hasAttribute("maxVelocity") && "Error: No se ha definido el atributo maxVelocity en el mapa" );
 		_maxVelocity = entityInfo->getFloatAttribute("maxVelocity");*/
 
+		_hud = _entity->getComponent<CSpectatorHud>("CSpectatorHud");
+
 		return true;
 	} // spawn
 
@@ -113,6 +117,7 @@ namespace Logic {
 						nextPlayer->getComponent<CAnimatedGraphics>("CAnimatedGraphics")->setVisible(false);
 						cameraComp->setTarget(nextPlayer);
 						_currentFollowedPlayer = nextPlayer;
+						_hud->lookAt(_currentFollowedPlayer->getName());
 					}
 					else {
 						if(_currentFollowedPlayer != NULL) {
@@ -122,6 +127,8 @@ namespace Logic {
 
 						cameraComp->setTarget(_entity);
 					}
+
+					
 				}
 				else if(commandType == ControlType::RIGHT_CLICK) {
 					// Modo camara libre
@@ -131,6 +138,8 @@ namespace Logic {
 					}
 
 					CServer::getSingletonPtr()->getMap()->getEntityByName("Camera")->getComponent<CCamera>("CCamera")->setTarget(_entity);
+
+					_hud->freelook();
 				}
 				else {
 					if( _currentFollowedPlayer == NULL ) {

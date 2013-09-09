@@ -110,6 +110,7 @@
     <ClCompile Include="..\..\Src\Logic\Entity\Components\ShieldClient.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\ShieldServer.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\ShieldSpellController.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\SpectatorHud.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\Spell.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\SpellsManagerServer.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\SpellsManagerClient.cpp" />
@@ -316,6 +317,7 @@
     <ClInclude Include="..\..\Src\Logic\Entity\Components\ShieldClient.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\ShieldServer.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\ShieldSpellController.h" />
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\SpectatorHud.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\Spell.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\SpellsManagerServer.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\SpellsManagerClient.h" />
