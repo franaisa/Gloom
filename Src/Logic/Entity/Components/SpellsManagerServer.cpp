@@ -7,16 +7,20 @@ Contiene la implementación del componente que gestiona las armas y que administr
 @see Logic::IComponent
 
 @Author Antonio Jesus Narvaez
-@date September, 2013
+@date July, 2013
 */
 
 #include "SpellsManagerServer.h"
+#include "SpellType.h"
 
 #include "Logic/Entity/Entity.h"
 #include "Map/MapEntity.h"
 
 #include "AmplifyDamageServer.h"
 #include "CoolDownServer.h"
+
+#include "Logic/Messages/MessageAddSpell.h"
+
 
 namespace Logic 
 {
@@ -33,31 +37,31 @@ namespace Logic
 	bool CSpellsManagerServer::spawn(CEntity *entity, CMap *map, const Map::CEntity *entityInfo) {
 		if(!IComponent::spawn(entity,map,entityInfo)) return false;
 
-		/*
-		assert( entityInfo->hasAttribute("primarySpell") && "Debe de tener campo primarySpell");
-		assert( entityInfo->hasAttribute("secondarySpell") && "Debe de tener campo secondarySpell");
-		
-		_primarySpell = (SpellType::Enum)entityInfo->getIntAttribute("primarySpell");
-		_secondarySpell = (SpellType::Enum)entityInfo->getIntAttribute("secondarySpell");
-
-
-		entitySpawn = entity;
-		mapSpawn = map;
-		entityInfoSpawn = entityInfo;
-
+		_spells.resize(SpellType::eSIZE);
+		// Rellenamos el vector con los punteros a los componentes correspondientes
+		_spells[SpellType::eAMPLIFY_DAMAGE] = _entity->getComponent<Logic::CAmplifyDamageServer>("CAmplifyDamageServer");
+		_spells[SpellType::eCOOLDOWN] = _entity->getComponent<Logic::CCoolDownServer>("CCoolDownServer");
 		return true;
-		*/
 
 	} // spawn
+	//---------------------------------------------------------
+
+	bool CSpellsManagerServer::accept(const std::shared_ptr<CMessage>& message) {
+		Logic::TMessageType msgType = message->getMessageType();
+
+		return msgType == Message::ADD_SPELL;
+	} // accept
 	
 	//---------------------------------------------------------
 
-	void CSpellsManagerServer::onStart(){
-
-		
-	} // onStart
+	void CSpellsManagerServer::process(const std::shared_ptr<CMessage>& message) {
+		std::shared_ptr<CMessageAddSpell> spellMsg = std::static_pointer_cast<CMessageAddSpell>(message);
+		if(_spells[spellMsg->getSpell()]->isSleeping())
+			_spells[spellMsg->getSpell()]->wakeUp();
+		else
+			_spells[spellMsg->getSpell()]->addDuration();
+	} // process
 	//---------------------------------------------------------
-
 
 } // namespace Logic
 

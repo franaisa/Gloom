@@ -2,18 +2,20 @@
 #define __Logic_SpellsManagerClient_H
 
 #include "Logic/Entity/Component.h"
-#include "SpellType.h"
+
 
 #include <vector>
 
 //declaración de la clase
-namespace Logic 
+namespace Logic {
+	class ISpell;
+}
+
+namespace Logic
 {
 /**
-	Este componente controla la activacion/desactivacion de las armas que tenemos.
+	Este componente controla la activacion/desactivacion de los spells que tenemos.
 */
-
-
 	class CSpellsManagerClient : public IComponent
 	{
 		DEC_FACTORY(CSpellsManagerClient);
@@ -31,21 +33,14 @@ namespace Logic
 		*/
 		virtual bool spawn(CEntity* entity, CMap *map, const Map::CEntity *entityInfo);
 
-		virtual void onStart();
+		virtual bool accept(const std::shared_ptr<CMessage>& message);
+		virtual void process(const std::shared_ptr<CMessage>& message);
 		
 	private:
 
-		void addComponent();
+		std::vector<ISpell*> _spells;
 
-		SpellType::Enum _primarySpell;
-
-		SpellType::Enum _secondarySpell;
-
-
-		CEntity *entitySpawn;
-		CMap *mapSpawn;
-		const Map::CEntity *entityInfoSpawn;
-	}; // class CShoot
+	}; // class CSpellsManagerClient
 
 	REG_FACTORY(CSpellsManagerClient);
 
