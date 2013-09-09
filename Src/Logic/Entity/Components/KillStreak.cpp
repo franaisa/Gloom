@@ -19,6 +19,7 @@ Contiene la declaración del componente que controla el componente de los kill st
 
 #include "Logic/Messages/MessagePlayerDead.h"
 #include "Logic/Messages/MessageKillStreak.h"
+#include "Logic/Messages/MessageAddLife.h"
 
 #include "Logic/Messages/MessageKinematicMove.h"
 #include "Logic/Messages/MessageTouched.h"
@@ -108,8 +109,11 @@ namespace Logic
 		{
 			//Si hay cambio de nivel, comprobar el tipo del personaje y realizar su kill streak determinado (ver cabecera de la clase .h)
 			//Voy a intentar de momento hacerlo todo en esta misma clase para no crear muchos componentes y dejarlo todo centralizado aquí (si se puede)
+			//LaunchClassKillStreak();
 		}
 	}
+	//----------------------------------------------------------
+
 
 	void CKillStreak::SetLevel()
 	{
@@ -127,6 +131,56 @@ namespace Logic
 
 		//std::cout << "Soy : " << _entity->getName() << " y mi nivel es : " << _iLevel << " y mi killstreak es " << _iContKills <<std::endl;
 	}
+	//----------------------------------------------------------
+
+
+	void CKillStreak::LaunchClassKillStreak()
+	{
+		std::string type = this->getType(); 
+		if ((type == "Screamer") || (type == "LocalScreamer"))
+		{
+
+		}
+		else if ((type == "Shadow") || (type == "LocalShadow"))
+		{
+		
+		}
+		else if ((type == "Hound") || (type == "LocalHound"))
+		{
+
+		}
+		else if ((type == "Archangel") || (type == "LocalArchangel"))
+		{
+			ArchangelKillStreak();
+		}
+	}
+
+
+	void CKillStreak::ArchangelKillStreak()
+	{
+		switch (_iLevel)
+		{
+			case 1: //x3: Aumento de la vida.
+			{
+				std::cout << "Envio vida" << std::endl;
+				std::shared_ptr<Logic::CMessageAddLife> messageLife = std::make_shared<Logic::CMessageAddLife>();
+				messageLife->setAddLife(20);
+				this->getEntity()->emitMessage(messageLife);
+			}
+			break;
+			case 2:
+
+			break;
+			case 3:
+
+			break;
+			case 4:
+
+			break;
+		}
+	}
+
+	
 
 
 } // namespace Logic
