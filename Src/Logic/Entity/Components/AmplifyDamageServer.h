@@ -41,7 +41,7 @@ namespace Logic {
 	public:
 
 		/** Constructor por defecto. */
-		CAmplifyDamageServer() : ISpell("amplifyDamage"), _newPercentDamage(0) { }
+		CAmplifyDamageServer() : ISpell("AmplifyDamage"), _newPercentDamage(0) { }
 
 		//__________________________________________________________________
 

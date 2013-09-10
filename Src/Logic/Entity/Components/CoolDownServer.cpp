@@ -39,10 +39,12 @@ namespace Logic {
 	bool CCoolDownServer::spawn(CEntity* entity, CMap *map, const Map::CEntity *entityInfo) {
 		if(!ISpell::spawn(entity,map,entityInfo)) return false;
 
-		// Nos aseguramos de tener todos los atributos que necesitamos
-		assert( entityInfo->hasAttribute(_spellName + "PercentageCooldown") );
+		Map::CEntity *tempEntity = CEntityFactory::getSingletonPtr()->getInfo(_spellName);
 
-		_percentage = entityInfo->getFloatAttribute(_spellName + "PercentageCooldown");
+		// Nos aseguramos de tener todos los atributos que necesitamos
+		assert( tempEntity->hasAttribute("PercentageCooldown") );
+
+		_percentage = tempEntity->getFloatAttribute("PercentageCooldown");
 
 
 		_weaponryAmmo.resize(WeaponType::eSIZE);

@@ -82,8 +82,8 @@ Map = {
 		
 		model = "scroll.mesh",
 		id = "spell",
-		reward = 1,
-		respawnTime = 120,
+		reward = 0,
+		respawnTime = 12,
 		
 		audioTrigger_name = "items/holdable.wav",
 		audioTrigger_stream = false,
@@ -106,8 +106,8 @@ Map = {
 		
 		model = "scroll.mesh",
 		id = "spell",
-		reward = 2,
-		respawnTime = 120,
+		reward = 1,
+		respawnTime = 12,
 		
 		audioTrigger_name = "items/holdable.wav",
 		audioTrigger_stream = false,
@@ -475,38 +475,6 @@ Map = {
 		secondarySkillCooldown = 1,
 		invisibilityDuration = 5,
 		
-		primarySpell = 0,
-		secondarySpell = 1,
-				
-			spellamplifyDamageID = 0,
-			spellamplifyDamagePercentDamage = 30,
-			
-			spellcomeBackID = 1,
-			spellcomeBackCooldown = 10,
-			spellcomeBackMaxAmmo = 7,
-			spellcomeBackAmmoPerPull = 3,
-			spellcomeBackDurationEffect = 5,
-			spellcomeBackDistanceEffect = 200,
-
-			spellcoolDownID = 2,
-			spellcoolDownPercentageCooldown = 20,
-			
-			spellgravityID = 3,
-			spellgravitynewGravity = -0.002,
-			
-			spellhardDeathID = 4,
-			spellhardDeathExplotionRadius = 30.0,
-			spellhardDeathDamageExplotion = 200.0,
-			
-			spellhungryID = 5,
-			spellhungryPercentage = 0.5,
-			
-			spellshieldID = 6,
-			spellshieldDamage = 7,
-			spellshieldPercentageAbsorbed = 10,
-		
-			spellresurrectionID = 7,
-
 		particleName = "Odor",
 		particleVisible = false,
 		
@@ -581,40 +549,7 @@ Map = {
 		screamerReboundDistance = 20,
 		screamerReboundForce = 2,
 		screamerScreamForce = 2.5,
-		screamerScreamMaxDistance = 300,
-		
-		primarySpell = 0,
-		secondarySpell = 1,
-				
-			spellamplifyDamageID = 0,
-			spellamplifyDamagePercentDamage = 30,
-			
-			spellcomeBackID = 1,
-			spellcomeBackCooldown = 10,
-			spellcomeBackMaxAmmo = 7,
-			spellcomeBackAmmoPerPull = 3,
-			spellcomeBackDurationEffect = 5,
-			spellcomeBackDistanceEffect = 200,
-
-			spellcoolDownID = 2,
-			spellcoolDownPercentageCooldown = 20,
-			
-			spellgravityID = 3,
-			spellgravitynewGravity = -0.002,
-			
-			spellhardDeathID = 4,
-			spellhardDeathExplotionRadius = 30.0,
-			spellhardDeathDamageExplotion = 200.0,
-			
-			spellhungryID = 5,
-			spellhungryPercentage = 0.5,
-			
-			spellshieldID = 6,
-			spellshieldDamage = 7,
-			spellshieldPercentageAbsorbed = 10,
-		
-			spellresurrectionID = 7,
-			
+		screamerScreamMaxDistance = 300,	
 
 		particleName = "Odor",
 		particleVisible = false,
@@ -675,38 +610,6 @@ Map = {
 		
 		inmunityDuration = 5,
 		lifeDome = 10,
-		
-		primarySpell = 0,
-		secondarySpell = 1,
-				
-			spellamplifyDamageID = 0,
-			spellamplifyDamagePercentDamage = 30,
-			
-			spellcomeBackID = 1,
-			spellcomeBackCooldown = 10,
-			spellcomeBackMaxAmmo = 7,
-			spellcomeBackAmmoPerPull = 3,
-			spellcomeBackDurationEffect = 5,
-			spellcomeBackDistanceEffect = 200,
-
-			spellcoolDownID = 2,
-			spellcoolDownPercentageCooldown = 20,
-			
-			spellgravityID = 3,
-			spellgravitynewGravity = -0.002,
-			
-			spellhardDeathID = 4,
-			spellhardDeathExplotionRadius = 30.0,
-			spellhardDeathDamageExplotion = 200.0,
-			
-			spellhungryID = 5,
-			spellhungryPercentage = 0.5,
-			
-			spellshieldID = 6,
-			spellshieldDamage = 7,
-			spellshieldPercentageAbsorbed = 10,
-		
-			spellresurrectionID = 7,
 
 		particleName = "Odor",
 		particleVisible = false,		
@@ -769,38 +672,6 @@ Map = {
 		biteVelocity=0.10;
 		biteDuration=0.5;
 		biteDamage = 40.0;
-		
-		primarySpell = 0,
-		secondarySpell = 1,
-				
-			spellamplifyDamageID = 0,
-			spellamplifyDamagePercentDamage = 30,
-			
-			spellcomeBackID = 1,
-			spellcomeBackCooldown = 10,
-			spellcomeBackMaxAmmo = 7,
-			spellcomeBackAmmoPerPull = 3,
-			spellcomeBackDurationEffect = 5,
-			spellcomeBackDistanceEffect = 200,
-
-			spellcoolDownID = 2,
-			spellcoolDownPercentageCooldown = 20,
-			
-			spellgravityID = 3,
-			spellgravitynewGravity = -0.002,
-			
-			spellhardDeathID = 4,
-			spellhardDeathExplotionRadius = 30.0,
-			spellhardDeathDamageExplotion = 200.0,
-			
-			spellhungryID = 5,
-			spellhungryPercentage = 0.5,
-			
-			spellshieldID = 6,
-			spellshieldDamage = 7,
-			spellshieldPercentageAbsorbed = 10,
-		
-			spellresurrectionID = 7,
 
 		particleName = "Odor",
 		particleVisible = false,
@@ -867,38 +738,6 @@ Map = {
 		screamerReboundForce = 2,
 		screamerScreamForce = 2.5,
 		screamerScreamMaxDistance = 130,
-
-		primarySpell = 0,
-		secondarySpell = 1,
-				
-			spellamplifyDamageID = 0,
-			spellamplifyDamagePercentDamage = 30,
-			
-			spellcomeBackID = 1,
-			spellcomeBackCooldown = 10,
-			spellcomeBackMaxAmmo = 7,
-			spellcomeBackAmmoPerPull = 3,
-			spellcomeBackDurationEffect = 5,
-			spellcomeBackDistanceEffect = 200,
-
-			spellcoolDownID = 2,
-			spellcoolDownPercentageCooldown = 20,
-			
-			spellgravityID = 3,
-			spellgravitynewGravity = -0.002,
-			
-			spellhardDeathID = 4,
-			spellhardDeathExplotionRadius = 30.0,
-			spellhardDeathDamageExplotion = 200.0,
-			
-			spellhungryID = 5,
-			spellhungryPercentage = 0.5,
-			
-			spellshieldID = 6,
-			spellshieldDamage = 7,
-			spellshieldPercentageAbsorbed = 10,
-		
-			spellresurrectionID = 7,
 		
 		hudPanelDebugPositionX = 0,
 		hudPanelDebugPositionY = 0,
@@ -960,38 +799,6 @@ Map = {
 		primarySkillCooldown = 25,
 		secondarySkillCooldown = 25,
 		invisibilityDuration = 5,
-
-		primarySpell = 0,
-		secondarySpell = 1,
-				
-			spellamplifyDamageID = 0,
-			spellamplifyDamagePercentDamage = 30,
-			
-			spellcomeBackID = 1,
-			spellcomeBackCooldown = 10,
-			spellcomeBackMaxAmmo = 7,
-			spellcomeBackAmmoPerPull = 3,
-			spellcomeBackDurationEffect = 5,
-			spellcomeBackDistanceEffect = 200,
-
-			spellcoolDownID = 2,
-			spellcoolDownPercentageCooldown = 20,
-			
-			spellgravityID = 3,
-			spellgravitynewGravity = -0.002,
-			
-			spellhardDeathID = 4,
-			spellhardDeathExplotionRadius = 30.0,
-			spellhardDeathDamageExplotion = 200.0,
-			
-			spellhungryID = 5,
-			spellhungryPercentage = 0.5,
-			
-			spellshieldID = 6,
-			spellshieldDamage = 7,
-			spellshieldPercentageAbsorbed = 10,
-		
-			spellresurrectionID = 7,
 		
 		hudPanelDebugPositionX = 0,
 		hudPanelDebugPositionY = 0,
@@ -1055,39 +862,6 @@ Map = {
 		
 		inmunityDuration = 5,
 		lifeDome = 10,
-
-		primarySpell = 0,
-		secondarySpell = 1,
-				
-			spellamplifyDamageID = 0,
-			spellamplifyDamagePercentDamage = 30,
-			
-			spellcomeBackID = 1,
-			spellcomeBackCooldown = 10,
-			spellcomeBackMaxAmmo = 7,
-			spellcomeBackAmmoPerPull = 3,
-			spellcomeBackDurationEffect = 5,
-			spellcomeBackDistanceEffect = 200,
-
-			spellcoolDownID = 2,
-			spellcoolDownPercentageCooldown = 20,
-			
-			spellgravityID = 3,
-			spellgravitynewGravity = -0.002,
-			
-			spellhardDeathID = 4,
-			spellhardDeathExplotionRadius = 30.0,
-			spellhardDeathDamageExplotion = 200.0,
-			
-			spellhungryID = 5,
-			spellhungryPercentage = 0.5,
-			
-			spellshieldID = 6,
-			spellshieldDamage = 7,
-			spellshieldPercentageAbsorbed = 10,
-		
-			spellresurrectionID = 7,
-			
 		
 		hudPanelDebugPositionX = 0,
 		hudPanelDebugPositionY = 0,
@@ -1160,39 +934,7 @@ Map = {
 		physic_entity = "rigid",
 		physic_trigger = true,
 		physic_type = "kinematic",
-		
-		primarySpell = 0,
-		secondarySpell = 1,
-				
-			spellamplifyDamageID = 0,
-			spellamplifyDamagePercentDamage = 30,
-			
-			spellcomeBackID = 1,
-			spellcomeBackCooldown = 10,
-			spellcomeBackMaxAmmo = 7,
-			spellcomeBackAmmoPerPull = 3,
-			spellcomeBackDurationEffect = 5,
-			spellcomeBackDistanceEffect = 200,
-
-			spellcoolDownID = 2,
-			spellcoolDownPercentageCooldown = 20,
-			
-			spellgravityID = 3,
-			spellgravitynewGravity = -0.002,
-			
-			spellhardDeathID = 4,
-			spellhardDeathExplotionRadius = 30.0,
-			spellhardDeathDamageExplotion = 200.0,
-			
-			spellhungryID = 5,
-			spellhungryPercentage = 0.5,
-			
-			spellshieldID = 6,
-			spellshieldDamage = 7,
-			spellshieldPercentageAbsorbed = 10,
-		
-			spellresurrectionID = 7,
-			
+					
 		hudCrossX = 4,
 		hudCrossY = 5,
 		hudScreenWidth = 26,
@@ -1339,38 +1081,6 @@ Map = {
 		audioDeath = "damage/splatdeath_03.wav",
 		audioSpawn = "gameplay/spawn.wav",
 		audioNoAmmo = "weapons/noammo.wav",
-		
-		primarySpell = 0,
-		secondarySpell = 1,
-				
-			spellamplifyDamageID = 0,
-			spellamplifyDamagePercentDamage = 30,
-			
-			spellcomeBackID = 1,
-			spellcomeBackCooldown = 10,
-			spellcomeBackMaxAmmo = 7,
-			spellcomeBackAmmoPerPull = 3,
-			spellcomeBackDurationEffect = 5,
-			spellcomeBackDistanceEffect = 200,
-
-			spellcoolDownID = 2,
-			spellcoolDownPercentageCooldown = 20,
-			
-			spellgravityID = 3,
-			spellgravitynewGravity = -0.002,
-			
-			spellhardDeathID = 4,
-			spellhardDeathExplotionRadius = 30.0,
-			spellhardDeathDamageExplotion = 200.0,
-			
-			spellhungryID = 5,
-			spellhungryPercentage = 0.5,
-			
-			spellshieldID = 6,
-			spellshieldDamage = 7,
-			spellshieldPercentageAbsorbed = 10,
-		
-			spellresurrectionID = 7,
 	},
 	
 	Camera = {
@@ -1707,5 +1417,19 @@ Map = {
 	
 	KillStreak = {
 		type = "KillStreak",
+	},
+	
+	SpellAmplifyDamage = {
+		type = "SpellAmplifyDamage",
+		ID = 0,
+		PercentDamage = 30,
+		Duration = 15,
+	},
+	
+	SpellCoolDown = {
+		type = "SpellCoolDown",
+		ID = 1,
+		PercentageCooldown = 20,
+		Duration = 15,
 	},
 }
