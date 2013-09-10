@@ -103,10 +103,26 @@ namespace Logic {
 			
 		std::vector <Physics::CRaycastHit> hits;
 		Physics::CServer::getSingletonPtr()->raycastMultiple(ray, _shotsDistance, hits, true, Physics::CollisionGroup::ePLAYER | Physics::CollisionGroup::eWORLD | Physics::CollisionGroup::eSCREAMER_SHIELD);
+
+		bool targetHit = false;
 		for (auto it = hits.begin(); it < hits.end(); ++it){
 			//Si tocamos el mundo no continuamos viendo hits
 			if((*it).entity->getType().compare("World")==0){
-				return;
+				Euler euler(Quaternion::IDENTITY);
+				euler.setDirection(it->normal);
+				euler.yaw( Ogre::Radian(Math::HALF_PI) );
+
+				Map::CEntity* entityInfo = CEntityFactory::getSingletonPtr()->getInfo("BulletSpark");
+				CEntity* bulletSpark = CEntityFactory::getSingletonPtr()->createEntity(entityInfo, _entity->getMap(), it->impact, euler.toQuaternion() );
+				bulletSpark->activate();
+				bulletSpark->start();
+
+				int randomValue = Math::unifRand(2);
+				std::string hitSound = (randomValue == 1 ? "weapons/soulReaper/wallHit.wav" : "weapons/soulReaper/wallHit2.wav");
+				emitSound(hitSound, false, true, false, false);
+
+				targetHit = true;
+				break;
 			}
 			if((*it).entity != _entity && (*it).entity->getType() != "ScreamerShield"){
 				//send damage message
@@ -148,10 +164,16 @@ namespace Logic {
 				bloodStrike->activate();
 				bloodStrike->start();
 
+				emitSound("weapons/soulReaper/goreHit.wav", false, true, false, false);
+
 				// esto es para que salga una vez que ya le ha dao a alguien que no eres tu mismo.
-				return;
+				targetHit = true;
+				break;
 			}
 		}
+
+		if(!targetHit)
+			emitSound("weapons/soulReaper/miss.wav", false, true, false, false);
 	} // primaryFire
 	//__________________________________________________________________
 

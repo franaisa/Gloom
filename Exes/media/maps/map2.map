@@ -16,7 +16,7 @@ Map = {
 	},	
 
 	David = {
-		type = "LocalArchangel",
+		type = "LocalScreamer",
 		isPlayer = true,
 		physic_group = 1,
 		physic_groupList = "-1",
@@ -37,7 +37,7 @@ Map = {
 		position = {-275.4,0.5,28.1},
 		force = {0.5,3.5,0.0},
 	},
-
+	
 	ActiveSpell = {
 		type = "Powerup1",
 		position = {-96.3475, 0.420609, 22.3819},

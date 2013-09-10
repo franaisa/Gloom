@@ -60,3 +60,4 @@ miniGunPrimaryShot
 miniGunSecondaryShot 
 ironHellGoatPrimaryShot 
 ironHellGoatSecondaryShot 
+ScreamerShieldHit
