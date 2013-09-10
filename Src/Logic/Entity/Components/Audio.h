@@ -13,6 +13,7 @@ Contiene la declaración del componente que controla el sonido de la entidad.
 #define __Logic_Audio_H
 
 #include "Logic/Entity/Component.h"
+#include "Logic/Entity/Components/AudioListener.h"
 
 //declaración de la clase
 namespace Logic 
@@ -26,7 +27,7 @@ namespace Logic
 	@author Jose Antonio García Yáñez
 	@date Marzo, 2013
 */
-	class CAudio : public IComponent
+	class CAudio : public IComponent, public IAudioListener
 	{
 		DEC_FACTORY(CAudio);
 	public:
@@ -35,6 +36,10 @@ namespace Logic
 		Constructor por defecto; en la clase base no hace nada.
 		*/
 		CAudio() {};
+
+		virtual void trackEnd(int channelIndex);
+
+	protected:
 
 		/**
 		Este componente sólo acepta mensajes de tipo AUDIO.
@@ -46,7 +51,11 @@ namespace Logic
 		*/
 		virtual void process(const std::shared_ptr<CMessage>& message);
 
-	// VACIO
+		virtual void onDeactivate();
+
+	private:
+
+		std::map<std::string, int> _tracksBeingPlayed;
 
 	}; // class CAudio
 

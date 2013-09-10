@@ -225,4 +225,13 @@ namespace Graphics {
 		}
 	}
 
+	//______________________________________________________________________________
+
+	/*
+	bool PUParticle::isEmitting(){
+		_particleSystem->
+	}
+	*/
+
+
 } // namespace Graphics

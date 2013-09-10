@@ -22,6 +22,7 @@ Contiene la implementación del componente que gestiona la aplicacion de una fuer
 #include "Logic/Messages/MessageTouched.h"
 #include "Logic/Messages/MessageAddForcePlayer.h"
 #include "Logic/Messages/MessageAudio.h"
+#include "Logic/Messages/MessageParticleStart.h"
 
 #include "Logic/Messages/MessageCreateParticle.h"
 
@@ -71,9 +72,9 @@ namespace Logic
 
 				_entity->emitMessage(audioMsg);
 
-				//@todo mandar un mensaje de ejecutar particulas
-				//_entity->getComponent<CParticleSystem>("CParticleSystem")->start();
-				
+				std::shared_ptr<CMessageParticleStart> particleMsg = std::make_shared<CMessageParticleStart>();
+				_entity->emitMessage(particleMsg);
+
 				break;
 			}
 		}

@@ -80,7 +80,7 @@ namespace Logic {
 
 		CEntity*	 fireWeapon			();
 
-		void		 triggerHitMessages	(CEntity* entityHit);
+		void		 triggerHitMessages	(CEntity* entityHit, float damage);
 
 		void		 secondaryShoot		();
 

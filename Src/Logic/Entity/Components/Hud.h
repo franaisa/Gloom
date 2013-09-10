@@ -63,8 +63,6 @@ namespace Logic
 
 		void updateMatchTime(int minutes, int seconds);
 
-		void spreeMessage(const std::string& message);
-
 	protected:
 
 		virtual void onFixedTick(unsigned int msecs);

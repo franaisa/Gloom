@@ -144,6 +144,13 @@ namespace Logic
 		//Función que setea el nivel en función del número de muertes
 		void SetLevel										();
 
+		//Función que lanza el kill streak correspondiente a la clase que sea la entidad
+		void LaunchClassKillStreak							();
+
+		void ArchangelKillStreak							();
+
+
+
 	private:
 
 		//Contador de muertes que lleva el jugador

@@ -13,7 +13,7 @@ system Woosh/mp_woosh_12
     scale                                       0.07 0.07 0.07
     technique 
     {
-        position                                0 -200 0
+        position                                0 0 0
         visual_particle_quota                   80
         material                                mp_woosh_smoke
         renderer                                Billboard
@@ -91,7 +91,7 @@ system Woosh/mp_woosh_12
     }
     technique 
     {
-        position                                0 -200 0
+        position                                0 0 0
         visual_particle_quota                   1
         material                                mp_woosh_circle_01
         renderer                                Billboard

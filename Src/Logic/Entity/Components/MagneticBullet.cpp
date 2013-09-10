@@ -122,22 +122,17 @@ namespace Logic
 
 					// Comprobamos que el screamer shield que hemos alcanzado
 					// no es el nuestro
-					if( _owner != NULL && screamerShieldOwner != _owner->getEntity() ) {
+					CEntity* bulletOwnerEntity = _owner->getEntity();
+					if( _owner != NULL && screamerShieldOwner != bulletOwnerEntity ) {
 						CGameNetPlayersManager* playersMgr = CGameNetPlayersManager::getSingletonPtr();
 						TEntityID enemyId = impactEntity->getEntityID();
+						TEntityID playerId = bulletOwnerEntity->getEntityID();
+						
 						if( playersMgr->existsByLogicId(enemyId) ) {
 							TeamFaction::Enum enemyTeam = playersMgr->getTeamUsingEntityId(enemyId);
-							TeamFaction::Enum myTeam = playersMgr->getTeamUsingEntityId(_owner->getEntity()->getEntityID());
+							TeamFaction::Enum myTeam = playersMgr->getTeamUsingEntityId(playerId);
 
-							if( !playersMgr->friendlyFireIsActive() ) {
-								if(enemyTeam == TeamFaction::eNONE || myTeam == TeamFaction::eNONE || enemyTeam != myTeam) {
-									std::shared_ptr<CMessageDamaged> damageDone = std::make_shared<CMessageDamaged>();
-									damageDone->setDamage(_damage);
-									damageDone->setEnemy( _owner->getEntity() );
-									impactEntity->emitMessage(damageDone);
-								}
-							}
-							else {
+							if(enemyTeam == TeamFaction::eNONE || myTeam == TeamFaction::eNONE || enemyTeam != myTeam) {
 								std::shared_ptr<CMessageDamaged> damageDone = std::make_shared<CMessageDamaged>();
 								damageDone->setDamage(_damage);
 								damageDone->setEnemy( _owner->getEntity() );
@@ -151,6 +146,12 @@ namespace Logic
 							impactEntity->emitMessage(dmgMsg);
 						}
 					}
+
+					// Creamos las particulas de impacto sobre el escudo
+					Map::CEntity* entityInfo = CEntityFactory::getSingletonPtr()->getInfo("ScreamerShieldHit");
+					CEntity* shieldHit = CEntityFactory::getSingletonPtr()->createEntity(entityInfo, _entity->getMap(), _entity->getPosition(), Quaternion::IDENTITY );
+					shieldHit->activate();
+					shieldHit->start();
 				}else{
 					if(_owner) {
 						//send damage message

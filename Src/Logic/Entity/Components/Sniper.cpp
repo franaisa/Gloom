@@ -116,15 +116,26 @@ namespace Logic {
 			//Si es una bola de fuego activamos el quemado
 			if(hits[i].entity->getType() == "FireBall"){
 				_burned=true;
+				continue;
 			}
-			//Entidades validas (Player que no seamos nosotros mismos)
-			if(hits[i].entity!=_entity){
-				if(hits[i].entity->getType() == "ScreamerShield") {
-					CEntity* screamerShieldOwner = hits[i].entity->getComponent<CScreamerShieldDamageNotifier>("CScreamerShieldDamageNotifier")->getOwner();
+			if(hits[i].entity->getType() == "ScreamerShield") {
+				CEntity* screamerShieldOwner = hits[i].entity->getComponent<CScreamerShieldDamageNotifier>("CScreamerShieldDamageNotifier")->getOwner();
 
-					if(screamerShieldOwner == _entity)
-						break;
-				}
+				if(screamerShieldOwner != _entity)
+					entityHit = hits[i].entity;
+
+				// Creamos las particulas de impacto sobre el escudo
+				Map::CEntity* entityInfo = CEntityFactory::getSingletonPtr()->getInfo("ScreamerShieldHit");
+				CEntity* shieldHit = CEntityFactory::getSingletonPtr()->createEntity(entityInfo, _entity->getMap(), hits[i].impact, Quaternion::IDENTITY );
+				shieldHit->activate();
+				shieldHit->start();
+
+				break;
+			}
+
+			//Entidades validas (Player que no seamos nosotros mismos)
+			else if(hits[i].entity!=_entity){
+				
 
 				entityHit=hits[i].entity;
 
@@ -197,11 +208,12 @@ namespace Logic {
 				//Antes de salir desactivamos el quemado para el siguiente disparo
 				_burned=false;
 
-				return;
+				break;
 			}
 			//Si tocamos una bola de fuego, activamos el quemado
 			else if(hits[i].entity->getType() == "FireBall"){
 				_burned=true;
+				continue;
 			}
 			else if(hits[i].entity->getType() == "ScreamerShield") {
 				// Tras mandar los mensajes de daño al escudo del screamer
@@ -217,6 +229,12 @@ namespace Logic {
 					else
 						triggerHitMessages(hits[i].entity, _primaryFireDamage);
 				}
+
+				// Creamos las particulas de impacto sobre el escudo
+				Map::CEntity* entityInfo = CEntityFactory::getSingletonPtr()->getInfo("ScreamerShieldHit");
+				CEntity* shieldHit = CEntityFactory::getSingletonPtr()->createEntity(entityInfo, _entity->getMap(), hits[i].impact, Quaternion::IDENTITY );
+				shieldHit->activate();
+				shieldHit->start();
 
 				break;
 			}
@@ -236,7 +254,7 @@ namespace Logic {
 				else
 					triggerHitMessages(hits[i].entity, _primaryFireDamage);
 
-				
+				break;
 			}
 		}
 	}//secondaryFireWeapon
@@ -283,11 +301,32 @@ namespace Logic {
 	//-------------------------------------------------------
 
 	void CSniper::triggerHitMessages(CEntity* entityHit, float damageFire) {
+		if(entityHit == NULL) return;
+
 		//send damage message
 		CGameNetPlayersManager* playersMgr = CGameNetPlayersManager::getSingletonPtr();
 		TEntityID enemyId = entityHit->getEntityID();
 		TEntityID playerId = _entity->getEntityID();
-		if( playersMgr->existsByLogicId(enemyId) ) {
+		if( entityHit->getType() == "ScreamerShield" ) {
+			if( playersMgr->existsByLogicId(enemyId) ) {
+				TeamFaction::Enum enemyTeam = playersMgr->getTeamUsingEntityId(enemyId);
+				TeamFaction::Enum myTeam = playersMgr->getTeamUsingEntityId(playerId);
+
+				if(enemyTeam == TeamFaction::eNONE || myTeam == TeamFaction::eNONE || enemyTeam != myTeam) {
+					std::shared_ptr<CMessageDamaged> damageDone = std::make_shared<CMessageDamaged>();
+					damageDone->setDamage(damageFire);
+					damageDone->setEnemy( _entity );
+					entityHit->emitMessage(damageDone);
+				}
+			}
+			else {
+				std::shared_ptr<CMessageDamaged> damageDone = std::make_shared<CMessageDamaged>();
+				damageDone->setDamage(damageFire);
+				damageDone->setEnemy( _entity );
+				entityHit->emitMessage(damageDone);
+			}
+		}
+		else if( playersMgr->existsByLogicId(enemyId) ) {
 			TeamFaction::Enum enemyTeam = playersMgr->getTeamUsingEntityId(enemyId);
 			TeamFaction::Enum myTeam = playersMgr->getTeamUsingEntityId(playerId);
 
@@ -295,7 +334,7 @@ namespace Logic {
 				if(enemyTeam == TeamFaction::eNONE || myTeam == TeamFaction::eNONE || enemyTeam != myTeam) {
 					std::shared_ptr<CMessageDamaged> damageDone = std::make_shared<CMessageDamaged>();
 					damageDone->setDamage(damageFire);
-					damageDone->setEnemy(_entity);
+					damageDone->setEnemy( _entity );
 					entityHit->emitMessage(damageDone);
 				}
 			}

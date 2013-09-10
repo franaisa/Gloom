@@ -13,24 +13,17 @@ a todas las armas.
 */
 
 #include "Spell.h"
-#include "Graphics.h"
+#include "SpellType.h"
 
 // Mapa
 #include "Map/MapEntity.h"
-
-// Mensajes
-#include "Logic/Messages/MessageControl.h"
-#include "Logic/Messages/MessageAudio.h"
-
-#include "Logic/Messages/MessagePrimarySpell.h"
-#include "Logic/Messages/MessageSecondarySpell.h"
+#include "Logic/Maps/EntityFactory.h"
 
 using namespace std;
 
 namespace Logic {
 	
-	ISpell::ISpell(const string& spellName) : _spellName("spell" + spellName),
-											_mustDeactivate(false) {
+	ISpell::ISpell(const string& spellName) : _spellName("Spell" + spellName), _currentTime(0){
 
 		// Nada que inicializar
 	}
@@ -46,26 +39,37 @@ namespace Logic {
 	bool ISpell::spawn(CEntity *entity, CMap *map, const Map::CEntity *entityInfo) {
 		if( !IComponent::spawn(entity,map,entityInfo) ) return false;
 
+		Map::CEntity *tempEntity = CEntityFactory::getSingletonPtr()->getInfo(_spellName);
 		// Comprobamos que los atributos obligatorios existen
-		assert( entityInfo->hasAttribute(_spellName + "ID") && "Debe tener id, mirar archivo spellType");
+		assert( tempEntity->hasAttribute("ID") && "Debe tener id, mirar archivo spellType");
 
 		// Leemos los atributos obligatorios de arma
-		_spellID = (SpellType::Enum)entityInfo->getIntAttribute(_spellName + "ID");
+		_spellID = (SpellType::Enum)tempEntity->getIntAttribute("ID");
 		
-		
+		_duration = tempEntity->getFloatAttribute("Duration")*1000;
 
 		return true;
 	} // spawn+
 	//__________________________________________________________________
 
-	void ISpell::onActivate(){
-		spell();
-	} // onActivate
+	void ISpell::addDuration(){
+		_currentTime += _duration;
+	} // addDuration
 	//__________________________________________________________________
 
-	void ISpell::onDeactivate(){
-		stopSpell();
-	} // onDeactivate
+	void ISpell::onWake(){
+		_currentTime = _duration;
+		spell();
+	} // onWake
+	//__________________________________________________________________
+
+	void ISpell::onTick(unsigned int msecs){
+		_currentTime -= msecs;
+
+		if(_currentTime < 0){
+			stopSpell();
+			this->putToSleep(true);
+		}
+	} // onTick
 	//__________________________________________________________________
 } // namespace Logic
-

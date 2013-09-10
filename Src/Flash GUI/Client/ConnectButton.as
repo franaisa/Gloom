@@ -28,8 +28,9 @@ package Client
 				var nick: String;
 				ip = manager.ip;
 				nick = manager.nick;
-				this.removeEventListener(MouseEvent.MOUSE_OUT, onMouseOut);
+				/*this.removeEventListener(MouseEvent.MOUSE_OUT, onMouseOut);
 				this.removeEventListener(MouseEvent.MOUSE_OVER, onMouseOver);
+				*/
 				ExternalInterface.call("connect", ip, nick);
 			}
 			

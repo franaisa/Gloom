@@ -46,7 +46,7 @@ namespace Logic {
 		bool _streamAudio;
 		std::string _audioName;
 		Vector3 _position;
-
+		unsigned int _channelIndex;
 	}; // class CStaticAudio
 
 	REG_FACTORY(CStaticAudio);

@@ -110,22 +110,14 @@ namespace Logic {
 						// Comprobamos que el screamer shield que hemos alcanzado
 						// no es el nuestro
 						if( screamerShieldOwner != fireBallOwner) {
-
 							CGameNetPlayersManager* playersMgr = CGameNetPlayersManager::getSingletonPtr();
 							TEntityID enemyId = entityContacted->getEntityID();
+							
 							if( playersMgr->existsByLogicId(enemyId) ) {
 								TeamFaction::Enum enemyTeam = playersMgr->getTeamUsingEntityId(enemyId);
 								TeamFaction::Enum myTeam = playersMgr->getTeamUsingEntityId(_owner->getEntity()->getEntityID());
 
-								if( !playersMgr->friendlyFireIsActive() ) {
-									if(enemyTeam == TeamFaction::eNONE || myTeam == TeamFaction::eNONE || enemyTeam != myTeam) {
-										std::shared_ptr<CMessageDamaged> damageDone = std::make_shared<CMessageDamaged>();
-										damageDone->setDamage(_damage);
-										damageDone->setEnemy( _owner->getEntity() );
-										entityContacted->emitMessage(damageDone);
-									}
-								}
-								else {
+								if(enemyTeam == TeamFaction::eNONE || myTeam == TeamFaction::eNONE || enemyTeam != myTeam) {
 									std::shared_ptr<CMessageDamaged> damageDone = std::make_shared<CMessageDamaged>();
 									damageDone->setDamage(_damage);
 									damageDone->setEnemy( _owner->getEntity() );
@@ -138,6 +130,12 @@ namespace Logic {
 								dmgMsg->setEnemy( _owner->getEntity() );
 								entityContacted->emitMessage(dmgMsg);
 							}
+
+							// Creamos las particulas de impacto sobre el escudo
+							Map::CEntity* entityInfo = CEntityFactory::getSingletonPtr()->getInfo("ScreamerShieldHit");
+							CEntity* shieldHit = CEntityFactory::getSingletonPtr()->createEntity(entityInfo, _entity->getMap(), contactPoint.position, Quaternion::IDENTITY );
+							shieldHit->activate();
+							shieldHit->start();
 						}
 					}
 					else {

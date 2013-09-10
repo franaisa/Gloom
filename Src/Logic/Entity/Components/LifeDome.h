@@ -18,7 +18,7 @@ Contiene la declaración del componente que controla la cúpula de la segunda habi
 namespace Logic {
 	class CArchangel;
 	class CPhysicDynamicEntity;
-	class CGraphics;
+	class CParticleSystem;
 }
 
 //declaración de la clase
@@ -97,7 +97,7 @@ namespace Logic
 		//Función de cuando se tocan el lifeDome
 		void lifeDomeTouched(CEntity *entityTouched);
 
-		CGraphics* _cGraph;
+		CParticleSystem* _cGraph;
 		/*
 		Puntero al componente fisico de la bala, se tiene por optimizacion
 		*/

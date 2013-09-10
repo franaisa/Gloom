@@ -177,13 +177,8 @@ namespace Logic{
 	} // process
 
 	void CHud::updateMatchTime(int minutes, int seconds) {
-		std::cout << "updatetime" << std::endl;
+		//std::cout << "updatetime" << std::endl;
 		_hud->callFunction( "updateTime", Hikari::Args(minutes)(seconds) );
-	}
-
-	void spreeMessage(const std::string& message) {
-		std::cout << message << std::endl;
-		//_hud->callFunction( "spreeMessage", Hikari::Args(message) );
 	}
 
 	void CHud::hudLife(int health){
@@ -191,12 +186,12 @@ namespace Logic{
 		_hud->callFunction("updateLife", Hikari::Args(health));
 	}
 	void CHud::hudWeapon(int ammo, int weapon){
-		std::cout << "weapon " << weapons[weapon] << std::endl;
+		//std::cout << "weapon " << weapons[weapon] << std::endl;
 		_hud->callFunction("updateWeapon",Hikari::Args(weapons[weapon]));
 		_hud->callFunction("updateBullets", Hikari::Args(ammo)(weapons[weapon]));
 	}
 	void CHud::hudAmmo(int ammo, int weapon){
-		std::cout << "bullets " << weapons[weapon] << std::endl;
+		//std::cout << "bullets " << weapons[weapon] << std::endl;
 		_hud->callFunction("updateBullets", Hikari::Args(ammo)(weapons[weapon]));
 	}
 	void CHud::hudSpawn(int spawn){
@@ -216,7 +211,7 @@ namespace Logic{
 	void CHud::hudRespawn(){
 		_respawn->hide();
 		_hud->show();
-		std::cout << "reset" << std::endl;
+		//std::cout << "reset" << std::endl;
 		_hud->callFunction("reset", Hikari::Args());
 	}
 
