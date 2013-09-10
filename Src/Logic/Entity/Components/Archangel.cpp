@@ -105,7 +105,7 @@ namespace Logic {
 			}
 			else
 			{
-				destroyLifeDome();
+				CEntityFactory::getSingletonPtr()->deferredDeleteEntity(_lifeDome, true);
 				_doingSecondarySkill = false;
 			}
 		}
@@ -137,6 +137,8 @@ namespace Logic {
 		_entity->emitMessage(materialMsg);
 		Logic::CWorldState::getSingletonPtr()->addChange(_entity,materialMsg);
 
+		emitSound("character/archangelShield.ogg", false, true, false, false, false);
+
 		_doingPrimarySkill = true;
 	}
 
@@ -162,6 +164,8 @@ namespace Logic {
 		_lifeDome->getComponent<CLifeDome>("CLifeDome")->setOwner(_entity);
 		_lifeDome->activate();
 		_lifeDome->start();
+
+		emitSound("character/lifeDome.mp3", false, true, false, false, false);
 		
 		// Enviamos el mensaje SET_OWNER para que el escudo se mueva
 		// acorde a los movimientos del player
@@ -169,12 +173,6 @@ namespace Logic {
 		setOwnerMsg->setOwner(_entity);
 		_lifeDome->emitMessage(setOwnerMsg);
 		_doingSecondarySkill = true;
-	}
-
-	//__________________________________________________________________
-
-	void CArchangel::destroyLifeDome() {
-		CEntityFactory::getSingletonPtr()->deferredDeleteEntity(_lifeDome,true);
 	}
 
 } // namespace Logic

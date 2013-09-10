@@ -313,6 +313,15 @@ namespace Logic {
 		setOwnerMsg->setOwner(_entity);
 		_screamerShield->emitMessage(setOwnerMsg);
 
+		// Sonido del escudo
+		std::shared_ptr<CMessageAudio> audioMsg = std::make_shared<CMessageAudio>();
+		
+		audioMsg->setAudioName("character/screamerShield.wav");
+		audioMsg->isLoopable(true);
+		audioMsg->is3dSound(true);
+			
+		_screamerShield->emitMessage(audioMsg);
+
 		// Enviamos un mensaje para indicar que se bloquee el disparo
 		shared_ptr<CMessageBlockShoot> canShootMsg = make_shared<CMessageBlockShoot>();
 		canShootMsg->canShoot(false);

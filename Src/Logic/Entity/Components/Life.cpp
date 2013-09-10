@@ -272,6 +272,7 @@ namespace Logic {
 
 	bool CLife::updateLife(int damage) {
 		//si ya estaba muerto no quiero volver a hacer toda la parafernalia
+		// si ya estaba muerto no deberia entrar aqui... wtf?
 		if (_currentLife < 1 ) return false;
 		
 		// Si hay una reduccion de daño activa, reducimos el daño aplicado

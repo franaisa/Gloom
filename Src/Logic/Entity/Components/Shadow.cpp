@@ -166,7 +166,7 @@ namespace Logic {
 			}//end if
 		}//end for
 
-		emitSound("character/shadowFlash.ogg", false, true, false, false, false);
+		emitSound("character/shadowFlash.wav", false, true, false, false, false);
 	}
 
 
