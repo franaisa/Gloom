@@ -60,3 +60,14 @@ SniperTrail CParticleSystem
 SpawnParticles CParticleSystem
 LavaBurn CParticleSystem
 ScreamerExplotion CParticleSystem
+soulReaperPrimaryShot CParticleSystem
+soulReaperSecondaryShot CParticleSystem
+sniperPrimaryShot CParticleSystem
+sniperSecondaryShot CParticleSystem
+shotGunPrimaryShot CParticleSystem
+shotGunSecondaryShot CParticleSystem
+miniGunPrimaryShot CParticleSystem
+miniGunSecondaryShot CParticleSystem
+ironHellGoatPrimaryShot CParticleSystem
+ironHellGoatSecondaryShot CParticleSystem
+

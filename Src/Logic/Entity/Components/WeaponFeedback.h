@@ -175,7 +175,8 @@ namespace Logic {
 		/**
 		Metodo que emite el mensaje que pintara la particula
 		*/
-		void IWeaponFeedback::emitParticle(bool primaryShoot = true);
+		void emitParticle(bool primaryShoot = true);
+		void emitParticle2(bool primaryShoot = true);
 
 		// =======================================================================
 		//                          MIEMBROS PROTEGIDOS
@@ -200,10 +201,13 @@ namespace Logic {
 
 		bool _ableToShoot;
 		
+		//@deprecated con el sistema actual de particulas
 		std::string _primaryFireParticle;
 		std::string _secondaryFireParticle;
+		
 		Vector3 _particlePosition;
 		
+		CEntity *_currentPaticle;
 
 	}; // class IWeaponFeedback
 

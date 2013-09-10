@@ -50,3 +50,13 @@ SniperTrail
 SpawnParticles
 LavaBurn
 ScreamerExplotion
+soulReaperPrimaryShot 
+soulReaperSecondaryShot 
+sniperPrimaryShot 
+sniperSecondaryShot 
+shotGunPrimaryShot 
+shotGunSecondaryShot 
+miniGunPrimaryShot 
+miniGunSecondaryShot 
+ironHellGoatPrimaryShot 
+ironHellGoatSecondaryShot 
