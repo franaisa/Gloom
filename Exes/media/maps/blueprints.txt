@@ -60,3 +60,4 @@ SniperTrail CParticleSystem
 SpawnParticles CParticleSystem
 LavaBurn CParticleSystem
 ScreamerExplotion CParticleSystem
+ScreamerShieldHit CParticleSystem

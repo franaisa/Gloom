@@ -50,3 +50,4 @@ SniperTrail
 SpawnParticles
 LavaBurn
 ScreamerExplotion
+ScreamerShieldHit
