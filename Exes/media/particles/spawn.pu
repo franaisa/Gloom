@@ -1,0 +1,53 @@
+system spawn
+{
+    technique 
+    {
+        visual_particle_quota                   200
+        emitted_emitter_quota                   15
+        material                                PUMediaPack/Flare_05
+        renderer                                Billboard
+        {
+        }
+        emitter                                 Point 
+        {
+            emission_rate                       3
+            angle                               0
+            time_to_live                        1.5
+            velocity                            8.5
+            duration                            2
+            emits                               emitter_particle CircleEmitter
+        }
+        emitter                                 Circle CircleEmitter
+        {
+            emission_rate                       20
+            angle                               360
+            time_to_live                        dyn_random
+            {
+                min                             0.2
+                max                             0.8
+            }
+            velocity                            1.15
+            all_particle_dimensions             dyn_random
+            {
+                min                             0.9
+                max                             2.4
+            }
+            keep_local                          true
+            direction                           0 0 0
+            colour                              0.7 0.8 1 1
+            radius                              3
+        }
+        affector                                Vortex 
+        {
+            rotation_axis                       0 1 0
+            rotation_speed                      12
+        }
+        affector                                Colour 
+        {
+            time_colour                         0    1 1 1 1
+            time_colour                         0.8  1 1 1 1
+            time_colour                         1    0 0 0 0
+            colour_operation                    multiply
+        }
+    }
+}

@@ -1,0 +1,20 @@
+compositor "explosionScreamer"
+{
+    technique
+    {
+        texture imagen target_width target_height PF_FLOAT16_RGBA
+
+        target imagen { input previous }
+
+        target_output
+        {
+            input none
+
+            pass render_quad
+            {
+                material explosionScreamerMaterial
+                input 0 imagen
+            }
+        }
+    }
+}

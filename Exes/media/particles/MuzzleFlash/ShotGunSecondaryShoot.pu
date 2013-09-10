@@ -1,0 +1,40 @@
+system shotGunSecondaryShoot
+{
+    technique 
+    {
+        visual_particle_quota                   10
+        emitted_emitter_quota                   10
+        material                                PUMediaPack/Ring_03
+        default_particle_width                  10
+        default_particle_height                 10
+        renderer                                Billboard
+        {
+        }
+        emitter                                 Point 
+        {
+            emission_rate                       1
+            time_to_live                        0
+            all_particle_dimensions             10
+            direction                           0 0 0
+            force_emission                      true
+        }
+        affector                                Scale 
+        {
+            xyz_scale                           dyn_oscillate
+            {
+                oscillate_frequency             1
+                oscillate_phase                 0
+                oscillate_base                  0
+                oscillate_amplitude             10
+                oscillate_type                  sine
+            }
+            since_start_system                  true
+        }
+        affector                                Colour 
+        {
+            time_colour                         0    0 0 0 1
+            time_colour                         1    0 0.2 1 1
+            colour_operation                    multiply
+        }
+    }
+}

@@ -244,7 +244,7 @@ namespace Graphics
 			public:
 				GlowMaterialListener()
 				{
-					mBlackMat = Ogre::MaterialManager::getSingleton().create("mGlowBlack", "Internal");
+				mBlackMat = Ogre::MaterialManager::getSingleton().create("mGlowBlack", "Internal");
 					mBlackMat->getTechnique(0)->getPass(0)->setDiffuse(0,0,0,0);
 					mBlackMat->getTechnique(0)->getPass(0)->setSpecular(0,0,0,0);
 					mBlackMat->getTechnique(0)->getPass(0)->setAmbient(0,0,0);

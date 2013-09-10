@@ -1,0 +1,60 @@
+system houndSecondarySkill
+{
+    category                                    Fire
+    technique 
+    {
+        visual_particle_quota                   200
+        emitted_technique_quota                 200
+        emitted_affector_quota                  200
+        emitted_system_quota                    200
+        material                                PUMediaPack/Smoke_11
+        renderer                                Billboard
+        {
+        }
+        emitter                                 Point 
+        {
+            emission_rate                       50
+            angle                               60
+            velocity                            dyn_random
+            {
+                min                             5
+                max                             10
+            }
+            all_particle_dimensions             dyn_random
+            {
+                min                             0.3
+                max                             6
+            }
+        }
+        affector                                Scale 
+        {
+            xyz_scale                           1.2
+        }
+        affector                                ParticleFollower 
+        {
+            min_distance                        1.2
+            max_distance                        6
+        }
+        affector                                Colour 
+        {
+            time_colour                         0    0 1 0 0.4
+            time_colour                         0.2  0.8 0.8 0 0.8
+            time_colour                         0.8  1 0 0 0.8
+            time_colour                         1    0 0 0 0
+        }
+        affector                                LinearForce 
+        {
+            force_vector                        0 0.6 0
+        }
+        affector                                TextureRotator 
+        {
+            use_own_rotation                    true
+            rotation                            dyn_random
+            {
+                min                             1
+                max                             40
+            }
+            rotation_speed                      0.1
+        }
+    }
+}

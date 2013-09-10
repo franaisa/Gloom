@@ -550,7 +550,8 @@ Map = {
 		screamerReboundForce = 2,
 		screamerScreamForce = 2.5,
 		screamerScreamMaxDistance = 300,	
-
+		screamerMaxShieldCompositor = 20,
+		
 		particleName = "Odor",
 		particleVisible = false,
 		
@@ -739,6 +740,7 @@ Map = {
 		screamerScreamForce = 2.5,
 		screamerScreamMaxDistance = 130,
 		
+		screamerMaxShieldCompositor = 20,
 		hudPanelDebugPositionX = 0,
 		hudPanelDebugPositionY = 0,
 		hudPanelDebugWidth = 2,
@@ -1394,7 +1396,6 @@ Map = {
 		BurnedIncrementPercentageDamage = 30,
 		MaxAmmo = 10,
 		ID = 1,
-		PrimaryFireParticle = "sniperPrimaryShoot",	
 		ParticlePosition = {6, 5, 6},
 		Audio = "weapons/sniper/sniper.wav",
 		audioNoAmmo = "weapons/noammo.wav",
@@ -1431,5 +1432,65 @@ Map = {
 		ID = 1,
 		PercentageCooldown = 20,
 		Duration = 15,
+	},
+	soulReaperPrimaryShot  = {
+		type = "soulReaperPrimaryShot",
+		particle_scriptName = "soulReaperPrimaryShot",
+		particle_on = true, 
+		particle_destroyEntityOnExpiry = true,
+	},
+	soulReaperSecondaryShot  = {
+		type = "soulReaperSecondaryShot",
+		particle_scriptName = "soulReaperSecondaryShot",
+		particle_on = true, 
+		particle_destroyEntityOnExpiry = true,
+	},
+	sniperPrimaryShot  = {
+		type = "sniperPrimaryShot",
+		particle_scriptName = "sniperPrimaryShot",
+		particle_on = true, 
+		particle_destroyEntityOnExpiry = true,
+	},
+	sniperSecondaryShot  = {
+		type = "sniperSecondaryShot",
+		particle_scriptName = "sniperSecondaryShot",
+		particle_on = true, 
+		particle_destroyEntityOnExpiry = true,
+	},
+	shotGunPrimaryShot  = {
+		type = "shotGunPrimaryShot",
+		particle_scriptName = "shotGunPrimaryShot",
+		particle_on = true, 
+		particle_destroyEntityOnExpiry = true,
+	},
+	shotGunSecondaryShot  = {
+		type = "shotGunSecondaryShot",
+		particle_scriptName = "shotGunSecondaryShot",
+		particle_on = true, 
+		particle_destroyEntityOnExpiry = true,
+	},
+	miniGunPrimaryShot  = {
+		type = "miniGunPrimaryShot",
+		particle_scriptName = "miniGunPrimaryShot",
+		particle_on = true, 
+		particle_destroyEntityOnExpiry = true,
+	},
+	miniGunSecondaryShot  = {
+		type = "miniGunSecondaryShot",
+		particle_scriptName = "miniGunSecondaryShot",
+		particle_on = true, 
+		particle_destroyEntityOnExpiry = true,
+	},
+	ironHellGoatPrimaryShot  = {
+		type = "ironHellGoatPrimaryShot",
+		particle_scriptName = "ironHellGoatPrimaryShot",
+		particle_on = true, 
+		particle_destroyEntityOnExpiry = true,
+	},
+	ironHellGoatSecondaryShot  = {
+		type = "ironHellGoatSecondaryShot",
+		particle_scriptName = "ironHellGoatSecondaryShot",
+		particle_on = true, 
+		particle_destroyEntityOnExpiry = true,
 	},
 }

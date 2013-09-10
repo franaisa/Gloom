@@ -1,4 +1,4 @@
-system sniperPrimaryShoot
+system sniperPrimaryShot
 {
     technique 
     {
