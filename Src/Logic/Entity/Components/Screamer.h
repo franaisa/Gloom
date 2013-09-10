@@ -246,6 +246,10 @@ namespace Logic {
 
 		/** Variable que controla la distancia del grito en los rebotes */
 		float _distanceShoot;
+
+		/** Cantidad máxima de escudo para que aparezca el compositor. */
+		float _maxShieldCompositor;
+
 		/** Puntero a la entidad que representa al escudo generado por la habilidad primaria. */
 		Logic::CEntity* _screamerShield;
 
@@ -253,6 +257,8 @@ namespace Logic {
 		Nombre del material original de la entidad
 		*/
 		std::string _materialName;
+
+		
 
 	}; // class CScreamer
 

@@ -564,6 +564,8 @@ Map = {
 		screamerScreamForce = 2.5,
 		screamerScreamMaxDistance = 300,
 		
+		maxShieldCompositor = 20,
+		
 		primarySpell = 0,
 		secondarySpell = 1,
 				
@@ -848,6 +850,9 @@ Map = {
 		screamerReboundForce = 2,
 		screamerScreamForce = 2.5,
 		screamerScreamMaxDistance = 130,
+
+		maxShieldCompositor = 20,
+		
 
 		primarySpell = 0,
 		secondarySpell = 1,

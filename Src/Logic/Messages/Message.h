@@ -103,6 +103,7 @@ namespace Logic {
 			ADD_SPELL					= 0x00000042,//66
 			SPELL_HUNGRY				= 0x00000043,//67
 			KILL_STREAK					= 0X00000044,//68
+			SECONDARY_SKILL_ACTIVE		= 0x00000045,//69
 		};
 	}
 

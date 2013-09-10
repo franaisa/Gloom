@@ -14,8 +14,9 @@ cámara de la entidad screamer.
 #include "Logic/Maps/Map.h"
 #include "Map/MapEntity.h"
 
-#include "Logic/Messages/MessageChangeMaterial.h"
+#include "Logic/Messages/MessageSecondarySkillActive.h"
 
+using namespace std;
 namespace Logic{
 
 	IMP_FACTORY(CLocalScreamer);
@@ -31,7 +32,7 @@ namespace Logic{
 	} // spawn
 
 	void CLocalScreamer::onActivate(){
-		_effect = "ArchangelShieldFP";
+		_effect = "explosionScreamer";
 		_scene->createCompositor(_effect);
 		_scene->setCompositorVisible(_effect, false);
 		_strengthEffect = "strength";
@@ -41,20 +42,33 @@ namespace Logic{
 
 	bool CLocalScreamer::accept(const std::shared_ptr<CMessage>& message) {
 		Logic::TMessageType msgType = message->getMessageType();
-		return msgType == Message::CHANGE_MATERIAL;
+		return msgType == Message::SECONDARY_SKILL_ACTIVE;
 	} // accept
 
-	void CLocalScreamer::process(const std::shared_ptr<CMessage>& message) {
-		std::shared_ptr<CMessageChangeMaterial> materialMsg = std::static_pointer_cast<CMessageChangeMaterial>(message);
+	void CLocalScreamer::process(const std::shared_ptr<CMessage>& message) {	
+		switch( message->getMessageType() ) {
+			case Message::SECONDARY_SKILL_ACTIVE: {		
+					auto Msg = static_pointer_cast<CMessageSecondarySkillActive>(message);
 
-		if (materialMsg->getMaterialName() == "original"){
-			_scene->setCompositorVisible(_effect, false);
-			this->putToSleep();
-			//esto no deberia de estar
-		}else{
-			_scene->setCompositorVisible(_effect, true);
-			_timestamp = 1300;
-		}
+					if(Msg->canActive()==true){
+					_scene->setCompositorVisible(_effect, true);
+					}
+					else{
+						_scene->setCompositorVisible(_effect, false);
+					}
+
+					
+				}
+				break;
+			}
+		//if (materialMsg->getMaterialName() == "original"){
+		//	_scene->setCompositorVisible(_effect, false);
+		//	this->putToSleep();
+		//	//esto no deberia de estar
+		//}else{
+		//	_scene->setCompositorVisible(_effect, true);
+		//	_timestamp = 1300;
+		//}
 	}
 	
 	void CLocalScreamer::onWake(){

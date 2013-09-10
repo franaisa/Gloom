@@ -1,9 +1,3 @@
-fragment_program explosionScreamerMaterial_ps cg
-{
-	source ArchangelShieldFP.cg
-	entry_point shield_ps
-	profiles ps_2_x arbfp1
-}
 
 material explosionScreamerMaterial
 {
@@ -14,12 +8,6 @@ material explosionScreamerMaterial
 		{
 			depth_check off
 
-			fragment_program_ref explosionScreamerMaterial_ps
-			{
-                param_named strength float1 4.0
-				
-			}
-
 			texture_unit 0
 			{
                 tex_coord_set 0
@@ -29,7 +17,7 @@ material explosionScreamerMaterial
 
 			texture_unit 1
 			{
-				texture berserkFP.png 2d
+				texture ExplosionScreamer2.png 2d
                 tex_coord_set 1
 				tex_address_mode clamp
 				filtering linear linear linear

@@ -787,6 +787,9 @@
     <ClCompile Include="..\..\Src\Logic\Entity\Components\LocalScreamer.cpp">
       <Filter>Entity\Components\Graphics\Source</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Messages\MessageSecondarySkillActive.cpp">
+      <Filter>Messages\Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Src\Logic\Maps\ComponentFactory.h">
@@ -1430,6 +1433,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Entity\Components\LocalScreamer.h">
       <Filter>Entity\Components\Graphics\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Messages\MessageSecondarySkillActive.h">
+      <Filter>Messages\Header</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

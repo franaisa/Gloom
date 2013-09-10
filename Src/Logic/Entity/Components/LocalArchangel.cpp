@@ -22,7 +22,7 @@ namespace Logic{
 	} // spawn
 
 	void CLocalArchangel::onActivate(){
-		_effect = "ArchangelShieldFP";
+			_effect = "ArchangelShieldFP"; 
 		_scene->createCompositor(_effect);
 		_scene->setCompositorVisible(_effect, false);
 		_strengthEffect = "strength";
