@@ -16,7 +16,7 @@ Map = {
 	},	
 
 	David = {
-		type = "LocalArchangel",
+		type = "LocalScreamer",
 		isPlayer = true,
 		physic_group = 1,
 		physic_groupList = "-1",
@@ -38,16 +38,6 @@ Map = {
 		force = {0.5,3.5,0.0},
 	},
 	
-	ExplosionCompositor= {
-		type = "RemotePlayer",
-		isPlayer = false,
-		position = {-355.4,0.5,38.1},
-		model = "ragdolls/agent47.mesh",
-		ragdoll_file = "media/models/ragdolls/hitman.RepX",
-		ragdoll_group = 19,
-		ragdoll_groupList = "-1",
-		
-	},
 	ActiveSpell = {
 		type = "Powerup1",
 		position = {-96.3475, 0.420609, 22.3819},

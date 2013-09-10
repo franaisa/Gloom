@@ -110,10 +110,7 @@ namespace Logic
 	private:
 
 		Graphics::CScene* _scene;
-
-		std::string _effect;
-		std::string _strengthEffect;
-
+		std::string _compositor;
 		int _timestamp;
 		
 	};//class CLocalScreamer

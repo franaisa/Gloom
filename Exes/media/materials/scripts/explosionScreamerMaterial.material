@@ -10,17 +10,16 @@ material explosionScreamerMaterial
 
 			texture_unit 0
 			{
-                tex_coord_set 0
 				tex_address_mode clamp
-				filtering linear linear linear
+				filtering anisotropic
 			}
 
 			texture_unit 1
 			{
 				texture ExplosionScreamer2.png 2d
-                tex_coord_set 1
+               
 				tex_address_mode clamp
-				filtering linear linear linear
+				filtering anisotropic
 			}
 
 		}

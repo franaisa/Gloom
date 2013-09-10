@@ -10,6 +10,7 @@ implementa las habilidades del personaje
 "Screamer".
 
 @author Francisco Aisa García
+@author Javier Fernández Villanueva
 @date Marzo, 2013
 */
 
@@ -248,7 +249,7 @@ namespace Logic {
 		float _distanceShoot;
 
 		/** Cantidad máxima de escudo para que aparezca el compositor. */
-		float _maxShieldCompositor;
+		float _screamerMaxShieldCompositor;
 
 		/** Puntero a la entidad que representa al escudo generado por la habilidad primaria. */
 		Logic::CEntity* _screamerShield;

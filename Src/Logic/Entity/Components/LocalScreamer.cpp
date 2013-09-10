@@ -32,10 +32,9 @@ namespace Logic{
 	} // spawn
 
 	void CLocalScreamer::onActivate(){
-		_effect = "explosionScreamer";
-		_scene->createCompositor(_effect);
-		_scene->setCompositorVisible(_effect, false);
-		_strengthEffect = "strength";
+		_compositor = "explosionScreamer";
+		_scene->createCompositor(_compositor);
+		_scene->setCompositorVisible(_compositor, false);
 		_timestamp = 0;
 	}
 	//------------------------------------------------------
@@ -51,24 +50,13 @@ namespace Logic{
 					auto Msg = static_pointer_cast<CMessageSecondarySkillActive>(message);
 
 					if(Msg->canActive()==true){
-					_scene->setCompositorVisible(_effect, true);
+					_scene->setCompositorVisible(_compositor, true);
 					}
-					else{
-						_scene->setCompositorVisible(_effect, false);
-					}
-
-					
+					else
+						_scene->setCompositorVisible(_compositor, false);		
 				}
 				break;
 			}
-		//if (materialMsg->getMaterialName() == "original"){
-		//	_scene->setCompositorVisible(_effect, false);
-		//	this->putToSleep();
-		//	//esto no deberia de estar
-		//}else{
-		//	_scene->setCompositorVisible(_effect, true);
-		//	_timestamp = 1300;
-		//}
 	}
 	
 	void CLocalScreamer::onWake(){
@@ -77,15 +65,6 @@ namespace Logic{
 	//------------------------------------------------------
 
 	void CLocalScreamer::onTick(unsigned int msecs) {
-
-		_timestamp -= msecs;
-		if(_timestamp > 100){
-			_scene->updateCompositorVariable(_effect, _strengthEffect, _timestamp*0.01);
-			
-		}else{
-			_timestamp = 1300;
-			this->putToSleep();
-		}
 		
 	} // tick
 	//----------------------------------------------------------

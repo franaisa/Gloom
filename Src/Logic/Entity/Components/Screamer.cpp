@@ -9,6 +9,7 @@ implementa las habilidades del personaje
 @see Logic::IComponent
 
 @author Francisco Aisa García.
+@author Javier Fernández Villanueva
 @date Marzo, 2013
 */
 
@@ -98,7 +99,7 @@ namespace Logic {
 		assert( entityInfo->hasAttribute("screamerExplotionDamage") );
 		assert( entityInfo->hasAttribute("screamerExplotionRadius") );
 		assert( entityInfo->hasAttribute("screamerScreamForce") );
-		assert( entityInfo->hasAttribute("maxShieldCompositor") );
+		assert( entityInfo->hasAttribute("screamerMaxShieldCompositor") );
 
 		// Asignamos los atributos correspondientes.
 		_currentScreamerShield = _screamerShieldThreshold = entityInfo->getFloatAttribute("screamerShieldThreshold");
@@ -115,7 +116,7 @@ namespace Logic {
 		_screamerReboundDistance = entityInfo->getFloatAttribute("screamerReboundDistance");
 		_screamerMaxRebounds = entityInfo->getIntAttribute("screamerMaxRebounds");
 
-		_maxShieldCompositor = entityInfo->getFloatAttribute("maxShieldCompositor");
+		_screamerMaxShieldCompositor = entityInfo->getFloatAttribute("screamerMaxShieldCompositor");
 		_rebound = 0;
 
 		return true;
@@ -129,8 +130,6 @@ namespace Logic {
 		// Si la habilidad secundaria está siendo usada
 		if(_secondarySkillIsActive) {
 
-			
-
 			// Comprobamos si tenemos que explotar, ya que podrían habernos
 			// disparado al escudo
 			if(_currentScreamerShield < 0) {
@@ -140,20 +139,21 @@ namespace Logic {
 			else {
 				// Reducir la energia si es posible
 				if(_currentScreamerShield > 1) {
-					
-					if(_currentScreamerShield<_maxShieldCompositor)
+
+					//compositor
+						if(_currentScreamerShield<_screamerMaxShieldCompositor)
 					{
 						// Mandar el mensaje true
-						shared_ptr<CMessageSecondarySkillActive> lockWeaponsMsg = make_shared<CMessageSecondarySkillActive>();
-						lockWeaponsMsg->canActive(true);
-						_entity->emitMessage(lockWeaponsMsg);
+						shared_ptr<CMessageSecondarySkillActive> SecSkillAcMsg = make_shared<CMessageSecondarySkillActive>();
+						SecSkillAcMsg->canActive(true);
+						_entity->emitMessage(SecSkillAcMsg);
 					}
 					else{
-						shared_ptr<CMessageSecondarySkillActive> lockWeaponsMsg = make_shared<CMessageSecondarySkillActive>();
-						lockWeaponsMsg->canActive(false);
-						_entity->emitMessage(lockWeaponsMsg);}
-					
-	
+						shared_ptr<CMessageSecondarySkillActive> SecSkillAcMsg = make_shared<CMessageSecondarySkillActive>();
+						SecSkillAcMsg->canActive(false);
+						_entity->emitMessage(SecSkillAcMsg);}
+
+
 					// Decrementar iterativamente hasta llegar a 0
 					// o no poder decrementar mas
 					_screamerShieldDamageTimer += msecs;
@@ -182,7 +182,8 @@ namespace Logic {
 					_currentScreamerShield = _screamerShieldThreshold;
 					break;
 				}
-			}
+			}	
+			
 		}
 	}
 
