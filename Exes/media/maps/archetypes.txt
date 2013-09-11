@@ -157,21 +157,21 @@ Map = {
 	
 	ScreamerExplotion = {
 		type = "ScreamerExplotion",
-		particle_scriptName = "Explosion/mp_explosion_04",
+		particle_scriptName = "screamerExplotion",
 		particle_on = true,
 		particle_destroyEntityOnExpiry = true,
 	},
 	
 	Explotion = {
 		type = "Explotion",
-		particle_scriptName = "Explosion/mp_explosion_03",
+		particle_scriptName = "fireballExplotion",
 		particle_on = true,
 		particle_destroyEntityOnExpiry = true,
 	},
 	
 	SmokeBash = {
 		type = "SmokeBash",
-		particle_scriptName = "Smoke/mp_smoke_bash",
+		particle_scriptName = "smokeBash",
 		particle_on = true,
 		particle_destroyEntityOnExpiry = true,
 	},
@@ -185,7 +185,7 @@ Map = {
 	
 	BloodStrike = {
 		type = "BloodStrike",
-		particle_scriptName = "Blood/mp_bloodsstrike_03",
+		particle_scriptName = "bloodStrike",
 		particle_on = true,
 		particle_destroyEntityOnExpiry = true,
 	},
@@ -199,14 +199,14 @@ Map = {
 	
 	BulletSpark = {
 		type = "BulletSpark",
-		particle_scriptName = "bullet_spark",
+		particle_scriptName = "bulletSpark",
 		particle_on = true,
 		particle_destroyEntityOnExpiry = true,
 	},
 	
 	SniperTrail = {
 		type = "SniperTrail",
-		particle_scriptName = "Explosion/mp_explosion_04_blue",
+		particle_scriptName = "sniperHit",
 		particle_on = true,
 		particle_destroyEntityOnExpiry = true,
 	},
@@ -1211,7 +1211,7 @@ Map = {
 		physic_groupList = "1",
 		particleName="JumperParticle",
 
-		particle_scriptName = "Woosh/mp_woosh_12",
+		particle_scriptName = "jumperImpulse",
 		particle_on = false,
 		particle_destroyEntityOnExpiry = false,
 	},
