@@ -13,7 +13,7 @@ material shotGun {
 			
 			// Textura de difuso
 			texture_unit DiffMap {
-				texture ARMA_B.png
+				texture shotgun.png
 			}
 			
 		}
@@ -35,7 +35,7 @@ material shotGun {
 			
 			// Textura de difuso
 			texture_unit DiffMap {
-				texture ARMA_B.png
+				texture shotgun.png
 			}
 			
 			// Textura para el bump mapping. En el alfa esta el mapa de especulares.
@@ -56,7 +56,7 @@ material shotGun {
 		
 		pass {
 			texture_unit {
-				texture ARMA_B_GLOW_old.png
+				texture shotgun_glow.png
 			}
 		}
 		
