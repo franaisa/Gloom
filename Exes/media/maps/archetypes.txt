@@ -1199,7 +1199,7 @@ Map = {
 	Jumper = {
 		type = "Jumper",
 		msgList= "32,41,69",
-		model = "jumper.mesh",
+		model = "jumpy.mesh",
 
 		audio = "gameplay/plasma.wav",
 		physic_entity = "rigid",
