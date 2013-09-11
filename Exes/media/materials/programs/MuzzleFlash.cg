@@ -15,6 +15,6 @@ float4 flash_ps (float2 texCoord  : TEXCOORD0
 		flash=1;
 	}
    
-   return saturate(base*flash);
+   return saturate((base+float4(0.1,0.1,0.1,0))*flash);
 }
 
