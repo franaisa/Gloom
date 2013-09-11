@@ -547,8 +547,8 @@ Map = {
 		
 		screamerMaxRebounds = 1,
 		screamerReboundDistance = 20,
-		screamerReboundForce = 2,
-		screamerScreamForce = 2.5,
+		screamerReboundForce = 2.5,
+		screamerScreamForce = 15,
 		screamerScreamMaxDistance = 300,	
 		screamerMaxShieldCompositor = 20,
 		
@@ -736,8 +736,8 @@ Map = {
 		
 		screamerMaxRebounds = 1,
 		screamerReboundDistance = 20,
-		screamerReboundForce = 2,
-		screamerScreamForce = 2.5,
+		screamerReboundForce = 2.5,
+		screamerScreamForce = 15,
 		screamerScreamMaxDistance = 130,
 		
 		screamerMaxShieldCompositor = 20,

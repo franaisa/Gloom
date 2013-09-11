@@ -315,7 +315,8 @@ namespace Logic {
 			if((*it).entity->getName() != _entity->getName()){
 				Vector3 direct = -(_directionShoot.reflect(-(*it).normal));
 				auto m = std::make_shared<CMessageAddForcePlayer>();
-				m->setForce(_directionShoot * (_screamerScreamForce*(1.0f- (*it).distance/_screamerScreamMaxDistance)));
+				Vector3 temp = (_directionShoot + (Vector3(0.0f,1.0f,0.0f))).normalisedCopy();
+				m->setForce(temp * (_screamerScreamForce*(1.0f- (*it).distance/_screamerScreamMaxDistance)));
 				(*it).entity->emitMessage(m);
 			}
 		}				
