@@ -200,8 +200,6 @@ namespace Application {
 		// Seteamos la id logica asociada al player
 		Logic::TEntityID playerId = player->getEntityID();
 		_playersMgr->setEntityID(playerNetId, playerId);
-		
-		std::cout << "creando " << name << std::endl;
 
 		// Escribimos el tipo de mensaje de red a enviar
 		Net::NetMessageType netMsg = Net::LOAD_PLAYERS;
@@ -223,6 +221,7 @@ namespace Application {
 
 		// Enviamos la entidad nueva al jugador local
 		netMsg = Net::LOAD_LOCAL_PLAYER;
+
 		// Serializamos toda la información que se necesita para la creación de la entidad
 		buffer.write(&netMsg, sizeof(netMsg));
 		buffer.write(&playerNetId, sizeof(playerNetId));

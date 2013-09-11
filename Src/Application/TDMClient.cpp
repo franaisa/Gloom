@@ -79,6 +79,7 @@ namespace Application {
 	void CTDMClient::activate() {
 		CGameClientState::activate();
 		_inEndGame = false;
+		Logic::CScoreboard::getSingletonPtr()->loadScoreboardTDM();
 	} // activate
 
 	//______________________________________________________________________________

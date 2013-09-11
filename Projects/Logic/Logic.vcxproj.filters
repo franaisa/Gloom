@@ -1366,7 +1366,7 @@
       <Filter>Messages\Header</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Entity\Components\SpectatorHud.h">
-      <Filter>Entity\Header Files</Filter>
+      <Filter>Entity\Components\Graphics\Header</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

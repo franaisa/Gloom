@@ -293,7 +293,7 @@ namespace Logic {
 				playersMgr->setDeaths(netId, deaths);
 
 				if(!Logic::CScoreboard::getSingletonPtr()->getPlayer(entityName))
-					Logic::CScoreboard::getSingletonPtr()->addPlayer(entityName, entity, entityType);
+					Logic::CScoreboard::getSingletonPtr()->addPlayer(entityName, entity, entityType, team);
 				else
 					Logic::CScoreboard::getSingletonPtr()->changePlayerEntity(entityName, entity, entityType);
 			}
