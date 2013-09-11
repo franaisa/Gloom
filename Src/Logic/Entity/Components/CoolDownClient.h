@@ -40,7 +40,7 @@ namespace Logic {
 	public:
 
 		/** Constructor por defecto. */
-		CCoolDownClient() : ISpell("coolDown") { }
+		CCoolDownClient() : ISpell("CoolDown") { }
 
 		//__________________________________________________________________
 

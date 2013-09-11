@@ -9,8 +9,15 @@ implementa las habilidades del personaje
 @see Logic::IComponent
 
 @author Francisco Aisa García.
+@author Javier Fernández Villanueva
 @date Marzo, 2013
 */
+
+
+#include "Logic/Maps/WorldState.h"
+
+
+
 
 // Componentes
 #include "Screamer.h"
@@ -37,7 +44,7 @@ implementa las habilidades del personaje
 #include "Logic/Messages/MessageHud.h"
 #include "Logic/Messages/MessageBlockShoot.h"
 #include "Logic/Messages/MessageAudio.h"
-
+#include "Logic/Messages/MessageSecondarySkillActive.h"
 // Física
 #include "Physics/Server.h"
 #include "Physics/GeometryFactory.h"
@@ -49,6 +56,7 @@ implementa las habilidades del personaje
 #include "Graphics/Particle.h"
 #include "Graphics/Scene.h"
 #include "Graphics/Camera.h"
+
 
 using namespace std;
 
@@ -91,7 +99,7 @@ namespace Logic {
 		assert( entityInfo->hasAttribute("screamerExplotionDamage") );
 		assert( entityInfo->hasAttribute("screamerExplotionRadius") );
 		assert( entityInfo->hasAttribute("screamerScreamForce") );
-		
+		assert( entityInfo->hasAttribute("screamerMaxShieldCompositor") );
 
 		// Asignamos los atributos correspondientes.
 		_currentScreamerShield = _screamerShieldThreshold = entityInfo->getFloatAttribute("screamerShieldThreshold");
@@ -107,6 +115,8 @@ namespace Logic {
 		_screamerScreamMaxDistance= entityInfo->getFloatAttribute("screamerScreamMaxDistance");
 		_screamerReboundDistance = entityInfo->getFloatAttribute("screamerReboundDistance");
 		_screamerMaxRebounds = entityInfo->getIntAttribute("screamerMaxRebounds");
+
+		_screamerMaxShieldCompositor = entityInfo->getFloatAttribute("screamerMaxShieldCompositor");
 		_rebound = 0;
 
 		return true;
@@ -115,8 +125,11 @@ namespace Logic {
 	//__________________________________________________________________
 
 	void CScreamer::checkSecondarySkill(unsigned int msecs) {
-		// Si la habilidad primaria está siendo usada
+
+		
+		// Si la habilidad secundaria está siendo usada
 		if(_secondarySkillIsActive) {
+
 			// Comprobamos si tenemos que explotar, ya que podrían habernos
 			// disparado al escudo
 			if(_currentScreamerShield < 0) {
@@ -126,6 +139,21 @@ namespace Logic {
 			else {
 				// Reducir la energia si es posible
 				if(_currentScreamerShield > 1) {
+
+					//compositor
+						if(_currentScreamerShield<_screamerMaxShieldCompositor)
+					{
+						// Mandar el mensaje true
+						shared_ptr<CMessageSecondarySkillActive> SecSkillAcMsg = make_shared<CMessageSecondarySkillActive>();
+						SecSkillAcMsg->canActive(true);
+						_entity->emitMessage(SecSkillAcMsg);
+					}
+					else{
+						shared_ptr<CMessageSecondarySkillActive> SecSkillAcMsg = make_shared<CMessageSecondarySkillActive>();
+						SecSkillAcMsg->canActive(false);
+						_entity->emitMessage(SecSkillAcMsg);}
+
+
 					// Decrementar iterativamente hasta llegar a 0
 					// o no poder decrementar mas
 					_screamerShieldDamageTimer += msecs;
@@ -154,7 +182,8 @@ namespace Logic {
 					_currentScreamerShield = _screamerShieldThreshold;
 					break;
 				}
-			}
+			}	
+			
 		}
 	}
 
@@ -202,6 +231,15 @@ namespace Logic {
 	//__________________________________________________________________
 
 	void CScreamer::primarySkill() {
+
+
+		//// Activamos el shader de inmunidad
+		std::shared_ptr<CMessageChangeMaterial> materialMsg = std::make_shared<CMessageChangeMaterial>();
+		materialMsg->setMaterialName("ArchangelDiamond3"); // En el futuro debe ser el material del archangel
+		_entity->emitMessage(materialMsg);
+		Logic::CWorldState::getSingletonPtr()->addChange(_entity,materialMsg);
+
+
 		// Sonido de grito
 		std::shared_ptr<CMessageAudio> audioMsg = std::make_shared<CMessageAudio>();
 		
@@ -312,6 +350,15 @@ namespace Logic {
 		shared_ptr<CMessageSetOwner> setOwnerMsg = make_shared<CMessageSetOwner>();
 		setOwnerMsg->setOwner(_entity);
 		_screamerShield->emitMessage(setOwnerMsg);
+
+		// Sonido del escudo
+		std::shared_ptr<CMessageAudio> audioMsg = std::make_shared<CMessageAudio>();
+		
+		audioMsg->setAudioName("character/screamerShield.wav");
+		audioMsg->isLoopable(true);
+		audioMsg->is3dSound(true);
+			
+		_screamerShield->emitMessage(audioMsg);
 
 		// Enviamos un mensaje para indicar que se bloquee el disparo
 		shared_ptr<CMessageBlockShoot> canShootMsg = make_shared<CMessageBlockShoot>();

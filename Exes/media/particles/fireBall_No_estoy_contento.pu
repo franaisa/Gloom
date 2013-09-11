@@ -1,0 +1,54 @@
+system fireball
+{
+    fast_forward                                4 0.1
+    category                                    Examples_31_40
+    technique 
+    {
+        visual_particle_quota                   1500
+        material                                PUMediaPack/Smoke_01
+        default_particle_width                  2
+        default_particle_height                 2
+        default_particle_depth                  1.2
+        renderer                                Billboard
+        {
+            sorting                             true
+        }
+        emitter                                 Point 
+        {
+            emission_rate                       40
+            angle                               10
+            time_to_live                        4
+            velocity                            6
+            position                            0 0 3
+            direction                           0 0 -1
+        }
+        affector                                SphereCollider 
+        {
+            mass_affector                       0
+            bouncyness                          0
+            collision_type                      flow
+            radius                              3
+        }
+        affector                                SphereCollider 
+        {
+            mass_affector                       0
+            bouncyness                          0
+            collision_type                      flow
+            radius                              3
+            inner_collision                     true
+        }
+        affector                                Colour 
+        {
+            time_colour                         0    1 1 1 0.6
+            time_colour                         0.0456522  0.666667 0.666667 0 1
+            time_colour                         0.269565  0.996078 0.4 0.00392157 1
+            time_colour                         0.893478  0.792157 0 0 0.709804
+            time_colour                         1    0 0 0 0.74902
+        }
+        affector                                Scale 
+        {
+            mass_affector                       0
+            xyz_scale                           4
+        }
+    }
+}

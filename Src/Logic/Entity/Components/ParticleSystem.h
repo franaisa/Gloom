@@ -59,6 +59,7 @@ namespace Logic {
 
 		void setDirection(const Vector3& direction) { _particleSystem->setDirection(direction); }
 		void setOrientation(const Quaternion& orientation) { _particleSystem->setOrientation(orientation); }
+		void setPosition(const Vector3& position) { _particleSystem->setPosition(position); }
 
 	protected:
 

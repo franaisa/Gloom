@@ -82,8 +82,8 @@ Map = {
 		
 		model = "scroll.mesh",
 		id = "spell",
-		reward = 1,
-		respawnTime = 120,
+		reward = 0,
+		respawnTime = 12,
 		
 		audioTrigger_name = "items/holdable.wav",
 		audioTrigger_stream = false,
@@ -106,8 +106,8 @@ Map = {
 		
 		model = "scroll.mesh",
 		id = "spell",
-		reward = 2,
-		respawnTime = 120,
+		reward = 1,
+		respawnTime = 12,
 		
 		audioTrigger_name = "items/holdable.wav",
 		audioTrigger_stream = false,
@@ -146,6 +146,13 @@ Map = {
 		physic_radius = 3,
 		physic_group = 12,
 		physic_groupList = "1",
+	},
+	
+	ScreamerShieldHit = {
+		type = "ScreamerShieldHit",
+		particle_scriptName = "screamerShieldHit",
+		particle_on = true,
+		particle_destroyEntityOnExpiry = true,
 	},
 	
 	ScreamerExplotion = {
@@ -468,38 +475,6 @@ Map = {
 		secondarySkillCooldown = 1,
 		invisibilityDuration = 5,
 		
-		primarySpell = 0,
-		secondarySpell = 1,
-				
-			spellamplifyDamageID = 0,
-			spellamplifyDamagePercentDamage = 30,
-			
-			spellcomeBackID = 1,
-			spellcomeBackCooldown = 10,
-			spellcomeBackMaxAmmo = 7,
-			spellcomeBackAmmoPerPull = 3,
-			spellcomeBackDurationEffect = 5,
-			spellcomeBackDistanceEffect = 200,
-
-			spellcoolDownID = 2,
-			spellcoolDownPercentageCooldown = 20,
-			
-			spellgravityID = 3,
-			spellgravitynewGravity = -0.002,
-			
-			spellhardDeathID = 4,
-			spellhardDeathExplotionRadius = 30.0,
-			spellhardDeathDamageExplotion = 200.0,
-			
-			spellhungryID = 5,
-			spellhungryPercentage = 0.5,
-			
-			spellshieldID = 6,
-			spellshieldDamage = 7,
-			spellshieldPercentageAbsorbed = 10,
-		
-			spellresurrectionID = 7,
-
 		particleName = "Odor",
 		particleVisible = false,
 		
@@ -574,41 +549,9 @@ Map = {
 		screamerReboundDistance = 20,
 		screamerReboundForce = 2,
 		screamerScreamForce = 2.5,
-		screamerScreamMaxDistance = 300,
+		screamerScreamMaxDistance = 300,	
+		screamerMaxShieldCompositor = 20,
 		
-		primarySpell = 0,
-		secondarySpell = 1,
-				
-			spellamplifyDamageID = 0,
-			spellamplifyDamagePercentDamage = 30,
-			
-			spellcomeBackID = 1,
-			spellcomeBackCooldown = 10,
-			spellcomeBackMaxAmmo = 7,
-			spellcomeBackAmmoPerPull = 3,
-			spellcomeBackDurationEffect = 5,
-			spellcomeBackDistanceEffect = 200,
-
-			spellcoolDownID = 2,
-			spellcoolDownPercentageCooldown = 20,
-			
-			spellgravityID = 3,
-			spellgravitynewGravity = -0.002,
-			
-			spellhardDeathID = 4,
-			spellhardDeathExplotionRadius = 30.0,
-			spellhardDeathDamageExplotion = 200.0,
-			
-			spellhungryID = 5,
-			spellhungryPercentage = 0.5,
-			
-			spellshieldID = 6,
-			spellshieldDamage = 7,
-			spellshieldPercentageAbsorbed = 10,
-		
-			spellresurrectionID = 7,
-			
-
 		particleName = "Odor",
 		particleVisible = false,
 		
@@ -668,38 +611,6 @@ Map = {
 		
 		inmunityDuration = 5,
 		lifeDome = 10,
-		
-		primarySpell = 0,
-		secondarySpell = 1,
-				
-			spellamplifyDamageID = 0,
-			spellamplifyDamagePercentDamage = 30,
-			
-			spellcomeBackID = 1,
-			spellcomeBackCooldown = 10,
-			spellcomeBackMaxAmmo = 7,
-			spellcomeBackAmmoPerPull = 3,
-			spellcomeBackDurationEffect = 5,
-			spellcomeBackDistanceEffect = 200,
-
-			spellcoolDownID = 2,
-			spellcoolDownPercentageCooldown = 20,
-			
-			spellgravityID = 3,
-			spellgravitynewGravity = -0.002,
-			
-			spellhardDeathID = 4,
-			spellhardDeathExplotionRadius = 30.0,
-			spellhardDeathDamageExplotion = 200.0,
-			
-			spellhungryID = 5,
-			spellhungryPercentage = 0.5,
-			
-			spellshieldID = 6,
-			spellshieldDamage = 7,
-			spellshieldPercentageAbsorbed = 10,
-		
-			spellresurrectionID = 7,
 
 		particleName = "Odor",
 		particleVisible = false,		
@@ -762,38 +673,6 @@ Map = {
 		biteVelocity=0.10;
 		biteDuration=0.5;
 		biteDamage = 40.0;
-		
-		primarySpell = 0,
-		secondarySpell = 1,
-				
-			spellamplifyDamageID = 0,
-			spellamplifyDamagePercentDamage = 30,
-			
-			spellcomeBackID = 1,
-			spellcomeBackCooldown = 10,
-			spellcomeBackMaxAmmo = 7,
-			spellcomeBackAmmoPerPull = 3,
-			spellcomeBackDurationEffect = 5,
-			spellcomeBackDistanceEffect = 200,
-
-			spellcoolDownID = 2,
-			spellcoolDownPercentageCooldown = 20,
-			
-			spellgravityID = 3,
-			spellgravitynewGravity = -0.002,
-			
-			spellhardDeathID = 4,
-			spellhardDeathExplotionRadius = 30.0,
-			spellhardDeathDamageExplotion = 200.0,
-			
-			spellhungryID = 5,
-			spellhungryPercentage = 0.5,
-			
-			spellshieldID = 6,
-			spellshieldDamage = 7,
-			spellshieldPercentageAbsorbed = 10,
-		
-			spellresurrectionID = 7,
 
 		particleName = "Odor",
 		particleVisible = false,
@@ -860,39 +739,8 @@ Map = {
 		screamerReboundForce = 2,
 		screamerScreamForce = 2.5,
 		screamerScreamMaxDistance = 130,
-
-		primarySpell = 0,
-		secondarySpell = 1,
-				
-			spellamplifyDamageID = 0,
-			spellamplifyDamagePercentDamage = 30,
-			
-			spellcomeBackID = 1,
-			spellcomeBackCooldown = 10,
-			spellcomeBackMaxAmmo = 7,
-			spellcomeBackAmmoPerPull = 3,
-			spellcomeBackDurationEffect = 5,
-			spellcomeBackDistanceEffect = 200,
-
-			spellcoolDownID = 2,
-			spellcoolDownPercentageCooldown = 20,
-			
-			spellgravityID = 3,
-			spellgravitynewGravity = -0.002,
-			
-			spellhardDeathID = 4,
-			spellhardDeathExplotionRadius = 30.0,
-			spellhardDeathDamageExplotion = 200.0,
-			
-			spellhungryID = 5,
-			spellhungryPercentage = 0.5,
-			
-			spellshieldID = 6,
-			spellshieldDamage = 7,
-			spellshieldPercentageAbsorbed = 10,
 		
-			spellresurrectionID = 7,
-		
+		screamerMaxShieldCompositor = 20,
 		hudPanelDebugPositionX = 0,
 		hudPanelDebugPositionY = 0,
 		hudPanelDebugWidth = 2,
@@ -953,38 +801,6 @@ Map = {
 		primarySkillCooldown = 25,
 		secondarySkillCooldown = 25,
 		invisibilityDuration = 5,
-
-		primarySpell = 0,
-		secondarySpell = 1,
-				
-			spellamplifyDamageID = 0,
-			spellamplifyDamagePercentDamage = 30,
-			
-			spellcomeBackID = 1,
-			spellcomeBackCooldown = 10,
-			spellcomeBackMaxAmmo = 7,
-			spellcomeBackAmmoPerPull = 3,
-			spellcomeBackDurationEffect = 5,
-			spellcomeBackDistanceEffect = 200,
-
-			spellcoolDownID = 2,
-			spellcoolDownPercentageCooldown = 20,
-			
-			spellgravityID = 3,
-			spellgravitynewGravity = -0.002,
-			
-			spellhardDeathID = 4,
-			spellhardDeathExplotionRadius = 30.0,
-			spellhardDeathDamageExplotion = 200.0,
-			
-			spellhungryID = 5,
-			spellhungryPercentage = 0.5,
-			
-			spellshieldID = 6,
-			spellshieldDamage = 7,
-			spellshieldPercentageAbsorbed = 10,
-		
-			spellresurrectionID = 7,
 		
 		hudPanelDebugPositionX = 0,
 		hudPanelDebugPositionY = 0,
@@ -1048,39 +864,6 @@ Map = {
 		
 		inmunityDuration = 5,
 		lifeDome = 10,
-
-		primarySpell = 0,
-		secondarySpell = 1,
-				
-			spellamplifyDamageID = 0,
-			spellamplifyDamagePercentDamage = 30,
-			
-			spellcomeBackID = 1,
-			spellcomeBackCooldown = 10,
-			spellcomeBackMaxAmmo = 7,
-			spellcomeBackAmmoPerPull = 3,
-			spellcomeBackDurationEffect = 5,
-			spellcomeBackDistanceEffect = 200,
-
-			spellcoolDownID = 2,
-			spellcoolDownPercentageCooldown = 20,
-			
-			spellgravityID = 3,
-			spellgravitynewGravity = -0.002,
-			
-			spellhardDeathID = 4,
-			spellhardDeathExplotionRadius = 30.0,
-			spellhardDeathDamageExplotion = 200.0,
-			
-			spellhungryID = 5,
-			spellhungryPercentage = 0.5,
-			
-			spellshieldID = 6,
-			spellshieldDamage = 7,
-			spellshieldPercentageAbsorbed = 10,
-		
-			spellresurrectionID = 7,
-			
 		
 		hudPanelDebugPositionX = 0,
 		hudPanelDebugPositionY = 0,
@@ -1153,39 +936,7 @@ Map = {
 		physic_entity = "rigid",
 		physic_trigger = true,
 		physic_type = "kinematic",
-		
-		primarySpell = 0,
-		secondarySpell = 1,
-				
-			spellamplifyDamageID = 0,
-			spellamplifyDamagePercentDamage = 30,
-			
-			spellcomeBackID = 1,
-			spellcomeBackCooldown = 10,
-			spellcomeBackMaxAmmo = 7,
-			spellcomeBackAmmoPerPull = 3,
-			spellcomeBackDurationEffect = 5,
-			spellcomeBackDistanceEffect = 200,
-
-			spellcoolDownID = 2,
-			spellcoolDownPercentageCooldown = 20,
-			
-			spellgravityID = 3,
-			spellgravitynewGravity = -0.002,
-			
-			spellhardDeathID = 4,
-			spellhardDeathExplotionRadius = 30.0,
-			spellhardDeathDamageExplotion = 200.0,
-			
-			spellhungryID = 5,
-			spellhungryPercentage = 0.5,
-			
-			spellshieldID = 6,
-			spellshieldDamage = 7,
-			spellshieldPercentageAbsorbed = 10,
-		
-			spellresurrectionID = 7,
-			
+					
 		hudCrossX = 4,
 		hudCrossY = 5,
 		hudScreenWidth = 26,
@@ -1332,38 +1083,6 @@ Map = {
 		audioDeath = "damage/splatdeath_03.wav",
 		audioSpawn = "gameplay/spawn.wav",
 		audioNoAmmo = "weapons/noammo.wav",
-		
-		primarySpell = 0,
-		secondarySpell = 1,
-				
-			spellamplifyDamageID = 0,
-			spellamplifyDamagePercentDamage = 30,
-			
-			spellcomeBackID = 1,
-			spellcomeBackCooldown = 10,
-			spellcomeBackMaxAmmo = 7,
-			spellcomeBackAmmoPerPull = 3,
-			spellcomeBackDurationEffect = 5,
-			spellcomeBackDistanceEffect = 200,
-
-			spellcoolDownID = 2,
-			spellcoolDownPercentageCooldown = 20,
-			
-			spellgravityID = 3,
-			spellgravitynewGravity = -0.002,
-			
-			spellhardDeathID = 4,
-			spellhardDeathExplotionRadius = 30.0,
-			spellhardDeathDamageExplotion = 200.0,
-			
-			spellhungryID = 5,
-			spellhungryPercentage = 0.5,
-			
-			spellshieldID = 6,
-			spellshieldDamage = 7,
-			spellshieldPercentageAbsorbed = 10,
-		
-			spellresurrectionID = 7,
 	},
 	
 	Camera = {
@@ -1412,7 +1131,7 @@ Map = {
 	ScreamerShield = {
 		type = "ScreamerShield",
 		model = "shieldCone.mesh",
-		msgList= "48",
+		msgList= "41, 48",
 		physic_entity = "rigid",
 		physic_trigger = false,
 		physic_type = "kinematic",
@@ -1444,7 +1163,6 @@ Map = {
 	
 	LifeDome = {
 		type = "LifeDome",
-		model = "lifeDome.mesh",
 		msgList= "48,55,56",
 		lifeDomeLife = 10;
 		lifeDomePerFriend = 4;
@@ -1456,9 +1174,9 @@ Map = {
 		physic_group = 11,
 		physic_groupList = "1", 
 		physic_mass = 10,
-		ticksPerSample = 1,
-		samplesPerSnapshot = 2,		
-		scale = {5,5,5},
+		particle_scriptName = "lifeDome",
+		particle_on = true,
+		particle_destroyEntityOnExpiry = false,
 	},
 	
 	ShieldSpell = {
@@ -1678,7 +1396,6 @@ Map = {
 		BurnedIncrementPercentageDamage = 30,
 		MaxAmmo = 10,
 		ID = 1,
-		PrimaryFireParticle = "sniperPrimaryShoot",	
 		ParticlePosition = {6, 5, 6},
 		Audio = "weapons/sniper/sniper.wav",
 		audioNoAmmo = "weapons/noammo.wav",
@@ -1701,5 +1418,79 @@ Map = {
 	
 	KillStreak = {
 		type = "KillStreak",
+	},
+	
+	SpellAmplifyDamage = {
+		type = "SpellAmplifyDamage",
+		ID = 0,
+		PercentDamage = 30,
+		Duration = 15,
+	},
+	
+	SpellCoolDown = {
+		type = "SpellCoolDown",
+		ID = 1,
+		PercentageCooldown = 20,
+		Duration = 15,
+	},
+	soulReaperPrimaryShot  = {
+		type = "soulReaperPrimaryShot",
+		particle_scriptName = "soulReaperPrimaryShot",
+		particle_on = true, 
+		particle_destroyEntityOnExpiry = true,
+	},
+	soulReaperSecondaryShot  = {
+		type = "soulReaperSecondaryShot",
+		particle_scriptName = "soulReaperSecondaryShot",
+		particle_on = true, 
+		particle_destroyEntityOnExpiry = true,
+	},
+	sniperPrimaryShot  = {
+		type = "sniperPrimaryShot",
+		particle_scriptName = "sniperPrimaryShot",
+		particle_on = true, 
+		particle_destroyEntityOnExpiry = true,
+	},
+	sniperSecondaryShot  = {
+		type = "sniperSecondaryShot",
+		particle_scriptName = "sniperSecondaryShot",
+		particle_on = true, 
+		particle_destroyEntityOnExpiry = true,
+	},
+	shotGunPrimaryShot  = {
+		type = "shotGunPrimaryShot",
+		particle_scriptName = "shotGunPrimaryShot",
+		particle_on = true, 
+		particle_destroyEntityOnExpiry = true,
+	},
+	shotGunSecondaryShot  = {
+		type = "shotGunSecondaryShot",
+		particle_scriptName = "shotGunSecondaryShot",
+		particle_on = true, 
+		particle_destroyEntityOnExpiry = true,
+	},
+	miniGunPrimaryShot  = {
+		type = "miniGunPrimaryShot",
+		particle_scriptName = "miniGunPrimaryShot",
+		particle_on = true, 
+		particle_destroyEntityOnExpiry = true,
+	},
+	miniGunSecondaryShot  = {
+		type = "miniGunSecondaryShot",
+		particle_scriptName = "miniGunSecondaryShot",
+		particle_on = true, 
+		particle_destroyEntityOnExpiry = true,
+	},
+	ironHellGoatPrimaryShot  = {
+		type = "ironHellGoatPrimaryShot",
+		particle_scriptName = "ironHellGoatPrimaryShot",
+		particle_on = true, 
+		particle_destroyEntityOnExpiry = true,
+	},
+	ironHellGoatSecondaryShot  = {
+		type = "ironHellGoatSecondaryShot",
+		particle_scriptName = "ironHellGoatSecondaryShot",
+		particle_on = true, 
+		particle_destroyEntityOnExpiry = true,
 	},
 }

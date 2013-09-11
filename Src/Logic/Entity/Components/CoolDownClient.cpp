@@ -27,9 +27,24 @@ namespace Logic {
 	bool CCoolDownClient::spawn(CEntity* entity, CMap *map, const Map::CEntity *entityInfo) {
 		if(!ISpell::spawn(entity,map,entityInfo)) return false;
 
+		/*
+		Map::CEntity *tempEntity = CEntityFactory::getSingletonPtr()->getInfo(_spellName);
+
+		// Nos aseguramos de tener todos los atributos que necesitamos
+		assert( tempEntity->hasAttribute("PercentageCooldown") );
+
+		_percentage = tempEntity->getFloatAttribute("PercentageCooldown");
+		*/
 		return true;
 	} // spawn
 	//__________________________________________________________________
+
+	/*
+	void CCoolDownClient::onStart(){
+	
+	} // onStart
+	//__________________________________________________________________
+	*/
 
 	void CCoolDownClient::spell(){ 
 		// feedback de cooldown reducio

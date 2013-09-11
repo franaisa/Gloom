@@ -1,0 +1,27 @@
+
+material explosionScreamerMaterial
+{
+	technique
+	{
+
+		pass
+		{
+			depth_check off
+
+			texture_unit 0
+			{
+				tex_address_mode clamp
+				filtering anisotropic
+			}
+
+			texture_unit 1
+			{
+				texture ExplosionScreamer2.png 2d
+               
+				tex_address_mode clamp
+				filtering anisotropic
+			}
+
+		}
+	}
+}

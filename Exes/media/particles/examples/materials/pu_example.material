@@ -138,7 +138,7 @@ material ParticleUniverse/Lightning
 
             texture_unit
             {
-                texture pu_lightning_20x64.png
+                texture pu_lightning_blue_20x64.png
             }
         }
     }

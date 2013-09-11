@@ -16,6 +16,8 @@
 // Mapa
 #include "Map/MapEntity.h"
 #include "Logic/Maps/EntityFactory.h"
+
+#include "Logic/Server.h"
 // Mensajes
 #include "Logic/Messages/MessageAudio.h"
 #include "Logic/Messages/MessageHudWeapon.h"
@@ -23,6 +25,8 @@
 #include "Logic/Messages/MessageSecondaryShoot.h"
 #include "Logic/Messages/MessageBlockShoot.h"
 #include "Logic/Messages/MessageCreateParticle.h"
+
+#include "Logic/Messages/MessageParticleStart.h"
 
 // Graficos
 // @deprecated Ogre no deberia estar acoplado a la logica
@@ -59,6 +63,7 @@ namespace Logic {
 		Map::CEntity *tempEntity = CEntityFactory::getSingletonPtr()->getInfo(_weaponName);
 		_weaponSound = tempEntity->getStringAttribute("Audio");
 
+		/*
 		if(tempEntity->hasAttribute("PrimaryFireParticle"))
 			_primaryFireParticle = tempEntity->getStringAttribute("PrimaryFireParticle");
 		else
@@ -68,7 +73,7 @@ namespace Logic {
 			_secondaryFireParticle = tempEntity->getStringAttribute("SecondaryFireParticle");
 		else
 			_secondaryFireParticle = "fogonazo";
-		
+		*/
 		if(tempEntity->hasAttribute("ParticlePosition"))
 			_particlePosition = tempEntity->getVector3Attribute("ParticlePosition");
 		else
@@ -164,7 +169,6 @@ namespace Logic {
 			
 		_entity->emitMessage(audioMsg);
 	} // emitSound
-
 	//__________________________________________________________________
 
 	void IWeaponFeedback::drawDecal(Logic::CEntity* pEntity, Vector3 vPos) {
@@ -199,6 +203,7 @@ namespace Logic {
 			}
 		}
 	} // decals
+	//__________________________________________________________________
 
 	void IWeaponFeedback::emitParticle(bool primaryShoot){
 		std::shared_ptr<CMessageCreateParticle> particleMsg = std::make_shared<CMessageCreateParticle>();
@@ -222,7 +227,36 @@ namespace Logic {
 
 		particleMsg->setPosition(particlePosition);
 		_entity->emitMessage(particleMsg);
-	}
+	} // emitParticle
+	//__________________________________________________________________
 
+	void IWeaponFeedback::emitParticle2(bool primaryShoot){
+		
+		// Calculo la posicion y orientacion de la entidad
+		Vector3 particlePosition = _entity->getPosition();
+		particlePosition.y += _heightShoot;
+		Vector3 orientation= _entity->getOrientation()*Vector3::NEGATIVE_UNIT_Z;
+		orientation.normalise();
+		/*
+		float fOffset = 8.0f;
+		orientation *= fOffset;
+		particlePosition += orientation;
+		/*/
+		//orientation *= _particlePosition;
+		particlePosition += (orientation*_particlePosition);
+		/* */
+
+		
+		_currentPaticle = CEntityFactory::getSingletonPtr()->createEntity(
+			CEntityFactory::getSingletonPtr()->getInfo(_weaponName+(primaryShoot?"PrimaryShot":"SecondaryShot")),			
+			Logic::CServer::getSingletonPtr()->getMap(),
+			particlePosition,
+			_entity->getOrientation()
+		);
+		_currentPaticle->activate();
+		_currentPaticle->start();
+	} // emitParticle2
+	//__________________________________________________________________
+	
 } // namespace Logic
 

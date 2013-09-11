@@ -18,6 +18,8 @@ namespace Logic {
 	//__________________________________________________________________
 
 	CDynamicAudio::~CDynamicAudio() {
+		// Se entiende que deactivate se llama antes de llamar al
+		// destructor, por lo que paramos los sonidos en ese metodo
 	}
 
 	//__________________________________________________________________

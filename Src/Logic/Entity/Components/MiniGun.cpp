@@ -217,7 +217,7 @@ namespace Logic {
 		CEntity* entityHit = fireWeapon();
 		if(entityHit != NULL) 
 		{
-			triggerHitMessages(entityHit);
+			triggerHitMessages(entityHit, _damage);
 		}
 
 	}
@@ -246,51 +246,58 @@ namespace Logic {
 
 		decrementAmmo();
 
-		//Comprobación de si da al mundo
-		Physics::CRaycastHit hits2;
-		bool disp = Physics::CServer::getSingletonPtr()->raycastSingle(ray, _distance,hits2, Physics::CollisionGroup::eWORLD);
-		if (disp)
-		{
-			//Mandar el mensaje de los decal
-			Vector3 pos = hits2.impact;
-			drawDecal(hits2.entity, hits2.impact);
-			
-			// Añado aqui las particulas de dado en la pared.
-			/*auto m = std::make_shared<CMessageCreateParticle>();
-			m->setPosition(hits2.impact);
-			m->setParticle("impactParticle");
-			m->setDirectionWithForce(hits2.normal);
-			hits2.entity->emitMessage(m);*/
-
-			Euler euler(Quaternion::IDENTITY);
-			euler.setDirection(hits2.normal);
-			euler.yaw( Ogre::Radian(Math::HALF_PI) );
-
-			Map::CEntity* entityInfo = CEntityFactory::getSingletonPtr()->getInfo("BulletSpark");
-			CEntity* bulletSpark = CEntityFactory::getSingletonPtr()->createEntity(entityInfo, _entity->getMap(), hits2.impact, euler.toQuaternion() );
-			bulletSpark->activate();
-			bulletSpark->start();
-
-			int randomValue = Math::unifRand(2);
-			std::string ricochetSound = (randomValue == 1 ? "weapons/hit/ric3.wav" : "weapons/hit/ric2.wav");
-			Audio::CServer::getSingletonPtr()->playSound3D(ricochetSound, hits2.impact, Vector3::ZERO, false, false);
-		}
-
 		// Rayo lanzado por el servidor de físicas de acuerdo a la distancia de potencia del arma
 		std::vector<Physics::CRaycastHit> hits;
-		Physics::CServer::getSingletonPtr()->raycastMultiple(ray, _distance,hits, true, Physics::CollisionGroup::ePLAYER | Physics::CollisionGroup::eSCREAMER_SHIELD | Physics::CollisionGroup::eHITBOX);
+		Physics::CServer::getSingletonPtr()->raycastMultiple(ray, _distance,hits, true, Physics::CollisionGroup::eWORLD | Physics::CollisionGroup::ePLAYER | Physics::CollisionGroup::eSCREAMER_SHIELD | Physics::CollisionGroup::eHITBOX);
 
 		//Devolvemos lo primero tocado que no seamos nosotros mismos
 		CEntity* touched=NULL;
 		for(int i=0;i<hits.size();++i) {
-			if(hits[i].entity!=_entity) {
+			if (hits[i].entity->getType() == "World")
+			{
+				//Mandar el mensaje de los decal
+				Vector3 pos = hits[i].impact;
+				drawDecal(hits[i].entity, hits[i].impact);
+			
+				// Añado aqui las particulas de dado en la pared.
+				/*auto m = std::make_shared<CMessageCreateParticle>();
+				m->setPosition(hits[i].impact);
+				m->setParticle("impactParticle");
+				m->setDirectionWithForce(hits[i].normal);
+				hits[i].entity->emitMessage(m);*/
+
+				Euler euler(Quaternion::IDENTITY);
+				euler.setDirection(hits[i].normal);
+				euler.yaw( Ogre::Radian(Math::HALF_PI) );
+
+				Map::CEntity* entityInfo = CEntityFactory::getSingletonPtr()->getInfo("BulletSpark");
+				CEntity* bulletSpark = CEntityFactory::getSingletonPtr()->createEntity(entityInfo, _entity->getMap(), hits[i].impact, euler.toQuaternion() );
+				bulletSpark->activate();
+				bulletSpark->start();
+
+				int randomValue = Math::unifRand(2);
+				std::string ricochetSound = (randomValue == 1 ? "weapons/hit/ric3.wav" : "weapons/hit/ric2.wav");
+				Audio::CServer::getSingletonPtr()->playSound3D(ricochetSound, hits[i].impact, Vector3::ZERO, false, false);
+				
+				break;
+			}
+			else if(hits[i].entity!=_entity) {
 				if(hits[i].entity->getType() == "ScreamerShield") 
 				{
 					CEntity* screamerShieldOwner = hits[i].entity->getComponent<CScreamerShieldDamageNotifier>("CScreamerShieldDamageNotifier")->getOwner();
 
-					// Si se trata de nuestro propio escudo salir
-					if(screamerShieldOwner == _entity)
-						break;
+					// Si se trata de un escudo enemigo nos quedamos con esta
+					// entidad y pintamos las particulas
+					if(screamerShieldOwner != _entity)
+						touched = hits[i].entity;
+
+					// Creamos las particulas de impacto sobre el escudo
+					Map::CEntity* entityInfo = CEntityFactory::getSingletonPtr()->getInfo("ScreamerShieldHit");
+					CEntity* shieldHit = CEntityFactory::getSingletonPtr()->createEntity(entityInfo, _entity->getMap(), hits[i].impact, Quaternion::IDENTITY );
+					shieldHit->activate();
+					shieldHit->start();
+
+					break;
 				}
 				else 
 				{
@@ -320,34 +327,55 @@ namespace Logic {
 
 	//__________________________________________________________________
 
-	void CMiniGun::triggerHitMessages(CEntity* entityHit) 
+	void CMiniGun::triggerHitMessages(CEntity* entityHit, float damage) 
 	{
+		if(entityHit == NULL) return;
+
 		//send damage message
 		CGameNetPlayersManager* playersMgr = CGameNetPlayersManager::getSingletonPtr();
 		TEntityID enemyId = entityHit->getEntityID();
 		TEntityID playerId = _entity->getEntityID();
-		if( playersMgr->existsByLogicId(enemyId) ) {
-			TeamFaction::Enum enemyTeam = playersMgr->getTeamUsingEntityId(enemyId);
-			TeamFaction::Enum myTeam = playersMgr->getTeamUsingEntityId(playerId);
+		if( entityHit->getType() == "ScreamerShield" ) {
+			if( playersMgr->existsByLogicId(enemyId) ) {
+				TeamFaction::Enum enemyTeam = playersMgr->getTeamUsingEntityId(enemyId);
+				TeamFaction::Enum myTeam = playersMgr->getTeamUsingEntityId(playerId);
 
-			if( !playersMgr->friendlyFireIsActive() && enemyId != playerId) {
 				if(enemyTeam == TeamFaction::eNONE || myTeam == TeamFaction::eNONE || enemyTeam != myTeam) {
 					std::shared_ptr<CMessageDamaged> damageDone = std::make_shared<CMessageDamaged>();
-					damageDone->setDamage(_damage);
+					damageDone->setDamage(damage);
 					damageDone->setEnemy( _entity );
 					entityHit->emitMessage(damageDone);
 				}
 			}
 			else {
 				std::shared_ptr<CMessageDamaged> damageDone = std::make_shared<CMessageDamaged>();
-				damageDone->setDamage(_damage);
+				damageDone->setDamage(damage);
+				damageDone->setEnemy( _entity );
+				entityHit->emitMessage(damageDone);
+			}
+		}
+		else if( playersMgr->existsByLogicId(enemyId) ) {
+			TeamFaction::Enum enemyTeam = playersMgr->getTeamUsingEntityId(enemyId);
+			TeamFaction::Enum myTeam = playersMgr->getTeamUsingEntityId(playerId);
+
+			if( !playersMgr->friendlyFireIsActive() && enemyId != playerId) {
+				if(enemyTeam == TeamFaction::eNONE || myTeam == TeamFaction::eNONE || enemyTeam != myTeam) {
+					std::shared_ptr<CMessageDamaged> damageDone = std::make_shared<CMessageDamaged>();
+					damageDone->setDamage(damage);
+					damageDone->setEnemy( _entity );
+					entityHit->emitMessage(damageDone);
+				}
+			}
+			else {
+				std::shared_ptr<CMessageDamaged> damageDone = std::make_shared<CMessageDamaged>();
+				damageDone->setDamage(damage);
 				damageDone->setEnemy( _entity );
 				entityHit->emitMessage(damageDone);
 			}
 		}
 		else {
 			std::shared_ptr<CMessageDamaged> damageDone = std::make_shared<CMessageDamaged>();
-			damageDone->setDamage(_damage);
+			damageDone->setDamage(damage);
 			damageDone->setEnemy( _entity );
 			entityHit->emitMessage(damageDone);
 		}
@@ -366,90 +394,70 @@ namespace Logic {
 		//Physics::CServer::getSingletonPtr()->sweepMultiple(sphere, (_entity->getPosition() + Vector3(0,_heightShoot,0)),_directionShoot,_screamerScreamMaxDistance,hitSpots, true);
 		Vector3 vDirectionShoot =_entity->getOrientation() * Vector3::NEGATIVE_UNIT_Z;
 		vDirectionShoot.normalise();
-		Physics::CServer::getSingletonPtr()->sweepMultiple(sphere, (_entity->getPosition() + Vector3(0,_heightShoot,0)),vDirectionShoot, _distance,hits, false, Physics::CollisionGroup::ePLAYER | Physics::CollisionGroup::eSCREAMER_SHIELD );	
+		Physics::CServer::getSingletonPtr()->sweepMultiple(sphere, (_entity->getPosition() + Vector3(0,_heightShoot,0)),vDirectionShoot, _distance,hits, true, 
+			Physics::CollisionGroup::ePLAYER | Physics::CollisionGroup::eSCREAMER_SHIELD | Physics::CollisionGroup::eWORLD | Physics::CollisionGroup::eHITBOX);	
 
+		int danyoTotal = _damage * _currentSpentSecondaryAmmo;
+		CEntity* touched = NULL;
 		for(auto it = hits.begin(); it < hits.end(); ++it){
-			std::string typeEntity = (*it).entity->getType();
-			if((*it).entity != _entity)
-			{
-				if( (*it).entity->getType() == "ScreamerShield") 
-				{
-					CEntity* screamerShieldOwner = (*it).entity->getComponent<CScreamerShieldDamageNotifier>("CScreamerShieldDamageNotifier")->getOwner();
-
-					if(screamerShieldOwner == _entity)
-						break;
-				}
-
-				int danyoTotal = _damage * _currentSpentSecondaryAmmo;
-
-				//send damage message
-				CGameNetPlayersManager* playersMgr = CGameNetPlayersManager::getSingletonPtr();
-				TEntityID enemyId = (*it).entity->getEntityID();
-				TEntityID playerId = _entity->getEntityID();
-				if( playersMgr->existsByLogicId(enemyId) ) {
-					TeamFaction::Enum enemyTeam = playersMgr->getTeamUsingEntityId(enemyId);
-					TeamFaction::Enum myTeam = playersMgr->getTeamUsingEntityId(playerId);
-
-					if( !playersMgr->friendlyFireIsActive() && enemyId != playerId) {
-						if(enemyTeam == TeamFaction::eNONE || myTeam == TeamFaction::eNONE || enemyTeam != myTeam) {
-							std::shared_ptr<CMessageDamaged> damageDone = std::make_shared<CMessageDamaged>();
-							damageDone->setDamage(danyoTotal);
-							damageDone->setEnemy( _entity );
-							(*it).entity->emitMessage(damageDone);
-						}
-					}
-					else {
-						std::shared_ptr<CMessageDamaged> damageDone = std::make_shared<CMessageDamaged>();
-						damageDone->setDamage(danyoTotal);
-						damageDone->setEnemy( _entity );
-						(*it).entity->emitMessage(damageDone);
-					}
-				}
-				else {
-					std::shared_ptr<CMessageDamaged> damageDone = std::make_shared<CMessageDamaged>();
-					damageDone->setDamage(danyoTotal);
-					damageDone->setEnemy( _entity );
-					(*it).entity->emitMessage(damageDone);
-				}
+			std::string typeEntity = it->entity->getType();
+			if( typeEntity == "World" ) {
+				//Mandar el mensaje de los decal
+				Vector3 pos = it->impact;
+				drawDecal(it->entity, it->impact);
 
 				Euler euler(Quaternion::IDENTITY);
-				euler.setDirection((*it).normal);
+				euler.setDirection(it->normal);
+				euler.yaw( Ogre::Radian(Math::HALF_PI) );
+
+				Map::CEntity* entityInfo = CEntityFactory::getSingletonPtr()->getInfo("BulletSpark");
+				CEntity* bulletSpark = CEntityFactory::getSingletonPtr()->createEntity(entityInfo, _entity->getMap(), it->impact, euler.toQuaternion() );
+				bulletSpark->activate();
+				bulletSpark->start();
+
+				int randomValue = Math::unifRand(2);
+				std::string ricochetSound = (randomValue == 1 ? "weapons/hit/ric3.wav" : "weapons/hit/ric2.wav");
+				Audio::CServer::getSingletonPtr()->playSound3D(ricochetSound, it->impact, Vector3::ZERO, false, false);
+
+				break;
+			}
+
+			else if( typeEntity == "ScreamerShield") {
+				CEntity* screamerShieldOwner = it->entity->getComponent<CScreamerShieldDamageNotifier>("CScreamerShieldDamageNotifier")->getOwner();
+
+				// Si se trata de un escudo enemigo nos quedamos con esta
+				// entidad y pintamos las particulas
+				if(screamerShieldOwner != _entity)
+					// Mandamos el mensaje de daño al escudo
+					touched = it->entity;
+
+				// Creamos las particulas de impacto sobre el escudo
+				Map::CEntity* entityInfo = CEntityFactory::getSingletonPtr()->getInfo("ScreamerShieldHit");
+				CEntity* shieldHit = CEntityFactory::getSingletonPtr()->createEntity(entityInfo, _entity->getMap(), it->impact, Quaternion::IDENTITY );
+				shieldHit->activate();
+				shieldHit->start();
+						
+				// Ya tenemos la entidad que buscabamos, salimos
+				break;
+			}
+
+			else if(it->entity != _entity)
+			{
+				touched = it->entity;
+
+				Euler euler(Quaternion::IDENTITY);
+				euler.setDirection(it->normal);
 
 				Map::CEntity* entityInfo = CEntityFactory::getSingletonPtr()->getInfo("BloodStrike");
-				CEntity* bloodStrike = CEntityFactory::getSingletonPtr()->createEntity(entityInfo, _entity->getMap(), (*it).impact, euler.toQuaternion() );
+				CEntity* bloodStrike = CEntityFactory::getSingletonPtr()->createEntity(entityInfo, _entity->getMap(), it->impact, euler.toQuaternion() );
 				bloodStrike->activate();
 				bloodStrike->start();
+
+				break;
 			}
 		}
 
-		//Decal, lo calculo sin dispersión
-		Vector3 origin = _entity->getPosition()+Vector3(0.0f,_heightShoot,0.0f);
-		// Creamos el ray desde el origen en la direccion del raton
-		Vector3 direction= _entity->getOrientation() * Vector3::NEGATIVE_UNIT_Z;
-		direction.normalise();
-		Ray ray(origin, direction);
-		Physics::CRaycastHit hits2;
-		bool disp = Physics::CServer::getSingletonPtr()->raycastSingle(ray, _distance,hits2, Physics::CollisionGroup::eWORLD);
-		if (disp)
-		{
-			//Mandar el mensaje de los decal
-			Vector3 pos = hits2.impact;
-			drawDecal(hits2.entity, hits2.impact);
-
-			Euler euler(Quaternion::IDENTITY);
-			euler.setDirection(hits2.normal);
-			euler.yaw( Ogre::Radian(Math::HALF_PI) );
-
-			Map::CEntity* entityInfo = CEntityFactory::getSingletonPtr()->getInfo("BulletSpark");
-			CEntity* bulletSpark = CEntityFactory::getSingletonPtr()->createEntity(entityInfo, _entity->getMap(), hits2.impact, euler.toQuaternion() );
-			bulletSpark->activate();
-			bulletSpark->start();
-
-			int randomValue = Math::unifRand(2);
-			std::string ricochetSound = (randomValue == 1 ? "weapons/hit/ric3.wav" : "weapons/hit/ric2.wav");
-			Audio::CServer::getSingletonPtr()->playSound3D(ricochetSound, hits2.impact, Vector3::ZERO, false, false);
-		}
-
+		triggerHitMessages(touched, danyoTotal);
 	} // secondaryShoot
 
 } // namespace Logic

@@ -64,6 +64,9 @@ namespace Logic {
 		shootFlash->setAttenuation( Vector3(1.0f, 0.014f, 0.0007f) );
 		shootFlash->setRange(325.0f);
 		shootFlash->turnOn( Vector3(0.0f, _heightShoot, 0.0f), 0.1f );
+
+		// muzzle flash
+		emitParticle2();
 	}
 
 	//__________________________________________________________________
@@ -89,6 +92,8 @@ namespace Logic {
 		shootFlash->setAttenuation( Vector3(1.0f, 0.014f, 0.0007f) );
 		shootFlash->setRange(325.0f);
 		shootFlash->turnOn( Vector3(0.0f, _heightShoot, 0.0f), 0.1f );
+
+		emitParticle2(false);
 	}
 
 }//namespace Logic
