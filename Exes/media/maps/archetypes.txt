@@ -1269,7 +1269,7 @@ Map = {
 		controlledByManager = false,
 		on = true,
 		
-		model = "arcan.mesh",
+		model = "archangel.mesh",
 		pitch = -90,
 		
 		physic_entity = "rigid",
