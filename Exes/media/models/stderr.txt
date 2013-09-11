@@ -1,2 +1,0 @@
-GLAppWindow::create_context(): wglCreateContextAttribsARB(): failed
-GLAppWindow::create_context(): wglCreateContextAttribsARB(): failed
