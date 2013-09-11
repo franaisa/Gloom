@@ -93,7 +93,6 @@
     <ClCompile Include="..\..\Src\Logic\Entity\Components\GraphicPlane.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\Hud.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\KillStreak.cpp" />
-    <ClCompile Include="..\..\Src\Logic\Entity\Components\LocalScreamer.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\ParticleSystem.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\PhysicStaticCompound.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\Ragdoll.cpp" />
@@ -250,7 +249,6 @@
     <ClCompile Include="..\..\Src\Logic\Messages\MessagePlayerDead.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessagePositionSnapshot.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageSecondaryShoot.cpp" />
-    <ClCompile Include="..\..\Src\Logic\Messages\MessageSecondarySkillActive.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageSecondarySpell.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageSetAnimation.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageSetOwner.cpp" />
@@ -290,7 +288,6 @@
     <ClInclude Include="..\..\Src\Logic\Entity\Components\GraphicPlane.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\Hud.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\KillStreak.h" />
-    <ClInclude Include="..\..\Src\Logic\Entity\Components\LocalScreamer.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\ParticleSystem.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\PhysicStaticCompound.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\Ragdoll.h" />
@@ -455,7 +452,6 @@
     <ClInclude Include="..\..\Src\Logic\Messages\MessageRebound.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageReducedCooldown.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageSecondaryShoot.h" />
-    <ClInclude Include="..\..\Src\Logic\Messages\MessageSecondarySkillActive.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageSecondarySpell.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageSetAnimation.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageSetOwner.h" />
