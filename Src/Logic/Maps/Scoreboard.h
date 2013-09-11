@@ -100,7 +100,7 @@ la clase del jugador, las muertes, los frags, los mejores spree, etc.
 		@param entidad asociada al jugador.
 		@param playerClass clase del jugador que se está creando.
 		*/
-		void addPlayer(const std::string &name, CEntity * playerEntity, const std::string &playerClass);
+		void addPlayer(const std::string &name, CEntity * playerEntity, const std::string &playerClass, int team);
 
 		/**
 		Método que añade al jugador local a la estructura de jugadores de la partida.
@@ -111,7 +111,7 @@ la clase del jugador, las muertes, los frags, los mejores spree, etc.
 		@param entidad asociada al jugador.
 		@param playerClass clase del jugador que se está creando.
 		*/
-		void addLocalPlayer(const std::string &name, CEntity * playerEntity, const std::string &playerClass);
+		void addLocalPlayer(const std::string &name, CEntity * playerEntity, const std::string &playerClass, int team = 0);
 
 		/**
 		Método que cambia la entidad asociada a un jugador. Sirve para cuando el jugador
@@ -121,7 +121,7 @@ la clase del jugador, las muertes, los frags, los mejores spree, etc.
 		@param newPlayerEntity entidad nueva del jugador.
 		@param newClass clase nueva a la que pertenece la entidad del jugador.
 		*/
-		void changePlayerEntity(const std::string &name, CEntity * newPlayerEntity, const std::string &newClass);
+		void changePlayerEntity(const std::string &name, CEntity * newPlayerEntity, const std::string &newClass, int team = 0);
 
 		/**
 		Método que elimina un jugador de la estructura de datos de players. Este 
@@ -129,28 +129,28 @@ la clase del jugador, las muertes, los frags, los mejores spree, etc.
 
 		@param name Nombre de la entidad que se está borrando.
 		*/
-		void deletePlayer(const std::string &name);
+		void deletePlayer(const std::string &name, int team = 0);
 
 		/**
 		Método que añade un frag al jugador indicado.
 
 		@param name Nombre de la entidad que se está actualizando.
 		*/
-		void addKill(const std::string &name);
+		void addKill(const std::string &name, int team = 0);
 
 		/**
 		Método que resta un frag al jugador indicado.
 
 		@param name Nombre de la entidad que se está actualizando.
 		*/
-		void subKill(const std::string &name);
+		void subKill(const std::string &name, int team = 0);
 
 		/**
 		Método que añade una muerte al jugador indicado.
 
 		@param name Nombre de la entidad que se está actualizando.
 		*/
-		void addDeath(const std::string &name);
+		void addDeath(const std::string &name, int team = 0);
 
 		/**
 		Método que cambia el nombre de un jugador. Siempre se debe llamar a
@@ -160,7 +160,7 @@ la clase del jugador, las muertes, los frags, los mejores spree, etc.
 		@param oldName Nombre que tenía la entidad antes.
 		@param newName Nombre que tendrá a partir de ahora.
 		*/
-		void changeName(const std::string &oldName, const std::string &newName);
+		void changeName(const std::string &oldName, const std::string &newName, int team = 0);
 
 		/**
 		Método que actualiza el ping que tiene el jugador indicado con respecto
@@ -169,7 +169,7 @@ la clase del jugador, las muertes, los frags, los mejores spree, etc.
 		@param name Nombre de la entidad que se está actualizando.
 		@param ping ping que tiene el jugador indicado.
 		*/
-		void changePing(const std::string &name, unsigned int &ping);
+		void changePing(const std::string &name, unsigned int &ping, int team = 0);
 
 		/**
 		Método que cambia la entidad asociada a un jugador. Sirve para cuando el jugador
@@ -178,7 +178,7 @@ la clase del jugador, las muertes, los frags, los mejores spree, etc.
 		@param name Nombre de la entidad que se está actualizando.
 		@param newSpree Killing spree actual del jugador
 		*/
-		void changeSpree(const std::string &name, unsigned int &newSpree);
+		void changeSpree(const std::string &name, unsigned int &newSpree, int team = 0);
 
 		/**
 		Método que consulta el mejor spree de un jugador concreto
@@ -187,7 +187,9 @@ la clase del jugador, las muertes, los frags, los mejores spree, etc.
 
 		@return El mejor killing spree del jugador consultado
 		*/
-		unsigned int getSpree(const std::string &name);
+		unsigned int getSpree(const std::string &name, int team = 0);
+
+		void changeTeam(const std::string &name, int newTeam);
 
 		/**
 		Método que limpia la lista de players

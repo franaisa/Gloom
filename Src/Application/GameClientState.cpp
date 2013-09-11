@@ -94,9 +94,10 @@ namespace Application {
 		
 		_netMgr->broadcast(ackBuffer.getbuffer(), ackBuffer.getSize());
 
-		Logic::CScoreboard::getSingletonPtr()->loadScoreboardDM();
+		
 		_seleccion->show();
 		_seleccion->focus();
+		ñapaflash = false;
 	} // activate
 
 	//______________________________________________________________________________
@@ -171,9 +172,9 @@ namespace Application {
 					std::string playerName = player->getName();
 
 					if(!Logic::CScoreboard::getSingletonPtr()->getPlayer(playerName))
-						Logic::CScoreboard::getSingletonPtr()->addPlayer(playerName, player, playerClass);
+						Logic::CScoreboard::getSingletonPtr()->addPlayer(playerName, player, playerClass, team);
 					else
-						Logic::CScoreboard::getSingletonPtr()->changePlayerEntity(playerName, player, playerClass);
+						Logic::CScoreboard::getSingletonPtr()->changePlayerEntity(playerName, player, playerClass, team);
 
 					// Actualizamos el gestor de players
 					Logic::CGameNetPlayersManager* playersMgr = Logic::CGameNetPlayersManager::getSingletonPtr();
@@ -260,9 +261,9 @@ namespace Application {
 					std::string playerName = player->getName();
 
 					if(!Logic::CScoreboard::getSingletonPtr()->getPlayer(playerName))
-						Logic::CScoreboard::getSingletonPtr()->addLocalPlayer(playerName, player, playerClass);
+						Logic::CScoreboard::getSingletonPtr()->addLocalPlayer(playerName, player, playerClass, team);
 					else
-						Logic::CScoreboard::getSingletonPtr()->changePlayerEntity(playerName, player, playerClass);
+						Logic::CScoreboard::getSingletonPtr()->changePlayerEntity(playerName, player, playerClass, team);
 
 					// Actualizamos el gestor de players
 					if( !playersMgr->existsByNetId(newPlayerNetId) )
@@ -424,6 +425,7 @@ namespace Application {
 				Input::CServer::getSingletonPtr()->getPlayerController()->deactivate();
 				//mostramos la gui
 				_seleccion->show();
+				ñapaflash = false;
 				break;
 			}
 			default: {
@@ -480,10 +482,12 @@ namespace Application {
 	//______________________________________________________________________________
 
 	Hikari::FlashValue CGameClientState::classSelected(Hikari::FlashControl* caller, const Hikari::Arguments& args) {
-		
+		if(ñapaflash)
+			return FLASH_VOID;
 		std::string sClass = args.at(0).getString();
 		Net::NetMessageType msgType = Net::CLASS_SELECTED;
-		
+		ñapaflash = true;
+
 
 		int selectedClass;
 

@@ -58,41 +58,45 @@ namespace Logic{
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	void CScoreboard::addPlayer(const std::string &name, CEntity * playerEntity, const std::string &playerClass){
+	void CScoreboard::addPlayer(const std::string &name, CEntity * playerEntity, const std::string &playerClass, int team){
 		//por si acaso, vamos a comprobar que no lo habiamos añadido
 		if(_players.find(name)!=_players.end())
 			return;
 		
 		//primero lo insertamos en nuestra estructura de datos
-		PlayerInfo player(name, playerEntity, playerClass);
+		PlayerInfo player(name, playerEntity, playerClass, team);
 		TPlayerInfo newPlayer(name, player);
 		_players.insert(newPlayer);
 
 		//ahora llamamos a la GUI para que cree nuestro nuevo player
-		if(_scoreboard)
+		if(_scoreboard && team == 0)
 			_scoreboard->callFunction("addPlayer",Hikari::Args(name)(playerClass));
+		else if (_scoreboard && team!= 0)
+			_scoreboard->callFunction("addPlayer",Hikari::Args(name)(playerClass)(team));
 	}
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	void CScoreboard::addLocalPlayer(const std::string &name, CEntity * playerEntity, const std::string &playerClass){
+	void CScoreboard::addLocalPlayer(const std::string &name, CEntity * playerEntity, const std::string &playerClass, int team){
 		//por si acaso, vamos a comprobar que no lo habiamos añadido
 		if(_players.find(name)!=_players.end())
 			return;
 
 		//primero lo insertamos en nuestra estructura de datos
-		PlayerInfo player(name, playerEntity, playerClass);
+		PlayerInfo player(name, playerEntity, playerClass, team);
 		TPlayerInfo newPlayer(name, player);
 		_players.insert(newPlayer);
 
 		//ahora llamamos a la GUI para que cree nuestro nuevo player
-		if(_scoreboard)
+		if(_scoreboard && team == 0)
 			_scoreboard->callFunction("addLocalPlayer",Hikari::Args(name)(playerClass));
+		else if(_scoreboard && team!=0)
+			_scoreboard->callFunction("addLocalPlayer",Hikari::Args(name)(playerClass)(team));
 	}
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	void CScoreboard::changePlayerEntity(const std::string &name, CEntity * newPlayerEntity, const std::string &newClass){
+	void CScoreboard::changePlayerEntity(const std::string &name, CEntity * newPlayerEntity, const std::string &newClass, int team){
 		auto player = _players.find(name);
 
 		if(player==_players.end())
@@ -101,25 +105,31 @@ namespace Logic{
 		player->second.playerClass = newClass;
 
 		//ahora avisamos a la GUI de que ha habido un cambio
-		_scoreboard->callFunction("changeClass",Hikari::Args(name)(newClass));
+		if(player->second.team==0)
+			_scoreboard->callFunction("changeClass",Hikari::Args(name)(newClass));
+		else
+			_scoreboard->callFunction("changeClass",Hikari::Args(name)(newClass)((int)player->second.team));
 	}
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
-	void CScoreboard::deletePlayer(const std::string &name){
+	void CScoreboard::deletePlayer(const std::string &name, int team){
 		auto player = _players.find(name);
 
 		if(player!=_players.end()) {
 			_players.erase(player);
 
 			//ahora avisamos a la GUI de que ha habido un cambio
-			_scoreboard->callFunction("deletePlayer",Hikari::Args(name));
+			if(player->second.team==0)
+				_scoreboard->callFunction("deletePlayer",Hikari::Args(name));
+			else
+				_scoreboard->callFunction("deletePlayer",Hikari::Args(name)((int)player->second.team));
 		}
 	}
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
-	void CScoreboard::addKill(const std::string &name){
+	void CScoreboard::addKill(const std::string &name, int team){
 		auto player = _players.find(name);
 
 		if(player==_players.end())
@@ -128,13 +138,19 @@ namespace Logic{
 
 		if( ++(player->second.currentSpree) > player->second.bestSpree ) {
 			player->second.bestSpree = player->second.currentSpree;
-			_scoreboard->callFunction("addSpree",Hikari::Args(name)((int)player->second.bestSpree));
+			if(player->second.team==0)
+				_scoreboard->callFunction("addSpree",Hikari::Args(name)((int)player->second.bestSpree));
+			else
+				_scoreboard->callFunction("addSpree",Hikari::Args(name)((int)player->second.bestSpree)((int)player->second.team));
 		}
 
 		showSpreeMessage(player->second.name, player->second.currentSpree);
 
 		//ahora avisamos a la GUI de que ha habido un cambio
-		_scoreboard->callFunction("addKill",Hikari::Args(name)((int)player->second.kills));
+		if(player->second.team==0)
+			_scoreboard->callFunction("addKill",Hikari::Args(name)((int)player->second.kills));
+		else
+			_scoreboard->callFunction("addKill",Hikari::Args(name)((int)player->second.kills)((int)player->second.team));
 	}
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -149,7 +165,7 @@ namespace Logic{
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	void CScoreboard::subKill(const std::string &name) {
+	void CScoreboard::subKill(const std::string &name, int team) {
 		auto player = _players.find(name);
 
 		if(player==_players.end())
@@ -157,12 +173,15 @@ namespace Logic{
 		player->second.kills--;
 
 		//ahora avisamos a la GUI de que ha habido un cambio
-		_scoreboard->callFunction("addKill",Hikari::Args(name)((int)player->second.kills));
+		if(player->second.team==0)
+			_scoreboard->callFunction("addKill",Hikari::Args(name)((int)player->second.kills));
+		else
+			_scoreboard->callFunction("addKill",Hikari::Args(name)((int)player->second.kills)((int)player->second.team));
 	}
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
-	void CScoreboard::addDeath(const std::string &name){
+	void CScoreboard::addDeath(const std::string &name, int team){
 		auto player = _players.find(name);
 
 		if(player==_players.end())
@@ -171,12 +190,16 @@ namespace Logic{
 		player->second.currentSpree = 0;
 
 		//ahora avisamos a la GUI de que ha habido un cambio
-		_scoreboard->callFunction("addDeath",Hikari::Args(name)((int)player->second.deaths));
+		if(player->second.team==0)
+			_scoreboard->callFunction("addDeath",Hikari::Args(name)((int)player->second.deaths));
+		else
+			_scoreboard->callFunction("addDeath",Hikari::Args(name)((int)player->second.deaths)((int)player->second.team));
+		
 	}
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
-	void CScoreboard::changeName(const std::string &oldName, const std::string &newName){
+	void CScoreboard::changeName(const std::string &oldName, const std::string &newName, int team){
 		auto player = _players.find(oldName);
 
 		if(player==_players.end())
@@ -189,12 +212,15 @@ namespace Logic{
 		_players.insert(playerUpdated);
 
 		//ahora avisamos a la GUI de que ha habido un cambio
-		_scoreboard->callFunction("changeNick",Hikari::Args(oldName)(newName));
+		if(team==0)
+			_scoreboard->callFunction("changeNick",Hikari::Args(oldName)(newName));
+		else
+			_scoreboard->callFunction("changeNick",Hikari::Args(oldName)(newName)((int)player->second.team));
 	}
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
-	void CScoreboard::changePing(const std::string &name, unsigned int &ping){
+	void CScoreboard::changePing(const std::string &name, unsigned int &ping, int team){
 		auto player = _players.find(name);
 
 		if(player==_players.end())
@@ -207,7 +233,7 @@ namespace Logic{
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
-	void CScoreboard::changeSpree(const std::string &name, unsigned int &newSpree){
+	void CScoreboard::changeSpree(const std::string &name, unsigned int &newSpree, int team){
 		auto player = _players.find(name);
 
 		if(player==_players.end())
@@ -215,17 +241,30 @@ namespace Logic{
 		player->second.bestSpree = newSpree;
 
 		//ahora avisamos a la GUI de que ha habido un cambio
-		_scoreboard->callFunction("addSpree",Hikari::Args(name)((int)newSpree));
+		if(team==0)
+			_scoreboard->callFunction("addSpree",Hikari::Args(name)((int)newSpree));
+		else
+			_scoreboard->callFunction("addSpree",Hikari::Args(name)((int)newSpree)((int)player->second.team));
 	}
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
-	unsigned int CScoreboard::getSpree(const std::string &name){
+	unsigned int CScoreboard::getSpree(const std::string &name, int team){
 		auto player = _players.find(name);
 
 		if(player==_players.end())
 			return 0;
 		return player->second.bestSpree;
+	}
+
+	void CScoreboard::changeTeam(const std::string &name, int newTeam){
+		auto player = _players.find(name);
+
+		if(player==_players.end())
+			return;
+
+		player->second.team = newTeam;
+		_scoreboard->callFunction("changeTeam", Hikari::Args(name)(newTeam));
 	}
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -325,11 +364,11 @@ namespace Logic{
 		auto end = _players.end();
 
 		for(;it!=end;++it){
-			_scoreboard->callFunction("addPlayer",Hikari::Args(it->second.name)(it->second.playerClass));
-			_scoreboard->callFunction("addKill",Hikari::Args(it->second.name)((int)it->second.kills));
-			_scoreboard->callFunction("addDeath",Hikari::Args(it->second.name)((int)it->second.deaths));
-			_scoreboard->callFunction("changePing",Hikari::Args(it->second.name)((int)it->second.ping));
-			_scoreboard->callFunction("addSpree",Hikari::Args(it->second.name)((int)it->second.bestSpree));
+			_scoreboard->callFunction("addPlayer",Hikari::Args(it->second.name)(it->second.playerClass)((int)it->second.team));
+			_scoreboard->callFunction("addKill",Hikari::Args(it->second.name)((int)it->second.kills)((int)it->second.team));
+			_scoreboard->callFunction("addDeath",Hikari::Args(it->second.name)((int)it->second.deaths)((int)it->second.team));
+			_scoreboard->callFunction("changePing",Hikari::Args(it->second.name)((int)it->second.ping)((int)it->second.team));
+			_scoreboard->callFunction("addSpree",Hikari::Args(it->second.name)((int)it->second.bestSpree)((int)it->second.team));
 		}
 		loadSpreeMenu();
 	}

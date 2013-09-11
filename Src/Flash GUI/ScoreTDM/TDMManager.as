@@ -21,9 +21,8 @@ package ScoreTDM
 			ExternalInterface.addCallback("changePing", changePing);
 			ExternalInterface.addCallback("changeClass", changeClass);
 			ExternalInterface.addCallback("addLocalPlayer", addLocalPlayer);
-			
+			ExternalInterface.addCallback("changeTeam", changeTeam);
 			ExternalInterface.addCallback("ChangeScores", changeScores);
-			
 			/*addPlayer("manolo", "Screamer", 1);
 			addPlayer("pepito", "Screamer", 1);
 			addPlayer("juan", "Screamer", 2);
@@ -120,6 +119,10 @@ package ScoreTDM
 			}
 			
 			head.scorered.text = score.toString();
+		}
+		
+		public function changeTeam(nick:String, newTeam:int) {
+			
 		}
 		
 	}

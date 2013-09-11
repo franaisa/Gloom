@@ -213,6 +213,7 @@ namespace Application {
 
 			//menu de seleccion de personaje
 			Hikari::FlashControl *_seleccion, *_escmenu;
+			bool ñapaflash;
 	}; // CMultiplayerTeamDeathmatchClientState
 
 } // namespace Application
