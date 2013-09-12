@@ -38,7 +38,7 @@ material Jump {
 				texture Jump_RGB.jpg
 			}
 			
-			// Textura para el bump mapping. En el alfa esta el mapa de especulares.
+			// Textura para el bump mapping.
 			texture_unit NormalMap {
 				texture Jump_NM.tga
 			}
@@ -48,6 +48,20 @@ material Jump {
 				texture Jump_SP.tga
 			}
 			
+		}
+	}
+
+	// Tecnica para sacar el depth-buffer
+	technique {
+		lighting off
+	
+		scheme depthScheme
+		pass {
+			vertex_program_ref depthMapVertex {
+			}
+			
+			fragment_program_ref depthMapFragment {
+			}
 		}
 	}
 }
