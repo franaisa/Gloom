@@ -12,7 +12,7 @@ material lavaFondo {
 			
 			// Textura de difuso
 			texture_unit DiffMap {
-				texture lava_COLOR.tga
+				texture magma_COLOR.tga
 			}
 			
 		}
@@ -34,17 +34,17 @@ material lavaFondo {
 			
 			// Textura de difuso
 			texture_unit DiffMap {
-				texture lava_COLOR.tga
+				texture magma_COLOR.tga
 			}
 			
 			// Textura para el bump mapping. En el alfa esta el mapa de especulares.
 			texture_unit NormalMap {
-				texture lava_NRM.tga
+				texture magma_NRM.tga
 			}
 			
 			// Textura de especular
 			texture_unit SpecMap {
-				texture lava_SPEC.tga
+				texture magma_SPEC.tga
 			}
 			
 		}
@@ -62,11 +62,11 @@ material lavaFondo {
 			}
 		
 			texture_unit DiffMap {
-				texture lava_COLOR.tga
+				texture magma_COLOR.tga
 			}
 		
 			texture_unit GlowMap {
-				texture lava_GLOW.tga
+				texture magma_GLOW.tga
 			}
 		}
 	}
