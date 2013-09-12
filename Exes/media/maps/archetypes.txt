@@ -1270,7 +1270,6 @@ Map = {
 		on = true,
 		
 		model = "archangel.mesh",
-		pitch = -90,
 		
 		physic_entity = "rigid",
 		physic_trigger = true,
