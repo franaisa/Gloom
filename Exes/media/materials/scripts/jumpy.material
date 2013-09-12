@@ -50,6 +50,26 @@ material Jump {
 			
 		}
 	}
+	
+	// Tecnica para pintar el glow
+	technique {
+		scheme glow
+		pass {
+			vertex_program_ref GlowMappingVertex {
+			}
+		
+			fragment_program_ref GlowMappingFragment {
+			}
+		
+			texture_unit DiffMap {
+				texture Jump_RGB.jpg
+			}
+		
+			texture_unit GlowMap {
+				texture Jump_GLOW.tga
+			}
+		}
+	}
 
 	// Tecnica para sacar el depth-buffer
 	technique {
