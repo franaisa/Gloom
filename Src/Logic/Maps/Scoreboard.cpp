@@ -4,7 +4,10 @@
 #include <vector>
 #include "Hikari.h"
 #include "Logic/Server.h"
+#include "Logic/Entity/Entity.h"
 #include "Logic/Maps/Map.h"
+
+#include "Audio/Server.h"
 
 #include "Graphics/Scene.h"
 
@@ -144,7 +147,7 @@ namespace Logic{
 				_scoreboard->callFunction("addSpree",Hikari::Args(name)((int)player->second.bestSpree)((int)player->second.team));
 		}
 
-		showSpreeMessage(player->second.name, player->second.currentSpree);
+		showSpreeMessage(player->second.entityPlayer, player->second.name, player->second.currentSpree);
 
 		//ahora avisamos a la GUI de que ha habido un cambio
 		if(player->second.team==0)
@@ -155,11 +158,15 @@ namespace Logic{
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	void CScoreboard::showSpreeMessage(const std::string &name, unsigned int nbKills) {
+	void CScoreboard::showSpreeMessage(Logic::CEntity* entity, const std::string &name, unsigned int nbKills) {
 		if(nbKills % 3 == 0 && nbKills < 28) {
 			unsigned int index = nbKills / 3;
 			std::cout << _spreeMsgList[index - 1] << std::endl;
 			_spreeMenu->callFunction( "spree", Hikari::Args(name)(_spreeMsgList[index - 1]) );
+			
+			// Sonido chachi de que llevas un spree
+			if( entity != NULL && entity->isPlayer() )
+				Audio::CServer::getSingletonPtr()->playSound("feedback/bell.mp3", false, false);
 		}
 	}
 

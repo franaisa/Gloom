@@ -264,7 +264,7 @@ la clase del jugador, las muertes, los frags, los mejores spree, etc.
 
 	private:
 
-		void showSpreeMessage(const std::string &name, unsigned int nbKills);
+		void showSpreeMessage(Logic::CEntity* entity, const std::string &name, unsigned int nbKills);
 
 		void loadSpreeMenu();
 
