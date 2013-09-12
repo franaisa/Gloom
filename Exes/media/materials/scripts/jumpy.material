@@ -13,7 +13,7 @@ material Jump {
 			
 			// Textura de difuso
 			texture_unit DiffMap {
-				texture Jump_RGB.jpg
+				texture Jump_COLOR.tga
 			}
 			
 		}
@@ -35,17 +35,17 @@ material Jump {
 			
 			// Textura de difuso
 			texture_unit DiffMap {
-				texture Jump_RGB.jpg
+				texture Jump_COLOR.tga
 			}
 			
 			// Textura para el bump mapping.
 			texture_unit NormalMap {
-				texture Jump_NM.tga
+				texture Jump_NRM.tga
 			}
 			
 			// Textura de especular
 			texture_unit SpecMap {
-				texture Jump_SP.tga
+				texture Jump_SPEC.tga
 			}
 			
 		}
@@ -62,11 +62,11 @@ material Jump {
 			}
 		
 			texture_unit DiffMap {
-				texture Jump_RGB.jpg
+				texture Jump_COLOR.tga
 			}
 		
 			texture_unit GlowMap {
-				texture Jump_GLOW3.tga
+				texture Jump_GLOW.tga
 			}
 		}
 	}
