@@ -8,7 +8,8 @@ implementa las habilidades del personaje
 @see Logic::CHound
 @see Logic::IComponent
 
-@author Jose Antonio García Yáñez.
+@author Antonio Jesus Narvaez Corrales.
+@author Francisco Aisa García.
 @author Rubén Mulero Guerrero.
 @date Marzo, 2013
 */
@@ -41,7 +42,7 @@ namespace Logic {
 
 	//__________________________________________________________________
 
-	CHound::CHound() : CPlayerClass("hound"), _biteTimer(0), charge(0), _doingPrimarySkill(0), _biteEntity(0) {
+	CHound::CHound() : CPlayerClass("hound"), _biteEntity(0) {
 		// Nada que hacer
 	}
 
@@ -56,8 +57,6 @@ namespace Logic {
 	bool CHound::spawn(CEntity* entity, CMap* map, const Map::CEntity* entityInfo) {
 		if( !CPlayerClass::spawn(entity,map,entityInfo) ) return false;
 
-		_berserkerTimer=0;
-
 		if(entityInfo->hasAttribute("materialName"))
 			_materialName = entityInfo->getStringAttribute("materialName");
 
@@ -66,27 +65,11 @@ namespace Logic {
 		// Pasamos el tiempo a msecs
 		_berserkerDuration = entityInfo->getFloatAttribute("berserkerDuration") * 1000;
 
-		assert( entityInfo->hasAttribute("maxVelocity") && "Error: No se ha definido el atributo maxVelocity en el mapa" );
-		_maxDefaultVelocity = entityInfo->getFloatAttribute("maxVelocity");
-
-		assert( entityInfo->hasAttribute("biteMaxVelocity") && "Error: No se ha definido el atributo biteMaxVelocity en el mapa" );
-		_biteMaxVelocity = entityInfo->getFloatAttribute("biteMaxVelocity");
-
-		assert( entityInfo->hasAttribute("biteVelocity") && "Error: No se ha definido el atributo biteVelocity en el mapa" );
-		_bitetVelocity = entityInfo->getFloatAttribute("biteVelocity");
+		assert( entityInfo->hasAttribute("biteSpeed") && "Error: No se ha definido el atributo biteSpeed en el mapa" );
+		_biteSpeed = entityInfo->getFloatAttribute("biteSpeed");
 
 		assert( entityInfo->hasAttribute("biteDuration") && "Error: No se ha definido el atributo biteDuration en el mapa" );
 		_biteDuration = entityInfo->getFloatAttribute("biteDuration") * 1000;
-
-		assert( entityInfo->hasAttribute("biteDamage") && "Error: No se ha definido el atributo biteDamage en el mapa" );
-		_biteDamage = entityInfo->getFloatAttribute("biteDamage");
-
-		//_berserkerDamagePercent = entityInfo->getFloatAttribute("berserkerDamagePercent");
-		//_berserkerCooldownPercent = entityInfo->getFloatAttribute("berserkerCooldownPercent");
-
-		/*Map::CEntity* trigger = CEntityFactory::getSingletonPtr()->getInfo("Bite");
-		_biteTrigger = CEntityFactory::getSingletonPtr()->createEntity(trigger, map, false);
-		_trigger = _biteTrigger->getComponent<CPhysicDynamicEntity>("CPhysicDynamicEntity");*/
 
 		return true;
 	} // spawn
@@ -103,30 +86,40 @@ namespace Logic {
 		CPlayerClass::onTick(msecs);
 
 		if(_doingPrimarySkill) {
-			if(_biteTimer > 0) {
-				_biteTimer -= msecs;
-				if(_biteTimer < 0) {
-					_biteTimer = 0;
-					_doingPrimarySkill = false;
+			_biteTimer -= msecs;
+			if(_biteTimer < 0) {
+				_biteTimer = 0;
+				_doingPrimarySkill = false;
 
-					// Mandamos un mensaje al avatar controller para que
-					// vuelva a usar el filtro que corresponde
-					std::shared_ptr<CMessageHoundCharge> houndChargeMsg = std::make_shared<CMessageHoundCharge>();
-					houndChargeMsg->isActive(false);
-					_entity->emitMessage(houndChargeMsg);
+				// Mandamos un mensaje al avatar controller para que
+				// vuelva a usar el filtro que corresponde
+				std::shared_ptr<CMessageHoundCharge> houndChargeMsg = std::make_shared<CMessageHoundCharge>();
+				houndChargeMsg->isActive(false);
+				_entity->emitMessage(houndChargeMsg);
 					
-					// Destruimos la entidad del mordisco
-					CEntityFactory::getSingletonPtr()->deferredDeleteEntity(_biteEntity, false);
-					_biteEntity = NULL;
+				// Destruimos la entidad del mordisco
+				CEntityFactory::getSingletonPtr()->deferredDeleteEntity(_biteEntity, false);
+				_biteEntity = NULL;
 
-					// Ñapa
-					if( Net::CManager::getSingletonPtr()->imServer() )
-						_physicController->activateSimulation();
-				}
+				// Ñapa
+				if( Net::CManager::getSingletonPtr()->imServer() )
+					_physicController->activateSimulation();
 			}
-			/*else{
-				stopSecondarySkill();
-			}*/
+		}
+		
+		if(_doingSecondarySkill) {
+			_berserkerTimer -= msecs;
+			if(_berserkerTimer < 0) {
+				_berserkerTimer = 0;
+				_doingSecondarySkill = false;
+
+				auto materialMsg = std::make_shared<CMessageParticleVisibility>();
+				materialMsg->setNameParticle("Odor");
+				materialMsg->setVisibility(false);
+				_entity->emitMessage(materialMsg);
+
+				emitSound("character/houndSmell.wav", false, false, false, true, false);
+			}
 		}
 	}
 
@@ -135,8 +128,7 @@ namespace Logic {
 	void CHound::onActivate() {
 		CPlayerClass::onActivate();
 
-		_berserkerTimer = _berserkerDuration;
-		_biteTimer = 0;
+		_biteTimer = _berserkerTimer = 0;
 		_doingPrimarySkill = _doingSecondarySkill = false;
 	}
 
@@ -176,7 +168,7 @@ namespace Logic {
 		// en la que este mirando con el filtro cambiado
 		std::shared_ptr<CMessageHoundCharge> houndChargeMsg = std::make_shared<CMessageHoundCharge>();
 		houndChargeMsg->setFilterMask(filterMask);
-		houndChargeMsg->setForce(5.0f);
+		houndChargeMsg->setForce(_biteSpeed);
 		_entity->emitMessage(houndChargeMsg);
 
 		// Emitimos el sonido de carga
@@ -190,12 +182,8 @@ namespace Logic {
 	//__________________________________________________________________
 
 	void CHound::secondarySkill() {
-		// Habilidad por definir
-
-		printf("\n haciendo habilidad");
-
 		//Arrancamos el cronometro
-		_berserkerTimer= _berserkerDuration;
+		_berserkerTimer = _berserkerDuration;
 
 		auto materialMsg = std::make_shared<CMessageParticleVisibility>();
 		materialMsg->setNameParticle("Odor");
@@ -206,22 +194,6 @@ namespace Logic {
 
 		emitSound("character/houndSmell.wav", false, true, true, false, false);
 	} // secondarySkill
-
-	//__________________________________________________________________
-
-	void CHound::stopSecondarySkill(){
-
-		printf("\n Terminando habilidad");
-
-		auto materialMsg = std::make_shared<CMessageParticleVisibility>();
-		materialMsg->setNameParticle("Odor");
-		materialMsg->setVisibility(false);
-		_entity->emitMessage(materialMsg);
-
-		_doingSecondarySkill = false;
-
-		emitSound("character/houndSmell.wav", false, false, false, true, false);
-	}
 	
 
 } // namespace Logic

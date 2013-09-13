@@ -668,10 +668,8 @@ Map = {
 		primarySkillCooldown = 25,
 		secondarySkillCooldown = 20,
 		berserkerDuration=20,
-		biteMaxVelocity=3.0;
-		biteVelocity=0.10;
+		biteSpeed=5.0;
 		biteDuration=0.5;
-		biteDamage = 40.0;
 
 		particleName = "Odor",
 		particleVisible = false,
@@ -926,10 +924,8 @@ Map = {
 		berserkerDuration=15,
 		berserkerDamagePercent=50,
 		berserkerCooldownPercent=50,
-		biteMaxVelocity=0.2;
-		biteVelocity=0.10;
+		biteSpeed=5.0;
 		biteDuration=0.5;
-		biteDamage = 40.0;
 		
 		physic_entity = "rigid",
 		physic_trigger = true,

@@ -9,7 +9,8 @@ Contiene la declaración de la clase que
 implementa las habilidades del personaje
 "Hound".
 
-@author Jose Antonio García Yáñez.
+@author Antonio Jesus Narvaez Corrales.
+@author Francisco Aisa García.
 @author Rubén Mulero Guerrero.
 @date Marzo, 2013
 */
@@ -33,7 +34,9 @@ namespace Logic {
 
 	@ingroup logicGroup
 
-	@author Jose Antonio García Yáñez.
+	@author Antonio Jesus Narvaez Corrales.
+	@author Francisco Aisa García.
+	@author Rubén Mulero Guerrero.
 	@date Marzo, 2013
 	*/
 
@@ -102,9 +105,6 @@ namespace Logic {
 		/** Habilidad por definir. */
 		virtual void secondarySkill();
 
-		/** Metodo a invocar cuando haya pasado el tiempo de la secondary skill*/
-		virtual void stopSecondarySkill();
-
 	protected:
 
 		/**
@@ -138,19 +138,11 @@ namespace Logic {
 		/** Variable boolena para comprobar si se esta haciendo la primary skill */
 		bool _doingSecondarySkill;
 
-		float _maxDefaultVelocity;
-
-		float _bitetVelocity;
-
 		int _biteTimer;
 
 		float _biteDuration;
 
-		float _biteDamage;
-
-		float _biteMaxVelocity;
-
-		bool charge;
+		float _biteSpeed;
 		
 		/**
 		Nombre del material original de la entidad
