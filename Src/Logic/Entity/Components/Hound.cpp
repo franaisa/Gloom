@@ -31,6 +31,7 @@ implementa las habilidades del personaje
 #include "PhysicController.h"
 #include "AvatarController.h"
 #include "PhysicDynamicEntity.h"
+#include "Net/Manager.h"
 
 #include "Graphics/poolParticle.h"
 
@@ -117,6 +118,10 @@ namespace Logic {
 					// Destruimos la entidad del mordisco
 					CEntityFactory::getSingletonPtr()->deferredDeleteEntity(_biteEntity, false);
 					_biteEntity = NULL;
+
+					// Ñapa
+					if( Net::CManager::getSingletonPtr()->imServer() )
+						_physicController->activateSimulation();
 				}
 			}
 			/*else{
@@ -167,8 +172,6 @@ namespace Logic {
 		// con la mascara que use por defecto el controller
 		filterMask = _physicController->getDefaultFilterMask() & filterMask;
 
-		filterMask = Physics::CollisionGroup::eWORLD;
-
 		// Mandar un mensaje al avatar controller de empujar al player en la direccion
 		// en la que este mirando con el filtro cambiado
 		std::shared_ptr<CMessageHoundCharge> houndChargeMsg = std::make_shared<CMessageHoundCharge>();
@@ -178,6 +181,10 @@ namespace Logic {
 
 		// Emitimos el sonido de carga
 		emitSound("character/houndBite.wav", false, true, false, false, false);
+
+		// Ñapa
+		if( Net::CManager::getSingletonPtr()->imServer() )
+			_physicController->deactivateSimulation();
 	} // primarySkill
 
 	//__________________________________________________________________

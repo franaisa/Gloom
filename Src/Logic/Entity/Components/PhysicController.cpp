@@ -30,7 +30,7 @@ IMP_FACTORY(CPhysicController);
 
 //________________________________________________________________________
 
-CPhysicController::CPhysicController() {
+CPhysicController::CPhysicController() : _simulating(true) {
 	// _controller <- Su valor se auto inicializa
 	// en el proyecto de física
 }
@@ -161,12 +161,14 @@ void CPhysicController::onContact(IPhysics *otherComponent, const Physics::CCont
 
 void CPhysicController::deactivateSimulation() {
 	_controller.deactivateSimulation();
+	_simulating = false;
 }
 
 //________________________________________________________________________
 
 void CPhysicController::activateSimulation() {
 	_controller.activateSimulation();
+	_simulating = true;
 }
 
 //________________________________________________________________________

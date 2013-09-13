@@ -240,6 +240,7 @@ namespace Logic {
 		_physicController = _entity->getComponent<CPhysicController>("CPhysicController");
 		assert(_physicController && "Error: El player no tiene un controlador fisico");
 
+		// Pasamos la mascara de movimiento al modo normal
 		_filterMask = _physicController->getDefaultFilterMask();
 	}
 

@@ -134,6 +134,13 @@ namespace Logic {
 
 		float getCapsuleHeight();
 
+		bool isSimulating() { return _simulating; }
+
+	protected:
+
+		virtual void onActivate() { _simulating = true; }
+		virtual void onDeactivate() { _simulating = false; }
+
 	private:
 
 
@@ -147,6 +154,8 @@ namespace Logic {
 
 		// Character controller que representa la entidad física en PhysX
 		Physics::CCharacterController _controller;
+
+		bool _simulating;
 
 	}; // class CPhysicController
 
