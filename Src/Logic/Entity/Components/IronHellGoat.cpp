@@ -153,7 +153,7 @@ namespace Logic {
 			// Si hay bolas vivas, mover las en función de la velocidad que
 			// llevan y la dirección en la que apunto con el ratón
 			for(auto it = _controllableFireBalls.begin(); it != _controllableFireBalls.end(); ++it) {
-				(*it)->alterDirection( _entity->getOrientation()*Vector3::NEGATIVE_UNIT_Z );
+				(*it)->alterDirection();
 			}
 		}
 		

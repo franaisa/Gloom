@@ -73,13 +73,19 @@ namespace Logic {
 		assert( entityInfo->hasAttribute("explotionRadius") );
 		assert( entityInfo->hasAttribute("direction") );
 		assert( entityInfo->hasAttribute("strength") );
+		assert( entityInfo->hasAttribute("shootHeight") );
+		assert( entityInfo->hasAttribute("remoteForce") );
 
 		_speed = entityInfo->getFloatAttribute("speed");
 		_damage = entityInfo->getFloatAttribute("damage");
 		_explotionRadius = entityInfo->getFloatAttribute("explotionRadius");
-		_direction = entityInfo->getVector3Attribute("direction");
+		Vector3 direction = entityInfo->getVector3Attribute("direction");
 		_strength = entityInfo->getFloatAttribute("strength");
+		_shootHeight = entityInfo->getFloatAttribute("shootHeight");
+		_remoteForce = entityInfo->getFloatAttribute("remoteForce");
 
+		_speedVector = _speed * direction;
+		
 		_world = Logic::CServer::getSingletonPtr()->getMap()->getEntityByName("World");
 		return true;
 	}
@@ -148,16 +154,38 @@ namespace Logic {
 
 	//________________________________________________________________________
 
-	void CFireBallController::alterDirection(const Vector3& direction) {
-		this->_direction += direction;
-		this->_direction.normalise();
+	void CFireBallController::alterDirection() {
+		CEntity* playerEntity = _owner->getEntity();
+		Vector3 shootPosition = playerEntity->getPosition() + Vector3(0.0f, _shootHeight, 0.0f);
+		Vector3 playerDirection = -playerEntity->getOrientation().zAxis();
+		playerDirection.normalise();
+		Vector3 vectorToFireball = _entity->getPosition() - shootPosition;
+
+		// Dado el vector director del player, lo que queremos es el vector
+		// perpendicular a dicho vector
+		// Primero calculamos la proyeccion del vector player-bola / orientacion
+		Vector3 proj = vectorToFireball.dotProduct(playerDirection) * playerDirection;
+
+		// Ahora calculamos el vector perpendicular usando la proyeccion
+		Vector3 perp = proj - vectorToFireball;
+		perp.normalise();
+
+		// Sumamos el desplazamiento como si de una fuerza se tratase a la direccion
+		// actual siempre teniendo en cuenta que no superemos la velocidad maxima.
+		_speedVector += perp * _remoteForce;
+		// Normalizamos la velocidad para que en ningun caso la bola pueda llegar
+		// a alcanzar una velocidad superior a la preestablecida. No divido por
+		// la velocidad porque es practicamente 0 y se lia el taco
+		if(_speedVector.x > _speed) _speedVector.x = _speed;
+		if(_speedVector.y > _speed) _speedVector.y = _speed;
+		if(_speedVector.z > _speed) _speedVector.z = _speed;
 	}
 
 	//________________________________________________________________________
 
 	void CFireBallController::onFixedTick(unsigned int msecs) {
 		// Muevo a la bola de fuego
-		_physicComponent->move( _direction * _speed * msecs );
+		_physicComponent->move( _speedVector * msecs );
 	}
 	
 	//________________________________________________________________________

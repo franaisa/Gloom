@@ -13,7 +13,7 @@ LocalSpectator CSpectatorController CPhysicController CSpectatorHud
 ItemSpawn CFloatingMovement CSpawnItemManager CGraphics
 ItemSpawnDynamic CPositionInterpolator CGraphics
 Jumper CGraphics CAudio CParticle CParticleSystem
-Lava CGraphics
+Lava CGraphicPlane
 Elevator CPhysicDynamicEntity CElevator CGraphics
 ElevatorTrigger CPhysicDynamicEntity CElevatorTrigger
 ContenedorLava CGraphics CPhysicStaticEntity

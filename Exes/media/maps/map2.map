@@ -422,8 +422,8 @@ Map = {
 		plane_height = 1500,
 		plane_xSegments = 20,
 		plane_ySegments = 20,
-		plane_uTiling = 15,
-		plane_vTiling = 15,
+		plane_uTiling = 20,
+		plane_vTiling = 20,
 		plane_upVector = {0, 0, 1},
 		plane_material = "lavaFondo",
 		

@@ -109,7 +109,7 @@ namespace Logic {
 		// @todo Setear una nueva direccion calculada en base a la direccion donde
 		// apunta el puntero
 
-		void alterDirection(const Vector3& direction);
+		void alterDirection();
 
 	protected:
 
@@ -131,9 +131,13 @@ namespace Logic {
 
 		CPhysicDynamicEntity* _physicComponent;
 
-		Vector3 _direction;
-
 		float _speed;
+
+		float _shootHeight;
+
+		float _remoteForce;
+
+		Vector3 _speedVector;
 
 		float _damage;
 
