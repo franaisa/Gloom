@@ -110,14 +110,14 @@ namespace Logic{
 	void CScoreboard::deletePlayer(const std::string &name, int team){
 		auto player = _players.find(name);
 
-		if(player!=_players.end()) {
-			_players.erase(player);
-
+		if( player != _players.end() ) {
 			//ahora avisamos a la GUI de que ha habido un cambio
-			if(player->second.team==0)
+			if(player->second.team == 0)
 				_scoreboard->callFunction("deletePlayer",Hikari::Args(name));
 			else
 				_scoreboard->callFunction("deletePlayer",Hikari::Args(name)((int)player->second.team));
+
+			_players.erase(player);
 		}
 	}
 
