@@ -87,9 +87,11 @@ namespace Logic {
 		// Para no consumir dos ticks, no vamos a reenviar el mensaje de daño
 		// al componente CScreamer, sino que sencillamente vamos a llamar al
 		// método que corresponda del propio componente.
-		CScreamer* screamerComponent = _owner->getComponent<CScreamer>("CScreamer");
-		assert(screamerComponent && "Error: La entidad del jugador no tiene ningun componente llamado CScreamer");
-		screamerComponent->absorbDamage(damage);
+		if(_owner != NULL) {
+			CScreamer* screamerComponent = _owner->getComponent<CScreamer>("CScreamer");
+			assert(screamerComponent && "Error: La entidad del jugador no tiene ningun componente llamado CScreamer");
+			screamerComponent->absorbDamage(damage);
+		}
 	}// damaged
 
 	//________________________________________________________________________
