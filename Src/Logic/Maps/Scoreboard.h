@@ -268,7 +268,10 @@ la clase del jugador, las muertes, los frags, los mejores spree, etc.
 
 		void loadSpreeMenu();
 
+		void initSpreeMessages();
+
 		std::vector<std::string> _spreeMsgList;
+		std::vector<std::string> _spreePlayerMsgList;
 
 		/**
 		Única instancia de la clase.

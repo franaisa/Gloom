@@ -211,6 +211,7 @@
     <ClCompile Include="..\..\Src\Logic\Messages\MessageChangeGravity.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageDamageAmplifier.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageDecal.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Messages\MessageHoundCharge.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageHud.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageKillStreak.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageParticleStart.cpp" />
@@ -222,7 +223,6 @@
     <ClCompile Include="..\..\Src\Logic\Messages\MessageCameraOffset.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageCameraRoll.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageCameraToEnemy.cpp" />
-    <ClCompile Include="..\..\Src\Logic\Messages\MessageCealing.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageChangeMaterial.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageChangeMaterialHudWeapon.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageChangePlayerClass.cpp" />
@@ -400,6 +400,7 @@
     <ClInclude Include="..\..\Src\Logic\Maps\TeamFaction.h" />
     <ClInclude Include="..\..\Src\Logic\Maps\WorldState.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageBlockShoot.h" />
+    <ClInclude Include="..\..\Src\Logic\Messages\MessageHoundCharge.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageHud.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageAddSpell.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageCameraRoll.h" />
@@ -418,7 +419,6 @@
     <ClInclude Include="..\..\Src\Logic\Messages\MessageAudio.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageDamageAmplifier.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageCameraToEnemy.h" />
-    <ClInclude Include="..\..\Src\Logic\Messages\MessageCealing.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageChangeMaterial.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageChangePlayerClass.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageChangeWeapon.h" />

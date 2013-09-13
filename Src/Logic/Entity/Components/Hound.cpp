@@ -14,17 +14,20 @@ implementa las habilidades del personaje
 */
 
 #include "Hound.h"
+#include "Bite.h"
 #include "Map/MapEntity.h"
 #include "Logic/Entity/Entity.h"
 #include "Logic/Maps/EntityFactory.h"
 #include "Logic/Maps/WorldState.h"
 #include "Physics/Server.h"
+#include "Logic/Server.h"
 #include "Logic/Messages/MessageDamageAmplifier.h"
 #include "Logic/Messages/MessageReducedCooldown.h"
 #include "Logic/Messages/MessageChangeMaterial.h"
 #include "Logic/Messages/MessageParticleVisibility.h"
 #include "Logic/Messages/MessageTouched.h"
 #include "Logic/Messages/MessageDamaged.h"
+#include "Logic/Messages/MessageHoundCharge.h"
 #include "PhysicController.h"
 #include "AvatarController.h"
 #include "PhysicDynamicEntity.h"
@@ -37,7 +40,7 @@ namespace Logic {
 
 	//__________________________________________________________________
 
-	CHound::CHound() : CPlayerClass("hound"), _biteTimer(0), charge(0), _doingPrimarySkill(0) {
+	CHound::CHound() : CPlayerClass("hound"), _biteTimer(0), charge(0), _doingPrimarySkill(0), _biteEntity(0) {
 		// Nada que hacer
 	}
 
@@ -80,46 +83,47 @@ namespace Logic {
 		//_berserkerDamagePercent = entityInfo->getFloatAttribute("berserkerDamagePercent");
 		//_berserkerCooldownPercent = entityInfo->getFloatAttribute("berserkerCooldownPercent");
 
-		_physicController = _entity->getComponent<CPhysicController>("CPhysicController");
-
-
-		Map::CEntity* trigger = CEntityFactory::getSingletonPtr()->getInfo("Bite");
-
+		/*Map::CEntity* trigger = CEntityFactory::getSingletonPtr()->getInfo("Bite");
 		_biteTrigger = CEntityFactory::getSingletonPtr()->createEntity(trigger, map, false);
-		_trigger = _biteTrigger->getComponent<CPhysicDynamicEntity>("CPhysicDynamicEntity");
+		_trigger = _biteTrigger->getComponent<CPhysicDynamicEntity>("CPhysicDynamicEntity");*/
 
 		return true;
 	} // spawn
 
 	//__________________________________________________________________
 
-	void CHound::onTick(unsigned int msecs) {
-		CPlayerClass::onTick(msecs);
-
-		if(_doingPrimarySkill){
-			if(_biteTimer > 0) {
-				_biteTimer -= msecs;
-				_trigger->setPosition(_entity->getPosition(),true);
-			}else{
-				stopSecondarySkill();
-			}
-		}
-	}
-
-	void CHound::onStart(unsigned int msecs){
-		_biteTrigger->deactivate();
+	void CHound::onStart(){
+		_physicController = _entity->getComponent<CPhysicController>("CPhysicController");
 	}
 
 	//________________________________________________________________________
 
-	/*void CHound::onFixedTick(unsigned int msecs) {
-		if(charge && _doingPrimarySkill){
-			Vector3 direction = _entity->getOrientation() * Vector3::NEGATIVE_UNIT_Z;
-			direction.normalise();
-			direction *= msecs * _biteMaxVelocity;
-			_physicController->move(direction, Physics::CollisionGroup::eWORLD, msecs);
+	void CHound::onTick(unsigned int msecs) {
+		CPlayerClass::onTick(msecs);
+
+		if(_doingPrimarySkill) {
+			if(_biteTimer > 0) {
+				_biteTimer -= msecs;
+				if(_biteTimer < 0) {
+					_biteTimer = 0;
+					_doingPrimarySkill = false;
+
+					// Mandamos un mensaje al avatar controller para que
+					// vuelva a usar el filtro que corresponde
+					std::shared_ptr<CMessageHoundCharge> houndChargeMsg = std::make_shared<CMessageHoundCharge>();
+					houndChargeMsg->isActive(false);
+					_entity->emitMessage(houndChargeMsg);
+					
+					// Destruimos la entidad del mordisco
+					CEntityFactory::getSingletonPtr()->deferredDeleteEntity(_biteEntity, false);
+					_biteEntity = NULL;
+				}
+			}
+			/*else{
+				stopSecondarySkill();
+			}*/
 		}
-	}*/
+	}
 
 	//________________________________________________________________________
 
@@ -127,30 +131,15 @@ namespace Logic {
 		CPlayerClass::onActivate();
 
 		_berserkerTimer = _berserkerDuration;
-
-		_doingSecondarySkill = false;
-
-		if ( _biteTrigger->isActivated() )
-			_biteTrigger->deactivate();
+		_biteTimer = 0;
+		_doingPrimarySkill = _doingSecondarySkill = false;
 	}
 
+	//________________________________________________________________________
 
-	bool CHound::accept(const std::shared_ptr<CMessage>& message) {
-		return CPlayerClass::accept(message) ||
-			message->getMessageType() == Message::TOUCHED;
-	}
-
-	void CHound::process(const std::shared_ptr<CMessage>& message){
-		CPlayerClass::process(message);
-		if ( message->getMessageType() == Message::TOUCHED){
-			std::shared_ptr<CMessageTouched> msg = std::static_pointer_cast<CMessageTouched>(message);
-			CEntity* entity = msg->getEntity();
-
-			std::shared_ptr<CMessageDamaged> damage = std::make_shared<CMessageDamaged>();
-			damage->setEnemy(_entity);
-			damage->setDamage(_biteDamage);
-			entity->emitMessage(damage);
-		}
+	void CHound::onDeactivate() {
+		if(_biteEntity != NULL)
+			CEntityFactory::getSingletonPtr()->deferredDeleteEntity(_biteEntity, false);
 	}
 
 	//__________________________________________________________________
@@ -158,19 +147,38 @@ namespace Logic {
 	void CHound::primarySkill() {
 		_doingPrimarySkill = true;
 		_biteTimer = _biteDuration;
-		_physicController->deactivateSimulation();
 
+		// Creamos la entidad del mordisco y le indicamos que nosotros somos el owner
+		// para que actualice su posicion en funcion de la nuestra
+		CEntityFactory* factory = CEntityFactory::getSingletonPtr();
+		Map::CEntity* houndTrigger = factory->getInfo("Bite");
+		_biteEntity = factory->createEntity(houndTrigger, CServer::getSingletonPtr()->getMap(), _entity->getPosition(), Quaternion::IDENTITY, false);
+		_biteEntity->activate();
+		_biteEntity->start();
+
+		CBite* biteComponent = _biteEntity->getComponent<CBite>("CBite");
+		biteComponent->setOwner(_entity);
+
+		// Queremos desactivar solo las colisiones con los players y los hitboxes
+		unsigned int filterMask = Physics::CollisionGroup::ePLAYER | Physics::CollisionGroup::eHITBOX;
+		// Calculamos el complementario
+		filterMask = ~filterMask;
+		// Eliminamos el filtro del player y los hitboxes usando el complementario
+		// con la mascara que use por defecto el controller
+		filterMask = _physicController->getDefaultFilterMask() & filterMask;
+
+		filterMask = Physics::CollisionGroup::eWORLD;
+
+		// Mandar un mensaje al avatar controller de empujar al player en la direccion
+		// en la que este mirando con el filtro cambiado
+		std::shared_ptr<CMessageHoundCharge> houndChargeMsg = std::make_shared<CMessageHoundCharge>();
+		houndChargeMsg->setFilterMask(filterMask);
+		houndChargeMsg->setForce(5.0f);
+		_entity->emitMessage(houndChargeMsg);
+
+		// Emitimos el sonido de carga
 		emitSound("character/houndBite.wav", false, true, false, false, false);
 	} // primarySkill
-
-	//__________________________________________________________________
-
-	void CHound::stopPrimarySkill() {
-		_doingPrimarySkill = false;
-		
-		_biteTimer = 0;
-		_physicController->activateSimulation();
-	}
 
 	//__________________________________________________________________
 
@@ -191,6 +199,7 @@ namespace Logic {
 
 		emitSound("character/houndSmell.wav", false, true, true, false, false);
 	} // secondarySkill
+
 	//__________________________________________________________________
 
 	void CHound::stopSecondarySkill(){

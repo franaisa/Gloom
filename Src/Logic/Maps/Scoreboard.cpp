@@ -21,16 +21,7 @@ namespace Logic{
 		_guiManager = CGUIManager::getSingletonPtr();
 		_scoreboard = 0;
 
-		_spreeMsgList.reserve(9);
-		_spreeMsgList.push_back("is on Killing Spree");
-		_spreeMsgList.push_back("is in Blood Bath");
-		_spreeMsgList.push_back("is on Ludicrous Massacre");
-		_spreeMsgList.push_back("is on Gruesome Carnage");
-		_spreeMsgList.push_back("is on Daunting Feast");
-		_spreeMsgList.push_back("is in Wicked Carnival");
-		_spreeMsgList.push_back("is in Devil's Playground");
-		_spreeMsgList.push_back("is the Soul Master");
-		_spreeMsgList.push_back("owns");
+		initSpreeMessages();
 	}
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -161,12 +152,17 @@ namespace Logic{
 	void CScoreboard::showSpreeMessage(Logic::CEntity* entity, const std::string &name, unsigned int nbKills) {
 		if(nbKills % 3 == 0 && nbKills < 28) {
 			unsigned int index = nbKills / 3;
-			std::cout << _spreeMsgList[index - 1] << std::endl;
-			_spreeMenu->callFunction( "spree", Hikari::Args(name)(_spreeMsgList[index - 1]) );
 			
 			// Sonido chachi de que llevas un spree
-			if( entity != NULL && entity->isPlayer() )
+			if( entity != NULL && entity->isPlayer() ) {
 				Audio::CServer::getSingletonPtr()->playSound("feedback/bell.mp3", false, false);
+				std::cout << _spreePlayerMsgList[index - 1] << std::endl;
+				//_spreeMenu->callFunction( "spreePlayer", Hikari::Args(name)(_spreePlayerMsgList[index - 1]) );
+			}
+			else {
+				std::cout << _spreeMsgList[index - 1] << std::endl;
+				_spreeMenu->callFunction( "spree", Hikari::Args(name)(_spreeMsgList[index - 1]) );
+			}
 		}
 	}
 
@@ -457,4 +453,29 @@ namespace Logic{
 		_spreeMenu->show();
 	}
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	void CScoreboard::initSpreeMessages() {
+		_spreeMsgList.reserve(9);
+		_spreeMsgList.push_back("is on a Killing Spree");
+		_spreeMsgList.push_back("is in a Blood Bath");
+		_spreeMsgList.push_back("is on a Ludicrous Massacre");
+		_spreeMsgList.push_back("is on a Gruesome Carnage");
+		_spreeMsgList.push_back("is on a Daunting Feast");
+		_spreeMsgList.push_back("is in a Wicked Carnival");
+		_spreeMsgList.push_back("is in the Devil's Playground");
+		_spreeMsgList.push_back("is the Soul Master");
+		_spreeMsgList.push_back("owns the match");
+
+		_spreePlayerMsgList.reserve(9);
+		_spreePlayerMsgList.push_back("Killing Spree");
+		_spreePlayerMsgList.push_back("Blood Bath");
+		_spreePlayerMsgList.push_back("Ludicrous Massacre");
+		_spreePlayerMsgList.push_back("Gruesome Carnage");
+		_spreePlayerMsgList.push_back("Daunting Feast");
+		_spreePlayerMsgList.push_back("Wicked Carnival");
+		_spreePlayerMsgList.push_back("Devil's Playground");
+		_spreePlayerMsgList.push_back("Soul Master");
+		_spreePlayerMsgList.push_back("Ownage");
+	}
 }

@@ -19,7 +19,6 @@ el mundo físico usando character controllers.
 #include "Physics/Server.h"
 
 #include "Logic/Messages/MessageCollisionDown.h"
-#include "Logic/Messages/MessageCealing.h"
 #include "Logic/Messages/MessageSide.h"
 
 #include "AvatarController.h"

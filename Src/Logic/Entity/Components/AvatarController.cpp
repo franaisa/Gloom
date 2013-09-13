@@ -33,9 +33,12 @@ de la entidad.
 #include "Logic/Messages/MessageAddForcePlayer.h"
 #include "Logic/Messages/MessageChangeGravity.h"
 #include "Logic/Messages/MessageAudio.h"
+#include "Logic/Messages/MessageHoundCharge.h"
 
 #include "Graphics/Scene.h"
 #include "Graphics/Camera.h"
+
+#include "Physics/Server.h"
 
 #include <math.h>
 
@@ -135,6 +138,7 @@ namespace Logic {
 
 		return msgType == Message::CONTROL			||
 			   msgType == Message::ADDFORCEPLAYER	||
+			   msgType == Message::HOUND_CHARGE		||
 			   msgType == Message::CHANGE_GRAVITY;
 	} // accept
 
@@ -173,6 +177,21 @@ namespace Logic {
 			}
 			case Message::CHANGE_GRAVITY:{
 				_gravity.y = std::static_pointer_cast<CMessageChangeGravity>(message)->getGravity();
+			}
+			case Message::HOUND_CHARGE: {
+				std::shared_ptr<CMessageHoundCharge> houndChargeMsg = std::static_pointer_cast<CMessageHoundCharge>(message);
+				
+				if( houndChargeMsg->isActive() ) {
+					Vector3 chargeVector = -1.0f * ( _entity->getOrientation().zAxis() );
+					chargeVector.normalise();
+					chargeVector *= houndChargeMsg->getForce();
+
+					_filterMask = houndChargeMsg->getFilterMask();
+					addForce(chargeVector);
+				}
+				else {
+					_filterMask = _physicController->getDefaultFilterMask();
+				}
 			}
 		}
 
@@ -220,6 +239,8 @@ namespace Logic {
 		// de desplazar al controlador del jugador.
 		_physicController = _entity->getComponent<CPhysicController>("CPhysicController");
 		assert(_physicController && "Error: El player no tiene un controlador fisico");
+
+		_filterMask = _physicController->getDefaultFilterMask();
 	}
 
 	//________________________________________________________________________
@@ -237,7 +258,7 @@ namespace Logic {
 		// Debido al reposicionamiento de la cápsula que hace PhysX, le seteamos un offset fijo
 		// al movernos para asegurarnos de que hay colision
 		Vector3 oldPosition = _entity->getPosition();
-		manageCollisions( _physicController->move(displacement-Vector3(0.0f, 0.15f, 0.0f), msecs), oldPosition );
+		manageCollisions( _physicController->move(displacement-Vector3(0.0f, 0.15f, 0.0f), _filterMask, msecs), oldPosition );
 	} // tick
 
 	//________________________________________________________________________

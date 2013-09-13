@@ -16,6 +16,8 @@
 
 namespace Logic {
 
+	class CPhysicDynamicEntity;
+
 	/**
 	@ingroup logicGroup
 
@@ -104,10 +106,17 @@ namespace Logic {
 
 		void setOwner(CEntity * owner);
 
+	protected:
+
+		virtual void onStart();
+		virtual void onTick(unsigned int msecs);
+
 	private:
 
+		CPhysicDynamicEntity* _physicComponent;
 		CEntity* _owner;
 		float _biteDamage;
+		float _lifeSteal;
 	};
 	REG_FACTORY(CBite);
 }

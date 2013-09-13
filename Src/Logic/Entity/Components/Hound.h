@@ -25,6 +25,7 @@ namespace Logic {
 	class CPhysicDynamicEntity;
 	class CAvatarController;
 	class CPhysicController;
+	class CBite;
 
 	/**
 	Clase que implementa las habilidades propias
@@ -79,28 +80,6 @@ namespace Logic {
 		*/
 		virtual bool spawn(CEntity* entity, CMap *map, const Map::CEntity *entityInfo);
 
-		//__________________________________________________________________
-
-		/** 
-		Este componente acepta los siguientes mensajes:
-
-		<ul>
-			<li>TOUCHED</li>
-		</ul>
-		
-		@param message Mensaje a chequear.
-		@return true si el mensaje es aceptado.
-		*/
-		virtual bool accept(const std::shared_ptr<CMessage>& message);
-
-		//__________________________________________________________________
-
-		/**
-		Método virtual que procesa un mensaje.
-
-		@param message Mensaje a procesar.
-		*/
-		virtual void process(const std::shared_ptr<CMessage>& message);
 
 		/**
 		Metodo que se llama al activar el componente.
@@ -108,6 +87,7 @@ namespace Logic {
 		*/
 		virtual void onActivate();
 
+		virtual void onDeactivate();
 		
 		// =======================================================================
 		//                  METODOS HEREDADOS DE CPlayerClass
@@ -121,18 +101,6 @@ namespace Logic {
 
 		/** Habilidad por definir. */
 		virtual void secondarySkill();
-
-		/**
-		Se dispara cuando se deja de pulsar la tecla que dispara la habilidad primaria.
-		Notar que este método no se ha hecho virtual puro (abstracto) porque muchas
-		de las habilidades no necesitarán tenerlo en cuenta. No obstante, dado que
-		el mensaje que se recibe para informarnos de esta acción es un mensaje de
-		control, he decidido tenerlo en cuenta en la clase padre.
-
-		Para que el uso de este método tenga sentido lo normal es que el cooldown
-		de la habilidad sea 0.
-		*/
-		virtual void stopPrimarySkill();
 
 		/** Metodo a invocar cuando haya pasado el tiempo de la secondary skill*/
 		virtual void stopSecondarySkill();
@@ -148,7 +116,7 @@ namespace Logic {
 
 		virtual void onTick(unsigned int msecs);
 
-		virtual void onStart(unsigned int msecs);
+		virtual void onStart();
 
 	private:
 
@@ -183,15 +151,13 @@ namespace Logic {
 		float _biteMaxVelocity;
 
 		bool charge;
+		
 		/**
 		Nombre del material original de la entidad
 		*/
 		std::string _materialName;
 
-		CEntity* _biteTrigger;
-
-		CPhysicDynamicEntity* _trigger;
-		CAvatarController* _avatarController;
+		CEntity* _biteEntity;
 		CPhysicController* _physicController;
 	}; // class CHound
 

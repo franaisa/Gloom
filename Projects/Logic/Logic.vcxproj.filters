@@ -298,9 +298,6 @@
     <ClCompile Include="..\..\Src\Logic\Messages\MessageActivate.cpp">
       <Filter>Messages\Source</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Src\Logic\Messages\MessageCealing.cpp">
-      <Filter>Messages\Source</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Src\Logic\PlayerInfo.cpp">
       <Filter>Net\Source</Filter>
     </ClCompile>
@@ -754,6 +751,9 @@
     <ClCompile Include="..\..\Src\Logic\Entity\Components\SpectatorHud.cpp">
       <Filter>Entity\Components\Graphics\Source</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Src\Logic\Messages\MessageHoundCharge.cpp">
+      <Filter>Messages\Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Src\Logic\Maps\ComponentFactory.h">
@@ -886,9 +886,6 @@
       <Filter>Messages\Header</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Messages\MessageActivate.h">
-      <Filter>Messages\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Logic\Messages\MessageCealing.h">
       <Filter>Messages\Header</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Src\Logic\PlayerInfo.h">
@@ -1367,6 +1364,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Src\Logic\Entity\Components\SpectatorHud.h">
       <Filter>Entity\Components\Graphics\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Logic\Messages\MessageHoundCharge.h">
+      <Filter>Messages\Header</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

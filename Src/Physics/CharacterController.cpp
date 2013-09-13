@@ -166,6 +166,9 @@ namespace Physics {
 	unsigned CCharacterController::move(const Vector3& movement, unsigned int customFilterMask, unsigned int msecs) {
 		PxVec3 disp = Vector3ToPxVec3(movement);
 		PxControllerFilters filters(customFilterMask);
+		PxFilterData data;
+		data.word0 = customFilterMask;
+		filters.mFilterData = &data;
 		return _controller->move(disp, 0.01f, msecs * 0.001f, filters, NULL);
 	}
 

@@ -1403,14 +1403,14 @@ Map = {
 		physic_entity = "rigid",
 		physic_trigger = true,
 		physic_type = "kinematic",
-		physic_shape = "capsule",
+		physic_shape = "sphere",
 		physic_radius = 3,
-		physic_height = 6,
-		physic_group = 1,
+		physic_group = 11,
 		physic_mass = 10,
 		physic_groupList = "1",
 		
 		damage = 40.0,
+		lifeSteal = 40.0,
 	},
 	
 	KillStreak = {
