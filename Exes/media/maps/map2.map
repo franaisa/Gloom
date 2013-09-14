@@ -27,7 +27,42 @@ Map = {
 		staticAudio_name = "ambient/lava_quiet.wav",
 		staticAudio_stream = true,
 	},
+	
+	Fan = {
+		type = "AmbientSound",
+		position = {192.972, 88.67, -67.08},
+		staticAudio_name = "ambient/bassy_fan.wav",
+		staticAudio_stream = true,
+	},
+	
+	Ambient1 = {
+		type = "AmbientSound",
+		position = {121.414, 3.0115, -230.99},
+		staticAudio_name = "ambient/deep_atmosphere.wav",
+		staticAudio_stream = true,
+	},
+	
+	Ambient2 = {
+		type = "AmbientSound",
+		position = {-51.9089, 47.9726, -241.786},
+		staticAudio_name = "ambient/deep_atmosphere.wav",
+		staticAudio_stream = true,
+	},
 
+	Ambient3 = {
+		type = "AmbientSound",
+		position = {-400.232, 74.89, -73.5654},
+		staticAudio_name = "ambient/deep_atmosphere.wav",
+		staticAudio_stream = true,
+	},
+	
+	Ambient4 = {
+		type = "AmbientSound",
+		position = {-34.8509, 78.4421, 58.429},
+		staticAudio_name = "ambient/deep_atmosphere.wav",
+		staticAudio_stream = true,
+	},
+	
 	World = {
 		type = "World",
 		static = true,
