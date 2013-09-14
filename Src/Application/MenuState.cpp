@@ -85,6 +85,7 @@ namespace Application {
 		CApplicationState::deactivate();
 		_menu->hide();
 
+		Audio::CServer::getSingletonPtr()->stopAllSounds();
 	} // deactivate
 
 	//--------------------------------------------------------

@@ -1,8 +1,29 @@
 Map = {
 
-	LavaSound = {
+	LavaSound1 = {
 		type = "AmbientSound",
-		position = {-133.692, 0.45532, -156.18},
+		position = {-6.34871, 1.65, -71.602},
+		staticAudio_name = "ambient/lava_quiet.wav",
+		staticAudio_stream = true,
+	},
+	
+	LavaSound2 = {
+		type = "AmbientSound",
+		position = {-123.08, 1.65, -64.36},
+		staticAudio_name = "ambient/lava_quiet.wav",
+		staticAudio_stream = true,
+	},
+	
+	LavaSound3 = {
+		type = "AmbientSound",
+		position = {-225.305, 1.65, -60.94},
+		staticAudio_name = "ambient/lava_quiet.wav",
+		staticAudio_stream = true,
+	},
+	
+	LavaSound4 = {
+		type = "AmbientSound",
+		position = {-324.381, 1.65, -56.35},
 		staticAudio_name = "ambient/lava_quiet.wav",
 		staticAudio_stream = true,
 	},
@@ -16,7 +37,7 @@ Map = {
 	},	
 
 	David = {
-		type = "LocalHound",
+		type = "LocalScreamer",
 		isPlayer = true,
 		physic_group = 1,
 		physic_groupList = "-1",

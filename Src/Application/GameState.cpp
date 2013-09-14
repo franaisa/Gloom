@@ -71,10 +71,6 @@ namespace Application {
 		Logic::CServer::getSingletonPtr()->setFixedTimeStep(16);
 		// Indicamos que a partir de ahora la creación de objetos es dinámica
 		Logic::CEntityFactory::getSingletonPtr()->dynamicCreation(true);
-
-		//paramos el sonido de menu
-		//Audio::CServer::getSingletonPtr()->stopSound("music/themeGloom.wav");
-		Audio::CServer::getSingletonPtr()->stopAllSounds();
 	} // activate
 
 	//--------------------------------------------------------
