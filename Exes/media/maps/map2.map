@@ -16,7 +16,7 @@ Map = {
 	},	
 
 	David = {
-		type = "LocalScreamer",
+		type = "LocalHound",
 		isPlayer = true,
 		physic_group = 1,
 		physic_groupList = "-1",
@@ -528,7 +528,7 @@ Map = {
 		lightType = "directional",
 		position = {-97.9955, 68.2714, -211.816},
 		direction = {0.0, -1.0, 0.0},
-		color = {1.0, 1.0, 1.0},
+		color = {0.5, 0.5, 0.5},
 		innerAngle = 0.63,
 		outerAngle = 1.11,
 		lightGroup = 2,
@@ -538,11 +538,12 @@ Map = {
 	Light3 = {
 		type = "Light",
 		lightType = "point",
-		position = {12.4903, 59.4316, -212.197},
-		color = {1.0, 1.0, 1.0},
-		range = 200,
-		attenuation = {1.0, 0.022, 0.0019},
-		lightGroup = 3,
+		position = {-125.828, -44.0043, -72.072},
+		color = {1.0, 1.0, 0.07},
+		range = 600,
+		attenuation = {1.0, 0.007, 0.0002},
+		lightGroup = 2,
 		lightIsStatic = true,
 	},
+
 }

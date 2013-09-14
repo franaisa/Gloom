@@ -184,7 +184,8 @@ namespace Logic {
 				if( houndChargeMsg->isActive() ) {
 					Vector3 chargeVector = -1.0f * ( _entity->getOrientation().zAxis() );
 					chargeVector.normalise();
-					chargeVector *= houndChargeMsg->getForce();
+					// Si estamos en el aire nos desplazamos un 10% de lo que en realidad nos desplazariamos en el suelo
+					chargeVector *= (_touchingGround || _sideColliding) ? houndChargeMsg->getForce() : houndChargeMsg->getForce() * 0.4f;
 
 					_filterMask = houndChargeMsg->getFilterMask();
 					addForce(chargeVector);
