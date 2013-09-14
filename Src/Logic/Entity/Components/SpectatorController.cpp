@@ -60,7 +60,19 @@ namespace Logic {
 	//________________________________________________________________________
 
 	CSpectatorController::~CSpectatorController() {
-		// Nada que hacer
+		CWorldState::getSingletonPtr()->removeObserver(this);
+	}
+
+	//________________________________________________________________________
+
+	void CSpectatorController::entityDestroyed(CEntity* entity) {
+		if(_currentFollowedPlayer != NULL && entity == _currentFollowedPlayer) {
+			_currentFollowedPlayer = NULL;
+
+			CServer::getSingletonPtr()->getMap()->getEntityByName("Camera")->getComponent<CCamera>("CCamera")->setTarget(_entity);
+
+			_hud->freelook();
+		}
 	}
 
 	//________________________________________________________________________
@@ -127,8 +139,6 @@ namespace Logic {
 
 						cameraComp->setTarget(_entity);
 					}
-
-					
 				}
 				else if(commandType == ControlType::RIGHT_CLICK) {
 					// Modo camara libre
@@ -206,6 +216,9 @@ namespace Logic {
 		// del jugador.
 		_physicController = _entity->getComponent<CPhysicController>("CPhysicController");
 		assert(_physicController && "Error: El player no tiene un controlador fisico");
+
+		std::vector<TMessageType> notUsed;
+		CWorldState::getSingletonPtr()->addObserver(this, notUsed);
 	}
 
 	//________________________________________________________________________

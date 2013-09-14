@@ -19,6 +19,7 @@ del espectador.
 #define __Logic_SpectatorController_H
 
 #include "Logic/Entity/Component.h"
+#include "Logic/Maps/WorldState.h"
 
 // Predeclaración de clases
 namespace Logic {
@@ -41,7 +42,7 @@ namespace Logic {
 	@date Abril, 2013
 	*/
 
-	class CSpectatorController : public IComponent {
+	class CSpectatorController : public IComponent, public Logic::CWorldState::IObserver {
 		DEC_FACTORY(CSpectatorController);
 	public:
 
@@ -58,6 +59,19 @@ namespace Logic {
 
 		/** Destructor. */
 		virtual ~CSpectatorController();
+
+
+		// =======================================================================
+		//                   METODOS OBSERVADORES DE WORLDSTATE
+		// =======================================================================
+
+
+		/**
+		Cada vez que una entidad se destruye se llama a este metodo.
+
+		@param entity Entidad que va a ser destruida.
+		*/
+		virtual void entityDestroyed(CEntity* entity);
 
 
 		// =======================================================================

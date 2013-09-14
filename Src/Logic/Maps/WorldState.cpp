@@ -116,7 +116,10 @@ namespace Logic {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	void CWorldState::deleteEntity(CEntity* entity){
+	void CWorldState::deleteEntity(CEntity* entity) {
+		for(auto it = _observers.begin(); it != _observers.end(); ++it)
+			it->first->entityDestroyed(entity);
+
 		TEntityID id = entity->getEntityID();
 
 		auto entityFound = _entities.find(id);
