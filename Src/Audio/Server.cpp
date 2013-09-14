@@ -200,7 +200,7 @@ namespace Audio
 		//Reproducción en channel
 		Channel *channel;
 		result = _system->playSound(
-			FMOD_CHANNEL_REUSE , // dejamos que FMOD seleccione cualquiera
+			FMOD_CHANNEL_FREE , // dejamos que FMOD seleccione cualquiera
 			sound, // sonido que se “engancha” a ese channel
 			false, // arranca sin “pause” (se reproduce directamente)
 			& channel); // devuelve el channel que asigna
@@ -255,7 +255,7 @@ namespace Audio
 
 		//Reproducción en channel
 		result = _system->playSound(
-		FMOD_CHANNEL_REUSE , // dejamos que FMOD seleccione cualquiera
+		FMOD_CHANNEL_FREE , // dejamos que FMOD seleccione cualquiera
 		sound, // sonido que se “engancha” a ese channel
 		false, // arranca sin “pause” (se reproduce directamente)
 		& channel); // devuelve el channel que asigna

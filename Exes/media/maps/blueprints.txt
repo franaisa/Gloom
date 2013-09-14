@@ -71,3 +71,4 @@ miniGunSecondaryShot CParticleSystem
 ironHellGoatPrimaryShot CParticleSystem
 ironHellGoatSecondaryShot CParticleSystem
 ScreamerShieldHit CParticleSystem
+ShotgunMuzzle CParticleSystem

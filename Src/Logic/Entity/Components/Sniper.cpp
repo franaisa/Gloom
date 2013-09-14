@@ -32,6 +32,7 @@ Contiene la implementación del componente que gestiona las armas y que administr
 
 #include "Logic/Messages/MessageDamaged.h"
 #include "Logic/Messages/MessageCreateParticle.h"
+#include "Logic/Messages/MessageAudio.h"
 
 #include <OgreManualObject.h>
 
@@ -101,6 +102,7 @@ namespace Logic {
 		//Cogemos lo primero tocado que no seamos nosotros mismos y vemos si a un rango X hay enemigos (no nosotros)
 		//Ojo en cooperativo tendremos que hacer distincion entre otros players aliados
 		CEntity* entityHit=NULL;
+		bool headshot = false;
 		for(int i=0;i<hits.size();++i){
 			//Si tocamos mundo terminamos
 			if(hits[i].entity->getType() == "World") {
@@ -135,7 +137,14 @@ namespace Logic {
 
 			//Entidades validas (Player que no seamos nosotros mismos)
 			else if(hits[i].entity!=_entity){
-				
+				if( hits[i].physicComponent->collidersHaveName() && hits[i].colliderName == "Bip01 Head" ) {
+					std::shared_ptr<CMessageAudio> audioMsg = std::make_shared<CMessageAudio>();
+					audioMsg->setAudioName("feedback/headshot.wav");
+					audioMsg->isPlayerOnlySound(true);
+					_entity->emitMessage(audioMsg);
+
+					headshot = true;
+				}
 
 				entityHit=hits[i].entity;
 
@@ -157,15 +166,20 @@ namespace Logic {
 		if(entityHit!=NULL && entityHit->getType() != "ScreamerShield"){
 			enemyToExpand=findEnemyToExpand(entityHit);
 			//Aplicamos daño a la entidad dada y a la más próxima (si la hay)
+
+			float totalDamage = _primaryFireDamage;
 			if(_burned)
-				triggerHitMessages(entityHit, _secondaryFireDamage + _secondaryFireDamage * _burnedIncrementPercentageDamage);
-			else
-				triggerHitMessages(entityHit, _secondaryFireDamage);
-			if(enemyToExpand!=NULL){
+				totalDamage += _primaryFireDamage * _burnedIncrementPercentageDamage;
+			if(headshot)
+				totalDamage *= 2.0f;
+
+			triggerHitMessages(entityHit, totalDamage);
+			
+			if( enemyToExpand != NULL ) {
 				if(_burned)
-					triggerHitMessages(enemyToExpand, _secondaryFireDamage + _secondaryFireDamage * _burnedIncrementPercentageDamage);
+					triggerHitMessages(enemyToExpand, _primaryFireDamage + _primaryFireDamage * _burnedIncrementPercentageDamage);
 				else
-					triggerHitMessages(enemyToExpand, _secondaryFireDamage);
+					triggerHitMessages(enemyToExpand, _primaryFireDamage);
 			}
 		}//if(entityHit!=NULL)
 
@@ -225,9 +239,9 @@ namespace Logic {
 				// mensajes de daño
 				if(screamerShieldOwner != _entity) {
 					if(_burned)
-						triggerHitMessages(hits[i].entity, _primaryFireDamage + _primaryFireDamage * _burnedIncrementPercentageDamage);
+						triggerHitMessages(hits[i].entity, _secondaryFireDamage + _secondaryFireDamage * _burnedIncrementPercentageDamage);
 					else
-						triggerHitMessages(hits[i].entity, _primaryFireDamage);
+						triggerHitMessages(hits[i].entity, _secondaryFireDamage);
 				}
 
 				// Creamos las particulas de impacto sobre el escudo
@@ -250,9 +264,9 @@ namespace Logic {
 				bloodStrike->start();
 
 				if(_burned)
-					triggerHitMessages(hits[i].entity, _primaryFireDamage + _primaryFireDamage * _burnedIncrementPercentageDamage);
+					triggerHitMessages(hits[i].entity, _secondaryFireDamage + _secondaryFireDamage * _burnedIncrementPercentageDamage);
 				else
-					triggerHitMessages(hits[i].entity, _primaryFireDamage);
+					triggerHitMessages(hits[i].entity, _secondaryFireDamage);
 
 				break;
 			}

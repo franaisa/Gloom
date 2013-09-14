@@ -155,6 +155,13 @@ Map = {
 		particle_destroyEntityOnExpiry = true,
 	},
 	
+	ShotgunMuzzle = {
+		type = "ShotgunMuzzle",
+		particle_scriptName = "shotgunMuzzle",
+		particle_on = true,
+		particle_destroyEntityOnExpiry = true,
+	},
+	
 	ScreamerExplotion = {
 		type = "ScreamerExplotion",
 		particle_scriptName = "screamerExplotion",
