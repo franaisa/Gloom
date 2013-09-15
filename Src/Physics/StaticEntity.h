@@ -70,11 +70,12 @@ namespace Physics {
 
 		@param plane Geometría del plano que queremos crear.
 		@param material Material que queremos que tenga el plano.
+		@param isTrigger true si se trata de un trigger.
 		@param group Grupo de colisión del plano.
 		@param groupList Grupos de colisión con los que queremos que interactue el plano.
 		@param component Componente lógico asociado.
 		*/
-		void load(const PlaneGeometry& plane, Material& material, int group,
+		void load(const PlaneGeometry& plane, Material& material, bool isTrigger, int group,
 				  const std::vector<int>& groupList, const Logic::IPhysics* component);
 
 		//________________________________________________________________________

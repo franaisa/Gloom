@@ -1118,16 +1118,24 @@ Map = {
 	
 	lava = {
 		type = "Lava",
-		position = {-10.0,0.2, -50.0},
-		model = "lava.mesh",
-		scale = 1,
-		damage = 5,
+		position = {0,0,0},
+		
+		plane_orientation = {0, 1, 0},
+		plane_width = 1500,
+		plane_height = 1500,
+		plane_xSegments = 20,
+		plane_ySegments = 20,
+		plane_uTiling = 20,
+		plane_vTiling = 20,
+		plane_upVector = {0, 0, 1},
+		plane_material = "lavaFondo",
+		
+		damage = 500,
 		timeDamage = 500,
-		physic_entity = "rigid",
+		
+		physic_entity = "plane",
+		physic_normal = {0, 1, 0},
 		physic_trigger = true,
-		physic_type = "static",
-		physic_shape = "box",
-		physic_dimensions = { 4, 7, 4 },
 		physic_group = 11,
 		physic_groupList = "1",
 	},

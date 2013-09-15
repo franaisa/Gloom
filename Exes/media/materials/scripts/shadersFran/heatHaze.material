@@ -1,0 +1,47 @@
+material heatHazeMaterial
+{
+	scheme heatHaze
+    technique
+    {
+        pass
+        {
+            lighting off
+            scene_blend modulate
+            depth_write off
+
+            texture_unit
+            {
+                texture magma_NRM.tga
+				scroll_anim 0.0 0.35
+            }
+        }
+    }
+}
+
+fragment_program heatHazeFragment hlsl {
+	source heatHaze.hlsl
+	entry_point fragment_main
+	target ps_2_0
+}
+
+material heatHazeProgram {
+	technique {
+		pass {
+			lighting off
+			depth_check off
+		
+			fragment_program_ref heatHazeFragment {
+			}
+		
+			// Textura de post-procesado de la escena
+			texture_unit SceneSampler {
+				tex_address_mode clamp
+				filtering linear linear none
+				colour_op replace
+			}
+			
+			texture_unit HeatMap {
+			}
+		}
+	}
+}
