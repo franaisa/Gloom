@@ -22,6 +22,9 @@ namespace Logic{
 		_scoreboard = 0;
 
 		initSpreeMessages();
+		
+		_blueScore = 0;
+		_redScore = 0;
 	}
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -143,8 +146,13 @@ namespace Logic{
 		//ahora avisamos a la GUI de que ha habido un cambio
 		if(player->second.team==0)
 			_scoreboard->callFunction("addKill",Hikari::Args(name)((int)player->second.kills));
-		else
+		else{
 			_scoreboard->callFunction("addKill",Hikari::Args(name)((int)player->second.kills)((int)player->second.team));
+			if(player->second.team == 1)
+				changeScores(++_blueScore,player->second.team);
+			else
+				changeScores(++_redScore,player->second.team);
+		}
 	}
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -157,11 +165,12 @@ namespace Logic{
 			if( entity != NULL && entity->isPlayer() ) {
 				Audio::CServer::getSingletonPtr()->playSound("feedback/bell.mp3", false, false);
 				std::cout << _spreePlayerMsgList[index - 1] << std::endl;
-				//_spreeMenu->callFunction( "spreePlayer", Hikari::Args(name)(_spreePlayerMsgList[index - 1]) );
+				_spreeMenu->callFunction( "localSpree", Hikari::Args(_spreePlayerMsgList[index - 1]) );
 			}
 			else {
 				std::cout << _spreeMsgList[index - 1] << std::endl;
-				_spreeMenu->callFunction( "spree", Hikari::Args(name)(_spreeMsgList[index - 1]) );
+				std::string spree = name + " " + _spreeMsgList[index - 1];
+				_spreeMenu->callFunction( "remoteSpree", Hikari::Args(spree) );
 			}
 		}
 	}
@@ -270,6 +279,10 @@ namespace Logic{
 		_scoreboard->callFunction("changeTeam", Hikari::Args(name)(newTeam));
 	}
 
+	void CScoreboard::changeScores(int score, int team){
+		_scoreboard->callFunction("changeScores", Hikari::Args(score)(team));
+	}
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	/*bool CScoreboard::keyPressed(Input::TKey key){
@@ -374,6 +387,10 @@ namespace Logic{
 			_scoreboard->callFunction("addSpree",Hikari::Args(it->second.name)((int)it->second.bestSpree)((int)it->second.team));
 		}
 		loadSpreeMenu();
+
+		if(_redScore > 0 || _blueScore > 0){
+
+		}
 	}
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -439,6 +456,11 @@ namespace Logic{
 			players.deserialize(player->second.bestSpree);
 			players.deserialize(player->second.team);
 			players.deserialize(player->second.ping);
+
+			if(player->second.team == 1)
+				_blueScore += player->second.kills;
+			else
+				_redScore += player->second.kills;
 		}
 	}
 

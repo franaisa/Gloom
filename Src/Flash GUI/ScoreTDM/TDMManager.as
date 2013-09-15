@@ -22,7 +22,7 @@ package ScoreTDM
 			ExternalInterface.addCallback("changeClass", changeClass);
 			ExternalInterface.addCallback("addLocalPlayer", addLocalPlayer);
 			ExternalInterface.addCallback("changeTeam", changeTeam);
-			ExternalInterface.addCallback("ChangeScores", changeScores);
+			ExternalInterface.addCallback("changeScores", changeScores);
 			/*addPlayer("manolo", "Screamer", 1);
 			addPlayer("pepito", "Screamer", 1);
 			addPlayer("juan", "Screamer", 2);

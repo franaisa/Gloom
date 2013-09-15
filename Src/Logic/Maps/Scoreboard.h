@@ -191,6 +191,8 @@ la clase del jugador, las muertes, los frags, los mejores spree, etc.
 
 		void changeTeam(const std::string &name, int newTeam);
 
+		void changeScores(int score, int team);
+
 		/**
 		Método que limpia la lista de players
 		*/
@@ -299,6 +301,8 @@ la clase del jugador, las muertes, los frags, los mejores spree, etc.
 		a utilizar mucho y llamar muchas veces al manager es muy costoso
 		*/
 		Hikari::FlashControl * _scoreboard, *_spreeMenu;
+
+		int _blueScore, _redScore;
 	};
 
 }
