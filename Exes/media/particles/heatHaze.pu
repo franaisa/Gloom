@@ -1,0 +1,26 @@
+system heatHaze {
+    smooth_lod                                true
+    main_camera_name                   MainCamera
+    lod_distances                            21 60 
+    technique {
+        material								heatHazeMaterial
+        lod_index                              1
+        default_particle_width        		0.96
+        default_particle_height            1.26
+        default_particle_depth             1.5
+        renderer								Billboard {
+        }
+        
+		emitter                                 Box {
+            angle                               15
+            time_to_live                        dyn_random {
+                min                             1
+                max                             2
+            }
+            velocity                            4
+            box_width                           2
+            box_height                          2
+            box_depth                           2
+        }
+    }
+}

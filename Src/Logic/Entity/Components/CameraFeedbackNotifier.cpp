@@ -153,6 +153,9 @@ namespace Logic {
 
 		_scene->createCompositor("shockWaveCompositor");
 		_scene->setCompositorVisible("shockWaveCompositor", false);
+
+		//_scene->createCompositor("heatHazeCompositor");
+		//_scene->setCompositorVisible("heatHazeCompositor", true);
 	}
 
 	//________________________________________________________________________
