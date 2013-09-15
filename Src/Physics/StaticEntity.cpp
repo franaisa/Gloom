@@ -85,7 +85,7 @@ namespace Physics {
 
 	//________________________________________________________________________
 
-	void CStaticEntity::load(const PlaneGeometry& plane, Material& material, int group, 
+	void CStaticEntity::load(const PlaneGeometry& plane, Material& material, bool isTrigger, int group, 
 							 const vector<int>& groupList, const Logic::IPhysics* component) {
 
 		// Obtenemos el puntero al servidor de fisicas
@@ -96,6 +96,13 @@ namespace Physics {
 
 		// Crear un plano estático
 		_actor = PxCreatePlane(*physics, plane, material);
+
+		// Transformarlo en trigger si es necesario
+		if(isTrigger) {
+			PxShape *shape;
+			_actor->getShapes(&shape, 1, 0);
+			shape->setFlag(PxShapeFlag::eTRIGGER_SHAPE, true);
+		}
 	
 		// Anotar el componente lógico asociado a la entidad física
 		_actor->userData = (void*) component;
