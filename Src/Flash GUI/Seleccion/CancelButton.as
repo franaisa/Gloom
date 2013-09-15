@@ -21,6 +21,7 @@ package Seleccion
 		}
 		
 		override protected function onMouseClick(e:MouseEvent):void {
+			trace("cancel");
 			ExternalInterface.call("selected", "cancel", "", "");
 		}
 		

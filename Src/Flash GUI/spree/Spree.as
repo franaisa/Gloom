@@ -11,14 +11,19 @@ package spree
 		
 		public function Spree() 
 		{
-			ExternalInterface.addCallback("spree", spreeM);
+			ExternalInterface.addCallback("localSpree", localSpreeM);
+			ExternalInterface.addCallback("remoteSpree", remoteSpreeM);
 		}
 		
 		
-		public function spreeM(nick:String, message: String):void {
-			spreemsg.nick.nick.text = nick;
-			spreemsg.spreetext.spree.text = message;
-			spreemsg.gotoAndPlay("spree");
+		public function localSpreeM(message: String):void {
+			localspreemsg.spreetext.spree.text = message;
+			localspreemsg.gotoAndPlay("spree");
+		}
+		
+		public function remoteSpreeM(message: String):void {
+			remotemsg.spreetext.spree.text = message;
+			remotemsg.gotoAndPlay("spree");
 		}
 	}
 

@@ -482,12 +482,10 @@ namespace Application {
 	//______________________________________________________________________________
 
 	Hikari::FlashValue CGameClientState::classSelected(Hikari::FlashControl* caller, const Hikari::Arguments& args) {
-		if(ñapaflash > 0 && ñapaflash < 1)
-			return FLASH_VOID;
+
 		std::string sClass = args.at(0).getString();
 		Net::NetMessageType msgType = Net::CLASS_SELECTED;
 		ñapaflash = true;
-
 
 		int selectedClass;
 

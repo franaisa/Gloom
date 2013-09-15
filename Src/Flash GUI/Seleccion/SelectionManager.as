@@ -83,6 +83,7 @@ package Seleccion
 			if (playerClass == null) {
 				return;
 			}
+			trace("selected");
 			ExternalInterface.call("selected", playerClass);
 		}
 		

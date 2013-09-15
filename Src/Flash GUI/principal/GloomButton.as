@@ -39,7 +39,6 @@ package principal
 			this.removeEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
 			this.addEventListener(MouseEvent.MOUSE_UP, onMouseUp);
 			this.gotoAndPlay("down");
-			onMouseClick(e);
 		}
 		protected function onMouseUp(e:MouseEvent):void {
 			this.removeEventListener(MouseEvent.MOUSE_UP, onMouseUp);

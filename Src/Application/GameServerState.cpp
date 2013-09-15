@@ -229,7 +229,7 @@ namespace Application {
 		buffer.serialize(player->getName(), false); // Nombre del player
 		buffer.serialize(player->getType(), false); // Clase del player
 		buffer.write(&team, sizeof(team));
-
+		std::cout << "el equipo que estoy enviando es ... " << team << std::endl;
 		player->activate();
 		player->start();
 

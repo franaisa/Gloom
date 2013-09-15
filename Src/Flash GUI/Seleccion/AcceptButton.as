@@ -18,6 +18,7 @@ package Seleccion
 		
 		override protected function onMouseClick(e:MouseEvent):void {
 			manager.selectionFinished();
+			trace("accept");
 		}
 		
 	}

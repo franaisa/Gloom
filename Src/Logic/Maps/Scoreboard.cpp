@@ -61,7 +61,7 @@ namespace Logic{
 		PlayerInfo player(name, playerEntity, playerClass, team);
 		TPlayerInfo newPlayer(name, player);
 		_players.insert(newPlayer);
-
+		std::cout << "Añadiendo " << name << " al equipo " << team << std::endl;
 		//ahora llamamos a la GUI para que cree nuestro nuevo player
 		if(_scoreboard && team == 0)
 			_scoreboard->callFunction("addPlayer",Hikari::Args(name)(playerClass));
@@ -80,7 +80,7 @@ namespace Logic{
 		PlayerInfo player(name, playerEntity, playerClass, team);
 		TPlayerInfo newPlayer(name, player);
 		_players.insert(newPlayer);
-
+		std::cout << "Añadiendo " << name << " al equipo " << team << std::endl;
 		//ahora llamamos a la GUI para que cree nuestro nuevo player
 		if(_scoreboard && team == 0)
 			_scoreboard->callFunction("addLocalPlayer",Hikari::Args(name)(playerClass));
