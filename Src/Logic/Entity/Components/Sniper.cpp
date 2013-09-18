@@ -176,6 +176,17 @@ namespace Logic {
 			triggerHitMessages(entityHit, totalDamage);
 			
 			if( enemyToExpand != NULL ) {
+				// Pintamos las particulas del rayo que afecta a los enemigos cercanos
+				Vector3 entityHitPos = entityHit->getPosition();
+
+				Euler rayOrientation(Quaternion::IDENTITY);
+				rayOrientation.setDirection( enemyToExpand->getPosition() - entityHitPos );
+
+				Map::CEntity* entityInfo = CEntityFactory::getSingletonPtr()->getInfo("sniperPrimaryShot");
+				CEntity* sniperRay = CEntityFactory::getSingletonPtr()->createEntity(entityInfo, _entity->getMap(), entityHitPos, rayOrientation.toQuaternion() );
+				sniperRay->activate();
+				sniperRay->start();
+
 				if(_burned)
 					triggerHitMessages(enemyToExpand, _primaryFireDamage + _primaryFireDamage * _burnedIncrementPercentageDamage);
 				else

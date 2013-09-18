@@ -216,7 +216,7 @@ namespace Logic {
 			Graphics::CServer *server = Graphics::CServer::getSingletonPtr();
 
 			_overlayWeapon3D[current] = server->createOverlay( "_overlay3D"+strWeapon, _scene );
-			std::string modelWeapon = weapon->getStringAttribute("Model");			
+			std::string modelWeapon = weapon->getStringAttribute("Model");	
 			
 			_graphicsEntities[current].graphicsEntity = _overlayWeapon3D[current]->add3D(strWeapon, modelWeapon,_graphicsEntities[current].offset);
 			assert(_graphicsEntities[current].graphicsEntity != 0 && "error al cargar la entidad grafica");
