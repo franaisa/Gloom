@@ -141,7 +141,6 @@ namespace Graphics
 		// añado la escena como hija de la camara
 		_cameraNode->addChild(sceneNode);
 
-		
 		// Esto es una pequeña ñapa, me creo un entidad grafica pero sin inicializar, y le añado una escena ahierro
 		// Hago esto para que se pueda desplazar desde la logica sin ningun problema.
 		Graphics::CEntity *entityTemp = new CEntity(nameEntity, nameMesh);
