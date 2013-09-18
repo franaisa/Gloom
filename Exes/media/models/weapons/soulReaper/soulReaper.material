@@ -1,19 +1,86 @@
-material Material#25
-{
-	technique
-	{
-		pass
-		{
-			ambient 0.588 0.588 0.588 1
-			diffuse 0.588 0.588 0.588 1
-			specular 0 0 0 1 10
-
-			texture_unit
-			{
-				texture SoulReaper.jpg
+material Material#25 {
+	technique {
+		pass {
+		
+			vertex_program_ref bumpLightingVertex_AMB {
+			}
+		
+			fragment_program_ref bumpLightingFragment_AMB {
+				// Constante para regular la cantidad de ambiente
+				param_named			Ka								float		0.6
+			}
+			
+			// Textura de difuso
+			texture_unit DiffMap {
+				texture SoulReaper_COLOR.jpg
+			}
+			
+		}
+		
+		pass {
+		
+			scene_blend add
+			iteration once_per_light
+		
+			vertex_program_ref bumpLightingVertexShader {
+			}
+			
+			fragment_program_ref bumpLightingFragment_DIFF_SPEC {
+				// Constante para regular la cantidad de difuso
+				param_named			Kd								float		0.6
+				// Constante de brillo especular
+				param_named 			shininess						float		70.0
+			}
+			
+			// Textura de difuso
+			texture_unit DiffMap {
+				texture SoulReaper_COLOR.jpg
+			}
+			
+			// Textura para el bump mapping. En el alfa esta el mapa de especulares.
+			texture_unit NormalMap {
+				texture SoulReaper_NRM.tga
+			}
+			
+			// Textura de especular
+			texture_unit SpecMap {
+				texture SoulReaper_SPEC.tga
+			}
+			
+		}
+	}
+	
+	// Para el glow
+	/*technique {
+		scheme glow
+		pass {
+			vertex_program_ref GlowMappingVertex {
+			}
+		
+			fragment_program_ref GlowMappingFragment {
+			}
+		
+			texture_unit DiffMap {
+				texture SoulReaper_COLOR.jpg
+			}
+		
+			texture_unit GlowMap {
+				texture Jump_GLOW.tga
 			}
 		}
+	}*/
 
+	// Para el motion blur
+	technique {
+		lighting off
+	
+		scheme depthScheme
+		pass {
+			vertex_program_ref depthMapVertex {
+			}
+			
+			fragment_program_ref depthMapFragment {
+			}
+		}
 	}
-
 }
