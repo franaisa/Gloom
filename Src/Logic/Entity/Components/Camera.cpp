@@ -114,6 +114,9 @@ namespace Logic
 			}
 			case Message::PLAYER_SPAWN: {
 				_dead=false;
+				_graphicsCamera->lookAt(Vector3::ZERO);
+				
+
 				//std::cout << "mensaje respawn recibido" << std::endl;
 				break;
 			}

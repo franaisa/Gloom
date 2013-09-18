@@ -123,8 +123,6 @@ namespace Graphics
 
 			_entity = _scene->getSceneMgr()->createEntity(pMesh);
 
-			printf("caña aqui %s y tb %d",(Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME).c_str(),_entity->getRenderQueueGroup()  );
-
 			_entity->setLightMask(1 << 0);
 			//_entity->setCastShadows(true);
 		}

@@ -102,6 +102,7 @@ namespace Graphics
 
 	void CCamera::setOrientation(const Quaternion& orientation){
 		//_camera->setOrientation(orientation);
+		
 		_cameraNode->setOrientation(orientation);
 	}
 	//--------------------------------------------------------
@@ -114,7 +115,11 @@ namespace Graphics
 	//--------------------------------------------------------
 	
 	void CCamera::lookAt(const Vector3& position){
-		_camera->lookAt(position);
+		// Si le paso la position a (0,0,0), significa que quiero restablecer la orientacion.
+		if(position == Vector3::ZERO)
+			_camera->setOrientation(Quaternion::IDENTITY);
+		else
+			_camera->lookAt(position);
 	}
 
 	//--------------------------------------------------------
