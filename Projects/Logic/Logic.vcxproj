@@ -89,6 +89,7 @@
     <ClCompile Include="..\..\Src\Logic\Entity\Components\DynamicAudio.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\DynamicLight.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\CharacterSound.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Entity\Components\DynamicParticleSystem.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\EnemyInSight.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\GraphicPlane.cpp" />
     <ClCompile Include="..\..\Src\Logic\Entity\Components\Hud.cpp" />
@@ -284,6 +285,7 @@
     <ClInclude Include="..\..\Src\Logic\Entity\Components\DynamicAudio.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\DynamicLight.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\CharacterSound.h" />
+    <ClInclude Include="..\..\Src\Logic\Entity\Components\DynamicParticleSystem.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\EnemyInSight.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\GraphicPlane.h" />
     <ClInclude Include="..\..\Src\Logic\Entity\Components\Hud.h" />

@@ -65,8 +65,6 @@ namespace Logic {
 
 		virtual void onStart();
 
-
-
 		Graphics::PUParticle* _particleSystem;
 
 		std::string _scriptName;

@@ -175,8 +175,7 @@ namespace Physics {
 
 	//________________________________________________________________________
 
-	bool CServer::Init() 
-	{
+	bool CServer::Init() {
 		if (!_instance) {
 			_instance = new CServer();
 		}
