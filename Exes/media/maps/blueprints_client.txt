@@ -30,20 +30,20 @@ Spike CGraphics CPositionInterpolator
 Light CLight CGraphics
 MovableLight CDynamicLight CGraphics
 TriggerLight CLight CGraphics CPhysicStaticCompound
-Powerup1 CFloatingMovement CSpawnItemManager CAudio CGraphics
-Powerup2 CFloatingMovement CSpawnItemManager CAudio CGraphics
-SuperShield CFloatingMovement CSpawnItemManager CAudio CGraphics
-Shield CFloatingMovement CSpawnItemManager CAudio CGraphics
-Orb CFloatingMovement CSpawnItemManager CAudio CGraphics
-SmallOrb CFloatingMovement CSpawnItemManager CAudio CGraphics
-ShotgunItem CFloatingMovement CSpawnItemManager CAudio CGraphics
-SniperItem CFloatingMovement CSpawnItemManager CAudio CGraphics
-MinigunItem CFloatingMovement CSpawnItemManager CAudio CGraphics
-IronHellGoatItem CFloatingMovement CSpawnItemManager CAudio CGraphics
-ShotgunAmmo CSpawnItemManager CAudio CGraphics
-IronHellGoatAmmo CSpawnItemManager CAudio CGraphics
-MinigunAmmo CSpawnItemManager CAudio CGraphics
-SniperAmmo CSpawnItemManager CAudio CGraphics
+Powerup1 CFloatingMovement CAudio CDynamicParticleSystem
+Powerup2 CFloatingMovement CAudio CDynamicParticleSystem
+SuperShield CFloatingMovement CAudio CGraphics
+Shield CFloatingMovement CAudio CGraphics
+Orb CFloatingMovement CAudio CGraphics
+SmallOrb CFloatingMovement CAudio CGraphics
+ShotgunItem CFloatingMovement CAudio CGraphics
+SniperItem CFloatingMovement CAudio CGraphics
+MinigunItem CFloatingMovement CAudio CGraphics
+IronHellGoatItem CFloatingMovement CAudio CGraphics
+ShotgunAmmo CAudio CGraphics
+IronHellGoatAmmo CAudio CGraphics
+MinigunAmmo CAudio CGraphics
+SniperAmmo CAudio CGraphics
 Explotion CParticleSystem
 SmokeBash CParticleSystem
 BulletSpark CParticleSystem

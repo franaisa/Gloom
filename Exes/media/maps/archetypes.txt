@@ -80,10 +80,13 @@ Map = {
 		type = "Powerup1",
 		msgList= "6,14,15,16,17,29,41",
 		
-		model = "scroll.mesh",
 		id = "spell",
 		reward = 0,
-		respawnTime = 12,
+		respawnTime = 120,
+		
+		particle_scriptName = "damageAmplifier",
+		particle_on = true, 
+		particle_destroyEntityOnExpiry = false,
 		
 		audioTrigger_name = "items/holdable.wav",
 		audioTrigger_stream = false,
@@ -104,10 +107,13 @@ Map = {
 		type = "Powerup2",
 		msgList= "6,14,15,16,17,29,41",
 		
-		model = "scroll.mesh",
 		id = "spell",
 		reward = 1,
-		respawnTime = 12,
+		respawnTime = 120,
+		
+		particle_scriptName = "cooldownReducer",
+		particle_on = true, 
+		particle_destroyEntityOnExpiry = false,
 		
 		audioTrigger_name = "items/holdable.wav",
 		audioTrigger_stream = false,

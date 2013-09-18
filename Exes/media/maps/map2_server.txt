@@ -14,12 +14,12 @@ Map = {
 
 	ActiveSpell = {
 		type = "Powerup1",
-		position = {-96.3475, 0.420609, 22.3819},
+		position = {-96.3475, 3.420609, 22.3819},
 	},
 	
 	PasiveSpell = {
 		type = "Powerup2",
-		position = {67.2079, 0.480556, 25.8414},
+		position = {67.2079, 3.480556, 25.8414},
 	},
 	
 	Orb1 = {
