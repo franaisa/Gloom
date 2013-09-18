@@ -18,6 +18,7 @@ Contiene la implementación de la clase que representa un Overlay.
 #include "Entity.h"
 
 #include "Particle.h"
+#include "Camera.h"
 
 #include "Graphics/Server.h"
 #include "BaseSubsystems/Math.h"
@@ -173,8 +174,10 @@ namespace Graphics
 
 			//scene->getSceneMgr()->getRootSceneNode()->addChild(sceneNode);
 			Ogre::SceneNode* sceneNode;
+			
 			sceneNode = new Ogre::SceneNode(_scene->getSceneMgr(), nameSceneNode);
-				
+			Ogre::SceneNode* cameraSceneNode = _scene->getCamera()->getSceneNode();
+
 			Ogre::Entity *entity;
 			entity = _scene->getSceneMgr()->createEntity(mesh);
 			
@@ -185,7 +188,11 @@ namespace Graphics
 
 			sceneNode->setPosition(position);
 
+			/*
+			sceneNode->addChild(cameraSceneNode);
+			/*/
 			_overlay->add3D(sceneNode);
+			/* */
 
 			// Esto es una pequeña ñapa, me creo un entidad grafica pero sin inicializar, y le añado una escena ahierro
 			// Hago esto para que se pueda desplazar desde la logica sin ningun problema.

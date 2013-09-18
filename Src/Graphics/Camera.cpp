@@ -91,7 +91,7 @@ namespace Graphics
 
 	const Vector3& CCamera::getCameraDirection() {
 		return _camera->getRealDirection(); 
-
+		
 	}
 	//--------------------------------------------------------
 
@@ -101,12 +101,14 @@ namespace Graphics
 	//--------------------------------------------------------
 
 	void CCamera::setOrientation(const Quaternion& orientation){
-		_camera->setOrientation(orientation);
+		//_camera->setOrientation(orientation);
+		_cameraNode->setOrientation(orientation);
 	}
 	//--------------------------------------------------------
 
 	void CCamera::rollCamera(float fRadian){
-		_camera->roll(Ogre::Radian(fRadian));
+		//_camera->roll(Ogre::Radian(fRadian));
+		_cameraNode->roll(Ogre::Radian(fRadian));
 	}
 
 	//--------------------------------------------------------
@@ -120,13 +122,34 @@ namespace Graphics
 
 	Graphics::CEntity* CCamera::addEntityChild(const std::string &nameEntity, const std::string &nameMesh, Vector3 position){
 	
+		// creo escena para la entidad nueva
 		Ogre::SceneNode* sceneNode;
 		sceneNode = new Ogre::SceneNode(_scene->getSceneMgr(), "_SceneCamera_"+nameEntity);
 
+		// creo la entidad nueva
 		Ogre::Entity *entity;
-		entity = _scene->getSceneMgr()->createEntity(nameEntity, nameMesh);
+		entity = _scene->getSceneMgr()->createEntity(nameMesh);
 
-		return 0;
+		
+		// atacho la entidad a la escena recien creada
+		sceneNode->attachObject(entity);
+		
+		entity->setRenderQueueGroupAndPriority(Ogre::RenderQueueGroupID::RENDER_QUEUE_6, 200);
+		// especifico su posicion
+		sceneNode->setPosition(position);
+
+		// añado la escena como hija de la camara
+		_cameraNode->addChild(sceneNode);
+
+		
+		// Esto es una pequeña ñapa, me creo un entidad grafica pero sin inicializar, y le añado una escena ahierro
+		// Hago esto para que se pueda desplazar desde la logica sin ningun problema.
+		Graphics::CEntity *entityTemp = new CEntity(nameEntity, nameMesh);
+		entityTemp->setOgreEntity(entity);
+		entityTemp->setSceneNode(sceneNode);
+		entityTemp->setScene(_scene);
+
+		return entityTemp;
 	}
 	
 	//--------------------------------------------------------

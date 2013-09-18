@@ -149,7 +149,7 @@ namespace Logic {
 				delete _graphicsEntities[i].graphicsEntity;
 				_graphicsEntities[i].graphicsEntity = NULL;
 
-				delete _overlayWeapon3D[i];
+				//delete _overlayWeapon3D[i];
 			}
 
 			delete _graphicsEntities;
@@ -163,14 +163,15 @@ namespace Logic {
 		//Cuando activamos el componente solo tendremos visible el arma 0( arma melee)
 		_currentWeapon = WeaponType::eSOUL_REAPER;
 		_graphicsEntities[_currentWeapon].graphicsEntity->setVisible(true);
-		_overlayWeapon3D[_currentWeapon]->setVisible(true);
+		//_overlayWeapon3D[_currentWeapon]->setVisible(true);
 	} // activate
 
 	//________________________________________________________________________
 
 	void CHudWeapons::onDeactivate() {
 		//Cuando desactivamos el componente, desactivaremos el arma actual
-		_overlayWeapon3D[_currentWeapon]->setVisible(false);
+		//_overlayWeapon3D[_currentWeapon]->setVisible(false);
+		_graphicsEntities[_currentWeapon].graphicsEntity->setVisible(false);
 
 		_fallAnim.movementDir = _runAnim.currentStrafingDir = 0;
 		_playerIsWalking = _playerIsLanding = _playerIsFalling = false;
@@ -210,7 +211,7 @@ namespace Logic {
 
 			_graphicsEntities[current].offset = weapon->getVector3Attribute("Offset");
 				
-			
+			/*
 			// Ahora voy a crear los overlays por cada arma en 3D
 
 			Graphics::CServer *server = Graphics::CServer::getSingletonPtr();
@@ -227,11 +228,20 @@ namespace Logic {
 
 			_overlayWeapon3D[current]->setVisible(false);
 			_overlayWeapon3D[current]->setZBuffer(15);
-			
-			
+			/*/
+
+			std::string modelWeapon = weapon->getStringAttribute("Model");	
+			_graphicsEntities[current].graphicsEntity = _scene->getCamera()->addEntityChild(strWeapon, modelWeapon, _graphicsEntities[current].offset);
+
+			//_graphicsEntities[current].graphicsEntity->setOrientation(Math::setQuaternion(_graphicsEntities[current].defaultYaw, _graphicsEntities[current].defaultPitch, _graphicsEntities[current].defaultRoll));
+			_graphicsEntities[current].graphicsEntity->setVisible(false);
+			/* */
 			
 		}
-		_overlayWeapon3D[WeaponType::eSOUL_REAPER]->setVisible(true);
+
+		//_overlayWeapon3D[WeaponType::eSOUL_REAPER]->setVisible(true);
+		_graphicsEntities[WeaponType::eSOUL_REAPER].graphicsEntity->setVisible(true);
+
 		if(!_graphicsEntities)
 			return false;
 		
@@ -260,7 +270,9 @@ namespace Logic {
 	void CHudWeapons::onStart() {
 		for(int i = 0; i < WeaponType::eSIZE; ++i) {
 			_graphicsEntities[i].defaultPos = _graphicsEntities[i].graphicsEntity->getPosition();
+			_graphicsEntities[i].graphicsEntity->setVisible(false);
 		}
+		_graphicsEntities[WeaponType::eSOUL_REAPER].graphicsEntity->setVisible(true);
 
 		_avatarController = _entity->getComponent<CAvatarController>("CAvatarController");
 		assert(_avatarController != NULL && "Error: Se necesita el componente avatar controller");
@@ -348,7 +360,7 @@ namespace Logic {
 	//________________________________________________________________________
 
 	void CHudWeapons::onFixedTick(unsigned int msecs) {
-		_graphicsEntities[_currentWeapon].graphicsEntity->setVisible(true);
+		//_graphicsEntities[_currentWeapon].graphicsEntity->setVisible(true);
 		if(_changingWeapon) {
 			changeWeaponAnim(msecs);
 		}
@@ -524,8 +536,11 @@ namespace Logic {
 		if(_chgWpnAnim.takingAway && _chgWpnAnim.x > 6.0f) {
 			_chgWpnAnim.takingAway = false;
 			
-			_overlayWeapon3D[_currentWeapon]->setVisible(false);
-			_overlayWeapon3D[_chgWpnAnim.nextWeapon]->setVisible(true);
+			_graphicsEntities[_currentWeapon].graphicsEntity->setVisible(false);
+			_graphicsEntities[_chgWpnAnim.nextWeapon].graphicsEntity->setVisible(true);
+
+			//_overlayWeapon3D[_currentWeapon]->setVisible(false);
+			//_overlayWeapon3D[_chgWpnAnim.nextWeapon]->setVisible(true);
 			_currentWeapon = _chgWpnAnim.nextWeapon;
 
 			Audio::CServer::getSingletonPtr()->playSound("weapons/change.wav");

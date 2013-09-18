@@ -104,6 +104,7 @@ namespace Graphics
 			// @deprecated De momento calculo las tangentes a los vertices desde
 			// Ogre para poder usar bump mapping. Lo ideal es que las tangentes
 			// se precalculen al exportar los modelos.
+			
 
 			Ogre::MeshPtr pMesh = Ogre::MeshManager::getSingleton().load(_mesh,
 				Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,    
@@ -121,6 +122,9 @@ namespace Graphics
 			}
 
 			_entity = _scene->getSceneMgr()->createEntity(pMesh);
+
+			printf("caña aqui %s y tb %d",(Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME).c_str(),_entity->getRenderQueueGroup()  );
+
 			_entity->setLightMask(1 << 0);
 			//_entity->setCastShadows(true);
 		}

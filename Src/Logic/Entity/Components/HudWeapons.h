@@ -333,7 +333,7 @@ namespace Logic {
 		FallAnim _fallAnim;
 
 		//////////////////////Gestion de armas
-		Graphics::COverlay *_overlayWeapon3D[WeaponType::eSIZE];
+		//Graphics::COverlay *_overlayWeapon3D[WeaponType::eSIZE];
 
 		CAvatarController* _avatarController;
 
