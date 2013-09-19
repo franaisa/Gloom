@@ -115,15 +115,16 @@ namespace Graphics
 	//--------------------------------------------------------
 	
 	void CCamera::lookAt(const Vector3& position){
-		// Si le paso la position a (0,0,0), significa que quiero restablecer la orientacion.
-		if(position == Vector3::ZERO)
-			_camera->setOrientation(Quaternion::IDENTITY);
-		else
-			_camera->lookAt(position);
+		_camera->lookAt(position);
 	}
 
 	//--------------------------------------------------------
 
+	void CCamera::restartCamera(){
+		_camera->setOrientation(Quaternion::IDENTITY);
+	}
+
+	//--------------------------------------------------------
 
 	Graphics::CEntity* CCamera::addEntityChild(const std::string &nameEntity, const std::string &nameMesh, Vector3 position){
 	
@@ -140,6 +141,10 @@ namespace Graphics
 		sceneNode->attachObject(entity);
 		
 		entity->setRenderQueueGroupAndPriority(Ogre::RenderQueueGroupID::RENDER_QUEUE_6, 200);
+
+		//entity->getSubEntity(0)->getMaterial()->setDepthCheckEnabled(false); 
+		//entity->getSubEntity(0)->getMaterial()->setDepthWriteEnabled(false);
+
 		// especifico su posicion
 		sceneNode->setPosition(position);
 

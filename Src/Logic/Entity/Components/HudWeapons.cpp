@@ -203,7 +203,7 @@ namespace Logic {
 			if(weapon->hasAttribute("ModelPitch"))
 				_graphicsEntities[current].defaultPitch = weapon->getFloatAttribute("ModelPitch");
 			if(weapon->hasAttribute("ModelRoll"))
-				_graphicsEntities[current].defaultPitch = weapon->getFloatAttribute("ModelRoll");
+				_graphicsEntities[current].defaultRoll = weapon->getFloatAttribute("ModelRoll");
 				
 			//Esto puede petar si no esta, pero creo q es obligatorio
 			if(!weapon->hasAttribute("Offset"))
@@ -233,7 +233,7 @@ namespace Logic {
 			std::string modelWeapon = weapon->getStringAttribute("Model");	
 			_graphicsEntities[current].graphicsEntity = _scene->getCamera()->addEntityChild(strWeapon, modelWeapon, _graphicsEntities[current].offset);
 
-			//_graphicsEntities[current].graphicsEntity->setOrientation(Math::setQuaternion(_graphicsEntities[current].defaultYaw, _graphicsEntities[current].defaultPitch, _graphicsEntities[current].defaultRoll));
+			_graphicsEntities[current].graphicsEntity->setOrientation(Math::setQuaternion(_graphicsEntities[current].defaultYaw, _graphicsEntities[current].defaultPitch, _graphicsEntities[current].defaultRoll));
 			_graphicsEntities[current].graphicsEntity->setVisible(false);
 			/* */
 			
