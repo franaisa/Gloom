@@ -1,0 +1,24 @@
+fragment_program overlayPainterFragment hlsl {
+	source overlayPainter.hlsl
+	entry_point fragment_main
+	target ps_2_0
+}
+
+material overlayPainter {
+	technique {
+		pass {
+			lighting off
+			depth_check off
+		
+			fragment_program_ref overlayPainterFragment {
+			}
+		
+			// Textura de post-procesado de la escena
+			texture_unit SceneSampler {
+			}
+			
+			texture_unit OverlaySampler {
+			}
+		}
+	}
+}

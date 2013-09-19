@@ -143,7 +143,7 @@ namespace Graphics
 		size_t vertexCount, indexCount;
 
 		getMeshInformation(_entity->getMesh(), vertexCount, vertexBuffer, indexCount, indexBuffer);*/
-			
+		
 		return _loaded = true;
 
 	} // load
@@ -273,6 +273,18 @@ namespace Graphics
 			_entityNode->setScale(scale);
 	} // setScale
 	
+	void CEntity::setRenderQueue(unsigned int index) {
+		_entity->setRenderQueueGroup(index);
+	}
+
+	unsigned int CEntity::getRenderQueue() {
+		return _entity->getRenderQueueGroup();
+	}
+
+	void CEntity::setVisibilityMask(unsigned int mask) {
+		_entity->setVisibilityFlags(mask);
+	}
+
 	//--------------------------------------------------------
 		
 	void CEntity::setScale(const float scale)

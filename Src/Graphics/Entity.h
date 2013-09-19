@@ -170,6 +170,11 @@ namespace Graphics
 		 */
 		void setScale(const Vector3 &scale);
 
+		void setRenderQueue(unsigned int index);
+		unsigned int getRenderQueue();
+
+		void setVisibilityMask(unsigned int mask);
+
 		/**
 		 Escala la entidad.
 

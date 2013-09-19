@@ -39,6 +39,19 @@ material mapaAlberto_blanco
 			}
 		}
 	}
+	
+	technique {
+		lighting off
+	
+		scheme blackScheme
+		pass {
+			vertex_program_ref blackVertex {
+			}
+			
+			fragment_program_ref blackFragment {
+			}
+		}
+	}
 }
 
 
@@ -107,6 +120,19 @@ material mapaAlberto_bronzecopper {
 			}
 			fragment_program_ref depthMapFragment
 			{
+			}
+		}
+	}
+	
+	technique {
+		lighting off
+	
+		scheme blackScheme
+		pass {
+			vertex_program_ref blackVertex {
+			}
+			
+			fragment_program_ref blackFragment {
 			}
 		}
 	}
@@ -181,6 +207,19 @@ material mapaAlberto_comluman {
 			}
 		}
 	}
+	
+	technique {
+		lighting off
+	
+		scheme blackScheme
+		pass {
+			vertex_program_ref blackVertex {
+			}
+			
+			fragment_program_ref blackFragment {
+			}
+		}
+	}
 }
 
 
@@ -223,6 +262,19 @@ material mapaAlberto_luces
 			}
 			fragment_program_ref depthMapFragment
 			{
+			}
+		}
+	}
+	
+	technique {
+		lighting off
+	
+		scheme blackScheme
+		pass {
+			vertex_program_ref blackVertex {
+			}
+			
+			fragment_program_ref blackFragment {
 			}
 		}
 	}
@@ -294,6 +346,19 @@ material mapaAlberto_metalContainer {
 			}
 			fragment_program_ref depthMapFragment
 			{
+			}
+		}
+	}
+
+	technique {
+		lighting off
+	
+		scheme blackScheme
+		pass {
+			vertex_program_ref blackVertex {
+			}
+			
+			fragment_program_ref blackFragment {
 			}
 		}
 	}	
@@ -368,6 +433,19 @@ material mapaAlberto_metalContainer0149 {
 			}
 		}
 	}
+	
+	technique {
+		lighting off
+	
+		scheme blackScheme
+		pass {
+			vertex_program_ref blackVertex {
+			}
+			
+			fragment_program_ref blackFragment {
+			}
+		}
+	}
 }
 
 
@@ -439,6 +517,19 @@ material mapaAlberto_metalContainers {
 			}
 		}
 	}
+	
+	technique {
+		lighting off
+	
+		scheme blackScheme
+		pass {
+			vertex_program_ref blackVertex {
+			}
+			
+			fragment_program_ref blackFragment {
+			}
+		}
+	}
 }
 
 
@@ -507,6 +598,19 @@ material mapaAlberto_metalpuerta {
 			}
 			fragment_program_ref depthMapFragment
 			{
+			}
+		}
+	}
+	
+	technique {
+		lighting off
+	
+		scheme blackScheme
+		pass {
+			vertex_program_ref blackVertex {
+			}
+			
+			fragment_program_ref blackFragment {
 			}
 		}
 	}
@@ -595,6 +699,19 @@ material mapaAlberto_piedra {
 			}
 		}
 	}
+	
+	technique {
+		lighting off
+	
+		scheme blackScheme
+		pass {
+			vertex_program_ref blackVertex {
+			}
+			
+			fragment_program_ref blackFragment {
+			}
+		}
+	}
 }
 
 
@@ -664,6 +781,19 @@ material mapaAlberto_suelo {
 			}
 			fragment_program_ref depthMapFragment
 			{
+			}
+		}
+	}
+	
+	technique {
+		lighting off
+	
+		scheme blackScheme
+		pass {
+			vertex_program_ref blackVertex {
+			}
+			
+			fragment_program_ref blackFragment {
 			}
 		}
 	}
@@ -738,6 +868,19 @@ material mapaAlberto_suelometal{
 			}
 		}
 	}
+	
+	technique {
+		lighting off
+	
+		scheme blackScheme
+		pass {
+			vertex_program_ref blackVertex {
+			}
+			
+			fragment_program_ref blackFragment {
+			}
+		}
+	}
 }
 
 
@@ -809,6 +952,19 @@ material mapaAlberto_techometal {
 			}
 		}
 	}
+	
+	technique {
+		lighting off
+	
+		scheme blackScheme
+		pass {
+			vertex_program_ref blackVertex {
+			}
+			
+			fragment_program_ref blackFragment {
+			}
+		}
+	}
 }
 
 
@@ -877,6 +1033,19 @@ material mapaAlberto_ventana {
 			}
 			fragment_program_ref depthMapFragment
 			{
+			}
+		}
+	}
+
+	technique {
+		lighting off
+	
+		scheme blackScheme
+		pass {
+			vertex_program_ref blackVertex {
+			}
+			
+			fragment_program_ref blackFragment {
 			}
 		}
 	}	
@@ -951,6 +1120,19 @@ material mapaAlberto_viga {
 			}
 		}
 	}
+	
+	technique {
+		lighting off
+	
+		scheme blackScheme
+		pass {
+			vertex_program_ref blackVertex {
+			}
+			
+			fragment_program_ref blackFragment {
+			}
+		}
+	}
 }
 
 
@@ -1019,6 +1201,19 @@ material metalContainer_metalContainer0036 {
 			}
 			fragment_program_ref depthMapFragment
 			{
+			}
+		}
+	}
+	
+	technique {
+		lighting off
+	
+		scheme blackScheme
+		pass {
+			vertex_program_ref blackVertex {
+			}
+			
+			fragment_program_ref blackFragment {
 			}
 		}
 	}

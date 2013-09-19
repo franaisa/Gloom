@@ -471,15 +471,15 @@ Map = {
 	
 	lavaFondo = {
 		type = "Lava",
-		position = {-218.0,-20.0, -67.7},
+		position = {-218.0,-10.0, -67.7},
 		
 		plane_orientation = {0, 1, 0},
-		plane_width = 1500,
-		plane_height = 1500,
-		plane_xSegments = 20,
-		plane_ySegments = 20,
-		plane_uTiling = 20,
-		plane_vTiling = 20,
+		plane_width = 500,
+		plane_height = 500,
+		plane_xSegments = 60,
+		plane_ySegments = 60,
+		plane_uTiling = 10,
+		plane_vTiling = 10,
 		plane_upVector = {0, 0, 1},
 		plane_material = "lavaFondo",
 		
