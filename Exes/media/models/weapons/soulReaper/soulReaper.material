@@ -51,7 +51,7 @@ material Material#25 {
 	}
 	
 	// Para el glow
-	/*technique {
+	technique {
 		scheme glow
 		pass {
 			vertex_program_ref GlowMappingVertex {
@@ -65,10 +65,10 @@ material Material#25 {
 			}
 		
 			texture_unit GlowMap {
-				texture Jump_GLOW.tga
+				texture SoulReaper_GLOW.tga
 			}
 		}
-	}*/
+	}
 
 	// Para el motion blur
 	technique {

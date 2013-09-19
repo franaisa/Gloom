@@ -163,6 +163,11 @@ namespace Graphics
 		*/
 		void resetFov();
 
+		/**
+		Metodo que establece la orientacio a la de por defecto
+		*/
+		void restartCamera();
+
 		Ogre::SceneNode* getSceneNode() { return _cameraNode; }
 
 	protected:
