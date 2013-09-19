@@ -24,7 +24,6 @@ compositor Glow
  
 			pass render_scene
 			{
-				last_render_queue 105
 			}
 		}
  
@@ -54,6 +53,47 @@ compositor Glow
 				material GlowCompositorMat/GlowB
 				input 0 rt0
 				input 1 AtoB
+			}
+		}
+	}
+}
+
+compositor overlayWeaponCompositor
+{
+	technique
+	{
+		texture	previousScene			target_width target_height PF_A8R8G8B8
+		texture	overlayWeapon			target_width target_height PF_A8R8G8B8
+ 
+		target previousScene
+		{
+			input previous
+		}
+		
+		// Obtenemos la escena
+		target overlayWeapon
+		{
+			input none
+			
+			pass clear
+			{
+			}
+ 
+			pass render_scene
+			{
+				first_render_queue 95
+				last_render_queue 95
+			}
+		}
+ 
+		target_output
+		{
+			input none
+			pass render_quad
+			{
+				material overlayPainter
+				input 0 previousScene
+				input 1 overlayWeapon
 			}
 		}
 	}

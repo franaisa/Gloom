@@ -160,15 +160,22 @@ namespace Graphics
 		_camera->getOgreCamera()->setAspectRatio(aspectratio);
 
 		if(_name != "dummy_scene"){
-			_compositorManager->addCompositor(_camera->getOgreCamera()->getViewport(), "Glow");
-			_compositorManager->setCompositorEnabled(_camera->getOgreCamera()->getViewport(), "Glow", true);
+			// Primero se blurrea la escena
+			_motionBlur = new CMotionBlur(_compositorManager, _camera);
+
+			Ogre::Viewport* viewport = _camera->getOgreCamera()->getViewport();
+			// Luego pintamos el overlay
+			_compositorManager->addCompositor(viewport, "overlayWeaponCompositor");
+			_compositorManager->setCompositorEnabled(viewport, "overlayWeaponCompositor", true);
+
+			// Luego aplicamos el glow
+			_compositorManager->addCompositor(viewport, "Glow");
+			_compositorManager->setCompositorEnabled(viewport, "Glow", true);
 
 			_glowMaterialListener = new GlowMaterialListener();
 			Ogre::MaterialManager::getSingletonPtr()->addListener(_glowMaterialListener);
 
 			_poolParticle->activate();
-
-			_motionBlur = new CMotionBlur(_compositorManager, _camera);
 			//_volumetricLight = new CVolumetricLightScattering(_compositorManager, _camera);
 		}
 

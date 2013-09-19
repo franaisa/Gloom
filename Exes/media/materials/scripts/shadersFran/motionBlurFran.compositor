@@ -8,6 +8,7 @@ compositor MotionBlurFranCompositor
 		// Obtenemos la escena
 		target rt0
 		{
+			visibility_mask 2
 			input previous
 		}
  

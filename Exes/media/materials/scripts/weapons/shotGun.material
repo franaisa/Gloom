@@ -52,6 +52,19 @@ material shotGun {
 	}
 	
 	technique {
+		lighting off
+	
+		scheme depthScheme
+		pass {
+			vertex_program_ref blackVertex {
+			}
+			
+			fragment_program_ref blackFragment {
+			}
+		}
+	}
+	
+	technique {
 		scheme glow
 		
 		pass {

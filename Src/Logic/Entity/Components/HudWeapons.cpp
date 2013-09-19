@@ -232,6 +232,11 @@ namespace Logic {
 
 			std::string modelWeapon = weapon->getStringAttribute("Model");	
 			_graphicsEntities[current].graphicsEntity = _scene->getCamera()->addEntityChild(strWeapon, modelWeapon, _graphicsEntities[current].offset);
+			// Este render queue se usa para simular los overlays. Poner en esta cola solo lo que queramos
+			// que se renderice como un overlay!!
+			_graphicsEntities[current].graphicsEntity->setRenderQueue(95);
+			// Esta mascara se utiliza para excluir el elemento del efecto de motion blur
+			_graphicsEntities[current].graphicsEntity->setVisibilityMask(1 << 0);
 
 			//_graphicsEntities[current].graphicsEntity->setOrientation(Math::setQuaternion(_graphicsEntities[current].defaultYaw, _graphicsEntities[current].defaultPitch, _graphicsEntities[current].defaultRoll));
 			_graphicsEntities[current].graphicsEntity->setVisible(false);
