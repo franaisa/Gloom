@@ -178,7 +178,8 @@ namespace Logic
 		*/
 		Graphics::CScene* _scene;
 
-		std::list<std::string> _material;
+		//std::list<std::string> _material;
+		std::string _material;
 
 		Ogre::ManualObject*					decalObject;
 		std::vector<Ogre::ManualObject*>	vListaDecals;

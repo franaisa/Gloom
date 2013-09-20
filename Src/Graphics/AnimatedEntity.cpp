@@ -217,7 +217,7 @@ namespace Graphics
 			_scene->getSceneMgr()->destroyEntity(_weapon);
 		_weapon = _scene->getSceneMgr()->createEntity(arma.getMesh());
 		
-		_entity->attachObjectToBone("weapon_bone_2",_weapon);
+		_entity->attachObjectToBone("Bip001 R Hand",_weapon);
 
 	}
 	//--------------------------------------------------------

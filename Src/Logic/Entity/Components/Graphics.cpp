@@ -68,7 +68,7 @@ namespace Logic
 		}
 		
 		//¿queremos material custom?
-		if(entityInfo->hasAttribute("materialName") && _model == "heavy.mesh"){
+		/*if(entityInfo->hasAttribute("materialName") && _model == "heavy.mesh"){
 			//material type
 			std::string materialName = entityInfo->getStringAttribute("materialName");
 			_material.push_back(materialName+"HeadBlue");
@@ -78,6 +78,8 @@ namespace Logic
 			_material.push_back(materialName+"HandsBlue");
 
 			_graphicsEntity->changeMaterial(_material);
+		}else */if (entityInfo->hasAttribute("materialName")){
+			_material = entityInfo->getStringAttribute("materialName");
 		}
 
 		_lightMask = readLightMask(entityInfo);

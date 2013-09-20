@@ -1,0 +1,210 @@
+vertex_program shield_vs hlsl
+{
+	source ArchangelShieldTP.hlsl
+	entry_point mainVS
+	target vs_2_0
+
+}
+
+fragment_program shield_ps hlsl
+{
+	source ArchangelShieldTP.hlsl
+	entry_point mainPS
+	target ps_2_0
+}
+
+
+material archangel {
+	technique {
+		pass {
+		
+			vertex_program_ref bumpLightingVertex_AMB {
+			}
+		
+			fragment_program_ref bumpLightingFragment_AMB {
+				// Constante para regular la cantidad de ambiente
+				param_named			Ka								float		0.6
+			}
+			
+			// Textura de difuso
+			texture_unit DiffMap {
+				texture map_arcangel_DIF.jpg
+			}
+			
+		}
+		
+		pass {
+		
+			scene_blend add
+			iteration once_per_light
+		
+			vertex_program_ref bumpLightingVertexShader {
+			}
+			
+			fragment_program_ref bumpLightingFragment_DIFF_ALPHASPEC {
+				// Constante para regular la cantidad de difuso
+				param_named			Kd								float		0.6
+				// Constante de brillo especular
+				param_named 			shininess						float		70.0
+			}
+			
+			// Textura de difuso
+			texture_unit DiffMap {
+				texture map_arcangel_DIF.jpg
+			}
+			
+			// Textura para el bump mapping. En el alfa esta el mapa de especulares.
+			texture_unit NormalMap {
+				texture map_arcangel_NRM_SPEC.tga
+			}
+			
+		}
+	}
+}
+
+//HABILIDAD PIEL DE DIAMANTE
+
+material archangelDiamond {
+	technique {
+		pass {
+		
+			vertex_program_ref bumpLightingVertex_AMB {
+			}
+		
+			fragment_program_ref bumpLightingFragment_AMB {
+				// Constante para regular la cantidad de ambiente
+				param_named			Ka								float		0.6
+			}
+			
+			// Textura de difuso
+			texture_unit DiffMap {
+				texture map_arcangel_DIF.jpg
+			}
+			
+		}
+		
+		pass 
+		{
+			illumination_stage ambient
+            scene_blend alpha_blend
+			
+			depth_write off
+			
+			vertex_program_ref shield_vs
+			{
+				param_named_auto ViewProjectionMatrix worldviewproj_matrix
+				
+			}
+			fragment_program_ref shield_ps
+            {
+				param_named alpha float 0.25
+				
+            }
+			texture_unit 0
+            {
+				tex_coord_set 0
+                texture $diffuse_tex_shield
+				scale 0.2 0.2
+            }
+		}
+		
+		pass {
+		
+			scene_blend add
+			iteration once_per_light
+		
+			vertex_program_ref bumpLightingVertexShader {
+			}
+			
+			fragment_program_ref bumpLightingFragment_DIFF_ALPHASPEC {
+				// Constante para regular la cantidad de difuso
+				param_named			Kd								float		0.6
+				// Constante de brillo especular
+				param_named 			shininess						float		70.0
+			}
+			
+			// Textura de difuso
+			texture_unit DiffMap {
+				texture map_arcangel_DIF.jpg
+			}
+			
+			// Textura para el bump mapping. En el alfa esta el mapa de especulares.
+			texture_unit NormalMap {
+				texture map_arcangel_NRM_SPEC.tga
+			}
+			
+		}
+		
+	}
+}
+
+//HECHIZO BERSERK
+
+
+material ArchangelBerserk {
+	technique {
+		pass {
+		
+			vertex_program_ref bumpLightingVertex_AMB {
+			}
+		
+			fragment_program_ref bumpLightingFragment_AMB {
+				// Constante para regular la cantidad de ambiente
+				param_named			Ka								float		0.6
+			}
+			
+			// Textura de difuso
+			texture_unit DiffMap {
+				texture map_arcangel_DIF.jpg
+			}
+			
+		}
+		
+		pass 
+		{
+			illumination_stage ambient
+            scene_blend alpha_blend
+
+			depth_write off
+
+			vertex_program_ref berserk_vs
+			{
+				param_named_auto ViewProjectionMatrix worldviewproj_matrix
+				param_named_auto tiempo time
+			}
+			fragment_program_ref berserk_ps
+            {
+				param_named alpha float 0.25
+				param_named_auto tiempo time
+            }
+		}
+		
+		pass {
+		
+			scene_blend add
+			iteration once_per_light
+		
+			vertex_program_ref bumpLightingVertexShader {
+			}
+			
+			fragment_program_ref bumpLightingFragment_DIFF_ALPHASPEC {
+				// Constante para regular la cantidad de difuso
+				param_named			Kd								float		0.6
+				// Constante de brillo especular
+				param_named 			shininess						float		70.0
+			}
+			
+			// Textura de difuso
+			texture_unit DiffMap {
+				texture map_arcangel_DIF.jpg
+			}
+			
+			// Textura para el bump mapping. En el alfa esta el mapa de especulares.
+			texture_unit NormalMap {
+				texture map_arcangel_NRM_SPEC.tga
+			}
+			
+		}
+	}
+}
+

@@ -83,7 +83,7 @@ namespace Logic
 				//ogre coge y me las borra para optimizar, por lo que al atacharlas luego no existen T-T
 				Graphics::CEntity* entity = new Graphics::CEntity(nameWeapon,CEntityFactory::getSingletonPtr()->getInfo(WeaponType::toString(current))->getStringAttribute("Model"));
 
-				//_animatedGraphicsEntity->attachWeapon(*entity, _entity->getEntityID());
+				_animatedGraphicsEntity->attachWeapon(*entity, _entity->getEntityID());
 				_weapons[i] =  entity;
 			}
 
@@ -102,7 +102,7 @@ namespace Logic
 		CGraphics::onActivate();
 
 		_animatedGraphicsEntity->setAnimation( _defaultAnimation,1, true );
-		//_animatedGraphicsEntity->attachWeapon(*_weapons[0], _entity->getEntityID());
+		_animatedGraphicsEntity->attachWeapon(*_weapons[0], _entity->getEntityID());
 		_insertAnimation = true;
 		_animatedGraphicsEntity->addObserver(this);
 	}
@@ -219,9 +219,9 @@ namespace Logic
 			CGraphics::changeMaterial(_currentMaterialWeapon);
 			if(_currentMaterialWeapon != "original"){
 				_originalMaterialWeapon = _animatedGraphicsEntity->getWeaponMaterial();
-				//_animatedGraphicsEntity->changeMaterialToWeapon(materialName);
+				_animatedGraphicsEntity->changeMaterialToWeapon(materialName);
 			}else{
-				//_animatedGraphicsEntity->changeMaterialToWeapon(_originalMaterialWeapon);
+				_animatedGraphicsEntity->changeMaterialToWeapon(_originalMaterialWeapon);
 			}
 		}
 	}
