@@ -217,6 +217,13 @@ Map = {
 		particle_destroyEntityOnExpiry = true,
 	},
 	
+	MinigunHit = {
+		type = "MinigunHit",
+		particle_scriptName = "minigunHit",
+		particle_on = true,
+		particle_destroyEntityOnExpiry = true,
+	},
+	
 	SniperTrail = {
 		type = "SniperTrail",
 		particle_scriptName = "sniperHit",

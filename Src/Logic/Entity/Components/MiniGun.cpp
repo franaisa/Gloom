@@ -257,7 +257,7 @@ namespace Logic {
 			{
 				//Mandar el mensaje de los decal
 				Vector3 pos = hits[i].impact;
-				drawDecal(hits[i].entity, hits[i].impact);
+				//drawDecal(hits[i].entity, hits[i].impact);
 			
 				// Añado aqui las particulas de dado en la pared.
 				/*auto m = std::make_shared<CMessageCreateParticle>();
@@ -270,10 +270,10 @@ namespace Logic {
 				euler.setDirection(hits[i].normal);
 				euler.yaw( Ogre::Radian(Math::HALF_PI) );
 
-				Map::CEntity* entityInfo = CEntityFactory::getSingletonPtr()->getInfo("BulletSpark");
-				CEntity* bulletSpark = CEntityFactory::getSingletonPtr()->createEntity(entityInfo, _entity->getMap(), hits[i].impact, euler.toQuaternion() );
-				bulletSpark->activate();
-				bulletSpark->start();
+				Map::CEntity* entityInfo = CEntityFactory::getSingletonPtr()->getInfo("MinigunHit");
+				CEntity* minigunHit = CEntityFactory::getSingletonPtr()->createEntity(entityInfo, _entity->getMap(), hits[i].impact, euler.toQuaternion() );
+				minigunHit->activate();
+				minigunHit->start();
 
 				int randomValue = Math::unifRand(2);
 				std::string ricochetSound = (randomValue == 1 ? "weapons/hit/ric3.wav" : "weapons/hit/ric2.wav");
@@ -404,16 +404,16 @@ namespace Logic {
 			if( typeEntity == "World" ) {
 				//Mandar el mensaje de los decal
 				Vector3 pos = it->impact;
-				drawDecal(it->entity, it->impact);
+				//drawDecal(it->entity, it->impact);
 
 				Euler euler(Quaternion::IDENTITY);
 				euler.setDirection(it->normal);
 				euler.yaw( Ogre::Radian(Math::HALF_PI) );
 
-				Map::CEntity* entityInfo = CEntityFactory::getSingletonPtr()->getInfo("BulletSpark");
-				CEntity* bulletSpark = CEntityFactory::getSingletonPtr()->createEntity(entityInfo, _entity->getMap(), it->impact, euler.toQuaternion() );
-				bulletSpark->activate();
-				bulletSpark->start();
+				Map::CEntity* entityInfo = CEntityFactory::getSingletonPtr()->getInfo("MinigunHit");
+				CEntity* minigunHit = CEntityFactory::getSingletonPtr()->createEntity(entityInfo, _entity->getMap(), it->impact, euler.toQuaternion() );
+				minigunHit->activate();
+				minigunHit->start();
 
 				int randomValue = Math::unifRand(2);
 				std::string ricochetSound = (randomValue == 1 ? "weapons/hit/ric3.wav" : "weapons/hit/ric2.wav");

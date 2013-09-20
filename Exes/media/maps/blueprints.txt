@@ -55,6 +55,7 @@ SniperAmmo CPhysicStaticEntity CSpawnItemManager CAudioTrigger CGraphics
 Explotion CParticleSystem
 SmokeBash CParticleSystem
 BulletSpark CParticleSystem
+MinigunHit	CParticleSystem
 BloodStrike CParticleSystem
 SniperTrail CParticleSystem
 SpawnParticles CParticleSystem
