@@ -2,7 +2,7 @@
 sampler SceneSampler	: register(s0); // Render de la escena
 sampler DepthMap			: register(s1); // Render del Z-Buffer
 
-#define NUM_SAMPLES 12
+#define NUM_SAMPLES 18
 
 // Parametros uniformes
 // Inversa de la matriz de vista-proyeccion del frame actual

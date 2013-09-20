@@ -72,7 +72,7 @@ namespace Logic {
 		
 		// Shoot flash
 		CDynamicLight* shootFlash = _entity->getComponent<CDynamicLight>("CDynamicLight");
-		shootFlash->setColor( Vector3(0.9f, 0.9f, 0.9f) );
+		shootFlash->setColor( Vector3(0.098f, 0.823f, 0.161f) );
 		shootFlash->setAttenuation( Vector3(1.0f, 0.014f, 0.0007f) );
 		shootFlash->setRange(325.0f);
 		shootFlash->turnOn( Vector3(0.0f, _heightShoot, 0.0f) );
@@ -182,9 +182,9 @@ namespace Logic {
 		CDynamicLight* shootFlash = _entity->getComponent<CDynamicLight>("CDynamicLight");
 
 		if(_firingRound) {
-			float r, g, b;
-			r = g = Math::unifRand(0.9f, 1.0f);
-			b = Math::unifRand(0.85f, 1.0f);
+			float r = Math::unifRand(0.098f, 0.18f);
+			float g = Math::unifRand(0.823f, 0.833f);
+			float b = Math::unifRand(0.161f, 0.171f);
 			
 			shootFlash->setColor( Vector3(r, g, b) );
 		}
