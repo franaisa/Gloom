@@ -21,6 +21,7 @@ Contiene la implementación de la clase principal de audio, llevará el control de
 
 #include <cassert>
 #include <iostream>
+#include <fstream>
 
 using namespace FMOD;
 using namespace std;
@@ -29,24 +30,23 @@ namespace Audio
 {
 	CServer *CServer::_instance = 0;
 
-	CServer::CServer() : _audioResourcesPath("media/audio/")
-	{
+	CServer::CServer() : _audioResourcesPath("media/audio/") {
 		assert(!_instance && "Segunda inicialización de Audio::CServer no permitida!");
-		_volume=0.5f;
-		_doppler=1.0f;
-		_rolloff=1.0f;
-		_soundAvatar=NULL;
-		_playerHeight=8;
-		_isMute=false;
-		_instance = this;
-		_minimumExecuteTime=100;
-		_timeToExecute=0;
+		
+		_volume				= 0.5f;
+		_doppler			= 1.0f;
+		_rolloff			= 1.0f;
+		_soundAvatar		= NULL;
+		_playerHeight		= 8;
+		_isMute				= false;
+		_instance			= this;
+		_minimumExecuteTime	= 100;
+		_timeToExecute		= 0;
 	} // CServer
 
 	//--------------------------------------------------------
 
-	CServer::~CServer() 
-	{
+	CServer::~CServer() {
 		assert(_instance);
 
 		_instance = 0;
@@ -55,28 +55,23 @@ namespace Audio
 
 	//--------------------------------------------------------
 
-	bool CServer::Init() 
-	{
+	bool CServer::Init() {
 		assert(!_instance && "Segunda inicialización de Audio::CServer no permitida!");
 
 		new CServer();
 
-		if (!_instance->open())
-		{
+		if ( !_instance->open() ) {
 			Release();
 			return false;
 		}
 
 		return true;
-
 	} // Init
 
 	//--------------------------------------------------------
 
-	void CServer::Release()
-	{
-		if(_instance)
-		{
+	void CServer::Release() {
+		if(_instance) {
 			_instance->close();
 			delete _instance;
 		}
@@ -85,8 +80,7 @@ namespace Audio
 
 	//--------------------------------------------------------
 
-	bool CServer::open()
-	{
+	bool CServer::open() {
 		FMOD_RESULT result;
 		//Creamos
 		result = System_Create(&_system);
@@ -102,15 +96,13 @@ namespace Audio
 		createCRCTable( _audioResourcesPath.substr(0, _audioResourcesPath.size() - 1) );
 
 		return true;
-
 	} // open
 
 	//--------------------------------------------------------
 
-	void CServer::close() 
-	{
+	void CServer::close() {
 		stopAllSounds();
-		_soundAvatar=NULL;
+		_soundAvatar = NULL;
 		_system->release();
 
 	} // close
@@ -149,7 +141,7 @@ namespace Audio
 
 	// función para dar salida de error y terminar aplicación
 	void CServer::ERRCHECK(FMOD_RESULT result){
-		if (result != FMOD_OK){
+		if (result != FMOD_OK) {
 			cerr << "FMOD error! " << result << endl << FMOD_ErrorString(result);
 			throw;
 		}
@@ -356,8 +348,8 @@ namespace Audio
 						std::string fileRelativePath = rootDirectory + "/" + ent->d_name;
 						fileRelativePath.replace(0, _audioResourcesPath.size(), 0, ' ');
 
-						assert( _CRCTable.insert( std::pair<int, std::string>( Math::CRC(fileRelativePath), fileRelativePath ) ).second && 
-							    "Error: Existen dos rutas de audio con el mismo checksum");
+						bool success = _CRCTable.insert( std::pair<int, std::string>( Math::CRC(fileRelativePath), fileRelativePath ) ).second;
+						assert( success && "Error: Existen dos rutas de audio con el mismo checksum");
 					}
 				}
 			}

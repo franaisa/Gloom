@@ -313,7 +313,7 @@ namespace Logic {
 		// Mensaje de playerDead para tratar el respawn y desactivar los componentes
 		// del personaje.
 		std::shared_ptr<CMessagePlayerDead> playerDeadMsg = std::make_shared<CMessagePlayerDead>();
-		playerDeadMsg->setKiller(enemy->getEntityID());
+		playerDeadMsg->setKiller(enemy);
 		_entity->emitMessage(playerDeadMsg);
 
 		//Emitir el mensaje para los killstreak, no me está llegando :S
