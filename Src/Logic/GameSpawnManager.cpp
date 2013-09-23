@@ -79,7 +79,7 @@ namespace Logic {
 			if(entidad!=NULL)
 				_listSpawnPoints.push_back(entidad);
 		}
-		_maxTrys=15;
+		_maxTrys=30;
 	} // activate
 
 	//--------------------------------------------------------
@@ -92,10 +92,10 @@ namespace Logic {
 	//---------------------------------------------------------
 	
 	CEntity* CGameSpawnManager::getSpawnPosition(){
-		int disponibles=0;
+		/*int disponibles=0;
 		for(int i =0;i<_listSpawnPoints.size();i++)
 			if(!_listSpawnPoints[i]->getComponent<CPhysicStaticEntity>("CPhysicStaticEntity")->getInTrigger())
-				disponibles++;
+				disponibles++;*/
 		int random=(rand()*clock())%_listSpawnPoints.size();
 		//Mientras que nos devuelva que el trigger esta activado buscamos otro punto
 		int intentos=0;
@@ -104,8 +104,10 @@ namespace Logic {
 			random=(rand()*clock())%_listSpawnPoints.size();
 			std::cout << "clock vale " << clock() << std::endl;
 			intentos++;
-			if(intentos>_maxTrys)
-				return NULL;
+			if(intentos>_maxTrys){
+				_listSpawnPoints[random]->getComponent<CPhysicStaticEntity>("CPhysicStaticEntity")->setInTrigger(true);
+				return _listSpawnPoints[random];
+			}
 		}
 		//Ademas por si acaso se pide mas de un punto en el mismo tick hay que marcarlo instantaneamente
 		_listSpawnPoints[random]->getComponent<CPhysicStaticEntity>("CPhysicStaticEntity")->setInTrigger(true);

@@ -272,8 +272,13 @@ namespace Logic {
 
 				Map::CEntity* entityInfo = CEntityFactory::getSingletonPtr()->getInfo("MinigunHit");
 				CEntity* minigunHit = CEntityFactory::getSingletonPtr()->createEntity(entityInfo, _entity->getMap(), hits[i].impact, euler.toQuaternion() );
-				minigunHit->activate();
-				minigunHit->start();
+				if (minigunHit) //guarda del puntero de minigunHit porque me ha petado el server al ser minigunHit NULL y luego intentar hacer el start, sobre todo cuando disparas muchas
+				{
+					minigunHit->activate();
+					minigunHit->start();
+				}
+				else
+					std::cout << "NO ENTRAAAAAAAAAAAAAAAA" << std::endl;
 
 				int randomValue = Math::unifRand(2);
 				std::string ricochetSound = (randomValue == 1 ? "weapons/hit/ric3.wav" : "weapons/hit/ric2.wav");
@@ -412,8 +417,11 @@ namespace Logic {
 
 				Map::CEntity* entityInfo = CEntityFactory::getSingletonPtr()->getInfo("MinigunHit");
 				CEntity* minigunHit = CEntityFactory::getSingletonPtr()->createEntity(entityInfo, _entity->getMap(), it->impact, euler.toQuaternion() );
-				minigunHit->activate();
-				minigunHit->start();
+				if (minigunHit) //guarda para evitar pete
+				{
+					minigunHit->activate();
+					minigunHit->start();
+				}
 
 				int randomValue = Math::unifRand(2);
 				std::string ricochetSound = (randomValue == 1 ? "weapons/hit/ric3.wav" : "weapons/hit/ric2.wav");

@@ -161,13 +161,12 @@ namespace Logic
 				break;
 			}
 		}
-
 	} // process
 	
 	//---------------------------------------------------------
 
 	void CWeaponsManagerClient::changeWeapon(unsigned char newWeapon){
-		
+
 		//printf("\n%d\t%d",_currentWeapon, newWeapon);
 		if(newWeapon >= WeaponType::eSIZE){
 			return;
@@ -177,17 +176,16 @@ namespace Logic
 			// Indicamos que el arma actual ya no está equipada
 			// Desactivamos el componente Shoot del arma actual
 			// e indicamos que ya no está equipada
-//_weaponry[_currentWeapon].second->inUse(false);
+			//_weaponry[_currentWeapon].second->inUse(false);
 			_weaponry[_currentWeapon].second->stayBusy();
 
 			// Activamos el componente del nuevo arma que vamos
 			// a equipar e indicamos que el arma está equipada
 			_weaponry[newWeapon].second->stayAvailable();
-//_weaponry[newWeapon].second->inUse(true);
+			//_weaponry[newWeapon].second->inUse(true);
 			
 			// Actualizamo el indice de arma
 			_currentWeapon = newWeapon;
-
 			
 			// Mandamos un mensaje para actualizar el HUD
 			std::shared_ptr<CMessageChangeWeaponGraphics> chgWpnGraphicsMsg = std::make_shared<CMessageChangeWeaponGraphics>();
@@ -263,17 +261,18 @@ namespace Logic
 			for (int i = _currentWeapon + 1; i < _weaponry.size(); ++i)
 			{
 				//Comprobamos si en ese índice tenemos arma
-				if (_weaponry[i].first && ( _weaponry[i].second->getAmmo() > 0 || i == WeaponType::eSOUL_REAPER ))
+				//if (_weaponry[i].first && ( _weaponry[i].second->getAmmo() > 0 || i == WeaponType::eSOUL_REAPER ) )
+				if( _weaponry[i].first && (i != _currentWeapon) && ( _weaponry[i].second->getAmmo() > 0 || i == WeaponType::eSOUL_REAPER ) )
 					return i;
 			}
-
+			/*
 			//Recorremos todas las armas del inventario desde el principio, para hacerlo circular
 			for (int i = WeaponType::eSOUL_REAPER; i <= _currentWeapon; ++i)
 			{
 				//Comprobamos si en ese índice tenemos arma y tiene balas
-				if (_weaponry[i].first && ( _weaponry[i].second->getAmmo() > 0 || i == WeaponType::eSOUL_REAPER ))
+				if (_weaponry[i].first && ( _weaponry[i].second->getAmmo() > 0 || i == WeaponType::eSOUL_REAPER ) )
 					return i;
-			}
+			}*/
 		}
 		else //iWeapon == -100 Armas anteriores
 		{
@@ -281,16 +280,17 @@ namespace Logic
 			for (int i = _currentWeapon - 1; i >= 0; --i)
 			{
 				//Comprobamos si en ese índice tenemos arma y tiene balas
-				if (_weaponry[i].first)
+				//if (_weaponry[i].first)
+				if( _weaponry[i].first && (i != _currentWeapon) && ( _weaponry[i].second->getAmmo() > 0 || i == WeaponType::eSOUL_REAPER ) )
 					return i;
 			}
 
-			for (int i = WeaponType::eSIZE - 1 ; i > _currentWeapon; --i)
+			/*for (int i = WeaponType::eSIZE - 1 ; i > _currentWeapon; --i)
 			{
 				//Comprobamos si en ese índice tenemos arma
 				if (_weaponry[i].first && ( _weaponry[i].second->getAmmo() > 0 || i == WeaponType::eSOUL_REAPER ))
 					return i;
-			}
+			}*/
 		}
 
 		return -1; //No hemos obtenido arma
