@@ -76,21 +76,23 @@ namespace Application {
 			case Logic::Message::PLAYER_DEAD: {
 				shared_ptr<Logic::CMessagePlayerDead> playerDeadMsg = static_pointer_cast<Logic::CMessagePlayerDead>(msg);
 				
-				Logic::TEntityID killerID = playerDeadMsg->getKiller();
-				Logic::TEntityID emitterID = emitter->getEntityID();
-				Logic::CEntity* killer = Logic::CServer::getSingletonPtr()->getMap()->getEntityByID(killerID);
-				if( emitter != killer && isPlayer(killer) ) {
-					if(_playersMgr->addFragUsingEntityID(killerID) == _goalScore && !_unlimitedScore) {
-						// fin de partida
-						cout << killer->getName() << " WINS THE MATCH" << endl;
-						endGame();
+				Logic::CEntity* killer = playerDeadMsg->getKiller();
+				if(killer != NULL) {
+					Logic::TEntityID killerID = killer->getEntityID();
+					Logic::TEntityID emitterID = emitter->getEntityID();
+					if( emitter != killer && isPlayer(killer) ) {
+						if(_playersMgr->addFragUsingEntityID(killerID) == _goalScore && !_unlimitedScore) {
+							// fin de partida
+							cout << killer->getName() << " WINS THE MATCH" << endl;
+							endGame();
+						}
 					}
-				}
-				else {
-					_playersMgr->substractFragUsingEntityID(emitterID);
-				}
+					else {
+						_playersMgr->substractFragUsingEntityID(emitterID);
+					}
 
-				_playersMgr->addDeathUsingEntityID(emitterID);
+					_playersMgr->addDeathUsingEntityID(emitterID);
+				}
 
 				//cout << killer->getName() << " lleva " << _playersMgr->getFragsUsingEntityID(killerID) << " frags y " << _playersMgr->getDeathsUsingEntityID(killerID) << " muertes." << endl;
 

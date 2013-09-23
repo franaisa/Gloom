@@ -99,15 +99,18 @@ namespace Logic{
 
 	void CAnimationManager::process(const std::shared_ptr<CMessage>& message) {
 		switch( message->getMessageType() ) {
-			case Message::PLAYER_DEAD:
-				sendDeadMessage(std::static_pointer_cast<CMessagePlayerDead>(message)->getKiller());
-				break;
+			case Message::PLAYER_DEAD: {
+				std::shared_ptr<CMessagePlayerDead> playerDeadMsg = std::static_pointer_cast<CMessagePlayerDead>(message);
+				CEntity* killer = playerDeadMsg->getKiller();
 
-			case Message::DAMAGED:
+				sendDeadMessage(killer);
+				break;
+			}
+			case Message::DAMAGED: {
 				//nada de momento
 				break;
-
-			case Message::CONTROL:
+			}
+			case Message::CONTROL: {
 				ControlType ctrlType = std::static_pointer_cast<CMessageControl>(message)->getType();
 
 				if( ( ctrlType == ControlType::JUMP || ctrlType == ControlType::DODGE_BACKWARDS || ctrlType == ControlType::DODGE_FORWARD || 
@@ -120,18 +123,17 @@ namespace Logic{
 					_entity->emitMessage(anim);
 				}
 				break;
-
+			}
 		}
 	}
 
-	void CAnimationManager::sendDeadMessage(TEntityID killer){
-		CEntity * entity = CServer::getSingletonPtr()->getMap()->getEntityByID(killer);
-		if(!entity)
+	void CAnimationManager::sendDeadMessage(CEntity* killer){
+		if(!killer)
 			return;
 
-		Vector3 direction = _entity->getPosition() - entity->getPosition();
+		Vector3 direction = _entity->getPosition() - killer->getPosition();
 		direction.normalise();
-		Vector3 entityDirection = entity->getOrientation()*Vector3::NEGATIVE_UNIT_Z;
+		Vector3 entityDirection = killer->getOrientation()*Vector3::NEGATIVE_UNIT_Z;
 		entityDirection.normalise();
 		float angle = direction.angleBetween(entityDirection).valueDegrees();
 

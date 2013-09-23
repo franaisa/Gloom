@@ -138,7 +138,7 @@ namespace Logic
 		//                            METODOS PROPIOS
 		// =======================================================================
 
-		void sendDeadMessage(TEntityID killer);
+		void sendDeadMessage(CEntity* killer);
 
 		std::string getMotionAnimation(const Vector3 &displacementDir);
 
