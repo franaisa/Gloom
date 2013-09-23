@@ -28,7 +28,13 @@
 
 #include "Logic/Messages/MessageParticleStart.h"
 
+#include "BaseSubsystems/Euler.h"
+
 // Graficos
+#include "Graphics/Server.h"
+#include "Graphics/Scene.h"
+#include "Graphics/Camera.h"
+
 // @deprecated Ogre no deberia estar acoplado a la logica
 #include <OgreSceneManager.h>
 #include <OgreMaterialManager.h>
@@ -235,16 +241,27 @@ namespace Logic {
 		// Calculo la posicion y orientacion de la entidad
 		Vector3 particlePosition = _entity->getPosition();
 		particlePosition.y += _heightShoot;
-		Vector3 orientation= _entity->getOrientation()*Vector3::NEGATIVE_UNIT_Z;
-		orientation.normalise();
-		/*
-		float fOffset = 8.0f;
-		orientation *= fOffset;
-		particlePosition += orientation;
+		//Vector3 orientation= _entity->getOrientation()*Vector3::NEGATIVE_UNIT_Z;
+		
+		//*
+		printf("\nPosicion mia: %f, %f, %f",particlePosition.x,particlePosition.y,particlePosition.z);
+
+		Quaternion aux = _entity->getOrientation();
 		/*/
-		//orientation *= _particlePosition;
-		particlePosition += (orientation*_particlePosition);
+		aux = Graphics::CServer::getSingletonPtr()->getSingletonPtr()->getActiveScene()->getCamera()->getCameraOrientation();
 		/* */
+		Euler *eulerOrientation = new Euler(aux);
+		eulerOrientation->yaw(Ogre::Radian(_particlePosition.x));
+		eulerOrientation->pitch(Ogre::Radian(_particlePosition.y));
+		Vector3 orientation = eulerOrientation->getForward();
+		delete eulerOrientation;
+		//orientation.normalise();
+		orientation *= _particlePosition.z;
+		//particlePosition += orientation;
+		particlePosition += orientation;
+
+		printf("\nPosicion Particula: %f, %f, %f",particlePosition.x,particlePosition.y,particlePosition.z);
+
 
 		
 		_currentPaticle = CEntityFactory::getSingletonPtr()->createEntity(
@@ -255,6 +272,8 @@ namespace Logic {
 		);
 		_currentPaticle->activate();
 		_currentPaticle->start();
+
+
 	} // emitParticle2
 	//__________________________________________________________________
 	

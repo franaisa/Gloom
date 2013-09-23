@@ -72,7 +72,8 @@ namespace Graphics
 
 	const Quaternion &CCamera::getCameraOrientation() 
 	{
-		return _camera->getOrientation();
+		return _cameraNode->getOrientation();
+		//return _camera->getOrientation();
 	}
 
 	//--------------------------------------------------------

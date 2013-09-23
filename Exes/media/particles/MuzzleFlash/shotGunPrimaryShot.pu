@@ -9,7 +9,7 @@
 system shotGunPrimaryShot
 {
     scale_velocity                              0.001
-    scale                                       0.001 0.001 0.001
+    scale                                       0.01 0.01 0.01
     technique 
     {
         visual_particle_quota                   8
