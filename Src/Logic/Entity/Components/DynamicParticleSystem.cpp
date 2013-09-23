@@ -8,6 +8,18 @@ namespace Logic {
 
 	//______________________________________________________________________________
 
+	CDynamicParticleSystem::CDynamicParticleSystem() : _owner(NULL) { 
+		// Nada que hacer
+	}
+
+	//______________________________________________________________________________
+
+	CDynamicParticleSystem::~CDynamicParticleSystem() {
+		// Nada que hacer
+	}
+
+	//______________________________________________________________________________
+
 	bool CDynamicParticleSystem::accept(const std::shared_ptr<CMessage>& message) {
 		return CParticleSystem::accept(message)					||
 			   message->getMessageType() == Message::ACTIVATE;
@@ -34,9 +46,23 @@ namespace Logic {
 
 	//______________________________________________________________________________
 	
+	void CDynamicParticleSystem::setOwner(CEntity* owner) {
+		this->_owner = owner;
+	}
+
+	//______________________________________________________________________________
+
+	void CDynamicParticleSystem::setOffset(const Vector3& offset) {
+		this->_offset = offset;
+	}
+
+	//______________________________________________________________________________
+
 	void CDynamicParticleSystem::onTick(unsigned int msecs) {
-		_particleSystem->setPosition( _entity->getPosition() + _offset );
-		_particleSystem->setOrientation( _entity->getOrientation() );
+		CEntity* followedEntity = (_owner != NULL) ? _owner : _entity;
+
+		_particleSystem->setPosition( followedEntity->getPosition() + _offset );
+		_particleSystem->setOrientation( followedEntity->getOrientation() );
 	}
 
 } // namespace Logic
