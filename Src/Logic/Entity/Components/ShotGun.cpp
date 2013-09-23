@@ -147,7 +147,7 @@ namespace Logic {
 
 	void CShotGun::destroyProjectile(CEntity *projectile, CEntity *killedBy){
 		if(killedBy->getType() == "World"){
-			//drawDecal(killedBy, projectile->getPosition());
+			drawDecal(killedBy, projectile->getPosition(), (int)WeaponType::eSHOTGUN);
 
 			// Añado aqui las particulas de dado en la pared.
 			auto m = std::make_shared<CMessageCreateParticle>();

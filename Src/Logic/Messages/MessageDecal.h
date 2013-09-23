@@ -20,9 +20,14 @@ namespace Logic {
 		std::string 	getTexture		()	{return _vTexture; }
 		void				setTexture		(std::string vValue) { _vTexture = vValue; }
 
+		bool		 	getRandomSize	()	{return _bRandomSize; }
+		void				setRandomSize	(bool bValue) { _bRandomSize = bValue; }
+
+
 	private:
 		Vector3		_vPosition;
 		std::string	_vTexture;
+		bool		_bRandomSize;
 		
 	};
 	REG_FACTORYMESSAGE(CMessageDecal);

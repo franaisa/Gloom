@@ -257,7 +257,7 @@ namespace Logic {
 			{
 				//Mandar el mensaje de los decal
 				Vector3 pos = hits[i].impact;
-				//drawDecal(hits[i].entity, hits[i].impact);
+				drawDecal(hits[i].entity, hits[i].impact, (int)WeaponType::eMINIGUN);
 			
 				// Añado aqui las particulas de dado en la pared.
 				/*auto m = std::make_shared<CMessageCreateParticle>();
@@ -277,8 +277,6 @@ namespace Logic {
 					minigunHit->activate();
 					minigunHit->start();
 				}
-				else
-					std::cout << "NO ENTRAAAAAAAAAAAAAAAA" << std::endl;
 
 				int randomValue = Math::unifRand(2);
 				std::string ricochetSound = (randomValue == 1 ? "weapons/hit/ric3.wav" : "weapons/hit/ric2.wav");
@@ -409,7 +407,7 @@ namespace Logic {
 			if( typeEntity == "World" ) {
 				//Mandar el mensaje de los decal
 				Vector3 pos = it->impact;
-				//drawDecal(it->entity, it->impact);
+				drawDecal(it->entity, it->impact, (int)WeaponType::eMINIGUN);
 
 				Euler euler(Quaternion::IDENTITY);
 				euler.setDirection(it->normal);

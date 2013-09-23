@@ -262,6 +262,10 @@ namespace Logic {
 		*/
 		void drawDecal(Logic::CEntity* pEntity, Vector3 vPos);
 
+		//Sobrecarga del método apra indicar qué arma ha hecho el decal
+		void drawDecal(Logic::CEntity* pEntity, Vector3 vPos, int iWeapon);
+
+
 
 		// =======================================================================
 		//                          MIEMBROS PROTEGIDOS

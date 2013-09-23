@@ -182,7 +182,7 @@ namespace Logic
 			}
 			case Message::DECAL: {
 				std::shared_ptr<CMessageDecal> msgDecal = std::static_pointer_cast<CMessageDecal>(message);
-				drawDecal(msgDecal->getPosition(), msgDecal->getTexture());
+				drawDecal(msgDecal->getPosition(), msgDecal->getTexture(), msgDecal->getRandomSize());
 				break;
 			}
 		}
@@ -245,7 +245,7 @@ namespace Logic
 	}
 	//---------------------------------------------------------
 
-	void CGraphics::drawDecal(Vector3 vPos, std::string vTexture) {
+	void CGraphics::drawDecal(Vector3 vPos, std::string vTexture, bool bRandomSize) {
 		OgreDecal::OgreMesh worldMesh;
 
 		/// This method will extract all of the triangles from the mesh to be used later. Only should be called once.
@@ -260,13 +260,16 @@ namespace Logic
  
 		/// Set Decal parameters:
 		Ogre::Vector3 pos = vPos; /// Send a ray into the mesh
-		float width = 1.0f;
-		float height = 1.0f;
+		float width = 0.5f;//1.0f;
+		float height = 0.5f;//1.0f;
 
-		int iRandom = rand() % 130 + 10;//Random entre 150 y 5
+		if (bRandomSize)
+		{
+			int iRandom = rand() % 130 + 10;//Random entre 150 y 5
 
-		width += iRandom/100.0f;
-		height += iRandom/100.0f;
+			width += iRandom/100.0f;
+			height += iRandom/100.0f;
+		}
 
 		/// We have everything ready to go. Now it's time to actually generate the decal:
 		if (_primerDecal)
