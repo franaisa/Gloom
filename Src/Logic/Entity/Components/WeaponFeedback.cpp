@@ -240,29 +240,43 @@ namespace Logic {
 		
 		// Calculo la posicion y orientacion de la entidad
 		Vector3 particlePosition = _entity->getPosition();
-		particlePosition.y += _heightShoot;
+		
 		//Vector3 orientation= _entity->getOrientation()*Vector3::NEGATIVE_UNIT_Z;
 		
-		//*
 		printf("\nPosicion mia: %f, %f, %f",particlePosition.x,particlePosition.y,particlePosition.z);
+		//*
+		
+		Euler eulerOrientation(Quaternion::IDENTITY);
+		eulerOrientation.setDirection(_entity->getOrientation()*Vector3::NEGATIVE_UNIT_Z);
+		eulerOrientation.yaw(Ogre::Radian(_particlePosition.x));
+		eulerOrientation.pitch(Ogre::Radian(_particlePosition.y));
 
-		Quaternion aux = _entity->getOrientation();
+		Vector3 orientation = eulerOrientation.getForward();
+
+		particlePosition = _entity->getPosition() + ( (orientation) * (_particlePosition.z) ); 
+		particlePosition.y += _heightShoot;
 		/*/
-		aux = Graphics::CServer::getSingletonPtr()->getSingletonPtr()->getActiveScene()->getCamera()->getCameraOrientation();
-		/* */
+		Quaternion aux = _entity->getOrientation();
+
+		
 		Euler *eulerOrientation = new Euler(aux);
+
+		
+
 		eulerOrientation->yaw(Ogre::Radian(_particlePosition.x));
-		eulerOrientation->pitch(Ogre::Radian(_particlePosition.y));
+		//eulerOrientation->pitch(Ogre::Radian(_particlePosition.y));
+
+		
 		Vector3 orientation = eulerOrientation->getForward();
-		delete eulerOrientation;
-		//orientation.normalise();
-		orientation *= _particlePosition.z;
-		//particlePosition += orientation;
-		particlePosition += orientation;
+			//_entity->getOrientation() * Vector3::NEGATIVE_UNIT_Z;
+
+		particlePosition = _entity->getPosition() + ( (orientation) * (5) ); 
+		particlePosition.y += _heightShoot;
+
+		/* */
+		
 
 		printf("\nPosicion Particula: %f, %f, %f",particlePosition.x,particlePosition.y,particlePosition.z);
-
-
 		
 		_currentPaticle = CEntityFactory::getSingletonPtr()->createEntity(
 			CEntityFactory::getSingletonPtr()->getInfo(_weaponName+(primaryShoot?"PrimaryShot":"SecondaryShot")),			

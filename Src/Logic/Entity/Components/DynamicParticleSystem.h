@@ -9,18 +9,20 @@ namespace Logic {
 		DEC_FACTORY(CDynamicParticleSystem);
 	public:
 
-		/**
-		Constructor por defecto; en la clase base no hace nada.
-		*/
-		CDynamicParticleSystem() { };
-		~CDynamicParticleSystem() { };
+		CDynamicParticleSystem();
+		~CDynamicParticleSystem();
 
 		virtual bool accept(const std::shared_ptr<CMessage>& message);
 		virtual void process(const std::shared_ptr<CMessage>& message);
 
+		void setOwner(CEntity* owner);
+		void setOffset(const Vector3& offset);
+
 	protected:
 
 		virtual void onTick(unsigned int msecs);
+
+		CEntity* _owner;
 
 	}; // class CDynamicParticleSystem
 

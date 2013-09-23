@@ -57,7 +57,7 @@ namespace Logic {
 
 		// Shader de onda
 		CCameraFeedbackNotifier* _cameraFX = _entity->getComponent<CCameraFeedbackNotifier>("CCameraFeedbackNotifier");
-		_cameraFX->weaponShockWave( Vector2(0.67f, 0.77f), 0.37f, 0.0009f, 0.04f, 40.0f, 0.3f );
+		_cameraFX->weaponShockWave( Vector2(0.67f, 0.77f), 0.55f, 0.001f, 0.05f, 40.0f, 0.3f );
 
 		// Shoot flash
 		CDynamicLight* shootFlash = _entity->getComponent<CDynamicLight>("CDynamicLight");
