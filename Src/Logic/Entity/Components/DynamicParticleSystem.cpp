@@ -13,7 +13,7 @@ namespace Logic {
 
 	//______________________________________________________________________________
 
-	CDynamicParticleSystem::CDynamicParticleSystem() : _owner(NULL), _graphicParent(NULL) { 
+	CDynamicParticleSystem::CDynamicParticleSystem() : _graphicParent(NULL) { 
 		// Nada que hacer
 	}
 
@@ -50,12 +50,6 @@ namespace Logic {
 	}
 
 	//______________________________________________________________________________
-	
-	void CDynamicParticleSystem::setOwner(CEntity* owner) {
-		this->_owner = owner;
-	}
-
-	//______________________________________________________________________________
 
 	void CDynamicParticleSystem::setOffset(const Vector3& offset) {
 		this->_offset = offset;
@@ -89,10 +83,8 @@ namespace Logic {
 
 	void CDynamicParticleSystem::onTick(unsigned int msecs) {
 		if(_graphicParent == NULL) {
-			CEntity* followedEntity = (_owner != NULL) ? _owner : _entity;
-
-			_particleSystem->setPosition( followedEntity->getPosition() + (followedEntity->getOrientation() * _offset) );
-			_particleSystem->setOrientation( followedEntity->getOrientation() );
+			_particleSystem->setPosition( _entity->getPosition() + _offset );
+			_particleSystem->setOrientation( _entity->getOrientation() );
 		}
 	}
 

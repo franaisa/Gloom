@@ -85,7 +85,7 @@ namespace Logic {
 		if(tempEntity->hasAttribute("ParticlePosition"))
 			_particlePosition = tempEntity->getVector3Attribute("ParticlePosition");
 		else
-			_particlePosition = Vector3(6, 5, 6);
+			_particlePosition = Vector3(0, 0, 0);
 
 
 		_hudWeapon = _entity->getComponent<CHudWeapons>("CHudWeapons");
@@ -239,76 +239,15 @@ namespace Logic {
 	//__________________________________________________________________
 
 	void IWeaponFeedback::emitParticle2(bool primaryShoot){
-		
-		// Calculo la posicion y orientacion de la entidad
-		Vector3 particlePosition = _entity->getPosition();
-		
-		//Vector3 orientation= _entity->getOrientation()*Vector3::NEGATIVE_UNIT_Z;
-		
-		printf("\nPosicion mia: %f, %f, %f",particlePosition.x,particlePosition.y,particlePosition.z);
-		//*
-		
-		Euler eulerOrientation(Quaternion::IDENTITY);
-		eulerOrientation.setDirection(_entity->getOrientation()*Vector3::NEGATIVE_UNIT_Z);
-		eulerOrientation.yaw(Ogre::Radian(_particlePosition.x));
-		eulerOrientation.pitch(Ogre::Radian(_particlePosition.y));
-
-		Vector3 orientation = eulerOrientation.getForward();
-
-		particlePosition = _entity->getPosition() + ( (orientation) * (_particlePosition.z) ); 
-		particlePosition.y += _heightShoot;
-		/*/
-		Quaternion aux = _entity->getOrientation();
-
-		
-		Euler *eulerOrientation = new Euler(aux);
-
-		
-
-		eulerOrientation->yaw(Ogre::Radian(_particlePosition.x));
-		//eulerOrientation->pitch(Ogre::Radian(_particlePosition.y));
-
-		
-		Vector3 orientation = eulerOrientation->getForward();
-			//_entity->getOrientation() * Vector3::NEGATIVE_UNIT_Z;
-
-		particlePosition = _entity->getPosition() + ( (orientation) * (5) ); 
-		particlePosition.y += _heightShoot;
-
-		/* */
-		
-
-		printf("\nPosicion Particula: %f, %f, %f",particlePosition.x,particlePosition.y,particlePosition.z);
-		
 		_currentPaticle = CEntityFactory::getSingletonPtr()->createEntity(
 			CEntityFactory::getSingletonPtr()->getInfo(_weaponName+(primaryShoot?"PrimaryShot":"SecondaryShot")),			
-			Logic::CServer::getSingletonPtr()->getMap(),
-			particlePosition,
-			_entity->getOrientation()
-		);
-		
-		/*
-		CDynamicParticleSystem *temp = _currentPaticle->getComponent<CDynamicParticleSystem>("CDynamicParticleSystem");
-		if (temp){
-			temp->setOwner(_entity);
-			temp->setOffset(_particlePosition);
-		}
-		*/
-
-		
+			Logic::CServer::getSingletonPtr()->getMap());
 
 		Graphics::CEntity* graphicWeapon = _hudWeapon->getCurrentWeapon();
-		Vector3 weaponPos = _hudWeapon->getCurrentWeaponWorldPos();
-
 		CDynamicParticleSystem* particleComp = _currentPaticle->getComponent<CDynamicParticleSystem>("CDynamicParticleSystem");
+		
 		particleComp->setGraphicParent(graphicWeapon);
-		//particleComp->setOwner(_entity);
-
-		//Vector3 playerPosition = _entity->getPosition();
-		//particleComp->setOffset( particlePosition - playerPosition );
-		Vector3 offset = particlePosition - weaponPos;
-		std::cout << std::endl << "OFFSETTTTTTTTTTTTTTTTTT: " << offset << std::endl;
-		particleComp->setOffset(Vector3(-1.313f, 3.146f, -0.659)); // este es el offset pa la minigun
+		particleComp->setOffset(_particlePosition);
 
 		_currentPaticle->activate();
 		_currentPaticle->start();
