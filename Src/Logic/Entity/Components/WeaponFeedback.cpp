@@ -312,12 +312,7 @@ namespace Logic {
 
 		_currentPaticle->activate();
 		_currentPaticle->start();
-		
-		
-
-
 	} // emitParticle2
-	//__________________________________________________________________
 	
 } // namespace Logic
 
