@@ -12,7 +12,7 @@
 #include "WeaponFeedback.h"
 #include "HudWeapons.h"
 #include "Graphics.h"
-
+#include "DynamicParticleSystem.h"
 // Mapa
 #include "Map/MapEntity.h"
 #include "Logic/Maps/EntityFactory.h"
@@ -284,8 +284,19 @@ namespace Logic {
 			particlePosition,
 			_entity->getOrientation()
 		);
+		
+		/*
+		CDynamicParticleSystem *temp = _currentPaticle->getComponent<CDynamicParticleSystem>("CDynamicParticleSystem");
+		if (temp){
+			temp->setOwner(_entity);
+			temp->setOffset(_particlePosition);
+		}
+		*/
+
 		_currentPaticle->activate();
 		_currentPaticle->start();
+		
+		
 
 
 	} // emitParticle2
