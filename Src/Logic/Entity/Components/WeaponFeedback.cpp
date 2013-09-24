@@ -298,6 +298,7 @@ namespace Logic {
 		
 
 		Graphics::CEntity* graphicWeapon = _hudWeapon->getCurrentWeapon();
+		Vector3 weaponPos = _hudWeapon->getCurrentWeaponWorldPos();
 
 		CDynamicParticleSystem* particleComp = _currentPaticle->getComponent<CDynamicParticleSystem>("CDynamicParticleSystem");
 		particleComp->setGraphicParent(graphicWeapon);
@@ -305,7 +306,9 @@ namespace Logic {
 
 		//Vector3 playerPosition = _entity->getPosition();
 		//particleComp->setOffset( particlePosition - playerPosition );
-		particleComp->setOffset( particlePosition );
+		Vector3 offset = particlePosition - weaponPos;
+		std::cout << std::endl << "OFFSETTTTTTTTTTTTTTTTTT: " << offset << std::endl;
+		particleComp->setOffset(Vector3(-1.313f, 3.146f, -0.659)); // este es el offset pa la minigun
 
 		_currentPaticle->activate();
 		_currentPaticle->start();

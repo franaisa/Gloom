@@ -183,6 +183,13 @@ namespace Logic {
 		return _graphicsEntities[_currentWeapon].graphicsEntity;
 	}
 
+	Vector3 CHudWeapons::getCurrentWeaponWorldPos() {
+		Ogre::Camera* camera = _scene->getCamera()->getOgreCamera();
+		Vector3 worldPosition = camera->getDerivedOrientation() * _graphicsEntities[_currentWeapon].graphicsEntity->getPosition() + camera->getDerivedPosition();
+
+		return worldPosition;
+	}
+
 	//________________________________________________________________________
 
 	bool CHudWeapons::spawn(CEntity *entity, CMap *map, const Map::CEntity *entityInfo) {
