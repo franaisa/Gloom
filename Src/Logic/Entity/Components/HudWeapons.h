@@ -109,6 +109,8 @@ namespace Logic {
 		*/
 		virtual void onDeactivate();
 
+		Graphics::CEntity* getCurrentWeapon();
+
 		/**
 		Metodo para cambiar el grafico en funcion del arma actual
 		*/

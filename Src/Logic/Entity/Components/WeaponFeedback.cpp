@@ -13,6 +13,8 @@
 #include "HudWeapons.h"
 #include "Graphics.h"
 #include "DynamicParticleSystem.h"
+#include "HudWeapons.h"
+
 // Mapa
 #include "Map/MapEntity.h"
 #include "Logic/Maps/EntityFactory.h"
@@ -292,6 +294,18 @@ namespace Logic {
 			temp->setOffset(_particlePosition);
 		}
 		*/
+
+		
+
+		Graphics::CEntity* graphicWeapon = _hudWeapon->getCurrentWeapon();
+
+		CDynamicParticleSystem* particleComp = _currentPaticle->getComponent<CDynamicParticleSystem>("CDynamicParticleSystem");
+		particleComp->setGraphicParent(graphicWeapon);
+		//particleComp->setOwner(_entity);
+
+		//Vector3 playerPosition = _entity->getPosition();
+		//particleComp->setOffset( particlePosition - playerPosition );
+		particleComp->setOffset( particlePosition );
 
 		_currentPaticle->activate();
 		_currentPaticle->start();

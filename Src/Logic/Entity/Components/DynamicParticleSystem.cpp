@@ -1,6 +1,11 @@
 #include "DynamicParticleSystem.h"
+#include "Graphics.h"
 
 #include "Logic/Messages/MessageActivate.h"
+
+#include "Graphics/Entity.h"
+
+using namespace std;
 
 namespace Logic {
 	
@@ -8,7 +13,7 @@ namespace Logic {
 
 	//______________________________________________________________________________
 
-	CDynamicParticleSystem::CDynamicParticleSystem() : _owner(NULL) { 
+	CDynamicParticleSystem::CDynamicParticleSystem() : _owner(NULL), _graphicParent(NULL) { 
 		// Nada que hacer
 	}
 
@@ -58,11 +63,37 @@ namespace Logic {
 
 	//______________________________________________________________________________
 
-	void CDynamicParticleSystem::onTick(unsigned int msecs) {
-		CEntity* followedEntity = (_owner != NULL) ? _owner : _entity;
+	void CDynamicParticleSystem::setGraphicParent(Graphics::CEntity* parent) {
+		this->_graphicParent = parent;
+	}
 
-		_particleSystem->setPosition( followedEntity->getPosition() + _offset );
-		_particleSystem->setOrientation( followedEntity->getOrientation() );
+	//______________________________________________________________________________
+
+	void CDynamicParticleSystem::onStart() {	
+		if(_graphicParent != NULL) {
+			_particleSystem = new(nothrow) Graphics::PUParticle(_scriptName, _graphicParent);
+			_particleSystem->setPosition(_offset);
+		}
+		else {
+			_particleSystem = new(nothrow) Graphics::PUParticle(_scriptName);
+			_particleSystem->setPosition( _entity->getPosition() + _offset );
+			_particleSystem->setOrientation( _entity->getOrientation() );
+		}
+
+		_particleSystem->addObserver(this); // No es necesario hacer el remove
+		if(_emitting)
+			_particleSystem->start();
+	} // onStart
+
+	//______________________________________________________________________________
+
+	void CDynamicParticleSystem::onTick(unsigned int msecs) {
+		if(_graphicParent == NULL) {
+			CEntity* followedEntity = (_owner != NULL) ? _owner : _entity;
+
+			_particleSystem->setPosition( followedEntity->getPosition() + (followedEntity->getOrientation() * _offset) );
+			_particleSystem->setOrientation( followedEntity->getOrientation() );
+		}
 	}
 
 } // namespace Logic

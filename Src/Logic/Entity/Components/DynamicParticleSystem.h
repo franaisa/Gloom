@@ -3,6 +3,10 @@
 
 #include "ParticleSystem.h"
 
+namespace Graphics {
+	class CEntity;
+}
+
 namespace Logic {
 
 	class CDynamicParticleSystem : public CParticleSystem {
@@ -17,12 +21,15 @@ namespace Logic {
 
 		void setOwner(CEntity* owner);
 		void setOffset(const Vector3& offset);
+		void setGraphicParent(Graphics::CEntity* parent);
 
 	protected:
 
+		virtual void onStart();
 		virtual void onTick(unsigned int msecs);
 
 		CEntity* _owner;
+		Graphics::CEntity* _graphicParent;
 
 	}; // class CDynamicParticleSystem
 

@@ -179,6 +179,12 @@ namespace Logic {
 
 	//________________________________________________________________________
 
+	Graphics::CEntity* CHudWeapons::getCurrentWeapon() {
+		return _graphicsEntities[_currentWeapon].graphicsEntity;
+	}
+
+	//________________________________________________________________________
+
 	bool CHudWeapons::spawn(CEntity *entity, CMap *map, const Map::CEntity *entityInfo) {
 		if(!IComponent::spawn(entity,map,entityInfo))
 			return false;
