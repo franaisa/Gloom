@@ -10,11 +10,11 @@ system miniGunPrimaryShot
 {
     keep_local                                  true
     scale_velocity                              0.001
-    scale                                       0.001 0.001 0.001
+    scale                                       0.02 0.02 0.02
     technique 
     {
         visual_particle_quota                   5
-        material                                mp_weapon_muzzle_03
+        material                                mp_weapon_muzzle_04
         default_particle_width                  100
         default_particle_height                 100
         renderer                                Billboard
@@ -31,7 +31,7 @@ system miniGunPrimaryShot
                 max                             0.2
             }
             velocity                            1e-006
-            duration                            0.3
+            repeat_delay                        0.5
             direction                           1 1 0
         }
         affector                                TextureRotator 
@@ -45,7 +45,7 @@ system miniGunPrimaryShot
         }
         affector                                Colour 
         {
-            time_colour                         0    0.6 0.6 0.6 1
+            time_colour                         0    0 0.5 0.1 1
             time_colour                         1    0 0 0 1
             colour_operation                    multiply
         }
@@ -56,15 +56,6 @@ system miniGunPrimaryShot
                 min                             1000
                 max                             1500
             }
-        }
-        observer                                OnTime 
-        {
-            observe_until_event                 true
-            handler                             DoStopSystem 
-            {
-            }
-            since_start_system                  true
-            on_time                             greater_than 0.4
         }
     }
     technique 
@@ -92,11 +83,11 @@ system miniGunPrimaryShot
             velocity                            1e-006
             duration                            0.3
             direction                           0 0 -1
-            colour                              1 1 0.992157 1
+            colour                              0 1 0.2 1
         }
         affector                                Colour 
         {
-            time_colour                         0    0.6 0.6 0.6 1
+            time_colour                         0    0 1 0.2 1
             time_colour                         1    0 0 0 1
             colour_operation                    multiply
         }
@@ -131,11 +122,11 @@ system miniGunPrimaryShot
             velocity                            1e-006
             duration                            0.3
             direction                           1 1 0
-            colour                              0.996078 0.839216 0.352941 1
+            colour                              0 1 0.2 1
         }
         affector                                Colour 
         {
-            time_colour                         0    1 1 1 1
+            time_colour                         0    0 1 0.2 1
             time_colour                         1    0 0 0 1
             colour_operation                    multiply
         }

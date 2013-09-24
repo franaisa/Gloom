@@ -66,6 +66,7 @@ namespace Logic {
 		shootFlash->turnOn( Vector3(0.0f, _heightShoot, 0.0f), 0.1f );
 
 		// @todo pintar un muzzle flash azul
+		emitParticle2();
 	}
 
 	//__________________________________________________________________
@@ -93,6 +94,7 @@ namespace Logic {
 		shootFlash->turnOn( Vector3(0.0f, _heightShoot, 0.0f), 0.1f );
 
 		// @todo pintar el mismo muzzle flash del disparo primario
+		emitParticle2(false);
 	}
 
 }//namespace Logic

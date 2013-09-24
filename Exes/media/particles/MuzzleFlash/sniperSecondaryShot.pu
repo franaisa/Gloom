@@ -6,10 +6,10 @@
 // Usage of this program is licensed under the terms of the Particle Universe Commercial License Media Pack 1.
 // You can find a copy of the Commercial License in the Media Pack 1 package.
 //-----------------------------------------------------------------------------------------------------------------------
-system sniperPrimaryShot
+system sniperSecondaryShot
 {
     scale_velocity                              0.001
-    scale                                       0.003 0.003 0.003
+    scale                                       0.006 0.006 0.006
     technique 
     {
         visual_particle_quota                   8

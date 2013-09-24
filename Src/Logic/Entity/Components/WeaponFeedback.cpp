@@ -116,7 +116,7 @@ namespace Logic {
 					if( primaryShootMsg->getShoot() ) {
 						primaryFire();
 						_primaryFireIsActive = true;
-						emitParticle(true);
+						//emitParticle(true);
 					}
 					else {
 						stopPrimaryFire();
@@ -133,7 +133,7 @@ namespace Logic {
 					if( secondaryShootMsg->getShoot() ) {
 						secondaryFire();
 						_secondaryFireIsActive = true;
-						emitParticle(false);
+						//emitParticle(false);
 					}
 					else {
 						stopSecondaryFire();
