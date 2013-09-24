@@ -111,6 +111,8 @@ namespace Logic {
 
 		Graphics::CEntity* getCurrentWeapon();
 
+		Vector3 getCurrentWeaponWorldPos();
+
 		/**
 		Metodo para cambiar el grafico en funcion del arma actual
 		*/
