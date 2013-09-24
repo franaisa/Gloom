@@ -245,7 +245,7 @@ namespace Logic {
 		
 		//Vector3 orientation= _entity->getOrientation()*Vector3::NEGATIVE_UNIT_Z;
 		
-		printf("\nPosicion mia: %f, %f, %f",particlePosition.x,particlePosition.y,particlePosition.z);
+		//printf("\nPosicion mia: %f, %f, %f",particlePosition.x,particlePosition.y,particlePosition.z);
 		//*
 		
 		Euler eulerOrientation(Quaternion::IDENTITY);
@@ -254,8 +254,8 @@ namespace Logic {
 		eulerOrientation.pitch(Ogre::Radian(_particlePosition.y));
 
 		Vector3 orientation = eulerOrientation.getForward();
-
-		particlePosition = _entity->getPosition() + ( (orientation) * (_particlePosition.z) ); 
+		orientation *= _particlePosition.z;
+		particlePosition = _entity->getPosition() + orientation ; 
 		particlePosition.y += _heightShoot;
 		/*/
 		Quaternion aux = _entity->getOrientation();
@@ -278,7 +278,7 @@ namespace Logic {
 		/* */
 		
 
-		printf("\nPosicion Particula: %f, %f, %f",particlePosition.x,particlePosition.y,particlePosition.z);
+		//printf("\nPosicion Particula: %f, %f, %f",particlePosition.x,particlePosition.y,particlePosition.z);
 		
 		_currentPaticle = CEntityFactory::getSingletonPtr()->createEntity(
 			CEntityFactory::getSingletonPtr()->getInfo(_weaponName+(primaryShoot?"PrimaryShot":"SecondaryShot")),			
@@ -295,8 +295,6 @@ namespace Logic {
 		}
 		*/
 
-		
-
 		Graphics::CEntity* graphicWeapon = _hudWeapon->getCurrentWeapon();
 
 		CDynamicParticleSystem* particleComp = _currentPaticle->getComponent<CDynamicParticleSystem>("CDynamicParticleSystem");
@@ -305,8 +303,8 @@ namespace Logic {
 
 		//Vector3 playerPosition = _entity->getPosition();
 		//particleComp->setOffset( particlePosition - playerPosition );
-		particleComp->setOffset( particlePosition );
-
+		particleComp->setOffset( graphicWeapon->getPosition() + Vector3(0,_heightShoot,0));
+		
 		_currentPaticle->activate();
 		_currentPaticle->start();
 		
