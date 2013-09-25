@@ -53,7 +53,7 @@ namespace Graphics {
 		fpParams->setNamedConstant("viewProjMatrix", viewProjMatrix);
 
 		// Pasamos la direccion de la luz --> {-52.0654, 60.1029, -108.08}
-		Vector3 lightPosition(300.0f, 600.0f, 0.0f);
-		fpParams->setNamedConstant("lightPosition", lightPosition);
+		//Vector3 lightPosition(300.0f, 600.0f, 0.0f);
+		//fpParams->setNamedConstant("lightPosition", lightPosition);
 	}
 }

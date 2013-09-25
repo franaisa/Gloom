@@ -49,6 +49,19 @@ material mapaAngel_lava1
 			emissive 0 0 0
 		}
 	}
+	
+	technique {
+		lighting off
+		
+		scheme depthScheme
+		pass {
+			vertex_program_ref depthMapVertex {
+			}
+			
+			fragment_program_ref depthMapFragment {
+			}
+		}
+	}
 }
 
 
