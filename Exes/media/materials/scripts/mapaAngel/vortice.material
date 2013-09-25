@@ -1,18 +1,14 @@
 material vortice
 {
-	set $glow_tex vortice_glow4.png
 	technique
 	{
 		pass
 		{
-			ambient 0.0 0.0 0.0 1
-			diffuse 0.0 0.0 0.0 1
-			specular 0 0 0 1 10
 			texture_unit aoMap
 			{
 				texture vortice.png
 				scale 0.1 0.1
-				scroll_anim 1 0.5
+				scroll_anim 0.4 0.25
 			}
 		}
 
@@ -22,17 +18,12 @@ material vortice
 		scheme glow
 		pass
 		{
-		
 			texture_unit
 			{
-				texture $glow_tex
+				texture vortice_glow4.png
 				scale 0.1 0.1
-				scroll_anim 1 0.5
+				scroll_anim 0.4 0.25
 			}
-			ambient 1 1 1
-			diffuse 1 1 1
-			specular 0 0 0 1
-			emissive 0 0 0
 		}
 	}
 	
