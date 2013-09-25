@@ -17,6 +17,32 @@ material hammer
 		}
 
 	}
+	
+	technique {
+		lighting off
+		
+		scheme depthScheme
+		pass {
+			vertex_program_ref depthMapVertex {
+			}
+			
+			fragment_program_ref depthMapFragment {
+			}
+		}
+	}
+	
+	technique {
+		lighting off
+	
+		scheme blackScheme
+		pass {
+			vertex_program_ref blackVertex {
+			}
+			
+			fragment_program_ref blackFragment {
+			}
+		}
+	}
 
 }
 

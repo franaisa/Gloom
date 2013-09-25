@@ -72,7 +72,7 @@ Map = {
 	},	
 
 	David = {
-		type = "LocalScreamer",
+		type = "LocalSpectator",
 		isPlayer = true,
 		physic_group = 1,
 		physic_groupList = "-1",
