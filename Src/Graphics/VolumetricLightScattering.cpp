@@ -39,7 +39,7 @@ namespace Graphics {
 		
 		_compositor->addListener(this);
 
-		initLightSources();
+		initLightSources(sceneName);
 
 		_currentScene = _mapScatterParams.find(sceneName);
 	}
@@ -111,50 +111,54 @@ namespace Graphics {
 
 	//________________________________________________________________________
 
-	void CVolumetricLightScattering::initLightSources() {
+	void CVolumetricLightScattering::initLightSources(const std::string& sceneName) {
 		std::pair< std::string, std::list<ScatteringParams> > temp;
 		std::list<ScatteringParams> lightInfoList;
-
-		temp.first = "map3.map";
-
-		// Luz de lava 1
 		ScatteringParams params;
-		params.lightPosition	= Vector3(56.0013, -80.1929, 122.114);
-		params.density			= 0.2f;
-		params.decay			= 0.99f;
-		params.weight			= 1.0f;
-		params.exposure			= 0.1f;
-
-		lightInfoList.push_back(params);
 		
-		// Luz de lava 2
-		params.lightPosition	= Vector3(74.8055f, 20.179f, -134.406f);
+		if( sceneName.find("map3") != std::string::npos ) {
+			temp.first = sceneName;
 
-		lightInfoList.push_back(params);
+			// Luz de lava 1
+			
+			params.lightPosition	= Vector3(56.0013, -80.1929, 122.114);
+			params.density			= 0.2f;
+			params.decay			= 0.99f;
+			params.weight			= 1.0f;
+			params.exposure			= 0.1f;
 
-		// Luz del vortice
-		params.lightPosition	= Vector3(-256.412f, -500.0f, -98.3735f);
-		params.density			= 0.22f;
-
-		lightInfoList.push_back(params);
-
-		// Introducimos las luces del mapa de angel
-		temp.second = lightInfoList;
-
-		_mapScatterParams.insert(temp);
-
-		// Luces del mapa de alberto
-		temp.first = "map2.map";
+			lightInfoList.push_back(params);
 		
-		lightInfoList.clear();
-		params.lightPosition	= Vector3(-180.146f, -598.734f, -48.2743f);
-		params.density			= 0.13f;
-		params.exposure			= 0.1f;
-		params.decay			= 0.9f;
+			// Luz de lava 2
+			params.lightPosition	= Vector3(74.8055f, 20.179f, -134.406f);
 
-		lightInfoList.push_back(params);
-		temp.second = lightInfoList;
+			lightInfoList.push_back(params);
+
+			// Luz del vortice
+			params.lightPosition	= Vector3(-256.412f, -500.0f, -98.3735f);
+			params.density			= 0.22f;
+
+			lightInfoList.push_back(params);
+
+			// Introducimos las luces del mapa de angel
+			temp.second = lightInfoList;
+
+			_mapScatterParams.insert(temp);
+		}
+		else if( sceneName.find("map2") != std::string::npos ) {
+			// Luces del mapa de alberto
+			temp.first = sceneName;
+			
+			params.lightPosition	= Vector3(-180.146f, -598.734f, -48.2743f);
+			params.density			= 0.13f;
+			params.exposure			= 0.1f;
+			params.decay			= 0.9f;
+			params.weight			= 1.0f;
+
+			lightInfoList.push_back(params);
+			temp.second = lightInfoList;
 		
-		_mapScatterParams.insert(temp);
+			_mapScatterParams.insert(temp);
+		}
 	}
 }

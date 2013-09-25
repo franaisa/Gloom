@@ -65,7 +65,7 @@ Map = {
 	},
 	
 	David = {
-		type = "LocalSpectator",
+		type = "LocalHound",
 		isPlayer = true,
 	},
 	

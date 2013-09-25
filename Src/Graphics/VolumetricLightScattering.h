@@ -58,7 +58,7 @@ namespace Graphics {
 			float exposure;
 		};
 
-		void initLightSources();
+		void initLightSources(const std::string& sceneName);
 		std::pair<ScatteringParams, bool> getClosestLightSource(const std::list<ScatteringParams>& lightList);
 		
 		Ogre::CompositorInstance* _compositor;
