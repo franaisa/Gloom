@@ -19,6 +19,7 @@ Contiene la implementación de la clase que maneja el PUParticle.
 #include "PUParticle.h"
 #include "Scene.h"
 #include "Server.h"
+#include "Entity.h"
 
 #include <assert.h>
 
@@ -38,7 +39,7 @@ namespace Graphics {
 	//______________________________________________________________________________
 
 	//Constructor de la clase PUParticle
-	PUParticle::PUParticle(const std::string& scriptName) {
+	PUParticle::PUParticle(const std::string& scriptName, Graphics::CEntity* parent) {
 		// Obtenemos los punteros a los singleton
 		Ogre::SceneManager* sceneMgr = Graphics::CServer::getSingletonPtr()->getActiveScene()->getSceneMgr();
 		ParticleUniverse::ParticleSystemManager* particleMgr = ParticleUniverse::ParticleSystemManager::getSingletonPtr();
@@ -58,8 +59,15 @@ namespace Graphics {
 		_particleSystem = particleMgr->createParticleSystem(_name, scriptName, sceneMgr);
 
 		// Atachamos el sistema de particulas a la escena
-		_sceneNode = sceneMgr->getRootSceneNode()->createChildSceneNode();
-		_sceneNode->attachObject(_particleSystem);
+		if(parent != NULL) {
+			Ogre::SceneNode* parentNode = parent->getSceneNode();
+			_sceneNode = parentNode->createChildSceneNode();
+			_sceneNode->attachObject(_particleSystem);
+		}
+		else {
+			_sceneNode = sceneMgr->getRootSceneNode()->createChildSceneNode();
+			_sceneNode->attachObject(_particleSystem);
+		}
 
 		// Realizamos la carga del sitema de particulas aqui
 		// para evitar caidas en el frame rate
@@ -224,14 +232,5 @@ namespace Graphics {
 			}
 		}
 	}
-
-	//______________________________________________________________________________
-
-	/*
-	bool PUParticle::isEmitting(){
-		_particleSystem->
-	}
-	*/
-
 
 } // namespace Graphics

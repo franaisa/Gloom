@@ -12,6 +12,8 @@
 #include "WeaponFeedback.h"
 #include "HudWeapons.h"
 #include "Graphics.h"
+#include "DynamicParticleSystem.h"
+#include "HudWeapons.h"
 
 // Mapa
 #include "Map/MapEntity.h"
@@ -28,7 +30,13 @@
 
 #include "Logic/Messages/MessageParticleStart.h"
 
+#include "BaseSubsystems/Euler.h"
+
 // Graficos
+#include "Graphics/Server.h"
+#include "Graphics/Scene.h"
+#include "Graphics/Camera.h"
+
 // @deprecated Ogre no deberia estar acoplado a la logica
 #include <OgreSceneManager.h>
 #include <OgreMaterialManager.h>
@@ -77,7 +85,7 @@ namespace Logic {
 		if(tempEntity->hasAttribute("ParticlePosition"))
 			_particlePosition = tempEntity->getVector3Attribute("ParticlePosition");
 		else
-			_particlePosition = Vector3(6, 5, 6);
+			_particlePosition = Vector3(0, 0, 0);
 
 
 		_hudWeapon = _entity->getComponent<CHudWeapons>("CHudWeapons");
@@ -110,7 +118,7 @@ namespace Logic {
 					if( primaryShootMsg->getShoot() ) {
 						primaryFire();
 						_primaryFireIsActive = true;
-						emitParticle(true);
+						//emitParticle(true);
 					}
 					else {
 						stopPrimaryFire();
@@ -127,7 +135,7 @@ namespace Logic {
 					if( secondaryShootMsg->getShoot() ) {
 						secondaryFire();
 						_secondaryFireIsActive = true;
-						emitParticle(false);
+						//emitParticle(false);
 					}
 					else {
 						stopSecondaryFire();
@@ -231,32 +239,19 @@ namespace Logic {
 	//__________________________________________________________________
 
 	void IWeaponFeedback::emitParticle2(bool primaryShoot){
-		
-		// Calculo la posicion y orientacion de la entidad
-		Vector3 particlePosition = _entity->getPosition();
-		particlePosition.y += _heightShoot;
-		Vector3 orientation= _entity->getOrientation()*Vector3::NEGATIVE_UNIT_Z;
-		orientation.normalise();
-		/*
-		float fOffset = 8.0f;
-		orientation *= fOffset;
-		particlePosition += orientation;
-		/*/
-		//orientation *= _particlePosition;
-		particlePosition += (orientation*_particlePosition);
-		/* */
-
-		
 		_currentPaticle = CEntityFactory::getSingletonPtr()->createEntity(
 			CEntityFactory::getSingletonPtr()->getInfo(_weaponName+(primaryShoot?"PrimaryShot":"SecondaryShot")),			
-			Logic::CServer::getSingletonPtr()->getMap(),
-			particlePosition,
-			_entity->getOrientation()
-		);
+			Logic::CServer::getSingletonPtr()->getMap());
+
+		Graphics::CEntity* graphicWeapon = _hudWeapon->getCurrentWeapon();
+		CDynamicParticleSystem* particleComp = _currentPaticle->getComponent<CDynamicParticleSystem>("CDynamicParticleSystem");
+		
+		particleComp->setGraphicParent(graphicWeapon);
+		particleComp->setOffset(_particlePosition);
+
 		_currentPaticle->activate();
 		_currentPaticle->start();
 	} // emitParticle2
-	//__________________________________________________________________
 	
 } // namespace Logic
 

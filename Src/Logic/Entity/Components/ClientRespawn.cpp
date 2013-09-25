@@ -60,7 +60,7 @@ namespace Logic  {
 
 	void CClientRespawn::process(const std::shared_ptr<CMessage>& message) {
 		switch( message->getMessageType() ) {
-			case Message::PLAYER_DEAD:{
+			case Message::PLAYER_DEAD: {
 				// @deprecated Esto no deberia hacerse aqui pero como mañana es la gamelab
 				// lo dejo asi. El problema es que el componente del servidor no procesa
 				// el mensaje de audio de muerte mandado desde el cliente
@@ -99,12 +99,10 @@ namespace Logic  {
 
 				//mostramos en pantalla el mensaje de quien ha matado a quien
 				std::shared_ptr<CMessagePlayerDead> playerDeadMsg = std::static_pointer_cast<CMessagePlayerDead> (message);
-				CEntity* entity = Logic::CServer::getSingletonPtr()->getMap()->getEntityByID(playerDeadMsg->getKiller());
+				CEntity* killer = playerDeadMsg->getKiller();
 			
-				if(!entity)
-					break;
-
-				updateGUI(entity);
+				if(killer != NULL)
+					updateGUI(killer);
 
 				break;
 			}

@@ -33,6 +33,7 @@ namespace Ogre {
 namespace Graphics {
 	class CScene;
 	class CServer;
+	class CEntity;
 }
 
 namespace ParticleUniverse {
@@ -65,7 +66,7 @@ namespace Graphics {
 
 		@param name Nombre del OgreParticle.
 		*/
-		PUParticle(const std::string& scriptName);
+		PUParticle(const std::string& scriptName, Graphics::CEntity* parent = NULL);
 
 		/**
 		Destructor de la partícula.

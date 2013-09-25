@@ -257,7 +257,7 @@ namespace Logic {
 			{
 				//Mandar el mensaje de los decal
 				Vector3 pos = hits[i].impact;
-				//drawDecal(hits[i].entity, hits[i].impact);
+				drawDecal(hits[i].entity, hits[i].impact, (int)WeaponType::eMINIGUN);
 			
 				// Añado aqui las particulas de dado en la pared.
 				/*auto m = std::make_shared<CMessageCreateParticle>();
@@ -272,8 +272,11 @@ namespace Logic {
 
 				Map::CEntity* entityInfo = CEntityFactory::getSingletonPtr()->getInfo("MinigunHit");
 				CEntity* minigunHit = CEntityFactory::getSingletonPtr()->createEntity(entityInfo, _entity->getMap(), hits[i].impact, euler.toQuaternion() );
-				minigunHit->activate();
-				minigunHit->start();
+				if (minigunHit) //guarda del puntero de minigunHit porque me ha petado el server al ser minigunHit NULL y luego intentar hacer el start, sobre todo cuando disparas muchas
+				{
+					minigunHit->activate();
+					minigunHit->start();
+				}
 
 				int randomValue = Math::unifRand(2);
 				std::string ricochetSound = (randomValue == 1 ? "weapons/hit/ric3.wav" : "weapons/hit/ric2.wav");
@@ -404,7 +407,7 @@ namespace Logic {
 			if( typeEntity == "World" ) {
 				//Mandar el mensaje de los decal
 				Vector3 pos = it->impact;
-				//drawDecal(it->entity, it->impact);
+				drawDecal(it->entity, it->impact, (int)WeaponType::eMINIGUN);
 
 				Euler euler(Quaternion::IDENTITY);
 				euler.setDirection(it->normal);
@@ -412,8 +415,11 @@ namespace Logic {
 
 				Map::CEntity* entityInfo = CEntityFactory::getSingletonPtr()->getInfo("MinigunHit");
 				CEntity* minigunHit = CEntityFactory::getSingletonPtr()->createEntity(entityInfo, _entity->getMap(), it->impact, euler.toQuaternion() );
-				minigunHit->activate();
-				minigunHit->start();
+				if (minigunHit) //guarda para evitar pete
+				{
+					minigunHit->activate();
+					minigunHit->start();
+				}
 
 				int randomValue = Math::unifRand(2);
 				std::string ricochetSound = (randomValue == 1 ? "weapons/hit/ric3.wav" : "weapons/hit/ric2.wav");

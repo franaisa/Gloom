@@ -196,6 +196,28 @@ namespace Logic {
 		shared_ptr<CMessageDecal> messageDecal = make_shared<CMessageDecal>();
 		messageDecal->setPosition(vPos);
 		messageDecal->setTexture("gunshotwall");
+		messageDecal->setRandomSize(true);
+		pEntity->emitMessage(messageDecal);
+	}
+
+	//__________________________________________________________________
+
+	void IWeapon::drawDecal(Logic::CEntity* pEntity, Vector3 vPos, int iWeapon)	{
+		OgreDecal::OgreMesh worldMesh;
+
+		shared_ptr<CMessageDecal> messageDecal = make_shared<CMessageDecal>();
+		messageDecal->setPosition(vPos);
+		switch (iWeapon)
+		{
+			case (int)WeaponType::eSHOTGUN: //shotgun		
+				messageDecal->setTexture("gunshotwall");
+				messageDecal->setRandomSize(true);
+			break;
+			case (int)WeaponType::eMINIGUN: //shotgun		
+				messageDecal->setTexture("miniGunDecal");
+				messageDecal->setRandomSize(false);
+			break;
+		}
 		pEntity->emitMessage(messageDecal);
 	}
 

@@ -6,11 +6,6 @@ material mapaAngel_lava1
 
 		pass 
 		{
-			ambient 0 0 0 1
-			diffuse 0 0 0 0
-			specular 2 2 2 100
-			emissive 1 1 1 1 
-			
 			vertex_program_ref ShaderLavaFondo
 			{
 				param_named_auto ViewProjectionMatrix worldviewproj_matrix
@@ -43,10 +38,19 @@ material mapaAngel_lava1
 			{
 				texture $glow_tex
 			}
-			ambient 1 1 1
-			diffuse 1 1 1
-			specular 0 0 0 1
-			emissive 0 0 0
+		}
+	}
+	
+	technique {
+		lighting off
+		
+		scheme depthScheme
+		pass {
+			vertex_program_ref depthMapVertex {
+			}
+			
+			fragment_program_ref depthMapFragment {
+			}
 		}
 	}
 }

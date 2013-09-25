@@ -5,6 +5,8 @@
 
 namespace Logic {
 
+	class CEntity;
+
 	class CMessagePlayerDead: public CMessage{
 	DEC_FACTORYMESSAGE(CMessagePlayerDead);
 	public:
@@ -14,12 +16,11 @@ namespace Logic {
 		virtual Net::CBuffer serialize();
 		virtual void deserialize(Net::CBuffer& buffer);
 
-		void setKiller(Logic::TEntityID killer){_killer = killer;}
-		Logic::TEntityID getKiller(){return _killer;}
+		void setKiller(CEntity* killer) { _killer = killer; }
+		CEntity* getKiller() { return _killer; }
 
 	private:
-		Logic::TEntityID _killer;
-
+		CEntity* _killer;
 	};
 	REG_FACTORYMESSAGE(CMessagePlayerDead);
 };

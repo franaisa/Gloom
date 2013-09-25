@@ -13,10 +13,10 @@ material volumetricLightMaterial {
 			fragment_program_ref volumetricLightFragment {
 				param_named		viewProjMatrix		matrix4x4		1 0 0 0	0 1 0 0	0 0 1 0	0 0 0 1
 				param_named		lightPosition			float3			0 0 0
-				param_named		Density					float				0.5
-				param_named		Decay					float				0.95
-				param_named		Weight					float 				1.0
-				param_named		Exposure				float				0.15
+				param_named		Density					float				0.22		// Distancia entre muestras
+				param_named		Decay					float				0.99		// Longitud del rayo
+				param_named		Weight					float 				1.0		//  Relleno
+				param_named		Exposure				float				0.1		// Saturacion del color
 			}
 		
 			// Textura de post-procesado de la escena

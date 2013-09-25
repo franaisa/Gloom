@@ -72,7 +72,7 @@ Map = {
 	},	
 
 	David = {
-		type = "LocalHound",
+		type = "LocalSpectator",
 		isPlayer = true,
 		physic_group = 1,
 		physic_groupList = "-1",
@@ -471,7 +471,7 @@ Map = {
 	
 	lavaFondo = {
 		type = "Lava",
-		position = {-218.0,-10.0, -67.7},
+		position = {-218.0,-20.0, -67.7},
 		
 		plane_orientation = {0, 1, 0},
 		plane_width = 500,
@@ -483,14 +483,7 @@ Map = {
 		plane_upVector = {0, 0, 1},
 		plane_material = "lavaFondo",
 		
-		damage = 500,
-		timeDamage = 500,
-		
-		physic_entity = "plane",
-		physic_normal = {0, 1, 0},
-		physic_trigger = true,
-		physic_group = 11,
-		physic_groupList = "1",
+		physic_dimensions = { 2000, 3, 2000 },
 	},
 
 	Camera = {

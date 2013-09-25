@@ -82,19 +82,49 @@ namespace Application {
 			case Logic::Message::PLAYER_DEAD: {
 				shared_ptr<Logic::CMessagePlayerDead> playerDeadMsg = static_pointer_cast<Logic::CMessagePlayerDead>(msg);
 				
-				Logic::TEntityID killerID = playerDeadMsg->getKiller();
-				Logic::TEntityID emitterID = emitter->getEntityID();
-				// Si no nos hemos suicidado (ya sea matandonos o muriendo en una trampa)
-				Logic::CEntity* killer = Logic::CServer::getSingletonPtr()->getMap()->getEntityByID(killerID);
-				if( emitter != killer && isPlayer(killer) ) {
-					// Incrementamos el número de muertes del jugador
-					_playersMgr->addFragUsingEntityID(killerID);
+				Logic::CEntity* killer = playerDeadMsg->getKiller();
+				if(killer != NULL) {
+					Logic::TEntityID killerID = killer->getEntityID();
+					Logic::TEntityID emitterID = emitter->getEntityID();
+					// Si no nos hemos suicidado (ya sea matandonos o muriendo en una trampa)
+					Logic::CEntity* killer = Logic::CServer::getSingletonPtr()->getMap()->getEntityByID(killerID);
+					if( emitter != killer && isPlayer(killer) ) {
+						// Incrementamos el número de muertes del jugador
+						_playersMgr->addFragUsingEntityID(killerID);
 					
-					// Obtenemos el equipo al que pertenece el jugador que acaba de hacer un frag
-					Logic::TeamFaction::Enum team = _playersMgr->getTeamUsingEntityId(killerID);
-					Logic::TeamFaction::Enum victimTeam = _playersMgr->getTeamUsingEntityId(emitterID);
-					// Si matas a alguien de tu equipo te descuentas frags
-					if(team == victimTeam) {
+						// Obtenemos el equipo al que pertenece el jugador que acaba de hacer un frag
+						Logic::TeamFaction::Enum team = _playersMgr->getTeamUsingEntityId(killerID);
+						Logic::TeamFaction::Enum victimTeam = _playersMgr->getTeamUsingEntityId(emitterID);
+						// Si matas a alguien de tu equipo te descuentas frags
+						if(team == victimTeam) {
+							if(team == Logic::TeamFaction::eRED_TEAM) {
+								--_redTeamScore;
+							}
+							else if(team == Logic::TeamFaction::eBLUE_TEAM) {
+								--_blueTeamScore;
+							}
+						}
+						// Sino incrementas frags y compruebas si has ganado la partida
+						else {
+							if(team == Logic::TeamFaction::eRED_TEAM) {
+								if(++_redTeamScore == _goalScore && !_unlimitedScore) {
+									endGame();
+									cout << "RED TEAM WINS!" << endl;
+								}
+							}
+							else if(team == Logic::TeamFaction::eBLUE_TEAM) {
+								if(++_blueTeamScore == _goalScore && !_unlimitedScore) {
+									endGame();
+									cout << "BLUE TEAM WINS!" << endl;
+								}
+							}
+						}
+					}
+					else {
+						_playersMgr->substractFragUsingEntityID(emitterID);
+
+						// Obtenemos el equipo al que pertenece el jugador que acaba de suicidarse
+						Logic::TeamFaction::Enum team = _playersMgr->getTeamUsingEntityId(emitterID);
 						if(team == Logic::TeamFaction::eRED_TEAM) {
 							--_redTeamScore;
 						}
@@ -102,36 +132,9 @@ namespace Application {
 							--_blueTeamScore;
 						}
 					}
-					// Sino incrementas frags y compruebas si has ganado la partida
-					else {
-						if(team == Logic::TeamFaction::eRED_TEAM) {
-							if(++_redTeamScore == _goalScore && !_unlimitedScore) {
-								endGame();
-								cout << "RED TEAM WINS!" << endl;
-							}
-						}
-						else if(team == Logic::TeamFaction::eBLUE_TEAM) {
-							if(++_blueTeamScore == _goalScore && !_unlimitedScore) {
-								endGame();
-								cout << "BLUE TEAM WINS!" << endl;
-							}
-						}
-					}
-				}
-				else {
-					_playersMgr->substractFragUsingEntityID(emitterID);
 
-					// Obtenemos el equipo al que pertenece el jugador que acaba de suicidarse
-					Logic::TeamFaction::Enum team = _playersMgr->getTeamUsingEntityId(emitterID);
-					if(team == Logic::TeamFaction::eRED_TEAM) {
-						--_redTeamScore;
-					}
-					else if(team == Logic::TeamFaction::eBLUE_TEAM) {
-						--_blueTeamScore;
-					}
+					_playersMgr->addDeathUsingEntityID(emitterID);
 				}
-
-				_playersMgr->addDeathUsingEntityID(emitterID);
 
 				break;
 			}
