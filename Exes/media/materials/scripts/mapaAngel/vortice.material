@@ -35,5 +35,29 @@ material vortice
 			emissive 0 0 0
 		}
 	}
+	
+	technique {
+		lighting off
+		
+		scheme depthScheme
+		pass {
+			vertex_program_ref depthMapVertex {
+			}
+			
+			fragment_program_ref depthMapFragment {
+			}
+		}
+	}
 
+}
+
+material vortexLight {
+	technique {
+		lighting off
+		pass {
+			texture_unit DiffMap {
+				texture vortice.png
+			}
+		}
+	}
 }

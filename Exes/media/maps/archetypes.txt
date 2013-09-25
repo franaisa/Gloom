@@ -1132,24 +1132,13 @@ Map = {
 	
 	lava = {
 		type = "Lava",
-		position = {0,0,0},
-		
-		plane_orientation = {0, 1, 0},
-		plane_width = 1500,
-		plane_height = 1500,
-		plane_xSegments = 20,
-		plane_ySegments = 20,
-		plane_uTiling = 20,
-		plane_vTiling = 20,
-		plane_upVector = {0, 0, 1},
-		plane_material = "lavaFondo",
-		
-		damage = 500,
+		position = {-10.0,0.2, -50.0},
+		damage = 5,
 		timeDamage = 500,
-		
-		physic_entity = "plane",
-		physic_normal = {0, 1, 0},
+		physic_entity = "rigid",
 		physic_trigger = true,
+		physic_type = "static",
+		physic_shape = "box",
 		physic_group = 11,
 		physic_groupList = "1",
 	},
