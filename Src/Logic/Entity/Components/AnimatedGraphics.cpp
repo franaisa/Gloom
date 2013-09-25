@@ -200,7 +200,7 @@ namespace Logic
 	void CAnimatedGraphics::changeWeapon(int newWeapon){
 		if(newWeapon != _currentWeapon)
 			_currentWeapon = newWeapon;
-			//_animatedGraphicsEntity->attachWeapon( *_weapons[_currentWeapon] , _entity->getEntityID() );
+			_animatedGraphicsEntity->attachWeapon( *_weapons[_currentWeapon] , _entity->getEntityID() );
 
 			//comprobamos si el material que tenia el arma anterior no era el original
 			// y si no lo era se lo tenemos que cambiar
