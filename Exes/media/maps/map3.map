@@ -65,7 +65,7 @@ Map = {
 	},
 	
 	David = {
-		type = "LocalSpectator",
+		type = "LocalHound",
 		isPlayer = true,
 	},
 	
@@ -90,8 +90,8 @@ Map = {
 		position = {75,146.6, -142.9},
 		
 		plane_orientation = {0, 1, 0},
-		plane_width = 350,
-		plane_height = 350,
+		plane_width = 180,
+		plane_height = 220,
 		plane_xSegments = 60,
 		plane_ySegments = 60,
 		plane_uTiling = 10,

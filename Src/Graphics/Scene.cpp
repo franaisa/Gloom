@@ -176,7 +176,7 @@ namespace Graphics
 			Ogre::MaterialManager::getSingletonPtr()->addListener(_glowMaterialListener);
 
 			_poolParticle->activate();
-			_volumetricLight = new CVolumetricLightScattering(_compositorManager, _camera);
+			//_volumetricLight = new CVolumetricLightScattering(_compositorManager, _camera, _name);
 		}
 
 		_sceneMgr->getRootSceneNode()->setVisible(true);
