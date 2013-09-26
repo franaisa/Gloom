@@ -15,6 +15,9 @@ Contiene la implementación del componente que representa al coolDown.
 #include "Logic/Server.h"
 #include "Map/MapEntity.h"
 
+#include "Graphics/Server.h"
+#include "Graphics/Scene.h"
+
 namespace Logic {
 	IMP_FACTORY(CCoolDownClient);
 
@@ -48,13 +51,13 @@ namespace Logic {
 
 	void CCoolDownClient::spell(){ 
 		// feedback de cooldown reducio
-
+		Graphics::CServer::getSingletonPtr()->getActiveScene()->createCompositor("ColdDownCompositor");
 	} // spell
 	//__________________________________________________________________
 		
 	void CCoolDownClient::stopSpell() { 
 		// fin feedback de cooldown reducio
-
+		Graphics::CServer::getSingletonPtr()->getActiveScene()->destroyCompositor("ColdDownCompositor");
 	} // stopSpell
 	//__________________________________________________________________
 

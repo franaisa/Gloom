@@ -1,0 +1,33 @@
+material ColdDownFP
+{
+	technique
+	{
+
+		pass
+		{
+			depth_check off
+
+			fragment_program_ref ArchangelShieldFP_ps
+			{
+                param_named strength float1 4.0
+				
+			}
+
+			texture_unit 0
+			{
+                tex_coord_set 0
+				tex_address_mode clamp
+				filtering linear linear linear
+			}
+
+			texture_unit 1
+			{
+				texture ColdDown_Alpha.png 2d
+                tex_coord_set 1
+				tex_address_mode clamp
+				filtering linear linear linear
+			}
+
+		}
+	}
+}
