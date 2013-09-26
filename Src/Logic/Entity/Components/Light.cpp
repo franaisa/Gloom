@@ -81,8 +81,8 @@ namespace Logic {
 		if( entityInfo->hasAttribute("direction") )
 			_direction = entityInfo->getVector3Attribute("direction");
 
-		if( entityInfo->hasAttribute("rotation") ) {
-			Quaternion rotation = entityInfo->getQuaternionAttribute("rotation");
+		if( entityInfo->hasAttribute("lightRotation") ) {
+			Quaternion rotation = entityInfo->getQuaternionAttribute("lightRotation");
 			_direction = -rotation.zAxis();
 		}
 

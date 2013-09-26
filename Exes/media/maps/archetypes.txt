@@ -8,7 +8,7 @@ Map = {
 		yaw = 0,
 		
 		static = true,
-		model = "scenario.mesh",
+		model =  "archangel.mesh",
 		physic_entity = "fromFile",
 		physic_normal = { 0, 1, 0 },
 		physic_file = "media/models/scenario.RepX",
