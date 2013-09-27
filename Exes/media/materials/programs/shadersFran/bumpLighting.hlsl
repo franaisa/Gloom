@@ -103,7 +103,7 @@ float computeAttenuation(float3 lightPos, float4 att, float3 P) {
 
 void computeLighting(float3 lightPosition, float4 lightAttenuation, float3 P, float3 N, float3 lightColor, float3 lightDirection, float3 halfAngle,
 							   float Kd, float Ks, float shininess, out float3 diffuse, out float3 specular) {
-	
+
 	// Calculamos la atenuacion. Si el rango es 0, quiere decir que no queremos
 	// atenuacion
 	float attenuation;
@@ -111,25 +111,25 @@ void computeLighting(float3 lightPosition, float4 lightAttenuation, float3 P, fl
 		attenuation = saturate( computeAttenuation(lightPosition, lightAttenuation, P) );
 	else
 		attenuation = 1.0f;
-	
+
 	// Calculamos el efecto del sopt light
 	float spotEffect;
 	if( !isNotSpotLight(spotLightParams) )
 		spotEffect = dualConeSpotlight(P);
 	else
 		spotEffect = 1.0f;
-	
+
 	// Calculamos la cantidad de luz ambiente basandonos en la ley del coseno de Lambert
 	float3 L = lightDirection;
 	float diffuseLight = max( dot(L, N), 0 );
 	diffuse = Kd * spotEffect * attenuation * lightColor * diffuseLight;
-	
+
 	// Calculamos la cantidad de especular
 	float3 H = halfAngle;
 	float specularLight = pow( max(dot(H, N), 0), shininess );
 	if(diffuseLight <= 0)
 		specularLight = 0;
-		
+
 	specular = Ks * spotEffect * attenuation * lightColor * specularLight;
 }
 
@@ -139,7 +139,7 @@ void computeLighting(float3 lightPosition, float4 lightAttenuation, float3 P, fl
 // de especular indica un color completo (R, G, B) en lugar de una intensidad constante para todos los canales.
 void computeLightingExtSpecular(float3 lightPosition, float4 lightAttenuation, float3 P, float3 N, float3 lightColor, float3 lightDirection, float3 halfAngle,
 							   float Kd, float3 Ks, float shininess, out float3 diffuse, out float3 specular) {
-	
+
 	// Calculamos la atenuacion. Si el rango es 0, quiere decir que no queremos
 	// atenuacion
 	float attenuation;
@@ -147,25 +147,25 @@ void computeLightingExtSpecular(float3 lightPosition, float4 lightAttenuation, f
 		attenuation = saturate( computeAttenuation(lightPosition, lightAttenuation, P) );
 	else
 		attenuation = 1.0f;
-	
+
 	// Calculamos el efecto del sopt light
 	float spotEffect;
 	if( !isNotSpotLight(spotLightParams) )
 		spotEffect = dualConeSpotlight(P);
 	else
 		spotEffect = 1.0f;
-	
+
 	// Calculamos la cantidad de luz ambiente basandonos en la ley del coseno de Lambert
 	float3 L = lightDirection;
 	float diffuseLight = max( dot(L, N), 0 );
 	diffuse = Kd * spotEffect * attenuation * lightColor * diffuseLight;
-	
+
 	// Calculamos la cantidad de especular
 	float3 H = halfAngle;
 	float specularLight = pow( max(dot(H, N), 0), shininess );
 	if(diffuseLight <= 0)
 		specularLight = 0;
-		
+
 	specular = Ks * spotEffect * attenuation * lightColor * specularLight;
 }
 
@@ -191,24 +191,24 @@ VsOutput vertex_main(const VsInput IN) {
 	OUT.uv0 = IN.uv0;
 	OUT.objectPos = IN.position;
 	OUT.normal = IN.normal;
-	
+
 	// Construimos la matriz 3x3 que nos permite pasar del espacio objeto al espacio
 	// textura (de esta forma el reflejo funciona bien sin importar la orientación
 	float3 binormal = normalize( cross(IN.normal, IN.tangent.xyz) );
 	float3x3 rotation = float3x3(IN.tangent.xyz, binormal, IN.normal);
-	
+
 	// Si la luz es puntual w vale 1.0f. En caso de ser direccional vale 1.0f
 	// Si la luz no es un spot light, spotlightparams vale (1.0f, 0.0f, 0.0f, 1.0f)
 	if( lightPosition.w == 0.0f && isNotSpotLight(spotLightParams) )
 		OUT.lightDirection = -lightDir;
 	else
 		OUT.lightDirection = (lightPosition.xyz - IN.position).xyz;
-	
+
 	// Obtenemos vector director de cámara y del rayo de luz
 	float3 eyeDirection = (eyePosition - IN.position).xyz;
 	//OUT.lightDirection = (lightPosition.xyz - IN.position).xyz;
 	OUT.lightDirection = normalize(OUT.lightDirection);
-	
+
 	// Rotamos los vectores en base a la matriz 3x3 construida anteriormente
 	eyeDirection = mul(rotation, eyeDirection);
 	OUT.lightDirection = mul(rotation, OUT.lightDirection);
@@ -224,7 +224,7 @@ VsOutput_AMB vertex_AMB(const VsInput_AMB IN) {
 
 	OUT.position = mul(viewProjectionMatrix, IN.position);
 	OUT.uv0 = IN.uv0;
-	
+
 	return OUT;
 }
 
@@ -238,19 +238,19 @@ float4 fragment_main(const PsInput IN) : COLOR {
 	float3 N = tex2D(NormalMap, IN.uv0).xyz;
 	N = expand(N);
 	N = normalize(N);
-	
+
 	// Calculamos la cantidad de luz ambiente
 	float3 ambient = Ka * globalAmbient.xyz;
-	
+
 	// Calculamos el color del pixel en base a la luz recibida
 	// Notar que la constante de especular se obtiene del canal alfa de la textura de normales
 	float3 specular, diffuse;
 	computeLighting(lightPosition.xyz, lightAttenuation, IN.position.xyz, N, lightColor.xyz, IN.lightDirection, IN.halfAngle, Kd, tex2D(NormalMap, IN.uv0).w, shininess, diffuse, specular);
-	
+
 	// Al resultado final de la iluminación del material hay que sumar
 	// el color del entorno reflejado por el especular
 	float3 color = (ambient + diffuse + specular) * tex2D(DiffMap, IN.uv0).xyz;
-	
+
 	return float4(color, 1.0f);
 }
 
@@ -259,7 +259,7 @@ float4 fragment_main(const PsInput IN) : COLOR {
 // Fragment para calcular ambiente
 float4 fragment_AMB(const PsInput_AMB IN) : COLOR {
 	float3 color = Ka * globalAmbient.xyz * tex2D(DiffMap, IN.uv0).xyz;
-	
+
 	return float4(color, 1.0f);
 }
 
@@ -271,16 +271,16 @@ float4 fragment_DIFF_ALPHASPEC(const PsInput IN) : COLOR {
 	float3 N = tex2D(NormalMap, IN.uv0).xyz;
 	N = expand(N);
 	N = normalize(N);
-	
+
 	// Calculamos el color del pixel en base a la luz recibida
 	// Notar que la constante de especular se obtiene del canal alfa de la textura de normales
 	float3 specular, diffuse;
 	computeLighting(lightPosition.xyz, lightAttenuation, IN.position.xyz, N, lightColor.xyz, IN.lightDirection, IN.halfAngle, Kd, tex2D(NormalMap, IN.uv0).w, shininess, diffuse, specular);
-	
+
 	// Al resultado final de la iluminación del material hay que sumar
 	// el color del entorno reflejado por el especular
 	float3 color = (diffuse + specular) * tex2D(DiffMap, IN.uv0).xyz;
-	
+
 	return float4(color, 1.0f);
 }
 
@@ -293,15 +293,15 @@ float4 fragment_DIFF_SPEC(const PsInput IN) : COLOR {
 	float3 N = tex2D(NormalMap, IN.uv0).xyz;
 	N = expand(N);
 	N = normalize(N);
-	
+
 	// Calculamos el color del pixel en base a la luz recibida
 	// Notar que la constante de especular se obtiene del canal alfa de la textura de normales
 	float3 specular, diffuse;
 	computeLightingExtSpecular(lightPosition.xyz, lightAttenuation, IN.position.xyz, N, lightColor.xyz, IN.lightDirection, IN.halfAngle, Kd, tex2D(SpecMap, IN.uv0).xyz, shininess, diffuse, specular);
-	
+
 	// Al resultado final de la iluminación del material hay que sumar
 	// el color del entorno reflejado por el especular
 	float3 color = (diffuse + specular) * tex2D(DiffMap, IN.uv0).xyz;
-	
+
 	return float4(color, 1.0f);
 }
