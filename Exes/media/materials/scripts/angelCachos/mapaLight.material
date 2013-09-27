@@ -1,0 +1,654 @@
+material Material#169[Object002]
+{
+	technique
+	{
+		pass
+		{
+		}
+
+	}
+
+}
+
+
+
+material Material#169[Object006]
+{
+	technique
+	{
+		pass
+		{
+		}
+
+	}
+
+}
+
+
+
+material Material#169[Object014]
+{
+	technique
+	{
+		pass
+		{
+		}
+
+	}
+
+}
+
+
+
+material Material#169[Object020]
+{
+	technique
+	{
+		pass
+		{
+		}
+
+	}
+
+}
+
+
+
+material Material#169[Object022]
+{
+	technique
+	{
+		pass
+		{
+		}
+
+	}
+
+}
+
+
+
+material Material#169[Object030]
+{
+	technique
+	{
+		pass
+		{
+		}
+
+	}
+
+}
+
+
+
+material Material#169[Object034]
+{
+	technique
+	{
+		pass
+		{
+		}
+
+	}
+
+}
+
+
+
+material Material#169[Object038]
+{
+	technique
+	{
+		pass
+		{
+		}
+
+	}
+
+}
+
+
+
+material Material#169[Object055]
+{
+	technique
+	{
+		pass
+		{
+		}
+
+	}
+
+}
+
+
+
+material Material#169[Object057]
+{
+	technique
+	{
+		pass
+		{
+		}
+
+	}
+
+}
+
+
+
+material Material#169[Object061]
+{
+	technique
+	{
+		pass
+		{
+		}
+
+	}
+
+}
+
+
+
+material Material#169[Object083]
+{
+	technique
+	{
+		pass
+		{
+		}
+
+	}
+
+}
+
+
+
+material Material#169[Object085]
+{
+	technique
+	{
+		pass
+		{
+		}
+
+	}
+
+}
+
+
+
+material Material#169[Object087]
+{
+	technique
+	{
+		pass
+		{
+		}
+
+	}
+
+}
+
+
+
+material Material#169[Object089]
+{
+	technique
+	{
+		pass
+		{
+		}
+
+	}
+
+}
+
+
+
+material Material#169[Object093]
+{
+	technique
+	{
+		pass
+		{
+		}
+
+	}
+
+}
+
+
+
+material Material#169[Object109] {
+	technique {
+		pass {
+		
+			vertex_program_ref bumpedLightmappingVertex_AMB {
+			}
+		
+			fragment_program_ref bumpedLightmappingFragment_AMB {
+				// Constante para regular la cantidad de ambiente
+				param_named			Ka								float		1.0
+			}
+			
+			// Textura de difuso
+			texture_unit DiffMap {
+				texture rock_DIF.jpg
+			}
+			
+			texture_unit BumpedLightmap {
+				texture Object109LightingMap.tga
+			}
+		}
+		
+		pass {
+		
+			scene_blend add
+			iteration once_per_light
+		
+			vertex_program_ref bumpedLightmappingVertexShader {
+			}
+			
+			fragment_program_ref bumpedLightmappingFragment_DIFF_ALPHASPEC {
+				// Constante para regular la cantidad de difuso
+				param_named			Kd								float		0.6
+				// Constante de brillo especular
+				param_named 			shininess						float		70.0
+			}
+			
+			// Textura de difuso
+			texture_unit DiffMap {
+				texture rock_DIF.jpg
+			}
+			
+			texture_unit BumpedLightmap {
+				texture Object109LightingMap.tga
+			}
+			
+			// Textura para el bump mapping. En el alfa esta el mapa de especulares.
+			texture_unit NormalMap {
+				texture rock_NRM_SPEC.tga
+			}
+			
+		}
+	}
+	
+	technique {
+		lighting off
+		
+		scheme depthScheme
+		pass {
+			vertex_program_ref depthMapVertex {
+			}
+			
+			fragment_program_ref depthMapFragment {
+			}
+		}
+	}
+	
+	technique {
+		lighting off
+	
+		scheme blackScheme
+		pass {
+			vertex_program_ref blackVertex {
+			}
+			
+			fragment_program_ref blackFragment {
+			}
+		}
+	}
+}
+
+
+
+material Material#169[Object117]
+{
+	technique
+	{
+		pass
+		{
+		}
+
+	}
+
+}
+
+
+
+material Material#169[Object119]
+{
+	technique
+	{
+		pass
+		{
+		}
+
+	}
+
+}
+
+
+
+material Material#169[Object121]
+{
+	technique
+	{
+		pass
+		{
+		}
+
+	}
+
+}
+
+
+
+material Material#169[Object123]
+{
+	technique
+	{
+		pass
+		{
+		}
+
+	}
+
+}
+
+
+
+material Material#169[Object125]
+{
+	technique
+	{
+		pass
+		{
+		}
+
+	}
+
+}
+
+
+
+material Material#169[Object128]
+{
+	technique
+	{
+		pass
+		{
+		}
+
+	}
+
+}
+
+
+
+material Material#169[Object130]
+{
+	technique
+	{
+		pass
+		{
+		}
+
+	}
+
+}
+
+
+
+material Material#169[Object132]
+{
+	technique
+	{
+		pass
+		{
+		}
+
+	}
+
+}
+
+
+
+material Material#169[Object134]
+{
+	technique
+	{
+		pass
+		{
+		}
+
+	}
+
+}
+
+
+
+material Material#169[Object136]
+{
+	technique
+	{
+		pass
+		{
+		}
+
+	}
+
+}
+
+
+
+material Material#169[Object138]
+{
+	technique
+	{
+		pass
+		{
+		}
+
+	}
+
+}
+
+
+
+material Material#169[Object140]
+{
+	technique
+	{
+		pass
+		{
+		}
+
+	}
+
+}
+
+
+
+material Material#169[Object141]
+{
+	technique
+	{
+		pass
+		{
+		}
+
+	}
+
+}
+
+
+
+material Material#169[Object142]
+{
+	technique
+	{
+		pass
+		{
+		}
+
+	}
+
+}
+
+
+
+material Material#169[Object143]
+{
+	technique
+	{
+		pass
+		{
+		}
+
+	}
+
+}
+
+
+
+material Material#169[Object144]
+{
+	technique
+	{
+		pass
+		{
+		}
+
+	}
+
+}
+
+
+
+material Material#169[Object145]
+{
+	technique
+	{
+		pass
+		{
+		}
+
+	}
+
+}
+
+
+
+material Material#169[Object146]
+{
+	technique
+	{
+		pass
+		{
+		}
+
+	}
+
+}
+
+
+
+material Material#203[Object067] {
+	technique {
+		pass {
+		
+			vertex_program_ref bumpedLightmappingVertex_AMB {
+			}
+		
+			fragment_program_ref bumpedLightmappingFragment_AMB {
+				// Constante para regular la cantidad de ambiente
+				param_named			Ka								float		1.0
+			}
+			
+			// Textura de difuso
+			texture_unit DiffMap {
+				texture rock_DIF.jpg
+			}
+			
+			texture_unit BumpedLightmap {
+				texture Object067LightingMap.tga
+			}
+			
+		}
+		
+		pass {
+		
+			scene_blend add
+			iteration once_per_light
+		
+			vertex_program_ref bumpedLightmappingVertexShader {
+			}
+			
+			fragment_program_ref bumpedLightmappingFragment_DIFF_ALPHASPEC {
+				// Constante para regular la cantidad de difuso
+				param_named			Kd								float		0.6
+				// Constante de brillo especular
+				param_named 			shininess						float		70.0
+			}
+			
+			// Textura de difuso
+			texture_unit DiffMap {
+				texture rock_DIF.jpg
+			}
+			
+			texture_unit BumpedLightmap {
+				texture Object067LightingMap.tga
+			}
+			
+			// Textura para el bump mapping. En el alfa esta el mapa de especulares.
+			texture_unit NormalMap {
+				texture rock_NRM_SPEC.tga
+			}
+			
+		}
+	}
+	
+	technique {
+		lighting off
+		
+		scheme depthScheme
+		pass {
+			vertex_program_ref depthMapVertex {
+			}
+			
+			fragment_program_ref depthMapFragment {
+			}
+		}
+	}
+	
+	technique {
+		lighting off
+	
+		scheme blackScheme
+		pass {
+			vertex_program_ref blackVertex {
+			}
+			
+			fragment_program_ref blackFragment {
+			}
+		}
+	}
+}
+
+
+
+material Material#203[Object147]
+{
+	technique
+	{
+		pass
+		{
+		}
+
+	}
+
+}
