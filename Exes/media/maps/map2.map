@@ -67,7 +67,12 @@ Map = {
 		type = "World",
 		static = true,
 		model = "mapaAlberto.mesh",
+		physic_entity = "fromFile",
+		physic_normal = { 0, 1, 0 },
 		physic_file = "media/models/mapaAlberto/mapaAlberto.RepX",
+		physic_group = 0,
+		physic_groupList = "-1",
+		
 		lightMask = "0, 1, 2",
 	},	
 

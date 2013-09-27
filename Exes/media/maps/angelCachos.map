@@ -1,5 +1,9 @@
 Map = {
 
+	PhysicWorld = {
+		type = "PhysicWorld",
+	},
+	
 	Player = {
 		type = "LocalSpectator",
 		isPlayer = true,
@@ -26,7 +30,8 @@ Map = {
 	Object002 = {
 		type = "World",
 		model = "Object002.mesh",
-		position = {-654.575012, 373.473999, 1413.839966},
+position = {0,0,0},
+scale = {0.3, 0.3, 0.3},
 		rotation = "-0.000000 1.000000 0.000000 0.000000",
 		static = true,
 	},
@@ -34,7 +39,8 @@ Map = {
 	Object006 = {
 		type = "World",
 		model = "Object006.mesh",
-		position = {-654.575012, 373.473999, 1413.839966},
+position = {0,0,0},
+scale = {0.3, 0.3, 0.3},
 		rotation = "-0.000000 1.000000 0.000000 0.000000",
 		static = true,
 	},
@@ -42,7 +48,8 @@ Map = {
 	Object014 = {
 		type = "World",
 		model = "Object014.mesh",
-		position = {-654.575012, 373.473999, 1413.839966},
+position = {0,0,0},
+scale = {0.3, 0.3, 0.3},
 		rotation = "-0.000000 1.000000 0.000000 0.000000",
 		static = true,
 	},
@@ -50,7 +57,8 @@ Map = {
 	Object020 = {
 		type = "World",
 		model = "Object020.mesh",
-		position = {-654.575012, 373.473999, 1413.839966},
+position = {0,0,0},
+scale = {0.3, 0.3, 0.3},
 		rotation = "-0.000000 1.000000 0.000000 0.000000",
 		static = true,
 	},
@@ -58,7 +66,7 @@ Map = {
 	Object022 = {
 		type = "World",
 		model = "Object022.mesh",
-		position = {-654.575012, 373.473999, 1413.839966},
+position = {0,0,0},
 		rotation = "-0.000000 1.000000 0.000000 0.000000",
 		static = true,
 	},
@@ -66,7 +74,7 @@ Map = {
 	Object030 = {
 		type = "World",
 		model = "Object030.mesh",
-		position = {-654.575012, 373.473999, 1413.839966},
+position = {0,0,0},
 		rotation = "-0.000000 1.000000 0.000000 0.000000",
 		static = true,
 	},
@@ -74,7 +82,8 @@ Map = {
 	Object034 = {
 		type = "World",
 		model = "Object034.mesh",
-		position = {-654.575012, 373.473999, 1413.839966},
+position = {0,0,0},
+scale = {0.3, 0.3, 0.3},
 		rotation = "-0.000000 1.000000 0.000000 0.000000",
 		static = true,
 	},
@@ -82,7 +91,8 @@ Map = {
 	Object038 = {
 		type = "World",
 		model = "Object038.mesh",
-		position = {-654.575012, 373.473999, 1413.839966},
+position = {0,0,0},
+scale = {0.3, 0.3, 0.3},
 		rotation = "-0.000000 1.000000 0.000000 0.000000",
 		static = true,
 	},
@@ -90,7 +100,8 @@ Map = {
 	Object055 = {
 		type = "World",
 		model = "Object055.mesh",
-		position = {-654.575012, 373.473999, 1413.839966},
+position = {0,0,0},
+scale = {0.3, 0.3, 0.3},
 		rotation = "-0.000000 1.000000 0.000000 0.000000",
 		static = true,
 	},
@@ -98,7 +109,8 @@ Map = {
 	Object057 = {
 		type = "World",
 		model = "Object057.mesh",
-		position = {-654.575012, 373.473999, 1413.839966},
+position = {0,0,0},
+scale = {0.3, 0.3, 0.3},
 		rotation = "-0.000000 1.000000 0.000000 0.000000",
 		static = true,
 	},
@@ -106,7 +118,8 @@ Map = {
 	Object061 = {
 		type = "World",
 		model = "Object061.mesh",
-		position = {-654.575012, 373.473999, 1413.839966},
+position = {0,0,0},
+scale = {0.3, 0.3, 0.3},
 		rotation = "-0.000000 1.000000 0.000000 0.000000",
 		static = true,
 	},
@@ -114,7 +127,8 @@ Map = {
 	Object067 = {
 		type = "World",
 		model = "Object067.mesh",
-		position = {-654.575012, 373.473999, 1413.839966},
+position = {0,0,0},
+scale = {0.3, 0.3, 0.3},
 		rotation = "-0.000000 1.000000 0.000000 0.000000",
 		static = true,
 	},
@@ -122,7 +136,8 @@ Map = {
 	Object083 = {
 		type = "World",
 		model = "Object083.mesh",
-		position = {-654.575012, 373.473999, 1413.839966},
+position = {0,0,0},
+scale = {0.3, 0.3, 0.3},
 		rotation = "-0.000000 1.000000 0.000000 0.000000",
 		static = true,
 	},
@@ -130,7 +145,8 @@ Map = {
 	Object085 = {
 		type = "World",
 		model = "Object085.mesh",
-		position = {-654.575012, 373.473999, 1413.839966},
+position = {0,0,0},
+scale = {0.3, 0.3, 0.3},
 		rotation = "-0.000000 1.000000 0.000000 0.000000",
 		static = true,
 	},
@@ -138,7 +154,8 @@ Map = {
 	Object087 = {
 		type = "World",
 		model = "Object087.mesh",
-		position = {-654.575012, 373.473999, 1413.839966},
+position = {0,0,0},
+scale = {0.3, 0.3, 0.3},
 		rotation = "-0.000000 1.000000 0.000000 0.000000",
 		static = true,
 	},
@@ -146,7 +163,8 @@ Map = {
 	Object089 = {
 		type = "World",
 		model = "Object089.mesh",
-		position = {-654.575012, 373.473999, 1413.839966},
+position = {0,0,0},
+scale = {0.3, 0.3, 0.3},
 		rotation = "-0.000000 1.000000 0.000000 0.000000",
 		static = true,
 	},
@@ -154,7 +172,8 @@ Map = {
 	Object093 = {
 		type = "World",
 		model = "Object093.mesh",
-		position = {-654.575012, 373.473999, 1413.839966},
+position = {0,0,0},
+scale = {0.3, 0.3, 0.3},
 		rotation = "-0.000000 1.000000 0.000000 0.000000",
 		static = true,
 	},
@@ -162,7 +181,8 @@ Map = {
 	Object109 = {
 		type = "World",
 		model = "Object109.mesh",
-		position = {-654.575012, 373.473999, 1413.839966},
+position = {0,0,0},
+scale = {0.3, 0.3, 0.3},
 		rotation = "-0.000000 1.000000 0.000000 0.000000",
 		static = true,
 	},
@@ -170,7 +190,8 @@ Map = {
 	Object117 = {
 		type = "World",
 		model = "Object117.mesh",
-		position = {-654.575012, 373.473999, 1413.839966},
+position = {0,0,0},
+scale = {0.3, 0.3, 0.3},
 		rotation = "-0.000000 1.000000 0.000000 0.000000",
 		static = true,
 	},
@@ -178,7 +199,8 @@ Map = {
 	Object119 = {
 		type = "World",
 		model = "Object119.mesh",
-		position = {-654.575012, 373.473999, 1413.839966},
+position = {0,0,0},
+scale = {0.3, 0.3, 0.3},
 		rotation = "-0.000000 1.000000 0.000000 0.000000",
 		static = true,
 	},
@@ -186,7 +208,8 @@ Map = {
 	Object121 = {
 		type = "World",
 		model = "Object121.mesh",
-		position = {-654.575012, 373.473999, 1413.839966},
+position = {0,0,0},
+scale = {0.3, 0.3, 0.3},
 		rotation = "-0.000000 1.000000 0.000000 0.000000",
 		static = true,
 	},
@@ -194,7 +217,8 @@ Map = {
 	Object123 = {
 		type = "World",
 		model = "Object123.mesh",
-		position = {-654.575012, 373.473999, 1413.839966},
+position = {0,0,0},
+scale = {0.3, 0.3, 0.3},
 		rotation = "-0.000000 1.000000 0.000000 0.000000",
 		static = true,
 	},
@@ -202,7 +226,8 @@ Map = {
 	Object125 = {
 		type = "World",
 		model = "Object125.mesh",
-		position = {-654.575012, 373.473999, 1413.839966},
+position = {0,0,0},
+scale = {0.3, 0.3, 0.3},
 		rotation = "-0.000000 1.000000 0.000000 0.000000",
 		static = true,
 	},
@@ -210,7 +235,8 @@ Map = {
 	Object128 = {
 		type = "World",
 		model = "Object128.mesh",
-		position = {-654.575012, 373.473999, 1413.839966},
+position = {0,0,0},
+scale = {0.3, 0.3, 0.3},
 		rotation = "-0.000000 1.000000 0.000000 0.000000",
 		static = true,
 	},
@@ -218,7 +244,8 @@ Map = {
 	Object130 = {
 		type = "World",
 		model = "Object130.mesh",
-		position = {-654.575012, 373.473999, 1413.839966},
+position = {0,0,0},
+scale = {0.3, 0.3, 0.3},
 		rotation = "-0.000000 1.000000 0.000000 0.000000",
 		static = true,
 	},
@@ -226,7 +253,8 @@ Map = {
 	Object132 = {
 		type = "World",
 		model = "Object132.mesh",
-		position = {-654.575012, 373.473999, 1413.839966},
+position = {0,0,0},
+scale = {0.3, 0.3, 0.3},
 		rotation = "-0.000000 1.000000 0.000000 0.000000",
 		static = true,
 	},
@@ -234,7 +262,8 @@ Map = {
 	Object134 = {
 		type = "World",
 		model = "Object134.mesh",
-		position = {-654.575012, 373.473999, 1413.839966},
+position = {0,0,0},
+scale = {0.3, 0.3, 0.3},
 		rotation = "-0.000000 1.000000 0.000000 0.000000",
 		static = true,
 	},
@@ -242,7 +271,8 @@ Map = {
 	Object136 = {
 		type = "World",
 		model = "Object136.mesh",
-		position = {-654.575012, 373.473999, 1413.839966},
+position = {0,0,0},
+scale = {0.3, 0.3, 0.3},
 		rotation = "-0.000000 1.000000 0.000000 0.000000",
 		static = true,
 	},
@@ -250,7 +280,8 @@ Map = {
 	Object138 = {
 		type = "World",
 		model = "Object138.mesh",
-		position = {-654.575012, 373.473999, 1413.839966},
+position = {0,0,0},
+scale = {0.3, 0.3, 0.3},
 		rotation = "-0.000000 1.000000 0.000000 0.000000",
 		static = true,
 	},
@@ -258,7 +289,8 @@ Map = {
 	Object140 = {
 		type = "World",
 		model = "Object140.mesh",
-		position = {-654.575012, 373.473999, 1413.839966},
+position = {0,0,0},
+scale = {0.3, 0.3, 0.3},
 		rotation = "-0.000000 1.000000 0.000000 0.000000",
 		static = true,
 	},
@@ -266,7 +298,8 @@ Map = {
 	Object141 = {
 		type = "World",
 		model = "Object141.mesh",
-		position = {-654.575012, 373.473999, 1413.839966},
+position = {0,0,0},
+scale = {0.3, 0.3, 0.3},
 		rotation = "-0.000000 1.000000 0.000000 0.000000",
 		static = true,
 	},
@@ -274,7 +307,8 @@ Map = {
 	Object142 = {
 		type = "World",
 		model = "Object142.mesh",
-		position = {-654.575012, 373.473999, 1413.839966},
+position = {0,0,0},
+scale = {0.3, 0.3, 0.3},
 		rotation = "-0.000000 1.000000 0.000000 0.000000",
 		static = true,
 	},
@@ -282,7 +316,8 @@ Map = {
 	Object143 = {
 		type = "World",
 		model = "Object143.mesh",
-		position = {-654.575012, 373.473999, 1413.839966},
+position = {0,0,0},
+scale = {0.3, 0.3, 0.3},
 		rotation = "-0.000000 1.000000 0.000000 0.000000",
 		static = true,
 	},
@@ -290,7 +325,8 @@ Map = {
 	Object144 = {
 		type = "World",
 		model = "Object144.mesh",
-		position = {-654.575012, 373.473999, 1413.839966},
+position = {0,0,0},
+scale = {0.3, 0.3, 0.3},
 		rotation = "-0.000000 1.000000 0.000000 0.000000",
 		static = true,
 	},
@@ -298,7 +334,8 @@ Map = {
 	Object145 = {
 		type = "World",
 		model = "Object145.mesh",
-		position = {-654.575012, 373.473999, 1413.839966},
+position = {0,0,0},
+scale = {0.3, 0.3, 0.3},
 		rotation = "-0.000000 1.000000 0.000000 0.000000",
 		static = true,
 	},
@@ -306,14 +343,15 @@ Map = {
 	Object146 = {
 		type = "World",
 		model = "Object146.mesh",
-		position = {-654.575012, 373.473999, 1413.839966},
+position = {0,0,0},
+scale = {0.3, 0.3, 0.3},
 		rotation = "-0.000000 1.000000 0.000000 0.000000",
 		static = true,
 	},
 
 	Omni001 = {
 		type = "Light",
-		position = {-304.575012, -19.015900, 1763.839966},
+position = {0,0,0},
 		rotation = "0.000000 1.000000 -0.000000 -0.000000",
 		lightRotation = "-0.707107 -0.000000 -0.000000 -0.707107",
 		lightIsStatic = true,
@@ -327,7 +365,7 @@ Map = {
 
 	Omni002 = {
 		type = "Light",
-		position = {-304.575012, -19.015900, 1763.839966},
+position = {0,0,0},
 		rotation = "0.000000 1.000000 -0.000000 -0.000000",
 		lightRotation = "-0.707107 -0.000000 -0.000000 -0.707107",
 		lightIsStatic = true,
@@ -341,7 +379,7 @@ Map = {
 
 	Omni003 = {
 		type = "Light",
-		position = {-304.575012, -19.015900, 1763.839966},
+position = {0,0,0},
 		rotation = "0.000000 1.000000 -0.000000 -0.000000",
 		lightRotation = "-0.707107 -0.000000 -0.000000 -0.707107",
 		lightIsStatic = true,
@@ -355,7 +393,7 @@ Map = {
 
 	Omni004 = {
 		type = "Light",
-		position = {-304.575012, -19.015900, 1763.839966},
+position = {0,0,0},
 		rotation = "0.000000 1.000000 -0.000000 -0.000000",
 		lightRotation = "-0.707107 -0.000000 -0.000000 -0.707107",
 		lightIsStatic = true,
@@ -369,7 +407,7 @@ Map = {
 
 	Omni006 = {
 		type = "Light",
-		position = {-304.575012, -19.015900, 1763.839966},
+position = {0,0,0},
 		rotation = "0.000000 1.000000 -0.000000 -0.000000",
 		lightRotation = "-0.707107 -0.000000 -0.000000 -0.707107",
 		lightIsStatic = true,
@@ -383,7 +421,7 @@ Map = {
 
 	Omni007 = {
 		type = "Light",
-		position = {-304.575012, -19.015900, 1763.839966},
+position = {0,0,0},
 		rotation = "0.000000 1.000000 -0.000000 -0.000000",
 		lightRotation = "-0.707107 -0.000000 -0.000000 -0.707107",
 		lightIsStatic = true,
@@ -397,7 +435,7 @@ Map = {
 
 	Omni008 = {
 		type = "Light",
-		position = {-304.575012, -19.015900, 1763.839966},
+position = {0,0,0},
 		rotation = "0.000000 1.000000 -0.000000 -0.000000",
 		lightRotation = "-0.707107 -0.000000 -0.000000 -0.707107",
 		lightIsStatic = true,
@@ -411,7 +449,7 @@ Map = {
 
 	Omni009 = {
 		type = "Light",
-		position = {-304.575012, -19.015900, 1763.839966},
+position = {0,0,0},
 		rotation = "0.000000 1.000000 -0.000000 -0.000000",
 		lightRotation = "-0.707107 -0.000000 -0.000000 -0.707107",
 		lightIsStatic = true,
@@ -425,7 +463,7 @@ Map = {
 
 	Omni010 = {
 		type = "Light",
-		position = {-304.575012, -19.015900, 1763.839966},
+position = {0,0,0},
 		rotation = "0.000000 1.000000 -0.000000 -0.000000",
 		lightRotation = "-0.707107 -0.000000 -0.000000 -0.707107",
 		lightIsStatic = true,
@@ -439,7 +477,7 @@ Map = {
 
 	Omni011 = {
 		type = "Light",
-		position = {-304.575012, -19.015900, 1763.839966},
+position = {0,0,0},
 		rotation = "0.000000 1.000000 -0.000000 -0.000000",
 		lightRotation = "-0.707107 -0.000000 -0.000000 -0.707107",
 		lightIsStatic = true,
@@ -453,7 +491,7 @@ Map = {
 
 	Omni012 = {
 		type = "Light",
-		position = {-304.575012, -19.015900, 1763.839966},
+position = {0,0,0},
 		rotation = "0.000000 1.000000 -0.000000 -0.000000",
 		lightRotation = "-0.707107 -0.000000 -0.000000 -0.707107",
 		lightIsStatic = true,
@@ -467,7 +505,7 @@ Map = {
 
 	Omni013 = {
 		type = "Light",
-		position = {-304.575012, -19.015900, 1763.839966},
+position = {0,0,0},
 		rotation = "0.000000 1.000000 -0.000000 -0.000000",
 		lightRotation = "-0.707107 -0.000000 -0.000000 -0.707107",
 		lightIsStatic = true,
@@ -481,7 +519,7 @@ Map = {
 
 	Omni014 = {
 		type = "Light",
-		position = {-304.575012, -19.015900, 1763.839966},
+position = {0,0,0},
 		rotation = "0.000000 1.000000 -0.000000 -0.000000",
 		lightRotation = "-0.707107 -0.000000 -0.000000 -0.707107",
 		lightIsStatic = true,
@@ -495,7 +533,7 @@ Map = {
 
 	Omni015 = {
 		type = "Light",
-		position = {-304.575012, -19.015900, 1763.839966},
+position = {0,0,0},
 		rotation = "0.000000 1.000000 -0.000000 -0.000000",
 		lightRotation = "-0.707107 -0.000000 -0.000000 -0.707107",
 		lightIsStatic = true,
@@ -509,7 +547,7 @@ Map = {
 
 	Omni016 = {
 		type = "Light",
-		position = {-304.575012, -19.015900, 1763.839966},
+position = {0,0,0},
 		rotation = "0.000000 1.000000 -0.000000 -0.000000",
 		lightRotation = "-0.707107 -0.000000 -0.000000 -0.707107",
 		lightIsStatic = true,
@@ -523,7 +561,7 @@ Map = {
 
 	Omni017 = {
 		type = "Light",
-		position = {-304.575012, -19.015900, 1763.839966},
+position = {0,0,0},
 		rotation = "0.000000 1.000000 -0.000000 -0.000000",
 		lightRotation = "-0.707107 -0.000000 -0.000000 -0.707107",
 		lightIsStatic = true,
@@ -537,7 +575,7 @@ Map = {
 
 	Omni018 = {
 		type = "Light",
-		position = {-304.575012, -19.015900, 1763.839966},
+position = {0,0,0},
 		rotation = "0.000000 1.000000 -0.000000 -0.000000",
 		lightRotation = "-0.707107 -0.000000 -0.000000 -0.707107",
 		lightIsStatic = true,
@@ -551,7 +589,7 @@ Map = {
 
 	Omni019 = {
 		type = "Light",
-		position = {-304.575012, -19.015900, 1763.839966},
+position = {0,0,0},
 		rotation = "0.000000 1.000000 -0.000000 -0.000000",
 		lightRotation = "-0.707107 -0.000000 -0.000000 -0.707107",
 		lightIsStatic = true,
@@ -565,7 +603,7 @@ Map = {
 
 	Omni020 = {
 		type = "Light",
-		position = {-304.575012, -19.015900, 1763.839966},
+position = {0,0,0},
 		rotation = "0.000000 1.000000 -0.000000 -0.000000",
 		lightRotation = "-0.707107 -0.000000 -0.000000 -0.707107",
 		lightIsStatic = true,
@@ -579,7 +617,7 @@ Map = {
 
 	Omni021 = {
 		type = "Light",
-		position = {-304.575012, -19.015900, 1763.839966},
+position = {0,0,0},
 		rotation = "0.000000 1.000000 -0.000000 -0.000000",
 		lightRotation = "-0.707107 -0.000000 -0.000000 -0.707107",
 		lightIsStatic = true,
@@ -593,7 +631,7 @@ Map = {
 
 	Omni022 = {
 		type = "Light",
-		position = {-304.575012, -19.015900, 1763.839966},
+position = {0,0,0},
 		rotation = "0.000000 1.000000 -0.000000 -0.000000",
 		lightRotation = "-0.707107 -0.000000 -0.000000 -0.707107",
 		lightIsStatic = true,
@@ -607,7 +645,7 @@ Map = {
 
 	Omni023 = {
 		type = "Light",
-		position = {-304.575012, -19.015900, 1763.839966},
+position = {0,0,0},
 		rotation = "0.000000 1.000000 -0.000000 -0.000000",
 		lightRotation = "-0.707107 -0.000000 -0.000000 -0.707107",
 		lightIsStatic = true,
@@ -621,7 +659,7 @@ Map = {
 
 	Omni024 = {
 		type = "Light",
-		position = {-304.575012, -19.015900, 1763.839966},
+position = {0,0,0},
 		rotation = "0.000000 1.000000 -0.000000 -0.000000",
 		lightRotation = "-0.707107 -0.000000 -0.000000 -0.707107",
 		lightIsStatic = true,
@@ -635,7 +673,7 @@ Map = {
 
 	Omni025 = {
 		type = "Light",
-		position = {-304.575012, -19.015900, 1763.839966},
+position = {0,0,0},
 		rotation = "0.000000 1.000000 -0.000000 -0.000000",
 		lightRotation = "-0.707107 -0.000000 -0.000000 -0.707107",
 		lightIsStatic = true,
@@ -649,7 +687,7 @@ Map = {
 
 	Omni026 = {
 		type = "Light",
-		position = {-304.575012, -19.015900, 1763.839966},
+position = {0,0,0},
 		rotation = "0.000000 1.000000 -0.000000 -0.000000",
 		lightRotation = "-0.707107 -0.000000 -0.000000 -0.707107",
 		lightIsStatic = true,
@@ -663,7 +701,7 @@ Map = {
 
 	Omni027 = {
 		type = "Light",
-		position = {-304.575012, -19.015900, 1763.839966},
+position = {0,0,0},
 		rotation = "0.000000 1.000000 -0.000000 -0.000000",
 		lightRotation = "-0.707107 -0.000000 -0.000000 -0.707107",
 		lightIsStatic = true,
@@ -677,7 +715,7 @@ Map = {
 
 	Omni028 = {
 		type = "Light",
-		position = {-304.575012, -19.015900, 1763.839966},
+position = {0,0,0},
 		rotation = "0.000000 1.000000 -0.000000 -0.000000",
 		lightRotation = "-0.707107 -0.000000 -0.000000 -0.707107",
 		lightIsStatic = true,
@@ -691,7 +729,7 @@ Map = {
 
 	Omni029 = {
 		type = "Light",
-		position = {-304.575012, -19.015900, 1763.839966},
+position = {0,0,0},
 		rotation = "0.000000 1.000000 -0.000000 -0.000000",
 		lightRotation = "-0.707107 -0.000000 -0.000000 -0.707107",
 		lightIsStatic = true,
@@ -705,7 +743,7 @@ Map = {
 
 	Omni030 = {
 		type = "Light",
-		position = {-304.575012, -19.015900, 1763.839966},
+position = {0,0,0},
 		rotation = "0.000000 1.000000 -0.000000 -0.000000",
 		lightRotation = "-0.707107 -0.000000 -0.000000 -0.707107",
 		lightIsStatic = true,
@@ -719,7 +757,7 @@ Map = {
 
 	Omni031 = {
 		type = "Light",
-		position = {-304.575012, -19.015900, 1763.839966},
+position = {0,0,0},
 		rotation = "0.000000 1.000000 -0.000000 -0.000000",
 		lightRotation = "-0.707107 -0.000000 -0.000000 -0.707107",
 		lightIsStatic = true,
@@ -733,7 +771,7 @@ Map = {
 
 	Omni032 = {
 		type = "Light",
-		position = {-304.575012, -19.015900, 1763.839966},
+position = {0,0,0},
 		rotation = "0.000000 1.000000 -0.000000 -0.000000",
 		lightRotation = "-0.707107 -0.000000 -0.000000 -0.707107",
 		lightIsStatic = true,
@@ -748,7 +786,7 @@ Map = {
 	Object147 = {
 		type = "World",
 		model = "Object147.mesh",
-		position = {-654.575012, 373.473999, 1413.839966},
+position = {0,0,0},
 		rotation = "-0.000000 1.000000 0.000000 0.000000",
 		static = true,
 	},
