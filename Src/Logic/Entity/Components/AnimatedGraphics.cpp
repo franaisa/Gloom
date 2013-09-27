@@ -180,7 +180,13 @@ namespace Logic
 	//---------------------------------------------------------
 
 	void CAnimatedGraphics::onTick(unsigned int msecs){
-		_graphicsEntity->setTransform(_entity->getPosition(),_entity->getYaw());
+		//Ñapa para solucionar el modelo del revés del archangel
+		if( getEntity()->getType() =="LocalArchangel" || getEntity()->getType() == "Archangel"){
+			Quaternion rancio(Ogre::Radian(Math::PI),Vector3::UNIT_Y);
+			_graphicsEntity->setTransform(_entity->getPosition(),_entity->getYaw()*rancio);
+		}
+		else
+			_graphicsEntity->setTransform(_entity->getPosition(),_entity->getYaw());
 	}//---------------------------------------------------------
 	//onTick
 	
@@ -191,7 +197,6 @@ namespace Logic
 			_insertAnimation = true;
 			_animatedGraphicsEntity->setAnimation( nextAnim.animation,nextAnim.rewind, nextAnim.loop );
 			_insertAnimation = nextAnim.exclude;
-			//_entity->getYaw(); Linea random
 			nextAnim.animation="";
 		}
 	}
