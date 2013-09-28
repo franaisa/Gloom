@@ -26,6 +26,7 @@ material bumpedLightmappingTest {
 		
 			scene_blend add
 			iteration once_per_light
+			max_lights 3
 		
 			vertex_program_ref bumpedLightmappingVertexShader {
 			}

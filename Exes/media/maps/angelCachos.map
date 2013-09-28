@@ -50,16 +50,16 @@ Map = {
 		physic_dimensions = { 100, 1, 120 },
 	},
 	
-	PhysicWorld = {
-		type = "PhysicWorld",
-	},
-	
 	Player = {
-		type = "LocalSpectator",
+		type = "LocalScreamer",
 		isPlayer = true,
 		position = {0, 5, 0},
 		physic_group = 1,
 		physic_groupList = "-1",
+	},
+	
+	PhysicWorld = {
+		type = "PhysicWorld",
 	},
 	
 	Camera = {
@@ -67,14 +67,166 @@ Map = {
 		height = 8,
 	},
 
+	Shotgun = {
+		type = "ShotgunItem",
+		position = {-123.662, 198.259, -153.212},
+	},
+	
 	UniqueSpawnPoint = {
 		type = "SpawnPoint",
-		position = {3.0, 0.2, 0.0},
+		position = {-348.442, 198.219, 196.188},
 		physic_entity = "rigid",
 		physic_trigger = true,
 		physic_type = "static",
 		physic_shape = "box",
 		physic_dimensions = { 4, 7, 4 },
+	},
+	
+	PilarRoomOmni001 = {
+		type = "Light",
+		position = {364.612, 106.976, 102.38},
+		lightIsStatic = true,
+		lightGroup = 1,
+		lightType = "point",
+		color = {0.9, 0.9, 0.9},
+		range = 600,
+		attenuation = {1.0, 0.007, 0.0002},
+	},
+	
+	PilarRoomOmni002 = {
+		type = "Light",
+		position = {200.844, 106.454, 102.456},
+		lightIsStatic = true,
+		lightGroup = 1,
+		lightType = "point",
+		color = {0.9, 0.9, 0.9},
+		range = 600,
+		attenuation = {1.0, 0.007, 0.0002},
+	},
+	
+	PilarRoomOmni003 = {
+		type = "Light",
+		position = {200.448, 105.223, -51.382},
+		lightIsStatic = true,
+		lightGroup = 1,
+		lightType = "point",
+		color = {0.9, 0.9, 0.9},
+		range = 600,
+		attenuation = {1.0, 0.007, 0.0002},
+	},
+	
+	PilarRoomOmni004 = {
+		type = "Light",
+		position = {365.006, 103.164, -51.0672},
+		lightIsStatic = true,
+		lightGroup = 1,
+		lightType = "point",
+		color = {0.9, 0.9, 0.9},
+		range = 600,
+		attenuation = {1.0, 0.007, 0.0002},
+	},
+	
+	CorridorPilarIronHellOmni006 = {
+		type = "Light",
+		position = {426.726, 144.901, 29.8391},
+		lightIsStatic = true,
+		lightGroup = 1,
+		lightType = "point",
+		color = {0.9, 0.9, 0.9},
+		range = 600,
+		attenuation = {1.0, 0.007, 0.0002},
+	},
+	
+	IronHellOmni007 = {
+		type = "Light",
+		position = {452.818, 153.902, -76.2599},
+		lightIsStatic = true,
+		lightGroup = 1,
+		lightType = "point",
+		color = {0.9, 0.9, 0.9},
+		range = 600,
+		attenuation = {1.0, 0.007, 0.0002},
+	},
+	
+	CorridorIronSniperOmni008 = {
+		type = "Light",
+		position = {431.164, 146.429, -383.983},
+		lightIsStatic = true,
+		lightGroup = 1,
+		lightType = "point",
+		color = {0.9, 0.9, 0.9},
+		range = 600,
+		attenuation = {1.0, 0.007, 0.0002},
+	},
+	
+	rockOmni009 = {
+		type = "Light",
+		position = {228.805, 143.773, -348.047},
+		lightIsStatic = true,
+		lightGroup = 1,
+		lightType = "point",
+		color = {0.9, 0.9, 0.9},
+		range = 600,
+		attenuation = {1.0, 0.007, 0.0002},
+	},
+	
+	rockOmni010 = {
+		type = "Light",
+		position = {228.339, 144.979, -390.932},
+		lightIsStatic = true,
+		lightGroup = 1,
+		lightType = "point",
+		color = {0.9, 0.9, 0.9},
+		range = 600,
+		attenuation = {1.0, 0.007, 0.0002},
+	},
+	
+	rockOmni011 = {
+		type = "Light",
+		position = {-6.06263, 144.977, -393.081},
+		lightIsStatic = true,
+		lightGroup = 1,
+		lightType = "point",
+		color = {0.9, 0.9, 0.9},
+		range = 600,
+		attenuation = {1.0, 0.007, 0.0002},
+	},
+	
+	rockOmni012 = {
+		type = "Light",
+		position = {-49.8506, 144.26, -377.692},
+		lightIsStatic = true,
+		lightGroup = 1,
+		lightType = "point",
+		color = {0.9, 0.9, 0.9},
+		range = 600,
+		attenuation = {1.0, 0.007, 0.0002},
+	},
+	
+	corridorRockPuenteOmni013 = {
+		type = "Light",
+		position = {-330.137, 214.158, -395.031},
+		lightIsStatic = true,
+		lightGroup = 1,
+		lightType = "point",
+		color = {0.9, 0.9, 0.9},
+		range = 600,
+		attenuation = {1.0, 0.007, 0.0002},
+	},
+	
+	VortexLight = {
+		type = "Light",
+		position = {-260.262, -4.85, -117.558},
+		direction = {0.0, 1.0, 0.0},
+		lightIsStatic = true,
+		lightGroup = 1,
+		lightType = "spot",
+		innerAngle = 0.93,
+		outerAngle = 1.51,
+		color = {0.0, 1.0, 0.87},
+		powerScale = 0.500000,
+		range = 3250,
+		attenuation = {1.0, 0.0014, 0.000007},
 	},
 
 	Object002 = {
@@ -399,20 +551,6 @@ Map = {
 		scale = {0.3, 0.3, 0.3},
 		rotation = "-0.000000 1.000000 0.000000 0.000000",
 		static = true,
-	},
-
-	Omni032 = {
-		type = "Light",
-		position = {0,800,0},
-		rotation = "0.000000 1.000000 -0.000000 -0.000000",
-		lightRotation = "-0.707107 -0.000000 -0.000000 -0.707107",
-		lightIsStatic = true,
-		lightGroup = 1,
-		lightType = "point",
-		color = {1.000000, 1.0, 1.0},
-		powerScale = 0.500000,
-		range = 1463.229980,
-		attenuation = {1.000000, 1.000000, 1.000000},
 	},
 
 	Object147 = {

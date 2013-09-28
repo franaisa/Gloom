@@ -166,6 +166,7 @@ namespace Graphics {
 			// Luz del vortice
 			params.lightPosition	= Vector3(48.2968f, -200.1517f, 122.804f);
 			params.density			= 0.22f;
+			params.exposure			= 0.4f;
 
 			lightInfoList.push_back(params);
 

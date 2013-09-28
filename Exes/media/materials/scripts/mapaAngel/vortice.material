@@ -14,8 +14,10 @@ material vortice
 		}
 
 	}
+	
 	technique
 	{
+		lighting off
 		scheme glow
 		pass
 		{
@@ -41,15 +43,4 @@ material vortice
 		}
 	}
 
-}
-
-material vortexLight {
-	technique {
-		lighting off
-		pass {
-			texture_unit DiffMap {
-				texture vortice.png
-			}
-		}
-	}
 }
