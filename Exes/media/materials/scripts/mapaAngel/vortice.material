@@ -2,6 +2,7 @@ material vortice
 {
 	technique
 	{
+		lighting off
 		pass
 		{
 			texture_unit aoMap

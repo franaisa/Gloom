@@ -1,5 +1,20 @@
 Map = {
 
+	PhysicWorld = {
+		type = "PhysicWorld",
+		position = {0, 0, 0},
+		msgList= "0, 30, 46",
+		scale = {1, 1, 1},
+		yaw = 0,
+		
+		static = true,
+		physic_entity = "fromFile",
+		physic_normal = { 0, 1, 0 },
+		physic_file = "media/materials/scripts/angelCachos/mapaAngel.RepX",
+		physic_group = 0,
+		physic_groupList = "-1",
+	},
+	
 	World = {
 		type = "World",
 		position = {0, 0, 0},

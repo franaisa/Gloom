@@ -2,7 +2,7 @@ Map = {
 
 	Vortex = {
 		type = "Vortice",
-		position = {-613.28, 0.0, 962.908},
+		position = {-255.078, -400.725, -105.462},
 		model = "vortice.mesh",
 		scale = 1,
 		damage = 500,
@@ -18,7 +18,7 @@ Map = {
 	
 	LavaPipes = {
 		type = "Lava",
-		position = {-298.535, 420.437, 1197.09},
+		position = {48.2968, 32.1517, 122.804},
 		
 		plane_orientation = {0, 1, 0},
 		plane_width = 200,
@@ -35,7 +35,7 @@ Map = {
 	
 	LavaAltar = {
 		type = "Lava",
-		position = {-270.475, 539.828, 947.562},
+		position = {82.3584, 145.033, -133.341},
 		
 		plane_orientation = {0, 1, 0},
 		plane_width = 180,
@@ -48,6 +48,10 @@ Map = {
 		plane_material = "lavaFondo",
 		
 		physic_dimensions = { 100, 1, 120 },
+	},
+	
+	PhysicWorld = {
+		type = "PhysicWorld",
 	},
 	
 	Player = {
@@ -76,8 +80,8 @@ Map = {
 	Object002 = {
 		type = "World",
 		model = "Object002.mesh",
-		scale = {0.300000, 0.300000, 0.300000},
-		position = {-61.904400, 496.479004, 701.583008},
+		position = {0,0,0},
+		scale = {0.3, 0.3, 0.3},
 		rotation = "-0.000000 1.000000 0.000000 0.000000",
 		static = true,
 	},
@@ -85,8 +89,8 @@ Map = {
 	Object006 = {
 		type = "World",
 		model = "Object006.mesh",
-		scale = {0.300000, 0.300000, 0.300000},
-		position = {-61.904400, 496.479004, 701.583008},
+		position = {0,0,0},
+		scale = {0.3, 0.3, 0.3},
 		rotation = "-0.000000 1.000000 0.000000 0.000000",
 		static = true,
 	},
@@ -94,8 +98,8 @@ Map = {
 	Object014 = {
 		type = "World",
 		model = "Object014.mesh",
-		scale = {0.300000, 0.300000, 0.300000},
-		position = {-61.904400, 496.479004, 701.583008},
+		position = {0,0,0},
+		scale = {0.3, 0.3, 0.3},
 		rotation = "-0.000000 1.000000 0.000000 0.000000",
 		static = true,
 	},
@@ -103,8 +107,8 @@ Map = {
 	Object020 = {
 		type = "World",
 		model = "Object020.mesh",
-		scale = {0.300000, 0.300000, 0.300000},
-		position = {-61.904400, 496.479004, 701.583008},
+		position = {0,0,0},
+		scale = {0.3, 0.3, 0.3},
 		rotation = "-0.000000 1.000000 0.000000 0.000000",
 		static = true,
 	},
@@ -112,8 +116,8 @@ Map = {
 	Object022 = {
 		type = "World",
 		model = "Object022.mesh",
+		position = {0,0,0},
 		scale = {0.300000, 0.300000, 0.300000},
-		position = {-61.904400, 496.479004, 701.583008},
 		rotation = "-0.000000 1.000000 0.000000 0.000000",
 		static = true,
 	},
@@ -121,8 +125,8 @@ Map = {
 	Object030 = {
 		type = "World",
 		model = "Object030.mesh",
+		position = {0,0,0},
 		scale = {0.300000, 0.300000, 0.300000},
-		position = {-61.904400, 496.479004, 701.583008},
 		rotation = "-0.000000 1.000000 0.000000 0.000000",
 		static = true,
 	},
@@ -130,8 +134,8 @@ Map = {
 	Object034 = {
 		type = "World",
 		model = "Object034.mesh",
-		scale = {0.300000, 0.300000, 0.300000},
-		position = {-61.904400, 496.479004, 701.583008},
+		position = {0,0,0},
+		scale = {0.3, 0.3, 0.3},
 		rotation = "-0.000000 1.000000 0.000000 0.000000",
 		static = true,
 	},
@@ -139,8 +143,8 @@ Map = {
 	Object038 = {
 		type = "World",
 		model = "Object038.mesh",
-		scale = {0.300000, 0.300000, 0.300000},
-		position = {-61.904400, 496.479004, 701.583008},
+		position = {0,0,0},
+		scale = {0.3, 0.3, 0.3},
 		rotation = "-0.000000 1.000000 0.000000 0.000000",
 		static = true,
 	},
@@ -148,8 +152,8 @@ Map = {
 	Object055 = {
 		type = "World",
 		model = "Object055.mesh",
-		scale = {0.300000, 0.300000, 0.300000},
-		position = {-61.904400, 496.479004, 701.583008},
+		position = {0,0,0},
+		scale = {0.3, 0.3, 0.3},
 		rotation = "-0.000000 1.000000 0.000000 0.000000",
 		static = true,
 	},
@@ -157,8 +161,8 @@ Map = {
 	Object057 = {
 		type = "World",
 		model = "Object057.mesh",
-		scale = {0.300000, 0.300000, 0.300000},
-		position = {-61.904400, 496.479004, 701.583008},
+		position = {0,0,0},
+		scale = {0.3, 0.3, 0.3},
 		rotation = "-0.000000 1.000000 0.000000 0.000000",
 		static = true,
 	},
@@ -166,8 +170,8 @@ Map = {
 	Object061 = {
 		type = "World",
 		model = "Object061.mesh",
-		scale = {0.300000, 0.300000, 0.300000},
-		position = {-61.904400, 496.479004, 701.583008},
+		position = {0,0,0},
+		scale = {0.3, 0.3, 0.3},
 		rotation = "-0.000000 1.000000 0.000000 0.000000",
 		static = true,
 	},
@@ -175,8 +179,8 @@ Map = {
 	Object067 = {
 		type = "World",
 		model = "Object067.mesh",
-		scale = {0.300000, 0.300000, 0.300000},
-		position = {-61.904400, 496.479004, 701.583008},
+		position = {0,0,0},
+		scale = {0.3, 0.3, 0.3},
 		rotation = "-0.000000 1.000000 0.000000 0.000000",
 		static = true,
 	},
@@ -184,8 +188,8 @@ Map = {
 	Object083 = {
 		type = "World",
 		model = "Object083.mesh",
-		scale = {0.300000, 0.300000, 0.300000},
-		position = {-61.904400, 496.479004, 701.583008},
+		position = {0,0,0},
+		scale = {0.3, 0.3, 0.3},
 		rotation = "-0.000000 1.000000 0.000000 0.000000",
 		static = true,
 	},
@@ -193,8 +197,8 @@ Map = {
 	Object085 = {
 		type = "World",
 		model = "Object085.mesh",
-		scale = {0.300000, 0.300000, 0.300000},
-		position = {-61.904400, 496.479004, 701.583008},
+		position = {0,0,0},
+		scale = {0.3, 0.3, 0.3},
 		rotation = "-0.000000 1.000000 0.000000 0.000000",
 		static = true,
 	},
@@ -202,8 +206,8 @@ Map = {
 	Object087 = {
 		type = "World",
 		model = "Object087.mesh",
-		scale = {0.300000, 0.300000, 0.300000},
-		position = {-61.904400, 496.479004, 701.583008},
+		position = {0,0,0},
+		scale = {0.3, 0.3, 0.3},
 		rotation = "-0.000000 1.000000 0.000000 0.000000",
 		static = true,
 	},
@@ -211,8 +215,8 @@ Map = {
 	Object089 = {
 		type = "World",
 		model = "Object089.mesh",
-		scale = {0.300000, 0.300000, 0.300000},
-		position = {-61.904400, 496.479004, 701.583008},
+		position = {0,0,0},
+		scale = {0.3, 0.3, 0.3},
 		rotation = "-0.000000 1.000000 0.000000 0.000000",
 		static = true,
 	},
@@ -220,8 +224,8 @@ Map = {
 	Object093 = {
 		type = "World",
 		model = "Object093.mesh",
-		scale = {0.300000, 0.300000, 0.300000},
-		position = {-61.904400, 496.479004, 701.583008},
+		position = {0,0,0},
+		scale = {0.3, 0.3, 0.3},
 		rotation = "-0.000000 1.000000 0.000000 0.000000",
 		static = true,
 	},
@@ -229,8 +233,8 @@ Map = {
 	Object109 = {
 		type = "World",
 		model = "Object109.mesh",
-		scale = {0.300000, 0.300000, 0.300000},
-		position = {-61.904400, 496.479004, 701.583008},
+		position = {0,0,0},
+		scale = {0.3, 0.3, 0.3},
 		rotation = "-0.000000 1.000000 0.000000 0.000000",
 		static = true,
 	},
@@ -238,8 +242,8 @@ Map = {
 	Object117 = {
 		type = "World",
 		model = "Object117.mesh",
-		scale = {0.300000, 0.300000, 0.300000},
-		position = {-61.904400, 496.479004, 701.583008},
+		position = {0,0,0},
+		scale = {0.3, 0.3, 0.3},
 		rotation = "-0.000000 1.000000 0.000000 0.000000",
 		static = true,
 	},
@@ -247,8 +251,8 @@ Map = {
 	Object119 = {
 		type = "World",
 		model = "Object119.mesh",
-		scale = {0.300000, 0.300000, 0.300000},
-		position = {-61.904400, 496.479004, 701.583008},
+		position = {0,0,0},
+		scale = {0.3, 0.3, 0.3},
 		rotation = "-0.000000 1.000000 0.000000 0.000000",
 		static = true,
 	},
@@ -256,8 +260,8 @@ Map = {
 	Object121 = {
 		type = "World",
 		model = "Object121.mesh",
-		scale = {0.300000, 0.300000, 0.300000},
-		position = {-61.904400, 496.479004, 701.583008},
+		position = {0,0,0},
+		scale = {0.3, 0.3, 0.3},
 		rotation = "-0.000000 1.000000 0.000000 0.000000",
 		static = true,
 	},
@@ -265,8 +269,8 @@ Map = {
 	Object123 = {
 		type = "World",
 		model = "Object123.mesh",
-		scale = {0.300000, 0.300000, 0.300000},
-		position = {-61.904400, 496.479004, 701.583008},
+		position = {0,0,0},
+		scale = {0.3, 0.3, 0.3},
 		rotation = "-0.000000 1.000000 0.000000 0.000000",
 		static = true,
 	},
@@ -274,8 +278,8 @@ Map = {
 	Object125 = {
 		type = "World",
 		model = "Object125.mesh",
-		scale = {0.300000, 0.300000, 0.300000},
-		position = {-61.904400, 496.479004, 701.583008},
+		position = {0,0,0},
+		scale = {0.3, 0.3, 0.3},
 		rotation = "-0.000000 1.000000 0.000000 0.000000",
 		static = true,
 	},
@@ -283,8 +287,8 @@ Map = {
 	Object128 = {
 		type = "World",
 		model = "Object128.mesh",
-		scale = {0.300000, 0.300000, 0.300000},
-		position = {-61.904400, 496.479004, 701.583008},
+		position = {0,0,0},
+		scale = {0.3, 0.3, 0.3},
 		rotation = "-0.000000 1.000000 0.000000 0.000000",
 		static = true,
 	},
@@ -292,8 +296,8 @@ Map = {
 	Object130 = {
 		type = "World",
 		model = "Object130.mesh",
-		scale = {0.300000, 0.300000, 0.300000},
-		position = {-61.904400, 496.479004, 701.583008},
+		position = {0,0,0},
+		scale = {0.3, 0.3, 0.3},
 		rotation = "-0.000000 1.000000 0.000000 0.000000",
 		static = true,
 	},
@@ -301,8 +305,8 @@ Map = {
 	Object132 = {
 		type = "World",
 		model = "Object132.mesh",
-		scale = {0.300000, 0.300000, 0.300000},
-		position = {-61.904400, 496.479004, 701.583008},
+		position = {0,0,0},
+		scale = {0.3, 0.3, 0.3},
 		rotation = "-0.000000 1.000000 0.000000 0.000000",
 		static = true,
 	},
@@ -310,8 +314,8 @@ Map = {
 	Object134 = {
 		type = "World",
 		model = "Object134.mesh",
-		scale = {0.300000, 0.300000, 0.300000},
-		position = {-61.904400, 496.479004, 701.583008},
+		position = {0,0,0},
+		scale = {0.3, 0.3, 0.3},
 		rotation = "-0.000000 1.000000 0.000000 0.000000",
 		static = true,
 	},
@@ -319,8 +323,8 @@ Map = {
 	Object136 = {
 		type = "World",
 		model = "Object136.mesh",
-		scale = {0.300000, 0.300000, 0.300000},
-		position = {-61.904400, 496.479004, 701.583008},
+		position = {0,0,0},
+		scale = {0.3, 0.3, 0.3},
 		rotation = "-0.000000 1.000000 0.000000 0.000000",
 		static = true,
 	},
@@ -328,8 +332,8 @@ Map = {
 	Object138 = {
 		type = "World",
 		model = "Object138.mesh",
-		scale = {0.300000, 0.300000, 0.300000},
-		position = {-61.904400, 496.479004, 701.583008},
+		position = {0,0,0},
+		scale = {0.3, 0.3, 0.3},
 		rotation = "-0.000000 1.000000 0.000000 0.000000",
 		static = true,
 	},
@@ -337,8 +341,8 @@ Map = {
 	Object140 = {
 		type = "World",
 		model = "Object140.mesh",
-		scale = {0.300000, 0.300000, 0.300000},
-		position = {-61.904400, 496.479004, 701.583008},
+		position = {0,0,0},
+		scale = {0.3, 0.3, 0.3},
 		rotation = "-0.000000 1.000000 0.000000 0.000000",
 		static = true,
 	},
@@ -346,8 +350,8 @@ Map = {
 	Object141 = {
 		type = "World",
 		model = "Object141.mesh",
-		scale = {0.300000, 0.300000, 0.300000},
-		position = {-61.904400, 496.479004, 701.583008},
+		position = {0,0,0},
+		scale = {0.3, 0.3, 0.3},
 		rotation = "-0.000000 1.000000 0.000000 0.000000",
 		static = true,
 	},
@@ -355,8 +359,8 @@ Map = {
 	Object142 = {
 		type = "World",
 		model = "Object142.mesh",
-		scale = {0.300000, 0.300000, 0.300000},
-		position = {-61.904400, 496.479004, 701.583008},
+		position = {0,0,0},
+		scale = {0.3, 0.3, 0.3},
 		rotation = "-0.000000 1.000000 0.000000 0.000000",
 		static = true,
 	},
@@ -364,8 +368,8 @@ Map = {
 	Object143 = {
 		type = "World",
 		model = "Object143.mesh",
-		scale = {0.300000, 0.300000, 0.300000},
-		position = {-61.904400, 496.479004, 701.583008},
+		position = {0,0,0},
+		scale = {0.3, 0.3, 0.3},
 		rotation = "-0.000000 1.000000 0.000000 0.000000",
 		static = true,
 	},
@@ -373,8 +377,8 @@ Map = {
 	Object144 = {
 		type = "World",
 		model = "Object144.mesh",
-		scale = {0.300000, 0.300000, 0.300000},
-		position = {-61.904400, 496.479004, 701.583008},
+		position = {0,0,0},
+		scale = {0.3, 0.3, 0.3},
 		rotation = "-0.000000 1.000000 0.000000 0.000000",
 		static = true,
 	},
@@ -382,8 +386,8 @@ Map = {
 	Object145 = {
 		type = "World",
 		model = "Object145.mesh",
-		scale = {0.300000, 0.300000, 0.300000},
-		position = {-61.904400, 496.479004, 701.583008},
+		position = {0,0,0},
+		scale = {0.3, 0.3, 0.3},
 		rotation = "-0.000000 1.000000 0.000000 0.000000",
 		static = true,
 	},
@@ -391,31 +395,31 @@ Map = {
 	Object146 = {
 		type = "World",
 		model = "Object146.mesh",
-		scale = {0.300000, 0.300000, 0.300000},
-		position = {-61.904400, 496.479004, 701.583008},
+		position = {0,0,0},
+		scale = {0.3, 0.3, 0.3},
 		rotation = "-0.000000 1.000000 0.000000 0.000000",
 		static = true,
 	},
 
-	Omni001 = {
+	Omni032 = {
 		type = "Light",
-		position = {288.096008, 103.988998, 1051.579956},
+		position = {0,800,0},
 		rotation = "0.000000 1.000000 -0.000000 -0.000000",
 		lightRotation = "-0.707107 -0.000000 -0.000000 -0.707107",
 		lightIsStatic = true,
 		lightGroup = 1,
 		lightType = "point",
-		color = {1.000000, 1.000000, 1.000000},
-		powerScale = 0.700000,
-		range = 1226.640015,
-		attenuation = {1.000000, 0.000000, 0.000000},
+		color = {1.000000, 1.0, 1.0},
+		powerScale = 0.500000,
+		range = 1463.229980,
+		attenuation = {1.000000, 1.000000, 1.000000},
 	},
 
 	Object147 = {
 		type = "World",
 		model = "Object147.mesh",
+		position = {0,0,0},
 		scale = {0.300000, 0.300000, 0.300000},
-		position = {-61.904400, 496.479004, 701.583008},
 		rotation = "-0.000000 1.000000 0.000000 0.000000",
 		static = true,
 	},

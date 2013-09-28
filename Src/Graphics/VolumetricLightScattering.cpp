@@ -150,7 +150,7 @@ namespace Graphics {
 
 			// Luz de lava pipes
 			
-			params.lightPosition	= Vector3(-298.535f, 220.437f, 1197.09f);
+			params.lightPosition	= Vector3(-255.078f, -400.725f, -105.462f);
 			params.density			= 0.2f;
 			params.decay			= 0.99f;
 			params.weight			= 1.0f;
@@ -159,12 +159,12 @@ namespace Graphics {
 			lightInfoList.push_back(params);
 		
 			// Luz de lava altar
-			params.lightPosition	= Vector3(-270.475f, 339.828f, 947.562f);
+			params.lightPosition	= Vector3(82.3584f, -45.033f, -133.341f);
 
 			lightInfoList.push_back(params);
 
 			// Luz del vortice
-			params.lightPosition	= Vector3(-613.28f, 0.0f, 962.908f);
+			params.lightPosition	= Vector3(48.2968f, -200.1517f, 122.804f);
 			params.density			= 0.22f;
 
 			lightInfoList.push_back(params);

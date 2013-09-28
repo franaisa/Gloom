@@ -2940,7 +2940,7 @@ material Material#169[Object146] {
 
 
 
-material Material#203[Object067] {
+material Material#203[Object067]_OgreMax {
 	technique {
 		pass {
 		
