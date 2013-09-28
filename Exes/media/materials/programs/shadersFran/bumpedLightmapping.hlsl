@@ -185,12 +185,7 @@ VsOutput_AMB vertex_AMB(const VsInput_AMB IN) {
 
 // Fragment para calcular ambiente
 float4 fragment_AMB(const PsInput_AMB IN) : COLOR {
-	float3 color;
-	// Solo si se trata de una entidad estatica y una luz estatica usamos el lightmap
-	if( customLightParams.w == 1.0f )
-		color = Ka * tex2D(DiffMap, IN.uv0).xyz * tex2D(BumpedLightmap, IN.uv1).xyz;
-	else
-		color = Ka * globalAmbient.xyz * tex2D(DiffMap, IN.uv0).xyz;
+	float3 color = Ka * tex2D(DiffMap, IN.uv0).xyz * tex2D(BumpedLightmap, IN.uv1).xyz;
 	
 	return float4(color, 1.0f);
 }

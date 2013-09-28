@@ -81,137 +81,37 @@ Map = {
 		physic_shape = "box",
 		physic_dimensions = { 4, 7, 4 },
 	},
-	
-	PilarRoomOmni001 = {
+
+	ChachiLight = {
 		type = "Light",
-		position = {364.612, 106.976, 102.38},
+		direction = {-0.0103, -0.4305, 0.903},
+		position = {0.0, 0.0, 0.0},
+		lightIsStatic = true,
+		lightGroup = 1,
+		lightType = "directional",
+		color = {0.9, 0.9, 0.9},
+	}, 
+	
+	LavaAltarOmni030 = {
+		type = "Light",
+		position = {85.9733, 144.42, -133.581},
 		lightIsStatic = true,
 		lightGroup = 1,
 		lightType = "point",
-		color = {0.9, 0.9, 0.9},
-		range = 600,
-		attenuation = {1.0, 0.007, 0.0002},
+		color = {1.0, 1.0, 0.09},
+		range = 3250,
+		attenuation = {1.0, 0.0014, 0.000007},
 	},
 	
-	PilarRoomOmni002 = {
+	LavaPipesOmni030 = {
 		type = "Light",
-		position = {200.844, 106.454, 102.456},
+		position = {51.9337, 13.6564, 113.85},
 		lightIsStatic = true,
 		lightGroup = 1,
 		lightType = "point",
-		color = {0.9, 0.9, 0.9},
-		range = 600,
-		attenuation = {1.0, 0.007, 0.0002},
-	},
-	
-	PilarRoomOmni003 = {
-		type = "Light",
-		position = {200.448, 105.223, -51.382},
-		lightIsStatic = true,
-		lightGroup = 1,
-		lightType = "point",
-		color = {0.9, 0.9, 0.9},
-		range = 600,
-		attenuation = {1.0, 0.007, 0.0002},
-	},
-	
-	PilarRoomOmni004 = {
-		type = "Light",
-		position = {365.006, 103.164, -51.0672},
-		lightIsStatic = true,
-		lightGroup = 1,
-		lightType = "point",
-		color = {0.9, 0.9, 0.9},
-		range = 600,
-		attenuation = {1.0, 0.007, 0.0002},
-	},
-	
-	CorridorPilarIronHellOmni006 = {
-		type = "Light",
-		position = {426.726, 144.901, 29.8391},
-		lightIsStatic = true,
-		lightGroup = 1,
-		lightType = "point",
-		color = {0.9, 0.9, 0.9},
-		range = 600,
-		attenuation = {1.0, 0.007, 0.0002},
-	},
-	
-	IronHellOmni007 = {
-		type = "Light",
-		position = {452.818, 153.902, -76.2599},
-		lightIsStatic = true,
-		lightGroup = 1,
-		lightType = "point",
-		color = {0.9, 0.9, 0.9},
-		range = 600,
-		attenuation = {1.0, 0.007, 0.0002},
-	},
-	
-	CorridorIronSniperOmni008 = {
-		type = "Light",
-		position = {431.164, 146.429, -383.983},
-		lightIsStatic = true,
-		lightGroup = 1,
-		lightType = "point",
-		color = {0.9, 0.9, 0.9},
-		range = 600,
-		attenuation = {1.0, 0.007, 0.0002},
-	},
-	
-	rockOmni009 = {
-		type = "Light",
-		position = {228.805, 143.773, -348.047},
-		lightIsStatic = true,
-		lightGroup = 1,
-		lightType = "point",
-		color = {0.9, 0.9, 0.9},
-		range = 600,
-		attenuation = {1.0, 0.007, 0.0002},
-	},
-	
-	rockOmni010 = {
-		type = "Light",
-		position = {228.339, 144.979, -390.932},
-		lightIsStatic = true,
-		lightGroup = 1,
-		lightType = "point",
-		color = {0.9, 0.9, 0.9},
-		range = 600,
-		attenuation = {1.0, 0.007, 0.0002},
-	},
-	
-	rockOmni011 = {
-		type = "Light",
-		position = {-6.06263, 144.977, -393.081},
-		lightIsStatic = true,
-		lightGroup = 1,
-		lightType = "point",
-		color = {0.9, 0.9, 0.9},
-		range = 600,
-		attenuation = {1.0, 0.007, 0.0002},
-	},
-	
-	rockOmni012 = {
-		type = "Light",
-		position = {-49.8506, 144.26, -377.692},
-		lightIsStatic = true,
-		lightGroup = 1,
-		lightType = "point",
-		color = {0.9, 0.9, 0.9},
-		range = 600,
-		attenuation = {1.0, 0.007, 0.0002},
-	},
-	
-	corridorRockPuenteOmni013 = {
-		type = "Light",
-		position = {-330.137, 214.158, -395.031},
-		lightIsStatic = true,
-		lightGroup = 1,
-		lightType = "point",
-		color = {0.9, 0.9, 0.9},
-		range = 600,
-		attenuation = {1.0, 0.007, 0.0002},
+		color = {1.0, 1.0, 0.09},
+		range = 3250,
+		attenuation = {1.0, 0.0014, 0.000007},
 	},
 	
 	VortexLight = {

@@ -22,7 +22,6 @@ material shotGun {
 		
 			scene_blend add
 			iteration once_per_light
-			max_lights 5
 		
 			vertex_program_ref bumpLightingVertexShader {
 			}
