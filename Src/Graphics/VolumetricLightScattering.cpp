@@ -93,13 +93,16 @@ namespace Graphics {
 			auto closestLight = it++;
 			float closestDist = (playerPos2d - pos2d).length();
 			float dist;
+
 			for(; it != lightList.end(); ++it) {
 				pos2d.x = it->lightPosition.x;
 				pos2d.y = it->lightPosition.z;
 
 				dist = (playerPos2d - pos2d).length();
-				if(dist < closestDist)
+				if(dist < closestDist) {
 					closestLight = it;
+					closestDist = dist;
+				}
 			}
 
 			closestLightSrc.second = true;
@@ -149,8 +152,7 @@ namespace Graphics {
 			temp.first = sceneName;
 
 			// Luz de lava pipes
-			
-			params.lightPosition	= Vector3(-255.078f, -400.725f, -105.462f);
+			params.lightPosition	= Vector3(48.2968f, -200.1517f, 122.804f);
 			params.density			= 0.2f;
 			params.decay			= 0.99f;
 			params.weight			= 1.0f;
@@ -164,9 +166,10 @@ namespace Graphics {
 			lightInfoList.push_back(params);
 
 			// Luz del vortice
-			params.lightPosition	= Vector3(48.2968f, -200.1517f, 122.804f);
+			
+			params.lightPosition	= Vector3(-255.078f, -400.725f, -105.462f);
 			params.density			= 0.22f;
-			params.exposure			= 0.4f;
+			params.exposure			= 0.2f;
 
 			lightInfoList.push_back(params);
 
