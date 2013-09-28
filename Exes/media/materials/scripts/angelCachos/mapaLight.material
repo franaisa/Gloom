@@ -24,6 +24,7 @@ material Material#169[Object002] {
 		
 			scene_blend add
 			iteration once_per_light
+			max_lights 3
 		
 			vertex_program_ref bumpedLightmappingVertexShader {
 			}
@@ -107,6 +108,7 @@ material Material#169[Object006] {
 		
 			scene_blend add
 			iteration once_per_light
+			max_lights 3
 		
 			vertex_program_ref bumpedLightmappingVertexShader {
 			}
@@ -190,6 +192,7 @@ material Material#169[Object014] {
 		
 			scene_blend add
 			iteration once_per_light
+			max_lights 3
 		
 			vertex_program_ref bumpedLightmappingVertexShader {
 			}
@@ -273,6 +276,7 @@ material Material#169[Object020] {
 		
 			scene_blend add
 			iteration once_per_light
+			max_lights 3
 		
 			vertex_program_ref bumpedLightmappingVertexShader {
 			}
@@ -356,6 +360,7 @@ material Material#169[Object022] {
 		
 			scene_blend add
 			iteration once_per_light
+			max_lights 3
 		
 			vertex_program_ref bumpedLightmappingVertexShader {
 			}
@@ -439,6 +444,7 @@ material Material#169[Object030] {
 		
 			scene_blend add
 			iteration once_per_light
+			max_lights 3
 		
 			vertex_program_ref bumpedLightmappingVertexShader {
 			}
@@ -522,6 +528,7 @@ material Material#169[Object034] {
 		
 			scene_blend add
 			iteration once_per_light
+			max_lights 3
 		
 			vertex_program_ref bumpedLightmappingVertexShader {
 			}
@@ -605,6 +612,7 @@ material Material#169[Object038] {
 		
 			scene_blend add
 			iteration once_per_light
+			max_lights 3
 		
 			vertex_program_ref bumpedLightmappingVertexShader {
 			}
@@ -688,6 +696,7 @@ material Material#169[Object055] {
 		
 			scene_blend add
 			iteration once_per_light
+			max_lights 3
 		
 			vertex_program_ref bumpedLightmappingVertexShader {
 			}
@@ -771,6 +780,7 @@ material Material#169[Object057] {
 		
 			scene_blend add
 			iteration once_per_light
+			max_lights 3
 		
 			vertex_program_ref bumpedLightmappingVertexShader {
 			}
@@ -854,6 +864,7 @@ material Material#169[Object061] {
 		
 			scene_blend add
 			iteration once_per_light
+			max_lights 3
 		
 			vertex_program_ref bumpedLightmappingVertexShader {
 			}
@@ -937,6 +948,7 @@ material Material#169[Object083] {
 		
 			scene_blend add
 			iteration once_per_light
+			max_lights 3
 		
 			vertex_program_ref bumpedLightmappingVertexShader {
 			}
@@ -1020,6 +1032,7 @@ material Material#169[Object085] {
 		
 			scene_blend add
 			iteration once_per_light
+			max_lights 3
 		
 			vertex_program_ref bumpedLightmappingVertexShader {
 			}
@@ -1103,6 +1116,7 @@ material Material#169[Object087] {
 		
 			scene_blend add
 			iteration once_per_light
+			max_lights 3
 		
 			vertex_program_ref bumpedLightmappingVertexShader {
 			}
@@ -1186,6 +1200,7 @@ material Material#169[Object089] {
 		
 			scene_blend add
 			iteration once_per_light
+			max_lights 3
 		
 			vertex_program_ref bumpedLightmappingVertexShader {
 			}
@@ -1269,6 +1284,7 @@ material Material#169[Object093] {
 		
 			scene_blend add
 			iteration once_per_light
+			max_lights 3
 		
 			vertex_program_ref bumpedLightmappingVertexShader {
 			}
@@ -1352,6 +1368,7 @@ material Material#169[Object109] {
 		
 			scene_blend add
 			iteration once_per_light
+			max_lights 3
 		
 			vertex_program_ref bumpedLightmappingVertexShader {
 			}
@@ -1436,6 +1453,7 @@ material Material#169[Object117] {
 		
 			scene_blend add
 			iteration once_per_light
+			max_lights 3
 		
 			vertex_program_ref bumpedLightmappingVertexShader {
 			}
@@ -1520,6 +1538,7 @@ material Material#169[Object119] {
 		
 			scene_blend add
 			iteration once_per_light
+			max_lights 3
 		
 			vertex_program_ref bumpedLightmappingVertexShader {
 			}
@@ -1603,6 +1622,7 @@ material Material#169[Object121] {
 		
 			scene_blend add
 			iteration once_per_light
+			max_lights 3
 		
 			vertex_program_ref bumpedLightmappingVertexShader {
 			}
@@ -1686,6 +1706,7 @@ material Material#169[Object123] {
 		
 			scene_blend add
 			iteration once_per_light
+			max_lights 3
 		
 			vertex_program_ref bumpedLightmappingVertexShader {
 			}
@@ -1769,6 +1790,7 @@ material Material#169[Object125] {
 		
 			scene_blend add
 			iteration once_per_light
+			max_lights 3
 		
 			vertex_program_ref bumpedLightmappingVertexShader {
 			}
@@ -1852,6 +1874,7 @@ material Material#169[Object128] {
 		
 			scene_blend add
 			iteration once_per_light
+			max_lights 3
 		
 			vertex_program_ref bumpedLightmappingVertexShader {
 			}
@@ -1935,6 +1958,7 @@ material Material#169[Object130] {
 		
 			scene_blend add
 			iteration once_per_light
+			max_lights 3
 		
 			vertex_program_ref bumpedLightmappingVertexShader {
 			}
@@ -2018,6 +2042,7 @@ material Material#169[Object132] {
 		
 			scene_blend add
 			iteration once_per_light
+			max_lights 3
 		
 			vertex_program_ref bumpedLightmappingVertexShader {
 			}
@@ -2101,6 +2126,7 @@ material Material#169[Object134] {
 		
 			scene_blend add
 			iteration once_per_light
+			max_lights 3
 		
 			vertex_program_ref bumpedLightmappingVertexShader {
 			}
@@ -2184,6 +2210,7 @@ material Material#169[Object136] {
 		
 			scene_blend add
 			iteration once_per_light
+			max_lights 3
 		
 			vertex_program_ref bumpedLightmappingVertexShader {
 			}
@@ -2267,6 +2294,7 @@ material Material#169[Object138] {
 		
 			scene_blend add
 			iteration once_per_light
+			max_lights 3
 		
 			vertex_program_ref bumpedLightmappingVertexShader {
 			}
@@ -2350,6 +2378,7 @@ material Material#169[Object140] {
 		
 			scene_blend add
 			iteration once_per_light
+			max_lights 3
 		
 			vertex_program_ref bumpedLightmappingVertexShader {
 			}
@@ -2433,6 +2462,7 @@ material Material#169[Object141] {
 		
 			scene_blend add
 			iteration once_per_light
+			max_lights 3
 		
 			vertex_program_ref bumpedLightmappingVertexShader {
 			}
@@ -2516,6 +2546,7 @@ material Material#169[Object142] {
 		
 			scene_blend add
 			iteration once_per_light
+			max_lights 3
 		
 			vertex_program_ref bumpedLightmappingVertexShader {
 			}
@@ -2599,6 +2630,7 @@ material Material#169[Object143] {
 		
 			scene_blend add
 			iteration once_per_light
+			max_lights 3
 		
 			vertex_program_ref bumpedLightmappingVertexShader {
 			}
@@ -2682,6 +2714,7 @@ material Material#169[Object144] {
 		
 			scene_blend add
 			iteration once_per_light
+			max_lights 3
 		
 			vertex_program_ref bumpedLightmappingVertexShader {
 			}
@@ -2765,6 +2798,7 @@ material Material#169[Object145] {
 		
 			scene_blend add
 			iteration once_per_light
+			max_lights 3
 		
 			vertex_program_ref bumpedLightmappingVertexShader {
 			}
@@ -2848,6 +2882,7 @@ material Material#169[Object146] {
 		
 			scene_blend add
 			iteration once_per_light
+			max_lights 3
 		
 			vertex_program_ref bumpedLightmappingVertexShader {
 			}
@@ -2932,6 +2967,7 @@ material Material#203[Object067] {
 		
 			scene_blend add
 			iteration once_per_light
+			max_lights 3
 		
 			vertex_program_ref bumpedLightmappingVertexShader {
 			}
@@ -3015,6 +3051,7 @@ material Material#203[Object147] {
 		
 			scene_blend add
 			iteration once_per_light
+			max_lights 3
 		
 			vertex_program_ref bumpedLightmappingVertexShader {
 			}

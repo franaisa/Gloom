@@ -1,5 +1,55 @@
 Map = {
 
+	Vortex = {
+		type = "Vortice",
+		position = {-613.28, 0.0, 962.908},
+		model = "vortice.mesh",
+		scale = 1,
+		damage = 500,
+		timeDamage = 500,
+		physic_entity = "rigid",
+		physic_trigger = true,
+		physic_type = "static",
+		physic_shape = "box",
+		physic_dimensions = { 2000, 50, 2000 },
+		physic_group = 2,
+		physic_groupList = "1",
+	},
+	
+	LavaPipes = {
+		type = "Lava",
+		position = {-298.535, 420.437, 1197.09},
+		
+		plane_orientation = {0, 1, 0},
+		plane_width = 200,
+		plane_height = 200,
+		plane_xSegments = 60,
+		plane_ySegments = 60,
+		plane_uTiling = 10,
+		plane_vTiling = 10,
+		plane_upVector = {0, 0, 1},
+		plane_material = "lavaFondo",
+		
+		physic_dimensions = {100, 1, 100},
+	},
+	
+	LavaAltar = {
+		type = "Lava",
+		position = {-270.475, 539.828, 947.562},
+		
+		plane_orientation = {0, 1, 0},
+		plane_width = 180,
+		plane_height = 220,
+		plane_xSegments = 60,
+		plane_ySegments = 60,
+		plane_uTiling = 10,
+		plane_vTiling = 10,
+		plane_upVector = {0, 0, 1},
+		plane_material = "lavaFondo",
+		
+		physic_dimensions = { 100, 1, 120 },
+	},
+	
 	Player = {
 		type = "LocalSpectator",
 		isPlayer = true,
