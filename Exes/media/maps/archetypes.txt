@@ -521,7 +521,7 @@ Map = {
 		position = {0.0, 50.0, 0.0},
 		msgList= "6,9,11,13,14,15,17,20,21,22,23,24,25,26,32,38,41,43,48,49,50,55,56,57,59,61,66,68",
 		
-		model = "ragdolls/agent47.mesh",
+		model = "archangel.mesh",
 		ragdoll_file = "media/models/ragdolls/hitman.RepX",
 		ragdoll_group = 19,
 		ragdoll_groupList = "-1",
