@@ -22,6 +22,8 @@
 #include "Logic/Messages/MessageAddWeapon.h"
 #include "Logic/Messages/MessageActivate.h"
 #include "Logic/Messages/MessageAddSpell.h"
+#include "Logic/Messages/MessageDamageAmplifier.h"
+#include "Logic/Messages/MessageReducedCooldown.h"
 
 #include "Graphics/HHFXParticle.h"
 
@@ -143,10 +145,18 @@ namespace Logic {
 				addWeaponMsg->setAddAmmo(_reward);
 				addWeaponMsg->setAddWeapon(_weaponType);
 				actor->emitMessage(addWeaponMsg);
-			}else if(_id == "spell") {
-				std::shared_ptr<CMessageAddSpell> addSpellMsg = std::make_shared<CMessageAddSpell>();
-				addSpellMsg->setSpell(_reward);
-				actor->emitMessage(addSpellMsg);
+			}
+			else if(_id == "damageAmplifier") {
+				std::shared_ptr<CMessageDamageAmplifier> dmgMsg = std::make_shared<CMessageDamageAmplifier>();
+				dmgMsg->setPercentDamage(_reward);
+				dmgMsg->setDuration(15000); // 15 segs
+				actor->emitMessage(dmgMsg);
+			}
+			else if(_id == "cooldownReducer") {
+				std::shared_ptr<CMessageReducedCooldown> cooldownMsg = std::make_shared<CMessageReducedCooldown>();
+				cooldownMsg->setPercentCooldown(_reward);
+				cooldownMsg->setDuration(15000); // 15 segs
+				actor->emitMessage(cooldownMsg);
 			}
 		}
 		// Arrancamos el timer.

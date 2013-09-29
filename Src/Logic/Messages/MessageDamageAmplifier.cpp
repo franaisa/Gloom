@@ -6,7 +6,7 @@ namespace Logic {
 
 	IMP_FACTORYMESSAGE(CMessageDamageAmplifier);
 
-	CMessageDamageAmplifier::CMessageDamageAmplifier() : CMessage(Message::DAMAGE_AMPLIFIER) {
+	CMessageDamageAmplifier::CMessageDamageAmplifier() : CMessage(Message::DAMAGE_AMPLIFIER), _duration(0) {
 		// Nada que hacer
 	}//
 	//----------------------------------------------------------

@@ -1,5 +1,22 @@
 Map = {
 
+	Player = {
+		type = "LocalHound",
+		isPlayer = true,
+		position = {0, 5, 0},
+		physic_group = 1,
+		physic_groupList = "-1",
+	},
+	
+	Camera = {
+		type = "Camera",
+		height = 8,
+	},
+	
+	PhysicWorld = {
+		type = "PhysicWorld",
+	},
+
 	Vortex = {
 		type = "Vortice",
 		position = {-255.078, -400.725, -105.462},
@@ -51,21 +68,39 @@ Map = {
 		physic_dimensions = { 100, 1, 120 },
 	},
 	
-	Player = {
-		type = "LocalHound",
-		isPlayer = true,
-		position = {0, 5, 0},
-		physic_group = 1,
-		physic_groupList = "-1",
+	VortexSinisterSound = {
+		type = "AmbientSound",
+		position = {-261.364, 120.75, -104.925},
+		staticAudio_name = "ambient/loop_deep.ogg",
+		staticAudio_stream = true,
 	},
 	
-	PhysicWorld = {
-		type = "PhysicWorld",
+	LavaAltarSound = {
+		type = "AmbientSound",
+		position = {87.0575, 165.676, -136.193},
+		staticAudio_name = "ambient/lava_quiet.wav",
+		staticAudio_stream = true,
 	},
 	
-	Camera = {
-		type = "Camera",
-		height = 8,
+	LavaPipesSound = {
+		type = "AmbientSound",
+		position = {110.972, 41.9249, 119.736},
+		staticAudio_name = "ambient/lava_quiet.wav",
+		staticAudio_stream = true,
+	},
+	
+	LavaPipesSound2 = {
+		type = "AmbientSound",
+		position = {-6.87131, 41.9249, 119.509},
+		staticAudio_name = "ambient/lava_quiet.wav",
+		staticAudio_stream = true,
+	},
+	
+	PipesSound = {
+		type = "AmbientSound",
+		position = {-33.102, 178.598, 252.685},
+		staticAudio_name = "ambient/bassy_fan.wav",
+		staticAudio_stream = true,
 	},
 
 	Shotgun = {

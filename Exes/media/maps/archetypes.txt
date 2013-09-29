@@ -91,12 +91,12 @@ Map = {
 		physic_groupList = "1",
 	},
 	
-	Powerup1 = {
-		type = "Powerup1",
+	DamageAmplifier = {
+		type = "DamageAmplifier",
 		msgList= "6,14,15,16,17,29,41",
 		
-		id = "spell",
-		reward = 0,
+		id = "damageAmplifier",
+		reward = 200,
 		respawnTime = 120,
 		
 		particle_scriptName = "damageAmplifier",
@@ -118,12 +118,12 @@ Map = {
 		physic_groupList = "1",
 	},
 	
-	Powerup2 = {
-		type = "Powerup2",
+	CooldownReducer = {
+		type = "CooldownReducer",
 		msgList= "6,14,15,16,17,29,41",
 		
-		id = "spell",
-		reward = 1,
+		id = "cooldownReducer",
+		reward = 200,
 		respawnTime = 120,
 		
 		particle_scriptName = "cooldownReducer",

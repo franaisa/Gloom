@@ -12,12 +12,15 @@ namespace Logic {
 		CMessageDamageAmplifier(int percentDamage ) ;
 		int getPercentDamage();
 		void setPercentDamage(int percentDamage);
+		void setDuration(unsigned int msecs) { _duration = msecs; }
+		unsigned int getDuration() { return _duration; }
 		~CMessageDamageAmplifier(){};
 		
 		virtual Net::CBuffer serialize();
 		virtual void deserialize(Net::CBuffer& buffer);
 	private:
 		 int _percentDamage;
+		 unsigned int _duration;
 	};
 	REG_FACTORYMESSAGE(CMessageDamageAmplifier);
 };
