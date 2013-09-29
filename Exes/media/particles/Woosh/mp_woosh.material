@@ -25,10 +25,9 @@ material mp_woosh_01
     }
 	
 	technique {
-		lighting off
-		
 		scheme depthScheme
 		pass {
+			lighting off
 			vertex_program_ref depthMapVertex {
 			}
 			
@@ -38,10 +37,9 @@ material mp_woosh_01
 	}
 	
 	technique {
-		lighting off
-	
 		scheme blackScheme
 		pass {
+			lighting off
 			vertex_program_ref blackVertex {
 			}
 			
@@ -69,10 +67,9 @@ material mp_woosh_02
     }
 	
 	technique {
-		lighting off
-		
 		scheme depthScheme
 		pass {
+			lighting off
 			vertex_program_ref depthMapVertex {
 			}
 			
@@ -82,10 +79,9 @@ material mp_woosh_02
 	}
 	
 	technique {
-		lighting off
-	
 		scheme blackScheme
 		pass {
+			lighting off
 			vertex_program_ref blackVertex {
 			}
 			
@@ -113,10 +109,9 @@ material mp_woosh_circle_01
     }
 	
 	technique {
-		lighting off
-		
 		scheme depthScheme
 		pass {
+			lighting off
 			vertex_program_ref depthMapVertex {
 			}
 			
@@ -126,10 +121,9 @@ material mp_woosh_circle_01
 	}
 	
 	technique {
-		lighting off
-	
 		scheme blackScheme
 		pass {
+			lighting off
 			vertex_program_ref blackVertex {
 			}
 			
@@ -157,10 +151,9 @@ material mp_woosh_circle_02
     }
 	
 	technique {
-		lighting off
-		
 		scheme depthScheme
 		pass {
+			lighting off
 			vertex_program_ref depthMapVertex {
 			}
 			
@@ -170,10 +163,9 @@ material mp_woosh_circle_02
 	}
 	
 	technique {
-		lighting off
-	
 		scheme blackScheme
 		pass {
+			lighting off
 			vertex_program_ref blackVertex {
 			}
 			
@@ -201,10 +193,9 @@ material mp_woosh_circle_03
     }
 	
 	technique {
-		lighting off
-		
 		scheme depthScheme
 		pass {
+			lighting off
 			vertex_program_ref depthMapVertex {
 			}
 			
@@ -214,10 +205,9 @@ material mp_woosh_circle_03
 	}
 	
 	technique {
-		lighting off
-	
 		scheme blackScheme
 		pass {
+			lighting off
 			vertex_program_ref blackVertex {
 			}
 			
@@ -245,10 +235,9 @@ material mp_woosh_circle_04
     }
 	
 	technique {
-		lighting off
-		
 		scheme depthScheme
 		pass {
+			lighting off
 			vertex_program_ref depthMapVertex {
 			}
 			
@@ -258,10 +247,9 @@ material mp_woosh_circle_04
 	}
 	
 	technique {
-		lighting off
-	
 		scheme blackScheme
 		pass {
+			lighting off
 			vertex_program_ref blackVertex {
 			}
 			
@@ -289,10 +277,9 @@ material mp_woosh_circle_05
     }
 	
 	technique {
-		lighting off
-		
 		scheme depthScheme
 		pass {
+			lighting off
 			vertex_program_ref depthMapVertex {
 			}
 			
@@ -302,10 +289,9 @@ material mp_woosh_circle_05
 	}
 	
 	technique {
-		lighting off
-	
 		scheme blackScheme
 		pass {
+			lighting off
 			vertex_program_ref blackVertex {
 			}
 			
@@ -333,10 +319,9 @@ material mp_woosh_circle_06
     }
 	
 	technique {
-		lighting off
-		
 		scheme depthScheme
 		pass {
+			lighting off
 			vertex_program_ref depthMapVertex {
 			}
 			
@@ -346,10 +331,9 @@ material mp_woosh_circle_06
 	}
 	
 	technique {
-		lighting off
-	
 		scheme blackScheme
 		pass {
+			lighting off
 			vertex_program_ref blackVertex {
 			}
 			
@@ -377,10 +361,9 @@ material mp_woosh_circle_07
     }
 	
 	technique {
-		lighting off
-		
 		scheme depthScheme
 		pass {
+			lighting off
 			vertex_program_ref depthMapVertex {
 			}
 			
@@ -390,10 +373,9 @@ material mp_woosh_circle_07
 	}
 	
 	technique {
-		lighting off
-	
 		scheme blackScheme
 		pass {
+			lighting off
 			vertex_program_ref blackVertex {
 			}
 			
@@ -421,10 +403,9 @@ material mp_woosh_circle_08
     }
 	
 	technique {
-		lighting off
-		
 		scheme depthScheme
 		pass {
+			lighting off
 			vertex_program_ref depthMapVertex {
 			}
 			
@@ -434,10 +415,9 @@ material mp_woosh_circle_08
 	}
 	
 	technique {
-		lighting off
-	
 		scheme blackScheme
 		pass {
+			lighting off
 			vertex_program_ref blackVertex {
 			}
 			
@@ -465,10 +445,9 @@ material mp_woosh_bolt_1x2
     }
 	
 	technique {
-		lighting off
-		
 		scheme depthScheme
 		pass {
+			lighting off
 			vertex_program_ref depthMapVertex {
 			}
 			
@@ -478,10 +457,9 @@ material mp_woosh_bolt_1x2
 	}
 	
 	technique {
-		lighting off
-	
 		scheme blackScheme
 		pass {
+			lighting off
 			vertex_program_ref blackVertex {
 			}
 			
@@ -509,10 +487,9 @@ material mp_woosh_flare
     }
 	
 	technique {
-		lighting off
-		
 		scheme depthScheme
 		pass {
+			lighting off
 			vertex_program_ref depthMapVertex {
 			}
 			
@@ -522,10 +499,9 @@ material mp_woosh_flare
 	}
 	
 	technique {
-		lighting off
-	
 		scheme blackScheme
 		pass {
+			lighting off
 			vertex_program_ref blackVertex {
 			}
 			
@@ -553,10 +529,9 @@ material mp_woosh_streak_01
     }
 	
 	technique {
-		lighting off
-		
 		scheme depthScheme
 		pass {
+			lighting off
 			vertex_program_ref depthMapVertex {
 			}
 			
@@ -566,10 +541,9 @@ material mp_woosh_streak_01
 	}
 	
 	technique {
-		lighting off
-	
 		scheme blackScheme
 		pass {
+			lighting off
 			vertex_program_ref blackVertex {
 			}
 			
@@ -597,10 +571,9 @@ material mp_woosh_star
     }
 	
 	technique {
-		lighting off
-		
 		scheme depthScheme
 		pass {
+			lighting off
 			vertex_program_ref depthMapVertex {
 			}
 			
@@ -610,10 +583,9 @@ material mp_woosh_star
 	}
 	
 	technique {
-		lighting off
-	
 		scheme blackScheme
 		pass {
+			lighting off
 			vertex_program_ref blackVertex {
 			}
 			
@@ -641,10 +613,9 @@ material mp_woosh_glow_01
     }
 	
 	technique {
-		lighting off
-		
 		scheme depthScheme
 		pass {
+			lighting off
 			vertex_program_ref depthMapVertex {
 			}
 			
@@ -654,10 +625,9 @@ material mp_woosh_glow_01
 	}
 	
 	technique {
-		lighting off
-	
 		scheme blackScheme
 		pass {
+			lighting off
 			vertex_program_ref blackVertex {
 			}
 			
@@ -685,10 +655,9 @@ material mp_woosh_smoke
     }
 	
 	technique {
-		lighting off
-		
 		scheme depthScheme
 		pass {
+			lighting off
 			vertex_program_ref depthMapVertex {
 			}
 			
@@ -698,10 +667,9 @@ material mp_woosh_smoke
 	}
 	
 	technique {
-		lighting off
-	
 		scheme blackScheme
 		pass {
+			lighting off
 			vertex_program_ref blackVertex {
 			}
 			
@@ -729,10 +697,9 @@ material mp_woosh_blurred
     }
 	
 	technique {
-		lighting off
-		
 		scheme depthScheme
 		pass {
+			lighting off
 			vertex_program_ref depthMapVertex {
 			}
 			
@@ -742,10 +709,9 @@ material mp_woosh_blurred
 	}
 	
 	technique {
-		lighting off
-	
 		scheme blackScheme
 		pass {
+			lighting off
 			vertex_program_ref blackVertex {
 			}
 			
@@ -773,10 +739,9 @@ material mp_woosh_flare_01
     }
 	
 	technique {
-		lighting off
-		
 		scheme depthScheme
 		pass {
+			lighting off
 			vertex_program_ref depthMapVertex {
 			}
 			
@@ -786,10 +751,9 @@ material mp_woosh_flare_01
 	}
 	
 	technique {
-		lighting off
-	
 		scheme blackScheme
 		pass {
+			lighting off
 			vertex_program_ref blackVertex {
 			}
 			

@@ -25,10 +25,9 @@ material mp_hit_metal_sparkle
     }
 	
 	technique {
-		lighting off
-		
 		scheme depthScheme
 		pass {
+			lighting off
 			vertex_program_ref depthMapVertex {
 			}
 			
@@ -38,10 +37,9 @@ material mp_hit_metal_sparkle
 	}
 	
 	technique {
-		lighting off
-	
 		scheme blackScheme
 		pass {
+			lighting off
 			vertex_program_ref blackVertex {
 			}
 			
@@ -69,10 +67,9 @@ material mp_hit_flare
     }
 	
 	technique {
-		lighting off
-		
 		scheme depthScheme
 		pass {
+			lighting off
 			vertex_program_ref depthMapVertex {
 			}
 			
@@ -82,10 +79,9 @@ material mp_hit_flare
 	}
 	
 	technique {
-		lighting off
-	
 		scheme blackScheme
 		pass {
+			lighting off
 			vertex_program_ref blackVertex {
 			}
 			
@@ -113,10 +109,9 @@ material mp_hit_arrow
     }
 	
 	technique {
-		lighting off
-		
 		scheme depthScheme
 		pass {
+			lighting off
 			vertex_program_ref depthMapVertex {
 			}
 			
@@ -126,10 +121,9 @@ material mp_hit_arrow
 	}
 	
 	technique {
-		lighting off
-	
 		scheme blackScheme
 		pass {
+			lighting off
 			vertex_program_ref blackVertex {
 			}
 			
@@ -157,10 +151,9 @@ material mp_hit_glow_01
     }
 	
 	technique {
-		lighting off
-		
 		scheme depthScheme
 		pass {
+			lighting off
 			vertex_program_ref depthMapVertex {
 			}
 			
@@ -170,10 +163,9 @@ material mp_hit_glow_01
 	}
 	
 	technique {
-		lighting off
-	
 		scheme blackScheme
 		pass {
+			lighting off
 			vertex_program_ref blackVertex {
 			}
 			
@@ -201,10 +193,9 @@ material mp_hit_glow_02
     }
 	
 	technique {
-		lighting off
-		
 		scheme depthScheme
 		pass {
+			lighting off
 			vertex_program_ref depthMapVertex {
 			}
 			
@@ -214,10 +205,9 @@ material mp_hit_glow_02
 	}
 	
 	technique {
-		lighting off
-	
 		scheme blackScheme
 		pass {
+			lighting off
 			vertex_program_ref blackVertex {
 			}
 			
@@ -245,10 +235,9 @@ material mp_hit_glow_03
     }
 	
 	technique {
-		lighting off
-		
 		scheme depthScheme
 		pass {
+			lighting off
 			vertex_program_ref depthMapVertex {
 			}
 			
@@ -258,10 +247,9 @@ material mp_hit_glow_03
 	}
 	
 	technique {
-		lighting off
-	
 		scheme blackScheme
 		pass {
+			lighting off
 			vertex_program_ref blackVertex {
 			}
 			
@@ -289,10 +277,9 @@ material mp_hit_glow_04
     }
 	
 	technique {
-		lighting off
-		
 		scheme depthScheme
 		pass {
+			lighting off
 			vertex_program_ref depthMapVertex {
 			}
 			
@@ -302,10 +289,9 @@ material mp_hit_glow_04
 	}
 	
 	technique {
-		lighting off
-	
 		scheme blackScheme
 		pass {
+			lighting off
 			vertex_program_ref blackVertex {
 			}
 			
@@ -333,10 +319,9 @@ material mp_hit_glow_05
     }
 	
 	technique {
-		lighting off
-		
 		scheme depthScheme
 		pass {
+			lighting off
 			vertex_program_ref depthMapVertex {
 			}
 			
@@ -346,10 +331,9 @@ material mp_hit_glow_05
 	}
 	
 	technique {
-		lighting off
-	
 		scheme blackScheme
 		pass {
+			lighting off
 			vertex_program_ref blackVertex {
 			}
 			
@@ -377,10 +361,9 @@ material mp_hit_glow_06
     }
 	
 	technique {
-		lighting off
-		
 		scheme depthScheme
 		pass {
+			lighting off
 			vertex_program_ref depthMapVertex {
 			}
 			
@@ -390,10 +373,9 @@ material mp_hit_glow_06
 	}
 	
 	technique {
-		lighting off
-	
 		scheme blackScheme
 		pass {
+			lighting off
 			vertex_program_ref blackVertex {
 			}
 			
@@ -421,10 +403,9 @@ material mp_hit_glow_07
     }
 	
 	technique {
-		lighting off
-		
 		scheme depthScheme
 		pass {
+			lighting off
 			vertex_program_ref depthMapVertex {
 			}
 			
@@ -434,10 +415,9 @@ material mp_hit_glow_07
 	}
 	
 	technique {
-		lighting off
-	
 		scheme blackScheme
 		pass {
+			lighting off
 			vertex_program_ref blackVertex {
 			}
 			
@@ -465,10 +445,9 @@ material mp_hit_circle_01
     }
 	
 	technique {
-		lighting off
-		
 		scheme depthScheme
 		pass {
+			lighting off
 			vertex_program_ref depthMapVertex {
 			}
 			
@@ -478,10 +457,10 @@ material mp_hit_circle_01
 	}
 	
 	technique {
-		lighting off
 	
 		scheme blackScheme
 		pass {
+			lighting off
 			vertex_program_ref blackVertex {
 			}
 			
@@ -509,10 +488,9 @@ material mp_hit_circle_02
     }
 	
 	technique {
-		lighting off
-		
 		scheme depthScheme
 		pass {
+			lighting off
 			vertex_program_ref depthMapVertex {
 			}
 			
@@ -522,10 +500,9 @@ material mp_hit_circle_02
 	}
 	
 	technique {
-		lighting off
-	
 		scheme blackScheme
 		pass {
+			lighting off
 			vertex_program_ref blackVertex {
 			}
 			
@@ -553,10 +530,9 @@ material mp_hit_circle_03
     }
 	
 	technique {
-		lighting off
-		
 		scheme depthScheme
 		pass {
+			lighting off
 			vertex_program_ref depthMapVertex {
 			}
 			
@@ -566,10 +542,9 @@ material mp_hit_circle_03
 	}
 	
 	technique {
-		lighting off
-	
 		scheme blackScheme
 		pass {
+			lighting off
 			vertex_program_ref blackVertex {
 			}
 			
@@ -597,10 +572,9 @@ material mp_hit_streak
     }
 	
 	technique {
-		lighting off
-		
 		scheme depthScheme
 		pass {
+			lighting off
 			vertex_program_ref depthMapVertex {
 			}
 			
@@ -609,11 +583,11 @@ material mp_hit_streak
 		}
 	}
 	
-	technique {
-		lighting off
+	technique {ff
 	
 		scheme blackScheme
 		pass {
+			lighting off
 			vertex_program_ref blackVertex {
 			}
 			

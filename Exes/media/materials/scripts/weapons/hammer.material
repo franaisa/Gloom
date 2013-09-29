@@ -19,10 +19,9 @@ material hammer
 	}
 	
 	technique {
-		lighting off
-		
 		scheme depthScheme
 		pass {
+			lighting off
 			vertex_program_ref depthMapVertex {
 			}
 			
@@ -32,10 +31,9 @@ material hammer
 	}
 	
 	technique {
-		lighting off
-	
 		scheme blackScheme
 		pass {
+			lighting off
 			vertex_program_ref blackVertex {
 			}
 			

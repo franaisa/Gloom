@@ -46,10 +46,9 @@ material Material#25 {
 	}
 	
 	technique {
-		lighting off
-		
 		scheme depthScheme
 		pass {
+			lighting off
 			vertex_program_ref depthMapVertex {
 			}
 			
@@ -59,10 +58,9 @@ material Material#25 {
 	}
 	
 	technique {
-		lighting off
-	
 		scheme blackScheme
 		pass {
+			lighting off
 			vertex_program_ref blackVertex {
 			}
 			
@@ -128,10 +126,9 @@ material Material#26 {
 	}
 	
 	technique {
-		lighting off
-		
 		scheme depthScheme
 		pass {
+			lighting off
 			vertex_program_ref depthMapVertex {
 			}
 			
@@ -141,10 +138,9 @@ material Material#26 {
 	}
 	
 	technique {
-		lighting off
-	
 		scheme blackScheme
 		pass {
+			lighting off
 			vertex_program_ref blackVertex {
 			}
 			
@@ -205,10 +201,9 @@ material Material#27 {
 	}
 	
 	technique {
-		lighting off
-		
 		scheme depthScheme
 		pass {
+			lighting off
 			vertex_program_ref depthMapVertex {
 			}
 			
@@ -218,10 +213,9 @@ material Material#27 {
 	}
 	
 	technique {
-		lighting off
-	
 		scheme blackScheme
 		pass {
+			lighting off
 			vertex_program_ref blackVertex {
 			}
 			
@@ -281,10 +275,9 @@ material Material#28 {
 	}
 	
 	technique {
-		lighting off
-		
 		scheme depthScheme
 		pass {
+			lighting off
 			vertex_program_ref depthMapVertex {
 			}
 			
@@ -294,10 +287,9 @@ material Material#28 {
 	}
 	
 	technique {
-		lighting off
-	
 		scheme blackScheme
 		pass {
+			lighting off
 			vertex_program_ref blackVertex {
 			}
 			
@@ -357,10 +349,9 @@ material Material#29 {
 	}
 	
 	technique {
-		lighting off
-		
 		scheme depthScheme
 		pass {
+			lighting off
 			vertex_program_ref depthMapVertex {
 			}
 			
@@ -370,10 +361,9 @@ material Material#29 {
 	}
 	
 	technique {
-		lighting off
-	
 		scheme blackScheme
 		pass {
+			lighting off
 			vertex_program_ref blackVertex {
 			}
 			

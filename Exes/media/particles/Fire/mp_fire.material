@@ -25,10 +25,9 @@ material mp_fire_01
     }
 	
 	technique {
-		lighting off
-		
 		scheme depthScheme
 		pass {
+			lighting off
 			vertex_program_ref depthMapVertex {
 			}
 			
@@ -38,10 +37,9 @@ material mp_fire_01
 	}
 	
 	technique {
-		lighting off
-	
 		scheme blackScheme
 		pass {
+			lighting off
 			vertex_program_ref blackVertex {
 			}
 			
@@ -69,10 +67,9 @@ material mp_fire_02
     }
 	
 	technique {
-		lighting off
-		
 		scheme depthScheme
 		pass {
+			lighting off
 			vertex_program_ref depthMapVertex {
 			}
 			
@@ -82,10 +79,9 @@ material mp_fire_02
 	}
 	
 	technique {
-		lighting off
-	
 		scheme blackScheme
 		pass {
+			lighting off
 			vertex_program_ref blackVertex {
 			}
 			
@@ -113,10 +109,9 @@ material mp_fire_03
     }
 	
 	technique {
-		lighting off
-		
 		scheme depthScheme
 		pass {
+			lighting off
 			vertex_program_ref depthMapVertex {
 			}
 			
@@ -126,10 +121,9 @@ material mp_fire_03
 	}
 	
 	technique {
-		lighting off
-	
 		scheme blackScheme
 		pass {
+			lighting off
 			vertex_program_ref blackVertex {
 			}
 			
@@ -157,10 +151,9 @@ material mp_fire_04
     }
 	
 	technique {
-		lighting off
-		
 		scheme depthScheme
 		pass {
+			lighting off
 			vertex_program_ref depthMapVertex {
 			}
 			
@@ -170,10 +163,9 @@ material mp_fire_04
 	}
 	
 	technique {
-		lighting off
-	
 		scheme blackScheme
 		pass {
+			lighting off
 			vertex_program_ref blackVertex {
 			}
 			
@@ -201,10 +193,9 @@ material mp_fire_05
     }
 	
 	technique {
-		lighting off
-		
 		scheme depthScheme
 		pass {
+			lighting off
 			vertex_program_ref depthMapVertex {
 			}
 			
@@ -214,10 +205,9 @@ material mp_fire_05
 	}
 	
 	technique {
-		lighting off
-	
 		scheme blackScheme
 		pass {
+			lighting off
 			vertex_program_ref blackVertex {
 			}
 			
@@ -245,10 +235,9 @@ material mp_fire_spark_01
     }
 	
 	technique {
-		lighting off
-		
 		scheme depthScheme
 		pass {
+			lighting off
 			vertex_program_ref depthMapVertex {
 			}
 			
@@ -258,10 +247,9 @@ material mp_fire_spark_01
 	}
 	
 	technique {
-		lighting off
-	
 		scheme blackScheme
 		pass {
+			lighting off
 			vertex_program_ref blackVertex {
 			}
 			
@@ -289,10 +277,9 @@ material mp_fire_spark_02
     }
 	
 	technique {
-		lighting off
-		
 		scheme depthScheme
 		pass {
+			lighting off
 			vertex_program_ref depthMapVertex {
 			}
 			
@@ -302,10 +289,9 @@ material mp_fire_spark_02
 	}
 	
 	technique {
-		lighting off
-	
 		scheme blackScheme
 		pass {
+			lighting off
 			vertex_program_ref blackVertex {
 			}
 			
@@ -333,10 +319,9 @@ material mp_fire_smoke_01
     }
 	
 	technique {
-		lighting off
-		
 		scheme depthScheme
 		pass {
+			lighting off
 			vertex_program_ref depthMapVertex {
 			}
 			
@@ -346,10 +331,9 @@ material mp_fire_smoke_01
 	}
 	
 	technique {
-		lighting off
-	
 		scheme blackScheme
 		pass {
+			lighting off
 			vertex_program_ref blackVertex {
 			}
 			
