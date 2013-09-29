@@ -146,13 +146,13 @@ namespace Logic
 				if(_insertAnimation){
 
 					_animatedGraphicsEntity->stopAllAnimations();
-					_animatedGraphicsEntity->setAnimation( setAnimMsg->getAnimation(), setAnimMsg->getRewind(), setAnimMsg->getLoop());
+					_animatedGraphicsEntity->setAnimation( setAnimMsg->getAnimation(), setAnimMsg->getLoop(), setAnimMsg->getRewind());
 					_insertAnimation = setAnimMsg->getExclude();
-
 				}else if(!_insertAnimation && setAnimMsg->getExclude()){
 					
 					_animatedGraphicsEntity->stopAllAnimations();
 					_animatedGraphicsEntity->setAnimation( setAnimMsg->getAnimation(), setAnimMsg->getRewind() , setAnimMsg->getLoop());
+					
 					
 				}else{
 
@@ -180,7 +180,9 @@ namespace Logic
 	//---------------------------------------------------------
 
 	void CAnimatedGraphics::onTick(unsigned int msecs){
-		_graphicsEntity->setTransform(_entity->getPosition(),_entity->getYaw());
+		//_graphicsEntity->setTransform(_entity->getPosition(),_entity->getYaw());
+		Quaternion rancio(Ogre::Radian(Math::PI),Vector3::UNIT_Y);
+		_graphicsEntity->setTransform(_entity->getPosition(),_entity->getYaw()*rancio);
 	}//---------------------------------------------------------
 	//onTick
 	
