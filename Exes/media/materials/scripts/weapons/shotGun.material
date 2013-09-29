@@ -52,10 +52,9 @@ material shotGun {
 	}
 	
 	technique {
-		lighting off
-		
 		scheme depthScheme
 		pass {
+			lighting off
 			vertex_program_ref depthMapVertex {
 			}
 			
@@ -65,10 +64,9 @@ material shotGun {
 	}
 	
 	technique {
-		lighting off
-	
 		scheme blackScheme
 		pass {
+			lighting off
 			vertex_program_ref blackVertex {
 			}
 			
@@ -78,10 +76,10 @@ material shotGun {
 	}
 	
 	technique {
-		lighting off
 		scheme glow
 		
 		pass {
+			lighting off
 			texture_unit {
 				texture shotgun_glow.png
 			}
