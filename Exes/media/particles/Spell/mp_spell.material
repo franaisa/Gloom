@@ -23,6 +23,32 @@ material mp_spell_tornado_flare
             }
         }
     }
+	
+	technique {
+		lighting off
+		
+		scheme depthScheme
+		pass {
+			vertex_program_ref depthMapVertex {
+			}
+			
+			fragment_program_ref depthMapFragment {
+			}
+		}
+	}
+	
+	technique {
+		lighting off
+	
+		scheme blackScheme
+		pass {
+			vertex_program_ref blackVertex {
+			}
+			
+			fragment_program_ref blackFragment {
+			}
+		}
+	}
 }
 //-----------------------------------------------------------------------------------------------------------------------
 material mp_spell_lightning_2x2
@@ -42,6 +68,32 @@ material mp_spell_lightning_2x2
 
         }
     }
+	
+	technique {
+		lighting off
+		
+		scheme depthScheme
+		pass {
+			vertex_program_ref depthMapVertex {
+			}
+			
+			fragment_program_ref depthMapFragment {
+			}
+		}
+	}
+	
+	technique {
+		lighting off
+	
+		scheme blackScheme
+		pass {
+			vertex_program_ref blackVertex {
+			}
+			
+			fragment_program_ref blackFragment {
+			}
+		}
+	}
 }
 //-----------------------------------------------------------------------------------------------------------------------
 material mp_spell_lightning_1x2
@@ -61,6 +113,32 @@ material mp_spell_lightning_1x2
 
         }
     }
+	
+	technique {
+		lighting off
+		
+		scheme depthScheme
+		pass {
+			vertex_program_ref depthMapVertex {
+			}
+			
+			fragment_program_ref depthMapFragment {
+			}
+		}
+	}
+	
+	technique {
+		lighting off
+	
+		scheme blackScheme
+		pass {
+			vertex_program_ref blackVertex {
+			}
+			
+			fragment_program_ref blackFragment {
+			}
+		}
+	}
 }
 //-----------------------------------------------------------------------------------------------------------------------
 material mp_spell_stripe
@@ -81,6 +159,32 @@ material mp_spell_stripe
 
         }
     }
+	
+	technique {
+		lighting off
+		
+		scheme depthScheme
+		pass {
+			vertex_program_ref depthMapVertex {
+			}
+			
+			fragment_program_ref depthMapFragment {
+			}
+		}
+	}
+	
+	technique {
+		lighting off
+	
+		scheme blackScheme
+		pass {
+			vertex_program_ref blackVertex {
+			}
+			
+			fragment_program_ref blackFragment {
+			}
+		}
+	}
 }
 //-----------------------------------------------------------------------------------------------------------------------
 material mp_spell_swirl
@@ -99,6 +203,32 @@ material mp_spell_swirl
             }
         }
     }
+	
+	technique {
+		lighting off
+		
+		scheme depthScheme
+		pass {
+			vertex_program_ref depthMapVertex {
+			}
+			
+			fragment_program_ref depthMapFragment {
+			}
+		}
+	}
+	
+	technique {
+		lighting off
+	
+		scheme blackScheme
+		pass {
+			vertex_program_ref blackVertex {
+			}
+			
+			fragment_program_ref blackFragment {
+			}
+		}
+	}
 }
 //-----------------------------------------------------------------------------------------------------------------------
 material mp_spell_small_ray
@@ -117,6 +247,32 @@ material mp_spell_small_ray
             }
         }
     }
+	
+	technique {
+		lighting off
+		
+		scheme depthScheme
+		pass {
+			vertex_program_ref depthMapVertex {
+			}
+			
+			fragment_program_ref depthMapFragment {
+			}
+		}
+	}
+	
+	technique {
+		lighting off
+	
+		scheme blackScheme
+		pass {
+			vertex_program_ref blackVertex {
+			}
+			
+			fragment_program_ref blackFragment {
+			}
+		}
+	}
 }
 //-----------------------------------------------------------------------------------------------------------------------
 material mp_spell_flare_01
@@ -135,6 +291,32 @@ material mp_spell_flare_01
             }
         }
     }
+	
+	technique {
+		lighting off
+		
+		scheme depthScheme
+		pass {
+			vertex_program_ref depthMapVertex {
+			}
+			
+			fragment_program_ref depthMapFragment {
+			}
+		}
+	}
+	
+	technique {
+		lighting off
+	
+		scheme blackScheme
+		pass {
+			vertex_program_ref blackVertex {
+			}
+			
+			fragment_program_ref blackFragment {
+			}
+		}
+	}
 }
 //-----------------------------------------------------------------------------------------------------------------------
 material mp_spell_flare_02
@@ -197,6 +379,32 @@ material mp_spell_flare_03
             }
         }
     }
+	
+	technique {
+		lighting off
+		
+		scheme depthScheme
+		pass {
+			vertex_program_ref depthMapVertex {
+			}
+			
+			fragment_program_ref depthMapFragment {
+			}
+		}
+	}
+	
+	technique {
+		lighting off
+	
+		scheme blackScheme
+		pass {
+			vertex_program_ref blackVertex {
+			}
+			
+			fragment_program_ref blackFragment {
+			}
+		}
+	}
 }
 //-----------------------------------------------------------------------------------------------------------------------
 material mp_spell_flare_06
@@ -215,6 +423,32 @@ material mp_spell_flare_06
             }
         }
     }
+	
+	technique {
+		lighting off
+		
+		scheme depthScheme
+		pass {
+			vertex_program_ref depthMapVertex {
+			}
+			
+			fragment_program_ref depthMapFragment {
+			}
+		}
+	}
+	
+	technique {
+		lighting off
+	
+		scheme blackScheme
+		pass {
+			vertex_program_ref blackVertex {
+			}
+			
+			fragment_program_ref blackFragment {
+			}
+		}
+	}
 }
 //-----------------------------------------------------------------------------------------------------------------------
 material mp_spell_woosh_01
@@ -233,6 +467,32 @@ material mp_spell_woosh_01
             }
         }
     }
+	
+	technique {
+		lighting off
+		
+		scheme depthScheme
+		pass {
+			vertex_program_ref depthMapVertex {
+			}
+			
+			fragment_program_ref depthMapFragment {
+			}
+		}
+	}
+	
+	technique {
+		lighting off
+	
+		scheme blackScheme
+		pass {
+			vertex_program_ref blackVertex {
+			}
+			
+			fragment_program_ref blackFragment {
+			}
+		}
+	}
 }
 //-----------------------------------------------------------------------------------------------------------------------
 material mp_spell_woosh_02
@@ -251,6 +511,32 @@ material mp_spell_woosh_02
             }
         }
     }
+	
+	technique {
+		lighting off
+		
+		scheme depthScheme
+		pass {
+			vertex_program_ref depthMapVertex {
+			}
+			
+			fragment_program_ref depthMapFragment {
+			}
+		}
+	}
+	
+	technique {
+		lighting off
+	
+		scheme blackScheme
+		pass {
+			vertex_program_ref blackVertex {
+			}
+			
+			fragment_program_ref blackFragment {
+			}
+		}
+	}
 }
 //-----------------------------------------------------------------------------------------------------------------------
 material mp_spell_outer
@@ -269,6 +555,32 @@ material mp_spell_outer
             }
         }
     }
+	
+	technique {
+		lighting off
+		
+		scheme depthScheme
+		pass {
+			vertex_program_ref depthMapVertex {
+			}
+			
+			fragment_program_ref depthMapFragment {
+			}
+		}
+	}
+	
+	technique {
+		lighting off
+	
+		scheme blackScheme
+		pass {
+			vertex_program_ref blackVertex {
+			}
+			
+			fragment_program_ref blackFragment {
+			}
+		}
+	}
 }
 //-----------------------------------------------------------------------------------------------------------------------
 material mp_spell_inner
@@ -287,6 +599,32 @@ material mp_spell_inner
             }
         }
     }
+	
+	technique {
+		lighting off
+		
+		scheme depthScheme
+		pass {
+			vertex_program_ref depthMapVertex {
+			}
+			
+			fragment_program_ref depthMapFragment {
+			}
+		}
+	}
+	
+	technique {
+		lighting off
+	
+		scheme blackScheme
+		pass {
+			vertex_program_ref blackVertex {
+			}
+			
+			fragment_program_ref blackFragment {
+			}
+		}
+	}
 }
 //-----------------------------------------------------------------------------------------------------------------------
 material mp_spell_ring
@@ -305,6 +643,32 @@ material mp_spell_ring
             }
         }
     }
+	
+	technique {
+		lighting off
+		
+		scheme depthScheme
+		pass {
+			vertex_program_ref depthMapVertex {
+			}
+			
+			fragment_program_ref depthMapFragment {
+			}
+		}
+	}
+	
+	technique {
+		lighting off
+	
+		scheme blackScheme
+		pass {
+			vertex_program_ref blackVertex {
+			}
+			
+			fragment_program_ref blackFragment {
+			}
+		}
+	}
 }
 //-----------------------------------------------------------------------------------------------------------------------
 material mp_spell_sweep
@@ -323,6 +687,32 @@ material mp_spell_sweep
             }
         }
     }
+	
+	technique {
+		lighting off
+		
+		scheme depthScheme
+		pass {
+			vertex_program_ref depthMapVertex {
+			}
+			
+			fragment_program_ref depthMapFragment {
+			}
+		}
+	}
+	
+	technique {
+		lighting off
+	
+		scheme blackScheme
+		pass {
+			vertex_program_ref blackVertex {
+			}
+			
+			fragment_program_ref blackFragment {
+			}
+		}
+	}
 }
 //-----------------------------------------------------------------------------------------------------------------------
 fragment_program mp_fp_spell_sphere hlsl
@@ -353,4 +743,30 @@ material mp_spell_sphere
             }
         }
     }
+	
+	technique {
+		lighting off
+		
+		scheme depthScheme
+		pass {
+			vertex_program_ref depthMapVertex {
+			}
+			
+			fragment_program_ref depthMapFragment {
+			}
+		}
+	}
+	
+	technique {
+		lighting off
+	
+		scheme blackScheme
+		pass {
+			vertex_program_ref blackVertex {
+			}
+			
+			fragment_program_ref blackFragment {
+			}
+		}
+	}
 }

@@ -253,7 +253,7 @@ namespace Logic {
 		//Devolvemos lo primero tocado que no seamos nosotros mismos
 		CEntity* touched=NULL;
 		for(int i=0;i<hits.size();++i) {
-			if (hits[i].entity->getType() == "World")
+			if (hits[i].entity->getType() == "PhysicWorld")
 			{
 				//Mandar el mensaje de los decal
 				Vector3 pos = hits[i].impact;
@@ -404,7 +404,7 @@ namespace Logic {
 		CEntity* touched = NULL;
 		for(auto it = hits.begin(); it < hits.end(); ++it){
 			std::string typeEntity = it->entity->getType();
-			if( typeEntity == "World" ) {
+			if( typeEntity == "PhysicWorld" ) {
 				//Mandar el mensaje de los decal
 				Vector3 pos = it->impact;
 				drawDecal(it->entity, it->impact, (int)WeaponType::eMINIGUN);

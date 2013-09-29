@@ -88,6 +88,16 @@ Map = {
 		position = {229.656, 145.785, -371.767},
 	},
 	
+	Sniper = {
+		type = "SniperItem",
+		position = {-259.377, 205.968, 43.6596},
+	},
+	
+	IronHellGoat = {
+		type = "IronHellGoatItem",
+		position = {279.695, 67.8358, -318.32},
+	},
+	
 	VortexSinisterSound = {
 		type = "AmbientSound",
 		position = {-261.364, 120.75, -104.925},

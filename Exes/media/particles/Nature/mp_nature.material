@@ -23,6 +23,32 @@ material mp_nature_sakura
             }
         }
     }
+	
+	technique {
+		lighting off
+		
+		scheme depthScheme
+		pass {
+			vertex_program_ref depthMapVertex {
+			}
+			
+			fragment_program_ref depthMapFragment {
+			}
+		}
+	}
+	
+	technique {
+		lighting off
+	
+		scheme blackScheme
+		pass {
+			vertex_program_ref blackVertex {
+			}
+			
+			fragment_program_ref blackFragment {
+			}
+		}
+	}
 }
 //-----------------------------------------------------------------------------------------------------------------------
 material mp_nature_snow
@@ -41,6 +67,32 @@ material mp_nature_snow
             }
         }
     }
+	
+	technique {
+		lighting off
+		
+		scheme depthScheme
+		pass {
+			vertex_program_ref depthMapVertex {
+			}
+			
+			fragment_program_ref depthMapFragment {
+			}
+		}
+	}
+	
+	technique {
+		lighting off
+	
+		scheme blackScheme
+		pass {
+			vertex_program_ref blackVertex {
+			}
+			
+			fragment_program_ref blackFragment {
+			}
+		}
+	}
 }
 //-----------------------------------------------------------------------------------------------------------------------
 material mp_nature_rain
@@ -59,6 +111,32 @@ material mp_nature_rain
             }
         }
     }
+	
+	technique {
+		lighting off
+		
+		scheme depthScheme
+		pass {
+			vertex_program_ref depthMapVertex {
+			}
+			
+			fragment_program_ref depthMapFragment {
+			}
+		}
+	}
+	
+	technique {
+		lighting off
+	
+		scheme blackScheme
+		pass {
+			vertex_program_ref blackVertex {
+			}
+			
+			fragment_program_ref blackFragment {
+			}
+		}
+	}
 }
 //-----------------------------------------------------------------------------------------------------------------------
 material mp_nature_water_01
@@ -77,6 +155,32 @@ material mp_nature_water_01
             }
         }
     }
+	
+	technique {
+		lighting off
+		
+		scheme depthScheme
+		pass {
+			vertex_program_ref depthMapVertex {
+			}
+			
+			fragment_program_ref depthMapFragment {
+			}
+		}
+	}
+	
+	technique {
+		lighting off
+	
+		scheme blackScheme
+		pass {
+			vertex_program_ref blackVertex {
+			}
+			
+			fragment_program_ref blackFragment {
+			}
+		}
+	}
 }
 //-----------------------------------------------------------------------------------------------------------------------
 material mp_nature_water_02
@@ -95,6 +199,32 @@ material mp_nature_water_02
             }
         }
     }
+	
+	technique {
+		lighting off
+		
+		scheme depthScheme
+		pass {
+			vertex_program_ref depthMapVertex {
+			}
+			
+			fragment_program_ref depthMapFragment {
+			}
+		}
+	}
+	
+	technique {
+		lighting off
+	
+		scheme blackScheme
+		pass {
+			vertex_program_ref blackVertex {
+			}
+			
+			fragment_program_ref blackFragment {
+			}
+		}
+	}
 }
 //-----------------------------------------------------------------------------------------------------------------------
 material mp_nature_water_03
@@ -113,4 +243,30 @@ material mp_nature_water_03
             }
         }
     }
+	
+	technique {
+		lighting off
+		
+		scheme depthScheme
+		pass {
+			vertex_program_ref depthMapVertex {
+			}
+			
+			fragment_program_ref depthMapFragment {
+			}
+		}
+	}
+	
+	technique {
+		lighting off
+	
+		scheme blackScheme
+		pass {
+			vertex_program_ref blackVertex {
+			}
+			
+			fragment_program_ref blackFragment {
+			}
+		}
+	}
 }
