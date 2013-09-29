@@ -49,7 +49,7 @@ namespace Logic
 
 	//---------------------------------------------------------
 	
-	CWeaponsManager::CWeaponsManager() : _currentWeapon(0) {
+	CWeaponsManager::CWeaponsManager() : _currentWeapon(0), _cooldownTimer(0), _dmgAmpTimer(0) {
 		
 	}
 
@@ -167,18 +167,42 @@ namespace Logic
 				break;
 			}
 			case Message::REDUCED_COOLDOWN: {
-				std::shared_ptr<CMessageReducedCooldown> reducedCdMsg = std::static_pointer_cast<CMessageReducedCooldown>(message);
-				reduceCooldowns( reducedCdMsg->getPercentCooldown() );
+				std::shared_ptr<CMessageReducedCooldown> cooldownMsg = std::static_pointer_cast<CMessageReducedCooldown>(message);
+				reduceCooldowns( cooldownMsg->getPercentCooldown() );
+				_cooldownTimer = cooldownMsg->getDuration();
 				break;
 			}
 			case Message::DAMAGE_AMPLIFIER: {
 				std::shared_ptr<CMessageDamageAmplifier> damageAmplifierMsg = std::static_pointer_cast<CMessageDamageAmplifier>(message);
 				amplifyDamage( damageAmplifierMsg->getPercentDamage() );
+				_dmgAmpTimer = damageAmplifierMsg->getDuration();
 				break;
 			}
 		}
 
 	} // process
+
+	//---------------------------------------------------------
+
+	void CWeaponsManager::onTick(unsigned int msecs) {
+		if(_cooldownTimer != 0) {
+			_cooldownTimer -= msecs;
+
+			if(_cooldownTimer <= 0) {
+				_cooldownTimer = 0;
+				reduceCooldowns(0);
+			}
+		}
+
+		if(_dmgAmpTimer != 0) {
+			_dmgAmpTimer -= msecs;
+
+			if(_dmgAmpTimer <= 0) {
+				_dmgAmpTimer = 0;
+				amplifyDamage(0);
+			}
+		}
+	}
 	
 	//---------------------------------------------------------
 

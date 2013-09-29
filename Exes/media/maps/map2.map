@@ -99,13 +99,13 @@ Map = {
 		force = {0.5,3.5,0.0},
 	},
 	
-	ActiveSpell = {
-		type = "Powerup1",
+	DamageAmplifier = {
+		type = "DamageAmplifier",
 		position = {-96.3475, 3.420609, 22.3819},
 	},
 	
-	PasiveSpell = {
-		type = "Powerup2",
+	CooldownReducer = {
+		type = "CooldownReducer",
 		position = {67.2079, 3.480556, 25.8414},
 	},
 	

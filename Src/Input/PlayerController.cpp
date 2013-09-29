@@ -470,7 +470,7 @@ namespace Input {
 			case Input::Key::T:
 			{
 				std::cout << "Position = " << _controlledAvatar->getPosition() << std::endl;
-				std::cout << "Direction = " << (-1.0f * _controlledAvatar->getOrientation().zAxis()) << std::endl;
+				//std::cout << "Direction = " << (-1.0f * _controlledAvatar->getOrientation().zAxis()) << std::endl;
 				/*std::shared_ptr<Logic::CMessageCameraOffset> m3 = std::make_shared<Logic::CMessageCameraOffset>();
 				m3->setOffsetTimer(100.0f);//Timer								 
 				Logic::CEntity * camera = Logic::CServer::getSingletonPtr()->getMap()->getEntityByType("Camera");

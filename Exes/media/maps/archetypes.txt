@@ -91,12 +91,12 @@ Map = {
 		physic_groupList = "1",
 	},
 	
-	Powerup1 = {
-		type = "Powerup1",
+	DamageAmplifier = {
+		type = "DamageAmplifier",
 		msgList= "6,14,15,16,17,29,41",
 		
-		id = "spell",
-		reward = 0,
+		id = "damageAmplifier",
+		reward = 200,
 		respawnTime = 120,
 		
 		particle_scriptName = "damageAmplifier",
@@ -118,12 +118,12 @@ Map = {
 		physic_groupList = "1",
 	},
 	
-	Powerup2 = {
-		type = "Powerup2",
+	CooldownReducer = {
+		type = "CooldownReducer",
 		msgList= "6,14,15,16,17,29,41",
 		
-		id = "spell",
-		reward = 1,
+		id = "cooldownReducer",
+		reward = 200,
 		respawnTime = 120,
 		
 		particle_scriptName = "cooldownReducer",
@@ -521,7 +521,7 @@ Map = {
 		position = {0.0, 50.0, 0.0},
 		msgList= "6,9,11,13,14,15,17,20,21,22,23,24,25,26,32,38,41,43,48,49,50,55,56,57,59,61,66,68",
 		
-		model = "ragdolls/agent47.mesh",
+		model = "archangel.mesh",
 		ragdoll_file = "media/models/ragdolls/hitman.RepX",
 		ragdoll_group = 19,
 		ragdoll_groupList = "-1",

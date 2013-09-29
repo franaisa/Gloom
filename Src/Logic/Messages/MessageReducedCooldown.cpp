@@ -6,7 +6,7 @@ namespace Logic {
 
 	IMP_FACTORYMESSAGE(CMessageReducedCooldown);
 
-	CMessageReducedCooldown::CMessageReducedCooldown() : CMessage(Message::REDUCED_COOLDOWN) {
+	CMessageReducedCooldown::CMessageReducedCooldown() : CMessage(Message::REDUCED_COOLDOWN), _duration(0) {
 		// Nada que hacer
 	}//
 	//----------------------------------------------------------

@@ -1,5 +1,22 @@
 Map = {
 
+	Player = {
+		type = "LocalHound",
+		isPlayer = true,
+		position = {0, 5, 0},
+		physic_group = 1,
+		physic_groupList = "-1",
+	},
+	
+	Camera = {
+		type = "Camera",
+		height = 8,
+	},
+	
+	PhysicWorld = {
+		type = "PhysicWorld",
+	},
+
 	Vortex = {
 		type = "Vortice",
 		position = {-255.078, -400.725, -105.462},
@@ -51,21 +68,132 @@ Map = {
 		physic_dimensions = { 100, 1, 120 },
 	},
 	
-	Player = {
-		type = "LocalHound",
-		isPlayer = true,
-		position = {0, 5, 0},
-		physic_group = 1,
-		physic_groupList = "-1",
+	DamageAmplifier = {
+		type = "DamageAmplifier",
+		position = {-258.174, 159.0, -198.872},
 	},
 	
-	PhysicWorld = {
-		type = "PhysicWorld",
+	CooldownReducer = {
+		type = "CooldownReducer",
+		position = {50.938, 83.0, 118.126},
 	},
 	
-	Camera = {
-		type = "Camera",
-		height = 8,
+	SuperShield = {
+		type = "SuperShield",
+		position = {83.4928, 205.062, -133.783},
+	},
+	
+	Shield = {
+		type = "Shield",
+		position = {229.656, 145.785, -371.767},
+	},
+	
+	Sniper = {
+		type = "SniperItem",
+		position = {-259.377, 205.968, 43.6596},
+	},
+	
+	IronHellGoat = {
+		type = "IronHellGoatItem",
+		position = {279.695, 67.8358, -318.32},
+	},
+	
+	VortexSinisterSound = {
+		type = "AmbientSound",
+		position = {-261.364, 120.75, -104.925},
+		staticAudio_name = "ambient/loop_deep.ogg",
+		staticAudio_stream = true,
+	},
+	
+	LavaAltarSound = {
+		type = "AmbientSound",
+		position = {87.0575, 165.676, -136.193},
+		staticAudio_name = "ambient/lava_quiet.wav",
+		staticAudio_stream = true,
+	},
+	
+	AltarSound = {
+		type = "AmbientSound",
+		position = {198.24, 160.864, -130.803},
+		staticAudio_name = "ambient/loop_deep.ogg",
+		staticAudio_stream = true,
+	},
+	
+	LavaPipesSound = {
+		type = "AmbientSound",
+		position = {110.972, 41.9249, 119.736},
+		staticAudio_name = "ambient/lava_quiet.wav",
+		staticAudio_stream = true,
+	},
+	
+	LavaPipesSound2 = {
+		type = "AmbientSound",
+		position = {-6.87131, 41.9249, 119.509},
+		staticAudio_name = "ambient/lava_quiet.wav",
+		staticAudio_stream = true,
+	},
+	
+	PipesSound = {
+		type = "AmbientSound",
+		position = {-33.102, 178.598, 252.685},
+		staticAudio_name = "ambient/bassy_fan.wav",
+		staticAudio_stream = true,
+	},
+	
+	MainRoomSound = {
+		type = "AmbientSound",
+		position = {-259.643, 189.844, 183.581},
+		staticAudio_name = "ambient/bassy_fan.wav",
+		staticAudio_stream = true,
+	},
+	
+	FlakSound = {
+		type = "AmbientSound",
+		position = {-45.9532, 188.384, -84.8533},
+		staticAudio_name = "ambient/deep_atmosphere.wav",
+		staticAudio_stream = true,
+	},
+	
+	CaveSound1 = {
+		type = "AmbientSound",
+		position = {-24.587, 155.621, -380.187},
+		staticAudio_name = "ambient/deep_atmosphere.wav",
+		staticAudio_stream = true,
+	},
+	
+	CaveSound2 = {
+		type = "AmbientSound",
+		position = {221.279, 146.421, -373.65},
+		staticAudio_name = "ambient/deep_atmosphere.wav",
+		staticAudio_stream = true,
+	},
+	
+	CaveSound3 = {
+		type = "AmbientSound",
+		position = {224.95, 36.6579, -361.412},
+		staticAudio_name = "ambient/loop_deep.ogg",
+		staticAudio_stream = true,
+	},
+	
+	IronSound = {
+		type = "AmbientSound",
+		position = {455.307, 146.747, -120.942},
+		staticAudio_name = "ambient/sinister_portal.wav",
+		staticAudio_stream = true,
+	},
+	
+	PilarsSound = {
+		type = "AmbientSound",
+		position = {235.031, 106.95, 113.566},
+		staticAudio_name = "ambient/loop_deep.ogg",
+		staticAudio_stream = true,
+	},
+	
+	PilarsSound2 = {
+		type = "AmbientSound",
+		position = {331.829, 104.838, -72.6641},
+		staticAudio_name = "ambient/loop_deep.ogg",
+		staticAudio_stream = true,
 	},
 
 	Shotgun = {
