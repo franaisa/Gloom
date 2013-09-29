@@ -68,6 +68,26 @@ Map = {
 		physic_dimensions = { 100, 1, 120 },
 	},
 	
+	DamageAmplifier = {
+		type = "DamageAmplifier",
+		position = {-258.174, 159.0, -198.872},
+	},
+	
+	CooldownReducer = {
+		type = "CooldownReducer",
+		position = {50.938, 83.0, 118.126},
+	},
+	
+	SuperShield = {
+		type = "SuperShield",
+		position = {83.4928, 205.062, -133.783},
+	},
+	
+	Shield = {
+		type = "Shield",
+		position = {229.656, 145.785, -371.767},
+	},
+	
 	VortexSinisterSound = {
 		type = "AmbientSound",
 		position = {-261.364, 120.75, -104.925},
