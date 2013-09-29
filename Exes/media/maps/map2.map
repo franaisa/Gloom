@@ -63,8 +63,8 @@ Map = {
 		staticAudio_stream = true,
 	},
 	
-	World = {
-		type = "World",
+	PhysicAndGraphicWorld = {
+		type = "PhysicAndGraphicWorld",
 		static = true,
 		model = "mapaAlberto.mesh",
 		physic_entity = "fromFile",

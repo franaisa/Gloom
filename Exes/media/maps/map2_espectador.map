@@ -1,7 +1,7 @@
 Map = {
 
-	World = {
-		type = "World",
+	PhysicAndGraphicWorld = {
+		type = "PhysicAndGraphicWorld",
 		model = "mapaAlberto.mesh",
 		physic_file = "media/models/mapaAlberto/mapaAlberto.RepX",
 	},
