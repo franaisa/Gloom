@@ -11,6 +11,7 @@ namespace Logic {
 		bool loop;
 		bool stop;
 		bool exclude;
+		int rewind;
 	};
 
 	struct AudioInfo {

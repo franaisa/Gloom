@@ -37,7 +37,6 @@ namespace Graphics
 	{
 		if(!_entity->getAllAnimationStates()->hasAnimationState(anim))
 			return false;
-
 		//comprobamos si la animación ya estaba ejecutandose
 		auto runningAnim = _runningAnimations.find(anim);
 
@@ -63,7 +62,7 @@ namespace Graphics
 				}
 				
 			}
-			runningAnim->second.direction = 1;
+			runningAnim->second.direction = rewind;
 			return true;
 		}
 
@@ -79,8 +78,7 @@ namespace Graphics
 		animation.animation = animstate;
 		animation.state = FADE_IN;
 		animation.fadeTime = fadeTime;
-		animation.direction = 1;
-
+		animation.direction = rewind;
 		//metemos la animacion en la lista de animaciones ejecutandose
 		TAnim newAnim (anim,animation);
 		_runningAnimations.insert(newAnim);
@@ -217,7 +215,7 @@ namespace Graphics
 			_scene->getSceneMgr()->destroyEntity(_weapon);
 		_weapon = _scene->getSceneMgr()->createEntity(arma.getMesh());
 		
-		//_entity->attachObjectToBone("Bip001 R Hand",_weapon);
+		_entity->attachObjectToBone("Bip001 R Hand",_weapon);
 
 	}
 	//--------------------------------------------------------

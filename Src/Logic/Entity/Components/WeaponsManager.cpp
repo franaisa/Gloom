@@ -35,6 +35,7 @@ Contiene la implementación del componente que gestiona las armas y que administr
 #include "Logic/Messages/MessageChangeWeaponGraphics.h"
 #include "Logic/Messages/MessageAddAmmo.h"
 #include "Logic/Messages/MessageAddWeapon.h"
+#include "Logic/Messages/MessageChangeMaterial.h"
 
 #include "Logic/Messages/MessageHudWeapon.h"
 #include "Logic/Messages/MessageHudAmmo.h"
@@ -42,6 +43,7 @@ Contiene la implementación del componente que gestiona las armas y que administr
 #include "Logic/Messages/MessageDamageAmplifier.h"
 #include "Logic/Messages/MessageReducedCooldown.h"
 
+#include "Logic/GameNetMsgManager.h"
 
 namespace Logic 
 {
@@ -191,6 +193,9 @@ namespace Logic
 			if(_cooldownTimer <= 0) {
 				_cooldownTimer = 0;
 				reduceCooldowns(0);
+				std::shared_ptr<CMessageChangeMaterial> matMsg = std::make_shared<CMessageChangeMaterial>();
+				matMsg->setMaterialName("original");
+				_entity->emitMessage(matMsg);
 			}
 		}
 
@@ -200,6 +205,9 @@ namespace Logic
 			if(_dmgAmpTimer <= 0) {
 				_dmgAmpTimer = 0;
 				amplifyDamage(0);
+				std::shared_ptr<CMessageChangeMaterial> matMsg = std::make_shared<CMessageChangeMaterial>();
+				matMsg->setMaterialName("original");
+				_entity->emitMessage(matMsg);
 			}
 		}
 	}
@@ -228,6 +236,12 @@ namespace Logic
 			// Actualizamo el indice de arma
 			_currentWeapon = newWeapon;
 
+			// Mandamos un mensaje para actualizar el grafico
+			std::shared_ptr<CMessageChangeWeaponGraphics> chgWpnGraphicsMsg = std::make_shared<CMessageChangeWeaponGraphics>();
+			chgWpnGraphicsMsg->setWeapon(_currentWeapon);
+			_entity->emitMessage(chgWpnGraphicsMsg);
+			Logic::CWorldState::getSingletonPtr()->addChange(_entity,chgWpnGraphicsMsg);
+
 		}
 		
 	}
@@ -239,6 +253,10 @@ namespace Logic
 		for(unsigned int i = 0; i < _weaponry.size(); ++i) {
 			_weaponry[i].second->amplifyDamage(percentage);
 		}
+
+		std::shared_ptr<CMessageChangeMaterial> matMsg = std::make_shared<CMessageChangeMaterial>();
+		matMsg->setMaterialName("ArchangelBerserk");
+		_entity->emitMessage(matMsg);
 	}
 
 	//---------------------------------------------------------
@@ -248,6 +266,9 @@ namespace Logic
 		for(unsigned int i = 0; i < _weaponry.size(); ++i) {
 			_weaponry[i].second->reduceCooldown(percentage);
 		}
+		std::shared_ptr<CMessageChangeMaterial> matMsg = std::make_shared<CMessageChangeMaterial>();
+		matMsg->setMaterialName("ArchangelAzul");
+		_entity->emitMessage(matMsg);
 	}
 
 	//---------------------------------------------------------
