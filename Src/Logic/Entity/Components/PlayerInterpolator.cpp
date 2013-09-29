@@ -185,6 +185,7 @@ namespace Logic {
 						setAnimMsg->setAnimation(info.animName);
 						setAnimMsg->setLoop(info.loop);
 						setAnimMsg->setExclude(info.exclude);
+						setAnimMsg->setRewind(info.rewind);
 						_entity->emitMessage(setAnimMsg);
 					}
 				}

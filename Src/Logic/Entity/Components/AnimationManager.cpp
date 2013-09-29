@@ -76,14 +76,15 @@ namespace Logic{
 			anim->setExclude(false);
 			_entity->emitMessage(anim);
 		}*/
-		else if ( !flying && _flying ) {
+		/*else if ( !flying && _flying ) {
 			_flying = false;
 			std::shared_ptr<CMessageSetAnimation> anim = std::make_shared<CMessageSetAnimation>();
 			anim->setLoop(true);
 			anim->setAnimation(getMotionAnimation(_lastDisplacementAnimation));
+			anim->setRewind(1);
 			anim->setExclude(false);
 			_entity->emitMessage(anim);
-		}
+		}*/
 	}
 
 	bool CAnimationManager::accept(const std::shared_ptr<CMessage>& message) {
@@ -120,6 +121,7 @@ namespace Logic{
 					anim->setLoop(false);
 					anim->setAnimation("jump");
 					anim->setExclude(true);
+					anim->setRewind(1);
 					_entity->emitMessage(anim);
 				}
 				break;

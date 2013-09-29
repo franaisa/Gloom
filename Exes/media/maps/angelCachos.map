@@ -93,9 +93,399 @@ Map = {
 		position = {-259.377, 205.968, 43.6596},
 	},
 	
+	Sniper2 = {
+		type = "SniperItem",
+		position = {-53.9443, 185.509, -438.562},
+	},
+	
 	IronHellGoat = {
 		type = "IronHellGoatItem",
 		position = {279.695, 67.8358, -318.32},
+	},
+	
+	Shotgun = {
+		type = "ShotgunItem",
+		position = {-126.387, 199.253, 48.1789},
+	},
+	
+	Shotgun2 = {
+		type = "ShotgunItem",
+		position = {173.671, 157.193, -133.298},
+	},
+	
+	Shotgun3 = {
+		type = "ShotgunItem",
+		position = {305.081, 74.3783, -474.763},
+	},
+	
+	Shotgun4 = {
+		type = "ShotgunItem",
+		position = {-64.0169, 160.291, -104.642},
+	},
+	
+	Minigun = {
+		type = "MinigunItem",
+		position = {303.117, 141.293, -470.963},
+	},
+	
+	Minigun2 = {
+		type = "MinigunItem",
+		position = {451.477, 144.571, -123.168},
+	},
+	
+	Orb1 = {
+		type = "Orb",
+		position = {232.641, 157.193, -162.383},
+	},
+	
+	Orb2 = {
+		type = "Orb",
+		position = {234.569, 157.193, -98.9215},
+	},
+	
+	Orb3 = {
+		type = "Orb",
+		position = {-303.623, 227.505, -232.086},
+	},
+	
+	Orb4 = {
+		type = "Orb",
+		position = {-309.894, 202.811, 39.7556},
+	},
+	
+	Orb5 = {
+		type = "Orb",
+		position = {-125.867, 199.259, -154.271},
+	},
+	
+	Orb6 = {
+		type = "Orb",
+		position = {355.391, 94.9557, 146.84},
+	},
+	
+	Orb7 = {
+		type = "Orb",
+		position = {357.189, 94.9553, -97.8403},
+	},
+	
+	Orb8 = {
+		type = "Orb",
+		position = {147.981, 115.972, -467.868},
+	},
+	
+	SmallOrb1 = {
+		type = "SmallOrb",
+		position = {-258.894, 183.133, -5.81107},
+	},
+	
+	SmallOrb2 = {
+		type = "SmallOrb",
+		position = {-258.894, 180.081, -28.2538},
+	},
+	
+	SmallOrb3 = {
+		type = "SmallOrb",
+		position = {-258.894, 172.777, -50.7638},
+	},
+	
+	SmallOrb4 = {
+		type = "SmallOrb",
+		position = {-258.894, 161.402, -79.4287},
+	},
+	
+	SmallOrb5 = {
+		type = "SmallOrb",
+		position = {-258.894, 153.522, -101.625},
+	},
+	
+	SmallOrb6 = {
+		type = "SmallOrb",
+		position = {-258.894, 148.207, -126.81},
+	},
+	
+	SmallOrb7 = {
+		type = "SmallOrb",
+		position = {-258.894, 149.4, -149.839},
+	},
+	
+	SmallOrb8 = {
+		type = "SmallOrb",
+		position = {-222.968, 199.26, 194.719},
+	},
+	
+	SmallOrb9 = {
+		type = "SmallOrb",
+		position = {-201.635, 199.26, 194.719},
+	},
+	
+	SmallOrb10 = {
+		type = "SmallOrb",
+		position = {-179.783, 199.26, 194.719},
+	},
+	
+	SmallOrb11 = {
+		type = "SmallOrb",
+		position = {-292.605, 199.26, 194.719},
+	},
+	
+	SmallOrb12 = {
+		type = "SmallOrb",
+		position = {-311.353, 199.26, 194.719},
+	},
+	
+	SmallOrb13 = {
+		type = "SmallOrb",
+		position = {-333.353, 199.26, 194.719},
+	},
+	
+	SmallOrb14 = {
+		type = "SmallOrb",
+		position = {-347.759, 199.26, -31.1},
+	},
+	
+	SmallOrb15 = {
+		type = "SmallOrb",
+		position = {-347.759, 199.26, -8.1},
+	},
+	
+	SmallOrb16 = {
+		type = "SmallOrb",
+		position = {-347.759, 199.26, 15.1},
+	},
+	
+	SmallOrb17 = {
+		type = "SmallOrb",
+		position = {-347.759, 199.26, 38.1},
+	},
+	
+	SmallOrb18 = {
+		type = "SmallOrb",
+		position = {260.34, 157.193, -130.951},
+	},
+	
+	SmallOrb19 = {
+		type = "SmallOrb",
+		position = {283.34, 157.193, -130.951},
+	},
+	
+	SmallOrb20 = {
+		type = "SmallOrb",
+		position = {306.34, 157.193, -130.951},
+	},
+	
+	SmallOrb21 = {
+		type = "SmallOrb",
+		position = {329.34, 157.193, -130.951},
+	},
+	
+	SmallOrb22 = {
+		type = "SmallOrb",
+		position = {280.561, 67.8177, -232.99},
+	},
+	
+	SmallOrb23 = {
+		type = "SmallOrb",
+		position = {280.561, 67.8177, -249.13},
+	},
+	
+	SmallOrb24 = {
+		type = "SmallOrb",
+		position = {280.561, 67.8177, -265.27},
+	},
+	
+	SmallOrb25 = {
+		type = "SmallOrb",
+		position = {280.561, 67.8177, -281.41},
+	},
+	
+	SmallOrb26 = {
+		type = "SmallOrb",
+		position = {280.561, 67.8177, -297.55},
+	},
+	
+	SmallOrb27 = {
+		type = "SmallOrb",
+		position = {-90.8313, 199.259, -83.5057},
+	},
+	
+	SmallOrb28 = {
+		type = "SmallOrb",
+		position = {-90.8313, 199.259, -98.4987},
+	},
+	
+	SmallOrb29 = {
+		type = "SmallOrb",
+		position = {-90.8313, 199.259, -113.4917},
+	},
+	
+	SmallOrb31 = {
+		type = "SmallOrb",
+		position = {19.4491, 199.259, -157.593},
+	},
+	
+	SmallOrb32 = {
+		type = "SmallOrb",
+		position = {19.4491, 199.259, -17.412},
+	},
+	
+	SmallOrb33 = {
+		type = "SmallOrb",
+		position = {25.983, 199.259, -210.508},
+	},
+	
+	SmallOrb34 = {
+		type = "SmallOrb",
+		position = {18.46, 199.259, -180.227},
+	},
+	
+	SmallOrb35 = {
+		type = "SmallOrb",
+		position = {39.7692, 195.201, -229.825},
+	},
+	
+	SmallOrb36 = {
+		type = "SmallOrb",
+		position = {57.0384, 189.587, -242.609},
+	},
+	
+	SmallOrb37 = {
+		type = "SmallOrb",
+		position = {76.5782, 184.295, -247.445},
+	},
+	
+	SmallOrb38 = {
+		type = "SmallOrb",
+		position = {99.299, 178.467, -247.027},
+	},
+	
+	SmallOrb39 = {
+		type = "SmallOrb",
+		position = {119.707, 172.707, -236.87},
+	},
+	
+	SmallOrb40 = {
+		type = "SmallOrb",
+		position = {133.198, 167.423, -221.629},
+	},
+	
+	SmallOrb41 = {
+		type = "SmallOrb",
+		position = {144.077, 161.371, -200.51},
+	},
+	
+	SmallOrb42 = {
+		type = "SmallOrb",
+		position = {18.7801, 199.259, -111.259},
+	},
+
+	SmallOrb43 = {
+		type = "SmallOrb",
+		position = {19.7114, 199.259, -87.9145},
+	},
+	
+	SmallOrb44 = {
+		type = "SmallOrb",
+		position = {22.9519, 199.26, -62.7876},
+	},
+	
+	SmallOrb45 = {
+		type = "SmallOrb",
+		position = {35.9773, 195.93, -34.9933},
+	},
+	
+	SmallOrb46 = {
+		type = "SmallOrb",
+		position = {48.3948, 192.081, -25.4368},
+	},
+	
+	SmallOrb47 = {
+		type = "SmallOrb",
+		position = {65.2231, 187.193, -17.3297},
+	},
+	
+	SmallOrb48 = {
+		type = "SmallOrb",
+		position = {80.9329, 183.102, -14.4097},
+	},
+	
+	SmallOrb49 = {
+		type = "SmallOrb",
+		position = {100.265, 178.29, -16.0666},
+	},
+	
+	SmallOrb50 = {
+		type = "SmallOrb",
+		position = {118.74, 173.041, -25.115},
+	},
+	
+	SmallOrb51 = {
+		type = "SmallOrb",
+		position = {134.532, 167.404, -40.8666},
+	},
+	
+	SmallOrb52 = {
+		type = "SmallOrb",
+		position = {140.016, 163.692, -54.3862},
+	},
+	
+	SmallOrb53 = {
+		type = "SmallOrb",
+		position = {143.373, 160.061, -67.3297},
+	},
+	
+	SmallOrb54 = {
+		type = "SmallOrb",
+		position = {-165.162, 199.26, -21.7228},
+	},
+	
+	SmallOrb55 = {
+		type = "SmallOrb",
+		position = {-164.677, 199.259, -39.045},
+	},
+	
+	SmallOrb56 = {
+		type = "SmallOrb",
+		position = {-176.795, 183.864, -359.537},
+	},
+	
+	SmallOrb57 = {
+		type = "SmallOrb",
+		position = {-159.896, 188.618, -348.646},
+	},
+	
+	SmallOrb58 = {
+		type = "SmallOrb",
+		position = {-142.05, 187.973, -342.07},
+	},
+	
+	SmallOrb59 = {
+		type = "SmallOrb",
+		position = {-124.018, 187.528, -336.008},
+	},
+	
+	SmallOrb60 = {
+		type = "SmallOrb",
+		position = {286.569, 72.2785, -446.784},
+	},
+	
+	SmallOrb61 = {
+		type = "SmallOrb",
+		position = {273.523, 78.0207, -433.635},
+	},
+	
+	SmallOrb62 = {
+		type = "SmallOrb",
+		position = {257.094, 85.811, -428.152},
+	},
+	
+	SmallOrb63 = {
+		type = "SmallOrb",
+		position = {239.481, 94.0714, -431.173},
+	},
+	
+	SmallOrb64 = {
+		type = "SmallOrb",
+		position = {225.09, 103.387, -440.622},
 	},
 	
 	VortexSinisterSound = {
@@ -196,10 +586,7 @@ Map = {
 		staticAudio_stream = true,
 	},
 
-	Shotgun = {
-		type = "ShotgunItem",
-		position = {-123.662, 198.259, -153.212},
-	},
+	
 	
 	UniqueSpawnPoint = {
 		type = "SpawnPoint",

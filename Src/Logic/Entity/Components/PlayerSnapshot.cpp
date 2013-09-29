@@ -68,7 +68,7 @@ namespace Logic {
 				info.loop = setAnimMsg->getLoop();
 				info.stop = false;
 				info.exclude = setAnimMsg->getExclude();
-
+				info.rewind = setAnimMsg->getRewind();
 				// informamos al worldState de la ultima animación que está poniendo
 				// la entidad, para que si alguien se conecta directamente le ponga
 				// la animación que le corresponde

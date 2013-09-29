@@ -146,13 +146,13 @@ namespace Logic
 				if(_insertAnimation){
 
 					_animatedGraphicsEntity->stopAllAnimations();
-					_animatedGraphicsEntity->setAnimation( setAnimMsg->getAnimation(), setAnimMsg->getRewind(), setAnimMsg->getLoop());
+					_animatedGraphicsEntity->setAnimation( setAnimMsg->getAnimation(), setAnimMsg->getLoop(), setAnimMsg->getRewind());
 					_insertAnimation = setAnimMsg->getExclude();
-
 				}else if(!_insertAnimation && setAnimMsg->getExclude()){
 					
 					_animatedGraphicsEntity->stopAllAnimations();
 					_animatedGraphicsEntity->setAnimation( setAnimMsg->getAnimation(), setAnimMsg->getRewind() , setAnimMsg->getLoop());
+					
 					
 				}else{
 
@@ -180,13 +180,9 @@ namespace Logic
 	//---------------------------------------------------------
 
 	void CAnimatedGraphics::onTick(unsigned int msecs){
-		//Ñapa para solucionar el modelo del revés del archangel
-		if( getEntity()->getType() =="LocalArchangel" || getEntity()->getType() == "Archangel"){
-			Quaternion rancio(Ogre::Radian(Math::PI),Vector3::UNIT_Y);
-			_graphicsEntity->setTransform(_entity->getPosition(),_entity->getYaw()*rancio);
-		}
-		else
-			_graphicsEntity->setTransform(_entity->getPosition(),_entity->getYaw());
+		//_graphicsEntity->setTransform(_entity->getPosition(),_entity->getYaw());
+		Quaternion rancio(Ogre::Radian(Math::PI),Vector3::UNIT_Y);
+		_graphicsEntity->setTransform(_entity->getPosition(),_entity->getYaw()*rancio);
 	}//---------------------------------------------------------
 	//onTick
 	
@@ -205,7 +201,7 @@ namespace Logic
 	void CAnimatedGraphics::changeWeapon(int newWeapon){
 		if(newWeapon != _currentWeapon)
 			_currentWeapon = newWeapon;
-			//_animatedGraphicsEntity->attachWeapon( *_weapons[_currentWeapon] , _entity->getEntityID() );
+			_animatedGraphicsEntity->attachWeapon( *_weapons[_currentWeapon] , _entity->getEntityID() );
 
 			//comprobamos si el material que tenia el arma anterior no era el original
 			// y si no lo era se lo tenemos que cambiar

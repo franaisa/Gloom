@@ -85,7 +85,11 @@ namespace Logic {
 			booleanMask |= _animationBuffer[i].stop		? (1 << 1) : 0;
 			booleanMask |= _animationBuffer[i].exclude	? (1 << 2) : 0;
 
+
+
 			buffer.write( &booleanMask, sizeof(booleanMask) );
+
+			buffer.serialize (_animationBuffer[i].rewind);
 		}
 		
 		booleanMask = 0;
@@ -138,6 +142,8 @@ namespace Logic {
 			_animationBuffer[i].loop	= booleanMask & (1 << 0);
 			_animationBuffer[i].stop	= booleanMask & (1 << 1);
 			_animationBuffer[i].exclude	= booleanMask & (1 << 2);
+
+			buffer.deserialize(_animationBuffer[i].rewind);
 		}
 
 		buffer.deserialize(audioBufferSize);
