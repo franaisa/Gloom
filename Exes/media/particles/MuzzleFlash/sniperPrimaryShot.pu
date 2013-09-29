@@ -34,6 +34,7 @@ system sniperPrimaryShot
             direction                           1 1 0
             end_texture_coords_range            3
             force_emission                      true
+			colour                              0.04 0.94 0.94 1
         }
         affector                                Colour 
         {
