@@ -43,7 +43,6 @@ namespace Logic {
 					_particleSystem->start();
 				else
 					_particleSystem->stop();
-
 				break;
 			}
 		}

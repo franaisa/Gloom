@@ -207,7 +207,7 @@ namespace Logic {
 		
 		Vector3 _particlePosition;
 		
-		CEntity *_currentPaticle;
+		CEntity *_currentParticle;
 
 	}; // class IWeaponFeedback
 

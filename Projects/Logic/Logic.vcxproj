@@ -216,6 +216,7 @@
     <ClCompile Include="..\..\Src\Logic\Messages\MessageHud.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageKillStreak.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageParticleStart.cpp" />
+    <ClCompile Include="..\..\Src\Logic\Messages\MessageParticleStop.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessageParticleVisibility.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessagePlayerSnapshot.cpp" />
     <ClCompile Include="..\..\Src\Logic\Messages\MessagePrimaryShoot.cpp" />
@@ -445,6 +446,7 @@
     <ClInclude Include="..\..\Src\Logic\Messages\MessageKinematicMove.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageMouse.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageParticleStart.h" />
+    <ClInclude Include="..\..\Src\Logic\Messages\MessageParticleStop.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessageParticleVisibility.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessagePlayerDead.h" />
     <ClInclude Include="..\..\Src\Logic\Messages\MessagePlayerSnapshot.h" />

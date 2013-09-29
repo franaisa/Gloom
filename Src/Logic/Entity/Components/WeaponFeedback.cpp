@@ -29,6 +29,9 @@
 #include "Logic/Messages/MessageCreateParticle.h"
 
 #include "Logic/Messages/MessageParticleStart.h"
+#include "Logic/Messages/MessageParticleStop.h"
+#include "Logic/Messages/MessageActivate.h"
+
 
 #include "BaseSubsystems/Euler.h"
 
@@ -51,7 +54,8 @@ namespace Logic {
 	IWeaponFeedback::IWeaponFeedback(const string& weaponName) : _weaponName(weaponName),
 																 _ableToShoot(true),
 																 _primaryFireIsActive(false),
-																 _secondaryFireIsActive(false) {
+																 _secondaryFireIsActive(false),
+																 _currentParticle(0){
 		// Nada que inicializar
 	}
 
@@ -239,18 +243,26 @@ namespace Logic {
 	//__________________________________________________________________
 
 	void IWeaponFeedback::emitParticle2(bool primaryShoot){
-		_currentPaticle = CEntityFactory::getSingletonPtr()->createEntity(
+		printf("\n a emitir");
+		if(_currentParticle){
+			printf("\n ya emitiendo");
+			std::shared_ptr<CMessageActivate> activateMsg = std::make_shared<CMessageActivate>();
+			activateMsg->setActivated(true);
+			_currentParticle->emitMessage(activateMsg);
+		}
+				
+		_currentParticle = CEntityFactory::getSingletonPtr()->createEntity(
 			CEntityFactory::getSingletonPtr()->getInfo(_weaponName+(primaryShoot?"PrimaryShot":"SecondaryShot")),			
 			Logic::CServer::getSingletonPtr()->getMap());
 
 		Graphics::CEntity* graphicWeapon = _hudWeapon->getCurrentWeapon();
-		CDynamicParticleSystem* particleComp = _currentPaticle->getComponent<CDynamicParticleSystem>("CDynamicParticleSystem");
+		CDynamicParticleSystem * particleComp = _currentParticle->getComponent<CDynamicParticleSystem>("CDynamicParticleSystem");
 		
 		particleComp->setGraphicParent(graphicWeapon);
 		particleComp->setOffset(_particlePosition);
 
-		_currentPaticle->activate();
-		_currentPaticle->start();
+		_currentParticle->activate();
+		_currentParticle->start();
 	} // emitParticle2
 	
 } // namespace Logic

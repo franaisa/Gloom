@@ -21,6 +21,10 @@ de disparo de la cabra.
 #include "Map/MapEntity.h"
 
 #include "Logic/Messages/MessageHudDispersion.h"
+#include "Logic/Messages/MessageParticleStart.h"
+#include "Logic/Messages/MessageParticleStop.h"
+#include "Logic/Messages/MessageActivate.h"
+
 
 using namespace std;
 
@@ -99,7 +103,11 @@ namespace Logic {
 		_entity->getComponent<CDynamicLight>("CDynamicLight")->turnOff();
 		_primaryFireIsActive = false;
 
-		Logic::CEntityFactory::getSingletonPtr()->deferredDeleteEntity(_currentPaticle,true);
+
+		std::shared_ptr<CMessageActivate> activateMsg = std::make_shared<CMessageActivate>();
+		activateMsg->setActivated(false);
+		_currentParticle->emitMessage(activateMsg);
+		printf("\n para de emitir");
 	}
 
 	//__________________________________________________________________

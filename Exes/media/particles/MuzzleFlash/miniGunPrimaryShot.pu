@@ -33,6 +33,7 @@ system miniGunPrimaryShot
             velocity                            1e-006
             repeat_delay                        0.5
             direction                           1 1 0
+			colour                              0 1 0.2 1
         }
         affector                                TextureRotator 
         {
@@ -81,6 +82,7 @@ system miniGunPrimaryShot
                 max                             0.2
             }
             velocity                            1e-006
+			repeat_delay                        0.5
             duration                            0.3
             direction                           0 0 -1
             colour                              0 1 0.2 1
@@ -120,6 +122,7 @@ system miniGunPrimaryShot
                 max                             0.2
             }
             velocity                            1e-006
+			repeat_delay                        0.5
             duration                            0.3
             direction                           1 1 0
             colour                              0 1 0.2 1

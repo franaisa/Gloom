@@ -73,7 +73,8 @@ namespace Logic {
 	//______________________________________________________________________________
 
 	bool CParticleSystem::accept(const std::shared_ptr<CMessage>& message) {
-		return message->getMessageType() == Message::PARTICLE_START;
+		return message->getMessageType() == Message::PARTICLE_START ||
+			message->getMessageType() == Message::PARTICLE_STOP;
 	}
 	
 	//______________________________________________________________________________
@@ -82,6 +83,10 @@ namespace Logic {
 		switch( message->getMessageType() ) {
 			case Message::PARTICLE_START: {
 				_particleSystem->start();
+				break;
+			}
+			case Message::PARTICLE_STOP: {
+				_particleSystem->stop();
 				break;
 			}
 		}
