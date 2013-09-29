@@ -3,6 +3,7 @@ float4x4 ViewProjectionMatrix;
 
 float tiempo;
 float alpha;
+float4 color;
 
 struct VsInput
 {
@@ -30,5 +31,5 @@ VsOutput mainVS(const VsInput In) {
 
 float4 mainPS() : COLOR 
 {
-	return float4(1.0, 0.0, 0.0, alpha*abs(sin(tiempo*3))+0.05);
+	return float4(color.rgb, alpha*abs(sin(tiempo*3))+0.05);
 }

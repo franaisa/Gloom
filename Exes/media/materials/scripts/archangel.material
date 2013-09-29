@@ -201,6 +201,75 @@ material ArchangelBerserk {
 			fragment_program_ref berserk_ps
             {
 				param_named alpha float 0.25
+				param_named colour float4 1.0 0.0 0.0 1.0
+				param_named_auto tiempo time
+            }
+		}
+		
+		pass {
+		
+			scene_blend add
+			iteration once_per_light
+		
+			vertex_program_ref bumpLightingVertexShader {
+			}
+			
+			fragment_program_ref bumpLightingFragment_DIFF_ALPHASPEC {
+				// Constante para regular la cantidad de difuso
+				param_named			Kd								float		0.6
+				// Constante de brillo especular
+				param_named 			shininess						float		70.0
+			}
+			
+			// Textura de difuso
+			texture_unit DiffMap {
+				texture map_arcangel_DIF.jpg
+			}
+			
+			// Textura para el bump mapping. En el alfa esta el mapa de especulares.
+			texture_unit NormalMap {
+				texture map_arcangel_NRM_SPEC.tga
+			}
+			
+		}
+	}
+}
+
+material ArchangelAzul {
+	technique {
+		pass {
+		
+			vertex_program_ref bumpLightingVertex_AMB {
+			}
+		
+			fragment_program_ref bumpLightingFragment_AMB {
+				// Constante para regular la cantidad de ambiente
+				param_named			Ka								float		0.6
+			}
+			
+			// Textura de difuso
+			texture_unit DiffMap {
+				texture map_arcangel_DIF.jpg
+			}
+			
+		}
+		
+		pass 
+		{
+			illumination_stage ambient
+            scene_blend alpha_blend
+
+			depth_write off
+
+			vertex_program_ref berserk_vs
+			{
+				param_named_auto ViewProjectionMatrix worldviewproj_matrix
+				param_named_auto tiempo time
+			}
+			fragment_program_ref berserk_ps
+            {
+				param_named alpha float 0.25
+				param_named colour float4 0.0 0.0 1.0 1.0
 				param_named_auto tiempo time
             }
 		}
