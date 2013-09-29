@@ -30,8 +30,8 @@ Spike CGraphics CPositionInterpolator
 Light CLight CGraphics
 MovableLight CDynamicLight CGraphics
 TriggerLight CLight CGraphics CPhysicStaticCompound
-Powerup1 CFloatingMovement CAudio CDynamicParticleSystem
-Powerup2 CFloatingMovement CAudio CDynamicParticleSystem
+DamageAmplifier CFloatingMovement CAudio CDynamicParticleSystem
+CooldownReducer CFloatingMovement CAudio CDynamicParticleSystem
 SuperShield CFloatingMovement CAudio CGraphics
 Shield CFloatingMovement CAudio CGraphics
 Orb CFloatingMovement CAudio CGraphics

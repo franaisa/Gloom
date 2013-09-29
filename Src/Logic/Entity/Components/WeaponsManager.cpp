@@ -193,6 +193,9 @@ namespace Logic
 			if(_cooldownTimer <= 0) {
 				_cooldownTimer = 0;
 				reduceCooldowns(0);
+				std::shared_ptr<CMessageChangeMaterial> matMsg = std::make_shared<CMessageChangeMaterial>();
+				matMsg->setMaterialName("original");
+				_entity->emitMessage(matMsg);
 			}
 		}
 
@@ -202,6 +205,9 @@ namespace Logic
 			if(_dmgAmpTimer <= 0) {
 				_dmgAmpTimer = 0;
 				amplifyDamage(0);
+				std::shared_ptr<CMessageChangeMaterial> matMsg = std::make_shared<CMessageChangeMaterial>();
+				matMsg->setMaterialName("original");
+				_entity->emitMessage(matMsg);
 			}
 		}
 	}

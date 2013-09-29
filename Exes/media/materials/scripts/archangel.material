@@ -62,10 +62,11 @@ material archangel {
 	}
 	
 	technique {
-		lighting off
+		
 		
 		scheme depthScheme
 		pass {
+			lighting off
 			vertex_program_ref depthMapVertex {
 			}
 			
@@ -75,10 +76,11 @@ material archangel {
 	}
 	
 	technique {
-		lighting off
+		
 	
 		scheme blackScheme
 		pass {
+			lighting off
 			vertex_program_ref blackVertex {
 			}
 			
@@ -129,7 +131,7 @@ material archangelDiamond {
 			texture_unit 0
             {
 				tex_coord_set 0
-                texture $diffuse_tex_shield
+                texture PielDiamanteTP.png
 				scale 0.2 0.2
             }
 		}
