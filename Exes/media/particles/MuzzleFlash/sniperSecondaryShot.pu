@@ -27,8 +27,8 @@ system sniperSecondaryShot
             angle                               0
             time_to_live                        dyn_random
             {
-                min                             0.1
-                max                             0.2
+                min                             0.01
+                max                             0.01
             }
             velocity                            1e-006
             direction                           1 1 0

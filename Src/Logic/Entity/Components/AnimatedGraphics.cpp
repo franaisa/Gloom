@@ -193,7 +193,6 @@ namespace Logic
 			_insertAnimation = true;
 			_animatedGraphicsEntity->setAnimation( nextAnim.animation,nextAnim.rewind, nextAnim.loop );
 			_insertAnimation = nextAnim.exclude;
-			//_entity->getYaw(); Linea random
 			nextAnim.animation="";
 		}
 	}

@@ -66,6 +66,9 @@ namespace Logic {
 			_weaponry[i]->amplifyDamage(_newPercentDamage);
 			
 		}
+
+		// Aqui pongo el feedback en 3º persona
+
 	} // spell
 	//__________________________________________________________________
 		
@@ -77,6 +80,9 @@ namespace Logic {
 		for(unsigned int i = 0; i < WeaponType::eSIZE;++i){
 			_weaponry[i]->amplifyDamage(0);
 		}
+
+		// Aqui quito el feedback en 3º persona
+
 	} // stopSpell
 	//__________________________________________________________________
 

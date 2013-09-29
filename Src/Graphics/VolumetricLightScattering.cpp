@@ -93,13 +93,16 @@ namespace Graphics {
 			auto closestLight = it++;
 			float closestDist = (playerPos2d - pos2d).length();
 			float dist;
+
 			for(; it != lightList.end(); ++it) {
 				pos2d.x = it->lightPosition.x;
 				pos2d.y = it->lightPosition.z;
 
 				dist = (playerPos2d - pos2d).length();
-				if(dist < closestDist)
+				if(dist < closestDist) {
 					closestLight = it;
+					closestDist = dist;
+				}
 			}
 
 			closestLightSrc.second = true;
@@ -141,6 +144,36 @@ namespace Graphics {
 			lightInfoList.push_back(params);
 
 			// Introducimos las luces del mapa de angel
+			temp.second = lightInfoList;
+
+			_mapScatterParams.insert(temp);
+		}
+		else if( sceneName.find("angelCachos") != std::string::npos ) {
+			temp.first = sceneName;
+
+			// Luz de lava pipes
+			params.lightPosition	= Vector3(48.2968f, -200.1517f, 122.804f);
+			params.density			= 0.2f;
+			params.decay			= 0.99f;
+			params.weight			= 1.0f;
+			params.exposure			= 0.1f;
+
+			lightInfoList.push_back(params);
+		
+			// Luz de lava altar
+			params.lightPosition	= Vector3(82.3584f, -45.033f, -133.341f);
+
+			lightInfoList.push_back(params);
+
+			// Luz del vortice
+			
+			params.lightPosition	= Vector3(-255.078f, -400.725f, -105.462f);
+			params.density			= 0.22f;
+			params.exposure			= 0.2f;
+
+			lightInfoList.push_back(params);
+
+			// Introducimos las luces del mapa de angel por trozos
 			temp.second = lightInfoList;
 
 			_mapScatterParams.insert(temp);

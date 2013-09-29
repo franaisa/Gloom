@@ -78,6 +78,7 @@ material shotGun {
 	}
 	
 	technique {
+		lighting off
 		scheme glow
 		
 		pass {

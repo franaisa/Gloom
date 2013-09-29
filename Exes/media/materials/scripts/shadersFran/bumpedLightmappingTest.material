@@ -1,0 +1,58 @@
+material bumpedLightmappingTest {
+	technique {
+		pass {
+		
+			vertex_program_ref bumpedLightmappingVertex_AMB {
+			}
+		
+			fragment_program_ref bumpedLightmappingFragment_AMB {
+				// Constante para regular la cantidad de ambiente
+				param_named			Ka								float		1.0
+			}
+			
+			// Textura de difuso
+			texture_unit DiffMap {
+				texture rock_DIF.jpg
+			}
+			
+			// Bumped Lightmap
+			texture_unit BumpedLightmap {
+				texture Object067LightingMap.tga
+			}
+			
+		}
+		
+		pass {
+		
+			scene_blend add
+			iteration once_per_light
+			max_lights 3
+		
+			vertex_program_ref bumpedLightmappingVertexShader {
+			}
+			
+			fragment_program_ref bumpedLightmappingFragment_DIFF_ALPHASPEC {
+				// Constante para regular la cantidad de difuso
+				param_named			Kd								float		0.6
+				// Constante de brillo especular
+				param_named 			shininess						float		70.0
+			}
+			
+			// Textura de difuso
+			texture_unit DiffMap {
+				texture rock_DIF.jpg
+			}
+			
+			// Bumped Lightmap - No se usa (solo para ocupar el registro)
+			texture_unit BumpedLightmap {
+				texture Object067LightingMap.tga
+			}
+			
+			// Textura para el bump mapping. En el alfa esta el mapa de especulares.
+			texture_unit NormalMap {
+				texture rock_NRM_SPEC.tga
+			}
+			
+		}
+	}
+}

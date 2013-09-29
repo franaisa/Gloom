@@ -15,6 +15,9 @@ Contiene la implementación del componente que representa al hechizo de amplifica
 #include "Logic/Server.h"
 #include "Map/MapEntity.h"
 
+#include "Graphics/Server.h"
+#include "Graphics/Scene.h"
+
 #include "Logic/Messages/MessageDamageAmplifier.h"
 
 namespace Logic {
@@ -42,13 +45,13 @@ namespace Logic {
 
 	void CAmplifyDamageClient::spell(){ 
 		// Feedback de que tengo el daño ampliado
-
+		Graphics::CServer::getSingletonPtr()->getActiveScene()->createCompositor("AmplifyDamageCompositor");
 	} // spell
 	//__________________________________________________________________
 		
 	void CAmplifyDamageClient::stopSpell() {
 		// Fin feedback de que tengo el daño ampliado
-
+		Graphics::CServer::getSingletonPtr()->getActiveScene()->destroyCompositor("AmplifyDamageCompositor");
 	} // stopSpell
 	//__________________________________________________________________
 

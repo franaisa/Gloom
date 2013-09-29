@@ -1,7 +1,7 @@
 Map = {
 
 	Player = {
-		type = "LocalSpectator",
+		type = "LocalHound",
 		isPlayer = true,
 		position = {0, 5, 0},
 		physic_group = 1,
@@ -12,10 +12,188 @@ Map = {
 		type = "Camera",
 		height = 8,
 	},
+	
+	PhysicWorld = {
+		type = "PhysicWorld",
+	},
 
+	Vortex = {
+		type = "Vortice",
+		position = {-255.078, -400.725, -105.462},
+		model = "vortice.mesh",
+		scale = 1,
+		damage = 500,
+		timeDamage = 500,
+		physic_entity = "rigid",
+		physic_trigger = true,
+		physic_type = "static",
+		physic_shape = "box",
+		physic_dimensions = { 2000, 50, 2000 },
+		physic_group = 2,
+		physic_groupList = "1",
+		lightMask = "1",
+	},
+	
+	LavaPipes = {
+		type = "Lava",
+		position = {48.2968, 32.1517, 122.804},
+		
+		plane_orientation = {0, 1, 0},
+		plane_width = 200,
+		plane_height = 200,
+		plane_xSegments = 60,
+		plane_ySegments = 60,
+		plane_uTiling = 10,
+		plane_vTiling = 10,
+		plane_upVector = {0, 0, 1},
+		plane_material = "lavaFondo",
+		
+		physic_dimensions = {100, 1, 100},
+	},
+	
+	LavaAltar = {
+		type = "Lava",
+		position = {82.3584, 145.033, -133.341},
+		
+		plane_orientation = {0, 1, 0},
+		plane_width = 180,
+		plane_height = 220,
+		plane_xSegments = 60,
+		plane_ySegments = 60,
+		plane_uTiling = 10,
+		plane_vTiling = 10,
+		plane_upVector = {0, 0, 1},
+		plane_material = "lavaFondo",
+		
+		physic_dimensions = { 100, 1, 120 },
+	},
+	
+	DamageAmplifier = {
+		type = "DamageAmplifier",
+		position = {-258.174, 159.0, -198.872},
+	},
+	
+	CooldownReducer = {
+		type = "CooldownReducer",
+		position = {50.938, 83.0, 118.126},
+	},
+	
+	SuperShield = {
+		type = "SuperShield",
+		position = {83.4928, 205.062, -133.783},
+	},
+	
+	Shield = {
+		type = "Shield",
+		position = {229.656, 145.785, -371.767},
+	},
+	
+	VortexSinisterSound = {
+		type = "AmbientSound",
+		position = {-261.364, 120.75, -104.925},
+		staticAudio_name = "ambient/loop_deep.ogg",
+		staticAudio_stream = true,
+	},
+	
+	LavaAltarSound = {
+		type = "AmbientSound",
+		position = {87.0575, 165.676, -136.193},
+		staticAudio_name = "ambient/lava_quiet.wav",
+		staticAudio_stream = true,
+	},
+	
+	AltarSound = {
+		type = "AmbientSound",
+		position = {198.24, 160.864, -130.803},
+		staticAudio_name = "ambient/loop_deep.ogg",
+		staticAudio_stream = true,
+	},
+	
+	LavaPipesSound = {
+		type = "AmbientSound",
+		position = {110.972, 41.9249, 119.736},
+		staticAudio_name = "ambient/lava_quiet.wav",
+		staticAudio_stream = true,
+	},
+	
+	LavaPipesSound2 = {
+		type = "AmbientSound",
+		position = {-6.87131, 41.9249, 119.509},
+		staticAudio_name = "ambient/lava_quiet.wav",
+		staticAudio_stream = true,
+	},
+	
+	PipesSound = {
+		type = "AmbientSound",
+		position = {-33.102, 178.598, 252.685},
+		staticAudio_name = "ambient/bassy_fan.wav",
+		staticAudio_stream = true,
+	},
+	
+	MainRoomSound = {
+		type = "AmbientSound",
+		position = {-259.643, 189.844, 183.581},
+		staticAudio_name = "ambient/bassy_fan.wav",
+		staticAudio_stream = true,
+	},
+	
+	FlakSound = {
+		type = "AmbientSound",
+		position = {-45.9532, 188.384, -84.8533},
+		staticAudio_name = "ambient/deep_atmosphere.wav",
+		staticAudio_stream = true,
+	},
+	
+	CaveSound1 = {
+		type = "AmbientSound",
+		position = {-24.587, 155.621, -380.187},
+		staticAudio_name = "ambient/deep_atmosphere.wav",
+		staticAudio_stream = true,
+	},
+	
+	CaveSound2 = {
+		type = "AmbientSound",
+		position = {221.279, 146.421, -373.65},
+		staticAudio_name = "ambient/deep_atmosphere.wav",
+		staticAudio_stream = true,
+	},
+	
+	CaveSound3 = {
+		type = "AmbientSound",
+		position = {224.95, 36.6579, -361.412},
+		staticAudio_name = "ambient/loop_deep.ogg",
+		staticAudio_stream = true,
+	},
+	
+	IronSound = {
+		type = "AmbientSound",
+		position = {455.307, 146.747, -120.942},
+		staticAudio_name = "ambient/sinister_portal.wav",
+		staticAudio_stream = true,
+	},
+	
+	PilarsSound = {
+		type = "AmbientSound",
+		position = {235.031, 106.95, 113.566},
+		staticAudio_name = "ambient/loop_deep.ogg",
+		staticAudio_stream = true,
+	},
+	
+	PilarsSound2 = {
+		type = "AmbientSound",
+		position = {331.829, 104.838, -72.6641},
+		staticAudio_name = "ambient/loop_deep.ogg",
+		staticAudio_stream = true,
+	},
+
+	Shotgun = {
+		type = "ShotgunItem",
+		position = {-123.662, 198.259, -153.212},
+	},
+	
 	UniqueSpawnPoint = {
 		type = "SpawnPoint",
-		position = {3.0, 0.2, 0.0},
+		position = {-348.442, 198.219, 196.188},
 		physic_entity = "rigid",
 		physic_trigger = true,
 		physic_type = "static",
@@ -23,10 +201,58 @@ Map = {
 		physic_dimensions = { 4, 7, 4 },
 	},
 
+	ChachiLight = {
+		type = "Light",
+		direction = {0.0, -1.0, 0.0},
+		position = {0.0, 0.0, 0.0},
+		lightIsStatic = true,
+		lightGroup = 2,
+		lightType = "directional",
+		color = {0.9, 0.9, 0.9},
+	}, 
+	
+	LavaAltarOmni030 = {
+		type = "Light",
+		position = {85.9733, 144.42, -133.581},
+		lightIsStatic = true,
+		lightGroup = 2,
+		lightType = "point",
+		color = {1.0, 1.0, 0.09},
+		range = 3250,
+		attenuation = {1.0, 0.0014, 0.000007},
+	},
+	
+	LavaPipesOmni030 = {
+		type = "Light",
+		position = {51.9337, 13.6564, 113.85},
+		lightIsStatic = true,
+		lightGroup = 2,
+		lightType = "point",
+		color = {1.0, 1.0, 0.09},
+		range = 3250,
+		attenuation = {1.0, 0.0014, 0.000007},
+	},
+	
+	VortexLight = {
+		type = "Light",
+		position = {-260.262, -4.85, -117.558},
+		direction = {0.0, 1.0, 0.0},
+		lightIsStatic = true,
+		lightGroup = 2,
+		lightType = "spot",
+		innerAngle = 0.93,
+		outerAngle = 1.51,
+		color = {0.0, 1.0, 0.87},
+		powerScale = 0.500000,
+		range = 3250,
+		attenuation = {1.0, 0.0014, 0.000007},
+	},
+
 	Object002 = {
 		type = "World",
 		model = "Object002.mesh",
-		position = {-654.575012, 373.473999, 1413.839966},
+		position = {0,0,0},
+		scale = {0.3, 0.3, 0.3},
 		rotation = "-0.000000 1.000000 0.000000 0.000000",
 		static = true,
 	},
@@ -34,7 +260,8 @@ Map = {
 	Object006 = {
 		type = "World",
 		model = "Object006.mesh",
-		position = {-654.575012, 373.473999, 1413.839966},
+		position = {0,0,0},
+		scale = {0.3, 0.3, 0.3},
 		rotation = "-0.000000 1.000000 0.000000 0.000000",
 		static = true,
 	},
@@ -42,7 +269,8 @@ Map = {
 	Object014 = {
 		type = "World",
 		model = "Object014.mesh",
-		position = {-654.575012, 373.473999, 1413.839966},
+		position = {0,0,0},
+		scale = {0.3, 0.3, 0.3},
 		rotation = "-0.000000 1.000000 0.000000 0.000000",
 		static = true,
 	},
@@ -50,7 +278,8 @@ Map = {
 	Object020 = {
 		type = "World",
 		model = "Object020.mesh",
-		position = {-654.575012, 373.473999, 1413.839966},
+		position = {0,0,0},
+		scale = {0.3, 0.3, 0.3},
 		rotation = "-0.000000 1.000000 0.000000 0.000000",
 		static = true,
 	},
@@ -58,7 +287,8 @@ Map = {
 	Object022 = {
 		type = "World",
 		model = "Object022.mesh",
-		position = {-654.575012, 373.473999, 1413.839966},
+		position = {0,0,0},
+		scale = {0.300000, 0.300000, 0.300000},
 		rotation = "-0.000000 1.000000 0.000000 0.000000",
 		static = true,
 	},
@@ -66,7 +296,8 @@ Map = {
 	Object030 = {
 		type = "World",
 		model = "Object030.mesh",
-		position = {-654.575012, 373.473999, 1413.839966},
+		position = {0,0,0},
+		scale = {0.300000, 0.300000, 0.300000},
 		rotation = "-0.000000 1.000000 0.000000 0.000000",
 		static = true,
 	},
@@ -74,7 +305,8 @@ Map = {
 	Object034 = {
 		type = "World",
 		model = "Object034.mesh",
-		position = {-654.575012, 373.473999, 1413.839966},
+		position = {0,0,0},
+		scale = {0.3, 0.3, 0.3},
 		rotation = "-0.000000 1.000000 0.000000 0.000000",
 		static = true,
 	},
@@ -82,7 +314,8 @@ Map = {
 	Object038 = {
 		type = "World",
 		model = "Object038.mesh",
-		position = {-654.575012, 373.473999, 1413.839966},
+		position = {0,0,0},
+		scale = {0.3, 0.3, 0.3},
 		rotation = "-0.000000 1.000000 0.000000 0.000000",
 		static = true,
 	},
@@ -90,7 +323,8 @@ Map = {
 	Object055 = {
 		type = "World",
 		model = "Object055.mesh",
-		position = {-654.575012, 373.473999, 1413.839966},
+		position = {0,0,0},
+		scale = {0.3, 0.3, 0.3},
 		rotation = "-0.000000 1.000000 0.000000 0.000000",
 		static = true,
 	},
@@ -98,7 +332,8 @@ Map = {
 	Object057 = {
 		type = "World",
 		model = "Object057.mesh",
-		position = {-654.575012, 373.473999, 1413.839966},
+		position = {0,0,0},
+		scale = {0.3, 0.3, 0.3},
 		rotation = "-0.000000 1.000000 0.000000 0.000000",
 		static = true,
 	},
@@ -106,7 +341,8 @@ Map = {
 	Object061 = {
 		type = "World",
 		model = "Object061.mesh",
-		position = {-654.575012, 373.473999, 1413.839966},
+		position = {0,0,0},
+		scale = {0.3, 0.3, 0.3},
 		rotation = "-0.000000 1.000000 0.000000 0.000000",
 		static = true,
 	},
@@ -114,7 +350,8 @@ Map = {
 	Object067 = {
 		type = "World",
 		model = "Object067.mesh",
-		position = {-654.575012, 373.473999, 1413.839966},
+		position = {0,0,0},
+		scale = {0.3, 0.3, 0.3},
 		rotation = "-0.000000 1.000000 0.000000 0.000000",
 		static = true,
 	},
@@ -122,7 +359,8 @@ Map = {
 	Object083 = {
 		type = "World",
 		model = "Object083.mesh",
-		position = {-654.575012, 373.473999, 1413.839966},
+		position = {0,0,0},
+		scale = {0.3, 0.3, 0.3},
 		rotation = "-0.000000 1.000000 0.000000 0.000000",
 		static = true,
 	},
@@ -130,7 +368,8 @@ Map = {
 	Object085 = {
 		type = "World",
 		model = "Object085.mesh",
-		position = {-654.575012, 373.473999, 1413.839966},
+		position = {0,0,0},
+		scale = {0.3, 0.3, 0.3},
 		rotation = "-0.000000 1.000000 0.000000 0.000000",
 		static = true,
 	},
@@ -138,7 +377,8 @@ Map = {
 	Object087 = {
 		type = "World",
 		model = "Object087.mesh",
-		position = {-654.575012, 373.473999, 1413.839966},
+		position = {0,0,0},
+		scale = {0.3, 0.3, 0.3},
 		rotation = "-0.000000 1.000000 0.000000 0.000000",
 		static = true,
 	},
@@ -146,7 +386,8 @@ Map = {
 	Object089 = {
 		type = "World",
 		model = "Object089.mesh",
-		position = {-654.575012, 373.473999, 1413.839966},
+		position = {0,0,0},
+		scale = {0.3, 0.3, 0.3},
 		rotation = "-0.000000 1.000000 0.000000 0.000000",
 		static = true,
 	},
@@ -154,7 +395,8 @@ Map = {
 	Object093 = {
 		type = "World",
 		model = "Object093.mesh",
-		position = {-654.575012, 373.473999, 1413.839966},
+		position = {0,0,0},
+		scale = {0.3, 0.3, 0.3},
 		rotation = "-0.000000 1.000000 0.000000 0.000000",
 		static = true,
 	},
@@ -162,7 +404,8 @@ Map = {
 	Object109 = {
 		type = "World",
 		model = "Object109.mesh",
-		position = {-654.575012, 373.473999, 1413.839966},
+		position = {0,0,0},
+		scale = {0.3, 0.3, 0.3},
 		rotation = "-0.000000 1.000000 0.000000 0.000000",
 		static = true,
 	},
@@ -170,7 +413,8 @@ Map = {
 	Object117 = {
 		type = "World",
 		model = "Object117.mesh",
-		position = {-654.575012, 373.473999, 1413.839966},
+		position = {0,0,0},
+		scale = {0.3, 0.3, 0.3},
 		rotation = "-0.000000 1.000000 0.000000 0.000000",
 		static = true,
 	},
@@ -178,7 +422,8 @@ Map = {
 	Object119 = {
 		type = "World",
 		model = "Object119.mesh",
-		position = {-654.575012, 373.473999, 1413.839966},
+		position = {0,0,0},
+		scale = {0.3, 0.3, 0.3},
 		rotation = "-0.000000 1.000000 0.000000 0.000000",
 		static = true,
 	},
@@ -186,7 +431,8 @@ Map = {
 	Object121 = {
 		type = "World",
 		model = "Object121.mesh",
-		position = {-654.575012, 373.473999, 1413.839966},
+		position = {0,0,0},
+		scale = {0.3, 0.3, 0.3},
 		rotation = "-0.000000 1.000000 0.000000 0.000000",
 		static = true,
 	},
@@ -194,7 +440,8 @@ Map = {
 	Object123 = {
 		type = "World",
 		model = "Object123.mesh",
-		position = {-654.575012, 373.473999, 1413.839966},
+		position = {0,0,0},
+		scale = {0.3, 0.3, 0.3},
 		rotation = "-0.000000 1.000000 0.000000 0.000000",
 		static = true,
 	},
@@ -202,7 +449,8 @@ Map = {
 	Object125 = {
 		type = "World",
 		model = "Object125.mesh",
-		position = {-654.575012, 373.473999, 1413.839966},
+		position = {0,0,0},
+		scale = {0.3, 0.3, 0.3},
 		rotation = "-0.000000 1.000000 0.000000 0.000000",
 		static = true,
 	},
@@ -210,7 +458,8 @@ Map = {
 	Object128 = {
 		type = "World",
 		model = "Object128.mesh",
-		position = {-654.575012, 373.473999, 1413.839966},
+		position = {0,0,0},
+		scale = {0.3, 0.3, 0.3},
 		rotation = "-0.000000 1.000000 0.000000 0.000000",
 		static = true,
 	},
@@ -218,7 +467,8 @@ Map = {
 	Object130 = {
 		type = "World",
 		model = "Object130.mesh",
-		position = {-654.575012, 373.473999, 1413.839966},
+		position = {0,0,0},
+		scale = {0.3, 0.3, 0.3},
 		rotation = "-0.000000 1.000000 0.000000 0.000000",
 		static = true,
 	},
@@ -226,7 +476,8 @@ Map = {
 	Object132 = {
 		type = "World",
 		model = "Object132.mesh",
-		position = {-654.575012, 373.473999, 1413.839966},
+		position = {0,0,0},
+		scale = {0.3, 0.3, 0.3},
 		rotation = "-0.000000 1.000000 0.000000 0.000000",
 		static = true,
 	},
@@ -234,7 +485,8 @@ Map = {
 	Object134 = {
 		type = "World",
 		model = "Object134.mesh",
-		position = {-654.575012, 373.473999, 1413.839966},
+		position = {0,0,0},
+		scale = {0.3, 0.3, 0.3},
 		rotation = "-0.000000 1.000000 0.000000 0.000000",
 		static = true,
 	},
@@ -242,7 +494,8 @@ Map = {
 	Object136 = {
 		type = "World",
 		model = "Object136.mesh",
-		position = {-654.575012, 373.473999, 1413.839966},
+		position = {0,0,0},
+		scale = {0.3, 0.3, 0.3},
 		rotation = "-0.000000 1.000000 0.000000 0.000000",
 		static = true,
 	},
@@ -250,7 +503,8 @@ Map = {
 	Object138 = {
 		type = "World",
 		model = "Object138.mesh",
-		position = {-654.575012, 373.473999, 1413.839966},
+		position = {0,0,0},
+		scale = {0.3, 0.3, 0.3},
 		rotation = "-0.000000 1.000000 0.000000 0.000000",
 		static = true,
 	},
@@ -258,7 +512,8 @@ Map = {
 	Object140 = {
 		type = "World",
 		model = "Object140.mesh",
-		position = {-654.575012, 373.473999, 1413.839966},
+		position = {0,0,0},
+		scale = {0.3, 0.3, 0.3},
 		rotation = "-0.000000 1.000000 0.000000 0.000000",
 		static = true,
 	},
@@ -266,7 +521,8 @@ Map = {
 	Object141 = {
 		type = "World",
 		model = "Object141.mesh",
-		position = {-654.575012, 373.473999, 1413.839966},
+		position = {0,0,0},
+		scale = {0.3, 0.3, 0.3},
 		rotation = "-0.000000 1.000000 0.000000 0.000000",
 		static = true,
 	},
@@ -274,7 +530,8 @@ Map = {
 	Object142 = {
 		type = "World",
 		model = "Object142.mesh",
-		position = {-654.575012, 373.473999, 1413.839966},
+		position = {0,0,0},
+		scale = {0.3, 0.3, 0.3},
 		rotation = "-0.000000 1.000000 0.000000 0.000000",
 		static = true,
 	},
@@ -282,7 +539,8 @@ Map = {
 	Object143 = {
 		type = "World",
 		model = "Object143.mesh",
-		position = {-654.575012, 373.473999, 1413.839966},
+		position = {0,0,0},
+		scale = {0.3, 0.3, 0.3},
 		rotation = "-0.000000 1.000000 0.000000 0.000000",
 		static = true,
 	},
@@ -290,7 +548,8 @@ Map = {
 	Object144 = {
 		type = "World",
 		model = "Object144.mesh",
-		position = {-654.575012, 373.473999, 1413.839966},
+		position = {0,0,0},
+		scale = {0.3, 0.3, 0.3},
 		rotation = "-0.000000 1.000000 0.000000 0.000000",
 		static = true,
 	},
@@ -298,7 +557,8 @@ Map = {
 	Object145 = {
 		type = "World",
 		model = "Object145.mesh",
-		position = {-654.575012, 373.473999, 1413.839966},
+		position = {0,0,0},
+		scale = {0.3, 0.3, 0.3},
 		rotation = "-0.000000 1.000000 0.000000 0.000000",
 		static = true,
 	},
@@ -306,7 +566,8 @@ Map = {
 	Object146 = {
 		type = "World",
 		model = "Object146.mesh",
-		position = {-654.575012, 373.473999, 1413.839966},
+		position = {0,0,0},
+		scale = {0.3, 0.3, 0.3},
 		rotation = "-0.000000 1.000000 0.000000 0.000000",
 		static = true,
 	},
@@ -314,463 +575,10 @@ Map = {
 	Object147 = {
 		type = "World",
 		model = "Object147.mesh",
-		position = {-654.575012, 373.473999, 1413.839966},
+		position = {0,0,0},
+		scale = {0.300000, 0.300000, 0.300000},
 		rotation = "-0.000000 1.000000 0.000000 0.000000",
 		static = true,
-	},
-
-	lampara = {
-		type = "World",
-		position = {-536.689026, 11.230000, 160.365997},
-		rotation = "0.000000 0.000000 0.000000 1.000000",
-		static = true,
-	},
-
-	Omni001 = {
-		type = "Light",
-		position = {-536.541992, 28.554600, 160.212006},
-		rotation = "0.000000 0.000000 0.000000 1.000000",
-		lightType = "point",
-		color = {1.000000, 1.000000, 1.000000},
-		attenuation = {1.000000, 0.000000, 0.000000},
-	},
-
-	lampara001 = {
-		type = "World",
-		position = {9.891020, 11.230000, 160.365997},
-		rotation = "0.000000 0.000000 0.000000 1.000000",
-		static = true,
-	},
-
-	Omni002 = {
-		type = "Light",
-		position = {10.037700, 28.554600, 160.212006},
-		rotation = "0.000000 0.000000 0.000000 1.000000",
-		lightType = "point",
-		color = {1.000000, 1.000000, 1.000000},
-		attenuation = {1.000000, 0.000000, 0.000000},
-	},
-
-	lampara002 = {
-		type = "World",
-		position = {9.891020, 11.230000, 672.702026},
-		rotation = "0.000000 0.000000 0.000000 1.000000",
-		static = true,
-	},
-
-	Omni003 = {
-		type = "Light",
-		position = {10.037700, 28.554701, 672.547974},
-		rotation = "0.000000 0.000000 0.000000 1.000000",
-		lightType = "point",
-		color = {1.000000, 1.000000, 1.000000},
-		attenuation = {1.000000, 0.000000, 0.000000},
-	},
-
-	Omni004 = {
-		type = "Light",
-		position = {-536.541992, 28.554701, 672.547974},
-		rotation = "0.000000 0.000000 0.000000 1.000000",
-		lightType = "point",
-		color = {1.000000, 1.000000, 1.000000},
-		attenuation = {1.000000, 0.000000, 0.000000},
-	},
-
-	lampara003 = {
-		type = "World",
-		position = {-536.689026, 11.230000, 672.702026},
-		rotation = "0.000000 0.000000 0.000000 1.000000",
-		static = true,
-	},
-
-	Omni006 = {
-		type = "Light",
-		position = {-753.010010, 169.106995, 392.739990},
-		rotation = "0.000000 0.000000 0.000000 1.000000",
-		lightType = "point",
-		color = {1.000000, 1.000000, 1.000000},
-		attenuation = {1.000000, 0.000000, 0.000000},
-	},
-
-	lampara005 = {
-		type = "World",
-		position = {-753.156006, 151.783005, 392.894012},
-		rotation = "0.000000 0.000000 0.000000 1.000000",
-		static = true,
-	},
-
-	lampara006 = {
-		type = "World",
-		position = {-831.494995, 175.011002, 758.307983},
-		rotation = "0.000000 0.000000 0.000000 1.000000",
-		static = true,
-	},
-
-	Omni007 = {
-		type = "Light",
-		position = {-831.348999, 192.335999, 758.153992},
-		rotation = "0.000000 0.000000 0.000000 1.000000",
-		lightType = "point",
-		color = {1.000000, 1.000000, 1.000000},
-		attenuation = {1.000000, 0.000000, 0.000000},
-	},
-
-	lampara007 = {
-		type = "World",
-		position = {-757.861023, 160.029999, 1780.420044},
-		rotation = "0.000000 0.000000 0.000000 1.000000",
-		static = true,
-	},
-
-	Omni008 = {
-		type = "Light",
-		position = {-757.713989, 177.354004, 1780.260010},
-		rotation = "0.000000 0.000000 0.000000 1.000000",
-		lightType = "point",
-		color = {1.000000, 1.000000, 1.000000},
-		attenuation = {1.000000, 0.000000, 0.000000},
-	},
-
-	lampara008 = {
-		type = "World",
-		position = {-84.945297, 132.397995, 1662.640015},
-		rotation = "0.000000 0.000000 0.000000 1.000000",
-		static = true,
-	},
-
-	Omni009 = {
-		type = "Light",
-		position = {-84.798798, 149.723007, 1662.479980},
-		rotation = "0.000000 0.000000 0.000000 1.000000",
-		lightType = "point",
-		color = {1.000000, 1.000000, 1.000000},
-		attenuation = {1.000000, 0.000000, 0.000000},
-	},
-
-	lampara009 = {
-		type = "World",
-		position = {-84.945297, 138.162994, 1801.810059},
-		rotation = "0.000000 0.000000 0.000000 1.000000",
-		static = true,
-	},
-
-	Omni010 = {
-		type = "Light",
-		position = {-84.798798, 155.487000, 1801.650024},
-		rotation = "0.000000 0.000000 0.000000 1.000000",
-		lightType = "point",
-		color = {1.000000, 1.000000, 1.000000},
-		attenuation = {1.000000, 0.000000, 0.000000},
-	},
-
-	lampara010 = {
-		type = "World",
-		position = {700.804993, 138.162994, 1808.550049},
-		rotation = "0.000000 0.000000 0.000000 1.000000",
-		static = true,
-	},
-
-	Omni011 = {
-		type = "Light",
-		position = {700.950989, 155.487000, 1808.390015},
-		rotation = "0.000000 0.000000 0.000000 1.000000",
-		lightType = "point",
-		color = {1.000000, 1.000000, 1.000000},
-		attenuation = {1.000000, 0.000000, 0.000000},
-	},
-
-	lampara011 = {
-		type = "World",
-		position = {844.406006, 138.162994, 1761.050049},
-		rotation = "0.000000 0.000000 0.000000 1.000000",
-		static = true,
-	},
-
-	Omni012 = {
-		type = "Light",
-		position = {844.552002, 155.487000, 1760.900024},
-		rotation = "0.000000 0.000000 0.000000 1.000000",
-		lightType = "point",
-		color = {1.000000, 1.000000, 1.000000},
-		attenuation = {1.000000, 0.000000, 0.000000},
-	},
-
-	lampara012 = {
-		type = "World",
-		position = {1777.660034, 363.942993, 1818.500000},
-		rotation = "0.000000 0.000000 0.000000 1.000000",
-		static = true,
-	},
-
-	Omni013 = {
-		type = "Light",
-		position = {1777.810059, 381.266998, 1818.349976},
-		rotation = "0.000000 0.000000 0.000000 1.000000",
-		lightType = "point",
-		color = {1.000000, 1.000000, 1.000000},
-		attenuation = {1.000000, 0.000000, 0.000000},
-	},
-
-	lampara013 = {
-		type = "World",
-		position = {409.114990, 363.942993, 1357.709961},
-		rotation = "0.000000 0.000000 0.000000 1.000000",
-		static = true,
-	},
-
-	Omni014 = {
-		type = "Light",
-		position = {409.261993, 381.266998, 1357.550049},
-		rotation = "0.000000 0.000000 0.000000 1.000000",
-		lightType = "point",
-		color = {1.000000, 1.000000, 1.000000},
-		attenuation = {1.000000, 0.000000, 0.000000},
-	},
-
-	lampara014 = {
-		type = "World",
-		position = {401.351013, 363.942993, 524.189026},
-		rotation = "0.000000 0.000000 0.000000 1.000000",
-		static = true,
-	},
-
-	Omni015 = {
-		type = "Light",
-		position = {401.497009, 381.266998, 524.034973},
-		rotation = "0.000000 0.000000 0.000000 1.000000",
-		lightType = "point",
-		color = {1.000000, 1.000000, 1.000000},
-		attenuation = {1.000000, 0.000000, 0.000000},
-	},
-
-	lampara015 = {
-		type = "World",
-		position = {731.338013, 274.355988, 781.723022},
-		rotation = "0.000000 0.000000 0.000000 1.000000",
-		static = true,
-	},
-
-	Omni016 = {
-		type = "Light",
-		position = {731.484009, 291.679993, 781.567993},
-		rotation = "0.000000 0.000000 0.000000 1.000000",
-		lightType = "point",
-		color = {1.000000, 1.000000, 1.000000},
-		attenuation = {1.000000, 0.000000, 0.000000},
-	},
-
-	lampara016 = {
-		type = "World",
-		position = {864.377991, 274.355988, 322.933014},
-		rotation = "0.000000 0.000000 0.000000 1.000000",
-		static = true,
-	},
-
-	Omni017 = {
-		type = "Light",
-		position = {864.523987, 291.679993, 322.778992},
-		rotation = "0.000000 0.000000 0.000000 1.000000",
-		lightType = "point",
-		color = {1.000000, 1.000000, 1.000000},
-		attenuation = {1.000000, 0.000000, 0.000000},
-	},
-
-	lampara017 = {
-		type = "World",
-		position = {582.497009, -171.304993, 104.341003},
-		rotation = "0.000000 0.000000 0.000000 1.000000",
-		static = true,
-	},
-
-	Omni018 = {
-		type = "Light",
-		position = {582.643982, -153.981003, 104.186996},
-		rotation = "0.000000 0.000000 0.000000 1.000000",
-		lightType = "point",
-		color = {1.000000, 1.000000, 1.000000},
-		attenuation = {1.000000, 0.000000, 0.000000},
-	},
-
-	lampara018 = {
-		type = "World",
-		position = {426.635986, -171.304993, 104.341003},
-		rotation = "0.000000 0.000000 0.000000 1.000000",
-		static = true,
-	},
-
-	Omni019 = {
-		type = "Light",
-		position = {426.782990, -153.981003, 104.186996},
-		rotation = "0.000000 0.000000 0.000000 1.000000",
-		lightType = "point",
-		color = {1.000000, 1.000000, 1.000000},
-		attenuation = {1.000000, 0.000000, 0.000000},
-	},
-
-	lampara019 = {
-		type = "World",
-		position = {20.663099, 198.630997, 815.830994},
-		rotation = "0.000000 0.000000 0.000000 1.000000",
-		static = true,
-	},
-
-	Omni020 = {
-		type = "Light",
-		position = {20.809500, 215.955002, 815.677002},
-		rotation = "0.000000 0.000000 0.000000 1.000000",
-		lightType = "point",
-		color = {1.000000, 1.000000, 1.000000},
-		attenuation = {1.000000, 0.000000, 0.000000},
-	},
-
-	lampara020 = {
-		type = "World",
-		position = {20.663099, 198.630997, 1061.000000},
-		rotation = "0.000000 0.000000 0.000000 1.000000",
-		static = true,
-	},
-
-	Omni021 = {
-		type = "Light",
-		position = {20.809500, 215.955002, 1060.849976},
-		rotation = "0.000000 0.000000 0.000000 1.000000",
-		lightType = "point",
-		color = {1.000000, 1.000000, 1.000000},
-		attenuation = {1.000000, 0.000000, 0.000000},
-	},
-
-	lampara021 = {
-		type = "World",
-		position = {1676.800049, 209.072998, 980.057007},
-		rotation = "1.000000 0.000000 0.000000 0.000000",
-		static = true,
-	},
-
-	Omni022 = {
-		type = "Light",
-		position = {1676.939941, 191.748001, 980.210999},
-		rotation = "1.000000 0.000000 0.000000 0.000000",
-		lightType = "point",
-		color = {1.000000, 1.000000, 1.000000},
-		attenuation = {1.000000, 0.000000, 0.000000},
-	},
-
-	lampara022 = {
-		type = "World",
-		position = {1218.270020, 383.009003, 743.859985},
-		rotation = "1.000000 0.000000 0.000000 0.000000",
-		static = true,
-	},
-
-	Omni023 = {
-		type = "Light",
-		position = {1218.420044, 365.683990, 744.013977},
-		rotation = "1.000000 0.000000 0.000000 0.000000",
-		lightType = "point",
-		color = {1.000000, 1.000000, 1.000000},
-		attenuation = {1.000000, 0.000000, 0.000000},
-	},
-
-	lampara023 = {
-		type = "World",
-		position = {1409.489990, 383.009003, -160.792999},
-		rotation = "1.000000 0.000000 0.000000 0.000000",
-		static = true,
-	},
-
-	Omni024 = {
-		type = "Light",
-		position = {1409.640015, 365.683990, -160.639008},
-		rotation = "1.000000 0.000000 0.000000 0.000000",
-		lightType = "point",
-		color = {1.000000, 1.000000, 1.000000},
-		attenuation = {1.000000, 0.000000, 0.000000},
-	},
-
-	lampara024 = {
-		type = "World",
-		position = {1667.829956, 383.009003, -160.792999},
-		rotation = "1.000000 0.000000 0.000000 0.000000",
-		static = true,
-	},
-
-	Omni025 = {
-		type = "Light",
-		position = {1667.979980, 365.683990, -160.639008},
-		rotation = "1.000000 0.000000 0.000000 0.000000",
-		lightType = "point",
-		color = {1.000000, 1.000000, 1.000000},
-		attenuation = {1.000000, 0.000000, 0.000000},
-	},
-
-	lampara025 = {
-		type = "World",
-		position = {1535.069946, 242.649002, 135.690994},
-		rotation = "1.000000 0.000000 0.000000 0.000000",
-		static = true,
-	},
-
-	Omni026 = {
-		type = "Light",
-		position = {1535.219971, 225.324005, 135.845001},
-		rotation = "1.000000 0.000000 0.000000 0.000000",
-		lightType = "point",
-		color = {1.000000, 1.000000, 1.000000},
-		attenuation = {1.000000, 0.000000, 0.000000},
-	},
-
-	Omni027 = {
-		type = "Light",
-		position = {1539.150024, -66.756500, 1100.949951},
-		rotation = "1.000000 0.000000 0.000000 0.000000",
-		lightType = "point",
-		color = {0.156863, 1.000000, 0.694118},
-		attenuation = {1.000000, 0.000000, 0.000000},
-	},
-
-	Omni028 = {
-		type = "Light",
-		position = {-74.903702, -240.087997, 1738.469971},
-		rotation = "1.000000 0.000000 0.000000 0.000000",
-		lightType = "point",
-		color = {1.000000, 0.572549, 0.011765},
-		attenuation = {1.000000, 0.000000, 0.000000},
-	},
-
-	Omni029 = {
-		type = "Light",
-		position = {311.773010, 113.074997, 954.031006},
-		rotation = "1.000000 0.000000 0.000000 0.000000",
-		lightType = "point",
-		color = {1.000000, 0.572549, 0.011765},
-		attenuation = {1.000000, 0.000000, 0.000000},
-	},
-
-	Omni030 = {
-		type = "Light",
-		position = {510.450012, 113.074997, 954.031006},
-		rotation = "1.000000 0.000000 0.000000 0.000000",
-		lightType = "point",
-		color = {1.000000, 0.572549, 0.011765},
-		attenuation = {1.000000, 0.000000, 0.000000},
-	},
-
-	Omni031 = {
-		type = "Light",
-		position = {315.761993, -280.002991, 102.874001},
-		rotation = "1.000000 0.000000 0.000000 0.000000",
-		lightType = "point",
-		color = {1.000000, 0.572549, 0.011765},
-		attenuation = {1.000000, 0.000000, 0.000000},
-	},
-
-	Omni032 = {
-		type = "Light",
-		position = {685.932007, -280.002991, 102.874001},
-		rotation = "1.000000 0.000000 0.000000 0.000000",
-		lightType = "point",
-		color = {1.000000, 0.572549, 0.011765},
-		attenuation = {1.000000, 0.000000, 0.000000},
 	},
 
 }

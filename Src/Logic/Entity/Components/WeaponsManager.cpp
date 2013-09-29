@@ -35,6 +35,7 @@ Contiene la implementación del componente que gestiona las armas y que administr
 #include "Logic/Messages/MessageChangeWeaponGraphics.h"
 #include "Logic/Messages/MessageAddAmmo.h"
 #include "Logic/Messages/MessageAddWeapon.h"
+#include "Logic/Messages/MessageChangeMaterial.h"
 
 #include "Logic/Messages/MessageHudWeapon.h"
 #include "Logic/Messages/MessageHudAmmo.h"
@@ -50,7 +51,7 @@ namespace Logic
 
 	//---------------------------------------------------------
 	
-	CWeaponsManager::CWeaponsManager() : _currentWeapon(0) {
+	CWeaponsManager::CWeaponsManager() : _currentWeapon(0), _cooldownTimer(0), _dmgAmpTimer(0) {
 		
 	}
 
@@ -168,18 +169,42 @@ namespace Logic
 				break;
 			}
 			case Message::REDUCED_COOLDOWN: {
-				std::shared_ptr<CMessageReducedCooldown> reducedCdMsg = std::static_pointer_cast<CMessageReducedCooldown>(message);
-				reduceCooldowns( reducedCdMsg->getPercentCooldown() );
+				std::shared_ptr<CMessageReducedCooldown> cooldownMsg = std::static_pointer_cast<CMessageReducedCooldown>(message);
+				reduceCooldowns( cooldownMsg->getPercentCooldown() );
+				_cooldownTimer = cooldownMsg->getDuration();
 				break;
 			}
 			case Message::DAMAGE_AMPLIFIER: {
 				std::shared_ptr<CMessageDamageAmplifier> damageAmplifierMsg = std::static_pointer_cast<CMessageDamageAmplifier>(message);
 				amplifyDamage( damageAmplifierMsg->getPercentDamage() );
+				_dmgAmpTimer = damageAmplifierMsg->getDuration();
 				break;
 			}
 		}
 
 	} // process
+
+	//---------------------------------------------------------
+
+	void CWeaponsManager::onTick(unsigned int msecs) {
+		if(_cooldownTimer != 0) {
+			_cooldownTimer -= msecs;
+
+			if(_cooldownTimer <= 0) {
+				_cooldownTimer = 0;
+				reduceCooldowns(0);
+			}
+		}
+
+		if(_dmgAmpTimer != 0) {
+			_dmgAmpTimer -= msecs;
+
+			if(_dmgAmpTimer <= 0) {
+				_dmgAmpTimer = 0;
+				amplifyDamage(0);
+			}
+		}
+	}
 	
 	//---------------------------------------------------------
 
@@ -222,6 +247,10 @@ namespace Logic
 		for(unsigned int i = 0; i < _weaponry.size(); ++i) {
 			_weaponry[i].second->amplifyDamage(percentage);
 		}
+
+		std::shared_ptr<CMessageChangeMaterial> matMsg = std::make_shared<CMessageChangeMaterial>();
+		matMsg->setMaterialName("ArchangelBerserk");
+		_entity->emitMessage(matMsg);
 	}
 
 	//---------------------------------------------------------
@@ -231,6 +260,9 @@ namespace Logic
 		for(unsigned int i = 0; i < _weaponry.size(); ++i) {
 			_weaponry[i].second->reduceCooldown(percentage);
 		}
+		std::shared_ptr<CMessageChangeMaterial> matMsg = std::make_shared<CMessageChangeMaterial>();
+		matMsg->setMaterialName("ArchangelAzul");
+		_entity->emitMessage(matMsg);
 	}
 
 	//---------------------------------------------------------

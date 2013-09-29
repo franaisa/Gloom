@@ -75,6 +75,9 @@ namespace Logic
 		void addWeapon(int ammo, int weaponIndex);
 
 	protected:
+
+		virtual void onTick(unsigned int msecs);
+
 		/**
 		Función que se llama cuando se quiere cambiar de arma utilizando el scroll. A partir del arma actual,
 		recorre el array del inventario de armas hacia adelante (iWeapon == 100) o hacia atrá (iWeapon == -100),
@@ -88,6 +91,9 @@ namespace Logic
 		arma actual equipada
 		*/
 		int _currentWeapon;
+
+		int _cooldownTimer;
+		int _dmgAmpTimer;
 
 		std::vector< std::pair<bool, IWeaponAmmo*> > _weaponry;
 

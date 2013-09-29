@@ -71,6 +71,8 @@ namespace Logic {
 			(*it)->reduceCooldown(_percentage);
 		}
 
+		// Aqui pongo el feedback en 3º persona
+
 	} // spell
 	//__________________________________________________________________
 		
@@ -82,6 +84,9 @@ namespace Logic {
 		for(auto it = _weaponryShoot.begin(); it < _weaponryShoot.end() ; ++it){
 			(*it)->reduceCooldown(0);
 		}
+
+		// Aqui quito el feedback en 3º persona
+
 	} // stopSpell
 	//__________________________________________________________________
 
