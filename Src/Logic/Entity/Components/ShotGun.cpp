@@ -146,7 +146,7 @@ namespace Logic {
 
 
 	void CShotGun::destroyProjectile(CEntity *projectile, CEntity *killedBy){
-		if(killedBy->getType() == "World"){
+		if(killedBy->getType() == "PhysicWorld"){
 			drawDecal(killedBy, projectile->getPosition(), (int)WeaponType::eSHOTGUN);
 
 			// Añado aqui las particulas de dado en la pared.

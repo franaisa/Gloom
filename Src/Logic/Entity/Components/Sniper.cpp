@@ -105,7 +105,7 @@ namespace Logic {
 		bool headshot = false;
 		for(int i=0;i<hits.size();++i){
 			//Si tocamos mundo terminamos
-			if(hits[i].entity->getType() == "World") {
+			if(hits[i].entity->getType() == "PhysicWorld") {
 				Map::CEntity* entityInfo = CEntityFactory::getSingletonPtr()->getInfo("SniperTrail");
 				CEntity* sniperTrail = CEntityFactory::getSingletonPtr()->createEntity(entityInfo, _entity->getMap(), hits[i].impact, Quaternion::IDENTITY );
 				sniperTrail->activate();
@@ -221,7 +221,7 @@ namespace Logic {
 		//Y ademas no hemos tocado ya pared
 		for(int i=0;i<hits.size();++i){
 			//Si tocamos el mundo no continuamos viendo hits y llamamos al pintado del rayo (si se considera necesario)
-			if(hits[i].entity->getType() == "World"){
+			if(hits[i].entity->getType() == "PhysicWorld"){
 
 				Map::CEntity* entityInfo = CEntityFactory::getSingletonPtr()->getInfo("SniperTrail");
 				CEntity* sniperTrail = CEntityFactory::getSingletonPtr()->createEntity(entityInfo, _entity->getMap(), hits[i].impact, Quaternion::IDENTITY );
