@@ -161,7 +161,7 @@ namespace Graphics
 
 		if(_name != "dummy_scene"){
 			// Primero se blurrea la escena
-			//_motionBlur = new CMotionBlur(_compositorManager, _camera);
+			_motionBlur = new CMotionBlur(_compositorManager, _camera);
 
 			Ogre::Viewport* viewport = _camera->getOgreCamera()->getViewport();
 			// Luego pintamos el overlay
